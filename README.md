@@ -23,6 +23,7 @@ FEATURES
 HOW TO INSTALL
 
 
+    cd install
 
     python3 installer.py -install
 
