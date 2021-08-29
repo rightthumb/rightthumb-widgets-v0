@@ -24,6 +24,12 @@ FEATURES
 
         the history is backed up and associated with files edited using the command line
 
+    in linux nice prompt
+        
+        ┌──(scott🌭Vulcan)-[/mnt/c/Users/Scott].3.def
+        
+        └─$
+        
     automatic franchise research
 
     cross reference 2 or more tv shows or movies
