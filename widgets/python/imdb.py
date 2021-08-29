@@ -1,4 +1,3 @@
-#!/usr/bin/python3
 import os
 import sys
 import time
@@ -93,7 +92,6 @@ def appSwitches():
 	
 	_.switches.register('xRef-Page-Threaded', '-pt,-threaded,-pthread')
 
-	_.switches.register('JustIDs', '-ids')
 
 	_.switches.trigger('Watched', _.txt2Date)
 	
@@ -305,9 +303,9 @@ def registerPerson(people,person,link,character,img=''):
 		if _.switches.isActive('HallmarkCrossRef') == True:
 			if len(foundHallmark) > 0:
 				iHallmark += 1
-			record = {'id': cnt+1,'name': person,'character': character,'link': link,'img': img,'hallmark': foundHallmark}
+			record = {'id': cnt,'name': person,'character': character,'link': link,'img': img,'hallmark': foundHallmark}
 		else:
-			record = {'id': cnt+1,'name': person,'character': character,'link': link,'img': img}
+			record = {'id': cnt,'name': person,'character': character,'link': link,'img': img}
 		people.append(record)
 		# print(people)
 		# pause = input('pause')
@@ -339,7 +337,7 @@ def getUrlList( url, find, omit, obscure=False ):
 	# print(newURL)
 	# brandNewURL = 'http://www.rightthumb.com/projects/widget/proxy.php?p=' + newURL.replace('&','[and]')
 	# print(newURL)
-	# __.xit()
+	# sys.exit()
 	page = requests.get(newURL)
 	tree = html.fromstring(page.content)
 	tables = tree.cssselect('.r')
@@ -387,7 +385,7 @@ def buildUrlList(url,info=False):
 	global buildUrlListLast
 	global buildUrlListDuplicate
 	# print( url )
-	# __.xit()
+	# sys.exit()
 	franchiseList = []
 	try:
 		page = requests.get(url)
@@ -467,7 +465,7 @@ def buildUrlList(url,info=False):
 						buildUrlListDuplicate.append(thisID)
 						# if 'tt1375666' in thisID:
 						# 	print( 'Error:', url )
-						# 	__.xit()
+						# 	sys.exit()
 						franchiseList.append(thisID)
 					iT += 1
 		except Exception as e:
@@ -511,7 +509,7 @@ def buildUrlList(url,info=False):
 					for xx in buildUrlList('http://www.imdb.com'+link,info):
 						# if 'tt1375666' in xx:
 						# 	print( 'Error:', url )
-						# 	__.xit()
+						# 	sys.exit()
 						franchiseList.append(xx)
 	except Exception as e:
 		# print('buildUrlList: for links(a) & .pagination-range')
@@ -526,8 +524,6 @@ def buildUrlList(url,info=False):
 ##########################################################################################
 ##########################################################################################
 def lookupPerson(url):
-
-
 	idRegistier(url)
 	thisPersonID = getIdFromUrl(url)
 	if _.switches.isActive('NoPrint') == False:
@@ -536,7 +532,6 @@ def lookupPerson(url):
 			os.system('cls')
 		else:
 			os.system('clear')
-
 	# print(url)
 	# pause = input('pause')
 	global hallmark
@@ -625,7 +620,6 @@ def lookupPerson(url):
 						link0 = str(links[0].attrib['href'])
 						link = 'http://www.imdb.com' + extractUrl(link0) + 'fullcredits?ref_=tt_cl_sm#cast'
 						thisID = getIdFromUrl(link)
-
 						year0 = ff.cssselect('.year_column')
 						year1 = year0[0].text_content()
 
@@ -657,16 +651,16 @@ def lookupPerson(url):
 					except Exception as e:
 						pass
 						# print(e)
-						# __.xit()
+						# sys.exit()
 						gigAge = ''
 					if j == 1:
 						if _.switches.isActive('HallmarkCrossRef') == True:
 							hallmarkData = isHallmark(thisID)
 							if len(hallmarkData) > 0:
 								iHallmark += 1
-							record = {'id': iiii+1, 'name': title, 'year': year, 'link': link, 'img': img, 'hallmark': hallmarkData, 'age': gigAge}
+							record = {'id': iiii, 'name': title, 'year': year, 'link': link, 'img': img, 'hallmark': hallmarkData, 'age': gigAge}
 						else:
-							record = {'id': iiii+1, 'name': title, 'year': year, 'link': link, 'img': img, 'age': gigAge}
+							record = {'id': iiii, 'name': title, 'year': year, 'link': link, 'img': img, 'age': gigAge}
 						movies.append(record)
 					iiii += 1
 				ii += 1
@@ -677,30 +671,23 @@ def lookupPerson(url):
 			os.system('cls')
 		else:
 			os.system('clear')
-		if _.switches.isActive('JustIDs'):
-			print( getIdFromUrl(url) )
 		print()
 		_.printBold(theirName + '\t' + str(age))
 		print()
 	if _.switches.isActive('NoPrint') == False:
-		if _.switches.isActive('JustIDs'):
-			for rec in movies:
-				print( getIdFromUrl( rec['link'] ) )
-			__.xit()
+		_.switches.fieldSet('Long','active',True)
+		_.switches.fieldSet('Long','value','name')
+		if _.switches.isActive('HallmarkCrossRef') == True:
+			_.tables.register('Auto',movies)
+			_.tables.fieldProfileSet( 'Auto', 'name', 'trigger', _.longDashAdd )
+			_.tables.print('Auto','id,hallmark,year,name')
+			print()
+			print('    ',iHallmark,'Hallmark')
 		else:
-			_.switches.fieldSet('Long','active',True)
-			_.switches.fieldSet('Long','value','name')
-			if _.switches.isActive('HallmarkCrossRef') == True:
-				_.tables.register('Auto',movies,w=1)
-				_.tables.fieldProfileSet( 'Auto', 'name', 'trigger', _.longDashAdd )
-				_.tables.print('Auto','id,hallmark,year,name')
-				print()
-				print('    ',iHallmark,'Hallmark')
-			else:
-				_.tables.register('Auto',movies,w=1)
-				
-				_.tables.fieldProfileSet( 'Auto', 'name', 'trigger', _.longDashAdd )
-				_.tables.print('Auto','id,year,age,name')
+			_.tables.register('Auto',movies)
+			
+			_.tables.fieldProfileSet( 'Auto', 'name', 'trigger', _.longDashAdd )
+			_.tables.print('Auto','id,year,age,name')
 	if _.switches.isActive('BuildCrossRef') == True:
 		buildMovies(movies,{'name': theirName, 'url': url})
 		theRows = []
@@ -739,7 +726,7 @@ def lookupPerson(url):
 				if sr.lower() in m['name'].lower():
 					searchResults.append(m)
 			print()
-			_.tables.register('searchResults',searchResults,w=1)
+			_.tables.register('searchResults',searchResults)
 			_.tables.fieldProfileSet( 'searchResults', 'name', 'trigger', _.longDashAdd )
 			_.tables.print('searchResults','id,year,name')
 		if selection == 'f':
@@ -756,7 +743,6 @@ def lookupPerson(url):
 			franchise = franchise.replace( '?', '' )
 			franchise = franchise.lower()
 			franchise = _str.basic(franchise)
-			load_franchise_table( franchise )
 
 			fID = inFranchiseID( franchise )
 			if type(fID) == bool:
@@ -764,7 +750,7 @@ def lookupPerson(url):
 				print()
 				print( 'Run:' )
 				print( '\tp franchise -f', franchise )
-				__.xit()
+				sys.exit()
 			if platform.system() == 'Windows':
 				os.system('cls')
 			else:
@@ -782,7 +768,7 @@ def lookupPerson(url):
 					movies[ix][franchise] = 'x'
 				else:
 					movies[ix][franchise] = ''
-			_.tables.register('Auto',movies,w=1)
+			_.tables.register('Auto',movies)
 			_.tables.fieldProfileSet( 'Auto', 'name', 'trigger', _.longDashAdd )
 			_.tables.print('Auto','id,year,age,'+franchise+',name')
 			print()
@@ -792,7 +778,7 @@ def lookupPerson(url):
 			for ix,r in enumerate(movies):
 				if getIdFromUrl(r['link']) in __.franchises[fID]['movieIDS']:
 					io += 1
-					print(r['id'],'\t',r['year'],r['name'])
+					print(r['year'],r['name'])
 			print()
 			if io > 0:
 				print(io)
@@ -811,11 +797,11 @@ def lookupPerson(url):
 
 
 			try:
-				ppl = _.addComma( len(set(__.franchises[fID]['peopleIDS'])) ) + ' people\t\t'
+				ppl = str( len(set(__.franchises[fID]['peopleIDS'])) ) + ' people\t\t'
 			except Exception as e:
 				ppl = ''
 			try:
-				mv = _.addComma( len(set(__.franchises[fID]['movieIDS'])) ) + ' movies\t\t'
+				mv = str( len(set(__.franchises[fID]['movieIDS'])) ) + ' movies\t\t'
 			except Exception as e:
 				mv = ''
 			print('_____________________________________________________________________________________________________________________')
@@ -911,7 +897,7 @@ def lookupPerson(url):
 					# print("",lookFor,description.lower())
 					if not allDC:
 					# print(allDC)
-					# __.xit()
+					# sys.exit()
 						if lookFor in description.lower():
 							_.updateLine("")
 							print()
@@ -919,16 +905,16 @@ def lookupPerson(url):
 							print(m['name'])
 							done = True
 							break
-							__.xit()
+							sys.exit()
 
-					# __.xit()
+					# sys.exit()
 				if done:
-					__.xit()
+					sys.exit()
 				if lfOr and lfAnd:
 					print('')
 					print('')
 					print('Error: and or, pick one')
-					__.xit()
+					sys.exit()
 				if not lfOr and  not lfAnd:
 					if lookFor in description:
 						# print('single')
@@ -1010,7 +996,7 @@ def lookupPerson(url):
 				except Exception as e:
 					_.cp( 'Error: unable to open browser', 'red' )
 		if selection == 'x' or selection == 'exit':
-			__.xit()
+			sys.exit()
 		if selection == 'p' or selection == 'pic':
 
 			try:
@@ -1031,7 +1017,7 @@ def lookupPerson(url):
 			_.saveTable(relationships,'imdb_relationships.json')
 		try:
 			selectedSomething = True
-			selection = int(selection)-1
+			selection = int(selection)
 			print()
 			print(movies[selection]['name'],' - has been selected')
 			print()
@@ -1061,7 +1047,7 @@ def getIdFromUrl(url):
 	# for u in urls:
 	# 	print(i,u)
 	# 	i+=1
-	# __.xit()
+	# sys.exit()
 
 
 	# result = _str.totalStrip(result)
@@ -1115,7 +1101,7 @@ def buildPeople(rows,related=False):
 				pass
 	# pause = input('pausexxx')
 	# print('buildPeople')
-	# __.xit()
+	# sys.exit()
 	# allPeople = set(allPeople)
 def buildMovies(rows,related=False):
 	# print(rows)
@@ -1144,7 +1130,7 @@ def buildMovies(rows,related=False):
 def buildRelationships(movieID,personID):
 	global relationships
 	# print('relationships')
-	# __.xit()
+	# sys.exit()
 	found = False
 	for rel in relationships:
 		if rel['movieID'] == movieID and rel['personID'] == personID:
@@ -1186,7 +1172,7 @@ def cleanupStringYear2(string):
 	string = _str.onlyDigits(string)
 	string = printClean( string )
 	# print(string)
-	# __.xit()
+	# sys.exit()
 
 	return string
 def cleanupStringYear(string):
@@ -1206,7 +1192,7 @@ def cleanupStringYear(string):
 	string = stringTMP[2].replace(')','')
 	string = printClean( string )
 	# print(string)
-	# __.xit()
+	# sys.exit()
 	return string
 
 def formatData( result ):
@@ -1315,18 +1301,16 @@ def cleanupString1(string):
 	# 	string = ''
 	return string
 def lookupMovie(url):
-
-
 	global iHallmark
 	iHallmark = 0
 	# print(url)
 	if _.switches.isActive('Episode'):
 		print('Loading...')
 		episodeLink(url)
-		__.xit()
+		sys.exit()
 	if _.switches.isActive('QuickInfo'):
 		movieRating(url)
-		__.xit()
+		sys.exit()
 	idRegistier(url)
 	if _.switches.isActive('NoPrint') == False:
 		pass
@@ -1334,7 +1318,6 @@ def lookupMovie(url):
 			os.system('cls')
 		else:
 			os.system('clear')
-
 	# print(url)
 	# pause = input('pause')
 	page = requests.get(url)
@@ -1445,33 +1428,25 @@ def lookupMovie(url):
 				os.system('cls')
 			else:
 				os.system('clear')
-
-			if _.switches.isActive('JustIDs'):
-				print( getIdFromUrl(url) )
 			print()
 			_.printBold(theYear+' '+theTitle)
 			print()
 		if _.switches.isActive('NoPrint') == False:
-			if _.switches.isActive('JustIDs'):
-				for rec in people:
-					print( getIdFromUrl( rec['link'] ) )
-				__.xit()
+			if _.switches.isActive('HallmarkCrossRef') == True:
+				_.tables.register('Auto',people)
+				_.tables.fieldProfileSet( 'Auto', 'character', 'trigger', _.longDashAdd )
+				_.tables.print('Auto','id,hallmark,name,character')
+				print()
+				print('    ',iHallmark,'Hallmark')
 			else:
-				if _.switches.isActive('HallmarkCrossRef') == True:
-					_.tables.register('Auto',people,w=1)
-					_.tables.fieldProfileSet( 'Auto', 'character', 'trigger', _.longDashAdd )
-					_.tables.print('Auto','id,hallmark,name,character')
-					print()
-					print('    ',iHallmark,'Hallmark')
-				else:
-					_.tables.register('Auto',people,w=1)
-					_.tables.fieldProfileSet( 'Auto', 'character', 'trigger', _.longDashAdd )
-					_.tables.print('Auto','id,name,character')
+				_.tables.register('Auto',people)
+				_.tables.fieldProfileSet( 'Auto', 'character', 'trigger', _.longDashAdd )
+				_.tables.print('Auto','id,name,character')
 		if _.switches.isActive('BuildCrossRef') == True and not _.switches.value('BuildCrossRef') == 'skip':
 			# print('test1')
 			buildPeople(people,{'name': theTitle, 'year': theYear, 'url': url})
 			# print('test2')
-			# __.xit()
+			# sys.exit()
 			theRows = []
 			theRows.append({'name': theTitle, 'year': theYear, 'link': url})
 			# print('test3')
@@ -1510,7 +1485,7 @@ def lookupMovie(url):
 				if sr.lower() in m['name'].lower():
 					searchResults.append(m)
 			print()
-			_.tables.register('searchResults',searchResults,w=1)
+			_.tables.register('searchResults',searchResults)
 			_.tables.fieldProfileSet( 'searchResults', 'character', 'trigger', _.longDashAdd )
 			_.tables.print('searchResults','id,name,character')
 		if selection == 'f':
@@ -1526,7 +1501,7 @@ def lookupMovie(url):
 				obscure = False
 			franchise = franchise.lower()
 			franchise = _str.basic(franchise)
-			load_franchise_table( franchise )
+
 			fID = inFranchiseID( franchise )
 			
 			if type(fID) == bool:
@@ -1534,7 +1509,7 @@ def lookupMovie(url):
 				print()
 				print( 'Run:' )
 				print( '\tp franchise -f', franchise )
-				__.xit()
+				sys.exit()
 			if platform.system() == 'Windows':
 				os.system('cls')
 			else:
@@ -1554,7 +1529,7 @@ def lookupMovie(url):
 					people[ix][franchise] = 'x'
 				else:
 					people[ix][franchise] = ''
-			_.tables.register('Auto',people,w=1)
+			_.tables.register('Auto',people)
 			_.tables.fieldProfileSet( 'Auto', 'character', 'trigger', _.longDashAdd )
 			_.tables.print('Auto','id,'+franchise+',name,character')
 			print()
@@ -1564,7 +1539,7 @@ def lookupMovie(url):
 			for ix,r in enumerate(people):
 				if getIdFromUrl(r['link']) in __.franchises[fID]['peopleIDS']:
 					io += 1
-					print(r['id'],'\t',r['name'])
+					print(r['name'])
 			print()
 			if io > 0:
 				print(io)
@@ -1583,11 +1558,11 @@ def lookupMovie(url):
 
 
 			try:
-				ppl = _.addComma( len(set(__.franchises[fID]['peopleIDS'])) ) + ' people\t\t'
+				ppl = str( len(set(__.franchises[fID]['peopleIDS'])) ) + ' people\t\t'
 			except Exception as e:
 				ppl = ''
 			try:
-				mv = _.addComma( len(set(__.franchises[fID]['movieIDS'])) ) + ' movies\t\t'
+				mv = str( len(set(__.franchises[fID]['movieIDS'])) ) + ' movies\t\t'
 			except Exception as e:
 				mv = ''
 			print('_____________________________________________________________________________________________________________________')
@@ -1651,7 +1626,7 @@ def lookupMovie(url):
 
 
 		if selection == 'x' or selection == 'exit':
-			__.xit()
+			sys.exit()
 		if selection == 'description' or selection == 'd':
 			newURL = extractUrl(url) + '?ref_=ttfc_fc_tt'
 			page = requests.get(newURL)
@@ -1679,7 +1654,7 @@ def lookupMovie(url):
 			_.saveTable(relationships,'imdb_relationships.json')
 		try:
 			selectedSomething = True
-			selection = int(selection)-1
+			selection = int(selection)
 			print()
 			print(people[selection]['name'],' - has been selected')
 			print()
@@ -1716,11 +1691,11 @@ def monthToNumber(theDate):
 
 def episodeLink(url):
 	# print( 'here' )
-	# __.xit()
+	# sys.exit()
 	eId = ''.join( _.switches.values('Episode') )
 	if not ':' in eId:
 		print('No Show')
-		__.xit()
+		sys.exit()
 	season = eId.split(':')[0]
 	_.switches.fieldSet('Episode','active',False)
 
@@ -1804,11 +1779,11 @@ def episodeLink(url):
 		for i,episode in enumerate(episodeList):
 			if eId == episode['id']:
 				# print(episode['url'])
-				# __.xit()
+				# sys.exit()
 				lookupEpisode(theYear,theTitle,episode['id'],episode['title'],episode['url'])
 	else:
 		print('No Episode Found')
-		__.xit()
+		sys.exit()
 
 
 
@@ -1823,7 +1798,7 @@ def isSeasonZero(url):
 	else:
 		result = False
 	# print(data)
-	# __.xit()
+	# sys.exit()
 	return result
 	
 
@@ -1872,12 +1847,12 @@ def episodesCache(theTitle):
 			if len(selection) == 0:
 				selection = 'x'
 			if selection.lower() == 'x':
-				__.xit()
+				sys.exit()
 			if selection in episodeListIds:
 				for i,episode in enumerate(episodeList):
 					if selection == episode['id']:
 						print(episode['url'])
-						# __.xit()
+						# sys.exit()
 						lookupEpisode(data['year'],data['title'],episode['id'],episode['title'],episode['url'])
 			print()
 
@@ -1960,7 +1935,7 @@ def crossReferenceEpisodes(iDs):
 		c += s['title'] + ','
 	c = _str.cleanBE(c,',')
 	# print(c)
-	_.tables.register('Auto',dataTable,w=1)
+	_.tables.register('Auto',dataTable)
 	_.tables.print('Auto',c)
 	print()
 	print(len(dataTable))
@@ -2167,12 +2142,12 @@ def episodes(url,theYear='',theTitle=''):
 			if len(selection) == 0:
 				selection = 'x'
 			if selection.lower() == 'x':
-				__.xit()
+				sys.exit()
 			if selection in episodeListIds:
 				for i,episode in enumerate(episodeList):
 					if selection == episode['id']:
 						print(episode['url'])
-						# __.xit()
+						# sys.exit()
 						lookupEpisode(theYear,theTitle,episode['id'],episode['title'],episode['url'])
 			else:
 				print('Error')
@@ -2259,7 +2234,7 @@ def lookupEpisode(theYear,theTitle,showId,showTitle,url):
 			people = registerPerson(people,person,link,character)
 			people2.append({'name': person, 'link': link, 'character': character})
 
-	_.tables.register('Auto',people,w=1)
+	_.tables.register('Auto',people)
 	_.tables.fieldProfileSet( 'Auto', 'character', 'trigger', _.longDashAdd )
 	_.tables.print('Auto','id,name,character')
 
@@ -2307,7 +2282,7 @@ def lookupEpisode(theYear,theTitle,showId,showTitle,url):
 
 
 		if selection == 'x' or selection == 'exit':
-			__.xit()
+			sys.exit()
 		makeSelection()
 
 	makeSelection()
@@ -2330,7 +2305,7 @@ def movieRating(url):
 			print(description.split('vote of ')[1],title.replace(',',' '))
 		except Exception as e:
 			pass
-		__.xit()
+		sys.exit()
 
 
 	if _.switches.isActive('QuickInfo'):
@@ -2477,7 +2452,7 @@ def movieRating(url):
 			pass
 		try:
 			if len(theRatings) > 0:
-				_.tables.register('Auto',theRatings,w=1)
+				_.tables.register('Auto',theRatings)
 				_.tables.print('Auto','category,rating')
 		except Exception as e:
 			pass
@@ -2512,7 +2487,7 @@ def buildHallmarkTable():
 		years.append(thisYear-x)
 		
 	# print(years)
-	# __.xit()
+	# sys.exit()
 	franchise = 'hallmark'
 	franchiseOmit = 'lifetime'
 	# theList = []
@@ -2561,7 +2536,7 @@ def buildHallmarkTable():
 	# theList.append('http://www.imdb.com/list/ls027316430/')
 	# theList.append('http://www.imdb.com/list/ls027937692/')
 	# print(set(theList))
-	# __.xit()
+	# sys.exit()
 	_.saveTable(theList,'imdb_hallmark_auto_research_theList.json')
 	print('Lists:',len(theList))
 	badIDs = 'ls076776375,ls066936786,ls076572568,ls074285945,ls070895912'
@@ -2601,7 +2576,7 @@ def buildHallmarkTable():
 	# hallmark.append({'name': nameFix, 'year': year, 'link': movieURL, 'people': []})
 	# _.tables.register('hallmarkraw',hallmarkDataRaw)
 	# _.tables.print('hallmarkraw','year,name,link')
-	# __.xit()
+	# sys.exit()
 def buildHallmarkTable2():
 	global hallmark
 	def duplicateCheck(theID):
@@ -2652,7 +2627,7 @@ def buildHallmarkTable2():
 					hallmark.append({'name': nameFix, 'year': year, 'link': movieURL, 'people': []})
 		except Exception as e:
 			print('Error:',url)
-			# __.xit()
+			# sys.exit()
 	if len(hallmark) < 1:
 		now = datetime.datetime.now()
 		# today = now.strftime("%Y-%m-%d")
@@ -2664,7 +2639,7 @@ def buildHallmarkTable2():
 			years.append(thisYear-x)
 			
 		# print(years)
-		# __.xit()
+		# sys.exit()
 		franchise = 'hallmark'
 		franchiseOmit = 'lifetime'
 		theList = []
@@ -2711,7 +2686,7 @@ def buildHallmarkTable2():
 		theList.append('http://www.imdb.com/list/ls027316430/')
 		theList.append('http://www.imdb.com/list/ls027937692/')
 		# print(set(theList))
-		# __.xit()
+		# sys.exit()
 		print('Lists:',len(set(theList)))
 		hallmarkIDs = []
 		for hlink in set(theList):
@@ -2853,26 +2828,26 @@ def google(searchFor,personMovie):
 	theAliasID_imdbID = theAliasID(searchFor,personMovie,'imdbID')
 	# test = input('alias: ' + theAliasID_imdbID + ' ' + personMovie)
 
-	if not type(theAliasID_imdbID) == bool:
-		return theAliasID_imdbID
+	# if not type(theAliasID_imdbID) == bool:
+	# 	return theAliasID_imdbID
 
-	if not type(theAliasID_imdbID) == bool:
+	# if not type(theAliasID_imdbID) == bool:
 		
-		if personMovie == 'movie':
-			foundAlias = True
-			theURL = __.links['imdb']['cinema']['fullcredits'].replace(__.ID_HERE,theAliasID_imdbID)
-			# test = input('foundAlias ' + theAliasID_imdbID + ' ' + personMovie)
-			result = lookupMovie(theURL)
-		if personMovie == 'person':
-			foundAlias = True
-			theURL = __.links['imdb']['people']['profile'].replace(__.ID_HERE,theAliasID_imdbID)
-			# test = input('foundAlias ' + theAliasID_imdbID + ' ' + personMovie)
-			result = lookupPerson(theURL)
+	# 	if personMovie == 'movie':
+	# 		foundAlias = True
+	# 		theURL = __.links['imdb']['cinema']['fullcredits'].replace(__.ID_HERE,theAliasID_imdbID)
+	# 		# test = input('foundAlias ' + theAliasID_imdbID + ' ' + personMovie)
+	# 		result = lookupMovie(theURL)
+	# 	if personMovie == 'person':
+	# 		foundAlias = True
+	# 		theURL = __.links['imdb']['people']['profile'].replace(__.ID_HERE,theAliasID_imdbID)
+	# 		# test = input('foundAlias ' + theAliasID_imdbID + ' ' + personMovie)
+	# 		result = lookupPerson(theURL)
 
 
 
 	if not foundAlias:
-
+		# print('here2')
 		url = 'https://www.google.com/search?q=imdb+'
 		newURL = url + _str.replaceAll(_str.replaceAll(searchFor,',','+'),' ','+')
 		# print(newURL)
@@ -2929,7 +2904,7 @@ def google(searchFor,personMovie):
 			if total == 0:
 				if not _.switches.isActive('Score'):
 					print('0 No Results')
-				__.xit()
+				sys.exit()
 			elif total == 1:
 				if len(theList['movies']) == 1:
 					addAliasID(searchFor,personMovie,'imdbID',getIdFromUrl(theList[0]['link']))
@@ -2952,7 +2927,7 @@ def google(searchFor,personMovie):
 						selection = input('Make Selection - ')
 						print()
 						if selection == 'x':
-							__.xit()
+							sys.exit()
 						elif not selection == 'm':
 							addAliasID(searchFor,personMovie,'imdbID',getIdFromUrl(theList['people'][int(selection)]['link']))
 							result = lookupPerson(theList['people'][int(selection)]['link'])
@@ -2972,7 +2947,7 @@ def google(searchFor,personMovie):
 						selection = input('Make Selection - ')
 						print()
 						if selection == 'x':
-							__.xit()
+							sys.exit()
 						elif not selection == 'm':
 							addAliasID(searchFor,personMovie,'imdbID',getIdFromUrl(theList['movies'][int(selection)]['link']))
 							result = lookupMovie(theList['movies'][int(selection)]['link'])
@@ -2992,7 +2967,7 @@ def google(searchFor,personMovie):
 						selection = input('Make Selection - ')
 						print()
 						if selection == 'x':
-							__.xit()
+							sys.exit()
 						elif not selection == 'm':
 							addAliasID(searchFor,personMovie,'imdbID',getIdFromUrl(theList['people'][int(selection)]['link']))
 							result = lookupPerson(theList['people'][int(selection)]['link'])
@@ -3036,7 +3011,7 @@ def googleID(searchFor,personMovie):
 			print(  )
 			print( '______________________________' )
 			print( searchFor, theAliasID_imdbID )
-			__.xit()
+			sys.exit()
 		return theAliasID_imdbID
 		if personMovie == 'movie':
 			foundAlias = True
@@ -3236,7 +3211,7 @@ def rottenTomatoesRank(movie):
 		if total == 0:
 			if not _.switches.isActive('Score'):
 				print('2 No Results')
-			__.xit()
+			sys.exit()
 		elif total == 1:
 			if len(theList['movies']) == 1:
 				result = lookupMovie(theList[0]['link'])
@@ -3256,7 +3231,7 @@ def rottenTomatoesRank(movie):
 					selection = input('Make Selection - ')
 					print()
 					if selection == 'x':
-						__.xit()
+						sys.exit()
 					elif not selection == 'm':
 						result = lookupPerson(theList['people'][int(selection)]['link'])
 				else:
@@ -3275,7 +3250,7 @@ def rottenTomatoesRank(movie):
 					selection = input('Make Selection - ')
 					print()
 					if selection == 'x':
-						__.xit()
+						sys.exit()
 					elif not selection == 'm':
 						result = lookupMovie(theList['movies'][int(selection)]['link'])
 				else:
@@ -3294,7 +3269,7 @@ def rottenTomatoesRank(movie):
 					selection = input('Make Selection - ')
 					print()
 					if selection == 'x':
-						__.xit()
+						sys.exit()
 					elif not selection == 'm':
 						result = lookupPerson(theList['people'][int(selection)]['link'])
 				else:
@@ -3329,11 +3304,7 @@ def dataPerson(url):
 
 	if url in dataPerson_data:
 		if _.daysDiff( dataPerson_data[url]['timestamp'], time.time() ) < __.data_day_diff:
-			try:
-				if dataPerson_data[url]['img']:
-					return dataPerson_data[url]
-			except Exception as e:
-				pass
+			return dataPerson_data[url]
 	page = requests.get(url)
 	tree = html.fromstring(page.content)
 	films = tree.cssselect('.filmo-category-section')
@@ -3398,13 +3369,7 @@ def dataMovie(url):
 
 	if url in dataMovie_data:
 		if _.daysDiff( dataMovie_data[url]['timestamp'], time.time() ) < __.data_day_diff:
-
-			try:
-				if dataMovie_data[url]['name']:
-					return dataMovie_data[url]
-			except Exception as e:
-				pass
-
+			return dataMovie_data[url]
 
 	page = requests.get(url)
 	tree = html.fromstring(page.content)
@@ -3449,7 +3414,7 @@ def crossReference():
 	print('allMovies:\t',len(allMovies))
 	print('relationships:\t',len(relationships))
 	print('xData:       \t',len(xData))
-	# __.xit()
+	# sys.exit()
 	for rel00 in relationships:
 		found = False
 		for rm0 in relMovies:
@@ -3502,7 +3467,7 @@ def crossReference():
 					newResults.append({'id': ap2['id'], 'name': ap2['name'], 'link': ap2['link'], })
 		i = 0
 		for result in newResults:
-			__.p(i,result['name'],w=_.switches.value('WebTable'))
+			print(i,result['name'])
 			i += 1
 		print()
 		print(len(newResults))
@@ -3539,7 +3504,7 @@ def crossReference():
 					newResults.append({'id': am2['id'], 'name': am2['name'], 'link': am2['link'], })
 		i = 0
 		for result in newResults:
-			__.p(i,result['name'],w=_.switches.value('WebTable'))
+			print(i,result['name'])
 			i += 1
 		print()
 		print(len(newResults))
@@ -3573,7 +3538,7 @@ def crossReference():
 				selectedSomething = True
 				google(searchFor,personMovie)
 		if selection == 'x' or selection == 'exit':
-			__.xit()
+			sys.exit()
 		if selection == 'not':
 			uninvited = []
 			i = 0
@@ -3591,14 +3556,13 @@ def crossReference():
 			print()
 			print('Un-invited')
 			print()
-			_.tables.register('uninvited',uninvited,w=1)
+			_.tables.register('uninvited',uninvited)
 			_.tables.fieldProfileSet( 'uninvited', 'character', 'trigger', _.longDashAdd )
 			_.tables.print('uninvited','id,name,character')
 
 
 
 		if selection == 'page':
-			print( 'document.querySelectorAll(\'.box\').length' )
 			rows = []
 			theFile = 'test.htm'
 			file0 = _v.stmp + _v.slash + theFile
@@ -3619,18 +3583,8 @@ def crossReference():
 			rows.append('<h4>')
 			rows.append(pageMoviePersonLabel)
 			rows.append('</h4>')
-			temp_file_label = '-imdb-xREF-__'+pageMoviePersonLabel.replace(' ','_').replace('_and_','__AND__')+'.htm'
-			temp_file_label_path = _v.stmp +_v.slash+ temp_file_label
-			if os.path.isfile(  temp_file_label_path  ):
-				print( temp_file_label_path )
-				try:
-					webbrowser.open(  'file://' + os.path.realpath(temp_file_label_path) , new=2)
-				except Exception as e:
-					try:
-						native_web_app.open(  'file://' + os.path.realpath(temp_file_label_path)  )
-					except Exception as e:
-						_.cp( 'Error: unable to open browser', 'red' )
-				__.xit()
+
+
 
 
 
@@ -3647,57 +3601,30 @@ def crossReference():
 				dataMovie_data = _.getTable( '-imdb-dataMovie.index' )
 
 			if _.switches.isActive('xRef-Page-Threaded'):
+				global _async
+				if _async is None:
+					_async = _.regImp( __.appReg, '_rightThumb._asynchronous' )
+				_async.imp.manage.cp( 'data', 2 )
+				_async.imp.manage.atExit( category=None, name=None, fn=threads_done )
 
-
-				stuff = 0
 				if _.switches.isActive('Movie'):
 					print(len(newResults))
 					for nr in newResults:
-						if not nr['link'] in dataPerson_data:
-							stuff += 1
+						_async.imp.manage.register( name='dataPerson', category='scan', fn=dataPerson, a=nr['link'], timeout=3 )
 						# data = dataPerson()
 				if _.switches.isActive('Person'):
 					print(len(newResults))
 					for nr in newResults:
-						if not nr['link'] in dataMovie_data:
-							stuff += 1
+						_async.imp.manage.register( name='dataMovie', category='scan', fn=dataMovie, a=nr['link'], timeout=3 )
 						# data = dataMovie(nr['link'])
 				
+				while not __.threads_complete:
+					time.sleep(.5)
+					pass
+				time.sleep(1)
 
-				if stuff > 5:
-					global _async
-					if _async is None:
-						_async = _.regImp( __.appReg, '_rightThumb._asynchronous' )
-					# __.asyn.cp( 'data', 2 )
-					try:
-						__.asyn.web( 30, safe=3, p=1 )
-					except Exception as e:
-						_async = _.regImp( __.appReg, '_rightThumb._asynchronous' )
-					
-					__.asyn.web( 30, safe=3, p=1 )
-
-					__.asyn.atExit( category=None, name=None, fn=threads_done )
-
-					if _.switches.isActive('Movie'):
-						print(len(newResults))
-						for nr in newResults:
-							if not nr['link'] in dataPerson_data:
-								__.asyn.register( name='dataPerson', category='scan', fn=dataPerson, a=nr['link'], timeout=120 )
-							# data = dataPerson()
-					if _.switches.isActive('Person'):
-						print(len(newResults))
-						for nr in newResults:
-							if not nr['link'] in dataMovie_data:
-								__.asyn.register( name='dataMovie', category='scan', fn=dataMovie, a=nr['link'], timeout=120 )
-							# data = dataMovie(nr['link'])
-					
-					while not __.threads_complete:
-						time.sleep(.5)
-						pass
-					time.sleep(1)
-
-					_.saveTable( dataPerson_data, '-imdb-dataPerson.index', p=0 )
-					_.saveTable( dataMovie_data, '-imdb-dataMovie.index', p=0 )
+				_.saveTable( dataPerson_data, '-imdb-dataPerson.index', p=0 )
+				_.saveTable( dataMovie_data, '-imdb-dataMovie.index', p=0 )
 
 
 
@@ -3749,7 +3676,7 @@ def crossReference():
 
 			_.saveTable( dataPerson_data, '-imdb-dataPerson.index', p=0 )
 			_.saveTable( dataMovie_data, '-imdb-dataMovie.index', p=0 )
-			_.tempFile(rows, temp_file_label )
+			_.tempFile(rows, '-imdb-xREF-__'+pageMoviePersonLabel.replace(' ','_').replace('_and_','__AND__')+'.htm')
 			_.tempFile(rows,theFile)
 
 			_.saveTable( dataPerson_data, '-imdb-dataPerson.index', p=0 )
@@ -4005,7 +3932,7 @@ def kevinBacon(url):
 		even.append(autoLink(url))
 	# for ev in even:
 	# 	print(ev['name'])
-	# __.xit()
+	# sys.exit()
 	iii = 0
 	j = 0
 	while not found:
@@ -4049,7 +3976,7 @@ def kevinBacon(url):
 						print('\t',kevin)
 					print()
 					print('\t\t',j, 'Degrees to Kevin Bakon')
-					__.xit()
+					sys.exit()
 			even=[]
 			xx = 0
 			if _.switches.value('KevinBacon') == 'build':
@@ -4117,7 +4044,7 @@ def kevinBacon(url):
 						print('\t',kevin)
 					print()
 					print('\t\t',j, 'Degrees to Kevin Bakon')
-					__.xit()
+					sys.exit()
 			if _.switches.isActive('KevinBaconPickUp') == True and iii == 1:
 				print('odd',len(odd))
 			else:
@@ -4239,7 +4166,7 @@ def crossReferenceDepth(back):
 		valueX = _.switches.value('BuildCrossRef')
 		_.switches.fieldSet('BuildCrossRef','value','skip')
 		misteryPerson = google(_.switches.value('Movie'),'movie')
-		_.tables.register('The_Mistery_Person',misteryPerson,w=1)
+		_.tables.register('The_Mistery_Person',misteryPerson)
 		_.switches.fieldSet('BuildCrossRef','value',valueX)
 		person = google(_.switches.value('Person'),'person')
 		done = False
@@ -4320,9 +4247,8 @@ def crossReferenceDepth(back):
 				selectedSomething = True
 				google(searchFor,personMovie)
 		if selection == 'x' or selection == 'exit':
-			__.xit()
+			sys.exit()
 		if selection == 'page':
-			print( 'document.querySelectorAll(\'.box\').length' )
 			rows = []
 			theFile = 'test.htm'
 			file0 = _v.stmp + _v.slash + theFile
@@ -4343,18 +4269,6 @@ def crossReferenceDepth(back):
 			rows.append('<h4>')
 			rows.append(pageMoviePersonLabel)
 			rows.append('</h4>')
-			temp_file_label = '-imdb-xREF-__'+pageMoviePersonLabel.replace(' ','_').replace('_and_','__AND__')+'.htm'
-			temp_file_label_path = _v.stmp +_v.slash+ temp_file_label
-			if os.path.isfile(  temp_file_label_path  ):
-				print( temp_file_label_path )
-				try:
-					webbrowser.open(  'file://' + os.path.realpath(temp_file_label_path) , new=2)
-				except Exception as e:
-					try:
-						native_web_app.open(  'file://' + os.path.realpath(temp_file_label_path)  )
-					except Exception as e:
-						_.cp( 'Error: unable to open browser', 'red' )
-				__.xit()
 
 
 
@@ -4376,51 +4290,29 @@ def crossReferenceDepth(back):
 				dataMovie_data = _.getTable( '-imdb-dataMovie.index' )
 
 			if _.switches.isActive('xRef-Page-Threaded'):
+				global _async
+				if _async is None:
+					_async = _.regImp( __.appReg, '_rightThumb._asynchronous' )
+				_async.imp.manage.cp( 'data', 2 )
+				_async.imp.manage.atExit( category=None, name=None, fn=threads_done )
 
-
-				stuff = 0
 				if _.switches.isActive('Movie'):
 					print(len(newResults))
 					for nr in newResults:
-						if not nr['link'] in dataPerson_data:
-							stuff += 1
+						_async.imp.manage.register( name='dataPerson', category='scan', fn=dataPerson, a=nr['link'], timeout=3 )
 						# data = dataPerson()
 				if _.switches.isActive('Person'):
 					print(len(newResults))
 					for nr in newResults:
-						if not nr['link'] in dataMovie_data:
-							stuff += 1
+						_async.imp.manage.register( name='dataMovie', category='scan', fn=dataMovie, a=nr['link'], timeout=3 )
 						# data = dataMovie(nr['link'])
 				
-
-				if stuff > 5:
-					global _async
-					if _async is None:
-						_async = _.regImp( __.appReg, '_rightThumb._asynchronous' )
-					# __.asyn.cp( 'data', 2 )
-					__.asyn.web( 10, safe=3, p=1 )
-
-					__.asyn.atExit( category=None, name=None, fn=threads_done )
-
-					if _.switches.isActive('Movie'):
-						print(len(newResults))
-						for nr in newResults:
-							if not nr['link'] in dataPerson_data:
-								__.asyn.register( name='dataPerson', category='scan', fn=dataPerson, a=nr['link'], timeout=120 )
-							# data = dataPerson()
-					if _.switches.isActive('Person'):
-						print(len(newResults))
-						for nr in newResults:
-							if not nr['link'] in dataMovie_data:
-								__.asyn.register( name='dataMovie', category='scan', fn=dataMovie, a=nr['link'], timeout=120 )
-							# data = dataMovie(nr['link'])
-				
-					while not __.threads_complete:
-						time.sleep(.5)
-						pass
-					time.sleep(1)
-					_.saveTable( dataPerson_data, '-imdb-dataPerson.index', p=0 )
-					_.saveTable( dataMovie_data, '-imdb-dataMovie.index', p=0 )
+				while not __.threads_complete:
+					time.sleep(.5)
+					pass
+				time.sleep(1)
+				_.saveTable( dataPerson_data, '-imdb-dataPerson.index', p=0 )
+				_.saveTable( dataMovie_data, '-imdb-dataMovie.index', p=0 )
 
 
 
@@ -4480,7 +4372,7 @@ def crossReferenceDepth(back):
 				rows.append('</body></html>')
 			_.saveTable( dataPerson_data, '-imdb-dataPerson.index', p=0 )
 			_.saveTable( dataMovie_data, '-imdb-dataMovie.index', p=0 )
-			_.tempFile(rows, temp_file_label)
+			_.tempFile(rows, '-imdb-xREF-__'+pageMoviePersonLabel.replace(' ','_').replace('_and_','__AND__')+'.htm')
 			_.tempFile(rows,theFile)
 
 			_.saveTable( dataPerson_data, '-imdb-dataPerson.index', p=0 )
@@ -4551,7 +4443,7 @@ def action():
 				xData.append(google(flick,'movie'))
 			# os.system('cls')
 			# print(len(xData[0]['people']),len(xData[1]['people']))
-			# __.xit()
+			# sys.exit()
 			crossReference()
 		elif _.switches.isActive('Person') == True:
 			for person0 in _.switches.value('Person').split(',and,'):
@@ -4559,6 +4451,8 @@ def action():
 			crossReference()
 
 	elif _.switches.isActive('Movie') == True:
+		# print('here')
+		# print(_.switches.value('Movie'),'movie')
 		google(_.switches.value('Movie'),'movie')
 
 
@@ -4602,7 +4496,7 @@ def action():
 
 						print('\t',peeps0['name'],peepsLengthSpacer+'\t','(' + peeps0['character'] + ')')
 				else:
-					_.tables.register('Auto',theMovies[0]['people'],w=1)
+					_.tables.register('Auto',theMovies[0]['people'])
 					_.tables.print('Auto','name')
 				print('_____________________________________________________')
 				hallmarkCharecters = []
@@ -4652,7 +4546,7 @@ def action():
 					_.switches.fieldSet('Long','value','movie,character')
 					_.switches.fieldSet('GroupBy','active',True)
 					_.switches.fieldSet('GroupBy','value','name')
-					_.tables.register('Char',hallmarkCharecters,w=1)
+					_.tables.register('Char',hallmarkCharecters)
 					# print(hallmarkCharecters)
 					# for hc in hallmarkCharecters:
 						# print(hc['name'])
@@ -4666,7 +4560,7 @@ def action():
 				_.switches.fieldSet('Long','value','name')
 				_.switches.fieldSet('Sort','active',True)
 				_.switches.fieldSet('Sort','value','year')
-				_.tables.register('Auto',theMovies,w=1)
+				_.tables.register('Auto',theMovies)
 				_.tables.print('Auto','year,name')
 				print()
 				print(len(theMovies))
@@ -4680,7 +4574,7 @@ def action():
 				_.switches.fieldSet('Long','value','name')
 				_.switches.fieldSet('Sort','active',True)
 				_.switches.fieldSet('Sort','value','year')
-				_.tables.register('Auto',hallmark,w=1)
+				_.tables.register('Auto',hallmark)
 				_.tables.print('Auto','year,name')
 				print()
 				print(len(hallmark))
@@ -4837,7 +4731,7 @@ class TheFeature:
 			dateDiff = _.dateDiff( time.time(), self.defaultExpiration() )
 			
 			# print( '\nError: isExpired', time.time(), self.defaultExpiration(), dateDiff )
-			# __.xit()
+			# sys.exit()
 			if dateDiff < 0:
 				done = True
 				result = True
@@ -4946,7 +4840,7 @@ class TheFeature:
 
 	def get_seasons( self, printMinimal ):
 		# print('here',printMinimal)
-		# __.xit()
+		# sys.exit()
 		# if not 'seasons' in self.pages:
 		# if True:
 		# if 'tt4154858' == self.imdbID:
@@ -4986,11 +4880,7 @@ class TheFeature:
 		for i1,season in enumerate(self.seasonData[0]['seasons']):
 			season_printed = False
 			for i2,episodes in enumerate(season['episodes']):
-				if int(season['season']) < 10:
-					seasonXYZ = '0'+str(season['season'])
-				else:
-					seasonXYZ = str(season['season'])
-				season_records.append({ 'season': 'Season: '+seasonXYZ, 'id': episodes['id'], 'date': airdateAlignRight(episodes['airdate']), 'title': episodes['title'] })
+				season_records.append({ 'season': 'Season: '+season['season'], 'id': episodes['id'], 'date': airdateAlignRight(episodes['airdate']), 'title': episodes['title'] })
 				if not printMinimal:
 					printRow = '\t'+' '+episodes['id']+' '+'\t'+' '+airdateAlignRight(episodes['airdate'])+' '+'\t'+' '+episodes['title']
 					if _.showLine( printRow ):
@@ -5013,7 +4903,7 @@ class TheFeature:
 			_.switches.fieldSet( 'GroupBy', 'active', True )
 			_.switches.fieldSet( 'GroupBy', 'value', 'season' )
 			_.switches.fieldSet( 'GroupBy', 'values', ['season'] )
-			_.tables.register( 'seasons', season_records ,w=1)
+			_.tables.register( 'seasons', season_records )
 			if _.switches.isActive('Column'):
 				_.tables.print( 'seasons', _.switches.value('Column') )
 			else:
@@ -5050,7 +4940,7 @@ class TheFeature:
 				try:
 					dateDiff = _.dateDiffX(lastDate,testDate,'-')
 					# print( 'dateDiff:', dateDiff )
-					# __.xit()
+					# sys.exit()
 				except Exception as e:
 					dateDiff = 0
 				# print(dateDiff,lastDate,testDate)
@@ -5061,7 +4951,7 @@ class TheFeature:
 					lastDate = testDate
 		# print( len( self.seasonData ) )
 		# print( _.printVar(self.seasonData) )
-		# __.xit()
+		# sys.exit()
 		if shouldPrint:
 			print()
 			print()
@@ -5108,7 +4998,7 @@ class TheFeature:
 				_.printBold('inSeason: '+ str(self.inSeason) +' '+ self.name)
 			else:
 				_.printBold( 'self.expirationDateDefault: '+str(self.expirationDateDefault) )
-			# __.xit()
+			# sys.exit()
 			# print('isExpired:',self.isExpired('seasons'))
 			result = {'inSeason': self.inSeason, 'lastDate': lastDate , 'expiration':  expirationDate}
 			# print(result)
@@ -5164,7 +5054,7 @@ class TheFeature:
 						page2 = requests.get( row.attrib['href'] )
 						tree2 = html.fromstring(page2.content)
 						print( page2.content )
-						__.xit()
+						sys.exit()
 						try:
 							full = tree2.cssselect('.icon-star-full')
 						except Exception as e:
@@ -5178,11 +5068,11 @@ class TheFeature:
 							stars += .5
 						print( stars, self.year_name() )
 						return False
-						__.xit()
+						sys.exit()
 					found += 1
 
 		# print( page.content )
-		# __.xit()
+		# sys.exit()
 
 		# print( data )
 
@@ -5237,7 +5127,7 @@ class TheFeature:
 	def get_fullcredits(self):
 		shouldRun = False
 		# print(self.acquisition['fullcredits']['acquired'])
-		# __.xit()
+		# sys.exit()
 
 		if self.isExpired('fullcredits'):
 			shouldRun = True
@@ -5303,7 +5193,7 @@ class TheFeature:
 		print()
 		print()
 
-		_.tables.register('Auto',self.fullcredits['people'],w=1)
+		_.tables.register('Auto',self.fullcredits['people'])
 		_.tables.fieldProfileSet( 'Auto', 'character', 'trigger', _.longDashAdd )
 		_.tables.print('Auto','id,name,character')
 		if not _.switches.isActive( 'Single' ):
@@ -5456,7 +5346,7 @@ class TheCinema:
 		self.childRow(imdbID)
 		if type(self.thisRow) == float:
 			print('Error: childRow')
-			__.xit()
+			sys.exit()
 		if not self.shouldSkip( self.childItemRows[self.thisRow] ):
 			self.childItemRows[self.thisRow].imdbID = imdbID
 			self.childItemRows[self.thisRow].get_ratings(imdb=False)
@@ -5483,7 +5373,7 @@ class TheCinema:
 		self.childRow(imdbID)
 		if type(self.thisRow) == float:
 			print('Error: childRow')
-			__.xit()
+			sys.exit()
 		self.childItemRows[self.thisRow].imdbID = imdbID
 		self.childItemRows[self.thisRow].get_ratings(imdb=False,printThis=False)
 
@@ -5536,7 +5426,7 @@ class TheCinema:
 			# print( k )
 
 		# _.saveTable( franchiseList,'imdb_franchise_display.json' )
-		# __.xit()
+		# sys.exit()
 		return ''
 
 	def pathGen( self, imdbID ):
@@ -5545,10 +5435,10 @@ class TheCinema:
 		# print(imdbID)
 		if type(self.thisRow) == float:
 			print('Error: childRow')
-			__.xit()
+			sys.exit()
 		if not self.childItemRows[self.thisRow].imdbID:
 			print( 'Error: imdbID')
-			__.xit()
+			sys.exit()
 		if not _.switches.isActive('ObjectsLoadSkip'):
 			self.childItemRows[self.thisRow].dump()
 		elif _.switches.value('ObjectsLoadSkip') == 'save':
@@ -5562,10 +5452,10 @@ class TheCinema:
 		# print(imdbID)
 		if type(self.thisRow) == float:
 			print('Error: childRow')
-			__.xit()
+			sys.exit()
 		if not self.childItemRows[self.thisRow].imdbID:
 			print( 'Error: seasons')
-			__.xit()
+			sys.exit()
 		if not _.switches.isActive('ObjectsLoadSkip'):
 			self.childItemRows[self.thisRow].dump()
 		elif _.switches.value('ObjectsLoadSkip') == 'save':
@@ -5583,13 +5473,13 @@ class TheCinema:
 		# print(imdbID)
 		if type(self.thisRow) == float:
 			print('Error: childRow')
-			__.xit()
+			sys.exit()
 
 		# print( 'self.thisRow:', self.thisRow )
 
 		if not self.childItemRows[self.thisRow].imdbID:
 			print( 'Error: seasons')
-			__.xit()
+			sys.exit()
 
 		self.childItemRows[self.thisRow].get_seasons(printMinimal)
 
@@ -5629,16 +5519,16 @@ class TheCinema:
 				startDate = _.figureOutDate(str(theDate), theFormat)
 			except Exception as e:
 				print( 'Error:' ,theDate )
-				__.xit()
+				sys.exit()
 		
 		# print(startDate)
 		# print(newStartDate)
-		# __.xit()
+		# sys.exit()
 		self.addChild(imdbID)
 		self.childRow(imdbID)
 		if type(self.thisRow) == float:
 			print('Error: childRow')
-			__.xit()
+			sys.exit()
 
 		self.childItemRows[self.thisRow].seasonStartsDate(startDate)
 		if not _.switches.isActive('ObjectsLoadSkip'):
@@ -5653,7 +5543,7 @@ class TheCinema:
 		self.childRow(imdbID)
 		if type(self.thisRow) == float:
 			print('Error: childRow')
-			__.xit()
+			sys.exit()
 
 		self.childItemRows[self.thisRow].showInSeason(True)
 		if not _.switches.isActive('ObjectsLoadSkip'):
@@ -5667,7 +5557,7 @@ class TheCinema:
 		self.childRow(imdbID)
 		if type(self.thisRow) == float:
 			print('Error: childRow')
-			__.xit()
+			sys.exit()
 
 		self.childItemRows[self.thisRow].get_fullcredits()
 		if not _.switches.isActive('ObjectsLoadSkip'):
@@ -5681,7 +5571,7 @@ class TheCinema:
 		childItems = []
 		for ci in self.childItemRows:
 			childItems.append({'name':ci.name})
-		_.tables.register('childClassItems',childItems,w=1)
+		_.tables.register('childClassItems',childItems)
 		_.tables.print('childClassItems','name')
 	def printStatus(self):
 		childItems = []
@@ -5697,7 +5587,7 @@ class TheCinema:
 				value = 'False'
 
 			childItems.append({'name':ci.name ,'active':active,'value': value})
-		_.tables.register('childClassItems',childItems,w=1)
+		_.tables.register('childClassItems',childItems)
 		_.tables.print('childClassItems','name,active,value')
 	def status(self,name,newStatus):
 		for i,ci in enumerate(self.childItemRows):
@@ -5778,7 +5668,7 @@ class ThePerson:
 			dateDiff = _.dateDiff( time.time(), self.defaultExpiration() )
 			
 			# print( '\nError: isExpired', time.time(), self.defaultExpiration(), dateDiff )
-			# __.xit()
+			# sys.exit()
 			if dateDiff < 0:
 				done = True
 				result = True
@@ -5799,7 +5689,7 @@ class ThePerson:
 		print( 'HERE:', 1 )
 		shouldRun = False
 		# print(self.acquisition['fullcredits']['acquired'])
-		# __.xit()
+		# sys.exit()
 
 		if self.isExpired('fullcredits'):
 			shouldRun = True
@@ -5849,7 +5739,7 @@ class ThePerson:
 
 	def print_fullcredits( self ):
 		print( 'HERE:', 100 )
-		# __.xit()
+		# sys.exit()
 		if platform.system() == 'Windows':
 			os.system('cls')
 		else:
@@ -5859,7 +5749,7 @@ class ThePerson:
 		print()
 		print()
 
-		_.tables.register('Auto',self.fullcredits['movies'],w=1)
+		_.tables.register('Auto',self.fullcredits['movies'])
 		_.tables.print('Auto','id,age,name')
 		if not _.switches.isActive( 'Single' ):
 			personMakeSelection( self.fullcredits )
@@ -5883,7 +5773,7 @@ class ThePeople:
 		self.childRow(imdbID)
 		if type(self.thisRow) == float:
 			print('Error: childRow')
-			__.xit()
+			sys.exit()
 
 		self.childItemRows[self.thisRow].get_fullcredits()
 
@@ -5939,7 +5829,7 @@ class ThePeople:
 		childItems = []
 		for ci in self.childItemRows:
 			childItems.append({'name':ci.name})
-		_.tables.register('childClassItems',childItems,w=1)
+		_.tables.register('childClassItems',childItems)
 		# tables.trigger('switches','switch,name',test,True)
 		_.tables.print('childClassItems','name')
 	def printStatus(self):
@@ -5956,7 +5846,7 @@ class ThePeople:
 				value = 'False'
 
 			childItems.append({'name':ci.name ,'active':active,'value': value})
-		_.tables.register('childClassItems',childItems,w=1)
+		_.tables.register('childClassItems',childItems)
 		_.tables.print('childClassItems','name,active,value')
 	def status(self,name,newStatus):
 		for i,ci in enumerate(self.childItemRows):
@@ -6062,7 +5952,7 @@ def get_people_fullcredits(imdbID):
 					except Exception as e:
 						pass
 						# print(e)
-						# __.xit()
+						# sys.exit()
 						gigAge = ''
 					if j == 1:
 						movies.append( {'id': iiii, 'name': cleanName(title), 'year': year, 'thisID': thisID, 'img': img, 'age': gigAge} )
@@ -6165,7 +6055,7 @@ def get_cinema_fullcredits(imdbID):
 def get_cinema_ratings(imdbID):
 	url = __.links['imdb']['cinema']['ratings'].replace(__.ID_HERE,imdbID)
 	# print(url)
-	# __.xit()
+	# sys.exit()
 	page = requests.get(url)
 	tree = html.fromstring(page.content)
 	description0 = tree.cssselect('.allText')
@@ -6219,14 +6109,14 @@ def get_cinema_ratings(imdbID):
 	year = cleanupString(year)
 	# print({'imdbID': imdbID, 'rating': rating, 'name': name, 'year': year})
 	# if not len(year) > 0:
-	# 	__.xit()
+	# 	sys.exit()
 	return {'rating': rating, 'show': nameShow, 'name': name, 'year': year}
 
 
 
 def get_cinema_seasons(imdbID):
 	# print(imdbID)
-	# __.xit()
+	# sys.exit()
 	seasonData = []
 	theTitle=''
 	theYear=''
@@ -6417,7 +6307,7 @@ def theAliasID(label,pm,idType):
 
 def caseTest():
 	# print('test')
-	# __.xit()
+	# sys.exit()
 	__.cinema = TheCinema()
 	__.people = ThePeople()
 
@@ -6438,11 +6328,11 @@ def caseTest():
 		# print('loaded')
 		# test = input('pause')
 	# print(_.get_size(__.cinema))
-	# __.xit()
+	# sys.exit()
 	# print(type(__.pipeData))
 	# focus()
 	# print( 'MovieFranchise:', _.switches.value('MovieFranchise') )
-	# __.xit()
+	# sys.exit()
 	__.pipeData = _.appData[__.appReg]['pipe']
 
 	# print(__.appReg)
@@ -6459,7 +6349,7 @@ def caseTest():
 
 				if _.switches.isActive('PrintPath') or ( _.switches.isActive('MovieFranchise') and (  'all' in _.switches.value('MovieFranchise') or 'id' in _.switches.value('MovieFranchise')  ) ):
 					# print( 'HERE' )
-					# __.xit()
+					# sys.exit()
 
 
 					__.results = []
@@ -6492,7 +6382,7 @@ def caseTest():
 							# print( row )
 							print( row['year'], row['path'] )
 							# print( row['path'] )
-						# __.xit()
+						# sys.exit()
 
 
 					return __.results
@@ -6550,7 +6440,7 @@ def caseTest():
 									if not imdbID in __.noSeasonData:
 										# print()
 										# print( 'imdbID:', imdbID )
-										# __.xit()
+										# sys.exit()
 										__.cinema.seasons( imdbID, printMinimal=True)
 									else:
 										print( 'Error: InSeason', pData )
@@ -6601,7 +6491,7 @@ def caseTest():
 				imdbID = googleID(_.switches.value('Person'),'person')
 		if not len(imdbID) > 0:
 			print('Google Error')
-			__.xit()
+			sys.exit()
 		if _.switches.isActive('Episode'):
 			__.cinema.seasons(imdbID)
 			# __.cinema.inSeason(imdbID)
@@ -6673,7 +6563,7 @@ def personMakeSelection( data ):
 			if sr.lower() in m['name'].lower():
 				searchResults.append(m)
 		print()
-		_.tables.register('searchResults',searchResults,w=1)
+		_.tables.register('searchResults',searchResults)
 		_.tables.fieldProfileSet( 'searchResults', 'name', 'trigger', _.longDashAdd )
 		_.tables.print('searchResults','id,year,name')
 	if selection == 'f':
@@ -6690,14 +6580,14 @@ def personMakeSelection( data ):
 		franchise = franchise.replace( '?', '' )
 		franchise = franchise.lower()
 		franchise = _str.basic(franchise)
-		load_franchise_table( franchise )
+
 		fID = inFranchiseID( franchise )
 		if type(fID) == bool:
 			print( 'No Franchise Data' )
 			print()
 			print( 'Run:' )
 			print( '\tp franchise -f', franchise )
-			__.xit()
+			sys.exit()
 		
 		if platform.system() == 'Windows':
 			os.system('cls')
@@ -6716,7 +6606,7 @@ def personMakeSelection( data ):
 				data['movies'][ix][franchise] = 'x'
 			else:
 				data['movies'][ix][franchise] = ''
-		_.tables.register('Auto',data['movies'],w=1)
+		_.tables.register('Auto',data['movies'])
 		_.tables.fieldProfileSet( 'Auto', 'name', 'trigger', _.longDashAdd )
 		_.tables.print('Auto','id,year,age,'+franchise+',name')
 		print()
@@ -6726,7 +6616,7 @@ def personMakeSelection( data ):
 		for ix,r in enumerate(data['movies']):
 			if getIdFromUrl(r['link']) in __.franchises[fID]['movieIDS']:
 				io += 1
-				print( r['id'],'\n', r['year'],r['name'])
+				print(r['year'],r['name'])
 		print()
 		if io > 0:
 			print(io)
@@ -6745,11 +6635,11 @@ def personMakeSelection( data ):
 
 
 		try:
-			ppl = _.addComma( len(set(__.franchises[fID]['peopleIDS'])) ) + ' people\t\t'
+			ppl = str( len(set(__.franchises[fID]['peopleIDS'])) ) + ' people\t\t'
 		except Exception as e:
 			ppl = ''
 		try:
-			mv = _.addComma( len(set(__.franchises[fID]['movieIDS'])) ) + ' movies\t\t'
+			mv = str( len(set(__.franchises[fID]['movieIDS'])) ) + ' movies\t\t'
 		except Exception as e:
 			mv = ''
 		print('_____________________________________________________________________________________________________________________')
@@ -6845,7 +6735,7 @@ def personMakeSelection( data ):
 				# print("",lookFor,description.lower())
 				if not allDC:
 				# print(allDC)
-				# __.xit()
+				# sys.exit()
 					if lookFor in description.lower():
 						_.updateLine("")
 						print()
@@ -6853,16 +6743,16 @@ def personMakeSelection( data ):
 						print(m['name'])
 						done = True
 						break
-						__.xit()
+						sys.exit()
 
-				# __.xit()
+				# sys.exit()
 			if done:
-				__.xit()
+				sys.exit()
 			if lfOr and lfAnd:
 				print('')
 				print('')
 				print('Error: and or, pick one')
-				__.xit()
+				sys.exit()
 			if not lfOr and  not lfAnd:
 				if lookFor in description:
 					# print('single')
@@ -6947,7 +6837,7 @@ def personMakeSelection( data ):
 
 
 	if selection == 'x' or selection == 'exit':
-		__.xit()
+		sys.exit()
 
 	try:
 		selectedSomething = True
@@ -6956,7 +6846,7 @@ def personMakeSelection( data ):
 		print(movies[selection]['name'],' - has been selected')
 		print()
 		__.cinema.register(imdbID, shouldPrint=True)
-		__.xit()
+		sys.exit()
 	except Exception as e:
 		selectedSomething = False
 		# print('Unspecified Error')
@@ -6998,7 +6888,7 @@ def movieMakeSelection( data ):
 			if sr.lower() in m['name'].lower():
 				searchResults.append(m)
 		print()
-		_.tables.register('searchResults',searchResults,w=1)
+		_.tables.register('searchResults',searchResults)
 		_.tables.fieldProfileSet( 'searchResults', 'character', 'trigger', _.longDashAdd )
 		_.tables.print('searchResults','id,name,character')
 	if selection == 'f':
@@ -7014,7 +6904,7 @@ def movieMakeSelection( data ):
 			obscure = False
 		franchise = franchise.lower()
 		franchise = _str.basic(franchise)
-		load_franchise_table( franchise )
+
 		fID = inFranchiseID( franchise )
 		
 		if type(fID) == bool:
@@ -7022,7 +6912,7 @@ def movieMakeSelection( data ):
 			print()
 			print( 'Run:' )
 			print( '\tp franchise -f', franchise )
-			__.xit()
+			sys.exit()
 
 		if platform.system() == 'Windows':
 			os.system('cls')
@@ -7043,7 +6933,7 @@ def movieMakeSelection( data ):
 				data['people'][ix][franchise] = 'x'
 			else:
 				data['people'][ix][franchise] = ''
-		_.tables.register('Auto',data['people'],w=1)
+		_.tables.register('Auto',data['people'])
 		_.tables.fieldProfileSet( 'Auto', 'character', 'trigger', _.longDashAdd )
 		_.tables.print('Auto','id,'+franchise+',name,character')
 		print()
@@ -7053,7 +6943,7 @@ def movieMakeSelection( data ):
 		for ix,r in enumerate(data['people']):
 			if getIdFromUrl(r['link']) in __.franchises[fID]['peopleIDS']:
 				io += 1
-				print(r['id'],'\t',  r['name'])
+				print(r['name'])
 		print()
 		if io > 0:
 			print(io)
@@ -7072,11 +6962,11 @@ def movieMakeSelection( data ):
 
 
 		try:
-			ppl = _.addComma( len(set(__.franchises[fID]['peopleIDS'])) ) + ' people\t\t'
+			ppl = str( len(set(__.franchises[fID]['peopleIDS'])) ) + ' people\t\t'
 		except Exception as e:
 			ppl = ''
 		try:
-			mv = _.addComma( len(set(__.franchises[fID]['movieIDS'])) ) + ' movies\t\t'
+			mv = str( len(set(__.franchises[fID]['movieIDS'])) ) + ' movies\t\t'
 		except Exception as e:
 			mv = ''
 		print('_____________________________________________________________________________________________________________________')
@@ -7122,7 +7012,7 @@ def movieMakeSelection( data ):
 
 
 	if selection == 'x' or selection == 'exit':
-		__.xit()
+		sys.exit()
 	if selection == 'description' or selection == 'd':
 		newURL = extractUrl(data['link']) + '?ref_=ttfc_fc_tt'
 		page = requests.get(newURL)
@@ -7142,7 +7032,7 @@ def movieMakeSelection( data ):
 		print(data['people'][selection]['name'],' - has been selected')
 		print()
 		__.people.register( getIdFromUrl( data['people'][selection]['link'] ), shouldPrint=True )
-		__.xit()
+		sys.exit()
 	except Exception as e:
 		selectedSomething = False
 	if not selectedSomething:
@@ -7177,11 +7067,7 @@ __.imdbAppearancesCaptured = 1553172315.2781389
 
 __.results = []
 __.franchises = []
-__.franchiseFile = 'imdb-franchises.json'
-__.franchiseFileDic = 'imdb-franchises-x.json'
-__.franchisesDic = {}
-
-# __.franchiseFile = 'imdb-franchises-'+  '_'.join( _.switches.values('Franchise') )  +'.json'
+__.franchiseFile = 'imdb_franchises_NEW.json'
 
 fileBackup = _.regImp( focus(), 'fileBackup' )
 fileBackup.switch( 'Silent' )
@@ -7195,9 +7081,7 @@ def backupJSON( name ):
 	global fileBackup
 	json_abspath = _v.myTables + _v.slash + name
 	fileBackup.switch( 'Input', json_abspath )
-	# fileBackup.imp.action()
-	fb = fileBackup.action()
-	print( fb )
+	fileBackup.imp.action()
 	# fileBackup.do( fileBackup.imp.action )
 # backupJSON( 'imdb_franchises.json' )
 # type imdb.py | p line - # kev tmp + _.saveTable -ln
@@ -7238,7 +7122,7 @@ def fixCase( data ):
 	return data
 
 def franchiseHierarchy( imdbID ):
-	omit = 'Horror,horror,Fantasy,fantasy,disney,hallmark,stan lee'
+	omit = 'disney,hallmark,stan lee'
 	mustHave = 'avengers'
 
 	if not len( __.franchises ):
@@ -7309,7 +7193,7 @@ def franchiseHierarchy( imdbID ):
 
 
 
-	# __.xit()
+	# sys.exit()
 
 	
 
@@ -7455,32 +7339,13 @@ def printFranchiseTable( data ):
 	_.switches.fieldSet( 'Sort', 'value', 'd:first,d:xsecond,d.year' )
 	_.switches.fieldSet( 'GroupBy', 'active', True )
 	_.switches.fieldSet( 'GroupBy', 'value', 'first,second' )
-	_.tables.register( 'data', franchiseYear( printData ) ,w=1)
+	_.tables.register( 'data', franchiseYear( printData ) )
 	if 'id' in _.switches.value('MovieFranchise'):
 		_.tables.print( 'data', 'first,second,label,imdbID' )
 	else:
 		_.tables.print( 'data', 'first,second,label' )
 	print()
 	print( len( printData ) )
-
-
-def load_franchise_table( franchise ):
-	if not franchise in __.franchisesDic:
-		__.franchisesDic[ franchise ] = 1
-		file = __.franchiseFileDic.replace( 'x', franchise.upper().replace(' ','_') )
-		for rec in _.getTable(file):
-			__.franchises.append( rec )
-
-def load_all_franchises():
-	import glob
-	tt = _v.myTables + _v.slash
-	for fran_file in glob.glob( tt + 'imdb-franchises-*' ):
-		if not _v.slash in fran_file:
-			fran_file = tt+fran_file
-		for rec in _.getTable2( fran_file ):
-			__.franchises.append(rec)
-
-
 
 
 
@@ -7530,11 +7395,14 @@ __.print_html_page_IDs = False
 # {'first': 'Star Wars', 'second': '', 'path': '', 'print': '1977 Star Wars', 'year': '1977', 'name': 'Star Wars'}
 ########################################################################################
 if __name__ == '__main__':
-	_.switches.fieldSet( 'xRef-Page-Threaded', 'active', True )
-	_.switches.fieldSet( 'EpisodeTable', 'active', True )
+
+
+	# _.switches.dumpSwitches(includeBlank=False)
+	
+
 	if _.switches.isActive('Watched'):
 		print( _.switches.value('Watched') )
-		# __.xit()
+		# sys.exit()
 	if _.switches.isActive('Case'):
 		caseTest()
 	else:
@@ -7568,7 +7436,7 @@ if __name__ == '__main__':
 # 		self.childRow(imdbID)
 # 		if type(self.thisRow) == float:
 # 			print('Error: childRow')
-# 			__.xit()
+# 			sys.exit()
 
 # 		self.childItemRows[self.thisRow].get_fullcredits()
 
