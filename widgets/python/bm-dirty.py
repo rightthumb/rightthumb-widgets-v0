@@ -223,7 +223,9 @@ def action():
 		a = line.split('|')[0]
 		bm = _v.resolveFolderIDs(line.split('|')[1])
 		if os.path.isdir(bm):
-			text = 'source $HOME/.bashrc'
+			text=''
+			if not _.isWin:
+				text += 'source $HOME/.bashrc'
 			text += '\n'
 			if _.isWin:
 				text += bm[0]+':'
