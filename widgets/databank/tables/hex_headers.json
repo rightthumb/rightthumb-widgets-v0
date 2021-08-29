@@ -1,0 +1,4043 @@
+[
+    {
+        "extension": "*",
+        "signature": "41 43 53 44",
+        "description": "AOL parameter|info files",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "*",
+        "signature": "62 70 6C 69 73 74",
+        "description": "Binary property list (plist)",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "*",
+        "signature": "00 14 00 00 01 02",
+        "description": "BIOS details in RAM",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "*",
+        "signature": "30 37 30 37 30",
+        "description": "cpio archive",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "*",
+        "signature": "7F 45 4C 46",
+        "description": "ELF executable",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "*",
+        "signature": "A1 B2 CD 34",
+        "description": "Extended tcpdump (libpcap) capture file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "*",
+        "signature": "04 00 00 00",
+        "description": "INFO2 Windows recycle bin_1",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "*",
+        "signature": "05 00 00 00",
+        "description": "INFO2 Windows recycle bin_2",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "*",
+        "signature": "AC ED",
+        "description": "Java serialization data",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "*",
+        "signature": "4B 57 41 4A 88 F0 27 D1",
+        "description": "KWAJ (compressed) file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "*",
+        "signature": "CD 20 AA AA 02 00 00 00",
+        "description": "NAV quarantined virus file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "*",
+        "signature": "53 5A 20 88 F0 27 33 D1",
+        "description": "QBASIC SZDD file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "*",
+        "signature": "6F 3C",
+        "description": "SMS text (SIM)",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "*",
+        "signature": "53 5A 44 44 88 F0 27 33",
+        "description": "SZDD file format",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "*",
+        "signature": "A1 B2 C3 D4",
+        "description": "tcpdump (libpcap) capture file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "*",
+        "signature": "34 CD B2 A1",
+        "description": "Tcpdump capture file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "*",
+        "signature": "EF BB BF",
+        "description": "UTF8 file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "*",
+        "signature": "FE FF",
+        "description": "UTF-16|UCS-2 file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "*",
+        "signature": "FF FE 00 00",
+        "description": "UTF-32|UCS-4 file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "*",
+        "signature": "62 65 67 69 6E",
+        "description": "UUencoded file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "*",
+        "signature": "D4 C3 B2 A1",
+        "description": "WinDump (winpcap) capture file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "*",
+        "signature": "37 E4 53 96 C9 DB D6 07",
+        "description": "zisofs compressed file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "123",
+        "signature": "00 00 1A 00 05 10 04",
+        "description": "Lotus 1-2-3 (v9)",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "386",
+        "signature": "4D 5A",
+        "description": "Windows virtual device drivers",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "3GP",
+        "signature": "00 00 00 14 66 74 79 70",
+        "description": "3GPP multimedia files",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "3GP",
+        "signature": "00 00 00 20 66 74 79 70",
+        "description": "3GPP2 multimedia files",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "3GP5",
+        "signature": "00 00 00 18 66 74 79 70",
+        "description": "MPEG-4 video files",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "4XM",
+        "signature": "52 49 46 46",
+        "description": "4X Movie video",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "7Z",
+        "signature": "37 7A BC AF 27 1C",
+        "description": "7-Zip compressed file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "ABA",
+        "signature": "00 01 42 41",
+        "description": "Palm Address Book Archive",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "Extension",
+        "signature": "Signature",
+        "description": "Description",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "ABD",
+        "signature": "51 57 20 56 65 72 2E 20",
+        "description": "ABD | QSD Quicken data file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "ABI",
+        "signature": "41 4F 4C 49 4E 44 45 58",
+        "description": "AOL address book index",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "ABI",
+        "signature": "41 4F 4C",
+        "description": "AOL config files",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "ABY",
+        "signature": "41 4F 4C 44 42",
+        "description": "AOL address book",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "ABY",
+        "signature": "41 4F 4C",
+        "description": "AOL config files",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "AC",
+        "signature": "72 69 66 66",
+        "description": "Sonic Foundry Acid Music File",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "ACCDB",
+        "signature": "00 01 00 00 53 74 61 6E 64 61 72 64 20 41 43 45 20 44 42",
+        "description": "Microsoft Access 2007",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "ACM",
+        "signature": "4D 5A",
+        "description": "MS audio compression manager driver",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "ACS",
+        "signature": "C3 AB CD AB",
+        "description": "MS Agent Character file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "AC_",
+        "signature": "D0 CF 11 E0 A1 B1 1A E1",
+        "description": "CaseWare Working Papers",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "AD",
+        "signature": "52 45 56 4E 55 4D 3A 2C",
+        "description": "Antenna data file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "ADF",
+        "signature": "44 4F 53",
+        "description": "Amiga disk file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "ADP",
+        "signature": "D0 CF 11 E0 A1 B1 1A E1",
+        "description": "Access project file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "ADX",
+        "signature": "03 00 00 00 41 50 50 52",
+        "description": "Approach index file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "ADX",
+        "signature": "80 00 00 20 03 12 04",
+        "description": "Dreamcast audio",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "AIFF",
+        "signature": "46 4F 52 4D 00",
+        "description": "Audio Interchange File",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "AIN",
+        "signature": "21 12",
+        "description": "AIN Compressed Archive",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "AMR",
+        "signature": "23 21 41 4D 52",
+        "description": "Adaptive Multi-Rate ACELP Codec (GSM)",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "ANI",
+        "signature": "52 49 46 46",
+        "description": "Windows animated cursor",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "API",
+        "signature": "4D 5A 90 00 03 00 00 00",
+        "description": "Acrobat plug-in",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "APR",
+        "signature": "D0 CF 11 E0 A1 B1 1A E1",
+        "description": "Lotus|IBM Approach 97 file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "ARC",
+        "signature": "41 72 43 01",
+        "description": "FreeArc compressed file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "ARC",
+        "signature": "1A 02",
+        "description": "LH archive (old vers.|type 1)",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "ARC",
+        "signature": "1A 03",
+        "description": "LH archive (old vers.|type 2)",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "ARC",
+        "signature": "1A 04",
+        "description": "LH archive (old vers.|type 3)",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "ARC",
+        "signature": "1A 08",
+        "description": "LH archive (old vers.|type 4)",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "ARC",
+        "signature": "1A 09",
+        "description": "LH archive (old vers.|type 5)",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "ARJ",
+        "signature": "60 EA",
+        "description": "ARJ Compressed archive file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "ARL",
+        "signature": "D4 2A",
+        "description": "AOL history|typed URL files",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "ASF",
+        "signature": "30 26 B2 75 8E 66 CF 11",
+        "description": "Windows Media Audio|Video File",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "Extension",
+        "signature": "Signature",
+        "description": "Description",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "AST",
+        "signature": "53 43 48 6C",
+        "description": "Underground Audio",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "ASX",
+        "signature": "3C",
+        "description": "Advanced Stream Redirector",
+        "src": "filesignatures.net",
+        "header": "3C 73 76 67 20 77 69 64 74 68 3D 22 35 38 22 20 68 65 69 67 68 74 3D 22 31 36 22 20 76 69 65 77"
+    },
+    {
+        "extension": "AU",
+        "signature": "64 6E 73 2E",
+        "description": "Audacity audio file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "AU",
+        "signature": "2E 73 6E 64",
+        "description": "NeXT|Sun Microsystems audio file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "AUT",
+        "signature": "D4 2A",
+        "description": "AOL history|typed URL files",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "AVI",
+        "signature": "52 49 46 46",
+        "description": "Resource Interchange File Format",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "AW",
+        "signature": "8A 01 09 00 00 00 E1 08",
+        "description": "MS Answer Wizard",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "AX",
+        "signature": "4D 5A 90 00 03 00 00 00",
+        "description": "DirectShow filter",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "AX",
+        "signature": "4D 5A",
+        "description": "Library cache file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "BAG",
+        "signature": "41 4F 4C 20 46 65 65 64",
+        "description": "AOL and AIM buddy list",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "BAG",
+        "signature": "41 4F 4C",
+        "description": "AOL config files",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "BDR",
+        "signature": "58 54",
+        "description": "MS Publisher",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "BIN",
+        "signature": "42 4C 49 32 32 33 51",
+        "description": "Speedtouch router firmware",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "BMP",
+        "signature": "42 4D",
+        "description": "Bitmap image",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "BZ2",
+        "signature": "42 5A 68",
+        "description": "bzip2 compressed archive",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "CAB",
+        "signature": "49 53 63 28",
+        "description": "Install Shield compressed file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "CAB",
+        "signature": "4D 53 43 46",
+        "description": "Microsoft cabinet file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "CAL",
+        "signature": "73 72 63 64 6F 63 69 64",
+        "description": "CALS raster bitmap",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "CAL",
+        "signature": "53 75 70 65 72 43 61 6C",
+        "description": "SuperCalc worksheet",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "CAL",
+        "signature": "B5 A2 B0 B3 B3 B0 A5 B5",
+        "description": "Windows calendar",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "CAP",
+        "signature": "58 43 50 00",
+        "description": "Packet sniffer files",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "CAP",
+        "signature": "52 54 53 53",
+        "description": "WinNT Netmon capture file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "CAS",
+        "signature": "5F 43 41 53 45 5F",
+        "description": "EnCase case file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "CAT",
+        "signature": "30",
+        "description": "MS security catalog file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "CBD",
+        "signature": "43 42 46 49 4C 45",
+        "description": "WordPerfect dictionary",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "CBK",
+        "signature": "5F 43 41 53 45 5F",
+        "description": "EnCase case file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "CDA",
+        "signature": "52 49 46 46",
+        "description": "Resource Interchange File Format",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "CDR",
+        "signature": "52 49 46 46",
+        "description": "CorelDraw document",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "CDR",
+        "signature": "45 4C 49 54 45 20 43 6F",
+        "description": "Elite Plus Commander game file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "CDR",
+        "signature": "4D 53 5F 56 4F 49 43 45",
+        "description": "Sony Compressed Voice File",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "Extension",
+        "signature": "Signature",
+        "description": "Description",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "CFG",
+        "signature": "5B 66 6C 74 73 69 6D 2E",
+        "description": "Flight Simulator Aircraft Configuration",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "CHI",
+        "signature": "49 54 53 46",
+        "description": "MS Compiled HTML Help File",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "CHM",
+        "signature": "49 54 53 46",
+        "description": "MS Compiled HTML Help File",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "CLASS",
+        "signature": "CA FE BA BE",
+        "description": "Java bytecode",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "CLB",
+        "signature": "43 4F 4D 2B",
+        "description": "COM+ Catalog",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "CLB",
+        "signature": "43 4D 58 31",
+        "description": "Corel Binary metafile",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "CMX",
+        "signature": "52 49 46 46",
+        "description": "Corel Presentation Exchange metadata",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "CNV",
+        "signature": "53 51 4C 4F 43 4F 4E 56",
+        "description": "DB2 conversion file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "COD",
+        "signature": "4E 61 6D 65 3A 20",
+        "description": "Agent newsreader character map",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "COM",
+        "signature": "4D 5A",
+        "description": "Windows|DOS executable file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "COM",
+        "signature": "E8",
+        "description": "Windows executable file_1",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "COM",
+        "signature": "E9",
+        "description": "Windows executable file_2",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "COM",
+        "signature": "EB",
+        "description": "Windows executable file_3",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "CPE",
+        "signature": "46 41 58 43 4F 56 45 52",
+        "description": "MS Fax Cover Sheet",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "CPI",
+        "signature": "53 49 45 54 52 4F 4E 49",
+        "description": "Sietronics CPI XRD document",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "CPI",
+        "signature": "FF 46 4F 4E 54",
+        "description": "Windows international code page",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "CPL",
+        "signature": "4D 5A",
+        "description": "Control panel application",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "CPL",
+        "signature": "DC DC",
+        "description": "Corel color palette",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "CPT",
+        "signature": "43 50 54 37 46 49 4C 45",
+        "description": "Corel Photopaint file_1",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "CPT",
+        "signature": "43 50 54 46 49 4C 45",
+        "description": "Corel Photopaint file_2",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "CPX",
+        "signature": "5B 57 69 6E 64 6F 77 73",
+        "description": "Microsoft Code Page Translation file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "CRU",
+        "signature": "43 52 55 53 48 20 76",
+        "description": "Crush compressed archive",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "CRW",
+        "signature": "49 49 1A 00 00 00 48 45",
+        "description": "Canon RAW file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "CSH",
+        "signature": "63 75 73 68 00 00 00 02",
+        "description": "Photoshop Custom Shape",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "CTF",
+        "signature": "43 61 74 61 6C 6F 67 20",
+        "description": "WhereIsIt Catalog",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "CTL",
+        "signature": "56 45 52 53 49 4F 4E 20",
+        "description": "Visual Basic User-defined Control file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "CUIX",
+        "signature": "50 4B 03 04",
+        "description": "Customization files",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "CUR",
+        "signature": "00 00 02 00",
+        "description": "Windows cursor",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "DAT",
+        "signature": "52 49 46 46",
+        "description": "Video CD MPEG movie",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "DAT",
+        "signature": "A9 0D 00 00 00 00 00 00",
+        "description": "Access Data FTK evidence",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "Extension",
+        "signature": "Signature",
+        "description": "Description",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "DAT",
+        "signature": "73 6C 68 21",
+        "description": "Allegro Generic Packfile (compressed)",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "DAT",
+        "signature": "73 6C 68 2E",
+        "description": "Allegro Generic Packfile (uncompressed)",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "DAT",
+        "signature": "41 56 47 36 5F 49 6E 74",
+        "description": "AVG6 Integrity database",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "DAT",
+        "signature": "03",
+        "description": "MapInfo Native Data Format",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "DAT",
+        "signature": "45 52 46 53 53 41 56 45",
+        "description": "EasyRecovery Saved State file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "DAT",
+        "signature": "43 6C 69 65 6E 74 20 55",
+        "description": "IE History file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "DAT",
+        "signature": "49 6E 6E 6F 20 53 65 74",
+        "description": "Inno Setup Uninstall Log",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "DAT",
+        "signature": "50 4E 43 49 55 4E 44 4F",
+        "description": "Norton Disk Doctor undo file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "DAT",
+        "signature": "50 45 53 54",
+        "description": "PestPatrol data|scan strings",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "DAT",
+        "signature": "1A 52 54 53 20 43 4F 4D",
+        "description": "Runtime Software disk image",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "DAT",
+        "signature": "52 41 5A 41 54 44 42 31",
+        "description": "Shareaza (P2P) thumbnail",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "DAT",
+        "signature": "4E 41 56 54 52 41 46 46",
+        "description": "TomTom traffic data",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "DAT",
+        "signature": "55 46 4F 4F 72 62 69 74",
+        "description": "UFO Capture map file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "DAT",
+        "signature": "57 4D 4D 50",
+        "description": "Walkman MP3 file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "DAT",
+        "signature": "43 52 45 47",
+        "description": "Win9x registry hive",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "DAT",
+        "signature": "72 65 67 66",
+        "description": "WinNT registry file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "DB",
+        "signature": "D0 CF 11 E0 A1 B1 1A E1",
+        "description": "MSWorks database file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "DB",
+        "signature": "08",
+        "description": "dBASE IV or dBFast configuration file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "DB",
+        "signature": "00 06 15 61 00 00 00 02 00 00 04 D2 00 00 10 00",
+        "description": "Netscape Navigator (v4) database",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "DB",
+        "signature": "44 42 46 48",
+        "description": "Palm Zire photo database",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "DB",
+        "signature": "53 51 4C 69 74 65 20 66 6F 72 6D 61 74 20 33 00",
+        "description": "SQLite database file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "DB",
+        "signature": "FD FF FF FF",
+        "description": "Thumbs.db subheader",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "DB3",
+        "signature": "03",
+        "description": "dBASE III file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "DB4",
+        "signature": "04",
+        "description": "dBASE IV file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "DBA",
+        "signature": "00 01 42 44",
+        "description": "Palm DateBook Archive",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "DBB",
+        "signature": "6C 33 33 6C",
+        "description": "Skype user data file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "DBF",
+        "signature": "4F 50 4C 44 61 74 61 62",
+        "description": "Psion Series 3 Database",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "DBX",
+        "signature": "CF AD 12 FE",
+        "description": "Outlook Express e-mail folder",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "DCI",
+        "signature": "3C 21 64 6F 63 74 79 70",
+        "description": "AOL HTML mail",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "DCX",
+        "signature": "B1 68 DE 3A",
+        "description": "PCX bitmap",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "Extension",
+        "signature": "Signature",
+        "description": "Description",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "dex",
+        "signature": "64 65 78 0A 30 30 39 00",
+        "description": "Dalvik (Android) executable file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "DIB",
+        "signature": "42 4D",
+        "description": "Bitmap image",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "DLL",
+        "signature": "4D 5A",
+        "description": "Windows|DOS executable file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "DMG",
+        "signature": "78",
+        "description": "MacOS X image file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "DMP",
+        "signature": "4D 44 4D 50 93 A7",
+        "description": "Windows dump file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "DMP",
+        "signature": "50 41 47 45 44 55",
+        "description": "Windows memory dump",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "DMS",
+        "signature": "44 4D 53 21",
+        "description": "Amiga DiskMasher compressed archive",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "DOC",
+        "signature": "D0 CF 11 E0 A1 B1 1A E1",
+        "description": "Microsoft Office document",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "DOC",
+        "signature": "0D 44 4F 43",
+        "description": "DeskMate Document",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "DOC",
+        "signature": "CF 11 E0 A1 B1 1A E1 00",
+        "description": "Perfect Office document",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "DOC",
+        "signature": "DB A5 2D 00",
+        "description": "Word 2.0 file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "DOC",
+        "signature": "EC A5 C1 00",
+        "description": "Word document subheader",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "DOCX",
+        "signature": "50 4B 03 04",
+        "description": "MS Office Open XML Format Document",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "DOCX",
+        "signature": "50 4B 03 04 14 00 06 00",
+        "description": "MS Office 2007 documents",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "DOT",
+        "signature": "D0 CF 11 E0 A1 B1 1A E1",
+        "description": "Microsoft Office document",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "DRV",
+        "signature": "4D 5A",
+        "description": "Windows|DOS executable file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "DRW",
+        "signature": "07",
+        "description": "Generic drawing programs",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "DRW",
+        "signature": "01 FF 02 04 03 02",
+        "description": "Micrografx vector graphic file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "DS4",
+        "signature": "52 49 46 46",
+        "description": "Micrografx Designer graphic",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "DSN",
+        "signature": "4D 56",
+        "description": "CD Stomper Pro label file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "DSP",
+        "signature": "23 20 4D 69 63 72 6F 73",
+        "description": "MS Developer Studio project file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "DSS",
+        "signature": "02 64 73 73",
+        "description": "Digital Speech Standard file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "DSW",
+        "signature": "64 73 77 66 69 6C 65",
+        "description": "MS Visual Studio workspace file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "DTD",
+        "signature": "07 64 74 32 64 64 74 64",
+        "description": "DesignTools 2D Design file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "DUN",
+        "signature": "5B 50 68 6F 6E 65 5D",
+        "description": "Dial-up networking file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "DVF",
+        "signature": "4D 53 5F 56 4F 49 43 45",
+        "description": "Sony Compressed Voice File",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "DVR",
+        "signature": "44 56 44",
+        "description": "DVR-Studio stream file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "DW4",
+        "signature": "4F 7B",
+        "description": "Visio|DisplayWrite 4 text file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "DWG",
+        "signature": "41 43 31 30",
+        "description": "Generic AutoCAD drawing",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "E01",
+        "signature": "45 56 46 09 0D 0A FF 00",
+        "description": "Expert Witness Compression Format",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "Extension",
+        "signature": "Signature",
+        "description": "Description",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "E01",
+        "signature": "4C 56 46 09 0D 0A FF 00",
+        "description": "Logical File Evidence Format",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "ECF",
+        "signature": "5B 47 65 6E 65 72 61 6C",
+        "description": "MS Exchange configuration file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "EFX",
+        "signature": "DC FE",
+        "description": "eFax file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "EML",
+        "signature": "58 2D",
+        "description": "Exchange e-mail",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "EML",
+        "signature": "52 65 74 75 72 6E 2D 50",
+        "description": "Generic e-mail_1",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "EML",
+        "signature": "46 72 6F 6D",
+        "description": "Generic e-mail_2",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "ENL",
+        "signature": "40 40 40 20 00 00 40 40 40 40",
+        "description": "EndNote Library File",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "EPS",
+        "signature": "C5 D0 D3 C6",
+        "description": "Adobe encapsulated PostScript",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "EPS",
+        "signature": "25 21 50 53 2D 41 64 6F",
+        "description": "Encapsulated PostScript file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "ETH",
+        "signature": "1A 35 01 00",
+        "description": "WinPharoah capture file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "EVT",
+        "signature": "30 00 00 00 4C 66 4C 65",
+        "description": "Windows Event Viewer file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "EVTX",
+        "signature": "45 6C 66 46 69 6C 65 00",
+        "description": "Windows Vista event log",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "EXE",
+        "signature": "4D 5A",
+        "description": "Windows|DOS executable file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "FDF",
+        "signature": "25 50 44 46",
+        "description": "PDF file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "FLAC",
+        "signature": "66 4C 61 43 00 00 00 22",
+        "description": "Free Lossless Audio Codec file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "FLI",
+        "signature": "00 11",
+        "description": "FLIC animation",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "FLT",
+        "signature": "4D 5A 90 00 03 00 00 00",
+        "description": "Audition graphic filter",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "FLT",
+        "signature": "76 32 30 30 33 2E 31 30",
+        "description": "Qimage filter",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "FLV",
+        "signature": "46 4C 56",
+        "description": "Flash video file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "FM",
+        "signature": "3C 4D 61 6B 65 72 46 69",
+        "description": "Adobe FrameMaker",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "FON",
+        "signature": "4D 5A",
+        "description": "Font file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "FTR",
+        "signature": "D2 0A 00 00",
+        "description": "WinPharoah filter file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "GHO",
+        "signature": "FE EF",
+        "description": "Symantex Ghost image file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "GHS",
+        "signature": "FE EF",
+        "description": "Symantex Ghost image file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "GID",
+        "signature": "3F 5F 03 00",
+        "description": "Windows Help file_2",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "GID",
+        "signature": "4C 4E 02 00",
+        "description": "Windows help file_3",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "GIF",
+        "signature": "47 49 46 38",
+        "description": "GIF file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "GPG",
+        "signature": "99",
+        "description": "GPG public keyring",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "GRP",
+        "signature": "50 4D 43 43",
+        "description": "Windows Program Manager group file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "GX2",
+        "signature": "47 58 32",
+        "description": "Show Partner graphics file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "Extension",
+        "signature": "Signature",
+        "description": "Description",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "GZ",
+        "signature": "1F 8B 08",
+        "description": "GZIP archive file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "HAP",
+        "signature": "91 33 48 46",
+        "description": "Hamarsoft compressed archive",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "HDMP",
+        "signature": "4D 44 4D 50 93 A7",
+        "description": "Windows dump file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "HDR",
+        "signature": "49 53 63 28",
+        "description": "Install Shield compressed file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "HDR",
+        "signature": "23 3F 52 41 44 49 41 4E",
+        "description": "Radiance High Dynamic Range image file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "hip",
+        "signature": "48 69 50 21",
+        "description": "Houdini image file. Three-dimensional modeling and animation",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "HLP",
+        "signature": "00 00 FF FF FF FF",
+        "description": "Windows Help file_1",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "HLP",
+        "signature": "3F 5F 03 00",
+        "description": "Windows Help file_2",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "HLP",
+        "signature": "4C 4E 02 00",
+        "description": "Windows help file_3",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "HQX",
+        "signature": "28 54 68 69 73 20 66 69",
+        "description": "BinHex 4 Compressed Archive",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "ICO",
+        "signature": "00 00 01 00",
+        "description": "Windows icon",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "IDX",
+        "signature": "41 4F 4C 44 42",
+        "description": "AOL user configuration",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "IDX",
+        "signature": "41 4F 4C",
+        "description": "AOL config files",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "IDX",
+        "signature": "50 00 00 00 20 00 00 00",
+        "description": "Quicken QuickFinder Information File",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "IFO",
+        "signature": "44 56 44",
+        "description": "DVD info file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "IMG",
+        "signature": "50 49 43 54 00 08",
+        "description": "ChromaGraph Graphics Card Bitmap",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "IMG",
+        "signature": "EB 3C 90 2A",
+        "description": "GEM Raster file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "IMG",
+        "signature": "53 43 4D 49",
+        "description": "Img Software Bitmap",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "IND",
+        "signature": "41 4F 4C 49 44 58",
+        "description": "AOL client preferences|settings file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "IND",
+        "signature": "41 4F 4C",
+        "description": "AOL config files",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "INFO",
+        "signature": "E3 10 00 01 00 00 00 00",
+        "description": "Amiga icon",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "INFO",
+        "signature": "54 68 69 73 20 69 73 20",
+        "description": "GNU Info Reader file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "INFO",
+        "signature": "7A 62 65 78",
+        "description": "ZoomBrowser Image Index",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "ISO",
+        "signature": "43 44 30 30 31",
+        "description": "ISO-9660 CD Disc Image",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "IVR",
+        "signature": "2E 52 45 43",
+        "description": "RealPlayer video file (V11+)",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "JAR",
+        "signature": "50 4B 03 04",
+        "description": "Java archive_1",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "JAR",
+        "signature": "5F 27 A8 89",
+        "description": "Jar archive",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "JAR",
+        "signature": "4A 41 52 43 53 00",
+        "description": "JARCS compressed archive",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "JAR",
+        "signature": "50 4B 03 04 14 00 08 00",
+        "description": "Java archive_2",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "JFIF",
+        "signature": "FF D8 FF E0",
+        "description": "JPEG IMAGE",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "Extension",
+        "signature": "Signature",
+        "description": "Description",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "JFIF",
+        "signature": "FF D8 FF E0",
+        "description": "JFIF IMAGE FILE - jpeg",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "JG",
+        "signature": "4A 47 03 0E",
+        "description": "AOL ART file_1",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "JG",
+        "signature": "4A 47 04 0E",
+        "description": "AOL ART file_2",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "JNT",
+        "signature": "4E 42 2A 00",
+        "description": "MS Windows journal",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "JP2",
+        "signature": "00 00 00 0C 6A 50 20 20",
+        "description": "JPEG2000 image files",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "JPE",
+        "signature": "FF D8 FF E0",
+        "description": "JPEG IMAGE",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "JPE",
+        "signature": "FF D8 FF E0",
+        "description": "JPE IMAGE FILE - jpeg",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "JPEG",
+        "signature": "FF D8 FF E0",
+        "description": "JPEG IMAGE",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "JPEG",
+        "signature": "FF D8 FF E2",
+        "description": "CANNON EOS JPEG FILE",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "JPEG",
+        "signature": "FF D8 FF E3",
+        "description": "SAMSUNG D500 JPEG FILE",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "JPG",
+        "signature": "FF D8 FF E0",
+        "description": "JPEG IMAGE",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "JPG",
+        "signature": "FF D8 FF E1",
+        "description": "Digital camera JPG using Exchangeable Image File Format (EXIF)",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "JPG",
+        "signature": "FF D8 FF E8",
+        "description": "Still Picture Interchange File Format (SPIFF)",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "JTP",
+        "signature": "4E 42 2A 00",
+        "description": "MS Windows journal",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "KGB",
+        "signature": "4B 47 42 5F 61 72 63 68",
+        "description": "KGB archive",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "KOZ",
+        "signature": "49 44 33 03 00 00 00",
+        "description": "Sprint Music Store audio",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "KWD",
+        "signature": "50 4B 03 04",
+        "description": "KWord document",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "LBK",
+        "signature": "C8 00 79 00",
+        "description": "Jeppesen FliteLog file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "LGC",
+        "signature": "7B 0D 0A 6F 20",
+        "description": "Windows application log",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "LGD",
+        "signature": "7B 0D 0A 6F 20",
+        "description": "Windows application log",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "LHA",
+        "signature": "2D 6C 68",
+        "description": "Compressed archive",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "LIB",
+        "signature": "21 3C 61 72 63 68 3E 0A",
+        "description": "Unix archiver (ar)|MS Program Library Common Object File Format (COFF)",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "LIT",
+        "signature": "49 54 4F 4C 49 54 4C 53",
+        "description": "MS Reader eBook",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "LNK",
+        "signature": "4C 00 00 00 01 14 02 00",
+        "description": "Windows shortcut file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "LOG",
+        "signature": "2A 2A 2A 20 20 49 6E 73",
+        "description": "Symantec Wise Installer log",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "LWP",
+        "signature": "57 6F 72 64 50 72 6F",
+        "description": "Lotus WordPro file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "LZH",
+        "signature": "2D 6C 68",
+        "description": "Compressed archive",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "M4A",
+        "signature": "00 00 00 20 66 74 79 70 4D 34 41",
+        "description": "Apple audio and video files",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "MANIFEST",
+        "signature": "3C 3F 78 6D 6C 20 76 65 72 73 69 6F 6E 3D",
+        "description": "Windows Visual Stylesheet",
+        "src": "filesignatures.net",
+        "header": "3C 3F 78 6D 6C 20 76 65 72 73 69 6F 6E 3D 22 31 2E 30 22 20 65 6E 63 6F 64 69 6E 67 3D 22 75 74"
+    },
+    {
+        "extension": "MAR",
+        "signature": "4D 41 72 30 00",
+        "description": "MAr compressed archive",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "Extension",
+        "signature": "Signature",
+        "description": "Description",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "MAR",
+        "signature": "4D 41 52 43",
+        "description": "Microsoft|MSN MARC archive",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "MAR",
+        "signature": "4D 41 52 31 00",
+        "description": "Mozilla archive",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "MDB",
+        "signature": "00 01 00 00 53 74 61 6E 64 61 72 64 20 4A 65 74 20 44 42",
+        "description": "Microsoft Access",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "MDF",
+        "signature": "01 0F 00 00",
+        "description": "SQL Data Base",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "MDI",
+        "signature": "45 50",
+        "description": "MS Document Imaging file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "MID",
+        "signature": "4D 54 68 64",
+        "description": "MIDI sound file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "MIDI",
+        "signature": "4D 54 68 64",
+        "description": "MIDI sound file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "MIF",
+        "signature": "3C 4D 61 6B 65 72 46 69",
+        "description": "Adobe FrameMaker",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "MIF",
+        "signature": "56 65 72 73 69 6F 6E 20",
+        "description": "MapInfo Interchange Format file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "MKV",
+        "signature": "1A 45 DF A3 93 42 82 88",
+        "description": "Matroska stream file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "MLS",
+        "signature": "4D 49 4C 45 53",
+        "description": "Milestones project management file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "MLS",
+        "signature": "4D 56 32 31 34",
+        "description": "Milestones project management file_1",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "MLS",
+        "signature": "4D 56 32 43",
+        "description": "Milestones project management file_2",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "MLS",
+        "signature": "4D 4C 53 57",
+        "description": "Skype localization data file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "MMF",
+        "signature": "4D 4D 4D 44 00 00",
+        "description": "Yamaha Synthetic music Mobile Application Format",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "MNY",
+        "signature": "00 01 00 00 4D 53 49 53 41 4D 20 44 61 74 61 62 61 73 65",
+        "description": "Microsoft Money file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "MOF",
+        "signature": "FF FE 23 00 6C 00 69 00",
+        "description": "MSinfo file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "MOV",
+        "signature": "6D 6F 6F 76",
+        "description": "QuickTime movie_1",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "MOV",
+        "signature": "66 72 65 65",
+        "description": "QuickTime movie_2",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "MOV",
+        "signature": "6D 64 61 74",
+        "description": "QuickTime movie_3",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "MOV",
+        "signature": "77 69 64 65",
+        "description": "QuickTime movie_4",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "MOV",
+        "signature": "70 6E 6F 74",
+        "description": "QuickTime movie_5",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "MOV",
+        "signature": "73 6B 69 70",
+        "description": "QuickTime movie_6",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "MP",
+        "signature": "0C ED",
+        "description": "Monochrome Picture TIFF bitmap",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "MP3",
+        "signature": "49 44 33",
+        "description": "MP3 audio file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "MPG",
+        "signature": "00 00 01 BA",
+        "description": "DVD video file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "MPG",
+        "signature": "00 00 01 B3",
+        "description": "MPEG video file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "MSC",
+        "signature": "D0 CF 11 E0 A1 B1 1A E1",
+        "description": "Microsoft Common Console Document",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "MSC",
+        "signature": "3C 3F 78 6D 6C 20 76 65 72 73 69 6F 6E 3D 22 31 2E 30 22 3F 3E 0D 0A 3C 4D 4D 43 5F 43 6F 6E 73 6F 6C 65 46 69 6C 65 20 43 6F 6E 73 6F 6C 65 56 65 72",
+        "description": "MMC Snap-in Control file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "MSI",
+        "signature": "D0 CF 11 E0 A1 B1 1A E1",
+        "description": "Microsoft Installer package",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "Extension",
+        "signature": "Signature",
+        "description": "Description",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "MSI",
+        "signature": "23 20",
+        "description": "Cerius2 file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "MSV",
+        "signature": "4D 53 5F 56 4F 49 43 45",
+        "description": "Sony Compressed Voice File",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "MTW",
+        "signature": "D0 CF 11 E0 A1 B1 1A E1",
+        "description": "Minitab data file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "NRI",
+        "signature": "0E 4E 65 72 6F 49 53 4F",
+        "description": "Nero CD compilation",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "NSF",
+        "signature": "1A 00 00 04 00 00",
+        "description": "Lotus Notes database",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "NSF",
+        "signature": "4E 45 53 4D 1A 01",
+        "description": "NES Sound file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "NTF",
+        "signature": "1A 00 00",
+        "description": "Lotus Notes database template",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "NTF",
+        "signature": "4E 49 54 46 30",
+        "description": "National Imagery Transmission Format file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "NTF",
+        "signature": "30 31 4F 52 44 4E 41 4E",
+        "description": "National Transfer Format Map",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "NVRAM",
+        "signature": "4D 52 56 4E",
+        "description": "VMware BIOS state file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "OBJ",
+        "signature": "4C 01",
+        "description": "MS COFF relocatable object code",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "OBJ",
+        "signature": "80",
+        "description": "Relocatable object code",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "OCX",
+        "signature": "4D 5A",
+        "description": "ActiveX|OLE Custom Control",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "ODP",
+        "signature": "50 4B 03 04",
+        "description": "OpenDocument template",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "ODT",
+        "signature": "50 4B 03 04",
+        "description": "OpenDocument template",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "OGA",
+        "signature": "4F 67 67 53 00 02 00 00",
+        "description": "Ogg Vorbis Codec compressed file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "OGG",
+        "signature": "4F 67 67 53 00 02 00 00",
+        "description": "Ogg Vorbis Codec compressed file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "OGV",
+        "signature": "4F 67 67 53 00 02 00 00",
+        "description": "Ogg Vorbis Codec compressed file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "OGX",
+        "signature": "4F 67 67 53 00 02 00 00",
+        "description": "Ogg Vorbis Codec compressed file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "OLB",
+        "signature": "4D 5A",
+        "description": "OLE object library",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "ONE",
+        "signature": "E4 52 5C 7B 8C D8 A7 4D",
+        "description": "MS OneNote note",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "OPT",
+        "signature": "D0 CF 11 E0 A1 B1 1A E1",
+        "description": "Developer Studio File Options file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "OPT",
+        "signature": "FD FF FF FF 20",
+        "description": "Developer Studio subheader",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "ORG",
+        "signature": "41 4F 4C 56 4D 31 30 30",
+        "description": "AOL personal file cabinet",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "OTT",
+        "signature": "50 4B 03 04",
+        "description": "OpenDocument template",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "P10",
+        "signature": "64 00 00 00",
+        "description": "Intel PROset|Wireless Profile",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "PAK",
+        "signature": "1A 0B",
+        "description": "PAK Compressed archive file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "PAK",
+        "signature": "50 41 43 4B",
+        "description": "Quake archive file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "PAT",
+        "signature": "47 50 41 54",
+        "description": "GIMP pattern file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "PAX",
+        "signature": "50 41 58",
+        "description": "PAX password protected bitmap",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "Extension",
+        "signature": "Signature",
+        "description": "Description",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "PCH",
+        "signature": "56 43 50 43 48 30",
+        "description": "Visual C PreCompiled header",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "PCX",
+        "signature": "0A 05 01 01",
+        "description": "ZSOFT Paintbrush file_3",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "PCX",
+        "signature": "0A 03 01 01",
+        "description": "ZSOFT Paintbrush file_2",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "PCX",
+        "signature": "0A 02 01 01",
+        "description": "ZSOFT Paintbrush file_1",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "PDB",
+        "signature": "4D 69 63 72 6F 73 6F 66 74 20 43 2F 43 2B 2B 20",
+        "description": "MS C++ debugging symbols file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "PDB",
+        "signature": "4D 2D 57 20 50 6F 63 6B",
+        "description": "Merriam-Webster Pocket Dictionary",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "PDB",
+        "signature": "AC ED 00 05 73 72 00 12",
+        "description": "BGBlitz position database file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "PDB",
+        "signature": "73 7A 65 7A",
+        "description": "PowerBASIC Debugger Symbols",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "PDB",
+        "signature": "73 6D 5F",
+        "description": "PalmOS SuperMemo",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "PDF",
+        "signature": "25 50 44 46",
+        "description": "PDF file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "PF",
+        "signature": "11 00 00 00 53 43 43 41",
+        "description": "Windows prefetch file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "PFC",
+        "signature": "41 4F 4C",
+        "description": "AOL config files",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "PFC",
+        "signature": "41 4F 4C 56 4D 31 30 30",
+        "description": "AOL personal file cabinet",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "PGD",
+        "signature": "50 47 50 64 4D 41 49 4E",
+        "description": "PGP disk image",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "PGM",
+        "signature": "50 35 0A",
+        "description": "Portable Graymap Graphic",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "PIF",
+        "signature": "4D 5A",
+        "description": "Windows|DOS executable file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "PKR",
+        "signature": "99 01",
+        "description": "PGP public keyring",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "PNG",
+        "signature": "89 50 4E 47 0D 0A 1A 0A",
+        "description": "PNG image",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "PPS",
+        "signature": "D0 CF 11 E0 A1 B1 1A E1",
+        "description": "Microsoft Office document",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "PPT",
+        "signature": "FD FF FF FF 43 00 00 00",
+        "description": "PowerPoint presentation subheader_6",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "PPT",
+        "signature": "FD FF FF FF 1C 00 00 00",
+        "description": "PowerPoint presentation subheader_5",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "PPT",
+        "signature": "D0 CF 11 E0 A1 B1 1A E1",
+        "description": "Microsoft Office document",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "PPT",
+        "signature": "FD FF FF FF 0E 00 00 00",
+        "description": "PowerPoint presentation subheader_4",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "PPT",
+        "signature": "A0 46 1D F0",
+        "description": "PowerPoint presentation subheader_3",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "PPT",
+        "signature": "0F 00 E8 03",
+        "description": "PowerPoint presentation subheader_2",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "PPT",
+        "signature": "00 6E 1E F0",
+        "description": "PowerPoint presentation subheader_1",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "PPTX",
+        "signature": "50 4B 03 04",
+        "description": "MS Office Open XML Format Document",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "PPTX",
+        "signature": "50 4B 03 04 14 00 06 00",
+        "description": "MS Office 2007 documents",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "PPZ",
+        "signature": "4D 53 43 46",
+        "description": "Powerpoint Packaged Presentation",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "PRC",
+        "signature": "74 42 4D 50 4B 6E 57 72",
+        "description": "PathWay Map file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "Extension",
+        "signature": "Signature",
+        "description": "Description",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "PRC",
+        "signature": "42 4F 4F 4B 4D 4F 42 49",
+        "description": "Palmpilot resource file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "PSD",
+        "signature": "38 42 50 53",
+        "description": "Photoshop image",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "PSP",
+        "signature": "7E 42 4B 00",
+        "description": "Corel Paint Shop Pro image",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "PUB",
+        "signature": "D0 CF 11 E0 A1 B1 1A E1",
+        "description": "MS Publisher file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "PWI",
+        "signature": "7B 5C 70 77 69",
+        "description": "MS WinMobile personal note",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "PWL",
+        "signature": "E3 82 85 96",
+        "description": "Win98 password file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "PWL",
+        "signature": "B0 4D 46 43",
+        "description": "Win95 password file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "QBB",
+        "signature": "45 86 00 00 06 00",
+        "description": "QuickBooks backup",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "QCP",
+        "signature": "52 49 46 46",
+        "description": "Resource Interchange File Format",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "QDF",
+        "signature": "AC 9E BD 8F 00 00",
+        "description": "QDF Quicken data",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "QEL",
+        "signature": "51 45 4C 20",
+        "description": "QDL Quicken data",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "QEMU",
+        "signature": "51 46 49",
+        "description": "Qcow Disk Image",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "QPH",
+        "signature": "03 00 00 00",
+        "description": "Quicken price history",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "QSD",
+        "signature": "51 57 20 56 65 72 2E 20",
+        "description": "ABD | QSD Quicken data file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "QTS",
+        "signature": "4D 5A",
+        "description": "Windows|DOS executable file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "QTX",
+        "signature": "4D 5A",
+        "description": "Windows|DOS executable file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "QXD",
+        "signature": "00 00 4D 4D 58 50 52",
+        "description": "Quark Express (Motorola)",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "QXD",
+        "signature": "00 00 49 49 58 50 52",
+        "description": "Quark Express (Intel)",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "RA",
+        "signature": "2E 72 61 FD 00",
+        "description": "RealAudio streaming media",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "RA",
+        "signature": "2E 52 4D 46 00 00 00 12",
+        "description": "RealAudio file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "RAM",
+        "signature": "72 74 73 70 3A 2F 2F",
+        "description": "RealMedia metafile",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "RAR",
+        "signature": "52 61 72 21 1A 07 00",
+        "description": "WinRAR compressed archive",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "REG",
+        "signature": "52 45 47 45 44 49 54",
+        "description": "WinNT Registry|Registry Undo files",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "REG",
+        "signature": "FF FE",
+        "description": "Windows Registry file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "RGB",
+        "signature": "01 DA 01 01 00 03",
+        "description": "Silicon Graphics RGB Bitmap",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "RM",
+        "signature": "2E 52 4D 46",
+        "description": "RealMedia streaming media",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "RMI",
+        "signature": "52 49 46 46",
+        "description": "Resource Interchange File Format",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "RMVB",
+        "signature": "2E 52 4D 46",
+        "description": "RealMedia streaming media",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "RPM",
+        "signature": "ED AB EE DB",
+        "description": "RedHat Package Manager",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "RTD",
+        "signature": "43 23 2B 44 A4 43 4D A5",
+        "description": "RagTime document",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "Extension",
+        "signature": "Signature",
+        "description": "Description",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "RTF",
+        "signature": "7B 5C 72 74 66 31",
+        "description": "RTF file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "RVT",
+        "signature": "D0 CF 11 E0 A1 B1 1A E1",
+        "description": "Revit Project file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "SAM",
+        "signature": "5B 76 65 72 5D",
+        "description": "Lotus AMI Pro document_2",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "SAM",
+        "signature": "5B 56 45 52 5D",
+        "description": "Lotus AMI Pro document_1",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "SAV",
+        "signature": "24 46 4C 32 40 28 23 29",
+        "description": "SPSS Data file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "SCR",
+        "signature": "4D 5A",
+        "description": "Screen saver",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "SDR",
+        "signature": "53 4D 41 52 54 44 52 57",
+        "description": "SmartDraw Drawing file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "SH3",
+        "signature": "48 48 47 42 31",
+        "description": "Harvard Graphics presentation file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "SHD",
+        "signature": "67 49 00 00",
+        "description": "Win2000|XP printer spool file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "SHD",
+        "signature": "4B 49 00 00",
+        "description": "Win9x printer spool file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "SHD",
+        "signature": "66 49 00 00",
+        "description": "WinNT printer spool file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "SHD",
+        "signature": "68 49 00 00",
+        "description": "Win Server 2003 printer spool file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "SHW",
+        "signature": "53 48 4F 57",
+        "description": "Harvard Graphics presentation",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "SIT",
+        "signature": "53 74 75 66 66 49 74 20",
+        "description": "StuffIt compressed archive",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "SIT",
+        "signature": "53 49 54 21 00",
+        "description": "StuffIt archive",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "SKF",
+        "signature": "07 53 4B 46",
+        "description": "SkinCrafter skin",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "SKR",
+        "signature": "95 01",
+        "description": "PGP secret keyring_2",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "SKR",
+        "signature": "95 00",
+        "description": "PGP secret keyring_1",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "SLE",
+        "signature": "3A 56 45 52 53 49 4F 4E",
+        "description": "Surfplan kite project file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "SLE",
+        "signature": "41 43 76",
+        "description": "Steganos virtual secure drive",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "SLN",
+        "signature": "4D 69 63 72 6F 73 6F 66 74 20 56 69 73 75 61 6C",
+        "description": "Visual Studio .NET file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "SNM",
+        "signature": "00 1E 84 90 00 00 00 00",
+        "description": "Netscape Communicator (v4) mail folder",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "SNP",
+        "signature": "4D 53 43 46",
+        "description": "MS Access Snapshot Viewer file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "SOU",
+        "signature": "D0 CF 11 E0 A1 B1 1A E1",
+        "description": "Visual Studio Solution User Options file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "SPL",
+        "signature": "00 00 01 00",
+        "description": "Printer spool file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "SPO",
+        "signature": "D0 CF 11 E0 A1 B1 1A E1",
+        "description": "SPSS output file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "SUD",
+        "signature": "52 45 47 45 44 49 54",
+        "description": "WinNT Registry|Registry Undo files",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "SUO",
+        "signature": "FD FF FF FF 04",
+        "description": "Visual Studio Solution subheader",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "SWF",
+        "signature": "46 57 53",
+        "description": "Shockwave Flash player",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "SWF",
+        "signature": "43 57 53",
+        "description": "Shockwave Flash file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "Extension",
+        "signature": "Signature",
+        "description": "Description",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "SXC",
+        "signature": "50 4B 03 04",
+        "description": "StarOffice spreadsheet",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "SXD",
+        "signature": "50 4B 03 04",
+        "description": "OpenOffice documents",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "SXI",
+        "signature": "50 4B 03 04",
+        "description": "OpenOffice documents",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "SXW",
+        "signature": "50 4B 03 04",
+        "description": "OpenOffice documents",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "SYS",
+        "signature": "FF",
+        "description": "Windows executable",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "SYS",
+        "signature": "EB",
+        "description": "Windows executable file_3",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "SYS",
+        "signature": "E9",
+        "description": "Windows executable file_2",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "SYS",
+        "signature": "E8",
+        "description": "Windows executable file_1",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "SYS",
+        "signature": "FF 4B 45 59 42 20 20 20",
+        "description": "Keyboard driver file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "SYS",
+        "signature": "4D 5A",
+        "description": "Windows|DOS executable file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "SYS",
+        "signature": "FF FF FF FF",
+        "description": "DOS system driver",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "SYW",
+        "signature": "41 4D 59 4F",
+        "description": "Harvard Graphics symbol graphic",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "TAR",
+        "signature": "75 73 74 61 72",
+        "description": "Tape Archive",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "TAR.BZ2",
+        "signature": "42 5A 68",
+        "description": "bzip2 compressed archive",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "TAR.Z",
+        "signature": "1F A0",
+        "description": "Compressed tape archive_2",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "TAR.Z",
+        "signature": "1F 9D 90",
+        "description": "Compressed tape archive_1",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "TB2",
+        "signature": "42 5A 68",
+        "description": "bzip2 compressed archive",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "TBZ2",
+        "signature": "42 5A 68",
+        "description": "bzip2 compressed archive",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "TIB",
+        "signature": "B4 6E 68 44",
+        "description": "Acronis True Image",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "TIF",
+        "signature": "4D 4D 00 2A",
+        "description": "TIFF file_3",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "TIF",
+        "signature": "49 49 2A 00",
+        "description": "TIFF file_2",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "TIF",
+        "signature": "49 20 49",
+        "description": "TIFF file_1",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "TIF",
+        "signature": "4D 4D 00 2B",
+        "description": "TIFF file_4",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "TIFF",
+        "signature": "49 49 2A 00",
+        "description": "TIFF file_2",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "TIFF",
+        "signature": "49 20 49",
+        "description": "TIFF file_1",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "TIFF",
+        "signature": "4D 4D 00 2B",
+        "description": "TIFF file_4",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "TIFF",
+        "signature": "4D 4D 00 2A",
+        "description": "TIFF file_3",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "TLB",
+        "signature": "4D 53 46 54 02 00 01 00",
+        "description": "OLE|SPSS|Visual C++ library file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "TR1",
+        "signature": "01 10",
+        "description": "Novell LANalyzer capture file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "UCE",
+        "signature": "55 43 45 58",
+        "description": "Unicode extensions",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "Extension",
+        "signature": "Signature",
+        "description": "Description",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "UFA",
+        "signature": "55 46 41 C6 D2 C1",
+        "description": "UFA compressed archive",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "VBX",
+        "signature": "4D 5A",
+        "description": "VisualBASIC application",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "VCD",
+        "signature": "45 4E 54 52 59 56 43 44",
+        "description": "VideoVCD|VCDImager file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "VCF",
+        "signature": "42 45 47 49 4E 3A 56 43",
+        "description": "vCard",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "VCW",
+        "signature": "5B 4D 53 56 43",
+        "description": "Visual C++ Workbench Info File",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "VHD",
+        "signature": "63 6F 6E 65 63 74 69 78",
+        "description": "Virtual PC HD image",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "VMDK",
+        "signature": "4B 44 4D",
+        "description": "VMware 4 Virtual Disk",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "VMDK",
+        "signature": "23 20 44 69 73 6B 20 44",
+        "description": "VMware 4 Virtual Disk description",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "VMDK",
+        "signature": "43 4F 57 44",
+        "description": "VMware 3 Virtual Disk",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "VOB",
+        "signature": "00 00 01 BA",
+        "description": "DVD video file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "VSD",
+        "signature": "D0 CF 11 E0 A1 B1 1A E1",
+        "description": "Visio file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "VXD",
+        "signature": "4D 5A",
+        "description": "Windows virtual device drivers",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "WAB",
+        "signature": "81 32 84 C1 85 05 D0 11",
+        "description": "Outlook Express address book (Win95)",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "WAB",
+        "signature": "9C CB CB 8D 13 75 D2 11",
+        "description": "Outlook address file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "WAV",
+        "signature": "52 49 46 46",
+        "description": "Resource Interchange File Format",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "WB2",
+        "signature": "00 00 02 00",
+        "description": "QuattroPro spreadsheet",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "WB3",
+        "signature": "3E 00 03 00 FE FF 09 00 06",
+        "description": "Quatro Pro for Windows 7.0",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "WIZ",
+        "signature": "D0 CF 11 E0 A1 B1 1A E1",
+        "description": "Microsoft Office document",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "WK1",
+        "signature": "00 00 02 00 06 04 06 00",
+        "description": "Lotus 1-2-3 (v1)",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "WK3",
+        "signature": "00 00 1A 00 00 10 04 00",
+        "description": "Lotus 1-2-3 (v3)",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "WK4",
+        "signature": "00 00 1A 00 02 10 04 00",
+        "description": "Lotus 1-2-3 (v4|v5)",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "WK5",
+        "signature": "00 00 1A 00 02 10 04 00",
+        "description": "Lotus 1-2-3 (v4|v5)",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "WKS",
+        "signature": "0E 57 4B 53",
+        "description": "DeskMate Worksheet",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "WKS",
+        "signature": "FF 00 02 00 04 04 05 54",
+        "description": "Works for Windows spreadsheet",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "WMA",
+        "signature": "30 26 B2 75 8E 66 CF 11",
+        "description": "Windows Media Audio|Video File",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "WMF",
+        "signature": "D7 CD C6 9A",
+        "description": "Windows graphics metafile",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "WMV",
+        "signature": "30 26 B2 75 8E 66 CF 11",
+        "description": "Windows Media Audio|Video File",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "WMZ",
+        "signature": "50 4B 03 04",
+        "description": "Windows Media compressed skin file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "WP",
+        "signature": "FF 57 50 43",
+        "description": "WordPerfect text and graphics",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "WP5",
+        "signature": "FF 57 50 43",
+        "description": "WordPerfect text and graphics",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "Extension",
+        "signature": "Signature",
+        "description": "Description",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "WP6",
+        "signature": "FF 57 50 43",
+        "description": "WordPerfect text and graphics",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "WPD",
+        "signature": "FF 57 50 43",
+        "description": "WordPerfect text and graphics",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "WPF",
+        "signature": "81 CD AB",
+        "description": "WordPerfect text",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "WPG",
+        "signature": "FF 57 50 43",
+        "description": "WordPerfect text and graphics",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "WPL",
+        "signature": "4D 69 63 72 6F 73 6F 66 74 20 57 69 6E 64 6F 77 73 20 4D 65 64 69 61 20 50 6C 61 79 65 72 20 2D 2D 20",
+        "description": "Windows Media Player playlist",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "WPP",
+        "signature": "FF 57 50 43",
+        "description": "WordPerfect text and graphics",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "WPS",
+        "signature": "D0 CF 11 E0 A1 B1 1A E1",
+        "description": "MSWorks text document",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "WRI",
+        "signature": "BE 00 00 00 AB",
+        "description": "MS Write file_3",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "WRI",
+        "signature": "32 BE",
+        "description": "MS Write file_2",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "WRI",
+        "signature": "31 BE",
+        "description": "MS Write file_1",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "WS",
+        "signature": "1D 7D",
+        "description": "WordStar Version 5.0|6.0 document",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "WS2",
+        "signature": "57 53 32 30 30 30",
+        "description": "WordStar for Windows file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "XDR",
+        "signature": "3C",
+        "description": "BizTalk XML-Data Reduced Schema",
+        "src": "filesignatures.net",
+        "header": "3C 73 76 67 20 77 69 64 74 68 3D 22 35 38 22 20 68 65 69 67 68 74 3D 22 31 36 22 20 76 69 65 77"
+    },
+    {
+        "extension": "XLA",
+        "signature": "D0 CF 11 E0 A1 B1 1A E1",
+        "description": "Microsoft Office document",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "XLS",
+        "signature": "FD FF FF FF 10",
+        "description": "Excel spreadsheet subheader_2",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "XLS",
+        "signature": "09 08 10 00 00 06 05 00",
+        "description": "Excel spreadsheet subheader_1",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "XLS",
+        "signature": "FD FF FF FF 29",
+        "description": "Excel spreadsheet subheader_7",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "XLS",
+        "signature": "FD FF FF FF 28",
+        "description": "Excel spreadsheet subheader_6",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "XLS",
+        "signature": "FD FF FF FF 23",
+        "description": "Excel spreadsheet subheader_5",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "XLS",
+        "signature": "D0 CF 11 E0 A1 B1 1A E1",
+        "description": "Microsoft Office document",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "XLS",
+        "signature": "FD FF FF FF 22",
+        "description": "Excel spreadsheet subheader_4",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "XLS",
+        "signature": "FD FF FF FF 1F",
+        "description": "Excel spreadsheet subheader_3",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "XLSX",
+        "signature": "50 4B 03 04",
+        "description": "MS Office Open XML Format Document",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "XLSX",
+        "signature": "50 4B 03 04 14 00 06 00",
+        "description": "MS Office 2007 documents",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "XML",
+        "signature": "3C 3F 78 6D 6C 20 76 65 72 73 69 6F 6E 3D 22 31 2E 30 22 3F 3E",
+        "description": "User Interface Language",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "XPI",
+        "signature": "50 4B 03 04",
+        "description": "Mozilla Browser Archive",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "XPS",
+        "signature": "50 4B 03 04",
+        "description": "XML paper specification file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "XPT",
+        "signature": "50 4B 03 04",
+        "description": "eXact Packager Models",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "XPT",
+        "signature": "58 50 43 4F 4D 0A 54 79",
+        "description": "XPCOM libraries",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "ZAP",
+        "signature": "4D 5A 90 00 03 00 00 00 04 00 00 00 FF FF",
+        "description": "ZoneAlam data file",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "Extension",
+        "signature": "Signature",
+        "description": "Description",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "ZIP",
+        "signature": "50 4B 03 04 14 00 01 00",
+        "description": "ZLock Pro encrypted ZIP",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "ZIP",
+        "signature": "50 4B 07 08",
+        "description": "PKZIP archive_3",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "ZIP",
+        "signature": "50 4B 05 06",
+        "description": "PKZIP archive_2",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "ZIP",
+        "signature": "50 4B 03 04",
+        "description": "PKZIP archive_1",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "ZIP",
+        "signature": "50 4B 53 70 58",
+        "description": "PKSFX self-extracting archive",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "ZIP",
+        "signature": "50 4B 4C 49 54 45",
+        "description": "PKLITE archive",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "ZIP",
+        "signature": "57 69 6E 5A 69 70",
+        "description": "WinZip compressed archive",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "ZOO",
+        "signature": "5A 4F 4F 20",
+        "description": "ZOO compressed archive",
+        "src": "filesignatures.net"
+    },
+    {
+        "extension": "fmp12",
+        "signature": "00 01 00 00 00 02 00 01 00 05 00 02 00 02 C0 48 42 41 4D 37 00 00 10 00 00 00 00 00 00 00 00 00",
+        "description": "FileMaker Database",
+        "src": "auto"
+    },
+    {
+        "extension": "sig",
+        "signature": "00 01 89 09 30 82 04 85 30 82 02 ED A0 03 02 01 02 02 11 00 FF 36 63 64 2F 2B 4A C1 76 7B 1C 89",
+        "description": "Chrome Extension",
+        "src": "auto"
+    },
+    {
+        "extension": "crx",
+        "signature": "43 72 32 34 02 00 00 00 A2 00 00 00 80 00 00 00 30 81 9F 30 0D 06 09 2A 86 48 86 F7 0D 01 01 01",
+        "description": "Chrome extension",
+        "src": "auto"
+    },
+    {
+        "extension": "pma",
+        "signature": "DC 05 83 40 00 00 40 00 00 00 40 00 02 00 00 00 43 DD 5D 93 00 00 00 00 40 00 00 00 00 00 00 00",
+        "description": "Chrome Metrics",
+        "src": "auto"
+    },
+    {
+        "extension": "",
+        "signature": "95 7C B9 C5 22 00 01 01 1A 6C 65 76 65 6C 64 62 2E 42 79 74 65 77 69 73 65 43 6F 6D 70 61 72 61",
+        "description": "Chrome MANIFEST",
+        "src": "auto"
+    },
+    {
+        "extension": "",
+        "signature": "53 4E 53 53 01 00 00 00 09 00 09 01 00 00 00 00 00 00 00 0D 00 0F 08 00 00 00 01 00 00 00 00 00",
+        "description": "Chrome session",
+        "src": "auto"
+    },
+    {
+        "extension": "ttf",
+        "signature": "00 01 00 00 00 0E 00 80 00 03 00 60 4F 53 2F 32 8C 34 92 EB 00 00 01 68 00 00 00 60 63 6D 61 70",
+        "description": "Font",
+        "src": "auto"
+    },
+    {
+        "extension": "woff",
+        "signature": "77 4F 46 46 00 01 00 00 00 01 C6 74 00 0E 00 00 00 03 D0 3C 00 01 00 00 00 00 00 00 00 00 00 00",
+        "description": "Web Open Font",
+        "src": "auto"
+    },
+    {
+        "extension": "woff2",
+        "signature": "77 4F 46 32 00 01 00 00 00 00 4B BC 00 11 00 00 00 00 9E 38 00 00 4B 5B 00 01 00 00 00 00 00 00",
+        "description": "Web Open Font",
+        "src": "auto"
+    },
+    {
+        "extension": "",
+        "signature": "C3 CA 04 C1 00 00 02 00 00 00 00 00 24 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00",
+        "description": "Chrome GPU Cache",
+        "src": "auto"
+    },
+    {
+        "extension": "",
+        "signature": "C3 CA 03 C1 00 00 02 00 00 00 00 00 00 00 00 00 00 00 00 00 09 00 00 00 00 00 01 A1 00 00 01 00",
+        "description": "Chrome GPU Cache",
+        "src": "auto"
+    },
+    {
+        "extension": "npy",
+        "signature": "93 4E 55 4D 50 59 01 00 46 00 7B 27 64 65 73 63 72 27 3A 20 27 7C 4F 38 27 2C 20 27 66 6F 72 74",
+        "description": "Python numpy object",
+        "src": "auto"
+    },
+    {
+        "extension": "ppm",
+        "signature": "50 36 0A 31 36 20 31 36 0A 32 35 35 0A 00 00 00 00 00 00 00 00 00 00 00 00 4E 8D C0 4A 86 BA 48",
+        "description": "Python Portable Pixmap (object)",
+        "src": "auto"
+    },
+    {
+        "extension": "pyc",
+        "signature": "33 0D 0D 0A EE CF 45 59 68 E2 00 00 E3 00 00 00 00 00 00 00 00 00 00 00 00 05 00 00 00 40 00 00",
+        "description": "Python compiled bytecode",
+        "src": "auto"
+    },
+    {
+        "extension": "mo",
+        "signature": "DE 12 04 95 00 00 00 00 48 00 00 00 1C 00 00 00 5C 02 00 00 00 00 00 00 00 00 00 00 00 00 00 00",
+        "description": "Python binary language support file - gettext.bindtextdomain(domain, localedir=None)",
+        "src": "auto"
+    },
+    {
+        "extension": "bin",
+        "signature": "00 00 00 5B 68 65 78 64 75 6D 70 5D 00 00 00 00 00 11 22 33 44 55 66 77 88 99 0A BB CC DD EE FF",
+        "description": "Hex file",
+        "src": "auto"
+    },
+    {
+        "extension": "ntf",
+        "signature": "31 46 54 4E 53 50 54 4E 00 00 01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00",
+        "description": "Windows 2000 and later font files (.ntf files) are binary files used for describing the device fonts of printers supported by Pscript.",
+        "src": "auto"
+    },
+    {
+        "extension": "vp",
+        "signature": "5B 1A 01 00 04 00 00 00 A0 03 00 00 02 00 1D 07 00 00 4D 02 00 00 92 BA 01 00 04 00 01 00 95 01",
+        "description": "Driver",
+        "src": "auto"
+    },
+    {
+        "extension": "cpa",
+        "signature": "9C 60 E8 0B 00 00 00 89 44 24 1C 89 54 24 14 61 9D C3 90 90 90 90 90 90 90 90 90 90 90 90 90 90",
+        "description": "Driver",
+        "src": "auto"
+    },
+    {
+        "extension": "rtl",
+        "signature": "42 43 C0 DE 21 0C 00 00 97 6C 04 00 0B 82 20 00 02 00 00 00 12 00 00 00 07 81 23 91 41 C8 04 49",
+        "description": "Driver",
+        "src": "auto"
+    },
+    {
+        "extension": "bin",
+        "signature": "11 12 15 17 1A 1C 41 42 45 47 4A 4C 31 32 35 37 3A 3C 00 00 70 75 9D A2 70 75 9D A2 70 75 9D A2",
+        "description": "Driver",
+        "src": "auto"
+    },
+    {
+        "extension": "dat",
+        "signature": "2A 57 45 53 54 4F 50 46 4F 52 4E 4F 4F 4E 45 2A 01 00 04 00 18 02 14 20 02 00 40 00 62 61 73 65",
+        "description": "Driver",
+        "src": "auto"
+    },
+    {
+        "extension": "bin",
+        "signature": "01 00 64 00 00 00 00 00 01 01 00 00 DA 6A 40 01 2C 00 00 00 4F 66 66 69 63 69 61 6C 20 72 33 36",
+        "description": "Driver",
+        "src": "auto"
+    },
+    {
+        "extension": "pb",
+        "signature": "22 7B 37 57 01 00 00 00 57 9F 5D 92 00 00 00 00 2F 08 30 79 E3 71 BA 9F F7 09 A8 51 80 3C D6 61",
+        "description": "Driver",
+        "src": "auto"
+    },
+    {
+        "extension": "etl",
+        "signature": "00 10 00 00 50 02 00 00 50 02 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00",
+        "description": "System Log",
+        "src": "auto"
+    },
+    {
+        "extension": "dat",
+        "signature": "00 00 00 00 00 00 00 00 00 00 00 00 01 00 00 00 00 00 00 00 70 0F 80 00 00 10 80 00 80 4E 80 00",
+        "description": "Driver",
+        "src": "auto"
+    },
+    {
+        "extension": "zdct",
+        "signature": "5A 53 74 72 69 6E 67 20 42 69 6E 61 72 79 20 46 6F 72 6D 61 74 02 07 00 00 05 00 00 00 65 6E 5F",
+        "description": "Adobe application data",
+        "src": "auto"
+    },
+    {
+        "extension": "atn",
+        "signature": "00 00 00 10 00 00 00 33 00 24 00 24 00 24 00 2F 00 50 00 72 00 65 00 73 00 65 00 74 00 73 00 2F",
+        "description": "Adobe Photoshop action macro",
+        "src": "auto"
+    },
+    {
+        "extension": "blw",
+        "signature": "00 00 00 10 00 00 00 01 00 00 00 00 00 00 6E 75 6C 6C 00 00 00 0A 00 00 00 00 52 64 20 20 6C 6F",
+        "description": "Adobe Application Filter",
+        "src": "auto"
+    },
+    {
+        "extension": "abr",
+        "signature": "00 06 00 02 38 42 49 4D 73 61 6D 70 00 00 73 08 00 00 01 B6 24 31 62 64 39 62 64 62 63 2D 38 61",
+        "description": "Adobe brush",
+        "src": "auto"
+    },
+    {
+        "extension": "cha",
+        "signature": "00 01 00 01 FF BA 00 C8 FF E2 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00",
+        "description": "Adobe Channel Mixer",
+        "src": "auto"
+    },
+    {
+        "extension": "acb",
+        "signature": "38 42 43 42 00 01 0B B8 00 00 00 23 00 24 00 24 00 24 00 2F 00 63 00 6F 00 6C 00 6F 00 72 00 62",
+        "description": "Adobe Color Books",
+        "src": "auto"
+    },
+    {
+        "extension": "aco",
+        "signature": "00 02 05 00 00 07 22 06 04 D8 06 90 00 00 00 00 00 07 00 44 00 49 00 43 00 20 00 31 00 73 00 00",
+        "description": "Adobe Color Swatches, 1",
+        "src": "auto"
+    },
+    {
+        "extension": "aco",
+        "signature": "00 02 00 56 00 02 FF FF F3 32 66 66 FF FF 00 00 00 09 00 48 00 4B 00 53 00 20 00 30 00 31 00 20",
+        "description": "Adobe Color Swatches, 2",
+        "src": "auto"
+    },
+    {
+        "extension": "aco",
+        "signature": "00 01 01 00 00 00 FF FF FF FF FF FF 00 00 00 00 FF FF FF FF CC CC 00 00 00 00 FF FF FF FF 99 99",
+        "description": "Adobe Color Swatches, 3",
+        "src": "auto"
+    },
+    {
+        "extension": "aco",
+        "signature": "00 01 00 34 00 00 12 12 11 12 00 00 00 00 00 00 17 18 11 12 01 02 00 00 00 00 1C 1C 2D 2E 01 02",
+        "description": "Adobe Color Swatches, 4",
+        "src": "auto"
+    },
+    {
+        "extension": "aco",
+        "signature": "00 02 04 71 00 07 22 EE FE FA 2B 9D 00 00 00 00 00 11 00 50 00 41 00 4E 00 54 00 4F 00 4E 00 45",
+        "description": "Adobe Color Swatches, 5",
+        "src": "auto"
+    },
+    {
+        "extension": "acv",
+        "signature": "00 04 00 05 00 02 00 00 00 00 00 FF 00 FF 00 03 00 FF 00 21 00 7F 00 77 00 00 00 B9 00 03 00 FF",
+        "description": "Adobe Curves Adjustment Panel",
+        "src": "auto"
+    },
+    {
+        "extension": "ado",
+        "signature": "00 01 00 02 00 02 FF FF FF FF FF FF 00 00 00 03 20 20 34 32 34 43 00 00 FF FF 00 00 00 00 00 00",
+        "description": "Adobe Duotones",
+        "src": "auto"
+    },
+    {
+        "extension": "grd",
+        "signature": "38 42 47 52 00 05 00 00 00 10 00 00 00 01 00 00 00 00 00 00 6E 75 6C 6C 00 00 00 01 00 00 00 00",
+        "description": "Adobe Gradients",
+        "src": "auto"
+    },
+    {
+        "extension": "hdt",
+        "signature": "68 64 72 74 00 00 00 03 3F 93 33 33 00 00 00 02 00 00 00 08 00 44 00 65 00 66 00 61 00 75 00 6C",
+        "description": "Adobe HDR Toning",
+        "src": "auto"
+    },
+    {
+        "extension": "ahu",
+        "signature": "00 02 00 00 00 42 00 19 00 00 00 00 00 1E 00 00 01 3B 01 59 00 0F 00 2D 00 00 00 00 00 00 00 0F",
+        "description": "Adobe Hue and Saturation",
+        "src": "auto"
+    },
+    {
+        "extension": "imz",
+        "signature": "00 00 00 02 00 00 00 00 00 00 04 00 00 00 03 00 00 00 40 90 00 00 00 00 00 00 40 88 00 00 00 00",
+        "description": "Adobe Image Size",
+        "src": "auto"
+    },
+    {
+        "extension": "alv",
+        "signature": "00 02 00 0F 00 FF 00 00 00 FF 00 64 00 00 00 FF 00 00 00 FF 00 64 00 00 00 FF 00 00 00 FF 00 64",
+        "description": "Adobe Photoshop Levels Format",
+        "src": "auto"
+    },
+    {
+        "extension": "irs",
+        "signature": "00 00 00 02 00 00 00 06 00 00 00 00 01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 80 00 00 00 00",
+        "description": "Adobe Photoshop Levels Format",
+        "src": "auto"
+    },
+    {
+        "extension": "pat",
+        "signature": "38 42 50 54 00 01 00 00 00 15 00 00 00 01 00 00 00 01 00 B2 00 B0 00 00 00 4A 00 24 00 24 00 24",
+        "description": "Adobe Photoshop patterns",
+        "src": "auto"
+    },
+    {
+        "extension": "asl",
+        "signature": "00 02 38 42 53 4C 00 03 00 22 61 C0 00 00 C1 18 00 00 00 01 00 00 00 03 00 80 00 80 00 00 00 07",
+        "description": "Adobe Photoshop layer style",
+        "src": "auto"
+    },
+    {
+        "extension": "tpl",
+        "signature": "38 42 54 50 00 00 00 03 00 00 00 02 38 42 49 4D 74 70 70 61 00 18 5F 44 00 0C 01 20 00 00 00 01",
+        "description": "Adobe Photoshop tool preset",
+        "src": "auto"
+    },
+    {
+        "extension": "fca",
+        "signature": "46 43 41 31 8C 12 00 00 00 00 20 00 64 00 E0 11 89 12 00 00 0E 00 06 00 06 00 00 00 01 54 7A 19",
+        "description": "Adobe Linguistics",
+        "src": "auto"
+    },
+    {
+        "extension": "hsp",
+        "signature": "46 45 50 31 00 00 00 00 16 00 5C 04 36 59 00 00 9C 00 00 01 9C 02 E0 00 00 00 06 00 00 00 20 00",
+        "description": "Adobe Linguistics",
+        "src": "auto"
+    },
+    {
+        "extension": "lex",
+        "signature": "43 6F 70 79 72 69 67 68 74 20 28 43 29 20 31 39 39 30 20 4D 65 72 72 69 61 6D 2D 57 65 62 73 74",
+        "description": "Adobe Linguistics",
+        "src": "auto"
+    },
+    {
+        "extension": "ths",
+        "signature": "43 6F 70 79 72 69 67 68 74 20 28 43 29 20 31 39 38 34 20 57 69 6C 6C 69 61 6D 20 43 6F 6C 6C 69",
+        "description": "Adobe Linguistics",
+        "src": "auto"
+    },
+    {
+        "extension": "clx",
+        "signature": "00 02 0A 00 11 00 03 00 1F 00 37 03 3E 79 65 6E 74 72 69 73 6C 68 67 61 63 75 64 6D 6F 66 6B 62",
+        "description": "Adobe Linguistics",
+        "src": "auto"
+    },
+    {
+        "extension": "env",
+        "signature": "01 02 50 48 27 01 29 00 0A 00 1B 00 06 00 BE 00 05 00 8F 04 52 00 00 01 00 01 00 01 BE 00 BE 00",
+        "description": "Adobe Linguistics",
+        "src": "auto"
+    },
+    {
+        "extension": "otf",
+        "signature": "4F 54 54 4F 00 0E 00 80 00 03 00 60 42 41 53 45 FC 42 E5 23 00 04 98 4C 00 00 00 40 43 46 46 20",
+        "description": "Adobe multi language font",
+        "src": "auto"
+    },
+    {
+        "extension": "icc",
+        "signature": "00 00 76 30 41 44 42 45 04 00 00 00 6C 69 6E 6B 52 47 42 20 52 47 42 20 07 DC 00 02 00 08 00 17",
+        "description": "Adobe Color Profile",
+        "src": "auto"
+    },
+    {
+        "extension": "icc",
+        "signature": "00 00 41 28 41 44 42 45 02 10 00 00 61 62 73 74 4C 61 62 20 4C 61 62 20 07 DB 00 0B 00 07 00 02",
+        "description": "Adobe Color Profile",
+        "src": "auto"
+    },
+    {
+        "extension": "icc",
+        "signature": "00 00 02 30 41 44 42 45 02 10 00 00 6D 6E 74 72 52 47 42 20 58 59 5A 20 07 D0 00 08 00 0B 00 13",
+        "description": "Color Profile",
+        "src": "auto"
+    },
+    {
+        "extension": "icc",
+        "signature": "00 00 09 FC 61 70 70 6C 02 10 00 00 6D 6E 74 72 52 47 42 20 58 59 5A 20 07 D9 00 04 00 16 00 0E",
+        "description": "Color Profile",
+        "src": "auto"
+    },
+    {
+        "extension": "icc",
+        "signature": "00 00 05 98 61 70 70 6C 02 20 00 00 73 63 6E 72 52 47 42 20 58 59 5A 20 07 D3 00 07 00 01 00 00",
+        "description": "Color Profile",
+        "src": "auto"
+    },
+    {
+        "extension": "icc",
+        "signature": "00 00 0A C4 61 70 70 6C 02 20 00 00 73 70 61 63 4C 61 62 20 4C 61 62 20 07 D0 00 02 00 0E 00 0C",
+        "description": "Color Profile",
+        "src": "auto"
+    },
+    {
+        "extension": "icc",
+        "signature": "00 17 51 E0 48 44 4D 20 02 00 00 00 70 72 74 72 43 4D 59 4B 4C 61 62 20 07 D2 00 0C 00 02 00 12",
+        "description": "Color Profile",
+        "src": "auto"
+    },
+    {
+        "extension": "ttf",
+        "signature": "00 01 00 00 00 09 00 80 00 03 00 10 63 6D 61 70 00 27 1A 8B 00 00 09 7C 00 00 00 64 67 6C 79 66",
+        "description": "Font",
+        "src": "auto"
+    },
+    {
+        "extension": "ftc",
+        "signature": "4C 46 43 00 35 2E 33 30 2E 33 30 00 FE FE FE FE FE FE FE FE 50 01 00 00 03 00 00 00 DC 00 00 00",
+        "description": "Logitech driver",
+        "src": "auto"
+    },
+    {
+        "extension": "dat",
+        "signature": "48 57 52 53 01 00 00 00 4D 69 63 72 6F 73 6F 66 74 20 43 6F 6D 6D 6F 6E 20 4C 4D 20 52 65 73 6F",
+        "description": "Common Files\\microsoft shared\\ink",
+        "src": "auto"
+    },
+    {
+        "extension": "resources",
+        "signature": "CE CA EF BE 01 00 00 00 91 00 00 00 6C 53 79 73 74 65 6D 2E 52 65 73 6F 75 72 63 65 73 2E 52 65",
+        "description": "PowerPoint Shape",
+        "src": "auto"
+    },
+    {
+        "extension": "mo",
+        "signature": "DE 12 04 95 00 00 00 00 90 05 00 00 1C 00 00 00 9C 2C 00 00 00 00 00 00 1C 59 00 00 00 00 00 00",
+        "description": "Gimp Module",
+        "src": "auto"
+    },
+    {
+        "extension": "xpi",
+        "signature": "00 00 00 00 50 4B 01 02 14 00 0A 00 00 00 00 00 00 00 21 3C B5 29 AB 05 2E 00 00 00 2E 00 00 00",
+        "description": "Firefox browser extension",
+        "src": "auto"
+    },
+    {
+        "extension": "sig",
+        "signature": "00 01 9F 09 30 82 04 9B 30 82 03 03 A0 03 02 01 02 02 10 2B F2 2A B3 AA FB 48 07 2E 70 33 AD EB",
+        "description": "Firefox signature",
+        "src": "auto"
+    },
+    {
+        "extension": "gbr",
+        "signature": "00 00 00 2F 00 00 00 02 00 00 00 01 00 00 00 01 00 00 00 01 47 49 4D 50 00 00 00 32 50 69 78 65",
+        "description": "Gimp module",
+        "src": "auto"
+    },
+    {
+        "extension": "gih",
+        "signature": "50 65 6E 63 69 6C 20 53 6B 65 74 63 68 0A 35 20 6E 63 65 6C 6C 73 3A 35 20 63 65 6C 6C 77 69 64",
+        "description": "Gimp module",
+        "src": "auto"
+    },
+    {
+        "extension": "gih",
+        "signature": "41 63 72 79 6C 69 63 20 30 31 0A 34 20 6E 63 65 6C 6C 73 3A 34 20 63 65 6C 6C 77 69 64 74 68 3A",
+        "description": "GIMP animated brush",
+        "src": "auto"
+    },
+    {
+        "extension": "ppm",
+        "signature": "50 36 0A 23 20 43 52 45 41 54 4F 52 3A 20 54 68 65 20 47 49 4D 50 27 73 20 50 4E 4D 20 46 69 6C",
+        "description": "Portable pixelmap graphic",
+        "src": "auto"
+    },
+    {
+        "extension": "pat",
+        "signature": "00 00 00 21 00 00 00 01 00 00 00 2D 00 00 00 2D 00 00 00 03 47 50 41 54 33 44 20 47 72 65 65 6E",
+        "description": "Gimp pattern file",
+        "src": "auto"
+    },
+    {
+        "extension": "rcc",
+        "signature": "71 72 65 73 00 00 00 01 00 08 5D 44 00 00 00 14 00 08 5B A0 00 00 00 23 3C 21 2D 2D 20 4E 6F 74",
+        "description": "Resource script",
+        "src": "auto"
+    },
+    {
+        "extension": "vp",
+        "signature": "5B 1A 01 00 04 00 00 00 D2 53 00 00 02 00 81 A7 00 00 B1 A2 00 00 92 BA 01 00 04 00 01 00 F9 A1",
+        "description": "Driver",
+        "src": "auto"
+    },
+    {
+        "extension": "nrr",
+        "signature": "14 FB A0 39 23 3E 64 2A 3D F0 7F 99 C5 01 00 00 00 00 00 00 2C 07 00 00 50 07 00 00 74 07 00 00",
+        "description": "Microsoft Office ribbon",
+        "src": "auto"
+    },
+    {
+        "extension": "kic",
+        "signature": "02 00 00 00 0C 00 00 00 4E 20 1C 00 03 00 00 00 10 00 00 00 D4 05 0E 00 66 17 1C 00 03 00 00 00",
+        "description": "Microsoft Office Proofing Tools",
+        "src": "auto"
+    },
+    {
+        "extension": "bdr",
+        "signature": "F8 6C 01 00 0A 00 51 00 75 00 61 00 64 00 72 00 61 00 6E 00 74 00 73 00 00 00 00 00 00 00 00 00",
+        "description": "Microsoft Office PUBBA",
+        "src": "auto"
+    },
+    {
+        "extension": "poc",
+        "signature": "50 4F 43 50 42 35 FD 01 0A 00 17 09 14 00 00 00 1C 01 00 00 18 0C 00 00 00 00 00 00 E2 04 00 00",
+        "description": "Microsoft Office Picture Manager",
+        "src": "auto"
+    },
+    {
+        "extension": "dat",
+        "signature": "01 00 00 00 4B 04 02 00 4B 04 02 00 01 41 00 63 00 63 00 65 00 73 00 73 00 2E 00 78 00 2D 00 6E",
+        "description": "Microsoft Office rsod",
+        "src": "auto"
+    },
+    {
+        "extension": "ttc",
+        "signature": "74 74 63 66 00 02 00 00 00 00 00 02 00 00 00 20 00 00 01 9C 44 53 49 47 00 00 1A 74 01 44 F2 EC",
+        "description": "Font",
+        "src": "auto"
+    },
+    {
+        "extension": "",
+        "signature": "38 42 33 4D 00 02 00 00 00 24 00 00 00 02 00 00 00 3A 00 24 00 24 00 24 00 2F 00 46 00 69 00 6C",
+        "description": "Adobe Preset",
+        "src": "auto"
+    },
+    {
+        "extension": "",
+        "signature": "00 02 01 2C 00 07 25 FD FE 0C FE 0C 00 00 00 00 00 10 00 41 00 4E 00 50 00 41 00 20 00 37 00 31",
+        "description": "Adobe Color",
+        "src": "auto"
+    },
+    {
+        "extension": "",
+        "signature": "4F 54 54 4F 00 0E 00 80 00 03 00 60 42 41 53 45 64 E8 6F 9F 00 04 FE BC 00 00 00 46 43 46 46 20",
+        "description": "Adobe typesupport",
+        "src": "auto"
+    },
+    {
+        "extension": "",
+        "signature": "36 31 30 00 00 00 00 B8 00 00 00 00 00 00 40 01 00 00 40 01 00 00 80 03 00 00 C0 04 00 00 40 01",
+        "description": "Bitmap",
+        "src": "auto"
+    },
+    {
+        "extension": "",
+        "signature": "3A 02 00 00 02 88 00 74 3A 20 00 00 00 F0 B5 84 B0 00 22 02 92 03 92 00 F0 41 FA 00 F0 53 FC 00",
+        "description": "Driver",
+        "src": "auto"
+    },
+    {
+        "extension": "icns",
+        "signature": "69 63 6E 73 00 00 E0 5B 69 63 73 23 00 00 00 48 00 70 0F F0 7F F8 7F F8 7F F8 FF FC FF FE FF FE",
+        "description": "Python Icons",
+        "src": "auto"
+    },
+    {
+        "extension": "sfx",
+        "signature": "4D 5A 90 00 03 00 00 00 04 00 00 00 FF FF 00 00 B8 00 00 00 00 00 00 00 40 00 00 00 00 00 00 00",
+        "description": "Auto uncompress, compressed archive",
+        "src": "auto"
+    },
+    {
+        "extension": "pak",
+        "signature": "05 00 00 00 01 00 00 00 71 01 2B 00 BB 00 64 09 00 00 18 01 21 0A 00 00 1C 01 7F 0B 00 00 1F 01",
+        "description": "Package file",
+        "src": "auto"
+    },
+    {
+        "extension": "nexe",
+        "signature": "7F 45 4C 46 01 01 01 00 00 00 00 00 00 00 00 00 02 00 03 00 01 00 00 00 A0 17 E2 0F 34 00 00 00",
+        "description": "Google Chrome native client executable",
+        "src": "auto"
+    },
+    {
+        "extension": "",
+        "signature": "53 51 4C 69 74 65 20 66 6F 72 6D 61 74 20 33 00 08 00 01 01 00 40 20 20 00 00 00 07 00 00 00 0F",
+        "description": "Chrome Profile file",
+        "src": "auto"
+    },
+    {
+        "extension": "ttf",
+        "signature": "00 01 00 00 00 0E 00 80 00 03 00 60 4F 53 2F 32 8C FC 93 00 00 00 01 68 00 00 00 60 63 6D 61 70",
+        "description": "Font",
+        "src": "auto"
+    },
+    {
+        "extension": "woff",
+        "signature": "77 4F 46 46 00 01 00 00 00 01 AE CC 00 0E 00 00 00 03 95 90 00 01 00 00 00 00 00 00 00 00 00 00",
+        "description": "Font",
+        "src": "auto"
+    },
+    {
+        "extension": "woff2",
+        "signature": "77 4F 46 32 00 01 00 00 00 00 4C BC 00 11 00 00 00 00 9C 48 00 00 4C 5A 00 01 00 00 00 00 00 00",
+        "description": "Font",
+        "src": "auto"
+    },
+    {
+        "extension": "",
+        "signature": "C3 CA 04 C1 00 00 02 00 01 00 00 00 00 01 00 00 01 00 00 00 00 04 00 00 00 00 00 00 01 00 00 00",
+        "description": "Chrome GPU Cache",
+        "src": "auto"
+    },
+    {
+        "extension": "store",
+        "signature": "08 FE E3 B5 80 06 10 09 1A 8E 0A 20 02 2A CA 09 08 01 12 C5 09 08 20 12 C0 09 00 32 2E D3 17 72",
+        "description": "Chrome Store",
+        "src": "auto"
+    },
+    {
+        "extension": "pyd",
+        "signature": "4D 5A 90 00 03 00 00 00 04 00 00 00 FF FF 00 00 B8 00 00 00 00 00 00 00 40 00 00 00 00 00 00 00",
+        "description": "Python dynamic module",
+        "src": "auto"
+    },
+    {
+        "extension": "pyc",
+        "signature": "03 F3 0D 0A 0A 5E 6F 57 63 00 00 00 00 00 00 00 00 03 00 00 00 40 00 00 00 73 7D 00 00 00 64 00",
+        "description": "Python compiled bytecode",
+        "src": "auto"
+    },
+    {
+        "extension": "pyo",
+        "signature": "03 F3 0D 0A FA 4F 6F 57 63 00 00 00 00 00 00 00 00 03 00 00 00 40 00 00 00 73 7D 00 00 00 64 00",
+        "description": "Python compiled code",
+        "src": "auto"
+    },
+    {
+        "extension": "whl",
+        "signature": "50 4B 03 04 14 00 00 00 08 00 36 96 66 49 07 90 A5 37 1C 0F 00 00 54 2C 00 00 0F 00 00 00 70 69",
+        "description": "Python Wheel installer",
+        "src": "auto"
+    },
+    {
+        "extension": "egg",
+        "signature": "50 4B 03 04 14 00 00 00 08 00 74 B4 A6 4A D6 31 9E E6 92 20 00 00 EA 74 00 00 0D 00 00 00 62 73",
+        "description": "Python Egg data",
+        "src": "auto"
+    },
+    {
+        "extension": "npz",
+        "signature": "50 4B 03 04 14 00 00 00 00 00 26 01 67 46 5A 10 38 AF 02 01 00 00 02 01 00 00 05 00 00 00 78 2E",
+        "description": "Python numpy save file",
+        "src": "auto"
+    },
+    {
+        "extension": "npy",
+        "signature": "93 4E 55 4D 50 59 01 00 46 00 7B 27 64 65 73 63 72 27 3A 20 27 3C 66 38 27 2C 20 27 66 6F 72 74",
+        "description": "Python numpy save file",
+        "src": "auto"
+    },
+    {
+        "extension": "so",
+        "signature": "7F 45 4C 46 02 01 01 00 00 00 00 00 00 00 00 00 03 00 3E 00 01 00 00 00 E0 1B 00 00 00 00 00 00",
+        "description": "Python compiled library",
+        "src": "auto"
+    },
+    {
+        "extension": "aifc",
+        "signature": "46 4F 52 4D 00 00 1A F6 41 49 46 43 46 56 45 52 00 00 00 04 A2 80 51 40 43 4F 4D 4D 00 00 00 18",
+        "description": "Audio Interchange File Format sound file with compression",
+        "src": "auto"
+    },
+    {
+        "extension": "pyc",
+        "signature": "33 0D 0D 0A EE CF 45 59 61 08 00 00 E3 00 00 00 00 00 00 00 00 00 00 00 00 04 00 00 00 40 00 00",
+        "description": "Python compiled bytecode",
+        "src": "auto"
+    },
+    {
+        "extension": "pickle",
+        "signature": "80 02 63 63 6F 6C 6C 65 63 74 69 6F 6E 73 0A 4F 72 64 65 72 65 64 44 69 63 74 0A 71 00 29 52 71",
+        "description": "Python Class pickle",
+        "src": "auto"
+    },
+    {
+        "extension": "mo",
+        "signature": "DE 12 04 95 00 00 00 00 80 00 00 00 1C 00 00 00 1C 04 00 00 00 00 00 00 00 00 00 00 00 00 00 00",
+        "description": "Python binary language support file - gettext.bindtextdomain(domain, localedir=None)",
+        "src": "auto"
+    },
+    {
+        "extension": "db",
+        "signature": "2A 2A 50 59 48 45 41 44 45 52 45 43 43 76 32 32 32 2E 2E 2E 30 30 30 2E 2E 2E 30 30 30 2E 2E 2E",
+        "description": "Python Database",
+        "src": "auto"
+    },
+    {
+        "extension": "",
+        "signature": "54 5A 69 66 32 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00",
+        "description": "Python pytz\\zoneinfo",
+        "src": "auto"
+    },
+    {
+        "extension": "mat",
+        "signature": "4D 41 54 4C 41 42 20 35 2E 30 20 4D 41 54 2D 66 69 6C 65 20 50 6C 61 74 66 6F 72 6D 3A 20 70 6F",
+        "description": "Matlab MatFile object",
+        "src": "auto"
+    },
+    {
+        "extension": "mat",
+        "signature": "00 00 03 E8 00 00 00 01 00 00 00 09 00 00 00 01 00 00 00 0C 74 65 73 74 63 6F 6D 70 6C 65 78 00",
+        "description": "Matlab MatFile object",
+        "src": "auto"
+    },
+    {
+        "extension": "sav",
+        "signature": "53 52 00 04 00 00 00 0A 00 00 04 44 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00",
+        "description": "scipy.io dictionary",
+        "src": "auto"
+    },
+    {
+        "extension": "cache",
+        "signature": "2F 62 E9 13 00 00 00 00 7B 3F 00 00 00 00 00 00 00 D9 97 CC B7 61 D4 01 78 41 00 00 66 1B 00 00",
+        "description": "Sublime Text cache",
+        "src": "auto"
+    },
+    {
+        "extension": "sublime-package",
+        "signature": "50 4B 03 04 14 00 00 00 00 00 7B 99 4B 4D 98 68 C7 D4 31 01 00 00 31 01 00 00 1A 00 00 00 41 63",
+        "description": "Sublime Text package",
+        "src": "auto"
+    },
+    {
+        "extension": "fmt",
+        "signature": "4D 5A 90 00 03 00 00 00 04 00 00 00 FF FF 00 00 B8 00 00 00 00 00 00 00 40 00 00 00 00 00 00 00",
+        "description": "WinRAR Formats",
+        "src": "auto"
+    },
+    {
+        "extension": "so",
+        "signature": "4D 5A 90 00 03 00 00 00 04 00 00 00 FF FF 00 00 B8 00 00 00 00 00 00 00 40 00 00 00 00 00 00 00",
+        "description": "ELF shared library",
+        "src": "auto"
+    },
+    {
+        "extension": "exp",
+        "signature": "4C 01 02 00 FF FF FF FF B8 A8 00 00 0E 04 00 00 00 00 00 01 2E 65 64 61 74 61 00 00 00 00 00 00",
+        "description": "Microsoft Visual C++ export file",
+        "src": "auto"
+    },
+    {
+        "extension": "fdb",
+        "signature": "66 64 62 30 91 00 09 42 61 62 65 6C 53 61 6E 73 E3 00 C8 01 02 02 10 02 75 02 94 02 D3 02 EB 02",
+        "description": "Firebird database",
+        "src": "auto"
+    },
+    {
+        "extension": "",
+        "signature": "00 00 00 00 00 00 00 00 00 18 D0 00 00 00 00 00 20 20 20 20 00 00 00 00 00 00 00 00 00 00 00 00",
+        "description": "mysql log",
+        "src": "auto"
+    },
+    {
+        "extension": "frm",
+        "signature": "FE 01 09 09 12 00 56 00 01 00 3E 08 00 00 F9 01 EA 03 00 00 00 00 00 00 00 00 00 02 45 00 08 00",
+        "description": "MySQL database metadata",
+        "src": "auto"
+    },
+    {
+        "extension": "myd",
+        "signature": "FF 6C 6F 63 61 6C 68 6F 73 74 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20",
+        "description": "MySQL database data",
+        "src": "auto"
+    },
+    {
+        "extension": "myi",
+        "signature": "FE FE 07 01 00 02 01 EE 00 B0 00 64 00 EC 00 05 00 00 01 00 53 04 00 00 00 00 39 FF 00 00 00 00",
+        "description": "MySQL database index",
+        "src": "auto"
+    },
+    {
+        "extension": "frm",
+        "signature": "FE 01 0A 09 12 00 56 00 01 00 28 0E 00 00 F9 01 56 09 00 00 00 00 00 00 00 00 00 02 33 00 09 00",
+        "description": "MySQL database metadata",
+        "src": "auto"
+    },
+    {
+        "extension": "csm",
+        "signature": "FE 01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00",
+        "description": "Borland C++ precompiled header file",
+        "src": "auto"
+    },
+    {
+        "extension": "myd",
+        "signature": "FF 00 00 00 00 4A 4F 49 4E 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20",
+        "description": "MySQL database data",
+        "src": "auto"
+    },
+    {
+        "extension": "myd",
+        "signature": "00 FF FF FF FF FF FF 73 74 5F 68 6F 73 74 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20",
+        "description": "MySQL database data",
+        "src": "auto"
+    },
+    {
+        "extension": "sys",
+        "signature": "FE FE 02 03 01 00 3D EF 00 00 D6 03 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 09 00",
+        "description": "mysql system file",
+        "src": "auto"
+    },
+    {
+        "extension": "fft",
+        "signature": "46 57 53 04 2D 6D 00 00 78 00 05 5F 00 00 11 94 00 00 0C 00 00 3F 0C 10 6D 00 00 01 00 A5 00 13",
+        "description": "Font",
+        "src": "auto"
+    },
+    {
+        "extension": "",
+        "signature": "00 00 04 F8 61 70 70 6C 02 20 00 00 73 70 61 63 58 59 5A 20 58 59 5A 20 07 D0 00 02 00 0E 00 0C",
+        "description": "Color Profile",
+        "src": "auto"
+    },
+    {
+        "extension": "",
+        "signature": "00 00 0C 48 4C 69 6E 6F 02 10 00 00 6D 6E 74 72 52 47 42 20 58 59 5A 20 07 CE 00 02 00 09 00 06",
+        "description": "Color Profile",
+        "src": "auto"
+    },
+    {
+        "extension": "",
+        "signature": "7F 45 4C 46 02 01 01 00 00 00 00 00 00 00 00 00 01 00 3E 00 01 00 00 00 00 00 00 00 00 00 00 00",
+        "description": "Chrome pnacl",
+        "src": "auto"
+    },
+    {
+        "extension": "PNG",
+        "signature": "52 49 46 46",
+        "description": "PNG Image",
+        "src": "manually added"
+    },
+    {
+        "extension": "SVG",
+        "signature": "3C 3F 78 6D 6C",
+        "description": "Scalable Vector Graphics",
+        "src": "manually added"
+    },
+    {
+        "extension": "SVG",
+        "signature": "3C 73 76 67 20",
+        "description": "Scalable Vector Graphics",
+        "src": "manually added"
+    },
+    {
+        "extension": "cvd",
+        "signature": "43 6C 61 6D 41",
+        "description": "Clam Anti-Virus",
+        "src": "manually added"
+    },
+    {
+        "extension": "crypt",
+        "signature": "41 45 53 02 00 00 1B",
+        "description": "AES Encrypted: - p cryptFile",
+        "src": "manually added"
+    }
+]

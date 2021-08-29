@@ -2,8 +2,6 @@
 
 FEATURES
 
-    automatically install vnc on debian
-
     works on
 
         windows (cmd.exe)
@@ -11,6 +9,30 @@ FEATURES
         linux and mac (bash)
 
         powershell
+
+    automatically install vnc on debian
+
+    extensive file header database
+
+    manage dnd spells
+
+    p checksum -f pop-os_20.10_amd64_nvidia_10.iso -test 412c49dcdda20dfa69b574f255a63d10dcfe20aa
+
+    p checksum -f pop-os_20.10_amd64_nvidia_10.iso -h md5 sha1 sha224 sha256 sha384 sha512 sha3_224 sha3_256 sha3_384 sha3_512
+
+    in windows, if you use the x command to close
+
+        the history is backed up and associated with files edited using the command line
+
+    automatic franchise research
+
+    cross reference 2 or more tv shows or movies
+
+    list all episodes in a series
+
+
+
+
 
 
 
@@ -36,6 +58,10 @@ HOW TO INSTALL
     python3 installer.py -config.editor "C:\Program Files\Sublime Text 3\sublime_text.exe"
 
 
+
+How to open a file
+
+    n file.txt
 
 How to recover a file
     

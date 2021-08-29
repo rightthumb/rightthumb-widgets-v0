@@ -183,7 +183,9 @@ def process( file, h ):
 	return result
 	
 def action():
-
+	focus()
+	if _.switches.isActive('Files'):
+		_.appData[__.appReg]['pipe'] = _.switches.values('Files')
 	if type( _.appData[__.appReg]['pipe'] ) == bool and not _.switches.isActive('Files'):
 		_.help()
 		print('Here')
