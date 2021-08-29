@@ -13664,6 +13664,11 @@ call %tech_drive%\\widgets\\batch\\c.bat %1
 				for path in A.ff.files:
 					to=v.home+'\\OneDrive\\Documents\\WindowsPowerShell\\'+vc.PATHS.path(path,file=True)
 					# copyfile(path,to)
+					try:
+						if os.path.isfile(to):
+							copyfile(to,to+'.bk')
+					except Exception as e:
+						pass
 					theFile = vc.HD.getText( path, raw=True )
 					theFile = theFile.replace('# 3DF20E1B1A8A',powershellVars)
 					vc.HD.saveText( theFile, to )
@@ -13672,6 +13677,11 @@ call %tech_drive%\\widgets\\batch\\c.bat %1
 			elif os.path.isdir(v.home+'\\Documents\\WindowsPowerShell'):
 				for path in A.ff.files:
 					to=v.home+'\\Documents\\WindowsPowerShell\\'+vc.PATHS.path(path,file=True)
+					try:
+						if os.path.isfile(to):
+							copyfile(to,to+'.bk')
+					except Exception as e:
+						pass
 					# copyfile(path,to)
 					theFile = vc.HD.getText( path, raw=True )
 					theFile = theFile.replace('# 3DF20E1B1A8A',powershellVars)
