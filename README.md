@@ -37,7 +37,12 @@ HOW TO INSTALL
 
 
 
+How to recover a file
+    
+    p fileRecover
 
+    in windows it backs up the command line history
+        the session id is associated with the files edited
 
 Create new python widget with
 
@@ -148,3 +153,34 @@ Before you share a problem the below command will tell you everything I am alrea
                 Accurate △
 
             n widgets/databank/tables/appRegistration.hash
+
+
+Entertainment
+    
+    List every episode of a tv show
+
+        ee the flash
+
+    Cross reference 2 tv show
+
+        p imdb -ent stargate atlantis and when calls the heart -xref
+
+    Automatic franchise research
+
+        p franchise -franchise marvel
+
+        p franchise -franchise dc
+
+        p franchise -franchise hallmark
+
+    When you look up a show
+
+        p imdb -ent the big bang theory
+
+            type f
+                type hallmark
+
+                    It cross references franchises
+
+                        marvel, dc, hallmark
+`
