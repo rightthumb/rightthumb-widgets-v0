@@ -1,0 +1,3 @@
+@echo off
+echo Researching...
+p files + *.py | p f + .json - #    |    p line -ps ' .json    --c | p line --c - " " | p countEach
