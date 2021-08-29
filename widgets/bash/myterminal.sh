@@ -1,0 +1,13 @@
+#!/bin/bash
+echo ""
+echo ""
+echo ""
+echo "mypid=\$(ps -p \$\$ -o ppid=)"
+echo "myterminal=\$(ps -p \$mypid o args=)"
+echo "echo \$myterminal"
+echo ""
+echo ""
+echo "register_terminal ?"
+echo ""
+echo ""
+echo ""
