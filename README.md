@@ -25,11 +25,13 @@ FEATURES
         the history is backed up and associated with files edited using the command line
 
     in linux nice prompt
+
+        random icon in every prompt, lol
         
         ┌──(scott🌭Vulcan)-[/mnt/c/Users/Scott].3.def
         
         └─$
-        
+
     automatic franchise research
 
     cross reference 2 or more tv shows or movies
@@ -148,9 +150,9 @@ Auto build bookmarks
 
 How to import another python widget
 
-    all python widget is imported as an instantiated object
+    all python widgets are imported as an instantiated object
 
-        all interaction is profiled and reports are available
+        all interaction are profiled and reports are available
 
 
 
@@ -164,8 +166,12 @@ Edit python template
 
     epyi base -e
 
-   
 
+Notes
+    
+    epyi base -file notes
+
+   
 
 
 Before you share a problem the below command will tell you everything I am already aware of
