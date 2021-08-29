@@ -1,3 +1,4 @@
+"# rightthumb-widgets-v0" 
 FEATURES
     automatically install vnc on debian
     works on
@@ -71,3 +72,4 @@ Before you share a problem the below command will tell you everything I am alrea
 
                    p f -in *.py + _rightThumb._base  -jn | p f + "if __name__ == '__main__';." - # -jn  | p line --c -make "echo {}| p appInfo" | p execute
                 Accurate △
+            n widgets/databank/tables/appRegistration.hash
