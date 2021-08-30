@@ -1,13 +1,25 @@
-"# rightthumb-widgets-v0" 
 
 DESCRIPTION
 
-    collection of handy scripts
+    collection of handy scripts ( over 1700 )
+
     p file -bin -r -ago 1d
         recursive binary files modified less than a day ago
-    p file -ago 1d -ext video
+
+    p file -ago 1d -ext video --c
         video files edited 1 day ago
             -ext switch includes all related extensions
+            --c does not print totals (works in all apps)
+            -ago accepts epoch date, 1min, 1h, 1d, 1m, 1y
+    p file -?
+        full help menu
+    p file --??
+        smaller help menu with global switches removed
+    p file --?? c
+        lists examples then copies the selected help item to clipboard
+    p file --c | p -copy
+        copies list of files
+
 
 
 
@@ -46,7 +58,7 @@ FEATURES
     cross reference 2 or more tv shows or movies
     list all episodes in a series
 
-    around 1700 widgets in this
+    
 
 
 
@@ -90,24 +102,27 @@ Create new python widget with
 
     # example:
         def action():
+            files=_.isData()
             if _.switches.isActive('Files'):
-                files= _.switches.values('Files')
+                for file in _.switches.values('Files'):
+                    files.append(file)
             if _.switches.isActive('Folders'):
-                files=[]
                 for folder in _.switches.values('Folders'):
                     files.append( folder, r=_.switches.isActive('Recursive') )
-                for path in files:
-                    if _.showLine(path):
-                        process(path)
+            for path in files:
+                if _.showLine(path):
+                    process(path)
     Notes
+        _.isData()
+            pipe or Files switch depending on switch registration
         _.switches.values
             list
-
         _.showLine
             by default is True
             is related to switches:
                 + - -or +close +duplicate -strictcase
                     +close and +duplicate, use a pattern recognition algorithm I cooked up
+
 
 
 
@@ -246,4 +261,11 @@ Entertainment
                     It cross references franchises
 
                         marvel, dc, hallmark
-`
+
+ABOUT
+
+    What if magic existed?
+    What if a place existed where your every thought and dream come to life.
+    There is only one catch: it has to be written down.
+    Such a place exists, it is called programming.
+        - Scott Taylor Reph, RightThumb.com
