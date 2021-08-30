@@ -1,4 +1,15 @@
 #!/usr/bin/python3
+
+# ## {R2D2919B742E} ##
+# ###########################################################################
+# What if magic existed?
+# What if a place existed where your every thought and dream come to life.
+# There is only one catch: it has to be written down.
+# Such a place exists, it is called programming.
+#    - Scott Taylor Reph, RightThumb.com
+# ###########################################################################
+# ## {C3P0D40fAe8B} ##
+
 #835B0032-Legacy
 #!/usr/bin/python
 
@@ -66,3 +77,5 @@ for image_path in image_paths:
             print "{} is Incorrect Recognized as {}".format(nbr_actual, nbr_predicted)
         cv2.imshow("Recognizing Face", predict_image[y: y + h, x: x + w])
         cv2.waitKey(1000)
+
+

@@ -1,4 +1,15 @@
 import _rightThumb._matrix as _matrix
+
+# ## {R2D2919B742E} ##
+# ###########################################################################
+# What if magic existed?
+# What if a place existed where your every thought and dream come to life.
+# There is only one catch: it has to be written down.
+# Such a place exists, it is called programming.
+#    - Scott Taylor Reph, RightThumb.com
+# ###########################################################################
+# ## {C3P0D40fAe8B} ##
+
 import _rightThumb._base3 as _
 
 thisChildApp = _matrix.GenChildLabel.gen( __file__ )
@@ -68,3 +79,5 @@ class TheChild:
 		else:
 			_matrix.app.algorithmRegister( result=False )
 			return _matrix.app.algorithmResult( algorithm, result=None )
+
+

@@ -1,4 +1,15 @@
 #!/usr/bin/python3
+
+# ## {R2D2919B742E} ##
+# ###########################################################################
+# What if magic existed?
+# What if a place existed where your every thought and dream come to life.
+# There is only one catch: it has to be written down.
+# Such a place exists, it is called programming.
+#    - Scott Taylor Reph, RightThumb.com
+# ###########################################################################
+# ## {C3P0D40fAe8B} ##
+
 import glob
 import os.path
 import sys
@@ -38,3 +49,4 @@ for b in bm:
 		notval += 1
 
 print('valid: {}     not valid: {}     total: {}'.format(val,notval,val+notval	))
+

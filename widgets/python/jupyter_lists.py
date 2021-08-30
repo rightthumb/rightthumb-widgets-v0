@@ -1,4 +1,15 @@
 #!/usr/bin/python3
+
+# ## {R2D2919B742E} ##
+# ###########################################################################
+# What if magic existed?
+# What if a place existed where your every thought and dream come to life.
+# There is only one catch: it has to be written down.
+# Such a place exists, it is called programming.
+#    - Scott Taylor Reph, RightThumb.com
+# ###########################################################################
+# ## {C3P0D40fAe8B} ##
+
 #835B0032-Legacy
 
 my_list0 = [1,2,3,4,5,6]
@@ -89,6 +100,8 @@ print '-----------------------------------'
 print new_list
 print new_list.count('a')
 print len(new_list)
+
+
 
 
 

@@ -1,4 +1,15 @@
 #!/usr/bin/python3
+
+# ## {R2D2919B742E} ##
+# ###########################################################################
+# What if magic existed?
+# What if a place existed where your every thought and dream come to life.
+# There is only one catch: it has to be written down.
+# Such a place exists, it is called programming.
+#    - Scott Taylor Reph, RightThumb.com
+# ###########################################################################
+# ## {C3P0D40fAe8B} ##
+
 # https://docs.google.com/spreadsheets/d/1eA-baxXeY_6VrnzCTrLwxcTKA62xs116UKQozjElF_k/edit#gid=0
 # http://gspread.readthedocs.io/en/latest/oauth2.html
 # http://www.makeuseof.com/tag/read-write-google-sheets-python/
@@ -27,3 +38,4 @@ print(all_cells)
 
 sheet.update_acell('G1', 'Updated from console')
 sheet.update_acell('A6', 'Check this out')
+

@@ -1,5 +1,16 @@
 
 
+# ## {R2D2919B742E} ##
+# ###########################################################################
+# What if magic existed?
+# What if a place existed where your every thought and dream come to life.
+# There is only one catch: it has to be written down.
+# Such a place exists, it is called programming.
+#    - Scott Taylor Reph, RightThumb.com
+# ###########################################################################
+# ## {C3P0D40fAe8B} ##
+
+
 _.switches.register(name, switch, expected_input_example = None)
 _.switches.register('Sort','-s,-sort', 'Asc:type, Desc:ext')
 
@@ -188,5 +199,7 @@ _.onlyAlphaNumeric(_.randomizeCase(_.genUUID()))
 True False same in a row
 diff = int((_.randomTrueFalseSame/_.randomTrueFalseCount)*100)
 #######################################
+
+
 
 

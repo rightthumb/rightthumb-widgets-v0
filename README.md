@@ -1,5 +1,16 @@
 "# rightthumb-widgets-v0" 
 
+DESCRIPTION
+
+    collection of handy scripts
+    p file -bin -r -ago 1d
+        recursive binary files modified less than a day ago
+    p file -ago 1d -ext video
+        video files edited 1 day ago
+            -ext switch includes all related extensions
+
+
+
 FEATURES
 
     works on
@@ -29,15 +40,13 @@ FEATURES
         random icon in every prompt, lol
         
         ┌──(scott🌭Vulcan)-[/mnt/c/Users/Scott].3.def
-        
         └─$
 
     automatic franchise research
-
     cross reference 2 or more tv shows or movies
-
     list all episodes in a series
 
+    around 1700 widgets in this
 
 
 
@@ -54,15 +63,12 @@ HOW TO INSTALL
 
 
     cd install
-
     python3 installer.py -install
 
 
 
     which nano | python3 installer.py -config.editor
-
     or
-
     python3 installer.py -config.editor "C:\Program Files\Sublime Text 3\sublime_text.exe"
 
 
@@ -74,15 +80,34 @@ How to open a file
 How to recover a file
     
     p fileRecover
-
-    in windows it backs up the command line history
-        the session id is associated with the files edited
+        in windows it backs up the command line history
+            the session id is associated with the files edited
 
 Create new python widget with
 
     epyi base -build myApp
-
     (scroll to bottom)
+
+    # example:
+        def action():
+            if _.switches.isActive('Files'):
+                files= _.switches.values('Files')
+            if _.switches.isActive('Folders'):
+                files=[]
+                for folder in _.switches.values('Folders'):
+                    files.append( folder, r=_.switches.isActive('Recursive') )
+                for path in files:
+                    if _.showLine(path):
+                        process(path)
+    Notes
+        _.switches.values
+            list
+
+        _.showLine
+            by default is True
+            is related to switches:
+                + - -or +close +duplicate -strictcase
+                    +close and +duplicate, use a pattern recognition algorithm I cooked up
 
 
 

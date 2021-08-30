@@ -1,4 +1,15 @@
 import sys,os,time,datetime,threading
+
+# ## {R2D2919B742E} ##
+# ###########################################################################
+# What if magic existed?
+# What if a place existed where your every thought and dream come to life.
+# There is only one catch: it has to be written down.
+# Such a place exists, it is called programming.
+#    - Scott Taylor Reph, RightThumb.com
+# ###########################################################################
+# ## {C3P0D40fAe8B} ##
+
 # from os.path import isfile, isdir
 # import uuid
 from operator import itemgetter
@@ -417,17 +428,23 @@ def back():
 	if _bm is None:
 		import _rightThumb._bookmarks as _bm
 	return _bm.Bookmarks( 'back' ).get()
-
-def files( folder ):
-	result = []
+files_all=[]
+def files( folder, r=0, first=True ):
+	global files_all
+	if first:
+		files_all = []
 	if os.path.isdir(folder):
 		dirList = os.listdir(folder)
-		
 		for item in dirList:
 			path = __.path(folder +_v.slash+ item)
-			if os.path.isfile(path):
-				result.append(item)
-	return result
+			try:
+				if os.path.isfile(path):
+					files_all.append(item)
+				if r and os.path.isdir(path):
+					files(path,r=1,first=False)
+			except Exception as ee:
+				print(path,ee)
+	return files_all
 
 def f( search=None, path=False,       p=None, s=None, r=False ):
 	if not p is None:
@@ -16764,7 +16781,7 @@ def load():
 		# switches.trigger('Column',formatColumns)
 
 		switchDefault = switches.length()
-		switches.register('Help', '?,??,/?,-?,/h,/help,-help,--help', 'copy  OR ids  OR  12  OR  ?? x')
+		switches.register('Help', '?,??,/?,-?,--??,/h,/help,-help,--help', 'copy  OR ids  OR  12  OR  ?? x')
 		switches.register('Column', '-c,-column', 'size, name')
 		switches.register('Sort','-s,-sort', 'Asc:type, Desc:ext')
 		switches.register('Debug', '-debug')
@@ -17544,3 +17561,5 @@ ph = historyPrint
 		if i == len(data): break;
 '''
 ##########################################################
+
+

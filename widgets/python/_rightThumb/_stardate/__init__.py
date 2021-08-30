@@ -1,4 +1,15 @@
 #!/usr/bin/python3
+
+# ## {R2D2919B742E} ##
+# ###########################################################################
+# What if magic existed?
+# What if a place existed where your every thought and dream come to life.
+# There is only one catch: it has to be written down.
+# Such a place exists, it is called programming.
+#    - Scott Taylor Reph, RightThumb.com
+# ###########################################################################
+# ## {C3P0D40fAe8B} ##
+
 # Date: Mon 24 Jun 2019 17:37:37 CEST
 # Author: Nicolas Flandrois
 # Description: The Compute class regroup all necessary computing functions,
@@ -191,4 +202,6 @@ def gen(tt=None,pp=None):
 
 def resolve(sd):
 	return Compute.sdtranslate(sd)
+
+
 

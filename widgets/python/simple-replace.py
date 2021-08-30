@@ -1,4 +1,15 @@
 #!/usr/bin/python3
+
+# ## {R2D2919B742E} ##
+# ###########################################################################
+# What if magic existed?
+# What if a place existed where your every thought and dream come to life.
+# There is only one catch: it has to be written down.
+# Such a place exists, it is called programming.
+#    - Scott Taylor Reph, RightThumb.com
+# ###########################################################################
+# ## {C3P0D40fAe8B} ##
+
 ##################################################
 # What if magic existed?
 # What if a place existed where your every thought and dream come to life.
@@ -68,7 +79,7 @@ _.appInfo[focus()] = {
 	],
 	'examples': [
 						_.hp('p simple-replace -f c.bat -clip '),
-						_.hp('p simple-replace -f D:\.rightthumb-widgets\widgets\python\_rightThumb\_vars\__init__.py -clip '),
+						_.hp('p simple-replace -f D:\\.rightthumb-widgets\\widgets\\python\\_rightThumb\\_vars\\__init__.py -clip '),
 						_.hp('p simple-replace -clip -folder '),
 						_.hp('p simple-replace -clip -folder '),
 						_.hp('p simple-replace -f %tool% '),
@@ -116,7 +127,7 @@ def registerSwitches( argvProcessForce=False ):
 	appSwitches()
 
 	_.myFileLocation_Print = False
-	_.switches.trigger( 'Files', _.myFileLocations, vs=True )
+	# _.switches.trigger( 'Files', _.myFileLocations, vs=True )
 	_.switches.trigger( 'Folder', _.myFolderLocations )
 	_.switches.trigger( 'URL', _.urlTrigger )
 	_.switches.trigger( 'Ago', _.timeAgo )
@@ -166,6 +177,7 @@ def getFolder(folder):
 
 
 def process(path):
+	# print(path)
 	global index
 	global printed_replace
 	file=_.getText(path,raw=True)
@@ -212,8 +224,9 @@ def action():
 			process(path)
 		if _.switches.isActive('Folders'):
 			folders=_.switches.values('Folders')
-			if not folders:
+			if not len(_.switches.value('Folders')):
 				folders=[os.getcwd()]
+			# print(folders)
 			global files
 			files=[]
 			for folder in folders:
@@ -237,6 +250,8 @@ def backup_file(path):
 if __name__ == '__main__':
 	action()
 	__.isExit()
+
+
 
 
 

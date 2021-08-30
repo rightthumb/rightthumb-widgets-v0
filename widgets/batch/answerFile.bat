@@ -1,4 +1,15 @@
 @echo off
+
+rem ## {R2D2919B742E} ##
+rem ###########################################################################
+rem What if magic existed?
+rem What if a place existed where your every thought and dream come to life.
+rem There is only one catch: it has to be written down.
+rem Such a place exists, it is called programming.
+rem    - Scott Taylor Reph, RightThumb.com
+rem ###########################################################################
+rem ## {C3P0D40fAe8B} ##
+
 set file=%1
 
 setlocal EnableDelayedExpansion
@@ -18,4 +29,6 @@ for /l %%i in (1 1 !n!) do set VAR_%%i=!line_%%i!
 
 echo.
 echo !VAR_1!
+
+
 

@@ -1,4 +1,15 @@
 @echo off
+
+rem ## {R2D2919B742E} ##
+rem ###########################################################################
+rem What if magic existed?
+rem What if a place existed where your every thought and dream come to life.
+rem There is only one catch: it has to be written down.
+rem Such a place exists, it is called programming.
+rem    - Scott Taylor Reph, RightThumb.com
+rem ###########################################################################
+rem ## {C3P0D40fAe8B} ##
+
 SET run=
 SET /p run= About to open files: 
 IF [%run%] == [y] CALL n testSSL.bat
@@ -36,4 +47,6 @@ start cmd /c cx p ssl_socket_bridge_client_user_administrator_b
 start cmd /c cx p ssl_socket_bridge_client_user_administrator_logs_b
 
 start cmd /c cx p ssl_socket_bridge_client_user_administrator_phone
+
+
 

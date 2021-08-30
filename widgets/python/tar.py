@@ -1,4 +1,15 @@
 #!/usr/bin/python3
+
+# ## {R2D2919B742E} ##
+# ###########################################################################
+# What if magic existed?
+# What if a place existed where your every thought and dream come to life.
+# There is only one catch: it has to be written down.
+# Such a place exists, it is called programming.
+#    - Scott Taylor Reph, RightThumb.com
+# ###########################################################################
+# ## {C3P0D40fAe8B} ##
+
 import os
 import sys
 import time
@@ -121,7 +132,7 @@ def registerSwitches( argvProcessForce=False ):
 
 	_.myFileLocation_Print = False
 	# __.myFileLocations_SKIP_VALIDATION = False
-	_.switches.trigger( 'Files', _.myFileLocations, vs=True )
+	# _.switches.trigger( 'Files', _.myFileLocations, vs=True )
 	_.switches.trigger( 'Folder', _.myFolderLocations )
 	_.switches.trigger( 'URL', _.urlTrigger )
 	_.switches.trigger( 'Ago', _.timeAgo )
@@ -188,7 +199,7 @@ _.postLoad( __file__ )
 
 
 def compress():
-	files = _.isData(r=1)
+	files = _.isData()
 	gz = _.switches.isActive('Gz')
 	tarball = None
 	if len(_.switches.value('Compress')):
@@ -205,13 +216,15 @@ def uncompress():
 
 
 def action():
-	
+	subjects=_.isData()
+	if _.switches.isActive('Files'):
+		subjects=_.switches.values('Files')
 	if _.switches.isActive('List'):
-		_tar.list(_.isData(r=1))
+		_tar.list(subjects)
 		return None
 
 	if not _.switches.isActive('Compress') and not _.switches.isActive('Uncompress'):
-		for i,path in enumerate( _.isData(r=1) ):
+		for i,path in enumerate( subjects ):
 			# print('here')
 			if  path.endswith('.gz') or path.endswith('.bz2'):
 				_.switches.fieldSet( 'Uncompress', 'active', True )
@@ -235,6 +248,8 @@ import xtarfile
 if __name__ == '__main__':
 	action()
 	__.isExit()
+
+
 
 
 

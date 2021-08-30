@@ -1,4 +1,15 @@
 #!/usr/bin/python3
+
+# ## {R2D2919B742E} ##
+# ###########################################################################
+# What if magic existed?
+# What if a place existed where your every thought and dream come to life.
+# There is only one catch: it has to be written down.
+# Such a place exists, it is called programming.
+#    - Scott Taylor Reph, RightThumb.com
+# ###########################################################################
+# ## {C3P0D40fAe8B} ##
+
 import _rightThumb._construct as __
 import _rightThumb._string as _str
 from pathlib import Path
@@ -263,10 +274,11 @@ archive7z =  ddDim(techDrive) +slash+'archive_7z_files'
 widgets = techFolder
 programs=widgets
 pp = techFolder + slash+'widgets'
-appProfiles = widgets + slash+'python'+slash+'profiles'
-compiled = widgets + slash+'compiled'
-documentation = widgets + slash+'documentation'
-project = widgets + slash+'project'
+w = techFolder + slash+'widgets'
+appProfiles = widgets+os.sep+'widgets'+ slash+'python'+slash+'profiles'
+compiled = widgets+os.sep+'widgets'+ slash+'compiled'
+documentation = widgets+os.sep+'widgets'+ slash+'documentation'
+project = widgets+os.sep+'widgets'+ slash+'project'
 updates = project + slash+'updates'
 images = techFolder + slash+'widgets'+slash+'project'+slash+'img'+slash
 # log_config = techFolder + slash+'widgets'+slash+'project'+slash+'log_config'+slash+'log_data.js'
@@ -500,32 +512,32 @@ data = research
 databank = research
 python = {
 			'crypt': {
-						'en': widgets + slash+'python'+slash+'crypt'+slash+'en',
-						'de': widgets + slash+'python'+slash+'crypt'+slash+'de',
+						'en': widgets+os.sep+'widgets'+ slash+'python'+slash+'crypt'+slash+'en',
+						'de': widgets+os.sep+'widgets'+ slash+'python'+slash+'crypt'+slash+'de',
 			},
 			'imploded': {
-						'windows': widgets + slash+'python'+slash+'imploded'+slash+'unity',
-						'unix': widgets + slash+'python'+slash+'imploded'+slash+'unity',
+						'windows': widgets+os.sep+'widgets'+ slash+'python'+slash+'imploded'+slash+'unity',
+						'unix': widgets+os.sep+'widgets'+ slash+'python'+slash+'imploded'+slash+'unity',
 						'this': None,
 			},
 			'src': {
-						'windows': widgets + slash+'python'+slash+'src'+slash+'unity',
-						'unix': widgets + slash+'python'+slash+'src'+slash+'unity',
+						'windows': widgets+os.sep+'widgets'+ slash+'python'+slash+'src'+slash+'unity',
+						'unix': widgets+os.sep+'widgets'+ slash+'python'+slash+'src'+slash+'unity',
 						'this': None,
 			},
 			'compiled': {
-						'windows': widgets + slash+'python'+slash+'compiled'+slash+'unity',
-						'unix': widgets + slash+'python'+slash+'compiled'+slash+'unity',
+						'windows': widgets+os.sep+'widgets'+ slash+'python'+slash+'compiled'+slash+'unity',
+						'unix': widgets+os.sep+'widgets'+ slash+'python'+slash+'compiled'+slash+'unity',
 						'this': None,
 			},
 			'burn': {
-						'windows': widgets + slash+'python'+slash+'burn'+slash+'unity',
-						'unix': widgets + slash+'python'+slash+'burn'+slash+'unity',
+						'windows': widgets+os.sep+'widgets'+ slash+'python'+slash+'burn'+slash+'unity',
+						'unix': widgets+os.sep+'widgets'+ slash+'python'+slash+'burn'+slash+'unity',
 						'this': None,
 			},
 }
 
-py = widgets + slash+'python'
+py = widgets+os.sep+'widgets'+ slash+'python'
 
   
 folder_alt = folder_alt.replace( '(profile)', userprofile + slash )
@@ -835,31 +847,31 @@ def dir_structure():
 	dir_check_create( thisHost+slash+'tables'+slash+'imdb' )
 	dir_check_create( thisHost+slash+'tables'+slash+'txt' )
 	dir_check_create( thisHost+slash+'tables'+slash+'applogs' )
-	# dir_check_create( widgets+slash+'{}' )
-	# type %tmpf1% | p line --c -make "dir_check_create( widgets+slash+'{}' )"
-	dir_check_create( widgets+slash+'batch' )
-	dir_check_create( widgets+slash+'c++' )
-	dir_check_create( widgets+slash+'compiled' )
-	# dir_check_create( widgets+slash+'data' )
-	dir_check_create( widgets+slash+'databank' )
-	dir_check_create( widgets+slash+'documentation' )
-	dir_check_create( widgets+slash+'exe' )
-	dir_check_create( widgets+slash+'extensions' )
-	# dir_check_create( widgets+slash+'hack' )
-	dir_check_create( widgets+slash+'html' )
-	dir_check_create( widgets+slash+'javascript' )
-	dir_check_create( widgets+slash+'keys' )
-	dir_check_create( widgets+slash+'php' )
-	dir_check_create( widgets+slash+'powershell' )
-	dir_check_create( widgets+slash+'project' )
-	dir_check_create( widgets+slash+'python' )
-	dir_check_create( widgets+slash+'vbs' )
-	dir_check_create( widgets+slash+'webApp' )
-	dir_check_create( widgets+slash+'java' )
-	dir_check_create( widgets+slash+'git' )
-	dir_check_create( widgets+slash+'cron' )
-	dir_check_create( widgets+slash+'sessions'+slash+'waiting' )
-	dir_check_create( widgets+slash+'sessions'+slash+'active' )
+	# dir_check_create( widgets+os.sep+'widgets'+slash+'{}' )
+	# type %tmpf1% | p line --c -make "dir_check_create( widgets+os.sep+'widgets'+slash+'{}' )"
+	dir_check_create( widgets+os.sep+'widgets'+slash+'batch' )
+	dir_check_create( widgets+os.sep+'widgets'+slash+'c++' )
+	dir_check_create( widgets+os.sep+'widgets'+slash+'compiled' )
+	# dir_check_create( widgets+os.sep+'widgets'+slash+'data' )
+	dir_check_create( widgets+os.sep+'widgets'+slash+'databank' )
+	dir_check_create( widgets+os.sep+'widgets'+slash+'documentation' )
+	dir_check_create( widgets+os.sep+'widgets'+slash+'exe' )
+	dir_check_create( widgets+os.sep+'widgets'+slash+'extensions' )
+	# dir_check_create( widgets+os.sep+'widgets'+slash+'hack' )
+	dir_check_create( widgets+os.sep+'widgets'+slash+'html' )
+	dir_check_create( widgets+os.sep+'widgets'+slash+'javascript' )
+	dir_check_create( widgets+os.sep+'widgets'+slash+'keys' )
+	dir_check_create( widgets+os.sep+'widgets'+slash+'php' )
+	dir_check_create( widgets+os.sep+'widgets'+slash+'powershell' )
+	dir_check_create( widgets+os.sep+'widgets'+slash+'project' )
+	dir_check_create( widgets+os.sep+'widgets'+slash+'python' )
+	dir_check_create( widgets+os.sep+'widgets'+slash+'vbs' )
+	dir_check_create( widgets+os.sep+'widgets'+slash+'webApp' )
+	dir_check_create( widgets+os.sep+'widgets'+slash+'java' )
+	dir_check_create( widgets+os.sep+'widgets'+slash+'git' )
+	dir_check_create( widgets+os.sep+'widgets'+slash+'cron' )
+	dir_check_create( widgets+os.sep+'widgets'+slash+'sessions'+slash+'waiting' )
+	dir_check_create( widgets+os.sep+'widgets'+slash+'sessions'+slash+'active' )
 	dir_check_create( techDrive+slash+'techApps' )
 	# dir_check_create( techDrive + slash+'techApps\\_installers' )
 	# dir_check_create( techDrive + slash+'techApps\\_stand_alone' )
@@ -1249,16 +1261,16 @@ def batch_files():
 		global slash
 		## OLD_INSTALLER
 		# if __.isWin:
-		# 	if not os.path.isfile( widgets + slash+'batch\\c.bat' ):
+		# 	if not os.path.isfile( widgets+os.sep+'widgets'+ slash+'batch\\c.bat' ):
 		# 		from _rightThumb._vars import batch_c
 		# 		batch_c.GENERATE_FILE(widgets)
 		# 	if not os.path.isfile( home + slash+'cc.bat' ):
 		# 		from _rightThumb._vars import batch_cc
 		# 		batch_cc.GENERATE_FILE(home)
-		# 	if not os.path.isfile( widgets + slash+'batch\\timestamp.bat' ):
+		# 	if not os.path.isfile( widgets+os.sep+'widgets'+ slash+'batch\\timestamp.bat' ):
 		# 		from _rightThumb._vars import batch_timestamp
 		# 		batch_timestamp.GENERATE_FILE(widgets)
-		# 	if not os.path.isfile( widgets + slash+'batch\\theUSB.bat' ):
+		# 	if not os.path.isfile( widgets+os.sep+'widgets'+ slash+'batch\\theUSB.bat' ):
 		# 		from _rightThumb._vars import batch_theUSB
 		# 		batch_theUSB.GENERATE_FILE(widgets)
 if not __.autoCreationConfiguration['created']['_vars']:
@@ -1429,3 +1441,5 @@ if not os.path.isdir(myConfig):
 # dir_check_create
 # thisHost
 ## OLD_INSTALLER
+myAppsPy=py
+

@@ -1,4 +1,15 @@
 import _rightThumb._vars as _v
+
+# ## {R2D2919B742E} ##
+# ###########################################################################
+# What if magic existed?
+# What if a place existed where your every thought and dream come to life.
+# There is only one catch: it has to be written down.
+# Such a place exists, it is called programming.
+#    - Scott Taylor Reph, RightThumb.com
+# ###########################################################################
+# ## {C3P0D40fAe8B} ##
+
 import os.path
 def GENERATE_FILE(programs):
 	fileName = programs + _v.slash+'batch\\c.bat'
@@ -368,3 +379,5 @@ GOTO:EOF
 
 	if not os.path.isfile( fileName ):
 		open(fileName,'w', encoding='utf-8').write(fileData)
+
+

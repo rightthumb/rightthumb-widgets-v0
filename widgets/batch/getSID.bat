@@ -1,5 +1,16 @@
 @echo off
 
+rem ## {R2D2919B742E} ##
+rem ###########################################################################
+rem What if magic existed?
+rem What if a place existed where your every thought and dream come to life.
+rem There is only one catch: it has to be written down.
+rem Such a place exists, it is called programming.
+rem    - Scott Taylor Reph, RightThumb.com
+rem ###########################################################################
+rem ## {C3P0D40fAe8B} ##
+
+
 wmic useraccount where (name='administrator' and domain='%computername%') get name,sid | find /i "admin">"%temp%\getSID.txt"
 set /p thisSID=<"%temp%\getSID.txt"
 set thisSID=%thisSID:~15,44%
@@ -23,3 +34,4 @@ FOR %%i IN ("a=A" "b=B" "c=C" "d=D" "e=E" "f=F" "g=G" "h=H" "i=I" "j=J" "k=K" "l
 
 set machineID={%machineID:~0,8%-%machineID:~8,4%-%machineID:~12,4%-%machineID:~16,4%-%machineID:~20,12%}
 set thisSIDMD5=
+

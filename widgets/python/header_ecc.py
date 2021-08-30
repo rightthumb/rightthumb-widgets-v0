@@ -1,4 +1,15 @@
 #!/usr/bin/python3
+
+# ## {R2D2919B742E} ##
+# ###########################################################################
+# What if magic existed?
+# What if a place existed where your every thought and dream come to life.
+# There is only one catch: it has to be written down.
+# Such a place exists, it is called programming.
+#    - Scott Taylor Reph, RightThumb.com
+# ###########################################################################
+# ## {C3P0D40fAe8B} ##
+
 #835B0032-Legacy
 #!/usr/bin/env python
 # https://pypi.org/project/pyFileFixity/
@@ -737,3 +748,4 @@ Note2: that Reed-Solomon can correct up to 2*resilience_rate erasures (eg, null 
 # Calling main function if the script is directly called (not imported as a library in another program)
 if __name__ == "__main__":  # pragma: no cover
     sys.exit(main())
+

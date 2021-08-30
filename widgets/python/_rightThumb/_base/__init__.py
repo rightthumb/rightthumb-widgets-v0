@@ -1,4 +1,15 @@
 # import _rightThumb._base as _
+
+# ## {R2D2919B742E} ##
+# ###########################################################################
+# What if magic existed?
+# What if a place existed where your every thought and dream come to life.
+# There is only one catch: it has to be written down.
+# Such a place exists, it is called programming.
+#    - Scott Taylor Reph, RightThumb.com
+# ###########################################################################
+# ## {C3P0D40fAe8B} ##
+
 '''
 p[0] = _.svc(p[0])
 
@@ -1203,6 +1214,8 @@ _.appInfo['columns'].append({'name': 'path', 'abbreviation': 'p'})
 _.appInfo['columns'].append({'name': 'size', 'abbreviation': 's'})
 
 '''
+
+
 
 
 

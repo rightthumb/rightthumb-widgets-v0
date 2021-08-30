@@ -1,4 +1,15 @@
 #!/usr/bin/python3
+
+# ## {R2D2919B742E} ##
+# ###########################################################################
+# What if magic existed?
+# What if a place existed where your every thought and dream come to life.
+# There is only one catch: it has to be written down.
+# Such a place exists, it is called programming.
+#    - Scott Taylor Reph, RightThumb.com
+# ###########################################################################
+# ## {C3P0D40fAe8B} ##
+
 #835B0032-Legacy
 
 
@@ -26,6 +37,8 @@ print 'Here is a number: %r. Here is a string: %r' %(123.1,'hi')
 print 'Object 1: {a}, Object 2: {b}, Object 3: {c}, Object 4: {d}'.format(a=1,b='two',c=12.3,d=stri)
 
 print 'Object 1: {a}, Object 2: {b}, Object 3: {c}, Object 4: {d}, '.format(a=1,b='two',c=12.3,d=stri) + stri2
+
+
 
 
 

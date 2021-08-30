@@ -1,4 +1,15 @@
 #!/usr/bin/python3
+
+# ## {R2D2919B742E} ##
+# ###########################################################################
+# What if magic existed?
+# What if a place existed where your every thought and dream come to life.
+# There is only one catch: it has to be written down.
+# Such a place exists, it is called programming.
+#    - Scott Taylor Reph, RightThumb.com
+# ###########################################################################
+# ## {C3P0D40fAe8B} ##
+
 #835B0032-Legacy
 # https://pypi.python.org/pypi/pinterest-client/1.0.2
 from pinterest import Pinterest
@@ -54,4 +65,6 @@ obj.close
 # 			logFile.write(str('\n' + pinID) + ',' + str(link))
 # 	except Exception as e:
 # 		pass
+
+
 

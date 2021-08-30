@@ -1,17 +1,24 @@
 #!/usr/bin/python3
+
+# ## {R2D2919B742E} ##
+# ###########################################################################
+# What if magic existed?
+# What if a place existed where your every thought and dream come to life.
+# There is only one catch: it has to be written down.
+# Such a place exists, it is called programming.
+#    - Scott Taylor Reph, RightThumb.com
+# ###########################################################################
+# ## {C3P0D40fAe8B} ##
+
 import os
 import sys
 import time
 # import simplejson as json
 # from threading import Timer
 
-
 ##################################################
-# construct registration
-
 import _rightThumb._construct as __
 appDBA = __.clearFocus( __name__, __file__ )
-# appDBA = __name__
 __.appReg = appDBA
 def focus( parentApp='', childApp='', reg=True ):
 	global appDBA
@@ -24,9 +31,7 @@ __.registeredApps.append( focus() )
 
 import _rightThumb._base3 as _
 _.load()
-
 ##################################################
-
 import _rightThumb._vars as _v
 import _rightThumb._string as _str
 
@@ -99,14 +104,11 @@ import _rightThumb._dir as _dir
 # _tickets = _.regImp( __.appReg, 'ticketTimeline' )
 # 	_tickets.switch( 'ReturnFiles' )
 # 	records = _tickets.do( 'records' )
-
 ##################################################
-
 # from lxml import html
 # import requests
 # import cssselect
 # import sqlite3
-
 ##################################################
 
 
@@ -118,17 +120,7 @@ def appSwitches():
 	# _.switches.register( 'Files', '-f,-file,-files','file.txt', isPipe='name,data,clean', description='Files' )
 
 
-	"""
-	_.switches.documentation( 'Test', { 
-										'examples': [
-														'',
-													],
-
-										'required': [],
-										'related': [],
-										'isRequired': False,
-									} )
-	"""
+	
 
 
 _.autoBackupData = True
@@ -182,10 +174,6 @@ _.appData[focus()] = {
 	},
 	}
 
-# _.appInfo[focus()]['examples'].append( 'p thisApp -file file.txt' )
-
-# _.appInfo[focus()]['columns'].append( {'name': 'name', 'abbreviation': 'n'} )
-
 
 
 def registerSwitches( argvProcessForce=False ):
@@ -210,9 +198,6 @@ def registerSwitches( argvProcessForce=False ):
 	
 	# _.switches.trigger( 'Files',_.inRelevantFolder )
 	
-	# _.switches.trigger( 'Watched', _.txt2Date )
-	# _.switches.trigger( 'Input',_.formatColumns )
-	# _.switches.trigger( 'Franchise',_.triggerSpace )
 	
 	_.defaultScriptTriggers()
 	_.switches.process()
@@ -240,16 +225,6 @@ if __name__ == '__main__':
 _.postLoad( __file__ )
 
 ########################################################################################
-# data = _.tables.returnSorted( 'data', 'd.timestamp', data )
-# _.switches.fieldSet( 'Long', 'active', True )
-# _.tables.register( 'data', table )
-# _.tables.print( 'data', 'name' )
-# p = _.getText( _v.pips, raw=True, clean=True ).split( '\n' )
-# os.system( '"' + do + '"' )
-# _.setPipeData( os.listdir( os.getcwd() ), focus() )
-# _.showLine( item )
-# 	if os.path.isdir( row ):
-# 	if os.path.isfile( row ):
 # __.appRegPipe
 ########################################################################################
 # START
@@ -404,7 +379,6 @@ def action():
 
 
 
-
 def load():
 	global undo
 
@@ -432,6 +406,9 @@ data = []
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
+
+
 
 
 

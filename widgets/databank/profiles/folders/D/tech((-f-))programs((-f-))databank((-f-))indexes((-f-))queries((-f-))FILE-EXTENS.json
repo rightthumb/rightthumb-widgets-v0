@@ -1,0 +1,30 @@
+{
+    "self": {
+        "ls": {
+            "1614430757.5948758": {
+                "app": "ls",
+                "recursive": false,
+                "factors": {
+                    "Text": false,
+                    "Binary": false,
+                    "Extensions": false,
+                    "Type": [],
+                    "PlusOr": false,
+                    "PlusClose": false,
+                    "Ago": true,
+                    "Plus": false,
+                    "Minus": false,
+                    "AgoVals": [
+                        1614430457.5599704
+                    ],
+                    "PlusVals": [],
+                    "MinusVals": []
+                },
+                "percentage": 18,
+                "count": 2,
+                "files": 11
+            }
+        }
+    },
+    "recursive": {}
+}

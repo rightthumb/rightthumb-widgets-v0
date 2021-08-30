@@ -1,4 +1,15 @@
 #!/usr/bin/python3
+
+# ## {R2D2919B742E} ##
+# ###########################################################################
+# What if magic existed?
+# What if a place existed where your every thought and dream come to life.
+# There is only one catch: it has to be written down.
+# Such a place exists, it is called programming.
+#    - Scott Taylor Reph, RightThumb.com
+# ###########################################################################
+# ## {C3P0D40fAe8B} ##
+
 import os, sys, time
 ##################################################
 import _rightThumb._construct as __
@@ -435,7 +446,7 @@ _.postLoad( 'D:\\\\tech\\\\hosts\\\\VULCAN\\\\widgets\\\\python\\\\testing123.py
 # _.f(p=1)
 # _.printVarSimple(  _dir.info(  _.f( 'secure', r=1 )  )  )
 # os.system('cls')
-# print( str( '\n'.join( dir(_v) )  ) )
+# print( str( '\\n'.join( dir(_v) )  ) )
 
 
 		'''
@@ -645,6 +656,8 @@ def action():
 if __name__ == '__main__':
 	action()
 	_.tables.eof()
+
+
 
 
 

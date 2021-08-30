@@ -1,4 +1,15 @@
 import _rightThumb._matrix as _matrix
+
+# ## {R2D2919B742E} ##
+# ###########################################################################
+# What if magic existed?
+# What if a place existed where your every thought and dream come to life.
+# There is only one catch: it has to be written down.
+# Such a place exists, it is called programming.
+#    - Scott Taylor Reph, RightThumb.com
+# ###########################################################################
+# ## {C3P0D40fAe8B} ##
+
 import time
 def async( name, script=None, kwargs=None, timeout=None, trigger=None, tkwargs=None, ttimeout=None, focus=None, trackingID=None,    k=None, t=None, tk=None, tt=None, ttime=None, f=None ):
 		appReg = _matrix.appReg
@@ -78,5 +89,7 @@ def async( name, script=None, kwargs=None, timeout=None, trigger=None, tkwargs=N
 				_matrix.app.records[ 'async' ][_matrix.app.label( name, focus, isBase=isBase )].add( theID=theID, registration=registration )
 			return _matrix.app.records[ 'async' ][_matrix.app.label( name, focus, isBase=isBase )]
 			# _matrix.app.records_async[name] = _async_child.TheChild( theID=theID, registration=registration )
+
+
 
 

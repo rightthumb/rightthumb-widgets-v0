@@ -1,4 +1,15 @@
 #!/bin/bash
+
+# ## {R2D2919B742E} ##
+# ###########################################################################
+# What if magic existed?
+# What if a place existed where your every thought and dream come to life.
+# There is only one catch: it has to be written down.
+# Such a place exists, it is called programming.
+#    - Scott Taylor Reph, RightThumb.com
+# ###########################################################################
+# ## {C3P0D40fAe8B} ##
+
 # wget -q http://reph.us/tools/tool -O $HOME/.rt/tool
 self_version="0.1.22.31"
 alias tool="$HOME/.rt/tool"
@@ -656,3 +667,5 @@ fi
 [[ "$*" == *-pip3.a* ]]    && pip3_install
 [[ "$*" == *-emoji* ]]    && run_command "apt-get install fonts-noto-color-emoji"
 [[ "$*" == "" ]]           && script_help
+
+

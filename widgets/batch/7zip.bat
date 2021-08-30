@@ -1,5 +1,16 @@
 @echo off
 
+rem ## {R2D2919B742E} ##
+rem ###########################################################################
+rem What if magic existed?
+rem What if a place existed where your every thought and dream come to life.
+rem There is only one catch: it has to be written down.
+rem Such a place exists, it is called programming.
+rem    - Scott Taylor Reph, RightThumb.com
+rem ###########################################################################
+rem ## {C3P0D40fAe8B} ##
+
+
 PROMPT - 
 ECHO %1>~path.txt    
 FOR /F "tokens=1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26 delims=\" %%A in (~path.txt) DO (
@@ -71,3 +82,5 @@ GOTO spaces_check_done
 echo "%myvar2%" %1
 
 "c:\Program Files (x86)\7-Zip\7z.exe" a "%myvar2%" %1
+
+

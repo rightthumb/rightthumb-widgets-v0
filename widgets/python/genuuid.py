@@ -1,4 +1,15 @@
 #!/usr/bin/python3
+
+# ## {R2D2919B742E} ##
+# ###########################################################################
+# What if magic existed?
+# What if a place existed where your every thought and dream come to life.
+# There is only one catch: it has to be written down.
+# Such a place exists, it is called programming.
+#    - Scott Taylor Reph, RightThumb.com
+# ###########################################################################
+# ## {C3P0D40fAe8B} ##
+
 import os
 import sys
 import time
@@ -25,7 +36,7 @@ import _rightThumb._string as _str
 def appSwitches():
 	pass
 	_.switches.register( 'Long', '-long' )
-	_.switches.register( 'Short', '-short' )
+	_.switches.register( 'Short', '-short,-mini,-small' )
 	_.switches.register( 'Strip', '-strip' )
 	_.switches.register( 'Count', '-cnt,-count' )
 	_.switches.register( 'PrintCharLength', '-print,-printlen,-lenprint,-len' )
@@ -144,18 +155,17 @@ _.postLoad( __file__ )
 ########################################################################################
 # START
 
-def action():
-	global first
+def action(first=True):
 
-	if _.switches.isActive('Count'):
-		if first:
-			first = False
-			i=1
-			while not i == int(_.switches.value('Count')):
-				i+=1
-				action()
+	if first and _.switches.isActive('Count'):
+		ids=[]
+		i=0
+		while i < int(_.switches.value('Count')):
+			i+=1
+			ids.append(action(first=False))
+		return ids
 
-
+	focus()
 	if not _.switches.isActive('Long') and not _.switches.isActive('Short'):
 		genid = _.genUUID()
 	elif _.switches.isActive('Short'):
@@ -190,11 +200,12 @@ def action():
 	return genid
 
 
-first = True
 
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
+
 
 
 

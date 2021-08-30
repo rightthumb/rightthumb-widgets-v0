@@ -1,4 +1,15 @@
 import _rightThumb._matrix as _matrix
+
+# ## {R2D2919B742E} ##
+# ###########################################################################
+# What if magic existed?
+# What if a place existed where your every thought and dream come to life.
+# There is only one catch: it has to be written down.
+# Such a place exists, it is called programming.
+#    - Scott Taylor Reph, RightThumb.com
+# ###########################################################################
+# ## {C3P0D40fAe8B} ##
+
 import time
 def procedure( name, registration=None, focus=None, trackingID=None ):
 		appReg = _matrix.appReg
@@ -48,4 +59,6 @@ def procedure( name, registration=None, focus=None, trackingID=None ):
 				_matrix.app.records[ 'procedure' ][_matrix.app.label( name, focus, isBase=isBase )].add( theID=theID, registration=registration )
 			return _matrix.app.records[ 'procedure' ][_matrix.app.label( name, focus, isBase=isBase )]
 			# _matrix.app.records_procedure[name] = _procedure_child.TheChild( theID=theID, registration=registration )
+
+
 

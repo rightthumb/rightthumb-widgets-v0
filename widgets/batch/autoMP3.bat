@@ -1,5 +1,16 @@
 @echo off
 
+rem ## {R2D2919B742E} ##
+rem ###########################################################################
+rem What if magic existed?
+rem What if a place existed where your every thought and dream come to life.
+rem There is only one catch: it has to be written down.
+rem Such a place exists, it is called programming.
+rem    - Scott Taylor Reph, RightThumb.com
+rem ###########################################################################
+rem ## {C3P0D40fAe8B} ##
+
+
 
 
 CALL p file --c - *.mp3 + *.opus *.webm *.m4a  -or > %tmpf%
@@ -29,3 +40,5 @@ del "%audioFile%"
 rem yAudio "https://www.youtube.com/watch?v=NGFToiLtXrod" & autoMP3 Can't Take My Eyes off You
 
 rem type %tmpf2% | a.playlist 1
+
+

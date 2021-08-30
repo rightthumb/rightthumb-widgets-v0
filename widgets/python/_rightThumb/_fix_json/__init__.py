@@ -1,5 +1,16 @@
 
 
+# ## {R2D2919B742E} ##
+# ###########################################################################
+# What if magic existed?
+# What if a place existed where your every thought and dream come to life.
+# There is only one catch: it has to be written down.
+# Such a place exists, it is called programming.
+#    - Scott Taylor Reph, RightThumb.com
+# ###########################################################################
+# ## {C3P0D40fAe8B} ##
+
+
 from os import path
 class Simple_JSON_Fix:
 	def __init__( self, path_or_code, i=0, save=None ):
@@ -321,3 +332,4 @@ class Simple_JSON_Fix:
 
 test=Simple_JSON_Fix( 'D:\\.rightthumb-widgets\\hosts\\VULCAN\\tables\\fileBackup.json', save=1 )
 python_variable=test.var
+

@@ -1,4 +1,15 @@
 -aggregate @ eof
+
+# ## {R2D2919B742E} ##
+# ###########################################################################
+# What if magic existed?
+# What if a place existed where your every thought and dream come to life.
+# There is only one catch: it has to be written down.
+# Such a place exists, it is called programming.
+#    - Scott Taylor Reph, RightThumb.com
+# ###########################################################################
+# ## {C3P0D40fAe8B} ##
+
 #######################################################################################
 _.showLine(item)
 #######################################################################################
@@ -324,4 +335,6 @@ def dateScramble( data ):
 
 
 p inBackup -v -vs -f %tmpf0% %tmpf1% %tmpf2% %tmpf3% %tmpf4% %tmpf5% %tmpf6% %tmpf7% %tmpf8% %tmpf9% -c n r v b -aggregate "eot?newest-date=max(date,?date); eof?bk-total = add(len(backup)); config(?var,?all,?first); format(eot?newest-date,?date); format(eof?bk-total,?comma); bk = add(len(backup)); eof?latest=max(date,?date); format(eof?latest,?date);"
+
+
 

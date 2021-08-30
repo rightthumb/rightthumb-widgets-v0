@@ -1,4 +1,15 @@
 #!/usr/bin/python3
+
+# ## {R2D2919B742E} ##
+# ###########################################################################
+# What if magic existed?
+# What if a place existed where your every thought and dream come to life.
+# There is only one catch: it has to be written down.
+# Such a place exists, it is called programming.
+#    - Scott Taylor Reph, RightThumb.com
+# ###########################################################################
+# ## {C3P0D40fAe8B} ##
+
 # The MIT License (MIT)
 #
 # Copyright (c) 2017 Scott Shawcroft for Adafruit Industries.
@@ -253,3 +264,4 @@ def map_range(x, in_min, in_max, out_min, out_max):
     if out_min <= out_max:
         return max(min(mapped, out_max), out_min)
     return min(max(mapped, out_max), out_min)
+

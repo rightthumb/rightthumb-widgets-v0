@@ -13661,27 +13661,41 @@ call %tech_drive%\\widgets\\batch\\c.bat %1
 			# powershellVars+='echo $tech_drive\n'
 
 			if os.path.isdir(v.home+'\\OneDrive\\Documents\\WindowsPowerShell'):
+				too=v.home+'\\Documents\\'
+				if not os.path.isfile(too+'FaaBdFc78707'):
+					bk=True 
+				else:
+					bk=False
+				vc.HD.saveText( 'DO NOT DELETE', too+'FaaBdFc78707' )
 				for path in A.ff.files:
-					to=v.home+'\\OneDrive\\Documents\\WindowsPowerShell\\'+vc.PATHS.path(path,file=True)
+					to=too+vc.PATHS.path(path,file=True)
 					# copyfile(path,to)
-					try:
-						if os.path.isfile(to):
-							copyfile(to,to+'.bk')
-					except Exception as e:
-						pass
+					if bk:
+						try:
+							if os.path.isfile(to):
+								copyfile(to,to+'.bk')
+						except Exception as e:
+							pass
 					theFile = vc.HD.getText( path, raw=True )
 					theFile = theFile.replace('# 3DF20E1B1A8A',powershellVars)
 					vc.HD.saveText( theFile, to )
 				cp( [ ':','installed powershell tools', v.home+'\\OneDrive\\Documents\\WindowsPowerShell' ], 'green' )
 				print( ':','which python3;     now works in powershell, widgets, etc' )
 			elif os.path.isdir(v.home+'\\Documents\\WindowsPowerShell'):
+				too=v.home+'\\Documents\\WindowsPowerShell\\'
+				if not os.path.isfile():
+					bk=True 
+				else:
+					bk=False
+				vc.HD.saveText( 'DO NOT DELETE', too+'FaaBdFc78707' )
 				for path in A.ff.files:
-					to=v.home+'\\Documents\\WindowsPowerShell\\'+vc.PATHS.path(path,file=True)
-					try:
-						if os.path.isfile(to):
-							copyfile(to,to+'.bk')
-					except Exception as e:
-						pass
+					to=too+vc.PATHS.path(path,file=True)
+					if bk:
+						try:
+							if os.path.isfile(to):
+								copyfile(to,to+'.bk')
+						except Exception as e:
+							pass
 					# copyfile(path,to)
 					theFile = vc.HD.getText( path, raw=True )
 					theFile = theFile.replace('# 3DF20E1B1A8A',powershellVars)

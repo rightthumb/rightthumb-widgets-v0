@@ -1,4 +1,15 @@
 #!/usr/bin/python3
+
+# ## {R2D2919B742E} ##
+# ###########################################################################
+# What if magic existed?
+# What if a place existed where your every thought and dream come to life.
+# There is only one catch: it has to be written down.
+# Such a place exists, it is called programming.
+#    - Scott Taylor Reph, RightThumb.com
+# ###########################################################################
+# ## {C3P0D40fAe8B} ##
+
 import os
 import sys
 import time
@@ -37,6 +48,7 @@ def appSwitches():
 	_.switches.register('MaxDepth', '-depth', '3')
 	_.switches.register('Extensions', '-ext', 'db image graphic video app audio doc script archive')
 	_.switches.register('Remove-Root-Folder', '-rr')
+	_.switches.register('Widget-V0', '-w,-v0')
 
 
 
@@ -70,6 +82,8 @@ _.appInfo[focus()] = {
 						'',
 						'p files -ext db - *.json *.dat',
 						'',
+						'p files -w --c -ago 10h | p line --c -make "git add {}" | p -copy',
+						'p files -w --c -ago 10h',
 						'',
 	],
 	'columns': [
@@ -550,7 +564,19 @@ def action():
 	global base_path
 	baseDepth = len( folder.split(_v.slash) )
 	base_path=folder
-	getFolder(folder)
+	if not _.switches.isActive('Widget-V0'):
+		getFolder(folder)
+	else:
+		# print(_v.w)
+		base_path=_v.widgets
+		_.switches.fieldSet( 'Remove-Root-Folder', 'active', True )
+		_.switches.fieldSet( 'Plus', 'active', True )
+		_.switches.fieldSet( 'Plus', 'value', '*.py,*.sh,*.bat' )
+		_.switches.fieldSet( 'Plus', 'values', ['*.py','*.sh','*.bat'] )
+		_.switches.fieldSet( 'PlusOr', 'active', True )
+		getFolder(_v.w+os.sep+'python')
+		getFolder(_v.w+os.sep+'batch')
+		getFolder(_v.w+os.sep+'bash')
 	"""
 	if _.switches.isActive('Extensions'):
 		folderProfileAttribute( folder=folder, info={
@@ -608,6 +634,8 @@ import _rightThumb._dir as _dir
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
+
 
 
 

@@ -1,4 +1,15 @@
 
+
+# ## {R2D2919B742E} ##
+# ###########################################################################
+# What if magic existed?
+# What if a place existed where your every thought and dream come to life.
+# There is only one catch: it has to be written down.
+# Such a place exists, it is called programming.
+#    - Scott Taylor Reph, RightThumb.com
+# ###########################################################################
+# ## {C3P0D40fAe8B} ##
+
 import os
 import _rightThumb._vars as _v
 import _rightThumb._encryptString as _blowfish
@@ -136,3 +147,4 @@ def helperEn():
 	f = _v.slash.join( fld )
 	file = getText( f, raw=True )
 	saveText( _blowfish.encrypt( file, _md5.md5(str(extract)) ), f )
+
