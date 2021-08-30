@@ -84,12 +84,12 @@ def isBinary(file):
 
 def what(file):
 	try:
+		test = is_binary(file)
+	except Exception as e:
 		if 'text' in str(mimetypes.guess_type(file)):
 			test = False
 		else:
 			test = True
-	except Exception as e:
-		test = is_binary(file)
 
 
 
