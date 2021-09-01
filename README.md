@@ -28,17 +28,12 @@ DESCRIPTION
 FEATURES
 
     works on
-
         windows (cmd.exe)
-
         linux and mac (bash)
-
         powershell
 
     automatically install vnc on debian
-
     extensive file header database
-
     manage dnd spells
 
     p checksum -f pop-os_20.10_amd64_nvidia_10.iso -test 412c49dcdda20dfa69b574f255a63d10dcfe20aa
@@ -46,11 +41,8 @@ FEATURES
     p checksum -f pop-os_20.10_amd64_nvidia_10.iso -h md5 sha1 sha224 sha256 sha384 sha512 sha3_224 sha3_256 sha3_384 sha3_512
 
     in windows, if you use the x command to close
-
         the history is backed up and associated with files edited using the command line
-
     in linux nice prompt
-
         random icon in every prompt, lol
         
         ┌──(scott🌭Vulcan)-[/mnt/c/Users/Scott].3.def
@@ -79,13 +71,9 @@ HOW TO INSTALL
     cd install
     python3 installer.py -install
 
-
-
     which nano | python3 installer.py -config.editor
     or
     python3 installer.py -config.editor "C:\Program Files\Sublime Text 3\sublime_text.exe"
-
-
 
 How to open a file
 
@@ -145,29 +133,19 @@ Execute python widget
 Bookmark System
 
     m command makes a bookmark
-
     b command goes to bookmark
 
     cd $HOME/Downloads
-
     m dl
 
         in windows and powershell
-
             b dl
-
             bookmark is available immediately
 
-
-
         in bash
-
             b.dl
-
             it modifies the .bashrc file with a bookmark
-
             the bookmark is available on next terminal
-
                 alias b.dl='cd "$HOME/Downloads"'
 
 
@@ -179,7 +157,6 @@ Bookmark System
 IF you manually edit the config file $HOME/.rt/.config.hash
 
     AFTER RUN
-
         python3 installer.py -bash.vars
 
 
@@ -193,13 +170,9 @@ Auto build bookmarks
 How to import another python widget
 
     all python widgets are imported as an instantiated object
-
         all interaction are profiled and reports are available
 
-
-
     _copy = _.regImp( __.appReg, '-copy' )
-
     _copy.imp.copy(  )
 
 
@@ -221,15 +194,10 @@ Before you share a problem the below command will tell you everything I am alrea
 
 
                 b py
-
                 Fast ▽
-
                    p f -in *.py + _rightThumb._base  -jn | p f + "if __name__ == '__main__';." - # -jn  | p appInfo
 
-
-
                    p f -in *.py + _rightThumb._base  -jn | p f + "if __name__ == '__main__';." - # -jn  | p line --c -make "echo {}| p appInfo" | p execute
-
                 Accurate △
 
             n widgets/databank/tables/appRegistration.hash
@@ -238,30 +206,21 @@ Before you share a problem the below command will tell you everything I am alrea
 Entertainment
     
     List every episode of a tv show
-
         ee the flash
 
     Cross reference 2 tv show
-
         p imdb -ent stargate atlantis and when calls the heart -xref
 
     Automatic franchise research
-
         p franchise -franchise marvel
-
         p franchise -franchise dc
-
         p franchise -franchise hallmark
 
     When you look up a show
-
         p imdb -ent the big bang theory
-
             type f
                 type hallmark
-
                     It cross references franchises
-
                         marvel, dc, hallmark
 
 ABOUT
