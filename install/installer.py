@@ -1594,6 +1594,8 @@ pr-|{6FAB5628-94A1-410A-82D1-1D42A2A11750}/.rt/profile/projects"""
 					if 'h' in _.switches.value('Installer').lower():
 						if not 'HISTSIZE' in line and not 'HISTFILESIZE' in line:
 							new_bashrc += line + '\n'
+						else:
+							new_bashrc += '# '+line + '\n'
 					else:
 						new_bashrc += line + '\n'
 
@@ -1637,6 +1639,9 @@ pr-|{6FAB5628-94A1-410A-82D1-1D42A2A11750}/.rt/profile/projects"""
 					for line in add.split('\n'):
 						if not 'HISTSIZE' in line and not 'HISTFILESIZE' in line:
 							newFile+=line+'\n'
+						else:
+							newFile+='# '+line+'\n'
+							
 					add=newFile
 				file += add
 			else:
@@ -1647,6 +1652,8 @@ pr-|{6FAB5628-94A1-410A-82D1-1D42A2A11750}/.rt/profile/projects"""
 					for line in add.split('\n'):
 						if not 'HISTSIZE' in line and not 'HISTFILESIZE' in line:
 							newFile+=line+'\n'
+						else:
+							newFile+='# '+line+'\n'
 					add=newFile
 				file += add
 			
@@ -1660,6 +1667,8 @@ pr-|{6FAB5628-94A1-410A-82D1-1D42A2A11750}/.rt/profile/projects"""
 				for line in add.split('\n'):
 					if not 'HISTSIZE' in line and not 'HISTFILESIZE' in line:
 						newFile+=line+'\n'
+					else:
+						newFile+='# '+line+'\n'
 				add=newFile
 			file += add
 			nt = subject
@@ -1673,6 +1682,8 @@ pr-|{6FAB5628-94A1-410A-82D1-1D42A2A11750}/.rt/profile/projects"""
 					for line in add.split('\n'):
 						if not 'HISTSIZE' in line and not 'HISTFILESIZE' in line:
 							newFile+=line+'\n'
+						else:
+							newFile+='# '+line+'\n'
 					add=newFile
 				file += add
 
@@ -1692,6 +1703,8 @@ pr-|{6FAB5628-94A1-410A-82D1-1D42A2A11750}/.rt/profile/projects"""
 			for line in add.split('\n'):
 				if not 'HISTSIZE' in line and not 'HISTFILESIZE' in line:
 					newFile+=line+'\n'
+				else:
+					newFile+='# '+line+'\n'
 			add=newFile
 		file += add
 

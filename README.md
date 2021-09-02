@@ -102,6 +102,7 @@ HOW THE INSTALLER WORKS
         a file %USERPROFILE%\rr.bat
             i recomend copying it to %SYSTEMROOT%\System32\rr.bat
         when you open windows terminal type rr ENTER and the widgets are loaded it just loads folders to the path and sets a few variables (they are simple to read)
+        
     
     in linux
         the .bashrc is modified
