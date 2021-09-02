@@ -13743,11 +13743,12 @@ def action():
 		if v.isWin:
 			cc_bat='''@echo off
 call %userprofile%\\.rt\\profile\\vars\\config.bat
-rem call %tech_drive%\\widgets\\batch\\resetVars.bat
-call %tech_drive%\\widgets\\batch\\c.bat %1 
+rem call %widgets%\\widgets\\batch\\resetVars.bat
+call %widgets%\\widgets\\batch\\c.bat %1 
 			'''
 			# vc.HD.saveText( cc_bat, v.home+os.sep+'rt.bat' )
 			vc.HD.saveText( cc_bat, v.home+os.sep+'rr.bat' )
+			vc.HD.saveText( cc_bat, v.home+os.sep+'cc.bat' )
 			A.ff.getFolders( v.bash['widgets']+'\\widgets\\powershell', r=False )
 			print()
 			print()
