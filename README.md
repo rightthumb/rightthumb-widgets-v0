@@ -77,6 +77,9 @@ HOW TO INSTALL
 
     cd install
     python3 installer.py -install
+        or 
+            python3 installer.py -install h
+                the h replaces the HISTSIZE and HISTFILESIZE to make the history larger
 
     which nano | python3 installer.py -config.editor
     or
@@ -91,6 +94,24 @@ How to recover a file
     p fileRecover
         in windows it backs up the command line history
             the session id is associated with the files edited
+
+
+HOW THE INSTALLER WORKS
+
+    in windows
+        a file %USERPROFILE%\rr.bat
+            i recomend copying it to %SYSTEMROOT%\System32\rr.bat
+        when you open windows terminal type rr ENTER and the widgets are loaded it just loads folders to the path and sets a few variables (they are simple to read)
+    
+    in linux
+        the .bashrc is modified
+        NOTHING IS REMOVED!!!
+        variables and aliases between ## {E45D09D22184} ## and ## {AEC80B4D3338} ##
+        bookmarks cd aliases between ## {42F74F699A95} ## and ## {6D2B143FF720} ##
+        VERY EASY TO REMOVE
+
+
+
 
 Create new python widget with
 

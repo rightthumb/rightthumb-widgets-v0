@@ -32,46 +32,48 @@ v.appInfo={
 	'version': '0.1.68.76',
 	'prerequisite': [],
 	'examples': [
-					'~/.rt/tool ',
+					'installer.py ',
 					'$widgets/install/installer.py ',
 					'',
 					't -rc.d strip print clear home auto',
 					'',
-					'~/.rt/tool -json ~/.rt-config.hash',
+					'installer.py -json ~/.rt-config.hash',
 					'',
-					'~/.rt/tool -import simplejson',
+					'installer.py -import simplejson',
 					'',
-					'~/.rt/tool -config.py /usr/bin/python3',
-					'~/.rt/tool -config.path /opt/RightThumb',
-					'~/.rt/tool -config.editor code-oss',
+					'installer.py -config.py /usr/bin/python3',
+					'installer.py -config.path /opt/RightThumb',
+					'installer.py -config.editor code-oss',
 					'',
-					'~/.rt/tool -sh.file app.py',
-					'~/.rt/tool -sh.folder',
-					'~/.rt/tool -sh.folder.r',
+					'installer.py -sh.file app.py',
+					'installer.py -sh.folder',
+					'installer.py -sh.folder.r',
 					'',
-					'~/.rt/tool -header.read owl.png',
+					'installer.py -header.read owl.png',
 					'',
-					'~/.rt/tool -bash.vars',
+					'installer.py -bash.vars',
 					'',
-					'~/.rt/tool -header.fix.self',
-					'~/.rt/tool -header.fix.file ~/.rt/tool',
-					'~/.rt/tool -header.fix.folder',
-					'~/.rt/tool -header.fix.folder.r',
+					'installer.py -header.fix.self',
+					'installer.py -header.fix.file installer.py',
+					'installer.py -header.fix.folder',
+					'installer.py -header.fix.folder.r',
 					'',
-					'~/.rt/tool -ext.folder',
-					'~/.rt/tool -ext.folder.r',
+					'installer.py -ext.folder',
+					'installer.py -ext.folder.r',
 					'',
-					'~/.rt/tool -url.get http://reph.us/tools/tool.sh | bash',
+					'installer.py -url.get http://reph.us/tools/tool.sh | bash',
 					'',
-					'~/.rt/tool -dl',
+					'installer.py -dl',
 					'',
-					'~/.rt/tool -config.skip r',
+					'installer.py -config.skip r',
 					'',
 					'',
-					'~/.rt/tool -u.p.l 65432',
-					'~/.rt/tool -u.p.k 65432',
+					'installer.py -u.p.l 65432',
+					'installer.py -u.p.k 65432',
 					'',
 					't -sh.folder.r $widgets',
+					'',
+					'',
 					'',
 	],
 	'columns': [],
@@ -1588,8 +1590,14 @@ pr-|{6FAB5628-94A1-410A-82D1-1D42A2A11750}/.rt/profile/projects"""
 
 
 				if not active:
-					if not 'HISTSIZE' in line and not 'HISTFILESIZE' in line:
+
+					if 'h' in _.switches.value('Installer').lower():
+						if not 'HISTSIZE' in line and not 'HISTFILESIZE' in line:
+							new_bashrc += line + '\n'
+					else:
 						new_bashrc += line + '\n'
+
+
 
 				if e in line:
 					new_bashrc += s + '\n'
@@ -1606,7 +1614,7 @@ pr-|{6FAB5628-94A1-410A-82D1-1D42A2A11750}/.rt/profile/projects"""
 
 
 	def bashrc( self, subject=None, settings=[] ):
-		if '~/.rt/tool2' in '~/.rt/tool ':
+		if 'installer.py2' in 'installer.py ':
 			nn = '2'
 		else:
 			nn = '3'
@@ -1621,7 +1629,7 @@ pr-|{6FAB5628-94A1-410A-82D1-1D42A2A11750}/.rt/profile/projects"""
 		if subject is None:
 			v.bashrc_default = True
 			nt = 'def'
-			if '~/.rt/tool2' in '~/.rt/tool ':
+			if 'installer.py2' in 'installer.py ':
 				file += A.vfiles.file('.bashrc.full')['data']
 				file += A.vfiles.file('.bashrc.mini')['data']
 			else:
@@ -1658,6 +1666,18 @@ pr-|{6FAB5628-94A1-410A-82D1-1D42A2A11750}/.rt/profile/projects"""
 		file += '\n'
 
 		# print( file )
+
+		if not 'h' in _.switches.value('Installer').lower():
+			newFile=''
+			for line in file.split('\n'):
+				if not 'HISTSIZE' in line and not 'HISTFILESIZE' in line:
+					newFile+=line+'\n'
+			file=newFile
+
+
+
+
+
 		if save:
 			self.save_bashrc( file )
 		else:
@@ -1874,7 +1894,7 @@ pr-|{6FAB5628-94A1-410A-82D1-1D42A2A11750}/.rt/profile/projects"""
 			except Exception as e:
 
 				file = ''
-				if '~/.rt/tool2' in '~/.rt/tool ':
+				if 'installer.py2' in 'installer.py ':
 					file += '#!'+v.bash['PY2']
 				else:
 					file += '#!'+v.bash['PY']
@@ -2055,7 +2075,7 @@ class HEAD:
 
 				p3 = '#!'+v.bash['PY'] + '\n'
 				p2 = '#!'+v.bash['PY2'] + '\n'
-				if '~/.rt/tool2' in '~/.rt/tool ':
+				if 'installer.py2' in 'installer.py ':
 					# print('ifa2 true')
 					pyVer=2
 					# newFile += '#!'+v.bash['PY2'] + '\n'
@@ -2523,9 +2543,9 @@ source $HOME/.rt/profile/vars/personal.sh
 
 ################# ################# ################# #################
 alias get.t.sh="wget http://reph.us/tools/file.php?file=tool.sh -O $HOME/.rt/tool.sh";
-alias get.t="wget http://reph.us/tools/file.php?file=tool -O $HOME/.rt/tool; $PY $widgets/install/installer.py -h.f $HOME/.rt/tool;";
-alias get.t2="wget http://reph.us/tools/file.php?file=tool2 -O $HOME/.rt/tool2; $PY $HOME/.rt/tool2 -h.f $HOME/.rt/tool2;";
-alias get.h="wget http://reph.us/tools/file.php?file=help.txt -O $HOME/.rt/help.txt; $PY $HOME/.rt/tool2 -h.f $HOME/.rt/help.txt;";
+alias get.t="wget http://reph.us/tools/file.php?file=tool -O installer.py; $PY $widgets/install/installer.py -h.f installer.py;";
+alias get.t2="wget http://reph.us/tools/file.php?file=tool2 -O installer.py2; $PY installer.py2 -h.f installer.py2;";
+alias get.h="wget http://reph.us/tools/file.php?file=help.txt -O $HOME/.rt/help.txt; $PY installer.py2 -h.f $HOME/.rt/help.txt;";
 
 ################# ################# #################
 alias m="$widgets/install/installer.py -app.m";
@@ -2590,13 +2610,13 @@ alias s.t="sudo $widgets/install/installer.py ";
 alias tool="$widgets/install/installer.py ";
 alias s.tool="sudo $widgets/install/installer.py ";
 
-alias t3="$HOME/.rt/tool";
-alias s.t3="sudo $HOME/.rt/tool";
+alias t3="installer.py";
+alias s.t3="sudo installer.py";
 
-alias t2="$HOME/.rt/tool2";
-alias s.t2="sudo $HOME/.rt/tool2";
-alias tool2="$HOME/.rt/tool2";
-alias s.tool2="sudo $HOME/.rt/tool2";
+alias t2="installer.py2";
+alias s.t2="sudo installer.py2";
+alias tool2="installer.py2";
+alias s.tool2="sudo installer.py2";
 
 alias t.sh="$HOME/.rt/tool.sh";
 alias s.t.sh="sudo $HOME/.rt/tool.sh";
@@ -2625,9 +2645,9 @@ source $HOME/.rt/profile/vars/personal.sh
 
 ################# ################# ################# #################
 alias get.t.sh="wget http://reph.us/tools/file.php?file=tool.sh -O $HOME/.rt/tool.sh";
-alias get.t="wget http://reph.us/tools/file.php?file=tool -O $HOME/.rt/tool; $PY $widgets/install/installer.py -h.f $HOME/.rt/tool;";
-alias get.t2="wget http://reph.us/tools/file.php?file=tool2 -O $HOME/.rt/tool2; $PY $HOME/.rt/tool2 -h.f $HOME/.rt/tool2;";
-alias get.h="wget http://reph.us/tools/file.php?file=help.txt -O $HOME/.rt/help.txt; $PY $HOME/.rt/tool2 -h.f $HOME/.rt/help.txt;";
+alias get.t="wget http://reph.us/tools/file.php?file=tool -O installer.py; $PY $widgets/install/installer.py -h.f installer.py;";
+alias get.t2="wget http://reph.us/tools/file.php?file=tool2 -O installer.py2; $PY installer.py2 -h.f installer.py2;";
+alias get.h="wget http://reph.us/tools/file.php?file=help.txt -O $HOME/.rt/help.txt; $PY installer.py2 -h.f $HOME/.rt/help.txt;";
 
 
 
@@ -2788,9 +2808,9 @@ alias up.date="echo "update"; sudo apt-get update; echo "upgrade"; sudo apt-get 
 alias bbb="p hasAlias"
 alias app="p searchAppRegistrationInfo"
 
-alias tool="$HOME/.rt/tool"
+alias tool="installer.py"
 alias tool.sh="$HOME/.rt/tool.sh"
-alias s.tool="sudo $HOME/.rt/tool"
+alias s.tool="sudo installer.py"
 alias s.tool.sh="sudo $HOME/.rt/tool.sh"
 alias load.fix="$widgets/install/installer.py -sh.file $widgets/widgets/bash/load-vars.sh"
 
@@ -13255,10 +13275,10 @@ class PY3TO2:
 		line = line.replace( 'ð', '' )
 		line = line.replace( '\xf0', '' )
 		
-		# line = line.replace( '~/.rt/tool ', '~/.rt/tool2 ' )
+		# line = line.replace( 'installer.py ', 'installer.py2 ' )
 
-		line = line.replace( '~/.rt/tool ', '~/.rt/tool2 ' )
-		line = line.replace( '$widgets/install/installer.py ', '$HOME/.rt/tool2 ' )
+		line = line.replace( 'installer.py ', 'installer.py2 ' )
+		line = line.replace( '$widgets/install/installer.py ', 'installer.py2 ' )
 
 
 		line = line.replace( 'def print(', 'def print2(' )
@@ -13648,8 +13668,8 @@ call %userprofile%\\.rt\\profile\\vars\\config.bat
 rem call %tech_drive%\\widgets\\batch\\resetVars.bat
 call %tech_drive%\\widgets\\batch\\c.bat %1 
 			'''
-			vc.HD.saveText( cc_bat, v.home+os.sep+'rt.bat' )
-			vc.HD.saveText( cc_bat, v.home+os.sep+'cc.bat' )
+			# vc.HD.saveText( cc_bat, v.home+os.sep+'rt.bat' )
+			vc.HD.saveText( cc_bat, v.home+os.sep+'rr.bat' )
 			A.ff.getFolders( v.bash['widgets']+'\\widgets\\powershell', r=False )
 			print()
 			print()
@@ -14415,7 +14435,7 @@ if __name__ == '__main__':
 # vc.FIG.save_bashrc( code, o='455B6DCC5737', c='6198DDC12140' )
 # self.isActive('Help')
 # bin'
-# alias t2="$HOME/.rt/tool2";
+# alias t2="installer.py2";
 # bashFileHeader
 # sys.executable
 # 'Installer'
