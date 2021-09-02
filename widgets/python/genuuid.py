@@ -37,7 +37,7 @@ def appSwitches():
 	pass
 	_.switches.register( 'Long', '-long' )
 	_.switches.register( 'Short', '-short,-mini,-small' )
-	_.switches.register( 'Strip', '-strip' )
+	_.switches.register( 'Strip', '-strip', 'be' )
 	_.switches.register( 'Count', '-cnt,-count' )
 	_.switches.register( 'PrintCharLength', '-print,-printlen,-lenprint,-len' )
 	_.switches.register( 'LowerCase', '-lo,-lower' )
@@ -177,7 +177,10 @@ def action(first=True):
 			genid = _.longID()
 
 	if _.switches.isActive('Strip'):
-		genid = genid.replace( '{', '' ).replace( '}', '' ).replace( '-', '' )
+		if 'be' in _.switches.value('Strip'):
+			genid = genid.replace( '{', '' ).replace( '}', '' )
+		else:
+			genid = genid.replace( '{', '' ).replace( '}', '' ).replace( '-', '' )
 
 
 	

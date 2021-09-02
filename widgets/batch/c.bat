@@ -87,15 +87,18 @@ SET Session_ID_BK=%Session_ID%
 echo %Session_ID% > %myVars%\ID.sys
 CALL timestamp ats2 noEcho
 SET timestamp_start=%now%
-echo %timestamp_start%
+rem echo %timestamp_start%
 :::::::::::::::::::::::: DOESNT WORK - :: CALL getSID
 GOTO:EOF
 
 :LOAD
 
+if not exist "%userprofile%\.rt\profile\vars\instanceID.sys" (
+	p genuuid -strip be > "%userprofile%\.rt\profile\vars\instanceID.sys"
+)
 
-SET /p installID=<%widgets%\widgets\instanceID.sys
-
+SET /p quote=<"%userprofile%\.rt\profile\vars\quote.txt"
+SET /p percentage=<"%userprofile%\.rt\profile\vars\percentage.txt"
 
 
 
@@ -163,7 +166,7 @@ IF NOT EXIST %widgets%\hosts (md %widgets%\hosts)
 IF NOT EXIST %myHome% (
 		md %myHome%
 		echo Building profile on USB
-		xcopy /s/d/y/c %widgets%:\%hostDefault%\*.* %myHome%\>nul
+		xcopy /s/d/y/c %widgets%\%hostDefault%\*.* %myHome%\>nul
 	)
 IF NOT EXIST %myVars% (md %myVars%) 
 IF NOT EXIST %myBookmarks% (md %myBookmarks%) 
@@ -236,9 +239,8 @@ SET pathPython=
 SET phpFiles=%php2%
 
 
-SET /p quote=<%myVars%\quote.txt
-SET /p percentage=<%myVars%\percentage.txt
-SET /p percent=<%myVars%\percentage.txt
+SET /p quote=<%userprofile%\.rt\profile\vars\quote.txt
+SET /p percentage=<%userprofile%\.rt\profile\vars\percentage.txt
 
 SET tmpf=%stmp%\{8E3F33E4-86AB-AB1E-6219-801DE111D9AF}
 SET tmpf0=%stmp%\{B820137A-79B8-45E3-BCBD-A6CAC50892D0}

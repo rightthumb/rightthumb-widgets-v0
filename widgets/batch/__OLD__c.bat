@@ -227,18 +227,18 @@ rem :SKIP_THIS_SECTION_001
 
 
 :AFTERDRIVE
-IF EXIST %widgets%:\ (
+IF EXIST %widgets%\ (
 		set widgets=%widgets%
 		set widgets=%widgets%
 		set widgets=%widgets%
-		set /p installId=<%widgets%:\tech\scripts\instanceID.sys
+		set /p installId=<%widgets%\tech\scripts\instanceID.sys
 	) else (
 		set /p Drive=<%userprofile%\.tk421
 		set widgets=%Drive:~0,1%
 		set widgets=%Drive:~0,1%
 		set widgets=%Drive:~0,1%
 		set widgets=%Drive:~0,1%
-		set /p installId=<%widgets%:\tech\scripts\instanceID.sys
+		set /p installId=<%widgets%\tech\scripts\instanceID.sys
 		set Drive=
 	)
 
@@ -248,7 +248,7 @@ rem 	set widgets=%Drive:~0,1%
 rem 	set widgets=%Drive:~0,1%
 rem 	set widgets=%Drive:~0,1%
 rem 	set widgets=%Drive:~0,1%
-rem 	set /p installId=<%widgets%:\tech\scripts\instanceID.sys
+rem 	set /p installId=<%widgets%\tech\scripts\instanceID.sys
 rem 	set Drive=
 rem 	)
 
@@ -256,17 +256,17 @@ rem 	)
 
 
 ::::::: API Paths (Asside from PHP)
-set scriptroot=%widgets%:\tech\scripts
-set widgets=%widgets%:\tech
-set pssroot=%widgets%:\tech\PS_Scripts
-set pss=%widgets%:\tech\PS_Scripts
+set scriptroot=%widgets%\tech\scripts
+set widgets=%widgets%\tech
+set pssroot=%widgets%\tech\PS_Scripts
+set pss=%widgets%\tech\PS_Scripts
 set scriptrootAlias=%scriptroot%\alias
 
 
 ::::::: PHP Drive
 
 set log_folder=%scriptroot%\log
-set php=%widgets%:\tech\srv\xampp\php\php.exe
+set php=%widgets%\tech\srv\xampp\php\php.exe
 set phpFiles=%scriptroot%\php
 
 
@@ -280,7 +280,7 @@ set oldPath=%path%
 set pathAPI=%scriptroot%\;%scriptrootAlias%\
 set pathApps=D:\Program Files (x86)\ImageMagick-6.9.2-Q16;D:\ProgramData\Oracle\Java\javapath;D:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;D:\Program Files (x86)\Intel\iCLS Client\;D:\Program Files\Intel\iCLS Client\;D:\WINDOWS\system32;D:\WINDOWS;D:\WINDOWS\System32\Wbem;D:\WINDOWS\System32\WindowsPowerShell\v1.0\;D:\Program Files (x86)\Windows Live\Shared;D:\Program Files\Intel\WiFi\bin\;D:\Program Files\Common Files\Intel\WirelessCommon\;D:\Program Files\Intel\Intel(R) Management Engine Components\DAL;D:\Program Files\Intel\Intel(R) Management Engine Components\IPT;D:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;D:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;D:\Program Files (x86)\Common Files\Acronis\SnapAPI\;D:\Program Files (x86)\Skype\Phone\;D:\Program Files (x86)\Windows Kits\10\Windows Performance Toolkit\;D:\Users\Scott\AppData\Local\Microsoft\WindowsApps
 rem set pathPython=D:\Users\Scott\AppData\Local\Programs\Python\Python36-32\;D:\Users\Scott\AppData\Local\Programs\Python\Python36-32\Lib\;D:\Users\Scott\AppData\Local\Programs\Python\Python36-32\Lib\site-packages\;D:\Users\Scott\AppData\Local\Programs\Python\Python36-32\;D:\Users\Scott\AppData\Local\Programs\Python\Python36-32\Scripts\
-set pathPython=%widgets%:\tech\scripts\python;D:\Users\Scott\AppData\Local\Programs\Python\Python36-32;D:\Users\Scott\AppData\Local\Programs\Python\Python36-32\Lib;D:\Users\Scott\AppData\Local\Programs\Python\Python36-32\Lib\site-packages;D:\Users\Scott\AppData\Local\Programs\Python\Python36-32;D:\Users\Scott\AppData\Local\Programs\Python\Python36-32\Scripts
+set pathPython=%widgets%\tech\scripts\python;D:\Users\Scott\AppData\Local\Programs\Python\Python36-32;D:\Users\Scott\AppData\Local\Programs\Python\Python36-32\Lib;D:\Users\Scott\AppData\Local\Programs\Python\Python36-32\Lib\site-packages;D:\Users\Scott\AppData\Local\Programs\Python\Python36-32;D:\Users\Scott\AppData\Local\Programs\Python\Python36-32\Scripts
 set pathBuilder=%pathPython%;%path%;%pathAPI%;%pathApps%;
 set path=%pathBuilder%
 
@@ -303,8 +303,8 @@ set w="D:\Program Files (x86)\Microsoft Office\root\Office16\WINWORD.EXE"
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 rem set py="D:\Users\Scott\AppData\Local\Programs\Python\Python36-32\python.exe"
 rem set py2="D:\Python27\python.exe"
-set py="%widgets%:\Apps\Python\Python36-32\python.exe"
-set py2="%widgets%:\Apps\Python\Python27\python.exe"
+set py="%widgets%\Apps\Python\Python36-32\python.exe"
+set py2="%widgets%\Apps\Python\Python27\python.exe"
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -376,8 +376,8 @@ cls
 
 
 ::::::: Check Drives
-call %widgets%:\tech\scripts\updateDate.bat
-set /p verDate=<%widgets%:\tech\scripts\verDate.txt
+call %widgets%\tech\scripts\updateDate.bat
+set /p verDate=<%widgets%\tech\scripts\verDate.txt
 IF [%1] == [drive] (GOTO FORCEDRIVE)
 IF [%1] == [v] (GOTO DRIVESCHECKED)
 IF [%drivesCheckedAlready%] == [y] GOTO DRIVESCHECKED
@@ -386,7 +386,7 @@ IF [%1] == [c] GOTO DRIVESCHECKED
 echo __________________________
 echo      %verDate%
 echo __________________________
-IF NOT [%widgets%] == [0]     (echo          %widgets%: 32BTN)
+IF NOT [%widgets%] == [0]     (echo          %widgets% 32BTN)
 IF NOT [%t3%] == [0]           (echo          %t3%: T3)
 IF NOT [%l119%] == [0]         (echo          %l119%: 119L)
 IF NOT [%cloudPub%] == [0]     (echo          %cloudPub%: cloudPub)

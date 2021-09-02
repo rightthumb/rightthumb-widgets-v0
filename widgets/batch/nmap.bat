@@ -28,13 +28,13 @@ GOTO:EOF
 echo.
 CALL p printMessage -message "Error: " " nmap is not installed"  -color red yellow
 echo.
-IF EXIST "%widgets%:\techApps\_installers\nmap\nmap-7.80-setup.exe" (
-	CALL p printMessage -message "      installer found: %widgets%:\techApps\_installers\nmap\nmap-7.80-setup.exe"  -color green
+IF EXIST "%widgets%\techApps\_installers\nmap\nmap-7.80-setup.exe" (
+	CALL p printMessage -message "      installer found: %widgets%\techApps\_installers\nmap\nmap-7.80-setup.exe"  -color green
 ) else (
 	CALL p printMessage -message "      installer missing: \techApps\_installers\nmap\nmap-7.80-setup.exe"  -color red
 )
-IF EXIST "%widgets%:\techApps\_installers\nmap\npcap-0.9991.exe" (
-	CALL p printMessage -message "      installer found: %widgets%:\techApps\_installers\nmap\npcap-0.9991.exe"  -color green
+IF EXIST "%widgets%\techApps\_installers\nmap\npcap-0.9991.exe" (
+	CALL p printMessage -message "      installer found: %widgets%\techApps\_installers\nmap\npcap-0.9991.exe"  -color green
 ) else (
 	CALL p printMessage -message "      installer missing: \techApps\_installers\nmap\npcap-0.9991.exe"  -color red
 	echo.

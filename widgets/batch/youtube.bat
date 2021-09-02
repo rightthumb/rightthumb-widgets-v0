@@ -11,5 +11,5 @@ rem ###########################################################################
 rem ## {C3P0D40fAe8B} ##
 
  rem %py% D:\Users\Scott\AppData\Local\Programs\Python\Python36-32\Scripts\youtube-dl.exe %*
- %widgets%:\widgets\exe\exe\youtube-dl.exe %*
+ %widgets%\widgets\exe\exe\youtube-dl.exe %*
 

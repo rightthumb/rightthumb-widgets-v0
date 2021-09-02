@@ -13609,6 +13609,9 @@ def action():
 		v.f.mkdir(v.home+os.sep+'.rt'+os.sep+'profile'+os.sep+'tables')
 		v.f.mkdir(v.home+os.sep+'.rt'+os.sep+'profile'+os.sep+'temp')
 		v.f.mkdir(v.home+os.sep+'.rt'+os.sep+'profile'+os.sep+'vars')
+		vc.HD.saveText( '"', v.home+os.sep+'.rt'+os.sep+'profile'+os.sep+'vars'+os.sep+'quote.txt' )
+		vc.HD.saveText( '%', v.home+os.sep+'.rt'+os.sep+'profile'+os.sep+'vars'+os.sep+'percentage.txt' )
+		vc.HD.saveText( vc.FIG.uuid(), v.home+os.sep+'.rt'+os.sep+'profile'+os.sep+'vars'+os.sep+'instanceID.sys' )
 		insta=vc.PATHS.path(__file__)
 		# tool=v.home+os.sep+'.rt'+os.sep+'tool.py'
 		tool=v.home+os.sep+'.rt'+os.sep+'tool'
@@ -13642,6 +13645,7 @@ def action():
 		if v.isWin:
 			cc_bat='''@echo off
 call %userprofile%\\.rt\\profile\\vars\\config.bat
+rem call %tech_drive%\\widgets\\batch\\resetVars.bat
 call %tech_drive%\\widgets\\batch\\c.bat %1 
 			'''
 			vc.HD.saveText( cc_bat, v.home+os.sep+'rt.bat' )
@@ -13673,42 +13677,31 @@ call %tech_drive%\\widgets\\batch\\c.bat %1
 
 			if os.path.isdir(v.home+'\\OneDrive\\Documents\\WindowsPowerShell'):
 				too=v.home+'\\Documents\\'
-				if not os.path.isfile(too+'FaaBdFc78707'):
-					bk=True 
-				else:
-					bk=False
-				vc.HD.saveText( 'DO NOT DELETE', too+'FaaBdFc78707' )
+				if not os.path.isfile(too+'backup.rt'):
+					v.f.mkdir(too+'backup.rt')
 				for path in A.ff.files:
 					to=too+vc.PATHS.path(path,file=True)
-					# copyfile(path,to)
-					if bk:
-						try:
-							if os.path.isfile(to):
-								copyfile(to,to+'.bk')
-						except Exception as e:
-							pass
 					theFile = vc.HD.getText( path, raw=True )
+					if os.path.isfile(to):
+						me=str(os.path.getmtime( to ))
+						bkPath=too+'backup.rt'+os.sep+me+'-'+vc.PATHS.path(to,file=True)
+						vc.HD.saveText( theFile, bkPath )
+
 					theFile = theFile.replace('# 3DF20E1B1A8A',powershellVars)
 					vc.HD.saveText( theFile, to )
 				cp( [ ':','installed powershell tools', v.home+'\\OneDrive\\Documents\\WindowsPowerShell' ], 'green' )
 				print( ':','which python3;     now works in powershell, widgets, etc' )
 			elif os.path.isdir(v.home+'\\Documents\\WindowsPowerShell'):
 				too=v.home+'\\Documents\\WindowsPowerShell\\'
-				if not os.path.isfile():
-					bk=True 
-				else:
-					bk=False
-				vc.HD.saveText( 'DO NOT DELETE', too+'FaaBdFc78707' )
+				if not os.path.isfile(too+'backup.rt'):
+					v.f.mkdir(too+'backup.rt')
 				for path in A.ff.files:
 					to=too+vc.PATHS.path(path,file=True)
-					if bk:
-						try:
-							if os.path.isfile(to):
-								copyfile(to,to+'.bk')
-						except Exception as e:
-							pass
-					# copyfile(path,to)
 					theFile = vc.HD.getText( path, raw=True )
+					if os.path.isfile(to):
+						me=str(os.path.getmtime( to ))
+						bkPath=too+'backup.rt'+os.sep+me+'-'+vc.PATHS.path(to,file=True)
+						vc.HD.saveText( theFile, bkPath )
 					theFile = theFile.replace('# 3DF20E1B1A8A',powershellVars)
 					vc.HD.saveText( theFile, to )
 				cp( [ ':','installed powershell tools', v.home+'\\Documents\\WindowsPowerShell' ], 'green' )

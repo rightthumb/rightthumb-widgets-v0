@@ -22,8 +22,8 @@ rem echo %widgets%
 echo Loading...
 
 
-IF EXIST "%widgets%:\" (CALL:START)
-IF NOT EXIST "%widgets%:\" (CALL:ERROR) 
+IF EXIST "%widgets%\" (CALL:START)
+IF NOT EXIST "%widgets%\" (CALL:ERROR) 
 GOTO:EOF
 :ERROR
 prompt - 
@@ -35,11 +35,11 @@ GOTO:EOF
 :START
 
 rem disable
-call %widgets%:\widgets\batch\resetVars.bat
+call %widgets%\widgets\batch\resetVars.bat
 
 SET /p Drive=<%userprofile%\.tk421
 SET widgets=%Drive:~0,1%
-call %widgets%:\widgets\batch\c.bat %1 
+call %widgets%\widgets\batch\c.bat %1 
 GOTO:EOF
 
 

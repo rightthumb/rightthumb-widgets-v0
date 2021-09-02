@@ -28,8 +28,8 @@ rem rem echo %widgets%
 echo Loading...
 
 
-IF NOT EXIST %widgets%:\ (GOTO ERROR) 
-IF EXIST %widgets%:\ (GOTO START) 
+IF NOT EXIST %widgets%\ (GOTO ERROR) 
+IF EXIST %widgets%\ (GOTO START) 
 :ERROR
 prompt - 
 cls
@@ -38,10 +38,10 @@ echo USB Drive Failure
 set errorDisplayOnce=y
 GOTO END
 :START
-call %widgets%:\widgets\batch\resetVars.bat
+call %widgets%\widgets\batch\resetVars.bat
 SET /p Drive=<%userprofile%\widgets.txt
 SET widgets=%Drive:~0,1%
-call %widgets%:\widgets\batch\c.bat %1 
+call %widgets%\widgets\batch\c.bat %1 
 GOTO END
 :END
 cls

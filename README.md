@@ -40,8 +40,15 @@ FEATURES
 
     p checksum -f pop-os_20.10_amd64_nvidia_10.iso -h md5 sha1 sha224 sha256 sha384 sha512 sha3_224 sha3_256 sha3_384 sha3_512
 
-    in windows, if you use the x command to close
+    in windows, if you use the x command instead of EXIT
         the history is backed up and associated with files edited using the command line
+
+    in windows, if you use the c command instead of CLS
+        if you close out without x command by accident
+            open a new terminal run r.t command then EXIT
+                ALL missing history will be documented
+
+
     in linux nice prompt
         random icon in every prompt, lol
         
@@ -87,7 +94,10 @@ How to recover a file
 
 Create new python widget with
 
-    epyi base -build myApp
+    in windows
+        epyi base -build myApp
+    linux
+        epyiBuild myApp
     (scroll to bottom)
 
     # example:
@@ -179,7 +189,11 @@ How to import another python widget
 
 Edit python template
 
-    epyi base -e
+    in windows
+        epyi base -e
+    in linux
+        n widgets\python\_rightThumb\_base3\_base3_init_example.py
+
 
 
 Notes

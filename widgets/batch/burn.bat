@@ -13,13 +13,13 @@ rem ## {C3P0D40fAe8B} ##
 CALL p unix
 
 
-rmdir /s /q %widgets%:\widgets\python\burn\windows
-rmdir /s /q %widgets%:\widgets\python\burn\unix
-mkdir %widgets%:\widgets\python\burn\windows
-mkdir %widgets%:\widgets\python\burn\unix
+rmdir /s /q %widgets%\widgets\python\burn\windows
+rmdir /s /q %widgets%\widgets\python\burn\unix
+mkdir %widgets%\widgets\python\burn\windows
+mkdir %widgets%\widgets\python\burn\unix
 
-xcopy /s/d/y/c %widgets%:\widgets\python\src\unix\*.py %widgets%:\widgets\python\burn\unix\
-xcopy /s/d/y/c %widgets%:\widgets\python\*.py %widgets%:\widgets\python\burn\windows\
+xcopy /s/d/y/c %widgets%\widgets\python\src\unix\*.py %widgets%\widgets\python\burn\unix\
+xcopy /s/d/y/c %widgets%\widgets\python\*.py %widgets%\widgets\python\burn\windows\
 
 
 

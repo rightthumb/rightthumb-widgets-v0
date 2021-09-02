@@ -236,7 +236,7 @@ def whatIsIt(file):
 		result = 'Binary'
 	return result
 
-def getFolder(folder):
+def getFolder(folder,r=True):
 	if folder.startswith('/proc'):
 		return None
 	global i
@@ -522,9 +522,9 @@ def getFolder(folder):
 					if _.switches.isActive('FolderRefine'):
 						if not _.showLine(newFolder):
 							shouldRun = False
-					if shouldRun:
+					if r and shouldRun:
 						try:
-							getFolder(newFolder)
+							getFolder(newFolder,r)
 						except Exception as e:
 							pass
 				else:
@@ -571,12 +571,15 @@ def action():
 		base_path=_v.widgets
 		_.switches.fieldSet( 'Remove-Root-Folder', 'active', True )
 		_.switches.fieldSet( 'Plus', 'active', True )
-		_.switches.fieldSet( 'Plus', 'value', '*.py,*.sh,*.bat' )
-		_.switches.fieldSet( 'Plus', 'values', ['*.py','*.sh','*.bat'] )
+		_.switches.fieldSet( 'Plus', 'value', '*.py,*.sh,*.bat,*.MD' )
+		_.switches.fieldSet( 'Plus', 'values', ['*.py','*.sh','*.bat','*.MD'] )
 		_.switches.fieldSet( 'PlusOr', 'active', True )
 		getFolder(_v.w+os.sep+'python')
 		getFolder(_v.w+os.sep+'batch')
 		getFolder(_v.w+os.sep+'bash')
+		getFolder(_v.widgets+os.sep+'install')
+		getFolder(_v.widgets, r=False)
+		
 	"""
 	if _.switches.isActive('Extensions'):
 		folderProfileAttribute( folder=folder, info={

@@ -21,13 +21,13 @@ set token=google.com
 GOTO START
 
 :START
-%widgets%:
+%widgets%
 :==========================================
 set notice=%1 is:
 set delay=5
 set b_delay=2
 set b_color=70
-set logdir=%widgets%:\tech\logs\
+set logdir=%widgets%\tech\logs\
 set log=%logdir%%1,Connection-log.txt
 
 

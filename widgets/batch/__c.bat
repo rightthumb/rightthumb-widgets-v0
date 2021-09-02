@@ -28,23 +28,23 @@ SET widgets=%Drive:~0,1%
 SET widgets=%Drive:~0,1%
 SET widgets=%Drive:~0,1%
 SET widgets=%Drive:~0,1%
-SET /p installID=<%widgets%:\tech\scripts\instanceID.sys
+SET /p installID=<%widgets%\tech\scripts\instanceID.sys
 SET Drive=
 
 
 
 ::::::: API Paths (Asside from PHP)
-SET widgets=%widgets%:\tech
+SET widgets=%widgets%\tech
 SET scriptroot=%widgets%\scripts
 SET pssroot=%widgets%\PS_Scripts
-SET pss=%widgets%:\tech\PS_Scripts
+SET pss=%widgets%\tech\PS_Scripts
 SET scriptrootAlias=%scriptroot%\alias
 
 
 ::::::: PHP Drive
 
 SET log_folder=%scriptroot%\log
-SET php=%widgets%:\tech\srv\xampp\php\php.exe
+SET php=%widgets%\tech\srv\xampp\php\php.exe
 SET phpFiles=%scriptroot%\php
 
 
@@ -54,7 +54,7 @@ SET phpFiles=%scriptroot%\php
 rem SET oldPath=%path%
 SET pathAPI=%scriptroot%\;%scriptrootAlias%\
 rem SET pathApps=D:\Program Files (x86)\ImageMagick-6.9.2-Q16;D:\ProgramData\Oracle\Java\javapath;D:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;D:\Program Files (x86)\Intel\iCLS Client\;D:\Program Files\Intel\iCLS Client\;D:\WINDOWS\system32;D:\WINDOWS;D:\WINDOWS\System32\Wbem;D:\WINDOWS\System32\WindowsPowerShell\v1.0\;D:\Program Files (x86)\Windows Live\Shared;D:\Program Files\Intel\WiFi\bin\;D:\Program Files\Common Files\Intel\WirelessCommon\;D:\Program Files\Intel\Intel(R) Management Engine Components\DAL;D:\Program Files\Intel\Intel(R) Management Engine Components\IPT;D:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;D:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;D:\Program Files (x86)\Common Files\Acronis\SnapAPI\;D:\Program Files (x86)\Skype\Phone\;D:\Program Files (x86)\Windows Kits\10\Windows Performance Toolkit\;D:\Users\Scott\AppData\Local\Microsoft\WindowsApps
-SET pathPython=%widgets%:\tech\scripts\python;D:\Users\Scott\AppData\Local\Programs\Python\Python36-32;D:\Users\Scott\AppData\Local\Programs\Python\Python36-32\Lib;D:\Users\Scott\AppData\Local\Programs\Python\Python36-32\Lib\site-packages;D:\Users\Scott\AppData\Local\Programs\Python\Python36-32;D:\Users\Scott\AppData\Local\Programs\Python\Python36-32\Scripts
+SET pathPython=%widgets%\tech\scripts\python;D:\Users\Scott\AppData\Local\Programs\Python\Python36-32;D:\Users\Scott\AppData\Local\Programs\Python\Python36-32\Lib;D:\Users\Scott\AppData\Local\Programs\Python\Python36-32\Lib\site-packages;D:\Users\Scott\AppData\Local\Programs\Python\Python36-32;D:\Users\Scott\AppData\Local\Programs\Python\Python36-32\Scripts
 rem SET pathBuilder=%pathPython%;%path%;%pathAPI%;%pathApps%;
 SET pathBuilder=%pathPython%;%path%;%pathAPI%;
 SET path=%pathBuilder%
@@ -76,8 +76,8 @@ rem SET w="D:\Program Files (x86)\Microsoft Office\root\Office16\WINWORD.EXE"
 
 rem SET py="D:\Users\Scott\AppData\Local\Programs\Python\Python36-32\python.exe"
 rem SET py2="D:\Python27\python.exe"
-SET py="%widgets%:\Apps\Python\Python36-32\python.exe"
-SET py2="%widgets%:\Apps\Python\Python27\python.exe"
+SET py="%widgets%\Apps\Python\Python36-32\python.exe"
+SET py2="%widgets%\Apps\Python\Python27\python.exe"
 ::SET pys="D:\Users\Scott\AppData\Local\Programs\Python\Python35\Scripts"
 rem SET pys=D:\Users\Scott\AppData\Local\Programs\Python\Python36-32\Scripts
 rem SET pytools=D:\Users\Scott\AppData\Local\Programs\Python\Python36-32\Tools\scripts

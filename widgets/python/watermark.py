@@ -34,20 +34,6 @@ def appSwitches():
 	_.switches.register( 'Folders', '-folder,-folders' )
 	_.switches.register( 'Recursive', '-folder,-folders' )
 
-### EXAMPLE: START
-# _.switches.trigger( 'Files', _.myFileLocations, vs=True )
-# 	finds the file in probable locations
-# 	and 
-# 		if  _.autoBackupData = True
-# 		and __.releaseAcquiredData = True
-# 			GET EPOCH FROM: hosts/hostname/logs/apps/execution_receipt-app_name-epoch.json
-# 		you can run apps on usb at a clients office
-# 			when you get home run: p app -loadepoch epoch 
-# 				backed up
-# 					pipe
-# 					files
-# 					tables
-### EXAMPLE: END
 _.autoBackupData = __.autoCreationConfiguration['backup']
 __.releaseAcquiredData = __.autoCreationConfiguration['logs'] 
 __.myFileLocations_SKIP_VALIDATION = False
@@ -61,11 +47,12 @@ __.switch_raw = []
 
 
 _.appInfo[focus()] = {
-	'file': 'thisApp.py',
+	'file': 'watermark.py',
 	'liveAppName': __.thisApp( __file__ ),
-	'description': 'Changes the world',
+ 	'description': 'add watermark to code',
 	'categories': [
-						'DEFAULT',
+						'watermark',
+						'code',
 				],
 	'usage': [
 						# 'epy another',
@@ -107,11 +94,7 @@ _.appData[focus()] = {
 					'table': {'sent': [], 'received': [] }, 
 		},
 	}
-### EXAMPLE: START
-# _.appInfo[focus()]['examples'].append( 'p thisApp -file file.txt' )
 
-# _.appInfo[focus()]['columns'].append( {'name': 'name', 'abbreviation': 'n'} )
-### EXAMPLE: END
 
 
 def registerSwitches( argvProcessForce=False ):
@@ -135,12 +118,6 @@ def registerSwitches( argvProcessForce=False ):
 	_.switches.trigger( 'URL', _.urlTrigger )
 	_.switches.trigger( 'Ago', _.timeAgo )
 	_.switches.trigger( 'Duration', _.timeFuture )
-	### EXAMPLE: START
-	# _.switches.trigger( 'Files',_.inRelevantFolder )	
-	# _.switches.trigger( 'Watched', _.txt2Date )
-	# _.switches.trigger( 'Input',_.formatColumns )
-	# _.switches.trigger( 'Franchise',_.triggerSpace )
-	### EXAMPLE: END
 	
 	_.defaultScriptTriggers()
 	_.switches.process()
@@ -168,30 +145,6 @@ if __name__ == '__main__':
 _.postLoad( __file__ )
 
 ########################################################################################
-### EXAMPLE: START
-# data = _.tables.returnSorted( 'data', 'd.timestamp', data )
-# _.switches.fieldSet( 'Long', 'active', True )
-# _.tables.register( 'data', table )
-# _.tables.fieldProfileSet('data','timestamp','trigger',_.friendlyDate)
-# _.tables.fieldProfileSet('data','phone,email,address','alignment','center')
-# _.tables.print( 'data', 'name' )
-# _.tables.print( 'data', ','.join(_.switches.values('Column')) )
-# _.switches.isActive('Files')
-# p = _.getText( _v.pips, raw=True, clean=True ).split( '\n' )
-# os.system( '"' + do + '"' )
-# _.setPipeData( os.listdir( os.getcwd() ), focus() )
-# _.showLine( item )
-# 	if os.path.isdir( row ):
-# 	if os.path.isfile( row ):
-#	os.path.abspath(path)
-# __.appRegPipe    ( pipe data registerd focus(__.appReg) set by _.myFileLocations {if imported} , default is None )
-# for i,row in enumerate(_.t( _.appData[__.appReg]['pipe'] )):
-# for i,row in _.e( _.isData(r=1) ):
-# date = _.friendlyDate( theDate )
-# _.addComma()
-# 													if platform.system() == 'Windows':
-### EXAMPLE: END
-########################################################################################
 # START
 
 def process(path):
@@ -203,6 +156,8 @@ def process(path):
 	elif path.endswith('.bat'):
 		comment = 'rem'
 	elif path.endswith('.js'):
+		comment = '//'
+	elif path.endswith('.php'):
 		comment = '//'
 
 	if len(comment) and os.path.isfile(path):
@@ -231,9 +186,6 @@ def process(path):
 			_.cp(path,'cyan')
 			return None
 			
-
-
-
 
 
 

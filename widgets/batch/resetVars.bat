@@ -13,8 +13,8 @@ rem ## {C3P0D40fAe8B} ##
 SET /p Drive=<%userprofile%\.tk421
 SET widgets=%Drive:~0,1%
 
-reg query "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Environment" /v Path | "%widgets%:\techApps\Python\Python36-32\python.exe" "%widgets%:\widgets\python\regKeyClean.py" > %widgets%:\widgets\batch\originalPath.bat
-CALL %widgets%:\widgets\batch\originalPath.bat
+reg query "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Environment" /v Path | %PY% "%widgets%\widgets\python\regKeyClean.py" > %widgets%\widgets\batch\originalPath.bat
+CALL %widgets%\widgets\batch\originalPath.bat
 
 SET widgets=
 SET Drive=

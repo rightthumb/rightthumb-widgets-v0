@@ -11,7 +11,7 @@ rem ###########################################################################
 rem ## {C3P0D40fAe8B} ##
 
 
-start cmd /c %widgets%:\tech\MyScripts\offline_www
+start cmd /c %widgets%\tech\MyScripts\offline_www
 
 
 

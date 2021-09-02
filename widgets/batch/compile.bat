@@ -12,17 +12,17 @@ rem ## {C3P0D40fAe8B} ##
 
 CALL m back
 
-SET appServer="%widgets%:\widgets\databank\tables\appServer.txt"
-SET appServerFiles="%widgets%:\widgets\databank\tables\appServerFiles.txt"
-SET appServerCompiledUnix=%widgets%:\widgets\python\compiled\unix
-SET appServerCompiledWin=%widgets%:\widgets\python\compiled\windows
+SET appServer="%widgets%\widgets\databank\tables\appServer.txt"
+SET appServerFiles="%widgets%\widgets\databank\tables\appServerFiles.txt"
+SET appServerCompiledUnix=%widgets%\widgets\python\compiled\unix
+SET appServerCompiledWin=%widgets%\widgets\python\compiled\windows
 SET appServerCC=%userprofile%\cc.bat
-SET appServerSrcWin=%widgets%:\widgets\python\_rightThumb
-SET appServerPython=%widgets%:\widgets\python
-SET appServerKeySub=%widgets%:\widgets\keys\sublime.txt
-SET appServerPro=%widgets%:\widgets
+SET appServerSrcWin=%widgets%\widgets\python\_rightThumb
+SET appServerPython=%widgets%\widgets\python
+SET appServerKeySub=%widgets%\widgets\keys\sublime.txt
+SET appServerPro=%widgets%\widgets
 
-SET appServerTechApps=%widgets%:\techApps
+SET appServerTechApps=%widgets%\techApps
 
 ECHO %appServerTechApps%\KeePass-2.45\Database.kdbx> %appServerFiles%
 
@@ -160,8 +160,8 @@ del appServer.py
 cd ..
 IF EXIST appServer.win.zip  del appServer.win.zip
 IF EXIST appServer.unix.zip del appServer.unix.zip
-CALL ## %widgets%:\widgets\batch\zipTerminal.bat win
-CALL ## %widgets%:\widgets\batch\zipTerminal.bat unix
+CALL ## %widgets%\widgets\batch\zipTerminal.bat win
+CALL ## %widgets%\widgets\batch\zipTerminal.bat unix
 SET /p pause=pause: 
 rem zip appServer.win appServer.win
 rem zip appServer.unix appServer.unix
