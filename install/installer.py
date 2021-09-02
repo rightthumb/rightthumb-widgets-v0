@@ -1630,23 +1630,51 @@ pr-|{6FAB5628-94A1-410A-82D1-1D42A2A11750}/.rt/profile/projects"""
 			v.bashrc_default = True
 			nt = 'def'
 			if 'installer.py2' in 'installer.py ':
-				file += A.vfiles.file('.bashrc.full')['data']
-				file += A.vfiles.file('.bashrc.mini')['data']
+				add = A.vfiles.file('.bashrc.full')['data']
+				add += A.vfiles.file('.bashrc.mini')['data']
+				if not 'h' in _.switches.value('Installer').lower():
+					newFile=''
+					for line in add.split('\n'):
+						if not 'HISTSIZE' in line and not 'HISTFILESIZE' in line:
+							newFile+=line+'\n'
+					add=newFile
+				file += add
 			else:
-				file += A.vfiles.file('.bashrc.mini')['data']
-				file += A.vfiles.file('.bashrc.full')['data']
+				add = A.vfiles.file('.bashrc.mini')['data']
+				add += A.vfiles.file('.bashrc.full')['data']
+				if not 'h' in _.switches.value('Installer').lower():
+					newFile=''
+					for line in add.split('\n'):
+						if not 'HISTSIZE' in line and not 'HISTFILESIZE' in line:
+							newFile+=line+'\n'
+					add=newFile
+				file += add
 			
 		else:
 			if subject == 'mini':
 
 				file = self.bash_vars(p=0)
-			file += A.vfiles.file('.bashrc.'+subject)['data']
+			add = A.vfiles.file('.bashrc.'+subject)['data']
+			if not 'h' in _.switches.value('Installer').lower():
+				newFile=''
+				for line in add.split('\n'):
+					if not 'HISTSIZE' in line and not 'HISTFILESIZE' in line:
+						newFile+=line+'\n'
+				add=newFile
+			file += add
 			nt = subject
 		save = True
 
 		for seti in settings:
 			if 'auto' in seti:
-				file += A.vfiles.file('.bashrc-auto')['data']
+				add = A.vfiles.file('.bashrc-auto')['data']
+				if not 'h' in _.switches.value('Installer').lower():
+					newFile=''
+					for line in add.split('\n'):
+						if not 'HISTSIZE' in line and not 'HISTFILESIZE' in line:
+							newFile+=line+'\n'
+					add=newFile
+				file += add
 
 			if 'strip' in seti:
 				file = file.replace( '$( $widgets/install/installer.py -bash.vars )', self.bash_vars(p=0) )
@@ -1657,7 +1685,16 @@ pr-|{6FAB5628-94A1-410A-82D1-1D42A2A11750}/.rt/profile/projects"""
 			if 'clear' in seti:
 				file += '\n\nclear\n\n'
 
-		file += A.vfiles.file('.bashrc-all')['data']
+
+		add = A.vfiles.file('.bashrc-all')['data']
+		if not 'h' in _.switches.value('Installer').lower():
+			newFile=''
+			for line in add.split('\n'):
+				if not 'HISTSIZE' in line and not 'HISTFILESIZE' in line:
+					newFile+=line+'\n'
+			add=newFile
+		file += add
+
 		file = file.replace( '20F543'+'59E924', nn+'.'+nt )
 
 		file += '\n'
@@ -1667,12 +1704,7 @@ pr-|{6FAB5628-94A1-410A-82D1-1D42A2A11750}/.rt/profile/projects"""
 
 		# print( file )
 
-		if not 'h' in _.switches.value('Installer').lower():
-			newFile=''
-			for line in file.split('\n'):
-				if not 'HISTSIZE' in line and not 'HISTFILESIZE' in line:
-					newFile+=line+'\n'
-			file=newFile
+
 
 
 
