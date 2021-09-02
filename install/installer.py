@@ -1020,6 +1020,7 @@ class HD:
 		for k in data:
 			data[k]=data[k].replace('\\\\','\\')
 			data[k]=data[k].replace('\\','\\\\')
+			data[k]=data[k].replace('"','')
 		text = printDic( data, p=0 )
 		vc.HD.saveText( text, file )
 
@@ -1786,6 +1787,8 @@ pr-|{6FAB5628-94A1-410A-82D1-1D42A2A11750}/.rt/profile/projects"""
 		# print( v.home )
 		items = []
 		if os.path.isfile( v.config ):
+			for k in v.config:
+				v.config[k]=v.config[k].replace('"','')
 			v.bash = vc.HD.getTableSimp( v.config )
 
 		# print(v.bash_defaults)
@@ -1837,9 +1840,9 @@ pr-|{6FAB5628-94A1-410A-82D1-1D42A2A11750}/.rt/profile/projects"""
 			if key:
 				if v.bash[key] and not key == 'CAT' and not key == 'SHELL':
 					if v.isWin:
-						items.append( 'set '+key+'='+v.bash[key]+'\n' )
+						items.append( 'set '+cl(key)+'='+v.bash[key]+'\n' )
 					else:
-						items.append( 'export '+key+'='+v.bash[key]+'\n' )
+						items.append( 'export '+cl(key)+'='+v.bash[key]+'\n' )
 		items.append('\n')
 		export = ''.join(items)
 		if v.isWin:
@@ -1932,6 +1935,16 @@ pr-|{6FAB5628-94A1-410A-82D1-1D42A2A11750}/.rt/profile/projects"""
 			v.bash[k]=v.bash[k].replace(os.sep+os.sep,os.sep)
 			if ' ' in v.bash[k]:
 				v.bash[k]='"'+v.bash[k]+'"'
+
+		done = False
+		while not done:
+			done=True
+			for k in v.bash:
+				if os.sep in k or '-' in k or ' ' in k or v.bash[k] == '' :
+					done=False
+					del v.bash[k]
+					break
+		
 
 
 
@@ -13643,6 +13656,8 @@ def cl(key):
 	key = key.replace('-','_')
 	key = key.replace('.','_')
 	key = key.replace(' ','')
+	if os.sep in key:
+		return '_err'
 	return key
 def testImport(app):
 	try:
@@ -13707,6 +13722,8 @@ def action():
 
 
 		if os.path.isfile( v.config ):
+			for k in v.config:
+				v.config[k]=v.config[k].replace('"','')
 			v.bash = vc.HD.getTableSimp( v.config )
 		v.bash['PY'] = sys.executable
 		if os.getcwd().endswith(os.sep+'install'):
@@ -13893,6 +13910,8 @@ example: ~/.rt/.config.hash
 	if switches.isActive('Config-Alias'):
 		vc.FIG.home()
 		if os.path.isfile( v.config ):
+			for k in v.config:
+				v.config[k]=v.config[k].replace('"','')
 			v.bash = vc.HD.getTableSimp( v.config )
 		if v.pipe:
 			v.bash['hAlias'] = ''.join(v.pipe)
@@ -13913,6 +13932,8 @@ example: ~/.rt/.config.hash
 	if switches.isActive('Config-Skip-Keychain'):
 		vc.FIG.home()
 		if os.path.isfile( v.config ):
+			for k in v.config:
+				v.config[k]=v.config[k].replace('"','')
 			v.bash = vc.HD.getTableSimp( v.config )
 		v.bash['skip_chain'] = 'true'
 		vc.FIG.v_bash_order()
@@ -13940,6 +13961,8 @@ example: ~/.rt/.config.hash
 	if switches.isActive('Config-Editor'):
 		vc.FIG.home()
 		if os.path.isfile( v.config ):
+			for k in v.config:
+				v.config[k]=v.config[k].replace('"','')
 			v.bash = vc.HD.getTableSimp( v.config )
 		if v.pipe:
 			v.bash['code_editor'] = ''.join(v.pipe)
@@ -13964,6 +13987,8 @@ example: ~/.rt/.config.hash
 	if switches.isActive('Config-Python'):
 		vc.FIG.home()
 		if os.path.isfile( v.config ):
+			for k in v.config:
+				v.config[k]=v.config[k].replace('"','')
 			v.bash = vc.HD.getTableSimp( v.config )
 		if v.pipe:
 			v.bash['PY'] = ''.join(v.pipe)
@@ -13985,6 +14010,8 @@ example: ~/.rt/.config.hash
 		vc.FIG.home()
 		
 		if os.path.isfile( v.config ):
+			for k in v.config:
+				v.config[k]=v.config[k].replace('"','')
 			v.bash = vc.HD.getTableSimp( v.config )
 		if v.pipe:
 			v.bash['PY2'] = ''.join(v.pipe)
@@ -14005,6 +14032,8 @@ example: ~/.rt/.config.hash
 		vc.FIG.home()
 		
 		if os.path.isfile( v.config ):
+			for k in v.config:
+				v.config[k]=v.config[k].replace('"','')
 			v.bash = vc.HD.getTableSimp( v.config )
 		if v.pipe:
 			v.bash['widgets'] = ''.join(v.pipe)
@@ -14047,6 +14076,8 @@ example: ~/.rt/.config.hash
 		vc.FIG.home()
 		
 		if os.path.isfile( v.config ):
+			for k in v.config:
+				v.config[k]=v.config[k].replace('"','')
 			v.bash = vc.HD.getTableSimp( v.config )
 		for add in switches.values('Config-Add'):
 			if ':' in add:
@@ -14072,6 +14103,8 @@ example: ~/.rt/.config.hash
 		vc.FIG.home()
 		
 		if os.path.isfile( v.config ):
+			for k in v.config:
+				v.config[k]=v.config[k].replace('"','')
 			v.bash = vc.HD.getTableSimp( v.config )
 		for remove in switches.values('Config-Remove'):
 			if remove in v.bash:
@@ -14123,6 +14156,8 @@ example: ~/.rt/.config.hash
 		vc.FIG.home()
 		
 		if os.path.isfile( v.config ):
+			for k in v.config:
+				v.config[k]=v.config[k].replace('"','')
 			v.bash = vc.HD.getTableSimp( v.config )
 		# print(v.bash)
 		vc.FIG.v_bash_order()
