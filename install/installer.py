@@ -1,4 +1,15 @@
 #!/usr/bin/python3
+
+# ## {R2D2919B742E} ##
+# ###########################################################################
+# What if magic existed?
+# What if a place existed where your every thought and dream come to life.
+# There is only one catch: it has to be written down.
+# Such a place exists, it is called programming.
+#    - Scott Taylor Reph, RightThumb.com
+# ###########################################################################
+# ## {C3P0D40fAe8B} ##
+
 import os,sys,datetime,time,platform,pickle
 class dot:
 	def __init__(self): pass;
@@ -21,46 +32,48 @@ v.appInfo={
 	'version': '0.1.68.76',
 	'prerequisite': [],
 	'examples': [
-					'~/.rt/tool ',
-					'$HOME/.rt/tool ',
+					'installer.py ',
+					'$widgets/install/installer.py ',
 					'',
 					't -rc.d strip print clear home auto',
 					'',
-					'~/.rt/tool -json ~/.rt-config.hash',
+					'installer.py -json ~/.rt-config.hash',
 					'',
-					'~/.rt/tool -import simplejson',
+					'installer.py -import simplejson',
 					'',
-					'~/.rt/tool -config.py /usr/bin/python3',
-					'~/.rt/tool -config.path /opt/RightThumb',
-					'~/.rt/tool -config.editor code-oss',
+					'installer.py -config.py /usr/bin/python3',
+					'installer.py -config.path /opt/RightThumb',
+					'installer.py -config.editor code-oss',
 					'',
-					'~/.rt/tool -sh.file app.py',
-					'~/.rt/tool -sh.folder',
-					'~/.rt/tool -sh.folder.r',
+					'installer.py -sh.file app.py',
+					'installer.py -sh.folder',
+					'installer.py -sh.folder.r',
 					'',
-					'~/.rt/tool -header.read owl.png',
+					'installer.py -header.read owl.png',
 					'',
-					'~/.rt/tool -bash.vars',
+					'installer.py -bash.vars',
 					'',
-					'~/.rt/tool -header.fix.self',
-					'~/.rt/tool -header.fix.file ~/.rt/tool',
-					'~/.rt/tool -header.fix.folder',
-					'~/.rt/tool -header.fix.folder.r',
+					'installer.py -header.fix.self',
+					'installer.py -header.fix.file installer.py',
+					'installer.py -header.fix.folder',
+					'installer.py -header.fix.folder.r',
 					'',
-					'~/.rt/tool -ext.folder',
-					'~/.rt/tool -ext.folder.r',
+					'installer.py -ext.folder',
+					'installer.py -ext.folder.r',
 					'',
-					'~/.rt/tool -url.get http://reph.us/tools/tool.sh | bash',
+					'installer.py -url.get http://reph.us/tools/tool.sh | bash',
 					'',
-					'~/.rt/tool -dl',
+					'installer.py -dl',
 					'',
-					'~/.rt/tool -config.skip r',
+					'installer.py -config.skip r',
 					'',
 					'',
-					'~/.rt/tool -u.p.l 65432',
-					'~/.rt/tool -u.p.k 65432',
+					'installer.py -u.p.l 65432',
+					'installer.py -u.p.k 65432',
 					'',
 					't -sh.folder.r $widgets',
+					'',
+					'',
 					'',
 	],
 	'columns': [],
@@ -68,8 +81,11 @@ v.appInfo={
 
 
 
-
- 
+try:
+	import colorama
+	colorama.init()
+except Exception as e:
+	colorama = None
 
 ######################################################
 def subdo(do,p=0):
@@ -97,6 +113,7 @@ def loader():
 		return None
 		
 	__.theDelim = '|||'
+	v.pipe=[]
 	if not sys.stdin.isatty():
 		v.pipe = setPipeData( sys.stdin.readlines(), clean=switches.isActive('Setting-PIPE-Clean') )
 	A.vfiles = virtualFiles()
@@ -110,7 +127,7 @@ def loader():
 		isWin = False
 
 	vc.HD = HD()
-	v.pipe = []
+	# v.pipe = []
 	v.f = dot()
 	vc.DIR = DIR()
 	vc.IS = IS()
@@ -139,19 +156,25 @@ def loader():
 	v.bash = {}
 	v.bash_defaults = {
 							'widgets': '/opt/RightThumb',
-							'PY': '/usr/bin/python3',
+							'PY': sys.executable,
 							'PY2': '/usr/bin/python2',
 
 							'SHELL': '/bin/bash',
-							'CAT': '[widgets]/widgets/python/cat.py -f',
+							'CAT': '[widgets]/widgets/python/src/unity/cat.py -f',
 
 
 	}
+	# v.bash_defaults['widgets']
+
 	v.bash_defaults_no_gui = {
 								'code_editor': 'nano',
 								'code_editor_pre': '',
 								'code_editor_suff': '',
 	}
+	if v.isWin:
+		v.bash_defaults_no_gui['code_editor']='C:\\Windows\\system32\\notepad.exe'
+		v.bash_defaults['widgets'] = 'C:\\.rightthumb-widgets'
+
 
 	v.bash_defaults = dics([ v.bash_defaults, v.bash_defaults_no_gui ])
 
@@ -306,11 +329,7 @@ def spaces(cnt):
 		result += ' '
 	return result
 
-try:
-	import colorama
-	colorama.init()
-except Exception as e:
-	colorama = None
+
 
 # class ColorBold:
 # gray = '\033[1;30;40m'
@@ -485,6 +504,7 @@ def cp( string, color='red', p=1 ):
 	if colorama is None:
 		# print('no colorama installed')
 		if p:
+			print('error')
 			print( string )
 		return string
 	subject = inlineColor( string, color )
@@ -867,9 +887,7 @@ class HD:
 				# print( 0, a )
 		return table
 	def getText( self, theFile, raw=False, clean=False, e=0, c=0 ):
- 
- 
- 
+		theFile=theFile.replace(os.sep+os.sep,os.sep)
 		if not os.path.isfile(theFile):
 			if raw:
 				return ''
@@ -895,6 +913,7 @@ class HD:
 		return lines
 
 	def saveText( self, rows, theFile, errors=True ):
+		theFile=theFile.replace(os.sep+os.sep,os.sep)
 		# print(vc.STR.printable)
 		vc.HD.chmod(theFile)
 		# print(type(rows))
@@ -949,6 +968,7 @@ class HD:
 			vc.HD.chmod(theFile)
 
 	def saveText2( self, rows, theFile, errors=True ):
+		theFile=theFile.replace(os.sep+os.sep,os.sep)
  
  
  
@@ -996,8 +1016,10 @@ class HD:
 
 	def saveTableSimp( self, data, file ):
  
- 
- 
+ 		
+		for k in data:
+			data[k]=data[k].replace('\\\\','\\')
+			data[k]=data[k].replace('\\','\\\\')
 		text = printDic( data, p=0 )
 		vc.HD.saveText( text, file )
 
@@ -1456,7 +1478,7 @@ bash.l|/mnt/d/widgets/bash
 pr.l|/mnt/d/tech/hosts/VULCAN/projects
 h.l|/mnt/d/tech/hosts/VULCAN
 ovpn.l|/mnt/d/tech/hosts/VULCAN/projects/ovpn
-bm|{A8693D4B-8A80-898F-83F0-E806D2F36800}/widgets/python/_rightThumb/_bookmarks
+bm|{A8693D4B-8A80-898F-83F0-E806D2F36800}/widgets/python/src/unity/_rightThumb/_bookmarks
 tool.live|/mnt/d/widgets/bash/install/py
 tool|/mnt/d/widgets/bash/install/py
 tt-|{6FAB5628-94A1-410A-82D1-1D42A2A11750}/.rt/profile/tables
@@ -1570,8 +1592,16 @@ pr-|{6FAB5628-94A1-410A-82D1-1D42A2A11750}/.rt/profile/projects"""
 
 
 				if not active:
-					if not 'HISTSIZE' in line and not 'HISTFILESIZE' in line:
+
+					if 'h' in switches.values('Installer'):
+						if not 'HISTSIZE' in line and not 'HISTFILESIZE' in line:
+							new_bashrc += line + '\n'
+						else:
+							new_bashrc += '# '+line + '\n'
+					else:
 						new_bashrc += line + '\n'
+
+
 
 				if e in line:
 					new_bashrc += s + '\n'
@@ -1588,7 +1618,7 @@ pr-|{6FAB5628-94A1-410A-82D1-1D42A2A11750}/.rt/profile/projects"""
 
 
 	def bashrc( self, subject=None, settings=[] ):
-		if '~/.rt/tool2' in '~/.rt/tool ':
+		if 'installer.py2' in 'installer.py ':
 			nn = '2'
 		else:
 			nn = '3'
@@ -1603,27 +1633,64 @@ pr-|{6FAB5628-94A1-410A-82D1-1D42A2A11750}/.rt/profile/projects"""
 		if subject is None:
 			v.bashrc_default = True
 			nt = 'def'
-			if '~/.rt/tool2' in '~/.rt/tool ':
-				file += A.vfiles.file('.bashrc.full')['data']
-				file += A.vfiles.file('.bashrc.mini')['data']
+			if 'installer.py2' in 'installer.py ':
+				add = A.vfiles.file('.bashrc.full')['data']
+				add += A.vfiles.file('.bashrc.mini')['data']
+				if not 'h' in switches.values('Installer'):
+					newFile=''
+					for line in add.split('\n'):
+						if not 'HISTSIZE' in line and not 'HISTFILESIZE' in line:
+							newFile+=line+'\n'
+						else:
+							newFile+='# '+line+'\n'
+							
+					add=newFile
+				file += add
 			else:
-				file += A.vfiles.file('.bashrc.mini')['data']
-				file += A.vfiles.file('.bashrc.full')['data']
+				add = A.vfiles.file('.bashrc.mini')['data']
+				add += A.vfiles.file('.bashrc.full')['data']
+				if not 'h' in switches.values('Installer'):
+					newFile=''
+					for line in add.split('\n'):
+						if not 'HISTSIZE' in line and not 'HISTFILESIZE' in line:
+							newFile+=line+'\n'
+						else:
+							newFile+='# '+line+'\n'
+					add=newFile
+				file += add
 			
 		else:
 			if subject == 'mini':
 
 				file = self.bash_vars(p=0)
-			file += A.vfiles.file('.bashrc.'+subject)['data']
+			add = A.vfiles.file('.bashrc.'+subject)['data']
+			if not 'h' in switches.values('Installer'):
+				newFile=''
+				for line in add.split('\n'):
+					if not 'HISTSIZE' in line and not 'HISTFILESIZE' in line:
+						newFile+=line+'\n'
+					else:
+						newFile+='# '+line+'\n'
+				add=newFile
+			file += add
 			nt = subject
 		save = True
 
 		for seti in settings:
 			if 'auto' in seti:
-				file += A.vfiles.file('.bashrc-auto')['data']
+				add = A.vfiles.file('.bashrc-auto')['data']
+				if not 'h' in switches.values('Installer'):
+					newFile=''
+					for line in add.split('\n'):
+						if not 'HISTSIZE' in line and not 'HISTFILESIZE' in line:
+							newFile+=line+'\n'
+						else:
+							newFile+='# '+line+'\n'
+					add=newFile
+				file += add
 
 			if 'strip' in seti:
-				file = file.replace( '$( $HOME/.rt/tool -bash.vars )', self.bash_vars(p=0) )
+				file = file.replace( '$( $widgets/install/installer.py -bash.vars )', self.bash_vars(p=0) )
 			if 'print' in seti:
 				save = False
 			if 'home' in seti:
@@ -1631,15 +1698,33 @@ pr-|{6FAB5628-94A1-410A-82D1-1D42A2A11750}/.rt/profile/projects"""
 			if 'clear' in seti:
 				file += '\n\nclear\n\n'
 
-		file += A.vfiles.file('.bashrc-all')['data']
+
+		add = A.vfiles.file('.bashrc-all')['data']
+		if not 'h' in switches.values('Installer'):
+			newFile=''
+			for line in add.split('\n'):
+				if not 'HISTSIZE' in line and not 'HISTFILESIZE' in line:
+					newFile+=line+'\n'
+				else:
+					newFile+='# '+line+'\n'
+			add=newFile
+		file += add
+
 		file = file.replace( '20F543'+'59E924', nn+'.'+nt )
 
 		file += '\n'
-		file += 'alias k="$widgets/widgets/python/keychain.py -rc ";\n'
-		file += 'alias pc="$widgets/widgets/python/pc.py -rc ";\n'
+		file += 'alias k="$widgets/widgets/python/src/unity/keychain.py -rc ";\n'
+		file += 'alias pc="$widgets/widgets/python/src/unity/pc.py -rc ";\n'
 		file += '\n'
 
 		# print( file )
+
+
+
+
+
+
+
 		if save:
 			self.save_bashrc( file )
 		else:
@@ -1710,27 +1795,30 @@ pr-|{6FAB5628-94A1-410A-82D1-1D42A2A11750}/.rt/profile/projects"""
 		for key in v.bash_defaults.keys():
 			if not key in v.bash:
 				v.bash[key] = v.bash_defaults[key]
-		if not v.gui:
-			for key in v.bash_defaults_no_gui.keys():
-				v.bash[key] = v.bash_defaults_no_gui[key]
+		if not v.isWin:
+			if not v.gui:
+				for key in v.bash_defaults_no_gui.keys():
+					v.bash[key] = v.bash_defaults_no_gui[key]
 		self.v_bash_order()
-		if 'PY' in v.bash and not v.bash['PY'] and 'PY' in v.bash_defaults:
-			v.bash['PY'] = v.bash_defaults['PY']
+		# if 'PY' in v.bash and not v.bash['PY'] and 'PY' in v.bash_defaults:
+		# 	v.bash['PY'] = v.bash_defaults['PY']
 
-		if 'widgets' in v.bash and not v.bash['widgets'] and 'widgets' in v.bash_defaults:
-			v.bash['widgets'] = v.bash_defaults['widgets']
+		# if 'widgets' in v.bash and not v.bash['widgets'] and 'widgets' in v.bash_defaults:
+		# 	v.bash['widgets'] = v.bash_defaults['widgets']
 		
-		if 'code_editor' in v.bash and not v.bash['code_editor'] and 'code_editor' in v.bash_defaults:
-			v.bash['code_editor'] = v.bash_defaults['code_editor']
-		v.bash['p_sh'] = v.bash['widgets'] + '/widgets/bash/nav/p.sh'
-		v.bash['p_sh'] = v.bash['p_sh'].replace('/',os.sep)
-
+		# if 'code_editor' in v.bash and not v.bash['code_editor'] and 'code_editor' in v.bash_defaults:
+		# 	v.bash['code_editor'] = v.bash_defaults['code_editor']
+		if v.isWin:
+			v.bash['p'] = v.bash['widgets'] + '/widgets/batch/p.bat'
+		else:
+			v.bash['p'] = v.bash['widgets'] + '/widgets/bash/nav/p.sh'
+		v.bash['p'] = v.bash['p'].replace('/',os.sep)
 
 		for k in v.bash:
 			if os.sep in v.bash[k]:
 				v.bash[k] = vc.PATHS.path(v.bash[k])
 				if v.isWin:
-					if not k in ['widgets','code_editor']:
+					if not k in ['widgets']:
 						v.bash[k] = '"'+v.bash[k]+'"'
 					else:
 						v.bash[k] = v.bash[k]
@@ -1742,6 +1830,8 @@ pr-|{6FAB5628-94A1-410A-82D1-1D42A2A11750}/.rt/profile/projects"""
 				v.bash[k] = v.bash[k].replace( '/opt/RightThumb', v.bash['widgets'] )
 
 		self.v_bash_order()
+
+
 		items.append('\n')
 		for key in v.bash:
 			if key:
@@ -1752,10 +1842,55 @@ pr-|{6FAB5628-94A1-410A-82D1-1D42A2A11750}/.rt/profile/projects"""
 						items.append( 'export '+key+'='+v.bash[key]+'\n' )
 		items.append('\n')
 		export = ''.join(items)
+		if v.isWin:
+			ext='bat'
+			export=export.replace('\\\\','\\')
+		else:
+			ext='sh'
 		if p:
 			print( export )
-			vc.HD.saveText( export, v.home+os.sep+'.rt'+os.sep+'profile'+os.sep+'vars'+os.sep+'config.bat' )
-			print(':',v.home+os.sep+'.rt'+os.sep+'profile'+os.sep+'vars'+os.sep+'config.bat')
+			vc.HD.saveText( export, v.bash['wprofile']+os.sep+'vars'+os.sep+'config.'+ext )
+			if v.isWin:
+				comment=':'
+
+			else:
+				comment='#'
+			
+			if not os.path.isfile(v.bash['wprofile']+os.sep+'vars'+os.sep+'config.'+ext):
+				color='yellow'
+				me=0
+			else:
+				me=os.stat( v.bash['wprofile']+os.sep+'vars'+os.sep+'config.'+ext ).st_size
+				if me > 5:
+					color='green'
+				else:
+					color='cyan'
+			cp([comment,vc.DIR.formatSize(me),v.bash['wprofile']+os.sep+'vars'+os.sep+'config.'+ext],color)
+
+			if not os.path.isfile(v.bash['wprofile']+os.sep+'vars'+os.sep+'personal.'+ext):
+				vc.HD.saveText( '', v.bash['wprofile']+os.sep+'vars'+os.sep+'personal.'+ext )
+				color='yellow'
+				me=0
+			else:
+				me=os.stat( v.bash['wprofile']+os.sep+'vars'+os.sep+'personal.'+ext ).st_size
+				if me > 5:
+					color='green'
+				else:
+					color='cyan'
+
+
+			cp([comment,vc.DIR.formatSize(me),v.bash['wprofile']+os.sep+'vars'+os.sep+'personal.'+ext],color)
+			if not os.path.isfile(v.home+os.sep+'.rt'+os.sep+'.config.hash'):
+				color='yellow'
+				me=0
+			else:
+				me=os.stat( v.home+os.sep+'.rt'+os.sep+'.config.hash' ).st_size
+				if me > 5:
+					color='green'
+				else:
+					color='cyan'
+			cp([comment,vc.DIR.formatSize(me),v.home+os.sep+'.rt'+os.sep+'.config.hash'],color)
+			# print(color)
 		return export
 
 
@@ -1783,8 +1918,20 @@ pr-|{6FAB5628-94A1-410A-82D1-1D42A2A11750}/.rt/profile/projects"""
 				if '['+key2+']' in v.bash[key]:
 					v.bash[key] = v.bash[key].replace( '['+key2+']', v.bash[key2] )
 
+		for key in v.bash:
+			if '\\' in v.bash[key] and not '\\\\' in v.bash[key]:
+				v.bash[key]=v.bash[key].replace( '\\', '\\\\' )
 
-
+		if not 'wprofile' in v.bash:
+			v.bash['wprofile']=v.home+os.sep+'.rt'+os.sep+'profile'
+		v.bash['w']=v.bash['widgets']
+		v.bash['ww']=v.bash['widgets']+os.sep+'widgets'
+		for k in v.bash:
+			v.bash[k]=v.bash[k].replace('"','')
+			v.bash[k]=v.bash[k].replace(os.sep+os.sep,os.sep)
+			v.bash[k]=v.bash[k].replace(os.sep+os.sep,os.sep)
+			if ' ' in v.bash[k]:
+				v.bash[k]='"'+v.bash[k]+'"'
 
 
 
@@ -1805,7 +1952,7 @@ pr-|{6FAB5628-94A1-410A-82D1-1D42A2A11750}/.rt/profile/projects"""
 			except Exception as e:
 
 				file = ''
-				if '~/.rt/tool2' in '~/.rt/tool ':
+				if 'installer.py2' in 'installer.py ':
 					file += '#!'+v.bash['PY2']
 				else:
 					file += '#!'+v.bash['PY']
@@ -1986,7 +2133,7 @@ class HEAD:
 
 				p3 = '#!'+v.bash['PY'] + '\n'
 				p2 = '#!'+v.bash['PY2'] + '\n'
-				if '~/.rt/tool2' in '~/.rt/tool ':
+				if 'installer.py2' in 'installer.py ':
 					# print('ifa2 true')
 					pyVer=2
 					# newFile += '#!'+v.bash['PY2'] + '\n'
@@ -2267,7 +2414,7 @@ class ONLINE:
 			files.append({ 'label': 'tool', 'path': v.home +os.sep+ '.rt' +os.sep+ 'tool', 'pre-exist': False })
 			files.append({ 'label': 'tool.sh', 'path': v.home +os.sep+ '.rt' +os.sep+ 'tool.sh', 'pre-exist': False })
 			files.append({ 'label': 'help.txt', 'path': v.home +os.sep+ '.rt' +os.sep+ 'help.txt', 'pre-exist': False })
-			# rec = { 'label': 'bashrc.py', 'path': v.bash['widgets'] + '/widgets/python/bashrc.py', 'pre-exist': True }
+			# rec = { 'label': 'bashrc.py', 'path': v.bash['widgets'] + '/widgets/python/src/unity/bashrc.py', 'pre-exist': True }
 			# rec['path'] = rec['path'].replace( '/', os.sep )
 			# files.append(rec)
 			rec = { 'label': 'load-vars.sh', 'path': v.bash['widgets'] + '/widgets/bash/load-vars.sh', 'pre-exist': True }
@@ -2340,27 +2487,27 @@ class virtualFiles:
 		if path == '.bashrc-auto':
 			data = """
 ################# ################# #################
-alias s.exp.gen="$widgets/widgets/python/expect-gen.py -sudo -p"
-alias exp.gen="$widgets/widgets/python/expect-gen.py -p "
-alias exp.geny="$widgets/widgets/python/expect-gen.py -p -y "
-alias pr.do="$HOME/.rt/profile/temp/temp.exp $( $widgets/widgets/python/keychain.py -label p.r -jp -get )"
+alias s.exp.gen="$widgets/widgets/python/src/unity/expect-gen.py -sudo -p"
+alias exp.gen="$widgets/widgets/python/src/unity/expect-gen.py -p "
+alias exp.geny="$widgets/widgets/python/src/unity/expect-gen.py -p -y "
+alias pr.do="$HOME/.rt/profile/temp/temp.exp $( $widgets/widgets/python/src/unity/keychain.py -label p.r -jp -get )"
 alias pr.e="exp.gen;pr.do"
-alias p9.do="$HOME/.rt/profile/temp/temp.exp $( $widgets/widgets/python/keychain.py -label p.9 -jp -get )"
-alias pv.do="$HOME/.rt/profile/temp/temp.exp $( $widgets/widgets/python/keychain.py -label vault -jp -get )"
+alias p9.do="$HOME/.rt/profile/temp/temp.exp $( $widgets/widgets/python/src/unity/keychain.py -label p.9 -jp -get )"
+alias pv.do="$HOME/.rt/profile/temp/temp.exp $( $widgets/widgets/python/src/unity/keychain.py -label vault -jp -get )"
 alias pv.e="exp.gen;pv.do"
 #################
-alias vps.do="$HOME/.rt/profile/temp/temp.exp $( $widgets/widgets/python/keychain.py -label vps.scott -jp -get )"
+alias vps.do="$HOME/.rt/profile/temp/temp.exp $( $widgets/widgets/python/src/unity/keychain.py -label vps.scott -jp -get )"
 alias vps.e="exp.gen;vps.do"
 alias vps.ey="exp.geny;vps.do"
 alias vps.el="echo su root | vps.e"
 alias s.vps.e="s.exp.gen;vps.do"
 #################
-alias reph.do="$HOME/.rt/profile/temp/temp.exp $( $widgets/widgets/python/keychain.py -label reph.l -jp -get )"
+alias reph.do="$HOME/.rt/profile/temp/temp.exp $( $widgets/widgets/python/src/unity/keychain.py -label reph.l -jp -get )"
 alias reph.e="exp.gen;reph.do"
 alias reph.ey="exp.geny;reph.do"
 alias reph.el="echo su root | reph.e"
 #################
-alias web.do="$HOME/.rt/profile/temp/temp.exp $( $widgets/widgets/python/keychain.py -label web.l -jp -get )"
+alias web.do="$HOME/.rt/profile/temp/temp.exp $( $widgets/widgets/python/src/unity/keychain.py -label web.l -jp -get )"
 alias web.e="exp.gen;web.do"
 alias web.ey="exp.geny;web.do"
 alias web.el="echo su root | web.e"
@@ -2390,7 +2537,7 @@ alias web.ssh="echo 'ssh ximlickficfp@tools.rightthumb.com' | web.e";
 ################# #################
 alias beep.="play -nq -t alsa synth 1 sine 440"
 ################# ################# #################
-alias vps.sync.sh="$HOME/.rt/tool -sh.folder /mnt/d/widgets/webApps/vps/"
+alias vps.sync.sh="$widgets/install/installer.py -sh.folder /mnt/d/widgets/webApps/vps/"
 alias vps.sync="echo scp /mnt/d/widgets/servers/web/vps/* root@vps.rightthumb.com:/opt/lampp/htdocs/|vps.e"
 alias vps.sync.get="echo scp root@vps.rightthumb.com:/opt/lampp/htdocs/ /mnt/d/widgets/servers/web/vps/* |vps.e"
 alias vps.www="echo    'ssh -L 8080:localhost:80 -C -N -l scott vps.rightthumb.com'    |  s.vps.e"
@@ -2451,82 +2598,83 @@ chmod 777 $HOME/.rt/profile/temp/temp.exp
 source $HOME/.rt/profile/vars/config.sh
 source $HOME/.rt/profile/vars/personal.sh
 
+
 ################# ################# ################# #################
 alias get.t.sh="wget http://reph.us/tools/file.php?file=tool.sh -O $HOME/.rt/tool.sh";
-alias get.t="wget http://reph.us/tools/file.php?file=tool -O $HOME/.rt/tool; $PY $HOME/.rt/tool -h.f $HOME/.rt/tool;";
-alias get.t2="wget http://reph.us/tools/file.php?file=tool2 -O $HOME/.rt/tool2; $PY $HOME/.rt/tool2 -h.f $HOME/.rt/tool2;";
-alias get.h="wget http://reph.us/tools/file.php?file=help.txt -O $HOME/.rt/help.txt; $PY $HOME/.rt/tool2 -h.f $HOME/.rt/help.txt;";
+alias get.t="wget http://reph.us/tools/file.php?file=tool -O installer.py; $PY $widgets/install/installer.py -h.f installer.py;";
+alias get.t2="wget http://reph.us/tools/file.php?file=tool2 -O installer.py2; $PY installer.py2 -h.f installer.py2;";
+alias get.h="wget http://reph.us/tools/file.php?file=help.txt -O $HOME/.rt/help.txt; $PY installer.py2 -h.f $HOME/.rt/help.txt;";
 
 ################# ################# #################
-alias m="$HOME/.rt/tool -app.m";
-alias b="$HOME/.rt/tool -app.b";
-alias d="$HOME/.rt/tool -app.d";
+alias m="$widgets/install/installer.py -app.m";
+alias b="$widgets/install/installer.py -app.b";
+alias d="$widgets/install/installer.py -app.d";
 ################# ################# #################
-alias p.ls="$HOME/.rt/tool -app.ls";
-alias p.bashrc="$HOME/.rt/tool -app.bashrc";
-alias p.which="$HOME/.rt/tool -app.which";
-alias p.ago="$HOME/.rt/tool -app.ago";
+alias p.ls="$widgets/install/installer.py -app.ls";
+alias p.bashrc="$widgets/install/installer.py -app.bashrc";
+alias p.which="$widgets/install/installer.py -app.which";
+alias p.ago="$widgets/install/installer.py -app.ago";
 
-alias p.file="$HOME/.rt/tool -app.file";
-alias p.files="$HOME/.rt/tool -app.files";
-alias p.folder="$HOME/.rt/tool -app.folder";
-alias p.folders="$HOME/.rt/tool -app.folders";
+alias p.file="$widgets/install/installer.py -app.file";
+alias p.files="$widgets/install/installer.py -app.files";
+alias p.folder="$widgets/install/installer.py -app.folder";
+alias p.folders="$widgets/install/installer.py -app.folders";
 
-alias p.paths="$HOME/.rt/tool -app.paths";
-alias t.p="$HOME/.rt/tool -app.paths";
+alias p.paths="$widgets/install/installer.py -app.paths";
+alias t.p="$widgets/install/installer.py -app.paths";
 
-alias p.shClean="$HOME/.rt/tool -sh.file";
-alias p.shClean.r="$HOME/.rt/tool -sh.folder.r";
+alias p.shClean="$widgets/install/installer.py -sh.file";
+alias p.shClean.r="$widgets/install/installer.py -sh.folder.r";
 
-alias s.p.shClean="sudo $HOME/.rt/tool -sh.file";
-alias s.p.shClean.r="sudo $HOME/.rt/tool -sh.folder.r";
+alias s.p.shClean="sudo $widgets/install/installer.py -sh.file";
+alias s.p.shClean.r="sudo $widgets/install/installer.py -sh.folder.r";
 
-alias bash.vars="$HOME/.rt/tool -bash.vars";
-alias t.dl="$HOME/.rt/tool -dl";
-alias t.url.get="$HOME/.rt/tool -url.get";
-alias t.wget.url="$HOME/.rt/tool -wget.url";
-alias t.online="$HOME/.rt/tool -is.online";
-alias t.o="$HOME/.rt/tool -is.online";
-alias t.ip="$HOME/.rt/tool -is.online";
+alias bash.vars="$widgets/install/installer.py -bash.vars";
+alias t.dl="$widgets/install/installer.py -dl";
+alias t.url.get="$widgets/install/installer.py -url.get";
+alias t.wget.url="$widgets/install/installer.py -wget.url";
+alias t.online="$widgets/install/installer.py -is.online";
+alias t.o="$widgets/install/installer.py -is.online";
+alias t.ip="$widgets/install/installer.py -is.online";
 
-alias t.rc.mini="$HOME/.rt/tool -bashrc.mini";
-alias t.rc.full="$HOME/.rt/tool -bashrc.full";
-alias t.rc.def="$HOME/.rt/tool -bashrc.def";
-alias t.valid="$HOME/.rt/tool -file.valid";
-alias t.pi="$HOME/.rt/tool -setting.pipe.print x";
-alias t.pipe="$HOME/.rt/tool -setting.pipe.print x";
-alias t.p="$HOME/.rt/tool -setting.pipe.print x";
-alias t.pipe.clean="$HOME/.rt/tool -setting.pipe.clean";
-alias t.p.clean="$HOME/.rt/tool -setting.pipe.clean";
-alias t.pi.c="$HOME/.rt/tool -setting.pipe.clean";
-alias t.p.c="$HOME/.rt/tool -setting.pipe.clean";
-alias line="$HOME/.rt/tool -app.line";
+alias t.rc.mini="$widgets/install/installer.py -bashrc.mini";
+alias t.rc.full="$widgets/install/installer.py -bashrc.full";
+alias t.rc.def="$widgets/install/installer.py -bashrc.def";
+alias t.valid="$widgets/install/installer.py -file.valid";
+alias t.pi="$widgets/install/installer.py -setting.pipe.print x";
+alias t.pipe="$widgets/install/installer.py -setting.pipe.print x";
+alias t.p="$widgets/install/installer.py -setting.pipe.print x";
+alias t.pipe.clean="$widgets/install/installer.py -setting.pipe.clean";
+alias t.p.clean="$widgets/install/installer.py -setting.pipe.clean";
+alias t.pi.c="$widgets/install/installer.py -setting.pipe.clean";
+alias t.p.c="$widgets/install/installer.py -setting.pipe.clean";
+alias line="$widgets/install/installer.py -app.line";
 
-alias file.header="$HOME/.rt/tool -header.fix.file";
-alias file.header.fix="$HOME/.rt/tool -header.fix.file";
-alias file.header.read="$HOME/.rt/tool -header.read";
+alias file.header="$widgets/install/installer.py -header.fix.file";
+alias file.header.fix="$widgets/install/installer.py -header.fix.file";
+alias file.header.read="$widgets/install/installer.py -header.read";
 
-alias sh.fi="$HOME/.rt/tool -sh.file";
-alias sh.fo="$HOME/.rt/tool -sh.folder";
-alias sh.fo.r="$HOME/.rt/tool -sh.folder.r";
+alias sh.fi="$widgets/install/installer.py -sh.file";
+alias sh.fo="$widgets/install/installer.py -sh.folder";
+alias sh.fo.r="$widgets/install/installer.py -sh.folder.r";
 
-alias h.fi="$HOME/.rt/tool -header.fix.file";
-alias h.fo="$HOME/.rt/tool -header.fix.folder";
-alias h.fo.r="$HOME/.rt/tool -header.fix.folder.r";
+alias h.fi="$widgets/install/installer.py -header.fix.file";
+alias h.fo="$widgets/install/installer.py -header.fix.folder";
+alias h.fo.r="$widgets/install/installer.py -header.fix.folder.r";
 
 
-alias t="$HOME/.rt/tool ";
-alias s.t="sudo $HOME/.rt/tool ";
-alias tool="$HOME/.rt/tool ";
-alias s.tool="sudo $HOME/.rt/tool ";
+alias t="$widgets/install/installer.py ";
+alias s.t="sudo $widgets/install/installer.py ";
+alias tool="$widgets/install/installer.py ";
+alias s.tool="sudo $widgets/install/installer.py ";
 
-alias t3="$HOME/.rt/tool";
-alias s.t3="sudo $HOME/.rt/tool";
+alias t3="installer.py";
+alias s.t3="sudo installer.py";
 
-alias t2="$HOME/.rt/tool2";
-alias s.t2="sudo $HOME/.rt/tool2";
-alias tool2="$HOME/.rt/tool2";
-alias s.tool2="sudo $HOME/.rt/tool2";
+alias t2="installer.py2";
+alias s.t2="sudo installer.py2";
+alias tool2="installer.py2";
+alias s.tool2="sudo installer.py2";
 
 alias t.sh="$HOME/.rt/tool.sh";
 alias s.t.sh="sudo $HOME/.rt/tool.sh";
@@ -2555,9 +2703,9 @@ source $HOME/.rt/profile/vars/personal.sh
 
 ################# ################# ################# #################
 alias get.t.sh="wget http://reph.us/tools/file.php?file=tool.sh -O $HOME/.rt/tool.sh";
-alias get.t="wget http://reph.us/tools/file.php?file=tool -O $HOME/.rt/tool; $PY $HOME/.rt/tool -h.f $HOME/.rt/tool;";
-alias get.t2="wget http://reph.us/tools/file.php?file=tool2 -O $HOME/.rt/tool2; $PY $HOME/.rt/tool2 -h.f $HOME/.rt/tool2;";
-alias get.h="wget http://reph.us/tools/file.php?file=help.txt -O $HOME/.rt/help.txt; $PY $HOME/.rt/tool2 -h.f $HOME/.rt/help.txt;";
+alias get.t="wget http://reph.us/tools/file.php?file=tool -O installer.py; $PY $widgets/install/installer.py -h.f installer.py;";
+alias get.t2="wget http://reph.us/tools/file.php?file=tool2 -O installer.py2; $PY installer.py2 -h.f installer.py2;";
+alias get.h="wget http://reph.us/tools/file.php?file=help.txt -O $HOME/.rt/help.txt; $PY installer.py2 -h.f $HOME/.rt/help.txt;";
 
 
 
@@ -2604,22 +2752,22 @@ alias newpage="$widgets/widgets/bash/newpage.sh"
 
 
 
-export stmp="$widgets/hosts/$(hostname)/temp"
-export tmpf0="$widgets/hosts/$(hostname)/temp/{B820137A-79B8-45E3-BCBD-A6CAC50892D0}"
-export tmpf1="$widgets/hosts/$(hostname)/temp/{C0FA8E56-8426-46BB-9CE8-4A14C51EA261}"
-export tmpf2="$widgets/hosts/$(hostname)/temp/{5FBF34C0-9A95-4C7E-BA53-44F84ECECCB5}"
-export tmpf3="$widgets/hosts/$(hostname)/temp/{F139D191-FA1A-44D5-855C-7E5141B30E0D}"
-export tmpf4="$widgets/hosts/$(hostname)/temp/{AA8EC8E1-EA9D-460D-A593-7B0FAEB9243E}"
-export tmpf5="$widgets/hosts/$(hostname)/temp/{201D82D6-2DC0-4552-A598-54F5481399A1}"
-export tmpf6="$widgets/hosts/$(hostname)/temp/{26B3B9C6-0A59-432A-9386-D432B53001CB}"
-export tmpf7="$widgets/hosts/$(hostname)/temp/{C03C0132-CFFC-4E3A-8F0F-614BB95164C7}"
-export tmpf8="$widgets/hosts/$(hostname)/temp/{4CCA3EBD-4535-42B7-9C75-05EFAACB00E0}"
-export tmpf9="$widgets/hosts/$(hostname)/temp/{DF1D4EBC-838E-419C-9C58-943C1767391A}"
+export stmp="$wprofile/temp"
+export tmpf0="$wprofile/temp/{B820137A-79B8-45E3-BCBD-A6CAC50892D0}"
+export tmpf1="$wprofile/temp/{C0FA8E56-8426-46BB-9CE8-4A14C51EA261}"
+export tmpf2="$wprofile/temp/{5FBF34C0-9A95-4C7E-BA53-44F84ECECCB5}"
+export tmpf3="$wprofile/temp/{F139D191-FA1A-44D5-855C-7E5141B30E0D}"
+export tmpf4="$wprofile/temp/{AA8EC8E1-EA9D-460D-A593-7B0FAEB9243E}"
+export tmpf5="$wprofile/temp/{201D82D6-2DC0-4552-A598-54F5481399A1}"
+export tmpf6="$wprofile/temp/{26B3B9C6-0A59-432A-9386-D432B53001CB}"
+export tmpf7="$wprofile/temp/{C03C0132-CFFC-4E3A-8F0F-614BB95164C7}"
+export tmpf8="$wprofile/temp/{4CCA3EBD-4535-42B7-9C75-05EFAACB00E0}"
+export tmpf9="$wprofile/temp/{DF1D4EBC-838E-419C-9C58-943C1767391A}"
 
 
 
 
-config="$widgets/hosts/$(hostname)/config"
+config="$wprofile/config"
 unixID="$config/.unix_id"
 
 
@@ -2718,11 +2866,11 @@ alias up.date="echo "update"; sudo apt-get update; echo "upgrade"; sudo apt-get 
 alias bbb="p hasAlias"
 alias app="p searchAppRegistrationInfo"
 
-alias tool="$HOME/.rt/tool"
+alias tool="installer.py"
 alias tool.sh="$HOME/.rt/tool.sh"
-alias s.tool="sudo $HOME/.rt/tool"
+alias s.tool="sudo installer.py"
 alias s.tool.sh="sudo $HOME/.rt/tool.sh"
-alias load.fix="$HOME/.rt/tool -sh.file $widgets/widgets/bash/load-vars.sh"
+alias load.fix="$widgets/install/installer.py -sh.file $widgets/widgets/bash/load-vars.sh"
 
 alias listening2="lsof -i -P -n | grep LISTEN"
 alias listening="netstat -l | p simpleLine + listen - listening"
@@ -7614,6 +7762,7 @@ class Table:
 		self.file = file
 
 	def save(self,theFile = '',tableTemp = True,printThis = True):
+		theFile=theFile.replace(os.sep+os.sep,os.sep)
 		HD.chmod(theFile)
 		simplejson = __.imp('simplejson')
 		if theFile == '':
@@ -7873,6 +8022,7 @@ class Tables:
 			i += 1
 
 	def save(self,table,theFile = '',tableTemp = True,printThis = True):
+		theFile=theFile.replace(os.sep+os.sep,os.sep)
 		HD.chmod(theFile)
 		theFile = str(theFile)
 		if not theFile == '' and not '.json' in theFile:
@@ -7885,6 +8035,7 @@ class Tables:
 		HD.chmod(theFile)
 
 	def get(self,table,theFile = '',tableTemp = True,printThis = False):
+		theFile=theFile.replace(os.sep+os.sep,os.sep)
 		theFile = str(theFile)
 		if not theFile == '' and not '.json' in theFile:
 			theFile = theFile + '.json'
@@ -13185,10 +13336,10 @@ class PY3TO2:
 		line = line.replace( 'ð', '' )
 		line = line.replace( '\xf0', '' )
 		
-		# line = line.replace( '~/.rt/tool ', '~/.rt/tool2 ' )
+		# line = line.replace( 'installer.py ', 'installer.py2 ' )
 
-		line = line.replace( '~/.rt/tool ', '~/.rt/tool2 ' )
-		line = line.replace( '$HOME/.rt/tool ', '$HOME/.rt/tool2 ' )
+		line = line.replace( 'installer.py ', 'installer.py2 ' )
+		line = line.replace( '$widgets/install/installer.py ', 'installer.py2 ' )
 
 
 		line = line.replace( 'def print(', 'def print2(' )
@@ -13381,6 +13532,7 @@ class HASH:
 ########################################################################################
 # switches.register('Help','--h')
 switches.register('Help','?,??,-h,--h,/?,-?,/h,help,/help,-help,--help')
+switches.register('---------','---------')
 switches.register('Plus','+')
 switches.register('Minus','-')
 switches.register('PlusOr', '-or')
@@ -13400,9 +13552,10 @@ switches.register('TableProfile', '-tp,-table',' *;c *;l  h;l header;left  size;
 switches.register('Long', '-l,-long')
 switches.register('Short', '-sc,-short')
 switches.register('Length', '-length','x3')
-
+switches.register('--------','---------')
 ########################################################################################
 # START
+switches.register('Installer','-install')
 switches.register('JSON-to-Var','-j2v,-json2var')
 switches.register('Test-Import','-i,-imp,-import,-t')
 switches.register('TEST','-test')
@@ -13422,10 +13575,11 @@ switches.register('Bash-Vars','-bash.vars')
 
 switches.register('Config-Alias','-config.alias')
 switches.register('Config-Python','-config.py,-config.python')
+switches.register('Config-Editor','-config.editor')
 switches.register('Config-Skip-Keychain','-config.skip')
 switches.register('Config-Python2','-config.py2,-config.python2')
 switches.register('Config-Path','-config.path,-config.widgets,-config.drive,-config.tech')
-switches.register('Config-Editor','-config.editor')
+# switches.register('Config-Editor','-config.editor')
 switches.register('Config-Add','-config.add')
 switches.register('Config-Remove','-config.remove')
 switches.register('Config-Print','-config,-config.print')
@@ -13529,6 +13683,120 @@ def action():
 	if not sws.active:
 		print_help()
 	
+	if switches.isActive('Installer'):
+		vc.FIG.home()
+		vc.FIG.v_bash_order()
+		if not os.getcwd().endswith(os.sep+'install'):
+			cp( 'Error, Please run from install folder', 'red' )
+			sys.exit()
+		vc.FIG.home()
+		vc.FIG.v_bash_order()
+		v.f.mkdir(v.bash['wprofile']+os.sep+'tables')
+		v.f.mkdir(v.bash['wprofile']+os.sep+'temp')
+		v.f.mkdir(v.bash['wprofile']+os.sep+'vars')
+		vc.HD.saveText( '"', v.bash['wprofile']+os.sep+'vars'+os.sep+'quote.txt' )
+		vc.HD.saveText( '%', v.bash['wprofile']+os.sep+'vars'+os.sep+'percentage.txt' )
+		vc.HD.saveText( vc.FIG.uuid(), v.bash['wprofile']+os.sep+'vars'+os.sep+'instanceID.sys' )
+		insta=vc.PATHS.path(__file__)
+		# tool=v.home+os.sep+'.rt'+os.sep+'tool.py'
+		tool=v.home+os.sep+'.rt'+os.sep+'tool'
+		if os.path.isfile(tool):
+			os.unlink(tool)
+		from shutil import copyfile
+		copyfile(insta,tool)
+
+
+		if os.path.isfile( v.config ):
+			v.bash = vc.HD.getTableSimp( v.config )
+		v.bash['PY'] = sys.executable
+		if os.getcwd().endswith(os.sep+'install'):
+			v.bash['widgets'] = os.getcwd().replace(os.sep+'install','')
+			v.bash['tech_drive'] = os.getcwd().replace(os.sep+'install','')
+			# print(v.bash['widgets'])
+			# print(os.getcwd())
+			# sys.exit()
+
+		vc.FIG.v_bash_order()
+		if v.bash:
+			vc.HD.saveTableSimp( v.bash, v.config )
+		test = vc.HD.getText( v.config, raw=True )
+		print( test )
+		if os.path.isfile(v.config):
+			cp( pp(v.config) , 'cyan' )
+		else:
+			cp( pp(v.config) , 'red' )
+		vc.FIG.bash_vars()
+		vc.FIG.bashrc(settings=['strip'])
+		if v.isWin:
+			cc_bat='''@echo off
+call %userprofile%\\.rt\\profile\\vars\\config.bat
+rem call %tech_drive%\\widgets\\batch\\resetVars.bat
+call %tech_drive%\\widgets\\batch\\c.bat %1 
+			'''
+			# vc.HD.saveText( cc_bat, v.home+os.sep+'rt.bat' )
+			vc.HD.saveText( cc_bat, v.home+os.sep+'rr.bat' )
+			A.ff.getFolders( v.bash['widgets']+'\\widgets\\powershell', r=False )
+			print()
+			print()
+			print()
+			template='Set-Variable -Name "!VAR!" -Value "!PATH!" -Visibility Public'
+			# template='New-Variable -Name "!VAR!" -Value "!PATH!" -Visibility Public'
+			powershellVars=''
+			for k in v.bash:
+				vary=v.bash[k]
+				vary=vary.replace('\\\\','\\')
+				vary=vary.replace('"','')
+				powershellVars+=template.replace('!VAR!',k).replace('!PATH!',vary)+'\n'
+			# powershellVars+='Clear-Variable -Name "widgets"\n'
+			for k in v.bash:
+				vary=v.bash[k]
+				vary=vary.replace('\\\\','\\')
+				if '"' in vary:
+					powershellVars+='$'+k+'='+vary+'\n'
+				else:
+					powershellVars+='$'+k+'="'+vary+'"\n'
+			powershellVars+='Set-Variable -Name "widgets" -Value $tech_drive\n'
+			powershellVars+='$widgets=$tech_drive\n'
+			# powershellVars+='echo $widgets\n'
+			# powershellVars+='echo $tech_drive\n'
+
+			if os.path.isdir(v.home+'\\OneDrive\\Documents\\WindowsPowerShell'):
+				too=v.home+'\\Documents\\'
+				if not os.path.isfile(too+'backup.rt'):
+					v.f.mkdir(too+'backup.rt')
+				for path in A.ff.files:
+					to=too+vc.PATHS.path(path,file=True)
+					theFile = vc.HD.getText( path, raw=True )
+					if os.path.isfile(to):
+						me=str(os.path.getmtime( to ))
+						bkPath=too+'backup.rt'+os.sep+me+'-'+vc.PATHS.path(to,file=True)
+						vc.HD.saveText( theFile, bkPath )
+
+					theFile = theFile.replace('# 3DF20E1B1A8A',powershellVars)
+					vc.HD.saveText( theFile, to )
+				cp( [ ':','installed powershell tools', v.home+'\\OneDrive\\Documents\\WindowsPowerShell' ], 'green' )
+				print( ':','which python3;     now works in powershell, widgets, etc' )
+			elif os.path.isdir(v.home+'\\Documents\\WindowsPowerShell'):
+				too=v.home+'\\Documents\\WindowsPowerShell\\'
+				if not os.path.isfile(too+'backup.rt'):
+					v.f.mkdir(too+'backup.rt')
+				for path in A.ff.files:
+					to=too+vc.PATHS.path(path,file=True)
+					theFile = vc.HD.getText( path, raw=True )
+					if os.path.isfile(to):
+						me=str(os.path.getmtime( to ))
+						bkPath=too+'backup.rt'+os.sep+me+'-'+vc.PATHS.path(to,file=True)
+						vc.HD.saveText( theFile, bkPath )
+					theFile = theFile.replace('# 3DF20E1B1A8A',powershellVars)
+					vc.HD.saveText( theFile, to )
+				cp( [ ':','installed powershell tools', v.home+'\\Documents\\WindowsPowerShell' ], 'green' )
+				print( ':','which python3;     now works in powershell, widgets, etc' )
+		if os.path.isfile(v.home+os.sep+'.rt'+os.sep+'.config.hash'):
+			try:
+				os.system(v.bash['code_editor'] +' '+ v.home+os.sep+'.rt'+os.sep+'.config.hash')
+			except Exception as e:
+				pass
+		return None
 	if switches.isActive('Setting-PIPE-Print'):
 		for x in v.pipe:
 			print(x)
@@ -13626,7 +13894,11 @@ example: ~/.rt/.config.hash
 		vc.FIG.home()
 		if os.path.isfile( v.config ):
 			v.bash = vc.HD.getTableSimp( v.config )
-		v.bash['hAlias'] = switches.values('Config-Alias')[0]
+		if v.pipe:
+			v.bash['hAlias'] = ''.join(v.pipe)
+		else:
+			v.bash['hAlias'] = switches.values('Config-Alias')[0]
+		
 		vc.FIG.v_bash_order()
 		if v.bash:
 			vc.HD.saveTableSimp( v.bash, v.config )
@@ -13665,11 +13937,39 @@ example: ~/.rt/.config.hash
 			cp( pp(v.config) , 'red' )
 		return None
 
+	if switches.isActive('Config-Editor'):
+		vc.FIG.home()
+		if os.path.isfile( v.config ):
+			v.bash = vc.HD.getTableSimp( v.config )
+		if v.pipe:
+			v.bash['code_editor'] = ''.join(v.pipe)
+			# v.bash['n'] = ''.join(v.pipe)
+		else:
+			v.bash['code_editor'] = ' '.join(switches.values('Config-Editor'))
+			# v.bash['n'] = ' '.join(switches.values('Config-Editor'))
+		if 'n' in v.bash:
+			del v.bash['n']
+		if 'n2' in v.bash:
+			del v.bash['n2']
+		vc.FIG.v_bash_order()
+		if v.bash:
+			vc.HD.saveTableSimp( v.bash, v.config )
+		test = vc.HD.getText( v.config, raw=True )
+		print( test )
+		if os.path.isfile(v.config):
+			cp( pp(v.config) , 'cyan' )
+		else:
+			cp( pp(v.config) , 'red' )
+		return None
 	if switches.isActive('Config-Python'):
 		vc.FIG.home()
 		if os.path.isfile( v.config ):
 			v.bash = vc.HD.getTableSimp( v.config )
-		v.bash['PY'] = switches.values('Config-Python')[0]
+		if v.pipe:
+			v.bash['PY'] = ''.join(v.pipe)
+		else:
+			v.bash['PY'] = ' '.join(switches.values('Config-Python'))
+
 		vc.FIG.v_bash_order()
 		if v.bash:
 			vc.HD.saveTableSimp( v.bash, v.config )
@@ -13686,7 +13986,10 @@ example: ~/.rt/.config.hash
 		
 		if os.path.isfile( v.config ):
 			v.bash = vc.HD.getTableSimp( v.config )
-		v.bash['PY2'] = switches.values('Config-Python2')[0]
+		if v.pipe:
+			v.bash['PY2'] = ''.join(v.pipe)
+		else:
+			v.bash['PY2'] = ' '.join(switches.values('Config-Python2'))
 		vc.FIG.v_bash_order()
 		if v.bash:
 			vc.HD.saveTableSimp( v.bash, v.config )
@@ -13703,7 +14006,10 @@ example: ~/.rt/.config.hash
 		
 		if os.path.isfile( v.config ):
 			v.bash = vc.HD.getTableSimp( v.config )
-		v.bash['widgets'] = switches.values('Config-Path')[0]
+		if v.pipe:
+			v.bash['widgets'] = ''.join(v.pipe)
+		else:
+			v.bash['widgets'] = ' '.join(switches.values('Config-Path'))
 		vc.FIG.v_bash_order()
 		if v.bash:
 			vc.HD.saveTableSimp( v.bash, v.config )
@@ -13715,22 +14021,27 @@ example: ~/.rt/.config.hash
 			cp( pp(v.config) , 'red' )
 		return None
 
-	if switches.isActive('Config-Editor'):
-		vc.FIG.home()
+	# if switches.isActive('Config-Editor'):
+	# 	vc.FIG.home()
 		
-		if os.path.isfile( v.config ):
-			v.bash = vc.HD.getTableSimp( v.config )
-		v.bash['code_editor'] = switches.values('Config-Editor')[0]
-		vc.FIG.v_bash_order()
-		if v.bash:
-			vc.HD.saveTableSimp( v.bash, v.config )
-		test = vc.HD.getText( v.config, raw=True )
-		print( test )
-		if os.path.isfile(v.config):
-			cp( pp(v.config) , 'cyan' )
-		else:
-			cp( pp(v.config) , 'red' )
-		return None
+	# 	if os.path.isfile( v.config ):
+	# 		v.bash = vc.HD.getTableSimp( v.config )
+	# 	if v.pipe:
+	# 		v.bash['code_editor'] = ''.join(v.pipe)
+	# 		v.bash['n'] = ''.join(v.pipe)
+	# 	else:
+	# 		v.bash['code_editor'] = ' '.join(switches.values('Config-Editor'))
+	# 		v.bash['n'] = ' '.join(switches.values('Config-Editor'))
+	# 	vc.FIG.v_bash_order()
+	# 	if v.bash:
+	# 		vc.HD.saveTableSimp( v.bash, v.config )
+	# 	test = vc.HD.getText( v.config, raw=True )
+	# 	print( test )
+	# 	if os.path.isfile(v.config):
+	# 		cp( pp(v.config) , 'cyan' )
+	# 	else:
+	# 		cp( pp(v.config) , 'red' )
+	# 	return None
 
 	if switches.isActive('Config-Add'):
 		vc.FIG.home()
@@ -14189,7 +14500,7 @@ if __name__ == '__main__':
 # vc.FIG.save_bashrc( code, o='455B6DCC5737', c='6198DDC12140' )
 # self.isActive('Help')
 # bin'
-# alias t2="$HOME/.rt/tool2";
+# alias t2="installer.py2";
 # bashFileHeader
-
-
+# sys.executable
+# 'Installer'
