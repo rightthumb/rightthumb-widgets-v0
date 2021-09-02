@@ -12,7 +12,7 @@ rem ## {C3P0D40fAe8B} ##
 
 if [%1] == [] GOTO END
  
-start "D:\Users\Scott\AppData\Local\Google\Chrome\Application\chrome.exe" "http://en.wikipedia.org/wiki/Area_code_%1"
+start "%USERPROFILE%\AppData\Local\Google\Chrome\Application\chrome.exe" "http://en.wikipedia.org/wiki/Area_code_%1"
 
 :END
 

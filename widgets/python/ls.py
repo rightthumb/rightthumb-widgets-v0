@@ -67,9 +67,10 @@ def appSwitches():
 	_.switches.register('Not', '-not,-invert')
 	_.switches.register('Extensions', '-ext', 'db image graphic video app audio doc script archive')
 	_.switches.register('Header', '-h,-header','5')
-	_.switches.register('PlusFile', '-pf,-pn,-plusfile')
 	_.switches.register('Group>=', '-,++g', '2' )
 	_.switches.register('Group<=', '-,--g', '2' )
+	_.switches.register('PlusFile', '-pf,-pn,-plusfile')
+	_.switches.register('Ago-Create-Date', '-cd')
 	# _.switches.register('WOYCreatedDate', '-cwoy')
 
 
@@ -737,14 +738,13 @@ def addFile( path, hasData=False ):
 					run = 'a'
 				elif 'md' in _.switches.values('Ago')[2]:
 					run = 'md'
-				elif 'cd' in _.switches.values('Ago')[2]:
+				elif _.switches.isActive('Ago-Create-Date'):
 					run = 'cd'
 				elif 'resent' in _.switches.values('Ago')[2]:
 					run = 'resent'
 				elif 'm' in _.switches.values('Ago')[2]:
 					run = 'md'
-				elif 'c' in _.switches.values('Ago')[2]:
-					run = 'cd'
+
 
 			elif len( _.switches.values('Ago') ) > 1 and type(_.switches.values('Ago')[1]) == str:
 				# print('asdf')
@@ -752,14 +752,13 @@ def addFile( path, hasData=False ):
 					run = 'a'
 				elif 'md' in _.switches.values('Ago')[1]:
 					run = 'md'
-				elif 'cd' in _.switches.values('Ago')[1]:
+				elif _.switches.isActive('Ago-Create-Date'):
 					run = 'cd'
 				elif 'resent' in _.switches.values('Ago')[1]:
 					run = 'resent'
 				elif 'm' in _.switches.values('Ago')[1]:
 					run = 'md'
-				elif 'c' in _.switches.values('Ago')[1]:
-					run = 'cd'
+
 
 			# print(  len( _.switches.values('Ago') )  )
 			# print(  ( _.switches.values('Ago') )  )

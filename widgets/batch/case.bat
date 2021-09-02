@@ -171,7 +171,7 @@ echo All Tasks have been completed >> "%html%"
 GOTO SKIPEND
 
 :VIEW
-start "D:\Users\Scott\AppData\Local\Google\Chrome\Application\chrome.exe" "%html%"
+start "%USERPROFILE%\AppData\Local\Google\Chrome\Application\chrome.exe" "%html%"
 GOTO END
 
 

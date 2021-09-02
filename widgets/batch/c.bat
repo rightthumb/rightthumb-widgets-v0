@@ -11,8 +11,8 @@ rem ###########################################################################
 rem ## {C3P0D40fAe8B} ##
 
 
-call %userprofile%\.rt\profile\vars\config.bat
-call %userprofile%\.rt\profile\vars\personal.bat
+call %USERPROFILE%\.rt\profile\vars\config.bat
+call %USERPROFILE%\.rt\profile\vars\personal.bat
 
 
 
@@ -93,12 +93,12 @@ GOTO:EOF
 
 :LOAD
 
-if not exist "%userprofile%\.rt\profile\vars\instanceID.sys" (
-	p genuuid -strip be > "%userprofile%\.rt\profile\vars\instanceID.sys"
+if not exist "%USERPROFILE%\.rt\profile\vars\instanceID.sys" (
+	p genuuid -strip be > "%USERPROFILE%\.rt\profile\vars\instanceID.sys"
 )
 
-SET /p quote=<"%userprofile%\.rt\profile\vars\quote.txt"
-SET /p percentage=<"%userprofile%\.rt\profile\vars\percentage.txt"
+SET /p quote=<"%USERPROFILE%\.rt\profile\vars\quote.txt"
+SET /p percentage=<"%USERPROFILE%\.rt\profile\vars\percentage.txt"
 
 
 
@@ -128,8 +128,13 @@ set "computername2=%computername: =_%"
 
 SET hostDefault=hosts\{D599DDFE-28B1-4CBD-B300-78DB4BCA7DF5}
 
-SET thisHost=hosts\%computername2%
-SET myHome=%widgets%\%thisHost%
+rem SET thisHost=hosts\%computername2%
+rem SET myHome=%widgets%\%thisHost%
+rem SET thisHost=%USERPROFILE%\.rt\profile
+
+SET thisHost=%wprofile%
+SET myHome=%thisHost%
+
 SET myVars=%myHome%\vars
 SET myBookmarks=%myHome%\bookmarks
 SET myTickets=%myHome%\tickets
@@ -220,9 +225,9 @@ CALL :run_process_exe_folders
 
 ::::::: Command Paths
 
-SET appPaths=%batch%;%python%;%myBatch%;%myPython%;%exe_folders%;%userprofile%
+SET appPaths=%batch%;%python%;%myBatch%;%myPython%;%exe_folders%;%USERPROFILE%
 if exist "%pyf%\Scripts" ( SET appPaths=%appPaths%;%pyf%\Scripts )
-SET pathPython=%userprofile%
+SET pathPython=%USERPROFILE%
 if exist "%pyf2%\Lib" ( SET SET pathPython=%pyf2%;%pyf2%\Lib;%pyf2%\Lib\site-packages;%pyf2%;%pyf2%\Scripts )
 CALL %batch%\originalPath.bat
 SET originalPath=%Path%
@@ -231,16 +236,14 @@ IF EXIST "D:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools
 	SET "pathBuilder=%pathBuilder%;D:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\bin\Hostx64\x64"
 )
 SET path=%pathBuilder%
-SET appPaths=
-SET pathAPI=
 SET pathBuilder=
 SET pathPython=
 
 SET phpFiles=%php2%
 
 
-SET /p quote=<%userprofile%\.rt\profile\vars\quote.txt
-SET /p percentage=<%userprofile%\.rt\profile\vars\percentage.txt
+SET /p quote=<%USERPROFILE%\.rt\profile\vars\quote.txt
+SET /p percentage=<%USERPROFILE%\.rt\profile\vars\percentage.txt
 
 SET tmpf=%stmp%\{8E3F33E4-86AB-AB1E-6219-801DE111D9AF}
 SET tmpf0=%stmp%\{B820137A-79B8-45E3-BCBD-A6CAC50892D0}

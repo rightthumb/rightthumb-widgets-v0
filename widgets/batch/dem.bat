@@ -13,7 +13,7 @@ rem ## {C3P0D40fAe8B} ##
 
 
 
-start "D:\Users\Scott\AppData\Local\Google\Chrome\Application\chrome.exe" "http://%1.areaconnect.com/statistics.htm"
+start "%USERPROFILE%\AppData\Local\Google\Chrome\Application\chrome.exe" "http://%1.areaconnect.com/statistics.htm"
 :END
 
 

@@ -11,7 +11,7 @@ rem ###########################################################################
 rem ## {C3P0D40fAe8B} ##
 
 
-set chrome1="D:\Users\Scott\AppData\Local\Google\Chrome\Application\chrome.exe"
+set chrome1="%USERPROFILE%\AppData\Local\Google\Chrome\Application\chrome.exe"
 IF EXIST %chrome1% ( set chrome=%chrome1% )
 
 set chrome2="D:\Program Files (x86)\Google\Chrome\Application\chrome.exe"

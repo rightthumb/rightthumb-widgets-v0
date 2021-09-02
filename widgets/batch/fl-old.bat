@@ -11,7 +11,7 @@ rem ###########################################################################
 rem ## {C3P0D40fAe8B} ##
 
 
-set index=D:\Users\Scott\Documents\lo\index.txt
+set index=%USERPROFILE%\Documents\lo\index.txt
  set search=
  set prefix=
  set postnumone=

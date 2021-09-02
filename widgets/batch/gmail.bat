@@ -32,7 +32,7 @@ if [%1] == [] GOTO END
 
 :NOTES
 GOTO END
-set browser_app=D:\Users\Scott\AppData\Local\Google\Chrome\Application\chrome.exe
+set browser_app=%USERPROFILE%\AppData\Local\Google\Chrome\Application\chrome.exe
 set www0=https://mail.google.com/mail/?shva=1#search/
 set www1=
 

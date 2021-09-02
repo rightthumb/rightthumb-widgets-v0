@@ -887,9 +887,7 @@ class HD:
 				# print( 0, a )
 		return table
 	def getText( self, theFile, raw=False, clean=False, e=0, c=0 ):
- 
- 
- 
+		theFile=theFile.replace(os.sep+os.sep,os.sep)
 		if not os.path.isfile(theFile):
 			if raw:
 				return ''
@@ -915,6 +913,7 @@ class HD:
 		return lines
 
 	def saveText( self, rows, theFile, errors=True ):
+		theFile=theFile.replace(os.sep+os.sep,os.sep)
 		# print(vc.STR.printable)
 		vc.HD.chmod(theFile)
 		# print(type(rows))
@@ -969,6 +968,7 @@ class HD:
 			vc.HD.chmod(theFile)
 
 	def saveText2( self, rows, theFile, errors=True ):
+		theFile=theFile.replace(os.sep+os.sep,os.sep)
  
  
  
@@ -1016,8 +1016,10 @@ class HD:
 
 	def saveTableSimp( self, data, file ):
  
- 
- 
+ 		
+		for k in data:
+			data[k]=data[k].replace('\\\\','\\')
+			data[k]=data[k].replace('\\','\\\\')
 		text = printDic( data, p=0 )
 		vc.HD.saveText( text, file )
 
@@ -1591,7 +1593,7 @@ pr-|{6FAB5628-94A1-410A-82D1-1D42A2A11750}/.rt/profile/projects"""
 
 				if not active:
 
-					if 'h' in _.switches.value('Installer').lower():
+					if 'h' in switches.values('Installer'):
 						if not 'HISTSIZE' in line and not 'HISTFILESIZE' in line:
 							new_bashrc += line + '\n'
 						else:
@@ -1634,7 +1636,7 @@ pr-|{6FAB5628-94A1-410A-82D1-1D42A2A11750}/.rt/profile/projects"""
 			if 'installer.py2' in 'installer.py ':
 				add = A.vfiles.file('.bashrc.full')['data']
 				add += A.vfiles.file('.bashrc.mini')['data']
-				if not 'h' in _.switches.value('Installer').lower():
+				if not 'h' in switches.values('Installer'):
 					newFile=''
 					for line in add.split('\n'):
 						if not 'HISTSIZE' in line and not 'HISTFILESIZE' in line:
@@ -1647,7 +1649,7 @@ pr-|{6FAB5628-94A1-410A-82D1-1D42A2A11750}/.rt/profile/projects"""
 			else:
 				add = A.vfiles.file('.bashrc.mini')['data']
 				add += A.vfiles.file('.bashrc.full')['data']
-				if not 'h' in _.switches.value('Installer').lower():
+				if not 'h' in switches.values('Installer'):
 					newFile=''
 					for line in add.split('\n'):
 						if not 'HISTSIZE' in line and not 'HISTFILESIZE' in line:
@@ -1662,7 +1664,7 @@ pr-|{6FAB5628-94A1-410A-82D1-1D42A2A11750}/.rt/profile/projects"""
 
 				file = self.bash_vars(p=0)
 			add = A.vfiles.file('.bashrc.'+subject)['data']
-			if not 'h' in _.switches.value('Installer').lower():
+			if not 'h' in switches.values('Installer'):
 				newFile=''
 				for line in add.split('\n'):
 					if not 'HISTSIZE' in line and not 'HISTFILESIZE' in line:
@@ -1677,7 +1679,7 @@ pr-|{6FAB5628-94A1-410A-82D1-1D42A2A11750}/.rt/profile/projects"""
 		for seti in settings:
 			if 'auto' in seti:
 				add = A.vfiles.file('.bashrc-auto')['data']
-				if not 'h' in _.switches.value('Installer').lower():
+				if not 'h' in switches.values('Installer'):
 					newFile=''
 					for line in add.split('\n'):
 						if not 'HISTSIZE' in line and not 'HISTFILESIZE' in line:
@@ -1698,7 +1700,7 @@ pr-|{6FAB5628-94A1-410A-82D1-1D42A2A11750}/.rt/profile/projects"""
 
 
 		add = A.vfiles.file('.bashrc-all')['data']
-		if not 'h' in _.switches.value('Installer').lower():
+		if not 'h' in switches.values('Installer'):
 			newFile=''
 			for line in add.split('\n'):
 				if not 'HISTSIZE' in line and not 'HISTFILESIZE' in line:
@@ -1828,6 +1830,8 @@ pr-|{6FAB5628-94A1-410A-82D1-1D42A2A11750}/.rt/profile/projects"""
 				v.bash[k] = v.bash[k].replace( '/opt/RightThumb', v.bash['widgets'] )
 
 		self.v_bash_order()
+
+
 		items.append('\n')
 		for key in v.bash:
 			if key:
@@ -1845,37 +1849,37 @@ pr-|{6FAB5628-94A1-410A-82D1-1D42A2A11750}/.rt/profile/projects"""
 			ext='sh'
 		if p:
 			print( export )
-			vc.HD.saveText( export, v.home+os.sep+'.rt'+os.sep+'profile'+os.sep+'vars'+os.sep+'config.'+ext )
+			vc.HD.saveText( export, v.bash['wprofile']+os.sep+'vars'+os.sep+'config.'+ext )
 			if v.isWin:
 				comment=':'
 
 			else:
 				comment='#'
 			
-			if not os.path.isfile(v.home+os.sep+'.rt'+os.sep+'profile'+os.sep+'vars'+os.sep+'config.'+ext):
+			if not os.path.isfile(v.bash['wprofile']+os.sep+'vars'+os.sep+'config.'+ext):
 				color='yellow'
 				me=0
 			else:
-				me=os.stat( v.home+os.sep+'.rt'+os.sep+'profile'+os.sep+'vars'+os.sep+'config.'+ext ).st_size
+				me=os.stat( v.bash['wprofile']+os.sep+'vars'+os.sep+'config.'+ext ).st_size
 				if me > 5:
 					color='green'
 				else:
 					color='cyan'
-			cp([comment,vc.DIR.formatSize(me),v.home+os.sep+'.rt'+os.sep+'profile'+os.sep+'vars'+os.sep+'config.'+ext],color)
+			cp([comment,vc.DIR.formatSize(me),v.bash['wprofile']+os.sep+'vars'+os.sep+'config.'+ext],color)
 
-			if not os.path.isfile(v.home+os.sep+'.rt'+os.sep+'profile'+os.sep+'vars'+os.sep+'personal.'+ext):
-				vc.HD.saveText( '', v.home+os.sep+'.rt'+os.sep+'profile'+os.sep+'vars'+os.sep+'personal.'+ext )
+			if not os.path.isfile(v.bash['wprofile']+os.sep+'vars'+os.sep+'personal.'+ext):
+				vc.HD.saveText( '', v.bash['wprofile']+os.sep+'vars'+os.sep+'personal.'+ext )
 				color='yellow'
 				me=0
 			else:
-				me=os.stat( v.home+os.sep+'.rt'+os.sep+'profile'+os.sep+'vars'+os.sep+'personal.'+ext ).st_size
+				me=os.stat( v.bash['wprofile']+os.sep+'vars'+os.sep+'personal.'+ext ).st_size
 				if me > 5:
 					color='green'
 				else:
 					color='cyan'
 
 
-			cp([comment,vc.DIR.formatSize(me),v.home+os.sep+'.rt'+os.sep+'profile'+os.sep+'vars'+os.sep+'personal.'+ext],color)
+			cp([comment,vc.DIR.formatSize(me),v.bash['wprofile']+os.sep+'vars'+os.sep+'personal.'+ext],color)
 			if not os.path.isfile(v.home+os.sep+'.rt'+os.sep+'.config.hash'):
 				color='yellow'
 				me=0
@@ -1918,7 +1922,16 @@ pr-|{6FAB5628-94A1-410A-82D1-1D42A2A11750}/.rt/profile/projects"""
 			if '\\' in v.bash[key] and not '\\\\' in v.bash[key]:
 				v.bash[key]=v.bash[key].replace( '\\', '\\\\' )
 
-
+		if not 'wprofile' in v.bash:
+			v.bash['wprofile']=v.home+os.sep+'.rt'+os.sep+'profile'
+		v.bash['w']=v.bash['widgets']
+		v.bash['ww']=v.bash['widgets']+os.sep+'widgets'
+		for k in v.bash:
+			v.bash[k]=v.bash[k].replace('"','')
+			v.bash[k]=v.bash[k].replace(os.sep+os.sep,os.sep)
+			v.bash[k]=v.bash[k].replace(os.sep+os.sep,os.sep)
+			if ' ' in v.bash[k]:
+				v.bash[k]='"'+v.bash[k]+'"'
 
 
 
@@ -2739,22 +2752,22 @@ alias newpage="$widgets/widgets/bash/newpage.sh"
 
 
 
-export stmp="$widgets/hosts/$(hostname)/temp"
-export tmpf0="$widgets/hosts/$(hostname)/temp/{B820137A-79B8-45E3-BCBD-A6CAC50892D0}"
-export tmpf1="$widgets/hosts/$(hostname)/temp/{C0FA8E56-8426-46BB-9CE8-4A14C51EA261}"
-export tmpf2="$widgets/hosts/$(hostname)/temp/{5FBF34C0-9A95-4C7E-BA53-44F84ECECCB5}"
-export tmpf3="$widgets/hosts/$(hostname)/temp/{F139D191-FA1A-44D5-855C-7E5141B30E0D}"
-export tmpf4="$widgets/hosts/$(hostname)/temp/{AA8EC8E1-EA9D-460D-A593-7B0FAEB9243E}"
-export tmpf5="$widgets/hosts/$(hostname)/temp/{201D82D6-2DC0-4552-A598-54F5481399A1}"
-export tmpf6="$widgets/hosts/$(hostname)/temp/{26B3B9C6-0A59-432A-9386-D432B53001CB}"
-export tmpf7="$widgets/hosts/$(hostname)/temp/{C03C0132-CFFC-4E3A-8F0F-614BB95164C7}"
-export tmpf8="$widgets/hosts/$(hostname)/temp/{4CCA3EBD-4535-42B7-9C75-05EFAACB00E0}"
-export tmpf9="$widgets/hosts/$(hostname)/temp/{DF1D4EBC-838E-419C-9C58-943C1767391A}"
+export stmp="$wprofile/temp"
+export tmpf0="$wprofile/temp/{B820137A-79B8-45E3-BCBD-A6CAC50892D0}"
+export tmpf1="$wprofile/temp/{C0FA8E56-8426-46BB-9CE8-4A14C51EA261}"
+export tmpf2="$wprofile/temp/{5FBF34C0-9A95-4C7E-BA53-44F84ECECCB5}"
+export tmpf3="$wprofile/temp/{F139D191-FA1A-44D5-855C-7E5141B30E0D}"
+export tmpf4="$wprofile/temp/{AA8EC8E1-EA9D-460D-A593-7B0FAEB9243E}"
+export tmpf5="$wprofile/temp/{201D82D6-2DC0-4552-A598-54F5481399A1}"
+export tmpf6="$wprofile/temp/{26B3B9C6-0A59-432A-9386-D432B53001CB}"
+export tmpf7="$wprofile/temp/{C03C0132-CFFC-4E3A-8F0F-614BB95164C7}"
+export tmpf8="$wprofile/temp/{4CCA3EBD-4535-42B7-9C75-05EFAACB00E0}"
+export tmpf9="$wprofile/temp/{DF1D4EBC-838E-419C-9C58-943C1767391A}"
 
 
 
 
-config="$widgets/hosts/$(hostname)/config"
+config="$wprofile/config"
 unixID="$config/.unix_id"
 
 
@@ -7749,6 +7762,7 @@ class Table:
 		self.file = file
 
 	def save(self,theFile = '',tableTemp = True,printThis = True):
+		theFile=theFile.replace(os.sep+os.sep,os.sep)
 		HD.chmod(theFile)
 		simplejson = __.imp('simplejson')
 		if theFile == '':
@@ -8008,6 +8022,7 @@ class Tables:
 			i += 1
 
 	def save(self,table,theFile = '',tableTemp = True,printThis = True):
+		theFile=theFile.replace(os.sep+os.sep,os.sep)
 		HD.chmod(theFile)
 		theFile = str(theFile)
 		if not theFile == '' and not '.json' in theFile:
@@ -8020,6 +8035,7 @@ class Tables:
 		HD.chmod(theFile)
 
 	def get(self,table,theFile = '',tableTemp = True,printThis = False):
+		theFile=theFile.replace(os.sep+os.sep,os.sep)
 		theFile = str(theFile)
 		if not theFile == '' and not '.json' in theFile:
 			theFile = theFile + '.json'
@@ -13668,15 +13684,19 @@ def action():
 		print_help()
 	
 	if switches.isActive('Installer'):
+		vc.FIG.home()
+		vc.FIG.v_bash_order()
 		if not os.getcwd().endswith(os.sep+'install'):
 			cp( 'Error, Please run from install folder', 'red' )
 			sys.exit()
-		v.f.mkdir(v.home+os.sep+'.rt'+os.sep+'profile'+os.sep+'tables')
-		v.f.mkdir(v.home+os.sep+'.rt'+os.sep+'profile'+os.sep+'temp')
-		v.f.mkdir(v.home+os.sep+'.rt'+os.sep+'profile'+os.sep+'vars')
-		vc.HD.saveText( '"', v.home+os.sep+'.rt'+os.sep+'profile'+os.sep+'vars'+os.sep+'quote.txt' )
-		vc.HD.saveText( '%', v.home+os.sep+'.rt'+os.sep+'profile'+os.sep+'vars'+os.sep+'percentage.txt' )
-		vc.HD.saveText( vc.FIG.uuid(), v.home+os.sep+'.rt'+os.sep+'profile'+os.sep+'vars'+os.sep+'instanceID.sys' )
+		vc.FIG.home()
+		vc.FIG.v_bash_order()
+		v.f.mkdir(v.bash['wprofile']+os.sep+'tables')
+		v.f.mkdir(v.bash['wprofile']+os.sep+'temp')
+		v.f.mkdir(v.bash['wprofile']+os.sep+'vars')
+		vc.HD.saveText( '"', v.bash['wprofile']+os.sep+'vars'+os.sep+'quote.txt' )
+		vc.HD.saveText( '%', v.bash['wprofile']+os.sep+'vars'+os.sep+'percentage.txt' )
+		vc.HD.saveText( vc.FIG.uuid(), v.bash['wprofile']+os.sep+'vars'+os.sep+'instanceID.sys' )
 		insta=vc.PATHS.path(__file__)
 		# tool=v.home+os.sep+'.rt'+os.sep+'tool.py'
 		tool=v.home+os.sep+'.rt'+os.sep+'tool'
@@ -13685,7 +13705,7 @@ def action():
 		from shutil import copyfile
 		copyfile(insta,tool)
 
-		vc.FIG.home()
+
 		if os.path.isfile( v.config ):
 			v.bash = vc.HD.getTableSimp( v.config )
 		v.bash['PY'] = sys.executable

@@ -23,7 +23,7 @@ rem 336 :END
 rem 353 :NOCLEAR
 rem 364 :FORCEDRIVE
 rem 376 :DRIVESCHECKED
-rem D:\Users\Scott\Desktop\2018.02.13\varCleanup.txt
+rem %USERPROFILE%\Desktop\2018.02.13\varCleanup.txt
 
 
 
@@ -278,9 +278,9 @@ set phpFiles=%scriptroot%\php
 ::;%userprofile%
 set oldPath=%path%
 set pathAPI=%scriptroot%\;%scriptrootAlias%\
-set pathApps=D:\Program Files (x86)\ImageMagick-6.9.2-Q16;D:\ProgramData\Oracle\Java\javapath;D:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;D:\Program Files (x86)\Intel\iCLS Client\;D:\Program Files\Intel\iCLS Client\;D:\WINDOWS\system32;D:\WINDOWS;D:\WINDOWS\System32\Wbem;D:\WINDOWS\System32\WindowsPowerShell\v1.0\;D:\Program Files (x86)\Windows Live\Shared;D:\Program Files\Intel\WiFi\bin\;D:\Program Files\Common Files\Intel\WirelessCommon\;D:\Program Files\Intel\Intel(R) Management Engine Components\DAL;D:\Program Files\Intel\Intel(R) Management Engine Components\IPT;D:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;D:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;D:\Program Files (x86)\Common Files\Acronis\SnapAPI\;D:\Program Files (x86)\Skype\Phone\;D:\Program Files (x86)\Windows Kits\10\Windows Performance Toolkit\;D:\Users\Scott\AppData\Local\Microsoft\WindowsApps
-rem set pathPython=D:\Users\Scott\AppData\Local\Programs\Python\Python36-32\;D:\Users\Scott\AppData\Local\Programs\Python\Python36-32\Lib\;D:\Users\Scott\AppData\Local\Programs\Python\Python36-32\Lib\site-packages\;D:\Users\Scott\AppData\Local\Programs\Python\Python36-32\;D:\Users\Scott\AppData\Local\Programs\Python\Python36-32\Scripts\
-set pathPython=%widgets%\tech\scripts\python;D:\Users\Scott\AppData\Local\Programs\Python\Python36-32;D:\Users\Scott\AppData\Local\Programs\Python\Python36-32\Lib;D:\Users\Scott\AppData\Local\Programs\Python\Python36-32\Lib\site-packages;D:\Users\Scott\AppData\Local\Programs\Python\Python36-32;D:\Users\Scott\AppData\Local\Programs\Python\Python36-32\Scripts
+set pathApps=D:\Program Files (x86)\ImageMagick-6.9.2-Q16;D:\ProgramData\Oracle\Java\javapath;D:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;D:\Program Files (x86)\Intel\iCLS Client\;D:\Program Files\Intel\iCLS Client\;D:\WINDOWS\system32;D:\WINDOWS;D:\WINDOWS\System32\Wbem;D:\WINDOWS\System32\WindowsPowerShell\v1.0\;D:\Program Files (x86)\Windows Live\Shared;D:\Program Files\Intel\WiFi\bin\;D:\Program Files\Common Files\Intel\WirelessCommon\;D:\Program Files\Intel\Intel(R) Management Engine Components\DAL;D:\Program Files\Intel\Intel(R) Management Engine Components\IPT;D:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;D:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;D:\Program Files (x86)\Common Files\Acronis\SnapAPI\;D:\Program Files (x86)\Skype\Phone\;D:\Program Files (x86)\Windows Kits\10\Windows Performance Toolkit\;%USERPROFILE%\AppData\Local\Microsoft\WindowsApps
+rem set pathPython=%USERPROFILE%\AppData\Local\Programs\Python\Python36-32\;%USERPROFILE%\AppData\Local\Programs\Python\Python36-32\Lib\;%USERPROFILE%\AppData\Local\Programs\Python\Python36-32\Lib\site-packages\;%USERPROFILE%\AppData\Local\Programs\Python\Python36-32\;%USERPROFILE%\AppData\Local\Programs\Python\Python36-32\Scripts\
+set pathPython=%widgets%\tech\scripts\python;%USERPROFILE%\AppData\Local\Programs\Python\Python36-32;%USERPROFILE%\AppData\Local\Programs\Python\Python36-32\Lib;%USERPROFILE%\AppData\Local\Programs\Python\Python36-32\Lib\site-packages;%USERPROFILE%\AppData\Local\Programs\Python\Python36-32;%USERPROFILE%\AppData\Local\Programs\Python\Python36-32\Scripts
 set pathBuilder=%pathPython%;%path%;%pathAPI%;%pathApps%;
 set path=%pathBuilder%
 
@@ -296,12 +296,12 @@ set bzip2="D:\Program Files\GnuWin32\bin\bzip2.exe"
 set n="D:\Program Files\Sublime Text 3\sublime_text.exe"
 set n=%code_editor%
 set w="D:\Program Files (x86)\Microsoft Office\root\Office16\WINWORD.EXE"
-::set py="D:\Users\Scott\AppData\Local\Programs\Python\Python35\python.exe"
+::set py="%USERPROFILE%\AppData\Local\Programs\Python\Python35\python.exe"
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-rem set py="D:\Users\Scott\AppData\Local\Programs\Python\Python36-32\python.exe"
+rem set py="%USERPROFILE%\AppData\Local\Programs\Python\Python36-32\python.exe"
 rem set py2="D:\Python27\python.exe"
 set py="%widgets%\Apps\Python\Python36-32\python.exe"
 set py2="%widgets%\Apps\Python\Python27\python.exe"
@@ -309,9 +309,9 @@ set py2="%widgets%\Apps\Python\Python27\python.exe"
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-::set pys="D:\Users\Scott\AppData\Local\Programs\Python\Python35\Scripts"
-set pys=D:\Users\Scott\AppData\Local\Programs\Python\Python36-32\Scripts
-set pytools=D:\Users\Scott\AppData\Local\Programs\Python\Python36-32\Tools\scripts
+::set pys="%USERPROFILE%\AppData\Local\Programs\Python\Python35\Scripts"
+set pys=%USERPROFILE%\AppData\Local\Programs\Python\Python36-32\Scripts
+set pytools=%USERPROFILE%\AppData\Local\Programs\Python\Python36-32\Tools\scripts
 set pyroot=%scriptroot%\python
 ::::::: API Variable Extras
 set /p quote=<%scriptroot%\quote.txt

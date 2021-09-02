@@ -10,7 +10,7 @@ rem    - Scott Taylor Reph, RightThumb.com
 rem ###########################################################################
 rem ## {C3P0D40fAe8B} ##
 
-CALL D:\Users\Scott\cc.bat
+CALL %USERPROFILE%\cc.bat
 
 echo conversion issue
 CALL p json2DB -build -app -i %1

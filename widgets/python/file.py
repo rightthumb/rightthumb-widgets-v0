@@ -34,9 +34,11 @@ import _rightThumb._string as _str
 # _browser = _.regImp( __.appReg, '_rightThumb._toolsScrapeDirect' )
 import _rightThumb._mimetype as _mime
 ##################################################
+__.isFiles=False
 
 def appSwitches():
-	_.switches.register('Recursive', '-r,-recursive')
+	if not __.isFiles:
+		_.switches.register('Recursive', '-r,-recursive')
 	_.switches.register('Count', '-c,-count,--c')
 	_.switches.register('Path', '-p,-path,-folder')
 	_.switches.register('Text', '-t,-text,-txt')
@@ -49,6 +51,8 @@ def appSwitches():
 	_.switches.register('MaxDepth', '-depth', '3')
 	_.switches.register('Extensions', '-ext', 'db image graphic video app audio doc script archive')
 	_.switches.register('Remove-Root-Folder', '-rr')
+	_.switches.register('Widget-V0', '-w,-v0')
+	_.switches.register('Ago-Create-Date', '-cd')
 
 
 
@@ -82,6 +86,8 @@ _.appInfo[focus()] = {
 						'',
 						'p files -ext db - *.json *.dat',
 						'',
+						'p files -w --c -ago 10h | p line --c -make "git add {}" | p -copy',
+						'p files -w --c -ago 10h',
 						'',
 	],
 	'columns': [
@@ -234,7 +240,7 @@ def whatIsIt(file):
 		result = 'Binary'
 	return result
 
-def getFolder(folder):
+def getFolder(folder,r=True):
 	if folder.startswith('/proc'):
 		return None
 	global i
@@ -310,14 +316,13 @@ def getFolder(folder):
 								run = 'a'
 							elif 'md' in _.switches.values('Ago')[2]:
 								run = 'md'
-							elif 'cd' in _.switches.values('Ago')[2]:
+							elif _.switches.isActive('Ago-Create-Date'):
 								run = 'cd'
 							elif 'resent' in _.switches.values('Ago')[2]:
 								run = 'resent'
 							elif 'm' in _.switches.values('Ago')[2]:
 								run = 'md'
-							elif 'c' in _.switches.values('Ago')[2]:
-								run = 'cd'
+
 
 						elif len( _.switches.values('Ago') ) > 1 and type(_.switches.values('Ago')[1]) == str:
 							# print('asdf')
@@ -325,14 +330,13 @@ def getFolder(folder):
 								run = 'a'
 							elif 'md' in _.switches.values('Ago')[1]:
 								run = 'md'
-							elif 'cd' in _.switches.values('Ago')[1]:
+							elif _.switches.isActive('Ago-Create-Date'):
 								run = 'cd'
 							elif 'resent' in _.switches.values('Ago')[1]:
 								run = 'resent'
 							elif 'm' in _.switches.values('Ago')[1]:
 								run = 'md'
-							elif 'c' in _.switches.values('Ago')[1]:
-								run = 'cd'
+
 
 						# print(  len( _.switches.values('Ago') )  )
 						# print(  ( _.switches.values('Ago') )  )
@@ -520,9 +524,9 @@ def getFolder(folder):
 					if _.switches.isActive('FolderRefine'):
 						if not _.showLine(newFolder):
 							shouldRun = False
-					if shouldRun and _.switches.isActive('Recursive'):
+					if r and shouldRun:
 						try:
-							getFolder(newFolder)
+							getFolder(newFolder,r)
 						except Exception as e:
 							pass
 				else:
@@ -546,6 +550,10 @@ def extensionsDatabank():
 				extensionList.append( x.lower() )
 
 def action():
+	if not __.isFiles:
+		r = _.switches.isActive('Recursive')
+	else:
+		r = True
 	if _.switches.isActive('Extensions'):
 		extensionsDatabank()
 
@@ -562,7 +570,25 @@ def action():
 	global base_path
 	baseDepth = len( folder.split(_v.slash) )
 	base_path=folder
-	getFolder(folder)
+	if not _.switches.isActive('Widget-V0'):
+		getFolder(folder,r=r)
+	else:
+		# print(_v.w)
+		base_path=_v.widgets
+		_.switches.fieldSet( 'Remove-Root-Folder', 'active', True )
+		_.switches.fieldSet( 'Plus', 'active', True )
+		_.switches.fieldSet( 'Plus', 'value', '*.py,*.sh,*.bat,*.MD' )
+		_.switches.fieldSet( 'Plus', 'values', ['*.py','*.sh','*.bat','*.MD'] )
+		_.switches.fieldSet( 'PlusOr', 'active', True )
+		getFolder(_v.w+os.sep+'python')
+		getFolder(_v.w+os.sep+'batch', r=False)
+		getFolder(_v.w+os.sep+'powershell', r=False)
+		getFolder(_v.w+os.sep+'php', r=False)
+		getFolder(_v.w+os.sep+'windows')
+		getFolder(_v.w+os.sep+'bash')
+		getFolder(_v.widgets+os.sep+'install')
+		getFolder(_v.widgets, r=False)
+		
 	"""
 	if _.switches.isActive('Extensions'):
 		folderProfileAttribute( folder=folder, info={
@@ -575,7 +601,7 @@ def action():
 	if not iS == i:
 		_.folderProfileAttribute( folder=folder, info = {
 														'app': 'files',
-														'recursive': True,
+														'recursive': r,
 														'factors': {
 																		'Text': _.switches.isActive('Text'),
 																		'Binary': _.switches.isActive('Binary'),
@@ -617,6 +643,7 @@ import _rightThumb._dir as _dir
 # 	global data
 # 	data = _.getTable( 'table.json' )
 # data = []
+# 'Recursive'
 ########################################################################################
 if __name__ == '__main__':
 	action()

@@ -14,12 +14,12 @@ call m tmp0
 call b vmtmp
 call m test
 set /p test=<%sroot%\script-bookmarks\BM-test.txt
-if NOT ["%test%"] == ["D:\Users\Scott\AppData\Local\Temp\vmware-Scott\VMwareDnD"] GOTO ERROR
+if NOT ["%test%"] == ["%USERPROFILE%\AppData\Local\Temp\vmware-Scott\VMwareDnD"] GOTO ERROR
 
 
 
 
-@attrib -r "D:\Users\Scott\AppData\Local\Temp\vmware-Scott\VMwareDnD\*.*" /s > ~
+@attrib -r "%USERPROFILE%\AppData\Local\Temp\vmware-Scott\VMwareDnD\*.*" /s > ~
 
 del ~ /q
 del *.* /s/q 

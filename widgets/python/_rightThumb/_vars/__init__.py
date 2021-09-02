@@ -274,7 +274,8 @@ archive7z =  ddDim(techDrive) +slash+'archive_7z_files'
 widgets = techFolder
 programs=widgets
 pp = techFolder + slash+'widgets'
-w = techFolder + slash+'widgets'
+w = techFolder 
+ww = techFolder + slash+'widgets'
 appProfiles = widgets+os.sep+'widgets'+ slash+'python'+slash+'profiles'
 compiled = widgets+os.sep+'widgets'+ slash+'compiled'
 documentation = widgets+os.sep+'widgets'+ slash+'documentation'
@@ -299,7 +300,8 @@ elif not __.isWin:
 # _v.sublime
 # scriptsFolder =  techFolder + slash+'scripts'
 # thisHost =  'hosts' + slash + computername2
-myHome =  techFolder + slash+'hosts' + slash + computername2
+# myHome =  techFolder + slash+'hosts' + slash + computername2
+myHome =  home+os.sep+'.rt'+os.sep+'profile'
 # print('myHome',myHome)
 thisHost =  myHome
 # myHome =  home +slash+ 'profile'
@@ -568,8 +570,8 @@ library = techFolder + slash+'widgets'+slash+'library'
 myDatabases = myHome + slash+'databases'
 myVars = myHome + slash+'vars'
 myNotes = myHome + slash+'notes'
-umlJson = myHome + slash+'uml_from_json'+slash+'data.js'
-umlHtml = myHome + slash+'uml_from_json'+slash+'index.htm'
+umlJson = myHome + slash+'json-uml-tree'+slash+'data.js'
+umlHtml = myHome + slash+'json-uml-tree'+slash+'index.htm'
 androidMaster = 'android_apps_master.json'
 androidMasterFull = myTables + slash + androidMaster
 myApps = techFolder + slash+'widgets'
@@ -831,18 +833,18 @@ def dir_structure():
 	dir_check_create( thisHost+slash+'bookmarks' )
 	dir_check_create( thisHost+slash+'databases' )
 	dir_check_create( thisHost+slash+'indexes' )
-	dir_check_create( thisHost+slash+'info' )
+	# dir_check_create( thisHost+slash+'info' )
 	dir_check_create( thisHost+slash+'logs' )
 	dir_check_create( thisHost+slash+'notes' )
-	dir_check_create( thisHost+slash+'playground' )
+	# dir_check_create( thisHost+slash+'playground' )
 	dir_check_create( thisHost+slash+'widgets' )
 	dir_check_create( thisHost+slash+'projects' )
-	dir_check_create( thisHost+slash+'scripts' )
+	# dir_check_create( thisHost+slash+'scripts' )
 	dir_check_create( thisHost+slash+'tables' )
 	dir_check_create( thisHost+slash+'temp' )
 	dir_check_create( thisHost+slash+'tickets' )
 	dir_check_create( thisHost+slash+'txt' )
-	dir_check_create( thisHost+slash+'uml_from_json' )
+	dir_check_create( thisHost+slash+'json-uml-tree' )
 	dir_check_create( thisHost+slash+'vars' )
 	dir_check_create( thisHost+slash+'tables'+slash+'imdb' )
 	dir_check_create( thisHost+slash+'tables'+slash+'txt' )
@@ -851,28 +853,28 @@ def dir_structure():
 	# type %tmpf1% | p line --c -make "dir_check_create( widgets+os.sep+'widgets'+slash+'{}' )"
 	dir_check_create( widgets+os.sep+'widgets'+slash+'batch' )
 	dir_check_create( widgets+os.sep+'widgets'+slash+'c++' )
-	dir_check_create( widgets+os.sep+'widgets'+slash+'compiled' )
+	# dir_check_create( widgets+os.sep+'widgets'+slash+'compiled' )
 	# dir_check_create( widgets+os.sep+'widgets'+slash+'data' )
 	dir_check_create( widgets+os.sep+'widgets'+slash+'databank' )
 	dir_check_create( widgets+os.sep+'widgets'+slash+'documentation' )
-	dir_check_create( widgets+os.sep+'widgets'+slash+'exe' )
-	dir_check_create( widgets+os.sep+'widgets'+slash+'extensions' )
+	# dir_check_create( widgets+os.sep+'widgets'+slash+'exe' )
+	# dir_check_create( widgets+os.sep+'widgets'+slash+'extensions' )
 	# dir_check_create( widgets+os.sep+'widgets'+slash+'hack' )
-	dir_check_create( widgets+os.sep+'widgets'+slash+'html' )
-	dir_check_create( widgets+os.sep+'widgets'+slash+'javascript' )
+	# dir_check_create( widgets+os.sep+'widgets'+slash+'html' )
+	# dir_check_create( widgets+os.sep+'widgets'+slash+'javascript' )
 	dir_check_create( widgets+os.sep+'widgets'+slash+'keys' )
 	dir_check_create( widgets+os.sep+'widgets'+slash+'php' )
 	dir_check_create( widgets+os.sep+'widgets'+slash+'powershell' )
 	dir_check_create( widgets+os.sep+'widgets'+slash+'project' )
 	dir_check_create( widgets+os.sep+'widgets'+slash+'python' )
-	dir_check_create( widgets+os.sep+'widgets'+slash+'vbs' )
-	dir_check_create( widgets+os.sep+'widgets'+slash+'webApp' )
-	dir_check_create( widgets+os.sep+'widgets'+slash+'java' )
-	dir_check_create( widgets+os.sep+'widgets'+slash+'git' )
+	# dir_check_create( widgets+os.sep+'widgets'+slash+'vbs' )
+	# dir_check_create( widgets+os.sep+'widgets'+slash+'webApp' )
+	# dir_check_create( widgets+os.sep+'widgets'+slash+'java' )
+	# dir_check_create( widgets+os.sep+'widgets'+slash+'git' )
 	dir_check_create( widgets+os.sep+'widgets'+slash+'cron' )
 	dir_check_create( widgets+os.sep+'widgets'+slash+'sessions'+slash+'waiting' )
 	dir_check_create( widgets+os.sep+'widgets'+slash+'sessions'+slash+'active' )
-	dir_check_create( techDrive+slash+'techApps' )
+	# dir_check_create( techDrive+slash+'techApps' )
 	# dir_check_create( techDrive + slash+'techApps\\_installers' )
 	# dir_check_create( techDrive + slash+'techApps\\_stand_alone' )
 	# dir_check_create( techDrive + slash+'techApps\\tools' )

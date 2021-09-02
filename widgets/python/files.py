@@ -34,8 +34,11 @@ import _rightThumb._string as _str
 # _browser = _.regImp( __.appReg, '_rightThumb._toolsScrapeDirect' )
 import _rightThumb._mimetype as _mime
 ##################################################
+__.isFiles=True
 
 def appSwitches():
+	if not __.isFiles:
+		_.switches.register('Recursive', '-r,-recursive')
 	_.switches.register('Count', '-c,-count,--c')
 	_.switches.register('Path', '-p,-path,-folder')
 	_.switches.register('Text', '-t,-text,-txt')
@@ -49,6 +52,7 @@ def appSwitches():
 	_.switches.register('Extensions', '-ext', 'db image graphic video app audio doc script archive')
 	_.switches.register('Remove-Root-Folder', '-rr')
 	_.switches.register('Widget-V0', '-w,-v0')
+	_.switches.register('Ago-Create-Date', '-cd')
 
 
 
@@ -312,14 +316,13 @@ def getFolder(folder,r=True):
 								run = 'a'
 							elif 'md' in _.switches.values('Ago')[2]:
 								run = 'md'
-							elif 'cd' in _.switches.values('Ago')[2]:
+							elif _.switches.isActive('Ago-Create-Date'):
 								run = 'cd'
 							elif 'resent' in _.switches.values('Ago')[2]:
 								run = 'resent'
 							elif 'm' in _.switches.values('Ago')[2]:
 								run = 'md'
-							elif 'c' in _.switches.values('Ago')[2]:
-								run = 'cd'
+
 
 						elif len( _.switches.values('Ago') ) > 1 and type(_.switches.values('Ago')[1]) == str:
 							# print('asdf')
@@ -327,14 +330,13 @@ def getFolder(folder,r=True):
 								run = 'a'
 							elif 'md' in _.switches.values('Ago')[1]:
 								run = 'md'
-							elif 'cd' in _.switches.values('Ago')[1]:
+							elif _.switches.isActive('Ago-Create-Date'):
 								run = 'cd'
 							elif 'resent' in _.switches.values('Ago')[1]:
 								run = 'resent'
 							elif 'm' in _.switches.values('Ago')[1]:
 								run = 'md'
-							elif 'c' in _.switches.values('Ago')[1]:
-								run = 'cd'
+
 
 						# print(  len( _.switches.values('Ago') )  )
 						# print(  ( _.switches.values('Ago') )  )
@@ -548,6 +550,10 @@ def extensionsDatabank():
 				extensionList.append( x.lower() )
 
 def action():
+	if not __.isFiles:
+		r = _.switches.isActive('Recursive')
+	else:
+		r = True
 	if _.switches.isActive('Extensions'):
 		extensionsDatabank()
 
@@ -565,7 +571,7 @@ def action():
 	baseDepth = len( folder.split(_v.slash) )
 	base_path=folder
 	if not _.switches.isActive('Widget-V0'):
-		getFolder(folder)
+		getFolder(folder,r=r)
 	else:
 		# print(_v.w)
 		base_path=_v.widgets
@@ -574,9 +580,12 @@ def action():
 		_.switches.fieldSet( 'Plus', 'value', '*.py,*.sh,*.bat,*.MD' )
 		_.switches.fieldSet( 'Plus', 'values', ['*.py','*.sh','*.bat','*.MD'] )
 		_.switches.fieldSet( 'PlusOr', 'active', True )
-		getFolder(_v.w+os.sep+'python')
-		getFolder(_v.w+os.sep+'batch')
-		getFolder(_v.w+os.sep+'bash')
+		getFolder(_v.ww+os.sep+'python')
+		getFolder(_v.ww+os.sep+'batch', r=False)
+		getFolder(_v.ww+os.sep+'powershell', r=False)
+		getFolder(_v.ww+os.sep+'php', r=False)
+		getFolder(_v.ww+os.sep+'windows')
+		getFolder(_v.ww+os.sep+'bash')
 		getFolder(_v.widgets+os.sep+'install')
 		getFolder(_v.widgets, r=False)
 		
@@ -592,7 +601,7 @@ def action():
 	if not iS == i:
 		_.folderProfileAttribute( folder=folder, info = {
 														'app': 'files',
-														'recursive': True,
+														'recursive': r,
 														'factors': {
 																		'Text': _.switches.isActive('Text'),
 																		'Binary': _.switches.isActive('Binary'),
@@ -634,6 +643,7 @@ import _rightThumb._dir as _dir
 # 	global data
 # 	data = _.getTable( 'table.json' )
 # data = []
+# 'Recursive'
 ########################################################################################
 if __name__ == '__main__':
 	action()

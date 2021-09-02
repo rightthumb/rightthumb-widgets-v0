@@ -13,14 +13,17 @@ DESCRIPTION
             -ext switch includes all related extensions
             --c does not print totals (works in all apps)
             -ago accepts epoch date, 1min, 1h, 1d, 1m, 1y
-    p file -?
+    p ls -ago 1d -ext video
+        displays a table of meta
+    p ls -?
         full help menu
-    p file --??
+    p ls --??
         smaller help menu with global switches removed
-    p file --?? c
+    p ls --?? c
         lists examples then copies the selected help item to clipboard
-    p file --c | p -copy
+    p ls --c | p -copy
         copies list of files
+
 
 
 
@@ -59,8 +62,12 @@ FEATURES
     cross reference 2 or more tv shows or movies
     list all episodes in a series
 
-    
+    in windows
+        p history -ago 2d + "cd clients"
+            you can search through terminal history
 
+
+    
 
 
 
@@ -80,6 +87,7 @@ HOW TO INSTALL
         or 
             python3 installer.py -install h
                 the h replaces the HISTSIZE and HISTFILESIZE to make the history larger
+        *NOT* python3 install/installer.py -install
 
     which nano | python3 installer.py -config.editor
     or

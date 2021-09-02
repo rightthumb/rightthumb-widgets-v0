@@ -10,6 +10,6 @@ rem    - Scott Taylor Reph, RightThumb.com
 rem ###########################################################################
 rem ## {C3P0D40fAe8B} ##
 
-type D:\Users\Scott\pss.txt | p line --c -u | p ls  -s cd -c n cd %*
+type %USERPROFILE%\pss.txt | p line --c -u | p ls  -s cd -c n cd %*
 
 

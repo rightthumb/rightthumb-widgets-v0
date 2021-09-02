@@ -10,7 +10,7 @@ rem    - Scott Taylor Reph, RightThumb.com
 rem ###########################################################################
 rem ## {C3P0D40fAe8B} ##
 
-start "D:\Users\Scott\AppData\Local\Google\Chrome\Application\chrome.exe" "http://www.urbandictionary.com/define.php?term=%1 %2 %3 %4 %5 %6 %7 %8 %9"
+start "%USERPROFILE%\AppData\Local\Google\Chrome\Application\chrome.exe" "http://www.urbandictionary.com/define.php?term=%1 %2 %3 %4 %5 %6 %7 %8 %9"
 
 
 

@@ -13,7 +13,7 @@ rem ## {C3P0D40fAe8B} ##
 
 set demote=%1
 IF [%1] == [] set /p demote=Demote What? : 
-set dev=D:\Users\Scott\Documents\tech\Scripts\DEV
+set dev=%USERPROFILE%\Documents\tech\Scripts\DEV
 set log=%dev%\demote-log.txt
 
 

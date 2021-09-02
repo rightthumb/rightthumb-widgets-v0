@@ -36,7 +36,7 @@ if [%1] == [] GOTO END
 
 :NOTES
 GOTO END
-set browser_app=D:\Users\Scott\AppData\Local\Google\Chrome\Application\chrome.exe
+set browser_app=%USERPROFILE%\AppData\Local\Google\Chrome\Application\chrome.exe
 set www0=http://www.google.com/#hl=en&newwindow=1&safe=off&q=+dnd
 set www1=&aq=f&aqi=g1g-z1g8&aql=&oq=&gs_rfai=&fp=84c7fb41710deb10
 

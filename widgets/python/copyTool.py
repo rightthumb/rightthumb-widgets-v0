@@ -220,16 +220,18 @@ def source_destination_Trigger( data ):
 	d = _v.techDrive
 	if test == 'td':
 		data = d
-	if test == 'mad':
-		data = _v.techFolder+_v.slash+'hosts'+_v.slash+'{D599DDFE-28B1-4CBD-B300-78DB4BCA7DF5}'+_v.slash+'programs'+_v.slash+'batch'
+	# if test == 'mad':
+		# data = _v.techFolder+_v.slash+'hosts'+_v.slash+'{D599DDFE-28B1-4CBD-B300-78DB4BCA7DF5}'+_v.slash+'widgets'+_v.slash+'batch'
 	elif test == 'hd':
 		data = _v.hostDefault
 	elif test == 'hh':
 		data = _v.thisHost
 	elif test == 'ma':
 		data = _v.myBatch
+	elif test == 'w' or test == 'widget' or test == 'widgets':
+		data = _v.techFolder+_v.slash+'widgets'
 	elif test == 'pp' or test == 'program' or test == 'programs':
-		data = _v.techFolder+_v.slash+'programs'
+		data = _v.techFolder+_v.slash+'widgets'
 	elif test == 'tt' or test == 'tech':
 		data = _v.techFolder
 	elif test == 'key1':
@@ -298,7 +300,7 @@ def source_destination_Trigger( data ):
 # def sourceTrigger( data ):
 # 	test = data.lower()
 # 	d = _v.techDrive
-# 	if test == 'p' or test == 'program' or test == 'programs':
+# 	if test == 'p' or test == 'program' or test == 'widgets':
 # 		data = d+':\\tech\\programs'
 # 	elif test == 't' or test == 'tech':
 # 		data = d+':\\tech'
