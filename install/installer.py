@@ -1787,8 +1787,6 @@ pr-|{6FAB5628-94A1-410A-82D1-1D42A2A11750}/.rt/profile/projects"""
 		# print( v.home )
 		items = []
 		if os.path.isfile( v.config ):
-			for k in v.config:
-				v.config[k]=v.config[k].replace('"','')
 			v.bash = vc.HD.getTableSimp( v.config )
 
 		# print(v.bash_defaults)
@@ -13722,8 +13720,6 @@ def action():
 
 
 		if os.path.isfile( v.config ):
-			for k in v.config:
-				v.config[k]=v.config[k].replace('"','')
 			v.bash = vc.HD.getTableSimp( v.config )
 		v.bash['PY'] = sys.executable
 		if os.getcwd().endswith(os.sep+'install'):
@@ -13910,8 +13906,6 @@ example: ~/.rt/.config.hash
 	if switches.isActive('Config-Alias'):
 		vc.FIG.home()
 		if os.path.isfile( v.config ):
-			for k in v.config:
-				v.config[k]=v.config[k].replace('"','')
 			v.bash = vc.HD.getTableSimp( v.config )
 		if v.pipe:
 			v.bash['hAlias'] = ''.join(v.pipe)
@@ -13932,8 +13926,6 @@ example: ~/.rt/.config.hash
 	if switches.isActive('Config-Skip-Keychain'):
 		vc.FIG.home()
 		if os.path.isfile( v.config ):
-			for k in v.config:
-				v.config[k]=v.config[k].replace('"','')
 			v.bash = vc.HD.getTableSimp( v.config )
 		v.bash['skip_chain'] = 'true'
 		vc.FIG.v_bash_order()
@@ -13961,8 +13953,6 @@ example: ~/.rt/.config.hash
 	if switches.isActive('Config-Editor'):
 		vc.FIG.home()
 		if os.path.isfile( v.config ):
-			for k in v.config:
-				v.config[k]=v.config[k].replace('"','')
 			v.bash = vc.HD.getTableSimp( v.config )
 		if v.pipe:
 			v.bash['code_editor'] = ''.join(v.pipe)
@@ -13987,8 +13977,6 @@ example: ~/.rt/.config.hash
 	if switches.isActive('Config-Python'):
 		vc.FIG.home()
 		if os.path.isfile( v.config ):
-			for k in v.config:
-				v.config[k]=v.config[k].replace('"','')
 			v.bash = vc.HD.getTableSimp( v.config )
 		if v.pipe:
 			v.bash['PY'] = ''.join(v.pipe)
@@ -14010,8 +13998,6 @@ example: ~/.rt/.config.hash
 		vc.FIG.home()
 		
 		if os.path.isfile( v.config ):
-			for k in v.config:
-				v.config[k]=v.config[k].replace('"','')
 			v.bash = vc.HD.getTableSimp( v.config )
 		if v.pipe:
 			v.bash['PY2'] = ''.join(v.pipe)
@@ -14032,8 +14018,6 @@ example: ~/.rt/.config.hash
 		vc.FIG.home()
 		
 		if os.path.isfile( v.config ):
-			for k in v.config:
-				v.config[k]=v.config[k].replace('"','')
 			v.bash = vc.HD.getTableSimp( v.config )
 		if v.pipe:
 			v.bash['widgets'] = ''.join(v.pipe)
@@ -14076,8 +14060,6 @@ example: ~/.rt/.config.hash
 		vc.FIG.home()
 		
 		if os.path.isfile( v.config ):
-			for k in v.config:
-				v.config[k]=v.config[k].replace('"','')
 			v.bash = vc.HD.getTableSimp( v.config )
 		for add in switches.values('Config-Add'):
 			if ':' in add:
@@ -14103,8 +14085,6 @@ example: ~/.rt/.config.hash
 		vc.FIG.home()
 		
 		if os.path.isfile( v.config ):
-			for k in v.config:
-				v.config[k]=v.config[k].replace('"','')
 			v.bash = vc.HD.getTableSimp( v.config )
 		for remove in switches.values('Config-Remove'):
 			if remove in v.bash:
@@ -14156,8 +14136,6 @@ example: ~/.rt/.config.hash
 		vc.FIG.home()
 		
 		if os.path.isfile( v.config ):
-			for k in v.config:
-				v.config[k]=v.config[k].replace('"','')
 			v.bash = vc.HD.getTableSimp( v.config )
 		# print(v.bash)
 		vc.FIG.v_bash_order()
