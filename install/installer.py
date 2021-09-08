@@ -1594,7 +1594,7 @@ pr-|{6FAB5628-94A1-410A-82D1-1D42A2A11750}/.rt/profile/projects"""
 
 				if not active:
 
-					if 'h' in switches.values('Installer'):
+					if 'h' in switches.values('Installer') or 'h' in switches.values('.bashrc-Default'):
 						if not 'HISTSIZE' in line and not 'HISTFILESIZE' in line:
 							new_bashrc += line + '\n'
 						else:
@@ -1637,7 +1637,7 @@ pr-|{6FAB5628-94A1-410A-82D1-1D42A2A11750}/.rt/profile/projects"""
 			if 'installer.py2' in 'installer.py ':
 				add = A.vfiles.file('.bashrc.full')['data']
 				add += A.vfiles.file('.bashrc.mini')['data']
-				if not 'h' in switches.values('Installer'):
+				if not 'h' in switches.values('Installer') and not 'h' in switches.values('.bashrc-Default'):
 					newFile=''
 					for line in add.split('\n'):
 						if not 'HISTSIZE' in line and not 'HISTFILESIZE' in line:
@@ -1650,7 +1650,7 @@ pr-|{6FAB5628-94A1-410A-82D1-1D42A2A11750}/.rt/profile/projects"""
 			else:
 				add = A.vfiles.file('.bashrc.mini')['data']
 				add += A.vfiles.file('.bashrc.full')['data']
-				if not 'h' in switches.values('Installer'):
+				if not 'h' in switches.values('Installer') and not 'h' in switches.values('.bashrc-Default'):
 					newFile=''
 					for line in add.split('\n'):
 						if not 'HISTSIZE' in line and not 'HISTFILESIZE' in line:
@@ -1665,7 +1665,7 @@ pr-|{6FAB5628-94A1-410A-82D1-1D42A2A11750}/.rt/profile/projects"""
 
 				file = self.bash_vars(p=0)
 			add = A.vfiles.file('.bashrc.'+subject)['data']
-			if not 'h' in switches.values('Installer'):
+			if not 'h' in switches.values('Installer') and not 'h' in switches.values('.bashrc-Default'):
 				newFile=''
 				for line in add.split('\n'):
 					if not 'HISTSIZE' in line and not 'HISTFILESIZE' in line:
@@ -1680,7 +1680,7 @@ pr-|{6FAB5628-94A1-410A-82D1-1D42A2A11750}/.rt/profile/projects"""
 		for seti in settings:
 			if 'auto' in seti:
 				add = A.vfiles.file('.bashrc-auto')['data']
-				if not 'h' in switches.values('Installer'):
+				if not 'h' in switches.values('Installer') and not 'h' in switches.values('.bashrc-Default'):
 					newFile=''
 					for line in add.split('\n'):
 						if not 'HISTSIZE' in line and not 'HISTFILESIZE' in line:
@@ -1701,7 +1701,7 @@ pr-|{6FAB5628-94A1-410A-82D1-1D42A2A11750}/.rt/profile/projects"""
 
 
 		add = A.vfiles.file('.bashrc-all')['data']
-		if not 'h' in switches.values('Installer'):
+		if not 'h' in switches.values('Installer') and not 'h' in switches.values('.bashrc-Default'):
 			newFile=''
 			for line in add.split('\n'):
 				if not 'HISTSIZE' in line and not 'HISTFILESIZE' in line:
