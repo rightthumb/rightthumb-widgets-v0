@@ -34,6 +34,7 @@ FEATURES
         windows (cmd.exe)
         linux and mac (bash)
         powershell
+        termux
 
     automatically install vnc on debian
     extensive file header database
@@ -127,7 +128,9 @@ Recommended python modules
     pip3 install binaryornot
     pip3 install cssselect
     pip3 install colorama
-    pip3 install setuptools-rust
+    pip3 install arrow
+    if termux
+        pip3 install setuptools-rust
     pip3 install pymysql
     pip3 install Crypto
     pip3 install tzlocal
@@ -135,20 +138,14 @@ Recommended python modules
     pip3 install datetime
     pip3 install pyAesCrypt
     pip3 install zipfile36
-    pip3 install zipfile
-    pip3 install tarfile
-    pip3 install wget
     pip3 install pywin32
     pip3 install stickytape
     pip3 install dnspython
     pip3 install pymongo
-    pip3 install arrow
     pip3 install mycloudhome
     pip3 install pyperclip
     pip3 install pyAesCrypt
     pip3 install pycrypto
-    pip3 install arrow
-    pip3 install pymysql
     pip3 install sshtunnel
     pip3 install gtts
     pip3 install emoji
