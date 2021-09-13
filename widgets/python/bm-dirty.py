@@ -235,8 +235,8 @@ def action():
 		bm = _v.resolveFolderIDs(line.split('|')[1])
 		if os.path.isdir(bm):
 			text=''
-			if not _.isWin:
-				text += 'source $HOME/.bashrc'
+			# if not _.isWin:
+			# 	text += 'source $HOME/.bashrc'
 			text += '\n'
 			if _.isWin:
 				text += bm[0]+':'
@@ -246,7 +246,10 @@ def action():
 			text += bm
 			text += '\n'
 
-			text += 'm '
+			if _.isWin:
+				text += _v.w+'\\widgets\\batch\\m.bat '
+			else:
+				text += _v.w+'/widgets/bash/nav/m.sh '
 			text += a
 			text += '\n'
 			text += '\n'
