@@ -26,6 +26,7 @@ _v = dot()
 A = dot()
 vclasses = dot()
 v.subprocess = None
+v.appsFolder=''
 v.appInfo={
 	'file': 'tool',
 	'description': 'little awkward bits of HIGHLY RELEVANT algorithms',
