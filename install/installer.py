@@ -1408,7 +1408,7 @@ class FIG:
 		folder_alt = '(profile)Downloads'
 		folder_alt = vc.PATHS.path(folder_alt.replace( '(profile)', v.home + os.sep ))
 
-		
+		loader()
 
 
 
