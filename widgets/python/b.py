@@ -154,19 +154,25 @@ _.postLoad( __file__ )
 
 
 def action():
+	
+	made={}
 	if 'wprofile' in _v.config_hash:
+		made['h'] = 1
 		h  = _v.config_hash['wprofile']
 	if 'ww' in _v.config_hash:
+		made['ww'] = 1
 		ww = _v.config_hash['ww']
-
-	a = ww+os.sep+'databank'+os.sep+'tables'+os.sep+'bookmarks.index'
-	b = h+os.sep+'tables'+os.sep+'bookmarks.index'
-	try:
-		if not os.path.isfile(b) and os.path.isfile(a):
-			from shutil import copyfile
-			copyfile(a,b)
-	except Exception as e:
-		pass
+	# print('made',made)
+	if 'ww' in made  and 'h' in made:
+		a = ww+os.sep+'databank'+os.sep+'tables'+os.sep+'bookmarks.index'
+		b = h+os.sep+'tables'+os.sep+'bookmarks.index'
+		# print(os.path.isfile(b))
+		try:
+			if not os.path.isfile(b) and os.path.isfile(a):
+				from shutil import copyfile
+				copyfile(a,b)
+		except Exception as e:
+			pass
 	path = _bm.Bookmarks( _.switches.value('Alias') ).get()
 	if path is None:
 		_.colorThis( 'Error, Bookmark does not exist', 'red' )

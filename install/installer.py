@@ -36,7 +36,9 @@ v.appInfo={
 					'installer.py ',
 					'$widgets/install/installer.py ',
 					'',
-					't -rc.d strip print clear home auto',
+					't -rc.d h strip print clear home auto',
+					'',
+					't -rc.d h auto',
 					'',
 					'installer.py -json ~/.rt-config.hash',
 					'',
@@ -161,7 +163,7 @@ def loader():
 							'PY2': '/usr/bin/python2',
 
 							'SHELL': '/bin/bash',
-							'CAT': '[widgets]/widgets/python/src/unity/cat.py -f',
+							'CAT': '[widgets]/widgets/python/cat.py -f',
 
 
 	}
@@ -189,7 +191,6 @@ def loader():
 				'p': '[home]',
 				'rt': '[home]/.rt',
 
-				'py': '[widgets]/widgets/python/src/unity',
 				'b': '[widgets]/widgets/bash',
 				'bash': '[widgets]/widgets/bash',
 				's': '[widgets]/widgets/batch',
@@ -1439,21 +1440,21 @@ livepp|/mnt/d/programs
 l.pp|/mnt/d/programs
 l.b|/mnt/d/widgets/bash
 l.bash|/mnt/d/widgets/bash
-l.py|/mnt/d/widgets/python/src/unity
+l.py|/mnt/d/widgets/python
 dl|/mnt/c/Users/Scott/Downloads
 l.ttt|/mnt/d/widgets/databank/tables
 l.db|/mnt/d/widgets/databank/tables
 live.pp|/mnt/d/programs
 pp.live|/mnt/d/programs
-live.py|/mnt/d/widgets/python/src/unity
-py.live|/mnt/d/widgets/python/src/unity
+live.py|/mnt/d/widgets/python
+py.live|/mnt/d/widgets/python
 live.i|/mnt/d/tech/hosts/VULCAN/indexes
 i.live|/mnt/d/tech/hosts/VULCAN/indexes
 h|{A8693D4B-8A80-898F-83F0-E806D2F36800}/{C12F266D-71B9-40D2-98B9-424B42D2DBAC}
 i|{A8693D4B-8A80-898F-83F0-E806D2F36800}/hosts/VULCAN/indexes
 tt|{A8693D4B-8A80-898F-83F0-E806D2F36800}/{C12F266D-71B9-40D2-98B9-424B42D2DBAC}/tables
 ttt|{A8693D4B-8A80-898F-83F0-E806D2F36800}/widgets/databank/tables
-py|{A8693D4B-8A80-898F-83F0-E806D2F36800}/widgets/python/src/unity
+py|{A8693D4B-8A80-898F-83F0-E806D2F36800}/widgets/python
 ent|/mnt/d/entertainment/movies
 pr|{A8693D4B-8A80-898F-83F0-E806D2F36800}/{C12F266D-71B9-40D2-98B9-424B42D2DBAC}/projects
 doc|/mnt/c/Users/Scott/Documents
@@ -1484,14 +1485,14 @@ ovpn|{A8693D4B-8A80-898F-83F0-E806D2F36800}/{C12F266D-71B9-40D2-98B9-424B42D2DBA
 ovpn.live|/mnt/d/tech/hosts/VULCAN/projects/ovpn
 bash.test|/mnt/d/tech/hosts/VULCAN/projects/bash
 pp.l|/mnt/d/programs
-py.l|/mnt/d/widgets/python/src/unity
+py.l|/mnt/d/widgets/python
 i.l|/mnt/d/tech/hosts/VULCAN/indexes
 b.l|/mnt/d/widgets/bash
 bash.l|/mnt/d/widgets/bash
 pr.l|/mnt/d/tech/hosts/VULCAN/projects
 h.l|/mnt/d/tech/hosts/VULCAN
 ovpn.l|/mnt/d/tech/hosts/VULCAN/projects/ovpn
-bm|{A8693D4B-8A80-898F-83F0-E806D2F36800}/widgets/python/src/unity/_rightThumb/_bookmarks
+bm|{A8693D4B-8A80-898F-83F0-E806D2F36800}/widgets/python/_rightThumb/_bookmarks
 tool.live|/mnt/d/widgets/bash/install/py
 tool|/mnt/d/widgets/bash/install/py
 tt-|{6FAB5628-94A1-410A-82D1-1D42A2A11750}/.rt/profile/tables
@@ -1726,8 +1727,8 @@ pr-|{6FAB5628-94A1-410A-82D1-1D42A2A11750}/.rt/profile/projects"""
 		file = file.replace( '20F543'+'59E924', nn+'.'+nt )
 
 		file += '\n'
-		file += 'alias k="$widgets/widgets/python/src/unity/keychain.py -rc ";\n'
-		file += 'alias pc="$widgets/widgets/python/src/unity/pc.py -rc ";\n'
+		file += 'alias k="$widgets/widgets/python/keychain.py -rc ";\n'
+		file += 'alias pc="$widgets/widgets/python/pc.py -rc ";\n'
 		file += '\n'
 
 		# print( file )
@@ -2463,7 +2464,7 @@ class ONLINE:
 			files.append({ 'label': 'tool', 'path': v.home +os.sep+ '.rt' +os.sep+ 'tool', 'pre-exist': False })
 			files.append({ 'label': 'tool.sh', 'path': v.home +os.sep+ '.rt' +os.sep+ 'tool.sh', 'pre-exist': False })
 			files.append({ 'label': 'help.txt', 'path': v.home +os.sep+ '.rt' +os.sep+ 'help.txt', 'pre-exist': False })
-			# rec = { 'label': 'bashrc.py', 'path': v.bash['widgets'] + '/widgets/python/src/unity/bashrc.py', 'pre-exist': True }
+			# rec = { 'label': 'bashrc.py', 'path': v.bash['widgets'] + '/widgets/python/bashrc.py', 'pre-exist': True }
 			# rec['path'] = rec['path'].replace( '/', os.sep )
 			# files.append(rec)
 			rec = { 'label': 'load-vars.sh', 'path': v.bash['widgets'] + '/widgets/bash/load-vars.sh', 'pre-exist': True }
@@ -2536,27 +2537,27 @@ class virtualFiles:
 		if path == '.bashrc-auto':
 			data = """
 ################# ################# #################
-alias s.exp.gen="$widgets/widgets/python/src/unity/expect-gen.py -sudo -p"
-alias exp.gen="$widgets/widgets/python/src/unity/expect-gen.py -p "
-alias exp.geny="$widgets/widgets/python/src/unity/expect-gen.py -p -y "
-alias pr.do="$HOME/.rt/profile/temp/temp.exp $( $widgets/widgets/python/src/unity/keychain.py -label p.r -jp -get )"
+alias s.exp.gen="$widgets/widgets/python/expect-gen.py -sudo -p"
+alias exp.gen="$widgets/widgets/python/expect-gen.py -p "
+alias exp.geny="$widgets/widgets/python/expect-gen.py -p -y "
+alias pr.do="$HOME/.rt/profile/temp/temp.exp $( $widgets/widgets/python/keychain.py -label p.r -jp -get )"
 alias pr.e="exp.gen;pr.do"
-alias p9.do="$HOME/.rt/profile/temp/temp.exp $( $widgets/widgets/python/src/unity/keychain.py -label p.9 -jp -get )"
-alias pv.do="$HOME/.rt/profile/temp/temp.exp $( $widgets/widgets/python/src/unity/keychain.py -label vault -jp -get )"
+alias p9.do="$HOME/.rt/profile/temp/temp.exp $( $widgets/widgets/python/keychain.py -label p.9 -jp -get )"
+alias pv.do="$HOME/.rt/profile/temp/temp.exp $( $widgets/widgets/python/keychain.py -label vault -jp -get )"
 alias pv.e="exp.gen;pv.do"
 #################
-alias vps.do="$HOME/.rt/profile/temp/temp.exp $( $widgets/widgets/python/src/unity/keychain.py -label vps.scott -jp -get )"
+alias vps.do="$HOME/.rt/profile/temp/temp.exp $( $widgets/widgets/python/keychain.py -label vps.scott -jp -get )"
 alias vps.e="exp.gen;vps.do"
 alias vps.ey="exp.geny;vps.do"
 alias vps.el="echo su root | vps.e"
 alias s.vps.e="s.exp.gen;vps.do"
 #################
-alias reph.do="$HOME/.rt/profile/temp/temp.exp $( $widgets/widgets/python/src/unity/keychain.py -label reph.l -jp -get )"
+alias reph.do="$HOME/.rt/profile/temp/temp.exp $( $widgets/widgets/python/keychain.py -label reph.l -jp -get )"
 alias reph.e="exp.gen;reph.do"
 alias reph.ey="exp.geny;reph.do"
 alias reph.el="echo su root | reph.e"
 #################
-alias web.do="$HOME/.rt/profile/temp/temp.exp $( $widgets/widgets/python/src/unity/keychain.py -label web.l -jp -get )"
+alias web.do="$HOME/.rt/profile/temp/temp.exp $( $widgets/widgets/python/keychain.py -label web.l -jp -get )"
 alias web.e="exp.gen;web.do"
 alias web.ey="exp.geny;web.do"
 alias web.el="echo su root | web.e"
@@ -2729,7 +2730,7 @@ alias t.sh="$HOME/.rt/tool.sh";
 alias s.t.sh="sudo $HOME/.rt/tool.sh";
 alias c="clear";
 alias vps.new="ssh-keygen -f '/home/scott/.ssh/known_hosts' -R 'vps.rightthumb.com';ssh-keygen -f '/home/scott/.ssh/known_hosts' -R '45.35.203.103';";
-
+alias vps2.new="ssh-keygen -f '/home/scott/.ssh/known_hosts' -R '45.35.203.104';ssh-keygen -f '/home/scott/.ssh/known_hosts' -R '45.35.203.104';";
 
 
 
@@ -14569,4 +14570,5 @@ if __name__ == '__main__':
 # alias t2="installer.py2";
 # bashFileHeader
 # sys.executable
+# del v.bash['profile']
 # 'Installer'
