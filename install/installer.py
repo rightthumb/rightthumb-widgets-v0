@@ -1187,7 +1187,8 @@ class SH:
  
 	def getFolderSH( self, folder ):
  
- 
+		if os.sep+'backup'+os.sep in folder:
+			return None
  
 		if not os.path.isdir(folder):
 			return None
@@ -1206,7 +1207,8 @@ class SH:
 				if not shouldProcess:
 					head = vc.HD.headTXT(path)
 					if len(head) and head[0] == '#':
-						shouldProcess = True
+						if 'python' in head or 'bash' in head:
+							shouldProcess = True
 
 				if shouldProcess:
 					self.processSHfile(path)
@@ -1408,7 +1410,7 @@ class FIG:
 		folder_alt = '(profile)Downloads'
 		folder_alt = vc.PATHS.path(folder_alt.replace( '(profile)', v.home + os.sep ))
 
-		loader()
+		
 
 
 
@@ -1909,7 +1911,7 @@ pr-|{6FAB5628-94A1-410A-82D1-1D42A2A11750}/.rt/profile/projects"""
 
 
 	def v_bash_order( self ):
-		loader()
+ 
 		vVv = vc.PATHS.clean4os( v.vVv )
 		bash_defaults = vc.PATHS.clean4os( v.bash_defaults )
 
@@ -13603,6 +13605,7 @@ switches.register('TEST','-test')
 switches.register('SH-Files','-sh.f,-sh.fi,-sh.file,-sh.files')
 switches.register('SH-Folders','-sh.fo,-sh.folder,-sh.folders')
 switches.register('SH-Folder-Recursive','-sh.fo.r,-sh.folder.r')
+# switches.register('SH-Auto-File','-sh.auto')
 
 switches.register('Clean','--c')
 
@@ -13844,7 +13847,7 @@ call %widgets%\\widgets\\batch\\c.bat %1
 			vc.SH.getFolderSH(v.bash['ww'])
 		# pv(v.bash)
 
-		
+		# 'Installer'
 		return None
 
 	if switches.isActive('Setting-PIPE-Print'):
