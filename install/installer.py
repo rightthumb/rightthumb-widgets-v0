@@ -1969,6 +1969,18 @@ pr-|{6FAB5628-94A1-410A-82D1-1D42A2A11750}/.rt/profile/projects"""
 					del v.bash[k]
 					break
 		
+		if 'profile' in v.bash:
+			del v.bash['profile']
+
+		for k in v.bash:
+			if '[profile]' in v.bash[k]:
+				if 'wprofile' in v.bash:
+					v.bash[k]=v.bash[k].replace( '[profile]', v.bash['wprofile'] )
+
+			if '[home]' in v.bash[k]:
+				v.bash[k]=v.bash[k].replace( '[home]', v.home )
+				
+
 
 
 
