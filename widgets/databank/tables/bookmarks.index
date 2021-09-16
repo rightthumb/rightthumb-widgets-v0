@@ -1,0 +1,1757 @@
+{
+    "labels": {
+        "32": "C:\\Windows\\System32",
+        "414FBD41": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\scripts\\manage_drives\\MSI\\index",
+        "6D1CC1AE201F": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\Desktop",
+        "7a": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\archive_7z_files",
+        "7za": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\archive_7z_files",
+        "a.": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\hosts\\MSI\\programs\\batch",
+        "a": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\hosts\\Archive\\programs\\python",
+        "a3": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\extensions\\aquire_3",
+        "a4": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\extensions\\aquire_4",
+        "a7": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\archive_7z_files",
+        "a7z": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\archive_7z_files",
+        "adobe": "C:\\Program Files\\Adobe",
+        "al": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\hosts\\MSI\\tables\\applogs",
+        "alog": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\hosts\\MSI\\tables\\applogs",
+        "app": "C:\\Program Files",
+        "appdata": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\AppData",
+        "appdata_local_temp": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\AppData\\Local\\Temp",
+        "applog": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\{C12F266D-71B9-40D2-98B9-424B42D2DBAC}\\logs\\apps",
+        "applogs": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\hosts\\MSI\\tables\\applogs",
+        "apps": "D:\\Apps",
+        "apptemp": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\AppData\\Local\\Temp",
+        "apptmp": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\AppData\\Local\\Temp",
+        "archive_7z_files": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\archive_7z_files",
+        "asdf": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\{C12F266D-71B9-40D2-98B9-424B42D2DBAC}\\tables",
+        "atable": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\extensions\\aquire_multi_table-w_header",
+        "atest": "C:\\Program Files\\Sublime Text 3",
+        "az": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\archive_7z_files",
+        "b": "{A8693D4B-8A80-898F-83F0-E806D2F36800}/widgets/bash",
+        "back": "{A8693D4B-8A80-898F-83F0-E806D2F36800}/widgets/bash/history",
+        "bank": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\databank",
+        "bash": "{A8693D4B-8A80-898F-83F0-E806D2F36800}/widgets/bash",
+        "bat": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\batch",
+        "batch": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\batch",
+        "bible": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\hosts\\MSI\\projects\\Bible",
+        "bm": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\{C12F266D-71B9-40D2-98B9-424B42D2DBAC}\\bookmarks",
+        "bmRoot": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\scripts\\script-bookmarks\\MSI",
+        "book": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\hosts\\MSI\\bookmarks",
+        "c++": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\c++",
+        "c": "C:\\",
+        "common": "C:\\Program Files\\Common Files",
+        "commonfiles": "C:\\Program Files\\Common Files",
+        "comon": "C:\\Program Files\\Common Files",
+        "configl": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\project\\log_config",
+        "configlog": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\project\\log_config",
+        "crypt": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\python\\crypt",
+        "current": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\hosts\\MSI\\databases",
+        "d": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\Desktop",
+        "dad": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\{C12F266D-71B9-40D2-98B9-424B42D2DBAC}\\projects\\dad",
+        "DadDesk": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\hosts\\SENIOR-HP",
+        "DadDesktop": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\hosts\\SENIOR-HP",
+        "DadLap": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\hosts\\REPHPC",
+        "DadLaptop": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\hosts\\REPHPC",
+        "data": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\databank",
+        "databank": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\databank",
+        "db": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\databank",
+        "dbphp": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\srv\\php",
+        "ddd": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\hosts\\{D599DDFE-28B1-4CBD-B300-78DB4BCA7DF5}",
+        "DDesk": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\hosts\\SENIOR-HP",
+        "ddh": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\hosts\\SENIOR-HP",
+        "def": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\hosts\\{D599DDFE-28B1-4CBD-B300-78DB4BCA7DF5}",
+        "Default": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\hosts\\{D599DDFE-28B1-4CBD-B300-78DB4BCA7DF5}",
+        "default2": "C:\\Users\\Default",
+        "desk": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\Desktop",
+        "Desktop": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\Desktop",
+        "dest": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\hosts\\MSI\\playground\\usbAppsUpdate\\destination",
+        "df": "C:\\Users\\Default",
+        "dl": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\Downloads",
+        "dlap": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\hosts\\REPHPC",
+        "dlh": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\hosts\\REPHPC",
+        "dmr": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\scripts\\manage_drives",
+        "dnd": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\Documents\\DnD",
+        "dnd2": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\databank\\projects\\DnD\\5e",
+        "doc": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\Documents",
+        "doc2": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\Documents",
+        "docs2": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\Documents",
+        "downloads": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\Downloads",
+        "dst": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\hosts\\MSI\\playground\\usbAppsUpdate\\destination",
+        "dup": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\hosts\\MSI\\projects\\Duplicates",
+        "duplicate": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\hosts\\MSI\\projects\\Duplicates",
+        "duplicates": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\hosts\\MSI\\projects\\Duplicates",
+        "dyan": "D:\\websites\\PillerBeauty",
+        "email": "C:\\Program Files\\Common Files\\microsoft shared\\Stationery",
+        "epg": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\hosts\\MSI\\tables\\epguides",
+        "etc": "C:\\WINDOWS\\system32\\drivers\\etc",
+        "ext": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\extensions",
+        "fmphp": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\srv\\php",
+        "folderProfiles": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\databank\\profiles\\folders",
+        "game": "D:\\Apps\\Games\\Nestopia140bin-938",
+        "games": "D:\\Apps\\Games\\Nestopia140bin-938",
+        "h": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}/.rt/profile",
+        "hdd": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\hosts\\SENIOR-HP",
+        "hdl": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\hosts\\REPHPC",
+        "ht": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\hosts\\MSI\\temp",
+        "htemp": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\hosts\\MSI\\temp",
+        "htm": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\html",
+        "htmp": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\hosts\\MSI\\temp",
+        "HTP": "D:\\Apps\\Portable\\HijackThisPortable",
+        "i": "{A8693D4B-8A80-898F-83F0-E806D2F36800}/hosts/VULCAN/indexes",
+        "im": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\python\\imploded\\unity",
+        "imp": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\python\\imploded\\unity",
+        "index": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\hosts\\MSI\\indexes",
+        "iso": "D:\\ISO",
+        "j": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\java",
+        "javascript": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\javascript",
+        "john": "D:\\websites\\old\\RightThumb\\projects\\john",
+        "joplin": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\Joplin",
+        "joplin2": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\.config\\joplin-desktop\\resources",
+        "js": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\javascript",
+        "karla": "{A8693D4B-8A80-898F-83F0-E806D2F36800}/{C12F266D-71B9-40D2-98B9-424B42D2DBAC}/projects/karla",
+        "key": "{A8693D4B-8A80-898F-83F0-E806D2F36800}/widgets/keys",
+        "keys": "{A8693D4B-8A80-898F-83F0-E806D2F36800}/widgets/keys",
+        "kp": "{A8693D4B-8A80-898F-83F0-E806D2F36800}/widgets/keys/p",
+        "lc": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\html\\projects\\log_config",
+        "lconfig": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\project\\log_config",
+        "lib": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\library",
+        "link": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\extensions\\links",
+        "links": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\extensions\\links",
+        "linux": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\AppData\\Local\\Packages\\CanonicalGroupLimited.Ubuntu20.04onWindows_79rhkp1fndgsc\\LocalState\\rootfs\\home\\scott",
+        "live": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\scripts",
+        "lnk": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\extensions\\links",
+        "localtemp": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\AppData\\Local\\Temp",
+        "localtmp": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\AppData\\Local\\Temp",
+        "logconfig": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\project\\log_config",
+        "ls": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\AppData\\Local\\Google\\Chrome\\User Data\\Default\\Local Storage\\leveldb",
+        "lsync": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\srv\\php",
+        "ltemp": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\AppData\\Local\\Temp",
+        "ltmp": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\AppData\\Local\\Temp",
+        "lunar": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\hosts\\MSI\\projects\\2020.06.01",
+        "lunar_table": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\hosts\\MSI\\projects\\2020.06.01",
+        "m": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\hosts\\MSI\\bookmarks",
+        "ma": "{A8693D4B-8A80-898F-83F0-E806D2F36800}/{C12F266D-71B9-40D2-98B9-424B42D2DBAC}/programs/batch",
+        "mdr": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\scripts\\manage_drives",
+        "mdt": "D:\\websites\\PillerBeauty\\ARCHIVE\\2021.05.08",
+        "mdt0": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\{C12F266D-71B9-40D2-98B9-424B42D2DBAC}\\projects\\mdt\\2021.03.21",
+        "mdt1": "D:\\websites\\PillerBeauty\\ARCHIVE\\2020.12.09\\2021.02.24",
+        "mdt2": "D:\\websites\\PillerBeauty\\ARCHIVE\\2021.01.08",
+        "mdt3": "D:\\websites\\PillerBeauty\\ARCHIVE\\2020.12.09",
+        "mdt4": "D:\\websites\\PillerBeauty\\ARCHIVE\\2020.12.09",
+        "mdt5": "D:\\websites\\PillerBeauty\\ARCHIVE\\2020.12.09",
+        "mdt6": "D:\\websites\\PillerBeauty\\ARCHIVE\\2020.12.09",
+        "mdt7": "D:\\websites\\PillerBeauty\\ARCHIVE\\2020.12.09",
+        "mdt8": "D:\\websites\\PillerBeauty\\ARCHIVE\\2020.12.09",
+        "mdt9": "D:\\websites\\PillerBeauty\\ARCHIVE\\2020.12.09",
+        "mdtX": "D:\\websites\\PillerBeauty\\ARCHIVE\\2021.05.08",
+        "meta": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\databank\\projects\\meta",
+        "mpy": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\hosts\\MSI\\programs\\python",
+        "Music": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\Music",
+        "myepy": "{A8693D4B-8A80-898F-83F0-E806D2F36800}/hosts/VULCAN/programs/python",
+        "myHome": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\hosts\\MSI",
+        "myIndex": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\hosts\\MSI\\indexes",
+        "myIndexes": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\hosts\\MSI\\indexes",
+        "mypy": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\hosts\\MSI\\programs\\python",
+        "myPython": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\hosts\\MSI\\programs\\python",
+        "myTickets": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\hosts\\MSI\\tickets",
+        "n": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\hosts\\MSI\\notes",
+        "netcuts": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\AppData\\Roaming\\Microsoft\\Windows\\Network Shortcuts",
+        "netshortcuts": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\AppData\\Roaming\\Microsoft\\Windows\\Network Shortcuts",
+        "notes": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\hosts\\MSI\\notes",
+        "olds": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\scripts",
+        "one": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\OneDrive",
+        "ostemp": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\AppData\\Local\\Temp",
+        "ostmp": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\AppData\\Local\\Temp",
+        "p": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}",
+        "p3": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}",
+        "p4": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}",
+        "pay": "D:\\websites\\RightThumb\\projects\\payroll",
+        "pd": "C:\\Users\\Public\\Desktop",
+        "pf": "C:\\Program Files",
+        "php": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\php",
+        "phpdb": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\srv\\php",
+        "phpsrv": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\srv\\php",
+        "phpsync": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\srv\\php",
+        "play": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\hosts\\MSI\\playground",
+        "pp": "{A8693D4B-8A80-898F-83F0-E806D2F36800}/widgets",
+        "ppp": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\hosts\\MSI\\programs\\python",
+        "ppy": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\python",
+        "pr": "{A8693D4B-8A80-898F-83F0-E806D2F36800}/hosts/VULCAN/projects",
+        "pro": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\programs",
+        "program": "C:\\Program Files",
+        "programs": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\programs",
+        "project": "D:\\projects",
+        "projects": "D:\\projects",
+        "ps": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\powershell",
+        "pss1": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\Documents\\WindowsPowerShell",
+        "psss": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\Documents\\WindowsPowerShell",
+        "py": "{A8693D4B-8A80-898F-83F0-E806D2F36800}/widgets/python",
+        "py2": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\hosts\\MSI\\programs\\python",
+        "pya": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\hosts\\Archive\\programs\\python",
+        "pyc": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\python\\compiled",
+        "pycu": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\python\\compiled\\unix",
+        "pycw": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\python\\compiled\\windows",
+        "pyi": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\python\\imploded",
+        "pyiu": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\python\\imploded\\unix",
+        "pyiw": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\python\\imploded\\windows",
+        "pys": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\python\\src",
+        "pysu": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\python\\src\\unix",
+        "pysw": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\python\\src\\windows",
+        "python2": "{A8693D4B-8A80-898F-83F0-E806D2F36800}Apps\\Python\\Python36-32",
+        "pyu": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\python\\src\\unix",
+        "pyw": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\python\\src\\windows",
+        "pyy": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\python",
+        "r": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\remote",
+        "recent": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\AppData\\Roaming\\Microsoft\\Windows\\Recent",
+        "remote": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\remote",
+        "rpy": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\remote\\python",
+        "rt": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}/.rt",
+        "s": "{A8693D4B-8A80-898F-83F0-E806D2F36800}/widgets/batch",
+        "s2": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\AppData\\Roaming\\Microsoft\\Windows\\SendTo",
+        "s32": "C:\\Windows\\System32",
+        "sample": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\webApps\\samples",
+        "samples": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\webApps\\samples",
+        "scott": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}",
+        "scripts": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\scripts",
+        "scripttmp": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\scripts\\temp",
+        "sd": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\scripts\\Docs",
+        "send": "C:\\Documents and Settings\\Scott\\SendTo",
+        "sendto": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\AppData\\Roaming\\Microsoft\\Windows\\SendTo",
+        "site": "D:\\websites",
+        "sites": "D:\\websites",
+        "sql": "D:\\projects\\sql",
+        "sqll": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\hosts\\MSI\\projects\\sql_learn",
+        "src": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\python\\src\\windows",
+        "srv": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\srv",
+        "srvi": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\srv\\i",
+        "ss": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\OneDrive\\Pictures\\Screenshots",
+        "sss": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\scripts",
+        "ssublime": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\AppData\\Roaming\\Sublime Text 3\\Packages\\User",
+        "st": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\AppData\\Roaming\\Microsoft\\Windows\\SendTo",
+        "start": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs",
+        "Stationery": "C:\\Program Files\\Common Files\\microsoft shared\\Stationery",
+        "stationery0": "C:\\Program Files\\Common Files\\microsoft shared\\Stationery",
+        "stationery1": "C:\\Program Files (x86)\\Common Files\\microsoft shared\\Stationery",
+        "stemp": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\{C12F266D-71B9-40D2-98B9-424B42D2DBAC}\\temp",
+        "stmp": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\{C12F266D-71B9-40D2-98B9-424B42D2DBAC}\\temp",
+        "stmp2": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\scripts\\temp",
+        "sto": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\AppData\\Roaming\\Microsoft\\Windows\\SendTo",
+        "subf": "C:\\Program Files\\Sublime Text 3",
+        "Sublime": "C:\\Program Files\\Sublime Text 3",
+        "sublimeAppData": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\AppData\\Roaming\\Sublime Text 3\\Packages\\User",
+        "sublimeData": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\AppData\\Roaming\\Sublime Text 3\\Packages\\User",
+        "sublimes": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\AppData\\Roaming\\Sublime Text 3\\Packages\\User",
+        "sublimeSettings": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\AppData\\Roaming\\Sublime Text 3\\Packages\\User",
+        "sync": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\srv\\php",
+        "syncL": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\srv\\php",
+        "syncLocal": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\srv\\php",
+        "syncphp": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\srv\\php",
+        "syncUSB": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\srv\\php",
+        "sys": "C:\\Windows\\System32",
+        "system": "C:\\Windows\\System32",
+        "t": "D:/websites/tools.RightThumb/tools",
+        "ta": "{A8693D4B-8A80-898F-83F0-E806D2F36800}Apps",
+        "tab": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\hosts\\MSI\\tables",
+        "table": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\hosts\\MSI\\tables",
+        "tables": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\hosts\\MSI\\tables",
+        "tapy": "{A8693D4B-8A80-898F-83F0-E806D2F36800}Apps\\Python",
+        "td": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\hosts\\{D599DDFE-28B1-4CBD-B300-78DB4BCA7DF5}\\tables",
+        "tech": "{A8693D4B-8A80-898F-83F0-E806D2F36800}",
+        "temp": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\{C12F266D-71B9-40D2-98B9-424B42D2DBAC}\\temp",
+        "tempapp": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\AppData\\Local\\Temp",
+        "test0": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\scripts",
+        "th": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\hosts\\MSI\\temp",
+        "theBible": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\hosts\\MSI\\projects\\Bible",
+        "thtml": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\html",
+        "tickets": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\{C12F266D-71B9-40D2-98B9-424B42D2DBAC}\\tickets",
+        "tmp": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\{C12F266D-71B9-40D2-98B9-424B42D2DBAC}\\temp",
+        "tmp0": "C:\\ProgramData\\Microsoft\\Windows\\AppRepository\\Packages\\Microsoft.WindowsTerminal_1.6.10571.0_x64__8wekyb3d8bbwe",
+        "tmph": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\hosts\\MSI\\temp",
+        "tmpScript": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\scripts\\temp",
+        "tools": "D:/websites/tools.RightThumb/tools",
+        "tt": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}/.rt/profile/tables",
+        "ttt": "{A8693D4B-8A80-898F-83F0-E806D2F36800}/widgets/databank/tables",
+        "txt": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\{C12F266D-71B9-40D2-98B9-424B42D2DBAC}\\backup\\txt",
+        "u": "C:\\Users",
+        "unsub": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\hosts\\MSI\\projects\\Unsubscribe",
+        "users": "C:\\Users",
+        "v": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\Videos",
+        "vault": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\databank\\vault",
+        "vbs": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\vbs",
+        "video": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\Videos",
+        "videos": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\Videos",
+        "web": "D:\\websites",
+        "webapp": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\webApp",
+        "www2": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\Downloads",
+        "xRef": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\hosts\\MSI\\projects\\ProcessMonitor_xRef",
+        "youtube": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\hosts\\MSI\\projects\\youtube",
+        "za": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\archive_7z_files",
+        "en": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\python\\crypt\\en",
+        "de": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\python\\crypt\\de",
+        "burn": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\python\\burn",
+        "pyb": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\python\\burn",
+        "pybu": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\python\\burn\\unix",
+        "pybw": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\python\\burn\\windows",
+        "mydb": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\hosts\\MSI\\databases",
+        "pht": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\hosts\\MSI\\projects\\hackTool",
+        "drag": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\hosts\\MSI\\projects\\drag",
+        "screenshot": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\OneDrive\\Pictures\\Screenshots",
+        "screenshots": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\OneDrive\\Pictures\\Screenshots",
+        "get": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\git",
+        "git": "{A8693D4B-8A80-898F-83F0-E806D2F36800}/{C12F266D-71B9-40D2-98B9-424B42D2DBAC}/git",
+        "pt": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\databank\\projects",
+        "tp": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\databank\\projects",
+        "tb": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\databank\\projects\\Bible",
+        "bt": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\databank\\projects\\Bible",
+        "tdnd": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\databank\\projects\\DnD",
+        "dndt": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\databank\\projects\\DnD",
+        "5e": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\databank\\projects\\DnD\\5e",
+        "53": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\databank\\projects\\DnD\\5e",
+        "dl2": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\Downloads",
+        "ddl": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\Downloads",
+        "dll": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\Downloads",
+        "mdtx": "D:\\websites\\PillerBeauty\\ARCHIVE\\2021.05.08",
+        "nl": "D:\\projects\\New_Laptop",
+        "vm2": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\Documents\\Virtual Machines",
+        "cloud": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\python\\src\\unity\\_rightThumb\\_cloud",
+        "spells.json": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\databank\\projects\\DnD\\roll20",
+        "roll20Spells": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\databank\\projects\\DnD\\roll20\\spells",
+        "roll20spells": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\databank\\projects\\DnD\\roll20\\spells",
+        "roll20": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\databank\\projects\\DnD\\roll20\\spells",
+        "sheet": "{A8693D4B-8A80-898F-83F0-E806D2F36800}/widgets/databank/projects/DnD/sheet",
+        "co": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\Documents\\DnD\\Colorado",
+        "home": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\AppData\\Local\\Packages\\CanonicalGroupLimited.Ubuntu20.04onWindows_79rhkp1fndgsc\\LocalState\\rootfs\\home\\scott",
+        "ubuntu": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\AppData\\Local\\Packages\\CanonicalGroupLimited.Ubuntu20.04onWindows_79rhkp1fndgsc\\LocalState\\rootfs\\home\\scott",
+        "dbt": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\databank\\tables",
+        "msi": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\hosts\\MSI",
+        "mi": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\hosts\\MSI\\indexes",
+        "mtt": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\hosts\\MSI\\tables",
+        "mbm": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\hosts\\MSI\\bookmarks",
+        "config": "{A8693D4B-8A80-898F-83F0-E806D2F36800}/hosts/VULCAN/config",
+        "mig": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\databank\\projects\\migration",
+        "migration": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\databank\\projects\\migration",
+        "implode": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\python\\imploded\\unity",
+        "imploded": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\python\\imploded\\unity",
+        "tool": "{A8693D4B-8A80-898F-83F0-E806D2F36800}/widgets/bash/install/py",
+        "mt": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\hosts\\MSI\\tables",
+        "lp": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\AppData\\Local\\Packages\\CanonicalGroupLimited.Ubuntu20.04onWindows_79rhkp1fndgsc\\LocalState\\rootfs\\opt\\RightThumb\\tech\\programs",
+        "lpy": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\AppData\\Local\\Packages\\CanonicalGroupLimited.Ubuntu20.04onWindows_79rhkp1fndgsc\\LocalState\\rootfs\\opt\\RightThumb\\tech\\programs\\python\\src\\unity",
+        "shell": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\webApps\\shell",
+        "drive": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\python\\src\\unity\\_rightThumb\\_drive",
+        "kali": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\AppData\\Local\\Packages\\KaliLinux.54290C8133FEE_ey8k8hqnwqnmg\\LocalState\\rootfs\\home\\scott",
+        "kaliopt": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\AppData\\Local\\Packages\\KaliLinux.54290C8133FEE_ey8k8hqnwqnmg\\LocalState\\rootfs\\opt",
+        "kopt": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\AppData\\Local\\Packages\\KaliLinux.54290C8133FEE_ey8k8hqnwqnmg\\LocalState\\rootfs\\opt",
+        "vi": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\hosts\\MSI\\indexes",
+        "website": "D:\\websites",
+        "websites": "D:\\websites",
+        "w": "{A8693D4B-8A80-898F-83F0-E806D2F36800}",
+        "jn": "D:\\websites\\old\\RightThumb\\projects\\john\\js",
+        "sa": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\webApps\\samples",
+        "sajs": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\webApps\\samples\\_js",
+        "saf": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\webApps\\samples\\NAVIGATION\\Tree_View\\Drag_and_Drop_and_Reordering\\Drag_and_Drop_for_Hierarchical_Data_Structure",
+        "large": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\webApps\\largeJsonTest",
+        "12345": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}",
+        "dy": "D:\\websites\\PillerBeauty",
+        "ody": "D:\\websites\\old\\PillerBeauty",
+        "odyan": "D:\\websites\\old\\PillerBeauty",
+        "olddyan": "D:\\websites\\old\\PillerBeauty",
+        "olddy": "D:\\websites\\old\\PillerBeauty",
+        "dypop": "D:\\websites\\PillerBeauty\\images\\popup",
+        "dyanpopup": "D:\\websites\\PillerBeauty\\images\\popup",
+        "dyanpop": "D:\\websites\\PillerBeauty\\images\\popup",
+        "dypopup": "D:\\websites\\PillerBeauty\\images\\popup",
+        "chrono": "C:\\Program Files (x86)\\ProjectChrono",
+        "wps": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\Documents\\WindowsPowerShell",
+        "pdate": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\{C12F266D-71B9-40D2-98B9-424B42D2DBAC}\\projects\\dates",
+        "pdates": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\{C12F266D-71B9-40D2-98B9-424B42D2DBAC}\\projects\\dates",
+        "vp": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\{C12F266D-71B9-40D2-98B9-424B42D2DBAC}\\projects",
+        "db.new": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\{C12F266D-71B9-40D2-98B9-424B42D2DBAC}\\projects\\blank_db",
+        "pj": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\{C12F266D-71B9-40D2-98B9-424B42D2DBAC}\\projects",
+        "pjvnc": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\{C12F266D-71B9-40D2-98B9-424B42D2DBAC}\\projects\\vnc",
+        "mh": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\hosts\\MSI",
+        "k": "{A8693D4B-8A80-898F-83F0-E806D2F36800}/widgets/keys",
+        "ticket": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\{C12F266D-71B9-40D2-98B9-424B42D2DBAC}\\tickets",
+        "q": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\databank\\indexes\\queries\\FILE-EXTENS",
+        "p36": "{A8693D4B-8A80-898F-83F0-E806D2F36800}Apps\\Python\\Python36-32",
+        "sara": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\{C12F266D-71B9-40D2-98B9-424B42D2DBAC}\\projects\\dad\\outlook\\Log",
+        "pdoc": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\documentation",
+        "ppdoc": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\documentation",
+        "docp": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\documentation",
+        "docpp": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\documentation",
+        "dadi": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\{C12F266D-71B9-40D2-98B9-424B42D2DBAC}\\projects\\dad\\index",
+        "idad": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\{C12F266D-71B9-40D2-98B9-424B42D2DBAC}\\projects\\dad\\index",
+        "py3": "{A8693D4B-8A80-898F-83F0-E806D2F36800}Apps\\Python\\Python36-32",
+        "dnd1": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\Documents\\DnD",
+        "dnd3": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\databank\\projects\\DnD",
+        "20": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\databank\\projects\\DnD\\roll20\\spells",
+        "r20": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\databank\\projects\\DnD\\roll20\\spells",
+        "joerogan": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\{C12F266D-71B9-40D2-98B9-424B42D2DBAC}\\projects\\Joe_Rogan",
+        "Joe_Rogan": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\{C12F266D-71B9-40D2-98B9-424B42D2DBAC}\\projects\\Joe_Rogan",
+        "joe_rogan": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\{C12F266D-71B9-40D2-98B9-424B42D2DBAC}\\projects\\Joe_Rogan",
+        "joe": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\{C12F266D-71B9-40D2-98B9-424B42D2DBAC}\\projects\\Joe_Rogan",
+        "Rogan": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\{C12F266D-71B9-40D2-98B9-424B42D2DBAC}\\projects\\Joe_Rogan",
+        "rogan": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\{C12F266D-71B9-40D2-98B9-424B42D2DBAC}\\projects\\Joe_Rogan",
+        "joer": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\{C12F266D-71B9-40D2-98B9-424B42D2DBAC}\\projects\\Joe_Rogan",
+        "Joe": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\{C12F266D-71B9-40D2-98B9-424B42D2DBAC}\\projects\\Joe_Rogan",
+        "err": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\Downloads\\ClamWinPortable\\Data\\2db",
+        "test": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}",
+        "nf": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\Documents\\temp\\netflix_test",
+        "netflix": "c:\\Users\\Scott\\AppData\\Local\\Packages\\4DF9E0F8.Netflix_mcm4njqhnhss8\\LocalState\\offlineInfo\\downloads",
+        "docu": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\documentation",
+        "wiki": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\{C12F266D-71B9-40D2-98B9-424B42D2DBAC}\\projects\\wikipedia",
+        "vm": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\Documents\\Virtual Machines",
+        "wt0": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\AppData\\Local\\Packages\\Microsoft.WindowsTerminal_8wekyb3d8bbwe\\RoamingState",
+        "wt": "C:\\Program Files\\WindowsApps\\Microsoft.WindowsTerminal_1.6.10571.0_x64__8wekyb3d8bbwe",
+        "wt.icons": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\AppData\\Local\\Packages\\Microsoft.WindowsTerminal_8wekyb3d8bbwe\\RoamingState",
+        "wt.icon": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\AppData\\Local\\Packages\\Microsoft.WindowsTerminal_8wekyb3d8bbwe\\RoamingState",
+        "wt.s": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\AppData\\Local\\Packages\\Microsoft.WindowsTerminal_8wekyb3d8bbwe\\LocalState",
+        "wt.settings": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\AppData\\Local\\Packages\\Microsoft.WindowsTerminal_8wekyb3d8bbwe\\LocalState",
+        "wt.wt": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\AppData\\Local\\Packages\\Microsoft.WindowsTerminal_8wekyb3d8bbwe",
+        "pics": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\OneDrive\\Pictures",
+        "pic": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\OneDrive\\Pictures",
+        "nmake": "d:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.28.29910\\bin\\Hostx64\\x64",
+        "dndspells": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\databank\\projects\\DnD\\dndspellslist",
+        "dndspellslist": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\databank\\projects\\DnD\\dndspellslist",
+        "wt.dat": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\AppData\\Local\\Packages\\Microsoft.WindowsTerminal_8wekyb3d8bbwe\\Settings",
+        "wt.reg": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\AppData\\Local\\Packages\\Microsoft.WindowsTerminal_8wekyb3d8bbwe\\Settings",
+        "photoshop": "C:\\Program Files\\Adobe\\Adobe Photoshop 2020",
+        "pss": "C:\\Program Files\\Adobe\\Adobe Photoshop 2020",
+        "fing": "C:\\Program Files\\Fing",
+        "fing2": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\AppData\\Roaming\\Fing",
+        "Downloads": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\Downloads",
+        "Documents": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\Documents",
+        "documents": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\Documents",
+        "desktop": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\Desktop",
+        "dt": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\Desktop",
+        "lttt": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\AppData\\Local\\Packages\\CanonicalGroupLimited.Ubuntu20.04onWindows_79rhkp1fndgsc\\LocalState\\rootfs\\opt\\RightThumb\\tech\\programs\\databank\\tables",
+        "bs": "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\batch",
+        "ma.old": "{A8693D4B-8A80-898F-83F0-E806D2F36800}/hosts/MSI/programs/batch",
+        "ma.msi": "{A8693D4B-8A80-898F-83F0-E806D2F36800}/hosts/MSI/programs/batch",
+        "ent": "D:/entertainment/movies",
+        "tt.msi": "{A8693D4B-8A80-898F-83F0-E806D2F36800}/hosts/MSI/tables",
+        "msi.tt": "{A8693D4B-8A80-898F-83F0-E806D2F36800}/hosts/MSI/tables",
+        ".t": "D:/websites/tools.RightThumb/tools",
+        "ps1": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}/Documents/WindowsPowerShell",
+        "key.p": "{A8693D4B-8A80-898F-83F0-E806D2F36800}/widgets/keys/p",
+        "k.p": "{A8693D4B-8A80-898F-83F0-E806D2F36800}/widgets/keys/p",
+        "kee": "{A8693D4B-8A80-898F-83F0-E806D2F36800}Apps/KeePass-2.48.1",
+        "keepass": "{A8693D4B-8A80-898F-83F0-E806D2F36800}Apps/KeePass-2.48.1",
+        "pass": "{A8693D4B-8A80-898F-83F0-E806D2F36800}/widgets/keys/p",
+        "imdb": "{A8693D4B-8A80-898F-83F0-E806D2F36800}/hosts/MSI/tables",
+        "je": "D:/projects",
+        "jec": "D:/projects",
+        "ject": "D:/projects",
+        "proj": "D:/projects",
+        "roj": "D:/projects",
+        "jects": "D:/projects",
+        "cts": "D:/projects",
+        "pr.o": "D:/projects",
+        "pr.old": "D:/projects",
+        "pr.d": "D:/projects",
+        "d.pr": "D:/projects",
+        "db.pr": "{A8693D4B-8A80-898F-83F0-E806D2F36800}/widgets/databank/projects",
+        "pr.db": "{A8693D4B-8A80-898F-83F0-E806D2F36800}/widgets/databank/projects",
+        "pw": "{A8693D4B-8A80-898F-83F0-E806D2F36800}/widgets/keys/p",
+        "a.t.v.s.ssh": "{A8693D4B-8A80-898F-83F0-E806D2F36800}/widgets/python/src/unity",
+        "5e.spells": "{A8693D4B-8A80-898F-83F0-E806D2F36800}/widgets/databank/projects/DnD/dndspellslist",
+        "5e.s": "{A8693D4B-8A80-898F-83F0-E806D2F36800}/widgets/databank/projects/DnD/dndspellslist",
+        "dnd.spells": "{A8693D4B-8A80-898F-83F0-E806D2F36800}/widgets/databank/projects/DnD/dndspellslist",
+        "dnd.s": "{A8693D4B-8A80-898F-83F0-E806D2F36800}/widgets/databank/projects/DnD/dndspellslist",
+        "dnd.spell": "{A8693D4B-8A80-898F-83F0-E806D2F36800}/widgets/databank/projects/DnD/dndspellslist",
+        "pr.linux": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}/AppData/Local/Packages/CanonicalGroupLimited.Ubuntu20.04onWindows_79rhkp1fndgsc/LocalState/rootfs/opt/RightThumb/tech/hosts/Vulcan/projects",
+        "linux.pr": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}/AppData/Local/Packages/CanonicalGroupLimited.Ubuntu20.04onWindows_79rhkp1fndgsc/LocalState/rootfs/opt/RightThumb/tech/hosts/Vulcan/projects",
+        "char": "{A8693D4B-8A80-898F-83F0-E806D2F36800}/widgets/databank/projects/DnD/configurations",
+        "dnd.char": "{A8693D4B-8A80-898F-83F0-E806D2F36800}/widgets/databank/projects/DnD/configurations",
+        "char.dnd": "{A8693D4B-8A80-898F-83F0-E806D2F36800}/widgets/databank/projects/DnD/configurations",
+        "camp": "{A8693D4B-8A80-898F-83F0-E806D2F36800}/widgets/databank/projects/DnD/configurations/groups/Church/campaigns",
+        "py.r": "{A8693D4B-8A80-898F-83F0-E806D2F36800}/widgets/remote/python",
+        "r.py": "{A8693D4B-8A80-898F-83F0-E806D2F36800}/widgets/remote/python",
+        "r.b": "{A8693D4B-8A80-898F-83F0-E806D2F36800}/widgets/remote/bash",
+        "b.r": "{A8693D4B-8A80-898F-83F0-E806D2F36800}/widgets/remote/bash",
+        "stuff.bat": "{A8693D4B-8A80-898F-83F0-E806D2F36800}/{C12F266D-71B9-40D2-98B9-424B42D2DBAC}/projects/bat-stuff",
+        "bat.stuff": "{A8693D4B-8A80-898F-83F0-E806D2F36800}/{C12F266D-71B9-40D2-98B9-424B42D2DBAC}/projects/bat-stuff",
+        "pp.linux": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}/AppData/Local/Packages/CanonicalGroupLimited.Ubuntu20.04onWindows_79rhkp1fndgsc/LocalState/rootfs/opt/RightThumb/tech/programs",
+        "h.linux": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}/AppData/Local/Packages/CanonicalGroupLimited.Ubuntu20.04onWindows_79rhkp1fndgsc/LocalState/rootfs/opt/RightThumb/tech/hosts/Vulcan",
+        "b.linux": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}/AppData/Local/Packages/CanonicalGroupLimited.Ubuntu20.04onWindows_79rhkp1fndgsc/LocalState/rootfs/opt/RightThumb/tech/programs/bash",
+        "py.kali": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}/AppData/Local/Packages/KaliLinux.54290C8133FEE_ey8k8hqnwqnmg/LocalState/rootfs/opt/RightThumb/tech/programs/python/src/unity",
+        "pp.kali": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}/AppData/Local/Packages/KaliLinux.54290C8133FEE_ey8k8hqnwqnmg/LocalState/rootfs/opt/RightThumb/tech/programs",
+        "ttt.kali": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}/AppData/Local/Packages/KaliLinux.54290C8133FEE_ey8k8hqnwqnmg/LocalState/rootfs/opt/RightThumb/tech/programs/databank/tables",
+        "exe": "{A8693D4B-8A80-898F-83F0-E806D2F36800}/widgets/exe",
+        "log.config": "{A8693D4B-8A80-898F-83F0-E806D2F36800}/widgets/html/projects/log_config",
+        "html": "{A8693D4B-8A80-898F-83F0-E806D2F36800}/widgets/html/projects",
+        "form.gen": "{A8693D4B-8A80-898F-83F0-E806D2F36800}/widgets/html/projects/form_gen",
+        "history": "{A8693D4B-8A80-898F-83F0-E806D2F36800}/widgets/bash/history",
+        "dnd.db": "{A8693D4B-8A80-898F-83F0-E806D2F36800}/widgets/databank/projects/DnD",
+        "vps": "{A8693D4B-8A80-898F-83F0-E806D2F36800}/widgets/servers/web/vps",
+        "phpp": "{A8693D4B-8A80-898F-83F0-E806D2F36800}/widgets/bash/install/php",
+        "bphp": "{A8693D4B-8A80-898F-83F0-E806D2F36800}/widgets/bash/install/php",
+        "phpb": "{A8693D4B-8A80-898F-83F0-E806D2F36800}/widgets/bash/install/php",
+        "smb": "{A8693D4B-8A80-898F-83F0-E806D2F36800}/widgets/servers/socket/smb",
+        "smb.s": "{A8693D4B-8A80-898F-83F0-E806D2F36800}/widgets/servers/socket/smb",
+        "linux.s": "{A8693D4B-8A80-898F-83F0-E806D2F36800}/widgets/servers/socket/linux",
+        "socket.l": "{A8693D4B-8A80-898F-83F0-E806D2F36800}/widgets/servers/socket/linux",
+        "sock.l": "{A8693D4B-8A80-898F-83F0-E806D2F36800}/widgets/servers/socket/linux",
+        "socket.w": "{A8693D4B-8A80-898F-83F0-E806D2F36800}/widgets/servers/socket/smb",
+        "socket.s": "{A8693D4B-8A80-898F-83F0-E806D2F36800}/widgets/servers/socket/smb",
+        "sock.w": "{A8693D4B-8A80-898F-83F0-E806D2F36800}/widgets/servers/socket/smb",
+        "sock.s": "{A8693D4B-8A80-898F-83F0-E806D2F36800}/widgets/servers/socket/smb",
+        "popup": "D:/websites/PillerBeauty/images/popup",
+        "dyan.p": "D:/websites/PillerBeauty/images/popup",
+        "hub": "{A8693D4B-8A80-898F-83F0-E806D2F36800}/widgets/python/src/unity/_rightThumb/_hub",
+        "matrix": "{A8693D4B-8A80-898F-83F0-E806D2F36800}/widgets/python/src/unity/_rightThumb/_matrix",
+        "json.fix": "{A8693D4B-8A80-898F-83F0-E806D2F36800}/widgets/python/src/unity/_rightThumb/_fix_json",
+        "json.tool": "{A8693D4B-8A80-898F-83F0-E806D2F36800}/widgets/python/src/unity/_rightThumb/_fix_json",
+        "json.t": "{A8693D4B-8A80-898F-83F0-E806D2F36800}/widgets/python/src/unity/_rightThumb/_fix_json",
+        "json.f": "{A8693D4B-8A80-898F-83F0-E806D2F36800}/widgets/python/src/unity/_rightThumb/_fix_json",
+        "fjson": "{A8693D4B-8A80-898F-83F0-E806D2F36800}/widgets/python/src/unity/_rightThumb/_fix_json",
+        "py.": "D:/.rightthumb_terminal/programs/python",
+        "pp.": "D:/.rightthumb_terminal/tech/programs",
+        ".rt": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}/.rt",
+        "tt-": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}/.rt/profile/tables",
+        "p-": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}/.rt/profile",
+        "rt-": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}/.rt",
+        "rt.": "{A8693D4B-8A80-898F-83F0-E806D2F36800}",
+        "rt.l2": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}/AppData/Local/Packages/CanonicalGroupLimited.Ubuntu20.04onWindows_79rhkp1fndgsc/LocalState/rootfs/opt/RightThumb",
+        "rt.l": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}/AppData/Local/Packages/CanonicalGroupLimited.Ubuntu20.04onWindows_79rhkp1fndgsc/LocalState/rootfs/opt/RightThumb",
+        "pp.l": "{6FAB5628-94A1-410A-82D1-1D42A2A11750}/AppData/Local/Packages/CanonicalGroupLimited.Ubuntu20.04onWindows_79rhkp1fndgsc/LocalState/rootfs/opt/RightThumb/tech/programs",
+        "inst": "{A8693D4B-8A80-898F-83F0-E806D2F36800}/install",
+        "p.l\r": "/mnt/c/Users/Scott",
+        "inst\r": "{A8693D4B-8A80-898F-83F0-E806D2F36800}/install",
+        "ww": "{A8693D4B-8A80-898F-83F0-E806D2F36800}/widgets",
+        "hh": "{A8693D4B-8A80-898F-83F0-E806D2F36800}/hosts/VULCAN"
+    },
+    "paths": {
+        "C:\\Windows\\System32": [
+            "32",
+            "s32",
+            "sys",
+            "system"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\scripts\\manage_drives\\MSI\\index": [
+            "414FBD41"
+        ],
+        "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\Desktop": [
+            "Desktop",
+            "desktop",
+            "desk",
+            "dt",
+            "back"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\archive_7z_files": [
+            "7a",
+            "7za",
+            "a7",
+            "a7z",
+            "archive_7z_files",
+            "az",
+            "za"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\hosts\\MSI\\programs\\batch": [
+            "a.",
+            "ma",
+            "ss"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\hosts\\Archive\\programs\\python": [
+            "a",
+            "pya"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\extensions\\aquire_3": [
+            "a3"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\extensions\\aquire_4": [
+            "a4"
+        ],
+        "C:\\Program Files\\Adobe": [
+            "adobe"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\hosts\\MSI\\tables\\applogs": [
+            "al",
+            "alog",
+            "applog",
+            "applogs"
+        ],
+        "C:\\Program Files": [
+            "app",
+            "pf",
+            "program"
+        ],
+        "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\AppData": [
+            "appdata"
+        ],
+        "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\AppData\\Local\\Temp": [
+            "appdata_local_temp",
+            "apptemp",
+            "apptmp",
+            "localtemp",
+            "localtmp",
+            "ltemp",
+            "ltmp",
+            "ostemp",
+            "ostmp",
+            "tempapp"
+        ],
+        "D:\\Apps": [
+            "apps"
+        ],
+        "C:\\Program Files\\Sublime Text 3": [
+            "asdf",
+            "atest",
+            "subf",
+            "Sublime"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\extensions\\aquire_multi_table-w_header": [
+            "atable"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\hosts\\MSI\\bookmarks": [
+            "mbm",
+            "bm"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\databank": [
+            "bank",
+            "data",
+            "databank",
+            "db"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\bash": [
+            "b"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\batch": [
+            "bat",
+            "batch",
+            "e",
+            "s",
+            "back",
+            "stmp",
+            "bs"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\hosts\\MSI\\projects\\Bible": [
+            "bible",
+            "theBible"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\scripts\\script-bookmarks\\MSI": [
+            "bmRoot"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\c++": [
+            "c++"
+        ],
+        "C:\\": [
+            "c"
+        ],
+        "C:\\Program Files\\Common Files": [
+            "common",
+            "commonfiles",
+            "comon"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\project\\log_config": [
+            "configl",
+            "configlog",
+            "lconfig",
+            "logconfig"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\python\\crypt": [
+            "crypt"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\hosts\\MSI\\databases": [
+            "current",
+            "db",
+            "mydb"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\hosts\\SENIOR-HP": [
+            "DadDesk",
+            "DadDesktop",
+            "DDesk",
+            "ddh",
+            "hdd"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\hosts\\REPHPC": [
+            "DadLap",
+            "DadLaptop",
+            "dlap",
+            "dlh",
+            "hdl"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\srv\\php": [
+            "dbphp",
+            "fmphp",
+            "lsync",
+            "phpdb",
+            "phpsrv",
+            "phpsync",
+            "sync",
+            "syncL",
+            "syncLocal",
+            "syncphp",
+            "syncUSB"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\hosts\\{D599DDFE-28B1-4CBD-B300-78DB4BCA7DF5}": [
+            "ddd",
+            "def",
+            "Default"
+        ],
+        "C:\\Users\\Default": [
+            "default2",
+            "df"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\hosts\\MSI\\playground\\usbAppsUpdate\\destination": [
+            "dest",
+            "dst"
+        ],
+        "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\Downloads": [
+            "dl2",
+            "ddl",
+            "dll",
+            "dl",
+            "Downloads"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\scripts\\manage_drives": [
+            "dmr",
+            "mdr"
+        ],
+        "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\Documents": [
+            "doc",
+            "Documents",
+            "documents"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\hosts\\{D599DDFE-28B1-4CBD-B300-78DB4BCA7DF5}\\tables": [
+            "dt",
+            "td"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\hosts\\MSI\\projects\\Duplicates": [
+            "dup",
+            "duplicate",
+            "duplicates"
+        ],
+        "C:\\Program Files\\Common Files\\microsoft shared\\Stationery": [
+            "email",
+            "Stationery",
+            "stationery0"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\hosts\\MSI\\tables\\epguides": [
+            "epg"
+        ],
+        "C:\\WINDOWS\\system32\\drivers\\etc": [
+            "etc"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\extensions": [
+            "ext"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\databank\\profiles\\folders": [
+            "folderProfiles"
+        ],
+        "D:\\Apps\\Games\\Nestopia140bin-938": [
+            "game",
+            "games"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\hosts\\MSI": [
+            "msi",
+            "mh"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\hosts\\MSI\\temp": [
+            "ht",
+            "htemp",
+            "htmp",
+            "stmp",
+            "temp",
+            "th",
+            "tmph"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\html": [
+            "htm",
+            "thtml"
+        ],
+        "D:\\Apps\\Portable\\HijackThisPortable": [
+            "HTP"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\hosts\\MSI\\indexes": [
+            "vi",
+            "mi"
+        ],
+        "D:\\ISO": [
+            "iso"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\javascript": [
+            "js"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\Joplin": [
+            "joplin"
+        ],
+        "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\.config\\joplin-desktop\\resources": [
+            "joplin2"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}Apps\\KeePass-2.45": [
+            "key"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\keys": [
+            "key",
+            "keys",
+            "k"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}Apps\\KeePass-1.28": [
+            "kp"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\html\\projects\\log_config": [
+            "lc"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\Library": [
+            "lib"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\extensions\\links": [
+            "link",
+            "links",
+            "lnk"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\scripts": [
+            "live",
+            "olds",
+            "scripts",
+            "sss",
+            "test0"
+        ],
+        "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\AppData\\Local\\Google\\Chrome\\User Data\\Default\\Local Storage\\leveldb": [
+            "ls"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\hosts\\MSI\\projects\\2020.06.01": [
+            "lunar",
+            "lunar_table",
+            "mdt",
+            "mdtX",
+            "mdt0",
+            "mdt1",
+            "mdt2"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\hosts\\MSI\\programs\\python": [
+            "mpy",
+            "myepy",
+            "mypy",
+            "myPython",
+            "ppp",
+            "py2"
+        ],
+        "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\Music": [
+            "Music"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\hosts\\MSI\\tickets": [
+            "back"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\hosts\\MSI\\notes": [
+            "n",
+            "notes"
+        ],
+        "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\AppData\\Roaming\\Microsoft\\Windows\\Network Shortcuts": [
+            "netcuts",
+            "netshortcuts"
+        ],
+        "{6FAB5628-94A1-410A-82D1-1D42A2A11750}": [
+            "12345",
+            "myepy",
+            "sock.w",
+            "test",
+            "p",
+            "back"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\php": [
+            "php"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\hosts\\MSI\\playground": [
+            "play"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\programs": [
+            "pp",
+            "pro",
+            "programs",
+            "back"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\python": [
+            "pyy",
+            "ppy"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\powershell": [
+            "ps"
+        ],
+        "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\Documents\\WindowsPowerShell": [
+            "wps"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\python\\src\\windows": [
+            "back"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\python\\compiled": [
+            "pyc"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\python\\compiled\\unix": [
+            "pycu"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\python\\compiled\\windows": [
+            "pycw"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\python\\imploded": [
+            "pyi"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\python\\imploded\\unix": [
+            "pyiu",
+            "back"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\python\\imploded\\windows": [
+            "pyiw"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\python\\src": [
+            "pys"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\python\\src\\unix": [
+            "pysu",
+            "pyu"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}Apps\\Python\\Python36-32": [
+            "p36",
+            "py3"
+        ],
+        "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\AppData\\Roaming\\Microsoft\\Windows\\Recent": [
+            "recent"
+        ],
+        "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\AppData\\Roaming\\Microsoft\\Windows\\SendTo": [
+            "s2",
+            "sendto",
+            "st",
+            "sto"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\scripts\\temp": [
+            "scripttmp",
+            "stemp",
+            "stmp2",
+            "tmpScript"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\scripts\\Docs": [
+            "sd"
+        ],
+        "C:\\Documents and Settings\\Scott\\SendTo": [
+            "send"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\hosts\\MSI\\projects\\sql_learn": [
+            "sqll"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\hosts\\MSI\\playground\\usbAppsUpdate\\source": [
+            "src"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\srv": [
+            "srv"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\srv\\i": [
+            "srvi"
+        ],
+        "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\AppData\\Roaming\\Sublime Text 3\\Packages\\User": [
+            "ssublime",
+            "sublimeAppData",
+            "sublimeData",
+            "sublimes",
+            "sublimeSettings"
+        ],
+        "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs": [
+            "start"
+        ],
+        "C:\\Program Files (x86)\\Common Files\\microsoft shared\\Stationery": [
+            "stationery1"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}": [
+            "tech",
+            "rt.",
+            "w",
+            "back"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}Apps": [
+            "back",
+            "ta"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\hosts\\MSI\\tables": [
+            "mtt",
+            "mt"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}Apps\\Python": [
+            "tapy"
+        ],
+        "C:\\WINDOWS\\system32": [
+            "tmp0"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\databank\\tables": [
+            "asdf",
+            "dbt",
+            "back"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\hosts\\MSI\\backup\\txt": [
+            "txt"
+        ],
+        "C:\\Users": [
+            "u",
+            "users"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\hosts\\MSI\\projects\\Unsubscribe": [
+            "unsub"
+        ],
+        "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\Videos": [
+            "v",
+            "video",
+            "videos"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\databank\\vault": [
+            "vault"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\vbs": [
+            "vbs"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\webApp": [
+            "webapp"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\hosts\\MSI\\projects\\ProcessMonitor_xRef": [
+            "xRef"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\hosts\\MSI\\projects\\youtube": [
+            "youtube"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\python\\crypt\\en": [
+            "en"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\python\\crypt\\de": [
+            "de"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\python\\burn": [
+            "burn",
+            "pyb"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\python\\burn\\unix": [
+            "pybu"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\python\\burn\\windows": [
+            "pybw"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\hosts\\MSI\\projects\\hackTool": [
+            "pht"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\hosts\\MSI\\projects\\drag": [
+            "drag"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\java": [
+            "back"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\git": [
+            "git"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\{C12F266D-71B9-40D2-98B9-424B42D2DBAC}\\tables": [
+            "asdf",
+            "tt"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\databank\\projects": [
+            "pt",
+            "tp"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\databank\\projects\\Bible": [
+            "tb",
+            "bt"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\databank\\projects\\DnD": [
+            "tdnd",
+            "dndt",
+            "back",
+            "dnd3"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\databank\\projects\\DnD\\5e": [
+            "53",
+            "dnd2",
+            "5e"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\{C12F266D-71B9-40D2-98B9-424B42D2DBAC}\\indexes": [
+            "back",
+            "i"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\{C12F266D-71B9-40D2-98B9-424B42D2DBAC}\\tickets": [
+            "back",
+            "tickets",
+            "ticket"
+        ],
+        "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\Documents\\Virtual Machines": [
+            "vm2",
+            "vm"
+        ],
+        "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\OneDrive\\Pictures\\Screenshots": [
+            "screenshot",
+            "screenshots",
+            "ss"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\{C12F266D-71B9-40D2-98B9-424B42D2DBAC}": [
+            "h"
+        ],
+        "C:\\Users\\Public\\Desktop": [
+            "pd"
+        ],
+        "D:\\websites\\PillerBeauty": [
+            "dyan",
+            "dy"
+        ],
+        "D:\\websites\\PillerBeauty\\ARCHIVE\\2020.12.09": [
+            "mdtX",
+            "mdt",
+            "mdt0",
+            "mdt1",
+            "mdt2",
+            "mdt9",
+            "mdt8",
+            "mdt7",
+            "mdt6",
+            "mdt5",
+            "mdt4",
+            "mdt3"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\{C12F266D-71B9-40D2-98B9-424B42D2DBAC}\\programs\\python": [
+            "myepy"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\{C12F266D-71B9-40D2-98B9-424B42D2DBAC}\\temp": [
+            "temp",
+            "tmp",
+            "stemp",
+            "stmp"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\databank\\projects\\DnD\\roll20": [
+            "spells.json"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\databank\\projects\\DnD\\roll20\\spells": [
+            "roll20Spells",
+            "roll20",
+            "20",
+            "r20"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\git\\5e-Character-Sheet\\sheet": [
+            "sheet"
+        ],
+        "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\Documents\\DnD": [
+            "dnd",
+            "dnd1"
+        ],
+        "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\Documents\\DnD\\Colorado": [
+            "co"
+        ],
+        "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\AppData\\Local\\Packages\\CanonicalGroupLimited.Ubuntu20.04onWindows_79rhkp1fndgsc\\LocalState\\rootfs\\home\\scott": [
+            "home",
+            "ubuntu",
+            "linux"
+        ],
+        "D:\\projects": [
+            "projects",
+            "project"
+        ],
+        "D:\\projects\\sql": [
+            "sql"
+        ],
+        "D:\\projects\\New_Laptop": [
+            "nl"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\{C12F266D-71B9-40D2-98B9-424B42D2DBAC}\\config": [
+            "config"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\{C12F266D-71B9-40D2-98B9-424B42D2DBAC}\\bookmarks": [
+            "bm"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\python\\src\\unity": [
+            "py",
+            "back"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\python\\src\\unity\\_rightThumb\\_cloud": [
+            "cloud"
+        ],
+        "D:\\websites\\tools.RightThumb": [
+            "tools",
+            "tool"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\python\\src\\unity\\_rightThumb": [
+            "rt"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\databank\\projects\\migration": [
+            "mig",
+            "migration"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\python\\imploded\\unity": [
+            "imp",
+            "implode",
+            "imploded",
+            "im"
+        ],
+        "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\AppData\\Local\\Packages\\CanonicalGroupLimited.Ubuntu20.04onWindows_79rhkp1fndgsc\\LocalState\\rootfs\\opt\\RightThumb\\tech\\programs": [
+            "lp"
+        ],
+        "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\AppData\\Local\\Packages\\CanonicalGroupLimited.Ubuntu20.04onWindows_79rhkp1fndgsc\\LocalState\\rootfs\\opt\\RightThumb\\tech\\programs\\python\\src\\unity": [
+            "lpy"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\databank\\projects\\meta": [
+            "meta"
+        ],
+        "D:\\websites\\PillerBeauty\\ARCHIVE\\2021.01.08": [
+            "mdtX",
+            "mdt",
+            "mdt0",
+            "mdt1",
+            "mdt2"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\webApps\\shell": [
+            "shell"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\python\\src\\unity\\_rightThumb\\_drive": [
+            "drive"
+        ],
+        "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\AppData\\Local\\Packages\\KaliLinux.54290C8133FEE_ey8k8hqnwqnmg\\LocalState\\rootfs\\home\\scott": [
+            "kali"
+        ],
+        "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\AppData\\Local\\Packages\\KaliLinux.54290C8133FEE_ey8k8hqnwqnmg\\LocalState\\rootfs\\opt": [
+            "kaliopt",
+            "kopt"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}Apps\\Library": [
+            "lib"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\library": [
+            "lib"
+        ],
+        "D:\\websites": [
+            "site",
+            "sites",
+            "web",
+            "website",
+            "websites",
+            "w"
+        ],
+        "D:\\websites\\old\\RightThumb\\projects\\john\\js": [
+            "john",
+            "jn"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\webApps\\samples": [
+            "sample",
+            "samples",
+            "sa"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\webApps\\samples\\_js": [
+            "sajs"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\webApps\\samples\\DATA_GRID\\JSON_Data": [
+            "back"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\webApps\\samples\\NAVIGATION\\Tree_View\\Drag_and_Drop_and_Reordering\\Drag_and_Drop_for_Hierarchical_Data_Structure": [
+            "saf"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\webApps\\largeJsonTest": [
+            "large"
+        ],
+        "D:\\websites\\old\\PillerBeauty": [
+            "ody",
+            "odyan",
+            "olddyan",
+            "olddy"
+        ],
+        "D:\\websites\\PillerBeauty\\images\\popup": [
+            "dypop",
+            "dyanpopup",
+            "dyanpop",
+            "dypopup"
+        ],
+        "C:\\Program Files (x86)\\ProjectChrono": [
+            "chrono"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\{C12F266D-71B9-40D2-98B9-424B42D2DBAC}\\projects\\dates": [
+            "pdate",
+            "pdates",
+            "pd"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\{C12F266D-71B9-40D2-98B9-424B42D2DBAC}\\projects": [
+            "vp",
+            "pr",
+            "pj",
+            "back"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\{C12F266D-71B9-40D2-98B9-424B42D2DBAC}\\projects\\blank_db": [
+            "db.new"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\{C12F266D-71B9-40D2-98B9-424B42D2DBAC}\\projects\\vnc": [
+            "pjvnc"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\{C12F266D-71B9-40D2-98B9-424B42D2DBAC}\\indexes\\2021.02.24": [
+            "mdtX"
+        ],
+        "D:\\websites\\PillerBeauty\\ARCHIVE\\2020.12.09\\2021.02.24": [
+            "mdtX",
+            "mdt",
+            "mdt0",
+            "mdt1"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\remote": [
+            "remote",
+            "r"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\remote\\python": [
+            "rpy"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\databank\\indexes\\queries\\FILE-EXTENS": [
+            "q"
+        ],
+        "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\OneDrive": [
+            "one"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\{C12F266D-71B9-40D2-98B9-424B42D2DBAC}\\projects\\dad\\outlook\\Log": [
+            "sara"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\documentation": [
+            "pdoc",
+            "ppdoc",
+            "docp",
+            "docpp",
+            "docu"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\{C12F266D-71B9-40D2-98B9-424B42D2DBAC}\\projects\\dad\\index": [
+            "dadi",
+            "idad"
+        ],
+        "D:\\": [
+            "dnd1"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\{C12F266D-71B9-40D2-98B9-424B42D2DBAC}\\projects\\Joe_Rogan": [
+            "joerogan",
+            "Joe_Rogan",
+            "joe",
+            "Rogan",
+            "joer",
+            "Joe"
+        ],
+        "D:\\websites\\RightThumb\\Karla": [
+            "karla"
+        ],
+        "D:\\websites\\RightThumb": [
+            "rt"
+        ],
+        "D:\\websites\\RightThumb\\projects\\payroll": [
+            "pay"
+        ],
+        "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\Downloads\\ClamWinPortable\\Data\\2db": [
+            "err"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\{C12F266D-71B9-40D2-98B9-424B42D2DBAC}\\projects\\dad": [
+            "dad"
+        ],
+        "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\Documents\\secure": [
+            "test"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\{C12F266D-71B9-40D2-98B9-424B42D2DBAC}\\projects\\mdt\\2021.03.21": [
+            "mdtX",
+            "mdt",
+            "mdt0"
+        ],
+        "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\Documents\\temp\\netflix_test": [
+            "nf"
+        ],
+        "c:\\Users\\Scott\\AppData\\Local\\Packages\\4DF9E0F8.Netflix_mcm4njqhnhss8\\LocalState\\offlineInfo\\downloads": [
+            "netflix"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\{C12F266D-71B9-40D2-98B9-424B42D2DBAC}\\projects\\wikipedia": [
+            "wiki"
+        ],
+        "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\AppData\\Local\\Packages\\Microsoft.WindowsTerminal_8wekyb3d8bbwe\\RoamingState": [
+            "wt0",
+            "wt",
+            "wt.icons",
+            "wt.icon"
+        ],
+        "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\AppData\\Local\\Packages\\Microsoft.WindowsTerminal_8wekyb3d8bbwe\\LocalState": [
+            "wt.s",
+            "wt.settings"
+        ],
+        "C:\\Program Files\\WindowsApps\\Microsoft.WindowsTerminal_1.6.10571.0_x64__8wekyb3d8bbwe": [
+            "wt.wt",
+            "wt"
+        ],
+        "C:\\ProgramData\\Microsoft\\Windows\\AppRepository\\Packages\\Microsoft.WindowsTerminal_1.6.10571.0_x64__8wekyb3d8bbwe": [
+            "tmp0"
+        ],
+        "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\OneDrive\\Pictures": [
+            "pics",
+            "pic"
+        ],
+        "d:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.28.29910\\bin\\Hostx64\\x64": [
+            "nmake"
+        ],
+        "D:\\websites\\old\\RightThumb\\projects\\john": [
+            "john"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\widgets\\databank\\projects\\DnD\\dndspellslist": [
+            "dndspells",
+            "dndspellslist"
+        ],
+        "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\AppData\\Local\\Packages\\Microsoft.WindowsTerminal_8wekyb3d8bbwe\\Settings": [
+            "wt.dat",
+            "wt.reg"
+        ],
+        "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\AppData\\Local\\Packages\\Microsoft.WindowsTerminal_8wekyb3d8bbwe": [
+            "wt.wt"
+        ],
+        "C:\\Program Files\\Adobe\\Adobe Photoshop 2020": [
+            "photoshop",
+            "pss"
+        ],
+        "C:\\Program Files\\Fing": [
+            "fing"
+        ],
+        "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\AppData\\Roaming\\Fing": [
+            "fing2"
+        ],
+        "{6FAB5628-94A1-410A-82D1-1D42A2A11750}\\AppData\\Local\\Packages\\CanonicalGroupLimited.Ubuntu20.04onWindows_79rhkp1fndgsc\\LocalState\\rootfs\\opt\\RightThumb\\tech\\programs\\databank\\tables": [
+            "lttt"
+        ],
+        "D:\\websites\\PillerBeauty\\ARCHIVE\\2021.05.08": [
+            "mdtX",
+            "mdt"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\{C12F266D-71B9-40D2-98B9-424B42D2DBAC}\\backup\\txt": [
+            "txt"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}\\{C12F266D-71B9-40D2-98B9-424B42D2DBAC}\\logs\\apps": [
+            "applog"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}/widgets/databank/tables": [
+            "back",
+            "ttt"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}/programs": [
+            "back",
+            "pp",
+            "p"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}/hosts/MSI/programs/batch": [
+            "ma.old",
+            "ma.msi"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}/{C12F266D-71B9-40D2-98B9-424B42D2DBAC}/programs/batch": [
+            "ma"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}/widgets/documentation": [
+            "back"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}/{C12F266D-71B9-40D2-98B9-424B42D2DBAC}/projects": [
+            "back",
+            "karla"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}/{C12F266D-71B9-40D2-98B9-424B42D2DBAC}/config": [
+            "config"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}/widgets/keys/p": [
+            "back",
+            "pass",
+            "pw",
+            "key.p",
+            "k.p",
+            "kp"
+        ],
+        "{6FAB5628-94A1-410A-82D1-1D42A2A11750}/Desktop": [
+            "back"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}/widgets/bash": [
+            "back",
+            "b",
+            "bash"
+        ],
+        "D:/entertainment/movies": [
+            "ent"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}/hosts/MSI/tables": [
+            "tt.msi",
+            "msi.tt",
+            "imdb"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}/{C12F266D-71B9-40D2-98B9-424B42D2DBAC}/tables": [
+            "tt"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}/widgets/databank": [
+            "back"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}/widgets/vbs": [
+            "back"
+        ],
+        "D:/websites/tools.RightThumb/tools": [
+            "t",
+            ".t",
+            "tools"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}/{C12F266D-71B9-40D2-98B9-424B42D2DBAC}/projects/pypi": [
+            "back"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}/{C12F266D-71B9-40D2-98B9-424B42D2DBAC}/projects/karla": [
+            "karla",
+            "back"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}/widgets/python/src/unity": [
+            "a.t.v.s.ssh",
+            "back"
+        ],
+        "{6FAB5628-94A1-410A-82D1-1D42A2A11750}/Documents/WindowsPowerShell": [
+            "back",
+            "ps1"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}/widgets/keys": [
+            "key",
+            "keys",
+            "k",
+            ".rt",
+            "tt-",
+            "p-",
+            "rt-",
+            "rt"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}Apps/KeePass-2.48.1": [
+            "kee",
+            "keepass",
+            "pass"
+        ],
+        "D:/projects": [
+            "je",
+            "jec",
+            "ject",
+            "proj",
+            "roj",
+            "jects",
+            "cts",
+            "pr.o",
+            "pr.old",
+            "pr.d",
+            "d.pr"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}/widgets/databank/projects": [
+            "db.pr",
+            "pr.db"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}/widgets/databank/projects/DnD/sheet": [
+            "sheet"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}/widgets/databank/projects/DnD/dndspellslist": [
+            "5e.spells",
+            "5e.s",
+            "dnd.spells",
+            "dnd.s",
+            "dnd.spell"
+        ],
+        "{6FAB5628-94A1-410A-82D1-1D42A2A11750}/AppData/Local/Packages/CanonicalGroupLimited.Ubuntu20.04onWindows_79rhkp1fndgsc/LocalState/rootfs/opt/RightThumb/tech/hosts/Vulcan/projects": [
+            "linux.pr",
+            "pr.linux"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}/widgets/databank/projects/DnD/configurations": [
+            "char",
+            "dnd.char",
+            "char.dnd"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}/widgets/databank/projects/DnD/configurations/groups/Church/campaigns": [
+            "camp"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}/widgets/remote/python": [
+            "py.r",
+            "r.py"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}/widgets/remote/bash": [
+            "b.r",
+            "r.b"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}/widgets/remote": [
+            "b.r"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}/{C12F266D-71B9-40D2-98B9-424B42D2DBAC}/projects/bat-stuff": [
+            "stuff.bat",
+            "bat.stuff"
+        ],
+        "{6FAB5628-94A1-410A-82D1-1D42A2A11750}/AppData/Local/Packages/CanonicalGroupLimited.Ubuntu20.04onWindows_79rhkp1fndgsc/LocalState/rootfs/opt/RightThumb/tech/programs": [
+            "pp.linux",
+            "pp.l"
+        ],
+        "{6FAB5628-94A1-410A-82D1-1D42A2A11750}/AppData/Local/Packages/CanonicalGroupLimited.Ubuntu20.04onWindows_79rhkp1fndgsc/LocalState/rootfs/opt/RightThumb/tech/hosts": [
+            "h.linux"
+        ],
+        "{6FAB5628-94A1-410A-82D1-1D42A2A11750}/AppData/Local/Packages/CanonicalGroupLimited.Ubuntu20.04onWindows_79rhkp1fndgsc/LocalState/rootfs/opt/RightThumb/tech/hosts/Vulcan": [
+            "h.linux"
+        ],
+        "{6FAB5628-94A1-410A-82D1-1D42A2A11750}/AppData/Local/Packages/CanonicalGroupLimited.Ubuntu20.04onWindows_79rhkp1fndgsc/LocalState/rootfs/opt/RightThumb/tech/programs/bash": [
+            "b.linux"
+        ],
+        "{6FAB5628-94A1-410A-82D1-1D42A2A11750}/AppData/Local/Packages/KaliLinux.54290C8133FEE_ey8k8hqnwqnmg/LocalState/rootfs/opt/RightThumb/tech/programs/python/src/unity": [
+            "py.kali"
+        ],
+        "{6FAB5628-94A1-410A-82D1-1D42A2A11750}/AppData/Local/Packages/KaliLinux.54290C8133FEE_ey8k8hqnwqnmg/LocalState/rootfs/opt/RightThumb/tech/programs": [
+            "pp.kali"
+        ],
+        "{6FAB5628-94A1-410A-82D1-1D42A2A11750}/AppData/Local/Packages/KaliLinux.54290C8133FEE_ey8k8hqnwqnmg/LocalState/rootfs/opt/RightThumb/tech/programs/databank/tables": [
+            "ttt.kali"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}/{C12F266D-71B9-40D2-98B9-424B42D2DBAC}/projects/vps": [
+            "back"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}/{C12F266D-71B9-40D2-98B9-424B42D2DBAC}/projects/base": [
+            "back"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}/widgets/exe": [
+            "exe"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}/{C12F266D-71B9-40D2-98B9-424B42D2DBAC}/projects/jq-test": [
+            "back"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}/widgets/html/projects/log_config/js": [
+            "log.config"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}/widgets/html": [
+            "html"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}/widgets/html/projects": [
+            "html"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}/widgets/html/projects/log_config": [
+            "log.config",
+            "form.gen"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}/widgets/html/projects/form_gen": [
+            "form.gen"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}/{C12F266D-71B9-40D2-98B9-424B42D2DBAC}/git": [
+            "git"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}/{C12F266D-71B9-40D2-98B9-424B42D2DBAC}/projects/tar-test/test": [
+            "back"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}/{C12F266D-71B9-40D2-98B9-424B42D2DBAC}/projects/tar-test": [
+            "back"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}/widgets/bash/history": [
+            "history",
+            "back"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}/{C12F266D-71B9-40D2-98B9-424B42D2DBAC}/projects/bash": [
+            "back"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}/widgets/databank/projects/DnD": [
+            "dnd.db"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}/hosts/VULCAN/programs/python": [
+            "myepy"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}/widgets/bash/install/py": [
+            "tool"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}/hosts/VULCAN": [
+            "h",
+            "hh"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}/hosts/VULCAN/projects": [
+            "back",
+            "pr"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}/hosts/VULCAN/tables": [
+            "back",
+            "tt"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}/widgets/webApps/vps": [
+            "vps"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}/widgets/bash/install/php": [
+            "phpp",
+            "bphp",
+            "phpb"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}/widgets/servers/web/vps": [
+            "vps"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}/widgets/servers/socket/smb": [
+            "smb",
+            "smb.s",
+            "socket.w",
+            "socket.s",
+            "sock.s",
+            "sock.w"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}/widgets/servers/socket/linux": [
+            "linux.s",
+            "socket.l",
+            "sock.l"
+        ],
+        "D:/websites/PillerBeauty/images/popup": [
+            "popup",
+            "dyan.p"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}/widgets/python/src/unity/_rightThumb/_hub": [
+            "hub"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}/widgets/python/src/unity/_rightThumb/_matrix": [
+            "matrix"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}/widgets/python/src/unity/_rightThumb/_fix_json": [
+            "json.fix",
+            "json.tool",
+            "json.t",
+            "json.f",
+            "fjson"
+        ],
+        "D:/.rightthumb_terminal/programs/python": [
+            "py."
+        ],
+        "D:/.rightthumb_terminal/programs": [
+            "pp."
+        ],
+        "D:/.rightthumb_terminal/tech/programs": [
+            "pp."
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}/widgets/python": [
+            "py",
+            "back"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}/hosts": [
+            "h"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}/hosts/VULCAN/config": [
+            "config"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}/hosts/VULCAN/indexes": [
+            "p",
+            ".rt",
+            "tt-",
+            "p-",
+            "rt-",
+            "rt",
+            "i"
+        ],
+        "{6FAB5628-94A1-410A-82D1-1D42A2A11750}/.rt": [
+            ".rt",
+            "rt-",
+            "rt"
+        ],
+        "{6FAB5628-94A1-410A-82D1-1D42A2A11750}/AppData/Local/Packages/CanonicalGroupLimited.Ubuntu20.04onWindows_79rhkp1fndgsc/LocalState/rootfs/opt/RightThumb": [
+            "rt.l2",
+            "rt.l"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}/hosts/VULCAN/tickets": [
+            "p"
+        ],
+        "{6FAB5628-94A1-410A-82D1-1D42A2A11750}/.rt/profile/tables": [
+            "tt-",
+            "tt"
+        ],
+        "{6FAB5628-94A1-410A-82D1-1D42A2A11750}/.rt/profile": [
+            "p-",
+            "h"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}/widgets": [
+            "pp",
+            "w",
+            "ww"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}/install/files": [
+            "inst"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}/widgets/batch": [
+            "s"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}/install": [
+            "inst",
+            "inst\r",
+            "back"
+        ],
+        "/mnt/c/Users/Scott": [
+            "p.l\r"
+        ],
+        "{A8693D4B-8A80-898F-83F0-E806D2F36800}/widgets/python/_rightThumb/_imdb": [
+            "back"
+        ]
+    }
+}
