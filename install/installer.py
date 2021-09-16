@@ -1909,7 +1909,7 @@ pr-|{6FAB5628-94A1-410A-82D1-1D42A2A11750}/.rt/profile/projects"""
 
 
 	def v_bash_order( self ):
- 
+ 		loader()
 		vVv = vc.PATHS.clean4os( v.vVv )
 		bash_defaults = vc.PATHS.clean4os( v.bash_defaults )
 
