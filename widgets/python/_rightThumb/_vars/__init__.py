@@ -183,25 +183,7 @@ td.b = dot()
 td.c = dot()
 configFile( '.path', home  +os.sep+'.rt'+os.sep+  '.path' )
 configFile( '.config.hash', home +os.sep+'.rt'+os.sep+ '.config.hash' )
-if __.isWin:
-	# fileName = home + slash+'.tk421'
-	fileName = home + slash+'.tk421'
-	if not os.path.isfile( fileName ):
-		open(fileName,'w', encoding='utf-8').write('C')
-	techDrive = open( fileName, 'r' ).read()
-	techDrive = techDrive
-	# print('techDrive',techDrive)
-	if '\n' in techDrive or '\r' in techDrive:
-		techDrive = techDrive.replace('\n','').replace('\r','')
-		open(fileName,'w', encoding='utf-8').write( techDrive )
-elif not __.isWin:
-	techDrive = '/opt/RightThumb'
-	try:
-		if not os.path.isdir(techDrive):
-			os.mkdir(techDrive)
-	except Exception as e:
-		if os.path.isdir('/home/ximlickficfp/cloud/files'):
-			techDrive = '/home/ximlickficfp/cloud/files'
+
 # print('techDrive',techDrive)
 configFile( '.path', home  +os.sep+'.rt'+os.sep+  '.path' )
 configFile( '.config.hash', home +os.sep+'.rt'+os.sep+ '.config.hash' )
@@ -251,6 +233,25 @@ if techDrive.endswith(os.sep):
 techDrive = _str.cleanBE(techDrive,' ')
 td.path = techDrive
 drive=techDrive
+if __.isWin:
+	# fileName = home + slash+'.tk421'
+	fileName = home + slash+'.tk421'
+	if not os.path.isfile( fileName ):
+		open(fileName,'w', encoding='utf-8').write('C')
+	techDrive = open( fileName, 'r' ).read()
+	techDrive = techDrive
+	# print('techDrive',techDrive)
+	if '\n' in techDrive or '\r' in techDrive:
+		techDrive = techDrive.replace('\n','').replace('\r','')
+		open(fileName,'w', encoding='utf-8').write( techDrive )
+elif not __.isWin:
+	techDrive = '/opt/RightThumb'
+	try:
+		if not os.path.isdir(techDrive):
+			os.mkdir(techDrive)
+	except Exception as e:
+		if os.path.isdir('/home/ximlickficfp/cloud/files'):
+			techDrive = '/home/ximlickficfp/cloud/files'
 	# fileName = home + slash+'.tk421'
 	# fileNameHost = home + slash+'.ncc1701'
 	# fileName = fileName.replace( slashes['windows'], slash )
