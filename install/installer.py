@@ -218,8 +218,7 @@ def loader():
 	vc.FIG.bash_vars(p=0)
 
 
-	v.vVv            = vc.PATHS.clean4os( v.vVv         )
-	v.bash_defaults = vc.PATHS.clean4os( v.bash_defaults )
+
 
 	v.tables=v.home +os.sep+ '.rt' +os.sep+ 'profile' +os.sep+ 'tables'
 	v.temp=v.home +os.sep+ '.rt' +os.sep+ 'profile' +os.sep+ 'temp'
@@ -233,11 +232,18 @@ def loader():
 		v.computername = socket.gethostname()
 
 	v.computername2 = v.computername.replace(' ','_')
-	v.host = v.bash['widgets'] +os.sep+'hosts'+os.sep+v.computername2
+	# v.host = v.bash['widgets'] +os.sep+'hosts'+os.sep+v.computername2
+	if 'profile' in v.bash:
+		v.host = v.bash['profile']
+	elif 'host' in v.bash:
+		v.host = v.bash['host']
+	else:
+		v.host = v.bash['widgets'] +os.sep+'hosts'+os.sep+v.computername2
 
-
-
-	v.appsFolder =  v.bash['widgets'] +os.sep+'techApps'
+	if 'apps' in v.bash:
+		v.appsFolder =  v.bash['apps']
+	elif 'tech_drive' in v.bash:
+		v.appsFolder =  v.bash['tech_drive']
 
 	vc.FIG.load()
 
@@ -1242,7 +1248,10 @@ class SH:
 
 	def processSHfile( self, path ):
  
- 
+		try:
+			os.chmod( path, 0o777 )
+		except Exception as e:
+			pass
  
 		vc.HD.chmod(path)
 		if not os.path.isfile(path):
@@ -1800,6 +1809,8 @@ pr-|{6FAB5628-94A1-410A-82D1-1D42A2A11750}/.rt/profile/projects"""
 			if not v.gui:
 				for key in v.bash_defaults_no_gui.keys():
 					v.bash[key] = v.bash_defaults_no_gui[key]
+
+
 		self.v_bash_order()
 		# if 'PY' in v.bash and not v.bash['PY'] and 'PY' in v.bash_defaults:
 		# 	v.bash['PY'] = v.bash_defaults['PY']
@@ -1810,7 +1821,7 @@ pr-|{6FAB5628-94A1-410A-82D1-1D42A2A11750}/.rt/profile/projects"""
 		# if 'code_editor' in v.bash and not v.bash['code_editor'] and 'code_editor' in v.bash_defaults:
 		# 	v.bash['code_editor'] = v.bash_defaults['code_editor']
 		if v.isWin:
-			v.bash['p'] = v.bash['widgets'] + '/widgets/batch/p.bat'
+			v.bash['p'] = v.bash['widgets'] + '\\widgets\\batch\\p.bat'
 		else:
 			v.bash['p'] = v.bash['widgets'] + '/widgets/bash/nav/p.sh'
 		v.bash['p'] = v.bash['p'].replace('/',os.sep)
@@ -1827,7 +1838,8 @@ pr-|{6FAB5628-94A1-410A-82D1-1D42A2A11750}/.rt/profile/projects"""
 		# if v.isWin:
 		# 	v.bash['widgets'] = v.bash['widgets'][0]
 		for k in v.bash:
-			if not k == 'widgets':
+			# if not k == 'widgets':
+			if '/opt/RightThumb' in v.bash[k]:
 				v.bash[k] = v.bash[k].replace( '/opt/RightThumb', v.bash['widgets'] )
 
 		self.v_bash_order()
@@ -1898,6 +1910,17 @@ pr-|{6FAB5628-94A1-410A-82D1-1D42A2A11750}/.rt/profile/projects"""
 
 	def v_bash_order( self ):
  
+		vVv = vc.PATHS.clean4os( v.vVv )
+		bash_defaults = vc.PATHS.clean4os( v.bash_defaults )
+
+		for k in vVv:
+			if not k in v.bash:
+				v.bash[k] = vVv[k]
+
+		for k in bash_defaults:
+			if not k in v.bash:
+				v.bash[k] = bash_defaults[k]
+
 		for k in v.bash:
 			if not k == 'widgets':
 				v.bash[k] = v.bash[k].replace( '/opt/RightThumb', v.bash['widgets'] )
@@ -4382,11 +4405,16 @@ class PATHS:
 	def path( self, p, ab=True, pop=False, file=False ):
 		# os = vc.FIG.imp('os')
 		# os = imp('os')
-		if not p:
-			return p
 		# print(p)
 		p = p.replace( chr(92), os.sep )
 		p = p.replace( chr(47), os.sep )
+		p = p.replace( os.sep+os.sep, os.sep )
+		if os.path.isfile(p) or os.path.isdir(p):
+			pass
+		else:
+			return p
+		if not p:
+			return p
 		while os.sep+os.sep in p:
 			p = p.replace(os.sep+os.sep,os.sep)
 		if ab:
@@ -4409,6 +4437,7 @@ class PATHS:
 			if file:
 				p = f
 		return p
+
 
 	def print_paths( self, subjects=[] ):
 
@@ -13704,12 +13733,12 @@ def action():
 			sys.exit()
 		vc.FIG.home()
 		vc.FIG.v_bash_order()
-		v.f.mkdir(v.bash['wprofile']+os.sep+'tables')
-		v.f.mkdir(v.bash['wprofile']+os.sep+'temp')
-		v.f.mkdir(v.bash['wprofile']+os.sep+'vars')
-		vc.HD.saveText( '"', v.bash['wprofile']+os.sep+'vars'+os.sep+'quote.txt' )
-		vc.HD.saveText( '%', v.bash['wprofile']+os.sep+'vars'+os.sep+'percentage.txt' )
-		vc.HD.saveText( vc.FIG.uuid(), v.bash['wprofile']+os.sep+'vars'+os.sep+'instanceID.sys' )
+		v.f.mkdir(v.home+os.sep+'.rt'+os.sep+'profile'+os.sep+'tables')
+		v.f.mkdir(v.home+os.sep+'.rt'+os.sep+'profile'+os.sep+'temp')
+		v.f.mkdir(v.home+os.sep+'.rt'+os.sep+'profile'+os.sep+'vars')
+		vc.HD.saveText( '"', v.home+os.sep+'.rt'+os.sep+'profile'+os.sep+'vars'+os.sep+'quote.txt' )
+		vc.HD.saveText( '%', v.home+os.sep+'.rt'+os.sep+'profile'+os.sep+'vars'+os.sep+'percentage.txt' )
+		vc.HD.saveText( vc.FIG.uuid(), v.home+os.sep+'.rt'+os.sep+'profile'+os.sep+'vars'+os.sep+'instanceID.sys' )
 		insta=vc.PATHS.path(__file__)
 		# tool=v.home+os.sep+'.rt'+os.sep+'tool.py'
 		tool=v.home+os.sep+'.rt'+os.sep+'tool'
@@ -13722,12 +13751,12 @@ def action():
 		if os.path.isfile( v.config ):
 			v.bash = vc.HD.getTableSimp( v.config )
 		v.bash['PY'] = sys.executable
-		if os.getcwd().endswith(os.sep+'install'):
-			v.bash['widgets'] = os.getcwd().replace(os.sep+'install','')
-			v.bash['tech_drive'] = os.getcwd().replace(os.sep+'install','')
-			# print(v.bash['widgets'])
-			# print(os.getcwd())
-			# sys.exit()
+		if os.sep+'install' in vc.PATHS.path(__file__):
+			v.bash['widgets'] = vc.PATHS.path(__file__).split(os.sep+'install')[0]
+		else:
+			if not 'widgets' in v.bash:
+				v.bash['widgets'] = input( 'path? ' )
+
 
 		vc.FIG.v_bash_order()
 		if v.bash:
@@ -13810,7 +13839,14 @@ call %widgets%\\widgets\\batch\\c.bat %1
 				os.system(v.bash['code_editor'] +' '+ v.home+os.sep+'.rt'+os.sep+'.config.hash')
 			except Exception as e:
 				pass
+		if not v.isWin:
+			switches.updateSwitchField( 'SH-Folder-Recursive', 'active', True )
+			vc.SH.getFolderSH(v.bash['ww'])
+		# pv(v.bash)
+
+		
 		return None
+
 	if switches.isActive('Setting-PIPE-Print'):
 		for x in v.pipe:
 			print(x)
