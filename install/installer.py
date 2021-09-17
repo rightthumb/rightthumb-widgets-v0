@@ -2563,7 +2563,7 @@ alias web.ey="exp.geny;web.do"
 alias web.el="echo su root | web.e"
 ################# #################
 alias ssh.1="echo 'ssh -R 8888:localhost:22 -C -N -l scott vps.rightthumb.com' | vps.e";
-alias ssh.2="echo 'ssh -R 8888:localhost:22 -C -N -l scott vps.rightthumb.com' | vps.e";
+alias ssh.2="echo 'ssh -R 8888:localhost:22 -C -N -l scott vps2.rightthumb.com' | vps.e";
 alias ssh.3="echo 'ssh scott@localhost -p 8080' | vps.e";
 alias ssh.3b="echo 'ssh rephs@localhost -p 8080' | vps.e";
 #################
@@ -2575,14 +2575,20 @@ alias vps.socket="echo 'ssh -R 65432:localhost:65432 -C -N -l scott vps.rightthu
 ################# #################
 alias reph.ssh.p="echo 'ssh thisreph@reph.us'";
 alias vps.ssh.p="echo 'ssh scott@vps.rightthumb.com'";
+alias vps1.ssh.p="echo 'ssh scott@vps1.rightthumb.com'";
+alias vps2.ssh.p="echo 'ssh scott@vps2.rightthumb.com'";
 alias web.ssh.p="echo 'ssh ximlickficfp@tools.rightthumb.com'";
 ################# #################
 alias reph.ssh.y="echo 'ssh thisreph@reph.us' | reph.ey";
 alias vps.ssh.y="echo 'ssh scott@vps.rightthumb.com' | vps.ey";
+alias vps1.ssh.y="echo 'ssh scott@vps1.rightthumb.com' | vps.ey";
+alias vps2.ssh.y="echo 'ssh scott@vps2.rightthumb.com' | vps.ey";
 alias web.ssh.y="echo 'ssh ximlickficfp@tools.rightthumb.com' | web.ey";
 #################
 alias reph.ssh="echo 'ssh thisreph@reph.us' | reph.e";
 alias vps.ssh="echo 'ssh scott@vps.rightthumb.com' | vps.e";
+alias vps1.ssh="echo 'ssh scott@vps1.rightthumb.com' | vps.e";
+alias vps2.ssh="echo 'ssh scott@vps2.rightthumb.com' | vps.e";
 alias web.ssh="echo 'ssh ximlickficfp@tools.rightthumb.com' | web.e";
 ################# #################
 alias beep.="play -nq -t alsa synth 1 sine 440"
@@ -2594,6 +2600,10 @@ alias vps.www="echo    'ssh -L 8080:localhost:80 -C -N -l scott vps.rightthumb.c
 export vpswww="sudo ssh -L 80:localhost:80 -C -N -l scott vps.rightthumb.com"
 alias vps.dt="echo    'ssh -L 59000:localhost:5900 -C -N -l scott vps.rightthumb.com'    |  vps.e"
 alias vps.dt2="echo    'ssh -L 59001:localhost:5901 -C -N -l scott vps.rightthumb.com'    |  vps.e"
+alias vps1.dt="echo    'ssh -L 59000:localhost:5900 -C -N -l scott vps1.rightthumb.com'    |  vps.e"
+alias vps1.dt2="echo    'ssh -L 59001:localhost:5901 -C -N -l scott vps1.rightthumb.com'    |  vps.e"
+alias vps2.dt="echo    'ssh -L 59000:localhost:5900 -C -N -l scott vps2.rightthumb.com'    |  vps.e"
+alias vps2.dt2="echo    'ssh -L 59001:localhost:5901 -C -N -l scott vps2.rightthumb.com'    |  vps.e"
 alias vps.k="echo $( p keychain -get -label vps.k )"
 alias kkk="echo $( p keychain -get -label login-test )"
 
@@ -14570,5 +14580,6 @@ if __name__ == '__main__':
 # alias t2="installer.py2";
 # bashFileHeader
 # sys.executable
+
 # del v.bash['profile']
 # 'Installer'
