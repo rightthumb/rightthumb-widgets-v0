@@ -2739,7 +2739,7 @@ alias s.tool2="sudo installer.py2";
 alias t.sh="$HOME/.rt/tool.sh";
 alias s.t.sh="sudo $HOME/.rt/tool.sh";
 alias c="clear";
-alias vps.new="ssh-keygen -f '/home/scott/.ssh/known_hosts' -R 'vps.rightthumb.com';ssh-keygen -f '/home/scott/.ssh/known_hosts' -R '45.35.203.103';";
+alias vps.new="ssh-keygen -f $HOME/.ssh/known_hosts -R 'vps.rightthumb.com';ssh-keygen -f $HOME/.ssh/known_hosts -R '45.35.203.103';";
 alias vps2.new="ssh-keygen -f '/home/scott/.ssh/known_hosts' -R '45.35.203.104';ssh-keygen -f '/home/scott/.ssh/known_hosts' -R '45.35.203.104';";
 
 
