@@ -10,9 +10,7 @@
 # ###########################################################################
 # ## {C3P0D40fAe8B} ##
 
-import os
-import sys
-import time
+import os, sys, time
 ##################################################
 import _rightThumb._construct as __
 appDBA = __.clearFocus( __name__, __file__ )
@@ -199,10 +197,10 @@ def genEpoch():
 def PRE_BACKUP_PROCESSING( path ):
 	# return None
 	if path.lower().endswith( '.py' ):
-		parts = path.split(_v.slash)
+		parts = path.split(os.sep)
 		parts.reverse()
 		filename = parts[0]
-		bk = _v.stmp+_v.slash+'_temp_auto_clean_fileBackup_'+filename
+		bk = _v.stmp+os.sep+'_temp_auto_clean_fileBackup_'+filename
 		if os.path.isfile( bk ):
 			return None
 
@@ -240,7 +238,7 @@ def PRE_BACKUP_PROCESSING( path ):
 			# del template
 			pass
 			if len(theExampleLines):
-				# ef = _v.myTables + _v.slash + _v.py_examples
+				# ef = _v.myTables + os.sep + _v.py_examples
 				# if os.path.isfile(ef):
 				# 	record = _.getTable( _v.py_examples )
 				# 	newExamples = []
@@ -383,8 +381,8 @@ def PRE_BACKUP_PROCESSING( path ):
 
 				if len(newFile):
 					tmpName = tempName( path )
-					# bk = _v.stmp+_v.slash+'_temp_auto_clean_fileBackup_'+_.fileDate(time.time())+tmpName
-					bk = _v.stmp+_v.slash+'_temp_auto_clean_fileBackup_'+filename
+					# bk = _v.stmp+os.sep+'_temp_auto_clean_fileBackup_'+_.fileDate(time.time())+tmpName
+					bk = _v.stmp+os.sep+'_temp_auto_clean_fileBackup_'+filename
 					newFile = postFileCleanup( newFile, path=path, maxLines=maxLines )
 					_.saveText( newFile, bk )
 					_.saveText( newFile, path )
@@ -424,7 +422,7 @@ def postFileCleanup( fileLines, path=None, maxLines=4 ):
 									} )
 	\"\"\""""
 
-	parts = path.split(_v.slash)
+	parts = path.split(os.sep)
 	parts.reverse()
 	filename = parts[0]
 	if '__init__.py' == filename:
@@ -460,7 +458,7 @@ def postFileCleanup( fileLines, path=None, maxLines=4 ):
 			for tag in hashtags.split(','):
 				tag = _str.totalClean( tag )
 				if len(tag):
-					newTags.append( aTag.replace( 'DEFAULT', tag.replace( "'", "'+_v.slash" ) ) )
+					newTags.append( aTag.replace( 'DEFAULT', tag.replace( "'", "'+os.sep" ) ) )
 				
 
 			file = file.replace( aTag , ''.join( newTags ) )
@@ -526,7 +524,7 @@ def postFileCleanup( fileLines, path=None, maxLines=4 ):
 	return file.split('\n')
 	pass
 def tempName( path ):
-	parts = path.split(_v.slash)
+	parts = path.split(os.sep)
 	name = '-'.join(parts)
 	name = name.replace( ':', ';' )
 	return name
@@ -583,7 +581,36 @@ def secureFiles_Encrypt( path, pw ):
 
 def secureFiles(path):
 
-	
+	global crypt_docs
+	cryptScan=False
+	if path.lower() in __.specifications['fileBackup-auto-crypt']['files']:
+		cryptScan=True
+	elif path.lower() in crypt_docs:
+		cryptScan=True
+	else:
+		fo=_dir.info( path )['folder'].lower()
+		if fo in __.specifications['fileBackup-auto-crypt']['folders']:
+			cryptScan=True
+		else:
+			for fTest in __.specifications['fileBackup-auto-crypt']['folders']:
+				if fTest+os.sep in fo+os.sep:
+					cryptScan=True
+
+
+
+
+
+	if cryptScan:
+		global _decrypt_docs
+		if _decrypt_docs is None:
+			_decrypt_docs = _.regImp( __.appReg, 'decrypt-docs' )
+		_.cp( [ 'SECURE FILE' ], 'Background.red' )
+
+		_decrypt_docs.imp.run(path)
+		if _.switches.isActive('isPreOpen'):
+			return True
+		else:
+			return False
 	
 	
 
@@ -667,12 +694,31 @@ def action(path=None,flag=None):
 				# secureFiles(path)
 				if secureFiles(path):
 					_.colorThis( [ 'Secure file, no backup' ], 'green' )
+					_.colorThis( path, 'cyan' )
 					# print(' -- TRUE -- ')
 					return None
 			
 			# print('post')
+			global crypt_docs
+			cryptScan=False
+			if path.lower() in __.specifications['fileBackup-auto-crypt']['files']:
+				cryptScan=True
+			elif path.lower() in crypt_docs:
+				cryptScan=True
+			else:
+				fo=_dir.info( path )['folder'].lower()
+				if fo in __.specifications['fileBackup-auto-crypt']['folders']:
+					cryptScan=True
+				else:
+					for fTest in __.specifications['fileBackup-auto-crypt']['folders']:
+						if fTest+os.sep in fo+os.sep:
+							cryptScan=True
 
-			if path.lower() in __.specifications['fileBackup-auto-crypt']['files']  or _dir.info( path )['folder'].lower() in __.specifications['fileBackup-auto-crypt']['folders']:
+			
+			
+
+
+			if cryptScan:
 				_.colorThis(  [ 'registered: documentation file' ], 'Background.light_blue'  )
 				theFile = _.getText( path, raw=True )
 				if __.specifications['fileBackup-auto-crypt']['scanA'] in theFile  or  __.specifications['fileBackup-auto-crypt']['scanB'] in theFile:
@@ -734,11 +780,11 @@ def action(path=None,flag=None):
 		library = _.getTableDB( 'library-path.hash' )
 		if path in library:
 			libFile = library[path]
-			tmpA = path.split(_v.slash)
+			tmpA = path.split(os.sep)
 			tmpA.reverse()
 			tmpB = tmpA.pop(0)
 
-			libFile = _v.library + _v.slash + libFile['id']+'-'+libFile['label']+'-'+tmpB
+			libFile = _v.library + os.sep + libFile['id']+'-'+libFile['label']+'-'+tmpB
 			
 			if not __.openSecure:
 				copyfile( path,  libFile)
@@ -801,17 +847,17 @@ def action(path=None,flag=None):
 				modifiedRaw = os.path.getmtime(path)
 				modified = formatDate(modifiedRaw)
 				if _mime.isText(path):
-					newname = _v.myTXT + _v.slash + str(now) + '-' + modified +  '-' + name
+					newname = _v.myTXT + os.sep + str(now) + '-' + modified +  '-' + name
 					mime = 'text'
 				else:
 					mime = 'binary'
 					_.colorThis( [  '********************'  ], 'yellow' )
 					_.colorThis( [  '   File is BINARY'  ], 'yellow' )
 					_.colorThis( [  '********************'  ], 'yellow' )
-					newname = _v.myBIN + _v.slash + str(now) + '-' + modified +  '-' + name
+					newname = _v.myBIN + os.sep + str(now) + '-' + modified +  '-' + name
 
 				name = ''
-				parts = os.path.abspath(path).split(_v.slash)
+				parts = os.path.abspath(path).split(os.sep)
 				parts.reverse()
 				name = parts.pop(0)
 
@@ -873,19 +919,21 @@ __.specifications['fileBackup-auto-crypt'] = {
 										'scanB': '!CRYPT!',
 
 										'files': [
-														_v.myHome  +_v.slash+  'projects'  +_v.slash+  'last_projects.txt',
-														_v.programs  +_v.slash+  'bash'  +_v.slash+    'notes'  +_v.slash+  'RT-SCRAP-'+ _v.unixIDs[6] +'.txt',
+														_v.myHome  +os.sep+  'projects'  +os.sep+  'last_projects.txt',
+														_v.ww  +os.sep+  'bash'  +os.sep+    'notes'  +os.sep+  'RT-SCRAP-'+ _v.unixIDs[6] +'.txt',
 										],
 
 										'folders': [
-														_v.programs  +_v.slash+  'documentation'  ,
+														_v.ww  +os.sep+  'documentation'  ,
+														_v.ww  +os.sep+  'bash'+os.sep+'notes'  ,
 										],
 }
 
 for i,x in enumerate(__.specifications['fileBackup-auto-crypt']['files']):
 	__.specifications['fileBackup-auto-crypt']['files'][i] = __.specifications['fileBackup-auto-crypt']['files'][i].lower()
 for i,x in enumerate(__.specifications['fileBackup-auto-crypt']['folders']):
-	__.specifications['fileBackup-auto-crypt']['folders'][i] = __.specifications['fileBackup-auto-crypt']['folders'][i].lower()
+	__.specifications['fileBackup-auto-crypt']['folders'][i] = _str.replaceDuplicate(__.specifications['fileBackup-auto-crypt']['folders'][i].lower(),os.sep)
+
 
 
 
@@ -925,8 +973,10 @@ except Exception as e:
 	_.colorThis( 'Error: missing pyAesCrypt', 'red' )
 
 
+crypt_docs = _.getTable('crypt-docs.list')
 
 focus()
+_decrypt_docs = None
 
 # flag validator
 # _bkLog.imp.validateFlag

@@ -211,13 +211,21 @@ class data_default:
 		self.file = file
 		self.default_result = default
 	def default( self ):
-	    for x in self.dics.split(','):
-	        if self.file.lower().endswith( '.'+x ):
-	            return {}
-	    for x in self.lists.split(','):
-	        if self.file.lower().endswith( '.'+x ):
-	            return []
-	    return self.default_result
+		for x in self.dics.split(','):
+			if self.file.lower().endswith( '.'+x ):
+				return {}
+		for x in self.lists.split(','):
+			if self.file.lower().endswith( '.'+x ):
+				return []
+
+		for x in self.dics.split(','):
+			if self.file.lower().endswith( '.'+x+'.json' ):
+				return {}
+		for x in self.lists.split(','):
+			if self.file.lower().endswith( '.'+x+'.json' ):
+				return []
+
+		return self.default_result
 
 def getTable( file ):
 	os = imp('os')

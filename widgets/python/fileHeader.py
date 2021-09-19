@@ -246,7 +246,7 @@ def action():
 			_.pipeCleaner(0)
 			# _.printVar( _.appData )
 			# for i,row in enumerate( _.appData[__.appReg]['pipe'] ):
-			for i,row in enumerate(_.isData(r=1)):
+			for i,row in enumerate(_.switches.values('Files')):
 				if not os.path.isfile(row):
 					_.colorThis(  ['Not a file:',row], 'red' )
 					# sys.exit()

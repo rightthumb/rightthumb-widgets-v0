@@ -10,6 +10,7 @@
 # ###########################################################################
 # ## {C3P0D40fAe8B} ##
 
+##################################################
 import os, sys, time
 ##################################################
 import _rightThumb._construct as __
@@ -30,12 +31,28 @@ import _rightThumb._string as _str
 ##################################################
 
 def appSwitches():
-	_.switches.register( 'Test', '-test' )
-	_.switches.register( 'Files', '-f,-file,-files','file.txt', isPipe='data', description='Files' )
+	pass
+	### EXAMPLE: START
+	# _.switches.register( 'Input', '-i' )
+	# _.switches.register( 'Files', '-f,-file,-files','file.txt', isData='glob,name,data,clean', description='Files' )
+	### EXAMPLE: END
 
-
+### EXAMPLE: START
+# _.switches.trigger( 'Files', _.myFileLocations, vs=True )
+# 	finds the file in probable locations
+# 	and 
+# 		if  _.autoBackupData = True
+# 		and __.releaseAcquiredData = True
+# 			GET EPOCH FROM: hosts/hostname/logs/apps/execution_receipt-app_name-epoch.json
+# 		you can run apps on usb at a clients office
+# 			when you get home run: p app -loadepoch epoch 
+# 				backed up
+# 					pipe
+# 					files
+# 					tables
+### EXAMPLE: END
 _.autoBackupData = __.autoCreationConfiguration['backup']
-__.releaseAcquiredData = __.autoCreationConfiguration['logs']
+__.releaseAcquiredData = __.autoCreationConfiguration['logs'] 
 __.myFileLocations_SKIP_VALIDATION = False
 __.isRequired_Pipe = False
 __.isRequired_Pipe_or_File = False
@@ -47,15 +64,11 @@ __.switch_raw = []
 
 
 _.appInfo[focus()] = {
-	'file': 'decrypt-docs.py',
+	'file': 'thisApp.py',
 	'liveAppName': __.thisApp( __file__ ),
- 	'description': 'decrypt registered documentation files',
+	'description': 'Changes the world',
 	'categories': [
-						'decrypt',
-						'docs',
-						'tool',
-						'file',
-						'text',
+						'DEFAULT',
 				],
 	'usage': [
 						# 'epy another',
@@ -97,7 +110,11 @@ _.appData[focus()] = {
 					'table': {'sent': [], 'received': [] }, 
 		},
 	}
+### EXAMPLE: START
+# _.appInfo[focus()]['examples'].append( 'p thisApp -file file.txt' )
 
+# _.appInfo[focus()]['columns'].append( {'name': 'name', 'abbreviation': 'n'} )
+### EXAMPLE: END
 
 
 def registerSwitches( argvProcessForce=False ):
@@ -121,6 +138,12 @@ def registerSwitches( argvProcessForce=False ):
 	_.switches.trigger( 'URL', _.urlTrigger )
 	_.switches.trigger( 'Ago', _.timeAgo )
 	_.switches.trigger( 'Duration', _.timeFuture )
+	### EXAMPLE: START
+	# _.switches.trigger( 'Files',_.inRelevantFolder )	
+	# _.switches.trigger( 'Watched', _.txt2Date )
+	# _.switches.trigger( 'Input',_.formatColumns )
+	# _.switches.trigger( 'Franchise',_.triggerSpace )
+	### EXAMPLE: END
 	
 	_.defaultScriptTriggers()
 	_.switches.process()
@@ -148,159 +171,54 @@ if __name__ == '__main__':
 _.postLoad( __file__ )
 
 ########################################################################################
+### EXAMPLE: START
+# data = _.tables.returnSorted( 'data', 'd.timestamp', data )
+# _.switches.fieldSet( 'Long', 'active', True )
+# _.tables.register( 'data', table )
+# _.tables.fieldProfileSet('data','timestamp','trigger',_.friendlyDate)
+# _.tables.fieldProfileSet('data','phone,email,address','alignment','center')
+# _.tables.print( 'data', 'name' )
+# _.tables.print( 'data', ','.join(_.switches.values('Column')) )
+# _.switches.isActive('Files')
+# p = _.getText( _v.pips, raw=True, clean=True ).split( '\n' )
+# os.system( '"' + do + '"' )
+# _.setPipeData( os.listdir( os.getcwd() ), focus() )
+# _.showLine( item )
+# 	if os.path.isdir( row ):
+# 	if os.path.isfile( row ):
+#	os.path.abspath(path)
+# __.appRegPipe    ( pipe data registerd focus(__.appReg) set by _.myFileLocations {if imported} , default is None )
+# for i,row in enumerate(_.t( _.appData[__.appReg]['pipe'] )):
+# for i,row in _.e( _.isData(r=1) ):
+# date = _.friendlyDate( theDate )
+# _.addComma()
+# 													if platform.system() == 'Windows':
+### EXAMPLE: END
+########################################################################################
 # START
 
 
-def identify(row):
-	n = '0123456789'
-	l = 'abcdefghijklmnopqrstuvwxyz'
-	u = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-	chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ/+='
-	for ch in row:
-		if not ch in chars:
-			return False
-	if ' ' in row:
-		return False
-	elif '\\' in row:
-		return False
-	elif '//' in row:
-		return False
-	elif 'http' in row:
-		return False
-	elif '=' in row and not row.endswith('='):
-		return False
-	elif row.endswith('=='):
-		return True
-	elif row.endswith('=') and len(row) > 15:
-		return True
-	elif row.count('/') > 5 or row.startswith('/'):
-		return False
-
-	else:
-		if len(row) < 7:
-			return False
-
-		doc = []
-		nn = 0
-		ll = 0
-		uu = 0
-		for ch in row:
-			if ch in n:
-				doc.append('n')
-				nn+=1
-			elif ch in l:
-				doc.append('l')
-				ll+=1
-			elif ch in u:
-				doc.append('u')
-				uu+=1
-		if uu == 0 or ll == 0  or nn == 0:
-			return False
-		if uu > ll and ll > 3:
-			return True
-		
-		if nn < 3 and len(row) < 8:
-			return False
-		if uu < 3 or ll < 3 :
-			return False
-		p = _.percentageDiffInt( uu, ll )
-		if p > 75:
-			return True
-		# print( p, uu, ll, row )
-		# print( doc )
-		return False
-
-
-	return False
-
-records = {}
-maxLen = 0
-def process(row):
-	global records
-	global maxLen
-	if identify(row):
-		try:
-			row2 = _vault.imp.s.de( row )
-			good = True
-			if '\n' in row2:
-				good = False
-			for ch in row2:
-				if ch not in _str.printable2:
-					good = False
-			if good:
-				records[row] = row2
-				if len(row2) > maxLen:
-					maxLen = len(row2)
-				# row = row2
-		except Exception as e:
-			pass
-		# if row.startswith('!VAULT!'):
-		# 	print( row )
-
-	return row
-	
-def addSpaces(row):
-	global maxLen
-	y = maxLen - len(row) + 5
-	i=0
-	t = ''
-	while not i == y:
-		i+=1
-		t+=' '
-	return t
-def run(path):
-	global records
-	global maxLen
-
-	table = _.getTable('crypt-docs.list')
-	test=table.copy()
-	if not path.lower() in table:
-		table.append(path)
-	if not str(table)==str(test):
-		_.saveTable( table, 'crypt-docs.list', p=0 )
-
-
-	file = []
-	for i,row in enumerate( _.getText( path,raw=True ).split('\n') ):
-		row = process(row)
-		file.append(row)
-	nFile = []
-	for row in file:
-		if row in records:
-			row = records[row] + addSpaces(records[row]) + '!VAULT!'
-		nFile.append(row)
-	data = '\n'.join(nFile)
-	_.saveText( data, path )
 
 def action():
+	# should be   Single-Task   OR   Imply-Architecture-Functions   OR   CLASSES!!
+	load()
+	global data
 
-	
-	if not _.switches.values('Files'):
-		_.e('please specify a file')
-
-	if _.switches.isActive('Test'):
-		row = ' '.join( _.switches.values('Test') )
-		row = process(row)
-		return None
-	
-	for path in _.switches.values('Files'):
-		run(path)
+	for i,row in enumerate( _.isData(r=1) ):
+		print(row)
 
 
 
+def load():
+	global data
+	data = _.getTable( 'table' )
 
-
-import _rightThumb._vault as _vault
-
-_vault = _.regImp( __.appReg, '_rightThumb._vault' )
-focus()
 
 
 ########################################################################################
 if __name__ == '__main__':
 	action()
 	__.isExit()
-
 
 
 

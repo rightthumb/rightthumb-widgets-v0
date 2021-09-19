@@ -189,32 +189,40 @@ def executeSearch(filename,files,search):
 		line = line.replace('\n','')
 		line = line.replace('\r','')
 		if searchName(files,line) == True:
-		 	if _.switches.isActive('Replace') == True:
-		 		line = replaceDo(line)
-		 	if _.switches.isActive('Bookmarks') == True:
-		 		if _.switches.isActive('FileName') == True:
-		 			print(filename)
-		 		else:
-		 			clean = _v.myBookmarks + _v.slash+'BM-'
-		 			if os.path.isdir(line) == True:
-		 				found = 'Good'
-		 			else:
-		 				found = 'Bad'
-		 			print(found + '\t ' + filename.replace(clean,'').replace('.txt','') + ' = ' + line)
-		 	elif _.switches.isActive('FileName') == True:
-		 		# print(filename + ':' + line)
-		 		newLine = line
-		 		newLine = _str.removeAll(newLine,'\t')
-		 		newLine = newLine.replace('\n','')
-		 		newLine = newLine.replace('\r','')
-		 		newLine = _str.replaceDuplicate(newLine,' ')
-		 		newLine = _str.cleanFirst(newLine,' ')
-		 		theList.append({'filename': filename,'string': newLine,'line': i})
-		 	elif _.switches.isActive('JustName') == True:
-		 		print(filename)
-		 		break
-		 	else:
-		 		print(line)
+			if _.switches.isActive('Replace') == True:
+				line = replaceDo(line)
+			if _.switches.isActive('Bookmarks') == True:
+				if _.switches.isActive('FileName') == True:
+					print(filename)
+				else:
+					clean = _v.myBookmarks + _v.slash+'BM-'
+					if os.path.isdir(line) == True:
+						found = 'Good'
+					else:
+						found = 'Bad'
+					print(found + '\t ' + filename.replace(clean,'').replace('.txt','') + ' = ' + line)
+			elif _.switches.isActive('FileName') == True:
+				# print(filename + ':' + line)
+				newLine = line
+				newLine = _str.removeAll(newLine,'\t')
+				newLine = newLine.replace('\n','')
+				newLine = newLine.replace('\r','')
+				newLine = _str.replaceDuplicate(newLine,' ')
+				newLine = _str.cleanFirst(newLine,' ')
+				theList.append({'filename': filename,'string': newLine,'line': i})
+			elif _.switches.isActive('JustName') == True:
+				print(filename)
+				break
+			else:
+				row=line
+				if _.switches.isActive('Plus'):
+					for plusSearchX in _.switches.values('Plus'):
+						plusSearchX = _.ci( plusSearchX )
+						for subject in _.caseUnspecific( row, plusSearchX ):
+							row = row.replace( subject, _.colorThis( subject, 'green', p=0 ) )
+					print(row)
+				else:
+					print(line)
 def takeAction():
 	global indexFiles
 	global theList
@@ -281,9 +289,9 @@ def action():
 	
 	pass
 	# if _.switches.isActive('Input'):
-	# 	_.setPipeData( _.getText( _.switches.value('Input') ), focus() )
+	#   _.setPipeData( _.getText( _.switches.value('Input') ), focus() )
 	# if not type( _.appData[__.appReg]['pipe'] ) == bool:
-	# 	pass
+	#   pass
 	# print( _.d2json(_.appData) )
 
 
@@ -358,18 +366,18 @@ def action():
 					indexFiles.append(str(path))
 			i += 1
 		# for path in pipeResults:
-		# 	path = path.replace('\r','')
-		# 	path = path.replace('\n','')
-		# 	if os.path.isfile(path) == True:
-		# 		# print(path)
-		# 		shouldUseFile = True
-		# 		if _.switches.isActive('Text'):
-		# 			mime = mimetypes.guess_type(path)
-		# 			if not str(mime) == "('text/plain', None)":
-		# 				shouldUseFile = False
+		#   path = path.replace('\r','')
+		#   path = path.replace('\n','')
+		#   if os.path.isfile(path) == True:
+		#       # print(path)
+		#       shouldUseFile = True
+		#       if _.switches.isActive('Text'):
+		#           mime = mimetypes.guess_type(path)
+		#           if not str(mime) == "('text/plain', None)":
+		#               shouldUseFile = False
 
-		# 		if shouldUseFile:
-		# 			indexFiles.append(str(path))
+		#       if shouldUseFile:
+		#           indexFiles.append(str(path))
 		takeAction()
 	else:
 		pass
