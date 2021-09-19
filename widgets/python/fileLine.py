@@ -159,7 +159,7 @@ _.postLoad( __file__ )
 
 def action():
 	if _.switches.isActive('Files'):
-		for i,row in enumerate(_.isData(r=1)):
+		for i,row in enumerate(_.switches.values('Files')):
 			if not _.switches.isActive('Clean'):
 				print(row)
 			file = _.getText(row)
