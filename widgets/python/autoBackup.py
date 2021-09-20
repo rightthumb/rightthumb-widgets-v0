@@ -359,140 +359,143 @@ def action():
 	# pause=input('pause')
 
 	for ii,log in enumerate(schedulerLog):
-		if not 'status' in log:log['status'] = status['default'];
-		if log['status'] == status['default'] and log['file'] in fileList:
-			schedulerLog[ii]['status'] = status['defaultSpentAltID']
-			log['status'] = status['defaultSpentAltID']
+		if not log['file'] in __.spent:
+			__.spent.append(log['file'])
+			if not 'status' in log:log['status'] = status['default'];
+			if log['status'] == status['default'] and log['file'] in fileList:
+				schedulerLog[ii]['status'] = status['defaultSpentAltID']
+				log['status'] = status['defaultSpentAltID']
 
-		if log['status'] == status['default']:
+			if log['status'] == status['default']:
 
-			fileBackup.deleteSwitch( 'Session' )
-			if 'session' in log:
-				fileBackup.switch( 'Session', log['session'] )
+				fileBackup.deleteSwitch( 'Session' )
+				if 'session' in log:
+					fileBackup.switch( 'Session', log['session'] )
 
 
-			fileBackup.switch( 'Input', log['file'] )
-			fileBackup.do( 'action' )
+				fileBackup.switch( 'Input', log['file'] )
+				fileBackup.do( 'action' )
 
-			schedulerLog[ii]['status'] = status['defaultSpent']
+				schedulerLog[ii]['status'] = status['defaultSpent']
 
 	_.saveTable( schedulerLog, 'fileBackupSchedule.json', p=0 )
 
 	for log in backupLog:
+		if not log['file'] in __.spent:
+			__.spent.append(log['file'])
+			# shoulRunPreGame = True
 
-		# shoulRunPreGame = True
+			# if log['status'] == status['default'] or log['status'] == status['defaultSpent']:
+			# 	pass
+			# else:
+			# 	shoulRunPreGame = False
 
-		# if log['status'] == status['default'] or log['status'] == status['defaultSpent']:
-		# 	pass
-		# else:
-		# 	shoulRunPreGame = False
+			# # if _.resolveEpochTest( log['timestamp'] ) > maxEpochDate:
+			# if ( log['timestamp'] ) > maxEpoch:
+			# 	shoulRunPreGame = False
 
-		# # if _.resolveEpochTest( log['timestamp'] ) > maxEpochDate:
-		# if ( log['timestamp'] ) > maxEpoch:
-		# 	shoulRunPreGame = False
+			# if log['file'] in fileList:
+			# 	shoulRunPreGame = False
 
-		# if log['file'] in fileList:
-		# 	shoulRunPreGame = False
-
-		# if shoulRunPreGame:
-		# 	fileList.append( log['file'] )
-		# 	if os.path.isfile(log['file']):
-		# 		# fd = _dir.fileInfo( log['file'] )
-		# 		fd = { 'date_modified_raw': _.mod( log['file'] ) }
-		# 		# print( log['file'] )
-		# 		shoulRun = False
-		# 		try:
-		# 			if not type( fd['date_modified_raw'] ) == bool:
-		# 				shoulRun = True
-		# 			else:
-		# 				shoulRun = False
-		# 		except Exception as e:
-		# 			shoulRun = False
-
-
-		if not 'status' in log:log['status'] = status['default'];
-		if log['status'] == status['default'] or log['status'] == status['defaultSpent']:
-			pass
-		else:
-			shoulRunPreGame = False
-
-		# if _.resolveEpochTest( log['timestamp'] ) < maxEpochDate:
-		if ( log['timestamp'] ) < maxEpoch:
-			shoulRunPreGame = False
-
-		if log['file'] in fileList:
-			shoulRunPreGame = False
-
-		if shoulRunPreGame:
+			# if shoulRunPreGame:
+			# 	fileList.append( log['file'] )
+			# 	if os.path.isfile(log['file']):
+			# 		# fd = _dir.fileInfo( log['file'] )
+			# 		fd = { 'date_modified_raw': _.mod( log['file'] ) }
+			# 		# print( log['file'] )
+			# 		shoulRun = False
+			# 		try:
+			# 			if not type( fd['date_modified_raw'] ) == bool:
+			# 				shoulRun = True
+			# 			else:
+			# 				shoulRun = False
+			# 		except Exception as e:
+			# 			shoulRun = False
 
 
-			
+			if not 'status' in log:log['status'] = status['default'];
+			if log['status'] == status['default'] or log['status'] == status['defaultSpent']:
+				pass
+			else:
+				shoulRunPreGame = False
 
-			shouldBackup = True
+			# if _.resolveEpochTest( log['timestamp'] ) < maxEpochDate:
+			if ( log['timestamp'] ) < maxEpoch:
+				shoulRunPreGame = False
 
-			if log['file'] in doNotBackup:
-				shouldBackup = False
+			if log['file'] in fileList:
+				shoulRunPreGame = False
+
+			if shoulRunPreGame:
 
 
-			if shouldBackup:
+				
 
-				fileList.append( log['file'] )
-				if os.path.isfile(log['file']):
-					# fd = _dir.fileInfo( log['file'] )
-					fd = { 'date_modified_raw': _.mod( log['file'] ) }
+				shouldBackup = True
 
-					shoulRun = False
-					try:
-						if not type( fd['date_modified_raw'] ) == bool:
-							shoulRun = True
-						else:
-							shoulRun = False
-					except Exception as e:
+				if log['file'] in doNotBackup:
+					shouldBackup = False
+
+
+				if shouldBackup:
+
+					fileList.append( log['file'] )
+					if os.path.isfile(log['file']):
+						# fd = _dir.fileInfo( log['file'] )
+						fd = { 'date_modified_raw': _.mod( log['file'] ) }
+
 						shoulRun = False
+						try:
+							if not type( fd['date_modified_raw'] ) == bool:
+								shoulRun = True
+							else:
+								shoulRun = False
+						except Exception as e:
+							shoulRun = False
 
 
-					if shoulRun:
+						if shoulRun:
 
-					# fd['date_modified_raw']date_modified_raw
-					# if shoulRun:
-						# if not _.resolveEpochTest(fd['date_modified_raw']) < maxEpochDate:
-						if not (fd['date_modified_raw']) < maxEpoch:
-							i=0
-							print( _.resolveEpochTest( fd['date_modified_raw'] ) )
-							if not 'fileBackup.json' in log['file'] and not 'fileBackupSchedule.json' in log['file'] and not 'ID.sys' in log['file']:
-								if not 'status' in log:log['status'] = status['default'];
-								if log['status'] == status['default'] or log['status'] == status['defaultSpent']:
-									pass
-								if log['file'] in doNotBackup:
-									_.colorThis( [   'Skipped:', log['file']    ], 'red' )
-								else:
-
+						# fd['date_modified_raw']date_modified_raw
+						# if shoulRun:
+							# if not _.resolveEpochTest(fd['date_modified_raw']) < maxEpochDate:
+							if not (fd['date_modified_raw']) < maxEpoch:
+								i=0
+								print( _.resolveEpochTest( fd['date_modified_raw'] ) )
+								if not 'fileBackup.json' in log['file'] and not 'fileBackupSchedule.json' in log['file'] and not 'ID.sys' in log['file']:
+									if not 'status' in log:log['status'] = status['default'];
 									if log['status'] == status['default'] or log['status'] == status['defaultSpent']:
-
-
-										# if 'netblock.py' in log['file']:
-										# 	print( 'Backup Log', _.resolveEpochTest( log['timestamp'] ) )
-										# 	print( _.resolveEpochTest(fd['date_modified_raw']), maxEpochDate )
-										# 	_.printTest( log )
-										fileBackup.deleteSwitch( 'Session' )
-										if 'session' in log:
-											fileBackup.switch( 'Session', log['session'] )
-										
-										fileBackup.switch( 'Input', log['file'] )
-										fileBackup.do( 'action' )
-
-									else:
+										pass
+									if log['file'] in doNotBackup:
 										_.colorThis( [   'Skipped:', log['file']    ], 'red' )
-						else:
-							pass
-							if i > 25:
-								break
-							i+=1
-							# print(log['file'])
-						# else:
-							# print( fd['date_modified'], log['file'] )
+									else:
+
+										if log['status'] == status['default'] or log['status'] == status['defaultSpent']:
 
 
+											# if 'netblock.py' in log['file']:
+											# 	print( 'Backup Log', _.resolveEpochTest( log['timestamp'] ) )
+											# 	print( _.resolveEpochTest(fd['date_modified_raw']), maxEpochDate )
+											# 	_.printTest( log )
+											fileBackup.deleteSwitch( 'Session' )
+											if 'session' in log:
+												fileBackup.switch( 'Session', log['session'] )
+											
+											fileBackup.switch( 'Input', log['file'] )
+											fileBackup.do( 'action' )
+
+										else:
+											_.colorThis( [   'Skipped:', log['file']    ], 'red' )
+							else:
+								pass
+								if i > 25:
+									break
+								i+=1
+								# print(log['file'])
+							# else:
+								# print( fd['date_modified'], log['file'] )
+
+__.spent = []
 
 ########################################################################################
 if __name__ == '__main__':

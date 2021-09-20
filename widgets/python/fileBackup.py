@@ -581,6 +581,7 @@ def secureFiles_Encrypt( path, pw ):
 
 def secureFiles(path):
 
+
 	global crypt_docs
 	cryptScan=False
 	if path.lower() in __.specifications['fileBackup-auto-crypt']['files']:
@@ -601,6 +602,8 @@ def secureFiles(path):
 
 
 	if cryptScan:
+		if not _.switches.isActive('isPreOpen'):
+			return False
 		global _decrypt_docs
 		if _decrypt_docs is None:
 			_decrypt_docs = _.regImp( __.appReg, 'decrypt-docs' )
@@ -720,7 +723,7 @@ def action(path=None,flag=None):
 
 			if cryptScan:
 				_.colorThis(  [ 'registered: documentation file' ], 'Background.light_blue'  )
-				theFile = _.getText( path, raw=True )
+				theFile = _.getText( path, raw=True ).replace('!vault!','!V!').replace('!VAULT!','!V!').replace('!v!','!V!').replace('!crypt!','!V!').replace('!CRYPT!','!V!')
 				if __.specifications['fileBackup-auto-crypt']['scanA'] in theFile  or  __.specifications['fileBackup-auto-crypt']['scanB'] in theFile:
 
 
@@ -915,11 +918,11 @@ def action(path=None,flag=None):
 
 __.specifications['fileBackup-auto-crypt'] = {
 
-										'scanA': '!VAULT!',
-										'scanB': '!CRYPT!',
+										'scanA': '!V!',
+										'scanB': '!VAULT!',
 
 										'files': [
-														_v.myHome  +os.sep+  'projects'  +os.sep+  'last_projects.txt',
+														_v.myHome  +os.sep+  'projects'  +os.sep+  'project-log.txt',
 														_v.ww  +os.sep+  'bash'  +os.sep+    'notes'  +os.sep+  'RT-SCRAP-'+ _v.unixIDs[6] +'.txt',
 										],
 

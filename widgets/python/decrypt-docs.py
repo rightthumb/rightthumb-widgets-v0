@@ -152,10 +152,30 @@ _.postLoad( __file__ )
 
 
 def identify(row):
+	if row.endswith(' '):
+		return False
+	if row.endswith('!V!'):
+		return False
+	if row.endswith('=='):
+		return True
+
+
 	n = '0123456789'
 	l = 'abcdefghijklmnopqrstuvwxyz'
 	u = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+	aa = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
 	chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ/+='
+
+
+	hasAlpha=False
+	for a in aa:
+		if a in row:
+			hasAlpha=True
+			break
+	if not hasAlpha:
+		return False
+
+
 	for ch in row:
 		if not ch in chars:
 			return False
@@ -172,6 +192,8 @@ def identify(row):
 	elif row.endswith('=='):
 		return True
 	elif row.endswith('=') and len(row) > 15:
+		return True
+	elif row.count('/') > 1 or row.count('+') > 1:
 		return True
 	elif row.count('/') > 5 or row.startswith('/'):
 		return False
@@ -216,6 +238,8 @@ def identify(row):
 records = {}
 maxLen = 0
 def process(row):
+	# if '!V!' in row:
+	# 	return row
 	global records
 	global maxLen
 	if identify(row):
@@ -229,8 +253,9 @@ def process(row):
 					good = False
 			if good:
 				records[row] = row2
-				if len(row2) > maxLen:
-					maxLen = len(row2)
+				if not row2.startswith('todo:'):
+					if len(row2) > maxLen:
+						maxLen = len(row2)
 				# row = row2
 		except Exception as e:
 			pass
@@ -259,15 +284,42 @@ def run(path):
 	if not str(table)==str(test):
 		_.saveTable( table, 'crypt-docs.list', p=0 )
 
-
 	file = []
-	for i,row in enumerate( _.getText( path,raw=True ).split('\n') ):
+	for i,row in enumerate( _.getText( path,raw=True ).replace('!vault!','!V!').replace('!VAULT!','!V!').replace('!v!','!V!').replace('!crypt!','!V!').replace('!CRYPT!','!V!').split('\n') ):
 		row = process(row)
 		file.append(row)
 	nFile = []
 	for row in file:
 		if row in records:
-			row = records[row] + addSpaces(records[row]) + '!VAULT!'
+			if records[row].startswith('todo:'):
+				done=False
+				for test in ['ai','todo']:
+					# print(test)
+					if not done:
+						if test+': ' in records[row]:
+							done=True
+							# print(test+': !V!')
+							# sys.exit()
+							row = records[row].replace( test+': ', test+':  !V!  ' )
+						elif test+':x' in records[row]:
+							done=True
+							row = records[row].replace( test+':x', test+':x !V!  ' )
+						elif test+':y' in records[row]:
+							done=True
+							row = records[row].replace( test+':y', test+':y !V!  ' )
+						elif test+':z' in records[row]:
+							done=True
+							row = records[row].replace( test+':z', test+':z !V!  ' )
+				
+				if not done:
+					done=True
+					row = records[row] + addSpaces(records[row]) + '!V!'
+				row=row.replace('!V!   ','!V!  ')
+				row=row.replace('!V!   ','!V!  ')
+				row=row.replace('   !V!','  !V!')
+				row=row.replace('   !V!','  !V!')
+			else:
+				row = records[row] + addSpaces(records[row]) + '!V!'
 		nFile.append(row)
 	data = '\n'.join(nFile)
 	_.saveText( data, path )

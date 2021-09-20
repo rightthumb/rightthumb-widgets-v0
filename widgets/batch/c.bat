@@ -231,8 +231,8 @@ GOTO:EOF
 			SET todoo=%stmp%\todo.txt
 			SET todo=%myHome%\projects\todo.txt
 			set open=%myHome%\projects\open_projects.txt
-			SET lastP=%myHome%\projects\last_projects.txt
-			SET scrap=%myHome%\projects\last_projects.txt
+			SET lastP=%myHome%\projects\project-log.txt
+			SET scrap=%myHome%\projects\project-log.txt
 			SET documentation=%widgets%\widgets\documentation
 			SET instructions=%documentation%\instructions.txt
 			SET imports=%documentation%\python_imports.py
