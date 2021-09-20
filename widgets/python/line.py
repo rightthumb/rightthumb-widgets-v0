@@ -44,7 +44,7 @@ def appSwitches():
 	_.switches.register('Count', '-c,-count')
 	_.switches.register('NoCount', '--c,--count')
 	_.switches.register('JustCount', '-jc,++c,++count')
-	_.switches.register('Parse', '-p,-parse',';; 0;2 or ;sp 2 ')
+	_.switches.register('Parse', '-p,-parse,-split',';; 0;2 or ;sp 2 ')
 	_.switches.register('Parse2', '-p2')
 	_.switches.register('ParseSearch', '-ps')
 	_.switches.register('ParsePrint', '-pp')

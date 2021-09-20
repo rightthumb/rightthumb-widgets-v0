@@ -12,7 +12,7 @@
 
 # SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 # source  "$SCRIPT_DIR/load-vars.sh"
-terminal_name_path="$widgets/tech/hosts/$(hostname)/config/.terminal"
+terminal_name_path="$wprofile/config/.terminal"
 if [[ ! -e $terminal_name_path ]]; then
 	touch $terminal_name_path
 fi

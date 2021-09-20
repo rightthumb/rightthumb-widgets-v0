@@ -13,10 +13,10 @@
 # SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 # source  "$SCRIPT_DIR/load-vars.sh"
 
-unixID7=$( sed -n '7p' < $widgets/tech/hosts/$(hostname)/config/.unix_id )
+unixID7=$( sed -n '7p' < $wprofile/config/.unix_id )
 notes_folder="$widgets/widgets/bash/notes"
 notes_file="$notes_folder/RT-SCRAP-$unixID7.txt"
-host_alias="$widgets/tech/hosts/$(hostname)/config/.alias"
+host_alias="$wprofile/config/.alias"
 if [[ ! -e $notes_folder ]]; then
 	mkdir $notes_folder
 fi
@@ -31,7 +31,7 @@ if [[ ! -e $notes_file ]]; then
 	echo "_________________ _________________ _________________ _________________" >> $notes_file
 	echo "" >> $notes_file
 fi
-# tech_config="$widgets/tech/hosts/$(hostname)/config"
+# tech_config="$wprofile/config"
 # tech_editor = '$tech_config/.editor'
 # code_editor=$( cat $tech_editor )
 p="bash $widgets/widgets/bash/p.sh"

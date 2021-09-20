@@ -14,7 +14,7 @@
 # SCRIPT_DIR="${SCRIPT_DIR/bash\/nav/bash}"
 # source  "$SCRIPT_DIR/load-vars.sh"
 who=$( whoami )
-unixID7=$( sed -n '7p' < $widgets/tech/hosts/$(hostname)/config/.unix_id )
+unixID7=$( sed -n '7p' < $wprofile/config/.unix_id )
 history_folder="$widgets/widgets/bash/history"
 history_file="$history_folder/RT-HISTORY-$unixID7-$who.txt"
 bashrc_folder="$widgets/widgets/bash/bashrc"
@@ -41,12 +41,12 @@ then
 else
 	$p  autoBackup -ago 1d
 fi
-terminal_name=$( sed -n '7p' < $widgets/tech/hosts/$(hostname)/config/.terminal )
+terminal_name=$( sed -n '7p' < $wprofile/config/.terminal )
 if [[ ! -e $terminal_name ]]; then
 	read -p 'close all terminals?: ' shouldClose
 	if [[ "$shouldClose" == "y" ]]; then
 	    echo "YES, closing"
-		terminal_name_path="$widgets/tech/hosts/$(hostname)/config/.terminal"
+		terminal_name_path="$wprofile/config/.terminal"
 		terminal_name=$( cat $terminal_name_path )
 	    echo "killall $terminal_name"
 		killall $terminal_name
