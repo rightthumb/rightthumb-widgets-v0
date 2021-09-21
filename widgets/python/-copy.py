@@ -402,6 +402,7 @@ def subject():
 		subject = {}
 		subject['base'] = {}
 		subject['base']['import'] = '''
+#!/usr/bin/python3
 import os,sys,time,importlib
 import _rightThumb._construct as __
 __.appReg = __.clearFocus( '__main__', 'D:\\\\tech\\\\hosts\\\\VULCAN\\\\widgets\\\\python\\\\testing123.py' )
@@ -550,24 +551,36 @@ $('td').forEach(div => div.style.background = 'orange');
 
 
 def autoText( data ):
+	table = {}
+	for k in data:
+		table[k] = data[k]
+	autxt = _v.dbTables  +_v.slash+ 'AutoText.csv'
+	if not os.path.isfile(autxt):
+		return table
 	try:
-		raw = _.getText( _v.dbTables  +_v.slash+ 'AutoText.csv', raw=True )
+		raw = _.getText( autxt, raw=True )
 	except Exception as e:
 		raw = ''
-		
-	text = {}
-	for k in data:
-		text[k] = data[k]
+	if len(raw) < 5:
+		return table
+
+
 	for line in raw.split('\n'):
+
+		c=line.count('%<')
 		line = line.replace( '%<', '' )
 		if not line == ';':
-			parts = line.split(';')
-			if len(parts) > 1:
-				a = parts[0]
-				b = parts[1]
+			if ';' in line:
+				f=_.find_all(line,';')
+				a=line[0:f[0]]
+				b=line[f[0]+1:]
 				b = b.replace( '{#crlf#}', '\n' )
-				text[a] = b
-	return text
+				# table[a] = {}
+				# table[a]['text'] = b
+				# table[a]['back'] = c
+				table[a] = b
+
+	return table
 
 
 def action():

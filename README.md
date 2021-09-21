@@ -1,7 +1,7 @@
 "# rightthumb-widgets-v0"
 
 
-DESCRIPTION
+Description
 
     collection of handy scripts ( over 1700 )
 
@@ -28,7 +28,7 @@ DESCRIPTION
 
 
 
-FEATURES
+Features
 
     works on
         windows (cmd.exe)
@@ -80,7 +80,7 @@ FEATURES
 
 
 
-HOW TO INSTALL
+How to install
 
 
     cd install
@@ -105,7 +105,7 @@ How to recover a file
             the session id is associated with the files edited
 
 
-HOW THE INSTALLER WORKS
+How the installer works
 
     in windows
         a file %USERPROFILE%\rr.bat
@@ -123,39 +123,45 @@ HOW THE INSTALLER WORKS
 
 Recommended python modules
 
-pip3 install simplejson
-pip3 install xtarfile
-pip3 install binaryornot
-pip3 install cssselect
-pip3 install colorama
-pip3 install arrow
-if termux
-    pip3 install setuptools-rust
-pip3 install pymysql
-pip3 install Crypto
-pip3 install tzlocal
-pip3 install termcolor
-pip3 install datetime
-pip3 install pyAesCrypt
-pip3 install zipfile36
-pip3 install pywin32
-pip3 install stickytape
-pip3 install dnspython
-pip3 install pymongo
-pip3 install mycloudhome
-pip3 install pyperclip
-pip3 install pyAesCrypt
-pip3 install pycrypto
-pip3 install sshtunnel
-pip3 install gtts
-pip3 install emoji
-pip3 install pyreadline
-pip3 install ping
-pip3 install netaddr
-pip3 install getmac
-pip3 install native_web_app
-pip3 install psutil
-pip3 install forward
+    apt-get install python3
+    apt-get install python3-pip
+    apt-get install fonts-emojione
+    apt-get install wget
+    apt-get install unzip
+
+    pip3 install simplejson
+    pip3 install xtarfile
+    pip3 install binaryornot
+    pip3 install cssselect
+    pip3 install colorama
+    pip3 install arrow
+    if termux
+        pip3 install setuptools-rust
+    pip3 install pymysql
+    pip3 install Crypto
+    pip3 install tzlocal
+    pip3 install termcolor
+    pip3 install datetime
+    pip3 install pyAesCrypt
+    pip3 install zipfile36
+    pip3 install pywin32
+    pip3 install stickytape
+    pip3 install dnspython
+    pip3 install pymongo
+    pip3 install mycloudhome
+    pip3 install pyperclip
+    pip3 install pyAesCrypt
+    pip3 install pycrypto
+    pip3 install sshtunnel
+    pip3 install gtts
+    pip3 install emoji
+    pip3 install pyreadline
+    pip3 install ping
+    pip3 install netaddr
+    pip3 install getmac
+    pip3 install native_web_app
+    pip3 install psutil
+    pip3 install forward
 
 
 Create new python widget with
@@ -262,6 +268,7 @@ Edit python template
 
 
 
+
 Notes
     
     epyi base -file notes
@@ -303,7 +310,75 @@ Entertainment
                     It cross references franchises
                         marvel, dc, hallmark
 
-ABOUT
+Code Note
+
+    I code a little weird because it is backwards compatible and organized
+        Example:
+            Used the command: p inFunc -f hotkeys.py
+                Generated this:
+                     class HOTKEYS
+                         def __init__
+                         def log_keystroke
+                     class CLIP
+                         def win_path
+                         def implode
+                         def explode
+                         def del_activate
+                         def del_run
+                     class TYPING
+                         def __init__
+                         def ty
+                         def ty_h
+                         def ty_a
+                         def keyboard_typing
+                     class LOADER
+                         def __init__
+                         def autoText
+                         def flip_table_test
+                         def add_text
+                         def build_table
+                     def action
+                     def load
+    
+    I instantiate everything
+        Hotkeys=HOTKEYS()
+        Typing=TYPING()
+        Loader=LOADER()
+        Clip=CLIP()
+
+    and execute:
+        Loader.build_table()
+            in the code
+
+    If del __init__ it is not backwards compatable
+
+Hotkey example
+
+    copy this
+        pip3 install simplejson
+        pip3 install xtarfile
+        pip3 install binaryornot
+        pip3 install cssselect
+        pip3 install colorama
+    hotkey
+        ctrl ctrl space 'del' 2
+            type out 'del' not the delete button
+    output
+        simplejson
+        xtarfile
+        binaryornot
+        cssselect
+        colorama
+
+    hotkey
+        ctrl ctrl space 'imp'
+            ('imp' stands for implode)
+    output
+        simplejson, xtarfile, binaryornot, cssselect, colorama
+
+
+
+About
 
     What if magic existed?
     What if a place existed where your every thought and dream come to life.

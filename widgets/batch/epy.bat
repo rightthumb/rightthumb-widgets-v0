@@ -20,6 +20,7 @@ if not [%3] == [] (
 	call p fileBackup -i "%python%\%1.py" -python
 ) 
 
-start "EDIT" %code_editor% "%python%\%1.py"
 
+rem start "EDIT" %code_editor% "%python%\%1.py"
+call p file-open -app %code_editor% -f "%python%\%1.py"
 
