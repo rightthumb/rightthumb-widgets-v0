@@ -376,6 +376,9 @@ Hotkey example
     output
         simplejson, xtarfile, binaryornot, cssselect, colorama
 
+    hotkey
+        22 esc esc esc
+    closes hotkeys
 
 
 About
