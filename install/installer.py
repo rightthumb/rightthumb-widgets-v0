@@ -1853,6 +1853,9 @@ pr-|{6FAB5628-94A1-410A-82D1-1D42A2A11750}/.rt/profile/projects"""
 		
 		# if 'code_editor' in v.bash and not v.bash['code_editor'] and 'code_editor' in v.bash_defaults:
 		# 	v.bash['code_editor'] = v.bash_defaults['code_editor']
+		if not 'widgets' in v.bash:
+			v.bash['widgets'] = vc.PATHS.path(__file__).split(os.sep+'install')[0]
+		
 		if v.isWin:
 			v.bash['p'] = v.bash['widgets'] + '\\widgets\\batch\\p.bat'
 		else:
@@ -1945,6 +1948,9 @@ pr-|{6FAB5628-94A1-410A-82D1-1D42A2A11750}/.rt/profile/projects"""
 	def v_bash_order( self ):
 		vVv = vc.PATHS.clean4os( v.vVv )
 		bash_defaults = vc.PATHS.clean4os( v.bash_defaults )
+
+		if not 'widgets' in v.bash:
+			v.bash['widgets'] = vc.PATHS.path(__file__).split(os.sep+'install')[0]
 
 		for k in vVv:
 			if not k in v.bash:
