@@ -1791,6 +1791,35 @@ pr-|{6FAB5628-94A1-410A-82D1-1D42A2A11750}/.rt/profile/projects"""
 		# v.f.mkdir( v.rtc )
 		return v.home
 
+	def var_clean( self ):
+
+		done=False
+		while not done:
+			err=False
+			for k in v.bash:
+				if not self.var_test(v.bash[k]):
+					err=True
+					del v.bash[k]
+					break
+			if not err:
+				done=True
+
+	def var_test( self, var ):
+		if os.path.isfile(var):
+			return True
+		if os.path.isdir(var):
+			return True
+
+		if not os.sep in var:
+			import subprocess
+			try:
+				result=subprocess.check_output([  'which', var ])
+				result=str( result ,'iso-8859-1')
+				if len(result) > 3:
+					return True
+			except Exception as e:
+				pass
+		return False
 	def bash_vars( self, p=1 ):
  
  
@@ -1847,6 +1876,7 @@ pr-|{6FAB5628-94A1-410A-82D1-1D42A2A11750}/.rt/profile/projects"""
 				v.bash[k] = v.bash[k].replace( '/opt/RightThumb', v.bash['widgets'] )
 
 		self.v_bash_order()
+
 
 
 		items.append('\n')
@@ -1913,7 +1943,6 @@ pr-|{6FAB5628-94A1-410A-82D1-1D42A2A11750}/.rt/profile/projects"""
 
 
 	def v_bash_order( self ):
- 
 		vVv = vc.PATHS.clean4os( v.vVv )
 		bash_defaults = vc.PATHS.clean4os( v.bash_defaults )
 
@@ -1981,6 +2010,7 @@ pr-|{6FAB5628-94A1-410A-82D1-1D42A2A11750}/.rt/profile/projects"""
 			if '[home]' in v.bash[k]:
 				v.bash[k]=v.bash[k].replace( '[home]', v.home )
 				
+		self.var_clean()
 
 
 
@@ -14584,6 +14614,7 @@ if __name__ == '__main__':
 # alias t2="installer.py2";
 # bashFileHeader
 # sys.executable
-
 # del v.bash['profile']
+
+# vc.FIG.bash_vars(p=0)
 # 'Installer'
