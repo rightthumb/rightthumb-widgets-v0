@@ -13784,6 +13784,7 @@ def action():
 	
 	if switches.isActive('Installer'):
 		vc.FIG.home()
+		v.bash['widgets'] = vc.PATHS.path(__file__).split(os.sep+'install')[0]
 		vc.FIG.v_bash_order()
 		if not os.getcwd().endswith(os.sep+'install'):
 			cp( 'Error, Please run from install folder', 'red' )
@@ -13808,8 +13809,7 @@ def action():
 		if os.path.isfile( v.config ):
 			v.bash = vc.HD.getTableSimp( v.config )
 		v.bash['PY'] = sys.executable
-		if os.sep+'install' in vc.PATHS.path(__file__):
-			v.bash['widgets'] = vc.PATHS.path(__file__).split(os.sep+'install')[0]
+		
 		else:
 			if not 'widgets' in v.bash:
 				v.bash['widgets'] = input( 'path? ' )
