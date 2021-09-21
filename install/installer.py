@@ -14387,14 +14387,18 @@ example: ~/.rt/.config.hash
 
 	if switches.isActive('.bashrc-Mini'):
 		vc.FIG.bashrc('mini',settings=switches.values('.bashrc-Mini'))
+		vc.FIG.bash_vars()
 		return None
 
 	if switches.isActive('.bashrc-Default'):
 		vc.FIG.bashrc(settings=switches.values('.bashrc-Default'))
+		vc.FIG.bash_vars()
 		return None
 
 	if switches.isActive('.bashrc-Full'):
 		vc.FIG.bashrc('full',settings=switches.values('.bashrc-Full'))
+		vc.FIG.bash_vars()
+		return None
 
 	if switches.isActive('File-Valid'):
 		for path in switches.values('File-Valid'):
