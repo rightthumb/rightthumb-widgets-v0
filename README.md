@@ -67,8 +67,26 @@ Features
         p history -ago 2d + "cd clients"
             you can search through terminal history
 
-
-    
+    have a movie drive?
+        auto franchise hierarchy!!
+    Marvel                      Avengers                   2019 Avengers: Endgame
+                                                           2018 Avengers: Infinity War
+                                                           2015 Avengers: Age of Ultron
+                                Spiderman                  2018 Spider-Man: Into the Spider-Verse
+                                                           2017 Spider-Man: Homecoming
+                                                           2014 The Amazing Spider-Man 2
+                                                           2007 Spider-Man 3
+                                                           2004 Spider-Man 2
+                                                           2002 Spider-Man
+                                Ant-Man                    2018 Ant-Man and the Wasp
+                                                           2015 Ant-Man
+                                Wolverine                  2017 Logan
+                                                           2013 The Wolverine
+                                                           2009 X-Men Origins: Wolverine
+                                Thor                       2017 Thor: Ragnarok
+                                                           2013 Thor: The Dark World
+                                                           2011 Thor
+        
 
 
 
