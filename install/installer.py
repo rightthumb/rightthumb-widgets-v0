@@ -13810,9 +13810,9 @@ def action():
 			v.bash = vc.HD.getTableSimp( v.config )
 		v.bash['PY'] = sys.executable
 		
-		else:
-			if not 'widgets' in v.bash:
-				v.bash['widgets'] = input( 'path? ' )
+		# else:
+		# 	if not 'widgets' in v.bash:
+		# 		v.bash['widgets'] = input( 'path? ' )
 
 
 		vc.FIG.v_bash_order()
