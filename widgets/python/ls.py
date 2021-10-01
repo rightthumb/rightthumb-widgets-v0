@@ -67,8 +67,8 @@ def appSwitches():
 	_.switches.register('Not', '-not,-invert')
 	_.switches.register('Extensions', '-ext', 'db image graphic video app audio doc script archive')
 	_.switches.register('Header', '-h,-header','5')
-	_.switches.register('Group>=', '-,++g', '2' )
-	_.switches.register('Group<=', '-,--g', '2' )
+	_.switches.register('Group>=', '++g', '2' )
+	_.switches.register('Group<=', '--g', '2' )
 	_.switches.register('PlusFile', '-pf,-pn,-plusfile')
 	_.switches.register('Ago-Create-Date', '-cd')
 	# _.switches.register('WOYCreatedDate', '-cwoy')
@@ -855,10 +855,13 @@ def action():
 
 	if _.switches.isActive('Group>='):
 		g = _.switches.values('Group>=')[0]
-		s = str(_.size_group_size(g))
-		_.switches.fieldSet( 'Size', 'active', True )
-		_.switches.fieldSet( 'Size', 'value', 'g,'+s )
-		_.switches.fieldSet( 'Size', 'values', ['g',s] )
+		try:
+			s = str(_.size_group_size(g))
+			_.switches.fieldSet( 'Size', 'active', True )
+			_.switches.fieldSet( 'Size', 'value', 'g,'+s )
+			_.switches.fieldSet( 'Size', 'values', ['g',s] )
+		except Exception as e:
+			pass
 
 	if _.switches.isActive('Group<='):
 		g = _.switches.values('Group<=')[0]
