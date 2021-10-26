@@ -696,7 +696,7 @@ def action(path=None,flag=None):
 			if True or _.switches.isActive('Test'):
 				# secureFiles(path)
 				if secureFiles(path):
-					_.colorThis( [ 'Secure file, no backup' ], 'green' )
+					# _.colorThis( [ 'Secure file' ], 'green' )
 					_.colorThis( path, 'cyan' )
 					# print(' -- TRUE -- ')
 					return None
@@ -722,8 +722,25 @@ def action(path=None,flag=None):
 
 
 			if cryptScan:
+				global doc_sep
 				_.colorThis(  [ 'registered: documentation file' ], 'Background.light_blue'  )
 				theFile = _.getText( path, raw=True ).replace('!vault!','!V!').replace('!VAULT!','!V!').replace('!v!','!V!').replace('!crypt!','!V!').replace('!CRYPT!','!V!')
+				crypy=__.specifications['fileBackup-auto-crypt']['crypt-segment']
+				segments=theFile.split(doc_sep)
+				newTemp=[]
+				for segment in segments:
+					if crypy+' ' in segment or crypy+'\n' in segment or crypy+'\t' in segment:
+						segment=segment.replace('!V!','')
+						segy=[]
+						for si, segsy in enumerate(segment.split('\n')):
+							if not si:
+								segy.append(  segsy  )
+							else:
+								segy.append(  _blowfish.encrypt( segsy, _vault.key() )  )
+						segment = '\n'.join( segy )
+					newTemp.append(segment)
+				theFile=doc_sep.join(newTemp)
+
 				if __.specifications['fileBackup-auto-crypt']['scanA'] in theFile  or  __.specifications['fileBackup-auto-crypt']['scanB'] in theFile:
 
 
@@ -746,29 +763,29 @@ def action(path=None,flag=None):
 								line = _str.cleanBE( line, '\t' )
 								line = _blowfish.encrypt(    line    ,    _vault.key()    )
 
-							elif __.specifications['fileBackup-auto-crypt']['scanB'] in line:
-								line = line.replace(  __.specifications['fileBackup-auto-crypt']['scanB']+' ', __.specifications['fileBackup-auto-crypt']['scanB']  )
-								line = line.replace(  __.specifications['fileBackup-auto-crypt']['scanB']+' ', __.specifications['fileBackup-auto-crypt']['scanB']  )
-								line = line.replace(  __.specifications['fileBackup-auto-crypt']['scanB']+' ', __.specifications['fileBackup-auto-crypt']['scanB']  )
-								line = line.replace(  __.specifications['fileBackup-auto-crypt']['scanB']+' ', __.specifications['fileBackup-auto-crypt']['scanB']  )
-								line = line.replace(  ' '+__.specifications['fileBackup-auto-crypt']['scanB'], __.specifications['fileBackup-auto-crypt']['scanB']  )
-								line = line.replace(  ' '+__.specifications['fileBackup-auto-crypt']['scanB'], __.specifications['fileBackup-auto-crypt']['scanB']  )
-								line = line.replace(  ' '+__.specifications['fileBackup-auto-crypt']['scanB'], __.specifications['fileBackup-auto-crypt']['scanB']  )
-								line = line.replace(  ' '+__.specifications['fileBackup-auto-crypt']['scanB'], __.specifications['fileBackup-auto-crypt']['scanB']  )
-								if '>'+__.specifications['fileBackup-auto-crypt']['scanB'] in line:
-									lineP = line.split( '>'+__.specifications['fileBackup-auto-crypt']['scanB'] )
-									# print( lineP )
-									# print( line )
-									line = _str.cleanBE( line, ' ' )
-									line = _str.cleanBE( line, '\t' )
-									line = _str.cleanBE( line, ' ' )
-									line = _str.cleanBE( line, '\t' )
-									line = _blowfish.encrypt(    _str.cleanBE( lineP[1], ' ' )    ,    _str.cleanBE( lineP[0], ' ' )    )
-								if __.specifications['fileBackup-auto-crypt']['scanB']+'<' in line:
-									lineP = line.split( __.specifications['fileBackup-auto-crypt']['scanB']+'<' )
-									# print( lineP )
-									# print( line )
-									line = _blowfish.encrypt(    _str.cleanBE( lineP[0], ' ' )    ,    _str.cleanBE( lineP[1], ' ' )    )
+						# elif __.specifications['fileBackup-auto-crypt']['scanB'] in line:
+						# 	line = line.replace(  __.specifications['fileBackup-auto-crypt']['scanB']+' ', __.specifications['fileBackup-auto-crypt']['scanB']  )
+						# 	line = line.replace(  __.specifications['fileBackup-auto-crypt']['scanB']+' ', __.specifications['fileBackup-auto-crypt']['scanB']  )
+						# 	line = line.replace(  __.specifications['fileBackup-auto-crypt']['scanB']+' ', __.specifications['fileBackup-auto-crypt']['scanB']  )
+						# 	line = line.replace(  __.specifications['fileBackup-auto-crypt']['scanB']+' ', __.specifications['fileBackup-auto-crypt']['scanB']  )
+						# 	line = line.replace(  ' '+__.specifications['fileBackup-auto-crypt']['scanB'], __.specifications['fileBackup-auto-crypt']['scanB']  )
+						# 	line = line.replace(  ' '+__.specifications['fileBackup-auto-crypt']['scanB'], __.specifications['fileBackup-auto-crypt']['scanB']  )
+						# 	line = line.replace(  ' '+__.specifications['fileBackup-auto-crypt']['scanB'], __.specifications['fileBackup-auto-crypt']['scanB']  )
+						# 	line = line.replace(  ' '+__.specifications['fileBackup-auto-crypt']['scanB'], __.specifications['fileBackup-auto-crypt']['scanB']  )
+						# 	if '>'+__.specifications['fileBackup-auto-crypt']['scanB'] in line:
+						# 		lineP = line.split( '>'+__.specifications['fileBackup-auto-crypt']['scanB'] )
+						# 		# print( lineP )
+						# 		# print( line )
+						# 		line = _str.cleanBE( line, ' ' )
+						# 		line = _str.cleanBE( line, '\t' )
+						# 		line = _str.cleanBE( line, ' ' )
+						# 		line = _str.cleanBE( line, '\t' )
+						# 		line = _blowfish.encrypt(    _str.cleanBE( lineP[1], ' ' )    ,    _str.cleanBE( lineP[0], ' ' )    )
+						# 	if __.specifications['fileBackup-auto-crypt']['scanB']+'<' in line:
+						# 		lineP = line.split( __.specifications['fileBackup-auto-crypt']['scanB']+'<' )
+						# 		# print( lineP )
+						# 		# print( line )
+						# 		line = _blowfish.encrypt(    _str.cleanBE( lineP[0], ' ' )    ,    _str.cleanBE( lineP[1], ' ' )    )
 
 
 
@@ -916,10 +933,13 @@ def action(path=None,flag=None):
 
 
 
+
 __.specifications['fileBackup-auto-crypt'] = {
 
 										'scanA': '!V!',
 										'scanB': '!VAULT!',
+										'crypt-segment': '#crypt',
+
 
 										'files': [
 														_v.myHome  +os.sep+  'projects'  +os.sep+  'project-log.txt',
@@ -980,6 +1000,7 @@ crypt_docs = _.getTable('crypt-docs.list')
 
 focus()
 _decrypt_docs = None
+doc_sep = '\n__________________________________________________________________________________\n'
 
 # flag validator
 # _bkLog.imp.validateFlag

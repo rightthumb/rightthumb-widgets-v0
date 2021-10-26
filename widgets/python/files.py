@@ -589,6 +589,9 @@ def action():
 		# print(_v.w)
 		base_path=_v.widgets
 		_.switches.fieldSet( 'Remove-Root-Folder', 'active', True )
+		_.switches.fieldSet( 'Minus', 'active', True )
+		_.switches.fieldSet( 'Minus', 'value', 'minecraft.py' )
+		_.switches.fieldSet( 'Minus', 'values', ['minecraft.py'] )
 		_.switches.fieldSet( 'Plus', 'active', True )
 		_.switches.fieldSet( 'Plus', 'value', '*.py,*.sh,*.bat,*.MD' )
 		_.switches.fieldSet( 'Plus', 'values', ['*.py','*.sh','*.bat','*.MD'] )
@@ -660,6 +663,7 @@ import _rightThumb._dir as _dir
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 
