@@ -12,28 +12,28 @@ rem ## {C3P0D40fAe8B} ##
 
 
 IF NOT "%1" == "" GOTO QUICK
-net view
-echo ===================================
-echo Enter the computer name to shutdown
-set /p cp=kill:
-cls
-echo %cp%
-echo ===================================
-set /p do=Type r for restrart or s to shutdown:
-cls
-echo Shutingdown %cp%
-shutdown -%do% -m %cp%
-echo ===================================
-set /p stop=Hit Enter to stop the shutdown of %cp%
-echo Shutdown Aborted
-shutdown -a -m %cp%
+rem net view
+rem echo ===================================
+rem echo Enter the computer name to shutdown
+rem set /p cp=kill:
+rem cls
+rem echo %cp%
+rem echo ===================================
+rem set /p do=Type r for restrart or s to shutdown:
+rem cls
+rem echo Shutingdown %cp%
+rem shutdown -%do% -m %cp%
+rem echo ===================================
+rem set /p stop=Hit Enter to stop the shutdown of %cp%
+rem echo Shutdown Aborted
+rem shutdown -a -m %cp%
 GOTO END
 
 
 
 
 :QUICK
-taskkill /im %1 /f
+taskkill /im %1* /f
 GOTO END
 
 

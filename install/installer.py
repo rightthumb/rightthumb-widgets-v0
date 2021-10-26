@@ -45,7 +45,7 @@ v.appInfo={
 					'installer.py -import simplejson',
 					'',
 					'installer.py -config.py /usr/bin/python3',
-					'installer.py -config.path /opt/RightThumb',
+					'installer.py -config.path /opt/rightthumb-widgets-v0',
 					'installer.py -config.editor code-oss',
 					'',
 					'installer.py -sh.file app.py',
@@ -158,7 +158,7 @@ def loader():
 	v.config_py = None
 	v.bash = {}
 	v.bash_defaults = {
-							'widgets': '/opt/RightThumb',
+							'widgets': '/opt/rightthumb-widgets-v0',
 							'PY': sys.executable,
 							'PY2': '/usr/bin/python2',
 
@@ -1875,8 +1875,8 @@ pr-|{6FAB5628-94A1-410A-82D1-1D42A2A11750}/.rt/profile/projects"""
 		# 	v.bash['widgets'] = v.bash['widgets'][0]
 		for k in v.bash:
 			# if not k == 'widgets':
-			if '/opt/RightThumb' in v.bash[k]:
-				v.bash[k] = v.bash[k].replace( '/opt/RightThumb', v.bash['widgets'] )
+			if '/opt/rightthumb-widgets-v0' in v.bash[k]:
+				v.bash[k] = v.bash[k].replace( '/opt/rightthumb-widgets-v0', v.bash['widgets'] )
 
 		self.v_bash_order()
 
@@ -1962,7 +1962,7 @@ pr-|{6FAB5628-94A1-410A-82D1-1D42A2A11750}/.rt/profile/projects"""
 
 		for k in v.bash:
 			if not k == 'widgets':
-				v.bash[k] = v.bash[k].replace( '/opt/RightThumb', v.bash['widgets'] )
+				v.bash[k] = v.bash[k].replace( '/opt/rightthumb-widgets-v0', v.bash['widgets'] )
  
 		table = {}
 		# if v.isWin:
@@ -2776,7 +2776,7 @@ alias t.sh="$HOME/.rt/tool.sh";
 alias s.t.sh="sudo $HOME/.rt/tool.sh";
 alias c="clear";
 alias vps.new="ssh-keygen -f $HOME/.ssh/known_hosts -R 'vps.rightthumb.com';ssh-keygen -f $HOME/.ssh/known_hosts -R '45.35.203.103';";
-alias vps2.new="ssh-keygen -f '/home/scott/.ssh/known_hosts' -R '45.35.203.104';ssh-keygen -f '/home/scott/.ssh/known_hosts' -R '45.35.203.104';";
+alias vps2.new="ssh-keygen -f '/home/scott/.ssh/known_hosts' -R 'vps2.rightthumb.com';ssh-keygen -f '/home/scott/.ssh/known_hosts' -R '45.35.203.104';";
 
 
 
@@ -14561,20 +14561,20 @@ example: ~/.rt/.config.hash
 
 	if switches.isActive('Folders-servers'):
 		folders = """
-/opt/RightThumb/widgets/servers/socket
-/opt/RightThumb/widgets/servers/socket/linux
-/opt/RightThumb/widgets/servers/socket/smb
-/opt/RightThumb/widgets/servers/web
-/opt/RightThumb/widgets/servers/web/alphabet
-/opt/RightThumb/widgets/servers/web/alphabet/assets
-/opt/RightThumb/widgets/servers/web/alphabet/assets/js
-/opt/RightThumb/widgets/servers/web/alphabet/Docs
-/opt/RightThumb/widgets/servers/web/crud
-/opt/RightThumb/widgets/servers/web/DnD
-/opt/RightThumb/widgets/servers/web/js.devexpress
-/opt/RightThumb/widgets/servers/web/largeJsonTest
-/opt/RightThumb/widgets/servers/web/shell
-/opt/RightThumb/widgets/servers/web/vps
+/opt/rightthumb-widgets-v0/widgets/servers/socket
+/opt/rightthumb-widgets-v0/widgets/servers/socket/linux
+/opt/rightthumb-widgets-v0/widgets/servers/socket/smb
+/opt/rightthumb-widgets-v0/widgets/servers/web
+/opt/rightthumb-widgets-v0/widgets/servers/web/alphabet
+/opt/rightthumb-widgets-v0/widgets/servers/web/alphabet/assets
+/opt/rightthumb-widgets-v0/widgets/servers/web/alphabet/assets/js
+/opt/rightthumb-widgets-v0/widgets/servers/web/alphabet/Docs
+/opt/rightthumb-widgets-v0/widgets/servers/web/crud
+/opt/rightthumb-widgets-v0/widgets/servers/web/DnD
+/opt/rightthumb-widgets-v0/widgets/servers/web/js.devexpress
+/opt/rightthumb-widgets-v0/widgets/servers/web/largeJsonTest
+/opt/rightthumb-widgets-v0/widgets/servers/web/shell
+/opt/rightthumb-widgets-v0/widgets/servers/web/vps
 		"""
 		vc.FIG.bash_vars(p=0)
 		for line in folders.split('\n'):
@@ -14583,7 +14583,7 @@ example: ~/.rt/.config.hash
 			line = vc.STR.cleanBE( line, '\r' )
 			line = vc.STR.cleanBE( line, '\t' )
 			if line:
-				line = line.replace( '/opt/RightThumb', v.bash['widgets'] )
+				line = line.replace( '/opt/rightthumb-widgets-v0', v.bash['widgets'] )
 				line = line.replace( '/', os.sep )
 				v.f.mkdir(line)
 		return None

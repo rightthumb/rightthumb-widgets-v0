@@ -152,13 +152,14 @@ _.postLoad( __file__ )
 
 
 def identify(row):
-	if row.endswith(' '):
+	if ' ' in row:
 		return False
-	if row.endswith('!V!'):
+	if '!V!' in row:
 		return False
-	if row.endswith('=='):
+	if row.endswith('='):
 		return True
-
+	# if len(row) > 15:
+	# 	return True
 
 	n = '0123456789'
 	l = 'abcdefghijklmnopqrstuvwxyz'
@@ -189,14 +190,14 @@ def identify(row):
 		return False
 	elif '=' in row and not row.endswith('='):
 		return False
-	elif row.endswith('=='):
+	elif row.endswith('='):
 		return True
-	elif row.endswith('=') and len(row) > 15:
+	elif len(row) > 15:
 		return True
-	elif row.count('/') > 1 or row.count('+') > 1:
-		return True
-	elif row.count('/') > 5 or row.startswith('/'):
-		return False
+	# elif row.count('/') > 1 or row.count('+') :
+	# 	return True
+	# elif row.count('/') > 5 or row.startswith('/'):
+	# 	return False
 
 	else:
 		if len(row) < 7:
@@ -276,6 +277,7 @@ def addSpaces(row):
 def run(path):
 	global records
 	global maxLen
+	global doc_sep
 
 	table = _.getTable('crypt-docs.list')
 	test=table.copy()
@@ -283,45 +285,54 @@ def run(path):
 		table.append(path)
 	if not str(table)==str(test):
 		_.saveTable( table, 'crypt-docs.list', p=0 )
+	theFILE = _.getText( path,raw=True )
+	if theFILE.startswith(doc_sep.replace('\n','')):
+		theFILE='\n'+theFILE
+	segments=[]
+	for segment in theFILE.split(doc_sep):
+		file = []
+		for i,row in enumerate( segment.replace('!vault!','!V!').replace('!VAULT!','!V!').replace('!v!','!V!').replace('!crypt!','!V!').replace('!CRYPT!','!V!').split('\n') ):
+			row = process(row)
+			file.append(row)
 
-	file = []
-	for i,row in enumerate( _.getText( path,raw=True ).replace('!vault!','!V!').replace('!VAULT!','!V!').replace('!v!','!V!').replace('!crypt!','!V!').replace('!CRYPT!','!V!').split('\n') ):
-		row = process(row)
-		file.append(row)
-	nFile = []
-	for row in file:
-		if row in records:
-			if records[row].startswith('todo:'):
-				done=False
-				for test in ['ai','todo']:
-					# print(test)
-					if not done:
-						if test+': ' in records[row]:
+		nFile = []
+		for row in file:
+			if row in records:
+				if '#crypt' in segment:
+					row = records[row]
+				else:
+					if records[row].startswith('todo:'):
+						done=False
+						for test in ['ai','todo']:
+							# print(test)
+							if not done:
+								if test+': ' in records[row]:
+									done=True
+									# print(test+': !V!')
+									# sys.exit()
+									row = records[row].replace( test+': ', test+':  !V!  ' )
+								elif test+':x' in records[row]:
+									done=True
+									row = records[row].replace( test+':x', test+':x !V!  ' )
+								elif test+':y' in records[row]:
+									done=True
+									row = records[row].replace( test+':y', test+':y !V!  ' )
+								elif test+':z' in records[row]:
+									done=True
+									row = records[row].replace( test+':z', test+':z !V!  ' )
+						
+						if not done:
 							done=True
-							# print(test+': !V!')
-							# sys.exit()
-							row = records[row].replace( test+': ', test+':  !V!  ' )
-						elif test+':x' in records[row]:
-							done=True
-							row = records[row].replace( test+':x', test+':x !V!  ' )
-						elif test+':y' in records[row]:
-							done=True
-							row = records[row].replace( test+':y', test+':y !V!  ' )
-						elif test+':z' in records[row]:
-							done=True
-							row = records[row].replace( test+':z', test+':z !V!  ' )
-				
-				if not done:
-					done=True
-					row = records[row] + addSpaces(records[row]) + '!V!'
-				row=row.replace('!V!   ','!V!  ')
-				row=row.replace('!V!   ','!V!  ')
-				row=row.replace('   !V!','  !V!')
-				row=row.replace('   !V!','  !V!')
-			else:
-				row = records[row] + addSpaces(records[row]) + '!V!'
-		nFile.append(row)
-	data = '\n'.join(nFile)
+							row = records[row] + addSpaces(records[row]) + '!V!'
+						row=row.replace('!V!   ','!V!  ')
+						row=row.replace('!V!   ','!V!  ')
+						row=row.replace('   !V!','  !V!')
+						row=row.replace('   !V!','  !V!')
+					else:
+						row = records[row] + addSpaces(records[row]) + '!V!'
+			nFile.append(row)
+		segments.append('\n'.join(nFile))
+	data = doc_sep.join(segments)
 	_.saveText( data, path )
 
 def action():
@@ -340,7 +351,7 @@ def action():
 
 
 
-
+doc_sep = '\n__________________________________________________________________________________\n'
 
 import _rightThumb._vault as _vault
 

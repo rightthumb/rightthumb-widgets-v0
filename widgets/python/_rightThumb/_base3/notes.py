@@ -47,7 +47,9 @@ logCheck = _.tables.returnSorted( 'data', 'd.timestamp', _.getTable('fileBackup.
 logCheck = _.tables.returnSorted( 'data', 'd.epoch', records )
 _.tables.fieldProfileSet( 'data', 'epoch', 'trigger', _.friendlyDate )
 
+***
 _.switches.fieldSet( 'Long', 'active', True )
+***
 
 
 __.table_b_print = False

@@ -495,7 +495,7 @@ def load():
 				'pre-clean': { 'raw': [ 'Key.ctrl,2', 'Key.space', 'del' ], 'do': 'Clip.del_activate()' },
 				'implode': { 'raw': [ 'Key.ctrl,2', 'Key.space', 'imp' ], 'do': 'Clip.implode()' },
 				'explode': { 'raw': [ 'Key.ctrl,2', 'Key.space', 'exp' ], 'do': 'Clip.explode()' },
-				'reload': { 'raw': [ 'Key.ctrl,2', 'Key.shift,2', 'Key.space,2' ], 'do': 'load()' },
+				'reload': { 'raw': [ 'Key.ctrl', 'Key.shift', 'Key.space' ], 'do': 'load()' },
 
 	}
 	auto_text = _.getTableDB('hotkeys-AutoText.dex')

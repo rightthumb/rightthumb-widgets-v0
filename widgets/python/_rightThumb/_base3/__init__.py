@@ -16934,7 +16934,7 @@ def load():
 		switches.register('PlusOr', '-or')
 		switches.register('PlusClose', '+close', '90%')
 		switches.register('PlusDuplicate', '+dup,+duplicate', '90%')
-		switches.register('StrictCase', '-strictcase')
+		switches.register('StrictCase', '-case,-strictcase')
 		switches.register('PrintAutoAbbreviations', ',-printa,-aprint')
 		switches.register('NoColor', '-nocolor', space=True)
 		switches.register('LoadEpoch', '-loadepoch')
