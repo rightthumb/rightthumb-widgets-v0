@@ -17,5 +17,6 @@ SET /p folder=<%tmpf%
 rem echo f "%folder%"
 %folder:~0,1%:
 cd "%folder%"
-
+echo %folder%
+echo.
 

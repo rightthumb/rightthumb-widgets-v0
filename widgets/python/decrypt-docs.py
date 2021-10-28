@@ -71,7 +71,7 @@ _.appInfo[focus()] = {
 						# '',
 	],
 	'examples': [
-						_.hp('p thisApp -file file.txt'),
+						_.hp('p decrypt-docs -file file.txt'),
 						'',
 	],
 	'columns': [
@@ -282,7 +282,12 @@ def run(path):
 	table = _.getTable('crypt-docs.list')
 	test=table.copy()
 	if not path.lower() in table:
-		table.append(path)
+		table.append( __.path(path) )
+	newTable = []
+	for ntf in table:
+		if not ntf in newTable:
+			newTable.append(ntf)
+	table = newTable
 	if not str(table)==str(test):
 		_.saveTable( table, 'crypt-docs.list', p=0 )
 	theFILE = _.getText( path,raw=True )

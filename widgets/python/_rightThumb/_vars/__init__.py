@@ -17,6 +17,7 @@ import os
 import sys
 import platform
 import time
+simplejson = None
 class dot:
 	def __init__( self ):
 		pass
@@ -34,12 +35,14 @@ def dics(*arg):
 			dic[k] = table[k]
 	return dic
 def configFile( item=None, value=None, p=True ):
+	global simplejson
 	try:
 		global configFile_data
 		if item is None:
 			if p:
-				import simplejson as json
-				dataDump = json.dumps(configFile_data, indent=4, sort_keys=False)
+				if not simplejson is None:
+					import simplejson
+				dataDump = simplejson.dumps(configFile_data, indent=4, sort_keys=False)
 				print(dataDump)
 			return configFile_data
 		if value is None:
@@ -149,6 +152,7 @@ if __.isWin:
 	profileTMP = cmdGetVar('userprofile') + slash+'_AppShareTemp'
 elif not __.isWin:
 	profileTMP = cmdGetVar('HOME') + slash+'_AppShareTemp'
+
 home = ''
 if __.isWin:
 	home = cmdGetVar('USERPROFILE')
@@ -234,6 +238,7 @@ if techDrive.endswith(os.sep):
 techDrive = _str.cleanBE(techDrive,' ')
 td.path = techDrive
 drive=techDrive
+
 if __.isWin:
 	# fileName = home + slash+'.tk421'
 	fileName = home + slash+'.tk421'
@@ -294,7 +299,7 @@ log_config_html = techFolder + slash+'widgets'+slash+'html'+slash+'projects'+sla
 dance = images + 'dance.gif'
 gears = images + 'gears.gif'
 if __.isWin:
-	sublime = 'C:\\Program Files\\Sublime Text 3\\sublime_text.exe'
+	sublime = '"C:\\Program Files\\Sublime Text 3\\sublime_text.exe"'
 elif not __.isWin:
 	if os.path.isfile('/opt/sublime/sublime_text'):
 		sublime = '/opt/sublime/sublime_text'
@@ -1055,28 +1060,34 @@ def generateFunctionLogFilename( filename ):
 	fbf = 'audit_'+fb + '_functions.json'
 	# print( fbf )
 	return fbf
+
 def getTable( theFile, tableTemp=False, printThis=False ):
-	import simplejson as json
+	global simplejson
+	if not simplejson is None:
+		import simplejson
 	global myTables
 	global slash
 	global stmp
-	if not type( tableTemp ) == bool:
-		if tableTemp == 'split':
-			file0 = myTables + slash+'tablesets'+slash + theFile
+	if os.sep in theFile:
+		file0 = theFile
 	else:
-		if tableTemp == True:
-			file0 = stmp + slash + theFile
+		if not type( tableTemp ) == bool:
+			if tableTemp == 'split':
+				file0 = myTables + slash+'tablesets'+slash + theFile
 		else:
-			file0 = myTables + slash + theFile
+			if tableTemp == True:
+				file0 = stmp + slash + theFile
+			else:
+				file0 = myTables + slash + theFile
 	if printThis:
 		print('Loaded: ' + file0)
 	if os.path.isfile(file0) == True:
 		with open(file0,'r', encoding="latin-1") as json_file:
-			json_data = json.load(json_file)
-			# json_data = json.load(json_file, object_pairs_hook=OrderedDict)
+			json_data = simplejson.load(json_file)
+		return json_data
 	else:
-		json_data = []
-	return json_data
+		return __.data_default(file=theFile,default=[]).default()
+
 def app7z():
 	if not __.isWin:
 		if not os.path.isfile('/usr/bin/7z'):
@@ -1440,6 +1451,23 @@ def config( subject='?' ):
 	if subject in cData:
 		return cData[subject]
 	return None
+
+
+try:
+	if not os.path.isfile(myConfig+os.sep+'construct.settings'):
+		with open(   myConfig+os.sep+'construct.settings',    'w' ) as f:
+			pass
+except Exception as e:
+	print( 'unable to touch:', myConfig+os.sep+'construct.settings' )
+
+def settings_load():
+	global myConfig
+	if os.stat( myConfig+os.sep+'construct.settings' ).st_size:
+		table = getTable(myConfig+os.sep+'construct.settings')
+		for k in table:
+			__.settings_table[k] = table[k]
+
+
 t   = techDrive
 tt  = myTables
 ttt = dbTables
@@ -1452,4 +1480,7 @@ if not os.path.isdir(myConfig):
 # thisHost
 ## OLD_INSTALLER
 myAppsPy=py
+wprofile = myHome
+doc_sep = '__________________________________________________________________________________'
+
 

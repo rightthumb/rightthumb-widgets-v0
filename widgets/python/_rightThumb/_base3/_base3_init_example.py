@@ -51,8 +51,8 @@ def appSwitches():
 # 					files
 # 					tables
 ### EXAMPLE: END
-_.autoBackupData = __.autoCreationConfiguration['backup']
-__.releaseAcquiredData = __.autoCreationConfiguration['logs'] 
+_.autoBackupData = __.setting('receipt-log')
+__.releaseAcquiredData = __.setting('receipt-file')
 __.myFileLocations_SKIP_VALIDATION = False
 __.isRequired_Pipe = False
 __.isRequired_Pipe_or_File = False

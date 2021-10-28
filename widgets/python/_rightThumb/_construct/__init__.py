@@ -19,8 +19,39 @@ try:
 except Exception as e:
 	importlib = None
 
+autoCreationConfiguration = {
+							'backup': True,
+							'logs': True,
+							'folders': True,
+							'created': { '_vars': 0 },
+}
+
+settings_table = {
+					'receipt-log': True,
+					'receipt-file': True,
+}
 
 
+
+def settings( subjects, d=None, val='71e9-a678' ):
+	results = []
+	for subject in subjects:
+		results.append(  setting( subject, val, d )  )
+	return results
+
+def setting( subject, val='71e9-a678', d=None, default=None ):
+	global settings_table
+
+	if not default is None:
+		d = default
+
+	if not val == '71e9-a678':
+		settings_table[subject] = val
+
+	if not subject in settings_table:
+		return d
+	
+	return settings_table[subject]
 
 
 releaseAcquiredData = True
@@ -90,28 +121,7 @@ def uuid():
 	UUID = imp('uuid')
 	return str(UUID.uuid4())
 
-def settings( subjects, a='a678-71e9', d=None, to='71e9-a678' ):
-	if not a == 'a678-71e9':
-		for subject in subjects:
-			if a == setting( subject, to, d ):
-				return True
-		return False
-	else:
-		for subject in subjects:
-			setting( subject, to, d )
 
-
-setting_table = {}
-def setting( subject, to='71e9-a678', d=None ):
-	global setting_table
-
-	if not to == '71e9-a678':
-		setting_table[subject] = to
-
-	if not subject in setting_table:
-		return d
-	
-	return setting_table[subject]
 
 
 imp_table = {}
@@ -265,12 +275,7 @@ myFileLocations_SKIP_VALIDATION = False
 
 
 
-autoCreationConfiguration = {
-							'backup': True,
-							'logs': True,
-							'folders': True,
-							'created': { '_vars': 0 },
-}
+
 """
 __.autoCreationConfiguration['backup']
 __.autoCreationConfiguration['logs']

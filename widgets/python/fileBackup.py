@@ -722,12 +722,14 @@ def action(path=None,flag=None):
 
 
 			if cryptScan:
+				_decrypt_docs = _.regImp( __.appReg, 'decrypt-docs' )
 				global doc_sep
 				_.colorThis(  [ 'registered: documentation file' ], 'Background.light_blue'  )
 				theFile = _.getText( path, raw=True ).replace('!vault!','!V!').replace('!VAULT!','!V!').replace('!v!','!V!').replace('!crypt!','!V!').replace('!CRYPT!','!V!')
 				crypy=__.specifications['fileBackup-auto-crypt']['crypt-segment']
 				segments=theFile.split(doc_sep)
 				newTemp=[]
+				crypt_segment = False
 				for segment in segments:
 					if crypy+' ' in segment or crypy+'\n' in segment or crypy+'\t' in segment:
 						segment=segment.replace('!V!','')
@@ -736,12 +738,17 @@ def action(path=None,flag=None):
 							if not si:
 								segy.append(  segsy  )
 							else:
-								segy.append(  _blowfish.encrypt( segsy, _vault.key() )  )
+								if _decrypt_docs.imp.identify(segsy):
+									segy.append(  segsy  )
+								else:
+									segy.append(  _blowfish.encrypt( segsy, _vault.key() )  )
+
+							crypt_segment = True
 						segment = '\n'.join( segy )
 					newTemp.append(segment)
 				theFile=doc_sep.join(newTemp)
 
-				if __.specifications['fileBackup-auto-crypt']['scanA'] in theFile  or  __.specifications['fileBackup-auto-crypt']['scanB'] in theFile:
+				if crypt_segment or __.specifications['fileBackup-auto-crypt']['scanA'] in theFile  or  __.specifications['fileBackup-auto-crypt']['scanB'] in theFile or crypy in theFile:
 
 
 
@@ -951,6 +958,13 @@ __.specifications['fileBackup-auto-crypt'] = {
 														_v.ww  +os.sep+  'bash'+os.sep+'notes'  ,
 										],
 }
+
+temp7 = _.getTable('crypt-docs.list')
+for item in temp7:
+	__.specifications['fileBackup-auto-crypt']['files'].append(item.lower())
+del temp7
+
+# C:\Users\Scott\.rt\profile\projects\project-log.txt
 
 for i,x in enumerate(__.specifications['fileBackup-auto-crypt']['files']):
 	__.specifications['fileBackup-auto-crypt']['files'][i] = __.specifications['fileBackup-auto-crypt']['files'][i].lower()

@@ -658,7 +658,7 @@ class Cloud:
 			epoch = None
 		if __.setting( 'print-errors' ):
 			if not __.setting('printed-epoch'):
-				__.setting('printed-epoch',1)
+				__.setting('printed-epoch',val=1)
 				print( 'epoch:', epoch )
 		isNew = True
 		if os.path.isfile(l):

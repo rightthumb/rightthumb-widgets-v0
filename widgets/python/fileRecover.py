@@ -528,7 +528,11 @@ def ask(data, doneselection=False, backupfile='', originalfile=''):
 			print()
 			print('\tRecovered')
 			print()
-			sp.Popen([_v.sublime, data[int(selection)]['file']])
+			try:
+				sp.Popen([   _v.sublime.replace('"','')   ,   data[int(selection)]['file'].replace('"','')  ])
+			except Exception as e:
+				print([   _v.sublime.replace('"','')   ,   data[int(selection)]['file'].replace('"','')  ])
+				print('unable to open')
 			# print(cpResult)
 			# print(newname)
 				
