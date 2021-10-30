@@ -2598,10 +2598,6 @@ alias web.e="exp.gen;web.do"
 alias web.ey="exp.geny;web.do"
 alias web.el="echo su root | web.e"
 ################# #################
-alias ssh.1="echo 'ssh -R 8888:localhost:22 -C -N -l scott vps.rightthumb.com' | vps.e";
-alias ssh.2="echo 'ssh -R 8888:localhost:22 -C -N -l scott vps2.rightthumb.com' | vps.e";
-alias ssh.3="echo 'ssh scott@localhost -p 8080' | vps.e";
-alias ssh.3b="echo 'ssh rephs@localhost -p 8080' | vps.e";
 #################
 alias vps.l="p keychain -label vps.l  -get -temp 10"
 alias web.l="p keychain -label web.l  -get -temp 10"
@@ -2632,16 +2628,19 @@ alias beep.="play -nq -t alsa synth 1 sine 440"
 alias vps.sync.sh="$widgets/install/installer.py -sh.folder /mnt/d/widgets/webApps/vps/"
 alias vps.sync="echo scp /mnt/d/widgets/servers/web/vps/* root@vps.rightthumb.com:/opt/lampp/htdocs/|vps.e"
 alias vps.sync.get="echo scp root@vps.rightthumb.com:/opt/lampp/htdocs/ /mnt/d/widgets/servers/web/vps/* |vps.e"
-alias vps.www="echo    'ssh -L 8080:localhost:80 -C -N -l scott vps.rightthumb.com'    |  s.vps.e"
 export vpswww="sudo ssh -L 80:localhost:80 -C -N -l scott vps.rightthumb.com"
-alias vps.dt="echo    'ssh -L 59000:localhost:5900 -C -N -l scott vps.rightthumb.com'    |  vps.e"
+alias vps.www="echo    'ssh -L 8080:localhost:80 -C -N -l scott vps.rightthumb.com'       |  s.vps.e"
+alias vps.dt="echo     'ssh -L 59000:localhost:5900 -C -N -l scott vps.rightthumb.com'    |  vps.e"
 alias vps.dt2="echo    'ssh -L 59001:localhost:5901 -C -N -l scott vps.rightthumb.com'    |  vps.e"
-alias vps1.dt="echo    'ssh -L 59000:localhost:5900 -C -N -l scott vps1.rightthumb.com'    |  vps.e"
-alias vps1.dt2="echo    'ssh -L 59001:localhost:5901 -C -N -l scott vps1.rightthumb.com'    |  vps.e"
-alias vps2.dt="echo    'ssh -L 59000:localhost:5900 -C -N -l scott vps2.rightthumb.com'    |  vps.e"
-alias vps2.dt2="echo    'ssh -L 59001:localhost:5901 -C -N -l scott vps2.rightthumb.com'    |  vps.e"
+alias vps1.dt="echo    'ssh -L 59000:localhost:5900 -C -N -l scott vps1.rightthumb.com'   |  vps.e"
+alias vps1.dt2="echo   'ssh -L 59001:localhost:5901 -C -N -l scott vps1.rightthumb.com'   |  vps.e"
+alias vps2.dt="echo    'ssh -L 59000:localhost:5900 -C -N -l scott vps2.rightthumb.com'   |  vps.e"
+alias vps2.dt2="echo   'ssh -L 59001:localhost:5901 -C -N -l scott vps2.rightthumb.com'   |  vps.e"
 alias vps.k="echo $( p keychain -get -label vps.k )"
 alias kkk="echo $( p keychain -get -label login-test )"
+alias vps.mongo="echo     'ssh -L 27017:localhost:27017 -C -N -l scott vps1.rightthumb.com'   |  vps.e"
+alias vps.mongo1="echo    'ssh -L 2701:localhost:27017 -C -N -l scott vps1.rightthumb.com'    |  vps.e"
+alias vps.mongo.="echo    'ssh -L 2701:localhost:27017 -C -N -l scott vps1.rightthumb.com'    |  vps.e"
 
 		"""
 			return self.file( path, data, { 'status': 'virtual' } )
