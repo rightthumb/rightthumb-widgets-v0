@@ -1,0 +1,210 @@
+{
+    ".ifv": {
+        "text": "if len( _.switches.values('') ):",
+        "back": 5
+    },
+    ".ifi": {
+        "text": "if _.switches.isActive(''):",
+        "back": 3
+    },
+    "--v": {
+        "text": "_.switches.values('')",
+        "back": 2
+    },
+    ".ifni": {
+        "text": "if not _.switches.isActive(''):",
+        "back": 3
+    },
+    "..bmi": {
+        "text": "import _rightThumb._bookmarks as _bm\nbm = _bm.Bookmarks(  ).get()",
+        "back": 8
+    },
+    "--is": {
+        "text": "_.switches.isActive('')",
+        "back": 2
+    },
+    ".ifdir": {
+        "text": "if os.path.isdir(  ):",
+        "back": 3
+    },
+    ".iffile": {
+        "text": "if os.path.isfile(  ):",
+        "back": 3
+    },
+    "..abs": {
+        "text": "os.path.abspath(  )",
+        "back": 2
+    },
+    "..dir": {
+        "text": "import _rightThumb._dir as _dir",
+        "back": 0
+    },
+    "..pwd": {
+        "text": "os.getcwd()",
+        "back": 0
+    },
+    "..me": {
+        "text": "os.path.getmtime( )",
+        "back": 2
+    },
+    "..ce": {
+        "text": "os.path.getctime( )",
+        "back": 2
+    },
+    "..ae": {
+        "text": "os.path.getatime( )",
+        "back": 2
+    },
+    "..copy": {
+        "text": "_copy = _.regImp( __.appReg, '-copy' )\n_copy.imp.copy(  )",
+        "back": 2
+    },
+    "..paste": {
+        "text": "_paste = _.regImp( __.appReg, '-paste' )\n_paste.imp.paste()",
+        "back": 0
+    },
+    "..cryptf": {
+        "text": "import _rightThumb._vault as _vault\nimport _rightThumb._encryptString as _blowfish\nimport _rightThumb._dir as _dir\n\ntry:\n\t_cryptFile = _.regImp( __.appReg, 'cryptFile' )\n\t_cryptFile.switch( 'NoExt' )\n\t# if _.switches.isActive('Clean'):\n\t_cryptFile.switch( 'Clean' )\n\t_cryptFile.imp.appDBA = _cryptFile.focus\nexcept Exception as e:\n\t_.colorThis( 'Error: missing pyAesCrypt', 'red' )\n\n\n\n\ndef secureFiles_Decrypt( path, pw ):\n\t_.cp( 'crypt.de', 'Background.light_blue' )\n\t_cryptFile.switch( 'Password', delete=True )\n\tif len(pw):\n\t\t_cryptFile.switch( 'Password', _blowfish.decrypt( pw, _vault.key() ) )\n\t_cryptFile.switch( 'Decrypt' )\n\t_cryptFile.switch( 'Encrypt', delete=True )\n\t_cryptFile.switch( 'Files', path )\n\n\tepoch = _dir.info(path)['me']\n\t_cryptFile.do( 'action' )\n\twhile epoch == _dir.info(path)['me']:\n\t\ttime.sleep(.2)\n\ndef secureFiles_Encrypt( path, pw ):\n\tif _.isCrypt(path):\n\t\treturn None\n\t\n\t_.cp( 'crypt.en', 'Background.light_blue' )\n\t_cryptFile.switch( 'Password', delete=True )\n\tif len(pw):\n\t\t_cryptFile.switch( 'Password', _blowfish.decrypt( pw, _vault.key() ) )\n\t_cryptFile.switch( 'Encrypt' )\n\t_cryptFile.switch( 'Decrypt', delete=True )\n\t_cryptFile.switch( 'Files', path )\n\n\tepoch = _dir.info(path)['me']\n\t_cryptFile.do( 'action' )\n\twhile epoch == _dir.info(path)['me']:\n\t\ttime.sleep(.2)\n\ncrypt = dot()\ncrypt.en = secureFiles_Encrypt\ncrypt.de = secureFiles_Decrypt",
+        "back": 0
+    },
+    "..vault": {
+        "text": "_vault = _.regImp( __.appReg, '_rightThumb._vault' )\n_vault.imp.s.de(  )",
+        "back": 2
+    },
+    "...dir": {
+        "text": "os.listdir(  )",
+        "back": 2
+    },
+    "..site": {
+        "text": "import site\nsite.getsitepackages()\ny = site.getsitepackages()\nif len(y) > 1:\n    x = y[1]\nelse:\n    x = y[0]\n\n\nimport pyperclip\ntry:\n    pyperclip.copy( x )\nexcept Exception as e:\n    open('temp.txt', 'w').write(x)\n\n\n",
+        "back": 0
+    },
+    "..log": {
+        "text": "with open(  _v.myTables+os.sep+'appInfo-errors'  , 'a' ) as file: file.write( appName + '\\n' );",
+        "back": 0
+    },
+    "..key": {
+        "text": "_keychain = _.regImp( __.appReg, 'keychain' )\n_keychain.imp.key('')",
+        "back": 2
+    },
+    "..set": {
+        "text": "_.switches.fieldSet( '', 'active', True )",
+        "back": 19
+    },
+    "..tar": {
+        "text": "tar = _.regImp( __.appReg, 'tar' )\ntar.imp.zip(  )",
+        "back": 2
+    },
+    "..size": {
+        "text": "_.formatSize( os.stat(  ).st_size )",
+        "back": 12
+    },
+    "...tar": {
+        "text": "import _rightThumb._tar as _tar",
+        "back": 0
+    },
+    "..bytes": {
+        "text": "os.stat(  ).st_size",
+        "back": 10
+    },
+    "..head": {
+        "text": "\" \".join(['{:02X}'.format(byte) for byte in     open(  , 'rb' ).read(32)    ])",
+        "back": 24
+    },
+    "..hash": {
+        "text": "import _rightThumb._md5 as _hash\n_hash.file( file, 'sha1' )",
+        "back": 0
+    },
+    "..md5": {
+        "text": "import _rightThumb._md5 as _hash\n_hash.file( file )",
+        "back": 0
+    },
+    "..sha": {
+        "text": "import _rightThumb._md5 as _hash\n_hash.file( file, 'sha1' )",
+        "back": 0
+    },
+    "...head": {
+        "text": "x = ''.join([chr(int(''.join(c), 16)) for c in zip(hx[0::2],hx[1::2])])",
+        "back": 0
+    },
+    "..split": {
+        "text": "",
+        "back": 0
+    },
+    "...1": {
+        "text": "~/.rt/tool -sh.file 101-auto-setup.sh",
+        "back": 0
+    },
+    "..1": {
+        "text": "# p genLinux -sh\nalias tool=\"/mnt/d/tech/programs/bash/install/py/tool\"\nalias tool.sh=\"/mnt/d/tech/programs/bash/101-auto-setup.sh\"\ntool -json ~/.rt-config.hash\nb.b.live\nchmod 777 101-auto-setup.sh\np shClean -f 101-auto-setup.sh\n./101-auto-setup.sh -dl\nchmod -R 777 ~/.rt\n~/.rt/tool -json ~/.rt-config.hash\n# p genLinux -sh\n\ntool -json ~/.rt-config.hash",
+        "back": 0
+    },
+    "..2": {
+        "text": "# p genLinux -sh\nalias tool=\"~/.rt/tool\"\nalias tool.sh=\"~/.rt/tool.sh\"\ntool -json ~/.rt-config.hash\n[ -f ~/.rt/tool ] && rm ~/.rt/tool\n[ -f ~/.rt/tool.sh ] && rm ~/.rt/tool.sh\n[ -f ~/.rt/help.txt ] && rm ~/.rt/help.txt\nsudo wget -O - -q \"http://reph.us/tools/file.php?file=tool.sh\" | bash\n# p genLinux -sh\n\ntool -json ~/.rt-config.hash",
+        "back": 0
+    },
+    "..tool.sh": {
+        "text": "sudo wget -O - -q \"http://reph.us/tools/file.php?file=tool.sh\" | bash",
+        "back": 0
+    },
+    "..3to2": {
+        "text": "_tool = _.import_path('?tool')\n_3to2 = _tool.PY3TO2()\n_3to2.convert( _.switches.values('Files'), _.switches.values('Save') )",
+        "back": 0
+    },
+    "..322": {
+        "text": "_tool = _.import_path('?tool')\n_3to2 = _tool.PY3TO2()\n_3to2.convert( _.switches.values('Files'), _.switches.values('Save') )",
+        "back": 0
+    },
+    "..open": {
+        "text": "open(  , 'r' ).read()",
+        "back": 15
+    },
+    "..t.sh": {
+        "text": "wget \"http://reph.us/tools/file.php?file=tool.sh\" -O ~/.rt/tool.sh",
+        "back": 0
+    },
+    "...k": {
+        "text": "################# ################# #################\nalias exp.gen=\"$tech_drive/tech/programs/python/src/unity/expect-gen.py -p \"\nalias exp.geny=\"$tech_drive/tech/programs/python/src/unity/expect-gen.py -p -y \"\nalias pr.do=\"$HOME/.rt/profile/temp/temp.exp $( $tech_drive/tech/programs/python/src/unity/keychain.py -label p.r -jp -get )\"\nalias pr.e=\"exp.gen;pr.do\"\nalias p9.do=\"$HOME/.rt/profile/temp/temp.exp $( $tech_drive/tech/programs/python/src/unity/keychain.py -label p.9 -jp -get )\"\nalias pv.do=\"$HOME/.rt/profile/temp/temp.exp $( $tech_drive/tech/programs/python/src/unity/keychain.py -label vault -jp -get )\"\nalias pv.e=\"exp.gen;pv.do\"\n#################\nalias vps.do=\"$HOME/.rt/profile/temp/temp.exp $( $tech_drive/tech/programs/python/src/unity/keychain.py -label vps.scott -jp -get )\"\nalias vps.e=\"exp.gen;vps.do\"\nalias vps.ey=\"exp.geny;vps.do\"\nalias vps.el=\"echo su root | vps.e\"\n#################\nalias reph.do=\"$HOME/.rt/profile/temp/temp.exp $( $tech_drive/tech/programs/python/src/unity/keychain.py -label reph.l -jp -get )\"\nalias reph.e=\"exp.gen;reph.do\"\nalias reph.ey=\"exp.geny;reph.do\"\nalias reph.el=\"echo su root | reph.e\"\n#################\nalias web.do=\"$HOME/.rt/profile/temp/temp.exp $( $tech_drive/tech/programs/python/src/unity/keychain.py -label web.l -jp -get )\"\nalias web.e=\"exp.gen;web.do\"\nalias web.ey=\"exp.geny;web.do\"\nalias web.el=\"echo su root | web.e\"\n################# #################\nalias ssh.1=\"echo 'ssh -R 8888:localhost:22 -C -N -l scott vps.rightthumb.com' | vps.e\";\nalias ssh.2=\"echo 'ssh -R 8888:localhost:22 -C -N -l scott vps.rightthumb.com' | vps.e\";\nalias ssh.3=\"echo 'ssh scott@localhost -p 8080' | vps.e\";\nalias ssh.3b=\"echo 'ssh rephs@localhost -p 8080' | vps.e\";\n#################\nalias vps.l=\"p keychain -label vps.l  -get -temp 10\"\nalias web.l=\"p keychain -label web.l  -get -temp 10\"\nalias reph.l=\"p keychain -label reph.l  -get -temp 10\"\n#################\nalias vps.socket=\"echo 'ssh -R 65432:localhost:65432 -C -N -l scott vps.rightthumb.com' | vps.e\";\n################# #################\nalias reph.ssh.p=\"echo 'ssh thisreph@reph.us'\";\nalias vps.ssh.p=\"echo 'ssh scott@vps.rightthumb.com'\";\nalias web.ssh.p=\"echo 'ssh ximlickficfp@tools.rightthumb.com'\";\n################# #################\nalias reph.ssh.y=\"echo 'ssh thisreph@reph.us' | reph.ey\";\nalias vps.ssh.y=\"echo 'ssh scott@vps.rightthumb.com' | vps.ey\";\nalias web.ssh.y=\"echo 'ssh ximlickficfp@tools.rightthumb.com' | web.ey\";\n#################\nalias reph.ssh=\"echo 'ssh thisreph@reph.us' | reph.e\";\nalias vps.ssh=\"echo 'ssh scott@vps.rightthumb.com' | vps.e\";\nalias web.ssh=\"echo 'ssh ximlickficfp@tools.rightthumb.com' | web.e\";\n################# #################\nalias beep.=\"play -nq -t alsa synth 1 sine 440\"\n################# ################# #################",
+        "back": 0
+    },
+    ".vps": {
+        "text": "vps.rightthumb.com",
+        "back": 0
+    },
+    "...git": {
+        "text": "git clone https://github.com/rightthumb/rightthumb-widgets-v0",
+        "back": 0
+    },
+    "...scott": {
+        "text": "echo \"scott  ALL=(ALL) NOPASSWD:ALL\" | sudo tee /etc/sudoers.d/scott",
+        "back": 0
+    },
+    "..lines": {
+        "text": "sum(1 for line in open(''))",
+        "back": 3
+    },
+    ".ifv": {
+        "text": "if len( _.switches.values('') ):",
+        "back": 5
+    },
+    ".ifi": {
+        "text": "if _.switches.isActive(''):",
+        "back": 3
+    },
+    ".ifni": {
+        "text": "if not _.switches.isActive(''):",
+        "back": 3
+    },
+    ".bmi": {
+        "text": "import _rightThumb._bookmarks as _bm\nbm = _bm.Bookmarks(  ).get()",
+        "back": 8
+    },
+    ".ifdir": {
+        "text": "if os.path.isdir(  ):",
+        "back": 3
+    },
+    ".iffile": {
+        "text": "if os.path.isfile(  ):",
+        "back": 3
+    }
+}
