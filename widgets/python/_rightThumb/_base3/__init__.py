@@ -23,6 +23,13 @@ from datetime import date
 # except Exception as e:
 #   pass
 
+def clear():
+	global isWin
+	if isWin:
+		os.system('cls')
+	else:
+		os.system('clear')
+
 def rstr(code,o,c):
 	i=o-1
 	txt=''
@@ -16661,13 +16668,20 @@ class Field:
 	def setTrigger( self, script ):
 		self.trigger = script
 
-	def addPadding( self, value, extra, right ):
+	def addPadding( self, value, extra, right, center ):
 		value = self.runTrigger( str(value) )
 		oValue = value
 		addPadding = (extra + self.maxField) - len( value )
 		add = ''
-
+		i=0
+		l=''
+		r=''
 		while not len(value) >= self.maxField+extra:
+			i+=1
+			if(i%2==0):
+				l+=' '
+			else:
+				r+=' '
 			value += ' '
 			add += ' '
 		# for x in range(1,addPadding+1):
@@ -16675,6 +16689,8 @@ class Field:
 		# return str(self.maxField)+' '+str(len( value ))+value
 		if right:
 			value = add + oValue
+		if center:
+			value = l + oValue + r
 		return value
 
 	def addPaddingSetSpaces( self, value ):
@@ -16800,7 +16816,7 @@ class Fields:
 		return result
 
 
-	def value( self, project, name, value, extra=None, right=False, appReg=False,    r=None ):
+	def value( self, project, name, value, extra=None, right=False, appReg=False,    r=None, center=False ):
 		result = value
 		if not r is None:
 			right = r
@@ -16812,7 +16828,7 @@ class Fields:
 			appReg = __.appReg
 		for i,s in enumerate(self.fields[project]):
 			if self.fields[project][i].appReg == appReg and project == self.fields[project][i].project and name == self.fields[project][i].name:
-				result = self.fields[project][i].addPadding( value, extra, right )
+				result = self.fields[project][i].addPadding( value, extra, right, center )
 		return result
 	def valuez( self, project, name, value, appReg=False ):
 		if type(appReg) == bool:
