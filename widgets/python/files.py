@@ -253,7 +253,7 @@ def getFolder(folder,r=True):
 	# 			return None
 	# 	if folder in '/bin /boot /dev /lib /lib64 /lost+found /media /mnt /proc /srv /sys'.split(' '):
 	# 		return None
-	if not _.showLine(folder, minus='/bin /boot /dev /lib /lib64 /lost+found /media /mnt /proc /srv /sys'.split(' ')):
+	if not _.showLine(folder, plus=[], minus='/bin /boot /dev /lib /lib64 /lost+found /media /mnt /proc /srv /sys'.split(' ')):
 		return None
 	global i
 	global iS
