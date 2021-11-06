@@ -249,7 +249,8 @@ def whatIsIt(file):
 	return result
 
 def getFolder(folder,r=True):
-	if folder.startswith('/proc'):
+
+	if folder in '/bin /boot /dev /lib /lib64 /lost+found /media /mnt /proc /srv /sys'.split(' '):
 		return None
 	global i
 	global iS
