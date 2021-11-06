@@ -251,7 +251,7 @@ def whatIsIt(file):
 def getFolder(folder,r=True):
 	if not _.isWin:
 		for test in '/bin /boot /dev /lib /lib64 /lost+found /media /mnt /proc /srv /sys'.split(' '):
-			if folder.startswith(test+'/'):
+			if folder.startswith(test):
 				return None
 		if folder in '/bin /boot /dev /lib /lib64 /lost+found /media /mnt /proc /srv /sys'.split(' '):
 			return None
