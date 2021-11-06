@@ -78,19 +78,17 @@ _.appInfo[focus()] = {
 						'p files --c ',
 						'p files -text ',
 						'',
-						'p files -size g 2mb',
 						'p files -size L 2mb',
 						'p files -size g 2mb --c -folder D:\\techApps\\Python\\Python36-32'+_v.slash,
 						'',
 						'b pp',
 						'p files + *.py *.bat *.sh *.js *.htm* *.php  -or -totals',
 						'',
-						'',
 						'p files -ext db - *.json *.dat',
 						'',
 						'p files -w --c -ago 10h | p line --c -make "git add {}" | p -copy',
 						'p files -w --c -ago 10h',
-						'',
+						'p files - /bin /boot /dev /lib /lib64 /lost+found /media /mnt /proc /srv /sys -f /',
 	],
 	'columns': [
 				       # { 'name': 'name', 'abbreviation': 'n' },
@@ -249,12 +247,14 @@ def whatIsIt(file):
 	return result
 
 def getFolder(folder,r=True):
-	if not _.isWin:
-		for test in '/bin /boot /dev /lib /lib64 /lost+found /media /mnt /proc /srv /sys'.split(' '):
-			if folder.startswith(test):
-				return None
-		if folder in '/bin /boot /dev /lib /lib64 /lost+found /media /mnt /proc /srv /sys'.split(' '):
-			return None
+	# if not _.isWin:
+	# 	for test in '/bin /boot /dev /lib /lib64 /lost+found /media /mnt /proc /srv /sys'.split(' '):
+	# 		if folder.startswith(test+'/'):
+	# 			return None
+	# 	if folder in '/bin /boot /dev /lib /lib64 /lost+found /media /mnt /proc /srv /sys'.split(' '):
+	# 		return None
+	if not _.showLine(folder):
+		return None
 	global i
 	global iS
 	global baseDepth
