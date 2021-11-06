@@ -7312,14 +7312,17 @@ def showLine( string, plus = '', minus = '', plusOr = False, end=None ):
 	# print(switches.isActive('Plus'))
 	# print(switches.values('Plus'))
 	# sys.exit()
-	if switches.isActive('Plus') or not plus == '':
-		# print('asdf')
-		result = positiveResults(string,plus,plusOr,end)
-		if not result and switches.isActive('PlusClose'):
-			result = closeResults( string )
-
-	else:
+	if plus is None:
 		result = True
+	else:
+		if switches.isActive('Plus') or not plus == '':
+			# print('asdf')
+			result = positiveResults(string,plus,plusOr,end)
+			if not result and switches.isActive('PlusClose'):
+				result = closeResults( string )
+
+		else:
+			result = True
 	if result == True and  (switches.isActive('Minus') or not minus == ''):
 		result = minusResults(string,minus)
 	# print(result)
