@@ -152,7 +152,10 @@ def action():
 	global data
 
 	_.fields.register( 'project', 'name', '111111111111111111111' )
-	
+	total = 0
+	for i,card in enumerate(data):
+		if card['level'] == 0:
+			total+=1
 	# _.pv(data[0])
 
 
@@ -166,20 +169,21 @@ def action():
 	# 		_.fields.register( 'project', 'name', mit )
 
 	# print( len(  _.fields.value( 'project', 'name', 'test', center=True )  ) );sys.exit();
-
-
 	i=-1
-	while len(data)>=i:
+	b=1
+	isBack=False
+	while b:
+		b+=1
 		i+=1
 		try:
 			card = data[i]
 		except Exception as e:
-			break
+			sys.exit()
 		try:
 			level = data[i]['level']
 		except Exception as e:
-			level = ''
-		if ( level == 0 ) and _.showLine(card['subject']):
+			level = 0
+		if isBack or (  ( level == 0 ) and _.showLine(card['subject'])  ):
 			_.clear()
 			_.cp( _.fields.value( 'project', 'name', card['subject'], center=True ), 'Background.green' )
 			for mit in card['omit']:
@@ -188,14 +192,15 @@ def action():
 			
 			# print()
 			# print()
-			print( _.fields.value( 'project', 'name', str(i+1)+' of '+str(len(data)), center=True ) )
+			print( _.fields.value( 'project', 'name', str(i+1)+' of '+str(total)+', '+str(len(data)), center=True ) )
 			print( _.fields.value( 'project', 'name', '(q)uit (b)ack', center=True ) )
-			wait = ''
+			isBack=False
 			wait=input('lvl: ')
 			if wait.lower()=='q' or wait.lower()=='x':
 				sys.exit()
 			
-			if 'b' in wait.lower():
+			if wait.lower()=='b':
+				isBack=True
 				i-=2
 			elif len(wait):
 				try:
@@ -203,26 +208,23 @@ def action():
 					_.saveTableDB( data, 'taboo.json' )
 				except Exception as e:
 					pass
+		# {
+		#     "subject": "drama",
+		#     "omit": [
+		#         "genre",
+		#         "queen",
+		#         "soap",
+		#         "movie",
+		#         "book"
+		#     ]
+		# }
 
-	pass
+		# Background.green
+		# Background.red
 
-	# {
-	#     "subject": "drama",
-	#     "omit": [
-	#         "genre",
-	#         "queen",
-	#         "soap",
-	#         "movie",
-	#         "book"
-	#     ]
-	# }
+		# _.fields.register( 'project', 'name', value )
 
-	# Background.green
-	# Background.red
-
-	# _.fields.register( 'project', 'name', value )
-
-	# _.fields.value( 'project', 'name', value )
+		# _.fields.value( 'project', 'name', value )
 
 def load():
 	global data
