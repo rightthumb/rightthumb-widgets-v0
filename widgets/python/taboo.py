@@ -9,7 +9,6 @@
 #    - Scott Taylor Reph, RightThumb.com
 # ###########################################################################
 # ## {C3P0D40fAe8B} ##
-
 ##################################################
 import os, sys, time
 ##################################################
@@ -32,25 +31,7 @@ import _rightThumb._string as _str
 
 def appSwitches():
 	pass
-	### EXAMPLE: START
-	# _.switches.register( 'Input', '-i' )
-	# _.switches.register( 'Files', '-f,-file,-files','file.txt', isData='glob,name,data,clean', description='Files' )
-	### EXAMPLE: END
 
-### EXAMPLE: START
-# _.switches.trigger( 'Files', _.myFileLocations, vs=True )
-# 	finds the file in probable locations
-# 	and 
-# 		if  _.autoBackupData = True
-# 		and __.releaseAcquiredData = True
-# 			GET EPOCH FROM: hosts/hostname/logs/apps/execution_receipt-app_name-epoch.json
-# 		you can run apps on usb at a clients office
-# 			when you get home run: p app -loadepoch epoch 
-# 				backed up
-# 					pipe
-# 					files
-# 					tables
-### EXAMPLE: END
 _.autoBackupData = __.setting('receipt-log')
 __.releaseAcquiredData = __.setting('receipt-file')
 __.myFileLocations_SKIP_VALIDATION = False
@@ -64,11 +45,12 @@ __.switch_raw = []
 
 
 _.appInfo[focus()] = {
-	'file': 'thisApp.py',
+	'file': 'taboo.py',
 	'liveAppName': __.thisApp( __file__ ),
-	'description': 'Changes the world',
+ 	'description': 'taboo game',
 	'categories': [
-						'DEFAULT',
+						'game',
+						'taboo',
 				],
 	'usage': [
 						# 'epy another',
@@ -110,11 +92,7 @@ _.appData[focus()] = {
 					'table': {'sent': [], 'received': [] }, 
 		},
 	}
-### EXAMPLE: START
-# _.appInfo[focus()]['examples'].append( 'p thisApp -file file.txt' )
 
-# _.appInfo[focus()]['columns'].append( {'name': 'name', 'abbreviation': 'n'} )
-### EXAMPLE: END
 
 
 def registerSwitches( argvProcessForce=False ):
@@ -138,12 +116,6 @@ def registerSwitches( argvProcessForce=False ):
 	_.switches.trigger( 'URL', _.urlTrigger )
 	_.switches.trigger( 'Ago', _.timeAgo )
 	_.switches.trigger( 'Duration', _.timeFuture )
-	### EXAMPLE: START
-	# _.switches.trigger( 'Files',_.inRelevantFolder )	
-	# _.switches.trigger( 'Watched', _.txt2Date )
-	# _.switches.trigger( 'Input',_.formatColumns )
-	# _.switches.trigger( 'Franchise',_.triggerSpace )
-	### EXAMPLE: END
 	
 	_.defaultScriptTriggers()
 	_.switches.process()
@@ -171,30 +143,6 @@ if __name__ == '__main__':
 _.postLoad( __file__ )
 
 ########################################################################################
-### EXAMPLE: START
-# data = _.tables.returnSorted( 'data', 'd.timestamp', data )
-# _.switches.fieldSet( 'Long', 'active', True )
-# _.tables.register( 'data', table )
-# _.tables.fieldProfileSet('data','timestamp','trigger',_.friendlyDate)
-# _.tables.fieldProfileSet('data','phone,email,address','alignment','center')
-# _.tables.print( 'data', 'name' )
-# _.tables.print( 'data', ','.join(_.switches.values('Column')) )
-# _.switches.isActive('Files')
-# p = _.getText( _v.pips, raw=True, clean=True ).split( '\n' )
-# os.system( '"' + do + '"' )
-# _.setPipeData( os.listdir( os.getcwd() ), focus() )
-# _.showLine( item )
-# 	if os.path.isdir( row ):
-# 	if os.path.isfile( row ):
-#	os.path.abspath(path)
-# __.appRegPipe    ( pipe data registerd focus(__.appReg) set by _.myFileLocations {if imported} , default is None )
-# for i,row in enumerate(_.t( _.appData[__.appReg]['pipe'] )):
-# for i,row in _.e( _.isData(r=1) ):
-# date = _.friendlyDate( theDate )
-# _.addComma()
-# 													if platform.system() == 'Windows':
-### EXAMPLE: END
-########################################################################################
 # START
 
 
@@ -203,15 +151,21 @@ def action():
 	load()
 	global data
 
-	_.pv(data[0])
+	_.fields.register( 'project', 'name', '111111111111111111111' )
+	
+	# _.pv(data[0])
 
 
-	for card in data:
-		_.clear()
-		_.fields.register( 'project', 'name', card['subject'] )
-		for mit in card['omit']:
-			_.fields.register( 'project', 'name', mit )
+	# for i,card in enumerate(data):
+	# 	data[i]['level']=0
+	# _.saveTableDB( data, 'taboo.json' )
+	# sys.exit()
+	# 	_.clear()
+	# 	_.fields.register( 'project', 'name', card['subject'] )
+	# 	for mit in card['omit']:
+	# 		_.fields.register( 'project', 'name', mit )
 
+	# print( len(  _.fields.value( 'project', 'name', 'test', center=True )  ) );sys.exit();
 	i=-1
 	while len(data)>=i:
 		i+=1
@@ -219,14 +173,33 @@ def action():
 			card = data[i]
 		except Exception as e:
 			break
-		if _.showLine(card['subject']):
+		try:
+			level = data[i]['level']
+		except Exception as e:
+			level = ''
+		if ( level == 0 ) and _.showLine(card['subject']):
 			_.clear()
 			_.cp( _.fields.value( 'project', 'name', card['subject'], center=True ), 'Background.green' )
 			for mit in card['omit']:
 				_.cp( _.fields.value( 'project', 'name', mit, center=True ), 'Background.red' )
-			wait=input(': ')
-			if wait.lower()=='q' and wait.lower()=='x':
+			# print( 'q(quit), b(back)' )
+			
+			# print()
+			# print()
+			print( _.fields.value( 'project', 'name', str(i+1)+' of '+str(len(data)), center=True ) )
+			print( _.fields.value( 'project', 'name', '(q)uit (b)ack', center=True ) )
+			wait=input('lvl: ')
+			if wait.lower()=='q' or wait.lower()=='x':
 				sys.exit()
+			
+			if wait.lower()=='b':
+				i-=2
+			elif len(wait):
+				try:
+					data[i]['level'] = int(wait)
+					_.saveTableDB( data, 'taboo.json' )
+				except Exception as e:
+					pass
 		# {
 		#     "subject": "drama",
 		#     "omit": [
@@ -256,7 +229,6 @@ import random
 if __name__ == '__main__':
 	action()
 	__.isExit()
-
 
 
 
