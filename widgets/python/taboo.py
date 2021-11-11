@@ -170,10 +170,8 @@ def action():
 
 	# print( len(  _.fields.value( 'project', 'name', 'test', center=True )  ) );sys.exit();
 	i=-1
-	b=1
 	isBack=False
-	while b:
-		b+=1
+	while True:
 		i+=1
 		try:
 			card = data[i]
