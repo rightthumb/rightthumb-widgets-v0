@@ -66,7 +66,7 @@ _.appInfo[focus()] = {
 						# '',
 	],
 	'examples': [
-						_.hp('p thisApp -file file.txt'),
+						_.hp('p taboo'),
 						'',
 	],
 	'columns': [
@@ -181,6 +181,8 @@ def action():
 			level = data[i]['level']
 		except Exception as e:
 			level = 0
+		if _.switches.isActive('Plus'):
+			isBack=True
 		if isBack or (  ( level == 0 ) and _.showLine(card['subject'])  ):
 			_.clear()
 			_.cp( _.fields.value( 'project', 'name', card['subject'], center=True ), 'Background.green' )
