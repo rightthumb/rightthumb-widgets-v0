@@ -166,6 +166,8 @@ def action():
 	# 		_.fields.register( 'project', 'name', mit )
 
 	# print( len(  _.fields.value( 'project', 'name', 'test', center=True )  ) );sys.exit();
+
+
 	i=-1
 	while len(data)>=i:
 		i+=1
@@ -188,11 +190,12 @@ def action():
 			# print()
 			print( _.fields.value( 'project', 'name', str(i+1)+' of '+str(len(data)), center=True ) )
 			print( _.fields.value( 'project', 'name', '(q)uit (b)ack', center=True ) )
+			wait = ''
 			wait=input('lvl: ')
 			if wait.lower()=='q' or wait.lower()=='x':
 				sys.exit()
 			
-			if wait.lower()=='b':
+			if 'b' in wait.lower():
 				i-=2
 			elif len(wait):
 				try:
@@ -200,23 +203,26 @@ def action():
 					_.saveTableDB( data, 'taboo.json' )
 				except Exception as e:
 					pass
-		# {
-		#     "subject": "drama",
-		#     "omit": [
-		#         "genre",
-		#         "queen",
-		#         "soap",
-		#         "movie",
-		#         "book"
-		#     ]
-		# }
 
-		# Background.green
-		# Background.red
+	pass
 
-		# _.fields.register( 'project', 'name', value )
+	# {
+	#     "subject": "drama",
+	#     "omit": [
+	#         "genre",
+	#         "queen",
+	#         "soap",
+	#         "movie",
+	#         "book"
+	#     ]
+	# }
 
-		# _.fields.value( 'project', 'name', value )
+	# Background.green
+	# Background.red
+
+	# _.fields.register( 'project', 'name', value )
+
+	# _.fields.value( 'project', 'name', value )
 
 def load():
 	global data
