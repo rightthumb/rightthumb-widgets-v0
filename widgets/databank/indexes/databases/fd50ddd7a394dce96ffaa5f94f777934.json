@@ -1,0 +1,4972 @@
+{
+    "recordID": "fd50ddd7a394dce96ffaa5f94f777934",
+    "id": 12676,
+    "tags": "technology os file extensions",
+    "tag_stems": [
+        "technolog",
+        "OS",
+        "file",
+        "extens"
+    ],
+    "path": "D:\\tech\\programs\\databank\\vault\\TECHNOLOG\\OS\\FILE\\EXTENS\\fd50ddd7a394dce96ffaa5f94f777934.json",
+    "subject": "Ext.",
+    "description": "Description",
+    "database": {},
+    "tables": [
+        {
+            "tableID": 0,
+            "data": "",
+            "indexes": {
+                "words": [],
+                "stems": {},
+                "speech": {},
+                "parts": {},
+                "words_cnt": 0,
+                "words_cnt_unique": 0,
+                "percentage": {}
+            }
+        },
+        {
+            "tableID": 1,
+            "data": "!$@",
+            "indexes": {
+                "words": [],
+                "stems": {},
+                "speech": {},
+                "parts": {},
+                "words_cnt": 0,
+                "words_cnt_unique": 0,
+                "percentage": {}
+            }
+        },
+        {
+            "tableID": 2,
+            "data": "0\u00e2\u0080\u00939",
+            "indexes": {
+                "words": [],
+                "stems": {},
+                "speech": {},
+                "parts": {},
+                "words_cnt": 0,
+                "words_cnt_unique": 0,
+                "percentage": {}
+            }
+        },
+        {
+            "tableID": 3,
+            "data": "References",
+            "indexes": {
+                "words": [
+                    "references"
+                ],
+                "stems": {
+                    "refer": 1
+                },
+                "speech": {
+                    "refer_NNS": 1
+                },
+                "parts": {
+                    "refer": [
+                        "NNS"
+                    ]
+                },
+                "words_cnt": 1,
+                "words_cnt_unique": 1,
+                "percentage": {
+                    "refer": 100
+                }
+            }
+        }
+    ],
+    "records": [
+        {
+            "tableID": 0,
+            "recordID": 0,
+            "data": "This article needs additional citations for verification. Please help improve this article by adding citations to reliable sources. Unsourced material may be challenged and removed.Find sources:\u00c2\u00a0\"List of filename extensions\"\u00c2\u00a0\u00e2\u0080\u0093\u00c2\u00a0news\u00c2\u00a0\u00c2\u00b7 newspapers\u00c2\u00a0\u00c2\u00b7 books\u00c2\u00a0\u00c2\u00b7 scholar\u00c2\u00a0\u00c2\u00b7 JSTOR (August 2016) (Learn how and when to remove this template message)",
+            "record": {
+                "undefined": "This article needs additional citations for verification. Please help improve this article by adding citations to reliable sources. Unsourced material may be challenged and removed.Find sources:\u00c2\u00a0\"List of filename extensions\"\u00c2\u00a0\u00e2\u0080\u0093\u00c2\u00a0news\u00c2\u00a0\u00c2\u00b7 newspapers\u00c2\u00a0\u00c2\u00b7 books\u00c2\u00a0\u00c2\u00b7 scholar\u00c2\u00a0\u00c2\u00b7 JSTOR (August 2016) (Learn how and when to remove this template message)"
+            },
+            "indexes": {
+                "words": [
+                    "be",
+                    "additional",
+                    "find",
+                    "article",
+                    "how",
+                    "list",
+                    "learn",
+                    "material",
+                    "news",
+                    "by",
+                    "extensions",
+                    "please",
+                    "filename",
+                    "citations",
+                    "help",
+                    "verification",
+                    "newspapers",
+                    "books",
+                    "needs",
+                    "template",
+                    "may",
+                    "adding",
+                    "this",
+                    "message",
+                    "sources",
+                    "scholar",
+                    "improve",
+                    "jstor",
+                    "challenged",
+                    "when",
+                    "removed",
+                    "remove",
+                    "unsourced",
+                    "reliable",
+                    "august"
+                ],
+                "stems": {
+                    "thi": 6,
+                    "articl": 4,
+                    "need": 2,
+                    "addit": 2,
+                    "citat": 4,
+                    "verif": 2,
+                    "pleas": 2,
+                    "help": 2,
+                    "improv": 2,
+                    "by": 2,
+                    "ad": 2,
+                    "reliabl": 2,
+                    "sourc": 4,
+                    "unsourc": 2,
+                    "materi": 2,
+                    "may": 2,
+                    "be": 2,
+                    "challeng": 2,
+                    "remov": 4,
+                    "find": 2,
+                    "list": 2,
+                    "filenam": 2,
+                    "extens": 2,
+                    "news": 2,
+                    "newspap": 2,
+                    "book": 2,
+                    "scholar": 2,
+                    "jstor": 2,
+                    "august": 2,
+                    "learn": 2,
+                    "how": 2,
+                    "when": 2,
+                    "templat": 2,
+                    "messag": 2
+                },
+                "speech": {
+                    "ad_VBG": 2,
+                    "addit_JJ": 2,
+                    "and_CC": 4,
+                    "articl_NN": 4,
+                    "august_NNP": 2,
+                    "be_VB": 2,
+                    "book_NNS": 2,
+                    "by_IN": 2,
+                    "challeng_NN": 2,
+                    "citat_NNS": 4,
+                    "extens_NNS": 2,
+                    "filenam_NN": 2,
+                    "find_IN": 2,
+                    "for_IN": 2,
+                    "help_NN": 2,
+                    "how_WRB": 2,
+                    "improv_VB": 2,
+                    "jstor_NN": 2,
+                    "learn_VB": 2,
+                    "list_NN": 2,
+                    "materi_NN": 2,
+                    "may_MD": 2,
+                    "messag_NN": 2,
+                    "need_NNS": 2,
+                    "news_NN": 2,
+                    "newspap_NNS": 2,
+                    "of_IN": 2,
+                    "pleas_VB": 2,
+                    "reliabl_JJ": 2,
+                    "remov_VB": 2,
+                    "remov_VBN": 2,
+                    "scholar_NN": 2,
+                    "sourc_NNS": 4,
+                    "templat_NN": 2,
+                    "thi_DT": 6,
+                    "to_TO": 4,
+                    "unsourc_VBN": 2,
+                    "verif_NN": 2,
+                    "when_WRB": 2
+                },
+                "parts": {
+                    "ad": [
+                        "VBG"
+                    ],
+                    "addit": [
+                        "JJ"
+                    ],
+                    "and": [
+                        "CC"
+                    ],
+                    "articl": [
+                        "NN"
+                    ],
+                    "august": [
+                        "NNP"
+                    ],
+                    "be": [
+                        "VB"
+                    ],
+                    "book": [
+                        "NNS"
+                    ],
+                    "by": [
+                        "IN"
+                    ],
+                    "challeng": [
+                        "NN"
+                    ],
+                    "citat": [
+                        "NNS"
+                    ],
+                    "extens": [
+                        "NNS"
+                    ],
+                    "filenam": [
+                        "NN"
+                    ],
+                    "find": [
+                        "IN"
+                    ],
+                    "for": [
+                        "IN"
+                    ],
+                    "help": [
+                        "NN"
+                    ],
+                    "how": [
+                        "WRB"
+                    ],
+                    "improv": [
+                        "VB"
+                    ],
+                    "jstor": [
+                        "NN"
+                    ],
+                    "learn": [
+                        "VB"
+                    ],
+                    "list": [
+                        "NN"
+                    ],
+                    "materi": [
+                        "NN"
+                    ],
+                    "may": [
+                        "MD"
+                    ],
+                    "messag": [
+                        "NN"
+                    ],
+                    "need": [
+                        "NNS"
+                    ],
+                    "news": [
+                        "NN"
+                    ],
+                    "newspap": [
+                        "NNS"
+                    ],
+                    "of": [
+                        "IN"
+                    ],
+                    "pleas": [
+                        "VB"
+                    ],
+                    "reliabl": [
+                        "JJ"
+                    ],
+                    "remov": [
+                        "VB",
+                        "VBN"
+                    ],
+                    "scholar": [
+                        "NN"
+                    ],
+                    "sourc": [
+                        "NNS"
+                    ],
+                    "templat": [
+                        "NN"
+                    ],
+                    "thi": [
+                        "DT"
+                    ],
+                    "to": [
+                        "TO"
+                    ],
+                    "unsourc": [
+                        "VBN"
+                    ],
+                    "verif": [
+                        "NN"
+                    ],
+                    "when": [
+                        "WRB"
+                    ]
+                },
+                "words_cnt": 80,
+                "words_cnt_unique": 35,
+                "percentage": {
+                    "thi": 8,
+                    "articl": 5,
+                    "need": 2,
+                    "addit": 2,
+                    "citat": 5,
+                    "verif": 2,
+                    "pleas": 2,
+                    "help": 2,
+                    "improv": 2,
+                    "by": 2,
+                    "ad": 2,
+                    "reliabl": 2,
+                    "sourc": 5,
+                    "unsourc": 2,
+                    "materi": 2,
+                    "may": 2,
+                    "be": 2,
+                    "challeng": 2,
+                    "remov": 5,
+                    "find": 2,
+                    "list": 2,
+                    "filenam": 2,
+                    "extens": 2,
+                    "news": 2,
+                    "newspap": 2,
+                    "book": 2,
+                    "scholar": 2,
+                    "jstor": 2,
+                    "august": 2,
+                    "learn": 2,
+                    "how": 2,
+                    "when": 2,
+                    "templat": 2,
+                    "messag": 2
+                }
+            }
+        },
+        {
+            "tableID": 1,
+            "recordID": 0,
+            "data": "###",
+            "record": {
+                "Ext.": "###",
+                "Description": "Temporary file",
+                "Used by": "Program-dependent format"
+            },
+            "indexes": {
+                "words": [
+                    "temporary",
+                    "file"
+                ],
+                "stems": {
+                    "temporari": 1,
+                    "file": 1
+                },
+                "speech": {
+                    "file_NN": 1,
+                    "temporari_JJ": 1
+                },
+                "parts": {
+                    "file": [
+                        "NN"
+                    ],
+                    "temporari": [
+                        "JJ"
+                    ]
+                },
+                "words_cnt": 2,
+                "words_cnt_unique": 2,
+                "percentage": {
+                    "temporari": 50,
+                    "file": 50
+                }
+            }
+        },
+        {
+            "tableID": 1,
+            "recordID": 1,
+            "data": "#24",
+            "record": {
+                "Ext.": "#24",
+                "Description": "Printer data file for 24-pin matrix printer",
+                "Used by": "LocoScript"
+            },
+            "indexes": {
+                "words": [
+                    "matrix",
+                    "data",
+                    "pin",
+                    "printer",
+                    "file"
+                ],
+                "stems": {
+                    "printer": 2,
+                    "data": 1,
+                    "file": 1,
+                    "pin": 1,
+                    "matrix": 1
+                },
+                "speech": {
+                    "data_NNS": 1,
+                    "file_NN": 1,
+                    "for_IN": 1,
+                    "matrix_NN": 1,
+                    "pin_NN": 1,
+                    "printer_NN": 2
+                },
+                "parts": {
+                    "data": [
+                        "NNS"
+                    ],
+                    "file": [
+                        "NN"
+                    ],
+                    "for": [
+                        "IN"
+                    ],
+                    "matrix": [
+                        "NN"
+                    ],
+                    "pin": [
+                        "NN"
+                    ],
+                    "printer": [
+                        "NN"
+                    ]
+                },
+                "words_cnt": 6,
+                "words_cnt_unique": 5,
+                "percentage": {
+                    "printer": 33,
+                    "data": 17,
+                    "file": 17,
+                    "pin": 17,
+                    "matrix": 17
+                }
+            }
+        },
+        {
+            "tableID": 1,
+            "recordID": 2,
+            "data": "#IB",
+            "record": {
+                "Ext.": "#IB",
+                "Description": "Printer data file",
+                "Used by": "LocoScript"
+            },
+            "indexes": {
+                "words": [
+                    "printer",
+                    "data",
+                    "file",
+                    "ib"
+                ],
+                "stems": {
+                    "ib": 1,
+                    "printer": 1,
+                    "data": 1,
+                    "file": 1
+                },
+                "speech": {
+                    "IB_NN": 1,
+                    "data_NNS": 1,
+                    "file_NN": 1,
+                    "printer_NN": 1
+                },
+                "parts": {
+                    "IB": [
+                        "NN"
+                    ],
+                    "data": [
+                        "NNS"
+                    ],
+                    "file": [
+                        "NN"
+                    ],
+                    "printer": [
+                        "NN"
+                    ]
+                },
+                "words_cnt": 4,
+                "words_cnt_unique": 4,
+                "percentage": {
+                    "ib": 25,
+                    "printer": 25,
+                    "data": 25,
+                    "file": 25
+                }
+            }
+        },
+        {
+            "tableID": 1,
+            "recordID": 3,
+            "data": "#nn",
+            "record": {
+                "Ext.": "#nn",
+                "Description": "Part of file image",
+                "Used by": "Long"
+            },
+            "indexes": {
+                "words": [
+                    "image",
+                    "nn",
+                    "part",
+                    "file"
+                ],
+                "stems": {
+                    "nn": 1,
+                    "part": 1,
+                    "file": 1,
+                    "imag": 1
+                },
+                "speech": {
+                    "file_NN": 1,
+                    "imag_NN": 1,
+                    "nn_NN": 1,
+                    "of_IN": 1,
+                    "part_NN": 1
+                },
+                "parts": {
+                    "file": [
+                        "NN"
+                    ],
+                    "imag": [
+                        "NN"
+                    ],
+                    "nn": [
+                        "NN"
+                    ],
+                    "of": [
+                        "IN"
+                    ],
+                    "part": [
+                        "NN"
+                    ]
+                },
+                "words_cnt": 4,
+                "words_cnt_unique": 4,
+                "percentage": {
+                    "nn": 25,
+                    "part": 25,
+                    "file": 25,
+                    "imag": 25
+                }
+            }
+        },
+        {
+            "tableID": 1,
+            "recordID": 4,
+            "data": "#SC",
+            "record": {
+                "Ext.": "#SC",
+                "Description": "Printer data file",
+                "Used by": "LocoScript"
+            },
+            "indexes": {
+                "words": [
+                    "file",
+                    "data",
+                    "sc",
+                    "printer"
+                ],
+                "stems": {
+                    "sc": 1,
+                    "printer": 1,
+                    "data": 1,
+                    "file": 1
+                },
+                "speech": {
+                    "SC_NN": 1,
+                    "data_NNS": 1,
+                    "file_NN": 1,
+                    "printer_NN": 1
+                },
+                "parts": {
+                    "SC": [
+                        "NN"
+                    ],
+                    "data": [
+                        "NNS"
+                    ],
+                    "file": [
+                        "NN"
+                    ],
+                    "printer": [
+                        "NN"
+                    ]
+                },
+                "words_cnt": 4,
+                "words_cnt_unique": 4,
+                "percentage": {
+                    "sc": 25,
+                    "printer": 25,
+                    "data": 25,
+                    "file": 25
+                }
+            }
+        },
+        {
+            "tableID": 1,
+            "recordID": 5,
+            "data": "#ST",
+            "record": {
+                "Ext.": "#ST",
+                "Description": "Standard mode printer definitions",
+                "Used by": "LocoScript"
+            },
+            "indexes": {
+                "words": [
+                    "st",
+                    "mode",
+                    "standard",
+                    "definitions",
+                    "printer"
+                ],
+                "stems": {
+                    "st": 1,
+                    "standard": 1,
+                    "mode": 1,
+                    "printer": 1,
+                    "definit": 1
+                },
+                "speech": {
+                    "ST_NN": 1,
+                    "definit_NNS": 1,
+                    "mode_NN": 1,
+                    "printer_NN": 1,
+                    "standard_NN": 1
+                },
+                "parts": {
+                    "ST": [
+                        "NN"
+                    ],
+                    "definit": [
+                        "NNS"
+                    ],
+                    "mode": [
+                        "NN"
+                    ],
+                    "printer": [
+                        "NN"
+                    ],
+                    "standard": [
+                        "NN"
+                    ]
+                },
+                "words_cnt": 5,
+                "words_cnt_unique": 5,
+                "percentage": {
+                    "st": 20,
+                    "standard": 20,
+                    "mode": 20,
+                    "printer": 20,
+                    "definit": 20
+                }
+            }
+        },
+        {
+            "tableID": 1,
+            "recordID": 6,
+            "data": "$$$",
+            "record": {
+                "Ext.": "$$$",
+                "Description": "OS/2 archive file (i.e. archives$.$$, keys$.$$)",
+                "Used by": "OS/2"
+            },
+            "indexes": {
+                "words": [
+                    "keys",
+                    "file",
+                    "archive",
+                    "os",
+                    "archives"
+                ],
+                "stems": {
+                    "os": 1,
+                    "archiv": 2,
+                    "file": 1,
+                    "key": 1
+                },
+                "speech": {
+                    "OS_NN": 1,
+                    "archiv_JJ": 1,
+                    "archiv_NNS": 1,
+                    "file_NN": 1,
+                    "key_NNS": 1
+                },
+                "parts": {
+                    "OS": [
+                        "NN"
+                    ],
+                    "archiv": [
+                        "JJ",
+                        "NNS"
+                    ],
+                    "file": [
+                        "NN"
+                    ],
+                    "key": [
+                        "NNS"
+                    ]
+                },
+                "words_cnt": 5,
+                "words_cnt_unique": 5,
+                "percentage": {
+                    "os": 20,
+                    "archiv": 40,
+                    "file": 20,
+                    "key": 20
+                }
+            }
+        },
+        {
+            "tableID": 1,
+            "recordID": 7,
+            "data": "$$$",
+            "record": {
+                "Ext.": "$$$",
+                "Description": "Temporary file",
+                "Used by": ""
+            },
+            "indexes": {
+                "words": [
+                    "temporary",
+                    "file"
+                ],
+                "stems": {
+                    "temporari": 1,
+                    "file": 1
+                },
+                "speech": {
+                    "file_NN": 1,
+                    "temporari_JJ": 1
+                },
+                "parts": {
+                    "file": [
+                        "NN"
+                    ],
+                    "temporari": [
+                        "JJ"
+                    ]
+                },
+                "words_cnt": 2,
+                "words_cnt_unique": 2,
+                "percentage": {
+                    "temporari": 50,
+                    "file": 50
+                }
+            }
+        },
+        {
+            "tableID": 1,
+            "recordID": 8,
+            "data": "$?",
+            "record": {
+                "Ext.": "$?",
+                "Description": "ZX Spectrum file in HOBETA format",
+                "Used by": ""
+            },
+            "indexes": {
+                "words": [
+                    "spectrum",
+                    "zx",
+                    "hobeta",
+                    "format",
+                    "file"
+                ],
+                "stems": {
+                    "zx": 1,
+                    "spectrum": 1,
+                    "file": 1,
+                    "hobeta": 1,
+                    "format": 1
+                },
+                "speech": {
+                    "ZX_NN": 1,
+                    "file_NN": 1,
+                    "format_NN": 1,
+                    "hobeta_NN": 1,
+                    "in_IN": 1,
+                    "spectrum_NN": 1
+                },
+                "parts": {
+                    "ZX": [
+                        "NN"
+                    ],
+                    "file": [
+                        "NN"
+                    ],
+                    "format": [
+                        "NN"
+                    ],
+                    "hobeta": [
+                        "NN"
+                    ],
+                    "in": [
+                        "IN"
+                    ],
+                    "spectrum": [
+                        "NN"
+                    ]
+                },
+                "words_cnt": 5,
+                "words_cnt_unique": 5,
+                "percentage": {
+                    "zx": 20,
+                    "spectrum": 20,
+                    "file": 20,
+                    "hobeta": 20,
+                    "format": 20
+                }
+            }
+        },
+        {
+            "tableID": 1,
+            "recordID": 9,
+            "data": "$00",
+            "record": {
+                "Ext.": "$00",
+                "Description": "Pipe file",
+                "Used by": "DOS"
+            },
+            "indexes": {
+                "words": [
+                    "pipe",
+                    "file"
+                ],
+                "stems": {
+                    "pipe": 1,
+                    "file": 1
+                },
+                "speech": {
+                    "file_NN": 1,
+                    "pipe_NN": 1
+                },
+                "parts": {
+                    "file": [
+                        "NN"
+                    ],
+                    "pipe": [
+                        "NN"
+                    ]
+                },
+                "words_cnt": 2,
+                "words_cnt_unique": 2,
+                "percentage": {
+                    "pipe": 50,
+                    "file": 50
+                }
+            }
+        },
+        {
+            "tableID": 1,
+            "recordID": 10,
+            "data": "$DB",
+            "record": {
+                "Ext.": "$DB",
+                "Description": "Database temporary file",
+                "Used by": "dBase"
+            },
+            "indexes": {
+                "words": [
+                    "file",
+                    "db",
+                    "database",
+                    "temporary"
+                ],
+                "stems": {
+                    "db": 1,
+                    "databas": 1,
+                    "temporari": 1,
+                    "file": 1
+                },
+                "speech": {
+                    "DB_NN": 1,
+                    "databas_NN": 1,
+                    "file_NN": 1,
+                    "temporari_JJ": 1
+                },
+                "parts": {
+                    "DB": [
+                        "NN"
+                    ],
+                    "databas": [
+                        "NN"
+                    ],
+                    "file": [
+                        "NN"
+                    ],
+                    "temporari": [
+                        "JJ"
+                    ]
+                },
+                "words_cnt": 4,
+                "words_cnt_unique": 4,
+                "percentage": {
+                    "db": 25,
+                    "databas": 25,
+                    "temporari": 25,
+                    "file": 25
+                }
+            }
+        },
+        {
+            "tableID": 1,
+            "recordID": 11,
+            "data": "$O1",
+            "record": {
+                "Ext.": "$O1",
+                "Description": "Pipe file",
+                "Used by": "DOS"
+            },
+            "indexes": {
+                "words": [
+                    "pipe",
+                    "file"
+                ],
+                "stems": {
+                    "pipe": 1,
+                    "file": 1
+                },
+                "speech": {
+                    "file_NN": 1,
+                    "pipe_NN": 1
+                },
+                "parts": {
+                    "file": [
+                        "NN"
+                    ],
+                    "pipe": [
+                        "NN"
+                    ]
+                },
+                "words_cnt": 2,
+                "words_cnt_unique": 2,
+                "percentage": {
+                    "pipe": 50,
+                    "file": 50
+                }
+            }
+        },
+        {
+            "tableID": 1,
+            "recordID": 12,
+            "data": "$VM",
+            "record": {
+                "Ext.": "$VM",
+                "Description": "Virtual manager temporary file",
+                "Used by": "Windows 3.x"
+            },
+            "indexes": {
+                "words": [
+                    "vm",
+                    "file",
+                    "virtual",
+                    "temporary",
+                    "manager"
+                ],
+                "stems": {
+                    "vm": 1,
+                    "virtual": 1,
+                    "manag": 1,
+                    "temporari": 1,
+                    "file": 1
+                },
+                "speech": {
+                    "VM_NN": 1,
+                    "file_NN": 1,
+                    "manag_NN": 1,
+                    "temporari_JJ": 1,
+                    "virtual_JJ": 1
+                },
+                "parts": {
+                    "VM": [
+                        "NN"
+                    ],
+                    "file": [
+                        "NN"
+                    ],
+                    "manag": [
+                        "NN"
+                    ],
+                    "temporari": [
+                        "JJ"
+                    ],
+                    "virtual": [
+                        "JJ"
+                    ]
+                },
+                "words_cnt": 5,
+                "words_cnt_unique": 5,
+                "percentage": {
+                    "vm": 20,
+                    "virtual": 20,
+                    "manag": 20,
+                    "temporari": 20,
+                    "file": 20
+                }
+            }
+        },
+        {
+            "tableID": 1,
+            "recordID": 13,
+            "data": "&01, &02, etc",
+            "record": {
+                "Ext.": "&01, &02, etc",
+                "Description": "Holdfast backup archive files",
+                "Used by": "Holdfast"
+            },
+            "indexes": {
+                "words": [
+                    "holdfast",
+                    "files",
+                    "etc",
+                    "backup",
+                    "archive"
+                ],
+                "stems": {
+                    "etc": 1,
+                    "holdfast": 1,
+                    "backup": 1,
+                    "archiv": 1,
+                    "file": 1
+                },
+                "speech": {
+                    "archiv_JJ": 1,
+                    "backup_NN": 1,
+                    "etc_NN": 1,
+                    "file_NNS": 1,
+                    "holdfast_NN": 1
+                },
+                "parts": {
+                    "archiv": [
+                        "JJ"
+                    ],
+                    "backup": [
+                        "NN"
+                    ],
+                    "etc": [
+                        "NN"
+                    ],
+                    "file": [
+                        "NNS"
+                    ],
+                    "holdfast": [
+                        "NN"
+                    ]
+                },
+                "words_cnt": 5,
+                "words_cnt_unique": 5,
+                "percentage": {
+                    "etc": 20,
+                    "holdfast": 20,
+                    "backup": 20,
+                    "archiv": 20,
+                    "file": 20
+                }
+            }
+        },
+        {
+            "tableID": 1,
+            "recordID": 14,
+            "data": ")2(",
+            "record": {
+                "Ext.": ")2(",
+                "Description": "LHA archiver temporary file",
+                "Used by": "LHA"
+            },
+            "indexes": {
+                "words": [
+                    "lha",
+                    "file",
+                    "temporary",
+                    "archiver"
+                ],
+                "stems": {
+                    "lha": 1,
+                    "archiv": 1,
+                    "temporari": 1,
+                    "file": 1
+                },
+                "speech": {
+                    "archiv_NN": 1,
+                    "file_NN": 1,
+                    "lha_NN": 1,
+                    "temporari_JJ": 1
+                },
+                "parts": {
+                    "archiv": [
+                        "NN"
+                    ],
+                    "file": [
+                        "NN"
+                    ],
+                    "lha": [
+                        "NN"
+                    ],
+                    "temporari": [
+                        "JJ"
+                    ]
+                },
+                "words_cnt": 4,
+                "words_cnt_unique": 4,
+                "percentage": {
+                    "lha": 25,
+                    "archiv": 25,
+                    "temporari": 25,
+                    "file": 25
+                }
+            }
+        },
+        {
+            "tableID": 1,
+            "recordID": 15,
+            "data": "??$",
+            "record": {
+                "Ext.": "??$",
+                "Description": "Backup file",
+                "Used by": "P-CAD"
+            },
+            "indexes": {
+                "words": [
+                    "backup",
+                    "file"
+                ],
+                "stems": {
+                    "backup": 1,
+                    "file": 1
+                },
+                "speech": {
+                    "backup_NN": 1,
+                    "file_NN": 1
+                },
+                "parts": {
+                    "backup": [
+                        "NN"
+                    ],
+                    "file": [
+                        "NN"
+                    ]
+                },
+                "words_cnt": 2,
+                "words_cnt_unique": 2,
+                "percentage": {
+                    "backup": 50,
+                    "file": 50
+                }
+            }
+        },
+        {
+            "tableID": 1,
+            "recordID": 16,
+            "data": "??_",
+            "record": {
+                "Ext.": "??_",
+                "Description": "Microsoft packed file",
+                "Used by": "Expand. Note:\u00c2\u00a0?? could be any first two characters in a file extension (e.g. BM_ for compressed bitmap (BMP), DL_ for compressed library, etc.) Files compressed using this method have been in use on Microsoft software CDs and floppies since around 1995."
+            },
+            "indexes": {
+                "words": [
+                    "packed",
+                    "microsoft",
+                    "file"
+                ],
+                "stems": {
+                    "microsoft": 1,
+                    "pack": 1,
+                    "file": 1
+                },
+                "speech": {
+                    "file_NN": 1,
+                    "microsoft_NNP": 1,
+                    "pack_NNS": 1
+                },
+                "parts": {
+                    "file": [
+                        "NN"
+                    ],
+                    "microsoft": [
+                        "NNP"
+                    ],
+                    "pack": [
+                        "NNS"
+                    ]
+                },
+                "words_cnt": 3,
+                "words_cnt_unique": 3,
+                "percentage": {
+                    "microsoft": 33,
+                    "pack": 33,
+                    "file": 33
+                }
+            }
+        },
+        {
+            "tableID": 1,
+            "recordID": 17,
+            "data": "?DK",
+            "record": {
+                "Ext.": "?DK",
+                "Description": "Disk image",
+                "Used by": "Loaddskf.exe"
+            },
+            "indexes": {
+                "words": [
+                    "image",
+                    "dk",
+                    "disk"
+                ],
+                "stems": {
+                    "dk": 1,
+                    "disk": 1,
+                    "imag": 1
+                },
+                "speech": {
+                    "DK_NN": 1,
+                    "disk_NN": 1,
+                    "imag_NN": 1
+                },
+                "parts": {
+                    "DK": [
+                        "NN"
+                    ],
+                    "disk": [
+                        "NN"
+                    ],
+                    "imag": [
+                        "NN"
+                    ]
+                },
+                "words_cnt": 3,
+                "words_cnt_unique": 3,
+                "percentage": {
+                    "dk": 33,
+                    "disk": 33,
+                    "imag": 33
+                }
+            }
+        },
+        {
+            "tableID": 1,
+            "recordID": 18,
+            "data": "?UT",
+            "record": {
+                "Ext.": "?UT",
+                "Description": "Nonpacked FTN mail (? - flavor)",
+                "Used by": "FidoNet"
+            },
+            "indexes": {
+                "words": [
+                    "nonpacked",
+                    "mail",
+                    "ftn",
+                    "ut",
+                    "flavor"
+                ],
+                "stems": {
+                    "ut": 1,
+                    "nonpack": 1,
+                    "ftn": 1,
+                    "mail": 1,
+                    "flavor": 1
+                },
+                "speech": {
+                    "UT_NN": 1,
+                    "flavor_NN": 1,
+                    "ftn_NN": 1,
+                    "mail_NN": 1,
+                    "nonpack_VBN": 1
+                },
+                "parts": {
+                    "UT": [
+                        "NN"
+                    ],
+                    "flavor": [
+                        "NN"
+                    ],
+                    "ftn": [
+                        "NN"
+                    ],
+                    "mail": [
+                        "NN"
+                    ],
+                    "nonpack": [
+                        "VBN"
+                    ]
+                },
+                "words_cnt": 5,
+                "words_cnt_unique": 5,
+                "percentage": {
+                    "ut": 20,
+                    "nonpack": 20,
+                    "ftn": 20,
+                    "mail": 20,
+                    "flavor": 20
+                }
+            }
+        },
+        {
+            "tableID": 1,
+            "recordID": 19,
+            "data": "!qB",
+            "record": {
+                "Ext.": "!qB",
+                "Description": "Unfinished qBittorrent download",
+                "Used by": "qBittorrent"
+            },
+            "indexes": {
+                "words": [
+                    "download",
+                    "unfinished",
+                    "qb",
+                    "qbittorrent"
+                ],
+                "stems": {
+                    "qb": 1,
+                    "unfinish": 1,
+                    "qbittorr": 1,
+                    "download": 1
+                },
+                "speech": {
+                    "download_NN": 1,
+                    "qB_NN": 1,
+                    "qbittorr_NN": 1,
+                    "unfinish_VBN": 1
+                },
+                "parts": {
+                    "download": [
+                        "NN"
+                    ],
+                    "qB": [
+                        "NN"
+                    ],
+                    "qbittorr": [
+                        "NN"
+                    ],
+                    "unfinish": [
+                        "VBN"
+                    ]
+                },
+                "words_cnt": 4,
+                "words_cnt_unique": 4,
+                "percentage": {
+                    "qb": 25,
+                    "unfinish": 25,
+                    "qbittorr": 25,
+                    "download": 25
+                }
+            }
+        },
+        {
+            "tableID": 1,
+            "recordID": 20,
+            "data": "!ut",
+            "record": {
+                "Ext.": "!ut",
+                "Description": "Unfinished \u00ce\u00bcTorrent download",
+                "Used by": "\u00ce\u00bcTorrent"
+            },
+            "indexes": {
+                "words": [
+                    "ut",
+                    "torrent",
+                    "download",
+                    "unfinished"
+                ],
+                "stems": {
+                    "ut": 1,
+                    "unfinish": 1,
+                    "torrent": 1,
+                    "download": 1
+                },
+                "speech": {
+                    "download_NN": 1,
+                    "torrent_NN": 1,
+                    "unfinish_VBN": 1,
+                    "ut_NN": 1
+                },
+                "parts": {
+                    "download": [
+                        "NN"
+                    ],
+                    "torrent": [
+                        "NN"
+                    ],
+                    "unfinish": [
+                        "VBN"
+                    ],
+                    "ut": [
+                        "NN"
+                    ]
+                },
+                "words_cnt": 4,
+                "words_cnt_unique": 4,
+                "percentage": {
+                    "ut": 25,
+                    "unfinish": 25,
+                    "torrent": 25,
+                    "download": 25
+                }
+            }
+        },
+        {
+            "tableID": 1,
+            "recordID": 21,
+            "data": "@@@",
+            "record": {
+                "Ext.": "@@@",
+                "Description": "DOS 2.0 - 3.2 backup control file",
+                "Used by": "DOS commands BACKUP and RESTORE"
+            },
+            "indexes": {
+                "words": [
+                    "control",
+                    "backup",
+                    "dos",
+                    "file"
+                ],
+                "stems": {
+                    "do": 1,
+                    "backup": 1,
+                    "control": 1,
+                    "file": 1
+                },
+                "speech": {
+                    "backup_NN": 1,
+                    "control_NN": 1,
+                    "do_NN": 1,
+                    "file_NN": 1
+                },
+                "parts": {
+                    "backup": [
+                        "NN"
+                    ],
+                    "control": [
+                        "NN"
+                    ],
+                    "do": [
+                        "NN"
+                    ],
+                    "file": [
+                        "NN"
+                    ]
+                },
+                "words_cnt": 4,
+                "words_cnt_unique": 4,
+                "percentage": {
+                    "do": 25,
+                    "backup": 25,
+                    "control": 25,
+                    "file": 25
+                }
+            }
+        },
+        {
+            "tableID": 1,
+            "recordID": 22,
+            "data": "___",
+            "record": {
+                "Ext.": "___",
+                "Description": "Adinf table",
+                "Used by": "Adinf"
+            },
+            "indexes": {
+                "words": [
+                    "table",
+                    "adinf"
+                ],
+                "stems": {
+                    "adinf": 1,
+                    "tabl": 1
+                },
+                "speech": {
+                    "adinf_NN": 1,
+                    "tabl_NN": 1
+                },
+                "parts": {
+                    "adinf": [
+                        "NN"
+                    ],
+                    "tabl": [
+                        "NN"
+                    ]
+                },
+                "words_cnt": 2,
+                "words_cnt_unique": 2,
+                "percentage": {
+                    "adinf": 50,
+                    "tabl": 50
+                }
+            }
+        },
+        {
+            "tableID": 1,
+            "recordID": 23,
+            "data": "?Q?",
+            "record": {
+                "Ext.": "?Q?",
+                "Description": "Squeeze",
+                "Used by": "CP/M and MS-DOS"
+            },
+            "indexes": {
+                "words": [
+                    "squeeze"
+                ],
+                "stems": {
+                    "squeez": 1
+                },
+                "speech": {
+                    "squeez_NN": 1
+                },
+                "parts": {
+                    "squeez": [
+                        "NN"
+                    ]
+                },
+                "words_cnt": 1,
+                "words_cnt_unique": 1,
+                "percentage": {
+                    "squeez": 100
+                }
+            }
+        },
+        {
+            "tableID": 1,
+            "recordID": 24,
+            "data": "~$~",
+            "record": {
+                "Ext.": "~$~",
+                "Description": "Temporary file",
+                "Used by": "1st Reader"
+            },
+            "indexes": {
+                "words": [
+                    "temporary",
+                    "file"
+                ],
+                "stems": {
+                    "temporari": 1,
+                    "file": 1
+                },
+                "speech": {
+                    "file_NN": 1,
+                    "temporari_JJ": 1
+                },
+                "parts": {
+                    "file": [
+                        "NN"
+                    ],
+                    "temporari": [
+                        "JJ"
+                    ]
+                },
+                "words_cnt": 2,
+                "words_cnt_unique": 2,
+                "percentage": {
+                    "temporari": 50,
+                    "file": 50
+                }
+            }
+        },
+        {
+            "tableID": 1,
+            "recordID": 25,
+            "data": "~1~, ~2~, etc.",
+            "record": {
+                "Ext.": "~1~, ~2~, etc.",
+                "Description": "Backup file (name is constructed with numbered backup option by appending ~, the incremented number, and another ~ after the original name)",
+                "Used by": "GNU coreutils (cp, install, ln, mv ), Emacs"
+            },
+            "indexes": {
+                "words": [
+                    "original",
+                    "option",
+                    "is",
+                    "another",
+                    "constructed",
+                    "by",
+                    "appending",
+                    "etc",
+                    "incremented",
+                    "after",
+                    "file",
+                    "name",
+                    "number",
+                    "backup",
+                    "with",
+                    "numbered"
+                ],
+                "stems": {
+                    "etc": 1,
+                    "backup": 2,
+                    "file": 1,
+                    "name": 2,
+                    "is": 1,
+                    "construct": 1,
+                    "with": 1,
+                    "number": 2,
+                    "option": 1,
+                    "by": 1,
+                    "append": 1,
+                    "increment": 1,
+                    "anoth": 1,
+                    "after": 1,
+                    "origin": 1
+                },
+                "speech": {
+                    "after_IN": 1,
+                    "and_CC": 1,
+                    "anoth_DT": 1,
+                    "append_VBG": 1,
+                    "backup_NN": 2,
+                    "by_IN": 1,
+                    "construct_VBN": 1,
+                    "etc_NN": 1,
+                    "file_NN": 1,
+                    "increment_VBN": 1,
+                    "is_VBZ": 1,
+                    "name_NN": 2,
+                    "number_JJ": 1,
+                    "number_NN": 1,
+                    "option_NN": 1,
+                    "origin_JJ": 1,
+                    "the_DT": 2,
+                    "with_IN": 1
+                },
+                "parts": {
+                    "after": [
+                        "IN"
+                    ],
+                    "and": [
+                        "CC"
+                    ],
+                    "anoth": [
+                        "DT"
+                    ],
+                    "append": [
+                        "VBG"
+                    ],
+                    "backup": [
+                        "NN"
+                    ],
+                    "by": [
+                        "IN"
+                    ],
+                    "construct": [
+                        "VBN"
+                    ],
+                    "etc": [
+                        "NN"
+                    ],
+                    "file": [
+                        "NN"
+                    ],
+                    "increment": [
+                        "VBN"
+                    ],
+                    "is": [
+                        "VBZ"
+                    ],
+                    "name": [
+                        "NN"
+                    ],
+                    "number": [
+                        "JJ",
+                        "NN"
+                    ],
+                    "option": [
+                        "NN"
+                    ],
+                    "origin": [
+                        "JJ"
+                    ],
+                    "the": [
+                        "DT"
+                    ],
+                    "with": [
+                        "IN"
+                    ]
+                },
+                "words_cnt": 18,
+                "words_cnt_unique": 16,
+                "percentage": {
+                    "etc": 6,
+                    "backup": 11,
+                    "file": 6,
+                    "name": 11,
+                    "is": 6,
+                    "construct": 6,
+                    "with": 6,
+                    "number": 11,
+                    "option": 6,
+                    "by": 6,
+                    "append": 6,
+                    "increment": 6,
+                    "anoth": 6,
+                    "after": 6,
+                    "origin": 6
+                }
+            }
+        },
+        {
+            "tableID": 1,
+            "recordID": 26,
+            "data": "~??",
+            "record": {
+                "Ext.": "~??",
+                "Description": "Old Backup files (.MNU to .~MN)",
+                "Used by": "Resource Workshop (Borland Delphi)"
+            },
+            "indexes": {
+                "words": [
+                    "mn",
+                    "files",
+                    "old",
+                    "mnu",
+                    "backup"
+                ],
+                "stems": {
+                    "old": 1,
+                    "backup": 1,
+                    "file": 1,
+                    "mnu": 1,
+                    "mn": 1
+                },
+                "speech": {
+                    "MN_NN": 1,
+                    "backup_NN": 1,
+                    "file_NNS": 1,
+                    "mnu_NN": 1,
+                    "old_NN": 1,
+                    "to_TO": 1
+                },
+                "parts": {
+                    "MN": [
+                        "NN"
+                    ],
+                    "backup": [
+                        "NN"
+                    ],
+                    "file": [
+                        "NNS"
+                    ],
+                    "mnu": [
+                        "NN"
+                    ],
+                    "old": [
+                        "NN"
+                    ],
+                    "to": [
+                        "TO"
+                    ]
+                },
+                "words_cnt": 5,
+                "words_cnt_unique": 5,
+                "percentage": {
+                    "old": 20,
+                    "backup": 20,
+                    "file": 20,
+                    "mnu": 20,
+                    "mn": 20
+                }
+            }
+        },
+        {
+            "tableID": 1,
+            "recordID": 27,
+            "data": "~H",
+            "record": {
+                "Ext.": "~H",
+                "Description": "Cardfile heap",
+                "Used by": "AZZ Cardfile"
+            },
+            "indexes": {
+                "words": [
+                    "cardfile",
+                    "heap"
+                ],
+                "stems": {
+                    "cardfil": 1,
+                    "heap": 1
+                },
+                "speech": {
+                    "cardfil_NN": 1,
+                    "heap_NN": 1
+                },
+                "parts": {
+                    "cardfil": [
+                        "NN"
+                    ],
+                    "heap": [
+                        "NN"
+                    ]
+                },
+                "words_cnt": 2,
+                "words_cnt_unique": 2,
+                "percentage": {
+                    "cardfil": 50,
+                    "heap": 50
+                }
+            }
+        },
+        {
+            "tableID": 1,
+            "recordID": 28,
+            "data": "\u00ce\u00bc",
+            "record": {
+                "Ext.": "\u00ce\u00bc",
+                "Description": "Metrowerks Codewarrior project",
+                "Used by": ""
+            },
+            "indexes": {
+                "words": [
+                    "project",
+                    "metrowerks",
+                    "codewarrior"
+                ],
+                "stems": {
+                    "metrowerk": 1,
+                    "codewarrior": 1,
+                    "project": 1
+                },
+                "speech": {
+                    "codewarrior_NN": 1,
+                    "metrowerk_NNS": 1,
+                    "project_NN": 1
+                },
+                "parts": {
+                    "codewarrior": [
+                        "NN"
+                    ],
+                    "metrowerk": [
+                        "NNS"
+                    ],
+                    "project": [
+                        "NN"
+                    ]
+                },
+                "words_cnt": 3,
+                "words_cnt_unique": 3,
+                "percentage": {
+                    "metrowerk": 33,
+                    "codewarrior": 33,
+                    "project": 33
+                }
+            }
+        },
+        {
+            "tableID": 1,
+            "recordID": 29,
+            "data": "\u00ce\u00a0",
+            "record": {
+                "Ext.": "\u00ce\u00a0",
+                "Description": "THINK C project",
+                "Used by": ""
+            },
+            "indexes": {
+                "words": [
+                    "project",
+                    "think"
+                ],
+                "stems": {
+                    "think": 1,
+                    "project": 1
+                },
+                "speech": {
+                    "project_NN": 1,
+                    "think_NN": 1
+                },
+                "parts": {
+                    "project": [
+                        "NN"
+                    ],
+                    "think": [
+                        "NN"
+                    ]
+                },
+                "words_cnt": 2,
+                "words_cnt_unique": 2,
+                "percentage": {
+                    "think": 50,
+                    "project": 50
+                }
+            }
+        },
+        {
+            "tableID": 2,
+            "recordID": 0,
+            "data": "0",
+            "record": {
+                "Ext.": "0",
+                "Description": "Compressed harddisk data",
+                "Used by": "DoubleSpace"
+            },
+            "indexes": {
+                "words": [
+                    "compressed",
+                    "harddisk",
+                    "data"
+                ],
+                "stems": {
+                    "compress": 1,
+                    "harddisk": 1,
+                    "data": 1
+                },
+                "speech": {
+                    "compress_VBN": 1,
+                    "data_NNS": 1,
+                    "harddisk_NN": 1
+                },
+                "parts": {
+                    "compress": [
+                        "VBN"
+                    ],
+                    "data": [
+                        "NNS"
+                    ],
+                    "harddisk": [
+                        "NN"
+                    ]
+                },
+                "words_cnt": 3,
+                "words_cnt_unique": 3,
+                "percentage": {
+                    "compress": 33,
+                    "harddisk": 33,
+                    "data": 33
+                }
+            }
+        },
+        {
+            "tableID": 2,
+            "recordID": 1,
+            "data": "0B",
+            "record": {
+                "Ext.": "0B",
+                "Description": "Printer font with lineDraw extended character set",
+                "Used by": "PageMaker"
+            },
+            "indexes": {
+                "words": [
+                    "extended",
+                    "character",
+                    "with",
+                    "font",
+                    "printer",
+                    "linedraw",
+                    "set"
+                ],
+                "stems": {
+                    "printer": 1,
+                    "font": 1,
+                    "with": 1,
+                    "linedraw": 1,
+                    "extend": 1,
+                    "charact": 1,
+                    "set": 1
+                },
+                "speech": {
+                    "charact_NN": 1,
+                    "extend_VBN": 1,
+                    "font_NN": 1,
+                    "linedraw_NN": 1,
+                    "printer_NN": 1,
+                    "set_NN": 1,
+                    "with_IN": 1
+                },
+                "parts": {
+                    "charact": [
+                        "NN"
+                    ],
+                    "extend": [
+                        "VBN"
+                    ],
+                    "font": [
+                        "NN"
+                    ],
+                    "linedraw": [
+                        "NN"
+                    ],
+                    "printer": [
+                        "NN"
+                    ],
+                    "set": [
+                        "NN"
+                    ],
+                    "with": [
+                        "IN"
+                    ]
+                },
+                "words_cnt": 7,
+                "words_cnt_unique": 7,
+                "percentage": {
+                    "printer": 14,
+                    "font": 14,
+                    "with": 14,
+                    "linedraw": 14,
+                    "extend": 14,
+                    "charact": 14,
+                    "set": 14
+                }
+            }
+        },
+        {
+            "tableID": 2,
+            "recordID": 2,
+            "data": "001, 002, ...",
+            "record": {
+                "Ext.": "001, 002, ...",
+                "Description": "Split parts of a single whole file",
+                "Used by": "FFSJ, HJSplit, JJSplit, split (Unix) (when using numeric suffixes)"
+            },
+            "indexes": {
+                "words": [
+                    "parts",
+                    "split",
+                    "whole",
+                    "file",
+                    "single"
+                ],
+                "stems": {
+                    "split": 1,
+                    "part": 1,
+                    "singl": 1,
+                    "whole": 1,
+                    "file": 1
+                },
+                "speech": {
+                    "file_NN": 1,
+                    "of_IN": 1,
+                    "part_NNS": 1,
+                    "singl_JJ": 1,
+                    "split_NN": 1,
+                    "whole_JJ": 1
+                },
+                "parts": {
+                    "file": [
+                        "NN"
+                    ],
+                    "of": [
+                        "IN"
+                    ],
+                    "part": [
+                        "NNS"
+                    ],
+                    "singl": [
+                        "JJ"
+                    ],
+                    "split": [
+                        "NN"
+                    ],
+                    "whole": [
+                        "JJ"
+                    ]
+                },
+                "words_cnt": 5,
+                "words_cnt_unique": 5,
+                "percentage": {
+                    "split": 20,
+                    "part": 20,
+                    "singl": 20,
+                    "whole": 20,
+                    "file": 20
+                }
+            }
+        },
+        {
+            "tableID": 2,
+            "recordID": 3,
+            "data": "1",
+            "record": {
+                "Ext.": "1",
+                "Description": "Fax",
+                "Used by": "(Many programs)"
+            },
+            "indexes": {
+                "words": [
+                    "fax"
+                ],
+                "stems": {
+                    "fax": 1
+                },
+                "speech": {
+                    "fax_NN": 1
+                },
+                "parts": {
+                    "fax": [
+                        "NN"
+                    ]
+                },
+                "words_cnt": 1,
+                "words_cnt_unique": 1,
+                "percentage": {
+                    "fax": 100
+                }
+            }
+        },
+        {
+            "tableID": 2,
+            "recordID": 4,
+            "data": "1",
+            "record": {
+                "Ext.": "1",
+                "Description": "Roff/nroff/troff/groff source for manual page",
+                "Used by": "cawf2.zip"
+            },
+            "indexes": {
+                "words": [
+                    "source",
+                    "manual",
+                    "groff",
+                    "troff",
+                    "roff",
+                    "page",
+                    "nroff"
+                ],
+                "stems": {
+                    "roff": 1,
+                    "nroff": 1,
+                    "troff": 1,
+                    "groff": 1,
+                    "sourc": 1,
+                    "manual": 1,
+                    "page": 1
+                },
+                "speech": {
+                    "for_IN": 1,
+                    "groff_NN": 1,
+                    "manual_JJ": 1,
+                    "nroff_NN": 1,
+                    "page_NN": 1,
+                    "roff_NN": 1,
+                    "sourc_NN": 1,
+                    "troff_NN": 1
+                },
+                "parts": {
+                    "for": [
+                        "IN"
+                    ],
+                    "groff": [
+                        "NN"
+                    ],
+                    "manual": [
+                        "JJ"
+                    ],
+                    "nroff": [
+                        "NN"
+                    ],
+                    "page": [
+                        "NN"
+                    ],
+                    "roff": [
+                        "NN"
+                    ],
+                    "sourc": [
+                        "NN"
+                    ],
+                    "troff": [
+                        "NN"
+                    ]
+                },
+                "words_cnt": 7,
+                "words_cnt_unique": 7,
+                "percentage": {
+                    "roff": 14,
+                    "nroff": 14,
+                    "troff": 14,
+                    "groff": 14,
+                    "sourc": 14,
+                    "manual": 14,
+                    "page": 14
+                }
+            }
+        },
+        {
+            "tableID": 2,
+            "recordID": 5,
+            "data": "123",
+            "record": {
+                "Ext.": "123",
+                "Description": "Spreadsheet",
+                "Used by": "Lotus 1-2-3 version 9 and version 97"
+            },
+            "indexes": {
+                "words": [
+                    "spreadsheet"
+                ],
+                "stems": {
+                    "spreadsheet": 1
+                },
+                "speech": {
+                    "spreadsheet_NN": 1
+                },
+                "parts": {
+                    "spreadsheet": [
+                        "NN"
+                    ]
+                },
+                "words_cnt": 1,
+                "words_cnt_unique": 1,
+                "percentage": {
+                    "spreadsheet": 100
+                }
+            }
+        },
+        {
+            "tableID": 2,
+            "recordID": 6,
+            "data": "123dx",
+            "record": {
+                "Ext.": "123dx",
+                "Description": "CAD drawing file",
+                "Used by": "Autodesk 123D design file, a ZIP file format package containing a .sat file and .png thumbnails.[1]"
+            },
+            "indexes": {
+                "words": [
+                    "drawing",
+                    "cad",
+                    "file"
+                ],
+                "stems": {
+                    "cad": 1,
+                    "draw": 1,
+                    "file": 1
+                },
+                "speech": {
+                    "cad_NN": 1,
+                    "draw_VBG": 1,
+                    "file_NN": 1
+                },
+                "parts": {
+                    "cad": [
+                        "NN"
+                    ],
+                    "draw": [
+                        "VBG"
+                    ],
+                    "file": [
+                        "NN"
+                    ]
+                },
+                "words_cnt": 3,
+                "words_cnt_unique": 3,
+                "percentage": {
+                    "cad": 33,
+                    "draw": 33,
+                    "file": 33
+                }
+            }
+        },
+        {
+            "tableID": 2,
+            "recordID": 7,
+            "data": "15U",
+            "record": {
+                "Ext.": "15U",
+                "Description": "Printer font with PI font set",
+                "Used by": "PageMaker"
+            },
+            "indexes": {
+                "words": [
+                    "font",
+                    "printer",
+                    "pi",
+                    "with",
+                    "set"
+                ],
+                "stems": {
+                    "printer": 1,
+                    "font": 2,
+                    "with": 1,
+                    "pi": 1,
+                    "set": 1
+                },
+                "speech": {
+                    "PI_NN": 1,
+                    "font_NN": 2,
+                    "printer_NN": 1,
+                    "set_NN": 1,
+                    "with_IN": 1
+                },
+                "parts": {
+                    "PI": [
+                        "NN"
+                    ],
+                    "font": [
+                        "NN"
+                    ],
+                    "printer": [
+                        "NN"
+                    ],
+                    "set": [
+                        "NN"
+                    ],
+                    "with": [
+                        "IN"
+                    ]
+                },
+                "words_cnt": 6,
+                "words_cnt_unique": 5,
+                "percentage": {
+                    "printer": 17,
+                    "font": 33,
+                    "with": 17,
+                    "pi": 17,
+                    "set": 17
+                }
+            }
+        },
+        {
+            "tableID": 2,
+            "recordID": 8,
+            "data": "16",
+            "record": {
+                "Ext.": "16",
+                "Description": "SYSLINUX Splash Screen Graphic",
+                "Used by": "SYSLINUX, XnView"
+            },
+            "indexes": {
+                "words": [
+                    "splash",
+                    "graphic",
+                    "syslinux",
+                    "screen"
+                ],
+                "stems": {
+                    "syslinux": 1,
+                    "splash": 1,
+                    "screen": 1,
+                    "graphic": 1
+                },
+                "speech": {
+                    "graphic_JJ": 1,
+                    "screen_NN": 1,
+                    "splash_NN": 1,
+                    "syslinux_NN": 1
+                },
+                "parts": {
+                    "graphic": [
+                        "JJ"
+                    ],
+                    "screen": [
+                        "NN"
+                    ],
+                    "splash": [
+                        "NN"
+                    ],
+                    "syslinux": [
+                        "NN"
+                    ]
+                },
+                "words_cnt": 4,
+                "words_cnt_unique": 4,
+                "percentage": {
+                    "syslinux": 25,
+                    "splash": 25,
+                    "screen": 25,
+                    "graphic": 25
+                }
+            }
+        },
+        {
+            "tableID": 2,
+            "recordID": 9,
+            "data": "1ST",
+            "record": {
+                "Ext.": "1ST",
+                "Description": "Usually README.1ST text file",
+                "Used by": ""
+            },
+            "indexes": {
+                "words": [
+                    "text",
+                    "file",
+                    "readme",
+                    "usually"
+                ],
+                "stems": {
+                    "usual": 1,
+                    "readm": 1,
+                    "text": 1,
+                    "file": 1
+                },
+                "speech": {
+                    "file_NN": 1,
+                    "readm_NN": 1,
+                    "text_NN": 1,
+                    "usual_RB": 1
+                },
+                "parts": {
+                    "file": [
+                        "NN"
+                    ],
+                    "readm": [
+                        "NN"
+                    ],
+                    "text": [
+                        "NN"
+                    ],
+                    "usual": [
+                        "RB"
+                    ]
+                },
+                "words_cnt": 4,
+                "words_cnt_unique": 4,
+                "percentage": {
+                    "usual": 25,
+                    "readm": 25,
+                    "text": 25,
+                    "file": 25
+                }
+            }
+        },
+        {
+            "tableID": 2,
+            "recordID": 10,
+            "data": "1TX",
+            "record": {
+                "Ext.": "1TX",
+                "Description": "1toX Logipole file",
+                "Used by": ""
+            },
+            "indexes": {
+                "words": [
+                    "logipole",
+                    "file"
+                ],
+                "stems": {
+                    "logipol": 1,
+                    "file": 1
+                },
+                "speech": {
+                    "file_NN": 1,
+                    "logipol_NN": 1
+                },
+                "parts": {
+                    "file": [
+                        "NN"
+                    ],
+                    "logipol": [
+                        "NN"
+                    ]
+                },
+                "words_cnt": 2,
+                "words_cnt_unique": 2,
+                "percentage": {
+                    "logipol": 50,
+                    "file": 50
+                }
+            }
+        },
+        {
+            "tableID": 2,
+            "recordID": 11,
+            "data": "2GR",
+            "record": {
+                "Ext.": "2GR",
+                "Description": "286 Grabber File",
+                "Used by": "Win"
+            },
+            "indexes": {
+                "words": [
+                    "file",
+                    "grabber"
+                ],
+                "stems": {
+                    "grabber": 1,
+                    "file": 1
+                },
+                "speech": {
+                    "file_NN": 1,
+                    "grabber_NNP": 1
+                },
+                "parts": {
+                    "file": [
+                        "NN"
+                    ],
+                    "grabber": [
+                        "NNP"
+                    ]
+                },
+                "words_cnt": 2,
+                "words_cnt_unique": 2,
+                "percentage": {
+                    "grabber": 50,
+                    "file": 50
+                }
+            }
+        },
+        {
+            "tableID": 2,
+            "recordID": 12,
+            "data": "301",
+            "record": {
+                "Ext.": "301",
+                "Description": "Fax",
+                "Used by": "Super FAX 2000 - Fax-Mail 96"
+            },
+            "indexes": {
+                "words": [
+                    "fax"
+                ],
+                "stems": {
+                    "fax": 1
+                },
+                "speech": {
+                    "fax_NN": 1
+                },
+                "parts": {
+                    "fax": [
+                        "NN"
+                    ]
+                },
+                "words_cnt": 1,
+                "words_cnt_unique": 1,
+                "percentage": {
+                    "fax": 100
+                }
+            }
+        },
+        {
+            "tableID": 2,
+            "recordID": 13,
+            "data": "386",
+            "record": {
+                "Ext.": "386",
+                "Description": "Intel 80386 processor driver",
+                "Used by": "Windows 3.x"
+            },
+            "indexes": {
+                "words": [
+                    "driver",
+                    "processor",
+                    "intel"
+                ],
+                "stems": {
+                    "intel": 1,
+                    "processor": 1,
+                    "driver": 1
+                },
+                "speech": {
+                    "driver_NN": 1,
+                    "intel_NNP": 1,
+                    "processor_NN": 1
+                },
+                "parts": {
+                    "driver": [
+                        "NN"
+                    ],
+                    "intel": [
+                        "NNP"
+                    ],
+                    "processor": [
+                        "NN"
+                    ]
+                },
+                "words_cnt": 3,
+                "words_cnt_unique": 3,
+                "percentage": {
+                    "intel": 33,
+                    "processor": 33,
+                    "driver": 33
+                }
+            }
+        },
+        {
+            "tableID": 2,
+            "recordID": 14,
+            "data": "386",
+            "record": {
+                "Ext.": "386",
+                "Description": "Windows virtual device driver",
+                "Used by": "Win"
+            },
+            "indexes": {
+                "words": [
+                    "windows",
+                    "device",
+                    "virtual",
+                    "driver"
+                ],
+                "stems": {
+                    "window": 1,
+                    "virtual": 1,
+                    "devic": 1,
+                    "driver": 1
+                },
+                "speech": {
+                    "devic_NN": 1,
+                    "driver_NN": 1,
+                    "virtual_JJ": 1,
+                    "window_NNS": 1
+                },
+                "parts": {
+                    "devic": [
+                        "NN"
+                    ],
+                    "driver": [
+                        "NN"
+                    ],
+                    "virtual": [
+                        "JJ"
+                    ],
+                    "window": [
+                        "NNS"
+                    ]
+                },
+                "words_cnt": 4,
+                "words_cnt_unique": 4,
+                "percentage": {
+                    "window": 25,
+                    "virtual": 25,
+                    "devic": 25,
+                    "driver": 25
+                }
+            }
+        },
+        {
+            "tableID": 2,
+            "recordID": 15,
+            "data": "3D",
+            "record": {
+                "Ext.": "3D",
+                "Description": "Universal Combat 3D model file",
+                "Used by": "Universal Combat"
+            },
+            "indexes": {
+                "words": [
+                    "combat",
+                    "universal",
+                    "model",
+                    "file"
+                ],
+                "stems": {
+                    "univers": 1,
+                    "combat": 1,
+                    "model": 1,
+                    "file": 1
+                },
+                "speech": {
+                    "combat_NN": 1,
+                    "file_NN": 1,
+                    "model_NN": 1,
+                    "univers_NN": 1
+                },
+                "parts": {
+                    "combat": [
+                        "NN"
+                    ],
+                    "file": [
+                        "NN"
+                    ],
+                    "model": [
+                        "NN"
+                    ],
+                    "univers": [
+                        "NN"
+                    ]
+                },
+                "words_cnt": 4,
+                "words_cnt_unique": 4,
+                "percentage": {
+                    "univers": 25,
+                    "combat": 25,
+                    "model": 25,
+                    "file": 25
+                }
+            }
+        },
+        {
+            "tableID": 2,
+            "recordID": 16,
+            "data": "3DMF",
+            "record": {
+                "Ext.": "3DMF",
+                "Description": "QuickDraw 3D Metafile",
+                "Used by": "QuickDraw"
+            },
+            "indexes": {
+                "words": [
+                    "metafile",
+                    "quickdraw"
+                ],
+                "stems": {
+                    "quickdraw": 1,
+                    "metafil": 1
+                },
+                "speech": {
+                    "metafil_NN": 1,
+                    "quickdraw_NN": 1
+                },
+                "parts": {
+                    "metafil": [
+                        "NN"
+                    ],
+                    "quickdraw": [
+                        "NN"
+                    ]
+                },
+                "words_cnt": 2,
+                "words_cnt_unique": 2,
+                "percentage": {
+                    "quickdraw": 50,
+                    "metafil": 50
+                }
+            }
+        },
+        {
+            "tableID": 2,
+            "recordID": 17,
+            "data": "3DS",
+            "record": {
+                "Ext.": "3DS",
+                "Description": "3D Studio Graphics format",
+                "Used by": "3D Studio"
+            },
+            "indexes": {
+                "words": [
+                    "graphics",
+                    "studio",
+                    "format"
+                ],
+                "stems": {
+                    "studio": 1,
+                    "graphic": 1,
+                    "format": 1
+                },
+                "speech": {
+                    "format_NN": 1,
+                    "graphic_NNS": 1,
+                    "studio_NN": 1
+                },
+                "parts": {
+                    "format": [
+                        "NN"
+                    ],
+                    "graphic": [
+                        "NNS"
+                    ],
+                    "studio": [
+                        "NN"
+                    ]
+                },
+                "words_cnt": 3,
+                "words_cnt_unique": 3,
+                "percentage": {
+                    "studio": 33,
+                    "graphic": 33,
+                    "format": 33
+                }
+            }
+        },
+        {
+            "tableID": 2,
+            "recordID": 18,
+            "data": "3DSX",
+            "record": {
+                "Ext.": "3DSX",
+                "Description": "Nintendo 3DS Homebrew File Format",
+                "Used by": "Nintendo 3DS Homebrew Launcher"
+            },
+            "indexes": {
+                "words": [
+                    "nintendo",
+                    "file",
+                    "format",
+                    "homebrew"
+                ],
+                "stems": {
+                    "nintendo": 1,
+                    "homebrew": 1,
+                    "file": 1,
+                    "format": 1
+                },
+                "speech": {
+                    "file_NN": 1,
+                    "format_NN": 1,
+                    "homebrew_NN": 1,
+                    "nintendo_NN": 1
+                },
+                "parts": {
+                    "file": [
+                        "NN"
+                    ],
+                    "format": [
+                        "NN"
+                    ],
+                    "homebrew": [
+                        "NN"
+                    ],
+                    "nintendo": [
+                        "NN"
+                    ]
+                },
+                "words_cnt": 4,
+                "words_cnt_unique": 4,
+                "percentage": {
+                    "nintendo": 25,
+                    "homebrew": 25,
+                    "file": 25,
+                    "format": 25
+                }
+            }
+        },
+        {
+            "tableID": 2,
+            "recordID": 19,
+            "data": "3DT",
+            "record": {
+                "Ext.": "3DT",
+                "Description": "Database in which the meta-data of a 3D Topicscape is held",
+                "Used by": "3D Topicscape"
+            },
+            "indexes": {
+                "words": [
+                    "topicscape",
+                    "data",
+                    "is",
+                    "database",
+                    "which",
+                    "held",
+                    "meta"
+                ],
+                "stems": {
+                    "databas": 1,
+                    "which": 1,
+                    "meta": 1,
+                    "data": 1,
+                    "topicscap": 1,
+                    "is": 1,
+                    "held": 1
+                },
+                "speech": {
+                    "data_NNS": 1,
+                    "databas_NN": 1,
+                    "held_NN": 1,
+                    "in_IN": 1,
+                    "is_VBZ": 1,
+                    "meta_NN": 1,
+                    "of_IN": 1,
+                    "the_DT": 1,
+                    "topicscap_NN": 1,
+                    "which_WDT": 1
+                },
+                "parts": {
+                    "data": [
+                        "NNS"
+                    ],
+                    "databas": [
+                        "NN"
+                    ],
+                    "held": [
+                        "NN"
+                    ],
+                    "in": [
+                        "IN"
+                    ],
+                    "is": [
+                        "VBZ"
+                    ],
+                    "meta": [
+                        "NN"
+                    ],
+                    "of": [
+                        "IN"
+                    ],
+                    "the": [
+                        "DT"
+                    ],
+                    "topicscap": [
+                        "NN"
+                    ],
+                    "which": [
+                        "WDT"
+                    ]
+                },
+                "words_cnt": 7,
+                "words_cnt_unique": 7,
+                "percentage": {
+                    "databas": 14,
+                    "which": 14,
+                    "meta": 14,
+                    "data": 14,
+                    "topicscap": 14,
+                    "is": 14,
+                    "held": 14
+                }
+            }
+        },
+        {
+            "tableID": 2,
+            "recordID": 20,
+            "data": "3DV",
+            "record": {
+                "Ext.": "3DV",
+                "Description": "3-D wireframe graphics by Oscar Garcia",
+                "Used by": "3dv wireframe viewer"
+            },
+            "indexes": {
+                "words": [
+                    "wireframe",
+                    "garcia",
+                    "oscar",
+                    "by",
+                    "graphics"
+                ],
+                "stems": {
+                    "wirefram": 1,
+                    "graphic": 1,
+                    "by": 1,
+                    "oscar": 1,
+                    "garcia": 1
+                },
+                "speech": {
+                    "by_IN": 1,
+                    "garcia_NN": 1,
+                    "graphic_NNS": 1,
+                    "oscar_NN": 1,
+                    "wirefram_NN": 1
+                },
+                "parts": {
+                    "by": [
+                        "IN"
+                    ],
+                    "garcia": [
+                        "NN"
+                    ],
+                    "graphic": [
+                        "NNS"
+                    ],
+                    "oscar": [
+                        "NN"
+                    ],
+                    "wirefram": [
+                        "NN"
+                    ]
+                },
+                "words_cnt": 5,
+                "words_cnt_unique": 5,
+                "percentage": {
+                    "wirefram": 20,
+                    "graphic": 20,
+                    "by": 20,
+                    "oscar": 20,
+                    "garcia": 20
+                }
+            }
+        },
+        {
+            "tableID": 2,
+            "recordID": 21,
+            "data": "3FX",
+            "record": {
+                "Ext.": "3FX",
+                "Description": "Effect",
+                "Used by": "CorelChart"
+            },
+            "indexes": {
+                "words": [
+                    "effect"
+                ],
+                "stems": {
+                    "effect": 1
+                },
+                "speech": {
+                    "effect_NN": 1
+                },
+                "parts": {
+                    "effect": [
+                        "NN"
+                    ]
+                },
+                "words_cnt": 1,
+                "words_cnt_unique": 1,
+                "percentage": {
+                    "effect": 100
+                }
+            }
+        },
+        {
+            "tableID": 2,
+            "recordID": 22,
+            "data": "3G2",
+            "record": {
+                "Ext.": "3G2",
+                "Description": "Mobile Phone Video",
+                "Used by": ""
+            },
+            "indexes": {
+                "words": [
+                    "mobile",
+                    "phone",
+                    "video"
+                ],
+                "stems": {
+                    "mobil": 1,
+                    "phone": 1,
+                    "video": 1
+                },
+                "speech": {
+                    "mobil_NN": 1,
+                    "phone_NN": 1,
+                    "video_NN": 1
+                },
+                "parts": {
+                    "mobil": [
+                        "NN"
+                    ],
+                    "phone": [
+                        "NN"
+                    ],
+                    "video": [
+                        "NN"
+                    ]
+                },
+                "words_cnt": 3,
+                "words_cnt_unique": 3,
+                "percentage": {
+                    "mobil": 33,
+                    "phone": 33,
+                    "video": 33
+                }
+            }
+        },
+        {
+            "tableID": 2,
+            "recordID": 23,
+            "data": "3GA",
+            "record": {
+                "Ext.": "3GA",
+                "Description": "Mobile Phone Audio (Samsung)",
+                "Used by": ""
+            },
+            "indexes": {
+                "words": [
+                    "mobile",
+                    "phone",
+                    "audio",
+                    "samsung"
+                ],
+                "stems": {
+                    "mobil": 1,
+                    "phone": 1,
+                    "audio": 1,
+                    "samsung": 1
+                },
+                "speech": {
+                    "audio_NN": 1,
+                    "mobil_NN": 1,
+                    "phone_NN": 1,
+                    "samsung_NN": 1
+                },
+                "parts": {
+                    "audio": [
+                        "NN"
+                    ],
+                    "mobil": [
+                        "NN"
+                    ],
+                    "phone": [
+                        "NN"
+                    ],
+                    "samsung": [
+                        "NN"
+                    ]
+                },
+                "words_cnt": 4,
+                "words_cnt_unique": 4,
+                "percentage": {
+                    "mobil": 25,
+                    "phone": 25,
+                    "audio": 25,
+                    "samsung": 25
+                }
+            }
+        },
+        {
+            "tableID": 2,
+            "recordID": 24,
+            "data": "3GP",
+            "record": {
+                "Ext.": "3GP",
+                "Description": "Mobile Phone Video",
+                "Used by": ""
+            },
+            "indexes": {
+                "words": [
+                    "mobile",
+                    "phone",
+                    "video"
+                ],
+                "stems": {
+                    "mobil": 1,
+                    "phone": 1,
+                    "video": 1
+                },
+                "speech": {
+                    "mobil_NN": 1,
+                    "phone_NN": 1,
+                    "video_NN": 1
+                },
+                "parts": {
+                    "mobil": [
+                        "NN"
+                    ],
+                    "phone": [
+                        "NN"
+                    ],
+                    "video": [
+                        "NN"
+                    ]
+                },
+                "words_cnt": 3,
+                "words_cnt_unique": 3,
+                "percentage": {
+                    "mobil": 33,
+                    "phone": 33,
+                    "video": 33
+                }
+            }
+        },
+        {
+            "tableID": 2,
+            "recordID": 25,
+            "data": "3GR",
+            "record": {
+                "Ext.": "3GR",
+                "Description": "386 Grabber File",
+                "Used by": "Win"
+            },
+            "indexes": {
+                "words": [
+                    "file",
+                    "grabber"
+                ],
+                "stems": {
+                    "grabber": 1,
+                    "file": 1
+                },
+                "speech": {
+                    "file_NN": 1,
+                    "grabber_NNP": 1
+                },
+                "parts": {
+                    "file": [
+                        "NN"
+                    ],
+                    "grabber": [
+                        "NNP"
+                    ]
+                },
+                "words_cnt": 2,
+                "words_cnt_unique": 2,
+                "percentage": {
+                    "grabber": 50,
+                    "file": 50
+                }
+            }
+        },
+        {
+            "tableID": 2,
+            "recordID": 26,
+            "data": "3MF",
+            "record": {
+                "Ext.": "3MF",
+                "Description": "3D Manufacturing Format",
+                "Used by": "3D Builder"
+            },
+            "indexes": {
+                "words": [
+                    "manufacturing",
+                    "format"
+                ],
+                "stems": {
+                    "manufactur": 1,
+                    "format": 1
+                },
+                "speech": {
+                    "format_NN": 1,
+                    "manufactur_VBG": 1
+                },
+                "parts": {
+                    "format": [
+                        "NN"
+                    ],
+                    "manufactur": [
+                        "VBG"
+                    ]
+                },
+                "words_cnt": 2,
+                "words_cnt_unique": 2,
+                "percentage": {
+                    "manufactur": 50,
+                    "format": 50
+                }
+            }
+        },
+        {
+            "tableID": 2,
+            "recordID": 27,
+            "data": "3T4",
+            "record": {
+                "Ext.": "3T4",
+                "Description": "Binary file converter to ASCII",
+                "Used by": "Util3"
+            },
+            "indexes": {
+                "words": [
+                    "converter",
+                    "binary",
+                    "ascii",
+                    "file"
+                ],
+                "stems": {
+                    "binari": 1,
+                    "file": 1,
+                    "convert": 1,
+                    "ascii": 1
+                },
+                "speech": {
+                    "ascii_NN": 1,
+                    "binari_JJ": 1,
+                    "convert_NN": 1,
+                    "file_NN": 1,
+                    "to_TO": 1
+                },
+                "parts": {
+                    "ascii": [
+                        "NN"
+                    ],
+                    "binari": [
+                        "JJ"
+                    ],
+                    "convert": [
+                        "NN"
+                    ],
+                    "file": [
+                        "NN"
+                    ],
+                    "to": [
+                        "TO"
+                    ]
+                },
+                "words_cnt": 4,
+                "words_cnt_unique": 4,
+                "percentage": {
+                    "binari": 25,
+                    "file": 25,
+                    "convert": 25,
+                    "ascii": 25
+                }
+            }
+        },
+        {
+            "tableID": 2,
+            "recordID": 28,
+            "data": "4DB",
+            "record": {
+                "Ext.": "4DB",
+                "Description": "4D Structure File",
+                "Used by": "4D"
+            },
+            "indexes": {
+                "words": [
+                    "structure",
+                    "file"
+                ],
+                "stems": {
+                    "structur": 1,
+                    "file": 1
+                },
+                "speech": {
+                    "file_NN": 1,
+                    "structur_NN": 1
+                },
+                "parts": {
+                    "file": [
+                        "NN"
+                    ],
+                    "structur": [
+                        "NN"
+                    ]
+                },
+                "words_cnt": 2,
+                "words_cnt_unique": 2,
+                "percentage": {
+                    "structur": 50,
+                    "file": 50
+                }
+            }
+        },
+        {
+            "tableID": 2,
+            "recordID": 29,
+            "data": "4DD",
+            "record": {
+                "Ext.": "4DD",
+                "Description": "4D Data File",
+                "Used by": "4D"
+            },
+            "indexes": {
+                "words": [
+                    "data",
+                    "file"
+                ],
+                "stems": {
+                    "data": 1,
+                    "file": 1
+                },
+                "speech": {
+                    "data_NNS": 1,
+                    "file_NN": 1
+                },
+                "parts": {
+                    "data": [
+                        "NNS"
+                    ],
+                    "file": [
+                        "NN"
+                    ]
+                },
+                "words_cnt": 2,
+                "words_cnt_unique": 2,
+                "percentage": {
+                    "data": 50,
+                    "file": 50
+                }
+            }
+        },
+        {
+            "tableID": 2,
+            "recordID": 30,
+            "data": "4DIndy",
+            "record": {
+                "Ext.": "4DIndy",
+                "Description": "4D Structure Index File",
+                "Used by": "4D"
+            },
+            "indexes": {
+                "words": [
+                    "structure",
+                    "index",
+                    "file"
+                ],
+                "stems": {
+                    "structur": 1,
+                    "index": 1,
+                    "file": 1
+                },
+                "speech": {
+                    "file_NN": 1,
+                    "index_NN": 1,
+                    "structur_NN": 1
+                },
+                "parts": {
+                    "file": [
+                        "NN"
+                    ],
+                    "index": [
+                        "NN"
+                    ],
+                    "structur": [
+                        "NN"
+                    ]
+                },
+                "words_cnt": 3,
+                "words_cnt_unique": 3,
+                "percentage": {
+                    "structur": 33,
+                    "index": 33,
+                    "file": 33
+                }
+            }
+        },
+        {
+            "tableID": 2,
+            "recordID": 31,
+            "data": "4C$",
+            "record": {
+                "Ext.": "4C$",
+                "Description": "Datafile",
+                "Used by": "4Cast/2"
+            },
+            "indexes": {
+                "words": [
+                    "datafile"
+                ],
+                "stems": {
+                    "datafil": 1
+                },
+                "speech": {
+                    "datafil_NN": 1
+                },
+                "parts": {
+                    "datafil": [
+                        "NN"
+                    ]
+                },
+                "words_cnt": 1,
+                "words_cnt_unique": 1,
+                "percentage": {
+                    "datafil": 100
+                }
+            }
+        },
+        {
+            "tableID": 2,
+            "recordID": 32,
+            "data": "4MD",
+            "record": {
+                "Ext.": "4MD",
+                "Description": "Musical file",
+                "Used by": ""
+            },
+            "indexes": {
+                "words": [
+                    "musical",
+                    "file"
+                ],
+                "stems": {
+                    "music": 1,
+                    "file": 1
+                },
+                "speech": {
+                    "file_NN": 1,
+                    "music_JJ": 1
+                },
+                "parts": {
+                    "file": [
+                        "NN"
+                    ],
+                    "music": [
+                        "JJ"
+                    ]
+                },
+                "words_cnt": 2,
+                "words_cnt_unique": 2,
+                "percentage": {
+                    "music": 50,
+                    "file": 50
+                }
+            }
+        },
+        {
+            "tableID": 2,
+            "recordID": 33,
+            "data": "4SW",
+            "record": {
+                "Ext.": "4SW",
+                "Description": "4DOS Swap File",
+                "Used by": "4DOS"
+            },
+            "indexes": {
+                "words": [
+                    "file",
+                    "swap"
+                ],
+                "stems": {
+                    "swap": 1,
+                    "file": 1
+                },
+                "speech": {
+                    "file_NN": 1,
+                    "swap_NN": 1
+                },
+                "parts": {
+                    "file": [
+                        "NN"
+                    ],
+                    "swap": [
+                        "NN"
+                    ]
+                },
+                "words_cnt": 2,
+                "words_cnt_unique": 2,
+                "percentage": {
+                    "swap": 50,
+                    "file": 50
+                }
+            }
+        },
+        {
+            "tableID": 2,
+            "recordID": 34,
+            "data": "4TH",
+            "record": {
+                "Ext.": "4TH",
+                "Description": "FORTH source code file",
+                "Used by": "ForthCMP - LMI Forth"
+            },
+            "indexes": {
+                "words": [
+                    "source",
+                    "code",
+                    "file",
+                    "forth"
+                ],
+                "stems": {
+                    "forth": 1,
+                    "sourc": 1,
+                    "code": 1,
+                    "file": 1
+                },
+                "speech": {
+                    "code_NN": 1,
+                    "file_NN": 1,
+                    "forth_NN": 1,
+                    "sourc_NN": 1
+                },
+                "parts": {
+                    "code": [
+                        "NN"
+                    ],
+                    "file": [
+                        "NN"
+                    ],
+                    "forth": [
+                        "NN"
+                    ],
+                    "sourc": [
+                        "NN"
+                    ]
+                },
+                "words_cnt": 4,
+                "words_cnt_unique": 4,
+                "percentage": {
+                    "forth": 25,
+                    "sourc": 25,
+                    "code": 25,
+                    "file": 25
+                }
+            }
+        },
+        {
+            "tableID": 2,
+            "recordID": 35,
+            "data": "555",
+            "record": {
+                "Ext.": "555",
+                "Description": "16 bit per pixel image file format (5bit per component)",
+                "Used by": "Sierra Entertainment"
+            },
+            "indexes": {
+                "words": [
+                    "image",
+                    "component",
+                    "bit",
+                    "file",
+                    "pixel",
+                    "format",
+                    "per"
+                ],
+                "stems": {
+                    "bit": 1,
+                    "per": 2,
+                    "pixel": 1,
+                    "imag": 1,
+                    "file": 1,
+                    "format": 1,
+                    "compon": 1
+                },
+                "speech": {
+                    "bit_NN": 1,
+                    "compon_NN": 1,
+                    "file_NN": 1,
+                    "format_NN": 1,
+                    "imag_NN": 1,
+                    "per_IN": 2,
+                    "pixel_NN": 1
+                },
+                "parts": {
+                    "bit": [
+                        "NN"
+                    ],
+                    "compon": [
+                        "NN"
+                    ],
+                    "file": [
+                        "NN"
+                    ],
+                    "format": [
+                        "NN"
+                    ],
+                    "imag": [
+                        "NN"
+                    ],
+                    "per": [
+                        "IN"
+                    ],
+                    "pixel": [
+                        "NN"
+                    ]
+                },
+                "words_cnt": 8,
+                "words_cnt_unique": 7,
+                "percentage": {
+                    "bit": 12,
+                    "per": 25,
+                    "pixel": 12,
+                    "imag": 12,
+                    "file": 12,
+                    "format": 12,
+                    "compon": 12
+                }
+            }
+        },
+        {
+            "tableID": 2,
+            "recordID": 36,
+            "data": "602",
+            "record": {
+                "Ext.": "602",
+                "Description": "Text (fairly simple format, plain text with binary control commands embedded within text lines and special formatting commands on dedicated lines)",
+                "Used by": "Text602 text processor by Software602"
+            },
+            "indexes": {
+                "words": [
+                    "text",
+                    "control",
+                    "formatting",
+                    "simple",
+                    "commands",
+                    "fairly",
+                    "within",
+                    "dedicated",
+                    "format",
+                    "special",
+                    "embedded",
+                    "with",
+                    "binary",
+                    "lines",
+                    "plain"
+                ],
+                "stems": {
+                    "text": 3,
+                    "fairli": 1,
+                    "simpl": 1,
+                    "format": 2,
+                    "plain": 1,
+                    "with": 1,
+                    "binari": 1,
+                    "control": 1,
+                    "command": 2,
+                    "embed": 1,
+                    "within": 1,
+                    "line": 2,
+                    "special": 1,
+                    "dedic": 1
+                },
+                "speech": {
+                    "and_CC": 1,
+                    "binari_NN": 1,
+                    "command_NNS": 2,
+                    "control_NN": 1,
+                    "dedic_VBN": 1,
+                    "embed_VBN": 1,
+                    "fairli_RB": 1,
+                    "format_NN": 1,
+                    "format_VBG": 1,
+                    "line_NNS": 2,
+                    "on_IN": 1,
+                    "plain_NN": 1,
+                    "simpl_NN": 1,
+                    "special_JJ": 1,
+                    "text_NN": 3,
+                    "with_IN": 1,
+                    "within_IN": 1
+                },
+                "parts": {
+                    "and": [
+                        "CC"
+                    ],
+                    "binari": [
+                        "NN"
+                    ],
+                    "command": [
+                        "NNS"
+                    ],
+                    "control": [
+                        "NN"
+                    ],
+                    "dedic": [
+                        "VBN"
+                    ],
+                    "embed": [
+                        "VBN"
+                    ],
+                    "fairli": [
+                        "RB"
+                    ],
+                    "format": [
+                        "NN",
+                        "VBG"
+                    ],
+                    "line": [
+                        "NNS"
+                    ],
+                    "on": [
+                        "IN"
+                    ],
+                    "plain": [
+                        "NN"
+                    ],
+                    "simpl": [
+                        "NN"
+                    ],
+                    "special": [
+                        "JJ"
+                    ],
+                    "text": [
+                        "NN"
+                    ],
+                    "with": [
+                        "IN"
+                    ],
+                    "within": [
+                        "IN"
+                    ]
+                },
+                "words_cnt": 19,
+                "words_cnt_unique": 15,
+                "percentage": {
+                    "text": 16,
+                    "fairli": 5,
+                    "simpl": 5,
+                    "format": 11,
+                    "plain": 5,
+                    "with": 5,
+                    "binari": 5,
+                    "control": 5,
+                    "command": 11,
+                    "embed": 5,
+                    "within": 5,
+                    "line": 11,
+                    "special": 5,
+                    "dedic": 5
+                }
+            }
+        },
+        {
+            "tableID": 2,
+            "recordID": 37,
+            "data": "668",
+            "record": {
+                "Ext.": "668",
+                "Description": "Music (the mixing is always at 12048\u00c2\u00a0Hz)",
+                "Used by": ""
+            },
+            "indexes": {
+                "words": [
+                    "is",
+                    "always",
+                    "music",
+                    "mixing",
+                    "hz"
+                ],
+                "stems": {
+                    "music": 1,
+                    "mix": 1,
+                    "is": 1,
+                    "alway": 1,
+                    "hz": 1
+                },
+                "speech": {
+                    "Hz_NN": 1,
+                    "alway_RB": 1,
+                    "at_IN": 1,
+                    "is_VBZ": 1,
+                    "mix_VBG": 1,
+                    "music_JJ": 1,
+                    "the_DT": 1
+                },
+                "parts": {
+                    "Hz": [
+                        "NN"
+                    ],
+                    "alway": [
+                        "RB"
+                    ],
+                    "at": [
+                        "IN"
+                    ],
+                    "is": [
+                        "VBZ"
+                    ],
+                    "mix": [
+                        "VBG"
+                    ],
+                    "music": [
+                        "JJ"
+                    ],
+                    "the": [
+                        "DT"
+                    ]
+                },
+                "words_cnt": 5,
+                "words_cnt_unique": 5,
+                "percentage": {
+                    "music": 20,
+                    "mix": 20,
+                    "is": 20,
+                    "alway": 20,
+                    "hz": 20
+                }
+            }
+        },
+        {
+            "tableID": 2,
+            "recordID": 38,
+            "data": "669",
+            "record": {
+                "Ext.": "669",
+                "Description": "Music (8 channels)",
+                "Used by": "The 669 Composer"
+            },
+            "indexes": {
+                "words": [
+                    "channels",
+                    "music"
+                ],
+                "stems": {
+                    "music": 1,
+                    "channel": 1
+                },
+                "speech": {
+                    "channel_NNS": 1,
+                    "music_JJ": 1
+                },
+                "parts": {
+                    "channel": [
+                        "NNS"
+                    ],
+                    "music": [
+                        "JJ"
+                    ]
+                },
+                "words_cnt": 2,
+                "words_cnt_unique": 2,
+                "percentage": {
+                    "music": 50,
+                    "channel": 50
+                }
+            }
+        },
+        {
+            "tableID": 2,
+            "recordID": 39,
+            "data": "6CM",
+            "record": {
+                "Ext.": "6CM",
+                "Description": "Music (6 Channel Module)",
+                "Used by": "Triton FastTracker"
+            },
+            "indexes": {
+                "words": [
+                    "channel",
+                    "module",
+                    "music"
+                ],
+                "stems": {
+                    "music": 1,
+                    "channel": 1,
+                    "modul": 1
+                },
+                "speech": {
+                    "channel_NNS": 1,
+                    "modul_NN": 1,
+                    "music_JJ": 1
+                },
+                "parts": {
+                    "channel": [
+                        "NNS"
+                    ],
+                    "modul": [
+                        "NN"
+                    ],
+                    "music": [
+                        "JJ"
+                    ]
+                },
+                "words_cnt": 3,
+                "words_cnt_unique": 3,
+                "percentage": {
+                    "music": 33,
+                    "channel": 33,
+                    "modul": 33
+                }
+            }
+        },
+        {
+            "tableID": 2,
+            "recordID": 40,
+            "data": "75",
+            "record": {
+                "Ext.": "75",
+                "Description": "75\u00c3\u009775 dpi display font",
+                "Used by": "Ventura Publisher"
+            },
+            "indexes": {
+                "words": [
+                    "dpi",
+                    "font",
+                    "display"
+                ],
+                "stems": {
+                    "dpi": 1,
+                    "display": 1,
+                    "font": 1
+                },
+                "speech": {
+                    "display_NN": 1,
+                    "dpi_NN": 1,
+                    "font_NN": 1
+                },
+                "parts": {
+                    "display": [
+                        "NN"
+                    ],
+                    "dpi": [
+                        "NN"
+                    ],
+                    "font": [
+                        "NN"
+                    ]
+                },
+                "words_cnt": 3,
+                "words_cnt_unique": 3,
+                "percentage": {
+                    "dpi": 33,
+                    "display": 33,
+                    "font": 33
+                }
+            }
+        },
+        {
+            "tableID": 2,
+            "recordID": 41,
+            "data": "7z",
+            "record": {
+                "Ext.": "7z",
+                "Description": "A compressed archive file format that supports several different data compression, encryption and pre-processing algorithms",
+                "Used by": "7-Zip"
+            },
+            "indexes": {
+                "words": [
+                    "compressed",
+                    "that",
+                    "algorithms",
+                    "data",
+                    "encryption",
+                    "processing",
+                    "different",
+                    "compression",
+                    "supports",
+                    "file",
+                    "format",
+                    "pre",
+                    "archive",
+                    "several"
+                ],
+                "stems": {
+                    "compress": 2,
+                    "archiv": 1,
+                    "file": 1,
+                    "format": 1,
+                    "that": 1,
+                    "support": 1,
+                    "sever": 1,
+                    "differ": 1,
+                    "data": 1,
+                    "encrypt": 1,
+                    "pre": 1,
+                    "process": 1,
+                    "algorithm": 1
+                },
+                "speech": {
+                    "algorithm_NN": 1,
+                    "and_CC": 1,
+                    "archiv_JJ": 1,
+                    "compress_NN": 1,
+                    "compress_VBN": 1,
+                    "data_NNS": 1,
+                    "differ_JJ": 1,
+                    "encrypt_NN": 1,
+                    "file_NN": 1,
+                    "format_NN": 1,
+                    "pre_NN": 1,
+                    "process_NN": 1,
+                    "sever_JJ": 1,
+                    "support_NNS": 1,
+                    "that_IN": 1
+                },
+                "parts": {
+                    "algorithm": [
+                        "NN"
+                    ],
+                    "and": [
+                        "CC"
+                    ],
+                    "archiv": [
+                        "JJ"
+                    ],
+                    "compress": [
+                        "NN",
+                        "VBN"
+                    ],
+                    "data": [
+                        "NNS"
+                    ],
+                    "differ": [
+                        "JJ"
+                    ],
+                    "encrypt": [
+                        "NN"
+                    ],
+                    "file": [
+                        "NN"
+                    ],
+                    "format": [
+                        "NN"
+                    ],
+                    "pre": [
+                        "NN"
+                    ],
+                    "process": [
+                        "NN"
+                    ],
+                    "sever": [
+                        "JJ"
+                    ],
+                    "support": [
+                        "NNS"
+                    ],
+                    "that": [
+                        "IN"
+                    ]
+                },
+                "words_cnt": 14,
+                "words_cnt_unique": 14,
+                "percentage": {
+                    "compress": 14,
+                    "archiv": 7,
+                    "file": 7,
+                    "format": 7,
+                    "that": 7,
+                    "support": 7,
+                    "sever": 7,
+                    "differ": 7,
+                    "data": 7,
+                    "encrypt": 7,
+                    "pre": 7,
+                    "process": 7,
+                    "algorithm": 7
+                }
+            }
+        },
+        {
+            "tableID": 2,
+            "recordID": 42,
+            "data": "8",
+            "record": {
+                "Ext.": "8",
+                "Description": "A86 assembler source code file",
+                "Used by": ""
+            },
+            "indexes": {
+                "words": [
+                    "source",
+                    "code",
+                    "assembler",
+                    "file"
+                ],
+                "stems": {
+                    "assembl": 1,
+                    "sourc": 1,
+                    "code": 1,
+                    "file": 1
+                },
+                "speech": {
+                    "assembl_NN": 1,
+                    "code_NN": 1,
+                    "file_NN": 1,
+                    "sourc_NN": 1
+                },
+                "parts": {
+                    "assembl": [
+                        "NN"
+                    ],
+                    "code": [
+                        "NN"
+                    ],
+                    "file": [
+                        "NN"
+                    ],
+                    "sourc": [
+                        "NN"
+                    ]
+                },
+                "words_cnt": 4,
+                "words_cnt_unique": 4,
+                "percentage": {
+                    "assembl": 25,
+                    "sourc": 25,
+                    "code": 25,
+                    "file": 25
+                }
+            }
+        },
+        {
+            "tableID": 2,
+            "recordID": 43,
+            "data": "85",
+            "record": {
+                "Ext.": "85",
+                "Description": "85\u00c3\u009785 dpi display font",
+                "Used by": "Ventura Publisher"
+            },
+            "indexes": {
+                "words": [
+                    "dpi",
+                    "font",
+                    "display"
+                ],
+                "stems": {
+                    "dpi": 1,
+                    "display": 1,
+                    "font": 1
+                },
+                "speech": {
+                    "display_NN": 1,
+                    "dpi_NN": 1,
+                    "font_NN": 1
+                },
+                "parts": {
+                    "display": [
+                        "NN"
+                    ],
+                    "dpi": [
+                        "NN"
+                    ],
+                    "font": [
+                        "NN"
+                    ]
+                },
+                "words_cnt": 3,
+                "words_cnt_unique": 3,
+                "percentage": {
+                    "dpi": 33,
+                    "display": 33,
+                    "font": 33
+                }
+            }
+        },
+        {
+            "tableID": 2,
+            "recordID": 44,
+            "data": "8BF",
+            "record": {
+                "Ext.": "8BF",
+                "Description": "Adobe Photoshop compatible filters/plugins",
+                "Used by": ""
+            },
+            "indexes": {
+                "words": [
+                    "plugins",
+                    "filters",
+                    "photoshop",
+                    "adobe",
+                    "compatible"
+                ],
+                "stems": {
+                    "adob": 1,
+                    "photoshop": 1,
+                    "compat": 1,
+                    "filter": 1,
+                    "plugin": 1
+                },
+                "speech": {
+                    "adob_NN": 1,
+                    "compat_JJ": 1,
+                    "filter_NNS": 1,
+                    "photoshop_NN": 1,
+                    "plugin_NNS": 1
+                },
+                "parts": {
+                    "adob": [
+                        "NN"
+                    ],
+                    "compat": [
+                        "JJ"
+                    ],
+                    "filter": [
+                        "NNS"
+                    ],
+                    "photoshop": [
+                        "NN"
+                    ],
+                    "plugin": [
+                        "NNS"
+                    ]
+                },
+                "words_cnt": 5,
+                "words_cnt_unique": 5,
+                "percentage": {
+                    "adob": 20,
+                    "photoshop": 20,
+                    "compat": 20,
+                    "filter": 20,
+                    "plugin": 20
+                }
+            }
+        },
+        {
+            "tableID": 2,
+            "recordID": 45,
+            "data": "8BI",
+            "record": {
+                "Ext.": "8BI",
+                "Description": "Adobe Photoshop compatible filters/plugins",
+                "Used by": ""
+            },
+            "indexes": {
+                "words": [
+                    "plugins",
+                    "filters",
+                    "photoshop",
+                    "adobe",
+                    "compatible"
+                ],
+                "stems": {
+                    "adob": 1,
+                    "photoshop": 1,
+                    "compat": 1,
+                    "filter": 1,
+                    "plugin": 1
+                },
+                "speech": {
+                    "adob_NN": 1,
+                    "compat_JJ": 1,
+                    "filter_NNS": 1,
+                    "photoshop_NN": 1,
+                    "plugin_NNS": 1
+                },
+                "parts": {
+                    "adob": [
+                        "NN"
+                    ],
+                    "compat": [
+                        "JJ"
+                    ],
+                    "filter": [
+                        "NNS"
+                    ],
+                    "photoshop": [
+                        "NN"
+                    ],
+                    "plugin": [
+                        "NNS"
+                    ]
+                },
+                "words_cnt": 5,
+                "words_cnt_unique": 5,
+                "percentage": {
+                    "adob": 20,
+                    "photoshop": 20,
+                    "compat": 20,
+                    "filter": 20,
+                    "plugin": 20
+                }
+            }
+        },
+        {
+            "tableID": 2,
+            "recordID": 46,
+            "data": "8BX",
+            "record": {
+                "Ext.": "8BX",
+                "Description": "Adobe Photoshop compatible filters/plugins",
+                "Used by": ""
+            },
+            "indexes": {
+                "words": [
+                    "plugins",
+                    "filters",
+                    "photoshop",
+                    "adobe",
+                    "compatible"
+                ],
+                "stems": {
+                    "adob": 1,
+                    "photoshop": 1,
+                    "compat": 1,
+                    "filter": 1,
+                    "plugin": 1
+                },
+                "speech": {
+                    "adob_NN": 1,
+                    "compat_JJ": 1,
+                    "filter_NNS": 1,
+                    "photoshop_NN": 1,
+                    "plugin_NNS": 1
+                },
+                "parts": {
+                    "adob": [
+                        "NN"
+                    ],
+                    "compat": [
+                        "JJ"
+                    ],
+                    "filter": [
+                        "NNS"
+                    ],
+                    "photoshop": [
+                        "NN"
+                    ],
+                    "plugin": [
+                        "NNS"
+                    ]
+                },
+                "words_cnt": 5,
+                "words_cnt_unique": 5,
+                "percentage": {
+                    "adob": 20,
+                    "photoshop": 20,
+                    "compat": 20,
+                    "filter": 20,
+                    "plugin": 20
+                }
+            }
+        },
+        {
+            "tableID": 2,
+            "recordID": 47,
+            "data": "890",
+            "record": {
+                "Ext.": "890",
+                "Description": "ScanTitling subtitle files"
+            },
+            "indexes": {
+                "words": [
+                    "files",
+                    "subtitle",
+                    "scantitling"
+                ],
+                "stems": {
+                    "scantitl": 1,
+                    "subtitl": 1,
+                    "file": 1
+                },
+                "speech": {
+                    "file_NNS": 1,
+                    "scantitl_VBG": 1,
+                    "subtitl_NN": 1
+                },
+                "parts": {
+                    "file": [
+                        "NNS"
+                    ],
+                    "scantitl": [
+                        "VBG"
+                    ],
+                    "subtitl": [
+                        "NN"
+                    ]
+                },
+                "words_cnt": 3,
+                "words_cnt_unique": 3,
+                "percentage": {
+                    "scantitl": 33,
+                    "subtitl": 33,
+                    "file": 33
+                }
+            }
+        },
+        {
+            "tableID": 2,
+            "recordID": 48,
+            "data": "8CM",
+            "record": {
+                "Ext.": "8CM",
+                "Description": "Music (8 Channel Module)",
+                "Used by": "Triton FastTracker"
+            },
+            "indexes": {
+                "words": [
+                    "channel",
+                    "module",
+                    "music"
+                ],
+                "stems": {
+                    "music": 1,
+                    "channel": 1,
+                    "modul": 1
+                },
+                "speech": {
+                    "channel_NNS": 1,
+                    "modul_NN": 1,
+                    "music_JJ": 1
+                },
+                "parts": {
+                    "channel": [
+                        "NNS"
+                    ],
+                    "modul": [
+                        "NN"
+                    ],
+                    "music": [
+                        "JJ"
+                    ]
+                },
+                "words_cnt": 3,
+                "words_cnt_unique": 3,
+                "percentage": {
+                    "music": 33,
+                    "channel": 33,
+                    "modul": 33
+                }
+            }
+        },
+        {
+            "tableID": 2,
+            "recordID": 49,
+            "data": "8M",
+            "record": {
+                "Ext.": "8M",
+                "Description": "Printer font with Math 8 extended character set",
+                "Used by": "PageMaker"
+            },
+            "indexes": {
+                "words": [
+                    "extended",
+                    "math",
+                    "character",
+                    "font",
+                    "printer",
+                    "with",
+                    "set"
+                ],
+                "stems": {
+                    "printer": 1,
+                    "font": 1,
+                    "with": 1,
+                    "math": 1,
+                    "extend": 1,
+                    "charact": 1,
+                    "set": 1
+                },
+                "speech": {
+                    "charact_NN": 1,
+                    "extend_VBN": 1,
+                    "font_NN": 1,
+                    "math_NN": 1,
+                    "printer_NN": 1,
+                    "set_NN": 1,
+                    "with_IN": 1
+                },
+                "parts": {
+                    "charact": [
+                        "NN"
+                    ],
+                    "extend": [
+                        "VBN"
+                    ],
+                    "font": [
+                        "NN"
+                    ],
+                    "math": [
+                        "NN"
+                    ],
+                    "printer": [
+                        "NN"
+                    ],
+                    "set": [
+                        "NN"
+                    ],
+                    "with": [
+                        "IN"
+                    ]
+                },
+                "words_cnt": 7,
+                "words_cnt_unique": 7,
+                "percentage": {
+                    "printer": 14,
+                    "font": 14,
+                    "with": 14,
+                    "math": 14,
+                    "extend": 14,
+                    "charact": 14,
+                    "set": 14
+                }
+            }
+        },
+        {
+            "tableID": 2,
+            "recordID": 50,
+            "data": "8U",
+            "record": {
+                "Ext.": "8U",
+                "Description": "Printer font with Roman 8 extended character set",
+                "Used by": "PageMaker"
+            },
+            "indexes": {
+                "words": [
+                    "extended",
+                    "character",
+                    "font",
+                    "printer",
+                    "roman",
+                    "with",
+                    "set"
+                ],
+                "stems": {
+                    "printer": 1,
+                    "font": 1,
+                    "with": 1,
+                    "roman": 1,
+                    "extend": 1,
+                    "charact": 1,
+                    "set": 1
+                },
+                "speech": {
+                    "charact_NN": 1,
+                    "extend_VBN": 1,
+                    "font_NN": 1,
+                    "printer_NN": 1,
+                    "roman_NN": 1,
+                    "set_NN": 1,
+                    "with_IN": 1
+                },
+                "parts": {
+                    "charact": [
+                        "NN"
+                    ],
+                    "extend": [
+                        "VBN"
+                    ],
+                    "font": [
+                        "NN"
+                    ],
+                    "printer": [
+                        "NN"
+                    ],
+                    "roman": [
+                        "NN"
+                    ],
+                    "set": [
+                        "NN"
+                    ],
+                    "with": [
+                        "IN"
+                    ]
+                },
+                "words_cnt": 7,
+                "words_cnt_unique": 7,
+                "percentage": {
+                    "printer": 14,
+                    "font": 14,
+                    "with": 14,
+                    "roman": 14,
+                    "extend": 14,
+                    "charact": 14,
+                    "set": 14
+                }
+            }
+        },
+        {
+            "tableID": 2,
+            "recordID": 51,
+            "data": "83p",
+            "record": {
+                "Ext.": "83p",
+                "Description": "Executable program for TI-83 Graphing Calculator",
+                "Used by": "TI Connect"
+            },
+            "indexes": {
+                "words": [
+                    "graphing",
+                    "ti",
+                    "calculator",
+                    "program",
+                    "executable"
+                ],
+                "stems": {
+                    "execut": 1,
+                    "program": 1,
+                    "ti": 1,
+                    "graph": 1,
+                    "calcul": 1
+                },
+                "speech": {
+                    "TI_NN": 1,
+                    "calcul_NN": 1,
+                    "execut_JJ": 1,
+                    "for_IN": 1,
+                    "graph_VBG": 1,
+                    "program_NN": 1
+                },
+                "parts": {
+                    "TI": [
+                        "NN"
+                    ],
+                    "calcul": [
+                        "NN"
+                    ],
+                    "execut": [
+                        "JJ"
+                    ],
+                    "for": [
+                        "IN"
+                    ],
+                    "graph": [
+                        "VBG"
+                    ],
+                    "program": [
+                        "NN"
+                    ]
+                },
+                "words_cnt": 5,
+                "words_cnt_unique": 5,
+                "percentage": {
+                    "execut": 20,
+                    "program": 20,
+                    "ti": 20,
+                    "graph": 20,
+                    "calcul": 20
+                }
+            }
+        },
+        {
+            "tableID": 2,
+            "recordID": 52,
+            "data": "89p",
+            "record": {
+                "Ext.": "89p",
+                "Description": "Executable program for TI-89/89 Titanium Graphing Calculator",
+                "Used by": "TI Connect"
+            },
+            "indexes": {
+                "words": [
+                    "graphing",
+                    "ti",
+                    "titanium",
+                    "calculator",
+                    "program",
+                    "executable"
+                ],
+                "stems": {
+                    "execut": 1,
+                    "program": 1,
+                    "ti": 1,
+                    "titanium": 1,
+                    "graph": 1,
+                    "calcul": 1
+                },
+                "speech": {
+                    "TI_NN": 1,
+                    "calcul_NN": 1,
+                    "execut_JJ": 1,
+                    "for_IN": 1,
+                    "graph_VBG": 1,
+                    "program_NN": 1,
+                    "titanium_NN": 1
+                },
+                "parts": {
+                    "TI": [
+                        "NN"
+                    ],
+                    "calcul": [
+                        "NN"
+                    ],
+                    "execut": [
+                        "JJ"
+                    ],
+                    "for": [
+                        "IN"
+                    ],
+                    "graph": [
+                        "VBG"
+                    ],
+                    "program": [
+                        "NN"
+                    ],
+                    "titanium": [
+                        "NN"
+                    ]
+                },
+                "words_cnt": 6,
+                "words_cnt_unique": 6,
+                "percentage": {
+                    "execut": 17,
+                    "program": 17,
+                    "ti": 17,
+                    "titanium": 17,
+                    "graph": 17,
+                    "calcul": 17
+                }
+            }
+        },
+        {
+            "tableID": 2,
+            "recordID": 53,
+            "data": "8xp",
+            "record": {
+                "Ext.": "8xp",
+                "Description": "Executable program for TI-83/84 Plus Graphing Calculator",
+                "Used by": "TI Connect"
+            },
+            "indexes": {
+                "words": [
+                    "graphing",
+                    "ti",
+                    "calculator",
+                    "plus",
+                    "program",
+                    "executable"
+                ],
+                "stems": {
+                    "execut": 1,
+                    "program": 1,
+                    "ti": 1,
+                    "plu": 1,
+                    "graph": 1,
+                    "calcul": 1
+                },
+                "speech": {
+                    "TI_NN": 1,
+                    "calcul_NN": 1,
+                    "execut_JJ": 1,
+                    "for_IN": 1,
+                    "graph_VBG": 1,
+                    "plu_CC": 1,
+                    "program_NN": 1
+                },
+                "parts": {
+                    "TI": [
+                        "NN"
+                    ],
+                    "calcul": [
+                        "NN"
+                    ],
+                    "execut": [
+                        "JJ"
+                    ],
+                    "for": [
+                        "IN"
+                    ],
+                    "graph": [
+                        "VBG"
+                    ],
+                    "plu": [
+                        "CC"
+                    ],
+                    "program": [
+                        "NN"
+                    ]
+                },
+                "words_cnt": 6,
+                "words_cnt_unique": 6,
+                "percentage": {
+                    "execut": 17,
+                    "program": 17,
+                    "ti": 17,
+                    "plu": 17,
+                    "graph": 17,
+                    "calcul": 17
+                }
+            }
+        },
+        {
+            "tableID": 2,
+            "recordID": 54,
+            "data": "91",
+            "record": {
+                "Ext.": "91",
+                "Description": "91\u00c3\u009791 dpi display font",
+                "Used by": "Ventura Publisher"
+            },
+            "indexes": {
+                "words": [
+                    "dpi",
+                    "font",
+                    "display"
+                ],
+                "stems": {
+                    "dpi": 1,
+                    "display": 1,
+                    "font": 1
+                },
+                "speech": {
+                    "display_NN": 1,
+                    "dpi_NN": 1,
+                    "font_NN": 1
+                },
+                "parts": {
+                    "display": [
+                        "NN"
+                    ],
+                    "dpi": [
+                        "NN"
+                    ],
+                    "font": [
+                        "NN"
+                    ]
+                },
+                "words_cnt": 3,
+                "words_cnt_unique": 3,
+                "percentage": {
+                    "dpi": 33,
+                    "display": 33,
+                    "font": 33
+                }
+            }
+        },
+        {
+            "tableID": 2,
+            "recordID": 55,
+            "data": "96",
+            "record": {
+                "Ext.": "96",
+                "Description": "96\u00c3\u009796 dpi display font",
+                "Used by": "Ventura Publisher"
+            },
+            "indexes": {
+                "words": [
+                    "dpi",
+                    "font",
+                    "display"
+                ],
+                "stems": {
+                    "dpi": 1,
+                    "display": 1,
+                    "font": 1
+                },
+                "speech": {
+                    "display_NN": 1,
+                    "dpi_NN": 1,
+                    "font_NN": 1
+                },
+                "parts": {
+                    "display": [
+                        "NN"
+                    ],
+                    "dpi": [
+                        "NN"
+                    ],
+                    "font": [
+                        "NN"
+                    ]
+                },
+                "words_cnt": 3,
+                "words_cnt_unique": 3,
+                "percentage": {
+                    "dpi": 33,
+                    "display": 33,
+                    "font": 33
+                }
+            }
+        },
+        {
+            "tableID": 3,
+            "recordID": 0,
+            "data": "This article includes a technology-related list of lists.",
+            "record": {
+                "undefined": "This article includes a technology-related list of lists."
+            },
+            "indexes": {
+                "words": [
+                    "related",
+                    "this",
+                    "includes",
+                    "technology",
+                    "article",
+                    "lists",
+                    "list"
+                ],
+                "stems": {
+                    "thi": 2,
+                    "articl": 2,
+                    "includ": 2,
+                    "technolog": 2,
+                    "relat": 2,
+                    "list": 4
+                },
+                "speech": {
+                    "articl_NN": 2,
+                    "includ_VBZ": 2,
+                    "list_NN": 2,
+                    "list_NNS": 2,
+                    "of_IN": 2,
+                    "relat_JJ": 2,
+                    "technolog_NN": 2,
+                    "thi_DT": 2
+                },
+                "parts": {
+                    "articl": [
+                        "NN"
+                    ],
+                    "includ": [
+                        "VBZ"
+                    ],
+                    "list": [
+                        "NN",
+                        "NNS"
+                    ],
+                    "of": [
+                        "IN"
+                    ],
+                    "relat": [
+                        "JJ"
+                    ],
+                    "technolog": [
+                        "NN"
+                    ],
+                    "thi": [
+                        "DT"
+                    ]
+                },
+                "words_cnt": 14,
+                "words_cnt_unique": 7,
+                "percentage": {
+                    "thi": 14,
+                    "articl": 14,
+                    "includ": 14,
+                    "technolog": 14,
+                    "relat": 14,
+                    "list": 29
+                }
+            }
+        }
+    ],
+    "stem_index": {
+        "audio": [
+            54
+        ],
+        "video": [
+            53,
+            55
+        ],
+        "document": [],
+        "imag": [
+            4,
+            18,
+            66
+        ],
+        "-r_imag": [],
+        "script": [],
+        "applic": []
+    }
+}

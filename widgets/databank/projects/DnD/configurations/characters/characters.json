@@ -1,0 +1,39 @@
+[
+    {
+        "character": "Kolvar",
+        "level": 7,
+        "class": "cleric",
+        "player": "Scott_Reph",
+        "indices": [
+            "Kolvar",
+            "cKolvar",
+            "Church",
+            "Scott",
+            "Eisendell"
+        ],
+        "group": "Church",
+        "campaign": "The_Heroes_of_Eisendell",
+        "db": {
+            "class": "cleric",
+            "race": [ "elf", "human" ],
+            "monster": []
+        }
+    },
+    {
+        "character": "Kilroth",
+        "level": 1,
+        "class": "sorcerer",
+        "player": "Scott_Reph",
+        "indices": [
+            "Kilroth",
+            "Strahd"
+        ],
+        "group": "Church",
+        "campaign": "Curse_of_Strahd",
+        "db": {
+            "class": "sorcerer",
+            "race": [],
+            "monster": ["Pseudodragon"]
+        }
+    }
+]

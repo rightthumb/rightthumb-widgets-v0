@@ -1,0 +1,142 @@
+[
+    {
+        "id": 39,
+        "name": "Spiritual Weapon",
+        "epoch": 1588553710.405088,
+        "level": "2nd",
+        "notes": "Cast a net to protect someone"
+    },
+    {
+        "id": 20,
+        "name": "Inflict Wounds",
+        "epoch": 1588555857.6215644,
+        "level": "3rd",
+        "notes": "Attack a troll's digestive and reproductive system used inspiration 37 from 11"
+    },
+    {
+        "id": 20,
+        "name": "Inflict Wounds",
+        "epoch": 1588559335.1995082,
+        "level": "3rd",
+        "notes": "Attack troll torso, liquifying it"
+    },
+    {
+        "id": 20,
+        "name": "Inflict Wounds",
+        "epoch": 1590368713.9745362,
+        "level": "3rd",
+        "notes": "Vampire woman - didn't roll high"
+    },
+    {
+        "id": 20,
+        "name": "Inflict Wounds",
+        "epoch": 1590369775.794156,
+        "level": "3rd",
+        "notes": "Vampire woman - didn't hurt her even though i rolled well"
+    },
+    {
+        "id": 45,
+        "name": "Clairvoyance",
+        "epoch": 1592783686.8877182,
+        "level": "3rd",
+        "notes": "look on other side of the door at a strange monistary with no wildlife around"
+    },
+    {
+        "id": 20,
+        "name": "Inflict Wounds",
+        "epoch": 1592790430.5852702,
+        "level": "3rd",
+        "notes": "melted a vampire"
+    },
+    {
+        "id": 18,
+        "name": "Guiding Bolt",
+        "epoch": 1592792048.7674773,
+        "level": "1st",
+        "notes": "missed a vampire"
+    },
+    {
+        "id": 19,
+        "name": "Healing Word",
+        "epoch": 1592792106.0895493,
+        "level": "1st",
+        "notes": "as bonus action Melchizedek"
+    },
+    {
+        "id": 4,
+        "name": "Sacred Flame",
+        "epoch": 1592793141.0651789,
+        "level": "Cantrip",
+        "notes": "evil vampire nun"
+    },
+    {
+        "id": 20,
+        "name": "Inflict Wounds",
+        "epoch": 1592794239.9490986,
+        "level": "3rd",
+        "notes": "melted an evil nones face"
+    },
+    {
+        "id": 36,
+        "name": "Prayer of Healing",
+        "epoch": 1593990601.2170768,
+        "notes": "heal myself from 4 hit points LOL ROLLED 7",
+        "level": "2nd"
+    },
+    {
+        "id": null,
+        "name": "REST",
+        "epoch": 1595199213.6026807,
+        "notes": "",
+        "level": null
+    },
+    {
+        "id": 45,
+        "name": "Clairvoyance",
+        "epoch": 1595204546.2608113,
+        "notes": "find the 6 skeletons down the hallway",
+        "level": "3rd"
+    },
+    {
+        "id": 14,
+        "name": "Cure Wounds",
+        "epoch": 1595207412.9757044,
+        "notes": "heal miraro",
+        "level": "1st"
+    },
+    {
+        "id": 14,
+        "name": "Cure Wounds",
+        "epoch": 1595207869.1164124,
+        "notes": "heal sister mercy",
+        "level": "1st"
+    },
+    {
+        "id": 39,
+        "name": "Spiritual Weapon",
+        "epoch": 1597771989.0539823,
+        "notes": "created net around a person covered in mimics and removed them",
+        "level": "2nd"
+    },
+    {
+        "id": 36,
+        "name": "Prayer of Healing",
+        "epoch": 1598832647.5574486,
+        "notes": "on Ichdothein Shaylen Kolvar Gazsi Anastasia",
+        "level": "2nd"
+    },
+    {
+        "id": 4,
+        "name": "Sacred Flame",
+        "epoch": 1598835324.210581,
+        "notes": "miss",
+        "level": "Cantrip"
+    },
+    {
+        "id": 4,
+        "name": "Sacred Flame",
+        "epoch": 1598835418.0876703,
+        "notes": "miss again ghost things",
+        "level": "Cantrip"
+    }
+]

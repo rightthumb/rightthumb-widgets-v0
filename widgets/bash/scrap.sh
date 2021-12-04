@@ -12,7 +12,7 @@
 
 # SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 # source  "$SCRIPT_DIR/load-vars.sh"
-
+echo "__________________________________________________________________________________"
 unixID7=$( sed -n '7p' < $wprofile/config/.unix_id )
 notes_folder="$widgets/widgets/bash/notes"
 notes_file="$notes_folder/RT-SCRAP-$unixID7.txt"

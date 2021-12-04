@@ -46,6 +46,7 @@ import _rightThumb._dir as _dir
 
 
 def appSwitches():
+	_.switches.register( 'Schedule-Path', '-schedule' )
 	_.switches.register( 'Add', '-add' )
 	_.switches.register( 'List', '-list' )
 	_.switches.register( 'Edit', '-edit' )
@@ -550,6 +551,10 @@ def theHelp():
 
 
 def action():
+	if _.switches.isActive('Schedule-Path'):
+		_.getTableProject( 'PillerBeauty.Schedule', 'schedule.json', path=True )
+		return None
+
 	global schedule
 	global upload
 
@@ -558,6 +563,7 @@ def action():
 
 	# _.printVarSimple( schedule )
 	# sys.exit()
+
 
 	if _.switches.isActive('List'):
 		_.tables.register('Auto',schedule)
@@ -765,7 +771,6 @@ if __name__ == '__main__':
 		action()
 	except Exception as e:
 		pass
-
 
 
 

@@ -7669,10 +7669,13 @@ def getTableDB( theFile,     isDic=None, isList=None ):
 		return __.data_default(file=theFile,default=[]).default()
 
 
-def getTableProject( project, theFile,     isDic=None, isList=None ):
+def getTableProject( project, theFile,     isDic=None, isList=None, path=False ):
 	if os.path.isfile(theFile): v.opened_file_me[theFile] = os.path.getmtime( theFile );
 	simplejson = __.imp('simplejson')
 	theFile = _v.projectData(project) + theFile
+	if path:
+		print(theFile)
+		return None
 	# print(theFile)
 	# print(theFile)
 	# print(theFile)
@@ -7686,12 +7689,14 @@ def getTableProject( project, theFile,     isDic=None, isList=None ):
 		return __.data_default(file=theFile,default=[]).default()
 
 
-def saveTableProject( project, rows, theFile, printThis=False, sort_keys=False, indentCode=True,  p=None, me=0 ):
+def saveTableProject( project, rows=[], theFile='', printThis=False, sort_keys=False, indentCode=True,  p=None, me=0, path=False ):
 	HD.chmod(theFile)
 	simplejson = __.imp('simplejson')
 	# print('*******************',theFile)
 	theFile = _v.projectData(project) + theFile
-
+	if path:
+		print(theFile)
+		return None
 	if indentCode:
 		dataDump = simplejson.dumps(rows, indent=4, sort_keys=sort_keys)
 	else:

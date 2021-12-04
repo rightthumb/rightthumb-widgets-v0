@@ -1,0 +1,1940 @@
+{
+    "Monsters": {
+        "IDs": {
+            "0": {
+                "aboleth": {}
+            },
+            "1": {
+                "acolyte": {}
+            },
+            "2": {
+                "adult-black-dragon": {}
+            },
+            "3": {
+                "adult-blue-dragon": {}
+            },
+            "4": {
+                "adult-brass-dragon": {}
+            },
+            "5": {
+                "adult-bronze-dragon": {}
+            },
+            "6": {
+                "adult-copper-dragon": {}
+            },
+            "7": {
+                "adult-gold-dragon": {}
+            },
+            "8": {
+                "adult-green-dragon": {}
+            },
+            "9": {
+                "adult-red-dragon": {}
+            },
+            "10": {
+                "adult-silver-dragon": {}
+            },
+            "11": {
+                "adult-white-dragon": {}
+            },
+            "12": {
+                "air-elemental": {}
+            },
+            "13": {
+                "ancient-black-dragon": {}
+            },
+            "14": {
+                "ancient-blue-dragon": {}
+            },
+            "15": {
+                "ancient-brass-dragon": {}
+            },
+            "16": {
+                "ancient-bronze-dragon": {}
+            },
+            "17": {
+                "ancient-copper-dragon": {}
+            },
+            "18": {
+                "ancient-gold-dragon": {}
+            },
+            "19": {
+                "ancient-green-dragon": {}
+            },
+            "20": {
+                "ancient-red-dragon": {}
+            },
+            "21": {
+                "ancient-silver-dragon": {}
+            },
+            "22": {
+                "ancient-white-dragon": {}
+            },
+            "23": {
+                "androsphinx": {}
+            },
+            "24": {
+                "animated-armor": {}
+            },
+            "25": {
+                "ankheg": {}
+            },
+            "26": {
+                "ape": {}
+            },
+            "27": {
+                "archmage": {}
+            },
+            "28": {
+                "assassin": {}
+            },
+            "29": {
+                "awakened-shrub": {}
+            },
+            "30": {
+                "awakened-tree": {}
+            },
+            "31": {
+                "axe-beak": {}
+            },
+            "32": {
+                "azer": {}
+            },
+            "33": {
+                "baboon": {}
+            },
+            "34": {
+                "badger": {}
+            },
+            "35": {
+                "balor": {}
+            },
+            "36": {
+                "bandit": {}
+            },
+            "37": {
+                "bandit-captain": {}
+            },
+            "38": {
+                "barbed-devil": {}
+            },
+            "39": {
+                "basilisk": {}
+            },
+            "40": {
+                "bat": {}
+            },
+            "41": {
+                "bearded-devil": {}
+            },
+            "42": {
+                "behir": {}
+            },
+            "43": {
+                "berserker": {}
+            },
+            "44": {
+                "black-bear": {}
+            },
+            "45": {
+                "black-dragon-wyrmling": {}
+            },
+            "46": {
+                "black-pudding": {}
+            },
+            "47": {
+                "blink-dog": {}
+            },
+            "48": {
+                "blood-hawk": {}
+            },
+            "49": {
+                "blue-dragon-wyrmling": {}
+            },
+            "50": {
+                "boar": {}
+            },
+            "51": {
+                "bone-devil": {}
+            },
+            "52": {
+                "brass-dragon-wyrmling": {}
+            },
+            "53": {
+                "bronze-dragon-wyrmling": {}
+            },
+            "54": {
+                "brown-bear": {}
+            },
+            "55": {
+                "bugbear": {}
+            },
+            "56": {
+                "bulette": {}
+            },
+            "57": {
+                "camel": {}
+            },
+            "58": {
+                "cat": {}
+            },
+            "59": {
+                "centaur": {}
+            },
+            "60": {
+                "chain-devil": {}
+            },
+            "61": {
+                "chimera": {}
+            },
+            "62": {
+                "chuul": {}
+            },
+            "63": {
+                "clay-golem": {}
+            },
+            "64": {
+                "cloaker": {}
+            },
+            "65": {
+                "cloud-giant": {}
+            },
+            "66": {
+                "cockatrice": {}
+            },
+            "67": {
+                "commoner": {}
+            },
+            "68": {
+                "constrictor-snake": {}
+            },
+            "69": {
+                "copper-dragon-wyrmling": {}
+            },
+            "70": {
+                "couatl": {}
+            },
+            "71": {
+                "crab": {}
+            },
+            "72": {
+                "crocodile": {}
+            },
+            "73": {
+                "cult-fanatic": {}
+            },
+            "74": {
+                "cultist": {}
+            },
+            "75": {
+                "darkmantle": {}
+            },
+            "76": {
+                "death-dog": {}
+            },
+            "77": {
+                "deep-gnome-svirfneblin": {}
+            },
+            "78": {
+                "deer": {}
+            },
+            "79": {
+                "deva": {}
+            },
+            "80": {
+                "dire-wolf": {}
+            },
+            "81": {
+                "djinni": {}
+            },
+            "82": {
+                "doppelganger": {}
+            },
+            "83": {
+                "draft-horse": {}
+            },
+            "84": {
+                "dragon-turtle": {}
+            },
+            "85": {
+                "dretch": {}
+            },
+            "86": {
+                "drider": {}
+            },
+            "87": {
+                "drow": {}
+            },
+            "88": {
+                "druid": {}
+            },
+            "89": {
+                "dryad": {}
+            },
+            "90": {
+                "duergar": {}
+            },
+            "91": {
+                "dust-mephit": {}
+            },
+            "92": {
+                "eagle": {}
+            },
+            "93": {
+                "earth-elemental": {}
+            },
+            "94": {
+                "efreeti": {}
+            },
+            "95": {
+                "elephant": {}
+            },
+            "96": {
+                "elk": {}
+            },
+            "97": {
+                "erinyes": {}
+            },
+            "98": {
+                "ettercap": {}
+            },
+            "99": {
+                "ettin": {}
+            },
+            "100": {
+                "fire-elemental": {}
+            },
+            "101": {
+                "fire-giant": {}
+            },
+            "102": {
+                "flesh-golem": {}
+            },
+            "103": {
+                "flying-snake": {}
+            },
+            "104": {
+                "flying-sword": {}
+            },
+            "105": {
+                "frog": {}
+            },
+            "106": {
+                "frost-giant": {}
+            },
+            "107": {
+                "gargoyle": {}
+            },
+            "108": {
+                "gelatinous-cube": {}
+            },
+            "109": {
+                "ghast": {}
+            },
+            "110": {
+                "ghost": {}
+            },
+            "111": {
+                "ghoul": {}
+            },
+            "112": {
+                "giant-ape": {}
+            },
+            "113": {
+                "giant-badger": {}
+            },
+            "114": {
+                "giant-bat": {}
+            },
+            "115": {
+                "giant-boar": {}
+            },
+            "116": {
+                "giant-centipede": {}
+            },
+            "117": {
+                "giant-constrictor-snake": {}
+            },
+            "118": {
+                "giant-crab": {}
+            },
+            "119": {
+                "giant-crocodile": {}
+            },
+            "120": {
+                "giant-eagle": {}
+            },
+            "121": {
+                "giant-elk": {}
+            },
+            "122": {
+                "giant-fire-beetle": {}
+            },
+            "123": {
+                "giant-frog": {}
+            },
+            "124": {
+                "giant-goat": {}
+            },
+            "125": {
+                "giant-hyena": {}
+            },
+            "126": {
+                "giant-lizard": {}
+            },
+            "127": {
+                "giant-octopus": {}
+            },
+            "128": {
+                "giant-owl": {}
+            },
+            "129": {
+                "giant-poisonous-snake": {}
+            },
+            "130": {
+                "giant-rat": {}
+            },
+            "131": {
+                "giant-rat-diseased": {}
+            },
+            "132": {
+                "giant-scorpion": {}
+            },
+            "133": {
+                "giant-sea-horse": {}
+            },
+            "134": {
+                "giant-shark": {}
+            },
+            "135": {
+                "giant-spider": {}
+            },
+            "136": {
+                "giant-toad": {}
+            },
+            "137": {
+                "giant-vulture": {}
+            },
+            "138": {
+                "giant-wasp": {}
+            },
+            "139": {
+                "giant-weasel": {}
+            },
+            "140": {
+                "giant-wolf-spider": {}
+            },
+            "141": {
+                "gibbering-mouther": {}
+            },
+            "142": {
+                "glabrezu": {}
+            },
+            "143": {
+                "gladiator": {}
+            },
+            "144": {
+                "gnoll": {}
+            },
+            "145": {
+                "goat": {}
+            },
+            "146": {
+                "goblin": {}
+            },
+            "147": {
+                "gold-dragon-wyrmling": {}
+            },
+            "148": {
+                "gorgon": {}
+            },
+            "149": {
+                "gray-ooze": {}
+            },
+            "150": {
+                "green-dragon-wyrmling": {}
+            },
+            "151": {
+                "green-hag": {}
+            },
+            "152": {
+                "grick": {}
+            },
+            "153": {
+                "griffon": {}
+            },
+            "154": {
+                "grimlock": {}
+            },
+            "155": {
+                "guard": {}
+            },
+            "156": {
+                "guardian-naga": {}
+            },
+            "157": {
+                "gynosphinx": {}
+            },
+            "158": {
+                "half-red-dragon-veteran": {}
+            },
+            "159": {
+                "harpy": {}
+            },
+            "160": {
+                "hawk": {}
+            },
+            "161": {
+                "hell-hound": {}
+            },
+            "162": {
+                "hezrou": {}
+            },
+            "163": {
+                "hill-giant": {}
+            },
+            "164": {
+                "hippogriff": {}
+            },
+            "165": {
+                "hobgoblin": {}
+            },
+            "166": {
+                "homunculus": {}
+            },
+            "167": {
+                "horned-devil": {}
+            },
+            "168": {
+                "hunter-shark": {}
+            },
+            "169": {
+                "hydra": {}
+            },
+            "170": {
+                "hyena": {}
+            },
+            "171": {
+                "ice-devil": {}
+            },
+            "172": {
+                "ice-mephit": {}
+            },
+            "173": {
+                "imp": {}
+            },
+            "174": {
+                "invisible-stalker": {}
+            },
+            "175": {
+                "iron-golem": {}
+            },
+            "176": {
+                "jackal": {}
+            },
+            "177": {
+                "killer-whale": {}
+            },
+            "178": {
+                "knight": {}
+            },
+            "179": {
+                "kobold": {}
+            },
+            "180": {
+                "kraken": {}
+            },
+            "181": {
+                "lamia": {}
+            },
+            "182": {
+                "lemure": {}
+            },
+            "183": {
+                "lich": {}
+            },
+            "184": {
+                "lion": {}
+            },
+            "185": {
+                "lizard": {}
+            },
+            "186": {
+                "lizardfolk": {}
+            },
+            "187": {
+                "mage": {}
+            },
+            "188": {
+                "magma-mephit": {}
+            },
+            "189": {
+                "magmin": {}
+            },
+            "190": {
+                "mammoth": {}
+            },
+            "191": {
+                "manticore": {}
+            },
+            "192": {
+                "marilith": {}
+            },
+            "193": {
+                "mastiff": {}
+            },
+            "194": {
+                "medusa": {}
+            },
+            "195": {
+                "merfolk": {}
+            },
+            "196": {
+                "merrow": {}
+            },
+            "197": {
+                "mimic": {}
+            },
+            "198": {
+                "minotaur": {}
+            },
+            "199": {
+                "minotaur-skeleton": {}
+            },
+            "200": {
+                "mule": {}
+            },
+            "201": {
+                "mummy": {}
+            },
+            "202": {
+                "mummy-lord": {}
+            },
+            "203": {
+                "nalfeshnee": {}
+            },
+            "204": {
+                "night-hag": {}
+            },
+            "205": {
+                "nightmare": {}
+            },
+            "206": {
+                "noble": {}
+            },
+            "207": {
+                "ochre-jelly": {}
+            },
+            "208": {
+                "octopus": {}
+            },
+            "209": {
+                "ogre": {}
+            },
+            "210": {
+                "ogre-zombie": {}
+            },
+            "211": {
+                "oni": {}
+            },
+            "212": {
+                "orc": {}
+            },
+            "213": {
+                "otyugh": {}
+            },
+            "214": {
+                "owl": {}
+            },
+            "215": {
+                "owlbear": {}
+            },
+            "216": {
+                "panther": {}
+            },
+            "217": {
+                "pegasus": {}
+            },
+            "218": {
+                "phase-spider": {}
+            },
+            "219": {
+                "pit-fiend": {}
+            },
+            "220": {
+                "planetar": {}
+            },
+            "221": {
+                "plesiosaurus": {}
+            },
+            "222": {
+                "poisonous-snake": {}
+            },
+            "223": {
+                "polar-bear": {}
+            },
+            "224": {
+                "pony": {}
+            },
+            "225": {
+                "priest": {}
+            },
+            "226": {
+                "pseudodragon": {}
+            },
+            "227": {
+                "purple-worm": {}
+            },
+            "228": {
+                "quasit": {}
+            },
+            "229": {
+                "quipper": {}
+            },
+            "230": {
+                "rakshasa": {}
+            },
+            "231": {
+                "rat": {}
+            },
+            "232": {
+                "raven": {}
+            },
+            "233": {
+                "red-dragon-wyrmling": {}
+            },
+            "234": {
+                "reef-shark": {}
+            },
+            "235": {
+                "remorhaz": {}
+            },
+            "236": {
+                "rhinoceros": {}
+            },
+            "237": {
+                "riding-horse": {}
+            },
+            "238": {
+                "roc": {}
+            },
+            "239": {
+                "roper": {}
+            },
+            "240": {
+                "rug-of-smothering": {}
+            },
+            "241": {
+                "rust-monster": {}
+            },
+            "242": {
+                "saber-toothed-tiger": {}
+            },
+            "243": {
+                "sahuagin": {}
+            },
+            "244": {
+                "salamander": {}
+            },
+            "245": {
+                "satyr": {}
+            },
+            "246": {
+                "scorpion": {}
+            },
+            "247": {
+                "scout": {}
+            },
+            "248": {
+                "sea-hag": {}
+            },
+            "249": {
+                "sea-horse": {}
+            },
+            "250": {
+                "shadow": {}
+            },
+            "251": {
+                "shambling-mound": {}
+            },
+            "252": {
+                "shield-guardian": {}
+            },
+            "253": {
+                "shrieker": {}
+            },
+            "254": {
+                "silver-dragon-wyrmling": {}
+            },
+            "255": {
+                "skeleton": {}
+            },
+            "256": {
+                "solar": {}
+            },
+            "257": {
+                "specter": {}
+            },
+            "258": {
+                "spider": {}
+            },
+            "259": {
+                "spirit-naga": {}
+            },
+            "260": {
+                "sprite": {}
+            },
+            "261": {
+                "spy": {}
+            },
+            "262": {
+                "steam-mephit": {}
+            },
+            "263": {
+                "stirge": {}
+            },
+            "264": {
+                "stone-giant": {}
+            },
+            "265": {
+                "stone-golem": {}
+            },
+            "266": {
+                "storm-giant": {}
+            },
+            "267": {
+                "succubus-incubus": {}
+            },
+            "268": {
+                "swarm-of-bats": {}
+            },
+            "269": {
+                "swarm-of-beetles": {}
+            },
+            "270": {
+                "swarm-of-centipedes": {}
+            },
+            "271": {
+                "swarm-of-insects": {}
+            },
+            "272": {
+                "swarm-of-poisonous-snakes": {}
+            },
+            "273": {
+                "swarm-of-quippers": {}
+            },
+            "274": {
+                "swarm-of-rats": {}
+            },
+            "275": {
+                "swarm-of-ravens": {}
+            },
+            "276": {
+                "swarm-of-spiders": {}
+            },
+            "277": {
+                "swarm-of-wasps": {}
+            },
+            "278": {
+                "tarrasque": {}
+            },
+            "279": {
+                "thug": {}
+            },
+            "280": {
+                "tiger": {}
+            },
+            "281": {
+                "treant": {}
+            },
+            "282": {
+                "tribal-warrior": {}
+            },
+            "283": {
+                "triceratops": {}
+            },
+            "284": {
+                "troll": {}
+            },
+            "285": {
+                "tyrannosaurus-rex": {}
+            },
+            "286": {
+                "unicorn": {}
+            },
+            "287": {
+                "vampire": {}
+            },
+            "288": {
+                "vampire-spawn": {}
+            },
+            "289": {
+                "veteran": {}
+            },
+            "290": {
+                "violet-fungus": {}
+            },
+            "291": {
+                "vrock": {}
+            },
+            "292": {
+                "vulture": {}
+            },
+            "293": {
+                "warhorse": {}
+            },
+            "294": {
+                "warhorse-skeleton": {}
+            },
+            "295": {
+                "water-elemental": {}
+            },
+            "296": {
+                "weasel": {}
+            },
+            "297": {
+                "werebear": {}
+            },
+            "298": {
+                "wereboar": {}
+            },
+            "299": {
+                "wererat": {}
+            },
+            "300": {
+                "weretiger": {}
+            },
+            "301": {
+                "werewolf": {}
+            },
+            "302": {
+                "white-dragon-wyrmling": {}
+            },
+            "303": {
+                "wight": {}
+            },
+            "304": {
+                "will-o-wisp": {}
+            },
+            "305": {
+                "winter-wolf": {}
+            },
+            "306": {
+                "wolf": {}
+            },
+            "307": {
+                "worg": {}
+            },
+            "308": {
+                "wraith": {}
+            },
+            "309": {
+                "wyvern": {}
+            },
+            "310": {
+                "xorn": {}
+            },
+            "311": {
+                "young-black-dragon": {}
+            },
+            "312": {
+                "young-blue-dragon": {}
+            },
+            "313": {
+                "young-brass-dragon": {}
+            },
+            "314": {
+                "young-bronze-dragon": {}
+            },
+            "315": {
+                "young-copper-dragon": {}
+            },
+            "316": {
+                "young-gold-dragon": {}
+            },
+            "317": {
+                "young-green-dragon": {}
+            },
+            "318": {
+                "young-red-dragon": {}
+            },
+            "319": {
+                "young-silver-dragon": {}
+            },
+            "320": {
+                "young-white-dragon": {}
+            },
+            "321": {
+                "zombie": {}
+            }
+        },
+        "items": {
+            "aboleth": [
+                0
+            ],
+            "acolyte": [
+                1
+            ],
+            "adult-black-dragon": [
+                2
+            ],
+            "adult-blue-dragon": [
+                3
+            ],
+            "adult-brass-dragon": [
+                4
+            ],
+            "adult-bronze-dragon": [
+                5
+            ],
+            "adult-copper-dragon": [
+                6
+            ],
+            "adult-gold-dragon": [
+                7
+            ],
+            "adult-green-dragon": [
+                8
+            ],
+            "adult-red-dragon": [
+                9
+            ],
+            "adult-silver-dragon": [
+                10
+            ],
+            "adult-white-dragon": [
+                11
+            ],
+            "air-elemental": [
+                12
+            ],
+            "ancient-black-dragon": [
+                13
+            ],
+            "ancient-blue-dragon": [
+                14
+            ],
+            "ancient-brass-dragon": [
+                15
+            ],
+            "ancient-bronze-dragon": [
+                16
+            ],
+            "ancient-copper-dragon": [
+                17
+            ],
+            "ancient-gold-dragon": [
+                18
+            ],
+            "ancient-green-dragon": [
+                19
+            ],
+            "ancient-red-dragon": [
+                20
+            ],
+            "ancient-silver-dragon": [
+                21
+            ],
+            "ancient-white-dragon": [
+                22
+            ],
+            "androsphinx": [
+                23
+            ],
+            "animated-armor": [
+                24
+            ],
+            "ankheg": [
+                25
+            ],
+            "ape": [
+                26
+            ],
+            "archmage": [
+                27
+            ],
+            "assassin": [
+                28
+            ],
+            "awakened-shrub": [
+                29
+            ],
+            "awakened-tree": [
+                30
+            ],
+            "axe-beak": [
+                31
+            ],
+            "azer": [
+                32
+            ],
+            "baboon": [
+                33
+            ],
+            "badger": [
+                34
+            ],
+            "balor": [
+                35
+            ],
+            "bandit": [
+                36
+            ],
+            "bandit-captain": [
+                37
+            ],
+            "barbed-devil": [
+                38
+            ],
+            "basilisk": [
+                39
+            ],
+            "bat": [
+                40
+            ],
+            "bearded-devil": [
+                41
+            ],
+            "behir": [
+                42
+            ],
+            "berserker": [
+                43
+            ],
+            "black-bear": [
+                44
+            ],
+            "black-dragon-wyrmling": [
+                45
+            ],
+            "black-pudding": [
+                46
+            ],
+            "blink-dog": [
+                47
+            ],
+            "blood-hawk": [
+                48
+            ],
+            "blue-dragon-wyrmling": [
+                49
+            ],
+            "boar": [
+                50
+            ],
+            "bone-devil": [
+                51
+            ],
+            "brass-dragon-wyrmling": [
+                52
+            ],
+            "bronze-dragon-wyrmling": [
+                53
+            ],
+            "brown-bear": [
+                54
+            ],
+            "bugbear": [
+                55
+            ],
+            "bulette": [
+                56
+            ],
+            "camel": [
+                57
+            ],
+            "cat": [
+                58
+            ],
+            "centaur": [
+                59
+            ],
+            "chain-devil": [
+                60
+            ],
+            "chimera": [
+                61
+            ],
+            "chuul": [
+                62
+            ],
+            "clay-golem": [
+                63
+            ],
+            "cloaker": [
+                64
+            ],
+            "cloud-giant": [
+                65
+            ],
+            "cockatrice": [
+                66
+            ],
+            "commoner": [
+                67
+            ],
+            "constrictor-snake": [
+                68
+            ],
+            "copper-dragon-wyrmling": [
+                69
+            ],
+            "couatl": [
+                70
+            ],
+            "crab": [
+                71
+            ],
+            "crocodile": [
+                72
+            ],
+            "cult-fanatic": [
+                73
+            ],
+            "cultist": [
+                74
+            ],
+            "darkmantle": [
+                75
+            ],
+            "death-dog": [
+                76
+            ],
+            "deep-gnome-svirfneblin": [
+                77
+            ],
+            "deer": [
+                78
+            ],
+            "deva": [
+                79
+            ],
+            "dire-wolf": [
+                80
+            ],
+            "djinni": [
+                81
+            ],
+            "doppelganger": [
+                82
+            ],
+            "draft-horse": [
+                83
+            ],
+            "dragon-turtle": [
+                84
+            ],
+            "dretch": [
+                85
+            ],
+            "drider": [
+                86
+            ],
+            "drow": [
+                87
+            ],
+            "druid": [
+                88
+            ],
+            "dryad": [
+                89
+            ],
+            "duergar": [
+                90
+            ],
+            "dust-mephit": [
+                91
+            ],
+            "eagle": [
+                92
+            ],
+            "earth-elemental": [
+                93
+            ],
+            "efreeti": [
+                94
+            ],
+            "elephant": [
+                95
+            ],
+            "elk": [
+                96
+            ],
+            "erinyes": [
+                97
+            ],
+            "ettercap": [
+                98
+            ],
+            "ettin": [
+                99
+            ],
+            "fire-elemental": [
+                100
+            ],
+            "fire-giant": [
+                101
+            ],
+            "flesh-golem": [
+                102
+            ],
+            "flying-snake": [
+                103
+            ],
+            "flying-sword": [
+                104
+            ],
+            "frog": [
+                105
+            ],
+            "frost-giant": [
+                106
+            ],
+            "gargoyle": [
+                107
+            ],
+            "gelatinous-cube": [
+                108
+            ],
+            "ghast": [
+                109
+            ],
+            "ghost": [
+                110
+            ],
+            "ghoul": [
+                111
+            ],
+            "giant-ape": [
+                112
+            ],
+            "giant-badger": [
+                113
+            ],
+            "giant-bat": [
+                114
+            ],
+            "giant-boar": [
+                115
+            ],
+            "giant-centipede": [
+                116
+            ],
+            "giant-constrictor-snake": [
+                117
+            ],
+            "giant-crab": [
+                118
+            ],
+            "giant-crocodile": [
+                119
+            ],
+            "giant-eagle": [
+                120
+            ],
+            "giant-elk": [
+                121
+            ],
+            "giant-fire-beetle": [
+                122
+            ],
+            "giant-frog": [
+                123
+            ],
+            "giant-goat": [
+                124
+            ],
+            "giant-hyena": [
+                125
+            ],
+            "giant-lizard": [
+                126
+            ],
+            "giant-octopus": [
+                127
+            ],
+            "giant-owl": [
+                128
+            ],
+            "giant-poisonous-snake": [
+                129
+            ],
+            "giant-rat": [
+                130
+            ],
+            "giant-rat-diseased": [
+                131
+            ],
+            "giant-scorpion": [
+                132
+            ],
+            "giant-sea-horse": [
+                133
+            ],
+            "giant-shark": [
+                134
+            ],
+            "giant-spider": [
+                135
+            ],
+            "giant-toad": [
+                136
+            ],
+            "giant-vulture": [
+                137
+            ],
+            "giant-wasp": [
+                138
+            ],
+            "giant-weasel": [
+                139
+            ],
+            "giant-wolf-spider": [
+                140
+            ],
+            "gibbering-mouther": [
+                141
+            ],
+            "glabrezu": [
+                142
+            ],
+            "gladiator": [
+                143
+            ],
+            "gnoll": [
+                144
+            ],
+            "goat": [
+                145
+            ],
+            "goblin": [
+                146
+            ],
+            "gold-dragon-wyrmling": [
+                147
+            ],
+            "gorgon": [
+                148
+            ],
+            "gray-ooze": [
+                149
+            ],
+            "green-dragon-wyrmling": [
+                150
+            ],
+            "green-hag": [
+                151
+            ],
+            "grick": [
+                152
+            ],
+            "griffon": [
+                153
+            ],
+            "grimlock": [
+                154
+            ],
+            "guard": [
+                155
+            ],
+            "guardian-naga": [
+                156
+            ],
+            "gynosphinx": [
+                157
+            ],
+            "half-red-dragon-veteran": [
+                158
+            ],
+            "harpy": [
+                159
+            ],
+            "hawk": [
+                160
+            ],
+            "hell-hound": [
+                161
+            ],
+            "hezrou": [
+                162
+            ],
+            "hill-giant": [
+                163
+            ],
+            "hippogriff": [
+                164
+            ],
+            "hobgoblin": [
+                165
+            ],
+            "homunculus": [
+                166
+            ],
+            "horned-devil": [
+                167
+            ],
+            "hunter-shark": [
+                168
+            ],
+            "hydra": [
+                169
+            ],
+            "hyena": [
+                170
+            ],
+            "ice-devil": [
+                171
+            ],
+            "ice-mephit": [
+                172
+            ],
+            "imp": [
+                173
+            ],
+            "invisible-stalker": [
+                174
+            ],
+            "iron-golem": [
+                175
+            ],
+            "jackal": [
+                176
+            ],
+            "killer-whale": [
+                177
+            ],
+            "knight": [
+                178
+            ],
+            "kobold": [
+                179
+            ],
+            "kraken": [
+                180
+            ],
+            "lamia": [
+                181
+            ],
+            "lemure": [
+                182
+            ],
+            "lich": [
+                183
+            ],
+            "lion": [
+                184
+            ],
+            "lizard": [
+                185
+            ],
+            "lizardfolk": [
+                186
+            ],
+            "mage": [
+                187
+            ],
+            "magma-mephit": [
+                188
+            ],
+            "magmin": [
+                189
+            ],
+            "mammoth": [
+                190
+            ],
+            "manticore": [
+                191
+            ],
+            "marilith": [
+                192
+            ],
+            "mastiff": [
+                193
+            ],
+            "medusa": [
+                194
+            ],
+            "merfolk": [
+                195
+            ],
+            "merrow": [
+                196
+            ],
+            "mimic": [
+                197
+            ],
+            "minotaur": [
+                198
+            ],
+            "minotaur-skeleton": [
+                199
+            ],
+            "mule": [
+                200
+            ],
+            "mummy": [
+                201
+            ],
+            "mummy-lord": [
+                202
+            ],
+            "nalfeshnee": [
+                203
+            ],
+            "night-hag": [
+                204
+            ],
+            "nightmare": [
+                205
+            ],
+            "noble": [
+                206
+            ],
+            "ochre-jelly": [
+                207
+            ],
+            "octopus": [
+                208
+            ],
+            "ogre": [
+                209
+            ],
+            "ogre-zombie": [
+                210
+            ],
+            "oni": [
+                211
+            ],
+            "orc": [
+                212
+            ],
+            "otyugh": [
+                213
+            ],
+            "owl": [
+                214
+            ],
+            "owlbear": [
+                215
+            ],
+            "panther": [
+                216
+            ],
+            "pegasus": [
+                217
+            ],
+            "phase-spider": [
+                218
+            ],
+            "pit-fiend": [
+                219
+            ],
+            "planetar": [
+                220
+            ],
+            "plesiosaurus": [
+                221
+            ],
+            "poisonous-snake": [
+                222
+            ],
+            "polar-bear": [
+                223
+            ],
+            "pony": [
+                224
+            ],
+            "priest": [
+                225
+            ],
+            "pseudodragon": [
+                226
+            ],
+            "purple-worm": [
+                227
+            ],
+            "quasit": [
+                228
+            ],
+            "quipper": [
+                229
+            ],
+            "rakshasa": [
+                230
+            ],
+            "rat": [
+                231
+            ],
+            "raven": [
+                232
+            ],
+            "red-dragon-wyrmling": [
+                233
+            ],
+            "reef-shark": [
+                234
+            ],
+            "remorhaz": [
+                235
+            ],
+            "rhinoceros": [
+                236
+            ],
+            "riding-horse": [
+                237
+            ],
+            "roc": [
+                238
+            ],
+            "roper": [
+                239
+            ],
+            "rug-of-smothering": [
+                240
+            ],
+            "rust-monster": [
+                241
+            ],
+            "saber-toothed-tiger": [
+                242
+            ],
+            "sahuagin": [
+                243
+            ],
+            "salamander": [
+                244
+            ],
+            "satyr": [
+                245
+            ],
+            "scorpion": [
+                246
+            ],
+            "scout": [
+                247
+            ],
+            "sea-hag": [
+                248
+            ],
+            "sea-horse": [
+                249
+            ],
+            "shadow": [
+                250
+            ],
+            "shambling-mound": [
+                251
+            ],
+            "shield-guardian": [
+                252
+            ],
+            "shrieker": [
+                253
+            ],
+            "silver-dragon-wyrmling": [
+                254
+            ],
+            "skeleton": [
+                255
+            ],
+            "solar": [
+                256
+            ],
+            "specter": [
+                257
+            ],
+            "spider": [
+                258
+            ],
+            "spirit-naga": [
+                259
+            ],
+            "sprite": [
+                260
+            ],
+            "spy": [
+                261
+            ],
+            "steam-mephit": [
+                262
+            ],
+            "stirge": [
+                263
+            ],
+            "stone-giant": [
+                264
+            ],
+            "stone-golem": [
+                265
+            ],
+            "storm-giant": [
+                266
+            ],
+            "succubus-incubus": [
+                267
+            ],
+            "swarm-of-bats": [
+                268
+            ],
+            "swarm-of-beetles": [
+                269
+            ],
+            "swarm-of-centipedes": [
+                270
+            ],
+            "swarm-of-insects": [
+                271
+            ],
+            "swarm-of-poisonous-snakes": [
+                272
+            ],
+            "swarm-of-quippers": [
+                273
+            ],
+            "swarm-of-rats": [
+                274
+            ],
+            "swarm-of-ravens": [
+                275
+            ],
+            "swarm-of-spiders": [
+                276
+            ],
+            "swarm-of-wasps": [
+                277
+            ],
+            "tarrasque": [
+                278
+            ],
+            "thug": [
+                279
+            ],
+            "tiger": [
+                280
+            ],
+            "treant": [
+                281
+            ],
+            "tribal-warrior": [
+                282
+            ],
+            "triceratops": [
+                283
+            ],
+            "troll": [
+                284
+            ],
+            "tyrannosaurus-rex": [
+                285
+            ],
+            "unicorn": [
+                286
+            ],
+            "vampire": [
+                287
+            ],
+            "vampire-spawn": [
+                288
+            ],
+            "veteran": [
+                289
+            ],
+            "violet-fungus": [
+                290
+            ],
+            "vrock": [
+                291
+            ],
+            "vulture": [
+                292
+            ],
+            "warhorse": [
+                293
+            ],
+            "warhorse-skeleton": [
+                294
+            ],
+            "water-elemental": [
+                295
+            ],
+            "weasel": [
+                296
+            ],
+            "werebear": [
+                297
+            ],
+            "wereboar": [
+                298
+            ],
+            "wererat": [
+                299
+            ],
+            "weretiger": [
+                300
+            ],
+            "werewolf": [
+                301
+            ],
+            "white-dragon-wyrmling": [
+                302
+            ],
+            "wight": [
+                303
+            ],
+            "will-o-wisp": [
+                304
+            ],
+            "winter-wolf": [
+                305
+            ],
+            "wolf": [
+                306
+            ],
+            "worg": [
+                307
+            ],
+            "wraith": [
+                308
+            ],
+            "wyvern": [
+                309
+            ],
+            "xorn": [
+                310
+            ],
+            "young-black-dragon": [
+                311
+            ],
+            "young-blue-dragon": [
+                312
+            ],
+            "young-brass-dragon": [
+                313
+            ],
+            "young-bronze-dragon": [
+                314
+            ],
+            "young-copper-dragon": [
+                315
+            ],
+            "young-gold-dragon": [
+                316
+            ],
+            "young-green-dragon": [
+                317
+            ],
+            "young-red-dragon": [
+                318
+            ],
+            "young-silver-dragon": [
+                319
+            ],
+            "young-white-dragon": [
+                320
+            ],
+            "zombie": [
+                321
+            ]
+        }
+    }
+}

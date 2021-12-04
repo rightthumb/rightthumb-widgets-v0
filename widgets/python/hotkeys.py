@@ -28,6 +28,14 @@ _.load()
 import _rightThumb._vars as _v
 import _rightThumb._string as _str
 ##################################################
+from threading import Timer
+import re
+try:
+	import winsound
+except Exception as e:
+	pass
+import simplejson
+##################################################
 
 def appSwitches():
 	_.switches.register( 'Print-Keys', '-print' )
@@ -170,7 +178,7 @@ _.postLoad( __file__ )
 ########################################################################################
 # START
 
-from pynput.keyboard import Key, Controller
+from pynput.keyboard import Key, KeyCode, Controller
 keyboard = Controller()
 
 from pynput.keyboard import Listener
@@ -181,52 +189,241 @@ class HOTKEYS:
 
 			
 
-	def log_keystroke( self, key ):
+	def release_key( self, key ):
+		global post_do
+		global key_set
+		try:
+			char = str(key.char)
+		except Exception as e:
+			char = str(key).replace("'",'')
+		try:
+			key_set.remove(char)
+		except Exception as e:
+			key_set = set()
+
+		if not key_set and post_do['status']:
+			post_do['status'] = 0
+			count = post_do['count']
+			k = post_do['label']
+			do = post_do['do']
+			if post_do['esc']:
+				keyboard.press(Key.esc)
+				keyboard.release(Key.esc)
+
+				keyboard.press(Key.esc)
+				keyboard.release(Key.esc)
+
+				keyboard.press(Key.esc)
+				keyboard.release(Key.esc)
+			
+				keyboard.press(Key.esc)
+				keyboard.release(Key.esc)
+
+			ii=0
+			if ii<count:
+				while not ii == count:
+					ii+=1
+					keyboard.press(Key.backspace)
+					keyboard.release(Key.backspace)
+			print(k)
+			exec(do)
+			# beepy.simple_beep2()
+		 
+	def process_keystroke( self, key ):
+		global post_do
+		global key_set
+		global print_chars
+		global ctrl_chars
+		try:
+			char = str(key.char)
+		except Exception as e:
+			char = str(key).replace("'",'')
+		key_set.add(char)
+		if print_chars:
+			print('____________')
+			print(key_set)
+			for x in key_set:
+			  print(str(x).replace("'",''))
 		global log
 		global table
 		global keyboard
+		# print(key)
 		key = str(key).replace("'", "")
 		log.append(key)
 		if _.switches.isActive('Print-Keys'):
 			print(key)
 		log0=log.copy()
 		log0.reverse()
-		
+		esc=False
+
+		# process set
 		for k in table:
 			good=True
 			count=0
-			# spacer=[]
+		
+			for kk in key_set:
+				found=False
+				for i,t in enumerate(table[k]['test']):
+					if '.alt' in t.lower():
+						esc=True
+					if t == '\\':
+						if kk == t:
+							found=True
+					else:
+						if kk.lower().startswith(t.lower()):
+							found=True
+					if not found:
+						try:
+							# if k == 'reload':
+								# print(kk,KeyCode( char=kk ), KeyCode( char=t.lower() ))
+							if kk == ctrl_chars[t.lower()]:
+							# if kk == KeyCode( char=ctrl_chars[t.lower()] ):
+								found=True
+
+						except Exception as e:
+							# print(e)
+							pass
+				if not found:
+					good=False
+			if not len(table[k]['test']) == len(key_set):
+				good=False
+			if good:
+				beepy.simple_beep()
+				post_do['status'] = 1
+				post_do['esc'] = esc
+				post_do['count'] = count
+				post_do['label'] = k
+				post_do['do'] = table[k]['do']
+
+				# ii=0
+				# if ii<count:
+				# 	while not ii == count:
+				# 		ii+=1
+				# 		keyboard.press(Key.esc)
+				# 		keyboard.press(Key.backspace)
+				# 		keyboard.release(Key.backspace)
+				# print(k)
+				# exec(table[k]['do'])
+				return None
+				break
+
+		# process history
+			
+		for k in table:
+			good=True
+			count=0
 			for i,t in enumerate(table[k]['test']):
+				if '.alt' in t.lower():
+					esc=True
 				try:
 					if not t.startswith('Key.'):
 						count+=1
-						# spacer.append(t)
 					elif t.startswith('Key.space'):
-						# spacer.append(t)
 						count+=1
 
-					if not log0[i].startswith(t):
-						# print(log0[i],t)
-						good=False
-						break
+					if t == '\\':
+						if not log0[i] == t:
+							good=False
+							break
+					else:
+						if not log0[i].startswith(t):
+							good=False
+							break
+
 				except Exception as e:
 					good=False
 					break
 			if good:
-				ii=0
-				# count-=1
-				if ii<count:
-					while not ii == count:
-						ii+=1
-						keyboard.press(Key.backspace)
-						keyboard.release(Key.backspace)
-				print(k)
-				# print(spacer)
-				# print(k,table[k]['do'])
-				exec(table[k]['do'])
-				# log=[]
+				beepy.simple_beep()
+				post_do['status'] = 1
+				post_do['esc'] = esc
+				post_do['count'] = count
+				post_do['label'] = k
+				post_do['do'] = table[k]['do']
+
+				# ii=0
+				# if ii<count:
+				# 	while not ii == count:
+				# 		ii+=1
+				# 		keyboard.press(Key.esc)
+				# 		keyboard.press(Key.backspace)
+				# 		keyboard.release(Key.backspace)
+				# print(k)
+				# exec(table[k]['do'])
 				break
 # class Hotkeys:END
+
+
+		
+
+class BEEPS:
+	def __init__( self ):
+		###
+		# Notes Config
+		###
+
+		# Set delay tempo
+		self.tempo = 0.15
+		# tempo = 1
+
+		# Setup Notes
+		self.notes = {}
+		self.notes["pause"] = 0
+		self.notes["c"] = 1
+		self.notes["c#"] = 2
+		self.notes["d"] = 3
+		self.notes["d#"] = 4
+		self.notes["e"] = 5
+		self.notes["f"] = 6
+		self.notes["f#"] = 7
+		self.notes["g"] = 8
+		self.notes["g#"] = 9
+		self.notes["a"] = 10
+		self.notes["a#"] = 11
+		self.notes["b"] = 12
+
+		# Note Types
+		self.note_types = {}
+		self.note_types["sixteenth"] = 50
+		self.note_types["eigth"] = 100
+		self.note_types["dotted_eigth"] = 150
+		self.note_types["quarter"] = 200
+		self.note_types["half"] = 400
+		self.note_types["whole"] = 800
+		self.note_types["triplet"] = 60
+	def play_note( self, octave, note, note_type ):
+		"""Play a note at a certain octave by calculating the frequency of the sound it would represent on the motherboard's speaker."""
+
+		# Match the note and note type to the dictionaries
+		note = self.notes[note]
+		note_type = self.note_types[note_type]
+
+		# Chill for a bit if it's a pause
+		if not note:
+			time.sleep(note_type/1000)
+			return
+
+		# Calculate C for the provided octave
+		frequency = 32.7032 * (2**octave)
+
+		# Calculate the frequency of the given note
+		frequency *= 1.059463094**note
+
+		# Beep it up
+		try:
+			winsound.Beep(int(frequency), note_type)
+			# Delay after the beep so it doesn't all run together
+			time.sleep(self.tempo)
+		except Exception as e:
+			pass
+
+	def simple_beep(self):
+		oct = 3
+		self.play_note(oct, 'g', 'half')
+
+	def simple_beep2(self):
+		oct = 3
+		self.play_note(oct, 'e', 'half')
 
 
 class CLIP:
@@ -250,11 +447,364 @@ class CLIP:
 		text=_str.cleanBE( text, '\t' )
 		text=_str.cleanBE( text, ' ' )
 		text = text.replace('\r','')
+
+		text=_str.cleanBE( text, '\n' )
+		text=_str.cleanBE( text, '\t' )
+		text=_str.cleanBE( text, ' ' )
+		text=_str.cleanBE( text, '\n' )
+		text=_str.cleanBE( text, '\t' )
+		text=_str.cleanBE( text, ' ' )
+		if text.startswith('{') or text.startswith('['):
+			try:
+				data = simplejson.load(text)
+			except Exception as e:
+				data = eval(text)
+			result = simplejson.dumps(data, sort_keys=False)
+			_copy.imp.copy( result, p=0 )
+			return None
 		text = text.replace('\n',', ')
+		text = text.replace('\r','')
+		# text = text.replace('\n','')
+		# text = text.replace(', ',',')
+		# text = text.replace(',','\n')
+		_copy.imp.copy( text, p=0 )
+
 		text=_str.replaceDuplicate( text, ' ' )
 		_copy.imp.copy( text, p=0 )
 
+	def prefix(self):
+		_paste = _.regImp( __.appReg, '-paste' )
+		_copy = _.regImp( __.appReg, '-copy' )
+		text = _paste.imp.paste()
+		text = text.replace( '\n', '' )
+		text = text.replace( '\r', '' )
+		text = text.replace( '\t', '' )
+		text = _str.cleanBE( text, ' ' )
+
+
+		keyboard.press(Key.esc)
+		keyboard.release(Key.esc)
+		keyboard.press(Key.esc)
+		keyboard.release(Key.esc)
+		with keyboard.pressed(Key.ctrl):
+			keyboard.press('x')
+			keyboard.release('x')
+
+		time.sleep(.5)
+		lines = _paste.imp.paste()
+		lines=_str.cleanBE( lines, '\n' )
+		lines = lines.replace('\r','')
+
+		result=''
+		for line in lines.split('\n'):
+			if len(line.replace(' ','').replace('\t','')):
+				result += text + ' ' + line + '\n'
+			else:
+				result += '\n'
+				
+		result=_str.cleanBE( result, '\n' )
+		_copy.imp.copy( result, p=0 )
+		time.sleep(1)
+		with keyboard.pressed(Key.ctrl):
+			keyboard.press('v')
+			keyboard.release('v')
+
+
+	def suffix(self):
+		_paste = _.regImp( __.appReg, '-paste' )
+		_copy = _.regImp( __.appReg, '-copy' )
+		text = _paste.imp.paste()
+		text = text.replace( '\n', '' )
+		text = text.replace( '\r', '' )
+		text = text.replace( '\t', '' )
+		text = _str.cleanBE( text, ' ' )
+		keyboard.press(Key.esc)
+		keyboard.release(Key.esc)
+		keyboard.press(Key.esc)
+		keyboard.release(Key.esc)
+		with keyboard.pressed(Key.ctrl):
+			keyboard.press('x')
+			keyboard.release('x')
+
+		time.sleep(.5)
+		lines = _paste.imp.paste()
+		lines=_str.cleanBE( lines, '\n' )
+		lines = lines.replace('\r','')
+		
+		project = _.genUUID()
+		_.fields.register( project, 'single' )
+		for line in lines.split('\n'):
+			if len(line.replace(' ','').replace('\t','')):
+				_.fields.register( project, 'single', line )
+
+		result=''
+		for line in lines.split('\n'):
+			if len(line.replace(' ','').replace('\t','')):
+				result += _.fields.value( project, 'single', line ) + ' ' + text + '\n'
+			else:
+				result += '\n'
+		
+		result=_str.cleanBE( result, '\n' )
+		_copy.imp.copy( result, p=0 )
+		time.sleep(1)
+		with keyboard.pressed(Key.ctrl):
+			keyboard.press('v')
+			keyboard.release('v')
+
+
+	def number(self):
+		_paste = _.regImp( __.appReg, '-paste' )
+		_copy = _.regImp( __.appReg, '-copy' )
+		text = _paste.imp.paste()
+		# text=_str.replaceDuplicate( text, '\n' )
+		text=_str.cleanBE( text, '\n' )
+		text=_str.cleanBE( text, '\t' )
+		text=_str.cleanBE( text, ' ' )
+		text = text.replace('\r','')
+		result=''
+		i_max=0
+		for line in text.split('\n'):
+			if len(line.replace(' ','').replace('\t','')):
+				i_max+=1
+		
+		i_char = len(str(i_max))
+		i=0
+		for line in text.split('\n'):
+			if len(line.replace(' ','').replace('\t','')):
+				i+=1
+				if i_char == 4:
+					if len(str(i)) == 4:
+						result += str(i)+' '+line+'\n'
+					elif len(str(i)) == 3:
+						result += str(i)+'  '+line+'\n'
+					elif len(str(i)) == 2:
+						result += str(i)+'   '+line+'\n'
+					elif len(str(i)) == 1:
+						result += str(i)+'    '+line+'\n'
+				if i_char == 3:
+					if len(str(i)) == 3:
+						result += str(i)+' '+line+'\n'
+					elif len(str(i)) == 2:
+						result += str(i)+'  '+line+'\n'
+					elif len(str(i)) == 1:
+						result += str(i)+'   '+line+'\n'
+				if i_char == 2:
+					if len(str(i)) == 2:
+						result += str(i)+' '+line+'\n'
+					elif len(str(i)) == 1:
+						result += str(i)+'  '+line+'\n'
+				if i_char == 1:
+					result += str(i)+' '+line+'\n'
+
+			else:
+				result += '\n'
+
+
+		result=_str.cleanBE( result, '\n' )
+		# text=_str.replaceDuplicate( result, ' ' )
+		_copy.imp.copy( result, p=0 )
+
+	def number_a(self):
+		_paste = _.regImp( __.appReg, '-paste' )
+		_copy = _.regImp( __.appReg, '-copy' )
+		text = _paste.imp.paste()
+		# text=_str.replaceDuplicate( text, '\n' )
+		text=_str.cleanBE( text, '\n' )
+		text=_str.cleanBE( text, '\t' )
+		text=_str.cleanBE( text, ' ' )
+		text = text.replace('\r','')
+		result=''
+		i_max=0
+		for line in text.split('\n'):
+			if len(line.replace(' ','').replace('\t','')):
+				i_max+=1
+		
+		i_char = len(str(i_max))
+		i=0
+		for line in text.split('\n'):
+			i+=1
+			if i_char == 4:
+				if len(str(i)) == 4:
+					result += str(i)+' '+line+'\n'
+				elif len(str(i)) == 3:
+					result += str(i)+'  '+line+'\n'
+				elif len(str(i)) == 2:
+					result += str(i)+'   '+line+'\n'
+				elif len(str(i)) == 1:
+					result += str(i)+'    '+line+'\n'
+			if i_char == 3:
+				if len(str(i)) == 3:
+					result += str(i)+' '+line+'\n'
+				elif len(str(i)) == 2:
+					result += str(i)+'  '+line+'\n'
+				elif len(str(i)) == 1:
+					result += str(i)+'   '+line+'\n'
+			if i_char == 2:
+				if len(str(i)) == 2:
+					result += str(i)+' '+line+'\n'
+				elif len(str(i)) == 1:
+					result += str(i)+'  '+line+'\n'
+			if i_char == 1:
+				result += str(i)+' '+line+'\n'
+
+
+
+		result=_str.cleanBE( result, '\n' )
+		# text=_str.replaceDuplicate( result, ' ' )
+		_copy.imp.copy( result, p=0 )
+
+	def number_b(self):
+		_paste = _.regImp( __.appReg, '-paste' )
+		_copy = _.regImp( __.appReg, '-copy' )
+		text = _paste.imp.paste()
+		# text=_str.replaceDuplicate( text, '\n' )
+		text=_str.cleanBE( text, '\n' )
+		text=_str.cleanBE( text, '\t' )
+		text=_str.cleanBE( text, ' ' )
+		text = text.replace('\r','')
+		result=''
+		i_max=0
+		for line in text.split('\n'):
+			if len(line.replace(' ','').replace('\t','')):
+				i_max+=1
+		
+		i_char = len(str(i_max))
+		i=0
+		for line in text.split('\n'):
+			line=_str.cleanBE( line, ' ' )
+			if len(line.replace(' ','').replace('\t','')):
+				i+=1
+				if i_char == 4:
+					if len(str(i)) == 4:
+						result += str(i)+' '+line+'\n'
+					elif len(str(i)) == 3:
+						result += str(i)+'  '+line+'\n'
+					elif len(str(i)) == 2:
+						result += str(i)+'   '+line+'\n'
+					elif len(str(i)) == 1:
+						result += str(i)+'    '+line+'\n'
+				if i_char == 3:
+					if len(str(i)) == 3:
+						result += str(i)+' '+line+'\n'
+					elif len(str(i)) == 2:
+						result += str(i)+'  '+line+'\n'
+					elif len(str(i)) == 1:
+						result += str(i)+'   '+line+'\n'
+				if i_char == 2:
+					if len(str(i)) == 2:
+						result += str(i)+' '+line+'\n'
+					elif len(str(i)) == 1:
+						result += str(i)+'  '+line+'\n'
+				if i_char == 1:
+					result += str(i)+' '+line+'\n'
+
+			else:
+				result += '\n'
+
+
+		result=_str.cleanBE( result, '\n' )
+		# text=_str.replaceDuplicate( result, ' ' )
+		_copy.imp.copy( result, p=0 )
+
+
+
+	def number_ba(self):
+		_paste = _.regImp( __.appReg, '-paste' )
+		_copy = _.regImp( __.appReg, '-copy' )
+		text = _paste.imp.paste()
+		# text=_str.replaceDuplicate( text, '\n' )
+		text=_str.cleanBE( text, '\n' )
+		text=_str.cleanBE( text, '\t' )
+		text=_str.cleanBE( text, ' ' )
+		text = text.replace('\r','')
+		result=''
+		i_max=0
+		for line in text.split('\n'):
+			if len(line.replace(' ','').replace('\t','')):
+				i_max+=1
+		
+		i_char = len(str(i_max))
+		i=0
+		for line in text.split('\n'):
+			line=_str.cleanBE( line, ' ' )
+			i+=1
+			if i_char == 4:
+				if len(str(i)) == 4:
+					result += str(i)+' '+line+'\n'
+				elif len(str(i)) == 3:
+					result += str(i)+'  '+line+'\n'
+				elif len(str(i)) == 2:
+					result += str(i)+'   '+line+'\n'
+				elif len(str(i)) == 1:
+					result += str(i)+'    '+line+'\n'
+			if i_char == 3:
+				if len(str(i)) == 3:
+					result += str(i)+' '+line+'\n'
+				elif len(str(i)) == 2:
+					result += str(i)+'  '+line+'\n'
+				elif len(str(i)) == 1:
+					result += str(i)+'   '+line+'\n'
+			if i_char == 2:
+				if len(str(i)) == 2:
+					result += str(i)+' '+line+'\n'
+				elif len(str(i)) == 1:
+					result += str(i)+'  '+line+'\n'
+			if i_char == 1:
+				result += str(i)+' '+line+'\n'
+
+
+
+
+		result=_str.cleanBE( result, '\n' )
+		# text=_str.replaceDuplicate( result, ' ' )
+		_copy.imp.copy( result, p=0 )
+
+
+
 	def explode(self):
+		_paste = _.regImp( __.appReg, '-paste' )
+		_copy = _.regImp( __.appReg, '-copy' )
+		text = _paste.imp.paste()
+		text=_str.replaceDuplicate( text, ' ' )
+		text=_str.cleanBE( text, '\n' )
+		text=_str.cleanBE( text, '\t' )
+		text=_str.cleanBE( text, ' ' )
+		text=_str.cleanBE( text, '\n' )
+		text=_str.cleanBE( text, '\t' )
+		text=_str.cleanBE( text, ' ' )
+		text = text.replace('\r','')
+		text = text.replace('\n','')
+		if text.startswith('{') or text.startswith('['):
+			try:
+				data = simplejson.load(text)
+			except Exception as e:
+				data = eval(text)
+			result = simplejson.dumps(data, indent=4, sort_keys=False)
+			_copy.imp.copy( result, p=0 )
+			return None
+		text = text.replace(', ',',')
+		text = text.replace(',','\n')
+		_copy.imp.copy( text, p=0 )
+
+	def math(self):
+		_paste = _.regImp( __.appReg, '-paste' )
+		_copy = _.regImp( __.appReg, '-copy' )
+		text = _paste.imp.paste()
+		text=_str.replaceDuplicate( text, ' ' )
+		text = text.replace('\t','')
+		text = text.replace('\r','')
+		text = text.replace('\n','')
+		text = text.replace('x','*')
+		text = text.replace('X','*')
+		string = ''
+		for x in text:
+			if x in '0123456789/*-+()':
+				string +=x
+		result = eval(string)
+		# result = sum(map(int, re.findall(r'[+-]?\d+', string)))
+		_copy.imp.copy( str(result), p=0 )
+
+	def dic(self):
 		_paste = _.regImp( __.appReg, '-paste' )
 		_copy = _.regImp( __.appReg, '-copy' )
 		text = _paste.imp.paste()
@@ -265,9 +815,26 @@ class CLIP:
 		text = text.replace('\r','')
 		text = text.replace('\n','')
 		text = text.replace(', ',',')
-		text = text.replace(',','\n')
-		_copy.imp.copy( text, p=0 )
+		text = text.replace(' ,',',')
+		xXx = text.split(',')
+		group=[]
+		for x in xXx:
+			group.append(x+':'+x)
+		result = '{'+','.join(group)+'}'
+		_copy.imp.copy( result, p=0 )
 
+	def add_slash(self):
+		_paste = _.regImp( __.appReg, '-paste' )
+		_copy = _.regImp( __.appReg, '-copy' )
+		text = _paste.imp.paste()
+		text = text.replace('\r','')
+		text=_str.cleanBE( text, '\n' )
+		text=_str.replaceDuplicate( text, '\n' )
+		newText = ''
+		for line in text.split('\n'):
+			newText += line + '\\\n'
+
+		_copy.imp.copy( newText, p=0 )
 
 
 	def del_activate(self):
@@ -475,10 +1042,39 @@ def action():
 		return None
 
 	load()
-	with Listener(on_press=Hotkeys.log_keystroke) as l:
+	print( 'EXIT:   Win + esc' )
+	with Listener(on_press=Hotkeys.process_keystroke,on_release=Hotkeys.release_key) as l:
 		l.join()
 
 
+ctrl_chars = {
+	'a': '\x01',
+	'b': '\x02',
+	'c': '\x03',
+	'd': '\x04',
+	'e': '\x05',
+	'f': '\x06',
+	'g': '\x07',
+	'h': '\x08',
+	'i': '\t',
+	'j': '\n',
+	'k': '\x0b',
+	'l': '\x0c',
+	'm': '\r',
+	'n': '\x0e',
+	'o': '\x0f',
+	'p': '\x10',
+	'q': '\x11',
+	'r': '\x12',
+	's': '\x13',
+	't': '\x14',
+	'u': '\x15',
+	'v': '\x16',
+	'w': '\x17',
+	'x': '\x18',
+	'y': '\x19',
+	'z': '\x1a',
+}
 
 
 def load():
@@ -489,13 +1085,27 @@ def load():
 	log = []
 	table = {
 				'EXIT': { 'raw': [ '22','Key.esc,3' ], 'do': 'sys.exit()' },
+				'EXIT2': { 'raw': [ 'Key.esc','Key.cmd' ], 'do': 'sys.exit()' },
 				'tester': { 'raw': [ 'Key.ctrl,3', 'test' ], 'do': 'print("works!!")' },
 				'win-path': { 'raw': [ 'Key.ctrl,2', 'win' ], 'do': 'Clip.win_path()' },
 				'mom': { 'raw': [ 'Key.ctrl,2', 'mom' ], 'do': 'Typing.ty("your_mother()",back=1)' },
 				'pre-clean': { 'raw': [ 'Key.ctrl,2', 'Key.space', 'del' ], 'do': 'Clip.del_activate()' },
-				'implode': { 'raw': [ 'Key.ctrl,2', 'Key.space', 'imp' ], 'do': 'Clip.implode()' },
-				'explode': { 'raw': [ 'Key.ctrl,2', 'Key.space', 'exp' ], 'do': 'Clip.explode()' },
-				'reload': { 'raw': [ 'Key.ctrl', 'Key.shift', 'Key.space' ], 'do': 'load()' },
+				'implode': { 'raw': [ 'Key.ctrl,2', 'Key.space', 'i' ], 'do': 'Clip.implode()' },
+				'implode2': { 'raw': [ 'Key.alt', 'Key.cmd', 'i' ], 'do': 'Clip.implode()' },
+				'number': { 'raw': [ 'Key.alt', 'Key.cmd', 'n' ], 'do': 'Clip.number()' },
+				'number-a': { 'raw': [ 'Key.alt', 'Key.cmd', 'n', 'a' ], 'do': 'Clip.number_a()' },
+				'number-b': { 'raw': [ 'Key.alt', 'Key.cmd', 'n', 'b' ], 'do': 'Clip.number_b()' },
+				'number-ba': { 'raw': [ 'Key.alt', 'Key.cmd', 'n', 'b', 'a' ], 'do': 'Clip.number_ba()' },
+				'explode': { 'raw': [ 'Key.ctrl,2', 'Key.space', 'x' ], 'do': 'Clip.explode()' },
+				'explode2': { 'raw': [ 'Key.alt', 'Key.cmd', 'x' ], 'do': 'Clip.explode()' },
+				'reload': { 'raw': [ 'Key.ctrl', 'Key.shift', 'r' ], 'do': 'load()' },
+				'add-slash': { 'raw': [ 'Key.shift,2',  '\\' ], 'do': 'Clip.add_slash()' },
+				'comma-to-js-dic': { 'raw': [ 'Key.ctrl,2', 'Key.space', 'dic' ], 'do': 'Clip.dic()' },
+				'clip-math': { 'raw': [ 'Key.alt', 'Key.cmd', 'M' ], 'do': 'Clip.math()' },
+				'prefix': { 'raw': [ 'Key.alt', 'Key.cmd', 'p' ], 'do': 'Clip.prefix()' },
+				'suffix': { 'raw': [ 'Key.alt', 'Key.cmd', 's' ], 'do': 'Clip.suffix()' },
+
+				'toggle-chars': { 'raw': [ 'Key.alt', 'Key.cmd', 't', 'c' ], 'do': 'toggle_chars()' },
 
 	}
 	auto_text = _.getTableDB('hotkeys-AutoText.dex')
@@ -504,13 +1114,21 @@ def load():
 	Loader.flip_table_test()
 	# _.pv(table)
 
+def toggle_chars():
+	global print_chars
+	if print_chars:
+		print_chars = False
+	else:
+		print_chars = True
+
 Hotkeys=HOTKEYS()
 Typing=TYPING()
 Loader=LOADER()
 Clip=CLIP()
-
-
-from threading import Timer
+beepy=BEEPS()
+key_set = set()
+post_do = { 'status': 0 }
+print_chars = False
 
 ########################################################################################
 if __name__ == '__main__':
