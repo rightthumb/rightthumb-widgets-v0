@@ -10,5 +10,6 @@ rem    - Scott Taylor Reph, RightThumb.com
 rem ###########################################################################
 rem ## {C3P0D40fAe8B} ##
 
-CALL p imdb -case -ep -ent %* 
-
+CALL p imdb -nolines -case -ep -ent %* 
+rem echo.
+rem echo ee how i met your mother -length 22 -on 8:18

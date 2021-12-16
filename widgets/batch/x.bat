@@ -10,6 +10,11 @@ rem    - Scott Taylor Reph, RightThumb.com
 rem ###########################################################################
 rem ## {C3P0D40fAe8B} ##
 
+echo.
+echo Reminder run   r.t   once a week.
+echo.
+
+call p fileBackup -f %wprofile%\projects\project-log.txt
 
 SET ORIGINAL_Session_ID=%Session_ID%
 

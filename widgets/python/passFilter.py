@@ -153,7 +153,7 @@ _.postLoad( __file__ )
 # START
 
 def process( row ):
-	if '-password' in row or '-pass' in row.lower() or '-pw' in row.lower() or 'crypt' in row.lower():
+	if '-password' in row or '-pass' in row.lower() or '-pw' in row.lower() or 'crypt' in row.lower() or '-en' in row.lower() or '-de' in row.lower():
 		parts = row.split(' ')
 		isNext = False
 		newRow = []
@@ -164,7 +164,7 @@ def process( row ):
 				if isNext:
 					part = '******'
 
-			if '-pass' in part.lower() or '-pw' in part.lower() or '-en' in part.lower() or '-de' in part.lower():
+			if '-password' in part.lower() or '-pass' in part.lower() or '-pw' in part.lower() or '-en' in part.lower() or '-de' in part.lower():
 				isNext = True
 
 			newRow.append( part )

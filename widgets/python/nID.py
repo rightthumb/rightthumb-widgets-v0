@@ -9,6 +9,7 @@
 #    - Scott Taylor Reph, RightThumb.com
 # ###########################################################################
 # ## {C3P0D40fAe8B} ##
+
 ##################################################
 import os, sys, time
 ##################################################
@@ -30,19 +31,29 @@ import _rightThumb._string as _str
 ##################################################
 
 def appSwitches():
-	pass
+	_.switches.register( 'Password', '-password' )
+	_.switches.register( 'Encrypt', '-en' )
+	_.switches.register( 'Decrypt', '-de' )
 
-#   finds the file in probable locations
-#   and 
-#       if  _.autoBackupData = True
-#       and __.releaseAcquiredData = True
-#           GET EPOCH FROM: hosts/hostname/logs/apps/execution_receipt-app_name-epoch.json
-#       you can run apps on usb at a clients office
-#           when you get home run: p app -loadepoch epoch 
-#               backed up
-#                   pipe
-#                   files
-#                   tables
+	pass
+	### EXAMPLE: START
+	# _.switches.register( 'Files', '-f,-file,-files','file.txt', isData='glob,name,data,clean', description='Files' )
+	### EXAMPLE: END
+
+### EXAMPLE: START
+# _.switches.trigger( 'Files', _.myFileLocations, vs=True )
+# 	finds the file in probable locations
+# 	and 
+# 		if  _.autoBackupData = True
+# 		and __.releaseAcquiredData = True
+# 			GET EPOCH FROM: hosts/hostname/logs/apps/execution_receipt-app_name-epoch.json
+# 		you can run apps on usb at a clients office
+# 			when you get home run: p app -loadepoch epoch 
+# 				backed up
+# 					pipe
+# 					files
+# 					tables
+### EXAMPLE: END
 _.autoBackupData = __.setting('receipt-log')
 __.releaseAcquiredData = __.setting('receipt-file')
 __.myFileLocations_SKIP_VALIDATION = False
@@ -56,12 +67,11 @@ __.switch_raw = []
 
 
 _.appInfo[focus()] = {
-	'file': 'send-gmail.py',
+	'file': 'thisApp.py',
 	'liveAppName': __.thisApp( __file__ ),
- 	'description': 'send email with gmail',
+	'description': 'Changes the world',
 	'categories': [
-						'gmail',
-						'email',
+						'DEFAULT',
 				],
 	'usage': [
 						# 'epy another',
@@ -77,19 +87,19 @@ _.appInfo[focus()] = {
 						# '',
 	],
 	'examples': [
-						_.hp('p send-gmail'),
+						_.hp('p thisApp -file file.txt'),
 						'',
 	],
 	'columns': [
-					   # { 'name': 'name', 'abbreviation': 'n' },
-					   # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+				       # { 'name': 'name', 'abbreviation': 'n' },
+				       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-					   # 'this',
-					   # 'app',
+				       # 'this',
+				       # 'app',
 	],
 	'notes': [
-					   # {},
+				       # {},
 	],
 }
 
@@ -103,7 +113,11 @@ _.appData[focus()] = {
 					'table': {'sent': [], 'received': [] }, 
 		},
 	}
+### EXAMPLE: START
+# _.appInfo[focus()]['examples'].append( 'p thisApp -file file.txt' )
 
+# _.appInfo[focus()]['columns'].append( {'name': 'name', 'abbreviation': 'n'} )
+### EXAMPLE: END
 
 
 def registerSwitches( argvProcessForce=False ):
@@ -127,7 +141,12 @@ def registerSwitches( argvProcessForce=False ):
 	_.switches.trigger( 'URL', _.urlTrigger )
 	_.switches.trigger( 'Ago', _.timeAgo )
 	_.switches.trigger( 'Duration', _.timeFuture )
-	# _.switches.trigger( 'Files',_.inRelevantFolder )  
+	### EXAMPLE: START
+	# _.switches.trigger( 'Files',_.inRelevantFolder )	
+	# _.switches.trigger( 'Watched', _.txt2Date )
+	# _.switches.trigger( 'Input',_.formatColumns )
+	# _.switches.trigger( 'Franchise',_.triggerSpace )
+	### EXAMPLE: END
 	
 	_.defaultScriptTriggers()
 	_.switches.process()
@@ -155,72 +174,62 @@ if __name__ == '__main__':
 _.postLoad( __file__ )
 
 ########################################################################################
-#   if os.path.isdir( row ):
-#   if os.path.isfile( row ):
-#   os.path.abspath(path)
-#                                                   if platform.system() == 'Windows':
+### EXAMPLE: START
+# data = _.tables.returnSorted( 'data', 'd.timestamp', data )
+# _.switches.fieldSet( 'Long', 'active', True )
+# _.tables.register( 'data', table )
+# _.tables.fieldProfileSet('data','timestamp','trigger',_.friendlyDate)
+# _.tables.fieldProfileSet('data','phone,email,address','alignment','center')
+# _.tables.print( 'data', 'name' )
+# _.tables.print( 'data', ','.join(_.switches.values('Column')) )
+# _.switches.isActive('Files')
+# p = _.getText( _v.pips, raw=True, clean=True ).split( '\n' )
+# os.system( '"' + do + '"' )
+# _.setPipeData( os.listdir( os.getcwd() ), focus() )
+# _.showLine( item )
+# 	if os.path.isdir( row ):
+# 	if os.path.isfile( row ):
+#	os.path.abspath(path)
+# __.appRegPipe    ( pipe data registerd focus(__.appReg) set by _.myFileLocations {if imported} , default is None )
+# for i,row in enumerate(_.t( _.appData[__.appReg]['pipe'] )):
+# for i,row in _.e( _.isData(r=1) ):
+# date = _.friendlyDate( theDate )
+# _.addComma()
+# 													if platform.system() == 'Windows':
+### EXAMPLE: END
 ########################################################################################
 # START
 
 
 
 def action():
-	import smtplib
+	load()
 
-	gmail_user = 'scott.reph@gmail.com'
-	gmail_password = _keychain.imp.key('gmail')
-	sent_from = gmail_user
-	to = ['scott.reph@gmail.com', 'scott.reph@eyeformeta.com']
-	subject = 'OMG Super Important Message'
-	body = 'Hey, what\'s up?\n\n- You'
+	if _.switches.isActive('Encrypt'):
+		x = _nID.mini.gen( _.switches.values('Encrypt')[0] )
+		print(x)
 
-
-
-	# list of email_id to send the mail
-	# li = ["xxxxx@gmail.com", "yyyyy@gmail.com"]
-	# try:
-	# 	for dest in to:
-	# 	    s = smtplib.SMTP('smtp.gmail.com', 587)
-	# 	    s.starttls()
-	# 	    s.login(gmail_user, gmail_password)
-	# 	    message = "Message_you_need_to_send"
-	# 	    s.sendmail(sent_from, dest, message)
-	# 	    s.quit()
-		
-	# except Exception as e:
-	# 	_.cp('Error')
-	# 	print(e)
+	if _.switches.isActive('Decrypt'):
+		x = _nID.mini.resolve( _.switches.values('Decrypt')[0] )
+		print(x)
 
 
 
-	email_text = """\
-	From: %s
-	To: %s
-	Subject: %s
 
-	%s
-	""" % (sent_from, ", ".join(to), subject, body)
+def load():
+	_nID.mini.password( _keychain.imp.key('nID') )
+	if _.switches.isActive('Password'):
+		_nID.mini.password( _.switches.values('Password')[0] )
+	
 
-	try:
-		server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
-		server.ehlo()
-		server.login(gmail_user, gmail_password)
-		server.sendmail(sent_from, to, email_text)
-		server.close()
-
-		print('Email sent!')
-	except Exception as e:
-		print('Something went wrong...')
-		print(e)
-
-
+import _rightThumb._nID as _nID
 _keychain = _.regImp( __.appReg, 'keychain' )
-
 
 ########################################################################################
 if __name__ == '__main__':
 	action()
 	__.isExit()
+
 
 
 

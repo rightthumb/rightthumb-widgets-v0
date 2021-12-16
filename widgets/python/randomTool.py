@@ -34,6 +34,7 @@ import _rightThumb._string as _str
 
 
 def appSwitches():
+	_.switches.register( 'Between', '-b', '10-20 6' )
 	_.switches.register( 'Case', '-case' )
 	_.switches.register( 'Int', '-int' )
 	_.switches.register( 'Text', '-text' )
@@ -406,6 +407,18 @@ def int_zero(s, e=None):
 	return ran
 
 def action():
+	if _.switches.isActive('Between'):
+		if len(_.switches.values('Between')) == 1: 
+			x = random.randint(int(_.switches.values('Between')[0].split('-')[0]), int(_.switches.values('Between')[0].split('-')[1]))
+			print(x)
+		else:
+			i=0
+			e=int(_.switches.values('Between')[1])
+			while not i == e:
+				i+=1
+				x = random.randint(int(_.switches.values('Between')[0].split('-')[0]), int(_.switches.values('Between')[0].split('-')[1]))
+				print(x)	
+		return None
 
 	# print( percent_of( 100, 5 ) )
 	# print( percent_of( 1616348027, 5 ) )

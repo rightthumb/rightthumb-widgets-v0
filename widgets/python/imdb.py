@@ -62,6 +62,7 @@ def appSwitches():
 	_.switches.register('QuickInfo', '-qi')
 	_.switches.register('Score', '-score')
 	_.switches.register('Episode', '-ep,-episode')
+	
 	_.switches.register('InSeason', '-is,-inseason')
 	_.switches.register('SeasonStarts', '-ss,-seasonstarts','"16 July 2017" dmy')
 
@@ -94,6 +95,9 @@ def appSwitches():
 	_.switches.register('xRef-Page-Threaded', '-pt,-threaded,-pthread')
 
 	_.switches.register('JustIDs', '-ids')
+
+	_.switches.register('EpisodeLength', '-length')
+	_.switches.register('OnEpisode', '-on')
 
 	_.switches.trigger('Watched', _.txt2Date)
 	
@@ -210,6 +214,8 @@ _.appInfo[focus()]['examples'].append('p imdb -case -ep  -live save -simp -ent s
 _.appInfo[focus()]['examples'].append('p imdb -case -ep  -live save -ent supernatural')
 _.appInfo[focus()]['examples'].append('')
 _.appInfo[focus()]['examples'].append('ee fringe + neither')
+_.appInfo[focus()]['examples'].append('')
+_.appInfo[focus()]['examples'].append('ee how i met your mother -length 22 -on 8:18')
 _.appInfo[focus()]['examples'].append('')
 
 
@@ -466,8 +472,8 @@ def buildUrlList(url,info=False):
 					if not thisID in buildUrlListDuplicate:
 						buildUrlListDuplicate.append(thisID)
 						# if 'tt1375666' in thisID:
-						# 	print( 'Error:', url )
-						# 	__.xit()
+						#   print( 'Error:', url )
+						#   __.xit()
 						franchiseList.append(thisID)
 					iT += 1
 		except Exception as e:
@@ -510,8 +516,8 @@ def buildUrlList(url,info=False):
 					# print(link)
 					for xx in buildUrlList('http://www.imdb.com'+link,info):
 						# if 'tt1375666' in xx:
-						# 	print( 'Error:', url )
-						# 	__.xit()
+						#   print( 'Error:', url )
+						#   __.xit()
 						franchiseList.append(xx)
 	except Exception as e:
 		# print('buildUrlList: for links(a) & .pagination-range')
@@ -636,15 +642,15 @@ def lookupPerson(url):
 						# good = 0
 						# found = False
 						# for x in year1:
-						# 	good += 1
-						# 	if not x in has:
-						# 		good = 0
-						# 		year1_temp = ''
-						# 	else:
-						# 		year1_temp += x
-						# 		good += 1
-						# 		if good == 4:
-						# 			break
+						#   good += 1
+						#   if not x in has:
+						#       good = 0
+						#       year1_temp = ''
+						#   else:
+						#       year1_temp += x
+						#       good += 1
+						#       if good == 4:
+						#           break
 						# year1 = year1_temp
 
 
@@ -823,7 +829,7 @@ def lookupPerson(url):
 			print()
 			print()
 
-		###################################################################################################	
+		################################################################################################### 
 		if selection == 'sd':
 			i = 0
 			for m in movies:
@@ -831,10 +837,10 @@ def lookupPerson(url):
 				status = str(i) + ' of ' +  str(len(movies))
 				_.updateLine(status)
 				try:
-				    tempXX = m['description']
-				    hasDescription = True
+					tempXX = m['description']
+					hasDescription = True
 				except KeyError:
-				    hasDescription = False
+					hasDescription = False
 				if hasDescription:
 					description = m['description']
 				else:
@@ -891,10 +897,10 @@ def lookupPerson(url):
 				status = str(i) + ' of ' +  str(len(movies))
 				_.updateLine(status)
 				try:
-				    tempXX = m['description']
-				    hasDescription = True
+					tempXX = m['description']
+					hasDescription = True
 				except KeyError:
-				    hasDescription = False
+					hasDescription = False
 				if hasDescription:
 					description = m['description']
 					description = description.replace('at this time','')
@@ -1059,8 +1065,8 @@ def getIdFromUrl(url):
 	urls = url.split('/')
 	# i=0
 	# for u in urls:
-	# 	print(i,u)
-	# 	i+=1
+	#   print(i,u)
+	#   i+=1
 	# __.xit()
 
 
@@ -1088,11 +1094,11 @@ def buildPeople(rows,related=False):
 	# found = False
 	# try:
 		
-	# 		for peeps1 in allPeople:
-	# 			if peeps0['id'] == peeps1['id']:
-	# 				found = True
+	#       for peeps1 in allPeople:
+	#           if peeps0['id'] == peeps1['id']:
+	#               found = True
 	# except Exception as e:
-	# 	pass
+	#   pass
 
 	# if not found:
 	# print(rows)
@@ -1289,7 +1295,7 @@ def cleanupString(string,beforeAfter=True):
 	string = printClean( string )
 	string = _str.cleanBE(string,' ')
 	# if string == 'b':
-	# 	string = ''
+	#   string = ''
 	return string
 def cleanupString1(string):
 	for xyz in __.imdb_replace:
@@ -1312,7 +1318,7 @@ def cleanupString1(string):
 	string = printClean( string )
 	string = _str.cleanBE(string,' ')
 	# if string == 'b':
-	# 	string = ''
+	#   string = ''
 	return string
 def lookupMovie(url):
 
@@ -1364,7 +1370,7 @@ def lookupMovie(url):
 			pass
 	
 	# for ty in movieYear:
-	# 	print(cleanupString(ty.text_content(),False))
+	#   print(cleanupString(ty.text_content(),False))
 	print('Processing', theYear, theTitle, '...')
 	theYearThis = theYear
 	theTitleThis = theTitle
@@ -1424,21 +1430,21 @@ def lookupMovie(url):
 		# # props = e.cssselect('.itemprop')
 		# i = 0
 		# for p in props:
-		# 	if i == 0:
-		# 		link = ''
-		# 		try:
-		# 			links = p.cssselect('a')
-		# 			link0 = str(links[0].attrib['href'])
-		# 			link = 'http://www.imdb.com' + extractUrl(link0) + '?ref_=ttfc_fc_cl_t13'
-		# 			# print(link)
-		# 		except Exception as ee:
-		# 			pass
-		# 		person = p.text_content()
-		# 		person = cleanupString(person)
-		# 		# print(people,person,link,character)
-		# 		people = registerPerson(people,person,link,character)
-		# 		people2.append({'name': person, 'link': link, 'character': character})
-		# 	i += 1
+		#   if i == 0:
+		#       link = ''
+		#       try:
+		#           links = p.cssselect('a')
+		#           link0 = str(links[0].attrib['href'])
+		#           link = 'http://www.imdb.com' + extractUrl(link0) + '?ref_=ttfc_fc_cl_t13'
+		#           # print(link)
+		#       except Exception as ee:
+		#           pass
+		#       person = p.text_content()
+		#       person = cleanupString(person)
+		#       # print(people,person,link,character)
+		#       people = registerPerson(people,person,link,character)
+		#       people2.append({'name': person, 'link': link, 'character': character})
+		#   i += 1
 	def doMore():
 		if _.switches.isActive('NoPrint') == False:
 			if platform.system() == 'Windows':
@@ -1596,7 +1602,7 @@ def lookupMovie(url):
 			print()
 
 
-		###################################################################################################	
+		################################################################################################### 
 		if selection == 'id':
 			print(getIdFromUrl(url))
 		if selection == 'xref':
@@ -1612,23 +1618,23 @@ def lookupMovie(url):
 
 
 				# try:
-				# 	newURL = 'http://www.imdb.com/title/' + getIdFromUrl(url) + '/parentalguide'
-				# 	page = requests.get(newURL)
-				# 	tree = html.fromstring(page.content)
-				# 	tr = tree.cssselect('#certifications-list')
-				# 	td = tr[0].cssselect('li')
-				# 	print()
-				# 	print('Rating:')
-				# 	for item in td:
-				# 		data0 = item.text_content()
-				# 		data1 = cleanupString(data0)
-				# 		# print(data1)
-				# 		if 'United' in data1 and 'States' in data1:
-				# 			data = data1.split(':')
-				# 			print('\t',data[1])
-				# 	print()
+				#   newURL = 'http://www.imdb.com/title/' + getIdFromUrl(url) + '/parentalguide'
+				#   page = requests.get(newURL)
+				#   tree = html.fromstring(page.content)
+				#   tr = tree.cssselect('#certifications-list')
+				#   td = tr[0].cssselect('li')
+				#   print()
+				#   print('Rating:')
+				#   for item in td:
+				#       data0 = item.text_content()
+				#       data1 = cleanupString(data0)
+				#       # print(data1)
+				#       if 'United' in data1 and 'States' in data1:
+				#           data = data1.split(':')
+				#           print('\t',data[1])
+				#   print()
 				# except Exception as e:
-				# 	print('Information unavailable')
+				#   print('Information unavailable')
 		if selection == 's' or selection == 'search':
 			personMovie = input('Person OR Movie - ')
 			searchFor = input('Search For - ')
@@ -1742,12 +1748,12 @@ def episodeLink(url):
 	# # theTitle = ''
 	# found = False
 	# for ta in theAlist:
-	# 	linkTest =ta.attrib['href']
-	# 	if '/title/tt' in linkTest and not found:
-	# 		found =True
-	# 		theTitle0 = cleanupString(ta.text_content())
-	# 		if len(theTitle0) > 1 and not 'External Sites' in theirName0 and not 'Full Cast' in theirName0:
-	# 			theTitle = theTitle0
+	#   linkTest =ta.attrib['href']
+	#   if '/title/tt' in linkTest and not found:
+	#       found =True
+	#       theTitle0 = cleanupString(ta.text_content())
+	#       if len(theTitle0) > 1 and not 'External Sites' in theirName0 and not 'Full Cast' in theirName0:
+	#           theTitle = theTitle0
 
 
 
@@ -2021,10 +2027,10 @@ def crossReferenceEpisodes(iDs):
 
 	makeSelection()
 	# for dt in dataTable:
-	# 	print(dt)
+	#   print(dt)
 	# dateList = sorted(dateList, key=itemgetter('started'))
 	# for s in shows:
-	# 	print(s['started'],s['title'])
+	#   print(s['started'],s['title'])
 def episodes(url,theYear='',theTitle=''):
 	if _.switches.isActive('BuildCrossRef'):
 		if platform.system() == 'Windows':
@@ -2053,7 +2059,7 @@ def episodes(url,theYear='',theTitle=''):
 	now = datetime.datetime.now()
 	today = now.strftime("%Y-%m-%d")
 	# if theYear[len(theYear)-1] == '-':
-	# 	print('still running')
+	#   print('still running')
 	seasonDataFile = 'imdb_season-data.json'
 	if len(seasonData) == 0:
 		seasonData = _.getTable(seasonDataFile)
@@ -2524,15 +2530,15 @@ def buildHallmarkTable():
 			except Exception as e:
 				pass
 		# for xx in getUrlList('https://www.google.com/search?q=imdb+'+franchise+'+series',franchise,franchiseOmit):
-		# 	try:
-		# 		theList.append(xx['link'])
-		# 	except Exception as e:
-		# 		pass
+		#   try:
+		#       theList.append(xx['link'])
+		#   except Exception as e:
+		#       pass
 		# for xx in getUrlList('https://www.google.com/search?q=imdb+'+franchise+'+tv+show',franchise,franchiseOmit):
-		# 	try:
-		# 		theList.append(xx['link'])
-		# 	except Exception as e:
-		# 		pass
+		#   try:
+		#       theList.append(xx['link'])
+		#   except Exception as e:
+		#       pass
 
 
 		for theYear in years:
@@ -2543,15 +2549,15 @@ def buildHallmarkTable():
 				except Exception as e:
 					pass
 			# for xx in getUrlList('https://www.google.com/search?q=imdb+'+franchise+'+'+theYear+'+series',franchise,franchiseOmit):
-			# 	try:
-			# 		theList.append(xx['link'])
-			# 	except Exception as e:
-			# 		pass
+			#   try:
+			#       theList.append(xx['link'])
+			#   except Exception as e:
+			#       pass
 			# for xx in getUrlList('https://www.google.com/search?q=imdb+'+franchise+'+'+theYear+'+tv+show',franchise,franchiseOmit):
-			# 	try:
-			# 		theList.append(xx['link'])
-			# 	except Exception as e:
-			# 		pass
+			#   try:
+			#       theList.append(xx['link'])
+			#   except Exception as e:
+			#       pass
 
 
 
@@ -2611,11 +2617,11 @@ def buildHallmarkTable2():
 				result = True
 		return result
 	# def duplicateCheck(name,year):
-	# 	result = False
-	# 	for hm in hallmark:
-	# 		if hm['name'] == name and hm['year'] == year:
-	# 			result = True
-	# 	return result
+	#   result = False
+	#   for hm in hallmark:
+	#       if hm['name'] == name and hm['year'] == year:
+	#           result = True
+	#   return result
 	
 
 	def buildTableH(url):
@@ -2674,15 +2680,15 @@ def buildHallmarkTable2():
 			except Exception as e:
 				pass
 		# for xx in getUrlList('https://www.google.com/search?q=imdb+'+franchise+'+series',franchise,franchiseOmit):
-		# 	try:
-		# 		theList.append(xx['link'])
-		# 	except Exception as e:
-		# 		pass
+		#   try:
+		#       theList.append(xx['link'])
+		#   except Exception as e:
+		#       pass
 		# for xx in getUrlList('https://www.google.com/search?q=imdb+'+franchise+'+tv+show',franchise,franchiseOmit):
-		# 	try:
-		# 		theList.append(xx['link'])
-		# 	except Exception as e:
-		# 		pass
+		#   try:
+		#       theList.append(xx['link'])
+		#   except Exception as e:
+		#       pass
 
 
 		for theYear in years:
@@ -2693,15 +2699,15 @@ def buildHallmarkTable2():
 				except Exception as e:
 					pass
 			# for xx in getUrlList('https://www.google.com/search?q=imdb+'+franchise+'+'+theYear+'+series',franchise,franchiseOmit):
-			# 	try:
-			# 		theList.append(xx['link'])
-			# 	except Exception as e:
-			# 		pass
+			#   try:
+			#       theList.append(xx['link'])
+			#   except Exception as e:
+			#       pass
 			# for xx in getUrlList('https://www.google.com/search?q=imdb+'+franchise+'+'+theYear+'+tv+show',franchise,franchiseOmit):
-			# 	try:
-			# 		theList.append(xx['link'])
-			# 	except Exception as e:
-			# 		pass
+			#   try:
+			#       theList.append(xx['link'])
+			#   except Exception as e:
+			#       pass
 
 
 
@@ -2817,37 +2823,37 @@ def getHallmarkPeople(url):
 
 
 # def getHallmarkPeople(url):
-# 	page = requests.get(url)
-# 	tree = html.fromstring(page.content)
-# 	cast = tree.cssselect('.cast_list')
-# 	tr = cast[0].cssselect('tr')
+#   page = requests.get(url)
+#   tree = html.fromstring(page.content)
+#   cast = tree.cssselect('.cast_list')
+#   tr = cast[0].cssselect('tr')
 
-# 	people = []
-# 	print(url)
-# 	print(len(tr))
-# 	for e in tr:
-# 		try:
-# 			char = e.cssselect('.character')
-# 			character = cleanupString(char[0].text_content())
-# 		except Exception as ee:
-# 			character = ''
+#   people = []
+#   print(url)
+#   print(len(tr))
+#   for e in tr:
+#       try:
+#           char = e.cssselect('.character')
+#           character = cleanupString(char[0].text_content())
+#       except Exception as ee:
+#           character = ''
 		
-# 		props = e.cssselect('.itemprop')
-# 		i = 0
-# 		print(len(props))
-# 		for p in props:
-# 			if i == 0:
-# 				link = ''
-# 				try:
-# 					links = p.cssselect('a')
-# 					link = str(links[0].attrib['href'])
-# 				except Exception as e:
-# 					pass
-# 				person = p.text_content()
-# 				person = cleanupString(person)
-# 				people = registerPerson(people,person,link,character)
-# 			i += 1
-# 	return people
+#       props = e.cssselect('.itemprop')
+#       i = 0
+#       print(len(props))
+#       for p in props:
+#           if i == 0:
+#               link = ''
+#               try:
+#                   links = p.cssselect('a')
+#                   link = str(links[0].attrib['href'])
+#               except Exception as e:
+#                   pass
+#               person = p.text_content()
+#               person = cleanupString(person)
+#               people = registerPerson(people,person,link,character)
+#           i += 1
+#   return people
 def google(searchFor,personMovie):
 	foundAlias = False
 	theAliasID_imdbID = theAliasID(searchFor,personMovie,'imdbID')
@@ -3104,7 +3110,7 @@ def googleID(searchFor,personMovie):
 				pass
 				# print( 'No Movie' )
 
-		if personMovie == 'person':	
+		if personMovie == 'person': 
 			result = getIdFromUrl(theList['people'][0]['link'])
 			addAliasID(searchFor,personMovie,'imdbID',result)
 
@@ -3188,7 +3194,7 @@ def googleID_OLD(searchFor,personMovie):
 				pass
 				# print( 'No Movie' )
 
-		if personMovie == 'person':	
+		if personMovie == 'person': 
 			result = getIdFromUrl(theList['people'][0]['link'])
 			addAliasID(searchFor,personMovie,'imdbID',result)
 
@@ -3985,11 +3991,11 @@ def kevinBacon(url):
 		# evenOdd0 = _.getTable('imdb_kevin_bacon_even.json')
 		# evenOdd1 = _.getTable('imdb_kevin_bacon_odd.json')
 		# if len(evenOdd0) > len(evenOdd1):
-		# 	even = evenOdd0
-		# 	odd = evenOdd1
+		#   even = evenOdd0
+		#   odd = evenOdd1
 		# else:
-		# 	odd = evenOdd0
-		# 	even = evenOdd1
+		#   odd = evenOdd0
+		#   even = evenOdd1
 		# evenOdd0 = []
 		# evenOdd1 = []
 		odd = []
@@ -4004,7 +4010,7 @@ def kevinBacon(url):
 	else:
 		even.append(autoLink(url))
 	# for ev in even:
-	# 	print(ev['name'])
+	#   print(ev['name'])
 	# __.xit()
 	iii = 0
 	j = 0
@@ -4108,7 +4114,7 @@ def kevinBacon(url):
 								found = True
 						except Exception as e:
 							pass
-			if not _.switches.value('KevinBacon') == 'build':			
+			if not _.switches.value('KevinBacon') == 'build':           
 				if found:
 					print()
 					print('Found Kevin Bakon')
@@ -4762,13 +4768,13 @@ class TheFeature:
 
 
 	# def hasExpiration(self):
-	# 	result = True
-	# 	if not self.isCanceled():
+	#   result = True
+	#   if not self.isCanceled():
 
 
 	def dump(self):
 		with open(self.objFile(), 'wb') as objSelf:
-		    pickle.dump(self, objSelf, pickle.HIGHEST_PROTOCOL)
+			pickle.dump(self, objSelf, pickle.HIGHEST_PROTOCOL)
 
 	def objFile(self):
 		return __.objectLocation['objects'].replace(__.ID_HERE,self.imdbID)
@@ -4950,14 +4956,14 @@ class TheFeature:
 		# if not 'seasons' in self.pages:
 		# if True:
 		# if 'tt4154858' == self.imdbID:
-		# 	print( '_____________________________________________________________' )
-		# 	for row in dir(self):
-		# 		try:
-		# 			_.printVar( eval( 'self.' + str(row) ) )
-		# 		except Exception as e:
-		# 			pass
-		# 		print( row )
-		# 	print( '_____________________________________________________________' )
+		#   print( '_____________________________________________________________' )
+		#   for row in dir(self):
+		#       try:
+		#           _.printVar( eval( 'self.' + str(row) ) )
+		#       except Exception as e:
+		#           pass
+		#       print( row )
+		#   print( '_____________________________________________________________' )
 
 		if self.isExpired('seasons'):
 			self.seasonData = []
@@ -5007,6 +5013,7 @@ class TheFeature:
 								print( printRow )
 							else:
 								_.colorizeRow( _.fields.value( 'episodes', 'episode', printRow ) )
+
 		
 		if _.switches.isActive('EpisodeTable'):
 			_.switches.fieldSet( 'Long', 'active', True )
@@ -5021,6 +5028,35 @@ class TheFeature:
 			# _.tables.fieldProfileSet( 'seasons', 'season', 'alignment', 'center' )
 
 			# _.tables.rprint( season_records, 'season,id,date,title' )
+		_.cp( [ '\n', len(season_records), 'episodes' ], 'yellow' )
+		showLen = ''
+		if _.switches.isActive('EpisodeLength'):
+			mins = int( _.switches.values('EpisodeLength')[0] )
+			_.cp( [ ' ',
+								_.addComma((mins*len(season_records))/60) + ' hrs'
+			], 'red' )
+			if _.switches.isActive('OnEpisode'):
+				on = _.switches.values('OnEpisode')[0]
+				i=0
+				w=0
+				started = False
+				for rec in season_records:
+					if rec['id'] == on:
+						started = True
+					if started:
+						i+=1
+					else:
+						w+=1
+				_.cp( [ '  ', 
+								str(round((mins*w)/60,2)) + ' hrs watched, ending on '+ on
+				], 'yellow' )
+				_.cp( [ '  ', 
+								str(round((mins*i)/60,2)) + ' hrs left, starting on '+ on
+				], 'green' )
+
+
+
+
 		if printMinimal:
 			self.showInSeason( printMinimal, shouldPrint=False )
 		else:
@@ -5114,17 +5150,17 @@ class TheFeature:
 			# print(result)
 			return result
 			# try:
-			# 	print(lastDate)
-			# 	ldEpoch = float(_.date2epoch(theDate,delim))
-			# 	now = float(time.time())
-			# 	if ldEpoch > now:
-			# 		self.inSeason = True
-			# 		print('show is in season')
-			# 	else:
-			# 		print('show is not in season')
-			# 		self.inSeason = False
+			#   print(lastDate)
+			#   ldEpoch = float(_.date2epoch(theDate,delim))
+			#   now = float(time.time())
+			#   if ldEpoch > now:
+			#       self.inSeason = True
+			#       print('show is in season')
+			#   else:
+			#       print('show is not in season')
+			#       self.inSeason = False
 			# except Exception as e:
-			# 	print('Error on lastDate:',lastDate)
+			#   print('Error on lastDate:',lastDate)
 	def year_name( self ):
 		addYear = True
 		if type(self.year) == int:
@@ -5353,7 +5389,7 @@ class TheCinema:
 
 	def dump(self):
 		with open(__.objectLocation['cinema'], 'wb') as objCinema:
-		    pickle.dump(self, objCinema, pickle.HIGHEST_PROTOCOL)
+			pickle.dump(self, objCinema, pickle.HIGHEST_PROTOCOL)
 
 	def objFile(self, imdbID):
 		return __.objectLocation['objects'].replace(__.ID_HERE,imdbID)
@@ -5728,8 +5764,8 @@ class ThePerson:
 
 	def dump(self):
 		with open(self.objFile(), 'wb') as objSelf:
-		    pickle.dump(self, objSelf, pickle.HIGHEST_PROTOCOL)
-		    
+			pickle.dump(self, objSelf, pickle.HIGHEST_PROTOCOL)
+			
 	def objFile(self):
 		return __.objectLocation['objects'].replace(__.ID_HERE,self.imdbID)
 
@@ -5841,10 +5877,10 @@ class ThePerson:
 
 
 		# if self.year:
-		# 	data = _.resolveEpochTest( time.time() )
-		# 	thisYear = int(data.split( '-' )[0])
-		# 	self.age = thisYear - self.year
-		# 	print( 'age:', self.age )
+		#   data = _.resolveEpochTest( time.time() )
+		#   thisYear = int(data.split( '-' )[0])
+		#   self.age = thisYear - self.year
+		#   print( 'age:', self.age )
 
 
 	def print_fullcredits( self ):
@@ -5899,7 +5935,7 @@ class ThePeople:
 
 	def dump(self):
 		with open(__.objectLocation['cinema'], 'wb') as objCinema:
-		    pickle.dump(self, objCinema, pickle.HIGHEST_PROTOCOL)
+			pickle.dump(self, objCinema, pickle.HIGHEST_PROTOCOL)
 
 	def objFile(self, imdbID):
 		return __.objectLocation['objects'].replace(__.ID_HERE,imdbID)
@@ -6102,7 +6138,7 @@ def get_cinema_fullcredits(imdbID):
 				theTitle = theTitle0
 	
 	# for ty in movieYear:
-	# 	print(cleanupString(ty.text_content(),False))
+	#   print(cleanupString(ty.text_content(),False))
 	theTitle = cleanName(theTitle)
 	print('Processing', theYear, theTitle, '...')
 	theYearThis = theYear
@@ -6192,7 +6228,7 @@ def get_cinema_ratings(imdbID):
 	except Exception as e:
 		name = ''
 	# if not nameShow == '':
-	# 	name = nameShow + ': ' + name
+	#   name = nameShow + ': ' + name
 	# print(len(nameStuff))
 	# nameX = nameStuff[0].text_content()
 	# nameY = cleanupString(nameX,False)
@@ -6219,7 +6255,7 @@ def get_cinema_ratings(imdbID):
 	year = cleanupString(year)
 	# print({'imdbID': imdbID, 'rating': rating, 'name': name, 'year': year})
 	# if not len(year) > 0:
-	# 	__.xit()
+	#   __.xit()
 	return {'rating': rating, 'show': nameShow, 'name': name, 'year': year}
 
 
@@ -6422,19 +6458,19 @@ def caseTest():
 	__.people = ThePeople()
 
 	# if _.switches.isActive('ObjectsLoadSkip'):
-	# 	__.cinema = TheCinema()
-	# 	__.people = ThePeople()
+	#   __.cinema = TheCinema()
+	#   __.people = ThePeople()
 	# else:
-	# 	try:
-	# 		with open(__.objectLocation['cinema'], 'rb') as objCinema:
-	# 			__.cinema = pickle.load(objCinema)
-	# 	except Exception as e:
-	# 		__.cinema = TheCinema()
-	# 	try:
-	# 		with open(__.objectLocation['people'], 'rb') as objPeople:
-	# 			__.people = pickle.load(objPeople)
-	# 	except Exception as e:
-	# 		__.people = ThePeople()
+	#   try:
+	#       with open(__.objectLocation['cinema'], 'rb') as objCinema:
+	#           __.cinema = pickle.load(objCinema)
+	#   except Exception as e:
+	#       __.cinema = TheCinema()
+	#   try:
+	#       with open(__.objectLocation['people'], 'rb') as objPeople:
+	#           __.people = pickle.load(objPeople)
+	#   except Exception as e:
+	#       __.people = ThePeople()
 		# print('loaded')
 		# test = input('pause')
 	# print(_.get_size(__.cinema))
@@ -6633,11 +6669,11 @@ def appearancesOnclick(onclick):
 	d = scriptData[3]
 	e = scriptData[4]
 	g = scriptData[6]
-	url = 	urlBase.replace( '*b*', b )
-	url = 		url.replace( '*c*', c )
-	url = 		url.replace( '*d*', d )
-	url = 		url.replace( '*e*', e )
-	url = 		url.replace( '*g*', g )
+	url =   urlBase.replace( '*b*', b )
+	url =       url.replace( '*c*', c )
+	url =       url.replace( '*d*', d )
+	url =       url.replace( '*e*', e )
+	url =       url.replace( '*g*', g )
 	return url
 	# toggleSeeMoreEpisodes(this,'nm1050978','tt0118480','actor','ttfc_fc_cl_i892',0,0,'#episodes-tt0118480-nm1050978-actor', toggleSpan); return false;
 
@@ -6757,7 +6793,7 @@ def personMakeSelection( data ):
 		print()
 		print()
 
-	##################################                        ##################################	
+	##################################                        ##################################    
 	if selection == 'sd':
 		i = 0
 		for m in data['movies']:
@@ -6765,10 +6801,10 @@ def personMakeSelection( data ):
 			status = str(i) + ' of ' +  str(len(data['movies']))
 			_.updateLine(status)
 			try:
-			    tempXX = m['description']
-			    hasDescription = True
+				tempXX = m['description']
+				hasDescription = True
 			except KeyError:
-			    hasDescription = False
+				hasDescription = False
 			if hasDescription:
 				description = m['description']
 			else:
@@ -6825,10 +6861,10 @@ def personMakeSelection( data ):
 			status = str(i) + ' of ' +  str(len(data['movies']))
 			_.updateLine(status)
 			try:
-			    tempXX = m['description']
-			    hasDescription = True
+				tempXX = m['description']
+				hasDescription = True
 			except KeyError:
-			    hasDescription = False
+				hasDescription = False
 			if hasDescription:
 				description = m['description']
 				description = description.replace('at this time','')
@@ -7162,7 +7198,7 @@ focus()
 
 
 # def timestamp():
-# 	return time.time()
+#   return time.time()
 
 
 # print(type(__.pipeData))
@@ -7563,14 +7599,14 @@ if __name__ == '__main__':
 # __.cinema.register(imdbID, shouldPrint=True)
 
 
-# 	def register(self, imdbID, shouldPrint):
-# 		self.addChild(imdbID)
-# 		self.childRow(imdbID)
-# 		if type(self.thisRow) == float:
-# 			print('Error: childRow')
-# 			__.xit()
+#   def register(self, imdbID, shouldPrint):
+#       self.addChild(imdbID)
+#       self.childRow(imdbID)
+#       if type(self.thisRow) == float:
+#           print('Error: childRow')
+#           __.xit()
 
-# 		self.childItemRows[self.thisRow].get_fullcredits()
+#       self.childItemRows[self.thisRow].get_fullcredits()
 
 # get_people_fullcredits
 
