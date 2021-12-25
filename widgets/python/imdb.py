@@ -696,6 +696,11 @@ def lookupPerson(url):
 		else:
 			_.switches.fieldSet('Long','active',True)
 			_.switches.fieldSet('Long','value','name')
+			xXx = len(movies)
+			for i,rec in enumerate(movies):
+				movies[i]['order'] = xXx
+				xXx-=1
+
 			if _.switches.isActive('HallmarkCrossRef') == True:
 				_.tables.register('Auto',movies,w=1)
 				_.tables.fieldProfileSet( 'Auto', 'name', 'trigger', _.longDashAdd )
@@ -706,7 +711,7 @@ def lookupPerson(url):
 				_.tables.register('Auto',movies,w=1)
 				
 				_.tables.fieldProfileSet( 'Auto', 'name', 'trigger', _.longDashAdd )
-				_.tables.print('Auto','id,year,age,name')
+				_.tables.print('Auto','id,order,year,age,name')
 	if _.switches.isActive('BuildCrossRef') == True:
 		buildMovies(movies,{'name': theirName, 'url': url})
 		theRows = []

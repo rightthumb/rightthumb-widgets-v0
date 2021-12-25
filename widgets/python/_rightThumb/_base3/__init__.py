@@ -9,7 +9,7 @@
 #    - Scott Taylor Reph, RightThumb.com
 # ###########################################################################
 # ## {C3P0D40fAe8B} ##
-
+import glob
 import sys,os,time,datetime,threading
 # from os.path import isfile, isdir
 # import uuid
@@ -2683,6 +2683,7 @@ def isData( data=None, focus=None, pipeClean=True, required=False,     r=None, c
 		for name in v.isData:
 			if len(switches.value(name)):
 				for isD in v.isData[name].split(','):
+					# print('isD',isD)
 					if isD == 'clean':
 						isClean=True
 					elif isD == 'name':
@@ -2691,25 +2692,35 @@ def isData( data=None, focus=None, pipeClean=True, required=False,     r=None, c
 					elif isD == 'glob':
 						for n in switches.values(name):
 							for f in glob.glob( n ):
+								f = __.path(f)
 								if os.path.isfile(f):
-									data.append(f)
+									for xXx in getText( f, raw=True ).split('\n'):
+										data.append(xXx)
 					elif isD == 'data':
 						tData=[]
 						for n in switches.values(name):
 							tData.append(getText(n,raw=True))
-						data = tData.join('\n')
+						# print(tData)
+						data = '\n'.join(tData)
+						# print(data)
+						# sys.exit()
+						# return data
+
 		if data:
 			if not isClean:
 				return data
 			elif type(data)==str:
+				# print('here')
+				# sys.exit()
 				newData=''
-				data = data.replace('\r')
-				data = _str.replaceDuplicate( data, '\n' )
-				for row in data.split('\n'):
-					row = _str.cleanBE( row, ' ' )
-					row = _str.cleanBE( row, '\t' )
-					newData+=row+'\n'
-				return newData
+				data = data.replace('\r','')
+				# data = _str.replaceDuplicate( data, '\n' )
+				# for row in data.split('\n'):
+				# 	row = _str.cleanBE( row, ' ' )
+				# 	row = _str.cleanBE( row, '\t' )
+				# 	newData+=row+'\n'
+				# return newData
+				return data.split('\n')
 			elif type(data)==list:
 				newData=[]
 				for row in data:
@@ -6590,20 +6601,40 @@ def myFileLocationsXYZ( file, silent=False, currentBaseVersion=3 ):
 
 isFirst=True
 def myFileLocations( file, silent=False, currentBaseVersion=3 ):
+	global appData
 	global isFirst
-	if not type( __.trigger_isPipe ) == bool:
+	# print('here')
+	try:
+		__.myFileLocations_processed
+	except Exception as e:
+		__.myFileLocations_processed = False
+	# print('__.trigger_isPipe',__.trigger_isPipe)
+	if not __.myFileLocations_processed and not type( __.trigger_isPipe ) == bool:
+		__.myFileLocations_processed = True
 		if 'glob' in __.trigger_isPipe:
-			glob = __.imp('glob')
+			appData[__.appReg]['pipe'] = ''
+			# __.trigger_isPipe = False
+			# glob = __.imp('glob')
+			import glob
 			g = glob.glob(file)
 			for f in g:
+				# f = __.path(f)
+				# FX = getText( f, raw=True )
+				# print('_____________________')
+				# print(f,FX)
+				# print('_____________________')
+				# sys.exit()
+				# appData[__.appReg]['pipe'] += FX + '\n'
 				myFileLocations( f, silent, currentBaseVersion )
 			file = g
+			# appData[__.appReg]['pipe'] = appData[__.appReg]['pipe'].split('\n')
+			# print("appData[__.appReg]['pipe']",appData[__.appReg]['pipe'])
+			return f
 
 	# print(__.myFileLocations_SKIP_VALIDATION)
 	# print(os.path.isdir(file))
 	# print(file)
 	# sys.exit()
-	global appData
 	if __.myFileLocations_SKIP_VALIDATION:
 		if type( appData[__.appReg]['pipe'] ) == bool:
 			appData[__.appReg]['pipe'] = []
@@ -6617,6 +6648,8 @@ def myFileLocations( file, silent=False, currentBaseVersion=3 ):
 		import glob
 		appData[__.appReg]['pipe'] = glob.glob(file)
 		return appData[__.appReg]['pipe']
+
+
 
 	global myFileLocation_File
 	global backup_subject_files
@@ -6695,7 +6728,8 @@ def myFileLocations( file, silent=False, currentBaseVersion=3 ):
 									if isFirst:
 										isFirst=False
 									else:
-										appData[__.appReg]['pipe'].append( row )
+										if type(appData[__.appReg]['pipe']) == list:
+											appData[__.appReg]['pipe'].append( row )
 									# tmpFiles.append( row )
 			# if hasFiles:
 			#   if 'clean' in __.trigger_isPipe:
@@ -8540,7 +8574,9 @@ class Switches:
 		tables.print('data','appreg,name,value')
 
 	def register(self, name, switch, expected_input_example = None, isRequired=False, isPipe=None, isData=None, description='', space=False):
+
 		if not isData is None:
+			__.trigger_isPipe = isData
 			isPipe=isData
 		self.switches.append(Switch(name, switch, expected_input_example, description, space))
 
@@ -9131,6 +9167,11 @@ class Switches:
 				self.switches[ii].pos = None
 				self.switches[ii].active = False
 				self.switches[ii].value = None
+				try:
+					__.trigger_isPipe = self.switches[ii].isData
+				except Exception as e:
+					pass
+
 		switchHelp = []
 		isActiveList = []
 		hasActiveRequireList = []

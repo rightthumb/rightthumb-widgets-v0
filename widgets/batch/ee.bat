@@ -12,4 +12,4 @@ rem ## {C3P0D40fAe8B} ##
 
 CALL p imdb -nolines -case -ep -ent %* 
 
-rem ee how i met your mother -length 22 -on 2:1 
+rem ee how i met your mother -length 22 -on 2:13
