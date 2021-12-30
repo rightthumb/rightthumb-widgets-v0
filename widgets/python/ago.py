@@ -101,6 +101,8 @@ _.appInfo[focus()] = {
 						'p ago -date 2014-08-30T00:30:00+03:00 -tz US/Eastern',
 						'p ago -date 2014-08-30T18:30:00+03:00 -tz US/Mountain',
 						'',
+						'p ago -tz US/Mountain',
+						'',
 	],
 	'columns': [
 				       # { 'name': 'name', 'abbreviation': 'n' },
