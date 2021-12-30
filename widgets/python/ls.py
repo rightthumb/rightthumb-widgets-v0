@@ -852,7 +852,7 @@ def addFile( path, hasData=False ):
 				data.append(  _dir.fileInfo( path, sdate=__.sdate, meta=meta )  )
 
 def action():
-
+	_.switches.fieldSet( 'NoTableLines', 'active', True )
 	if _.switches.isActive('Group>='):
 		g = _.switches.values('Group>=')[0]
 		try:
