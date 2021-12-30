@@ -238,7 +238,7 @@ def get(theLabel=None):
 		possibly_wait()
 		return password
 	else:
-		_.e( 'key does not exist' )
+		_.e( str(theLabel)+': key does not exist' )
 	
 
 def changePassword():

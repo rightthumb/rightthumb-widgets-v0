@@ -254,6 +254,8 @@ def processFile(path):
 	file = file.replace( chr(10), '\n' )
 	file = file.replace( chr(27), '' )
 	file = file.replace( '\r', '' )
+	while '\t' in file:
+		file = file.replace( '\t', '    ' )
 	if _.switches.isActive('Editor'):
 		file = file.replace( 'subl', _.switches.value('Editor') )
 
