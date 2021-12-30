@@ -39,7 +39,7 @@ def appSwitches():
 	_.switches.register( 'Date', '-date' )
 	_.switches.register( 'WOY', '-woy' )
 	_.switches.register( 'Test', '-test' )
-	_.switches.register( 'TimeZone', '-tz', '-0400  OR  US/Mountain  OR  all' )
+	_.switches.register( 'TimeZone', '-tz', '+0400  OR  US/Mountain  OR  all' )
 	_.switches.register( 'Ordinal', '-ordinal' )
 	_.switches.register( 'nID', '-nID' )
 	pass
@@ -94,6 +94,12 @@ _.appInfo[focus()] = {
 						'',
 						'',
 						'p ago -tz all + / | p line -p / 0 | p countEach',
+						'',
+						'p ago -date 2014-08-30T18:30:00+03:00',
+						'p ago -date 2014-08-30T00:30:00+03:00',
+						'p ago -date 2014-08-30T00:30:00+03:00 -tz America/New_York',
+						'p ago -date 2014-08-30T00:30:00+03:00 -tz US/Eastern',
+						'p ago -date 2014-08-30T18:30:00+03:00 -tz US/Mountain',
 						'',
 	],
 	'columns': [

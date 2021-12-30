@@ -40,7 +40,7 @@ import _rightThumb._string as _str
 
 def appSwitches():
 	pass
-	_.switches.register( 'Files', '-f,-file,-files','file.txt', isPipe=True, isRequired=True, description='Files' )
+	_.switches.register( 'Files', '-f,-file,-files','file.txt', isPipe=True,  description='Files' )
 	_.switches.register( 'Lines', '-lines' )
 	_.switches.register( 'Head', '-head' )
 
@@ -269,7 +269,7 @@ def tail(fn, n, offset=None):
     value is a tuple in the form ``(lines, has_more)`` where `has_more` is
     an indicator that is `True` if there are more lines in the file.
     """
-    f = open(fn, "r")
+    f = open(fn, 'r')
     avg_line_length = 74
     to_read = n + (offset or 0)
 
@@ -290,24 +290,42 @@ def tail(fn, n, offset=None):
 
 
 def action():
-	f = _.switches.values('Files')[0]
-	# f = _.getText( _.switches.values('Files')[0], raw=True )
 	n = 20
 	if _.switches.isActive('Lines'):
 		n = int( _.switches.values('Lines')[0] )
 
-	if _.switches.isActive('Head'):
-		sample = head(f, n)
+
+	if _.switches.isActive('Files'):
+		f = _.switches.values('Files')[0]
+
+		if _.switches.isActive('Head'):
+			sample = head(f, n)
+		else:
+			sample = tail(f, n)
+		for x in sample:
+			try:
+				for z in x:
+					print(z)
+			except Exception as e:
+				pass
 	else:
-		sample = tail(f, n)
-	for x in sample:
-		try:
-			for z in x:
-				print(z)
-		except Exception as e:
-			pass
-	# sample = tail( f )
-	# print( sample )
+
+		data = _.isData()
+		if _.switches.isActive('Head'):
+			for i,line in enumerate(data):
+				if i < n:
+					print(line)
+		else:
+			data.reverse()
+			data0 = []
+			for i,line in enumerate(data):
+				if i < n:
+					data0.append(line)
+			data0.reverse()
+			for i,line in enumerate(data0):
+				print(line)
+
+
 
 
 ########################################################################################

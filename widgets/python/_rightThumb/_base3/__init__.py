@@ -596,6 +596,14 @@ pandas = None
 _sd = None
 
 def isDate( theDate, record={}, tz=None, q=True ):
+
+	# theDate = autoDate(theDate)
+
+	# print(theDate)
+	# sys.exit()
+
+
+
 	s = time.time()
 	# slow from loading pandas
 	if not tz is None and not len(tz):
@@ -668,6 +676,9 @@ def isDate( theDate, record={}, tz=None, q=True ):
 	ss = time.time()
 	record['epoch'] = epoch
 	record['ordinal'] = datetime.datetime.fromtimestamp( epoch ).toordinal()
+	record['text-date'] = datetime.datetime.fromtimestamp( epoch ).strftime('%b, %d %Y')
+	record['text-time'] = datetime.datetime.fromtimestamp( epoch ).strftime('%I:%M %p')
+	record['text-datetime'] = datetime.datetime.fromtimestamp( epoch ).strftime('%b, %d %Y @ %I:%M %p')
 	record['sdate'] = friendlyDate2( epoch )
 	record['strip'] = onlyNumbers_strip(friendlyDate( epoch ).split(' ')[0])
 	record['stript'] = onlyNumbers_strip(friendlyDate( epoch ))
@@ -681,20 +692,33 @@ def isDate( theDate, record={}, tz=None, q=True ):
 	record['ago'] = _dir.dateDiffText( epoch )
 	record['days'] = daysDiff(  epoch, time.time()  )
 	record['tz'] = local_tz
+	# record['iso'] = datetime.datetime.fromtimestamp( epoch ).isoformat()
+	# record['iso'] = datetime.datetime.fromtimestamp( epoch ).replace(microsecond=0).astimezone().isoformat()
+	record['iso'] = record['fdate'].replace( ' ', 'T' ) + record['tz']
+	# iso 24
 	
 
 	try:
 		import _rightThumb._nID as _nID
-		_nID.mini.password( '1970' )
+		try:
+			_keychain = regImp( __.appReg, 'keychain' )
+			nID_password = _keychain.imp.key('nID')
+			_nID.mini.password( nID_password )
+			isPass = 'secure'
+		except Exception as e:
+			_nID.mini.password( '1970' )
+			isPass = 'unsecure'
 		eee = ''
 		ee = str(record['epoch'])
 		for c in ee:
 			if '.' == c:
 				break
 			eee+=c
-		record['nID'] = _nID.mini.gen( record['strip'] )
-		record['nIDt'] = _nID.mini.gen( record['stript'] )
-		record['nIDe'] = _nID.mini.gen( int(eee) )
+		# record['crypt-password'] = nID_password
+		record['crypt-date'] = _nID.mini.gen( record['strip'] )
+		record['crypt-time'] = _nID.mini.gen( record['stript'] )
+		record['crypt-epoch'] = _nID.mini.gen( int(eee) )
+		record['crypt-pass'] = isPass
 	except Exception as e:
 		pass
 
@@ -8592,7 +8616,10 @@ class Switches:
 
 		
 		if not isPipe is None:
+			if type(isPipe) == bool and isPipe:
+				isPipe = 'data'
 			v.isData[name]=isPipe
+
 			if 'name' in isPipe and ( 'data' in isPipe or 'clean' in isPipe ):
 				pass
 			elif 'name' in isPipe:

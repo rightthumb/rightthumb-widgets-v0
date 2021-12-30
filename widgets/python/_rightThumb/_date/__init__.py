@@ -453,10 +453,11 @@ def address24Hr( data, hr, delim='-' ):
 
 
 def autoDate( data, theFormat=False, fail=False ):
-
+	# print('data',data)
 	try:
 		import datefinder
-		for match in datefinder.find_dates(string_value):
+		for match in datefinder.find_dates(data):
+			# print( 'match.timestamp()', match.timestamp() )
 			return match.timestamp()
 	except Exception as e:
 		pass
