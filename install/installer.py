@@ -2629,44 +2629,44 @@ alias vps.l="p keychain -label vps.l -get -temp 10"
 alias web.l="p keychain -label web.l -get -temp 10"
 alias reph.l="p keychain -label reph.l -get -temp 10"
 #################
-alias vps.socket="ssh -R 65432:localhost:65432 -C -N -l scott vps.rightthumb.com";
+alias vps.socket="ssh -R 65432:localhost:65432 -C -N -l scott hoth.eyeformeta.com";
 ################# #################
 alias reph.ssh.p="ssh thisreph@reph.us'";
-alias vps.ssh.p="ssh scott@vps.rightthumb.com'";
-alias vps1.ssh.p="ssh scott@vps1.rightthumb.com'";
-alias vps2.ssh.p="ssh scott@vps2.rightthumb.com'";
+alias vps.ssh.p="ssh scott@hoth.eyeformeta.com'";
+alias vps1.ssh.p="ssh scott@hoth.eyeformeta.com'";
+alias vps2.ssh.p="ssh scott@bespin.eyeformeta.com'";
 alias web.ssh.p="ssh ximlickficfp@tools.rightthumb.com'";
 ################# #################
 alias reph.ssh.y="ssh thisreph@reph.us";
-alias vps.ssh.y="ssh scott@vps.rightthumb.comy";
-alias vps1.ssh.y="ssh scott@vps1.rightthumb.comy";
-alias vps2.ssh.y="ssh scott@vps2.rightthumb.comy";
+alias vps.ssh.y="ssh scott@hoth.eyeformeta.comy";
+alias vps1.ssh.y="ssh scott@hoth.eyeformeta.comy";
+alias vps2.ssh.y="ssh scott@bespin.eyeformeta.comy";
 alias web.ssh.y="ssh ximlickficfp@tools.rightthumb.com";
 #################
 alias reph.ssh="ssh thisreph@reph.us";
-alias vps.ssh="ssh scott@vps.rightthumb.com";
-alias vps1.ssh="ssh scott@vps1.rightthumb.com";
-alias vps2.ssh="ssh scott@vps2.rightthumb.com";
+alias vps.ssh="ssh scott@hoth.eyeformeta.com";
+alias vps1.ssh="ssh scott@hoth.eyeformeta.com";
+alias vps2.ssh="ssh scott@bespin.eyeformeta.com";
 alias web.ssh="ssh ximlickficfp@tools.rightthumb.com";
 ################# #################
 alias beep.="play -nq -t alsa synth 1 sine 440"
 ################# ################# #################
 alias vps.sync.sh="$widgets/install/installer.py -sh.folder /mnt/d/widgets/webApps/vps/"
-alias vps.sync="echo scp /mnt/d/widgets/servers/web/vps/* root@vps.rightthumb.com:/opt/lampp/htdocs/|vps.e"
-alias vps.sync.get="echo scp root@vps.rightthumb.com:/opt/lampp/htdocs/ /mnt/d/widgets/servers/web/vps/* |vps.e"
-export vpswww="sudo ssh -L 80:localhost:80 -C -N -l scott vps.rightthumb.com"
-alias vps.www="ssh -L 8080:localhost:80 -C -N -l scott vps.rightthumb.com"
-alias vps.dt="ssh -L 59000:localhost:5900 -C -N -l scott vps.rightthumb.com"
-alias vps.dt2="ssh -L 59001:localhost:5901 -C -N -l scott vps.rightthumb.com"
-alias vps1.dt="ssh -L 59000:localhost:5900 -C -N -l scott vps1.rightthumb.com"
-alias vps1.dt2="ssh -L 59001:localhost:5901 -C -N -l scott vps1.rightthumb.com"
-alias vps2.dt="ssh -L 59000:localhost:5900 -C -N -l scott vps2.rightthumb.com"
-alias vps2.dt2="ssh -L 59001:localhost:5901 -C -N -l scott vps2.rightthumb.com"
+alias vps.sync="echo scp /mnt/d/widgets/servers/web/vps/* root@hoth.eyeformeta.com:/opt/lampp/htdocs/|vps.e"
+alias vps.sync.get="echo scp root@hoth.eyeformeta.com:/opt/lampp/htdocs/ /mnt/d/widgets/servers/web/vps/* |vps.e"
+export vpswww="sudo ssh -L 80:localhost:80 -C -N -l scott hoth.eyeformeta.com"
+alias vps.www="ssh -L 8080:localhost:80 -C -N -l scott hoth.eyeformeta.com"
+alias vps.dt="ssh -L 59000:localhost:5900 -C -N -l scott hoth.eyeformeta.com"
+alias vps.dt2="ssh -L 59001:localhost:5901 -C -N -l scott hoth.eyeformeta.com"
+alias vps1.dt="ssh -L 59000:localhost:5900 -C -N -l scott hoth.eyeformeta.com"
+alias vps1.dt2="ssh -L 59001:localhost:5901 -C -N -l scott hoth.eyeformeta.com"
+alias vps2.dt="ssh -L 59000:localhost:5900 -C -N -l scott bespin.eyeformeta.com"
+alias vps2.dt2="ssh -L 59001:localhost:5901 -C -N -l scott bespin.eyeformeta.com"
 alias vps.k="echo $( p keychain -get -label vps.k )"
 alias kkk="echo $( p keychain -get -label login-test )"
-alias vps.mongo="ssh -L 27017:localhost:27017 -C -N -l scott vps1.rightthumb.com"
-alias vps.mongo1="ssh -L 2701:localhost:27017 -C -N -l scott vps1.rightthumb.com"
-alias vps.mongo.="ssh -L 2701:localhost:27017 -C -N -l scott vps1.rightthumb.com"
+alias vps.mongo="ssh -L 27017:localhost:27017 -C -N -l scott hoth.eyeformeta.com"
+alias vps.mongo1="ssh -L 2701:localhost:27017 -C -N -l scott hoth.eyeformeta.com"
+alias vps.mongo.="ssh -L 2701:localhost:27017 -C -N -l scott hoth.eyeformeta.com"
 
 		"""
 			return self.file( path, data, { 'status': 'virtual' } )
@@ -2800,8 +2800,8 @@ alias s.tool2="sudo installer.py2";
 alias t.sh="$HOME/.rt/tool.sh";
 alias s.t.sh="sudo $HOME/.rt/tool.sh";
 alias c="clear";
-alias vps.new="ssh-keygen -f $HOME/.ssh/known_hosts -R 'vps.rightthumb.com';ssh-keygen -f $HOME/.ssh/known_hosts -R '45.35.203.103';";
-alias vps2.new="ssh-keygen -f '/home/scott/.ssh/known_hosts' -R 'vps2.rightthumb.com';ssh-keygen -f '/home/scott/.ssh/known_hosts' -R '45.35.203.104';";
+alias vps.new="ssh-keygen -f $HOME/.ssh/known_hosts -R 'hoth.eyeformeta.com';ssh-keygen -f $HOME/.ssh/known_hosts -R '45.35.203.103';";
+alias vps2.new="ssh-keygen -f '/home/scott/.ssh/known_hosts' -R 'bespin.eyeformeta.com';ssh-keygen -f '/home/scott/.ssh/known_hosts' -R '45.35.203.104';";
 
 
 
@@ -2996,31 +2996,31 @@ alias listening2="lsof -i -P -n | grep LISTEN"
 alias listening="netstat -l | p simpleLine + listen - listening"
 alias fw.y="sudo ufw allow "
 alias fw.n="sudo ufw deny "
-alias vps.ssh="ssh scott@vps.rightthumb.com"
-alias vps2.ssh="ssh scott@vps2.rightthumb.com"
-alias v="ssh scott@vps.rightthumb.com"
-alias vv="ssh scott@vps2.rightthumb.com"
+alias vps.ssh="ssh scott@hoth.eyeformeta.com"
+alias vps2.ssh="ssh scott@bespin.eyeformeta.com"
+alias v="ssh scott@hoth.eyeformeta.com"
+alias vv="ssh scott@bespin.eyeformeta.com"
 alias reph.us="ssh thisreph@reph.us"
 alias rt="ssh vy2ehn4azpfl@23.229.227.201"
 
 
-alias vps.mongo="ssh -L 27017:localhost:27017 -C -N -l scott vps1.rightthumb.com"
-alias vps.mongo1="ssh -L 2701:localhost:27017 -C -N -l scott vps1.rightthumb.com"
-alias vps.mongo.="ssh -L 2701:localhost:27017 -C -N -l scott vps1.rightthumb.com"
+alias vps.mongo="ssh -L 27017:localhost:27017 -C -N -l scott hoth.eyeformeta.com"
+alias vps.mongo1="ssh -L 2701:localhost:27017 -C -N -l scott hoth.eyeformeta.com"
+alias vps.mongo.="ssh -L 2701:localhost:27017 -C -N -l scott hoth.eyeformeta.com"
 
-alias vps.dt="ssh -L 59000:localhost:5900 -C -N -l scott vps.rightthumb.com"
-alias vps.dt2="ssh -L 59001:localhost:5901 -C -N -l scott vps.rightthumb.com"
-alias vps1.dt="ssh -L 59000:localhost:5900 -C -N -l scott vps1.rightthumb.com"
-alias vps1.dt2="ssh -L 59001:localhost:5901 -C -N -l scott vps1.rightthumb.com"
-alias vps2.dt="ssh -L 59000:localhost:5900 -C -N -l scott vps2.rightthumb.com"
-alias vps2.dt2="ssh -L 59001:localhost:5901 -C -N -l scott vps2.rightthumb.com"
+alias vps.dt="ssh -L 59000:localhost:5900 -C -N -l scott hoth.eyeformeta.com"
+alias vps.dt2="ssh -L 59001:localhost:5901 -C -N -l scott hoth.eyeformeta.com"
+alias vps1.dt="ssh -L 59000:localhost:5900 -C -N -l scott hoth.eyeformeta.com"
+alias vps1.dt2="ssh -L 59001:localhost:5901 -C -N -l scott hoth.eyeformeta.com"
+alias vps2.dt="ssh -L 59000:localhost:5900 -C -N -l scott bespin.eyeformeta.com"
+alias vps2.dt2="ssh -L 59001:localhost:5901 -C -N -l scott bespin.eyeformeta.com"
 
 alias .git="git clone https://github.com/rightthumb/rightthumb-widgets-v0"
-alias vps.py="scp  /mnt/d/.rightthumb-widgets/widgets/python/vps*.py root@vps.rightthumb.com:/opt/rightthumb-widgets-v0/widgets/python/"
-alias vps2.py="scp  /mnt/d/.rightthumb-widgets/widgets/python/vps*.py root@vps2.rightthumb.com:/opt/rightthumb-widgets-v0/widgets/python/"
+alias vps.py="scp  /mnt/d/.rightthumb-widgets/widgets/python/vps*.py root@hoth.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/python/"
+alias vps2.py="scp  /mnt/d/.rightthumb-widgets/widgets/python/vps*.py root@bespin.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/python/"
 
-alias vps.py2="scp  /opt/rightthumb-widgets-v0/widgets/python/vps*.py root@vps.rightthumb.com:/opt/rightthumb-widgets-v0/widgets/python/"
-alias vps2.py2="scp  /opt/rightthumb-widgets-v0/widgets/python/vps*.py root@vps2.rightthumb.com:/opt/rightthumb-widgets-v0/widgets/python/"
+alias vps.py2="scp  /opt/rightthumb-widgets-v0/widgets/python/vps*.py root@hoth.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/python/"
+alias vps2.py2="scp  /opt/rightthumb-widgets-v0/widgets/python/vps*.py root@bespin.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/python/"
 
 
 
