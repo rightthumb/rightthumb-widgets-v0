@@ -213,6 +213,18 @@ if os.path.isfile( configFile('.config.hash') ):
 		if not __.isWin:
 			if os.path.isdir(config_hash['path']):
 				techDrive = config_hash['path']
+me = os.path.abspath(__file__)
+mep = me.split(os.sep)
+mep.reverse()
+mep.pop(0)
+mep.pop(0)
+mep.pop(0)
+mep.pop(0)
+mep.pop(0)
+mep.reverse()
+techDrive = os.sep.join(mep)
+del me
+del mep
 config_default.path = techDrive
 config_default_dic['w'] = techDrive
 config_default_dic['widgets'] = techDrive
