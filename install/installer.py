@@ -2998,8 +2998,11 @@ alias fw.y="sudo ufw allow "
 alias fw.n="sudo ufw deny "
 alias vps.ssh="ssh scott@hoth.eyeformeta.com"
 alias vps2.ssh="ssh scott@bespin.eyeformeta.com"
+
 alias v="ssh scott@hoth.eyeformeta.com"
 alias vv="ssh scott@bespin.eyeformeta.com"
+alias vvv="ssh scott@mandalore.eyeformeta.com"
+
 alias reph.us="ssh thisreph@reph.us"
 alias rt="ssh vy2ehn4azpfl@23.229.227.201"
 
@@ -3014,13 +3017,17 @@ alias vps1.dt="ssh -L 59000:localhost:5900 -C -N -l scott hoth.eyeformeta.com"
 alias vps1.dt2="ssh -L 59001:localhost:5901 -C -N -l scott hoth.eyeformeta.com"
 alias vps2.dt="ssh -L 59000:localhost:5900 -C -N -l scott bespin.eyeformeta.com"
 alias vps2.dt2="ssh -L 59001:localhost:5901 -C -N -l scott bespin.eyeformeta.com"
+alias vps3.dt="ssh -L 59000:localhost:5900 -C -N -l scott mandalore.eyeformeta.com"
+alias vps3.dt2="ssh -L 59001:localhost:5901 -C -N -l scott mandalore.eyeformeta.com"
 
 alias .git="git clone https://github.com/rightthumb/rightthumb-widgets-v0"
 alias vps.py="scp  /mnt/d/.rightthumb-widgets/widgets/python/vps*.py root@hoth.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/python/"
 alias vps2.py="scp  /mnt/d/.rightthumb-widgets/widgets/python/vps*.py root@bespin.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/python/"
+alias vps3.py="scp  /mnt/d/.rightthumb-widgets/widgets/python/vps*.py root@mandalore.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/python/"
 
 alias vps.py2="scp  /opt/rightthumb-widgets-v0/widgets/python/vps*.py root@hoth.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/python/"
 alias vps2.py2="scp  /opt/rightthumb-widgets-v0/widgets/python/vps*.py root@bespin.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/python/"
+alias vps3.py2="scp  /opt/rightthumb-widgets-v0/widgets/python/vps*.py root@mandalore.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/python/"
 
 
 
