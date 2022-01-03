@@ -3008,6 +3008,10 @@ alias v="ssh scott@hoth.eyeformeta.com"
 alias vv="ssh scott@bespin.eyeformeta.com"
 alias vvv="ssh scott@mandalore.eyeformeta.com"
 
+alias hoth="ssh scott@hoth.eyeformeta.com"
+alias bespin="ssh scott@bespin.eyeformeta.com"
+alias mandalore="ssh scott@mandalore.eyeformeta.com"
+
 alias reph.us="ssh thisreph@reph.us"
 alias rt="ssh vy2ehn4azpfl@23.229.227.201"
 
