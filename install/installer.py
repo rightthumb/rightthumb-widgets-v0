@@ -3003,6 +3003,9 @@ alias vps1.dt2="ssh -L 59001:localhost:5901 -C -N -l scott vps1.rightthumb.com"
 alias vps2.dt="ssh -L 59000:localhost:5900 -C -N -l scott vps2.rightthumb.com"
 alias vps2.dt2="ssh -L 59001:localhost:5901 -C -N -l scott vps2.rightthumb.com"
 
+alias .git="git clone https://github.com/rightthumb/rightthumb-widgets-v0"
+
+
 alias watch.vnc="$widgets/widgets/bash/vnc_watch.sh> /dev/null 2>&1 & "
 
 			"""
