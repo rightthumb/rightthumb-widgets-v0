@@ -771,7 +771,7 @@ function get__THETABLE( $ID_label ){
                 try:
                     dic[parts[0]] = define[parts[1].split('(')[0].lower()]
                     fields.append(parts[0])
-                    if 'DEFAULT 0'.lower() in line.lower() or 'DEFAULT 1'.lower() in line.lower():
+                    if 'DEFAULT 0'.lower() in line.lower() or 'DEFAULT 1'.lower() in line.lower() or 'CURRENT_TIMESTAMP'.lower() in line.lower():
                         skip.append( parts[0] )
                     elif not i == 1:
 

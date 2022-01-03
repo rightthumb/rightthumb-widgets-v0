@@ -33,7 +33,11 @@ v.appInfo={
 	'version': '0.1.68.76',
 	'prerequisite': [],
 	'examples': [
-					'installer.py ',
+					'',
+					'python3 installer.py -install h',
+					'python3 installer.py -install h',
+					'python3 installer.py -install h',
+					'',
 					'$widgets/install/installer.py ',
 					'',
 					't -rc.d h strip print clear home auto',
@@ -82,7 +86,20 @@ v.appInfo={
 	'columns': [],
 }
 
-
+def cl(key):
+	key = key.replace('-','_')
+	key = key.replace('.','_')
+	key = key.replace(' ','')
+	if os.sep in key:
+		return '_err'
+	return key
+def testImport(app):
+	try:
+		exec( 'import ' + app )
+	except Exception as e:
+		print( 'no' )
+	else:
+		print( 'yes' )
 
 try:
 	import colorama
@@ -2599,29 +2616,29 @@ alias web.ey="exp.geny;web.do"
 alias web.el="echo su root | web.e"
 ################# #################
 #################
-alias vps.l="p keychain -label vps.l  -get -temp 10"
-alias web.l="p keychain -label web.l  -get -temp 10"
-alias reph.l="p keychain -label reph.l  -get -temp 10"
+alias vps.l="p keychain -label vps.l -get -temp 10"
+alias web.l="p keychain -label web.l -get -temp 10"
+alias reph.l="p keychain -label reph.l -get -temp 10"
 #################
-alias vps.socket="echo 'ssh -R 65432:localhost:65432 -C -N -l scott vps.rightthumb.com' | vps.e";
+alias vps.socket="ssh -R 65432:localhost:65432 -C -N -l scott vps.rightthumb.com";
 ################# #################
-alias reph.ssh.p="echo 'ssh thisreph@reph.us'";
-alias vps.ssh.p="echo 'ssh scott@vps.rightthumb.com'";
-alias vps1.ssh.p="echo 'ssh scott@vps1.rightthumb.com'";
-alias vps2.ssh.p="echo 'ssh scott@vps2.rightthumb.com'";
-alias web.ssh.p="echo 'ssh ximlickficfp@tools.rightthumb.com'";
+alias reph.ssh.p="ssh thisreph@reph.us'";
+alias vps.ssh.p="ssh scott@vps.rightthumb.com'";
+alias vps1.ssh.p="ssh scott@vps1.rightthumb.com'";
+alias vps2.ssh.p="ssh scott@vps2.rightthumb.com'";
+alias web.ssh.p="ssh ximlickficfp@tools.rightthumb.com'";
 ################# #################
-alias reph.ssh.y="echo 'ssh thisreph@reph.us' | reph.ey";
-alias vps.ssh.y="echo 'ssh scott@vps.rightthumb.com' | vps.ey";
-alias vps1.ssh.y="echo 'ssh scott@vps1.rightthumb.com' | vps.ey";
-alias vps2.ssh.y="echo 'ssh scott@vps2.rightthumb.com' | vps.ey";
-alias web.ssh.y="echo 'ssh ximlickficfp@tools.rightthumb.com' | web.ey";
+alias reph.ssh.y="ssh thisreph@reph.us";
+alias vps.ssh.y="ssh scott@vps.rightthumb.comy";
+alias vps1.ssh.y="ssh scott@vps1.rightthumb.comy";
+alias vps2.ssh.y="ssh scott@vps2.rightthumb.comy";
+alias web.ssh.y="ssh ximlickficfp@tools.rightthumb.com";
 #################
-alias reph.ssh="echo 'ssh thisreph@reph.us' | reph.e";
-alias vps.ssh="echo 'ssh scott@vps.rightthumb.com' | vps.e";
-alias vps1.ssh="echo 'ssh scott@vps1.rightthumb.com' | vps.e";
-alias vps2.ssh="echo 'ssh scott@vps2.rightthumb.com' | vps.e";
-alias web.ssh="echo 'ssh ximlickficfp@tools.rightthumb.com' | web.e";
+alias reph.ssh="ssh thisreph@reph.us";
+alias vps.ssh="ssh scott@vps.rightthumb.com";
+alias vps1.ssh="ssh scott@vps1.rightthumb.com";
+alias vps2.ssh="ssh scott@vps2.rightthumb.com";
+alias web.ssh="ssh ximlickficfp@tools.rightthumb.com";
 ################# #################
 alias beep.="play -nq -t alsa synth 1 sine 440"
 ################# ################# #################
@@ -2629,18 +2646,18 @@ alias vps.sync.sh="$widgets/install/installer.py -sh.folder /mnt/d/widgets/webAp
 alias vps.sync="echo scp /mnt/d/widgets/servers/web/vps/* root@vps.rightthumb.com:/opt/lampp/htdocs/|vps.e"
 alias vps.sync.get="echo scp root@vps.rightthumb.com:/opt/lampp/htdocs/ /mnt/d/widgets/servers/web/vps/* |vps.e"
 export vpswww="sudo ssh -L 80:localhost:80 -C -N -l scott vps.rightthumb.com"
-alias vps.www="echo    'ssh -L 8080:localhost:80 -C -N -l scott vps.rightthumb.com'       |  s.vps.e"
-alias vps.dt="echo     'ssh -L 59000:localhost:5900 -C -N -l scott vps.rightthumb.com'    |  vps.e"
-alias vps.dt2="echo    'ssh -L 59001:localhost:5901 -C -N -l scott vps.rightthumb.com'    |  vps.e"
-alias vps1.dt="echo    'ssh -L 59000:localhost:5900 -C -N -l scott vps1.rightthumb.com'   |  vps.e"
-alias vps1.dt2="echo   'ssh -L 59001:localhost:5901 -C -N -l scott vps1.rightthumb.com'   |  vps.e"
-alias vps2.dt="echo    'ssh -L 59000:localhost:5900 -C -N -l scott vps2.rightthumb.com'   |  vps.e"
-alias vps2.dt2="echo   'ssh -L 59001:localhost:5901 -C -N -l scott vps2.rightthumb.com'   |  vps.e"
+alias vps.www="ssh -L 8080:localhost:80 -C -N -l scott vps.rightthumb.com"
+alias vps.dt="ssh -L 59000:localhost:5900 -C -N -l scott vps.rightthumb.com"
+alias vps.dt2="ssh -L 59001:localhost:5901 -C -N -l scott vps.rightthumb.com"
+alias vps1.dt="ssh -L 59000:localhost:5900 -C -N -l scott vps1.rightthumb.com"
+alias vps1.dt2="ssh -L 59001:localhost:5901 -C -N -l scott vps1.rightthumb.com"
+alias vps2.dt="ssh -L 59000:localhost:5900 -C -N -l scott vps2.rightthumb.com"
+alias vps2.dt2="ssh -L 59001:localhost:5901 -C -N -l scott vps2.rightthumb.com"
 alias vps.k="echo $( p keychain -get -label vps.k )"
 alias kkk="echo $( p keychain -get -label login-test )"
-alias vps.mongo="echo     'ssh -L 27017:localhost:27017 -C -N -l scott vps1.rightthumb.com'   |  vps.e"
-alias vps.mongo1="echo    'ssh -L 2701:localhost:27017 -C -N -l scott vps1.rightthumb.com'    |  vps.e"
-alias vps.mongo.="echo    'ssh -L 2701:localhost:27017 -C -N -l scott vps1.rightthumb.com'    |  vps.e"
+alias vps.mongo="ssh -L 27017:localhost:27017 -C -N -l scott vps1.rightthumb.com"
+alias vps.mongo1="ssh -L 2701:localhost:27017 -C -N -l scott vps1.rightthumb.com"
+alias vps.mongo.="ssh -L 2701:localhost:27017 -C -N -l scott vps1.rightthumb.com"
 
 		"""
 			return self.file( path, data, { 'status': 'virtual' } )
@@ -2837,7 +2854,6 @@ alias p0="$widgets/widgets/bash/nav/p0.sh"
 alias pu="$widgets/widgets/bash/nav/p0.sh"
 alias p00="$widgets/widgets/bash/nav/p00.sh"
 alias pw="$widgets/widgets/bash/nav/p00.sh"
-alias v="$widgets/widgets/bash/nav/v.sh"
 
 
 alias c="$widgets/widgets/bash/nav/c.sh"
@@ -2971,6 +2987,21 @@ alias listening2="lsof -i -P -n | grep LISTEN"
 alias listening="netstat -l | p simpleLine + listen - listening"
 alias fw.y="sudo ufw allow "
 alias fw.n="sudo ufw deny "
+alias vps.ssh="ssh scott@vps.rightthumb.com"
+alias vps2.ssh="ssh scott@vps2.rightthumb.com"
+alias v="ssh scott@vps.rightthumb.com"
+alias vv="ssh scott@vps2.rightthumb.com"
+
+alias vps.mongo="ssh -L 27017:localhost:27017 -C -N -l scott vps1.rightthumb.com"
+alias vps.mongo1="ssh -L 2701:localhost:27017 -C -N -l scott vps1.rightthumb.com"
+alias vps.mongo.="ssh -L 2701:localhost:27017 -C -N -l scott vps1.rightthumb.com"
+
+alias vps.dt="ssh -L 59000:localhost:5900 -C -N -l scott vps.rightthumb.com"
+alias vps.dt2="ssh -L 59001:localhost:5901 -C -N -l scott vps.rightthumb.com"
+alias vps1.dt="ssh -L 59000:localhost:5900 -C -N -l scott vps1.rightthumb.com"
+alias vps1.dt2="ssh -L 59001:localhost:5901 -C -N -l scott vps1.rightthumb.com"
+alias vps2.dt="ssh -L 59000:localhost:5900 -C -N -l scott vps2.rightthumb.com"
+alias vps2.dt2="ssh -L 59001:localhost:5901 -C -N -l scott vps2.rightthumb.com"
 
 alias watch.vnc="$widgets/widgets/bash/vnc_watch.sh> /dev/null 2>&1 & "
 
@@ -13741,20 +13772,7 @@ switches.register('Folders-servers','-folders.servers')
 
 
 switches.process()
-def cl(key):
-	key = key.replace('-','_')
-	key = key.replace('.','_')
-	key = key.replace(' ','')
-	if os.sep in key:
-		return '_err'
-	return key
-def testImport(app):
-	try:
-		exec( 'import ' + app )
-	except Exception as e:
-		print( 'no' )
-	else:
-		print( 'yes' )
+
 
 pv=printVar
 vp=printVar

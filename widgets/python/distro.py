@@ -10,7 +10,10 @@
 # ###########################################################################
 # ## {C3P0D40fAe8B} ##
 
-import os, sys, time
+import os
+import sys
+import time
+# import platform
 ##################################################
 import _rightThumb._construct as __
 appDBA = __.clearFocus( __name__, __file__ )
@@ -27,36 +30,27 @@ _.load()
 ##################################################
 import _rightThumb._vars as _v
 import _rightThumb._string as _str
+
 ##################################################
+
 
 def appSwitches():
 	pass
-	_.switches.register( 'From', '-from' )
-	_.switches.register( 'To', '-to' )
-	# _.switches.register( 'Files', '-f,-file,-files','file.txt', isPipe='name,data,clean', description='Files' )
 
 
 _.autoBackupData = __.autoCreationConfiguration['backup']
-__.releaseAcquiredData = __.autoCreationConfiguration['logs']
-__.myFileLocations_SKIP_VALIDATION = False
 __.isRequired_Pipe = False
 __.isRequired_Pipe_or_File = False
 __.pre_error = False
-__.switch_raw = []
-# __.switch_raw = [ 'Delim' ]
 # __.isRequired_or_List = ['Pipe','Files','Plus']
-# __.setting( 'app-switches-raw', [ 'Delim' ] )
-
 
 _.appInfo[focus()] = {
-	'file': 'os-link.py',
+	'file': 'this_distro.py',
 	'liveAppName': __.thisApp( __file__ ),
- 	'description': 'edit one file and it saves to both',
+ 	'description': 'register distro',
 	'categories': [
-						'os',
-						'file',
-						'link',
-						'os.link',
+						'register',
+						'distro',
 				],
 	'usage': [
 						# 'epy another',
@@ -72,19 +66,19 @@ _.appInfo[focus()] = {
 						# '',
 	],
 	'examples': [
-						_.hp('p os-link -from showdown.min-2.0.0.js-PYTHON.htm -to D:\.rightthumb-widgets\widgets\html\markdown\showdown.min-2.0.0.js-PYTHON.htm '),
+						'p this_distro ',
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
-				       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					   # { 'name': 'name', 'abbreviation': 'n' },
+					   # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					   # 'this',
+					   # 'app',
 	],
 	'notes': [
-				       # {},
+					   # {},
 	],
 }
 
@@ -117,11 +111,13 @@ def registerSwitches( argvProcessForce=False ):
 	appSwitches()
 
 	_.myFileLocation_Print = False
-	_.switches.trigger( 'Files', _.myFileLocations, vs=True )
+	__.myFileLocations_SKIP_VALIDATION = False
+	_.switches.trigger( 'Files', _.myFileLocations )
 	_.switches.trigger( 'Folder', _.myFolderLocations )
 	_.switches.trigger( 'URL', _.urlTrigger )
 	_.switches.trigger( 'Ago', _.timeAgo )
 	_.switches.trigger( 'Duration', _.timeFuture )
+	
 	
 	_.defaultScriptTriggers()
 	_.switches.process()
@@ -154,18 +150,37 @@ _.postLoad( __file__ )
 
 
 def action():
+	if _.isWin:
+		do = "systeminfo | p line --c + \"OS Name\" -p ;. 1 | p line --c > " + _v.tmpf
+		os.system('"' + do + '"')
+		thisDistro = _.getText( _v.tmpf, raw=True, clean=2 )
+		_.saveText( thisDistro, _v.configFile('.distro') )
+		print( thisDistro )
+		
 
-	for i,fro in enumerate( _.switches.values('From') ):
-		if os.path.isfile(fro):
-			fro = os.path.abspath(fro)
-		for to in _.switches.values('To'):
-			if os.path.isfile(to):
-				to = os.path.abspath(to)
-				os.unlink(to)
-
-			os.link( fro, to )
-
-
+	elif not _.isWin:
+		import csv
+		RELEASE_DATA = {}
+		if os.path.isfile('/etc/os-release') and os.path.isfile('/etc/debian_version'):
+			with open('/etc/os-release') as f:
+				reader = csv.reader(f, delimiter="=")
+				for row in reader:
+					if row:
+						RELEASE_DATA[row[0]] = row[1]
+			thisDistro = RELEASE_DATA["NAME"]
+			if RELEASE_DATA["ID"] in ["debian", "raspbian"]:
+				with open('/etc/debian_version') as f:
+					DEBIAN_VERSION = f.readline().strip()
+				major_version = DEBIAN_VERSION.split(".")[0]
+				version_split = RELEASE_DATA["VERSION"].split(" ", maxsplit=1)
+				if version_split[0] == major_version:
+					# Just major version shown, replace it with the full version
+					RELEASE_DATA["VERSION"] = " ".join([DEBIAN_VERSION] + version_split[1:])
+				thisDistro = "{} {}".format(RELEASE_DATA["NAME"], RELEASE_DATA["VERSION"])
+		elif os.path.isfile('/proc/version'):
+			thisDistro = _.getText( '/proc/version', raw=True, clean=2 )
+		_.saveText( thisDistro, _v.configFile('.distro') )
+		print(thisDistro)
 
 
 
@@ -173,7 +188,8 @@ def action():
 ########################################################################################
 if __name__ == '__main__':
 	action()
-	__.isExit()
+
+
 
 
 

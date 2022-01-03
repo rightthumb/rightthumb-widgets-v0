@@ -253,6 +253,7 @@ if __.isWin:
 			techDrive = techDrive.replace('\n','').replace('\r','')
 			techDrive = techDrive.replace('\n','').replace('\r','')
 			open(fileName,'w', encoding='utf-8').write( techDrive )
+w=techDrive
 # elif not __.isWin:
 # 	techDrive = '/opt/RightThumb'
 # 	try:
@@ -1482,5 +1483,5 @@ if not os.path.isdir(myConfig):
 myAppsPy=py
 wprofile = myHome
 doc_sep = '__________________________________________________________________________________'
-
+meta=config_hash
 

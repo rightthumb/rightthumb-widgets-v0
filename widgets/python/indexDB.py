@@ -36,6 +36,10 @@ import _rightThumb._string as _str
 import _rightThumb._mimetype as _mime
 ##################################################
 import sqlite3
+try:
+	import _rightThumb._beep as _beep
+except Exception as e:
+	_beep=None
 ##################################################
 
 def appSwitches():
@@ -415,6 +419,9 @@ def action():
 		_.colorThis( [ 'Created database of meta data for', _.addComma(i), 'files in ', round(time.time()-epoch,2), 'seconds,', round(  (time.time()-epoch)/60 ,1), 'minutes' ], 'yellow' )
 
 	conn.commit()
+	global _beep
+	if not _beep is None:
+		_beep.mission_impossible()
 
 	
 i = 0

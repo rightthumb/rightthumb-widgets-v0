@@ -10,6 +10,7 @@
 # ###########################################################################
 # ## {C3P0D40fAe8B} ##
 
+##################################################
 import os, sys, time
 ##################################################
 import _rightThumb._construct as __
@@ -31,13 +32,27 @@ import _rightThumb._string as _str
 
 def appSwitches():
 	pass
-	_.switches.register( 'From', '-from' )
-	_.switches.register( 'To', '-to' )
-	# _.switches.register( 'Files', '-f,-file,-files','file.txt', isPipe='name,data,clean', description='Files' )
+	### EXAMPLE: START
+	_.switches.register( 'Clean', '--c' )
+	_.switches.register( 'Files', '-f,-file,-files','file.txt', description='Files' )
+	### EXAMPLE: END
 
-
-_.autoBackupData = __.autoCreationConfiguration['backup']
-__.releaseAcquiredData = __.autoCreationConfiguration['logs']
+### EXAMPLE: START
+# _.switches.trigger( 'Files', _.myFileLocations, vs=True )
+# 	finds the file in probable locations
+# 	and 
+# 		if  _.autoBackupData = True
+# 		and __.releaseAcquiredData = True
+# 			GET EPOCH FROM: hosts/hostname/logs/apps/execution_receipt-app_name-epoch.json
+# 		you can run apps on usb at a clients office
+# 			when you get home run: p app -loadepoch epoch 
+# 				backed up
+# 					pipe
+# 					files
+# 					tables
+### EXAMPLE: END
+_.autoBackupData = False
+__.releaseAcquiredData = __.setting('receipt-file')
 __.myFileLocations_SKIP_VALIDATION = False
 __.isRequired_Pipe = False
 __.isRequired_Pipe_or_File = False
@@ -49,14 +64,15 @@ __.switch_raw = []
 
 
 _.appInfo[focus()] = {
-	'file': 'os-link.py',
+	'file': 'scan-big-files.py',
 	'liveAppName': __.thisApp( __file__ ),
- 	'description': 'edit one file and it saves to both',
+	'description': 'Search within large files only loading one line at a time into memory',
 	'categories': [
-						'os',
 						'file',
-						'link',
-						'os.link',
+						'scan',
+						'large',
+						'big',
+						'search',
 				],
 	'usage': [
 						# 'epy another',
@@ -72,7 +88,7 @@ _.appInfo[focus()] = {
 						# '',
 	],
 	'examples': [
-						_.hp('p os-link -from showdown.min-2.0.0.js-PYTHON.htm -to D:\.rightthumb-widgets\widgets\html\markdown\showdown.min-2.0.0.js-PYTHON.htm '),
+						_.hp('p scan-big-files -f pypi-org_simple.txt + json ++ big large huge great'),
 						'',
 	],
 	'columns': [
@@ -98,7 +114,11 @@ _.appData[focus()] = {
 					'table': {'sent': [], 'received': [] }, 
 		},
 	}
+### EXAMPLE: START
+# _.appInfo[focus()]['examples'].append( 'p thisApp -file file.txt' )
 
+# _.appInfo[focus()]['columns'].append( {'name': 'name', 'abbreviation': 'n'} )
+### EXAMPLE: END
 
 
 def registerSwitches( argvProcessForce=False ):
@@ -122,6 +142,12 @@ def registerSwitches( argvProcessForce=False ):
 	_.switches.trigger( 'URL', _.urlTrigger )
 	_.switches.trigger( 'Ago', _.timeAgo )
 	_.switches.trigger( 'Duration', _.timeFuture )
+	### EXAMPLE: START
+	# _.switches.trigger( 'Files',_.inRelevantFolder )	
+	# _.switches.trigger( 'Watched', _.txt2Date )
+	# _.switches.trigger( 'Input',_.formatColumns )
+	# _.switches.trigger( 'Franchise',_.triggerSpace )
+	### EXAMPLE: END
 	
 	_.defaultScriptTriggers()
 	_.switches.process()
@@ -149,31 +175,53 @@ if __name__ == '__main__':
 _.postLoad( __file__ )
 
 ########################################################################################
+### EXAMPLE: START
+# data = _.tables.returnSorted( 'data', 'd.timestamp', data )
+# _.switches.fieldSet( 'Long', 'active', True )
+# _.tables.register( 'data', table )
+# _.tables.fieldProfileSet('data','timestamp','trigger',_.friendlyDate)
+# _.tables.fieldProfileSet('data','phone,email,address','alignment','center')
+# _.tables.print( 'data', 'name' )
+# _.tables.print( 'data', ','.join(_.switches.values('Column')) )
+# _.switches.isActive('Files')
+# p = _.getText( _v.pips, raw=True, clean=True ).split( '\n' )
+# os.system( '"' + do + '"' )
+# _.setPipeData( os.listdir( os.getcwd() ), focus() )
+# _.showLine( item )
+# 	if os.path.isdir( row ):
+# 	if os.path.isfile( row ):
+#	os.path.abspath(path)
+# __.appRegPipe    ( pipe data registerd focus(__.appReg) set by _.myFileLocations {if imported} , default is None )
+# for i,row in enumerate(_.t( _.appData[__.appReg]['pipe'] )):
+# for i,row in _.e( _.isData(r=1) ):
+# date = _.friendlyDate( theDate )
+# _.addComma()
+# 													if platform.system() == 'Windows':
+### EXAMPLE: END
+########################################################################################
 # START
 
 
 
 def action():
+	i=0
+	for file in _.switches.values('Files'):
+		with open(file, 'r') as inF:
+			for line in inF:
+				if _.showLine(line):
+					i+=1
+					print( line.replace('\r','').replace('\n','') )
 
-	for i,fro in enumerate( _.switches.values('From') ):
-		if os.path.isfile(fro):
-			fro = os.path.abspath(fro)
-		for to in _.switches.values('To'):
-			if os.path.isfile(to):
-				to = os.path.abspath(to)
-				os.unlink(to)
-
-			os.link( fro, to )
-
-
-
-
+	if not _.switches.isActive('Clean'):
+		print()
+		_.cp(['',_.addComma(i)],'yellow')
 
 
 ########################################################################################
 if __name__ == '__main__':
 	action()
 	__.isExit()
+
 
 
 

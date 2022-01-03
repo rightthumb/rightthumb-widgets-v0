@@ -24,7 +24,7 @@ if [ -f "$subject_path" ]; then
     $PY $subject_path $@
 else
 	echo "did you mean"
-	$PY $py_file -folder $py_folder + $subject -noext -label ";tApps" -prefix ";t" +close 70
+	$PY $py_file -folder $py_folder + $subject -noext -label ";tApps" -prefix ";t" +close "70"
 fi
 
 

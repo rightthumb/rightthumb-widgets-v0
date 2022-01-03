@@ -14,7 +14,10 @@
 # Internal Speaker Beeping Module for Windows
 #
 import time
-import winsound
+try:
+    import winsound
+except Exception as e:
+    pass
 
 ###
 # Notes Config
@@ -81,6 +84,12 @@ def beep():
     play_note(oct, "g", "half")
 
 def mission_impossible():
+    try:
+        mission_impossible_play()
+    except Exception as e:
+        pass
+
+def mission_impossible_play():
     oct = 3
     play_note(oct, "g", "half")
     play_note(oct, "g", "half")

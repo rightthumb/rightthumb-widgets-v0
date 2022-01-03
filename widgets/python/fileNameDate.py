@@ -180,7 +180,7 @@ def addSuffix( baseName, suffix ):
 	baseName = noExt + suffix + '.' + ext
 	return baseName
 
-def newName( data, info=False, theTime=False, skipSequence=False, addSequence=False, suffix=False ):
+def new_name( data, info=False, theTime=False, skipSequence=False, addSequence=False, suffix=False ):
 	global spent
 	if type(info) == bool:
 		info = _dir.fileInfo( data )
@@ -222,11 +222,11 @@ def newName( data, info=False, theTime=False, skipSequence=False, addSequence=Fa
 	data = dataX
 	if os.path.isfile(n) or n in spent:
 		if not theTime:
-			n = newName( data, info, theTime=True )
+			n = new_name( data, info, theTime=True )
 		elif not skipSequence:
-			n = newName( data, info, theTime=True, skipSequence=True )
+			n = new_name( data, info, theTime=True, skipSequence=True )
 		elif not addSequence:
-			n = newName( data, info, theTime=True, addSequence=True )
+			n = new_name( data, info, theTime=True, addSequence=True )
 		else:
 			n = data
 
@@ -516,8 +516,8 @@ def action():
 					if not thisFolder == info['folder']+_v.slash and thisFolder in info['folder']:
 						pre = info['folder'].replace( thisFolder, '' )
 						preX = pre + _v.slash
-					info['newname'] = preY + preX + info['original']
-					info['name_x'] = preY + preX + info['name']
+					info['new_name'] = preY + preX + info['original']
+					info['old_name'] = preY + preX + info['name']
 					info['row'] = row
 					records.append( info )
 			else:
@@ -535,22 +535,22 @@ def action():
 		records = _.tables.returnSorted( 'data', 'a.date_created_raw', records )
 		if not _.switches.isActive('Undo'):
 			for i,record in enumerate(records):
-				records[i]['newname'] = newName( record['name'], record )
-				record['newname'] = records[i]['newname']
+				records[i]['new_name'] = new_name( record['name'], record )
+				record['new_name'] = records[i]['new_name']
 				# print( record['date_modified'] )
 
 				if not _.switches.isActive( 'Test' ):
-					log = { 'original': record['name'], 'new': record['newname'] , 'folder': record['folder'] , 'path': [], 'epoch': epoch}
+					log = { 'original': record['name'], 'new': record['new_name'] , 'folder': record['folder'] , 'path': [], 'epoch': epoch}
 					log['path'].append( record['path'] )
-					records[i]['newname'] += log['new']
+					records[i]['new_name'] += log['new']
 
 					preX = ''
 					preY = ''
 					if not thisFolder == record['folder']+_v.slash and thisFolder in record['folder']:
 						pre = record['folder'].replace( thisFolder, '' )
 						preX = pre + _v.slash
-					records[i]['newname'] = preY + preX + log['new']
-					records[i]['name_x'] = preY + preX + log['original']
+					records[i]['new_name'] = preY + preX + log['new']
+					records[i]['old_name'] = preY + preX + log['original']
 					
 					try:
 						os.rename( log['path'][0], record['folder'] +_v.slash+ log['new'] )
@@ -567,11 +567,11 @@ def action():
 		_.switches.fieldSet( 'Long', 'active', True )
 		_.tables.register( 'data', records )
 		if not _.switches.isActive( 'Test' ):
-			_.tables.print( 'data', 'name_x,newname' )
+			_.tables.print( 'data', 'old_name,new_name' )
 			print()
 			_.saveTable( data, 'fileNameDate_log.json' )
 		else:
-			_.tables.print( 'data', 'name_x,newname,original' )
+			_.tables.print( 'data', 'old_name,new_name,original' )
 
 
 
@@ -585,8 +585,6 @@ epoch = time.time()
 ########################################################################################
 if __name__ == '__main__':
 	action()
-
-
 
 
 

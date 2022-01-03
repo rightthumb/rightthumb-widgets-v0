@@ -41,7 +41,7 @@ import _rightThumb._string as _str
 def appSwitches():
 	pass
 	_.switches.register( 'Files', '-f,-file,-files','file.txt', isPipe=True,  description='Files' )
-	_.switches.register( 'Lines', '-lines' )
+	_.switches.register( 'Lines', '-l,-lines' )
 	_.switches.register( 'Head', '-head' )
 
 

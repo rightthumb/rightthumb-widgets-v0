@@ -670,6 +670,7 @@ def make(string):
 		i = 0
 		stringTMP = string
 		string = ' '.join( _.switches.values('Make') )
+		string = _str.replaceAll(string,"''",'"')
 		string = _str.replaceAll(string,";'",'"')
 		string = _str.replaceAll(string,"\\n",'\n')
 		string = _str.replaceAll(string,";n",'\n')
