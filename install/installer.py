@@ -3030,6 +3030,7 @@ alias vps3.dt="ssh -L 59000:localhost:5900 -C -N -l scott mandalore.eyeformeta.c
 alias vps3.dt2="ssh -L 59001:localhost:5901 -C -N -l scott mandalore.eyeformeta.com"
 
 alias .git="git clone https://github.com/rightthumb/rightthumb-widgets-v0"
+alias .git.="rm -rf rightthumb-widgets-v0 ; git clone https://github.com/rightthumb/rightthumb-widgets-v0 ; cd rightthumb-widgets-v0 ; chmod 777 -R . ; p shClean -folder -r"
 alias vps.py="scp  /mnt/d/.rightthumb-widgets/widgets/python/vps*.py root@hoth.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/python/"
 alias vps2.py="scp  /mnt/d/.rightthumb-widgets/widgets/python/vps*.py root@bespin.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/python/"
 alias vps3.py="scp  /mnt/d/.rightthumb-widgets/widgets/python/vps*.py root@mandalore.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/python/"
