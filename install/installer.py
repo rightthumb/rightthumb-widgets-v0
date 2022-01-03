@@ -3035,7 +3035,8 @@ alias vps2.py2="scp  /opt/rightthumb-widgets-v0/widgets/python/vps*.py root@besp
 alias vps3.py2="scp  /opt/rightthumb-widgets-v0/widgets/python/vps*.py root@mandalore.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/python/"
 
 
-alias .installer='wget https://raw.githubusercontent.com/rightthumb/rightthumb-widgets-v0/main/install/installer.py > $widgets/install/installer.py'
+alias .installer='rm $widgets/install/installer.py ; wget https://raw.githubusercontent.com/rightthumb/rightthumb-widgets-v0/main/install/installer.py -O $widgets/install/installer.py ; chmod 777 $widgets/install/installer.py ; python3 $widgets/install/installer.py -rc.d h'
+alias .installer.s='sudo rm $widgets/install/installer.py ; wget https://raw.githubusercontent.com/rightthumb/rightthumb-widgets-v0/main/install/installer.py -O $widgets/install/installer.py ; chmod 777 $widgets/install/installer.py ; python3 $widgets/install/installer.py -rc.d h'
 
 
 alias watch.vnc="$widgets/widgets/bash/vnc_watch.sh> /dev/null 2>&1 & "
