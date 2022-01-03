@@ -940,6 +940,15 @@ class HD:
 	def saveText( self, rows, theFile, errors=True ):
 		theFile=theFile.replace(os.sep+os.sep,os.sep)
 		# print(vc.STR.printable)
+		# v.f.mkdir
+		if os.sep in theFile:
+			parts = theFile.split(os.sep)
+			parts.reverse()
+			parts.pop(0)
+			parts.reverse()
+			v.f.mkdir(os.sep.join(parts))
+
+
 		vc.HD.chmod(theFile)
 		# print(type(rows))
 		try:
@@ -2991,6 +3000,9 @@ alias vps.ssh="ssh scott@vps.rightthumb.com"
 alias vps2.ssh="ssh scott@vps2.rightthumb.com"
 alias v="ssh scott@vps.rightthumb.com"
 alias vv="ssh scott@vps2.rightthumb.com"
+alias reph.us="ssh thisreph@reph.us"
+alias rt="ssh vy2ehn4azpfl@23.229.227.201"
+
 
 alias vps.mongo="ssh -L 27017:localhost:27017 -C -N -l scott vps1.rightthumb.com"
 alias vps.mongo1="ssh -L 2701:localhost:27017 -C -N -l scott vps1.rightthumb.com"
@@ -3006,6 +3018,10 @@ alias vps2.dt2="ssh -L 59001:localhost:5901 -C -N -l scott vps2.rightthumb.com"
 alias .git="git clone https://github.com/rightthumb/rightthumb-widgets-v0"
 alias vps.py="scp  /mnt/d/.rightthumb-widgets/widgets/python/vps*.py root@vps.rightthumb.com:/opt/rightthumb-widgets-v0/widgets/python/"
 alias vps2.py="scp  /mnt/d/.rightthumb-widgets/widgets/python/vps*.py root@vps2.rightthumb.com:/opt/rightthumb-widgets-v0/widgets/python/"
+
+alias vps.py2="scp  /opt/rightthumb-widgets-v0/widgets/python/vps*.py root@vps.rightthumb.com:/opt/rightthumb-widgets-v0/widgets/python/"
+alias vps2.py2="scp  /opt/rightthumb-widgets-v0/widgets/python/vps*.py root@vps2.rightthumb.com:/opt/rightthumb-widgets-v0/widgets/python/"
+
 
 
 
@@ -3081,6 +3097,7 @@ class Bookmarks:
 						v.home +os.sep+ '.rt' +os.sep+ 'profile' +os.sep+ 'tables',
 						v.home +os.sep+ '.rt' +os.sep+ 'profile' +os.sep+ 'temp',
 						v.home +os.sep+ '.rt' +os.sep+ 'profile' +os.sep+ 'projects',
+						v.home +os.sep+ '.rt' +os.sep+ 'profile' +os.sep+ 'vars',
 		]
 		for folder in folders:
 			v.f.mkdir(folder)
