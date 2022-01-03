@@ -1967,6 +1967,11 @@ pr-|{6FAB5628-94A1-410A-82D1-1D42A2A11750}/.rt/profile/projects"""
 					color='cyan'
 			cp([comment,vc.DIR.formatSize(me),v.home+os.sep+'.rt'+os.sep+'.config.hash'],color)
 			# print(color)
+		print()
+		print('suggestion:')
+		print('    echo "alias crontab=\'EDITOR=nano /usr/bin/crontab\'" >> ~/.bashrc')
+		print()
+
 		return export
 
 
@@ -3030,9 +3035,12 @@ alias vps2.py2="scp  /opt/rightthumb-widgets-v0/widgets/python/vps*.py root@besp
 alias vps3.py2="scp  /opt/rightthumb-widgets-v0/widgets/python/vps*.py root@mandalore.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/python/"
 
 
+alias installer='wget https://raw.githubusercontent.com/rightthumb/rightthumb-widgets-v0/main/install/installer.py > $widgets/install/installer.py'
 
 
 alias watch.vnc="$widgets/widgets/bash/vnc_watch.sh> /dev/null 2>&1 & "
+
+
 
 			"""
 			return self.file( path, data, { 'status': 'virtual' } )
