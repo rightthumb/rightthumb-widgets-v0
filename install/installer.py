@@ -3039,9 +3039,11 @@ alias vps2.py2="scp  /opt/rightthumb-widgets-v0/widgets/python/vps*.py root@besp
 alias vps3.py2="scp  /opt/rightthumb-widgets-v0/widgets/python/vps*.py root@mandalore.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/python/"
 
 
-alias .installer='rm $widgets/install/installer.py ; wget https://raw.githubusercontent.com/rightthumb/rightthumb-widgets-v0/main/install/installer.py -O $widgets/install/installer.py ; chmod 777 $widgets/install/installer.py ; python3 $widgets/install/installer.py -rc.d h'
-alias .installer.s='sudo rm $widgets/install/installer.py ; wget https://raw.githubusercontent.com/rightthumb/rightthumb-widgets-v0/main/install/installer.py -O $widgets/install/installer.py ; chmod 777 $widgets/install/installer.py ; python3 $widgets/install/installer.py -rc.d h'
+alias .installer='cat ~/.bashrc > ~/.bashrc.bk ; echo "" > ~/.bashrc ; rm $widgets/install/installer.py ; wget https://raw.githubusercontent.com/rightthumb/rightthumb-widgets-v0/main/install/installer.py -O $widgets/install/installer.py ; chmod 777 $widgets/install/installer.py ; python3 $widgets/install/installer.py -rc.d h'
+alias .installer.s='sudo cat ~/.bashrc > ~/.bashrc.bk ; echo "" > ~/.bashrc ; rm $widgets/install/installer.py ; wget https://raw.githubusercontent.com/rightthumb/rightthumb-widgets-v0/main/install/installer.py -O $widgets/install/installer.py ; chmod 777 $widgets/install/installer.py ; python3 $widgets/install/installer.py -rc.d h'
 
+alias ..b='cd /opt ; cd rightthumb-widgets-v0 ; m w ; cd install/ ; m in ; cd .. ; cd widgets/ ; m ww ; cd python/ ; m py ; cd .. ; cd bash/ ; m b ; m bash ; cd .. ; cd databank/ ; m db ; cd tables/ ; m ttt ; cd ; cd .rt ; m rt ; cd profile/ ; m h ; cd tables/ ; m tt ; cd .. ; cd config/ ; m config ; m c ; cd .. ; cd projects/ ; m pr ; cd'
+alias ...b='cd rightthumb-widgets-v0 ; m w ; cd install/ ; m in ; cd .. ; cd widgets/ ; m ww ; cd python/ ; m py ; cd .. ; cd bash/ ; m b ; m bash ; cd .. ; cd databank/ ; m db ; cd tables/ ; m ttt ; cd ; cd .rt ; m rt ; cd profile/ ; m h ; cd tables/ ; m tt ; cd .. ; cd config/ ; m config ; m c ; cd .. ; cd projects/ ; m pr ; cd'
 
 alias watch.vnc="$widgets/widgets/bash/vnc_watch.sh> /dev/null 2>&1 & "
 
