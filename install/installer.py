@@ -3048,9 +3048,15 @@ alias ...b='cd rightthumb-widgets-v0 ; m w ; cd install/ ; m in ; cd .. ; cd wid
 
 alias watch.vnc="$widgets/widgets/bash/vnc_watch.sh> /dev/null 2>&1 & "
 
+alias rr='sudo su root'
 
+#  ssh-keygen -t rsa
+#  ssh-copy-id -i ~/.ssh/id_rsa.pub scott@hoth.eyeformeta.com
+
+# hoth bespin mandalore
 
 			"""
+			# echo "alias rr='sudo su root'" >> ~/.bashrc
 			return self.file( path, data, { 'status': 'virtual' } )
 			
 
