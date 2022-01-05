@@ -1,5 +1,4 @@
 #!/bin/bash
-
 # ## {R2D2919B742E} ##
 # ###########################################################################
 # What if magic existed?
@@ -9,22 +8,9 @@
 #    - Scott Taylor Reph, RightThumb.com
 # ###########################################################################
 # ## {C3P0D40fAe8B} ##
-
-# SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
-# SCRIPT_DIR="${SCRIPT_DIR/bash\/nav/bash}"
-# echo $SCRIPT_DIR
-# source  "$SCRIPT_DIR/load-vars.sh"
-# echo $widgets
-subject=$1
-shift
-subject_path=$widgets/widgets/python/$subject.py
+p=$1
+subject_path=$widgets/widgets/python/vps-dl.py
 py_file=$widgets/widgets/python/file.py
 py_folder=$widgets/widgets/python/
-if [ -f "$subject_path" ]; then
-    $PY $subject_path $@
-else
-	echo "did you mean"
-	$PY $py_file -folder $py_folder + $subject -noext -label ";tApps" -prefix ";t" +close "75"
-fi
-
-
+echo $PY $subject_path -host hoth -path $p
+# alias dl.h='/mnt/d/.rightthumb-widgets/widgets/bash/vps/dl-hoth.sh'

@@ -241,7 +241,7 @@ def action():
 
 import _rightThumb._tar as _tar
 
-import xtarfile
+# import xtarfile
 
 
 ########################################################################################

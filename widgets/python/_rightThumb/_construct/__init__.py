@@ -171,16 +171,18 @@ def isExit():
 		on_exit_subjects[subject]()
 
 
-def path( p, ab=True, pop=False, file=False ):
+def path( p, ab=True, pop=False, file=False, slash=None ):
 	# os = vc.FIG.imp('os')
 	os = imp('os')
+	if slash is None:
+		slash = os.sep
 	if not p:
 		return p
 	# print(p)
-	p = p.replace( chr(92), os.sep )
-	p = p.replace( chr(47), os.sep )
-	while os.sep+os.sep in p:
-		p = p.replace(os.sep+os.sep,os.sep)
+	p = p.replace( chr(92), slash )
+	p = p.replace( chr(47), slash )
+	while slash+slash in p:
+		p = p.replace(slash+slash,slash)
 	if ab:
 		try:
 			p = os.path.abspath(p)
@@ -193,11 +195,21 @@ def path( p, ab=True, pop=False, file=False ):
 	if type(p) == str and p[1] == ':':
 		p = p[0].upper() + p[1:]
 	if type(p) == str and ( pop or file ):
-		parts = p.split(os.sep)
+
+		if type(pop) == int:
+			i=0
+			while not i == pop:
+				i+=1
+				p = path( p, pop=True, slash=slash )
+				# print(p)
+			if file:
+				p = path( p, file=True, slash=slash )
+			return p
+		parts = p.split(slash)
 		parts.reverse()
 		f = parts.pop(0)
 		parts.reverse()
-		p = str(os.sep).join(parts)
+		p = str(slash).join(parts)
 		if file:
 			p = f
 	return p
@@ -213,29 +225,6 @@ def file( p ):
 	f = parts.pop(0)
 	return f
 
-class data_default:
-	# __.data_default(file=theFile,default=[])
-	def __init__( self, file, default ):
-		self.dics = 'index,indexes,dex,ls,hash,hashes,tables,logs,lists,indices,meta,setting,settings'
-		self.lists = 'table,cache,log,list'
-		self.file = file
-		self.default_result = default
-	def default( self ):
-		for x in self.dics.split(','):
-			if self.file.lower().endswith( '.'+x ):
-				return {}
-		for x in self.lists.split(','):
-			if self.file.lower().endswith( '.'+x ):
-				return []
-
-		for x in self.dics.split(','):
-			if self.file.lower().endswith( '.'+x+'.json' ):
-				return {}
-		for x in self.lists.split(','):
-			if self.file.lower().endswith( '.'+x+'.json' ):
-				return []
-
-		return self.default_result
 
 def getTable( file ):
 	os = imp('os')
@@ -394,22 +383,98 @@ appInfoScan = False # appInfo.py
 # __.constructRegistration(_.appInfo[blank.focus(focus())]['file'],blank.focus(focus()))
 
 
+class data_default:
+	# __.data_default(file=theFile,default=[])
+	def __init__( self, file, default ):
+		self.dics = 'index,indexes,dex,ls,hash,hashes,tables,logs,lists,indices,meta,setting,settings,dic'
+		self.lists = 'table,cache,log,list,json,config'
+		self.file = file
+		self.default_result = default
+	def default( self ):
+
+		for x in self.dics.split(','):
+			if self.file.lower().endswith( '.'+x+'.json' ):
+				return {}
+		for x in self.lists.split(','):
+			if self.file.lower().endswith( '.'+x+'.json' ):
+				return []
+
+		for x in self.dics.split(','):
+			if self.file.lower().endswith( '.'+x ):
+				return {}
+		for x in self.lists.split(','):
+			if self.file.lower().endswith( '.'+x ):
+				return []
+		return self.default_result
+# return __.data_default(file=theFile,default=[]).default()
 
 
+class file_headers:
+	# __.data_default(file=theFile,default=[])
+	def __init__( self, path, default='' ):
+		self.watermark = '''
+## {R2D2919B742E} ##
+###########################################################################
+What if magic existed?
+What if a place existed where your every thought and dream come to life.
+There is only one catch: it has to be written down.
+Such a place exists, it is called programming.
+   - Scott Taylor Reph, RightThumb.com
+###########################################################################
+## {C3P0D40fAe8B} ##
+
+'''.replace('\r','')
+		self.path = path
+		self.headers = {
+							'.sh': '#!/bin/bash\n',
+							'.py': '#!/usr/bin/python3\n',
+							'.bat': '@echo off\n',
+							'.html': {'url':'https://apps.eyeformeta.com/templates/html/0.htm'},
+							'.htm':  {'url':'https://apps.eyeformeta.com/templates/html/1.htm'},
+							# '.php':  {'url':'https://apps.eyeformeta.com/templates/html/1.htm'},
+		}
+		self.comment = {
+							# '.js': '//',
+							'.sh': '#',
+							'.py': '#',
+							'.bat': 'rem',
+		}
+		# self.nospace=['.sh']
+		self.nospace=[]
+		self.default_result = default
+	def add_watermark(self,code):
+		for ext in self.comment:
+			if self.path.endswith(ext):
+				for line in self.watermark.split('\n'):
+					if len( line.replace(' ','').replace('\t','') ):
+						code+=self.comment[ext]+' '+line+'\n'
+					else:
+						code+='\n'
+		for ext in self.nospace:
+			if self.path.endswith(ext):
+				import _rightThumb._string as _str
+				code = _str.cleanBE(code,' ')
+				code = _str.cleanBE(code,'\n')
+				code = _str.replaceDuplicate(code,'\n')
+				code = _str.cleanBE(code,'\n')
+				code = _str.cleanBE(code,' ')
+				code+='\n'
+
+		return code
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	def default( self ):
+		for ext in self.headers:
+			if self.path.endswith(ext):
+				if type(self.headers[ext]) == dict:
+					try:
+						import requests
+						page = requests.get(self.headers[ext]['url'])
+						return page.content.decode("utf-8")
+					except Exception as e:
+						return self.add_watermark(self.default_result)
+						
+				return self.add_watermark(self.headers[ext])
+		return self.add_watermark(self.default_result)
+# __.file_headers(path).default()
 

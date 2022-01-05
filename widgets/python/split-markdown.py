@@ -34,7 +34,7 @@ def appSwitches():
 	pass
 	### EXAMPLE: START
 	# _.switches.register( 'Input', '-i' )
-	# _.switches.register( 'Files', '-f,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=True )
+	_.switches.register( 'Files', '-f,-file,-files','file.txt', isData='glob', description='Files', isRequired=True )
 	### EXAMPLE: END
 
 ### EXAMPLE: START
@@ -88,15 +88,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
-				       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					   # { 'name': 'name', 'abbreviation': 'n' },
+					   # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					   # 'this',
+					   # 'app',
 	],
 	'notes': [
-				       # {},
+					   # {},
 	],
 }
 
@@ -197,21 +197,72 @@ _.postLoad( __file__ )
 ########################################################################################
 # START
 
+def get_title_clean(data):
+	data = data.replace('\r','')
+	data = _str.cleanBE( data, ' ' )
+	data = _str.cleanBE( data, '\t' )
+	data = _str.cleanBE( data, '\n' )
+	return data
+
+def cleanup(data):
+	data = get_title_clean(data)
+	data = get_title_clean(data)
+	data = get_title_clean(data)
+	data = get_title_clean(data)
+	return data
+
+def get_title(data):
+	data = cleanup(data)
+	data = data.split('\n')[0]
+	data = data.replace('#','')
+	data = get_title_clean(data)
+	data = get_title_clean(data)
+	data = _str.replaceDuplicate(data,' ')
+	return data
+
+
+def filename(folder,subject):
+	_v.mkdir(folder)
+	fn=''
+	for ch in get_title(subject):
+		if ch in ' 0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_[]()':
+			fn+=ch
+	fn = fn.replace(' ','-')
+	xXx = folder+os.sep+fn+'.md'
+	if os.path.isfile(xXx):
+		xXx = folder+os.sep+fn+'-'+_.miniUUID().replace('{','').replace('}','')+'.md'
+	xXx = xXx.replace('/',os.sep)
+	xXx = xXx.replace('\\',os.sep)
+	xXx = xXx.replace(os.sep+os.sep,os.sep)
+	xXx = xXx.replace(os.sep+os.sep,os.sep)
+	xXx = xXx.replace(os.sep+os.sep,os.sep)
+	return xXx
+
+
+def process(path):
+	path=__.path(path)
+	file = _.getText(path,raw=True).replace('\r','')
+	folder=_v.popFile(path)
+	for subject in file.split('----'):
+		print(subject)
+		print()
+		ask=input('path: ')
+		ask=ask.replace('/',os.sep)
+		ask=ask.replace('\\',os.sep)
+		if not ask=='':
+			p=filename(folder+os.sep+ask,subject)
+			_.saveText(subject,p)
+
+
+
+
 
 
 def action():
-	# should be   Single-Task   OR   Imply-Architecture-Functions   OR   CLASSES!!
-	load()
-	global data
-
-	for i,row in enumerate( _.isData(r=1) ):
-		print(row)
+	for i,path in enumerate( _.isData(r=1) ):
+		process(path)
 
 
-
-def load():
-	global data
-	data = _.getTable( 'table' )
 
 
 

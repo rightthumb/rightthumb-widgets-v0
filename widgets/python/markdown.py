@@ -152,7 +152,221 @@ _.postLoad( __file__ )
 
 ########################################################################################
 # START
+########################################################################################  ########################################################################################
+# webserver start
 
+
+import os,sys
+from http.server import BaseHTTPRequestHandler, HTTPServer
+from cgi import parse_header, parse_multipart
+from urllib.parse import parse_qs
+import random
+host = "localhost"
+port = random.randint(8000,8999)
+
+hello_msg = "Server running..."
+
+def get_title_clean(data):
+	data = data.replace('\r','')
+	data = _str.cleanBE( data, ' ' )
+	data = _str.cleanBE( data, '\t' )
+	data = _str.cleanBE( data, '\r' )
+	return data
+
+def get_title(data):
+	data = get_title_clean(data)
+	data = get_title_clean(data)
+	data = get_title_clean(data)
+	data = get_title_clean(data)
+	data = data.split('\n')[0]
+	data = data.replace('#','')
+	data = get_title_clean(data)
+	data = get_title_clean(data)
+	data = _str.replaceDuplicate(data,' ')
+	return data
+
+class Server(BaseHTTPRequestHandler):
+    def _set_headers(self):
+        self.send_response(200)
+        self.send_header('Content-type', 'text/html')
+        self.end_headers()
+
+    def do_GET(self):
+        self.respond_OK(hello_msg)
+
+    def do_POST(self):
+        print("Post")
+
+        data = self.parse_POST()
+
+        # print(data)
+        # print(type(data))
+        # print(str(data[b'butt'][0]))
+        shutdown=str( data[b'shutdown'][0] ,'iso-8859-1')
+        if shutdown=='yes':
+        	result='file not saved'
+        else:
+
+	        global filesOpened
+	        if len(filesOpened) > 1:
+	        	path = __.path(filesOpened[0])
+	        	parts=path.split(os.sep)
+	        	parts.reverse()
+	        	parts.pop(0)
+	        	parts.reverse()
+	        	folder = os.sep.join(parts)
+	        	fn=''
+	        	for ch in get_title(file):
+	        		if ch in ' 0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_[]()':
+	        			fn+=ch
+	        	fn = fn.replace(' ','-')
+	        	xXx = folder+os.sep+fn+'.md'
+	        	if os.path.isfile(xXx):
+	        		xXx = folder+os.sep+fn+'-'+_.miniUUID().replace('{','').replace('}','')+'.md'
+	        	path = xXx
+
+
+	        result='file saved'
+	        file=str( data[b'file'][0] ,'iso-8859-1').replace('\r','')
+	        path=str( data[b'path'][0] ,'iso-8859-1')
+	        html=str( data[b'html'][0] ,'iso-8859-1')
+	        if len(html) > 4:
+	        	result='files saved'
+	        	HTML = '''<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>THE_TITLE</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<link href='https://eyeformeta.com/apps/showdown/style.css' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Old+Standard+TT:400,400italic,700' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,600' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.2/css/foundation.min.css">
+	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+	<!-- <META http-equiv="refresh" content="1;URL=/?"> -->
+	<style type="text/css">
+		#markdown-html {
+		    width: 80%;
+		    margin-left: auto;
+		    margin-right: auto;
+		}
+    </style>
+
+</head>
+
+<body>
+	<div id="markdown-html">CODE_HERE</div>
+</body>
+
+</html>'''
+
+	        	HTML = HTML.replace('THE_TITLE',get_title(file))
+	        	HTML = HTML.replace('CODE_HERE',html)
+	        	webbrowser.open(path[:-2]+'htm', new=2)
+	        	_.saveText( HTML,path[:-2]+'htm' )
+
+
+	        _.saveText( file,path )
+	        _.cp(['saved:',path],'green')
+
+        self.respond_OK('''
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,600' rel='stylesheet' type='text/css'>
+	<title>saved</title>
+	<meta charset="utf-8">
+	<!-- <META http-equiv="refresh" content="1;URL=/?"> -->
+	<style type="text/css">
+body {
+	background-image: url('https://eyeformeta.com/img/bk/dragon-bk.png');
+	background-repeat: no-repeat;
+	background-attachment: fixed;  
+	background-size: cover;
+	color: #fff;
+	font-family: 'Open Sans', 'Myriad Pro', 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Geneva, Verdana, sans-serif;
+	background-position: center;
+	font-size: 400%;
+}
+
+.boxH
+{
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* content of this box will be centered vertically */
+.boxV
+{
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+	</style>
+</head>
+
+<body>
+		<div>
+		</div>
+		<div class="boxH">
+		  <div class="boxV">
+		    <div class="boxM">
+		      THE_RESULT
+		    </div>
+		  </div>
+		</div>
+</body>
+
+</html>
+
+        	'''.replace('THE_RESULT',result))
+
+        sys.exit()
+
+
+    def parse_POST(self):
+        ctype, pdict = parse_header(self.headers['content-type'])
+        if ctype == 'multipart/form-data':
+            postvars = parse_multipart(self.rfile, pdict)
+        elif ctype == 'application/x-www-form-urlencoded':
+            length = int(self.headers['content-length'])
+            postvars = parse_qs(
+                    self.rfile.read(length), 
+                    keep_blank_values=1)
+        else:
+            postvars = {}
+
+    
+        return postvars
+
+    def respond_OK(self, msg):
+        self.send_response(200)
+        self.send_header("Content-type", "text/html")
+        self.end_headers()
+        self.wfile.write(bytes(msg, "utf-8"))
+
+def START_WEBSERVER():
+    webServer = HTTPServer((host, port), Server)
+    print("Server started http://%s:%s" % (host, port))
+
+    try:
+        webServer.serve_forever()
+    except KeyboardInterrupt:
+        pass
+
+    webServer.server_close()
+    print("Server stopped.")
+
+# webserver end
+########################################################################################  ########################################################################################
 def getFolder(folder):
 	global base
 	if base is None:
@@ -177,16 +391,20 @@ markdown = []
 filesOpened = []
 filesOpened_cnt = 0
 ask=None
+THE_PATH=''
 
 def openFile(path):
+	global THE_PATH
+	THE_PATH = __.path(path)
 	print(path)
+
 	global filesOpened
 	if not path in filesOpened:
 		filesOpened.append(path)
 
-		_file_open.switch('App',_v.meta['code_editor'])
-		_file_open.switch('Files',path)
-		_file_open.action()
+		# _file_open.switch('App',_v.meta['code_editor'])
+		# _file_open.switch('Files',path)
+		# _file_open.action()
 
 def processFile(path):
 	global ask
@@ -226,6 +444,7 @@ def processFile(path):
 	markdown.append( sep.replace('FILE_PATH',path.replace(base+os.sep,'')) + _.getText( path, raw=True ) )
 base=None
 def action():
+	_.switches.fieldSet( 'GUI-Edit', 'active', True )
 	global markdown
 	global sep
 	sep='''
@@ -251,7 +470,13 @@ def action():
 	if _.switches.isActive('Files'):
 		base = os.getcwd()
 		for path in _.switches.values('Files'):
-			processFile(path)
+			if os.path.isdir(path):
+				getFolder(path)
+			else:
+				try:
+					processFile(path)
+				except Exception as e:
+					pass
 
 	if _.switches.isActive('Recursive'):
 		_.switches.fieldSet( 'Folder', 'active', True )
@@ -264,19 +489,21 @@ def action():
 
 		getFolder(folder)
 
-	else:
-		base = os.getcwd()
-		_.pipeCleaner(0)
-		for i,row in enumerate(_.isData(r=1)):
-			processFile(row)
+	# else:
+	# 	base = os.getcwd()
+	# 	_.pipeCleaner(0)
+	# 	for i,row in enumerate(_.isData(r=1)):
+	# 		processFile(row)
 
 	if _.switches.isActive('GUI-Edit'):
 		delim='\n\n-----\n\n'
 	else:
 		delim=''
-
-	_.saveText( html.replace( 'MARKDOWN_HERE', delim.join(markdown) ), save )
+	global THE_PATH
+	global port
+	_.saveText( html.replace( 'MARKDOWN_HERE', delim.join(markdown) ).replace( 'PATH_HERE', THE_PATH ).replace( '8080', str(port) ), save )
 	webbrowser.open(save, new=2)
+	START_WEBSERVER()
 
 import webbrowser
 _file_open = _.regImp( __.appReg, 'file-open' )

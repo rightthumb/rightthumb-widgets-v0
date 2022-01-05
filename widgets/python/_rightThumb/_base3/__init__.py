@@ -403,6 +403,7 @@ class dot:
     def __init__( self ):
         pass
 
+__.tableLine = 'BEE22BBA'
 v = dot()
 v.isData = {}
 v.opened_file_me = {}
@@ -2722,13 +2723,21 @@ def isData( data=None, focus=None, pipeClean=True, required=False,     r=None, c
                     elif isD == 'name':
                         for n in switches.values(name):
                             data.append(name)
-                    elif isD == 'glob':
+                    elif isD == 'glob' and 'data' in v.isData[name]:
                         for n in switches.values(name):
                             for f in glob.glob( n ):
                                 f = __.path(f)
                                 if os.path.isfile(f):
                                     for xXx in getText( f, raw=True ).split('\n'):
                                         data.append(xXx)
+                    elif isD == 'glob':
+                        for n in switches.values(name):
+                            # print(n)
+                            for f in glob.glob( n ):
+                                f = __.path(f)
+                                if os.path.isfile(f):
+                                    data.append(f)
+
                     elif isD == 'data':
                         tData=[]
                         for n in switches.values(name):
@@ -4877,13 +4886,13 @@ def colorizeRow( row, tableID=False, prefix='', prefixColor='', haltColorShift=F
         # print( str(len(row))+colorID( tableID, up ) + row + Background.end )
         if colorizeRow_last is None or not haltColorShift:
             colorizeRow_last = colorID( tableID, up )
-        if not pipe_break or not '|' in row:
+        if not pipe_break or not __.tableLine in row:
             print( prefix + colorizeRow_last + row + Background.end )
         else:
             sep = colorThis( ' ', 'red', p=0 )
             line = prefix + sep
             parts=[]
-            for part in row.split('|'):
+            for part in row.split(__.tableLine):
                 parts.append( colorizeRow_last + part + Background.end )
                 
             line += sep.join(parts) + sep
@@ -11369,7 +11378,7 @@ class Table:
         # print(self.asset)
         self.isExtraRecord_0001 = {}
         self.isExtraRecord_000x = ''
-        tableLine = '|'
+        tableLine = __.tableLine
         if l is None:
             if switches.isActive('NoTableLines'):
                 tableLine = ''

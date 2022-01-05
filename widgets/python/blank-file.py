@@ -28,18 +28,12 @@ _.load()
 import _rightThumb._vars as _v
 import _rightThumb._string as _str
 ##################################################
-import shutil
-##################################################
 
 def appSwitches():
 	pass
-	_.switches.register( 'Prefix', '-p,-prefix', 'dnd' )
-	_.switches.register( 'Suffix', '-x,-suffix', 'client' )
-	_.switches.register( 'Files', '-f,-file,-files','file.txt', isData='glob,name,data,clean', description='Files' )
-	_.switches.register( 'Folder', '-o,-folder' )
-	_.switches.register( 'Recursive', '-r,-recursive' )
+	_.switches.register( 'Files', '-f,-file,-files' )
 
-_.autoBackupData = False
+_.autoBackupData = __.setting('receipt-log')
 __.releaseAcquiredData = __.setting('receipt-file')
 __.myFileLocations_SKIP_VALIDATION = False
 __.isRequired_Pipe = False
@@ -52,14 +46,17 @@ __.switch_raw = []
 
 
 _.appInfo[focus()] = {
-	'file': 'rename-prefix-suffix.py',
+	'file': 'blank-file.py',
 	'liveAppName': __.thisApp( __file__ ),
-	'description': 'Rename file with prefix or suffix',
+ 	'description': 'create blank file with header or template',
 	'categories': [
-						'rename',
-						'prefix',
+						'.sh',
+						'.bat',
+						'.htm',
+						'.html',
 						'file',
-						'suffix',
+						'template',
+						'blank',
 				],
 	'usage': [
 						# 'epy another',
@@ -75,7 +72,10 @@ _.appInfo[focus()] = {
 						# '',
 	],
 	'examples': [
-						_.hp('p thisApp -file file.txt'),
+						_.hp(''),
+						_.hp('bl dl.sh'),
+						_.hp(''),
+						_.hp('p blank-file -f index.htm'),
 						'',
 	],
 	'columns': [
@@ -120,7 +120,7 @@ def registerSwitches( argvProcessForce=False ):
 	appSwitches()
 
 	_.myFileLocation_Print = False
-	_.switches.trigger( 'Files', _.myFileLocations, vs=True )
+	# _.switches.trigger( 'Files', _.myFileLocations, vs=True )
 	# _.switches.trigger( 'Folder', _.myFolderLocations )
 	_.switches.trigger( 'URL', _.urlTrigger )
 	_.switches.trigger( 'Ago', _.timeAgo )
@@ -154,79 +154,73 @@ _.postLoad( __file__ )
 ########################################################################################
 # START
 
-def rename(a,b):
-	print()
-	print(a)
-	print(b)
-	print()
-	shutil.move(a,b)
+def confirm():
+    _.cp( _.linePrint(txt='*',p=0), 'red' )
+    _.cp( [ '  \t', 'ABOUT TO ERASE FILE!!!!!!!!!' ], 'yellow' )
+    _.cp( _.linePrint(txt='*',p=0), 'red' )
+    
+        
+
 
 def process(path):
-	path = __.path(path)
-	if not os.path.isfile(path):
-		return None
-	if not os.sep in path:
-		file = path
-		folder = ''
-	else:
-		tmp = path.split(os.sep)
-		tmp.reverse()
-		file = tmp[0]
-		folder = path[:-len(file)]
-		# dic={'i':file,'o':folder}
-		# print(dic)
-	pass
-
-	if _.switches.isActive('Suffix'):
-		if not '.' in file:
-			file = file + _.switches.values('Suffix')[0]
-		else:
-			tmp = path.split('.')
-			tmp.reverse()
-			ext = tmp[0]
-			fi = path[:-len(ext)+1]
-			fi = fi + _.switches.values('Suffix')[0]
-			file = fi +'.'+ ext
-
-	pass
-	if _.switches.isActive('Prefix'):
-		file = _.switches.values('Prefix')[0] + file
-	pass
-	rename(path,folder+file)
-
-
-
-def getFolder(folder,r=False):
-	if not os.path.isdir(folder):
-		return None
-	for file in os.listdir(folder):
-		path = folder +os.sep+ file
-		if os.path.isfile(path):
-			process(path)
-		elif r:
-			getFolder(path,r)
-			
-
-
+	if os.sep in path:
+		_v.dir_check_create( _v.popFile(path) )
+	if os.path.isfile(path):
+		_.cp('The file already exists!!','red')
+		ask=input('   clear? Y/n/o:').lower()
+		if 'o' in ask:
+			editor(path)
+			return None
+		if 'n' in ask:
+			return None
+		confirm()
+		ask=input('   SURE ? Y/n/o:').lower()
+		if 'o' in ask:
+			editor(path)
+			return None
+		if 'n' in ask:
+			return None
+		ask=input('   LAST CHANCE!! ? Y/n/o:').lower()
+		if 'o' in ask:
+			editor(path)
+			return None
+		if 'n' in ask:
+			return None
+		return __.file_headers(path).default()
+	return __.file_headers(path).default()
 
 def action():
-	if _.switches.isActive('Recursive'):
-		_.switches.fieldSet( 'Folder', 'active', True )
-
-	if _.switches.isActive('Folder'):
-		if len(_.switches.value('Folder')):
-			print('a',_.switches.value('Folder'))
-			for folder in _.switches.values('Folder'):
-				getFolder(folder,r=_.switches.isActive('Recursive'))
-		else:
-			print('b')
-			folder = os.getcwd()
-			getFolder(folder,r=_.switches.isActive('Recursive'))
-
-
 	if _.switches.isActive('Files'):
-		for file in _.switches.values('Files'):
-			process(file)
+		for path in _.switches.values('Files'):
+			# print('____________')
+			# test=__.file_headers(path).default()
+			# print(test)
+			# print(type(test))
+			# print('____________')
+
+			f = process(path)
+			if type(f) == str:
+				if _.isWin:
+					editor(path)
+					time.sleep(2)
+				_.saveText( f, path )
+				if not _.isWin:
+					editor(path)
+				_.cp('saved','green')
+			else:
+				_.cp('aborted','red')
+
+def editor(path):
+	if _.isWin:
+		_file_open.switch('Files',path)
+		_file_open.action()
+	else:
+		print(_v.meta['code_editor'],path)
+
+
+_file_open = _.regImp( __.appReg, 'file-open' )
+_file_open.switch('App',_v.meta['code_editor'])
+import _rightThumb._string as _str
 
 
 ########################################################################################
