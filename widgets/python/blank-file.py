@@ -202,7 +202,7 @@ def action():
 			if type(f) == str:
 				if _.isWin:
 					editor(path)
-					time.sleep(2)
+					time.sleep(.01)
 				_.saveText( f, path )
 				if not _.isWin:
 					editor(path)

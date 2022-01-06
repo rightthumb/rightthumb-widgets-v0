@@ -978,6 +978,45 @@ function get__THETABLE( $ID_label ){
             keyboard.press('v')
             keyboard.release('v')
 
+    def combine_make(self):
+        _paste = _.regImp( __.appReg, '-paste' )
+        _copy = _.regImp( __.appReg, '-copy' )
+        text = _paste.imp.paste()
+        text = text.replace( '\n', '' )
+        text = text.replace( '\r', '' )
+        text = text.replace( '\t', '' )
+        text = _str.cleanBE( text, ' ' )
+
+        time.sleep(1)
+        keyboard.press(Key.esc)
+        keyboard.release(Key.esc)
+        keyboard.press(Key.esc)
+        keyboard.release(Key.esc)
+        time.sleep(.5)
+        with keyboard.pressed(Key.ctrl):
+            keyboard.press('x')
+            keyboard.release('x')
+
+        time.sleep(.5)
+        lines = _paste.imp.paste()
+        lines=_str.cleanBE( lines, '\n' )
+        lines = lines.replace('\r','')
+
+        a = lines.split('\n\n')[0].split('\n')
+        b = lines.split('\n\n')[1].split('\n')
+
+        result=''
+        for i,line in enumerate(a):
+            result += text.replace( '{1}', a[i] ).replace( '{2}', b[i] )+'\n'
+                
+        result=_str.cleanBE( result, '\n' )
+        result=result.replace("''",'"')
+        _copy.imp.copy( result, p=0 )
+        time.sleep(1)
+        with keyboard.pressed(Key.ctrl):
+            keyboard.press('v')
+            keyboard.release('v')
+
 
     def suffix(self):
         _paste = _.regImp( __.appReg, '-paste' )
@@ -1600,6 +1639,7 @@ def load():
                 'builder-two': { 'raw': [ 'Key.alt', 'Key.cmd', 'y' ], 'do': 'Clip.builder2()' },
                 'range-first': { 'raw': [ 'Key.alt', 'Key.cmd', '-' ], 'do': 'Clip.range_first()' },
                 'reverse-lines': { 'raw': [ 'Key.alt', 'Key.cmd', 'r' ], 'do': 'Clip.reverse_lines()' },
+                'reverse-lines': { 'raw': [ 'Key.alt', 'Key.cmd', 'd' ], 'do': 'Clip.combine_make()' },
 
                 'toggle-chars': { 'raw': [ 'Key.alt', 'Key.cmd', 't', 'c' ], 'do': 'toggle_chars()' },
 

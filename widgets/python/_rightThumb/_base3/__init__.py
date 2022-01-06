@@ -17955,5 +17955,40 @@ def dict_generator(indict, pre=None, fields=[] ):
 #   else:
 #       index[s] += 1
 
+def timeblock(epoch=None,hr=None,ish=None, ):
+    if epoch is None and hr is None and ish is None:
+        hr=5
+    elif not ish is None:
+        hr = int( isDate(ish)['time'].split(' ')[1].split(':')[0] )
+    elif not epoch is None:
+        hr = int( friendlyDate2( epoch ).split(' ')[1].split(':')[0] )
+    elif not hr is None:
+        hr = int(hr)
+    t='err'
+    if hr > 22:
+        t='late'
+    elif hr < 4:
+        t='late'
+    elif hr < 6:
+        t='wee'
+    elif hr < 8:
+        t='early'
+    elif hr < 12:
+        t='morning'
+    elif hr <= 17:
+        t='afternoon'
+    else:
+        t='evening'
+    # wee early morning afternoon evening late
+    return t
 
+def rli(LIST,default=''):
+    random = __.imp('random')
+    if len(LIST) == 0:
+        return default
+    if len(LIST) == 1:
+        return LIST[0]
+    # random_list_item
+    return LIST[ random.randint(0,len(LIST)-1) ]
 
+tb=timeblock

@@ -141,6 +141,8 @@ How the installer works
 
 Recommended python modules
 
+    sudo python3 -m ensurepip
+    python3 -m pip install --upgrade pip
     apt-get install python3
     apt-get install python3-pip
     apt-get install fonts-emojione
