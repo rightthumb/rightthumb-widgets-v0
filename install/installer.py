@@ -3057,9 +3057,7 @@ alias vps.h.sh="scp  /mnt/d/.rightthumb-widgets/widgets/bash/vps-7facG/vps* root
 alias vps.b.sh="scp  /mnt/d/.rightthumb-widgets/widgets/bash/vps-7facG/vps* root@bespin.eyeformeta.com:/opt/vps-7facG/ ; ssh root@bespin.eyeformeta.com 'chmod -R 777 /opt/vps-7facG/'"
 alias vps.m.sh="scp  /mnt/d/.rightthumb-widgets/widgets/bash/vps-7facG/vps* root@mandalore.eyeformeta.com:/opt/vps-7facG/ ; ssh root@mandalore.eyeformeta.com 'chmod -R 777 /opt/vps-7facG/'"
 
-alias vps.h.c="ssh root@hoth.eyeformeta.com -f 'python3 /opt/rightthumb-widgets-v0/widgets/python/shClean.py -folder /opt/rightthumb-widgets-v0/widgets/python/ -r ;  python3 /opt/rightthumb-widgets-v0/widgets/python/shClean.py -folder /opt/rightthumb-widgets-v0/widgets/bash/ -r ; python3 /opt/rightthumb-widgets-v0/widgets/python/shClean.py -folder /opt/vps-7facG/ -r'"
-alias vps.b.c="ssh root@bespin.eyeformeta.com -f 'python3 /opt/rightthumb-widgets-v0/widgets/python/shClean.py -folder /opt/rightthumb-widgets-v0/widgets/python/ -r ;  python3 /opt/rightthumb-widgets-v0/widgets/python/shClean.py -folder /opt/rightthumb-widgets-v0/widgets/bash/ -r ; python3 /opt/rightthumb-widgets-v0/widgets/python/shClean.py -folder /opt/vps-7facG/ -r'"
-alias vps.m.c="ssh root@mandalore.eyeformeta.com -f 'python3 /opt/rightthumb-widgets-v0/widgets/python/shClean.py -folder /opt/rightthumb-widgets-v0/widgets/python/ -r ;  python3 /opt/rightthumb-widgets-v0/widgets/python/shClean.py -folder /opt/rightthumb-widgets-v0/widgets/bash/ -r ; python3 /opt/rightthumb-widgets-v0/widgets/python/shClean.py -folder /opt/vps-7facG/ -r'"
+alias vps.h.c="ssh root@hoth.eyeformeta.com -f '/bin/python3 /opt/rightthumb-widgets-v0/widgets/python/shClean.py -r -folder /opt/rightthumb-widgets-v0/widgets/python/ /opt/rightthumb-widgets-v0/widgets/bash/ /opt/vps-7facG/ '"
  
 alias vps.h.sh2="scp  /opt/vps-7facG/* root@hoth.eyeformeta.com:/opt/vps-7facG/ ; ssh root@hoth.eyeformeta.com 'chmod -R 777 /opt/vps-7facG/'"
 alias vps.b.sh2="scp  /opt/vps-7facG/* root@bespin.eyeformeta.com:/opt/vps-7facG/ ; ssh root@bespin.eyeformeta.com 'chmod -R 777 /opt/vps-7facG/'"
