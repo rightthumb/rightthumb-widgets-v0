@@ -254,7 +254,20 @@ def getFolder(folder,r=True):
 	# 	if folder in '/bin /boot /dev /lib /lib64 /lost+found /media /mnt /proc /srv /sys'.split(' '):
 	# 		return None
 	if not _.showLine(folder, plus=None, minus='/bin /boot /dev /lib /lib64 /lost+found /proc /srv /sys'.split(' ')):
-		return None
+		if _.showLine(os.getcwd(), plus=None, minus='/bin /boot /dev /lib /lib64 /lost+found /proc /srv /sys'.split(' ')):
+			if _.showLine(os.getcwd(), plus=None, minus='/bin /boot /dev /lib /lib64 /lost+found /proc /srv /sys'.split(' ')):
+				if not len(_.switches.value('Folders')):
+					return None
+				else:
+					last_check=False
+					for f in _.switches.values('Folders'):
+						if not _.showLine(f, plus=None, minus='/bin /boot /dev /lib /lib64 /lost+found /proc /srv /sys'.split(' ')):
+							last_check=True
+					if not last_check:
+						return None
+
+
+
 	global i
 	global iS
 	global baseDepth
