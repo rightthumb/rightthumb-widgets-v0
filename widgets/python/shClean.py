@@ -89,11 +89,11 @@ _.appInfo[focus()] = {
 						''
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
+					   # { 'name': 'name', 'abbreviation': 'n' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					   # 'this',
+					   # 'app',
 	],
 
 	}
@@ -184,7 +184,7 @@ def registerSwitches( argvProcessForce=False ):
 	appSwitches()
 
 	_.myFileLocation_Print = False
-	_.switches.trigger('Files',_.myFileLocations)
+	# _.switches.trigger('Files',_.myFileLocations)
 	# _.switches.trigger('Files',_.inRelevantFolder)
 	
 
@@ -249,8 +249,10 @@ def getFolder(folder):
 					pass
 
 def processFile(path):
-	if _.isWin:
-		os.chmod( path, '777' )
+	if not os.path.isfile(path):
+		return None
+	if not _.isWin:
+		os.chmod( path, 0o777 )
 	_.cp( [ 'CLEANED:', path ], 'cyan' )
 	file = _.getText( path, raw=True )
 	file = file.replace( chr(10), '\n' )
@@ -268,22 +270,34 @@ def processFile(path):
 def action():
 
 	for path in _.switches.values('Files'):
-		processFile(path)
+		if '*' in path:
+			for f in glob.glob( path ):
+				f = __.path(f)
+				processFile(f)
+
+		elif not '*' in path:
+			if os.path.isfile(path):
+				path=__.path(path)
+				processFile(path)
 
 
 	if _.switches.isActive( 'Folder' ):
 		if len( _.switches.value('Folder') ):
-			folder = _.switches.values( 'Folder' )[0]
+			for folder in _.switches.values( 'Folder' ):
+				getFolder(folder)
+			
 		else:
 			folder = os.getcwd()
+			getFolder(folder)
 
-		getFolder(folder)
 
 	else:
 		_.pipeCleaner(0)
 		for i,row in enumerate(_.isData(r=1)):
 			processFile(row)
 
+
+import glob
 
 
 ########################################################################################

@@ -3101,6 +3101,8 @@ alias crontab.='EDITOR=nano /usr/bin/crontab'
 alias rr='sudo su root'
 alias vps="echo 'bespin hoth mandalore'"
 
+alias pbcopy='xclip -selection clipboard'
+alias pbpaste='xclip -selection clipboard -o'
 
 # crontab    /var/spool/cron/user
 # ssh-keygen -t rsa
