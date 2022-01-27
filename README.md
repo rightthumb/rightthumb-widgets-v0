@@ -27,7 +27,6 @@ Description
 
 
 
-
 Features
 
     works on
@@ -127,7 +126,7 @@ How the installer works
 
     in windows
         a file %USERPROFILE%\rr.bat
-            i recomend copying it to %SYSTEMROOT%\System32\rr.bat
+            i recommend copying it to %SYSTEMROOT%\System32\rr.bat
         when you open windows terminal type rr ENTER and the widgets are loaded it just loads folders to the path and sets a few variables (they are simple to read)
         
     
@@ -338,11 +337,40 @@ Code Note
                 Generated this:
                      class HOTKEYS
                          def __init__
-                         def log_keystroke
+                         def release_key
+                         def process_keystroke
+                     class BEEPS
+                         def __init__
+                         def play_note
+                         def simple_beep
+                         def simple_beep2
                      class CLIP
+                         def toLower
+                         def toUpper
+                         def reverse_lines
+                         def builder
+                         def builder2
+                             def build_helper
+                         def range_first
+                             def spliter
+                         def first
+                         def php_var
+                         def SQL_to_crud
+                             def field_data
                          def win_path
                          def implode
+                         def implode3
+                         def prefix
+                         def combine_make
+                         def suffix
+                         def number
+                         def number_a
+                         def number_b
+                         def number_ba
                          def explode
+                         def math
+                         def dic
+                         def add_slash
                          def del_activate
                          def del_run
                      class TYPING
@@ -356,39 +384,49 @@ Code Note
                          def autoText
                          def flip_table_test
                          def add_text
-                         def build_table
-                     def action
-                     def load
-    
+                         def build_table    
     I instantiate everything
         Hotkeys=HOTKEYS()
         Typing=TYPING()
         Loader=LOADER()
         Clip=CLIP()
-
     and execute:
         Loader.build_table()
             in the code
-
     If del __init__ it is not backwards compatable
 
 Hotkey example
 
-    copy this
-        pip3 install simplejson
-        pip3 install xtarfile
-        pip3 install binaryornot
-        pip3 install cssselect
-        pip3 install colorama
-    hotkey
-        ctrl ctrl space 'del' 2
-            type out 'del' not the delete button
-    output
-        simplejson
-        xtarfile
-        binaryornot
-        cssselect
-        colorama
+~~~
+   copy
+        1
+        2
+        3
+    cmd+alt+i (implode: works with text AND json)
+    paste
+    1, 2, 3
+
+    copy
+        [1, 2, 3]
+    cmd+alt+x (explode: works with text AND json)
+    paste
+        [
+            1,
+            2,
+            3
+        ]
+
+    HOW TO FIND ALL COMMANDS:
+
+        run command: epy hotkeys
+            then scroll to the bottom of the app to see a list of hotkeys
+
+        config file 1: widgets/databank/tables/hotkeys-AutoText.dex
+            (there is an app called AutoText that can be imported into this system)
+
+        config file 2: widgets/databank/tables/hotkeys-Text.dex
+
+
 
     hotkey
         ctrl ctrl space 'imp'
@@ -399,7 +437,13 @@ Hotkey example
     hotkey
         22 esc esc esc
     closes hotkeys
+~~~
 
+Creating your own apps using this system?
+
+    ALL python apps have have documentation and categorical tags
+        if creating a new app with this system; documentation tag tense is inconsequential
+            i extract the word stems when using documentation ( with nltk.stem )
 
 About
 
