@@ -688,18 +688,49 @@ def process(path):
 		print( _.colorThis( path, 'cyan', p=0 ) )
 		return path
 	else:
+
+		if not _.switches.isActive('Search-Print-Line'):
+			pr=0
+		elif 'a' in _.switches.value('Search-Print-Line').lower():
+			pr=2
+		else:
+			pr=1
+
+		inc=_.switches.values('Search-For-Text-Include')
+		ex=_.switches.values('Search-For-Text-Exclude')
 		i=0
+		if len(inc) == 1 and not len(ex):
+			fast=True
+			find = inc[0].lower()
+
+		else:
+			fast=False
+
 		with open(path) as f:
 			for line in f:
 				i+=1
-				if _.showLine(line, plus=_.switches.values('Search-For-Text-Include'), minus=_.switches.values('Search-For-Text-Exclude')):
-					if _.switches.isActive('Search-Print-Line'):
-						print()
-					print( _.colorThis( path, 'cyan', p=0 ) )
-					if _.switches.isActive('Search-Print-Line'):
-						print(i,line.replace('\r','').replace('\n',''))
-					if not 'a' in _.switches.value('Search-Print-Line').lower():
-						return path
+				
+				if fast:
+					if find in line.lower():
+						if pr:
+							print()
+						print( _.colorThis( path, 'cyan', p=0 ) )
+						if pr:
+							print(i,line.replace('\r','').replace('\n',''))
+						if pr == 1:
+							return path
+
+
+
+				else:
+					if _.showLine(line, plus=inc, minus=ex):
+						if pr:
+							print()
+						print( _.colorThis( path, 'cyan', p=0 ) )
+						if pr:
+							print(i,line.replace('\r','').replace('\n',''))
+						if pr == 1:
+							return path
 
 
 # if _.switches.isActive('Ago'):
