@@ -42,7 +42,7 @@ def appSwitches():
 	if not __.isFiles:
 		_.switches.register('Recursive', '-r,-recursive')
 	_.switches.register('Count', '-c,-count,--c')
-	_.switches.register('Folders', '-f,-p,-path,-paths,-folder,-folders,-fo')
+	_.switches.register('Folders', '-f,-folder,-folders,-fo')
 	_.switches.register('Text', '-t,-text,-txt')
 	_.switches.register('Binary', '-bin')
 	_.switches.register('Size', '-size',' g 10mb, L 2kb ')
@@ -55,6 +55,10 @@ def appSwitches():
 	_.switches.register('Remove-Root-Folder', '-rr')
 	_.switches.register('Widget-V0', '-w,-v0')
 	_.switches.register('Ago-Create-Date', '-cd')
+	_.switches.register('Search-For-Text-Include', '-has,-search')
+	_.switches.register('Search-For-Text-Exclude', '-not')
+	_.switches.register('Search-Print-Line', '-p,-print','all')
+
 
 
 
@@ -91,11 +95,11 @@ _.appInfo[focus()] = {
 						'p files - /bin /boot /dev /lib /lib64 /lost+found /media /mnt /proc /srv /sys -f /',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
+					   # { 'name': 'name', 'abbreviation': 'n' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					   # 'this',
+					   # 'app',
 	],
 
 	}
@@ -129,14 +133,14 @@ def formatSize(size):
 	elif size > 1048576 and size < 1073741824:
 		num = round(size / 1048576, 2)
 		result = str(num) + ' MB'
-	elif size > 1073741824 and size < 1099511627776	:
+	elif size > 1073741824 and size < 1099511627776 :
 		num = round(size / 1073741824, 2)
 		result = str(num) + ' GB'
 	else:
 		num = round(size / 1099511627776, 2)
 		result = str(num) + ' TB'
 	# if size < 1:
-	# 	result = ''
+	#   result = ''
 	return result
 
 def unFormatSize(size):
@@ -156,7 +160,7 @@ def unFormatSize(size):
 	factor = ''
 
 	if 'TB' in size:
-		factor = 1099511627776	
+		factor = 1099511627776  
 	elif 'GB' in size:
 		factor = 1073741824
 	elif 'MB' in size:
@@ -248,11 +252,11 @@ def whatIsIt(file):
 
 def getFolder(folder,r=True):
 	# if not _.isWin:
-	# 	for test in '/bin /boot /dev /lib /lib64 /lost+found /media /mnt /proc /srv /sys'.split(' '):
-	# 		if folder.startswith(test+'/'):
-	# 			return None
-	# 	if folder in '/bin /boot /dev /lib /lib64 /lost+found /media /mnt /proc /srv /sys'.split(' '):
-	# 		return None
+	#   for test in '/bin /boot /dev /lib /lib64 /lost+found /media /mnt /proc /srv /sys'.split(' '):
+	#       if folder.startswith(test+'/'):
+	#           return None
+	#   if folder in '/bin /boot /dev /lib /lib64 /lost+found /media /mnt /proc /srv /sys'.split(' '):
+	#       return None
 	if not _.showLine(folder, plus=None, minus='/bin /boot /dev /lib /lib64 /lost+found /proc /srv /sys'.split(' ')):
 		if _.showLine(os.getcwd(), plus=None, minus='/bin /boot /dev /lib /lib64 /lost+found /proc /srv /sys'.split(' ')):
 			if _.showLine(os.getcwd(), plus=None, minus='/bin /boot /dev /lib /lib64 /lost+found /proc /srv /sys'.split(' ')):
@@ -460,9 +464,9 @@ def getFolder(folder,r=True):
 
 								if _.switches.isActive('Count'):
 									if _.switches.isActive('Remove-Root-Folder'):
-										print( _.colorThis( pathX, 'cyan', p=0 ) )
+										process(pathX)
 									else:
-										print( _.colorThis( path, 'cyan', p=0 ) )
+										process(path)
 								else:
 									iS+=1
 
@@ -503,10 +507,10 @@ def getFolder(folder,r=True):
 									shouldAdd = False
 
 							# if '.' in path:
-							# 	pathy = path.lower().split('.')
-							# 	pathy_test = pathy.pop()
-							# 	if not '.'+pathy_test in extensionList:
-							# 		shouldAdd = False
+							#   pathy = path.lower().split('.')
+							#   pathy_test = pathy.pop()
+							#   if not '.'+pathy_test in extensionList:
+							#       shouldAdd = False
 
 
 
@@ -515,30 +519,31 @@ def getFolder(folder,r=True):
 						if not _.switches.isActive('Totals'):
 							if _.switches.isActive('Remove-Root-Folder'):
 								if not _.switches.isActive('Plus'):
-									_.colorThis( pathX, 'cyan' )
+									process(pathX)
 								else:
-									print( _.colorPlus( pathX, 'cyan' ) )
+									process(pathX)
 							else:
 								if not _.switches.isActive('Plus'):
-									_.colorThis( path, 'cyan' )
+									process(path)
 								else:
-									print( _.colorPlus( path, 'cyan' ) )
+									process(path)
+
 
 					# if shouldAdd:
-					# 	text_binary = False
-					# 	if not _.switches.isActive('Text') and not _.switches.isActive('Binary'):
-					# 		text_binary = True
-					# 	else:
-					# 		if not _.switches.isActive('Binary') and  _.switches.isActive('Text') and isText(path):
-					# 			text_binary = True
-					# 		if not _.switches.isActive('Binary') and not _.switches.isActive('Text'):
-					# 			text_binary = True
-					# 		if not _.switches.isActive('Text') and  _.switches.isActive('Binary') and not isText(path):
-					# 			text_binary = True
-					# 		if not _.switches.isActive('Text') and  not _.switches.isActive('Binary'):
-					# 			text_binary = True
-					# 	if not text_binary:
-					# 		shouldAdd = False
+					#   text_binary = False
+					#   if not _.switches.isActive('Text') and not _.switches.isActive('Binary'):
+					#       text_binary = True
+					#   else:
+					#       if not _.switches.isActive('Binary') and  _.switches.isActive('Text') and isText(path):
+					#           text_binary = True
+					#       if not _.switches.isActive('Binary') and not _.switches.isActive('Text'):
+					#           text_binary = True
+					#       if not _.switches.isActive('Text') and  _.switches.isActive('Binary') and not isText(path):
+					#           text_binary = True
+					#       if not _.switches.isActive('Text') and  not _.switches.isActive('Binary'):
+					#           text_binary = True
+					#   if not text_binary:
+					#       shouldAdd = False
 
 
 			# if os.path.isdir(path) and _.showLine(path):
@@ -556,6 +561,11 @@ def getFolder(folder,r=True):
 							pass
 				else:
 					print('error')
+
+
+
+
+
 
 
 def extensionsDatabank():
@@ -669,12 +679,31 @@ i = 0
 iS = 0
 baseDepth = 0
 
+def process(path):
+	if not _.switches.isActive('Search-For-Text-Include'):
+		print( _.colorThis( path, 'cyan', p=0 ) )
+		return path
+	else:
+		i=0
+		with open(path) as f:
+			for line in f:
+				i+=1
+				if _.showLine(line, plus=_.switches.values('Search-For-Text-Include'), minus=_.switches.values('Search-For-Text-Exclude')):
+					if _.switches.isActive('Search-Print-Line'):
+						print()
+					print( _.colorThis( path, 'cyan', p=0 ) )
+					if _.switches.isActive('Search-Print-Line'):
+						print(i,line.replace('\r','').replace('\n',''))
+					if not 'a' in _.switches.value('Search-Print-Line').lower():
+						return path
+
+
 # if _.switches.isActive('Ago'):
 import _rightThumb._dir as _dir
 
 # def load():
-# 	global data
-# 	data = _.getTable( 'table.json' )
+#   global data
+#   data = _.getTable( 'table.json' )
 # data = []
 # 'Recursive'
 ########################################################################################
