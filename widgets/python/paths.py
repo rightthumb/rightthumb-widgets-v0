@@ -195,6 +195,11 @@ def action():
 
 					print(subby)
 				print( subject )
+				if subject.startswith('/mnt/'):
+					sub = subject[5:]
+					dr=sub[0]
+					sub = sub[1:]
+					print( dr.upper()+':'+sub.replace('/','\\') )
 
 				if platform.system() == 'Windows':
 					print( subject.replace( '\\', '\\\\' ) )

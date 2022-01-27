@@ -9,7 +9,6 @@
 #    - Scott Taylor Reph, RightThumb.com
 # ###########################################################################
 # ## {C3P0D40fAe8B} ##
-
 ##################################################
 import os, sys, time
 ##################################################
@@ -38,24 +37,7 @@ def appSwitches():
 
 
 	pass
-	### EXAMPLE: START
-	# _.switches.register( 'Files', '-f,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=True )
-	### EXAMPLE: END
 
-### EXAMPLE: START
-# _.switches.trigger( 'Files', _.myFileLocations, vs=True )
-# 	finds the file in probable locations
-# 	and 
-# 		if  _.autoBackupData = True
-# 		and __.releaseAcquiredData = True
-# 			GET EPOCH FROM: hosts/hostname/logs/apps/execution_receipt-app_name-epoch.json
-# 		you can run apps on usb at a clients office
-# 			when you get home run: p app -loadepoch epoch 
-# 				backed up
-# 					pipe
-# 					files
-# 					tables
-### EXAMPLE: END
 _.autoBackupData = __.setting('receipt-log')
 __.releaseAcquiredData = __.setting('receipt-file')
 __.myFileLocations_SKIP_VALIDATION = False
@@ -69,11 +51,12 @@ __.switch_raw = []
 
 
 _.appInfo[focus()] = {
-	'file': 'thisApp.py',
+	'file': 'greeting.py',
 	'liveAppName': __.thisApp( __file__ ),
-	'description': 'Changes the world',
+ 	'description': 'greeting used in vps-hoth-7i0ZA-7GT90c-bot-chat',
 	'categories': [
-						'DEFAULT',
+						'bot',
+						'greeting',
 				],
 	'usage': [
 						# 'epy another',
@@ -115,11 +98,7 @@ _.appData[focus()] = {
 					'table': {'sent': [], 'received': [] }, 
 		},
 	}
-### EXAMPLE: START
-# _.appInfo[focus()]['examples'].append( 'p thisApp -file file.txt' )
 
-# _.appInfo[focus()]['columns'].append( {'name': 'name', 'abbreviation': 'n'} )
-### EXAMPLE: END
 
 
 def registerSwitches( argvProcessForce=False ):
@@ -143,12 +122,6 @@ def registerSwitches( argvProcessForce=False ):
 	_.switches.trigger( 'URL', _.urlTrigger )
 	_.switches.trigger( 'Ago', _.timeAgo )
 	_.switches.trigger( 'Duration', _.timeFuture )
-	### EXAMPLE: START
-	# _.switches.trigger( 'Files',_.inRelevantFolder )	
-	# _.switches.trigger( 'Watched', _.txt2Date )
-	# _.switches.trigger( 'Input',_.formatColumns )
-	# _.switches.trigger( 'Franchise',_.triggerSpace )
-	### EXAMPLE: END
 	
 	_.defaultScriptTriggers()
 	_.switches.process()
@@ -176,30 +149,6 @@ if __name__ == '__main__':
 _.postLoad( __file__ )
 
 ########################################################################################
-### EXAMPLE: START
-# data = _.tables.returnSorted( 'data', 'd.timestamp', data )
-# _.switches.fieldSet( 'Long', 'active', True )
-# _.tables.register( 'data', table )
-# _.tables.fieldProfileSet('data','timestamp','trigger',_.friendlyDate)
-# _.tables.fieldProfileSet('data','phone,email,address','alignment','center')
-# _.tables.print( 'data', 'name' )
-# _.tables.print( 'data', ','.join(_.switches.values('Column')) )
-# _.switches.isActive('Files')
-# p = _.getText( _v.pips, raw=True, clean=True ).split( '\n' )
-# os.system( '"' + do + '"' )
-# _.setPipeData( os.listdir( os.getcwd() ), focus() )
-# _.showLine( item )
-# 	if os.path.isdir( row ):
-# 	if os.path.isfile( row ):
-#	os.path.abspath(path)
-# __.appRegPipe    ( pipe data registerd focus(__.appReg) set by _.myFileLocations {if imported} , default is None )
-# for i,row in enumerate(_.t( _.appData[__.appReg]['pipe'] )):
-# for i,row in _.e( _.isData(r=1) ):
-# date = _.friendlyDate( theDate )
-# _.addComma()
-# 													if platform.system() == 'Windows':
-### EXAMPLE: END
-########################################################################################
 # START
 
 import random
@@ -217,20 +166,26 @@ def timeGreeting():
 
 	return tb
 
-
+name=None
 
 def action():
+	global name
 	greetings = _.getTableDB('time-greeting.hash')
 
+	if _.switches.value('Type')=='random':
+		_.switches.fieldSet( 'Random', 'active', True )
+
+	ti = timeGreeting()
+	ty = _.rli(  'endearing name mean sexy mf none'.split(' ')  )
+	
 	if _.switches.isActive('Random'):
-		ti = _.rli(  'wee early morning afternoon evening late'.split(' ')  )
-		ty = _.rli(  'endearing name mean sexy mf none'.split(' ')  )
-	else:
-		ti = timeGreeting()
-		if not _.switches.isActive('Type'):
-			ty = 'none'
-		else:
-			ty = _.switches.value('Type')
+		if 'time' in _.switches.value('Random').lower():
+			ti = _.rli(  'wee early morning afternoon evening late'.split(' ')  )
+		
+		# if 'type' in _.switches.value('Random').lower():
+	# else:
+	if _.switches.isActive('Type'):
+		ty = _.switches.value('Type')
 		ty=ty.lower()
 
 	TG = greetings[ ti ]
@@ -238,20 +193,24 @@ def action():
 
 	if ty == 'none':
 		print( greeting )
-		return None
+		return ''
 	
 	
 	# endearing, name, mean, sexy, mf, none
 	if ty == 'none':
 		print( greeting )
-		return None
+		return ''
 	if ty == 'mf':
 		end = _.getText(_v.ttt+os.sep+'greeting-mf.txt',raw=True,clean=2).split('\n')
 	if ty == 'name':
 		try:
 			end = [_.switches.values('Type')[1]]
 		except Exception as e:
-			end = 'Scott Lo Frank'.split(' ')
+			if not name is None:
+				end=[name]
+			else:
+				end = 'Scott'.split(' ')
+
 	if ty == 'sexy':
 		end = ['sexy']
 	if ty == 'mean':
@@ -259,9 +218,11 @@ def action():
 	if ty == 'endearing':
 		end = _.getText(_v.ttt+os.sep+'greeting-endearing.txt',raw=True,clean=2).split('\n')
 
-	END = _.rli(end)
+	END = _.rli(end).title()
+	result = greeting+', '+END
+	print( result )
+	return result
 
-	print( greeting+', '+END )
 
 	# data = _.getText(_v.ttt+os.sep+'endearing.txt',raw=True,clean=2).split('\n')
 	# d = random.randint(0,len(data)-1)
@@ -270,12 +231,10 @@ def action():
 
 
 
-
 ########################################################################################
 if __name__ == '__main__':
 	action()
 	__.isExit()
-
 
 
 

@@ -35,7 +35,7 @@ import _rightThumb._string as _str
 
 
 def appSwitches():
-	_.switches.register( 'Files', '-f,-file,-files','file.txt', isPipe='name', description='Files' )
+	_.switches.register( 'Files', '-f,-file,-files','file.txt', isPipe='glob', description='Files' )
 	_.switches.register( 'Remove', '-r,-remove' )
 
 
@@ -118,7 +118,7 @@ def registerSwitches( argvProcessForce=False ):
 
 	_.myFileLocation_Print = False
 	__.myFileLocations_SKIP_VALIDATION = False
-	# _.switches.trigger( 'Files', _.myFileLocations, vs=True )
+	_.switches.trigger( 'Files', _.myFileLocations )
 	_.switches.trigger( 'Folder', _.myFolderLocations )
 	_.switches.trigger( 'URL', _.urlTrigger )
 	_.switches.trigger( 'Ago', _.timeAgo )
@@ -154,35 +154,40 @@ _.postLoad( __file__ )
 # START
 
 
+def process(path):
+	if os.path.isfile(path):
+		path = os.path.abspath(path)
+		if not _.switches.isActive('Remove'):
+			if os.path.isfile( path ):
+				os.unlink(path)
+				_.cp( [ 'deleted:', path ], 'red' )
+	
+	path = __.path( path )
+
+	records[ _v.sanitizeFolder(path) ] = 1
+	_.cp( ['Scheduled:',path], 'red' )
+
+	if _.switches.isActive('Remove'):
+		if os.path.isfile(path):
+			_.cp(  [ 'Deleted:', path ], 'red'  )
+			os.unlink(path)
 
 def action():
 	load()
 	global records
 
-	if _.switches.isActive('Files'):
-		files = _.switches.values('Files')
-	else:
-		files = _.isData(r=1)
+	# if _.switches.isActive('Files'):
+	# 	files = _.switches.values('Files')
+	# else:
+	files = _.isData(r=1)
 
 	for i,path in enumerate( files ):
+		try:
+			process(path)
+		except Exception as e:
+			_.cp(e,'red')
 
-		
-		if os.path.isfile(path):
-			path = os.path.abspath(path)
-			if not _.switches.isActive('Remove'):
-				if os.path.isfile( path ):
-					os.unlink(path)
-					_.cp( [ 'deleted:', path ], 'red' )
-		
-		path = __.path( path )
 
-		records[ _v.sanitizeFolder(path) ] = 1
-		_.cp( ['Scheduled:',path], 'red' )
-
-		if _.switches.isActive('Remove'):
-			if os.path.isfile(path):
-				_.cp(  [ 'Deleted:', path ], 'red'  )
-				os.unlink(path)
 
 	_.saveTableDB( records, 'delete.index' )
 

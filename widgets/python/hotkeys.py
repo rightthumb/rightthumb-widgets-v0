@@ -926,8 +926,9 @@ function get__THETABLE( $ID_label ){
             try:
                 data = simplejson.load(text)
             except Exception as e:
-                data = eval(text)
+                data = eval(text.replace('false','False').replace('true','True'))
             result = simplejson.dumps(data, sort_keys=False)
+            result=result.replace('{','{ ').replace('}',' }')
             _copy.imp.copy( result, p=0 )
             return None
         text = text.replace('\n',', ')
@@ -935,10 +936,47 @@ function get__THETABLE( $ID_label ){
         # text = text.replace('\n','')
         # text = text.replace(', ',',')
         # text = text.replace(',','\n')
+        
         _copy.imp.copy( text, p=0 )
 
         text=_str.replaceDuplicate( text, ' ' )
         _copy.imp.copy( text, p=0 )
+
+    def implode3(self):
+        _paste = _.regImp( __.appReg, '-paste' )
+        _copy = _.regImp( __.appReg, '-copy' )
+        text = _paste.imp.paste()
+        text=_str.replaceDuplicate( text, '\n' )
+        text=_str.cleanBE( text, '\n' )
+        text=_str.cleanBE( text, '\t' )
+        text=_str.cleanBE( text, ' ' )
+        text = text.replace('\r','')
+
+        text=_str.cleanBE( text, '\n' )
+        text=_str.cleanBE( text, '\t' )
+        text=_str.cleanBE( text, ' ' )
+        text=_str.cleanBE( text, '\n' )
+        text=_str.cleanBE( text, '\t' )
+        text=_str.cleanBE( text, ' ' )
+        if text.startswith('{') or text.startswith('['):
+            # print(text)
+            # sys.exit()
+            try:
+                data = simplejson.load(text)
+            except Exception as e:
+                data = eval(text.replace('false','False').replace('true','True'))
+            result = '[\n\t'
+            records = []
+            for record in data:
+                records.append( simplejson.dumps(record, sort_keys=False) )
+            result += ',\n\t'.join(records)
+            result += '\n]'
+            
+            result=result.replace('{','{ ').replace('}',' }')
+            _copy.imp.copy( result, p=0 )
+            return None
+
+
 
     def prefix(self):
         _paste = _.regImp( __.appReg, '-paste' )
@@ -1618,6 +1656,7 @@ def load():
                 'pre-clean': { 'raw': [ 'Key.ctrl,2', 'Key.space', 'del' ], 'do': 'Clip.del_activate()' },
                 'implode': { 'raw': [ 'Key.ctrl,2', 'Key.space', 'i' ], 'do': 'Clip.implode()' },
                 'implode2': { 'raw': [ 'Key.alt', 'Key.cmd', 'i' ], 'do': 'Clip.implode()' },
+                'implode3': { 'raw': [ 'Key.alt', 'Key.shift', 'i' ], 'do': 'Clip.implode3()' },
                 'number': { 'raw': [ 'Key.alt', 'Key.cmd', 'n' ], 'do': 'Clip.number()' },
                 'number-a': { 'raw': [ 'Key.alt', 'Key.cmd', 'n', 'a' ], 'do': 'Clip.number_a()' },
                 'number-b': { 'raw': [ 'Key.alt', 'Key.cmd', 'n', 'b' ], 'do': 'Clip.number_b()' },

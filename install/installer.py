@@ -10,7 +10,13 @@
 # ###########################################################################
 # ## {C3P0D40fAe8B} ##
 
-import os,sys,datetime,time,platform,pickle
+import os,sys,datetime,time,platform
+
+try:
+    import pickle
+except Exception as e:
+    pass
+
 class dot:
     def __init__(self): pass;
 
@@ -30,7 +36,7 @@ v.appsFolder=''
 v.appInfo={
     'file': 'tool',
     'description': 'little awkward bits of HIGHLY RELEVANT algorithms',
-    'version': '0.1.68.76',
+    'version': '1.4.21.58',
     'prerequisite': [],
     'examples': [
                     '',
@@ -3045,31 +3051,34 @@ alias vps3.dt2="ssh -L 59001:localhost:5901 -C -N -l scott mandalore.eyeformeta.
 alias .git="git clone https://github.com/rightthumb/rightthumb-widgets-v0"
 alias .git.="rm -rf rightthumb-widgets-v0 ; git clone https://github.com/rightthumb/rightthumb-widgets-v0 ; cd rightthumb-widgets-v0 ; chmod -R 777 . ; p shClean -folder -r"
 
-alias vps.h.py="scp  /mnt/d/.rightthumb-widgets/widgets/python/vps*.py root@hoth.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/python/ ; ssh root@hoth.eyeformeta.com 'chmod -R 777 /opt/rightthumb-widgets-v0/'"
-alias vps.b.py="scp  /mnt/d/.rightthumb-widgets/widgets/python/vps*.py root@bespin.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/python/ ; ssh root@bespin.eyeformeta.com 'chmod -R 777 /opt/rightthumb-widgets-v0/'"
+
+alias vps.h.py="scp  /mnt/d/.rightthumb-widgets/widgets/python/vps*.py root@hoth.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/python/      ; ssh root@hoth.eyeformeta.com 'chmod -R 777 /opt/rightthumb-widgets-v0/'"
+alias vps.b.py="scp  /mnt/d/.rightthumb-widgets/widgets/python/vps*.py root@bespin.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/python/    ; ssh root@bespin.eyeformeta.com 'chmod -R 777 /opt/rightthumb-widgets-v0/'"
 alias vps.m.py="scp  /mnt/d/.rightthumb-widgets/widgets/python/vps*.py root@mandalore.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/python/ ; ssh root@mandalore.eyeformeta.com 'chmod -R 777 /opt/rightthumb-widgets-v0/'"
 
-alias vps.h.py2="scp  /opt/rightthumb-widgets-v0/widgets/python/vps*.py root@hoth.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/python/ ; ssh root@hoth.eyeformeta.com 'chmod -R 777 /opt/rightthumb-widgets-v0/'"
-alias vps.b.py2="scp  /opt/rightthumb-widgets-v0/widgets/python/vps*.py root@bespin.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/python/  ; ssh root@bespin.eyeformeta.com 'chmod -R 777 /opt/rightthumb-widgets-v0/'"
+alias vps.h.py2="scp  /opt/rightthumb-widgets-v0/widgets/python/vps*.py root@hoth.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/python/       ; ssh root@hoth.eyeformeta.com 'chmod -R 777 /opt/rightthumb-widgets-v0/'"
+alias vps.b.py2="scp  /opt/rightthumb-widgets-v0/widgets/python/vps*.py root@bespin.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/python/     ; ssh root@bespin.eyeformeta.com 'chmod -R 777 /opt/rightthumb-widgets-v0/'"
 alias vps.m.py2="scp  /opt/rightthumb-widgets-v0/widgets/python/vps*.py root@mandalore.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/python/  ; ssh root@mandalore.eyeformeta.com 'chmod -R 777 /opt/rightthumb-widgets-v0/'"
 
-alias vps.h.sh="scp  /mnt/d/.rightthumb-widgets/widgets/bash/vps-7facG/vps* root@hoth.eyeformeta.com:/opt/vps-7facG/ ; ssh root@hoth.eyeformeta.com 'chmod -R 777 /opt/vps-7facG/'"
-alias vps.b.sh="scp  /mnt/d/.rightthumb-widgets/widgets/bash/vps-7facG/vps* root@bespin.eyeformeta.com:/opt/vps-7facG/ ; ssh root@bespin.eyeformeta.com 'chmod -R 777 /opt/vps-7facG/'"
-alias vps.m.sh="scp  /mnt/d/.rightthumb-widgets/widgets/bash/vps-7facG/vps* root@mandalore.eyeformeta.com:/opt/vps-7facG/ ; ssh root@mandalore.eyeformeta.com 'chmod -R 777 /opt/vps-7facG/'"
+alias vps.h.sh="scp  /mnt/d/.rightthumb-widgets/widgets/bash/vps-srv/vps* root@hoth.eyeformeta.com:/opt/vps-srv/      ; ssh root@hoth.eyeformeta.com 'chmod -R 777 /opt/vps-srv/'"
+alias vps.b.sh="scp  /mnt/d/.rightthumb-widgets/widgets/bash/vps-srv/vps* root@bespin.eyeformeta.com:/opt/vps-srv/    ; ssh root@bespin.eyeformeta.com 'chmod -R 777 /opt/vps-srv/'"
+alias vps.m.sh="scp  /mnt/d/.rightthumb-widgets/widgets/bash/vps-srv/vps* root@mandalore.eyeformeta.com:/opt/vps-srv/ ; ssh root@mandalore.eyeformeta.com 'chmod -R 777 /opt/vps-srv/'"
 
-alias vps.h.c="ssh root@hoth.eyeformeta.com -f '/bin/python3 /opt/rightthumb-widgets-v0/widgets/python/shClean.py -r -folder /opt/rightthumb-widgets-v0/widgets/python/ /opt/rightthumb-widgets-v0/widgets/bash/ /opt/vps-7facG/ '"
+alias vps.h.c="ssh -f root@hoth.eyeformeta.com      -f '/bin/python3 /opt/rightthumb-widgets-v0/widgets/python/shClean.py -r -folder /opt '"
+alias vps.b.c="ssh -f root@bespin.eyeformeta.com    -f '/bin/python3 /opt/rightthumb-widgets-v0/widgets/python/shClean.py -r -folder /opt '"
+alias vps.m.c="ssh -f root@mandalore.eyeformeta.com -f '/bin/python3 /opt/rightthumb-widgets-v0/widgets/python/shClean.py -r -folder /opt '"
  
-alias vps.h.sh2="scp  /opt/vps-7facG/* root@hoth.eyeformeta.com:/opt/vps-7facG/ ; ssh root@hoth.eyeformeta.com 'chmod -R 777 /opt/vps-7facG/'"
-alias vps.b.sh2="scp  /opt/vps-7facG/* root@bespin.eyeformeta.com:/opt/vps-7facG/ ; ssh root@bespin.eyeformeta.com 'chmod -R 777 /opt/vps-7facG/'"
-alias vps.m.sh2="scp  /opt/vps-7facG/* root@mandalore.eyeformeta.com:/opt/vps-7facG/ ; ssh root@mandalore.eyeformeta.com 'chmod -R 777 /opt/vps-7facG/'"
+alias vps.h.sh2="scp  /opt/vps-srv/* root@hoth.eyeformeta.com:/opt/vps-srv/      ; ssh root@hoth.eyeformeta.com 'chmod -R 777 /opt/vps-srv/'"
+alias vps.b.sh2="scp  /opt/vps-srv/* root@bespin.eyeformeta.com:/opt/vps-srv/    ; ssh root@bespin.eyeformeta.com 'chmod -R 777 /opt/vps-srv/'"
+alias vps.m.sh2="scp  /opt/vps-srv/* root@mandalore.eyeformeta.com:/opt/vps-srv/ ; ssh root@mandalore.eyeformeta.com 'chmod -R 777 /opt/vps-srv/'"
 
-alias vps.h.sh.="ssh root@hoth.eyeformeta.com 'mkdir /opt/vps-7facG/; chmod -R 777 /opt/vps-7facG/' "
-alias vps.b.sh.="ssh root@bespin.eyeformeta.com 'mkdir /opt/vps-7facG/; chmod -R 777 /opt/vps-7facG/' "
-alias vps.m.sh.="ssh root@mandalore.eyeformeta.com 'mkdir /opt/vps-7facG/; chmod -R 777 /opt/vps-7facG/' "
+alias vps.h.sh.="ssh root@hoth.eyeformeta.com      'mkdir /opt/vps-srv/; chmod -R 777 /opt/vps-srv/' "
+alias vps.b.sh.="ssh root@bespin.eyeformeta.com    'mkdir /opt/vps-srv/; chmod -R 777 /opt/vps-srv/' "
+alias vps.m.sh.="ssh root@mandalore.eyeformeta.com 'mkdir /opt/vps-srv/; chmod -R 777 /opt/vps-srv/' "
 
 
-alias .installer='cat ~/.bashrc > ~/.bashrc.bk ; echo "" > ~/.bashrc ; rm $widgets/install/installer.py ; wget https://raw.githubusercontent.com/rightthumb/rightthumb-widgets-v0/main/install/installer.py -O $widgets/install/installer.py ; chmod 777 $widgets/install/installer.py ; python3 $widgets/install/installer.py -rc.d h'
-alias .installer.s='sudo cat ~/.bashrc > ~/.bashrc.bk ; echo "" > ~/.bashrc ; rm $widgets/install/installer.py ; wget https://raw.githubusercontent.com/rightthumb/rightthumb-widgets-v0/main/install/installer.py -O $widgets/install/installer.py ; chmod 777 $widgets/install/installer.py ; python3 $widgets/install/installer.py -rc.d h'
+alias in.='cat ~/.bashrc > ~/.bashrc.bk ; echo "" > ~/.bashrc ; rm $widgets/install/installer.py ; wget https://raw.githubusercontent.com/rightthumb/rightthumb-widgets-v0/main/install/installer.py -O $widgets/install/installer.py ; chmod 777 $widgets/install/installer.py ; python3 $widgets/install/installer.py -rc.d h'
+alias in.s='sudo cat ~/.bashrc > ~/.bashrc.bk ; echo "" > ~/.bashrc ; rm $widgets/install/installer.py ; wget https://raw.githubusercontent.com/rightthumb/rightthumb-widgets-v0/main/install/installer.py -O $widgets/install/installer.py ; chmod 777 $widgets/install/installer.py ; python3 $widgets/install/installer.py -rc.d h'
 
 alias ..b='cd /opt ; cd rightthumb-widgets-v0 ; m w ; cd install/ ; m in ; cd .. ; cd widgets/ ; m ww ; cd python/ ; m py ; cd .. ; cd bash/ ; m b ; m bash ; cd .. ; cd databank/ ; m db ; cd tables/ ; m ttt ; cd ; cd .rt ; m rt ; cd profile/ ; m h ; cd tables/ ; m tt ; cd .. ; cd config/ ; m config ; m c ; cd .. ; cd projects/ ; m pr ; cd'
 alias ...b='cd rightthumb-widgets-v0 ; m w ; cd install/ ; m in ; cd .. ; cd widgets/ ; m ww ; cd python/ ; m py ; cd .. ; cd bash/ ; m b ; m bash ; cd .. ; cd databank/ ; m db ; cd tables/ ; m ttt ; cd ; cd .rt ; m rt ; cd profile/ ; m h ; cd tables/ ; m tt ; cd .. ; cd config/ ; m config ; m c ; cd .. ; cd projects/ ; m pr ; cd'
@@ -3080,20 +3089,22 @@ alias rr='sudo su root'
 
 alias crontab.='EDITOR=nano /usr/bin/crontab'
 
-alias dl='python3 /mnt/d/.rightthumb-widgets/widgets/vps-app-43012F21-dl.py'
-alias dl.b='python3 /mnt/d/.rightthumb-widgets/widgets/python/vps-app-43012F21-dl-bespin.py -path '
-alias dl.h='python3 /mnt/d/.rightthumb-widgets/widgets/python/python/vps-app-43012F21-dl-hoth.py -path '
-alias dl.m='python3 /mnt/d/.rightthumb-widgets/widgets/python/vps-app-43012F21-dl-mandalore.py -path '
+alias dl='python3 /mnt/d/.rightthumb-widgets/widgets/vps-app-7facG-7GldEZ-dl.py'
+alias dl.b='python3 /mnt/d/.rightthumb-widgets/widgets/python/vps-app-7facG-7GldEZ-dl-bespin.py -path '
+alias dl.h='python3 /mnt/d/.rightthumb-widgets/widgets/python/python/vps-app-7facG-7GldEZ-dl-hoth.py -path '
+alias dl.m='python3 /mnt/d/.rightthumb-widgets/widgets/python/vps-app-7facG-7GldEZ-dl-mandalore.py -path '
 
 alias bl='python3 /mnt/d/.rightthumb-widgets/widgets/python/blank-file.py -f '
 
+alias crontab.='EDITOR=nano /usr/bin/crontab'
+
+alias rr='sudo su root'
+alias vps="echo 'bespin hoth mandalore'"
+
 
 # crontab    /var/spool/cron/user
-
 # ssh-keygen -t rsa
 # ssh-copy-id -i ~/.ssh/id_rsa.pub scott@hoth.eyeformeta.com
-
-# hoth bespin mandalore
 
             """
             # echo "alias rr='sudo su root'" >> ~/.bashrc

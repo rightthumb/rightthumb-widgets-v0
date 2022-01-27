@@ -403,7 +403,7 @@ class dot:
     def __init__( self ):
         pass
 
-__.tableLine = 'BEE22BBA'
+__.tableLine = '‽'
 v = dot()
 v.isData = {}
 v.opened_file_me = {}
@@ -10083,7 +10083,7 @@ class Table:
 
     def showColumnHeader(self,column):
         # rows = self.asset
-        result = ''
+        result = ' '
         if type(self.universalSpacing) == dict:
             self.spaces = self.universalSpacing
         for c in column.split(','):
@@ -10097,11 +10097,12 @@ class Table:
             # x
             # alignment = 'center'
             alignment = self.fieldProfileGet(c,'alignment',isHeader=True)
+            alignment='left'
             if alignment == '':
                 ########## Default Alignment ##########
-                alignment = 'right'
+                alignment = 'left'
 
-
+            result+=' '
             if alignment == 'center':
                 totalSpace = int(tabFix) - len(c)
                 if totalSpace > 0:
