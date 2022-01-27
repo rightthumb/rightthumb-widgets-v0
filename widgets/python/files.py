@@ -683,21 +683,31 @@ i = 0
 iS = 0
 baseDepth = 0
 
+if _.switches.isActive('Search-For-Text-Include'):
+	scan=True
+else:
+	scan=False
+
+if not _.switches.isActive('Search-Print-Line'):
+	pr=0
+elif 'a' in _.switches.value('Search-Print-Line').lower():
+	pr=2
+else:
+	pr=1
+
+inc=_.switches.values('Search-For-Text-Include')
+ex=_.switches.values('Search-For-Text-Exclude')
+
+
 def process(path):
-	if not _.switches.isActive('Search-For-Text-Include'):
+	global scan
+	global pr
+	global inc
+	global ex
+	if not scan:
 		print( _.colorThis( path, 'cyan', p=0 ) )
 		return path
 	else:
-
-		if not _.switches.isActive('Search-Print-Line'):
-			pr=0
-		elif 'a' in _.switches.value('Search-Print-Line').lower():
-			pr=2
-		else:
-			pr=1
-
-		inc=_.switches.values('Search-For-Text-Include')
-		ex=_.switches.values('Search-For-Text-Exclude')
 		i=0
 		if len(inc) == 1 and not len(ex):
 			fast=True
