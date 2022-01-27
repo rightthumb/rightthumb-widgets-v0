@@ -257,7 +257,11 @@ def getFolder(folder,r=True):
 	#           return None
 	#   if folder in '/bin /boot /dev /lib /lib64 /lost+found /media /mnt /proc /srv /sys'.split(' '):
 	#       return None
-	if not _.showLine(folder, plus=None, minus='/bin /boot /dev /lib /lib64 /lost+found /proc /srv /sys'.split(' ')):
+	good = True
+	for check in '/bin /boot /dev /lib /lib64 /lost+found /proc /srv /sys'.split(' '):
+		if folder.startswith(check):
+			good = False
+	if not good:
 		if _.showLine(os.getcwd(), plus=None, minus='/bin /boot /dev /lib /lib64 /lost+found /proc /srv /sys'.split(' ')):
 			if _.showLine(os.getcwd(), plus=None, minus='/bin /boot /dev /lib /lib64 /lost+found /proc /srv /sys'.split(' ')):
 				if not len(_.switches.value('Folders')):
@@ -706,6 +710,11 @@ import _rightThumb._dir as _dir
 #   data = _.getTable( 'table.json' )
 # data = []
 # 'Recursive'
+
+
+# getFolder
+
+
 ########################################################################################
 if __name__ == '__main__':
 	action()
