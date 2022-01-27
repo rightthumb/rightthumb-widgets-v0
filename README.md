@@ -426,17 +426,6 @@ Hotkey example
 
         config file 2: widgets/databank/tables/hotkeys-Text.dex
 
-
-
-    hotkey
-        ctrl ctrl space 'imp'
-            ('imp' stands for implode)
-    output
-        simplejson, xtarfile, binaryornot, cssselect, colorama
-
-    hotkey
-        22 esc esc esc
-    closes hotkeys
 ~~~
 
 Creating your own apps using this system?
