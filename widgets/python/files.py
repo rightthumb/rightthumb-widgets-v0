@@ -603,6 +603,8 @@ def action():
 	_.fields.register( 'files', 'name', '1000.43 KB' )
 	global i
 	global iS
+	global infile
+	global scan
 	# load()
 	if _.switches.isActive('Folders') == False:
 		folder = os.getcwd()
@@ -670,11 +672,18 @@ def action():
 		} )
 
 	if _.switches.isActive('Count') == False:
-		if not i == iS:
-		# if _.switches.isActive('Size'):
-			_.colorThis( [  '\n', _.addComma(iS), 'of', _.addComma(i), '\n'  ], 'yellow' )
-		else:
-			_.colorThis( [  '\n{}\n'.format( _.addComma(i) )  ], 'yellow' )
+		if not scan:
+			if not i == iS:
+			# if _.switches.isActive('Size'):
+				_.colorThis( [  '\n', _.addComma(iS), 'of', _.addComma(i), '\n'  ], 'yellow' )
+			else:
+				_.colorThis( [  '\n{}\n'.format( _.addComma(i) )  ], 'yellow' )
+		elif scan:
+			if not i == iS:
+			# if _.switches.isActive('Size'):
+				_.colorThis( [  '\n','in', _.addComma(infile), 'subset', _.addComma(iS), 'of', _.addComma(i), '\n'  ], 'yellow' )
+			else:
+				_.colorThis( [  '\n','in', _.addComma(infile), 'of', _.addComma(i), '\n'  ], 'yellow' )
 		# print('\n{}\n'.format(i))
 
 extensionList = []
@@ -697,13 +706,14 @@ else:
 
 inc=_.switches.values('Search-For-Text-Include')
 ex=_.switches.values('Search-For-Text-Exclude')
-
+infile=0
 
 def process(path):
 	global scan
 	global pr
 	global inc
 	global ex
+	global infile
 	if not scan:
 		print( _.colorThis( path, 'cyan', p=0 ) )
 		return path
@@ -722,6 +732,7 @@ def process(path):
 				
 				if fast:
 					if find in line.lower():
+						infile+=1
 						if pr:
 							print()
 						print( _.colorThis( path, 'cyan', p=0 ) )
@@ -734,6 +745,7 @@ def process(path):
 
 				else:
 					if _.showLine(line, plus=inc, minus=ex):
+						infile+=1
 						if pr:
 							print()
 						print( _.colorThis( path, 'cyan', p=0 ) )
