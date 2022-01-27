@@ -744,7 +744,7 @@ def process(path):
 							print()
 						print( _.colorThis( path, 'cyan', p=0 ) )
 						if pr:
-							print(i,line.replace('\r','').replace('\n',''))
+							print_line(i,line,inc)
 						if pr == 1:
 							return path
 
@@ -757,10 +757,27 @@ def process(path):
 							print()
 						print( _.colorThis( path, 'cyan', p=0 ) )
 						if pr:
-							print(i,line.replace('\r','').replace('\n',''))
+							print_line(i,line,inc)
 						if pr == 1:
 							return path
 
+def cleaner(line):
+	line=line.replace('\r','').replace('\n','')
+	line=_str.cleanBE(line,' ')
+	line=_str.cleanBE(line,'\t')
+	return line
+
+def print_line(i,line,inc):
+	# print(line)
+	line=cleaner(line)
+	line=cleaner(line)
+	subjects=[]
+	for xXx in inc:
+		for subject in _.caseUnspecific( line, xXx ):
+			subjects.append(subject)
+	for subject in subjects:
+		line = line.replace( subject, _.cp( subject, 'green', p=0 ) )
+	print('',_.cp(i,'yellow',p=0),line)
 
 def sw(path):
 	# print(path)
