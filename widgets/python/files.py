@@ -250,30 +250,35 @@ def whatIsIt(file):
 		result = 'Binary'
 	return result
 
+
+
+
 def getFolder(folder,r=True):
+	folder=folder.replace(os.sep+os.sep,os.sep)
+	folder=folder.replace(os.sep+os.sep,os.sep)
 	# if not _.isWin:
 	#   for test in '/bin /boot /dev /lib /lib64 /lost+found /media /mnt /proc /srv /sys'.split(' '):
 	#       if folder.startswith(test+'/'):
 	#           return None
 	#   if folder in '/bin /boot /dev /lib /lib64 /lost+found /media /mnt /proc /srv /sys'.split(' '):
 	#       return None
-	good = True
-	for check in '/bin /boot /dev /lib /lib64 /lost+found /proc /srv /sys'.split(' '):
-		if folder.startswith(check):
-			good = False
-	if not good:
-		if _.showLine(os.getcwd(), plus=None, minus='/bin /boot /dev /lib /lib64 /lost+found /proc /srv /sys'.split(' ')):
-			if _.showLine(os.getcwd(), plus=None, minus='/bin /boot /dev /lib /lib64 /lost+found /proc /srv /sys'.split(' ')):
-				if not len(_.switches.value('Folders')):
-					return None
-				else:
-					last_check=False
-					for f in _.switches.values('Folders'):
-						if not _.showLine(f, plus=None, minus='/bin /boot /dev /lib /lib64 /lost+found /proc /srv /sys'.split(' ')):
-							last_check=True
-					if not last_check:
-						return None
+	if not sw(folder):
+		# return None
+		if not sw(os.getcwd()):
+			# print(os.getcwd(),folder)
+			# print(folder)
+			pass
+		elif not len(_.switches.value('Folders')):
+			return None
+		else:
+			good=False
+			for f in _.switches.values('Folders'):
+				if not sw(f):
+					good=True
+			if not good:
+				return None
 
+	# print(folder)
 
 
 	global i
@@ -708,6 +713,8 @@ inc=_.switches.values('Search-For-Text-Include')
 ex=_.switches.values('Search-For-Text-Exclude')
 infile=0
 
+def process3(path):
+	pass
 def process(path):
 	global scan
 	global pr
@@ -754,6 +761,14 @@ def process(path):
 						if pr == 1:
 							return path
 
+
+def sw(path):
+	# print(path)
+	for check in '/bin /boot /dev /lib /lib64 /lost+found /proc /srv /sys'.split(' '):
+		if path.lower() == check or path.lower().startswith(check+'/'):
+			# print(path)
+			return False
+	return True
 
 # if _.switches.isActive('Ago'):
 import _rightThumb._dir as _dir
