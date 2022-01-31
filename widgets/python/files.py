@@ -201,7 +201,7 @@ def registerSwitches( argvProcessForce=False ):
 	appSwitches()
 
 	_.switches.trigger( 'Size' , unFormatSize )
-	_.switches.trigger( 'Folders' , _.bAlias )
+	# _.switches.trigger( 'Folders' , _.bAlias )
 	# _.switches.trigger('Input',_.myFileLocations)
 		# trigger settings
 	_.myFileLocation_Print = False
@@ -715,14 +715,33 @@ infile=0
 
 def process3(path):
 	pass
+
+spent=[]
+
+def printer(path,ni=0):
+	global spent
+	global infile
+	if _.isWin:
+		p = path.lower()
+	else:
+		p=path
+	if p in spent:
+		return None
+	spent.append(p)
+	print( _.colorThis( path, 'cyan', p=0 ) )
+	infile+=1
+
 def process(path):
+	# print(path)
+	# char = chardet.detect(open( path, 'rb' ).read(200))['encoding']\
+	char='utf-8'
+	# print(char)
 	global scan
 	global pr
 	global inc
 	global ex
-	global infile
 	if not scan:
-		print( _.colorThis( path, 'cyan', p=0 ) )
+		printer(path)
 		return path
 	else:
 		i=0
@@ -733,16 +752,16 @@ def process(path):
 		else:
 			fast=False
 
-		with open(path) as f:
+		with open(path,encoding=char) as f:
 			for line in f:
 				i+=1
 				
 				if fast:
 					if find in line.lower():
-						infile+=1
+						
 						if pr:
 							print()
-						print( _.colorThis( path, 'cyan', p=0 ) )
+						printer(path,ni=1)
 						if pr:
 							print_line(i,line,inc)
 						if pr == 1:
@@ -752,10 +771,9 @@ def process(path):
 
 				else:
 					if _.showLine(line, plus=inc, minus=ex):
-						infile+=1
 						if pr:
 							print()
-						print( _.colorThis( path, 'cyan', p=0 ) )
+						printer(path,ni=1)
 						if pr:
 							print_line(i,line,inc)
 						if pr == 1:
@@ -786,6 +804,11 @@ def sw(path):
 			# print(path)
 			return False
 	return True
+
+
+
+# import chardet
+
 
 # if _.switches.isActive('Ago'):
 import _rightThumb._dir as _dir

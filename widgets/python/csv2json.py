@@ -16,13 +16,9 @@ import time
 # import simplejson as json
 # from threading import Timer
 
-
 ##################################################
-# construct registration
-
 import _rightThumb._construct as __
 appDBA = __.clearFocus( __name__, __file__ )
-# appDBA = __name__
 __.appReg = appDBA
 def focus( parentApp='', childApp='', reg=True ):
 	global appDBA
@@ -35,9 +31,7 @@ __.registeredApps.append(focus())
 
 import _rightThumb._base3 as _
 _.load()
-
 ##################################################
-
 import _rightThumb._vars as _v
 import _rightThumb._string as _str
 # import _rightThumb._profileVariables as _profile
@@ -85,35 +79,22 @@ import _rightThumb._string as _str
 # 	txtBackup.switch( 'Flag', 'pre replaceText' )
 # 	recoveryFile = txtBackup.do( 'action' )
 ##################################################
-
 # from lxml import html
 # import requests
 # import cssselect
 # import sqlite3
-
 ##################################################
 
 
 def appSwitches():
 	# _.switches.register( 'Input', '-i', isRequired=True )
-	# _.switches.register( 'Input', '-i' )
 	# _.switches.register( 'Files', '-f,-file,-files','file.txt', isPipe=True, isRequired=True, description='' )
 	_.switches.register( 'Files', '-f,-file,-files','file.csv', isPipe='name', description='CSV files' )
 	_.switches.register( 'Output', '-o' )
 	_.switches.register( 'Format', '-format', 'dump,pretty' )
 
 
-	"""
-	_.switches.documentation( 'Test', { 
-										'examples': [
-														'',
-													],
-
-										'required': [],
-										'related': [],
-										'isRequired': False,
-									} )
-	"""
+	
 
 
 _.autoBackupData = True
@@ -171,8 +152,6 @@ _.appData[focus()] = {
 
 
 
-
-
 def registerSwitches( argvProcessForce=False ):
 	global appDBA
 	if not __.appReg == appDBA and appDBA in __.appReg:
@@ -202,7 +181,6 @@ def registerSwitches( argvProcessForce=False ):
 
 
 
-
 if not __name__ == '__main__':
 	_.argvProcess = False
 else:
@@ -225,10 +203,6 @@ if __name__ == '__main__':
 _.postLoad( __file__ )
 
 ########################################################################################
-# data = _.tables.returnSorted( 'data', 'd.timestamp', data )
-# _.switches.fieldSet( 'Long', 'active', True )
-# _.tables.register( 'data', table )
-# _.tables.print( 'data', 'name' )
 # p = _.getText( _v.pips, raw=True, clean=True ).split('\n')
 # os.system('"' + do + '"')
 # _.setPipeData( os.listdir(os.getcwd()), focus() )
@@ -241,28 +215,27 @@ _.postLoad( __file__ )
 
 
 
-
 def action():
 
-	if not type( _.appData[__.appReg]['pipe'] ) == bool:
-		_.pipeCleaner()
-		# _.printVar(_.appData)
-		for i,row in enumerate(_.appData[__.appReg]['pipe']):
-			out = ''
-			if _.switches.isActive('Output'):
-				try:
-					out = _.switches.values('Output')[i]
-				except Exception as e:
-					out = _.changeExtension( row, 'json' )
-			else:
-				out = _.changeExtension( row, 'json' )
-			_.csv( row, out)
+	# if not type( _.appData[__.appReg]['pipe'] ) == bool:
+	# 	_.pipeCleaner()
+	# 	# _.printVar(_.appData)
+	# 	for i,row in enumerate(_.appData[__.appReg]['pipe']):
+	# 		out = ''
+	# 		if _.switches.isActive('Output'):
+	# 			try:
+	# 				out = _.switches.values('Output')[i]
+	# 			except Exception as e:
+	# 				out = _.changeExtension( row, 'json' )
+	# 		else:
+	# 			out = _.changeExtension( row, 'json' )
+	data=_.csv( _.switches.values('Files')[0] )
+	_.saveTable2(data,_.switches.values('Output')[0])
 
 
 ########################################################################################
 if __name__ == '__main__':
 	action()
-
 
 
 

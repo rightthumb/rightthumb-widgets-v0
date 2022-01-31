@@ -682,8 +682,13 @@ def isDate( theDate, record={}, tz=None, q=True ):
     if _dir is None:
         import _rightThumb._dir as _dir
     ss = time.time()
+
+    if type(epoch) == str:
+        epoch = autoDate(epoch.replace('z',''))
     record['epoch'] = epoch
+    # print( epoch )
     record['ordinal'] = datetime.datetime.fromtimestamp( epoch ).toordinal()
+    # sys.exit()
     record['text-date'] = datetime.datetime.fromtimestamp( epoch ).strftime('%b, %d %Y')
     record['text-time'] = datetime.datetime.fromtimestamp( epoch ).strftime('%I:%M %p')
     record['text-datetime'] = datetime.datetime.fromtimestamp( epoch ).strftime('%b, %d %Y @ %I:%M %p')
@@ -705,45 +710,47 @@ def isDate( theDate, record={}, tz=None, q=True ):
     record['iso'] = record['fdate'].replace( ' ', 'T' ) + record['tz']
     # iso 24
     # pv(_v.config_hash)
-    if 'nocrypt' in _v.config_hash:
-        pass
-    else:
-        try:
-            import _rightThumb._nID as _nID
+    global isWin
+    if isWin:
+        if 'nocrypt' in _v.config_hash:
+            pass
+        else:
             try:
-                _keychain = regImp( __.appReg, 'keychain' )
-                nID_password = _keychain.imp.key('nID')
-                _nID.mini.password( nID_password )
-                isPass = 'secure'
+                import _rightThumb._nID as _nID
+                try:
+                    _keychain = regImp( __.appReg, 'keychain' )
+                    nID_password = _keychain.imp.key('nID')
+                    _nID.mini.password( nID_password )
+                    isPass = 'secure'
+                except Exception as e:
+                    _nID.mini.password( '1970' )
+                    isPass = 'unsecure'
+                eee = ''
+                ee = str(record['epoch'])
+                for c in ee:
+                    if '.' == c:
+                        break
+                    eee+=c
+                # record['crypt-password'] = nID_password
+                record['crypt-date'] = _nID.mini.gen( record['strip'] )
+                record['crypt-time'] = _nID.mini.gen( record['stript'] )
+                record['crypt-epoch'] = _nID.mini.gen( int(eee) )
+                record['crypt-pass'] = isPass
             except Exception as e:
-                _nID.mini.password( '1970' )
-                isPass = 'unsecure'
-            eee = ''
-            ee = str(record['epoch'])
-            for c in ee:
-                if '.' == c:
-                    break
-                eee+=c
-            # record['crypt-password'] = nID_password
-            record['crypt-date'] = _nID.mini.gen( record['strip'] )
-            record['crypt-time'] = _nID.mini.gen( record['stript'] )
-            record['crypt-epoch'] = _nID.mini.gen( int(eee) )
-            record['crypt-pass'] = isPass
+                pass
+
+
+        try:
+            import _rightThumb._stardate as _sd
+            record['stardate'] = _sd.gen(  epoch  )
         except Exception as e:
             pass
 
-
-    try:
-        import _rightThumb._stardate as _sd
-        record['stardate'] = _sd.gen(  epoch  )
-    except Exception as e:
-        pass
-
-    dt = record['fdate'].split(' ')[0].split('-')
-    try:
-        record['quarter'] = str(record['year']) +'.'+ str(pandas.Timestamp(datetime.date( int(dt[0]) , int(dt[1]), int(dt[2]))).quarter)
-    except Exception as e:
-        pass
+        dt = record['fdate'].split(' ')[0].split('-')
+        try:
+            record['quarter'] = str(record['year']) +'.'+ str(pandas.Timestamp(datetime.date( int(dt[0]) , int(dt[1]), int(dt[2]))).quarter)
+        except Exception as e:
+            pass
 
     e = time.time()
     # print( e-s )
@@ -8461,6 +8468,8 @@ def sort(rows, name):
 
     return rows
 
+def blank_script_trigger(data):
+    return data
 
 class Switch:
 
@@ -8477,6 +8486,7 @@ class Switch:
         self.space = space
         self.vs = False
         self.script_trigger_alt = None
+        self.script=blank_script_trigger
         
     def trigger(self,script,vs=False,alt=None):
         if not alt is None:
@@ -8484,6 +8494,7 @@ class Switch:
             vs = True
         self.vs = vs
         self.script_trigger = script
+        self.script = script
 
 
 
@@ -8497,6 +8508,7 @@ class Switches:
         self.hasRequired = []
         self.isRequired = {}
         self.postScripts = []
+        self.dex = {}
 
 
     def all( self, appReg=None, omit=None, omitDefaults=True,             od=1 ):
@@ -8671,6 +8683,12 @@ class Switches:
         if not isData is None:
             __.trigger_isPipe = isData
             isPipe=isData
+        i=len(self.switches)
+
+        if not __.appReg in self.dex:
+            self.dex[__.appReg]={}
+        self.dex[__.appReg][name]=i
+
         self.switches.append(Switch(name, switch, expected_input_example, description, space))
 
         try:
@@ -8909,9 +8927,13 @@ class Switches:
             if self.switches[i].appReg == __.appReg:
                 if name == self.switches[i].name:
                     self.switches[i].trigger(script,vs,alt)
-
+    
+    def simpleTrigger( self, name, value ):
+        return self.switches[self.dex[__.appReg][name]].script(value)
+                    
 
     def value2(self,name):
+        # return ','.join( self.value3(name) )
         # return ','.join(  self.value3(name)  )
 
 
@@ -8956,6 +8978,7 @@ class Switches:
             result = ''
 
             for i,a in enumerate(switchInput):
+                # a=self.simpleTrigger(name,a)
                 if i > self.fieldGet(name,'pos'):
                     if self.isSwitch(switchInput[i]) == True:
                         break
@@ -8994,8 +9017,9 @@ class Switches:
         return value
 
     def format2( self, name ):
-
         values = self.value3(name)
+        # if name =='Plus':
+        #     print(values)
         if values is None:
             values = []
         else:
@@ -14533,8 +14557,17 @@ def defaultScriptTriggers():
 def print_epoch_trigger(item):
     print( 'epoch:', __.startTime  )
 
+default_switch_trigger_index={}
+def default_switch_trigger(name,script):
+    global default_switch_trigger_index
+    default_switch_trigger_index[name]=script
+
 def defaultScriptTriggers_do():
     global defaultScriptTriggers_run
+    global default_switch_trigger_index
+    for name in default_switch_trigger_index:
+        switches.trigger(name,default_switch_trigger_index[name])
+
     if defaultScriptTriggers_run:
         if len(appInfo[__.appReg_bk]['columns']) > 0:
 

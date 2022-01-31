@@ -233,9 +233,7 @@ class Bookmarks:
 				self.index['paths'][p].append( self.alias )
 		_.saveTable( self.index, 'bookmarks.index', p=0 )
 		if not _.switches.isActive('Clean'):
-			global noPrint
-			if not noPrint:
-				_.colorThis( [  self.alias, self.current  ], 'cyan' )
+			_.colorThis( [  self.alias, self.current  ], 'cyan' )
 		self.log()
 		return self.folder
 	###########################################################################################
@@ -250,8 +248,6 @@ class Bookmarks:
 
 		self.log()
 		return self.folder
-
-noPrint=False
 
 def action():
 	pass

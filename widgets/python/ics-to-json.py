@@ -31,11 +31,8 @@ import _rightThumb._string as _str
 ##################################################
 
 def appSwitches():
-	pass
-	### EXAMPLE: START
-	# _.switches.register( 'Input', '-i' )
-	# _.switches.register( 'Files', '-f,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=True )
-	### EXAMPLE: END
+	_.switches.register( 'Save', '-save' )
+	_.switches.register( 'Files', '-f,-file,-files','file.txt', description='Files', isRequired=True )
 
 ### EXAMPLE: START
 # _.switches.trigger( 'Files', _.myFileLocations, vs=True )
@@ -88,15 +85,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
-				       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					   # { 'name': 'name', 'abbreviation': 'n' },
+					   # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					   # 'this',
+					   # 'app',
 	],
 	'notes': [
-				       # {},
+					   # {},
 	],
 }
 
@@ -133,7 +130,7 @@ def registerSwitches( argvProcessForce=False ):
 	appSwitches()
 
 	_.myFileLocation_Print = False
-	_.switches.trigger( 'Files', _.myFileLocations, vs=True )
+	# _.switches.trigger( 'Files', _.myFileLocations, vs=True )
 	_.switches.trigger( 'Folder', _.myFolderLocations )
 	_.switches.trigger( 'URL', _.urlTrigger )
 	_.switches.trigger( 'Ago', _.timeAgo )
@@ -199,23 +196,51 @@ _.postLoad( __file__ )
 # START
 
 
+from icalendar import Calendar, Event
+
 
 def action():
-	# should be   Single-Task   OR   Imply-Architecture-Functions   OR   CLASSES!!
-	load()
-	global data
+	records = []
+	cal = Calendar.from_ical(open(_.switches.values('Files')[0],'rb').read())
 
-	for i,row in enumerate( _.isData(r=1) ):
-		print(row)
-
-
-
-def load():
-	global data
-	data = _.getTable( 'table' )
+	for x in cal.subcomponents:
+		print()
+		print()
+		print()
+		print(dict(x))
+	# for x in dir(cal):
+	# 	print(x)
 
 
+	# for i,x in enumerate(cal.items()):
+	# 	# if i == 4:
+	# 	print()
+	# 	print()
+	# 	print()
+	# 	print()
+	# 	print()
+	# 	print(x)
+	# 	for y in dir(x):
+	# 		print(y)
 
+
+	# for component in cal.walk():
+	# 	dic={}
+	# 	dat=dict(component)
+	# 	for x in list(dat.keys()):
+	# 		try:
+	# 			dic[x] = str(dat[x])
+	# 		except Exception as e:
+	# 			pass
+	# 	records.append( dic )
+
+	# # _.pv(records)
+
+	# if _.switches.isActive('Save'):
+	# 	_.saveTable2( records, _.switches.values('Save')[0] )
+
+
+# for x in list(dict(component).keys()):
 ########################################################################################
 if __name__ == '__main__':
 	action()

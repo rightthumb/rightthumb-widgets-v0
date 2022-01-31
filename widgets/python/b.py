@@ -36,7 +36,6 @@ import _rightThumb._string as _str
 def appSwitches():
 	_.switches.register('Alias', '-a,-i,-alias','d,sendto,docs', isRequired=True)
 	_.switches.register('Save', '-save')
-	_.switches.register('Path', '-path')
 
 
 _.autoBackupData = __.autoCreationConfiguration['backup']
@@ -186,12 +185,7 @@ def action():
 				copyfile(a,b)
 		except Exception as e:
 			pass
-	if _.switches.isActive('Path'):
-		_bm.noPrint=True
 	path = _bm.Bookmarks( _.switches.value('Alias') ).get()
-	if _.switches.isActive('Path'):
-		print(path)
-		return None
 	if path is None:
 		_.colorThis( 'Error, Bookmark does not exist', 'red' )
 		sys.exit()

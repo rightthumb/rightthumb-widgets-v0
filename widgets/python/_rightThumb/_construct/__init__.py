@@ -431,7 +431,7 @@ Such a place exists, it is called programming.
 							'.bat': '@echo off\n',
 							'.html': {'url':'https://apps.eyeformeta.com/templates/html/0.htm'},
 							'.htm':  {'url':'https://apps.eyeformeta.com/templates/html/1.htm'},
-							# '.php':  {'url':'https://apps.eyeformeta.com/templates/html/1.htm'},
+							'.php':  {'url':'https://apps.eyeformeta.com/templates/html/0.php.txt'},
 		}
 		self.comment = {
 							# '.js': '//',
