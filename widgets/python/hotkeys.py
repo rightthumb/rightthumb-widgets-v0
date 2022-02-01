@@ -976,6 +976,36 @@ function get__THETABLE( $ID_label ){
             _copy.imp.copy( result, p=0 )
             return None
 
+    def toString(self):
+        _paste = _.regImp( __.appReg, '-paste' )
+        _copy = _.regImp( __.appReg, '-copy' )
+        text = _paste.imp.paste()
+        text=_str.replaceDuplicate( text, '\n' )
+        text=_str.cleanBE( text, '\n' )
+        text=_str.cleanBE( text, '\t' )
+        text=_str.cleanBE( text, ' ' )
+        text = text.replace('\r','')
+
+        text=_str.cleanBE( text, '\n' )
+        text=_str.cleanBE( text, '\t' )
+        text=_str.cleanBE( text, ' ' )
+        text=_str.cleanBE( text, '\n' )
+        text=_str.cleanBE( text, '\t' )
+        text=_str.cleanBE( text, ' ' )
+        if text.startswith('{') or text.startswith('['):
+            # print(text)
+            # sys.exit()
+            try:
+                data = simplejson.load(text)
+            except Exception as e:
+                data = eval(text.replace('false','False').replace('true','True'))
+            records = []
+            for rec in data:
+                records.append(rec.replace('\r','').replace('\n',''))
+
+            _copy.imp.copy( '\n'.join(records), p=0 )
+            return None
+
 
 
     def prefix(self):
@@ -1151,6 +1181,34 @@ function get__THETABLE( $ID_label ){
         result=_str.cleanBE( result, '\n' )
         # text=_str.replaceDuplicate( result, ' ' )
         _copy.imp.copy( result, p=0 )
+
+
+    def numberz(self):
+        _paste = _.regImp( __.appReg, '-paste' )
+        _copy = _.regImp( __.appReg, '-copy' )
+        text = _paste.imp.paste()
+        # text=_str.replaceDuplicate( text, '\n' )
+        text=_str.cleanBE( text, '\n' )
+        text=_str.cleanBE( text, '\t' )
+        text=_str.cleanBE( text, ' ' )
+        text = text.replace('\r','')
+        texts = text.split('\n')
+        result=''
+        i=0
+        for line in texts:
+            if len(line.replace(' ','').replace('\t','')):
+                i+=1
+                result += _.zeros2(i,  len(str(len(texts)))  )+' '+line+'\n'
+
+
+            else:
+                result += '\n'
+
+
+        result=_str.cleanBE( result, '\n' )
+        # text=_str.replaceDuplicate( result, ' ' )
+        _copy.imp.copy( result, p=0 )
+
 
     def number_a(self):
         _paste = _.regImp( __.appReg, '-paste' )
@@ -1658,6 +1716,7 @@ def load():
                 'implode2': { 'raw': [ 'Key.alt', 'Key.cmd', 'i' ], 'do': 'Clip.implode()' },
                 'implode3': { 'raw': [ 'Key.alt', 'Key.shift', 'i' ], 'do': 'Clip.implode3()' },
                 'number': { 'raw': [ 'Key.alt', 'Key.cmd', 'n' ], 'do': 'Clip.number()' },
+                'number': { 'raw': [ 'Key.shift', 'Key.alt', 'n' ], 'do': 'Clip.numberz()' },
                 'number-a': { 'raw': [ 'Key.alt', 'Key.cmd', 'n', 'a' ], 'do': 'Clip.number_a()' },
                 'number-b': { 'raw': [ 'Key.alt', 'Key.cmd', 'n', 'b' ], 'do': 'Clip.number_b()' },
                 'number-ba': { 'raw': [ 'Key.alt', 'Key.cmd', 'n', 'b', 'a' ], 'do': 'Clip.number_ba()' },
@@ -1670,11 +1729,13 @@ def load():
                 'suffix': { 'raw': [ 'Key.alt', 'Key.cmd', 's' ], 'do': 'Clip.suffix()' },
                 'lower': { 'raw': [ 'Key.alt', 'Key.cmd', 'l' ], 'do': 'Clip.toLower()' },
                 'upper': { 'raw': [ 'Key.alt', 'Key.cmd', 'u' ], 'do': 'Clip.toUpper()' },
+
+                'lower': { 'raw': [ 'Key.shift', 'Key.cmd', 's' ], 'do': 'Clip.toString()' },
                 
                 'first-word': { 'raw': [ 'Key.alt', 'Key.cmd', '1' ], 'do': 'Clip.first()' },
                 'sql-crud': { 'raw': [ 'Key.alt', 'Key.cmd', 'c' ], 'do': 'Clip.SQL_to_crud()' },
                 'first-php-var': { 'raw': [ 'Key.alt', 'Key.cmd', '4' ], 'do': 'Clip.php_var()' },
-                'builder-one': { 'raw': [ 'Key.alt', 'Key.cmd', 'b' ], 'do': 'Clip.builder()' },
+                # 'builder-one': { 'raw': [ 'Key.alt', 'Key.cmd', 'b' ], 'do': 'Clip.builder()' },
                 'builder-two': { 'raw': [ 'Key.alt', 'Key.cmd', 'y' ], 'do': 'Clip.builder2()' },
                 'range-first': { 'raw': [ 'Key.alt', 'Key.cmd', '-' ], 'do': 'Clip.range_first()' },
                 'reverse-lines': { 'raw': [ 'Key.alt', 'Key.cmd', 'r' ], 'do': 'Clip.reverse_lines()' },

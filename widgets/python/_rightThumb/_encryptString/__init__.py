@@ -1,4 +1,4 @@
-try:
+import sys
 
 # ## {R2D2919B742E} ##
 # ###########################################################################
@@ -10,25 +10,42 @@ try:
 # ###########################################################################
 # ## {C3P0D40fAe8B} ##
 
+errors=False
+errors=True
+hasErrors=False
+try:
 	import base64
 except Exception as e:
+	hasErrors=True
+	if errors: print(e);
 	pass
 try:
 	from Crypto.Cipher import Blowfish
 except Exception as e:
+	hasErrors=True
+	if errors: print(e);
 	pass
 try:
 	import _rightThumb._vars as _v
 except Exception as e:
+	hasErrors=True
+	if errors: print(e);
 	pass
 try:
 	import _rightThumb._md5 as _md5
 except Exception as e:
+	hasErrors=True
+	if errors: print(e);
 	pass
 try:
 	import _rightThumb._string as _str
 except Exception as e:
+	hasErrors=True
+	if errors: print(e);
 	pass
+
+if errors and hasErrors:
+	sys.exit()
 
 def genPassword( password=False ):
 	return newKey( password )

@@ -1851,6 +1851,14 @@ def secureDeleteFile(f):
 
     return result
 
+def zeros2(n,c):
+    result = ''
+    a = len(str(n))
+    while not len(result)+a == c:
+        result += '0'
+    result += str(n)
+    return result
+
 def zeros(n,z='0'):
     if os.path.isfile(fIn):
         n = os.stat(  f  ).st_size
@@ -2749,14 +2757,18 @@ def isData( data=None, focus=None, pipeClean=True, required=False,     r=None, c
                         tData=[]
                         for n in switches.values(name):
                             tData.append(getText(n,raw=True))
-                        # print(tData)
+                        # print(tData[0])
                         data = '\n'.join(tData)
                         # print(data)
+                        # print(type(data))
                         # sys.exit()
                         # return data
+                        # sys.exit()
 
         if data:
-            if not isClean:
+            # print('here')
+            # sys.exit()
+            if False and not isClean:
                 return data
             elif type(data)==str:
                 # print('here')
@@ -2769,12 +2781,14 @@ def isData( data=None, focus=None, pipeClean=True, required=False,     r=None, c
                 #   row = _str.cleanBE( row, '\t' )
                 #   newData+=row+'\n'
                 # return newData
+                # print('here')
+                # sys.exit()
                 return data.split('\n')
             elif type(data)==list:
                 newData=[]
                 for row in data:
-                    row = row.replace('\r')
-                    row = row.replace('\n')
+                    row = row.replace('\r','')
+                    row = row.replace('\n','')
                     row = _str.replaceDuplicate( row, ' ' )
                     row = _str.cleanBE( row, ' ' )
                     row = _str.cleanBE( row, '\t' )
