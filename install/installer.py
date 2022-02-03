@@ -3050,6 +3050,7 @@ alias vps3.dt2="ssh -L 59001:localhost:5901 -C -N -l scott mandalore.eyeformeta.
 
 alias .git="git clone https://github.com/rightthumb/rightthumb-widgets-v0"
 alias .git.="rm -rf rightthumb-widgets-v0 ; git clone https://github.com/rightthumb/rightthumb-widgets-v0 ; cd rightthumb-widgets-v0 ; chmod -R 777 . ; p shClean -folder -r"
+echo '' > $stmp/.gp
 alias .gp=" pwd > $stmp/.gp ; cd /opt/rightthumb-widgets-v0 ; git reset --hard ; git pull ; sudo chmod 777 -R . ; python3 /opt/rightthumb-widgets-v0/install/installer.py -rc.d h  ; cd $( cat $stmp/.gp )"
 
 

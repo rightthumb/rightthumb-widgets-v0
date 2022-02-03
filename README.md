@@ -149,6 +149,7 @@ Recommended python modules
     apt-get install unzip
 
     pip3 install simplejson
+    pip3 install datefinder
     pip3 install xtarfile
     pip3 install binaryornot
     pip3 install cssselect
