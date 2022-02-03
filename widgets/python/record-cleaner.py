@@ -525,6 +525,8 @@ class Scanner:
 		pass
 
 	def process( self, data, subject='A02F28B2' ):
+		if not type(data) == str:
+			return {}
 		data=data.replace('),',')')
 		# address email phone name website notes
 		bk=data

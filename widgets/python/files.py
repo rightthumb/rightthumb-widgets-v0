@@ -91,6 +91,7 @@ _.appInfo[focus()] = {
 						'p files -ext db - *.json *.dat',
 						'',
 						'p files -w --c -ago 10h | p line --c -make "git add {}" | p -copy',
+						'p files -w --c -ago 10h | p line --c -make "git add {}" | p execute',
 						'p files -w --c -ago 10h',
 						'p files - /bin /boot /dev /lib /lib64 /lost+found /media /mnt /proc /srv /sys -f /',
 	],
