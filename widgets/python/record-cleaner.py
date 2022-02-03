@@ -524,7 +524,7 @@ class Scanner:
 		sample = {'self': 'new', 'phone': [app.phone.process('813-690-1260')]}
 		pass
 
-	def process( self, data, subject ):
+	def process( self, data, subject='A02F28B2' ):
 		data=data.replace('),',')')
 		# address email phone name website notes
 		bk=data
@@ -549,7 +549,8 @@ class Scanner:
 				# item = str(item)
 				if not 'phone' in dic:
 					dic['phone'] = []
-				dic['phone'].append(item)
+				if not item in dic['phone']:
+					dic['phone'].append(item)
 				data = data.replace(item,'')
 
 		if not subject == 'email':
@@ -558,7 +559,8 @@ class Scanner:
 				# item = item.group(0)
 				if not 'email' in dic:
 					dic['email'] = []
-				dic['email'].append(item)
+				if not item in dic['email']:
+					dic['email'].append(item)
 				for clean in _.caseUnspecific( data, item ):
 					data = data.replace(clean,'')
 

@@ -735,6 +735,7 @@ def isDate( theDate, record={}, tz=None, q=True ):
                 record['crypt-date'] = _nID.mini.gen( record['strip'] )
                 record['crypt-time'] = _nID.mini.gen( record['stript'] )
                 record['crypt-epoch'] = _nID.mini.gen( int(eee) )
+                record['appID'] = _nID.mini.gen( int(eee) )
                 record['crypt-pass'] = isPass
             except Exception as e:
                 pass
@@ -4377,6 +4378,14 @@ def getCSV( file, save=False, json_file='', printThis=True ):
 
     return csv( file=theFile, save=save, json_file=json_file, printThis=printThis )
 
+def csvTXT( data ):
+    import csv
+    csv_rows = []
+    reader = csv.DictReader(data)
+    title = reader.fieldnames
+    for row in reader:
+        csv_rows.extend([{title[i]:row[title[i]] for i in range(len(title))}])
+    return csv_rows
 def csv( file, save=False, json_file='',printThis=True ):
     import csv
     if type(save) == str:
@@ -12367,7 +12376,11 @@ isTime = False
 
 timeAgoBase = []
 timeAgoBaseCount = 0
-def timeAgo( do='', startDate=None ):
+def timeAgo( do='', startDate=None,epoch=None, d=None ):
+    if not epoch is None:
+        startDate = epoch
+    if not d is None:
+        startDate = d
 
     try:
         do = float(do)
