@@ -283,6 +283,7 @@ def run(path):
 	test=table.copy()
 	if not path.lower() in table:
 		table.append( __.path(path) )
+	# _.pv( table )
 	newTable = []
 	for ntf in table:
 		if not ntf in newTable:

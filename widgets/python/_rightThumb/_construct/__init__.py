@@ -426,6 +426,7 @@ Such a place exists, it is called programming.
 '''.replace('\r','')
 		self.path = path
 		self.headers = {
+							'.txt': '__________________________________________________________________________________\n',
 							'.sh': '#!/bin/bash\n',
 							'.py': '#!/usr/bin/python3\n',
 							'.bat': '@echo off\n',
