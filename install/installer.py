@@ -3070,14 +3070,23 @@ alias vps.h.sh="ssh root@hoth.eyeformeta.com 'mkdir -p /opt/rightthumb-widgets-v
 alias vps.b.sh="ssh root@bespin.eyeformeta.com 'mkdir -p /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/' ; scp  $ww/bash/vps-srv/* root@bespin.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/bash/vps-srv/    ; ssh root@bespin.eyeformeta.com 'chmod -R 777 /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/'"
 alias vps.m.sh="ssh root@mandalore.eyeformeta.com 'mkdir -p /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/' ; scp  $ww/bash/vps-srv/* root@mandalore.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/bash/vps-srv/ ; ssh root@mandalore.eyeformeta.com 'chmod -R 777 /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/'"
 
-alias vps.h.sh2="ssh root@hoth.eyeformeta.com 'mkdir -p /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/' ; scp  /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/* root@hoth.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/bash/vps-srv/      ; ssh root@hoth.eyeformeta.com 'chmod -R 777 /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/'"
-alias vps.b.sh2="ssh root@bespin.eyeformeta.com 'mkdir -p /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/' ; scp  /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/* root@bespin.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/bash/vps-srv/    ; ssh root@bespin.eyeformeta.com 'chmod -R 777 /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/'"
-alias vps.m.sh2="ssh root@mandalore.eyeformeta.com 'mkdir -p /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/' ; scp  /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/* root@mandalore.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/bash/vps-srv/ ; ssh root@mandalore.eyeformeta.com 'chmod -R 777 /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/'"
+alias vps.h.sh.="mkdir -p $ww/bash/vps-srv/ ; scp root@hoth.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/bash/vps-srv/ $ww/bash/vps-srv/* ; chmod 777 -R $ww/bash/vps-srv/"
+alias vps.b.sh.="mkdir -p $ww/bash/vps-srv/ ; scp root@bespin.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/bash/vps-srv/ $ww/bash/vps-srv/* ; chmod 777 -R $ww/bash/vps-srv/"
+alias vps.m.sh.="mkdir -p $ww/bash/vps-srv/ ; scp root@mandalore.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/bash/vps-srv/ $ww/bash/vps-srv/* ; chmod 777 -R $ww/bash/vps-srv/"
+
+
+alias vps.h.sh2="ssh root@hoth.eyeformeta.com -f 'mkdir -p /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/' ; scp  /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/* root@hoth.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/bash/vps-srv/      ; ssh root@hoth.eyeformeta.com 'chmod -R 777 /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/'"
+alias vps.b.sh2="ssh root@bespin.eyeformeta.com -f 'mkdir -p /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/' ; scp  /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/* root@bespin.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/bash/vps-srv/    ; ssh root@bespin.eyeformeta.com 'chmod -R 777 /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/'"
+alias vps.m.sh2="ssh root@mandalore.eyeformeta.com -f 'mkdir -p /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/' ; scp  /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/* root@mandalore.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/bash/vps-srv/ ; ssh root@mandalore.eyeformeta.com 'chmod -R 777 /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/'"
 
 
 alias vps.h.db="scp  $ww/databank/tables/*.* root@hoth.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/databank/tables/      ; ssh root@hoth.eyeformeta.com 'chmod -R 777 /opt/rightthumb-widgets-v0/'"
 alias vps.b.db="scp  $ww/databank/tables/*.* root@bespin.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/databank/tables/    ; ssh root@bespin.eyeformeta.com 'chmod -R 777 /opt/rightthumb-widgets-v0/'"
 alias vps.m.db="scp  $ww/databank/tables/*.* root@mandalore.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/databank/tables/ ; ssh root@mandalore.eyeformeta.com 'chmod -R 777 /opt/rightthumb-widgets-v0/'"
+
+alias vps.h.db.="mkdir -p $ww/databank/tables/ ; scp root@hoth.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/databank/tables/ $ww/databank/tables/* ; chmod 777 -R $ww/databank/tables/"
+alias vps.b.db.="mkdir -p $ww/databank/tables/ ; scp root@bespin.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/databank/tables/ $ww/databank/tables/* ; chmod 777 -R $ww/databank/tables/"
+alias vps.m.db.="mkdir -p $ww/databank/tables/ ; scp root@mandalore.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/databank/tables/ $ww/databank/tables/* ; chmod 777 -R $ww/databank/tables/"
 
 
 alias in.='cat ~/.bashrc > ~/.bashrc.bk ; echo "" > ~/.bashrc ; rm $widgets/install/installer.py ; wget https://raw.githubusercontent.com/rightthumb/rightthumb-widgets-v0/main/install/installer.py -O $widgets/install/installer.py ; chmod 777 $widgets/install/installer.py ; python3 $widgets/install/installer.py -rc.d h'
