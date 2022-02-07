@@ -3084,9 +3084,9 @@ alias vps.h.db="scp  $ww/databank/tables/*.* root@hoth.eyeformeta.com:/opt/right
 alias vps.b.db="scp  $ww/databank/tables/*.* root@bespin.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/databank/tables/    ; ssh root@bespin.eyeformeta.com 'chmod -R 777 /opt/rightthumb-widgets-v0/'"
 alias vps.m.db="scp  $ww/databank/tables/*.* root@mandalore.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/databank/tables/ ; ssh root@mandalore.eyeformeta.com 'chmod -R 777 /opt/rightthumb-widgets-v0/'"
 
-alias vps.h.db.="mkdir -p $ww/databank/tables/ ; scp root@hoth.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/databank/tables/*.* $ww/databank/tables/* ; chmod 777 -R $ww/databank/tables/"
-alias vps.b.db.="mkdir -p $ww/databank/tables/ ; scp root@bespin.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/databank/tables/*.* $ww/databank/tables/* ; chmod 777 -R $ww/databank/tables/"
-alias vps.m.db.="mkdir -p $ww/databank/tables/ ; scp root@mandalore.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/databank/tables/*.* $ww/databank/tables/* ; chmod 777 -R $ww/databank/tables/"
+alias vps.h.db.="scp -rp root@hoth.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/databank/tables/*.* $ww/databank/tables/ ; chmod 777 -R $ww/databank/tables/"
+alias vps.b.db.="scp -rp root@bespin.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/databank/tables/*.* $ww/databank/tables/ ; chmod 777 -R $ww/databank/tables/"
+alias vps.m.db.="scp -rp root@mandalore.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/databank/tables/*.* $ww/databank/tables/ ; chmod 777 -R $ww/databank/tables/"
 
 
 alias in.='cat ~/.bashrc > ~/.bashrc.bk ; echo "" > ~/.bashrc ; rm $widgets/install/installer.py ; wget https://raw.githubusercontent.com/rightthumb/rightthumb-widgets-v0/main/install/installer.py -O $widgets/install/installer.py ; chmod 777 $widgets/install/installer.py ; python3 $widgets/install/installer.py -rc.d h'
@@ -3122,7 +3122,7 @@ export EDITOR='nano'
 # crontab    /var/spool/cron/user
 # ssh-keygen -t rsa
 # ssh-copy-id -i ~/.ssh/id_rsa.pub scott@hoth.eyeformeta.com
-
+clear
             """
             # echo "alias rr='sudo su root'" >> ~/.bashrc
             return self.file( path, data, { 'status': 'virtual' } )
