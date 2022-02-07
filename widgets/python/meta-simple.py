@@ -31,10 +31,10 @@ import _rightThumb._string as _str
 ##################################################
 
 def appSwitches():
+	_.switches.register( 'Subject', '-app,-sub,subject', 'ftp' )
 	pass
 	### EXAMPLE: START
-	# _.switches.register( 'Input', '-i' )
-	_.switches.register( 'Files', '-f,-file,-files','file.txt',  description='Files', isRequired=True )
+	# _.switches.register( 'Files', '-f,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=True )
 	### EXAMPLE: END
 
 ### EXAMPLE: START
@@ -133,7 +133,7 @@ def registerSwitches( argvProcessForce=False ):
 	appSwitches()
 
 	_.myFileLocation_Print = False
-	# _.switches.trigger( 'Files', _.myFileLocations, vs=True )
+	_.switches.trigger( 'Files', _.myFileLocations, vs=True )
 	_.switches.trigger( 'Folder', _.myFolderLocations )
 	_.switches.trigger( 'URL', _.urlTrigger )
 	_.switches.trigger( 'Ago', _.timeAgo )
@@ -198,40 +198,40 @@ _.postLoad( __file__ )
 ########################################################################################
 # START
 
-def process(path):
-	meta = {}
-	file = os.path.abspath(path)
-	folder = __.path(path,pop=True)
-	while not os.path.isfile( folder+os.sep+'.folder.meta' ):
-		try:
-			folder = __.path(folder,pop=True)
-		except Exception as e:
-			pass
-	meta = _.getTable2( folder+os.sep+'.folder.meta' )
-	_.pv(meta)
-	if 'url' in meta:
-		url = file.replace( __.path(folder), meta['url'] ).replace('\\','/')
-		if os.path.isdir(path):
-			url += '/'
-		print(url)
-		webbrowser.open(url, new=2)
-		 
+def template(subject):
+	global meta
+	if subject == 'url':
+		return ''
+	if subject == 'ftp':
+		return {
+												'server':		'',
+												'user':			'',
+												'password':		'',
+												'path':			'',
+												'full-path':			'',
+											}
+	pass
+	return {}
 
 def action():
-	# should be   Single-Task   OR   Imply-Architecture-Functions   OR   CLASSES!!
 	load()
-	global data
+	global meta
+	for k in _.switches.values('Subject'):
+		if not k in meta:
+			meta[k] = template(k)
 
-	for i,path in enumerate( _.switches.values('Files') ):
-		process(path)
+	_.saveTable2( meta, '.folder.meta' )
+	os.system( 'n .folder.meta' )
+
+
 
 
 
 def load():
-	global data
-	# data = _.getTable( 'table' )
+	global meta
+	meta = _.getTable2( '.folder.meta' )
 
-import webbrowser
+
 
 ########################################################################################
 if __name__ == '__main__':

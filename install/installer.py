@@ -3054,9 +3054,9 @@ echo '' > $stmp/.gp
 alias .gp=" pwd > $stmp/.gp ; cd /opt/rightthumb-widgets-v0 ; git reset --hard ; git pull ; sudo chmod 777 -R . ; python3 /opt/rightthumb-widgets-v0/install/installer.py -rc.d h  ; cd $( cat $stmp/.gp )"
 
 
-alias vps.h.py="scp  /mnt/d/.rightthumb-widgets/widgets/python/vps*.py root@hoth.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/python/      ; ssh root@hoth.eyeformeta.com 'chmod -R 777 /opt/rightthumb-widgets-v0/'"
-alias vps.b.py="scp  /mnt/d/.rightthumb-widgets/widgets/python/vps*.py root@bespin.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/python/    ; ssh root@bespin.eyeformeta.com 'chmod -R 777 /opt/rightthumb-widgets-v0/'"
-alias vps.m.py="scp  /mnt/d/.rightthumb-widgets/widgets/python/vps*.py root@mandalore.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/python/ ; ssh root@mandalore.eyeformeta.com 'chmod -R 777 /opt/rightthumb-widgets-v0/'"
+alias vps.h.py="scp  $ww/python/vps*.py root@hoth.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/python/      ; ssh root@hoth.eyeformeta.com 'chmod -R 777 /opt/rightthumb-widgets-v0/'"
+alias vps.b.py="scp  $ww/python/vps*.py root@bespin.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/python/    ; ssh root@bespin.eyeformeta.com 'chmod -R 777 /opt/rightthumb-widgets-v0/'"
+alias vps.m.py="scp  $ww/python/vps*.py root@mandalore.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/python/ ; ssh root@mandalore.eyeformeta.com 'chmod -R 777 /opt/rightthumb-widgets-v0/'"
 
 alias vps.h.py2="scp  /opt/rightthumb-widgets-v0/widgets/python/vps*.py root@hoth.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/python/       ; ssh root@hoth.eyeformeta.com 'chmod -R 777 /opt/rightthumb-widgets-v0/'"
 alias vps.b.py2="scp  /opt/rightthumb-widgets-v0/widgets/python/vps*.py root@bespin.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/python/     ; ssh root@bespin.eyeformeta.com 'chmod -R 777 /opt/rightthumb-widgets-v0/'"
@@ -3066,14 +3066,18 @@ alias vps.h.c="ssh -f root@hoth.eyeformeta.com      -f '/bin/python3 /opt/rightt
 alias vps.b.c="ssh -f root@bespin.eyeformeta.com    -f '/bin/python3 /opt/rightthumb-widgets-v0/widgets/python/shClean.py -r -folder /opt '"
 alias vps.m.c="ssh -f root@mandalore.eyeformeta.com -f '/bin/python3 /opt/rightthumb-widgets-v0/widgets/python/shClean.py -r -folder /opt '"
  
-alias vps.h.sh="ssh root@hoth.eyeformeta.com 'mkdir -p /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/' ; scp  /mnt/d/.rightthumb-widgets/widgets/bash/vps-srv/* root@hoth.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/bash/vps-srv/      ; ssh root@hoth.eyeformeta.com 'chmod -R 777 /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/'"
-alias vps.b.sh="ssh root@bespin.eyeformeta.com 'mkdir -p /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/' ; scp  /mnt/d/.rightthumb-widgets/widgets/bash/vps-srv/* root@bespin.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/bash/vps-srv/    ; ssh root@bespin.eyeformeta.com 'chmod -R 777 /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/'"
-alias vps.m.sh="ssh root@mandalore.eyeformeta.com 'mkdir -p /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/' ; scp  /mnt/d/.rightthumb-widgets/widgets/bash/vps-srv/* root@mandalore.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/bash/vps-srv/ ; ssh root@mandalore.eyeformeta.com 'chmod -R 777 /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/'"
+alias vps.h.sh="ssh root@hoth.eyeformeta.com 'mkdir -p /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/' ; scp  $ww/bash/vps-srv/* root@hoth.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/bash/vps-srv/      ; ssh root@hoth.eyeformeta.com 'chmod -R 777 /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/'"
+alias vps.b.sh="ssh root@bespin.eyeformeta.com 'mkdir -p /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/' ; scp  $ww/bash/vps-srv/* root@bespin.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/bash/vps-srv/    ; ssh root@bespin.eyeformeta.com 'chmod -R 777 /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/'"
+alias vps.m.sh="ssh root@mandalore.eyeformeta.com 'mkdir -p /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/' ; scp  $ww/bash/vps-srv/* root@mandalore.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/bash/vps-srv/ ; ssh root@mandalore.eyeformeta.com 'chmod -R 777 /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/'"
+
+alias vps.h.sh2="ssh root@hoth.eyeformeta.com 'mkdir -p /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/' ; scp  /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/* root@hoth.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/bash/vps-srv/      ; ssh root@hoth.eyeformeta.com 'chmod -R 777 /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/'"
+alias vps.b.sh2="ssh root@bespin.eyeformeta.com 'mkdir -p /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/' ; scp  /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/* root@bespin.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/bash/vps-srv/    ; ssh root@bespin.eyeformeta.com 'chmod -R 777 /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/'"
+alias vps.m.sh2="ssh root@mandalore.eyeformeta.com 'mkdir -p /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/' ; scp  /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/* root@mandalore.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/bash/vps-srv/ ; ssh root@mandalore.eyeformeta.com 'chmod -R 777 /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/'"
 
 
-alias vps.h.db="scp  /mnt/d/.rightthumb-widgets/widgets/databank/tables/*.* root@hoth.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/databank/tables/      ; ssh root@hoth.eyeformeta.com 'chmod -R 777 /opt/rightthumb-widgets-v0/'"
-alias vps.b.db="scp  /mnt/d/.rightthumb-widgets/widgets/databank/tables/*.* root@bespin.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/databank/tables/    ; ssh root@bespin.eyeformeta.com 'chmod -R 777 /opt/rightthumb-widgets-v0/'"
-alias vps.m.db="scp  /mnt/d/.rightthumb-widgets/widgets/databank/tables/*.* root@mandalore.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/databank/tables/ ; ssh root@mandalore.eyeformeta.com 'chmod -R 777 /opt/rightthumb-widgets-v0/'"
+alias vps.h.db="scp  $ww/databank/tables/*.* root@hoth.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/databank/tables/      ; ssh root@hoth.eyeformeta.com 'chmod -R 777 /opt/rightthumb-widgets-v0/'"
+alias vps.b.db="scp  $ww/databank/tables/*.* root@bespin.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/databank/tables/    ; ssh root@bespin.eyeformeta.com 'chmod -R 777 /opt/rightthumb-widgets-v0/'"
+alias vps.m.db="scp  $ww/databank/tables/*.* root@mandalore.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/databank/tables/ ; ssh root@mandalore.eyeformeta.com 'chmod -R 777 /opt/rightthumb-widgets-v0/'"
 
 
 alias in.='cat ~/.bashrc > ~/.bashrc.bk ; echo "" > ~/.bashrc ; rm $widgets/install/installer.py ; wget https://raw.githubusercontent.com/rightthumb/rightthumb-widgets-v0/main/install/installer.py -O $widgets/install/installer.py ; chmod 777 $widgets/install/installer.py ; python3 $widgets/install/installer.py -rc.d h'
@@ -3088,12 +3092,12 @@ alias rr='sudo su root'
 
 alias crontab.='EDITOR=nano /usr/bin/crontab'
 
-alias dl='python3 /mnt/d/.rightthumb-widgets/widgets/vps-app-7facG-7GldEZ-dl.py'
-alias dl.b='python3 /mnt/d/.rightthumb-widgets/widgets/python/vps-app-7facG-7GldEZ-dl-bespin.py -path '
-alias dl.h='python3 /mnt/d/.rightthumb-widgets/widgets/python/python/vps-app-7facG-7GldEZ-dl-hoth.py -path '
-alias dl.m='python3 /mnt/d/.rightthumb-widgets/widgets/python/vps-app-7facG-7GldEZ-dl-mandalore.py -path '
+alias dl='python3 $ww/vps-app-7facG-7GldEZ-dl.py'
+alias dl.b='python3 $ww/python/vps-app-7facG-7GldEZ-dl-bespin.py -path '
+alias dl.h='python3 $ww/python/python/vps-app-7facG-7GldEZ-dl-hoth.py -path '
+alias dl.m='python3 $ww/python/vps-app-7facG-7GldEZ-dl-mandalore.py -path '
 
-alias bl='python3 /mnt/d/.rightthumb-widgets/widgets/python/blank-file.py -f '
+alias bl='python3 $ww/python/blank-file.py -f '
 
 alias crontab.='EDITOR=nano /usr/bin/crontab'
 
@@ -13954,7 +13958,9 @@ def action():
 
         if os.path.isfile( v.config ):
             v.bash = vc.HD.getTableSimp( v.config )
+        v.bash['py'] = v.bash['ww']+os.sep+'python'
         v.bash['PY'] = sys.executable
+
         
         # else:
         #   if not 'widgets' in v.bash:

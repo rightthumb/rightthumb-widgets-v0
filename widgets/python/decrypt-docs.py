@@ -336,6 +336,7 @@ def run(path):
 						row=row.replace('   !V!','  !V!')
 					else:
 						row = records[row] + addSpaces(records[row]) + '!V!'
+						# row = records[row]
 			nFile.append(row)
 		segments.append('\n'.join(nFile))
 	data = doc_sep.join(segments)

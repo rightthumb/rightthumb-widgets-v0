@@ -33,23 +33,23 @@ import _rightThumb._string as _str
 def appSwitches():
 	pass
 	### EXAMPLE: START
-	# _.switches.register( 'Input', '-i' )
+	_.switches.register( 'Seconds', '-sec','15' )
 	_.switches.register( 'Files', '-f,-file,-files','file.txt',  description='Files', isRequired=True )
 	### EXAMPLE: END
 
 ### EXAMPLE: START
 # _.switches.trigger( 'Files', _.myFileLocations, vs=True )
-# 	finds the file in probable locations
-# 	and 
-# 		if  _.autoBackupData = True
-# 		and __.releaseAcquiredData = True
-# 			GET EPOCH FROM: hosts/hostname/logs/apps/execution_receipt-app_name-epoch.json
-# 		you can run apps on usb at a clients office
-# 			when you get home run: p app -loadepoch epoch 
-# 				backed up
-# 					pipe
-# 					files
-# 					tables
+#   finds the file in probable locations
+#   and 
+#       if  _.autoBackupData = True
+#       and __.releaseAcquiredData = True
+#           GET EPOCH FROM: hosts/hostname/logs/apps/execution_receipt-app_name-epoch.json
+#       you can run apps on usb at a clients office
+#           when you get home run: p app -loadepoch epoch 
+#               backed up
+#                   pipe
+#                   files
+#                   tables
 ### EXAMPLE: END
 _.autoBackupData = __.setting('receipt-log')
 __.releaseAcquiredData = __.setting('receipt-file')
@@ -88,15 +88,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
-				       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					   # { 'name': 'name', 'abbreviation': 'n' },
+					   # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					   # 'this',
+					   # 'app',
 	],
 	'notes': [
-				       # {},
+					   # {},
 	],
 }
 
@@ -133,14 +133,14 @@ def registerSwitches( argvProcessForce=False ):
 	appSwitches()
 
 	_.myFileLocation_Print = False
-	# _.switches.trigger( 'Files', _.myFileLocations, vs=True )
+	_.switches.trigger( 'Files', _.myFileLocations, vs=True )
 	_.switches.trigger( 'Folder', _.myFolderLocations )
 	_.switches.trigger( 'URL', _.urlTrigger )
 	_.switches.trigger( 'Ago', _.timeAgo )
 	_.switches.trigger( 'Duration', _.timeFuture )
 	### EXAMPLE: START
 	# _.default_switch_trigger('Plus', trigger_plus)
-	# _.switches.trigger( 'Files',_.inRelevantFolder )	
+	# _.switches.trigger( 'Files',_.inRelevantFolder )  
 	# _.switches.trigger( 'Watched', _.txt2Date )
 	# _.switches.trigger( 'Input',_.formatColumns )
 	# _.switches.trigger( 'Franchise',_.triggerSpace )
@@ -185,53 +185,78 @@ _.postLoad( __file__ )
 # os.system( '"' + do + '"' )
 # _.setPipeData( os.listdir( os.getcwd() ), focus() )
 # _.showLine( item )
-# 	if os.path.isdir( row ):
-# 	if os.path.isfile( row ):
-#	os.path.abspath(path)
+#   if os.path.isdir( row ):
+#   if os.path.isfile( row ):
+#   os.path.abspath(path)
 # __.appRegPipe    ( pipe data registerd focus(__.appReg) set by _.myFileLocations {if imported} , default is None )
 # for i,row in enumerate(_.t( _.appData[__.appReg]['pipe'] )):
 # for i,row in _.e( _.isData(r=1) ):
 # date = _.friendlyDate( theDate )
 # _.addComma()
-# 													if platform.system() == 'Windows':
+#                                                   if platform.system() == 'Windows':
 ### EXAMPLE: END
 ########################################################################################
 # START
+loop=0
+def getText(path,raw=True):
+	global loop
+	loop+=1
+	f = {}
+	f[loop] = open(path, 'r', encoding='utf-8')
+	lines = f[loop].readlines()
+	f[loop].close()
+	del f[loop]
+	if raw:
+		lines = ''.join(lines)
+	return lines
+
+def watch(path):
+	global printed
+	lines = getText(path,raw=True).replace('\r','').split('\n')
+	added = False
+	for i,line in enumerate(lines):
+		if not i in printed:
+			added = True
+			# print(line)
+			if len(line):
+				# print(i,line)
+				print(line)
+			printed.append(i)
+
+	if added:
+
+		printed.reverse()
+		if not len(lines[printed[0]]):
+			printed.pop(0)
+		printed.reverse()
+
 
 def process(path):
-	meta = {}
-	file = os.path.abspath(path)
-	folder = __.path(path,pop=True)
-	while not os.path.isfile( folder+os.sep+'.folder.meta' ):
-		try:
-			folder = __.path(folder,pop=True)
-		except Exception as e:
-			pass
-	meta = _.getTable2( folder+os.sep+'.folder.meta' )
-	_.pv(meta)
-	if 'url' in meta:
-		url = file.replace( __.path(folder), meta['url'] ).replace('\\','/')
-		if os.path.isdir(path):
-			url += '/'
-		print(url)
-		webbrowser.open(url, new=2)
-		 
+	global printed
+	i=0
+	while True:
+		i+=1
+		# print('-',i)
+		# printed = []
+		watch(path)
+		
 
+		if _.switches.isActive('Seconds'):
+			sec = int(_.switches.value('Seconds'))
+		else:
+			sec = 15
+		time.sleep(sec)
+
+
+printed = []
 def action():
-	# should be   Single-Task   OR   Imply-Architecture-Functions   OR   CLASSES!!
-	load()
-	global data
+
 
 	for i,path in enumerate( _.switches.values('Files') ):
 		process(path)
 
 
 
-def load():
-	global data
-	# data = _.getTable( 'table' )
-
-import webbrowser
 
 ########################################################################################
 if __name__ == '__main__':

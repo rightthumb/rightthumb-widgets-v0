@@ -92,6 +92,8 @@ _.appInfo[focus()] = {
 						'p meta -drive e',
 						'p meta -drive f',
 						'',
+						'p meta -folder -add folder.servers.ftp',
+						'',
 	],
 	'columns': [
 				       # { 'name': 'name', 'abbreviation': 'n' },
@@ -695,16 +697,11 @@ def load():
 									'ftp': {
 										'account': {
 											'LABEL': {
-												'client':			False,
 												'server':		'',
 												'user':			'',
 												'password':		'',
 												'path':			'',
-												'sync': {
-													'upload': False,
-													'download': False,
-													'delay': 120,
-												},
+												'full-path':			'',
 											},
 										},
 
@@ -792,7 +789,7 @@ I'M TALKING TO YOU!!
 ??
 
 """
-
+__.print_path = True
 
 ########################################################################################
 if __name__ == '__main__':

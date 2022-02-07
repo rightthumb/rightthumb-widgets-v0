@@ -666,6 +666,7 @@ def secureFiles(path):
 
 def action(path=None,flag=None):
 	if not path is None:
+		path = __.path(  os.path.abspath(path)  )
 		_.switches.fieldSet( 'Silent', 'active', True )
 		_.switches.fieldSet( 'isRunOnce', 'active', True )
 		_.switches.fieldSet( 'DoNotSchedule', 'active', True )
@@ -687,7 +688,6 @@ def action(path=None,flag=None):
 	if _.switches.isActive('Input') or not path is None:
 		if path is None:
 			path = _.switches.value('Input')
-		
 		# print( 'path::::', path )
 		if os.path.isfile(path):
 			path = __.path(  os.path.abspath(path)  )

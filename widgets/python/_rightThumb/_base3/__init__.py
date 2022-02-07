@@ -300,7 +300,7 @@ import _rightThumb._construct as __
 import _rightThumb._vars as _v
 import _rightThumb._string as _str
 
-
+__.print_path = False
 ######################################################
 
 if os.path.isfile( _v.py+_v.slash+'thread.py' ):
@@ -7663,6 +7663,8 @@ def saveTable( rows, theFile, tableTemp=False, printThis=True, indentCode=True, 
             file0 = _v.stmp + _v.slash + theFile
             px = file0
 
+    if __.print_path:
+        print(file0)
     if indentCode:
         dataDump = simplejson.dumps(rows, indent=4, sort_keys=sort_keys)
     else:
@@ -7851,6 +7853,8 @@ def saveTableProject( project, rows=[], theFile='', printThis=False, sort_keys=F
     simplejson = __.imp('simplejson')
     # print('*******************',theFile)
     theFile = _v.projectData(project) + theFile
+    if __.print_path:
+        print(theFile)
     if path:
         print(theFile)
         return None
@@ -7874,7 +7878,8 @@ def saveTableDB( rows, theFile, printThis=False, sort_keys=False, indentCode=Tru
 
     # print('*******************',theFile)
     theFile = _v.dbTables + _v.slash + theFile
-
+    if __.print_path:
+        print(theFile)
     if indentCode:
         dataDump = simplejson.dumps(rows, indent=4, sort_keys=sort_keys)
     else:
