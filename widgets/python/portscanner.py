@@ -32,11 +32,11 @@ import _rightThumb._vars as _v
 import _rightThumb._string as _str
 
 ##################################################
-
+import socket
 
 def appSwitches():
 	_.switches.register( 'CIDR', '-cidr', '192.168.254.57/24' )
-	_.switches.register( 'IPs', '-ip,-ips', '192.168.254.1-254' )
+	_.switches.register( 'IPs', '-ip,-ips,-h,-host,-hosts', '192.168.254.1-254' )
 	# _.switches.register( 'ThreadPrint', '-tp' )
 	_.switches.register( 'Resolve', '-r,-resolve' )
 	_.switches.register( 'Top', '-top', '20  OR 200 udp' )
@@ -45,11 +45,17 @@ def appSwitches():
 	_.switches.register( 'Max', '-max','800' )
 	_.switches.register( 'Ports', '-port,-ports',' 9100 139 ' )
 	_.switches.register( 'Save', '-save',' scan-tbcn-2021.04.csv ' )
+	_.switches.register( 'DisplayFilter', '-filter','ports' )
 
 	# _.switches.register( 'Quick', '-q' )
 
-
-	pass
+def hostname_to_ip(data):
+	if not data[0] in '0123456789':
+		try:
+			data = socket.gethostbyname(data)
+		except Exception as e:
+			pass
+	return data
 
 
 _.autoBackupData = __.autoCreationConfiguration['backup']
@@ -148,6 +154,7 @@ def registerSwitches( argvProcessForce=False ):
 
 	_.myFileLocation_Print = False
 	__.myFileLocations_SKIP_VALIDATION = False
+	_.switches.trigger( 'IPs', hostname_to_ip )
 	_.switches.trigger( 'Files', _.myFileLocations, vs=True )
 	_.switches.trigger( 'Folder', _.myFolderLocations )
 	_.switches.trigger( 'URL', _.urlTrigger )
@@ -360,10 +367,21 @@ def resolution_results():
 
 
 	print()
+	if _.switches.isActive('DisplayFilter'):
+		recs = []
+		if 'port' in _.switches.value('DisplayFilter').lower():
+			for rec in records:
+				# print( type(rec['ports']), rec['ports'])
+				if len(rec['ports']):
+					recs.append(rec)
+			records = recs
 	_.tables.register( 'IPS', records )
 	_.tables.print( 'IPS', 'address,name,vendor,mac,ports' )
 	print()
-	_.cp(  [ '\n', '', len(IP_Table) ], 'yellow'  )
+	if not len(records) == len(IP_Table):
+		_.cp(  [ '\n', '', len(records),'of',len(IP_Table) ], 'yellow'  )
+	else:
+		_.cp(  [ '\n', '', len(IP_Table) ], 'yellow'  )
 
 	if _.switches.isActive('Save') and len(_.switches.value('Save')):
 		for save in _.switches.values('Save'):
@@ -642,7 +660,7 @@ _async = _.regImp( __.appReg, '_rightThumb._asynchronous' )
 # for x in dir(ping):
 # 	print(x)
 # sys.exit()
-import socket
+
 import subprocess
 from getmac import get_mac_address
 
