@@ -156,8 +156,13 @@ def cleanStringA(data):
 	data = _str.cleanBE(data,'\r')
 	data = _str.cleanBE(data,'\n')
 	data = _str.cleanBE(data,'\r')
-	data = _str.cleanBE(data,'\t')
-	data = _str.cleanBE(data,' ')
+	data = _str.cleanEnd(data,' ')
+	data = _str.cleanEnd(data,'\t')
+	data = _str.cleanEnd(data,' ')
+	data = _str.cleanEnd(data,'\t')
+
+	# data = _str.cleanBE(data,'\t')
+	# data = _str.cleanBE(data,' ')
 	return data
 
 def login( label, appReg=None ):
@@ -177,11 +182,11 @@ def login( label, appReg=None ):
 		print()
 
 		_.saveText( _blowfish.encrypt(password), auto )
-	gateKey = _blowfish.decryptClean( _.getText(auto,raw=True,clean=2) )
+	gateKey = _blowfish.decrypt( _.getText(auto,raw=True,clean=2) )
 	vault = _.getTableDB( 'vault.index' )
 	
 	if location in vault:
-		password = _blowfish.decryptClean( vault[location], gateKey )
+		password = _blowfish.decrypt( vault[location], gateKey )
 	else:
 		if vaultPass:
 			_.colorThis( label, 'yellow' )
@@ -202,12 +207,12 @@ def key(password=None):
 			print()
 
 		_.saveText( _blowfish.encrypt(password), auto )
-	gateKey = _blowfish.decryptClean( _.getText(auto,raw=True,clean=2) )
+	gateKey = _blowfish.decrypt( _.getText(auto,raw=True,clean=2) )
 	return gateKey
 
 def string( data ):
 	password = key()
-	return _blowfish.decryptClean( data, password )
+	return _blowfish.decrypt( data, password )
 
 def action():
 	pass

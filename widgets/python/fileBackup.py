@@ -47,7 +47,7 @@ def appSwitches():
 	_.switches.register('Input', '-i,-f,-file','file.txt')
 	_.switches.register('Result', '-result')
 	_.switches.register('Flag', '-flag')
-	_.switches.register('Silent', '-silent')
+	_.switches.register('Silent', '-silent,--c')
 	_.switches.register('DoNotSchedule', '-noschedule')
 	_.switches.register('isRunOnce', '-1,-isrunonce,-once,-single,-runonce,-one')
 	_.switches.register('PythonDocumentation', '-python')
@@ -240,15 +240,15 @@ def PRE_BACKUP_PROCESSING( path ):
 			if len(theExampleLines):
 				# ef = _v.myTables + os.sep + _v.py_examples
 				# if os.path.isfile(ef):
-				# 	record = _.getTable( _v.py_examples )
-				# 	newExamples = []
-				# 	for x in record['examples']:
-				# 		if not x in newExamples:
-				# 			newExamples.append( x )
-				# 	for x in theExampleLines:
-				# 		if not x in newExamples:
-				# 			newExamples.append( x )
-				# 	theExampleLines = newExamples
+				#   record = _.getTable( _v.py_examples )
+				#   newExamples = []
+				#   for x in record['examples']:
+				#       if not x in newExamples:
+				#           newExamples.append( x )
+				#   for x in theExampleLines:
+				#       if not x in newExamples:
+				#           newExamples.append( x )
+				#   theExampleLines = newExamples
 					# del newExamples
 				pass
 
@@ -606,7 +606,11 @@ def secureFiles(path):
 			return False
 		global _decrypt_docs
 		if _decrypt_docs is None:
-			_decrypt_docs = _.regImp( __.appReg, 'decrypt-docs' )
+			if path.lower().endswith('.md'):
+				# _decrypt_docs = _.regImp( __.appReg, 'decrypt-docs-md' )
+				_decrypt_docs = _.regImp( __.appReg, 'decrypt-docs' )
+			else:
+				_decrypt_docs = _.regImp( __.appReg, 'decrypt-docs' )
 		_.cp( [ 'SECURE FILE' ], 'Background.red' )
 
 		_decrypt_docs.imp.run(path)
@@ -722,31 +726,62 @@ def action(path=None,flag=None):
 
 
 			if cryptScan:
-				_decrypt_docs = _.regImp( __.appReg, 'decrypt-docs' )
+				todo = []
 				global doc_sep
+				if path.lower().endswith('.md'):
+					# _decrypt_docs = _.regImp( __.appReg, 'decrypt-docs-md' )
+					_decrypt_docs = _.regImp( __.appReg, 'decrypt-docs' )
+					doc_sep = '\n___\n'
+				else:
+					_decrypt_docs = _.regImp( __.appReg, 'decrypt-docs' )
+					doc_sep = '\n__________________________________________________________________________________\n'
 				_.colorThis(  [ 'registered: documentation file' ], 'Background.light_blue'  )
-				theFile = _.getText( path, raw=True ).replace('!vault!','!V!').replace('!VAULT!','!V!').replace('!v!','!V!').replace('!crypt!','!V!').replace('!CRYPT!','!V!')
+				theFile = '\n'+_.getText( path, raw=True ).replace('!vault!','!V!').replace('!VAULT!','!V!').replace('!v!','!V!').replace('!crypt!','!V!').replace('!CRYPT!','!V!')
+				theFile = theFile.replace('\r','')
+				# tF = theFile
+				if path.lower().endswith('.md'):
+					todo.append('\n~~~\n')
+					theFile = _decrypt_docs.imp.md_clean(theFile)
+					# if not tF == theFile:
+					#   _.saveText(theFile,path)
+					#   _.cp('FIXED: .md lines','yellow')
+				elif not path.lower().endswith('.md'):
+					while '___________________________________________________________________________________' in theFile:
+						theFile = theFile.replace('___________________________________________________________________________________','__________________________________________________________________________________')
+					while '\t\n' in theFile:
+						theFile = theFile.replace('\t\n','\n')
+					while ' \n' in theFile:
+						theFile = theFile.replace(' \n','\n')
+					# if not tF == theFile:
+					#   _.cp('FIXED: space after line end','yellow')
+					#   _.saveText(theFile,path)
+
 				crypy=__.specifications['fileBackup-auto-crypt']['crypt-segment']
-				segments=theFile.split(doc_sep)
-				newTemp=[]
-				crypt_segment = False
-				for segment in segments:
-					if crypy+' ' in segment or crypy+'\n' in segment or crypy+'\t' in segment:
-						segment=segment.replace('!V!','')
-						segy=[]
-						for si, segsy in enumerate(segment.split('\n')):
-							if not si:
-								segy.append(  segsy  )
-							else:
-								if _decrypt_docs.imp.identify(segsy):
+				
+				todo.append(doc_sep)
+				for doc_sep_ in todo:
+					segments=theFile.split(doc_sep_)
+					newTemp=[]
+					crypt_segment = False
+					for segment in segments:
+						# print(segment.split('\n')[0])
+						# if crypy+' ' in segment or crypy+'\n' in segment or crypy+'\t' in segment:
+						if crypy+' ' in segment.split('\n')[0] or crypy+'\n' in segment.split('\n')[0]+'\n' or crypy+'\t' in segment.split('\n')[0]:
+							segment=segment.replace('!V!','')
+							segy=[]
+							for si, segsy in enumerate(segment.split('\n')):
+								if not si:
 									segy.append(  segsy  )
 								else:
-									segy.append(  _blowfish.encrypt( segsy, _vault.key() )  )
+									if _decrypt_docs.imp.identify(segsy):
+										segy.append(  segsy  )
+									else:
+										segy.append(  _blowfish.encrypt( segsy, _vault.key() )  )
 
-							crypt_segment = True
-						segment = '\n'.join( segy )
-					newTemp.append(segment)
-				theFile=doc_sep.join(newTemp)
+								crypt_segment = True
+							segment = '\n'.join( segy )
+						newTemp.append(segment)
+					theFile=doc_sep_.join(newTemp) 
 
 				if crypt_segment or __.specifications['fileBackup-auto-crypt']['scanA'] in theFile  or  __.specifications['fileBackup-auto-crypt']['scanB'] in theFile or crypy in theFile:
 
@@ -771,28 +806,28 @@ def action(path=None,flag=None):
 								line = _blowfish.encrypt(    line    ,    _vault.key()    )
 
 						# elif __.specifications['fileBackup-auto-crypt']['scanB'] in line:
-						# 	line = line.replace(  __.specifications['fileBackup-auto-crypt']['scanB']+' ', __.specifications['fileBackup-auto-crypt']['scanB']  )
-						# 	line = line.replace(  __.specifications['fileBackup-auto-crypt']['scanB']+' ', __.specifications['fileBackup-auto-crypt']['scanB']  )
-						# 	line = line.replace(  __.specifications['fileBackup-auto-crypt']['scanB']+' ', __.specifications['fileBackup-auto-crypt']['scanB']  )
-						# 	line = line.replace(  __.specifications['fileBackup-auto-crypt']['scanB']+' ', __.specifications['fileBackup-auto-crypt']['scanB']  )
-						# 	line = line.replace(  ' '+__.specifications['fileBackup-auto-crypt']['scanB'], __.specifications['fileBackup-auto-crypt']['scanB']  )
-						# 	line = line.replace(  ' '+__.specifications['fileBackup-auto-crypt']['scanB'], __.specifications['fileBackup-auto-crypt']['scanB']  )
-						# 	line = line.replace(  ' '+__.specifications['fileBackup-auto-crypt']['scanB'], __.specifications['fileBackup-auto-crypt']['scanB']  )
-						# 	line = line.replace(  ' '+__.specifications['fileBackup-auto-crypt']['scanB'], __.specifications['fileBackup-auto-crypt']['scanB']  )
-						# 	if '>'+__.specifications['fileBackup-auto-crypt']['scanB'] in line:
-						# 		lineP = line.split( '>'+__.specifications['fileBackup-auto-crypt']['scanB'] )
-						# 		# print( lineP )
-						# 		# print( line )
-						# 		line = _str.cleanBE( line, ' ' )
-						# 		line = _str.cleanBE( line, '\t' )
-						# 		line = _str.cleanBE( line, ' ' )
-						# 		line = _str.cleanBE( line, '\t' )
-						# 		line = _blowfish.encrypt(    _str.cleanBE( lineP[1], ' ' )    ,    _str.cleanBE( lineP[0], ' ' )    )
-						# 	if __.specifications['fileBackup-auto-crypt']['scanB']+'<' in line:
-						# 		lineP = line.split( __.specifications['fileBackup-auto-crypt']['scanB']+'<' )
-						# 		# print( lineP )
-						# 		# print( line )
-						# 		line = _blowfish.encrypt(    _str.cleanBE( lineP[0], ' ' )    ,    _str.cleanBE( lineP[1], ' ' )    )
+						#   line = line.replace(  __.specifications['fileBackup-auto-crypt']['scanB']+' ', __.specifications['fileBackup-auto-crypt']['scanB']  )
+						#   line = line.replace(  __.specifications['fileBackup-auto-crypt']['scanB']+' ', __.specifications['fileBackup-auto-crypt']['scanB']  )
+						#   line = line.replace(  __.specifications['fileBackup-auto-crypt']['scanB']+' ', __.specifications['fileBackup-auto-crypt']['scanB']  )
+						#   line = line.replace(  __.specifications['fileBackup-auto-crypt']['scanB']+' ', __.specifications['fileBackup-auto-crypt']['scanB']  )
+						#   line = line.replace(  ' '+__.specifications['fileBackup-auto-crypt']['scanB'], __.specifications['fileBackup-auto-crypt']['scanB']  )
+						#   line = line.replace(  ' '+__.specifications['fileBackup-auto-crypt']['scanB'], __.specifications['fileBackup-auto-crypt']['scanB']  )
+						#   line = line.replace(  ' '+__.specifications['fileBackup-auto-crypt']['scanB'], __.specifications['fileBackup-auto-crypt']['scanB']  )
+						#   line = line.replace(  ' '+__.specifications['fileBackup-auto-crypt']['scanB'], __.specifications['fileBackup-auto-crypt']['scanB']  )
+						#   if '>'+__.specifications['fileBackup-auto-crypt']['scanB'] in line:
+						#       lineP = line.split( '>'+__.specifications['fileBackup-auto-crypt']['scanB'] )
+						#       # print( lineP )
+						#       # print( line )
+						#       line = _str.cleanBE( line, ' ' )
+						#       line = _str.cleanBE( line, '\t' )
+						#       line = _str.cleanBE( line, ' ' )
+						#       line = _str.cleanBE( line, '\t' )
+						#       line = _blowfish.encrypt(    _str.cleanBE( lineP[1], ' ' )    ,    _str.cleanBE( lineP[0], ' ' )    )
+						#   if __.specifications['fileBackup-auto-crypt']['scanB']+'<' in line:
+						#       lineP = line.split( __.specifications['fileBackup-auto-crypt']['scanB']+'<' )
+						#       # print( lineP )
+						#       # print( line )
+						#       line = _blowfish.encrypt(    _str.cleanBE( lineP[0], ' ' )    ,    _str.cleanBE( lineP[1], ' ' )    )
 
 
 
@@ -800,7 +835,11 @@ def action(path=None,flag=None):
 						newFile.append(  line  )
 					
 					pass
-					_.saveText(  newFile, path  )
+					tehFile = '\n'.join(newFile)
+					if tehFile.startswith('\n'):
+						tehFile = tehFile[1:]
+					
+					_.saveText(  tehFile, path  )
 
 
 
@@ -890,7 +929,7 @@ def action(path=None,flag=None):
 
 				
 				# changed timestamp on 1620919454
-				#	previously...    'timestamp': now 
+				#   previously...    'timestamp': now 
 				try:
 					modified_epoch = _dir.info(os.path.abspath(path))['me']
 				except Exception as e:
@@ -934,6 +973,7 @@ def action(path=None,flag=None):
 					# print(result)
 					if not _.switches.isActive('Silent'):
 						_.printBold('Backup Successful', 'green')
+						print(newname)
 					# print(newname)
 					return newname
 	return True
@@ -975,13 +1015,13 @@ for i,x in enumerate(__.specifications['fileBackup-auto-crypt']['folders']):
 
 
 # for i,x in enumerate(__.specifications['fileBackup-auto-crypt']['files']):
-# 	print(  'f:', x  )
+#   print(  'f:', x  )
 # print()
 # path = _.switches.value('Input')
 # path = os.path.abspath(path)
 # print( 'i:',path )
 # if path.lower() in __.specifications['fileBackup-auto-crypt']['files']:
-# 	print( 'file match' )
+#   print( 'file match' )
 # print()
 # sys.exit()
 

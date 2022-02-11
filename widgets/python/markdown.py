@@ -51,7 +51,7 @@ __.switch_raw = []
 _.appInfo[focus()] = {
 	'file': 'markdown.py',
 	'liveAppName': __.thisApp( __file__ ),
- 	'description': 'markdown .md files to html webpage',
+	'description': 'markdown .md files to html webpage',
 	'categories': [
 						'.md',
 						'markdown',
@@ -78,15 +78,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
-				       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					   # { 'name': 'name', 'abbreviation': 'n' },
+					   # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					   # 'this',
+					   # 'app',
 	],
 	'notes': [
-				       # {},
+					   # {},
 	],
 }
 
@@ -186,53 +186,59 @@ def get_title(data):
 	return data
 
 class Server(BaseHTTPRequestHandler):
-    def _set_headers(self):
-        self.send_response(200)
-        self.send_header('Content-type', 'text/html')
-        self.end_headers()
+	def _set_headers(self):
+		self.send_response(200)
+		self.send_header('Content-type', 'text/html')
+		self.end_headers()
 
-    def do_GET(self):
-        self.respond_OK(hello_msg)
+	def do_GET(self):
+		self.respond_OK(hello_msg)
 
-    def do_POST(self):
-        print("Post")
+	def do_POST(self):
+		print("Post")
 
-        data = self.parse_POST()
+		data = self.parse_POST()
 
-        # print(data)
-        # print(type(data))
-        # print(str(data[b'butt'][0]))
-        shutdown=str( data[b'shutdown'][0] ,'iso-8859-1')
-        if shutdown=='yes':
-        	result='file not saved'
-        else:
+		# print(data)
+		# print(type(data))
+		# print(str(data[b'butt'][0]))
+		shutdown=str( data[b'shutdown'][0] ,'iso-8859-1')
 
-	        global filesOpened
-	        if len(filesOpened) > 1:
-	        	path = __.path(filesOpened[0])
-	        	parts=path.split(os.sep)
-	        	parts.reverse()
-	        	parts.pop(0)
-	        	parts.reverse()
-	        	folder = os.sep.join(parts)
-	        	fn=''
-	        	for ch in get_title(file):
-	        		if ch in ' 0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_[]()':
-	        			fn+=ch
-	        	fn = fn.replace(' ','-')
-	        	xXx = folder+os.sep+fn+'.md'
-	        	if os.path.isfile(xXx):
-	        		xXx = folder+os.sep+fn+'-'+_.miniUUID().replace('{','').replace('}','')+'.md'
-	        	path = xXx
+		if shutdown=='yes':
+			result='file not saved'
+			path=str( data[b'path'][0] ,'iso-8859-1')
+			fileBackup.switch( 'isPreOpen', delete=True )
+			# fileBackup.switch( 'isPreOpen' )
+			fileBackup.switch( 'Input', path )
+			fileBackup.action()
+		else:
+
+			global filesOpened
+			if len(filesOpened) > 1:
+				path = __.path(filesOpened[0])
+				parts=path.split(os.sep)
+				parts.reverse()
+				parts.pop(0)
+				parts.reverse()
+				folder = os.sep.join(parts)
+				fn=''
+				for ch in get_title(file):
+					if ch in ' 0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_[]()':
+						fn+=ch
+				fn = fn.replace(' ','-')
+				xXx = folder+os.sep+fn+'.md'
+				if os.path.isfile(xXx):
+					xXx = folder+os.sep+fn+'-'+_.miniUUID().replace('{','').replace('}','')+'.md'
+				path = xXx
 
 
-	        result='file saved'
-	        file=str( data[b'file'][0] ,'iso-8859-1').replace('\r','')
-	        path=str( data[b'path'][0] ,'iso-8859-1')
-	        html=str( data[b'html'][0] ,'iso-8859-1')
-	        if len(html) > 4:
-	        	result='files saved'
-	        	HTML = '''<!DOCTYPE html>
+			result='file saved'
+			file=str( data[b'file'][0] ,'iso-8859-1').replace('\r','')
+			path=str( data[b'path'][0] ,'iso-8859-1')
+			html=str( data[b'html'][0] ,'iso-8859-1')
+			if len(html) > 4:
+				result='files saved'
+				HTML = '''<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -246,11 +252,11 @@ class Server(BaseHTTPRequestHandler):
 	<!-- <META http-equiv="refresh" content="1;URL=/?"> -->
 	<style type="text/css">
 		#markdown-html {
-		    width: 80%;
-		    margin-left: auto;
-		    margin-right: auto;
+			width: 80%;
+			margin-left: auto;
+			margin-right: auto;
 		}
-    </style>
+	</style>
 
 </head>
 
@@ -260,16 +266,21 @@ class Server(BaseHTTPRequestHandler):
 
 </html>'''
 
-	        	HTML = HTML.replace('THE_TITLE',get_title(file))
-	        	HTML = HTML.replace('CODE_HERE',html)
-	        	webbrowser.open(path[:-2]+'htm', new=2)
-	        	_.saveText( HTML,path[:-2]+'htm' )
+				HTML = HTML.replace('THE_TITLE',get_title(file))
+				HTML = HTML.replace('CODE_HERE',html)
+				webbrowser.open(path[:-2]+'htm', new=2)
+				_.saveText( HTML,path[:-2]+'htm' )
 
 
-	        _.saveText( file,path )
-	        _.cp(['saved:',path],'green')
+			_.saveText( file,path )
+			_.cp(['saved:',path],'green')
+			pass
+			fileBackup.switch( 'isPreOpen', delete=True )
+			# fileBackup.switch( 'isPreOpen' )
+			fileBackup.switch( 'Input', path )
+			fileBackup.action()
 
-        self.respond_OK('''
+		self.respond_OK('''
 <!DOCTYPE html>
 <html lang="en">
 
@@ -318,52 +329,52 @@ body {
 		</div>
 		<div class="boxH">
 		  <div class="boxV">
-		    <div class="boxM">
-		      THE_RESULT
-		    </div>
+			<div class="boxM">
+			  THE_RESULT
+			</div>
 		  </div>
 		</div>
 </body>
 
 </html>
 
-        	'''.replace('THE_RESULT',result))
+			'''.replace('THE_RESULT',result))
 
-        sys.exit()
+		sys.exit()
 
 
-    def parse_POST(self):
-        ctype, pdict = parse_header(self.headers['content-type'])
-        if ctype == 'multipart/form-data':
-            postvars = parse_multipart(self.rfile, pdict)
-        elif ctype == 'application/x-www-form-urlencoded':
-            length = int(self.headers['content-length'])
-            postvars = parse_qs(
-                    self.rfile.read(length), 
-                    keep_blank_values=1)
-        else:
-            postvars = {}
+	def parse_POST(self):
+		ctype, pdict = parse_header(self.headers['content-type'])
+		if ctype == 'multipart/form-data':
+			postvars = parse_multipart(self.rfile, pdict)
+		elif ctype == 'application/x-www-form-urlencoded':
+			length = int(self.headers['content-length'])
+			postvars = parse_qs(
+					self.rfile.read(length), 
+					keep_blank_values=1)
+		else:
+			postvars = {}
 
-    
-        return postvars
+	
+		return postvars
 
-    def respond_OK(self, msg):
-        self.send_response(200)
-        self.send_header("Content-type", "text/html")
-        self.end_headers()
-        self.wfile.write(bytes(msg, "utf-8"))
+	def respond_OK(self, msg):
+		self.send_response(200)
+		self.send_header("Content-type", "text/html")
+		self.end_headers()
+		self.wfile.write(bytes(msg, "utf-8"))
 
 def START_WEBSERVER():
-    webServer = HTTPServer((host, port), Server)
-    print("Server started http://%s:%s" % (host, port))
+	webServer = HTTPServer((host, port), Server)
+	print("Server started http://%s:%s" % (host, port))
 
-    try:
-        webServer.serve_forever()
-    except KeyboardInterrupt:
-        pass
+	try:
+		webServer.serve_forever()
+	except KeyboardInterrupt:
+		pass
 
-    webServer.server_close()
-    print("Server stopped.")
+	webServer.server_close()
+	print("Server stopped.")
 
 # webserver end
 ########################################################################################  ########################################################################################
@@ -406,6 +417,31 @@ def openFile(path):
 		# _file_open.switch('Files',path)
 		# _file_open.action()
 
+
+def process(table):
+	for i,path in enumerate( table ):
+		run = True
+		if _.switches.isActive('Widgets'):
+			run = False
+			if path.lower().startswith(_v.w.lower()):
+				run = True
+		if not os.path.isfile(path):
+			run=False
+		if run:
+			print()
+			fileBackup.switch( 'Input', path )
+			fb = fileBackup.action()
+			print(path)
+			print(fb)
+
+def build_tables():
+	if not len(v.crypt):
+		process(  _.getTable('crypt-docs.list')  )
+		process(  _.getTable('secure-crypt-local.meta')  )
+
+v = _.dot()
+v.crypt = []
+
 def processFile(path):
 	global ask
 	global filesOpened_cnt
@@ -413,8 +449,15 @@ def processFile(path):
 	global sep
 	global base
 
-	if not os.path.isfile(path) or not path.endswith('.md'):
+	# fileBackup.switch( 'isPreOpen', delete=True )
+	fileBackup.switch( 'isPreOpen' )
+	fileBackup.switch( 'Input', path )
+	fileBackup.action()
+
+	if not os.path.isfile(path) or not path.lower().endswith('.md'):
 		return None
+
+	pass
 
 	
 
@@ -450,7 +493,7 @@ def action():
 	sep='''
 -----
 ```md
-    FILE:  FILE_PATH
+	FILE:  FILE_PATH
 ```
 
 -----
@@ -490,10 +533,10 @@ def action():
 		getFolder(folder)
 
 	# else:
-	# 	base = os.getcwd()
-	# 	_.pipeCleaner(0)
-	# 	for i,row in enumerate(_.isData(r=1)):
-	# 		processFile(row)
+	#   base = os.getcwd()
+	#   _.pipeCleaner(0)
+	#   for i,row in enumerate(_.isData(r=1)):
+	#       processFile(row)
 
 	if _.switches.isActive('GUI-Edit'):
 		delim='\n\n-----\n\n'
@@ -507,6 +550,16 @@ def action():
 
 import webbrowser
 _file_open = _.regImp( __.appReg, 'file-open' )
+
+
+fileBackup = _.regImp( focus(), 'fileBackup' )
+fileBackup.switch( 'Silent' )
+fileBackup.switch( 'Flag', 'imdb' )
+fileBackup.switch( 'isRunOnce' )
+fileBackup.switch( 'DoNotSchedule' )
+fileBackup.switch( 'isPreOpen', delete=True )
+
+
 
 ########################################################################################
 if __name__ == '__main__':

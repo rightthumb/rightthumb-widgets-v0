@@ -274,26 +274,35 @@ def addSpaces(row):
 		i+=1
 		t+=' '
 	return t
-def run(path):
-	global records
-	global maxLen
-	global doc_sep
 
-	table = _.getTable('crypt-docs.list')
-	test=table.copy()
-	if not path.lower() in table:
-		table.append( __.path(path) )
-	# _.pv( table )
-	newTable = []
-	for ntf in table:
-		if not ntf in newTable:
-			newTable.append(ntf)
-	table = newTable
-	if not str(table)==str(test):
-		_.saveTable( table, 'crypt-docs.list', p=0 )
-	theFILE = _.getText( path,raw=True )
-	if theFILE.startswith(doc_sep.replace('\n','')):
-		theFILE='\n'+theFILE
+
+def md_clean(theFILE):
+	done = False
+	while not done:
+		theFILE = _str.replaceAll(theFILE,' \n','\n')
+		theFILE = _str.replaceAll(theFILE,'----','---')
+		theFILE = _str.replaceAll(theFILE,'____','___')
+		theFILE = _str.replaceAll(theFILE,'* * * *','* * *')
+		theFILE = _str.replaceAll(theFILE,'****','***')
+		theFILE = _str.replaceAll(theFILE,'~~~~','~~~')
+		theFILE = _str.replaceAll(theFILE,'````','```')
+
+		done = True
+		for xXx in ['____','----','* * * *','****','````','~~~~']:
+			if xXx in theFILE:
+				done = False
+		if done:
+			while '---' in theFILE:
+				theFILE = theFILE.replace( '---', '___' )
+			while '* * *' in theFILE:
+				theFILE = theFILE.replace( '* * *', '___' )
+			while '***' in theFILE:
+				theFILE = theFILE.replace( '***', '___' )
+			while '```' in theFILE:
+				theFILE = theFILE.replace( '```', '~~~' )
+	return theFILE
+
+def process_doc_sep(theFILE,doc_sep):
 	segments=[]
 	for segment in theFILE.split(doc_sep):
 		file = []
@@ -304,9 +313,15 @@ def run(path):
 		nFile = []
 		for row in file:
 			if row in records:
-				if '#crypt' in segment:
+				# print(0,segment.split('\n')[0])
+				# print(1,segment.split('\n')[1])
+				# sys.exit()
+				# if '#crypt' in segment:
+				if '#crypt' in segment.split('\n')[1] or '#crypt' in segment.split('\n')[0]:
+					# print("if '#crypt' in segment:")
 					row = records[row]
 				else:
+					# print("if NOT '#crypt' in segment:")
 					if records[row].startswith('todo:'):
 						done=False
 						for test in ['ai','todo']:
@@ -340,7 +355,47 @@ def run(path):
 			nFile.append(row)
 		segments.append('\n'.join(nFile))
 	data = doc_sep.join(segments)
-	_.saveText( data, path )
+	return data
+
+def run(path):
+	global records
+	global maxLen
+	global doc_sep
+
+	table = _.getTable('crypt-docs.list')
+	test=table.copy()
+	if not __.path(path) in table:
+		table.append( __.path(path) )
+	# _.pv( table )
+	newTable = []
+	for ntf in table:
+		if not ntf in newTable:
+			newTable.append(ntf)
+	table = newTable
+	if not str(table)==str(test):
+		_.saveTable( table, 'crypt-docs.list', p=0 )
+		_.cp('added to database','yellow')
+	else:
+		pass
+		_.cp('in database','yellow')
+	theFILE = _.getText( path,raw=True )
+	if theFILE.startswith(doc_sep.replace('\n','')):
+		theFILE='\n'+theFILE
+
+	doc_sep = '\n__________________________________________________________________________________\n'
+	if path.lower().endswith('.md'):
+		theFILE = md_clean(theFILE)
+		if theFILE.startswith('\n'):
+			_.saveText(theFILE[1:],path)
+		else:
+			_.saveText(theFILE,path)
+		doc_sep = '\n___\n'
+
+		theFILE = process_doc_sep(theFILE,'\n~~~\n')
+
+	theFILE = process_doc_sep(theFILE,doc_sep)
+	theFILE = _str.cleanFirst(theFILE,'\n')
+	_.saveText( theFILE, path )
 
 def action():
 

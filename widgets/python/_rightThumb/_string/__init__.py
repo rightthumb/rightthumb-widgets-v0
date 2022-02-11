@@ -25,6 +25,8 @@ removeAll(string,rWhat)
 
 _str.replaceDuplicate(string,rWhat)
 _str.cleanBE(string,rWhat)
+_str.cleanEnd(string,' ')
+_str.cleanFirst(string,' ')
 
 row = _str.replaceDuplicate( row, ' ' )
 row = _str.cleanBE( row, ' ' )

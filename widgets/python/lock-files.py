@@ -10,10 +10,8 @@
 # ###########################################################################
 # ## {C3P0D40fAe8B} ##
 
-import os
-import sys
-import time
-# import platform
+##################################################
+import os, sys, time
 ##################################################
 import _rightThumb._construct as __
 appDBA = __.clearFocus( __name__, __file__ )
@@ -30,16 +28,32 @@ _.load()
 ##################################################
 import _rightThumb._vars as _v
 import _rightThumb._string as _str
-
 ##################################################
 
-
 def appSwitches():
-	_.switches.register( 'Clear', '-clear' )
+	pass
+	### EXAMPLE: START
+	_.switches.register( 'Widgets', '-w' )
+	_.switches.register( 'Unlock', '-unlock' )
+	# _.switches.register( 'Files', '-f,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=True )
+	### EXAMPLE: END
 
-
-_.autoBackupData = __.autoCreationConfiguration['backup']
-__.releaseAcquiredData = __.autoCreationConfiguration['logs']
+### EXAMPLE: START
+# _.switches.trigger( 'Files', _.myFileLocations, vs=True )
+# 	finds the file in probable locations
+# 	and 
+# 		if  _.autoBackupData = True
+# 		and __.releaseAcquiredData = True
+# 			GET EPOCH FROM: hosts/hostname/logs/apps/execution_receipt-app_name-epoch.json
+# 		you can run apps on usb at a clients office
+# 			when you get home run: p app -loadepoch epoch 
+# 				backed up
+# 					pipe
+# 					files
+# 					tables
+### EXAMPLE: END
+_.autoBackupData = __.setting('receipt-log')
+__.releaseAcquiredData = __.setting('receipt-file')
 __.myFileLocations_SKIP_VALIDATION = False
 __.isRequired_Pipe = False
 __.isRequired_Pipe_or_File = False
@@ -47,14 +61,15 @@ __.pre_error = False
 __.switch_raw = []
 # __.switch_raw = [ 'Delim' ]
 # __.isRequired_or_List = ['Pipe','Files','Plus']
+# __.setting( 'app-switches-raw', [ 'Delim' ] )
+
 
 _.appInfo[focus()] = {
-	'file': 'logout.py',
+	'file': 'thisApp.py',
 	'liveAppName': __.thisApp( __file__ ),
-	'description': 'Logout',
+	'description': 'Changes the world',
 	'categories': [
-						'terminal',
-						'logout',
+						'DEFAULT',
 				],
 	'usage': [
 						# 'epy another',
@@ -70,7 +85,7 @@ _.appInfo[focus()] = {
 						# '',
 	],
 	'examples': [
-						'p logout',
+						_.hp('p thisApp -file file.txt'),
 						'',
 	],
 	'columns': [
@@ -96,7 +111,11 @@ _.appData[focus()] = {
 					'table': {'sent': [], 'received': [] }, 
 		},
 	}
+### EXAMPLE: START
+# _.appInfo[focus()]['examples'].append( 'p thisApp -file file.txt' )
 
+# _.appInfo[focus()]['columns'].append( {'name': 'name', 'abbreviation': 'n'} )
+### EXAMPLE: END
 
 
 def registerSwitches( argvProcessForce=False ):
@@ -115,13 +134,18 @@ def registerSwitches( argvProcessForce=False ):
 	appSwitches()
 
 	_.myFileLocation_Print = False
-	__.myFileLocations_SKIP_VALIDATION = False
 	_.switches.trigger( 'Files', _.myFileLocations, vs=True )
 	_.switches.trigger( 'Folder', _.myFolderLocations )
 	_.switches.trigger( 'URL', _.urlTrigger )
 	_.switches.trigger( 'Ago', _.timeAgo )
 	_.switches.trigger( 'Duration', _.timeFuture )
-	
+	### EXAMPLE: START
+	# _.default_switch_trigger('Plus', trigger_plus)
+	# _.switches.trigger( 'Files',_.inRelevantFolder )	
+	# _.switches.trigger( 'Watched', _.txt2Date )
+	# _.switches.trigger( 'Input',_.formatColumns )
+	# _.switches.trigger( 'Franchise',_.triggerSpace )
+	### EXAMPLE: END
 	
 	_.defaultScriptTriggers()
 	_.switches.process()
@@ -149,36 +173,70 @@ if __name__ == '__main__':
 _.postLoad( __file__ )
 
 ########################################################################################
+### EXAMPLE: START
+# data = _.tables.returnSorted( 'data', 'd.timestamp', data )
+# _.switches.fieldSet( 'Long', 'active', True )
+# _.tables.register( 'data', table )
+# _.tables.fieldProfileSet('data','timestamp','trigger',_.friendlyDate)
+# _.tables.fieldProfileSet('data','phone,email,address','alignment','center')
+# _.tables.print( 'data', 'name' )
+# _.tables.print( 'data', ','.join(_.switches.values('Column')) )
+# _.switches.isActive('Files')
+# p = _.getText( _v.pips, raw=True, clean=True ).split( '\n' )
+# os.system( '"' + do + '"' )
+# _.setPipeData( os.listdir( os.getcwd() ), focus() )
+# _.showLine( item )
+# 	if os.path.isdir( row ):
+# 	if os.path.isfile( row ):
+#	os.path.abspath(path)
+# __.appRegPipe    ( pipe data registerd focus(__.appReg) set by _.myFileLocations {if imported} , default is None )
+# for i,row in enumerate(_.t( _.appData[__.appReg]['pipe'] )):
+# for i,row in _.e( _.isData(r=1) ):
+# date = _.friendlyDate( theDate )
+# _.addComma()
+# 													if platform.system() == 'Windows':
+### EXAMPLE: END
+########################################################################################
 # START
 
-
-def process():
-	file = _v.myConfig  +_v.slash+  '.vault'
-	zeros = ''
-	for x in range(500):
-		zeros += '0'
-	_.saveText( zeros, file )
-	time.sleep( .5 )
-	os.unlink( file )
+def process(table):
+	for i,path in enumerate( table ):
+		run = True
+		if _.switches.isActive('Widgets'):
+			run = False
+			if path.lower().startswith(_v.w.lower()):
+				run = True
+		if not os.path.isfile(path):
+			run=False
+		if run:
+			print()
+			fileBackup.switch( 'Input', path )
+			fb = fileBackup.action()
+			print(path)
+			print(fb)
 
 def action():
-	_lock.action()
-	process()
-	time.sleep(.2)
-	_vault.key(__.uuid()+__.uuid()+__.uuid())
-	time.sleep(.2)
-	if _.switches.isActive('Clear'):
-		process()
 
-import _rightThumb._vault as _vault
-_lock = _.regImp( __.appReg, 'lock-files' )
-# _lock.switch( 'Widgets' )
+	process(  _.getTable('crypt-docs.list')  )
+	process(  _.getTable('secure-crypt-local.meta')  )
+
+
+
+
+
+
+fileBackup = _.regImp( focus(), 'fileBackup' )
+fileBackup.switch( 'Silent' )
+fileBackup.switch( 'Flag', 'imdb' )
+fileBackup.switch( 'isRunOnce' )
+fileBackup.switch( 'DoNotSchedule' )
+if _.switches.isActive('Unlock'):
+	fileBackup.switch( 'isPreOpen' )
 
 ########################################################################################
 if __name__ == '__main__':
 	action()
-	_.tables.eof()
-
+	__.isExit()
 
 
 
