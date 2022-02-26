@@ -382,6 +382,8 @@ def padZeros(string,count):
 
 
 def replaceAll(string,rWhat,rWith):
+    if not rWhat in string:
+        return string
     tmp = '{C9DCAA81-3B8A-68E9-E4CF-A405E2199CB9}'
 
 
@@ -424,10 +426,14 @@ def replaceAll(string,rWhat,rWith):
 #   return string
 
 def removeAll(string,rWhat):
+    if not rWhat in string:
+        return string
     rWith = ''
     return replaceAll(string,rWhat,rWith)
 
 def replaceDuplicate(string,rWhat):
+    if not rWhat in string:
+        return string
     rWith = rWhat
     rWhat = str(rWhat) + str(rWhat)
     string = replaceAll(string,rWhat,rWith)
@@ -436,10 +442,14 @@ def replaceDuplicate(string,rWhat):
     return string
 
 def cleanBE(string,rWhat):
+    if not rWhat in string:
+        return string
     string = cleanEnd(string,rWhat)
     string = cleanFirst(string,rWhat)
     return string
 def cleanEnd(string,rWhat):
+    if not rWhat in string:
+        return string
     string = str(string)
     rWhat = str(rWhat)
     # string = replaceDuplicate(string,rWhat)
@@ -452,6 +462,8 @@ def cleanEnd(string,rWhat):
     return string
 
 def cleanEnd2(string,rWhat):
+    if not rWhat in string:
+        return string
     string = str(string)
     rWhat = str(rWhat)
     string = totalStrip3(string)
@@ -463,9 +475,13 @@ def cleanEnd2(string,rWhat):
     return string
 
 def cleanLast(string,rWhat):
+    if not rWhat in string:
+        return string
     return cleanEnd(string,rWhat)
 
 def cleanFirst(string,rWhat):
+    if not rWhat in string:
+        return string
     string = str(string)
     rWhat = str(rWhat)
     # string = replaceDuplicate(string,rWhat)
@@ -477,6 +493,8 @@ def cleanFirst(string,rWhat):
     return string
 
 def cleanAll(string,rWhat,rWith):
+    if not rWhat in string:
+        return string
     done=False
     while done == False:
         if string.count(rWhat) > 0:

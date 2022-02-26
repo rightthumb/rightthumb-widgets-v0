@@ -906,6 +906,52 @@ function get__THETABLE( $ID_label ){
             data = data.replace('\\','\\\\')
         _copy.imp.copy( data, p=0 )
 
+    def reduction_loop(self):
+        _paste = _.regImp( __.appReg, '-paste' )
+        _copy = _.regImp( __.appReg, '-copy' )
+        text = _paste.imp.paste()
+        if ',' in text:
+            par = False
+        else:
+            par = True
+        text = text.replace( '\n', ',' )
+        text = text.replace( '\t', '' )
+        text = text.replace( ' ', '' )
+        text = text.replace( '\r', '' )
+        text = _str.cleanBE(text,',')
+        text = _str.replaceAll(text,',,',',')
+        numbs = []
+        for n in text.split(','):
+            if len(n):
+                n = int(n)
+                numbs.append(n)
+        l=0
+        done=False
+        while not done:
+            for n in numbs:
+                if (not n%2==0):
+                    done = True
+
+
+            if not done:
+                l+=1
+                for i,n in enumerate(numbs):
+                    numbs[i] = n/2
+        pass
+        strings = []
+        strings.append( str(l)+':' )
+        for n in numbs:
+            strings.append(str(n).replace('.0',''))
+
+        if par:
+            bind = '\n'
+        else:
+            bind = ', '
+        results = bind.join(strings)
+        results = results.replace( ':,', ':' )
+        _copy.imp.copy( results, p=0 )
+
+
     def implode(self):
         _paste = _.regImp( __.appReg, '-paste' )
         _copy = _.regImp( __.appReg, '-copy' )
@@ -1713,6 +1759,7 @@ def load():
                 'mom': { 'raw': [ 'Key.ctrl,2', 'mom' ], 'do': 'Typing.ty("your_mother()",back=1)' },
                 'pre-clean': { 'raw': [ 'Key.ctrl,2', 'Key.space', 'del' ], 'do': 'Clip.del_activate()' },
                 'implode': { 'raw': [ 'Key.ctrl,2', 'Key.space', 'i' ], 'do': 'Clip.implode()' },
+                # 'reduction_loop': { 'raw': [ 'Key.alt', 'Key.shift', 'Key.cmd', 'r' ], 'do': 'Clip.reduction_loop()' },
                 'implode2': { 'raw': [ 'Key.alt', 'Key.cmd', 'i' ], 'do': 'Clip.implode()' },
                 'implode3': { 'raw': [ 'Key.alt', 'Key.shift', 'i' ], 'do': 'Clip.implode3()' },
                 'number': { 'raw': [ 'Key.alt', 'Key.cmd', 'n' ], 'do': 'Clip.number()' },
@@ -1730,7 +1777,7 @@ def load():
                 'lower': { 'raw': [ 'Key.alt', 'Key.cmd', 'l' ], 'do': 'Clip.toLower()' },
                 'upper': { 'raw': [ 'Key.alt', 'Key.cmd', 'u' ], 'do': 'Clip.toUpper()' },
 
-                'lower': { 'raw': [ 'Key.shift', 'Key.cmd', 's' ], 'do': 'Clip.toString()' },
+                'lower': { 'raw': [ 'Key.shift', 'Key.cmd', 's', 't' ], 'do': 'Clip.toString()' },
                 
                 'first-word': { 'raw': [ 'Key.alt', 'Key.cmd', '1' ], 'do': 'Clip.first()' },
                 'sql-crud': { 'raw': [ 'Key.alt', 'Key.cmd', 'c' ], 'do': 'Clip.SQL_to_crud()' },
@@ -1738,7 +1785,7 @@ def load():
                 # 'builder-one': { 'raw': [ 'Key.alt', 'Key.cmd', 'b' ], 'do': 'Clip.builder()' },
                 'builder-two': { 'raw': [ 'Key.alt', 'Key.cmd', 'y' ], 'do': 'Clip.builder2()' },
                 'range-first': { 'raw': [ 'Key.alt', 'Key.cmd', '-' ], 'do': 'Clip.range_first()' },
-                'reverse-lines': { 'raw': [ 'Key.alt', 'Key.cmd', 'r' ], 'do': 'Clip.reverse_lines()' },
+                'reverse-lines': { 'raw': [ 'Key.alt', 'Key.shift', 'r' ], 'do': 'Clip.reverse_lines()' },
                 'reverse-lines': { 'raw': [ 'Key.alt', 'Key.cmd', 'd' ], 'do': 'Clip.combine_make()' },
 
                 'toggle-chars': { 'raw': [ 'Key.alt', 'Key.cmd', 't', 'c' ], 'do': 'toggle_chars()' },

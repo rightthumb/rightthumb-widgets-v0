@@ -7134,7 +7134,15 @@ def genUUID( project='', label='', uniqueTimestamp=False ):
             # appData[__.appReg]['uuid'] = { 'uuid': theID, 'timestamp': time.time(), 'project': theProject, 'app': 'guid' }
     return string
 
-def saveText( rows, theFile, errors=True, me=0 ):
+__.fn.saveText = False
+def saveText( rows, theFile, errors=True, me=0, test=None ):
+    # print(rows)
+    ty9=type(rows)
+    if not test is None:
+        __.fn.saveText = test
+    test=0
+    if __.fn.saveText:
+        cp( [ 'saveText', __.appReg, type(rows), theFile ], 'cyan' )
     HD.chmod(theFile)
     # print(type(rows))
     try:
@@ -7153,7 +7161,14 @@ def saveText( rows, theFile, errors=True, me=0 ):
         if type(rows) == str:
             # print(rows)
             f.write(rows)
+            if __.fn.saveText:
+                print(1111111,0)
         else:
+            if __.fn.saveText:
+                print(1111111,1)
+            # if ty9 == str:
+            #     f.write(str(rows))
+            # elif ty9 == list:
             for i,row in enumerate(rows):
                 # f.write(str(row) + os.linesep)
                 if i == 0:
@@ -7162,6 +7177,8 @@ def saveText( rows, theFile, errors=True, me=0 ):
                 else:
                     f.write(str(row) + '\n')
         f.close()
+        
+            
     except Exception as e:
         if type(rows) == list:
             result = ''
@@ -7176,15 +7193,21 @@ def saveText( rows, theFile, errors=True, me=0 ):
             rows = result
         try:
             open(theFile, 'wb').write(rows)
+            if __.fn.saveText:
+                print(2222222)
         except Exception as e:
             try:
                 open(theFile, 'w').write(rows)
+                if __.fn.saveText:
+                    print(3333333)
             except Exception as e:
                 new_text = ''
                 for x in rows:
                     if x in _str.printable:
                         new_text+=x
                 open(theFile, 'w', encoding='utf-8').write(new_text)
+                if __.fn.saveText:
+                    print(4444444)
         HD.chmod(theFile)
         # if errors:
         #   print( 'Auto correction when saving text' )
@@ -12341,6 +12364,9 @@ def unFormatSize(size):
     # 1152921504606846976
     if False:
         pass
+
+
+
     elif 'YB' in size:
         factor = 1208925819614629174706176
     elif 'ZB' in size:
@@ -12357,18 +12383,24 @@ def unFormatSize(size):
         factor = 1048576
     elif 'KB' in size:
         factor = 1024
+
     else:
         factor = 1
-    size = size.replace('X','')
-    size = size.replace('Y','')
-    size = size.replace('Z','')
-    size = size.replace('E','')
-    size = size.replace('P','')
-    size = size.replace('T','')
-    size = size.replace('B','')
-    size = size.replace('M','')
-    size = size.replace('K','')
-    size = size.replace('G','')
+    size2 = ''
+    for c in size:
+        if c in '0123456789.':
+            size2+=c
+    size = size2
+    # size = size.replace('X','')
+    # size = size.replace('Y','')
+    # size = size.replace('Z','')
+    # size = size.replace('E','')
+    # size = size.replace('P','')
+    # size = size.replace('T','')
+    # size = size.replace('B','')
+    # size = size.replace('M','')
+    # size = size.replace('K','')
+    # size = size.replace('G','')
     size = float(size)
     if str(size).endswith('.0'):
         size = int(size)
@@ -12376,6 +12408,94 @@ def unFormatSize(size):
     result = round(size * factor,0)
     # print( size, factor )
     # result = size * factor
+    return result
+
+def unFormatSize2(size):
+    size = str(size)
+    # size = size.upper()
+    factor = ''
+    # 1152921504606846976
+
+    bity=False
+    if False:
+        pass
+
+
+
+    elif 'YB' in size or 'yB' in size:
+        factor = 1208925819614629174706176
+    elif 'ZB' in size or 'zB' in size:
+        factor = 1180591620717411303424
+    elif 'EB' in size or 'eB' in size:
+        factor = 1152921504606847000
+    elif 'PB' in size or 'pB' in size:
+        factor = 1125899906842624
+    elif 'TB' in size or 'tB' in size:
+        factor = 1099511627776
+    elif 'GB' in size or 'gB' in size:
+        factor = 1073741824
+    elif 'MB' in size or 'mB' in size:
+        factor = 1048576
+    elif 'KB' in size or 'kB' in size:
+        factor = 1024
+
+
+
+
+    elif 'Yb' in size or 'yb' in size or 'ybit' in size.lower():
+        bity=True
+        factor = 1000000000000000000000000
+    elif 'Zb' in size or 'zb' in size or 'zbit' in size.lower():
+        bity=True
+        factor = 1000000000000000000000
+    elif 'Eb' in size or 'eb' in size or 'ebit' in size.lower():
+        bity=True
+        factor = 1000000000000000000
+    elif 'Pb' in size or 'pb' in size or 'pbit' in size.lower():
+        bity=True
+        factor = 1000000000000000
+    elif 'Tb' in size or 'tb' in size or 'tbit' in size.lower():
+        bity=True
+        factor = 1000000000000
+    elif 'Gb' in size or 'gb' in size or 'gbit' in size.lower():
+        bity=True
+        factor = 1000000000
+    elif 'Mb' in size or 'mb' in size or 'mbit' in size.lower():
+        bity=True
+        factor = 1000000
+    elif 'Kb' in size or 'kb' in size or 'kbit' in size.lower():
+        bity=True
+        factor = 1000
+
+    else:
+        factor = 1
+    size2 = ''
+    for c in size:
+        if c in '0123456789.':
+            size2+=c
+    size = size2
+    # size = size.replace('X','')
+    # size = size.replace('Y','')
+    # size = size.replace('Z','')
+    # size = size.replace('E','')
+    # size = size.replace('P','')
+    # size = size.replace('T','')
+    # size = size.replace('B','')
+    # size = size.replace('M','')
+    # size = size.replace('K','')
+    # size = size.replace('G','')
+    size = float(size)
+    if str(size).endswith('.0'):
+        size = int(size)
+
+    result = round(size * factor,0)
+    if 0 and bity:
+        result = result /8
+    # print( size, factor )
+    # result = size * factor
+    rt = str(result)
+    if rt.endswith('.0'):
+        return int(result)
     return result
 isTime = False
 

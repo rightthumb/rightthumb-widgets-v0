@@ -31,7 +31,10 @@ settings_table = {
 					'receipt-file': True,
 }
 
-
+class dot:
+    def __init__( self ):
+        pass
+fn=dot()
 
 def settings( subjects, d=None, val='71e9-a678' ):
 	results = []
@@ -59,7 +62,6 @@ releaseAcquiredData = True
 table_b_print = False
 
 switch_raw = []
-
 
 
 thisOS = platform.system()

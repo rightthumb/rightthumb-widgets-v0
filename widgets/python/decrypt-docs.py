@@ -49,7 +49,7 @@ __.switch_raw = []
 _.appInfo[focus()] = {
 	'file': 'decrypt-docs.py',
 	'liveAppName': __.thisApp( __file__ ),
- 	'description': 'decrypt registered documentation files',
+	'description': 'decrypt registered documentation files',
 	'categories': [
 						'decrypt',
 						'docs',
@@ -75,15 +75,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
-				       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					   # { 'name': 'name', 'abbreviation': 'n' },
+					   # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					   # 'this',
+					   # 'app',
 	],
 	'notes': [
-				       # {},
+					   # {},
 	],
 }
 
@@ -159,7 +159,7 @@ def identify(row):
 	if row.endswith('='):
 		return True
 	# if len(row) > 15:
-	# 	return True
+	#   return True
 
 	n = '0123456789'
 	l = 'abcdefghijklmnopqrstuvwxyz'
@@ -195,13 +195,15 @@ def identify(row):
 	elif len(row) > 15:
 		return True
 	# elif row.count('/') > 1 or row.count('+') :
-	# 	return True
+	#   return True
 	# elif row.count('/') > 5 or row.startswith('/'):
-	# 	return False
+	#   return False
 
 	else:
 		if len(row) < 7:
 			return False
+		if len(row) > 40:
+			return True
 
 		doc = []
 		nn = 0
@@ -238,9 +240,111 @@ def identify(row):
 
 records = {}
 maxLen = 0
+maxLen2 = 0
+def vcrypyAA(file):
+	if type(file) == list:
+		result = 'list'
+		file = '\n'.join(file)
+	else:
+		result = 'str'
+
+	if '!V!' in file:
+		lp = _.find_all(file,'\n')
+		v = _.find_all(file,'!V!')
+		for i in v:
+			pA = -1
+			pB = -1
+			for l in lp:
+				if l < i:
+					pB = pA
+					pA = l
+				else:
+					pB = pA
+					pA = l
+					break
+			# print( '___' )
+			# print( 747, (pA,pB), file[pB:pA].replace('\n','\n') )
+			vcrypyA(file[pB:pA].replace('\n','\n'))
+
+			# print( '___' )
+	return file
+
+
+		
+
+def vcrypyA(row):
+	global maxLen2
+	# global isMD
+	# if not isMD:
+	#   return row
+	row2 = row
+	if '!V!' in row2:
+		row2 = row2.replace('!V!','')
+		row2 = _str.cleanEnd(row2,'\t')
+		row2 = _str.cleanEnd(row2,' ')
+
+		if len(row2) > maxLen2:
+			maxLen2 = len(row2)
+	return row
+
+def vcrypyB(file):
+	global indexP
+	global isMD
+	# print(505,type(file))
+	# return file
+	result = 'str'
+	if type(file) == list:
+		result = 'list'
+		file = '\n'.join(file)
+
+	if '!V!' in file:
+		has = True
+	else:
+		has = False
+	done = True
+
+
+	if isMD and indexP:
+		done = False
+	elif has:
+		done = False
+	else:
+		done = True
+	
+	if not done:
+		file = file.split('\n')
+		if isMD and indexP:
+			spent=[]
+			for oOo in indexP:
+				if not oOo in spent:
+					spent.append(oOo)
+					file[oOo] = '~~~'+indexP[oOo]
+
+
+	if not done:
+		if has:
+			for i,row in enumerate(file):
+				if '!V!' in row:
+					row = file[i]
+					row = row.replace('!V!','')
+					row = _str.cleanEnd(row,'\t')
+					row = _str.cleanEnd(row,' ')
+					row = row + addSpaces2(row) + '!V!'
+					file[i] = row
+					# print(404,row)
+	if __.fn.saveText:
+		print('vcrypyB',result,)
+	return file
+	if result == 'list':
+		return file
+	else:
+		return '\n'.join(file)
+
 def process(row):
+	row = _str.cleanEnd(row,' ')
+	row = _str.replaceAll(row, '  !V!',' !V!')
 	# if '!V!' in row:
-	# 	return row
+	#   return row
 	global records
 	global maxLen
 	if identify(row):
@@ -261,7 +365,7 @@ def process(row):
 		except Exception as e:
 			pass
 		# if row.startswith('!VAULT!'):
-		# 	print( row )
+		#   print( row )
 
 	return row
 	
@@ -275,8 +379,19 @@ def addSpaces(row):
 		t+=' '
 	return t
 
-
+def addSpaces2(row):
+	global maxLen2
+	y = maxLen2 - len(row) + 5
+	i=0
+	t = ''
+	while not i == y:
+		i+=1
+		t+=' '
+	return t
+indexP = {}
 def md_clean(theFILE):
+	# focus()
+	global indexP
 	done = False
 	while not done:
 		theFILE = _str.replaceAll(theFILE,' \n','\n')
@@ -300,29 +415,70 @@ def md_clean(theFILE):
 				theFILE = theFILE.replace( '***', '___' )
 			while '```' in theFILE:
 				theFILE = theFILE.replace( '```', '~~~' )
-	return theFILE
+	file = theFILE.split('\n')
+	spent = []
+	for i,row in enumerate(file):
+		if '!V!' in row:
+			vcrypyA(row)
+		if '~~~' in row and len(row) > len('~~~'):
+			if not i in spent:
+				spent.append(i)
+				indexP[i] = row.split('~~~')[1]
+			file[i] = '~~~'
+	theFILE = '\n'.join(file)
 
-def process_doc_sep(theFILE,doc_sep):
+
+
+	return theFILE
+r = 0
+def process_doc_sep(theFILE,doc_sep,doc_seps):
+	global isMD
+	global r
+	r+=1
 	segments=[]
+	if type(theFILE) == list:
+		theFILE = '\n'.join(theFILE)
+	preFile = '\n'+doc_sep+'\n#testing\n\n'
+	theFILE = preFile + theFILE
 	for segment in theFILE.split(doc_sep):
+		s0 = segment.split('\n')[0].lower()
+		try:
+			s1 = segment.split('\n')[1].lower()
+		except Exception as e:
+			s1 = ''
+		choice=1
+		for dsep in doc_seps:
+			if s0 in dsep:
+				choice=0
+		if '#crypt' in s0.lower():
+			choice=1
+
 		file = []
+		fileBK = []
 		for i,row in enumerate( segment.replace('!vault!','!V!').replace('!VAULT!','!V!').replace('!v!','!V!').replace('!crypt!','!V!').replace('!CRYPT!','!V!').split('\n') ):
+			fileBK.append(row)
 			row = process(row)
 			file.append(row)
-
 		nFile = []
-		for row in file:
+		for i,row in enumerate(file):
+			test = 999
 			if row in records:
-				# print(0,segment.split('\n')[0])
-				# print(1,segment.split('\n')[1])
+				# print(0,s0)
+				# print(1,s1)
 				# sys.exit()
 				# if '#crypt' in segment:
-				if '#crypt' in segment.split('\n')[1] or '#crypt' in segment.split('\n')[0]:
+				test = 111
+				original = row
+
+				if 1 and '#crypt' in s1 or '#crypt' in s0:
 					# print("if '#crypt' in segment:")
 					row = records[row]
+					test = 222
+
 				else:
 					# print("if NOT '#crypt' in segment:")
 					if records[row].startswith('todo:'):
+						test = 333
 						done=False
 						for test in ['ai','todo']:
 							# print(test)
@@ -344,20 +500,44 @@ def process_doc_sep(theFILE,doc_sep):
 						
 						if not done:
 							done=True
-							row = records[row] + addSpaces(records[row]) + '!V!'
+							# row = records[row] + addSpaces(records[row]) + '!V!'
+							row = _str.cleanEnd(records[row],' ') + addSpaces(records[row]) + '!V!'
 						row=row.replace('!V!   ','!V!  ')
 						row=row.replace('!V!   ','!V!  ')
 						row=row.replace('   !V!','  !V!')
 						row=row.replace('   !V!','  !V!')
-					else:
+						row=vcrypyA(row)
+						test = 444
+					elif choice:
+						test = 555
 						row = records[row] + addSpaces(records[row]) + '!V!'
+						row=vcrypyA(row)
 						# row = records[row]
+
+			# print(test,row)
+			# if s0 in doc_sep:
+			if test == 111 or test == 999 or not choice:
+				row = fileBK[i]
+			vVv = 0
+			if ( vVv and 'password' in row ) or ( vVv and '2022-02-04T22:30:00-0500' in row ) or ( vVv and '45.35.203.103' in row ) or ( vVv and 'DNX8ZsjuI1DWelkKipcBZL3j0IB6afSVlAnjXCssy2yIIsn7J9O3Aw==' in row ):
+				_.cp(_.linePrint(p=0),'yellow')
+				print( s0 )
+				print( s1 )
+				print(r,choice,test,row)
 			nFile.append(row)
 		segments.append('\n'.join(nFile))
+	
 	data = doc_sep.join(segments)
+	data = data[len(preFile):]
+	data = vcrypyB(data)
 	return data
 
 def run(path):
+	global isMD
+	if path.lower().endswith('.md'):
+		isMD = True
+	else:
+		isMD = False
 	global records
 	global maxLen
 	global doc_sep
@@ -374,27 +554,34 @@ def run(path):
 	table = newTable
 	if not str(table)==str(test):
 		_.saveTable( table, 'crypt-docs.list', p=0 )
-		_.cp('added to database','yellow')
+		_.cp('added to secure docs database','yellow')
 	else:
 		pass
-		_.cp('in database','yellow')
+		_.cp('in secure docs database','yellow')
 	theFILE = _.getText( path,raw=True )
 	if theFILE.startswith(doc_sep.replace('\n','')):
 		theFILE='\n'+theFILE
 
-	doc_sep = '\n__________________________________________________________________________________\n'
+	doc_seps = [
+					'\n__________________________________________________________________________________\n',
+					'\n___\n',
+					'\n~~~\n',
+				]
+
+	doc_sep  = doc_seps[0]
 	if path.lower().endswith('.md'):
 		theFILE = md_clean(theFILE)
-		if theFILE.startswith('\n'):
-			_.saveText(theFILE[1:],path)
-		else:
-			_.saveText(theFILE,path)
-		doc_sep = '\n___\n'
+		# if theFILE.startswith('\n'):
+		# 	_.saveText(theFILE[1:],path)
+		# else:
+		# 	_.saveText(theFILE,path)
+		theFILE = process_doc_sep(theFILE, doc_seps[2],doc_seps)
+		theFILE = process_doc_sep(theFILE, doc_seps[1],doc_seps)
 
-		theFILE = process_doc_sep(theFILE,'\n~~~\n')
+	else:
+		theFILE = process_doc_sep(theFILE, doc_sep,[doc_sep])
+		theFILE = _str.cleanFirst(theFILE,'\n')
 
-	theFILE = process_doc_sep(theFILE,doc_sep)
-	theFILE = _str.cleanFirst(theFILE,'\n')
 	_.saveText( theFILE, path )
 
 def action():
@@ -420,6 +607,12 @@ import _rightThumb._vault as _vault
 _vault = _.regImp( __.appReg, '_rightThumb._vault' )
 focus()
 
+isMD = True
+
+# run(
+# vcrypyA
+# vcrypyB
+# process_doc_sep
 
 ########################################################################################
 if __name__ == '__main__':

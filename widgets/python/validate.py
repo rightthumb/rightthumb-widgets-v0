@@ -74,6 +74,9 @@ _.appInfo[focus()] = {
 						'',
 						'p validate -f jquery-1.10.2.js -process B',
 						'',
+						'p validate -f _app-9a05b382f076e9b2.js + regex',
+						'p validate -f _app-9a05b382f076e9b2.js + regex --c',
+						'',
 	],
 	'columns': [
 				       # { 'name': 'name', 'abbreviation': 'n' },

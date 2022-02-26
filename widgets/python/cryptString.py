@@ -369,6 +369,7 @@ def clip_get_2():
 win32clipboard = None
 
 def cleanString(data):
+	return data
 	data = cleanStringA(data)
 	data = cleanStringA(data)
 	data = cleanStringA(data)
@@ -377,6 +378,7 @@ def cleanString(data):
 	return data
 
 def cleanStringA(data):
+	return data
 	data = _str.cleanBE(data,_v.default_powershell)
 	data = _str.cleanBE(data,'\r')
 	data = _str.cleanBE(data,'\n')
@@ -522,6 +524,8 @@ def action():
 # _vault = _.regImp( __.appReg, '_rightThumb._vault' )
 import _rightThumb._vault as _vault
 
+
+# def cleanStringA(data):
 
 
 ########################################################################################

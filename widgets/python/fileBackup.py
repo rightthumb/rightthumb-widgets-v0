@@ -668,6 +668,11 @@ def secureFiles(path):
 	# return True
 	return False
 
+
+
+
+
+
 def action(path=None,flag=None):
 	if not path is None:
 		path = __.path(  os.path.abspath(path)  )
@@ -731,8 +736,10 @@ def action(path=None,flag=None):
 				if path.lower().endswith('.md'):
 					# _decrypt_docs = _.regImp( __.appReg, 'decrypt-docs-md' )
 					_decrypt_docs = _.regImp( __.appReg, 'decrypt-docs' )
-					doc_sep = '\n___\n'
+					doc_sep = '\n~~~\n'
+					_decrypt_docs.imp.isMD = True
 				else:
+					# _decrypt_docs.imp.isMD = False
 					_decrypt_docs = _.regImp( __.appReg, 'decrypt-docs' )
 					doc_sep = '\n__________________________________________________________________________________\n'
 				_.colorThis(  [ 'registered: documentation file' ], 'Background.light_blue'  )
@@ -740,8 +747,10 @@ def action(path=None,flag=None):
 				theFile = theFile.replace('\r','')
 				# tF = theFile
 				if path.lower().endswith('.md'):
-					todo.append('\n~~~\n')
+					todo.append('\n___\n')
+					# print('A')
 					theFile = _decrypt_docs.imp.md_clean(theFile)
+					# print('B')
 					# if not tF == theFile:
 					#   _.saveText(theFile,path)
 					#   _.cp('FIXED: .md lines','yellow')
@@ -781,7 +790,12 @@ def action(path=None,flag=None):
 								crypt_segment = True
 							segment = '\n'.join( segy )
 						newTemp.append(segment)
-					theFile=doc_sep_.join(newTemp) 
+					theFile=doc_sep_.join(newTemp)
+				if path.lower().endswith('.md'):
+					# print(1)
+					theFile = _decrypt_docs.imp.vcrypyAA(theFile)
+					theFile = _decrypt_docs.imp.vcrypyB(theFile)
+					# print(2)
 
 				if crypt_segment or __.specifications['fileBackup-auto-crypt']['scanA'] in theFile  or  __.specifications['fileBackup-auto-crypt']['scanB'] in theFile or crypy in theFile:
 
@@ -791,18 +805,20 @@ def action(path=None,flag=None):
 					_.colorThis(  [ 'scan: positive, found sensitive data' ], 'Background.red'  )
 					_.colorThis(  [ 'securing data' ], 'Background.green'  )
 					newFile = []
+					if type(theFile) == list:
+						theFile = '\n'.join(theFile)
 					for line in theFile.split('\n'):
 						if __.specifications['fileBackup-auto-crypt']['scanA'] in line  or  __.specifications['fileBackup-auto-crypt']['scanB'] in line:
 
-							line = line.replace(  '\t', ''  )
-							line = _str.cleanBE( line, ' ' )
+							# line = line.replace(  '\t', ''  )
+							# line = _str.cleanBE( line, ' ' )
 							if __.specifications['fileBackup-auto-crypt']['scanA'] in line:
 								line = line.replace(  __.specifications['fileBackup-auto-crypt']['scanA'], ''  )
 
-								line = _str.cleanBE( line, ' ' )
-								line = _str.cleanBE( line, '\t' )
-								line = _str.cleanBE( line, ' ' )
-								line = _str.cleanBE( line, '\t' )
+								# line = _str.cleanBE( line, ' ' )
+								# line = _str.cleanBE( line, '\t' )
+								# line = _str.cleanBE( line, ' ' )
+								# line = _str.cleanBE( line, '\t' )
 								line = _blowfish.encrypt(    line    ,    _vault.key()    )
 
 						# elif __.specifications['fileBackup-auto-crypt']['scanB'] in line:
@@ -838,7 +854,10 @@ def action(path=None,flag=None):
 					tehFile = '\n'.join(newFile)
 					if tehFile.startswith('\n'):
 						tehFile = tehFile[1:]
+					if tehFile.startswith('\n'):
+						tehFile = tehFile[1:]
 					
+					# focus()
 					_.saveText(  tehFile, path  )
 
 
@@ -973,7 +992,7 @@ def action(path=None,flag=None):
 					# print(result)
 					if not _.switches.isActive('Silent'):
 						_.printBold('Backup Successful', 'green')
-						print(newname)
+						_.cp(newname,'darkcyan')
 					# print(newname)
 					return newname
 	return True
@@ -1058,6 +1077,9 @@ doc_sep = '\n___________________________________________________________________
 
 # flag validator
 # _bkLog.imp.validateFlag
+
+# _decrypt_docs.imp.
+
 
 # fileBackup
 ########################################################################################

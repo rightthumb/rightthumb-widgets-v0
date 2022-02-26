@@ -430,6 +430,7 @@ def process(table):
 		if run:
 			print()
 			fileBackup.switch( 'Input', path )
+			fileBackup.switch( 'isPreOpen' )
 			fb = fileBackup.action()
 			print(path)
 			print(fb)
