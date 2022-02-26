@@ -700,6 +700,10 @@ def action():
 				else:
 
 					for i,rec in enumerate(data):
+						# for k in rec:
+						# 	print(k, rec[k])
+						# sys.exit()
+						data[i]['size'] = _dir.info( rec['backup'] )['size']
 						if rec['name'] == '__init__.py':
 							data[i]['name'] = initName( rec )
 
@@ -711,13 +715,14 @@ def action():
 					print()
 					print( 'log: fileBackup.json' )
 					print()
+
 					_.tables.register('data',data)
 					_.tables.fieldProfileSet('data','timestamp','trigger',_.float2Date3)
 					if not _.switches.isActive('DontResolveIDs'):
 						_.tables.fieldProfileSet('data','name','trigger',_.resolveIDs)
 					_.tables.fieldProfileSet('data','row,flag','alignment','center')
 					_.tables.sort( 'data', 'd.timestamp' )
-					_.tables.print('data','row,name,flag,timestamp,age,version,ticket_open_at_time,session')
+					_.tables.print('data','row,name,flag,timestamp,age,version,ticket_open_at_time,session,size')
 					print()
 					# print( 'HERE', 3 )
 
@@ -765,6 +770,9 @@ def load():
 	ticketTimeline.do( ticketTimeline.imp.action )
 
 	epochTickets = _.getTable( 'ticketTimeline.json' )
+
+
+import _rightThumb._dir as _dir
 
 hasSearched = False
 originalData = []

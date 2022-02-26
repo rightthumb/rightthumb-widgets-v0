@@ -6714,7 +6714,10 @@ def myFileLocations( file, silent=False, currentBaseVersion=3 ):
             file = g
             # appData[__.appReg]['pipe'] = appData[__.appReg]['pipe'].split('\n')
             # print("appData[__.appReg]['pipe']",appData[__.appReg]['pipe'])
-            return f
+            try:
+                return f
+            except Exception as e:
+                return file
 
     # print(__.myFileLocations_SKIP_VALIDATION)
     # print(os.path.isdir(file))

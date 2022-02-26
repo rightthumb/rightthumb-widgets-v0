@@ -114,6 +114,7 @@ def p( *text, w='' ):
 	print(txt)
 
 
+
 def xit():
 	sys.exit()
 

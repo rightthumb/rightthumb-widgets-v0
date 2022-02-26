@@ -733,9 +733,12 @@ def printer(path,ni=0):
 	infile+=1
 
 def process(path):
+	if not os.path.isfile(path):
+		return path
 	# print(path)
 	# char = chardet.detect(open( path, 'rb' ).read(200))['encoding']\
 	char='utf-8'
+	char='iso-8859-1'
 	# print(char)
 	global scan
 	global pr
@@ -753,32 +756,36 @@ def process(path):
 		else:
 			fast=False
 
-		with open(path,encoding=char) as f:
-			for line in f:
-				i+=1
-				
-				if fast:
-					if find in line.lower():
-						
-						if pr:
-							print()
-						printer(path,ni=1)
-						if pr:
-							print_line(i,line,inc)
-						if pr == 1:
-							return path
+		# with open(path,encoding=char) as f:
+		# print(os.path.isfile(path),path)
+		if not os.path.isfile(path):
+			return path
+		for line in _.getText(path,raw=True).split('\n'):
+			# for line in f:
+			i+=1
+			
+			if fast:
+				if find in line.lower():
+					
+					if pr:
+						print()
+					printer(path,ni=1)
+					if pr:
+						print_line(i,line,inc)
+					if pr == 1:
+						return path
 
 
 
-				else:
-					if _.showLine(line, plus=inc, minus=ex):
-						if pr:
-							print()
-						printer(path,ni=1)
-						if pr:
-							print_line(i,line,inc)
-						if pr == 1:
-							return path
+			else:
+				if _.showLine(line, plus=inc, minus=ex):
+					if pr:
+						print()
+					printer(path,ni=1)
+					if pr:
+						print_line(i,line,inc)
+					if pr == 1:
+						return path
 
 def cleaner(line):
 	line=line.replace('\r','').replace('\n','')
@@ -822,6 +829,7 @@ import _rightThumb._dir as _dir
 
 
 # getFolder
+# with open(path,encoding=char) as f:
 
 
 ########################################################################################

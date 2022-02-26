@@ -200,8 +200,13 @@ def identify(row):
 	#   return False
 
 	else:
+
 		if len(row) < 7:
 			return False
+		
+		if row.endswith('='):
+			return True
+
 		if len(row) > 40:
 			return True
 
@@ -461,8 +466,10 @@ def process_doc_sep(theFILE,doc_sep,doc_seps):
 			file.append(row)
 		nFile = []
 		for i,row in enumerate(file):
+			inRec = False
 			test = 999
 			if row in records:
+				inRec = True
 				# print(0,s0)
 				# print(1,s1)
 				# sys.exit()
@@ -470,7 +477,7 @@ def process_doc_sep(theFILE,doc_sep,doc_seps):
 				test = 111
 				original = row
 
-				if 1 and '#crypt' in s1 or '#crypt' in s0:
+				if '#crypt' in s1 or '#crypt' in s0:
 					# print("if '#crypt' in segment:")
 					row = records[row]
 					test = 222
@@ -516,14 +523,17 @@ def process_doc_sep(theFILE,doc_sep,doc_seps):
 
 			# print(test,row)
 			# if s0 in doc_sep:
+			if choice and inRec:
+				if row in records:
+					row = records[row]
 			if test == 111 or test == 999 or not choice:
 				row = fileBK[i]
 			vVv = 0
-			if ( vVv and 'password' in row ) or ( vVv and '2022-02-04T22:30:00-0500' in row ) or ( vVv and '45.35.203.103' in row ) or ( vVv and 'DNX8ZsjuI1DWelkKipcBZL3j0IB6afSVlAnjXCssy2yIIsn7J9O3Aw==' in row ):
+			if ( vVv and 'password' in row ) or ( vVv and '2022-02-04T22:30:00-0500' in row ) or ( vVv and '45.35.203.103' in row ) or ( vVv and 'DNX8ZsjuI1DWelkKipcBZL3j0IB6afSVlAnjXCssy2yIIsn7J9O3Aw==' in row ) or ( vVv and '3Yakcawoid5hXCFWnaYIhgkv5wl5BkdjSAJja5Vifyw=' in row ):
 				_.cp(_.linePrint(p=0),'yellow')
 				print( s0 )
 				print( s1 )
-				print(r,choice,test,row)
+				print(r,choice,test,row,inRec)
 			nFile.append(row)
 		segments.append('\n'.join(nFile))
 	

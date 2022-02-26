@@ -30,10 +30,10 @@ import _rightThumb._string as _str
 ##################################################
 
 def appSwitches():
-	_.switches.register( 'Subject', '-app,-sub,subject', 'ftp' )
-	_.switches.register( 'Files', '-f,-file,-files','app.py', isData='name', description='Files' )
-	_.switches.register( 'Folders', '-fo,-folder,-folders', 'python' )
+	_.switches.register( 'Date', '-date' )
+	_.switches.register( 'Ago', '-ago' )
 	pass
+	_.switches.register( 'Files', '-f,-file,-files','file.txt', isData='name', description='Files', isRequired=True )
 
 _.autoBackupData = __.setting('receipt-log')
 __.releaseAcquiredData = __.setting('receipt-file')
@@ -48,13 +48,16 @@ __.switch_raw = []
 
 
 _.appInfo[focus()] = {
-	'file': 'meta.py',
+	'file': 'recover-py-apps.py',
 	'liveAppName': __.thisApp( __file__ ),
- 	'description': 'simple meta editor',
+ 	'description': 'recover a bunch of apps to a  specific date to test if legacy versions work',
 	'categories': [
-						'meta',
-						'file',
-						'folder',
+						'python',
+						'py',
+						'date',
+						'restore',
+						'recover',
+						'list',
 				],
 	'usage': [
 						# 'epy another',
@@ -70,7 +73,7 @@ _.appInfo[focus()] = {
 						# '',
 	],
 	'examples': [
-						_.hp('p meta -app ftp'),
+						_.hp('p recover-py-apps -date 2021-10-27 14:43:10 -f encryptString decrypt-docs fileBackup cryptFile secureFiles backupLog vault dir '),
 						'',
 	],
 	'columns': [
@@ -149,159 +152,124 @@ _.postLoad( __file__ )
 ########################################################################################
 # START
 
-def scan_meta(pathy=None):
-	if pathy is None:
-		pathy = os.getcwd()
-	if os.path.isfile(pathy):
-		p = __.path(pathy,pop=True)
-	elif os.path.isdir(pathy):
-		p = __.path(pathy)
-	else:
-		return {}
-	children_meta = []
-	while True:
-		test = p +os.sep+ '.folder.meta'
-		test = test.replace(os.sep+os.sep,os.sep)
-		if os.path.isfile(test):
-			meta_folders_table(test)
-			_.cp( [str(len(children_meta))+':',p], 'yellow')
-			children_meta.append( __.getTable(test) )
-		p = __.path(p,pop=True)
-		if not os.sep in p:
-			return children_meta
-		# try:
-		# 	p = __.path(p,pop=True)
-		# except Exception as e:
-		# 	return children_meta
 
-
-
-def dic_order(m):
-	n = {}
-	for k in v.order:
-		if k in m:
-			n[k] = m[k]
-	for k in m:
-		if not k in n:
-			n[k] = m[k]
-	return n
 
 def action():
-	load()
-	global meta
-	if _.switches.isActive('Subject'):
-		for k in _.switches.values('Subject'):
-			if not k in meta:
-				meta[k] = template(k)
-				meta = dic_order(meta)
+	if _.switches.isActive('Ago'):
+		ago = _.switches.value('Ago')
+	if _.switches.isActive('Date'):
+		ago = _.autoDate( ' '.join( _.switches.values('Date') ) )
 
-		_.saveTable2( meta, '.folder.meta' )
-		meta_folders_table('.folder.meta')
 
-	if os.path.isfile('.folder.meta'):
-		os.system( 'n .folder.meta' )
-	
-	if v.f:
-		for p in v.f:
-			m = scan_meta(p)
-			_.pv(m)
-	
+	_.cp( _.isDate(ago)['fdate'], 'green' )
+
+
+	done = []
+	recover = {}
+	backups = {}
+	paths = []
 
 
 
-
-def load():
-	global meta
-	if os.path.isfile('.folder.meta'):
-		meta_folders_table('.folder.meta')
-		meta = _.getTable2( '.folder.meta' )
-	else:
-		meta = {}
-
-
-	v.f = {}
 	for path in _.switches.values('Files'):
-		if os.path.isfile(path):
-			path = __.path(path)
-			v.f[path] = 0
-		elif os.path.isdir(path):
-			path = __.path(path)
-			v.f[path] = 1
-	for path in _.switches.values('Folders'):
-		if os.path.isfile(path):
-			path = __.path(path)
-			v.f[path] = 0
-		elif os.path.isdir(path):
-			path = __.path(path)
-			v.f[path] = 1
-	if _.switches.isActive('Folders') and not len(v.f):
-		v.f[ os.getcwd() ] = 1
+		path = path.replace(os.sep+os.sep,os.sep)
+		path = path.replace(os.sep+os.sep,os.sep)
+		if _.isWin:
+			path = path.lower()
+		paths.append( path )
+		fileBackup.switch( 'Input', path )
+		fb = fileBackup.action()
+		backups[path] = fb
+
+		# print(path)
 
 
-def meta_folders_table(path):
-	path = __.path(path)
-	if os.path.isfile(path):
-		path = __.path(path,pop=True)
-	if _.isWin:
-		path = path.lower()
-	table = _.getTable('meta-folders.list')
-	test=table.copy()
-	if not __.path(path) in table:
-		table.append( __.path(path) )
-	# _.pv( table )
-	newTable = []
-	for ntf in table:
-		if not ntf in newTable:
-			newTable.append(ntf)
-	table = newTable
-	if not str(table)==str(test):
-		_.saveTable( table, 'meta-folders.list', p=0 )
-		_.cp(['added',path,'to meta database'],'yellow')
-	# else:
-	# 	pass
-	# 	_.cp('in meta database','yellow')
+	_.linePrint()
+	print( '#backups' )
+	for f in backups:
+		print()
+		print(f)
+		print(backups[f])
+	print()
+
+	# _.pv(paths)
+	# _.pv(backups)
+	log = _.tables.returnSorted( 'data', 'd.timestamp', _.getTable('fileBackup.json') )
+	'''
+			id
+			timestamp
+			file
+			backup
+			mime
+			status
+			name
+			log
+			session
+			version
+			v
+			v1
+			v2
+			v3
+			flag
+	'''
 
 
-def template(subject):
-	global meta
-	if subject == 'url':
-		return ''
+	for rec in log:
+		if _.isWin:
+			f = rec['file'].lower()
+		else:
+			f = rec['file']
+		f = f.replace(os.sep+os.sep,os.sep)
+		# if not f in done and f in paths:
+		# if 'decrypt-docs.py' in f:
+		# 	print(f, f in paths)
+		if f in paths:
+			# print(f)
+			if not f in done and os.path.isfile(rec['backup']):
+				recover[f] = rec['backup']
 
-	ftp = {
-			'server':		'',
-			'user':			'',
-			'password':		'',
-			'path':			'',
-			'full-path':	'',
-	}
-	if subject == 'ftp':
-		return ftp
+			if rec['timestamp'] < ago:
+				if not f in done:
+					done.append(f)
+		if len(done) == len(paths):
+			# _.e('done')
+			# print('break')
+			break
 
-	if subject == 'sftp':
-		return ftp
-	
-	if subject == 'client':
-		return {
-			'company': '',
-			'contact': '',
-			'email': '',
-			'phone': '',
-		}
-
-	if subject == 'project' or subject == 'note' or subject == 'info':
-		return {
-			'description': '',
-			'tags': '',
-		}
-	
-	
-	return ''
+	# _.pv(done)
+	# _.pv(recover)
+	_.linePrint()
+	print( '#restore' )
+	for f in recover:
+		print()
+		print(f)
+		print(recover[f])
+	print()
+	_.linePrint()
 
 
-v = _.dot()
-v.order = 'url client project note info sftp ftp'.split(' ')
+
+	ask=input('restore? Y/n: ')
+	if not 'n' in ask.lower():
+		print()
+		for f in recover:
+			copyfile( recover[f], f )
 
 
+		ask=input('back to original? Y/n: ')
+		if not 'n' in ask.lower():
+			for f in backups:
+				copyfile( backups[f], f )
+
+
+
+fileBackup = _.regImp( focus(), 'fileBackup' )
+fileBackup.switch( 'Silent' )
+fileBackup.switch( 'Flag', 'imdb' )
+fileBackup.switch( 'isRunOnce' )
+fileBackup.switch( 'DoNotSchedule' )
+
+from shutil import copyfile
 
 ########################################################################################
 if __name__ == '__main__':

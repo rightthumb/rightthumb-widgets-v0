@@ -387,10 +387,13 @@ def scanFolders(sync=False, meta=False):
 		load()
 
 	__.v.secure.folders = {}
-	__.v.secure.files = {}
 	__.v.secure.nosync = {}
 	__.v.secure.sync = {}
-	__.v.secure.crypt = {}
+	if meta:
+		__.v.secure.files = _.getTable('secure-crypt-local.meta')
+	else:
+		__.v.secure.files = _.getTable('secure-files-local.settings')
+	__.v.secure.crypt = _.getTable('secure-crypt-local.settings')
 
 	__.v.secure.hash = {}
 

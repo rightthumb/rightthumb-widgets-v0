@@ -1144,6 +1144,8 @@ def getMachineID():
 		output = _str.replaceAll(output, ' ','')
 		output = _str.totalStrip(output)
 		output = output.replace('administrator','')
+		# print('getMachineID',output)
+		# sys.exit()
 		md5 = _md5.md5(output)
 		guid = _md5.md52GUID(md5,True)
 		return guid
