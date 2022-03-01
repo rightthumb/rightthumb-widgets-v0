@@ -666,6 +666,12 @@ def secureFiles(path):
 
 
 	# return True
+	try:
+		del _decrypt_docs.imp.indexP
+		_decrypt_docs.imp.indexP = {}
+		del _decrypt_docs
+	except Exception as e:
+		pass
 	return False
 
 

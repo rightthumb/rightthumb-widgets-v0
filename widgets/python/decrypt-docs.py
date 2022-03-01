@@ -323,7 +323,12 @@ def vcrypyB(file):
 			for oOo in indexP:
 				if not oOo in spent:
 					spent.append(oOo)
-					file[oOo] = '~~~'+indexP[oOo]
+
+					try:
+						file[oOo] = '~~~'+indexP[oOo]
+					except Exception as e:
+						pass
+						# print(329,oOo,len(file),oOo in indexP,'error: indexP[oOo]')
 
 
 	if not done:
@@ -551,7 +556,8 @@ def run(path):
 	global records
 	global maxLen
 	global doc_sep
-
+	global indexP
+	indexP = {}
 	table = _.getTable('crypt-docs.list')
 	test=table.copy()
 	if not __.path(path) in table:
@@ -623,6 +629,7 @@ isMD = True
 # vcrypyA
 # vcrypyB
 # process_doc_sep
+# print(329,oOo,len(file),oOo in indexP,'error: indexP[oOo]')
 
 ########################################################################################
 if __name__ == '__main__':

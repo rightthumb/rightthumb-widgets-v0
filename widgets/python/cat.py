@@ -42,6 +42,7 @@ def appSwitches():
 	_.switches.register( 'Line', '-l,-ln,-line' )
 	_.switches.register( 'NoComment', '-nc' )
 	_.switches.register( 'StripPreNumber', '-sn' )
+	_.switches.register( 'Comment', '-comment', '"#"' )
 
 
 

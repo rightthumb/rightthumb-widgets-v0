@@ -10180,7 +10180,11 @@ class Table:
                 ########## Default Alignment ##########
                 alignment = 'left'
 
-            result+=' '
+            if switches.isActive('YesTableLines'):
+                result+='|'
+            else:
+                result+=' '
+
             if alignment == 'center':
                 totalSpace = int(tabFix) - len(c)
                 if totalSpace > 0:
@@ -10203,7 +10207,28 @@ class Table:
                 result += self.addSpace(c,tabFix) + c.replace('_',' ').upper() + self.columnTab
             # else:
                 # result += c.replace('_',' ').upper() + self.addSpace(c,tabFix) + self.columnTab
-        result += '\n'
+        
+        if switches.isActive('YesTableLines'):
+            result += '|'
+            if len(switches.value('YesTableLines')):
+                newResult = '\n'
+                for x in result.replace(' |','| '):
+                    if x == '|':
+                        newResult+=x
+                    else:
+                        newResult+='-'
+                newResult = _str.cleanEnd(newResult,'-')
+                result+=newResult
+
+                # for c in column.split(','):
+                    # result += '|'+self.addSpace(c,tabFix).replace(' ','-') + self.columnTab.replace(' ','-')
+                    # result += '|'+self.addSpace(c,tabFix).replace(' ','-')
+
+
+        if switches.isActive('YesTableLines'):
+            result = result.replace(' |','| ')
+        else:
+            result += '\n'
         return '\n'+result
 
     def findColumName( self, column ):
@@ -11448,16 +11473,23 @@ class Table:
 
 
         if printColumns:
-            columnHeader = self.tab['table']+loopPrint(__.table_prefix_padding) + columnHeader.replace( '\n', '' )
+            if switches.isActive('YesTableLines'):
+                columnHeader = self.tab['table']+loopPrint(__.table_prefix_padding) + columnHeader
+            else:
+                columnHeader = self.tab['table']+loopPrint(__.table_prefix_padding) + columnHeader.replace( '\n', '' )
             print()
             printBold( columnHeader )
             # printBold( columnHeader, prefix=self.tab['header'] )
-            print()
+            if not len(switches.value('YesTableLines')):
+                print()
         i = 0
         # print(self.asset)
         self.isExtraRecord_0001 = {}
         self.isExtraRecord_000x = ''
         tableLine = __.tableLine
+        if switches.isActive('YesTableLines'):
+            tableLine = '|'
+
         if l is None:
             if switches.isActive('NoTableLines'):
                 tableLine = ''
@@ -17267,7 +17299,8 @@ def load():
         switches.register('GroupBy', '-g,-group,-groupby', 'ext, month')
         switches.register('WrapTable', '-wrap', 'n p  OR  2  OR  path')
         switches.register('NoWrapTable', '-nowrap')
-        switches.register('NoTableLines', '-nl,-nolines')
+        # switches.register('NoTableLines', '-nolines')
+        switches.register('YesTableLines', '-yl,-yeslines')
         switches.register('TableJSON', ',-tjson,-tablejson')
         switches.register('FieldTotal', '-fieldtotal', 'mem_usage')
         switches.register('Aggregate', '-aggregate', '" eof-field-len= add(len(version),len(backup)); config(var,eof,isFirst); "')
