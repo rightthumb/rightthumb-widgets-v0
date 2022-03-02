@@ -1036,7 +1036,7 @@ for i,x in enumerate(__.specifications['fileBackup-auto-crypt']['files']):
 for i,x in enumerate(__.specifications['fileBackup-auto-crypt']['folders']):
 	__.specifications['fileBackup-auto-crypt']['folders'][i] = _str.replaceDuplicate(__.specifications['fileBackup-auto-crypt']['folders'][i].lower(),os.sep)
 
-
+# _.pv(__.specifications)
 
 
 # for i,x in enumerate(__.specifications['fileBackup-auto-crypt']['files']):

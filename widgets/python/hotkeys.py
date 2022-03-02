@@ -1092,6 +1092,20 @@ function get__THETABLE( $ID_label ){
             keyboard.press('v')
             keyboard.release('v')
 
+    def decrypt_lines(self):
+        _paste = _.regImp( __.appReg, '-paste' )
+        _copy = _.regImp( __.appReg, '-copy' )
+        _decrypt_docs = _.regImp( __.appReg, 'decrypt-docs' )
+        _vault = _.regImp( __.appReg, '_rightThumb._vault' )
+        text = _paste.imp.paste()
+        text = text.replace('\r','')
+        rows = []
+        for row in text.split('\n'):
+            if _decrypt_docs.imp.identify(row):
+                row = _vault.imp.s.de( row )
+            rows.append(row)
+        _copy.imp.copy( '\n'.join(rows), p=0 )
+
     def combine_make(self):
         _paste = _.regImp( __.appReg, '-paste' )
         _copy = _.regImp( __.appReg, '-copy' )
@@ -1790,6 +1804,7 @@ def load():
 
                 'toggle-chars': { 'raw': [ 'Key.alt', 'Key.cmd', 't', 'c' ], 'do': 'toggle_chars()' },
 
+                'decrypt-lines': { 'raw': [ 'Key.cmd', 'c' ], 'do': 'Clip.decrypt_lines()' },
     }
     auto_text = _.getTableDB('hotkeys-AutoText.dex')
     hot_text  = _.getTableDB('hotkeys-Text.dex')

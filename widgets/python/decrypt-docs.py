@@ -618,7 +618,7 @@ def action():
 
 doc_sep = '\n__________________________________________________________________________________\n'
 
-import _rightThumb._vault as _vault
+# import _rightThumb._vault as _vault
 
 _vault = _.regImp( __.appReg, '_rightThumb._vault' )
 focus()

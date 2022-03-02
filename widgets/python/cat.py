@@ -92,6 +92,8 @@ _.appInfo[focus()] = {
 						'p cat -f file.txt -tail 4',
 						'p cat -f file.txt -head 7',
 						'',
+						'p cat -f /etc/apt/sources.list* -comment "#"',
+						'',
 	],
 	'columns': [
 				       # { 'name': 'name', 'abbreviation': 'n' },

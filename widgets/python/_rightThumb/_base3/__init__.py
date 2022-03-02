@@ -6683,20 +6683,46 @@ def myFileLocationsXYZ( file, silent=False, currentBaseVersion=3 ):
         else:
             return myFileLocation_Files
 
+def myFileLocations_add_file(path):
+    global appData
+    global myFileLocation_Files
+    if __.myFileLocations_SKIP_VALIDATION:
+        if type( appData[__.appReg]['pipe'] ) == bool:
+            appData[__.appReg]['pipe'] = []
+        if isFirst:
+            isFirst=False
+        else:
+            appData[__.appReg]['pipe'].append( path )
+    if  not path in myFileLocation_Files:
+        myFileLocation_Files.append( path )
+
+
 isFirst=True
 def myFileLocations( file, silent=False, currentBaseVersion=3 ):
     # return file
     global appData
     global isFirst
+    if '*' in file:
+        __.trigger_isPipe = 'glob'
+    if os.path.isfile(file):
+        myFileLocations_add_file(file)
+
     # print('here')
     try:
         __.myFileLocations_processed
     except Exception as e:
         __.myFileLocations_processed = False
     # print('__.trigger_isPipe',__.trigger_isPipe)
+    # print(__.trigger_isPipe)
+    # if 'glob' in __.trigger_isPipe:
+    #     import glob
+    #     g = glob.glob(file)
+    #     print('g',g,__.myFileLocations_processed)
+    #     return g
     if not __.myFileLocations_processed and not type( __.trigger_isPipe ) == bool:
         __.myFileLocations_processed = True
         if 'glob' in __.trigger_isPipe:
+            print('asdf')
             appData[__.appReg]['pipe'] = ''
             # __.trigger_isPipe = False
             # glob = __.imp('glob')
@@ -6712,6 +6738,8 @@ def myFileLocations( file, silent=False, currentBaseVersion=3 ):
                 # appData[__.appReg]['pipe'] += FX + '\n'
                 myFileLocations( f, silent, currentBaseVersion )
             file = g
+            # print(g)
+            # return g
             # appData[__.appReg]['pipe'] = appData[__.appReg]['pipe'].split('\n')
             # print("appData[__.appReg]['pipe']",appData[__.appReg]['pipe'])
             try:
@@ -6723,14 +6751,7 @@ def myFileLocations( file, silent=False, currentBaseVersion=3 ):
     # print(os.path.isdir(file))
     # print(file)
     # sys.exit()
-    if __.myFileLocations_SKIP_VALIDATION:
-        if type( appData[__.appReg]['pipe'] ) == bool:
-            appData[__.appReg]['pipe'] = []
-        if isFirst:
-            isFirst=False
-        else:
-            appData[__.appReg]['pipe'].append( file )
-        return file
+
     # print( 'HERE HERE HERE HERE ', file )
     if '*' in file:
         import glob
@@ -6921,7 +6942,7 @@ def myFileLocations2( file, silent=False, currentBaseVersion=3 ):
             except Exception as e:
                 pass
     
-    if not os.path.isfile( _v.relevant_folders ):
+    if not os.path.isfile( _v.relevant_folders ) and __.isWin:
         print( 'generateRelevantFolders' )
         import generateRelevantFolders
         generateRelevantFolders.action()
@@ -8733,6 +8754,9 @@ class Switches:
         tables.print('data','appreg,name,value')
 
     def register(self, name, switch, expected_input_example = None, isRequired=False, isPipe=None, isData=None, description='', space=False):
+
+        if not isPipe is None:
+            __.trigger_isPipe = isPipe
 
         if not isData is None:
             __.trigger_isPipe = isData

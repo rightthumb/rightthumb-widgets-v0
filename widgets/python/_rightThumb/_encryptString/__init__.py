@@ -49,7 +49,7 @@ if errors and hasErrors:
 
 def genPassword( password=False ):
 	return newKey( password )
-	
+
 def newKey( password ):
 	# min 150
 
@@ -195,5 +195,5 @@ def md5File(fname):
 # 	save( what, savePath )
 # 	return None
 
-
+p=genPassword
 

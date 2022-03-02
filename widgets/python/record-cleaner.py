@@ -147,8 +147,23 @@ _.postLoad( __file__ )
 ########################################################################################
 # START
 
-
-
+def clean7(string):
+	# string=string.lower()
+	string=string.title()
+	vVv = ''
+	string=string.replace('&',' and ')
+	for s in string:
+		if s in 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ':
+			vVv+=s
+		else:
+			vVv+=' '
+	string = vVv
+	string=_str.replaceDuplicate(string,' ')
+	string=_str.cleanBE(string,' ')
+	strint=string.title()
+	for om in 'and of with'.split(' '):
+		string=string.replace( ' '+om.title()+' ' ,' '+om.lower()+' ')
+	return string
 import re
 
 
@@ -398,6 +413,133 @@ class Record:
 			if not k in self.index['count']:
 				self.index['count'][k]=0
 			self.index['count'][k]+=1
+
+	def inProfiles_7GzGHN( self, records=[], rec=None, inv=None ):
+		rrec = rec
+		invN = clean7(rrec['Name'])
+		if not rec is None:
+			inv = self.profile(rec)
+		# print(profile)
+		# print('a')
+		IDS = []
+		SUB = None
+		blanks=[]
+		for cc in records:
+			rec = records[cc]
+			Id = records[cc]['Id']
+			if not 'profile' in rec:
+				rec['profile'] = self.profile(rec)
+			clp = rec['profile']
+			# print(clp)
+			if len(clp['all']) and type(clp['all'][0]) == list:
+				clp['all'] = clp['all'][0]
+			if len(inv['all']) and type(inv['all'][0]) == list:
+				inv['all'] = inv['all'][0]
+
+
+
+			a = tuple(clp['all'])
+			b = tuple(inv['all'])
+			both = list(set(a) & set(b))
+			if both:
+				
+				if not Id in [
+                            '7ebcdea8-05e3-4a6e-84c1-5bba01ac11f8',
+                            '3bc840f9-7e4f-4c8f-a20b-7b885d6559e1',
+                            '9f87dd22-d1b3-4100-a966-40c46c185951',
+                        ]:
+					if not len(clp['address']):
+						blanks.append(Id)
+					IDS.append( { Id: both } )
+					if inv['address'] == clp['address']:
+						SUB = Id
+				# print(both)
+			# sys.exit()
+		if not SUB is None:
+			IDS = SUB
+		else:
+			if len(blanks) == 1:
+				IDS = blanks[0]
+			elif type(IDS) == list and len(IDS) == 1:
+				dk = list(IDS[0].keys())[0]
+				# print(1,IDS[0])
+				IDS = dk
+			else:
+				
+				IDS = len(blanks), len(IDS)
+				if IDS == (0,0):
+					IDS = None
+					# _.pv(rrec)
+					for cc in records:
+						rec = records[cc]
+						Id = records[cc]['Id']
+						nin1 = clean7(records[cc]['BillingName'])
+						nin2 = clean7(records[cc]['ContactName'])
+
+						both = list(set(invN.split(' ')) & set(nin1.split(' ')))
+						if len(both) > 1:
+							IDS = Id
+							break
+
+
+		return IDS
+
+
+	def profile( self, record ):
+		dic = {
+					'fields': {},
+					'all': [],
+					'address': '',
+		}
+
+		for ad in 'ShippingAddress BillingAddress DocumentRecipientAddress ShipAddress'.split(' '):
+			if ad in record:
+				if len(record[ad]) and ' ' in record[ad] and record[ad][0] in '0123456789':
+					dic['address'] = record[ad].replace(',',' ').split(' ')[0]
+
+
+
+		if not record:
+			return None
+		for k in record:
+			try:
+				dat = app.scan.process( record[k] )
+			except Exception as e:
+				print(k,record)
+				sys.exit()
+			# print(dat)
+
+			for wes in dat:
+				if not wes == 'self':
+					if not wes in dic['fields']:
+						dic['fields'][wes]=[]
+					if not dat[wes] in dic['fields'][wes]:
+						dic['fields'][wes].append(dat[wes])
+					# dat[wes]=dat[wes][0]
+					if type(dat[wes]) == list:
+						for fat in dat[wes]:
+							if not fat in dic['all']:
+								# print('dat[wes]',fat)
+								dic['all'].append(fat)
+
+			# for wes in dat:
+			# 	print(wes)
+			# 	sys.exit()
+				# if not wes == 'self':
+				# 	if not wes in dic['fields']:
+				# 		dic['fields'][wes]=[]
+				# 	if not wes in dic['fields'][wes]:
+				# 		dic['fields'][wes].append(wes)
+
+				# 	if not wes in dic['all']:
+				# 		dic['all'].append(wes)
+		for k in dic['fields']:
+			if len(dic['fields'][k]) and type(dic['fields'][k][0]) == list:
+				dic['fields'][k] = dic['fields'][k][0]
+
+
+		return dic
+
 
 	def process( self, record ):
 		record=self.run(record)
