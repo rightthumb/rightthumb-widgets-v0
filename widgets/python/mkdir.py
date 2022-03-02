@@ -14,7 +14,6 @@ import os
 import sys
 import time
 # import platform
-
 ##################################################
 import _rightThumb._construct as __
 appDBA = __.clearFocus( __name__, __file__ )
@@ -29,33 +28,27 @@ __.registeredApps.append( focus() )
 import _rightThumb._base3 as _
 _.load()
 ##################################################
-
 import _rightThumb._vars as _v
 import _rightThumb._string as _str
 
-
 ##################################################
-### EXAMPLE: START
 # import simplejson as json
 # from threading import Timer
 # from lxml import html
 # import requests
 # import cssselect
 # import sqlite3
-### EXAMPLE: END
 ##################################################
 
 
 def appSwitches():
 	_.switches.register( 'Folders', '-f,-folder,-folders' )
 	_.switches.register( 'Files', '-file,-files' )
+	_.switches.register( 'Prepend-Folder', '-p,-pre,-base' )
 
 	pass
-	### EXAMPLE: START
-	# _.switches.register( 'Input', '-i' )
 	# _.switches.register( 'Files', '-f,-file,-files','file.txt', isPipe=True, isRequired=True, description='Files' )
 	# _.switches.register( 'Files', '-f,-file,-files','file.txt', isPipe='name,data,clean', description='Files' )
-	### EXAMPLE: END
 
 
 _.autoBackupData = __.autoCreationConfiguration['backup']
@@ -69,11 +62,11 @@ __.switch_raw = []
 # __.isRequired_or_List = ['Pipe','Files','Plus']
 
 _.appInfo[focus()] = {
-	'file': 'thisApp.py',
+	'file': 'mkdir.py',
 	'liveAppName': __.thisApp( __file__ ),
-	'description': 'Changes the world',
+ 	'description': 'make folder',
 	'categories': [
-						'DEFAULT',
+						'mkdir',
 				],
 	'usage': [
 						# 'epy another',
@@ -115,11 +108,7 @@ _.appData[focus()] = {
 					'table': {'sent': [], 'received': [] }, 
 		},
 	}
-### EXAMPLE: START
-# _.appInfo[focus()]['examples'].append( 'p thisApp -file file.txt' )
 
-# _.appInfo[focus()]['columns'].append( {'name': 'name', 'abbreviation': 'n'} )
-### EXAMPLE: END
 
 
 def registerSwitches( argvProcessForce=False ):
@@ -144,13 +133,8 @@ def registerSwitches( argvProcessForce=False ):
 	_.switches.trigger( 'URL', _.urlTrigger )
 	_.switches.trigger( 'Ago', _.timeAgo )
 	_.switches.trigger( 'Duration', _.timeFuture )
-	### EXAMPLE: START
 	# _.switches.trigger( 'Files',_.inRelevantFolder )
 	
-	# _.switches.trigger( 'Watched', _.txt2Date )
-	# _.switches.trigger( 'Input',_.formatColumns )
-	# _.switches.trigger( 'Franchise',_.triggerSpace )
-	### EXAMPLE: END
 	
 	_.defaultScriptTriggers()
 	_.switches.process()
@@ -178,41 +162,27 @@ if __name__ == '__main__':
 _.postLoad( __file__ )
 
 ########################################################################################
-### EXAMPLE: START
-# data = _.tables.returnSorted( 'data', 'd.timestamp', data )
-# _.switches.fieldSet( 'Long', 'active', True )
-# _.tables.register( 'data', table )
-# _.tables.fieldProfileSet('data','timestamp','trigger',_.friendlyDate)
-# _.tables.fieldProfileSet('data','phone,email,address','alignment','center')
-# _.tables.print( 'data', 'name' )
-# _.tables.print( 'data', ','.join(_.switches.values('Column')) )
-# _.switches.isActive('Files')
-# p = _.getText( _v.pips, raw=True, clean=True ).split( '\n' )
-# os.system( '"' + do + '"' )
-# _.setPipeData( os.listdir( os.getcwd() ), focus() )
-# _.showLine( item )
-# 	if os.path.isdir( row ):
-# 	if os.path.isfile( row ):
-#	os.path.abspath(path)
-# __.appRegPipe    ( pipe data registerd focus(__.appReg) set by _.myFileLocations {if imported} , default is None )
-# for i,row in enumerate(_.t( _.appData[__.appReg]['pipe'] )):
-# for i,row in _.e( _.isData(r=1) ):
-# date = _.friendlyDate( theDate )
-# _.addComma()
-# 													if platform.system() == 'Windows':
-### EXAMPLE: END
-########################################################################################
 # START
 
-
+def fix(path):
+	p=os.getcwd()
+	path=path.replace('\\',os.sep)
+	path=path.replace('/',os.sep)
+	if not _.switches.isActive('Prepend-Folder'):
+		return path
+	if not path.startswith(p):
+		path=p+os.sep+path
+	path=path.replace(os.sep+os.sep,os.sep)
+	path=path.replace(os.sep+os.sep,os.sep)
+	return path
 
 def action():
 
 	for folder in _.switches.values('Folders'):
-		_v.mkdir( folder )
+		_v.mkdir( fix(folder) )
 
 	for file in _.switches.values('Files'):
-		_v.mkdir( file, isFile=True )
+		_v.mkdir( fix(file), isFile=True )
 
 
 
@@ -220,7 +190,6 @@ def action():
 if __name__ == '__main__':
 	action()
 	_.tables.eof()
-
 
 
 
