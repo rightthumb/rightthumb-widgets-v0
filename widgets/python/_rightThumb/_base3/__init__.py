@@ -17828,7 +17828,7 @@ def historyPrint( code, pre='' ):
         elif x.startswith('-'):
             lastSwitch = True
             result += colorThis( x, colors['switches'], p=0 )
-        elif x.startswith('/'):
+        elif x.startswith('/') and not ' -' in code:
             lastSwitch = True
             result += colorThis( x, colors['switches'], p=0 )
         elif x == '|' or x == '&':

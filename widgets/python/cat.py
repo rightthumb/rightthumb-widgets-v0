@@ -311,6 +311,13 @@ def action():
 
 
 				if shouldAdd:
+					if _.switches.isActive('Comment'):
+						comment = _.switches.values('Comment')[0]
+						row = row.split(comment)[0]
+
+						if not len( simpleClean(row) ):
+							shouldAdd = False
+				if shouldAdd:
 					vVv.print += 1
 					if row == midID:
 						print( _.genLine( maxLEN, '_', p=0 ) )
