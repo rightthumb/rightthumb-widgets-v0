@@ -37,12 +37,14 @@ def appSwitches():
 	pass
 	_.switches.register( 'Long', '-long' )
 	_.switches.register( 'Short', '-short,-mini,-small' )
-	_.switches.register( 'Strip', '-strip', 'be' )
+	_.switches.register( 'Strip', '-cl,-clean,-t,-st,-strip', 'be' )
 	_.switches.register( 'Count', '-cnt,-count' )
 	_.switches.register( 'PrintCharLength', '-print,-printlen,-lenprint,-len' )
 	_.switches.register( 'LowerCase', '-lo,-lower' )
 	_.switches.register( 'MixedCase', '-m,-mix,-mixed' )
 	_.switches.register( 'NoPrint', '--c' )
+	_.switches.register( 'Pre-Date', '-e,-epoch' )
+	_.switches.register( 'Find-Date', '-uuid,-guid' )
 
 
 
@@ -155,7 +157,66 @@ _.postLoad( __file__ )
 ########################################################################################
 # START
 
+def process(vVv):
+	if '{' in vVv:
+		hasBr=True
+	else:
+		hasBr=False
+	if not _.switches.isActive('Pre-Date'):
+		return vVv
+	vVv=vVv.replace('{','').replace('}','')
+	i=0
+	indices=[]
+	for c in vVv:
+		if c == '-':
+			indices.append(i)
+		if not c == '-':
+			i+=1
+	vVv = _str.do('an',vVv)
+	e=time.time()
+	ea=str(e).split('.')[0]
+	eb=str(e).split('.')[1]
+	ec=str(e).replace('.','d')
+	ad=ea
+	dec=2
+	if len(_.switches.value('Pre-Date')):
+		dec=int(_.switches.value('Pre-Date'))
+	pre='epoc'
+	if _.switches.isActive('Short'):
+		dec=0
+		pre=str(randrange(10))+'e'
+	i=0
+	while not i == dec:
+		ad += eb[i]
+		i+=1
+
+	# vVv = _.over(vVv,   ea+'e'  )
+	vVv = _.over(vVv,   pre+ad , r=1   )
+	if indices:
+		vVv = _.ddelim(vVv,d='-',indices=indices)
+	if hasBr and not '{' in vVv:
+		vVv = '{'+vVv+'}'
+
+	return vVv
+
+
 def action(first=True):
+
+	if _.switches.isActive('Find-Date'):
+		for uuid in _.switches.values('Find-Date'):
+			uuid = _str.do('an',uuid)
+			if len(uuid) > 30:
+				if 'epoc' in uuid:
+					d=int(uuid.split('epoc')[1][:10])
+					_.cp( _.isDate( d, f='fdate') , 'cyan' )
+			elif len(uuid) < 15 and len(uuid) > 10:
+				if 'e' in uuid:
+					d=int(uuid.split('e')[1][:10])
+					_.cp( _.isDate( d, f='fdate') , 'cyan' )
+
+
+
+		return None
 
 	if first and _.switches.isActive('Count'):
 		ids=[]
@@ -176,6 +237,7 @@ def action(first=True):
 		else:
 			genid = _.longID()
 
+	genid=process(genid)
 	if _.switches.isActive('Strip'):
 		if 'be' in _.switches.value('Strip'):
 			genid = genid.replace( '{', '' ).replace( '}', '' )
@@ -183,7 +245,6 @@ def action(first=True):
 			genid = genid.replace( '{', '' ).replace( '}', '' ).replace( '-', '' )
 
 
-	
 	if not _.switches.isActive('LowerCase') and not _.switches.isActive('MixedCase'):
 		if not _.switches.isActive('NoPrint'):
 			print( genid )
@@ -201,6 +262,8 @@ def action(first=True):
 		_.colorThis( [  '', _.addComma(len(genid)), 'characters'  ], 'yellow' )
   
 	return genid
+
+from random import randrange
 
 
 

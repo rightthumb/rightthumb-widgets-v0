@@ -263,6 +263,12 @@ def getFolder(folder,r=True):
 	#           return None
 	#   if folder in '/bin /boot /dev /lib /lib64 /lost+found /media /mnt /proc /srv /sys'.split(' '):
 	#       return None
+
+
+	# if _.switches.isActive('Minus') and not _.showLine(folder,):
+	# 	return None
+	
+
 	if not sw(folder):
 		# return None
 		if not sw(os.getcwd()):
@@ -828,6 +834,8 @@ import _rightThumb._dir as _dir
 # 'Recursive'
 
 
+# getFolder
+# getFolder
 # getFolder
 # with open(path,encoding=char) as f:
 

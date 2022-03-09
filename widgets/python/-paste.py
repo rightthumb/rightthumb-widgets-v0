@@ -35,7 +35,7 @@ import _rightThumb._string as _str
 
 
 def appSwitches():
-	pass
+	_.switches.register( 'Clean', '-clean' )
 
 
 _.autoBackupData = __.autoCreationConfiguration['backup']
@@ -259,10 +259,32 @@ win32clipboard = None
 
 paste = clip_get
 
+def cleaner(textR):
+	text=''
+	for x in textR:
+		if x in _str.printable2:
+			text+=x
+		else:
+			text+=' '
+	text=_str.do('all',text,'  ',' ')
+	text=_str.do('be',text,' ')
+	return text
+
 def action():
+	textR=clip_get()
+	# text = textR.encode("ascii", "ignore")
+	if not _.switches.isActive('Clean'):
+		text = textR
+	elif _.switches.isActive('Clean'):
+		text = cleaner(textR)
+
+	try:
+		print( text )
+	except Exception as e:
+		text = cleaner(text)
+		print( text )
 
 
-	print( clip_get() )
 
 
 

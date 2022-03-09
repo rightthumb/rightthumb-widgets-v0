@@ -31,9 +31,14 @@ import _rightThumb._string as _str
 ##################################################
 
 def appSwitches():
+	_.switches.register( 'Words', '-w' )
+	_.switches.register( 'PrintScrap', '-print,-scrap' )
+	_.switches.register( 'AddChars', '-a,-add,-char,-chars' )
+	_.switches.register( 'Dic', '-dic' )
+	_.switches.register( 'JustReturn', '-jr' )
+	_.switches.register( 'Err', '-err' )
 	pass
 	### EXAMPLE: START
-	# _.switches.register( 'Input', '-i' )
 	# _.switches.register( 'Files', '-f,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=True )
 	### EXAMPLE: END
 
@@ -86,7 +91,8 @@ _.appInfo[focus()] = {
 						# '',
 	],
 	'examples': [
-						_.hp('p thisApp -file file.txt'),
+						_.hp('p -paste | p word-stems'),
+						_.hp('p word-stems -w configuration copying customizable essential'),
 						'',
 	],
 	'columns': [
@@ -200,22 +206,75 @@ _.postLoad( __file__ )
 ########################################################################################
 # START
 
-
+processWordStem = None
+index_of_word_stems = {}
+def wordStem(word):
+    global processWordStem
+    global index_of_word_stems
+    if processWordStem is None:
+        import nltk
+        from nltk.stem import PorterStemmer
+        from nltk.tokenize import word_tokenize
+        processWordStem = PorterStemmer()
+    stem = processWordStem.stem(word)
+    if not stem in index_of_word_stems:
+    	index_of_word_stems[stem] = {}
+    index_of_word_stems[stem][word] = {}
+    return stem
 
 def action():
-	# should be   Single-Task   OR   Imply-Architecture-Functions   OR   CLASSES!!
-	load()
-	global data
 
-	for i,row in enumerate( _.isData(r=1) ):
-		print(row)
+	if _.switches.isActive('Words'):
+		words = _.switches.values('Words')
+		fileR = ' '.join(words)
+	else:
+		words = _.isData()
+		fileR = '\n'.join(words)
 
 
+	file=''
+	for ch in fileR:
+		if ch in '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'+_.switches.value('AddChars'):
+			file+=ch
+		else:
+			file+=' '
+	file=_str.do('all',file,'  ',' ')
+	file=_str.do('be',file,' ')
 
-def load():
-	global data
-	data = _.getTable( 'table' )
-
+	if _.switches.isActive('PrintScrap'):
+		print(file)
+	# print(' '.join(words))
+	dic={}
+	err=[]
+	for word in file.split(' '):
+		# word=word.lower()
+		if not word.lower() in dic:
+			st=wordStem(word)
+			if not st.lower() == word.lower():
+				dic[word.lower()] = st
+			else:
+				if not word in err:
+					err.append(word)
+	error='no word stems found'
+	if dic:
+		error='did NOT fail but...'
+		if _.switches.isActive('JustReturn'):
+			return dic
+		keys=list( dic.keys() )
+		dic2={}
+		keys.sort()
+		for k in keys:
+			dic2[k]=dic[k]
+		if _.switches.isActive('Dic'):
+			_.pv(dic2)
+		else:
+			_.printDicFields(dic2)
+	if not dic or _.switches.isActive('Err'):
+		li=[]
+		li.append( { 'l': 'found these errors:', 'c': 'green', 'd': 1 } )
+		for er in err:
+			li.append( { 'l': er, 'c': 'green', 'd': 2, 'n': 'todo' } )
+		_.e([error]+li)
 
 
 ########################################################################################

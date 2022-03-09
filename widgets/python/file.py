@@ -199,7 +199,7 @@ def registerSwitches( argvProcessForce=False ):
 	appSwitches()
 
 	_.switches.trigger( 'Size' , unFormatSize )
-	# _.switches.trigger( 'Folders' , _.bAlias )
+	_.switches.trigger( 'Folders' , _.bAlias )
 	# _.switches.trigger('Input',_.myFileLocations)
 		# trigger settings
 	_.myFileLocation_Print = False

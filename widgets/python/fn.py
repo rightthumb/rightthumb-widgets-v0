@@ -67,8 +67,6 @@ _.appInfo[focus()] = {
 	'file': 'thisApp.py',
 	'liveAppName': __.thisApp( __file__ ),
 	'description': 'Changes the world',
-		# _.ail(1,'subject')+
-		# _.aib('one')+
 	'categories': [
 						'DEFAULT',
 				],
@@ -201,20 +199,17 @@ _.postLoad( __file__ )
 # START
 
 
-
 def action():
-	# should be   Single-Task   OR   Imply-Architecture-Functions   OR   CLASSES!!
-	load()
-	global data
+	def min(txt,what):
+		return _.ddelim( txt, what=what )
 
-	for i,row in enumerate( _.isData(r=1) ):
-		print(row)
-
-
-
-def load():
-	global data
-	data = _.getTable( 'table' )
+	_.linePrint(c='yellow')
+	# txt = _.genUUID(); print(txt); what='uuid'; eof=min(txt,what); print(eof);  _.linePrint(c='yellow');
+	txt = 'A34606ED742E461E9A1461AA0F98780D'; print(txt); what='uuid'; eof=min(txt,what); print(eof);  _.linePrint(c='yellow');
+	txt = '2022-03-02 14:44:26'; print(txt); what='dt'; eof=min(txt,what); print(eof); _.linePrint(c='yellow');
+	txt = '20220302'; print(txt); what='date'; eof=min(txt,what); print(eof); _.linePrint(c='yellow');
+	txt = '20220302145338'; print(txt); what='dt'; eof=min(txt,what); print(eof); _.linePrint(c='yellow');
+	txt = '202203021453'; print(txt); what='dt'; eof=min(txt,what); print(eof); _.linePrint(c='yellow');
 
 
 

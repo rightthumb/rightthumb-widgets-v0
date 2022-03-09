@@ -27,6 +27,268 @@ from datetime import date
 # except Exception as e:
 #   pass
 
+def tab(val,n=None, t='    ', cnt=False, add=None,  s=False):
+
+    if n is None and add is None and not s and not cnt:
+        n=1
+
+    def shortest(lines):
+        p=None
+        for i,line in enumerate(lines):
+            l=_str.do('be',line, ' ')
+            a=len(line)
+            b=len(l)
+            d=a-b
+            if p is None:
+                p=d
+            elif b and d < p:
+                p=d
+        return p
+    def shorten(lines):
+        p=shortest(lines)
+        for i,line in enumerate(lines):
+            l=_str.do('be',line, ' ')
+            if len(l):
+                lines[i] = line[p:]
+            else:
+                lines[i] = ''
+        return lines
+
+
+
+    val = val.replace('\t',t)
+    val = val.replace('\r','')
+    val = _str.do('be',val, '\n')
+    # val = _str.do('all',val, ' \n')
+    lines = val.split('\n')
+
+    if cnt:
+        p=shortest(lines)
+        
+
+
+
+    if s:
+        lines=shorten(lines)
+
+    if not add is None and add:
+        for i,line in enumerate(lines):
+            l=_str.do('be',line, ' ')
+            if len(l):
+                lines[i] = t + line
+            else:
+                lines[i] = ''
+    if not n is None and n:
+        i=0
+        pre=''
+        while not i == n:
+            i+=1
+            pre+=t
+        print('n',n,'|'+pre+'|')
+        for i,line in enumerate(lines):
+            l=_str.do('be',line, ' ')
+            if len(l):
+                lines[i] = pre+line
+            else:
+                lines[i] = ''
+    return '\n'.join(lines)
+
+def l(subject,d=' '): return subject.split(d);
+
+def rev(string):
+    a=list(string)
+    a.reverse()
+    a=''.join(a)
+    return a
+
+def n2w(n,c=None):
+    d=None
+    s=str(n)
+    if '.' in s:
+        n=int(s.split('.')[0])
+        # d=int(s.split('.')[1])
+    try:
+        import num2word
+    except Exception as ee:
+        e(ee)
+
+    r = num2word.word(n)
+    if not d is None:
+        r += ' and '+n2w(d).replace('Hundred','Hundredth').replace('Thousand','Thousandth').replace('Million','Millionth').replace('Billion','Billionth').replace('Trillion','Trillionth')
+        if not c is None:
+            result = colorThis( r, c )
+    return r
+
+def aiBullet(string,depth=None,d=None):
+    if type(string) == int:
+        s=depth
+        d=string
+        string=s
+        depth=d
+    if not d is None:
+        depth=d
+    if depth is None:
+        return '\n                  - '+string
+    code='\n                  '
+    i=0
+    while not i==depth:
+        i+=1
+        code+='  '
+    return code+'- '+string
+
+def aiLine(string,lines=2):
+
+    if type(string) == int:
+        s=lines
+        l=string
+        string=s
+        lines=l
+
+    if lines==2:
+        return '\n\n                '+string
+    else:
+        return '\n                '+string
+
+def over(txt,note='',r=None,l=None):
+    end=False
+    if r: end=True;
+    # print('note',note)
+    ss=txt
+    if len(note):
+        if end:
+            ss=rev(ss)
+            note=rev(note)
+
+        s=''
+        i=0
+        nd=len(note)-1
+        for ch in ss:
+            if i > nd:
+                s+=ch
+            elif ch in '{-}':
+                s+=ch
+            else:
+                s+=note[i]
+            
+            if not ch in '{-}':
+                i+=1
+        ss=s
+        if end:
+            ss=rev(ss)
+            note=rev(note)
+    return ss
+
+
+
+def ddelim( txt=None, what='szYZhw', d=None, indices=None, f=1, r=-1 ):
+    if what.lower() in l('uuid guid'):
+        what = 'uuid'
+    def uu(p,r,u):
+        if p:
+            cp(['in section',u,r], 'Background.red')
+        return u
+    p=0
+    u=0
+    ec='yellow'
+    ec='Background.light_blue'
+    def eeof(u,p,ec,d,r,what,txt,note=None):
+        if p:
+            if note is None:
+                cp([{'r':r, 'u':u, 'p':p, 'd':d,'what':what}],'yellow')
+            else:
+                cp([{'*':note, 'r':r, 'u':u, 'p':p, 'd':d,'what':what}],'yellow')
+            cp(['e',txt],ec)
+        return txt
+    if txt is None:
+        _.cp('ddelim( txt=None, indices=[8, 12, 16, 20], d='-' )','yellow')
+        sys.exit()
+
+    specified=1
+    
+    if d is None:
+        specified=0
+        # d='-'
+    if indices is None:
+        specified=0
+        # indices=[8, 12, 16, 20]
+    if p:
+        print(1,txt)
+    if f:
+        txt=_str.stripNonAlphaNumaric(txt,'.').replace(' ','')
+    if p:
+        cp(['~',what,len(txt)],'cyan')
+        cp( [specified,txt,what,d], 'white' )
+    
+    if specified:
+        pass
+    elif what in '{} [] () <>'.split(' '):
+        u=uu(p,r,1)
+        new_string=what[0]+txt+what[1]
+        return eeof(u,p,ec,d,r,what,new_string)
+
+    elif what == 'uuid':
+        u=uu(p,r,2)
+        d='-'; indices=[8, 12, 16, 20];
+        txt=ddelim( txt, d=d, indices=indices, f=0, r=u )
+        txt=ddelim( txt, what='{}', f=0, r=u )
+        return eeof(u,p,ec,d,r,what,txt)
+    elif what == 'time':
+        u=uu(p,r,3)
+        if len(txt) == 6:
+            d=':'; indices=[2, 4];
+        elif len(txt) == 4:
+            d=':'; indices=[2];
+        return eeof(u,p,ec,d,r,what,ddelim( txt, d=d, indices=indices, f=0, r=u ))
+
+    elif what == 'date':
+        u=uu(p,r,4)
+        d='-'; indices=[4, 6];
+        return eeof(u,p,ec,d,r,what,ddelim( txt, d=d, indices=indices, f=0, r=u ))
+    elif what in 'dt ts timestamp date-time stamp'.split(' '):
+        u=uu(p,r,5)
+        txtt=ddelim( txt, d=' ', indices=[8], f=0, r=u )
+        if p:
+            cp(['txtt',txtt],'darkcyan')
+        # sys.exit()
+        a=ddelim( txtt.split(' ')[0], what='date', f=0, r=u )
+        b=ddelim( txtt.split(' ')[1], what='time', f=0, r=u )
+        txt=a+' '+b
+        return eeof(u,p,ec,d,r,what,txt)
+    elif indices is None:
+        cp('ELSE','red')
+        print('-----------',what,txt)
+        eeof(u,p,ec,d,r,what,txt,note='WTF')
+        e('ELSE')
+
+    # print(2,txt)
+
+    original = txt
+    delimiter = d
+
+
+    if p and d == ' ':
+        cp(['**',txt,what,d,indices],'red')
+
+    new_string = ''
+    for i,ch in enumerate(txt):
+        new_string += ch
+        if i+1 in indices:
+            new_string += d
+    return eeof(u,p,ec,d,r,what,new_string)
+    return eeof(u,p,ec,d,r,what,new_string)
+
+
+
+    prev = 0
+    for index in indices:
+        if p:
+            print('ind',what,(prev,index),original[prev:index])
+        new_string += original[prev:index] + delimiter
+        prev = index
+    new_string += original[prev:]
+    return eeof(u,p,ec,d,r,what,new_string)
+delimiter=ddelim
+
 def clear():
     global isWin
     if isWin:
@@ -405,8 +667,9 @@ class dot:
 
 __.tableLine = '‽'
 v = dot()
+vv = dot()
 v.isData = {}
-v.opened_file_me = {}
+vv.opened_file_me = {}
 __.switch_skimmer = dot()
 __.switch_skimmer.scan = [ '??' ]
 __.switch_skimmer.active = []
@@ -600,14 +863,18 @@ _tz = None
 pandas = None
 _sd = None
 
-def isDate( theDate, record={}, tz=None, q=True ):
+def isDate( theDate, record={}, tz=None, q=True, f=None,w=None,what=None ):
+    if not w is None: f=w;
+    if not what is None: f=what;
 
     # theDate = autoDate(theDate)
 
     # print(theDate)
     # sys.exit()
 
-
+    global _dir
+    if _dir is None:
+        import _rightThumb._dir as _dir
 
     s = time.time()
     # slow from loading pandas
@@ -618,6 +885,7 @@ def isDate( theDate, record={}, tz=None, q=True ):
 
     local_tz = str(time.strftime("%z")).replace(':','')
 
+
     hasTZ = False
     if type(theDate) == str and len(theDate) > 11:
         if theDate[-6:].startswith('+') or theDate[-6:].startswith('-'):
@@ -626,15 +894,119 @@ def isDate( theDate, record={}, tz=None, q=True ):
     if type(theDate) == str and len(theDate) > 11 and type(hasTZ) == bool:
         if theDate[-5:].startswith('+') or theDate[-5:].startswith('-'):
             hasTZ = theDate[-5:].replace(':','')
-
-
-
-
-
-
-
-
     epoch = autoDate(theDate)
+
+
+
+
+
+    if f=='dow':
+        dow=_dir.getDOWromEpochText( epoch ).lower()
+        dci = {
+                'monday': 'mon',
+                'tuesday': 'tue',
+                'wednesday': 'wed',
+                'thursday': 'thu',
+                'friday': 'fri',
+                'saturday': 'sat',
+                'sunday': 'sun',
+        }
+        if dow in dci:
+            return dci[dow]
+        return dow
+    def fitem(f):
+
+        if f=='friendly': return friendlyDate( epoch );
+        if f=='iso': return friendlyDate( epoch ).replace( ' ', 'T' ) + local_tz;
+        if f=='woy': return _dir.getWeekAndYear( epoch );
+        if f=='month': return _dir.getMonthFromEpoch( epoch );
+        if f=='epoch': return epoch;
+        if f=='ordinal': return datetime.datetime.fromtimestamp( epoch ).toordinal();
+        if f=='text-date': return datetime.datetime.fromtimestamp( epoch ).strftime('%b, %d %Y');
+        if f=='text-time': return datetime.datetime.fromtimestamp( epoch ).strftime('%I:%M %p');
+        if f=='text-datetime': return datetime.datetime.fromtimestamp( epoch ).strftime('%b, %d %Y @ %I:%M %p');
+        if f=='sdate': return friendlyDate2( epoch );
+        if f=='strip': return onlyNumbers_strip(friendlyDate( epoch ).split(' ')[0]);
+        if f=='stript': return onlyNumbers_strip(friendlyDate( epoch ));
+        if f=='date': return friendlyDate( epoch ).split(' ')[0];
+        if f=='time': return friendlyDate2( epoch ).split(' ')[1];
+        if f=='fdate': return friendlyDate( epoch );
+        if f=='month': return _dir.getMonthFromEpoch( epoch );
+        if f=='year': return _dir.getYearFromEpoch( epoch );
+        if f=='woy': return _dir.getWeekAndYear( epoch );
+        if f=='ago': return _dir.dateDiffText( epoch );
+        if f=='days': return daysDiff(  epoch, time.time()  );
+        if f=='tz': return local_tz;
+
+
+        try:
+            import _rightThumb._nID as _nID
+            try:
+                _keychain = regImp( __.appReg, 'keychain' )
+                nID_password = _keychain.imp.key('nID')
+                _nID.mini.password( nID_password )
+                isPass = 'secure'
+            except Exception as e:
+                _nID.mini.password( '1970' )
+                isPass = 'unsecure'
+            eee = ''
+            ee = str(record['epoch'])
+            for c in ee:
+                if '.' == c:
+                    break
+                eee+=c
+            pass
+
+            if f=='crypt-date': return _nID.mini.gen( record['strip'] );
+            if f=='crypt-time': return _nID.mini.gen( record['stript'] );
+            if f=='crypt-epoch': return _nID.mini.gen( int(eee) );
+            if f=='appID': return _nID.mini.gen( int(eee) );
+
+
+
+        except Exception as e:
+            pass
+        if f=='crypt-pass': return isPass;
+        if f=='stardate':
+            try:
+                import _rightThumb._stardate as _sd
+                return _sd.gen(  epoch  )
+            except Exception as e:
+                return None
+        if f=='quarter':
+            dt = friendlyDate( epoch ).split(' ')[0].split('-')
+            try:
+                return str(record['year']) +'.'+ str(pandas.Timestamp(datetime.date( int(dt[0]) , int(dt[1]), int(dt[2]))).quarter)
+            except Exception as e:
+                return None
+        if f=='true': return True;
+        return None
+
+
+
+    #########################################################
+    pass
+    if f:
+        if type(f)==list:
+            f=' '.join(f)
+        f=f.replace(',',' ')
+        if not ' ' in f:
+            return fitem(f)
+        else:
+            j={}
+            for q in f.split(' '):
+                j[q] = fitem(q)
+            return j
+
+
+
+
+
+
+
+
+    #########################################################
+
     # pv(_v.config_hash)
     if 'noarrow' in _v.config_hash:
         local_tz = ''
@@ -670,7 +1042,7 @@ def isDate( theDate, record={}, tz=None, q=True ):
 
     if not epoch:
         return record
-    global _dir
+
     global pandas
     if pandas is None:
         if q:
@@ -679,8 +1051,7 @@ def isDate( theDate, record={}, tz=None, q=True ):
                 import pandas
             except Exception as e:
                 pass
-    if _dir is None:
-        import _rightThumb._dir as _dir
+
     ss = time.time()
 
     if type(epoch) == str:
@@ -708,6 +1079,7 @@ def isDate( theDate, record={}, tz=None, q=True ):
     # record['iso'] = datetime.datetime.fromtimestamp( epoch ).isoformat()
     # record['iso'] = datetime.datetime.fromtimestamp( epoch ).replace(microsecond=0).astimezone().isoformat()
     record['iso'] = record['fdate'].replace( ' ', 'T' ) + record['tz']
+    
     # iso 24
     # pv(_v.config_hash)
     global isWin
@@ -1470,7 +1842,7 @@ def autoComplete( table, prompt='> ' ):
 
 
 def getCryptTable( theFile, db=False, bank=False, index=False, temp=False, free=False, password=None ):
-    if os.path.isfile(theFile): v.opened_file_me[theFile] = os.path.getmtime( theFile );
+    if os.path.isfile(theFile): vv.opened_file_me[theFile] = os.path.getmtime( theFile );
     simplejson = __.imp('simplejson')
     global _vault
     global shutil
@@ -1659,7 +2031,7 @@ def saveCryptTable( rows, theFile, db=False, bank=False, index=False, temp=False
 
     if p:
         printBold('Saved: ' + px, 'blue')
-    if me and theFile in v.opened_file_me: changeM( theFile, v.opened_file_me[theFile] );
+    if me and theFile in vv.opened_file_me: changeM( theFile, vv.opened_file_me[theFile] );
     return file0
 
 
@@ -1688,14 +2060,16 @@ def loopPrint(  length=5, txt=' ', p=0 ):
     return result
 
 lp = loopPrint
-def linePrint(  label=None, text=None, txt='_', mn=50, add=5, p=2 ):
+def linePrint(  label=None, text=None, txt='_', mn=50, add=5, p=2, c='', x=None ):
+    color=c
     ln = mn
     if text is None and label is None:
         if __.terminal.width:
             ln = __.terminal.width
             add = 0
 
-
+    if not x is None:
+        ln=int(ln*x)
     if not label is None:
         global line_length_hash_table
         if not label in line_length_hash_table:
@@ -1723,11 +2097,28 @@ def linePrint(  label=None, text=None, txt='_', mn=50, add=5, p=2 ):
         if add:
             add+=1
         ln += add
-        while not i == ln:
+        # while not i == ln:
+        #     result += txt
+        #     i+=1
+
+
+        r=[]
+        # while not i == ln:
+        while len(result) < ln:
             result += txt
+            r.append(txt)
             i+=1
+        if len(result) > ln:
+            r.pop(0)
+            result=''.join(r)
+
         if p:
-            print( result )
+            if color:
+                cp( result, color )
+            else:
+                print( result )
+        if color:
+            result=cp( result, color, p=0 )
         return result
 
 
@@ -3364,7 +3755,7 @@ def folderProfileAttribute( folder, info ):
 
 def getBin( file ):
     theFile=file
-    if os.path.isfile(theFile): v.opened_file_me[theFile] = os.path.getmtime( theFile );
+    if os.path.isfile(theFile): vv.opened_file_me[theFile] = os.path.getmtime( theFile );
     f = open( file, 'rb' )
     data = f.read()
     f.close()
@@ -3401,7 +3792,7 @@ def saveBin( data, file, me=0 ):
             except Exception as e:
                 colorThis( 'Error: bin save', 'red' )
     HD.chmod(file)
-    if me and theFile in v.opened_file_me: changeM( theFile, v.opened_file_me[theFile] );
+    if me and theFile in vv.opened_file_me: changeM( theFile, vv.opened_file_me[theFile] );
 
 def pDiff( one, two, use=None ):
     if not use is None:
@@ -4363,11 +4754,11 @@ def saveCSV( data, file, printThis=True,                p=None, me=0 ):
     saveText( cleanFile, theFile )
     if printThis:
         printBold('Saved: ' + px, 'blue')
-    if me and theFile in v.opened_file_me: changeM( theFile, v.opened_file_me[theFile] );
+    if me and theFile in vv.opened_file_me: changeM( theFile, vv.opened_file_me[theFile] );
 
 def getCSV( file, save=False, json_file='', printThis=True ):
     theFile=file
-    if os.path.isfile(theFile): v.opened_file_me[theFile] = os.path.getmtime( theFile );
+    if os.path.isfile(theFile): vv.opened_file_me[theFile] = os.path.getmtime( theFile );
     if file.startswith('temp'+_v.slash):
         file = file.replace( 'temp'+_v.slash, '' )
         theFile = _v.stmp + _v.slash + file
@@ -4671,7 +5062,7 @@ def saveData( rows, theFile, printThis=True ):
 
 
 def getData( theFile, exitOnError=False ):
-    if os.path.isfile(theFile): v.opened_file_me[theFile] = os.path.getmtime( theFile );
+    if os.path.isfile(theFile): vv.opened_file_me[theFile] = os.path.getmtime( theFile );
     location = theFile
     if os.path.isfile( theFile ):
         found = True
@@ -5185,6 +5576,14 @@ def colorThis( strings='', color='red', notBold=False, shouldPrint=True, ipsum=F
         colorHelp( ipsum )
 
 
+    pass 
+    aaPre=''
+    ws=ws_sep(string)
+    aaPre=ws[0]
+    string=ws[1]
+
+
+
     if '.' in color:
 
         try:
@@ -5251,6 +5650,8 @@ def colorThis( strings='', color='red', notBold=False, shouldPrint=True, ipsum=F
         else:
             found = True
 
+    result = aaPre+result
+    
     if not found:
         printBold( 'Error: _.colorThis: color not found ' + str(color), 'red' )
         print()
@@ -5259,6 +5660,8 @@ def colorThis( strings='', color='red', notBold=False, shouldPrint=True, ipsum=F
         colorHelp( ipsum )
 
         sys.exit()
+
+
 
     if shouldPrint:
         try:
@@ -5281,7 +5684,19 @@ def colorThis( strings='', color='red', notBold=False, shouldPrint=True, ipsum=F
 
     return result
 
-
+def ws_sep(string):
+    a=''
+    b=''
+    done=False
+    for ch in string:
+        if done:
+            b+=ch
+        elif ch in ' \t':
+            a+=ch
+        else:
+            b+=ch
+            done=True
+    return a,b
 
 
 def inlineColor( string, color='red' ):
@@ -7105,13 +7520,58 @@ def txt2Date(text):
         result = str( theDate ).split()[0]
     return result
 
-def genUUID( project='', label='', uniqueTimestamp=False ):
+def uuidEpoc( uuid, f='iso' ):
+    uuid = _str.do('an',uuid)
+    if 'epoc' in uuid:
+        d=int(uuid.split('epoc')[1][:10])
+        return _.isDate( d, f=f)
+    return None
+
+def genUUID( project='', label='', uniqueTimestamp=False, note='', r=None, e=None, n=None, c=False, epoch=None ):
+    if not e is None: epoch=e;
+    if not n is None:  note=n;
+    if not r is None:   end=r;
+
+    if epoch:
+        dec=2
+        if type(epoch) == int and not epoch==1:
+            dec=epoch
+
+        ee=time.time()
+        ea=str(ee).split('.')[0]
+        eb=str(ee).split('.')[1]
+        ec=str(ee).replace('.','d')
+        ad=ea
+        i=0
+        while not i == dec:
+            ad += eb[i]
+            i+=1
+        end=True
+        note='epoc'+ad
+
+
+
+
     global appData
     global appInfo
+    def rev(string):
+        l=list(string)
+        l.reverse()
+        return ''.join(l)
     uuid = __.imp('uuid')
     string = uuid.uuid4()
     string = str(string)
-    string = '{' + string.upper() + '}'
+    ss=string
+    if note:
+        if end:
+            r=1
+        else:
+            r=0
+        ss=over(ss,note,r=r)
+    if c:
+        string = ss
+    else:
+        string = '{' + ss + '}'
     try:
         type(appData[__.appReg]['uuid'])
         good = True
@@ -7235,10 +7695,10 @@ def saveText( rows, theFile, errors=True, me=0, test=None ):
         HD.chmod(theFile)
         # if errors:
         #   print( 'Auto correction when saving text' )
-    if me and theFile in v.opened_file_me: changeM( theFile, v.opened_file_me[theFile] );
+    if me and theFile in vv.opened_file_me: changeM( theFile, vv.opened_file_me[theFile] );
 
 def getText( theFile, raw=False, clean=False,  e=0, c=0 ):
-    if os.path.isfile(theFile): v.opened_file_me[theFile] = os.path.getmtime( theFile );
+    if os.path.isfile(theFile): vv.opened_file_me[theFile] = os.path.getmtime( theFile );
     HD.chmod(theFile)
     lines = None
     if os.path.isfile(theFile):
@@ -7770,12 +8230,12 @@ def saveTable( rows, theFile, tableTemp=False, printThis=True, indentCode=True, 
 
     if printThis:
         printBold('Saved: ' + px, 'blue')
-    if me and theFile in v.opened_file_me: changeM( theFile, v.opened_file_me[theFile] );
+    if me and theFile in vv.opened_file_me: changeM( theFile, vv.opened_file_me[theFile] );
     return file0
 
 
 def getTable( theFile, tableTemp=False,      isDic=None, isList=None,      tmp=None ):
-    if os.path.isfile(theFile): v.opened_file_me[theFile] = os.path.getmtime( theFile );
+    if os.path.isfile(theFile): vv.opened_file_me[theFile] = os.path.getmtime( theFile );
     simplejson = __.imp('simplejson')
     # defaults to myTables
     if not type( tableTemp ) == bool:
@@ -7805,7 +8265,7 @@ def getTable( theFile, tableTemp=False,      isDic=None, isList=None,      tmp=N
         return __.data_default(file=theFile,default=[]).default()
 
 def getTable3(theFile):
-    if os.path.isfile(theFile): v.opened_file_me[theFile] = os.path.getmtime( theFile );
+    if os.path.isfile(theFile): vv.opened_file_me[theFile] = os.path.getmtime( theFile );
     simplejson = __.imp('simplejson')
     if os.path.isfile(theFile) == True:
         with open(theFile,'r') as json_file:
@@ -7815,7 +8275,7 @@ def getTable3(theFile):
     return __.data_default(file=theFile,default=[]).default()
 
 def getTable2( theFile,     isDic=None, isList=None ):
-    if os.path.isfile(theFile): v.opened_file_me[theFile] = os.path.getmtime( theFile );
+    if os.path.isfile(theFile): vv.opened_file_me[theFile] = os.path.getmtime( theFile );
     simplejson = __.imp('simplejson')
     if theFile.lower().endswith('.index') or theFile.lower().endswith('.indexes'):
         isDic = True
@@ -7828,7 +8288,7 @@ def getTable2( theFile,     isDic=None, isList=None ):
         return __.data_default(file=theFile,default=[]).default()
 
 def getTableBIG( theFile,     isDic=None, isList=None ):
-    if os.path.isfile(theFile): v.opened_file_me[theFile] = os.path.getmtime( theFile );
+    if os.path.isfile(theFile): vv.opened_file_me[theFile] = os.path.getmtime( theFile );
     simplejson = __.imp('simplejson')
     import pandas as pd
     if theFile.lower().endswith('.index') or theFile.lower().endswith('.indexes'):
@@ -7856,7 +8316,7 @@ def getTableBIG( theFile,     isDic=None, isList=None ):
 
 _tar = None
 def getTableDB( theFile,     isDic=None, isList=None ):
-    if os.path.isfile(theFile): v.opened_file_me[theFile] = os.path.getmtime( theFile );
+    if os.path.isfile(theFile): vv.opened_file_me[theFile] = os.path.getmtime( theFile );
     simplejson = __.imp('simplejson')
     theFile = _v.dbTables + _v.slash + theFile
     if os.path.isfile(theFile):
@@ -7876,7 +8336,7 @@ def getTableDB( theFile,     isDic=None, isList=None ):
 
 
 def getTableProject( project, theFile,     isDic=None, isList=None, path=False ):
-    if os.path.isfile(theFile): v.opened_file_me[theFile] = os.path.getmtime( theFile );
+    if os.path.isfile(theFile): vv.opened_file_me[theFile] = os.path.getmtime( theFile );
     simplejson = __.imp('simplejson')
     theFile = _v.projectData(project) + theFile
     if path:
@@ -7917,7 +8377,7 @@ def saveTableProject( project, rows=[], theFile='', printThis=False, sort_keys=F
     HD.chmod(theFile)
     if printThis:
         print('Saved: ' + theFile)
-    if me and theFile in v.opened_file_me: changeM( theFile, v.opened_file_me[theFile] );
+    if me and theFile in vv.opened_file_me: changeM( theFile, vv.opened_file_me[theFile] );
 
 def saveTableDB( rows, theFile, printThis=False, sort_keys=False, indentCode=True,  p=None, me=0 ):
     HD.chmod(theFile)
@@ -7939,7 +8399,7 @@ def saveTableDB( rows, theFile, printThis=False, sort_keys=False, indentCode=Tru
     HD.chmod(theFile)
     if printThis:
         print('Saved: ' + theFile)
-    if me and theFile in v.opened_file_me: changeM( theFile, v.opened_file_me[theFile] );
+    if me and theFile in vv.opened_file_me: changeM( theFile, vv.opened_file_me[theFile] );
 
 
 def saveTable2( rows, theFile, printThis=False, sort_keys=False, indentCode=True, p=None, me=0 ):
@@ -7964,7 +8424,7 @@ def saveTable2( rows, theFile, printThis=False, sort_keys=False, indentCode=True
     HD.chmod(theFile)
     if printThis:
         print('Saved: ' + theFile)
-    if me and theFile in v.opened_file_me: changeM( theFile, v.opened_file_me[theFile] );
+    if me and theFile in vv.opened_file_me: changeM( theFile, vv.opened_file_me[theFile] );
 
 def saveTable3( rows, theFile, printThis=False, me=0 ):
     HD.chmod(theFile)
@@ -7977,7 +8437,7 @@ def saveTable3( rows, theFile, printThis=False, me=0 ):
     HD.chmod(theFile)
     if printThis:
         print('Saved: ' + theFile)
-    if me and theFile in v.opened_file_me: changeM( theFile, v.opened_file_me[theFile] );
+    if me and theFile in vv.opened_file_me: changeM( theFile, vv.opened_file_me[theFile] );
 
 
 def tempFile(rows,theFile):
@@ -8413,7 +8873,7 @@ def updateLine( string, clear=True, color=None, sleep=None ):
 
 
 def getLastTableSplit(theFile,tableTemp = 'split'):
-    if os.path.isfile(theFile): v.opened_file_me[theFile] = os.path.getmtime( theFile );
+    if os.path.isfile(theFile): vv.opened_file_me[theFile] = os.path.getmtime( theFile );
     if tableTemp == 'split':
         basePath = _v.myTables + _v.slash+'tablesets'
     else:
@@ -8477,7 +8937,7 @@ def saveTableSplitNew( rows,theFile,tableTemp = True,printThis = True, project=F
     HD.chmod(path)
     if printThis:
         print('Saved: ' + path)
-    if me and theFile in v.opened_file_me: changeM( theFile, v.opened_file_me[theFile] );
+    if me and theFile in vv.opened_file_me: changeM( theFile, vv.opened_file_me[theFile] );
 
 def sort(rows, name):
     global errors
@@ -9268,7 +9728,9 @@ class Switches:
         pass
         print()
         print()
-        colorThis('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++','yellow')
+        # def linePrint(  label=None, text=None, txt='_', mn=50, add=5, p=2, c='', half=False, h=None )
+        linePrint(txt='+',c='yellow',x=.5)
+        # colorThis('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++','yellow')
         printBold( 'Requirements:' )
         print()
         hasRequirements = False
@@ -9328,7 +9790,8 @@ class Switches:
         if not hasRequirements:
             colorThis( [ '\t', 'No requirements' ], 'green' )
         print()
-        colorThis('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++','yellow')
+        linePrint(txt='+',c='yellow',x=.5)
+        # colorThis('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++','yellow')
         print()
         print()
         self.print()
@@ -11777,9 +12240,9 @@ class Table:
         HD.chmod(theFile)
         if printThis:
             print('Saved: ' + file0)
-        if me and theFile in v.opened_file_me: changeM( theFile, v.opened_file_me[theFile] );
+        if me and theFile in vv.opened_file_me: changeM( theFile, vv.opened_file_me[theFile] );
     def get(self,theFile = '',tableTemp = True,printThis = False):
-        if os.path.isfile(theFile): v.opened_file_me[theFile] = os.path.getmtime( theFile );
+        if os.path.isfile(theFile): vv.opened_file_me[theFile] = os.path.getmtime( theFile );
         simplejson = __.imp('simplejson')
         if theFile == '':
             theFile = self.file
@@ -12037,10 +12500,10 @@ class Tables:
                 self.tables[i].save(theFile,tableTemp,printThis)
             i += 1
         HD.chmod(theFile)
-        if me and theFile in v.opened_file_me: changeM( theFile, v.opened_file_me[theFile] );
+        if me and theFile in vv.opened_file_me: changeM( theFile, vv.opened_file_me[theFile] );
 
     def get(self,table,theFile = '',tableTemp = True,printThis = False):
-        if os.path.isfile(theFile): v.opened_file_me[theFile] = os.path.getmtime( theFile );
+        if os.path.isfile(theFile): vv.opened_file_me[theFile] = os.path.getmtime( theFile );
         theFile = str(theFile)
         if not theFile == '' and not '.json' in theFile:
             theFile = theFile + '.json'
@@ -12605,6 +13068,21 @@ def timeAgo( do='', startDate=None,epoch=None, d=None ):
             ts += 86400-1
     # print( timeAgoBaseCount, ts )
     return ts
+
+def timeCalc(do, epoch=None):
+    global epoch_times_dic
+    et=epoch_times_dic
+    k=list(et.keys())
+    k.reverse()
+    for t in et:
+        do=do.replace(t,t+',')
+        do=_str.do('be',do,',')
+    print(do)
+    sys.exit()
+    if epoch is None:
+        epoch = time.time()
+
+
 def timeAgo_past(do='', startDate=None):
     if startDate is None:
         startDate = time.time()
@@ -17777,6 +18255,7 @@ cp = colorThis
 
 pv = printVarSimple
 vp = printVarSimple
+
 def e( msg , e=None, kill=True):
     
     cp( linePrint(txt='*',p=0), 'red' )
@@ -17785,10 +18264,48 @@ def e( msg , e=None, kill=True):
     if type(msg) == str:
         cp( [ '  \t', msg ], 'yellow' )
     if type(msg) == list:
-        msgN = ['  \t']
+        nu={}
+        # msgN = ['  \t']
         for x in msg:
-            msgN.append(x)
-        cp( msgN, 'yellow' )
+            if x ==0:
+                print()
+            elif type(x)==dict: # { 'l': line, 'c': 'green', 'd': 1, 'n': 'todo' }
+                l=x['l']
+                if 'c' in x:
+                    c=x['c']
+                else:
+                    c='yellow'
+                if 'd' in x:
+                    d=x['d']
+                else:
+                    d=0
+
+                if 'n' in x:
+                    nn=x['n']
+                    if not nn in nu:
+                        nu[nn]=0
+                    n=nu[nn]
+                else:
+                    n=None
+
+                if len(x) == 3:
+                    c
+                w='  \t'
+                i=0
+                while not i == d:
+                    i+=1
+                    w+='\t'
+                if n is None:
+                    cp( [ w, l ], c )
+                else:
+                    nu[nn]+=1
+                    cp( [ w, str(nu[nn])+')', l ], c )
+
+            else:
+                cp( [ '  \t', x ], 'yellow' )
+
+            # msgN.append(x)
+        # cp( msgN, 'yellow' )
     if not e is None:
         cp( ['  \t\t',e], 'cyan' )
         
@@ -18238,3 +18755,56 @@ def rli(LIST,default=''):
     return LIST[ random.randint(0,len(LIST)-1) ]
 
 tb=timeblock
+
+epoch_times_dic = {
+                        "y": 31536000,
+                        "m": 2678400,
+                        "w": 604800,
+                        "d": 86400,
+                        "h": 3600,
+                        "min": 60
+}
+et=epoch_times_dic
+def epoch_times():
+    global epoch_times_dic
+    if not epoch_times_dic is None:
+        return epoch_times_dic
+
+    dic={}
+    a=isDate('2022-03-28',f='epoch')
+    b=isDate('2022-03-29',f='epoch')
+    day=int(b-a)
+
+    a=isDate('2022-02-25',f='epoch')
+    b=isDate('2023-02-25',f='epoch')
+    dic['y']=int(b-a)
+
+    a=isDate('2022-01-01',f='epoch')
+    b=isDate('2022-02-01',f='epoch')
+    dic['m']=int(b-a)
+
+    dic['w']=day*7
+    dic['d']=day
+
+    a=isDate('2022-01-01 21:00:00',f='epoch')
+    b=isDate('2022-01-01 22:00:00',f='epoch')
+    dic['h']=int(b-a)
+
+    a=isDate('2022-01-01 21:15:00',f='epoch')
+    b=isDate('2022-01-01 21:16:00',f='epoch')
+    dic['min']=int(b-a)
+
+
+    return dic
+
+# timeCalc
+
+
+aib=aiBullet
+ail=aiLine
+bu=aiBullet
+bull=aiBullet
+lbu=aiLine
+
+nw=n2w
+UUID=genUUID

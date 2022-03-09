@@ -1120,5 +1120,19 @@ charFixData = ['','x00'],
 
 
 
+def do(what,string,a=None,b=None,c=None,d=None):
+    try:
+        if what in 'an'.split(' '): import re; return re.sub(r'[^A-Za-z0-9 ]+', '', string);
+    except Exception as e:
+        if what in 'an'.split(' '): return re.sub(r'[^A-Za-z0-9 ]+', '', string);
 
+    if what in 'all'.split(' '): return replaceAll(string,a,b);
+    if what in 'cleanAll'.split(' '): return cleanAll(string,a,b);
+    if what in 'dup'.split(' '): return replaceDuplicate(string,a);
+    if what in 'be'.split(' '): return cleanBE(string,a);
+    if what in 'b'.split(' '): return cleanFirst(string,a);
+    if what in 'e'.split(' '): return cleanEnd(string,a);
+    if 'alpha' in what and 'nu' in what : return stripNonAlphaNumaric(string);
+    if what in 'n'.split(' '): return removeNonNumber(string);
+    if what in 'ra remove'.split(' '): return removeAll(string,a);
 

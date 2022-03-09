@@ -9,7 +9,6 @@
 #    - Scott Taylor Reph, RightThumb.com
 # ###########################################################################
 # ## {C3P0D40fAe8B} ##
-
 ##################################################
 import os, sys, time
 ##################################################
@@ -31,26 +30,40 @@ import _rightThumb._string as _str
 ##################################################
 
 def appSwitches():
+	_.switches.register( 'Dirty', '-dirty' )
+	_.switches.register( 'Split', '-split', 'sp sep win' )
+	_.switches.register( 'SameLine', '-line' )
+	_.switches.register( 'PrintScrap', '-print,-scrap' )
+	_.switches.register( 'AddChars', '-a,-add,-char,-chars' )
 	pass
-	### EXAMPLE: START
-	# _.switches.register( 'Input', '-i' )
-	# _.switches.register( 'Files', '-f,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=True )
-	### EXAMPLE: END
 
-### EXAMPLE: START
-# _.switches.trigger( 'Files', _.myFileLocations, vs=True )
-# 	finds the file in probable locations
-# 	and 
-# 		if  _.autoBackupData = True
-# 		and __.releaseAcquiredData = True
-# 			GET EPOCH FROM: hosts/hostname/logs/apps/execution_receipt-app_name-epoch.json
-# 		you can run apps on usb at a clients office
-# 			when you get home run: p app -loadepoch epoch 
-# 				backed up
-# 					pipe
-# 					files
-# 					tables
-### EXAMPLE: END
+def sc(string):
+	string = _str.replaceDuplicate(string,' ')
+	string = _str.cleanBE(string,' ')
+	return string
+
+
+SPLIT = {
+		sc('cn sc colon semi'): ';',
+		sc('c comma'): ',',
+		sc('d dash'): '-',
+		sc('sp space'): ' ',
+		sc('s sl sep os.sep slash'): os.sep,
+		sc('w win iswin'): '\\',
+		sc('l linux'): '/',
+		sc('t tab'): '\t',
+		sc('q qq'): '"',
+		sc('sq'): "'",
+}
+
+def split_trigger(data):
+	global SPLIT
+	for k in SPLIT:
+		for a in k.split(' '):
+			if a == data.lower():
+				return SPLIT[k]
+	return data
+
 _.autoBackupData = __.setting('receipt-log')
 __.releaseAcquiredData = __.setting('receipt-file')
 __.myFileLocations_SKIP_VALIDATION = False
@@ -64,13 +77,15 @@ __.switch_raw = []
 
 
 _.appInfo[focus()] = {
-	'file': 'thisApp.py',
+	'file': 'pipe-split.py',
 	'liveAppName': __.thisApp( __file__ ),
-	'description': 'Changes the world',
-		# _.ail(1,'subject')+
-		# _.aib('one')+
+ 	'description': 'pipe skimmer',
 	'categories': [
-						'DEFAULT',
+						'skim',
+						'search',
+						'pipe',
+						'screen',
+						'troubleshoot',
 				],
 	'usage': [
 						# 'epy another',
@@ -86,8 +101,17 @@ _.appInfo[focus()] = {
 						# '',
 	],
 	'examples': [
-						_.hp('p thisApp -file file.txt'),
-						'',
+						_.hp('py vps- | p pipe-split -split " " + 7GzGHN'),
+						_.hp(''),
+						_.hp('p file -folder py | p pipe-split -split sp sep + 7GzGHN'),
+						_.hp(''),
+						_.hp('p file -folder py | p pipe-split -split sep .  + 7GzGHN'),
+						_.hp(''),
+						_.hp('b e'),
+						_.hp('p files + *.php *.sh -or -has .py exec -print | p pipe-split -dirty + .py'),
+						_.hp('p files + *.php *.sh -or -has .py exec -print | p pipe-split -dirty + .py -print'),
+						_.hp('p files + *.php *.sh -or -has .py exec -print | p pipe-split -dirty + .py -a / \\'),
+						_.hp(''),
 	],
 	'columns': [
 				       # { 'name': 'name', 'abbreviation': 'n' },
@@ -112,11 +136,7 @@ _.appData[focus()] = {
 					'table': {'sent': [], 'received': [] }, 
 		},
 	}
-### EXAMPLE: START
-# _.appInfo[focus()]['examples'].append( 'p thisApp -file file.txt' )
 
-# _.appInfo[focus()]['columns'].append( {'name': 'name', 'abbreviation': 'n'} )
-### EXAMPLE: END
 
 
 def registerSwitches( argvProcessForce=False ):
@@ -135,18 +155,13 @@ def registerSwitches( argvProcessForce=False ):
 	appSwitches()
 
 	_.myFileLocation_Print = False
+	_.switches.trigger( 'Split', split_trigger )
+
 	_.switches.trigger( 'Files', _.myFileLocations, vs=True )
 	_.switches.trigger( 'Folder', _.myFolderLocations )
 	_.switches.trigger( 'URL', _.urlTrigger )
 	_.switches.trigger( 'Ago', _.timeAgo )
 	_.switches.trigger( 'Duration', _.timeFuture )
-	### EXAMPLE: START
-	# _.default_switch_trigger('Plus', trigger_plus)
-	# _.switches.trigger( 'Files',_.inRelevantFolder )	
-	# _.switches.trigger( 'Watched', _.txt2Date )
-	# _.switches.trigger( 'Input',_.formatColumns )
-	# _.switches.trigger( 'Franchise',_.triggerSpace )
-	### EXAMPLE: END
 	
 	_.defaultScriptTriggers()
 	_.switches.process()
@@ -174,40 +189,56 @@ if __name__ == '__main__':
 _.postLoad( __file__ )
 
 ########################################################################################
-### EXAMPLE: START
-# data = _.tables.returnSorted( 'data', 'd.timestamp', data )
-# _.switches.fieldSet( 'Long', 'active', True )
-# _.tables.register( 'data', table )
-# _.tables.fieldProfileSet('data','timestamp','trigger',_.friendlyDate)
-# _.tables.fieldProfileSet('data','phone,email,address','alignment','center')
-# _.tables.print( 'data', 'name' )
-# _.tables.print( 'data', ','.join(_.switches.values('Column')) )
-# _.switches.isActive('Files')
-# p = _.getText( _v.pips, raw=True, clean=True ).split( '\n' )
-# os.system( '"' + do + '"' )
-# _.setPipeData( os.listdir( os.getcwd() ), focus() )
-# _.showLine( item )
-# 	if os.path.isdir( row ):
-# 	if os.path.isfile( row ):
-#	os.path.abspath(path)
-# __.appRegPipe    ( pipe data registerd focus(__.appReg) set by _.myFileLocations {if imported} , default is None )
-# for i,row in enumerate(_.t( _.appData[__.appReg]['pipe'] )):
-# for i,row in _.e( _.isData(r=1) ):
-# date = _.friendlyDate( theDate )
-# _.addComma()
-# 													if platform.system() == 'Windows':
-### EXAMPLE: END
-########################################################################################
 # START
 
-
-
+def splitter(data,split):
+	# print(data,split)
+	results = []
+	for i,row in enumerate( data ):
+		if _.showLine(row):
+			for subject in row.split(split):
+				if _.showLine(subject):
+					results.append(subject)
+	return results
 def action():
-	# should be   Single-Task   OR   Imply-Architecture-Functions   OR   CLASSES!!
-	load()
-	global data
+	result = _.isData(r=1)
+	# print(result)
+	if _.switches.isActive('Dirty'):
+		dirty={}
+		file=''
+		for ch in '\n'.join(result):
+			if ch in '._-0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ\n'+_.switches.value('AddChars'):
+				file+=ch
+			else:
+				file+=' '
+		file=_str.do('all',file,'  ',' ')
+		file=_str.do('be',file,' ')
+		if _.switches.isActive('PrintScrap'):
+			print(file)
+		for line in file.split('\n'):
+			for kik in line.split(' '):
+				if _.showLine(kik):
+					if not kik in dirty:
+						dirty[kik]=0
+					dirty[kik]+=1
 
-	for i,row in enumerate( _.isData(r=1) ):
+		_.pv(dirty)
+		return None
+
+
+	if not _.switches.isActive('Split') or not len(_.switches.value('Split')):
+		global SPLIT
+		_.cp( _.linePrint(p=0), 'green' )
+		_.cp( 'split trigger', 'yellow' )
+		_.pv(SPLIT)
+		_.cp( _.linePrint(p=0), 'green' )
+		_.e('-split required')
+	# print(_.switches.values('Split'))
+	for split in _.switches.values('Split'):
+		# print('split',split)
+		result=splitter(result,split)
+		# print('result',result)
+	for row in result:
 		print(row)
 
 
@@ -222,7 +253,6 @@ def load():
 if __name__ == '__main__':
 	action()
 	__.isExit()
-
 
 
 

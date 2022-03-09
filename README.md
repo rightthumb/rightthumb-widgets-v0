@@ -182,6 +182,7 @@ Recommended python modules
     pip3 install native_web_app
     pip3 install psutil
     pip3 install forward
+    pip3 install num2word
 
 
 Create new python widget with

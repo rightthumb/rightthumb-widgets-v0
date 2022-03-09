@@ -31,9 +31,11 @@ import _rightThumb._string as _str
 ##################################################
 
 def appSwitches():
+	_.switches.register( 'Hex', '-h,-hex' )
+	_.switches.register( 'Number', '-n,-c,-code,-codes' )
+	_.switches.register( 'JSON', '-json' )
 	pass
 	### EXAMPLE: START
-	# _.switches.register( 'Input', '-i' )
 	# _.switches.register( 'Files', '-f,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=True )
 	### EXAMPLE: END
 
@@ -64,11 +66,10 @@ __.switch_raw = []
 
 
 _.appInfo[focus()] = {
-	'file': 'thisApp.py',
+	'file': 'win-err.py',
 	'liveAppName': __.thisApp( __file__ ),
-	'description': 'Changes the world',
-		# _.ail(1,'subject')+
-		# _.aib('one')+
+	'description': 'windows System Error Codes (0-499)'+
+		_.aib('https://docs.microsoft.com/en-us/windows/win32/debug/system-error-codes--0-499-'),
 	'categories': [
 						'DEFAULT',
 				],
@@ -86,7 +87,7 @@ _.appInfo[focus()] = {
 						# '',
 	],
 	'examples': [
-						_.hp('p thisApp -file file.txt'),
+						_.hp('p win-err -json'),
 						'',
 	],
 	'columns': [
@@ -200,21 +201,112 @@ _.postLoad( __file__ )
 ########################################################################################
 # START
 
+def build_codes(codes_raw):
+	raw=codes_raw.split('\n')
+	def isEnd(i,raw):
+		if i+3>len(raw):
+			return True
+		else:
+			return False
+	records={
+				'n': {},
+				'h': {},
+				'l': [],
+	}
+	i=0
+	while True:
+		if isEnd(i,raw):
+			break
+		rec = {
+				'e': raw[i],
+				'n': raw[i+1].split(' ')[0],
+				'h': raw[i+1].split(' ')[1].replace('(','').replace(')',''),
+				'd': raw[i+2],
+		}
+		records['n'][ rec['n'] ]=len(records['l'])
+		records['h'][ rec['h'] ]=len(records['l'])
+		records['l'].append(rec)
+		i+=3
+	return records
+
+def fh(string):
+	return string.upper().replace('0X','0x')
+
+def get(string):
+	global codes
+	if '0x' in string.lower():
+		if fh(string) in codes['h']:
+			return codes['l'][  codes['h'][fh(string)]  ]
+		return {}
+	elif string in codes['n']:
+		return codes['l'][  codes['n'][fh(string)]  ]
+	return {}
+
+
 
 
 def action():
-	# should be   Single-Task   OR   Imply-Architecture-Functions   OR   CLASSES!!
 	load()
-	global data
+	global codes
 
-	for i,row in enumerate( _.isData(r=1) ):
-		print(row)
+	recs = []
+	if _.switches.isActive('JSON'):
+		_.pv(codes)
+		return None
+	if _.switches.isActive('Plus'):
+		for rec in codes['l']:
+			r=str(rec)
+			r=rec['e']
+			if _.showLine(r):
+				print( rec['n'], rec['e'] )
+				# recs.append(rec)
+		# _.pv(recs)
+		return None
+
+
+	if _.switches.isActive('Hex'):
+		for s in _.switches.values('Hex'):
+			recs.append(get(s))
+	if _.switches.isActive('Number'):
+		for s in _.switches.values('Number'):
+			recs.append(get(s))
+
+		_.pv(recs)
+
+	# for i,rec in enumerate( codes ):
+	# 	_.pv(rec)
+	# 	sys.exit()
 
 
 
 def load():
-	global data
-	data = _.getTable( 'table' )
+	global codes
+	r=_v.ww+os.sep+'databank'+os.sep+'tables'+os.sep+'windows-system-error-codes-raw.txt'
+	d=_v.ww+os.sep+'databank'+os.sep+'tables'+os.sep+'windows-system-error-codes.json'
+	u='https://docs.microsoft.com/en-us/windows/win32/debug/system-error-codes--0-499-'
+	if 1 and os.path.isfile(d):
+		codes=_.getTableDB('windows-system-error-codes.json')
+	elif 1 and not os.path.isfile(d) and os.path.isfile(r):
+		codes_raw = _.getText( r, raw=True,clean=2 )
+		# print(codes_raw)
+		codes=build_codes(codes_raw)
+		_.saveTableDB( codes, 'windows-system-error-codes.json' )
+	else:
+
+		try:
+			import webbrowser
+			webbrowser.open(u, new=2)
+		except Exception as e:
+			pass
+		_.e([
+				{ 'l': 'please save text errors', 'd': 0, 'c': 'Background.red' },
+				0,
+				u,
+				{ 'l': "copy( document.querySelector('dl').innerText )", 'd': 1, 'c': 'cyan', 'n': 'todo' },
+				{ 'l': r, 'd': 1, 'c': 'green', 'n': 'todo' },
+			])
+	# _.pv(codes)
+	# sys.exit()
 
 
 

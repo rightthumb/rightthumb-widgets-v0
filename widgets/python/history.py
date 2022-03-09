@@ -248,15 +248,18 @@ def process( path ):
 			if row.startswith('Session:'):
 				hasPrinted = False
 				if 'isAdmin:True' in row:
-					fileLabel = _.colorThis( row+'______________________________________ ______________________________________', 'Background.red', p=0 )
+					# fileLabel = _.colorThis( row+'______________________________________ ______________________________________', 'Background.red', p=0 )
+					fileLabel = _.linePrint(p=0,c='Background.red')
 
 				else:
-					fileLabel = _.colorThis( row, 'Background.green', p=0 )
+					fileLabel = _.linePrint(p=0,c='Background.green')
+					# fileLabel = _.colorThis( row, 'Background.green', p=0 )
 			else:
 				if _.showLine( row ):
 					if not hasPrinted:
 						hasPrinted = True
-						_.colorThis( ['\n\n___________________________________________________________________________________________________________'], 'red' )
+						# _.colorThis( ['\n\n___________________________________________________________________________________________________________'], 'red' )
+						print(); print(); _.linePrint(c='red');
 						print( fileLabel )
 					if 'echo this is ' in row and 'test' in row and 'file.txt' in row and '>' in row and not 'force' in row.lower():
 						pass

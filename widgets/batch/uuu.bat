@@ -10,5 +10,5 @@ rem    - Scott Taylor Reph, RightThumb.com
 rem ###########################################################################
 rem ## {C3P0D40fAe8B} ##
 
-CALL p genuuid -e -strip be %*
+CALL p genuuid -uuid %*
 

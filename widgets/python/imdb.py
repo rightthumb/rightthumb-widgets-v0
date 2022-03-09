@@ -346,7 +346,12 @@ def getUrlList( url, find, omit, obscure=False ):
 	# brandNewURL = 'http://www.rightthumb.com/projects/widget/proxy.php?p=' + newURL.replace('&','[and]')
 	# print(newURL)
 	# __.xit()
+
+	# page = requests.get(newURL).content.decode("utf-8").replace('\\n','\n')
 	page = requests.get(newURL)
+	# page=str(requests.post(newURL, data = {'path':path,'file':new}).content,'iso-8859-1')
+	
+
 	tree = html.fromstring(page.content)
 	tables = tree.cssselect('.r')
 	for t in tables:
