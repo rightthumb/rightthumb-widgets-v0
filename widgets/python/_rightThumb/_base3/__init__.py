@@ -27,6 +27,13 @@ from datetime import date
 # except Exception as e:
 #   pass
 
+def tailpop(subject,delim):
+    parts=subject.split(delim)
+    parts.reverse()
+    e=parts.pop(0)
+    parts.reverse()
+    return delim.join(parts)
+
 def tab(val,n=None, t='    ', cnt=False, add=None,  s=False):
 
     if n is None and add is None and not s and not cnt:
