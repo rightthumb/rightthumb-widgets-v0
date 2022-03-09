@@ -240,7 +240,6 @@ def process(path):
 
 	
 		 
-
 def action():
 	if not _.switches.isActive('Test') and not _.switches.isActive('Upload-Scp') and not _.switches.isActive('Download-Scp'):
 		_.switches.fieldSet( 'Test', 'active', True )

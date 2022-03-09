@@ -101,6 +101,8 @@ _.appInfo[focus()] = {
 						# '',
 	],
 	'examples': [
+						_.hp('echo %path% | p pipe-split -split ;'),
+						_.hp(''),
 						_.hp('py vps- | p pipe-split -split " " + 7GzGHN'),
 						_.hp(''),
 						_.hp('p file -folder py | p pipe-split -split sp sep + 7GzGHN'),
@@ -111,6 +113,8 @@ _.appInfo[focus()] = {
 						_.hp('p files + *.php *.sh -or -has .py exec -print | p pipe-split -dirty + .py'),
 						_.hp('p files + *.php *.sh -or -has .py exec -print | p pipe-split -dirty + .py -print'),
 						_.hp('p files + *.php *.sh -or -has .py exec -print | p pipe-split -dirty + .py -a / \\'),
+						_.hp(''),
+						_.hp('p files + *.php *.sh   *.py   -or -has .py exec -print | p pipe-split -dirty + .py -a / \\'),
 						_.hp(''),
 	],
 	'columns': [

@@ -771,6 +771,7 @@ def process(path):
 			i+=1
 			
 			if fast:
+				_.cp('fast','green')
 				if find in line.lower():
 					
 					if pr:
@@ -784,7 +785,10 @@ def process(path):
 
 
 			else:
-				if _.showLine(line, plus=inc, minus=ex):
+				# print(inc)
+				# print(ex)
+				# sys.exit()
+				if _.showLine(line, plus=inc, minus=ex,OR=False):
 					if pr:
 						print()
 					printer(path,ni=1)

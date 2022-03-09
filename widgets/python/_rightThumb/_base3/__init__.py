@@ -7938,7 +7938,7 @@ def calculate_monthdelta(date1, date2):
 #     x.start()
 
 
-def showLine( string, plus = '', minus = '',plusOr = False, end=None,isSub=False ):
+def showLine( string, plus = '', minus = '',plusOr = False, end=None,isSub=False, OR=None ):
     # print(plus)
     # print(string)
     global switches
@@ -7950,7 +7950,7 @@ def showLine( string, plus = '', minus = '',plusOr = False, end=None,isSub=False
     else:
         if switches.isActive('Plus') or not plus == '':
             # print('asdf')
-            result = positiveResults(string,plus,plusOr,end)
+            result = positiveResults(string,plus,plusOr,end,OR=OR)
             if not result and switches.isActive('PlusClose'):
                 result = closeResults( string )
 
@@ -7988,11 +7988,14 @@ def closeResults( string ):
 
 
 
-def positiveResults(string,plus='',plusOr=False,end=None):
+def positiveResults(string,plus='',plusOr=False,end=None,OR=None):
     global switches
 
     if plusOr or switches.isActive('PlusOr'):
         plusOr = True
+    
+    if not OR is None:
+        plusOr=OR
     if not plus == '':
         plusInput = plus
     else:
