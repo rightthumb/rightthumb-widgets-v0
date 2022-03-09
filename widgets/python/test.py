@@ -33,9 +33,13 @@ import _rightThumb._string as _str
 def appSwitches():
 	pass
 	### EXAMPLE: START
-	# _.switches.register( 'Input', '-i' )
+	_.switches.register( 'Upload-Scp', '-u,-up,-upload' )
+	_.switches.register( 'Download-Scp', '-dl,-down,-download' )
+	_.switches.register( 'Test', '-t,-test' )
 	_.switches.register( 'Files', '-f,-file,-files','file.txt',  description='Files', isRequired=True )
 	### EXAMPLE: END
+
+
 
 ### EXAMPLE: START
 # _.switches.trigger( 'Files', _.myFileLocations, vs=True )
@@ -64,11 +68,12 @@ __.switch_raw = []
 
 
 _.appInfo[focus()] = {
-	'file': 'thisApp.py',
+	'file': 'vps-file.py',
 	'liveAppName': __.thisApp( __file__ ),
-	'description': 'Changes the world',
+	'description': 'manage website files and open in url based on parentfolder meta',
 	'categories': [
-						'DEFAULT',
+						'meta',
+						'test',
 				],
 	'usage': [
 						# 'epy another',
@@ -84,7 +89,9 @@ _.appInfo[focus()] = {
 						# '',
 	],
 	'examples': [
-						_.hp('p thisApp -file file.txt'),
+						_.hp('p test -f default.js -test'),
+						_.hp('p test -f default.js -up'),
+						_.hp('p test -f default.js -dl'),
 						'',
 	],
 	'columns': [
@@ -209,29 +216,72 @@ def process(path):
 			pass
 	meta = _.getTable2( folder+os.sep+'.folder.meta' )
 	_.pv(meta)
+	
+
+	# Upload-Scp Download-Scp Test
+	ftp=None
+	url=None
+	for k in meta:
+		for su in meta[k]:
+			if su == 'full-path':
+				ftp=meta[k]
+				break
+		if not ftp is None:
+			break
 	if 'url' in meta:
 		url = file.replace( __.path(folder), meta['url'] ).replace('\\','/')
 		if os.path.isdir(path):
 			url += '/'
 		print(url)
-		webbrowser.open(url, new=2)
+		if _.switches.isActive('Test'):
+			try:
+				import webbrowser
+			except Exception as e:
+				pass
+			try:
+				webbrowser.open(url, new=2)
+			except Exception as e:
+				_.e(e)
+
+	scp='scp'
+	if _.isWin:
+		scp='"C:\\Program Files\\Git\\usr\\bin\\scp.exe"'
+
+	if _.switches.isActive('Upload-Scp') or _.switches.isActive('Download-Scp'):
+		if ftp is None or url is None:
+			_.e('meta missing fields')
+		s=ftp['server']
+		f=ftp['full-path']
+		u=ftp['user']
+		fi = file.replace( __.path(folder), f ).replace('\\','/')
+		if os.path.isdir(path):
+			fi=__.path(fi,pop=True)
+			fi += '/'
+			path+=os.sep
+
+	if _.switches.isActive('Upload-Scp'):
+		do=f'{scp} {path}  {u}@{s}:{fi}'
+	if _.switches.isActive('Download-Scp'):
+		do=f'{scp} {u}@{s}:{fi} {path}'
+	if _.switches.isActive('Upload-Scp') or _.switches.isActive('Download-Scp'):
+		print(do)
+		try:
+			os.system( do )
+		except Exception as e:
+			_.e(e)
+
+	
 		 
 
 def action():
-	# should be   Single-Task   OR   Imply-Architecture-Functions   OR   CLASSES!!
-	load()
-	global data
-
+	if not _.switches.isActive('Test') and not _.switches.isActive('Upload-Scp') and not _.switches.isActive('Download-Scp'):
+		_.switches.fieldSet( 'Test', 'active', True )
 	for i,path in enumerate( _.switches.values('Files') ):
 		process(path)
 
 
 
-def load():
-	global data
-	# data = _.getTable( 'table' )
-
-import webbrowser
+	
 
 ########################################################################################
 if __name__ == '__main__':
