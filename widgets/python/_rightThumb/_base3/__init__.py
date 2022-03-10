@@ -27,6 +27,100 @@ from datetime import date
 # except Exception as e:
 #   pass
 
+def string_preview(string,l=30):
+    string=str(string)
+    if not string:
+        return string
+    new=''
+    broke=False
+    for i,x in enumerate(string):
+        if i+1 <= l:
+            if x == '\t':
+                x='\\t'
+            if x == '\n':
+                x='\\n'
+            new+=x
+        else:
+            broke=True
+            new+='... ('+addComma(len(string))+')'
+            break
+    return new
+
+
+tinydic_data = []
+tinydic_last = {}
+tinydic_dic = {}
+def tinydic(data,par='',skim=None, mt=True, lan='js', prev=False, dump=None, dic=False):
+    if type(dump)==str: dump=[dump];
+    global tinydic_data
+    global tinydic_last
+    global tinydic_dic
+    def rents(lan,p,k):
+        p2=None
+        if lan == 'py' and type(k)==str:
+            p2=p+f"['{k}']"
+        elif lan == 'py' and type(k)==int:
+            p2=p+f"[{k}]"
+        elif lan == 'js' and type(k)==str:
+            p2=p+f".{k}"
+        elif lan == 'js' and type(k)==int:
+            p2=p+f"[{k}]"
+        else:
+            _.e('type(key)')
+        return p2
+    if not par:
+        # if mt: print('mt');
+        tinydic_data=[]
+    if type(data) == list:
+        for key, value in enumerate(data):
+            par2=rents(lan,par,key)
+            if dump is None and not prev and skim is None and mt and not par2 in tinydic_data:
+                tinydic_data.append(par2)
+            tinydic(value,par2,skim,mt,lan,prev,dump,dic)
+        if dic: return tinydic_dic;
+        return tinydic_data
+
+    if 'items' in dir(data) and 'builtin_function_or_method' in str(type(data.items)):
+        child=True
+    else:
+        tinydic_dic[par] = data
+        child=False
+        if dump is None and prev and skim is None:
+            tinydic_data.append(par+' = '+string_preview(data))
+        elif dump is None and not prev and skim is None and not par in tinydic_data:
+            tinydic_data.append(par)
+        if not skim is None:
+            if showLine(str(data)):
+                if not dump is None:
+                    for du in dump:
+                        if du  in tinydic_last:
+                            ump=du+': '+ tinydic_last[du]
+                            if not ump in tinydic_data:
+                                tinydic_data.append('')
+                                tinydic_data.append(ump)
+                if not par in tinydic_data:
+                    if prev:
+                        tinydic_data.append(par+' = '+string_preview(data))
+                    else:
+                        tinydic_data.append(par)
+                tinydic_last={}
+
+    if child:
+        for key, value in data.items():
+            if not skim is None and not dump is None and key in dump:
+                for du in dump:
+                    if key == du:
+                        tinydic_last[du]=value
+            if skim is None and not dump is None and key in dump:
+                print(key,value)
+            par2=rents(lan,par,key)                
+            if dump is None and not prev and skim is None and mt and not par2 in tinydic_data:
+                tinydic_data.append(par2)
+            tinydic(value,par2,skim,mt,lan,prev,dump,dic)
+    if dic: return tinydic_dic;
+    return tinydic_data
+
+
 def tailpop(subject,delim):
     parts=subject.split(delim)
     parts.reverse()

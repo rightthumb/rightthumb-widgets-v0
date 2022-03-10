@@ -73,6 +73,21 @@ _.fields.register( 'project', 'name', value )
 _.fields.value( 'project', 'name', value )
 #######################################################################################
 
+def algorithm( y, qID=0 ):
+	_.threads.spent( qID, sys.getsizeof( 'obj') )
+
+
+_.threads.add( 'books', trigger=complete, loaded=False ) # kwargs 
+_.threads.maxThreadsSafe = 250
+_.threads.report = False
+_.threads.auditPrint = False
+
+for y in x:
+	_.threads.add( 'books', algorithm, [ y ] )
+
+
+#######################################################################################
+
 	_.switches.documentation( 'Test', { 
 										'examples': [
 														'',
