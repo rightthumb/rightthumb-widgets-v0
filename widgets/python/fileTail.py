@@ -74,6 +74,8 @@ _.appInfo[focus()] = {
 						# '',
 	],
 	'examples': [
+						_.hp('p fileTail -f fileBackup.json + backup file -or -l 200'),
+						_.hp('p fileTail -f fileBackup.json + backup -or -l 200'),
 						'p fileTail -f file.txt -lines 10',
 						''
 						'p fileTail -f %scrap%  -lines 50| p cryptString -password 123 456 789'
@@ -305,7 +307,8 @@ def action():
 		for x in sample:
 			try:
 				for z in x:
-					print(z)
+					if _.showLine(z):
+						print(z)
 			except Exception as e:
 				pass
 	else:
@@ -314,7 +317,8 @@ def action():
 		if _.switches.isActive('Head'):
 			for i,line in enumerate(data):
 				if i < n:
-					print(line)
+					if _.showLine(line):
+						print(line)
 		else:
 			data.reverse()
 			data0 = []
@@ -323,7 +327,8 @@ def action():
 					data0.append(line)
 			data0.reverse()
 			for i,line in enumerate(data0):
-				print(line)
+				if _.showLine(line):
+					print(line)
 
 
 

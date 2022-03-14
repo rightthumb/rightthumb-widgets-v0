@@ -964,7 +964,9 @@ _tz = None
 pandas = None
 _sd = None
 
-def isDate( theDate, record={}, tz=None, q=True, f=None,w=None,what=None ):
+def isDate( theDate=None, record={}, tz=None, q=True, f=None,w=None,what=None ):
+    if theDate is None:
+        theDate=time.time()
     if not w is None: f=w;
     if not what is None: f=what;
 
@@ -1038,36 +1040,41 @@ def isDate( theDate, record={}, tz=None, q=True, f=None,w=None,what=None ):
         if f=='ago': return _dir.dateDiffText( epoch );
         if f=='days': return daysDiff(  epoch, time.time()  );
         if f=='tz': return local_tz;
-
-
-        try:
-            import _rightThumb._nID as _nID
+        if f in 'crypt-date crypt-time crypt-epoch appID app crypt-pass'.split(' '):
             try:
-                _keychain = regImp( __.appReg, 'keychain' )
-                nID_password = _keychain.imp.key('nID')
-                _nID.mini.password( nID_password )
-                isPass = 'secure'
+                import _rightThumb._nID as _nID
+                try:
+                    _keychain = regImp( __.appReg, 'keychain' )
+                    nID_password = _keychain.imp.key('nID')
+                    _nID.mini.password( nID_password )
+                    isPass = 'secure'
+                except Exception as e:
+                    _nID.mini.password( '1970' )
+                    isPass = 'unsecure'
+                eee = ''
+                try:
+                    ee = str(record['epoch'])
+                    for c in ee:
+                        if '.' == c:
+                            break
+                        eee+=c
+                except Exception as e:
+                    eee=theDate
+                    # print(f,1,'err:', e)
+                pass
+
+                if f=='crypt-date': return _nID.mini.gen( record['strip'] );
+                if f=='crypt-time': return _nID.mini.gen( record['stript'] );
+                try:
+                    if f=='crypt-epoch': return _nID.mini.gen( int(eee) );
+                    if f=='appID' or f=='app': return _nID.mini.gen( int(eee) );
+                except Exception as e:
+                    print(f,2,'err:', e)
+                    sys.exit()
+                if f=='crypt-pass': return isPass;
             except Exception as e:
-                _nID.mini.password( '1970' )
-                isPass = 'unsecure'
-            eee = ''
-            ee = str(record['epoch'])
-            for c in ee:
-                if '.' == c:
-                    break
-                eee+=c
-            pass
-
-            if f=='crypt-date': return _nID.mini.gen( record['strip'] );
-            if f=='crypt-time': return _nID.mini.gen( record['stript'] );
-            if f=='crypt-epoch': return _nID.mini.gen( int(eee) );
-            if f=='appID': return _nID.mini.gen( int(eee) );
-
-
-
-        except Exception as e:
-            pass
-        if f=='crypt-pass': return isPass;
+                print(f,3,'err:',e)
+                pass
         if f=='stardate':
             try:
                 import _rightThumb._stardate as _sd
@@ -3240,7 +3247,7 @@ def isData( data=None, focus=None, pipeClean=True, required=False,     r=None, c
                                         data.append(xXx)
                     elif isD == 'glob':
                         for n in switches.values(name):
-                            # print(n)
+                            print(8425545514662,n)
                             for f in glob.glob( n ):
                                 f = __.path(f)
                                 if os.path.isfile(f):
@@ -7238,7 +7245,7 @@ def myFileLocations( file, silent=False, currentBaseVersion=3 ):
     if not __.myFileLocations_processed and not type( __.trigger_isPipe ) == bool:
         __.myFileLocations_processed = True
         if 'glob' in __.trigger_isPipe:
-            print('asdf')
+            cp('__.trigger_isPipe=glob','purple')
             appData[__.appReg]['pipe'] = ''
             # __.trigger_isPipe = False
             # glob = __.imp('glob')
@@ -7628,10 +7635,13 @@ def uuidEpoc( uuid, f='iso' ):
         return _.isDate( d, f=f)
     return None
 
-def genUUID( project='', label='', uniqueTimestamp=False, note='', r=None, e=None, n=None, c=False, epoch=None ):
+def genUUID( project='', label='', uniqueTimestamp=False, note='', r=None, e=None, n=None, c=False, epoch=None,    small=None, t=None, tiny=None ):
+    if not tiny is None: small=tiny;    #KEEP 1ST
+    if not t is None: small=t;          #KEEP 2ND
+    if small: return miniUUID();        #KEEP 3RD
     if not e is None: epoch=e;
     if not n is None:  note=n;
-    if not r is None:   end=r;
+    if not r is None: small=None; end=r;
 
     if epoch:
         dec=2
@@ -18354,11 +18364,12 @@ _cryptFile.do( 'action' )
 ############################################### ###############################################
 # alias
 
-colorPrint = colorThis
-cp = colorThis
+colorPrint=colorThis
+cp=colorThis
 
-pv = printVarSimple
-vp = printVarSimple
+vp=printVarSimple
+pv=printVarSimple
+pvs=printVarSimple
 
 def e( msg , e=None, kill=True):
     
@@ -18735,6 +18746,23 @@ ph = historyPrint
 #     else:
 #         yield pre + [indict]
 
+
+def appID_nID_password():
+    try:
+        from random import randrange
+    except Exception as e:
+        pass
+    tn='8136901260'
+    o=randrange(len(tn))
+    if not o:
+        o+=1
+    if str(randrange(1000)/2).endswith('.0'):
+        n=tn[o:]
+    else:
+        n=tn[:o]
+    return n
+
+
 def dict_generator_prefix( cnt, txt='    ' ):
     result=''
     n=0
@@ -18912,3 +18940,4 @@ lbu=aiLine
 
 nw=n2w
 UUID=genUUID
+

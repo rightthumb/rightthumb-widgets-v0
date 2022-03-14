@@ -33,8 +33,9 @@ def appSwitches():
 	_.switches.register( 'Password', '-password' )
 	_.switches.register( 'Encrypt', '-en' )
 	_.switches.register( 'Decrypt', '-de' )
-	# _.switches.register( 'App', '-app' )
+	_.switches.register( 'App', '-app' )
 	_.switches.register( 'Date', '-d,-date' )
+	_.switches.register( 'Epoch', '-e,-epoch' )
 
 	pass
 	# _.switches.register( 'Files', '-f,-file,-files','file.txt', isData='glob,name,data,clean', description='Files' )
@@ -158,8 +159,20 @@ _.postLoad( __file__ )
 
 
 def action():
+	load()
+	if _.switches.isActive('App'):
+		x = _nID.mini.gen( int( time.time() ) )
+		print(x)
+		return x
+
+
+
+	if _.switches.isActive('Epoch'):
+		x = _nID.mini.gen( int( time.time() ) )
+		print(x)
+		return x
 	if _.switches.isActive('Date'):
-		x = _nID.mini.gen( int( _.isDate( ' '.join(_.switches.values('Date')) )['epoch'] ) )
+		x = _nID.mini.gen( int( _.isDate( ' '.join(_.switches.values('Date')), f='epoch' ) ) )
 		print(x)
 		return x
 
@@ -169,27 +182,31 @@ def action():
 	# 	x = _nID.mini.gen( n )
 	# 	print(x)		
 
-	load()
+	
 
 	if _.switches.isActive('Encrypt'):
 		x = _nID.mini.gen( _.switches.values('Encrypt')[0] )
 		print(x)
+		return x
 
 	if _.switches.isActive('Decrypt'):
 		x = _nID.mini.resolve( _.switches.values('Decrypt')[0] )
 		print(x)
+		return x
 
 
 
 def load():
-	_nID.mini.password( _keychain.imp.key('nID') )
 	if _.switches.isActive('Password'):
 		_nID.mini.password( _.switches.values('Password')[0] )
+	else:
+		# _nID.mini.password( _keychain.imp.key('nID') )
+		_nID.mini.password( _.appID_nID_password() )
 	
 
 import _rightThumb._nID as _nID
 _keychain = _.regImp( __.appReg, 'keychain' )
-
+# print("_keychain.imp.key('nID')",_keychain.imp.key('nID'))
 ########################################################################################
 if __name__ == '__main__':
 	action()

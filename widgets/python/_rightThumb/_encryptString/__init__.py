@@ -82,12 +82,14 @@ def pad_string( string ):
 def decryptClean( data, password=False ):
 	result = decrypt( data, password )
 	# return result
-	return _str.cleanBE( result, ' ' )
+	# return _str.cleanBE( result, ' ' )
+	return _str.do('e',result,' ')
 def decrypt( data, password=False ):
 	crypt_obj = Blowfish.new(newKey(password), Blowfish.MODE_ECB)
 	decoded = base64.b64decode(data)
 	decrypt = crypt_obj.decrypt(decoded)
 	result = str(decrypt,'iso-8859-1')
+	return _str.do('e',result,' ')
 	return result
 
 

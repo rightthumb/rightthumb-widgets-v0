@@ -42,6 +42,7 @@ def appSwitches():
 	_.switches.register( 'TimeZone', '-tz', '+0400  OR  US/Mountain  OR  all' )
 	_.switches.register( 'Ordinal', '-ordinal' )
 	_.switches.register( 'nID', '-nID' )
+	_.switches.register( 'Fields', '-f,-field,-fields' )
 	pass
 
 
@@ -54,7 +55,7 @@ __.pre_error = False
 _.appInfo[focus()] = {
 	'file': 'ago.py',
 	'liveAppName': __.thisApp( __file__ ),
- 	'description': 'Ago epoch',
+	'description': 'Ago epoch',
 	'categories': [
 						'time',
 						'ago',
@@ -105,15 +106,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
-				       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					   # { 'name': 'name', 'abbreviation': 'n' },
+					   # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					   # 'this',
+					   # 'app',
 	],
 	'notes': [
-				       # {},
+					   # {},
 	],
 }
 
@@ -348,6 +349,55 @@ def process():
 
 
 def action():
+	if _.switches.isActive('Fields'):
+		fields = '''
+				epoch
+			  ordinal
+			text-date
+			text-time
+		text-datetime
+				sdate
+				strip
+			   stript
+				 date
+				 time
+				fdate
+				month
+				 year
+				  woy
+				  dow
+				  ago
+				 days
+				   tz
+				  iso
+		   crypt-date
+		   crypt-time
+		  crypt-epoch
+				appID
+		   crypt-pass
+			 stardate
+			  quarter
+		'''
+		fields = fields.replace(' ','')
+		fields = fields.replace('\t','')
+		fields = _str.do( 'dup', fields, '\n' )
+		fields = _str.do( 'be', fields, '\n' )
+		f = fields.split('\n')
+		# _.pv(f)
+		# sys.exit()
+		# return None
+		pass
+		if not _.switches.value('Fields'):
+			return None
+
+		# for field in f:
+		for field in _.switches.values('Fields'):
+			x=_.isDate(time.time(),f=field)
+			# print(field,x)
+			print(x)
+			# _.cp( ,  )
+
+		return None
 
 	if _.switches.value('TimeZone') == 'all':
 		import pytz
