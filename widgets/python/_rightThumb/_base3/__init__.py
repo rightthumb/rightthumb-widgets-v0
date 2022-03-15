@@ -13349,7 +13349,7 @@ def epoch_math(epoch, d=None,w=None,m=None,y=None,    h=None,mm=None,s=None, add
     return epoch
 
 def timeAgo_do( do, epoch):
-    print(do)
+    # print(do)
     def d486(yolo):
         return int(yolo)
         return float(yolo)
