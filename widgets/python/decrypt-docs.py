@@ -152,6 +152,8 @@ _.postLoad( __file__ )
 
 
 def identify(row):
+	if 'sUW+UyzaAo1BuzZ/2UahGCp4kHgiwk+xKniQeCLCT7GlpF8/aeR6NXE0uVp6/Kb/w3tFeg3Qb+9KnIbZ+6+nWijD//xIEr3Q' in row:
+		return True
 	if ' ' in row:
 		return False
 	if '!V!' in row:

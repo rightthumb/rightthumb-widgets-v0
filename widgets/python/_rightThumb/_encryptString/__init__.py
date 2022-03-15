@@ -89,8 +89,8 @@ def decrypt( data, password=False ):
 	decoded = base64.b64decode(data)
 	decrypt = crypt_obj.decrypt(decoded)
 	result = str(decrypt,'iso-8859-1')
-	return _str.do('e',result,' ')
 	return result
+	return _str.do('e',result,' ')
 
 
 def encrypt( data, password=False ):

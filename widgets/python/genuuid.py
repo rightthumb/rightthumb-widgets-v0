@@ -36,8 +36,8 @@ import _rightThumb._string as _str
 def appSwitches():
 	pass
 	_.switches.register( 'Long', '-long' )
-	_.switches.register( 'Short', '-short,-mini,-small' )
-	_.switches.register( 'Strip', '-cl,-clean,-t,-st,-strip', 'be' )
+	_.switches.register( 'Short', '-t,-short,-mini,-small,-tiny' )
+	_.switches.register( 'Strip', '-cl,-clean,-st,-strip', 'be' )
 	_.switches.register( 'Count', '-cnt,-count' )
 	_.switches.register( 'PrintCharLength', '-print,-printlen,-lenprint,-len' )
 	_.switches.register( 'LowerCase', '-lo,-lower' )
@@ -162,8 +162,8 @@ def process(vVv):
 		hasBr=True
 	else:
 		hasBr=False
-	if not _.switches.isActive('Pre-Date'):
-		return vVv
+	# if not _.switches.isActive('Pre-Date'):
+	# 	return vVv
 	vVv=vVv.replace('{','').replace('}','')
 	i=0
 	indices=[]
@@ -229,7 +229,7 @@ def action(first=True):
 	focus()
 	if not _.switches.isActive('Long') and not _.switches.isActive('Short'):
 		genid = _.genUUID()
-	elif _.switches.isActive('Short'):
+	if _.switches.isActive('Short'):
 		genid = _.miniUUID()
 	elif _.switches.isActive('Long'):
 		if  len( _.switches.value('Long') ):

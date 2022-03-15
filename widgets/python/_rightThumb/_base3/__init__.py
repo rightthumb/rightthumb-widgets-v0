@@ -965,8 +965,7 @@ pandas = None
 _sd = None
 
 def isDate( theDate=None, record={}, tz=None, q=True, f=None,w=None,what=None ):
-    if theDate is None:
-        theDate=time.time()
+    if theDate is None: theDate=time.time();
     if not w is None: f=w;
     if not what is None: f=what;
 
@@ -1044,9 +1043,10 @@ def isDate( theDate=None, record={}, tz=None, q=True, f=None,w=None,what=None ):
             try:
                 import _rightThumb._nID as _nID
                 try:
-                    _keychain = regImp( __.appReg, 'keychain' )
-                    nID_password = _keychain.imp.key('nID')
-                    _nID.mini.password( nID_password )
+                    # _keychain = regImp( __.appReg, 'keychain' )
+                    # nID_password = _keychain.imp.key('nID')
+                    # _nID.mini.password( nID_password )
+                    _nID.mini.password( appID_nID_password() )
                     isPass = 'secure'
                 except Exception as e:
                     _nID.mini.password( '1970' )
@@ -1198,9 +1198,10 @@ def isDate( theDate=None, record={}, tz=None, q=True, f=None,w=None,what=None ):
             try:
                 import _rightThumb._nID as _nID
                 try:
-                    _keychain = regImp( __.appReg, 'keychain' )
-                    nID_password = _keychain.imp.key('nID')
-                    _nID.mini.password( nID_password )
+                    # _keychain = regImp( __.appReg, 'keychain' )
+                    # nID_password = _keychain.imp.key('nID')
+                    # _nID.mini.password( nID_password )
+                    _nID.mini.password( appID_nID_password() )
                     isPass = 'secure'
                 except Exception as e:
                     _nID.mini.password( '1970' )
@@ -13166,10 +13167,12 @@ def timeAgo( do='', startDate=None,epoch=None, d=None ):
         result = []
         for x in do.split(','):
             result.append( timeAgo( x, startDate ) )
+            # result.append( timeAgo_do( x, startDate ) )
         return result
     if len(do) == 10 and do.count('-') == 2:
         ts = autoDate( do )
     else:
+        # ts = timeAgo_do( do, startDate)
         if not do.startswith('+'):
             ts = timeAgo_past(do,startDate)
         elif do.startswith('+'):
@@ -13305,6 +13308,97 @@ def timeAgo_past(do='', startDate=None):
     # print(result)]
     # print(result)
     # return result
+
+def epoch_math(epoch, d=None,w=None,m=None,y=None,    h=None,mm=None,s=None, add=None, sub=None):
+    if add is None and sub is None: add=True;
+    if sub: add = False;
+
+
+    def em_years(sourcedate, years, add=None):
+        if add: years_to_add = sourcedate.year + years;
+        if not add: years_to_add = sourcedate.year - years;
+        return sourcedate.replace(year=years_to_add)
+
+    def em_months(sourcedate, months, add=None):
+        from dateutil.relativedelta import relativedelta
+        if add: return sourcedate + relativedelta(months=months);
+        if not add: return sourcedate - relativedelta(months=months);
+
+    orig = datetime.datetime.fromtimestamp(epoch)
+
+    if add:
+        if not w is None: orig = orig + datetime.timedelta(days=w*7);
+        if not d is None: orig = orig + datetime.timedelta(days=d);
+    else:
+        if not w is None: orig = orig - datetime.timedelta(days=w*7);
+        if not d is None: orig = orig - datetime.timedelta(days=d);
+
+    if not m is None: orig = em_months(orig, m, add);
+    if not y is None: orig = em_years(orig, y, add);
+    epoch = orig.timestamp()
+
+    if add:
+        if not h is None: epoch+=(h*3600);
+        if not mm is None: epoch+=(mm*60);
+        if not s is None: epoch+=s;
+    else:
+        if not h is None: epoch-=(h*3600);
+        if not mm is None: epoch-=(mm*60);
+        if not s is None: epoch-=s;
+
+    return epoch
+
+def timeAgo_do( do, epoch):
+    print(do)
+    def d486(yolo):
+        return int(yolo)
+        return float(yolo)
+
+    dic={}
+    if not do:
+        return do
+    
+    add=False
+    builder=''
+    i=-1
+    while True:
+        i+=1
+        try:
+            c=do[i]
+        except Exception as e:
+            return epoch
+        if c == '+' or c == '-':
+            builder=''
+            if c == '+':
+                add=True
+            elif c == '-':
+                add=False
+        elif c in '0123456789.':
+            builder+=c
+        elif c == 'm':
+            ghost=False
+            try:
+                if do[i+1] == 'i' and do[i+2] == 'n': ghost=True;
+            except Exception as e:
+                pass
+            if ghost:
+                i+=2
+                epoch = epoch_math(epoch, mm=d486(builder), add=add)
+
+            else:
+                epoch = epoch_math(epoch, m=d486(builder), add=add)
+            builder=''
+        elif c == 'y': epoch = epoch_math(epoch, y=d486(builder), add=add); builder='';
+        elif c == 's': epoch += s; builder='';
+    return epoch
+
+
+
+
+
+
+
+
 
 def timeFuture(do='', startDate=None):
     if startDate is None:
