@@ -45,10 +45,10 @@ class nID:
 		# self.preCheck()
 		self.passwordRan = False
 	def password( self, pw=None ):
-		if self.passwordRan:
-			return None
-		if not pw is None:
-			self.passwordRan = True
+		# if self.passwordRan:
+		# 	return None
+		# if not pw is None:
+		# 	self.passwordRan = True
 		self.code = self.code_default
 		# print(self.code)
 		if pw is None:
@@ -59,7 +59,7 @@ class nID:
 		code_gen = []
 		en = _md5.md5( pw )
 		for x in self.code:
-			en = _md5.md5( en )
+			en = _md5.md5( x+en )
 			code_gen.append({ 'code': x, 'sort': en })
 		code_sort = sorted(code_gen, key=itemgetter('sort'))
 		code = ''
@@ -176,6 +176,8 @@ class nID:
 
 
 	def gen( self, num=189922, data=False, d=None ):
+		if type(num) == float:
+			num = int(num)
 		if type(num) == str:
 			numX = ''
 			for x in num:

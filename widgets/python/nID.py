@@ -161,6 +161,19 @@ _.postLoad( __file__ )
 def action():
 	load()
 	if _.switches.isActive('App'):
+		_key = _.regImp( __.appReg, 'vps-text-key' )		
+		if len(_.switches.value('App')):
+			epoch=time.time()
+			xx=[]
+			for y in _key.imp.shapeKee():
+				# print(type(y),y)
+				_nID.mini.password( y )
+				x = _nID.mini.gen( int(epoch) )
+				xx.append(x)
+				print(x)
+			return xx
+
+
 		x = _nID.mini.gen( int( time.time() ) )
 		print(x)
 		return x

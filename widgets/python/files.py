@@ -771,7 +771,7 @@ def process(path):
 			i+=1
 			
 			if fast:
-				_.cp('fast','green')
+				# _.cp('fast','green')
 				if find in line.lower():
 					
 					if pr:
