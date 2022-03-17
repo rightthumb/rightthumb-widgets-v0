@@ -7761,7 +7761,7 @@ def miniUUID(epoch=None):
         return UUID_Epoch(result)
 
 
-def UUID_Epoch(vVv,dec=2):
+def UUID_Epoch(vVv,dec=2,epoch=None):
 
     if '{' in vVv:
         hasBr=True
@@ -7778,9 +7778,14 @@ def UUID_Epoch(vVv,dec=2):
         if not c == '-':
             i+=1
     vVv = _str.do('an',vVv)
-    e=time.time()
+    if epoch is None:
+        e=time.time()
+    else:
+        e=epoch
     ea=str(e).split('.')[0]
     eb=str(e).split('.')[1]
+    if len(eb) == 1:
+        eb+='0'
     ec=str(e).replace('.','d')
     ad=ea
     if not dec is None:

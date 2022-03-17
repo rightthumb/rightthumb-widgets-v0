@@ -48,7 +48,7 @@ class nID:
 		# if self.passwordRan:
 		# 	return None
 		# if not pw is None:
-		# 	self.passwordRan = True
+		self.passwordRan = True
 		self.code = self.code_default
 		# print(self.code)
 		if pw is None:
@@ -58,8 +58,10 @@ class nID:
 		from operator import itemgetter
 		code_gen = []
 		en = _md5.md5( pw )
+		# print(en)
+		# sys.exit()
 		for x in self.code:
-			en = _md5.md5( x+en )
+			en = _md5.md5( en )
 			code_gen.append({ 'code': x, 'sort': en })
 		code_sort = sorted(code_gen, key=itemgetter('sort'))
 		code = ''
@@ -91,7 +93,8 @@ class nID:
 			if not x in table:
 				table.append(x)
 		self.code = ''.join(table)
-		self.password()
+		if not self.passwordRan:
+			self.password()
 		self.base = len(self.code)
 		# print(self.base)
 		# print(self.table)

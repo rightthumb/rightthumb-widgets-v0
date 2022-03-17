@@ -36,6 +36,8 @@ def appSwitches():
 	_.switches.register( 'App', '-app' )
 	_.switches.register( 'Date', '-d,-date' )
 	_.switches.register( 'Epoch', '-e,-epoch' )
+	_.switches.register( 'List', '-list' )
+	_.switches.register( 'Subject-New-ID', '-id,-sub,-subject' )
 
 	pass
 	# _.switches.register( 'Files', '-f,-file,-files','file.txt', isData='glob,name,data,clean', description='Files' )
@@ -78,7 +80,9 @@ _.appInfo[focus()] = {
 						# '',
 	],
 	'examples': [
+						_.hp('p nID -app a'),
 						_.hp('p nID -en 123456789 '),
+						_.hp('p nID -en 1000 -list'),
 						'',
 	],
 	'columns': [
@@ -157,11 +161,38 @@ _.postLoad( __file__ )
 ########################################################################################
 # START
 
+_key = _.regImp( __.appReg, 'vps-text-key' )
+from random import randrange
+def action(new=None):
+	if new or _.switches.isActive('Subject-New-ID'):
+		if new:
+			subject=new
+		else:
+			subject=_.switches.values('Subject-New-ID')[0]
+		table=_.getTable('nID-Subject-ID.hash')
+		keys=_key.imp.shapeKee()
+		key=randrange(len(keys))
+		# print()
+		if not subject in table:
+			# print(key)
+			table[subject] = {
+								'subject': subject,
+								'number': 999,
+								'key': key,
+			}
+		
+		key=table[subject]['key']
+		table[subject]['number']+=1
+		# print(keys[ key ])
+		_nID.mini.password(   keys[ key ]   )
+		n=_nID.mini.gen( table[subject]['number'] )
+		_.saveTable( table, 'nID-Subject-ID.hash', p=0 )
+		print(n)
+		return n
 
-def action():
+		return None
 	load()
 	if _.switches.isActive('App'):
-		_key = _.regImp( __.appReg, 'vps-text-key' )		
 		if len(_.switches.value('App')):
 			epoch=time.time()
 			xx=[]
@@ -200,6 +231,13 @@ def action():
 	if _.switches.isActive('Encrypt'):
 		x = _nID.mini.gen( _.switches.values('Encrypt')[0] )
 		print(x)
+		if _.switches.isActive('List'):
+			print()
+			for y in _key.imp.shapeKee():
+				_nID.mini.password( y )
+				x = _nID.mini.gen( _.switches.values('Encrypt')[0] )
+				print(x)
+
 		return x
 
 	if _.switches.isActive('Decrypt'):
