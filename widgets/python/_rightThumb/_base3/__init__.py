@@ -3235,9 +3235,10 @@ def isData( data=None, focus=None, pipeClean=True, required=False,     r=None, c
         data=[]
         global switches
         isClean=False
-
+        # print('v.isData',v.isData,__.appReg)
         for name in v.isData:
-            if len(switches.value(name)):
+            # print('val',switches.values(name),len(switches.values(name)),name)
+            if len(switches.values(name)):
                 for isD in v.isData[name].split(','):
                     # print('isD',isD)
                     if isD == 'clean':
@@ -3252,6 +3253,7 @@ def isData( data=None, focus=None, pipeClean=True, required=False,     r=None, c
                                 for xXx in getText( f, raw=True ).split('\n'):
                                     data.append(xXx)
                     elif isD == 'glob':
+                        # print('9e1647494350')
                         for n in switches.values(name):
                             # print('3e1647480669',n)
                             # print('n',n)
@@ -7255,7 +7257,7 @@ def myFileLocations( file, silent=False, currentBaseVersion=3 ):
     if not __.myFileLocations_processed and not type( __.trigger_isPipe ) == bool:
         __.myFileLocations_processed = True
         if 'glob' in __.trigger_isPipe:
-            cp('__.trigger_isPipe=glob','purple')
+            # cp('__.trigger_isPipe=glob','purple')
             appData[__.appReg]['pipe'] = ''
             # __.trigger_isPipe = False
             # glob = __.imp('glob')

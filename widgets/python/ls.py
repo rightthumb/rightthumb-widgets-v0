@@ -38,7 +38,7 @@ def appSwitches():
 
 	_.switches.register('Database', '-db,-database')
 	_.switches.register('Recursive', '-r,-recursive')
-	_.switches.register( 'Files', '-f,-file,-files','file.txt', isPipe='name', description='Files' )
+	_.switches.register( 'Files', '-f,-file,-files','file.txt', isPipe='glob', description='Files' )
 	_.switches.register('Folder', '-folder')
 
 	_.switches.register('Count', '-c,-count,--c')
@@ -182,11 +182,11 @@ _.appInfo[focus()] = {
 						{ 'name': 'dps', 'abbreviation': 'sdate', 'sort': 'sdate_raw' },
 						{ 'name': 'header', 'abbreviation': 'h' },
 						# { 'name': 'hash', 'abbreviation': '?', 'sort': '' },
-				       
+					   
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					   # 'this',
+					   # 'app',
 	],
 
 	}
@@ -220,7 +220,7 @@ def unFormatSize(size):
 	factor = ''
 
 	if 'TB' in size:
-		factor = 1099511627776	
+		factor = 1099511627776  
 	elif 'GB' in size:
 		factor = 1073741824
 	elif 'MB' in size:
@@ -330,7 +330,7 @@ if _.switches.isActive('Ago_by_Created'):
 	# if not _.switches.isActive('GroupBy'):
 		# _.switches.fieldSet( 'Sort', 'active', True )
 		# WEEK OF YEAR
-	# 	date_modified_raw
+	#   date_modified_raw
 
 	# print('cwoy ')
 
@@ -693,7 +693,7 @@ def addFile( path, hasData=False ):
 			
 			found = False
 			# if '.'+record['ext'].lower() in extensionList:
-			# 	found = True
+			#   found = True
 
 
 			pathX = record['path'].lower()
@@ -852,6 +852,42 @@ def addFile( path, hasData=False ):
 				data.append(  _dir.fileInfo( path, sdate=__.sdate, meta=meta )  )
 
 def action():
+	global data
+	# print('_.isData()',_.isData())
+	# focus()
+	# print('ce797caa1c16', _.switches.values('Files') )
+	if _.isData():
+		data=[]
+		for path in _.isData():
+			if os.path.isfile(path):
+				path=__.path(path)
+				# print(path)
+				addFile(path)
+		pass
+		if _.switches.isActive('Totals'):
+			total=0
+			for rec in data:
+				total+=rec['bytes']
+			_.cp( _.formatSize(total), 'green' )
+			return None
+		elif not _.switches.isActive('Totals'):
+			
+			_.tables.register( 'data', data, w=1 )
+			# _.tables.fieldProfileSet( 'data', 'week_of_year', 'trigger', _.woyTrigger )
+			_.tables.fieldProfileSet( 'data', 'meta.epoch.me', 'trigger', _.friendlyDate )
+			_.tables.fieldProfileSet( 'data', 'meta.epoch.ae', 'trigger', _.friendlyDate )
+			_.tables.fieldProfileSet( 'data', 'meta.epoch.ce', 'trigger', _.friendlyDate )
+			if _.switches.isActive('mimeType'):
+				theColumns = 'mime,ext,ago,name,size,date_modified,date_created,date_accessed'
+			else:
+				theColumns = 'ext,ago,name,size,date_modified,date_created,date_accessed'
+			if 0:
+				theColumns = theColumns.replace( ',date_accessed', '' )
+
+			theColumns = theColumns.replace( ',date_accessed', '' )
+			_.tables.print( 'data', _.unixAutoColumns( data, theColumns, focus() ) )
+			return None
+
 	# _.switches.fieldSet( 'NoTableLines', 'active', True )
 	if _.switches.isActive('Group>='):
 		g = _.switches.values('Group>=')[0]
@@ -872,7 +908,6 @@ def action():
 		_.switches.fieldSet( 'Size', 'values', ['l',s] )
 
 	global i
-	global data
 	global fileCount
 	global folderCount
 	global _mime
@@ -918,11 +953,11 @@ def action():
 
 
 	# if not type( _.appData[__.appReg]['pipe'] ) == bool:
-	# 	_.pipeCleaner(0)
-	# 	# _.printVar( _.appData )
-	# 	for i,row in enumerate( _.appData[__.appReg]['pipe'] ):
-	# 		print( row )
-	# 		process( row )
+	#   _.pipeCleaner(0)
+	#   # _.printVar( _.appData )
+	#   for i,row in enumerate( _.appData[__.appReg]['pipe'] ):
+	#       print( row )
+	#       process( row )
 
 
 
@@ -936,7 +971,7 @@ def action():
 				folders.append(_.switches.value('Folder'))
 			else:
 				_.e( 'no folder selected' )
-		# 	folders.append(os.getcwd())
+		#   folders.append(os.getcwd())
 		# print(folders)
 		# sys.exit()
 		for folder in folders:
@@ -1026,10 +1061,10 @@ def action():
 
 
 				# {
-				# 	'folder': folder,
-				# 	'folders': folderCount,
-				# 	'files': fileCount,
-				# 	'data': data,
+				#   'folder': folder,
+				#   'folders': folderCount,
+				#   'files': fileCount,
+				#   'data': data,
 				# }
 
 				for x in dataCacheX:
@@ -1048,16 +1083,16 @@ def action():
 	else:
 		end = time.time()
 		# if _.switches.isActive('Ago'):
-		# 	newData = []
-		# 	ago = _.switches.value('Ago')
-		# 	for record in data:
-		# 		if record['date_modified_raw'] < ago:
-		# 			newData.append( record )
-		# 	data = newData
+		#   newData = []
+		#   ago = _.switches.value('Ago')
+		#   for record in data:
+		#       if record['date_modified_raw'] < ago:
+		#           newData.append( record )
+		#   data = newData
 
 		if _.switches.isActive('JSON'):
 			# for x in data[0].keys():
-			# 	print(x)
+			#   print(x)
 			# sys.exit()
 			_.printVarSimple( data )
 		else:
@@ -1115,7 +1150,7 @@ def action():
 							data[i][h] = _hash.file( record['path'], h=h )
 			# Cache FolderRefine Duplicate Hash mimeType MovieTitle
 			saveFile = {
-								'isLegacy':	False,
+								'isLegacy': False,
 								'switches': {
 									'active': [],
 									'isActive': {},
@@ -1433,8 +1468,8 @@ def action():
 # _.printVar( _dir.fileInfo( path ) )
 
 # def load():
-# 	global data
-# 	data = _.getTable( 'table' )
+#   global data
+#   data = _.getTable( 'table' )
 
 # test
 # test

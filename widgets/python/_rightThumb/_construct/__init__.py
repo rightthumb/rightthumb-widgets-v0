@@ -457,6 +457,7 @@ Such a place exists, it is called programming.
 		for ext in self.nospace:
 			if self.path.endswith(ext):
 				import _rightThumb._string as _str
+				code = code.replace('\r','')
 				code = _str.cleanBE(code,' ')
 				code = _str.cleanBE(code,'\n')
 				code = _str.replaceDuplicate(code,'\n')
@@ -464,7 +465,7 @@ Such a place exists, it is called programming.
 				code = _str.cleanBE(code,' ')
 				code+='\n'
 
-		return code
+		return code.replace('\r','')
 
 
 	def default( self ):
@@ -474,7 +475,7 @@ Such a place exists, it is called programming.
 					try:
 						import requests
 						page = requests.get(self.headers[ext]['url'])
-						return page.content.decode("utf-8")
+						return page.content.decode("utf-8").replace('\r','')
 					except Exception as e:
 						return self.add_watermark(self.default_result)
 						
