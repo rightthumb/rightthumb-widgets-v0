@@ -34,7 +34,7 @@ def appSwitches():
 	_.switches.register( 'Upload-Scp', '-u,-up,-upload' )
 	_.switches.register( 'Download-Scp', '-d,-dl,-down,-download' )
 	_.switches.register( 'Test', '-t,-test' )
-	_.switches.register( 'Files', '-f,-file,-files','file.txt',  description='Files', isRequired=True )
+	_.switches.register( 'Files', '-f,-file,-files','file.txt',  description='glob', isRequired=True )
 	_.switches.register( 'mkdir', '-mkdir' )
 
 
@@ -198,12 +198,12 @@ def process(path):
 
 	scp='scp'
 	if _.isWin:
-		scp='"C:\\Program Files\\Git\\usr\\bin\\scp.exe"'
 		scp='scp'
+		scp='"C:\\Program Files\\Git\\usr\\bin\\scp.exe"'
 
 	if _.switches.isActive('Upload-Scp') or _.switches.isActive('Download-Scp'):
-		if ftp is None or url is None:
-			_.e('meta missing fields')
+		# if ftp is None or url is None:
+		# 	_.e('meta missing fields')
 		s=ftp['server']
 		f=ftp['full-path']
 		u=ftp['user']
@@ -227,7 +227,8 @@ def process(path):
 			_.e(e)
 
 	if _.switches.isActive('Upload-Scp'):
-		do=f'{scp} {path}  {u}@{s}:{fi}'
+		# do=f'{scp} {path}  {u}@{s}:{fi}'
+		do=f'{scp} {file}  {u}@{s}:{fi}'
 	if _.switches.isActive('Download-Scp'):
 		do=f'{scp} {u}@{s}:{fi} {path}'
 	if _.switches.isActive('Upload-Scp') or _.switches.isActive('Download-Scp'):
