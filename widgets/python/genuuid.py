@@ -158,51 +158,13 @@ _.postLoad( __file__ )
 # START
 
 def process(vVv):
-	if '{' in vVv:
-		hasBr=True
-	else:
-		hasBr=False
-	# if not _.switches.isActive('Pre-Date'):
-	# 	return vVv
-	vVv=vVv.replace('{','').replace('}','')
-	i=0
-	indices=[]
-	for c in vVv:
-		if c == '-':
-			indices.append(i)
-		if not c == '-':
-			i+=1
-	vVv = _str.do('an',vVv)
-	e=time.time()
-	ea=str(e).split('.')[0]
-	eb=str(e).split('.')[1]
-	ec=str(e).replace('.','d')
-	ad=ea
-	dec=2
-	if len(_.switches.value('Pre-Date')):
-		dec=int(_.switches.value('Pre-Date'))
-	pre='epoc'
-	if _.switches.isActive('Short'):
-		dec=0
-		pre=str(randrange(10))+'e'
-	i=0
-	while not i == dec:
-		ad += eb[i]
-		i+=1
-
-	# vVv = _.over(vVv,   ea+'e'  )
-	vVv = _.over(vVv,   pre+ad , r=1   )
-	if indices:
-		vVv = _.ddelim(vVv,d='-',indices=indices)
-	if hasBr and not '{' in vVv:
-		vVv = '{'+vVv+'}'
-
-	return vVv
+	return _.UUID_Epoch(vVv)
 
 
 def action(first=True):
 
 	if _.switches.isActive('Find-Date'):
+		print('poo')
 		for uuid in _.switches.values('Find-Date'):
 			uuid = _str.do('an',uuid)
 			if len(uuid) > 30:
@@ -236,8 +198,8 @@ def action(first=True):
 			genid = _.longID( int( _.switches.value('Long') ) )
 		else:
 			genid = _.longID()
-
-	genid=process(genid)
+	if _.switches.isActive('Pre-Date'):
+		genid=process(genid)
 	if _.switches.isActive('Strip'):
 		if 'be' in _.switches.value('Strip'):
 			genid = genid.replace( '{', '' ).replace( '}', '' )

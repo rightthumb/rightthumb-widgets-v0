@@ -3215,6 +3215,12 @@ class dt:
 
 
 def isData( data=None, focus=None, pipeClean=True, required=False,     r=None, c=None ):
+    def isData_path_list(stuff,dAta=[]):
+        for f in stuff:
+            f = __.path(f)
+            if os.path.isfile(f):
+                dAta.append(f)
+        return dAta
     if not c is None: pipeClean=c;
     if not r is None: required = r;
     if data is None:
@@ -3241,18 +3247,22 @@ def isData( data=None, focus=None, pipeClean=True, required=False,     r=None, c
                             data.append(name)
                     elif isD == 'glob' and 'data' in v.isData[name]:
                         for n in switches.values(name):
-                            for f in glob.glob( n ):
-                                f = __.path(f)
-                                if os.path.isfile(f):
-                                    for xXx in getText( f, raw=True ).split('\n'):
-                                        data.append(xXx)
+                            # for f in glob.glob( n ):
+                            for f in isData_path_list( glob.glob( n ) ):
+                                for xXx in getText( f, raw=True ).split('\n'):
+                                    data.append(xXx)
                     elif isD == 'glob':
                         for n in switches.values(name):
-                            print(8425545514662,n)
-                            for f in glob.glob( n ):
-                                f = __.path(f)
-                                if os.path.isfile(f):
-                                    data.append(f)
+                            # print('3e1647480669',n)
+                            # print('n',n)
+                            # sys.exit()
+                            if type(n) == list:
+                                stuff = n
+                            if type(n) == str:
+                                stuff = glob.glob( n )
+                            if not stuff is None:
+                                data=isData_path_list(stuff,data)
+
 
                     elif isD == 'data':
                         tData=[]
@@ -4516,10 +4526,6 @@ def myFolderLocations( data ):
 def mod(path):
     return os.path.getmtime(path)
 
-def miniUUID(): 
-    u = genUUID()
-    u = u.replace( '{','' ).replace( '-','' )
-    return '{' + u[:12] + '}'
 
 
 def colorPlus( data, color='green' ):
@@ -7223,6 +7229,8 @@ def myFileLocations_add_file(path):
 
 isFirst=True
 def myFileLocations( file, silent=False, currentBaseVersion=3 ):
+    if __.isRequired_Pipe_or_File:
+        return file
     # return file
     global appData
     global isFirst
@@ -7243,6 +7251,7 @@ def myFileLocations( file, silent=False, currentBaseVersion=3 ):
     #     g = glob.glob(file)
     #     print('g',g,__.myFileLocations_processed)
     #     return g
+
     if not __.myFileLocations_processed and not type( __.trigger_isPipe ) == bool:
         __.myFileLocations_processed = True
         if 'glob' in __.trigger_isPipe:
@@ -7266,6 +7275,7 @@ def myFileLocations( file, silent=False, currentBaseVersion=3 ):
             # return g
             # appData[__.appReg]['pipe'] = appData[__.appReg]['pipe'].split('\n')
             # print("appData[__.appReg]['pipe']",appData[__.appReg]['pipe'])
+            return file
             try:
                 return f
             except Exception as e:
@@ -7279,7 +7289,9 @@ def myFileLocations( file, silent=False, currentBaseVersion=3 ):
     # print( 'HERE HERE HERE HERE ', file )
     if '*' in file:
         import glob
-        appData[__.appReg]['pipe'] = glob.glob(file)
+        if not type(appData[__.appReg]['pipe']) == list: appData[__.appReg]['pipe']=[];
+        for path in glob.glob(file):
+            appData[__.appReg]['pipe'].append(path)
         return appData[__.appReg]['pipe']
 
 
@@ -7289,8 +7301,8 @@ def myFileLocations( file, silent=False, currentBaseVersion=3 ):
     if type(__.myFileLocations_SKIP_VALIDATION) == bool and __.myFileLocations_SKIP_VALIDATION:
         # print('here')
         # sys.exit()
-        if type( appData[__.appReg]['pipe'] ) == bool:
-            appData[__.appReg]['pipe'] = []
+        if not type(appData[__.appReg]['pipe']) == list:
+            appData[__.appReg]['pipe']=[]
             return None
         if isFirst:
             isFirst=False
@@ -7629,6 +7641,11 @@ def txt2Date(text):
         result = str( theDate ).split()[0]
     return result
 
+
+
+## UUID ## START ############################################################################################################################
+
+
 def uuidEpoc( uuid, f='iso' ):
     uuid = _str.do('an',uuid)
     if 'epoc' in uuid:
@@ -7636,7 +7653,7 @@ def uuidEpoc( uuid, f='iso' ):
         return _.isDate( d, f=f)
     return None
 
-def genUUID( project='', label='', uniqueTimestamp=False, note='', r=None, e=None, n=None, c=False, epoch=None,    small=None, t=None, tiny=None ):
+def genUUID( project='', label='', uniqueTimestamp=False, note=None, r=None, e=None, n=None, c=False, epoch=None,    small=None, t=None, tiny=None ):
     if not tiny is None: small=tiny;    #KEEP 1ST
     if not t is None: small=t;          #KEEP 2ND
     if small: return miniUUID();        #KEEP 3RD
@@ -7673,6 +7690,7 @@ def genUUID( project='', label='', uniqueTimestamp=False, note='', r=None, e=Non
     uuid = __.imp('uuid')
     string = uuid.uuid4()
     string = str(string)
+    # return string
     ss=string
     if note:
         if end:
@@ -7729,6 +7747,82 @@ def genUUID( project='', label='', uniqueTimestamp=False, note='', r=None, e=Non
                 saveTable(uuidLog,'uuid_log.json',printThis=False)
             # appData[__.appReg]['uuid'] = { 'uuid': theID, 'timestamp': time.time(), 'project': theProject, 'app': 'guid' }
     return string
+
+
+def miniUUID(epoch=None):
+    u = genUUID()
+    u = u.replace( '{','' ).replace( '-','' )
+    result = '{' + u[:12] + '}'
+    if epoch is None:
+        return result
+    else:
+        return UUID_Epoch(result)
+
+
+def UUID_Epoch(vVv,dec=2):
+
+    if '{' in vVv:
+        hasBr=True
+    else:
+        hasBr=False
+
+
+    vVv=vVv.replace('{','').replace('}','')
+    i=0
+    indices=[]
+    for c in vVv:
+        if c == '-':
+            indices.append(i)
+        if not c == '-':
+            i+=1
+    vVv = _str.do('an',vVv)
+    e=time.time()
+    ea=str(e).split('.')[0]
+    eb=str(e).split('.')[1]
+    ec=str(e).replace('.','d')
+    ad=ea
+    if not dec is None:
+        dec=int(dec)
+    else:
+        dec=2
+    pre='epoc'
+    if len(vVv) == 12 or len(vVv) == 14:
+        from random import randrange
+        dec=0
+        pre=str(randrange(10))+'e'
+    i=0
+    while not i == dec:
+        ad += eb[i]
+        i+=1
+
+    # vVv = _.over(vVv,   ea+'e'  )
+    vVv = over(vVv,   pre+ad , r=1   )
+    if indices:
+        vVv = ddelim(vVv,d='-',indices=indices)
+    if hasBr and not '{' in vVv:
+        vVv = '{'+vVv+'}'
+
+    return vVv
+
+
+
+UUID=genUUID
+guid=genUUID
+
+UUIDm=miniUUID
+UUIDM=miniUUID
+MUUID=miniUUID
+mUUID=miniUUID
+
+UUIDE=UUID_Epoch
+guidE=UUID_Epoch
+uuidE=UUID_Epoch
+
+UUIDe=uuidEpoc
+uuide=uuidEpoc
+
+## UUID ## END ############################################################################################################################
+
 
 __.fn.saveText = False
 def saveText( rows, theFile, errors=True, me=0, test=None ):
@@ -18552,6 +18646,7 @@ def historyPrint( code, pre='' ):
                 'pipe': 'red',
                 'switches': 'green',
                 'value': 'cyan',
+                'quote': 'darkcyan',
     }
 
         
@@ -18575,19 +18670,35 @@ def historyPrint( code, pre='' ):
         elif x.startswith('+'):
             lastSwitch = True
             result += colorThis( x, colors['switches'], p=0 )
-        elif x.startswith('-'):
+        elif x.startswith('-') or( x.startswith('/') and not ' -' in code ):
             lastSwitch = True
             result += colorThis( x, colors['switches'], p=0 )
-        elif x.startswith('/') and not ' -' in code:
-            lastSwitch = True
-            result += colorThis( x, colors['switches'], p=0 )
+
+
         elif x == '|' or x == '&':
             lastCMD = False
             lastSwitch = False
             lastPipe = True
             result += colorThis( x, colors['pipe'], p=0 )
         elif lastSwitch:
-            result += colorThis( x, colors['value'], p=0 )
+            if '"' in x:
+                yx=''
+                Yy=''
+                for yY in x:
+                    if not yY == '"':
+                        Yy+=yY
+                    else:
+                        if Yy:
+                            yx+=colorThis( Yy, colors['value'], p=0 )
+                            Yy=''
+                        yx+=colorThis( '"', colors['quote'], p=0 )
+                if Yy:
+                    yx+=colorThis( Yy, colors['value'], p=0 )
+                    Yy=''
+
+                result += yx
+            else:
+                result += colorThis( x, colors['value'], p=0 )
         elif lastCMD:
             result += colorThis( x, colors['value'], p=0 )
         else:
@@ -19033,5 +19144,6 @@ bull=aiBullet
 lbu=aiLine
 
 nw=n2w
-UUID=genUUID
+
+## UUID ##
 

@@ -1,5 +1,5 @@
 @echo off
 rem call p lock-files -w
-call uuid | p -copy
+call uuid -e | p -copy
 git commit
 git push

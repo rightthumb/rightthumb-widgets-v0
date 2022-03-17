@@ -264,6 +264,7 @@ def clip_set_1(data,end='',clean=True):
 	# r.destroy()
 
 def clip_set( data, end='', p=True, clean=True ):
+	data=str(data)
 	data = _.stripColor(data)
 
 	if not _.switches.isActive('NoPrint'):
