@@ -1038,6 +1038,7 @@ def isDate( theDate=None, record={}, tz=None, q=True, f=None,w=None,what=None ):
         if f=='woy': return _dir.getWeekAndYear( epoch );
         if f=='ago': return _dir.dateDiffText( epoch );
         if f=='days': return daysDiff(  epoch, time.time()  );
+        if f=='dow': return _dir.getDOWromEpochText( epoch );
         if f=='tz': return local_tz;
         if f in 'crypt-date crypt-time crypt-epoch appID app crypt-pass'.split(' '):
             try:
