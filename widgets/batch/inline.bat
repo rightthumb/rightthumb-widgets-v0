@@ -10,4 +10,5 @@ rem    - Scott Taylor Reph, RightThumb.com
 rem ###########################################################################
 rem ## {C3P0D40fAe8B} ##
 
+rem call p vps-inline -do "start=time.time();print(_.newid('test'), time.time() - start);"
 call p vps-inline -do %*

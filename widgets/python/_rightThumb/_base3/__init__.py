@@ -19151,7 +19151,12 @@ def epoch_times():
 
 # timeCalc
 
-
+def newid(subject):
+    requests = __.imp('requests')
+    url='https://eyeformeta.com/apps/ids/?subject=live-'+subject
+    page = requests.get(url).content.decode("utf-8").replace('\\n','\n').replace('\n','').replace('\r','').replace(' ','').replace('\t','')
+    return page
+    
 aib=aiBullet
 ail=aiLine
 bu=aiBullet
