@@ -694,7 +694,7 @@ class Scanner:
 				if not 'phone' in dic:
 					dic['phone'] = []
 				if not item in dic['phone']:
-					dic['phone'].append(item)
+					dic['phone'].append(app.phone.process(item))
 				data = data.replace(item,'')
 
 		if not subject == 'email':
