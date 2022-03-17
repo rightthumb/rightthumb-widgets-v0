@@ -6980,11 +6980,18 @@ def printTest( data, color='white', line=None, isPrint=1, shouldExit=1, validate
 def printVar2( data, sort_keys=False ):
     printVarOld( data, sort_keys )
     
-def printVarSimple( data, sort_keys=False, isDic=None, prefix=None, remove=None ):
+def printVarSimple( data, sort_keys=False, isDic=None, prefix=None, remove=None, d=None, p=True ):
+    simplejson = __.imp('simplejson')
+    dump=simplejson.dumps(data, indent=4, sort_keys=sort_keys)
+    if d:
+        if p:
+            print(dump)
+        return dump 
     data = json_clean(data)
     if not isDic is None and isDic and type(data) == str:
-        saveText( data, _v.myTemp + _v.slash+'printVarSimple.json' )
-        data = getTable2( _v.myTemp + _v.slash+'printVarSimple.json' )
+        # saveText( data, _v.myTemp + _v.slash+'printVarSimple.json' )
+        # data = getTable2( _v.myTemp + _v.slash+'printVarSimple.json' )
+        data = dump
     printVarOld( data, sort_keys, prefix=prefix, remove=remove )
 
 def printVarSimple2( data, sort_keys=False, isDic=None ):
