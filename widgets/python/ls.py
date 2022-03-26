@@ -71,6 +71,7 @@ def appSwitches():
 	_.switches.register('Group<=', '--g', '2' )
 	_.switches.register('PlusFile', '-pf,-pn,-plusfile')
 	_.switches.register('Ago-Create-Date', '-cd')
+	_.switches.register('PrintBytes', '-bytes')
 	# _.switches.register('WOYCreatedDate', '-cwoy')
 
 
@@ -1455,6 +1456,8 @@ def action():
 					txt += _.colorThis(  [  _.addComma(folderCount) + ' folders' ], 'blue', p=0 )
 					print( txt )
 				print()
+				if _.switches.isActive('PrintBytes'):
+					_.cp( ['bytes:',totalBytes], 'cyan' )
 				endPrint = time.time()
 				if _.switches.isActive('Time'):
 					_.colorThis( [ 'App Time:', round( end-start, 3 ) ], 'yellow' )
