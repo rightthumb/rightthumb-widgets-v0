@@ -60,6 +60,30 @@ def appSwitches():
 	_.switches.register('Search-Print-Line', '-p,-print','all')
 
 
+fse=False
+def fs(data):
+	global fse
+	if 'flag:' in data:
+		return None
+
+	if not __.isFiles:
+		if 'flag: stop' in data:
+			fse=True
+			return None
+		if 'flag: start' in data:
+			fse=False
+			return None
+		if fse:
+			return None
+	if __.isFiles:
+		data = data.replace('files','file')
+		data = ' '+data+' '
+		data = data.replace('-recursive','')
+		data = data.replace('-r ','')
+		data = data[1:]
+		data = data[:-1]
+
+	return data
 
 
 _.appInfo[focus()] = {
@@ -79,21 +103,22 @@ _.appInfo[focus()] = {
 						# '',
 	],
 	'examples': [
-						'p files --c ',
-						'p files -text ',
-						'',
-						'p files -size L 2mb',
-						'p files -size g 2mb --c -folder D:\\techApps\\Python\\Python36-32'+_v.slash,
-						'',
-						'b pp',
-						'p files + *.py *.bat *.sh *.js *.htm* *.php  -or -totals',
-						'',
-						'p files -ext db - *.json *.dat',
-						'',
-						'p files -w --c -ago 10h | p line --c -make "git add {}" | p -copy',
-						'p files -w --c -ago 10h | p line --c -make "git add {}" | p execute',
-						'p files -w --c -ago 10h',
-						'p files - /bin /boot /dev /lib /lib64 /lost+found /media /mnt /proc /srv /sys -f /',
+						fs('p files --c '),
+						fs('p files -text '),
+						fs(''),
+						fs('p files -size L 2mb'),
+						fs('p files -size g 2mb --c -folder D:\\techApps\\Python\\Python36-32'+_v.slash),
+						fs(''),
+						fs('b pp'),
+						fs('p files + *.py *.bat *.sh *.js *.htm* *.php  -or -totals'),
+						fs(''),
+						fs('p files -ext db - *.json *.dat'),
+						fs('flag: stop'),
+						fs('p files -w --c -ago 10h | p line --c -make "git add {}" | p -copy'),
+						fs('p files -w --c -ago 10h | p line --c -make "git add {}" | p execute'),
+						fs('p files -w --c -ago 10h'),
+						fs('flag: start'),
+						fs('p files - /bin /boot /dev /lib /lib64 /lost+found /media /mnt /proc /srv /sys -f / -r'),
 	],
 	'columns': [
 					   # { 'name': 'name', 'abbreviation': 'n' },

@@ -9885,36 +9885,37 @@ class Switches:
                 IDs = {}
                 ei = 1
                 for docItem in appInfo[__.appReg]['examples']:
-                    prei = str(ei)
-                    if len(self.value('Help')) and self.value('Help') == prei:
-                        prei = '*'
-                    elif not 'id' in self.value('Help') and not 'c' in self.value('Help') :
-                        prei = ''
-                    else:
-                        quit_early = True
-                    if type(docItem) == list:
-                        if not len(docItem[0]):
+                    if not docItem is None:
+                        prei = str(ei)
+                        if len(self.value('Help')) and self.value('Help') == prei:
+                            prei = '*'
+                        elif not 'id' in self.value('Help') and not 'c' in self.value('Help') :
                             prei = ''
                         else:
-                            ei+=1
-                        if prei == '*':
-                            setClip(docItem[0])
-                            quit_early= True
-                        if len(prei):
-                            IDs[prei] = docItem[0]
-                        colorThis( '\t'+prei+'\t'+docItem[0], docItem[1]  )
-                    else:
-                        if not len(docItem):
-                            prei = ''
-                        else:
-                            ei+=1
-
-                        if len(prei):
-                            IDs[prei] = docItem
-                        if prei == '*':
-                            setClip(docItem)
                             quit_early = True
-                        colorizeRow( '\t'+prei+'\t'+ docItem , 2)
+                        if type(docItem) == list:
+                            if not len(docItem[0]):
+                                prei = ''
+                            else:
+                                ei+=1
+                            if prei == '*':
+                                setClip(docItem[0])
+                                quit_early= True
+                            if len(prei):
+                                IDs[prei] = docItem[0]
+                            colorThis( '\t'+prei+'\t'+docItem[0], docItem[1]  )
+                        else:
+                            if not len(docItem):
+                                prei = ''
+                            else:
+                                ei+=1
+
+                            if len(prei):
+                                IDs[prei] = docItem
+                            if prei == '*':
+                                setClip(docItem)
+                                quit_early = True
+                            colorizeRow( '\t'+prei+'\t'+ docItem , 2)
             if 'id' in self.value('Help') or 'c' in self.value('Help'):
                 askID = input( '?> : ' )
                 if askID in IDs:
@@ -18246,7 +18247,7 @@ class regImp:
 
         for name in names.split(','):
             vl = value
-            if name == 'Password':
+            if name == 'Password' or name == 'Key':
                 vl = '*******'
             if not value is None:
                 try:

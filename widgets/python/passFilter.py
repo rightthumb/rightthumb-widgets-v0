@@ -153,19 +153,24 @@ _.postLoad( __file__ )
 # START
 
 def process( row ):
-	if '-password' in row or '-pass' in row.lower() or '-pw' in row.lower() or 'crypt' in row.lower() or '-en' in row.lower() or '-de' in row.lower():
-		parts = row.split(' ')
-		isNext = False
-		newRow = []
-		for part in parts:
-			if isNext:
-				if part.startswith('-') or part.startswith('+'):
-					isNext = False
+	# if '-password' in row or '-pass' in row.lower() or '-pw' in row.lower() or 'crypt' in row.lower() or '-en' in row.lower() or '-de' in row.lower():
+	for test in '-password -pass -pw -en -de -key crypt'.split(' '):
+		if test in row.lower():
+			parts = row.split(' ')
+			isNext = False
+			newRow = []
+			for part in parts:
 				if isNext:
-					part = '******'
+					if part.startswith('-') or part.startswith('+'):
+						isNext = False
+					if isNext:
+						part = '******'
 
-			if '-password' in part.lower() or '-pass' in part.lower() or '-pw' in part.lower() or '-en' in part.lower() or '-de' in part.lower():
-				isNext = True
+			# if '-password' in part.lower() or '-pass' in part.lower() or '-pw' in part.lower() or '-en' in part.lower() or '-de' in part.lower():
+			
+			for test in '-password -pass -pw -en -de -key'.split(' '):
+				if test in part.lower():
+					isNext = True
 
 			newRow.append( part )
 		row = ' '.join( newRow )

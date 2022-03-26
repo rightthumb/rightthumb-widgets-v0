@@ -64,6 +64,7 @@ __.switch_raw = []
 
 
 _.appInfo[focus()] = {
+	# 'app': '7facG-jo0Cxk',
 	'file': 'thisApp.py',
 	'liveAppName': __.thisApp( __file__ ),
 	'description': 'Changes the world',

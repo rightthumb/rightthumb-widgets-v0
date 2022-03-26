@@ -42,7 +42,7 @@ def appSwitches():
 	if not __.isFiles:
 		_.switches.register('Recursive', '-r,-recursive')
 	_.switches.register('Count', '-c,-count,--c')
-	_.switches.register('Folders', '-f,-p,-path,-paths,-folder,-folders,-fo')
+	_.switches.register('Folders', '-f,-folder,-folders,-fo')
 	_.switches.register('Text', '-t,-text,-txt')
 	_.switches.register('Binary', '-bin')
 	_.switches.register('Size', '-size',' g 10mb, L 2kb ')
@@ -55,7 +55,31 @@ def appSwitches():
 	_.switches.register('Remove-Root-Folder', '-rr')
 	_.switches.register('Widget-V0', '-w,-v0')
 	_.switches.register('Ago-Create-Date', '-cd')
+	_.switches.register('Search-For-Text-Include', '-has,-search')
+	_.switches.register('Search-For-Text-Exclude', '-not')
+	_.switches.register('Search-Print-Line', '-p,-print','all')
 
+
+fse=False
+def fs(data):
+	global fse
+	if 'flag: stop' in data:
+		fse=True
+		return None
+	if 'flag: start' in data:
+		fse=False
+		return None
+	if fse:
+		return None
+	if __.isFiles:
+		data = data.replace('files','file')
+		data = ' '+data+' '
+		data = data.replace('-recursive','')
+		data = data.replace('-r ','')
+		data = data[1:]
+		data = data[:-1]
+
+	return data
 
 
 _.appInfo[focus()] = {
@@ -75,29 +99,29 @@ _.appInfo[focus()] = {
 						# '',
 	],
 	'examples': [
-						'p files --c ',
-						'p files -text ',
-						'',
-						'p files -size g 2mb',
-						'p files -size L 2mb',
-						'p files -size g 2mb --c -folder D:\\techApps\\Python\\Python36-32'+_v.slash,
-						'',
-						'b pp',
-						'p files + *.py *.bat *.sh *.js *.htm* *.php  -or -totals',
-						'',
-						'',
-						'p files -ext db - *.json *.dat',
-						'',
-						'p files -w --c -ago 10h | p line --c -make "git add {}" | p -copy',
-						'p files -w --c -ago 10h',
-						'',
+						fs('p files --c '),
+						fs('p files -text '),
+						fs(''),
+						fs('p files -size L 2mb'),
+						fs('p files -size g 2mb --c -folder D:\\techApps\\Python\\Python36-32'+_v.slash),
+						fs(''),
+						fs('b pp'),
+						fs('p files + *.py *.bat *.sh *.js *.htm* *.php  -or -totals'),
+						fs(''),
+						fs('p files -ext db - *.json *.dat'),
+						fs('flag: stop'),
+						fs('p files -w --c -ago 10h | p line --c -make "git add {}" | p -copy'),
+						fs('p files -w --c -ago 10h | p line --c -make "git add {}" | p execute'),
+						fs('p files -w --c -ago 10h'),
+						fs('flag: start'),
+						fs('p files - /bin /boot /dev /lib /lib64 /lost+found /media /mnt /proc /srv /sys -f / -r'),
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
+					   # { 'name': 'name', 'abbreviation': 'n' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					   # 'this',
+					   # 'app',
 	],
 
 	}
@@ -131,14 +155,14 @@ def formatSize(size):
 	elif size > 1048576 and size < 1073741824:
 		num = round(size / 1048576, 2)
 		result = str(num) + ' MB'
-	elif size > 1073741824 and size < 1099511627776	:
+	elif size > 1073741824 and size < 1099511627776 :
 		num = round(size / 1073741824, 2)
 		result = str(num) + ' GB'
 	else:
 		num = round(size / 1099511627776, 2)
 		result = str(num) + ' TB'
 	# if size < 1:
-	# 	result = ''
+	#   result = ''
 	return result
 
 def unFormatSize(size):
@@ -158,7 +182,7 @@ def unFormatSize(size):
 	factor = ''
 
 	if 'TB' in size:
-		factor = 1099511627776	
+		factor = 1099511627776  
 	elif 'GB' in size:
 		factor = 1073741824
 	elif 'MB' in size:
@@ -199,7 +223,7 @@ def registerSwitches( argvProcessForce=False ):
 	appSwitches()
 
 	_.switches.trigger( 'Size' , unFormatSize )
-	_.switches.trigger( 'Folders' , _.bAlias )
+	# _.switches.trigger( 'Folders' , _.bAlias )
 	# _.switches.trigger('Input',_.myFileLocations)
 		# trigger settings
 	_.myFileLocation_Print = False
@@ -248,9 +272,43 @@ def whatIsIt(file):
 		result = 'Binary'
 	return result
 
+
+
+
 def getFolder(folder,r=True):
-	if folder.startswith('/proc'):
-		return None
+	folder=folder.replace(os.sep+os.sep,os.sep)
+	folder=folder.replace(os.sep+os.sep,os.sep)
+	# if not _.isWin:
+	#   for test in '/bin /boot /dev /lib /lib64 /lost+found /media /mnt /proc /srv /sys'.split(' '):
+	#       if folder.startswith(test+'/'):
+	#           return None
+	#   if folder in '/bin /boot /dev /lib /lib64 /lost+found /media /mnt /proc /srv /sys'.split(' '):
+	#       return None
+
+
+	# if _.switches.isActive('Minus') and not _.showLine(folder,):
+	# 	return None
+	
+
+	if not sw(folder):
+		# return None
+		if not sw(os.getcwd()):
+			# print(os.getcwd(),folder)
+			# print(folder)
+			pass
+		elif not len(_.switches.value('Folders')):
+			return None
+		else:
+			good=False
+			for f in _.switches.values('Folders'):
+				if not sw(f):
+					good=True
+			if not good:
+				return None
+
+	# print(folder)
+
+
 	global i
 	global iS
 	global baseDepth
@@ -443,9 +501,9 @@ def getFolder(folder,r=True):
 
 								if _.switches.isActive('Count'):
 									if _.switches.isActive('Remove-Root-Folder'):
-										print( _.colorThis( pathX, 'cyan', p=0 ) )
+										process(pathX)
 									else:
-										print( _.colorThis( path, 'cyan', p=0 ) )
+										process(path)
 								else:
 									iS+=1
 
@@ -486,10 +544,10 @@ def getFolder(folder,r=True):
 									shouldAdd = False
 
 							# if '.' in path:
-							# 	pathy = path.lower().split('.')
-							# 	pathy_test = pathy.pop()
-							# 	if not '.'+pathy_test in extensionList:
-							# 		shouldAdd = False
+							#   pathy = path.lower().split('.')
+							#   pathy_test = pathy.pop()
+							#   if not '.'+pathy_test in extensionList:
+							#       shouldAdd = False
 
 
 
@@ -498,30 +556,31 @@ def getFolder(folder,r=True):
 						if not _.switches.isActive('Totals'):
 							if _.switches.isActive('Remove-Root-Folder'):
 								if not _.switches.isActive('Plus'):
-									_.colorThis( pathX, 'cyan' )
+									process(pathX)
 								else:
-									print( _.colorPlus( pathX, 'cyan' ) )
+									process(pathX)
 							else:
 								if not _.switches.isActive('Plus'):
-									_.colorThis( path, 'cyan' )
+									process(path)
 								else:
-									print( _.colorPlus( path, 'cyan' ) )
+									process(path)
+
 
 					# if shouldAdd:
-					# 	text_binary = False
-					# 	if not _.switches.isActive('Text') and not _.switches.isActive('Binary'):
-					# 		text_binary = True
-					# 	else:
-					# 		if not _.switches.isActive('Binary') and  _.switches.isActive('Text') and isText(path):
-					# 			text_binary = True
-					# 		if not _.switches.isActive('Binary') and not _.switches.isActive('Text'):
-					# 			text_binary = True
-					# 		if not _.switches.isActive('Text') and  _.switches.isActive('Binary') and not isText(path):
-					# 			text_binary = True
-					# 		if not _.switches.isActive('Text') and  not _.switches.isActive('Binary'):
-					# 			text_binary = True
-					# 	if not text_binary:
-					# 		shouldAdd = False
+					#   text_binary = False
+					#   if not _.switches.isActive('Text') and not _.switches.isActive('Binary'):
+					#       text_binary = True
+					#   else:
+					#       if not _.switches.isActive('Binary') and  _.switches.isActive('Text') and isText(path):
+					#           text_binary = True
+					#       if not _.switches.isActive('Binary') and not _.switches.isActive('Text'):
+					#           text_binary = True
+					#       if not _.switches.isActive('Text') and  _.switches.isActive('Binary') and not isText(path):
+					#           text_binary = True
+					#       if not _.switches.isActive('Text') and  not _.switches.isActive('Binary'):
+					#           text_binary = True
+					#   if not text_binary:
+					#       shouldAdd = False
 
 
 			# if os.path.isdir(path) and _.showLine(path):
@@ -539,6 +598,11 @@ def getFolder(folder,r=True):
 							pass
 				else:
 					print('error')
+
+
+
+
+
 
 
 def extensionsDatabank():
@@ -572,6 +636,8 @@ def action():
 	_.fields.register( 'files', 'name', '1000.43 KB' )
 	global i
 	global iS
+	global infile
+	global scan
 	# load()
 	if _.switches.isActive('Folders') == False:
 		folder = os.getcwd()
@@ -584,9 +650,14 @@ def action():
 	if not _.switches.isActive('Widget-V0'):
 		getFolder(folder,r=r)
 	else:
+		# print(_v.ww)
+		# print(_v.widgets)
 		# print(_v.w)
 		base_path=_v.widgets
 		_.switches.fieldSet( 'Remove-Root-Folder', 'active', True )
+		_.switches.fieldSet( 'Minus', 'active', True )
+		_.switches.fieldSet( 'Minus', 'value', 'minecraft.py,vps-' )
+		_.switches.fieldSet( 'Minus', 'values', ['minecraft.py','vps-'] )
 		_.switches.fieldSet( 'Plus', 'active', True )
 		_.switches.fieldSet( 'Plus', 'value', '*.py,*.sh,*.bat,*.MD' )
 		_.switches.fieldSet( 'Plus', 'values', ['*.py','*.sh','*.bat','*.MD'] )
@@ -634,11 +705,18 @@ def action():
 		} )
 
 	if _.switches.isActive('Count') == False:
-		if not i == iS:
-		# if _.switches.isActive('Size'):
-			_.colorThis( [  '\n', _.addComma(iS), 'of', _.addComma(i), '\n'  ], 'yellow' )
-		else:
-			_.colorThis( [  '\n{}\n'.format( _.addComma(i) )  ], 'yellow' )
+		if not scan:
+			if not i == iS:
+			# if _.switches.isActive('Size'):
+				_.colorThis( [  '\n', _.addComma(iS), 'of', _.addComma(i), '\n'  ], 'yellow' )
+			else:
+				_.colorThis( [  '\n{}\n'.format( _.addComma(i) )  ], 'yellow' )
+		elif scan:
+			if not i == iS:
+			# if _.switches.isActive('Size'):
+				_.colorThis( [  '\n','in', _.addComma(infile), 'subset', _.addComma(iS), 'of', _.addComma(i), '\n'  ], 'yellow' )
+			else:
+				_.colorThis( [  '\n','in', _.addComma(infile), 'of', _.addComma(i), '\n'  ], 'yellow' )
 		# print('\n{}\n'.format(i))
 
 extensionList = []
@@ -647,17 +725,150 @@ i = 0
 iS = 0
 baseDepth = 0
 
+if _.switches.isActive('Search-For-Text-Include'):
+	scan=True
+else:
+	scan=False
+
+if not _.switches.isActive('Search-Print-Line'):
+	pr=0
+elif 'a' in _.switches.value('Search-Print-Line').lower():
+	pr=2
+else:
+	pr=1
+
+inc=_.switches.values('Search-For-Text-Include')
+ex=_.switches.values('Search-For-Text-Exclude')
+infile=0
+
+def process3(path):
+	pass
+
+spent=[]
+
+def printer(path,ni=0):
+	global spent
+	global infile
+	if _.isWin:
+		p = path.lower()
+	else:
+		p=path
+	if p in spent:
+		return None
+	spent.append(p)
+	print( _.colorThis( path, 'cyan', p=0 ) )
+	infile+=1
+
+def process(path):
+	if not os.path.isfile(path):
+		return path
+	# print(path)
+	# char = chardet.detect(open( path, 'rb' ).read(200))['encoding']\
+	char='utf-8'
+	char='iso-8859-1'
+	# print(char)
+	global scan
+	global pr
+	global inc
+	global ex
+	if not scan:
+		printer(path)
+		return path
+	else:
+		i=0
+		if len(inc) == 1 and not len(ex):
+			fast=True
+			find = inc[0].lower()
+
+		else:
+			fast=False
+
+		# with open(path,encoding=char) as f:
+		# print(os.path.isfile(path),path)
+		if not os.path.isfile(path):
+			return path
+		for line in _.getText(path,raw=True).split('\n'):
+			# for line in f:
+			i+=1
+			
+			if fast:
+				# _.cp('fast','green')
+				if find in line.lower():
+					
+					if pr:
+						print()
+					printer(path,ni=1)
+					if pr:
+						print_line(i,line,inc)
+					if pr == 1:
+						return path
+
+
+
+			else:
+				# print(inc)
+				# print(ex)
+				# sys.exit()
+				if _.showLine(line, plus=inc, minus=ex,OR=False):
+					if pr:
+						print()
+					printer(path,ni=1)
+					if pr:
+						print_line(i,line,inc)
+					if pr == 1:
+						return path
+
+def cleaner(line):
+	line=line.replace('\r','').replace('\n','')
+	line=_str.cleanBE(line,' ')
+	line=_str.cleanBE(line,'\t')
+	return line
+
+def print_line(i,line,inc):
+	# print(line)
+	line=cleaner(line)
+	line=cleaner(line)
+	subjects=[]
+	for xXx in inc:
+		for subject in _.caseUnspecific( line, xXx ):
+			subjects.append(subject)
+	for subject in subjects:
+		line = line.replace( subject, _.cp( subject, 'green', p=0 ) )
+	print('',_.cp(i,'yellow',p=0),line)
+
+def sw(path):
+	# print(path)
+	for check in '/bin /boot /dev /lib /lib64 /lost+found /proc /srv /sys'.split(' '):
+		if path.lower() == check or path.lower().startswith(check+'/'):
+			# print(path)
+			return False
+	return True
+
+
+
+# import chardet
+
+
 # if _.switches.isActive('Ago'):
 import _rightThumb._dir as _dir
 
 # def load():
-# 	global data
-# 	data = _.getTable( 'table.json' )
+#   global data
+#   data = _.getTable( 'table.json' )
 # data = []
 # 'Recursive'
+
+
+# getFolder
+# getFolder
+# getFolder
+# with open(path,encoding=char) as f:
+
+
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 
