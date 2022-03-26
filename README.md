@@ -183,7 +183,7 @@ Recommended python modules
     pip3 install psutil
     pip3 install forward
     pip3 install num2word
-    git clone https://github.com/izderadicka/unistego
+    pip3 install -e git+https://github.com/izderadicka/unistego#egg=unistego
 
 
 Create new python widget with

@@ -230,9 +230,16 @@ def process(path):
 
 	if _.switches.isActive('Upload-Scp'):
 		# do=f'{scp} {path}  {u}@{s}:{fi}'
-		do=f'{scp} {file}  {u}@{s}:{fi}'
+		if os.path.isdir(file):
+			do=f'{scp} -r {file}  {u}@{s}:{fi}'
+		else:
+			do=f'{scp} {file}  {u}@{s}:{fi}'
 	if _.switches.isActive('Download-Scp'):
-		do=f'{scp} {u}@{s}:{fi} {path}'
+		if os.path.isdir(path):
+			do=f'{scp} -r {u}@{s}:{fi} {path}'
+		else:
+			do=f'{scp}  {u}@{s}:{fi} {path}'
+	
 	if _.switches.isActive('Upload-Scp') or _.switches.isActive('Download-Scp'):
 		print(do)
 		try:

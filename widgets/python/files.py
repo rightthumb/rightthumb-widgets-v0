@@ -75,13 +75,16 @@ def fs(data):
 			return None
 		if fse:
 			return None
-	if __.isFiles:
+	if not __.isFiles:
 		data = data.replace('files','file')
+	if __.isFiles:
 		data = ' '+data+' '
 		data = data.replace('-recursive','')
 		data = data.replace('-r ','')
-		data = data[1:]
-		data = data[:-1]
+		if data.startswith(' '):
+			data = data[1:]
+		if data.endswith(' '):
+			data = data[:-1]
 
 	return data
 

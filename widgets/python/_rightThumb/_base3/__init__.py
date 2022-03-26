@@ -327,6 +327,12 @@ def ddelim( txt=None, what='szYZhw', d=None, indices=None, f=1, r=-1 ):
         new_string=what[0]+txt+what[1]
         return eeof(u,p,ec,d,r,what,new_string)
 
+    elif what == 'uuid2':
+        u=uu(p,r,2)
+        d='-'; indices=[8, 12, 16, 20];
+        txt=ddelim( txt, d=d, indices=indices, f=0, r=u )
+        txt=ddelim( txt, what='{}', f=0, r=u )
+        return eeof(u,p,ec,d,r,what,txt).replace('{','').replace('}','')
     elif what == 'uuid':
         u=uu(p,r,2)
         d='-'; indices=[8, 12, 16, 20];
