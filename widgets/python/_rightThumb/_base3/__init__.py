@@ -58,13 +58,13 @@ def tinydic(data,par='',skim=None, mt=True, lan='js', prev=False, dump=None, dic
     def rents(lan,p,k):
         p2=None
         if lan == 'py' and type(k)==str:
-            p2=p+f"[\'{k}\']"
+            p2=p+"['{k}']".replace('{k}',k)
         elif lan == 'py' and type(k)==int:
-            p2=p+f"[{k}]"
+            p2=p+"[{k}]".replace('{k}',k)
         elif lan == 'js' and type(k)==str:
-            p2=p+f".{k}"
+            p2=p+".{k}".replace('{k}',k)
         elif lan == 'js' and type(k)==int:
-            p2=p+f"[{k}]"
+            p2=p+"[{k}]".replace('{k}',k)
         else:
             _.e('type(key)')
         return p2
