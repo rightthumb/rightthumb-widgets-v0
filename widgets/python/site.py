@@ -34,7 +34,8 @@ def appSwitches():
 	_.switches.register( 'Upload-Scp', '-u,-up,-upload' )
 	_.switches.register( 'Download-Scp', '-d,-dl,-down,-download' )
 	_.switches.register( 'Test', '-t,-test' )
-	_.switches.register( 'Files', '-f,-file,-files','file.txt',  description='glob', isRequired=True )
+	# _.switches.register( 'Files', '-f,-file,-files','file.txt',  description='glob', isRequired=True )
+	_.switches.register( 'Files', '-f,-file,-files','file.txt', isRequired=True )
 	_.switches.register( 'mkdir', '-mkdir' )
 
 
@@ -120,7 +121,7 @@ def registerSwitches( argvProcessForce=False ):
 	appSwitches()
 
 	_.myFileLocation_Print = False
-	# _.switches.trigger( 'Files', _.myFileLocations, vs=True )
+	_.switches.trigger( 'Files', _.myFileLocations, vs=True )
 	_.switches.trigger( 'Folder', _.myFolderLocations )
 	_.switches.trigger( 'URL', _.urlTrigger )
 	_.switches.trigger( 'Ago', _.timeAgo )
@@ -207,6 +208,7 @@ def process(path):
 		s=ftp['server']
 		f=ftp['full-path']
 		u=ftp['user']
+		# pw=_vault.imp.s.de( ftp['password'] )
 		fi = file.replace( __.path(folder), f ).replace('\\','/')
 		if os.path.isdir(path):
 			fi=__.path(fi,pop=True)
@@ -247,6 +249,7 @@ def action():
 	for i,path in enumerate( _.switches.values('Files') ):
 		process(path)
 
+# _vault = _.regImp( __.appReg, '_rightThumb._vault' )
 
 
 	

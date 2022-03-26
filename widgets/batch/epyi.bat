@@ -114,7 +114,7 @@ goto:eof
 		)
 	if [%initOpen%] == [y] (
 
-			call p fileBackup -i %childExample% -python
+			call p fileBackup -open -i %childExample% -python
 			start "EDIT" %code_editor% %childExample%
 			goto:eof
 
@@ -132,7 +132,7 @@ goto:eof
 		)
 	if [%initOpen%] == [y] (
 			if not exist "%importFolder%\" md "%importFolder%\"
-			call p fileBackup -i %child% -python
+			call p fileBackup -open -i %child% -python
 			start "EDIT" %code_editor% %child%
 			echo %child%
 		) else (
@@ -152,7 +152,7 @@ goto:eof
 		rem echo %fileName%
 		if [%fileName%] == [] goto:eof
 
-		call p fileBackup -i "%importFolder%\%fileName%.py" -python
+		call p fileBackup -open -i "%importFolder%\%fileName%.py" -python
 		start "EDIT" %code_editor% "%importFolder%\%fileName%.py"
 		rem echo %importFolder%\%fileName%.py
 
@@ -176,9 +176,9 @@ goto:eof
 		)
 	goto:eof
 :BUILDFILE_FALSE
-	call p fileBackup -i "%python%\%fileName%.py" -python
+	call p fileBackup -open -i "%python%\%fileName%.py" -python
 	type %initExample% > "%python%\%fileName%.py"
-	call p fileBackup -i "%python%\%fileName%.py" -python
+	call p fileBackup -open -i "%python%\%fileName%.py" -python
 	start "EDIT" %code_editor% "%python%\%fileName%.py"
 	rem echo %python%\%fileName%.py
 	goto:eof
@@ -186,10 +186,10 @@ goto:eof
 	echo App already exists
 	set /p action=Replace App?: 
 	if [%action%] == [y] (
-			call p fileBackup -i "%python%\%fileName%.py" -python
+			call p fileBackup -open -i "%python%\%fileName%.py" -python
 			type %initExample% > "%python%\%fileName%.py"
 		) else (
-			call p fileBackup -i "%python%\%fileName%.py" -python
+			call p fileBackup -open -i "%python%\%fileName%.py" -python
 		)
 
 	start "EDIT" %code_editor% "%python%\%fileName%.py"
@@ -205,7 +205,7 @@ goto:eof
 		)
 	if [%initOpen%] == [y] (
 			if not exist "%importFolder%\" md "%importFolder%\"
-			call p fileBackup -i %__init__% -python
+			call p fileBackup -open -i %__init__% -python
 			if [%isNew%] == [Y] echo %template% %__init__%
 			if [%isNew%] == [Y] type %template% > %__init__%
 			start "EDIT" %code_editor% %__init__%
@@ -215,12 +215,12 @@ goto:eof
 		)
 	goto:eof
 :EXAMPLE
-	call p fileBackup -i %initExample% -python
+	call p fileBackup -open -i %initExample% -python
 	start "EDIT" %code_editor% %initExample%
 	rem echo %initExample%
 	goto:eof
 :SAMPLE
-	call p fileBackup -i %childSample% -python
+	call p fileBackup -open -i %childSample% -python
 	start "EDIT" %code_editor% %childSample%
 	rem echo %childSample%
 	goto:eof
@@ -230,7 +230,7 @@ goto:eof
 			echo.
 			type %childCommands%
 		) else (
-			call p fileBackup -i %childCommands% -python
+			call p fileBackup -open -i %childCommands% -python
 			start "EDIT" %code_editor% %childCommands%
 			rem echo %childCommands%
 		)
@@ -240,7 +240,7 @@ goto:eof
 	rem echo %childCommands%
 	goto:eof
 :CMDE
-	call p fileBackup -i %childCommands% -python
+	call p fileBackup -open -i %childCommands% -python
 	start "EDIT" %code_editor% %childCommands%
 	rem echo %childCommands%
 	echo.

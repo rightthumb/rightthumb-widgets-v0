@@ -11,7 +11,7 @@ rem ###########################################################################
 rem ## {C3P0D40fAe8B} ##
 
 cls
-call p fileBackup -i %qi%
+call p fileBackup -open -i %qi%
 if exist %qi% DEL /q %qi% 
 echo.
 for /F "tokens=*" %%A in (%myTables%\qi.txt) do CALL :PROCESS %%A

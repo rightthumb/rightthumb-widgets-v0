@@ -17,7 +17,7 @@ CALL driveLabel %m3ID% MOVIES
 if [%foundFolder%] == [True] (
 
 		CALL p projectTimer -project movieData -start
-		CALL p fileBackup -i %m3Data%
+		CALL p fileBackup -open -i %m3Data%
 		echo.
 		CALL p files --c > %tmpf%
 		CALL p executeEstimate -project movieData -i "dir /s/b /a:a" -prefix "Researching files"

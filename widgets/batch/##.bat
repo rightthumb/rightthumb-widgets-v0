@@ -10,7 +10,7 @@ rem    - Scott Taylor Reph, RightThumb.com
 rem ###########################################################################
 rem ## {C3P0D40fAe8B} ##
 
-
+call D:\.rightthumb-widgets\widgets\batch\c.bat
 start cmd /c %1 %2
 
 

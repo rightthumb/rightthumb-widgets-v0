@@ -18,7 +18,7 @@ rem echo %foundFolder%
 if [%foundFolder%] == [True] (
 
 		CALL p projectTimer -project movieData -start
-		CALL p fileBackup -i %mData%
+		CALL p fileBackup -open -i %mData%
 		echo.
 		CALL p executeEstimate -project movieData -i "dir /s/b /a:a" -prefix "Researching files"
 		%thisDrive%:

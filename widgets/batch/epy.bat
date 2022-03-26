@@ -13,11 +13,11 @@ rem ## {C3P0D40fAe8B} ##
 rem echo "%python%\%1.py"
 
 if not [%3] == [] (
-	call p fileBackup -i "%python%\%1.py" %2 %3 -python
+	call p fileBackup -open -i "%python%\%1.py" %2 %3 -python
 ) else if not [%2] == [] (
-	call p fileBackup -i "%python%\%1.py" %2 -python
+	call p fileBackup -open -i "%python%\%1.py" %2 -python
 ) else (
-	call p fileBackup -i "%python%\%1.py" -python
+	call p fileBackup -open -i "%python%\%1.py" -python
 ) 
 
 
