@@ -63,14 +63,18 @@ def appSwitches():
 fse=False
 def fs(data):
 	global fse
-	if 'flag: stop' in data:
-		fse=True
+	if 'flag:' in data:
 		return None
-	if 'flag: start' in data:
-		fse=False
-		return None
-	if fse:
-		return None
+
+	if not __.isFiles:
+		if 'flag: stop' in data:
+			fse=True
+			return None
+		if 'flag: start' in data:
+			fse=False
+			return None
+		if fse:
+			return None
 	if __.isFiles:
 		data = data.replace('files','file')
 		data = ' '+data+' '
@@ -334,270 +338,276 @@ def getFolder(folder,r=True):
 		for item in dirList:
 			record = None
 			path = folder + _v.slash + item
-			path = path.replace(_v.slash+_v.slash,_v.slash)
-			if os.path.isfile(path):
-				pathX=path
-				pathX=pathX.replace(base_path+os.sep,'')
-				i = i + 1
+			add(path,r)
+def add(path,r=False):
+	global i
+	global iS
+	global baseDepth
+	global base_path
+	path = path.replace(_v.slash+_v.slash,_v.slash)
+	if os.path.isfile(path):
+		pathX=path
+		pathX=pathX.replace(base_path+os.sep,'')
+		i = i + 1
 
-				if _.showLine(path):
+		if _.showLine(path):
+			shouldAdd = False
+
+			if not _.switches.isActive('Text') and not _.switches.isActive('Binary'):
+				# print(0,whatIsIt(path),path)
+				# print(path)
+				shouldAdd = True
+			else:
+				if not _.switches.isActive('Binary') and  _.switches.isActive('Text') and isText(path):
+					# print(1,whatIsIt(path),path)
+					# print(path)
+					shouldAdd = True
+				if not _.switches.isActive('Binary') and not _.switches.isActive('Text'):
+					# print(2,whatIsIt(path),path)
+					# print(path)
+					shouldAdd = True
+				if not _.switches.isActive('Text') and  _.switches.isActive('Binary') and not isText(path):
+					# print(3,whatIsIt(path),path)
+					# print(path)
+					shouldAdd = True
+				if not _.switches.isActive('Text') and  not _.switches.isActive('Binary'):
+					# print(4,whatIsIt(path),path)
+					# print(path)
+					shouldAdd = True
+
+			pass
+
+			pass
+
+
+			if _.switches.isActive('Ago'):
+				# sys.exit()
+				record = _dir.fileInfo( path )
+				# print( _.switches.values('Ago'), record['date_modified_raw'], record['date_created_raw'],  )
+				# if os.path.isfile(path):
+				shouldAdd = False
+				run = 'default'
+				if len( _.switches.values('Ago') ) > 2:
+					if 'a' in _.switches.values('Ago')[2]:
+						run = 'a'
+					elif 'md' in _.switches.values('Ago')[2]:
+						run = 'md'
+					elif _.switches.isActive('Ago-Create-Date'):
+						run = 'cd'
+					elif 'resent' in _.switches.values('Ago')[2]:
+						run = 'resent'
+					elif 'm' in _.switches.values('Ago')[2]:
+						run = 'md'
+
+
+				elif len( _.switches.values('Ago') ) > 1 and type(_.switches.values('Ago')[1]) == str:
+					# print('asdf')
+					if 'a' in _.switches.values('Ago')[1]:
+						run = 'a'
+					elif 'md' in _.switches.values('Ago')[1]:
+						run = 'md'
+					elif _.switches.isActive('Ago-Create-Date'):
+						run = 'cd'
+					elif 'resent' in _.switches.values('Ago')[1]:
+						run = 'resent'
+					elif 'm' in _.switches.values('Ago')[1]:
+						run = 'md'
+
+
+				# print(  len( _.switches.values('Ago') )  )
+				# print(  ( _.switches.values('Ago') )  )
+				# sys.exit()
+				# accessed_raw
+
+
+				agoRange = False
+				if len( _.switches.values('Ago') ) > 1 and type(_.switches.values('Ago')[1]) == float:
+					agoRange = True
+
+				# print( run, agoRange, _.switches.values('Ago')[0], _.friendlyDate(_.switches.values('Ago')[0]) )
+
+				if not agoRange:
+					if run == 'default':
+						if record['date_modified_raw'] > _.switches.values('Ago')[0] or record['date_created_raw'] > _.switches.values('Ago')[0]:
+							shouldAdd = True
+							# print(path)
+					elif run == 'resent':
+						if record['date_modified_raw'] > _.switches.values('Ago')[0] or record['date_created_raw'] > _.switches.values('Ago')[0] or record['accessed_raw'] > _.switches.values('Ago')[0]:
+							shouldAdd = True
+					elif run == 'a':
+						if record['accessed_raw'] > _.switches.values('Ago')[0]:
+							# print( _.friendlyDate(_.switches.values('Ago')[0]), _.switches.values('Ago')[0], record['accessed_raw'], _.friendlyDate(record['accessed_raw']) )
+							shouldAdd = True
+					elif run == 'cd':
+						if record['date_created_raw'] > _.switches.values('Ago')[0]:
+							shouldAdd = True
+					elif run == 'md':
+						if record['date_modified_raw'] > _.switches.values('Ago')[0]:
+							shouldAdd = True
+				elif agoRange:
+					if run == 'default':
+						# print(record['date_modified_raw'])
+						# print(_.switches.values('Ago'))
+						if record['date_modified_raw'] < _.switches.values('Ago')[0] or record['date_created_raw'] < _.switches.values('Ago')[0]:
+							if record['date_modified_raw'] > _.switches.values('Ago')[1] or record['date_created_raw'] > _.switches.values('Ago')[1]:
+								shouldAdd = True
+					elif run == 'resent':
+						if record['date_modified_raw'] < _.switches.values('Ago')[0] or record['date_created_raw'] < _.switches.values('Ago')[0] or record['accessed_raw'] < _.switches.values('Ago')[0]:
+							if record['date_modified_raw'] > _.switches.values('Ago')[1] or record['date_created_raw'] > _.switches.values('Ago')[1] or record['accessed_raw'] > _.switches.values('Ago')[1]:
+								shouldAdd = True
+					elif run == 'a':
+						if record['accessed_raw'] < _.switches.values('Ago')[0]:
+							if record['accessed_raw'] > _.switches.values('Ago')[1]:
+								shouldAdd = True
+					elif run == 'cd':
+						if record['date_created_raw'] < _.switches.values('Ago')[0]:
+							if record['date_created_raw'] > _.switches.values('Ago')[1]:
+								shouldAdd = True
+					elif run == 'md':
+						if record['date_modified_raw'] < _.switches.values('Ago')[0]:
+							if record['date_modified_raw'] > _.switches.values('Ago')[1]:
+								shouldAdd = True
+
+
+
+			pass
+
+			pass
+			# if shouldAdd: print( 1001, path );
+			if shouldAdd:
+				if _.switches.isActive('Size'):
 					shouldAdd = False
+					shouldAdd_2 = False
+					stat = os.stat(path)
+					size = stat.st_size
+					if 'l' in _.switches.values('Size')[0]:
+						if size < _.switches.values('Size')[1]:
+							shouldAdd_2 = True
+					if 'g' in _.switches.values('Size')[0]:
+						if size > _.switches.values('Size')[1]:
+							shouldAdd_2 = True
 
-					if not _.switches.isActive('Text') and not _.switches.isActive('Binary'):
-						# print(0,whatIsIt(path),path)
-						# print(path)
-						shouldAdd = True
-					else:
-						if not _.switches.isActive('Binary') and  _.switches.isActive('Text') and isText(path):
-							# print(1,whatIsIt(path),path)
-							# print(path)
-							shouldAdd = True
-						if not _.switches.isActive('Binary') and not _.switches.isActive('Text'):
-							# print(2,whatIsIt(path),path)
-							# print(path)
-							shouldAdd = True
-						if not _.switches.isActive('Text') and  _.switches.isActive('Binary') and not isText(path):
-							# print(3,whatIsIt(path),path)
-							# print(path)
-							shouldAdd = True
-						if not _.switches.isActive('Text') and  not _.switches.isActive('Binary'):
-							# print(4,whatIsIt(path),path)
-							# print(path)
-							shouldAdd = True
-
-					pass
-
-					pass
-
-
-					if _.switches.isActive('Ago'):
-						# sys.exit()
-						record = _dir.fileInfo( path )
-						# print( _.switches.values('Ago'), record['date_modified_raw'], record['date_created_raw'],  )
-						# if os.path.isfile(path):
+					if shouldAdd_2:
 						shouldAdd = False
-						run = 'default'
-						if len( _.switches.values('Ago') ) > 2:
-							if 'a' in _.switches.values('Ago')[2]:
-								run = 'a'
-							elif 'md' in _.switches.values('Ago')[2]:
-								run = 'md'
-							elif _.switches.isActive('Ago-Create-Date'):
-								run = 'cd'
-							elif 'resent' in _.switches.values('Ago')[2]:
-								run = 'resent'
-							elif 'm' in _.switches.values('Ago')[2]:
-								run = 'md'
 
-
-						elif len( _.switches.values('Ago') ) > 1 and type(_.switches.values('Ago')[1]) == str:
-							# print('asdf')
-							if 'a' in _.switches.values('Ago')[1]:
-								run = 'a'
-							elif 'md' in _.switches.values('Ago')[1]:
-								run = 'md'
-							elif _.switches.isActive('Ago-Create-Date'):
-								run = 'cd'
-							elif 'resent' in _.switches.values('Ago')[1]:
-								run = 'resent'
-							elif 'm' in _.switches.values('Ago')[1]:
-								run = 'md'
-
-
-						# print(  len( _.switches.values('Ago') )  )
-						# print(  ( _.switches.values('Ago') )  )
-						# sys.exit()
-						# accessed_raw
-
-
-						agoRange = False
-						if len( _.switches.values('Ago') ) > 1 and type(_.switches.values('Ago')[1]) == float:
-							agoRange = True
-
-						# print( run, agoRange, _.switches.values('Ago')[0], _.friendlyDate(_.switches.values('Ago')[0]) )
-
-						if not agoRange:
-							if run == 'default':
-								if record['date_modified_raw'] > _.switches.values('Ago')[0] or record['date_created_raw'] > _.switches.values('Ago')[0]:
-									shouldAdd = True
-									# print(path)
-							elif run == 'resent':
-								if record['date_modified_raw'] > _.switches.values('Ago')[0] or record['date_created_raw'] > _.switches.values('Ago')[0] or record['accessed_raw'] > _.switches.values('Ago')[0]:
-									shouldAdd = True
-							elif run == 'a':
-								if record['accessed_raw'] > _.switches.values('Ago')[0]:
-									# print( _.friendlyDate(_.switches.values('Ago')[0]), _.switches.values('Ago')[0], record['accessed_raw'], _.friendlyDate(record['accessed_raw']) )
-									shouldAdd = True
-							elif run == 'cd':
-								if record['date_created_raw'] > _.switches.values('Ago')[0]:
-									shouldAdd = True
-							elif run == 'md':
-								if record['date_modified_raw'] > _.switches.values('Ago')[0]:
-									shouldAdd = True
-						elif agoRange:
-							if run == 'default':
-								# print(record['date_modified_raw'])
-								# print(_.switches.values('Ago'))
-								if record['date_modified_raw'] < _.switches.values('Ago')[0] or record['date_created_raw'] < _.switches.values('Ago')[0]:
-									if record['date_modified_raw'] > _.switches.values('Ago')[1] or record['date_created_raw'] > _.switches.values('Ago')[1]:
-										shouldAdd = True
-							elif run == 'resent':
-								if record['date_modified_raw'] < _.switches.values('Ago')[0] or record['date_created_raw'] < _.switches.values('Ago')[0] or record['accessed_raw'] < _.switches.values('Ago')[0]:
-									if record['date_modified_raw'] > _.switches.values('Ago')[1] or record['date_created_raw'] > _.switches.values('Ago')[1] or record['accessed_raw'] > _.switches.values('Ago')[1]:
-										shouldAdd = True
-							elif run == 'a':
-								if record['accessed_raw'] < _.switches.values('Ago')[0]:
-									if record['accessed_raw'] > _.switches.values('Ago')[1]:
-										shouldAdd = True
-							elif run == 'cd':
-								if record['date_created_raw'] < _.switches.values('Ago')[0]:
-									if record['date_created_raw'] > _.switches.values('Ago')[1]:
-										shouldAdd = True
-							elif run == 'md':
-								if record['date_modified_raw'] < _.switches.values('Ago')[0]:
-									if record['date_modified_raw'] > _.switches.values('Ago')[1]:
-										shouldAdd = True
-
-
-
-					pass
-
-					pass
-					# if shouldAdd: print( 1001, path );
-					if shouldAdd:
-						if _.switches.isActive('Size'):
-							shouldAdd = False
-							shouldAdd_2 = False
-							stat = os.stat(path)
-							size = stat.st_size
-							if 'l' in _.switches.values('Size')[0]:
-								if size < _.switches.values('Size')[1]:
-									shouldAdd_2 = True
-							if 'g' in _.switches.values('Size')[0]:
-								if size > _.switches.values('Size')[1]:
-									shouldAdd_2 = True
-
-							if shouldAdd_2:
-								shouldAdd = False
-
-								if not _.switches.isActive('Text') and not _.switches.isActive('Binary'):
-									
-									shouldAdd = True
-								else:
-									if not _.switches.isActive('Binary') and  _.switches.isActive('Text') and isText(path):
-										shouldAdd = True
-									if not _.switches.isActive('Binary') and not _.switches.isActive('Text'):
-										shouldAdd = True
-									if not _.switches.isActive('Text') and  _.switches.isActive('Binary') and not isText(path):
-										shouldAdd = True
-									if not _.switches.isActive('Text') and  not _.switches.isActive('Binary'):
-										shouldAdd = True
-
-
-
-							if shouldAdd:
-								shouldAdd = False
-								
-
-								if _.switches.isActive('Count'):
-									if _.switches.isActive('Remove-Root-Folder'):
-										process(pathX)
-									else:
-										process(path)
-								else:
-									iS+=1
-
-									formatedSize = formatSize( size )
-									formatedSize = _.fields.value( 'files', 'name', formatedSize )
-									result = ''
-									fs = formatedSize.split(' ')
-									result += _.colorThis( fs[0], 'Color.purple', p=0 )
-									result += ' '
-									result += _.colorThis( fs[1], 'Color.darkcyan', p=0 )
-									fs.reverse()
-									fs.pop()
-									fs.pop()
-									fs.reverse()
-									result += ' '.join(fs)
-									result += '\t'
-									if _.switches.isActive('Remove-Root-Folder'):
-										result += _.colorThis( pathX, 'cyan', p=0 )
-									else:
-										result += _.colorThis( path, 'cyan', p=0 )
-
-									print( result )
-								
-								# print( formatedSize, '\t', path )
-
-
-					if shouldAdd :
-
-						global extensionList
-						if len( extensionList ):
-							if record is None:
-								record = _dir.fileInfo( path )
-							if not len( record['ext'] ):
-								shouldAdd = False
-							else:
-								record['ext'] = record['ext'].lower()
-								if not '.'+record['ext'] in extensionList:
-									shouldAdd = False
-
-							# if '.' in path:
-							#   pathy = path.lower().split('.')
-							#   pathy_test = pathy.pop()
-							#   if not '.'+pathy_test in extensionList:
-							#       shouldAdd = False
+						if not _.switches.isActive('Text') and not _.switches.isActive('Binary'):
+							
+							shouldAdd = True
+						else:
+							if not _.switches.isActive('Binary') and  _.switches.isActive('Text') and isText(path):
+								shouldAdd = True
+							if not _.switches.isActive('Binary') and not _.switches.isActive('Text'):
+								shouldAdd = True
+							if not _.switches.isActive('Text') and  _.switches.isActive('Binary') and not isText(path):
+								shouldAdd = True
+							if not _.switches.isActive('Text') and  not _.switches.isActive('Binary'):
+								shouldAdd = True
 
 
 
 					if shouldAdd:
-						iS+=1
-						if not _.switches.isActive('Totals'):
+						shouldAdd = False
+						
+
+						if _.switches.isActive('Count'):
 							if _.switches.isActive('Remove-Root-Folder'):
-								if not _.switches.isActive('Plus'):
-									process(pathX)
-								else:
-									process(pathX)
+								process(pathX)
 							else:
-								if not _.switches.isActive('Plus'):
-									process(path)
-								else:
-									process(path)
+								process(path)
+						else:
+							iS+=1
+
+							formatedSize = formatSize( size )
+							formatedSize = _.fields.value( 'files', 'name', formatedSize )
+							result = ''
+							fs = formatedSize.split(' ')
+							result += _.colorThis( fs[0], 'Color.purple', p=0 )
+							result += ' '
+							result += _.colorThis( fs[1], 'Color.darkcyan', p=0 )
+							fs.reverse()
+							fs.pop()
+							fs.pop()
+							fs.reverse()
+							result += ' '.join(fs)
+							result += '\t'
+							if _.switches.isActive('Remove-Root-Folder'):
+								result += _.colorThis( pathX, 'cyan', p=0 )
+							else:
+								result += _.colorThis( path, 'cyan', p=0 )
+
+							print( result )
+						
+						# print( formatedSize, '\t', path )
 
 
-					# if shouldAdd:
-					#   text_binary = False
-					#   if not _.switches.isActive('Text') and not _.switches.isActive('Binary'):
-					#       text_binary = True
-					#   else:
-					#       if not _.switches.isActive('Binary') and  _.switches.isActive('Text') and isText(path):
-					#           text_binary = True
-					#       if not _.switches.isActive('Binary') and not _.switches.isActive('Text'):
-					#           text_binary = True
-					#       if not _.switches.isActive('Text') and  _.switches.isActive('Binary') and not isText(path):
-					#           text_binary = True
-					#       if not _.switches.isActive('Text') and  not _.switches.isActive('Binary'):
-					#           text_binary = True
-					#   if not text_binary:
+			if shouldAdd :
+
+				global extensionList
+				if len( extensionList ):
+					if record is None:
+						record = _dir.fileInfo( path )
+					if not len( record['ext'] ):
+						shouldAdd = False
+					else:
+						record['ext'] = record['ext'].lower()
+						if not '.'+record['ext'] in extensionList:
+							shouldAdd = False
+
+					# if '.' in path:
+					#   pathy = path.lower().split('.')
+					#   pathy_test = pathy.pop()
+					#   if not '.'+pathy_test in extensionList:
 					#       shouldAdd = False
 
 
-			# if os.path.isdir(path) and _.showLine(path):
-			if os.path.isdir(path):
-				newFolder = folder + _v.slash + item
-				if os.path.isdir(newFolder):
-					shouldRun = True
-					if _.switches.isActive('FolderRefine'):
-						if not _.showLine(newFolder):
-							shouldRun = False
-					if r and shouldRun:
-						try:
-							getFolder(newFolder,r)
-						except Exception as e:
-							pass
-				else:
-					print('error')
+
+			if shouldAdd:
+				iS+=1
+				if not _.switches.isActive('Totals'):
+					if _.switches.isActive('Remove-Root-Folder'):
+						if not _.switches.isActive('Plus'):
+							process(pathX)
+						else:
+							process(pathX)
+					else:
+						if not _.switches.isActive('Plus'):
+							process(path)
+						else:
+							process(path)
+
+
+			# if shouldAdd:
+			#   text_binary = False
+			#   if not _.switches.isActive('Text') and not _.switches.isActive('Binary'):
+			#       text_binary = True
+			#   else:
+			#       if not _.switches.isActive('Binary') and  _.switches.isActive('Text') and isText(path):
+			#           text_binary = True
+			#       if not _.switches.isActive('Binary') and not _.switches.isActive('Text'):
+			#           text_binary = True
+			#       if not _.switches.isActive('Text') and  _.switches.isActive('Binary') and not isText(path):
+			#           text_binary = True
+			#       if not _.switches.isActive('Text') and  not _.switches.isActive('Binary'):
+			#           text_binary = True
+			#   if not text_binary:
+			#       shouldAdd = False
+
+
+	# if os.path.isdir(path) and _.showLine(path):
+	if os.path.isdir(path):
+		newFolder = path
+		if os.path.isdir(newFolder):
+			shouldRun = True
+			if _.switches.isActive('FolderRefine'):
+				if not _.showLine(newFolder):
+					shouldRun = False
+			if r and shouldRun:
+				try:
+					getFolder(newFolder,r)
+				except Exception as e:
+					pass
+		else:
+			print('error')
 
 
 
@@ -622,87 +632,94 @@ def extensionsDatabank():
 				extensionList.append( x.lower() )
 
 def action():
-	if not __.isFiles:
-		r = _.switches.isActive('Recursive')
-		if not r:
-			_.switches.fieldSet( 'Remove-Root-Folder', 'active', True )
-
-	else:
-		r = True
-	if _.switches.isActive('Extensions'):
-		extensionsDatabank()
-
-
-	_.fields.register( 'files', 'name', '1000.43 KB' )
-	global i
-	global iS
-	global infile
-	global scan
-	# load()
-	if _.switches.isActive('Folders') == False:
-		folder = os.getcwd()
-	else:
-		folder = _.switches.value('Folders')
-	global baseDepth
 	global base_path
-	baseDepth = len( folder.split(_v.slash) )
-	base_path=folder
-	if not _.switches.isActive('Widget-V0'):
-		getFolder(folder,r=r)
-	else:
-		# print(_v.ww)
-		# print(_v.widgets)
-		# print(_v.w)
-		base_path=_v.widgets
-		_.switches.fieldSet( 'Remove-Root-Folder', 'active', True )
-		_.switches.fieldSet( 'Minus', 'active', True )
-		_.switches.fieldSet( 'Minus', 'value', 'minecraft.py,vps-' )
-		_.switches.fieldSet( 'Minus', 'values', ['minecraft.py','vps-'] )
-		_.switches.fieldSet( 'Plus', 'active', True )
-		_.switches.fieldSet( 'Plus', 'value', '*.py,*.sh,*.bat,*.MD' )
-		_.switches.fieldSet( 'Plus', 'values', ['*.py','*.sh','*.bat','*.MD'] )
-		_.switches.fieldSet( 'PlusOr', 'active', True )
-		getFolder(_v.ww+os.sep+'python')
-		getFolder(_v.ww+os.sep+'batch', r=False)
-		getFolder(_v.ww+os.sep+'powershell', r=False)
-		getFolder(_v.ww+os.sep+'php', r=False)
-		getFolder(_v.ww+os.sep+'windows')
-		getFolder(_v.ww+os.sep+'bash')
-		getFolder(_v.widgets+os.sep+'install')
-		getFolder(_v.widgets, r=False)
+	if  _.isData():
+		base_path=''
+		for path in _.isData():
+			add(path)
+
+	elif not _.isData():
+		if not __.isFiles:
+			r = _.switches.isActive('Recursive')
+			if not r:
+				_.switches.fieldSet( 'Remove-Root-Folder', 'active', True )
+
+		else:
+			r = True
+		if _.switches.isActive('Extensions'):
+			extensionsDatabank()
+
+
+		_.fields.register( 'files', 'name', '1000.43 KB' )
+		global i
+		global iS
+		global infile
+		global scan
+		# load()
+		if _.switches.isActive('Folders') == False:
+			folder = os.getcwd()
+		else:
+			folder = _.switches.value('Folders')
+		global baseDepth
+		# global base_path
+		baseDepth = len( folder.split(_v.slash) )
+		base_path=folder
+		if not _.switches.isActive('Widget-V0'):
+			getFolder(folder,r=r)
+		else:
+			# print(_v.ww)
+			# print(_v.widgets)
+			# print(_v.w)
+			base_path=_v.widgets
+			_.switches.fieldSet( 'Remove-Root-Folder', 'active', True )
+			_.switches.fieldSet( 'Minus', 'active', True )
+			_.switches.fieldSet( 'Minus', 'value', 'minecraft.py,vps-' )
+			_.switches.fieldSet( 'Minus', 'values', ['minecraft.py','vps-'] )
+			_.switches.fieldSet( 'Plus', 'active', True )
+			_.switches.fieldSet( 'Plus', 'value', '*.py,*.sh,*.bat,*.MD' )
+			_.switches.fieldSet( 'Plus', 'values', ['*.py','*.sh','*.bat','*.MD'] )
+			_.switches.fieldSet( 'PlusOr', 'active', True )
+			getFolder(_v.ww+os.sep+'python')
+			getFolder(_v.ww+os.sep+'batch', r=False)
+			getFolder(_v.ww+os.sep+'powershell', r=False)
+			getFolder(_v.ww+os.sep+'php', r=False)
+			getFolder(_v.ww+os.sep+'windows')
+			getFolder(_v.ww+os.sep+'bash')
+			getFolder(_v.widgets+os.sep+'install')
+			getFolder(_v.widgets, r=False)
 		
-	"""
-	if _.switches.isActive('Extensions'):
-		folderProfileAttribute( folder=folder, info={
-														'recursive': True,
-														'count': iS,
-														'files': i ,
-														'diff': _.pDiff( iS, i, use='less' ) ,
-		} )
-	"""
-	if not iS == i:
-		_.folderProfileAttribute( folder=folder, info = {
-														'app': 'files',
-														'recursive': r,
-														'factors': {
-																		'Text': _.switches.isActive('Text'),
-																		'Binary': _.switches.isActive('Binary'),
-																		'Extensions': _.switches.isActive('Extensions'),
-																		'Type': _.switches.values('Extensions'),
+		"""
+		if _.switches.isActive('Extensions'):
+			folderProfileAttribute( folder=folder, info={
+															'recursive': True,
+															'count': iS,
+															'files': i ,
+															'diff': _.pDiff( iS, i, use='less' ) ,
+			} )
+		"""
+		if not iS == i:
+			_.folderProfileAttribute( folder=folder, info = {
+															'app': 'files',
+															'recursive': r,
+															'factors': {
+																			'Text': _.switches.isActive('Text'),
+																			'Binary': _.switches.isActive('Binary'),
+																			'Extensions': _.switches.isActive('Extensions'),
+																			'Type': _.switches.values('Extensions'),
 
-																		'PlusOr': _.switches.isActive('PlusOr'),
-																		'PlusClose': _.switches.isActive('PlusClose'),
-																		'Plus': _.switches.isActive('Plus'),
-																		'Minus': _.switches.isActive('Minus'),
-																		
-																		'PlusVals': _.switches.values('Plus'),
-																		'MinusVals': _.switches.values('Minus'),
-														},
-														'percentage': _.pDiff( iS, i, use='less' ),
-														'count': iS,
-														'files': i,
+																			'PlusOr': _.switches.isActive('PlusOr'),
+																			'PlusClose': _.switches.isActive('PlusClose'),
+																			'Plus': _.switches.isActive('Plus'),
+																			'Minus': _.switches.isActive('Minus'),
+																			
+																			'PlusVals': _.switches.values('Plus'),
+																			'MinusVals': _.switches.values('Minus'),
+															},
+															'percentage': _.pDiff( iS, i, use='less' ),
+															'count': iS,
+															'files': i,
 
-		} )
+			} )
 
 	if _.switches.isActive('Count') == False:
 		if not scan:
