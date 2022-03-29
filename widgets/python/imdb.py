@@ -1173,20 +1173,27 @@ def buildRelationships(movieID,personID):
 ##########################################################################################
 
 def printClean( string ):
+	string = _clean(string)
 	for xyz in __.imdb_replace:
 		string = string.replace( xyz[0], xyz[1] )
 
 	return _str.printClean( string )
 
+def _clean(string):
+	string = str(string)
+	string = string.replace('\xe2\x80','-')
+	string = string.replace('\\xe2\\x80','-')
+	return string
+
 def cleanupStringYear3(string):
-	string = string.replace( '\xe2\x80', '-' ).replace( _v.slash+'xe2\\x80', '-' )
+	string = _clean(string)
 	string = cleanupString(string)
 	# string = _str.onlyDigits(string)
 	string = string.replace(' ','')
 	string = printClean( string )
 	return string
 def cleanupStringYear2(string):
-	string = string.replace( '\xe2\x80', '-' ).replace( _v.slash+'xe2\\x80', '-' )
+	string = _clean(string)
 	string = _str.replaceAll(string,'\n',' ')
 	string = _str.replaceDuplicate(string,' ')
 	string = _str.cleanLast(string,' ')
@@ -1206,7 +1213,7 @@ def cleanupStringYear2(string):
 
 	return string
 def cleanupStringYear(string):
-	string = string.replace( '\xe2\x80', '-' ).replace( _v.slash+'xe2\\x80', '-' )
+	string = _clean(string)
 	string = _str.replaceAll(string,'\n',' ')
 	string = _str.replaceAll(string,'\t',' ')
 	string = _str.replaceDuplicate(string,' ')
@@ -1250,16 +1257,18 @@ def formatData( result ):
 			result = str(result,'iso-8859-1', 'ignore')
 		except Exception as e:
 			pass
+	result = _clean(result)
 	return result
 		
 
 
 def cleanupString0( string ):
+	string = _clean(string)
 	for xyz in __.imdb_replace:
 		string = string.replace( xyz[0], xyz[1] )
 	# string = string.replace( '\\xb1', 'n' ).replace( '\xb1', 'n' )
 	string = formatData( string )
-	string = string.replace( '\xe2\x80', '-' ).replace( _v.slash+'xe2\\x80', '-' )
+	string = string.replace( '\xe2\x80', '-' ).replace( '\\xe2\\x80', '-' )
 	for x in txt_clean_list:
 		string = string.replace( x, '' )
 	string = _str.replaceAll(string,'\n',' ')
@@ -1273,17 +1282,18 @@ def cleanupString0( string ):
 	string = _str.cleanBE(string,' ')
 	return string
 def cleanupString(string,beforeAfter=True):
+	string = _clean(string)
 	for xyz in __.imdb_replace:
 		string = string.replace( xyz[0], xyz[1] )
 	# string = string.replace( '\\xb1', 'n' ).replace( '\xb1', 'n' )
 	global txt_clean_list
 	string = formatData( string )
-	string = string.replace( '\xa0', '' ).replace( _v.slash+'xa0', '-' )
-	string = string.replace( '\xe2\x80', '-' ).replace( _v.slash+'xe2\\x80', '-' )
+	string = string.replace( '\xa0', '' ).replace( '\\xa0', '-' )
+	string = string.replace( '\xe2\x80', '-' ).replace( '\\xe2\\x80', '-' )
 	for x in txt_clean_list:
 		string = string.replace( x, '' )
 	string = _str.replaceAll(string,'\xc2',' ')
-	string = _str.replaceAll(string,_v.slash+'xc2',' ')
+	string = _str.replaceAll(string,'\\xc2',' ')
 	string = _str.replaceAll(string,'\n',' ')
 	string = _str.replaceAll(string,'\t',' ')
 	string = _str.cleanLast(string,' ')
@@ -1293,14 +1303,14 @@ def cleanupString(string,beforeAfter=True):
 	string = _str.cleanSpecial(string)
 	string = _str.cleanFirst(string,' ')
 	string = _str.charFix(string)
-	string = string.replace(_v.slash+'xe2\\x80\\x93','-')
-	string = string.replace(_v.slash+'\\xe2\\\\x80\\\\x93','-')
+	string = string.replace('\\xe2\\x80\\x93','-')
+	string = string.replace('\\\\xe2\\\\x80\\\\x93','-')
 	if beforeAfter:
 		string = string.split('(')[0]
 	else:
 		string = string.split('(')[1]
 	string = string.split('/')[0]
-	string = string.replace(_v.slash+'xbb','')
+	string = string.replace('\\xbb','')
 	string = _str.replaceDuplicate(string,' ')
 	string = printClean( string )
 	string = _str.cleanBE(string,' ')
@@ -1308,11 +1318,12 @@ def cleanupString(string,beforeAfter=True):
 	#   string = ''
 	return string
 def cleanupString1(string):
+	string = _clean(string)
 	for xyz in __.imdb_replace:
 		string = string.replace( xyz[0], xyz[1] )
 	# string = string.replace( '\\xb1', 'n' ).replace( '\xb1', 'n' )
 	string = formatData( string )
-	string = string.replace( '\xe2\x80', '-' ).replace( _v.slash+'xe2\\x80', '-' )
+	string = string.replace( '\xe2\x80', '-' ).replace( '\\xe2\\x80', '-' )
 	for x in txt_clean_list:
 		string = string.replace( x, '' )
 	string = _str.replaceAll(string,'\n',' ')
@@ -1322,8 +1333,8 @@ def cleanupString1(string):
 	string = _str.cleanFirst(string,' ')
 	string = _str.cleanSpecial(string)
 	string = _str.cleanFirst(string,' ')
-	string = string.replace(_v.slash+'xe2\\x80\\x93','-')
-	string = string.replace(_v.slash+'\\xe2\\\\x80\\\\x93','-')
+	string = string.replace('\\xe2\\x80\\x93','-')
+	string = string.replace('\\\\xe2\\\\x80\\\\x93','-')
 	string = _str.replaceDuplicate(string,' ')
 	string = printClean( string )
 	string = _str.cleanBE(string,' ')
@@ -3617,7 +3628,7 @@ def crossReference():
 			print( 'document.querySelectorAll(\'.box\').length' )
 			rows = []
 			theFile = 'test.htm'
-			file0 = _v.stmp + _v.slash + theFile
+			file0 = _v.stmp + os.sep + theFile
 			rows.append('<html><head>')
 			rows.append('<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>')
 			# rows.append('<script type="text/javascript" src="http://www.pillerbeauty.com/js/jquery-1.11.3.js"></script>')
@@ -3636,7 +3647,7 @@ def crossReference():
 			rows.append(pageMoviePersonLabel)
 			rows.append('</h4>')
 			temp_file_label = '-imdb-xREF-__'+pageMoviePersonLabel.replace(' ','_').replace('_and_','__AND__')+'.htm'
-			temp_file_label_path = _v.stmp +_v.slash+ temp_file_label
+			temp_file_label_path = _v.stmp +os.sep+ temp_file_label
 			if os.path.isfile(  temp_file_label_path  ):
 				print( temp_file_label_path )
 				try:
@@ -4341,7 +4352,7 @@ def crossReferenceDepth(back):
 			print( 'document.querySelectorAll(\'.box\').length' )
 			rows = []
 			theFile = 'test.htm'
-			file0 = _v.stmp + _v.slash + theFile
+			file0 = _v.stmp + os.sep + theFile
 			rows.append('<html><head>')
 			rows.append('<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>')
 			# rows.append('<script type="text/javascript" src="http://www.pillerbeauty.com/js/jquery-1.11.3.js"></script>')
@@ -4360,7 +4371,7 @@ def crossReferenceDepth(back):
 			rows.append(pageMoviePersonLabel)
 			rows.append('</h4>')
 			temp_file_label = '-imdb-xREF-__'+pageMoviePersonLabel.replace(' ','_').replace('_and_','__AND__')+'.htm'
-			temp_file_label_path = _v.stmp +_v.slash+ temp_file_label
+			temp_file_label_path = _v.stmp +os.sep+ temp_file_label
 			if os.path.isfile(  temp_file_label_path  ):
 				print( temp_file_label_path )
 				try:
@@ -4751,7 +4762,7 @@ class TheFeature:
 								'rating': {'acquired': 0,'expires': 0,},
 							}
 	def setYear(self,year):
-		year = str(year)
+		year = _clean(year)
 		year = year.replace(' ','')
 		n = '0123456789-'
 		y = ''
@@ -4905,11 +4916,11 @@ class TheFeature:
 
 		if type( fh ) == int:
 			first = fixCase( cleanName( cleanNamePathPrep( __.franchises[fh]['label']) ).title() )
-			p = __.movieDrivePath  + first + _v.slash  + cleanNamePathPrep( self.year_name() ) + '.mkv'
+			p = __.movieDrivePath  + first + os.sep  + cleanNamePathPrep( self.year_name() ) + '.mkv'
 			fh = { 'first': first, 'second': second, 'path': p }
 
 		elif type( fh ) == bool:
-			p = __.movieDrivePath  + 'Single'+_v.slash + cleanNamePathPrep( self.name ) + _v.slash + cleanNamePathPrep( self.year_name() ) + '.mkv'
+			p = __.movieDrivePath  + 'Single'+os.sep + cleanNamePathPrep( self.name ) + os.sep + cleanNamePathPrep( self.year_name() ) + '.mkv'
 			fh = { 'first': first, 'second': second, 'path': p }
 
 		if not test:
@@ -4990,7 +5001,12 @@ class TheFeature:
 		if not printMinimal:
 			# print(self.seasonData[0]['year'],self.seasonData[0]['title'],'\n\n\tSeasons: ',str(len(self.seasonData[0]['seasons'])))
 			# _.printBold(self.seasonData[0]['year']+' '+self.seasonData[0]['title']+' '+'\n\n\tSeasons: '+' '+str(len(self.seasonData[0]['seasons'])))
-			_.cp(self.seasonData[0]['year']+' '+self.seasonData[0]['title'], 'yellow')
+			# _.tinydic(self.seasonData)
+			
+			self.seasonData[0]['year'] = _clean(self.seasonData[0]['year'])
+			# for x in _.tinydic(self.seasonData,skim=None,lan='py',prev=True,dump=None,list0=True):
+			# 	print(x)
+			_.cp(_clean(self.seasonData[0]['year'])+' '+self.seasonData[0]['title']+' '+self.seasonData[0]['id'], 'yellow')
 			_.cp( '\n\tSeasons: '+' '+str(len(self.seasonData[0]['seasons'])), 'green' )
 			print()
 		for i1,season in enumerate(self.seasonData[0]['seasons']):
@@ -5878,6 +5894,7 @@ class ThePerson:
 # { 'name': x, 'date': x, 'year': x, 'location': x, 'link': x, 'movies': movies }
 
 	def setYear( self, year=False ):
+		year = _clean(year)
 		self.age = 0
 		if not type(year) == bool:
 			try:
@@ -6410,9 +6427,9 @@ __.links = {
 			}
 
 __.objectLocation = {
-						'people': _v.myTables + _v.slash+'imdb_people.objects',
-						'cinema': _v.myTables + _v.slash+'imdb_cinema.objects',
-						'objects': _v.myTables + _v.slash+'imdb'+_v.slash+'imdb_obj_' + __.ID_HERE + '.objects'
+						'people': _v.myTables + os.sep+'imdb_people.objects',
+						'cinema': _v.myTables + os.sep+'imdb_cinema.objects',
+						'objects': _v.myTables + os.sep+'imdb'+os.sep+'imdb_obj_' + __.ID_HERE + '.objects'
 					}
 
 # __.objectLocation['cinema']
@@ -7235,11 +7252,11 @@ fileBackup.switch( 'Flag', 'imdb' )
 fileBackup.switch( 'isRunOnce' )
 fileBackup.switch( 'DoNotSchedule' )
 
-__.movieDrivePath = 'E:\\MOVIES'+_v.slash
+__.movieDrivePath = 'E:\\MOVIES'+os.sep
 
 def backupJSON( name ):
 	global fileBackup
-	json_abspath = _v.myTables + _v.slash + name
+	json_abspath = _v.myTables + os.sep + name
 	fileBackup.switch( 'Input', json_abspath )
 	# fileBackup.imp.action()
 	fb = fileBackup.action()
@@ -7333,7 +7350,7 @@ def franchiseHierarchy( imdbID ):
 	# return results
 
 	if len(results) < 2 or 0 == len(results)-1:
-		p = __.movieDrivePath + first + _v.slash + year + ' ' + movie + '.mkv'
+		p = __.movieDrivePath + first + os.sep + year + ' ' + movie + '.mkv'
 	else:
 		second = cleanNamePathPrep( fixCase( results[ len(results)-1 ]['label'].title() ) )
 		useSecond = True
@@ -7344,12 +7361,12 @@ def franchiseHierarchy( imdbID ):
 					useSecond = False
 
 		if useSecond:
-			p = __.movieDrivePath + first + _v.slash + second + _v.slash + year + ' ' + movie + '.mkv'
+			p = __.movieDrivePath + first + os.sep + second + os.sep + year + ' ' + movie + '.mkv'
 		else:
 			second = ''
-			p = __.movieDrivePath + first + _v.slash + year + ' ' + movie + '.mkv'
+			p = __.movieDrivePath + first + os.sep + year + ' ' + movie + '.mkv'
 	# _.printVar( results )
-	p = p.replace( _v.slash+' ', _v.slash )
+	p = p.replace( os.sep+' ', os.sep )
 	return { 'first': first, 'second': second, 'path': p }
 	# print( p )
 
@@ -7426,8 +7443,8 @@ def cleanName2( data ):
 		data = data.replace( xyz[0], xyz[1] )
 	# data = data.replace( '\\xb1', 'n' ).replace( '\xb1', 'n' )
 	data = cleanName( data )
-	data = data.replace( _v.slash+' ', _v.slash )
-	data = data.replace( ' '+_v.slash, _v.slash )
+	data = data.replace( os.sep+' ', os.sep )
+	data = data.replace( ' '+os.sep, os.sep )
 	return data
 
 def cleanName_old( data ):
@@ -7435,7 +7452,7 @@ def cleanName_old( data ):
 		data = data.replace( xyz[0], xyz[1] )
 	# data = data.replace( '\\xb1', 'n' ).replace( '\xb1', 'n' )
 	remove = [
-				_v.slash+'xb*',
+				os.sep+'xb*',
 	]
 	for r in remove:
 		if '*' in r:
@@ -7519,9 +7536,9 @@ def load_franchise_table( franchise ):
 
 def load_all_franchises():
 	import glob
-	tt = _v.myTables + _v.slash
+	tt = _v.myTables + os.sep
 	for fran_file in glob.glob( tt + 'imdb-franchises-*' ):
-		if not _v.slash in fran_file:
+		if not os.sep in fran_file:
 			fran_file = tt+fran_file
 		for rec in _.getTable2( fran_file ):
 			__.franchises.append(rec)
@@ -7531,12 +7548,12 @@ def load_all_franchises():
 
 
 txt_clean_list = [
-					'\xc3', _v.slash+'xc3',
-					'\xad', _v.slash+'xad',
-					'\xc3', _v.slash+'xc3',
-					'\xb3', _v.slash+'xb3',
-					'\xc3', _v.slash+'xc3',
-					'\x93', _v.slash+'x93',
+					'\xc3', os.sep+'xc3',
+					'\xad', os.sep+'xad',
+					'\xc3', os.sep+'xc3',
+					'\xb3', os.sep+'xb3',
+					'\xc3', os.sep+'xc3',
+					'\x93', os.sep+'x93',
 ]
 
 __.imdb_replace = [

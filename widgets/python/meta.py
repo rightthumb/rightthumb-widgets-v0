@@ -50,7 +50,7 @@ __.switch_raw = []
 _.appInfo[focus()] = {
 	'file': 'meta.py',
 	'liveAppName': __.thisApp( __file__ ),
- 	'description': 'simple meta editor',
+ 	'description': 'simple meta editor ( in external json files )',
 	'categories': [
 						'meta',
 						'file',

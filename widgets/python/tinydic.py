@@ -32,9 +32,11 @@ import _rightThumb._string as _str
 def appSwitches():
 	pass
 	_.switches.register( 'Files', '-f,-file,-files','file.txt', isData='name', description='Files' )
+	_.switches.register( 'URL', '-url' )
 	_.switches.register( 'Preview', '-p,-prev,-preview' )
 	_.switches.register( 'DumpFields', '-dump,-field,-fields,-fi' )
 	_.switches.register( 'Language', '-l,-lan,-language' )
+	_.switches.register( 'Show-Depth', '-depth' )
 
 _.autoBackupData = __.setting('receipt-log')
 __.releaseAcquiredData = __.setting('receipt-file')
@@ -75,6 +77,8 @@ _.appInfo[focus()] = {
 	],
 	'examples': [
 						_.hp('p tinydic -f www.iheartjane.com.har + 74.6 -prev -dump url'),
+						_.hp('p tinydic -url https://materialdesignicons.com/api/package/38EF63D0-4744-11E4-B3CF-842B2B6CFE1B'),
+						_.hp(''),
 						'',
 	],
 	'columns': [
@@ -165,7 +169,12 @@ import simplejson
 
 
 def action():
-	if _.isData():
+
+	if _.switches.isActive('URL'):
+		import requests
+		url = _.switches.values('URL')[0]
+		data = data=simplejson.loads(str(requests.get(url).content,'iso-8859-1'))
+	elif _.isData():
 		try:
 			data=simplejson.loads( '\n'.join(_.isData()) )
 		except Exception as e:
@@ -196,8 +205,14 @@ def action():
 		lan='js'
 
 
+	if _.switches.isActive('Show-Depth'):
+		list0 = False
+	else:
+		list0 = True
+
 	_.linePrint(c='yellow')
-	for x in _.tinydic(data,skim=skim,lan=lan,prev=prev,dump=dump):
+	# for x in _.tinydic(data,skim=None,lan='py',prev=False,dump=None,list0=True)
+	for x in _.tinydic(data,skim=skim,lan=lan,prev=prev,dump=dump,list0=list0):
 		print(x)
 	_.linePrint(c='yellow')
 

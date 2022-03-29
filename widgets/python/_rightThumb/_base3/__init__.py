@@ -50,21 +50,23 @@ def string_preview(string,l=30):
 tinydic_data = []
 tinydic_last = {}
 tinydic_dic = {}
-def tinydic(data,par='',skim=None, mt=True, lan='js', prev=False, dump=None, dic=False):
+def tinydic(data,par='',skim=None, mt=True, lan='js', prev=False, dump=None, dic=False, list0=True):
     if type(dump)==str: dump=[dump];
     global tinydic_data
     global tinydic_last
     global tinydic_dic
-    def rents(lan,p,k):
+    def rents(lan,p,k,islist=False,list0=True):
         p2=None
-        if lan == 'py' and type(k)==str:
+        if islist and list0:
+            k='0'
+            p2=p+"[{k}]".replace('{k}',k)
+        elif type(k)==int:
+            k=str(k)
+            p2=p+"[{k}]".replace('{k}',k)
+        elif lan == 'py':
             p2=p+"['{k}']".replace('{k}',k)
-        elif lan == 'py' and type(k)==int:
-            p2=p+"[{k}]".replace('{k}',k)
-        elif lan == 'js' and type(k)==str:
+        elif lan == 'js':
             p2=p+".{k}".replace('{k}',k)
-        elif lan == 'js' and type(k)==int:
-            p2=p+"[{k}]".replace('{k}',k)
         else:
             _.e('type(key)')
         return p2
@@ -73,10 +75,12 @@ def tinydic(data,par='',skim=None, mt=True, lan='js', prev=False, dump=None, dic
         tinydic_data=[]
     if type(data) == list:
         for key, value in enumerate(data):
-            par2=rents(lan,par,key)
+            par2=rents(lan,par,key,islist=True,list0=list0)
             if dump is None and not prev and skim is None and mt and not par2 in tinydic_data:
                 tinydic_data.append(par2)
-            tinydic(value,par2,skim,mt,lan,prev,dump,dic)
+            if skim is None and not dump is None and (   par2 in dump   ):
+                print(str(key)+':',value)
+            tinydic(value,par2,skim,mt,lan,prev,dump,dic,list0)
         if dic: return tinydic_dic;
         return tinydic_data
 
@@ -107,16 +111,16 @@ def tinydic(data,par='',skim=None, mt=True, lan='js', prev=False, dump=None, dic
 
     if child:
         for key, value in data.items():
+            par2=rents(lan,par,key)
             if not skim is None and not dump is None and key in dump:
                 for du in dump:
                     if key == du:
                         tinydic_last[du]=value
-            if skim is None and not dump is None and key in dump:
-                print(key,value)
-            par2=rents(lan,par,key)                
+            if skim is None and not dump is None and (   key in dump   or   par2 in dump   ):
+                print(str(key)+':',value)
             if dump is None and not prev and skim is None and mt and not par2 in tinydic_data:
                 tinydic_data.append(par2)
-            tinydic(value,par2,skim,mt,lan,prev,dump,dic)
+            tinydic(value,par2,skim,mt,lan,prev,dump,dic,list0)
     if dic: return tinydic_dic;
     return tinydic_data
 

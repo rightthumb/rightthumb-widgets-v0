@@ -451,6 +451,12 @@ class CLIP:
         result.reverse()
         _copy.imp.copy(  '\n'.join(result)  , p=0 )
 
+    def dirty_eval(self):
+        _copy = _.regImp( __.appReg, '-copy' )
+        _paste = _.regImp( __.appReg, '-paste' )
+        data  = eval( _paste.imp.paste() )
+        _copy.imp.copy(  str(data)  , p=0 )
+
     def builder(self):
         global keyboard
         _paste = _.regImp( __.appReg, '-paste' )
@@ -1805,6 +1811,8 @@ def load():
                 'toggle-chars': { 'raw': [ 'Key.alt', 'Key.cmd', 't', 'c' ], 'do': 'toggle_chars()' },
 
                 'decrypt-lines': { 'raw': [ 'Key.cmd', 'c' ], 'do': 'Clip.decrypt_lines()' },
+
+                'eval-clip': { 'raw': [ 'Key.alt', 'Key.cmd', 'e' ], 'do': 'Clip.dirty_eval()' },
     }
     auto_text = _.getTableDB('hotkeys-AutoText.dex')
     hot_text  = _.getTableDB('hotkeys-Text.dex')

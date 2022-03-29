@@ -28,7 +28,7 @@ if exist %1 (
 goto:eof
 
 :OPEN_FILE
-	call p file-open -app %code_editor% -f "%*"
+	call p file-open -app %code_editor% -f %*
 	rem start "EDIT" %code_editor% "%*"
 goto:eof
 
