@@ -3039,6 +3039,16 @@ alias reph.us="ssh thisreph@reph.us"
 alias rt="ssh vy2ehn4azpfl@23.229.227.201"
 
 
+alias ssh.="ssh-keygen -t rsa"
+alias ssh.h.s="ssh-copy-id -i ~/.ssh/id_rsa.pub scott@hoth.eyeformeta.com"
+alias ssh.b.s="ssh-copy-id -i ~/.ssh/id_rsa.pub scott@bespin.eyeformeta.com"
+alias ssh.m.s="ssh-copy-id -i ~/.ssh/id_rsa.pub scott@mandalore.eyeformeta.com"
+alias ssh.e.s="ssh-copy-id -i ~/.ssh/id_rsa.pub scott@endor.eyeformeta.com"
+alias ssh.h.r="ssh-copy-id -i ~/.ssh/id_rsa.pub root@hoth.eyeformeta.com"
+alias ssh.b.r="ssh-copy-id -i ~/.ssh/id_rsa.pub root@bespin.eyeformeta.com"
+alias ssh.m.r="ssh-copy-id -i ~/.ssh/id_rsa.pub root@mandalore.eyeformeta.com"
+alias ssh.e.r="ssh-copy-id -i ~/.ssh/id_rsa.pub root@endor.eyeformeta.com"
+
 alias vps.mongo="ssh -L 27017:localhost:27017 -C -N -l scott hoth.eyeformeta.com"
 alias vps.mongo1="ssh -L 2701:localhost:27017 -C -N -l scott hoth.eyeformeta.com"
 alias vps.mongo.="ssh -L 2701:localhost:27017 -C -N -l scott hoth.eyeformeta.com"
