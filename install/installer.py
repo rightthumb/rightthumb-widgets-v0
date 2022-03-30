@@ -3098,6 +3098,17 @@ alias vps.b.py.="scp -rp root@bespin.eyeformeta.com:/opt/rightthumb-widgets-v0/w
 alias vps.m.py.="scp -rp root@mandalore.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/python/vps* $ww/python/ ; chmod 777 -R $ww/python/"
 
 
+alias vps.e.py="scp $ww/python/vps*.py root@endor.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/python/ ; ssh root@endor.eyeformeta.com \'chmod -R 777 /opt/rightthumb-widgets-v0/\'"
+alias vps.e.py2="scp /opt/rightthumb-widgets-v0/widgets/python/vps*.py root@endor.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/python/ ; ssh root@endor.eyeformeta.com \'chmod -R 777 /opt/rightthumb-widgets-v0/\'"
+alias vps.e.c="ssh -f root@endor.eyeformeta.com -f \'/bin/python3 /opt/rightthumb-widgets-v0/widgets/python/shClean.py -r -folder /opt \'"
+alias vps.e.sh="ssh root@endor.eyeformeta.com \'mkdir -p /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/\' ; scp $ww/bash/vps-srv/* root@endor.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/bash/vps-srv/ ; ssh root@endor.eyeformeta.com \'chmod -R 777 /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/\'"
+alias vps.e.sh2="ssh root@endor.eyeformeta.com -f \'mkdir -p /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/\' ; scp /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/* root@endor.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/bash/vps-srv/ ; ssh root@endor.eyeformeta.com \'chmod -R 777 /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/\'"
+alias vps.e.db="scp $ww/databank/tables/*.* root@endor.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/databank/tables/ ; ssh root@endor.eyeformeta.com \'chmod -R 777 /opt/rightthumb-widgets-v0/\'"
+alias vps.e.sh.="mkdir -p $ww/bash/vps-srv/ ; scp -rp root@endor.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/bash/vps-srv/*.* $ww/bash/vps-srv/ ; chmod 777 -R $ww/bash/vps-srv/"
+alias vps.e.db.="scp -rp root@endor.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/databank/tables/*.* $ww/databank/tables/ ; chmod 777 -R $ww/databank/tables/"
+alias vps.e.py.="scp -rp root@endor.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/python/vps* $ww/python/ ; chmod 777 -R $ww/python/"
+
+
 alias in.='cat ~/.bashrc > ~/.bashrc.bk ; echo "" > ~/.bashrc ; rm $widgets/install/installer.py ; wget https://raw.githubusercontent.com/rightthumb/rightthumb-widgets-v0/main/install/installer.py -O $widgets/install/installer.py ; chmod 777 $widgets/install/installer.py ; python3 $widgets/install/installer.py -rc.d h'
 alias in.s='sudo cat ~/.bashrc > ~/.bashrc.bk ; echo "" > ~/.bashrc ; rm $widgets/install/installer.py ; wget https://raw.githubusercontent.com/rightthumb/rightthumb-widgets-v0/main/install/installer.py -O $widgets/install/installer.py ; chmod 777 $widgets/install/installer.py ; sudo python3 $widgets/install/installer.py -rc.d h'
 
