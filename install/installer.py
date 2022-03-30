@@ -3039,6 +3039,8 @@ alias reph.us="ssh thisreph@reph.us"
 alias rt="ssh vy2ehn4azpfl@23.229.227.201"
 
 
+alias .py-pip="$widgets/bash/quick-setup.sh";
+
 alias ssh.="ssh-keygen -t rsa"
 alias ssh.h.s="ssh-copy-id -i ~/.ssh/id_rsa.pub scott@hoth.eyeformeta.com"
 alias ssh.b.s="ssh-copy-id -i ~/.ssh/id_rsa.pub scott@bespin.eyeformeta.com"
@@ -3117,6 +3119,7 @@ alias vps.e.db="scp $ww/databank/tables/*.* root@endor.eyeformeta.com:/opt/right
 alias vps.e.sh.="mkdir -p $ww/bash/vps-srv/ ; scp -rp root@endor.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/bash/vps-srv/*.* $ww/bash/vps-srv/ ; chmod 777 -R $ww/bash/vps-srv/"
 alias vps.e.db.="scp -rp root@endor.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/databank/tables/*.* $ww/databank/tables/ ; chmod 777 -R $ww/databank/tables/"
 alias vps.e.py.="scp -rp root@endor.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/python/vps* $ww/python/ ; chmod 777 -R $ww/python/"
+
 
 
 alias in.='cat ~/.bashrc > ~/.bashrc.bk ; echo "" > ~/.bashrc ; rm $widgets/install/installer.py ; wget https://raw.githubusercontent.com/rightthumb/rightthumb-widgets-v0/main/install/installer.py -O $widgets/install/installer.py ; chmod 777 $widgets/install/installer.py ; python3 $widgets/install/installer.py -rc.d h'
