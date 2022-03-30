@@ -5001,7 +5001,6 @@ class TheFeature:
 		if not printMinimal:
 			# print(self.seasonData[0]['year'],self.seasonData[0]['title'],'\n\n\tSeasons: ',str(len(self.seasonData[0]['seasons'])))
 			# _.printBold(self.seasonData[0]['year']+' '+self.seasonData[0]['title']+' '+'\n\n\tSeasons: '+' '+str(len(self.seasonData[0]['seasons'])))
-			# _.tinydic(self.seasonData)
 			
 			self.seasonData[0]['year'] = _clean(self.seasonData[0]['year'])
 			# for x in _.tinydic(self.seasonData,skim=None,lan='py',prev=True,dump=None,list0=True):
@@ -5022,7 +5021,7 @@ class TheFeature:
 					seasonXYZ = '0'+str(season['season'])
 				else:
 					seasonXYZ = str(season['season'])
-				season_records.append({ 'season': 'Season: '+seasonXYZ, 'id': episodes['id'], 'date': airdateAlignRight(episodes['airdate']), 'title': episodes['title'] })
+				season_records.append({ 'season': 'Season: '+seasonXYZ, 'id': episodes['id'], 'date': airdateAlignRight(episodes['airdate']), 'title': episodes['title'], 'imdb': getIdFromUrl(episodes['url']) })
 				if not printMinimal:
 					printRow = '\t'+' '+episodes['id']+' '+'\t'+' '+airdateAlignRight(episodes['airdate'])+' '+'\t'+' '+episodes['title']
 					if _.showLine( printRow ):
@@ -5050,7 +5049,7 @@ class TheFeature:
 			if _.switches.isActive('Column'):
 				_.tables.print( 'seasons', _.switches.value('Column') )
 			else:
-				_.tables.print( 'seasons', 'season,id,date,title' )
+				_.tables.print( 'seasons', 'season,id,date,imdb,title' )
 			# _.tables.fieldProfileSet( 'seasons', 'season', 'alignment', 'center' )
 
 			# _.tables.rprint( season_records, 'season,id,date,title' )

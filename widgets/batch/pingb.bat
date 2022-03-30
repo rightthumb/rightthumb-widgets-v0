@@ -2,6 +2,7 @@
 
 set pingb=google.com
 
+if [%1] == [e] set pingb=endor.eyeformeta.com
 if [%1] == [b] set pingb=bespin.eyeformeta.com
 if [%1] == [m] set pingb=mandalore.eyeformeta.com
 if [%1] == [h] set pingb=hoth.eyeformeta.com

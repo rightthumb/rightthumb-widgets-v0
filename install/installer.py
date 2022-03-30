@@ -3023,10 +3023,12 @@ alias fw.n="sudo ufw deny "
 alias vps.ssh="ssh scott@hoth.eyeformeta.com"
 alias vps2.ssh="ssh scott@bespin.eyeformeta.com"
 
+alias ve="ssh scott@endor.eyeformeta.com"
 alias v="ssh scott@hoth.eyeformeta.com"
 alias vv="ssh scott@bespin.eyeformeta.com"
 alias vvv="ssh scott@mandalore.eyeformeta.com"
-alias vvvv="ssh vy2ehn4azpfl@thumb.eyeformeta.com"
+alias vvvv="ssh scott@endor.eyeformeta.com"
+alias vvvvv="ssh vy2ehn4azpfl@thumb.eyeformeta.com"
 alias thumb="ssh vy2ehn4azpfl@thumb.eyeformeta.com"
 
 alias hoth="ssh scott@hoth.eyeformeta.com"
