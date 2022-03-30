@@ -680,8 +680,29 @@ def alpha(line):
     line = line.replace(' ]','')
     line = line.replace(']','')
     return line
+def totalStrip1b(line,add=''):
+    if add is None: add='';
+    PERMITTED_CHARS = " 0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"+add
+    section = ''
+    for word in line.split(' '):
+        section += ''.join(c for c in word if c in PERMITTED_CHARS)
+        section += ' '
+    line = section + ']'
+    line = line.replace(' ]','')
+    line = line.replace(']','')
+    return line
 def totalStrip2(line):
     PERMITTED_CHARS = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-" 
+    section = ''
+    for word in line.split(' '):
+        section += ''.join(c for c in word if c in PERMITTED_CHARS)
+        section += ' '
+    line = section + ']'
+    line = line.replace(' ]','')
+    line = line.replace(']','')
+    return line
+def totalStrip2b(line):
+    PERMITTED_CHARS = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_ " 
     section = ''
     for word in line.split(' '):
         section += ''.join(c for c in word if c in PERMITTED_CHARS)
@@ -1148,6 +1169,7 @@ def clean_filename(filename, dup=False, replace=None, whitelist=None):
 def do(what=None,string='',a=None,b=None,c=None,d=None):
 
     # if what in 'file'.split(' ') and not string: print( '(filename, dup=False, replace=None, whitelist=None)' );
+    if what in 'an alphan'.split(' '): return totalStrip1b( string, a );
     if what in 'file'.split(' '): return clean_filename( string, a, b, c );
 
     if what is None:

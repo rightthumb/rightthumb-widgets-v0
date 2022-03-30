@@ -3042,6 +3042,7 @@ alias rt="ssh vy2ehn4azpfl@23.229.227.201"
 alias .py-pip="$widgets/bash/quick-setup.sh";
 
 alias ssh.="ssh-keygen -t rsa"
+alias ssh.h.a="ssh-copy-id -i ~/.ssh/id_rsa.pub admin@hoth.eyeformeta.com"
 alias ssh.h.s="ssh-copy-id -i ~/.ssh/id_rsa.pub scott@hoth.eyeformeta.com"
 alias ssh.b.s="ssh-copy-id -i ~/.ssh/id_rsa.pub scott@bespin.eyeformeta.com"
 alias ssh.m.s="ssh-copy-id -i ~/.ssh/id_rsa.pub scott@mandalore.eyeformeta.com"

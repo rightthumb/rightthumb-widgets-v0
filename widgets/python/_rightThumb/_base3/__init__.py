@@ -27,6 +27,14 @@ from datetime import date
 # except Exception as e:
 #   pass
 
+'''
+simplejson = __.imp('simplejson')
+simplejson.loads(var)
+simplejson.dumps(rows, indent=4, sort_keys=sort_keys)
+simplejson.dumps(rows)
+'''
+
+
 def string_preview(string,l=30):
     string=str(string)
     if not string:

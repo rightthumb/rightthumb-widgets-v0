@@ -1795,7 +1795,9 @@ def load():
                 'prefix': { 'raw': [ 'Key.alt', 'Key.cmd', 'p' ], 'do': 'Clip.prefix()' },
                 'suffix': { 'raw': [ 'Key.alt', 'Key.cmd', 's' ], 'do': 'Clip.suffix()' },
                 'lower': { 'raw': [ 'Key.alt', 'Key.cmd', 'l' ], 'do': 'Clip.toLower()' },
+                'lower2': { 'raw': [ 'Key.ctrl', 'Key.cmd', 'l' ], 'do': 'Clip.toLower()' },
                 'upper': { 'raw': [ 'Key.alt', 'Key.cmd', 'u' ], 'do': 'Clip.toUpper()' },
+                'upper2': { 'raw': [ 'Key.ctrl', 'Key.cmd', 'u' ], 'do': 'Clip.toUpper()' },
 
                 'lower': { 'raw': [ 'Key.shift', 'Key.cmd', 's', 't' ], 'do': 'Clip.toString()' },
                 
