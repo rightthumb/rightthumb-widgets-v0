@@ -35,6 +35,8 @@ def appSwitches():
 	_.switches.register( 'SameLine', '-line' )
 	_.switches.register( 'PrintScrap', '-print,-scrap' )
 	_.switches.register( 'AddChars', '-a,-add,-char,-chars' )
+	_.switches.register( 'Clean', '--c' )
+
 	pass
 
 def sc(string):
@@ -225,8 +227,14 @@ def action():
 					if not kik in dirty:
 						dirty[kik]=0
 					dirty[kik]+=1
-
-		_.pv(dirty)
+		if not _.switches.isActive('Clean'):
+			_.cp( _.linePrint(p=0), 'cyan' )
+			_.pv(dirty)
+			_.cp( _.linePrint(p=0), 'cyan' )
+		for k in dirty:
+			print(k)
+		if not _.switches.isActive('Clean'):
+			_.cp( _.linePrint(p=0), 'cyan' )
 		return None
 
 

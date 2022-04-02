@@ -216,11 +216,22 @@ def process(path):
 			path+=os.sep
 
 
-		rfo = _.tailpop(fi,'/')
-		mkdir=f'ssh -f {u}@{s} "/bin/python3 /opt/rightthumb-widgets-v0/widgets/python/mkdir.py -folder {rfo}"'
+		
+		
 
 
 	if _.switches.isActive('mkdir'):
+		s=ftp['server']
+		f=ftp['full-path']
+		u=ftp['user']
+		fi = file.replace( __.path(folder), f ).replace('\\','/')
+		rfo = _.tailpop(fi,'/')
+		# pw=_vault.imp.s.de( ftp['password'] )
+		if os.path.isdir(path):
+			fi=__.path(fi,pop=True)
+			fi += '/'
+			path+=os.sep
+		mkdir=f'ssh -f {u}@{s} "/bin/python3 /opt/rightthumb-widgets-v0/widgets/python/mkdir.py -folder {rfo}"'
 		print(mkdir)
 		try:
 			_.cp('creating folder structure','yellow')

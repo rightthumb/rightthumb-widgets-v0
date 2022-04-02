@@ -204,7 +204,7 @@ _.postLoad( __file__ )
 
 
 def action():
-	# should be   Single-Task   OR   Imply-Architecture-Functions   OR   CLASSES!!
+	#--> min, architecture {:strict:}
 	load()
 	global data
 

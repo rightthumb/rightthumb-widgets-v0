@@ -430,6 +430,14 @@ class CLIP:
 
 
 
+    def dup_space(self):
+        _copy = _.regImp( __.appReg, '-copy' )
+        _paste = _.regImp( __.appReg, '-paste' )
+        data  = _paste.imp.paste()
+        data = data.replace('\r','')
+        data = _str.do('dup',data,'\n')
+        _copy.imp.copy( data, p=0 )
+
     def toLower(self):
         _copy = _.regImp( __.appReg, '-copy' )
         _paste = _.regImp( __.appReg, '-paste' )
@@ -1800,6 +1808,8 @@ def load():
                 'upper2': { 'raw': [ 'Key.ctrl', 'Key.cmd', 'u' ], 'do': 'Clip.toUpper()' },
 
                 'lower': { 'raw': [ 'Key.shift', 'Key.cmd', 's', 't' ], 'do': 'Clip.toString()' },
+
+                'dup-spaces': { 'raw': [ 'Key.ctrl', 'Key.cmd', 's' ], 'do': 'Clip.dup_space()' },
                 
                 'first-word': { 'raw': [ 'Key.alt', 'Key.cmd', '1' ], 'do': 'Clip.first()' },
                 'sql-crud': { 'raw': [ 'Key.alt', 'Key.cmd', 'c' ], 'do': 'Clip.SQL_to_crud()' },

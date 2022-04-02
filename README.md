@@ -23,6 +23,8 @@ Description
         lists examples then copies the selected help item to clipboard
     p ls --c | p -copy
         copies list of files
+    p cat -f 555-index.htm + eyeformeta. | p pipe-split -dirty + eyeformeta --c | p sortThis | p -copy
+        javascript global namespace report
 
 
 
@@ -443,4 +445,4 @@ About
     What if a place existed where your every thought and dream come to life.
     There is only one catch: it has to be written down.
     Such a place exists, it is called programming.
-        - Scott Taylor Reph, RightThumb.com
+        - Scott Taylor Reph, RightThumb.com, EyeForMeta.com
