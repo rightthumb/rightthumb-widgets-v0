@@ -35,7 +35,7 @@ import _rightThumb._string as _str
 
 
 def appSwitches():
-	_.switches.register( 'Files', '-f,-file,-files','?config  OR  ??config', isPipe='name', description='Files' )
+	_.switches.register( 'Files', '-f,-file,-files','file.txt', isData='glob', description='Files', isRequired=True )
 	_.switches.register( 'Implode', '-i,-imp,-implode' )
 	_.switches.register( 'Explode', '-e,-x,-explode' )
 	_.switches.register( 'Add', '-add', 'name;scott py;python3' )

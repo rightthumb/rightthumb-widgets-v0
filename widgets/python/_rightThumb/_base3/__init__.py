@@ -34,6 +34,29 @@ simplejson.dumps(rows, indent=4, sort_keys=sort_keys)
 simplejson.dumps(rows)
 '''
 
+def pa(fi=None,fo=None,dot='',mkdir=True):
+    if os.path.isdir(fi): fi=None; fo=fi;
+    def _pacl(sub,dot):
+        sub=sub.replace('\\',os.sep).replace('/',os.sep)
+        sub=_str.do('dup',sub,os.sep)
+        if dot: sub=sub.replace(dot,os.sep);
+        return sub
+
+    if type(fo) == str: fo=_pacl(fo,dot);
+    if type(fi) == str:
+        if '/' in fi or '\\' in fi: fo=__.path(_pacl(fi,0),pop=True); fi=__.path(_pacl(fi,0),file=True); fo=_pacl(fo,dot);
+    if dot: fo=fo.replace('.',os.sep);
+
+
+    if not fo is None and not fi is None:
+        path=fo+os.sep+fi
+    elif not fo is None:
+        path=fo
+        fi=''
+    if mkdir:
+        if not os.path.isdir(fo):
+            _v.mkdir(fo)
+    return path
 
 def string_preview(string,l=30):
     string=str(string)

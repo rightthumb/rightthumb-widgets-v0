@@ -41,7 +41,7 @@ def appSwitches():
 	_.switches.register( 'Count', '-cnt,-count' )
 	_.switches.register( 'PrintCharLength', '-print,-printlen,-lenprint,-len' )
 	_.switches.register( 'LowerCase', '-lo,-lower' )
-	_.switches.register( 'MixedCase', '-m,-mix,-mixed' )
+	_.switches.register( 'MixedCase', '-m,-mix,-mixed,-case' )
 	_.switches.register( 'NoPrint', '--c' )
 	_.switches.register( 'Pre-Date', '-e,-epoch' )
 	_.switches.register( 'Find-Date', '-uuid,-guid' )

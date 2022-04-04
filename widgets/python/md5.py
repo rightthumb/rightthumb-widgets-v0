@@ -95,7 +95,8 @@ import _rightThumb._md5 as _md5
 
 def appSwitches():
 	pass
-	_.switches.register( 'Files', '-f,-file,-files','file.txt', isPipe=True, isRequired=True, description='Files' )
+	
+	_.switches.register( 'Files', '-f,-file,-files','file.txt', isData='glob', description='Files', isRequired=True )
 	_.switches.register( 'Time', '-time' )
 
 	
@@ -215,24 +216,22 @@ _.postLoad( __file__ )
 
 def action():
 
-	if not type( _.appData[__.appReg]['pipe'] ) == bool:
-		_.pipeCleaner(0)
+	# if not type( _.appData[__.appReg]['pipe'] ) == bool:
+		# _.pipeCleaner(0)
 		# _.printVar( _.appData )
-		for i,row in enumerate( _.appData[__.appReg]['pipe'] ):
-			
-			start=time.time()
-			data = _md5.md5File( row )
-			print( data )
-			if _.switches.isActive('Time'):
-				print(time.time()-start)
+	for i,row in enumerate( _.isData(r=1) ):
+		start=time.time()
+		print(row)
+		data = _md5.md5File( row )
+		print( data )
+		if _.switches.isActive('Time'):
+			print(time.time()-start)
 
 
 
 ########################################################################################
 if __name__ == '__main__':
 	action()
-
-
 
 
 

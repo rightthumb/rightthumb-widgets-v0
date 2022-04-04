@@ -10,10 +10,8 @@
 # ###########################################################################
 # ## {C3P0D40fAe8B} ##
 
-import os
-import sys
-import time
-# import platform
+##################################################
+import os, sys, time
 ##################################################
 import _rightThumb._construct as __
 appDBA = __.clearFocus( __name__, __file__ )
@@ -30,16 +28,31 @@ _.load()
 ##################################################
 import _rightThumb._vars as _v
 import _rightThumb._string as _str
-
 ##################################################
 
-
 def appSwitches():
-	_.switches.register( 'Clean', '-clean' )
+	pass
+	### EXAMPLE: START
+	# _.switches.register( 'Input', '-i' )
+	_.switches.register( 'Files', '-f,-file,-files','file.txt', isData='glob', description='Files', isRequired=True )
+	### EXAMPLE: END
 
-
-_.autoBackupData = __.autoCreationConfiguration['backup']
-__.releaseAcquiredData = __.autoCreationConfiguration['logs']
+### EXAMPLE: START
+# _.switches.trigger( 'Files', _.myFileLocations, vs=True )
+# 	finds the file in probable locations
+# 	and 
+# 		if  _.autoBackupData = True
+# 		and __.releaseAcquiredData = True
+# 			GET EPOCH FROM: hosts/hostname/logs/apps/execution_receipt-app_name-epoch.json
+# 		you can run apps on usb at a clients office
+# 			when you get home run: p app -loadepoch epoch 
+# 				backed up
+# 					pipe
+# 					files
+# 					tables
+### EXAMPLE: END
+_.autoBackupData = __.setting('receipt-log')
+__.releaseAcquiredData = __.setting('receipt-file')
 __.myFileLocations_SKIP_VALIDATION = False
 __.isRequired_Pipe = False
 __.isRequired_Pipe_or_File = False
@@ -47,14 +60,18 @@ __.pre_error = False
 __.switch_raw = []
 # __.switch_raw = [ 'Delim' ]
 # __.isRequired_or_List = ['Pipe','Files','Plus']
+# __.setting( 'app-switches-raw', [ 'Delim' ] )
+
 
 _.appInfo[focus()] = {
-	'file': '-paste.py',
+	# 'app': '7facG-jo0Cxk',
+	'file': 'thisApp.py',
 	'liveAppName': __.thisApp( __file__ ),
- 	'description': 'paste clipboard',
+	'description': 'Changes the world',
+		# _.ail(1,'subject')+
+		# _.aib('one')+
 	'categories': [
-						'clipboard',
-						'paste',
+						'DEFAULT',
 				],
 	'usage': [
 						# 'epy another',
@@ -70,7 +87,7 @@ _.appInfo[focus()] = {
 						# '',
 	],
 	'examples': [
-						'p thisApp -file file.txt',
+						_.hp('p thisApp -file file.txt'),
 						'',
 	],
 	'columns': [
@@ -96,7 +113,11 @@ _.appData[focus()] = {
 					'table': {'sent': [], 'received': [] }, 
 		},
 	}
+### EXAMPLE: START
+# _.appInfo[focus()]['examples'].append( 'p thisApp -file file.txt' )
 
+# _.appInfo[focus()]['columns'].append( {'name': 'name', 'abbreviation': 'n'} )
+### EXAMPLE: END
 
 
 def registerSwitches( argvProcessForce=False ):
@@ -115,13 +136,18 @@ def registerSwitches( argvProcessForce=False ):
 	appSwitches()
 
 	_.myFileLocation_Print = False
-	__.myFileLocations_SKIP_VALIDATION = False
 	_.switches.trigger( 'Files', _.myFileLocations, vs=True )
 	_.switches.trigger( 'Folder', _.myFolderLocations )
 	_.switches.trigger( 'URL', _.urlTrigger )
 	_.switches.trigger( 'Ago', _.timeAgo )
 	_.switches.trigger( 'Duration', _.timeFuture )
-	
+	### EXAMPLE: START
+	# _.default_switch_trigger('Plus', trigger_plus)
+	# _.switches.trigger( 'Files',_.inRelevantFolder )	
+	# _.switches.trigger( 'Watched', _.txt2Date )
+	# _.switches.trigger( 'Input',_.formatColumns )
+	# _.switches.trigger( 'Franchise',_.triggerSpace )
+	### EXAMPLE: END
 	
 	_.defaultScriptTriggers()
 	_.switches.process()
@@ -149,152 +175,50 @@ if __name__ == '__main__':
 _.postLoad( __file__ )
 
 ########################################################################################
+### EXAMPLE: START
+# data = _.tables.returnSorted( 'data', 'd.timestamp', data )
+# _.switches.fieldSet( 'Long', 'active', True )
+# _.tables.register( 'data', table )
+# _.tables.fieldProfileSet('data','timestamp','trigger',_.friendlyDate)
+# _.tables.fieldProfileSet('data','phone,email,address','alignment','center')
+# _.tables.print( 'data', 'name' )
+# _.tables.print( 'data', ','.join(_.switches.values('Column')) )
+# _.switches.isActive('Files')
+# p = _.getText( _v.pips, raw=True, clean=True ).split( '\n' )
+# os.system( '"' + do + '"' )
+# _.setPipeData( os.listdir( os.getcwd() ), focus() )
+# _.showLine( item )
+# 	if os.path.isdir( row ):
+# 	if os.path.isfile( row ):
+#	os.path.abspath(path)
+# __.appRegPipe    ( pipe data registerd focus(__.appReg) set by _.myFileLocations {if imported} , default is None )
+# for i,row in enumerate(_.t( _.appData[__.appReg]['pipe'] )):
+# for i,row in _.e( _.isData(r=1) ):
+# date = _.friendlyDate( theDate )
+# _.addComma()
+# 													if platform.system() == 'Windows':
+### EXAMPLE: END
+########################################################################################
 # START
 
-def cleanString(data):
-	data = cleanStringA(data)
-	data = cleanStringA(data)
-	data = cleanStringA(data)
-	data = cleanStringA(data)
-	data = cleanStringA(data)
-	return data
 
-def cleanStringA(data):
-	data = _str.cleanBE(data,_v.default_powershell)
-	data = _str.cleanBE(data,'\r')
-	data = _str.cleanBE(data,'\n')
-	data = _str.cleanBE(data,'\r')
-	data = _str.cleanBE(data,'\t')
-	data = _str.cleanBE(data,' ')
-	return data
-
-def formatData( result ):
-	try:
-		result = str(result,'utf-8')
-	except Exception as e:
-		try:
-			result = str(result,'iso-8859-1')
-		except Exception as e:
-			result = result.encode('utf-8')
-	return result
-
-
-
-def clip_get():
-	result = 'error'
-	try:
-		result = clip_get_2()
-	except Exception as e:
-		_.cp( '\tpython3 -m pip install pyperclip', 'yellow' )
-		try:
-			result = clip_get_1()
-		except Exception as e:
-			try:
-				result = clip_get_3()
-			except Exception as e:
-				_.cp( 'Error: clipboard error', 'red' )
-				_.cp( '\tpython3 -m pip install pyperclip', 'yellow' )
-
-	if not result:
-		_.cp( 'Error: clipboard error', 'red' )
-		_.cp( '\tpython3 -m pip install pyperclip', 'yellow' )
-		sys.exit()
-	# print( result )
-	# sys.exit()
-	return result
-
-
-def clip_get_1():
-	from tkinter import Tk
-	r = Tk()
-	r.withdraw()
-	r.clipboard_clear()
-	return r.clipboard_get()
-
-
-def clip_get_3():
-	import subprocess
-	# print('_.isWin:',_.isWin)
-	if _.isWin:
-		_.cp( 'Error: clipboard error', 'red' )
-		return None
-
-	tmpA = _v.stmp +_v.slash+ 'cryptString-A.txt'
-	tmpB = _v.stmp +_v.slash+ 'cryptString-B.txt'
-	if os.path.isfile(tmpA):
-		os.unlink(tmpA)
-	if os.path.isfile(tmpB):
-		os.unlink(tmpB)
-	if not _.which('xsel'):
-		if not _.isWin:
-			print( '\tsudo apt install xclip xsel' )
-			return None
-
-	cmd = ["xsel", "--clipboard", "--output", ">", tmpA ]
-	# print( ' '.join(cmd) )
-	p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
-	if os.path.isfile(tmpA):
-		return _.getText( tmpA, raw=True, clean=2 )
-	return None
-	# return _.which('xsel')
-	# return _.which('xclip')
-	# return _.which('python3')
-
-	# return 'test'
-
-def clip_get_2():
-	import pyperclip
-	return cleanString( pyperclip.paste() )
-
-	# global win32clipboard
-	# if win32clipboard is None:
-	# 	import win32clipboard
-	# # get clipboard data
-	# win32clipboard.OpenClipboard()
-	# data = win32clipboard.GetClipboardData()
-	# win32clipboard.CloseClipboard()
-	# return data
-
-win32clipboard = None
-
-paste = clip_get
-
-def cleaner(textR):
-
-	text=''
-	for x in textR:
-		if x in _str.printable2:
-			text+=x
-		else:
-			text+=' '
-	text=_str.do('all',text,'  ',' ')
-	text=_str.do('be',text,' ')
-	text=text.replace('\r','')
-	return text
 
 def action():
-	textR=clip_get()
-	# text = textR.encode("ascii", "ignore")
-	if not _.switches.isActive('Clean'):
-		text = textR
-	elif _.switches.isActive('Clean'):
-		text = cleaner(textR)
-	text = cleaner(text)
-	try:
-		print( text )
-	except Exception as e:
-		text = cleaner(text)
-		print( text )
+	#--> min, architecture {:strict:}
+
+	for i,path in enumerate( _.isData(r=1) ):
+		print(path)
+		if os.path.isfile(path):
+			_.pv( _dir.info(path) )
 
 
-
+import _rightThumb._dir as _dir
 
 
 ########################################################################################
 if __name__ == '__main__':
 	action()
-	_.tables.eof()
-
+	__.isExit()
 
 
 

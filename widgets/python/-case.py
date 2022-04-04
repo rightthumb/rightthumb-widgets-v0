@@ -31,9 +31,10 @@ import _rightThumb._string as _str
 ##################################################
 
 def appSwitches():
+	_.switches.register( 'Upper', '-u' )
+	_.switches.register( 'Lower', '-u' )
 	pass
 	### EXAMPLE: START
-	# _.switches.register( 'Input', '-i' )
 	# _.switches.register( 'Files', '-f,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=True )
 	### EXAMPLE: END
 
@@ -201,23 +202,70 @@ _.postLoad( __file__ )
 ########################################################################################
 # START
 
+def randomTrueFalse(fix=2):
+    import random
 
+    global randomTrueFalseLast
+    global randomTrueFalseCount
+    global randomTrueFalseSame
+    try:
+        randomTrueFalseLast
+    except Exception as e:
+        randomTrueFalseLast = True
+        randomTrueFalseSame = 0
+        randomTrueFalseCount = 0
+
+    ran = random.randint(1,101)
+    result = ran % 2 == 0
+    i = 0
+    while i < fix:
+        i+=1
+        if result == randomTrueFalseLast:
+            ran = random.randint(1,101)
+            result = ran % 2 == 0
+
+    if result == randomTrueFalseLast:
+        randomTrueFalseSame += 1
+    randomTrueFalseCount += 1
+    randomTrueFalseLast = result
+    return result
+def randomizeCase(string):
+    import random
+
+    result = ''
+    for ch in string:
+        if ch.isalnum():
+            try:
+                int(ch)
+            except Exception as e:
+                ran = random.randint(1,101)
+                test = ran % 2 == 0
+                if randomTrueFalse():
+                    ch = ch.lower()
+                else:
+                    ch = ch.upper()
+        result += ch
+    return result
 
 def action():
 	#--> min, architecture {:strict:}
-	load()
-	global c3po
+	text=_paste.imp.paste()
+	new=''
+	for t in text:
+		if randomTrueFalse():
+			t=t.upper()
+		else:
+			t=t.lower()
+		new+=t
+	if _.switches.isActive('Upper'):
+		new=new.upper()
+	if _.switches.isActive('Lower'):
+		new=new.lower()
+	_copy.imp.copy( new )
 
-	for i,row in enumerate( _.isData(r=1) ):
-		print(row)
 
-
-
-def load():
-	global c3po
-	c3po = _.getTable( 'table' )
-
-
+_paste = _.regImp( __.appReg, '-paste' )
+_copy = _.regImp( __.appReg, '-copy' )
 
 ########################################################################################
 if __name__ == '__main__':

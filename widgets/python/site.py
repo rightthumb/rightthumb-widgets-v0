@@ -37,6 +37,7 @@ def appSwitches():
 	# _.switches.register( 'Files', '-f,-file,-files','file.txt',  description='glob', isRequired=True )
 	_.switches.register( 'Files', '-f,-file,-files','file.txt', isRequired=True )
 	_.switches.register( 'mkdir', '-mkdir' )
+	_.switches.register( 'Server', '-srv,-server' )
 
 
 
@@ -168,7 +169,13 @@ def process(path):
 			folder = __.path(folder,pop=True)
 		except Exception as e:
 			pass
-	meta = _.getTable2( folder+os.sep+'.folder.meta' )
+	mPath = folder+os.sep+'.folder.meta'
+	if _.switches.isActive('Server'):
+		s=_.switches.value('Server')
+		if os.path.isfile(mPath+'.'+s):
+			mPath+='.'+s
+
+	meta = _.getTable2( mPath )
 	_.pv(meta)
 	
 

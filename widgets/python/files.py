@@ -46,7 +46,6 @@ def appSwitches():
 	_.switches.register('Text', '-t,-text,-txt')
 	_.switches.register('Binary', '-bin')
 	_.switches.register('Size', '-size',' g 10mb, L 2kb ')
-	# _.switches.register('Extensions', '-ext', 'image, video, audio, document')
 	_.switches.register('Totals', '-total,-totals')
 	_.switches.register('FolderRefine', '-fr')
 	_.switches.register('Ago', '-ago', '1m')

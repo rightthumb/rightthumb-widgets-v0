@@ -31,9 +31,11 @@ import _rightThumb._string as _str
 ##################################################
 
 def appSwitches():
+	_.switches.register( 'Aliases', '-a,-alias,-aliases' )
+	_.switches.register( 'Content', '-con' )
+	_.switches.register( 'Labels', '-l,-label,-labels,-lables,-lable' )
 	pass
 	### EXAMPLE: START
-	# _.switches.register( 'Input', '-i' )
 	# _.switches.register( 'Files', '-f,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=True )
 	### EXAMPLE: END
 
@@ -65,7 +67,7 @@ __.switch_raw = []
 
 _.appInfo[focus()] = {
 	# 'app': '7facG-jo0Cxk',
-	'file': 'thisApp.py',
+	'file': 'aliases.py',
 	'liveAppName': __.thisApp( __file__ ),
 	'description': 'Changes the world',
 		# _.ail(1,'subject')+
@@ -87,7 +89,7 @@ _.appInfo[focus()] = {
 						# '',
 	],
 	'examples': [
-						_.hp('p thisApp -file file.txt'),
+						_.hp('p aliases -file file.txt'),
 						'',
 	],
 	'columns': [
@@ -201,22 +203,78 @@ _.postLoad( __file__ )
 ########################################################################################
 # START
 
+def liner(strin):
+	strin=strin.replace('\t','')
+	def spa(rin,what): return rin.replace(' '+what,what).replace(what+' ',what);
+	strin=_str.do('dup',strin,' ')
+	strin=_str.do('be',strin,' ')
+	strin=spa(strin,';')
+	strin=spa(strin,'=')
+	if '="' in strin:
+		strin=spa(strin,'"')
+	elif "='" in strin:
+		strin=spa(strin,"'")
+	return strin
 
+def recMe(alias):
+	alias=alias[6:]
+	label=alias.split('=')[0]
+	content=alias.split('=')[1]
+	if content.startswith('"'):
+		content=content[1:]
+	if content.endswith('"'):
+		content=content[:-1]
+	if content.endswith("'"):
+		content=content[:-1]
+	# content=content.replace(';','\n')
+	return { label:content }
 
 def action():
 	#--> min, architecture {:strict:}
 	load()
-	global c3po
+	global aliases
+	index={}
+	for alias in aliases:
+		alias=liner(alias)
+		rec=recMe(alias)
+		for a in rec:
+			index[a]=rec[a]
+	subjects={}
+	for a in index:
+		if _.switches.isActive('Content'):
+			if _.switches.isActive('Plus'):
+				if _.showLine(index[a]):
+					subjects[a]=index[a]
+		else:
+			if _.switches.isActive('Plus'):
+				if _.showLine(a):
+					subjects[a]=index[a]
+		if a in _.switches.values('Aliases'):
+			subjects[a]=index[a]
+	pass
+	for a in subjects:
+		if not _.switches.isActive('Labels'):
+			_.linePrint(c='green')
+		_.cp([ a ], 'yellow')
+		if not _.switches.isActive('Labels'):
+			for line in index[a].split(';'):
+				print( '\t',line )
 
-	for i,row in enumerate( _.isData(r=1) ):
-		print(row)
+
+
+
 
 
 
 def load():
-	global c3po
-	c3po = _.getTable( 'table' )
-
+	global aliases
+	aliases=[]
+	# file=_.pa(_v.w +'/install/installer.py')
+	# print(file)
+	# sys.exit()
+	for i,row in enumerate(  _.getText(_.pa(_v.w +'/install/installer.py'), raw=True).replace('\r','').split('\n')  ):
+		if row.startswith('alias '):
+			aliases.append(row)
 
 
 ########################################################################################

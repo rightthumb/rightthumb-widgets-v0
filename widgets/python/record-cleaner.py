@@ -614,7 +614,9 @@ class Phone:
 	def process( self, data ):
 		data=data.replace('\r','')
 		data=data.replace('\n','')
-		data=data.replace('+','')
+		data=data.replace('+1','')
+		if data.startswith('1'):
+			data=data[1:]
 		for item in re.finditer(r"\(?\b[2-9][0-9]{2}\)?[-. ]?[2-9][0-9]{2}[-. ]?[0-9]{4}\b", data):
 			item = item.group(0)
 			clean=''

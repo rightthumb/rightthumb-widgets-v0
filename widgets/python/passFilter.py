@@ -172,8 +172,8 @@ def process( row ):
 				if test in part.lower():
 					isNext = True
 
-			newRow.append( part )
-		row = ' '.join( newRow )
+				newRow.append( part )
+			row = ' '.join( newRow )
 	return row
 
 

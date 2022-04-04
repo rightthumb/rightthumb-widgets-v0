@@ -9,7 +9,6 @@
 #    - Scott Taylor Reph, RightThumb.com
 # ###########################################################################
 # ## {C3P0D40fAe8B} ##
-
 ##################################################
 import os, sys, time
 ##################################################
@@ -31,6 +30,7 @@ import _rightThumb._string as _str
 ##################################################
 
 def appSwitches():
+	_.switches.register( 'Dump-Types', '-dump' )
 	_.switches.register( 'Type', '-t,-type' )
 	_.switches.register( 'Clip', '-clip' )
 	_.switches.register( 'Form-id', '-f.id' )
@@ -41,24 +41,18 @@ def appSwitches():
 	_.switches.register( 'Form-iter.n', '-f.iter.n' )
 	_.switches.register( 'Form-iter.v', '-f.iter.v' )
 	pass
-	### EXAMPLE: START
-	# _.switches.register( 'Files', '-f,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=True )
-	### EXAMPLE: END
 
-### EXAMPLE: START
-# _.switches.trigger( 'Files', _.myFileLocations, vs=True )
-# 	finds the file in probable locations
-# 	and 
-# 		if  _.autoBackupData = True
-# 		and __.releaseAcquiredData = True
-# 			GET EPOCH FROM: hosts/hostname/logs/apps/execution_receipt-app_name-epoch.json
-# 		you can run apps on usb at a clients office
-# 			when you get home run: p app -loadepoch epoch 
-# 				backed up
-# 					pipe
-# 					files
-# 					tables
-### EXAMPLE: END
+#       finds the file in probable locations
+#       and 
+#               if  _.autoBackupData = True
+#               and __.releaseAcquiredData = True
+#                       GET EPOCH FROM: hosts/hostname/logs/apps/execution_receipt-app_name-epoch.json
+#               you can run apps on usb at a clients office
+#                       when you get home run: p app -loadepoch epoch 
+#                               backed up
+#                                       pipe
+#                                       files
+#                                       tables
 _.autoBackupData = __.setting('receipt-log')
 __.releaseAcquiredData = __.setting('receipt-file')
 __.myFileLocations_SKIP_VALIDATION = False
@@ -72,13 +66,14 @@ __.switch_raw = []
 
 
 _.appInfo[focus()] = {
-	'file': 'thisApp.py',
+	'file': 'html-form.py',
 	'liveAppName': __.thisApp( __file__ ),
-	'description': 'Changes the world',
+	'description': 'generate html form',
 		# _.ail(1,'subject')+
 		# _.aib('one')+
 	'categories': [
-						'DEFAULT',
+						'form',
+						'fields',
 				],
 	'usage': [
 						# 'epy another',
@@ -94,7 +89,7 @@ _.appInfo[focus()] = {
 						# '',
 	],
 	'examples': [
-						_.hp('p thisApp -file file.txt'),
+						_.hp('p html-form '),
 						'',
 	],
 	'columns': [
@@ -120,11 +115,7 @@ _.appData[focus()] = {
 					'table': {'sent': [], 'received': [] }, 
 		},
 	}
-### EXAMPLE: START
-# _.appInfo[focus()]['examples'].append( 'p thisApp -file file.txt' )
 
-# _.appInfo[focus()]['columns'].append( {'name': 'name', 'abbreviation': 'n'} )
-### EXAMPLE: END
 
 
 def registerSwitches( argvProcessForce=False ):
@@ -148,13 +139,7 @@ def registerSwitches( argvProcessForce=False ):
 	_.switches.trigger( 'URL', _.urlTrigger )
 	_.switches.trigger( 'Ago', _.timeAgo )
 	_.switches.trigger( 'Duration', _.timeFuture )
-	### EXAMPLE: START
-	# _.default_switch_trigger('Plus', trigger_plus)
-	# _.switches.trigger( 'Files',_.inRelevantFolder )	
-	# _.switches.trigger( 'Watched', _.txt2Date )
-	# _.switches.trigger( 'Input',_.formatColumns )
-	# _.switches.trigger( 'Franchise',_.triggerSpace )
-	### EXAMPLE: END
+	# _.switches.trigger( 'Files',_.inRelevantFolder )      
 	
 	_.defaultScriptTriggers()
 	_.switches.process()
@@ -182,42 +167,51 @@ if __name__ == '__main__':
 _.postLoad( __file__ )
 
 ########################################################################################
-### EXAMPLE: START
-# data = _.tables.returnSorted( 'data', 'd.timestamp', data )
-# _.switches.fieldSet( 'Long', 'active', True )
-# _.tables.register( 'data', table )
-# _.tables.fieldProfileSet('data','timestamp','trigger',_.friendlyDate)
-# _.tables.fieldProfileSet('data','phone,email,address','alignment','center')
-# _.tables.print( 'data', 'name' )
-# _.tables.print( 'data', ','.join(_.switches.values('Column')) )
-# _.switches.isActive('Files')
-# p = _.getText( _v.pips, raw=True, clean=True ).split( '\n' )
-# os.system( '"' + do + '"' )
-# _.setPipeData( os.listdir( os.getcwd() ), focus() )
-# _.showLine( item )
-# 	if os.path.isdir( row ):
-# 	if os.path.isfile( row ):
-#	os.path.abspath(path)
-# __.appRegPipe    ( pipe data registerd focus(__.appReg) set by _.myFileLocations {if imported} , default is None )
-# for i,row in enumerate(_.t( _.appData[__.appReg]['pipe'] )):
-# for i,row in _.e( _.isData(r=1) ):
-# date = _.friendlyDate( theDate )
-# _.addComma()
-# 													if platform.system() == 'Windows':
-### EXAMPLE: END
+#       if os.path.isdir( row ):
+#       if os.path.isfile( row ):
+#       os.path.abspath(path)
+#                                                                                                       if platform.system() == 'Windows':
 ########################################################################################
 # START
 
-def process(_type=None,_id=None,_class=None,_iter=None,_iter_dic=None):
-	if ty=='select':
-		field = '''
-<div for="_id_" class="custom-select" style="width:200px;">
-        <label for="_id_">_label_</label>
-                <select id="_id_" class="_class_" name="_name_">
-                        <option value="_iter_v_">_iter_n_</option>
-                </select>
-</div>
-'''
+
+def lements(_type):
+	global elements
+	if _type is None:
+		return None
+
+	for k in elements:
+		if _type in elements[k]:
+			return elements[k][_type]
+
+	return None
+
+
+# def process(_type=None, _name=None, _label=None, _id=None,_class=None,_iter=None,_iter_dic=None):
+def process(dic):
+
+
+	_type=''
+	_name=''
+	_label=''
+	_class=''
+	_iter=None
+	_iter_dic=None
+	if 'name' in dic: _name=dic['name'];
+	_id=id_pre()+'-'+_name
+
+	if 'type' in dic: _type=dic['type'];
+	if 'label' in dic: _label=dic['label'];
+	if 'id' in dic: _id=_id+'-'+dic['id'];
+	if 'class' in dic: _class=dic['class'];
+	if 'itter' in dic: _iter=dic['itter'];
+	if 'itter-dic' in dic: _iter_dic=dic['itter-dic'];
+
+
+
+	field = lements(_type)
+	if field is None:
+		_.e('bad type')
 	pass
 	if '_iter_n_' in field and _iter_dic:
 		d=_iter_dic
@@ -243,45 +237,137 @@ def process(_type=None,_id=None,_class=None,_iter=None,_iter_dic=None):
 					
 		field='\n'.join(new)
 
+
+	field = field.replace( '_id_', _id )
+	field = field.replace( '_class_', _class )
+	field = field.replace( '_type_', _type )
+	field = field.replace( '_name_', _name )
+	field = field.replace( '_label_', _label )
+	return field
+	# print(field)
 					
 
 
+def id_pre():
+	a = random.choice(list('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'))
+	b = random.choice(list('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'))
+	c = random.choice(list('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'))
+	d = random.choice(list('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'))
+	return a+b+c+d
 
+html='''<!DOCTYPE html>
+<html lang="en-US">
 
+<head>
+        <title>title</title>
+        <meta charset="utf-8">
+        <!-- <META http-equiv="refresh" content="1;URL=/?"> -->
 
+        <link rel="stylesheet" href="https://eyeformeta.com/assets/forms/fields/default.css">
+        
+</head>
+
+<body>
+<form>
+HERE
+</form>
+        <!-- -->
+</body>
+
+</html>'''
 
 def action():
+	global html
+	load()
+	fields = []
+	if _.switches.isActive('Dump-Types'):
+		dumpTypes()
+		return None
+
+
+	if _.isData():
+		if _.isData()[0].replace(' ','').replace('\t','').replace('\r','').replace('\n','').startswith('{'):
+			for item in _.isData():
+				pro=process(  simplejson.loads(item)  )
+				fields.append(pro)
+
+			print( html.replace('HERE', '\n'.join(fields) ) )
+			return None
+
+
+
 	_type=None
+	_name=None
+	_label=None
 	_id=None
 	_class=None
 	_iter=None
 	_iter_dic=None
 	# if _.switches.isActive('Type'):
-	name=''
-	_type='select'
-	_id='2F-'+name
-	_class=name
+
+	_type='text'
+	_name='tester'
+	_label='my field'
+	_id='2F-'+_name
+	_class=_name
+
 	_iter=None
-	_iter_dic={
-					
+	_iter_dic=None
+
+
+
+	dic = {
+				'type': _type,
+				'name': _name,
+				'label': _label,
+				'id': _id,
+				'class': _class,
+				# 'itter': [],
+				# 'itter-dic': {},
 	}
 
-	process(_type=_type,_id=_id,_class=_class,_iter=_iter,_iter_dic=_iter_dic)
+	# print( simplejson.dumps(dic) )
+
+	process(dic)
+	# process(_type=_type,_name=_name,_label=_label,_id=_id,_class=_class,_iter=_iter,_iter_dic=_iter_dic)
 
 
-assets
-binary
-checkbox
-date
-radio
-range
-select
+	
+
+def dumpTypes():
+	global elements
+
+	for k in elements:
+		print()
+		for _type in elements[k]:
+			print( _type )
+
+
+def load():
+	global elements
+	url='https://eyeformeta.com/assets/forms/fields/dic.php'
+	page=str(requests.post(url, data = {'test':'sample'}).content,'iso-8859-1')
+	elements = simplejson.loads(page)
+	# _.pv(elements)
+	# _.e(9)
+# assets
+# binary
+# checkbox
+# date
+# radio
+# range
+# select
+
+
+requests = __.imp('requests')
+simplejson = __.imp('simplejson')
+random = __.imp('random')
+
 
 ########################################################################################
 if __name__ == '__main__':
 	action()
 	__.isExit()
-
 
 
 

@@ -24,8 +24,9 @@ Description
     p ls --c | p -copy
         copies list of files
     p cat -f 555-index.htm + eyeformeta. | p pipe-split -dirty + eyeformeta --c | p sortThis | p -copy
-        javascript global namespace report
-
+        scan javascript global namespace report
+    p cat -f 555-index.htm + "var " "(" - "{" "[" "'"
+        scan javascript for variables set with a function
 
 
 

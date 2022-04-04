@@ -96,6 +96,9 @@ _.appInfo[focus()] = {
 						# '',
 	],
 	'examples': [
+						'p portscanner -top 20  -ip 45.35.203.103 ',
+						'p portscanner -top 200 -ip 45.35.203.103  ',
+						'',
 						'p portscanner -ip 192.168.254.57',
 						'p portscanner -ip 192.168.254.1-x',
 						'p portscanner -ip 192.168.254.1-254',
@@ -109,8 +112,6 @@ _.appInfo[focus()] = {
 						'',
 						'',
 						'p portscanner -cidr 192.168.254.57/24 -top 20 -r -save scan-home-2021.04.csv scan-home-2021.04.table',
-						'',
-						'p portscanner -ip 45.35.203.103 -top 20',
 						'',
 	],
 	'columns': [
