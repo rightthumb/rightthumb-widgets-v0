@@ -78,7 +78,8 @@ GOTO:EOF
 	if not ["%lab%"] == [""] (
 		title %lab% - %Session_ID%
 	) else (
-		title %today%
+		title mf
+		rem title %today%
 	)
 	CALL timestamp t2 noEcho
 GOTO:EOF

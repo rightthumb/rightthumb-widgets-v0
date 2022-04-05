@@ -3157,6 +3157,8 @@ export EDITOR='nano'
 # crontab    /var/spool/cron/user
 # ssh-keygen -t rsa
 # ssh-copy-id -i ~/.ssh/id_rsa.pub scott@hoth.eyeformeta.com
+
+PROMPT_COMMAND='echo -ne "\\033]0;$( whoami ) $prompt_symbol $( cat /etc/hostname )\\007"'
 clear
             """
             # echo "alias rr='sudo su root'" >> ~/.bashrc

@@ -11,6 +11,7 @@ rem ###########################################################################
 rem ## {C3P0D40fAe8B} ##
 
 set pp=%myBookmarks%\BM-%1.txt
+
 rem echo %pp%
 
 IF NOT EXIST "%pp%" (
@@ -30,6 +31,8 @@ GOTO:EOF
 	call set p=%%p:{6FAB5628-94A1-410A-82D1-1D42A2A11750}=%userprofile%%%
 	call set p=%%p:{C12F266D-71B9-40D2-98B9-424B42D2DBAC}=%thisHost%%%
 	SET b=%p%
+	call p script-helper -replace "'%b%' '/' '\\'" > %tmpf%
+	SET /p b=<%tmpf%
 	IF [%2] == [] echo ^%%b^%% = %b%
 GOTO:EOF
 

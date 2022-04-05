@@ -153,7 +153,8 @@ _.postLoad( __file__ )
 
 ########################################################################################
 
-
+def c41(strin):
+	return strin.replace('\\',os.sep).replace('/',os.sep)
 
 class Bookmarks:
 	def __init__( self, alias=None, path=None ):
@@ -180,13 +181,13 @@ class Bookmarks:
 
 	def sanitize( self ):
 		self.folder = _v.sanitizeFolder( self.path )
-		return self.folder
+		return c41(self.folder)
 
 	def resolve( self, path ):
 		self.folder = _v.resolveFolderIDs(path)
 		if not _.isWin:
 			self.folder = self.folder.replace( '\\', '/' )
-		return self.folder
+		return c41(self.folder)
 
 	def file( self ):
 		return _v.bookmarkFormat.replace( 'ALIASHERE', self.alias )
@@ -235,7 +236,7 @@ class Bookmarks:
 		if not _.switches.isActive('Clean'):
 			_.colorThis( [  self.alias, self.current  ], 'cyan' )
 		self.log()
-		return self.folder
+		return c41(self.folder)
 	###########################################################################################
 	def get( self ):
 		if not self.alias in self.index['labels'] and not self.alias.lower() in self.index['labels']:
@@ -247,7 +248,7 @@ class Bookmarks:
 			self.resolve( self.index['labels'][self.alias.lower()] )
 
 		self.log()
-		return self.folder
+		return c41(self.folder)
 
 def action():
 	pass

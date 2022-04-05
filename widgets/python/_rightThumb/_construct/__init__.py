@@ -436,6 +436,8 @@ Such a place exists, it is called programming.
 							'.html': {'url':'https://apps.eyeformeta.com/templates/html/0.htm'},
 							'.htm':  {'url':'https://apps.eyeformeta.com/templates/html/1.htm'},
 							'.php':  {'url':'https://apps.eyeformeta.com/templates/html/0.php.txt'},
+							'.folder.meta':  {'url':'https://apps.eyeformeta.com/templates/html/.folder.meta.h'},
+							'.folder.meta.b':  {'url':'https://apps.eyeformeta.com/templates/html/.folder.meta.b'},
 		}
 		self.comment = {
 							# '.js': '//',

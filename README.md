@@ -27,6 +27,10 @@ Description
         scan javascript global namespace report
     p cat -f 555-index.htm + "var " "(" - "{" "[" "'"
         scan javascript for variables set with a function
+    p inFunc -f mf.py + self.
+        proper python class and function search tool
+    cat D:\.rightthumb-widgets\widgets\python\_rightThumb\_auditCodeBase\__init__.py | p pipe-split -dirty + self. -a "("
+        dirty python class variable and function dump
 
 
 
