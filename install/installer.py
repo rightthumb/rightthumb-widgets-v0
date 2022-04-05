@@ -2604,6 +2604,8 @@ class virtualFiles:
  
         self.files = {}
     def file( self, path, data=None, meta={} ):
+
+        c3po = _.getText( '/etc/hostname', raw=True, clean=2 ).split('.')[0]
  
  
  
@@ -2829,10 +2831,10 @@ alias vps2.new="ssh-keygen -f '/home/scott/.ssh/known_hosts' -R 'bespin.eyeforme
 
 
 
-
+PROMPT_COMMAND='echo -ne "\\033]0;$( whoami ) $prompt_symbol """+c3po+""" \\007"'
 export HISTSIZE=100000
 export HISTFILESIZE=100000
-
+clear
             """
             return self.file( path, data, { 'status': 'virtual' } )
 
@@ -3158,7 +3160,16 @@ export EDITOR='nano'
 # ssh-keygen -t rsa
 # ssh-copy-id -i ~/.ssh/id_rsa.pub scott@hoth.eyeformeta.com
 
-PROMPT_COMMAND='echo -ne "\\033]0;$( whoami ) $prompt_symbol $( cat /etc/hostname )\\007"'
+
+if [ ! -f ~/.rt/.nickname ]
+then
+    $p linux-nickname > ~/.rt/.nickname
+fi
+
+
+PROMPT_COMMAND='echo -ne "\\033]0;$( whoami ) $prompt_symbol """+c3po+""" \\007"'
+export HISTSIZE=100000
+export HISTFILESIZE=100000
 clear
             """
             # echo "alias rr='sudo su root'" >> ~/.bashrc
