@@ -76,9 +76,10 @@ GOTO:EOF
 	SET nowTime=%now%
 	SET today=%timestamp_start%  - %nowTime%
 	if not ["%lab%"] == [""] (
-		title %lab% - %Session_ID%
+		rem title %lab% - %Session_ID%
+		title %lab% - local
 	) else (
-		title mf
+		title local
 		rem title %today%
 	)
 	CALL timestamp t2 noEcho

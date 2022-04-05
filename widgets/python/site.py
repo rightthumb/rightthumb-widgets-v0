@@ -38,6 +38,7 @@ def appSwitches():
 	_.switches.register( 'Files', '-f,-file,-files','file.txt', isRequired=True )
 	_.switches.register( 'mkdir', '-mkdir' )
 	_.switches.register( 'Server', '-srv,-server' )
+	_.switches.register( 'Print', '-print' )
 
 
 
@@ -240,11 +241,12 @@ def process(path):
 			path+=os.sep
 		mkdir=f'ssh -f {u}@{s} "/bin/python3 /opt/rightthumb-widgets-v0/widgets/python/mkdir.py -folder {rfo}"'
 		print(mkdir)
-		try:
-			_.cp('creating folder structure','yellow')
-			os.system( mkdir )
-		except Exception as e:
-			_.e(e)
+		if not _.switches.isActive('Print'):
+			try:
+				_.cp('creating folder structure','yellow')
+				os.system( mkdir )
+			except Exception as e:
+				_.e(e)
 
 	if _.switches.isActive('Upload-Scp'):
 		# do=f'{scp} {path}  {u}@{s}:{fi}'
@@ -260,10 +262,11 @@ def process(path):
 	
 	if _.switches.isActive('Upload-Scp') or _.switches.isActive('Download-Scp'):
 		print(do)
-		try:
-			os.system( do )
-		except Exception as e:
-			_.e(e)
+		if not _.switches.isActive('Print'):
+			try:
+				os.system( do )
+			except Exception as e:
+				_.e(e)
 
 
 	

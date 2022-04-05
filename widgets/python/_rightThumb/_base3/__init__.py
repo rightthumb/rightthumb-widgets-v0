@@ -33,6 +33,17 @@ simplejson.loads(var)
 simplejson.dumps(rows, indent=4, sort_keys=sort_keys)
 simplejson.dumps(rows)
 '''
+def printt( table, cols=None, sort=None ):
+    if not table: return None;
+    global switches
+    global tables
+    if not sort is None:
+        switches.fieldSet( 'Sort', 'active', True )
+        switches.fieldSet( 'Sort', 'value', sort )
+        switches.fieldSet( 'Sort', 'values', sort.split(',') )
+    tables.register( 'ea3dfa23ae6d', table )
+    if cols is None: cols=','.join(list(table[0].keys()));
+    tables.print( 'ea3dfa23ae6d', cols )
 
 def pa(fi=None,fo=None,dot='',mkdir=True):
     if os.path.isdir(fi): fi=None; fo=fi;
@@ -1006,6 +1017,7 @@ pandas = None
 _sd = None
 
 def isDate( theDate=None, record={}, tz=None, q=True, f=None,w=None,what=None ):
+    # record={}
     if (type(theDate) == int or type(theDate) == float) and theDate < 1:
         return 0
     if theDate is None: theDate=time.time();

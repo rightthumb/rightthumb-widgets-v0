@@ -34,6 +34,13 @@ def dics(*arg):
 		for k in table:
 			dic[k] = table[k]
 	return dic
+
+
+def path_fix(path):
+	path=path.replace('/',os.sep).replace('\\',os.sep)
+	path=_str.do('dup',path,os.sep)
+	return path
+
 def configFile( item=None, value=None, p=True ):
 	global simplejson
 	try:
@@ -911,6 +918,7 @@ def dir_structure():
 	if home_created:
 		create_default_profile()
 def createDestinationFolders( folder, o=None, isFile=False, p=False ):
+	folder=path_fix(folder)
 	global techDrive
 	global slashes
 	global slash
@@ -968,6 +976,7 @@ def createDestinationFolders( folder, o=None, isFile=False, p=False ):
 				# _.colorThis( [ 'Error: creating folder', f ], 'red' )
 	return folder
 def dir_check_create( folder ):
+	folder=path_fix(folder)
 	# print(folder)
 	return createDestinationFolders( folder )
 	global dDim
@@ -1021,6 +1030,7 @@ def dir_check_create( folder ):
 				# print( 'Error:', f )
 	return True
 def dir_check_create2( theFolder ):
+	theFolder=path_fix(theFolder)
 	global slashes
 	global slash
 	if not __.isWin:
@@ -1075,6 +1085,7 @@ def generateFunctionLogFilename( filename ):
 	return fbf
 
 def getTable( theFile, tableTemp=False, printThis=False ):
+	theFile=path_fix(theFile)
 	global simplejson
 	if not simplejson is None:
 		import simplejson
@@ -1439,12 +1450,13 @@ def tableAlts(t,omit=True):
 				if os.path.isfile(fi):
 					result.append(fi)
 	return result
-path = __.path
-mkdir = createDestinationFolders
-default_powershell = 'echo test | py $p\\app.py'
+
+
+
+
+
 # popFileDir(path)
 # print('end')
-config_file = None
 def config( subject='?' ):
 	global mymyConfig
 	global config_file
@@ -1482,6 +1494,11 @@ def settings_load():
 		for k in table:
 			__.settings_table[k] = table[k]
 
+path = __.path
+mkdir = createDestinationFolders
+# default_powershell = 'echo test | py $p\\app.py'
+default_powershell = ''
+config_file = None
 
 t   = techDrive
 tt  = myTables

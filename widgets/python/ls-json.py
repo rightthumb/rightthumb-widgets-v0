@@ -31,10 +31,12 @@ import _rightThumb._string as _str
 ##################################################
 
 def appSwitches():
+	_.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='glob', description='Files' )
+	_.switches.register( 'Recursive', '-r' )
+	_.switches.register( 'Folders', '-fo,-folder,-folders','/var/log/' )
 	pass
 	### EXAMPLE: START
 	# _.switches.register( 'Input', '-i' )
-	# _.switches.register( 'Files', '-f,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=True )
 	### EXAMPLE: END
 
 ### EXAMPLE: START
@@ -202,24 +204,68 @@ _.postLoad( __file__ )
 # START
 
 
+def getFolder(folder,r=False):
+	if not os.path.isdir(folder): return None;
+
+	try:
+		files=os.listdir(folder)
+	except Exception as e:
+		return None
+
+	for item in files:
+		path=folder+os.sep+item
+		if os.path.isfile(path): process(path);
+
+		if r and os.path.isdir(path): getFolder(folder,r=r);
+
+
+
+def process(path):
+	path=__.path(path)
+	# print(path);sys.exit();
+	info = _dir.info(path)
+	if info:
+		try:
+			del info['stat']
+		except Exception as e:
+			pass
+		_.v_file.append(info)
 
 def action():
 	#--> min, architecture {:strict:}
-	load()
-	global c3po
 
-	# if _.switches.isActive('Test'): test(); return None;
+	r=_.switches.isActive('Recursive')
 
-	for i,row in enumerate( _.isData(r=1) ):
-		print(row)
+	if _.switches.isActive('Files'):
+		for path in _.switches.values('Files'):
+			if type(path) == list:
+				for p in path:
+					process(p)
+			else:
+				process(path)
+	elif _.switches.isActive('Folders') and len(_.switches.value('Folders')):
+		for path in _.switches.values('Files'):
+			getFolder(path,r)
+	elif _.switches.isActive('Folders') and not len(_.switches.value('Folders')):
+		getFolder(os.getcwd(),r)
+	else:
+		getFolder(os.getcwd(),r)
 
 
+	# print(_.v_file)
+	# _.pv(_.v_file)
+	print( simplejson.dumps(_.v_file, indent=4, sort_keys=False ) )
 
-def load():
-	global c3po
-	c3po = _.getTable( 'table' )
 
+'''
+simplejson.loads(var)
+simplejson.dumps(rows, indent=4, sort_keys=sort_keys)
+'''
+simplejson = __.imp('simplejson')
 
+_.v_file = []
+
+import _rightThumb._dir as _dir
 
 ########################################################################################
 if __name__ == '__main__':

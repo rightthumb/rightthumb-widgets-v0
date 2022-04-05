@@ -3178,7 +3178,7 @@ export EDITOR='nano'
 # ssh-copy-id -i ~/.ssh/id_rsa.pub scott@hoth.eyeformeta.com
 
 
-
+alias rms='p secure-delete-file -f'
 
 PROMPT_COMMAND='echo -ne "\\033]0;$( whoami ) $prompt_symbol """+c3po+""" \\007"'
 export HISTSIZE=100000
