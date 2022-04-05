@@ -2634,7 +2634,10 @@ class virtualFiles:
 
     def myFile( self, path ):
  
-        c3po = vc.HD.getText( path, raw=True, clean=2 ).split('.')[0]
+        c3po = vc.HD.getText( '/etc/hostname', raw=True, clean=2 )
+        print(c3po)
+        c3po=c3po.split('.')[0]
+        print(c3po)
  
         if path == '.bashrc-auto':
             data = """
