@@ -941,6 +941,20 @@ class HD:
                     f = open(theFile, 'r')
                     lines = f.readlines()
                     f.close()
+        if clean:
+            def c20(sub,a,b):
+                while a in sub:
+                    sub=sub.replace(a,b)
+                return sub
+            d20=''.join(lines)
+            d20=c20(d20,'\r','')
+            d20=c20(d20,'\n\n','\n')
+            if clean==2:
+                d20=c20(d20,' \n','\n')
+                d20=c20(d20,'\t\n','\n')
+                d20=c20(d20,'\n\n','\n')
+            lines=d20.split('\n')
+
         if raw:
             return ''.join(lines)
         return lines
@@ -2605,7 +2619,7 @@ class virtualFiles:
         self.files = {}
     def file( self, path, data=None, meta={} ):
 
-        c3po = _.getText( '/etc/hostname', raw=True, clean=2 ).split('.')[0]
+        c3po = vc.HD.getText( path, raw=True, clean=2 ).split('.')[0]
  
  
  
@@ -3161,10 +3175,6 @@ export EDITOR='nano'
 # ssh-copy-id -i ~/.ssh/id_rsa.pub scott@hoth.eyeformeta.com
 
 
-if [ ! -f ~/.rt/.nickname ]
-then
-    $p linux-nickname > ~/.rt/.nickname
-fi
 
 
 PROMPT_COMMAND='echo -ne "\\033]0;$( whoami ) $prompt_symbol """+c3po+""" \\007"'
