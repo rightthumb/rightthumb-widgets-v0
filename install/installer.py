@@ -2619,7 +2619,7 @@ class virtualFiles:
         self.files = {}
     def file( self, path, data=None, meta={} ):
 
-        c3po = vc.HD.getText( path, raw=True, clean=2 ).split('.')[0]
+        
  
  
  
@@ -2634,7 +2634,7 @@ class virtualFiles:
 
     def myFile( self, path ):
  
- 
+        c3po = vc.HD.getText( path, raw=True, clean=2 ).split('.')[0]
  
         if path == '.bashrc-auto':
             data = """
