@@ -824,7 +824,7 @@ vv = dot()
 v.isData = {}
 vv.opened_file_me = {}
 __.switch_skimmer = dot()
-__.switch_skimmer.scan = [ '??' ]
+__.switch_skimmer.scan = [ '??','-??','--??','/??' ]
 __.switch_skimmer.active = []
 
 __.aggregate = dot()
@@ -9856,7 +9856,7 @@ class Switches:
                     result = True
         return result
     def help(self):
-        if self.value('Help') == 'x':
+        if self.value('Help') == 'x' or self.value('Help') == 'cls' or self.value('Help') == 'clear':
             if __.isWin:
                 os.system('cls')
             else:
@@ -9969,7 +9969,7 @@ class Switches:
                                 setClip(docItem)
                                 quit_early = True
                             colorizeRow( '\t'+prei+'\t'+ docItem , 2)
-            if 'id' in self.value('Help') or 'c' in self.value('Help'):
+            if 'id' in self.value('Help') or 'c' in self.value('Help') or 'ask' in self.value('Help'):
                 askID = input( '?> : ' )
                 if askID in IDs:
                     setClip(IDs[askID])
@@ -12324,7 +12324,8 @@ class Table:
                         colorizeRow( tableLine+result, prefix=self.tab['table']+loopPrint(__.table_prefix_padding), prefixColor=self.tab_color, haltColorShift=self.isExtraRecord )
             i += 1
             if 'expected_input_example' in column and 'switch' in column and  switchDefault == i:
-                if '??' in __.switch_skimmer.active:
+                # if '??' in __.switch_skimmer.active:
+                if __.switch_skimmer.active:
                     sys.exit()
                 pass
                 print('')
@@ -18165,7 +18166,7 @@ def load():
         # switches.trigger('Column',formatColumns)
 
         switchDefault = switches.length()
-        switches.register('Help', '?,??,/?,-?,--??,/h,/help,-help,--help', 'copy  OR ids  OR  12  OR  ?? x')
+        switches.register('Help', '?,??,/?,/??,-?,-??,--??,/h,/help,-help,--help', 'copy  OR ids  OR  12  OR  ?? x')
         switches.register('Column', '-c,-column', 'size, name')
         switches.register('Sort','-s,-sort', 'Asc:type, Desc:ext')
         switches.register('Debug', '-debug')

@@ -15,6 +15,11 @@
 # echo $SCRIPT_DIR
 # source  "$SCRIPT_DIR/load-vars.sh"
 # echo $widgets
+# echo $widgets
+
+
+if [ -z ${widgets} ]; then source ~/.bashrc; fi
+# source ~/.bashrc
 subject=$1
 shift
 subject_path=$widgets/widgets/python/$subject.py
@@ -23,8 +28,9 @@ py_folder=$widgets/widgets/python/
 if [ -f "$subject_path" ]; then
     $PY $subject_path $@
 else
-	echo "did you mean"
-	$PY $py_file -folder $py_folder + $subject -noext -label ";tApps" -prefix ";t" +close "75"
+    echo "did you mean"
+    echo $subject_path
+    $PY $py_file -folder $py_folder + $subject -noext -label ";tApps" -prefix ";t" +close "75"
 fi
 
 
