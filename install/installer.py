@@ -2989,7 +2989,7 @@ alias uuid='p genuuid'
 alias uuids='p genuuid -cnt 10'
 alias n.rc='n ~/.bashrc'
 
-export p="bash $widgets/widgets/bash/nav/p.sh"
+export p="/usr/bin/sh $widgets/widgets/bash/nav/p.sh"
 export config
 export widgets
 

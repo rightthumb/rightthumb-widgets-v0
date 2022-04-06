@@ -13,7 +13,8 @@ rem ## {C3P0D40fAe8B} ##
 if [%1] == [] (
 	%py%
 ) else (
-	CALL p file -prefix -noext --c -folder %widgets%\widgets\python + %*
+	type D:\.rightthumb-widgets\widgets\python\0-index.list | call p line + %*
+	rem CALL p file -prefix -noext --c -folder %widgets%\widgets\python + %*
 )
 
 rem @echo off
