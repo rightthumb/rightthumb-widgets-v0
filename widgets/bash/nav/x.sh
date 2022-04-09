@@ -26,10 +26,10 @@ p="python $widgets/widgets/bash/nav/p.sh"
 py_app=$widgets/widgets/python/autoBackup.py
 p="bash $widgets/widgets/bash/nav/p.sh"
 if [[ ! -e $history_folder ]]; then
-	mkdir $history_folder
+    mkdir $history_folder
 fi
 if [[ ! -e $bashrc_folder ]]; then
-	mkdir $bashrc_folder
+    mkdir $bashrc_folder
 fi
 $p fileBackup -i $history_file
 $p fileBackup -i $history_file
@@ -37,29 +37,29 @@ cat $thisHistory > $history_file
 cat $thisBashrc > $bashrc_file
 if [[ -n "$1"  ]]
 then
-	$p  autoBackup -ago $1
+    $p  autoBackup -ago $1
 else
-	$p  autoBackup -ago 1d
+    $p  autoBackup -ago 1d
 fi
 terminal_name=$( sed -n '7p' < $wprofile/config/.terminal )
 if [[ ! -e $terminal_name ]]; then
-	read -p 'close all terminals?: ' shouldClose
-	if [[ "$shouldClose" == "y" ]]; then
-	    echo "YES, closing"
-		terminal_name_path="$wprofile/config/.terminal"
-		terminal_name=$( cat $terminal_name_path )
-	    echo "killall $terminal_name"
-		killall $terminal_name
-	else
-	    echo "NOT, closing"
-	fi
-	
+    read -p 'close all terminals?: ' shouldClose
+    if [[ "$shouldClose" == "y" ]]; then
+        echo "YES, closing"
+        terminal_name_path="$wprofile/config/.terminal"
+        terminal_name=$( cat $terminal_name_path )
+        echo "killall $terminal_name"
+        killall $terminal_name
+    else
+        echo "NOT, closing"
+    fi
+    
 else
-	echo "EXAMPLE:"
-	echo "         myterminal"
-	echo "         or"
-	echo "         ( pstree to find terminal name )"
-	echo "         register_terminal xfce4-terminal"
+    echo "EXAMPLE:"
+    echo "         myterminal"
+    echo "         or"
+    echo "         ( pstree to find terminal name )"
+    echo "         register_terminal xfce4-terminal"
 fi
 
 
