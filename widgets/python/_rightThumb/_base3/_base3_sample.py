@@ -152,7 +152,7 @@ if not sys.stdin.isatty():
 
 # 	_.switches.fieldGet('Column','pos')
 # 	if _.switches.exists('Column2'):
-# 		print('This is a switch')
+# 		_.pr('This is a switch')
 
 
 
@@ -163,7 +163,7 @@ if not sys.stdin.isatty():
 # 	if _.switches.isActive('Move') == True:
 # 	        shutil.move(_.ci(_.switches.value('Input')), _.switches.value('Move') + '\\' + _.ci(_.switches.value('Input')))
 # 	# if _.showLine(string):
-# 		# print(line)
+# 		# _.pr(line)
 
 # _.appInfo[focus()]['categories']
 
@@ -187,7 +187,7 @@ if not sys.stdin.isatty():
 
 # 	def register(self, name):
 # 		self.childItemRows.append(TheChildItems(name))
-# 	def print(self):
+# 	def _.pr(self):
 # 		childItems = []
 # 		for ci in self.childItemRows:
 # 			childItems.append({'name':ci.name})
@@ -234,8 +234,8 @@ if not sys.stdin.isatty():
 # _.randomizeCase(_.genUUID())
 # _.randomizeCase(_.longID(howMany=2))
 # x = _.randomizeCase(_.longID(howMany=2))
-# print(_.onlyNumbers(x))
-# print(_.onlyAlpha(x))
+# _.pr(_.onlyNumbers(x))
+# _.pr(_.onlyAlpha(x))
 # _.onlyAlphaNumeric(_.randomizeCase(_.genUUID()))
 
 # True False same in a row
@@ -284,6 +284,7 @@ def action():
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

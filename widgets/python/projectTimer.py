@@ -176,7 +176,7 @@ if not sys.stdin.isatty():
 
 # _dir.sqlCreateTable( db, deleteDBFirst=True, close=True )
 # obj = _dir.fileInfo( path, sql=True )
-# print(   _dir.fileInfo( _.switches.value('Input') )['size']   )
+# _.pr(   _dir.fileInfo( _.switches.value('Input') )['size']   )
 
 # _.saveLog('queue')
 # _.saveLog('audit')
@@ -258,9 +258,9 @@ def action():
 
 		if _.switches.isActive('ShowTotal'):
 			if _.switches.isActive('Prefix'):
-				print( _.switches.value('Prefix') + ':', ncTime )
+				_.pr( _.switches.value('Prefix') + ':', ncTime )
 			else:
-				print( ncTime )
+				_.pr( ncTime )
 
 		logFile.append( { 
 							'project':  _.switches.value('Project'),
@@ -276,12 +276,13 @@ def action():
 	if not type( _.appData[__.appReg]['pipe'] ) == bool:
 		for row in _.appData[__.appReg]['pipe']:
 			row = row.replace( '\n', '' )
-			print(row)
+			_.pr(row)
 
 # projectTimer
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

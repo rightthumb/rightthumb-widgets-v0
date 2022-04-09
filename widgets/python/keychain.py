@@ -185,7 +185,7 @@ def add():
 
 def possibly_wait():
 	if  _.switches.isActive('Temp'):
-		# print('Temp')
+		# _.pr('Temp')
 		loops = 8
 		if len( _.switches.value('Temp') ):
 			loops = int( _.switches.value('Temp') )
@@ -211,16 +211,16 @@ def get(theLabel=None):
 		label = theLabel
 
 	password = ''
-	# print('label',label)
+	# _.pr('label',label)
 	if label in table:
 		password = _vault.imp.s.de(table[label])
 
 		if theLabel is None and not _.switches.isActive('JustReturn'):
 			if _.switches.isActive('JustPrint'):
 				if 'r' == _.switches.value('JustPrint'):
-					print(password+'\r')
+					_.pr(password+'\r')
 				else:
-					print(password)
+					_.pr(password)
 				return password
 			_copy.imp.copy( password, p=_.v.p  )
 		possibly_wait()
@@ -230,9 +230,9 @@ def get(theLabel=None):
 		if theLabel is None and not _.switches.isActive('JustReturn'):
 			if _.switches.isActive('JustPrint'):
 				if 'r' == _.switches.value('JustPrint'):
-					print(password+'\r')
+					_.pr(password+'\r')
 				else:
-					print(password)
+					_.pr(password)
 				return password
 			_copy.imp.copy( password, p=_.v.p  )
 		possibly_wait()
@@ -329,7 +329,7 @@ alias vps.k="echo $( p keychain -get -label vps.k )"
 alias kk="echo $( p keychain -get -label login-test )"
 
 		"""
-		print( aliases )
+		_.pr( aliases )
 		return None
 
 	load()
@@ -357,7 +357,7 @@ def load():
 		if _.switches.isActive('Label'):
 			if not label:
 				_.e( 'missing label' )
-		# print('label:',label)
+		# _.pr('label:',label)
 		# _.vp(table)
 		# sys.exit()
 table = None
@@ -379,6 +379,7 @@ _vault = _.regImp( __.appReg, '_rightThumb._vault' )
 if __name__ == '__main__':
 	action()
 	_.tables.eof()
+
 
 
 

@@ -173,7 +173,7 @@ def load():
 
 	if do == 1:
 		keys = list(  _.v.spell.spells[0].keys()  )
-		print( '\n'.join(keys) )
+		_.pr( '\n'.join(keys) )
 
 	if do == 2:
 		classes = []
@@ -191,7 +191,7 @@ def load():
 					spells[c] = 0
 				spells[c] += 1
 		classes.sort()
-		# print( 'sp\t', 'dmg\t', 'class'  )
+		# _.pr( 'sp\t', 'dmg\t', 'class'  )
 		classInfo = []
 		for c in classes:
 			classInfo.append({ 'class': c, 'spells': spells[c], 'damage': damage[c] })
@@ -204,12 +204,12 @@ def load():
 		_.switches.fieldSet( 'Sort', 'value', 'damage,spells,class' )
 		_.tables.print( 'classes', 'damage,spells,class'  )
 
-		# print( '\n'.join(classes) )
+		# _.pr( '\n'.join(classes) )
 	if do == 3:
 
 		_.cp( len(_.v.spell.spells), 'yellow' )
 		for spell in _.v.spell.spells:
-			print( spell['name'] )
+			_.pr( spell['name'] )
 		_.cp( len(_.v.spell.spells), 'yellow' )
 
 	if do == 4:
@@ -222,15 +222,15 @@ def load():
 		for o,oSpell in enumerate(old):
 			# oSpell['name'] = oSpell['name'].replace( ' (UA)', '' )
 			if oSpell['name'] in new:
-				print( o, new[oSpell['name']], oSpell['name'] )
+				_.pr( o, new[oSpell['name']], oSpell['name'] )
 				table[o] = new[oSpell['name']]
 			else:
 				_.cp(oSpell['name'])
 				bad+=1
-		print('bad', bad)
-		print()
-		print()
-		print()
+		_.pr('bad', bad)
+		_.pr()
+		_.pr()
+		_.pr()
 		_.printVarSimple(table)
 	if do == 5:
 		old = _.getTable2( 'D:\\tech\\programs\\databank\\projects\\DnD\\configurations\\groups\\Church\\campaigns\\Curse_of_Strahd\\sorcerer\\players\\Scott_Reph\\characters\\Kilroth\\spells.json' )
@@ -255,6 +255,7 @@ def indexInt( table ):
 if __name__ == '__main__':
 	action()
 	_.tables.eof()
+
 
 
 

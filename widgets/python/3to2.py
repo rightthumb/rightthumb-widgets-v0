@@ -161,7 +161,7 @@ def convert(path):
         three2two.main("lib3to2.fixes", shlex.split("-n --no-diffs -w {0}".format(path)))
     file = _.getText(path,raw=True)
     file = file.replace( 'except Exception, e:', 'except e:' )
-    file = file.replace( 'def print(', 'def print2(' )
+    file = file.replace( 'def _.pr(', 'def print2(' )
     file = file.replace( 'self.print(', 'self.print2(' )
     file = file.replace( '#!/usr/bin/python3', '#!/usr/bin/python2' )
     file = file.replace( 'ð', '' )
@@ -177,7 +177,7 @@ def process(path):
 def action():
 
     # for x in dir(lib3to2):
-    #   print(x)
+    #   _.pr(x)
     # sys.exit()
 
     for i,path in enumerate( _.isData(r=1) ):
@@ -190,6 +190,7 @@ def action():
 if __name__ == '__main__':
     action()
     __.isExit()
+
 
 
 

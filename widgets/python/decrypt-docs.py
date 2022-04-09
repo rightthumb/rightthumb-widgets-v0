@@ -238,8 +238,8 @@ def identify(row):
 		p = _.percentageDiffInt( uu, ll )
 		if p > 75:
 			return True
-		# print( p, uu, ll, row )
-		# print( doc )
+		# _.pr( p, uu, ll, row )
+		# _.pr( doc )
 		return False
 
 
@@ -269,11 +269,11 @@ def vcrypyAA(file):
 					pB = pA
 					pA = l
 					break
-			# print( '___' )
-			# print( 747, (pA,pB), file[pB:pA].replace('\n','\n') )
+			# _.pr( '___' )
+			# _.pr( 747, (pA,pB), file[pB:pA].replace('\n','\n') )
 			vcrypyA(file[pB:pA].replace('\n','\n'))
 
-			# print( '___' )
+			# _.pr( '___' )
 	return file
 
 
@@ -297,7 +297,7 @@ def vcrypyA(row):
 def vcrypyB(file):
 	global indexP
 	global isMD
-	# print(505,type(file))
+	# _.pr(505,type(file))
 	# return file
 	result = 'str'
 	if type(file) == list:
@@ -330,7 +330,7 @@ def vcrypyB(file):
 						file[oOo] = '~~~'+indexP[oOo]
 					except Exception as e:
 						pass
-						# print(329,oOo,len(file),oOo in indexP,'error: indexP[oOo]')
+						# _.pr(329,oOo,len(file),oOo in indexP,'error: indexP[oOo]')
 
 
 	if not done:
@@ -343,9 +343,9 @@ def vcrypyB(file):
 					row = _str.cleanEnd(row,' ')
 					row = row + addSpaces2(row) + '!V!'
 					file[i] = row
-					# print(404,row)
+					# _.pr(404,row)
 	if __.fn.saveText:
-		print('vcrypyB',result,)
+		_.pr('vcrypyB',result,)
 	return file
 	if result == 'list':
 		return file
@@ -377,7 +377,7 @@ def process(row):
 		except Exception as e:
 			pass
 		# if row.startswith('!VAULT!'):
-		#   print( row )
+		#   _.pr( row )
 
 	return row
 	
@@ -477,29 +477,29 @@ def process_doc_sep(theFILE,doc_sep,doc_seps):
 			test = 999
 			if row in records:
 				inRec = True
-				# print(0,s0)
-				# print(1,s1)
+				# _.pr(0,s0)
+				# _.pr(1,s1)
 				# sys.exit()
 				# if '#crypt' in segment:
 				test = 111
 				original = row
 
 				if '#crypt' in s1 or '#crypt' in s0:
-					# print("if '#crypt' in segment:")
+					# _.pr("if '#crypt' in segment:")
 					row = records[row]
 					test = 222
 
 				else:
-					# print("if NOT '#crypt' in segment:")
+					# _.pr("if NOT '#crypt' in segment:")
 					if records[row].startswith('todo:'):
 						test = 333
 						done=False
 						for test in ['ai','todo']:
-							# print(test)
+							# _.pr(test)
 							if not done:
 								if test+': ' in records[row]:
 									done=True
-									# print(test+': !V!')
+									# _.pr(test+': !V!')
 									# sys.exit()
 									row = records[row].replace( test+': ', test+':  !V!  ' )
 								elif test+':x' in records[row]:
@@ -528,7 +528,7 @@ def process_doc_sep(theFILE,doc_sep,doc_seps):
 						row=vcrypyA(row)
 						# row = records[row]
 
-			# print(test,row)
+			# _.pr(test,row)
 			# if s0 in doc_sep:
 			if choice and inRec:
 				if row in records:
@@ -538,9 +538,9 @@ def process_doc_sep(theFILE,doc_sep,doc_seps):
 			vVv = 0
 			if ( vVv and 'password' in row ) or ( vVv and '2022-02-04T22:30:00-0500' in row ) or ( vVv and '45.35.203.103' in row ) or ( vVv and 'DNX8ZsjuI1DWelkKipcBZL3j0IB6afSVlAnjXCssy2yIIsn7J9O3Aw==' in row ) or ( vVv and '3Yakcawoid5hXCFWnaYIhgkv5wl5BkdjSAJja5Vifyw=' in row ):
 				_.cp(_.linePrint(p=0),'yellow')
-				print( s0 )
-				print( s1 )
-				print(r,choice,test,row,inRec)
+				_.pr( s0 )
+				_.pr( s1 )
+				_.pr(r,choice,test,row,inRec)
 			nFile.append(row)
 		segments.append('\n'.join(nFile))
 	
@@ -631,12 +631,13 @@ isMD = True
 # vcrypyA
 # vcrypyB
 # process_doc_sep
-# print(329,oOo,len(file),oOo in indexP,'error: indexP[oOo]')
+# _.pr(329,oOo,len(file),oOo in indexP,'error: indexP[oOo]')
 
 ########################################################################################
 if __name__ == '__main__':
 	action()
 	__.isExit()
+
 
 
 

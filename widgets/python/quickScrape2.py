@@ -242,7 +242,7 @@ _.postLoad( __file__ )
 def ask_question( field, label, validateionRule=False ):
 
 
-	print()
+	_.pr()
 	theEnd = ''
 	if not type(validateionRule) == bool:
 		if validateionRule == 'yn_y':
@@ -265,12 +265,12 @@ def ask_question( field, label, validateionRule=False ):
 
 
 	if shouldClean:
-		# print(data)
+		# _.pr(data)
 		data = _str.replaceDuplicate( data, ' ' )
 		data = _str.cleanBE( data, ' ' )
 
 
-	# print(data)
+	# _.pr(data)
 	result = data
 	if not type(validateionRule) == bool:
 		result = validateask_question( field, validateionRule, data )
@@ -286,8 +286,8 @@ def ask_question( field, label, validateionRule=False ):
 				display = 'no'
 		else:
 			display = result
-	# print(data)
-	print( display )
+	# _.pr(data)
+	_.pr( display )
 
 	
 	return result
@@ -297,7 +297,7 @@ def validateask_question( field, what, data ):
 
 
 	if what == 'project_type':
-		# print( field, what, data )
+		# _.pr( field, what, data )
 		# sys.exit()
 		if 'f' in data.lower():
 			result = 'front_end'
@@ -342,14 +342,14 @@ def validateask_question( field, what, data ):
 		elif data.lower() == 'f':
 			result = False
 		elif not 'http' in data.lower():
-			print( 'Error: bad url' )
+			_.pr( 'Error: bad url' )
 			result = validateask_question( field, what, ask_question( field, 'url:' ) )
 		else:
 			result = data
 
 	elif what == 'notBlankText':
 		if not len(data):
-			print( 'Error: cannot be blank' )
+			_.pr( 'Error: cannot be blank' )
 			result = validateask_question( field, what, ask_question( field, field2Label(field) ) )
 		else:
 			result = data
@@ -366,7 +366,7 @@ def validateask_question( field, what, data ):
 
 	elif what == 'password':
 		if not len(data):
-			print( 'Error: cannot be blank' )
+			_.pr( 'Error: cannot be blank' )
 			result = validateask_question( field, what, ask_question( field, field2Label(field) ) )
 		else:
 			if data.endswith('='):
@@ -376,7 +376,7 @@ def validateask_question( field, what, data ):
 
 	elif what == 'selector':
 		if not len(data):
-			print( 'Error: cannot be blank' )
+			_.pr( 'Error: cannot be blank' )
 			result = validateask_question( field, what, ask_question( field, field2Label(field) ) )
 		else:
 			result = data
@@ -439,7 +439,7 @@ def validateask_question( field, what, data ):
 				result = 'auto'
 
 	else:
-		print( 'Error: validateAsk' )
+		_.pr( 'Error: validateAsk' )
 		sys.exit()
 
 	return result
@@ -458,8 +458,8 @@ def action():
 	code = _.getText( _v.myAppsJs + _v.slash+'quickScrape.js' )
 
 	config['selector'] = ask_question( 'selector', 'selector:', 'selector' )
-	print()
-	print( 'dog==.media-heading;personality==[id^=\'breed-personality\']' )
+	_.pr()
+	_.pr( 'dog==.media-heading;personality==[id^=\'breed-personality\']' )
 	config['child_selectors'] = ask_question( 'child_selectors', 'child selector:' )
 
 	config['hasNext'] = ask_question( 'has_next', 'next button:', 'yn_n' )
@@ -515,8 +515,8 @@ def action():
 					pass
 
 			if _.switches.isActive( 'ReportAll' ):
-				print()
-				print()
+				_.pr()
+				_.pr()
 				try:
 					_.tables.print( 'data', ','.join( fields ) )
 				except Exception as e:
@@ -531,7 +531,7 @@ def action():
 		else:
 			if not len(config['next_selector']):
 				isDone = True
-				print( 'Error: missing selector for next' )
+				_.pr( 'Error: missing selector for next' )
 			else:
 				if config['next_selector_specific']:
 					nextFound =_browser.imp.project.injectReturn( 'return window.clickNext_exists("'+config['next_selector']+'");' )
@@ -541,14 +541,14 @@ def action():
 						isDone = True
 				else:
 					if config['next_selector_isLink']:
-						# print( config['next_selector'] )
-						# print( 'window.findNextLink_exists("'+config['next_selector']+'")' )
-						print()
-						print()
-						print()
+						# _.pr( config['next_selector'] )
+						# _.pr( 'window.findNextLink_exists("'+config['next_selector']+'")' )
+						_.pr()
+						_.pr()
+						_.pr()
 						nextFound =_browser.imp.project.injectReturn( 'return window.findNextLink_exists("'+config['next_selector']+'");' )
 						# nextFound = True
-						# print( 'nextFound:', nextFound )
+						# _.pr( 'nextFound:', nextFound )
 						# nextFound = True
 						if nextFound:
 							# pause = input('pause')
@@ -582,8 +582,8 @@ def cleanData( data ):
 			if not key in newFields:
 				newFields.append( key )
 			data[i][key] = str(record[key])
-			# print( key, record[key] )
-			# print( type( record[key] ), key )
+			# _.pr( key, record[key] )
+			# _.pr( type( record[key] ), key )
 	return data
 
 # 'li.media', 
@@ -606,6 +606,7 @@ config = {}
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

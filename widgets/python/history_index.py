@@ -291,7 +291,7 @@ def build_dex( code, ticket ):
 		elif lastSwitch:
 			pass
 			# dex = dx( ticket, dex, key=last_CMD_Type, cmd=last_CMD, sw=last_Switch, val=x )
-			# print( 'val', x, '\t\t', code )
+			# _.pr( 'val', x, '\t\t', code )
 		elif lastCMD:
 			pass
 			# dex = dx( ticket, dex, key=last_CMD_Type, cmd=last_CMD, val=x )
@@ -306,7 +306,7 @@ def extractDaysFromSession( row, ticket ):
 	result = []
 	try:
 
-		# print( row )
+		# _.pr( row )
 		theDate = row.split('(')[1].split(')')[0]
 		start = theDate.split('-')[0]
 		end = theDate.split('-')[1]
@@ -319,12 +319,12 @@ def extractDaysFromSession( row, ticket ):
 		result.append( newStart )
 
 		if not newStart == newEnd:
-			# print( 'started' )
+			# _.pr( 'started' )
 			thisDate = newStart
 			while not thisDate == newEnd:
-				# print( 'pre', thisDate, newEnd )
+				# _.pr( 'pre', thisDate, newEnd )
 				thisDate = str(_.dateAdd2( thisDate  , 1, delim='-' )).replace( ' ', '' )
-				# print( 'thisDate', thisDate, newEnd )
+				# _.pr( 'thisDate', thisDate, newEnd )
 				if not thisDate in result:
 					result.append( thisDate )
 
@@ -333,7 +333,7 @@ def extractDaysFromSession( row, ticket ):
 	except Exception as e:
 		pass
 
-	# print(  'result', result  )
+	# _.pr(  'result', result  )
 	# sys.exit()
 	return result
 
@@ -353,7 +353,7 @@ def process( path, ticket ):
 	file = _.getText( path, raw=True, clean=2 )
 	for row in file.split('\n'):
 		# if row.startswith('<'):
-		# 	print( row )
+		# 	_.pr( row )
 		# if True:
 		if not row.startswith('<'):
 			if row.startswith('Session:'):
@@ -410,7 +410,7 @@ def process( path, ticket ):
 							if not ticket in index_edit_py[rowSp]:
 								index_edit_py[rowSp][ticket] = {}
 						except Exception as e:
-							print( 'epyi', row )
+							_.pr( 'epyi', row )
 							pass
 					elif row.startswith('n ') and '.py' in row:
 						try:
@@ -422,7 +422,7 @@ def process( path, ticket ):
 							if not ticket in index_edit_py[rowSp]:
 								index_edit_py[rowSp][ticket] = {}
 						except Exception as e:
-							print( 'n', row )
+							_.pr( 'n', row )
 							pass
 					elif row.startswith('epy ') or row.startswith('myepy '):
 						try:
@@ -434,7 +434,7 @@ def process( path, ticket ):
 							if not ticket in index_edit_py[rowSp]:
 								index_edit_py[rowSp][ticket] = {}
 						except Exception as e:
-							print( 'epy', row )
+							_.pr( 'epy', row )
 							pass
 					
 					if not editPy is None:
@@ -582,15 +582,15 @@ def load():
 						elif 'resent' in _.switches.values('Ago')[1]:
 							run = 'resent'
 
-					# print(  len( _.switches.values('Ago') )  )
-					# print(  ( _.switches.values('Ago') )  )
+					# _.pr(  len( _.switches.values('Ago') )  )
+					# _.pr(  ( _.switches.values('Ago') )  )
 					# sys.exit()
 					# accessed_raw
 
 
 					if run == 'default':
-						# print(record['date_modified_raw'])
-						# print(_.switches.values('Ago'))
+						# _.pr(record['date_modified_raw'])
+						# _.pr(_.switches.values('Ago'))
 						if record['date_modified_raw'] > _.switches.values('Ago')[0] or record['date_created_raw'] > _.switches.values('Ago')[0]:
 							shouldAdd = True
 					elif run == 'resent':
@@ -598,7 +598,7 @@ def load():
 							shouldAdd = True
 					elif run == 'a':
 						if record['accessed_raw'] > _.switches.values('Ago')[0]:
-							# print( _.friendlyDate(_.switches.values('Ago')[0]), _.switches.values('Ago')[0], record['accessed_raw'], _.friendlyDate(record['accessed_raw']) )
+							# _.pr( _.friendlyDate(_.switches.values('Ago')[0]), _.switches.values('Ago')[0], record['accessed_raw'], _.friendlyDate(record['accessed_raw']) )
 							shouldAdd = True
 					elif run == 'cd':
 						if record['date_created_raw'] > _.switches.values('Ago')[0]:
@@ -620,6 +620,7 @@ index = {}
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

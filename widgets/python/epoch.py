@@ -160,7 +160,7 @@ if not sys.stdin.isatty():
 
 # _dir.sqlCreateTable( db, deleteDBFirst=True, close=True )
 # obj = _dir.fileInfo( path, sql=True )
-# print(   _dir.fileInfo( _.switches.value('Input') )['size']   )
+# _.pr(   _dir.fileInfo( _.switches.value('Input') )['size']   )
 
 # _.saveLog('queue')
 # _.saveLog('audit')
@@ -224,7 +224,7 @@ if not sys.stdin.isatty():
 # def dateScramble( data ):
 # 	d = _.date2epoch( data )
 # 	if len( str(data) ) > 0:
-# 		print( data, d )
+# 		_.pr( data, d )
 # 	return _.resolveEpochTest( d, falseBlank=True )
 
 	# data = [
@@ -356,7 +356,7 @@ if not sys.stdin.isatty():
 	###################
 
 	# try:
-	# 	print()
+	# 	_.pr()
 
 	# 	fieldList = ','.join(__.databases.getFields( 'test', 'test_table', exclude='' ))
 	# 	_.tables.register('results_table',results)
@@ -370,15 +370,16 @@ if not sys.stdin.isatty():
 
 def action():
 	if _.switches.isActive('Epoch'):
-		print( _.friendlyDate( float( _.switches.value('Epoch') ) ) )
+		_.pr( _.friendlyDate( float( _.switches.value('Epoch') ) ) )
 	else:
-		print( time.time() )
+		_.pr( time.time() )
 
 
 
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

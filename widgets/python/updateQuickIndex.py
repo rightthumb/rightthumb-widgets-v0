@@ -148,12 +148,12 @@ def action():
 		path = _v.myIndexes + _v.slash + item
 		if os.path.isfile( path ):
 			# if _dir.fileInfo( path )['date_created'].split( ' ' )[0] == today:
-			# print( item )
+			# _.pr( item )
 			if isInternal( item ):
 				processFile( path )
 	_.saveText( results, _v.quickIndex )
-	print( 'Quick index updated' )
-	print( _v.quickIndex )
+	_.pr( 'Quick index updated' )
+	_.pr( _v.quickIndex )
 
 def processFile( path ):
 	global results
@@ -189,6 +189,7 @@ drive_records = _.getTable( file_drives )
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

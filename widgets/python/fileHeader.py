@@ -216,11 +216,11 @@ def addSig(sig):
 	theSignature=input( 'add?: ' )
 
 	if len(theSignature) and sig['signature'].startswith(theSignature):
-		print()
+		_.pr()
 		for record in data:
 			if theSignature == record['signature'] or record['signature'].startswith(theSignature):
-				print( '\t', record['signature'], '\t', record['description'] )
-		print()
+				_.pr( '\t', record['signature'], '\t', record['description'] )
+		_.pr()
 		theExtension=input( 'extension: ' )
 		theExtension = theExtension.replace('.','')
 		if len(theExtension):
@@ -253,7 +253,7 @@ def action():
 				if os.path.isfile(row):
 					info = process( row )
 					if _.switches.isActive('Add'):
-						print( info )
+						_.pr( info )
 						if type(info) == list:
 							for record in info:
 								_.printVarSimple(record)
@@ -262,26 +262,26 @@ def action():
 						elif type(info) == str:
 							for record in data:
 								if info.startswith(record['signature']):
-									print( '\t?\t', record['description'] )
+									_.pr( '\t?\t', record['description'] )
 						addSig(info)
 						return None
 
 
 					if _.switches.isActive('JustHeader'):
 						asciiH = asciiHeader(info)
-						# print( info )
-						print()
-						print( _.colorPrint( row, 'cyan', p=0 ), asciiH )
-						print()
+						# _.pr( info )
+						_.pr()
+						_.pr( _.colorPrint( row, 'cyan', p=0 ), asciiH )
+						_.pr()
 					else:
 
 						if type(info) == str:
 							if not _.switches.isActive('Clean'):
-								print()
-								print( row, 'Unknown', info )
+								_.pr()
+								_.pr( row, 'Unknown', info )
 								for record in data:
 									if info.startswith(record['signature']):
-										print( '\t?\t', record['description'] )
+										_.pr( '\t?\t', record['description'] )
 								addSig(info)
 
 
@@ -318,12 +318,12 @@ def action():
 																info['signature'],
 															] )
 
-									print()
+									_.pr()
 									_.colorThis( _.linePrint( 'header', add=10, p=0 ), 'red' )
 									_.colorThis( [ _.lp(), row ], 'cyan' )
 									_.colorThis( [ _.lp(), info['extension'] ] , 'cyan' )
 									_.colorThis( [ _.lp(), info['description'] ], 'yellow' )
-									print( _.lp(), asciiHeader(info['signature']) )
+									_.pr( _.lp(), asciiHeader(info['signature']) )
 									_.colorThis( _.linePrint( 'header', add=10, p=0 ), 'red' )
 									
 									# _.printVarSimple( info )
@@ -331,13 +331,13 @@ def action():
 									if not row.endswith('.'+info['extension'].lower()) and not row.endswith('.'+info['extension'].upper()):
 										os.rename( row, row+'.'+info['extension'].lower() )
 										_.colorThis( [ row+'.'+info['extension'].lower() ], 'green' )
-									# print( info )
+									# _.pr( info )
 						elif type(info) == list:
 								if not _.switches.isActive('Rename'):
-									print()
-									print( row )
+									_.pr()
+									_.pr( row )
 									for inf in info:
-										print( '\t', inf['extension'], inf['description'] )
+										_.pr( '\t', inf['extension'], inf['description'] )
 								elif _.switches.isActive('Rename'):
 									theExtensions = []
 									found = None
@@ -359,7 +359,7 @@ def action():
 
 	if _.switches.isActive('ResolveErrors'):
 
-		print( 'Errors:', len(err) )
+		_.pr( 'Errors:', len(err) )
 
 		# sig = {}
 
@@ -449,26 +449,26 @@ def action():
 
 
 				# { 'signature': h, 'ext': n.split(' ')[0] }
-				print()
-				print()
-				print()
-				print()
-				print( newRecord )
-				print()
-				print( 'records:', len(records[n]) )
-				print()
+				_.pr()
+				_.pr()
+				_.pr()
+				_.pr()
+				_.pr( newRecord )
+				_.pr()
+				_.pr( 'records:', len(records[n]) )
+				_.pr()
 
 
 
 				for rec in records[n]:
-					print( rec['path'] )
+					_.pr( rec['path'] )
 				# _.printVar( records[n][0]['dir'] )
 				# add.append()
 			
-				print()
-				print()
-				print()
-				print()
+				_.pr()
+				_.pr()
+				_.pr()
+				_.pr()
 				description = 'y'
 				description = input( 'Description: ' )
 				if not description.lower() == 'x':
@@ -487,8 +487,8 @@ def action():
 					pass
 					remove.sort()
 					remove.reverse()
-					# print( remove )
-					# print( 'Signature:', h )
+					# _.pr( remove )
+					# _.pr( 'Signature:', h )
 
 					for r in remove:
 						err.pop(r)
@@ -505,10 +505,10 @@ def action():
 
 
 		os.system('cls')
-		print()
-		print()
+		_.pr()
+		_.pr()
 
-		print( 'Done' )
+		_.pr( 'Done' )
 		pause=input('pause')
 
 
@@ -562,26 +562,26 @@ def action():
 
 
 				# { 'signature': h, 'ext': n.split(' ')[0] }
-				print()
-				print()
-				print()
-				print()
-				print( newRecord )
-				print()
-				print( 'records:', len(records[n]) )
-				print()
+				_.pr()
+				_.pr()
+				_.pr()
+				_.pr()
+				_.pr( newRecord )
+				_.pr()
+				_.pr( 'records:', len(records[n]) )
+				_.pr()
 
 
 
 				for rec in records[n]:
-					print( rec['path'] )
+					_.pr( rec['path'] )
 				# _.printVar( records[n][0]['dir'] )
 				# add.append()
 			
-				print()
-				print()
-				print()
-				print()
+				_.pr()
+				_.pr()
+				_.pr()
+				_.pr()
 				description = 'y'
 				description = input( 'Description: ' )
 				if not description.lower() == 'x':
@@ -600,8 +600,8 @@ def action():
 					pass
 					remove.sort()
 					remove.reverse()
-					# print( remove )
-					# print( 'Signature:', h )
+					# _.pr( remove )
+					# _.pr( 'Signature:', h )
 
 					for r in remove:
 						err.pop(r)
@@ -615,7 +615,7 @@ def action():
 		pass
 		remove.sort()
 		remove.reverse()
-		print( remove )
+		_.pr( remove )
 
 		for r in remove:
 			err.pop(r)
@@ -700,6 +700,7 @@ err = []
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

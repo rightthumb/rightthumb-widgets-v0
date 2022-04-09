@@ -236,21 +236,21 @@ def buildFields( record ):
 				thisRecord[field] = ''
 				pass
 	pass
-	# print( '\t'.join( result ) )
+	# _.pr( '\t'.join( result ) )
 	records.append( thisRecord )
 	pass
 	# if len( result ) == 6:
-	# 	print( result[0], result[1], result[2], result[3], result[4], result[5] )
+	# 	_.pr( result[0], result[1], result[2], result[3], result[4], result[5] )
 	# if len( result ) == 5:
-	# 	print( result[0], result[1], result[2], result[3], result[4] )
+	# 	_.pr( result[0], result[1], result[2], result[3], result[4] )
 	# if len( result ) == 4:
-	# 	print( result[0], result[1], result[2], result[3] )
+	# 	_.pr( result[0], result[1], result[2], result[3] )
 	# if len( result ) == 3:
-	# 	print( result[0], result[1], result[2] )
+	# 	_.pr( result[0], result[1], result[2] )
 	# if len( result ) == 2:
-	# 	print( result[0], result[1] )
+	# 	_.pr( result[0], result[1] )
 	# if len( result ) == 1:
-	# 	print( result[0] )
+	# 	_.pr( result[0] )
 
 
 def action():
@@ -261,7 +261,7 @@ def action():
 	ago = _.timeAgo()
 
 	# _.printTest( ago )
-	# print( ago )
+	# _.pr( ago )
 	# sys.exit()
 	spent = []
 	files = 0
@@ -292,11 +292,11 @@ def action():
 		_.tables.register( 'data', records )
 		_.tables.print( 'data', ','.join(records[0].keys()) )
 	if not _.switches.isActive( 'NoCount' ):
-		print()
-		print( 'files:', _.addComma(files) )
-		print( 'edits:', _.addComma(edits) )
-		print()
-		print( 'fileBackup.json' )
+		_.pr()
+		_.pr( 'files:', _.addComma(files) )
+		_.pr( 'edits:', _.addComma(edits) )
+		_.pr()
+		_.pr( 'fileBackup.json' )
 
 
 
@@ -311,6 +311,7 @@ data = []
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

@@ -386,7 +386,7 @@ def action():
 	load()
 
 	test = theAppend( 'os.path.isfile' )
-	print( test )
+	_.pr( test )
 	sys.exit()
 
 	if not len( documentation ):
@@ -414,6 +414,7 @@ spaceID = 0
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

@@ -243,18 +243,19 @@ def action():
 	# sys.exit()
 
 
-	# print( url )
+	# _.pr( url )
 	# try:
 	# 	result = html.fromstring(requests.get( url ).content).text_content()
 	# except Exception as e:
 	# 	result = 'offline'
-	# print(result)
+	# _.pr(result)
 
 
 
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

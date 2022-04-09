@@ -208,7 +208,7 @@ def indexer():
             tabs.append(ii)
             # t=_.cp(t,'red',p=0)
         text+=t
-    # print(text)
+    # _.pr(text)
     global fields
     for ii,line in enumerate( _.isData(r=1) ):
         tes=ltest(line)
@@ -225,7 +225,7 @@ def test():
     l=len( _.isData() )
     quotient = 1 / 1.1
     percent = quotient * l
-    # print(percent)
+    # _.pr(percent)
     # sys.exit()
     # percent = quotient * 100
     pass
@@ -246,7 +246,7 @@ def test():
     #       text+=str(  _.cp(i,'green',p=0)  )
     #   else:
     #       text+=str(i)
-    # print(text)
+    # _.pr(text)
 
 
 
@@ -264,7 +264,7 @@ def test():
         if ii in index and index[ii] > percent:
             t=_.cp(t,'red',p=0)
         text+=t
-    print(text)
+    _.pr(text)
 
 
     i=0
@@ -281,7 +281,7 @@ def test():
             i=0
         else:
             text+=' '
-    print(text)
+    _.pr(text)
 
 def ltest(line):
     tabs=indexer()
@@ -337,7 +337,7 @@ def labeler(stri):
 
     isFile=False
     isFolder=False
-    # print(stri)
+    # _.pr(stri)
     try:
         if os.path.isfile(stri):
             isFile=True
@@ -380,7 +380,7 @@ def dicer(line):
     label_dex={}
     dic={}
     for fie in fieldsa(line):
-        # print(fie)
+        # _.pr(fie)
         l=labelee(fie)
         if not l == '-':
             dic[l]=_str.do('be',fie,' ')
@@ -446,7 +446,7 @@ def process():
             fi=dicer(line)
             records.append(fi)
             # _.pv(fi)
-                # print('fie',fie)
+                # _.pr('fie',fie)
     return records
 
 
@@ -476,6 +476,7 @@ field_list=[]
 if __name__ == '__main__':
     action()
     __.isExit()
+
 
 
 

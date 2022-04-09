@@ -52,9 +52,9 @@ class pID:
 		elif not split is None and type(pattern) == str:
 			self.code = pattern.split(split)
 		else:
-			print( 'Error: self.pattern( pattern, split=None )' )
+			_.pr( 'Error: self.pattern( pattern, split=None )' )
 			sys.exit()
-		# print( self.code )
+		# _.pr( self.code )
 	def buildPatterns( self, count=2, duplicates=True ):
 		permutations = []
 		start = []
@@ -62,8 +62,8 @@ class pID:
 		while not i == count:
 			i+=1
 			start.append(  self.code[0]  )
-		# print( start )
-		# print( self.code.index( start[0] ) )
+		# _.pr( start )
+		# _.pr( self.code.index( start[0] ) )
 		if duplicates:
 			permutations.append( start )
 		n = self.resolve( start )
@@ -75,9 +75,9 @@ class pID:
 			plus=1
 			pp = self.gen( n, err=True )
 			p = pp[0]
-			# print(p)
+			# _.pr(p)
 			if len(p) > count:
-				# print(p)
+				# _.pr(p)
 				# sys.exit()
 				done=True
 			if not done:
@@ -86,9 +86,9 @@ class pID:
 				else:
 					# pre = len(p)
 					# post = len(set(p))
-					# print('xxx:', pre,post)
+					# _.pr('xxx:', pre,post)
 					if pp[1]==1:
-						# print(p)
+						# _.pr(p)
 						permutations.append( p )
 					else:
 						if pp[1] == 0:
@@ -96,11 +96,11 @@ class pID:
 						self.skip_count+=plus
 						self.skip_table.append(plus)
 						# if pp[1] == -1:
-						# 	print('HERE')
+						# 	_.pr('HERE')
 						# 	sys.exit()
-						# print(p, plus)
-						# print( 'plus:', plus )
-					# print( 'HERE' )
+						# _.pr(p, plus)
+						# _.pr( 'plus:', plus )
+					# _.pr( 'HERE' )
 
 					# sys.exit()
 
@@ -146,7 +146,7 @@ class pID:
 			method = 1
 
 			if method == 1:
-				# print( type(self.table[i]), type(x), x )
+				# _.pr( type(self.table[i]), type(x), x )
 				# if not x == self.ph:
 				# 		y = self.table[i][x]
 				# 		total += y
@@ -200,13 +200,13 @@ class pID:
 					pass
 				if len(self.code) == self.max_unsafe+1:
 					break
-		# print(self.code)
+		# _.pr(self.code)
 		code = []
 		for x in self.code:
 			if not x == self.ph:
 				code.append(x)
 		self.code = code
-		# print( len( self.code ) )
+		# _.pr( len( self.code ) )
 		# sys.exit()
 		table = []
 		for x in self.code:
@@ -215,10 +215,10 @@ class pID:
 		self.code = table
 		# self.password()
 		self.base = len(self.code)
-		# print(self.base)
-		# print(self.table)
+		# _.pr(self.base)
+		# _.pr(self.table)
 		self.place_value_id(save=True)
-		# print(self.table)
+		# _.pr(self.table)
 		# sys.exit()
 		self.checked = True
 
@@ -248,10 +248,10 @@ class pID:
 				try:
 					table.append( self.code.index(x) )
 				except Exception as e:
-					print('ERROR:')
-					print( '\t',self.code )
-					print( '\t', x )
-					print()
+					_.pr('ERROR:')
+					_.pr( '\t',self.code )
+					_.pr( '\t', x )
+					_.pr()
 					sys.exit()
 
 		# _.colorThis( str(table), 'yellow' )
@@ -266,7 +266,7 @@ class pID:
 			method = 1
 
 			if method == 1:
-				# print( type(self.table[i]), type(x), x )
+				# _.pr( type(self.table[i]), type(x), x )
 				if not x == self.ph:
 					y = self.table[i][x]
 					total += y
@@ -331,24 +331,24 @@ class pID:
 				n = 0
 			else:
 				run = self.query( n )
-				# print( 'run', run )
-				# print( 'run', run )
+				# _.pr( 'run', run )
+				# _.pr( 'run', run )
 				pvA = self.placeValueQuery(n)
 				try:
 					n -= run['n']
 				except Exception as e:
-					print(run)
+					_.pr(run)
 				pvB = self.placeValueQuery(n)
 				pvD = pvA - pvB
 				pvDs.append( pvD )
 				try:
 					table.append(run['id'])
 				except Exception as e:
-					print('Error: Number is to large')
+					_.pr('Error: Number is to large')
 					sys.exit()
 
 				# if num >= 3906:
-				# 	print( run )
+				# 	_.pr( run )
 				# if not n == 0:
 				if pvD > 1:
 					while not pvD == 1:
@@ -360,7 +360,7 @@ class pID:
 				pv = run['pv']
 
 		# if num >= 3906:
-		# 	print( table )
+		# 	_.pr( table )
 
 		placeValue = self.placeValueQuery( num )
 
@@ -425,7 +425,7 @@ class pID:
 		add = 0
 		startAdd = False
 		for pvi, pv in enumerate(self.table):
-			# print(pv)
+			# _.pr(pv)
 			if startAdd: add+=1;
 			for numi, num in enumerate(self.table[pvi]):
 
@@ -438,7 +438,7 @@ class pID:
 				}
 				if num == search:
 					return last
-				# print( num )
+				# _.pr( num )
 		return None
 
 	def place_value_id( self, test=189922, save=False ):
@@ -503,9 +503,9 @@ class pID:
 			if isTest:
 				if t >= 15501: sys.exit();
 				if t >= 59:
-					print( '',theID, p, add, '\t', _pID.gen( t, d=1 ), '   \t', addComma(t), t )
+					_.pr( '',theID, p, add, '\t', _pID.gen( t, d=1 ), '   \t', addComma(t), t )
 			if isTest and t == 62:
-				print( 62, idFix(theID), t )
+				_.pr( 62, idFix(theID), t )
 				sys.exit()
 			if test > t:
 				lastID = theID
@@ -540,7 +540,7 @@ class pID:
 			if i and 1 and i % self.base == 0:
 				theID = -1; p+=1;
 
-				# print( len(theSet), self.base )
+				# _.pr( len(theSet), self.base )
 				# if not len(theSet) == self.base:
 				# 	while not len(theSet) == self.base:
 				# 		theSet.pop()
@@ -584,7 +584,7 @@ def table( db='pID.db' ):
 		if n % commitPer == 0:
 			conn.commit()
 			mits+=1
-			print(mits,n)
+			_.pr(mits,n)
 	conn.commit()
 
 
@@ -612,7 +612,7 @@ def gen2( num, data=None, d=None ):
 			try:
 				nVal[nth]+=1
 			except Exception as e:
-				print('nVal[nth]+=1',nVal,nth)
+				_.pr('nVal[nth]+=1',nVal,nth)
 				sys.exit()
 
 			shouldZero = False
@@ -651,7 +651,7 @@ def gen2( num, data=None, d=None ):
 		try:
 			result += base[x]
 		except Exception as e:
-			print( 'result += base[x]', x )
+			_.pr( 'result += base[x]', x )
 	if data:
 		return theVal
 	return result
@@ -765,8 +765,8 @@ class checksum:
 		# https://stattrek.com/online-calculator/combinations-permutations.aspx
 
 		if not self.setting in list(self.options.keys()):
-			print( '\t', 'Settings error:' )
-			print( '\t\t', 'Try: 128, 64, 32, 16, 8, 4' )
+			_.pr( '\t', 'Settings error:' )
+			_.pr( '\t\t', 'Try: 128, 64, 32, 16, 8, 4' )
 			sys.exit()
 
 
@@ -794,7 +794,7 @@ class checksum:
 
 		if not self.processFile(path):
 			return None
-		# print(self.n)
+		# _.pr(self.n)
 		return self.checksum
 
 		# self.start()
@@ -811,7 +811,7 @@ class checksum:
 		try:
 			return sum(l) / len(l)
 		except Exception as e:
-			print( 'Error: average' )
+			_.pr( 'Error: average' )
 
 	def chunk( self, chunk ):
 		self.index[ self.location ] += self.average( list(chunk) )
@@ -819,8 +819,8 @@ class checksum:
 
 	def digest( self ):
 		nn = ''
-		# print()
-		# print(self.n)
+		# _.pr()
+		# _.pr(self.n)
 		# _.printVar(self.index)
 		for i,x in enumerate(self.n):
 			ni = int(self.n[i])
@@ -844,8 +844,8 @@ class checksum:
 				# 		ii+=1
 				# 	nn += self.digit( self.n[i], int(pp) )
 		self.n = nn
-		# print(self.n)
-		# print()
+		# _.pr(self.n)
+		# _.pr()
 
 		x = mini.gen( int(self.n) )
 		xx = ''
@@ -885,28 +885,28 @@ class checksum:
 			try:
 				if type(c) == int:
 					self.nIndex[ str(location) ] += c
-					print(c)
-					# print('A')
+					_.pr(c)
+					# _.pr('A')
 				else:
 					self.nIndex[ str(location) ] += ord(c)
-					# print('B')
+					# _.pr('B')
 				
 			except Exception as e:
-				print()
-				print('\tError')
-				print( '\t\t',c )
-				print()
-				print(i,chr(c))
-				print()
-				print(self.data)
+				_.pr()
+				_.pr('\tError')
+				_.pr( '\t\t',c )
+				_.pr()
+				_.pr(i,chr(c))
+				_.pr()
+				_.pr(self.data)
 
 				sys.exit()
 			location+=1
 			if location > locationMax:
 				location=0
-		# print( self.n )
+		# _.pr( self.n )
 		done = self.build()
-		# print( self.n )
+		# _.pr( self.n )
 		x = mini.gen( done )
 		xx = ''
 		i=0
@@ -983,7 +983,7 @@ class checksum:
 		else:
 			self.passwordA = password
 			self.passwordB = password
-		# print( 'self.passwordB',self.passwordB )
+		# _.pr( 'self.passwordB',self.passwordB )
 		mini.password( self.passwordB )
 		default = '{E23CD55D-E33F-42F2-81B1-72F8319A6087}'
 		if self.passwordA is None:
@@ -1038,28 +1038,28 @@ class checksum:
 
 
 	def digitB( self, z, much ):
-		# print(z,much)
+		# _.pr(z,much)
 		r = int(z)
 		for x in str(much):
 			r += int(x)
 			for w in str(r):
 				r = int(w)
 
-		# print( z,r )
+		# _.pr( z,r )
 		return self.digit(z,r)
 
 	def digit( self, z, much ):
 		z = int(z)
 		i = 0
-		# print()
-		# print(z,much)
+		# _.pr()
+		# _.pr(z,much)
 		while not i == much:
 			
 			i+=1
 			z += 1
 			if z > 9:
 				z = 0
-		# print(z)
+		# _.pr(z)
 		return str(z)
 
 	def step( self, much ):
@@ -1091,9 +1091,9 @@ class checksum:
 
 	def getBin( self, path ):
 		if path is None:
-			print()
-			print( "\tchecksum = _pID.checksum( data, setting='16', password=['abc',123]  ).run()" )
-			print()
+			_.pr()
+			_.pr( "\tchecksum = _pID.checksum( data, setting='16', password=['abc',123]  ).run()" )
+			_.pr()
 			sys.exit()
 
 		if not os.path.isfile(path):
@@ -1112,16 +1112,16 @@ class checksum:
 	def processFile( self, path ):
 
 		if path is None:
-			print()
-			print( "\tchecksum = _pID.checksum( data, setting='16', password=['abc',123]  ).run()" )
-			print()
+			_.pr()
+			_.pr( "\tchecksum = _pID.checksum( data, setting='16', password=['abc',123]  ).run()" )
+			_.pr()
 			sys.exit()
 
 		if not os.path.isfile(path):
 			return False
 
 		self.start()
-		# print(path)
+		# _.pr(path)
 		with open( path, 'rb' ) as part:
 			for chunk in iter(lambda: part.read(4096), b''):
 				self.chunk(chunk)
@@ -1129,4 +1129,5 @@ class checksum:
 
 
 mini = pID()
+
 

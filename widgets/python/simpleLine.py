@@ -159,7 +159,7 @@ def action():
 			for z in _.switches.values('Plus'):
 				for y in _.caseUnspecific(x,z):
 					x = x.replace(y, _.colorThis( y, 'green', p=0 ))
-			print(i,x)
+			_.pr(i,x)
 
 	_.colorThis( [ '', _.addComma(_.nc.cnt.search), 'of', _.addComma(_.nc.cnt.total) ], 'yellow' )
 
@@ -171,6 +171,7 @@ def action():
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

@@ -155,10 +155,10 @@ _.postLoad( __file__ )
 def action():
 	a = _v.stmp +os.sep+ 'unclaimed_tickets'
 	b = _v.stmp +os.sep+ 'unclaimed_tickets_history'
-	# print(folder)
+	# _.pr(folder)
 	for i,folder in enumerate([a,b]):
 		for file in os.listdir(folder):
-			# print(file)
+			# _.pr(file)
 			if file.startswith('closed') or file.startswith('open'):
 				pre = ''
 				if file.startswith('closed'):
@@ -168,11 +168,11 @@ def action():
 					pre = 'open'
 					alt = file.replace('open','closed')
 				path = folder +os.sep+ file
-				# print(file)
+				# _.pr(file)
 				session = file.replace(pre+'-','').replace('.txt','')
 				path2 = folder+_v.slash+'history-'+session+'.txt'
 				if os.path.isfile(path):
-					# print(path)
+					# _.pr(path)
 					if not os.path.isfile(  _v.myTickets +os.sep+ file  ) and not os.path.isfile(  _v.myTickets +os.sep+ alt  ):
 						_.colorThis( [ 'reclaiming ticket for session: ', session ], 'cyan' )
 						newFile = []
@@ -188,6 +188,7 @@ def action():
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

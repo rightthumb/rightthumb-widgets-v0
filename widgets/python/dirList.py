@@ -350,10 +350,10 @@ def action():
 
 	if _.switches.isActive('Print'):
 		for x in payloadFolders:
-			print( x )
+			_.pr( x )
 
 		for x in payloadFiles:
-			print( x )
+			_.pr( x )
 
 	if _.switches.isActive('Files') and _.switches.isActive('Folders'):
 		return { 'Files': payloadFiles, 'Folders': payloadFolders, }
@@ -380,6 +380,7 @@ payloadFolders = []
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

@@ -170,13 +170,14 @@ def action():
 	if _.switches.isActive('Files'):
 		files=_.switches.values('Files')
 	for i,path in enumerate(files):
-		print( __.path(path,pop=True) )
+		_.pr( __.path(path,pop=True) )
 
 
 
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

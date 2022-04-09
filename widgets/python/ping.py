@@ -19,7 +19,7 @@ import _rightThumb._matrix as _matrix
 a, app, application = _matrix.theApp()
 appDBA = _matrix.clearFocus( __name__, __file__ )
 _matrix.appReg = appDBA
-# print( 'appDBA', appDBA )
+# _.pr( 'appDBA', appDBA )
 app.focus( appDBA )
 def focus( parentApp='', childApp='', reg=True ):
 	global appDBA
@@ -153,11 +153,11 @@ def check_ping(host):
 			# response = os.system("dir")
 			# response = os.system("ping -n 1 -w 500 " + host + " > nul")
 			result = subprocess.run(['ping', '-n','1','-w','500',host], stdout=subprocess.PIPE)
-			# print(result)
+			# _.pr(result)
 		else:
 			result = subprocess.run(['ping', '-c','1','-W','0.5',host], stdout=subprocess.PIPE)
 			# response = os.system("ping -c 1 -W 0.5" + host + "> /dev/null")
-		# print(result.stdout)
+		# _.pr(result.stdout)
 	
 		if 'reply' in str(result.stdout).lower():
 			response = 1
@@ -187,7 +187,7 @@ def action():
 
 	if not app.switch('Duration').isActive():
 		for h in hosts:
-			# print( h, check_ping(h) )
+			# _.pr( h, check_ping(h) )
 			if check_ping(h):
 				_.colorThis( h, 'green' )
 			else:
@@ -199,12 +199,12 @@ def action():
 		for h in hosts:
 			bad[h] = 0
 		while not time.time() > duration[0]:
-			print()
-			print()
+			_.pr()
+			_.pr()
 			left = str( duration[0] - time.time() )
 			_.colorThis( [ ' : ', left.split('.')[0], ' : ' ], 'yellow' )
 			for h in hosts:
-				# print( h, check_ping(h) )
+				# _.pr( h, check_ping(h) )
 				if check_ping(h):
 					bad[h] = 0
 					if not app.switch('Print').isActive():
@@ -221,6 +221,7 @@ def action():
 
 if __name__ == '__main__':
 	app.asyn( 'action', action, trigger=app.focus(appDBA).unregister )
+
 
 
 

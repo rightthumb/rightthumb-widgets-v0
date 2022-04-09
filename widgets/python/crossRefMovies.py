@@ -174,15 +174,15 @@ def relevantFolders():
 	global relevantFoldersOne
 	global relevantFoldersTwo
 
-	# print( fDataOne )
+	# _.pr( fDataOne )
 	toDrillDown = []
-	print()
+	_.pr()
 	for k in fDataOne.keys():
 		s = fDataOne[k]
 		p = _.percentageDiffIntAuto( fDataOne[k], fDataOneTotal )
 		if p > 5:
 			toDrillDown.append( k )
-			print( p, k, fDataOne[k], fDataOneTotal )
+			_.pr( p, k, fDataOne[k], fDataOneTotal )
 	cMax = 0
 	for k in toDrillDown:
 		s = fDataOne[k]
@@ -199,11 +199,11 @@ def relevantFolders():
 				relevantFoldersOne.append( k )
 		else:
 			relevantFoldersOne.append( k )
-	print()
+	_.pr()
 	for rf in relevantFoldersOne:
-		print( rf )
-	print()
-	print()
+		_.pr( rf )
+	_.pr()
+	_.pr()
 	if not _.switches.isActive('Single'):
 		toDrillDown = []
 		for k in fDataTwo.keys():
@@ -211,7 +211,7 @@ def relevantFolders():
 			p = _.percentageDiffIntAuto( fDataTwo[k], fDataTwoTotal )
 			if p > 5:
 				toDrillDown.append( k )
-				print( p, k, fDataTwo[k], fDataTwoTotal )
+				_.pr( p, k, fDataTwo[k], fDataTwoTotal )
 		cMax = 0
 		for k in toDrillDown:
 			s = fDataTwo[k]
@@ -228,9 +228,9 @@ def relevantFolders():
 					relevantFoldersTwo.append( k )
 			else:
 				relevantFoldersTwo.append( k )
-		print()
+		_.pr()
 		for rf in relevantFoldersTwo:
-			print( rf )
+			_.pr( rf )
 
 def documentFolders( folder, tL=1 ):
 	global fDataOne
@@ -275,17 +275,17 @@ def xRefTrue( data ):
 	global dTwo
 	global behavior
 	if len( dOne[data] ) == 1 and len( dTwo[data] ) == 1:
-		print()
-		print( dOne[data] )
-		print( dTwo[data] )
+		_.pr()
+		_.pr( dOne[data] )
+		_.pr( dTwo[data] )
 
 def noFranchise():
 	global dOne
 	global dTwo
 	missingFranchise = []
-	print()
-	print()
-	print()
+	_.pr()
+	_.pr()
+	_.pr()
 	for k in dOne.keys():
 		found = False
 		for record in dOne[k]:
@@ -293,7 +293,7 @@ def noFranchise():
 				found = True
 		if found:
 			missingFranchise.append( k )
-			print( k )
+			_.pr( k )
 	if not _.switches.isActive('Single'):
 		for k in dTwo.keys():
 			found = False
@@ -302,7 +302,7 @@ def noFranchise():
 					found = True
 			if found:
 				missingFranchise.append( k )
-				print( k )
+				_.pr( k )
 
 def words():
 	global dOne
@@ -313,14 +313,14 @@ def words():
 		k = _str.replaceDuplicate( k,' ' )
 		k = _str.cleanBE( k,' ' )
 		for s in k.split(' '):
-			print( s.lower() )
+			_.pr( s.lower() )
 
 	for k in dTwo.keys():
 		k = _str.removeNonAlpha2( k )
 		k = _str.replaceDuplicate( k,' ' )
 		k = _str.cleanBE( k,' ' )
 		for s in k.split(' '):
-			print( s.lower() )
+			_.pr( s.lower() )
 def exif():
 	global dOne
 	global dTwo
@@ -328,7 +328,7 @@ def exif():
 	c = 'exiftool "THEFILE" -json > C:\\exif\\MOD_BYTES.json'
 	e = 'C:\\exif\\MOD_BYTES.json'
 
-	# print(dOne)
+	# _.pr(dOne)
 
 	exifFiles = []
 	for k in dOne.keys():
@@ -341,19 +341,19 @@ def exif():
 				if not 'f' in _.switches.value('Exif').lower():
 					if 'n' in _.switches.value('Exif').lower():
 						if not os.path.isfile( te ):
-							print( x )
+							_.pr( x )
 						else:
 							size = os.stat( te ).st_size
 							if not size:
-								print( x )
+								_.pr( x )
 					else:
-						print( x )
+						_.pr( x )
 				else:
 					if 'n' in _.switches.value('Exif').lower():
 						if not os.path.isfile( te ):
-							print( te )
+							_.pr( te )
 					else:
-						print( te )
+						_.pr( te )
 
 	if not _.switches.isActive('Single'):
 		exifFiles.append( 'C:\\exif\\1516473860.0_1499553772.json' )
@@ -367,19 +367,19 @@ def exif():
 					if not 'f' in _.switches.value('Exif').lower():
 						if 'n' in _.switches.value('Exif').lower():
 							if not os.path.isfile( te ):
-								print( x )
+								_.pr( x )
 							else:
 								size = os.stat( te ).st_size
 								if not size:
-									print( x )
+									_.pr( x )
 						else:
-							print( x )
+							_.pr( x )
 					else:
 						if 'n' in _.switches.value('Exif').lower():
 							if not os.path.isfile( te ):
-								print( te )
+								_.pr( te )
 						else:
-							print( te )
+							_.pr( te )
 
 def csvExport():
 	global dOne
@@ -399,7 +399,7 @@ def csvExport():
 			r += c.replace( 'FIELD', row['bytes'] )
 			r += c.replace( 'FIELD', row['mod'] )
 			r += e.replace( 'FIELD', row['imdbID'] )
-			print( r )
+			_.pr( r )
 
 	# if not _.switches.isActive('Single'):
 
@@ -409,7 +409,7 @@ def action():
 	global ext
 
 	fileTwo = []
-	# print( _.appData )
+	# _.pr( _.appData )
 	if not type( _.appData[__.appReg]['pipe'] ) == bool:
 		fileOne = _.appData[__.appReg]['pipe']
 		fieldSet( 'Single', 'active', True )
@@ -421,13 +421,13 @@ def action():
 			one = _.switches.value('FileOne')
 			two = _.switches.value('FileTwo')
 		else:
-			print('Error 0')
+			_.pr('Error 0')
 			sys.exit()
 		try:
 			fileOne = _.getText( one )
 			fileTwo = _.getText( two )
 		except Exception as e:
-			print('Error 1')
+			_.pr('Error 1')
 			sys.exit()
 
 	listOne = []
@@ -505,63 +505,63 @@ def action():
 
 	if not _.switches.isActive('Single') and not _.switches.isActive('Exif') and not _.switches.isActive('CSV') and not _.switches.isActive('Test'):
 		if not fileOneFalseCount and not fileTwoFalseCount:
-			print( 'Lists are a match' )
+			_.pr( 'Lists are a match' )
 		else:
 			if not fileOneFalseCount:
-				print( 'All items in one are in two' )
+				_.pr( 'All items in one are in two' )
 			else:
 				if not _.switches.isActive('Report') or '1' in _.switches.value('Report') or 'one' in _.switches.value('Report').lower():
 					if not _.switches.isActive('Report'):
-						print( 'Items in list 1 that are missing in list 2:' )
-						print()
+						_.pr( 'Items in list 1 that are missing in list 2:' )
+						_.pr()
 					for i, row in enumerate(fileOneFalseList):
 						if _.switches.isActive('NoCount'):
-							print( row )
+							_.pr( row )
 						else:
-							print( i+1, row )
+							_.pr( i+1, row )
 					if not _.switches.isActive('Report'):
-						print()
-						print()
-						print()
+						_.pr()
+						_.pr()
+						_.pr()
 			if not fileTwoFalseCount:
-				print( 'All items in two are in one' )
+				_.pr( 'All items in two are in one' )
 			else:
 				if not _.switches.isActive('Report') or '2' in _.switches.value('Report') or 'two' in _.switches.value('Report').lower():
 					if not _.switches.isActive('Report'):
-						print( 'Items in list 2 that are missing in list 1:' )
-						print()
+						_.pr( 'Items in list 2 that are missing in list 1:' )
+						_.pr()
 					for i, row in enumerate(fileTwoFalseList):
 						if _.switches.isActive('NoCount'):
-							print( row )
+							_.pr( row )
 						else:
-							print( i+1, row )
+							_.pr( i+1, row )
 			if not _.switches.isActive('NoCount'):
-				print()
-				print( 'One:' )
-				print( '\tTotal:\t', fileOneTrueCount+fileOneFalseCount )
-				# print( '\tTrue:\t', fileOneTrueCount )
-				print( '\tFalse:\t', fileOneFalseCount )
-				print( '\t% T:\t', str(_.percentageDiffIntAuto( fileOneTrueCount+fileOneFalseCount, fileOneTrueCount))+'%' )
-				print( '\t% F:\t', str(_.percentageDiffIntAuto( fileOneTrueCount+fileOneFalseCount, fileOneFalseCount))+'%' )
-				print()
-				print( 'Two:' )
-				print( '\tTotal:\t', fileTwoTrueCount+fileTwoFalseCount )
-				# print( '\tTrue:\t', fileTwoTrueCount )
-				print( '\tFalse:\t', fileTwoFalseCount )
-				print( '\t% T:\t', str(_.percentageDiffIntAuto( fileTwoTrueCount+fileTwoFalseCount, fileTwoTrueCount))+'%' )
-				print( '\t% F:\t', str(_.percentageDiffIntAuto( fileTwoTrueCount+fileTwoFalseCount, fileTwoFalseCount))+'%' )
+				_.pr()
+				_.pr( 'One:' )
+				_.pr( '\tTotal:\t', fileOneTrueCount+fileOneFalseCount )
+				# _.pr( '\tTrue:\t', fileOneTrueCount )
+				_.pr( '\tFalse:\t', fileOneFalseCount )
+				_.pr( '\t% T:\t', str(_.percentageDiffIntAuto( fileOneTrueCount+fileOneFalseCount, fileOneTrueCount))+'%' )
+				_.pr( '\t% F:\t', str(_.percentageDiffIntAuto( fileOneTrueCount+fileOneFalseCount, fileOneFalseCount))+'%' )
+				_.pr()
+				_.pr( 'Two:' )
+				_.pr( '\tTotal:\t', fileTwoTrueCount+fileTwoFalseCount )
+				# _.pr( '\tTrue:\t', fileTwoTrueCount )
+				_.pr( '\tFalse:\t', fileTwoFalseCount )
+				_.pr( '\t% T:\t', str(_.percentageDiffIntAuto( fileTwoTrueCount+fileTwoFalseCount, fileTwoTrueCount))+'%' )
+				_.pr( '\t% F:\t', str(_.percentageDiffIntAuto( fileTwoTrueCount+fileTwoFalseCount, fileTwoFalseCount))+'%' )
 
-				print()
-				print( 'Totals:' )
-				print( '\tRows:\t', fileTwoTrueCount+fileTwoFalseCount+fileOneTrueCount+fileOneFalseCount )
-				print()
-				print( '\tUnique:\t', fileTwoTrueCount+fileTwoFalseCount+fileOneFalseCount )
-				print( '\tTrue:\t', fileOneTrueCount )
-				print( '\tFalse:\t', fileTwoFalseCount+fileOneFalseCount )
-				print( '\t% T:\t', str(_.percentageDiffIntAuto( fileTwoTrueCount+fileTwoFalseCount+fileOneFalseCount, fileTwoTrueCount))+'%' )
-				print( '\t% F:\t', str(_.percentageDiffIntAuto( fileTwoTrueCount+fileTwoFalseCount+fileOneFalseCount, fileTwoFalseCount+fileOneFalseCount))+'%' )
-		print()
-		print()
+				_.pr()
+				_.pr( 'Totals:' )
+				_.pr( '\tRows:\t', fileTwoTrueCount+fileTwoFalseCount+fileOneTrueCount+fileOneFalseCount )
+				_.pr()
+				_.pr( '\tUnique:\t', fileTwoTrueCount+fileTwoFalseCount+fileOneFalseCount )
+				_.pr( '\tTrue:\t', fileOneTrueCount )
+				_.pr( '\tFalse:\t', fileTwoFalseCount+fileOneFalseCount )
+				_.pr( '\t% T:\t', str(_.percentageDiffIntAuto( fileTwoTrueCount+fileTwoFalseCount+fileOneFalseCount, fileTwoTrueCount))+'%' )
+				_.pr( '\t% F:\t', str(_.percentageDiffIntAuto( fileTwoTrueCount+fileTwoFalseCount+fileOneFalseCount, fileTwoFalseCount+fileOneFalseCount))+'%' )
+		_.pr()
+		_.pr()
 		relevantFolders()
 		# noFranchise()
 		# words()
@@ -592,17 +592,17 @@ def test():
 	data = []
 	for record in dOne[ t ]:
 		data.append( record['id'] )
-		# print( record['id']+'.json' )
+		# _.pr( record['id']+'.json' )
 
 	# sys.exit()
 	_exif.setPipeData( data )
 	records = _exif.identify()
-	print()
+	_.pr()
 	i = 0
 	for record in records:
 		i += 1
-		print( record['keep'], record['id'],  )
-	print(i)
+		_.pr( record['keep'], record['id'],  )
+	_.pr(i)
 
 
 
@@ -623,6 +623,7 @@ exifJSON = {}
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

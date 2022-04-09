@@ -166,12 +166,12 @@ def action():
 	    s.listen()
 	    conn, addr = s.accept()
 	    with conn:
-	        print('Connected by', addr)
+	        _.pr('Connected by', addr)
 	        while True:
 	            data = conn.recv(1024)
 	            if not data:
 	                break
-	            print(data)
+	            _.pr(data)
 	            conn.sendall(data)
 
 
@@ -180,6 +180,7 @@ def action():
 if __name__ == '__main__':
 	action()
 	__.isExit()
+
 
 
 

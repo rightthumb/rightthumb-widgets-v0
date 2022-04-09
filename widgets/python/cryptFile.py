@@ -165,11 +165,11 @@ def action():
 	global appDBA
 	# focus()
 	# focus()
-	# print('appDBA',appDBA)
-	# print( _.switches.isActive('Files',appDBA), 'Files', _.switches.value('Files',appDBA) )
-	# print( _.switches.isActive('Decrypt',appDBA), 'Decrypt' )
-	# print( _.switches.isActive('Encrypt',appDBA), 'Encrypt' )
-	# print( _.switches.isActive('isCrypt',appDBA), 'isCrypt' )
+	# _.pr('appDBA',appDBA)
+	# _.pr( _.switches.isActive('Files',appDBA), 'Files', _.switches.value('Files',appDBA) )
+	# _.pr( _.switches.isActive('Decrypt',appDBA), 'Decrypt' )
+	# _.pr( _.switches.isActive('Encrypt',appDBA), 'Encrypt' )
+	# _.pr( _.switches.isActive('isCrypt',appDBA), 'isCrypt' )
 
 	# sys.exit()
 
@@ -180,11 +180,11 @@ def action():
 			if not os.path.isfile(filepath):
 				return None
 
-			# print( _.switches.isActive('isCrypt',appDBA), 'isCrypt' )
+			# _.pr( _.switches.isActive('isCrypt',appDBA), 'isCrypt' )
 			# sys.exit()
 
 			if  _.switches.isActive('isCrypt',appDBA):
-				# print('here')
+				# _.pr('here')
 				# sys.exit()
 				done = True
 				if _.isCrypt(filepath):
@@ -213,25 +213,25 @@ def action():
 
 
 				filepath = original
-				# print(  " ".join(['{:02X}'.format(byte) for byte in     open( filepath, 'rb' ).read(32)    ])  )
+				# _.pr(  " ".join(['{:02X}'.format(byte) for byte in     open( filepath, 'rb' ).read(32)    ])  )
 				if " ".join(['{:02X}'.format(byte) for byte in     open( filepath, 'rb' ).read(32)    ]).startswith( '41 45 53 02 00 00 1B' ):
 				# if _.isCrypt(filepath):
 					confirmed_encrypted = True
 				else:
 					confirmed_encrypted = False
 
-				# print( _.switches.isActive('Decrypt',appDBA) )
+				# _.pr( _.switches.isActive('Decrypt',appDBA) )
 				if not _.switches.isActive('Decrypt',appDBA) and not _.switches.isActive('Encrypt',appDBA):
-					# print(0)
+					# _.pr(0)
 					if confirmed_encrypted:
-						# print(1)
+						# _.pr(1)
 						_.switches.fieldSet( 'Decrypt', 'active', True, appDBA )
 					else:
-						# print(2)
+						# _.pr(2)
 						_.switches.fieldSet( 'Encrypt', 'active', True, appDBA )
 
 
-				# print( _.switches.isActive('Decrypt',appDBA) )
+				# _.pr( _.switches.isActive('Decrypt',appDBA) )
 				if not confirmed_encrypted and _.switches.isActive('Decrypt',appDBA):
 					_.colorThis( [ 'Error: not encrypted' ], 'red' )
 					sys.exit()
@@ -276,7 +276,7 @@ def action():
 					if _.switches.isActive('DeleteOriginal',appDBA):
 						_.secureDeleteFile(filepath)
 						
-				# print( _.switches.isActive('Decrypt',appDBA) )
+				# _.pr( _.switches.isActive('Decrypt',appDBA) )
 				if _.switches.isActive('Decrypt',appDBA):
 					if not _.switches.isActive('Clean'):
 						_.colorThis(['Decrypt:',filepath],'cyan')
@@ -312,9 +312,9 @@ def action():
 								# decrypt file stream
 								pyAesCrypt.decryptStream(fIn, fOut, password, bufferSize, encFileSize)
 						except ValueError:
-							print('Err:', 0)
+							_.pr('Err:', 0)
 							if os.path.isfile( output ):
-								print('Err:', 1)
+								_.pr('Err:', 1)
 								os.remove( output )
 								time.sleep(.2)
 							# remove output file on error
@@ -336,7 +336,7 @@ def action():
 						os.remove(filepath)
 			filepath = original
 			if not _.switches.isActive('Clean'):
-				print( 'isCrypt', _.isCrypt(filepath) )
+				_.pr( 'isCrypt', _.isCrypt(filepath) )
 
 
 encrypted_file_ext = '.crypt'
@@ -354,6 +354,7 @@ focus()
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

@@ -221,7 +221,7 @@ def action():
 	table = []
 
 	for key in index.keys():
-		# print(key)
+		# _.pr(key)
 		if len( index[key] ) > 1:
 			record = {
 						'name': key,
@@ -256,6 +256,7 @@ sorcerer = []
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

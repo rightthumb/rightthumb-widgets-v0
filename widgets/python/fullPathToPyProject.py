@@ -188,14 +188,14 @@ def action():
 				epy.append( data )
 
 		for row in epy:
-			print( row )
-		print(len(epy))
-		print()
+			_.pr( row )
+		_.pr(len(epy))
+		_.pr()
 		for row in epyi:
-			print( row )
-		print(len(epyi))
-		print()
-		print(len(epyi)+len(epy))
+			_.pr( row )
+		_.pr(len(epyi))
+		_.pr()
+		_.pr(len(epyi)+len(epy))
 
 
 
@@ -205,6 +205,7 @@ def action():
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

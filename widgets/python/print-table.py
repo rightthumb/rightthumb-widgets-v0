@@ -189,7 +189,7 @@ def action():
 
 	for i,path in enumerate( _.isData(r=1) ):
 		table = _.getTable2(path)
-		print(table)
+		_.pr(table)
 
 
 
@@ -197,6 +197,7 @@ def action():
 if __name__ == '__main__':
 	action()
 	__.isExit()
+
 
 
 

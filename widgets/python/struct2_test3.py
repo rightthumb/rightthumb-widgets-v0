@@ -19,7 +19,7 @@ import _rightThumb._construct2 as __
 a, app, application = __.theApp()
 appDBA = __.clearFocus( __name__, __file__ )
 __.appReg = appDBA
-# print( 'appDBA', appDBA )
+# _.pr( 'appDBA', appDBA )
 app.focus( appDBA )
 def focus( parentApp='', childApp='', reg=True ):
 	global appDBA
@@ -34,8 +34,8 @@ import _rightThumb._base4 as ___
 ##################################################
 
 
-# print( focus( parentApp='parent' ) )
-# print( app.base(   focus( parentApp='parent' )   ) )
+# _.pr( focus( parentApp='parent' ) )
+# _.pr( app.base(   focus( parentApp='parent' )   ) )
 # sys.exit()
 
 
@@ -118,13 +118,13 @@ def test():
 	i=0
 	while i < 100:
 		pass 
-	print( 'ran' )
+	_.pr( 'ran' )
 
 def handler( arg1='E1', arg2='E2' ):
 	i=0
 	# asdf
 	while True:
-		print( i, arg1, arg2 )
+		_.pr( i, arg1, arg2 )
 		i+=1
 		time.sleep(.5)
 
@@ -167,14 +167,14 @@ def fn(i):
 # sys.getfilesystemencoding()
 
 def action():
-	# print( sys._getframe().f_code.co_name, dir(sys._getframe()) )
+	# _.pr( sys._getframe().f_code.co_name, dir(sys._getframe()) )
 	
-	# print( five(0) )
+	# _.pr( five(0) )
 	# sys._getframe(  ).f_code.co_filename
 
 	# fn.f = 1
-	# print( fn.f )
-	# print( fn.f )
+	# _.pr( fn.f )
+	# _.pr( fn.f )
 
 	# sys.exit()
 	global appDBA
@@ -182,7 +182,7 @@ def action():
 	# sys._getframe().f_code.co_name
 
 	app.data( 'AnyDesk.json' ).set( ___.table.get( 'AnyDesk.json' ) )
-	# print( app.data( 'AnyDesk.json' ).get() )
+	# _.pr( app.data( 'AnyDesk.json' ).get() )
 	_.printVarSimple( app.data( 'AnyDesk.json' ).get() )
 
 
@@ -192,38 +192,38 @@ def action():
 	x = app.switch( 'Files' ).about()
 	_.printVarSimple( x )
 
-	# print( "a.ir()", a.ir() )
-	# print( 'Files', a.s('Files').a() )
+	# _.pr( "a.ir()", a.ir() )
+	# _.pr( 'Files', a.s('Files').a() )
 
 	if a.ir() and a.s('Files').a() and a.s('Files').l() and not app.switch('Files').inVal('one') and a.ps('thisProcess', 'Files and One', i=1 ):
-		print( 'Missing one' )
+		_.pr( 'Missing one' )
 	if a.ir() and a.s('Files').a() and a.s('Files').l() and app.switch('Files').inVal('one') and a.ps('thisProcess', 'Files and One', i=1 ):
-		print( 'Works' )
+		_.pr( 'Works' )
 
 	if a.ir() and a.s('Files').a() and not a.s('Files').l() and a.ps('thisProcess', 'Files and One', i=1 ):
-		print( 'No Switch Values' )
+		_.pr( 'No Switch Values' )
 	if a.ir() and not a.s('Files').a() and a.ps('thisProcess', 'Files and One', i=1 ):
-		print( 'Missing Files Switch' )
+		_.pr( 'Missing Files Switch' )
 
 	testVar = {}
 
 	if a.ir() and a.s('Files').a() and a.docIF( 'test' in testVar.keys(), 'hasKey', 'test in testVar' ):
 		a.ps('Files and test', 'docIF test', i=1 )
-		print( 'docIF True' )
+		_.pr( 'docIF True' )
 	else:
 		a.ps('Files and test', 'docIF test', i=1 )
-		print( 'docIF False' )
+		_.pr( 'docIF False' )
 	
 	pass
 	# temp = app.ext( 'test', 'struct2_test5' )
 	# app.ext( 'test' ).imp.action()
 	# temp = app.ext( 'test', 'struct2_test5' ).schedule()
-	# print('NEW HERE',__.genUUID())
-	# print('HERE')
+	# _.pr('NEW HERE',__.genUUID())
+	# _.pr('HERE')
 	# app.viewLog()
 	
 	# data = app.id( temp ).singleGetWait()
-	# print( '**********', data )
+	# _.pr( '**********', data )
 
 	app.switch('Files').call()
 
@@ -252,5 +252,6 @@ if __name__ == '__main__':
 
 
 # sys._getframe().f_code.co_name
+
 
 

@@ -207,9 +207,9 @@ def action():
 		for i,row in enumerate( _.appData[__.appReg]['pipe'] ):
 
 			if _.switches.isActive('Parts'):
-				print( len(row) )
+				_.pr( len(row) )
 				a = int(   str(len(row)/int(_.switches.value('Parts'))).split('.')[0]   )
-				print(a)
+				_.pr(a)
 				line = ''
 				for i,x in enumerate(row):
 					line += x
@@ -217,7 +217,7 @@ def action():
 					if n % a == 0:
 						line += ' '
 
-				print( line )
+				_.pr( line )
 
 
 			elif not _.switches.isActive('Parts'):
@@ -241,7 +241,7 @@ def action():
 
 			pass
 			_.fields.asset( 'length', table )
-			print()
+			_.pr()
 			for record in table:
 				row = '\t'
 				row += _.fields.value( 'length', 'length',   record['length'], right=1   )
@@ -249,8 +249,8 @@ def action():
 				row += _.fields.value( 'length', 'label',   record['label']   )
 				row += '\t'
 				row += _.fields.value( 'length', 'subject',   record['subject'], right=1   )
-				print( row )
-			print()
+				_.pr( row )
+			_.pr()
 
 
 
@@ -280,34 +280,35 @@ def load():
 		if _.switches.isActive('Sort'):
 			table = _.tables.returnSorted( 'strings', _.switches.value('Sort'), table )
 		_.fields.asset( 'strings', table )
-		print()
+		_.pr()
 		for record in table:
 			row = '\t'
 			row += _.fields.value( 'strings', 'string', record['string'], right=1 )
 			row += '\t'
 			row += _.fields.value( 'strings', 'length', record['length'] )
-			print( row )
-		print()
+			_.pr( row )
+		_.pr()
 """
 
 
 		# for string in _.switches.values('String'):
 		# 	table.append({ 'string':   _.colorThis( string, 'yellow', p=0 )   , 'length':   _.colorThis( len(string), 'green', p=0 )   })
-		# print()
+		# _.pr()
 		# _.fields.asset( 'strings', table )
-		# print()
+		# _.pr()
 		# for record in table:
 		# 	row = '\t'
 		# 	row += _.fields.value( 'strings', 'string',   _.colorThis( record['string'], 'yellow', p=0 )   )
 		# 	row += '\t'
 		# 	row += _.fields.value( 'strings', 'length',   _.colorThis( record['length'], 'green', p=0 )   )
-		# 	print( row )
-		# print()
+		# 	_.pr( row )
+		# _.pr()
 
 
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

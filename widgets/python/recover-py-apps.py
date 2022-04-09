@@ -181,16 +181,16 @@ def action():
 		fb = fileBackup.action()
 		backups[path] = fb
 
-		# print(path)
+		# _.pr(path)
 
 
 	_.linePrint()
-	print( '#backups' )
+	_.pr( '#backups' )
 	for f in backups:
-		print()
-		print(f)
-		print(backups[f])
-	print()
+		_.pr()
+		_.pr(f)
+		_.pr(backups[f])
+	_.pr()
 
 	# _.pv(paths)
 	# _.pv(backups)
@@ -222,9 +222,9 @@ def action():
 		f = f.replace(os.sep+os.sep,os.sep)
 		# if not f in done and f in paths:
 		# if 'decrypt-docs.py' in f:
-		# 	print(f, f in paths)
+		# 	_.pr(f, f in paths)
 		if f in paths:
-			# print(f)
+			# _.pr(f)
 			if not f in done and os.path.isfile(rec['backup']):
 				recover[f] = rec['backup']
 
@@ -233,25 +233,25 @@ def action():
 					done.append(f)
 		if len(done) == len(paths):
 			# _.e('done')
-			# print('break')
+			# _.pr('break')
 			break
 
 	# _.pv(done)
 	# _.pv(recover)
 	_.linePrint()
-	print( '#restore' )
+	_.pr( '#restore' )
 	for f in recover:
-		print()
-		print(f)
-		print(recover[f])
-	print()
+		_.pr()
+		_.pr(f)
+		_.pr(recover[f])
+	_.pr()
 	_.linePrint()
 
 
 
 	ask=input('restore? Y/n: ')
 	if not 'n' in ask.lower():
-		print()
+		_.pr()
 		for f in recover:
 			copyfile( recover[f], f )
 
@@ -275,6 +275,7 @@ from shutil import copyfile
 if __name__ == '__main__':
 	action()
 	__.isExit()
+
 
 
 

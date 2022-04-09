@@ -174,11 +174,11 @@ def action():
 	if 'ww' in _v.config_hash:
 		made['ww'] = 1
 		ww = _v.config_hash['ww']
-	# print('made',made)
+	# _.pr('made',made)
 	if 'ww' in made  and 'h' in made:
 		a = ww+os.sep+'databank'+os.sep+'tables'+os.sep+'bookmarks.index'
 		b = h+os.sep+'tables'+os.sep+'bookmarks.index'
-		# print(os.path.isfile(b))
+		# _.pr(os.path.isfile(b))
 		try:
 			if not os.path.isfile(b) and os.path.isfile(a):
 				from shutil import copyfile
@@ -195,13 +195,13 @@ def action():
 		else:
 			_.saveText( path, _.switches.values('Save')[0] )
 	else:
-		# print(path)
+		# _.pr(path)
 		if path.count(':'):
 			parts = path.split(':')
 			parts.reverse()
 			path = path[0]+':'+parts[0]
 
-		print(path)
+		_.pr(path)
 
 
 import _rightThumb._bookmarks as _bm
@@ -209,6 +209,7 @@ import _rightThumb._bookmarks as _bm
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

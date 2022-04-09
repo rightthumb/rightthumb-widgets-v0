@@ -181,7 +181,7 @@ def action():
 
 	except Exception as e:
 		_.cp( 'Link NOT created', 'red' )
-		print( e )
+		_.pr( e )
 	else:
 		_.cp( 'Link created', 'green' )
 
@@ -193,6 +193,7 @@ def action():
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

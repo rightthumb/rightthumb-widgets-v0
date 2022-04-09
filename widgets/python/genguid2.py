@@ -285,11 +285,11 @@ def action():
 		genid = genid.replace( '{', '' ).replace( '}', '' ).replace( '-', '' )
 
 
-	print( genid )
+	_.pr( genid )
 
 
 	if _.switches.isActive('PrintCharLength'):
-		print()
+		_.pr()
 		_.colorThis( [  '', _.addComma(len(genid)), 'characters'  ], 'yellow' )
   
 
@@ -300,6 +300,7 @@ def action():
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

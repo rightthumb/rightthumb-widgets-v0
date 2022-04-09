@@ -195,10 +195,10 @@ def processReg( path, vLx=None ):
 
 
 	if run:
-		# print( path )
-		# print(  )
+		# _.pr( path )
+		# _.pr(  )
 		# _.printVarSimple( record )
-		# print( record.keys() )
+		# _.pr( record.keys() )
 		
 		data.append( path.lower() )
 		lm_cu = ''
@@ -211,12 +211,12 @@ def processReg( path, vLx=None ):
 			return None
 
 		path = path[5:]
-		# print(path)
-		# print('|'+path+'|')
+		# _.pr(path)
+		# _.pr('|'+path+'|')
 
-		# print()
-		# print(path)
-		# print()
+		# _.pr()
+		# _.pr(path)
+		# _.pr()
 
 		try:
 			if lm_cu == 'HKLM':
@@ -245,7 +245,7 @@ def processReg( path, vLx=None ):
 					r = { 's': vLxS, 'name': name, 'type': type(value), 't': vtype, 'value': v }
 					if _.showLine( str(r) ):
 						table.append(r)
-					# print(name, vtype, type(value))
+					# _.pr(name, vtype, type(value))
 					# print (repr(name))
 					i += 1
 			except WindowsError:
@@ -287,7 +287,7 @@ def processFile( path ):
 
 	if _.showLine(path):
 		if not _.switches.isActive('Binary') and not _.switches.isActive('Text'):
-			print( path )
+			_.pr( path )
 		else:
 
 			info = _dir.info( path, mime=True )
@@ -297,9 +297,9 @@ def processFile( path ):
 			if info['name'] == 'desktop.ini':
 				return None
 			if info['mime'] == 'Binary' and _.switches.isActive('Binary'):
-				print( path )
+				_.pr( path )
 			elif info['mime'] == 'Text' and _.switches.isActive('Text'):
-				print( path )
+				_.pr( path )
 
 
 
@@ -327,14 +327,14 @@ def action():
 
 		# lm = winreg.ConnectRegistry( computer_name, winreg.HKEY_LOCAL_MACHINE )
 		# cu = winreg.ConnectRegistry( computer_name, winreg.HKEY_CURRENT_USER )
-		# print( 'here' )
+		# _.pr( 'here' )
 
 		theLogFiles = _.switches.values('Files')
 		if not len(theLogFiles) and not type( _.appData[__.appReg]['pipe'] ) == bool:
 			theLogFiles = _.appData[__.appReg]['pipe']
 
 		for theLogFile in theLogFiles:
-			# print( 'Log:', theLogFile )
+			# _.pr( 'Log:', theLogFile )
 			# records = _.getCSV( theLogFile )
 			records = _.csv( theLogFile )
 			for record in records:
@@ -372,12 +372,12 @@ def action():
 					if not loRow in data:
 						data.append( row.lower() )
 						do = 'call q "' + row + '">'+_v.txt_temp
-						print( row )
+						_.pr( row )
 						os.system('"' + do + '"')
 						result = _.getText( _v.txt_temp, raw=True, clean=2 )
 						for line in result.split('\n'):
 							if _.showLine( line ):
-								print( line )
+								_.pr( line )
 
 
 
@@ -400,6 +400,7 @@ dataF = []
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

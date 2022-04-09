@@ -180,13 +180,13 @@ def preProcess( row ):
 			for i,column in enumerate(columns):
 				column = _str.cleanBE(column,' ')
 				columns[i] = column
-			# print(columns)
+			# _.pr(columns)
 			for i,column in enumerate(columns):
 				fields[i] = column.replace( ' ', '_' )
 				table[ original.index(column) ] += 1
 				x = original[ original.index(column) ]
 				theIs.append( original.index(column) )
-				# print(x)
+				# _.pr(x)
 			# sys.exit()
 			startOnLine = di
 			break
@@ -207,9 +207,9 @@ def process():
 	# threshold = 80
 	# _.printVar( table )
 	
-	# print()
-	# print(totalRows)
-	# print()
+	# _.pr()
+	# _.pr(totalRows)
+	# _.pr()
 	# pause()
 
 	records = []
@@ -250,7 +250,7 @@ def process():
 
 
 				if shouldRun:
-					# print( build  )
+					# _.pr( build  )
 					if pastClose:
 						if len( build ) > 1:
 
@@ -284,7 +284,7 @@ def process():
 			if not record[0] == fields[0]:
 				if di > startOnLine:
 					records.append(record)
-				# print(record)
+				# _.pr(record)
 	pass
 	lengths = {}
 	for record in records:
@@ -309,7 +309,7 @@ def process():
 					newRec[ fields[i] ] = column
 				newRecords.append( newRec )
 			else:
-				print( len(record),record )
+				_.pr( len(record),record )
 
 
 
@@ -317,9 +317,9 @@ def process():
 	# if not _.switches.isActive('Save') or not len(_.switches.value('Save')):
 	# 	if not _.switches.isActive('Print'):
 	# 		for record in newRecords:
-	# 			print( record )
+	# 			_.pr( record )
 	return newRecords
-	# print( len(records), len(newRecords) )
+	# _.pr( len(records), len(newRecords) )
 
 
 
@@ -330,9 +330,9 @@ def postProcess():
 	global delim
 	global threshold
 	_.printVar( table )
-	print()
-	print(len(data))
-	print()
+	_.pr()
+	_.pr(len(data))
+	_.pr()
 	
 	records = []
 	
@@ -382,7 +382,7 @@ def postProcess():
 		keys = {}
 		first = True
 		for record in records:
-			print( len(record), maxTables )
+			_.pr( len(record), maxTables )
 			if first:
 				if len(record) == maxTables:
 					first = False
@@ -398,13 +398,13 @@ def postProcess():
 
 	pass
 	for record in newRecords:
-		print( record )
+		_.pr( record )
 """
 
 
 
 def action():
-	# print( 'Change to, if last was space' )
+	# _.pr( 'Change to, if last was space' )
 	# sys.exit()
 	global table
 	global data
@@ -428,12 +428,12 @@ def action():
 	if len(records):
 		keys = list( records[0].keys() )
 
-	print( ','.join(keys) )
+	_.pr( ','.join(keys) )
 	for record in records:
 		r = []
 		for key in keys:
 			r.append( record[key] )
-		print( ','.join(r) )
+		_.pr( ','.join(r) )
 
 	# _.printVarSimple( records )	
 
@@ -458,6 +458,7 @@ totalRows = 0
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

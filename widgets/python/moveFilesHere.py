@@ -232,19 +232,19 @@ def processFile( path ):
 	os.chdir( homeFolder )
 
 
-	print()
-	print()
-	# print()
-	print( baseFolder )
+	_.pr()
+	_.pr()
+	# _.pr()
+	_.pr( baseFolder )
 	do = 'move "' + path + '" "' + folder + _v.slash+'"'
-	print( do )
+	_.pr( do )
 	os.system('"' + do + '"')
 
 
-	# print()
-	print()
-	print()
-	# print( '\t',folder )
+	# _.pr()
+	_.pr()
+	_.pr()
+	# _.pr( '\t',folder )
 
 
 def action():
@@ -290,7 +290,7 @@ def load():
 	# _.printVar( folderReport )
 	folderReport = _.tables.returnSorted( 'data', 'd.percent', folderReport )
 	baseFolder = folderReport[0]['folder'] + _v.slash
-	# print( 'baseFolder:', baseFolder )
+	# _.pr( 'baseFolder:', baseFolder )
 	# sys.exit()
 
 baseFolder = ''
@@ -298,6 +298,7 @@ homeFolder = os.getcwd()
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

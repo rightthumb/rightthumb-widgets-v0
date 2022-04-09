@@ -205,13 +205,13 @@ def TestFrankenCert():
 		ctx.use_certificate(cert1)
 		ctx.check_privatekey()
 	except OpenSSL.SSL.Error as e:
-		print()
-		print( "SSL test success" )
-		# print( "SSL test success : %s" % e )
+		_.pr()
+		_.pr( "SSL test success" )
+		# _.pr( "SSL test success : %s" % e )
 		return
 
-	print()
-	print( "SSL test fail" )
+	_.pr()
+	_.pr( "SSL test fail" )
 
 # if __name__ == "__main__":
 # 	TestFrankenCert()
@@ -232,9 +232,9 @@ def action():
 	if _.switches.isActive('FileLabel'):
 		label = _.switches.values( 'FileLabel' )[0]
 
-	print(  )
-	print( 'Description:', description )
-	print( 'Label:', label.upper() )
+	_.pr(  )
+	_.pr( 'Description:', description )
+	_.pr( 'Label:', label.upper() )
 
 	(cert1, key1) = GenerateSelfSignedCert( description , validity, serial_no )
 
@@ -245,6 +245,7 @@ def action():
 ########################################################################################
 if __name__ == '__main__':
   action()
+
 
 
 

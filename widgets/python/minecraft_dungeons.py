@@ -206,9 +206,9 @@ def action():
 	for i,record in enumerate(data):
 		if not 'completed' in record:
 			changed = True
-			print()
-			print()
-			print(record['Location'])
+			_.pr()
+			_.pr()
+			_.pr(record['Location'])
 			data[i]['completed'] = input( '\tCompleted: ' )
 		locations.append(record['Location'])
 		if not record['completed'] in index:
@@ -227,7 +227,7 @@ def action():
 				elif location in index['y'] and record['completed'] == 'n':
 					do_next.append( record['Location'] )
 
-					# print( record['Location'],'', record['Unlock Predecessor'] )
+					# _.pr( record['Location'],'', record['Unlock Predecessor'] )
 	cnt = 0
 	for i,record in enumerate(data):
 		if record['completed'] == 'n':
@@ -237,7 +237,7 @@ def action():
 			elif record['Location'] in important:
 				_.colorThis( record['Location'], 'yellow' )
 			else:
-				print(record['Location'])
+				_.pr(record['Location'])
 	
 	_.colorThis( cnt, 'yellow' )
 
@@ -261,6 +261,7 @@ def load():
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

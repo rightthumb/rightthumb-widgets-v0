@@ -285,7 +285,7 @@ _.postLoad( __file__ )
 
 
 def sliceVar( var, newP ):
-	# print(newP)
+	# _.pr(newP)
 	n = None
 	if type(var) == list:
 		n = []
@@ -415,8 +415,8 @@ def action():
 	report = profile( data )
 
 	for record in report['payload']:
-		# print( ' '.join(record) )
-		print( record )
+		# _.pr( ' '.join(record) )
+		_.pr( record )
 
 def load():
 	global data
@@ -431,6 +431,7 @@ research = {
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

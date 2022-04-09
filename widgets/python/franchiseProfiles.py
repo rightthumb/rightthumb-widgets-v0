@@ -168,7 +168,7 @@ def action():
 			franchises[i]['aliases'] = franchise['label']
 			what = franchise['label']
 		for alias in what:
-			# print( alias )
+			# _.pr( alias )
 			result = ''
 			for word in alias.split( ' ' ):
 				result += _inDic.imp.testAll( word ) + ' '
@@ -179,8 +179,8 @@ def action():
 	_.switches.fieldSet( 'GroupBy', 'value', 'franchise' )
 	_.tables.register( 'data', data )
 	_.tables.print( 'data', 'alias,profile' )
-	print()
-	print( len(data) )
+	_.pr()
+	_.pr( len(data) )
 
 
 
@@ -191,6 +191,7 @@ franchises = _.getTable( 'imdb_franchises_NEW.json' )
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

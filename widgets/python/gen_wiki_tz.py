@@ -198,7 +198,7 @@ _.postLoad( __file__ )
 
 def action():
 	url = 'https://en.wikipedia.org/wiki/List_of_tz_database_time_zones'
-	print( url )
+	_.pr( url )
 	from pytz import all_timezones
 
 	table = _.getTableDB('tz.json')
@@ -218,10 +218,10 @@ def action():
 			if not rec['offset2'] in index:
 				index[ rec['offset2'] ] = rec
 			rec['py'] = True
-			# print(rec['name'])
+			# _.pr(rec['name'])
 			i+=1
 		clean.append(rec)
-	print('\t',i, len(all_timezones))
+	_.pr('\t',i, len(all_timezones))
 	_.saveTableDB( clean, 'tz_simple.json' )
 	_.saveTableDB( index, 'tz.index' )
 
@@ -229,6 +229,7 @@ def action():
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

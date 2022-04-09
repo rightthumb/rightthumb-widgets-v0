@@ -221,19 +221,19 @@ def action():
 		folder = os.getcwd()
 
 	if not os.path.isdir( folder ):
-		print( 'Error: folder' )
+		_.pr( 'Error: folder' )
 		sys.exit()
 
 	for record in data:
-		print()
-		print( fileName(record['label']) )
+		_.pr()
+		_.pr( fileName(record['label']) )
 		try:
 			fX = folder + _v.slash + fileName(record['label'])
 			r = requests.get( record['href'] )
 			open(fX, 'wb').write(r.content)
-			print( 'Success' )
+			_.pr( 'Success' )
 		except Exception as e:
-			print( 'Error:', e )
+			_.pr( 'Error:', e )
 
 
 
@@ -244,6 +244,7 @@ data = []
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

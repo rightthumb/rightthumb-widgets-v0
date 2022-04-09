@@ -343,7 +343,7 @@ def formatData( result ):
 import getpass
 
 # password = getpass.getpass()
-# print(password)
+# _.pr(password)
 ######################################################################################## ########################################################################################
 import socket
 import ssl
@@ -426,7 +426,7 @@ class Socket_Manager:
 
 
 	def waitingNotice( self ):
-		print( self.waitingMsg )
+		_.pr( self.waitingMsg )
 
 
 	def recvall( self ):
@@ -517,18 +517,18 @@ def load():
 	# key = formatData(decryptB( enKey, input(' Password ') ))
 	key = str(key,'iso-8859-1').replace( ' ', '' )
 	key = formatData(key)
-	# print( 'decrypted key:', key )
+	# _.pr( 'decrypted key:', key )
 	# decrypt2(fin=formatData(encryptedFile), fout=encryptedData['path'], key=key)
 	# sys.exit()
 	try:
 		decrypt2(fin=formatData(encryptedFile), fout=encryptedData['path'], key=key)
 	except Exception as e:
-		print()
+		_.pr()
 		_.colorThis( [   'Bad Password'   ], 'red' )
 		sys.exit()
 
 encryptedData = { 'path': _v.keys+_v.slash+_.longID(4)+'.pem', 'file': '', 'enKey': 'zgEU5amYMg601oJeCjrLbdgR1+Xt2KBXMc43tKt0Ye2nHynBIugEH9ht6ssCnZCv' }
-# print(encryptedData)
+# _.pr(encryptedData)
 thisSocket = None
 
 
@@ -580,7 +580,7 @@ first = True
 # 		pass
 # 		# dataIn = sock.recv(1000)
 # 		# data = str(dataIn,'iso-8859-1')
-# 		# print(data)
+# 		# _.pr(data)
 # Thread(target=handler, args=('sock')).start()
 # Thread(target=handler, args=(client, i)).start()
 
@@ -597,8 +597,8 @@ def formatData( result ):
 
 active = True
 while active:
-	# print('loop')
-	print()
+	# _.pr('loop')
+	_.pr()
 	# try:
 	# 	sock.connect((hostname, port))
 	# except Exception as e:
@@ -617,11 +617,11 @@ while active:
 		sock.send(result)
 		# data = sock.recv(1024)
 		# validation = str(data,'iso-8859-1')
-		# print( 'validation', validation )
+		# _.pr( 'validation', validation )
 		# if expecting == validation:
-		# 	print( 'validation pass' )
+		# 	_.pr( 'validation pass' )
 		# else:
-		# 	print( 'validation fail' )
+		# 	_.pr( 'validation fail' )
 		# sock.close()
 		# try:
 		# 	sock.connect((hostname, port))
@@ -690,6 +690,7 @@ while active:
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

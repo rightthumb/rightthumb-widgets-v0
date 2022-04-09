@@ -267,7 +267,7 @@ def getFolder(folder):
 			dirList = os.listdir(folder)
 		if _.switches.isActive('Files'):
 			dirList = _.switches.values('Files')
-			# print( dirList )
+			# _.pr( dirList )
 		for item in dirList:
 			if not _.switches.isActive('Files'):
 				path = folder + _v.slash + item
@@ -299,7 +299,7 @@ def getFolder(folder):
 						except Exception as e:
 							pass
 				else:
-					print('error')
+					_.pr('error')
 
 
 
@@ -339,7 +339,7 @@ def addFile( path, hasData=False ):
 		# stat = os.stat(path)
 		# size = stat.st_size
 		size = record['bytes']
-		# print( _.switches.values('Size') )
+		# _.pr( _.switches.values('Size') )
 		# sys.exit()
 		if 'l' in _.switches.values('Size')[0]:
 			if size < _.switches.values('Size')[1]:
@@ -421,15 +421,15 @@ def addFile( path, hasData=False ):
 				elif 'resent' in _.switches.values('Ago')[1]:
 					run = 'resent'
 
-			# print(  len( _.switches.values('Ago') )  )
-			# print(  ( _.switches.values('Ago') )  )
+			# _.pr(  len( _.switches.values('Ago') )  )
+			# _.pr(  ( _.switches.values('Ago') )  )
 			# sys.exit()
 			# accessed_raw
 
 
 			if run == 'default':
-				# print(record['date_modified_raw'])
-				# print(_.switches.values('Ago'))
+				# _.pr(record['date_modified_raw'])
+				# _.pr(_.switches.values('Ago'))
 				if record['date_modified_raw'] > _.switches.values('Ago')[0] or record['date_created_raw'] > _.switches.values('Ago')[0]:
 					shouldAdd = True
 			elif run == 'resent':
@@ -437,7 +437,7 @@ def addFile( path, hasData=False ):
 					shouldAdd = True
 			elif run == 'a':
 				if record['accessed_raw'] > _.switches.values('Ago')[0]:
-					# print( _.friendlyDate(_.switches.values('Ago')[0]), _.switches.values('Ago')[0], record['accessed_raw'], _.friendlyDate(record['accessed_raw']) )
+					# _.pr( _.friendlyDate(_.switches.values('Ago')[0]), _.switches.values('Ago')[0], record['accessed_raw'], _.friendlyDate(record['accessed_raw']) )
 					shouldAdd = True
 			elif run == 'cd':
 				if record['date_created_raw'] > _.switches.values('Ago')[0]:
@@ -483,7 +483,7 @@ def action():
 		_.switches.fieldSet( 'Files', 'active', True )
 		_.switches.fieldSet( 'Files', 'values', _.appData[__.appReg]['pipe'] )
 		_.switches.fieldSet( 'Files', 'value', ','.join(_.appData[__.appReg]['pipe']) )
-		# print( _.switches.values('Files') )
+		# _.pr( _.switches.values('Files') )
 
 	if _.switches.isActive('Files') and _.switches.isActive('JSON'):
 		records = []
@@ -505,7 +505,7 @@ def action():
 	# 	_.pipeCleaner(0)
 	# 	# _.printVar( _.appData )
 	# 	for i,row in enumerate( _.appData[__.appReg]['pipe'] ):
-	# 		print( row )
+	# 		_.pr( row )
 	# 		process( row )
 
 
@@ -608,7 +608,7 @@ def action():
 			# }
 
 			for x in dataCacheX:
-				# print(x)
+				# _.pr(x)
 				addFile( x, hasData=True )
 		else:
 			getFolder(folder)
@@ -631,7 +631,7 @@ def action():
 
 		if _.switches.isActive('JSON'):
 			# for x in data[0].keys():
-			# 	print(x)
+			# 	_.pr(x)
 			# sys.exit()
 			_.printVarSimple( data )
 		else:
@@ -644,7 +644,7 @@ def action():
 
 			if not i == fileCount:
 			# if not len(files) == i:
-				# print('HERE')
+				# _.pr('HERE')
 				_.folderProfileAttribute( folder=folder, info = {
 																'app': 'dirX',
 																'recursive': _.switches.isActive('Recursive'),
@@ -779,7 +779,7 @@ def action():
 
 				pass
 			if not _.switches.isActive('Clean'):
-				print()
+				_.pr()
 
 				
 				totalBytes = 0
@@ -794,15 +794,15 @@ def action():
 					txt += _.colorThis(  [  _.formatSize( totalBytes ) ], 'green', p=0 )
 					txt += ' in '
 					txt += _.colorThis(  [  _.addComma(folderCount) + ' folders' ], 'blue', p=0 )
-					print( txt )
+					_.pr( txt )
 				else:
 					txt = '\t ' + _.addComma(fileCount) + ' total files '
 					txt += _.colorThis(  [  _.addComma(i), 'selected '  ], 'yellow', p=0 )
 					txt += _.colorThis(  [  _.formatSize( totalBytes ) ], 'green', p=0 )
 					txt += ' in '
 					txt += _.colorThis(  [  _.addComma(folderCount) + ' folders' ], 'blue', p=0 )
-					print( txt )
-				print()
+					_.pr( txt )
+				_.pr()
 				endPrint = time.time()
 				if _.switches.isActive('Time'):
 					_.colorThis( [ 'App Time:', round( end-start, 3 ) ], 'yellow' )
@@ -829,7 +829,7 @@ def extensionsDatabank():
 	extensionList = _db.do( 'action' )
 	for i,x in enumerate(extensionList):
 		extensionList[i] = x.lower()
-	# print( extensionList )
+	# _.pr( extensionList )
 	# sys.exit()
 
 
@@ -842,6 +842,7 @@ i=0
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

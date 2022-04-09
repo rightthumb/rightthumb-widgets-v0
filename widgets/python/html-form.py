@@ -244,7 +244,7 @@ def process(dic):
 	field = field.replace( '_name_', _name )
 	field = field.replace( '_label_', _label )
 	return field
-	# print(field)
+	# _.pr(field)
 					
 
 
@@ -291,7 +291,7 @@ def action():
 				pro=process(  simplejson.loads(item)  )
 				fields.append(pro)
 
-			print( html.replace('HERE', '\n'.join(fields) ) )
+			_.pr( html.replace('HERE', '\n'.join(fields) ) )
 			return None
 
 
@@ -326,7 +326,7 @@ def action():
 				# 'itter-dic': {},
 	}
 
-	# print( simplejson.dumps(dic) )
+	# _.pr( simplejson.dumps(dic) )
 
 	process(dic)
 	# process(_type=_type,_name=_name,_label=_label,_id=_id,_class=_class,_iter=_iter,_iter_dic=_iter_dic)
@@ -338,9 +338,9 @@ def dumpTypes():
 	global elements
 
 	for k in elements:
-		print()
+		_.pr()
 		for _type in elements[k]:
-			print( _type )
+			_.pr( _type )
 
 
 def load():
@@ -368,6 +368,7 @@ random = __.imp('random')
 if __name__ == '__main__':
 	action()
 	__.isExit()
+
 
 
 

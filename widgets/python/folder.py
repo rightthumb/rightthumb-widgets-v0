@@ -213,9 +213,9 @@ _.postLoad( __file__ )
 def action():
 
 	if not _.switches.isActive('Count'):
-		print()
+		_.pr()
 		_.colorThis( [  'Folders:\n'  ], 'green' )
-		# print('Folders:\n')
+		# _.pr('Folders:\n')
 
 	if _.switches.isActive('Folder'):
 		folder = _.switches.values('Folder')[0]
@@ -229,22 +229,22 @@ def action():
 		if os.path.isdir(item):
 			if _.showLine(item):
 				i = i + 1
-				# print(item)
+				# _.pr(item)
 				if not _.switches.isActive('Count'):
-					# print('\t',item)
+					# _.pr('\t',item)
 					_.colorThis( [  '\t',item  ], 'cyan' )
 				else:
-					# print(item)
+					# _.pr(item)
 					_.colorThis( [  item  ], 'cyan' )
 
 
 
 	if not _.switches.isActive('Count') :
 		_.colorThis( [  '',i  ], 'yellow' )
-		print()
+		_.pr()
 		_.colorThis( [  folder  ], 'darkcyan' )
-		# print('\n{}\n{}'.format(i,folder))
-		# print('',i)
+		# _.pr('\n{}\n{}'.format(i,folder))
+		# _.pr('',i)
 
 
 # _.colorThis( [    ], 'yellow' )
@@ -254,6 +254,7 @@ def action():
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

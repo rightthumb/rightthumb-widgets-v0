@@ -184,7 +184,7 @@ if __name__ == '__main__':
 # START
 
 def action():
-	print( _.switches.value( 'Page' ) )
+	_.pr( _.switches.value( 'Page' ) )
 	pause = input( 'pause' )
 	_browser.imp.project.open( _.switches.value( 'Page' ) )
 	pause = input( 'pause' )
@@ -192,8 +192,8 @@ def action():
 	# if _.switches.isActive( 'Inject' ):
 	# 	injectThis = _v.myAppsJs + '\\' + _.switches.value( 'Inject' ) + '.js'
 	# 	code = _.getText( injectThis, raw=True )
-	# 	print( code )
-	# 	# print( injectThis )
+	# 	_.pr( code )
+	# 	# _.pr( injectThis )
 	# 	# sys.exit()
 	# 	_browser.imp.project.inject( code )
 
@@ -217,6 +217,7 @@ def action():
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

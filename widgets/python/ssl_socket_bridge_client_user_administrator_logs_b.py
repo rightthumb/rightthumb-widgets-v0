@@ -344,7 +344,7 @@ def formatData( result ):
 import getpass
 
 # password = getpass.getpass()
-# print(password)
+# _.pr(password)
 ######################################################################################## ########################################################################################
 import socket
 import ssl
@@ -421,7 +421,7 @@ class Socket_Manager:
 
 
 	def waitingNotice( self ):
-		print( self.waitingMsg )
+		_.pr( self.waitingMsg )
 
 
 	def recvall( self ):
@@ -512,22 +512,23 @@ def load():
 	# key = formatData(decryptB( enKey, input(' Password ') ))
 	key = str(key,'iso-8859-1').replace( ' ', '' )
 	key = formatData(key)
-	# print( 'decrypted key:', key )
+	# _.pr( 'decrypted key:', key )
 	# decrypt2(fin=formatData(encryptedFile), fout=encryptedData['path'], key=key)
 	# sys.exit()
 	try:
 		decrypt2(fin=formatData(encryptedFile), fout=encryptedData['path'], key=key)
 	except Exception as e:
-		print()
+		_.pr()
 		_.colorThis( [   'Bad Password'   ], 'red' )
 		sys.exit()
 
 encryptedData = { 'path': _v.keys+_v.slash+_.longID(4)+'.pem', 'file': '', 'enKey': 'zgEU5amYMg601oJeCjrLbdgR1+Xt2KBXMc43tKt0Ye2nHynBIugEH9ht6ssCnZCv' }
-# print(encryptedData)
+# _.pr(encryptedData)
 thisSocket = None
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

@@ -228,7 +228,7 @@ def action():
 				info = _dir.fileInfo( row )
 				out = info['folder'] + _v.slash+'_' + info['name'].split( '.blowfish' )[0]
 				# out = '_' + row.split( '.blowfish' )[0]
-				# print( out )
+				# _.pr( out )
 				# pause=input('pause')
 				if _.switches.isActive('Password'):
 					_blowfish.decrypt( row, out, _.switches.values('Password')[0] )
@@ -251,6 +251,7 @@ def load():
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

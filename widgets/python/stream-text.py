@@ -217,10 +217,10 @@ def watch(path):
 	for i,line in enumerate(lines):
 		if not i in printed:
 			added = True
-			# print(line)
+			# _.pr(line)
 			if len(line):
-				# print(i,line)
-				print(line)
+				# _.pr(i,line)
+				_.pr(line)
 			printed.append(i)
 
 	if added:
@@ -236,7 +236,7 @@ def process(path):
 	i=0
 	while True:
 		i+=1
-		# print('-',i)
+		# _.pr('-',i)
 		# printed = []
 		watch(path)
 		
@@ -262,6 +262,7 @@ def action():
 if __name__ == '__main__':
 	action()
 	__.isExit()
+
 
 
 

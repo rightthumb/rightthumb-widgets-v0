@@ -172,7 +172,7 @@ if not sys.stdin.isatty():
 
 # _dir.sqlCreateTable( db, deleteDBFirst=True, close=True )
 # obj = _dir.fileInfo( path, sql=True )
-# print(   _dir.fileInfo( _.switches.value('Input') )['size']   )
+# _.pr(   _dir.fileInfo( _.switches.value('Input') )['size']   )
 
 # _.saveLog('queue')
 # _.saveLog('audit')
@@ -257,7 +257,7 @@ def action():
 			test = sLine[1].replace( '"','' )
 			if len( test ) == 4 and isInt( test ):
 				
-				print( setLen, '\t', year )
+				_.pr( setLen, '\t', year )
 				name.append( year + '_' + str(setLen) )
 				setLen = 0
 				year = test
@@ -268,8 +268,8 @@ def action():
 				if '@' in line:
 					setLen += 1
 					result[year].append(line)
-					# print(line)
-		print( setLen, '\t', year )
+					# _.pr(line)
+		_.pr( setLen, '\t', year )
 		name.append( year + '_' + str(setLen) )
 
 	
@@ -284,6 +284,7 @@ def action():
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

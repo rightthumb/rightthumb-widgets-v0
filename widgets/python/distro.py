@@ -155,7 +155,7 @@ def action():
 		os.system('"' + do + '"')
 		thisDistro = _.getText( _v.tmpf, raw=True, clean=2 )
 		_.saveText( thisDistro, _v.configFile('.distro') )
-		print( thisDistro )
+		_.pr( thisDistro )
 		
 
 	elif not _.isWin:
@@ -180,7 +180,7 @@ def action():
 		elif os.path.isfile('/proc/version'):
 			thisDistro = _.getText( '/proc/version', raw=True, clean=2 )
 		_.saveText( thisDistro, _v.configFile('.distro') )
-		print(thisDistro)
+		_.pr(thisDistro)
 
 
 
@@ -188,6 +188,7 @@ def action():
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

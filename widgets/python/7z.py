@@ -167,7 +167,7 @@ def formatDate(date):
 	theDate = str(theDate)
 	return theDate
 def qt(string):
-	# print( string )
+	# _.pr( string )
 	# pause=input('pause')
 	# sys.exit()
 	return '"' + str(string) + '"'
@@ -178,18 +178,18 @@ def we(string):
 		return string
 
 def action():
-	# print( 'HERE' )
+	# _.pr( 'HERE' )
 	if _.switches.isActive('Input'):
-		# print( 'HERE' )
+		# _.pr( 'HERE' )
 		if os.path.isfile( _.switches.value('Input') ):
 			fileInfo = _dir.fileInfo( _.switches.value('Input') )
-			# print( fileInfo['folder'] )
+			# _.pr( fileInfo['folder'] )
 			# sys.exit()
 			os.chdir( fileInfo['folder'] )
 		if os.path.isdir( _.switches.value('Input') ):
 			folder = _.switches.value('Input')
 			# fileInfo = _dir.fileInfo( folder )
-			# print( os.walk(fileInfo['folder']) )
+			# _.pr( os.walk(fileInfo['folder']) )
 			# os.listdir(folder)
 			modTime = _.resolveEpochTest(max(os.path.getmtime(root) for root,_,_ in os.walk(folder)))
 			for row in os.listdir(folder):
@@ -204,14 +204,14 @@ def action():
 			fileInfo['folder'] = _v.slash.join( fList )
 			fileInfo['date_modified'] = modTime
 			fileInfo['ext'] = ''
-			# print( modTime )
+			# _.pr( modTime )
 			# sys.exit()
 
 
 	defaultPassword = _blowfish.genPassword()
 	if _.switches.isActive('Password'):
 		if not len( _.switches.value('Password') ):
-			# print( 'HERE' )
+			# _.pr( 'HERE' )
 			_.switches.fieldSet( 'Password', 'value', defaultPassword )
 
 	
@@ -221,7 +221,7 @@ def action():
 	# 	_.setPipeData( _.getText( _.switches.value('Input') ), focus() )
 	# if not type( _.appData[__.appReg]['pipe'] ) == bool:
 	# 	pass
-	# print( _.d2json(_.appData) )
+	# _.pr( _.d2json(_.appData) )
 
 
 # def action():
@@ -258,7 +258,7 @@ def action():
 		elif os.path.isdir(file):
 			baseName = file
 		else:
-			print('No File')
+			_.pr('No File')
 			sys.exit()
 		
 		z7 = _v.app7z()
@@ -280,11 +280,11 @@ def action():
 
 		if _.switches.isActive('Password'):
 			do = do + ' -p"' + password + '"'
-		# print()
-		# print('do:')
-		# print('\t',do)
-		# print()
-		# print()
+		# _.pr()
+		# _.pr('do:')
+		# _.pr('\t',do)
+		# _.pr()
+		# _.pr()
 		# pause=input('pause')
 		os.system('"' + do + '"')
 
@@ -293,7 +293,7 @@ def action():
 		file = _.switches.value('Input')
 		baseName = removeExtension( fileInfo['name'] )
 		z7 = _v.app7z()
-		# print('test')
+		# _.pr('test')
 		if _.switches.isActive('Password'):
 			pw = _.switches.value('Password')
 			do = z7 + ' e ' + qt(file) + ' -p"' + pw + '" -oc:' +    baseName
@@ -326,16 +326,16 @@ def action():
 									if 'Name' in row:
 										iheader = i
 										header = row
-										# print( header )
-				# print( row )
-				# print( row )
+										# _.pr( header )
+				# _.pr( row )
+				# _.pr( row )
 
 				if i >= (iheader + 2) :
 					if '----------------------' in row:
 						break
 
 					theFile = getFileFromRows( header, row )
-					print( theFile )
+					_.pr( theFile )
 					
 					if _v.slash in theFile and  _.switches.value('UnZipNoFolder') == 'auto' :
 						do = preSplitDo
@@ -348,21 +348,21 @@ def action():
 							if os.path.isfile(theFile):
 								os.rename( theFile, nameDate( theFile, theFile, '', fileInfo, addZip=True ) )
 						except Exception as e:
-							print( e )
+							_.pr( e )
 					
 			# sys.exit()
-			# print( '|'+theFile+'|' )
+			# _.pr( '|'+theFile+'|' )
 			# sys.exit()
 				# shouldRename = True
-				# print( nameDate( theFile, theFile, '' ) )
+				# _.pr( nameDate( theFile, theFile, '' ) )
 				# sys.exit()
 
 
-		# print()
-		# print('do:')
-		# print('\t',do)
-		# print()
-		# print()
+		# _.pr()
+		# _.pr('do:')
+		# _.pr('\t',do)
+		# _.pr()
+		# _.pr()
 		# pause=input('pause')
 		os.system('"' + do + '"')
 
@@ -394,7 +394,7 @@ def nameDate( file, baseName, pwLabel, fileInfo, addZip=False ):
 
 	return _fileNameDate.imp.newName( we( baseName + pwLabel ), fileInfo )
 	baseNewName = modified + '-' + baseName + pwLabel
-	# print(we(baseNewName))
+	# _.pr(we(baseNewName))
 	if not os.path.isfile(we(baseNewName)):
 		nameFinal = baseNewName
 	else:
@@ -412,6 +412,7 @@ def nameDate( file, baseName, pwLabel, fileInfo, addZip=False ):
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

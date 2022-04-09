@@ -242,8 +242,8 @@ def action():
 	file=_str.do('be',file,' ')
 
 	if _.switches.isActive('PrintScrap'):
-		print(file)
-	# print(' '.join(words))
+		_.pr(file)
+	# _.pr(' '.join(words))
 	dic={}
 	err=[]
 	for word in file.split(' '):
@@ -281,6 +281,7 @@ def action():
 if __name__ == '__main__':
 	action()
 	__.isExit()
+
 
 
 

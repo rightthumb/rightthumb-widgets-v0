@@ -178,17 +178,17 @@ def find_supporting(file,change):
 		pass
 		if not '.' in function:
 			# test = ii-len('def ')
-			# print(test)
-			# print(fns)
+			# _.pr(test)
+			# _.pr(fns)
 			if not ii-len('def ')+1 in fns:
 				function.reverse()
 				fn = ''.join(function)
 				if fn and not fn in ['childScript','__import__','abs','all','any','ascii','bin','bool','breakpoint','bytearray','bytes','callable','chr','classmethod','compile','complex','delattr','dict','dir','divmod','enumerate','eval','exec','filter','float','format','frozenset','getattr','globals','hasattr','hash','help','hex','id','input','int','isinstance','issubclass','iter','len','list','locals','map','max','memoryview','min','next','object','oct','open','ord','pow','print','property','range','repr','reversed','round','set','setattr','slice','sorted','staticmethod','str','sum','super','tuple','type','vars','zip']:
 					if not fn in spent:
 						spent.append(fn)
-						# print(fn)
+						# _.pr(fn)
 						support.append(fn)
-					# print(fn,function)
+					# _.pr(fn,function)
 					# new=''
 					# i=-1
 					# while not i == len(file)-1:
@@ -265,7 +265,7 @@ def process(subject):
 		subject = 'def '+subject
 	altA = nameUnder(subject)
 	altB = nameUpper(subject)
-	# print(subject,altA,altB)
+	# _.pr(subject,altA,altB)
 	# global toTable
 	global addedFunctions
 	global addedVarsCode
@@ -279,13 +279,13 @@ def process(subject):
 	# if not _.switches.isActive('Underscore'):
 	do = True
 	if subject+' ' in to.replace(':',' :').replace('(',' ('):
-		# print('s in to',subject)
+		# _.pr('s in to',subject)
 		do=False
 	if altA in to.replace(':',' :').replace('(',' ('):
-		# print('A in to',altA)
+		# _.pr('A in to',altA)
 		do=False
 	if altB in to.replace(':',' :').replace('(',' ('):
-		# print('B in to',altB)
+		# _.pr('B in to',altB)
 		do=False
 
 	sub = None
@@ -320,7 +320,7 @@ def process(subject):
 				should=True
 			if should:
 				pass
-				# print('should work B',sub,do,addedFunctions)
+				# _.pr('should work B',sub,do,addedFunctions)
 
 
 		return None
@@ -412,7 +412,7 @@ def find_global(data):
 		line = _.rstr( data, i, eol )
 		line2 = line
 		# line = data[ i: eol ]
-		# print(i,eol,'line',line)
+		# _.pr(i,eol,'line',line)
 		pass
 		if not '==' in line and not line.startswith(' ') and not line.startswith('\t') and '=' in line:
 			# _.cp(line,'cyan')
@@ -430,7 +430,7 @@ def find_global(data):
 			ii=i
 			started=False
 			vi = False
-			# print(ii,eol)
+			# _.pr(ii,eol)
 			while not ii==eol:
 				ii+=1
 				ch=data[ii]
@@ -447,7 +447,7 @@ def find_global(data):
 						part = pre+_.rstr( data, i, ee )
 						break
 					else:
-						# print(pre)
+						# _.pr(pre)
 						pre+=ch
 			if not vi:
 				part=line2
@@ -472,13 +472,13 @@ def action():
 	global to
 	global addVars
 	focus()
-	# print( _.isData() )
+	# _.pr( _.isData() )
 	for i,subject in enumerate( _.isData(r=1) ):
 		subject = _str.cleanBE(subject,' ')
 		if subject:
 			process(subject)
 	addVars+='\n\n'
-	print('addVars',addVars)
+	_.pr('addVars',addVars)
 	_.saveText(to+addVars,_.switches.values('To')[0])
 	_.cp(['Saved:',_.switches.values('To')[0]],'green')
 
@@ -504,22 +504,22 @@ def load():
 	# _inFunc.ignoreLines=[]
 	# _inFunc.md5Data=[]
 
-	# print('table',table)
+	# _.pr('table',table)
 	# # _inFunc = _.regImp( __.appReg, 'inFunc' )
 	# _inFunc.switch('Log')
 	# _inFunc.switch('Files',_.switches.values('To')[0])
 	# toTable = _inFunc.action().copy()
-	# # print('toTable',toTable)
+	# # _.pr('toTable',toTable)
 	# sys.exit()
 	base = _.getText( _.switches.values('From')[0] )
 	to = _.getText( _.switches.values('To')[0], raw=True )
 	toGlo = find_global(to)
 	baseGlo = find_global( ''.join(base) )
-	print('baseGlo',baseGlo)
-	print('##############################################################')
+	_.pr('baseGlo',baseGlo)
+	_.pr('##############################################################')
 	for k in baseGlo:
-		print(baseGlo[k])
-	print('##############################################################')
+		_.pr(baseGlo[k])
+	_.pr('##############################################################')
 	# _.pv(baseGlo)
 	# _.pv(table)
 	to+='\n\n############################################################## copy-fn-class\n\n'
@@ -534,6 +534,7 @@ addedFunctions=[]
 if __name__ == '__main__':
 	action()
 	__.isExit()
+
 
 
 

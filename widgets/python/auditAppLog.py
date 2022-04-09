@@ -166,7 +166,7 @@ if not sys.stdin.isatty():
 
 # _dir.sqlCreateTable( db, deleteDBFirst=True, close=True )
 # obj = _dir.fileInfo( path, sql=True )
-# print(   _dir.fileInfo( _.switches.value('Input') )['size']   )
+# _.pr(   _dir.fileInfo( _.switches.value('Input') )['size']   )
 
 # _.saveLog('queue')
 # _.saveLog('audit')
@@ -227,20 +227,20 @@ def average( lst ):
     return round(sum(lst) / len(lst), 2)
 
 def section( section, data, dataType='' ):
-	print()
+	_.pr()
 	data_sum = round(sum(data),2)
 	data_avg = average(data)
-	print()
-	print(section+':')
+	_.pr()
+	_.pr(section+':')
 	if dataType == 'file':
-		print( '\tsum:\t', _dir.formatSize(data_sum) )
-		print( '\taverage:', data_avg, 'Bytes')
+		_.pr( '\tsum:\t', _dir.formatSize(data_sum) )
+		_.pr( '\taverage:', data_avg, 'Bytes')
 	elif dataType == '':
-		print( '\tsum:\t', (data_sum) )
-		print( '\taverage:', data_avg )
+		_.pr( '\tsum:\t', (data_sum) )
+		_.pr( '\taverage:', data_avg )
 	elif dataType == 'milliseconds':
-		print( '\tsum:\t', round(data_sum/60,2), 's' )
-		print( '\taverage:', round(data_avg/60,2), 's' )
+		_.pr( '\tsum:\t', round(data_sum/60,2), 's' )
+		_.pr( '\taverage:', round(data_avg/60,2), 's' )
 
 def action():
 	if _.switches.isActive('Input'):
@@ -285,17 +285,17 @@ def action():
 
 
 		for app in info.keys():
-			print('______________________________________')
-			print()
-			print('    app:',app.replace('.py',''))
-			print()
-			print()
-			print('Rows:\t',len(info[app]['mem']))
+			_.pr('______________________________________')
+			_.pr()
+			_.pr('    app:',app.replace('.py',''))
+			_.pr()
+			_.pr()
+			_.pr('Rows:\t',len(info[app]['mem']))
 			section( 'Memory', info[app]['mem'], 'file' )
 			section( 'Lines', info[app]['lines'] )
 			section( 'Runtime', info[app]['runtime'], 'milliseconds' )
-			print()
-			print('______________________________________')
+			_.pr()
+			_.pr('______________________________________')
 			
 		
 
@@ -306,6 +306,7 @@ def action():
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

@@ -181,7 +181,7 @@ if not sys.stdin.isatty():
 
 # _dir.sqlCreateTable( db, deleteDBFirst=True, close=True )
 # obj = _dir.fileInfo( path, sql=True )
-# print(   _dir.fileInfo( _.switches.value('Input') )['size']   )
+# _.pr(   _dir.fileInfo( _.switches.value('Input') )['size']   )
 
 # _.saveLog('queue')
 # _.saveLog('audit')
@@ -244,7 +244,7 @@ def getLogText( data ):
 	global record
 	for attribute in record['data']['logfields']['attribute']:
 		if attribute['id'] == data:
-			# print(attribute['text'])
+			# _.pr(attribute['text'])
 			return attribute['text']
 
 def getDelete( data ):
@@ -317,11 +317,11 @@ def action():
 
 
 	if type( record ) == bool:
-		print()
-		print('log not configured')
-		print()
-		print(' Run:')
-		print( '\tp logConfig -i', _.switches.value('Input') )
+		_.pr()
+		_.pr('log not configured')
+		_.pr()
+		_.pr(' Run:')
+		_.pr( '\tp logConfig -i', _.switches.value('Input') )
 		sys.exit()
 	else:
 		shouldRun = True
@@ -331,14 +331,14 @@ def action():
 		# id
 		# text
 
-		# print( record['data']['logfields']['attribute'] )
+		# _.pr( record['data']['logfields']['attribute'] )
 	if shouldRun:
 		# _.printVar(record)
 		# sys.exit()
 		process( record['data']['logfields']['dataTable'] )
-		# print( 'groups:', flatten( groups ) )
-		# print( 'fields:', flatten( fields ) )
-		# print( 'flattenSort:', flattenSort() )
+		# _.pr( 'groups:', flatten( groups ) )
+		# _.pr( 'fields:', flatten( fields ) )
+		# _.pr( 'flattenSort:', flattenSort() )
 
 		if len( groups ) > 0:
 			_.switches.fieldSet( 'GroupBy','active', True )
@@ -372,7 +372,7 @@ def action():
 			log.reverse()
 
 
-		print()
+		_.pr()
 		_.tables.register('logs',log)
 		for row in record['data']['logfields']['attribute']:
 			try:
@@ -381,7 +381,7 @@ def action():
 				trigger = False
 			if not type(trigger) == bool:
 				# if trigger == 'epoch':
-					# print( trigger, row['text'],flatten( fields ) )
+					# _.pr( trigger, row['text'],flatten( fields ) )
 				_.tables.fieldProfileSet( 'logs', row['text'], 'trigger', eval(trigger) )
 		# sys.exit()
 		# _.tables.fieldProfileSet('logs','timestamp','trigger',_.float2Date)
@@ -395,6 +395,7 @@ fields = []
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

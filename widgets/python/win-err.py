@@ -258,7 +258,7 @@ def action():
 			r=str(rec)
 			r=rec['e']
 			if _.showLine(r):
-				print( rec['n'], rec['e'] )
+				_.pr( rec['n'], rec['e'] )
 				# recs.append(rec)
 		# _.pv(recs)
 		return None
@@ -288,7 +288,7 @@ def load():
 		codes=_.getTableDB('windows-system-error-codes.json')
 	elif 1 and not os.path.isfile(d) and os.path.isfile(r):
 		codes_raw = _.getText( r, raw=True,clean=2 )
-		# print(codes_raw)
+		# _.pr(codes_raw)
 		codes=build_codes(codes_raw)
 		_.saveTableDB( codes, 'windows-system-error-codes.json' )
 	else:
@@ -314,6 +314,7 @@ def load():
 if __name__ == '__main__':
 	action()
 	__.isExit()
+
 
 
 

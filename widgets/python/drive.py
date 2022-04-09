@@ -163,11 +163,11 @@ _.postLoad( __file__ )
 
 def action():
 
-	# print( _drive.Scan().file_drives )
+	# _.pr( _drive.Scan().file_drives )
 	i=0
 	while i < 100:
 		i+=1
-		print( 'Uncle Scotty, I just love being with you.' )
+		_.pr( 'Uncle Scotty, I just love being with you.' )
 
 
 import _rightThumb._drive as _drive
@@ -179,6 +179,7 @@ import _rightThumb._drive as _drive
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

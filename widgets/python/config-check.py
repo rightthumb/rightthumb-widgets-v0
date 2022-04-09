@@ -162,7 +162,7 @@ def action():
 	for config in _.switches.values('Config'):
 		c = _v.config(config)
 		_copy.imp.copy( str(c) )
-		# print( c )
+		# _.pr( c )
 
 _copy = _.regImp( __.appReg, '-copy' )
 
@@ -171,6 +171,7 @@ _copy = _.regImp( __.appReg, '-copy' )
 if __name__ == '__main__':
 	action()
 	_.tables.eof()
+
 
 
 

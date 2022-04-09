@@ -208,11 +208,11 @@ fileBackup.switch( 'DoNotSchedule' )
 
 def action():
 
-	# print( _.switches.value('Input') )
+	# _.pr( _.switches.value('Input') )
 
 
 	if len(_.switches.value('Plus'))<3:
-		print( 'Error: Plus' )
+		_.pr( 'Error: Plus' )
 		sys.exit()
 
 	if not type( _.appData[__.appReg]['pipe'] ) == bool or _.switches.isActive('Input') and os.path.isfile( _.switches.value('Input') ):
@@ -238,8 +238,8 @@ def getTabs( line ):
 
 def processFile( filename ):
 
-	print()
-	print('processing:', filename)
+	_.pr()
+	_.pr('processing:', filename)
 	fileBackup.switch( 'Input', filename )
 	fileBackup.switch( 'Flag', 'pre moveText' )
 	recoveryFile = fileBackup.do( 'action' )
@@ -289,9 +289,9 @@ def processFile( filename ):
 		if 'n' in keep.lower():
 			try:
 				copyfile(recoveryFile, filename)
-				print( 'Undo successful' )
+				_.pr( 'Undo successful' )
 			except Exception as e:
-				print( 'Undo fail' )
+				_.pr( 'Undo fail' )
 
 
 
@@ -299,6 +299,7 @@ def processFile( filename ):
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

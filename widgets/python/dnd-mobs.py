@@ -233,7 +233,7 @@ def action():
 	if _.switches.isActive('Copy'):
 		_copy.imp.copy( result )
 	else:
-		print( result )
+		_.pr( result )
 
 
 import random
@@ -246,6 +246,7 @@ if _.switches.isActive('Copy'):
 if __name__ == '__main__':
 	action()
 	__.isExit()
+
 
 
 

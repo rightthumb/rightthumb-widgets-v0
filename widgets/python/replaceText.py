@@ -178,16 +178,16 @@ insertText = ''
 replaceText = ''
 def action():
 	if _.switches.isActive('Test'):
-		print( _.switches.values('Replace')[0] )
+		_.pr( _.switches.values('Replace')[0] )
 		sys.exit()
 	global insertText
 	global replaceText
 
-	# print( _.switches.value('Input') )
+	# _.pr( _.switches.value('Input') )
 	shouldRun = False
 	if _.switches.isActive('InsertFile'):
 		if not os.path.isfile( _.switches.value('InsertFile') ):
-			print( 'Error: InsertFile' )
+			_.pr( 'Error: InsertFile' )
 			sys.exit()
 		else:
 			shouldRun = True
@@ -203,7 +203,7 @@ def action():
 
 	if _.switches.isActive('ReplaceFile'):
 		if not os.path.isfile( _.switches.value('ReplaceFile') ):
-			print( 'Error: ReplaceFile' )
+			_.pr( 'Error: ReplaceFile' )
 			sys.exit()
 		else:
 			shouldRun = True
@@ -221,7 +221,7 @@ def action():
 			sys.exit()
 
 	if not shouldRun:
-		print( 'Error: Bad switch 1' )
+		_.pr( 'Error: Bad switch 1' )
 		sys.exit()
 
 	if not type( _.appData[__.appReg]['pipe'] ) == bool or _.switches.isActive('Input') and os.path.isfile( _.switches.value('Input') ):
@@ -234,7 +234,7 @@ def action():
 			if os.path.isfile( filename ):
 				processFile(filename)
 	else:
-		print( 'Error: No Files' )
+		_.pr( 'Error: No Files' )
 		sys.exit()
 
 
@@ -251,8 +251,8 @@ def processFile( filename ):
 	global insertText
 	global replaceText
 
-	print()
-	print('processing:', filename)
+	_.pr()
+	_.pr('processing:', filename)
 	fileBackup.switch( 'Input', filename )
 	fileBackup.switch( 'Flag', 'pre replaceText' )
 	recoveryFile = fileBackup.do( 'action' )
@@ -279,15 +279,16 @@ def processFile( filename ):
 		if 'n' in keep.lower():
 			try:
 				copyfile(recoveryFile, filename)
-				print( 'Undo successful' )
+				_.pr( 'Undo successful' )
 			except Exception as e:
-				print( 'Undo fail' )
+				_.pr( 'Undo fail' )
 
 
 
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

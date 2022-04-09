@@ -198,15 +198,15 @@ def findGroups( records ):
 				configurations[ii]['cnt'] = paths[i]['cnt']
 
 	_.switches.fieldSet( 'Long', 'active', True )
-	print()
+	_.pr()
 
 	if len( configurations ) > 0:
 		_.tables.register('data',configurations)
 		_.tables.print('data', ','.join( configurations[0].keys() ) )
 		# _.tables.fieldProfileSet('Auto','timestamp','trigger',_.float2Date)
 	else:
-		print( 'Error: configurations == 0' )
-		print( paths )
+		_.pr( 'Error: configurations == 0' )
+		_.pr( paths )
 	configID+=1
 	return configurations
 
@@ -215,9 +215,9 @@ def findGroups( records ):
 def report( configFile, parentIn='', fieldsIn='', allFields=False ):
 	if _.switches.isActive('All'):
 		allFields = True
-	print()
-	print( 'Report:', parentIn )
-	print()
+	_.pr()
+	_.pr( 'Report:', parentIn )
+	_.pr()
 	keyList = {}
 	cKeyList = {}
 	records = []
@@ -234,7 +234,7 @@ def report( configFile, parentIn='', fieldsIn='', allFields=False ):
 	# find children
 	for config in configFile:
 		for label in config.keys():
-			# print( label )
+			# _.pr( label )
 			keyList[label] = auditType( configFile[0][label] )
 			if keyList[label] == 'child':
 				if not label in children:
@@ -258,7 +258,7 @@ def report( configFile, parentIn='', fieldsIn='', allFields=False ):
 					shouldProcess = True
 			if shouldProcess:
 				cKeyList[label] = cleanTypeString( configFile[0][label] )
-				# print( fieldsSpecified, label, cKeyList[label] )
+				# _.pr( fieldsSpecified, label, cKeyList[label] )
 
 	# check for changes 
 	for config in configFile:
@@ -268,11 +268,11 @@ def report( configFile, parentIn='', fieldsIn='', allFields=False ):
 			try:
 				dt = cleanTypeString( config[label] )
 			except Exception as e:
-				print( 'Error: key', label )
-				# print( config )
+				_.pr( 'Error: key', label )
+				# _.pr( config )
 
 
-			# print( label, dt )
+			# _.pr( label, dt )
 			try:
 				if type( cKeyList[label] ) == str or type( cKeyList[label] ) == list:
 					error = False
@@ -282,30 +282,30 @@ def report( configFile, parentIn='', fieldsIn='', allFields=False ):
 				error = True
 			
 			if error:
-				print('Error: field')
+				_.pr('Error: field')
 				sys.exit()
 
 
-			# print( label, cKeyList[label] )
+			# _.pr( label, cKeyList[label] )
 
 
 			if type( cKeyList[label] ) == list and not dt in cKeyList[label]:
 				cKeyList[label].append( dt )
 			if type( cKeyList[label] ) == str and not dt == cKeyList[label]:
-				# print( 'HERE' )
+				# _.pr( 'HERE' )
 				tmp = cKeyList[label]
 				cKeyList[label] = []
 				cKeyList[label].append( tmp )
 				cKeyList[label].append( dt )
 
 
-	# print( cKeyList )
+	# _.pr( cKeyList )
 	keyList = {}
 
 	for config in configFile:
 		rec = {}
 		for label in cKeyList.keys():
-			# print( label )
+			# _.pr( label )
 			if type(cKeyList[label]) == list:
 				rec[label] = cleanTypeString( config[label] )
 			elif cKeyList[label] == 'list':
@@ -319,13 +319,13 @@ def report( configFile, parentIn='', fieldsIn='', allFields=False ):
 				rec[label] = str(cKeyList[label])+'*'
 
 		records.append( rec )
-	# print( records )
+	# _.pr( records )
 	
 	# global settings
 	settings = findGroups( records )
 	if not fieldsIn == '':
 		for b in settings:
-			print( b )
+			_.pr( b )
 	# if fieldsIn == '':
 	storyboard = {}
 
@@ -341,16 +341,16 @@ def report( configFile, parentIn='', fieldsIn='', allFields=False ):
 	# while not 'endall' in fields:
 	# 	if not 'endall' in fields:
 	while not fields == 'x' and not 'endall' in fields:
-		print(  )
-		print(  )
+		_.pr(  )
+		_.pr(  )
 
 
 		if  allFields:
-			print( ','.join( parentFields ) )
+			_.pr( ','.join( parentFields ) )
 		# else:
 		fields = answer( ' What fields? ' )
 		if not fields == 'x' and not fields == 'b' and not 'endall' in fields:
-			print( 'fields:', fields )
+			_.pr( 'fields:', fields )
 			if fieldsIn == '':
 				storyboard = {}
 			if len( storyboard.keys() ) == 0:
@@ -364,7 +364,7 @@ def report( configFile, parentIn='', fieldsIn='', allFields=False ):
 				failField = answer( ' Field? ' )
 				storyboard['fail_field'] = failField.lower()
 			reportData = report( configFile, parentIn, fields )
-			print( 'reportData:', sys.getsizeof( str(reportData) ), len( reportData.keys() ) )
+			_.pr( 'reportData:', sys.getsizeof( str(reportData) ), len( reportData.keys() ) )
 			# sys.exit()
 			# if sys.getsizeof( str(reportData) ) > 5:
 			if len( reportData.keys() ) > 0:
@@ -412,16 +412,16 @@ def answer( text ):
 	global fields
 
 	if _.switches.isActive('AnswerFile'):
-		print( answerID )
+		_.pr( answerID )
 		try:
 			theAnswer = answerFile[answerID].replace( '\n', '' )
 			answerID += 1
-			print(  )
-			print( 'text:', text, 'answer:', theAnswer )
+			_.pr(  )
+			_.pr( 'text:', text, 'answer:', theAnswer )
 		except Exception as e:
-			print( 'Error: answerFile' )
-			print( answerID )
-			print( 'text:', text )
+			_.pr( 'Error: answerFile' )
+			_.pr( answerID )
+			_.pr( 'text:', text )
 			sys.exit()
 	else:
 		theAnswer = input( text )
@@ -434,7 +434,7 @@ def answer( text ):
 def action():
 	if _.switches.isActive('If'):
 		if not _.switches.isActive('Project'):
-			print( 'Error: please specify a project' )
+			_.pr( 'Error: please specify a project' )
 			sys.exit()
 		project = _.switches.value('Project')
 		config = _.getTable( 'storyboard_' + project + '.json' )
@@ -460,10 +460,10 @@ def action():
 			# results.append( reportData )
 			results[ project ][config] = reportData
 
-	print()
-	print()
-	print()
-	print( _.d2json(results) )
+	_.pr()
+	_.pr()
+	_.pr()
+	_.pr( _.d2json(results) )
 	# _.copyDicAsJSON( results, openUML=True )
 	_.setUmlData( results )
 
@@ -474,31 +474,31 @@ def action():
 			answerBackup = _v.myTables + _v.slash+'storyboard_answerFile_auto.txt'
 
 		_.saveText( answerFile, answerBackup )
-		print()
-		print( answerBackup )
+		_.pr()
+		_.pr( answerBackup )
 	_.saveTable( results, 'storyboard_' + project + '.json', printThis=True )
-	print()
-	print()
-	print()
+	_.pr()
+	_.pr()
+	_.pr()
 
 	surfData( results[ project ], [], parent=True )
-	print()
-	print()
-	print()
+	_.pr()
+	_.pr()
+	_.pr()
 
-	# print( 'attributesTable:', len(attributesTable), ','.join( attributesTable[0].keys() ) )
+	# _.pr( 'attributesTable:', len(attributesTable), ','.join( attributesTable[0].keys() ) )
 	
-	print()
-	print()
+	_.pr()
+	_.pr()
 	# for a in attributesTable:
-	# 	print( a )
+	# 	_.pr( a )
 	for key in attributesTable.keys():
-		# print( key )
-		print()
-		print()
-		print( '_____________________________________XX_____________________________________' )
-		print()
-		print()
+		# _.pr( key )
+		_.pr()
+		_.pr()
+		_.pr( '_____________________________________XX_____________________________________' )
+		_.pr()
+		_.pr()
 		_.tables.register( 'data', attributesTable[ key ] )
 		_.tables.print('data', ','.join( attributesTable[ key ][0].keys() ) )
 		
@@ -506,7 +506,7 @@ def action():
 
 
 def surfData( data, path, parent=False ):
-	# print()
+	# _.pr()
 	if parent:
 		path=[]
 
@@ -518,7 +518,7 @@ def surfData( data, path, parent=False ):
 		for key in data.keys():
 			if parent:
 				path=[]
-			# print( 'key:', key )
+			# _.pr( 'key:', key )
 			if key == 'children':
 				hasChildren = True
 			if key == 'settings':
@@ -536,9 +536,9 @@ def surfData( data, path, parent=False ):
 			if not hasName:
 				path2 = path
 			pass
-			# print( type(path), path, path2 )
-			# print( 'hasPID:', path2, hasPID( data[ key ] ) )
-			# print( 'auditType:', auditType( data[ key ] ) )
+			# _.pr( type(path), path, path2 )
+			# _.pr( 'hasPID:', path2, hasPID( data[ key ] ) )
+			# _.pr( 'auditType:', auditType( data[ key ] ) )
 
 			# if hasPID( data[ key ] ):
 			# 	addAttributes( data[ key ], path2 )
@@ -546,21 +546,21 @@ def surfData( data, path, parent=False ):
 
 		if hasGroups:
 			pass
-			# print( 'hasGroups:', hasGroups)
+			# _.pr( 'hasGroups:', hasGroups)
 			# path3 = papp( path2, 'groups')
 			path3 = path2
 			# addAttributes( data[ 'groups' ], path3 )
 			surfData( data[ 'groups' ], path3 )
 
 		if hasSettings:
-			# print( 'hasSettings:', hasSettings)
+			# _.pr( 'hasSettings:', hasSettings)
 			# path3 = papp( path2, 'settings')
 			path3 = path2
 			addAttributes( data[ 'settings' ], path3 )
 			# surfData( data[ 'settings' ], path3 )
 
 		if hasChildren:
-			# print( 'hasChildren:', hasChildren)
+			# _.pr( 'hasChildren:', hasChildren)
 			# path3 = papp( path2, 'children')
 			path3 = path2
 			# addAttributes( data[ 'children' ], path3 )
@@ -570,7 +570,7 @@ def surfData( data, path, parent=False ):
 
 		# if hasPID( data):
 		# 	addAttributes( data, path2 )
-		# print( 'implode:', implode( data ).split(',') )
+		# _.pr( 'implode:', implode( data ).split(',') )
 		for key in implode( data ).split(','):
 			if parent:
 				path=[]
@@ -593,7 +593,7 @@ def papp( data, addText, parent=False ):
 
 	if shouldRun:
 		if not type( addText ) == str:
-			print( 'papp:', addText )
+			_.pr( 'papp:', addText )
 		if not len( data ):
 			data.append( addText )
 		else:	
@@ -618,8 +618,8 @@ def implode( data, parent=False ):
 				if not d in omit:
 					n.append( d )
 		except Exception as e:
-			print( 'Error: implode' )
-			print( data )
+			_.pr( 'Error: implode' )
+			_.pr( data )
 			sys.exit()
 	if parent:
 		omitParent = n
@@ -642,8 +642,8 @@ def implode2( data, parent=False ):
 					if not type(data[d]) == list and not type(data[d]) == dict:
 						n.append( d )
 		except Exception as e:
-			print( 'Error: implode' )
-			print( data )
+			_.pr( 'Error: implode' )
+			_.pr( data )
 			sys.exit()
 	if parent:
 		omitParent = n
@@ -655,37 +655,37 @@ def addAttributes( data, path ):
 
 
 
-	print()
-	print( '____________________________________________________________________________' )
+	_.pr()
+	_.pr( '____________________________________________________________________________' )
 	try:
-		print( 'Path:', ','.join( path ) )
+		_.pr( 'Path:', ','.join( path ) )
 	except Exception as e:
-		print( 'Path:', path )
+		_.pr( 'Path:', path )
 
 
-	# print( ','.join( path ) )
+	# _.pr( ','.join( path ) )
 	if len( data ) > 0:
-		print()
-		print()
+		_.pr()
+		_.pr()
 		try:
 
 
 			if type(data) == list:
-				# print( 'implode:', implode2( data[0] ) )
+				# _.pr( 'implode:', implode2( data[0] ) )
 				_.tables.register( 'data', data )
 				_.tables.print('data', implode( data[0] ) )
 
 			if type(data) == dict:
-				# print( 'implode:', implode2( data ) )
+				# _.pr( 'implode:', implode2( data ) )
 				_.tables.register( 'data', [data] )
 				_.tables.print('data', implode2( data ) )
 
 
 		except Exception as e:
-			print( 'Error: attributes' )
-			print( type(data) )
-			print( implode2( data ) )
-			print( data )
+			_.pr( 'Error: attributes' )
+			_.pr( type(data) )
+			_.pr( implode2( data ) )
+			_.pr( data )
 			sys.exit()
 	n = '-'.join( data[0].keys() ) + '_' +  '-'.join( path )
 	attributesTable[ n ] = []
@@ -714,11 +714,11 @@ def newID():
 
 
 def processKeyIf( data, label ):
-	print( '#########################################' )
-	print()
-	print( '# ' + data['name'] )
-	print()
-	print( 'for row in config[\'' + label + '\']:' )
+	_.pr( '#########################################' )
+	_.pr()
+	_.pr( '# ' + data['name'] )
+	_.pr()
+	_.pr( 'for row in config[\'' + label + '\']:' )
 	if data['fail'] == 'f':
 		data['fail'] = data['fail_field']
 	processGroupIf( data['groups'], data['fail'], 'row', 1 )
@@ -753,8 +753,8 @@ def processSettingsIf( data, fail, label, tabs ):
 		return label+'[\'' + fld + '\']'
 	# return ''
 	omit = ['pid','gid','cnt']
-	# print()
-	# print( addTabs( tabs ) + '# Settings:' )
+	# _.pr()
+	# _.pr( addTabs( tabs ) + '# Settings:' )
 	for row in data:
 		statement = []
 		for key in row.keys():
@@ -770,15 +770,15 @@ def processSettingsIf( data, fail, label, tabs ):
 				else:
 					task = 'Error: ' + key + ' ' + row[key]
 				statement.append( task )
-				print( addTabs( tabs ) + 'if ' + ' and '.join( statement ) + ':')
-				# print( addTabs( tabs ) + task )
-				# print( addTabs( tabs ) + key, row[key], type(row[key]) )
+				_.pr( addTabs( tabs ) + 'if ' + ' and '.join( statement ) + ':')
+				# _.pr( addTabs( tabs ) + task )
+				# _.pr( addTabs( tabs ) + key, row[key], type(row[key]) )
 
 
 def processChildrenIf( data, fail, label, tabs ):
 	# return ''
-	print()
-	print( addTabs( tabs ) + '# Children:' )
+	_.pr()
+	_.pr( addTabs( tabs ) + '# Children:' )
 	for i,row in enumerate(data):
 		keys = []
 
@@ -786,7 +786,7 @@ def processChildrenIf( data, fail, label, tabs ):
 			keys.append( key )
 
 		nLabel = label+'_c'
-		print( addTabs( tabs ) + 'for '+nLabel+' in '+label+'[\'' + data[i]['name'] + '\']:' )
+		_.pr( addTabs( tabs ) + 'for '+nLabel+' in '+label+'[\'' + data[i]['name'] + '\']:' )
 
 
 		label = nLabel
@@ -844,6 +844,7 @@ if __name__ == '__main__':
 # h
 # x
 # x
+
 
 
 

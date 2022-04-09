@@ -249,7 +249,7 @@ def action():
 
 	if _.switches.isActive('Print'):
 		for x in remove:
-			print( x )
+			_.pr( x )
 
 	if _.switches.isActive('Delete'):
 
@@ -288,7 +288,7 @@ def action():
 		_.colorThis( [ ii, 'files deleted' ], 'yellow' )
 		if ie:
 			for x in errors:
-				print( '\t', x )
+				_.pr( '\t', x )
 			_.colorThis( [ ie, 'file errors' ], 'red' )
 		_.saveTable( newLog, 'fileBackup.json' )
 				
@@ -316,6 +316,7 @@ size = None
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

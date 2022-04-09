@@ -162,7 +162,7 @@ def manageSlots( n ):
 	global default
 	global spent
 
-	# print(n)
+	# _.pr(n)
 
 	for s in slots:
 		if slots[s] == default:
@@ -205,9 +205,9 @@ def action():
 		slotCnt = int(_.switches.value('Slots'))
 
 	# for x in range(0,slotCnt):
-	# 	print(x)
+	# 	_.pr(x)
 	# sys.exit()
-	print( 'Processing...', end='\r' )
+	_.pr( 'Processing...', end='\r' )
 	for x in range(0,slotCnt):
 		slots[x] = default
 	for i,row in enumerate(_.isData(r=1,pipeClean=False)):
@@ -246,8 +246,8 @@ def action():
 					table.append(i)
 					windex[x] = i
 					last = x
-		# print(row)
-	print( '                                                        ', end='\r' )
+		# _.pr(row)
+	_.pr( '                                                        ', end='\r' )
 	if diff == default:
 		_.colorThis( 'not found', 'red' )
 	else:
@@ -272,11 +272,11 @@ def action():
 				cnt+=1
 				if not _.switches.isActive('Clean'):
 					if d == dex[t][d]:
-						print( '\t\t', clean( _.isData(pipeClean=False)[d] ) )
+						_.pr( '\t\t', clean( _.isData(pipeClean=False)[d] ) )
 					else:
 						x = d
 						while not x == dex[t][d]+1:
-							print( '\t\t', clean( _.isData(pipeClean=False)[x] ) )
+							_.pr( '\t\t', clean( _.isData(pipeClean=False)[x] ) )
 							x+=1
 		_.colorThis( [ '\n','',  cnt ], 'yellow' )
 
@@ -293,6 +293,7 @@ slots = {}
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

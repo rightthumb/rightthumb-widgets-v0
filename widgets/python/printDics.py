@@ -157,7 +157,7 @@ if __name__ == '__main__':
 
 def printKeys( data ):
 	for key in data.keys():
-		print( key )
+		_.pr( key )
 
 def action():
 	printKeys( _.getTable( 'dic_adj.json' ) )
@@ -173,6 +173,7 @@ def action():
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

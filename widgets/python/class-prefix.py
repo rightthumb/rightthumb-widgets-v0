@@ -209,11 +209,11 @@ def process(path):
 			if line.startswith('class '):
 				lastIsIf = False
 				ln = spaceOut(line)
-				# print(ln)
+				# _.pr(ln)
 				lastClass = ln.split(' ')[1]
 				table[lastClass] = []
 				tablev[lastClass] = []
-				print(lastClass)
+				_.pr(lastClass)
 
 			if line.startswith('\tif ') or line.startswith('\telif ') or line.startswith('\telse:') :
 				lastIsIf = True
@@ -225,7 +225,7 @@ def process(path):
 				if lastClass:
 					table[lastClass].append(lastDef)
 					tabd[lastDef] = lastClass
-					print('\t',lastDef)
+					_.pr('\t',lastDef)
 			if line.startswith('\t') and not line.startswith('\t\t') and '=' in line:
 				lx = line.split('\t')[1]
 				ln = spaceOut(lx)
@@ -244,9 +244,9 @@ def process(path):
 					if not 'def' == lastVar and not 'if' == lastVar :
 						tabv[lastVar] = lastClass
 
-		print()
-		print()
-		print()
+		_.pr()
+		_.pr()
+		_.pr()
 		newfile = ''
 		myGlobals = []
 		myGlobalsAll = []
@@ -265,10 +265,10 @@ def process(path):
 				lastIsIf = True
 
 			if line.startswith('\tglobal '):
-				# print('000')
+				# _.pr('000')
 				ln = spaceOut(line)
 				if ' global ' in ln:
-					# print('001')
+					# _.pr('001')
 					lx = cleanMe( line, ' ' )
 					lx = cleanMe( lx, '\n' )
 					try:
@@ -276,7 +276,7 @@ def process(path):
 					except Exception as e:
 						lastGlobal = ''
 					if len(lastGlobal):
-						# print( '002', lastGlobal )
+						# _.pr( '002', lastGlobal )
 						myGlobalsAll.append(lastGlobal)
 			if line.startswith('\tdef '):
 				myGlobals = []
@@ -287,9 +287,9 @@ def process(path):
 			elif line.startswith('\t\t'):
 				ln = spaceOut(line)
 				# if 'global ' in ln:
-					# print('100')
+					# _.pr('100')
 				if ' global ' in ln:
-					# print('110')
+					# _.pr('110')
 					lx = cleanMe( ln, ' ' )
 					# lx = cleanMe( lx, '\n' )
 					try:
@@ -297,7 +297,7 @@ def process(path):
 					except Exception as e:
 						lastGlobal = ''
 					if len(lastGlobal) and not lastGlobal == 'global':
-						# print( '111', lastGlobal )
+						# _.pr( '111', lastGlobal )
 						myGlobals.append(lastGlobal)
 
 
@@ -325,9 +325,9 @@ def process(path):
 				for cd in tabv:
 					if cd:
 						if ' '+cd+' ' in ln:
-							print( '200', cd, myGlobalsAll, myGlobals )
+							_.pr( '200', cd, myGlobalsAll, myGlobals )
 							if cd in myGlobalsAll or cd in myGlobals:
-								print( '222', cd )
+								_.pr( '222', cd )
 								line = line.replace( cd, tabv[cd]+'.'+cd )
 								line = classy( line, tabv[cd] )
 
@@ -367,12 +367,13 @@ def action():
 			else:
 				process(path)
 		else:
-			print('skipped')
+			_.pr('skipped')
 
 ########################################################################################
 if __name__ == '__main__':
 	action()
 	__.isExit()
+
 
 
 

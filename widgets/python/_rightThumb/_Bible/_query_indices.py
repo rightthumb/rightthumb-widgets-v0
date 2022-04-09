@@ -28,7 +28,7 @@ indices = {
 def query(query):
 	if len(query) == 1:
 		result = searchSingle( wordStem(query[0]) )
-		print( result )
+		_.pr( result )
 
 		x = _.traverse( result )
 		for rec in x['fields']:
@@ -36,8 +36,8 @@ def query(query):
 				bk = rec['parents'][0]
 				ch = rec['parents'][1]
 				vs = rec['field']
-				print( bk, ch, vs )
-		# print( x.keys() )
+				_.pr( bk, ch, vs )
+		# _.pr( x.keys() )
 
 	else:
 		q = []
@@ -48,11 +48,11 @@ def query(query):
 		setCount = 0
 		for qSet in _.generatePatterns( q ):
 
-			# print('qSet',qSet)
+			# _.pr('qSet',qSet)
 			setCount+=1
 			indices = searchDouble(  q[qSet[0]]+' '+q[qSet[1]]  )
 			if indices is None:
-				print('Error:',q[qSet[0]]+' '+q[qSet[1]])
+				_.pr('Error:',q[qSet[0]]+' '+q[qSet[1]])
 			if not indices is None:
 				for bk in indices:
 					for ch in indices[bk]:
@@ -71,24 +71,24 @@ def query(query):
 							references[bk][ch]['cnt'] += 1
 							references[bk][ch][vs]['cnt'] += 1
 
-		# print(references)
+		# _.pr(references)
 		# sys.exit()
 		wow = _.factor( references, count=setCount )
-		# print(wow['factors']['single'])
+		# _.pr(wow['factors']['single'])
 		table = {}
 		books = []
 		for relevant in wow['factors']['single'][1]['relevant']:
 			rec = wow['records'][1][ relevant['id'] ]
 			books.append( int( rec['path'].split('.')[0] ) )
-			# print(rec)
+			# _.pr(rec)
 		for relevant in wow['factors']['single'][3]['relevant']:
 			rec = wow['records'][3][ relevant['id'] ]
-			# print()
+			# _.pr()
 			bk = int( rec['path'].split('.')[0] )
 			ch = int( rec['path'].split('.')[1] )
 			vs = int( rec['path'].split('.')[2] )
 			# if bk == 41:
-			# 	print( rec )
+			# 	_.pr( rec )
 			if not bk in table:
 				table[bk] = {}
 			if not ch in table[bk]:
@@ -101,8 +101,8 @@ def query(query):
 			# for x in query:
 			# 	for y in _.caseUnspecific(word,x):
 			# 		word = word.replace( y, _.colorThis( y, 'yellow', p=0 ) )
-			# print( word )
-			# print( rec )
+			# _.pr( word )
+			# _.pr( rec )
 
 		pass
 		table = eval(   _.d2json( table, sort_keys=True )   )
@@ -110,7 +110,7 @@ def query(query):
 		for bk in books:
 			bk = str(bk)
 			if bk in table:
-				print( '\n\n'+  _.colorThis( _B.labels[bk], 'green', p=0 )  + '\n' )
+				_.pr( '\n\n'+  _.colorThis( _B.labels[bk], 'green', p=0 )  + '\n' )
 				chs = []
 				for ch in table[bk]:
 					chs.append( int(ch) )
@@ -153,15 +153,15 @@ def query(query):
 								rx = rx.replace( y, _.colorThis( y, 'cyan', p=0 ) )
 						result.append( rx )
 
-						# print( '\t\t',_.colorThis( vs, 'cyan', p=0 ), word )
-					print( ''.join( result ) )
-						# print( rec )
+						# _.pr( '\t\t',_.colorThis( vs, 'cyan', p=0 ), word )
+					_.pr( ''.join( result ) )
+						# _.pr( rec )
 
 			
 
 			# for x in wow['records']:
 			# 	for y in wow['records'][x]:
-			# 		print( y )
+			# 		_.pr( y )
 
 
 
@@ -217,6 +217,7 @@ def wordStem(word):
 
 
 processWordStem = None
+
 
 
 

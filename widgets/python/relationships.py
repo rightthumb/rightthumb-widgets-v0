@@ -205,7 +205,7 @@ def start(thisFILE):
 		IDs = []
 		for x in _.traverse( data, config={'inDicI':_.switches.value('Plus').replace(',',' ').lower()})['inDicI']:
 			IDs.append(int(x[0]))
-			# print(isINT(x[0]))
+			# _.pr(isINT(x[0]))
 			p = []
 			for i,y in enumerate(x):
 				# p.append( y )
@@ -215,31 +215,31 @@ def start(thisFILE):
 			px = '.'.join(p)
 			if not px in paths:
 				paths.append(px)
-				# print(px)
-			# print(  )
+				# _.pr(px)
+			# _.pr(  )
 
-		# print( thisFILE, IDs )
+		# _.pr( thisFILE, IDs )
 		if len(paths):
 			label = _.fileLabel(thisFILE)
 			__.databases[  label  ] = data
 			# _.printTest(f)
-			print()
+			_.pr()
 			_.colorThis(  label, 'yellow' )
 			fullPaths = []
 			for x in paths:
-				# print( '\t', x )
+				# _.pr( '\t', x )
 
 				py = []
 				py.append(label)
 				py.append(x)
 				pz = ':'.join(py)
 				# addOption( pz )
-				print( '\t',pz )
+				_.pr( '\t',pz )
 				fullPaths.append( pz )
 
 
 			pass
-			print()
+			_.pr()
 			xXx = 'y'
 			subjects = []
 			if _.switches.isActive('Ask') and not _.switches.isActive('Fields'):
@@ -259,11 +259,11 @@ def start(thisFILE):
 								subjects.append( xXx )
 								__.chosen.append( xXx )
 
-			print()
-			print(subjects)
-			print()
-			print()
-			print()
+			_.pr()
+			_.pr(subjects)
+			_.pr()
+			_.pr()
+			_.pr()
 
 def traverse( data, path ):
 	global trav
@@ -271,10 +271,10 @@ def traverse( data, path ):
 	p.reverse()
 	subject = p.pop()
 	if subject == 'i':
-		print( 'Error' )
-	# print( subject )
-	# print( data[subject] )
-	# print( data[subject] )
+		_.pr( 'Error' )
+	# _.pr( subject )
+	# _.pr( data[subject] )
+	# _.pr( data[subject] )
 	try:
 		if type( data[subject] ) == str:
 			trav.append( data[subject] )
@@ -302,15 +302,15 @@ def processPath( xXx ):
 						'IDs': {},
 						'items': {},
 	}
-	print()
-	print()
-	print(db)
+	_.pr()
+	_.pr()
+	_.pr(db)
 
 	for i,row in enumerate( __.databases[db] ):
 		trav = []
 		traverse( row, path )
 		if len(trav):
-			print( '\t', trav )
+			_.pr( '\t', trav )
 			for x in trav:
 				if not i in index[ db ]['IDs']:
 					index[ db ]['IDs'][i] = {}
@@ -328,9 +328,9 @@ def action():
 	__.databases = {}
 	__.chosen = []
 	# if _.switches.isActive('Search'):
-	# 	print( 'search active' )
-	# 	print( _.switches.value('Search') )
-	# 	print( _.switches.values('Search') )
+	# 	_.pr( 'search active' )
+	# 	_.pr( _.switches.value('Search') )
+	# 	_.pr( _.switches.values('Search') )
 
 	global data
 	global fileFirst
@@ -343,11 +343,11 @@ def action():
 		except Exception as e:
 			_.colorThis( [ 'Error: FILE' ], 'red' )
 	
-	print()
-	print()
+	_.pr()
+	_.pr()
 	_.colorThis('=============================================================================================================', 'green' )
-	print()
-	print()
+	_.pr()
+	_.pr()
 	if len( __.chosen ):
 		global index
 
@@ -377,6 +377,7 @@ def action():
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

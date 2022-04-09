@@ -199,7 +199,7 @@ def km2US(kilometers):
 
 	# calculate miles
 	miles = kilometers * conv_fac
-	# print('%0.2f kilometers is equal to %0.2f miles' %(kilometers,miles))
+	# _.pr('%0.2f kilometers is equal to %0.2f miles' %(kilometers,miles))
 	return miles
 
 def findDistance2( lon, lat, distance, what='lat' ):
@@ -213,14 +213,14 @@ def findDistance( lon, lat, distance, what='lat' ):
 				coordinates['one'][what] += n
 				result =  geopy.distance.vincenty( (  coordinates['one']['lon'], coordinates['one']['lat']  ) , (  coordinates['two']['lon'], coordinates['two']['lat']  )  ).km
 				test = km2US(result)
-				# print( test )
+				# _.pr( test )
 
 		elif 'd' in ud:
 			while test > distance:
 				coordinates['one'][what] -= n
 				result =  geopy.distance.vincenty( (  coordinates['one']['lon'], coordinates['one']['lat']  ) , (  coordinates['two']['lon'], coordinates['two']['lat']  )  ).km
 				test = km2US(result)
-				# print( test )
+				# _.pr( test )
 		return test
 
 
@@ -268,13 +268,13 @@ def findDistance( lon, lat, distance, what='lat' ):
 	while not test == distance:
 		if by == 100000000000000:
 			break
-		# print()
-		# print( str(by), coordinates['two'] )
+		# _.pr()
+		# _.pr( str(by), coordinates['two'] )
 		test = testThisFloat( modBy(), toggleDirection(), test )
 
 	if test > distance:
 		test = testThisFloat( 1/by, 'down', test )
-	# print(coordinates['two'])
+	# _.pr(coordinates['two'])
 	return coordinates['one'][what]
 
 
@@ -283,45 +283,45 @@ def findDistance( lon, lat, distance, what='lat' ):
 
 	# 	result =  geopy.distance.vincenty( (  coordinates['one']['lon'], coordinates['one']['lat']  ) , (  coordinates['two']['lon'], coordinates['two']['lat']  )  ).km
 	# 	test = km2US(result)
-	# 	print( test )
+	# 	_.pr( test )
 
 
 	# if test == distance:
 	# 	return coordinates['two']
 
-	# print()
+	# _.pr()
 
 	# while test > distance:
 	# 	coordinates['one'][what] -= .001
 
 	# 	result =  geopy.distance.vincenty( (  coordinates['one']['lon'], coordinates['one']['lat']  ) , (  coordinates['two']['lon'], coordinates['two']['lat']  )  ).km
 	# 	test = km2US(result)
-	# 	print( test )
+	# 	_.pr( test )
 
 	# if test == distance:
 	# 	return coordinates['two']
 
-	# print()
+	# _.pr()
 
 	# while test < distance:
 	# 	coordinates['one'][what] += .0001
 
 	# 	result =  geopy.distance.vincenty( (  coordinates['one']['lon'], coordinates['one']['lat']  ) , (  coordinates['two']['lon'], coordinates['two']['lat']  )  ).km
 	# 	test = km2US(result)
-	# 	print( test )
+	# 	_.pr( test )
 
 	# sys.exit()
 	# if test == distance:
 	# 	return coordinates['two']
 
-	# print()
+	# _.pr()
 
 	# while not test > distance:
 	# 	coordinates['one'][what] += .00001
 
 	# 	result =  geopy.distance.vincenty( (  coordinates['one']['lon'], coordinates['one']['lat']  ) , (  coordinates['two']['lon'], coordinates['two']['lat']  )  ).km
 	# 	test = km2US(result)
-	# 	print( test )
+	# 	_.pr( test )
 
 	# print
 
@@ -331,9 +331,9 @@ def genLon():
 	lon = base['start']['lon']
 	lat = base['start']['lat']
 	
-	# print( lon, lat )
+	# _.pr( lon, lat )
 	while lon < base['end']['lon']:
-		print()
+		_.pr()
 		genLat( lon, lat )
 		lon = findDistance( lon, lat, miles, what='lon' )
 
@@ -345,7 +345,7 @@ def genLat( lon, lat ):
 
 	while lat < base['end']['lat']:
 		lat = findDistance( lon, lat, miles, what='lat' )
-		print( lon, lat )
+		_.pr( lon, lat )
 		# sys.exit()
 		data.append( (lon,lat) )
 
@@ -377,6 +377,7 @@ data = []
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

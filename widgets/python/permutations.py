@@ -167,32 +167,32 @@ def process(lvl=0,parents=[],last=False):
 	global highest
 	global tables
 
-	# print( len(tables) )
+	# _.pr( len(tables) )
 	# sys.exit()
 	try:
 		for x in tables[lvl]:
 			p = parents+[x]
 			if not x in eval('permutations'+build(parents)):
 				exec('permutations'+build(p)+'={ }')
-			# print(last, highest,lvl)
+			# _.pr(last, highest,lvl)
 			
 			# if last and highest==lvl:
 			
-			# print(  len(tables) , lvl  )
+			# _.pr(  len(tables) , lvl  )
 
 			if len(tables)-1 == lvl:
 				if not _.switches.isActive('Time'):
 					m = ' '.join(  _.switches.values('Make')  )
 					for i,z in enumerate(p):
 						m = m.replace( '{'+str(i)+'}', _.color(z,'yellow',attr='bold',p=0) )
-					print(m)
+					_.pr(m)
 			if len(tables) > lvl-1:
 				process( lvl+1, p, last=last )
 			if lvl>highest:
 				highest=lvl
 	except Exception as e:
 		pass
-		# print( 'lvl',lvl )
+		# _.pr( 'lvl',lvl )
 
 
 def action():
@@ -209,17 +209,17 @@ def action():
 		# y = _pID.mini.resolve( x[0] )
 		# x = _pID.mini.gen( n )
 		if not _.switches.isActive('Print'):
-			print( time.time()-start )
-			print( 'code:', len(_pID.mini.code) )
-			print( 'table:',len(table) )
-			print( 'skipped:',_pID.mini.skip_count )
+			_.pr( time.time()-start )
+			_.pr( 'code:', len(_pID.mini.code) )
+			_.pr( 'table:',len(table) )
+			_.pr( 'skipped:',_pID.mini.skip_count )
 
 		# for x in _pID.mini.skip_table:
-		# 	print(x)
+		# 	_.pr(x)
 		# input( ' : ' )
 		if _.switches.isActive('Print'):
 			for x in table:
-				print(x)
+				_.pr(x)
 		# sys.exit()
 
 
@@ -239,7 +239,7 @@ def action():
 	if not _.switches.isActive('Count'):
 		process()
 	if _.switches.isActive('Time'):
-		print( '\ntime:', time.time()-start )
+		_.pr( '\ntime:', time.time()-start )
 
 			
 highest=0
@@ -249,6 +249,7 @@ highest=0
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

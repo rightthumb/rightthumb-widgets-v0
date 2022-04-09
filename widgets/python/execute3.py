@@ -160,11 +160,11 @@ if not sys.stdin.isatty():
 def notThreaded():
 	for pip in _.appData[__.appReg]['pipe']:
 		if not  _.switches.isActive('NoCount'):
-			print(pip)
+			_.pr(pip)
 		try:
 			os.system(pip)
 		except Exception as e:
-			print('Error')
+			_.pr('Error')
 
 def threaded():
 	_.threads.add( 'execute', trigger=complete, loaded=False )
@@ -191,11 +191,11 @@ def threaded():
 
 def executePipeRow( pip, qID=False ):
 	if not  _.switches.isActive('NoCount'):
-		print(pip)
+		_.pr(pip)
 	try:
 		os.system(pip)
 	except Exception as e:
-		print('Error')
+		_.pr('Error')
 
 	
 	if not type(qID) == bool:
@@ -211,14 +211,15 @@ def action():
 
 
 def complete():
-	print()
-	print()
-	print( 'done' )
+	_.pr()
+	_.pr()
+	_.pr( 'done' )
 
 
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

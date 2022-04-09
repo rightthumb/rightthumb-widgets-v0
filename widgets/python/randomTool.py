@@ -244,7 +244,7 @@ def around( string, place_value_strict=False ):
 		# ee='.1000'
 		string = string.split('.')[0]
 	val = int(string)
-	# print(val)
+	# _.pr(val)
 	pL = 1
 	# sB = percentage( 500, val, i=0 )
 	variance = 5
@@ -260,7 +260,7 @@ def around( string, place_value_strict=False ):
 
 	sB = percent_of( val, 5 )
 	tx = sB
-	# print(sB)
+	# _.pr(sB)
 
 	vLoop = 0
 	while tf() and vLoop < maxVarianceLoops:
@@ -269,7 +269,7 @@ def around( string, place_value_strict=False ):
 		pL+=1
 
 
-	# print(pL,sB,tx)
+	# _.pr(pL,sB,tx)
 
 	s = val - tx
 	e = val + tx
@@ -289,7 +289,7 @@ def around( string, place_value_strict=False ):
 			return float(str(ran)+ee)
 
 	return ran
-	# print( ran, ' | ', s, '-', e )
+	# _.pr( ran, ' | ', s, '-', e )
 
 def percent_of( n, p ):
 
@@ -299,7 +299,7 @@ def percent_of( n, p ):
 	while True:
 		nn-=1
 		pp = percentage( nn, n )
-		# print( 'po', n, p, '-', nn, pp )
+		# _.pr( 'po', n, p, '-', nn, pp )
 		if pp <= p:
 			return nn
 
@@ -311,7 +311,7 @@ def around_probability():
 
 	i=0
 	x = {}
-	print( _.addComma(do) )
+	_.pr( _.addComma(do) )
 	while not i==do:
 		i+=1
 		t=0
@@ -324,7 +324,7 @@ def around_probability():
 	_.printVarSimple(x)
 	
 	for y in x.keys():
-		print( y, percentage( x[y], do, i=0 ) )
+		_.pr( y, percentage( x[y], do, i=0 ) )
 
 
 def around_probability_real():
@@ -335,7 +335,7 @@ def around_probability_real():
 
 	i=0
 	x = {}
-	print( _.addComma(do) )
+	_.pr( _.addComma(do) )
 	while not i==do:
 		i+=1
 		t = around( a )
@@ -359,7 +359,7 @@ def prob_random():
 
 	i=0
 	x = {}
-	print( _.addComma(do) )
+	_.pr( _.addComma(do) )
 
 
 
@@ -378,9 +378,9 @@ def prob_random():
 		pp = percentage( x[y], do, i=0 )
 		p.append(pp)
 		if not _.switches.isActive('Clean'):
-			print( y, pp )
-	print()
-	print( Average(p) )
+			_.pr( y, pp )
+	_.pr()
+	_.pr( Average(p) )
 def Average(lst): 
 	return sum(lst) / len(lst)
 
@@ -410,18 +410,18 @@ def action():
 	if _.switches.isActive('Between'):
 		if len(_.switches.values('Between')) == 1: 
 			x = random.randint(int(_.switches.values('Between')[0].split('-')[0]), int(_.switches.values('Between')[0].split('-')[1]))
-			print(x)
+			_.pr(x)
 		else:
 			i=0
 			e=int(_.switches.values('Between')[1])
 			while not i == e:
 				i+=1
 				x = random.randint(int(_.switches.values('Between')[0].split('-')[0]), int(_.switches.values('Between')[0].split('-')[1]))
-				print(x)	
+				_.pr(x)	
 		return None
 
-	# print( percent_of( 100, 5 ) )
-	# print( percent_of( 1616348027, 5 ) )
+	# _.pr( percent_of( 100, 5 ) )
+	# _.pr( percent_of( 1616348027, 5 ) )
 	# sys.exit()
 	if _.switches.isActive('ProbRandom'):
 		if _.switches.isActive('Around'):
@@ -434,11 +434,11 @@ def action():
 			around_probability()
 		else:
 			a = around( _.switches.value('Around') )
-			print( a )
+			_.pr( a )
 		sys.exit()
 	if _.switches.isActive('Case'):
 		for x in _.switches.values('Case'):
-			print( case( x ) )
+			_.pr( case( x ) )
 
 	if _.switches.isActive('Int'):
 		if len( _.switches.value('Int') ):
@@ -451,7 +451,7 @@ def action():
 
 		elif not len( _.switches.value('Int') ):
 			ran = random.randint(1,1000001)
-		print( ran )
+		_.pr( ran )
 
 	if _.switches.isActive('Text'):
 		for x in _.switches.values('Text'):
@@ -463,13 +463,14 @@ def action():
 			new = []
 			for x in records:
 				new.append( x['data'] )
-			print( ''.join(new) )
+			_.pr( ''.join(new) )
 
 
 
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

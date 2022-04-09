@@ -169,8 +169,8 @@ def run(rows=[],split=[' '],sLine=None,sResult=None,before=None,after=None):
 	subject = []
 	table = {}
 	subs = []
-	# print(len(rows))
-	# print( split )
+	# _.pr(len(rows))
+	# _.pr( split )
 	if not after is None:
 
 		for i,row in enumerate( rows ):
@@ -185,7 +185,7 @@ def run(rows=[],split=[' '],sLine=None,sResult=None,before=None,after=None):
 					for af in after:
 						if af.lower() in sub.lower():
 							last = af
-					# print(row, last, after)
+					# _.pr(row, last, after)
 					if last in after and not last.lower() in sub.lower():
 
 						shouldAdd=False
@@ -194,15 +194,15 @@ def run(rows=[],split=[' '],sLine=None,sResult=None,before=None,after=None):
 								shouldAdd = True
 						else:
 							shouldAdd = True
-						# print( after, shouldAdd, last, sub )
+						# _.pr( after, shouldAdd, last, sub )
 						if shouldAdd:
 							if not before is None and sub in before:
 								sub = rows[i-1]
-							# print(sub)
+							# _.pr(sub)
 							subject.append( sub )
 							last = ''
 			subs.append(subject)
-		# print( subs )
+		# _.pr( subs )
 		return subs
 
 		
@@ -222,7 +222,7 @@ def run(rows=[],split=[' '],sLine=None,sResult=None,before=None,after=None):
 					for af in after:
 						if af.lower() in sub.lower():
 							last = af
-					# print(row, last, after)
+					# _.pr(row, last, after)
 					if last in after and not last.lower() in sub.lower():
 
 						shouldAdd=False
@@ -231,14 +231,14 @@ def run(rows=[],split=[' '],sLine=None,sResult=None,before=None,after=None):
 								shouldAdd = True
 						else:
 							shouldAdd = True
-						# print( after, shouldAdd, last, sub )
+						# _.pr( after, shouldAdd, last, sub )
 						if shouldAdd:
-							# print(sub)
+							# _.pr(sub)
 							subject.append( sub )
 							last = ''
 			subject.reverse() ##########################################################################
 			subs.append(subject)
-		# print( subs )
+		# _.pr( subs )
 		subs.reverse() ##########################################################################
 		return subs
 
@@ -256,7 +256,7 @@ def run(rows=[],split=[' '],sLine=None,sResult=None,before=None,after=None):
 		# 			for af in after:
 		# 				if af.lower() in sub.lower():
 		# 					last = af
-		# 			# print(row, last, after)
+		# 			# _.pr(row, last, after)
 		# 			if last in after and not last.lower() in sub.lower():
 
 		# 				shouldAdd=False
@@ -265,7 +265,7 @@ def run(rows=[],split=[' '],sLine=None,sResult=None,before=None,after=None):
 		# 						shouldAdd = True
 		# 				else:
 		# 					shouldAdd = True
-		# 				# print( after, shouldAdd, last, sub )
+		# 				# _.pr( after, shouldAdd, last, sub )
 		# 				if shouldAdd:
 		# 					subject.append( sub )
 		# 					last = ''
@@ -316,7 +316,7 @@ def run(rows=[],split=[' '],sLine=None,sResult=None,before=None,after=None):
 					subject.append( sub )
 		sub = subject
 					
-	# print(sub)
+	# _.pr(sub)
 	return sub
 
 
@@ -327,7 +327,7 @@ def action():
 	rows=[];sLine=None;sResult=None;before=None;after=None;split=[' '];
 	splits = ' '
 	if _.switches.isActive('Split'):
-		print("_.switches.values('Split'):", _.switches.values('Split'))
+		_.pr("_.switches.values('Split'):", _.switches.values('Split'))
 		split = _.switches.values('Split')
 		if not split:
 			splits = " "
@@ -361,14 +361,15 @@ def subjects(sub,splits):
 		if len(x):
 			s = splits.join(x)
 
-			print( s )
-			# print(x)
+			_.pr( s )
+			# _.pr(x)
 
 
 ########################################################################################
 if __name__ == '__main__':
 	action()
 	__.isExit()
+
 
 
 

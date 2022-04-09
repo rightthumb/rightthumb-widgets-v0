@@ -211,14 +211,15 @@ def action():
 	d = datetime.datetime.fromtimestamp( _.autoDate(ts) )
 
 	unixtime = time.mktime(d.timetuple())
-	print( unixtime )
-	print( _.friendlyDateTouch(unixtime) )
+	_.pr( unixtime )
+	_.pr( _.friendlyDateTouch(unixtime) )
 
 201108231405.14
 
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

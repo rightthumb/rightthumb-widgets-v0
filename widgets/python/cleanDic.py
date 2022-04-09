@@ -268,7 +268,7 @@ def action():
 			newRoman.append( n.lower() )
 
 	# for i,n in enumerate(newRoman):
-	# 	print( i, n )
+	# 	_.pr( i, n )
 
 	newDic = {}
 	i=0
@@ -276,7 +276,7 @@ def action():
 
 		if rec in newRoman:
 			i+=1
-			print( i, rec )
+			_.pr( i, rec )
 		else:
 			good = True
 			for x in '0123456789 ':
@@ -286,7 +286,7 @@ def action():
 				newDic[rec] = 1
 			else:
 				pass
-				# print( rec )
+				# _.pr( rec )
 	_.saveTable( newDic, 'dic_all.json' )
 
 def load():
@@ -308,6 +308,7 @@ roman = []
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

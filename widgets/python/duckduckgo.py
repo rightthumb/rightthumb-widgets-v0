@@ -309,10 +309,10 @@ def action():
 
 
 	if not _.switches.isActive('Clean'):
-		print()
+		_.pr()
 		_.colorThis(   _.switches.value('Query').replace( ',', ' ' )   , 'green' )
-		print()
-		print()
+		_.pr()
+		_.pr()
 
 	i = 0
 
@@ -343,7 +343,7 @@ def action():
 		else:
 			if _.showLine( record['text'] ):
 				ix+=1
-				print( _.colorPlus( record['text'], color='cyan' ) )
+				_.pr( _.colorPlus( record['text'], color='cyan' ) )
 				if _.switches.isActive('Links'):
 					_.colorThis(   [  record['link']  ]   , 'yellow' )
 			
@@ -371,9 +371,9 @@ def action():
 				i+=1
 				if not _.switches.isActive('NoLinks'):
 					_.colorThis( result['FirstURL'], 'yellow' )
-					print()
+					_.pr()
 				if not _.switches.isActive('Clean'):
-					print()
+					_.pr()
 			except Exception as e:
 				try:
 					for item in result['Topics']:
@@ -381,9 +381,9 @@ def action():
 						i+=1
 						if not _.switches.isActive('NoLinks'):
 							_.colorThis( item['FirstURL'], 'yellow' )		
-							print()
+							_.pr()
 						if not _.switches.isActive('Clean'):
-							print()
+							_.pr()
 				except Exception as e:
 					_.printVar( result )
 
@@ -399,7 +399,7 @@ def action():
 			notes += 'of'
 			notes += _.colorThis( [  '', i ,'' ], 'yellow', p=0 )
 		notes += _.colorThis( [  ' (', dataFrom , ')' ], 'darkcyan', p=0 )
-		print( notes )
+		_.pr( notes )
 
 	if _.switches.isActive('Path'):
 		_.colorThis( [  resultsLink  ], 'green' )
@@ -409,8 +409,8 @@ def action():
 def printSpace():
 	if not _.switches.isActive('Clean'):
 		if _.switches.isActive('Links'):
-			print()
-			print()
+			_.pr()
+			_.pr()
 		
 
 
@@ -419,6 +419,7 @@ def printSpace():
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

@@ -155,7 +155,7 @@ _.postLoad( __file__ )
 
 def action():
 	for i,filename in enumerate(_.isData(r=1)):
-		# print(filename)
+		# _.pr(filename)
 		# sys.exit()
 		file = _.getTable2( filename )
 
@@ -170,7 +170,7 @@ def action():
 		except Exception as e:
 			pass
 
-		print( "file['data']", len(file['data']) )
+		_.pr( "file['data']", len(file['data']) )
 
 		keys2del = ['stat']
 		for i,record in enumerate(file['data']):
@@ -187,7 +187,7 @@ def action():
 
 
 		x = table.insert_many(file['data'])
-		print(x.inserted_ids)
+		_.pr(x.inserted_ids)
 
 
 import pymongo
@@ -196,6 +196,7 @@ import pymongo
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

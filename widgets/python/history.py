@@ -242,7 +242,7 @@ def process( path ):
 	for row in file.split('\n'):
 
 		# if row.startswith('<'):
-		# 	print( row )
+		# 	_.pr( row )
 		# if True:
 		if not row.startswith('<'):
 			if row.startswith('Session:'):
@@ -259,8 +259,8 @@ def process( path ):
 					if not hasPrinted:
 						hasPrinted = True
 						# _.colorThis( ['\n\n___________________________________________________________________________________________________________'], 'red' )
-						print(); print(); _.linePrint(c='red');
-						print( fileLabel )
+						_.pr(); _.pr(); _.linePrint(c='red');
+						_.pr( fileLabel )
 					if 'echo this is ' in row and 'test' in row and 'file.txt' in row and '>' in row and not 'force' in row.lower():
 						pass
 					else:
@@ -269,7 +269,7 @@ def process( path ):
 						row = _str.replaceDuplicate( row, ' ' )
 						row = _str.cleanBE( row, ' ' )
 						row = '    ' + colorize(row)
-						print( row )
+						_.pr( row )
 						theTotal+=1
 	if theTotal:
 		_.cp( [ '', theTotal ], 'yellow' )
@@ -304,7 +304,7 @@ def action():
 	elif _.switches.isActive('Select_I'):
 		if _.switches.isActive('Sort'): records = _.tables.returnSorted( 'data', 'desc.date_modified_raw', records );
 		mx = int( _.switches.values('Select_I')[0] )
-		# print(mx)
+		# _.pr(mx)
 		for i,record in enumerate(records):
 			if i > mx:
 				break
@@ -329,8 +329,8 @@ def action():
 
 			if ii == last:
 				
-				print()
-				print()
+				_.pr()
+				_.pr()
 				_.cp(  [ 'Copied:\n\t', item ]  , 'green' )
 				_.setClip( item )
 				break
@@ -362,15 +362,15 @@ def load():
 						elif 'resent' in _.switches.values('Ago')[1]:
 							run = 'resent'
 
-					# print(  len( _.switches.values('Ago') )  )
-					# print(  ( _.switches.values('Ago') )  )
+					# _.pr(  len( _.switches.values('Ago') )  )
+					# _.pr(  ( _.switches.values('Ago') )  )
 					# sys.exit()
 					# accessed_raw
 
 
 					if run == 'default':
-						# print(record['date_modified_raw'])
-						# print(_.switches.values('Ago'))
+						# _.pr(record['date_modified_raw'])
+						# _.pr(_.switches.values('Ago'))
 						if record['date_modified_raw'] > _.switches.values('Ago')[0] or record['date_created_raw'] > _.switches.values('Ago')[0]:
 							shouldAdd = True
 					elif run == 'resent':
@@ -378,7 +378,7 @@ def load():
 							shouldAdd = True
 					elif run == 'a':
 						if record['accessed_raw'] > _.switches.values('Ago')[0]:
-							# print( _.friendlyDate(_.switches.values('Ago')[0]), _.switches.values('Ago')[0], record['accessed_raw'], _.friendlyDate(record['accessed_raw']) )
+							# _.pr( _.friendlyDate(_.switches.values('Ago')[0]), _.switches.values('Ago')[0], record['accessed_raw'], _.friendlyDate(record['accessed_raw']) )
 							shouldAdd = True
 					elif run == 'cd':
 						if record['date_created_raw'] > _.switches.values('Ago')[0]:
@@ -400,6 +400,7 @@ history_items = []
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

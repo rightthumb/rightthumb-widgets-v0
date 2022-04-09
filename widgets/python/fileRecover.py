@@ -241,13 +241,13 @@ def dataSearch(data, row, searchAll=True):
 		os.system('cls')
 	else:
 		os.system('clear')
-	print()
+	_.pr()
 	_.tables.register('dataFound',dataFound)
 	_.tables.fieldProfileSet('dataFound','timestamp','trigger',_.float2Date3)
 	_.tables.fieldProfileSet('dataFound','row,flag','alignment','center')
 	_.tables.print('dataFound','row,name,flag,timestamp,age,version')
-	print()
-	# print( 'HERE', 4 )
+	_.pr()
+	# _.pr( 'HERE', 4 )
 	ask(dataFound)
 
 
@@ -271,19 +271,19 @@ def cleanSelection(string):
 	return string
 
 def helpMenu():
-	print()
-	print('\tHelp:')
-	print()
-	print('\t\ts - (s24) - search for a file with the same src path that contains a specific string')
-	print('\t\tp - (p5)  - open and print full path of backup file')
-	print('\t\to - (o3)  - open and print full path of backup file')
-	print('\t\tf - (f1)  - change the flag of an item')
-	print('\t\tt - (t5275)  - print path to ticket')
-	print('\t\tr - Recover the original file then exit')
-	print('\t\tnumber - type a number from the above list to recover')
-	print('\t\tthis - (this5)  - list all backups for selected file')
-	print('\t\tx - exit')
-	print()
+	_.pr()
+	_.pr('\tHelp:')
+	_.pr()
+	_.pr('\t\ts - (s24) - search for a file with the same src path that contains a specific string')
+	_.pr('\t\tp - (p5)  - open and print full path of backup file')
+	_.pr('\t\to - (o3)  - open and print full path of backup file')
+	_.pr('\t\tf - (f1)  - change the flag of an item')
+	_.pr('\t\tt - (t5275)  - print path to ticket')
+	_.pr('\t\tr - Recover the original file then exit')
+	_.pr('\t\tnumber - type a number from the above list to recover')
+	_.pr('\t\tthis - (this5)  - list all backups for selected file')
+	_.pr('\t\tx - exit')
+	_.pr()
 
 
 def ask(data, doneselection=False, backupfile='', originalfile=''):
@@ -314,7 +314,7 @@ def ask(data, doneselection=False, backupfile='', originalfile=''):
 
 
 	if 't' in selection:
-		# print( selection )
+		# _.pr( selection )
 		se = selection.replace( 't', '' ).replace( ' ', '' )
 
 		try:
@@ -328,9 +328,9 @@ def ask(data, doneselection=False, backupfile='', originalfile=''):
 			good = False
 
 		if good:
-			print()
+			_.pr()
 			for xse in se.split( ',' ):
-				print( xse, _v.ticketPath( xse ) )
+				_.pr( xse, _v.ticketPath( xse ) )
 			sys.exit()
 
 	if ',' in selection:
@@ -346,13 +346,13 @@ def ask(data, doneselection=False, backupfile='', originalfile=''):
 			good = False
 
 		if good:
-			print()
+			_.pr()
 			for xse in selection.split( ',' ):
 				tp = _v.ticketPath( xse )
 				if type( tp ) == bool:
 					good = False
 				else:
-					print( xse, tp )
+					_.pr( xse, tp )
 			if good:
 				sys.exit()
 
@@ -363,9 +363,9 @@ def ask(data, doneselection=False, backupfile='', originalfile=''):
 	else:
 		pass
 		if len(selection) > 6:
-			print()
-			print('Make input less than 6')
-			print()
+			_.pr()
+			_.pr('Make input less than 6')
+			_.pr()
 			ask(data)
 
 	if selection == '':
@@ -383,8 +383,8 @@ def ask(data, doneselection=False, backupfile='', originalfile=''):
 
 
 		if good:
-			print()
-			print( selection, _v.ticketPath( selection ) )
+			_.pr()
+			_.pr( selection, _v.ticketPath( selection ) )
 			sys.exit()
 
 
@@ -401,16 +401,16 @@ def ask(data, doneselection=False, backupfile='', originalfile=''):
 	if selection == 'r':
 		if len(backupfile) > 0 and len(originalfile) > 0:
 			copyfile(backupfile, originalfile)
-			print()
-			print('Reverted to original')
-			print()
+			_.pr()
+			_.pr('Reverted to original')
+			_.pr()
 		sys.exit()
 
 	if 'f' in selection or 'flag' in selection:
 		selection = selection.replace(' ','')
 		selection = selection.replace('flag','')
 		selection = selection.replace('f','')
-		print()
+		_.pr()
 		
 		flag = input('Change flag to?: ')
 		backupLogY = cleanLog( printThis=False )
@@ -425,9 +425,9 @@ def ask(data, doneselection=False, backupfile='', originalfile=''):
 			if not type(found) == bool:
 				backupLogY[found]['flag'] = flag
 			_.saveTable( backupLogY, 'fileBackup.json', printThis=True )
-			# print( 'HERE', 0 )
+			# _.pr( 'HERE', 0 )
 		except Exception as e:
-			print('Error on flag change')
+			_.pr('Error on flag change')
 		backupLogY = []
 		sys.exit()
 
@@ -439,9 +439,9 @@ def ask(data, doneselection=False, backupfile='', originalfile=''):
 			helpMenu()
 			ask(data)
 		try:
-			print()
-			print(data[int(selection)]['backup'])
-			print()
+			_.pr()
+			_.pr(data[int(selection)]['backup'])
+			_.pr()
 			sp.Popen([_v.sublime, data[int(selection)]['backup']])
 
 		except Exception as e:
@@ -458,17 +458,17 @@ def ask(data, doneselection=False, backupfile='', originalfile=''):
 			data[int(selection)]['backup']
 		except Exception as e:
 			isNumber = False
-			print()
-			print('Error')
-			print(selection)
+			_.pr()
+			_.pr('Error')
+			_.pr(selection)
 		if isNumber:
 			if not hasSearched:
 				dataSearch(data,selection)
 			else:
-				print()
-				print('\tSearch this list or all')
-				print('\t0 - search this list')
-				print('\t1 - search all')
+				_.pr()
+				_.pr('\tSearch this list or all')
+				_.pr('\t0 - search this list')
+				_.pr('\t1 - search all')
 				searchWhat = input('Choose: ')
 
 				if len(searchWhat) == 1 and ('0' in searchWhat or '1' in searchWhat):
@@ -477,7 +477,7 @@ def ask(data, doneselection=False, backupfile='', originalfile=''):
 					else:
 						dataSearch(data, selection, False)
 				else:
-					print('Error')
+					_.pr('Error')
 					sys.exit()
 
 
@@ -495,46 +495,46 @@ def ask(data, doneselection=False, backupfile='', originalfile=''):
 	if isNumber:
 
 		if not os.path.isfile(data[int(selection)]['backup']):
-			print('\tBackup file does not exist')
-			print()
-			print('\trun: p fileBackupLogFix')
+			_.pr('\tBackup file does not exist')
+			_.pr()
+			_.pr('\trun: p fileBackupLogFix')
 			sys.exit()
 		else:
 			modifiedRaw = os.path.getmtime(data[int(selection)]['file'])
 			modified = formatDate(modifiedRaw)
 			newname = _v.myTXT + _v.slash + str(time.time()) + '-' + modified +  '-' + Path(data[int(selection)]['file']).name
-			# print(data[int(selection)]['file'])
+			# _.pr(data[int(selection)]['file'])
 			backupLogX = _.getTable('fileBackup.json')
 			bkID = generateID(data[int(selection)]['file'])
 			log = { 'id': bkID, 'timestamp': time.time(), 'file': os.path.abspath(data[int(selection)]['file']), 'backup': newname }
 			backupLogX.append(log)
 			
 
-			# print(os.path.isfile(data[int(selection)]['backup']),data[int(selection)]['backup'])
-			# print(os.path.isfile(data[int(selection)]['file']),data[int(selection)]['file'])
+			# _.pr(os.path.isfile(data[int(selection)]['backup']),data[int(selection)]['backup'])
+			# _.pr(os.path.isfile(data[int(selection)]['file']),data[int(selection)]['file'])
 			# sys.exit()
 			if not type(origalFile) == str:
 				logCheck = _.tables.returnSorted( 'backupLog', 'd.timestamp', _.getTable('fileBackup.json') )
 				if bkID == logCheck[0]['id']:
-					# print()
-					# print('First in log')
+					# _.pr()
+					# _.pr('First in log')
 					origalFile = logCheck[0]['backup']
 				else:
 					_.saveTable(backupLogX,'fileBackup.json',printThis=True)
-					# print( 'HERE', 1 )
+					# _.pr( 'HERE', 1 )
 					cpResult = copyfile(data[int(selection)]['file'],newname)
 					origalFile = newname
 			cpResult = copyfile(data[int(selection)]['backup'], data[int(selection)]['file'])
-			print()
-			print('\tRecovered')
-			print()
+			_.pr()
+			_.pr('\tRecovered')
+			_.pr()
 			try:
 				sp.Popen([   _v.sublime.replace('"','')   ,   data[int(selection)]['file'].replace('"','')  ])
 			except Exception as e:
-				print([   _v.sublime.replace('"','')   ,   data[int(selection)]['file'].replace('"','')  ])
-				print('unable to open')
-			# print(cpResult)
-			# print(newname)
+				_.pr([   _v.sublime.replace('"','')   ,   data[int(selection)]['file'].replace('"','')  ])
+				_.pr('unable to open')
+			# _.pr(cpResult)
+			# _.pr(newname)
 				
 			ask(data, backupfile=data[int(selection)]['backup'], originalfile=data[int(selection)]['file'])
 
@@ -567,7 +567,7 @@ def cleanLog(printThis=True):
 
 		newLog.append( data )
 	_.saveTable( newLog, 'fileBackup.json', printThis=True )
-	# print( 'HERE', 2 )
+	# _.pr( 'HERE', 2 )
 	return newLog
 
 
@@ -602,7 +602,7 @@ def action():
 			if not _.switches.isActive('ShowLast'):
 				abPath = os.path.abspath(path)
 				theID = generateID(path)
-			# print()
+			# _.pr()
 
 			data = []
 			justFile = []
@@ -665,7 +665,7 @@ def action():
 						justFile.append( logItem['backup'] )
 						i += 1
 			if not len(data) > 0:
-				print('No backup')
+				_.pr('No backup')
 			else:
 				if not _.switches.isActive('Short'):
 					_.switches.fieldSet('Long','active',True)
@@ -674,7 +674,7 @@ def action():
 				
 				if _.switches.isActive('JustFiles'):
 					for bkf in justFile:
-						print(bkf)
+						_.pr(bkf)
 				if _.switches.isActive('Audit'):
 					justFile.append( original )
 					# global appDBA
@@ -685,23 +685,23 @@ def action():
 					inFunc.deleteSwitch( 'Audit' )
 					
 					for bkf in justFile:
-						# print()
-						print( bkf )
+						# _.pr()
+						_.pr( bkf )
 						inFunc.switch( 'Input', bkf )
 						inFunc.imp.data = []
 						inFunc.imp.process = []
 						inFunc.imp.log = []
 						inFunc.imp.ignoreLines=[]
 						functionLogPath = inFunc.do( 'action' )
-					print()
-					print( 'Log:', functionLogPath )
+					_.pr()
+					_.pr( 'Log:', functionLogPath )
 
 
 				else:
 
 					for i,rec in enumerate(data):
 						# for k in rec:
-						# 	print(k, rec[k])
+						# 	_.pr(k, rec[k])
 						# sys.exit()
 						data[i]['size'] = _dir.info( rec['backup'] )['size']
 						if rec['name'] == '__init__.py':
@@ -712,9 +712,9 @@ def action():
 					else:
 						os.system('clear')
 					
-					print()
-					print( 'log: fileBackup.json' )
-					print()
+					_.pr()
+					_.pr( 'log: fileBackup.json' )
+					_.pr()
 
 					_.tables.register('data',data)
 					_.tables.fieldProfileSet('data','timestamp','trigger',_.float2Date3)
@@ -723,13 +723,13 @@ def action():
 					_.tables.fieldProfileSet('data','row,flag','alignment','center')
 					_.tables.sort( 'data', 'd.timestamp' )
 					_.tables.print('data','row,name,flag,timestamp,age,version,ticket_open_at_time,session,size')
-					print()
-					# print( 'HERE', 3 )
+					_.pr()
+					# _.pr( 'HERE', 3 )
 
 
 					originalData = data
 
-					# print(type(_.appData[__.appReg]['pipe']))
+					# _.pr(type(_.appData[__.appReg]['pipe']))
 					if type(_.appData[__.appReg]['pipe']) == str:
 						ask(data)
 	# backup
@@ -741,7 +741,7 @@ def initName( record ):
 	file = record['file']
 	file = file.replace( _v.myAppsPy, '' )
 	fileX = file.split( _v.slash )
-	# print( fileX )
+	# _.pr( fileX )
 	# sys.exit()
 	# return '__init__: ' + fileX[1] + '.' + fileX[2] 
 	return '__init__: '  + fileX[2][1:].replace( 'base3', 'base' ).upper()
@@ -751,7 +751,7 @@ def getTicket( epoch ):
 	global epochTickets
 	result = ''
 	for ticket in epochTickets:
-		# print( epoch, ticket['start'], ticket['end'] )
+		# _.pr( epoch, ticket['start'], ticket['end'] )
 		# sys.exit()
 		try:
 			if float(epoch) > float(ticket['start']) and float(epoch) < float(ticket['end']):
@@ -781,6 +781,7 @@ origalFile = False
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

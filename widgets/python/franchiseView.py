@@ -176,11 +176,11 @@ def action():
 
 	for record in __.franchises:
 		# for key in record.keys():
-		# 	print( key )
+		# 	_.pr( key )
 		for alias in record['aliases']:
-			# print( ' '.join(_.switches.values( 'Franchise' )).lower() in  alias )
+			# _.pr( ' '.join(_.switches.values( 'Franchise' )).lower() in  alias )
 			if ' '.join(_.switches.values( 'Franchise' )).lower() in alias:
-				print()
+				_.pr()
 				movies = []
 				for rec in record['movies']:
 					if _.showLine( rec['name'] ):
@@ -190,13 +190,13 @@ def action():
 				_.tables.returnSorted( 'data', 'd:year', movies )
 				_.tables.fieldProfileSet( 'data', 'name', 'trigger', _.longDashAdd )
 				_.tables.print( 'data', 'year,name' )
-				print()
+				_.pr()
 				if not len( movies ) == len( record['movies'] ):
-					print( '', len(movies),'of', len( record['movies'] ), 'Screenplays' )
+					_.pr( '', len(movies),'of', len( record['movies'] ), 'Screenplays' )
 				else:
-					print( '', len( record['movies'] ), 'Screenplays' )
+					_.pr( '', len( record['movies'] ), 'Screenplays' )
 				# for movie in :
-				# 	print( movie['year'], movie['name'] )
+				# 	_.pr( movie['year'], movie['name'] )
 
 
 def load():
@@ -205,7 +205,7 @@ def load():
 	franchise = ' '.join( _.switches.values('Franchise') )
 
 	__.franchiseFile = 'imdb-franchises-'+   franchise.upper().replace(' ','_')   +'.json'
-	# print( __.franchiseFile )
+	# _.pr( __.franchiseFile )
 	__.franchises = _.getTable(__.franchiseFile)
 	# __.franchisesName = _.getTable( 'imdb_franchise_display.json' )
 	_.switches.fieldSet( 'Long', 'active', True )
@@ -213,6 +213,7 @@ def load():
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

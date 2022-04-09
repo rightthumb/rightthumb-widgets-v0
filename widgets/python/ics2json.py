@@ -244,7 +244,7 @@ def action():
 		rec = rec.replace( '\n ', '' )
 		dic = {}
 		dic['ATTENDEE'] = []
-		# print('_______________')
+		# _.pr('_______________')
 		att = attendee(rec)
 		if not att is None:
 			rec = rec.replace( att['raw'], '' )
@@ -317,13 +317,13 @@ def action():
 				pass
 			else:
 				pass
-				# print(line)
-		# print(rec)
+				# _.pr(line)
+		# _.pr(rec)
 		dic['DTSTART'] = dic['DTSTART'].replace('America/New_York:','')
 		dic['DTEND'] = dic['DTEND'].replace('America/New_York:','')
 		dic = dic_order(dic)
 		output.append(dic)
-		# print( dic['DTSTART'] )
+		# _.pr( dic['DTSTART'] )
 		# _.pv(dic)
 		# sys.exit()
 	pass 
@@ -368,6 +368,7 @@ _clean = _.regImp( __.appReg, 'record-cleaner' )
 if __name__ == '__main__':
 	action()
 	__.isExit()
+
 
 
 

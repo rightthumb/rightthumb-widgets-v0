@@ -275,20 +275,20 @@ class Cloud:
 			pass
 		except Exception as e:
 			_.colorThis( 'Error:', 'red' )
-			print( '\t', e )
+			_.pr( '\t', e )
 
 		_.colorThis( 'status: db connecting', 'yellow' )
 		self.db( ssh_server, ssh_port, ssh_user, ssh_password, db_server, db_port, db_user, db_password, db_name, db_prefix )
 		_.colorThis( 'status: db initialized', 'yellow' )
-		# print()
-		# print()
+		# _.pr()
+		# _.pr()
 		# test = __.cloud.db.search_table_version('files')
-		# print(test)
+		# _.pr(test)
 		# _.printVarSimple(__.cloud.db.table_fields)
 		# _.printVarSimple(test)
-		# # print(test)
-		# print()
-		# print()
+		# # _.pr(test)
+		# _.pr()
+		# _.pr()
 
 
 
@@ -320,10 +320,10 @@ class Cloud:
 	def syncDates( self ):
 		_.colorThis( 'status: sftp indexing', 'yellow' )
 
-		print( 'SELECT * FROM '+__.cloud.db.table_prefix+'_files' )
+		_.pr( 'SELECT * FROM '+__.cloud.db.table_prefix+'_files' )
 
 		for record in __.cloud.db.query( 'SELECT * FROM '+__.cloud.db.table_prefix+'_files', 'files' ):
-			print(record)
+			_.pr(record)
 			paths = __.cloud.db.gen_paths( record['cloud_path'] )
 			record['local'] = paths['local']
 			record['remote'] = paths['remote']
@@ -331,11 +331,11 @@ class Cloud:
 
 
 		_.colorThis( 'status: synchronizing dates', 'yellow' )
-		print(self.index['remote'])
+		_.pr(self.index['remote'])
 		for rp in self.index['remote']:
 			rec = self.index['remote'][rp]
 			paths = __.cloud.db.gen_paths( rp )
-			print(paths['local'])
+			_.pr(paths['local'])
 			_.changeM( paths['local'], rec['modified'] )
 			_.changeC( paths['local'], rec['created'] )
 			# changeM( paths['local'], rec['modified'] )
@@ -433,7 +433,7 @@ class Cloud:
 		if isNew:
 			newer = 'n'
 		return newer
-			# print( diff, _.friendlyDate(info['me']), _.friendlyDate(rd) )
+			# _.pr( diff, _.friendlyDate(info['me']), _.friendlyDate(rd) )
 
 
 	def recursiveRemoteIndex( self, epoch=None ):
@@ -469,15 +469,15 @@ class Cloud:
 				record['remote'] = paths['remote']
 
 				# if not os.path.isfile( record['local'] ):
-				# 	print( record['local'] )
+				# 	_.pr( record['local'] )
 				if os.path.isfile( record['local'] ):
-					print( 'del', record['local'] )
+					_.pr( 'del', record['local'] )
 					# fileBackup.switch( 'Input', record['local'] )
 					# backup_file = fileBackup.do( 'action' )
 					# if os.path.isfile(backup_file):
 					# 	os.unlink(backup_file)
 					# os.link( record['local'], backup_file )
-					# print( 'backup:', backup_file )
+					# _.pr( 'backup:', backup_file )
 					# os.unlink( record['local'] )
 
 
@@ -584,15 +584,15 @@ class Cloud:
 
 					try:
 
-						# print( '000' )
+						# _.pr( '000' )
 						info = _dir.info( path )
-						# print(path)
+						# _.pr(path)
 						self.counter['files']+=1
 						# self.index['local'].append( path ) #########################################################################
-						# print( 'PRE' )
+						# _.pr( 'PRE' )
 						paths = __.cloud.db.gen_paths( path )
-						# print( 'POST' )
-						# print( paths, path )
+						# _.pr( 'POST' )
+						# _.pr( paths, path )
 						cloud_path = paths['cloud']
 						for testX in self.program_folders:
 							if testX in cloud_path:
@@ -622,15 +622,15 @@ class Cloud:
 		if len( self.index['local'].keys() )  == 0:
 			# self.recursiveLocalIndex( self.structure['local']['shell'],self.structure['local']['tech']  )
 			self.find_program_folders()
-			# print(len(self.index['local'].keys())  )
+			# _.pr(len(self.index['local'].keys())  )
 			self.recursiveLocalIndex( self.structure['local']['python'],self.structure['local']['tech'] , plus=['*.py','*.htm'], plusOr=True )
-			# print(len(self.index['local'].keys())  )
+			# _.pr(len(self.index['local'].keys())  )
 			self.recursiveLocalIndex( self.structure['local']['bash'],self.structure['local']['tech']  )
-			# print(len(self.index['local'].keys())  )
+			# _.pr(len(self.index['local'].keys())  )
 			self.recursiveLocalIndex( self.structure['local']['powershell'],self.structure['local']['tech'] )
 			self.recursiveLocalIndex( self.structure['local']['javascript'],self.structure['local']['tech']  )
 			self.recursiveLocalIndex( self.structure['local']['documentation'],self.structure['local']['tech']  )
-			print(len(self.index['local'].keys())  )
+			_.pr(len(self.index['local'].keys())  )
 			# _.printVarSimple(self.index)
 		if len( self.index['remote'].keys() )  == 0:
 			self.recursiveRemoteIndex()
@@ -791,7 +791,7 @@ class Cloud:
 		if stat is None:
 			return False
 		else:
-			# print( 'get_remote_file stat:', stat )
+			# _.pr( 'get_remote_file stat:', stat )
 			# sys.exit()
 			self.build_local( local )
 			try:
@@ -864,7 +864,7 @@ class Cloud:
 
 	def dir_check_create( self, folder ):
 		if self.remote_isdir( folder ):
-			# print( folder )
+			# _.pr( folder )
 			return False
 
 
@@ -883,10 +883,10 @@ class Cloud:
 				# if not techDrive in f:
 				# 	f = techDrive+dDim+slash+f
 				f = f.replace( _v.slashes['u']+_v.slashes['u'], _v.slashes['u'] )
-				# print(f)
+				# _.pr(f)
 
 				exist = self.remote_isdir( f )
-				# print( 'exist:', exist, f, '\r\n' )
+				# _.pr( 'exist:', exist, f, '\r\n' )
 				if not exist:
 
 
@@ -908,11 +908,11 @@ class Cloud:
 
 
 
-					# print( 'Error:', f )
+					# _.pr( 'Error:', f )
 		return True
 
 	def db( self, ssh_server, ssh_port, ssh_user, ssh_password, db_server, db_port, db_user, db_password, db_name, db_prefix ):
-		# print( 'HERE A' )
+		# _.pr( 'HERE A' )
 		__.cloud.waiting = True
 		_.colorThis( 'status: db creating thread', 'yellow' )
 		_threads.manager.register(
@@ -937,7 +937,7 @@ class Cloud:
 		while __.cloud.waiting:
 			time.sleep(.5)
 		return None
-		# print( 'HERE B' )
+		# _.pr( 'HERE B' )
 		# DB( ssh_server, ssh_port, ssh_user, ssh_password, db_server, db_port, db_user, db_password, db_name )
 
 
@@ -978,7 +978,7 @@ class DB:
 
 		self.table_fields = {}
 
-		# print( 'HERE C' )
+		# _.pr( 'HERE C' )
 		time.sleep(.5)
 		_.colorThis( 'status: db ssh connecting', 'yellow' )
 		task_completed = False
@@ -1009,7 +1009,7 @@ class DB:
 		
 		_.colorThis( 'status: db ssh connected', 'yellow' )
 		# for x in dir(self.ssh):
-		# 	print(x)
+		# 	_.pr(x)
 		_.colorThis( 'status: db pymysql connecting', 'yellow' )
 
 		task_completed = False
@@ -1046,7 +1046,7 @@ class DB:
 	def db_test( self ):
 		query = '''SELECT VERSION();'''
 		data = pd.read_sql_query(query, self.db)
-		print(data)
+		_.pr(data)
 
 	def close( self ):
 		# sys.exit()
@@ -1122,21 +1122,21 @@ class DB:
 			if table_label.startswith(self.table_prefix):
 				table_label = table_label[len(self.table_prefix+'_'):]
 			records = []
-			# print( '\t\t', table_label )
+			# _.pr( '\t\t', table_label )
 			for rec in table:
 				record = {}
 				for i,field in enumerate(rec):
 					record[  self.table_fields[table_label][i]  ] = field
 					if type(field) == datetime.datetime:
 						record[  self.table_fields[table_label][i]  ] = str(field)
-					# print( '\t\t\t', self.table_fields[table_label][i], type(field), field )
+					# _.pr( '\t\t\t', self.table_fields[table_label][i], type(field), field )
 				records.append(record)
 			return records
 		return table
 
 	def check_structure( self ):
 		self.tables_app_live = []
-		# print('A')
+		# _.pr('A')
 		for tbl in self.tables_app_list:
 			self.tables_app_live.append( self.table_prefix+'_'+tbl )
 
@@ -1144,23 +1144,23 @@ class DB:
 		for table in self.query('show tables'):
 			self.live_tables.append(table[0])
 
-		# print('B')
+		# _.pr('B')
 		for table in self.tables_app_live:
 			if not table in self.live_tables:
 				self.table_setup(table)
 			# else:
-				# print(table)
+				# _.pr(table)
 
-		# print('C')
+		# _.pr('C')
 		for table in self.query('show tables'):
 			if table[0] in self.tables_app_live:
 				this_label = table[0][len(self.table_prefix+'_'):]
 				self.table_fields[ this_label ] = []
-				# print( this_label )
+				# _.pr( this_label )
 				for field in self.query('SHOW COLUMNS FROM ' + table[0]):
-					# print( '\t', field[0] )
+					# _.pr( '\t', field[0] )
 					self.table_fields[ this_label ].append( field[0] )
-		# print('D')
+		# _.pr('D')
 
 
 	def table_setup( self, label ):
@@ -1336,7 +1336,7 @@ CREATE TABLE '''+self.table_prefix+'_'+item+''' (
 		return self.query(sql,self.tables_app_list[0] )
 
 	def insert_file( self, direction, local, cloud_path ):
-		# print( 'cloud_path:', cloud_path )
+		# _.pr( 'cloud_path:', cloud_path )
 		shouldAdd = True
 		cp = cloud_path
 		if direction == 'upload':
@@ -1390,7 +1390,7 @@ CREATE TABLE '''+self.table_prefix+'_'+item+''' (
 
 
 		if not shouldAdd:
-			# print( 'updating...' )
+			# _.pr( 'updating...' )
 			sql = 'UPDATE '+table+' SET NEW_VALUES WHERE '+key+' = '+value
 			build_set = []
 			for field in dic.keys():
@@ -1402,7 +1402,7 @@ CREATE TABLE '''+self.table_prefix+'_'+item+''' (
 				build_set.append( '`'+field+'` = '+ v )
 			sql = sql.replace( 'NEW_VALUES', ','.join(build_set) )
 		elif shouldAdd:
-			# print( 'inserting...' )
+			# _.pr( 'inserting...' )
 			sql = "INSERT INTO `"+table+"` ( FIELD_NAMES ) VALUES ( FIELD_VALUES )"
 			build_names = []
 			build_values = []
@@ -1415,8 +1415,8 @@ CREATE TABLE '''+self.table_prefix+'_'+item+''' (
 			sql = sql.replace( 'FIELD_NAMES',','.join(build_names) )
 			sql = sql.replace( 'FIELD_VALUES',','.join(build_values) )
 
-		# print(sql)
-		# print(sql)
+		# _.pr(sql)
+		# _.pr(sql)
 
 		task_completed = False
 		while not task_completed:
@@ -1451,16 +1451,16 @@ CREATE TABLE '''+self.table_prefix+'_'+item+''' (
 		else:
 			v = str(dic[key])
 		sql = 'SELECT * FROM '+table+' WHERE '+key+' = '+v
-		# print(sql)
+		# _.pr(sql)
 		records =  self.query(sql,table)
-		# print( records )
+		# _.pr( records )
 		if single is None:
 			return records
 		else:
 			if not len(records):
 				return None
 			else:
-				# print(records[0][single])
+				# _.pr(records[0][single])
 				return records[0][single]
 
 
@@ -1483,7 +1483,7 @@ CREATE TABLE '''+self.table_prefix+'_'+item+''' (
 			if not 'gen_paths' in __.LOOP:
 				__.LOOP['gen_paths'] = 0
 			__.LOOP['gen_paths']+=1
-			print( 'Error: gen_paths - ', __.LOOP['gen_paths'], path )
+			_.pr( 'Error: gen_paths - ', __.LOOP['gen_paths'], path )
 			if __.LOOP['gen_paths'] < 10:
 				cloud_path = self.gen_paths(path)['cloud']
 			else:
@@ -1526,7 +1526,7 @@ def gen_paths( path ):
 			__.LOOP['gen_paths'] = 0
 		__.LOOP['gen_paths']+=1
 		if 'show_path_errors' in __.specifications and __.specifications['show_path_errors']:
-			print( 'Error: gen_paths - ', __.LOOP['gen_paths'], path )
+			_.pr( 'Error: gen_paths - ', __.LOOP['gen_paths'], path )
 		if __.LOOP['gen_paths'] < 10:
 			cloud_path = gen_paths(path)['cloud']
 		else:
@@ -1586,10 +1586,10 @@ def actionRequest( classy, label, action=None, error=None, success=None ):
 		
 
 		if __.cloud.attempt[classy][label][attempt] < 4:
-			print( 'return False' )
+			_.pr( 'return False' )
 			return False
 		else:
-			print( 'return True' )
+			_.pr( 'return True' )
 			return True
 
 	elif not action is None:
@@ -1608,10 +1608,10 @@ def actionRequest( classy, label, action=None, error=None, success=None ):
 
 		error_rest( rest_for, __.cloud.attempt[classy][label][  file_action  ][attempt])
 		if __.cloud.attempt[classy][label][  file_action  ][attempt] < 4:
-			print( 'return False' )
+			_.pr( 'return False' )
 			return False
 		else:
-			print( 'return True' )
+			_.pr( 'return True' )
 			return True
 			
 # def result( classy, label, record=None ):
@@ -1689,12 +1689,12 @@ import _rightThumb._md5 as _md5
 import _rightThumb._simpleThreads as _threads
 
 import _rightThumb._tz as _tz
-# print( '__.cloud' )
+# _.pr( '__.cloud' )
 
 
 # import inspect
 # x = inspect.getargspec(SSHTunnelForwarder)
-# print(x)
+# _.pr(x)
 
 import _rightThumb._md5 as _md5
 import _rightThumb._dir as _dir
@@ -1743,5 +1743,6 @@ if __name__ == '__main__':
 
 # check_structure
 # search_table_version
+
 
 

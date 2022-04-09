@@ -203,17 +203,17 @@ _.postLoad( __file__ )
 def action():
 	table = []
 	for rec in _.ciData:
-		# print()
-		# print( rec )
+		# _.pr()
+		# _.pr( rec )
 		a = _.printText( rec[0], p=0 )
 		b = _.printText( rec[1], p=0 )
 		table.append({ 'input': a, 'output': b })
-		# print(a)
-		# print(b)
+		# _.pr(a)
+		# _.pr(b)
 		# _.printText( rec[1] )
-		# print( str([rec[0]])[2:][:-2] )
-		# print( str([rec[1]])[2:][:-2] )
-		# print()
+		# _.pr( str([rec[0]])[2:][:-2] )
+		# _.pr( str([rec[1]])[2:][:-2] )
+		# _.pr()
 	_.tables.register( 'data', table )
 	_.tables.fieldProfileSet( 'data', '*', 'alignment', 'center' )
 	_.tables.print( 'data', 'input,output' )
@@ -224,6 +224,7 @@ def action():
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

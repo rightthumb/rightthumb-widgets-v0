@@ -206,7 +206,7 @@ def scan():
 def action():
 
 	x = _group_auto_reply.imp.test(  )
-	print(x)
+	_.pr(x)
 
 	# from _rightThumb._sms_listener import group_auto_reply
 
@@ -219,6 +219,7 @@ _group_auto_reply = _.regImp( __.appReg, '_rightThumb._sms_listener.group_auto_r
 if __name__ == '__main__':
 	action()
 	__.isExit()
+
 
 
 

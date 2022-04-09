@@ -158,25 +158,25 @@ _.postLoad( __file__ )
 
 def check_folders( file, folders ):
 	for folder in folders:
-		# print( folder )
+		# _.pr( folder )
 		if _.switches.isActive('Path'):
 			if _.showLine( folder ):
-				print( folder )
+				_.pr( folder )
 		else:
 			if not folder.endswith( _v.slash ):
 				folder = folder + _v.slash
 			path = folder + file
-			# print(path)
+			# _.pr(path)
 			if os.path.isfile( path ):
-				# print(path)
+				# _.pr(path)
 				if not _.switches.isActive('Clean'):
-					print( _.cp( 'path:', 'cyan', p=0 ), _.cp(  path, 'green', p=0  ) )
+					_.pr( _.cp( 'path:', 'cyan', p=0 ), _.cp(  path, 'green', p=0  ) )
 				return path
 			
 			if _.isWin:
 				if os.path.isfile( path+'.exe' ):
 					if not _.switches.isActive('Clean'):
-						print( _.cp( 'path:', 'cyan', p=0 ), _.cp(  path+'.exe', 'green', p=0  ) )
+						_.pr( _.cp( 'path:', 'cyan', p=0 ), _.cp(  path+'.exe', 'green', p=0  ) )
 					return path+'.exe'
 	return None
 
@@ -217,7 +217,7 @@ def check_alias( file ):
 	
 	if file in aliases:
 		if not _.switches.isActive('Clean'):
-			print( _.cp( 'alias:', 'cyan', p=0 ), _.cp(  aliases[file], 'green', p=0  ) )
+			_.pr( _.cp( 'alias:', 'cyan', p=0 ), _.cp(  aliases[file], 'green', p=0  ) )
 		return aliases[file]
 	return None
 	
@@ -229,24 +229,24 @@ def check_variables( file ):
 
 	if file in variables:
 		if not _.switches.isActive('Clean'):
-			print( _.cp( 'variable: ', 'cyan', p=0 ), _.cp(  variables[file], 'green', p=0  ) )
+			_.pr( _.cp( 'variable: ', 'cyan', p=0 ), _.cp(  variables[file], 'green', p=0  ) )
 		return variables[file]
 
 	for v in variables:
 		if v.lower() == file.lower():
 			if not _.switches.isActive('Clean'):
-				print( _.cp( 'variable: '+ v, 'cyan', p=0 ), _.cp(  variables[v], 'green', p=0  ) )
+				_.pr( _.cp( 'variable: '+ v, 'cyan', p=0 ), _.cp(  variables[v], 'green', p=0  ) )
 			return variables[v]
 	for v in variables:
 		if variables[v].lower().endswith( file.lower() ):
 			if not _.switches.isActive('Clean'):
-				print( _.cp( 'variable: '+ v, 'cyan', p=0 ), _.cp(  variables[v], 'green', p=0  ) )
+				_.pr( _.cp( 'variable: '+ v, 'cyan', p=0 ), _.cp(  variables[v], 'green', p=0  ) )
 			return variables[v]
 
 	for v in variables:
 		if file.lower() in variables[v].lower():
 			if not _.switches.isActive('Clean'):
-				print( _.cp( 'variable: ' + v, 'cyan', p=0 ), _.cp(  variables[v], 'green', p=0  ) )
+				_.pr( _.cp( 'variable: ' + v, 'cyan', p=0 ), _.cp(  variables[v], 'green', p=0  ) )
 			return variables[v]
 
 def action():
@@ -260,7 +260,7 @@ def action():
 	for i,row in enumerate(_.isData(r=1)):
 		if os.path.isfile(row):
 			if not _.switches.isActive('Clean'):
-				print( _.cp( 'auto:', 'cyan', p=0 ), _.cp(  row, 'green', p=0  ) )
+				_.pr( _.cp( 'auto:', 'cyan', p=0 ), _.cp(  row, 'green', p=0  ) )
 			return row
 		if _.isWin:
 			result = check_folders(  row, os.environ['PATH'].split(';')  )
@@ -269,7 +269,7 @@ def action():
 			if not result is None:
 				return result
 			result = check_alias(  row  )
-		# print( 'here', row, result )
+		# _.pr( 'here', row, result )
 		if not result is None:
 			return result
 
@@ -290,6 +290,7 @@ import subprocess
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

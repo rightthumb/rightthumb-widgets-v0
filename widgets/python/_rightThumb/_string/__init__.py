@@ -190,7 +190,7 @@ def namespace( app, data ):
     string = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_.'
     data = makePrintable( data, replaceWith=' ', appropriate=string )
     result = False
-    # print( type( app ) )
+    # _.pr( type( app ) )
     for row in data.split(' '):
         if row.startswith( str(app)+'.' ):
             result = row
@@ -542,7 +542,7 @@ def cleanSpecial(line,special1=False):
     skip = False
     string = ''
     for char in str(line):
-        # print(item)
+        # _.pr(item)
         char = str(char)
         if char == slash:
             i = 0
@@ -638,7 +638,7 @@ def cleanSpecial2(line,special1=False):
     skip = False
     string = ''
     for char in str(line):
-        # print(item)
+        # _.pr(item)
         char = str(char)
         if char == slash:
             i = 0
@@ -1169,14 +1169,14 @@ def clean_filename(filename, dup=False, replace=None, whitelist=None):
     cleaned_filename = ''.join(c for c in cleaned_filename if c in whitelist)
     cleaned_filename = cleanBE(cleaned_filename,' ')
     if len(cleaned_filename)>char_limit:
-        print("Warning, filename truncated because it was over {}. Filenames may no longer be unique".format(char_limit))
+        _.pr("Warning, filename truncated because it was over {}. Filenames may no longer be unique".format(char_limit))
     if dup:
         cleaned_filename = do( 'dup', cleaned_filename, replace )
     return cleaned_filename[:char_limit]
 
 def do(what=None,string='',a=None,b=None,c=None,d=None):
 
-    # if what in 'file'.split(' ') and not string: print( '(filename, dup=False, replace=None, whitelist=None)' );
+    # if what in 'file'.split(' ') and not string: _.pr( '(filename, dup=False, replace=None, whitelist=None)' );
     if what in 'an alphan'.split(' '): return totalStrip1b( string, a );
     if what in 'file'.split(' '): return clean_filename( string, a, b, c );
 
@@ -1214,4 +1214,5 @@ def do(what=None,string='',a=None,b=None,c=None,d=None):
     if 'alpha' in what and 'nu' in what : return stripNonAlphaNumaric(string);
     if what in 'n'.split(' '): return removeNonNumber(string);
     if what in 'ra remove'.split(' '): return removeAll(string,a);
+
 

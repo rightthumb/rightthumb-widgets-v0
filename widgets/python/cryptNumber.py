@@ -171,7 +171,7 @@ def ask( label=None ):
 
 def action():
 	n = 436942671737277407348192807075945686997744513
-	# print( 436942671737277407348192807075945686997744513 )
+	# _.pr( 436942671737277407348192807075945686997744513 )
 	# n = input(' n: ')
 	# n = int( ask('n') )
 
@@ -183,28 +183,29 @@ def action():
 
 	if not _.switches.isActive('Number') and not _.switches.isActive('Resolve'):
 		x = _nID.mini.gen( n )
-		print( x )
+		_.pr( x )
 		y = _nID.mini.resolve( x )
-		print( y )
+		_.pr( y )
 		# _.printVarSimple( _nID.mini.table )
 	if _.switches.isActive('Number'):
 		for n in _.switches.values('Number'):
-			print()
+			_.pr()
 			x = _nID.mini.gen( n )
-			print( x )
+			_.pr( x )
 			y = _nID.mini.resolve( x )
-			print( y )
-			print()
+			_.pr( y )
+			_.pr()
 	elif _.switches.isActive('Resolve'):
 		x = _.switches.value('Resolve')
 		y = _nID.mini.resolve( x )
-		print( y )
+		_.pr( y )
 
 
 
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

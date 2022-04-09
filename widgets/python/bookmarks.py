@@ -298,8 +298,8 @@ def action():
 		_.colorThis( [ '\n', 'Deleted:', '\n' ], 'yellow' )
 		for record in data['bad']:
 			_.colorThis( [ '\t   ', _.fields.value( 'bookmarks-bad', 'label', record['label'] ), record['path'] ], 'cyan' )
-		print()
-		print()
+		_.pr()
+		_.pr()
 
 
 	_.colorThis( [ '\n', 'Bookmarks:', '\n' ], 'yellow' )
@@ -316,6 +316,7 @@ data = { 'bad': [], 'good': [], 'both': []  }
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

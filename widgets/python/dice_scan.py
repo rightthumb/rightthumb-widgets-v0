@@ -215,7 +215,7 @@ def colorize(data):
 		for subject in _.caseUnspecific( data, search ):
 			data = data.replace( subject, _.colorThis( subject, 'green', p=0 ) )
 	return data
-	# print( dice )
+	# _.pr( dice )
 
 
 def action():
@@ -230,6 +230,7 @@ def action():
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

@@ -40,13 +40,13 @@ def configFile( item=None, value=None, p=True ):
 			if p:
 				import simplejson as json
 				dataDump = json.dumps(configFile_data, indent=4, sort_keys=False)
-				print(dataDump)
+				_.pr(dataDump)
 			return configFile_data
 		if value is None:
 			if item in configFile_data:
 				return configFile_data[item]
 			else:
-				print( 'Error: configFile', item, 'value not set' )
+				_.pr( 'Error: configFile', item, 'value not set' )
 		elif not value is None:
 			configFile_data[item] = value
 			return value
@@ -165,7 +165,7 @@ if not __.isWin:
 	if not home:
 		if not __.isWin:
 			home = '~'
-# print( 'home:',home )
+# _.pr( 'home:',home )
 if __.isWin:
 	computername = os.getenv('COMPUTERNAME')
 	userprofile = os.getenv('USERPROFILE')
@@ -264,7 +264,7 @@ def ddDim(xyz):
 # baseFolder = dDim+slash+'tech'+slash+'programs'+slash+'python'+slash+'_rightThumb'+slash+'_base3'
 # baseFolderVersions = dDim+slash+'tech'+slash+'programs'+slash+'python'+slash+'_rightThumb'+slash+'_base' + import_delim
 techFolder =  ddDim(techDrive)+slash+'tech'
-# print('techFolder:',techFolder)
+# _.pr('techFolder:',techFolder)
 # sys.exit()
 appsFolder =  ddDim(techDrive) +slash+'techApps'
 archive7z =  ddDim(techDrive) +slash+'tech'+slash+'archive_7z_files'
@@ -347,7 +347,7 @@ if __.isWin:
 else:
 	unix_editor_path = techDrive + slash+'.editor'
 	unix_editor_path_sufix = techDrive + slash+'.editor.sufix'
-	# print(unix_editor_path)
+	# _.pr(unix_editor_path)
 if not __.isWin:
 	unix_editor_edit = ''
 	if os.path.isfile(unix_editor_path_sufix):
@@ -679,9 +679,9 @@ def cloud_path( path ):
 		newPath = newPath.replace( '//', '/' )
 		newPath = newPath.replace( '//', '/' )
 		newPath = newPath.replace( '//', '/' )
-		print(newPath)
+		_.pr(newPath)
 		return newPath
-	print(path)
+	_.pr(path)
 	return path
 def projectData( project ):
 	global slash
@@ -920,7 +920,7 @@ def createDestinationFolders( folder, o=None, isFile=False, p=False ):
 	global slashes
 	global slash
 	global UNC
-	# print(folder)
+	# _.pr(folder)
 	if os.path.isdir(folder): return None;
 	
 	thisSlash = slash
@@ -928,7 +928,7 @@ def createDestinationFolders( folder, o=None, isFile=False, p=False ):
 		if key in folder:
 			folder = folder.replace( key, UNC['de'][key] )
 	if os.path.isdir(folder): return None;
-	# print(folder)
+	# _.pr(folder)
 	if not __.isWin:
 		isUnix = True
 	else:
@@ -951,7 +951,7 @@ def createDestinationFolders( folder, o=None, isFile=False, p=False ):
 	try:
 		os.mkdir(  folder )
 		if p:
-			print( folder )
+			_.pr( folder )
 		return folder
 	except Exception as e:
 		pass
@@ -973,7 +973,7 @@ def createDestinationFolders( folder, o=None, isFile=False, p=False ):
 				# _.colorThis( [ 'Error: creating folder', f ], 'red' )
 	return folder
 def dir_check_create( folder ):
-	# print(folder)
+	# _.pr(folder)
 	return createDestinationFolders( folder )
 	global dDim
 	global slash
@@ -988,10 +988,10 @@ def dir_check_create( folder ):
 		techDrive = techDrive.replace( ':', '' )
 	# if techDrive in folder:
 	# 	folder = techDrive+dDim+slash+folder
-	# print(folder)
-	# print( folder )
+	# _.pr(folder)
+	# _.pr( folder )
 	if os.path.isdir( folder ):
-		# print( folder )
+		# _.pr( folder )
 		return False
 	try:
 		os.mkdir( folder )
@@ -1015,15 +1015,15 @@ def dir_check_create( folder ):
 		f = t+slash+f
 		# if not techDrive in f:
 		# 	f = techDrive+dDim+slash+f
-		# print(f)
+		# _.pr(f)
 		exist = os.path.isdir( f )
-		# print( 'exist:', exist, f, '\r\n' )
+		# _.pr( 'exist:', exist, f, '\r\n' )
 		if not exist:
 			try:
 				os.mkdir( f )
 			except Exception as e:
 				pass
-				# print( 'Error:', f )
+				# _.pr( 'Error:', f )
 	return True
 def dir_check_create2( theFolder ):
 	global slashes
@@ -1066,7 +1066,7 @@ def generateFunctionLogFilename( filename ):
 	global myAppsPy
 	global slash
 	file = os.path.abspath( filename )
-	# print( file )
+	# _.pr( file )
 	f = file
 	if myTXT in file:
 		for record in fileBackupLog():
@@ -1077,7 +1077,7 @@ def generateFunctionLogFilename( filename ):
 	fb = fb.replace( slash, '_' )
 	fbr = 'audit_'+fb + '_raw.json'
 	fbf = 'audit_'+fb + '_functions.json'
-	# print( fbf )
+	# _.pr( fbf )
 	return fbf
 def getTable( theFile, tableTemp=False, printThis=False ):
 	import simplejson as json
@@ -1093,7 +1093,7 @@ def getTable( theFile, tableTemp=False, printThis=False ):
 		else:
 			file0 = myTables + slash + theFile
 	if printThis:
-		print('Loaded: ' + file0)
+		_.pr('Loaded: ' + file0)
 	if os.path.isfile(file0) == True:
 		with open(file0,'r', encoding="latin-1") as json_file:
 			json_data = json.load(json_file)
@@ -1120,7 +1120,7 @@ def app7z():
 		elif os.path.isfile(app7z1):
 			app = app7z1
 		else:
-			print('Error: no 7z')
+			_.pr('Error: no 7z')
 			sys.exit()
 		app = '"' + app + '"'
 	return app
@@ -1155,7 +1155,7 @@ def getDriveID(driveLetter):
 	global slash
 	global dDim
 	idFile = ddDim(driveLetter) +slash+'drive.id.sys'
-	# print(idFile)
+	# _.pr(idFile)
 	result = False
 	if os.path.isfile(idFile) == True:
 		driveID = open( idFile, 'r' ).read()
@@ -1342,7 +1342,7 @@ def ipGet(force=False):
 		if os.path.isfile( configFile('.distro') ):
 			f['distro'] = open( configFile('.distro'), 'r' ).read()
 		url = 'http://tools.rightthumb.com/register.php?'+urllib.parse.urlencode(f)
-		# print(url)
+		# _.pr(url)
 		try:
 			ip = html.fromstring(requests.get( url  ).content).text_content()
 			open(configFile('.ip'),'w', encoding='utf-8').write( ip )
@@ -1354,11 +1354,11 @@ def ipGet(force=False):
 		cache_age = time.time() - cache_time
 		if cache_age > 14400:
 			get_ip = True
-	# print(get_ip)
+	# _.pr(get_ip)
 	if not get_ip and not force:
 		# ip = open( configFile('.ip'), 'r' ).read()
 		ip = open(configFile('.ip'), 'r', encoding='utf-8').readlines()[0]
-		# print(ip,'here',configFile('.ip'))
+		# _.pr(ip,'here',configFile('.ip'))
 		ip = _str.totalStrip(ip)
 	elif get_ip or force:
 		if not hasImported:
@@ -1392,7 +1392,7 @@ if not '/bash/' in __file__:
 		ipGet()
 	except Exception as e:
 		pass
-		# print( 'Error: IP' )
+		# _.pr( 'Error: IP' )
 def table(t):
 	global myTables
 	global slash
@@ -1421,7 +1421,7 @@ def tableAlts(t,omit=True):
 	current = parts.pop(0)
 	parts.reverse()
 	folder = slash.join( parts )
-	# print( folder )
+	# _.pr( folder )
 	# sys.exit()
 	result = []
 	for ho in os.listdir(folder):
@@ -1440,7 +1440,7 @@ path = __.path
 mkdir = createDestinationFolders
 default_powershell = 'echo test | py $p\\app.py'
 # popFileDir(path)
-# print('end')
+# _.pr('end')
 config_file = None
 def config( subject='?' ):
 	global mymyConfig
@@ -1473,4 +1473,5 @@ if not os.path.isdir(myConfig):
 	dir_structure()
 # dir_check_create
 # thisHost
+
 

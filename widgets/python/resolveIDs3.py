@@ -304,8 +304,8 @@ def resolveEpoch(line,clean=False):
 				epochTest = _.resolveEpochTest( word, showPrint=this_is_a_test, showPrintTry=this_is_a_test, onlyEpoch=False )
 				# [ result, epoch ]
 				if this_is_a_test:
-					print( 'word:', word )
-					print( 'epochTest:', epochTest )
+					_.pr( 'word:', word )
+					_.pr( 'epochTest:', epochTest )
 				if type( epochTest ) == list:
 					result += epochTest[0]
 					epoch = epochTest[1]
@@ -348,8 +348,8 @@ def resolveEpochNEW(line,clean=False):
 				epochTest = _.resolveEpochTest( word, showPrint=this_is_a_test, showPrintTry=this_is_a_test, onlyEpoch=False )
 				# [ result, epoch ]
 				if this_is_a_test:
-					print( 'word:', word )
-					print( 'epochTest:', epochTest )
+					_.pr( 'word:', word )
+					_.pr( 'epochTest:', epochTest )
 				if type( epochTest ) == list:
 					record.append( [word,_.friendlyDate(float(word))] )
 					result += epochTest[0]
@@ -375,7 +375,7 @@ def action():
 		line = line.replace('\n','')
 		
 		if _.switches.isActive('End'):
-			print(line,getLabels(line),resolveEpoch(line))
+			_.pr(line,getLabels(line),resolveEpoch(line))
 		elif _.switches.isActive('Replace'):
 		
 			for rec in resolveEpochNEW(line):
@@ -389,10 +389,10 @@ def action():
 				
 				line = line.replace( str(rec[0]), new )
 
-			print(line)
+			_.pr(line)
 				# data.append({ 'id': str(rec[0]), 'epoch': str(rec[0]), 'line': line })
-			# print( 'resolveEpochNEW:', epochs )
-			# print(resolveEpoch(line),resolveIDs(line))
+			# _.pr( 'resolveEpochNEW:', epochs )
+			# _.pr(resolveEpoch(line),resolveIDs(line))
 		else:
 			epoch = resolveEpoch(line,True)
 			theID = resolveIDs(line,True)
@@ -404,15 +404,15 @@ def action():
 
 	_.tables.register('resolvedData',data)
 	_.tables.fieldProfileSet('resolvedData','id','alignment','right')
-	print()
+	_.pr()
 
 
 	if not _.switches.isActive('Short'):
 		_.switches.fieldSet('Long','active',True)
 
 	if idCount == 0 and epochCount == 0:
-		print()
-		print('Nothing to resolve')
+		_.pr()
+		_.pr('Nothing to resolve')
 	elif idCount > 0 and epochCount > 0:
 		_.tables.print('resolvedData','epoch,id,line')
 	elif idCount > 0 and epochCount == 0:
@@ -445,6 +445,7 @@ def load():
 if __name__ == '__main__':
 	action()
 	_.tables.eof()
+
 
 
 

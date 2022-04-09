@@ -164,7 +164,7 @@ def process(vVv):
 def action(first=True):
 
 	if _.switches.isActive('Find-Date'):
-		print('poo')
+		_.pr('poo')
 		for uuid in _.switches.values('Find-Date'):
 			uuid = _str.do('an',uuid)
 			if len(uuid) > 30:
@@ -209,18 +209,18 @@ def action(first=True):
 
 	if not _.switches.isActive('LowerCase') and not _.switches.isActive('MixedCase'):
 		if not _.switches.isActive('NoPrint'):
-			print( genid )
+			_.pr( genid )
 	elif _.switches.isActive('LowerCase'):
 		if not _.switches.isActive('NoPrint'):
-			print( genid.lower() )
+			_.pr( genid.lower() )
 	elif _.switches.isActive('MixedCase'):
 		import randomTool
 		if not _.switches.isActive('NoPrint'):
-			print( randomTool.case(genid) )
+			_.pr( randomTool.case(genid) )
 
 
 	if _.switches.isActive('PrintCharLength'):
-		print()
+		_.pr()
 		_.colorThis( [  '', _.addComma(len(genid)), 'characters'  ], 'yellow' )
   
 	return genid
@@ -232,6 +232,7 @@ from random import randrange
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

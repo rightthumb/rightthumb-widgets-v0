@@ -203,16 +203,16 @@ def action():
 			fileBackup.switch( 'Input', file )
 			fb = fileBackup.action()
 			# if not _.switches.isActive('Clean'):
-			# 	print( fb )
+			# 	_.pr( fb )
 			data = _.getTable2( file )
 		if not type(data) == dict:
 			_.cp( 'Error: not dic', 'red' )
-			print(data)
+			_.pr(data)
 			return None
 		if _.switches.isActive('Add'):
 			for add in _.switches.values('Add'):
 				item = add.split(';')
-				# print(item)
+				# _.pr(item)
 				data[ item[0] ] = item[1]
 		if _.switches.isActive('Order'):
 			newData = {}
@@ -264,13 +264,13 @@ def action():
 			test = _.getText( file, raw=True )
 			if not _.switches.isActive('Clean'):
 				if not _.switches.isActive('Clean1'):
-					print()
-				print(test)
+					_.pr()
+				_.pr(test)
 				if not _.switches.isActive('Clean1'):
-					print()
-					print(os.path.abspath(file))
+					_.pr()
+					_.pr(os.path.abspath(file))
 					try:
-						print( fb )
+						_.pr( fb )
 					except Exception as e:
 						pass
 
@@ -281,6 +281,7 @@ def action():
 if __name__ == '__main__':
 	action()
 	_.tables.eof()
+
 
 
 

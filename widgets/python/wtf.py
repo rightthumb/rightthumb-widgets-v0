@@ -225,7 +225,7 @@ def shouldAdd( url ):
 	
 def getPage( url ):
 	global data
-	print()
+	_.pr()
 	try:
 		page = requests.get( url )
 		tree = html.fromstring(page.content)
@@ -249,23 +249,23 @@ def getPage( url ):
 			except Exception as e:
 				src = ''
 				alt = ''
-			print( alt )
+			_.pr( alt )
 			if shouldAdd( src ):
 				data.append({ 'label': alt,  'href': src })
 				_.saveTable( data, 'wtf.json', printThis=False )
 				
 
-		print( url )
-		print( 'Success' )
+		_.pr( url )
+		_.pr( 'Success' )
 
 		if len( nextUrl ):
 			getPage( nextUrl )
 		else:
-			print( 'Error: next' )
+			_.pr( 'Error: next' )
 			open('wtf_error.htm', 'wb').write(page.content)
 
 	except Exception as e:
-		print( 'Error:', e )
+		_.pr( 'Error:', e )
 		try:
 			page = requests.get( url )
 			tree = html.fromstring(page.content)
@@ -282,7 +282,7 @@ def getPage( url ):
 			if len( nextUrl ):
 				getPage( nextUrl )
 			else:
-				print( 'Error: next' )
+				_.pr( 'Error: next' )
 				open('wtf_error.htm', 'wb').write(page.content)
 
 		except Exception as e:
@@ -305,7 +305,7 @@ def action():
 	# 	folder = os.getcwd()
 
 	# if not os.path.isdir( folder ):
-	# 	print( 'Error: folder' )
+	# 	_.pr( 'Error: folder' )
 	# 	sys.exit()
 	if not _.switches.isActive( 'Input' ):
 		getPage( 'https://wtffunfact.com/' )
@@ -322,6 +322,7 @@ data = []
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

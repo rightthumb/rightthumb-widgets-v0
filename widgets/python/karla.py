@@ -257,8 +257,8 @@ class karla:
 	def __init__( self ):
 		self.test = 1
 
-	def print( self ):
-		print( self.test )
+	def _.pr( self ):
+		_.pr( self.test )
 
 
 
@@ -270,17 +270,17 @@ class Car:
 		self.paintHistory = []
 		self.paintHistory.append( color )
 
-	def print( self ):
-		print()
-		print( 'make:', self.make )
-		print( 'model:', self.model )
-		print( 'color:', self.color )
-		print( 'paintHistory:', self.paintHistory )
+	def _.pr( self ):
+		_.pr()
+		_.pr( 'make:', self.make )
+		_.pr( 'model:', self.model )
+		_.pr( 'color:', self.color )
+		_.pr( 'paintHistory:', self.paintHistory )
 
 	def paint( self, color ):
-		print()
-		print( '\t Car Just Painted:', color, 'was', self.color )
-		print()
+		_.pr()
+		_.pr( '\t Car Just Painted:', color, 'was', self.color )
+		_.pr()
 		self.paintHistory.append( color )
 		self.color = color
 
@@ -292,11 +292,11 @@ def action():
 	test = 0
 
 	# if _.switches.isActive('Test'):
-	# 	print( 'Test is Active' )
+	# 	_.pr( 'Test is Active' )
 	# else:
-	# 	print( 'Test NOT Active' )
+	# 	_.pr( 'Test NOT Active' )
 	if _.switches.isActive( 'Files' ):
-		# print( _.switches.values('Files')[0] )
+		# _.pr( _.switches.values('Files')[0] )
 		asset = _.getTable2( _.switches.values('Files')[0] )
 
 		profile = _profile.records.audit( 'name', asset )
@@ -314,7 +314,7 @@ def action():
 	# 	# _.printVar(_.appData)
 	# 	for i,row in enumerate(_.appData[__.appReg]['pipe']):
 	# 		if _.showLine( row ):
-	# 			print( row )
+	# 			_.pr( row )
 
 	# kMoney = karla()
 	# kMoney.print()
@@ -338,14 +338,14 @@ def action():
 
 		profile = _profile.records.audit( 'object', car2 )
 		asset = _profile.records.getAsset( 'object' )
-		print( '____________________________________' )
+		_.pr( '____________________________________' )
 		_.printVar( asset )
-		print( '____________________________________' )
+		_.pr( '____________________________________' )
 		_.printVar( profile )
 
 
-		print( car2.paintHistory )
-		print( car2.paintHistory[1] )
+		_.pr( car2.paintHistory )
+		_.pr( car2.paintHistory[1] )
 
 
 # def load():
@@ -357,6 +357,7 @@ def action():
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

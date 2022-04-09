@@ -174,7 +174,7 @@ def action():
 	_browser.imp.project.open( _.switches.value( 'Input' ) )
 
 	test = False
-	print( test )
+	_.pr( test )
 	while not test:
 		pause = input( 'pause' )
 		try:
@@ -183,7 +183,7 @@ def action():
 		except Exception as e:
 			test = False
 			how = 1
-		print( test, how )
+		_.pr( test, how )
 		_browser.imp.project.jqueryInject()
 		code = _.getText( _v.myAppsJs + _v.slash+'right_click.js' , raw=True )
 		_browser.imp.project.inject( code )
@@ -198,6 +198,7 @@ def action():
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

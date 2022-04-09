@@ -212,7 +212,7 @@ def clip_set_3(data,end='',clean=True):
 	time.sleep(.2)
 	if not os.path.isfile(tmpA):
 		if not _.switches.isActive('NoPrint'):
-			print( 'no file' )
+			_.pr( 'no file' )
 		return None
 
 	# cmd = ["cat", tmpA, "|",  "xsel", "--clipboard", "--input"  ]
@@ -233,11 +233,11 @@ def clip_set_3(data,end='',clean=True):
 		result = None
 
 	if not result:
-		# print( ' '.join(cmd) )
+		# _.pr( ' '.join(cmd) )
 		if not _.switches.isActive('NoPrint'):
 			if _.isWin:
 				_.cp( 'Error: unable to copy', 'red' )
-			print(data)
+			_.pr(data)
 
 	# p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
 
@@ -269,7 +269,7 @@ def clip_set( data, end='', p=True, clean=True ):
 
 	if not _.switches.isActive('NoPrint'):
 		if p:
-			print(data)
+			_.pr(data)
 
 	# clip_set_3(data)
 	try:
@@ -313,8 +313,8 @@ def clip_get(p=False):
 		sys.exit()
 	else:
 		if p:
-			print(result)
-	# print( result )
+			_.pr(result)
+	# _.pr( result )
 	# sys.exit()
 	return result
 
@@ -329,7 +329,7 @@ def clip_get_1():
 
 def clip_get_3():
 	import subprocess
-	# print('_.isWin:',_.isWin)
+	# _.pr('_.isWin:',_.isWin)
 	if _.isWin:
 		if not _.switches.isActive('NoPrint'):
 			if _.isWin:
@@ -345,11 +345,11 @@ def clip_get_3():
 	if not _.which('xsel'):
 		if not _.isWin:
 			if not _.switches.isActive('NoPrint'):
-				print( '\tsudo apt install xclip xsel' )
+				_.pr( '\tsudo apt install xclip xsel' )
 			return None
 
 	cmd = ["xsel", "--clipboard", "--output", ">", tmpA ]
-	# print( ' '.join(cmd) )
+	# _.pr( ' '.join(cmd) )
 	p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
 	if os.path.isfile(tmpA):
 		return _.getText( tmpA, raw=True, clean=2 )
@@ -448,7 +448,7 @@ _.postLoad( 'D:\\\\tech\\\\hosts\\\\VULCAN\\\\widgets\\\\python\\\\testing123.py
 # _.f(p=1)
 # _.printVarSimple(  _dir.info(  _.f( 'secure', r=1 )  )  )
 # os.system('cls')
-# print( str( '\\n'.join( dir(_v) )  ) )
+# _.pr( str( '\\n'.join( dir(_v) )  ) )
 
 
 		'''
@@ -536,7 +536,7 @@ $('td').forEach(div => div.style.background = 'orange');
 			return None
 
 		if type(subject[a]) == str:
-			# print( subject[a] )
+			# _.pr( subject[a] )
 			return subject[a]
 
 		if not b in subject[a] or not len( _.switches.values('Subject') ) > 1:
@@ -587,23 +587,23 @@ def autoText( data ):
 def action():
 
 	if __.hasPipeData:
-		# print('|')
-		# print(input())
-		# print('|')
-		# print(sys.stdin)
-		# print('|')
-		# print(sys.stdin.readlines())
-		# print('|')
-		# print( _.appData[focus()]['pipe'] )
-		# print('|')
-		# print(_.isData())
-		# print('|')
+		# _.pr('|')
+		# _.pr(input())
+		# _.pr('|')
+		# _.pr(sys.stdin)
+		# _.pr('|')
+		# _.pr(sys.stdin.readlines())
+		# _.pr('|')
+		# _.pr( _.appData[focus()]['pipe'] )
+		# _.pr('|')
+		# _.pr(_.isData())
+		# _.pr('|')
 		data = '\n'.join( _.isData() )
-		# print('|')
-		# print(data)
-		# print('|')
+		# _.pr('|')
+		# _.pr(data)
+		# _.pr('|')
 		clip_set(data,p=1)
-		# print('|')
+		# _.pr('|')
 		return None
 		
 	_.v.end = ''
@@ -670,6 +670,7 @@ def action():
 if __name__ == '__main__':
 	action()
 	_.tables.eof()
+
 
 
 

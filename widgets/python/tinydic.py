@@ -213,7 +213,7 @@ def action():
 	_.linePrint(c='yellow')
 	# for x in _.tinydic(data,skim=None,lan='py',prev=False,dump=None,list0=True)
 	for x in _.tinydic(data,skim=skim,lan=lan,prev=prev,dump=dump,list0=list0):
-		print(x)
+		_.pr(x)
 	_.linePrint(c='yellow')
 
 
@@ -230,6 +230,7 @@ def load():
 if __name__ == '__main__':
 	action()
 	__.isExit()
+
 
 
 

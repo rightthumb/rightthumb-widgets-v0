@@ -238,33 +238,33 @@ def getFolder(folder):
 					shouldInclude = False
 					if not _.switches.isActive('Text') and not _.switches.isActive('Binary'):
 						i = i + 1
-						# print(0,whatIsIt(path),path)
-						# print(path)
+						# _.pr(0,whatIsIt(path),path)
+						# _.pr(path)
 						shouldInclude = True
 
 					else:
 						if not _.switches.isActive('Binary') and  _.switches.isActive('Text') and isText(path):
 							i = i + 1
-							# print(1,whatIsIt(path),path)
-							# print(path)
+							# _.pr(1,whatIsIt(path),path)
+							# _.pr(path)
 							shouldInclude = True
 
 						if not _.switches.isActive('Binary') and not _.switches.isActive('Text'):
 							i = i + 1
-							# print(2,whatIsIt(path),path)
-							# print(path)
+							# _.pr(2,whatIsIt(path),path)
+							# _.pr(path)
 							shouldInclude = True
 
 						if not _.switches.isActive('Text') and  _.switches.isActive('Binary') and not isText(path):
 							i = i + 1
-							# print(3,whatIsIt(path),path)
-							# print(path)
+							# _.pr(3,whatIsIt(path),path)
+							# _.pr(path)
 							shouldInclude = True
 
 						if not _.switches.isActive('Text') and  not _.switches.isActive('Binary'):
 							i = i + 1
-							# print(4,whatIsIt(path),path)
-							# print(path)
+							# _.pr(4,whatIsIt(path),path)
+							# _.pr(path)
 							shouldInclude = True
 
 					if shouldInclude:
@@ -279,7 +279,7 @@ def getFolder(folder):
 						else:
 							_.colorThis( [  '\t', path.replace( os.getcwd()+_v.slash, '' )  ], 'cyan' )
 
-						# print( path )
+						# _.pr( path )
 						if _.switches.isActive('Confirm'):
 							if _.switches.isActive('BackupOnce'):
 								status = scheduleStatus['onceActive']
@@ -304,7 +304,7 @@ def getFolder(folder):
 					except Exception as e:
 						pass
 				else:
-					print('error')
+					_.pr('error')
 
 
 
@@ -317,9 +317,9 @@ def action():
 	load()
 
 	if not _.switches.isActive('Clean'):
-		print()
+		_.pr()
 		_.colorThis( [  'Files:'  ], 'yellow' )
-		print()
+		_.pr()
 
 	if _.switches.isActive('Folder') == False:
 		folder = os.getcwd()
@@ -329,18 +329,18 @@ def action():
 	getFolder(folder)
 
 	if not _.switches.isActive('Clean'):
-		print()
+		_.pr()
 		if i:
 			if not _.switches.isActive('Confirm'):
 				msg = _.colorThis( [  '', i, ''  ], 'yellow', p=0 )
 				msg += _.colorThis( [  'files would have been scheduled to backup'  ], 'green', p=0 )
-				print( msg )
+				_.pr( msg )
 				
 				_.colorThis( 'Preview: nothing scheduled to backup', 'red' )
 			else:
 				msg = _.colorThis( [  '', i, ''  ], 'yellow', p=0 )
 				msg += _.colorThis( [  'files scheduled to backup'  ], 'green', p=0 )
-				print( msg )
+				_.pr( msg )
 
 
 	
@@ -370,6 +370,7 @@ scheduler = []
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

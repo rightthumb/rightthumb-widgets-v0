@@ -282,18 +282,18 @@ _.postLoad( __file__ )
 # 			for char in record.keys():
 # 				if record[char] > 1 and char in _str.alphaChar:
 # 					if char in audit:
-# 						print( word )
+# 						_.pr( word )
 
 # 					if not char in payload:
 # 						payload.append( char )
-# 						# print( char )
-# 			# print( word )
+# 						# _.pr( char )
+# 			# _.pr( word )
 # 	payload.sort()
 # 	for x in payload:
-# 		print( x )
+# 		_.pr( x )
 
-# 	print()
-# 	print( len(payload) )
+# 	_.pr()
+# 	_.pr( len(payload) )
 
 
 
@@ -325,20 +325,20 @@ def action():
 			for l in letters:
 				if word.find(l+l) > 0 and l in _str.alphaChar:
 					if l in audit:
-						print( word )
-					# print( word )
+						_.pr( word )
+					# _.pr( word )
 					if not l in payload:
-						print( l, word )
+						_.pr( l, word )
 						payload.append( l )
 
 	payload.sort()
 	for x in payload:
-		print( x )
+		_.pr( x )
 
-	print()
-	print( _.addComma(len(payload)) , 'payload' )
-	print()
-	print( _.addComma(i) , 'words' )
+	_.pr()
+	_.pr( _.addComma(len(payload)) , 'payload' )
+	_.pr()
+	_.pr( _.addComma(i) , 'words' )
 
 
 def load():
@@ -356,6 +356,7 @@ data = []
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

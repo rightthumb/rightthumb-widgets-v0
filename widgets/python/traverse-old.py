@@ -209,7 +209,7 @@ def start(thisFILE):
 		IDs = []
 		for x in _.traverse( data, config={'inDicI':_.switches.value('Plus').replace(',',' ').lower()})['inDicI']:
 			IDs.append(int(x[0]))
-		# print( thisFILE, IDs )
+		# _.pr( thisFILE, IDs )
 	for i,record in enumerate(data):
 		thisRecordIsGood = False
 		
@@ -229,7 +229,7 @@ def start(thisFILE):
 					isOmit=None
 
 					if '>' in x or '<' in x:
-						# print('BBB')
+						# _.pr('BBB')
 						if '>=' in x:
 							y=x.split('>=')
 						elif '<=' in x:
@@ -239,7 +239,7 @@ def start(thisFILE):
 						elif '<' in x:
 							y=x.split('<')
 
-						# print( y )
+						# _.pr( y )
 					elif '-~' in x:
 						isOmit = True
 						y=x.split('-~')
@@ -264,7 +264,7 @@ def start(thisFILE):
 						xIS = None
 						xIN = None
 						if '>' in x or '<' in x:
-							# print( 'AAA' )
+							# _.pr( 'AAA' )
 							try:
 								if '>=' in x:
 									if not int(found) >= int(y[1]):
@@ -276,12 +276,12 @@ def start(thisFILE):
 									if not int(found) > int(y[1]):
 										good=False
 								elif '<' in x:
-									# print('HERE')
+									# _.pr('HERE')
 									if not int(found) < int(y[1]):
 										good=False
 
 							except Exception as e:
-								# print( 'ERROR' )
+								# _.pr( 'ERROR' )
 								good=False
 
 						else:
@@ -341,7 +341,7 @@ def start(thisFILE):
 								display.append({ 'field': x, 'value': str(record[x]) })
 							except Exception as e:
 								pass
-							# print( _.colorThis( x+':', 'yellow', p=0 ), _.colorThis( record[x], 'green', p=0 ) )
+							# _.pr( _.colorThis( x+':', 'yellow', p=0 ), _.colorThis( record[x], 'green', p=0 ) )
 						else:
 							found_table_i = _.traverse( record, config={'find_path':x})
 							if 'find_path' in found_table_i:
@@ -351,17 +351,17 @@ def start(thisFILE):
 								except Exception as e:
 									pass
 
-								# print()
-								# print()
-								# print( found_table_i )
-								# print()
-								# print()
+								# _.pr()
+								# _.pr()
+								# _.pr( found_table_i )
+								# _.pr()
+								# _.pr()
 
 							# bld = 'record'
 							# for st in x.split('.'):
 							# 	bld+='["'+st+'"]'
-							# print( bld )
-							# # print( _.colorThis( x+':', 'yellow', p=0 ), _.colorThis( eval(bld), 'green', p=0 ) )
+							# _.pr( bld )
+							# # _.pr( _.colorThis( x+':', 'yellow', p=0 ), _.colorThis( eval(bld), 'green', p=0 ) )
 							# try:
 							# 	display.append({ 'field': x, 'value': str(eval(bld)) })
 							# except Exception as e:
@@ -369,7 +369,7 @@ def start(thisFILE):
 					pass
 					_.fields.asset( 'project',  display )
 					if not __.fieldSettings['primary'] is None and  len(display) > 1:
-						# print( len(display),'display',display )
+						# _.pr( len(display),'display',display )
 						pri = 0
 						sec = 0
 						for dx in display:
@@ -405,7 +405,7 @@ def start(thisFILE):
 
 							thisRecord[ dx['field'] ] = dx['value']
 							if not _.switches.isActive('Table'):
-								print( _.colorThis( 
+								_.pr( _.colorThis( 
 									_.fields.value( 'project', 'field', dx['field'], r=1 )
 									+':', 'yellow', p=0 ), _.colorThis( 
 									_.fields.value( 'project', 'value', dx['value'] )
@@ -414,17 +414,17 @@ def start(thisFILE):
 				if not _.switches.isActive('Table'):
 					if shouldShow:
 						if not _.switches.isActive('Spaces'):
-							print()
-							print()
+							_.pr()
+							_.pr()
 						elif  _.switches.isActive('Spaces'):
 							spaces = 0
 							mx = int( _.switches.values('Spaces')[0] )
 							while not spaces == mx:
 								spaces+=1
-								print()
-					# print('fieldCount',fieldCount, _.switches.isActive('Spaces'), _.switches.values('Spaces')[0], )
+								_.pr()
+					# _.pr('fieldCount',fieldCount, _.switches.isActive('Spaces'), _.switches.values('Spaces')[0], )
 					if _.switches.isActive('Spaces') and _.switches.values('Spaces')[0] == '0' and len( _.switches.values('Spaces') ) > 1 and 'f' in _.switches.values('Spaces')[1] and fieldCount > 1:
-						print()
+						_.pr()
 					if _.switches.isActive('One'):
 						sys.exit()
 		
@@ -441,8 +441,8 @@ def action():
 	if _.switches.isActive('Index'):
 
 		for row in _.isData(r=1):
-			print()
-			print()
+			_.pr()
+			_.pr()
 			_.colorThis( row, 'yellow' )
 			_.traverse( _.getTable( row ) )
 			# _.printVarSimple( _.traverse_dic_research )
@@ -461,14 +461,14 @@ def action():
 					x.append( ff )
 			x.sort()
 			if not _.switches.value('Index') == 'type':
-				print(  )
+				_.pr(  )
 				for y in x:
 					_.colorThis( ['\t',y], 'cyan' )
 		sys.exit()
 	# if _.switches.isActive('Search'):
-	# 	print( 'search active' )
-	# 	print( _.switches.value('Search') )
-	# 	print( _.switches.values('Search') )
+	# 	_.pr( 'search active' )
+	# 	_.pr( _.switches.value('Search') )
+	# 	_.pr( _.switches.values('Search') )
 
 	global data
 	global fileFirst
@@ -489,6 +489,7 @@ __.traverse_table = []
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

@@ -199,16 +199,17 @@ _.postLoad( __file__ )
 def action():
 
 	for i,row in enumerate(_.isData(r=1)):
-		print()
+		_.pr()
 		for x in row.split( _.switches.values('Delim')[0] ):
-			print(x)
-		print()
+			_.pr(x)
+		_.pr()
 
 
 
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

@@ -201,7 +201,7 @@ def clip_get():
 		_.cp( 'Error: clipboard error', 'red' )
 		_.cp( '\tpython3 -m pip install pyperclip', 'yellow' )
 		sys.exit()
-	# print( result )
+	# _.pr( result )
 	# sys.exit()
 	return result
 
@@ -216,7 +216,7 @@ def clip_get_1():
 
 def clip_get_3():
 	import subprocess
-	# print('_.isWin:',_.isWin)
+	# _.pr('_.isWin:',_.isWin)
 	if _.isWin:
 		_.cp( 'Error: clipboard error', 'red' )
 		return None
@@ -229,11 +229,11 @@ def clip_get_3():
 		os.unlink(tmpB)
 	if not _.which('xsel'):
 		if not _.isWin:
-			print( '\tsudo apt install xclip xsel' )
+			_.pr( '\tsudo apt install xclip xsel' )
 			return None
 
 	cmd = ["xsel", "--clipboard", "--output", ">", tmpA ]
-	# print( ' '.join(cmd) )
+	# _.pr( ' '.join(cmd) )
 	p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
 	if os.path.isfile(tmpA):
 		return _.getText( tmpA, raw=True, clean=2 )
@@ -283,10 +283,10 @@ def action():
 		text = cleaner(textR)
 	text = cleaner(text)
 	try:
-		print( text )
+		_.pr( text )
 	except Exception as e:
 		text = cleaner(text)
-		print( text )
+		_.pr( text )
 
 
 
@@ -296,6 +296,7 @@ def action():
 if __name__ == '__main__':
 	action()
 	_.tables.eof()
+
 
 
 

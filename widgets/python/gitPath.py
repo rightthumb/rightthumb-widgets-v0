@@ -165,11 +165,12 @@ def action():
 		git_path = _v.slashes['u'] + git_path
 
 		
-		print( git_path )
+		_.pr( git_path )
 
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

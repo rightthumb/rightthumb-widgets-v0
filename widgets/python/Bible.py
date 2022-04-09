@@ -158,8 +158,8 @@ def action():
 
 	mx = 200
 	for q in _B.query:
-		print()
-		print()
+		_.pr()
+		_.pr()
 		_print.label(q)
 
 		cnt = 0
@@ -167,13 +167,13 @@ def action():
 		for vs in _verses.build(q):
 			if 'ch' in vs:
 				cnt = 0
-				print()
+				_.pr()
 				
 				result.append( '\n'+  _.colorThis( vs['ch'], 'yellow', p=0 )  + '\n' )
 			else:
 				# if _.showLine(vs['word']):
 				if True:
-					# print( vs['vs'], _.colorThis( vs['word'], 'cyan', p=0 ) )
+					# _.pr( vs['vs'], _.colorThis( vs['word'], 'cyan', p=0 ) )
 					word = vs['word']
 					for tmp in str(vs['vs']):
 						cnt +=1
@@ -199,14 +199,14 @@ def action():
 					result.append( rx )
 						
 
-		print( ''.join( result ) )
-			# print(vs)
+		_.pr( ''.join( result ) )
+			# _.pr(vs)
 		
 
 
 def load():
 	if _.switches.isActive('EditCMDs'):
-		print( """
+		_.pr( """
 	epy Bible
 	epyi Bible
 	epyi Bible -file _query
@@ -217,13 +217,13 @@ def load():
 
 			""" )
 
-		# print(' epy Bible ')
-		# print(' epyi Bible ')
-		# print(' epyi Bible -file _query ')
-		# print(' epyi Bible -file _verses ')
-		# print(' epyi Bible -file _print ')
-		# print(' epyi Bible -file _build_indices ')
-		# print(' epyi Bible -file _query_indices ')
+		# _.pr(' epy Bible ')
+		# _.pr(' epyi Bible ')
+		# _.pr(' epyi Bible -file _query ')
+		# _.pr(' epyi Bible -file _verses ')
+		# _.pr(' epyi Bible -file _print ')
+		# _.pr(' epyi Bible -file _build_indices ')
+		# _.pr(' epyi Bible -file _query_indices ')
 		sys.exit()
 
 
@@ -262,15 +262,15 @@ if _.switches.isActive('ListBooks'):
 	for i in _B.Books:
 		# BKs[_B.Books[i]][i] = {}
 		# if _B.Books[i] == 55:
-		# 	print( i )
+		# 	_.pr( i )
 		if len(i) <= len(BKs[_B.Books[i]]):
 			BKs[_B.Books[i]] = i.lower()
-		# print( i, _B.Books[i] )
-	# print( _B.Books )
+		# _.pr( i, _B.Books[i] )
+	# _.pr( _B.Books )
 	
 	# for i in BKs:
-	# 	# print( i, type(i) )
-	# 	print( i, BKs[i] )
+	# 	# _.pr( i, type(i) )
+	# 	_.pr( i, BKs[i] )
 
 	table = []
 	for i in _B.labels:
@@ -281,7 +281,7 @@ if _.switches.isActive('ListBooks'):
 				table.append({ 'number': '', 'book': '', 'mini': '' })
 
 			table.append({ 'number': i, 'book': _B.labels[i], 'mini': BKs[int(i)] })
-		# print( i, _B.labels[i] )
+		# _.pr( i, _B.labels[i] )
 	_.tables.register( 'Books', table )
 	_.tables.fieldProfileSet( 'Books', 'number', 'alignment', 'left' )
 	_.tables.fieldProfileSet( 'Books', 'mini', 'alignment', 'left' )
@@ -319,4 +319,5 @@ pp nest_dim_sort_test
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 

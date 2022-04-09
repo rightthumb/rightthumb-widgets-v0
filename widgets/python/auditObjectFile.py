@@ -178,17 +178,18 @@ def loadObject(file):
 
 
 def action():
-	print( 'DOES NOT WORK' )
+	_.pr( 'DOES NOT WORK' )
 	sys.exit()
 	if _.switches.isActive('Input'):
 		obj = loadObject( _.switches.value('Input') )
 
-		print( type(obj) )
+		_.pr( type(obj) )
 
 
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

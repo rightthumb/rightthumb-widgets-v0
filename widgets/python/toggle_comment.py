@@ -170,12 +170,12 @@ def action():
 	the_file_path = 'D:\\tech\\hosts\\VULCAN\\projects\\vnc\\vnc.config'
 
 	for i,the_file_path in enumerate(_.isData(r=1)):
-		print(the_file_path)
+		_.pr(the_file_path)
 
 		if not os.path.isfile(the_file_path):
-			print( 'The file:' )
-			print( '          ',the_file_path )
-			print( 'does not exist' )
+			_.pr( 'The file:' )
+			_.pr( '          ',the_file_path )
+			_.pr( 'does not exist' )
 		elif os.path.isfile(the_file_path):
 			bashrc = _.getText( the_file_path, raw=True )
 			s = '{A3D236DE}'
@@ -199,14 +199,14 @@ def action():
 							del table[label][str(ii)]
 						table[label][ii] = 1
 
-						print('Now is ON')
+						_.pr('Now is ON')
 					else:
 
 						if str(ii) in table[label]:
 							del table[label][str(ii)]
 						table[label][ii] = 0
 
-						print('Now is OFF')
+						_.pr('Now is OFF')
 						the_new_file += escape + line + '\n'
 					
 					if _.switches.isActive('Label'):
@@ -217,7 +217,7 @@ def action():
 
 
 			if not found:
-				print( 'Error: file is missing code', s )
+				_.pr( 'Error: file is missing code', s )
 			else:
 				_.saveText( the_new_file, the_file_path )
 
@@ -228,6 +228,7 @@ def action():
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

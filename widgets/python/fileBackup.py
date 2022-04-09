@@ -168,7 +168,7 @@ def log_default_fields(record):
 def generateID(path):
 	abPath = os.path.abspath(path)
 	md5 = _md5.md5File(abPath)
-	# print(md5)
+	# _.pr(md5)
 	return _md5.md52GUID(md5,True)
 
 def idExist(theID, data, path):
@@ -258,7 +258,7 @@ def PRE_BACKUP_PROCESSING( path ):
 							'path': path,
 							'examples': theExampleLines,
 				}
-				# print( data )
+				# _.pr( data )
 				_.saveTable(   data,  _v.py_examples.replace( _v.import_delim , thisExampleVX  )   )
 				# del data
 				# del theExampleLines
@@ -285,33 +285,33 @@ def PRE_BACKUP_PROCESSING( path ):
 
 			if thisBaseVX is None:
 				return None
-			# print(  )
-			# print( _v.py_examples )
-			# print(  )
-			# print( _v.import_delim )
-			# print(  )
-			# print( thisBaseVX )
-			# print(  )
+			# _.pr(  )
+			# _.pr( _v.py_examples )
+			# _.pr(  )
+			# _.pr( _v.import_delim )
+			# _.pr(  )
+			# _.pr( thisBaseVX )
+			# _.pr(  )
 
 
 			examples = _.getTable( _v.py_examples.replace( _v.import_delim , thisBaseVX  ) )
 			alpha = checkAlpha( thisBaseVX )
 			varSize = _.get_size(examples)
 			# varSize2 = _.get_size(  _.getTable('asdflasdfasdfasfasdfasd')  )
-			# print(  )
-			# print( examples )
-			# print(  )
-			# print( 'varSize:', varSize, thisBaseVX )
-			# print( varSize2 )
-			# print(  )
-			# print( alpha )
-			# print(  )
+			# _.pr(  )
+			# _.pr( examples )
+			# _.pr(  )
+			# _.pr( 'varSize:', varSize, thisBaseVX )
+			# _.pr( varSize2 )
+			# _.pr(  )
+			# _.pr( alpha )
+			# _.pr(  )
 			if alpha['has'] and not varSize is None and varSize < 100:
 				examples = _.getTable( _v.py_examples.replace( _v.import_delim , alpha['int']  ) )
-				# print( 'ran' )
+				# _.pr( 'ran' )
 			varSize = _.get_size(examples)
 
-			# print( 'varSize:', varSize, alpha )
+			# _.pr( 'varSize:', varSize, alpha )
 			if not varSize is None and varSize > 100:
 
 				if md5 == examples['md5']:
@@ -437,20 +437,20 @@ def postFileCleanup( fileLines, path=None, maxLines=4 ):
 	file = file.replace( fr , frX )
 
 	if "\t'description': 'Changes the world'," in file:
-		print()
+		_.pr()
 		txt = _.colorThis( [ ' Please add a description for the app ' ] , 'yellow', p=0 )
 		txt += _.colorThis( [ filenameDisplay.split('.')[0] ] , 'red', p=0 )
-		print( txt )
+		_.pr( txt )
 		description = ''
 		description = input( '\n\tDescription: ' )
-		print()
+		_.pr()
 		file = file.replace( "\t'description': 'Changes the world'," ," \t'description': '"+description+"'," )
 	aTag = "\t\t\t\t\t\t'DEFAULT',\n"
 	if aTag in file:
-		print()
+		_.pr()
 		txt = _.colorThis( [ ' Please add a hashtags for the app ' ] , 'yellow', p=0 )
 		txt += _.colorThis( [ filenameDisplay.split('.')[0] ] , 'red', p=0 )
-		print( txt )
+		_.pr( txt )
 		hashtags = '' 
 		hashtags = input( '\n\tHashtags(one,two): ' )
 		newTags = []
@@ -462,7 +462,7 @@ def postFileCleanup( fileLines, path=None, maxLines=4 ):
 				
 
 			file = file.replace( aTag , ''.join( newTags ) )
-		print()
+		_.pr()
 	if not isImport:
 		xExample = 'p thisApp -file file.txt'
 		aExample = "\t\t\t\t\t\t_.hp('"+xExample+"'),\n"
@@ -470,10 +470,10 @@ def postFileCleanup( fileLines, path=None, maxLines=4 ):
 			import subprocess
 			dataTXT = subprocess.check_output(["doskey", "/history"])
 			dataTXT = str(dataTXT,'iso-8859-1', 'ignore')
-			# print( dataTXT )
+			# _.pr( dataTXT )
 			# do = ' doskey /history > "' + _v.tmpf + '"'
 			# do = 'h > %tmpf%'
-			# # print( do )
+			# # _.pr( do )
 			# os.system( '"' + do + '"' )
 
 			# dataTXT = _.getText( _v.tmpf, raw=True, clean=2 ).split('\n')
@@ -484,25 +484,25 @@ def postFileCleanup( fileLines, path=None, maxLines=4 ):
 			txt += _.colorThis( [ filenameDisplay.split('.')[0] ] , 'red', p=0 )
 
 			newExample = []
-			# print('dataTXT',dataTXT)
+			# _.pr('dataTXT',dataTXT)
 
 			for line in dataTXT.split('\n'):
 				line = _str.totalClean( line )
 				line += ' '
-				# print( 'test:', line )
+				# _.pr( 'test:', line )
 				if line.lower().startswith( 'p '+fn.lower()+' ' ):
 					if first:
 						first = False
-						print(  )
-						print(  )
-						print( txt )
+						_.pr(  )
+						_.pr(  )
+						_.pr( txt )
 					_.colorThis( [ '\n\tAdd example (y): ' ] , 'cyan' )
 					if not 'n' in input( '\n\t\t ?: '+line ):
 						addExample = aExample.replace('\\','\\\\')
 						addExample = addExample.replace( xExample, line )
 						newExample.append( addExample )
 						_.colorThis( [ '\n\t\t\t Added' ] , 'green' )
-						print( addExample )
+						_.pr( addExample )
 					else:
 						_.colorThis( [ '\n\t\t\t NOT Added' ] , 'red' )
 
@@ -548,7 +548,7 @@ def secureFiles_Decrypt( path, pw ):
 	_.cp( 'crypt.de', 'Background.light_blue' )
 	_cryptFile.switch( 'Password', delete=True )
 	if len(pw):
-		# print(_blowfish.decrypt( pw, _vault.key() ))
+		# _.pr(_blowfish.decrypt( pw, _vault.key() ))
 		_cryptFile.switch( 'Password', _blowfish.decrypt( pw, _vault.key() ) )
 	_cryptFile.switch( 'Decrypt' )
 	_cryptFile.switch( 'Encrypt', delete=True )
@@ -650,7 +650,7 @@ def secureFiles(path):
 			if _.isCrypt(path):
 				secureFiles_Decrypt( path, secure_record['Password'] )
 
-		# print( 'isPreOpen', _.switches.isActive('isPreOpen') )
+		# _.pr( 'isPreOpen', _.switches.isActive('isPreOpen') )
 
 
 		
@@ -692,7 +692,7 @@ def action(path=None,flag=None):
 
 	__.openSecure = False
 	__.secureFilesID = None
-	# print( 'ran action', __.appReg )
+	# _.pr( 'ran action', __.appReg )
 	# millTimeStamp = lambda: int(round(time.time() * 1000))
 	# now = millTimeStamp()
 
@@ -703,20 +703,20 @@ def action(path=None,flag=None):
 	if _.switches.isActive('Input') or not path is None:
 		if path is None:
 			path = _.switches.value('Input')
-		# print( 'path::::', path )
+		# _.pr( 'path::::', path )
 		if os.path.isfile(path):
 			path = __.path(  os.path.abspath(path)  )
 			
-			# print('pre')
+			# _.pr('pre')
 			if True or _.switches.isActive('Test'):
 				# secureFiles(path)
 				if secureFiles(path):
 					# _.colorThis( [ 'Secure file' ], 'green' )
 					_.colorThis( path, 'cyan' )
-					# print(' -- TRUE -- ')
+					# _.pr(' -- TRUE -- ')
 					return None
 			
-			# print('post')
+			# _.pr('post')
 			global crypt_docs
 			cryptScan=False
 			if path.lower() in __.specifications['fileBackup-auto-crypt']['files']:
@@ -754,9 +754,9 @@ def action(path=None,flag=None):
 				# tF = theFile
 				if path.lower().endswith('.md'):
 					todo.append('\n___\n')
-					# print('A')
+					# _.pr('A')
 					theFile = _decrypt_docs.imp.md_clean(theFile)
-					# print('B')
+					# _.pr('B')
 					# if not tF == theFile:
 					#   _.saveText(theFile,path)
 					#   _.cp('FIXED: .md lines','yellow')
@@ -779,7 +779,7 @@ def action(path=None,flag=None):
 					newTemp=[]
 					crypt_segment = False
 					for segment in segments:
-						# print(segment.split('\n')[0])
+						# _.pr(segment.split('\n')[0])
 						# if crypy+' ' in segment or crypy+'\n' in segment or crypy+'\t' in segment:
 						if crypy+' ' in segment.split('\n')[0] or crypy+'\n' in segment.split('\n')[0]+'\n' or crypy+'\t' in segment.split('\n')[0]:
 							segment=segment.replace('!V!','')
@@ -798,16 +798,16 @@ def action(path=None,flag=None):
 						newTemp.append(segment)
 					theFile=doc_sep_.join(newTemp)
 				if path.lower().endswith('.md'):
-					# print(1)
+					# _.pr(1)
 					theFile = _decrypt_docs.imp.vcrypyAA(theFile)
 					theFile = _decrypt_docs.imp.vcrypyB(theFile)
-					# print(2)
+					# _.pr(2)
 
 				if crypt_segment or __.specifications['fileBackup-auto-crypt']['scanA'] in theFile  or  __.specifications['fileBackup-auto-crypt']['scanB'] in theFile or crypy in theFile:
 
 
 
-					# print(  'secure line found'  )
+					# _.pr(  'secure line found'  )
 					_.colorThis(  [ 'scan: positive, found sensitive data' ], 'Background.red'  )
 					_.colorThis(  [ 'securing data' ], 'Background.green'  )
 					newFile = []
@@ -838,8 +838,8 @@ def action(path=None,flag=None):
 						#   line = line.replace(  ' '+__.specifications['fileBackup-auto-crypt']['scanB'], __.specifications['fileBackup-auto-crypt']['scanB']  )
 						#   if '>'+__.specifications['fileBackup-auto-crypt']['scanB'] in line:
 						#       lineP = line.split( '>'+__.specifications['fileBackup-auto-crypt']['scanB'] )
-						#       # print( lineP )
-						#       # print( line )
+						#       # _.pr( lineP )
+						#       # _.pr( line )
 						#       line = _str.cleanBE( line, ' ' )
 						#       line = _str.cleanBE( line, '\t' )
 						#       line = _str.cleanBE( line, ' ' )
@@ -847,8 +847,8 @@ def action(path=None,flag=None):
 						#       line = _blowfish.encrypt(    _str.cleanBE( lineP[1], ' ' )    ,    _str.cleanBE( lineP[0], ' ' )    )
 						#   if __.specifications['fileBackup-auto-crypt']['scanB']+'<' in line:
 						#       lineP = line.split( __.specifications['fileBackup-auto-crypt']['scanB']+'<' )
-						#       # print( lineP )
-						#       # print( line )
+						#       # _.pr( lineP )
+						#       # _.pr( line )
 						#       line = _blowfish.encrypt(    _str.cleanBE( lineP[0], ' ' )    ,    _str.cleanBE( lineP[1], ' ' )    )
 
 
@@ -895,15 +895,15 @@ def action(path=None,flag=None):
 		if not _.switches.isActive('Silent'):
 			_.colorThis( [  path  ], 'cyan' )
 			
-			# print(path)
+			# _.pr(path)
 			# sys.exit()
-			# print(path)
+			# _.pr(path)
 
 
 		name = Path(path).name
 		if not os.path.isfile(path):
 			_.colorThis( [  'Does not exist'  ], 'red' )
-			# print('Does not exist')
+			# _.pr('Does not exist')
 			# txtScheduler = _.getTable( 'fileBackupSchedule.json' )
 			# path = os.path.abspath(path)
 			# txtScheduler.append( { 'timestamp': genEpoch(), 'file': path, 'status': 0, 'app': 'fileBackup', 'group': 0 } )
@@ -931,7 +931,7 @@ def action(path=None,flag=None):
 					thisFlag = _.switches.value('Flag')
 					_bkLog.switch( 'Flag', thisFlag )
 					_bkLog.imp.addFlagIfHasBackup( idCheck )
-				# print(idCheck)
+				# _.pr(idCheck)
 				return idCheck
 			else:
 
@@ -992,14 +992,14 @@ def action(path=None,flag=None):
 				except Exception as e:
 					result = 'Error'
 				if _.switches.isActive('Result'):
-					print(result)
+					_.pr(result)
 				else:
 					pass
-					# print(result)
+					# _.pr(result)
 					if not _.switches.isActive('Silent'):
 						_.printBold('Backup Successful', 'green')
 						_.cp(newname,'darkcyan')
-					# print(newname)
+					# _.pr(newname)
 					return newname
 	return True
 
@@ -1040,14 +1040,14 @@ for i,x in enumerate(__.specifications['fileBackup-auto-crypt']['folders']):
 
 
 # for i,x in enumerate(__.specifications['fileBackup-auto-crypt']['files']):
-#   print(  'f:', x  )
-# print()
+#   _.pr(  'f:', x  )
+# _.pr()
 # path = _.switches.value('Input')
 # path = os.path.abspath(path)
-# print( 'i:',path )
+# _.pr( 'i:',path )
 # if path.lower() in __.specifications['fileBackup-auto-crypt']['files']:
-#   print( 'file match' )
-# print()
+#   _.pr( 'file match' )
+# _.pr()
 # sys.exit()
 
 try:
@@ -1092,6 +1092,7 @@ doc_sep = '\n___________________________________________________________________
 if __name__ == '__main__':
 	action()
 	__.isExit()
+
 
 
 

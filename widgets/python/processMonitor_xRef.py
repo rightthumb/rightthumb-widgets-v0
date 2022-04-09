@@ -270,33 +270,33 @@ def action():
 	# for i,record in enumerate(data['bad']):
 	# 	item = record['Operation'] +', '+ record['Result']
 	# 	if not item in tempSpent:
-	# 		print( item )
+	# 		_.pr( item )
 	# 		tempSpent.append( item )
 
 	# for i,record in enumerate(data['good']):
 	# 	item = record['Operation'] +', '+ record['Result']
 	# 	if not item in tempSpent:
-	# 		print( item )
+	# 		_.pr( item )
 	# 		tempSpent.append( item )
 
 
 	# sys.exit()
 
-	print()
-	print()
+	_.pr()
+	_.pr()
 
 	errorsSpent = []
 	for i,record in enumerate(data['good']):
 		if record['Result'] == 'SUCCESS':
 
 			if '.pst' in record['Path'].lower() and 'grow' in record['Path'].lower():
-				# print()
-				# print()
-				# print()
-				# print()
+				# _.pr()
+				# _.pr()
+				# _.pr()
+				# _.pr()
 				# _.printTest( record, x=0 )
-				# print()
-				# print()
+				# _.pr()
+				# _.pr()
 				# _.printTest( data['index'][ record['Path'].lower() ], x=0 )
 			# if i:
 				try:
@@ -305,7 +305,7 @@ def action():
 					for test in data['index'][ record['Path'].lower() ]:
 
 						# if not test['Operation'] == record['Operation']:
-						# 	print( test['Path'], record['Operation'], test['Operation'] )
+						# 	_.pr( test['Path'], record['Operation'], test['Operation'] )
 						if test['Operation'] == record['Operation']:
 
 							# spent['good'] = test['Sort']
@@ -318,14 +318,14 @@ def action():
 									thisError = test['Operation']+','+test['Result']+','+test['Path'].lower()
 									if not thisError in errorsSpent:
 										errorsSpent.append( thisError )
-										print( record['Operation'],  test['Result'], test['Path'] )
+										_.pr( record['Operation'],  test['Result'], test['Path'] )
 
 
 				except Exception as e:
 					pass
 
 		# if i:
-		# 	print( record.keys() )
+		# 	_.pr( record.keys() )
 		# 	_.printTest( record )
 
 
@@ -382,6 +382,7 @@ log = []
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

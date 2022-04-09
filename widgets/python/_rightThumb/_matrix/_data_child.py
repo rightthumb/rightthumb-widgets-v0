@@ -67,7 +67,7 @@ class TheChild:
 	def set( self, data, trackingID=None ):
 		algorithm = _matrix.app.algorithmRegister(trackingID=trackingID)
 		self.live = _matrix.app.callers()[0]['file']
-		# print('self.live',self.live)
+		# _.pr('self.live',self.live)
 		# _.printVarSimple(  )
 
 		self.status = True
@@ -78,12 +78,12 @@ class TheChild:
 		_matrix.app.algorithmResult( algorithm, result=None )
 		return data
 
-		# print('set',self.value)
+		# _.pr('set',self.value)
 
 	def get( self, trackingID=None ):
 		algorithm = _matrix.app.algorithmRegister(trackingID=trackingID)
 		
-		# print('get')
+		# _.pr('get')
 		return _matrix.app.algorithmResult( algorithm, result=self.value )
 
 	def clean( self, data, clean=0, trackingID=None ):
@@ -185,6 +185,7 @@ class TheChild:
 		self.clear()
 		
 		return _matrix.app.algorithmResult( algorithm, result=val )
+
 
 
 

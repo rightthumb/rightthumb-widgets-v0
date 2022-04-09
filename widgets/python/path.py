@@ -161,17 +161,18 @@ def action():
 			file = file.replace( _v.slash+_v.slash, _v.slash )
 			if _.switches.isActive('Validate'):
 				if os.path.isdir( file ):
-					print( file )
+					_.pr( file )
 				if os.path.isfile( file ):
-					print( file )
+					_.pr( file )
 			elif not _.switches.isActive('Validate'):
-				print( file )
+				_.pr( file )
 
 
 
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

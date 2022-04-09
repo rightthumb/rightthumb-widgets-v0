@@ -189,7 +189,7 @@ def process( file, h ):
 	end = time.time()
 	diff = end - start
 	if _.switches.isActive('Time'):
-		print( h, diff )
+		_.pr( h, diff )
 			
 	return result
 	
@@ -199,9 +199,9 @@ def action():
 		_.appData[__.appReg]['pipe'] = _.switches.values('Files')
 	if type( _.appData[__.appReg]['pipe'] ) == bool and not _.switches.isActive('Files'):
 		_.help()
-		print('Here')
+		_.pr('Here')
 
-	# print( _.appData[__.appReg]['pipe'] )
+	# _.pr( _.appData[__.appReg]['pipe'] )
 	# sys.exit()
 	hashes = 	{
 					"md5": "e400cf095a5ce8d540be1ffff5380829",
@@ -261,8 +261,8 @@ def action():
 			record_dic = {}
 			if multHash:
 				if not _.switches.isActive('Clean') and not _.switches.isActive('Test'):
-					print()
-					print()
+					_.pr()
+					_.pr()
 					_.colorThis(   [ row ], 'green'   )
 				for h in _.switches.values('Hash'):
 					record = process( row, h )
@@ -300,7 +300,7 @@ def action():
 					try:
 						record
 					except Exception as e:
-						print( 'Hash', _.switches.values('Hash') )
+						_.pr( 'Hash', _.switches.values('Hash') )
 						sys.exit()
 
 					if multiFile:
@@ -326,6 +326,7 @@ def action():
 if __name__ == '__main__':
 	action()
 	__.isExit()
+
 
 
 

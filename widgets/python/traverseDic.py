@@ -186,26 +186,26 @@ def action():
 			# if True:
 			if shouldInclude:
 				
-				# print( record )
+				# _.pr( record )
 				if _.switches.isActive('Parents'):
 					found = False
 					for pp in _.switches.values('Parents'):
 						pp = _str.cleanBE(pp,' ')
-						# print( '|'+pp+'|' )
+						# _.pr( '|'+pp+'|' )
 						# found = False
 						if len(pp):
 							if '[' in pp:
 								ppx = eval(pp)
 								if ppx == record['parents']:
 									found = True
-									# print('A')
+									# _.pr('A')
 
 							elif not ';' in pp:
 								if pp.lower() == record['parents'][ len(record['parents'])-1 ].lower():
 									found = True
-									# print('B', pp)
+									# _.pr('B', pp)
 							elif ';' in pp:
-								# print( pp )
+								# _.pr( pp )
 								found = False
 								mpx = len(record['parents'])-1
 								ipi = 0
@@ -216,9 +216,9 @@ def action():
 									testing = []
 									for ip, px in enumerate(pps):
 										ipi+=1
-										# print( mpx, mpx-ip )
+										# _.pr( mpx, mpx-ip )
 										# temp.append([ px, record['parents'][ ip ] ])
-										# print(px, record['parents'][ ip ] )
+										# _.pr(px, record['parents'][ ip ] )
 										# testing['a'].append( px.lower() )
 										# testing['b'].append( record['parents'][ ip ].lower() )
 										if px.lower() == record['parents'][ ip ].lower():
@@ -226,15 +226,15 @@ def action():
 											testing.append(record['parents'][ ip ])
 											# good = False
 									if len(testing) == len(pps) and (len(record['parents']) == ipi or len(record['parents']) == ipi+1):
-										# print( 'xx', len(testing) , len(pps) )
-										# print()
-										# print()
-										# print()
+										# _.pr( 'xx', len(testing) , len(pps) )
+										# _.pr()
+										# _.pr()
+										# _.pr()
 										# for x in temp:
-										# 	print(x)
-										# print(  )
+										# 	_.pr(x)
+										# _.pr(  )
 										found = True
-										# print('C', record['parents'], pp, len(pp),'\t',testing)
+										# _.pr('C', record['parents'], pp, len(pp),'\t',testing)
 
 
 					pass
@@ -269,13 +269,13 @@ def action():
 							"""
 						else:
 							pass
-							print( record )
+							_.pr( record )
 		if _.switches.isActive('Lookup'):
 
 
 			theSearch = {}
 			for key in records.keys():
-				# print()
+				# _.pr()
 				fields = []
 				for ri, record in enumerate(records[key]):
 					fields.append(record['field'])
@@ -330,21 +330,21 @@ def action():
 
 			pass
 			# researchType single multi_individual multi_pattern
-			# print( 'records', records )
-			# print( 'researchType', researchType )
+			# _.pr( 'records', records )
+			# _.pr( 'researchType', researchType )
 			pass
 			if False and researchType == 'single' or researchType == 'multi_individual':
 
 				payload = {}
 				for key in records.keys():
-					# print()
+					# _.pr()
 					fields = []
 					for ri, record in enumerate(records[key]):
 						fields.append(record['field'])
 					for ri, record in enumerate(records[key]):
 						field = record['parents'] + [ record['field'] ]
 						_.traverse_dic_research['returnField'] = []
-						# print( field )
+						# _.pr( field )
 						_.traverse_dic( theDic, config={ 'returnField': field } )
 						for tdri, pay in enumerate(_.traverse_dic_research['returnField']):
 							pay['parents'].pop()
@@ -363,9 +363,9 @@ def action():
 
 								payload[ key ][ delim.join(pay['parents']) ][ record['field'] ] = pay['data']
 			if True:
-				# print( 'test' )
+				# _.pr( 'test' )
 			# elif False and researchType == 'multi_pattern':
-				# print( 'here' )
+				# _.pr( 'here' )
 				# _.printVarSimple( theSearch )
 				# _.printVarSimple( config )
 				# sys.exit()
@@ -382,9 +382,9 @@ def action():
 
 
 				for tdri, pay in enumerate(_.traverse_dic_research['returnFields']):
-					# print()
-					# print( pay['parents'] )
-					# print( pay['parentsI'] )
+					# _.pr()
+					# _.pr( pay['parents'] )
+					# _.pr( pay['parentsI'] )
 					# pay['parents'].pop()
 					var = buildVariable({
 											'pay': pay,
@@ -393,9 +393,9 @@ def action():
 					d = pay['data']
 					do = var + ' = d'
 					exec( do )
-					# print( do, d )
-					# print( payload )
-					# print( do )
+					# _.pr( do, d )
+					# _.pr( payload )
+					# _.pr( do )
 
 
 				_.printVarSimple( payload )
@@ -413,27 +413,27 @@ def buildVariable( config ):
 
 
 
-	# print( config )
+	# _.pr( config )
 	r = 'xXx'
 	blank = '[\''+r+'\']'
 	build = []
 	build2 = []
 	build.append( 'payload' )
 	build2.append( 'payload' )
-	# print()
-	# print(config['pay']['parents'])
-	# print(config['pay']['parentsI'])
+	# _.pr()
+	# _.pr(config['pay']['parents'])
+	# _.pr(config['pay']['parentsI'])
 	# _.printVarSimple( config['settings'] )
 	# sys.exit()
 	for i,item in enumerate(config['pay']['parents']):
-		# print( config['pay']['parents'][i] )
-		# print( item )
+		# _.pr( config['pay']['parents'][i] )
+		# _.pr( item )
 		# field2 = 
 		build2.append( str(item) )
 
 		field = None
 		if item == theI:
-			# print( 'here' )
+			# _.pr( 'here' )
 			# sys.exit()
 			field = str(config['pay']['parentsI'][i])
 		elif i > len(config['settings']['common'])-1 :
@@ -442,18 +442,18 @@ def buildVariable( config ):
 
 		if not field is None:
 			do = ''.join( build )
-			# print( 'do', do )
+			# _.pr( 'do', do )
 			test = eval( do )
 			build.append( blank.replace( r, field ) )
 			
 			do = ''.join( build )
-			# print( 'do', do )
+			# _.pr( 'do', do )
 			if not field in test:
 				exec( ''.join( build ) + '={ }' )
 
 			px = delim.join(build2)
 			if px in config['settings'].keys():
-				# print( 'here' )
+				# _.pr( 'here' )
 				# sys.exit()
 				for x in config['settings'][px]:
 					y = ''.join( build+[ blank.replace( r, x ) ] )
@@ -489,6 +489,7 @@ theI = '-i-'
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

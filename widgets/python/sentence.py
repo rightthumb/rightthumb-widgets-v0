@@ -200,12 +200,13 @@ def action():
 	rd_parser = nltk.RecursiveDescentParser(grammar1)
 	sent = _.switches.values('Test')
 	for tree in rd_parser.parse(sent):
-		print(tree)
+		_.pr(tree)
 
 
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

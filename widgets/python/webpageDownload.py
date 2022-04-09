@@ -198,7 +198,7 @@ def action():
 	_browser.imp.project.close()
 	_.printVar( data )
 	
-	print()
+	_.pr()
 	_.saveTable( data, 'Church_Directory.json' )
 
 
@@ -213,7 +213,7 @@ def action2():
 		_.saveText( page.content , _.switches.values('Save')[0] )
 		_.colorThis( 'Saved', 'green' )
 	else:
-		print( page.content )
+		_.pr( page.content )
 	# tree = html.fromstring(page.content)
 	# tables = tree.cssselect('.r')
 	# for t in tables:
@@ -226,9 +226,9 @@ def action2():
 	# 		link = str(links[0].attrib['href'])
 	# 		link = link.replace('/url?q=http:','http:')
 	# 		text = t.text_content()
-	# 		# print(text)
-	# 		print()
-	# 		print(text)
+	# 		# _.pr(text)
+	# 		_.pr()
+	# 		_.pr(text)
 
 
 
@@ -242,6 +242,7 @@ def action2():
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

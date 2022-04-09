@@ -309,10 +309,10 @@ setTimeout(function(){ scrollEnd(); }, 800);
 		apps = _.getTable( 'android_apps.json' )
 
 	selectedApps = []
-	# print( 'HERE' )
+	# _.pr( 'HERE' )
 	if _.switches.isActive('Get'):
 		for i,app in enumerate(apps):
-			# print( app )
+			# _.pr( app )
 			_.threads.add( 'genre', scheduleX, [ app ] )
 			# if _.showLine( app['genre'] + ' ' + app['company'] + ' ' + app['name'] + ' ' + app['description'] + ' ' + app['stars'] ):
 	else:
@@ -322,7 +322,7 @@ setTimeout(function(){ scrollEnd(); }, 800);
 
 
 def complete():
-	# print( 'HERE: complete 0' )
+	# _.pr( 'HERE: complete 0' )
 	global apps
 	global masterData
 
@@ -331,7 +331,7 @@ def complete():
 		_.saveTable( masterData, _v.androidMaster, printThis=False )
 	except Exception as e:
 		pass
-	# print( 'HERE: complete 1' )
+	# _.pr( 'HERE: complete 1' )
 
 	selectedApps = []
 	for i,app in enumerate(apps):
@@ -342,11 +342,11 @@ def complete():
 
 	# if _.switches.isActive('Get') or _.switches.isActive('Manual'):
 
-	print()
-	print()
+	_.pr()
+	_.pr()
 
 	# for i,app in enumerate(selectedApps):
-	# 	print( i, '\t', app['name'] )
+	# 	_.pr( i, '\t', app['name'] )
 	_.switches.fieldSet( 'Long', 'active', True )
 
 	if not _.switches.isActive('GroupBy') and not _.switches.isActive('Sort'):
@@ -355,7 +355,7 @@ def complete():
 	_.tables.register('apps',selectedApps)
 	_.tables.fieldProfileSet('apps','company,genre,name,description','trigger',_.printSafe)
 	if _.switches.isActive('Column'):
-		# print( _.switches.value('Column') )
+		# _.pr( _.switches.value('Column') )
 		# sys.exit()
 		# _.tables.print('apps', 'company,genre,name' )
 		_.tables.print('apps', _.switches.value('Column') )
@@ -366,8 +366,8 @@ def complete():
 			_.tables.print('apps','genre,company,stars,name')
 
 
-	print()
-	print( 'Apps:', len( apps ) )
+	_.pr()
+	_.pr( 'Apps:', len( apps ) )
 
 	
 	if _.switches.isActive('Ask'):
@@ -375,17 +375,17 @@ def complete():
 def loopList( selectedApps ):
 	ask = ''
 
-	print()
-	print()
+	_.pr()
+	_.pr()
 
 	while not 'x' in ask.lower():
-		print()
+		_.pr()
 		ask = input( 'View app webpage: ' )
 		if not 'x' in ask.lower():
 			try:
 				_.openURL( selectedApps[int(ask)]['url'] )
 			except Exception as e:
-				print( 'Error: bad id' )
+				_.pr( 'Error: bad id' )
 
 def androidMaster( data ):
 	global masterData
@@ -411,7 +411,7 @@ def androidMaster( data ):
 						if _.switches.isActive('Manual'):
 							if masterData[i]['genre'] == '' or masterData[i]['company'] == '' :
 								_.openURL( data['url'] )
-								print()
+								_.pr()
 								copyManual()
 								gc = input( ' Manual input: ' )
 								if '{' in gc:
@@ -429,10 +429,10 @@ def androidMaster( data ):
 		gc = getGenre( data['url'] )
 		data['genre'] = gc[0]
 		data['company'] = gc[1]
-		# print( 'genre:', data['genre'] )
+		# _.pr( 'genre:', data['genre'] )
 		masterData.append( data )
 		# _.saveTable( masterData, _v.androidMaster, printThis=False )
-		# print( 'NOT FOUND:', data['genre'],'\t', data )
+		# _.pr( 'NOT FOUND:', data['genre'],'\t', data )
 		# sys.exit()
 		# sys.exit()
 
@@ -460,7 +460,7 @@ def scheduleX( data, qID=False ):
 		data['genre'] = gc[0]
 		data['company'] = gc[1]
 
-		# print( 'genre:', data['genre'] )
+		# _.pr( 'genre:', data['genre'] )
 		masterData.append( data )
 		_.saveTable( masterData, _v.androidMaster, printThis=False )
 		# _.saveTable( masterData, _v.androidMaster )
@@ -623,6 +623,7 @@ def xRef():
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

@@ -213,11 +213,11 @@ def process(path):
 			if line.startswith('class '):
 				lastIsIf = False
 				ln = spaceOut(line)
-				# print(ln)
+				# _.pr(ln)
 				lastClass = ln.split(' ')[1]
 				table[lastClass] = []
 				tablev[lastClass] = []
-				print(lastClass)
+				_.pr(lastClass)
 
 			if line.startswith('\tif ') or line.startswith('\telif ') or line.startswith('\telse:') :
 				lastIsIf = True
@@ -229,7 +229,7 @@ def process(path):
 				if lastClass:
 					table[lastClass].append(lastDef)
 					tabd[lastDef] = lastClass
-					print('\t',lastDef)
+					_.pr('\t',lastDef)
 			if line.startswith('\t') and not line.startswith('\t\t') and '=' in line:
 				lx = line.split('\t')[1]
 				ln = spaceOut(lx)
@@ -248,9 +248,9 @@ def process(path):
 					if not 'def' == lastVar and not 'if' == lastVar :
 						tabv[lastVar] = lastClass
 
-		print()
-		print()
-		print()
+		_.pr()
+		_.pr()
+		_.pr()
 		newfile = ''
 		myGlobals = []
 		myGlobalsAll = []
@@ -265,7 +265,7 @@ def process(path):
 				lastIsIf = False
 				ln = spaceOut(line)
 				lastClass = ln.split(' ')[1]
-				print(lastClass)
+				_.pr(lastClass)
 			if line.startswith('\tif ') or line.startswith('\telif ') or line.startswith('\telse:') :
 				lastIsIf = True
 
@@ -305,11 +305,11 @@ def process(path):
 				if lastClass:
 					line = line.replace( 'vc.'+lastClass+'.', 'self.' )
 				# if lastClass and lastClass+'' in line:
-				#   print()
-				#   print('vc.'+lastClass+'.', line )
-				#   print()
+				#   _.pr()
+				#   _.pr('vc.'+lastClass+'.', line )
+				#   _.pr()
 				# # if 'vc.'+lastClass+'.' in line:
-				#   print('vc.'+lastClass+'.' )
+				#   _.pr('vc.'+lastClass+'.' )
 
 
 
@@ -340,6 +340,7 @@ def action():
 if __name__ == '__main__':
 	action()
 	__.isExit()
+
 
 
 

@@ -172,9 +172,9 @@ def searchInTicket( ticket ):
 			for row in file:
 				if _.showLine( row ):
 					results.append( row )
-					# print( row )
+					# _.pr( row )
 		except Exception as e:
-			print( 'Error:', chosen )
+			_.pr( 'Error:', chosen )
 
 
 
@@ -188,7 +188,7 @@ def processTickets():
 				_.appData[__.appReg]['pipe'].append( row )
 	if not type( _.appData[__.appReg]['pipe'] ) == bool:
 		_.pipeCleaner()
-		# print( _.printVar(_.appData) )
+		# _.pr( _.printVar(_.appData) )
 		for i,row in enumerate(_.appData[__.appReg]['pipe']):
 			data = searchInTicket( row )
 			for d in data:
@@ -200,7 +200,7 @@ def getTicket( epoch ):
 	global epochTickets
 	result = ''
 	for ticket in epochTickets:
-		# print( epoch, ticket['start'], ticket['end'] )
+		# _.pr( epoch, ticket['start'], ticket['end'] )
 		# sys.exit()
 		try:
 			if float(epoch) > float(ticket['start']) and float(epoch) < float(ticket['end']):
@@ -238,17 +238,17 @@ def action():
 			if not type( _.appData[__.appReg]['pipe'] ) == bool:
 				data = processTickets()
 				if not len( data ):
-					print( 'No Results' )
+					_.pr( 'No Results' )
 				else:
 					nData = []
 					for row in set(data):
 						nData.append({ 'row': row })
 						
-					# print( type( nData ) )
+					# _.pr( type( nData ) )
 					for row in _.tables.returnSorted( 'row', 'd.row', nData ):
-						print( row['row'] )
+						_.pr( row['row'] )
 			else:
-				print( 'No tickets found' )
+				_.pr( 'No tickets found' )
 
 
 
@@ -272,13 +272,14 @@ def load():
 	else:
 		do = 'clear'
 	os.system( '"' + do + '"' )
-	print()
+	_.pr()
 
 backupLog = []
 epochTickets = []
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

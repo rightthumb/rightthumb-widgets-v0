@@ -192,11 +192,11 @@ def process(path):
 def action():
 	if _.switches.isActive('Files'):
 		for path in _.switches.values('Files'):
-			# print('____________')
+			# _.pr('____________')
 			# test=__.file_headers(path).default()
-			# print(test)
-			# print(type(test))
-			# print('____________')
+			# _.pr(test)
+			# _.pr(type(test))
+			# _.pr('____________')
 
 			f = process(path)
 			if type(f) == str:
@@ -215,7 +215,7 @@ def editor(path):
 		_file_open.switch('Files',path)
 		_file_open.action()
 	else:
-		print(_v.meta['code_editor'],path)
+		_.pr(_v.meta['code_editor'],path)
 
 
 _file_open = _.regImp( __.appReg, 'file-open' )
@@ -227,6 +227,7 @@ import _rightThumb._string as _str
 if __name__ == '__main__':
 	action()
 	__.isExit()
+
 
 
 

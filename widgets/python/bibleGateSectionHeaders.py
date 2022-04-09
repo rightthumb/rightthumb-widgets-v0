@@ -168,7 +168,7 @@ def pipeCleaner():
 
 # _dir.sqlCreateTable( db, deleteDBFirst=True, close=True )
 # obj = _dir.fileInfo( path, sql=True )
-# print(   _dir.fileInfo( _.switches.value('Input') )['size']   )
+# _.pr(   _dir.fileInfo( _.switches.value('Input') )['size']   )
 
 # _.saveLog('queue')
 # _.saveLog('audit')
@@ -259,10 +259,10 @@ def processSection( bkid, book, chapter, url, qID=0 ):
 			c = str(s[0].get('class'))
 			r = c.replace('text ','')
 			t = cleanupString(s[0].text_content())
-			# print( bkid, book, chapter, url)
+			# _.pr( bkid, book, chapter, url)
 			info = { 'book': book, 'chapter': chapter, 'verses': r, 'text': t, 'url': url,  }
 			data[bkid]['chapters'][str(chapter)].append( info )
-			# print( book, chapter, r )
+			# _.pr( book, chapter, r )
 			payload += 1
 			mem += sys.getsizeof( info )
 			# mem = 0
@@ -305,7 +305,7 @@ def action():
 			total += 1
 
 	_.threads.statusTotal = total
-	print()
+	_.pr()
 	total = 0
 	for mi,m in enumerate(meta):
 		# if mi == 0:
@@ -323,7 +323,7 @@ def action():
 			# if ci < 10:
 			link = url + m['name'] + '+' + str(c['chapter'])
 			_.threads.add( 'headers', processSection, [ mi, m['name'], (c['chapter']), link ] )
-	# print(total)
+	# _.pr(total)
 
 
 # def action2():
@@ -340,17 +340,17 @@ def complete():
 	global total
 	global payload
 
-	print()
-	print()
-	print('________________________________')
-	print()
-	print(' All books have been processed')
-	print('________________________________')
-	print()
-	print( 'data:',len(data) )
-	print( 'urls:', total)
-	print( 'payload:', payload)
-	print()
+	_.pr()
+	_.pr()
+	_.pr('________________________________')
+	_.pr()
+	_.pr(' All books have been processed')
+	_.pr('________________________________')
+	_.pr()
+	_.pr( 'data:',len(data) )
+	_.pr( 'urls:', total)
+	_.pr( 'payload:', payload)
+	_.pr()
 	if _.switches.isActive('Version'):
 		_.saveTable( data , 'Bible_section_headers_biblegateway_'+_.switches.value('Version').upper()+'.json', printThis=True )
 	else:
@@ -364,6 +364,7 @@ payload = 0
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

@@ -304,24 +304,24 @@ def action():
 			key = file.read()
 
 
-	print( 'Domain:', domain )
-	print( 'IP Addresses:', ipaddresses )
-	print( 'Label:', label )
+	_.pr( 'Domain:', domain )
+	_.pr( 'IP Addresses:', ipaddresses )
+	_.pr( 'Label:', label )
 
 	cert = generate_selfsigned_cert( hostname=domain, ip_addresses=ipaddresses, key=key )
-	# print()
-	# print( 'cert_pem:' )
-	# print()
-	# print( str(  cert[0]  ,'iso-8859-1') )
-	# print()
-	# print( 'key_pem:' )
-	# print()
-	# print( str(  cert[1]  ,'iso-8859-1') )
+	# _.pr()
+	# _.pr( 'cert_pem:' )
+	# _.pr()
+	# _.pr( str(  cert[0]  ,'iso-8859-1') )
+	# _.pr()
+	# _.pr( 'key_pem:' )
+	# _.pr()
+	# _.pr( str(  cert[1]  ,'iso-8859-1') )
 
 	# if _.switches.isActive('Save'):
 	_.saveText(  str(  cert[0]  ,'iso-8859-1'), _v.keys+_v.slash+'self_public_'+label+'.crt'  )
 	_.saveText(  str(  cert[1]  ,'iso-8859-1'), _v.keys+_v.slash+'self_private_'+label+'.pem'  )
-	print( 'Saved' )
+	_.pr( 'Saved' )
 
 # https://gist.github.com/bloodearnest/9017111a313777b9cce5
 ########################################################################################
@@ -337,6 +337,7 @@ if __name__ == '__main__':
 
 
 # Copyright 2018 Simon Davy
+
 
 
 

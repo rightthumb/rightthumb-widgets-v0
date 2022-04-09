@@ -186,7 +186,7 @@ if not sys.stdin.isatty():
 
 # _dir.sqlCreateTable( db, deleteDBFirst=True, close=True )
 # obj = _dir.fileInfo( path, sql=True )
-# print(   _dir.fileInfo( _.switches.value('Input') )['size']   )
+# _.pr(   _dir.fileInfo( _.switches.value('Input') )['size']   )
 
 # _.saveLog('queue')
 # _.saveLog('audit')
@@ -253,13 +253,13 @@ def action():
 		one = _.switches.value('FileOne')
 		two = _.switches.value('FileTwo')
 	else:
-		print('Error 0')
+		_.pr('Error 0')
 		sys.exit()
 	try:
 		fileOne = _.getText( one )
 		fileTwo = _.getText( two )
 	except Exception as e:
-		print('Error 1')
+		_.pr('Error 1')
 		sys.exit()
 
 	listOne = []
@@ -308,65 +308,66 @@ def action():
 
 
 	if not fileOneFalseCount and not fileTwoFalseCount:
-		print( 'Lists are a match' )
+		_.pr( 'Lists are a match' )
 	else:
 		if not fileOneFalseCount:
-			print( 'All items in one are in two' )
+			_.pr( 'All items in one are in two' )
 		else:
 			if not _.switches.isActive('Report') or '1' in _.switches.value('Report') or 'one' in _.switches.value('Report').lower():
 				if not _.switches.isActive('Report'):
-					print( 'Items in list 1 that are missing in list 2:' )
-					print()
+					_.pr( 'Items in list 1 that are missing in list 2:' )
+					_.pr()
 				for i, row in enumerate(fileOneFalseList):
 					if _.switches.isActive('NoCount'):
-						print( row )
+						_.pr( row )
 					else:
-						print( i+1, row )
+						_.pr( i+1, row )
 				if not _.switches.isActive('Report'):
-					print()
-					print()
-					print()
+					_.pr()
+					_.pr()
+					_.pr()
 		if not fileTwoFalseCount:
-			print( 'All items in two are in one' )
+			_.pr( 'All items in two are in one' )
 		else:
 			if not _.switches.isActive('Report') or '2' in _.switches.value('Report') or 'two' in _.switches.value('Report').lower():
 				if not _.switches.isActive('Report'):
-					print( 'Items in list 2 that are missing in list 1:' )
-					print()
+					_.pr( 'Items in list 2 that are missing in list 1:' )
+					_.pr()
 				for i, row in enumerate(fileTwoFalseList):
 					if _.switches.isActive('NoCount'):
-						print( row )
+						_.pr( row )
 					else:
-						print( i+1, row )
+						_.pr( i+1, row )
 		if not _.switches.isActive('NoCount'):
-			print()
-			print( 'One:' )
-			print( '\tTotal:\t', fileOneTrueCount+fileOneFalseCount )
-			# print( '\tTrue:\t', fileOneTrueCount )
-			print( '\tFalse:\t', fileOneFalseCount )
-			print( '\t% T:\t', str(_.percentageDiffIntAuto( fileOneTrueCount+fileOneFalseCount, fileOneTrueCount))+'%' )
-			print( '\t% F:\t', str(_.percentageDiffIntAuto( fileOneTrueCount+fileOneFalseCount, fileOneFalseCount))+'%' )
-			print()
-			print( 'Two:' )
-			print( '\tTotal:\t', fileTwoTrueCount+fileTwoFalseCount )
-			# print( '\tTrue:\t', fileTwoTrueCount )
-			print( '\tFalse:\t', fileTwoFalseCount )
-			print( '\t% T:\t', str(_.percentageDiffIntAuto( fileTwoTrueCount+fileTwoFalseCount, fileTwoTrueCount))+'%' )
-			print( '\t% F:\t', str(_.percentageDiffIntAuto( fileTwoTrueCount+fileTwoFalseCount, fileTwoFalseCount))+'%' )
+			_.pr()
+			_.pr( 'One:' )
+			_.pr( '\tTotal:\t', fileOneTrueCount+fileOneFalseCount )
+			# _.pr( '\tTrue:\t', fileOneTrueCount )
+			_.pr( '\tFalse:\t', fileOneFalseCount )
+			_.pr( '\t% T:\t', str(_.percentageDiffIntAuto( fileOneTrueCount+fileOneFalseCount, fileOneTrueCount))+'%' )
+			_.pr( '\t% F:\t', str(_.percentageDiffIntAuto( fileOneTrueCount+fileOneFalseCount, fileOneFalseCount))+'%' )
+			_.pr()
+			_.pr( 'Two:' )
+			_.pr( '\tTotal:\t', fileTwoTrueCount+fileTwoFalseCount )
+			# _.pr( '\tTrue:\t', fileTwoTrueCount )
+			_.pr( '\tFalse:\t', fileTwoFalseCount )
+			_.pr( '\t% T:\t', str(_.percentageDiffIntAuto( fileTwoTrueCount+fileTwoFalseCount, fileTwoTrueCount))+'%' )
+			_.pr( '\t% F:\t', str(_.percentageDiffIntAuto( fileTwoTrueCount+fileTwoFalseCount, fileTwoFalseCount))+'%' )
 
-			print()
-			print( 'Totals:' )
-			print( '\tRows:\t', fileTwoTrueCount+fileTwoFalseCount+fileOneTrueCount+fileOneFalseCount )
-			print()
-			print( '\tUnique:\t', fileTwoTrueCount+fileTwoFalseCount+fileOneFalseCount )
-			print( '\tTrue:\t', fileOneTrueCount )
-			print( '\tFalse:\t', fileTwoFalseCount+fileOneFalseCount )
-			print( '\t% T:\t', str(_.percentageDiffIntAuto( fileTwoTrueCount+fileTwoFalseCount+fileOneFalseCount, fileTwoTrueCount))+'%' )
-			print( '\t% F:\t', str(_.percentageDiffIntAuto( fileTwoTrueCount+fileTwoFalseCount+fileOneFalseCount, fileTwoFalseCount+fileOneFalseCount))+'%' )
+			_.pr()
+			_.pr( 'Totals:' )
+			_.pr( '\tRows:\t', fileTwoTrueCount+fileTwoFalseCount+fileOneTrueCount+fileOneFalseCount )
+			_.pr()
+			_.pr( '\tUnique:\t', fileTwoTrueCount+fileTwoFalseCount+fileOneFalseCount )
+			_.pr( '\tTrue:\t', fileOneTrueCount )
+			_.pr( '\tFalse:\t', fileTwoFalseCount+fileOneFalseCount )
+			_.pr( '\t% T:\t', str(_.percentageDiffIntAuto( fileTwoTrueCount+fileTwoFalseCount+fileOneFalseCount, fileTwoTrueCount))+'%' )
+			_.pr( '\t% F:\t', str(_.percentageDiffIntAuto( fileTwoTrueCount+fileTwoFalseCount+fileOneFalseCount, fileTwoFalseCount+fileOneFalseCount))+'%' )
 # crossRef
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

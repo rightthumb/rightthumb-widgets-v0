@@ -177,7 +177,7 @@ if not sys.stdin.isatty():
 
 # _dir.sqlCreateTable( db, deleteDBFirst=True, close=True )
 # obj = _dir.fileInfo( path, sql=True )
-# print(   _dir.fileInfo( _.switches.value('Input') )['size']   )
+# _.pr(   _dir.fileInfo( _.switches.value('Input') )['size']   )
 
 # _.saveLog('queue')
 # _.saveLog('audit')
@@ -246,7 +246,7 @@ def action():
 			if _.switches.isActive('Score'):
 				for theLabel in __.pipeData:
 					if not theLabel in __.omitFromMovies:
-						# print('   -   ',theLabel)
+						# _.pr('   -   ',theLabel)
 						imdbID = googleID(theLabel,'movie')
 						__.cinema.rating(imdbID)
 	else:
@@ -257,14 +257,14 @@ def action():
 			if _.switches.isActive('Person'):
 				imdbID = googleID(_.switches.value('Person'),'person')
 		if not len(imdbID) > 0:
-			print('Google Error')
+			_.pr('Google Error')
 			sys.exit()
 		if _.switches.isActive('Episode'):
 			__.cinema.seasons(imdbID)
 			# __.cinema.inSeason(imdbID)
 		elif _.switches.isActive('SeasonStarts'):
 			ssv = _.switches.value('SeasonStarts')
-			# print(ssv)
+			# _.pr(ssv)
 			ssvp = ssv.split(',')
 			if len(ssvp) == 1:
 				__.cinema.seasonsStarts(imdbID,ssvp[0])
@@ -293,10 +293,10 @@ _.appData[__name__]['pipe'] = ''
 if not sys.stdin.isatty():
 	_.appData[__name__]['pipe'] = []
 	for pd in sys.stdin.readlines():
-		# print(pd)
+		# _.pr(pd)
 		pd = pd.replace('\n','')
 		if not pd == '':
-			# print(pd)
+			# _.pr(pd)
 			_.appData[__name__]['pipe'].append(pd)
 	try:
 		if not _.appData[__.appReg]['pipe'][0][0] in _str.safeChar:
@@ -308,10 +308,10 @@ if not sys.stdin.isatty():
 # 	return time.time()
 
 
-# print(type(__.pipeData))
+# _.pr(type(__.pipeData))
 
 __.aliases = _.getTable('imdb_aliases.json')
-# print(__.aliases)
+# _.pr(__.aliases)
 # test = input('pause')
 __.omitFromMovies = []
 __.omitFromMovies.append('Scotty\'S 4Th Birthday 7 16 84')
@@ -322,6 +322,7 @@ __.omitFromMovies.append('Scotty\'S 4Th Birthday 7 16 84')
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

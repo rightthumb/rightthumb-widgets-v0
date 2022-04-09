@@ -574,7 +574,7 @@ def action():
 		if ' ' in ext:
 			_.pv(rec)
 			for ii,x in enumerate(ext.split(' ')):
-				print( ii, x )
+				_.pr( ii, x )
 			ask=input('?: ')
 			ext = ext.split(' ')[int(ask)]
 		index[ rec['MIME Type'] ] = ext
@@ -587,6 +587,7 @@ def action():
 if __name__ == '__main__':
 	action()
 	__.isExit()
+
 
 
 

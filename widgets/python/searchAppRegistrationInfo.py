@@ -142,7 +142,7 @@ def action():
 	load()
 
 	if not _.switches.isActive( 'NoCount' ):
-		print()
+		_.pr()
 
 	rid = []
 	if _.switches.isActive( 'RemoveDefault' ):
@@ -313,25 +313,25 @@ def action():
 		diff = len(pIDs)-len(nIDs)
 
 	for ID in IDs:
-		print( data[ID]['live_app'] )
+		_.pr( data[ID]['live_app'] )
 	if _.switches.isActive( 'NoCount' ):
 		sys.exit()
-	print()
-	print( '',len(IDs) )
+	_.pr()
+	_.pr( '',len(IDs) )
 
 	if len( rid ):
-		print( '', diff, '\tremoved' )
-		print()
+		_.pr( '', diff, '\tremoved' )
+		_.pr()
 		if _.switches.isActive( 'PrintRemoved' ):
-			print( 'Removed:' )
-			print()
+			_.pr( 'Removed:' )
+			_.pr()
 			for ID in pIDs:
 				bad = True
 				for r in rid:
 					if ID == r:
 						bad = False
 				if not bad:
-					print( '\t',data[ID]['live_file'] )
+					_.pr( '\t',data[ID]['live_file'] )
 def load():
 	global data
 	data = _.getTableDB( 'appRegistration.json' )
@@ -339,6 +339,7 @@ data = []
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

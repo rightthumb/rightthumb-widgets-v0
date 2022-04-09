@@ -33,6 +33,72 @@ simplejson.loads(var)
 simplejson.dumps(rows, indent=4, sort_keys=sort_keys)
 simplejson.dumps(rows)
 '''
+
+def print_pr(text):
+    if not '_rightThumb._base3 ' in text:
+        return text
+    text=text.replace('\r','')
+    lines=[]
+    for line in text.split('\n'):
+        replace=False
+        if line.startswith('print('):
+            replace=True
+        elif '.print(' in line:
+            replace=False
+        elif line.startswith('def ') or '\t def ' in line or ' def ' in line:
+            replace=False
+        else:
+            replace=True
+
+        
+        if replace:
+            line=line.replace('print(','_.pr(')
+        lines.append(line)
+    return '\n'.join(lines)
+
+
+print_ed=[]
+print_ed_group={}
+def print_(*args,p=None,c=None,pad=3,g=None,end=None):
+    global print_ed; global print_ed_group; items=[];
+    pre=''
+    # if not g is None:
+    # print_ed_group
+    for arg in args: items.append(str(arg));
+    prn=pre+' '.join(items)
+    if not c is None: prn=cp( prn, c, p=0 );
+    if p is None: rint=True;
+    elif p: rint=True;
+    elif not p: rint=False;
+    else: rint=True;
+    if rint:
+        if not end is None: print( prn, end=end );
+        else: print( prn );
+    print_ed.append(prn)
+    return prn
+
+
+
+
+fo_fi=[]
+def fo(folder,r=False,script=None,first=True):
+    global fo_fi
+    if first: fo_fi=[];
+    if not os.path.isdir(folder): return fo_fi;
+    try:
+        files=os.listdir(folder)
+    except Exception as e:
+        return fo_fi
+    for item in files:
+        path=folder+os.sep+item
+        if os.path.isfile(path):
+            fo_fi.append(path)
+            if not script is None: script(path);
+        if r and os.path.isdir(path): getFolder(folder,r,script,False);
+    return fo_fi
+
+
+
 def printt( table, cols=None, sort=None ):
     if not table: return None;
     global switches
@@ -113,7 +179,7 @@ def tinydic(data,par='',skim=None, mt=True, lan='js', prev=False, dump=None, dic
             _.e('type(key)')
         return p2
     if not par:
-        # if mt: print('mt');
+        # if mt: print_('mt');
         tinydic_data=[]
     if type(data) == list:
         for key, value in enumerate(data):
@@ -121,7 +187,7 @@ def tinydic(data,par='',skim=None, mt=True, lan='js', prev=False, dump=None, dic
             if dump is None and not prev and skim is None and mt and not par2 in tinydic_data:
                 tinydic_data.append(par2)
             if skim is None and not dump is None and (   par2 in dump   ):
-                print(str(key)+':',value)
+                print_(str(key)+':',value)
             tinydic(value,par2,skim,mt,lan,prev,dump,dic,list0)
         if dic: return tinydic_dic;
         return tinydic_data
@@ -159,7 +225,7 @@ def tinydic(data,par='',skim=None, mt=True, lan='js', prev=False, dump=None, dic
                     if key == du:
                         tinydic_last[du]=value
             if skim is None and not dump is None and (   key in dump   or   par2 in dump   ):
-                print(str(key)+':',value)
+                print_(str(key)+':',value)
             if dump is None and not prev and skim is None and mt and not par2 in tinydic_data:
                 tinydic_data.append(par2)
             tinydic(value,par2,skim,mt,lan,prev,dump,dic,list0)
@@ -231,7 +297,7 @@ def tab(val,n=None, t='    ', cnt=False, add=None,  s=False):
         while not i == n:
             i+=1
             pre+=t
-        print('n',n,'|'+pre+'|')
+        print_('n',n,'|'+pre+'|')
         for i,line in enumerate(lines):
             l=_str.do('be',line, ' ')
             if len(l):
@@ -299,7 +365,7 @@ def aiLine(string,lines=2):
 def over(txt,note='',r=None,l=None):
     end=False
     if r: end=True;
-    # print('note',note)
+    # print_('note',note)
     ss=txt
     if len(note):
         if end:
@@ -359,7 +425,7 @@ def ddelim( txt=None, what='szYZhw', d=None, indices=None, f=1, r=-1 ):
         specified=0
         # indices=[8, 12, 16, 20]
     if p:
-        print(1,txt)
+        print_(1,txt)
     if f:
         txt=_str.stripNonAlphaNumaric(txt,'.').replace(' ','')
     if p:
@@ -409,11 +475,11 @@ def ddelim( txt=None, what='szYZhw', d=None, indices=None, f=1, r=-1 ):
         return eeof(u,p,ec,d,r,what,txt)
     elif indices is None:
         cp('ELSE','red')
-        print('-----------',what,txt)
+        print_('-----------',what,txt)
         eeof(u,p,ec,d,r,what,txt,note='WTF')
         e('ELSE')
 
-    # print(2,txt)
+    # print_(2,txt)
 
     original = txt
     delimiter = d
@@ -435,7 +501,7 @@ def ddelim( txt=None, what='szYZhw', d=None, indices=None, f=1, r=-1 ):
     prev = 0
     for index in indices:
         if p:
-            print('ind',what,(prev,index),original[prev:index])
+            print_('ind',what,(prev,index),original[prev:index])
         new_string += original[prev:index] + delimiter
         prev = index
     new_string += original[prev:]
@@ -461,7 +527,7 @@ def get_supporting_line(data,i,b=';',rev={}):
     if type(data) == list:
         data = ''.join(data)
     eol=vindex(data,i,n='\n')
-    # print('eol',eol)
+    # print_('eol',eol)
     if eol == {}:
         eol=len(data)
     if eol > len(data)-1:
@@ -477,22 +543,22 @@ def get_supporting_line(data,i,b=';',rev={}):
     #       break
     #   else:
     #       if cc in ')}]':
-    #           print('rev',rev)
-    #           print('xxxxxxxxxxxxxxxxx',cc,ip)
-    #           print( ip in rev )
-    #           print( ip+1 in rev )
-    #           print( ip-1 in rev )
-    #           print( ip+2 in rev )
-    #           print( ip-2 in rev )
+    #           print_('rev',rev)
+    #           print_('xxxxxxxxxxxxxxxxx',cc,ip)
+    #           print_( ip in rev )
+    #           print_( ip+1 in rev )
+    #           print_( ip-1 in rev )
+    #           print_( ip+2 in rev )
+    #           print_( ip-2 in rev )
     #           if ip in rev:
-    #               print('here here here here here here here here here here here ')
+    #               print_('here here here here here here here here here here here ')
     #               ipx=vindex(data,rev[ip],n='\n',r=True)
     #               pre=data[ ipx: ip ]
-    #               print( 'pre pre', pre )
+    #               print_( 'pre pre', pre )
     #               break
     #           sys.exit()
     #       pre+=cc
-    # print('pre',pre)
+    # print_('pre',pre)
     while True:
         ii+=1
         if ii>=len(data): break;
@@ -510,7 +576,7 @@ def get_supporting_line(data,i,b=';',rev={}):
                         ii=y[iii]
                         if iii >= len(data):
                             ii=len(data)
-                # print(ii,c,y)
+                # print_(ii,c,y)
                 # sys.exit()
         
     return pre+data[i:ii]
@@ -719,7 +785,7 @@ __.print_path = False
 ######################################################
 
 if os.path.isfile( _v.py+_v.slash+'thread.py' ):
-    print( 'rm thread' )
+    print_( 'rm thread' )
     os.unlink( _v.py+_v.slash+'thread.py' )
 
 ######################################################
@@ -742,13 +808,13 @@ def find_all_do(a_str, sub):
 
 _bm=None
 def bAlias(subject):
-    # print(type(subject))
+    # print_(type(subject))
     if type(subject) == str:
         subjects = [subject]
     elif type(subject) == list:
         subjects = subject
     else:
-        print(type(subject))
+        print_(type(subject))
         _.e( 'bAlias', subject )
 
     results=[]
@@ -769,11 +835,11 @@ def bAlias(subject):
             if 'ww' in _v.config_hash:
                 made['ww'] = 1
                 ww = _v.config_hash['ww']
-            # print('made',made)
+            # print_('made',made)
             if 'ww' in made  and 'h' in made:
                 a = ww+os.sep+'databank'+os.sep+'tables'+os.sep+'bookmarks.index'
                 b = h+os.sep+'tables'+os.sep+'bookmarks.index'
-                # print(os.path.isfile(b))
+                # print_(os.path.isfile(b))
                 try:
                     if not os.path.isfile(b) and os.path.isfile(a):
                         from shutil import copyfile
@@ -781,7 +847,7 @@ def bAlias(subject):
                 except Exception as e:
                     pass
             path = _bm.Bookmarks( sub ).get()
-            # print(sub,path)
+            # print_(sub,path)
             if path is None:
                 cp( 'Error, Bookmark does not exist', 'red' )
                 results.append(sub)
@@ -870,7 +936,7 @@ except Exception as e:
     __.terminal.width = 0
     __.terminal.height = 0
 
-# print(__.terminal.width)
+# print_(__.terminal.width)
 
 __.terminal.cols = __.terminal.width
 
@@ -938,7 +1004,7 @@ def files( folder, r=0, first=True ):
                 if r and os.path.isdir(path):
                     files(path,r=1,first=False)
             except Exception as ee:
-                print(path,ee)
+                print_(path,ee)
     return files_all
 
 def f( search=None, path=False,       p=None, s=None, r=False ):
@@ -1001,7 +1067,7 @@ def printDicFields( dic ):
             cp( [ 'saved:', switches.values('TableJSON')[0] ], 'green' )
         else:
             # printVarSimple(self.asset)
-            print( d2json(dic) )
+            print_( d2json(dic) )
         return None
 
     for k in dic:
@@ -1009,7 +1075,7 @@ def printDicFields( dic ):
         fields.register( 'dic', 'value', str(dic[k]) )
 
     for k in dic:
-        print( fields.value( 'dic', 'field', str(k)+':', right=True ), fields.value( 'dic', 'value', str(dic[k]) ) )
+        print_( fields.value( 'dic', 'field', str(k)+':', right=True ), fields.value( 'dic', 'value', str(dic[k]) ) )
 
 arrow = None
 _tz = None
@@ -1026,7 +1092,7 @@ def isDate( theDate=None, record={}, tz=None, q=True, f=None,w=None,what=None ):
 
     # theDate = autoDate(theDate)
 
-    # print(theDate)
+    # print_(theDate)
     # sys.exit()
 
     global _dir
@@ -1116,7 +1182,7 @@ def isDate( theDate=None, record={}, tz=None, q=True, f=None,w=None,what=None ):
                         eee+=c
                 except Exception as e:
                     eee=theDate
-                    # print(f,1,'err:', e)
+                    # print_(f,1,'err:', e)
                 pass
 
                 if f=='crypt-date': return _nID.mini.gen( record['strip'] );
@@ -1125,11 +1191,11 @@ def isDate( theDate=None, record={}, tz=None, q=True, f=None,w=None,what=None ):
                     if f=='crypt-epoch': return _nID.mini.gen( int(eee) );
                     if f=='appID' or f=='app': return _nID.mini.gen( int(eee) );
                 except Exception as e:
-                    print(f,2,'err:', e)
+                    print_(f,2,'err:', e)
                     sys.exit()
                 if f=='crypt-pass': return isPass;
             except Exception as e:
-                print(f,3,'err:',e)
+                print_(f,3,'err:',e)
                 pass
         if f=='stardate':
             try:
@@ -1221,7 +1287,7 @@ def isDate( theDate=None, record={}, tz=None, q=True, f=None,w=None,what=None ):
     if type(epoch) == str:
         epoch = autoDate(epoch.replace('z',''))
     record['epoch'] = epoch
-    # print( epoch )
+    # print_( epoch )
     record['ordinal'] = datetime.datetime.fromtimestamp( epoch ).toordinal()
     # sys.exit()
     record['text-date'] = datetime.datetime.fromtimestamp( epoch ).strftime('%b, %d %Y')
@@ -1291,8 +1357,8 @@ def isDate( theDate=None, record={}, tz=None, q=True, f=None,w=None,what=None ):
             pass
 
     e = time.time()
-    # print( e-s )
-    # print( e-ss )
+    # print_( e-s )
+    # print_( e-ss )
     return record
 
 
@@ -1426,8 +1492,8 @@ class AGGREGATE:
     def code( self, script, label=None, isSwitch=False, addSwitch=False, addAll=False ):
         if script is None:
             return None
-        # print()
-        # print( script )
+        # print_()
+        # print_( script )
         # sys.exit()
         self.counter += 1
         if isSwitch:
@@ -1442,9 +1508,9 @@ class AGGREGATE:
         self.records[label] = []
         records = code( script=script, addString=[['alphaParam','?']]  )
 
-        # print(  )
-        # print( records )
-        # print(  )
+        # print_(  )
+        # print_( records )
+        # print_(  )
         # sys.exit()
         # return None
 
@@ -1462,7 +1528,7 @@ class AGGREGATE:
             indexes.functions[fXn] = []
         indexes.functions['other'] = []
         for rec in records:
-            # print(rec)
+            # print_(rec)
             if rec['status'] and 'function' in rec['l']:
                 if rec['txt'] in __.aggregate.fn.order:
                     indexes.functions[rec['txt']].append(rec)
@@ -1527,7 +1593,7 @@ class AGGREGATE:
             tmp_records.append(rec)
 
         # for rec in tmp_records:
-        #   print(rec)
+        #   print_(rec)
 
         # sys.exit()
 
@@ -1537,13 +1603,13 @@ class AGGREGATE:
 
         table = {}
         for i,rec in enumerate( self.records[label] ):
-            # print( rec )
+            # print_( rec )
             table[ str(rec['i']) ] = str(self.counter) +'-'+ str(i)
-            # print( i, rec )
+            # print_( i, rec )
         # sys.exit()
         for i,rec in enumerate( self.records[label] ):
             self.records[label][i]['i'] = str(self.counter) +'-'+ str(i)
-            # print( rec['i'], i )
+            # print_( rec['i'], i )
         # sys.exit()
 
         for i,rec in enumerate( self.records[label] ):
@@ -1598,7 +1664,7 @@ class AGGREGATE:
 
 
         # for rec in self.records[label]:
-        #   print( rec )
+        #   print_( rec )
 
         # sys.exit()
 
@@ -1631,7 +1697,7 @@ class AGGREGATE:
 
             if label in self.records:
                 toProcess.append(label)
-                    # print(rec)
+                    # print_(rec)
         self.last = '<?>'.join(toProcess)
         self.lasting = toProcess
         if self.last in self.cache.records:
@@ -1662,7 +1728,7 @@ class AGGREGATE:
             indexes.functions[fXn] = []
         indexes.functions['other'] = []
         for rec in records:
-            # print(rec)
+            # print_(rec)
             if rec['status'] and 'function' in rec['l']:
                 if rec['txt'] in __.aggregate.fn.order:
                     indexes.functions[rec['txt']].append(rec)
@@ -1730,16 +1796,16 @@ class AGGREGATE:
         for rec in tmp_records:
             combine_records.append(rec)
         
-        # print()
-        # # print( combine_records )
-        # print()
+        # print_()
+        # # print_( combine_records )
+        # print_()
 
         # for rec in combine_records:
-        #   print(rec)
+        #   print_(rec)
 
 
-        # print( '   self.last:', self.last )
-        # print( 'self.lasting:', self.lasting )
+        # print_( '   self.last:', self.last )
+        # print_( 'self.lasting:', self.lasting )
         # sys.exit()
         self.cache.records[self.last] = combine_records
         
@@ -1772,7 +1838,7 @@ class AGGREGATE:
             if rec['status'] and 'variable' in rec['l']:
                 child = self.index[rec['val']]
                 if 'function' in child['l'] and child['txt'] in __.aggregate.fn.format:
-                    # print( 'here' )
+                    # print_( 'here' )
                     rXy = []
                     if '?' in rec['txt'] and rec['txt'].lower().split('?')[0]+'?' in __.aggregate.group_prefixes:
                         gc = rec['txt'].split('?')[2]
@@ -1833,7 +1899,7 @@ class AGGREGATE:
 
             for field in fields:
                 f = tfc(field)
-                # print( formating[f] )
+                # print_( formating[f] )
                 if f in formating:
                     if '?date1' in formating[f]:
                         return friendlyDate( data )
@@ -1841,12 +1907,12 @@ class AGGREGATE:
                         return friendlyDate2( data )
                     if '?size' in formating[f]:
                         data = str(data).replace( ',', '' ).replace( ' ', '' )
-                        # print('here                                               xx')
+                        # print_('here                                               xx')
                         if formating[f]['?size']:
                             fm = list(formating[f]['?size'].keys())[0]
                             return reFormatSize( str(data)+fm )
                         
-                        # print( formatSize( int(data) ) )
+                        # print_( formatSize( int(data) ) )
                         return formatSize( int(data) )
                     if '?bytes' in formating[f]:
                         return unFormatSize( data )
@@ -2051,15 +2117,15 @@ def getCryptTable( theFile, db=False, bank=False, index=False, temp=False, free=
                     # decrypt file stream
                     pyAesCrypt.decryptStream(fIn, fOut, password, bufferSize, encFileSize)
             except ValueError:
-                print('Err:', 0)
+                print_('Err:', 0)
                 if os.path.isfile( the_temp_file ):
-                    print('Err:', 1)
+                    print_('Err:', 1)
                     os.remove( the_temp_file )
                     time.sleep(.2)
 
 
-        # print( 'theFile', theFile )
-        # print( 'file0', file0 )
+        # print_( 'theFile', theFile )
+        # print_( 'file0', file0 )
         # import bigjson
         with open(the_temp_file,'r', encoding="latin-1") as json_file:
             json_data = simplejson.load(json_file)
@@ -2207,7 +2273,7 @@ def hex2ascii( hx ):
         return ''.join([chr(int(''.join(c), 16)) for c in zip(hx[0::2],hx[1::2])])
 
     elif not type(hx) == str:
-        print('hex2ascii error')
+        print_('hex2ascii error')
         sys.exit()
 
 
@@ -2221,7 +2287,7 @@ def loopPrint(  length=5, txt=' ', p=0 ):
         result += txt
         i+=1
     if p:
-        print(result)
+        print_(result)
     return result
 
 lp = loopPrint
@@ -2281,7 +2347,7 @@ def linePrint(  label=None, text=None, txt='_', mn=50, add=5, p=2, c='', x=None 
             if color:
                 cp( result, color )
             else:
-                print( result )
+                print_( result )
         if color:
             result=cp( result, color, p=0 )
         return result
@@ -2292,7 +2358,7 @@ def dic_key_sort( table, n=False ):
     saveTable( table, '-tmp-dic_key_sort.json', tableTemp=True, printThis=False,  sort_keys=True )
     return getTable( '-tmp-dic_key_sort.json', tableTemp=True )
     # dataDump = json.dumps(table, indent=4, sort_keys=True)
-    # print(dataDump)
+    # print_(dataDump)
     # sys.exit()
     # return json.load( str(dataDump) )
 
@@ -2315,7 +2381,7 @@ def dic_key_sort2( table, n=False, ip=False, r=False ):
 
                 for y in x.split('.'):
                     xXx = fields.padZeros( 'cnt-ip', 'val', int(y) )
-                    # print(xXx)
+                    # print_(xXx)
 
                     zZz.append( xXx )
                 theData.append( '.'.join(zZz) )
@@ -2329,15 +2395,15 @@ def dic_key_sort2( table, n=False, ip=False, r=False ):
                 y = x
             elif x.count('.') == 3:
                 for y in x.split('.'):
-                    # print(y)
+                    # print_(y)
                     zZz.append( str(int(y)) )
                 y = '.'.join(zZz)
-                # print(y)
+                # print_(y)
             if y in table:
                 dic[y] = table[y]
-        # print(theData)
+        # print_(theData)
         # printVarSimple(dic)
-        # print()
+        # print_()
         return dic
 
 
@@ -2454,7 +2520,7 @@ def replaceFile( fIn, fOut ):
     return _v.slash.join( parts )+_v.slash+fOut
 
 def patternDiff(a,b):
-    # print('here')
+    # print_('here')
     # a = 'gensslkey'
     # b = 'gensslkey'
     # b = 'gensslkeyz'
@@ -2464,23 +2530,23 @@ def patternDiff(a,b):
     testing = 0
 
     if testing:
-        print()
-        print()
-        print('________________________________________________________')
-        print()
-        print()
-        print( a,b )
+        print_()
+        print_()
+        print_('________________________________________________________')
+        print_()
+        print_()
+        print_( a,b )
     x = patternMatch( a, b )
     d = get_change( len(a),len(b) )
     e = get_change( x, d )
     # e = get_change( d, x )
     if testing:
-        print('x',x)
-        print( 'd',d )
-        print( 'e,f',e )
+        print_('x',x)
+        print_( 'd',d )
+        print_( 'e,f',e )
     f = int(100-e)
     f =e
-    # print( 'f',f )
+    # print_( 'f',f )
     if f == 0:
         f = 100
     # dd = d
@@ -2488,7 +2554,7 @@ def patternDiff(a,b):
     if dd == 0:
         dd = 100
     if testing:
-        print( 'dd',dd )
+        print_( 'dd',dd )
     # if d <= f:
     if d >= f:
         aa = dd
@@ -2529,7 +2595,7 @@ def patternDiff(a,b):
             try:
                 theSetB.append( percentageDiffIntAuto( kBA[kk], kBB[kk] ) )
             except Exception as e:
-                print()
+                print_()
                 sys.exit()
 
         # pp = av(theSet)
@@ -2550,22 +2616,22 @@ def patternDiff(a,b):
         pB = percentageDiffIntAuto( tB, len(b) )
 
     if testing:
-        print( 'pA', pA )
-        print( 'pB', pB )
+        print_( 'pA', pA )
+        print_( 'pB', pB )
 
     zz = xMultiply(  [aa,100], [bb,0]  )
     if zz > 100:
         zz = xMultiply(  [bb,100], [aa,0]  )
 
     if testing:
-        print([aa,100], [bb,0])
-        print(  'diff', zz )
-        print( [aa,bb, pA,pB] )
-        print(  'av', av([aa,bb, pA,pB])  )
+        print_([aa,100], [bb,0])
+        print_(  'diff', zz )
+        print_( [aa,bb, pA,pB] )
+        print_(  'av', av([aa,bb, pA,pB])  )
     ww = av([aa,bb, pA,pB])
     # if pA > pB:
     #   if pA < ww
-    # print( int(ww), [aa,bb, pA,pB], a, b,  )
+    # print_( int(ww), [aa,bb, pA,pB], a, b,  )
     return ww
 
 def av( ds ):
@@ -2631,7 +2697,7 @@ def days_math( epoch, days=1, do='+'):
     elif do == '-':
         now = autoDate( friendlyDate( autoDate(epoch) ).split(' ')[0] ) - (  86400*days  )
     else:
-        print('Error: ', "days_math( epoch, days=1, do='+')")
+        print_('Error: ', "days_math( epoch, days=1, do='+')")
         sys.exit()
     tdy0 = autoDate(friendlyDate( now ).split(' ')[0])
     return tdy0
@@ -2654,7 +2720,7 @@ def time_diff(epoch):
 def printText(text,p=1):
     result = str([text])[2:][:-2]
     if p:
-        print( result )
+        print_( result )
     return result
 
 
@@ -2666,11 +2732,11 @@ def changeM( path, stampM, stampA=None, meta=False, p=0 ):
             mn = ', '+str(int((time.time() - stampM) /60)) + ' min'
             if mn == '0 min':
                 mn = ', just now'
-        print( friendlyDate(stampM), colorThis( [time_diff(stampM)+ mn], 'yellow', p=0 ), path )
+        print_( friendlyDate(stampM), colorThis( [time_diff(stampM)+ mn], 'yellow', p=0 ), path )
     if stampA is None:
         stampA = stampM
-    # print(stampM)
-    # print(stampA)
+    # print_(stampM)
+    # print_(stampA)
     global changeDate_Table
     global _dir
     global touch_meta
@@ -2710,7 +2776,7 @@ def changeC( path, stampC, meta=False, p=0 ):
         mn = ''
         if time_diff(stampC) == 'today':
             mn = str(int((time.time() - stampC) /60)) + ' min'
-        print( friendlyDate(stampC), colorThis( [time_diff(stampC), mn], 'yellow', p=0 ), path )
+        print_( friendlyDate(stampC), colorThis( [time_diff(stampC), mn], 'yellow', p=0 ), path )
     global changeC_rc_path
     global changeDate_Table
     global _dir
@@ -2751,7 +2817,7 @@ def changeC( path, stampC, meta=False, p=0 ):
                 saveTable( changeDate_Table, 'touch.index', p=0 )
             # if __.isWin:
             #   do = ['powershell.exe', '$(Get-Item "'+path+'").CreationTime=("'+modify_timestamp(stampC)+'")']
-            #   print(do)
+            #   print_(do)
             #   # p = subprocess.Popen([do], stdout=sys.stdout)
             #   p = subprocess.Popen(['powershell.exe', '$(Get-Item "'+path+'").CreationTime=("'+modify_timestamp(stampC)+'")'], stdout=sys.stdout)
             try:
@@ -2759,7 +2825,7 @@ def changeC( path, stampC, meta=False, p=0 ):
                 if __.isWin:
                     if os.path.isdir( 'C:\\Windows\\System32\\WindowsPowerShell' ):
                         # do = ['powershell.exe', '$(Get-Item "'+path+'").CreationTime=("'+modify_timestamp(stampC)+'")']
-                        # print( do )
+                        # print_( do )
                         # p = subprocess.Popen([do], stdout=sys.stdout)
                         p = subprocess.Popen(['powershell.exe', '$(Get-Item "'+path+'").CreationTime=("'+modify_timestamp(stampC)+'")'], stdout=sys.stdout)
                 else:
@@ -2808,8 +2874,8 @@ def PowerShell_bashrc_name_break():
     if os.path.isfile(psA):
         os.rename( psA , psB )
         time.sleep(.2)
-        # print(psA)
-        # print(psB)
+        # print_(psA)
+        # print_(psB)
 
 def PowerShell_bashrc_name_break_fix():
     global changeC_rc_path
@@ -2872,7 +2938,7 @@ class NC:
                     b += '.'+w
                     b = _str.cleanBE(b,'.')
                     if not b in __.nc_histrory:
-                        # print(b)
+                        # print_(b)
                         self.build(b)
 
 
@@ -2899,7 +2965,7 @@ pp nx_test
 
 
 # for x in sys.modules:
-#     print(x)
+#     print_(x)
 
 import _rightThumb._profileVariables as _profile
 colorama_loaded = False
@@ -2930,13 +2996,13 @@ def check_field_match( actual, search ):
 
 
 def fileLabel(path):
-    print(path)
+    print_(path)
     global _dir
     if _dir is None:
         import _rightThumb._dir as _dir
     f = _dir.info( path )
     label = f['name_'].replace( '.'+f['ext'], '' )
-    print( label )
+    print_( label )
     return label
 
 def getTablesProject( project ):
@@ -2954,7 +3020,7 @@ def color( strings='', c='?', b=None, shouldPrint=True, attr=None,       p=None 
     if switches.isActive( 'NoColor' ):
         if shouldPrint:
 
-            print(str(strings))
+            print_(str(strings))
             return strings
         else:
             return strings
@@ -2967,7 +3033,7 @@ def color( strings='', c='?', b=None, shouldPrint=True, attr=None,       p=None 
 
 
     if c == '?':
-        print("""
+        print_("""
 
     Text colors:
         grey
@@ -3046,7 +3112,7 @@ def color( strings='', c='?', b=None, shouldPrint=True, attr=None,       p=None 
 
     if shouldPrint:
         try:
-            print( result )
+            print_( result )
         except Exception as e:
 
             try:
@@ -3066,7 +3132,7 @@ def factor( data, f=None, threshold=51, count=1 ):
     single = {}
     factors = {}
     for x in records:
-        # print( x, records[x] )
+        # print_( x, records[x] )
         if not x in single:
             single[x] = {
                             'len': x,
@@ -3084,7 +3150,7 @@ def factor( data, f=None, threshold=51, count=1 ):
         
         
         single[x]['last'] = percentageDiffAuto( records[x][0]['value'], records[x][  len(records[x])-1  ]['value'], isFloat=True, rnd=2 )
-        # print( "single[x]['last']", single[x]['last'] )
+        # print_( "single[x]['last']", single[x]['last'] )
         # sys.exit()
         relevant = []
         # single[x]['relevant'].append({ 'drop': 0, 'id': 0, 'diff': 0, 'diff_0': 0, 'diff_0p': 0 })
@@ -3097,24 +3163,24 @@ def factor( data, f=None, threshold=51, count=1 ):
                 drop = percentageDiffAuto( records[x][i]['value'], last, isFloat=True, rnd=2 )
                 # asdf = last-records[x][i]['value']
                 # dLast = percentageDiffSmaller( last, asdf , isFloat=True, rnd=2 )
-                # print( dLast, '\t', last, '\t', asdf )
-                # print( records[x][i] )
+                # print_( dLast, '\t', last, '\t', asdf )
+                # print_( records[x][i] )
                 if drop <= single[x]['drop_val'] and drop <= threshold:
                     single[x]['drop_val'] = drop
                     single[x]['drop_id'] = i
                     if records[x][i]['value'] >= count:
                         single[x]['relevant'].append({ 'drop': drop, 'id': i, 'diff': last-records[x][i]['value'], 'diff_0': records[x][0]['value']- records[x][i]['value'] ,'diff_0p': percentageDiffAuto( records[x][0]['value'], records[x][i]['value'], isFloat=True, rnd=2 ) })
                     # else:
-                    #     print( records[x][i]['value'], count )
+                    #     print_( records[x][i]['value'], count )
                 if i==1:
                     single[x]['first'] = percentageDiffAuto( records[x][0]['value'], records[x][i]['value'], isFloat=True, rnd=2 )
                     single[x]['diff_fl'] = percentageDiffAuto( single[x]['first'], records[x][i]['value'], isFloat=True, rnd=2 )
-                    # print( "single[x]['first']", single[x]['first'] )
-                    # print( "single[x]['diff_fl']", single[x]['diff_fl'] )
+                    # print_( "single[x]['first']", single[x]['first'] )
+                    # print_( "single[x]['diff_fl']", single[x]['diff_fl'] )
                 
                 last = records[x][i]['value']
             # lastD = drop
-            # print(y)
+            # print_(y)
         # single[x]['relevant'] = sort( single[x]['relevant'], 'drop' )
         # printVar( single[x] )
     factors['single'] = single
@@ -3250,7 +3316,7 @@ class dt:
             pass
             self.load( result+'@'+self.time )
         except Exception as e:
-            print('result',result)
+            print_('result',result)
             sys.exit()
             # raise e
         return self
@@ -3291,12 +3357,12 @@ def isData( data=None, focus=None, pipeClean=True, required=False,     r=None, c
         data=[]
         global switches
         isClean=False
-        # print('v.isData',v.isData,__.appReg)
+        # print_('v.isData',v.isData,__.appReg)
         for name in v.isData:
-            # print('val',switches.values(name),len(switches.values(name)),name)
+            # print_('val',switches.values(name),len(switches.values(name)),name)
             if len(switches.values(name)):
                 for isD in v.isData[name].split(','):
-                    # print('isD',isD)
+                    # print_('isD',isD)
                     if isD == 'clean':
                         isClean=True
                     elif isD == 'name':
@@ -3309,10 +3375,10 @@ def isData( data=None, focus=None, pipeClean=True, required=False,     r=None, c
                                 for xXx in getText( f, raw=True ).split('\n'):
                                     data.append(xXx)
                     elif isD == 'glob':
-                        # print('9e1647494350')
+                        # print_('9e1647494350')
                         for n in switches.values(name):
-                            # print('3e1647480669',n)
-                            # print('n',n)
+                            # print_('3e1647480669',n)
+                            # print_('n',n)
                             # sys.exit()
                             if type(n) == list:
                                 stuff = n
@@ -3326,21 +3392,21 @@ def isData( data=None, focus=None, pipeClean=True, required=False,     r=None, c
                         tData=[]
                         for n in switches.values(name):
                             tData.append(getText(n,raw=True))
-                        # print(tData[0])
+                        # print_(tData[0])
                         data = '\n'.join(tData)
-                        # print(data)
-                        # print(type(data))
+                        # print_(data)
+                        # print_(type(data))
                         # sys.exit()
                         # return data
                         # sys.exit()
 
         if data:
-            # print('here')
+            # print_('here')
             # sys.exit()
             if False and not isClean:
                 return data
             elif type(data)==str:
-                # print('here')
+                # print_('here')
                 # sys.exit()
                 newData=''
                 data = data.replace('\r','')
@@ -3350,7 +3416,7 @@ def isData( data=None, focus=None, pipeClean=True, required=False,     r=None, c
                 #   row = _str.cleanBE( row, '\t' )
                 #   newData+=row+'\n'
                 # return newData
-                # print('here')
+                # print_('here')
                 # sys.exit()
                 return data.split('\n')
             elif type(data)==list:
@@ -3619,8 +3685,8 @@ def unixAutoColumns( asset, columns, focus=None ):
         for key in lengths:
             if col.lower() == key.lower():
                 total += lengths[key]
-    # print( total, columns )
-    # print( cols, type(cols) )
+    # print_( total, columns )
+    # print_( cols, type(cols) )
     nextDel = 0
     done = False
     newList = []
@@ -3644,10 +3710,10 @@ def unixAutoColumns( asset, columns, focus=None ):
     pass
     if not len(columns):
         columns = newList[ len(newList)-1 ]
-    # print( total, columns )
+    # print_( total, columns )
 
 
-    # print( 'total:', total )
+    # print_( 'total:', total )
 
     # sys.exit()
     return columns
@@ -3667,13 +3733,13 @@ def callers( i=1 ):
                 xxx = str(sys._getframe(i).f_code.co_name)
             except Exception as e:
                 xxx = '_bootstrap'
-            # print(x)
-            # print(xxx)
+            # print_(x)
+            # print_(xxx)
             if '_bootstrap' in xxx or '<module>' in xxx:
                 error=True
             else:
                 if not x is None:
-                    # print(x)
+                    # print_(x)
                     callersX.append(x)
                 else:
                     error=True
@@ -3681,7 +3747,7 @@ def callers( i=1 ):
             error=True
 
         i+=1
-    # print(callersX)
+    # print_(callersX)
     return callersX
 
 def epochDiff( a, b, isInt=None, isText=None, isFloat=None, isHR=None, isDays=None,      isD=None, isH=None, isI=None, isT=None, isF=None, txt=None ):
@@ -3765,7 +3831,7 @@ def epochDiff( a, b, isInt=None, isText=None, isFloat=None, isHR=None, isDays=No
 
 def getDriveID( drive, fail_isLetter=False ):
     drive = drive.upper()
-    # print(drive)
+    # print_(drive)
 
     def getDriveID_clean( driveID ):
         
@@ -3800,7 +3866,7 @@ def getDriveID( drive, fail_isLetter=False ):
             driveID = open( idFileB, 'r' ).read()
             driveID = getDriveID_clean(driveID)
         # else:
-            # print('Error')
+            # print_('Error')
             # os._exit(0)
     return driveID
 
@@ -3809,7 +3875,7 @@ def folderProfileAttribute( folder, info ):
     epoch = time.time()
 
     driveID = getDriveID( folder[0], fail_isLetter=True )
-    # print(driveID)
+    # print_(driveID)
     # sys.exit()
     # file_drives = 'indexTable_drives-' + _v.getMachineID() + '.json'
     folders = folder[3:].replace( _v.slash, '((-f-))' )
@@ -3837,7 +3903,7 @@ def folderProfileAttribute( folder, info ):
         record[what][app][epoch] = info
         saveTable2( record, saveTo )
     elif os.path.isfile( saveTo ):
-        # print(saveTo)
+        # print_(saveTo)
         try:
             record = getTable2( saveTo )
         except Exception as e:
@@ -3867,31 +3933,31 @@ def folderProfileAttribute( folder, info ):
                             
                             same = True
                         else:
-                            # print( 'failed', fKey )
+                            # print_( 'failed', fKey )
                             failed = True
 
 
                         if not fKey in record[what][app][key]:
                             failed = True
-                            # print( 'missing', fKey )
+                            # print_( 'missing', fKey )
                 if same and not failed:
                     same = False
                     failed = False
                     for fKey in list( info['factors'].keys() ):
                         if fKey in record[what][app][key]['factors'] and info['factors'][fKey]  ==  record[what][app][key]['factors'][fKey]:
                             same = True
-                            # print( 'Same' )
+                            # print_( 'Same' )
                         else:
-                            # print( 'failed', fKey )
+                            # print_( 'failed', fKey )
                             failed = True
 
 
                         if not fKey in record[what][app][key]['factors'] :
                             failed = True
-                            # print( 'missing', fKey )
-                # print()
-                # print( 'same', same )
-                # print( 'failed', failed )
+                            # print_( 'missing', fKey )
+                # print_()
+                # print_( 'same', same )
+                # print_( 'failed', failed )
                 if same and not failed:
                     pass
                 else:
@@ -4005,15 +4071,15 @@ def clean_dic( dic, omit ):
     traverse_dic_research['key_has'] = []
     traverse_dic( dic, config={ 'key_has': omit } )
     
-    print( 'key_has len:', len(traverse_dic_research['key_has']) )
+    print_( 'key_has len:', len(traverse_dic_research['key_has']) )
     for x in traverse_dic_research['key_has']:
-        print(x)
+        print_(x)
     if not len(traverse_dic_research['key_has']):
         fields = ''
         for x in traverse_dic_research['all']:
             fields += x['field'] + '; '
-            # print(x)
-        print(fields)
+            # print_(x)
+        print_(fields)
     sys.exit()
 traverse_dic_research = {}
 
@@ -4038,7 +4104,7 @@ def traverse_dic( data=None, config={} ):
         config['inDicI'] = config['inDicI'].lower()
 
     if data is None:
-        print('traverse_dic_research', traverse_dic_research)
+        print_('traverse_dic_research', traverse_dic_research)
         sys.exit()
     if not 'i_default' in config.keys():
         config['i_default'] = '-i-'
@@ -4110,13 +4176,13 @@ def traverse_obj( data=None, config={}, parents=[], parentsI=[],  ):
                 if not str(np) in traverse_dic_research['inDic_spent']:
                     traverse_dic_research['inDic_spent'].append(str(np))
                     traverse_dic_research['inDic'].append( parents + [key] )
-                    print(key)
+                    print_(key)
 
 
             if 'returnField' in config.keys() and  config['returnField'] == np:
                 traverse_dic_research['returnField'].append({  'data':  data[key], 'parents': np, 'parentsI': npi,  })
             elif 'returnFields' in config.keys() and  key in config['returnFields'].keys():
-                # print('here')
+                # print_('here')
                 for parent in config['returnFields'][key]:
                     if parent == np:
                         traverse_dic_research['returnFields'].append({  'data':  data[key], 'parents': np, 'parentsI': npi,  })
@@ -4189,9 +4255,9 @@ def traverse_obj( data=None, config={}, parents=[], parentsI=[],  ):
 
         if 'find_path' in config.keys():
             thePath = '.'.join(parents).replace( '-i-', 'i' )
-            # print(config['find_path'],thePath)
+            # print_(config['find_path'],thePath)
             if config['find_path'].lower() == thePath.lower():
-                # print(thePath)
+                # print_(thePath)
                 if not 'find_path' in traverse_dic_research:
                     traverse_dic_research['find_path'] = []
                 traverse_dic_research['find_path'].append( data )
@@ -4262,9 +4328,9 @@ def wrapText( data, length=150, pre_space='    ', scan=[], bold='yellow', s=' ',
         data = ''
         pre_space = ''
         if p:
-            print( theText )
+            print_( theText )
         else:
-            # print( '\n\ntheText:', theText, '\n\n' )
+            # print_( '\n\ntheText:', theText, '\n\n' )
             return theText
 
 
@@ -4279,7 +4345,7 @@ def simpleDic( dic ):
     return txt
 def simpleDic2( dic ):
     txt = str(dic)
-    # print( txt )
+    # print_( txt )
     txt = txt.replace( ", '", ",\n'" )
     txt = txt.replace( '{', '' )
     txt = txt.replace( '}', '' )
@@ -4292,7 +4358,7 @@ def simpleDic2( dic ):
 def lastBackup( file, backup=0 ):
     backupLog = tables.returnSorted( 'backupLog', 'd.timestamp', getTable('fileBackup.json') )
     path = os.path.abspath(file)
-    # print( 'path:', path )
+    # print_( 'path:', path )
     if backup == '?':
 
         i = 0
@@ -4310,7 +4376,7 @@ def lastBackup( file, backup=0 ):
         for record in backupLog:
             if record['file'] == path:
                 # printTest( record )
-                # print( friendlyDate(record['timestamp']) )
+                # print_( friendlyDate(record['timestamp']) )
                 if i == backup:
                     return record['backup']
                 i+=1
@@ -4553,7 +4619,7 @@ def urlTrigger(url):
 
 def myFolderLocations( data ):
     return data
-    # print(data)
+    # print_(data)
     if type(data) == list:
         for i,d in enumerate(data):
             data[i] = myFolderLocations(d)
@@ -4568,7 +4634,7 @@ def myFolderLocations( data ):
     if not len(bmIndex):
         bmIndex = getTable( 'bookmarks.index' )
 
-    # print( bmIndex )
+    # print_( bmIndex )
     if data in bmIndex['labels']:
         return _v.resolveFolderIDs(bmIndex['labels'][data])
     if data.lower() in bmIndex['labels']:
@@ -4707,18 +4773,18 @@ def listColor( text, rows, color='green' ):
     return text
     r = text
 
-    # print( 'HERE', r )
+    # print_( 'HERE', r )
     txtCNT = text.lower()
     for row in rows:
 
         loc = txtCNT.find( row )
         if row in txtCNT:
-            print( 'loc:', loc )
+            print_( 'loc:', loc )
             if loc:
                 r = ''
                 for i,char in enumerate(text):
                     if i >= loc and i <= len(row)-1:
-                        print( char )
+                        print_( char )
                         r += colorThis( char, color, p=0 )
                     else:
                         r+=char
@@ -4735,7 +4801,7 @@ def LoadingDone(done=None):
     while not __.loadingVar['hasCleared']:
         time.sleep( .2 )
     time.sleep( .7 )
-    print( '                                                        ', end='\r' )
+    print_( '                                                        ', end='\r' )
     time.sleep( 2 )
     __.loadingVar['hasCleared'] = False
     __.loadingVar['hasLoaded'] = False
@@ -4783,14 +4849,14 @@ def loadingGif(loading, qID=False):
             '      **',
     ]
     while not __.loadingVar['hasLoaded']:
-        print( '                                                                                                   ', end='\r' )
+        print_( '                                                                                                   ', end='\r' )
         for x in gif:
             animate = colorThis( x, 'red', p=0 )
-            print( '\t\t{' + animate + '} '+loading+'...', end='\r' )
+            print_( '\t\t{' + animate + '} '+loading+'...', end='\r' )
             time.sleep( .4 )
-        print( '                                                                                                   ', end='\r' )
-    print( '                                                                                                   ', end='\r' )
-    print( '\t\t'+colorThis( __.loadingVar['done'], 'green', p=0 ), end='\r' )
+        print_( '                                                                                                   ', end='\r' )
+    print_( '                                                                                                   ', end='\r' )
+    print_( '\t\t'+colorThis( __.loadingVar['done'], 'green', p=0 ), end='\r' )
     if not type(qID) == bool:
         global threads
         threads.spent( qID, sys.getsizeof( 'obj') )
@@ -4820,14 +4886,14 @@ def loadingGifX(loading):
             '      **',
     ]
     while not __.loadingVar['hasLoaded']:
-        print( '                                                                                                   ', end='\r' )
+        print_( '                                                                                                   ', end='\r' )
         for x in gif:
             animate = colorThis( x, 'red', p=0 )
-            print( '\t\t{' + animate + '} '+loading+'...', end='\r' )
+            print_( '\t\t{' + animate + '} '+loading+'...', end='\r' )
             time.sleep( .4 )
-        print( '                                                                                                   ', end='\r' )
-    print( '                                                                                                   ', end='\r' )
-    print( '\t\t'+colorThis( __.loadingVar['done'], 'green', p=0 ), end='\r' )
+        print_( '                                                                                                   ', end='\r' )
+    print_( '                                                                                                   ', end='\r' )
+    print_( '\t\t'+colorThis( __.loadingVar['done'], 'green', p=0 ), end='\r' )
 
     __.loadingVar['hasLoaded'] = False
 
@@ -4887,7 +4953,7 @@ def ipsumParagraph( count=1, shouldPrint=False, returnList=False, lorem=True ):
 
     if shouldPrint:
         data = '\n\n'.join( result )
-        print( data )
+        print_( data )
 
     if returnList:
         return result
@@ -4968,9 +5034,9 @@ def csv( file, save=False, json_file='',printThis=True ):
     # with open(file) as csvfile:
         reader = csv.DictReader(csvfile)
         title = reader.fieldnames
-        # print( title )
+        # print_( title )
         # for t in title:
-        #   print( t )
+        #   print_( t )
         for row in reader:
             csv_rows.extend([{title[i]:row[title[i]] for i in range(len(title))}])
         csv_rows = convertTimestamp( csv_rows )
@@ -5132,7 +5198,7 @@ setPipeDataRan = False
 
 __.columnAbbreviations = 1
 
-# print( 'make pattern algorithm for pattern IDs' )
+# print_( 'make pattern algorithm for pattern IDs' )
 
 # def testPatterns( two, one ):
 
@@ -5142,7 +5208,7 @@ def saveData( rows, theFile, printThis=True ):
         if _v.slash in theFile:
             saveTable2( rows, theFile, printThis )
             if printThis:
-                print( 'Saved: ', theFile )
+                print_( 'Saved: ', theFile )
         else:
             saveTable( rows, theFile, printThis )
         return True
@@ -5151,14 +5217,14 @@ def saveData( rows, theFile, printThis=True ):
         if _v.slash in theFile:
             saveText( rows, theFile )
             if printThis:
-                print( 'Saved: ', theFile )
+                print_( 'Saved: ', theFile )
         else:
             if os.path.isfile( _v.myTables + _v.slash + theFile ):
                 saveText( rows, _v.myTables + _v.slash + theFile )
             else:
                 saveText( rows, _v.myTables + _v.slash + theFile )
             if printThis:
-                print( 'Saved: ', _v.myTables + _v.slash + theFile )
+                print_( 'Saved: ', _v.myTables + _v.slash + theFile )
         return True
 
     location = theFile
@@ -5191,13 +5257,13 @@ def saveData( rows, theFile, printThis=True ):
         if location.lower().endswith( '.json' ):
             saveTable2( rows, location, printThis )
             if printThis:
-                print( 'Saved: ', location )
+                print_( 'Saved: ', location )
             return True
 
         if location.lower().endswith( '.txt' ):
             saveText( rows, location )
             if printThis:
-                print( 'Saved: ', location )
+                print_( 'Saved: ', location )
             return True
 
 
@@ -5206,7 +5272,7 @@ def saveData( rows, theFile, printThis=True ):
         location = _v.myTables + _v.slash + theFile + '.txt'
         saveText( rows, location )
         if printThis:
-            print( 'Saved: ', location )
+            print_( 'Saved: ', location )
         return True
 
     if t == dict:
@@ -5214,7 +5280,7 @@ def saveData( rows, theFile, printThis=True ):
         return True
     if t == list:
         if len(rows) == 0:
-            print( 'Error: no data to save' )
+            print_( 'Error: no data to save' )
             return False
 
         t = type( rows[0] )
@@ -5226,10 +5292,10 @@ def saveData( rows, theFile, printThis=True ):
             location = _v.myTables + _v.slash + theFile + '.txt'
             saveText( rows, location )
             if printThis:
-                print( 'Saved: ', location )
+                print_( 'Saved: ', location )
             return True
 
-    print( 'Error: unable to save file' )
+    print_( 'Error: unable to save file' )
     return False
 
 
@@ -5262,7 +5328,7 @@ def getData( theFile, exitOnError=False ):
                     location = _v.myTXT + _v.slash + theFile
 
         if not found:
-            print( 'Error: unable to locate file' )
+            print_( 'Error: unable to locate file' )
             if exitOnError:
                 sys.exit()
             return []
@@ -5419,7 +5485,7 @@ def colorHelp( ipsum=False ):
     global colorHelp_colorList
     for sample in colorHelp_colorList:
         if not len( sample ):
-            print()
+            print_()
         else:
             result = eval( sample + '+ "THE_TEXT" + Color.end' )
             if ipsum:
@@ -5427,7 +5493,7 @@ def colorHelp( ipsum=False ):
             else:
                 result = result.replace( 'THE_TEXT', sample )
             
-            print( result )
+            print_( result )
     sys.exit()
 
 
@@ -5462,7 +5528,7 @@ def colorizeRow( row, tableID=False, prefix='', prefixColor='', haltColorShift=F
         prefix = colorThis( prefix, prefixColor, p=0 )
     global switches
     if switches.isActive( 'NoColor' ):
-        print( row )
+        print_( row )
         return False
 
     if type(tableID) == bool:
@@ -5470,18 +5536,18 @@ def colorizeRow( row, tableID=False, prefix='', prefixColor='', haltColorShift=F
     if not type(row) == str:
         row = str(row)
     if type(tableID) == bool:
-        print( row )
+        print_( row )
     else:
         if _str.hasVisible(row):
             up =True
         else:
             up =False
-        # print( 'tableID:', tableID, colorID( tableID ) )
-        # print( str(len(row))+colorID( tableID, up ) + row + Background.end )
+        # print_( 'tableID:', tableID, colorID( tableID ) )
+        # print_( str(len(row))+colorID( tableID, up ) + row + Background.end )
         if colorizeRow_last is None or not haltColorShift:
             colorizeRow_last = colorID( tableID, up )
         if not pipe_break or not __.tableLine in row:
-            print( prefix + colorizeRow_last + row + Background.end )
+            print_( prefix + colorizeRow_last + row + Background.end )
         else:
             sep = colorThis( ' ', 'red', p=0 )
             line = prefix + sep
@@ -5490,7 +5556,7 @@ def colorizeRow( row, tableID=False, prefix='', prefixColor='', haltColorShift=F
                 parts.append( colorizeRow_last + part + Background.end )
                 
             line += sep.join(parts) + sep
-            print(line)
+            print_(line)
 
 
 
@@ -5613,7 +5679,7 @@ def colorThis( strings='', color='red', notBold=False, shouldPrint=True, ipsum=F
     #     if type(colorProfile) == str:
     #         if type(strings) == list and ',' in colorProfile:
     #             if colorProfile.count('*') > 1:
-    #                 print( ' only 1 * ' )
+    #                 print_( ' only 1 * ' )
     #             new_CP = []
     #             cp = colorProfile.split(',')
     #             end = len(strings)-1
@@ -5730,7 +5796,7 @@ def colorThis( strings='', color='red', notBold=False, shouldPrint=True, ipsum=F
     global switches
     if switches.isActive( 'NoColor' ):
         if shouldPrint:
-            print(string)
+            print_(string)
             return string
         else:
             return string
@@ -5741,11 +5807,11 @@ def colorThis( strings='', color='red', notBold=False, shouldPrint=True, ipsum=F
     found = False
 
     if color == 'help':
-        print()
-        print()
-        print( "_.colorThis( strings='', color='red', notBold=False, shouldPrint=True, ipsum=False )" )
-        print()
-        print()
+        print_()
+        print_()
+        print_( "_.colorThis( strings='', color='red', notBold=False, shouldPrint=True, ipsum=False )" )
+        print_()
+        print_()
         colorHelp( ipsum )
 
 
@@ -5827,9 +5893,9 @@ def colorThis( strings='', color='red', notBold=False, shouldPrint=True, ipsum=F
     
     if not found:
         printBold( 'Error: _.colorThis: color not found ' + str(color), 'red' )
-        print()
-        print( strings )
-        print()
+        print_()
+        print_( strings )
+        print_()
         colorHelp( ipsum )
 
         sys.exit()
@@ -5838,7 +5904,7 @@ def colorThis( strings='', color='red', notBold=False, shouldPrint=True, ipsum=F
 
     if shouldPrint:
         try:
-            print( result )
+            print_( result )
         except Exception as e:
 
             try:
@@ -5901,26 +5967,26 @@ def printColor( string, color='red' ):
 
     global switches
     if switches.isActive( 'NoColor' ):
-        print( string )
+        print_( string )
         return False
 
     color = color.lower()
     if not type(string) == str:
         string = str(string)
     if color == 'red':
-        print( Color.red + string + Color.end )
+        print_( Color.red + string + Color.end )
     elif color == 'cyan':
-        print( Color.cyan + string + Color.end )
+        print_( Color.cyan + string + Color.end )
     elif color == 'darkcyan' or color == 'grey':
-        print( Color.darkcyan + string + Color.end )
+        print_( Color.darkcyan + string + Color.end )
     elif color == 'blue':
-        print( Color.blue + string + Color.end )
+        print_( Color.blue + string + Color.end )
     elif color == 'green':
-        print( Color.green + string + Color.end )
+        print_( Color.green + string + Color.end )
     elif color == 'yellow':
-        print( Color.yellow + string + Color.end )
+        print_( Color.yellow + string + Color.end )
     elif color == 'underline':
-        print( Color.underline + string + Color.end )
+        print_( Color.underline + string + Color.end )
 
 # def formatData( result ):
 #     try:
@@ -5941,28 +6007,28 @@ def printBold( string, color='white', prefix='' ):
     
     global switches
     if switches.isActive( 'NoColor' ):
-        print( string )
+        print_( string )
         return False
 
     color = color.lower()
     if not type(string) == str:
         string = str(string)
     if color == 'white':
-        print( ColorBold.white + string + ColorBold.end )
+        print_( ColorBold.white + string + ColorBold.end )
     elif color == 'red':
-        print( ColorBold.red + string + ColorBold.end )
+        print_( ColorBold.red + string + ColorBold.end )
     elif color == 'gray' or color == 'grey':
-        print( ColorBold.gray + string + ColorBold.end )
+        print_( ColorBold.gray + string + ColorBold.end )
     elif color == 'green':
-        print( ColorBold.green + string + ColorBold.end )
+        print_( ColorBold.green + string + ColorBold.end )
     elif color == 'yellow':
-        print( ColorBold.yellow + string + ColorBold.end )
+        print_( ColorBold.yellow + string + ColorBold.end )
     elif color == 'blue':
-        print( ColorBold.blue + string + ColorBold.end )
+        print_( ColorBold.blue + string + ColorBold.end )
     elif color == 'magenta':
-        print( ColorBold.magenta + string + ColorBold.end )
+        print_( ColorBold.magenta + string + ColorBold.end )
     elif color == 'cyan':
-        print( ColorBold.cyan + string + ColorBold.end )
+        print_( ColorBold.cyan + string + ColorBold.end )
 
 
 def inlineColorGroup( row, tableID=False ):
@@ -5978,13 +6044,13 @@ def inlineColorGroup( row, tableID=False ):
     if not type(row) == str:
         row = str(row)
     if type(tableID) == bool:
-        print( row )
+        print_( row )
     else:
         if _str.hasVisible(row):
             up =True
         else:
             up =False
-        # print( 'tableID:', tableID, colorID( tableID ) )
+        # print_( 'tableID:', tableID, colorID( tableID ) )
         return colorID( tableID, up ) + row + Background.end
 
 
@@ -6059,7 +6125,7 @@ def testPatterns( one, two, simple=True ):
         for d in datasetY:
             chars.append( one[d] )
             if x:
-                print( one[d], d )
+                print_( one[d], d )
         return ''.join( chars )
     def addSpent( datasetY ):
         for d in datasetY:
@@ -6098,11 +6164,11 @@ def testPatterns( one, two, simple=True ):
                         break
             if not datasetY[len(datasetY)-1] == theMax:
                 nextLast = int(datasetY[len(datasetY)-1])
-                # print()
-                # print( 'nextLast:', nextLast )
+                # print_()
+                # print_( 'nextLast:', nextLast )
                 for x in range(1,100000):
-                    # print()
-                    # print( nextLast, x, nextLast + x )
+                    # print_()
+                    # print_( nextLast, x, nextLast + x )
                     nextLast = nextLast + 1
                     if nextLast <= theMax:
                         datasetY.append( nextLast )
@@ -6114,24 +6180,24 @@ def testPatterns( one, two, simple=True ):
                             addSpent( datasetY )
                             addMatch( datasetY )
                             patterns.append( genChars( datasetY ) )
-                            # print( '\t1' )
+                            # print_( '\t1' )
                             break
                     else:
                         addSpent( datasetY )
                         addMatch( datasetY )
                         patterns.append( genChars( datasetY ) )
-                        # print( '\t2' )
+                        # print_( '\t2' )
                         break
             else:
                 addSpent( datasetY )
                 addMatch( datasetY )
                 patterns.append( genChars( datasetY ) )
-                # print( '\t3' )
+                # print_( '\t3' )
 
     def runTest( patternLength ):
         data = generatePatterns2( one, 2 )
         # data = generatePatterns( one, 2 )
-        # print( len(data) )
+        # print_( len(data) )
         i = 0
         ii = 0
         for dataset in data:
@@ -6139,9 +6205,9 @@ def testPatterns( one, two, simple=True ):
             if x in two:
                 addMatch( dataset )
                 expandTest( dataset )
-                # print( x )
+                # print_( x )
                 if test:
-                    print( x )
+                    print_( x )
                 i += 1
             else:
                 ii += 1
@@ -6156,8 +6222,8 @@ def testPatterns( one, two, simple=True ):
 
 
     newResult = percentageDiffInt( len(matches), len(one) )
-    # print( patterns )
-    # print( newResult )
+    # print_( patterns )
+    # print_( newResult )
     if simple:
         return newResult
     else:
@@ -6172,7 +6238,7 @@ def generatePatterns( string, patternLength=2 ):
         offset = 0
         dataset = []
         for offset in range(0,by):
-            # print( offset )
+            # print_( offset )
             ix = False
             for i,char in enumerate(string):
                 if i >= offset:
@@ -6185,7 +6251,7 @@ def generatePatterns( string, patternLength=2 ):
                         if len( dataset ):
                             dataset.sort()
                             data.append( dataset )
-                            # print( ''.join( dataset ) )
+                            # print_( ''.join( dataset ) )
                         dataset = []
 
 
@@ -6255,9 +6321,9 @@ def stringDiff( one, two ):
     # resultY.append(min(resultX))
     # resultY.append(patternMatch( one, two ))
     # result = max(resultY)
-    # print()
-    # print( setA, theTotal_one )
-    # print( resultX, one, two )
+    # print_()
+    # print_( setA, theTotal_one )
+    # print_( resultX, one, two )
 
     return result
 
@@ -6283,7 +6349,7 @@ def postLoad( file, epoch=0, theFocus=False ):
     else:
         theFocus = __.appReg
 
-        # print( 'theFocus:', theFocus )
+        # print_( 'theFocus:', theFocus )
         # printVar( appData )
         if  theFocus in appData:
             if type( appData[theFocus]['pipe'] ) == bool:
@@ -6295,10 +6361,10 @@ def postLoad( file, epoch=0, theFocus=False ):
 
 
 
-        # print( type( appData[theFocus]['pipe'] ) )
+        # print_( type( appData[theFocus]['pipe'] ) )
 
 
-        # print( appData[theFocus]['pipe'] )
+        # print_( appData[theFocus]['pipe'] )
 
 
         if type( myFileLocation_File ) == bool:
@@ -6308,16 +6374,16 @@ def postLoad( file, epoch=0, theFocus=False ):
         
         # if __.isRequired_Pipe_or_File and not hasFile and not hasPipeData:
         #     if __.pre_error:
-        #         print(  )
-        #         print( inlineBold('Error:','red')+inlineBold(' Pipe')+' data or '+inlineBold('File')+' is required' )
-        #         print(  )
+        #         print_(  )
+        #         print_( inlineBold('Error:','red')+inlineBold(' Pipe')+' data or '+inlineBold('File')+' is required' )
+        #         print_(  )
         #         sys.exit()
 
         # if __.isRequired_Pipe and not hasPipeData:
         #     if __.pre_error:
-        #         print(  )
-        #         print( 'Error: Pipe data is required' )
-        #         print(  )
+        #         print_(  )
+        #         print_( 'Error: Pipe data is required' )
+        #         print_(  )
         #         sys.exit()
 
         on = switches.records( formating='dic_on-off-v', appReg=theFocus )['on']
@@ -6379,11 +6445,11 @@ def postLoad( file, epoch=0, theFocus=False ):
         #                 meetsRequirements = True
         #         if not meetsRequirements:
         #             if __.pre_error:
-        #                 print(  )
-        #                 print( inlineBold( 'Error:', 'red' ) + ' One of the following is required:', ', '.join( __.isRequired_or_List ) )
-        #                 print(  )
+        #                 print_(  )
+        #                 print_( inlineBold( 'Error:', 'red' ) + ' One of the following is required:', ', '.join( __.isRequired_or_List ) )
+        #                 print_(  )
 
-        #                 # print( __.registeredApps )
+        #                 # print_( __.registeredApps )
 
         #                 sys.exit()
 
@@ -6424,6 +6490,7 @@ def releaseAcquiredData( appDBA, theFocus, payload=None ):
     global appData
     global myFileLocation_Files
     global switches
+    global print_ed
     log = _v.appLogs() + _v.slash+'execution_receipt-' + appDBA + '-' + str( __.startTime ) + '.json'
     rebuiltCommandRaw = theCommand( appDBA, printThis=False, separate=True )
     if len( rebuiltCommandRaw[1] ):
@@ -6432,11 +6499,12 @@ def releaseAcquiredData( appDBA, theFocus, payload=None ):
     else:
         rebuiltCommand = rebuiltCommandRaw[0]
         rebuiltCommandEpoch = rebuiltCommandRaw[0] + ' -loadEpoch ' + str( __.startTime ) 
-    # print( log )
-    # print( rebuiltCommandRaw )
+    # print_( log )
+    # print_( rebuiltCommandRaw )
 
 
     # autoBackupData = True
+
 
 
     info = {
@@ -6448,6 +6516,7 @@ def releaseAcquiredData( appDBA, theFocus, payload=None ):
                 'files': [],
                 'switches': switches.getTable(),
                 'errors': [],
+                'printed': print_ed,
     }
     if not payload is None:
         info['payload'] = payload
@@ -6477,20 +6546,20 @@ def releaseAcquiredData( appDBA, theFocus, payload=None ):
                     except Exception as e:
                         info['errors'].append({ 'error': fileError, 'file': _v.myAppLogs + _v.slash + thisName })
 
-        # print( theFocus, type( appData[theFocus]['pipe'] ) )
-        # print('theFocus',theFocus)
+        # print_( theFocus, type( appData[theFocus]['pipe'] ) )
+        # print_('theFocus',theFocus)
         if not type( appData[theFocus]['pipe'] ) == bool:
             thisName = 'files-' + appDBA + '-' + str( __.startTime ) + '_pipe' + '.cache'
             saveText( appData[theFocus]['pipe'], _v.myAppLogs + _v.slash + thisName )
-            # print(info)
+            # print_(info)
             info['files'].append( thisName )
             
         
 
         saveTable2( info, log )
 
-        # print()
-        # print()
+        # print_()
+        # print_()
         # printVar( info )
 
     # 
@@ -6498,7 +6567,7 @@ def releaseAcquiredData( appDBA, theFocus, payload=None ):
 # file0 = _v.myTables + _v.slash+'applogs'+_v.slash + log
 
 def reclaimAcquiredData( appDBA, epoch, theFocus=False ):
-    print( 'reclaimAcquiredData' )
+    print_( 'reclaimAcquiredData' )
     global switches
     if not type( theFocus ) == bool:
         appReg = theFocus
@@ -6506,7 +6575,7 @@ def reclaimAcquiredData( appDBA, epoch, theFocus=False ):
         appReg = __.appReg
 
     log = _v.appLogs() + _v.slash+'execution_receipt-' + appDBA + '-' + str( epoch ) + '.json'
-    print(  os.path.isfile(log), log )
+    print_(  os.path.isfile(log), log )
     if not os.path.isfile(log):
         cp( 'Error: please select a valid backup', 'error' )
         sys.exit()
@@ -6516,8 +6585,8 @@ def reclaimAcquiredData( appDBA, epoch, theFocus=False ):
         __.payloadCache = info['payload']
 
 
-    # print( log )
-    # print( info )
+    # print_( log )
+    # print_( info )
     # printVar( info )
 
     def pipeFile():
@@ -6566,17 +6635,24 @@ def reclaimAcquiredData( appDBA, epoch, theFocus=False ):
                 data.append( switchData[i] )
         return data
 
+    pass
+    if 'printed' in info:
+        # cp( '' )
+        for line in info['printed']:
+            print(line)
 
-    if switches.onlyLoadEpoch( theFocus=appReg ):
-        switchData = rebuildSwitches( info['switches'] )
     else:
-        switchData = rebuildFiles( info['switches'] )
-    # printVar( switchData )
-    switches.loadTable( switchData, theFocus=appReg )
-    # print( 'theFocus:', theFocus )
 
-    if not type( pipeFile() ) == bool:
-        appData[appReg]['pipe'] = getText( pipeFile() )
+        if switches.onlyLoadEpoch( theFocus=appReg ):
+            switchData = rebuildSwitches( info['switches'] )
+        else:
+            switchData = rebuildFiles( info['switches'] )
+        # printVar( switchData )
+        switches.loadTable( switchData, theFocus=appReg )
+        # print_( 'theFocus:', theFocus )
+
+        if not type( pipeFile() ) == bool:
+            appData[appReg]['pipe'] = getText( pipeFile() )
 
 
 
@@ -6601,7 +6677,7 @@ def theCommand( file='', theFocus=False, printThis=True, justSwitches=False, sep
     else:
         result = 'p ' + appDBA + ' ' + theSwitchInfo
     if printThis:
-        print( result )
+        print_( result )
     if separate:
         return [ 'p ' + appDBA, theSwitchInfo ]
 
@@ -6760,7 +6836,7 @@ def genAppName( file ):
 
 def printFields( data, depth=1 ):
     if depth == 1:
-        print()
+        print_()
     def tabLoop( depth ):
         result = ''
         i=0
@@ -6772,11 +6848,11 @@ def printFields( data, depth=1 ):
 
         if len(data) and type(data[0]) == dict:
             for row in data[0].keys():
-                print( tabLoop( depth ), row )
+                print_( tabLoop( depth ), row )
                 printFields( data[0][row], depth+1 )
     elif type( data ) == dict:
         for row in data.keys():
-            print( tabLoop( depth ), row )
+            print_( tabLoop( depth ), row )
             printFields( data[row], depth+1 )
 
 def removeReturn( data ):
@@ -6939,7 +7015,7 @@ def d2json( data, sort_keys=False ):
     return simplejson.dumps(data, indent=4, sort_keys=sort_keys)
 
 def printVar1( data ):
-    print( d2json( data ) )
+    print_( d2json( data ) )
 
 
 def printVar( data, sort_keys=False, isDic=None ):
@@ -6954,7 +7030,7 @@ def printVar( data, sort_keys=False, isDic=None ):
     # result = getText( _v.json_temp, raw=True )
     # result = type( result )
     result = printVarColor( result )
-    print(  )
+    print_(  )
 
 def printTest( data, color='white', line=None, isPrint=1, shouldExit=1, validate=1, raw=0, profile=False, sort_keys=False, pause=None,    r=0, v=1, val=1, l=None, x=1, s=False, sk=False, p=None ):
 
@@ -7024,12 +7100,12 @@ def printTest( data, color='white', line=None, isPrint=1, shouldExit=1, validate
             colorThis( data, color )
 
     if shouldPause:
-        print('pause doesnt work')
+        print_('pause doesnt work')
         sys.exit()
 
         pause=input(' - ')
     elif shouldExit:
-        # print('shouldExit')
+        # print_('shouldExit')
         sys.exit()
 
 
@@ -7041,7 +7117,7 @@ def printVarSimple( data, sort_keys=False, isDic=None, prefix=None, remove=None,
     dump=simplejson.dumps(data, indent=4, sort_keys=sort_keys)
     if d:
         if p:
-            print(dump)
+            print_(dump)
         return dump 
     data = json_clean(data)
     if not isDic is None and isDic and type(data) == str:
@@ -7056,12 +7132,12 @@ def printVarSimple2( data, sort_keys=False, isDic=None ):
     result = result.replace( '"', '' )
     result = result.replace( ',', '' )
     result = printVarColor_OLD( result )
-    print( result )
+    print_( result )
 
 
 def printVarSimpleFake( data ):
     result = printVarColor_OLD( data )
-    print( result )
+    print_( result )
 def printVarOld( data, sort_keys=False, prefix=None, remove=None ):
     result = d2json( data, sort_keys )
     # result = type( result )
@@ -7070,23 +7146,23 @@ def printVarOld( data, sort_keys=False, prefix=None, remove=None ):
         for x in remove:
             result = result.replace(x,'')
     if prefix is None:
-        print( result )
+        print_( result )
     else:
         for x in result.split('\n'):
-            print( prefix+x )
+            print_( prefix+x )
 
 def printVarSimplePostReplace( data, string, newString, sort_keys=False ):
     result = d2json( data, sort_keys )
     # result = type( result )
     result = printVarColor_OLD( result )
     result = result.replace( string, newString )
-    print( result )
+    print_( result )
 
 
 def printVar2( data, sort_keys=False ):
     result = d2json( data, sort_keys )
     result = printVarColor_OLD( result )
-    print( result )
+    print_( result )
 
 
 def printVarColor( data ):
@@ -7095,14 +7171,14 @@ def printVarColor( data ):
 
     # index = validator.createIndex( data, 'javascript' )
     # validator.colorPrint_old()
-    # print(data)
+    # print_(data)
     index = validator.createIndex( data, 'javascript', skipLoad=True, simple=False, A=None, B=True, C=None )
     # printVarSimple(validator.identity)
     # index = validator.createIndex( data, 'javascript', simple=False, B=True )
     validator.colorPrint()
     
 def printVarSimpleSTR(data):
-    print( printVarColor_OLD( data ) )
+    print_( printVarColor_OLD( data ) )
 
 def printVarColor_OLD( code ):
     result = ''
@@ -7118,7 +7194,7 @@ def printVarColor_OLD( code ):
             # txt+=inlineBold( '"', 'darkcyan' )
             txt+=inlineBold( code[i+1:ii], 'cyan' )
             txt+=Color.darkcyan+"'"+Color.end
-            # print(ii,c,)
+            # print_(ii,c,)
             result += txt
             i = ii
         elif c == '"':
@@ -7128,7 +7204,7 @@ def printVarColor_OLD( code ):
             # txt+=inlineBold( '"', 'darkcyan' )
             txt+=inlineBold( code[i+1:ii], 'cyan' )
             txt+=Color.darkcyan+'"'+Color.end
-            # print(ii,c,)
+            # print_(ii,c,)
             result += txt
             i = ii
         else:
@@ -7268,11 +7344,11 @@ def myFileLocationsXYZ( file, silent=False, currentBaseVersion=3 ):
     for i,f in enumerate(myFileLocation_Pipe):
         myFileLocation_Pipe[i] = __.path(f)
     if type(appData[__.appReg]['pipe']) == list and len(appData[__.appReg]['pipe']):
-        # print('here a')
+        # print_('here a')
         return appData[__.appReg]['pipe']
     else:
-        # print('here b')
-        # print(type(myFileLocation_Files[0]))
+        # print_('here b')
+        # print_(type(myFileLocation_Files[0]))
         if len(myFileLocation_Files):
             return myFileLocation_Files[0]
         else:
@@ -7304,17 +7380,17 @@ def myFileLocations( file, silent=False, currentBaseVersion=3 ):
     if os.path.isfile(file):
         myFileLocations_add_file(file)
 
-    # print('here')
+    # print_('here')
     try:
         __.myFileLocations_processed
     except Exception as e:
         __.myFileLocations_processed = False
-    # print('__.trigger_isPipe',__.trigger_isPipe)
-    # print(__.trigger_isPipe)
+    # print_('__.trigger_isPipe',__.trigger_isPipe)
+    # print_(__.trigger_isPipe)
     # if 'glob' in __.trigger_isPipe:
     #     import glob
     #     g = glob.glob(file)
-    #     print('g',g,__.myFileLocations_processed)
+    #     print_('g',g,__.myFileLocations_processed)
     #     return g
 
     if not __.myFileLocations_processed and not type( __.trigger_isPipe ) == bool:
@@ -7329,29 +7405,29 @@ def myFileLocations( file, silent=False, currentBaseVersion=3 ):
             for f in g:
                 # f = __.path(f)
                 # FX = getText( f, raw=True )
-                # print('_____________________')
-                # print(f,FX)
-                # print('_____________________')
+                # print_('_____________________')
+                # print_(f,FX)
+                # print_('_____________________')
                 # sys.exit()
                 # appData[__.appReg]['pipe'] += FX + '\n'
                 myFileLocations( f, silent, currentBaseVersion )
             file = g
-            # print(g)
+            # print_(g)
             # return g
             # appData[__.appReg]['pipe'] = appData[__.appReg]['pipe'].split('\n')
-            # print("appData[__.appReg]['pipe']",appData[__.appReg]['pipe'])
+            # print_("appData[__.appReg]['pipe']",appData[__.appReg]['pipe'])
             return file
             try:
                 return f
             except Exception as e:
                 return file
 
-    # print(__.myFileLocations_SKIP_VALIDATION)
-    # print(os.path.isdir(file))
-    # print(file)
+    # print_(__.myFileLocations_SKIP_VALIDATION)
+    # print_(os.path.isdir(file))
+    # print_(file)
     # sys.exit()
 
-    # print( 'HERE HERE HERE HERE ', file )
+    # print_( 'HERE HERE HERE HERE ', file )
     if '*' in file:
         import glob
         if not type(appData[__.appReg]['pipe']) == list: appData[__.appReg]['pipe']=[];
@@ -7364,7 +7440,7 @@ def myFileLocations( file, silent=False, currentBaseVersion=3 ):
     global myFileLocation_File
     global backup_subject_files
     if type(__.myFileLocations_SKIP_VALIDATION) == bool and __.myFileLocations_SKIP_VALIDATION:
-        # print('here')
+        # print_('here')
         # sys.exit()
         if not type(appData[__.appReg]['pipe']) == list:
             appData[__.appReg]['pipe']=[]
@@ -7391,10 +7467,10 @@ def myFileLocations( file, silent=False, currentBaseVersion=3 ):
     except Exception as e:
         pass
     if len( myFileLocation_Files ):
-        # print('xxx')
+        # print_('xxx')
     # if len( myFileLocation_Files ) and type( appData[__.appReg]['pipe'] ) == bool:
         if not type( __.trigger_isPipe ) == bool:
-            # print( 'HERE', myFileLocation_Files )
+            # print_( 'HERE', myFileLocation_Files )
             __.appRegPipe = __.appReg
 
             if 'name' in __.trigger_isPipe:
@@ -7405,7 +7481,7 @@ def myFileLocations( file, silent=False, currentBaseVersion=3 ):
             tmpFiles = []
             hasFiles = False
             if justNames:
-                # print( 'HERE' )
+                # print_( 'HERE' )
                 # setPipeData( myFileLocation_Files, __.appReg )
 
                 if type( appData[__.appReg]['pipe'] ) == bool:
@@ -7528,23 +7604,23 @@ def myFileLocations2( file, silent=False, currentBaseVersion=3 ):
         for testThis in probableLocations:
             try:
                 theTest = eval( testThis )
-                # print()
-                # print(theTest)
+                # print_()
+                # print_(theTest)
                 theTest = theTest.replace( '*THEFILENAME*', file )
-                # print(os.path.isfile( theTest ),theTest)
+                # print_(os.path.isfile( theTest ),theTest)
                 if os.path.isfile( theTest ):
                     if silentSetTo:
                         
-                        print()
-                        print( 'File not here but in:', theTest )
-                        print()
+                        print_()
+                        print_( 'File not here but in:', theTest )
+                        print_()
 
                     return theTest
             except Exception as e:
                 pass
     
     if not os.path.isfile( _v.relevant_folders ) and __.isWin:
-        print( 'generateRelevantFolders' )
+        print_( 'generateRelevantFolders' )
         import generateRelevantFolders
         generateRelevantFolders.action()
 
@@ -7555,7 +7631,7 @@ def myFileLocations2( file, silent=False, currentBaseVersion=3 ):
             if 'ext' in __.specifications:
                 if os.path.isfile( fld  +_v.slash+  file+ __.specifications['ext'] ):
                     return fld  +_v.slash+  file
-            # print(fld)
+            # print_(fld)
 
     return file
 
@@ -7625,7 +7701,7 @@ def dateAdd2( theDate, addDays, delim='-' ):
             float( theDate )
             theDate = resolveEpochTest( theDate, onlyEpoch='day', delim=delim )
             if type(theDate) == bool:
-                print( 'Error:', theDate )
+                print_( 'Error:', theDate )
                 sys.exit()
         except Exception as e:
             printBold( 'Error: '+ theDate, 'red' )
@@ -7636,7 +7712,7 @@ def dateAdd2( theDate, addDays, delim='-' ):
     return date0 + datetime.timedelta(days=addDays)
 
 def dateMathEpoch( epoch, theDays, do='+' ):
-    # print(epoch, theDays)
+    # print_(epoch, theDays)
     epoch = autoDate(epoch)
     # if do == '+':
     #   return epoch + ( theDays*86400 )
@@ -7650,9 +7726,9 @@ def dateMathEpoch( epoch, theDays, do='+' ):
     elif do == '-':
         date1 = date0 - datetime.timedelta(days=theDays)
     else:
-        print( "dateMathEpoch( epoch, theDays, do='+' )" )
+        print_( "dateMathEpoch( epoch, theDays, do='+' )" )
         sys.exit()
-    # print(date1.timestamp())
+    # print_(date1.timestamp())
     return autoDate((date1.timestamp()))
 
 
@@ -7672,7 +7748,7 @@ def txt2Date(text):
         if text.count('-') == 2:
             try:
                 textSplit = text.split('-')
-                # print(textSplit)
+                # print_(textSplit)
                 theDate = datetime.datetime( int(textSplit[0]), int(textSplit[1]), int(textSplit[2]), 0, 0 )
                 result = str( theDate ).split()[0]
             except Exception as e:
@@ -7680,7 +7756,7 @@ def txt2Date(text):
                 theDate = datetime.date.today()
                 result = str( theDate ).split()[0]
         else:
-            print('Date error: using today\'s date')
+            print_('Date error: using today\'s date')
             theDate = datetime.date.today()
             result = str( theDate ).split()[0]
     else:
@@ -7781,13 +7857,13 @@ def genUUID( project='', label='', uniqueTimestamp=False, note=None, r=None, e=N
 
         if not project == '' or not label == '':
             if type(appData[__.appReg]['uuid']) == str:
-                # print()
-                # print( '__.appReg', __.appReg )
-                # print()
-                # print(d2json( appData ))
-                # print()
+                # print_()
+                # print_( '__.appReg', __.appReg )
+                # print_()
+                # print_(d2json( appData ))
+                # print_()
                 appData[__.appReg]['uuid'] = {}
-                # print(appInfo[__.appReg]['file'])
+                # print_(appInfo[__.appReg]['file'])
                 # sys.exit()
                 appData[__.appReg]['uuid']['app'] = appInfo[__.appReg]['file']
 
@@ -7896,7 +7972,7 @@ uuide=uuidEpoc
 
 __.fn.saveText = False
 def saveText( rows, theFile, errors=True, me=0, test=None ):
-    # print(rows)
+    # print_(rows)
     ty9=type(rows)
     if not test is None:
         __.fn.saveText = test
@@ -7904,28 +7980,28 @@ def saveText( rows, theFile, errors=True, me=0, test=None ):
     if __.fn.saveText:
         cp( [ 'saveText', __.appReg, type(rows), theFile ], 'cyan' )
     HD.chmod(theFile)
-    # print(type(rows))
+    # print_(type(rows))
     try:
         if type(rows) == bytes:
             rows = str(rows,'utf-8')
         f = open(theFile,'w', encoding='utf-8')
         # if type(rows) == str:
 
-        # print(type(rows))
+        # print_(type(rows))
         # f.write(str(rows))
         # rows = [unicode(x.strip()) if x is not None else u'' for x in rows]
         # f.write(rows)
         # f.write(rows.encode("iso-8859-1", "replace"))
 
-        # print(type(rows))
+        # print_(type(rows))
         if type(rows) == str:
-            # print(rows)
+            # print_(rows)
             f.write(rows)
             if __.fn.saveText:
-                print(1111111,0)
+                print_(1111111,0)
         else:
             if __.fn.saveText:
-                print(1111111,1)
+                print_(1111111,1)
             # if ty9 == str:
             #     f.write(str(rows))
             # elif ty9 == list:
@@ -7954,12 +8030,12 @@ def saveText( rows, theFile, errors=True, me=0, test=None ):
         try:
             open(theFile, 'wb').write(rows)
             if __.fn.saveText:
-                print(2222222)
+                print_(2222222)
         except Exception as e:
             try:
                 open(theFile, 'w').write(rows)
                 if __.fn.saveText:
-                    print(3333333)
+                    print_(3333333)
             except Exception as e:
                 new_text = ''
                 for x in rows:
@@ -7967,10 +8043,10 @@ def saveText( rows, theFile, errors=True, me=0, test=None ):
                         new_text+=x
                 open(theFile, 'w', encoding='utf-8').write(new_text)
                 if __.fn.saveText:
-                    print(4444444)
+                    print_(4444444)
         HD.chmod(theFile)
         # if errors:
-        #   print( 'Auto correction when saving text' )
+        #   print_( 'Auto correction when saving text' )
     if me and theFile in vv.opened_file_me: changeM( theFile, vv.opened_file_me[theFile] );
 
 def getText( theFile, raw=False, clean=False,  e=0, c=0 ):
@@ -7994,7 +8070,7 @@ def getText( theFile, raw=False, clean=False,  e=0, c=0 ):
     else:
         if not e:
             return None
-        print('(getText) Error: No File')
+        print_('(getText) Error: No File')
         sys.exit()
     if raw:
         txt = ''.join( lines )
@@ -8071,7 +8147,7 @@ def getText( theFile, raw=False, clean=False,  e=0, c=0 ):
             if clean == 3:
                 row = ' ' + row + ' '
 
-            # print( row )
+            # print_( row )
             lines[i] = row
         return lines
     else:
@@ -8170,7 +8246,7 @@ def calculate_monthdelta(date1, date2):
 # def timeout(start,t):
 
 #     # os._exit(0)
-#     # print('loop')
+#     # print_('loop')
 #     global completed
 #     global killTime
 #     global timeoutKill
@@ -8187,7 +8263,7 @@ def calculate_monthdelta(date1, date2):
 #     elif completed == False:
 #         timeoutKill = True
 #         completed = True
-#         print('\n*** Timeout ***()')
+#         print_('\n*** Timeout ***()')
 #         # os._exit(0)
 
 # def processTimeout():
@@ -8199,26 +8275,26 @@ def calculate_monthdelta(date1, date2):
 #         except Exception as e:
 #             errors.append({'id': 18, 'function': 'parent', 'cnt': 1, 'location': "defaultTimeout = int(switches.value('Timeout'))", 'vars': [{'name': 'timeout', 'value': switches.value('Timeout')}], 'error': e})
 #             printBold('Error:','red')
-#             print('\tBad timeout value.')
+#             print_('\tBad timeout value.')
 #             os._exit(0)
 
-#     # print(defaultTimeout)
+#     # print_(defaultTimeout)
 #     x = Timer(0.0, timeout, ('start',defaultTimeout))
 #     x.start()
 
 
 def showLine( string, plus = '', minus = '',plusOr = False, end=None,isSub=False, OR=None ):
-    # print(plus)
-    # print(string)
+    # print_(plus)
+    # print_(string)
     global switches
-    # print(switches.isActive('Plus'))
-    # print(switches.values('Plus'))
+    # print_(switches.isActive('Plus'))
+    # print_(switches.values('Plus'))
     # sys.exit()
     if plus is None :
         result = True
     else:
         if switches.isActive('Plus') or not plus == '':
-            # print('asdf')
+            # print_('asdf')
             result = positiveResults(string,plus,plusOr,end,OR=OR)
             if not result and switches.isActive('PlusClose'):
                 result = closeResults( string )
@@ -8235,7 +8311,7 @@ def showLine( string, plus = '', minus = '',plusOr = False, end=None,isSub=False
             result = True
     if result == True and  (switches.isActive('Minus') or not minus == ''):
         result = minusResults(string,minus)
-    # print(result)
+    # print_(result)
     return result
 def closeResults( string ):
     global switches
@@ -8248,9 +8324,9 @@ def closeResults( string ):
             pass
 
     test = patternDiff( string, switches.value('Plus') )
-    # print( int(test), string, switches.value('Plus') )
+    # print_( int(test), string, switches.value('Plus') )
     if test >= plusClose:
-        # print( test, string )
+        # print_( test, string )
         return True
     else:
         return False
@@ -8295,7 +8371,7 @@ def positiveResults(string,plus='',plusOr=False,end=None,OR=None):
     result = False
     if not switches.isActive('StrictCase'):
         string = string.lower()
-    # print( plusList )
+    # print_( plusList )
     # sys.exit()
     for s in plusList:
         if not switches.isActive('StrictCase'):
@@ -8318,7 +8394,7 @@ def positiveResults(string,plus='',plusOr=False,end=None,OR=None):
         elif switches.isActive('PlusDuplicate') and (  string.count(ci(s)) > 1 or string.count(s) > 1 ):
             cnt += 1
         # if 'opus' in string:
-        #   print(cnt, string)
+        #   print_(cnt, string)
         if length == cnt:
             result = True
             break
@@ -8326,7 +8402,7 @@ def positiveResults(string,plus='',plusOr=False,end=None,OR=None):
             if cnt > 0:
                 result = True
     # if result:
-    #     print(string,plus)
+    #     print_(string,plus)
     return result
 
 def minusResults(string,minus=''):
@@ -8391,7 +8467,7 @@ def saveLog( logname, rows=[], focus=True, printThis=True ):
     if not len(rows) and logname == 'threads':
         global threads
         rows = threads.log()
-        # print( rows )
+        # print_( rows )
         # sys.exit()
     if not len(rows) and logname == 'audit':
         for ad in __.structure():
@@ -8420,7 +8496,7 @@ def saveLog( logname, rows=[], focus=True, printThis=True ):
     f.close()
     HD.chmod(file0)
     if printThis:
-        print('Saved: ' + file0)
+        print_('Saved: ' + file0)
 
 def saveTable( rows, theFile, tableTemp=False, printThis=True, indentCode=True, sort_keys=False, archive=False,                k=0,s=0,tmp=None,here=None,h=None,    p=1, me=0   ):
     HD.chmod(theFile)
@@ -8450,7 +8526,7 @@ def saveTable( rows, theFile, tableTemp=False, printThis=True, indentCode=True, 
             px = file0
 
     if __.print_path:
-        print(file0)
+        print_(file0)
     if indentCode:
         dataDump = simplejson.dumps(rows, indent=4, sort_keys=sort_keys)
     else:
@@ -8530,8 +8606,8 @@ def getTable( theFile, tableTemp=False,      isDic=None, isList=None,      tmp=N
     if not os.path.isfile(file0):
         file0 = theFile
     if os.path.isfile(file0):
-        # print( 'theFile', theFile )
-        # print( 'file0', file0 )
+        # print_( 'theFile', theFile )
+        # print_( 'file0', file0 )
         # import bigjson
         with open(file0,'r', encoding="latin-1") as json_file:
             json_data = simplejson.load(json_file)
@@ -8619,12 +8695,12 @@ def getTableProject( project, theFile,     isDic=None, isList=None, path=False )
     simplejson = __.imp('simplejson')
     theFile = _v.projectData(project) + theFile
     if path:
-        print(theFile)
+        print_(theFile)
         return None
-    # print(theFile)
-    # print(theFile)
-    # print(theFile)
-    # print(theFile)
+    # print_(theFile)
+    # print_(theFile)
+    # print_(theFile)
+    # print_(theFile)
     if os.path.isfile(theFile) == True:
         with open(theFile,'r', encoding="latin-1") as json_file:
             json_data = simplejson.load(json_file)
@@ -8637,12 +8713,12 @@ def getTableProject( project, theFile,     isDic=None, isList=None, path=False )
 def saveTableProject( project, rows=[], theFile='', printThis=False, sort_keys=False, indentCode=True,  p=None, me=0, path=False ):
     HD.chmod(theFile)
     simplejson = __.imp('simplejson')
-    # print('*******************',theFile)
+    # print_('*******************',theFile)
     theFile = _v.projectData(project) + theFile
     if __.print_path:
-        print(theFile)
+        print_(theFile)
     if path:
-        print(theFile)
+        print_(theFile)
         return None
     if indentCode:
         dataDump = simplejson.dumps(rows, indent=4, sort_keys=sort_keys)
@@ -8655,17 +8731,17 @@ def saveTableProject( project, rows=[], theFile='', printThis=False, sort_keys=F
     f.close()
     HD.chmod(theFile)
     if printThis:
-        print('Saved: ' + theFile)
+        print_('Saved: ' + theFile)
     if me and theFile in vv.opened_file_me: changeM( theFile, vv.opened_file_me[theFile] );
 
 def saveTableDB( rows, theFile, printThis=False, sort_keys=False, indentCode=True,  p=None, me=0 ):
     HD.chmod(theFile)
     simplejson = __.imp('simplejson')
 
-    # print('*******************',theFile)
+    # print_('*******************',theFile)
     theFile = _v.dbTables + _v.slash + theFile
     if __.print_path:
-        print(theFile)
+        print_(theFile)
     if indentCode:
         dataDump = simplejson.dumps(rows, indent=4, sort_keys=sort_keys)
     else:
@@ -8677,7 +8753,7 @@ def saveTableDB( rows, theFile, printThis=False, sort_keys=False, indentCode=Tru
     f.close()
     HD.chmod(theFile)
     if printThis:
-        print('Saved: ' + theFile)
+        print_('Saved: ' + theFile)
     if me and theFile in vv.opened_file_me: changeM( theFile, vv.opened_file_me[theFile] );
 
 
@@ -8686,7 +8762,7 @@ def saveTable2( rows, theFile, printThis=False, sort_keys=False, indentCode=True
     simplejson = __.imp('simplejson')
     if not p is None:
         printThis = p
-    # print('*******************',theFile)
+    # print_('*******************',theFile)
     if theFile.startswith('temp'+_v.slash):
         theFile = theFile.replace( 'temp'+_v.slash, '' )
         theFile = _v.stmp + _v.slash + theFile
@@ -8702,20 +8778,20 @@ def saveTable2( rows, theFile, printThis=False, sort_keys=False, indentCode=True
     f.close()
     HD.chmod(theFile)
     if printThis:
-        print('Saved: ' + theFile)
+        print_('Saved: ' + theFile)
     if me and theFile in vv.opened_file_me: changeM( theFile, vv.opened_file_me[theFile] );
 
 def saveTable3( rows, theFile, printThis=False, me=0 ):
     HD.chmod(theFile)
     simplejson = __.imp('simplejson')
-    # print('*******************',theFile)
+    # print_('*******************',theFile)
     dataDump = simplejson.dumps(rows)
     f = open(theFile,'w')
     f.write(str(dataDump))
     f.close()
     HD.chmod(theFile)
     if printThis:
-        print('Saved: ' + theFile)
+        print_('Saved: ' + theFile)
     if me and theFile in vv.opened_file_me: changeM( theFile, vv.opened_file_me[theFile] );
 
 
@@ -8730,8 +8806,8 @@ def tempFile(rows,theFile):
     file.close()
 
 def stamp2Date(ts):
-    # print(ts)
-    # print(datetime.datetime.fromtimestamp(int(ts) / 1e3))
+    # print_(ts)
+    # print_(datetime.datetime.fromtimestamp(int(ts) / 1e3))
     return datetime.datetime.fromtimestamp(int(ts) / 1e3)
 def float2Date(ts):
     import _rightThumb._date as _date
@@ -8742,8 +8818,8 @@ def float2Date(ts):
             ts = float(ts)
         else:
             ts = int(ts)
-        # print(type(ts))
-        # print( stamp2Date(ts) )
+        # print_(type(ts))
+        # print_( stamp2Date(ts) )
     return stamp2Date(ts)
 def float2Date2(ts):
     if type(ts) == str:
@@ -8752,7 +8828,7 @@ def float2Date2(ts):
             ts = float(ts)
         else:
             ts = int(ts)
-        # print(type(ts))
+        # print_(type(ts))
     return str(datetime.datetime.fromtimestamp(ts)).split('.')[0]
     # return str(datetime.datetime.fromtimestamp(ts / 1e3))
     # return str(ts)
@@ -8807,7 +8883,7 @@ def dateDiff( theDate0, theDate1, delim='-' ):
             printBold( 'Error: _.dateDiff '+ str(theDate1), 'red' )
             sys.exit()
 
-    # print(theDate0,theDate1,delim)
+    # print_(theDate0,theDate1,delim)
     # sys.exit()
     fdtl0 = theDate0.split(delim)
     date0 = datetime.date(int(fdtl0[0]), int(fdtl0[1]), int(fdtl0[2]))
@@ -8833,7 +8909,7 @@ def dateDiffX( theDate0, theDate1, delim='-' ):
 
 
 
-    # print(theDate0,theDate1,delim)
+    # print_(theDate0,theDate1,delim)
     # sys.exit()
     fdtl0 = theDate0.split(delim)
     date0 = datetime.date(int(fdtl0[0]), int(fdtl0[1]), int(fdtl0[2]))
@@ -8878,7 +8954,7 @@ def date2epoch(theDate,delim='-'):
         elif theDate.count(':') == 3:
             stmp = dt.strptime(theDate, '%Y-%m-%d %H:%M:%S:%f')
         else:
-            print('Error: date2epoch')
+            print_('Error: date2epoch')
             sys.exit()
 
     else:
@@ -8909,12 +8985,12 @@ def figureOutDate(theDate, theFormat):
 
     theFormatExp = 'dmy'
     if not len(theFormat) == 3:
-        print('format error, expected: dmy, ymd')
+        print_('format error, expected: dmy, ymd')
         sys.exit()
     if theFormat[0] in theFormatExp and theFormat[1] in theFormatExp and theFormat[2] in theFormatExp:
         pass
     else:
-        print('format error, expected: dmy, ymd')
+        print_('format error, expected: dmy, ymd')
         sys.exit()
     # theFormat = 'dmy'
     theDate = str(theDate)
@@ -8946,7 +9022,7 @@ def figureOutDate(theDate, theFormat):
         m = m.lower()
         found = False
         for monththeDate in getMonthData():
-            # print(monththeDate)
+            # print_(monththeDate)
             # sys.exit()
             full = monththeDate['month']
             abbrev = monththeDate['abbrev']
@@ -8959,7 +9035,7 @@ def figureOutDate(theDate, theFormat):
         if not found:
             ans = input('What Month? ')
             if len(ans) == 0:
-                print('Month error')
+                print_('Month error')
                 sys.exit()
             try:
                 int(ans)
@@ -9023,11 +9099,11 @@ def figureOutDate(theDate, theFormat):
         info['d'] = ifoy
     if test(ifod) == '' and 'd' in fList:
         info['m'] = ifod
-    # print(test(ifoy))
-    # print(fList)
+    # print_(test(ifoy))
+    # print_(fList)
 
     result = info['y'] + '-' + info['m'] + '-' + info['d']
-    # print(result)
+    # print_(result)
     if not hasDup:
         hasDup = False
         if result.count(ifoy) > 1:
@@ -9037,14 +9113,14 @@ def figureOutDate(theDate, theFormat):
         if result.count(ifod) > 1:
             hasDup = True
         if hasDup:
-            print('Error please specify format: ymd')
+            print_('Error please specify format: ymd')
             sys.exit()
     else:
         if result.count(info['y']) > 1:
-            print('Error please specify format: ymd')
+            print_('Error please specify format: ymd')
             sys.exit()
 
-    print(result)
+    print_(result)
     sys.exit()
     return result
 
@@ -9140,9 +9216,9 @@ def updateLine( string, clear=True, color=None, sleep=None ):
 
 
     if updateLine_disable:
-        print(string)
+        print_(string)
     else:
-        print('{}\r'.format(string), end="")
+        print_('{}\r'.format(string), end="")
 
 
     if not sleep is None:
@@ -9157,26 +9233,26 @@ def getLastTableSplit(theFile,tableTemp = 'split'):
         basePath = _v.myTables + _v.slash+'tablesets'
     else:
         basePath = _v.stmp
-    # print(basePath)
+    # print_(basePath)
     dirList = os.listdir(basePath)
     fileList = []
     for d in dirList:
         if d.startswith(theFile):
             fileList.append(d)
-    # print(fileList)
+    # print_(fileList)
     fileList.sort()
-    # print(fileList)
-    # print()
-    # print(fileList[len(fileList)-1])
-    # print(fileList)
+    # print_(fileList)
+    # print_()
+    # print_(fileList[len(fileList)-1])
+    # print_(fileList)
     # file0 = basePath + _v.slash + fileList[len(fileList)-1]
-    # print(file0)
+    # print_(file0)
     return getTable(fileList[len(fileList)-1],tableTemp)
 
 def saveTableSplitNew( rows,theFile,tableTemp = True,printThis = True, project=False, me=0 ):
     HD.chmod(theFile)
     # defaults to myTables
-    print( 'save size:', len(rows))
+    print_( 'save size:', len(rows))
     if tableTemp:
         file0 = _v.myTables + _v.slash+'tablesets' + _v.slash + theFile
     elif project:
@@ -9215,7 +9291,7 @@ def saveTableSplitNew( rows,theFile,tableTemp = True,printThis = True, project=F
     f.close()
     HD.chmod(path)
     if printThis:
-        print('Saved: ' + path)
+        print_('Saved: ' + path)
     if me and theFile in vv.opened_file_me: changeM( theFile, vv.opened_file_me[theFile] );
 
 def sort(rows, name):
@@ -9272,7 +9348,7 @@ def sort(rows, name):
     sortCode += '))'
     exec(sortCode)
     if len( tempFields ):
-        # print( tempFields )
+        # print_( tempFields )
         for ix,r in enumerate(rows):
             for tmp in tempFields:
                 try:
@@ -9414,7 +9490,7 @@ class Switches:
         try:
             for i,row in enumerate(self.switches):
                 if row.name == name:
-                    # print( 'SET' )
+                    # print_( 'SET' )
                     if self.switches[i].appReg == __.appReg:
 
                         try:
@@ -9488,7 +9564,7 @@ class Switches:
             else:
                 if not row.value is None or row.active:
                     data.append({ 'name': row.name, 'value': row.value, 'appreg': row.appReg })
-            # print(row.name,'\t',row.value,'\t',row.appReg)
+            # print_(row.name,'\t',row.value,'\t',row.appReg)
         tables.register('data',data)
         tables.print('data','appreg,name,value')
 
@@ -9599,7 +9675,7 @@ class Switches:
                 elif self.fieldExists( name, 'script_trigger', theFocus ) == True:
                     script = '{}(\'{}\',\'{}\')'.format(self.fieldGet(name,'script_trigger'),name,value)# script_trigger_external
                     value = eval(script)
-        # print( name, column, value )
+        # print_( name, column, value )
         # sys.exit()
         for i,row in enumerate(self.switches):
             if self.switches[i].appReg == theFocus:
@@ -9661,7 +9737,7 @@ class Switches:
         return value
 
     def fieldGet2(self,name,column):# getSwitchField
-        # print(name,column)
+        # print_(name,column)
         result = ''
         for i,row in enumerate(self.switches):
             if row.name == name:
@@ -9669,7 +9745,7 @@ class Switches:
         return result
 
     def fieldGet( self, name, column, theFocus=False ):# getSwitchField
-        # print(name,column)
+        # print_(name,column)
         result = ''
         if not column == 'pos':
 
@@ -9679,13 +9755,13 @@ class Switches:
 
                 for i,row in enumerate(self.switches):
                     if row.name == name:
-                        # print( row.name, row.active )
+                        # print_( row.name, row.active )
                         if row.active:
                             found = True
 
                 result = found
                         
-                # print( 'here', name, found )
+                # print_( 'here', name, found )
                 # sys.exit()
 
 
@@ -9705,7 +9781,7 @@ class Switches:
                         return []
 
                     printBold( 'Error: Nonexistent Switch', 'red' )
-                    print( name, column, theFocus )
+                    print_( name, column, theFocus )
                     printVar( self.index )
                     sys.exit()
                 row = self.switches[i]
@@ -9821,7 +9897,7 @@ class Switches:
                 for b in a.switch.split(','):
                     if b == string:
                         result = True
-                    # print(b,result)
+                    # print_(b,result)
         return result
 
     def format(self,name):# processSwitchFormatting
@@ -9836,7 +9912,7 @@ class Switches:
     def format2( self, name ):
         values = self.value3(name)
         # if name =='Plus':
-        #     print(values)
+        #     print_(values)
         if values is None:
             values = []
         else:
@@ -9861,11 +9937,11 @@ class Switches:
                 os.system('cls')
             else:
                 os.system('clear')
-        # print(__.registeredApps)
-        # print(__.appReg)
+        # print_(__.registeredApps)
+        # print_(__.appReg)
         # sys.exit()
         if len(__.registeredApps) > 1:
-            # print(__.appReg)
+            # print_(__.appReg)
             if __.appReg == '__init__' or __.appReg == 'cryptFile':
                 return None
         if __.appInfoScan:
@@ -9877,33 +9953,33 @@ class Switches:
         if __.cls_process_switches_help or 'cls' in self.value('Help'):
             os.system('cls')
         # os.system('cls')
-        print()
-        print()
+        print_()
+        print_()
         filename = colorThis(  [ 'Program:  \t' ], 'bold', p=0  )
         try:
             filename += colorThis(  [ appInfo[__.appReg]['liveAppName'] ], 'yellow', p=0  )
         except Exception as e:
             filename += colorThis(  [ appInfo[__.appReg]['file'].replace('.py','') ], 'yellow', p=0  )
-        print()
-        print( filename )
-        print()
+        print_()
+        print_( filename )
+        print_()
 
         try:
             if type( appInfo[__.appReg]['description'] ) == list:
-                print( inlineBold('Description:   '))
+                print_( inlineBold('Description:   '))
                 for x in appInfo[__.appReg]['description']:
-                    print( '                 - ', x )
-                print()
+                    print_( '                 - ', x )
+                print_()
             else:
-                print( inlineBold('Description:   '), appInfo[__.appReg]['description'] + '\n')
+                print_( inlineBold('Description:   '), appInfo[__.appReg]['description'] + '\n')
             configured = True
         except Exception as e:
             configured = False
             
         try:
-            # print( inlineBold('Categories:    '), ', '.join( appInfo[__.appReg]['categories'] ) + '\n')
-            print( inlineBold('Tags:          '), '(',', '.join( appInfo[__.appReg]['categories'] ), ')' + '\n')
-            # print( inlineBold('          Tags:'), ', '.join( appInfo[__.appReg]['categories'] ) + '\n')
+            # print_( inlineBold('Categories:    '), ', '.join( appInfo[__.appReg]['categories'] ) + '\n')
+            print_( inlineBold('Tags:          '), '(',', '.join( appInfo[__.appReg]['categories'] ), ')' + '\n')
+            # print_( inlineBold('          Tags:'), ', '.join( appInfo[__.appReg]['categories'] ) + '\n')
             pass
         except Exception as e:
             pass
@@ -9917,7 +9993,7 @@ class Switches:
                     else:
                         colorizeRow( '\t\t'+ docItem , 2)
                     # colorizeRow('\t' + prereq,2)
-                print('\n')
+                print_('\n')
         except Exception as e:
             pass
         try:
@@ -9928,7 +10004,7 @@ class Switches:
                         colorThis( '\t\t'+docItem[0], docItem[1]  )
                     else:
                         colorizeRow( '\t\t'+ docItem , 2)
-                print('\n')
+                print_('\n')
         except Exception as e:
             pass
         if configured:
@@ -9977,14 +10053,14 @@ class Switches:
             if quit_early:
                 sys.exit()
                     # colorizeRow('\t' + ex,2)
-                print('\n')
+                print_('\n')
             if len(appInfo[__.appReg]['columns']) > 0:
                 printBold('Columns and abbreviations:')
                 result = ''
                 if len( appInfo[__.appReg]['columns'] ):
                     # fields.register( 'columns', 'name,abbreviation', script=__.triggerTest )
                     fields.asset( 'columns', appInfo[__.appReg]['columns'] )
-                    print()
+                    print_()
 
                 if __.columnAbbreviations == 0:
                     for col in appInfo[__.appReg]['columns']:
@@ -9999,20 +10075,20 @@ class Switches:
                             abbreviation =  fields.value( 'columns', 'abbreviation', col['abbreviation'] )
                             name =          fields.value( 'columns', 'name', col['name'] )
                             colorizeRow( '\t' + abbreviation + '\t' + name )
-                        # print( '\t', col['abbreviation'], '\t', col['name']  )
+                        # print_( '\t', col['abbreviation'], '\t', col['name']  )
 
                 if len( appInfo[__.appReg]['columns'] ):
-                    print()
-                    print()
-                # print('\n')
+                    print_()
+                    print_()
+                # print_('\n')
         pass
-        print()
-        print()
+        print_()
+        print_()
         # def linePrint(  label=None, text=None, txt='_', mn=50, add=5, p=2, c='', half=False, h=None )
         linePrint(txt='+',c='yellow',x=.5)
         # colorThis('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++','yellow')
         printBold( 'Requirements:' )
-        print()
+        print_()
         hasRequirements = False
         # if __.isRequired_Pipe_or_File:
         #     hasRequirements = True
@@ -10043,50 +10119,50 @@ class Switches:
 
 
         for switch in self.switches:
-            # print( dir(switch) )
-            # print( switch.__dict__ )
+            # print_( dir(switch) )
+            # print_( switch.__dict__ )
             if len(switch.documentation['required']) :
-                print()
-                print()
-                print( colorThis( '  !! If using switch:' , 'bold', p=0 ), colorThis( switch.name , 'yellow', p=0 ), colorThis( 'the following is required:' , 'bold', p=0 ) )
+                print_()
+                print_()
+                print_( colorThis( '  !! If using switch:' , 'bold', p=0 ), colorThis( switch.name , 'yellow', p=0 ), colorThis( 'the following is required:' , 'bold', p=0 ) )
                 for x in switch.documentation['required']:
                     hasRequirements = True
                     colorThis(  [ '\t', x  ]  , 'red' )
 
 
             if len(switch.documentation['related']) :
-                print()
-                print()
-                print( colorThis( '  If using switch:' , 'bold', p=0 ), colorThis( switch.name , 'yellow', p=0 ), colorThis( 'the following is related:' , 'bold', p=0 ) )
+                print_()
+                print_()
+                print_( colorThis( '  If using switch:' , 'bold', p=0 ), colorThis( switch.name , 'yellow', p=0 ), colorThis( 'the following is related:' , 'bold', p=0 ) )
                 for x in switch.documentation['related']:
                     hasRequirements = True
                     colorThis(  [ '\t', x  ]  , 'yellow' )
 
                 # del switch.script_trigger
                 # del switch.__dict__.script_trigger
-                # print( dict( str(switch.__dict__) ) )
+                # print_( dict( str(switch.__dict__) ) )
                 # printVar( dict(switch.__dict__) )
             # sys.exit()
         if not hasRequirements:
             colorThis( [ '\t', 'No requirements' ], 'green' )
-        print()
+        print_()
         linePrint(txt='+',c='yellow',x=.5)
         # colorThis('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++','yellow')
-        print()
-        print()
+        print_()
+        print_()
         self.print()
         if 'notes' in appInfo[__.appReg]:
             if len( appInfo[__.appReg]['notes'] ):
-                print()
-                print()
+                print_()
+                print_()
                 printBold( 'Notes:' )
                 for col in appInfo[__.appReg]['notes']:
-                    print()
+                    print_()
                     printVarSimple( col, prefix='                ', remove='"' )
-                    print()
+                    print_()
 
         # for x in sys.modules:
-        #     print(x)
+        #     print_(x)
         sys.exit()
         raise SystemExit
         os._exit(0)
@@ -10143,7 +10219,7 @@ class Switches:
                                         switchHelp.append(ii)
 
         if self.exists('_Raw') == True:
-            # print('test')
+            # print_('test')
             self.fieldSet('_Raw','pos',1)
             self.fieldSet('_Raw','active',True)
             self.fieldSet('_Raw','value',self.format('_Raw'))
@@ -10166,9 +10242,9 @@ class Switches:
             for i in switchHelp:
                 if len( self.switches[i].documentation['description'] ):
                     somethingPrinted = True
-                    print()
-                    print( inlineBold('Description:\t'), self.switches[i].documentation['description'] )
-                    print()
+                    print_()
+                    print_( inlineBold('Description:\t'), self.switches[i].documentation['description'] )
+                    print_()
                 if len( self.switches[i].documentation['examples'] ):
                     printBold( 'Examples:' )
                     for example in self.switches[i].documentation['examples']:
@@ -10201,8 +10277,8 @@ class Switches:
                 except Exception as e:
                     if not satisfied:
                         allSatisfied = False
-                        print()
-                        print( colorThis( 'Error:', 'red', p=0 ) + ' missing required switch:', req )
+                        print_()
+                        print_( colorThis( 'Error:', 'red', p=0 ) + ' missing required switch:', req )
                         sys.exit()
 
 
@@ -10217,8 +10293,8 @@ class Switches:
                 if not satisfied:
                     if not i in switchHelp:
                         switchHelp.append( i )
-                        print()
-                        print( 'Error:\t\t missing required switch' )
+                        print_()
+                        print_( 'Error:\t\t missing required switch' )
                     allSatisfied = False
 
 
@@ -10319,7 +10395,7 @@ class Switches:
             try:
                 result = self.index[ self.appRegDefault ][ name ]
             except Exception as e:
-                # print( name, appReg, self.appRegDefault )
+                # print_( name, appReg, self.appRegDefault )
                 result = None
 
         return result
@@ -10365,7 +10441,7 @@ class Switches:
         table = []
         for i,sw in enumerate(self.switches):
             if self.switches[i].appReg == theFocus:
-                # print( type(sw.active), sw.active )
+                # print_( type(sw.active), sw.active )
                 if sw.active:
                     table.append(sw.name)
         return table
@@ -10398,7 +10474,7 @@ class Switches:
                     else:
                         r = sX[0] + ' ' + str(row.value)
                     data.append( r )
-            # print(row.name,'\t',row.value,'\t',row.appReg)
+            # print_(row.name,'\t',row.value,'\t',row.appReg)
         return ' '.join( data )
     def getTable( self, theFocus=False ):
         if not type( theFocus ) == bool:
@@ -10476,7 +10552,7 @@ class TableView:
         self.fields = fields
         self.sort = sort
         self.table = table
-        # print(self.name)
+        # print_(self.name)
 
 
 TableProfile_Config = {}
@@ -10551,20 +10627,20 @@ class Table:
         global switches
         i=0
         for tp in self.views:
-            # print()
+            # print_()
             # for x in dir(self.views[i]):
-            #   print(x)
+            #   print_(x)
 
             if self.views[i].name == name:
-                # print('found')
+                # print_('found')
                 switches.fieldSet('Sort','active',True)
                 switches.fieldSet('Sort','value',str(self.views[i].sort))
-                # print(switches.value('Sort'))
+                # print_(switches.value('Sort'))
                 # try:
                     
                 # except Exception as e:
                 #   pass
-                # print('name:',name)
+                # print_('name:',name)
                 self.print(self.views[i].fields)
             i += 1
 
@@ -10625,29 +10701,29 @@ class Table:
         global switches
         rows = self.asset
         spacer = 1
-        # print('*** ' + name)
+        # print_('*** ' + name)
         size = len(name) + spacer
         
-        # print(name,00)
+        # print_(name,00)
         # rows[0][name]
         try:
             pass
             if name in rows[0]:
                 rows[0][name]
             else:
-                # print(  'rows[0]["' + '"]["'.join(name.split('.')) + '"]'  )
+                # print_(  'rows[0]["' + '"]["'.join(name.split('.')) + '"]'  )
                 eval(  'rows[0]["' + '"]["'.join(name.split('.')) + '"]'  )
         except Exception as e:
             errors.append({'id': 9, 'function': 'tabGetMaxSpace()', 'cnt': 1, 'location': 'rows[0][name]', 'vars': [{'name': 'rows', 'value': 'nope to that, to big'}, {'name': 'name', 'value': name}], 'error': e})
             printBold('Error:','red')
             printBold('\tBad column input.')
-            print(9)
-            print(name)
-            print(  'rows[0]["' + '"]["'.join(name.split('.')) + '"]'  )
+            print_(9)
+            print_(name)
+            print_(  'rows[0]["' + '"]["'.join(name.split('.')) + '"]'  )
             printVarSimple(rows[0])
             printBold('record sample','red')
             os._exit(0)
-        # print(name)
+        # print_(name)
         for item in rows:
             shorten = True
             if switches.isActive('Long') == True:
@@ -10671,7 +10747,7 @@ class Table:
                     text = self.nameLength(str(thisData),'')
             else:
                 if switches.isActive('Length'):
-                    # print('asdf')
+                    # print_('asdf')
                     # sys.exit()
                     try:
                         
@@ -10692,7 +10768,7 @@ class Table:
             itemSize = len(str(text)) + spacer
             if itemSize > size:
                 size = itemSize
-            # print(item)
+            # print_(item)
         return size
 
     def addSpace(self,string,max):
@@ -10768,7 +10844,7 @@ class Table:
                 self.tableProfile.append({'name': field, propertyName: value})
 
     def fieldProfileGet(self,field,propertyName,isHeader = False):
-        # print('ran')
+        # print_('ran')
         field = field.lower()
         i = 0
         value = ''
@@ -10802,19 +10878,19 @@ class Table:
             value = 'left'
         return value
     def showColumn(self,column,i,columnHeaderLength):
-        # print(column)
+        # print_(column)
         global errors
         global lastGroup
         global switches
         def test(one,two):
-            # print(one,two)
+            # print_(one,two)
             if (one) == (two):
                 return True
             else:
                 return False
         groupByList = self.groupByList
         rows = self.asset
-        # print(rows)
+        # print_(rows)
 
         columnList = column
         if column in rows[i]:
@@ -10823,7 +10899,7 @@ class Table:
             value = str(self.triggerExecute(column,  eval(  'rows[i]["' + '"]["'.join(column.split('.')) + '"]'  )  ) )
 
         # value = rows[i][column]
-        # print(column,value)
+        # print_(column,value)
         value = value.replace('\n','')
         # value = self.scriptTriggerField(column,rows[i][column])
         try:
@@ -10858,19 +10934,19 @@ class Table:
             for gb in groupBy.split(','):
                 gb = str(gb)
                 if column == gb:
-                    # print('- -',last,text)
+                    # print_('- -',last,text)
                     if not test(groupByList[gb],text) == True:
                         if groupBy.split(',')[0] == column:
                             pass
                             if self.group_space:
-                                print(self.groupLine(columnList,columnHeaderLength))
+                                print_(self.groupLine(columnList,columnHeaderLength))
                             if not self.isExtraRecord:
                                 for g in groupBy.split(','):
                                     groupByList[g] = ''
                         else:
                             pass
                             if self.group_space:
-                                print('')
+                                print_('')
                          
 
                         if not self.isExtraRecord:
@@ -10880,7 +10956,7 @@ class Table:
                                 text = ''
 
                         # else:
-                        #   print(text)
+                        #   print_(text)
                     else:
                         pass
                          
@@ -10889,7 +10965,7 @@ class Table:
                         text = ''
                         
         alignment = self.fieldProfileGet(column,'alignment')
-        # print(alignment)
+        # print_(alignment)
         # if alignment == 'left':
         result = text + self.addSpace(text,tabFix)
         if alignment == 'left':
@@ -10912,8 +10988,8 @@ class Table:
                 theLeft = 0
                 theRight = 0
             result = self.addSpace2(theLeft) + text + self.addSpace2(theRight)
-            # print(column,theLeft,theRight,'0' + result + '0')
-            # print(totalSpace,theLeft,theRight)
+            # print_(column,theLeft,theRight,'0' + result + '0')
+            # print_(totalSpace,theLeft,theRight)
         #   result = theLeft + text + theRight
         return result
 
@@ -10938,7 +11014,7 @@ class Table:
                 # errors.append({'id': 11, 'function': 'showColumn()', 'cnt': 2, 'location': 'tabFix = spaces[c]', 'vars': [{'name': 'rows', 'value': 'nope to that, to big'}, {'name': 'column', 'value': column}], 'error': e})
                 tabFix = self.tabGetMaxSpace(c)
                 self.spaces[c] = tabFix
-                # print(tabFix)
+                # print_(tabFix)
             # x
             # alignment = 'center'
             alignment = self.fieldProfileGet(c,'alignment',isHeader=True)
@@ -11044,13 +11120,13 @@ class Table:
                 diff = percentageDiffIntAuto( spaces[0]['s'], spaces[1]['s'] )
                 if diff >= 50:
                     fieldsToShorten.append( spaces[1]['c'] )
-                # print( 'diff:', diff )
+                # print_( 'diff:', diff )
 
                 if len( self.spaces.keys() ) > 2:
                     diff = percentageDiffIntAuto( spaces[0]['s'], spaces[2]['s'] )
                     if diff >= 50:
                         fieldsToShorten.append( spaces[2]['c'] )
-                    # print( 'diff:', diff )
+                    # print_( 'diff:', diff )
         elif len(switches.value('WrapTable')):
             done = False
             if len(switches.values('WrapTable')) == 1:
@@ -11092,14 +11168,14 @@ class Table:
                         if isp+1 == wrapBy:
                             break
 
-                # print(type(wrapBy))
-                # print(wrapBy)
+                # print_(type(wrapBy))
+                # print_(wrapBy)
                 # sys.exit()
 
                     
 
 
-        # print(fieldsToShorten)
+        # print_(fieldsToShorten)
         # sys.exit()
 
         maxLen = self.maxNameLength
@@ -11134,10 +11210,10 @@ class Table:
 
         # percentageDiffIntAuto
         # printVarSimple( self.spaces )
-        # print( '---------' )
+        # print_( '---------' )
         # printVarSimple( tempSpaces )
         # for x in spaces:
-        #   print(x)
+        #   print_(x)
 
         wrapTableKey = self.wrapTableKey
         
@@ -11150,7 +11226,7 @@ class Table:
         letters = {}
         
 
-        # print(letterSet)
+        # print_(letterSet)
         # sys.exit()
         def letterBoost( i ):
             if not str(i) in letters:
@@ -11176,7 +11252,7 @@ class Table:
                     # rec[c] = {}
                     recordKey = 1
                     # cs = fields.padZeros( wrapTableKey+'-b', 'val', recordKey )
-                    # # print(cs)
+                    # # print_(cs)
                     # if not cs in rec:
                     #   rec[cs] = {}
                     # if not c in rec[cs]:
@@ -11184,13 +11260,13 @@ class Table:
                     
                     rec_parts = autoWrapText( str(record[c]), length=tempSpaces[c] )
 
-                    # print('_________________________________________')
-                    # print()
-                    # print(record[c])
-                    # print()
-                    # print(rec_parts)
-                    # print()
-                    # print('_________________________________________')
+                    # print_('_________________________________________')
+                    # print_()
+                    # print_(record[c])
+                    # print_()
+                    # print_(rec_parts)
+                    # print_()
+                    # print_('_________________________________________')
                     rp = ''
                     last_rp = ''
                     for rp in rec_parts:
@@ -11215,7 +11291,7 @@ class Table:
                     #   if len( rec[cs][c] ) > tempSpaces[c]:
                     #       recordKey += 1
                     #       cs = fields.padZeros( wrapTableKey+'-b', 'val', recordKey )
-                    #       # print(cs)
+                    #       # print_(cs)
                     #       if not cs in rec:
                     #           rec[cs] = {}
                     #       if not c in rec[cs]:
@@ -11228,15 +11304,15 @@ class Table:
                         for c in rec[xXx]:
                             self.asset[i][c] = rec[xXx][c]
                     else:
-                        # print(xXx)
+                        # print_(xXx)
                         rec[xXx][wrapTableKey+'-sort'] = this_key +'-'+ xXx
                         recordsToAdd.append(rec[xXx])
-                    # print(rec[x])
-                # print(rec)
+                    # print_(rec[x])
+                # print_(rec)
 
         for rec in recordsToAdd:
             self.asset.append(rec)
-            # print(rec)
+            # print_(rec)
         # sys.exit()
         self.spaces = {}
 
@@ -11271,21 +11347,21 @@ class Table:
 
 
         # for x in self.asset:
-        #   print()
-        #   print(x)
-        #   print()
+        #   print_()
+        #   print_(x)
+        #   print_()
 
 
 
 
         # for i,record in enumerate(self.asset):
-        #   print( record[wrapTableKey+'-sort'] )
+        #   print_( record[wrapTableKey+'-sort'] )
         # sys.exit()
-        # print(self.asset)
+        # print_(self.asset)
         # for x in self.asset:
-        #   print()
-        #   print(x)
-        #   print()
+        #   print_()
+        #   print_(x)
+        #   print_()
         # sys.exit()
         
         self.print(
@@ -11300,7 +11376,7 @@ class Table:
 
 
     def aggregateRecord( self, i ):
-        # print()
+        # print_()
         
         for c in self.aggregates.columns:
             if not c in self.asset[i]:
@@ -11327,7 +11403,7 @@ class Table:
         if not 'data' in v:
             v['data'] = []
 
-        # print( self.aggregate_backtrack )
+        # print_( self.aggregate_backtrack )
 
         if 'data' in f:
             v['data'].append( f['data'] )
@@ -11402,7 +11478,7 @@ class Table:
 
         # if self.aggregates.groups:
         #   printVarSimple(self.aggregates.groups)
-        #   print( list( self.asset[0].keys() ) )
+        #   print_( list( self.asset[0].keys() ) )
         #   sys.exit()
 
 
@@ -11411,7 +11487,7 @@ class Table:
         ss = str(s)
         if True:
             seg = self.aggregates.index[ss]
-            # print(seg)
+            # print_(seg)
             
             # self.aggregate_backtrack = { 'i': i, 's': s, 'seg': seg }
 
@@ -11446,7 +11522,7 @@ class Table:
                             self.aggregates.storage[seg['txt']][alpha]['data'] = 0
                             self.aggregates.storage[seg['txt']][alpha]['settings'] = {}
                     if seg['txt'].startswith('eof?'):
-                        # print( seg['txt'] ); sys.exit();
+                        # print_( seg['txt'] ); sys.exit();
                         if not seg['txt'] in __.aggregate.eof.storage:
                             __.aggregate.eof.storage[ seg['txt'] ] = {}
                         if not alpha in __.aggregate.eof.storage[seg['txt']]:
@@ -11455,7 +11531,7 @@ class Table:
                             __.aggregate.eof.storage[seg['txt']][alpha]['settings'] = {}
                     
                     
-                    # print(isOF, seg['txt'])
+                    # print_(isOF, seg['txt'])
 
                 
                     child = self.aggregates.index[ str(seg['val']) ]
@@ -11502,7 +11578,7 @@ class Table:
                             __.aggregate.eof.storage[seg['txt']][alpha]['data'] = data['data']
                 
                 else:
-                    # print( i, seg['txt'], data['data'] )
+                    # print_( i, seg['txt'], data['data'] )
                     self.asset[i][seg['txt']] = data['data']
 
                     
@@ -11554,7 +11630,7 @@ class Table:
                     result = float(''.join(nX))
                     if str(result).endswith('.0'):
                         result = int(result)
-                    # print(result)
+                    # print_(result)
                     return { 'data': result }
 
 
@@ -11567,12 +11643,12 @@ class Table:
                     if 'data' in v:
                         if type(v['data']) == list:
                             for d in v['data']:
-                                # print( 'len-d:', d )
+                                # print_( 'len-d:', d )
                                 result += len( str( d ) )
                         else:
-                            # print( 'len-vd:', v['data'] )
+                            # print_( 'len-vd:', v['data'] )
                             result += len( str( v['data'] ) )
-                    # print( 'len-v', v )
+                    # print_( 'len-v', v )
                     if str(result).endswith('.0'):
                         result = int(result)
                     return { 'data': result }
@@ -11629,7 +11705,7 @@ class Table:
                     for par in result:
                         suff = "['"+par+"']"
                         suffix += suff
-                        # print( 'suffix:', suffix )
+                        # print_( 'suffix:', suffix )
                         try:
                             eval( '__.aggregate.format'+suffix  )
                         except Exception as e:
@@ -11660,7 +11736,7 @@ class Table:
                             pass
                         if _dir is None:
                             import _rightThumb._dir as _dir
-                        # print( result )
+                        # print_( result )
                         # self.asset[i]['month'] = _dir.getMonthFromEpoch( result )
                         # self.asset[i]['year'] = _dir.getYearFromEpoch( result )
                         # self.asset[i]['woy'] = _dir.getWeekAndYear( result )
@@ -11701,7 +11777,7 @@ class Table:
                     if _dir is None:
                         import _rightThumb._dir as _dir
                     # info = _dir.info( _str.cleanBE( result, ' ' ).replace( '\t', '' ) )
-                    # print( info )
+                    # print_( info )
                     try:
                         info = _dir.info( _str.cleanBE( result, ' ' ).replace( '\t', '' ) )
                     except Exception as e:
@@ -11760,7 +11836,7 @@ class Table:
 
 
         a = ' '.join( switches.values('Aggregate') )
-        # print( a )
+        # print_( a )
 
         
         self.aggregates = dot()
@@ -11810,7 +11886,7 @@ class Table:
         # self.hasGroups
 
         pass
-        # print( self.aggregates.columns )
+        # print_( self.aggregates.columns )
         # sys.exit()
 
 
@@ -11821,7 +11897,7 @@ class Table:
         #       cp( x, 'green' )
         #   else:
         #       cp( x, 'cyan' )
-        #       # print( x )
+        #       # print_( x )
 
         for i,record in enumerate(self.asset):
             self.aggregateRecord( i )
@@ -11833,7 +11909,7 @@ class Table:
 
 
     def aggregateRecordGroups( self, i ):
-        # print()
+        # print_()
 
         for seg in self.aggregates.segments:
             if seg['status']:
@@ -11844,9 +11920,9 @@ class Table:
                     cp( 'Error: aggregate, group error', 'red' )
                     cp( '\t expected:', 'yellow' )
                     cp( '\t\t eog?level?group-len=add(len)', 'green' )
-                    print()
+                    print_()
                     cp( [ 'Specifically:', e ], 'red' )
-                    print()
+                    print_()
                     sys.exit()
 
 
@@ -11858,8 +11934,8 @@ class Table:
             seg = self.aggregates.agroups[ix]
             q = seg['txt'].split('?')
             subject = q[1]
-            # print( self.asset[0].keys() )
-            # print(subject); sys.exit();
+            # print_( self.asset[0].keys() )
+            # print_(subject); sys.exit();
             if subject in self.asset[0] and not subject in self.aggregates.groups:
                 self.aggregates.groups[subject] = {}
                 self.aggregates.groups[subject]['b'] = {}
@@ -11867,9 +11943,9 @@ class Table:
                 lastQ = ''
                 lastID = -1
                 for i,record in enumerate(self.asset):
-                    # print(subject)
+                    # print_(subject)
                     if subject in record:
-                        # print( record[subject] )
+                        # print_( record[subject] )
                         if not record[subject] == lastQ:
                             if not lastID == -1:
                                 self.aggregates.groups[subject]['b'][lastID] = i
@@ -11881,7 +11957,7 @@ class Table:
 
         # if self.aggregates.groups:
         #   printVarSimple(self.aggregates.groups)
-        #   print( list( self.asset[0].keys() ) )
+        #   print_( list( self.asset[0].keys() ) )
         #   sys.exit()
 
     def aggregate( self, script ):
@@ -11921,7 +11997,7 @@ class Table:
                 cp( [ 'saved:', switches.values('TableJSON')[0] ], 'green' )
             else:
                 # printVarSimple(self.asset)
-                print( d2json(self.asset) )
+                print_( d2json(self.asset) )
             return None
 
 
@@ -11929,7 +12005,7 @@ class Table:
             self.tab['table'] = p
 
         if not type(self.asset) == list or len(self.asset) == 0:
-            print('Null Set')
+            print_('Null Set')
             sys.exit()
 
 
@@ -12006,17 +12082,17 @@ class Table:
         }
         self.isExtraRecord_0001 = {}
         self.isExtraRecord_000x = ''
-        # print('here',column)
+        # print_('here',column)
         if not pc is None:
             printColumns = pc
         self.groupByTrigger()
         if type(fieldLengths) == dict:
             self.universalSpacing = fieldLengths
-        # print(column)
-        # print(self.assets)
+        # print_(column)
+        # print_(self.assets)
         # rows = self.asset
         if not type(self.asset) == list or len(self.asset) == 0:
-            print('Null Set')
+            print_('Null Set')
             sys.exit()
         global errors
         global switchDefault
@@ -12028,11 +12104,11 @@ class Table:
                 column += self.findColumName(cs.split('=')[0]) + ','
             except Exception as e:
                 column += cs + ','
-                # print( 'Error: print column', cs )
+                # print_( 'Error: print column', cs )
                 # sys.exit()
-            # print(cs.split('=')[0])
+            # print_(cs.split('=')[0])
         column = _str.cleanBE(column,',')
-        # print(column)
+        # print_(column)
         newData = []
         oldData = []
         if ':' in column or '=' in columnSearch:
@@ -12093,8 +12169,8 @@ class Table:
                     newData.append(r)
                 i+=1
             self.asset = newData
-            # print(newData)
-            # print('dasfdasdfasdfadsf')
+            # print_(newData)
+            # print_('dasfdasdfasdfadsf')
 
 
         newData = []
@@ -12117,8 +12193,8 @@ class Table:
                             except Exception as e:
                                 dataNo = ''
                             if len(dataYes) > 0:
-                                # print('IS')
-                                # print(dataYes)
+                                # print_('IS')
+                                # print_(dataYes)
                                 length = 0
 
                                 for s in dataYes.split(' '):
@@ -12126,7 +12202,7 @@ class Table:
                                         rowInclude = False
                                         if len(s) > 0:
                                             length += 1
-                                            # print(string)
+                                            # print_(string)
                                             s = s.lower()
                                             cnt = 0
                                             if len(s) > 1 and s[0] == '*':
@@ -12137,13 +12213,13 @@ class Table:
                                             elif len(s) > 1 and s[-1] == '*':
                                                 s = s.replace('*','')
                                                 if string.startswith(s):
-                                                    # print(s,string)
+                                                    # print_(s,string)
                                                     cnt += 1
                                                     rowInclude = True
                                             elif s in string:
                                                 cnt += 1
                                                 rowInclude = True
-                                # print(length,cnt)
+                                # print_(length,cnt)
                                 # if length == cnt:
                                 # if cnt > 0:
                                     # rowInclude = True
@@ -12151,7 +12227,7 @@ class Table:
                                         #   if cnt > 0:
                                         #       rowInclude = True
                             if len(dataNo) > 0 and rowInclude:
-                                # print('ISNOT')
+                                # print_('ISNOT')
                                 rowInclude = True
                                 try:
                                     for s in dataNo.split(' '):
@@ -12177,7 +12253,7 @@ class Table:
                 if rowInclude:
                     newData.append(data)
             self.asset = newData
-            # print(self.asset)
+            # print_(self.asset)
 
 
 
@@ -12190,10 +12266,10 @@ class Table:
             # switches.fieldSet('Column','value',column)
             # column = switches.value('Column')
 
-        # print('-',column)
+        # print_('-',column)
         columnHeader = self.showColumnHeader(column)
         columnHeaderLength = len(columnHeader)
-        # print(columnHeader)
+        # print_(columnHeader)
 
 
         self.groupByList = {}
@@ -12217,15 +12293,15 @@ class Table:
                             result += self.showColumn(c,i,columnHeaderLength) + self.columnTab
                         except Exception as e:
                             pass
-                    # print(result)
+                    # print_(result)
                     maxSize = len(result)+self.prefixSize()
                     i+=1
 
 
-                # print( maxSize )
+                # print_( maxSize )
                 if maxSize > __.terminal.width and not switches.isActive('NoWrapTable'):
                     self.wrapTable(__.terminal.width)
-                    # print( 'error' )
+                    # print_( 'error' )
                     # sys.exit()
                     return None
 
@@ -12244,13 +12320,13 @@ class Table:
                 columnHeader = self.tab['table']+loopPrint(__.table_prefix_padding) + columnHeader
             else:
                 columnHeader = self.tab['table']+loopPrint(__.table_prefix_padding) + columnHeader.replace( '\n', '' )
-            print()
+            print_()
             printBold( columnHeader )
             # printBold( columnHeader, prefix=self.tab['header'] )
             if not len(switches.value('YesTableLines')):
-                print()
+                print_()
         i = 0
-        # print(self.asset)
+        # print_(self.asset)
         self.isExtraRecord_0001 = {}
         self.isExtraRecord_000x = ''
         tableLine = __.tableLine
@@ -12264,7 +12340,7 @@ class Table:
             tableLine = ''
 
         for item in self.asset:
-            # print(item)
+            # print_(item)
             result = ''
             for c in column.split(','):
                 try:
@@ -12272,13 +12348,13 @@ class Table:
                     # result += self.showColumn(c,i,columnHeaderLength) + self.columnTab
                 except Exception as e:
                     pass
-                # print(result)
+                # print_(result)
                 self.isExtraRecord = False
                 
                 
                 # if self.wrapTableKey+'-sort' in item:
-                    # print(  item[self.wrapTableKey+'-sort']  )
-                    # print(    )
+                    # print_(  item[self.wrapTableKey+'-sort']  )
+                    # print_(    )
 
                 if self.wrapTableKey+'-sort' in item:
                     self.isExtraRecord_000x = item[self.wrapTableKey+'-sort']
@@ -12292,11 +12368,11 @@ class Table:
                     errors.append({'id': 12, 'function': 'print()', 'cnt': 1, 'location': "result += showColumn(rows,c,i) + _v.slash+'t'", 'vars': [{'name': 'folder', 'value': 'folder'}, {'name': 'column', 'value': column}], 'error': e})
                     printBold('Error:','red')
                     printBold('\tBad column input.')
-                    print(12)
-                    print(c)
-                    print(12)
+                    print_(12)
+                    print_(c)
+                    print_(12)
                     os._exit(0)
-            # print(_str.totalStrip5(result)) #TESTING
+            # print_(_str.totalStrip5(result)) #TESTING
             
             maxSize = len(result)+self.prefixSize()
             if maxSize > __.terminal.width and not switches.isActive('NoWrapTable'):
@@ -12307,7 +12383,7 @@ class Table:
                 ToDo = ' the below if will be under this else '
 
             if len(result) > 0:
-                # print(result)
+                # print_(result)
                 shouldPrint = True
                 if self.isExtraRecord_000x.split('-')[0] in self.isExtraRecord_0001:
                     testResult = result
@@ -12315,7 +12391,7 @@ class Table:
                     if not len(testResult):
                         shouldPrint = False
                 # if self.isExtraRecord:
-                #   print( self.isExtraRecord )
+                #   print_( self.isExtraRecord )
 
                 if shouldPrint:
                     if self.groupID_KEY in item and item[self.groupID_KEY].endswith('-B'):
@@ -12328,12 +12404,12 @@ class Table:
                 if __.switch_skimmer.active:
                     sys.exit()
                 pass
-                print('')
+                print_('')
         # if len(oldData) > 0:
         #   self.asset = oldData
         self.asset = self.backup.asset.copy()
         self.aggregate_processed = False
-        # print( 'recovered' )
+        # print_( 'recovered' )
 
 
         footer = {}
@@ -12392,12 +12468,12 @@ class Table:
                     #           __.aggregate.storage[k][y]['data'] = friendlyDate( __.aggregate.storage[k][y]['data'] )
                     #       if '?comma' in __.aggregate.format[fo]:
                     #           __.aggregate.storage[k][y]['data'] = addComma( __.aggregate.storage[k][y]['data'] )
-                    # # print(  )
+                    # # print_(  )
                     # footer[ theKey ] = __.aggregate.storage[k][y]['data']
                     footer[ theKey ] = __.aggregate.obj.format( [k,y], __.aggregate.storage[k][y]['data'] )
         if footer:
-            print()
-            # print()
+            print_()
+            # print_()
             footer_txt = []
             footer_txt.append( __.aggregate.prefix )
 
@@ -12406,10 +12482,10 @@ class Table:
                 footer_txt.append( footer[k] ) 
                 footer_txt.append( '  ' )
             cp( footer_txt, 'cyan' ) 
-            # print( __.aggregate.config )
-            print()
-                    # print( f, y, __.aggregate.storage[k][y]['data'] )
-            # print( k )
+            # print_( __.aggregate.config )
+            print_()
+                    # print_( f, y, __.aggregate.storage[k][y]['data'] )
+            # print_( k )
             # sys.exit()
 
     def sort(self,fields=''):# sortThis
@@ -12482,7 +12558,7 @@ class Table:
         sortCode += '))'
         exec(sortCode)
         if len( tempFields ):
-            # print( tempFields )
+            # print_( tempFields )
             for ix,r in enumerate(rows):
                 for tmp in tempFields:
                     try:
@@ -12507,7 +12583,7 @@ class Table:
         if theFile == '':
             theFile = str(self.file)
         self.file = theFile
-        # print(theFile)
+        # print_(theFile)
     # def saveTable(rows,theFile,tableTemp = True,printThis = True):
         # defaults to myTables
         if tableTemp == True:
@@ -12520,7 +12596,7 @@ class Table:
         f.close()
         HD.chmod(theFile)
         if printThis:
-            print('Saved: ' + file0)
+            print_('Saved: ' + file0)
         if me and theFile in vv.opened_file_me: changeM( theFile, vv.opened_file_me[theFile] );
     def get(self,theFile = '',tableTemp = True,printThis = False):
         if os.path.isfile(theFile): vv.opened_file_me[theFile] = os.path.getmtime( theFile );
@@ -12534,7 +12610,7 @@ class Table:
         else:
             file0 = _v.stmp + _v.slash + theFile
         if printThis:
-            print('Loaded: ' + file0)
+            print_('Loaded: ' + file0)
         if os.path.isfile(file0) == True:
             with open(file0,'r', encoding="latin-1") as json_file:
                 json_data = simplejson.load(json_file)
@@ -12699,11 +12775,11 @@ class Tables:
         if 'Sort' in xXx['on']:
             sortBy = xXx['values']['Sort']
             self.sort( name, ','.join( sortBy ) )
-            # print( sortBy )
+            # print_( sortBy )
             # sys.exit()
         if not pc is None:
             printColumns = pc
-        # print(name,fields)
+        # print_(name,fields)
         sI = None
         i = 0
         for t in self.tables:
@@ -12714,7 +12790,7 @@ class Tables:
                     self.tables[i].print(fields,fieldLengths,printColumns=printColumns, l=l, p=p)
                     sI = i
                 else:
-                    print('Null Set')
+                    print_('Null Set')
             i += 1
         if switches.isActive('FieldTotal'):
             fieldTotals = {}
@@ -12731,10 +12807,10 @@ class Tables:
                                     thisFieldB.append(char)
                             thisFieldC = int(''.join(thisFieldB))
                             fieldTotals[field]['total'] += thisFieldC
-            print()
-            print()
+            print_()
+            print_()
             for field in fieldTotals:
-                print( addComma(fieldTotals[field]['total']),'\t', fieldTotals[field]['actual'] )
+                print_( addComma(fieldTotals[field]['total']),'\t', fieldTotals[field]['actual'] )
 
 
 
@@ -12833,7 +12909,7 @@ class Tables:
         for r in result.keys():
             total += result[r]
             total += 5
-        # print(result)
+        # print_(result)
         return total
 
     def getFieldLengths(self,name,fields):
@@ -12866,21 +12942,21 @@ class Tables:
 
         # for m in self.meta['data']:
         #   genLine(totalColumnWidth,'=')
-        #   print('Table:\t',m['table'])
-        #   print('Parent:\t',m['parent'])
-        #   print('Records:',m['count'])
-        #   print()
+        #   print_('Table:\t',m['table'])
+        #   print_('Parent:\t',m['parent'])
+        #   print_('Records:',m['count'])
+        #   print_()
         #   tables.register(m['table'],m['fields'])
         #   tables.fieldProfileSet(m['table'],'*','alignment','center')
         #   tables.print(m['table'],'type,field,max,min,average',fieldLengths)
 
         #   genLine(totalColumnWidth,'=')
-        # print()
-        # print('Records:',self.meta['records'])
-        # print()
-        # print('Errors:')
+        # print_()
+        # print_('Records:',self.meta['records'])
+        # print_()
+        # print_('Errors:')
         # for e in self.meta['errors']:
-        #   print('\t',e)
+        #   print_('\t',e)
 
         return result
 
@@ -12898,12 +12974,12 @@ class Tables:
             shouldPrint = False
 
         if shouldPrint:
-            print()
-            print()
+            print_()
+            print_()
 
             linePrint()
 
-            # print()
+            # print_()
             # printVarSimple( __.aggregate.eof.storage )
 
 
@@ -12955,8 +13031,8 @@ class Tables:
                     elif '?second' in special:
                         theKey = y
 
-                    # print( 'format:', __.aggregate.format )
-                    # print( 'k y:', k, y  )
+                    # print_( 'format:', __.aggregate.format )
+                    # print_( 'k y:', k, y  )
 
                     # for fo in __.aggregate.format:
                     #   if fo == k or fo == y:
@@ -12967,12 +13043,12 @@ class Tables:
 
 
 
-                    # # print(  )
+                    # # print_(  )
                     # footer[ theKey ] = __.aggregate.eof.storage[k][y]['data']
                     footer[ theKey ] = __.aggregate.obj.format( [k,y], __.aggregate.eof.storage[k][y]['data'] )
         if footer:
-            print()
-            # print()
+            print_()
+            # print_()
             footer_txt = []
             footer_txt.append( __.aggregate.prefix )
 
@@ -12981,10 +13057,10 @@ class Tables:
                 footer_txt.append( footer[k] ) 
                 footer_txt.append( '  ' )
             cp( footer_txt, 'cyan' ) 
-            # print( __.aggregate.config )
-            print()
-                    # print( f, y, __.aggregate.storage[k][y]['data'] )
-            # print( k )
+            # print_( __.aggregate.config )
+            print_()
+                    # print_( f, y, __.aggregate.storage[k][y]['data'] )
+            # print_( k )
 
 
 
@@ -13209,7 +13285,7 @@ def unFormatSize(size):
         size = int(size)
 
     result = round(size * factor,0)
-    # print( size, factor )
+    # print_( size, factor )
     # result = size * factor
     return result
 
@@ -13294,7 +13370,7 @@ def unFormatSize2(size):
     result = round(size * factor,0)
     if 0 and bity:
         result = result /8
-    # print( size, factor )
+    # print_( size, factor )
     # result = size * factor
     rt = str(result)
     if rt.endswith('.0'):
@@ -13321,10 +13397,10 @@ def timeAgo( do='', startDate=None,epoch=None, d=None ):
     if not len(timeAgoBase) and timeAgoBaseCount == 0:
         if ',' in do:
             timeAgoBase = do.split(',')
-            # print(do)
+            # print_(do)
             # sys.exit()
     timeAgoBaseCount += 1
-    # print( do, friendlyDate(startDate) )
+    # print_( do, friendlyDate(startDate) )
     if len(do) == 19 and do.count('-') == 2 and do.count(':') == 2:
         return autoDate( do )
     if len(do) == 16 and do.count('-') == 2 and do.count(':') == 1:
@@ -13349,7 +13425,7 @@ def timeAgo( do='', startDate=None,epoch=None, d=None ):
         if timeAgoBaseCount == 3 or timeAgoBaseCount == 5 :
             pass
             ts += 86400-1
-    # print( timeAgoBaseCount, ts )
+    # print_( timeAgoBaseCount, ts )
     return ts
 
 def timeCalc(do, epoch=None):
@@ -13360,7 +13436,7 @@ def timeCalc(do, epoch=None):
     for t in et:
         do=do.replace(t,t+',')
         do=_str.do('be',do,',')
-    print(do)
+    print_(do)
     sys.exit()
     if epoch is None:
         epoch = time.time()
@@ -13463,16 +13539,16 @@ def timeAgo_past(do='', startDate=None):
         start_date = dateMathEpoch( startDate, nmb, '-' )
     return start_date
     # dTx = str(start_date)
-    # print(dT)
-    # print(dT)
-    # print(dT)
-    # print(dT)
+    # print_(dT)
+    # print_(dT)
+    # print_(dT)
+    # print_(dT)
     # d = dTx.split('-')
     # result = datetime.datetime(int(d[0]),int(d[1]),int(d[2]),0,0).timestamp()
 
-    # print(start_date)
-    # print(result)]
-    # print(result)
+    # print_(start_date)
+    # print_(result)]
+    # print_(result)
     # return result
 
 def epoch_math(epoch, d=None,w=None,m=None,y=None,    h=None,mm=None,s=None, add=None, sub=None):
@@ -13515,7 +13591,7 @@ def epoch_math(epoch, d=None,w=None,m=None,y=None,    h=None,mm=None,s=None, add
     return epoch
 
 def timeAgo_do( do, epoch):
-    # print(do)
+    # print_(do)
     def d486(yolo):
         return int(yolo)
         return float(yolo)
@@ -13671,12 +13747,12 @@ def monthsDiff( one, two ):
     one = friendlyDate( autoDate( one ) ).split(' ')[0]
     two = friendlyDate( autoDate( two ) ).split(' ')[0]
 
-    # print( 'here' )
-    # print( 'one', one )
-    # print( 'two', two )
+    # print_( 'here' )
+    # print_( 'one', one )
+    # print_( 'two', two )
     oneB = one.split('-')
     twoB = two.split('-')
-    # print( 'here' )
+    # print_( 'here' )
 
     oneA = float( oneB[0]+'.'+oneB[1] )
     twoA = float( twoB[0]+'.'+twoB[1] )
@@ -13694,8 +13770,8 @@ def monthsDiff( one, two ):
     twoB[0] = int(twoB[0])
     twoB[1] = int(twoB[1])
     i=0
-    # print(  )
-    # print(' i',i, do)
+    # print_(  )
+    # print_(' i',i, do)
     done = False
     while  not done:
         if oneB[0] == twoB[0] and  oneB[1] == twoB[1]:
@@ -13712,8 +13788,8 @@ def monthsDiff( one, two ):
                 if twoB[1] == 0:
                     twoB[1] = 12
                     twoB[0] -= 1
-    #   print('i',i, twoB[0], twoB[1])
-    # print(' i',i, do, oneB[0], oneB[1], '|', twoB[0], twoB[1] )
+    #   print_('i',i, twoB[0], twoB[1])
+    # print_(' i',i, do, oneB[0], oneB[1], '|', twoB[0], twoB[1] )
     return i
 cal_days = None
 def days_in_month( m, y=None ):
@@ -13756,19 +13832,19 @@ def dateDiffDic( one, two ):
 
     md1 = monthsDiff( one, two )
     # md1 = autoDate( friendlyDate( autoDate(md1) ).split(' ') )
-    print( 'md1', md1 )
+    print_( 'md1', md1 )
     md2 = md1
     mx1 = monthMath( t, md1, do='+' )
-    print( 'mx1', friendlyDate(mx1) )
+    print_( 'mx1', friendlyDate(mx1) )
     mx1 = autoDate( friendlyDate( autoDate(mx1) ).split(' ') )
-    print( 'mx1', friendlyDate(mx1) )
+    print_( 'mx1', friendlyDate(mx1) )
     # if mx1 > t:
     if abs(mx1 - o) > 86420:
-        print( 'error a' )
-        print( '-', abs(mx1 - o) )
-        print( friendlyDate(mx1), friendlyDate(o) )
-        print( (mx1), (o) )
-        print( 'error a' )
+        print_( 'error a' )
+        print_( '-', abs(mx1 - o) )
+        print_( friendlyDate(mx1), friendlyDate(o) )
+        print_( (mx1), (o) )
+        print_( 'error a' )
         md1-=1
         mx1 = monthMath( o, md1-1, do='+' )
     d1 = abs(daysDiff( o, mx1 ))
@@ -13778,12 +13854,12 @@ def dateDiffDic( one, two ):
     # # if mx2 > o:
     # if abs(mx2 - t) > 86420:
 
-    #   print( 'error b' )
-    #   print( '-', abs(mx2 - t) )
-    #   print( friendlyDate(mx2), friendlyDate(t) )
-    #   print( (mx2), (t) )
+    #   print_( 'error b' )
+    #   print_( '-', abs(mx2 - t) )
+    #   print_( friendlyDate(mx2), friendlyDate(t) )
+    #   print_( (mx2), (t) )
 
-    #   print( 'error b' )
+    #   print_( 'error b' )
     #   md2-=1
     #   mx2 = monthMath( t, md2, do='+' )
     # d2 = daysDiff( t, mx2 )
@@ -13794,12 +13870,12 @@ def dateDiffDic( one, two ):
     # one = friendlyDate( autoDate( one ) ).split(' ')[0]
     # two = friendlyDate( autoDate( two ) ).split(' ')[0]
 
-    # # print( 'here' )
-    # # print( 'one', one )
-    # # print( 'two', two )
+    # # print_( 'here' )
+    # # print_( 'one', one )
+    # # print_( 'two', two )
     # oneB = one.split('-')
     # twoB = two.split('-')
-    # # print( 'here' )
+    # # print_( 'here' )
 
     # oneA = float( oneB[0]+'.'+oneB[1] )
     # twoA = float( twoB[0]+'.'+twoB[1] )
@@ -13824,18 +13900,18 @@ def dateDiffDic( one, two ):
     #           'm': 0,
     #           'd': 0,
     # }
-    # # print(  )
-    # # print(' i',i, do)
+    # # print_(  )
+    # # print_(' i',i, do)
     # done = False
 
     # done = False
 
-    # # print(  )
+    # # print_(  )
 
 
 
     # while  not done:
-    #   print( oneB, twoB )
+    #   print_( oneB, twoB )
     #   if oneB[0] == twoB[0] and  oneB[1] == twoB[1]  and  oneB[2] == twoB[2] :
     #       done = True
     #   if not done:
@@ -13858,12 +13934,12 @@ def dateDiffDic( one, two ):
     # one = friendlyDate( autoDate( one ) ).split(' ')[0]
     # two = friendlyDate( autoDate( two ) ).split(' ')[0]
 
-    # # print( 'here' )
-    # # print( 'one', one )
-    # # print( 'two', two )
+    # # print_( 'here' )
+    # # print_( 'one', one )
+    # # print_( 'two', two )
     # oneB = one.split('-')
     # twoB = two.split('-')
-    # # print( 'here' )
+    # # print_( 'here' )
 
     # oneA = float( oneB[0]+'.'+oneB[1] )
     # twoA = float( twoB[0]+'.'+twoB[1] )
@@ -13884,8 +13960,8 @@ def dateDiffDic( one, two ):
     # twoB[2] = int(twoB[2])
 
     # i=0
-    # # print(  )
-    # # print(' i',i, do)
+    # # print_(  )
+    # # print_(' i',i, do)
     # done = False
 #   while  not done:
 #       if oneB[0] == twoB[0] and  oneB[1] == twoB[1]:
@@ -13914,7 +13990,7 @@ def dateDiffDic( one, two ):
 
 #       bb = str(twoB[1])
 #       cc = str(twoB[2])
-#       # print( '048b' )
+#       # print_( '048b' )
 #       if twoB[1] < 10:
 #           bb = '0'+bb
 #       if twoB[2] < 10:
@@ -13979,7 +14055,7 @@ def dateDiffText( theDate, epoch=None ):
 
 
 
-    # print( theDate, days, theDate < epoch, theDate > epoch, epoch, time.time() )
+    # print_( theDate, days, theDate < epoch, theDate > epoch, epoch, time.time() )
     if days == 0:
         return 'today'
     elif theDate < epoch:
@@ -14031,13 +14107,13 @@ def getYearFromEpoch(theDate):
     return datetime.datetime.fromtimestamp( int(theDate) ).isocalendar()[0]
 
 def getWOYFromEpoch(theDate):
-    # print('theDate:',theDate)
+    # print_('theDate:',theDate)
     theDate = autoDate(theDate)
 
     try:
         return datetime.datetime.fromtimestamp( theDate ).isocalendar()[1]
     except Exception as e:
-        print( 'Error:', theDate )
+        print_( 'Error:', theDate )
         sys.exit()
 
 
@@ -14060,14 +14136,14 @@ def daysDiff( one, two ):
         two = friendlyDate( oneA ).split(' ')[0]
 
 
-    # print( '090', one, two )
+    # print_( '090', one, two )
 
     oneB = one.split('-')
     twoB = two.split('-')
     if date_datetime is None:
         from datetime import date as date_datetime
     d0 = date_datetime(int(oneB[0]), int(oneB[1]), int(oneB[2]))
-    # print( '080', twoB )
+    # print_( '080', twoB )
     d1 = date_datetime(int(twoB[0]), int(twoB[1]), int(twoB[2]))
     delta = d1 - d0
     dd = delta.days
@@ -14095,7 +14171,7 @@ def yearMath( thisDate, years, do='+' ):
 
 def monthMath( thisDate, months, do='+' ):
     months = abs(months)
-    # print( '040', thisDate, autoDate( thisDate ), friendlyDate(thisDate) )
+    # print_( '040', thisDate, autoDate( thisDate ), friendlyDate(thisDate) )
     theDateParts = friendlyDate( autoDate( thisDate ) ).split(' ')
     theDate = theDateParts[0]
     parts = theDate.split('-')
@@ -14104,7 +14180,7 @@ def monthMath( thisDate, months, do='+' ):
     parts[2] = int(parts[2])
     i = 0
     while not i == months:
-        # print( months, 1, parts )
+        # print_( months, 1, parts )
         if do == '+':
             parts[1]+=1
             if parts[1] == 13:
@@ -14116,19 +14192,19 @@ def monthMath( thisDate, months, do='+' ):
                 parts[1] = 12
                 parts[0] -= 1
         i+=1
-    # print( '048a' )
+    # print_( '048a' )
     bb = str(parts[1])
     cc = str(parts[2])
-    # print( '048b' )
+    # print_( '048b' )
     if parts[1] < 10:
         bb = '0'+bb
     if parts[2] < 10:
         cc = '0'+cc
-    # print( '048c' )
+    # print_( '048c' )
     text = str(parts[0])+'-'+bb+'-'+cc +' '+ theDateParts[1]
-    # print( '049', text )
+    # print_( '049', text )
     result = autoDate(  text  )
-    # print( '050a', text, type( result ) )
+    # print_( '050a', text, type( result ) )
     while type( result ) == bool:
 
         parts[2]-=1
@@ -14141,12 +14217,12 @@ def monthMath( thisDate, months, do='+' ):
             cc = '0'+cc
         text = str(parts[0])+'-'+bb+'-'+cc +' '+ theDateParts[1]
         result = autoDate(  text  )
-        # print( '050b', text, type( result ) )
+        # print_( '050b', text, type( result ) )
 
 
 
-    # print( '050c', text )
-    # print( '060', result )
+    # print_( '050c', text )
+    # print_( '060', result )
     return result
 
 def epoch(string,end=False):
@@ -14169,7 +14245,7 @@ def epoch(string,end=False):
         day = 1
     else:
         day = d[2]
-    # print(d)
+    # print_(d)
     # sys.exit()
     if end:
         y = int(d[0])
@@ -14302,15 +14378,15 @@ class Database:
             for i,r in enumerate(self.records):
                 self.records[i]['date_created'] = time.time()
                 self.records[i]['date_modified'] = ''
-                # print( self.records[i] )
+                # print_( self.records[i] )
 
         if self.delete and os.path.isfile( self.file ):
             os.unlink( self.file )
             if self.printFileActivity:
-                print( ' file deleted ')
+                print_( ' file deleted ')
         if os.path.isfile( self.file ):
             if self.printFileActivity:
-                print( ' file exists ')
+                print_( ' file exists ')
 
         if auto and os.path.isfile( self.file ):
             self.genInfo( process=True )
@@ -14448,7 +14524,7 @@ class Database:
     def search( self, info ):
         sqlite3 = __.imp('sqlite3')
         if not self.initializedDB:
-            print( 'no data' )
+            print_( 'no data' )
             sys.exit()
 
         if not type( info['custom'] ) == bool and not info['force']:
@@ -14478,7 +14554,7 @@ class Database:
         conn.close()
 
         return results
-        # print( info )
+        # print_( info )
     def trigger( self, table, field, data ):
         result = data
         if field == 'date_created':
@@ -14543,7 +14619,7 @@ class Database:
         b = b.replace( '[names]', n )
         b = b.replace( '[dataDel]', dd )
         b = b.replace( '[data]', d )
-        # print( b )
+        # print_( b )
         return eval( b )
 
 
@@ -14563,7 +14639,7 @@ class Database:
                     if len( data ) > 1 and not 'sqlite' in data:
                         tables.append( data )
 
-            # print( tables )
+            # print_( tables )
 
             for table in tables:
                 sql = 'PRAGMA table_info('+table+')'
@@ -14662,7 +14738,7 @@ class Database:
     def create( self, table=False, fields=False ):
         sqlite3 = __.imp('sqlite3')
         if os.path.isfile(self.file):
-            print( 'Database exists' )
+            print_( 'Database exists' )
         else:
             conn = sqlite3.connect(self.file)
             cursor = conn.cursor()
@@ -14811,7 +14887,7 @@ class Database2:
 
     def queryBuilder(self,data): # queryBuilder
         self.data = data
-        # print(data['fields'])
+        # print_(data['fields'])
         # sys.exit()
         self.qbFields = []
         tbls = data['table'].split(',')
@@ -14821,7 +14897,7 @@ class Database2:
             multi_Table = False
         if multi_Table:
             sql = 'SELECT '
-            # print(data['fields'])
+            # print_(data['fields'])
             for field in data['fields']:
                 for name in field['names'].split(','):
                     thisT = ''
@@ -14902,7 +14978,7 @@ class Database2:
 
                     coin = action['search'].split(',')
                     if not len(coin) == 2:
-                        print('bad input')
+                        print_('bad input')
                         sys.exit()
                     if isNu(coin[0]):
                         do = 'b'
@@ -15005,15 +15081,15 @@ class Database2:
         con = sqlite3.connect(self.appDB)
         for line in con.iterdump():
             if 'CREATE TABLE' in line and not 'INSERT INTO' in line:
-                # print(line)
+                # print_(line)
                 one = line.split('CREATE TABLE ')[1]
                 two = one.split(' (')
                 table = two[0]
-                # print(table)
+                # print_(table)
                 fieldRaw = two[1].split(')')[0]
                 f = []
                 for field in fieldRaw.split(', '):
-                    # print('\t',field)
+                    # print_('\t',field)
                     fd = field.split(' ')
                     f.append({'type': fd[1], 'field': fd[0], 'max': 0, 'min': 0, 'average': 0})
 
@@ -15041,37 +15117,37 @@ class Database2:
             c.execute(sql)
             rows = c.fetchall()
             for row in rows:
-                # print(row)
+                # print_(row)
                 for fi,field in enumerate(m['fields']):
-                    # print(field['field'],row[fi])
+                    # print_(field['field'],row[fi])
                     aKey = str(m['table']) + '-' + str(number2Words(field['field']))
-                    # print(aKey)
+                    # print_(aKey)
                     
                     try:
                         if not type(average[aKey]['datapoints']) == list:
                             average[aKey] = {'max': 0, 'min': 'first', 'average': 0, 'datapoints': [], 'count': 0}
 
-                        # print(type())                     
+                        # print_(type())                     
                     except Exception as e:
                         average[aKey] = {'max': 0, 'min': 'first', 'average': 0, 'datapoints': [], 'count': 0}
                     average[aKey]
-                    # print(aKey)
+                    # print_(aKey)
                     if field['type'] == 'int':
                         if type(row[fi]) == int:
                             size = row[fi]
                         else:
                             string = re.sub('[^0-9]', '', str(row[fi]))
-                            # print(type(string),string)
-                            # print(string)
+                            # print_(type(string),string)
+                            # print_(string)
                             if len(string) == 0:
                                 size = 0
                             else:
                                 size = int(string)
                     if field['type'] == 'str':
                         size = len(str(row[fi]))
-                    # print()
-                    # print(type(average[aKey]['max']),average[aKey]['max'])
-                    # print(type(size),size)
+                    # print_()
+                    # print_(type(average[aKey]['max']),average[aKey]['max'])
+                    # print_(type(size),size)
                     if average[aKey]['max'] < size:
                         average[aKey]['max'] = size
                     if average[aKey]['min'] == 'first':
@@ -15085,13 +15161,13 @@ class Database2:
         for im,m in enumerate(meta):
 
             for row in rows:
-                # print(row)
+                # print_(row)
                 for fi,field in enumerate(m['fields']):
-                    # print(meta[im]['fields'][fi]['max'])
+                    # print_(meta[im]['fields'][fi]['max'])
                     aKey = m['table'] + '-' + number2Words(field['field'])
-                    # print(aKey)
+                    # print_(aKey)
                     try:
-                        # print(average[aKey]['max'])
+                        # print_(average[aKey]['max'])
                         meta[im]['fields'][fi]['max'] = average[aKey]['max']
                         meta[im]['fields'][fi]['min'] = average[aKey]['min']
                         # meta[im]['fields'][fi]['average'] = int(np.mean(average[aKey]['datapoints']))
@@ -15132,28 +15208,28 @@ class Database2:
 
         for m in self.meta['data']:
             genLine(totalColumnWidth,'=')
-            print('Table:\t',m['table'])
-            print('Parent:\t',m['parent'])
-            print('Records:',m['count'])
-            print()
+            print_('Table:\t',m['table'])
+            print_('Parent:\t',m['parent'])
+            print_('Records:',m['count'])
+            print_()
             tables.register(m['table'],m['fields'])
             # tables.fieldProfileSet(m['table'],'*','alignment','center')
             # tables.print(m['table'],'type,field,max,min,average',fieldLengths)
             tables.print(m['table'],'type,field,max,min,average')
 
             genLine(totalColumnWidth,'=')
-        print()
-        print('Records:',self.meta['records'])
-        print()
-        print('Errors:')
+        print_()
+        print_('Records:',self.meta['records'])
+        print_()
+        print_('Errors:')
         for e in self.meta['errors']:
-            print('\t',e)
-        print()
-        print()
-        print('Example:')
-        print('\t p dba -app',self.name)
-        print()
-        print()
+            print_('\t',e)
+        print_()
+        print_()
+        print_('Example:')
+        print_('\t p dba -app',self.name)
+        print_()
+        print_()
     def findParent(self,table):
         # parent = 'Error'
         # for m in self.meta['data']:
@@ -15222,17 +15298,17 @@ class Database2:
                     if newName == column:
                         nm = newName
                         found = True
-                # print(field)
+                # print_(field)
                 if found:
                     break
 
             result = self.checkConfig(table,nm)
-        # print(mainTable)
+        # print_(mainTable)
         return result
     def checkConfig(self,tbl,nm):
         self.appJSON
-        # print(self.appJSON)
-        # print(tbl,nm)
+        # print_(self.appJSON)
+        # print_(tbl,nm)
         structure = getTable2(self.appJSON)
         result = ''
         if tbl == structure['name']:
@@ -15267,7 +15343,7 @@ class Database2:
                 tables.fieldProfileSet('sql',c,'trigger',formatSize)
             if self.findType(c) == 'bytes':
                 tables.fieldProfileSet('sql',c,'trigger',formatSize)
-            # print(self.findType(c))
+            # print_(self.findType(c))
         tables.print('sql',col)
 
 
@@ -15340,18 +15416,18 @@ def genLine(count,what, p=1):
         result += what
         cnt += 1
     if p:
-        print(result)
+        print_(result)
     return result
 
 
 def ci(string): 
     #switchValueClean
     global ciData
-    # print( ciData )
+    # print_( ciData )
     # sys.exit()
     for cx in ciData:
         if cx[0] in string:
-            # print( 'HERE', cx )
+            # print_( 'HERE', cx )
             string = string.replace( cx[0], cx[1] )
     
     string = string.replace( ';d;', __.theDelim )
@@ -15465,8 +15541,8 @@ def longID(howMany=2):
 # %USERPROFILE%\Desktop\%*
 
 def formatColumns_OLD(columns):
-    # print(__.appReg)
-    # print(columns)
+    # print_(__.appReg)
+    # print_(columns)
     result = ''
     if columns is None:
         result = columns
@@ -15488,12 +15564,12 @@ def formatColumns_OLD(columns):
                 c = preData + '.' + c
             result += c + ','
         result = result[:-1]
-    # print(result)
+    # print_(result)
     return result
 
 def formatColumns(columns):
-    # print(__.appReg)
-    # print(columns)
+    # print_(__.appReg)
+    # print_(columns)
     result = ''
     if columns is None:
         result = columns
@@ -15510,14 +15586,14 @@ def formatColumns(columns):
             for col in appInfo[__.appReg]['columns']:
                 for a in col['abbreviation'].split(','):
                     if a.lower() == c.lower():
-                        # print(a,c)
+                        # print_(a,c)
                         # sys.exit()
                         c = col['name']
             if hasPre:
                 c = preData + ':' + c
             result += c + ','
         result = result[:-1]
-    # print(result)
+    # print_(result)
     return result
 
 
@@ -15535,8 +15611,8 @@ def formatColumnsSort(columns):
             columns = columns.replace( ',d.', ',d:' )
 
 
-    # print(__.appReg)
-    # print(columns)
+    # print_(__.appReg)
+    # print_(columns)
     result = ''
     if columns is None:
         result = columns
@@ -15554,13 +15630,13 @@ def formatColumnsSort(columns):
                 if 'sort' in list(col.keys()) and len(col['sort']):
                     for a in col['abbreviation'].split(','):
                         if a.lower() == c.lower():
-                            # print(a,c)
+                            # print_(a,c)
                             # sys.exit()
                             c = col['sort']
                 else:
                     for a in col['abbreviation'].split(','):
                         if a.lower() == c.lower():
-                            # print(a,c)
+                            # print_(a,c)
                             # sys.exit()
                             c = col['name']
             if hasPre:
@@ -15569,13 +15645,13 @@ def formatColumnsSort(columns):
 
             result += c + ','
         result = result[:-1]
-    # print( result )
+    # print_( result )
     return result
 
 
 def formatColumnsSortOld(columns):
-    # print(__.appReg)
-    # print(columns)
+    # print_(__.appReg)
+    # print_(columns)
     result = ''
     if columns is None:
         result = columns
@@ -15604,7 +15680,7 @@ def formatColumnsSortOld(columns):
 
             result += c + ','
         result = result[:-1]
-    # print( result )
+    # print_( result )
     return result
 
 def plusCloseClean(data):
@@ -15618,7 +15694,7 @@ def defaultScriptTriggers():
     __.appReg_bk = __.appReg
 
 def print_epoch_trigger(item):
-    print( 'epoch:', __.startTime  )
+    print_( 'epoch:', __.startTime  )
 
 default_switch_trigger_index={}
 def default_switch_trigger(name,script):
@@ -15659,7 +15735,7 @@ def autoAbbreviations():
             if type( myFileLocation_File_Data ) == dict:
                 myFileLocation_File_Data = [myFileLocation_File_Data]
             for i,key in enumerate( myFileLocation_File_Data[0].keys()):
-                # print( key )
+                # print_( key )
                 record = {}
                 record['id'] = i
                 record['key'] = key
@@ -15741,7 +15817,7 @@ def autoAbbreviations():
                 if not flagsResolved == len(flagged):
                     for i,f in enumerate(flagged):
                         if not flagged[i]['assigned']:
-                            print( 'Error: abbreviation', data[flagged[i]['id']]['key'] )
+                            print_( 'Error: abbreviation', data[flagged[i]['id']]['key'] )
 
 
             # printVar( groups )
@@ -15750,31 +15826,31 @@ def autoAbbreviations():
             for aa in approvedAbbreviations:
                 appInfo[__.appReg]['columns'].append({'name': aa['key'], 'abbreviation': aa['abbreviations']})
             if switches.isActive('PrintAutoAbbreviations'):
-                print()
-                print('Columns and abbreviations:')
+                print_()
+                print_('Columns and abbreviations:')
                 result = ''
                 for col in appInfo[__.appReg]['columns']:
                     result += col['name'] + '(' + col['abbreviation'] + '), '
                 result = result[:-2]
-                print('\t' + result + '\n')
-                print()
+                print_('\t' + result + '\n')
+                print_()
 
             defaultScriptTriggers()
             # sys.exit()
-            # print(first)
+            # print_(first)
 
 
 def printAutoAbbreviations():
     global printAutoAbbreviations_scheduled
     if printAutoAbbreviations_scheduled and switches.isActive('PrintAutoAbbreviations'):
-        print()
-        print('Columns and abbreviations:')
+        print_()
+        print_('Columns and abbreviations:')
         result = ''
         for col in appInfo[__.appReg]['columns']:
             result += col['name'] + '(' + col['abbreviation'] + '), '
         result = result[:-2]
-        print('\t' + result + '\n')
-        print()
+        print_('\t' + result + '\n')
+        print_()
 
 
 
@@ -15808,18 +15884,18 @@ class ThisThread( threading.Thread ):
         self._stop_event = threading.Event()
         self.target = self.run
         if start:
-            # print( 'pre start' )
+            # print_( 'pre start' )
             # self.run()
             self.start()
-            # print( 'post start' )
+            # print_( 'post start' )
 
 
 
     def run( self ):
         # for x in dir(self):
-        #   print(x)
-        # print('run')
-        # print('xx',self.isAlive())
+        #   print_(x)
+        # print_('run')
+        # print_('xx',self.isAlive())
         self.epoch = time.time()
         completed = False
         error = False
@@ -15841,7 +15917,7 @@ class ThisThread( threading.Thread ):
         finally:
             self.endTime = time.time()
             self.duration = self.endTime - self.epoch
-            # print()
+            # print_()
             # _.colorThis(  [ self.tID, 'ended' ], 'red'  )
             ended = ''
             if self.wasKilled:
@@ -15868,18 +15944,18 @@ class ThisThread( threading.Thread ):
                 return id
  
     def kill( self ):
-        # print( 'kill started' )
+        # print_( 'kill started' )
         self.wasKilled = True
         self._stop_event.set()
         # thread_id = self.getID()
         # """ {7DB6A001-0637-4F13-B328-2B17A481CF35} """
         # import ctypes
-        # # print( 'kill id', thread_id )
+        # # print_( 'kill id', thread_id )
         # res = ctypes.pythonapi.PyThreadState_SetAsyncExc(thread_id,
         #     ctypes.py_object(SystemExit))
         # if res > 1:
         #   ctypes.pythonapi.PyThreadState_SetAsyncExc(thread_id, 0)
-        # print( 'kill complete' )
+        # print_( 'kill complete' )
         # raise Exception('My error!')
         
 
@@ -15993,7 +16069,7 @@ class Threads:
         
 
     def open( self ):
-        # print('open 0')
+        # print_('open 0')
         self.sstatus = 1
         __.queueLastActivity = time.time()
         self.active = True
@@ -16045,7 +16121,7 @@ class Threads:
                                                 start = True,
                 )
                 # threadTimer( .0001, self.func, self.arg, qID=self.qID )
-        # print('open 1')
+        # print_('open 1')
 
     def close( self, mem=0, data=False, trigger=False, triggerArg=False, kwargs=False, lines=0 ):
         self.sstatus = 0
@@ -16093,7 +16169,7 @@ class Threads:
         
 
         # Threads.closedCnt += 1
-        # print('Closed:',self.qID,'\tTotal Closed:',Threads.newCounter,'\tScheduler:',__.queueCountScheduleAudit,__.queueCountSchedule,'\tTimers:',__.queueCountTimer)
+        # print_('Closed:',self.qID,'\tTotal Closed:',Threads.newCounter,'\tScheduler:',__.queueCountScheduleAudit,__.queueCountSchedule,'\tTimers:',__.queueCountTimer)
         self.status = False
         self.log['end'] = time.time()
         self.log['runtime'] = self.log['end'] - self.log['start']
@@ -16251,8 +16327,8 @@ class Queue:
 
 
 
-        # print('arg:',arg)
-        # print( name, type( trigger ) )
+        # print_('arg:',arg)
+        # print_( name, type( trigger ) )
         # sys.exit()
         nextID = False
         global appInfo
@@ -16277,17 +16353,17 @@ class Queue:
 
         __.projectData[focus][name] = {}
         # if not 'folder' in name:
-        #   print( 'zero' )
+        #   print_( 'zero' )
         #   sys.exit()
 
         __.projectData[focus][name][0] = {}
         __.projectData[focus][name][0]['saveInitiated'] = False
-        # print( 'check3:', focus, name, 0 )
+        # print_( 'check3:', focus, name, 0 )
         __.projectData[focus][name][0]['data'] = []
 
         __.projectData[focus][name][1] = {}
         __.projectData[focus][name][1]['saveInitiated'] = False
-        # print( 'check4:', focus, name, 1 )
+        # print_( 'check4:', focus, name, 1 )
         __.projectData[focus][name][1]['data'] = []
 
         try:
@@ -16348,7 +16424,7 @@ class Queue:
         self.isLoaded = False
         self.records[focus]['names'][name]['loaded'] = loaded
         if not self.auditAutoAdjust:
-            # print(focus,name)
+            # print_(focus,name)
             if self.maxThreadsAuto:
                 self.records[focus]['names'][name]['maxThreads'] = self.maxThreadsSafe
             else:
@@ -16377,8 +16453,8 @@ class Queue:
 
 
     def add( self, name, func=False, arg=False, kwargs=False, focus=False , addID=True , trigger=False, triggerArg=False, triggerKwargs=False, loaded=False, timeout=False, database=False, pID=False ):
-        # print('arg:',arg)
-        # print( name, type( trigger ) )
+        # print_('arg:',arg)
+        # print_( name, type( trigger ) )
         # sys.exit()
         nextID = False
         global appInfo
@@ -16405,17 +16481,17 @@ class Queue:
 
             __.projectData[focus][name] = {}
             # if not 'folder' in name:
-            #   print( 'zero' )
+            #   print_( 'zero' )
             #   sys.exit()
 
             __.projectData[focus][name][0] = {}
             __.projectData[focus][name][0]['saveInitiated'] = False
-            # print( 'check3:', focus, name, 0 )
+            # print_( 'check3:', focus, name, 0 )
             __.projectData[focus][name][0]['data'] = []
 
             __.projectData[focus][name][1] = {}
             __.projectData[focus][name][1]['saveInitiated'] = False
-            # print( 'check4:', focus, name, 1 )
+            # print_( 'check4:', focus, name, 1 )
             __.projectData[focus][name][1]['data'] = []
 
             try:
@@ -16475,7 +16551,7 @@ class Queue:
         self.isLoaded = False
         self.records[focus]['names'][name]['loaded'] = loaded
         if not self.auditAutoAdjust:
-            # print(focus,name)
+            # print_(focus,name)
             if self.maxThreadsAuto:
                 self.records[focus]['names'][name]['maxThreads'] = self.maxThreadsSafe
             else:
@@ -16608,58 +16684,58 @@ class Queue:
             self.completionTime = time.time() - self.created
             if self.report:
                 self.reportPrinted = True
-                print('__________________________________________')
-                print()
-                print('opened:',self.opened)
-                # print('records open:',self.records[focus]['open'])
-                print('isEverythingLoaded:',time.time()-self.loadedBy,time.time()-self.lastActivity)
-                print('spendFocus')
-                print('queueCountSchedule:',__.queueCountSchedule)
-                print('queueCountAudit:',__.queueCountAudit)
-                print('audit:',__.queueCountAudit)
-                print()
-                print('load time:\t', int(self.loadTime))
-                print('time after load:\t', int(time.time()-self.loadedBy))
-                print()
-                print('app time:\t', int(self.completionTime))
-                print()
-                print('maxInQueue:',self.maxInQueue)
+                print_('__________________________________________')
+                print_()
+                print_('opened:',self.opened)
+                # print_('records open:',self.records[focus]['open'])
+                print_('isEverythingLoaded:',time.time()-self.loadedBy,time.time()-self.lastActivity)
+                print_('spendFocus')
+                print_('queueCountSchedule:',__.queueCountSchedule)
+                print_('queueCountAudit:',__.queueCountAudit)
+                print_('audit:',__.queueCountAudit)
+                print_()
+                print_('load time:\t', int(self.loadTime))
+                print_('time after load:\t', int(time.time()-self.loadedBy))
+                print_()
+                print_('app time:\t', int(self.completionTime))
+                print_()
+                print_('maxInQueue:',self.maxInQueue)
                 # str((self.completionTime/1000)%60)
-                print()
-                print('timeouts:',self.timeoutCount())
-                # print("Average of the list =", round(average, 2)) 
-                print()
-                print('__________________________________________')
+                print_()
+                print_('timeouts:',self.timeoutCount())
+                # print_("Average of the list =", round(average, 2)) 
+                print_()
+                print_('__________________________________________')
             elif self.statusTotal > 0:
                 cTime = round(self.completionTime,2)
                 if cTime > 60:
                     ncTime = str(round((self.completionTime/60),2)) + ' min'
                 else:
                     ncTime = str(round(self.completionTime,2)) + ' sec'
-                print('App time: ' + str(ncTime), end='\r', flush=True)
+                print_('App time: ' + str(ncTime), end='\r', flush=True)
                 # sys.stdout.flush()
 
     def spendFocus( self, name, focus, which ):
 
 
-        # print( 'spendFocus which:', which )
+        # print_( 'spendFocus which:', which )
 
-        # print( 'HERE: 0' )
+        # print_( 'HERE: 0' )
         self.saveData()
-        # print( 'HERE: 1' )
+        # print_( 'HERE: 1' )
 
         if not self.records[focus]['names'][name]['executed']:
             if not type( self.records[focus]['names'][name]['trigger'] ) == bool:
                 if not type( self.records[focus]['names'][name]['triggerArg'] ) == bool:
                     # Timer(.0001, self.records[focus]['names'][name]['trigger'], self.records[focus]['names'][name]['triggerArg']).start()
-                    # print( '\trunning 0' )
+                    # print_( '\trunning 0' )
                     self.records[focus]['names'][name]['trigger'](**self.records[focus]['names'][name]['triggerArg'])
 
                 else:
-                    # print( '\trunning 1' )
+                    # print_( '\trunning 1' )
                     self.records[focus]['names'][name]['trigger']()
             self.records[focus]['names'][name]['executed'] = True
-        # print( 'HERE: 2' )
+        # print_( 'HERE: 2' )
 
 
     def log( self, name=False, focus=False ):
@@ -16734,7 +16810,7 @@ class Queue:
             i = 0 
             while self.opened < self.maxThreads-10 and i < self.notstarted:
                 # time.sleep(.02)
-                # print( 'open:', self.opened, 'max:', self.maxThreads )
+                # print_( 'open:', self.opened, 'max:', self.maxThreads )
                 # if self.opened < self.maxThreads-10 and i < self.notstarted:
                 chosen = self.nextInQueue()
                 if type(chosen) == bool:
@@ -16792,7 +16868,7 @@ class Queue:
                     if not self.records[key]['threads'][i].active:
                         chosen = { 'focus': key, 'qID': self.records[key]['threads'][i].qID }
             if type(chosen) == bool:
-                # print('active:',self.checkActive())
+                # print_('active:',self.checkActive())
                 return False
         except Exception as e:
             chosen = False
@@ -16944,7 +17020,7 @@ class Queue:
 
         except Exception as e:
             data = False
-            # print(memory)
+            # print_(memory)
 
         return data
 
@@ -16989,15 +17065,15 @@ class Queue:
                             if len(__.projectData[focus][name][pdID]['data']) > 0:
                                 
                                 saveTableSplitNew( __.projectData[focus][name][pdID]['data'], logName, project=True )
-                                print( 'check0:', focus, name, pdID )
+                                print_( 'check0:', focus, name, pdID )
                                 if not 'folder' in name:
-                                    print( 'zero' )
+                                    print_( 'zero' )
                                     sys.exit()
                                 __.projectData[focus][name][pdID]['data'] = []
                         else:
-                            print()
-                            print('Data saved to:',self.records[focus]['names'][name]['database'])
-                            print()
+                            print_()
+                            print_('Data saved to:',self.records[focus]['names'][name]['database'])
+                            print_()
 
 
                             if len(__.projectData[focus][name][pdID]['data']) > 0:
@@ -17016,9 +17092,9 @@ class Queue:
                                         saveTableSplitNew( errors, logName+'__ERRORS__', project=True )
                                 except Exception as e:
                                     saveTableSplitNew( __.projectData[focus][name][pdID]['data'], logName, project=True )
-                                    print( 'check1:', focus, name, pdID )
+                                    print_( 'check1:', focus, name, pdID )
                                 if not 'folder' in name:
-                                    print( 'zero' )
+                                    print_( 'zero' )
                                     sys.exit()
                                 __.projectData[focus][name][pdID]['data'] = []
 
@@ -17030,7 +17106,7 @@ class Queue:
         self.data[0] = 0
         self.data[1] = 0
         for focus in __.projectData:
-            # print( 'focus:', focus )
+            # print_( 'focus:', focus )
             try:
                 del __.projectData[focus][0]
             except Exception as e:
@@ -17039,43 +17115,43 @@ class Queue:
                 logName = 'auto_' + self.records[focus]['app'] + '_' + name + '_' + str(self.created)
                 for pdID in __.projectData[focus][name].keys():
                     if not type(__.projectData[focus][name][pdID]['saveInitiated']) == bool:
-                        # print('saveInitiated:',__.projectData[focus][name][pdID]['saveInitiated'])
-                        # print()
-                        # print(len( __.projectData[focus][name][ __.projectData[focus][name][pdID]['saveInitiated']['pdID'] ]['data'] ), __.projectData[focus][name][pdID]['saveInitiated']['size'] )
-                        # print()
+                        # print_('saveInitiated:',__.projectData[focus][name][pdID]['saveInitiated'])
+                        # print_()
+                        # print_(len( __.projectData[focus][name][ __.projectData[focus][name][pdID]['saveInitiated']['pdID'] ]['data'] ), __.projectData[focus][name][pdID]['saveInitiated']['size'] )
+                        # print_()
                         if len( __.projectData[focus][name][ __.projectData[focus][name][pdID]['saveInitiated']['pdID'] ]['data'] ) > __.projectData[focus][name][pdID]['saveInitiated']['size']:
                             __.projectData[focus][name][pdID]['saveInitiated']['timeSizeChange'] = time.time()
                         else:
-                            # print()
-                            # print('got here')
-                            # print()
+                            # print_()
+                            # print_('got here')
+                            # print_()
 
                             diff = time.time() - __.projectData[focus][name][pdID]['saveInitiated']['timestamp']
-                            print()
-                            # print()
-                            # print('diff:',diff)
-                            # print()
-                            print( 'diff:', diff )
-                            print( __.projectData[focus][name][pdID]['saveInitiated']['size'], len(__.projectData[focus][name][  __.projectData[focus][name][pdID]['saveInitiated']['pdID']  ]['data']))
+                            print_()
+                            # print_()
+                            # print_('diff:',diff)
+                            # print_()
+                            print_( 'diff:', diff )
+                            print_( __.projectData[focus][name][pdID]['saveInitiated']['size'], len(__.projectData[focus][name][  __.projectData[focus][name][pdID]['saveInitiated']['pdID']  ]['data']))
                             if diff > __.projectData[focus][name][pdID]['saveInitiated']['startAfterNoChangeFor']:
                                 __.datadumps += 1
                                 if type(self.records[focus]['names'][name]['database']) == bool or self.records[focus]['names'][name]['database'] is None:
                                     tmpData = __.projectData[focus][name][__.projectData[focus][name][pdID]['saveInitiated']['pdID']]['data']
-                                    print( 'save started' )
+                                    print_( 'save started' )
                                     saveTableSplitNew( tmpData, __.projectData[focus][name][pdID]['saveInitiated']['logname'], project=True )
                                     tmpData = []
-                                    print( 'post split save:', len(__.projectData[focus][name][__.projectData[focus][name][pdID]['saveInitiated']['pdID']]['data']) )
+                                    print_( 'post split save:', len(__.projectData[focus][name][__.projectData[focus][name][pdID]['saveInitiated']['pdID']]['data']) )
                                     __.projectData[__.projectData[focus][name][pdID]['saveInitiated']['focus']][__.projectData[focus][name][pdID]['saveInitiated']['pdID']] = []
                                     if not 'folder' in name:
-                                        print( 'zero' )
+                                        print_( 'zero' )
                                         sys.exit()
                                     __.projectData[focus][name][pdID]['saveInitiated'] = False
                                     threadTimer( .5, enableThreadDataSwap )
                             
                                 else:
-                                    print()
-                                    print('Data saved to:',self.records[focus]['names'][name]['database'])
-                                    print()
+                                    print_()
+                                    print_('Data saved to:',self.records[focus]['names'][name]['database'])
+                                    print_()
                                     # try:
                                     conn = sqlite3.connect(self.records[focus]['names'][name]['database'])
                                     cursor = conn.cursor()
@@ -17096,7 +17172,7 @@ class Queue:
 
                                     # __.projectData[focus][name][  __.projectData[focus][name][pdID]['saveInitiated']['pdID']  ]['data'] = []
                                     if not 'folder' in name:
-                                        print( 'zero' )
+                                        print_( 'zero' )
                                         sys.exit()
                                     __.projectData[focus][name][pdID]['saveInitiated'] = False
                                     threadTimer( .5, enableThreadDataSwap )
@@ -17113,23 +17189,23 @@ class Queue:
                     pass
                 for name in __.projectData[focus].keys():
                     for pdID in __.projectData[focus][name].keys():
-                        # print('data len:',len(__.projectData[focus][name][pdID]['data']))
-                        # print('projectDataMaxLen:',self.projectDataMaxLen)
+                        # print_('data len:',len(__.projectData[focus][name][pdID]['data']))
+                        # print_('projectDataMaxLen:',self.projectDataMaxLen)
                         if len(__.projectData[focus][name][pdID]['data']):
                             self.projectDataDetected = True
 
-                            # print()
-                            # print( len(__.projectData[focus][name][pdID]['data']), self.projectDataMaxLen )
-                            # print()
+                            # print_()
+                            # print_( len(__.projectData[focus][name][pdID]['data']), self.projectDataMaxLen )
+                            # print_()
 
                             if len(__.projectData[focus][name][pdID]['data']) >= self.projectDataMaxLen:
                                 
                                 if __.pdID[focus][name] == 0:
                                     __.pdID[focus][name] = 1
-                                    print( 'NOW: 1' )
+                                    print_( 'NOW: 1' )
                                 else:
                                     __.pdID[focus][name] = 0
-                                    print( 'NOW: 0' )
+                                    print_( 'NOW: 0' )
                                 
                                 logname = 'auto_' + self.records[focus]['app'] + '_' + str(self.created)
                                 __.saveInitiated = True
@@ -17204,7 +17280,7 @@ class Queue:
                         args[0]['args']['data'] = data
 
                     
-                    # print(args)
+                    # print_(args)
                     threadTimer( .0001, threadKwargs, args )
                 elif not type(data) == bool and not type(triggerArg) == bool and not kwargs:
                     try:
@@ -17215,19 +17291,19 @@ class Queue:
                             triggerArg[0].append(data)
                             threadTimer( .0001, threadKwargs, triggerArg )
                         except Exception as e:
-                            print('listener trigger error')
+                            print_('listener trigger error')
 
 
             except Exception as e:
-                print('listener trigger error')
+                print_('listener trigger error')
 
 
     def printStatus( self ):
         pDone = str(int(percentageDiffInt(self.closed, self.statusTotal)))
         if not type( self.prefix ) == bool:
-            print(' ' + self.prefix + ':', pDone + '%' , end='\r')
+            print_(' ' + self.prefix + ':', pDone + '%' , end='\r')
         else:
-            print(' ' + pDone + '%' , end='\r')
+            print_(' ' + pDone + '%' , end='\r')
         sys.stdout.flush()
 
     def timeoutCount( self ):
@@ -17265,13 +17341,13 @@ class Queue:
                     if threads.status and threads.timeout:
                         dur = time.time() - threads.log['start']
                         if dur > threads.timeout:
-                            # print( 'time ran out',threads.qID )
-                            # print( 'time ran out',threads.qID )
-                            # print( 'time ran out',threads.qID )
+                            # print_( 'time ran out',threads.qID )
+                            # print_( 'time ran out',threads.qID )
+                            # print_( 'time ran out',threads.qID )
 
 
                             # for x in dir(threads.thisThread):
-                            #     print(x)
+                            #     print_(x)
 
                             # sys.exit()
 
@@ -17279,7 +17355,7 @@ class Queue:
                             self.spent( threads.qID, 0 )
                             self.records[focus]['threads'][i].hasTimedOut = 1
                             self.records[focus]['threads'][i].thisThread.kill()
-                            # print( 'stopped' )
+                            # print_( 'stopped' )
 
 
 
@@ -17289,15 +17365,15 @@ class Queue:
         #         for i, threads in enumerate( self.records[focus]['threads'] ):
         #             if not threads.thisThread is None:
         #                 if threads.status and threads.timeout:
-        #                     print( 'Has timeout' )
+        #                     print_( 'Has timeout' )
         #                     dur = time.time() - threads.log['start']
         #                     if dur > threads.timeout:
-        #                         print( 'time ran out' )
+        #                         print_( 'time ran out' )
         #                         self.spent( threads.qID, 0 )
         #                         self.records[focus]['threads'][i].hasTimedOut = 1
         #                         self.records[focus]['threads'][i].thisThread.kill()
         #                         self.records[focus]['threads'][i].thisThread.join()
-        #                         print( 'stopped' )
+        #                         print_( 'stopped' )
 
 
 
@@ -17340,7 +17416,7 @@ class Queue:
                 if diff > self.autoLoadedAfter:
                     if diff2 > self.autoLoadedAfter:
                         if self.auditPrint:
-                            print('Auto Loaded:', diff)
+                            print_('Auto Loaded:', diff)
 
                         for focus in self.records.keys():
                             for name in self.records[focus]['names'].keys():
@@ -17357,31 +17433,31 @@ class Queue:
             if self.projectDataDetected:
 
                 if False:
-                    print()
-                    print()
-                    print('Opened:',self.opened,'\tClosed:',self.totalClosed,'\tClosed:',self.closed,'\tTotal:',self.nextID,'\tMax in queue:',self.maxInQueue,'\tTotal Task:',__.totalTask,'\tTotal Audit:',__.queueCountScheduleAudit+__.queueCountSchedule )
-                    print()
+                    print_()
+                    print_()
+                    print_('Opened:',self.opened,'\tClosed:',self.totalClosed,'\tClosed:',self.closed,'\tTotal:',self.nextID,'\tMax in queue:',self.maxInQueue,'\tTotal Task:',__.totalTask,'\tTotal Audit:',__.queueCountScheduleAudit+__.queueCountSchedule )
+                    print_()
                 for focus in __.projectData:
                     try:
                         del __.projectData[focus][0]
                     except Exception as e:
                         pass
                     for name in __.projectData[focus].keys():
-                        print( 'pre:', focus, name, __.projectData[focus].keys() )
-                        print( '0:', len(__.projectData[focus][name][0]['data']), focus, name )
-                        print( '1:', len(__.projectData[focus][name][1]['data']), focus, name )
+                        print_( 'pre:', focus, name, __.projectData[focus].keys() )
+                        print_( '0:', len(__.projectData[focus][name][0]['data']), focus, name )
+                        print_( '1:', len(__.projectData[focus][name][1]['data']), focus, name )
                         if len(__.projectData[focus][name][0]['data']) or len(__.projectData[focus][name][1]['data']):
                             if False:
-                                print('Name:',name, '\tProject 0 Length:', len(__.projectData[focus][name][0]['data']), '\tProject 1 Length:', len(__.projectData[focus][name][1]['data']),'\tdb:',self.records[focus]['names'][name]['database'] )
+                                print_('Name:',name, '\tProject 0 Length:', len(__.projectData[focus][name][0]['data']), '\tProject 1 Length:', len(__.projectData[focus][name][1]['data']),'\tdb:',self.records[focus]['names'][name]['database'] )
                             if True:
-                                print('Name:',name, '\tOpened:',self.opened,'\tClosed:',self.closed,'\tTotal:',self.nextID,'\tMax in queue:',self.maxInQueue,'\tTotal Task:',__.totalTask, '\tProject 0 Length:', len(__.projectData[focus][name][0]['data']), '\tProject 1 Length:', len(__.projectData[focus][name][1]['data']),'\tdb:',self.records[focus]['names'][name]['database'] )
+                                print_('Name:',name, '\tOpened:',self.opened,'\tClosed:',self.closed,'\tTotal:',self.nextID,'\tMax in queue:',self.maxInQueue,'\tTotal Task:',__.totalTask, '\tProject 0 Length:', len(__.projectData[focus][name][0]['data']), '\tProject 1 Length:', len(__.projectData[focus][name][1]['data']),'\tdb:',self.records[focus]['names'][name]['database'] )
             else:
-                print('Opened:',self.opened,'\tClosed:',self.closed,'\tTotal:',self.nextID,'\tMax in queue:',self.maxInQueue,'\tTotal Task:',__.totalTask,'\tTotal Audit:',__.queueCountScheduleAudit+__.queueCountSchedule )
-            # print( self.opened, self.isLoaded, self.notstarted )
+                print_('Opened:',self.opened,'\tClosed:',self.closed,'\tTotal:',self.nextID,'\tMax in queue:',self.maxInQueue,'\tTotal Task:',__.totalTask,'\tTotal Audit:',__.queueCountScheduleAudit+__.queueCountSchedule )
+            # print_( self.opened, self.isLoaded, self.notstarted )
             if False:
-                print()
-                print( self.opened, self.isLoaded, self.notstarted )
-                print()
+                print_()
+                print_( self.opened, self.isLoaded, self.notstarted )
+                print_()
 
         elif self.statusTotal > 0:
             self.printStatus()
@@ -17396,7 +17472,7 @@ class Queue:
 
         if self.opened == 0 and self.isLoaded and self.notstarted <= 0:
             if self.auditPrint:
-                print('audit:',__.queueCountAudit)
+                print_('audit:',__.queueCountAudit)
             self.printReport()
             self.saveData()
             if self.saveLog:
@@ -17456,9 +17532,9 @@ class Queue:
                                         newMax = self.maxThreadsSafe
                                     self.auditAutoAdjust = True
                                     self.records[f]['names'][n]['maxThreads'] = newMax
-                                    print('_________________________________________')
-                                    print()
-                                    print('Changed max threads from:', lastMax,'to:',newMax)
+                                    print_('_________________________________________')
+                                    print_()
+                                    print_('Changed max threads from:', lastMax,'to:',newMax)
 
                 threadTimer( self.auditLoop, threadAudit )
                 # Timer( .5, threadAudit ).start()
@@ -17601,26 +17677,26 @@ class Queue:
 
 
 def enableThreadDataSwap():
-    print( 'key test00:', __.projectData[ __.processing[0] ].keys() )
-    print( 'enableThreadDataSwap: initiated' )
-    # print( __.processing )
-    print( 'post process size:', len(__.projectData[ __.processing[0] ][ __.processing[1] ][   __.processing[2]   ]['data']) )
+    print_( 'key test00:', __.projectData[ __.processing[0] ].keys() )
+    print_( 'enableThreadDataSwap: initiated' )
+    # print_( __.processing )
+    print_( 'post process size:', len(__.projectData[ __.processing[0] ][ __.processing[1] ][   __.processing[2]   ]['data']) )
     __.saveInitiated = False
     
     # __.projectData[focus][name][0]['data'] = []
-    print( 'key test0:', __.projectData[ __.processing[0] ].keys() )
+    print_( 'key test0:', __.projectData[ __.processing[0] ].keys() )
     # __.projectData[ __.processing[0] ][ __.processing[1] ][   __.processing[2]   ]['data'] = []
     # __.projectData[ '__main__' ][ 'folder' ][   __.processing[2]   ]['data'] = []
-    print( 'key test1:', __.projectData[ __.processing[0] ].keys() )
+    print_( 'key test1:', __.projectData[ __.processing[0] ].keys() )
 
 # def hasTimedOut():
-#   print( 'hasTimedOut' )
+#   print_( 'hasTimedOut' )
 
 # @timeout( 10, hasTimedOut() )
 def threadTimer( tim, func, args=False, qID=False ):
     Timer = __.imp('threading.Timer')
     __.totalTask += 1
-    # print(func.__name__)
+    # print_(func.__name__)
     shouldRun = True
     if func.__name__ == 'threadSchedule':
         if __.queueCountScheduleAudit > 4:
@@ -17655,12 +17731,12 @@ def threadTimer( tim, func, args=False, qID=False ):
             # https://stackoverflow.com/questions/34562473/most-pythonic-way-to-kill-a-thread-after-some-period-of-time
             # __.threadQueue[qID].join(30)
             # if __.threadQueue[qID].is_alive():
-            #   print( 'Has Timed Out' )
+            #   print_( 'Has Timed Out' )
             #   e.set()
             # else:
             #   pass
         except Exception as e:
-            print('Thread Error:',__.queueCountTimer)
+            print_('Thread Error:',__.queueCountTimer)
 
 
 def threadAudit():
@@ -17672,14 +17748,14 @@ def threadSchedule():
     threads.schedule()
 
 def threadKwargs( data=False ):
-    # print(data)
+    # print_(data)
     try:
         data['func'](**data['args'][0])
     except Exception as e:
         try:
             data[0]['func'](**data['args'][0])
         except Exception as e:
-            print('Error: kwargs')
+            print_('Error: kwargs')
 
 
 
@@ -17795,7 +17871,7 @@ def percentageDiffCalc( smaller, bigger, isFloat=False, rnd=1 ):
 
 ###################################################################################################################
 """ {7DB6A001-0637-4F13-B328-2B17A481CF35}
-    print('got here 2')
+    print_('got here 2')
 
 def loadingGraphic():
     # return False
@@ -17853,7 +17929,7 @@ def loadingGraphic():
 def loadingGraphicEnd():
     # return False
     global theLoadingGraphic
-    print('got here 1')
+    print_('got here 1')
     # theLoadingGraphic.destroy()
     # theLoadingGraphic.quit()
 """
@@ -17959,7 +18035,7 @@ class Field:
         if type( self.trigger ) == bool:
             return value
 
-        # print( 'HERE' )
+        # print_( 'HERE' )
         return self.trigger( value )
 
     def registerValue( self, value ):
@@ -18134,23 +18210,23 @@ __.databases = Databases()
 def appInfoDump():
     global appInfo
     for k in appInfo.keys():
-        print()
-        print(k,appInfo[k])
+        print_()
+        print_(k,appInfo[k])
 
 
 
 def appInfoDump2():
     global appInfo
     for k in appInfo.keys():
-        print()
-        print(k,appInfo[k])
+        print_()
+        print_(k,appInfo[k])
 
 
 
 # def appInfoDump2():
 #   global appInfo
 #   for k in appInfo.keys():
-#       print(k,appInfo[k]['columns'])
+#       print_(k,appInfo[k]['columns'])
 
 switches_loaded = 0
 def load():
@@ -18227,14 +18303,14 @@ class regImp:
 
         self.app = app
         self.parent = focus
-        # print( 'self.imp = importlib.import_module', app )
+        # print_( 'self.imp = importlib.import_module', app )
         self.imp = importlib.import_module(app)
         # self.imp = importlib.util.spec_from_file_location( app, _v.py + _v.slash + app + '.py' )
-        # print( os.path.isfile( _v.py + _v.slash + app + '.py' ) )
-        # print( self.imp )
-        # print( self.imp.test )
+        # print_( os.path.isfile( _v.py + _v.slash + app + '.py' ) )
+        # print_( self.imp )
+        # print_( self.imp.test )
         # sys.exit()
-        # print(self.imp.focus())
+        # print_(self.imp.focus())
 
         self.focus = self.imp.focus( parentApp=focus )
         self.focusPop = focus
@@ -18265,7 +18341,7 @@ class regImp:
     def listFunctions( self ):
         self.functions
         for func in self.functions:
-            print( func['name'], func['args'] )
+            print_( func['name'], func['args'] )
 
     def pipe( self, data=[], xfer=False, clear=True, appReg=False ):
         global appData
@@ -18313,7 +18389,7 @@ class regImp:
                     pass
 
 
-            # print(self.focus)
+            # print_(self.focus)
             __.appReg = self.focus
 
             if delete or d:
@@ -18643,7 +18719,7 @@ def e( msg , e=None, kill=True):
         # msgN = ['  \t']
         for x in msg:
             if x ==0:
-                print()
+                print_()
             elif type(x)==dict: # { 'l': line, 'c': 'green', 'd': 1, 'n': 'todo' }
                 l=x['l']
                 if 'c' in x:
@@ -18837,8 +18913,8 @@ class ONLINE:
             self.onStatus = True
         else:
             self.onStatus = False
-        # print(self.ip)
-        # print(self.onStatus)
+        # print_(self.ip)
+        # print_(self.onStatus)
         return self.onStatus
 
 
@@ -18846,7 +18922,7 @@ class ONLINE:
     def download_updates( self ):
         # requests = vc.FIG.imp('requests')
         requests = __.imp('requests')
-        # print('here')
+        # print_('here')
         # vc.FIG.bash_vars(p=0)
         if not os.path.isdir(_v.home +os.sep+ '.rt'):
             os.mkdir(_v.home +os.sep+ '.rt')
@@ -18886,7 +18962,7 @@ class ONLINE:
                     if os.path.isfile(p):
                         os.unlink(p)
                     if not os.path.isfile( p ):
-                        print()
+                        print_()
                         cp( [ 'downloading:', l ], 'yellow' )
                         url = 'http://reph.us/tools/'+l
                         page = requests.get(url)
@@ -18898,7 +18974,7 @@ class ONLINE:
                         saveText( page_code, p )
                         cp( [ 'saved:', p ], 'yellow' )
                 else:
-                    print(rec)
+                    print_(rec)
 
     download = download_updates
 imps = {}
@@ -19073,7 +19149,7 @@ def dict_generator(indict, pre=None, fields=[] ):
                     dict_generator_index[p]=1
                 else:
                     dict_generator_index[p]+=1
-                # print(p)
+                # print_(p)
                 found = False
 
                 if key in fields:
@@ -19105,7 +19181,7 @@ def dict_generator(indict, pre=None, fields=[] ):
                         elif f == 7:
                             cp(xXx,'white')
                         else:
-                            print(xXx)
+                            print_(xXx)
 
 
 
@@ -19223,4 +19299,18 @@ lbu=aiLine
 nw=n2w
 
 ## UUID ##
+
+
+# print_( 1,2,3,4, c='yellow' ); sys.exit();
+pr=print_
+prt=printt
+pt=printt
+_fileBackup=None
+def bk(path,flag=None):
+    global _fileBackup
+    if _fileBackup is None: _fileBackup = regImp( __.appReg, 'fileBackup' );
+    _fileBackup.switch( 'Silent' )
+    _fileBackup.switch( 'Input', path )
+    if type(flag) == str: _fileBackup.switch( 'Flag', flag );
+    return _fileBackup.do( 'action' )
 

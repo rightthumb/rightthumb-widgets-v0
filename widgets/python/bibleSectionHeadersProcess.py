@@ -171,7 +171,7 @@ if not sys.stdin.isatty():
 
 # _dir.sqlCreateTable( db, deleteDBFirst=True, close=True )
 # obj = _dir.fileInfo( path, sql=True )
-# print(   _dir.fileInfo( _.switches.value('Input') )['size']   )
+# _.pr(   _dir.fileInfo( _.switches.value('Input') )['size']   )
 
 # _.saveLog('queue')
 # _.saveLog('audit')
@@ -233,10 +233,10 @@ def expandRef(data0):
 	global books
 	verses = []
 	b = books[data0[0]]['name']
-	# #####x  print(data0)
-	# #####x  print()
+	# #####x  _.pr(data0)
+	# #####x  _.pr()
 	############### dont forget if :
-	#####x  print(data0)
+	#####x  _.pr(data0)
 	if len(data0[1]) > 0:
 		if not ':' in data0[1]:
 			data0[1] = '1:' + data0[1]
@@ -244,29 +244,29 @@ def expandRef(data0):
 			cT = data0[1].split(':')[0]
 			iT = data0[1].split(':')[1].split(',')
 
-			# #####x  print('ch',cT)
+			# #####x  _.pr('ch',cT)
 			for iX in iT:
 				if '-' in iX:
-					# #####x  print(iX)
+					# #####x  _.pr(iX)
 					th = iX.split('-')
 					for xD in range(int(th[0]),int(th[1])+1):
 						r_b = data0[0]
 						r_c = cT
 						r_v = xD
 						verses.append([int(r_b)+1,int(r_c),int(r_v)])
-						#####x  print(b,cT,xD)
+						#####x  _.pr(b,cT,xD)
 				else:
 					r_b = data0[0]
 					r_c = cT
 					r_v = iX
 					if len(r_v) == 0:
 						r_v = 0
-					# print(r_b,r_c,r_v)
+					# _.pr(r_b,r_c,r_v)
 					# verses.append([data0[0],cT,iX])
 					verses.append([int(r_b)+1,int(r_c),int(r_v)])
-					#####x  print(b,cT,iX)
+					#####x  _.pr(b,cT,iX)
 		else:
-			#####x  print('********************************************')
+			#####x  _.pr('********************************************')
 			
 			for bCH in books[data0[0]-1]['chapter_verses']:
 				if bCH['chapter'] == int(data0[1]):
@@ -276,9 +276,9 @@ def expandRef(data0):
 						r_v = xD
 						# verses.append([data0[0],int(data0[1]),xD])
 						verses.append([int(r_b)+1,int(r_c),int(r_v)])
-						#####x  print(b,int(data0[1]),xD)
+						#####x  _.pr(b,int(data0[1]),xD)
 
-			#####x  print('********************************************')
+			#####x  _.pr('********************************************')
 	return verses
 
 
@@ -295,7 +295,7 @@ def getBook( book ):
 	global booksNew
 
 	for i,bn in enumerate(booksNew):
-		print( bn )
+		_.pr( bn )
 		if book == bn['book']:
 			return bn['abbreviation']
 
@@ -320,15 +320,15 @@ def processData():
 						data[theID]['verse_ids'] = verse_ids
 						data[theID]['expanded_verses'] = booksNew[i]['book'] + ' ' + row['verses'].split(' ')[1]
 						data[theID]['biblegateway'] = 'https://www.biblegateway.com/passage/?version=NIV&interface=amp&search=' + data[theID]['expanded_verses'].replace(' ','+')
-						print( data[theID]['biblegateway'] )
+						_.pr( data[theID]['biblegateway'] )
 					except Exception as e:
-						print( 'Error:', ix, booksNew[i]['book'], row['verses'] )
+						_.pr( 'Error:', ix, booksNew[i]['book'], row['verses'] )
 
 
 
 
 
-	print(ix)
+	_.pr(ix)
 	_.saveTable( data , 'Bible_section_headers.json', printThis=True )
 
 def action():
@@ -359,7 +359,7 @@ def newAbbreviations():
 
 	for i,br in enumerate(booksRaw):
 		br = br.replace('\n','').replace('.','')
-		# print( br )
+		# _.pr( br )
 		abbreviation = br.split(',')[1]
 		n = {
 				'book':		br.split(',')[0],
@@ -380,6 +380,7 @@ data = _.getTable('Bible_section_headers.json')
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

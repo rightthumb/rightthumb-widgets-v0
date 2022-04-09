@@ -307,12 +307,12 @@ def action():
 			if len(row):
 				try:
 					cent = _.patternMatch( row, search, both=2 )
-					# print( _.colorThis( [str(cent)], 'yellow', p=0 ), '\t', row )
-					print( cent , '\t', row )
+					# _.pr( _.colorThis( [str(cent)], 'yellow', p=0 ), '\t', row )
+					_.pr( cent , '\t', row )
 				except Exception as e:
 					pass
 			else:
-				print()
+				_.pr()
 
 
 
@@ -323,6 +323,7 @@ def action():
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

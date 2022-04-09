@@ -177,7 +177,7 @@ _.postLoad( __file__ )
 
 def action():
 	focus()
-	# print(_.isData())
+	# _.pr(_.isData())
 	# sys.exit()
 	files = _.switches.values('Files')
 	if type(files[0]) == list:
@@ -189,13 +189,13 @@ def action():
 		try:
 			os.path.isfile(filepath)
 		except Exception as e:
-			print(filepath)
+			_.pr(filepath)
 			_.e(e)
 		if os.path.isfile(filepath):
 			
 
 			if i and not 'noline' in _.switches.value('Clean'):
-				print('_________________________________________')
+				_.pr('_________________________________________')
 			if not _.isCrypt(filepath):
 				if not _.switches.isActive('Clean'):
 					if __.path(filepath).startswith( _v.pp+os.sep+'configs'+os.sep ):
@@ -217,16 +217,16 @@ def action():
 					time.sleep(.2)
 			if False and wasCrypt:
 				if not _.switches.isActive('Clean'):
-					print('_________________________________________')
-					print()
-					print()
+					_.pr('_________________________________________')
+					_.pr()
+					_.pr()
 				
 			# sys.exit()
 			newFile = []
 			theFile = _.getText(filepath,raw=True).split('\n')
 			lX = 10
 			if _.switches.isActive('Head'):
-				# print('Head')
+				# _.pr('Head')
 				if len(_.switches.value('Head')):
 					lX = int(_.switches.value('Head'))
 				if len(theFile) > lX:
@@ -240,7 +240,7 @@ def action():
 								break
 
 			if _.switches.isActive('Tail'):
-				# print('Tail')
+				# _.pr('Tail')
 				if len(newFile):
 					newFile.append(midID)
 				tail = []
@@ -248,7 +248,7 @@ def action():
 					lX = int(_.switches.value('Tail'))
 				theFile.reverse()
 				if len(theFile) > lX:
-					# print( 'file right size' )
+					# _.pr( 'file right size' )
 					for llx,xyz in enumerate(theFile):
 						if len(xyz):
 							if  llx <= lX:
@@ -259,15 +259,15 @@ def action():
 								break
 
 				tail.reverse()
-				# print( 'tail len', len(tail) )
+				# _.pr( 'tail len', len(tail) )
 				for xyz in tail:
 					newFile.append(xyz)
 
 			if len(newFile):
-				# print( 'newFile len', len(newFile) )
+				# _.pr( 'newFile len', len(newFile) )
 				theFile = newFile
 
-			# print(lX,type(lX))
+			# _.pr(lX,type(lX))
 			# sys.exit()
 
 			# maxLEN = 5000
@@ -330,18 +330,18 @@ def action():
 				if shouldAdd:
 					vVv.print += 1
 					if row == midID:
-						print( _.genLine( maxLEN, '_', p=0 ) )
+						_.pr( _.genLine( maxLEN, '_', p=0 ) )
 					else:
 						if _.switches.isActive('Line'):
-							print( _.cp(i+1, 'yellow', p=0),'\t', row )
+							_.pr( _.cp(i+1, 'yellow', p=0),'\t', row )
 						else:
-							print(row)
+							_.pr(row)
 
 			if wasCrypt:
 				if False and not _.switches.isActive('Clean'):
-					print()
-					print()
-					print('_________________________________________')
+					_.pr()
+					_.pr()
+					_.pr('_________________________________________')
 				_cryptFile.switch( 'Encrypt' )
 				_cryptFile.switch( 'Decrypt', delete=True )
 				_cryptFile.switch( 'Files', filepath )
@@ -350,7 +350,7 @@ def action():
 	pass
 	if not _.switches.isActive('Clean'):
 		if vVv.total:
-			print()
+			_.pr()
 			if vVv.total == vVv.print:
 				_.cp( [ '', _.addComma(vVv.total) ], 'yellow' )
 			else:
@@ -384,6 +384,7 @@ import _rightThumb._dir as _dir
 if __name__ == '__main__':
 	action()
 	__.isExit()
+
 
 
 

@@ -207,8 +207,8 @@ def pipProcess( what ):
 	for i,row in enumerate( pipList ):
 		if runFix and i > 0:
 			_file_folder.switch( 'Compair,Clean' )
-		print()
-		print( '____________________________________ PIP ____________________________________' )
+		_.pr()
+		_.pr( '____________________________________ PIP ____________________________________' )
 		pipAction( row, what )
 
 		if runFix and i == 0:
@@ -217,7 +217,7 @@ def pipProcess( what ):
 
 def action():
 	# for row in help("modules"):
-	# 	print( row )
+	# 	_.pr( row )
 	# sys.exit()
 
 	if type( _.appData[__.appReg]['pipe'] ) == bool and _.switches.isActive( 'Input' ):
@@ -237,7 +237,7 @@ def action():
 	# 				_.appData[__.appReg]['pipe'].append( row )
 	if not type( _.appData[__.appReg]['pipe'] ) == bool:
 		_.pipeCleaner()
-		# print( _.printVar(_.appData) )
+		# _.pr( _.printVar(_.appData) )
 		for i,row in enumerate(_.appData[__.appReg]['pipe']):
 			if _.switches.isActive( 'Input' ) and 'up' in _.switches.value( 'Input' ).lower():
 				pipProcess( 'install --upgrade ' + row )
@@ -253,6 +253,7 @@ def action():
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

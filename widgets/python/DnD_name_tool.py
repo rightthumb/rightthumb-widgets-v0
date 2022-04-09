@@ -244,46 +244,46 @@ def elf( row ):
 			data['female'].append({ 'name': name[0], 'sortID': '' })
 
 
-	# print( 'elf', row )
+	# _.pr( 'elf', row )
 
 def orc( i, row ):
 	row = eval( row )
-	# print( 'i:', i, type(row), len(row), len(row[0]), row[0]  )
+	# _.pr( 'i:', i, type(row), len(row), len(row[0]), row[0]  )
 	# sys.exit()
 	if i == 0:
 		for ii,nameX in enumerate(row[0]):
 
-			# print( nameX )
+			# _.pr( nameX )
 			for name in (nameX.split('\n')):
-			# print( name )
+			# _.pr( name )
 			# if ii == 0:
-			# 	print( name )
+			# 	_.pr( name )
 			# 	sys.exit()
 				if '. ' in name:
 					n = name.split('. ')[1]
-					# print( n )
+					# _.pr( n )
 					if i == 0:
 						data['male'].append({ 'name': n, 'sortID': '' })
 					else:
 						data['female'].append({ 'name': n, 'sortID': '' })
 	else:
-		# print( 'i:', i, type(row), len(row), len(row[0]), row[0]  )
+		# _.pr( 'i:', i, type(row), len(row), len(row[0]), row[0]  )
 		# sys.exit()
 		for name in (row[0].split('\n')):
-		# print( name )
+		# _.pr( name )
 		# if ii == 0:
-		# 	print( name )
+		# 	_.pr( name )
 		# 	sys.exit()
 			if '. ' in name:
 				n = name.split('. ')[1]
-				# print( n )
+				# _.pr( n )
 				if i == 0:
 					data['male'].append({ 'name': n, 'sortID': '' })
 				else:
 					data['female'].append({ 'name': n, 'sortID': '' })
 
 
-	# print( row )
+	# _.pr( row )
 def tiefling( row ):
 	global status
 
@@ -335,7 +335,7 @@ def action():
 		if shouldRun:
 			for i,row in enumerate(_.appData[__.appReg]['pipe']):
 				if not _.switches.isActive( 'Race' ):
-					print( row )
+					_.pr( row )
 				else:
 					if 'elf' in _.switches.value( 'Race' ).lower():
 						elf( row )
@@ -367,6 +367,7 @@ data = []
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

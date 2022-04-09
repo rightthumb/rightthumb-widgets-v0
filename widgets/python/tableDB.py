@@ -182,9 +182,9 @@ def action():
 	global data
 	dataDump = simplejson.dumps(data, indent=4, sort_keys=False)
 	if not dataDump:
-		print('[]')
+		_.pr('[]')
 	else:
-		print( dataDump )
+		_.pr( dataDump )
 
 	
 def load():
@@ -195,22 +195,22 @@ def load():
 	elif _.switches.isActive('myTables'):
 		data = _.getTable( _.switches.values('Table')[0] )
 		# p = _v.myTables+os.sep+_.switches.values('Table')[0]
-		# print(os.path.isfile(p),p)
+		# _.pr(os.path.isfile(p),p)
 		# if os.path.isfile(p):
 		# 	data = _.getText( p )
 	else:
 		data = _.getTableDB( _.switches.values('Table')[0] )
 		# p = _v.ttt +os.sep+ _.switches.values('Table')[0]
-		# print(os.path.isfile(p),p)
+		# _.pr(os.path.isfile(p),p)
 		# if os.path.isfile(p):
 		# 	data = _.getText( p )
 
 	data = process(data)
 	if len(data):
 		keys = list( data[0].keys() )
-		# print('web',_.switches.values('WebTable'))
+		# _.pr('web',_.switches.values('WebTable'))
 		if _.switches.isActive('WebTable'):
-			# print('spreadsheet.js')
+			# _.pr('spreadsheet.js')
 			sheet = _.getText( 'spreadsheet.js' )
 			spread = []
 			test = '750DD885FC69'
@@ -248,6 +248,7 @@ def load():
 if __name__ == '__main__':
 	action()
 	__.isExit()
+
 
 
 

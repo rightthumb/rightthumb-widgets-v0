@@ -152,7 +152,7 @@ _.postLoad( __file__ )
 def ftp_upload():
 
 
-	# print( 'upload', upload )
+	# _.pr( 'upload', upload )
 	# sys.exit()
 
 	userA = 'ay7q2HGaNN6mSWaVZniaEw=='
@@ -164,8 +164,8 @@ def ftp_upload():
 	userB = _str.cleanBE( userB, ' ' )
 	passwordB = _str.cleanBE( passwordB, ' ' )
 
-	# print( userB )
-	# print( passwordB )
+	# _.pr( userB )
+	# _.pr( passwordB )
 	# sys.exit()
 
 	ftp = FTP()
@@ -180,9 +180,9 @@ def ftp_upload():
 
 def action():
 
-	print( 'Uploading...', end='\r')
+	_.pr( 'Uploading...', end='\r')
 	ftp_upload()
-	print( '                 ', end='\r')
+	_.pr( '                 ', end='\r')
 
 
 import _rightThumb._encryptString as _blowfish
@@ -195,6 +195,7 @@ import _rightThumb._vault as _vault
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

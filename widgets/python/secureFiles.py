@@ -205,7 +205,7 @@ def secureFiles_Decrypt( path, pw ):
 	_.cp( 'crypt.de', 'Background.light_blue' )
 	_cryptFile.switch( 'Password', delete=True )
 	if len(pw):
-		# print(_blowfish.decrypt( pw, _vault.key() ))
+		# _.pr(_blowfish.decrypt( pw, _vault.key() ))
 		_cryptFile.switch( 'Password', _blowfish.decrypt( pw, _vault.key() ) )
 	_cryptFile.switch( 'Decrypt' )
 	_cryptFile.switch( 'Encrypt', delete=True )
@@ -358,7 +358,7 @@ def secureFiles( path, unlock=None, lock=None ):
 
 def getFolder( folder, ext=[], recursive=False, record={} ):
 	__.v.secure.folders[folder] = record
-	# print( 'getFolder:', folder )
+	# _.pr( 'getFolder:', folder )
 	try:
 		dirList = os.listdir( folder )
 	except Exception as e:
@@ -366,7 +366,7 @@ def getFolder( folder, ext=[], recursive=False, record={} ):
 
 	for file in dirList:
 		path = __.path(folder +_v.slash+ file)
-		# print(path)
+		# _.pr(path)
 		if os.path.isdir( path ):
 			if recursive:
 				getFolder( path, ext, recursive, record )
@@ -402,7 +402,7 @@ def scanFolders(sync=False, meta=False):
 		record = settings['folders'][f]
 		_.v.files = []
 		if record['Recursive']:
-			# print('................................................')
+			# _.pr('................................................')
 			record['priority'] = 0
 			recursive = True
 		else:
@@ -411,7 +411,7 @@ def scanFolders(sync=False, meta=False):
 		getFolder( _v.resolveFolderIDs(f), record['Extensions'], recursive=recursive, record=record )
 		for path in _.v.files:
 			if os.path.isfile(path):
-				# print(path)
+				# _.pr(path)
 				processFiles( path, record, sync )
 				# __.v.secure.files[ p ] = record
 
@@ -447,7 +447,7 @@ def scanFolders(sync=False, meta=False):
 	return __.v.secure.files
 
 def processFiles( path, record, sync ):
-	# print( 'processFiles:', path )
+	# _.pr( 'processFiles:', path )
 	if record['Encrypt']:
 		__.v.secure.crypt[ path ] = record
 	if record['noBackup'] or record['Backup']:
@@ -592,7 +592,7 @@ def process( subject ):
 		elif type(san) == str:
 			settings['files'][ san ] = config
 
-		# print( 'file   subject:', subject, ff, '\n', san )
+		# _.pr( 'file   subject:', subject, ff, '\n', san )
 
 	elif os.path.isdir(subject):
 		subject = os.path.abspath(subject)
@@ -608,12 +608,12 @@ def process( subject ):
 			settings['folders'][ san ] = config
 
 
-		# print( 'folder subject:', subject, '\n', san )
+		# _.pr( 'folder subject:', subject, '\n', san )
 	elif _.switches.isActive('Resolve'):
-			print()
-			print( subject )
-			print( _v.resolveFolderIDs(subject) )
-			print()
+			_.pr()
+			_.pr( subject )
+			_.pr( _v.resolveFolderIDs(subject) )
+			_.pr()
 	else:
 		_.colorThis( [ 'Error:', subject ], 'red' )
 		sys.exit()
@@ -627,7 +627,7 @@ def scanLock( lock=False ):
 	scanFolders(sync=True, meta=True)
 	if lock:
 		for f in __.v.secure.files:
-			print()
+			_.pr()
 			# _.cp( f, 'cyan' )
 			secureFiles( f, lock=True )
 def action():
@@ -637,7 +637,7 @@ def action():
 	# sys.exit()
 
 	# s = "123456"
-	# print(s[2:])
+	# _.pr(s[2:])
 	# sys.exit()
 	global appDBA
 	global settings
@@ -701,7 +701,7 @@ def action():
 	return None
 
 	# for i,row in enumerate(_.isData(r=1)):
-	# 	print(row)
+	# 	_.pr(row)
 
 __.v.secure = _.dot()
 
@@ -714,7 +714,7 @@ def load():
 						'files': {},
 		}
 
-	# print(settings)
+	# _.pr(settings)
 	# sys.exit()
 settings = {}
 
@@ -728,6 +728,7 @@ focus()
 if __name__ == '__main__':
 	action()
 	__.isExit()
+
 
 
 

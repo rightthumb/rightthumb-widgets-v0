@@ -287,12 +287,12 @@ def genMulti( config, currentDepth=0, parent=None ):
 		i+=1
 		thisLabel = label()
 		record = { 'depth': currentDepth, 'label': thisLabel, 'parent': parent, 'children': {} }
-		# print( 'record:', thisLabel, record )
+		# _.pr( 'record:', thisLabel, record )
 		try:
 			table[thisLabel] = record
 		except Exception as e:
 			pass
-			# print( 'error:', record, table )
+			# _.pr( 'error:', record, table )
 		if config['depth'] == currentDepth:
 			return table
 		else:
@@ -330,8 +330,8 @@ def addDimension():
 					for keyP in parents:
 						buildCommand += fieldBase.replace( 'THIS', str(keyP) )
 
-					# print( 'parents:', parents )
-					# print( 'buildCommand:', buildCommand )
+					# _.pr( 'parents:', parents )
+					# _.pr( 'buildCommand:', buildCommand )
 
 
 					buildCommandA = buildCommand + '.update({"'+key+'":{}})'
@@ -348,9 +348,9 @@ def findParents( key, theParents=[] ):
 	global table
 	result = None
 	result = table[key]['parent']
-	# print()
-	# print('findParents:', key, result )
-	# print()
+	# _.pr()
+	# _.pr('findParents:', key, result )
+	# _.pr()
 
 	try:
 		len(result)
@@ -365,7 +365,7 @@ def findParents( key, theParents=[] ):
 			len(table[result]['parent'])
 		except Exception as e:
 			return theParents
-		# print( 'find Next:', result )
+		# _.pr( 'find Next:', result )
 		return findParents( result, theParents )
 
 
@@ -399,6 +399,7 @@ nextID = 0
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

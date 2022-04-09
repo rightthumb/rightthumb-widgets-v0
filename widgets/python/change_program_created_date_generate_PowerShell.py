@@ -212,7 +212,7 @@ def get_PY_Name(  path, name  ):
 def process_PY( filename ):
 	global index_PY
 	file = _.getTable2( filename )
-	# print( file['data'][0] )
+	# _.pr( file['data'][0] )
 	# _.printVarSimple( file['data'][0] )
 
 
@@ -232,7 +232,7 @@ def process( filename ):
 	global index_PY
 	global index
 	file = _.getTable2( filename )
-	# print( file['data'][0] )
+	# _.pr( file['data'][0] )
 	# _.printVarSimple( file['data'][0] )
 
 	for i,record in enumerate(file['data']):
@@ -245,7 +245,7 @@ def process( filename ):
 
 		if os.path.isfile(path):
 			ps = '$(Get-Item "'+path+'").CreationTime=("'+d+'")'
-			print( ps  )
+			_.pr( ps  )
 def action():
 	global index
 	for i,row in enumerate(_.isData(r=1)):
@@ -261,6 +261,7 @@ index = []
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

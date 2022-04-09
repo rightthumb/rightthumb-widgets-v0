@@ -18,16 +18,16 @@ import _rightThumb._Bible as _B
 import sys
 
 def all(include_query=True):
-	print('Bible')
+	_.pr('Bible')
 	Bible()
-	print('books')
+	_.pr('books')
 	books()
-	print('labels')
+	_.pr('labels')
 	labels()
 	if include_query:
-		print('query indices')
+		_.pr('query indices')
 		search_indices()
-	print('\n','DONE')
+	_.pr('\n','DONE')
 
 indexes = {}
 def search_indices():
@@ -118,11 +118,11 @@ def search_indices():
 			STEMS = ' '.join(STEMs)
 
 			patterns = _.generatePatterns( STEMs )
-			# print()
-			# print()
-			# print( VERSE )
-			# print( STEMS )
-			# print(patterns)
+			# _.pr()
+			# _.pr()
+			# _.pr( VERSE )
+			# _.pr( STEMS )
+			# _.pr(patterns)
 			for Wi in patterns:
 				Ws = []
 				for tWi in Wi:
@@ -130,11 +130,11 @@ def search_indices():
 				subject = ' '.join(Ws)
 				doublesIndexAdd( subject, bk, ch, vs )
 
-				# print(subject)
-			# # print( wordStem( VERSE ) )
+				# _.pr(subject)
+			# # _.pr( wordStem( VERSE ) )
 
-			# print( ' '.join(diff) )
-			# print()
+			# _.pr( ' '.join(diff) )
+			# _.pr()
 			# input(' ')
 
 			# sys.exit()
@@ -162,7 +162,7 @@ def books():
 	for i,record in enumerate(theBooksA):
 		bID = i+1
 		tmpBooks[record['name']] = bID
-	# 	print( bID, record['name'] )
+	# 	_.pr( bID, record['name'] )
 	# sys.exit()
 	for i,record in enumerate(theBooksB.split('\n')):
 		bID = i+1
@@ -173,8 +173,8 @@ def books():
 			_.colorThis( ['ERROR: ',bID,  record], 'red' )
 
 		# try:
-		# 	print( bID, tmpBooks[recs[0]], recs[0],  )
-		# 	# print( bID, theBooksA[i], recs[0], tmpBooks[recs[0]] )
+		# 	_.pr( bID, tmpBooks[recs[0]], recs[0],  )
+		# 	# _.pr( bID, theBooksA[i], recs[0], tmpBooks[recs[0]] )
 		# except Exception as e:
 		# 	_.colorThis( ['ERROR: ',bID,  record], 'red' )
 		for rec in recs:
@@ -210,8 +210,8 @@ def Bible():
 			words = verse[4]
 			words = _str.cleanBE(words,' ')
 		except Exception as e:
-			print( row )
-			print( verse )
+			_.pr( row )
+			_.pr( verse )
 			sys.exit()
 		if not vB in _B.Bible:
 			_B.Bible[vB] = {}
@@ -223,6 +223,7 @@ def Bible():
 
 
 processWordStem = None
+
 
 
 

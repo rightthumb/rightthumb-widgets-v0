@@ -346,7 +346,7 @@ def action():
 					part += '   '
 					part += _.fields.value( 'data', 'three', record[2] )
 
-					print( part )
+					_.pr( part )
 
 def load():
 	global data
@@ -361,6 +361,7 @@ data = []
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

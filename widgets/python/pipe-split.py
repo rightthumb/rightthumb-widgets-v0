@@ -198,7 +198,7 @@ _.postLoad( __file__ )
 # START
 
 def splitter(data,split):
-	# print(data,split)
+	# _.pr(data,split)
 	results = []
 	for i,row in enumerate( data ):
 		if _.showLine(row):
@@ -208,7 +208,7 @@ def splitter(data,split):
 	return results
 def action():
 	result = _.isData(r=1)
-	# print(result)
+	# _.pr(result)
 	if _.switches.isActive('Dirty'):
 		dirty={}
 		file=''
@@ -220,7 +220,7 @@ def action():
 		file=_str.do('all',file,'  ',' ')
 		file=_str.do('be',file,' ')
 		if _.switches.isActive('PrintScrap'):
-			print(file)
+			_.pr(file)
 		for line in file.split('\n'):
 			for kik in line.split(' '):
 				if _.showLine(kik):
@@ -232,7 +232,7 @@ def action():
 			_.pv(dirty)
 			_.cp( _.linePrint(p=0), 'cyan' )
 		for k in dirty:
-			print(k)
+			_.pr(k)
 		if not _.switches.isActive('Clean'):
 			_.cp( _.linePrint(p=0), 'cyan' )
 		return None
@@ -245,13 +245,13 @@ def action():
 		_.pv(SPLIT)
 		_.cp( _.linePrint(p=0), 'green' )
 		_.e('-split required')
-	# print(_.switches.values('Split'))
+	# _.pr(_.switches.values('Split'))
 	for split in _.switches.values('Split'):
-		# print('split',split)
+		# _.pr('split',split)
 		result=splitter(result,split)
-		# print('result',result)
+		# _.pr('result',result)
 	for row in result:
-		print(row)
+		_.pr(row)
 
 
 
@@ -265,6 +265,7 @@ def load():
 if __name__ == '__main__':
 	action()
 	__.isExit()
+
 
 
 

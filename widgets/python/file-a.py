@@ -331,25 +331,25 @@ def getFolder( folder ):
 				shouldPrint = False
 
 				if not _.switches.isActive('Text') and not _.switches.isActive('Binary'):
-					# print(0,whatIsIt(path),path)
-					# print(path)
+					# _.pr(0,whatIsIt(path),path)
+					# _.pr(path)
 					shouldPrint = True
 				else:
 					if not _.switches.isActive('Binary') and  _.switches.isActive('Text') and isText(path):
-						# print(1,whatIsIt(path),path)
-						# print(path)
+						# _.pr(1,whatIsIt(path),path)
+						# _.pr(path)
 						shouldPrint = True
 					if not _.switches.isActive('Binary') and not _.switches.isActive('Text'):
-						# print(2,whatIsIt(path),path)
-						# print(path)
+						# _.pr(2,whatIsIt(path),path)
+						# _.pr(path)
 						shouldPrint = True
 					if not _.switches.isActive('Text') and  _.switches.isActive('Binary') and not isText(path):
-						# print(3,whatIsIt(path),path)
-						# print(path)
+						# _.pr(3,whatIsIt(path),path)
+						# _.pr(path)
 						shouldPrint = True
 					if not _.switches.isActive('Text') and  not _.switches.isActive('Binary'):
-						# print(4,whatIsIt(path),path)
-						# print(path)
+						# _.pr(4,whatIsIt(path),path)
+						# _.pr(path)
 						shouldPrint = True
 
 
@@ -388,7 +388,7 @@ def getFolder( folder ):
 							shouldPrint = False
 							
 							if _.switches.isActive('Count'):
-								print( _.colorThis( path, 'cyan', p=0 ) )
+								_.pr( _.colorThis( path, 'cyan', p=0 ) )
 							else:
 
 								formatedSize = formatSize( size )
@@ -406,21 +406,21 @@ def getFolder( folder ):
 								result += '\t'
 								result += _.colorThis( path, 'cyan', p=0 )
 
-								print( result )
+								_.pr( result )
 							
-							# print( formatedSize, '\t', path )
+							# _.pr( formatedSize, '\t', path )
 
 
 				if shouldPrint:
 
 					global extensionList
 					if len( extensionList ):
-						# print( 'here' )
+						# _.pr( 'here' )
 						# sys.exit()
 						if '.' in item:
 							pathy = item.lower().split('.')
 							pathy_test = pathy.pop()
-							# print(pathy_test)
+							# _.pr(pathy_test)
 							if not '.'+pathy_test in extensionList:
 								shouldPrint = False
 
@@ -457,7 +457,7 @@ def action():
 	if _.switches.isActive('Extensions'):
 		extensionsDatabank()
 
-	# print( 'HERE' )
+	# _.pr( 'HERE' )
 	# sys.exit()
 
 	if _.switches.isActive( 'Silent' ):
@@ -468,11 +468,11 @@ def action():
 		folder = _.switches.values( 'Folder' )[0]
 	else:
 		folder = os.getcwd()
-	# print( folder )
+	# _.pr( folder )
 	# sys.exit()
 	if not _.switches.isActive('Count'):
 		if not _.switches.isActive('Label'):
-			print()
+			_.pr()
 			_.colorThis( 'Files:\n', 'green' )
 		else:
 			_.colorThis( [ _.ci(_.switches.value( 'Label' )) + ':\n' ], 'green' )
@@ -491,14 +491,14 @@ def action():
 				if _.showLine( formatPrint(item) ):
 
 					if len( extensionList ):
-						# print( 'here' )
+						# _.pr( 'here' )
 						# sys.exit()
 						if '.' in item:
-							# print( item )
+							# _.pr( item )
 							pathy = item.lower().split('.')
 							pathy_test = pathy.pop()
 							if '.'+pathy_test in extensionList:
-								# print(pathy_test)
+								# _.pr(pathy_test)
 								if not _.switches.isActive('Totals'):
 									if _.switches.isActive('Count'):
 										_.colorThis( [  formatPrint(item)  ], 'cyan' )
@@ -508,28 +508,28 @@ def action():
 					else:
 
 						if not _.switches.isActive('Text') and not _.switches.isActive('Binary'):
-							# print(0,_mime.what(path),path)
-							# print(path)
+							# _.pr(0,_mime.what(path),path)
+							# _.pr(path)
 
 							if _.switches.isActive('Path'):
 								if not _.switches.isActive('Totals'):
-									print( path )
+									_.pr( path )
 								files.append( path,noPrefix=True )
 							elif not _.switches.isActive('Count'):
 								if not _.switches.isActive('Totals'):
 									_.colorThis( [  '\t', formatPrint(item)  ], 'cyan' )
-								# print( '\t', formatPrint(item) )
+								# _.pr( '\t', formatPrint(item) )
 								files.append( formatPrint(item,noPrefix=True) )
 							else:
-								# print( formatPrint(item) )
+								# _.pr( formatPrint(item) )
 								if not _.switches.isActive('Totals'):
 									_.colorThis( [  formatPrint(item)  ], 'cyan' )
 								files.append( formatPrint(item,noPrefix=True) )
 						else:
 							if not _.switches.isActive('Binary') and  _.switches.isActive('Text') and _mime.isText(path):
-								# print(1,_mime.what(path),path)
-								# print(path)
-								# print( '\t', formatPrint(item) )
+								# _.pr(1,_mime.what(path),path)
+								# _.pr(path)
+								# _.pr( '\t', formatPrint(item) )
 								if not _.switches.isActive('Totals'):
 									if _.switches.isActive('Count'):
 										_.colorThis( [  formatPrint(item)  ], 'cyan' )
@@ -537,9 +537,9 @@ def action():
 										_.colorThis( [  '\t', formatPrint(item)  ], 'cyan' )
 								files.append( formatPrint(item,noPrefix=True) )
 							if not _.switches.isActive('Binary') and not _.switches.isActive('Text'):
-								# print(2,_mime.what(path),path)
-								# print(path)
-								# print( '\t', formatPrint(item) )
+								# _.pr(2,_mime.what(path),path)
+								# _.pr(path)
+								# _.pr( '\t', formatPrint(item) )
 								if not _.switches.isActive('Totals'):
 									if _.switches.isActive('Count'):
 										_.colorThis( [  formatPrint(item)  ], 'cyan' )
@@ -548,9 +548,9 @@ def action():
 								files.append( formatPrint(item,noPrefix=True) )
 
 							if not _.switches.isActive('Text') and  _.switches.isActive('Binary') and not _mime.isText(path):
-								# print(3,_mime.what(path),path)
-								# print(path)
-								# print( '\t', formatPrint(item) )
+								# _.pr(3,_mime.what(path),path)
+								# _.pr(path)
+								# _.pr( '\t', formatPrint(item) )
 								if not _.switches.isActive('Totals'):
 									if _.switches.isActive('Count'):
 										_.colorThis( [  formatPrint(item)  ], 'cyan' )
@@ -559,9 +559,9 @@ def action():
 								files.append( formatPrint(item,noPrefix=True) )
 							if not _.switches.isActive('Text') and  not _.switches.isActive('Binary'):
 								
-								# print(4,_mime.what(path),path)
-								# print(path)
-								# print( '\t', formatPrint(item) )
+								# _.pr(4,_mime.what(path),path)
+								# _.pr(path)
+								# _.pr( '\t', formatPrint(item) )
 								if not _.switches.isActive('Totals'):
 									if _.switches.isActive('Count'):
 										_.colorThis( [  formatPrint(item)  ], 'cyan' )
@@ -570,11 +570,11 @@ def action():
 								files.append( formatPrint(item,noPrefix=True) )
 
 	# if _.switches.isActive('Count') == False and _.switches.isActive('NoFolder') == False:
-	# 	print('\n{}\n{}'.format(i,folder))
+	# 	_.pr('\n{}\n{}'.format(i,folder))
 	# if _.switches.isActive('NoFolder'):
-	# 	print('',i)
+	# 	_.pr('',i)
 	if not len(files) == i:
-		# print('HERE')
+		# _.pr('HERE')
 		_.folderProfileAttribute( folder=folder, info = {
 														'app': 'file',
 														'recursive': _.switches.isActive('Recursive'),
@@ -615,13 +615,13 @@ def action():
 			if i == 0:
 				if not _.switches.isActive('Label'):
 					_.colorThis( [  formatPrint('\tNo Files')  ], 'red' )
-					# print( formatPrint('\tNo Files') )
+					# _.pr( formatPrint('\tNo Files') )
 				else:
 					_.colorThis( [  formatPrint('\tNo ' +_.ci(_.switches.value( 'Label' )))  ], 'red' )
-					# print( formatPrint('\tNo ' +_.ci(_.switches.value( 'Label' ))) )
-			# print('',i)
+					# _.pr( formatPrint('\tNo ' +_.ci(_.switches.value( 'Label' ))) )
+			# _.pr('',i)
 			_.colorThis( [  '',i  ], 'yellow' )
-			print()
+			_.pr()
 			_.colorThis( [  folder  ], 'darkcyan' )
 			
 
@@ -652,7 +652,7 @@ def extensionsDatabank():
 	extensionList = _db.do( 'action' )
 	for i,x in enumerate(extensionList):
 		extensionList[i] = x.lower()
-	# print( extensionList )
+	# _.pr( extensionList )
 
 
 extensionList = []
@@ -664,6 +664,7 @@ recursive = False
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

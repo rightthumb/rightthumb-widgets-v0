@@ -230,14 +230,14 @@ def google(search):
 			item = t.text_content()
 		except Exception as e:
 			item = ''
-		# print(item)
+		# _.pr(item)
 		if 'imdb' in item.lower():
 			# links = t.cssselect('a')
 			link = str(t.attrib['href'])
 			link = link.replace('/url?q=http:','http:')
 			text = t.text_content()
 			###################################################################################################
-			# print(item,link)
+			# _.pr(item,link)
 
 			if '/title/' in link:
 				imdbID = getIdFromUrl( link )
@@ -260,7 +260,7 @@ def action():
 
 	for i,record in enumerate(records['data']):
 		if 'movie' in record.keys() and type(record['movie']) == list:
-			# print( record['movie'] )
+			# _.pr( record['movie'] )
 			imdbID = None
 			try:
 				imdbID = index['searches'][ record['movie'][0]+' '+record['movie'][1] ]
@@ -300,11 +300,11 @@ def action():
 
 
 			if not imdbID is None:
-				print( imdbID, record['movie'][0]+' '+record['movie'][1], _.colorThis( index['imdb'][imdbID], 'green', p=0 ) )
+				_.pr( imdbID, record['movie'][0]+' '+record['movie'][1], _.colorThis( index['imdb'][imdbID], 'green', p=0 ) )
 			else:
 				imdbID = google( record['movie'][0]+' '+record['movie'][1] )
 				if not imdbID is None:
-					print( imdbID,	 record['movie'][0]+' '+record['movie'][1], _.colorThis( index['imdb'][imdbID], 'green', p=0 ) )
+					_.pr( imdbID,	 record['movie'][0]+' '+record['movie'][1], _.colorThis( index['imdb'][imdbID], 'green', p=0 ) )
 
 				else:
 					_.colorThis( record['movie'], 'red' )
@@ -314,10 +314,10 @@ def load():
 	global index
 	records = _.getTableDB( 'movie.cache' )
 	index = _.getTableDB('imdb-search.index')
-	# print(index)
+	# _.pr(index)
 	# sys.exit()
-	# 			print( index.keys() )
-	# 			print( index['searches'].keys() )
+	# 			_.pr( index.keys() )
+	# 			_.pr( index['searches'].keys() )
 
 records = []
 index = {}
@@ -329,6 +329,7 @@ index = {}
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

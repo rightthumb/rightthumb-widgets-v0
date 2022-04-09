@@ -208,7 +208,7 @@ def action():
 	load()
 	global c3po
 
-	print( c3po.split('.')[0] )
+	_.pr( c3po.split('.')[0] )
 
 
 
@@ -221,10 +221,11 @@ def load():
 ########################################################################################
 if __name__ == '__main__':
 	if _.isWin:
-		print('only works on linux')
+		_.pr('only works on linux')
 	else:
 		action()
 	__.isExit()
+
 
 
 

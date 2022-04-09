@@ -169,8 +169,8 @@ def cleanData( data ):
 			if not key in newFields:
 				newFields.append( key )
 			# data[i][key] = str(record[key])
-			# print( key, record[key] )
-			# print( type( record[key] ), key )
+			# _.pr( key, record[key] )
+			# _.pr( type( record[key] ), key )
 	return data
 
 def action():
@@ -178,7 +178,7 @@ def action():
 	skipLoad = False
 	if not type( _.appData[__.appReg]['pipe'] ) == bool:
 		skipLoad = True
-		# print( _.appData[__.appReg]['pipe'] )
+		# _.pr( _.appData[__.appReg]['pipe'] )
 		_.saveText( _.appData[__.appReg]['pipe'], _v.myTemp + _v.slash+'_printTable_temp.json' )
 		data = _.getTable2( _v.myTemp + _v.slash+'_printTable_temp.json' )
 		_.switches.fieldSet( 'Input', 'active', True )
@@ -206,20 +206,20 @@ def action():
 			data = [data]
 
 		if not type( data ) == list:
-			print( 'Error: bad file' )
+			_.pr( 'Error: bad file' )
 			sys.exit()
 		else:
 			try:
 				for k in data[0].keys():
 					keys.append( k )
 			except Exception as e:
-				print( 'Error: bad file' )
+				_.pr( 'Error: bad file' )
 				sys.exit()
 
 		# here
 
 		if not len( data ):
-			print( 'No data' )
+			_.pr( 'No data' )
 			return False
 
 		pass
@@ -233,7 +233,7 @@ def action():
 
 
 		# if _.switches.isActive('Int'):
-		# 	# print( 'here' )
+		# 	# _.pr( 'here' )
 		# 	d = []
 		# 	for i,rec in enumerate(data):
 		# 		for k in rec.keys():
@@ -298,7 +298,7 @@ def action():
 						newData.append( record )
 			pass
 
-			print()
+			_.pr()
 			newData = cleanData( newData )
 
 			_.tables.register('data',newData )
@@ -311,7 +311,7 @@ def action():
 
 		else:
 
-			print()
+			_.pr()
 			data = cleanData( data )
 			_.tables.register('data',data )
 			_.tables.fieldProfileSet('data','field','alignment','right')
@@ -327,12 +327,13 @@ def action():
 			txt = _.colorThis( k+':', 'green', p=0 )
 			txt += '\t'
 			txt += _.colorThis( _.addComma( The_Totals[k] ) , 'yellow', p=0 )
-			print( txt )
+			_.pr( txt )
 
 		# _.printVarSimple( data[0] )
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

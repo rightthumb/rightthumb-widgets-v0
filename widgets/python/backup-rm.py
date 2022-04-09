@@ -160,22 +160,22 @@ def action():
 		backupLog = _.getTable('fileBackup.json')
 		for path in _.switches.values('Files'):
 			path = __.path(path)
-			print(path)
-			# print(type(_.switches.value('Ago')))
-			# print( _.isDate(_.switches.value('Ago'))['sdate'] )
+			_.pr(path)
+			# _.pr(type(_.switches.value('Ago')))
+			# _.pr( _.isDate(_.switches.value('Ago'))['sdate'] )
 			newLog=[]
 			found=0
 			for log in backupLog:
 				delete=False
 				if log['file'] == path and log['timestamp'] > _.switches.value('Ago'):
 					delete=True
-					print( _.isDate(log['timestamp'])['sdate'] )
+					_.pr( _.isDate(log['timestamp'])['sdate'] )
 					found+=1
 				# if log['file'] == path:
-					# print(log['backup'])
-					# print(_.switches.isActive('Ago'))
-					# print(log['timestamp'] < _.switches.isActive('Ago'))
-					# print(log['timestamp'] > _.switches.isActive('Ago'))
+					# _.pr(log['backup'])
+					# _.pr(_.switches.isActive('Ago'))
+					# _.pr(log['timestamp'] < _.switches.isActive('Ago'))
+					# _.pr(log['timestamp'] > _.switches.isActive('Ago'))
 					# sys.exit()
 				if _.switches.isActive('Delete'):
 					if delete:
@@ -184,7 +184,7 @@ def action():
 								file_data = _.getText(log['backup'],raw=True)
 							except Exception as e:
 								file_data = open( log['backup'] , 'rb' ).read()
-							# print(type(file_data))
+							# _.pr(type(file_data))
 							newFile=''
 							i=0
 							for x in file_data:
@@ -225,6 +225,7 @@ def action():
 if __name__ == '__main__':
 	action()
 	__.isExit()
+
 
 
 

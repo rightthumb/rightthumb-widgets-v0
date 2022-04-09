@@ -210,7 +210,7 @@ def indexed_fields(client):
 			indexed_fields_hash[db][table][field] = {}
 
 	return indexed_fields_hash
-		# print(record)
+		# _.pr(record)
 
 def index_field( client, db, table, field ):
 	global indexed_fields_hash
@@ -234,7 +234,7 @@ def index_field( client, db, table, field ):
 	# should_index = True
 	if should_index:
 		resp = client[db][table].create_index([ (field, 1) ])
-		print( 'indexing result:', resp )
+		_.pr( 'indexing result:', resp )
 
 		client['collection_management']['my_indexes'].insert_one({
 				'db': db,
@@ -246,7 +246,7 @@ def index_field( client, db, table, field ):
 def action():
 
 	encrypted_connection_string = '6h0zPeDVhqMH0yIMRnOeA9NjJajbGY0HOqo4LnRgeZbx0hnInPE46WXkcl4Qu2BJFIdpCY3MCbjFeAIYLamP+aDmiFPoKsKQm5cBqVc+OfqShFLKPptf1djYtgygBlKbrG/N/H59bmhfWi5s3oQAgXEj9w6cKp2ay2QYdHkSIFDHQDJ1si3fmGg9dR1UuYpjVDi812VXYQm2/4Wgpw/CxBPTQG9zgMYjbmjEgVoI6HoyeOoEDI2r/lxpbDbsoP7mRQWwnwGZtTpbo4F/EcRavnqUJ6HUe3TLcQeF6ywFN+wHHePOrmMOlZ13Y4Qo4OSfkEGtUl+0X9Q='
-	# print(_blowfish.decrypt( encrypted_connection_string, _vault.key() ))
+	# _.pr(_blowfish.decrypt( encrypted_connection_string, _vault.key() ))
 	client = pymongo.MongoClient(  _blowfish.decrypt( encrypted_connection_string, _vault.key() )  )
 
 	theDB = 'ls2mdb'
@@ -268,7 +268,7 @@ def action():
 					my_collection = client[x][coll]
 					# one = dir(client[x][coll])
 
-					print( 
+					_.pr( 
 						'\t',
 						_.colorThis( coll, 'yellow', p=0 ),
 						' | ',
@@ -276,10 +276,10 @@ def action():
 						 )
 					try:
 						theKeys = list(client[x][coll].find_one().keys())
-						# print( theKeys )
+						# _.pr( theKeys )
 						for fy in theKeys:
 							_.colorThis( [ '\t\t', fy ], 'white' )
-						# print(client[x][coll].find_one())
+						# _.pr(client[x][coll].find_one())
 					except Exception as e:
 						pass
 
@@ -316,7 +316,7 @@ def action():
 				if key in x:
 					record[key] = x[key]
 					if isSingle:
-						print( record[key] )
+						_.pr( record[key] )
 
 		records.append(record)
 	if not isSingle:
@@ -384,9 +384,9 @@ def generate( client, db, table):
 			_.colorThis( 'Error: AE1D | generic problem' )
 			sys.exit()
 	if not _.switches.isActive('Clean'):
-		print('\n\n')
+		_.pr('\n\n')
 		_.printVarSimpleSTR( result )
-		print('\n\n')
+		_.pr('\n\n')
 		# _.printVarSimple( eval(result) )
 
 	# sys.exit()
@@ -400,7 +400,7 @@ def generate( client, db, table):
 
 
 	if len(q) == 2:
-		print(q)
+		_.pr(q)
 
 
 	sys.exit()
@@ -417,6 +417,7 @@ import simplejson as json
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

@@ -258,7 +258,7 @@ def action():
 		_.cp([ a ], 'yellow')
 		if not _.switches.isActive('Labels'):
 			for line in index[a].split(';'):
-				print( '\t',line )
+				_.pr( '\t',line )
 
 
 
@@ -270,7 +270,7 @@ def load():
 	global aliases
 	aliases=[]
 	# file=_.pa(_v.w +'/install/installer.py')
-	# print(file)
+	# _.pr(file)
 	# sys.exit()
 	for i,row in enumerate(  _.getText(_.pa(_v.w +'/install/installer.py'), raw=True).replace('\r','').split('\n')  ):
 		if row.startswith('alias '):
@@ -281,6 +281,7 @@ def load():
 if __name__ == '__main__':
 	action()
 	__.isExit()
+
 
 
 

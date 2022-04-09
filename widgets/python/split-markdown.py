@@ -244,8 +244,8 @@ def process(path):
 	file = _.getText(path,raw=True).replace('\r','')
 	folder=_v.popFile(path)
 	for subject in file.split('----'):
-		print(subject)
-		print()
+		_.pr(subject)
+		_.pr()
 		ask=input('path: ')
 		ask=ask.replace('/',os.sep)
 		ask=ask.replace('\\',os.sep)
@@ -270,6 +270,7 @@ def action():
 if __name__ == '__main__':
 	action()
 	__.isExit()
+
 
 
 

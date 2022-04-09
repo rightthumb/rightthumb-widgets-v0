@@ -220,7 +220,7 @@ def t2d( data ):
 		result = str(data)
 		result = result.replace( '.', ':' )
 		result = result + ':0'
-	# print( result )
+	# _.pr( result )
 	return result
 
 def durationNumber( data ):
@@ -303,7 +303,7 @@ def setIndicatorTest( file ):
 	for i,x in enumerate(__.setIndicators):
 		for xx in (x):
 			if xx in s.lower():
-				# print(xx)
+				# _.pr(xx)
 				result = i
 	return result
 
@@ -390,12 +390,12 @@ def action():
 
 		for exif in data:
 			cData = exif['exif'][0]
-			# print( f('ImageHeight'), f('ImageWidth') , f('Megapixels'), f('AudioChannels') )
-			print( f('ImageHeight') )
+			# _.pr( f('ImageHeight'), f('ImageWidth') , f('Megapixels'), f('AudioChannels') )
+			_.pr( f('ImageHeight') )
 
 		bestVideo = vote( data )
 		cData = bestVideo['exif'][0]
-		# print( 'Best:', bestVideo['info'], f('ImageHeight'), f('ImageWidth') , f('Megapixels'), f('AudioChannels') )
+		# _.pr( 'Best:', bestVideo['info'], f('ImageHeight'), f('ImageWidth') , f('Megapixels'), f('AudioChannels') )
 
 def identify():
 	global cData
@@ -424,7 +424,7 @@ def identify():
 		if not record['isfile']:
 			record['error'] = True
 		if not record['isfile'] or record['error']:
-			print( 'Error:', file )
+			_.pr( 'Error:', file )
 		if record['isfile'] and not record['error']:
 			record['exif'] = _.getTable2( file )
 			cData = record['exif'][0]
@@ -442,9 +442,9 @@ def identify():
 					groups[ record['groupid'] ] += 1
 				except Exception as e:
 					groups[ record['groupid'] ] = 1
-		# print( record['groupid'], record['type'], f('ImageHeight'), record['duration'] )
+		# _.pr( record['groupid'], record['type'], f('ImageHeight'), record['duration'] )
 		data.append( record )
-		# print( f('FileName') )
+		# _.pr( f('FileName') )
 
 	if hasGroup > 1:
 		g = 0
@@ -483,19 +483,19 @@ def identify():
 
 		for record in data:
 			cData = record['exif'][0]
-			print( record['groupid'], record['type'], f('ImageHeight'), record['duration'], record['grouptime'], movieDuration( t2d( record['grouptime'] ) ), record['time'] )
+			_.pr( record['groupid'], record['type'], f('ImageHeight'), record['duration'], record['grouptime'], movieDuration( t2d( record['grouptime'] ) ), record['time'] )
 
-		print()
-		print( 'Group Winners:' )
+		_.pr()
+		_.pr( 'Group Winners:' )
 		keepGID = []
 		keepID = []
 		for gp in theGroups.keys():
 			theGroupVote[record['groupcnt']] = vote(theGroups[gp])
 			keepGID.append( theGroupVote[record['groupcnt']]['groupid'] )
-			print( theGroupVote[record['groupcnt']]['groupid'] )
+			_.pr( theGroupVote[record['groupcnt']]['groupid'] )
 
-		print()
-		print( 'Non-Group Winner:' )
+		_.pr()
+		_.pr( 'Non-Group Winner:' )
 		cnt = 0
 		noGroup = {}
 		noGroupVote = {}
@@ -515,8 +515,8 @@ def identify():
 			for gp in noGroup.keys():
 				noGroupVote[gp] = vote(noGroup[gp])
 				cData = noGroupVote[gp]['exif'][0]
-				print( gp )
-				print( noGroupVote[gp]['type'], f('ImageHeight'), noGroupVote[gp]['duration'] )
+				_.pr( gp )
+				_.pr( noGroupVote[gp]['type'], f('ImageHeight'), noGroupVote[gp]['duration'] )
 				keepID.append( noGroupVote[gp]['id'] )
 			
 		for i,record in enumerate(data):
@@ -548,8 +548,8 @@ def identify():
 			for gp in noGroup.keys():
 				noGroupVote[gp] = vote(noGroup[gp])
 				cData = noGroupVote[gp]['exif'][0]
-				print( gp )
-				print( noGroupVote[gp]['type'], f('ImageHeight'), noGroupVote[gp]['duration'] )
+				_.pr( gp )
+				_.pr( noGroupVote[gp]['type'], f('ImageHeight'), noGroupVote[gp]['duration'] )
 				keepID.append( noGroupVote[gp]['id'] )
 			
 		for i,record in enumerate(data):
@@ -602,6 +602,7 @@ __.exif_Folder = 'c:\\exif'+_v.slash
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

@@ -212,7 +212,7 @@ def action():
 
 	for i,row in enumerate( _.isData(r=1)):
 		if _.showLine(row):
-			print(row)
+			_.pr(row)
 
 
 
@@ -226,6 +226,7 @@ def load():
 if __name__ == '__main__':
 	action()
 	_.tables.eof()
+
 
 
 

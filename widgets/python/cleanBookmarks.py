@@ -167,12 +167,12 @@ def action():
 					file0 = _.getText( path )
 					file = file0[0]
 					file = file.replace( '\n', '' )
-					# print( file )
+					# _.pr( file )
 					location = _v.resolveFolderIDs(file)
 
 
 					if not os.path.isdir( location ):
-						print( 'BAD:\t', location )
+						_.pr( 'BAD:\t', location )
 						shutil.move( path, bad )
 						# if _.switches.isActive( 'Delete' ):
 							# os.remove( path )
@@ -191,6 +191,7 @@ def action():
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

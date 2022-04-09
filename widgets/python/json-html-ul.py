@@ -210,8 +210,8 @@ def action():
 		if not xx == '?':
 			processFolderHTML(rec)
 	code += pre() + '</ul>\n'
-	# print()
-	print(clean(code))
+	# _.pr()
+	_.pr(clean(code))
 	# _.cp(folder +os.sep+ 'joplin-database.json','green')
 
 def clean(data):
@@ -331,6 +331,7 @@ def load():
 if __name__ == '__main__':
 	action()
 	__.isExit()
+
 
 
 

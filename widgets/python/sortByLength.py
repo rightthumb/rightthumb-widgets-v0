@@ -244,7 +244,7 @@ def action():
 
 		for i,row in enumerate(_.appData[__.appReg]['pipe']):
 			# test = _.fields.valuez( 'data', 'len', str(len(row)) )
-			# print( test )
+			# _.pr( test )
 			# sys.exit()
 			data.append({ 'len': len(row), 'len_text': _.fields.valuez( 'data', 'len', str(len(row)) ), 'data': row })
 		
@@ -253,7 +253,7 @@ def action():
 		records = _.tables.returnSorted( 'data', 'a.len_text', data )
 
 		for record in records:
-			print( record['data'] )
+			_.pr( record['data'] )
 
 # def load():
 # 	global data
@@ -264,6 +264,7 @@ data = []
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

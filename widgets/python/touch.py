@@ -183,11 +183,11 @@ def getFolder(folder):
 					pass
 
 
-		# print(psA)
-		# print(psB)
+		# _.pr(psA)
+		# _.pr(psB)
 
 def process( path ):
-	print()
+	_.pr()
 	if not os.path.isfile(path):
 		_v.popFileDir(path)
 		with open(path, 'w') as fp: 
@@ -245,13 +245,13 @@ def process( path ):
 				created_date = float(_.switches.value('Created'))
 			else:
 				created_date = _.autoDate(' '.join( _.switches.values('Created') ))
-			# print(created_date)
+			# _.pr(created_date)
 			_.changeC( path, created_date,   meta=_.switches.isActive('Meta')   ,p=1)
 			if not default:
-				# print(stamp)
+				# _.pr(stamp)
 				_.changeM( path, stampM, stampA,   meta=_.switches.isActive('Meta')   ,p=1)
 		else:
-			# print('here')
+			# _.pr('here')
 			_.changeM( path, stampM, stampA,   meta=_.switches.isActive('Meta')   ,p=1)
 	elif _.switches.isActive('Undo'):
 		if os.path.isfile(path):
@@ -311,7 +311,7 @@ def process( path ):
 
 		_.saveTable( _.nc.tables.meta, 'touch.meta', p=0 )
 
-	print( path )
+	_.pr( path )
 	
 
 
@@ -331,7 +331,7 @@ def action():
 		_.switches.fieldSet( 'Modified', 'values', ['now'] )
 
 
-	# print(x)
+	# _.pr(x)
 	# sys.exit()
 
 	_.nc.child( 'tables' )
@@ -369,6 +369,7 @@ import _rightThumb._dir as _dir
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

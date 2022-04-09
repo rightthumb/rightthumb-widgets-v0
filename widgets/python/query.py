@@ -169,9 +169,9 @@ def action():
 		sql = 'SELECT sql FROM sqlite_master WHERE name="files"'
 	else:
 		sql = ' '.join( _.switches.values('SQL') ).replace("'",'"').replace( ';p', '%' )
-	# print( sql )
-	# print()
-	# print()
+	# _.pr( sql )
+	# _.pr()
+	# _.pr()
 	cnt = 0
 	t = None
 	for db in _.switches.values('DB'):
@@ -186,7 +186,7 @@ def action():
 				data = data.replace( '(', '(\n\t ' )
 				data = data.replace( ')', '\n)' )
 				data = data.replace( ',', ',\n\t' )
-				print(data)
+				_.pr(data)
 
 			else:
 				if not _.switches.isActive('Plus') and not _.switches.isActive('Minus'):
@@ -199,7 +199,7 @@ def action():
 							rec[f] = record[ei]
 						table.append(rec)
 					else:
-						print( record )
+						_.pr( record )
 
 				elif _.switches.isActive('Subject'):
 					i = int( _.switches.value('Subject') )
@@ -212,7 +212,7 @@ def action():
 								rec[f] = record[ei]
 							table.append(rec)
 						else:
-							print( record )
+							_.pr( record )
 				else:
 					if _.showLine( str(record) ):
 						cnt+=1
@@ -223,17 +223,18 @@ def action():
 								rec[f] = record[ei]
 							table.append(rec)
 						else:
-							print( record )
+							_.pr( record )
 		if len(table):
 			_.tables.register( 'data', table )
 			_.tables.print( 'data', ','.join( _.switches.values('Fields') ) )
-	print()
+	_.pr()
 	_.colorThis( ['',cnt], 'yellow' )
 
 
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

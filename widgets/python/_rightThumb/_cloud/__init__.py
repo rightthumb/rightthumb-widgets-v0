@@ -303,7 +303,7 @@ class Cloud:
 		except Exception as e:
 			_.cp( '.', 'red' )
 			# _.colorThis( 'Error:', 'red' )
-			# print( '\t', e )
+			# _.pr( '\t', e )
 
 		_.colorThis( 'status: db connecting', 'yellow' )
 
@@ -316,15 +316,15 @@ class Cloud:
 
 
 		_.colorThis( 'status: db initialized', 'yellow' )
-		# print()
-		# print()
+		# _.pr()
+		# _.pr()
 		# test = __.cloud.db.search_table_version('files')
-		# print(test)
+		# _.pr(test)
 		# _.printVarSimple(__.cloud.db.table_fields)
 		# _.printVarSimple(test)
-		# # print(test)
-		# print()
-		# print()
+		# # _.pr(test)
+		# _.pr()
+		# _.pr()
 
 
 
@@ -341,17 +341,17 @@ class Cloud:
 			self.ftp()
 
 			if os.path.isfile( _v.stmp +_v.slash+ 'cloud.cache' ):
-				print( 'cleared cache' )
+				_.pr( 'cleared cache' )
 				os.unlink( _v.stmp +_v.slash+ 'cloud.cache' )
 
 			time.sleep(.5)
-			print(  )
-			print( '~/cloud/files/tech/programs/remote/files-last.json' )
-			print( _v.stmp +_v.slash+ 'cloud.cache' )
-			print(  )
+			_.pr(  )
+			_.pr( '~/cloud/files/tech/programs/remote/files-last.json' )
+			_.pr( _v.stmp +_v.slash+ 'cloud.cache' )
+			_.pr(  )
 			# result = self.sftp.get(   '~/cloud/files/tech/programs/remote/files-last.json'   ,   _v.stmp +_v.slash+ 'cloud.cache'   )
 			result = self.sftp.get(   '/home/ximlickficfp/cloud/files/tech/programs/remote/files-last.json'   ,   _v.stmp +_v.slash+ 'cloud.cache'   )
-			print(_v.stmp +_v.slash+ 'cloud.cache')
+			_.pr(_v.stmp +_v.slash+ 'cloud.cache')
 			try:
 				self.sftp.close()
 			except Exception as e:
@@ -376,17 +376,17 @@ class Cloud:
 		time.sleep(2)
 		buff = ''
 		while chan.recv_ready():
-			print('Reading buffer')
+			_.pr('Reading buffer')
 			resp = chan.recv(9999)
 			buff = resp.decode()
-			print(resp.decode())
+			_.pr(resp.decode())
 
 
 			time.sleep(2)
 
-		print('\nCommand was successful: \n  ' + cmd)
-		print()
-		# print('Command was successful: ' + cmd)
+		_.pr('\nCommand was successful: \n  ' + cmd)
+		_.pr()
+		# _.pr('Command was successful: ' + cmd)
 
 	def ssh_connection( self, ssh_password ):
 		# return None
@@ -429,11 +429,11 @@ class Cloud:
 
 			exists = False
 			while not exists:
-				print( 'indexing cloud' )
+				_.pr( 'indexing cloud' )
 				stdin, stdout, stderr = self.ssh.exec_command('sh ~/cloud/files/tech/programs/remote/bash/p.sh index')
 				time.sleep(.5)
 				try:
-					print(  self.sftp.stat( remote_table_remote )  )
+					_.pr(  self.sftp.stat( remote_table_remote )  )
 					exists = True
 				except Exception as e:
 					exists = False
@@ -441,7 +441,7 @@ class Cloud:
 			task_completed = False
 			while not task_completed:
 				try:
-					print(  self.sftp.get(   remote_table_remote   ,   remote_table_local   )  )
+					_.pr(  self.sftp.get(   remote_table_remote   ,   remote_table_local   )  )
 					time.sleep(.5)
 					if not os.path.isfile(remote_table_local):
 						raise TypeError("Download Error")
@@ -453,7 +453,7 @@ class Cloud:
 
 
 			time.sleep(.5)
-			print(  'file:',os.path.isfile(remote_table_local)  )
+			_.pr(  'file:',os.path.isfile(remote_table_local)  )
 			remote_table = _.getTable2( remote_table_local )
 			remote_index = {}
 			for i,record in enumerate(remote_table):
@@ -480,10 +480,10 @@ class Cloud:
 			getFolder( self.structure['local']['databank_db_vault'] )
 			getFolder( self.structure['local']['databank_db_indexes'] )
 			
-			print(__.v.secure.sync)
+			_.pr(__.v.secure.sync)
 
 			for sec_file in __.v.secure.sync:
-				print(sec_file)
+				_.pr(sec_file)
 				addThisFile( sec_file )
 
 
@@ -499,19 +499,19 @@ class Cloud:
 					# compare_date_local = _tz.convert( local['modified'], local['tz'], remote_index[paths['cloud']]['tz'] )
 					compare_date_remote = _tz.convert( remote_index[paths['cloud']]['tz'], remote_index[paths['cloud']]['tz'], local['tz'] )
 					if not local['modified'] == compare_date_remote:
-						print( local['modified'], compare_date_remote, paths['cloud'] )
+						_.pr( local['modified'], compare_date_remote, paths['cloud'] )
 						if 'FixDates' in __.specifications:
 							pass
 							# os.utime(local['path'],(compare_date_remote, compare_date_remote))
 						elif 'FixDates' in __.specifications:
 							if not local['modified'] > compare_date_remote:
-								print( 'upload', paths['cloud'] )
+								_.pr( 'upload', paths['cloud'] )
 								action_table['upload'][paths['cloud']] = {
 																			'local': local,
 																			'remote': remote_index[paths['cloud']],
 								}
 							else:
-								print( 'download', paths['cloud'] )
+								_.pr( 'download', paths['cloud'] )
 								action_table['download'][paths['cloud']] = {
 																			'local': local,
 																			'remote': remote_index[paths['cloud']],
@@ -537,16 +537,16 @@ class Cloud:
 			# _.printVarSimple( _dir.info(remote_table_local) )
 
 				
-			# print( 'DONE' )
+			# _.pr( 'DONE' )
 			# stdin, stdout, stderr = self.ssh.exec_command(  open("D:\\tech\\programs\\python.remote\\run.sh").read()  )
-			# print('__________________________________________')
-			# print(stdin)
-			# print('__________________________________________')
-			# print(stdout)
-			# print('__________________________________________')
-			# print(stderr)
-			# print('__________________________________________')
-			# print( result )
+			# _.pr('__________________________________________')
+			# _.pr(stdin)
+			# _.pr('__________________________________________')
+			# _.pr(stdout)
+			# _.pr('__________________________________________')
+			# _.pr(stderr)
+			# _.pr('__________________________________________')
+			# _.pr( result )
 			try:
 				self.sftp.close()
 			except Exception as e:
@@ -560,10 +560,10 @@ class Cloud:
 	def syncDates( self ):
 		_.colorThis( 'status: sftp indexing', 'yellow' )
 
-		print( 'SELECT * FROM '+__.cloud.db.table_prefix+'_files' )
+		_.pr( 'SELECT * FROM '+__.cloud.db.table_prefix+'_files' )
 
 		for record in __.cloud.db.query( 'SELECT * FROM '+__.cloud.db.table_prefix+'_files', 'files' ):
-			print(record)
+			_.pr(record)
 			paths = __.cloud.db.gen_paths( record['cloud_path'] )
 			record['local'] = paths['local']
 			record['remote'] = paths['remote']
@@ -571,11 +571,11 @@ class Cloud:
 
 
 		_.colorThis( 'status: synchronizing dates', 'yellow' )
-		print(self.index['remote'])
+		_.pr(self.index['remote'])
 		for rp in self.index['remote']:
 			rec = self.index['remote'][rp]
 			paths = __.cloud.db.gen_paths( rp )
-			print(paths['local'])
+			_.pr(paths['local'])
 			_.changeM( paths['local'], rec['modified'] )
 			_.changeC( paths['local'], rec['created'] )
 			# changeM( paths['local'], rec['modified'] )
@@ -610,7 +610,7 @@ class Cloud:
 		_.colorThis( 'status: sftp indexing', 'yellow' )
 		self.build_indices()
 		_.colorThis( 'status: sftp update deleted', 'yellow' )
-		print('skipped')
+		_.pr('skipped')
 		# self.updateDeleted()
 
 		if upload:
@@ -659,7 +659,7 @@ class Cloud:
 		if __.setting( 'print-errors' ):
 			if not __.setting('printed-epoch'):
 				__.setting('printed-epoch',val=1)
-				print( 'epoch:', epoch )
+				_.pr( 'epoch:', epoch )
 		isNew = True
 		if os.path.isfile(l):
 			if paths['cloud'] in self.index['remote']:
@@ -680,13 +680,13 @@ class Cloud:
 		if isNew:
 			newer = 'n'
 		return newer
-			# print( diff, _.friendlyDate(info['me']), _.friendlyDate(rd) )
+			# _.pr( diff, _.friendlyDate(info['me']), _.friendlyDate(rd) )
 
 
 	def recursiveRemoteIndex( self, epoch=None ):
 
 
-		# print( self.folderGroup )
+		# _.pr( self.folderGroup )
 		folderGroups = groupFoldersList( self.folderGroup )
 		for x in self.program_folders_active:
 			if not x in folderGroups:
@@ -697,7 +697,7 @@ class Cloud:
 
 
 		sql = 'SELECT * FROM '+__.cloud.db.table_prefix+'_files WHERE eol=0 AND ' + ' OR '.join( xx )
-		# print(sql)
+		# _.pr(sql)
 		isFirst = True
 
 		if False:
@@ -716,15 +716,15 @@ class Cloud:
 				record['remote'] = paths['remote']
 
 				# if not os.path.isfile( record['local'] ):
-				# 	print( record['local'] )
+				# 	_.pr( record['local'] )
 				if os.path.isfile( record['local'] ):
-					print( 'del', record['local'] )
+					_.pr( 'del', record['local'] )
 					# fileBackup.switch( 'Input', record['local'] )
 					# backup_file = fileBackup.do( 'action' )
 					# if os.path.isfile(backup_file):
 					# 	os.unlink(backup_file)
 					# os.link( record['local'], backup_file )
-					# print( 'backup:', backup_file )
+					# _.pr( 'backup:', backup_file )
 					# os.unlink( record['local'] )
 
 
@@ -786,11 +786,11 @@ class Cloud:
 
 
 	def fileLocalIndex( self, path, base=None, plus=None, minus=None, plusOr=None, first=True, epoch=None ):
-		# print(path)
+		# _.pr(path)
 		__.v.fileLocalIndex = {}
 		__.v.fileLocalIndex['base'] = base
 		__.v.fileLocalIndex['epoch'] = epoch
-		# print( 'isfile:', epoch, _.friendlyDate(epoch), path )
+		# _.pr( 'isfile:', epoch, _.friendlyDate(epoch), path )
 		includeThis = False
 		if plus is None and minus is None:
 			includeThis = True
@@ -801,15 +801,15 @@ class Cloud:
 
 			try:
 
-				# print( '000' )
+				# _.pr( '000' )
 				info = _dir.info( path )
-				# print(path)
+				# _.pr(path)
 				self.counter['files']+=1
 				# self.index['local'].append( path ) #########################################################################
-				# print( 'PRE' )
+				# _.pr( 'PRE' )
 				paths = __.cloud.db.gen_paths( path )
-				# print( 'POST' )
-				# print( paths, path )
+				# _.pr( 'POST' )
+				# _.pr( paths, path )
 				cloud_path = paths['cloud']
 				for testX in self.program_folders:
 					if testX in cloud_path:
@@ -828,10 +828,10 @@ class Cloud:
 
 
 			except Exception as e:
-				print()
-				print(path)
-				print(e)
-				print()
+				_.pr()
+				_.pr(path)
+				_.pr(e)
+				_.pr()
 
 	def recursiveLocalIndex( self, folder, base=None, plus=None, minus=None, plusOr=None, first=True, epoch=None ):
 		_v.dir_check_create(folder)
@@ -878,15 +878,15 @@ class Cloud:
 		if len( self.index['local'].keys() )  == 0:
 			# self.recursiveLocalIndex( self.structure['local']['shell'],self.structure['local']['tech']  )
 			self.find_program_folders()
-			# print( 'batch, pre', len(self.index['local'].keys()) )
+			# _.pr( 'batch, pre', len(self.index['local'].keys()) )
 			self.recursiveLocalIndex( self.structure['local']['batch'],self.structure['local']['tech']  )
-			# print( 'batch, post', len(self.index['local'].keys()) )
-			# print(len(self.index['local'].keys())  )
+			# _.pr( 'batch, post', len(self.index['local'].keys()) )
+			# _.pr(len(self.index['local'].keys())  )
 			self.recursiveLocalIndex( self.structure['local']['python'],self.structure['local']['tech'] , plus=['*.py','*.htm'], plusOr=True )
-			# print(len(self.index['local'].keys())  )
+			# _.pr(len(self.index['local'].keys())  )
 			self.recursiveLocalIndex( self.structure['local']['bash'],self.structure['local']['tech']  )
 			self.recursiveLocalIndex( self.structure['local']['library'],self.structure['local']['tech']  )
-			# print(len(self.index['local'].keys())  )
+			# _.pr(len(self.index['local'].keys())  )
 			self.recursiveLocalIndex( self.structure['local']['remote.app'],self.structure['local']['tech']  )
 			self.recursiveLocalIndex( self.structure['local']['powershell'],self.structure['local']['tech'] )
 			self.recursiveLocalIndex( self.structure['local']['javascript'],self.structure['local']['tech']  )
@@ -896,13 +896,13 @@ class Cloud:
 			self.recursiveLocalIndex( self.structure['local']['databank_db_vault'],self.structure['local']['tech']  )
 			self.recursiveLocalIndex( self.structure['local']['databank_db_indexes'],self.structure['local']['tech']  )
 
-			# print(__.v.secure.sync)
+			# _.pr(__.v.secure.sync)
 			for sec_file in __.v.secure.sync:
-				# print(sec_file)
+				# _.pr(sec_file)
 				self.fileLocalIndex( sec_file, base=__.v.fileLocalIndex['base'], epoch=__.v.fileLocalIndex['epoch'] )
 				# addThisFile( sec_file )
 
-			print(len(self.index['local'].keys())  )
+			_.pr(len(self.index['local'].keys())  )
 			# _.printVarSimple(self.index)
 		if len( self.index['remote'].keys() )  == 0:
 			self.recursiveRemoteIndex()
@@ -1014,12 +1014,12 @@ class Cloud:
 				task_completed = actionRequest( 'Cloud', 'upload', action=paths['cloud'], error=e )
 
 				if not ranFix:
-					print('ranFix')
+					_.pr('ranFix')
 					mkdir_script = 'sh ~/cloud/files/tech/programs/remote/bash/p.sh mkdirs -file '+ paths['remote']
 					# mkdir_script = 'sh ~/cloud/files/tech/programs/bash/p.sh mkdir -file '+ paths['remote']
 					# mkdir_script = 'sh /home/ximlickficfp/cloud/files/tech/programs/remote/bash/p.sh mkdir -file "'+ paths['remote']+'"'
 					ranFix = True
-					# print( mkdir_script )
+					# _.pr( mkdir_script )
 					task_completed_fx = False
 					while not task_completed_fx:
 						try:
@@ -1028,14 +1028,14 @@ class Cloud:
 							# i, o, e = self.ssh.exec_command( _v.mkdir( paths['remote'], isFile=True, p=True ) )
 
 							for line_res in o.readlines():
-								print( line_res )
+								_.pr( line_res )
 							for line_res in e.readlines():
-								print( line_res )
+								_.pr( line_res )
 
 
-							# print(stdin, stdout, stderr)
+							# _.pr(stdin, stdout, stderr)
 						except Exception as e:
-							print(e)
+							_.pr(e)
 							task_completed_fx = actionRequest( 'Cloud', 'pre upload backup', action=paths['cloud'], error=e )
 						else:
 							actionRequest( 'Cloud', 'upload', action=paths['cloud'], success=True)
@@ -1103,7 +1103,7 @@ class Cloud:
 			self.sftp.stat( r )
 		except Exception as e:
 			pass
-			# print( 'eol:', paths['cloud'] )
+			# _.pr( 'eol:', paths['cloud'] )
 			return 
 
 		self.build_local(l)
@@ -1138,7 +1138,7 @@ class Cloud:
 		if stat is None:
 			return False
 		else:
-			# print( 'get_remote_file stat:', stat )
+			# _.pr( 'get_remote_file stat:', stat )
 			# sys.exit()
 			self.build_local( local )
 			try:
@@ -1225,10 +1225,10 @@ class Cloud:
 				# if not techDrive in f:
 				# 	f = techDrive+dDim+slash+f
 				f = f.replace( _v.slashes['u']+_v.slashes['u'], _v.slashes['u'] )
-				# print(f)
+				# _.pr(f)
 
 				# exist = self.remote_isdir( f )
-				# print( 'exist:', exist, f, '\r\n' )
+				# _.pr( 'exist:', exist, f, '\r\n' )
 				# if not exist:
 				if True:
 
@@ -1251,14 +1251,14 @@ class Cloud:
 
 
 
-					# print( 'Error:', f )
+					# _.pr( 'Error:', f )
 		return True
 
 	def dir_check_create( self, folder ):
 		#################################################################################################################
 		return False
 		if self.remote_isdir( folder ):
-			# print( folder )
+			# _.pr( folder )
 			return False
 
 
@@ -1277,10 +1277,10 @@ class Cloud:
 				# if not techDrive in f:
 				# 	f = techDrive+dDim+slash+f
 				f = f.replace( _v.slashes['u']+_v.slashes['u'], _v.slashes['u'] )
-				# print(f)
+				# _.pr(f)
 
 				# exist = self.remote_isdir( f )
-				# print( 'exist:', exist, f, '\r\n' )
+				# _.pr( 'exist:', exist, f, '\r\n' )
 				# if not exist:
 				if True:
 
@@ -1303,11 +1303,11 @@ class Cloud:
 
 
 
-					# print( 'Error:', f )
+					# _.pr( 'Error:', f )
 		return True
 
 	def db( self, ssh_server, ssh_port, ssh_user, ssh_password, db_server, db_port, db_user, db_password, db_name, db_prefix ):
-		# print( 'HERE A' )
+		# _.pr( 'HERE A' )
 		__.cloud.waiting = True
 		_.colorThis( 'status: db creating thread', 'yellow' )
 		_threads.manager.register(
@@ -1332,7 +1332,7 @@ class Cloud:
 		while __.cloud.waiting:
 			time.sleep(.5)
 		return None
-		# print( 'HERE B' )
+		# _.pr( 'HERE B' )
 		# DB( ssh_server, ssh_port, ssh_user, ssh_password, db_server, db_port, db_user, db_password, db_name )
 
 
@@ -1373,7 +1373,7 @@ class DB:
 
 		self.table_fields = {}
 
-		# print( 'HERE C' )
+		# _.pr( 'HERE C' )
 		time.sleep(.5)
 		_.colorThis( 'status: db ssh connecting', 'yellow' )
 		task_completed = False
@@ -1404,7 +1404,7 @@ class DB:
 		
 		_.colorThis( 'status: db ssh connected', 'yellow' )
 		# for x in dir(self.ssh):
-		# 	print(x)
+		# 	_.pr(x)
 		_.colorThis( 'status: db pymysql connecting', 'yellow' )
 
 		task_completed = False
@@ -1441,7 +1441,7 @@ class DB:
 	def db_test( self ):
 		query = '''SELECT VERSION();'''
 		data = pd.read_sql_query(query, self.db)
-		print(data)
+		_.pr(data)
 
 	def close( self ):
 
@@ -1529,21 +1529,21 @@ class DB:
 			if table_label.startswith(self.table_prefix):
 				table_label = table_label[len(self.table_prefix+'_'):]
 			records = []
-			# print( '\t\t', table_label )
+			# _.pr( '\t\t', table_label )
 			for rec in table:
 				record = {}
 				for i,field in enumerate(rec):
 					record[  self.table_fields[table_label][i]  ] = field
 					if type(field) == datetime.datetime:
 						record[  self.table_fields[table_label][i]  ] = str(field)
-					# print( '\t\t\t', self.table_fields[table_label][i], type(field), field )
+					# _.pr( '\t\t\t', self.table_fields[table_label][i], type(field), field )
 				records.append(record)
 			return records
 		return table
 
 	def check_structure( self ):
 		self.tables_app_live = []
-		# print('A')
+		# _.pr('A')
 		for tbl in self.tables_app_list:
 			self.tables_app_live.append( self.table_prefix+'_'+tbl )
 
@@ -1551,23 +1551,23 @@ class DB:
 		for table in self.query('show tables'):
 			self.live_tables.append(table[0])
 
-		# print('B')
+		# _.pr('B')
 		for table in self.tables_app_live:
 			if not table in self.live_tables:
 				self.table_setup(table)
 			# else:
-				# print(table)
+				# _.pr(table)
 
-		# print('C')
+		# _.pr('C')
 		for table in self.query('show tables'):
 			if table[0] in self.tables_app_live:
 				this_label = table[0][len(self.table_prefix+'_'):]
 				self.table_fields[ this_label ] = []
-				# print( this_label )
+				# _.pr( this_label )
 				for field in self.query('SHOW COLUMNS FROM ' + table[0]):
-					# print( '\t', field[0] )
+					# _.pr( '\t', field[0] )
 					self.table_fields[ this_label ].append( field[0] )
-		# print('D')
+		# _.pr('D')
 
 
 	def table_setup( self, label ):
@@ -1743,7 +1743,7 @@ CREATE TABLE '''+self.table_prefix+'_'+item+''' (
 		return self.query(sql,self.tables_app_list[0] )
 
 	def insert_file( self, direction, local, cloud_path ):
-		# print( 'cloud_path:', cloud_path )
+		# _.pr( 'cloud_path:', cloud_path )
 		shouldAdd = True
 		cp = cloud_path
 		if direction == 'upload':
@@ -1797,7 +1797,7 @@ CREATE TABLE '''+self.table_prefix+'_'+item+''' (
 
 
 		if not shouldAdd:
-			# print( 'updating...' )
+			# _.pr( 'updating...' )
 			sql = 'UPDATE '+table+' SET NEW_VALUES WHERE '+key+' = '+value
 			build_set = []
 			for field in dic.keys():
@@ -1809,7 +1809,7 @@ CREATE TABLE '''+self.table_prefix+'_'+item+''' (
 				build_set.append( '`'+field+'` = '+ v )
 			sql = sql.replace( 'NEW_VALUES', ','.join(build_set) )
 		elif shouldAdd:
-			# print( 'inserting...' )
+			# _.pr( 'inserting...' )
 			sql = "INSERT INTO `"+table+"` ( FIELD_NAMES ) VALUES ( FIELD_VALUES )"
 			build_names = []
 			build_values = []
@@ -1822,8 +1822,8 @@ CREATE TABLE '''+self.table_prefix+'_'+item+''' (
 			sql = sql.replace( 'FIELD_NAMES',','.join(build_names) )
 			sql = sql.replace( 'FIELD_VALUES',','.join(build_values) )
 
-		# print(sql)
-		# print(sql)
+		# _.pr(sql)
+		# _.pr(sql)
 
 		task_completed = False
 		while not task_completed:
@@ -1858,16 +1858,16 @@ CREATE TABLE '''+self.table_prefix+'_'+item+''' (
 		else:
 			v = str(dic[key])
 		sql = 'SELECT * FROM '+table+' WHERE '+key+' = '+v
-		# print(sql)
+		# _.pr(sql)
 		records =  self.query(sql,table)
-		# print( records )
+		# _.pr( records )
 		if single is None:
 			return records
 		else:
 			if not len(records):
 				return None
 			else:
-				# print(records[0][single])
+				# _.pr(records[0][single])
 				return records[0][single]
 
 
@@ -1890,7 +1890,7 @@ CREATE TABLE '''+self.table_prefix+'_'+item+''' (
 			if not 'gen_paths' in __.LOOP:
 				__.LOOP['gen_paths'] = 0
 			__.LOOP['gen_paths']+=1
-			print( 'Error: gen_paths - ', __.LOOP['gen_paths'], path )
+			_.pr( 'Error: gen_paths - ', __.LOOP['gen_paths'], path )
 			if __.LOOP['gen_paths'] < 10:
 				cloud_path = self.gen_paths(path)['cloud']
 			else:
@@ -1933,7 +1933,7 @@ def gen_paths( path ):
 			__.LOOP['gen_paths'] = 0
 		__.LOOP['gen_paths']+=1
 		if 'show_path_errors' in __.specifications and __.specifications['show_path_errors']:
-			print( 'Error: gen_paths - ', __.LOOP['gen_paths'], path )
+			_.pr( 'Error: gen_paths - ', __.LOOP['gen_paths'], path )
 		if __.LOOP['gen_paths'] < 10:
 			cloud_path = gen_paths(path)['cloud']
 		else:
@@ -1993,10 +1993,10 @@ def actionRequest( classy, label, action=None, error=None, success=None, attempt
 		
 
 		if __.cloud.attempt[classy][label][attempt] < attempts:
-			# print( 'return False' )
+			# _.pr( 'return False' )
 			return False
 		else:
-			print( 'err' )
+			_.pr( 'err' )
 			return True
 
 	elif not action is None:
@@ -2011,11 +2011,11 @@ def actionRequest( classy, label, action=None, error=None, success=None, attempt
 
 		error_rest( rest_for, __.cloud.attempt[classy][label][  file_action  ][attempt])
 		if __.cloud.attempt[classy][label][  file_action  ][attempt] < attempts:
-			# print( 'return False' )
+			# _.pr( 'return False' )
 			return False
 		else:
-			print( 'err' )
-			# print( 'return gave up' )
+			_.pr( 'err' )
+			# _.pr( 'return gave up' )
 			return True
 			
 # def result( classy, label, record=None ):
@@ -2070,7 +2070,7 @@ class CLOUD_VAR:
 
 def finagleFile( path ):
 	if path.lower().endswith('.sh'):
-		# print('.sh', os.path.isfile(path))
+		# _.pr('.sh', os.path.isfile(path))
 		if os.path.isfile(path):
 			file = _.getText( path, raw=True )
 			file = file.replace( chr(10), '\n' )
@@ -2145,12 +2145,12 @@ import _rightThumb._md5 as _md5
 import _rightThumb._simpleThreads as _threads
 
 import _rightThumb._tz as _tz
-# print( '__.cloud' )
+# _.pr( '__.cloud' )
 
 
 # import inspect
 # x = inspect.getargspec(SSHTunnelForwarder)
-# print(x)
+# _.pr(x)
 
 import _rightThumb._md5 as _md5
 import _rightThumb._dir as _dir
@@ -2219,13 +2219,13 @@ def shCleanFile(path):
 	if _tool.cloud_loaded:
 		if not shCleanFile_announce:
 			shCleanFile_announce=True
-			print( 'cleaner = tool' )
+			_.pr( 'cleaner = tool' )
 		_tool.vc.HEAD.bashFileHeader(path)
 		_tool.vc.SH.processSHfile(path)
 	else:
 		if not shCleanFile_announce:
 			shCleanFile_announce=True
-			print( 'cleaner = cloud' )
+			_.pr( 'cleaner = cloud' )
 		if not _.isWin:
 			os.chmod( path, 0o777 )
 		shouldRun = False
@@ -2254,7 +2254,7 @@ except Exception as e:
 def do_nothing(var1=None,var2=None,var3=None,var4=None,p=1):
 	return None
 
-# print( tool_path )
+# _.pr( tool_path )
 rt = _v.home +os.sep+ '.rt'
 t = _v.home +os.sep+ '.rt' +os.sep+ 'tool'
 if not os.path.isdir(rt):
@@ -2267,9 +2267,9 @@ if not os.path.isfile( t ):
 	page_code = page_code.replace( chr(27), '' )
 	page_code = page_code.replace( '\r', '' )
 	# for x in dir(page):
-	# 	print(x)
-	# print(page_code)
-	# print(type(page_code))
+	# 	_.pr(x)
+	# _.pr(page_code)
+	# _.pr(type(page_code))
 	_.saveText( page_code, t )
 time.sleep(.05)
 
@@ -2282,7 +2282,7 @@ if os.path.isfile( t ):
 		_tool.cloud_loaded = False
 
 else:
-	# print('no tool')
+	# _.pr('no tool')
 
 	_tool = _.dot()
 	_tool.v = _.dot()
@@ -2301,7 +2301,7 @@ if _tool.cloud_loaded:
 # try:
 # except Exception as e:
 # 	pass
-# print( _tool.v.bash )
+# _.pr( _tool.v.bash )
 # sys.exit()
 # https://www.reddit.com/r/learnpython/comments/53wph1/connecting_to_a_mysql_database_in_a_python_script/
 
@@ -2317,6 +2317,7 @@ __.local_table = []
 # batch, post
 
 # __.specifications['testing'] = True
+
 
 
 

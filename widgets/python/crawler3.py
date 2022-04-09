@@ -219,7 +219,7 @@ def process(url):
 			if link.startswith('/'):
 				path = dicURL(url,link)
 				process(path)
-				# print(path)
+				# _.pr(path)
 
 		except Exception as e:
 			pass
@@ -237,6 +237,7 @@ from urllib.parse import urlparse
 if __name__ == '__main__':
 	action()
 	__.isExit()
+
 
 
 

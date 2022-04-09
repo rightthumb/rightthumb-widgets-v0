@@ -153,16 +153,16 @@ def action():
 					file0 = _.getText( path )
 					file = file0[0]
 					file = file.replace( '\n', '' )
-					# print( file )
+					# _.pr( file )
 					if _.switches.isActive( 'Recursive' ):
 						if find + _v.slash == file or find == file or find + _v.slash in file:
 							data.append({ 'alias': alias, 'folder': _v.resolveFolderIDs(file) })
 					else:
 						if find + _v.slash == file or find == file:
-							print( alias )
+							_.pr( alias )
 				except Exception as e:
 					pass
-					# print( alias, file0 )
+					# _.pr( alias, file0 )
 	if _.switches.isActive( 'Recursive' ):
 		if not _.switches.isActive( 'JustName' ):
 			_.switches.fieldSet( 'Long', 'active', True )
@@ -170,17 +170,18 @@ def action():
 			_.switches.fieldSet( 'GroupBy', 'value', 'folder' )
 			_.tables.register( 'data', data )
 			_.tables.print( 'data', 'folder,alias' )
-			print()
-			print( len(data) )
+			_.pr()
+			_.pr( len(data) )
 		else:
 			for x in data:
-				print( x['alias'] )
+				_.pr( x['alias'] )
 
 
 
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

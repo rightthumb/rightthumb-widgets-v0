@@ -212,7 +212,7 @@ def build( path, typ=None, ask=False ):
 				y.append(x)
 				v = _.dicString( 'subjectConfiguration', '.'.join(y) )
 				v += ' = {}'
-				# print(v)
+				# _.pr(v)
 				exec(v)
 
 
@@ -234,15 +234,15 @@ def build( path, typ=None, ask=False ):
 				done = False
 				new = []
 				while not done:
-					print()
-					print('List Manager')
-					print('___________________________________________')
-					print(path)
-					print()
+					_.pr()
+					_.pr('List Manager')
+					_.pr('___________________________________________')
+					_.pr(path)
+					_.pr()
 					for i,x in enumerate( eval(v) ):
-						print( i, x )
-					print()
-					print( 'Example: del:0,3  OR  edit:0,6  OR  add:item  OR  x' )
+						_.pr( i, x )
+					_.pr()
+					_.pr( 'Example: del:0,3  OR  edit:0,6  OR  add:item  OR  x' )
 					command=''
 					command = input( ' ? : ' )
 					if 'del:' in command:
@@ -265,23 +265,23 @@ def build( path, typ=None, ask=False ):
 							newX = []
 							for ii,xyz in enumerate(eval(v)):
 								if do == 'del' and ii in aL:
-									print( 'deleted: ', xyz)
+									_.pr( 'deleted: ', xyz)
 								else:
 									if do == 'edit' and ii in aL:
-										print(xyz)
+										_.pr(xyz)
 										xyz=input( ' edit: ' )
 									newX.append( xyz )
-								# print('eor')
+								# _.pr('eor')
 							new = newX
-							# print('eol')
-						# print('eoDO')
-					# print('eoWHILE')
+							# _.pr('eol')
+						# _.pr('eoDO')
+					# _.pr('eoWHILE')
 				
 					exec( v +' = new' )
-				# print('eoALL')
-				print(  )
-				print( 'done' )
-				print('___________________________________________')
+				# _.pr('eoALL')
+				_.pr(  )
+				_.pr( 'done' )
+				_.pr('___________________________________________')
 
 
 		elif not typ == 'list':
@@ -303,7 +303,7 @@ def build( path, typ=None, ask=False ):
 				field = '"""'+field+'"""'
 			v += ' = ' + field
 			exec( v )
-	# print( v )
+	# _.pr( v )
 
 
 def build_labels( path ):
@@ -316,7 +316,7 @@ def build_labels( path ):
 			if test in THE_LABELS:
 				path = path.replace('LABEL', THE_LABELS[test], 1)
 			elif not test in THE_LABELS:
-				# print( test )
+				# _.pr( test )
 				THE_LABELS[test] = input( ' Label: ' )
 			
 
@@ -325,7 +325,7 @@ def build_labels( path ):
 	return path
 
 def index_dic(metaData, pFix=''):
-	# print(metaData,pFix)
+	# _.pr(metaData,pFix)
 	# sys.exit()
 	if len(pFix):
 		pFix = pFix+'.'
@@ -348,7 +348,7 @@ def index_dic(metaData, pFix=''):
 				fields.append({ 'type': t, 'path': ff })
 	dics.sort()
 	# fields.sort()
-	print(  )
+	_.pr(  )
 	for field in dics:
 		# yy = field.replace('LABEL', label, 1)
 		while True:
@@ -356,7 +356,7 @@ def index_dic(metaData, pFix=''):
 				yy = build_labels( pFix+field )
 				break
 			except Exception as e:
-				print(e)
+				_.pr(e)
 
 		# _.colorThis( ['\t',yy], 'yellow' )
 		while True:
@@ -364,10 +364,10 @@ def index_dic(metaData, pFix=''):
 				build( yy )
 				break
 			except Exception as e:
-				print(e)
+				_.pr(e)
 
-	print(  )
-	print(  )
+	_.pr(  )
+	_.pr(  )
 	for field in fields:
 		# field['path'] = field['path'].replace('LABEL', label, 1)
 		while True:
@@ -375,13 +375,13 @@ def index_dic(metaData, pFix=''):
 				field['path'] = build_labels( pFix+field['path'] )
 				break
 			except Exception as e:
-				print(e)
+				_.pr(e)
 		while True:
 			try:
 				build( field['path'], field['type'], True )
 				break
 			except Exception as e:
-				print(e)
+				_.pr(e)
 		# _.colorThis( ['\t',field], 'cyan' )
 
 	return subjectConfiguration
@@ -495,8 +495,8 @@ def proces_drive( drive ):
 	_.saveTableProject( 'drive.volume-update.'+driveID,    driveMetaUpdate,    str(time.time())+'.hash' )
 	_.saveTableProject( 'drive.last.'+driveID,    driveMetaUpdate,    'volume.hash' )
 
-	# print( driveID )
-	# print( driveMeta.__dict__ )
+	# _.pr( driveID )
+	# _.pr( driveMeta.__dict__ )
 	_.printVarSimple( driveMeta )
 
 
@@ -624,7 +624,7 @@ def action():
 				i=0
 				while i < 100:
 					k = genKey(cp)
-					print( k, len(k) )
+					_.pr( k, len(k) )
 
 
 
@@ -794,6 +794,7 @@ __.print_path = True
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

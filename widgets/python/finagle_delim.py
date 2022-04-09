@@ -209,7 +209,7 @@ def action():
 			else:
 				newRow += delim
 		newRow += delim
-		print( newRow )
+		_.pr( newRow )
 
 
 
@@ -218,6 +218,7 @@ def action():
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

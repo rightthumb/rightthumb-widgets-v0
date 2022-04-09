@@ -212,11 +212,11 @@ class Sessions:
 		self.activate()
 		while self.active is None:
 			self.active = _.getTable2( self.broadcast )
-			# print('self.active',self.active)
+			# _.pr('self.active',self.active)
 			if self.active['request'] is None:
 				self.active = None
 			time.sleep(1)
-		# print( 'HERE' )
+		# _.pr( 'HERE' )
 		for do in self.active['request']:
 			try:
 				os.system(do)
@@ -251,7 +251,7 @@ class Sessions:
 			self.openTerminal()
 		i=0
 		while self.active is None and i < l:
-			# print( 'requestLoop', i )
+			# _.pr( 'requestLoop', i )
 			self.scan(request)
 			time.sleep(s)
 			i+=1
@@ -272,9 +272,9 @@ class Sessions:
 						if not x in item:
 							valid = False
 					# if not valid:
-					# 	print( 'invalid' )
+					# 	_.pr( 'invalid' )
 					if valid:
-						# print( 'valid' )
+						# _.pr( 'valid' )
 						status = _.getTable2( path )
 						if not status['busy']:
 							_.saveTable2( {'busy': True, 'request': request}, path )
@@ -282,7 +282,7 @@ class Sessions:
 							return self.active
 					
 
-		# print('End Scan')
+		# _.pr('End Scan')
 		return self.active
 
 
@@ -313,6 +313,7 @@ def action():
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

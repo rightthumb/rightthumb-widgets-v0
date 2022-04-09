@@ -199,7 +199,7 @@ def action():
 	load()
 
 	for i,row in enumerate(_.isData(r=1)):
-		print(row)
+		_.pr(row)
 
 
 
@@ -207,6 +207,7 @@ def action():
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

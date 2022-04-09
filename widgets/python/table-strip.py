@@ -215,7 +215,7 @@ def action():
 		return None
 
 	file = '\n'.join( _.isData(r=1) )
-	print( text(file) )
+	_.pr( text(file) )
 
 
 	
@@ -228,6 +228,7 @@ def action():
 if __name__ == '__main__':
 	action()
 	__.isExit()
+
 
 
 

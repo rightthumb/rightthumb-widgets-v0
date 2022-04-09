@@ -205,7 +205,7 @@ def action():
 			float(row)
 			if '.' in row:
 				part = row.split('.')
-				print( len(part[0]), len(part[1]) )
+				_.pr( len(part[0]), len(part[1]) )
 		except Exception as e:
 			pass
 
@@ -216,6 +216,7 @@ def action():
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

@@ -194,7 +194,7 @@ def process(path):
 		url = file.replace( __.path(folder), meta['url'] ).replace('\\','/')
 		if os.path.isdir(path):
 			url += '/'
-		print(url)
+		_.pr(url)
 		if _.switches.isActive('Test'):
 			try:
 				import webbrowser
@@ -240,7 +240,7 @@ def process(path):
 			fi += '/'
 			path+=os.sep
 		mkdir=f'ssh -f {u}@{s} "/bin/python3 /opt/rightthumb-widgets-v0/widgets/python/mkdir.py -folder {rfo}"'
-		print(mkdir)
+		_.pr(mkdir)
 		if not _.switches.isActive('Print'):
 			try:
 				_.cp('creating folder structure','yellow')
@@ -261,7 +261,7 @@ def process(path):
 			do=f'{scp}  {u}@{s}:{fi} {path}'
 	
 	if _.switches.isActive('Upload-Scp') or _.switches.isActive('Download-Scp'):
-		print(do)
+		_.pr(do)
 		if not _.switches.isActive('Print'):
 			try:
 				os.system( do )
@@ -285,6 +285,7 @@ def action():
 if __name__ == '__main__':
 	action()
 	__.isExit()
+
 
 
 

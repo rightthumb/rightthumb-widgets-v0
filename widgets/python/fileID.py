@@ -210,7 +210,7 @@ def action():
 	global data
 
 	if  _.switches.isActive('Probability_of_false_positive'):
-		print()
+		_.pr()
 		_.colorThis( ' Probability of false positive ', 'green' )
 
 		permutations = {
@@ -226,12 +226,12 @@ def action():
 
 		# https://stattrek.com/online-calculator/combinations-permutations.aspx
 
-		print()
+		_.pr()
 
 		for key in permutations.keys():
-			print( '\t', _.colorThis( key, 'yellow', p=0 ), '\t', _.colorThis( permutations[key], 'red', p=0 ) )
+			_.pr( '\t', _.colorThis( key, 'yellow', p=0 ), '\t', _.colorThis( permutations[key], 'red', p=0 ) )
 
-		print()
+		_.pr()
 		sys.exit()
 
 	settings = '16'
@@ -253,16 +253,16 @@ def action():
 		_.pipeCleaner(0)
 		# _.printVar( _.appData )
 		for i,path in enumerate( _.appData[__.appReg]['pipe'] ):
-			# print()
+			# _.pr()
 			record = _dir.fileInfo( path )
 			start = time.time()
-			# print( data )
+			# _.pr( data )
 			# sys.exit()
 			# checksum = _fileID.run( path )
-			# print(path)
+			# _.pr(path)
 			checksum = _fileID.file( path )
 			resolved = _nID.mini.resolve(checksum)
-			print(checksum)
+			_.pr(checksum)
 			log[settings].append({ 
 										'epoch': time.time(),
 										'checksum': checksum,
@@ -274,13 +274,13 @@ def action():
 			})
 
 			if _.switches.isActive('Time'):
-				print(time.time()-start)
-				print()
+				_.pr(time.time()-start)
+				_.pr()
 			_.saveTableDB( log, 'fileID_efficiency.index' )
 
 
-		# print()
-		# print( len(checksum) )
+		# _.pr()
+		# _.pr( len(checksum) )
 
 
 
@@ -294,6 +294,7 @@ data = ''
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

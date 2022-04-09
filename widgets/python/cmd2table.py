@@ -224,11 +224,11 @@ def colSearch( row ):
 		indexB =  []
 
 		for i,x in enumerate(data[spacing-1]):
-			# print(x)
+			# _.pr(x)
 			if not x == ' ' or started:
 				started = True
 				indexB.append( x )
-				# print( indexB )
+				# _.pr( indexB )
 			if i in indexBreaks:
 				started = False
 				cleaned = _str.cleanBE(''.join(indexB),' ')
@@ -260,11 +260,11 @@ def colSearch( row ):
 			indexB = []
 			if iD >= startOnLine:
 				for i,x in enumerate( row ):
-					# print(x)
+					# _.pr(x)
 					if not x == ' ' or started:
 						started = True
 						indexB.append( x )
-						# print( indexB )
+						# _.pr( indexB )
 					if i in indexBreaks:
 						started = False
 						cleaned = _str.cleanBE(''.join(indexB),' ')
@@ -278,11 +278,11 @@ def colSearch( row ):
 
 
 
-		# print(preFields)
+		# _.pr(preFields)
 		# sys.exit()
 
 
-		# print( 'found column spacing' )
+		# _.pr( 'found column spacing' )
 		# sys.exit()
 
 
@@ -313,13 +313,13 @@ def preProcess( row ):
 			for i,column in enumerate(columns):
 				column = _str.cleanBE(column,' ')
 				columns[i] = column
-			# print(columns)
+			# _.pr(columns)
 			for i,column in enumerate(columns):
 				fields[i] = column.replace( ' ', '_' )
 				table[ original.index(column) ] += 1
 				x = original[ original.index(column) ]
 				theIs.append( original.index(column) )
-				# print(x)
+				# _.pr(x)
 			# sys.exit()
 			startOnLine = di
 			break
@@ -343,9 +343,9 @@ def process():
 	# threshold = 80
 	# _.printVar( table )
 	
-	# print()
-	# print(totalRows)
-	# print()
+	# _.pr()
+	# _.pr(totalRows)
+	# _.pr()
 	# pause()
 
 	records = []
@@ -386,7 +386,7 @@ def process():
 
 
 				if shouldRun:
-					# print( build  )
+					# _.pr( build  )
 					if pastClose:
 						if len( build ) > 1:
 
@@ -420,7 +420,7 @@ def process():
 			if not record[0] == fields[0]:
 				if di > startOnLine:
 					records.append(record)
-				# print(record)
+				# _.pr(record)
 	pass
 	lengths = {}
 	for record in records:
@@ -445,7 +445,7 @@ def process():
 					newRec[ fields[i] ] = column
 				newRecords.append( newRec )
 			else:
-				print( len(record),record )
+				_.pr( len(record),record )
 
 
 
@@ -453,9 +453,9 @@ def process():
 	if not _.switches.isActive('Save') or not len(_.switches.value('Save')):
 		if not _.switches.isActive('Print') and not _.switches.isActive('Make'):
 			for record in newRecords:
-				print( record )
+				_.pr( record )
 	return newRecords
-	# print( len(records), len(newRecords) )
+	# _.pr( len(records), len(newRecords) )
 
 
 
@@ -466,9 +466,9 @@ def postProcess():
 	global delim
 	global threshold
 	_.printVar( table )
-	print()
-	print(len(data))
-	print()
+	_.pr()
+	_.pr(len(data))
+	_.pr()
 	
 	records = []
 	
@@ -518,7 +518,7 @@ def postProcess():
 		keys = {}
 		first = True
 		for record in records:
-			print( len(record), maxTables )
+			_.pr( len(record), maxTables )
 			if first:
 				if len(record) == maxTables:
 					first = False
@@ -534,13 +534,13 @@ def postProcess():
 
 	pass
 	for record in newRecords:
-		print( record )
+		_.pr( record )
 """
 
 
 
 def action():
-	# print( 'Change to, if last was space' )
+	# _.pr( 'Change to, if last was space' )
 	# sys.exit()
 	global table
 	global data
@@ -630,7 +630,7 @@ def action():
 		for rec in result:
 			if 'quote' in settings:
 				rec = rec.replace( "'", '"' )
-			print( rec )
+			_.pr( rec )
 
 
 
@@ -666,6 +666,7 @@ uData = []
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

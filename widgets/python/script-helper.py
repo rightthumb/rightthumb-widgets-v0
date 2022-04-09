@@ -167,7 +167,7 @@ def action():
 	#--> replace string fix {:replace:}
 	if _.switches.isActive('Replace'):
 		dump =' '.join(_.switches.values('Replace'))
-		# print(dump)
+		# _.pr(dump)
 		_code = _.regImp( __.appReg, '_rightThumb._auditCodeBase' )
 		_code.imp.validator.register( dump, 'javascript' )
 		status = _code.imp.validator.createIndex( dump, 'javascript', skipLoad=True, simple=False, B=True )
@@ -183,7 +183,7 @@ def action():
 			text=text[1:]
 			text=text[:-1]
 			Q.append(text)
-			# print(i,text)
+			# _.pr(i,text)
 		pass
 		a=Q[0]
 		b=Q[1]
@@ -207,7 +207,7 @@ def action():
 			i+=1; a=a.replace(b,c);
 			if i>1000: break;
 		if not _.switches.isActive('NoPrint'):
-			print(a)
+			_.pr(a)
 		if _.switches.isActive('isFile'):
 			_.saveText( a, path )
 		return a
@@ -219,6 +219,7 @@ def action():
 if __name__ == '__main__':
 	action()
 	__.isExit()
+
 
 
 

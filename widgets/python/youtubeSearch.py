@@ -159,8 +159,8 @@ from urllib.parse import unquote
 
 def getUrlList( url, obscure=False ):
 	global printTestStuff
-	# print( 'omit:', omit )
-	# print( 'url:', url )
+	# _.pr( 'omit:', omit )
+	# _.pr( 'url:', url )
 	# sys.exit()
 	theList = []
 	omitWords = [
@@ -182,9 +182,9 @@ def getUrlList( url, obscure=False ):
 					'the'
 	]
 	newURL = url.replace(',','+').replace(' ','+')
-	# print(newURL)
+	# _.pr(newURL)
 	# brandNewURL = 'http://www.rightthumb.com/projects/widget/proxy.php?p=' + newURL.replace('&','[and]')
-	# print(newURL)
+	# _.pr(newURL)
 	# sys.exit()
 
 	
@@ -197,15 +197,15 @@ def getUrlList( url, obscure=False ):
 			item = t.text_content()
 		except Exception as e:
 			item = ''
-		# print(item)
+		# _.pr(item)
 		if 'youtube' in item.lower():
 			links = t.cssselect('a')
 			link = str(links[0].attrib['href'])
 			link = link.replace('/url?q=http:','http:')
 			text = t.text_content()
-			# print(text)
-			# print()
-			# print(text)
+			# _.pr(text)
+			# _.pr()
+			# _.pr(text)
 
 
 			# pause = input('pause')
@@ -217,13 +217,13 @@ def getUrlList( url, obscure=False ):
 			if _.showLine( text ):
 				shouldRun = True
 			if printTestStuff:
-				print( shouldRun, text )
+				_.pr( shouldRun, text )
 
-			# print( 'shouldRun:', shouldRun )
+			# _.pr( 'shouldRun:', shouldRun )
 			if shouldRun:
 				if 'youtube.com/watch' in link:
 					theURL = link.replace('/url?q=','').split('/&sa=U')[0]
-					# print(theURL)
+					# _.pr(theURL)
 					theList.append({'name': text,'link': theURL})
 	return theList
 
@@ -256,27 +256,27 @@ def action():
 				if _.switches.isActive('Song'):
 					row += ' Song'
 				if printTestStuff:
-					print(  )
-					print(  )
-					print( row )
-					print(  )
+					_.pr(  )
+					_.pr(  )
+					_.pr( row )
+					_.pr(  )
 
 				row = row.replace( ' ', '+' )
 				records = getUrlList( base+row )
 				if printTestStuff:
-					print(  )
+					_.pr(  )
 				offset = 0
 				if _.switches.isActive('Offset') and len(_.switches.value('Offset')):
 					offset = int( _.switches.value('Offset') )
 				try:
 					result = unquote(records[offset]['link']).split('&')[0]
-					print( result )
+					_.pr( result )
 				except Exception as e:
 					pass
 	# 			youtubeVideos.append( unquote(records[0]['link']).split('&')[0] )
 
 	# for url in youtubeVideos:
-	# 	print( url )
+	# 	_.pr( url )
 
 
 printTestStuff = _.switches.isActive( 'PrintTestStuff' )
@@ -284,6 +284,7 @@ printTestStuff = _.switches.isActive( 'PrintTestStuff' )
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

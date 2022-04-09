@@ -227,8 +227,8 @@ def action():
 		_.pipeCleaner(0)
 		# _.printVar( _.appData )
 		for i,row in enumerate( _.appData[__.appReg]['pipe'] ):
-			print( row )
-			# print( saveFile( row ) )
+			_.pr( row )
+			# _.pr( saveFile( row ) )
 			try:
 				if os.path.isfile(row):
 					try:
@@ -252,6 +252,7 @@ def action():
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

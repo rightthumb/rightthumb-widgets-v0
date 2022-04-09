@@ -201,9 +201,9 @@ def printTable():
 			fields.append(x)
 	_.tables.print( 'data', ','.join(fields) )
 
-	print()
-	print( len(data) )
-	print()
+	_.pr()
+	_.pr( len(data) )
+	_.pr()
 
 
 
@@ -227,7 +227,7 @@ def action():
 	# p = os.path.abspath(f)
 	# # x = os.path.normpath( p )
 	# x = path2url( p )
-	# print( x )
+	# _.pr( x )
 
 	# sys.exit()
 
@@ -248,7 +248,7 @@ def action():
 	printTable()
 
 	# data =_browser.imp.project.injectReturn( 'JSON.parse( JSON.stringify( window ) )' )
-	# print()
+	# _.pr()
 	try:
 		_.printVar( name_resolution )
 	except Exception as e:
@@ -271,6 +271,7 @@ _auditJS = _.regImp( __.appReg, 'auditJavascript' )
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

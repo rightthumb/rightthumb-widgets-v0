@@ -204,10 +204,10 @@ if __name__ == '__main__':
 	if _.switches.isActive('Input'):
 		file = _.switches.value('Input')
 	else:
-		print()
-		print( 'Expected:' )
-		print('\tp dicTable -i dic_noun.json -add jane ')
-		print('\tp dicTable -i dic_noun.json -remove to ')
+		_.pr()
+		_.pr( 'Expected:' )
+		_.pr('\tp dicTable -i dic_noun.json -add jane ')
+		_.pr('\tp dicTable -i dic_noun.json -remove to ')
 		sys.exit()
 	data = _.getTable( file )
 ########################################################################################
@@ -217,4 +217,5 @@ if __name__ == '__main__':
 
 
  
+
 

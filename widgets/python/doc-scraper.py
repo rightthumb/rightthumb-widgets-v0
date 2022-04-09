@@ -229,11 +229,11 @@ def process(path):
 	for segment in segments:
 		if _.showLine(segment):
 			if p:
-				print(print_sep)
-			print(segment)
+				_.pr(print_sep)
+			_.pr(segment)
 
 	if p:
-		print(print_sep)
+		_.pr(print_sep)
 
 def action():
 	if not _.switches.isActive('Not-Hashtags'):
@@ -242,7 +242,7 @@ def action():
 		_.switches.fieldSet( 'Plus', 'value', ','.join(val) )
 		_.switches.fieldSet( 'Plus', 'values', val )
 	# _.switches.values('Plus')=_.switches.values('Hashtags')
-	# print(_.switches.values('Plus')); sys.exit();
+	# _.pr(_.switches.values('Plus')); sys.exit();
 
 
 	if _.switches.isActive('Files'):
@@ -259,6 +259,7 @@ def action():
 if __name__ == '__main__':
 	action()
 	__.isExit()
+
 
 
 

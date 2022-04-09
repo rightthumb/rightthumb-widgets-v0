@@ -155,7 +155,7 @@ def generatePatterns( string, patternLength ):
 		offset = 0
 		dataset = []
 		for offset in range(0,by):
-			# print( offset )
+			# _.pr( offset )
 			ix = False
 			for i,char in enumerate(string):
 				if i >= offset:
@@ -173,7 +173,7 @@ def generatePatterns( string, patternLength ):
 							if not xSpent in spent:
 								spent.append(xSpent)
 								data.append( dataset )
-							# print( ''.join( dataset ) )
+							# _.pr( ''.join( dataset ) )
 						dataset = []
 
 
@@ -191,7 +191,7 @@ def newAbbreviations():
 
 	for i,br in enumerate(booksRaw):
 		br = br.replace('\n','').replace('.','')
-		# print( br )
+		# _.pr( br )
 		abbreviation = br.split(',')[1]
 		n = {
 				'book':		br.split(',')[0],
@@ -210,11 +210,11 @@ def getBook( book ):
 
 def getBookByID( book ):
 	global booksNew
-	# print( book )
+	# _.pr( book )
 	for i,bn in enumerate(booksNew):
 		if int(book) == i+1:
 			return bn['abbreviation']
-	# print( 'book' )
+	# _.pr( 'book' )
 
 
 def action():
@@ -232,21 +232,21 @@ def action():
 			cnt = key.count('_')
 			if cnt > 5 :
 				gtr+=1
-				print()
-				print( cnt )
-				print( key )
-				print( txt )
+				_.pr()
+				_.pr( cnt )
+				_.pr( key )
+				_.pr( txt )
 
 			if cnt > g :
 				g = cnt
 				k = key
 				txt = data[key]
-		print()
-		print()
-		print( g )
-		print( k )
-		print( txt )
-		print('gtr',gtr)
+		_.pr()
+		_.pr()
+		_.pr( g )
+		_.pr( k )
+		_.pr( txt )
+		_.pr('gtr',gtr)
 
 		sys.exit()
 
@@ -287,7 +287,7 @@ def action():
 			for i,row in enumerate( _.appData[__.appReg]['pipe'] ):
 				pass
 
-				# print( row )
+				# _.pr( row )
 				# sys.exit()
 				row = row.replace( '\t', '  ' )
 				row = _str.replaceDuplicate(row,'  ')
@@ -299,8 +299,8 @@ def action():
 					vV = verse[3]
 					vV = _str.cleanBE(vV,' ')
 				except Exception as e:
-					print( row )
-					print( verse )
+					_.pr( row )
+					_.pr( verse )
 
 				words = verse[4].lower()
 
@@ -323,14 +323,14 @@ def action():
 				pat = generatePatterns( data, 2 )
 				if vID == '15' and 0:
 					for xx in pat:
-						print(xx)
+						_.pr(xx)
 					sys.exit()
 				try:
 					ref = getBookByID(vB) + ' ' + vCh+':'+vV
 				except Exception as e:
 					_.colorThis( 'Error', 'red' )
-					print(row)
-					print(verse)
+					_.pr(row)
+					_.pr(verse)
 					sys.exit()
 				spent = []
 				for x in pat:
@@ -421,7 +421,7 @@ def action():
 						test[xK]['add'].append(test[xK]['id'])
 						# words['pos'].append(test[xK]['id'])
 
-						# print(test[xK]['pattern'])
+						# _.pr(test[xK]['pattern'])
 
 			pass
 
@@ -441,7 +441,7 @@ def action():
 				  newPattern += '_' + pst
 				newPattern = _str.cleanBE( newPattern , '_' )
 				index[k][i]['pattern'] = newPattern
-				# print(index[k][i]['pattern'])
+				# _.pr(index[k][i]['pattern'])
 
 
 
@@ -502,7 +502,7 @@ def action():
 					else:
 						test[xK]['add'].append(test[xK]['id'])
 
-						# print(test[xK]['pattern'])
+						# _.pr(test[xK]['pattern'])
 			pass
 			for i in test.keys():
 				for add in test[i]['add']:
@@ -524,7 +524,7 @@ def action():
 				  newPattern += '_' + pst
 				newPattern = _str.cleanBE( newPattern , '_' )
 				index[k][i]['pattern'] = newPattern
-				# print(index[k][i]['pattern'])
+				# _.pr(index[k][i]['pattern'])
 
 
 
@@ -558,7 +558,7 @@ def action():
 
 
 					index[k][i]['pattern'] = '_'.join( thisPattern )
-					# print( index[k][i]['pattern'] )
+					# _.pr( index[k][i]['pattern'] )
 
 					if index[k][i]['pattern'] in pattern_index.keys():
 						pattern_index[ index[k][i]['pattern']  ].append( index[k][i] )
@@ -582,7 +582,7 @@ def action():
 	# 					cache[   text[  pos  ]   ] = ps.stem( text[  pos  ] )
 	# 				thisPattern.append( pst )
 	# 			words['pattern'] = '_'.join( thisPattern )
-	# 			# print( words['pattern'] )
+	# 			# _.pr( words['pattern'] )
 
 	# 			if words['pattern'] in pattern_index.keys():
 	# 				pattern_index[ words['pattern']  ].append( words )
@@ -593,7 +593,7 @@ def action():
 
 
 			# for words in index[k]:
-			# 	print( words )
+			# 	_.pr( words )
 			# sys.exit()
 
 		_.saveTable2( pattern_index, 'bible_patterns_min_3.json' )
@@ -611,8 +611,8 @@ def getVerseByIndex( vs ):
 		vV = verse[3]
 		vV = _str.cleanBE(vV,' ')
 	except Exception as e:
-		print( row )
-		print( verse )
+		_.pr( row )
+		_.pr( verse )
 
 	words = verse[4].lower()
 
@@ -626,7 +626,7 @@ def load():
 	global sections
 	global omit_words
 	omit_words = _.getTable( 'dic_omit.json' )
-	# print( list(omit_words.keys()) )
+	# _.pr( list(omit_words.keys()) )
 	# sys.exit()
 	booksRaw = _.getText(_v.myTables + _v.slash+'bible_books.csv')
 	booksNew = []
@@ -640,6 +640,7 @@ pattern_index = {}
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

@@ -155,7 +155,7 @@ def action():
 		message = ''
 		for i,color in enumerate(_.switches.values('Color')):
 			message+= _.colorThis( _.switches.values('Message')[i], _.switches.values('Color')[i], p=0 )
-		print( message )
+		_.pr( message )
 
 
 	elif not len(_.switches.values('Color')) > 1:
@@ -167,6 +167,7 @@ def action():
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

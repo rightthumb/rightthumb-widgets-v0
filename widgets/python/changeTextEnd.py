@@ -191,7 +191,7 @@ theText = ''
 def action():
 	global theText
 
-	# print( _.switches.value('Input') )
+	# _.pr( _.switches.value('Input') )
 
 	if _.switches.isActive('Text'):
 		
@@ -199,7 +199,7 @@ def action():
 		theText = _str.cleanBE( theText, ' ' )
 
 	if len(_.switches.value('Plus'))<3:
-		print( 'Error: Plus' )
+		_.pr( 'Error: Plus' )
 		sys.exit()
 
 	if not type( _.appData[__.appReg]['pipe'] ) == bool or _.switches.isActive('Input') and os.path.isfile( _.switches.value('Input') ):
@@ -226,8 +226,8 @@ def getTabs( line ):
 def processFile( filename ):
 	global theText
 
-	print()
-	print('processing:', filename)
+	_.pr()
+	_.pr('processing:', filename)
 	fileBackup.switch( 'Input', filename )
 	fileBackup.switch( 'Flag', 'pre changeTextEnd' )
 	recoveryFile = fileBackup.do( 'action' )
@@ -273,10 +273,10 @@ def processFile( filename ):
 
 			if _.switches.isActive('Add'):
 				if _.switches.isActive('Payload'):
-					# print()
-					# print(line)
+					# _.pr()
+					# _.pr(line)
 					payloadData = line.split( delim )[ row ]
-					# print(payloadData)
+					# _.pr(payloadData)
 					if dup:
 						payloadData = _str.replaceDuplicate( payloadData, ' ' )
 						payloadData = _str.replaceDuplicate( payloadData, '\t' )
@@ -322,15 +322,16 @@ def processFile( filename ):
 		if 'n' in keep.lower():
 			try:
 				copyfile(recoveryFile, filename)
-				print( 'Undo successful' )
+				_.pr( 'Undo successful' )
 			except Exception as e:
-				print( 'Undo fail' )
+				_.pr( 'Undo fail' )
 
 # type %tmpf0% | p changeTextEnd + ;. "function(" -text  ";n;t;tfamily.v.tracker.push({'action';.'change','function';.'*_*','timestamp';.(new Date).getTime(),'id';.family.talk.thisTable,'d';.family.talk.adherence.r_d(),'a';.family.talk.adherence.r_a()});" -payload ;. 0 nsif -add - setTimeout
 
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

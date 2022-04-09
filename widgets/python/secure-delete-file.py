@@ -156,7 +156,7 @@ def action():
 				file_data = _.getText(path,raw=True)
 			except Exception as e:
 				file_data = open( path , 'rb' ).read()
-			# print(type(file_data))
+			# _.pr(type(file_data))
 			newFile=''
 			i=0
 			for x in file_data:
@@ -174,6 +174,7 @@ def action():
 if __name__ == '__main__':
 	action()
 	__.isExit()
+
 
 
 

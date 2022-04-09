@@ -150,7 +150,7 @@ def action():
 		_.pipeCleaner(0)
 		# _.printVar( _.appData )
 		for i,row in enumerate( _.appData[__.appReg]['pipe'] ):
-			print( process(row) )
+			_.pr( process(row) )
 
 
 
@@ -166,6 +166,7 @@ def action():
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

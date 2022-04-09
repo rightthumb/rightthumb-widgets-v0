@@ -155,10 +155,10 @@ _.postLoad( __file__ )
 # START
 
 def rename(a,b):
-	print()
-	print(a)
-	print(b)
-	print()
+	_.pr()
+	_.pr(a)
+	_.pr(b)
+	_.pr()
 	shutil.move(a,b)
 
 def process(path):
@@ -174,7 +174,7 @@ def process(path):
 		file = tmp[0]
 		folder = path[:-len(file)]
 		# dic={'i':file,'o':folder}
-		# print(dic)
+		# _.pr(dic)
 	pass
 
 	if _.switches.isActive('Suffix'):
@@ -215,11 +215,11 @@ def action():
 
 	if _.switches.isActive('Folder'):
 		if len(_.switches.value('Folder')):
-			print('a',_.switches.value('Folder'))
+			_.pr('a',_.switches.value('Folder'))
 			for folder in _.switches.values('Folder'):
 				getFolder(folder,r=_.switches.isActive('Recursive'))
 		else:
-			print('b')
+			_.pr('b')
 			folder = os.getcwd()
 			getFolder(folder,r=_.switches.isActive('Recursive'))
 
@@ -233,6 +233,7 @@ def action():
 if __name__ == '__main__':
 	action()
 	__.isExit()
+
 
 
 

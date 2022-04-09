@@ -206,7 +206,7 @@ def clip_set_3(data):
 	_.saveText( data, tmpA )
 	time.sleep(.2)
 	if not os.path.isfile(tmpA):
-		print( 'no file' )
+		_.pr( 'no file' )
 		return None
 
 	# cmd = ["cat", tmpA, "|",  "xsel", "--clipboard", "--input"  ]
@@ -227,9 +227,9 @@ def clip_set_3(data):
 		result = None
 
 	if not result:
-		# print( ' '.join(cmd) )
+		# _.pr( ' '.join(cmd) )
 		_.cp( 'Error: unable to copy', 'red' )
-		print(data)
+		_.pr(data)
 
 	# p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
 
@@ -283,13 +283,13 @@ def clip_set(data):
 	# 			try:
 	# 				clip_set_4(data)
 	# 			except expression as identifier:
-	# 				print( 'python3 -m pip install pyperclip' )
-	# 				print( 'pip3 install pyperclip' )
-	# 				print()
-	# 				print( 'sudo apt install xclip xsel' )
-	# 				print( 'sudo pacman xclip xsel' )
-	# 				print( 'sudo dnf xclip xsel' )
-	# 				print( '' )
+	# 				_.pr( 'python3 -m pip install pyperclip' )
+	# 				_.pr( 'pip3 install pyperclip' )
+	# 				_.pr()
+	# 				_.pr( 'sudo apt install xclip xsel' )
+	# 				_.pr( 'sudo pacman xclip xsel' )
+	# 				_.pr( 'sudo dnf xclip xsel' )
+	# 				_.pr( '' )
 
 
 def clip_get():
@@ -311,7 +311,7 @@ def clip_get():
 		_.cp( 'Error: clipboard error', 'red' )
 		_.cp( '\tpython3 -m pip install pyperclip', 'yellow' )
 		sys.exit()
-	# print( result )
+	# _.pr( result )
 	# sys.exit()
 	return result
 
@@ -326,7 +326,7 @@ def clip_get_1():
 
 def clip_get_3():
 	import subprocess
-	# print('_.isWin:',_.isWin)
+	# _.pr('_.isWin:',_.isWin)
 	if _.isWin:
 		_.cp( 'Error: clipboard error', 'red' )
 		return None
@@ -339,11 +339,11 @@ def clip_get_3():
 		os.unlink(tmpB)
 	if not _.which('xsel'):
 		if not _.isWin:
-			print( '\tsudo apt install xclip xsel' )
+			_.pr( '\tsudo apt install xclip xsel' )
 			return None
 
 	cmd = ["xsel", "--clipboard", "--output", ">", tmpA ]
-	# print( ' '.join(cmd) )
+	# _.pr( ' '.join(cmd) )
 	p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
 	if os.path.isfile(tmpA):
 		return _.getText( tmpA, raw=True, clean=2 )
@@ -391,7 +391,7 @@ def cleanStringA(data):
 def action():
 
 
-	# print(1010,_.switches.isActive('Encrypt'))
+	# _.pr(1010,_.switches.isActive('Encrypt'))
 	password = None
 	if  _.switches.isActive('Password'):
 		if len(  _.switches.value('Password')  ):
@@ -417,7 +417,7 @@ def action():
 
 		data = cleanString( data )
 		if _.switches.value('Clipboard').lower().startswith('p'):
-			print( '|'+data+'|' )
+			_.pr( '|'+data+'|' )
 
 
 
@@ -428,7 +428,7 @@ def action():
 
 		clip = cleanString( clip )
 		if _.switches.value('Clipboard').lower().startswith('p'):
-			print( clip )
+			_.pr( clip )
 
 		clip_set(  clip  )
 
@@ -449,7 +449,7 @@ def action():
 				time.sleep(1)
 				_.updateLine( '                  ' )
 
-			# print()
+			# _.pr()
 			clip_set( '' )
 			_.updateLine( '                                    ' )
 			_.updateLine( 'clipboard cleared' )
@@ -464,20 +464,20 @@ def action():
 
 
 	if _.switches.isActive('Encrypt'):
-		# print(1030,_.switches.isActive('Encrypt'))
+		# _.pr(1030,_.switches.isActive('Encrypt'))
 		if not _.switches.isActive('JustReturn'):
 			_.colorThis( _blowfish.encrypt( ' '.join( _.switches.values('Encrypt') ), password ), 'green' )
 		elif _.switches.isActive('JustReturn'):
 			return _blowfish.encrypt( ' '.join( _.switches.values('Encrypt') ), password )
 
 	elif _.switches.isActive('Decrypt'):
-		# print(1040)
+		# _.pr(1040)
 		if not _.switches.isActive('JustReturn'):
 			_.colorThis( _blowfish.decrypt( _.switches.values('Decrypt')[0], password ), 'green' )
 		elif _.switches.isActive('JustReturn'):
 			return _blowfish.decrypt( _.switches.values('Decrypt')[0], password )
 	else:
-		# print(1050)
+		# _.pr(1050)
 		for i,row in enumerate(_.isData(c=False,focus=focus())):
 			row = row.replace( '\n', '' )
 			if row.endswith('='):
@@ -497,7 +497,7 @@ def action():
 								for x in de_row:
 									if not x in _str.printable:
 										good = False
-								# print('good:',good,x)
+								# _.pr('good:',good,x)
 								if not good:
 									try:
 										de_row = _blowfish.decrypt( row, pw )
@@ -514,14 +514,14 @@ def action():
 					for x in de_row:
 						if not x in _str.printable:
 							good = False
-					# print('good:',good,x)
+					# _.pr('good:',good,x)
 					if not good:
 						row = _blowfish.decrypt( row, _vault.key() )
 					else:
 						row = de_row
 
-			print( row )
-		# print( password )
+			_.pr( row )
+		# _.pr( password )
 
 				
 
@@ -535,6 +535,7 @@ import _rightThumb._vault as _vault
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

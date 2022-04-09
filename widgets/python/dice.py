@@ -245,10 +245,10 @@ def action():
 				passed+=1
 	pass
 	if thresh:
-		print(passed)
+		_.pr(passed)
 	else:
-		print(results)
-		print(sum(results))
+		_.pr(results)
+		_.pr(sum(results))
 
 
 	
@@ -259,6 +259,7 @@ def action():
 if __name__ == '__main__':
 	action()
 	__.isExit()
+
 
 
 

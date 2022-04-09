@@ -171,7 +171,7 @@ if not sys.stdin.isatty():
 
 # _dir.sqlCreateTable( db, deleteDBFirst=True, close=True )
 # obj = _dir.fileInfo( path, sql=True )
-# print(   _dir.fileInfo( _.switches.value('Input') )['size']   )
+# _.pr(   _dir.fileInfo( _.switches.value('Input') )['size']   )
 
 # _.saveLog('queue')
 # _.saveLog('audit')
@@ -267,7 +267,7 @@ def processPage( i, book, url, qID=0 ):
 
 		 	data[i]['data'].append( { 'verses': verses, 'text': text } )
 
-	print(book,'complete')
+	_.pr(book,'complete')
 	_.threads.spent( qID, sys.getsizeof( 'obj') )
 
 
@@ -292,21 +292,21 @@ def action():
 		link1 = str(link0[0].attrib['href'])
 		link = url + link1
 		# if i == 0:
-		print( b, link )
+		_.pr( b, link )
 			# processPage( b, link )
 		_.threads.add( 'books', processPage, [ i, b, link ] )
 
 def complete():
 	global data
 
-	print()
-	print()
-	print('________________________________')
-	print()
-	print(' All books have been processed')
-	print('________________________________')
-	print()
-	print()
+	_.pr()
+	_.pr()
+	_.pr('________________________________')
+	_.pr()
+	_.pr(' All books have been processed')
+	_.pr('________________________________')
+	_.pr()
+	_.pr()
 
 	_.saveTable( data , 'Bible_section_headers.json', printThis=True )
 
@@ -316,6 +316,7 @@ data = {}
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

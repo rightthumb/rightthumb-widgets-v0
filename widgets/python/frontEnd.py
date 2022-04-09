@@ -162,9 +162,9 @@ import _rightThumb._encryptString as _blowfish
 def action():
 	# string = 'scott'
 	# en = _blowfish.encrypt( string )
-	# print( en )
+	# _.pr( en )
 	# de = _blowfish.decrypt( en )
-	# print( de )
+	# _.pr( de )
 
 	# sys.exit()
 	
@@ -191,7 +191,7 @@ def action():
 	# pause = input( 'pause' )
 	data = _browser.imp.project.injectReturn( 'window.acquirePayload()' )
 	for row in data:
-		print( row['name'] )
+		_.pr( row['name'] )
 	_browser.imp.project.close()
 	
 
@@ -204,5 +204,6 @@ if __name__ == '__main__':
 
 
 # https://help.crossbrowsertesting.com/selenium-testing/getting-started/python/
+
 
 

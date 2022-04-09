@@ -203,9 +203,9 @@ def exif( doThis, qID=False ):
 
 
 def complete():
-	print()
-	print()
-	print( 'Done' )
+	_.pr()
+	_.pr()
+	_.pr( 'Done' )
 
 
 def action():
@@ -230,7 +230,7 @@ def action():
 			# 	_.appData[__.appReg]['pipe'].append( row )
 	if not type( _.appData[__.appReg]['pipe'] ) == bool:
 		_.pipeCleaner()
-		# print( _.printVar(_.appData) )
+		# _.pr( _.printVar(_.appData) )
 		
 		if not _.switches.isActive( 'Folder' ):
 			do = 'exiftool "THEFILE" -json'
@@ -242,14 +242,14 @@ def action():
 		
 
 		for i,row in enumerate(_.appData[__.appReg]['pipe']):
-			# print( row )
+			# _.pr( row )
 			if not os.path.isfile( row ):
 				if _.switches.isActive('Input'):
-					print( 'File does not exist' )
+					_.pr( 'File does not exist' )
 					sys.exit()
 			else:
 				info = _dir.fileInfo( row )
-				# print( _.printVar( info ) )
+				# _.pr( _.printVar( info ) )
 				
 				# try:
 				# except Exception as e:
@@ -259,7 +259,7 @@ def action():
 					doThis = doThis.replace( 'MOD_BYTES', _.switches.value( 'Folder' ) +_v.slash+ str(info['date_modified_raw'])+'_'+str(info['bytes']) )
 				else:
 					doThis = doThis.replace( 'MOD_BYTES', str(info['date_modified_raw'])+'_'+str(info['bytes']) )
-				# print( doThis )
+				# _.pr( doThis )
 				if not _.switches.isActive( 'Folder' ):
 					exif( doThis )
 				else:
@@ -274,6 +274,7 @@ isSingle = False
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

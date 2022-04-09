@@ -51,7 +51,7 @@ __.switch_raw = []
 _.appInfo[focus()] = {
 	'file': 'json-dump.py',
 	'liveAppName': __.thisApp( __file__ ),
-	'description': 'print( str(json) ) ',
+	'description': '_.pr( str(json) ) ',
 	'categories': [
 						'json',
 						'table',
@@ -193,7 +193,7 @@ def action():
 
 	for i,path in enumerate( _.isData(r=1) ):
 		table = _.getTable2( path )
-		print( table )
+		_.pr( table )
 		for save in _.switches.values('Save'):
 			_.saveText( str(table), save )
 
@@ -203,6 +203,7 @@ def action():
 if __name__ == '__main__':
 	action()
 	__.isExit()
+
 
 
 

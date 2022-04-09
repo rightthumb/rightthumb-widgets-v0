@@ -157,7 +157,7 @@ def action():
 
 
 	data = '\n'.join(_.isData(r=1))
-	# print(data)
+	# _.pr(data)
 	simplejson = __.imp('simplejson')
 	recs = simplejson.loads(data)
 	_.printt(recs)
@@ -168,6 +168,7 @@ def action():
 if __name__ == '__main__':
 	action()
 	__.isExit()
+
 
 
 

@@ -168,10 +168,10 @@ def action():
 		for imp in record['file_profile']['imports']:
 			raw = _str.stripNonAlphaNumaric(  imp['raw'].lower()  ).split(' ')
 			if _.switches.values('App')[0].lower() in raw or '_'+_.switches.values('App')[0].lower() in raw:
-				# print( imp['raw'] )
+				# _.pr( imp['raw'] )
 				for ex in imp['examples']:
 					if _.showLine( ex ):
-						print( ex )
+						_.pr( ex )
 
 
 
@@ -187,6 +187,7 @@ data = []
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

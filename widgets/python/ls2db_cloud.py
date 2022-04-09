@@ -159,14 +159,14 @@ _.postLoad( __file__ )
 def action():
 	__.appReg = focus()
 	for i,filename in enumerate(_.isData( focus=focus() )):
-		# print(filename)
+		# _.pr(filename)
 		# sys.exit()
-		# print(filename)
+		# _.pr(filename)
 		# sys.exit()
 		file = _.getTable2( filename )
 
 		encrypted_connection_string = '6h0zPeDVhqMH0yIMRnOeA9NjJajbGY0HOqo4LnRgeZbx0hnInPE46WXkcl4Qu2BJFIdpCY3MCbjFeAIYLamP+aDmiFPoKsKQm5cBqVc+OfqShFLKPptf1djYtgygBlKbrG/N/H59bmhfWi5s3oQAgXEj9w6cKp2ay2QYdHkSIFDHQDJ1si3fmGg9dR1UuYpjVDi812VXYQm2/4Wgpw/CxBPTQG9zgMYjbmjEgVoI6HoyeOoEDI2r/lxpbDbsoP7mRQWwnwGZtTpbo4F/EcRavnqUJ6HUe3TLcQeF6ywFN+wHHePOrmMOlZ13Y4Qo4OSfkEGtUl+0X9Q='
-		# print(_blowfish.decrypt( encrypted_connection_string, _vault.key() ))
+		# _.pr(_blowfish.decrypt( encrypted_connection_string, _vault.key() ))
 		client = pymongo.MongoClient(  _blowfish.decrypt( encrypted_connection_string, _vault.key() )  )
 
 		db = client[  'ls2mdb'  ]
@@ -192,7 +192,7 @@ def action():
 
 
 		x = table.insert_many(file['data'])
-		# print(x.inserted_ids)
+		# _.pr(x.inserted_ids)
 		_.colorThis(  [  '\n\t', "Records:", _.addComma(len(file['data']))  ], 'yellow'  )
 
 
@@ -204,6 +204,7 @@ import pymongo
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

@@ -150,7 +150,7 @@ def action():
 		for i,row in enumerate( _.appData[__.appReg]['pipe'] ):
 			if len(row):
 				cnt+=1
-			print( row )
+			_.pr( row )
 		_.colorThis( [  '\n','', cnt  ], 'yellow' )
 
 
@@ -158,6 +158,7 @@ def action():
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

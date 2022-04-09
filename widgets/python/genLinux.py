@@ -159,7 +159,7 @@ _.postLoad( __file__ )
 def ftp_upload():
 	# ftp_upload_ssh()
 
-	# print( 'upload', upload )
+	# _.pr( 'upload', upload )
 	# sys.exit()
 
 	userA = 'ay7q2HGaNN6mSWaVZniaEw=='
@@ -171,15 +171,15 @@ def ftp_upload():
 	userB = _str.cleanBE( userB, ' ' )
 	passwordB = _str.cleanBE( passwordB, ' ' )
 
-	# print( userB )
-	# print( passwordB )
+	# _.pr( userB )
+	# _.pr( passwordB )
 	# sys.exit()
 
 	ftp = FTP()
 	ftp.connect('107.180.54.171', 21)
 	ftp.login(userB, passwordB)
 	if _.showLine('linux.zip'):
-		# print('D:\\websites\\tools.RightThumb\\tools\\linux.zip')
+		# _.pr('D:\\websites\\tools.RightThumb\\tools\\linux.zip')
 		_.updateLine('')
 		_.updateLine( 'uploading linux.zip', 'darkcyan' )
 		ftp.storbinary('STOR linux.zip', open('D:\\websites\\tools.RightThumb\\tools\\linux.zip', 'rb'))
@@ -188,7 +188,7 @@ def ftp_upload():
 		md5_check('linux.zip')
 
 	if _.showLine('databank.zip'):
-		# print('D:\\websites\\tools.RightThumb\\tools\\databank.zip')
+		# _.pr('D:\\websites\\tools.RightThumb\\tools\\databank.zip')
 		_.updateLine('')
 		_.updateLine( 'uploading databank.zip', 'darkcyan' )
 		ftp.storbinary('STOR databank.zip', open('D:\\websites\\tools.RightThumb\\tools\\databank.zip', 'rb'))
@@ -232,8 +232,8 @@ def ftp_upload_ssh():
 	userB = _str.cleanBE( userB, ' ' )
 	passwordB = _str.cleanBE( passwordB, ' ' )
 
-	# print( userB )
-	# print( passwordB )
+	# _.pr( userB )
+	# _.pr( passwordB )
 	# sys.exit()
 
 	ftp = FTP()
@@ -264,7 +264,7 @@ def ftp_upload_ssh():
 				# 		break
 				# 	file = file.replace( chr(10), '\n' )
 				# 	file = file.replace( '\r', '' )
-				# 	# print(ii)
+				# 	# _.pr(ii)
 				# _.saveText( file, path )
 
 				
@@ -287,13 +287,13 @@ def ftp_upload_ssh():
 def md5_check(file):
 	local  = _md5.md5File('D:\\websites\\tools.RightThumb\\tools\\'+file)
 	remote = _.v.online.page('http://reph.us/tools/md5.php?file='+file)
-	# print('local',local)
-	# print('remote',remote)
-	# print( local, remote )
+	# _.pr('local',local)
+	# _.pr('remote',remote)
+	# _.pr( local, remote )
 	if local == remote:
 		_.cp( [ 'validation success', remote ], 'green' )
 	else:
-		print( 'local:',local, 'remote:',remote )
+		_.pr( 'local:',local, 'remote:',remote )
 		_.e( 'validation failure' )
 def action():
 
@@ -313,14 +313,14 @@ def action():
 		ftp_upload_ssh()
 		return None
 	if _.switches.isActive('PrintPath'):
-		print( 'wget -o https://reph.us/tools/setup.sh | bash' )
-		print( '' )
-		print( '# or' )
-		print( 'wget https://reph.us/tools/linux.zip' )
-		print( 'wget https://reph.us/tools/databank.zip' )
-		print( '' )
-		print( 'unzip linux.zip -d linux' )
-		print( '' )
+		_.pr( 'wget -o https://reph.us/tools/setup.sh | bash' )
+		_.pr( '' )
+		_.pr( '# or' )
+		_.pr( 'wget https://reph.us/tools/linux.zip' )
+		_.pr( 'wget https://reph.us/tools/databank.zip' )
+		_.pr( '' )
+		_.pr( 'unzip linux.zip -d linux' )
+		_.pr( '' )
 	else:
 		_.updateLine( 'Uploading...', 'darkcyan' )
 		ftp_upload()
@@ -344,6 +344,7 @@ if __name__ == '__main__':
 	action()
 
 # https://stackoverflow.com/questions/21998013/python-ftplib-show-ftp-upload-progress
+
 
 
 

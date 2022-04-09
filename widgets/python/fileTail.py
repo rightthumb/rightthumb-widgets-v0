@@ -264,7 +264,7 @@ def head(file, n):
 		line = a_file.readline()
 		line = line.replace('\n','')
 		line = line.replace('\r','')
-		print(line)
+		_.pr(line)
 
 def tail(fn, n, offset=None):
     """Reads a n lines from f with an offset of offset lines.  The return
@@ -308,7 +308,7 @@ def action():
 			try:
 				for z in x:
 					if _.showLine(z):
-						print(z)
+						_.pr(z)
 			except Exception as e:
 				pass
 	else:
@@ -318,7 +318,7 @@ def action():
 			for i,line in enumerate(data):
 				if i < n:
 					if _.showLine(line):
-						print(line)
+						_.pr(line)
 		else:
 			data.reverse()
 			data0 = []
@@ -328,7 +328,7 @@ def action():
 			data0.reverse()
 			for i,line in enumerate(data0):
 				if _.showLine(line):
-					print(line)
+					_.pr(line)
 
 
 
@@ -336,6 +336,7 @@ def action():
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

@@ -225,7 +225,7 @@ def autoPorts(srv):
 
 def getIP(host):
 	# ip = socket.gethostbyname(host)
-	# print(':ip:',ip)
+	# _.pr(':ip:',ip)
 	# return ip
 	if host == 'localhost':
 		return '127.0.0.1'
@@ -256,14 +256,14 @@ def fields(record):
 		else:
 			d[k] = record[k]
 			wt = _.autoWrapText( _.cp( [ k+':', record[k] ], 'cyan', p=0 ), prefix=len('serving: '), pre_skip_0=True )
-			# print(wt)
-			# print(type(wt))
+			# _.pr(wt)
+			# _.pr(type(wt))
 			if type(wt) == str:
-				print(wt)
+				_.pr(wt)
 			else:
-				print( '\n'.join(wt) )
+				_.pr( '\n'.join(wt) )
 			# for w in wt:
-			# 	print(w)
+			# 	_.pr(w)
 			val = ask( k )
 			if val == '!':
 				keep = True
@@ -301,14 +301,14 @@ def fields(record):
 			if not keep and k == 'password':
 				d[k] = _vault.imp.s.en(d[k])
 
-	print()
-	print()
+	_.pr()
+	_.pr()
 	_.cp( [ '!! default fields completed !!' ], 'red' )
-	print()
-	print()
+	_.pr()
+	_.pr()
 	_.cp( [ 'adding custom fields' ], 'green' )
-	print()
-	print()
+	_.pr()
+	_.pr()
 
 	_.cp( [ 'leave field blank when done or value=exit' ], 'cyan' )
 	while not v.exit:
@@ -383,6 +383,7 @@ _vault = _.regImp( __.appReg, '_rightThumb._vault' )
 if __name__ == '__main__':
 	action()
 	__.isExit()
+
 
 
 

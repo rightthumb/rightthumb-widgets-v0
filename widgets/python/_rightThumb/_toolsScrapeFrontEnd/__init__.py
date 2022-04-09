@@ -282,14 +282,14 @@ class FrontEnd(object):
 
 	def initialize( self ):
 		if self.browser is None:
-			# print( 'HERE' )
+			# _.pr( 'HERE' )
 
 			# import chromedriver_binary
 			# self.browser = webdriver.Chrome()
 			# options.binary_location = "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe"
 			# options.binary_location = "D:\\techApps\\GoogleChromePortable\\GoogleChromePortable.exe"
 			# options.binary_location = "D:\\techApps\\chrome-win\\chrome.exe"
-			# print( _v.chromePortable )
+			# _.pr( _v.chromePortable )
 			options = webdriver.ChromeOptions()
 			# 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36'
 			# options.add_argument('--user-agent="Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)"')
@@ -305,7 +305,7 @@ class FrontEnd(object):
 				server = proxy.start_server()
 				self.client = proxy.start_client()
 				self.client.new_har( "google.com" )
-				print( self.client.proxy )
+				_.pr( self.client.proxy )
 				# options.add_argument("--proxy-server={}".format(self.client.proxy))
 
 			options.binary_location = _v.chromePortable
@@ -318,7 +318,7 @@ class FrontEnd(object):
 			# self.browser = webdriver.Chrome(chrome_options=options, executable_path="D:\\tech\\programs\\exe\\ChromeDriver\\80.0.3987.16\\chromedriver.exe")
 			# self.browser = webdriver.Chrome( _v.chromedriver )
 			# self.url('http://www.google.com')
-			# print( 'DONE' )
+			# _.pr( 'DONE' )
 
 
 
@@ -364,8 +364,8 @@ class FrontEnd(object):
 		time.sleep( 3 )
 
 	def loginIndividually( self, url, login, password, login_selector, password_selector, login_button='', password_button='', rawPass=False ):
-		# print( 'works' )
-		# print( url, login, password, login_selector, password_selector, login_button, password_button )
+		# _.pr( 'works' )
+		# _.pr( url, login, password, login_selector, password_selector, login_button, password_button )
 		# sys.exit()
 		self.open( url )
 		if not '.' in login_selector and not '#' in login_selector and not '[' in login_selector and not '=' in login_selector:
@@ -422,7 +422,7 @@ class FrontEnd(object):
 	#                   src = i.get_attribute("src")
 	#               if src:
  #                            if src.find("/236x/") != -1 or src.find("/474x/") != 1:
- #                                print(src)
+ #                                _.pr(src)
  #                                src = src.replace("/236x/", "/736x/")
  #                                src = src.replace("/474x/", "/736x/")
  #                                results.append(u_to_s(src))
@@ -456,7 +456,7 @@ class FrontEnd(object):
 			newCode += _.flattenList( code )
 		else:
 			newCode += code
-		# print( newCode )
+		# _.pr( newCode )
 		self.browser.execute_script( newCode )
 
 	def injectReturn( self, code ):
@@ -495,7 +495,7 @@ class FrontEnd(object):
 		self.active = False
 		# if __.har:
 		#   _.printVarSimple( self.client.har )
-			# pprint.pprint( self.client.har )
+			# pprint.p_.pr( self.client.har )
 			# self.proxy.new_har("myhar")
 			# with open('myhar.har', 'w') as har_file:
 			#   json.dump(proxy.har, har_file)
@@ -503,14 +503,14 @@ class FrontEnd(object):
 
 	def wait( self ):
 		time.sleep( 2 )
-		# print(  )
-		# print( 'Waiting for task completion' )
+		# _.pr(  )
+		# _.pr( 'Waiting for task completion' )
 		ix = 0
 		while not self.injectReturn('return document.readyState;') == 'complete':
 			self.inject( "window.onload = function() { window.taskComplete=1; };" )
 			time.sleep( 1 )
 			ix+=1
-			print( ix, end='\r', flush=True )
+			_.pr( ix, end='\r', flush=True )
 
 	def code( self ):
 		
@@ -545,13 +545,14 @@ def action():
 	#   _.setPipeData( _.getText( _.switches.value('Input') ), focus() )
 	# if not type( _.appData[__.appReg]['pipe'] ) == bool:
 	#   pass
-	# print( _.d2json(_.appData) )
+	# _.pr( _.d2json(_.appData) )
 
 
 
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

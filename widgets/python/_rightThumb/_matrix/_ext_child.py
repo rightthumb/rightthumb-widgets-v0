@@ -29,7 +29,7 @@ class TheChild:
 
 
 	def add( self, theID, registration ):
-		# print( '  *** ext here A ***' )
+		# _.pr( '  *** ext here A ***' )
 		algorithm = _matrix.app.algorithmRegister(trackingID=registration['trackingID'])
 		self.ids.append( theID )
 		self.focus = registration['focus']
@@ -41,13 +41,13 @@ class TheChild:
 		self.focusPop = registration['focus']
 		# self.app = self.app+'.py'
 		self.imp = None
-		# print( self.app )
+		# _.pr( self.app )
 		try:
 			self.imp = importlib.import_module( self.app )
 		except Exception as e:
-			# print( 'e:', e, self.app , 'ext 67')
+			# _.pr( 'e:', e, self.app , 'ext 67')
 			pass
-		# print( '  *** ext here X ***' )
+		# _.pr( '  *** ext here X ***' )
 		# self.focus = self.imp.focus( parentApp=registration['focus'] )
 
 
@@ -60,7 +60,7 @@ class TheChild:
 		self.saveLogFile = True
 
 		# load()
-		# print( '    made it here' )
+		# _.pr( '    made it here' )
 		self.imp.registration()
 
 		# _matrix.constructRegistration(appInfo[self.imp.focus(focus)]['file'],self.imp.focus(focus))
@@ -69,13 +69,13 @@ class TheChild:
 
 		_matrix.app.totalMemory()
 		_matrix.app.algorithmResult( algorithm, result=None )
-		# print( '  *** ext here B ***' )
+		# _.pr( '  *** ext here B ***' )
 
 
 
 	def unregister( self, trackingID=None ):
 		algorithm = _matrix.app.algorithmRegister(trackingID=trackingID)
-		# print( 'unregistered' )
+		# _.pr( 'unregistered' )
 	  # for key in _matrix.app.records['data'].keys():
 	  #     if self.name in _matrix.app.records['data'][key].focus:
 	  #         _matrix.app.records['data'][key].unregister()
@@ -85,7 +85,7 @@ class TheChild:
 		self.size = _.get_size(self.imp)
 		_matrix.app.totalMemory()
 		_matrix.app.focus(appDBA).unregister()
-		# print( 'unregistered complete' )
+		# _.pr( 'unregistered complete' )
 		# _.colorThis( [ self.name, '_matrix.app.memory_max', _.formatSize(_matrix.app.memory_max) ], 'yellow' )
 		_matrix.app.algorithmResult( algorithm, result=None )
 
@@ -115,7 +115,7 @@ class TheChild:
 			result = _matrix.app.id( temp ).singleGetWait()
 		elif not schedule:
 			result = self.imp.action()
-			# print( result )
+			# _.pr( result )
 
 		return _matrix.app.algorithmResult( algorithm, result=result )
 
@@ -235,5 +235,6 @@ class TheChild:
  #        #   theID = threads.add( 'execute', theFunc, [ arg, self.focus ], trigger=saveThreadsLog, loaded=True )
 
  #        return theID
+
 
 

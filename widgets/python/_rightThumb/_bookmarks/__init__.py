@@ -260,7 +260,7 @@ if 'wprofile' in _v.config_hash:
 if 'ww' in _v.config_hash:
 	made['ww'] = 1
 	ww = _v.config_hash['ww']
-# print('made',made)
+# _.pr('made',made)
 if 'ww' in made  and 'h' in made:
 	try:
 		a = ww+os.sep+'databank'+os.sep+'tables'+os.sep+'bookmarks.index'
@@ -275,6 +275,7 @@ if 'ww' in made  and 'h' in made:
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

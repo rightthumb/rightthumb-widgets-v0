@@ -173,7 +173,7 @@ if not sys.stdin.isatty():
 
 # _dir.sqlCreateTable( db, deleteDBFirst=True, close=True )
 # obj = _dir.fileInfo( path, sql=True )
-# print(   _dir.fileInfo( _.switches.value('Input') )['size']   )
+# _.pr(   _dir.fileInfo( _.switches.value('Input') )['size']   )
 
 # _.saveLog('queue')
 # _.saveLog('audit')
@@ -235,8 +235,8 @@ def newFields( data ):
 	result = []
 	for i,d in enumerate(data):
 		result.append( i )
-	print( data )
-	print( result )
+	_.pr( data )
+	_.pr( result )
 	return result
 
 
@@ -249,11 +249,11 @@ def read_csv( file ):
 		sys.exit()
 		for row in reader:
 			csv_rows.extend([{title[i]:row[title[i]] for i in range(len(title))}])
-		# 	# print( row )
-			print( csv_rows )
+		# 	# _.pr( row )
+			_.pr( csv_rows )
 			sys.exit()
 		
-		print( csv_rows )
+		_.pr( csv_rows )
 		# return csv_rows
 
 def action():
@@ -267,7 +267,7 @@ def action():
 	# 	one = _.switches.value('FileOne')
 	# 	two = _.switches.value('FileTwo')
 	# else:
-	# 	print('Error 0')
+	# 	_.pr('Error 0')
 	# 	sys.exit()
 	# try:
 	# 	# fileOne = _.getText( one )
@@ -275,16 +275,17 @@ def action():
 	# 	fileOne = read_csv( one )
 	# 	fileTwo = read_csv( two )
 	# except Exception as e:
-	# 	print('Error 1')
+	# 	_.pr('Error 1')
 	# 	sys.exit()
 
 	# for row in fileOne:
-	# 	print( row )
+	# 	_.pr( row )
 
 # crossRefCSV
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

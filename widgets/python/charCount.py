@@ -184,7 +184,7 @@ if __name__ == '__main__':
 
 def action():
 	if _.switches.isActive('Input'):
-		print( len( _.switches.value('Input') ) )
+		_.pr( len( _.switches.value('Input') ) )
 
 
 # def load():
@@ -194,6 +194,7 @@ def action():
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

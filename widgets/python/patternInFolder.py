@@ -232,22 +232,22 @@ def action():
 
 	missing = True
 	if missing:
-		print()
+		_.pr()
 		_.colorThis( [ 'Missing:' ], 'green' )
-		print()
+		_.pr()
 		_.colorThis( [ '\t' 'Files:' ], 'yellow' )
 		for item in files:
 			if not item['in']:
 				_.colorThis( [ '\t\t', item['name'] ], 'cyan' )
-		print()
-		print()
+		_.pr()
+		_.pr()
 
 		_.colorThis( [ '\t', 'Pipe:' ], 'yellow' )
 		for item in subjects:
 			if not item['in']:
 				_.colorThis( [ '\t\t', item['row'] ], 'cyan' )
-		print()
-		print()
+		_.pr()
+		_.pr()
 
 
 
@@ -256,6 +256,7 @@ def action():
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

@@ -177,7 +177,7 @@ def getFolder(folder):
 
 
 def process(path):
-	# print(path)
+	# _.pr(path)
 	if not _.showLine(path):
 		return None
 	else:
@@ -187,7 +187,7 @@ def process(path):
 		original=file
 		for v in index:
 			if not printed_replace:
-				print(v,index[v])
+				_.pr(v,index[v])
 			file = file.replace(v,index[v])
 		printed_replace=True
 		
@@ -206,12 +206,12 @@ def action():
 	text=text.replace('\r','')
 	text=_str.cleanBE(text,'\n')
 	if text:
-		# print(text)
+		# _.pr(text)
 		while '\n\n\n' in text:
 			text=text.replace('\n\n\n','\n\n')
-		# print(text)
+		# _.pr(text)
 		data=text.split('\n\n')
-		# print(data)
+		# _.pr(data)
 		index={}
 		for dt in data:
 			y=dt.split('\n')
@@ -229,7 +229,7 @@ def action():
 			folders=_.switches.values('Folders')
 			if not len(_.switches.value('Folders')):
 				folders=[os.getcwd()]
-			# print(folders)
+			# _.pr(folders)
 			global files
 			files=[]
 			for folder in folders:
@@ -253,6 +253,7 @@ def backup_file(path):
 if __name__ == '__main__':
 	action()
 	__.isExit()
+
 
 
 

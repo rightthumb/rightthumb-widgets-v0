@@ -205,7 +205,7 @@ def action():
 	pipe = _.isData(r=1)
 	pipe.reverse()
 	for row in pipe:
-		print(row)
+		_.pr(row)
 
 
 
@@ -213,6 +213,7 @@ def action():
 if __name__ == '__main__':
 	action()
 	__.isExit()
+
 
 
 

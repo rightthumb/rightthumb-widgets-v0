@@ -412,7 +412,7 @@ def action():
 	_browser.imp.project.wait()
 
 	# agent = _browser.imp.project.injectReturn( 'navigator.userAgent;' )
-	# print( agent )
+	# _.pr( agent )
 	pause=input('pause: ')
 	# data = _browser.imp.project.getCookies()
 	# _.printVarSimple( data )
@@ -427,17 +427,17 @@ def action():
 		_browser.imp.project.wait()
 		_browser.imp.project.inject( code )
 		payload = _browser.imp.project.injectReturn( 'window.hackData_DnD_Payload_Complete;' )
-		# print( test )
+		# _.pr( test )
 		while payload is None:
 			payload = _browser.imp.project.injectReturn( 'window.hackData_DnD_Payload_Complete;' )
 		
 		for record in payload:
 			data.append( record )
-		print()
-		print()
-		print('data:', len(data))
-		print()
-		print()
+		_.pr()
+		_.pr()
+		_.pr('data:', len(data))
+		_.pr()
+		_.pr()
 		time.sleep(.5)
 		nextCheck = _browser.imp.project.injectReturn( 'window.hackData_DnD_Payload_Complete;' )
 		_browser.imp.project.inject( 'window.hackData_DnD_Payload_Acquired = false;' )
@@ -470,6 +470,7 @@ def action():
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

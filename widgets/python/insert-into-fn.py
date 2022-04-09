@@ -190,7 +190,7 @@ def process(path):
 	global injection_ID
 	funtions=[]
 	for key in table:
-		# print('rec',rec)
+		# _.pr('rec',rec)
 		if not key.startswith('class'):
 			funtions.append( table[key]['start'] )
 
@@ -220,7 +220,7 @@ def process(path):
 				new+=pre+line2+ ' ## injection_ID: ' + injection_ID +'\n'
 
 					# break
-			# print(line)
+			# _.pr(line)
 		else:
 			new+=line
 
@@ -241,7 +241,7 @@ def load():
 	_inFunc.switch('Log')
 	_inFunc.switch('Files',_.switches.values('Files')[0])
 	table = _inFunc.action().copy()
-	# print('table',table)
+	# _.pr('table',table)
 	data=_.getText( _.switches.values('Files')[0] )
 	if injection_ID in ''.join(data):
 		_.e('already injected')
@@ -252,6 +252,7 @@ import _rightThumb._md5 as _md5
 if __name__ == '__main__':
 	action()
 	__.isExit()
+
 
 
 

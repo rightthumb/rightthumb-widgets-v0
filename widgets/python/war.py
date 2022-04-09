@@ -174,7 +174,7 @@ values = {
 # 		tmp.append({ 'card': c, 'val': values[c[:-1]], 'player': i+1 })
 # 	sortedDeck = _.tables.returnSorted( 'data', 'd.val', tmp )
 # 	return sortedDeck
-	# print( sortedDeck )
+	# _.pr( sortedDeck )
 	# sys.exit()
 	# aa = a[:-1]
 	# bb = b[:-1]
@@ -213,8 +213,8 @@ def play():
 			for p in hands:
 				if not p in lost:
 					if len(hands[p]):
-						print( '?', p, len(hands[p]), hands[p] )
-			# print( 'TIE' )
+						_.pr( '?', p, len(hands[p]), hands[p] )
+			# _.pr( 'TIE' )
 			_.colorThis( 'DRAW', 'green' )
 			winner = True
 		cnt = 0
@@ -231,11 +231,11 @@ def play():
 				if not p in lost:
 					if len(hands[p]):
 						_.colorThis( ['winner:', p], 'green' )
-						# print( 'winner:', p )
+						# _.pr( 'winner:', p )
 						winner = True
 		if cnt == 0:
 			lost.reverse()
-			print( 'Loosing TIE:', lost[0], lost[1] )
+			_.pr( 'Loosing TIE:', lost[0], lost[1] )
 			winner = True
 		if not cnt == 1 and not cnt == 0:
 			hand()
@@ -296,7 +296,7 @@ def hand():
 	if not winner is None:
 		for cx in result:
 			hands[winner].append( cx['card'] )
-	# print( result )
+	# _.pr( result )
 	# sys.exit()
 
 def war( battling ):
@@ -308,7 +308,7 @@ def war( battling ):
 
 	
 	# for p in battling:
-	# 	print( p, len(hands[p]) )
+	# 	_.pr( p, len(hands[p]) )
 	cg = {}
 	for p in battling:
 		cg[p] = []
@@ -362,7 +362,7 @@ def war( battling ):
 		elif warLEVEL['level'] > 3:
 			_.colorThis( [warLEVEL['level']+1, 'battling:', battling, result], 'green' )
 
-		# print()
+		# _.pr()
 	
 	if len(result) == 0:
 		for p in battling:
@@ -370,7 +370,7 @@ def war( battling ):
 			_.colorThis( [p, 'lost'], 'red' )
 		return None
 		_.colorThis(  'Error: b23', 'red'  )
-		print(  )
+		_.pr(  )
 	elif len(result) == 1:
 		for p in battling:
 			if not p == result[0]['player']:
@@ -397,7 +397,7 @@ def war( battling ):
 				_.colorThis( [p, 'lost'], 'red' )
 				lost.append(p)
 			return None
-				# print( p, len(hands[p]) )
+				# _.pr( p, len(hands[p]) )
 			# _.colorThis( [ 'Error', battling, cg, war_cards ], 'red' )
 		if len(nBattling) == 1:
 			for p in battling:
@@ -405,16 +405,16 @@ def war( battling ):
 					lost.append(p)
 					_.colorThis( [p, 'lost'], 'red' )
 			return nBattling[0]
-		# print(nBattling)
+		# _.pr(nBattling)
 		return war( nBattling )
 
 
 
 def newGame():
-	print()
-	print()
-	print()
-	print()
+	_.pr()
+	_.pr()
+	_.pr()
+	_.pr()
 	global players
 	global hands
 	global loopCheck
@@ -425,7 +425,7 @@ def newGame():
 
 	__.currentGame +=1
 	_.colorThis(  ['GAME:', __.currentGame], 'cyan'  )
-	# print(  )
+	# _.pr(  )
 
 	total_wars['war'] = 0
 	total_wars['multi'] = 0
@@ -435,7 +435,7 @@ def newGame():
 	loopCheck = 0
 	hands = {}
 	deck = shuffle( 'AC,2C,3C,4C,5C,6C,7C,8C,9C,10C,JC,QC,KC,AD,2D,3D,4D,5D,6D,7D,8D,9D,10D,JD,QD,KD,AH,2H,3H,4H,5H,6H,7H,8H,9H,10H,JH,QH,KH,AS,2S,3S,4S,5S,6S,7S,8S,9S,10S,JS,QS,KS'.split(',') )
-	# print( deck )
+	# _.pr( deck )
 
 	# players = 8
 	for p in range(1,players+1):
@@ -452,10 +452,10 @@ def newGame():
 		if p > players:
 			p = 1
 	# for p in hands:
-	# 	print( p, len(hands[p]) )
+	# 	_.pr( p, len(hands[p]) )
 	play()
-	# print( 'wars:', total_wars['war'] )
-	# print( 'multi-wars:', total_wars['multi'] )
+	# _.pr( 'wars:', total_wars['war'] )
+	# _.pr( 'multi-wars:', total_wars['multi'] )
 	totals = {}
 	wtotal = 0
 	# total_wars = 0
@@ -463,9 +463,9 @@ def newGame():
 		totals[k] = warLEVEL['game'][k]
 		wtotal += totals[k]
 
-	print( 'hands:', total_hands['hands'])
-	print( 'depths of war:', totals)
-	print( 'Total wars:', wtotal )
+	_.pr( 'hands:', total_hands['hands'])
+	_.pr( 'depths of war:', totals)
+	_.pr( 'Total wars:', wtotal )
 
 
 def action(total_games=1):
@@ -491,23 +491,23 @@ def action(total_games=1):
 		games+=1
 		newGame()
 
-	print()
-	print()
-	print()
-	# print( 'total wars:', total_wars['total_war'] )
-	# print( 'total multi-wars:', total_wars['total_multi'] )
-	print( 'players:', players )
-	print( 'games:', _.addComma(total_games) )
-	print( 'hands:', _.addComma(total_hands['total']))
+	_.pr()
+	_.pr()
+	_.pr()
+	# _.pr( 'total wars:', total_wars['total_war'] )
+	# _.pr( 'total multi-wars:', total_wars['total_multi'] )
+	_.pr( 'players:', players )
+	_.pr( 'games:', _.addComma(total_games) )
+	_.pr( 'hands:', _.addComma(total_hands['total']))
 	totals = {}
 	wtotal = 0
 	for k in sorted(warLEVEL['totals'].keys()):
 		totals[k] = warLEVEL['totals'][k]
 		wtotal += totals[k]
-	print( 'depths of war:', totals)
-	print( 'max depths of war:', warLEVEL['max'])
-	print( 'Total wars:', _.addComma(wtotal) )
-	print( 'Max Depth GAME:', __.maxDepthGame )
+	_.pr( 'depths of war:', totals)
+	_.pr( 'max depths of war:', warLEVEL['max'])
+	_.pr( 'Total wars:', _.addComma(wtotal) )
+	_.pr( 'Max Depth GAME:', __.maxDepthGame )
 	
 	# total_wars = { 'war':0,'multi':0,'total_war':0,'total_multi'0 }
 
@@ -525,6 +525,7 @@ warLEVEL = { 'level': 0, 'totals':{}, 'game':{}, 'max': 0 }
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

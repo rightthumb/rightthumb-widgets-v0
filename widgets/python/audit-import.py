@@ -188,16 +188,16 @@ def processImport():
 			IMPY += ' '+ch+' '
 
 	# xxx = IMPY.count('folderID_tech')
-	# print(xxx)
+	# _.pr(xxx)
 	# sys.exit()
 	table.usage = _.dot()
 	table.usage.app = _.dot()
 	table.usage.i = _.dot()
 
-	# print( imp )
+	# _.pr( imp )
 	# for line in imp:
 	# 	line = line.replace( ' ', '•' )
-	# 	print(line)
+	# 	_.pr(line)
 
 	pass
 	isClass = False
@@ -205,10 +205,10 @@ def processImport():
 	functions = []
 	for line in imp:
 		# if line.startswith('class '):
-		# 	# print(line)
+		# 	# _.pr(line)
 
 		if line.startswith('class ') and not line == 'class dot:' and not line == 'class DOT:' and not line == 'class Dot:':
-			# print(line)
+			# _.pr(line)
 			isClass = True
 			lClass = line.split('class ')[1].split('(')[0].split(':')[0].split(' ')[0]
 			lClass = _str.cleanBE( lClass, '\t' )
@@ -241,7 +241,7 @@ def processImport():
 					ixi = iii
 				if iYi > ixi:
 					ixi = iYi
-				# print(ixi, cl)
+				# _.pr(ixi, cl)
 				table.variables[cl] = {
 															'i': ixi,
 															'apps': {},
@@ -260,7 +260,7 @@ def processImport():
 		
 		if isClass:
 			if line.startswith('\tdef '):
-				# print(line)
+				# _.pr(line)
 				cl = line.split('\tdef ')[1].split('(')[0].split(' ')[0]
 				cl = _str.cleanBE( cl, '\t' )
 				if not cl == '__init__':
@@ -272,10 +272,10 @@ def processImport():
 
 	pass
 	for line in imp:
-		# print(line)
+		# _.pr(line)
 		for k in table.classes:
 			x = '='+k+'('
-			# print(x)
+			# _.pr(x)
 			if x in line:
 				line = line.replace('\t','')
 				line = line.replace(' ','')
@@ -287,9 +287,9 @@ def processImport():
 					v = v.replace('_._','_.')
 					table.classes[k]['variable'] = v
 					# _.cp( v, 'green' )
-				# print( k, v )
+				# _.pr( k, v )
 	# _.vp( table.classes )
-	# print( '\n'.join( list(table.classes.keys()) ) )
+	# _.pr( '\n'.join( list(table.classes.keys()) ) )
 
 
 def scanAppRegistration():
@@ -304,17 +304,17 @@ def scanAppRegistration():
 		a = key
 
 
-		# print(a)
+		# _.pr(a)
 		for rec in record['file_profile']['imports']:
 			im = rec['app']
 			if im == '_rightThumb._'+IMP:
-				# print(im)
+				# _.pr(im)
 				if 'instances' in rec:
 					if rec['instances']:
-						# print( list(rec['instances'].keys())[0] )
+						# _.pr( list(rec['instances'].keys())[0] )
 						pre = list(rec['instances'].keys())[0].split('.')[0]
-						# print(pre)
-						# print('here')
+						# _.pr(pre)
+						# _.pr('here')
 						# _.pv(table.classes)
 						# _.pv(table.functions)
 						# _.pv(table.variables)
@@ -324,7 +324,7 @@ def scanAppRegistration():
 								for child in table.classes[k]['children']:
 									item = pre +'.'+ vv +'.'+child + '('
 									if item in rec['instances']:
-										# print(item)
+										# _.pr(item)
 										table.classes[k]['children'][child]['i'] += 1
 										table.classes[k]['children'][child]['apps'][a] = rec['instances'][item]
 										table.classes[k]['i'] += rec['instances'][item]
@@ -333,7 +333,7 @@ def scanAppRegistration():
 						for k in table.functions:
 							# item = pre +'.'+ k + '('
 							item = pre +'.'+ k+'('
-							# print(item)
+							# _.pr(item)
 							for oOo in rec['instances']:
 
 								if item[:-1] == oOo or item in oOo:
@@ -341,7 +341,7 @@ def scanAppRegistration():
 										table.functions[k]['i'] += 1
 										table.functions[k]['apps'][a] = rec['instances'][item]
 										# table.functions[k]['i'] += rec['instances'][item]
-									# print(oOo)
+									# _.pr(oOo)
 
 						for k in table.variables:
 							# item = pre +'.'+ k + '('
@@ -352,7 +352,7 @@ def scanAppRegistration():
 										table.variables[k]['i'] += 1
 										table.variables[k]['apps'][a] = rec['instances'][item]
 										# table.functions[k]['i'] += rec['instances'][item]
-									# print(oOo)
+									# _.pr(oOo)
 
 def isInt(n):
 	x = '0123456789'
@@ -461,7 +461,7 @@ def action():
 			if isBad:
 				if table.functions[k]['i'] <= do.functions:
 					_.cp( [ '\t', table.functions[k]['i'], pre+k ], 'cyan' )
-					# print( table.functions[k]['i'], pre+k )
+					# _.pr( table.functions[k]['i'], pre+k )
 			else:
 				if table.functions[k]['i'] >= do.functions:
 					_.cp( [ '\t', table.functions[k]['i'], pre+k ], 'cyan' )
@@ -490,7 +490,7 @@ def action():
 						else:
 							ppre = ''
 					_.cp( [ '\t', table.classes[k]['children'][child]['i'], ppre+vVv+'.'+child ], 'cyan' )
-					# print( table.classes[k]['i'], pre+table.classes[k]['variable']+'.'+child )
+					# _.pr( table.classes[k]['i'], pre+table.classes[k]['variable']+'.'+child )
 			
 
 
@@ -523,21 +523,21 @@ def action():
 
 	# _.vp(test)
 	# IMPY = '\n'.join( imp )
-	# print(IMPY)
+	# _.pr(IMPY)
 	# for k in table.variables:
 	# 	if table.variables[k]['i'] < 1:
-	# 		print( 0, k )
+	# 		_.pr( 0, k )
 			# ixi = impy.lower().count(k.lower())
 			# table.variables[k]['i'] = ixi
 			# if table.variables[k]['i'] < 1:
-			# 	# print()
-			# 	# print()
+			# 	# _.pr()
+			# 	# _.pr()
 
-			# 	# print(table.variables[k]['i'], k)
+			# 	# _.pr(table.variables[k]['i'], k)
 			# 	# for x in k:
-			# 	# 	print( ord(x), chr(ord(x)) )
-			# 	# print()
-			# 	# print()
+			# 	# 	_.pr( ord(x), chr(ord(x)) )
+			# 	# _.pr()
+			# 	# _.pr()
 			# test[k] = table.variables[k]
 			# _.vp( table.variables[k] )
 
@@ -549,7 +549,7 @@ def action():
 	# _.vp( test )
 
 	if _.switches.isActive('AppCount'):
-		print( 'apps:', appCount )
+		_.pr( 'apps:', appCount )
 
 def load():
 	global imp
@@ -580,6 +580,7 @@ def load():
 if __name__ == '__main__':
 	action()
 	_.tables.eof()
+
 
 
 

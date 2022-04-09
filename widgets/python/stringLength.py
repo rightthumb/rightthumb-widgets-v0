@@ -200,18 +200,19 @@ _.postLoad( __file__ )
 def action():
 	for i,row in enumerate(_.isData(r=1)):
 		if not _.switches.isActive('Delim'):
-			print( len(row) )
+			_.pr( len(row) )
 		else:
 			y = []
 			for x in row.split(_.ci(_.switches.values('Delim')[0])):
 				y.append( str(len(x)) )
-			print( ' '.join(y) )
+			_.pr( ' '.join(y) )
 
 
 
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

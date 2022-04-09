@@ -260,10 +260,10 @@ def process( ip ):
 
 		# page = requests.get( url + ip )
 
-	# print( page.content )
+	# _.pr( page.content )
 	# _.printVar( eval( page.content ) )
 	testing = False
-	# print( html )
+	# _.pr( html )
 	if sys.getsizeof( html ) < 350:
 		good = True
 		tests = [
@@ -276,21 +276,21 @@ def process( ip ):
 		t = t.decode('latin1')
 		t = t.replace( ' ', '' )
 		if testing:
-			print()
-			print( t )
-			print()
+			_.pr()
+			_.pr( t )
+			_.pr()
 		if not t.startswith( "b'{" ):
 			if testing:
-				print( 'Error: start', t[0] )
+				_.pr( 'Error: start', t[0] )
 			good = False
 		if not t.endswith( "}'" ):
 			if testing:
-				print( 'Error: end', t[-1] )
+				_.pr( 'Error: end', t[-1] )
 			good = False
 		for test in tests:
 			if not test in t:
 				if testing:
-					print( 'Error:', test )
+					_.pr( 'Error:', test )
 				good = False
 
 
@@ -307,7 +307,7 @@ def process( ip ):
 				sys.exit()
 
 
-			# print( thePath )
+			# _.pr( thePath )
 			# sys.exit()
 			data = eval( html )
 			data['co'] = resolveCountry( data['country'] )
@@ -315,9 +315,9 @@ def process( ip ):
 			# except Exception as e:
 			# 	data['co'] = ''
 			if not type( data ) == dict:
-				print()
-				print( 'Error: BAD CODE !!!!!!!!!!!!' )
-				print( '\t', thePath )
+				_.pr()
+				_.pr( 'Error: BAD CODE !!!!!!!!!!!!' )
+				_.pr( '\t', thePath )
 				sys.exit()
 
 			return data
@@ -326,18 +326,18 @@ def process( ip ):
 
 	else:
 		if testing:
-			print( sys.getsizeof( html ) )
+			_.pr( sys.getsizeof( html ) )
 		return False
 		# _.printFields( eval( page.content ) )
 	# for row in  li:
 	# 	span = tables.cssselect('span')
-	# 	print( cleanupString(span[0]), '\t', cleanupString(span[1]) )
-	# 	print(x.text_content())
+	# 	_.pr( cleanupString(span[0]), '\t', cleanupString(span[1]) )
+	# 	_.pr(x.text_content())
 
 	# for x in dir( page ):
-	# 	print(x)
-	# print( tree.body )
-	# print( tree.text_content() )
+	# 	_.pr(x)
+	# _.pr( tree.body )
+	# _.pr( tree.text_content() )
 	# tables = tree.cssselect('.r')
 def checkExist( row, data ):
 	for record in data:
@@ -363,13 +363,13 @@ def action():
 		_.setPipeData( [  _.switches.value('Input')  ], focus() )
 	if not type( _.appData[__.appReg]['pipe'] ) == bool:
 		load()
-		# print( _.printVar(_.appData) )
+		# _.pr( _.printVar(_.appData) )
 		data = []
 		errors = []
 		spent = []
 		for i,row in enumerate(_.appData[__.appReg]['pipe']):
 			if len( row ):
-				# print( row )
+				# _.pr( row )
 				hasAlpha = False
 				for char in row:
 					if char in _str.alphaChar:
@@ -408,9 +408,9 @@ def action():
 				_.tables.print( 'data', 'ip,org' )
 			else:
 				_.tables.print( 'data', _.switches.value('Column') )
-			# print()
-			# print('', len(data))
-			# print()
+			# _.pr()
+			# _.pr('', len(data))
+			# _.pr()
 		for error in errors:
 			_.printBold( error, 'red' )
 		if not len(data):
@@ -439,7 +439,7 @@ def action():
 def cleanData( data ):
 	fields = []
 	newFields = []
-	# print( len(data) )
+	# _.pr( len(data) )
 	for record in data:
 		for key in record.keys():
 			if not key in fields:
@@ -460,9 +460,9 @@ def cleanData( data ):
 			if not key in newFields:
 				newFields.append( key )
 			data[i][key] = str(record[key])
-			# print( key, record[key] )
-			# print( type( record[key] ), key )
-	# print( len(data) )
+			# _.pr( key, record[key] )
+			# _.pr( type( record[key] ), key )
+	# _.pr( len(data) )
 	return data
 
 def resolveCountry( data ):
@@ -486,6 +486,7 @@ spent = []
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

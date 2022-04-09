@@ -19,7 +19,7 @@ import _rightThumb._matrix as _matrix
 a, app, application = _matrix.theApp()
 appDBA = _matrix.clearFocus( __name__, __file__ )
 _matrix.appReg = appDBA
-# print( 'appDBA', appDBA )
+# _.pr( 'appDBA', appDBA )
 app.focus( appDBA )
 def focus( parentApp='', childApp='', reg=True ):
 	global appDBA
@@ -80,7 +80,7 @@ def appSwitches():
 # __.isRequired_Pipe_or_File = False
 focusID = None
 def registration():
-	# print( 'matrix2 registration()' )
+	# _.pr( 'matrix2 registration()' )
 	global appDBA
 	global program
 	global focusID
@@ -107,7 +107,7 @@ def action():
 	load()
 	if not app.data('stdin').stdin() is None:
 		for i,row in enumerate( app.data('stdin').get() ):
-			print( row )
+			_.pr( row )
 	app.data( 'data in matrix2' ).set( ___.table.get( 'AnyDesk.json' ) )
 	_.colorThis( '\n\n\n\n                                                                        success' )
 	_.colorThis( ' This thing Works ', 'green' )
@@ -123,6 +123,7 @@ def load():
 
 if __name__ == '__main__':
 	app.asyn( 'action', action, trigger=app.focus(appDBA).unregister )
+
 
 
 

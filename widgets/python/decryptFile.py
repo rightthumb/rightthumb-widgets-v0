@@ -203,7 +203,7 @@ def action():
 	# import Crypto.Cipher as _cipher
 
 	# for x in dir(_cipher):
-		# print(x)
+		# _.pr(x)
 
 	# global data
 	# load()
@@ -229,6 +229,7 @@ def action():
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

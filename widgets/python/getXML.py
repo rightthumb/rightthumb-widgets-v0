@@ -249,7 +249,7 @@ def process( url ):
 	response = urllib.request.urlopen(request)
 	html = response.read()
 
-	print( html.decode('utf-8') )
+	_.pr( html.decode('utf-8') )
 
 	# for line in html.decode('utf-8').split('\n'):
 	# 	_.printBold( line, 'green' )
@@ -283,6 +283,7 @@ def action():
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

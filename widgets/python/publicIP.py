@@ -278,7 +278,7 @@ import requests
 def action():
 	url = 'http://www.rightthumb.com/projects/widget/clientIP.php'
 	page = requests.get(url)
-	print( str(  page.content  ,'iso-8859-1' ) )
+	_.pr( str(  page.content  ,'iso-8859-1' ) )
 
 
 
@@ -286,6 +286,7 @@ def action():
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

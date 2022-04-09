@@ -198,7 +198,7 @@ import subprocess
 
 def action():
 	# if not _.isWin:
-		# print( 'only for windows' )
+		# _.pr( 'only for windows' )
 		# sys.exit()
 	backupLog = _.getTable('fileBackup.json')
 	for i,row in enumerate(_.isData(r=1)):
@@ -207,11 +207,11 @@ def action():
 		file = os.path.abspath(row)
 		fileW = file.replace( '\\unity\\', '\\windows\\' )
 		for record in backupLog:
-			# print()
-			# print( file )
-			# print( record['file'] )
-			# print()
-			# # print(record['timestamp'])
+			# _.pr()
+			# _.pr( file )
+			# _.pr( record['file'] )
+			# _.pr()
+			# # _.pr(record['timestamp'])
 			if file.lower() == record['file'].lower() or fileW.lower() == record['file'].lower():
 				if record['timestamp'] > match['epoch']:
 					found = True
@@ -226,8 +226,8 @@ def action():
 						match['epoch'] = record['timestamp']
 						match['record'] = record
 		if found:
-			# print( match['record']['backup'] )
-			# print( file )
+			# _.pr( match['record']['backup'] )
+			# _.pr( file )
 			if _.isWin:
 				subprocess.call([ 'fc', file, match['record']['backup']])
 			else:
@@ -240,6 +240,7 @@ def action():
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

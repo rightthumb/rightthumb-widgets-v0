@@ -112,7 +112,7 @@ def size_group(s):
 	for rec in groups:
 		un = rec['s']+rec['x']
 		fo = unFormatSize(un)
-		# print(fo)
+		# _.pr(fo)
 		print
 		if s >= fo:
 			return int(rec['l'])
@@ -199,7 +199,7 @@ def sqlCreateTable( db, deleteDBFirst=False, close=False, asset=None, length=Non
 			total_records = asset
 		elif type(asset) == list:
 			total_records = len(asset)
-			# print( type(asset) )
+			# _.pr( type(asset) )
 
 		# pause = input( 'pause: ' )
 	if not delete is None:
@@ -228,7 +228,7 @@ def sqlCreateTable( db, deleteDBFirst=False, close=False, asset=None, length=Non
 # 	global cursor
 # 	record = fileInfo( path, sql, md5, exif, attrib, mime, db_connection, db_cursor, count )
 # 	if record is None:
-# 		print( 'Error:', path )
+# 		_.pr( 'Error:', path )
 # 	else:
 # 		cursor.execute( record )
 commit_count = 0
@@ -241,7 +241,7 @@ def fileInfo( path, sql=False, md5=False, exif=0,   attrib=None, mime=None, db_c
 	global processed_count
 	global total_records
 	processed_count += 1
-	# print( processed_count, total_records )
+	# _.pr( processed_count, total_records )
 	if processed_count == total_records:
 		last = True
 
@@ -252,7 +252,7 @@ def fileInfo( path, sql=False, md5=False, exif=0,   attrib=None, mime=None, db_c
 			db_connection = conn
 			db_cursor = cursor
 			count = processed_count
-			# print( 'here', type(db_cursor) )
+			# _.pr( 'here', type(db_cursor) )
 			# import sys
 			# sys.exit()
 
@@ -349,15 +349,15 @@ def fileInfoAction( path, sql, md5, exif, getAttrib=None, getMime=None, db_conne
 			woy = mwoy
 			year = myear
 			calcBy = modifiedRaw
-			# print('mwoy')
+			# _.pr('mwoy')
 			woyBY = '.m'
 		else:
 			woyBY = '.c'
-			# print('cwoy')
+			# _.pr('cwoy')
 			woy = cwoy
 			year = cyear
 			calcBy = createdRaw
-		# print('dateCalcByModified', dateCalcByModified)
+		# _.pr('dateCalcByModified', dateCalcByModified)
 		thisweek = getWOYFromEpoch(time.time())
 		weekAndYear = round(woy * 0.01,2) + year
 		dow = getDOWromEpochText(calcBy)
@@ -381,18 +381,18 @@ def fileInfoAction( path, sql, md5, exif, getAttrib=None, getMime=None, db_conne
 			else:
 				shouldMD5 = False
 				md5Data = md5[1]
-		# print( 'shouldMD5:', shouldMD5 )
+		# _.pr( 'shouldMD5:', shouldMD5 )
 		if shouldMD5:
-			# print( 'shouldMD5:', shouldMD5 )
-			# print()
-			# print( 'Processing:', path2 )
+			# _.pr( 'shouldMD5:', shouldMD5 )
+			# _.pr()
+			# _.pr( 'Processing:', path2 )
 			try:
 				md5Data = _md5.md5File( path2 )
 			except Exception as e:
 				pass
 				
-			# print( md5Data )
-			# print( 'md5File', md5Data, path2 )
+			# _.pr( md5Data )
+			# _.pr( 'md5File', md5Data, path2 )
 			# try:
 			# except Exception as e:
 			# 	pass
@@ -411,7 +411,7 @@ def fileInfoAction( path, sql, md5, exif, getAttrib=None, getMime=None, db_conne
 		if len(weekAndYear) == 6:
 			weekAndYear += '0' 
 
-		# print( dateDiffText(calcBy) )
+		# _.pr( dateDiffText(calcBy) )
 		global header
 		theHeader = ''
 		if header:
@@ -454,12 +454,12 @@ def fileInfoAction( path, sql, md5, exif, getAttrib=None, getMime=None, db_conne
 				'group': size_group(size),
 		}
 		if not type(obj['bytes']) == int:
-			# print('here')
+			# _.pr('here')
 			# sys.exit()
 			obj['bytes'] = 0
 
 		if not sdate is None:
-			# print(sdate_raw)
+			# _.pr(sdate_raw)
 			obj['sdate'] = formatDate(sdate_raw)
 			obj['sdate_raw'] = sdate_raw
 			obj['de'] = sdate_raw
@@ -506,7 +506,7 @@ def fileInfoAction( path, sql, md5, exif, getAttrib=None, getMime=None, db_conne
 			obj['attrib'] = attribs
 		if not getMime is None:
 			obj['mime'] = mime
-		# print('here')
+		# _.pr('here')
 		epoch.append({ 'label': 'obj', 'epoch': time.time() })
 
 	if exif == 1:
@@ -514,10 +514,10 @@ def fileInfoAction( path, sql, md5, exif, getAttrib=None, getMime=None, db_conne
 	if exif == 2:
 		exifData = acquireExif( obj )
 			
-		# print( exifData[0] )
+		# _.pr( exifData[0] )
 		
 		# for key in exifData[0].keys():
-		# 	print( key )
+		# 	_.pr( key )
 		# sys.exit()
 		for key in exifData[0].keys():
 			try:
@@ -559,14 +559,14 @@ def fileInfoAction( path, sql, md5, exif, getAttrib=None, getMime=None, db_conne
 
 
 	if not db_cursor is None:
-		# print( count )
+		# _.pr( count )
 		global commitPer
 		global commit_count
 		if not type(obj) == bool:
 			db_cursor.execute(obj)
 			epoch.append({ 'label': 'sql_execute', 'epoch': time.time() })
 			if not count is None and count % commitPer == 0:
-				# print( count, commitPer )
+				# _.pr( count, commitPer )
 				db_connection.commit()
 				commit_count+=1
 
@@ -575,7 +575,7 @@ def fileInfoAction( path, sql, md5, exif, getAttrib=None, getMime=None, db_conne
 				commit_count+=1
 			epoch.append({ 'label': 'sql_commit', 'epoch': time.time() })
 		else:
-			print( 'error:', path )
+			_.pr( 'error:', path )
 
 
 
@@ -664,7 +664,7 @@ def friendlyWeekNew(theDate):
 	currentDate = time.time()
 	currentYear = formatDateYear(currentDate)
 	currentWeek = datetime.datetime.fromtimestamp(currentDate).isocalendar()[1]
-	# print(date(2018, 12, 28).isocalendar()[1])
+	# _.pr(date(2018, 12, 28).isocalendar()[1])
 	try:
 		theDate = int(theDate)
 		testYear = formatDateYear(theDate)
@@ -792,7 +792,7 @@ def unFormatSize(size):
 		size = int(size)
 
 	result = round(size * factor,0)
-	# print( size, factor )
+	# _.pr( size, factor )
 	# result = size * factor
 	return result
 
@@ -900,8 +900,8 @@ def getTable( theFile, tableTemp=False,      isDic=None, isList=None,      tmp=N
 	if not os.path.isfile(file0):
 		file0 = theFile
 	if os.path.isfile(file0):
-		# print( 'theFile', theFile )
-		# print( 'file0', file0 )
+		# _.pr( 'theFile', theFile )
+		# _.pr( 'file0', file0 )
 		# import bigjson
 		with open(file0,'r', encoding="latin-1") as json_file:
 			json_data = json.load(json_file)
@@ -992,20 +992,20 @@ def getTable( theFile, tableTemp=False,      isDic=None, isList=None,      tmp=N
 # 					break
 # 				# wmd = abs(_.daysDiff(   _.monthMath(      _.woy2dates( str( round(wy * 0.01,2) + y ) )[0]      , tMs, do='+' ), epoch   ))
 # 				# ixx = abs(int(str( wmd/7 ).split('.')[0]))
-# 				# print(ixx)
+# 				# _.pr(ixx)
 # 				# if ixx> 4:
 
-# 				# 	print( '\n000-time_ago' )
-# 				# 	print( '000', nwoy )
-# 				# 	print( '010', _.friendlyDate(_.woy2dates( str( round(wy * 0.01,2) + y ) )[0]) )
+# 				# 	_.pr( '\n000-time_ago' )
+# 				# 	_.pr( '000', nwoy )
+# 				# 	_.pr( '010', _.friendlyDate(_.woy2dates( str( round(wy * 0.01,2) + y ) )[0]) )
 
-# 				# 	print( '020', tMs, _.friendlyDate(_.monthMath(      _.woy2dates( str( round(wy * 0.01,2) + y ) )[0]      , tMs, do='+' ))    )
+# 				# 	_.pr( '020', tMs, _.friendlyDate(_.monthMath(      _.woy2dates( str( round(wy * 0.01,2) + y ) )[0]      , tMs, do='+' ))    )
 					
-# 				# 	print( '030', nwoy, tyrs, tMs, ixx, '  ...  ', wmd )
+# 				# 	_.pr( '030', nwoy, tyrs, tMs, ixx, '  ...  ', wmd )
 
 # 				# 	import sys
 # 				# 	sys.exit()
-# 				# print( wmd )
+# 				# _.pr( wmd )
 
 # 				# ixx = ixx - ( tMs*4 )
 
@@ -1024,11 +1024,11 @@ def getTable( theFile, tableTemp=False,      isDic=None, isList=None,      tmp=N
 # 			if y < KILL_ON:
 # 				break
 # 	if not woy_hash_table_back:
-# 		# print(0,data)
+# 		# _.pr(0,data)
 # 		return data
 # 	else:
 # 		if not data in woy_hash_table_back:
-# 			# print(1,data)
+# 			# _.pr(1,data)
 # 			# printVarSimple(woy_hash_table_back)
 # 			return data
 # 		else:
@@ -1122,7 +1122,7 @@ def gen_days_2be(days=1):
 # 				# tMs = _.monthsDiff(  )
 # 				tMs = int(str(tMsZ).split('.')[0])
 # 				ixx = ixx - ( tMs*4 )
-# 				# print( '000-time_2be' )
+# 				# _.pr( '000-time_2be' )
 # 				# wmd = abs(_.daysDiff(   _.monthMath(      _.woy2dates( str( round(wy * 0.01,2) + y ) )[0]      , tMs, do='+' ), epoch   ))
 # 				# ixx = int(str( wmd/7 ).split('.')[0])
 				
@@ -1142,11 +1142,11 @@ def gen_days_2be(days=1):
 # 			if y > KILL_ON:
 # 				break
 # 	if not woy_hash_table_forward:
-# 		# print(0,data)
+# 		# _.pr(0,data)
 # 		return data
 # 	else:
 # 		if not data in woy_hash_table_forward:
-# 			# print(1,data)
+# 			# _.pr(1,data)
 # 			# printVarSimple(woy_hash_table_back)
 # 			return data
 # 		else:
@@ -1178,7 +1178,7 @@ def gen_days_ago(days=1):
 
 def dateDiffText( theDate ):
 
-	# print( theDate )
+	# _.pr( theDate )
 
 	y=0
 	m=0
@@ -1240,8 +1240,8 @@ def dateDiffText( theDate ):
 
 def daysDiff( one, two ):
 
-	print(one, two)
-	print(type(one), type(two))
+	_.pr(one, two)
+	_.pr(type(one), type(two))
 
 	if one == two:
 		return 0
@@ -1259,5 +1259,6 @@ def daysDiff( one, two ):
 
 # dateDiffText
 header = 0
+
 
 

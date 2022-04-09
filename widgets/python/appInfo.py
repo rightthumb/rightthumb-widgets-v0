@@ -184,7 +184,7 @@ def addKeys( appInfo, fileInfo, version, fileProfile ):
 				error = True
 				errors.append({ 'field': 'file_profile', 'error': 'has include that is not used', 'effects': 'speed' })
 
-	# print( 'VVVVVVVVVVVVVVVVVVVVV' )
+	# _.pr( 'VVVVVVVVVVVVVVVVVVVVV' )
 	# _.printVar( appInfo )
 	# sys.exit()
 	appInfo['live_file'] = fileInfo['name']
@@ -251,7 +251,7 @@ def addKeys( appInfo, fileInfo, version, fileProfile ):
 		if appInfo['categories'][0] == 'research' and appInfo['categories'][1] == 'text manipulation' and len(appInfo['categories']) == 2:
 			error = False
 			errors.append({ 'field': 'categories', 'error': 'default data', 'affect': 'documentation' })
-	# print( 'HERE', 0 )
+	# _.pr( 'HERE', 0 )
 # switches
 # can have pipeData
 # must have pipeData
@@ -333,7 +333,7 @@ def createRecord( data ):
 			test = '931B695AF62A' + data
 			data = test.replace( '931B695AF62Aimport ', '' )
 			appSpace = data
-		# print( 'appSpace:', appSpace )
+		# _.pr( 'appSpace:', appSpace )
 		if ',' in appSpace:
 			newResults = []
 			for app in appSpace.split( ',' ):
@@ -403,15 +403,15 @@ def createRecord( data ):
 		try:
 			info['app'] = data.split( "')" )[0].split( ",'" )[1]
 		except Exception as e:
-			print()
-			print( data )
+			_.pr()
+			_.pr( data )
 			sys.exit()
 
 		return info
 
 
 	if '931B695AF62A' in data:
-		print( 'Error: 931B695AF62A' )
+		_.pr( 'Error: 931B695AF62A' )
 	return info
 
 # from os.path import isfile, isdir
@@ -446,12 +446,12 @@ def processApp( path ):
 	global data
 	
 	# for x in myApps():
-	# 	print(x)
+	# 	_.pr(x)
 
 	# return {}
 	test = False
 
-	# print( os.path.abspath(path), os.path.isfile(path) )
+	# _.pr( os.path.abspath(path), os.path.isfile(path) )
 	fileInfo = _dir.fileInfo( os.path.abspath(path) )
 	if fileInfo['name'].startswith( 'blank' ):
 		return False
@@ -474,7 +474,7 @@ def processApp( path ):
 
 
 		if 'import ' in row.lower() or ( 'from ' in row.lower() and 'import ' in row.lower() ) or '_.regimp(' in row.lower():
-			# print( 'here' )
+			# _.pr( 'here' )
 			if row.startswith( 'import ' ) or ( row.startswith( 'from ' ) and ' import ' in row.lower() ) or '_.regimp(' in row.lower():
 				importData = auditImportLine( row )
 				if not type( importData ) == bool:
@@ -493,9 +493,9 @@ def processApp( path ):
 				try:
 					version = int( v )
 				except Exception as e:
-					print( row )
-					print( v )
-					print( 'Error: int( v )' )
+					_.pr( row )
+					_.pr( v )
+					_.pr( 'Error: int( v )' )
 					# sys.exit()
 					version = 0
 	if len( fileProfile['imports'] ):
@@ -512,7 +512,7 @@ def processApp( path ):
 			row = row.replace( '\t', ' ' )
 			while '  ' in row:
 				row = row.replace('  ',' ')
-			# print(row)
+			# _.pr(row)
 			for i,record in enumerate(fileProfile['imports']):
 				if not 'instances' in fileProfile['imports'][i]:
 					fileProfile['imports'][i]['instances'] = {}
@@ -526,10 +526,10 @@ def processApp( path ):
 								for nsx in r.split( ' ' ):
 									if ns+'.' in nsx:
 										nsxXx = processInstances(ns,nsx)
-										# print( nsxXx )
+										# _.pr( nsxXx )
 										for nsxXxY in nsxXx:
 											if len(nsxXxY):
-												# print( type(nsxXxY), nsxXxY )
+												# _.pr( type(nsxXxY), nsxXxY )
 												if not nsxXxY in fileProfile['imports'][i]['instances']:
 													fileProfile['imports'][i]['instances'][nsxXxY] = 0
 												fileProfile['imports'][i]['instances'][nsxXxY] +=1
@@ -546,14 +546,14 @@ def processApp( path ):
 
 	if test:
 		if version == 0:
-			print( 'Version Error' )
+			_.pr( 'Version Error' )
 		else:
-			print( 'version:', version )
+			_.pr( 'version:', version )
 
-		# print()
-		# print( 'fileInfo:', path, os.path.abspath(path) )
+		# _.pr()
+		# _.pr( 'fileInfo:', path, os.path.abspath(path) )
 		# _.printVar( fileInfo )
-		# print()
+		# _.pr()
 
 	appName = path.replace( _v.py,'' ).replace('.py','').replace( os.sep, '.' ).replace(' ','')
 	try:
@@ -563,9 +563,9 @@ def processApp( path ):
 		imp = importlib.import_module( appName )
 
 		# if test:
-		# 	print( 'imp:' )
+		# 	_.pr( 'imp:' )
 		# 	_.printVar( imp._.appInfo )
-		# 	print()
+		# 	_.pr()
 		
 
 		iKeys = 0
@@ -613,7 +613,7 @@ def processApp( path ):
 
 		if foundVersion:
 			appInfo = auditAppInfo( appInfo, fileInfo, version, fileProfile )
-			print( 'WORKS' )
+			_.pr( 'WORKS' )
 			appInfo['base_version'] = version
 			appInfo['file_profile'] = fileProfile
 			appInfo['app_version'] = findRevision( fileInfo['path'] )
@@ -630,9 +630,9 @@ def processApp( path ):
 
 		if foundVersion:
 			if test:
-				print( 'appInfo:' )
+				_.pr( 'appInfo:' )
 				_.printVar( appInfo )
-				print()
+				_.pr()
 			for i,key in enumerate(appInfo.keys()):
 				iKeys += 1
 				
@@ -643,7 +643,7 @@ def processApp( path ):
 						found = True
 						result = appInfo[ key ]
 				except Exception as e:
-					print( 'Error:', appInfo[ key ]['file'], fileInfo['name'] )
+					_.pr( 'Error:', appInfo[ key ]['file'], fileInfo['name'] )
 
 
 
@@ -652,12 +652,12 @@ def processApp( path ):
 
 
 			if test:
-				print( 'found:', found )
+				_.pr( 'found:', found )
 			result['livefile'] = fileInfo['name']
 			return result
 
 		if test:
-			print( 'Error: version not found', version )
+			_.pr( 'Error: version not found', version )
 	except Exception as e:
 		with open(  _v.myTables+os.sep+'appInfo-errors'  , 'a' ) as file: file.write( appName + '\n' );
 		_.e( appName, e, kill=False )
@@ -681,10 +681,10 @@ def action():
 	if not type( _.appData[__.appReg]['pipe'] ) == bool:
 		for i,row in enumerate(_.appData[__.appReg]['pipe']):
 			row = row.replace( '\n', '' )
-			print( row )
+			_.pr( row )
 			if test:
-				print( '______________________________' )
-				print( '______________________________' )
+				_.pr( '______________________________' )
+				_.pr( '______________________________' )
 			info = processApp( row )
 			# try:
 			# except Exception as e:
@@ -703,19 +703,19 @@ def action():
 				a = a.replace('.py','')
 				records[a] = info
 				# data.append( info )
-				print( 'Good' )
+				_.pr( 'Good' )
 			else:
-				print( 'Bool' )
+				_.pr( 'Bool' )
 					
 
 			
 			if test:
-				print( '______________________________' )
+				_.pr( '______________________________' )
 				_.printVar( info )
 				return False
 		_.saveTableDB( records, 'appRegistration.hash' )
-		print()
-		print()
+		_.pr()
+		_.pr()
 		_.colorThis( 'DONE', 'green' )
 
 myAppList = []
@@ -747,6 +747,7 @@ autoRevision = _.tables.returnSorted( 'backupLog', 'd.timestamp', _.getTable('fi
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

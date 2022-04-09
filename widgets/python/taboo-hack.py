@@ -244,10 +244,10 @@ def action():
 		for path in _.switches.values('Files'):
 			for line in _.getText(path):
 				code = eval( '{'+line+'}' )
-				# print(type(code),code)
+				# _.pr(type(code),code)
 				text = clean(code['text'])
 				rec = extractWords(text)
-				# print( text )
+				# _.pr( text )
 				taboo.append(rec)
 				# _.pv(rec)
 				# sys.exit()
@@ -268,6 +268,7 @@ def action():
 if __name__ == '__main__':
 	action()
 	__.isExit()
+
 
 
 

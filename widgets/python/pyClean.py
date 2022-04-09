@@ -241,7 +241,7 @@ def getFolder(folder):
 			if path.endswith('.py'):
 				file = _.getText( path, raw=True )
 				if not file.startswith('#!/usr/bin/python3'):
-					print( path )
+					_.pr( path )
 					file = '#!/usr/bin/python3\n'+file
 					_.saveText( file, path )
 
@@ -280,6 +280,7 @@ def action():
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

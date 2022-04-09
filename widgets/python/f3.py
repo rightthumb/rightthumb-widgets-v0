@@ -177,7 +177,7 @@ def searchName(files,line):
 			result = False
 	else:
 		result = _.showLine(line)
-		# print(result)
+		# _.pr(result)
 	return result
 
 def executeSearch(filename,files,search):
@@ -193,16 +193,16 @@ def executeSearch(filename,files,search):
 				line = replaceDo(line)
 			if _.switches.isActive('Bookmarks') == True:
 				if _.switches.isActive('FileName') == True:
-					print(filename)
+					_.pr(filename)
 				else:
 					clean = _v.myBookmarks + _v.slash+'BM-'
 					if os.path.isdir(line) == True:
 						found = 'Good'
 					else:
 						found = 'Bad'
-					print(found + '\t ' + filename.replace(clean,'').replace('.txt','') + ' = ' + line)
+					_.pr(found + '\t ' + filename.replace(clean,'').replace('.txt','') + ' = ' + line)
 			elif _.switches.isActive('FileName') == True:
-				# print(filename + ':' + line)
+				# _.pr(filename + ':' + line)
 				newLine = line
 				newLine = _str.removeAll(newLine,'\t')
 				newLine = newLine.replace('\n','')
@@ -211,7 +211,7 @@ def executeSearch(filename,files,search):
 				newLine = _str.cleanFirst(newLine,' ')
 				theList.append({'filename': filename,'string': newLine,'line': i})
 			elif _.switches.isActive('JustName') == True:
-				print(filename)
+				_.pr(filename)
 				break
 			else:
 				row=line
@@ -220,27 +220,27 @@ def executeSearch(filename,files,search):
 						plusSearchX = _.ci( plusSearchX )
 						for subject in _.caseUnspecific( row, plusSearchX ):
 							row = row.replace( subject, _.colorThis( subject, 'green', p=0 ) )
-					print(row)
+					_.pr(row)
 				else:
-					print(line)
+					_.pr(line)
 def takeAction():
 	global indexFiles
 	global theList
 	search = []
 	filename = ''
-	# print(indexFiles)
-	# print(_.switches.value('_Raw'))
-	# print(_.switches.value('Plus'))
-	# print(_.switches.value('Minus'))
-	# print(indexFiles)
+	# _.pr(indexFiles)
+	# _.pr(_.switches.value('_Raw'))
+	# _.pr(_.switches.value('Plus'))
+	# _.pr(_.switches.value('Minus'))
+	# _.pr(indexFiles)
 	# os._exit(0)
-	# print( indexFiles )
+	# _.pr( indexFiles )
 	if type(_.appData[__.appReg]['pipe']) == list:
 		lookIn = indexFiles
 	else:
 		lookIn = glob.glob( indexFiles )
 	for files in lookIn:
-		# print( files )
+		# _.pr( files )
 		if _.switches.isActive('Force'):
 			mimeTest = True
 		else:
@@ -274,10 +274,10 @@ def takeAction():
 						executeSearch(filename,files,search)
 					except Exception as e:
 						pass
-						print('Error: ' + str(filename))
+						_.pr('Error: ' + str(filename))
 			# HERE
 	if _.switches.isActive('FileName') == True:
-		print()
+		_.pr()
 		_.switches.fieldSet('Long','active',True)
 		_.switches.fieldSet('GroupBy','active',True)
 		_.switches.fieldSet('GroupBy','value','filename')
@@ -292,7 +292,7 @@ def action():
 	#   _.setPipeData( _.getText( _.switches.value('Input') ), focus() )
 	# if not type( _.appData[__.appReg]['pipe'] ) == bool:
 	#   pass
-	# print( _.d2json(_.appData) )
+	# _.pr( _.d2json(_.appData) )
 
 
 	p = 'Papa_Desktop-Closet'
@@ -354,7 +354,7 @@ def action():
 			path = path.replace('\n','')
 			path = str(path)
 			if os.path.isfile(path) == True:
-				# print(path)
+				# _.pr(path)
 				shouldUseFile = True
 				if _.switches.isActive('Text'):
 					# mime = mimetypes.guess_type(path)
@@ -369,7 +369,7 @@ def action():
 		#   path = path.replace('\r','')
 		#   path = path.replace('\n','')
 		#   if os.path.isfile(path) == True:
-		#       # print(path)
+		#       # _.pr(path)
 		#       shouldUseFile = True
 		#       if _.switches.isActive('Text'):
 		#           mime = mimetypes.guess_type(path)
@@ -391,6 +391,7 @@ if _.switches.isActive('Errors') == True:
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

@@ -151,7 +151,7 @@ def newAbbreviations():
 
 	for i,br in enumerate(booksRaw):
 		br = br.replace('\n','').replace('.','')
-		# print( br )
+		# _.pr( br )
 		abbreviation = br.split(',')[1]
 		n = {
 				'book':		br.split(',')[0],
@@ -168,13 +168,13 @@ def action():
 	load()
 
 	# for key in data.keys():
-	# 	print( key, len( data[key] ) )
+	# 	_.pr( key, len( data[key] ) )
 
-	# print( len(_.appData[__.appReg]['pipe']) )
+	# _.pr( len(_.appData[__.appReg]['pipe']) )
 
 	for i,book in enumerate(theBooks):
 		if _.showLine( book['book'] ):
-			print( i+1,'\t', book['book'] )
+			_.pr( i+1,'\t', book['book'] )
 
 
 	myBook = None
@@ -185,13 +185,13 @@ def action():
 		chapter=input(' Chapter:  ')
 		verse=input(' Verse:  ')
 		for i,index in enumerate(data[ myBook+' '+chapter+':'+verse ]):
-			print( i,'\t',index.split('-')[1], '\t', index.split('-')[0] )
+			_.pr( i,'\t',index.split('-')[1], '\t', index.split('-')[0] )
 		pat=int(input(' Select:  '))
 		for record in patterns[ data[ myBook+' '+chapter+':'+verse ][pat].split('-')[0] ]:
-			print()
-			print()
-			print()
-			print( record['verse'], '\t', _str.stripNonAlphaNumaric(  _str.replaceDuplicate( theBible[ int(record['id']) ].replace( '\t', '   ' ), '  ' ).split('  ')[4].replace( eCV(record['verse'])[0], '' ).replace( eCV(record['verse'])[1], '' )   ) )
+			_.pr()
+			_.pr()
+			_.pr()
+			_.pr( record['verse'], '\t', _str.stripNonAlphaNumaric(  _str.replaceDuplicate( theBible[ int(record['id']) ].replace( '\t', '   ' ), '  ' ).split('  ')[4].replace( eCV(record['verse'])[0], '' ).replace( eCV(record['verse'])[1], '' )   ) )
 
 	except Exception as e:
 		pass
@@ -224,6 +224,7 @@ data = []
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

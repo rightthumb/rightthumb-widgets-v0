@@ -181,11 +181,11 @@ def action():
 				for imports in record['file_profile']['imports']:
 					for example in imports['examples']:
 						if not '_.' in example and not ' _' in example and not '_str' in example and not '=_' in example and not example.startswith('_'):
-							# print( example )
+							# _.pr( example )
 							thisExample = _str.namespace( imports['namespace'][0], example )
 							if not thisExample in spent_list and not type(thisExample) == bool:
 								spent_list.append( thisExample )
-								print( thisExample )
+								_.pr( thisExample )
 			except Exception as e:
 				pass
 
@@ -195,7 +195,7 @@ def action():
 			try:
 				for imports in record['file_profile']['imports']:
 					if not imports['namespace'][0] in spent_list:
-						print( imports['namespace'][0] )
+						_.pr( imports['namespace'][0] )
 						spent_list.append( imports['namespace'][0] )
 			except Exception as e:
 				pass
@@ -207,7 +207,7 @@ def action():
 					thisExample = _str.namespace( imports['namespace'][0], example )
 					if not thisExample in spent_list and not type(thisExample) == bool:
 						spent_list.append( thisExample )
-						print( thisExample )
+						_.pr( thisExample )
 
 
 	if test == 3:
@@ -215,7 +215,7 @@ def action():
 			for app in record['relatedapps']:
 				if not app in spent_list:
 					spent_list.append( app )
-					print( app )
+					_.pr( app )
 
 	if test == 4:
 		global valueOffset
@@ -238,7 +238,7 @@ def action():
 					thisExample = _str.namespace( imports['namespace'][0], example )
 					if not thisExample in spent_list and not type(thisExample) == bool:
 						spent_list.append( thisExample )
-						print( thisExample )
+						_.pr( thisExample )
 						if not thisExample in namespace_tree:
 							namespace_tree.append( thisExample )
 							data[i]['file_profile']['imports'][ii]['namespace_tree'].append( thisExample )
@@ -246,8 +246,8 @@ def action():
 
 
 
-	print()
-	print( '', len( spent_list ) )
+	_.pr()
+	_.pr( '', len( spent_list ) )
 
 
 def extractAppName( data ):
@@ -270,7 +270,7 @@ def generateQuery( data ):
 
 	if not pastDone:
 		buildCommand = commandBase
-		# print( valueOffset )
+		# _.pr( valueOffset )
 		selectedValue = _.switches.values( 'Input' )[valueOffset].split(';')
 		valueOffset+=1
 		for key in selectedValue:
@@ -286,7 +286,7 @@ def generateQuery( data ):
 				if isLast:
 					if not record in spent_list:
 						spent_list.append( record )
-						print( '\t', record )
+						_.pr( '\t', record )
 				else:
 					if not isLast:
 						generateQuery( record )
@@ -294,7 +294,7 @@ def generateQuery( data ):
 			if isLast:
 				if not newData in spent_list:
 					spent_list.append( newData )
-					print( '\t', newData )
+					_.pr( '\t', newData )
 
 
 
@@ -308,6 +308,7 @@ spent_list = []
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

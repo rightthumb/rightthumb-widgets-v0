@@ -154,11 +154,11 @@ def action():
 	xx = _.isData(r=1)
 	# xx.reverse()
 	for i,row in enumerate( xx ):
-		print()
-		print('____________________________________________')
-		print()
+		_.pr()
+		_.pr('____________________________________________')
+		_.pr()
 		for x in row.split( _.ci(_.switches.values('Split')[0]) ):
-			print(x)
+			_.pr(x)
 
 
 
@@ -166,6 +166,7 @@ def action():
 if __name__ == '__main__':
 	action()
 	__.isExit()
+
 
 
 

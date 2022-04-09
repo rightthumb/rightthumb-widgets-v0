@@ -281,7 +281,7 @@ def action():
 			_.printTest( data['email'][key] )
 
 			# for records in data['email'][key]:
-			# 	print( type( records ) )
+			# 	_.pr( type( records ) )
 			# 	sys.exit()
 			# 	# 	_.printTest( records )
 
@@ -309,6 +309,7 @@ files = []
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

@@ -36,17 +36,17 @@ class TheChild:
 
 	def unregister( self, trackingID=None ):
 		algorithm = _matrix.app.algorithmRegister(trackingID=trackingID)
-		# print('self.name',self.name)
+		# _.pr('self.name',self.name)
 		for key in _matrix.app.records['data'].keys():
 			if self.name in _matrix.app.records['data'][key].focus:
-				# print(' found  found  found  found  found  found  found  found  found  found  found  found  found ')
+				# _.pr(' found  found  found  found  found  found  found  found  found  found  found  found  found ')
 				_matrix.app.records['data'][key].unregister()
 			if self.name in _matrix.app.records['data'][key].live:
-				# print(' found  found  found  found  found  found  found  found  found  found  found  found  found ')
+				# _.pr(' found  found  found  found  found  found  found  found  found  found  found  found  found ')
 				_matrix.app.records['data'][key].unregister()
 		try:
 			for key in _matrix.app.records['ext'].keys():
-				# print( "_matrix.app.records['ext'][key].app", _matrix.app.records['ext'][key].app, self.name )
+				# _.pr( "_matrix.app.records['ext'][key].app", _matrix.app.records['ext'][key].app, self.name )
 				if self.name in _matrix.app.records['ext'][key].app:
 					_matrix.app.records['ext'][key].unregister()
 		except Exception as e:
@@ -79,5 +79,6 @@ class TheChild:
 		else:
 			_matrix.app.algorithmRegister( result=False )
 			return _matrix.app.algorithmResult( algorithm, result=None )
+
 
 

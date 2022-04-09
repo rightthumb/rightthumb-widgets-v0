@@ -41,7 +41,7 @@ def appSwitches():
 	
 def trigger_plus(data):
 	# return data
-	# print(data)
+	# _.pr(data)
 	# sys.exit()
 	return data.replace("'",'')
 
@@ -916,11 +916,11 @@ def display(a,b):
 			_.cp(loc_tally,'darkcyan')
 		loc_tally=0
 		last_loc=loc
-		print()
-		print()
+		_.pr()
+		_.pr()
 		_.cp(loc,'darkcyan')
 	if 'ID' in xXx:
-		print( '\t', _.cp( ID, 'white', p=0 ), _.cp( shrine, color, p=0 ) )     
+		_.pr( '\t', _.cp( ID, 'white', p=0 ), _.cp( shrine, color, p=0 ) )     
 	else:
 		_.cp( [ '\t', shrine ], color )
 	if 'Trial' in xXx:
@@ -995,9 +995,9 @@ def action():
 
 
 	if printed == 120:
-		print('',printed)
+		_.pr('',printed)
 	else:
-		print('',printed,'of',120)
+		_.pr('',printed,'of',120)
 
 	if _.switches.isActive('Done'):
 
@@ -1015,7 +1015,7 @@ def action():
 				_.cp('Saved','green')				
 			else:
 				ask=input('  Save? Y/n: ')
-				print()
+				_.pr()
 				if not 'n' in ask.lower():
 					_.saveTableDB(list(set(done)),'botw.list')
 					_.cp('Saved','green')
@@ -1025,7 +1025,7 @@ def action():
 		elif not printed == 1:
 
 			ask=input('  Save? y/N: ')
-			print()
+			_.pr()
 			if 'y' in ask.lower():
 				_.saveTableDB(list(set(done)),'botw.list')
 				_.cp('Saved','green')
@@ -1033,9 +1033,9 @@ def action():
 				_.cp('did not save','red')
 	pass
 	done=list(set(done))
-	print()
+	_.pr()
 	_.cp( [ 'completed:', str(len(done))+',', 120-len(done), 'left' ], 'Background.light_blue' )
-	print()
+	_.pr()
 
 # googled: zelda breath of the wild wiki shrines map
 # https://www.ign.com/wikis/the-legend-of-zelda-breath-of-the-wild/Shrines#Lanayru
@@ -1056,6 +1056,7 @@ Shoqa Tatone Shrine
 if __name__ == '__main__':
 	action()
 	__.isExit()
+
 
 
 

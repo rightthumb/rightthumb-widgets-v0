@@ -177,11 +177,11 @@ if __name__ == '__main__':
 # START
 
 def auditRow( row ):
-	if 'print(' in row:
-		# print( row )
+	if '_.pr(' in row:
+		# _.pr( row )
 		return True
 	if '_.appData' in row and "'pipe'" in row and 'for ' in row and not row.startswith( 'if ' ):
-		# print( row )
+		# _.pr( row )
 		return True
 	return False
 
@@ -190,7 +190,7 @@ def processFile( filename ):
 	path = os.path.abspath( filename )
 
 	file = _.getText( path, raw=True, clean=2 )
-	# print( file )
+	# _.pr( file )
 	check = False
 	for i,row in enumerate(file.split('\n')):
 		row = _str.removeUnsave( row )
@@ -201,7 +201,7 @@ def processFile( filename ):
 			if not row.startswith( ' ' ):
 				
 				check = False
-				# print( row )
+				# _.pr( row )
 
 				if auditRow( row ):
 					return True
@@ -215,7 +215,7 @@ def processFile( filename ):
 
 				if not row.startswith( 'def ' ):
 
-					# print( row )
+					# _.pr( row )
 					# check = True
 
 					if auditRow( row ):
@@ -229,10 +229,10 @@ def processFile( filename ):
 
 
 def action():
-	# print( 'HERE' )
+	# _.pr( 'HERE' )
 	# sys.exit()
 
-	# print( _.printVar(_.appData) )
+	# _.pr( _.printVar(_.appData) )
 	if _.switches.isActive('Input'):
 	# 	_.setPipeData( _.getText( _.switches.value('Input') ), focus() )
 		if type( _.appData[__.appReg]['pipe'] ) == bool:
@@ -241,12 +241,12 @@ def action():
 				_.appData[__.appReg]['pipe'].append( row )
 	if not type( _.appData[__.appReg]['pipe'] ) == bool:
 		_.pipeCleaner()
-		# print( _.printVar(_.appData) )
+		# _.pr( _.printVar(_.appData) )
 		for i,row in enumerate(_.appData[__.appReg]['pipe']):
 			if os.path.isfile( row ):
-				# print( row )
+				# _.pr( row )
 				if processFile( row ):
-					print( row )
+					_.pr( row )
 
 			# return False
 
@@ -254,6 +254,7 @@ def action():
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

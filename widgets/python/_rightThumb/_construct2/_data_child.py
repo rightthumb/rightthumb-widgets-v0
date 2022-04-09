@@ -55,10 +55,10 @@ class TheChild:
 		self.size = _.get_size(self.value)
 		__.app.memory += self.size
 
-		# print('set',self.value)
+		# _.pr('set',self.value)
 
 	def get( self ):
-		# print('get')
+		# _.pr('get')
 		return self.value
 
 	def clean( self, data ):
@@ -111,6 +111,7 @@ class TheChild:
 		self.singeSet = False
 		self.clear()
 		return val
+
 
 
 

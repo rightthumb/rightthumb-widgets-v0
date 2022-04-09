@@ -206,7 +206,7 @@ def action():
 
 
 	while not lines == 0:
-		print( lines )
+		_.pr( lines )
 		lines-=1
 
 
@@ -215,6 +215,7 @@ def action():
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

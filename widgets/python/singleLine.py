@@ -196,7 +196,7 @@ def testPattern( i ):
 			# if not data[i-2] in patternsX[data[i]][data[i-1]]:
 				# return True
 			else:
-				# print(i, '\t x: \t',data[i], '\t\t' ,data[i-1] )
+				# _.pr(i, '\t x: \t',data[i], '\t\t' ,data[i-1] )
 				return False
 		# else:
 		# 	if i-1 in theLines[ data[i-1] ]:
@@ -236,7 +236,7 @@ def action():
 			else:
 				if testPattern( i ):
 					spent[row] = 1
-					print(row)
+					_.pr(row)
 			
 
 
@@ -245,7 +245,7 @@ def action():
 		for i,row in enumerate(data):
 			if not row in spent:
 				spent[row] = 1
-				print(row)
+				_.pr(row)
 
 spent = {}
 data = []
@@ -256,6 +256,7 @@ theLines = {}
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

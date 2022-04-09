@@ -162,24 +162,24 @@ def action():
 	selection = []
 	for i,row in enumerate(_.isData(r=1)):
 		if not _.switches.isActive('Parse'):
-			# print(row)
-			print(0)
+			# _.pr(row)
+			_.pr(0)
 		elif  _.switches.isActive('Parse') and not len(_.switches.value('Parse')):
-			# print(row)
-			print(1)
+			# _.pr(row)
+			_.pr(1)
 		elif  _.switches.isActive('Parse') and len(_.switches.values('Parse')) and not _.switches.isActive('Plus'):
 			sp = _.ci(_.switches.values('Parse')[0])
 			if sp == ';sp':
 				sp = ' '
-			# print([sp])
+			# _.pr([sp])
 			parts = row.split(sp)
-			print( parts )
-			# print(2)
+			_.pr( parts )
+			# _.pr(2)
 		elif  _.switches.isActive('Parse') and len(_.switches.values('Parse')) and _.switches.isActive('Plus'):
 			sp = _.ci(_.switches.values('Parse')[0])
 			if sp == ';sp':
 				sp = ' '
-			# print([sp])
+			# _.pr([sp])
 			# sys.exit()
 			parts = row.split(sp)
 			line = []
@@ -192,13 +192,14 @@ def action():
 							if i in selection:
 								line.append( _.colorThis( str(i), 'green', p=0 )+'-'+subject )
 				if len(line):
-					print( '\t'.join(line), '\t\t', row)
+					_.pr( '\t'.join(line), '\t\t', row)
 
 
 
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

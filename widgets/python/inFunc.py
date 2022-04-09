@@ -185,14 +185,14 @@ def classPathRepo( s, n ):
 
 def fixEnd( end ):
 	global ignoreLines
-	# print()
-	# print(end)
+	# _.pr()
+	# _.pr(end)
 	while end in ignoreLines:
 		end -= 1
-		# print(end)
-	# print(end)
+		# _.pr(end)
+	# _.pr(end)
 	# sys.exit()
-	# print()
+	# _.pr()
 	return end
 def closeLog():
 	global log
@@ -202,7 +202,7 @@ def closeLog():
 
 	return ''
 	for d in data:
-		print( d )
+		_.pr( d )
 
 #####################################################
 def isChar(theChar):
@@ -288,7 +288,7 @@ def attemptClose(info):
 
 	for i,p in enumerate(process):
 		if p['status'] and data[p['location']]['cnt'] >= info['cnt']:
-			# print(data[p['location']]['cnt'],info['cnt'])
+			# _.pr(data[p['location']]['cnt'],info['cnt'])
 			data[p['location']]['end'] = info['line']
 			data[p['location']]['size'] = info['line'] - data[p['location']]['start']
 			process[i]['status'] = False
@@ -321,8 +321,8 @@ def action():
 		fileRecover.do( 'action' )
 		# _.switches.dumpSwitches()
 		# focus()
-		# print( focus() )
-		# print( __.appReg )
+		# _.pr( focus() )
+		# _.pr( __.appReg )
 		sys.exit()
 	if _.switches.isActive('Files'):
 		xXx = {
@@ -331,9 +331,9 @@ def action():
 				'all': 0,
 
 		}
-		# print( _.switches.value('Input') )
+		# _.pr( _.switches.value('Input') )
 		# sys.exit()
-		# print(_.switches.values('Files'))
+		# _.pr(_.switches.values('Files'))
 		if not os.path.isfile( _.switches.values('Files')[0] ):
 			# _.printBold( 'Error: File Not Found', 'red' )
 			_.printBold( 'File Not Found', 'red' )
@@ -366,11 +366,11 @@ def action():
 					info['end'] = 0
 					process.append({ 'status': True, 'location': len(data), 'cnt': info['cnt'] })
 					data.append(info)
-					# print(line)
+					# _.pr(line)
 		try:
 			data[len(data)-1]['end']
 		except Exception as e:
-			print(' No Functions ')
+			_.pr(' No Functions ')
 			return False
 		if data[len(data)-1]['end'] == 0:
 			data[len(data)-1]['end'] = len(file)
@@ -382,7 +382,7 @@ def action():
 		
 		if doSearch and len(found) > 0:
 			for dat in data:
-				# print( dat )
+				# _.pr( dat )
 				table['dat'][dat['start']] = dat
 				lastPrint = ''
 				for i,row in enumerate(found):
@@ -395,7 +395,7 @@ def action():
 							s = str(addSpace(dat['cnt']))+'class'+str(dat['name'])
 							if not lastPrint == s:
 								if not _.switches.isActive('JustReturn'):
-									# print(addSpace(dat['cnt']), _.inlineBold('class','magenta') ,dat['name'])
+									# _.pr(addSpace(dat['cnt']), _.inlineBold('class','magenta') ,dat['name'])
 									parent = { 'space': addSpace(dat['cnt']), 'type': 'class', 'label': dat['name'], 'line': row+1 }
 									table['parents'][dat['start']] = parent
 							lastPrint = s
@@ -404,7 +404,7 @@ def action():
 							s = str(addSpace(dat['cnt']))+'def'+str(dat['name'])
 							if not lastPrint == s:
 								if not _.switches.isActive('JustReturn'):
-									# print(addSpace(dat['cnt']),_.inlineBold('def','yellow'),dat['name'])
+									# _.pr(addSpace(dat['cnt']),_.inlineBold('def','yellow'),dat['name'])
 									parent = { 'space': addSpace(dat['cnt']), 'type': 'def', 'label': dat['name'], 'line': row+1 }
 									table['parents'][dat['start']] = parent
 							lastPrint = s
@@ -427,26 +427,26 @@ def action():
 # listColor( text, rows, color='green' )
 
 								
-								# print( 'listColor:', rowX )
+								# _.pr( 'listColor:', rowX )
 								# for x in _.switches.values('Plus'):
-								# 	print( 'x:', x )
+								# 	_.pr( 'x:', x )
 								# 	rowX = rowX.replace( str(x), _.colorThis( str(x), 'green', p=0 ) )
 								for search in _.switches.values('Plus'):
 									printLine = printLine.replace( search, _.inlineBold( search, 'green' ) )
 								if not _.switches.isActive('JustReturn'):
-									# print( addSpace(maxSpace+1), _.inlineBold( str(int(rowX)+1) ), printLine )
+									# _.pr( addSpace(maxSpace+1), _.inlineBold( str(int(rowX)+1) ), printLine )
 									table['lines'][int(rowX)+1] = { 'parent': dat, 'space': addSpace(maxSpace+1), 'line': int(rowX)+1, 'text': printLine }
-							# print()
+							# _.pr()
 		elif not doSearch:
 			md5Data = []
 			lastCount = 0
 			p = ''
 			for dat in data:
-				# print( dat )
+				# _.pr( dat )
 				dat['end'] = fixEnd(dat['end'])
 				dat['size'] = dat['end'] - dat['start']
-				# print( dat )
-				# print()
+				# _.pr( dat )
+				# _.pr()
 				# sys.exit()
 				if dat['isClass']:
 					if _.switches.isActive('Log'):
@@ -473,7 +473,7 @@ def action():
 						if not _.switches.isActive('JustReturn'):
 							xXx['classes'] += 1
 							xXx['all'] += 1
-							print( addSpace(dat['cnt']),'class',dat['name'] )
+							_.pr( addSpace(dat['cnt']),'class',dat['name'] )
 
 				else:
 					if _.switches.isActive('Log'):
@@ -500,16 +500,16 @@ def action():
 						if not _.switches.isActive('JustReturn'):
 							xXx['functions'] += 1
 							xXx['all'] += 1
-							print( addSpace(dat['cnt']),'def',dat['name'] )
+							_.pr( addSpace(dat['cnt']),'def',dat['name'] )
 
 			pass
 
-			# print()
-			# print()
+			# _.pr()
+			# _.pr()
 			# for m in md5Data:
-			# 	print( m )
-			# print()
-			# print()
+			# 	_.pr( m )
+			# _.pr()
+			# _.pr()
 			if _.switches.isActive('Log'):
 				return saveLog( md5Data )
 		# _.printVarSimple( data )
@@ -520,31 +520,31 @@ def action():
 				table['children'][ table['lines'][ln]['parent']['start'] ] = {}
 			for ln in table['lines']:
 				table['children'][ table['lines'][ln]['parent']['start'] ][ln] = {}
-			# print()
-			# print()
+			# _.pr()
+			# _.pr()
 			for lnp in table['parents']:
 				recP = table['parents'][lnp]
 				if recP['type'] == 'class':
-					print(recP['space'], _.inlineBold(recP['type'],'magenta') ,recP['label'])
+					_.pr(recP['space'], _.inlineBold(recP['type'],'magenta') ,recP['label'])
 					xXx['classes'] += 1
 					xXx['all'] += 1
 				else:
 					xXx['functions'] += 1
 					xXx['all'] += 1
-					print(recP['space'], _.inlineBold(recP['type'],'yellow') ,recP['label'])
+					_.pr(recP['space'], _.inlineBold(recP['type'],'yellow') ,recP['label'])
 				if lnp in table['children']:
 					ch = list(table['children'][lnp].keys())
 					for lnc in ch:
 						recC = table['lines'][lnc]
-						# print( addSpace(maxSpace+1), _.inlineBold( str(int(rowX)+1) ), printLine )
-						print(recC['space'], _.inlineBold(recC['line']) ,recC['text'])
-						# print(lnc)
+						# _.pr( addSpace(maxSpace+1), _.inlineBold( str(int(rowX)+1) ), printLine )
+						_.pr(recC['space'], _.inlineBold(recC['line']) ,recC['text'])
+						# _.pr(lnc)
 
-					# print( ch )
-		print()
-		# print(xXx)
+					# _.pr( ch )
+		_.pr()
+		# _.pr(xXx)
 		_.printDicFields(xXx)
-		print()
+		_.pr()
 		_.cp( _.switches.values('Files')[0], 'cyan' )
 		return data
 	pass
@@ -554,7 +554,7 @@ def saveLog( md5Data ):
 	auditLog = []
 	# auditLog = _.getTable( logFile )
 	if len( auditLog ) == 0:
-		# print( 'First Audit' )
+		# _.pr( 'First Audit' )
 		auditLog = {}
 		for md in md5Data:
 			idx = md['path']
@@ -607,7 +607,7 @@ def saveLog( md5Data ):
 
 						if md['epoch'] < auditLog[idx]['first']:
 							auditLog[idx]['first'] = md['epoch']
-	# print('log2:',logFile)
+	# _.pr('log2:',logFile)
 	_.saveTable( auditLog, logFile, printThis=False )
 	return auditLog
 
@@ -625,6 +625,7 @@ ignoreLines=[]
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

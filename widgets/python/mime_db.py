@@ -250,10 +250,10 @@ def process( db, sql ):
 			if not os.path.isfile( record['path'] ):
 				sql_del = "   DELETE FROM files WHERE path = '"+record['path']+"';   "
 				c.execute(sql_del)
-				print( 'DEL', record['path'] )
+				_.pr( 'DEL', record['path'] )
 			else:
 				# _.printVarSimple(record)
-				# print( record )
+				# _.pr( record )
 
 				mime = isWhat( record['path'] )
 
@@ -275,6 +275,7 @@ index = {}
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

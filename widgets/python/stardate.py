@@ -176,21 +176,22 @@ def action():
 			epoch = _.switches.value('Ago')
 		if not _.switches.isActive('Stardate'):
 			sd = _sd.gen(  epoch  )
-			print( sd )
+			_.pr( sd )
 	elif _.switches.isActive('Date'):
 			sd = _sd.gen(  pp=_.switches.value('Date')  )
-			print( sd )
+			_.pr( sd )
 
 	
 	if _.switches.isActive('Stardate'):
 		sd = float(  _.switches.value('Stardate')  )
 	# sys.exit()
 	dt = _sd.resolve( sd )
-	print( dt )
+	_.pr( dt )
 
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

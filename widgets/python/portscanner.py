@@ -194,18 +194,18 @@ _.postLoad( __file__ )
 # START
 
 
-# print('ran 0', time.time() - __.test_epoch )
+# _.pr('ran 0', time.time() - __.test_epoch )
 
 def testA():
-	print('ran A', time.time() - __.test_epoch )
+	_.pr('ran A', time.time() - __.test_epoch )
 
 def testB():
 	# time.sleep( 5 )
-	print('ran B', time.time() - __.test_epoch )
+	_.pr('ran B', time.time() - __.test_epoch )
 
 def testC():
 	# time.sleep( 5 )
-	print('ran C', time.time() - __.test_epoch )
+	_.pr('ran C', time.time() - __.test_epoch )
 
 
 
@@ -235,11 +235,11 @@ def ping_ip(current_ip_address):
 
 def resolve_address(address=None):
 	global IP_Table
-	# print(resolve_address)
+	# _.pr(resolve_address)
 	if address is None:
-		print( 'missing address' )
+		_.pr( 'missing address' )
 		return None
-	# print( address )
+	# _.pr( address )
 	# host = ping(address, count=4, interval=1, timeout=2, source=None, privileged=True)
 
 	# host = pyping.ping( address )
@@ -259,9 +259,9 @@ def resolve_address(address=None):
 
 
 	the_mac = get_mac_address(ip=address, network_request=True)
-	# print(the_mac)
+	# _.pr(the_mac)
 
-	# print(return_code,address)
+	# _.pr(return_code,address)
 	scan = False
 	if _.switches.isActive('Top') or _.switches.isActive('Categories') or _.switches.isActive('AllPorts') or _.switches.isActive('Ports'):
 		if _.switches.isActive('Resolve') and the_mac:
@@ -270,7 +270,7 @@ def resolve_address(address=None):
 			scan = True
 	
 	if the_mac:
-		# print( 'scan:', scan )
+		# _.pr( 'scan:', scan )
 		THE_IP_DIC( a=address, m=the_mac )
 		get_name(address)
 
@@ -278,26 +278,26 @@ def resolve_address(address=None):
 		__.asyn.register( name=address, category='scan', fn=scan_address, a=address, timeout=3 )
 
 	
-		# print( the_mac, name )
+		# _.pr( the_mac, name )
 
 
 
 
-	# print( host.packets_received, type(host.packets_received) )
+	# _.pr( host.packets_received, type(host.packets_received) )
 	
 	# for x in dir(return_code):
-	# 	print(x)
+	# 	_.pr(x)
 	# sys.exit()
 
-	# print( host.__dict__['_packets_received'] )
+	# _.pr( host.__dict__['_packets_received'] )
 
 	# sys.exit()
-	# print(host.packets_received,address)
+	# _.pr(host.packets_received,address)
 	# if host.__dict__['_packets_received']:
 		# IP_Table[address] = host.__dict__['_packets_received']
-		# print(1)
+		# _.pr(1)
 	# else:
-		# print(0)
+		# _.pr(0)
 
 def THE_IP_DIC( a=None, m=None, n=None, v=None, p=None ):
 	global IP_Table
@@ -328,33 +328,33 @@ def get_name(address):
 		run = True
 	if address in IP_Table and not IP_Table[address]['name']:
 		run = True
-	# print('run',run)
+	# _.pr('run',run)
 	name = ''
 	try:
 		name = socket.getfqdn(address)
 	except Exception as e:
 		pass
-	# print('name',name)
+	# _.pr('name',name)
 	if name:
 		THE_IP_DIC( a=address, n=name )
-		# print(x)
+		# _.pr(x)
 
 	
 
 def resolution_results():
-	# print( 'Report:' )
+	# _.pr( 'Report:' )
 	global IP_Table
 	global mac_vendor_table
 
-	# print( 400 )
+	# _.pr( 400 )
 	IP_Table = _.dic_key_sort2(IP_Table,ip=True)
-	# print( 401 )
+	# _.pr( 401 )
 
 
 
 	records = []
 
-	# print( 401 )
+	# _.pr( 401 )
 	for address in IP_Table:
 
 		vend = ''
@@ -369,18 +369,18 @@ def resolution_results():
 		
 
 
-	print()
+	_.pr()
 	if _.switches.isActive('DisplayFilter'):
 		recs = []
 		if 'port' in _.switches.value('DisplayFilter').lower():
 			for rec in records:
-				# print( type(rec['ports']), rec['ports'])
+				# _.pr( type(rec['ports']), rec['ports'])
 				if len(rec['ports']):
 					recs.append(rec)
 			records = recs
 	_.tables.register( 'IPS', records )
 	_.tables.print( 'IPS', 'address,name,vendor,mac,ports' )
-	print()
+	_.pr()
 	if not len(records) == len(IP_Table):
 		_.cp(  [ '\n', '', len(records),'of',len(IP_Table) ], 'yellow'  )
 	else:
@@ -406,12 +406,12 @@ def processIPs():
 
 	if _.switches.isActive('CIDR'):
 		for network in _.switches.values('CIDR'):
-			# print(network)
+			# _.pr(network)
 			# sys.exit()
 			try:
 				for ip in IPNetwork( network )[1:-1]:
 					ip = str(ip)
-					# print(ip)
+					# _.pr(ip)
 					# resolve_address(ip)
 					# sys.exit()
 					__.asyn.register( name=ip, category='resolve', fn=resolve_address, a=ip )
@@ -430,8 +430,8 @@ def processIPs():
 	elif not  _.switches.isActive('CIDR'):
 		for IPs in _.switches.values('IPs'):
 			if not '-' in IPs and IPs.count('.') == 3:
-				# print('here')
-				# print('here')
+				# _.pr('here')
+				# _.pr('here')
 				# resolve_address(ip)
 				__.asyn.register( name=IPs, category='resolve', fn=resolve_address, a=IPs )
 				# if scan:
@@ -452,23 +452,23 @@ def processIPs():
 					# 		__.asyn.register( name=ip, category='scan', fn=scan_address, a=ip )
 					# 	elif ip in IP_Table:
 					# 		__.asyn.register( name=ip, category='scan', fn=scan_address, a=ip )
-					# print(ip)
+					# _.pr(ip)
 
 
 def scan_address(address):
-	# print('scan_address:', address)
+	# _.pr('scan_address:', address)
 	global spent_ports
 	if _.switches.isActive('Top') or _.switches.isActive('Categories') or _.switches.isActive('AllPorts') or _.switches.isActive('Ports'):
 		scan = True
 	else:
 		scan = False
 	if scan:
-		# print(' HERE A ')
+		# _.pr(' HERE A ')
 		ports = []
 		if _.switches.isActive('Ports'):
 			ports = _.switches.values('Ports')
 		elif _.switches.isActive('Top'):
-			# print(' HERE B ')
+			# _.pr(' HERE B ')
 			if _.switches.value('Top') == '':
 				ports = __.ports_hash['top']
 			elif _.switches.value('Top') == '20':
@@ -481,18 +481,18 @@ def scan_address(address):
 				elif 'u' in  _.switches.values('Top')[1].lower():
 					ports = __.ports_hash['200']['udp']
 			else:
-				# print(' HERE C ')
+				# _.pr(' HERE C ')
 				if int(  _.switches.values('Top')[0]  ) > len(__.ports_hash['top']):
 					ports = __.ports_hash['top']
 				else:
 					ports = __.ports_hash['top'][: int(  _.switches.values('Top')[0]  ) ]
-				# print(' HERE D ')
+				# _.pr(' HERE D ')
 			pass
 		
-		# print(' HERE xXx ')
+		# _.pr(' HERE xXx ')
 		if not address in spent_ports:
 			spent_ports[address] = {}
-		# print(ports)
+		# _.pr(ports)
 		for port in ports:
 			if len(port):
 				port = port.replace( ' ', '' )
@@ -543,15 +543,15 @@ def action():
 					tcp_udp += ' '+_.cp('UDP','green',p=0)+' '
 				else:
 					tcp_udp += ' '+_.cp('UDP','red',p=0)+' '
-				print()
-				print(p)
-				print(tcp_udp)
+				_.pr()
+				_.pr(p)
+				_.pr(tcp_udp)
 				des = _.autoWrapText(rec['Description'],prefix=' ')
 				if type(des) == str:
 					des = [des]
 				for line in des:
-					print(line)
-				print()
+					_.pr(line)
+				_.pr()
 				# _.pv(rec)
 		
 		return None
@@ -604,7 +604,7 @@ def load():
 	# _.saveTableDB( mac_vendor_table, 'mac-vendors.hash' )
 
 	# test = '123456789'
-	# print( test[:6] )
+	# _.pr( test[:6] )
 	# _.printVarSimple( mac_vendor_table )
 	# sys.exit()
 
@@ -614,20 +614,20 @@ def load():
 def report_fix_test():
 	IP_Table = {'localhost': 1, '192.168.254.30': 1, '192.168.254.62': 1, '192.168.254.75': 1, '192.168.254.78': 1, '192.168.254.82': 1, '192.168.254.86': 1, '192.168.254.97': 1, '192.168.254.95': 1, '192.168.254.64': 1, '192.168.254.66': 1, '192.168.254.73': 1, '192.168.254.74': 1, '192.168.254.81': 1, '192.168.254.87': 1, '192.168.254.60': 1, '192.168.254.61': 1, '192.168.254.68': 1, '192.168.254.71': 1, '192.168.254.72': 1, '192.168.254.88': 1, '192.168.254.90': 1, '192.168.254.93': 1, '192.168.254.94': 1, '192.168.254.99': 1, '192.168.254.65': 1, '192.168.254.69': 1, '192.168.254.77': 1, '192.168.254.80': 1, '192.168.254.85': 1, '192.168.254.91': 1, '192.168.254.89': 1, '192.168.254.92': 1, '192.168.254.96': 1, '192.168.254.59': 1, '192.168.254.70': 1, '192.168.254.79': 1, '192.168.254.84': 1, '192.168.254.83': 1, '192.168.254.100': 1, '192.168.254.98': 1, '192.168.254.63': 1, '192.168.254.67': 1, '192.168.254.76': 1, '192.168.254.38': 1, '192.168.254.5': 1, '192.168.254.51': 1, '192.168.254.12': 1, '192.168.254.15': 1, '192.168.254.26': 1, '192.168.254.18': 1, '192.168.254.29': 1, '192.168.254.28': 1, '192.168.254.20': 1, '192.168.254.45': 1, '192.168.254.7': 1, '192.168.254.46': 1, '192.168.254.44': 1, '192.168.254.2': 1, '192.168.254.10': 1, '192.168.254.31': 1, '192.168.254.35': 1, '192.168.254.52': 1, '192.168.254.25': 1, '192.168.254.53': 1, '192.168.254.17': 1, '192.168.254.55': 1, '192.168.254.6': 1, '192.168.254.22': 1, '192.168.254.27': 1, '192.168.254.34': 1, '192.168.254.47': 1, '192.168.254.1': 1, '192.168.254.32': 1, '192.168.254.16': 1, '192.168.254.13': 1, '192.168.254.3': 1, '192.168.254.40': 1, '192.168.254.9': 1, '192.168.254.54': 1, '192.168.254.8': 1, '192.168.254.36': 1, '192.168.254.33': 1, '192.168.254.23': 1, '192.168.254.58': 1, '192.168.254.49': 1, '192.168.254.21': 1, '192.168.254.56': 1, '192.168.254.39': 1, '192.168.254.19': 1, '192.168.254.57': 1, '192.168.254.41': 1, '192.168.254.50': 1, '192.168.254.43': 1, '192.168.254.14': 1, '192.168.254.42': 1, '192.168.254.24': 1, '192.168.254.37': 1, '192.168.254.11': 1, '192.168.254.48': 1, '192.168.254.4': 1, '192.168.254.254': 1}
 
-	# print(IP_Table)
+	# _.pr(IP_Table)
 	IP_Table = _.dic_key_sort2(IP_Table,ip=True)
-	# print(IP_Table)
+	# _.pr(IP_Table)
 
 	for ip in IP_Table:
-		print( ip )
+		_.pr( ip )
 
 
-	print( '', len(IP_Table)  )
+	_.pr( '', len(IP_Table)  )
 
 
 
 def scan_port( ip, port ):
-	# print( ip, port )
+	# _.pr( ip, port )
 	port = int(port)
 	if port >= __.ephemeral:
 		return None
@@ -643,18 +643,18 @@ def scan_port( ip, port ):
 
 	# Create a new socket
 	tcp = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-	# print( tcp.gettimeout() )
+	# _.pr( tcp.gettimeout() )
 	# sys.exit()
 	tcp.settimeout(2)
-	# print( tcp.connect_ex((ip, port)), port )
+	# _.pr( tcp.connect_ex((ip, port)), port )
 
 
 	# Print if the port is open
 	result = tcp.connect_ex((ip, port))
-	# print( result, port )
+	# _.pr( result, port )
 
 	# for x in dir(result):
-	# 	print(x)
+	# 	_.pr(x)
 
 	try:
 		tcp.close()
@@ -666,11 +666,11 @@ def scan_port( ip, port ):
 
 	if not result:
 		THE_IP_DIC( a=ip, p=str(port) )
-		# print( 'not result:', port )
+		# _.pr( 'not result:', port )
 	# else:
-		# print( 'result:', port )
-		# print('[+] %s:%d/TCP Open' % (ip, port) )
-		# print('[+] %s:%d/TCP Open' % (ip, port) , data[str(port)]['Description'] )
+		# _.pr( 'result:', port )
+		# _.pr('[+] %s:%d/TCP Open' % (ip, port) )
+		# _.pr('[+] %s:%d/TCP Open' % (ip, port) , data[str(port)]['Description'] )
 
 spent_ports = {}
 __.ports_hash = {
@@ -693,7 +693,7 @@ _async = _.regImp( __.appReg, '_rightThumb._asynchronous' )
 # import pyping
 # import ping
 # for x in dir(ping):
-# 	print(x)
+# 	_.pr(x)
 # sys.exit()
 
 import subprocess
@@ -707,6 +707,7 @@ if _.switches.isActive('CIDR'):
 if __name__ == '__main__':
 	action()
 	# report_fix_test()
+
 
 
 

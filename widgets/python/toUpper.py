@@ -156,13 +156,14 @@ _.postLoad( __file__ )
 def action():
 
 	for i,row in enumerate( _.isData(r=1) ):
-		print( row.upper() )
+		_.pr( row.upper() )
 
 
 ########################################################################################
 if __name__ == '__main__':
 	action()
 	_.tables.eof()
+
 
 
 

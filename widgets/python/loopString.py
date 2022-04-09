@@ -171,7 +171,7 @@ def action():
 	while not i == int( _.switches.value( 'Loops' ) ):
 		string += _.ci(_.switches.value( 'String' ))
 		i+=1
-	print( string )
+	_.pr( string )
 
 
 
@@ -182,6 +182,7 @@ def action():
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

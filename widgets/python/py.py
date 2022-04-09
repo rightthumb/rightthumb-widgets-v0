@@ -156,12 +156,12 @@ def action():
 
 
 	# a = _.autoComplete( addrs )
-	# print( "You entered", a)
-	# print()
+	# _.pr( "You entered", a)
+	# _.pr()
 	# a = _.autoComplete( [  'angel', 'a piece of poo'  ] )
-	# print( "You entered", a)
-	# # print( a, 'you dork' )
-	# print( 'you dork' )
+	# _.pr( "You entered", a)
+	# # _.pr( a, 'you dork' )
+	# _.pr( 'you dork' )
 
 	# sys.exit()
 
@@ -180,7 +180,7 @@ def action():
 				total['set'] += 1
 				_.colorThis( [ '\t', app ], 'cyan' )
 
-	print()
+	_.pr()
 	if total['all'] == total['set']:
 		_.colorThis( [ '', total['set'] ], 'yellow' )
 	else:
@@ -189,6 +189,7 @@ def action():
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

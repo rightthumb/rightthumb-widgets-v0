@@ -161,7 +161,7 @@ good = ' 0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ.-_'
 def prep(x):
 	global www
 	www['x'] = x
-	print( str(www) )
+	_.pr( str(www) )
 	x = x.replace( '"', '\\"' )
 	return x
 
@@ -187,7 +187,7 @@ def action():
 		delim = None
 
 	_.switches.fieldSet( 'PlusOr', 'active', True )
-	print( 'Processing...', end='\r' )
+	_.pr( 'Processing...', end='\r' )
 	md5 = _md5.md5(  '\n'.join(  _.isData(r=1,c=0)  )  )
 
 	db = _v.myTemp+_v.slash+'closestDB-'+md5+'.db'
@@ -296,7 +296,7 @@ def action():
 				windex[x] = i
 
 
-	print( '                                                        ', end='\r' )
+	_.pr( '                                                        ', end='\r' )
 	if diff == default:
 		_.colorThis( 'not found', 'red' )
 	else:
@@ -361,11 +361,11 @@ def action():
 					cnt+=1
 					if not _.switches.isActive('Clean'):
 						if d == dex[t][d]:
-							print( '\t\t', clean( _.isData(pipeClean=False)[d] ) )
+							_.pr( '\t\t', clean( _.isData(pipeClean=False)[d] ) )
 						else:
 							x = d
 							while not x == dex[t][d]+1:
-								print( '\t\t', clean( _.isData(pipeClean=False)[x] ) )
+								_.pr( '\t\t', clean( _.isData(pipeClean=False)[x] ) )
 								x+=1
 		_.colorThis( [ '\n','',  cnt ], 'yellow' )
 
@@ -374,6 +374,7 @@ def action():
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

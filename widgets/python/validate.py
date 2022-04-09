@@ -200,17 +200,17 @@ def process(fi):
 
 	if not status is None:
 		if _.switches.isActive('NameSpace'):
-			print( 'name space:' )
+			_.pr( 'name space:' )
 			ns = _code.imp.validator.link_jsNameSpace_to_function_payloads()
-			print(ns)
+			_.pr(ns)
 			sys.exit()
 		_.colorThis( 'Valid', 'green' )
 		if _.switches.isActive( 'Time' ):
-			print( _code.imp.validator.duration )
+			_.pr( _code.imp.validator.duration )
 	# index = _code.imp.validator.thisTest
-	# print( index )
+	# _.pr( index )
 	if True:
-		# print( _code.imp.validator.asset )
+		# _.pr( _code.imp.validator.asset )
 		if _.switches.isActive('Plus'):
 			found = 0
 			foundType = []
@@ -224,22 +224,22 @@ def process(fi):
 						foundType.append(_code.imp.validator.identity['identity'][o])
 					found+=1
 					if not _.switches.isActive('Clean'):
-						print()
-						print()
-						print()
-						print( o,c,l )
-						print(  _code.imp.validator.assetSnipet( o, c )  )
-			print()
-			print()
-			print()
+						_.pr()
+						_.pr()
+						_.pr()
+						_.pr( o,c,l )
+						_.pr(  _code.imp.validator.assetSnipet( o, c )  )
+			_.pr()
+			_.pr()
+			_.pr()
 			_.colorThis( [ _.addComma(found), ' and '.join( foundType ) ], 'yellow' )
 	
 	if True:
 		if not C is None:
 			for x in _code.imp.validator.identity['validation']:
-				# print()
-				# print()
-				# print()
+				# _.pr()
+				# _.pr()
+				# _.pr()
 				rec = _code.imp.validator.identity['validation'][x]
 				label = []
 				values = []
@@ -260,20 +260,20 @@ def process(fi):
 						else:
 							txt = data[o]
 						values.append(txt)
-				# print( data[x], x, '\t', rec )
+				# _.pr( data[x], x, '\t', rec )
 				if  len(label):
-					print( ' '.join( label ), values )
+					_.pr( ' '.join( label ), values )
 
 
 
 	# _.printVarSimple( _code.imp.validator.identity )
-	# print()
+	# _.pr()
 	# _code.imp.validator.the_validation_process()
-		# print( type(x) )
-		# print(  x, _code.imp.validator.identity['identity'][x]  )
+		# _.pr( type(x) )
+		# _.pr(  x, _code.imp.validator.identity['identity'][x]  )
 
 	# for x in index['list']:
-	# 	print(  _code.imp.validator.assetSnipet( x['start'], x['end'] )  )
+	# 	_.pr(  _code.imp.validator.assetSnipet( x['start'], x['end'] )  )
 
 
 	# indexes profile
@@ -286,12 +286,13 @@ def process(fi):
 _code = _.regImp( __.appReg, '_rightThumb._auditCodeBase' )
 
 # _.colorThis( 0, 'asdf' )
-# print( type(324) )
+# _.pr( type(324) )
 # sys.exit()
 
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

@@ -226,10 +226,10 @@ def process(subject):
 				# _.cp( ['supporting:',f], 'yellow' )
 
 		for ta in toAdd:
-			# print(ta)
+			# _.pr(ta)
 			_.cp([ta],'red')
 			# ask='n'
-			# print('delete supporting '+ta+':')
+			# _.pr('delete supporting '+ta+':')
 			# ask = input(': ')
 			# if 'y' in ask.lower():
 			# 	process(ta)
@@ -276,6 +276,7 @@ addedFunctions=[]
 if __name__ == '__main__':
 	action()
 	__.isExit()
+
 
 
 

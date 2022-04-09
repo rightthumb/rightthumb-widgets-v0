@@ -161,7 +161,7 @@ def process( database, record ):
 			try:
 				d[1]
 			except Exception as e:
-				print(d)
+				_.pr(d)
 				sys.exit()
 			if not d[1] in dice[database][record['type']][record['level']]:
 				dice[database][record['type']][record['level']][d[1]] = []
@@ -189,7 +189,7 @@ def processCompareLevel( database, record ):
 			try:
 				d[1]
 			except Exception as e:
-				print(d)
+				_.pr(d)
 				sys.exit()
 			if not d[1] in dice[record['type']][record['level']][database]:
 				dice[record['type']][record['level']][database][d[1]] = {'t': 0, 'c': {}, 'd': [] }
@@ -222,7 +222,7 @@ def processCompareLevel( database, record ):
 			try:
 				d[1]
 			except Exception as e:
-				print(d)
+				_.pr(d)
 				sys.exit()
 			if not d[1] in dice[record['type']][record['level']][database]:
 				dice[record['type']][record['level']][database][d[1]] = {'t': 0, 'c': {}, 'd': [] }
@@ -263,7 +263,7 @@ def processCompareStatsD( database, record ):
 			try:
 				d[1]
 			except Exception as e:
-				print(d)
+				_.pr(d)
 				sys.exit()
 
 			i=0
@@ -276,7 +276,7 @@ def processCompareStatsD( database, record ):
 				dy = int(d[1])
 			except Exception as e:
 				pass
-				# print( d[1] )
+				# _.pr( d[1] )
 			
 			thisDice=0
 			while not i == dx:
@@ -327,6 +327,7 @@ files = []
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

@@ -196,7 +196,7 @@ if not sys.stdin.isatty():
 
 # _dir.sqlCreateTable( db, deleteDBFirst=True, close=True )
 # obj = _dir.fileInfo( path, sql=True )
-# print(   _dir.fileInfo( _.switches.value('Input') )['size']   )
+# _.pr(   _dir.fileInfo( _.switches.value('Input') )['size']   )
 
 # _.saveLog('queue')
 # _.saveLog('audit')
@@ -259,7 +259,7 @@ def action():
 	runOld = False
 
 	if not runOld:
-		# print( 0 )
+		# _.pr( 0 )
 		if _.switches.isActive('Input'):
 			if _.switches.isActive('Label'):
 				label = _.switches.value('Label').replace( ',', ' ' )
@@ -279,18 +279,18 @@ def action():
 				# for l in log:
 				# 	newLog.append( log )
 
-			# print( 1 )
+			# _.pr( 1 )
 			info = {
 						'file': _.switches.value('Input'),
 						'path': os.path.abspath( _.switches.value('Input') ),
 						'label': label,
 						'log': newLog
 			}
-			# print( 2 )
-			# print( 'logConfigFile_tmp:',logConfigFile_tmp )
-			# print( type(info) )
-			# print( sys.getsizeof(info) )
-			# print( (info) )
+			# _.pr( 2 )
+			# _.pr( 'logConfigFile_tmp:',logConfigFile_tmp )
+			# _.pr( type(info) )
+			# _.pr( sys.getsizeof(info) )
+			# _.pr( (info) )
 			# _.printVar( info )
 			_.saveTable( info, logConfigFile_tmp, tableTemp=True, printThis=False )
 			
@@ -303,12 +303,12 @@ def action():
 
 			infoTextBuild += ';'
 			_.saveText( infoTextBuild, _v.log_config )
-			# print( 3 )
+			# _.pr( 3 )
 			_browser.imp.project.open( _v.log_config_html )
 			# _browser.imp.project.inject( infoTextBuild )
 
 			test = False
-			print( test )
+			_.pr( test )
 			while not test:
 				time.sleep( 1 )
 				try:
@@ -317,7 +317,7 @@ def action():
 				except Exception as e:
 					test = False
 					how = 1
-				print( test, how )
+				_.pr( test, how )
 
 			if test:
 				configurationFile = _browser.imp.project.injectReturn( 'configGen.talk.saveData()' )
@@ -332,11 +332,11 @@ def action():
 					if record['file'] == configurationFile['file']:
 						theLog[i] = configurationFile
 						found = True
-						print( 'Record Updated' )
+						_.pr( 'Record Updated' )
 						break
 
 				if not found:
-					print( 'Record Added' )
+					_.pr( 'Record Added' )
 					theLog.append( configurationFile )
 				_.saveTable( theLog, 'logConfig.json', printThis=True )
 			
@@ -348,7 +348,7 @@ def action():
 				# 		theLog.append( generatedLog )
 				# 		_.saveTable( theLog, 'logConfig.json', printThis=True )
 				# except Exception as e:
-				# 	print( 'Error: unable to update log' )
+				# 	_.pr( 'Error: unable to update log' )
 
 	if runOld:
 		if _.switches.isActive('Input'):
@@ -412,6 +412,7 @@ def action():
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

@@ -161,7 +161,7 @@ if not sys.stdin.isatty():
 # 	b = _v.bookmarkFormat.replace( 'ALIASHERE', _.switches.value('Alias') )
 	
 # 	if len(_.switches.value('Alias')) == 0:
-# 		print( 'Error' )
+# 		_.pr( 'Error' )
 # 	else:
 # 		_.saveText( p, b )
 
@@ -201,8 +201,8 @@ if not sys.stdin.isatty():
 
 
 # 	if _.switches.isActive('Print'):
-# 		print( p )
-# 		print( b )
+# 		_.pr( p )
+# 		_.pr( b )
 
 
 
@@ -214,11 +214,11 @@ def action():
 	if 'ww' in _v.config_hash:
 		made['ww'] = 1
 		ww = _v.config_hash['ww']
-	# print('made',made)
+	# _.pr('made',made)
 	if 'ww' in made  and 'h' in made:
 		a = ww+os.sep+'databank'+os.sep+'tables'+os.sep+'bookmarks.index'
 		b = h+os.sep+'tables'+os.sep+'bookmarks.index'
-		# print(os.path.isfile(b))
+		# _.pr(os.path.isfile(b))
 		try:
 			if not os.path.isfile(b) and os.path.isfile(a):
 				from shutil import copyfile
@@ -277,7 +277,7 @@ def action():
 
 
 		# bashrc_path = _v.programs +_v.slash+ 'bash' +_v.slash+ 'b.sh'
-		# # print( os.path.isfile(bashrc_path),  bashrc_path)
+		# # _.pr( os.path.isfile(bashrc_path),  bashrc_path)
 		# bashrc = _.getText( bashrc_path, raw=True )
 		# s = '## {42F74F699A95} ##'
 		# e = '## {6D2B143FF720} ##'
@@ -325,8 +325,8 @@ def action():
 
 	# y = _bm.Bookmarks( _.switches.value('Alias') ).get()
 
-	# print(x)
-	# print(y)
+	# _.pr(x)
+	# _.pr(y)
 
 
 import _rightThumb._bookmarks as _bm
@@ -334,6 +334,7 @@ import _rightThumb._bookmarks as _bm
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

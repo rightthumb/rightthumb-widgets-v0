@@ -179,7 +179,7 @@ if not sys.stdin.isatty():
 
 # _dir.sqlCreateTable( db, deleteDBFirst=True, close=True )
 # obj = _dir.fileInfo( path, sql=True )
-# print(   _dir.fileInfo( _.switches.value('Input') )['size']   )
+# _.pr(   _dir.fileInfo( _.switches.value('Input') )['size']   )
 
 # _.saveLog('queue')
 # _.saveLog('audit')
@@ -283,7 +283,7 @@ def action():
 				for token in tex:
 					subject_speech = nltk.pos_tag([token])
 
-					# print( subject_speech[0][0] )
+					# _.pr( subject_speech[0][0] )
 					# sys.exit()
 		
 					
@@ -352,7 +352,7 @@ def action():
 
 	if not _.switches.isActive('Stemming'):
 		for w in data:
-			print(w)
+			_.pr(w)
 		if not _.switches.isActive('Clean'):
 			_.colorThis( [ '\n', len(data), 'words' ], 'yellow' )
 		return data
@@ -410,6 +410,7 @@ def action():
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

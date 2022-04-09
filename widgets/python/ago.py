@@ -210,16 +210,16 @@ def process():
 						t += ':'
 
 
-					# print(i,c)
+					# _.pr(i,c)
 
 					t += c
 			else:
 				t = int(oo)
 				
 
-			print()
+			_.pr()
 			_.printDicFields( _.isDate( t, tz=_.switches.value('TimeZone') ) )
-			print()
+			_.pr()
 		return None
 
 		
@@ -228,9 +228,9 @@ def process():
 	if _.switches.isActive('Ordinal'):
 		for o in _.switches.values('Ordinal'):
 			oo = datetime.date.fromordinal(int(o))
-			print()
+			_.pr()
 			_.printDicFields( _.isDate( oo, tz=_.switches.value('TimeZone') ) )
-			print()
+			_.pr()
 		return None
 
 	if _.switches.isActive('Test'):
@@ -266,19 +266,19 @@ def process():
 
 
 	elif _.switches.isActive('Date'):
-		# print( _.autoDate( _.switches.value('Date') ) )
-		# print( _.getWOY(_.switches.value('Date')) )
-		# print( _.time_diff( _.switches.value('Date') ) )
-		# print()
-		# print( _.daysDiff( _.autoDate(_.switches.value('Date')), time.time() ), 'days' )
-		# print()
+		# _.pr( _.autoDate( _.switches.value('Date') ) )
+		# _.pr( _.getWOY(_.switches.value('Date')) )
+		# _.pr( _.time_diff( _.switches.value('Date') ) )
+		# _.pr()
+		# _.pr( _.daysDiff( _.autoDate(_.switches.value('Date')), time.time() ), 'days' )
+		# _.pr()
 		_.printDicFields( _.isDate( _.switches.value('Date'), tz=_.switches.value('TimeZone') ) )
 		
 
 	elif _.switches.isActive('Epoch'):
-		# print( _.friendlyDate(_.switches.value('Epoch')) )
-		# print( _.getWOY( _.switches.value('Epoch') ) )
-		# print( _.time_diff(_.switches.value('Epoch')) )
+		# _.pr( _.friendlyDate(_.switches.value('Epoch')) )
+		# _.pr( _.getWOY( _.switches.value('Epoch') ) )
+		# _.pr( _.time_diff(_.switches.value('Epoch')) )
 
 		_.printDicFields( _.isDate( float(_.switches.value('Epoch')), tz=_.switches.value('TimeZone') ) )
 		
@@ -287,64 +287,64 @@ def process():
 	elif _.switches.isActive('Ago'):
 
 		if len(_.switches.values('Ago')) > 1:
-			print( _.dateDiffText(  _.switches.values('Ago')[0], _.switches.values('Ago')[1]  ) )
-			print('_______________')
-			print()
+			_.pr( _.dateDiffText(  _.switches.values('Ago')[0], _.switches.values('Ago')[1]  ) )
+			_.pr('_______________')
+			_.pr()
 			
 		for i,ago in enumerate(_.switches.values('Ago')):
-			# print( _.switches.values('Ago')[i] )
-			# print( (time.time() - _.switches.values('Ago')[i]) )
-			# print( _.friendlyDate(_.switches.values('Ago')[i]) )
-			# print( _.getWOY(_.switches.values('Ago')[i]) )
-			# print( _.time_diff(_.switches.values('Ago')[0]) )
-			# print()
-			# print()
-			# print( _.dateDiffText( _.switches.values('Ago')[i] ) )
-			# print()
-			# print( _.daysDiff( _.switches.values('Ago')[i], time.time() ), 'days' )
-			# print()
+			# _.pr( _.switches.values('Ago')[i] )
+			# _.pr( (time.time() - _.switches.values('Ago')[i]) )
+			# _.pr( _.friendlyDate(_.switches.values('Ago')[i]) )
+			# _.pr( _.getWOY(_.switches.values('Ago')[i]) )
+			# _.pr( _.time_diff(_.switches.values('Ago')[0]) )
+			# _.pr()
+			# _.pr()
+			# _.pr( _.dateDiffText( _.switches.values('Ago')[i] ) )
+			# _.pr()
+			# _.pr( _.daysDiff( _.switches.values('Ago')[i], time.time() ), 'days' )
+			# _.pr()
 			_.printDicFields( _.isDate( _.switches.values('Ago')[i], tz=_.switches.value('TimeZone') ) )
-			# print()
-			print('_________________________________________________________')
-		# print( _.days_in_month( 5, 1980 ) )
+			# _.pr()
+			_.pr('_________________________________________________________')
+		# _.pr( _.days_in_month( 5, 1980 ) )
 		# # sys.exit()
-		# print()
-		# print( _.dateDiffDic(  time.time(), _.switches.value('Ago')  ) )
+		# _.pr()
+		# _.pr( _.dateDiffDic(  time.time(), _.switches.value('Ago')  ) )
 
 	elif _.switches.isActive('WOY'):
 		d = _.woy2dates( _.switches.value('WOY') )
 		f = _.woy2datesFriendly( _.switches.value('WOY') )
-		print( '      ', d[0], '  -  ', d[1] )
-		print( f[0], '  -  ', f[1] )
+		_.pr( '      ', d[0], '  -  ', d[1] )
+		_.pr( f[0], '  -  ', f[1] )
 	else:
 		epoch = time.time()
-		# print( 'Now' )
-		# print( epoch )
-		# print( _.friendlyDate(epoch) )
-		# print( _.getWOY(epoch) )
-		# print( _.time_diff(epoch) )
-		# print()
+		# _.pr( 'Now' )
+		# _.pr( epoch )
+		# _.pr( _.friendlyDate(epoch) )
+		# _.pr( _.getWOY(epoch) )
+		# _.pr( _.time_diff(epoch) )
+		# _.pr()
 		_.printDicFields( _.isDate( epoch, tz=_.switches.value('TimeZone') ) )
 		if False:
-			print()
-			print()
-			print()
+			_.pr()
+			_.pr()
+			_.pr()
 			months = 2
-			print( months )
+			_.pr( months )
 			xXx = _.monthMath( epoch, months, do='+' )
-			print( xXx )
-			print( _.friendlyDate(xXx) )
-			print( _.time_diff(xXx) )
-			print( _.monthsDiff( epoch, xXx ) )
-			print()
-			# print()
+			_.pr( xXx )
+			_.pr( _.friendlyDate(xXx) )
+			_.pr( _.time_diff(xXx) )
+			_.pr( _.monthsDiff( epoch, xXx ) )
+			_.pr()
+			# _.pr()
 			xXx = _.monthMath( epoch, months, do='-' )
-			print( xXx )
-			print( _.friendlyDate(xXx) )
-			print( _.time_diff(xXx) )
-			print( _.monthsDiff( epoch, xXx ) )
-			print()
-			print()
+			_.pr( xXx )
+			_.pr( _.friendlyDate(xXx) )
+			_.pr( _.time_diff(xXx) )
+			_.pr( _.monthsDiff( epoch, xXx ) )
+			_.pr()
+			_.pr()
 
 
 
@@ -393,8 +393,8 @@ def action():
 		# for field in f:
 		for field in _.switches.values('Fields'):
 			x=_.isDate(time.time(),f=field)
-			# print(field,x)
-			print(x)
+			# _.pr(field,x)
+			_.pr(x)
 			# _.cp( ,  )
 
 		return None
@@ -403,7 +403,7 @@ def action():
 		import pytz
 		for x in pytz.all_timezones:
 			if _.showLine(x):
-				print(x)
+				_.pr(x)
 
 		return None
 
@@ -428,6 +428,7 @@ import _rightThumb._encryptString as _blowfish
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

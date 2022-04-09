@@ -277,7 +277,7 @@ class ThisAsyncThread(threading.Thread):
 		finally:
 			self.endTime = time.time()
 			self.duration = self.endTime - self.epoch
-			# print()
+			# _.pr()
 			# _.colorThis(  [ self.tID, 'ended' ], 'red'  )
 			ended = ''
 			self.status = 2
@@ -334,7 +334,7 @@ def handler( arg1='E1', arg2='E2' ):
 	i=0
 	# asdf
 	while True:
-		print( i, arg1, arg2 )
+		_.pr( i, arg1, arg2 )
 		i+=1
 		time.sleep(.5)
 
@@ -366,9 +366,9 @@ def test():
 	# """)
 	# cursor.execute("SHOW TABLES")
 	# rows = cursor.fetchall()
-	# # print( rows[1] )
+	# # _.pr( rows[1] )
 	# for row in rows:
-	# 	print(row)
+	# 	_.pr(row)
 
 
 
@@ -379,7 +379,7 @@ def test():
 	# 					VALUES ( 1, 'Reph', 'Scott', '4477 Amberly Oaks Court', 'Tampa' );
 	# """)
 	# cnxn.commit()
-	# print( 'Added' )
+	# _.pr( 'Added' )
 
 	start = time.time()
 	loops = 20
@@ -395,16 +395,16 @@ def test():
 	end = time.time()
 	total = end - start
 	average = total / loops
-	print(  )
-	print( 'Loops:', loops )
-	print( 'Total milliseconds:', total )
-	print( 'Average:', average )
+	_.pr(  )
+	_.pr( 'Loops:', loops )
+	_.pr( 'Total milliseconds:', total )
+	_.pr( 'Average:', average )
 
 
 
-	# print( rows[1] )
+	# _.pr( rows[1] )
 	# for row in rows:
-	# 	print(row)
+	# 	_.pr(row)
 
 class Asset_Manager:
 
@@ -689,10 +689,10 @@ def action():
 	threadMonitor()	
 
 	time.sleep(5)
-	print( 'killing' )
+	_.pr( 'killing' )
 	# registeredThreads[0].kill()
 	# registeredThreads[0].join()
-	# print( 'fin' )
+	# _.pr( 'fin' )
 	sys.exit()
 
 
@@ -946,11 +946,11 @@ class Asynchronous:
 
 		if not len( self.THREADS ) == self.statuses['done']:
 			loaded = False
-			# print( 'nl:', 1, len( self.THREADS ), self.statuses['done'] )
+			# _.pr( 'nl:', 1, len( self.THREADS ), self.statuses['done'] )
 
 		if not len(self.THREADS) == len(self.queue):
 			loaded = False
-			# print( 'nl:', 2, len(self.THREADS), len(self.queue) )
+			# _.pr( 'nl:', 2, len(self.THREADS), len(self.queue) )
 
 		return loaded
 
@@ -987,10 +987,10 @@ class Asynchronous:
 				if not self.pauseOn is None:
 					if self.running_total % self.pauseOn == 0:
 						# _.updateLine( 'pause                                                                                        ' )
-						# print( 'pause' )
+						# _.pr( 'pause' )
 						time.sleep( self.pauseFor )
 						# _.updateLine( 'resume                                                                                        ' )
-						# print( 'resume' )
+						# _.pr( 'resume' )
 
 				DONE = False
 				while not DONE:
@@ -1063,26 +1063,26 @@ class Asynchronous:
 			self.wait()
 
 			if not self.done:
-				# print( 'monitor:', int( time.time() - self.started ) )
-				# print()
-				# print()
+				# _.pr( 'monitor:', int( time.time() - self.started ) )
+				# _.pr()
+				# _.pr()
 				for thread in self.THREADS:
 					if not thread.killOn is None:
 						if thread.duration is None:
 							pass
-							# print()
-							# print()
-							# print( '        name:', thread.name )
-							# print( 'duration Var:', thread.duration )
-							# print( '    duration:', time.time() - thread.epoch )
-							# print( '      killOn:', thread.killOn )
+							# _.pr()
+							# _.pr()
+							# _.pr( '        name:', thread.name )
+							# _.pr( 'duration Var:', thread.duration )
+							# _.pr( '    duration:', time.time() - thread.epoch )
+							# _.pr( '      killOn:', thread.killOn )
 						if thread.duration is None and (  time.time() - thread.epoch ) > thread.killOn:
 							_.colorThis( 'TIMEOUT', 'red' )
 							thread.kill()
 							thread.join()
 
-				# print()
-				# print()
+				# _.pr()
+				# _.pr()
 
 				# self.status_check()
 				# _.printVarSimple( self.statuses )
@@ -1119,9 +1119,9 @@ class Asynchronous:
 						status_update += _.cp(_.addComma(self.statuses['errors']),'red',p=0)
 					status_update += '                                       '
 
-					# print( status_update )
+					# _.pr( status_update )
 					if self.print > 1:
-						print( status_update )
+						_.pr( status_update )
 					else:
 						_.updateLine( status_update )
 
@@ -1268,6 +1268,7 @@ manage = __.asyn
 
 # _async = _.regImp( __.appReg, '_rightThumb._asynchronous' )
 # _async.imp.manage.register( fn=test )
+
 
 
 

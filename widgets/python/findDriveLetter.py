@@ -155,10 +155,10 @@ def driveScan( driveID ):
 	letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 	for letter in letters:
 		test = letter+':\\drive.id.sys'
-		# print(letter)
+		# _.pr(letter)
 		if os.path.isfile( test ) and driveID in _.getText( test, raw=True ):
 			return letter
-	# print('Error')
+	# _.pr('Error')
 	return 'Error'
 def action():
 	global data
@@ -181,29 +181,29 @@ def action():
 					records.append( record )
 
 		if len(records) == 0:
-			print( '0' )
+			_.pr( '0' )
 			return None
 
 
 		
 		if not _.switches.isActive('Scan') and len(records) == 1:
 			scan = driveScan( records[0]['id'] )
-			print( scan )
+			_.pr( scan )
 		else:
 			_.fields.asset( 'data', records )
-			# print(records[0].keys())
+			# _.pr(records[0].keys())
 			for record in records:
 				scan = driveScan( record['id'] )
 				if scan == 'Error':
 					color = 'red'
 				else:
 					color = 'green'
-				# print( record.keys() )
+				# _.pr( record.keys() )
 				part = '\t'
 				part += _.colorThis( [  _.fields.value( 'data', 'name', record['name'].replace('-',' ').replace('_',' '), right=1 )  ], color, p=0 )
 				part += '   '
 
-				# print(scan)
+				# _.pr(scan)
 				if scan == 'Error':
 					part += _.colorThis( [  _.fields.value( 'data', 'scan_results', 'Not Connected' )  ], color, p=0 )
 				else:
@@ -211,7 +211,7 @@ def action():
 
 				part += '   '
 				part += _.colorThis( [  _.fields.value( 'data', 'id', record['id'], right=1 )  ], color, p=0 )
-				print( part )
+				_.pr( part )
 
 	elif _.switches.isActive('ID'):
 		_.fields.asset( 'data', data )
@@ -234,6 +234,7 @@ data = []
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

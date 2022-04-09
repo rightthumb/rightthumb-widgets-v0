@@ -177,29 +177,30 @@ def action():
 	start=time.time()
 	if option == 1:
 		size=st.download()
-		# print(size)
+		# _.pr(size)
 	elif option == 2:
 		size=st.upload()
-		# print(size)
+		# _.pr(size)
 	elif option == 3:
 		servernames =[]
 		st.get_servers(servernames)
-		print(st.results.ping)
+		_.pr(st.results.ping)
 		diff=time.time()-start
-		print(diff)
+		_.pr(diff)
 	else:
-		print("Please enter the correct choice !")
+		_.pr("Please enter the correct choice !")
 	if option<3:
 		by=_.unFormatSize( str(option).split('.')[0]+'mb' )
 		diff=time.time()-start
 		rounded = int( str(by/diff).split('.')[0] )
 		size=_.formatSize( rounded, 'mb' )
-		print(size+'S')
+		_.pr(size+'S')
 
 ########################################################################################
 if __name__ == '__main__':
 	action()
 	__.isExit()
+
 
 
 

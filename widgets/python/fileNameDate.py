@@ -162,7 +162,7 @@ def hasDate( data ):
 	x = data.split( '_' )[0]
 	l = len(x)
 	c = x.count( '-', 0, len(x) )
-	# print(l, c)
+	# _.pr(l, c)
 	if l == 10 and c == 2 and data.startswith(x):
 		return True
 	else:
@@ -304,7 +304,7 @@ def osSequence( path, name='signaturemassageandfacialspa.sql' ):
 	
 def searchFolder( folder ):
 	global theFiles
-	# print('here',folder)
+	# _.pr('here',folder)
 	for file in os.listdir(folder):
 		if _.showLine( file ):
 			if os.path.isfile( file ):
@@ -314,9 +314,9 @@ def searchFolder( folder ):
 				# searchFolder( folder + _v.slash + file )
 				try:
 					searchFolder( folder + _v.slash + file )
-					# print( '   OK:', folder + _v.slash + file )
+					# _.pr( '   OK:', folder + _v.slash + file )
 				except Exception as e:
-					# print( 'ERROR:', folder + _v.slash + file )
+					# _.pr( 'ERROR:', folder + _v.slash + file )
 					pass
 
 def action():
@@ -326,7 +326,7 @@ def action():
 	load()
 	if _.switches.isActive( 'Undo' ) and _.switches.isActive( 'Epoch' ):
 		if not len( _.switches.value( 'Epoch' ) ):
-			print( 'Error: Missing epoch' )
+			_.pr( 'Error: Missing epoch' )
 			sys.exit()
 
 		epoch = float( _.switches.value( 'Epoch' ) )
@@ -362,10 +362,10 @@ def action():
 				if c < least:
 					least = c
 					base = row['folder']
-					# print( base )
+					# _.pr( base )
 			inAll = True
 			isAll = True
-			# print( 'base:', base, least, c )
+			# _.pr( 'base:', base, least, c )
 			for row in records[epoch]:
 				if not base == row['folder']:
 					isAll = False
@@ -385,33 +385,33 @@ def action():
 		if 'sample' in logReport:
 			for i,epoch in enumerate(epochs):
 				sample = 0
-				print()
-				print()
-				print( epoch, profiles[i]['description'] )
-				print()
+				_.pr()
+				_.pr()
+				_.pr( epoch, profiles[i]['description'] )
+				_.pr()
 				for row in records[epoch]:
 					if sample <= sampleSize:
 						sample+=1
-						print( '\t', row['path'][0] )
+						_.pr( '\t', row['path'][0] )
 			sys.exit()
 		else:
 		
-			print()
-			print( 'Rename Log:' )
-			print()
+			_.pr()
+			_.pr( 'Rename Log:' )
+			_.pr()
 			for row in profiles:
-				print( '\t', row['id'], '\t', row['description'] )
-			print()
+				_.pr( '\t', row['id'], '\t', row['description'] )
+			_.pr()
 
 
 
-		# print( epochs )
+		# _.pr( epochs )
 
 
 		sys.exit()
 	elif _.switches.isActive( 'Undo' ) and 'l' in _.switches.value( 'Undo' ).lower():
 		if not len(data):
-			print( 'No records' )
+			_.pr( 'No records' )
 			sys.exit()
 		
 		theFiles = []
@@ -421,7 +421,7 @@ def action():
 				theFiles.append( record['path'][1] )
 		
 	elif _.switches.isActive( 'Undo' ) and _.switches.isActive( 'Folder' ):
-		# print( 'HERE' )
+		# _.pr( 'HERE' )
 		# sys.exit()
 		theFiles = []
 		folder = os.getcwd()
@@ -452,18 +452,18 @@ def action():
 
 
 	if len(theFiles):
-		# print( _.printVar(theFiles) )
+		# _.pr( _.printVar(theFiles) )
 		records = []
 
 
-		# print()
+		# _.pr()
 		# for i,row in enumerate( theFiles ):
-		# 	print(row)
+		# 	_.pr(row)
 		# sys.exit()
 
 		thisFolder = os.getcwd()
 		thisFolder += _v.slash
-		# print(thisFolder)
+		# _.pr(thisFolder)
 		# sys.exit()
 		for i,row in enumerate( theFiles ):
 			# osSequence( row )
@@ -480,21 +480,21 @@ def action():
 					theID = findRecord_path_ID( os.path.abspath( row ) )
 					if type( theID ) == bool:
 						pass
-						# print( 'Error:', row )
+						# _.pr( 'Error:', row )
 					
 					else:
 						if os.path.isfile( data[theID]['path'][0] ):
 							oldSequence = osSequence( data[theID]['path'][0], data[theID]['original'] )
 							if type( oldSequence ) == bool:
 								pass
-								# print( 'Error:', row )
+								# _.pr( 'Error:', row )
 							else:
 								try:
 									os.rename( data[theID]['path'][1], oldSequence )
 									status = True
 								except Exception as e:
 									status = False
-								# print( data[theID]['original'] )
+								# _.pr( data[theID]['original'] )
 								data.pop( theID )
 								info['original'] = '('+ info['original'] +') '+ oldSequence
 								if status:
@@ -506,7 +506,7 @@ def action():
 								status = True
 							except Exception as e:
 								status = False
-							# print( data[theID]['original'] )
+							# _.pr( data[theID]['original'] )
 							data.pop( theID )
 							if status:
 								_.saveTable( data, 'fileNameDate_log.json', printThis=False )
@@ -537,7 +537,7 @@ def action():
 			for i,record in enumerate(records):
 				records[i]['new_name'] = new_name( record['name'], record )
 				record['new_name'] = records[i]['new_name']
-				# print( record['date_modified'] )
+				# _.pr( record['date_modified'] )
 
 				if not _.switches.isActive( 'Test' ):
 					log = { 'original': record['name'], 'new': record['new_name'] , 'folder': record['folder'] , 'path': [], 'epoch': epoch}
@@ -558,7 +558,7 @@ def action():
 					except Exception as e:
 						status = False
 					log['path'].append( os.path.abspath( record['folder'] +_v.slash+ log['new'] ) )
-					# print( log['original'] )
+					# _.pr( log['original'] )
 					if len( log['path']) == 2 and not log['path'][0] == log['path'][1]:
 						data.append( log )
 					if status:
@@ -568,7 +568,7 @@ def action():
 		_.tables.register( 'data', records )
 		if not _.switches.isActive( 'Test' ):
 			_.tables.print( 'data', 'old_name,new_name' )
-			print()
+			_.pr()
 			_.saveTable( data, 'fileNameDate_log.json' )
 		else:
 			_.tables.print( 'data', 'old_name,new_name,original' )
@@ -585,6 +585,7 @@ epoch = time.time()
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

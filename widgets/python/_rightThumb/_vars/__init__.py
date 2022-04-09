@@ -50,13 +50,13 @@ def configFile( item=None, value=None, p=True ):
 				if not simplejson is None:
 					import simplejson
 				dataDump = simplejson.dumps(configFile_data, indent=4, sort_keys=False)
-				print(dataDump)
+				_.pr(dataDump)
 			return configFile_data
 		if value is None:
 			if item in configFile_data:
 				return configFile_data[item]
 			else:
-				print( 'Error: configFile', item, 'value not set' )
+				_.pr( 'Error: configFile', item, 'value not set' )
 		elif not value is None:
 			configFile_data[item] = value
 			return value
@@ -176,7 +176,7 @@ if not __.isWin:
 	if not home:
 		if not __.isWin:
 			home = '~'
-# print( 'home:',home )
+# _.pr( 'home:',home )
 if __.isWin:
 	computername = os.getenv('COMPUTERNAME')
 	userprofile = os.getenv('USERPROFILE')
@@ -195,7 +195,7 @@ td.c = dot()
 configFile( '.path', home  +os.sep+'.rt'+os.sep+  '.path' )
 configFile( '.config.hash', home +os.sep+'.rt'+os.sep+ '.config.hash' )
 
-# print('techDrive',techDrive)
+# _.pr('techDrive',techDrive)
 configFile( '.path', home  +os.sep+'.rt'+os.sep+  '.path' )
 configFile( '.config.hash', home +os.sep+'.rt'+os.sep+ '.config.hash' )
 if os.path.isfile( configFile('.path') ):
@@ -265,7 +265,7 @@ if __.isWin:
 	# 	open(fileName,'w', encoding='utf-8').write('C:\\.rightthumb-widgets')
 	# techDrive = open( fileName, 'r' ).read()
 	# techDrive = techDrive
-	# print('techDrive',techDrive)
+	# _.pr('techDrive',techDrive)
 	if '\n' in techDrive or '\r' in techDrive:
 		if os.path.isfile( fileName ):
 			techDrive = techDrive.replace('\n','').replace('\r','')
@@ -297,7 +297,7 @@ def ddDim(xyz):
 	if not dDim in xyz:
 		return xyz+dDim
 techFolder =  ddDim(techDrive)
-# print('techFolder:',techFolder)
+# _.pr('techFolder:',techFolder)
 # sys.exit()
 appsFolder =  ddDim(techDrive) +slash+'techApps'
 archive7z =  ddDim(techDrive) +slash+'archive_7z_files'
@@ -332,7 +332,7 @@ elif not __.isWin:
 # thisHost =  'hosts' + slash + computername2
 # myHome =  techFolder + slash+'hosts' + slash + computername2
 myHome =  home+os.sep+'.rt'+os.sep+'profile'
-# print('myHome',myHome)
+# _.pr('myHome',myHome)
 thisHost =  myHome
 # myHome =  home +slash+ 'profile'
 # thisHost =  myHome
@@ -384,7 +384,7 @@ if __.isWin:
 else:
 	unix_editor_path = techDrive + slash+'.editor'
 	unix_editor_path_sufix = techDrive + slash+'.editor.sufix'
-	# print(unix_editor_path)
+	# _.pr(unix_editor_path)
 if not __.isWin:
 	unix_editor_edit = ''
 	if os.path.isfile(unix_editor_path_sufix):
@@ -697,9 +697,9 @@ def cloud_path( path ):
 		newPath = newPath.replace( '//', '/' )
 		newPath = newPath.replace( '//', '/' )
 		newPath = newPath.replace( '//', '/' )
-		print(newPath)
+		_.pr(newPath)
 		return newPath
-	print(path)
+	_.pr(path)
 	return path
 def projectData( project ):
 	global slash
@@ -923,7 +923,7 @@ def createDestinationFolders( folder, o=None, isFile=False, p=False ):
 	global slashes
 	global slash
 	global UNC
-	# print(folder)
+	# _.pr(folder)
 	if os.path.isdir(folder): return None;
 	
 	thisSlash = slash
@@ -931,7 +931,7 @@ def createDestinationFolders( folder, o=None, isFile=False, p=False ):
 		if key in folder:
 			folder = folder.replace( key, UNC['de'][key] )
 	if os.path.isdir(folder): return None;
-	# print(folder)
+	# _.pr(folder)
 	if not __.isWin:
 		isUnix = True
 	else:
@@ -954,7 +954,7 @@ def createDestinationFolders( folder, o=None, isFile=False, p=False ):
 	try:
 		os.mkdir(  folder )
 		if p:
-			print( folder )
+			_.pr( folder )
 		return folder
 	except Exception as e:
 		pass
@@ -977,7 +977,7 @@ def createDestinationFolders( folder, o=None, isFile=False, p=False ):
 	return folder
 def dir_check_create( folder ):
 	folder=path_fix(folder)
-	# print(folder)
+	# _.pr(folder)
 	return createDestinationFolders( folder )
 	global dDim
 	global slash
@@ -992,10 +992,10 @@ def dir_check_create( folder ):
 		techDrive = techDrive.replace( ':', '' )
 	# if techDrive in folder:
 	# 	folder = techDrive+dDim+slash+folder
-	# print(folder)
-	# print( folder )
+	# _.pr(folder)
+	# _.pr( folder )
 	if os.path.isdir( folder ):
-		# print( folder )
+		# _.pr( folder )
 		return False
 	try:
 		os.mkdir( folder )
@@ -1019,15 +1019,15 @@ def dir_check_create( folder ):
 		f = t+slash+f
 		# if not techDrive in f:
 		# 	f = techDrive+dDim+slash+f
-		# print(f)
+		# _.pr(f)
 		exist = os.path.isdir( f )
-		# print( 'exist:', exist, f, '\r\n' )
+		# _.pr( 'exist:', exist, f, '\r\n' )
 		if not exist:
 			try:
 				os.mkdir( f )
 			except Exception as e:
 				pass
-				# print( 'Error:', f )
+				# _.pr( 'Error:', f )
 	return True
 def dir_check_create2( theFolder ):
 	theFolder=path_fix(theFolder)
@@ -1070,7 +1070,7 @@ def generateFunctionLogFilename( filename ):
 	global myTXT
 	global py
 	file = os.path.abspath( filename )
-	# print( file )
+	# _.pr( file )
 	f = file
 	if myTXT in file:
 		for record in fileBackupLog():
@@ -1081,7 +1081,7 @@ def generateFunctionLogFilename( filename ):
 	fb = fb.replace( slash, '_' )
 	fbr = 'audit_'+fb + '_raw.json'
 	fbf = 'audit_'+fb + '_functions.json'
-	# print( fbf )
+	# _.pr( fbf )
 	return fbf
 
 def getTable( theFile, tableTemp=False, printThis=False ):
@@ -1104,7 +1104,7 @@ def getTable( theFile, tableTemp=False, printThis=False ):
 			else:
 				file0 = myTables + slash + theFile
 	if printThis:
-		print('Loaded: ' + file0)
+		_.pr('Loaded: ' + file0)
 	if os.path.isfile(file0) == True:
 		with open(file0,'r', encoding="latin-1") as json_file:
 			json_data = simplejson.load(json_file)
@@ -1131,7 +1131,7 @@ def app7z():
 		elif os.path.isfile(app7z1):
 			app = app7z1
 		else:
-			print('Error: no 7z')
+			_.pr('Error: no 7z')
 			sys.exit()
 		app = '"' + app + '"'
 	return app
@@ -1155,7 +1155,7 @@ def getMachineID():
 		output = _str.replaceAll(output, ' ','')
 		output = _str.totalStrip(output)
 		output = output.replace('administrator','')
-		# print('getMachineID',output)
+		# _.pr('getMachineID',output)
 		# sys.exit()
 		md5 = _md5.md5(output)
 		guid = _md5.md52GUID(md5,True)
@@ -1168,7 +1168,7 @@ def getDriveID(driveLetter):
 	global slash
 	global dDim
 	idFile = ddDim(driveLetter) +slash+'drive.id.sys'
-	# print(idFile)
+	# _.pr(idFile)
 	result = False
 	if os.path.isfile(idFile) == True:
 		driveID = open( idFile, 'r' ).read()
@@ -1356,7 +1356,7 @@ def ipGet(force=False):
 		if os.path.isfile( configFile('.distro') ):
 			f['distro'] = open( configFile('.distro'), 'r' ).read()
 		url = 'http://tools.rightthumb.com/register.php?'+urllib.parse.urlencode(f)
-		# print(url)
+		# _.pr(url)
 		try:
 			ip = html.fromstring(requests.get( url  ).content).text_content()
 			open(configFile('.ip'),'w', encoding='utf-8').write( ip )
@@ -1368,11 +1368,11 @@ def ipGet(force=False):
 		cache_age = time.time() - cache_time
 		if cache_age > 14400:
 			get_ip = True
-	# print(get_ip)
+	# _.pr(get_ip)
 	if not get_ip and not force:
 		# ip = open( configFile('.ip'), 'r' ).read()
 		ip = open(configFile('.ip'), 'r', encoding='utf-8').readlines()[0]
-		# print(ip,'here',configFile('.ip'))
+		# _.pr(ip,'here',configFile('.ip'))
 		ip = _str.totalStrip(ip)
 	elif get_ip or force:
 		if not hasImported:
@@ -1406,7 +1406,7 @@ if not '/bash/' in __file__:
 		ipGet()
 	except Exception as e:
 		pass
-		# print( 'Error: IP' )
+		# _.pr( 'Error: IP' )
 def table(t):
 	global myTables
 	global slash
@@ -1435,7 +1435,7 @@ def tableAlts(t,omit=True):
 	current = parts.pop(0)
 	parts.reverse()
 	folder = slash.join( parts )
-	# print( folder )
+	# _.pr( folder )
 	# sys.exit()
 	result = []
 	for ho in os.listdir(folder):
@@ -1456,7 +1456,7 @@ def tableAlts(t,omit=True):
 
 
 # popFileDir(path)
-# print('end')
+# _.pr('end')
 def config( subject='?' ):
 	global mymyConfig
 	global config_file
@@ -1485,7 +1485,7 @@ try:
 		with open(   myConfig+os.sep+'construct.settings',    'w' ) as f:
 			pass
 except Exception as e:
-	print( 'unable to touch:', myConfig+os.sep+'construct.settings' )
+	_.pr( 'unable to touch:', myConfig+os.sep+'construct.settings' )
 
 def settings_load():
 	global myConfig
@@ -1515,4 +1515,5 @@ myAppsPy=py
 wprofile = myHome
 doc_sep = '__________________________________________________________________________________'
 meta=config_hash
+
 

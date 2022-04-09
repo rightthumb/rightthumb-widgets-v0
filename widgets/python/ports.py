@@ -197,13 +197,13 @@ def port_scan():
 		if not 'Ephemeral' in data[port]['IANA_Status'] and not 'Ephemeral' in data[port]['Description']:
 		
 			if not port == 'Port':
-				# print(port)
+				# _.pr(port)
 				scan_port( ip, port )
 				try:
 					scan_port( ip, port )
 				except Exception as e:
 					pass
-					# print( 'port error:', port )
+					# _.pr( 'port error:', port )
 
 
 spent = []
@@ -222,19 +222,19 @@ def scan_port( ip, port ):
 		spent.append(port)
 		# Create a new socket
 		tcp = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-		# print( tcp.gettimeout() )
+		# _.pr( tcp.gettimeout() )
 		# sys.exit()
 		tcp.settimeout(.02)
-		# print( tcp.connect_ex((ip, port)), port )
+		# _.pr( tcp.connect_ex((ip, port)), port )
 
 
 		# Print if the port is open
 		result = tcp.connect_ex((ip, port))
-		# print( result, port )
+		# _.pr( result, port )
 		if not result:
-			print( port )
-			# print('[+] %s:%d/TCP Open' % (ip, port) )
-			# print('[+] %s:%d/TCP Open' % (ip, port) , data[str(port)]['Description'] )
+			_.pr( port )
+			# _.pr('[+] %s:%d/TCP Open' % (ip, port) )
+			# _.pr('[+] %s:%d/TCP Open' % (ip, port) , data[str(port)]['Description'] )
 			tcp.close()
 
 		# try:
@@ -248,11 +248,11 @@ def scan_port( ip, port ):
 	# result_of_check = a_socket.connect_ex(location)
 
 	# if result_of_check == 0:
-	#    print( 'Yes\t', port )
-	#    # print( port )
+	#    _.pr( 'Yes\t', port )
+	#    # _.pr( port )
 	# # else:
-	# #    print( 'No \t', port )
-	#    # print("Port is not open")
+	# #    _.pr( 'No \t', port )
+	#    # _.pr("Port is not open")
 	# # OUTPUT
 	# # Port is not open
 
@@ -276,14 +276,14 @@ def processPortRow(row):
 	# if port not in data:
 	# else:
 	# 	ipsPorts[ip][port] = data[port]
-	# 	# print()
+	# 	# _.pr()
 		# if _.switches.isActive('All'):
-		# 	print(port)
+		# 	_.pr(port)
 		# 	_.printVarSimple( data[port] )
 		# else:
-		# 	print( '  ', _.cp( port, 'yellow', p=0 ), _.cp( data[port]['Description'], 'cyan', p=0 ) )
+		# 	_.pr( '  ', _.cp( port, 'yellow', p=0 ), _.cp( data[port]['Description'], 'cyan', p=0 ) )
 
-		# print()
+		# _.pr()
 
 def ip_port_report():
 	global data
@@ -291,11 +291,11 @@ def ip_port_report():
 
 	# ipsPorts = _.dic_key_sort2(ipsPorts, ip=False)
 	# _.printVarSimple( ipsPorts )
-	# print()
-	# print()
-	# print()
-	# print()
-	# print()
+	# _.pr()
+	# _.pr()
+	# _.pr()
+	# _.pr()
+	# _.pr()
 	ipsPorts = _.dic_key_sort2(ipsPorts, ip=True)
 	# _.printVarSimple( ipsPorts )
 	# sys.exit()
@@ -305,16 +305,16 @@ def ip_port_report():
 			_.cp( ip, 'green' )
 
 			ipsPorts[ip] = _.dic_key_sort2( ipsPorts[ip], n=True )
-			# print(ipsPorts[ip])
+			# _.pr(ipsPorts[ip])
 
 			for port in ipsPorts[ip]:
 				if port in data:
 
 					if _.switches.isActive('All'):
-						print(port)
+						_.pr(port)
 						_.printVarSimple( data[port] )
 					else:
-						print( '  ', _.cp( port, 'yellow', p=0 ), _.cp( data[port]['Description'], 'cyan', p=0 ) )
+						_.pr( '  ', _.cp( port, 'yellow', p=0 ), _.cp( data[port]['Description'], 'cyan', p=0 ) )
 				else:
 					# printRed = False
 					try:
@@ -327,9 +327,9 @@ def ip_port_report():
 						printRed = True
 		
 					if printRed:
-						print( '  ', _.cp( port, 'red', p=0 ), _.cp( 'not found', 'red', p=0 ) )
+						_.pr( '  ', _.cp( port, 'red', p=0 ), _.cp( 'not found', 'red', p=0 ) )
 					else:
-						print( '  ', _.cp( port, 'yellow', p=0 ), _.cp( 'Ephemeral', 'cyan', p=0 ) )
+						_.pr( '  ', _.cp( port, 'yellow', p=0 ), _.cp( 'Ephemeral', 'cyan', p=0 ) )
 	elif _.switches.isActive('Plus'):
 		for ip in ipsPorts:
 			printed = False
@@ -337,7 +337,7 @@ def ip_port_report():
 				if plus in ipsPorts[ip]:
 					if not printed:
 						printed = True
-						print( ip )
+						_.pr( ip )
 
 
 
@@ -372,7 +372,7 @@ def action():
 		for port in data:
 			try:
 				if int(port) > 0:
-					print( port )
+					_.pr( port )
 			except Exception as e:
 				pass
 
@@ -405,7 +405,7 @@ def action():
 			search = search.replace(' ', '')
 			if search in data.keys():
 				if _.switches.isActive('All'):
-					print( data[search] )
+					_.pr( data[search] )
 				else:
 					tcp_udp = []
 					if 'y' in data[search]['TCP'].lower():
@@ -415,7 +415,7 @@ def action():
 					text = _.colorThis( ','.join(tcp_udp), 'green', p=0 )
 					text += '\t'
 					text += _.colorThis( data[search]['Description'], 'yellow', p=0 )
-					print( text )
+					_.pr( text )
 			else:
 				_.colorThis( [ 'Port '+search+' not found' ], 'red' )
 
@@ -437,7 +437,7 @@ def action():
 				records.append( record )
 				total = countPorts( record['Port'], total )
 
-		# print('totalAll',totalAll)
+		# _.pr('totalAll',totalAll)
 		if len(records):
 			_.switches.fieldSet( 'Sort', 'active', True )
 			_.switches.fieldSet( 'Sort', 'value', 'port_sort' )
@@ -456,7 +456,7 @@ def action():
 				_.colorThis( [ '\n', '',  _.fields.value( 'totals', 'data', _.addComma(len(records)), right=1 )  , _.fields.value( 'totals', 'label', 'Records' ) ], 'yellow' )
 				_.colorThis( [ ' ',  _.fields.value( 'totals', 'data', _.addComma(total), right=1 )  , _.fields.value( 'totals', 'label', 'Ports' ) ], 'yellow' )
 				# _.colorThis( [ ' ', _.addComma(total), '\t', 'Ports' ], 'yellow' )
-			print()
+			_.pr()
 			_.colorThis( [  ' ',  _.fields.value( 'totals', 'data', _.addComma(len(data)), right=1 )  , _.fields.value( 'totals', 'label', 'Total Records' ) ], 'yellow' )
 			_.colorThis( [  ' ',  _.fields.value( 'totals', 'data',  _.addComma(totalAll), right=1 )  , _.fields.value( 'totals', 'label', 'Total Ports' ) ], 'yellow' )
 			# _.colorThis( [ '\n', '', _.addComma(len(data)), 'Total Records' ], 'yellow' )
@@ -483,9 +483,9 @@ def generatePortsIndex():
 			parts = record['Port'].split('-')
 			port = int(parts[0])
 			end = int(parts[1])
-			# print(parts)
+			# _.pr(parts)
 			while not port == end+1:
-				# print( port )
+				# _.pr( port )
 				data[ str(port) ] = record
 				port += 1
 	_.saveTableDB( 'Ports_Complete_List_Index.json' )
@@ -527,7 +527,7 @@ def load():
 						data[ port ]['Description'] = 'http server'
 
 					# else:
-					# 	print( 'skipped:', port )
+					# 	_.pr( 'skipped:', port )
 
 
 			except Exception as e:
@@ -546,6 +546,7 @@ data = {}
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

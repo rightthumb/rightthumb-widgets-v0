@@ -188,7 +188,7 @@ def process( data ):
 	if _.switches.isActive('WordStems'):
 		for i,x in enumerate(data):
 			data[i] = wordStem(x)
-		# print('here')
+		# _.pr('here')
 		return data
 	if _.switches.isActive('Split'):
 		new = []
@@ -251,7 +251,7 @@ def process( data ):
 				data[i] = x.lower()
 
 
-			# print( data[i] )
+			# _.pr( data[i] )
 
 
 	if _.switches.isActive('Unique'):
@@ -272,7 +272,7 @@ def action():
 		for i,row in enumerate( _.isData(r=1) ):
 			records.append({ 'i': i, 'line': row })
 
-		_.tables.rprint( records, 'line' )
+		_.tables.r_.pr( records, 'line' )
 		return None
 		sys.exit()
 
@@ -317,16 +317,16 @@ def action():
 				_.printVarSimple( data )
 			elif itIS == 'list':
 				for i,row in enumerate(data):
-					print( row )
+					_.pr( row )
 		elif _.switches.isActive('Flatten'):
 			if not _.switches.value('Flatten') is None and len( _.switches.value('Flatten') ):
-				# print( len( _.switches.value('Flatten') ), type( _.switches.value('Flatten') ), _.switches.value('Flatten') )
+				# _.pr( len( _.switches.value('Flatten') ), type( _.switches.value('Flatten') ), _.switches.value('Flatten') )
 				by = _.switches.values('Flatten')[0]
 			else:
 				by = ','
 			if by == ';sp':
 				by = ' '
-			print(  by.join( data )  )
+			_.pr(  by.join( data )  )
 
 		if _.switches.isActive('Save'):
 			_.saveText( '\n'.join(data), _.switches.values('Save')[0] )
@@ -366,6 +366,7 @@ def load():
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

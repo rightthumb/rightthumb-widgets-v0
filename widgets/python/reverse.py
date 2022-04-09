@@ -191,7 +191,7 @@ def action():
 	data.reverse()
 
 	for i,row in enumerate( data ):
-		print(row)
+		_.pr(row)
 
 
 
@@ -199,6 +199,7 @@ def action():
 if __name__ == '__main__':
 	action()
 	__.isExit()
+
 
 
 

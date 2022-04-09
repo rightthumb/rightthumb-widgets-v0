@@ -180,14 +180,14 @@ def searchFolder( folder ):
 	for o in omit.split(','):
 		if o in folder:
 			return False
-	# print('here',folder)
+	# _.pr('here',folder)
 	if os.path.isdir( folder ):
 		if not folder in data:
-			# print( folder )
+			# _.pr( folder )
 			pp = os.path.abspath( folder )
 			if _.switches.isActive('Print'):
 				if _.showLine(pp):
-					print(pp)
+					_.pr(pp)
 					cnt+=1
 			data.append( pp )
 			for file in os.listdir(folder):
@@ -204,9 +204,9 @@ def action():
 	global cnt
 
 	if os.path.isfile(_v.relevant_folders):
-		# print( 'Deleted' )
+		# _.pr( 'Deleted' )
 		os.unlink(_v.relevant_folders)
-	# print( 'Scanning' )
+	# _.pr( 'Scanning' )
 	for part in profile.split(','):
 		searchFolder( _v.userprofile + _v.slash + part )
 
@@ -217,15 +217,15 @@ def action():
 			searchFolder( folder )
 
 	_.saveText( data, _v.relevant_folders )
-	print()
+	_.pr()
 	_.colorThis( _v.relevant_folders, 'blue' )
-	print()
+	_.pr()
 	_.colorThis( [ '', _.addComma(len(data)), 'folders'  ], 'green' )
 	if _.switches.isActive('Print'):
 		if not cnt == len(data):
 			_.colorThis( [ '  ', cnt, 'found' ], 'yellow' )
 
-	# print( 'Done' )
+	# _.pr( 'Done' )
 
 omit = 'Lasalle,S_Archive,Projects,wp-content,wp-includes,FileZilla,httpdocs,images,ckeditor,HuMo-gen,cross-connect-master,iTunes,tech\\srv,pyFileFixity'
 profile = 'Desktop,Documents,Downloads,Music,OneDrive,Pictures,SkyDrive,Videos'
@@ -242,6 +242,7 @@ if __name__ == '__main__':
 	action()
 
 # generateRelevantFolders
+
 
 
 

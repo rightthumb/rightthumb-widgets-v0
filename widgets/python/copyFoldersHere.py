@@ -219,19 +219,19 @@ def processFolder( folder ):
 	os.chdir( homeFolder )
 
 
-	print()
-	print()
-	# print()
+	_.pr()
+	_.pr()
+	# _.pr()
 
 	do = 'xcopy /d/y/c "' + folder + _v.slash+'*.*" "' + folder.split(':'+_v.slash)[1] + _v.slash+'"'
-	print( do )
+	_.pr( do )
 	os.system('"' + do + '"')
 
 
-	# print()
-	print()
-	print()
-	# print( '\t',folder )
+	# _.pr()
+	_.pr()
+	_.pr()
+	# _.pr( '\t',folder )
 
 
 def action():
@@ -276,6 +276,7 @@ homeFolder = os.getcwd()
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

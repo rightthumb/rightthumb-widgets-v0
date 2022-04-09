@@ -204,7 +204,7 @@ _.postLoad( __file__ )
 # import inspect
 
 # x = inspect.getargspec(vlc)
-# print(x)
+# _.pr(x)
 # sys.exit()
 
 
@@ -222,7 +222,7 @@ def stop():
 	global loops
 	loops+=1
 	time.sleep(13)
-	# print('AA')
+	# _.pr('AA')
 	subprocess.call(['/usr/bin/pkill', 'mpv'])
 	
 	if loops < 3:
@@ -250,6 +250,7 @@ loops = 0
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

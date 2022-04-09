@@ -288,7 +288,7 @@ def folderReport():
 		if i == 0 and False:
 			if _.switches.isActive('JustReturn'):
 				return folderInfo(folder)
-			print( _.switches.isActive('JustReturn') )
+			_.pr( _.switches.isActive('JustReturn') )
 			_.printVar( folderInfo(folder) )
 			sys.exit()
 
@@ -346,8 +346,8 @@ def folderReport():
 		_.switches.fieldSet( 'Long', 'active', True )
 		_.tables.register( 'data', report )
 		_.tables.print( 'data', 'total,percent,count,isCount,hasCount,level,folder' )
-		print()
-		print( 'total:', _.addComma(total) )
+		_.pr()
+		_.pr( 'total:', _.addComma(total) )
 	return report
 		
 
@@ -372,7 +372,7 @@ def folderReportNew():
 
 def action():
 	load()
-	# print( _.appData[__.appReg]['pipe'] )
+	# _.pr( _.appData[__.appReg]['pipe'] )
 	if not type( _.appData[__.appReg]['pipe'] ) == bool:
 		if not _.setPipeDataRan:
 			_.pipeCleaner(1)
@@ -386,9 +386,9 @@ def action():
 
 		if _.switches.isActive( 'NotSorted' ):
 			_.appData[__.appReg]['pipe'] = sorted(_.appData[__.appReg]['pipe'], key=lambda v: (v.upper(), v[0].islower()))
-		# print( 'HERE' )
+		# _.pr( 'HERE' )
 		if _.switches.isActive( 'Report' ):
-			print( 'X HERE X' )
+			_.pr( 'X HERE X' )
 			return folderReport()
 		if _.switches.isActive( 'Unique' ):
 			uniqueData()
@@ -401,7 +401,7 @@ def action():
 				if not os.path.isdir(row):
 					shouldPrint = False
 			if shouldPrint:
-				print( row )
+				_.pr( row )
 
 
 
@@ -427,6 +427,7 @@ totalThreshold = 50
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

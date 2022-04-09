@@ -260,8 +260,8 @@ def upDown(myList, myNumber):
 		return myNumber
 	# try:
 	# except Exception as e:
-	# 	print( myNumber )
-	# 	print( myList )
+	# 	_.pr( myNumber )
+	# 	_.pr( myList )
 	# 	sys.exit()
 
 	myList = list(myList)
@@ -290,7 +290,7 @@ def testItem( num ):
 	global numberList
 	global powerTable
 	n = upDown( numberList, num )
-	# print( 'testItem:', num, n )
+	# _.pr( 'testItem:', num, n )
 	return n
 
 
@@ -308,7 +308,7 @@ def listOptions( num ):
 	options = []
 	while not x == large:
 		ti = testItem( x )
-		# print( 'listOptions:', x, ti, num )
+		# _.pr( 'listOptions:', x, ti, num )
 		if ti:
 			if not ti in options:
 				options.append( ti )
@@ -330,14 +330,14 @@ def listOptions( num ):
 		if x <= num:
 			newOptions.append( x )
 
-	# print( 'options:', num, newOptions )
+	# _.pr( 'options:', num, newOptions )
 
 	return options
 
 def test( num, total, path ):
 	global numberList
 	global powerTable
-	# print()
+	# _.pr()
 
 
 	if not total:
@@ -351,7 +351,7 @@ def test( num, total, path ):
 
 	myLo = max(newLo)
 	t = total-myLo
-	# print( '\n TEST:', num, total, newLo, myLo, t )
+	# _.pr( '\n TEST:', num, total, newLo, myLo, t )
 	path.append( myLo )
 
 	if t < 1:
@@ -363,7 +363,7 @@ def test( num, total, path ):
 def testOLD( num, total, path ):
 	global numberList
 	global powerTable
-	# print()
+	# _.pr()
 
 
 
@@ -377,12 +377,12 @@ def testOLD( num, total, path ):
 				isDone = True
 				path.append( t )
 				t = total-t
-				# print( t, path )
+				# _.pr( t, path )
 				return path
 			else:
 				isDone = True
 				path.append( x )
-				# print( t, path )
+				# _.pr( t, path )
 				return path
 
 	nextFound = False
@@ -394,7 +394,7 @@ def testOLD( num, total, path ):
 		else:
 			return None
 			
-			# print( 'Error:  n' )
+			# _.pr( 'Error:  n' )
 			# sys.exit()
 		if not n in path:
 			nextFound = True
@@ -441,7 +441,7 @@ def findValues( num ):
 	while result is None:
 		loop += 1
 		if loop > 20:
-			# print( 'Skipping' )
+			# _.pr( 'Skipping' )
 			return None
 		result = test( num, num, [] )
 		if not result is None:
@@ -461,7 +461,7 @@ def findValues( num ):
 
 def findShortest( num ):
 	global omit
-	# print( 'Finding:', num )
+	# _.pr( 'Finding:', num )
 
 	records = []
 	spent = []
@@ -475,7 +475,7 @@ def findShortest( num ):
 			omit.append( num )
 			return None
 
-		# print( thisResult )
+		# _.pr( thisResult )
 		string = str(thisResult)
 		if not string in spent:
 			spent.append( string )
@@ -491,22 +491,22 @@ def process( num, qID=False ):
 	global addedList
 	addedList[num] = 0
 	if manual:
-		print()
-		print( 'Processing:', num )
+		_.pr()
+		_.pr( 'Processing:', num )
 	resultTable[num] = findShortest( num )
 	if manual:
-		print( resultTable[num] )
+		_.pr( resultTable[num] )
 	if resultTable[num] is None:
 		while resultTable[num] is None:
 			addThis = _.shuffle( numberList )[0]
 			if addThis < 400:
 				if manual:
-					print( 'Adding:',addThis  )
+					_.pr( 'Adding:',addThis  )
 				pass
 				resultTable[num] = findShortest( num+addThis )
 		addedList[num] = addThis
 		if manual:
-			print( 'Adding:', addThis, 'worked', resultTable[num] )
+			_.pr( 'Adding:', addThis, 'worked', resultTable[num] )
 
 
 	if not type(qID) == bool:
@@ -545,15 +545,15 @@ def action():
 
 
 
-	print( 'N2K:', dataSet )
+	_.pr( 'N2K:', dataSet )
 	
 	for num in dataSet:
 		if threaded:
 			_.threads.add( 'NumberKnockout', process, [num] )
 		else:
 			# process( num )
-			print()
-			print('__________________________________________')
+			_.pr()
+			_.pr('__________________________________________')
 			_.colorThis( [ num ], 'cyan' )
 			spent = []
 			for w in [1,2,3,4,5,6]:
@@ -568,8 +568,8 @@ def action():
 							nn = num-ww
 							nn = num-www
 							x = test( num, nn, [w,ww,www] )
-							# print('_____________________')
-							# print()
+							# _.pr('_____________________')
+							# _.pr()
 							# _.colorThis( [ x ], 'green' )
 							powerPrint = []
 							for y in x:
@@ -577,15 +577,15 @@ def action():
 									powerPrint.append( str(powerTable[y]['number'])+'^'+str(powerTable[y]['power']) )
 									pass
 								except Exception as e:
-									print( 'Error' )
-									# print( y )
+									_.pr( 'Error' )
+									# _.pr( y )
 									_.printTest( powerTable )
 									sys.exit()
 								else:
 									pass
 								finally:
 									pass
-							print( ', '.join( powerPrint ) )
+							_.pr( ', '.join( powerPrint ) )
 				
 
 
@@ -593,7 +593,7 @@ def action():
 			sys.exit()
 
 	# for record in numberList:
-	# 	print( record )
+	# 	_.pr( record )
 
 
 
@@ -611,43 +611,43 @@ def complete():
 	global resultTable
 	global addedList
 
-	print()
-	print()
-	print()
-	print('_______________________________________')
-	print('               Complete')
-	print()
-	print()
+	_.pr()
+	_.pr()
+	_.pr()
+	_.pr('_______________________________________')
+	_.pr('               Complete')
+	_.pr()
+	_.pr()
 
 	report = 2
 
 	if report == 1:
 
 		for num in dataSet:
-			print()
+			_.pr()
 			rec = resultTable[num]
 			if addedList[num]:
-				print( 'Number:', num, 'Added:', addedList[num], rec )
+				_.pr( 'Number:', num, 'Added:', addedList[num], rec )
 			else:
-				print( 'Number:', num,  rec )
+				_.pr( 'Number:', num,  rec )
 
 	if report == 2:
 
 		for num in dataSet:
-			print()
-			print()
-			print()
+			_.pr()
+			_.pr()
+			_.pr()
 			rec = resultTable[num]
-			print( 'Number:', num )
+			_.pr( 'Number:', num )
 			
 			if addedList[num]:
-				print( 'Added:' )
-				print( '\t', powerTable[addedList[num]] )
-				print( 'New Number:', num+addedList[num] )
-				print()
-			print( 'Power Table:' )
+				_.pr( 'Added:' )
+				_.pr( '\t', powerTable[addedList[num]] )
+				_.pr( 'New Number:', num+addedList[num] )
+				_.pr()
+			_.pr( 'Power Table:' )
 			for r in rec:
-				print( '\t', powerTable[r] )
+				_.pr( '\t', powerTable[r] )
 
 
 		# if rec is None:
@@ -655,16 +655,16 @@ def complete():
 
 
 
-	# print( 'omit:', len(omit), omit )
-	# print( 'Skipped:', len(dataSet)-len(omit), 'of', len(dataSet) )
+	# _.pr( 'omit:', len(omit), omit )
+	# _.pr( 'Skipped:', len(dataSet)-len(omit), 'of', len(dataSet) )
 
 
-	# print( 'result:', shortest[0] )
-	# print()
+	# _.pr( 'result:', shortest[0] )
+	# _.pr()
 
 	# for x in shortest[0]['data']:
 	# 	record = powerTable[ x ]
-	# 	print( record )
+	# 	_.pr( record )
 
 
 def load():
@@ -703,6 +703,7 @@ addedList = {}
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

@@ -250,12 +250,12 @@ def action():
 
 		cidr = sum(bin(int(x)).count('1') for x in _.switches.value('SubnetMask').split('.'))
 		if not clean:
-			print( cidr )
+			_.pr( cidr )
 		return cidr
 	elif len(_.switches.all()) == 2 and _.switches.isActive('cidr') and _.switches.isActive('SubnetMask') and len(_.switches.value('cidr')) and  len(_.switches.value('cidr')) < 4 and not len(_.switches.value('SubnetMask')) :
 		netmask = cidr_to_netmask(_.switches.value('cidr'))
 		if not clean:
-			print(netmask)
+			_.pr(netmask)
 		return netmask
 
 	elif len(_.switches.all()) == 1 and _.switches.isActive('cidr') and  _.switches.isActive('cidr') and _.switches.value('cidr').count('.') == 3  and _.switches.value('cidr').count('/') == 1:
@@ -264,15 +264,15 @@ def action():
 		for ip in IPNetwork(_.switches.value('cidr')):
 			i+=1
 		if not clean:
-			print( '\n'.join( network ) )
-			print( 'IPs:', i )
+			_.pr( '\n'.join( network ) )
+			_.pr( 'IPs:', i )
 		return network
 	elif len(_.switches.all()) == 2 and _.switches.isActive('List') and _.switches.isActive('cidr') and  _.switches.isActive('cidr') and _.switches.value('cidr').count('.') == 3  and _.switches.value('cidr').count('/') == 1:
 		IPs = []
 		for ip in IPNetwork(_.switches.value('cidr')):
 			IPs.append( ip )
 			if not clean:
-				print(ip)
+				_.pr(ip)
 		return IPs
 	elif len(_.switches.all()) == 3 and _.switches.isActive('List') and _.switches.isActive('IPAddress') and  _.switches.isActive('SubnetMask'):
 		cidr = sum(bin(int(x)).count('1') for x in _.switches.value('SubnetMask').split('.'))
@@ -282,9 +282,9 @@ def action():
 			i+=1
 			IPs.append( ip )
 			if not clean:
-				print(ip)
+				_.pr(ip)
 		if not clean:
-			print( 'IPs:', i )
+			_.pr( 'IPs:', i )
 		return IPs
 	elif len(_.switches.all()) == 2 and _.switches.isActive('IPAddress') and  _.switches.isActive('SubnetMask'):
 		cidr = sum(bin(int(x)).count('1') for x in _.switches.value('SubnetMask').split('.'))
@@ -295,11 +295,11 @@ def action():
 			i+=1
 			IPs.append( ip )
 		if not clean:
-			print( _.switches.value('IPAddress')+'/'+str(cidr) )
-			print( 'IPs:', i )
+			_.pr( _.switches.value('IPAddress')+'/'+str(cidr) )
+			_.pr( 'IPs:', i )
 			if not netmask == _.switches.value('SubnetMask'):
-				print()
-				print( 'Fixed:', netmask )
+				_.pr()
+				_.pr( 'Fixed:', netmask )
 		return IPs
 	pass
 
@@ -311,6 +311,7 @@ def load():
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

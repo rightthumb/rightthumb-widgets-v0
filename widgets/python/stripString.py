@@ -190,7 +190,7 @@ def action():
 		file = _.getText(filepath)
 
 		result = ''
-		# print(file)
+		# _.pr(file)
 		for line in file:
 			line = str(line)
 			line = line.replace('\n','')
@@ -198,8 +198,8 @@ def action():
 			line = _str.replaceDuplicate(line,' ')
 			line = _str.cleanBE(line,' ')
 			result += line
-			# print(line)
-		# print(result)
+			# _.pr(line)
+		# _.pr(result)
 		_.saveText(result,filepath)
 
 
@@ -207,6 +207,7 @@ def action():
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

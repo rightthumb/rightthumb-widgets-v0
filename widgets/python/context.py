@@ -169,7 +169,7 @@ def action():
 	result = []
 	for fl in fileList:
 		fl = fl.replace('\n','')
-		# print(fl)
+		# _.pr(fl)
 		file = _.getText(_v.myHome + _v.slash+'tickets'+_v.slash + fl)
 		show = False
 		for f in file:
@@ -186,26 +186,27 @@ def action():
 	
 	for data in (result):
 		if 'Session:' in data:
-			print('\n\n\n')
+			_.pr('\n\n\n')
 			one = data.split('(')[1]
 			theDate = one.split(')')[0]
 
 			d = expireCheck(theDate)
 
-		print(data)
+		_.pr(data)
 		if 'Session:' in data:
-			print('Days ago:',d)
-			print('\n')
+			_.pr('Days ago:',d)
+			_.pr('\n')
 			
-	print()
-	print()
-	print('Records:',len(fileList))
+	_.pr()
+	_.pr()
+	_.pr('Records:',len(fileList))
 
 
 
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

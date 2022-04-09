@@ -209,7 +209,7 @@ def action():
 		fileBackup.switch( 'Input', path )
 		fileBackup.action()
 		
-		# print(path)
+		# _.pr(path)
 		_file_open.switch('Files',path)
 		_file_open.action()
 		pass
@@ -221,6 +221,7 @@ def action():
 if __name__ == '__main__':
 	action()
 	__.isExit()
+
 
 
 

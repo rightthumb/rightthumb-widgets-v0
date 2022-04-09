@@ -195,13 +195,13 @@ def action(t=None):
 	greeting = _.rli(TG)
 
 	if ty == 'none':
-		print( greeting )
+		_.pr( greeting )
 		return ''
 	
 	
 	# endearing, name, mean, sexy, mf, none
 	if ty == 'none':
-		print( greeting )
+		_.pr( greeting )
 		return ''
 	if ty == 'mf':
 		end = _.getText(_v.ttt+os.sep+'greeting-mf.txt',raw=True,clean=2).split('\n')
@@ -226,14 +226,14 @@ def action(t=None):
 
 	END = _.rli(end).title()
 	result = greeting+', '+END
-	print( result )
+	_.pr( result )
 	return result
 
 
 	# data = _.getText(_v.ttt+os.sep+'endearing.txt',raw=True,clean=2).split('\n')
 	# d = random.randint(0,len(data)-1)
 
-	# print(data[d])
+	# _.pr(data[d])
 
 
 
@@ -241,6 +241,7 @@ def action(t=None):
 if __name__ == '__main__':
 	action()
 	__.isExit()
+
 
 
 

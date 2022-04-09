@@ -173,7 +173,7 @@ def action():
 	# if not os.path.isfile(  _v.dbTables  +_v.slash+ 'bookmarks.index'  ):
 	# 	_.colorThis( [ '' ] )
 
-	# print( _v.thisHost )
+	# _.pr( _v.thisHost )
 	# sys.exit()
 
 	# folderID_host folderID_techApps folderID_alt
@@ -193,25 +193,25 @@ def action():
 
 			for y in _.caseUnspecific(  data['labels'][subject]  ,  'c:\\tech'  ):
 
-				print()
+				_.pr()
 				_.colorThis( data['labels'][subject], 'cyan' )
 				data['labels'][subject] = data['labels'][subject].replace( y, _v.folderID_tech )
 				_.colorThis( data['labels'][subject], 'cyan' )
-				print()
+				_.pr()
 			
 			for y in _.caseUnspecific(  data['labels'][subject]  ,  'C:\\Users\\Scott'  ):
-				print()
+				_.pr()
 				_.colorThis( data['labels'][subject], 'cyan' )
 				data['labels'][subject] = data['labels'][subject].replace( y, _v.folderID_profile )
 				_.colorThis( data['labels'][subject], 'cyan' )
-				print()
+				_.pr()
 
 			for y in _.caseUnspecific(  data['labels'][subject]  ,  'hosts\\VULCAN'  ):
-				print()
+				_.pr()
 				_.colorThis( data['labels'][subject], 'cyan' )
 				data['labels'][subject] = data['labels'][subject].replace( y, _v.folderID_host )
 				_.colorThis( data['labels'][subject], 'cyan' )
-				print()
+				_.pr()
 
 
 
@@ -242,10 +242,10 @@ def action():
 
 			temp = None
 			if not subject == subjectNEW:
-				print()
+				_.pr()
 				_.colorThis( subject, 'cyan' )
 				_.colorThis( subjectNEW, 'cyan' )
-				print()
+				_.pr()
 				if not os.path.isdir( _v.resolveFolderIDs(subjectNEW) ):
 					if not _.switches.isActive('Good'):
 						_.colorThis( [ _v.resolveFolderIDs(subjectNEW) ], 'red' )
@@ -320,6 +320,7 @@ import shutil
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

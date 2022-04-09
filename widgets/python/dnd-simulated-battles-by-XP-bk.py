@@ -338,7 +338,7 @@ def healthXP():
 	times = levelXP()
 	# sub = HP_DICE*(HP_DICE_X+times)
 	sub = HP_DICE*(levelXP())
-	# print('healthXP',HP_DICE,levelXP())
+	# _.pr('healthXP',HP_DICE,levelXP())
 	if _.switches.isActive('Hit-Dice-Mod'):
 		sub += int(_.switches.value('Hit-Dice-Mod'))
 
@@ -380,7 +380,7 @@ def genMobs():
 		allMobs.append( myMob )
 
 	if __.printing:
-		print( '__________________________________________________', cnt, 'MOBS' )
+		_.pr( '__________________________________________________', cnt, 'MOBS' )
 
 
 	return allMobs
@@ -411,7 +411,7 @@ def rollDamage( options, npc, yer ):
 				'last':rollDamage_LAST,
 				'npc':npc,
 		}
-		# print( 'rollDamage', dic  )
+		# _.pr( 'rollDamage', dic  )
 	rollDamage_LAST = yer
 	return result
 
@@ -431,7 +431,7 @@ def battle():
 
 	BATTLE_ID+=1
 	if __.printing:
-		print('\n\n\nBATTLE_ID:',BATTLE_ID)
+		_.pr('\n\n\nBATTLE_ID:',BATTLE_ID)
 	
 
 
@@ -455,7 +455,7 @@ def battle():
 				damage = rollDamage( options=player['Damage-60'], npc=1, yer=-10 )
 			else:
 				damage = rollDamage( options=player['Damage-Melee'], npc=1, yer=-10 )
-			# print("mobs[mi]['health']",mobs[mi]['health'],,ROUND)
+			# _.pr("mobs[mi]['health']",mobs[mi]['health'],,ROUND)
 			mobs[mi]['health'] = mobs[mi]['health'] - damage
 			if mobs[mi]['health'] < 1:
 				# XP += XP_PER
@@ -475,7 +475,7 @@ def battle():
 			else:
 				damage = rollDamage( options=player['Damage-Melee'], npc=1, yer=-11 )
 			mobs[mi]['health'] = mobs[mi]['health'] - damage
-			# print("mobs[mi]['health']",mobs[mi]['health'],ROUND)
+			# _.pr("mobs[mi]['health']",mobs[mi]['health'],ROUND)
 			if mobs[mi]['health'] < 1:
 				# XP += XP_PER
 				if __.printing:
@@ -493,7 +493,7 @@ def battle():
 		for i,mob in enumerate(mobs):
 			ac = roll(dice=20,cnt=1)
 			if ac >= player['ac']:
-				# print('ac',ac)
+				# _.pr('ac',ac)
 
 
 
@@ -509,14 +509,14 @@ def battle():
 								'R': ROUND,
 					}
 					if __.printing:
-						print('HEALTH',dic)
+						_.pr('HEALTH',dic)
 					player['health'] = HEALTH
 					
 					if HEALTH < 1:
 						healing_potion()
 
-						# print( 'PLAYER DEAD:', player )
-						# print( 'KILLED BY:', mob )
+						# _.pr( 'PLAYER DEAD:', player )
+						# _.pr( 'KILLED BY:', mob )
 						# _.e('DEAD')
 
 
@@ -581,10 +581,10 @@ def action():
 		did+=1
 		simulation_of_years()
 
-	print()
+	_.pr()
 	_.linePrint(txt=' ',p=1)
-	print()
-	print('Potions average of',_.addComma(ip)+':',Average(POTIONS_USED_LIST))
+	_.pr()
+	_.pr('Potions average of',_.addComma(ip)+':',Average(POTIONS_USED_LIST))
 
 def Average(lst):
     return sum(lst) / len(lst)
@@ -610,7 +610,7 @@ def simulation_of_years():
 	LAST_FULL_HEALTH = healthXP()
 	HEALTH = healthXP()
 
-	# print('starting-health',HEALTH, 'Level:',levelXP())
+	# _.pr('starting-health',HEALTH, 'Level:',levelXP())
 	
 	# sys.exit()
 
@@ -620,16 +620,16 @@ def simulation_of_years():
 		XP+=XP_PER
 		rest()
 
-	# print('POTIONS_USED:',POTIONS_USED)
+	# _.pr('POTIONS_USED:',POTIONS_USED)
 	POTIONS_USED_LIST.append(POTIONS_USED)
-	# print('ending-health',HEALTH, 'Level:',levelXP())
+	# _.pr('ending-health',HEALTH, 'Level:',levelXP())
 
 
 __.printing=0
 
 
 import random
-print()
+_.pr()
 
 XP_PER = 500
 
@@ -638,6 +638,7 @@ XP_PER = 500
 if __name__ == '__main__':
 	action()
 	__.isExit()
+
 
 
 

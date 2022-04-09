@@ -189,9 +189,9 @@ def action():
 	load()
 
 	for i,record in enumerate(data):
-		print()
-		print()
-		print()
+		_.pr()
+		_.pr()
+		_.pr()
 		
 		if 'LAST-BACKUP'.lower() in record['file'].lower():
 			delim = ' - '
@@ -199,17 +199,17 @@ def action():
 			last_backup_color = _.colorThis( [ 'LAST-BACKUP' ], 'red', p=0 )
 			delim_color = _.colorThis( [ delim ], 'green', p=0 )
 			newPrint = record['file']
-			# print()
-			# print()
-			# print()
-			# print(last_backup)
-			# print()
-			# print()
-			# print(  newPrint.split( last_backup+delim )  )
+			# _.pr()
+			# _.pr()
+			# _.pr()
+			# _.pr(last_backup)
+			# _.pr()
+			# _.pr()
+			# _.pr(  newPrint.split( last_backup+delim )  )
 			theRest = _.colorThis( [ newPrint.split( last_backup+delim )[1] ], 'yellow', p=0 )
 
 			newPrint = last_backup_color+delim_color+theRest
-			print(newPrint)
+			_.pr(newPrint)
 		else:
 			_.colorThis( [ record['file'] ], 'yellow' )
 		report = {}
@@ -224,13 +224,13 @@ def action():
 					if not row in test['data']:
 						if not first:
 							first = True
-							print()
-							# print()
-							# print()
+							_.pr()
+							# _.pr()
+							# _.pr()
 							_.colorThis(  [ '\t', test['file'] ] , 'cyan' )
 						if not lastID == ir-1:
-							print()
-							print()
+							_.pr()
+							_.pr()
 						lastID = ir
 						if not _.switches.isActive('NoBreak'):
 							pre = '                     '
@@ -278,19 +278,19 @@ def action():
 								rowi+=1
 							pass
 							row = ''.join( newText )
-						# print( 'estimate:', estimate )
+						# _.pr( 'estimate:', estimate )
 						p = _.colorThis( [ '\t\t', ir+1  ], 'purple', p=0 )+'\t'+_.plusColor( row )
 						# _.colorThis( [ row ], 'bold', p=0 )
-						print(p)
+						_.pr(p)
 
 
 	spent_sp = []
 	if len( backupFiles ):
-		print()
-		print()
+		_.pr()
+		_.pr()
 		_.colorThis( [ 'backup files:' ], 'green' )
 		for record in backupFiles:
-			print()
+			_.pr()
 			if not data[ record['i'] ]['start'] is None:
 				spent_sp.append( record['i'] )
 				scan_profile = scan_audit( record['i'] )
@@ -306,19 +306,19 @@ def action():
 				_.colorThis( [ '\t', record['file'] ], 'cyan' )
 			else:
 				_.colorThis( [ '\t', record['file'] ], 'cyan' )
-			print()
+			_.pr()
 	pass
 	hasScans = False
 	for i,record in enumerate(data):
 		if record['scan'] and not i in spent_sp:
 			hasScans = True
 	if hasScans:
-		print()
-		print()
+		_.pr()
+		_.pr()
 		_.colorThis( [ 'audit auto line matching:' ], 'green' )
 	for i,record in enumerate(data):
 		if record['scan'] and not i in spent_sp:
-			print()
+			_.pr()
 			scan_profile = scan_audit( record['i'] )
 			sp = scan_profile
 			part_profile = {
@@ -330,7 +330,7 @@ def action():
 			}
 			_.colorThis( [ '\t', _.simpleDic(part_profile)  ], 'yellow' )
 			_.colorThis( [ '\t', record['file'] ], 'cyan' )
-			print()
+			_.pr()
 
 
 
@@ -369,17 +369,17 @@ def scan_audit( i ):
 	return scan_profile
 
 	if False and pFirst < 90:
-		print()
-		print()
-		print( 'Scan Audit, Differences:' )
-		print( '\tfirst:', xFirst )
-		print( '\tscan:', xScan )
-		print()
-		print( '\tdiff:', xDiff )
-		print()
-		print( '\tper:', pFirst )
-		print()
-		print()
+		_.pr()
+		_.pr()
+		_.pr( 'Scan Audit, Differences:' )
+		_.pr( '\tfirst:', xFirst )
+		_.pr( '\tscan:', xScan )
+		_.pr()
+		_.pr( '\tdiff:', xDiff )
+		_.pr()
+		_.pr( '\tper:', pFirst )
+		_.pr()
+		_.pr()
 
 
 def load():
@@ -401,7 +401,7 @@ def load():
 
 
 
-		print()
+		_.pr()
 		if ':' in filename:
 			shouldRun = True
 		if filename.count(':') == 1 and filename[1] == ':':
@@ -409,7 +409,7 @@ def load():
 			filelabel = filename
 
 
-		# print('shouldRun',shouldRun)
+		# _.pr('shouldRun',shouldRun)
 		if shouldRun:
 
 
@@ -423,7 +423,7 @@ def load():
 				filelabel = ':'.join(filelabelX)
 				part.append( filelabel )
 				part.append( xx )
-				# print( part )
+				# _.pr( part )
 			else:
 				part = filename.split(':')
 			partial = True
@@ -443,13 +443,13 @@ def load():
 			filename = _.lastBackup( _.switches.values('Files')[ifn-1].split(':')[0] , backup )
 			backupFiles.append({ 'file': filename, 'i': ifn })
 			if filename is None:
-				print( 'No Backup Found' )
+				_.pr( 'No Backup Found' )
 				sys.exit()
 			filelabel = filelabel + ' - ' + data[ifn-1]['file']
 			if not data[ifn-1]['start'] is None:
 				scan = True
 		fileData = _.getText( filename )
-		# print( '\n\ngetText:', filename, type(fileData), '\n\n' )
+		# _.pr( '\n\ngetText:', filename, type(fileData), '\n\n' )
 		original = fileData
 
 
@@ -469,7 +469,7 @@ def load():
 			is_scan = True
 			partial = True
 			found = False
-			# print( '\n\n', data[ifn-1]['start'], '\n\n' )
+			# _.pr( '\n\n', data[ifn-1]['start'], '\n\n' )
 			startScanA = data[ifn-1]['original'][  data[ifn-1]['start']-1  ]
 			startScanB = data[ifn-1]['data'][  data[ifn-1]['start']-1  ]
 
@@ -530,7 +530,7 @@ def load():
 			if not end_p is None and end_p == len(data[ifn-1]['data']):
 				end = len(fileData)-1
 			# if not end_p is None:
-			# 	print( end_p, len(data[ifn-1]['data']) )
+			# 	_.pr( end_p, len(data[ifn-1]['data']) )
 			if start is None or end is None:
 				_.colorThis( ['endScanA', endScanA], 'cyan' )
 				if not endScanA == endScanB:
@@ -539,16 +539,16 @@ def load():
 				_.colorThis( 'auto line number search FAIL: 1', 'red' )
 				sys.exit()
 			if False and isBackup:
-				print()
-				print('start',start)
-				print('end',end)
-				print()
-				print( 'p diff', end_p-start_p )
-				print( 'diff', end-start )
-				print()
-				print(fileData[start-1])
-				print(fileData[end-1])
-				print()
+				_.pr()
+				_.pr('start',start)
+				_.pr('end',end)
+				_.pr()
+				_.pr( 'p diff', end_p-start_p )
+				_.pr( 'diff', end-start )
+				_.pr()
+				_.pr(fileData[start-1])
+				_.pr(fileData[end-1])
+				_.pr()
 				# sys.exit()
 
 		if partial and not scan:
@@ -575,7 +575,7 @@ def load():
 
 			if active:
 				if False and isBackup:
-					print( i, 'start', start, fileData[i] )
+					_.pr( i, 'start', start, fileData[i] )
 					ikill+=1
 					if ikill == killOn:
 						sys.exit()
@@ -595,17 +595,17 @@ def load():
 			elif xFirst < xScan:
 				xDiff = xScan - xFirst
 			if pFirst < 90:
-				print()
-				print()
-				print( 'Scan Audit, Differences:' )
-				print( '\tfirst:', xFirst )
-				print( '\tscan:', xScan )
-				print()
-				print( '\tdiff:', xDiff )
-				print()
-				print( '\tper:', pFirst )
-				print()
-				print()
+				_.pr()
+				_.pr()
+				_.pr( 'Scan Audit, Differences:' )
+				_.pr( '\tfirst:', xFirst )
+				_.pr( '\tscan:', xScan )
+				_.pr()
+				_.pr( '\tdiff:', xDiff )
+				_.pr()
+				_.pr( '\tper:', pFirst )
+				_.pr()
+				_.pr()
 				pause = input( ' pause: ' )
 
 		data.append({  'file': filelabel, 'data': fileData, 'partial': partial, 'start': start, 'end': end, 'original': original, 'scan': is_scan, 'i': ifn  })
@@ -622,6 +622,7 @@ backupFiles = []
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

@@ -148,7 +148,7 @@ if not sys.stdin.isatty():
 
 # _dir.sqlCreateTable( db, deleteDBFirst=True, close=True )
 # obj = _dir.fileInfo( path, sql=True )
-# print(   _dir.fileInfo( _.switches.value('Input') )['size']   )
+# _.pr(   _dir.fileInfo( _.switches.value('Input') )['size']   )
 
 # _.saveLog('queue')
 # _.saveLog('audit')
@@ -221,17 +221,18 @@ def action():
 	if not type( _.appData[__.appReg]['pipe'] ) == bool:
 		d = inline( _.appData[__.appReg]['pipe'] )
 		if not _.switches.isActive('Make'):
-			print( d )
+			_.pr( d )
 		else:
 			n = _.switches.value('Make')
 			n = n.replace( '{}', d )
-			print( n )
+			_.pr( n )
 
 
 
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

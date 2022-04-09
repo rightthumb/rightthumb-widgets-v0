@@ -425,7 +425,7 @@ def createDestinationFolders( folder ):
 	# parts.reverse()
 	# parts.pop()
 	# parts.reverse()
-	# print( _v.slash.join( parts ) )
+	# _.pr( _v.slash.join( parts ) )
 
 	newParts = []
 
@@ -446,7 +446,7 @@ def createDestinationFoldersSrc( src, folders, destination ):
 		p = f.replace( src+_v.slash, '' )
 		d = destination + _v.slash + p
 		createDestinationFolders( d )
-		# print( d )
+		# _.pr( d )
 		
 
 def genFolders( src, folders ):
@@ -546,14 +546,14 @@ def destinationStructureGetFolder( s, d, path ):
 	dfi = dfi.replace( _v.slash+_v.slash, _v.slash )
 	dfo = dfo.replace( _v.slash+_v.slash, _v.slash )
 
-	# print( 'masterS:', masterS )
-	# print( '    dfo:', dfo )
-	# print( '    dfi:', dfi )
+	# _.pr( 'masterS:', masterS )
+	# _.pr( '    dfo:', dfo )
+	# _.pr( '    dfi:', dfi )
 	# sys.exit()
 
-	# print()
-	# print( 'dfo:', dfo )
-	# print( 'dfi:', dfi )
+	# _.pr()
+	# _.pr( 'dfo:', dfo )
+	# _.pr( 'dfi:', dfi )
 
 	# sys.exit()
 	if not d in masterDListX:
@@ -580,9 +580,9 @@ def destinationStructureGetFolder( s, d, path ):
 	else:
 		dfi = None
 
-	# print()
-	# print( 'dfo:', dfo )
-	# print( 'dfi:', dfi )
+	# _.pr()
+	# _.pr( 'dfo:', dfo )
+	# _.pr( 'dfi:', dfi )
 
 
 	return dfi
@@ -639,14 +639,14 @@ def destinationStructurePipe( path ):
 	dfi = dfi.replace( _v.slash+_v.slash, _v.slash )
 	dfo = dfo.replace( _v.slash+_v.slash, _v.slash )
 
-	# print( 'masterS:', masterS )
-	# print( '    dfo:', dfo )
-	# print( '    dfi:', dfi )
+	# _.pr( 'masterS:', masterS )
+	# _.pr( '    dfo:', dfo )
+	# _.pr( '    dfi:', dfi )
 	# sys.exit()
 
 
-	# print( 'dfo:', dfo )
-	# print( 'dfi:', dfi )
+	# _.pr( 'dfo:', dfo )
+	# _.pr( 'dfi:', dfi )
 
 	# sys.exit()
 
@@ -676,12 +676,12 @@ def destinationStructurePipe( path ):
 def fileCopy( s, d ):
 	global totals
 	global copyReport
-	# print()
-	# print( '     Source:', s )
-	# print( 'Destination:', d )
+	# _.pr()
+	# _.pr( '     Source:', s )
+	# _.pr( 'Destination:', d )
 	# return None
 	if _.showLine( s ):
-		# print( s )
+		# _.pr( s )
 		shouldCopy = False
 		if not os.path.isfile( d ):
 			shouldCopy = True
@@ -712,11 +712,11 @@ def fileCopy( s, d ):
 		copyReport['records'][ didR ].append( s )
 		
 		if _.switches.isActive('Print'):
-			print( did, _.colorThis( s, 'cyan', p=0 ) )
+			_.pr( did, _.colorThis( s, 'cyan', p=0 ) )
 
 
 
-		# print( did, s )
+		# _.pr( did, s )
 
 # 		# do = 'xcopy /d/y/c "' + s + '" "' + d + '">NUL'
 # 		do = 'xcopy /d/y/c/i/q "' + s + '" "' + d + '"'
@@ -758,7 +758,7 @@ def fileCopyX( s, d ):
 		copyReport['records'][ didR ].append( s )
 		
 		if _.switches.isActive('Print'):
-			print( did, _.colorThis( s, 'cyan', p=0 ) )
+			_.pr( did, _.colorThis( s, 'cyan', p=0 ) )
 
 
 def fileCopyY( s, d, path ):
@@ -770,7 +770,7 @@ def fileCopyY( s, d, path ):
 
 		d = destinationStructureGetFolder( s, d, path )
 		# return None
-		# print( s, d, path )
+		# _.pr( s, d, path )
 		s = path
 
 
@@ -796,7 +796,7 @@ def fileCopyY( s, d, path ):
 		copyReport['records'][ didR ].append( s )
 		
 		if _.switches.isActive('Print'):
-			print( did, _.colorThis( s, 'cyan', p=0 ) )
+			_.pr( did, _.colorThis( s, 'cyan', p=0 ) )
 
 
 def fileCopyX_old( s, d ):
@@ -807,7 +807,7 @@ def fileCopyX_old( s, d ):
 		d = destinationStructurePipe( s )
 
 		# createDestinationFolders( d )
-		# print( s )
+		# _.pr( s )
 		do = 'xcopy /d/y/c/i/q "' + s + '" "' + d + _v.slash+'">NUL 2>&1'
 		
 		# do = 'echo test'
@@ -817,7 +817,7 @@ def fileCopyX_old( s, d ):
 		except Exception as e:
 			did = _.colorThis( 'E', 'red', p=0 )
 			
-		print( did, _.colorThis( s, 'cyan', p=0 ) )
+		_.pr( did, _.colorThis( s, 'cyan', p=0 ) )
 def copyFolders( toCopy ):
 
 	for record in toCopy:
@@ -851,7 +851,7 @@ def getFolder( s, d, folder ):
 						pass
 			# try:
 			# 		else:
-			# 			print('error')
+			# 			_.pr('error')
 
 
 			# except Exception as e:
@@ -860,23 +860,23 @@ def getFolder( s, d, folder ):
 
 
 def process( s, d, fs ):
-	# print( s )
-	# print( d )
-	# print( fs )
+	# _.pr( s )
+	# _.pr( d )
+	# _.pr( fs )
 	# sys.exit()
 	toProcess = genFolders( s, fs )
 	toCopy = matchFolders( s, d, toProcess )
-	print()
-	print( toProcess )
-	print()
+	_.pr()
+	_.pr( toProcess )
+	_.pr()
 	copyFolders( toCopy )
 
 def processFiles( s, d, fs, a=0 ):
 	global masterD
 	global totals
-	# print( s )
-	# print( d )
-	# print( fs )
+	# _.pr( s )
+	# _.pr( d )
+	# _.pr( fs )
 	# sys.exit()
 
 	if a:
@@ -887,20 +887,20 @@ def processFiles( s, d, fs, a=0 ):
 	for path in fs:
 		d = destinationStructure( path )
 		if not d is None:
-			# print()
+			# _.pr()
 			# _.printTest( 'Before fileCopy', x=0 )
 			fileCopy( path, d )
 			# _.printTest( 'After fileCopy', x=0 )
-	print()
+	_.pr()
 	x = d.split(_v.slash)
 	x.pop()
 
-	print()
+	_.pr()
 	_.colorThis( [ '', _.addComma(totals['C']), '\tCopied' ], 'yellow' )
-	# print()
+	# _.pr()
 	_.colorThis( [ '', _.addComma(totals['S']), '\tAlready up to date' ], 'yellow' )
 	# _.printVar( totals )
-	# print()
+	# _.pr()
 	_.colorThis( [ '', _.addComma(totals['E']), '\tErrors' ], 'yellow' )
 	# _.colorThis( [ totals ], 'yellow' )
 
@@ -908,9 +908,9 @@ def folderSelection( s, d ):
 	global masterD
 	global hasCleared
 	os.system( 'cls' )
-	print()
-	print( ' Folder:' )
-	print( '       ', s )
+	_.pr()
+	_.pr( ' Folder:' )
+	_.pr( '       ', s )
 	# return False
 
 	
@@ -921,9 +921,9 @@ def folderSelection( s, d ):
 	fs = _dirList.do( 'action' )
 
 	if not _.switches.isActive('Answer'):
-		print()
+		_.pr()
 		_.colorThis( 'Select what folders to backup:', 'yellow' )
-		print()
+		_.pr()
 		options = []
 		sections = []
 		fs.sort()
@@ -932,30 +932,30 @@ def folderSelection( s, d ):
 			cf = folder.replace( s+_v.slash, '' )
 			_.colorThis( [ '\t', i, cf ], 'cyan' )
 			sections.append( str(i) )
-		print()
-		print()
-		print()
+		_.pr()
+		_.pr()
+		_.pr()
 		_.colorThis( [  'A = recursive ( all files and subfolder )'  ], 'yellow' )
 		_.colorThis( [  'S = open a subfolder and list the folders'  ], 'yellow' )
 		_.colorThis( [  'F = disables recursion and can specify a file'  ], 'yellow' )
 		_.colorThis( [  'E = all except'  ], 'yellow' )
 		_.colorThis( [  'B = back a folder'  ], 'yellow' )
-		print()
+		_.pr()
 		_.colorThis( [  'Example: a or 0,1 of s,35 f,SanDisk.zip'  ], 'yellow' )
-		print()
+		_.pr()
 		selection = input( ' Selection: ' )
 	else:
 		selection = ','.join( _.switches.values('Answer') )
 	selection = selection.lower()
 	selection = _str.cleanBE( selection,' ' )
-	print()
+	_.pr()
 	os.system('cls')
-	print()
+	_.pr()
 	_.colorThis( 'Copy Tool Results:', 'green' )
-	print()
+	_.pr()
 
 	if selection.startswith( 'x' ):
-		print( 'Exit' )
+		_.pr( 'Exit' )
 		sys.exit()
 
 	if 'b' in selection :
@@ -986,7 +986,7 @@ def folderSelection( s, d ):
 				autoSelect.append( x )
 
 		selection = ','.join( autoSelect )
-		# print( selection )
+		# _.pr( selection )
 		# sys.exit()
 
 	if 'a' in selection and not selection.startswith( 'f' ):
@@ -1071,7 +1071,7 @@ def complete(printTotals=False):
 
 	if not _.switches.isActive('Fast_UpdateAtEnd'):
 		_.updateLine('                                                     ')
-	print()
+	_.pr()
 	if printTotals:
 
 
@@ -1089,7 +1089,7 @@ def complete(printTotals=False):
 			pass
 
 
-		print()
+		_.pr()
 		_.colorThis( [ '', _.addComma(totals['C']), '\tCopied' ], 'yellow' )
 		_.colorThis( [ '', _.addComma(totals['S']), '\tAlready up to date' ], 'yellow' )
 		_.colorThis( [ '', _.addComma(totals['E']), '\tErrors' ], 'yellow' )
@@ -1098,46 +1098,46 @@ def complete(printTotals=False):
 
 	# copyReport = { 'totals': { 'C': 0, 'E': 0, 'S': 0,  }, 'records': { 'C': [], 'E': [], 'S': [],  } }
 
-	print( '____________________________________________________________________' )
+	_.pr( '____________________________________________________________________' )
 
 	if copyReport['totals']['C']:
-		print()
-		print()
+		_.pr()
+		_.pr()
 		_.colorThis( 'Copied:', 'green' )
-		print()
+		_.pr()
 
 		for record in copyReport['records']['C']:
 			_.colorThis( [ '\t', record ] , 'cyan' )
-		print()
+		_.pr()
 		_.colorThis( [ '', copyReport['totals']['C'] ], 'cyan' )
-		print()
+		_.pr()
 
 	if False:
 		if copyReport['totals']['S']:
-			print()
-			print()
+			_.pr()
+			_.pr()
 			_.colorThis( 'Already Had Updated Copy:', 'yellow' )
-			print()
+			_.pr()
 
 			for record in copyReport['records']['S']:
 				_.colorThis( [ '\t', record ], 'cyan' )
-			print()
+			_.pr()
 			_.colorThis( [ '', copyReport['totals']['S'] ], 'yellow' )
-			print()
+			_.pr()
 
 
 
 		if copyReport['totals']['E']:
-			print()
-			print()
+			_.pr()
+			_.pr()
 			_.colorThis( 'Error:', 'yellow' )
-			print()
+			_.pr()
 
 			for record in copyReport['records']['E']:
 				_.colorThis( [ '\t', record ], 'red' )
-			print()
+			_.pr()
 			_.colorThis( [ '', copyReport['totals']['E'] ], 'yellow' )
-			print()
+			_.pr()
 
 
 
@@ -1208,8 +1208,8 @@ def action():
 		_.colorThis( [ 'Drive Not Connected' ], 'red' )
 		sys.exit()
 	if not _.switches.isActive('Answer'):
-		print( 'S:', s )
-		print( 'D:', d )
+		_.pr( 'S:', s )
+		_.pr( 'D:', d )
 		pause=input(' : ')
 	# sys.exit()
 
@@ -1238,9 +1238,9 @@ def action():
 		if result == d:
 			did = _.colorThis( 'C', 'green', p=0 )
 		else:
-			print(result)
+			_.pr(result)
 			did = _.colorThis( 'E', 'red', p=0 )
-		print(did)
+		_.pr(did)
 		sys.exit()
 
 
@@ -1274,11 +1274,11 @@ def action():
 
 
 
-			print()
+			_.pr()
 			_.colorThis( [ '', _.addComma(totals['C']), '\tCopied' ], 'yellow' )
 			_.colorThis( [ '', _.addComma(totals['S']), '\tAlready up to date' ], 'yellow' )
 			_.colorThis( [ '', _.addComma(totals['E']), '\tErrors' ], 'yellow' )
-			print()
+			_.pr()
 			complete()
 
 		return False
@@ -1286,13 +1286,13 @@ def action():
 
 	
 
-	# print( 'Source:', s )
-	# print( 'Destination:', d )
+	# _.pr( 'Source:', s )
+	# _.pr( 'Destination:', d )
 
 	# return False
 
-	# print( 'Source:', s )
-	# print( 'Destination:', d )
+	# _.pr( 'Source:', s )
+	# _.pr( 'Destination:', d )
 
 
 	# return False
@@ -1324,6 +1324,7 @@ masterDListX = []
 if __name__ == '__main__':
 	action()
 	__.isExit()
+
 
 
 

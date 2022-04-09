@@ -152,13 +152,14 @@ def action():
 	# 	_.setPipeData( _.getText( _.switches.value('Input') ), focus() )
 	# if not type( _.appData[__.appReg]['pipe'] ) == bool:
 	# 	pass
-	# print( _.d2json(_.appData) )
+	# _.pr( _.d2json(_.appData) )
 
 
 
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

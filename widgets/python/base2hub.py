@@ -164,7 +164,7 @@ def replace_text(data):
 
 	for part in parts:
 		prt = part.split('\n')
-		# print(prt)
+		# _.pr(prt)
 		if prt[0] and len(prt) > 1:
 			prt[0] = _str.cleanBE(prt[0],' ')
 			prt[1] = _str.cleanBE(prt[1],' ')
@@ -174,13 +174,13 @@ def replace_text(data):
 
 def convert_class_variables( subject, replace, *items ):
 	global file
-	# print(file)
+	# _.pr(file)
 	for item in items:
 		sub = subject+item
-		# print(sub)
+		# _.pr(sub)
 		index = _.find_all( file, sub )
 		index.reverse()
-		# print(index)
+		# _.pr(index)
 
 		for i in index:
 			new = ''
@@ -207,12 +207,12 @@ def convert_class_variables( subject, replace, *items ):
 
 def convert_class_functions( subject, replace ):
 	global file
-	# print(file)
+	# _.pr(file)
 	sub = subject
-	# print(sub)
+	# _.pr(sub)
 	index = _.find_all( file, sub )
 	index.reverse()
-	# print(index)
+	# _.pr(index)
 
 	for i in index:
 		new = ''
@@ -261,16 +261,16 @@ def add_app_to_fn():
 		pass
 		if not '.' in function:
 			# test = ii-len('def ')
-			# print(test)
-			# print(fns)
+			# _.pr(test)
+			# _.pr(fns)
 			if not ii-len('def ')+1 in fns:
 				function.reverse()
 				fn = ''.join(function)
 				if fn and not fn in ['childScript','__import__','abs','all','any','ascii','bin','bool','breakpoint','bytearray','bytes','callable','chr','classmethod','compile','complex','delattr','dict','dir','divmod','enumerate','eval','exec','filter','float','format','frozenset','getattr','globals','hasattr','hash','help','hex','id','input','int','isinstance','issubclass','iter','len','list','locals','map','max','memoryview','min','next','object','oct','open','ord','pow','print','property','range','repr','reversed','round','set','setattr','slice','sorted','staticmethod','str','sum','super','tuple','type','vars','zip']:
 					if not fn in spent:
 						spent.append(fn)
-						print(fn)
-					# print(fn,function)
+						_.pr(fn)
+					# _.pr(fn,function)
 					new=''
 					for i,ch in enumerate(file):
 						if i == ii+1:
@@ -296,7 +296,7 @@ def remove_text(data):
 		for part in parts:
 			part = _str.cleanBE(part,' ')
 			part = _str.cleanBE(part,'\t')
-			# print(i,'part',part.lower() in line.lower(),part,line)
+			# _.pr(i,'part',part.lower() in line.lower(),part,line)
 			if part and part.lower() in line.lower():
 				add=False
 		if add:
@@ -657,7 +657,7 @@ __.appReg_bk
 def action():
 	for i,path in enumerate( _.isData(r=1) ):
 		f = process(path)
-		# print(f)
+		# _.pr(f)
 		_.saveText( f, path )
 		_.cp( path, 'green' )
 
@@ -667,6 +667,7 @@ file = ''
 if __name__ == '__main__':
 	action()
 	__.isExit()
+
 
 
 

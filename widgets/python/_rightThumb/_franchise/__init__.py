@@ -201,7 +201,7 @@ def lookupMovie( imdbID ):
 				pass
 		
 		# for ty in movieYear:
-		# 	print(cleanupString(ty.text_content(),False))
+		# 	_.pr(cleanupString(ty.text_content(),False))
 		theYearThis = theYear
 		theTitleThis = theTitle
 		img0 = tree.cssselect('img')
@@ -223,7 +223,7 @@ def lookupMovie( imdbID ):
 			# Set 2
 			# 
 			props = e.cssselect('td')
-			# print(len(props))
+			# _.pr(len(props))
 			try:
 				char = props[3].cssselect('.character')
 				character = cleanupString(char[0].text_content())
@@ -245,7 +245,7 @@ def lookupMovie( imdbID ):
 				links = e.cssselect('a')
 				link0 = str(links[0].attrib['href'])
 				link = 'http://www.imdb.com' + extractUrl(link0) + '?ref_=ttfc_fc_cl_t13'
-				# print(link)
+				# _.pr(link)
 			except Exception as ee:
 				link = ''
 			if len(link) > 3:
@@ -259,7 +259,7 @@ def lookupMovie( imdbID ):
 		obj2 = obj
 		obj2['people'] = len(obj['people'])
 		if _.switches.isActive('RawPrint'):
-			print( obj2 )
+			_.pr( obj2 )
 		# if not type(qID) == bool:
 		# 	_.threads.spent( qID, sys.getsizeof( str(obj) ) )
 	except Exception as e:
@@ -298,11 +298,11 @@ def cleanupStringYear2(string):
 	string = _str.cleanFirst(string,' ')
 	string = _str.cleanBE(string,' ')
 
-	# print(string)
+	# _.pr(string)
 	# stringTMP = string.split('(')
 	# string = stringTMP[2].replace(')','')
 	string = _str.onlyDigits2(string)
-	# print(string)
+	# _.pr(string)
 	# sys.exit()
 	string = string.replace( ' ', '' )
 	return string
@@ -317,10 +317,10 @@ def cleanupStringYear(string):
 	string = _str.cleanFirst(string,' ')
 	string = _str.cleanBE(string,' ')
 
-	# print(string)
+	# _.pr(string)
 	stringTMP = string.split('(')
 	string = stringTMP[2].replace(')','')
-	# print(string)
+	# _.pr(string)
 	# sys.exit()
 	return string
 def cleanupString0(string):
@@ -376,11 +376,11 @@ def buildUrlList( url, label='', buildUrlListLast={}, buildUrlListDuplicate=[] )
 	# global buildUrlListLast
 	# global buildUrlListDuplicate
 	global dataDump
-	# print( url )
+	# _.pr( url )
 	# sys.exit()
 	if len(label):
 		if _.switches.isActive('RawPrint'):
-			print( label )
+			_.pr( label )
 	franchiseList = []
 	try:
 		page = requests.get(url)
@@ -395,12 +395,12 @@ def buildUrlList( url, label='', buildUrlListLast={}, buildUrlListDuplicate=[] )
 			for l in ll:
 				links.append( l )
 		if _.switches.isActive('RawPrint'):
-			print( 'url:', url )
-		# print(links)
+			_.pr( 'url:', url )
+		# _.pr(links)
 		# sys.exit()
 	except Exception as e:
 		if _.switches.isActive('RawPrint'):
-			print('Bad list link (', url, ')' )
+			_.pr('Bad list link (', url, ')' )
 
 	if info:
 		try:
@@ -443,10 +443,10 @@ def buildUrlList( url, label='', buildUrlListLast={}, buildUrlListDuplicate=[] )
 				if not nameFix in bad and not 'Lists by' in nameFix:
 					if len(year) > 2:
 						if _.switches.isActive('RawPrint'):
-							print(year,nameFix)
+							_.pr(year,nameFix)
 					else:
 						if _.switches.isActive('RawPrint'):
-							print('    ',nameFix)
+							_.pr('    ',nameFix)
 					# if 'TV Movie' in name and duplicateCheck(getIdFromUrl(movieURL)) == False:
 					thisID = getIdFromUrl(movieURL)
 					if not thisID in buildUrlListDuplicate:
@@ -454,7 +454,7 @@ def buildUrlList( url, label='', buildUrlListLast={}, buildUrlListDuplicate=[] )
 						hallmark.append({'id': thisID, 'name': nameFix, 'year': year, 'link': movieURL, 'people': []})
 		except Exception as e:
 			pass
-			# print('Error:',url)
+			# _.pr('Error:',url)
 	else:
 		iT = 0
 		try:
@@ -466,16 +466,16 @@ def buildUrlList( url, label='', buildUrlListLast={}, buildUrlListDuplicate=[] )
 						if not thisID in buildUrlListDuplicate:
 							buildUrlListDuplicate.append(thisID)
 							# if 'tt1375666' in thisID:
-							# 	print( 'Error:', url )
+							# 	_.pr( 'Error:', url )
 							# 	sys.exit()
 							franchiseList.append(thisID)
 						iT += 1
 				except Exception as e:
 					pass
 		except Exception as e:
-			# print('buildUrlList: for links(a) & franchiseList.append')
+			# _.pr('buildUrlList: for links(a) & franchiseList.append')
 			pass
-		# print('iT',iT)
+		# _.pr('iT',iT)
 
 
 
@@ -488,7 +488,7 @@ def buildUrlList( url, label='', buildUrlListLast={}, buildUrlListDuplicate=[] )
 			L = '0'
 			E = '0'
 	except Exception as e:
-		# print('buildUrlList: .pagination-range')
+		# _.pr('buildUrlList: .pagination-range')
 		pass
 
 
@@ -512,11 +512,11 @@ def buildUrlList( url, label='', buildUrlListLast={}, buildUrlListDuplicate=[] )
 					buildUrlListLast[item] = int(link.split('?page=')[1])
 				if actionX:
 					if _.switches.isActive('RawPrint'):
-						print('Page:',buildUrlListLast[item])
-					# print(link)
+						_.pr('Page:',buildUrlListLast[item])
+					# _.pr(link)
 					nextPage = 'http://www.imdb.com'+link
 					# nextLabel = label+' page X'
-					# print( 'next page' )
+					# _.pr( 'next page' )
 					# sys.exit()
 					if 'http' in nextPage.lower():
 						__.asyn.register( name='franchiseList', category='franchiseList', fn=buildUrlList, k={ 'url':nextPage, 'label':label, 'buildUrlListLast':buildUrlListLast, 'buildUrlListDuplicate':buildUrlListDuplicate }, timeout=120 )
@@ -529,16 +529,16 @@ def buildUrlList( url, label='', buildUrlListLast={}, buildUrlListDuplicate=[] )
 
 	# 				# for xx in buildUrlList( ,  ):
 	# 					# if 'tt1375666' in xx:
-	# 					# 	print( 'Error:', url )
+	# 					# 	_.pr( 'Error:', url )
 	# 					# 	sys.exit()
 	# 					# franchiseList.append(xx)
 	# except Exception as e:
-	# 	# print('buildUrlList: for links(a) & .pagination-range')
+	# 	# _.pr('buildUrlList: for links(a) & .pagination-range')
 	# 	pass
 
 	obj = franchiseList
 	if _.switches.isActive('RawPrint'):
-		print(len(set(obj)))
+		_.pr(len(set(obj)))
 	dataDump.append(obj)
 
 	# if not type(obj) == bool:
@@ -553,9 +553,9 @@ def buildUrlList( url, label='', buildUrlListLast={}, buildUrlListDuplicate=[] )
 
 
 def getUrlList( url, find, omit, obscure=False ):
-	# print( 'omit:', omit )
+	# _.pr( 'omit:', omit )
 	if _.switches.isActive('RawPrint'):
-		print( 'url:', url )
+		_.pr( 'url:', url )
 	# sys.exit()
 	theList = []
 	omitWords = [
@@ -577,9 +577,9 @@ def getUrlList( url, find, omit, obscure=False ):
 					'the'
 	]
 	newURL = url.replace(',','+').replace(' ','+')
-	# print(newURL)
+	# _.pr(newURL)
 	# brandNewURL = 'http://www.rightthumb.com/projects/widget/proxy.php?p=' + newURL.replace('&','[and]')
-	# print(newURL)
+	# _.pr(newURL)
 	# sys.exit()
 
 	
@@ -592,15 +592,15 @@ def getUrlList( url, find, omit, obscure=False ):
 			item = t.text_content()
 		except Exception as e:
 			item = ''
-		# print(item)
+		# _.pr(item)
 		if 'imdb' in item.lower():
 			links = t.cssselect('a')
 			link = str(links[0].attrib['href'])
 			link = link.replace('/url?q=http:','http:')
 			text = t.text_content()
-			# print(text)
-			# print()
-			# print(text)
+			# _.pr(text)
+			# _.pr()
+			# _.pr(text)
 
 
 			# pause = input('pause')
@@ -624,12 +624,12 @@ def getUrlList( url, find, omit, obscure=False ):
 						if ox.lower() in text.lower():
 							shouldRun = False
 
-			# print( 'shouldRun:', shouldRun )
+			# _.pr( 'shouldRun:', shouldRun )
 			if shouldRun:
 				if 'imdb.com/list/' in link:
 					theURL = link.replace('/url?q=','').split('/&sa=U')[0]
 					if _.switches.isActive('RawPrint'):
-						print(theURL)
+						_.pr(theURL)
 					if not theURL in __.spentLists:
 						__.spentLists[ theURL ] = 1
 						theList.append({'name': text,'link': theURL})
@@ -652,8 +652,8 @@ def action():
 
 
 
-	# print( _.switches.isActive('Alias') )
-	# print( _.switches.isActive('RawPrint') )
+	# _.pr( _.switches.isActive('Alias') )
+	# _.pr( _.switches.isActive('RawPrint') )
 	# sys.exit()
 
 	p=1
@@ -663,7 +663,7 @@ def action():
 
 
 	if _.switches.isActive('RawPrint'):
-		print()
+		_.pr()
 	if _.switches.isActive('Franchise'):
 		franchise = franchiseLabel()
 	else:
@@ -697,23 +697,23 @@ def action():
 	# franchiseName = franchise.replace(' ','_')
 	franchiseName = franchise
 	
-	print(franchise)
+	_.pr(franchise)
 
-	print()
-	print()
-	print('Automatic Inteligent Research', franchise.upper(),'...')
-	print()
-	print()
+	_.pr()
+	_.pr()
+	_.pr('Automatic Inteligent Research', franchise.upper(),'...')
+	_.pr()
+	_.pr()
 	# backupJSON( 'imdb_franchises.json' )
 
-	# print(__.franchises[0][franchiseName])
-	# print(__.franchises)
+	# _.pr(__.franchises[0][franchiseName])
+	# _.pr(__.franchises)
 
 	didResearch = False
 	franID = inFranchiseID( franchiseName )
 	if force:
-		print('Force')
-		print()
+		_.pr('Force')
+		_.pr()
 		startResearch = True
 		if not type(franID) == bool:
 			__.franchises.pop(franID)
@@ -744,8 +744,8 @@ def action():
 
 		
 		
-		# print( 'listExists:', franID )
-		# sys.exit()				# print('startResearch')
+		# _.pr( 'listExists:', franID )
+		# sys.exit()				# _.pr('startResearch')
 		# sys.exit()
 
 		# for xx in franID('https://www.google.com/search?q=imdb+'+franchise+'+franchise+movies'):
@@ -778,7 +778,7 @@ def action():
 				listMax = 100
 				if _.switches.isActive('ListCount'):
 					listMax = int( _.switches.value('ListCount') )
-				# print( 'xx', genOmitLink(franchise),franchise,genOmit(franchise), franchiseSearch )
+				# _.pr( 'xx', genOmitLink(franchise),franchise,genOmit(franchise), franchiseSearch )
 
 				if 'franchise' in getLists:
 					for xx in getUrlList('https://www.google.com/search?q=imdb+list+'+franchiseSearch+'+franchise'+genOmitLink(franchise),franchise,genOmit(franchise), obscure = obscure ):
@@ -806,13 +806,13 @@ def action():
 
 
 			if _.switches.isActive('RawPrint'):
-				print( 'theList:', theList )
+				_.pr( 'theList:', theList )
 
 			franID = len( __.franchises )
 			if _.switches.isActive('RawPrint'):
-				print()
-				print()
-				print()
+				_.pr()
+				_.pr()
+				_.pr()
 			info = {}
 			info['date_acquired'] = time.time()
 			info['epoch'] = time.time()
@@ -854,15 +854,15 @@ def action():
 				_.printVar( info )
 			except Exception as e:
 				if _.switches.isActive('RawPrint'):
-					print( info )
+					_.pr( info )
 
 			# sys.exit()
-			# print( theList )
+			# _.pr( theList )
 
 
 		newList = cleanList( theList )
 		if _.switches.isActive('RawPrint'):
-			print('Initiating research on ',len(newList),'items')
+			_.pr('Initiating research on ',len(newList),'items')
 		franchiseList = []
 
 
@@ -889,11 +889,11 @@ def action():
 
 		for lnk in newList:
 			if _.switches.isActive('RawPrint'):
-				print()
-				print(lnk)
-				print()
-			# print(lnk['name'].replace(' - IMDb','').replace('IMDb','').replace('imdb','').replace('IMDB',''))
-			# print(lnk['link'].replace('https://www.imdb.com/','').replace('http://www.imdb.com/',''))
+				_.pr()
+				_.pr(lnk)
+				_.pr()
+			# _.pr(lnk['name'].replace(' - IMDb','').replace('IMDb','').replace('imdb','').replace('IMDB',''))
+			# _.pr(lnk['link'].replace('https://www.imdb.com/','').replace('http://www.imdb.com/',''))
 			label = lnk['link'].replace('https://www.imdb.com/','').replace('http://www.imdb.com/',''),lnk['name'].replace(' - IMDb','').replace('IMDb','').replace('imdb','').replace('IMDB','')
 			# do = buildUrlList( lnk['link'], label )
 			
@@ -906,12 +906,12 @@ def action():
 
 			# for xxx in do:
 			# 	# if 'tt1375666' in xxx:
-			# 	# 	print( 'Error:', xxx )
+			# 	# 	_.pr( 'Error:', xxx )
 			# 	# 	sys.exit()
 			# 	franchiseList.append(xxx)
 			# # try:
 			# # except Exception as e:
-			# # 	print('Error: buildUrlList')
+			# # 	_.pr('Error: buildUrlList')
 
 			# break
 
@@ -920,31 +920,31 @@ def action():
 	else:
 		franchiseList = list(set( __.franchises[franID]['movieIDS'] ))
 		if _.switches.isActive('RawPrint'):
-			print(len(franchiseList))
+			_.pr(len(franchiseList))
 
 		report()
 
 
 def franchiseListComplete():
 
-	# print()
-	# print()
-	# print()
-	# print()
-	# print()
-	# print('                                     THIS THING WORKS')
-	# print()
-	# print()
-	# print()
-	# print()
-	# print()
-	# print()
+	# _.pr()
+	# _.pr()
+	# _.pr()
+	# _.pr()
+	# _.pr()
+	# _.pr('                                     THIS THING WORKS')
+	# _.pr()
+	# _.pr()
+	# _.pr()
+	# _.pr()
+	# _.pr()
+	# _.pr()
 
 
 	global franID
 	global dataDump
 
-	# print( type(dataDump),dataDump )
+	# _.pr( type(dataDump),dataDump )
 	# sys.exit()
 
 	newData = []
@@ -958,7 +958,7 @@ def franchiseListComplete():
 	
 	# sys.exit()
 	if _.switches.isActive('RawPrint'):
-		print( 'Processing:', len( __.franchises[franID]['movieIDS'] ) )
+		_.pr( 'Processing:', len( __.franchises[franID]['movieIDS'] ) )
 	dataDump = []
 
 	for imdbID in __.franchises[franID]['movieIDS']:
@@ -1000,7 +1000,7 @@ def report():
 	td = str(today).split('-')
 	tdd = datetime.date(int(td[0]), int(td[1]), int(td[2]))
 	diff = tdd - foundDate
-	# print()
+	# _.pr()
 
 
 	if didResearch:
@@ -1013,30 +1013,30 @@ def report():
 		os.system('cls')
 	#################################################################################################### MOVIES
 	if len(movies):
-		print()
-		print(info['theirName'], '\t', info['age'])
-		print()
+		_.pr()
+		_.pr(info['theirName'], '\t', info['age'])
+		_.pr()
 		for ix,r in enumerate(movies):
 			# record = {'id': iiii, 'name': title, 'year': year, 'link': link, 'img': img, 'age': gigAge}
-			# print((r['link']))
-			# print(getIdFromUrl(r['link']))
+			# _.pr((r['link']))
+			# _.pr(getIdFromUrl(r['link']))
 			if getIdFromUrl(r['link']) in franchiseList:
-				# print(r['name'])
+				# _.pr(r['name'])
 				movies[ix][franchiseName] = 'x'
 			else:
 				movies[ix][franchiseName] = ''
 		_.tables.register('Auto',movies)
 		_.tables.print('Auto','id,year,age,'+franchiseName+',name')
-		print()
-		print()
+		_.pr()
+		_.pr()
 		io = 0
 		for ix,r in enumerate(movies):
 			if getIdFromUrl(r['link']) in franchiseList:
 				io += 1
-				print(r['year'],r['name'])
-		print()
+				_.pr(r['year'],r['name'])
+		_.pr()
 		if io > 0:
-			print(io)
+			_.pr(io)
 
 		if io == 0:
 
@@ -1059,23 +1059,23 @@ def report():
 
 
 			if moreData:
-				print('None of these items are',franchiseName)
+				_.pr('None of these items are',franchiseName)
 
-				print()
-				print('')
-				print()
-				print('However, they are noted in:')
+				_.pr()
+				_.pr('')
+				_.pr()
+				_.pr('However, they are noted in:')
 				for fdai,fda in enumerate(__.franchises[2][franchiseName]):
 					if thisPersonID in  __.franchises[2][franchiseName][fdai]['people']:
-						print('\t\t\t\t',__.franchises[2][franchiseName][fdai]['year'],__.franchises[2][franchiseName][fdai]['title'])
-				print()
-				print()
-				print()
-				print()
+						_.pr('\t\t\t\t',__.franchises[2][franchiseName][fdai]['year'],__.franchises[2][franchiseName][fdai]['title'])
+				_.pr()
+				_.pr()
+				_.pr()
+				_.pr()
 	#################################################################################################### MOVIES
 
-	print()
-	print()
+	_.pr()
+	_.pr()
 	try:
 		ppl = _.addComma(len(set( __.franchises[franID]['peopleIDS'] ))) + ' people\t\t'
 	except Exception as e:
@@ -1084,10 +1084,10 @@ def report():
 		mv = _.addComma(len(set( __.franchises[franID]['movieIDS'] ))) + ' movies\t\t'
 	except Exception as e:
 		mv = ''
-	print('_____________________________________________________________________________________________________________________')
-	print(franchise.upper(), '\t\t',ppl,mv,__.franchises[franID]['date'],'\t\t',str(diff.days),'days')
-	print()
-	print()
+	_.pr('_____________________________________________________________________________________________________________________')
+	_.pr(franchise.upper(), '\t\t',ppl,mv,__.franchises[franID]['date'],'\t\t',str(diff.days),'days')
+	_.pr()
+	_.pr()
 
 		###################################################################################################	
 
@@ -1098,7 +1098,7 @@ def inFranchiseID( test ):
 	test = test.replace( ',', ' ' )
 	test = test.replace( '_', ' ' )
 	test = _str.cleanBE( test, ' ' )
-	# print( 'test:', test )
+	# _.pr( 'test:', test )
 	for i,franchise in enumerate(__.franchises):
 
 		if franchise['label'].lower() == test.lower():
@@ -1106,7 +1106,7 @@ def inFranchiseID( test ):
 
 
 		for alias in franchise['aliases']:
-			# print( test, alias )
+			# _.pr( test, alias )
 			if alias == test:
 				return i
 		if ' ' in test:
@@ -1211,7 +1211,7 @@ def cleanList( data ):
 				newResults.append( d )
 
 
-	# print( len(newResults) )
+	# _.pr( len(newResults) )
 	# sys.exit()
 	return newResults
 
@@ -1232,7 +1232,7 @@ def printFranchise():
 	franID = inFranchiseID( franchise )
 
 	# for movie in __.franchises[franID]['movies']:
-		# print( movie['imdbID'], movie['year'], movie['name'], movie['link'] )
+		# _.pr( movie['imdbID'], movie['year'], movie['name'], movie['link'] )
 
 	_.switches.fieldSet( 'Long', 'active', True )
 	_.tables.returnSorted( 'data', 'd.year', __.franchises[franID]['movies'] )
@@ -1316,6 +1316,7 @@ if __name__ == '__main__':
 
 # buildUrlList,
 	# Bad list link ( 4 )
+
 
 
 

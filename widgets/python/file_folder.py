@@ -162,14 +162,14 @@ def action():
 	else:
 		folder = os.getcwd()
 
-	# print( 'folder:', folder )
+	# _.pr( 'folder:', folder )
 
 
 	if _.switches.isActive( 'Compair' ):
 		oldList = _.getTable2( _v.myTemp + _v.slash+'file_folder_md5-' + _md5.md5( folder ) + '.json' )
 		# _.printVar( oldList )
 		if oldList is None:
-			print( 'Error: nothing to compair to' )
+			_.pr( 'Error: nothing to compair to' )
 			return False
 	i = 0
 	files = []
@@ -178,7 +178,7 @@ def action():
 	totalFolder = 0
 	for item in os.listdir(folder):
 		path = folder + _v.slash + item
-		# print( path )
+		# _.pr( path )
 		if os.path.isfile(path):
 			totalFile+=1
 			if _.showLine(item):
@@ -205,9 +205,9 @@ def action():
 				_.saveTable2( newList, _v.myTemp + _v.slash+'file_folder_md5-' + _md5.md5( folder ) + '.json' )
 			else:
 				for f in files:
-					print( f['label'] )
+					_.pr( f['label'] )
 				for f in files:
-					print( f['label'] )
+					_.pr( f['label'] )
 		else:
 
 
@@ -215,27 +215,27 @@ def action():
 				files[i]['sort_by_field'] = item['label'].replace( '__', '_0_' )
 
 
-			print()
+			_.pr()
 			_.colorThis( 'Files:', 'green' )
 			for f in _.tables.returnSorted( 'files', 'a.sort_by_field', files ):
 				_.colorThis( [ '\t',f['label'] ], 'cyan' )
-			print()
+			_.pr()
 			if totalFile == len(files):
 				_.colorThis( [ '',_.addComma(totalFile) ], 'yellow' )
 			else:
-				print('',_.colorThis( [ _.addComma(len(files)) ], 'yellow', p=0 ),'of',_.colorThis( [ _.addComma(totalFile) ], 'yellow', p=0 ))
-			print()
+				_.pr('',_.colorThis( [ _.addComma(len(files)) ], 'yellow', p=0 ),'of',_.colorThis( [ _.addComma(totalFile) ], 'yellow', p=0 ))
+			_.pr()
 			_.colorThis( 'Folders:', 'green' )
 			for f in _.tables.returnSorted( 'folders', 'a.label', folders ):
 				_.colorThis( [ '\t',f['label'] ], 'cyan' )
-			print()
+			_.pr()
 			if totalFolder == len(folders):
 				_.colorThis( [ '',totalFolder ], 'yellow' )
 			else:
-				print('',_.colorThis( [ _.addComma(len(folders)) ], 'yellow', p=0 ),'of',_.colorThis( [ _.addComma(totalFolder) ], 'yellow', p=0 ))
-			print()
+				_.pr('',_.colorThis( [ _.addComma(len(folders)) ], 'yellow', p=0 ),'of',_.colorThis( [ _.addComma(totalFolder) ], 'yellow', p=0 ))
+			_.pr()
 			_.colorThis( folder, 'darkcyan' )
-			print()
+			_.pr()
 
 
 
@@ -263,30 +263,30 @@ def action():
 
 		if not _.switches.isActive( 'Clean' ):
 			if not len( newItems['files'] ) and not len( newItems['folders'] ):
-				print( 'No changes' )
+				_.pr( 'No changes' )
 				return False
-			print()
+			_.pr()
 			_.colorThis( 'Files:', 'green' )
 			for f in newItems['files']:
 				_.colorThis( [ '\t',f ], 'cyan' )
-			print()
+			_.pr()
 			if totalFile == len(files):
 				_.colorThis( [ '',_.addComma(totalFile) ], 'yellow' )
 			else:
-				print('',_.colorThis( [ _.addComma(len(folders)) ], 'yellow', p=0 ),'of',_.colorThis( [ _.addComma(totalFolder) ], 'yellow', p=0 ))
-			print()
+				_.pr('',_.colorThis( [ _.addComma(len(folders)) ], 'yellow', p=0 ),'of',_.colorThis( [ _.addComma(totalFolder) ], 'yellow', p=0 ))
+			_.pr()
 			_.colorThis( 'Folders:', 'green' )
 			for f in newItems['folders']:
 				_.colorThis( [ '\t',f ], 'cyan' )
-			print()
+			_.pr()
 			if totalFolder == len(folders):
 				_.colorThis( [ '',_.addComma(totalFolder) ], 'yellow' )
 			else:
 
-				print('',_.colorThis( [ _.addComma(len(folders)) ], 'yellow', p=0 ),'of',_.colorThis( [ _.addComma(totalFolder) ], 'yellow', p=0 ))
-			print()
-			print(folder)
-			print()
+				_.pr('',_.colorThis( [ _.addComma(len(folders)) ], 'yellow', p=0 ),'of',_.colorThis( [ _.addComma(totalFolder) ], 'yellow', p=0 ))
+			_.pr()
+			_.pr(folder)
+			_.pr()
 		return newItems
 
 
@@ -294,6 +294,7 @@ def action():
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

@@ -206,7 +206,7 @@ def action():
 	global functionName
 	global replaceText
 
-	# print( _.switches.value('Input') )
+	# _.pr( _.switches.value('Input') )
 	shouldRun = False
 
 	if _.switches.isActive('Function'):
@@ -218,7 +218,7 @@ def action():
 
 	if _.switches.isActive('ReplaceFile'):
 		if not os.path.isfile( _.switches.value('ReplaceFile') ):
-			print( 'Error: ReplaceFile' )
+			_.pr( 'Error: ReplaceFile' )
 			sys.exit()
 		else:
 			shouldRun = True
@@ -232,7 +232,7 @@ def action():
 			sys.exit()
 
 	if not shouldRun:
-		print( 'Error: Bad switch 1' )
+		_.pr( 'Error: Bad switch 1' )
 		sys.exit()
 
 	if not type( _.appData[__.appReg]['pipe'] ) == bool or _.switches.isActive('Input') and os.path.isfile( _.switches.value('Input') ):
@@ -245,7 +245,7 @@ def action():
 			if os.path.isfile( filename ):
 				processFile(filename)
 	else:
-		print( 'Error: No Files' )
+		_.pr( 'Error: No Files' )
 		sys.exit()
 
 
@@ -262,8 +262,8 @@ def processFile( filename ):
 	global functionName
 	global replaceText
 	replaceText = replaceText.replace( ';n', _v.slash+'n' )
-	print()
-	print('processing:', filename)
+	_.pr()
+	_.pr('processing:', filename)
 	fileBackup.switch( 'Input', filename )
 	fileBackup.switch( 'Flag', 'pre replaceFunction' )
 	recoveryFile = fileBackup.do( 'action' )
@@ -323,11 +323,11 @@ def processFile( filename ):
 			loop = True			
 			while loop:
 				if xx in hasText:
-					# print( 'h', file[xx] )
+					# _.pr( 'h', file[xx] )
 					loop = False
 					# xx+=1
 				# elif xx in comment_blank:
-					# print( 'c', file[xx] )
+					# _.pr( 'c', file[xx] )
 					# loop = False
 				else:
 					xx-=1
@@ -357,9 +357,9 @@ def processFile( filename ):
 		if 'n' in keep.lower():
 			try:
 				copyfile(recoveryFile, filename)
-				print( 'Undo successful' )
+				_.pr( 'Undo successful' )
 			except Exception as e:
-				print( 'Undo fail' )
+				_.pr( 'Undo fail' )
 
 
 
@@ -367,6 +367,7 @@ def processFile( filename ):
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

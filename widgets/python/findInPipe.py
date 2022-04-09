@@ -245,7 +245,7 @@ def action():
 			if _.showLine( row ):
 				_.printBold( row, color )
 			else:
-				print( row )
+				_.pr( row )
 
 
 
@@ -258,6 +258,7 @@ def action():
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

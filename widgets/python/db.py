@@ -169,10 +169,10 @@ def table_fields(databaseFile,table):
 	cursor = connection.execute('select * from '+table)
 	row = cursor.fetchone()
 	names = row.keys()
-	# print(names)
+	# _.pr(names)
 
 	# for n in names:
-	# 	print(n)
+	# 	_.pr(n)
 	# sys.exit()
 	return names
 
@@ -185,7 +185,7 @@ def action():
 		sql = ' '.join( _.switches.values('SQL') )
 		if not _.isWin:
 			sql = sql.replace( '\*', '*' )
-		# print(sql)
+		# _.pr(sql)
 		# sys.exit()
 		isDefault = False
 	else:
@@ -193,13 +193,13 @@ def action():
 
 	for i,row in enumerate(_.isData(r=1)):
 		if not _.switches.isActive('Clean'):
-			print('DB:', row)
+			_.pr('DB:', row)
 		
 		if _.switches.isActive('TableFields'):
 			for table in _.switches.values('TableFields'):
-				print( '\t', table )
+				_.pr( '\t', table )
 				for field in table_fields(  row, table  ):
-					print( '\t\t', field )
+					_.pr( '\t\t', field )
 
 				
 		else:
@@ -211,20 +211,20 @@ def action():
 				delim = _.switches.values('Delim')[0]
 
 			if not _.switches.isActive('NotRecords'):
-				# print('here')
+				# _.pr('here')
 				records = c.fetchall()
-				# print(records)
+				# _.pr(records)
 				for record in records:
-					# print(record)
+					# _.pr(record)
 					txt = []
 					for field in record:
 						txt.append(str(field)) 
 					if isDefault:
-						print( '\t', delim.join(txt) )
+						_.pr( '\t', delim.join(txt) )
 						for field in table_fields(  row, delim.join(txt)  ):
-							print( '\t\t', field )
+							_.pr( '\t\t', field )
 					else:
-						print( delim.join(txt) )
+						_.pr( delim.join(txt) )
 
 
 
@@ -233,6 +233,7 @@ import sqlite3
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

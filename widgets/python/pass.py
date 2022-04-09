@@ -148,19 +148,19 @@ import _rightThumb._md5 as _md5
 
 
 def action():
-	# print(ord('\\'));sys.exit();
-	# print(ord('/'));sys.exit();
-	# print( _v.slashes['windows']['char'] );sys.exit();
-	# print( _v.slashes['unix']['char'] );sys.exit();
+	# _.pr(ord('\\'));sys.exit();
+	# _.pr(ord('/'));sys.exit();
+	# _.pr( _v.slashes['windows']['char'] );sys.exit();
+	# _.pr( _v.slashes['unix']['char'] );sys.exit();
 	_.printVarSimple( _.stringType( '5Ab' ) )
 	_.printVarSimple( _.stringType( '4fAb' ) )
 	_.printVarSimple( _.stringType( '23465437476!Ab' ) )
 	_.printVarSimple( _.stringType( '5Ab654asdf345FDSFG' ) )
 	_.printVarSimple( _.stringType( '5Ab' ) )
-	print( _.stringType( 123, mini=0 ) )
-	print( _.stringType( 123.1, mini=0 ) )
-	print( _.stringType( _md5, mini=0 ) )
-	# print( _.stringType( saasdfadsf, mini=0 ) )
+	_.pr( _.stringType( 123, mini=0 ) )
+	_.pr( _.stringType( 123.1, mini=0 ) )
+	_.pr( _.stringType( _md5, mini=0 ) )
+	# _.pr( _.stringType( saasdfadsf, mini=0 ) )
 	sys.exit()
 
 	if _.switches.isActive('Loops'):
@@ -184,10 +184,10 @@ def action():
 		md5 += _md5.md5(md5)
 		i+=1
 
-	print( md5 )
-	print( 'md5:',len(md5) )
-	print( 'n:',len(str(n)) )
-	print( 'p:',len(p) )
+	_.pr( md5 )
+	_.pr( 'md5:',len(md5) )
+	_.pr( 'n:',len(str(n)) )
+	_.pr( 'p:',len(p) )
 
 
 	# y = _nID.mini.resolve( x[0] )
@@ -200,6 +200,7 @@ def action():
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

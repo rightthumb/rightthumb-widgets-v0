@@ -280,7 +280,7 @@ def action():
 	load()
 
 
-	# print( data )	
+	# _.pr( data )	
 
 	_.saveTable2(  data,  _.switches.values('Files')[0], indentCode=False )
 	
@@ -294,6 +294,7 @@ data = []
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

@@ -154,7 +154,7 @@ _.postLoad( __file__ )
 
 import importlib
 ip_app = _v.py + _v.slash + 'ip.py'
-# print(  os.path.isfile(ip_app) ,  ip_app )
+# _.pr(  os.path.isfile(ip_app) ,  ip_app )
 # ip = importlib.import_module( ip_app )
 
 import importlib.util
@@ -173,13 +173,13 @@ def secure_vnc():
 		if myip.startswith( octet+'.' ):
 			isLocal = True
 	if isLocal:
-		print( 'local network, safe', myip )
+		_.pr( 'local network, safe', myip )
 		log.append( 'local network, safe, '+myip )
 		_.saveTable( log, 'secure_vnc.json' )
 	else:
 		log.append( 'NOT local network, unsafe, '+ myip )
 		_.saveTable( log, 'secure_vnc.json' )
-		print( 'NOT local network, unsafe, FIXING' )
+		_.pr( 'NOT local network, unsafe, FIXING' )
 		time.sleep(.5)
 		subprocess.call(['sh', '/opt/RightThumb/tech/programs/bash/secure_vnc.sh'])
 		# toggle_comment -f /etc/vnc.conf -label vnc
@@ -206,11 +206,11 @@ def action():
 		key = list(table['vnc'].keys())[0]
 		status = table['vnc'][key]
 		if int(status) == isActive:
-			print( 'public' )
+			_.pr( 'public' )
 			log.append( 'public' )
 			secure_vnc()
 		else:
-			print( 'private, safe', status )
+			_.pr( 'private, safe', status )
 			log.append( 'private, safe' )
 			_.saveTable( log, 'secure_vnc.json' )
 
@@ -223,6 +223,7 @@ octets = [ '192', '10' ]
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

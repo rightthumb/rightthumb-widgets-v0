@@ -207,13 +207,13 @@ def action():
 		else:
 			records.append(record)
 		i+=1
-		# print( record )
+		# _.pr( record )
 
 
 	_.tables.register( 'data', records )
 	_.tables.print( 'data', ','.join(list(groups.keys())) )
 
-	# print( l, gs )
+	# _.pr( l, gs )
 
 	# _.printVarSimple( groups )
 	# _.printVarSimple( table )
@@ -232,6 +232,7 @@ def blanks(cnt):
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

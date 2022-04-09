@@ -186,7 +186,7 @@ if __name__ == '__main__':
 def action():
 	global needed
 	msg = 'WB MNQ TZTL KMBG WMBNRJI DS T KBMG BK CBZTMEDCI TQE, ZVDJI DW DS WMNI WVTW WVI SNDCDEI RMTAIS EITWV, VI EBIS DW QBW KBM SBGI QBRJI BRUICW RNW KBM SBGI QBRJI BRUICW RNW WB ISCTFI SBGI DJJ'
-	print( msg )
+	_.pr( msg )
 	decoded = msg
 	# sys.exit()
 	load()
@@ -202,7 +202,7 @@ def action():
 		# 		_.appData[__.appReg]['pipe'].append( row )
 	if not type( _.appData[__.appReg]['pipe'] ) == bool:
 		_.pipeCleaner()
-		# print( _.printVar(_.appData) )
+		# _.pr( _.printVar(_.appData) )
 		result = ''
 		for c in decoded:
 
@@ -219,26 +219,26 @@ def action():
 								spent.append( code[0] )
 
 						# if c.upper() == 'B':
-						# 	print( c, code )
+						# 	_.pr( c, code )
 						c = code[1].upper()
 						# if c.upper() == 'O':
-						# 	print( c, code )
+						# 	_.pr( c, code )
 						break
 			result += c
 					
 			
-	print( result )
-	print()
-	print()
+	_.pr( result )
+	_.pr()
+	_.pr()
 
 	for en in 'A B C D E F G H I J K L M N O P Q R S T U V W X Y Z'.split( ' ' ):
 		if not en in spent:
 			needed.append( en )
 
-	print( 'encoded:', ' '.join( encoded ) )
-	print( ' needed:', ' '.join( needed ) )
-	print()
-	print()
+	_.pr( 'encoded:', ' '.join( encoded ) )
+	_.pr( ' needed:', ' '.join( needed ) )
+	_.pr()
+	_.pr()
 
 	if _.switches.isActive( 'Dictionary' ):
 		dicWord()
@@ -263,7 +263,7 @@ def dicWord():
 		if findPattern == '_':
 			return False
 
-		# print( findPattern.split( '_' ) )
+		# _.pr( findPattern.split( '_' ) )
 		
 		test = '*,*'.join( findPattern.split( '_' ) )
 
@@ -272,7 +272,7 @@ def dicWord():
 		test = _str.cleanEnd( test, ',*' )
 
 		_.switches.fieldSet( 'Plus', 'value', test )
-	print( cnt, _.switches.value( 'Plus' ) )
+	_.pr( cnt, _.switches.value( 'Plus' ) )
 
 	# sys.exit()
 
@@ -297,7 +297,7 @@ def dicWord():
 				if good:
 					for y,x in enumerate(dic[0]):
 						if not x == '_':
-							# print( x, word[y] )
+							# _.pr( x, word[y] )
 							if not word[y].lower() == x.lower():
 								good = False
 						elif not word[y].upper() in needed:
@@ -305,11 +305,11 @@ def dicWord():
 
 
 				if good:
-					print( word )
+					_.pr( word )
 					i+=1
 
-	print(  )
-	print( i )
+	_.pr(  )
+	_.pr( i )
 
 # def find( criteria, test ):
 # 	if criteria.startswith('*') and criteria.endswith('*'):
@@ -361,6 +361,7 @@ if __name__ == '__main__':
 # X,_
 # Y,_
 # Z,_
+
 
 
 

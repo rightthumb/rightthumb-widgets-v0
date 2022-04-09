@@ -196,16 +196,16 @@ def action():
 
 
 	# for c in txt:
-	# 	print( c,ord(c) )
+	# 	_.pr( c,ord(c) )
 
 	if txt.count('_') > 1 or chr(95) in txt:
-		# print('here')
+		# _.pr('here')
 		new = txt.replace('_',' ')
 	else:
 		new = txt.replace(' ','_')
 
-	print( txt )
-	print( new )
+	_.pr( txt )
+	_.pr( new )
 	if _.switches.isActive('Clip'):
 		_copy = _.regImp( __.appReg, '-copy' )
 		_copy.imp.copy( new,p=0 )
@@ -217,6 +217,7 @@ def action():
 if __name__ == '__main__':
 	action()
 	__.isExit()
+
 
 
 

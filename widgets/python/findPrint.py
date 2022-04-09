@@ -153,8 +153,8 @@ fileBackup.switch( 'DoNotSchedule' )
 
 def processFile( filename ):
 
-	print()
-	print('processing:', filename)
+	_.pr()
+	_.pr('processing:', filename)
 	fileBackup.switch( 'Input', filename )
 	fileBackup.switch( 'Flag', 'pre findPrint' )
 	recoveryFile = fileBackup.do( 'action' )
@@ -169,11 +169,11 @@ def processFile( filename ):
 		tmp = _str.replaceDuplicate( tmp, ' ' )
 		tmp = _str.cleanBE( tmp, ' ' )
 		shouldRun = False
-		if tmp.startswith('print('):
+		if tmp.startswith('_.pr('):
 			shouldRun = True
 
 		if shouldRun:
-			newFile.append( line.replace( 'print(', 'print('+str(i+1)+',' ) )
+			newFile.append( line.replace( '_.pr(', '_.pr('+str(i+1)+',' ) )
 		else:
 			newFile.append(line)
 
@@ -192,8 +192,8 @@ def processFile( filename ):
 				_.colorThis( 'Undo successful', 'green' )
 			except Exception as e:
 				_.colorThis( 'Undo fail', 'red' )
-				print( recoveryFile )
-				print( os.path.abspath(filename) )
+				_.pr( recoveryFile )
+				_.pr( os.path.abspath(filename) )
 
 
 
@@ -212,6 +212,7 @@ def action():
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

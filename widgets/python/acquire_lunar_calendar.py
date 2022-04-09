@@ -176,7 +176,7 @@ def processYear( year ):
 	if type(payload) == list:
 		data[year] = []
 		if not len(payload):
-			print('Blank')
+			_.pr('Blank')
 			error = True
 		for x in payload:
 			data[year].append(x)
@@ -206,7 +206,7 @@ def action():
 def load():
 	global code
 	code = _.getText( _v.myAppsJs + _v.slash+'acquire_lunar_calendar.js', raw=True )
-	# print(code)
+	# _.pr(code)
 
 
 code = ''
@@ -217,6 +217,7 @@ data = {}
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

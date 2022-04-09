@@ -182,7 +182,7 @@ def action():
 	for i,row in enumerate( _.isData(r=1) ):
 		newRow = process( row )
 		theFile.append(newRow)
-		print( newRow )
+		_.pr( newRow )
 
 	if _.switches.isActive('Save'):
 		# _.saveText( '\n'.join(theFile) , _.switches.values('Save') )
@@ -192,13 +192,14 @@ def action():
 	# 	_.pipeCleaner(0)
 	# 	# _.printVar( _.appData )
 	# 	for i,row in enumerate( _.appData[__.appReg]['pipe'] ):
-	# 		print( process( row ) )
+	# 		_.pr( process( row ) )
 
 
 
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

@@ -265,7 +265,7 @@ def percentageInt(percent, whole):
 
 def action():
 	if not _.switches.isActive('Input'):
-		print()
+		_.pr()
 		_.colorThis(  [ 'Error' ], 'red'  )
 		_.colorThis(  [ '\t', 'p diff -i 45 60' ], 'yellow'  )
 	if _.switches.isActive('Input'):
@@ -285,18 +285,18 @@ def action():
 				n1 = nv[0]
 
 
-			print()
-			print( 'difference' )
-			print()
-			print( '\t  ', str(_.pDiff(n0, n1, 'l')) + ' %' )
-			print( '\t  ', str(_.pDiff(n0,n1, 'g')) + ' %' )
-			print()
+			_.pr()
+			_.pr( 'difference' )
+			_.pr()
+			_.pr( '\t  ', str(_.pDiff(n0, n1, 'l')) + ' %' )
+			_.pr( '\t  ', str(_.pDiff(n0,n1, 'g')) + ' %' )
+			_.pr()
 			_.colorThis( [ '', n1-n0 ], 'yellow' )
-			print()
+			_.pr()
 			
 			
 		except Exception as e:
-			print()
+			_.pr()
 			_.colorThis(  [ 'Error' ], 'red'  )
 			_.colorThis(  [ '\t', 'p diff -i 45 60' ], 'yellow'  )
 
@@ -306,6 +306,7 @@ def action():
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

@@ -176,14 +176,14 @@ def action():
 	global data
 	# load()
 
-	# print( _v.chromedriver )
+	# _.pr( _v.chromedriver )
 	# sys.exit()
 
 	url                = 'https://covenantlifetampa.org/church-directory/'
 	password           = 'harmony'
 	selector           = '#pwbox-3255'
 
-	# print( password )
+	# _.pr( password )
 
 	_browser.imp.project.open( url )
 	_browser.imp.project.setField( password, selector, enter=True )
@@ -198,7 +198,7 @@ def action():
 	data =_browser.imp.project.injectReturn( 'window.hack.acquire.payload()' )
 	_.printVar( data )
 	
-	print()
+	_.pr()
 	_.saveTable( data, 'Church_Directory.json' )
 # 
 
@@ -220,6 +220,7 @@ if __name__ == '__main__':
 # window.hack.acquire.done = true;
 # p dir3 -ago 1d -c n
 # p dirdb + *.py selenium chrome techApps Python36
+
 
 
 

@@ -163,8 +163,8 @@ def action():
 	if _.switches.isActive('Input'):
 		codeRaw = _.switches.value('Input')
 		if not '{' in codeRaw:
-			print( 'Error: expected' )
-			print( '\t"family.talk.structure.attribute.set( {n,t,t} );"' )
+			_.pr( 'Error: expected' )
+			_.pr( '\t"family.talk.structure.attribute.set( {n,t,t} );"' )
 			sys.exit()
 		start = codeRaw.split( '{' )[0]
 		end = codeRaw.split( '}' )[1]
@@ -195,13 +195,14 @@ def action():
 
 					result = _str.cleanBE( result, ', ' )
 					result += end
-					print( result )
+					_.pr( result )
 
 
 
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

@@ -26,3 +26,7 @@ else
 fi
 
 
+# x='test'
+# if [ -z ${TERM+x} ]; then TERM=dumb; fi
+
+

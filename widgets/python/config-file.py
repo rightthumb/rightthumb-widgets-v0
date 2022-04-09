@@ -167,7 +167,7 @@ def action():
 		file = _.getText(path,raw=True)
 		save = folder+path.replace(os.sep,'-').replace(':',';')
 		_.saveText(file,save)
-		print(path)
+		_.pr(path)
 
 
 
@@ -175,6 +175,7 @@ def action():
 if __name__ == '__main__':
 	action()
 	__.isExit()
+
 
 
 

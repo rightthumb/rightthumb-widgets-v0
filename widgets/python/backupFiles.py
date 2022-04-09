@@ -261,12 +261,13 @@ def action():
 
 	for record in backupLog:
 		if _.showLine( record['file'] ):
-			print( record['backup'] )
+			_.pr( record['backup'] )
 
 
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

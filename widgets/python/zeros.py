@@ -217,13 +217,14 @@ def action():
 			zeros+='\n'
 		if i == cnt:
 			done=True
-	print(zeros)
+	_.pr(zeros)
 
 
 
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

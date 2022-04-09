@@ -333,7 +333,7 @@ if _.switches.isActive('Ago_by_Created'):
 		# WEEK OF YEAR
 	#   date_modified_raw
 
-	# print('cwoy ')
+	# _.pr('cwoy ')
 
 def movieTitle(pipeData):
 	theResult = pipeData
@@ -344,7 +344,7 @@ def movieTitle(pipeData):
 		p = _str.replaceDuplicate(p,' ')
 		p = _str.cleanBE(p,' ')
 		# dots = p.split('.')
-		# print(dots[len(dots)-1])
+		# _.pr(dots[len(dots)-1])
 		# p.replace(dots[len(dots)-1],'')
 		line = ''
 		i=0
@@ -372,7 +372,7 @@ def movieTitle(pipeData):
 		line = _str.cleanBE(line,' ')
 		if '(' in p:
 			line += ' ' + p.split('(')[1].split(')')[0]
-		# print(line.encode('ascii'))
+		# _.pr(line.encode('ascii'))
 		y = False
 		for l in line.split(' '):
 			if len(l) == 4:
@@ -457,7 +457,7 @@ def movieTitle(pipeData):
 			newRecord = newRecord.replace(year,'')
 			return year, cleanUpMovie(newRecord)
 
-			# print( record )
+			# _.pr( record )
 		if not type(record) == tuple:
 			return record
 		elif type(record) == tuple:
@@ -479,7 +479,7 @@ def movieTitle(pipeData):
 	result = []
 	dataType = 'filename'
 	for p in pipeData:
-		# print( ( p ) )
+		# _.pr( ( p ) )
 		# sys.exit()
 		if type( p ) == dict:
 			dataType = 'dict'
@@ -494,7 +494,7 @@ def movieTitle(pipeData):
 			line = clean( folder + ' ' + p['name'] )
 		else:
 			line = clean( p )
-		# print( line )
+		# _.pr( line )
 		if len(line) > 0 and not 'sample' in line:
 			if dataType == 'filename':
 				result.append(line)
@@ -558,7 +558,7 @@ def getFolder(folder):
 			dirList = os.listdir(folder)
 		if _.switches.isActive('Files'):
 			dirList = _.switches.values('Files')
-			# print( dirList )
+			# _.pr( dirList )
 		for item in dirList:
 			if not _.switches.isActive('Files'):
 				path = folder + _v.slash + item
@@ -604,7 +604,7 @@ def getFolder(folder):
 						except Exception as e:
 							pass
 				else:
-					print('error')
+					_.pr('error')
 
 
 
@@ -651,7 +651,7 @@ def addFile( path, hasData=False ):
 			_dir.fileInfo(path,err=True)
 		except Exception as e:
 			error = e
-		print( 'Error:', os.path.isfile(path),path, error, '\n________________________\n' )
+		_.pr( 'Error:', os.path.isfile(path),path, error, '\n________________________\n' )
 
 		return None
 	
@@ -677,7 +677,7 @@ def addFile( path, hasData=False ):
 		# stat = os.stat(path)
 		# size = stat.st_size
 		size = record['bytes']
-		# print( _.switches.values('Size') )
+		# _.pr( _.switches.values('Size') )
 		# sys.exit()
 		if 'l' in _.switches.values('Size')[0]:
 			if size < _.switches.values('Size')[1]:
@@ -716,7 +716,7 @@ def addFile( path, hasData=False ):
 				shouldPrint = True
 			else:
 				if not _.switches.isActive('Binary') and  _.switches.isActive('Text') and isText(record['path']) == True :
-					# print(isText(record['path']))
+					# _.pr(isText(record['path']))
 					i = i + 1
 					shouldPrint = True
 				elif not _.switches.isActive('Binary') and not _.switches.isActive('Text'):
@@ -752,7 +752,7 @@ def addFile( path, hasData=False ):
 
 
 			elif len( _.switches.values('Ago') ) > 1 and type(_.switches.values('Ago')[1]) == str:
-				# print('asdf')
+				# _.pr('asdf')
 				if 'a' in _.switches.values('Ago')[1]:
 					run = 'a'
 				elif 'md' in _.switches.values('Ago')[1]:
@@ -765,8 +765,8 @@ def addFile( path, hasData=False ):
 					run = 'md'
 
 
-			# print(  len( _.switches.values('Ago') )  )
-			# print(  ( _.switches.values('Ago') )  )
+			# _.pr(  len( _.switches.values('Ago') )  )
+			# _.pr(  ( _.switches.values('Ago') )  )
 			# sys.exit()
 			# accessed_raw
 
@@ -774,12 +774,12 @@ def addFile( path, hasData=False ):
 			if len( _.switches.values('Ago') ) > 1 and type(_.switches.values('Ago')[1]) == float:
 				agoRange = True
 
-			# print(  'agoRange', agoRange  )
+			# _.pr(  'agoRange', agoRange  )
 
 			if not agoRange:
 				if run == 'default':
-					# print(record['date_modified_raw'])
-					# print(_.switches.values('Ago'))
+					# _.pr(record['date_modified_raw'])
+					# _.pr(_.switches.values('Ago'))
 					if record['date_modified_raw'] > _.switches.values('Ago')[0] or record['date_created_raw'] > _.switches.values('Ago')[0]:
 						shouldAdd = True
 				elif run == 'resent':
@@ -787,7 +787,7 @@ def addFile( path, hasData=False ):
 						shouldAdd = True
 				elif run == 'a':
 					if record['accessed_raw'] > _.switches.values('Ago')[0]:
-						# print( _.friendlyDate(_.switches.values('Ago')[0]), _.switches.values('Ago')[0], record['accessed_raw'], _.friendlyDate(record['accessed_raw']) )
+						# _.pr( _.friendlyDate(_.switches.values('Ago')[0]), _.switches.values('Ago')[0], record['accessed_raw'], _.friendlyDate(record['accessed_raw']) )
 						shouldAdd = True
 				elif run == 'cd':
 					if record['date_created_raw'] > _.switches.values('Ago')[0]:
@@ -797,8 +797,8 @@ def addFile( path, hasData=False ):
 						shouldAdd = True
 			elif agoRange:
 				if run == 'default':
-					# print(record['date_modified_raw'])
-					# print(_.switches.values('Ago'))
+					# _.pr(record['date_modified_raw'])
+					# _.pr(_.switches.values('Ago'))
 					if record['date_modified_raw'] < _.switches.values('Ago')[0] or record['date_created_raw'] < _.switches.values('Ago')[0]:
 						if record['date_modified_raw'] > _.switches.values('Ago')[1] or record['date_created_raw'] > _.switches.values('Ago')[1]:
 							shouldAdd = True
@@ -854,15 +854,15 @@ def addFile( path, hasData=False ):
 
 def action():
 	global data
-	# print('_.isData()',_.isData())
+	# _.pr('_.isData()',_.isData())
 	# focus()
-	# print('ce797caa1c16', _.switches.values('Files') )
+	# _.pr('ce797caa1c16', _.switches.values('Files') )
 	if _.isData():
 		data=[]
 		for path in _.isData():
 			if os.path.isfile(path):
 				path=__.path(path)
-				# print(path)
+				# _.pr(path)
 				addFile(path)
 		pass
 		if _.switches.isActive('Totals'):
@@ -903,7 +903,7 @@ def action():
 	if _.switches.isActive('Group<='):
 		g = _.switches.values('Group<=')[0]
 		s = str(_.size_group_size(g))
-		# print( g,s )
+		# _.pr( g,s )
 		_.switches.fieldSet( 'Size', 'active', True )
 		_.switches.fieldSet( 'Size', 'value', 'l,'+s )
 		_.switches.fieldSet( 'Size', 'values', ['l',s] )
@@ -935,7 +935,7 @@ def action():
 		_.switches.fieldSet( 'Files', 'active', True )
 		_.switches.fieldSet( 'Files', 'values', _.appData[__.appReg]['pipe'] )
 		_.switches.fieldSet( 'Files', 'value', ','.join(_.appData[__.appReg]['pipe']) )
-		# print( _.switches.values('Files') )
+		# _.pr( _.switches.values('Files') )
 
 	if _.switches.isActive('Files') and _.switches.isActive('JSON'):
 		records = []
@@ -957,7 +957,7 @@ def action():
 	#   _.pipeCleaner(0)
 	#   # _.printVar( _.appData )
 	#   for i,row in enumerate( _.appData[__.appReg]['pipe'] ):
-	#       print( row )
+	#       _.pr( row )
 	#       process( row )
 
 
@@ -973,10 +973,10 @@ def action():
 			else:
 				_.e( 'no folder selected' )
 		#   folders.append(os.getcwd())
-		# print(folders)
+		# _.pr(folders)
 		# sys.exit()
 		for folder in folders:
-			# print(folder)
+			# _.pr(folder)
 			# sys.exit()
 			if _.switches.isActive('Cache') or ( _.switches.isActive('LoadEpoch') and not __.payloadCache is None ):
 				_.switches.fieldSet( 'Cache', 'active', True )
@@ -1069,7 +1069,7 @@ def action():
 				# }
 
 				for x in dataCacheX:
-					# print(x)
+					# _.pr(x)
 					addFile( x, hasData=True )
 			else:
 				getFolder(folder)
@@ -1093,7 +1093,7 @@ def action():
 
 		if _.switches.isActive('JSON'):
 			# for x in data[0].keys():
-			#   print(x)
+			#   _.pr(x)
 			# sys.exit()
 			_.printVarSimple( data )
 		else:
@@ -1106,7 +1106,7 @@ def action():
 
 			if not i == fileCount:
 			# if not len(files) == i:
-				# print('HERE')
+				# _.pr('HERE')
 				_.folderProfileAttribute( folder=folder, info = {
 																'app': 'ls',
 																'recursive': _.switches.isActive('Recursive'),
@@ -1169,9 +1169,9 @@ def action():
 			
 
 			if _.switches.isActive('Save'):
-				# print(saveFile)
-				# print(_.switches.values('Save')[0])
-				print( 'Saved:', _.switches.values('Save')[0] )
+				# _.pr(saveFile)
+				# _.pr(_.switches.values('Save')[0])
+				_.pr( 'Saved:', _.switches.values('Save')[0] )
 				_.saveTable2( saveFile, _.switches.values('Save')[0] )
 
 			elif not _.switches.isActive('Save'):
@@ -1210,7 +1210,7 @@ def action():
 							# _.printTest(record)
 							key += str(record['name'])
 						if 'test0' in keyType:
-							print(key)
+							_.pr(key)
 						if key in table:
 							table[key].append(i)
 							if not key in duplicates:
@@ -1223,15 +1223,15 @@ def action():
 					if _.switches.isActive( 'GroupBy' ):
 						keyType+='test11'
 					for key in duplicates:
-						print()
+						_.pr()
 						if 'test1' in keyType:
 							keyP = key
 							if 'test11' in keyType:
 								keyP = keyP.replace( '*', '' )
-							print(keyP)
-							print()
+							_.pr(keyP)
+							_.pr()
 						for i in table[key]:
-							# print(i)
+							# _.pr(i)
 							day = ''
 							if 'test1' in keyType:
 								day = '\t'
@@ -1245,9 +1245,9 @@ def action():
 										if not day == '':
 											day += ' '
 										day += data[i]['date_modified'].split(' ')[0]
-								print( day, data[i]['path'] )
+								_.pr( day, data[i]['path'] )
 							else:
-								print( day+data[i]['path'] )
+								_.pr( day+data[i]['path'] )
 
 
 
@@ -1277,8 +1277,8 @@ def action():
 								if len(record['ext']):
 									nN = record['name'][0:len(record['name'])-len(record['ext'])-1]
 									fL = len(nN)
-									# print( nN, record['name'], record['ext'], length, op, fL )
-									# print( length, op, fL )
+									# _.pr( nN, record['name'], record['ext'], length, op, fL )
+									# _.pr( length, op, fL )
 									shouldAdd = False
 									if op == '==':
 										if fL == length:
@@ -1290,7 +1290,7 @@ def action():
 										if fL <= length:
 											shouldAdd = True
 									if shouldAdd:
-										# print( nN, record['name'], record['ext'], length, op, fL )
+										# _.pr( nN, record['name'], record['ext'], length, op, fL )
 										record['length'] = fL
 										nw.append(record)
 
@@ -1312,8 +1312,8 @@ def action():
 							if _.showLine(record['ext']):
 								nN = record['ext']
 								fL = len(nN)
-								# print( nN, record['name'], record['ext'], length, op, fL )
-								# print( length, op, fL )
+								# _.pr( nN, record['name'], record['ext'], length, op, fL )
+								# _.pr( length, op, fL )
 								shouldAdd = False
 								if op == '==':
 									if fL == length:
@@ -1325,7 +1325,7 @@ def action():
 									if fL <= length:
 										shouldAdd = True
 								if shouldAdd:
-									# print( nN, record['name'], record['ext'], length, op, fL )
+									# _.pr( nN, record['name'], record['ext'], length, op, fL )
 									record['length'] = fL
 									nw.append(record)
 
@@ -1337,7 +1337,7 @@ def action():
 				_.tables.fieldProfileSet( 'data', 'meta.epoch.me', 'trigger', _.friendlyDate )
 				_.tables.fieldProfileSet( 'data', 'meta.epoch.ae', 'trigger', _.friendlyDate )
 				_.tables.fieldProfileSet( 'data', 'meta.epoch.ce', 'trigger', _.friendlyDate )
-				# print('here')
+				# _.pr('here')
 				# _.tables.fieldProfileSet( 'data', 'week_of_year', 'trigger', _.woyTrigger )
 				# _.tables.fieldProfileSet( 'data', '_header_', 'alignment', 'left' )
 				# _.tables.fieldProfileSet('data','timestamp','trigger',_.friendlyDate)
@@ -1429,7 +1429,7 @@ def action():
 
 				pass
 			if not _.switches.isActive('Clean'):
-				print()
+				_.pr()
 
 				
 				totalBytes = 0
@@ -1447,15 +1447,15 @@ def action():
 					txt += _.colorThis(  [  _.formatSize( totalBytes ) ], 'green', p=0 )
 					txt += ' in '
 					txt += _.colorThis(  [  _.addComma(folderCount) + ' folders' ], 'blue', p=0 )
-					print( txt )
+					_.pr( txt )
 				else:
 					txt = '\t ' + _.addComma(fileCount) + ' total files '
 					txt += _.colorThis(  [  _.addComma(i), 'selected '  ], 'yellow', p=0 )
 					txt += _.colorThis(  [  _.formatSize( totalBytes ) ], 'green', p=0 )
 					txt += ' in '
 					txt += _.colorThis(  [  _.addComma(folderCount) + ' folders' ], 'blue', p=0 )
-					print( txt )
-				print()
+					_.pr( txt )
+				_.pr()
 				if _.switches.isActive('PrintBytes'):
 					_.cp( ['bytes:',totalBytes], 'cyan' )
 				endPrint = time.time()
@@ -1501,12 +1501,12 @@ def extensionsDatabank():
 				x = '.'+x
 			if not x in extensionList:
 				extensionList.append( x.lower() )
-	# print( extensionList )
+	# _.pr( extensionList )
 	# sys.exit()
 
 
 
-	# print('done')
+	# _.pr('done')
 	# _.printVarSimple(woy_hash_table)
 
 # datetime.datetime.fromtimestamp(epoch).strftime('%c')
@@ -1533,7 +1533,8 @@ woy_hash_table = {}
 ########################################################################################
 if __name__ == '__main__':
 	action()
-	# print(_v.appLogs())
+	# _.pr(_v.appLogs())
+
 
 
 

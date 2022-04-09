@@ -181,7 +181,7 @@ def sections(line):
 		parts.append(c)
 		parts.append(d)
 
-	# print(parts)
+	# _.pr(parts)
 	if len(parts) == 4:
 		ep = parts[0]
 		par = ep.split('.')
@@ -275,13 +275,14 @@ def action():
 
 # folder = 'C:\\Users\\Scott\\.rt\\profile\\projects\\ent'
 folder = _v.home + '/.rt/profile/projects/ent'.replace('/',os.sep)
-print(folder)
+_.pr(folder)
 	
 
 ########################################################################################
 if __name__ == '__main__':
 	action()
 	__.isExit()
+
 
 
 

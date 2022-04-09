@@ -192,7 +192,7 @@ def action():
 		text += 'source $HOME/.bashrc\n\n'
 	else:
 		text += '%USERPROFILE%\\rr.bat\n\n'
-	print(text)
+	_.pr(text)
 	spent={}
 	data2 = data.split('\n')
 	data2.reverse()
@@ -224,7 +224,7 @@ def action():
 						text += '\n'
 						text += '\n'
 						file += text
-						print(text)
+						_.pr(text)
 	_copy.imp.copy( file )
 
 _copy = _.regImp( __.appReg, '-copy' )
@@ -234,6 +234,7 @@ _copy = _.regImp( __.appReg, '-copy' )
 if __name__ == '__main__':
 	action()
 	__.isExit()
+
 
 
 

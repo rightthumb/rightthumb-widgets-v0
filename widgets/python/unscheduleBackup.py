@@ -265,22 +265,22 @@ _.postLoad( __file__ )
 
 def display( data ):
 	if _.switches.isActive('Plus'):
-		# print( _.colorPlus(data) )
+		# _.pr( _.colorPlus(data) )
 		file = _.colorPlus( data['file'], 'cyan' )
 	else:
 		# _.colorThis( data, 'cyan' )
 		file = _.colorThis( data['file'], 'cyan', p=0 )
 
 	if _.switches.isActive('Group') and not len(_.switches.value('Group')):
-		print()
-		print( 'Group:', _.colorThis( data['group'], 'yellow', p=0 ) )
-		print( file )
+		_.pr()
+		_.pr( 'Group:', _.colorThis( data['group'], 'yellow', p=0 ) )
+		_.pr( file )
 	elif _.switches.isActive('Date') and not len(_.switches.value('Date')):
-		print()
-		print( 'Date:', _.colorThis( _.resolveEpochTest(data['timestamp']), 'yellow', p=0 ) )
-		print( file )
+		_.pr()
+		_.pr( 'Date:', _.colorThis( _.resolveEpochTest(data['timestamp']), 'yellow', p=0 ) )
+		_.pr( file )
 	else:
-		print( file )
+		_.pr( file )
 
 
 
@@ -293,7 +293,7 @@ def action():
 
 
 	if not _.switches.isActive('Clean'):
-		print()
+		_.pr()
 
 
 	if _.switches.isActive('Folder'):
@@ -350,8 +350,8 @@ def action():
 
 	if _.switches.isActive('Backup') and _.switches.isActive('Schedule'):
 		if not _.switches.isActive('Clean'):
-			print()
-			print()
+			_.pr()
+			_.pr()
 
 
 
@@ -399,18 +399,18 @@ def action():
 
 
 	if not _.switches.isActive('Clean'):
-		print()
+		_.pr()
 		if ii:
 			if not _.switches.isActive('Confirm'):
 				msg = _.colorThis( [  '', ii, ''  ], 'yellow', p=0 )
 				msg += _.colorThis( [  'files would have been deactivated'  ], 'green', p=0 )
-				print( msg )
+				_.pr( msg )
 				_.colorThis( 'Preview: nothing deactivated', 'red' )
 				
 			else:
 				msg = _.colorThis( [  '', ii, ''  ], 'yellow', p=0 )
 				msg += _.colorThis( [  'files deactivated'  ], 'green', p=0 )
-				print( msg )
+				_.pr( msg )
 
 
 
@@ -451,6 +451,7 @@ epoch = 0
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

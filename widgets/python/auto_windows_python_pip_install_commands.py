@@ -206,9 +206,9 @@ _.postLoad( __file__ )
 def process(item):
 	text = item.split('"')[1]
 	if _.isWin:
-		print( text.replace( 'python3', '%py%' ) )
+		_.pr( text.replace( 'python3', '%py%' ) )
 	else:
-		print(text)
+		_.pr(text)
 
 
 def action():
@@ -220,10 +220,10 @@ def action():
 	lastSpace = True
 	for i,row in enumerate( data ):
 		test = row.replace( '\t', '' ).replace( ' ', '' )
-		# print( lastSpace, len(test) )
+		# _.pr( lastSpace, len(test) )
 		if len(test) < 3:
 			if not lastSpace:
-				print()
+				_.pr()
 			
 				lastSpace = True
 		
@@ -250,6 +250,7 @@ def load():
 if __name__ == '__main__':
 	action()
 	_.tables.eof()
+
 
 
 

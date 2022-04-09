@@ -225,15 +225,15 @@ def action(data=False):
 
 		data = {}
 		if not len( log ):
-			print( 'No Data' )
+			_.pr( 'No Data' )
 			sys.exit()
 		total = log[len(log)-1]['timestamp'] - log[0]['timestamp']
 		theTotal = 'seconds: ' + str((total/1000)%60)
 		# pause  = input('pause')
 
 		for row in log:
-			# print(row.keys())
-			# print(  row['function'], row['action'] )
+			# _.pr(row.keys())
+			# _.pr(  row['function'], row['action'] )
 			try:
 				data[row['uuid']].append(row)
 			except Exception as e:
@@ -244,7 +244,7 @@ def action(data=False):
 
 		last = 0
 		for key in data.keys():
-			# print(key)
+			# _.pr(key)
 			last = 0
 			for row in _.tables.returnSorted( 'auditJavascript', 'a.timestamp', data[key] ):
 				if not last == 0:
@@ -253,7 +253,7 @@ def action(data=False):
 					diff = 0
 				last = row['timestamp']
 				if not 'start' in row['action']:
-					# print( row['timestamp'], '\t', diff, '\t',row['function'], '\t', row['action'].replace('end ','').replace('end','') )
+					# _.pr( row['timestamp'], '\t', diff, '\t',row['function'], '\t', row['action'].replace('end ','').replace('end','') )
 					nm = row['function'] + '__' + row['action'].replace('end ','').replace('end','').replace('  ',' ').replace(' ','_')
 					try:
 						report[nm].append(diff)
@@ -265,20 +265,20 @@ def action(data=False):
 		for key in report.keys():
 			logReport.append( {'function': key.split('__')[0], 'action': key.split('__')[1].replace('_',' '), 'milliseconds': sum(report[key]), 'seconds': (sum(report[key])/1000)%60} )
 
-			# print(key,'\tmilliseconds:',sum(report[key]),'\tseconds:',)
+			# _.pr(key,'\tmilliseconds:',sum(report[key]),'\tseconds:',)
 
-		print()
+		_.pr()
 		_.tables.register('auditJavascriptReport',logReport)
 		_.tables.print('auditJavascriptReport','function,action,milliseconds,seconds')
 
-		print()
-		print()
+		_.pr()
+		_.pr()
 
 		
-		print('algorithm total:')
-		print('\t\t',theTotal)
-		print()
-		print()
+		_.pr('algorithm total:')
+		_.pr('\t\t',theTotal)
+		_.pr()
+		_.pr()
 		
 
 
@@ -295,6 +295,7 @@ def action(data=False):
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

@@ -549,7 +549,7 @@ def action():
 
 	if _.switches.isActive('JSON'):
 		import simplejson
-		print( simplejson.dumps(sample, indent=4, sort_keys=False) )
+		_.pr( simplejson.dumps(sample, indent=4, sort_keys=False) )
 
 
 	elif not _.switches.isActive('JSON'):
@@ -562,7 +562,7 @@ def action():
 		if _.switches.isActive('Lorem'):
 			result = lorem + result[:1].lower()+result[1:]
 
-		print( result )
+		_.pr( result )
 
 
 
@@ -571,6 +571,7 @@ def action():
 if __name__ == '__main__':
 	action()
 	__.isExit()
+
 
 
 

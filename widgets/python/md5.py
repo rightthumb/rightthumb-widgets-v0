@@ -221,17 +221,18 @@ def action():
 		# _.printVar( _.appData )
 	for i,row in enumerate( _.isData(r=1) ):
 		start=time.time()
-		print(row)
+		_.pr(row)
 		data = _md5.md5File( row )
-		print( data )
+		_.pr( data )
 		if _.switches.isActive('Time'):
-			print(time.time()-start)
+			_.pr(time.time()-start)
 
 
 
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

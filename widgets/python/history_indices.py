@@ -158,15 +158,15 @@ def action():
 	try:	
 		x = data[ _.switches.values('CMD')[0].lower() ]
 	except Exception as e:
-		print()
+		_.pr()
 		_.colorThis( [  'Error: app does not exist in this index '  ], 'red' )
-		print()
+		_.pr()
 		_.colorThis( [  '\t index: ', subject_index  ], 'yellow' )
 		sys.exit()
 
-	print( x )
-	print(  )
-	print( _v.myTickets )
+	_.pr( x )
+	_.pr(  )
+	_.pr( _v.myTickets )
 
 	spent=[]
 
@@ -183,7 +183,7 @@ def action():
 				if _.showLine( row ):
 					if not row in spent:
 						spent.append(row)
-						print( row )
+						_.pr( row )
 
 
 def load():
@@ -233,7 +233,7 @@ def load():
 		subject_index = indices['cmd']
 	if not subject_index is None:
 		data = _.getTable( subject_index )
-	# print(data)
+	# _.pr(data)
 	if data is None:
 		_.colorThis( 'Error: index not selected', 'red' )
 		sys.exit()
@@ -244,6 +244,7 @@ data = None
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

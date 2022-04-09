@@ -265,9 +265,9 @@ def action():
 	load()
 
 
-	# print(  len(data)  )
+	# _.pr(  len(data)  )
 	# for k in data.keys():
-	# 	print( k )
+	# 	_.pr( k )
 
 
 
@@ -309,9 +309,9 @@ def action():
 
 
 		for rec in data:
-			print()
-			print()
-			print()
+			_.pr()
+			_.pr()
+			_.pr()
 			for k in rec.keys():
 				_.colorThis( k, 'yellow' )
 				for tag in rec[k]:
@@ -326,14 +326,14 @@ def action():
 
 
 		pass
-		print()
-		print()
-		print()
-		print()
+		_.pr()
+		_.pr()
+		_.pr()
+		_.pr()
 
 		for x in otherTags['outer']:
 			if not x in spentTags['outer']:
-				print( 'Missing:', x )
+				_.pr( 'Missing:', x )
 
 
 
@@ -377,6 +377,7 @@ data = []
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

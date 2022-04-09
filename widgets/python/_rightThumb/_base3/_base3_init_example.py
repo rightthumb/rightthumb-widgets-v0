@@ -211,15 +211,20 @@ def action():
 	# if _.switches.isActive('Test'): test(); return None;
 
 	for i,row in enumerate( _.isData(r=1) ):
-		print(row)
+		#--> new print function
+		_.pr(row)
 
 
 
 def load():
 	global c3po
 	c3po = _.getTable( 'table' )
+	#--> new table printer
+	_.pt(c3po)
 
-
+#--> todo:
+# --> 	- _.prt(c3po,trigger={'epoch': _.friendlyDate})
+#--> 	- 
 
 ########################################################################################
 if __name__ == '__main__':

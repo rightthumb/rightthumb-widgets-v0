@@ -172,38 +172,38 @@ def testOne( word ):
 	for test in omit.keys():
 		if test == word:
 			return 'omit'
-			print( 'omit', test, word )
+			_.pr( 'omit', test, word )
 			break
 
 	for test in pronoun.keys():
 		if test == word:
 			return 'pronoun'
-			print( 'pronoun', test, word )
+			_.pr( 'pronoun', test, word )
 			break
 
 	for test in noun.keys():
 		if test == word:
 			return 'noun'
-			print( 'noun', test, word )
+			_.pr( 'noun', test, word )
 			break
 
 	for test in verb.keys():
 		if test == word:
 			return 'verb'
-			print( 'verb', test, word )
+			_.pr( 'verb', test, word )
 			break
 
 
 	for test in adv.keys():
 		if test == word:
 			return 'adv'
-			print( 'adv', test, word )
+			_.pr( 'adv', test, word )
 			break
 
 	for test in adj.keys():
 		if test == word:
 			return 'adj'
-			print( 'adj', test, word )
+			_.pr( 'adj', test, word )
 			break
 
 
@@ -291,11 +291,11 @@ def testAll( word ):
 			return testAll( word[:-1] )	
 		return 'unknown'
 	if _.switches.isActive( 'Print' ):
-		print( str(word) + ':', result )
+		_.pr( str(word) + ':', result )
 	result = _str.cleanBE( result, ',' )
 	return result
 	# else:
-	# 	print( 'unknown' )
+	# 	_.pr( 'unknown' )
 
 
 
@@ -314,7 +314,7 @@ def action():
 				test = testOne( word[:-1] )
 		record = { 'word': word, 'type': test }
 		if _.switches.isActive( 'Print' ):
-			print( record )
+			_.pr( record )
 
 		return test
 		return record
@@ -344,7 +344,7 @@ def action():
 		result = _.tables.returnSorted( 'data', 'a.type', data )
 
 		for row in result:
-			print( row )
+			_.pr( row )
 
 
 
@@ -359,6 +359,7 @@ pronoun = _.getTable( 'dic_pronoun.json' )
 if __name__ == '__main__':
 	_.switches.fieldSet( 'Print', 'active', True )
 	action()
+
 
 
 

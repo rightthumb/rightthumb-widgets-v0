@@ -198,7 +198,7 @@ def getFolder(folder):
 			maxDepth = 4
 		if len( folder.split(_v.slash) ) - baseDepth >= maxDepth:
 			if len(_.switches.values('MaxDepth')) > 1 and 'p' in _.switches.values('MaxDepth')[1]:
-				print( folder )
+				_.pr( folder )
 
 			return None
 	try:
@@ -219,25 +219,25 @@ def getFolder(folder):
 					shouldPrint = False
 
 					if not _.switches.isActive('Text') and not _.switches.isActive('Binary'):
-						# print(0,whatIsIt(path),path)
-						# print(path)
+						# _.pr(0,whatIsIt(path),path)
+						# _.pr(path)
 						shouldPrint = True
 					else:
 						if not _.switches.isActive('Binary') and  _.switches.isActive('Text') and isText(path):
-							# print(1,whatIsIt(path),path)
-							# print(path)
+							# _.pr(1,whatIsIt(path),path)
+							# _.pr(path)
 							shouldPrint = True
 						if not _.switches.isActive('Binary') and not _.switches.isActive('Text'):
-							# print(2,whatIsIt(path),path)
-							# print(path)
+							# _.pr(2,whatIsIt(path),path)
+							# _.pr(path)
 							shouldPrint = True
 						if not _.switches.isActive('Text') and  _.switches.isActive('Binary') and not isText(path):
-							# print(3,whatIsIt(path),path)
-							# print(path)
+							# _.pr(3,whatIsIt(path),path)
+							# _.pr(path)
 							shouldPrint = True
 						if not _.switches.isActive('Text') and  not _.switches.isActive('Binary'):
-							# print(4,whatIsIt(path),path)
-							# print(path)
+							# _.pr(4,whatIsIt(path),path)
+							# _.pr(path)
 							shouldPrint = True
 
 					pass
@@ -248,7 +248,7 @@ def getFolder(folder):
 					if _.switches.isActive('Ago'):
 						# sys.exit()
 						record = _dir.fileInfo( path )
-						# print( _.switches.values('Ago'), record['date_modified_raw'], record['date_created_raw'],  )
+						# _.pr( _.switches.values('Ago'), record['date_modified_raw'], record['date_created_raw'],  )
 						# if os.path.isfile(path):
 						shouldPrint = False
 						run = 'default'
@@ -262,15 +262,15 @@ def getFolder(folder):
 							elif 'resent' in _.switches.values('Ago')[1]:
 								run = 'resent'
 
-						# print(  len( _.switches.values('Ago') )  )
-						# print(  ( _.switches.values('Ago') )  )
+						# _.pr(  len( _.switches.values('Ago') )  )
+						# _.pr(  ( _.switches.values('Ago') )  )
 						# sys.exit()
 						# accessed_raw
 
 
 						if run == 'default':
-							# print(record['date_modified_raw'])
-							# print(_.switches.values('Ago'))
+							# _.pr(record['date_modified_raw'])
+							# _.pr(_.switches.values('Ago'))
 							if record['date_modified_raw'] > _.switches.values('Ago')[0] or record['date_created_raw'] > _.switches.values('Ago')[0]:
 								shouldPrint = True
 						elif run == 'resent':
@@ -278,12 +278,12 @@ def getFolder(folder):
 								shouldPrint = True
 						elif run == 'a':
 							if record['accessed_raw'] > _.switches.values('Ago')[0]:
-								# print( _.friendlyDate(_.switches.values('Ago')[0]), _.switches.values('Ago')[0], record['accessed_raw'], _.friendlyDate(record['accessed_raw']) )
+								# _.pr( _.friendlyDate(_.switches.values('Ago')[0]), _.switches.values('Ago')[0], record['accessed_raw'], _.friendlyDate(record['accessed_raw']) )
 								shouldPrint = True
 						elif run == 'cd':
-							# print( 'HERE A' )
+							# _.pr( 'HERE A' )
 							if record['date_created_raw'] > _.switches.values('Ago')[0]:
-								# print( 'HERE B' )
+								# _.pr( 'HERE B' )
 								shouldPrint = True
 						elif run == 'md':
 							if record['date_modified_raw'] > _.switches.values('Ago')[0]:
@@ -327,7 +327,7 @@ def getFolder(folder):
 								shouldPrint = False
 								
 								if _.switches.isActive('Count'):
-									# print( _.colorThis( path, 'cyan', p=0 ) )
+									# _.pr( _.colorThis( path, 'cyan', p=0 ) )
 									process(path)
 								else:
 									iS+=1
@@ -347,10 +347,10 @@ def getFolder(folder):
 									result += '\t'
 									result += _.colorThis( path, 'cyan', p=0 )
 
-									# print( result )
+									# _.pr( result )
 									process(path)
 								
-								# print( formatedSize, '\t', path )
+								# _.pr( formatedSize, '\t', path )
 
 
 					if shouldPrint :
@@ -372,7 +372,7 @@ def getFolder(folder):
 								# _.colorThis( path, 'cyan' )
 								process(path)
 							else:
-								print( _.colorPlus( path, 'cyan' ) )
+								_.pr( _.colorPlus( path, 'cyan' ) )
 
 			# if os.path.isdir(path) and _.showLine(path):
 			if os.path.isdir(path):
@@ -388,7 +388,7 @@ def getFolder(folder):
 						except Exception as e:
 							pass
 				else:
-					print('error')
+					_.pr('error')
 
 def extensionsDatabank():
 	global extensionList
@@ -399,7 +399,7 @@ def extensionsDatabank():
 	extensionList = _db.do( 'action' )
 	for i,x in enumerate(extensionList):
 		extensionList[i] = x.lower()
-	# print( extensionList )
+	# _.pr( extensionList )
 
 
 def action():
@@ -466,7 +466,7 @@ def action():
 			_.colorThis( [  '\n', _.addComma(iS), 'of', _.addComma(i), '\n'  ], 'yellow' )
 		else:
 			_.colorThis( [  '\n{}\n'.format( _.addComma(i) )  ], 'yellow' )
-		# print('\n{}\n'.format(i))
+		# _.pr('\n{}\n'.format(i))
 
 extensionList = []
 
@@ -510,7 +510,7 @@ def changeC( path, stamp ):
 	# parts.reverse()
 	# fld = _v.slash.join(parts)
 	# os.chdir(fld)
-	# print(path)
+	# _.pr(path)
 	try:
 
 		if _.isWin:
@@ -529,7 +529,7 @@ def changeC( path, stamp ):
 		# raise e
 	# time.sleep(.02)
 def changeM( path, stamp ):
-	# print(path)
+	# _.pr(path)
 	os.utime(path,(stamp, stamp))
 
 def process( path ):
@@ -556,7 +556,7 @@ def process( path ):
 
 	p = path.lower() 
 	if p in index[f]:
-		print(path)
+		_.pr(path)
 		changeM( path, index[f][p]['me'] )
 		# changeC( path, index[f][p]['ce'] )
 		# if info['ce'] > index[f][p]['ce']:
@@ -570,13 +570,13 @@ def process( path ):
 		# 	me = records[0][1]
 
 		# 	if info['me'] < threshhold:
-		# 		print( ce, me )
-		# 		print( _.friendlyDate(ce), _.friendlyDate(me) )
+		# 		_.pr( ce, me )
+		# 		_.pr( _.friendlyDate(ce), _.friendlyDate(me) )
 
 
 
 		# for record in records:
-		# 	print(record)
+		# 	_.pr(record)
 
 
 
@@ -599,6 +599,7 @@ conn = None
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

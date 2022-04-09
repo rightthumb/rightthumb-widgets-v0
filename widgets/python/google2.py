@@ -219,7 +219,7 @@ def google( subject, data ):
 	tree = html.fromstring(page.content)
 
 	# _.saveText( cleanupString0(page.content), _v.html_temp )
-	# print( _v.html_temp )
+	# _.pr( _v.html_temp )
 
 	record = tree.cssselect('.ZINbbc')
 	i = 'x'
@@ -234,7 +234,7 @@ def google( subject, data ):
 		
 
 
-	# print( 'i:', i )
+	# _.pr( 'i:', i )
 	if i == 'x':
 		payload = tree.cssselect('.s3v9rd')
 	else:
@@ -256,7 +256,7 @@ def google( subject, data ):
 				
 				result = cleanupString0( payload[0].text_content() )
 			except Exception as e:
-				print(  )
+				_.pr(  )
 				s = cleanupString0( subject )
 				s = s.replace(',','_').replace(' ','_')
 				f = _v.html_temp
@@ -268,9 +268,9 @@ def google( subject, data ):
 				else:
 					error = 'unknown'
 
-				print( 'Search:', subject )
-				print( 'Error:', error )
-				print( 'Page:', f )
+				_.pr( 'Search:', subject )
+				_.pr( 'Error:', error )
+				_.pr( 'Page:', f )
 				result = 'Error: ' + error
 		# sys.exit()
 
@@ -292,21 +292,21 @@ def fileName():
 	return 'google_' + f
 
 def printRecord( record ):
-	print()
-	print()
-	print( '________________________________________________' )
-	print( record['q'] )
+	_.pr()
+	_.pr()
+	_.pr( '________________________________________________' )
+	_.pr( record['q'] )
 	# if not record['search'] == record['q']:
-	# 	print()
-	# 	print( '\t(', record['search'],')' )
-	# 	print()
-	print()
-	print( record['a'] )
+	# 	_.pr()
+	# 	_.pr( '\t(', record['search'],')' )
+	# 	_.pr()
+	_.pr()
+	_.pr( record['a'] )
 	if len( record['notes'] ):
-		print()
+		_.pr()
 
 		for row in record['notes']:
-			print( '\t', row )
+			_.pr( '\t', row )
 
 
 def action():
@@ -335,7 +335,7 @@ def action():
 					_.appData[__.appReg]['pipe'].append( row )
 	if not type( _.appData[__.appReg]['pipe'] ) == bool:
 		_.pipeCleaner()
-		# print( _.printVar(_.appData) )
+		# _.pr( _.printVar(_.appData) )
 		records = []
 		for i,row in enumerate(_.appData[__.appReg]['pipe']):
 			q = row
@@ -371,5 +371,6 @@ if __name__ == '__main__':
 
 
 # https://zapier.com/apps
+
 
 

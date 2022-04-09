@@ -154,7 +154,7 @@ def action():
 
 	for row in data:
 		for part in row['parts']:
-			print( part )
+			_.pr( part )
 
 
 
@@ -162,6 +162,7 @@ def action():
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

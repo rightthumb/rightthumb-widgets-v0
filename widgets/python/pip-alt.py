@@ -162,7 +162,7 @@ _.postLoad( __file__ )
 
 def process( module ):
 	url = 'https://pypi.org/simple/'+module+'/'
-	print(url)
+	_.pr(url)
 	page = requests.get(url)
 	tree = html.fromstring(page.content)
 	links = tree.cssselect('a')
@@ -176,19 +176,19 @@ def process( module ):
 		elif _.switches.isActive('Print'):
 			link = str(item.attrib['href'])
 			text = item.text_content()
-			print()
-			print(text)
-			print(link)
+			_.pr()
+			_.pr(text)
+			_.pr(link)
 
 	_.linePrint()
 	if not _.switches.isActive('Print'):
 		if text:
-			print()
-			print( text )
-			# print( link  )
+			_.pr()
+			_.pr( text )
+			# _.pr( link  )
 			_copy.imp.copy( 'wget '+link+' -O '+text, p=1 )
 		else:
-			print()
+			_.pr()
 			_.cp( [ 'Error, missing src only .whl:', module ], 'red' )
 
 
@@ -201,7 +201,7 @@ def action():
 		try:
 			process( module )
 		except Exception as e:
-			print()
+			_.pr()
 			_.cp( [ 'Error, url:', module ], 'red' )
 
 _copy = _.regImp( __.appReg, '-copy' )
@@ -213,6 +213,7 @@ _copy = _.regImp( __.appReg, '-copy' )
 if __name__ == '__main__':
 	action()
 	_.tables.eof()
+
 
 
 

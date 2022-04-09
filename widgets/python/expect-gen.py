@@ -221,9 +221,9 @@ def action(p=False,c=False):
 	_.saveText(appy, where)
 	_.chmod(where)
 	if _.switches.isActive('Sudo'):
-		print( 'sudo', where )
+		_.pr( 'sudo', where )
 	else:
-		print( where )
+		_.pr( where )
 
 
 
@@ -231,6 +231,7 @@ def action(p=False,c=False):
 if __name__ == '__main__':
 	action()
 	__.isExit()
+
 
 
 

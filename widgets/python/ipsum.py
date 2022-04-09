@@ -194,7 +194,7 @@ def action():
 	ipsum = _.getText( _v.ipsum )
 	
 	for row in ipsum:
-		print( row )
+		_.pr( row )
 
 
 
@@ -205,6 +205,7 @@ def action():
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

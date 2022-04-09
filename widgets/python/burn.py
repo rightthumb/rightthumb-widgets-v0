@@ -174,11 +174,11 @@ def buildFolders( path ):
 		if os.name == 'posix':
 			if not f.startswith(_v.slash):
 				f = _v.slash+f
-		# print(f)
+		# _.pr(f)
 		exist = os.path.isdir( f )
 		if not exist:
 			try:
-				# print(f)
+				# _.pr(f)
 				os.mkdir( f )
 			except Exception as e:
 				pass
@@ -203,7 +203,7 @@ def getFolder( folder ):
 			path = folder + _v.slash + item
 			path = path.replace(_v.slash+_v.slash,_v.slash)
 			if os.path.isfile(path):
-				# print(path)
+				# _.pr(path)
 				if path.endswith('.py'):
 					process( path )
 
@@ -231,6 +231,7 @@ overwriteWith = None
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

@@ -30,7 +30,7 @@ def label(q):
 		for x in rec.split(' '):
 			if x in _B.Books:
 				bk = _B.labels[ str(_B.Books[x]) ]
-				# print( bk, lastBook )
+				# _.pr( bk, lastBook )
 				if not bk == lastBook:
 					result.append(  bk  )
 				lastBook = bk
@@ -39,5 +39,6 @@ def label(q):
 	_.colorThis( [ ' '.join( result ) ], 'green' )
 
 	
+
 
 

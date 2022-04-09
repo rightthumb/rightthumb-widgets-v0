@@ -207,8 +207,8 @@ def action():
 
 	ago1 = None
 	ago2 = None
-	# print(_.switches.value('Ago'))
-	# print(_.switches.values('Ago'))
+	# _.pr(_.switches.value('Ago'))
+	# _.pr(_.switches.values('Ago'))
 	# sys.exit()
 	if _.switches.isActive('Ago'):
 		if len( _.switches.values('Ago') ) > 1:
@@ -228,14 +228,14 @@ def action():
 				else:
 					ago1 = _.autoDate(_.switches.values('Dates')[1])
 					ago2 = _.autoDate(_.switches.values('Dates')[0])
-	# print(ago1)
-	# print(_.friendlyDate(ago1))
-	# print(ago2)
-	# print(_.friendlyDate(ago2))
+	# _.pr(ago1)
+	# _.pr(_.friendlyDate(ago1))
+	# _.pr(ago2)
+	# _.pr(_.friendlyDate(ago2))
 	# sys.exit()
 	global default_days_ago
 
-	# print( fileBackup_archive(), os.path.isfile(fileBackup_archive()) )
+	# _.pr( fileBackup_archive(), os.path.isfile(fileBackup_archive()) )
 	# sys.exit()
 	backupLog = _.getTable('fileBackup.json')
 
@@ -254,7 +254,7 @@ def action():
 	# _.printVarSimple( backupLog[0] )
 
 
-	# print( ago )
+	# _.pr( ago )
 
 	# sys.exit()
 
@@ -267,7 +267,7 @@ def action():
 		if not ago1 is None:
 			if t > ago1 and t < ago2:
 				should_include = True
-				# print( _.friendlyDate(record['timestamp']) )
+				# _.pr( _.friendlyDate(record['timestamp']) )
 		else:
 			if t > ago:
 				should_include = True
@@ -307,22 +307,22 @@ def action():
 		for dayX in sorted_keys(index[woy]):
 			for fileX in sorted_keys(index[woy][dayX]):
 				if _.showLine( fileX ):
-					# print(fileX)
+					# _.pr(fileX)
 					cntA+=1
 		if cntA:
 			if not _.switches.isActive('Clean'):
-				print()
-				print()
-				print()
-				print()
-				# print( _.colorThis( woy, 'green', p=0 ) ,'   ', _.colorThis( _.addComma( len(index[woy]) ), 'blue', p=0 ),'   ', _.colorThis( _.addComma( cntA ), 'yellow', p=0 ) )
+				_.pr()
+				_.pr()
+				_.pr()
+				_.pr()
+				# _.pr( _.colorThis( woy, 'green', p=0 ) ,'   ', _.colorThis( _.addComma( len(index[woy]) ), 'blue', p=0 ),'   ', _.colorThis( _.addComma( cntA ), 'yellow', p=0 ) )
 				diff_label = _.dateDiffText( time.time(), _.woy2date(woy) )
 				if diff_label == 'tommorow' or diff_label == 'yesterday' or diff_label == 'today'or diff_label == 'next week':
 					diff_label = 'this week'
-				print( _.colorThis(   diff_label, 'green', p=0   ) ,'   ', _.colorThis( _.addComma( len(index[woy]) ), 'blue', p=0 ),'   ', _.colorThis( _.addComma( cntA ), 'yellow', p=0 ) )
-				# print(_.woy2date(woy), _.friendlyDate(_.woy2date(woy)) )
-				# print( _.colorThis(   _.dateDiffText( time.time() ), 'green', p=0   ) ,'   ', _.colorThis( _.addComma( len(index[woy]) ), 'blue', p=0 ),'   ', _.colorThis( _.addComma( cntA ), 'yellow', p=0 ) )
-				# print( _.colorThis(   _.dateDiffText( _.woy2date(woy) ), 'green', p=0   ) ,'   ', _.colorThis( _.addComma( len(index[woy]) ), 'blue', p=0 ),'   ', _.colorThis( _.addComma( cntA ), 'yellow', p=0 ) )
+				_.pr( _.colorThis(   diff_label, 'green', p=0   ) ,'   ', _.colorThis( _.addComma( len(index[woy]) ), 'blue', p=0 ),'   ', _.colorThis( _.addComma( cntA ), 'yellow', p=0 ) )
+				# _.pr(_.woy2date(woy), _.friendlyDate(_.woy2date(woy)) )
+				# _.pr( _.colorThis(   _.dateDiffText( time.time() ), 'green', p=0   ) ,'   ', _.colorThis( _.addComma( len(index[woy]) ), 'blue', p=0 ),'   ', _.colorThis( _.addComma( cntA ), 'yellow', p=0 ) )
+				# _.pr( _.colorThis(   _.dateDiffText( _.woy2date(woy) ), 'green', p=0   ) ,'   ', _.colorThis( _.addComma( len(index[woy]) ), 'blue', p=0 ),'   ', _.colorThis( _.addComma( cntA ), 'yellow', p=0 ) )
 			# _.printVarSimple( index )
 			# _.printVarSimple( index[woy] )
 			# sys.exit()
@@ -331,11 +331,11 @@ def action():
 				cntB = 0
 				for fileY in sorted_keys(index[woy][day]):
 					if _.showLine( fileY ):
-						# print(fileY)
+						# _.pr(fileY)
 						cntB+=1
 				if cntB:
 					if not _.switches.isActive('Clean'):
-						print( _.colorThis( [ '\t', day ], 'white', p=0 ) ,'   ', _.colorThis( _.addComma( cntB ), 'yellow', p=0 ) )
+						_.pr( _.colorThis( [ '\t', day ], 'white', p=0 ) ,'   ', _.colorThis( _.addComma( cntB ), 'yellow', p=0 ) )
 					# _.colorThis(  [ '\t', day ], 'white'  )
 
 					for file in sorted_keys(index[woy][day]):
@@ -347,8 +347,8 @@ def action():
 									idex = index[woy][day][file]
 									_.colorThis(  [ '\t\t\t', idex['version'], idex['backup'] ], 'darkcyan'  )
 									xXx = sorted_keys(dexy[ file.lower() ])
-									# print(xXx[len(xXx)-1])
-									# print(dexy[ file.lower() ][ xXx[len(xXx)-1] ])
+									# _.pr(xXx[len(xXx)-1])
+									# _.pr(dexy[ file.lower() ][ xXx[len(xXx)-1] ])
 									# _.colorThis(  [ '\t\t\t\t', dexy[ file.lower() ][ xXx[0] ] ], 'purple'  )
 									dex = dexy[ file.lower() ][ xXx[len(xXx)-1] ]
 									_.colorThis(  [ '\t\t\t', dex['version'],dex['backup'] ], 'purple'  )
@@ -362,8 +362,8 @@ def action():
 										idex = index[woy][day][file]
 										_.colorThis(  [ '\t\t\t', idex['version'], idex['backup'] ], 'darkcyan'  )
 										xXx = sorted_keys(dexy[ file.lower() ])
-										# print(xXx[len(xXx)-1])
-										# print(dexy[ file.lower() ][ xXx[len(xXx)-1] ])
+										# _.pr(xXx[len(xXx)-1])
+										# _.pr(dexy[ file.lower() ][ xXx[len(xXx)-1] ])
 										# _.colorThis(  [ '\t\t\t\t', dexy[ file.lower() ][ xXx[0] ] ], 'purple'  )
 										dex = dexy[ file.lower() ][ xXx[len(xXx)-1] ]
 										_.colorThis(  [ '\t\t\t', dex['version'],dex['backup'] ], 'purple'  )
@@ -371,15 +371,15 @@ def action():
 
 	if not _.switches.isActive('Clean'):
 		if _.switches.isActive('Ago'):
-			print()
-			print('Ago:')
-			# print( '  ', _.friendlyDate(ago) )
+			_.pr()
+			_.pr('Ago:')
+			# _.pr( '  ', _.friendlyDate(ago) )
 			if not ago1 is None:
 				_.colorThis(  [ '  ', _.dateDiffText( ago2, ago1 ) ] , 'purple'   )
 			else:
 				_.colorThis(  [ '  ', _.dateDiffText( time.time(), ago ) ] , 'purple'   )
 			_.colorThis(  [ '    ', _.friendlyDate(ago) ] , 'purple'   )
-			print()
+			_.pr()
 		_.colorThis( [ 'found:', _.addComma(cnt) ], 'yellow' )
 
 
@@ -397,6 +397,7 @@ import _rightThumb._dir as _dir
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

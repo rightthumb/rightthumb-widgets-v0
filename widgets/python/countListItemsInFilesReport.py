@@ -267,28 +267,28 @@ def action():
 
 	_.saveData( namespace_tree, 'namespace_tree' )
 
-	print()
+	_.pr()
 	_.tables.print( 'inFiles', 'label,total,file_total' )
-	print()
-	print()
+	_.pr()
+	_.pr()
 	# _.tables.print( 'theTotal', 'label,total,file_total' )
 
-	print( '      totalFiles:', totalFiles )
-	print( 'totalOccurrences:', _.addComma(totalOccurrences) )
-	print()
-	print()
-	print( '      setFiles:', setFiles )
-	print( 'setOccurrences:', _.addComma(setOccurrences) )
-	print()
-	print()
-	print( '      setFiles: %', _.percentageDiffInt( setFiles, totalFiles ) )
-	print( 'setOccurrences: %', _.percentageDiffInt( setOccurrences, totalOccurrences ) )
-	print()
-	print()
-	print( 'records:', len(records), 'of', len(data.keys()), '%', _.percentageDiffInt( len(records), len(data.keys()) ) )
-	print()
-	print()
-	print( 'missingOccurrences:', _.addComma(missingOccurrences) )
+	_.pr( '      totalFiles:', totalFiles )
+	_.pr( 'totalOccurrences:', _.addComma(totalOccurrences) )
+	_.pr()
+	_.pr()
+	_.pr( '      setFiles:', setFiles )
+	_.pr( 'setOccurrences:', _.addComma(setOccurrences) )
+	_.pr()
+	_.pr()
+	_.pr( '      setFiles: %', _.percentageDiffInt( setFiles, totalFiles ) )
+	_.pr( 'setOccurrences: %', _.percentageDiffInt( setOccurrences, totalOccurrences ) )
+	_.pr()
+	_.pr()
+	_.pr( 'records:', len(records), 'of', len(data.keys()), '%', _.percentageDiffInt( len(records), len(data.keys()) ) )
+	_.pr()
+	_.pr()
+	_.pr( 'missingOccurrences:', _.addComma(missingOccurrences) )
 	# totalFiles = 288
 	# totalOccurrences = 29510
 
@@ -303,6 +303,7 @@ data = []
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

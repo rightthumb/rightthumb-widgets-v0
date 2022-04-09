@@ -242,41 +242,41 @@ class Address:
 
 	def standard_addr( self, address ):
 		'''Checks for unit numbers and street addresses and puts them in the standard format''' 
-		#print("################################")
-		#print("### Address: ", address)
+		#_.pr("################################")
+		#_.pr("### Address: ", address)
 		unit_nums = re.findall(r"(?<=Unit )\w?\d+\w?|(?<=U)\d+\w?|\w?\d+\w?(?=\s*/)", address)
 		unit_num = unit_nums[0] if len(unit_nums)==1 else ""
-		#print("Unit Number: ", unit_num)
+		#_.pr("Unit Number: ", unit_num)
 		proc_addr = re.sub(r"Unit \w?\d+\w?/?|U\d+\w?/?|\w?\d+\w?\s*/", "", address)
 		proc_addr = re.sub(r"^[,\- ]+|[,\- ]+$", "", proc_addr)
-		#print("Unitless address: ", proc_addr)
+		#_.pr("Unitless address: ", proc_addr)
 		type_opts = r"Terrace|Way|Walk|St|Rd|Ave|Cl|Ct|Cres|Blvd|Dr|Ln|Pl|Sq|Pde|Cct"
 		road_attrs_pattern = r"(?P<rd_no>\w?\d+(\-\d+)?\w?\s+)(?P<rd_nm>[a-zA-z \d\-]+)\s+(?P<rd_tp>" + type_opts + ")"
-		#print("Road Attr Pattern: ", road_attrs_pattern)
+		#_.pr("Road Attr Pattern: ", road_attrs_pattern)
 		road_attrs = re.search(road_attrs_pattern, proc_addr)
 		try:
 			road_num = road_attrs.group('rd_no').strip()
 		except AttributeError:
 			road_num = ""
-		#print("Road number: ", road_num)
+		#_.pr("Road number: ", road_num)
 		try:
 			road_name = road_attrs.group('rd_nm').strip()
 		except AttributeError:
 			road_name = ""
-		#print("Road name: ", road_name)
+		#_.pr("Road name: ", road_name)
 		try:
 			road_type = road_attrs.group('rd_tp').strip()
 		except AttributeError:
 			road_type = ""
-		#print("Road type: ", road_type)
+		#_.pr("Road type: ", road_type)
 		proc_addr = self.lengthen_rd(re.sub(r"^[,\- ]+|[,\- ]+$", "", re.sub(road_attrs_pattern, "", proc_addr)))
-		#print("Leftover: ", proc_addr)
+		#_.pr("Leftover: ", proc_addr)
 
 		unit_seg = (unit_num + "/" if unit_num!="" else "") if road_num != "" else ("Unit " + unit_num + ", " if unit_num!="" else "")
 		road_seg = ((road_num + " " if road_num!="" else "") + road_name + " " + road_type).strip()
 		post_road_seg = " " + proc_addr if proc_addr != "" else ""
 		proc_addr = (unit_seg + road_seg) + post_road_seg
-		#print("### Processed Address: ", proc_addr)
+		#_.pr("### Processed Address: ", proc_addr)
 		return proc_addr
 
 	def miniClean( self, aa ):
@@ -419,8 +419,8 @@ class Record:
 		invN = clean7(rrec['Name'])
 		if not rec is None:
 			inv = self.profile(rec)
-		# print(profile)
-		# print('a')
+		# _.pr(profile)
+		# _.pr('a')
 		IDS = []
 		SUB = None
 		blanks=[]
@@ -430,7 +430,7 @@ class Record:
 			if not 'profile' in rec:
 				rec['profile'] = self.profile(rec)
 			clp = rec['profile']
-			# print(clp)
+			# _.pr(clp)
 			if len(clp['all']) and type(clp['all'][0]) == list:
 				clp['all'] = clp['all'][0]
 			if len(inv['all']) and type(inv['all'][0]) == list:
@@ -453,7 +453,7 @@ class Record:
 					IDS.append( { Id: both } )
 					if inv['address'] == clp['address']:
 						SUB = Id
-				# print(both)
+				# _.pr(both)
 			# sys.exit()
 		if not SUB is None:
 			IDS = SUB
@@ -462,7 +462,7 @@ class Record:
 				IDS = blanks[0]
 			elif type(IDS) == list and len(IDS) == 1:
 				dk = list(IDS[0].keys())[0]
-				# print(1,IDS[0])
+				# _.pr(1,IDS[0])
 				IDS = dk
 			else:
 				
@@ -505,9 +505,9 @@ class Record:
 			try:
 				dat = app.scan.process( record[k] )
 			except Exception as e:
-				print(k,record)
+				_.pr(k,record)
 				sys.exit()
-			# print(dat)
+			# _.pr(dat)
 
 			for wes in dat:
 				if not wes == 'self':
@@ -519,11 +519,11 @@ class Record:
 					if type(dat[wes]) == list:
 						for fat in dat[wes]:
 							if not fat in dic['all']:
-								# print('dat[wes]',fat)
+								# _.pr('dat[wes]',fat)
 								dic['all'].append(fat)
 
 			# for wes in dat:
-			# 	print(wes)
+			# 	_.pr(wes)
 			# 	sys.exit()
 				# if not wes == 'self':
 				# 	if not wes in dic['fields']:
@@ -570,7 +570,7 @@ class Record:
 					record[key] = app.address.process( record[key] )
 		return record
 	def scan( self, record ):
-		# print(5)
+		# _.pr(5)
 		for key in record:
 			if key in self.index['fields']:
 				subject = self.index['fields'][key]
@@ -770,7 +770,7 @@ app.flags = Flags()
 # x=app.scan.process( 'https://eyeformeta.com/', 'asdf' )
 # x=app.scan.process( 'https://www.google.com/search?q=python+extract+all+email+addresses&rlz=1C1RXQR_enUS929US929&sxsrf=APq-WBtrxEUFvbpwqXq7AKj6b2YrJ3NrUw%3A1643384417889&ei=YQ70Ya-8Ne6MwbkPmp6S4Ac&oq=python+extract+all+email+&gs_lcp=Cgdnd3Mtd2l6EAMYADIFCCEQoAEyBQghEKABMgUIIRCrAjIFCCEQqwI6BwgAEEcQsAM6CggAEIAEEIcCEBQ6BQgAEIAEOgYIABAWEB46CAghEBYQHRAeSgQIQRgASgQIRhgAUOAKWOwWYLIqaAFwAngAgAFtiAHmBZIBAzkuMZgBAKABAcgBCMABAQ&sclient=gws-wiz', 'asdf' )
 # x=app.scan.process( 'mailto:lorrainemsmith1517@gmail.com;mailto:trader1@mindspring.com;mailto:claytonfrank@hotmail.com', 'asdf' )
-# print(x)
+# _.pr(x)
 # sys.exit()
 
 
@@ -782,6 +782,7 @@ def action():
 if __name__ == '__main__':
 	action()
 	__.isExit()
+
 
 
 

@@ -193,33 +193,33 @@ def action():
 					if not __.isWin and subby.startswith(os.sep):
 						subby = '.'+subby
 
-					print(subby)
-				print( subject )
+					_.pr(subby)
+				_.pr( subject )
 				if subject.startswith('/mnt/'):
 					sub = subject[5:]
 					dr=sub[0]
 					sub = sub[1:]
-					print( dr.upper()+':'+sub.replace('/','\\') )
+					_.pr( dr.upper()+':'+sub.replace('/','\\') )
 
 				if platform.system() == 'Windows':
-					print( subject.replace( '\\', '\\\\' ) )
+					_.pr( subject.replace( '\\', '\\\\' ) )
 					git_path = subject
 					git_path = git_path.replace( _v.slashes['w'], _v.slashes['u'] )
 					git_path = git_path.replace( ':', '' )
 					git_path = _v.slashes['u'] + git_path
-					print( git_path )
+					_.pr( git_path )
 
 					wsl = '/mnt/'+ git_path[1].lower() + git_path[2:]
-					print( wsl )
+					_.pr( wsl )
 					
 
 
 
 
-				print( _.path2url( subject ) )
+				_.pr( _.path2url( subject ) )
 
 				if _v.sanitizeFolder( subject ).startswith('{'):
-					print( _v.sanitizeFolder( subject ) )
+					_.pr( _v.sanitizeFolder( subject ) )
 		
 
 			except Exception as e:
@@ -248,6 +248,7 @@ def action():
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

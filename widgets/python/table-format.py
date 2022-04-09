@@ -192,7 +192,7 @@ def action():
 	file = '\n'.join( _.isData(r=1) )
 	text(file)
 	if not _.switches.isActive('Copy'):
-		print( text(file) )
+		_.pr( text(file) )
 
 
 	
@@ -201,6 +201,7 @@ def action():
 if __name__ == '__main__':
 	action()
 	__.isExit()
+
 
 
 

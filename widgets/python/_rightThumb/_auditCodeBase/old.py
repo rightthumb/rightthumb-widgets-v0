@@ -202,15 +202,15 @@ def findLineStart( p ):
 			record = 'Error'
 			for line, d in enumerate(struct['database']):
 				if d > p:
-					print(d)
+					_.pr(d)
 					record = line-1
 					break
 			
 			pass
 			if record == -1:
-				print(0)
+				_.pr(0)
 			else:
-				print(struct['database'][record],record)
+				_.pr(struct['database'][record],record)
 
 	return False
 
@@ -227,7 +227,7 @@ def loadCharInstructionsByID( i ):
 		if i == struct['id']:
 			return struct
 
-	print( 'charInstructions: Error' )
+	_.pr( 'charInstructions: Error' )
 	sys.exit()
 
 def isCharByID( i, c ):
@@ -243,7 +243,7 @@ def loadRules( i ):
 	for struct in ins['rules']:
 		if i == struct['id']:
 			return struct
-	print( 'charInstructions: Error' )
+	_.pr( 'charInstructions: Error' )
 	sys.exit()
 
 def inDatabase( i, p ):
@@ -255,7 +255,7 @@ def inDatabase( i, p ):
 				return True
 			else:
 				return False
-	print( 'inDatabase: Error' )
+	_.pr( 'inDatabase: Error' )
 	sys.exit()
 
 def inDatabaseByCategory( cat, p, strict=True ):
@@ -300,32 +300,32 @@ def dumpDocumentation():
 	global actionPlan_count_raw
 	global omit
 	global fileText
-	print()
-	print()
-	print('    START    ')
-	print()
-	print()
-	print(documentation)
-	print()
-	print()
-	print( 'pos:', currentPos )
-	print( 'line:', findLine(currentPos) )
-	print()
-	print( 'actionPlan_count:', actionPlan_count )
-	print( 'actionPlan_count_raw:', actionPlan_count_raw )
-	print()
-	# print('omit dump:')
-	# print(omit)
-	print()
+	_.pr()
+	_.pr()
+	_.pr('    START    ')
+	_.pr()
+	_.pr()
+	_.pr(documentation)
+	_.pr()
+	_.pr()
+	_.pr( 'pos:', currentPos )
+	_.pr( 'line:', findLine(currentPos) )
+	_.pr()
+	_.pr( 'actionPlan_count:', actionPlan_count )
+	_.pr( 'actionPlan_count_raw:', actionPlan_count_raw )
+	_.pr()
+	# _.pr('omit dump:')
+	# _.pr(omit)
+	_.pr()
 	dmp = ''
 	for o in omit:
 		dmp += fileText[o]
-	print(dmp)
-	print()
-	print()
-	print('    END    ')
-	print()
-	print()
+	_.pr(dmp)
+	_.pr()
+	_.pr()
+	_.pr('    END    ')
+	_.pr()
+	_.pr()
 
 
 
@@ -338,7 +338,7 @@ def processCharID( p, i=False, charRules=False ):
 		charRules = loadCharInstructionsByID( i )
 
 	if not '#' in fileText[p]:
-		print( 'processCharID:', fileText[p] )
+		_.pr( 'processCharID:', fileText[p] )
 	ran = False
 	for rl in charRules['languages']:
 		if rl['code'] == 'global' or rl['code'] == code:
@@ -349,7 +349,7 @@ def processCharID( p, i=False, charRules=False ):
 					pt+=1
 				resolveRange( p, pt, noPrint=True, forceOmit=True,initiatedBy='processCharID' )
 	if not ran:
-		print( 'not complete' )
+		_.pr( 'not complete' )
 		sys.exit()
 
 
@@ -377,7 +377,7 @@ def actionPlan( p ):
 	if inDatabaseByCategory( 'carage', p ):
 		shouldSkip = True
 	if inDatabaseByCategory( 'comment', p, strict=False ):
-		print(p)
+		_.pr(p)
 		sys.exit()
 		charRules = loadCharInstructionsByChar( fileText[p] )
 		if not type( charRules ) == bool:
@@ -397,12 +397,12 @@ def actionPlan( p ):
 		isAN_NS = str(p) in labelText1
 		ran = ''
 		for path in ins['action']:
-			# print( path['code'] )
+			# _.pr( path['code'] )
 			# sys.exit()
 			pathFail = False
 			if path['code'] == 'global' or path['code'] == code:
 				pt = skipWhitespace( pt )
-				# print( 'p:', p )
+				# _.pr( 'p:', p )
 				for test in path['test']:
 					pt = skipWhitespace( pt )
 					pathFail = False
@@ -419,18 +419,18 @@ def actionPlan( p ):
 							if pathFail:
 								ran += ' pathFail'
 							if not pathFail:
-								print( 'pass:', test )
+								_.pr( 'pass:', test )
 								for r in path['rules']:
 									ran += ' rules'
 									omitR = []
-									print( 'STARTING RULE:', r, fileText[p], ';0 ln:',findLine(p) )
+									_.pr( 'STARTING RULE:', r, fileText[p], ';0 ln:',findLine(p) )
 									ruleResult = testRule( p, r )
 									if type(ruleResult) == int:
-										print( type( ruleResult ) )
-										# print( 'ruleResult:', ruleResult )
+										_.pr( type( ruleResult ) )
+										# _.pr( 'ruleResult:', ruleResult )
 										documentation.append({ 'id': path['id'], 'record': resolveRange( p, ruleResult, initiatedBy='success' ) })
 										return True
-								print( 'RULE FAIL' )
+								_.pr( 'RULE FAIL' )
 						else:
 							ran += ' NOT specific'
 							# not path['specific']
@@ -441,22 +441,22 @@ def actionPlan( p ):
 										pt -= 1
 										break
 									pt+=1
-								print( 'pass:', test )
+								_.pr( 'pass:', test )
 								for r in path['rules']:
 									ran += ' rules'
 									omitR = []
-									print( 'STARTING RULE:', r, fileText[p], ';1 ln:',findLine(p) )
+									_.pr( 'STARTING RULE:', r, fileText[p], ';1 ln:',findLine(p) )
 									ruleResult = testRule( p, r )
 									if type(ruleResult) == int:
-										print( type( ruleResult ) )
-										# print( 'ruleResult:', ruleResult )
+										_.pr( type( ruleResult ) )
+										# _.pr( 'ruleResult:', ruleResult )
 										documentation.append({ 'id': path['id'], 'record': resolveRange( p, ruleResult, initiatedBy='success' ) })
 										return True
 								ran += 'RULE FAIL'
 
 
 	if not shouldSkip:
-		print( p,fileText[p], pt,fileText[pt],'\tline:', findLine(p), 'ran:', ran )
+		_.pr( p,fileText[p], pt,fileText[pt],'\tline:', findLine(p), 'ran:', ran )
 		resolveRange( p, pt, justPrint=True, initiatedBy='not shouldSkip' )
 		dumpDocumentation()
 		if not inDatabaseByCategory( 'comment', p, strict=False ):
@@ -468,7 +468,7 @@ def resolveRange( s, e, noPrint=False, justPrint=False, forceOmit=False, initiat
 	global fileText
 	global omit
 	ss = s
-	# print( 'resolveRange:', s, e )
+	# _.pr( 'resolveRange:', s, e )
 	record = ''
 	while not s == e:
 		record += str(fileText[s])
@@ -490,8 +490,8 @@ def resolveRange( s, e, noPrint=False, justPrint=False, forceOmit=False, initiat
 
 
 	if not noPrint:
-		print( noPrint, justPrint, initiatedBy )
-		print( ss,e,'record:', record )
+		_.pr( noPrint, justPrint, initiatedBy )
+		_.pr( ss,e,'record:', record )
 	return record
 
 def testRule( p, r ):
@@ -499,17 +499,17 @@ def testRule( p, r ):
 	global labelText0
 	global labelText1
 	global omitR
-	print()
-	print('                                              start:',r)
+	_.pr()
+	_.pr('                                              start:',r)
 	rules = loadRules( r )
 	pt = skipWhitespace( p )
 
 	for i,rule in enumerate(rules['pattern']):
 		pt = skipWhitespace( pt )
-		print( 'pos:', pt )
+		_.pr( 'pos:', pt )
 		ruleFail = False
 		if i in omitR:
-			print( 'skipped:', i )
+			_.pr( 'skipped:', i )
 		else:
 			for test in rule['test']:
 				if type( test ) == str:
@@ -518,15 +518,15 @@ def testRule( p, r ):
 							if not fileText[pt] == ct:
 								ruleFail = True
 								if rule['required']:
-									print( r, 'Hard Fail:0', test, fileText[pt], rules['code'] )
+									_.pr( r, 'Hard Fail:0', test, fileText[pt], rules['code'] )
 									resolveRange( p, pt, justPrint=True, initiatedBy='tr hf 0' )
 									resetLine = findLineStart( p )
-									print('END resetLine')
+									_.pr('END resetLine')
 									dumpDocumentation()
 									return False
 								else:
 									omitR.append( i )
-									print( 'Soft Fail:0', test, fileText[pt], rules['code'] )
+									_.pr( 'Soft Fail:0', test, fileText[pt], rules['code'] )
 									# testRule( p, r )
 							else:
 								if inDatabaseByCategory( 'end', pt ):
@@ -534,7 +534,7 @@ def testRule( p, r ):
 									break
 								pt += 1
 							if not ruleFail:
-								print( 'pass:', test )
+								_.pr( 'pass:', test )
 					else:
 						if fileText[pt] in test:
 							while fileText[pt] in test:
@@ -545,42 +545,42 @@ def testRule( p, r ):
 						else:
 							ruleFail = True
 							if rule['required']:
-								print( r, 'Hard Fail:1', test, fileText[pt], rules['code'] )
+								_.pr( r, 'Hard Fail:1', test, fileText[pt], rules['code'] )
 								resolveRange( p, pt, justPrint=True, initiatedBy='tr hf 1' )
 								resetLine = findLineStart( p )
-								print('END resetLine')
+								_.pr('END resetLine')
 								dumpDocumentation()
 								return False
 							else:
 								omitR.append( i )
-								print( 'Soft Fail:1', test, fileText[pt], rules['code'] )
+								_.pr( 'Soft Fail:1', test, fileText[pt], rules['code'] )
 								# testRule( p, r )
 
 				elif type( test ) == int:
-					print()
-					print('isInt',r,fileText[p],'; ln:',findLine(p) )
+					_.pr()
+					_.pr('isInt',r,fileText[p],'; ln:',findLine(p) )
 					charTest = isCharByID( test, fileText[p] )
-					print( type( charTest ) )
-					print()
+					_.pr( type( charTest ) )
+					_.pr()
 					
 				else:
-					print( type( test ) )
-					print( 'not string' )
-	print('end')
+					_.pr( type( test ) )
+					_.pr( 'not string' )
+	_.pr('end')
 	# sys.exit()
 	return pt
 
 def skipWhitespace( p ):
-	# print( 'skipWhitespace: ran' )
+	# _.pr( 'skipWhitespace: ran' )
 	while inDatabaseByCategory( 'whitespace', p ):
-		print( str(fileText[p])+'** skipped ** ' )
+		_.pr( str(fileText[p])+'** skipped ** ' )
 		if inDatabaseByCategory( 'end', p ):
 			break
 		p+=1
 	return p
-		# print( rule )
+		# _.pr( rule )
 
-	# print( rules )
+	# _.pr( rules )
 
 # isWhitespace = inDatabaseByCategory( 'whitespace', p )
 # isEnd = inDatabaseByCategory( 'end', p )
@@ -603,15 +603,15 @@ def action():
 
 	filepath = os.path.abspath( _.switches.value('Input') )
 	if not os.path.isfile( filepath ):
-		print( 'No File:', filepath )
+		_.pr( 'No File:', filepath )
 		return False
 
-	# print( filepath )
+	# _.pr( filepath )
 
 	fileTable = _.getText( filepath )
 	fileText = ''.join( fileTable )
-	# print( type( fileText ) )
-	# print( fileText )
+	# _.pr( type( fileText ) )
+	# _.pr( fileText )
 	
 
 	# create databases
@@ -690,6 +690,7 @@ if __name__ == '__main__':
 # config
 
 # instructions
+
 
 
 

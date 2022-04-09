@@ -160,7 +160,7 @@ class ThisThread(threading.Thread):
 		finally:
 			self.endTime = time.time()
 			self.duration = self.endTime - self.epoch
-			# print()
+			# _.pr()
 			ended = ''
 			if self.wasKilled:
 				ended += ' killed '
@@ -183,9 +183,9 @@ class ThisThread(threading.Thread):
 			}
 			global log
 			log.append( self.log )
-			# print( 'THE END' )
+			# _.pr( 'THE END' )
 			if not self.trigger is None:
-				# print( '\n\n\tTHE END trigger' )
+				# _.pr( '\n\n\tTHE END trigger' )
 				# _.colorThis( 'if not self.trigger is None:' )
 				__.app.async( self.name + ' Trigger', self.trigger, kwargs=self.trigger_kwargs, timeout=self.trigger_timeout )
 
@@ -210,7 +210,7 @@ def handler( arg1='E1', arg2='E2' ):
 	i=0
 	# asdf
 	while True:
-		print( i, arg1, arg2 )
+		_.pr( i, arg1, arg2 )
 		i+=1
 		time.sleep(.5)
 
@@ -233,27 +233,27 @@ def threadMonitor():
 	done = False
 	while not done:
 		if isTest >= 3:
-			print()
-			print()
+			_.pr()
+			_.pr()
 		for key in records.keys():
 			for thisThread in records[key]:
 				if not thisThread.killOn is None:
 					if thisThread.duration is None:
 						if isTest >= 3:
-							print()
-							print()
-							print( '        name:', thisThread.name )
-							print( 'duration Var:', thisThread.duration )
-							print( '    duration:', time.time() - thisThread.epoch )
-							print( '      killOn:', thisThread.killOn )
+							_.pr()
+							_.pr()
+							_.pr( '        name:', thisThread.name )
+							_.pr( 'duration Var:', thisThread.duration )
+							_.pr( '    duration:', time.time() - thisThread.epoch )
+							_.pr( '      killOn:', thisThread.killOn )
 					if thisThread.duration is None and (  time.time() - thisThread.epoch ) > thisThread.killOn:
 						_.colorThis( [  'TIMEOUT', thisThread.tID, thisThread.name  ] , 'red' )
 						thisThread.kill()
 						thisThread.join()
 
 		if isTest >= 3:
-			print()
-			print()
+			_.pr()
+			_.pr()
 
 
 		complete = 0
@@ -272,6 +272,7 @@ def threadMonitor():
 		time.sleep(.2)
 	if isTest >= 2:
 		_.printVar( log )
+
 
 
 

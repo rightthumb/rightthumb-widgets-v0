@@ -254,7 +254,7 @@ class TheChild:
 		algorithm = _matrix.app.algorithmRegister(trackingID=trackingID)
 		for i, key in enumerate(_matrix.app.records['switch']):
 			record = _matrix.app.records['switch'][key]
-			print(  record.focus,  record.name, record.active )
+			_.pr(  record.focus,  record.name, record.active )
 		_matrix.app.algorithmResult( algorithm, result=None )
 
 
@@ -266,5 +266,6 @@ class TheChild:
 
 
 		
+
 
 

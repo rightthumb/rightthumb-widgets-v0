@@ -225,7 +225,7 @@ class HOTKEYS:
                     ii+=1
                     keyboard.press(Key.backspace)
                     keyboard.release(Key.backspace)
-            print(k)
+            _.pr(k)
             exec(do)
             # beepy.simple_beep2()
          
@@ -240,18 +240,18 @@ class HOTKEYS:
             char = str(key).replace("'",'')
         key_set.add(char)
         if print_chars:
-            print('____________')
-            print(key_set)
+            _.pr('____________')
+            _.pr(key_set)
             for x in key_set:
-              print(str(x).replace("'",''))
+              _.pr(str(x).replace("'",''))
         global log
         global table
         global keyboard
-        # print(key)
+        # _.pr(key)
         key = str(key).replace("'", "")
         log.append(key)
         if _.switches.isActive('Print-Keys'):
-            print(key)
+            _.pr(key)
         log0=log.copy()
         log0.reverse()
         esc=False
@@ -275,13 +275,13 @@ class HOTKEYS:
                     if not found:
                         try:
                             # if k == 'reload':
-                                # print(kk,KeyCode( char=kk ), KeyCode( char=t.lower() ))
+                                # _.pr(kk,KeyCode( char=kk ), KeyCode( char=t.lower() ))
                             if kk == ctrl_chars[t.lower()]:
                             # if kk == KeyCode( char=ctrl_chars[t.lower()] ):
                                 found=True
 
                         except Exception as e:
-                            # print(e)
+                            # _.pr(e)
                             pass
                 if not found:
                     good=False
@@ -302,7 +302,7 @@ class HOTKEYS:
                 #       keyboard.press(Key.esc)
                 #       keyboard.press(Key.backspace)
                 #       keyboard.release(Key.backspace)
-                # print(k)
+                # _.pr(k)
                 # exec(table[k]['do'])
                 return None
                 break
@@ -348,7 +348,7 @@ class HOTKEYS:
                 #       keyboard.press(Key.esc)
                 #       keyboard.press(Key.backspace)
                 #       keyboard.release(Key.backspace)
-                # print(k)
+                # _.pr(k)
                 # exec(table[k]['do'])
                 break
 # class Hotkeys:END
@@ -772,7 +772,7 @@ function get__THETABLE( $ID_label ){
         skip = []
         for i,line in enumerate(data.split('\n')):
             line = cleaner(line)
-            print(line)
+            _.pr(line)
             parts = line.split(' ')
             if i == 0:
                 if 'CREATE TABLE' in line.upper():
@@ -799,7 +799,7 @@ function get__THETABLE( $ID_label ){
         # _.pv(fields_r)
         # _.pv(skip)
         # _.pv(dic)
-        # print( table )
+        # _.pr( table )
 
 
         def field_data(f,t):
@@ -1019,7 +1019,7 @@ function get__THETABLE( $ID_label ){
         text=_str.cleanBE( text, '\t' )
         text=_str.cleanBE( text, ' ' )
         if text.startswith('{') or text.startswith('['):
-            # print(text)
+            # _.pr(text)
             # sys.exit()
             try:
                 data = simplejson.load(text)
@@ -1053,7 +1053,7 @@ function get__THETABLE( $ID_label ){
         text=_str.cleanBE( text, '\t' )
         text=_str.cleanBE( text, ' ' )
         if text.startswith('{') or text.startswith('['):
-            # print(text)
+            # _.pr(text)
             # sys.exit()
             try:
                 data = simplejson.load(text)
@@ -1526,14 +1526,14 @@ function get__THETABLE( $ID_label ){
         global keyboard
         x='x'
         while not x in '123456789':
-            # print('x',x)
+            # _.pr('x',x)
             log0=log.copy()
             log0.reverse()
             x=log0[0]
         if x in '123456789':
             keyboard.press(Key.backspace)
             keyboard.release(Key.backspace)
-            # print('y',x)
+            # _.pr('y',x)
             x=int(x)
             _paste = _.regImp( __.appReg, '-paste' )
             text = _paste.imp.paste()
@@ -1723,7 +1723,7 @@ def action():
         return None
 
     load()
-    print( 'EXIT:   Win + esc' )
+    _.pr( 'EXIT:   Win + esc' )
     with Listener(on_press=Hotkeys.process_keystroke,on_release=Hotkeys.release_key) as l:
         l.join()
 
@@ -1782,7 +1782,7 @@ def load():
     log = []
     table = {
                 'EXIT': { 'raw': [ 'Key.esc','Key.cmd' ], 'do': 'sys.exit()' },
-                'tester': { 'raw': [ 'Key.ctrl,3', 'test' ], 'do': 'print("works!!")' },
+                'tester': { 'raw': [ 'Key.ctrl,3', 'test' ], 'do': '_.pr("works!!")' },
                 'win-path': { 'raw': [ 'Key.ctrl,2', 'win' ], 'do': 'Clip.win_path()' },
                 'mom': { 'raw': [ 'Key.ctrl,2', 'mom' ], 'do': 'Typing.ty("your_mother()",back=1)' },
                 'pre-clean': { 'raw': [ 'Key.ctrl,2', 'Key.space', 'del' ], 'do': 'Clip.del_activate()' },
@@ -1852,6 +1852,7 @@ print_chars = False
 if __name__ == '__main__':
     action()
     __.isExit()
+
 
 
 

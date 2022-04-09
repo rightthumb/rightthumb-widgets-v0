@@ -161,30 +161,31 @@ def action():
 	if _.switches.isActive('Files'):
 		for i,row in enumerate(_.switches.values('Files')):
 			if not _.switches.isActive('Clean'):
-				print(row)
+				_.pr(row)
 			file = _.getText(row)
 			if not _.switches.isActive('Line'):
 				for i,row in enumerate(file):
-					print( i+1, '\t', row)
+					_.pr( i+1, '\t', row)
 
 			else:
 				for l in _.switches.values('Line'):
-					print( file[ int(l) -1 ] )
+					_.pr( file[ int(l) -1 ] )
 	elif not _.switches.isActive('Files'):
 		file = _.isData(r=1)
 		if not _.switches.isActive('Line'):
 			for i,row in enumerate(file):
-				print( i+1, '\t', row)
+				_.pr( i+1, '\t', row)
 
 		else:
 			for l in _.switches.values('Line'):
-				print( file[ int(l) -1 ] )
+				_.pr( file[ int(l) -1 ] )
 
 
 
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

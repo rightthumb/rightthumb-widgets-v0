@@ -173,7 +173,7 @@ def auditType( data ):
 
 def findGroups( records ):
 	global configID
-	# print( records )
+	# _.pr( records )
 	paths = []
 	cntK = {}
 	
@@ -183,10 +183,10 @@ def findGroups( records ):
 		try:
 			type( cntK[str(rec)] )
 			cntK[str(rec)] += 1
-			# print( 'here', cntK[str(rec)] )
-			# print( str(rec) )
+			# _.pr( 'here', cntK[str(rec)] )
+			# _.pr( str(rec) )
 		except Exception as e:
-			# print( type( cntK[str(rec)] ) )
+			# _.pr( type( cntK[str(rec)] ) )
 			cntK[str(rec)] = 1
 			paths.append({ 'cnt': 0, 'config': configID, 'rec': rec })
 			n = {}
@@ -211,35 +211,35 @@ def findGroups( records ):
 				configurations[ii]['cnt'] = paths[i]['cnt']
 
 		# paths[i][0] = cntK[str(paths[i][1])]
-		# print( paths[i] )
-		# print( paths[i]['cnt'],'\t', paths[i]['rec'] )
+		# _.pr( paths[i] )
+		# _.pr( paths[i]['cnt'],'\t', paths[i]['rec'] )
 
 	_.switches.fieldSet( 'Long', 'active', True )
 	# # _.switches.fieldSet( 'Input', 'value', 'one' )
-	# print()
+	# _.pr()
 	# test = _.tables.returnSorted( 'test', 'd.cnt', print_records )
 	# _.tables.print('test','cnt,rec')
-	# print()
-	# print()
+	# _.pr()
+	# _.pr()
 	# test2 = _.tables.returnSorted( 'test2', 'd.rec', print_records )
 	# _.tables.print('test2','cnt,rec')
-	# print()
-	print()
+	# _.pr()
+	_.pr()
 
 	if len( configurations ) > 0:
 		_.tables.register('data',configurations)
 		_.tables.print('data', ','.join( configurations[0].keys() ) )
 		# _.tables.fieldProfileSet('Auto','timestamp','trigger',_.float2Date)
 	else:
-		print( 'Error: configurations == 0' )
-		print( paths )
+		_.pr( 'Error: configurations == 0' )
+		_.pr( paths )
 	return configurations
 
 def reportChild( parentIn='', childIn='', fieldsIn='' ):
 	global configFile
-	print()
-	print( 'Report:', parentIn )
-	print()
+	_.pr()
+	_.pr( 'Report:', parentIn )
+	_.pr()
 	keyList = {}
 	cKeyList = {}
 	records = []
@@ -248,14 +248,14 @@ def reportChild( parentIn='', childIn='', fieldsIn='' ):
 		fieldsSpecified = True
 		fieldsIn = fieldsIn.lower()
 		fieldList = fieldsIn.split(',')
-	# print( 'fieldsSpecified:', fieldsSpecified )
+	# _.pr( 'fieldsSpecified:', fieldsSpecified )
 	for config in configFile[ str(parentIn) ]:
-		# print( config )
+		# _.pr( config )
 		for label in config.keys():
 			keyList[label] = auditType( config[label] )
-		# print( label, keyList[label] )
+		# _.pr( label, keyList[label] )
 		if keyList[label] == 'child':
-			# print( 'fieldsSpecified', fieldsSpecified )
+			# _.pr( 'fieldsSpecified', fieldsSpecified )
 			if not len( cKeyList.keys() ):
 				for cLabel in config[label][0].keys():
 					if fieldsSpecified:
@@ -263,7 +263,7 @@ def reportChild( parentIn='', childIn='', fieldsIn='' ):
 						if cLabel.lower() in fieldList:
 							shouldProcess = True
 					else:
-						# print( '0 HERE' )
+						# _.pr( '0 HERE' )
 						if cLabel == 'id':
 							shouldProcess = False
 						else:
@@ -271,9 +271,9 @@ def reportChild( parentIn='', childIn='', fieldsIn='' ):
 
 
 					if shouldProcess:
-						# print( '* HERE' )
+						# _.pr( '* HERE' )
 						cKeyList[cLabel] = cleanTypeString( config[label][0][cLabel] )
-						# print( 'HERE', cLabel, cKeyList[cLabel] )
+						# _.pr( 'HERE', cLabel, cKeyList[cLabel] )
 
 			for child in config[label]:
 				for cLabel in cKeyList.keys():
@@ -281,11 +281,11 @@ def reportChild( parentIn='', childIn='', fieldsIn='' ):
 					try:
 						dt = cleanTypeString( child[cLabel] )
 					except Exception as e:
-						print( 'Error: key', cLabel )
-						print( child )
+						_.pr( 'Error: key', cLabel )
+						_.pr( child )
 
 
-					# print( cLabel, dt )
+					# _.pr( cLabel, dt )
 					try:
 						if type( cKeyList[cLabel] ) == str or type( cKeyList[cLabel] ) == list:
 							error = False
@@ -295,28 +295,28 @@ def reportChild( parentIn='', childIn='', fieldsIn='' ):
 						error = True
 					
 					if error:
-						print('Error: field')
+						_.pr('Error: field')
 						sys.exit()
 
 
-					# print( cLabel, cKeyList[cLabel] )
+					# _.pr( cLabel, cKeyList[cLabel] )
 
 
 					if type( cKeyList[cLabel] ) == list and not dt in cKeyList[cLabel]:
 						cKeyList[cLabel].append( dt )
 					if type( cKeyList[cLabel] ) == str and not dt == cKeyList[cLabel]:
-						# print( 'HERE' )
+						# _.pr( 'HERE' )
 						tmp = cKeyList[cLabel]
 						cKeyList[cLabel] = []
 						cKeyList[cLabel].append( tmp )
 						cKeyList[cLabel].append( dt )
-	# print( cKeyList )
+	# _.pr( cKeyList )
 	keyList = {}
 
 	for config in configFile[ str(parentIn) ]:
 		for label in config.keys():
 			keyList[label] = auditType( config[label] )
-		# print( keyList[label] )
+		# _.pr( keyList[label] )
 		if keyList[label] == 'child':
 			for child in config[label]:
 				rec = {}
@@ -334,7 +334,7 @@ def reportChild( parentIn='', childIn='', fieldsIn='' ):
 						rec[cLabel] = str(cKeyList[cLabel])+'*'
 
 				records.append( rec )
-	# print( records )
+	# _.pr( records )
 	findGroups( records )
 
 
@@ -342,9 +342,9 @@ def reportChild( parentIn='', childIn='', fieldsIn='' ):
 
 def reportParent( parentIn='', fieldsIn='' ):
 	global configFile
-	print()
-	print( 'Report:', parentIn )
-	print()
+	_.pr()
+	_.pr( 'Report:', parentIn )
+	_.pr()
 	keyList = {}
 	cKeyList = {}
 	records = []
@@ -370,7 +370,7 @@ def reportParent( parentIn='', fieldsIn='' ):
 
 			if shouldProcess:
 				cKeyList[label] = cleanTypeString( configFile[ str(parentIn) ][0][label] )
-				# print( 'HERE', label, cKeyList[label] )
+				# _.pr( 'HERE', label, cKeyList[label] )
 
 
 
@@ -381,11 +381,11 @@ def reportParent( parentIn='', fieldsIn='' ):
 			try:
 				dt = cleanTypeString( config[label] )
 			except Exception as e:
-				print( 'Error: key', label )
-				print( config )
+				_.pr( 'Error: key', label )
+				_.pr( config )
 
 
-			# print( label, dt )
+			# _.pr( label, dt )
 			try:
 				if type( cKeyList[label] ) == str or type( cKeyList[label] ) == list:
 					error = False
@@ -395,30 +395,30 @@ def reportParent( parentIn='', fieldsIn='' ):
 				error = True
 			
 			if error:
-				print('Error: field')
+				_.pr('Error: field')
 				sys.exit()
 
 
-			# print( label, cKeyList[label] )
+			# _.pr( label, cKeyList[label] )
 
 
 			if type( cKeyList[label] ) == list and not dt in cKeyList[label]:
 				cKeyList[label].append( dt )
 			if type( cKeyList[label] ) == str and not dt == cKeyList[label]:
-				# print( 'HERE' )
+				# _.pr( 'HERE' )
 				tmp = cKeyList[label]
 				cKeyList[label] = []
 				cKeyList[label].append( tmp )
 				cKeyList[label].append( dt )
 
 
-	# print( cKeyList )
+	# _.pr( cKeyList )
 	keyList = {}
 
 	for config in configFile[ str(parentIn) ]:
 		rec = {}
 		for label in cKeyList.keys():
-			# print( label )
+			# _.pr( label )
 			if type(cKeyList[label]) == list:
 				rec[label] = cleanTypeString( config[label] )
 			elif cKeyList[label] == 'list':
@@ -432,7 +432,7 @@ def reportParent( parentIn='', fieldsIn='' ):
 				rec[label] = str(cKeyList[label])+'*'
 
 		records.append( rec )
-	# print( records )
+	# _.pr( records )
 	return findGroups( records )
 	# sys.exit()
 
@@ -444,48 +444,48 @@ def action():
 	if not _.switches.isActive('Report'):
 		if not _.switches.isActive('All'):
 			for config in configFile.keys():
-				print( config )
+				_.pr( config )
 		else:
 			if not _.switches.isActive('All'):
 				for config in configFile.keys():
-					print( '______________________________________________________________________________________________________________________________________________' )
+					_.pr( '______________________________________________________________________________________________________________________________________________' )
 					reportParent( parentIn=config )
 					reportChild( parentIn=config )
-					print( '______________________________________________________________________________________________________________________________________________' )
+					_.pr( '______________________________________________________________________________________________________________________________________________' )
 			else:
 				for config in configFile.keys():
-					print( '______________________________________________________________________________________________________________________________________________' )
+					_.pr( '______________________________________________________________________________________________________________________________________________' )
 					reportParent( parentIn=config )
 					fields = ''
 					while not fields == 'x':
-						print( '____________________________________' )
+						_.pr( '____________________________________' )
 						fields = input( ' What fields? ' )
 						if not fields == 'x' and not fields == 'b':
 							groups = reportParent( parentIn=config, fieldsIn=fields )
-							print(  )
-							print( groups )
-							print(  )
+							_.pr(  )
+							_.pr( groups )
+							_.pr(  )
 							failtype = input( ' Fail type (h,s,field)? ' )
 							if 'f' == failtype:
 								failField = input( ' Field? ' )
 
 
-					print( '_______________________________________________________________________' )
+					_.pr( '_______________________________________________________________________' )
 					reportChild( parentIn=config )
-					print( '____________________________________' )
+					_.pr( '____________________________________' )
 					fields = ''
 					while not fields == 'x':
-						print( '____________________________________' )
+						_.pr( '____________________________________' )
 						fields = input( ' What fields? ' )
 						if not fields == 'x' and not fields == 'b':
 							groups = reportChild( parentIn=config, fieldsIn=fields )
-							print(  )
-							print( groups )
-							print(  )
+							_.pr(  )
+							_.pr( groups )
+							_.pr(  )
 							failtype = input( ' Fail type (h,s,field)? ' )
 							if 'f' == failtype:
 								failField = input( ' Field? ' )
-					print( '______________________________________________________________________________________________________________________________________________' )
+					_.pr( '______________________________________________________________________________________________________________________________________________' )
 
 
 	else:
@@ -505,6 +505,7 @@ if __name__ == '__main__':
 # storyboard
 
 # findGroups
+
 
 
 

@@ -157,11 +157,11 @@ def process(table):
 		if not os.path.isfile(path):
 			run=False
 		if run:
-			print()
+			_.pr()
 			fileBackup.switch( 'Input', path )
 			fb = fileBackup.action()
-			print(path)
-			print(fb)
+			_.pr(path)
+			_.pr(fb)
 
 def action():
 
@@ -182,6 +182,7 @@ if _.switches.isActive('Unlock'):
 if __name__ == '__main__':
 	action()
 	__.isExit()
+
 
 
 

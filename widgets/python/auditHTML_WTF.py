@@ -173,7 +173,7 @@ if not sys.stdin.isatty():
 
 # _dir.sqlCreateTable( db, deleteDBFirst=True, close=True )
 # obj = _dir.fileInfo( path, sql=True )
-# print(   _dir.fileInfo( _.switches.value('Input') )['size']   )
+# _.pr(   _dir.fileInfo( _.switches.value('Input') )['size']   )
 
 # _.saveLog('queue')
 # _.saveLog('audit')
@@ -258,7 +258,7 @@ def getPage(url):
 		thisWebPage = BeautifulSoup(file,"html.parser")
 	return thisWebPage
 def getLocal(url):
-	print('Not Configured')
+	_.pr('Not Configured')
 	sys.exit()
 
 def getPageTitle(url):
@@ -288,11 +288,11 @@ def getPageStructure(url,report):
 
 # 	projectReport = []
 # 	thisWebPage = getPage(url)
-# 	print()
-# 	print()
-# 	print(url)
-# 	print()
-# 	print()
+# 	_.pr()
+# 	_.pr()
+# 	_.pr(url)
+# 	_.pr()
+# 	_.pr()
 # 	first_child = thisWebPage.find("body")
 # 	for i,ch in enumerate(first_child.children):
 # 		data = { 'data': [], 'el': [], 'ids': [], 'timestart': time.time()}
@@ -300,7 +300,7 @@ def getPageStructure(url,report):
 # 	report['structure'] = projectReport
 # 	# try:
 # 	# except Exception as e:
-# 	# 	print('children error')
+# 	# 	_.pr('children error')
 # 	# 	return ''
 # 	return report
 ####################################################################################
@@ -377,57 +377,57 @@ def getPageStructure(url,report):
 # 	if not obj.children:
 # 	# if True:
 # 	# if False:
-# 		print('no children')
+# 		_.pr('no children')
 # 		try:
 # 			obj = cleanText(obj)
 # 			if showError:
-# 				print()
+# 				_.pr()
 # 			if shouldAdd:
 # 				for omit in pathOmitList:
 # 					if omit in path:
 # 						shouldAdd = False
 # 						# shouldFindChildren = False
 # 						if showError:
-# 							print(0)
+# 							_.pr(0)
 # 			if shouldAdd:
 # 				for omit in objOmitListContains:
 # 					if omit.lower() in obj.lower():
 # 						shouldAdd = False
 # 						if showError:
-# 							print(1)
+# 							_.pr(1)
 # 			if shouldAdd:
 # 				for omit in objOmitList:
 # 					if omit == obj:
 # 						shouldAdd = False
 # 						# shouldFindChildren = False
 # 						if showError:
-# 							print(2)
+# 							_.pr(2)
 # 			if shouldAdd:
 # 				for omit in duplicateText:
 # 					if omit == obj and not path.endswith('span:-"') and not path.endswith('span"'):
 # 						shouldAdd = False
 # 						if showError:
-# 							print(3)
+# 							_.pr(3)
 # 			if shouldAdd:
 # 				if obj.startswith('.'):
 # 					shouldAdd = False
 # 					if showError:
-# 						print(4)
+# 						_.pr(4)
 # 			if shouldAdd:
 # 				if len(obj) <= objLength:
 # 					shouldAdd = False
 # 					if showError:
-# 						print(5)
+# 						_.pr(5)
 # 			# if shouldAdd:
 # 			# 	if not obj.startswith('<!'):
 # 			# 		shouldAdd = False
 # 			# 		if showError:
-# 			# 			print(6)
+# 			# 			_.pr(6)
 # 			if shouldAdd:
 # 				if path == '-:-':
 # 					shouldAdd = False
 # 					if showError:
-# 						print(7)
+# 						_.pr(7)
 # 		except Exception as e:
 # 			shouldAdd = False
 
@@ -437,14 +437,14 @@ def getPageStructure(url,report):
 
 # 		if shouldAdd:
 # 			if showError:
-# 				print('attempt')
+# 				_.pr('attempt')
 # 			duplicateText.append(obj)
-# 			# print(obj)
+# 			# _.pr(obj)
 # 			report['el'].append({'path': path,'obj': obj})
 # 			report['timeend'] = time.time()
 # 			# if theCount <= 100:
 # 			projectReport.append(report)
-# 			# print(report)
+# 			# _.pr(report)
 # 			# theCount += 1
 # 			# report = []
 # 		if not shouldAdd:
@@ -459,7 +459,7 @@ def getPageStructure(url,report):
 # 				thinkOfTheChildren(ch,report,path)
 # 	except Exception as e:
 # 		pass
-# 		# print(path,obj)
+# 		# _.pr(path,obj)
 
 
 
@@ -508,11 +508,11 @@ def thinkOfTheChildren(obj,report,path='-'):
 		obj = shouldThisBeAdded(obj,path)
 
 
-		print('obj 3:',type(obj),len(obj),obj)
+		_.pr('obj 3:',type(obj),len(obj),obj)
 		# pause = input('pause')
 		if len(obj) > 5:
 		# if True:
-			print('added')
+			_.pr('added')
 			pause = input('pause')
 			try:
 				try:
@@ -524,7 +524,7 @@ def thinkOfTheChildren(obj,report,path='-'):
 						attrib = False
 			except Exception as e:
 				attrib = False
-			# print(obj)
+			# _.pr(obj)
 
 			duplicateText.append( obj )
 			report['el'].append( { 'path': path,'obj': obj, 'attrib': attrib } )
@@ -540,15 +540,15 @@ def shouldThisBeAdded(obj,path):
 		r = json.dumps({'obj':obj})
 		d = json.loads(r)
 		obj = d['obj']
-		print()
-		print()
-		print('obj 0:',len(obj),obj)
+		_.pr()
+		_.pr()
+		_.pr('obj 0:',len(obj),obj)
 	except Exception as e:
 		obj = ''
 		shouldAdd = False
 	# if shouldAdd:
-	# 	print('pass 0')
-	# 	print('obj:',len(obj),obj)
+	# 	_.pr('pass 0')
+	# 	_.pr('obj:',len(obj),obj)
 	if len(obj) < 5:
 		shouldAdd = False
 	if shouldAdd:
@@ -560,21 +560,21 @@ def shouldThisBeAdded(obj,path):
 
 
 	if shouldAdd:
-		print('obj 1:',type(obj),len(obj),obj)
-	print('obj 1.5:',type(obj),len(obj),obj)
+		_.pr('obj 1:',type(obj),len(obj),obj)
+	_.pr('obj 1.5:',type(obj),len(obj),obj)
 
 
 
 	if not shouldAdd:
 		if pauseError:
-			print('obj 2:',type(obj),len(obj),obj)
+			_.pr('obj 2:',type(obj),len(obj),obj)
 			pause = input('pause 00')
 	else:
 		for omit in pathOmitList:
 			if omit in path:
 				shouldAdd = False
 				if showError:
-					print(0,omit,path)
+					_.pr(0,omit,path)
 	if not shouldAdd:
 		if pauseError:
 			pause = input('pause 0')
@@ -583,7 +583,7 @@ def shouldThisBeAdded(obj,path):
 			if omit.lower() in obj.lower():
 				shouldAdd = False
 				if showError:
-					print(1,omit,obj)
+					_.pr(1,omit,obj)
 	if not shouldAdd:
 		if pauseError:
 			pause = input('pause 1')
@@ -592,7 +592,7 @@ def shouldThisBeAdded(obj,path):
 			if omit == obj:
 				shouldAdd = False
 				if showError:
-					print(2,omit,obj)
+					_.pr(2,omit,obj)
 	if not shouldAdd:
 		if pauseError:
 			pause = input('pause 2')
@@ -601,7 +601,7 @@ def shouldThisBeAdded(obj,path):
 			if omit == obj and not path.endswith('span:-"') and not path.endswith('span"'):
 				shouldAdd = False
 				if showError:
-					print(3,omit,obj)
+					_.pr(3,omit,obj)
 	if not shouldAdd:
 		if pauseError:
 			pause = input('pause 3')
@@ -609,7 +609,7 @@ def shouldThisBeAdded(obj,path):
 		if obj.startswith('.'):
 			shouldAdd = False
 			if showError:
-				print(4)
+				_.pr(4)
 	if not shouldAdd:
 		if pauseError:
 			pause = input('pause 4')
@@ -617,7 +617,7 @@ def shouldThisBeAdded(obj,path):
 		if len(obj) >= objLength:
 			shouldAdd = False
 			if showError:
-				print(5)
+				_.pr(5)
 	if not shouldAdd:
 		if pauseError:
 			pause = input('pause 5')
@@ -625,7 +625,7 @@ def shouldThisBeAdded(obj,path):
 		if path == '-:-':
 			shouldAdd = False
 			if showError:
-				print(6)
+				_.pr(6)
 
 	if not shouldAdd:
 		if pauseError:
@@ -677,13 +677,13 @@ def shouldThisBeAdded(obj,path):
 
 
 def saveResults(data):
-	print()
+	_.pr()
 	if type(data) == dict:
 		report.append(data)
-		print(report)
+		_.pr(report)
 		_.saveTable(report,'auditHTML.json')
 	else:
-		print('Not Saved')
+		_.pr('Not Saved')
 
 def action():
 	global thisWebPage
@@ -704,11 +704,11 @@ def action():
 			# except Exception as e:
 			# 	thisWebPage = ''
 			pageTitle = getPageTitle(url)
-			print('title:',pageTitle)
+			_.pr('title:',pageTitle)
 			pinID = extractID(url)
 			report = {'pinID': pinID, 'title': pageTitle, 'structure': [], 'timestart': time.time()}
 			pageStructure = getPageStructure(url,report)
-			# print(pageStructure)
+			# _.pr(pageStructure)
 			_.saveTable2(pageStructure,'auditHTML.json', printThis=True)
 			# saveResults()
 
@@ -726,22 +726,22 @@ def action():
 
 				# if checkComplete(pinID):
 				if pinID in completedIDs:
-					print('duplicate:',pinID)
+					_.pr('duplicate:',pinID)
 				else:
 					projectReport = []
 					# try:
-					print()
-						# print(pinID)
+					_.pr()
+						# _.pr(pinID)
 					# try:
 					# 	thisWebPage = getPage(td)
 					# except Exception as e:
 					# 	thisWebPage = ''
 					# if thisWebPage == '':
-					# 	print('get error:',pinID)
+					# 	_.pr('get error:',pinID)
 					# else:
-					print(_dir.formatSize(_dir.getSize(td)),pinID)
+					_.pr(_dir.formatSize(_dir.getSize(td)),pinID)
 					pageTitle = getPageTitle(td)
-					# print('title:',pageTitle)
+					# _.pr('title:',pageTitle)
 					report = {'pinID': pinID, 'title': pageTitle, 'structure': [], 'timestart': time.time()}
 
 					getPageStructure(td,report)
@@ -752,15 +752,15 @@ def action():
 					dataPath = 'D:\\Pinterest_Cache_Report\\Pinterest_Page_Cache_Report_ID-THEID.json'
 					jsonFile = dataPath.replace('THEID',pinID)
 					if len(projectReport) == 0:
-						print('projectReport: 0')
+						_.pr('projectReport: 0')
 					else:
 						projectReportSize = sys.getsizeof(projectReport)
 						if projectReportSize > 100:
-							print('memory:',projectReportSize)
-							# print(projectReport)
+							_.pr('memory:',projectReportSize)
+							# _.pr(projectReport)
 							_.saveTable2(projectReport,jsonFile, printThis=True	)
 						else:
-							print('Memory error:',projectReportSize)
+							_.pr('Memory error:',projectReportSize)
 						projectReport = []
 
 
@@ -792,7 +792,7 @@ if __name__ == '__main__':
 		for item in dirList:
 			completedIDs.append(extractID(item))
 
-	print('completedIDs:', len(completedIDs))
+	_.pr('completedIDs:', len(completedIDs))
 
 	# auditHTML
 	thisWebPage = True
@@ -858,6 +858,7 @@ def cleanText(string):
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

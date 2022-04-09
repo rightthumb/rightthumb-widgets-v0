@@ -208,9 +208,9 @@ def action():
 	start = start.replace( ' ', '' )
 	start = start.replace( ',', '' )
 	b = _.unFormatSize( start )
-	print( b )
+	_.pr( b )
 	end = _.formatSize( b )
-	print( end )
+	_.pr( end )
 
 
 
@@ -218,6 +218,7 @@ def action():
 if __name__ == '__main__':
 	action()
 	_.tables.eof()
+
 
 
 

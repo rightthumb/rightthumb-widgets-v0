@@ -228,7 +228,7 @@ def action():
 		if len(records):
 			d = _.modify_timestamp( records[0][0] )
 			ps = '$(Get-Item "'+info['path']+'").CreationTime=("'+d+'")'
-			print( ps )
+			_.pr( ps )
 			
 
 
@@ -240,6 +240,7 @@ import sqlite3
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

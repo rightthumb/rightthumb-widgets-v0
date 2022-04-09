@@ -158,11 +158,11 @@ _.postLoad( __file__ )
 def action():
 	# sorted(var, key=lambda v: (v.upper(), v[0].islower()))
 	
-		# print( 'HERE' )
+		# _.pr( 'HERE' )
 	newPipe = []
 	dic = []
 	for i,row in enumerate( _.appData[__.appReg]['pipe'] ):
-		# print(row)
+		# _.pr(row)
 		row = row.replace( '\n', '' )
 		row = row.replace( '\r', '' )
 		original = row
@@ -188,12 +188,12 @@ def action():
 		_.saveTable( data, 'sortThis_tmp.json' )
 	else:
 		for row in data:
-			print( row['sortable'] )
+			_.pr( row['sortable'] )
 
 	# for d in sorted(pipeData, key=lambda v: (v.upper(), v[0].islower())):
 	# 	d = d.replace('\n','')
 	# 	d = d.replace('\r','')
-	# 	print(d)
+	# 	_.pr(d)
 
 
 
@@ -204,6 +204,7 @@ def action():
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

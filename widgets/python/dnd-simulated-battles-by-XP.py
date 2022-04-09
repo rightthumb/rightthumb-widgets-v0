@@ -396,14 +396,14 @@ def healthXP():
     if _.g.mm:
         HP_DICE = int(_.g.m[_.g.i]['hp']['dice'].lower().split('d')[1])
         times = levelXP()
-        # print( HP_DICE, levelXP() )
+        # _.pr( HP_DICE, levelXP() )
         sub = HP_DICE*(levelXP())
         if 'bo' in _.g.m[_.g.i]['hp']:
             sub += int(_.g.m[_.g.i]['hp']['bo'])
     else:
         HP_DICE = int(_.g.p[_.g.i]['hp']['dice'].lower().split('d')[1])
         times = levelXP()
-        # print('healthXP',_.g.p[_.g.i]['name'],HP_DICE,levelXP())
+        # _.pr('healthXP',_.g.p[_.g.i]['name'],HP_DICE,levelXP())
         sub = HP_DICE*(levelXP())
         if 'bo' in _.g.p[_.g.i]['hp']:
             sub += int(_.g.p[_.g.i]['hp']['bo'])
@@ -462,7 +462,7 @@ def genMobs():
         allMobs.append( myMob )
 
     if __.printing:
-        print( '__________________________________________________', cnt, 'MOBS' )
+        _.pr( '__________________________________________________', cnt, 'MOBS' )
 
 
     return allMobs
@@ -481,7 +481,7 @@ def rollDamage( dam, ii, yeti ):
             result += roll(  dice=  int( di.split('d')[1] )  ,   cnt=int( di.split('d')[0] )   )
     else:
         result += roll(  dice=  int( di.split('d')[1] )  ,   cnt=int( di.split('d')[0] )   )
-    # print( result, ii, yeti )
+    # _.pr( result, ii, yeti )
     return result
 
 
@@ -501,7 +501,7 @@ def battle():
     BATTLE_ID+=1
     battle_notes['mini'].append({ 'battle': str(BATTLE_ID)})
     if __.printing:
-        print('\n\n\nBATTLE_ID:',BATTLE_ID)
+        _.pr('\n\n\nBATTLE_ID:',BATTLE_ID)
     
     _.g.m = genMobs()
     _.g.mm = True
@@ -545,7 +545,7 @@ def battle():
             battle_notes['round'].append({ 'ran away': 'HA HA HA!!'})
             battle_notes['mini'].append({ 'ran away': 'HA HA HA!!'})
             battle_notes['npc'].append({ 'ran away': 'HA HA HA!!'})
-            print('ran away')
+            _.pr('ran away')
             break
     return ROUND
 
@@ -730,7 +730,7 @@ def battle_round(distance,R,npc,npcd):
     #               damage = rollDamage( dams[di], i, 1 )
     #               o=_.g.p[mi]['hp']['val']
     #               _.g.p[mi]['hp']['val'] -= damage
-    #               # print(o,_.g.p[mi]['hp']['val'])
+    #               # _.pr(o,_.g.p[mi]['hp']['val'])
     #               if _.g.p[mi]['hp']['val'] < 1:
     #                   _.g.i = mi
     #                   healing_potion()
@@ -846,14 +846,14 @@ def action():
         did+=1
         simulation_of_years()
 
-    print()
+    _.pr()
     _.linePrint(txt=' ',p=1)
-    print()
+    _.pr()
     for i,rec in enumerate(_.g.p):
-        print(_.g.p[i]['name'],'Potions average of',_.addComma(ip)+':',Average(_.g.p[i]['potions-avg']))
+        _.pr(_.g.p[i]['name'],'Potions average of',_.addComma(ip)+':',Average(_.g.p[i]['potions-avg']))
 
-    print( 'battles:',_.addComma(BATTLE_ID) )
-    print( 'rounds:',_.addComma(ROUND_ID) )
+    _.pr( 'battles:',_.addComma(BATTLE_ID) )
+    _.pr( 'rounds:',_.addComma(ROUND_ID) )
 
 def simulation_of_years():
     global XP_PER
@@ -882,7 +882,7 @@ def simulation_of_years():
 
     HP_END = _.g.p[_.g.i]['xp-e']
 
-    # print('starting-health',_.g.p[_.g.i]['hp'], 'Level:',levelXP())
+    # _.pr('starting-health',_.g.p[_.g.i]['hp'], 'Level:',levelXP())
     
     # sys.exit()
     # 0C8CC579
@@ -899,7 +899,7 @@ def simulation_of_years():
             bats = 1
         # bats=1
         # if not bats == 1:
-        #     print('bats',bats)
+        #     _.pr('bats',bats)
         bty = 0
         if 1 == random.randint(1,5):
             bats=0
@@ -919,13 +919,13 @@ def simulation_of_years():
 
 
 
-    # print(battle_notes['rounds'])
+    # _.pr(battle_notes['rounds'])
     # _.pv(battle_notes['rounds'])
     
     battle_notes_text = ''
     for bat in battle_notes['mini']:
         line = str(list(bat.keys())[0]) +':  '+ str(bat[ list(bat.keys())[0] ])
-        # print(line)
+        # _.pr(line)
         line += '\n'
         battle_notes_text+=line
 
@@ -935,7 +935,7 @@ def simulation_of_years():
     for i,rec in enumerate(_.g.p):
         _.g.i = i
         _.g.p[i]['potions-avg'].append(_.g.p[i]['potions'])
-        # print(_.g.p[i]['name'])
+        # _.pr(_.g.p[i]['name'])
 
         n = _.g.p[i]['name']
         game['end'][n] = _.g.p[i]
@@ -954,7 +954,7 @@ def simulation_of_years():
         }
         _.pv(game['mini'])
 
-    # print( 'battle_avg:', game['battle_avg'] )
+    # _.pr( 'battle_avg:', game['battle_avg'] )
     games.append( game )
     # Timer( 0, _beep.simple_beep ).start()
 
@@ -974,7 +974,7 @@ _.g.i = 0
 _.g.mm = False
 
 import random
-# print()
+# _.pr()
 
 XP_PER = 500
 
@@ -1050,4 +1050,5 @@ if __name__ == '__main__':
 # simulation_of_years
 # 0C8CC579
 # healing_RING
+
 

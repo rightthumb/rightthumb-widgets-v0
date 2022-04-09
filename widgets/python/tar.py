@@ -225,7 +225,7 @@ def action():
 
 	if not _.switches.isActive('Compress') and not _.switches.isActive('Uncompress'):
 		for i,path in enumerate( subjects ):
-			# print('here')
+			# _.pr('here')
 			if  path.endswith('.gz') or path.endswith('.bz2'):
 				_.switches.fieldSet( 'Uncompress', 'active', True )
 			else:
@@ -248,6 +248,7 @@ import _rightThumb._tar as _tar
 if __name__ == '__main__':
 	action()
 	__.isExit()
+
 
 
 

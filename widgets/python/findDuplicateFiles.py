@@ -229,7 +229,7 @@ def action():
 	spent = []
 	load()
 	if not _.switches.isActive( 'ShowFlagged' ):
-		print( 'Files:', len(data) )
+		_.pr( 'Files:', len(data) )
 	records = {}
 	for i,file in enumerate(data):
 		try:
@@ -254,7 +254,7 @@ def action():
 		if len(records[theID]) > 1:
 			dup+=1
 			if not _.switches.isActive( 'ShowFlagged' ):
-				print()
+				_.pr()
 			for i,xID in enumerate(records[theID]):
 				if not i == 0:
 					size+=data[xID]['bytes']
@@ -262,16 +262,16 @@ def action():
 				if not _.switches.isActive( 'ShowFlagged' ):
 					if not thisRecord in spent:
 						spent.append( thisRecord )
-						print( thisRecord )
+						_.pr( thisRecord )
 	if _.switches.isActive( 'ShowFlagged' ):
-		# print('HERE')
-		# print( flagged )
+		# _.pr('HERE')
+		# _.pr( flagged )
 		for row in flagged:
-			print( row )
+			_.pr( row )
 	if not _.switches.isActive( 'ShowFlagged' ):
-		print()
-		print('Duplicates:',dup)
-		print( 'Space:',_.formatSize(size) )
+		_.pr()
+		_.pr('Duplicates:',dup)
+		_.pr( 'Space:',_.formatSize(size) )
 
 # findDuplicateFiles
 
@@ -279,7 +279,7 @@ def action():
 def load():
 	global data
 	data = _.getTable2( _.switches.value( 'Input' ) )
-	# print( len(data), type(data), type(data[0]) )
+	# _.pr( len(data), type(data), type(data[0]) )
 	# sys.exit()
 data = []
 flagData = {}
@@ -287,6 +287,7 @@ flagged = []
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

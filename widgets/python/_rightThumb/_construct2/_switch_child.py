@@ -227,7 +227,7 @@ class TheChild:
 	def dump( self ):
 		for i, key in enumerate(__.app.records['switch']):
 			record = __.app.records['switch'][key]
-			print(  record.focus,  record.name, record.active )
+			_.pr(  record.focus,  record.name, record.active )
 
 	def setKeys( self ):
 		for i, key in enumerate(__.app.records['switch']):
@@ -241,4 +241,5 @@ class TheChild:
 
 
 		
+
 

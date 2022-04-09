@@ -173,7 +173,7 @@ if not sys.stdin.isatty():
 
 # _dir.sqlCreateTable( db, deleteDBFirst=True, close=True )
 # obj = _dir.fileInfo( path, sql=True )
-# print(   _dir.fileInfo( _.switches.value('Input') )['size']   )
+# _.pr(   _dir.fileInfo( _.switches.value('Input') )['size']   )
 
 # _.saveLog('queue')
 # _.saveLog('audit')
@@ -238,16 +238,16 @@ import csv
 
 # dps = psutil.disk_partitions()
 # fmt_str = "{:<8} {:<7} {:<7}"
-# print(fmt_str.format("Drive", "Type", "Opts"))
+# _.pr(fmt_str.format("Drive", "Type", "Opts"))
 # # Only show a couple of different types of devices, for brevity.
 # for i,d in enumerate(list(dps)):
 # 	dp = dps[i]
-# 	print(dp)
-# 	print(fmt_str.format(dp.device, dp.fstype, dp.opts))
+# 	_.pr(dp)
+# 	_.pr(fmt_str.format(dp.device, dp.fstype, dp.opts))
 
-# print((dps))
-# print()
-# print(list(dps))
+# _.pr((dps))
+# _.pr()
+# _.pr(list(dps))
 
 
 def cpuinfo():
@@ -274,7 +274,7 @@ def cpuinfo():
     with open('eggs.csv', 'r') as csvfile:
           spamreader = csv.reader(csvfile, delimiter=' ', quotechar='|')
           for row in spamreader:
-             print(row) 
+             _.pr(row) 
 
 def action():
 	pass
@@ -286,6 +286,7 @@ def action():
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

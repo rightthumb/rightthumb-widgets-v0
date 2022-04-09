@@ -334,7 +334,7 @@ if ( $registered_schedule_area === 'promo_item' ) {
 	THE_FILE = THE_FILE.replace( '||PROMO||', ''.join( sections['PROMO'] ) )
 	THE_FILE = THE_FILE.replace( '||PROMO_ITEM||', ''.join( sections['PROMO_ITEM'] ) )
 	_.saveText( THE_FILE, 'D:\\websites\\PillerBeauty\\_THE_SCHEDULE.PHP' )
-	print( THE_FILE )
+	_.pr( THE_FILE )
 	return THE_FILE
 
 
@@ -464,12 +464,12 @@ def build(config):
 
 	if config['pDiscount_IDs'] == '*':
 		hasDis = True
-		print( 8888 )
+		_.pr( 8888 )
 
 	if not config['pDiscount_IDs'] == '-' and not config['pDiscount_IDs'] == '*' and  not config['pDiscount_IDs'] == '':
 		hasDis_item = True
 		hasDis = True
-		print( 8888 )
+		_.pr( 8888 )
 		section_promo = section_promo.replace( '$promo_shipping_affected', '// $promo_shipping_affected' )
 		for x in config['pDiscount_IDs'].split(','):
 			section_promo_items_pDiscount_LIST.append( section_promo_items_pDiscount.replace( '|pDiscount_ID|', x ) )
@@ -522,10 +522,10 @@ def build(config):
 		sections['IMG'].append( section_img )
 
 	
-	# print( 'hasDis', hasDis )
-	# print( 'hasDis_item', hasDis_item )
-	# print( 'hasBOGO', hasBOGO )
-	# print( 'hasBOGO_grp', hasBOGO_grp )
+	# _.pr( 'hasDis', hasDis )
+	# _.pr( 'hasDis_item', hasDis_item )
+	# _.pr( 'hasBOGO', hasBOGO )
+	# _.pr( 'hasBOGO_grp', hasBOGO_grp )
 
 	# _.printVarSimple( config )
 	# sys.exit()
@@ -576,7 +576,7 @@ def action():
 		for i,x in enumerate(schedule):
 			index[x['id']] = i
 		theID = input(' ID: ')
-		print()
+		_.pr()
 		if len(theID) and theID in index:
 			form = Documentation_Initial(schedule[ index[theID] ])
 			record = form.record
@@ -593,16 +593,16 @@ def action():
 		for i,x in enumerate(schedule):
 			index[x['id']] = i
 		theID = input(' ID: ')
-		print()
+		_.pr()
 		test = []
 		if len(theID) and theID in index:
 			test.append( schedule[ index[theID] ] )
 		today = _.friendlyDate( time.time() ).split(' ')[0]
 		yesterday = _.dateSub( today, '-', 1 )
 		tommorow = _.dateAdd( today, '-', 1 )
-		# print( 'today', today )
-		# print( 'yesterday', yesterday )
-		# print( 'tommorow', tommorow )
+		# _.pr( 'today', today )
+		# _.pr( 'yesterday', yesterday )
+		# _.pr( 'tommorow', tommorow )
 		# sys.exit()
 		test[0]['start'] = _.friendlyDate( yesterday ).split(' ')[0]
 		test[0]['end'] = _.friendlyDate( tommorow ).split(' ')[0]
@@ -658,7 +658,7 @@ def action():
 
 		form = Documentation_Initial(new)
 		record = form.record
-		# print(record)
+		# _.pr(record)
 		_.printVarSimple( record )
 		schedule.append( record )
 		_.saveTableProject( 'PillerBeauty.Schedule', schedule, 'schedule.json' )
@@ -673,7 +673,7 @@ def ftp_upload():
 	global schedule
 	global upload
 
-	# print( 'upload', upload )
+	# _.pr( 'upload', upload )
 	# sys.exit()
 
 	userA = 'g9SudNvwJMrYzgbw8BrhrwA7+D2PXO8oxna7YruupJQ='
@@ -686,11 +686,11 @@ def ftp_upload():
 	passwordB = _str.cleanBE( passwordB, ' ' )
 
 
-	# print(  userA  ,  passwordA )
-	# print(  userB  ,  passwordB )
+	# _.pr(  userA  ,  passwordA )
+	# _.pr(  userB  ,  passwordB )
 	# sys.exit()
 
-	print( 'Uploading Schedule' )
+	_.pr( 'Uploading Schedule' )
 	session = ftplib.FTP('ftp.pillerbeauty.com',  userB  ,  passwordB  )
 	file = open('D:\\websites\\PillerBeauty\\_THE_SCHEDULE.PHP','rb')
 	session.storbinary('STOR _THE_SCHEDULE.PHP', file)
@@ -704,7 +704,7 @@ def ftp_upload():
 
 	for record in schedule:
 		file_path = fld + record['graphic']
-		# print(file_path)
+		# _.pr(file_path)
 		if os.path.isfile( file_path ):
 			file_dir =  _dir.fileInfo( file_path )
 			# _.printVarSimple( file_dir )
@@ -717,7 +717,7 @@ def ftp_upload():
 					uploaded = True
 
 			if uploaded:
-				print( 'Uploading', record['graphic'] )
+				_.pr( 'Uploading', record['graphic'] )
 				upload[ record['graphic'] ] = time.time()
 				file = open( file_path ,'rb')
 				session.storbinary('STOR ' + record['graphic'], file)
@@ -771,6 +771,7 @@ if __name__ == '__main__':
 		action()
 	except Exception as e:
 		pass
+
 
 
 

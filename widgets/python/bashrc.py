@@ -175,7 +175,7 @@ def action( bashrc_manual=None ):
 
 		
 		if not bashrc_manual is None:
-			# print('specified', bashrc_manual)
+			# _.pr('specified', bashrc_manual)
 			bashrc_path = bashrc_manual
 		elif bashrc_manual is None:
 
@@ -195,8 +195,8 @@ def action( bashrc_manual=None ):
 
 
 		spent.append(bashrc_path)
-		print( 'whoami:', username )
-		# print( 'running:',bashrc_path )
+		_.pr( 'whoami:', username )
+		# _.pr( 'running:',bashrc_path )
 		bashrc = _.getText( bashrc_path, raw=True )
 		s = '## {E45D09D22184} ##'
 		e = '## {AEC80B4D3338} ##'
@@ -591,6 +591,7 @@ cd $HOME
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

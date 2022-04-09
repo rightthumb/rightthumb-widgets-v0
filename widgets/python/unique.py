@@ -261,7 +261,7 @@ def action():
 			if _.showLine( row ):
 				if not row.lower() in data:
 					data.append( row.lower() )
-					print( row )
+					_.pr( row )
 
 
 
@@ -275,6 +275,7 @@ data = []
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

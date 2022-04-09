@@ -264,7 +264,7 @@ def password():
 	xyz = None
 	b = ask('b')
 	xyz = None
-	print()
+	_.pr()
 
 	p = str(n)+b+a
 
@@ -676,7 +676,7 @@ def action():
 	global index
 	load()
 
-	# print( _.appData[__.appReg]['pipe'] )
+	# _.pr( _.appData[__.appReg]['pipe'] )
 	if type( _.appData[__.appReg]['pipe'] ) == bool:
 		_.colorThis( [  '\n','Error: no files','\n'  ], 'red' )
 		_.colorThis( [  '\t', 'check folder', '\n'  ], 'yellow' )
@@ -715,6 +715,7 @@ xyz = None
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

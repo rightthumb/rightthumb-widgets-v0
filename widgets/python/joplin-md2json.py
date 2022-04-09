@@ -192,7 +192,7 @@ def action():
 					records['parents'].append(meta['id'])
 					# _.pv(meta)
 					# sys.exit()
-					# print(meta['data'])
+					# _.pr(meta['data'])
 				else:
 					if not meta['parent_id'] in records['folders']:
 						records['folders'][meta['parent_id']] = []
@@ -202,16 +202,16 @@ def action():
 
 			# meta['title'] = meta['data']
 			records['files'][meta['id']] = meta
-			# print(records)
+			# _.pr(records)
 			# _.pv(records)
-			# print(meta['data'])
+			# _.pr(meta['data'])
 			# sys.exit()
 	_.saveTable2(records, folder +os.sep+ 'joplin-database.json')
 	for rec in records['parents']:
 		xx = records['files'][rec]['title']
 		if not xx == '?':
 			processFolder(rec)
-	print()
+	_.pr()
 	_.cp(folder +os.sep+ 'joplin-database.json','green')
 spent=[]
 def processFolder(rec):
@@ -227,15 +227,15 @@ def processFolder(rec):
 			todo = '0'
 		if len(xx) > 2 and not xx.startswith('Z0'):
 			if t == '2' or t == '5':
-				print( pre(),  _.cp(xx,'yellow',p=0), _.cp(rec,'purple',p=0) )
+				_.pr( pre(),  _.cp(xx,'yellow',p=0), _.cp(rec,'purple',p=0) )
 			elif todo == '0':
-				print( pre(),  _.cp(xx,'green',p=0), _.cp(rec,'purple',p=0) )
+				_.pr( pre(),  _.cp(xx,'green',p=0), _.cp(rec,'purple',p=0) )
 			else:
-				print( pre(),  _.cp(xx,'red',p=0), _.cp(rec,'purple',p=0) )
+				_.pr( pre(),  _.cp(xx,'red',p=0), _.cp(rec,'purple',p=0) )
 			if rec in records['folders']:
 				level += 1
 				for recF in records['folders'][rec]:
-				# 	print( pre(), records['files'][recF]['data'].split('\n')[0] )
+				# 	_.pr( pre(), records['files'][recF]['data'].split('\n')[0] )
 				# sys.exit()
 					processFolder(recF)
 				level -= 1
@@ -255,6 +255,7 @@ def pre():
 if __name__ == '__main__':
 	action()
 	__.isExit()
+
 
 
 

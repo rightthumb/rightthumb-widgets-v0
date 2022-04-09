@@ -224,13 +224,14 @@ def action():
 	data = _.tables.returnSorted( 'data', 'app', apps )
 
 	for row in data:
-		print( row['app'] )
+		_.pr( row['app'] )
 
 apps = []
 
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

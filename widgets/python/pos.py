@@ -197,9 +197,9 @@ def action():
 	data = '\n'.join( _.isData(r=1) )
 
 	for search in _.switches.values('Plus'):
-		print( data.index(search) )
+		_.pr( data.index(search) )
 
-	# print( data )
+	# _.pr( data )
 
 
 
@@ -209,6 +209,7 @@ def action():
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

@@ -162,7 +162,7 @@ def action():
 		code = code.replace( '\r', '' )
 		code = code.replace( '+', ' ' )
 		code = code.replace( '^', '+' )
-		print( code )
+		_.pr( code )
 
 
 
@@ -170,6 +170,7 @@ def action():
 if __name__ == '__main__':
 	action()
 	__.isExit()
+
 
 
 

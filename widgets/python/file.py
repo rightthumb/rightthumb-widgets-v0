@@ -262,7 +262,7 @@ def getFolder(folder,r=True):
 			maxDepth = 4
 		if len( folder.split(_v.slash) ) - baseDepth >= maxDepth:
 			if len(_.switches.values('MaxDepth')) > 1 and 'p' in _.switches.values('MaxDepth')[1]:
-				print( folder )
+				_.pr( folder )
 
 			return None
 	try:
@@ -286,25 +286,25 @@ def getFolder(folder,r=True):
 					shouldAdd = False
 
 					if not _.switches.isActive('Text') and not _.switches.isActive('Binary'):
-						# print(0,whatIsIt(path),path)
-						# print(path)
+						# _.pr(0,whatIsIt(path),path)
+						# _.pr(path)
 						shouldAdd = True
 					else:
 						if not _.switches.isActive('Binary') and  _.switches.isActive('Text') and isText(path):
-							# print(1,whatIsIt(path),path)
-							# print(path)
+							# _.pr(1,whatIsIt(path),path)
+							# _.pr(path)
 							shouldAdd = True
 						if not _.switches.isActive('Binary') and not _.switches.isActive('Text'):
-							# print(2,whatIsIt(path),path)
-							# print(path)
+							# _.pr(2,whatIsIt(path),path)
+							# _.pr(path)
 							shouldAdd = True
 						if not _.switches.isActive('Text') and  _.switches.isActive('Binary') and not isText(path):
-							# print(3,whatIsIt(path),path)
-							# print(path)
+							# _.pr(3,whatIsIt(path),path)
+							# _.pr(path)
 							shouldAdd = True
 						if not _.switches.isActive('Text') and  not _.switches.isActive('Binary'):
-							# print(4,whatIsIt(path),path)
-							# print(path)
+							# _.pr(4,whatIsIt(path),path)
+							# _.pr(path)
 							shouldAdd = True
 
 					pass
@@ -315,7 +315,7 @@ def getFolder(folder,r=True):
 					if _.switches.isActive('Ago'):
 						# sys.exit()
 						record = _dir.fileInfo( path )
-						# print( _.switches.values('Ago'), record['date_modified_raw'], record['date_created_raw'],  )
+						# _.pr( _.switches.values('Ago'), record['date_modified_raw'], record['date_created_raw'],  )
 						# if os.path.isfile(path):
 						shouldAdd = False
 						run = 'default'
@@ -333,7 +333,7 @@ def getFolder(folder,r=True):
 
 
 						elif len( _.switches.values('Ago') ) > 1 and type(_.switches.values('Ago')[1]) == str:
-							# print('asdf')
+							# _.pr('asdf')
 							if 'a' in _.switches.values('Ago')[1]:
 								run = 'a'
 							elif 'md' in _.switches.values('Ago')[1]:
@@ -346,8 +346,8 @@ def getFolder(folder,r=True):
 								run = 'md'
 
 
-						# print(  len( _.switches.values('Ago') )  )
-						# print(  ( _.switches.values('Ago') )  )
+						# _.pr(  len( _.switches.values('Ago') )  )
+						# _.pr(  ( _.switches.values('Ago') )  )
 						# sys.exit()
 						# accessed_raw
 
@@ -356,19 +356,19 @@ def getFolder(folder,r=True):
 						if len( _.switches.values('Ago') ) > 1 and type(_.switches.values('Ago')[1]) == float:
 							agoRange = True
 
-						# print( run, agoRange, _.switches.values('Ago')[0], _.friendlyDate(_.switches.values('Ago')[0]) )
+						# _.pr( run, agoRange, _.switches.values('Ago')[0], _.friendlyDate(_.switches.values('Ago')[0]) )
 
 						if not agoRange:
 							if run == 'default':
 								if record['date_modified_raw'] > _.switches.values('Ago')[0] or record['date_created_raw'] > _.switches.values('Ago')[0]:
 									shouldAdd = True
-									# print(path)
+									# _.pr(path)
 							elif run == 'resent':
 								if record['date_modified_raw'] > _.switches.values('Ago')[0] or record['date_created_raw'] > _.switches.values('Ago')[0] or record['accessed_raw'] > _.switches.values('Ago')[0]:
 									shouldAdd = True
 							elif run == 'a':
 								if record['accessed_raw'] > _.switches.values('Ago')[0]:
-									# print( _.friendlyDate(_.switches.values('Ago')[0]), _.switches.values('Ago')[0], record['accessed_raw'], _.friendlyDate(record['accessed_raw']) )
+									# _.pr( _.friendlyDate(_.switches.values('Ago')[0]), _.switches.values('Ago')[0], record['accessed_raw'], _.friendlyDate(record['accessed_raw']) )
 									shouldAdd = True
 							elif run == 'cd':
 								if record['date_created_raw'] > _.switches.values('Ago')[0]:
@@ -378,8 +378,8 @@ def getFolder(folder,r=True):
 									shouldAdd = True
 						elif agoRange:
 							if run == 'default':
-								# print(record['date_modified_raw'])
-								# print(_.switches.values('Ago'))
+								# _.pr(record['date_modified_raw'])
+								# _.pr(_.switches.values('Ago'))
 								if record['date_modified_raw'] < _.switches.values('Ago')[0] or record['date_created_raw'] < _.switches.values('Ago')[0]:
 									if record['date_modified_raw'] > _.switches.values('Ago')[1] or record['date_created_raw'] > _.switches.values('Ago')[1]:
 										shouldAdd = True
@@ -405,7 +405,7 @@ def getFolder(folder,r=True):
 					pass
 
 					pass
-					# if shouldAdd: print( 1001, path );
+					# if shouldAdd: _.pr( 1001, path );
 					if shouldAdd:
 						if _.switches.isActive('Size'):
 							shouldAdd = False
@@ -443,9 +443,9 @@ def getFolder(folder,r=True):
 
 								if _.switches.isActive('Count'):
 									if _.switches.isActive('Remove-Root-Folder'):
-										print( _.colorThis( pathX, 'cyan', p=0 ) )
+										_.pr( _.colorThis( pathX, 'cyan', p=0 ) )
 									else:
-										print( _.colorThis( path, 'cyan', p=0 ) )
+										_.pr( _.colorThis( path, 'cyan', p=0 ) )
 								else:
 									iS+=1
 
@@ -467,9 +467,9 @@ def getFolder(folder,r=True):
 									else:
 										result += _.colorThis( path, 'cyan', p=0 )
 
-									print( result )
+									_.pr( result )
 								
-								# print( formatedSize, '\t', path )
+								# _.pr( formatedSize, '\t', path )
 
 
 					if shouldAdd :
@@ -500,12 +500,12 @@ def getFolder(folder,r=True):
 								if not _.switches.isActive('Plus'):
 									_.colorThis( pathX, 'cyan' )
 								else:
-									print( _.colorPlus( pathX, 'cyan' ) )
+									_.pr( _.colorPlus( pathX, 'cyan' ) )
 							else:
 								if not _.switches.isActive('Plus'):
 									_.colorThis( path, 'cyan' )
 								else:
-									print( _.colorPlus( path, 'cyan' ) )
+									_.pr( _.colorPlus( path, 'cyan' ) )
 
 					# if shouldAdd:
 					# 	text_binary = False
@@ -538,7 +538,7 @@ def getFolder(folder,r=True):
 						except Exception as e:
 							pass
 				else:
-					print('error')
+					_.pr('error')
 
 
 def extensionsDatabank():
@@ -584,7 +584,7 @@ def action():
 	if not _.switches.isActive('Widget-V0'):
 		getFolder(folder,r=r)
 	else:
-		# print(_v.w)
+		# _.pr(_v.w)
 		base_path=_v.widgets
 		_.switches.fieldSet( 'Remove-Root-Folder', 'active', True )
 		_.switches.fieldSet( 'Plus', 'active', True )
@@ -639,7 +639,7 @@ def action():
 			_.colorThis( [  '\n', _.addComma(iS), 'of', _.addComma(i), '\n'  ], 'yellow' )
 		else:
 			_.colorThis( [  '\n{}\n'.format( _.addComma(i) )  ], 'yellow' )
-		# print('\n{}\n'.format(i))
+		# _.pr('\n{}\n'.format(i))
 
 extensionList = []
 
@@ -658,6 +658,7 @@ import _rightThumb._dir as _dir
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

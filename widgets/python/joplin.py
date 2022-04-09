@@ -159,7 +159,7 @@ def process( level=0, parent='' ):
 	global spent
 	table = []
 	for record in data:
-		# print( record['parent_id'] )
+		# _.pr( record['parent_id'] )
 		if record['parent_id'] == parent and not record['title'].endswith('.png') and not record['title'] == '?':
 			if not record['id'] in spent['A']:
 				table.append( record )
@@ -169,7 +169,7 @@ def process( level=0, parent='' ):
 
 	for record in table:
 		# _.printTest(record)
-		# print('HERE')
+		# _.pr('HERE')
 		printLevel( level, record )
 		if not record['id'] in spent['B']:
 			spent['B'].append(record['id'])
@@ -187,15 +187,15 @@ def printLevel( level, record ):
 	pre = ''
 	while not i == level:
 
-		# print('here', i, text, level)
+		# _.pr('here', i, text, level)
 		# sys.exit()
 		pre += prefix
 		i+=1
 	if not record['id'] in spent['C']:
 		spent['C'].append(record['id'])
-		print( record['id'], pre, record['title'], record['parent_id'] )
-		# print( record['type_'], pre, record['title'] )
-		# print( pre, record['title'] )
+		_.pr( record['id'], pre, record['title'], record['parent_id'] )
+		# _.pr( record['type_'], pre, record['title'] )
+		# _.pr( pre, record['title'] )
 	
 
 def process2( parent='' ):
@@ -203,7 +203,7 @@ def process2( parent='' ):
 	global spent
 	table = []
 	for record in data:
-		# print( record['parent_id'] )
+		# _.pr( record['parent_id'] )
 		if record['parent_id'] == parent and not record['title'].endswith('.png') and not record['title'] == '?':
 			if not record['id'] in spent['A']:
 				record['children'] = process2( parent=record['id'] )
@@ -221,18 +221,18 @@ def printLevel2( records, level ):
 	pre = ''
 	while not i == level:
 
-		# print('here', i, text, level)
+		# _.pr('here', i, text, level)
 		# sys.exit()
 		pre += prefix
 		i+=1
 
 	for record in records:
 		if record['type_'] == 2:
-			print( pre, _.colorThis( record['title'], 'green', p=0 ) )
+			_.pr( pre, _.colorThis( record['title'], 'green', p=0 ) )
 		elif record['type_'] == 1:
-			print( pre, _.colorThis( record['title'], 'white', p=0 ) )
+			_.pr( pre, _.colorThis( record['title'], 'white', p=0 ) )
 		else:
-			print( pre, _.colorThis( record['title'], 'yellow', p=0 ) )
+			_.pr( pre, _.colorThis( record['title'], 'yellow', p=0 ) )
 		printLevel2( records=record['children'], level=level+1 )
 
 
@@ -283,5 +283,6 @@ if __name__ == '__main__':
 
 
  
+
 
 

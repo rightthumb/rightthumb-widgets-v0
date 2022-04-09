@@ -282,29 +282,29 @@ def getFolder(folder):
 
 					if not _.switches.isActive('Text') and not _.switches.isActive('Binary'):
 						i = i + 1
-						# print(0,whatIsIt(path),path)
-						# print(path)
+						# _.pr(0,whatIsIt(path),path)
+						# _.pr(path)
 						shouldPrint = True
 					else:
 						if not _.switches.isActive('Binary') and  _.switches.isActive('Text') and isText(path):
 							i = i + 1
-							# print(1,whatIsIt(path),path)
-							# print(path)
+							# _.pr(1,whatIsIt(path),path)
+							# _.pr(path)
 							shouldPrint = True
 						if not _.switches.isActive('Binary') and not _.switches.isActive('Text'):
 							i = i + 1
-							# print(2,whatIsIt(path),path)
-							# print(path)
+							# _.pr(2,whatIsIt(path),path)
+							# _.pr(path)
 							shouldPrint = True
 						if not _.switches.isActive('Text') and  _.switches.isActive('Binary') and not isText(path):
 							i = i + 1
-							# print(3,whatIsIt(path),path)
-							# print(path)
+							# _.pr(3,whatIsIt(path),path)
+							# _.pr(path)
 							shouldPrint = True
 						if not _.switches.isActive('Text') and  not _.switches.isActive('Binary'):
 							i = i + 1
-							# print(4,whatIsIt(path),path)
-							# print(path)
+							# _.pr(4,whatIsIt(path),path)
+							# _.pr(path)
 							shouldPrint = True
 
 
@@ -351,7 +351,7 @@ def getFolder(folder):
 								shouldPrint = False
 								iS+=1
 								if _.switches.isActive('Count'):
-									print( _.colorThis( path, 'cyan', p=0 ) )
+									_.pr( _.colorThis( path, 'cyan', p=0 ) )
 								else:
 
 									formatedSize = formatSize( size )
@@ -369,9 +369,9 @@ def getFolder(folder):
 									result += '\t'
 									result += _.colorThis( path, 'cyan', p=0 )
 
-									print( result )
+									_.pr( result )
 								
-								# print( formatedSize, '\t', path )
+								# _.pr( formatedSize, '\t', path )
 
 
 
@@ -382,7 +382,7 @@ def getFolder(folder):
 						# if not _.switches.isActive('Plus'):
 						# 	_.colorThis( path, 'cyan' )
 						# else:
-						# 	print( _.colorPlus( path, 'cyan' ) )
+						# 	_.pr( _.colorPlus( path, 'cyan' ) )
 
 			if os.path.isdir(path):
 				newFolder = folder + _v.slash + item
@@ -392,7 +392,7 @@ def getFolder(folder):
 					except Exception as e:
 						pass
 				else:
-					print('error')
+					_.pr('error')
 
 
 
@@ -417,9 +417,9 @@ def action():
 			_.colorThis( [  '\n', iS, 'of', i, '\n'  ], 'yellow' )
 		else:
 			_.colorThis( [  '\n{}\n'.format(i)  ], 'yellow' )
-		# print('\n{}\n'.format(i))
+		# _.pr('\n{}\n'.format(i))
 	_.saveTable( _dir.timeAudit, '_dir.timeAudit.json' )
-	print( 'Time Logged for', i, 'files' )
+	_.pr( 'Time Logged for', i, 'files' )
 i = 0
 iS = 0
 # def load():
@@ -435,6 +435,7 @@ _dir.timeAudit = _.getTable( '_dir.timeAudit.json' )
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

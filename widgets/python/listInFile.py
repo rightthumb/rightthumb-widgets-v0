@@ -169,13 +169,13 @@ def process( line ):
 	for i,record in enumerate(_.appData[__.appReg]['pipe']):
 		if _.switches.isActive('EndsWith'):
 			if line.lower().endswith( record.lower() ):
-				# print(   _.caseUnspecific( line, record.lower() )   )
+				# _.pr(   _.caseUnspecific( line, record.lower() )   )
 				for x in _.caseUnspecific( line, record.lower() ):
 					line = line.replace( x, _.colorThis( x, 'cyan', p=0 ) )
 				return line
 		else:
 			if record.lower() in line.lower():
-				# print(   _.caseUnspecific( line, record.lower() )   )
+				# _.pr(   _.caseUnspecific( line, record.lower() )   )
 				for x in _.caseUnspecific( line, record.lower() ):
 					line = line.replace( x, _.colorThis( x, 'cyan', p=0 ) )
 				return line
@@ -192,14 +192,14 @@ def action():
 	for line in data:
 		test = process( line )
 		if not test is None:
-			print( test )
+			_.pr( test )
 
 
 
 def test():
 	global data
 	for record in data:
-		print( record )
+		_.pr( record )
 
 	sys.exit()
 
@@ -214,6 +214,7 @@ data = []
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

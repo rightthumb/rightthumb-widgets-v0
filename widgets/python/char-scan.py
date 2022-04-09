@@ -167,12 +167,12 @@ def getFolder(folder):
 
 def process(path):
 	global data
-	# print(path)
+	# _.pr(path)
 	try:
 		m = _mime.isText( path )
 	except Exception as e:
 		return None
-	print( m,  path)
+	_.pr( m,  path)
 	theFile = ''
 	shouldScan = False
 	# return None
@@ -196,7 +196,7 @@ def action():
 	global data
 
 	if _.switches.isActive('Print'):
-		print(  ' '.join(data)  )
+		_.pr(  ' '.join(data)  )
 		return None
 	if _.switches.isActive('Test'):
 
@@ -208,7 +208,7 @@ def action():
 			if not x in data:
 				what = 'bin'
 				break
-		print(what)		
+		_.pr(what)		
 			
 		return None
 
@@ -219,7 +219,7 @@ def action():
 	getFolder( folder )
 
 	_.saveTableDB( data, 'text-file-chars.list', indentCode=False )
-	print( 'Saved: text-file-chars.list' )
+	_.pr( 'Saved: text-file-chars.list' )
 
 
 def load():
@@ -233,6 +233,7 @@ import _rightThumb._mimetype as _mime
 if __name__ == '__main__':
 	action()
 	__.isExit()
+
 
 
 

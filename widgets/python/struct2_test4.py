@@ -10,10 +10,10 @@
 # ###########################################################################
 # ## {C3P0D40fAe8B} ##
 
-print('*** it loaded ***')
-print('*** it loaded ***')
-print('*** it loaded ***')
-print('*** it loaded ***')
+_.pr('*** it loaded ***')
+_.pr('*** it loaded ***')
+_.pr('*** it loaded ***')
+_.pr('*** it loaded ***')
 import os
 import sys
 import time
@@ -23,7 +23,7 @@ import _rightThumb._construct2 as __
 a, app, application = __.theApp()
 appDBA = __.clearFocus( __name__, __file__ )
 __.appReg = appDBA
-# print( 'appDBA', appDBA )
+# _.pr( 'appDBA', appDBA )
 app.focus( appDBA )
 def focus( parentApp='', childApp='', reg=True ):
 	global appDBA
@@ -109,12 +109,13 @@ registerSwitches()
 
 
 def action():
-	print( 'action works' )
+	_.pr( 'action works' )
 
 
 
 if __name__ == '__main__':
 	app.async( 'action', action, trigger=app.focus(appDBA).unregister )
+
 
 
 

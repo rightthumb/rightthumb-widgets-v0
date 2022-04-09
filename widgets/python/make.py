@@ -210,7 +210,7 @@ def action():
 	cnt = len(str(len(_.isData(r=1))))
 	for i,row in enumerate( _.isData(r=1) ):
 		line = text.replace( '{}',row ).replace( '{i}',pre(i,cnt) ).replace("''",'"')
-		print(line)
+		_.pr(line)
 
 
 
@@ -219,6 +219,7 @@ def action():
 if __name__ == '__main__':
 	action()
 	__.isExit()
+
 
 
 

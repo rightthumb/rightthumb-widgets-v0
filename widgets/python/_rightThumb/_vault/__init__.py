@@ -176,10 +176,10 @@ def login( label, appReg=None ):
 	vaultPass = False
 	if not os.path.isfile(auto):
 		vaultPass = True
-		print()
+		_.pr()
 		_.colorThis( 'Vault:', 'yellow' )
 		password = getpass.getpass()
-		print()
+		_.pr()
 
 		_.saveText( _blowfish.encrypt(password), auto )
 	gateKey = _blowfish.decrypt( _.getText(auto,raw=True,clean=2) )
@@ -201,10 +201,10 @@ def key(password=None):
 	if not os.path.isfile(auto):
 		vaultPass = True
 		if password is None:
-			print()
+			_.pr()
 			_.colorThis( 'Vault:', 'yellow' )
 			password = getpass.getpass()
-			print()
+			_.pr()
 
 		_.saveText( _blowfish.encrypt(password), auto )
 	gateKey = _blowfish.decrypt( _.getText(auto,raw=True,clean=2) )
@@ -338,6 +338,7 @@ import _rightThumb._encryptString as _blowfish
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

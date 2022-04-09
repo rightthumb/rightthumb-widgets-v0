@@ -310,7 +310,7 @@ def process(row):
 	result = _str.replaceDuplicate(result,' ')
 	result = _str.cleanBE(result,' ')
 	if len(result):
-		print( result )
+		_.pr( result )
 
 def action():
 	load()
@@ -335,6 +335,7 @@ replaceID = ''
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

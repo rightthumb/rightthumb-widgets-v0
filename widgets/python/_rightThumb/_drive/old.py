@@ -30,7 +30,7 @@ def colorThis( txt, color, p=1 ):
 		c = eval( 'ColorMin.' + color )
 		result = c + txt + ColorMin.end
 	if p:
-		print( result )
+		_.pr( result )
 	return result
 
 def colorList( txt, theList ):
@@ -74,13 +74,13 @@ def printMessage():
 	msg = colorThis( '                                          Loading', 'green', p=0 ) + dots
 
 	os.system('cls')
-	print()
-	print()
-	print()
-	print()
+	_.pr()
+	_.pr()
+	_.pr()
+	_.pr()
 	colorThis( '                                          Loading...', 'green' )
 	# colorThis( '                                          Loading...', 'yellow' )
-	# print( msg )
+	# _.pr( msg )
 	# pause=input('')
 printMessage()
 ##################################################
@@ -229,7 +229,7 @@ if not sys.stdin.isatty():
 
 ########################################################################################
 def getID(drive):
-	# print(drive)
+	# _.pr(drive)
 	driveID = ''
 	if os.path.isdir(drive) == True:
 		idFile = drive + 'drive.id.sys'
@@ -241,7 +241,7 @@ def getID(drive):
 			driveID = driveID.replace('\n','')
 			driveID = driveID.replace('\r','')
 		# else:
-			# print('Error')
+			# _.pr('Error')
 			# os._exit(0)
 	return driveID
 
@@ -308,9 +308,9 @@ def appendRecord(driveID,letter,initiated):
 		result = {'name': 'C_Drive', 'type': 'internal', 'priority': 1, 'drive': letter, 'id': driveID, 'machineID': machineID, 'pc': os.getenv('COMPUTERNAME'), 'timestamp': int(round(time.time() * 1000))}
 	else:
 		if showInfo:
-			# print('TYPE:\t','internal','external','thumb','button','cloud\n')
+			# _.pr('TYPE:\t','internal','external','thumb','button','cloud\n')
 			showInfo = False
-		print(letter)
+		_.pr(letter)
 		# name = input('\t    name: ')
 		# theType = input('\t    type: ')
 		# ipriority = input('\tpriority:  ')
@@ -347,12 +347,12 @@ def scanDrives():
 		if os.path.isdir(letter):
 			if os.path.isfile(idFile) == True:
 				driveID = getID(letter)
-				# print(driveID)
+				# _.pr(driveID)
 				if recordCheck(driveID,letter) == False:
 					drive_records.append(appendRecord(driveID,letter,os.path.getctime(idFile)))
 
 				instance['drives'].append({'name': recordLabel(driveID,letter), 'drive': letter, 'id': driveID, 'pc': os.getenv('COMPUTERNAME')})
-				# print(letter,driveID)
+				# _.pr(letter,driveID)
 			else:
 
 				if hasPermission( l ):
@@ -362,8 +362,8 @@ def scanDrives():
 					file.write(driveID)				 
 					file.close()
 					os.system('attrib +h ' + idFile)
-					# print(letter,driveID)
-					# print(letter,'New Drive ID:',driveID)
+					# _.pr(letter,driveID)
+					# _.pr(letter,'New Drive ID:',driveID)
 
 		_.saveTable( drive_records, file_drives, p=0 )
 	return instance
@@ -386,20 +386,20 @@ def printDriveRows(what):
 		if what == 'all':
 			driveTotal +=1
 			rows.append(r)
-			# print(r['drive'],r['name'],'\t',r['id'])
+			# _.pr(r['drive'],r['name'],'\t',r['id'])
 		else:
 			if os.path.isdir(r['drive']) == True:
 				if recordCheck(getID(r['drive'])):
 					driveTotal +=1
 					rows.append(r)
-				# print(r['drive'],r['name'],'\t',r['id'])
+				# _.pr(r['drive'],r['name'],'\t',r['id'])
 	if _.switches.isActive('Column'):
 		_.tables.register('Auto',rows)
 		_.tables.print('Auto','Column')
 	else:
 		_.tables.register('Auto',rows)
 		_.tables.print('Auto','drive,name,id,priority')
-	print('\nTotal:',driveTotal)
+	_.pr('\nTotal:',driveTotal)
 
 def initiateScan():
 
@@ -411,11 +411,11 @@ def initiateScan():
 	else:
 		drive_records = []
 
-	# print(drive_records)
+	# _.pr(drive_records)
 	# sys.exit()
 
 	result = scanDrives()
-	# print(result)
+	# _.pr(result)
 	# sys.exit()
 	
 	logSave(result,file_driveLog)
@@ -428,8 +428,8 @@ def historyLog():
 	for record in records:
 		for r in record['drives']:
 			if _.switches.value('History') == r['id']:
-				# print(record['instance'],str(record['timestamp']),stamp2Date(record['timestamp']))
-				print(stamp2Date(record['timestamp']))
+				# _.pr(record['instance'],str(record['timestamp']),stamp2Date(record['timestamp']))
+				_.pr(stamp2Date(record['timestamp']))
 
 
 def printActive():
@@ -442,21 +442,21 @@ def printActive():
 		if os.path.isdir(letter) == True:
 			try:
 				record = getRecord(getID(letter))
-				# print(letter,type(record))
+				# _.pr(letter,type(record))
 				if type(record) == dict:
 					rows.append(record)
 				i += 1
 			except Exception as e:
 				pass
 	os.system('cls')
-	print()
+	_.pr()
 	if _.switches.isActive('Column'):
 		_.tables.register('Auto',rows)
 		_.tables.print('Auto','Column')
 	else:
 		_.tables.register('Auto',rows)
 		_.tables.print('Auto','drive,name,id,priority')
-	# print('\nTotal:',i)
+	# _.pr('\nTotal:',i)
 	_.colorThis(  [ '\nTotal:',i ], 'yellow'  )
 
 def getFolder(folder,file):
@@ -485,20 +485,20 @@ def getFolder(folder,file):
 					except Exception as e:
 						pass
 				else:
-					print('error')
+					_.pr('error')
 
 def index():
 	global indexTemp
 	initiateScan()
-	print('')
-	print('Indexing...')
-	print('')
+	_.pr('')
+	_.pr('Indexing...')
+	_.pr('')
 	
 	allDrives = False
 	global drive_records
 	# indexWhat = _.switches.value('Index').split(',')
 	indexWhat = _.switches.values('Index')
-	# print( 'indexWhat', indexWhat )
+	# _.pr( 'indexWhat', indexWhat )
 	# sys.exit()
 
 
@@ -519,9 +519,9 @@ def index():
 		for i,iW in enumerate(indexWhat):
 			if ':' in iW:
 				iW = iW.split( ':' )[0]
-			# print(  )
-			# print( iW )
-			# print(  )
+			# _.pr(  )
+			# _.pr( iW )
+			# _.pr(  )
 			found = False
 			for ii,record in enumerate(drive_records):
 				# _.printVar( record )
@@ -543,8 +543,8 @@ def index():
 						found = True
 						indexWhat[i] = ii
 
-	# print(do)
-	# print(type(indexWhat))
+	# _.pr(do)
+	# _.pr(type(indexWhat))
 
 	# os._exit(0)
 	# sys.exit()
@@ -553,7 +553,7 @@ def index():
 
 		if os.path.isdir(drive_records[i]['drive']):
 			indexIDs.newID(  drive_records[i]['drive'][0]  )
-			print('\tIndexing drive: ',drive_records[i]['drive'])
+			_.pr('\tIndexing drive: ',drive_records[i]['drive'])
 			if drive_records[i]['priority'] < 10:
 				priority = '0' + str(drive_records[i]['priority'])
 			else:
@@ -569,12 +569,12 @@ def index():
 				modDate = os.path.getmtime(fullpath)
 				shutil.move(fullpath, path + _v.slash + 'archive'+_v.slash + formatDate(modDate) + '__' + file)
 			shutil.move(fullpathTMP, fullpath)
-			print('\t\t',fullpath)
+			_.pr('\t\t',fullpath)
 
 	def indexFolder( iW, f ):
 		if os.path.isdir( f ):
 			indexIDs.newID(iW)
-			print('\tIndexing drive: ', iW )
+			_.pr('\tIndexing drive: ', iW )
 			path = _v.myIndexes
 			file = iW + '.txt'
 			fullpath = path + _v.slash + file
@@ -586,7 +586,7 @@ def index():
 				modDate = os.path.getmtime(fullpath)
 				shutil.move(fullpath, path + _v.slash + 'archive'+_v.slash + formatDate(modDate) + '__' + file)
 			shutil.move(fullpathTMP, fullpath)
-			print('\t\t',fullpath)
+			_.pr('\t\t',fullpath)
 	anyFail = False
 	for i,iW in enumerate(indexWhat):
 		if type( iW ) == int:
@@ -596,13 +596,13 @@ def index():
 			except Exception as e:
 				success = False
 				anyFail = True
-				print( 'Error Indexing: ' + record['drive'] )
+				_.pr( 'Error Indexing: ' + record['drive'] )
 			
 		else:
 			f = resolveAlias( iW )
-			print( f )
+			_.pr( f )
 			if not os.path.isdir( f ):
-				print('Error: Not an alias')
+				_.pr('Error: Not an alias')
 			else:
 				try:
 					indexFolder( iW, f )
@@ -610,14 +610,14 @@ def index():
 				except Exception as e:
 					success = False
 					anyFail = True
-					print( 'Error Indexing: ' + iW )
+					_.pr( 'Error Indexing: ' + iW )
 
 				
 
 	if not anyFail:
-		print('Indexing Complete')
+		_.pr('Indexing Complete')
 	else:
-		print('Failure')
+		_.pr('Failure')
 
 def resolveAlias( alias ):
 
@@ -719,7 +719,7 @@ class Documentation_Initial:
 
 
 		def textarea_bind_ENTER(p1):
-			# print( 'Got: ', textarea1.get("1.0",END) )
+			# _.pr( 'Got: ', textarea1.get("1.0",END) )
 			self.descriptorID = -1
 
 		def validate():
@@ -743,13 +743,13 @@ class Documentation_Initial:
 				# for x in dir(window):
 				# 	x = str(x)
 				# 	if not x.startswith('_'):
-				# 		print(x)
+				# 		_.pr(x)
 				self.save = True
 				window.destroy()
 				window.quit()
 
 			else:
-				print('Please complete form')
+				_.pr('Please complete form')
 		def loopDescriptorTest(i):
 			try:
 				if len(self.descriptors.split('\n')[i]) == 0:
@@ -781,7 +781,7 @@ class Documentation_Initial:
 					done = True
 
 			if not done:
-				# print('loopDescriptorTest:',loopDescriptorTest(self.descriptorID+1))
+				# _.pr('loopDescriptorTest:',loopDescriptorTest(self.descriptorID+1))
 				if loopDescriptorTest(self.descriptorID+1):
 					self.descriptorID += 1
 				else:
@@ -800,14 +800,14 @@ class Documentation_Initial:
 					i = -1
 					while i <= self.descriptorLoop-1:
 						i += 1
-						# print(self.descriptorID,self.descriptorLoop,i)
+						# _.pr(self.descriptorID,self.descriptorLoop,i)
 						result += loopDescriptorAdd(i)
 					result += loopDescriptorAdd(self.descriptorID)
 
 
 
 			if shouldReset:
-				# print('shouldReset:',shouldReset)
+				# _.pr('shouldReset:',shouldReset)
 				self.descriptorID = -1
 				self.descriptorLoop = -1
 
@@ -831,7 +831,7 @@ class Documentation_Initial:
 			if shouldReset:
 				self.descriptorID = -1
 				self.descriptorLoop = -1
-				# print('reset')
+				# _.pr('reset')
 			self.owner = raw_owner.get()
 			self.type = raw_type.get()
 			self.label = raw_label.get()
@@ -978,28 +978,28 @@ class Documentation_Initial:
 		return result
 
 	def estimateDriveSize( self, size ):
-		print( 'size:', size )
-		print( 'gigSize:', self.gigSize( size ) )
-		print( 'formatSizeB:', self.formatSizeB( size ) )
+		_.pr( 'size:', size )
+		_.pr( 'gigSize:', self.gigSize( size ) )
+		_.pr( 'formatSizeB:', self.formatSizeB( size ) )
 		raw = self.formatSizeB(size)
 		done = False
 		i = 0
-		print( 'pre:', raw)
+		_.pr( 'pre:', raw)
 		while not done:
 			i += 1
 			estimate = i * 64
 			if estimate > raw:
 				done = True
-		print( 'post:', estimate)
+		_.pr( 'post:', estimate)
 		if 'TB' in self.formatSize( estimate ):
 			estimate = estimate * 1073741824
-			print('TB')
+			_.pr('TB')
 		else:
-			print( self.removeNumbers() )
+			_.pr( self.removeNumbers() )
 			estimate = self.unFormatSize( str(estimate) + self.removeNumbers() )
 
 
-		print( 'formated:', self.formatSize( estimate ) )
+		_.pr( 'formated:', self.formatSize( estimate ) )
 		return estimate
 	def formatSizeB( self, size ):
 		try:
@@ -1185,14 +1185,14 @@ def action():
 		os.system('cls')
 		_.colorThis( [  '\n', 'Error:'  ], 'red' )
 		_.colorThis( [  '\n', '\tA switch is required.\n'  ], 'yellow' )
-		print( _.colorThis( '\t\t Try:', 'yellow', p=0 ) , _.colorThis( 'p drive --help', 'green', p=0 ) )
+		_.pr( _.colorThis( '\t\t Try:', 'yellow', p=0 ) , _.colorThis( 'p drive --help', 'green', p=0 ) )
 
 	# sys.exit()
 
 	if _.switches.isActive('Path'):
-		print('machineID:',machineID)
-		print(file_drives)
-		print(file_driveLog)
+		_.pr('machineID:',machineID)
+		_.pr(file_drives)
+		_.pr(file_driveLog)
 
 	if _.switches.isActive('Scan'):
 		initiateScan()
@@ -1232,11 +1232,12 @@ machineID = _v.getMachineID()
 file_drives = 'indexTable_drives-' + machineID + '.json'
 file_driveLog = 'indexTable_logs-' + machineID + '.json'
 driveTotal = 0
-# print(file_drives)
+# _.pr(file_drives)
 _.switches.fieldSet('Long','active',True)
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

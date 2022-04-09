@@ -204,24 +204,24 @@ def action():
 	cal = Calendar.from_ical(open(_.switches.values('Files')[0],'rb').read())
 
 	for x in cal.subcomponents:
-		print()
-		print()
-		print()
-		print(dict(x))
+		_.pr()
+		_.pr()
+		_.pr()
+		_.pr(dict(x))
 	# for x in dir(cal):
-	# 	print(x)
+	# 	_.pr(x)
 
 
 	# for i,x in enumerate(cal.items()):
 	# 	# if i == 4:
-	# 	print()
-	# 	print()
-	# 	print()
-	# 	print()
-	# 	print()
-	# 	print(x)
+	# 	_.pr()
+	# 	_.pr()
+	# 	_.pr()
+	# 	_.pr()
+	# 	_.pr()
+	# 	_.pr(x)
 	# 	for y in dir(x):
-	# 		print(y)
+	# 		_.pr(y)
 
 
 	# for component in cal.walk():
@@ -245,6 +245,7 @@ def action():
 if __name__ == '__main__':
 	action()
 	__.isExit()
+
 
 
 

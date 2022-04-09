@@ -220,16 +220,16 @@ def action():
 			else:
 				show = no
 			for row in show:
-				print( row )
+				_.pr( row )
 		else:
-			print( 'Yes:' )
+			_.pr( 'Yes:' )
 			for row in yes:
-				print( '\t',row )
-			print()
-			print()
-			print( 'No:' )
+				_.pr( '\t',row )
+			_.pr()
+			_.pr()
+			_.pr( 'No:' )
 			for row in no:
-				print( '\t',row )
+				_.pr( '\t',row )
 
 
 
@@ -240,6 +240,7 @@ def action():
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

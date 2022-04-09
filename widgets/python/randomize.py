@@ -202,7 +202,7 @@ def action():
 
 		records = _.tables.returnSorted( 'data', 'd.sort', data )
 		for x in records:
-			print( x['data'] )
+			_.pr( x['data'] )
 
 
 
@@ -210,6 +210,7 @@ def action():
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

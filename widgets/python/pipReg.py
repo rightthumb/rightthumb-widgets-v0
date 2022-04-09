@@ -275,9 +275,9 @@ def action():
         if _.switches.isActive('Command'):
             record['command'] = ' '.join( _.switches.values('Command') )
         _.printVar( record )
-        print()
+        _.pr()
         keep = input( 'Keep? ' )
-        print()
+        _.pr()
         if not 'n' in keep.lower():
             data.append( record )
             _.saveTable2( data, _v.updates+_v.slash+'python_module_installation_log.json' )
@@ -287,7 +287,7 @@ def action():
 
     else:
         if not len( _.switches.value('View') ):
-            print()
+            _.pr()
             _.switches.fieldSet( 'Long', 'active', True )
             _.tables.register( 'log', data )
             _.tables.fieldProfileSet( 'log', 'epoch', 'trigger', _.resolveEpochTest )
@@ -303,7 +303,7 @@ def action():
                         # _.printVar( record )
             except Exception as e:
                 view = data
-            print()
+            _.pr()
             _.switches.fieldSet( 'Long', 'active', True )
             _.tables.register( 'log', view )
             _.tables.fieldProfileSet( 'log', 'epoch', 'trigger', _.resolveEpochTest )
@@ -322,6 +322,7 @@ data = []
 ########################################################################################
 if __name__ == '__main__':
     action()
+
 
 
 

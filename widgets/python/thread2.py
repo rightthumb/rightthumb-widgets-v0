@@ -211,23 +211,23 @@ def getFileInfo(path):
 	modified = formatDate(os.path.getctime(os.path.abspath(path)))
 	created = formatDate(os.path.getmtime(os.path.abspath(path)))
 	# data.append({ 'path': path, 'modified': modified, 'created': created })
-	print( created, modified, path)
+	_.pr( created, modified, path)
 
 def test(data):
-	print(type(data),str(data))
+	_.pr(type(data),str(data))
 
 def test2(data,two):
-	print(type(data),str(data))
-	print(type(two),str(two))
+	_.pr(type(data),str(data))
+	_.pr(type(two),str(two))
 
 def test3(*args):
 	for i,a in enumerate(args):
-		print(i,a)
-	print()
+		_.pr(i,a)
+	_.pr()
 
 def getFileInfo4( path, qID=0 ):
 	_.appData[focus()]['audit'].append( { 'start': True, 'note': '', 'entire': True, 'function': sys._getframe().f_code.co_name, 'app': _.appInfo[focus()]['file'], 'timestamp': time.time(), 'uuid': '' } );
-	# print(path)
+	# _.pr(path)
 	global data
 	try:
 		data[0]
@@ -275,7 +275,7 @@ def queueClose( qID, mem=0 ):
 
 def queueMonitor():
 	__.queueMonitorCount += 1
-	# print('queueMonitor')
+	# _.pr('queueMonitor')
 	total = 0
 	q = __.queue
 	if len(q) > 0:
@@ -296,7 +296,7 @@ def queueMonitor():
 
 		else:
 			if not type(__.queueCompleteFunc) == str:
-				print('qm',__.queueMonitorCount)
+				_.pr('qm',__.queueMonitorCount)
 				Timer(.01, __.queueCompleteFunc).start()
 
 
@@ -311,15 +311,15 @@ def action():
 
 	if not type(_.appData[__.appReg]['pipe']) == str:
 		dirList = _.appData[__.appReg]['pipe']
-		print('pipe')
+		_.pr('pipe')
 	else:
-		print('no pipe')
+		_.pr('no pipe')
 	i = 0
 	for item in dirList:
 		item = item.replace('\n','')
 		path = folder + _v.slash + item
 		if os.path.isfile(item) == True:
-			# print(item)
+			# _.pr(item)
 			# threadAdd(False,1.0, test, ({'name': item}))	# fail
 			# threadAdd(False,1.0, test, (('test')))		# fail
 			# threadAdd(False,1.0, test, ('test'))			# fail
@@ -331,14 +331,14 @@ def action():
 			# threadAdd(False,1.0, test3, ['test','two'])	# WORKS
 			i+=1
 			threadAdd2(__.queueID,getFileInfo4, [item])	# WORKS
-	print('size',i)
+	_.pr('size',i)
 	__.queueLoaded = True
 
 def complete():
 	global data
 	# for d in data:
-		# print(d)
-	print('data:',len(data))
+		# _.pr(d)
+	_.pr('data:',len(data))
 	# _.saveTable(__.queue,                   'app_audit_log_'+str(time.time())+'__'+_.appInfo[focus()]['file']+'____'+_.appInfo[focus()]['instance']+'.json')
 	# _.saveTable(,'app_audit_log_'+str(time.time())+'__'+_.appInfo[focus()]['file']+'__actions__'++'.json')
 	_.saveLog('queue')
@@ -371,6 +371,7 @@ __.queueMonitorCount = 0
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

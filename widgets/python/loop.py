@@ -207,11 +207,11 @@ def action():
 	#--> min, architecture {:strict:}
 
 	while True:
-		# print('tempo')
+		# _.pr('tempo')
 		try:
 			os.system( ' '.join( _.switches.values('Input') ) )
 		except Exception as e:
-			print('err')
+			_.pr('err')
 		time.sleep(1)
 
 
@@ -219,6 +219,7 @@ def action():
 if __name__ == '__main__':
 	action()
 	__.isExit()
+
 
 
 

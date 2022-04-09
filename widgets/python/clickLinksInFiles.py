@@ -269,7 +269,7 @@ def process( path=None, link=None ):
 
 			file = _.getText( path, raw=True, clean=2 ).split('\n')
 
-			print( len( file ) )
+			_.pr( len( file ) )
 
 			for url in file:
 				if url.startswith( 'http' ):
@@ -303,7 +303,7 @@ def action():
 			elif row.startswith( 'http' ):
 				process( link=row )
 
-		print()
+		_.pr()
 		_.colorThis( [ '',urli ], 'yellow' )
 
 
@@ -312,6 +312,7 @@ urli = 0
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

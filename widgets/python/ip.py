@@ -161,7 +161,7 @@ def action():
 		s.connect(("8.8.8.8", 80))
 		return s.getsockname()[0]
 	myip = get_ip_address()
-	print(  myip  )
+	_.pr(  myip  )
 		# sys.exit()
 	_v.ipGet( force=True )
 	_.colorThis(  ['IP:',_v.ip], 'green'  )
@@ -179,7 +179,7 @@ def action():
 		_.switches.fieldSet( 'Sort', 'value', 'woy,ip,epoch' )
 		_.switches.fieldSet( 'Sort', 'values', ['woy','ip','epoch'] )
 
-		print( _v.config('.ip.hash') )
+		_.pr( _v.config('.ip.hash') )
 		try:
 			cache = _.getTable2(_v.config('.ip.hash'))
 		except Exception as e:
@@ -207,6 +207,7 @@ import _rightThumb._dir as _dir
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

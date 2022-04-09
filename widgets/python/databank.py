@@ -255,7 +255,7 @@ class DataBank:
 
 		for files in self.indexFilesNames:
 
-			# print( self.pathIndexDatabases+_v.slash+files )
+			# _.pr( self.pathIndexDatabases+_v.slash+files )
 			index = _.getTable2( self.pathIndexDatabases+_v.slash+files )
 
 
@@ -264,10 +264,10 @@ class DataBank:
 			for search in self.table_tag_stems:
 				if search in tags:
 					cnt+=1
-			# print( 'test:', cnt, len(self.table_tag_stems) )
+			# _.pr( 'test:', cnt, len(self.table_tag_stems) )
 			if cnt == len(self.table_tag_stems):
 
-				print(index['tags'])
+				_.pr(index['tags'])
 
 				chars = None
 				startwith = None
@@ -292,7 +292,7 @@ class DataBank:
 
 				self.search_tag_stems.sort()
 				if '_'.join(self.search_tag_stems) in list(index['stem_index']):
-					# print( 'in index' )
+					# _.pr( 'in index' )
 					for i in index['stem_index'][  '_'.join(self.search_tag_stems)  ]:
 						data = index['records'][i]['data']
 						if not self.subject_trigger is None:
@@ -325,17 +325,17 @@ class DataBank:
 							
 
 
-					# print( len(self.records) )
+					# _.pr( len(self.records) )
 				else:
 
 					records = []
 
-					# print( 'found table' )
+					# _.pr( 'found table' )
 
 				
 					tables = []
 					for i,table in enumerate(index['tables']):
-						# print( table['indexes'].keys() )
+						# _.pr( table['indexes'].keys() )
 						cnt = 0
 						stems = list(  table['indexes']['stems'].keys()  )
 						for search in self.search_tag_stems:
@@ -343,7 +343,7 @@ class DataBank:
 								cnt+=1
 						if cnt == len(self.search_tag_stems):
 							tables.append(table['tableID'])
-							# print(table['tableID'])
+							# _.pr(table['tableID'])
 						# table['tableID']
 						# table['data']
 						# table['indexes']
@@ -364,7 +364,7 @@ class DataBank:
 								records.append(i)
 
 					pass
-					print( len(records) )
+					_.pr( len(records) )
 
 					self.search_tag_stems.sort()
 					index['stem_index'][  '_'.join(self.search_tag_stems)  ] = records
@@ -518,7 +518,7 @@ def process( file ):
 	try:
 		_.colorThis(  [ '\t', record['settings']['settings']['label'] ], 'cyan'  )
 	except Exception as e:
-		print( record['settings']['settings'].keys() )
+		_.pr( record['settings']['settings'].keys() )
 		sys.exit()
 	_.colorThis(  [ '\t\t', record['settings']['settings']['tag_path'] ], 'blue'  )
 	
@@ -593,12 +593,12 @@ def process( file ):
 	if False:
 		_textIndex.pipe( str(page.content).split('\n') )
 		indexes['database'] = _textIndex.do( 'action' )
-		print()
-		print()
-		print( 'Percentage: > 2' )
+		_.pr()
+		_.pr()
+		_.pr( 'Percentage: > 2' )
 		for k in indexes['database']['percentage'].keys():
 			if indexes['database']['percentage'][k] > 2:
-				print( k, indexes['database']['percentage'][k] )
+				_.pr( k, indexes['database']['percentage'][k] )
 		_.printVar1( indexes['database'] )
 		# sys.exit()
 
@@ -609,8 +609,8 @@ def process( file ):
 	isTraditional = False
 	if len( record['data']['data'][0].keys() ) == 2 and  'label' in record['data']['data'][0].keys() and 'records' in record['data']['data'][0].keys():
 		isTraditional = True
-		# print( 'isTraditional' )
-		# print( record['data']['data'][0]['records'][0].keys() )
+		# _.pr( 'isTraditional' )
+		# _.pr( record['data']['data'][0]['records'][0].keys() )
 		if not len(record['settings']['settings']['description']) and (  'description' in record['data']['data'][0]['records'][0].keys()  or 'Description' in record['data']['data'][0]['records'][0].keys()  or 'DESCRIPTION' in record['data']['data'][0]['records'][0].keys() ):
 			
 			record['settings']['settings']['description'] = 'description'
@@ -633,11 +633,11 @@ def process( file ):
 
 
 	if not isTraditional:
-		print()
-		print( '! isTraditional' )
-		print()
+		_.pr()
+		_.pr( '! isTraditional' )
+		_.pr()
 		for k in record['data']['data'][0].keys():
-			print( k )
+			_.pr( k )
 
 
 
@@ -701,7 +701,7 @@ def process( file ):
 
 
 		pass
-		# print( indexes )
+		# _.pr( indexes )
 		# sys.exit()
 		# _.printTest( indexes )
 		_.saveTable2( indexes, _v.data+_v.slash+'indexes'+_v.slash+'databases'+_v.slash+recordID+'.json' )
@@ -718,7 +718,7 @@ def process( file ):
 
 	# for k in indexes['database']['count'].keys():
 	#   if indexes['database']['count'][k] > 5:
-	#       print( k, indexes['database']['count'][k], _.percentageDiffInt( indexes['database']['count'][k], indexes['database']['cnt_words'] ) )
+	#       _.pr( k, indexes['database']['count'][k], _.percentageDiffInt( indexes['database']['count'][k], indexes['database']['cnt_words'] ) )
 
 
 	# sys.exit()
@@ -758,7 +758,7 @@ def action():
 
 			fileBackup.switch( 'Input', filepath )
 			bk = fileBackup.do( 'action' )
-			print( 'backup:', filepath, bk )
+			_.pr( 'backup:', filepath, bk )
 
 			index = []
 			for ix in _.getTable2(  filepath  ):
@@ -816,8 +816,8 @@ def action():
 		# records = _.getTable2(_v.databank+_v.slash+'temp'+_v.slash+'acquired.json')
 		if False:
 			records = eval(page.content)
-			print( type(records) )
-			# print( (records) )
+			_.pr( type(records) )
+			# _.pr( (records) )
 			_.printVar1(records)
 
 		_.colorThis(  [ '\nCompleted: structure, indexes, registration, and schedules' ], 'green'  )
@@ -847,7 +847,7 @@ def action():
 	#   do = 'n ' + _v.myTables + _v.slash+'researchData-TEMP.json'
 	#   os.system( '"' + do + '"' )
 
-	#   print( 'Blank' )
+	#   _.pr( 'Blank' )
 	# else:
 	#   _.printVar( data )
 
@@ -927,6 +927,7 @@ delete_after_download = False
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

@@ -202,8 +202,8 @@ def action():
 			ids.append( l['id'] )
 
 	dirList = os.listdir(_v.myTickets)
-	# print( _v.myTickets )
-	# print( dirList )
+	# _.pr( _v.myTickets )
+	# _.pr( dirList )
 	i = 0
 	for item in dirList:
 		path = _v.myTickets + _v.slash + item
@@ -212,7 +212,7 @@ def action():
 				idx = item.lower().replace( 'closed-', '' ).replace( 'open-', '' ).replace( '.txt', '' )
 				if len( idx ):
 					if not idx in ids:
-						print( path )
+						_.pr( path )
 						txtFile = _.getText( path )
 						data = ''
 						for line in txtFile:
@@ -221,11 +221,11 @@ def action():
 								data = line
 								data = data.replace( ' ', '' )
 								break
-						print()
-						print( data )
+						_.pr()
+						_.pr( data )
 						start = data.split( '(' )[1].split( '-' )[0]
 						end = data.split( '-' )[1].split( ')' )[0]
-						print( _.resolveEpochTest(start), _.resolveEpochTest(end) )
+						_.pr( _.resolveEpochTest(start), _.resolveEpochTest(end) )
 						log.append({ 'id': idx, 'start': _.autoDate(start), 'end': _.autoDate(end) })
 						i+=1
 
@@ -266,8 +266,8 @@ def tickets_of_the_day():
 			ids.append( l['id'] )
 
 	dirList = os.listdir(_v.myTickets)
-	# print( _v.myTickets )
-	# print( dirList )
+	# _.pr( _v.myTickets )
+	# _.pr( dirList )
 	i = 0
 	for item in dirList:
 		path = _v.myTickets + _v.slash + item
@@ -277,7 +277,7 @@ def tickets_of_the_day():
 				if len( idx ):
 					if not idx in ids:
 						if shouldPrint:
-							print( path )
+							_.pr( path )
 						txtFile = _.getText( path )
 						data = ''
 						for line in txtFile:
@@ -287,18 +287,18 @@ def tickets_of_the_day():
 								data = data.replace( ' ', '' )
 								break
 						if shouldPrint:
-							print()
-							print( data )
+							_.pr()
+							_.pr( data )
 						start = data.split( '(' )[1].split( '-' )[0]
 						end = data.split( '-' )[1].split( ')' )[0]
 						if shouldPrint:
-							print( _.resolveEpochTest(start), _.resolveEpochTest(end) )
+							_.pr( _.resolveEpochTest(start), _.resolveEpochTest(end) )
 						s = _.resolveEpochTest(start).split(' ')[0]
 						e = _.resolveEpochTest(end).split(' ')[0] + ' 23:59:59'
 						s = _.resolveEpochTest(  _.autoDate(s)  )
 						e = _.resolveEpochTest(  _.autoDate(e)  )
 						if shouldPrint:
-							print( s, e )
+							_.pr( s, e )
 						# sys.exit()
 						log.append({ 'id': idx, 'start': _.autoDate(s), 'end': _.autoDate(e) })
 						i+=1
@@ -324,6 +324,7 @@ def tickets_of_the_day():
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

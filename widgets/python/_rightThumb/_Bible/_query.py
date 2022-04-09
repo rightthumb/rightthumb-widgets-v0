@@ -36,7 +36,7 @@ def build():
 		base = base.replace( ' -', '-' )
 		if not ':' in base:
 			base+=':0'
-			# print( base )
+			# _.pr( base )
 			# sys.exit()
 
 		q = {
@@ -44,22 +44,22 @@ def build():
 				'chapter': None,
 				'verse': None,
 		}
-		# print( ':', base.count(':') )
-		# print( '-', base.count('-') )
+		# _.pr( ':', base.count(':') )
+		# _.pr( '-', base.count('-') )
 		if base.count(':') > 1:
 			matches = re.finditer(   ':'   , base)
 			dex = [match.start() for match in matches]
-			# print( 'dex', dex )
-		# print()
-		# print( base )
-		# print()
+			# _.pr( 'dex', dex )
+		# _.pr()
+		# _.pr( base )
+		# _.pr()
 		# separate multi book and verse
 		#	p Bible -vs jn 1:1-2-2:4-6
 		clean=False
 		i=0
 		while not clean and i<50:
 			i+=1
-			# print('itter')
+			# _.pr('itter')
 			clean = True
 			n = []
 			for y in base.split(' '):
@@ -178,6 +178,7 @@ def hasAlpha( check ):
 		if x in 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ':
 			return True
 	return False
+
 
 
 

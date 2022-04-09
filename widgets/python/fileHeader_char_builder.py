@@ -241,7 +241,7 @@ def action():
 
 			try:
 				header = ''.join([chr(int(''.join(c), 16)) for c in zip(hx[0::2],hx[1::2])])
-				# print(header)
+				# _.pr(header)
 				for x in header:
 					if not x in data:
 						data.append(x)
@@ -253,20 +253,20 @@ def action():
 				# _.colorThis( record['signature'], 'red' )
 				pass
 
-	print()
-	print(total)
-	print()
-	print(data)
+	_.pr()
+	_.pr(total)
+	_.pr()
+	_.pr(data)
 
 	_.saveTableDB( data, 'hex_header_chars.json' )
 	_.colorThis( 'saved: hex_header_chars.json', 'green' )
 
 	# pause=input( '  paused hit enter  ' )
 
-	print( 'Testing...' )
-	print()
-	print()
-	print()
+	_.pr( 'Testing...' )
+	_.pr()
+	_.pr()
+	_.pr()
 
 	
 
@@ -274,7 +274,7 @@ def action():
 		if record['src'] == 'filesignatures.net':
 			if not 'sign' in record['signature'].lower():
 				hx = asciiHeader( record['signature'] )
-				print( hx )
+				_.pr( hx )
 
 
 
@@ -292,6 +292,7 @@ def load():
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

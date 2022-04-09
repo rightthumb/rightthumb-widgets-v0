@@ -289,13 +289,13 @@ def timeAgo():
 	if 'd' in do:
 		start_date = datetime.date.today() + datetime.timedelta(-1 * nmb)
 	dT = str(start_date)
-	# print(dT)
-	# print(dT)
-	# print(dT)
+	# _.pr(dT)
+	# _.pr(dT)
+	# _.pr(dT)
 	d = dT.split('-')
 	result = datetime.datetime(int(d[0]),int(d[1]),int(d[2]),0,0).timestamp()
 
-	# print(start_date)
+	# _.pr(start_date)
 	return result
 def epoch(string,end=False):
 	string = str(string)
@@ -317,7 +317,7 @@ def epoch(string,end=False):
 		day = 1
 	else:
 		day = d[2]
-	# print(d)
+	# _.pr(d)
 	# sys.exit()
 	if end:
 		y = int(d[0])
@@ -356,15 +356,15 @@ def action():
 		for dbFile in databaseFile.split(','):
 			do(dbFile)
 	if not _.switches.isActive('NoCount'):
-		print()
-		print('Total:')
-		print('\tFiles:\t',totalCount)
-		print('\tSize:\t',formatSize(totalSize))
+		_.pr()
+		_.pr('Total:')
+		_.pr('\tFiles:\t',totalCount)
+		_.pr('\tSize:\t',formatSize(totalSize))
 def do(databaseFile):
-	# print(databaseFile)
+	# _.pr(databaseFile)
 	global totalSize
 	global totalCount
-	# print(databaseFile)
+	# _.pr(databaseFile)
 	conn = sqlite3.connect(databaseFile)
 	c = conn.cursor()
 	# sql = "SELECT bytes,path FROM files WHERE path like '%0%'"
@@ -398,17 +398,17 @@ def do(databaseFile):
 			sql = "SELECT * FROM files WHERE bytes < " + str(unFormatSize(sA[1])) + " ORDER BY bytes"
 		elif sA[0].lower() == 'b' and len(sA) == 3:
 			sql = "SELECT * FROM files WHERE bytes > " + str(unFormatSize(sA[1])) + " and bytes < " + str(unFormatSize(sA[2])) + " ORDER BY bytes"
-			print(sql)
+			_.pr(sql)
 		else:
-			print('Error:')
-			print('\tExpected:')
-			print('\t\tp dirdb -db D_Drive.db -size g 2gb')
-			print('\t\tp dirdb -db D_Drive.db -size b 1gb 3gb')
+			_.pr('Error:')
+			_.pr('\tExpected:')
+			_.pr('\t\tp dirdb -db D_Drive.db -size g 2gb')
+			_.pr('\t\tp dirdb -db D_Drive.db -size b 1gb 3gb')
 			sys.exit()
 	elif not  _.switches.isActive('Folder'):
 		sql = "SELECT * FROM files WHERE bytes > 100000000 ORDER BY bytes"
 	if _.switches.isActive('Folder'):
-		# print(_.switches.value('Folder'))
+		# _.pr(_.switches.value('Folder'))
 		sql = "SELECT * FROM files WHERE folder like '" + _.switches.value('Folder') + "' ORDER BY bytes"
 	if _.switches.isActive('DateUnix'):
 		s = _.switches.value('DateUnix')
@@ -417,45 +417,45 @@ def do(databaseFile):
 	if _.switches.isActive('Date'):
 		sDate = _.switches.value('Date')
 		sD = sDate.split(',')
-		# print(sD[0])
-		# print(isNu(sD[0]))
-		# print(len(sD))
+		# _.pr(sD[0])
+		# _.pr(isNu(sD[0]))
+		# _.pr(len(sD))
 		if isNu(sD[0]) and len(sD) == 2:
 			sql = "SELECT * FROM files WHERE date_modified_raw > " + str(epoch(sD[0])) + " and date_modified_raw < " + str(epoch(sD[1],True)) + " ORDER BY bytes"
 		elif len(sD) == 3:
 			sql = "SELECT * FROM files WHERE date_modified_raw > " + str(epoch(sD[1])) + " and date_modified_raw < " + str(epoch(sD[2],True)) + " ORDER BY bytes"
-			# print(sql)
+			# _.pr(sql)
 		elif len(sD) == 2:
 			if sD[0] == 'before':
 				sql = "SELECT * FROM files WHERE date_modified_raw < " + str(epoch(sD[1])) + " ORDER BY bytes"
 			elif sD[0] == 'after':
 				sql = "SELECT * FROM files WHERE date_modified_raw > " + str(epoch(sD[1])) + " ORDER BY bytes"
 			else:
-				print('before after between')
+				_.pr('before after between')
 				sys.exit()
 	if _.switches.isActive('Ago'):
-		# print(timeAgo())
+		# _.pr(timeAgo())
 		# sys.exit()
 		sql = "SELECT * FROM files WHERE date_modified_raw > " + str(timeAgo()) + " ORDER BY bytes"
 
 		# d = epoch()
-		# print(d)
+		# _.pr(d)
 		# sys.exit()
 
 	# sql = "SELECT bytes,path FROM files WHERE bytes > 100000000"
 	# if  _.switches.isActive('Folder'):
-		# print(sql)
+		# _.pr(sql)
 	c.execute(sql)
 	# c.execute('SELECT * FROM {tn} WHERE {cn} = {st}'.\
 	#         format(tn='files', cn='path', st='s'))
 	all_rows = c.fetchall()
-	# print('1):', all_rows)
+	# _.pr('1):', all_rows)
 	names = action2(databaseFile)
-	# print(names)
+	# _.pr(names)
 	global columnDefault
 	data = []
 	for f in all_rows:
-		# print(_.switches.value('Column'))
+		# _.pr(_.switches.value('Column'))
 
 		row = {}
 		for i,n in enumerate(names):
@@ -486,7 +486,7 @@ def do(databaseFile):
 			totalSize += row['bytes']
 			# if not _.switches.isActive('Folder'):
 			if columnDefault:
-				print(line)
+				_.pr(line)
 		else:
 			if _.showLine(row['path']) and os.path.isfile(row['path']):
 				data.append( row )
@@ -498,7 +498,7 @@ def do(databaseFile):
 					fS += ' '
 				# if not _.switches.isActive('Folder'):
 				if columnDefault:
-					print(fS,'',row['path'])
+					_.pr(fS,'',row['path'])
 
 	if not columnDefault:
 		_.switches.fieldSet('Long','active',True)
@@ -512,10 +512,10 @@ def action2(databaseFile):
 	cursor = connection.execute('select * from files')
 	row = cursor.fetchone()
 	names = row.keys()
-	# print(names)
+	# _.pr(names)
 
 	# for n in names:
-	# 	print(n)
+	# 	_.pr(n)
 	# sys.exit()
 	return names
 
@@ -534,7 +534,7 @@ def action3():
 
 if not _.switches.isActive('Database'):
 	dbs = _v.myIndexes + _v.slash+'C_Drive.db,' + _v.myIndexes + _v.slash+'D_Drive.db'
-	# print(dbs)
+	# _.pr(dbs)
 	_.switches.fieldSet('Database','active',True)
 	_.switches.fieldSet('Database','value',dbs)
 
@@ -550,6 +550,7 @@ if not _.switches.isActive('Column'):
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

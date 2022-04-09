@@ -207,11 +207,11 @@ def action():
 		for x in _.switches.values('Remove'):
 			row = row.replace( x, '' )
 		if _.switches.isActive('Prefix'):
-			print( ' '.join(_.switches.values('Prefix')), row )
+			_.pr( ' '.join(_.switches.values('Prefix')), row )
 		else:
-			print(row)
+			_.pr(row)
 		cnt+=1
-	print()
+	_.pr()
 	_.colorThis(  [ '', cnt ], 'yellow'  )
 
 
@@ -220,6 +220,7 @@ def action():
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

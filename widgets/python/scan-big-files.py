@@ -210,10 +210,10 @@ def action():
 			for line in inF:
 				if _.showLine(line):
 					i+=1
-					print( line.replace('\r','').replace('\n','') )
+					_.pr( line.replace('\r','').replace('\n','') )
 
 	if not _.switches.isActive('Clean'):
-		print()
+		_.pr()
 		_.cp(['',_.addComma(i)],'yellow')
 
 
@@ -221,6 +221,7 @@ def action():
 if __name__ == '__main__':
 	action()
 	__.isExit()
+
 
 
 

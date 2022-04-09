@@ -149,13 +149,14 @@ _.postLoad( __file__ )
 
 
 def action():
-	print( time.strftime("%z") )
+	_.pr( time.strftime("%z") )
 
 
 
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

@@ -170,7 +170,7 @@ if not sys.stdin.isatty():
 
 # _dir.sqlCreateTable( db, deleteDBFirst=True, close=True )
 # obj = _dir.fileInfo( path, sql=True )
-# print(   _dir.fileInfo( _.switches.value('Input') )['size']   )
+# _.pr(   _dir.fileInfo( _.switches.value('Input') )['size']   )
 
 # _.saveLog('queue')
 # _.saveLog('audit')
@@ -237,7 +237,7 @@ def action():
 		for pip in _.appData[__.appReg]['pipe']:
 			for row in file:
 				if pip in row:
-					print( row )
+					_.pr( row )
 
 
 
@@ -246,6 +246,7 @@ def action():
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

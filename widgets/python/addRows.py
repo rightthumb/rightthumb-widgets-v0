@@ -207,9 +207,9 @@ def action():
 				yrow += x
 		yn = float(yrow)
 		total += yn
-		print( yn )
+		_.pr( yn )
 
-	print()
+	_.pr()
 	_.colorThis( total, 'yellow' )
 
 
@@ -220,6 +220,7 @@ def action():
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

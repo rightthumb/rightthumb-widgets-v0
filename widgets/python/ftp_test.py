@@ -151,7 +151,7 @@ def getFolder( sftp, folder ):
 	if folder.endswith('/'):
 		folder = folder[:-1]
 	sftp.chdir(folder)
-	# print( folder )
+	# _.pr( folder )
 	items = sftp.listdir()
 	folders = []
 	for item in items:
@@ -165,7 +165,7 @@ def getFolder( sftp, folder ):
 				elif S_ISREG(mode):
 					total['files']+=1
 					mod = sftp.stat(item).st_mtime
-					print(mod, '\t', folder+'/'+entry.filename)
+					_.pr(mod, '\t', folder+'/'+entry.filename)
 		except Exception as e:
 			pass
 	for fld in folders:
@@ -180,7 +180,7 @@ def action():
 	global user
 	global total
 	load()
-	# print( _vault.imp.string('MVHip09oQqVQhbm9Fq8y8Q==') )
+	# _.pr( _vault.imp.string('MVHip09oQqVQhbm9Fq8y8Q==') )
 	# sys.exit()
 	# https://medium.com/@keagileageek/paramiko-how-to-ssh-and-file-transfers-with-python-75766179de73
 	ssh=paramiko.SSHClient()
@@ -191,14 +191,14 @@ def action():
 					username=      user,
 					password=      _vault.imp.string(_v.config().cloud.ssh.password)
 				)
-	# print( ssh.exec_command('pwd') )
+	# _.pr( ssh.exec_command('pwd') )
 	# stdin, stdout, stderr = ssh.exec_command(“sudo ls”)
 	# stdin.write(‘mypassword\n’)
 	# print stdout.readlines()
 
 	sftp=ssh.open_sftp()
 	# home = sftp.getcwd()
-	# print( home )
+	# _.pr( home )
 	sftp.chdir('/')
 	# sftp.chdir('home')
 
@@ -214,22 +214,22 @@ def action():
 
 	getFolder( sftp, cloud_base )
 	# getFolder( sftp, '/home/'+user+'/public_html' )
-	print(  )
-	print( time.time()-s )
-	print(total)
+	_.pr(  )
+	_.pr( time.time()-s )
+	_.pr(total)
 	# getFolder( sftp, '/home/ximlickficfp/public_html/tools.rightthumb.com' )
-	print()
-	print()
-	print()
+	_.pr()
+	_.pr()
+	_.pr()
 	# getFolder( sftp, '/home/ximlickficfp/public_html/tools.rightthumb.com/crypt' )
 	# sftp.chdir('/home/ximlickficfp/public_html/tools.rightthumb.com/crypt')
 	# sftp.chdir('')
 	# files = sftp.listdir()
 	# for x in files:
-	# 	print( x )
+	# 	_.pr( x )
 
 	# mod = sftp.stat( '{43E97BB4-EEB6-43A7-8A20-61A8123C17C1}.crypt' ).st_mtime
-	# print( mod )
+	# _.pr( mod )
 
 
 	# try:
@@ -276,6 +276,7 @@ _vault = _.regImp( __.appReg, '_rightThumb._vault' )
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

@@ -63,7 +63,7 @@ class Compute(object):
 				break
 
 			except:
-				print(error_message)
+				_.pr(error_message)
 
 	def leapyr(year: int):
 		""""
@@ -74,11 +74,11 @@ class Compute(object):
 		"""
 		if year % 400 == 0 or (year % 4 == 0 and year % 100 != 0):
 			n = 366
-			# print("The year is a Leap year.\n")
+			# _.pr("The year is a Leap year.\n")
 
 		else:
 			n = 365
-			# print("The year is a normal year.\n")
+			# _.pr("The year is a normal year.\n")
 
 		return n
 
@@ -103,7 +103,7 @@ class Compute(object):
 			elif len(pp) == 10 and pp.count('-') == 2:
 			 	res_date = datetime.datetime.strptime(  pp  ,  '%Y-%m-%d'  )
 
-			 # print(res_date)
+			 # _.pr(res_date)
 			 # sys.exit()
 			 # datetime.datetime.strptime('0001-01-01T00:00:00', "%Y-%m-%dT%H:%M:%S")
 
@@ -115,18 +115,18 @@ class Compute(object):
 		t = res_date.timetuple()
 
 
-		# print( t )
+		# _.pr( t )
 		# sys.exit()
 
 		# fd = _.friendlyDate( _.autoDate(tt) )
-		# print( fd )
+		# _.pr( fd )
 		# y = int(fd.split(' ')[0].split('-')[0])
 		# # m = int(fd.split(' ')[0].split('-')[1])
 		# d = int(fd.split(' ')[0].split('-')[2])
 		# m = int(fd.split(' ')[1].split(':')[0])
 		# h = int(fd.split(' ')[1].split(':')[1])
 
-		# print( y, m, d, m, h )
+		# _.pr( y, m, d, m, h )
 
 
 		# sys.exit()
@@ -160,7 +160,7 @@ class Compute(object):
 		Compute.config()["stardate"] = Stardate Yaer reference point
 		Compute.leapyr(t.tm_year) = number of days leap year/not (365 or 366)
 		"""
-		# print("Stardate  : ", sd, type(sd))
+		# _.pr("Stardate  : ", sd, type(sd))
 
 		dlist = []
 		ed_year = int(((sd - Compute.config()["stardate"]) // 1000) +
@@ -185,8 +185,8 @@ class Compute(object):
 		dlist.append(int(ed_min))
 		# NOTE: This calculation has 2 min leap from real date
 		dstring = " ".join([str(i) for i in dlist])
-		# print(dstring)
-		# print( dstring )
+		# _.pr(dstring)
+		# _.pr( dstring )
 		# dt = datetime.datetime.strptime(dstring, '%Y %j %H %M')
 		# res = datetime.datetime.strptime(dstring, '%Y %j %H %M').strftime('%Y-%m-%d %H:%M:%S')
 		return str(datetime.datetime.strptime(dstring, '%Y %j %H %M').strftime('%Y-%m-%d %H:%M:%S'))
@@ -202,6 +202,7 @@ def gen(tt=None,pp=None):
 
 def resolve(sd):
 	return Compute.sdtranslate(sd)
+
 
 
 

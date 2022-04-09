@@ -154,13 +154,13 @@ _.postLoad( __file__ )
 def action():
 	
 	if _.switches.isActive('Length'):
-		print( len( _.isData(required=True) ) )
+		_.pr( len( _.isData(required=True) ) )
 
 	if _.switches.isActive('Top'):
 		end = int( _.switches.value('Top') )
 		for i,row in enumerate(_.isData(required=True)):
 			if i <= end:
-				print(row)
+				_.pr(row)
 
 	if _.switches.isActive('Sample'):
 		start = int( _.switches.values('Sample')[0] )
@@ -171,7 +171,7 @@ def action():
 		for i,row in enumerate(_.isData(required=True)):
 			if i >= start:
 				if i <= end:
-					print(row)
+					_.pr(row)
 
 	if _.switches.isActive('Tail'):
 		end = int( _.switches.value('Tail') )
@@ -183,11 +183,12 @@ def action():
 				results.append(row)
 		results.reverse()
 		for x in results:
-			print(x)
+			_.pr(x)
 
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

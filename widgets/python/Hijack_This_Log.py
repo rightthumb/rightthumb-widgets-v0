@@ -248,26 +248,26 @@ def action():
             dic={}
             dic['a']=check
             dic['b']=row
-            # print(dic)
+            # _.pr(dic)
 
             # sys.exit()
-            # print(row)
+            # _.pr(row)
 
             if check.lower() in row.lower():
-                # print(row)
+                # _.pr(row)
                 bad = False
 
         # if not len(row):
         #   bad = False
         if bad:
-          print( row.replace('\n','') )
+          _.pr( row.replace('\n','') )
 
 
 def load():
     global whitelist
     global log
     # whitelist = _.getText( _v.dbTables+os.sep+'HijackThis_Whitelist.txt', raw=True, clean=2 ).lower().replace('\r','')
-    # print(whitelist)
+    # _.pr(whitelist)
     # sys.exit()
     whitelist = _.getText( _v.dbTables+os.sep+'HijackThis_Whitelist.txt', raw=True, clean=2 ).lower().replace('\r','').split('\n')
     log = _.getText( _.switches.values('Files')[0] , raw=True, clean=2 ).replace('\r','').split('\n')
@@ -279,6 +279,7 @@ log = []
 ########################################################################################
 if __name__ == '__main__':
     action()
+
 
 
 

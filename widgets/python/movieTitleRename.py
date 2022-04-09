@@ -254,10 +254,10 @@ def removeStuff( line ):
 	line = line.replace( ' .', '.' )
 	line = _str.cleanBE(line,' ')
 	global extensionList
-	# print( extensionList )
+	# _.pr( extensionList )
 	# sys.exit()
 	hasExt = ''
-	# print( extensionList )
+	# _.pr( extensionList )
 	for xt in extensionList:
 		if xt.upper() in line:
 			hasExt = xt
@@ -298,15 +298,15 @@ def action():
 
 		m = removeStuff(row)
 		if _.switches.isActive('Test'):
-			print()
-			print(row)
-			print(m)
-			print()
+			_.pr()
+			_.pr(row)
+			_.pr(m)
+			_.pr()
 		else:
 			if _.isWin:
-				print( 'rename '+ '"'+row+'"'  +'   '+ '"'+m+'"' )
+				_.pr( 'rename '+ '"'+row+'"'  +'   '+ '"'+m+'"' )
 			else:
-				print( 'mv '+ '"'+row+'"'  +'   '+ '"'+m+'"' )
+				_.pr( 'mv '+ '"'+row+'"'  +'   '+ '"'+m+'"' )
 
 
 
@@ -332,6 +332,7 @@ def extensionsDatabank():
 if __name__ == '__main__':
 	action()
 	_.tables.eof()
+
 
 
 

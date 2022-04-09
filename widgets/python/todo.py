@@ -202,19 +202,19 @@ def action():
 		last=-1
 		for i,line in enumerate(_.getText(path,raw=True).split('\n')):
 			if line.lower().startswith('todo:'):
-				# print(i,i-last)
-				# print(last-i)
+				# _.pr(i,i-last)
+				# _.pr(last-i)
 				if i-last > 10:
-					print()
+					_.pr()
 					_.cp( _.linePrint(txt='_',p=0), 'yellow' )
-					print(i+1)
-					print()
+					_.pr(i+1)
+					_.pr()
 				else:
 					ix=1
 					while not ix==i-last:
-						print()
+						_.pr()
 						ix+=1
-				print(line)
+				_.pr(line)
 				last=i
 
 
@@ -222,6 +222,7 @@ def action():
 if __name__ == '__main__':
 	action()
 	__.isExit()
+
 
 
 

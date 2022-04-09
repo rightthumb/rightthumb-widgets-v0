@@ -200,7 +200,7 @@ if not sys.stdin.isatty():
 
 # _dir.sqlCreateTable( db, deleteDBFirst=True, close=True )
 # obj = _dir.fileInfo( path, sql=True )
-# print(   _dir.fileInfo( _.switches.value('Input') )['size']   )
+# _.pr(   _dir.fileInfo( _.switches.value('Input') )['size']   )
 
 # _.saveLog('queue')
 # _.saveLog('audit')
@@ -264,7 +264,7 @@ if not sys.stdin.isatty():
 # def dateScramble( data ):
 # 	d = _.date2epoch( data )
 # 	if len( str(data) ) > 0:
-# 		print( data, d )
+# 		_.pr( data, d )
 # 	return _.resolveEpochTest( d, falseBlank=True )
 
 	# data = [
@@ -396,7 +396,7 @@ if not sys.stdin.isatty():
 	###################
 
 	# try:
-	# 	print()
+	# 	_.pr()
 
 	# 	fieldList = ','.join(__.databases.getFields( 'test', 'test_table', exclude='' ))
 	# 	_.tables.register('results_table',results)
@@ -418,11 +418,11 @@ insertText = ''
 def action():
 	global insertText
 
-	# print( _.switches.value('Input') )
+	# _.pr( _.switches.value('Input') )
 
 	if _.switches.isActive('InsertFile'):
 		if not os.path.isfile( _.switches.value('InsertFile') ):
-			print( 'Error: InsertFile' )
+			_.pr( 'Error: InsertFile' )
 			sys.exit()
 		else:
 			insertText = _.getText( _.switches.value('InsertFile'), True )
@@ -434,7 +434,7 @@ def action():
 		insertText = _str.cleanBE( insertText, ' ' )
 
 	if len(_.switches.value('Plus'))<3:
-		print( 'Error: Plus' )
+		_.pr( 'Error: Plus' )
 		sys.exit()
 
 	if not type( _.appData[__.appReg]['pipe'] ) == bool or _.switches.isActive('Input') and os.path.isfile( _.switches.value('Input') ):
@@ -461,8 +461,8 @@ def getTabs( line ):
 def processFile( filename ):
 	global insertText
 
-	print()
-	print('processing:', filename)
+	_.pr()
+	_.pr('processing:', filename)
 	fileBackup.switch( 'Input', filename )
 	fileBackup.switch( 'Flag', 'pre insertText' )
 	recoveryFile = fileBackup.do( 'action' )
@@ -500,15 +500,16 @@ def processFile( filename ):
 		if 'n' in keep.lower():
 			try:
 				copyfile(recoveryFile, filename)
-				print( 'Undo successful' )
+				_.pr( 'Undo successful' )
 			except Exception as e:
-				print( 'Undo fail' )
+				_.pr( 'Undo fail' )
 
 
 
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

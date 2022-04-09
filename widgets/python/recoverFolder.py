@@ -236,7 +236,7 @@ def action():
 					newName = _fileNameDate.imp.newName( fileFolder['file'], suffix='(preRecover)' )
 					os.rename( record['file'], newName )
 
-				print( record['file'] )
+				_.pr( record['file'] )
 				spent.append( record['file'] )
 				shutil.copy( record['backup'], record['file'] )
 
@@ -264,6 +264,7 @@ data = []
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

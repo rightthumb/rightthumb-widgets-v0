@@ -198,7 +198,7 @@ def action():
 				_.appData[__.appReg]['pipe'].append( row )
 	if not type( _.appData[__.appReg]['pipe'] ) == bool:
 		_.pipeCleaner()
-		# print( _.printVar(_.appData) )
+		# _.pr( _.printVar(_.appData) )
 		for i,row in enumerate(_.appData[__.appReg]['pipe']):
 
 			data.append( _dir.fileInfo( row, md5=True ) )
@@ -213,6 +213,7 @@ def action():
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

@@ -158,7 +158,7 @@ def dateAdd( theDate, addDays, epoch=True ):
 		return theDate
 	epoch = _.autoDate( theDate )
 
-	# print('epoch',epoch,theDate)
+	# _.pr('epoch',epoch,theDate)
 	# sys.exit()
 	utc_time = datetime.utcfromtimestamp(epoch)
 	future_time = utc_time + timedelta(addDays)
@@ -171,7 +171,7 @@ def dateMinus( theDate, addDays, epoch=True ):
 		return theDate
 	epoch = _.autoDate( theDate )
 
-	# print('epoch',epoch,theDate)
+	# _.pr('epoch',epoch,theDate)
 	# sys.exit()
 	utc_time = datetime.utcfromtimestamp(epoch)
 	future_time = utc_time - timedelta(addDays)
@@ -199,18 +199,18 @@ def process( start, end ):
 		start = _.autoDate(start)
 	if not type(end) == float:
 		end = _.autoDate(end)
-	# print(start, end)
+	# _.pr(start, end)
 	diff = end - start
 	theDiff = diff
 
 	theDates.append({ 'start': start, 'end': end })
 
-	# print()
-	# print()
-	# print( _.friendlyDate(start) )
-	# print( _.friendlyDate(end) )
-	# print()
-	# print( 'diff', (diff/60), 'HRs'  )
+	# _.pr()
+	# _.pr()
+	# _.pr( _.friendlyDate(start) )
+	# _.pr( _.friendlyDate(end) )
+	# _.pr()
+	# _.pr( 'diff', (diff/60), 'HRs'  )
 	global log
 	records = []
 	for record in log:
@@ -327,22 +327,22 @@ def action():
 	report = _.tables.returnSorted( 'data', 'd.pDiff', report )
 	_.fields.asset( 'data', report )
 	
-	print()
+	_.pr()
 	for record in report:
 		line = _.colorThis( [  _.fields.value( 'data', 'label', record['label'], right=1 )  ], 'green', p=0 )
 		line += '\t'
 		line += _.colorThis( [ _.addComma(record['pDiff'])+'%' ], 'yellow', p=0 )
-		print( line )
-	print()
+		_.pr( line )
+	_.pr()
 	_.colorThis( [ ' Days:', epochDays( theDates[0]['start'],theDates[0]['end'] ),'\tHrs:', epochHRs( theDates[0]['start'],theDates[0]['end'] ) ], 'blue' )
-	print( theDates[0] )
+	_.pr( theDates[0] )
 
 
 	# for record in theDates:
 	# 	diff = record['end'] - record['start']
 	# 	diffX = [diff,diff/60,(diff/60)/60]
 	# 	diffX = epochHRs(record['start'],record['end'])
-	# 	print( _.friendlyDate(record['start']), _.friendlyDate(record['end']), diffX )
+	# 	_.pr( _.friendlyDate(record['start']), _.friendlyDate(record['end']), diffX )
 
 	# _.printVar( report )
 
@@ -350,7 +350,7 @@ def action():
 	# pDiff
 
 
-	# print( lunar[0].keys() )
+	# _.pr( lunar[0].keys() )
 
 def load():
 	global lunar
@@ -408,6 +408,7 @@ copy(hackData)
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

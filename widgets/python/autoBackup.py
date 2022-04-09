@@ -139,7 +139,7 @@ def ago():
 		return do
 	do = do.lower()
 	md = True
-	# print(do)
+	# _.pr(do)
 	# sys.exit()
 	if ',' in do:
 		d = do.lower().split(',')
@@ -177,20 +177,20 @@ def action():
 
 	if _.switches.isActive('Ago'):
 		maxEpoch = _.autoDate(_.resolveEpochTest(ago()))
-		# print( maxEpoch )
-		# print( _.autoDate(_.resolveEpochTest(maxEpoch)) )
+		# _.pr( maxEpoch )
+		# _.pr( _.autoDate(_.resolveEpochTest(maxEpoch)) )
 		# sys.exit()
 
 	if _.switches.isActive('Date'):
 		maxEpoch = _.autoDate(_.resolveEpochTest( _.switches.value('Date') ))
-	# print()
-	# print( _.autoDate(_.resolveEpochTest(maxEpoch)), '\t', _.resolveEpochTest(maxEpoch) )
-	# print()
+	# _.pr()
+	# _.pr( _.autoDate(_.resolveEpochTest(maxEpoch)), '\t', _.resolveEpochTest(maxEpoch) )
+	# _.pr()
 	# maxEpoch = _.autoDate(_.resolveEpochTest(maxEpoch))
 	# date_modified_raw
-	# print( _.autoDate(_.resolveEpochTest(ago())), _.resolveEpochTest(ago()) )
+	# _.pr( _.autoDate(_.resolveEpochTest(ago())), _.resolveEpochTest(ago()) )
 	# maxEpoch = _.autoDate(_.resolveEpochTest(ago()))
-	print( 'maxEpoch:', maxEpoch, _.resolveEpochTest(maxEpoch) )
+	_.pr( 'maxEpoch:', maxEpoch, _.resolveEpochTest(maxEpoch) )
 	# sys.exit()
 
 
@@ -223,7 +223,7 @@ def action():
 
 
 	# if _.switches.isActive('BackupRunOnce'):
-	# 	print( 'BackupRunOnce: Active' )
+	# 	_.pr( 'BackupRunOnce: Active' )
 	# 	pause=input('pause')
 							
 	fileBackup.switch( 'isRunOnce' )
@@ -239,7 +239,7 @@ def action():
 
 					notice = _.colorThis( [  'Special: '  ], 'green', p=0 )
 					notice += _.colorThis( [  log['file']  ], 'cyan', p=0 )
-					print( notice )
+					_.pr( notice )
 
 
 					fileBackup.deleteSwitch( 'Session' )
@@ -261,8 +261,8 @@ def action():
 
 
 	
-	# print( 'runOnceFiles:', runOnceFiles )
-	# print( 'doNotBackup:', doNotBackup )
+	# _.pr( 'runOnceFiles:', runOnceFiles )
+	# _.pr( 'doNotBackup:', doNotBackup )
 	# pause=input('pause')
 
 	maxEpochDate = _.resolveEpochTest( maxEpoch )
@@ -323,15 +323,15 @@ def action():
 						# if not _.resolveEpochTest(fd['date_modified_raw']) < maxEpochDate:
 						if not (fd['date_modified_raw']) < maxEpoch:
 							i=0
-							# print( _.resolveEpochTest( fd['date_modified_raw'] ) )
+							# _.pr( _.resolveEpochTest( fd['date_modified_raw'] ) )
 							if True and ( not 'fileBackup.json' in log['file'] and not 'fileBackupSchedule.json' in log['file'] and not 'ID.sys' in log['file'] ):
-								# print( 'Scheduler: Start' )
+								# _.pr( 'Scheduler: Start' )
 								if not 'status' in log:log['status'] = status['default'];
 								if log['status'] == status['default'] or log['status'] == status['defaultSpent']:
 
 									# if 'netblock.py' in log['file']:
-									# 	print( 'Scheduler', _.resolveEpochTest( log['timestamp'] ) )
-									# 	print( _.resolveEpochTest(fd['date_modified_raw']), maxEpochDate )
+									# 	_.pr( 'Scheduler', _.resolveEpochTest( log['timestamp'] ) )
+									# 	_.pr( _.resolveEpochTest(fd['date_modified_raw']), maxEpochDate )
 									# 	_.printTest( log )
 									fileBackup.deleteSwitch( 'Session' )
 									if 'session' in log:
@@ -345,7 +345,7 @@ def action():
 										
 
 
-								# print( 'Scheduler: End' )
+								# _.pr( 'Scheduler: End' )
 						else:
 							pass
 							if i > 25:
@@ -355,7 +355,7 @@ def action():
 	
 
 	############################		############################
-	# print( 'Should have backed up' )
+	# _.pr( 'Should have backed up' )
 	# pause=input('pause')
 
 	for ii,log in enumerate(schedulerLog):
@@ -402,7 +402,7 @@ def action():
 			# 	if os.path.isfile(log['file']):
 			# 		# fd = _dir.fileInfo( log['file'] )
 			# 		fd = { 'date_modified_raw': _.mod( log['file'] ) }
-			# 		# print( log['file'] )
+			# 		# _.pr( log['file'] )
 			# 		shoulRun = False
 			# 		try:
 			# 			if not type( fd['date_modified_raw'] ) == bool:
@@ -461,7 +461,7 @@ def action():
 							# if not _.resolveEpochTest(fd['date_modified_raw']) < maxEpochDate:
 							if not (fd['date_modified_raw']) < maxEpoch:
 								i=0
-								print( _.resolveEpochTest( fd['date_modified_raw'] ) )
+								_.pr( _.resolveEpochTest( fd['date_modified_raw'] ) )
 								if not 'fileBackup.json' in log['file'] and not 'fileBackupSchedule.json' in log['file'] and not 'ID.sys' in log['file']:
 									if not 'status' in log:log['status'] = status['default'];
 									if log['status'] == status['default'] or log['status'] == status['defaultSpent']:
@@ -474,8 +474,8 @@ def action():
 
 
 											# if 'netblock.py' in log['file']:
-											# 	print( 'Backup Log', _.resolveEpochTest( log['timestamp'] ) )
-											# 	print( _.resolveEpochTest(fd['date_modified_raw']), maxEpochDate )
+											# 	_.pr( 'Backup Log', _.resolveEpochTest( log['timestamp'] ) )
+											# 	_.pr( _.resolveEpochTest(fd['date_modified_raw']), maxEpochDate )
 											# 	_.printTest( log )
 											fileBackup.deleteSwitch( 'Session' )
 											if 'session' in log:
@@ -491,9 +491,9 @@ def action():
 								if i > 25:
 									break
 								i+=1
-								# print(log['file'])
+								# _.pr(log['file'])
 							# else:
-								# print( fd['date_modified'], log['file'] )
+								# _.pr( fd['date_modified'], log['file'] )
 
 __.spent = []
 
@@ -502,6 +502,7 @@ if __name__ == '__main__':
 	action()
 
 # autoBackup
+
 
 
 

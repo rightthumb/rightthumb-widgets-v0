@@ -269,7 +269,7 @@ def action():
 
 
 	# if 'title' in _.switches.values('MustInclude'):
-	# 	print( 'here' )
+	# 	_.pr( 'here' )
 
 	# sys.exit()
 
@@ -292,17 +292,17 @@ def action():
 # 	<class 'str'> link
 # 	<class 'int'> people
 
-# for x in movie.keys(): print( type(movie[x]), x );
+# for x in movie.keys(): _.pr( type(movie[x]), x );
 	if platform.system() == 'Windows':
 		os.system( 'cls' )
 	else:
 		os.system( 'clear' )
-	print()
+	_.pr()
 
 	for i,franchise in enumerate(franchises):
 		if _.showLine( franchise['label'] ) or _.showLine( str(franchise['aliases']) ):
 			_.colorThis( [ '\n', franchise['label'] ], 'yellow' )
-			# print( franchise['movieIDS'] )
+			# _.pr( franchise['movieIDS'] )
 			# sys.exit()
 			removeIDs_movies = []
 			removeIDs_people = []
@@ -375,5 +375,6 @@ if __name__ == '__main__':
 
 
 0
+
 
 

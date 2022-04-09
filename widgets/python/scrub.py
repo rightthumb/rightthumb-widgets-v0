@@ -197,7 +197,7 @@ def process(path):
 
     for i,line in enumerate(lines):
         if 'tool.class' in subjects: 
-            # print('tool.class')
+            # _.pr('tool.class')
             if 'D.' in line and not '.D.' in line:
                 line = line.replace( 'D.', 'oooooo.D.' )
             if 'HD.' in line and not '.HD.' in line:
@@ -275,6 +275,7 @@ import _rightThumb._mimetype as _mime
 if __name__ == '__main__':
     action()
     __.isExit()
+
 
 
 

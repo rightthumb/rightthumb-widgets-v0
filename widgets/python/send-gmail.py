@@ -189,7 +189,7 @@ def action():
 		
 	# except Exception as e:
 	# 	_.cp('Error')
-	# 	print(e)
+	# 	_.pr(e)
 
 
 
@@ -208,10 +208,10 @@ def action():
 		server.sendmail(sent_from, to, email_text)
 		server.close()
 
-		print('Email sent!')
+		_.pr('Email sent!')
 	except Exception as e:
-		print('Something went wrong...')
-		print(e)
+		_.pr('Something went wrong...')
+		_.pr(e)
 
 
 _keychain = _.regImp( __.appReg, 'keychain' )
@@ -221,6 +221,7 @@ _keychain = _.regImp( __.appReg, 'keychain' )
 if __name__ == '__main__':
 	action()
 	__.isExit()
+
 
 
 

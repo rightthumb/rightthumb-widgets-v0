@@ -218,7 +218,7 @@ if not sys.stdin.isatty():
 
 def countThisLine(line):
 	omitList = _.switches.value('Omit')
-	# print('"' + omitList +)
+	# _.pr('"' + omitList +)
 	result = True
 	lineOriginal = line
 	line = line.replace('Python','')
@@ -241,13 +241,13 @@ def countThisLine(line):
 	return result
 
 def displayLine(line):
-	# print(line)
+	# _.pr(line)
 	line = line.replace('\n','')
 	if _.switches.isActive('Parse') == True:
 		parse = _.switches.value('Parse2')
 		p = parse.split(',')
 		# p = list(parse)
-		# print(p)
+		# _.pr(p)
 		# sys.exit()
 		p[0] =  _.ci(str(p[0]))
 		p[1] =  _.ci(str(p[1]))
@@ -260,7 +260,7 @@ def displayLine(line):
 
 		if p1.count(';mdt') > 0:
 			linePart = ''
-			# print(line.count('.'))
+			# _.pr(line.count('.'))
 			found = False
 			for lx in line.split(p[0]):
 				linePart += lx + p[0]
@@ -322,7 +322,7 @@ def displayLine(line):
 				line = newLine
 			except Exception as e:
 				line = ''
-	# print(line)
+	# _.pr(line)
 	if _.switches.isActive('Alpha') == True:
 		line = _str.cleanFirst(line,' ')
 		line = _str.cleanLast(line,' ')
@@ -380,12 +380,12 @@ def parseClean(line):
 	return line
 def substitute(string):
 	result = string
-	# print(string)
+	# _.pr(string)
 	p = _.switches.value('Substitute').split(',')
 	p[0] = _.ci(p[0])
 	p[1] = _.ci(p[1])
-	# print(p)
-	# print(p)	
+	# _.pr(p)
+	# _.pr(p)	
 	# os._exit(0)
 	# result = _str.replaceAll(str(string),p[0],p[1])
 	result = string.replace(p[0],p[1])
@@ -404,7 +404,7 @@ def make(string):
 		string = _str.replaceAll(string,";'",'"')
 		for l in stringTMP.split(p):
 			pp = '{' + str(i) + '}'
-			# print(l,pp)
+			# _.pr(l,pp)
 			l = l.replace('\r','')
 			l = l.replace('\n','')
 			string = string.replace(pp,l)
@@ -471,7 +471,7 @@ def crossRefGetMatch(inLine,line,parse,nameNum):
 			break
 
 	result = ''
-	# print(cnt)
+	# _.pr(cnt)
 
 	cnt = cnt - 1
 	while cnt > 0:
@@ -491,9 +491,9 @@ def crossRefGetMatch(inLine,line,parse,nameNum):
 def crossRef_xRef(xRef,line):
 	result = False
 	for item in xRef:
-		# print(item)
+		# _.pr(item)
 		if item == line:
-			# print('true')
+			# _.pr('true')
 			result = True
 	return result
 
@@ -549,26 +549,26 @@ def crossReference(inLine,file,xRefRev):
 	# HERE!
 	if match == True and matchType == 'complex':
 		if displayThis == 3:
-			print(result['files'][0]['path'],result['files'][1]['path'])
+			_.pr(result['files'][0]['path'],result['files'][1]['path'])
 		elif displayThis == 1:
-			print(result['files'][0]['path'])
+			_.pr(result['files'][0]['path'])
 		elif displayThis == 2:
-			print(result['files'][1]['path'])
+			_.pr(result['files'][1]['path'])
 		elif displayThis == 0:
-			print(result['negotiated'])
+			_.pr(result['negotiated'])
 		elif displayThis == 4:
 			xRefList.append(result)
 		if _.switches.isActive('CrossReferenceUltimate') and xRefRev == False:
 			xRef.append(result['negotiated'])
 	if match == True and matchType == 'simple':
 		if displayThis == 1:
-			print(inLine)
+			_.pr(inLine)
 		elif displayThis == 0:
-			print(xMatch)
+			_.pr(xMatch)
 		if _.switches.isActive('CrossReferenceUltimate') and xRefRev == False:
 			xRef.append(xMatch)
 	if displayThis == 5 and match == False:
-		print(inLine)
+		_.pr(inLine)
 
 	return match
 
@@ -615,7 +615,7 @@ def fixCSV(line):
 		line = _str.replaceDuplicate(line,' ')
 		line = _str.cleanFirst(line,' ')
 		line = _str.cleanLast(line,' ')
-	# print(line[0])
+	# _.pr(line[0])
 	theSplits = line.split(',')
 
 	result = ''
@@ -634,7 +634,7 @@ def fixCSV(line):
 _.delim = ','
 if _.switches.isActive('Parse') == True:
 	_.switches.fieldSet('ParseClean','active',True)
-# print(_.switches.value('Parse'))
+# _.pr(_.switches.value('Parse'))
 # sys.exit()
 cnt = 0
 lNumber = 1
@@ -668,35 +668,35 @@ if _.switches.isActive('CrossReferenceReverse') == False:
 			if countThisLine(line) == True:
 				parse0 = _.switches.value('Parse')
 				parse = parse0.split(',')
-				# print()
+				# _.pr()
 				# sys.exit()
 				# line = displayLine(line)
 				if parse0.count(',') == 3:
 					line2 = line
 					_.switches.fieldSet('Parse2','value',str(parse[0])+','+str(parse[1]))
-					# print( _.switches.value('Parse2'))
+					# _.pr( _.switches.value('Parse2'))
 					line = str(displayLine(line))
 					_.switches.fieldSet('Parse2','value',str(parse[2])+','+str(parse[3]))
-					# print( _.switches.value('Parse2'))
-					# print(line)
+					# _.pr( _.switches.value('Parse2'))
+					# _.pr(line)
 					l2 = str(displayLine(line2))
 					line += ' - ' + l2.replace(_.ci(parse[2]),'')
-					# print(line)
+					# _.pr(line)
 					# sys.exit()
 				else:
 					_.switches.fieldSet('Parse2','value',_.switches.value('Parse'))
 					line = displayLine(line)
-				# print(line)
+				# _.pr(line)
 
 				if _.switches.isActive('x92') == True:
 					line = line.encode('UTF-8').decode('latin-1')
 					line = _str.replaceAll(line,"'",'\u0092')
 
-				# print(line)
+				# _.pr(line)
 				if _.switches.isActive('Precsv2json') == True:
 					slashID = '3D2B7E36-B661-4C46-B37B-7B537663F6BB'
 					line = _str.replaceAll(line,_v.slash,slashID)
-				# print(line)
+				# _.pr(line)
 				if _.switches.isActive('FixCSV') == True:
 					line = fixCSV(line)
 				if _.switches.isActive('NoClean') == False:
@@ -715,7 +715,7 @@ if _.switches.isActive('CrossReferenceReverse') == False:
 					except Exception as e:
 						pass
 
-				# print(line)
+				# _.pr(line)
 				if _.switches.isActive('Postcsv2json') == True:
 					line = _str.replaceAll(line,'{6BEB554C-3FCE-419F-8917-B5A0678F48BA}',',')
 					# slashID = '3D2B7E36-B661-4C46-B37B-7B537663F6BB'
@@ -733,20 +733,20 @@ if _.switches.isActive('CrossReferenceReverse') == False:
 					if _.switches.isActive('Original'):
 						if len(line) > 0:
 							line = make(lineOriginal)
-							print(line)
+							_.pr(line)
 					else:
 						if len(line) > 0:
 							line = make(line)
-							print(line)
+							_.pr(line)
 					
 				else:
 					if _.switches.isActive('Unique') == True:
 						resultList.append(line)
 					if _.switches.isActive('LineNumber') == True:
 						if _.switches.isActive('Original'):
-							print(lNumber,lineOriginal)
+							_.pr(lNumber,lineOriginal)
 						else:
-							print(lNumber,line)
+							_.pr(lNumber,line)
 					else:
 						if _.switches.isActive('CrossReference') == True:
 							if crossReference(line,crossRef_File,False):
@@ -761,17 +761,17 @@ if _.switches.isActive('CrossReferenceReverse') == False:
 									if _.switches.isActive('Original'):
 										if _.switches.isActive('Blanks'):
 											if len(lineOriginal) > 0:
-												print(lineOriginal)
+												_.pr(lineOriginal)
 										else: 
-											print(lineOriginal)
+											_.pr(lineOriginal)
 									else:
 										if _.switches.isActive('Blanks'):
 											if len(line) > 0:
-												print(line)
+												_.pr(line)
 										else: 
-											print(line)
+											_.pr(line)
 								else:
-									print(line)
+									_.pr(line)
 
 			cnt += 1
 		lNumber += 1
@@ -779,8 +779,8 @@ if _.switches.isActive('CrossReferenceReverse') == False:
 ############################################################################ ############################################################################
 
 if _.switches.isActive('CrossReference') == True and _.switches.isActive('NoCount') == False  and _.switches.isActive('CrossReferenceUltimate') == False:
-	print('\tGood',cntCrossRefG1,'\tBad',cntCrossRefB1)
-	print('Total',cntCrossRefB1 + cntCrossRefG1)
+	_.pr('\tGood',cntCrossRefG1,'\tBad',cntCrossRefB1)
+	_.pr('Total',cntCrossRefB1 + cntCrossRefG1)
 
 
 
@@ -788,31 +788,31 @@ if _.switches.isActive('CrossReference') == True and _.switches.isActive('NoCoun
 
 
 if _.switches.isActive('Count') == False:
-	print('')
+	_.pr('')
 if _.switches.isActive('NoCount') == False and _.switches.isActive('Progress') == False and _.switches.isActive('Unique') == False and _.switches.isActive('CrossReference') == False:
-	print('{}'.format(cnt))
+	_.pr('{}'.format(cnt))
 	if _.switches.isActive('CountDiv'):
 		divby = int(_.switches.value('CountDiv'))
 		ncnt = cnt / divby
 		nncnt = round(ncnt,1)
-		print(nncnt)
+		_.pr(nncnt)
 
 
 
 if _.switches.isActive('Progress') == True:
 	theTotal = int(_.switches.value('Progress'))
 	result = get_change(cnt,theTotal)
-	print(result,'%')
-	print('\t',cnt,'of',theTotal)
+	_.pr(result,'%')
+	_.pr('\t',cnt,'of',theTotal)
 
 if _.switches.isActive('Unique') == True:
 	resultNew = set(resultList)
 	cnt = 0
 	for r in resultNew:
-		print(r)
+		_.pr(r)
 		cnt += 1
 	if _.switches.isActive('NoCount') == False:
-		print('\n{}'.format(cnt))
+		_.pr('\n{}'.format(cnt))
 
 
 
@@ -833,7 +833,7 @@ if _.switches.isActive('CrossReferenceReverse') == True:
 	cntCrossRefO2 = 0
 	cnt2 = 0
 	for line in crossRef_File:
-		# print(line)
+		# _.pr(line)
 		line = str(line)
 		if _.switches.isActive('Character') == True:
 			try:
@@ -867,39 +867,39 @@ if _.switches.isActive('CrossReferenceReverse') == True:
 		cntOmited = 0
 		for xRef in xRefList:
 			if (xRefBase[xRef['files'][0]['nStat_id']]['value'] > thresholdPercent and xRefBase[xRef['files'][1]['nStat_id']]['value'] > thresholdPercent) or xRefBase[xRef['files'][1]['nStat_id']]['count'] > thresholdCount:
-				print(xRef['negotiated'])
+				_.pr(xRef['negotiated'])
 				pass
 			else:
 				cntOmited += 1
 
 
 	if _.switches.isActive('NoCount') == False:
-		print('')
+		_.pr('')
 		if _.switches.isActive('CrossReferenceIntelligent'):
-			print('Omited',cntOmited)
+			_.pr('Omited',cntOmited)
 		# linesPipe = len(_.appData[__.appReg]['pipe'])
 		# linesFile = len(crossRef_File)
 		cnt2 = cntCrossRefG2 + cntCrossRefO2
 		if _.switches.isActive('CrossReferenceUltimate') == False:
-			print('\tGood',cnt2,'\tBad',cntCrossRefB2)
-			print('Total',cntCrossRefB2 + cnt2)
+			_.pr('\tGood',cnt2,'\tBad',cntCrossRefB2)
+			_.pr('Total',cntCrossRefB2 + cnt2)
 		else:
 			if cnt2 > cntCrossRefG1:
 				cntGood = cnt2
 			else:
 				cntGood = cntCrossRefG1
 
-			print('\tGood',cntGood,'\tBad',linesPipe - cntGood)
-			print('Pipe',linesPipe,'Lines\n')
-			print('\tGood',cntGood,'\tBad',linesFile - cntGood)
-			print('File',linesFile,'Lines\n')
+			_.pr('\tGood',cntGood,'\tBad',linesPipe - cntGood)
+			_.pr('Pipe',linesPipe,'Lines\n')
+			_.pr('\tGood',cntGood,'\tBad',linesFile - cntGood)
+			_.pr('File',linesFile,'Lines\n')
 
 			if len(xRefBase) > 1:
 				_.switches.fieldSet('Sort','active',True)
 				_.switches.fieldSet('Sort','value','desc:name,desc:count')
 				_.tables.register('Auto',xRefBase)
 				_.tables.print('Auto','name,count,value')
-				# print(xRefBase)
+				# _.pr(xRefBase)
 
 if _.switches.value('CrossReferenceIntelligent') == 'save' or _.switches.value('CrossReferenceIntelligent') == 'build' or _.switches.isActive('CrossReferenceSaveTables'):
 	if _.switches.isActive('CrossReferenceReverse') == False:
@@ -912,6 +912,7 @@ if _.switches.value('CrossReferenceIntelligent') == 'save' or _.switches.value('
 	file2 = 'file_negotiation_statistics.json'
 	_.saveTable(xRefList,file1)
 	_.saveTable(xRefBase,file2)
+
 
 
 

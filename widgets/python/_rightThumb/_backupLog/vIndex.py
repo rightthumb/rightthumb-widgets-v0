@@ -372,7 +372,7 @@ def cleanRecord( i, record ):
 			fv[f]['v1'] = 0
 			fv[f]['v2'] = 0
 		elif epochSec( fv[f]['epoch'], epoch ) > 604800:
-			# print( getFlags( backupLog[fv[f]['i']]['flag'].lower() ) )
+			# _.pr( getFlags( backupLog[fv[f]['i']]['flag'].lower() ) )
 			if 'v' in getFlags( backupLog[fv[f]['i']]['flag'].lower() ):
 				fv[f]['v2'] += 1
 			else:
@@ -402,7 +402,7 @@ def cleanRecord( i, record ):
 		newRecord['flag'] = record['flag']
 	except Exception as e:
 		newRecord['flag'] = ''
-		# print( 'Error: field, flag' )
+		# _.pr( 'Error: field, flag' )
 		# _.printVar( record )
 		# sys.exit()
 	return newRecord
@@ -444,7 +444,7 @@ def autoBatchIdentify():
 		if x < groupSeconds:
 			if not lg:
 				pass
-				# print()
+				# _.pr()
 			lg = True
 
 			if not last in epochList:
@@ -455,7 +455,7 @@ def autoBatchIdentify():
 				epochList.append( log['timestamp'] )
 				groupList[ log['timestamp'] ] = groupID
 
-			# print( groupID, '\t', x, '\t', y, '\t', _.resolveEpochTest( log['timestamp'] ), log['flag'] )
+			# _.pr( groupID, '\t', x, '\t', y, '\t', _.resolveEpochTest( log['timestamp'] ), log['flag'] )
 		else:
 			if lg == True:
 				lg = False
@@ -485,6 +485,7 @@ if __name__ == '__main__':
 	action()
 
 # _bkLog.do( _bkLog.imp.autoFileVersion )
+
 
 
 

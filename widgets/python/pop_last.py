@@ -282,14 +282,14 @@ def action():
         if delim in string:
             found = True
             subject = string.split(delim)
-            # print( subject )
+            # _.pr( subject )
             subject.pop()
             result = delim.join( subject )
             if _.switches.isActive('FileNameSafe'):
                 result = _str.filenameSafe( result )
             result = _str.replaceDuplicate( result, ' ' )
             result = _str.cleanBE( result, ' ' )
-            print( result )
+            _.pr( result )
             return result
     return string
 
@@ -298,6 +298,7 @@ def action():
 ########################################################################################
 if __name__ == '__main__':
     action()
+
 
 
 

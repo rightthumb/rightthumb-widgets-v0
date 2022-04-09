@@ -220,7 +220,7 @@ def action():
 					os.unlink( path )
 					delete_table.append( paths )
 					_.saveTable( delete_table, 'cloud.delete.json', p=0 )
-					print( 'Deleted:', path )
+					_.pr( 'Deleted:', path )
 					# _.printVarSimple(paths)
 
 				except Exception as e:
@@ -254,14 +254,14 @@ def action():
 								if os.path.isfile( deleted['local'] ):
 									fileBackup.switch( 'Input', path )
 									backup_file = fileBackup.do( 'action' )
-									print( 'backup:', backup_file )
+									_.pr( 'backup:', backup_file )
 									os.unlink( deleted['local'] )
 
 							try:
 								os.link(deleted['backup'], deleted['local'])
 								del delete_table[i]
 								_.saveTable( delete_table, 'cloud.delete.json', p=0 )
-								print( 'Recovered:', path )
+								_.pr( 'Recovered:', path )
 								# _.printVarSimple(delete_table)
 							except Exception as e:
 								pass
@@ -313,8 +313,8 @@ def action():
 		pass
 	# testA = 
 	# testB = _.friendlyDate( testA )
-	# print( testA )
-	# print( testB )
+	# _.pr( testA )
+	# _.pr( testB )
 
 	# _.printVarSimple( cloud.index )
 
@@ -331,6 +331,7 @@ _keychain = _.regImp( __.appReg, 'keychain' )
 if __name__ == '__main__':
 	action()
 	__.isExit()
+
 
 
 

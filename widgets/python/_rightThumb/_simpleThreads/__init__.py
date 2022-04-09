@@ -263,7 +263,7 @@ class ThisThread(threading.Thread):
 		finally:
 			self.endTime = time.time()
 			self.duration = self.endTime - self.epoch
-			# print()
+			# _.pr()
 			# _.colorThis(  [ self.tID, 'ended' ], 'red'  )
 			ended = ''
 			if self.wasKilled:
@@ -329,25 +329,25 @@ class ThisThread(threading.Thread):
 # 			self.wait()
 
 # 			if not self.done:
-# 				# print()
-# 				# print()
+# 				# _.pr()
+# 				# _.pr()
 # 				for thisThread in self.registeredThreads:
 # 					if not thisThread.killOn is None:
 # 						if thisThread.duration is None:
 
-# 							print()
-# 							print()
-# 							print( '        name:', thisThread.name )
-# 							print( 'duration Var:', thisThread.duration )
-# 							print( '    duration:', time.time() - thisThread.epoch )
-# 							print( '      killOn:', thisThread.killOn )
+# 							_.pr()
+# 							_.pr()
+# 							_.pr( '        name:', thisThread.name )
+# 							_.pr( 'duration Var:', thisThread.duration )
+# 							_.pr( '    duration:', time.time() - thisThread.epoch )
+# 							_.pr( '      killOn:', thisThread.killOn )
 # 						if thisThread.duration is None and (  time.time() - thisThread.epoch ) > thisThread.killOn:
 # 							_.colorThis( 'TIMEOUT', 'red' )
 # 							thisThread.kill()
 # 							thisThread.join()
 
-# 				# print()
-# 				# print()
+# 				# _.pr()
+# 				# _.pr()
 
 
 # 				complete = 0
@@ -390,7 +390,7 @@ def handler( arg1='E1', arg2='E2' ):
 	i=0
 	# asdf
 	while True:
-		print( i, arg1, arg2 )
+		_.pr( i, arg1, arg2 )
 		i+=1
 		time.sleep(.5)
 
@@ -421,9 +421,9 @@ def test():
 	# """)
 	# cursor.execute("SHOW TABLES")
 	# rows = cursor.fetchall()
-	# # print( rows[1] )
+	# # _.pr( rows[1] )
 	# for row in rows:
-	# 	print(row)
+	# 	_.pr(row)
 
 
 
@@ -434,7 +434,7 @@ def test():
 	# 					VALUES ( 1, 'Reph', 'Scott', '4477 Amberly Oaks Court', 'Tampa' );
 	# """)
 	# cnxn.commit()
-	# print( 'Added' )
+	# _.pr( 'Added' )
 
 	start = time.time()
 	loops = 20
@@ -450,16 +450,16 @@ def test():
 	end = time.time()
 	total = end - start
 	average = total / loops
-	print(  )
-	print( 'Loops:', loops )
-	print( 'Total milliseconds:', total )
-	print( 'Average:', average )
+	_.pr(  )
+	_.pr( 'Loops:', loops )
+	_.pr( 'Total milliseconds:', total )
+	_.pr( 'Average:', average )
 
 
 
-	# print( rows[1] )
+	# _.pr( rows[1] )
 	# for row in rows:
-	# 	print(row)
+	# 	_.pr(row)
 
 class Asset_Manager:
 
@@ -718,25 +718,25 @@ class Manage:
 		
 		done = False
 		while not done:
-			# print()
-			# print()
+			# _.pr()
+			# _.pr()
 			for thisThread in self.threads:
 				if not thisThread.killOn is None:
 					if thisThread.duration is None:
 
-						print()
-						print()
-						print( '        name:', thisThread.name )
-						print( 'duration Var:', thisThread.duration )
-						print( '    duration:', time.time() - thisThread.epoch )
-						print( '      killOn:', thisThread.killOn )
+						_.pr()
+						_.pr()
+						_.pr( '        name:', thisThread.name )
+						_.pr( 'duration Var:', thisThread.duration )
+						_.pr( '    duration:', time.time() - thisThread.epoch )
+						_.pr( '      killOn:', thisThread.killOn )
 					if thisThread.duration is None and (  time.time() - thisThread.epoch ) > thisThread.killOn:
 						_.colorThis( 'TIMEOUT', 'red' )
 						thisThread.kill()
 						thisThread.join()
 
-			# print()
-			# print()
+			# _.pr()
+			# _.pr()
 
 
 			complete = 0
@@ -795,6 +795,7 @@ def action():
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

@@ -204,12 +204,12 @@ def action():
 		return _.ddelim( txt, what=what )
 
 	_.linePrint(c='yellow')
-	# txt = _.genUUID(); print(txt); what='uuid'; eof=min(txt,what); print(eof);  _.linePrint(c='yellow');
-	txt = 'A34606ED742E461E9A1461AA0F98780D'; print(txt); what='uuid'; eof=min(txt,what); print(eof);  _.linePrint(c='yellow');
-	txt = '2022-03-02 14:44:26'; print(txt); what='dt'; eof=min(txt,what); print(eof); _.linePrint(c='yellow');
-	txt = '20220302'; print(txt); what='date'; eof=min(txt,what); print(eof); _.linePrint(c='yellow');
-	txt = '20220302145338'; print(txt); what='dt'; eof=min(txt,what); print(eof); _.linePrint(c='yellow');
-	txt = '202203021453'; print(txt); what='dt'; eof=min(txt,what); print(eof); _.linePrint(c='yellow');
+	# txt = _.genUUID(); _.pr(txt); what='uuid'; eof=min(txt,what); _.pr(eof);  _.linePrint(c='yellow');
+	txt = 'A34606ED742E461E9A1461AA0F98780D'; _.pr(txt); what='uuid'; eof=min(txt,what); _.pr(eof);  _.linePrint(c='yellow');
+	txt = '2022-03-02 14:44:26'; _.pr(txt); what='dt'; eof=min(txt,what); _.pr(eof); _.linePrint(c='yellow');
+	txt = '20220302'; _.pr(txt); what='date'; eof=min(txt,what); _.pr(eof); _.linePrint(c='yellow');
+	txt = '20220302145338'; _.pr(txt); what='dt'; eof=min(txt,what); _.pr(eof); _.linePrint(c='yellow');
+	txt = '202203021453'; _.pr(txt); what='dt'; eof=min(txt,what); _.pr(eof); _.linePrint(c='yellow');
 
 
 
@@ -217,6 +217,7 @@ def action():
 if __name__ == '__main__':
 	action()
 	__.isExit()
+
 
 
 

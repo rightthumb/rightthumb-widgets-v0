@@ -159,21 +159,21 @@ _.postLoad( __file__ )
 try: 
 	from googlesearch import search
 except ImportError:  
-	print("No module named 'google' found") 
+	_.pr("No module named 'google' found") 
 
 
 # for x in dir( search ):
-# 	print( x )
+# 	_.pr( x )
 # sys.exit()
 
 def action():
 	_.updateLine( 'Searching google.com                     ' )
 	# for x in dir( google.standard_search.GoogleResult ):
-		# print( x )
+		# _.pr( x )
 	# data = google.doGoogleSearch('python')
 	# google.standard_search.search = 'python'
 	# data = 
-	# print( data )
+	# _.pr( data )
 	query = ' '.join( _.switches.values('Query') )
 	# _.switches.value('Query').replace( ',', ' ' )
 	# query = _.ci( query )
@@ -221,22 +221,22 @@ def action():
 
 	if not _.switches.isActive('NoPrint'):
 		if not _.switches.isActive('Clean'):
-			print()
+			_.pr()
 			if not srcSave:
 				_.colorThis( [  '', '(', 'live', ')'  ], 'darkcyan' )
 			else:
 				_.colorThis( [  '', '(', 'archive', ')'  ], 'darkcyan' )
 
 
-		print()
+		_.pr()
 		for key in result:
-			print( key, result[key] )
+			_.pr( key, result[key] )
 
 
 		if not _.switches.isActive('NoAsk'):
 			# _.pv( result )
 			_copy = _.regImp( __.appReg, '-copy' )
-			print()
+			_.pr()
 			ask = input( '  id?: ' )
 			if len(ask):
 				i = int(ask)
@@ -261,6 +261,7 @@ def action():
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

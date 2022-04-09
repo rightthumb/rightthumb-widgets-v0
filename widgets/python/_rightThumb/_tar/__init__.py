@@ -34,9 +34,9 @@ isTar = dot()
 isTar.gz = isGz
 isTar.bz2 = isBz2
 def tar( files, tarball=None, gz=False, ext=None  ):
-	# print(type(files),files)
+	# _.pr(type(files),files)
 	if type(files) is str:
-		# print('here')
+		# _.pr('here')
 		files = [files]
 	if gz:
 		ext = '.tar.gz'
@@ -52,7 +52,7 @@ def tar( files, tarball=None, gz=False, ext=None  ):
 		tarball = tarball
 	once=False
 	hasAction = False
-	# print(files)
+	# _.pr(files)
 	for i,path in enumerate( files ):
 		if not type(path) == str:
 			path = path[0]
@@ -60,7 +60,7 @@ def tar( files, tarball=None, gz=False, ext=None  ):
 		# if type(path) == list:
 		# 	path = path[0]
 		# 	files[i] = path
-		# print(type(path), path)
+		# _.pr(type(path), path)
 		# sys.exit()
 		if not os.path.isdir(path) and not _.isTar.gz(path) and not _.isTar.bz2(path):
 			hasAction = True
@@ -70,12 +70,12 @@ def tar( files, tarball=None, gz=False, ext=None  ):
 
 	for i,path in enumerate( files ):
 		aa = os.stat( path ).st_size
-		print( _.formatSize( aa ) )
-		# print('here')
-		# print(path)
+		_.pr( _.formatSize( aa ) )
+		# _.pr('here')
+		# _.pr(path)
 		if os.path.isdir(path):
 
-			# print('here')
+			# _.pr('here')
 			if tarball:
 				folder( path, tarball )
 			else:
@@ -93,9 +93,9 @@ def tar( files, tarball=None, gz=False, ext=None  ):
 				tar.add(path)
 				tar.close()
 				bb = os.stat( path+ext ).st_size
-				print( _.formatSize( bb ) )
-				print( str(_.percentageDiffCalc( aa, bb ))+'%' )
-				print( _.formatSize(aa-bb) )
+				_.pr( _.formatSize( bb ) )
+				_.pr( str(_.percentageDiffCalc( aa, bb ))+'%' )
+				_.pr( _.formatSize(aa-bb) )
 				if _.switches.isActive('NoExt'):
 					os.unlink( path )
 					os.rename( path+ext, path )
@@ -103,9 +103,9 @@ def tar( files, tarball=None, gz=False, ext=None  ):
 	if once and len(_.switches.value('Compress')):
 		tar.close()
 		bb = os.stat( _.switches.values('Compress')[0] ).st_size
-		print( _.formatSize( bb ) )
-		print( str(_.percentageDiffCalc( aa, bb ))+'%' )
-		print( _.formatSize(aa-bb) )
+		_.pr( _.formatSize( bb ) )
+		_.pr( str(_.percentageDiffCalc( aa, bb ))+'%' )
+		_.pr( _.formatSize(aa-bb) )
 
 
 def untar( files ):
@@ -127,7 +127,7 @@ def untar( files ):
 def uncompress_folder(path):
 	tar = xtarfile.open(path)
 	for member in tar.getmembers():
-		print( "Extracting %s" % member.name )
+		_.pr( "Extracting %s" % member.name )
 		tar.extract(member, path=path.replace('.tar.bz2',''))
 
 
@@ -149,6 +149,7 @@ def folder( fromPath, toPath=None, gz=False ):
 def list(files):
 	for path in files:
 		tar = xtarfile.open(path,'r:bz2')
-		print( tar.list() )
+		_.pr( tar.list() )
 		tar.close()
+
 

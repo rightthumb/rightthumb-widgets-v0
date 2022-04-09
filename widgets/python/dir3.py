@@ -182,7 +182,7 @@ if not sys.stdin.isatty():
 
 # _dir.sqlCreateTable( db, deleteDBFirst=True, close=True )
 # obj = _dir.fileInfo( path, sql=True )
-# print(   _dir.fileInfo( _.switches.value('Input') )['size']   )
+# _.pr(   _dir.fileInfo( _.switches.value('Input') )['size']   )
 
 # _.saveLog('queue')
 # _.saveLog('audit')
@@ -275,14 +275,14 @@ def getFileInfo( path, qID=False ):
 	else:
 		md5Data = False
 
-	# print( md5Data )
+	# _.pr( md5Data )
 	try:
 		obj = _dir.fileInfo( path, sql, md5Data, exif=exif )
 	except Exception as e:
 		obj =False
 	# _.printVar( obj )
 	# sys.exit()
-	# print( obj )
+	# _.pr( obj )
 	# sys.exit()
 	if not type(obj) == bool:
 		if _.switches.isActive('Dump'):
@@ -336,22 +336,22 @@ def action():
 
 
 	if _.switches.isActive('PrintVar'):
-		# print( _.switches.value('PrintVar') )
+		# _.pr( _.switches.value('PrintVar') )
 
 		for file in _.switches.values('PrintVar'):
-			print( '______________________________________________' )
+			_.pr( '______________________________________________' )
 			info = _dir.fileInfo( _.ci(file), md5=True, exif=True )
 			_.printVar( info )
 			d = _.dateDiffX( info['date_modified_raw'], time.time() )
-			print( 'Days:', d )
-			print( 'Weeks:', round(d/7,1) )
-			print( 'Months:', round(d/30,1) )
+			_.pr( 'Days:', d )
+			_.pr( 'Weeks:', round(d/7,1) )
+			_.pr( 'Months:', round(d/30,1) )
 			y = round(d/365,1)
 			if y < 1:
-				print( 'Years:', _.percentageDiffInt( y, 1 ), '%' )
+				_.pr( 'Years:', _.percentageDiffInt( y, 1 ), '%' )
 			else:
-				print( 'Years:', y )
-			# print( _.dateDiff( info['date_modified_raw'], time.time() ) )
+				_.pr( 'Years:', y )
+			# _.pr( _.dateDiff( info['date_modified_raw'], time.time() ) )
 
 		sys.exit()
 
@@ -359,10 +359,10 @@ def action():
 	if not _.switches.isActive( 'SkipAgeCheck' ):
 		if os.path.isfile( __.cacheFile ):
 			age = int(_dir.fileAge( __.cacheFile ))
-			# print( age, age/60 )
+			# _.pr( age, age/60 )
 			# sys.exit()
 			if ( age/60 ) < __.ageCheck:
-				# print( 'Skipped' )
+				# _.pr( 'Skipped' )
 				import dir0
 				if _.switches.isActive('NoColor'):
 					dir0.updateSwitchField('NoColor','active',True)
@@ -389,7 +389,7 @@ def action():
 
 	if not type( _.appData[__.appReg]['pipe'] ) == str:
 		# os.system('cls')
-		# print()
+		# _.pr()
 		if not exif:
 			_.threads.report = False
 			_.threads.auditPrint = False
@@ -433,15 +433,15 @@ def complete():
 			_.saveTable2( data, _.switches.value('Save'), printThis=False )
 		else:
 			_.saveTable2( data, __.cacheFile, printThis=False )
-			# print(' p dir -cache offline.dirCache')
+			# _.pr(' p dir -cache offline.dirCache')
 		if not _.switches.isActive('NoDirPass'):
 			import dir0
 		if _.switches.isActive('Save'):
 			pass
-			# print( 'Saved:', _.switches.value('Save') )
+			# _.pr( 'Saved:', _.switches.value('Save') )
 		else:
 			pass
-			# print( 'Saved:', __.cacheFile )
+			# _.pr( 'Saved:', __.cacheFile )
 
 # ****************************************************
 __.ageCheck = 20
@@ -474,8 +474,8 @@ if _.switches.isActive('MD5'):
 			shouldGetData = True
 	if shouldGetData:
 		dataArchive = _.getTable2( dataArchiveFile )
-	# print(dataArchiveFile)
-	# print(dataArchive)
+	# _.pr(dataArchiveFile)
+	# _.pr(dataArchive)
 else:
 	md5 = False
 
@@ -485,6 +485,7 @@ else:
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

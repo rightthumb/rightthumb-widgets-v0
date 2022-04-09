@@ -209,8 +209,8 @@ def download(subject):
 	return text
 
 def process(subject):
-	# print(subject)
-	# print(download(subject))
+	# _.pr(subject)
+	# _.pr(download(subject))
 	return { 'text': subject.replace(' ','') }
 	# return { 'text': subject, 'hex': subject.encode("utf-8").hex(), 'code': download(subject) }
 	return subject.encode("utf-8").hex(), download(subject)
@@ -226,9 +226,9 @@ def action():
 
 	if _.switches.isActive('Subject'):
 		for item in _.switches.values('Subject'):
-			# print(item)
+			# _.pr(item)
 			x = eval(item)
-			print(x)
+			_.pr(x)
 		return None
 
 	for i,subject in enumerate( _.isData(r=1) ):
@@ -242,12 +242,12 @@ def action():
 			if t:
 				# json = _.pv(rec,p=0)
 				json = JSON( rec )
-				# print(json)
+				# _.pr(json)
 				# sys.exit()
 				code = json.split('"')[3]
-				print( s, code )
+				_.pr( s, code )
 
-			# print( rec )
+			# _.pr( rec )
 
 
 
@@ -255,6 +255,7 @@ def action():
 if __name__ == '__main__':
 	action()
 	__.isExit()
+
 
 
 

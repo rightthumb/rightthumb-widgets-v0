@@ -205,13 +205,13 @@ _.postLoad( __file__ )
 def process_line(row):
 	global theII
 	global theI
-	if 'print('+str(theII) in row and not '#' in row:
-		row = row.replace( 'print(', '#print(' )
+	if '_.pr('+str(theII) in row and not '#' in row:
+		row = row.replace( '_.pr(', '#_.pr(' )
 		return row
 
 	if '_.tables.print(' in row:
 		pre = row.split('_.tables.print(')[0]
-		row = pre + 'print('+str(theI) +')'+ '\n' + row + '\n' + pre + 'print('+str(theI) +')'+ '\n'
+		row = pre + '_.pr('+str(theI) +')'+ '\n' + row + '\n' + pre + '_.pr('+str(theI) +')'+ '\n'
 		theI+=1
 	return row
 
@@ -220,7 +220,7 @@ def process_line(row):
 def action():
 	for i,row in enumerate( _.isData(r=1) ):
 		row = process_line(row)
-		print(row)
+		_.pr(row)
 
 theII = 100000
 theI = theII
@@ -230,6 +230,7 @@ theI = theII
 if __name__ == '__main__':
 	action()
 	__.isExit()
+
 
 
 

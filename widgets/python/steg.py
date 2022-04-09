@@ -227,7 +227,7 @@ def read(path,password=None):
 
 
 def write(path,hidden,password=None):
-	print(path,hidden,password)
+	_.pr(path,hidden,password)
 	if not password is None:
 		hidden = _blowfish.encrypt( hidden, _hash.string(password) )
 
@@ -303,6 +303,7 @@ import getpass
 if __name__ == '__main__':
 	action()
 	__.isExit()
+
 
 
 

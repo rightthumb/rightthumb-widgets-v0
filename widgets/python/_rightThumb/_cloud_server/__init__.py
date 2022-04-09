@@ -295,7 +295,7 @@ def formatData( result ):
 import getpass
 
 # password = getpass.getpass()
-# print(password)
+# _.pr(password)
 ######################################################################################## ########################################################################################
 
 
@@ -397,7 +397,7 @@ import random
 
 
 def handler( client, i, qID=None, account=None ):
-	# print( 'client:', type(client) )
+	# _.pr( 'client:', type(client) )
 	# sys.exit()
 	global dataBuffer
 
@@ -418,11 +418,11 @@ def handler( client, i, qID=None, account=None ):
 
 
 	if alive:
-		# print( 'account:', str(account) )
+		# _.pr( 'account:', str(account) )
 		while alive and account is None:
 			dataIn = client.recv(1000)
 			data = str(dataIn,'iso-8859-1')
-			# print(data)
+			# _.pr(data)
 			if '2BR2D2C3P04LIFE_LOGIN' in data:
 				account = eval(data)
 				del account['flag']
@@ -446,18 +446,18 @@ def handler( client, i, qID=None, account=None ):
 				for userRecord in database:
 					if userRecord['user'] == account['user']:
 						_.colorThis( [ 'Login:\t', account['user'] ], 'yellow' )
-						# print( 'record found' )
+						# _.pr( 'record found' )
 						recordFound = True
-						# print( 'en:', userRecord['password'] )
-						# print( 'pass:', formatData(account['password']) )
-						# print( 'base:', thePassword )
+						# _.pr( 'en:', userRecord['password'] )
+						# _.pr( 'pass:', formatData(account['password']) )
+						# _.pr( 'base:', thePassword )
 						try:
 							decryptedPassword = decryptVar( formatData(userRecord['password']), formatData(account['password']) )
 							decryptedPasswordDecoded = str(decryptedPassword,'iso-8859-1')
 						except Exception as e:
 							decryptedPassword = '{098DCA7077F5}'
 
-						# print( 'decrypted', decryptedPasswordDecoded )
+						# _.pr( 'decrypted', decryptedPasswordDecoded )
 						if decryptedPasswordDecoded == users[account['user']]['machine']:
 							authorized = True
 							users[account['user']]['authorized'] = True
@@ -470,13 +470,13 @@ def handler( client, i, qID=None, account=None ):
 					_.colorThis( [ 'record NOT found:', account['user'] ], 'red' )
 					write_key()
 					key = load_key()
-					print( 'new key:', _.colorThis( [ key ], 'green', p=0 ) )
+					_.pr( 'new key:', _.colorThis( [ key ], 'green', p=0 ) )
 					
 					newRecord = {
 										'user': account['user'],
 										'password': encryptVar( formatData(users[account['user']]['machine']), key ),
 					}
-					# print( newRecord )
+					# _.pr( newRecord )
 					database.append(newRecord)
 					_.saveTable( database, 'ssl_socket_bridge_user_mgt_server.json' )
 
@@ -491,7 +491,7 @@ def handler( client, i, qID=None, account=None ):
 					authColor = 'green'
 				else:
 					authColor = 'red'
-				print( 'authorized:', _.colorThis( authorized, authColor, p=0 ) )
+				_.pr( 'authorized:', _.colorThis( authorized, authColor, p=0 ) )
 
 				if account['user'] == 'logs':
 					dataBuffer[  account['user']  ] = { 'data': users, 'flag': '2BR2D2C3P04LIFE_USERS' }
@@ -499,7 +499,7 @@ def handler( client, i, qID=None, account=None ):
 				break
 
 		if 'administrators' in account['groups']:
-			print( 'Administrator Login' )
+			_.pr( 'Administrator Login' )
 
 			while users[account['user']]['status']:
 
@@ -510,7 +510,7 @@ def handler( client, i, qID=None, account=None ):
 					instructions = eval(data)
 					_.printVar( instructions )
 					if not instructions['send'] is None:
-						print( 'INSTRUCTIONS:\t', instructions['user'], instructions['send'] )
+						_.pr( 'INSTRUCTIONS:\t', instructions['user'], instructions['send'] )
 						time.sleep(.5)
 
 						
@@ -535,11 +535,11 @@ def handler( client, i, qID=None, account=None ):
 							dataBuffer[  instructions['user']  ] = instructions['send']
 						else:
 							if instructions['send'] == 'kill':
-								print( 'server kill' )
+								_.pr( 'server kill' )
 								killswitch = True
 								
 								_.threads.autoLoaded = True
-								print( 'Kill', account['user'], qID )
+								_.pr( 'Kill', account['user'], qID )
 								users[account['user']]['status'] = 0
 								users[account['user']]['logout'] = time.time()
 								# shutdown()
@@ -548,7 +548,7 @@ def handler( client, i, qID=None, account=None ):
 								wait = True
 
 								while wait:
-									print( 'waiting for connections to close' )
+									_.pr( 'waiting for connections to close' )
 									cnt = 0
 									for usr in active.keys():
 										if active[usr] == True and not usr == 'administrator':
@@ -564,7 +564,7 @@ def handler( client, i, qID=None, account=None ):
 								sys.exit()
 
 		elif 'system' in account['groups'] and account['user'] == 'logs':
-			# print( 'Log Client Connected' )
+			# _.pr( 'Log Client Connected' )
 
 			while users[account['user']]['status']:
 
@@ -572,14 +572,14 @@ def handler( client, i, qID=None, account=None ):
 					users[account['user']]['status'] = 0
 					users[account['user']]['logout'] = time.time()
 					client.send(  formatData('exit')  )
-					print( 'Kill', account['user'], qID )
+					_.pr( 'Kill', account['user'], qID )
 					client.close()
 					_.threads.kill( qID )
 
 					
 
 				if not dataBuffer[  account['user']  ] is None:
-					print( account['user'], 'Data for me' )
+					_.pr( account['user'], 'Data for me' )
 					result = dataBuffer[  account['user']  ]
 					if result == 'exit':
 						users[account['user']]['status'] = 0
@@ -587,7 +587,7 @@ def handler( client, i, qID=None, account=None ):
 					result = formatData( result )
 					if len(str(result,'iso-8859-1')):
 						client.send(result)
-						print( 'sent' )
+						_.pr( 'sent' )
 					dataBuffer[  account['user']  ] = None
 				time.sleep(0.1)
 
@@ -595,21 +595,21 @@ def handler( client, i, qID=None, account=None ):
 
 
 		elif 'users' in account['groups']:
-			# print( 'User Login:', account['user'] )
+			# _.pr( 'User Login:', account['user'] )
 			while users[account['user']]['status']:
 
 				if killswitch:
 					users[account['user']]['status'] = 0
 					users[account['user']]['logout'] = time.time()
 					client.send(  formatData('exit')  )
-					print( 'Kill', account['user'], qID )
+					_.pr( 'Kill', account['user'], qID )
 					client.close()
 					_.threads.kill( qID )
 
 					
 
 				if not dataBuffer[  account['user']  ] is None:
-					print( account['user'], 'Data for me' )
+					_.pr( account['user'], 'Data for me' )
 					result = dataBuffer[  account['user']  ]
 					if result == 'exit':
 						users[account['user']]['status'] = 0
@@ -617,7 +617,7 @@ def handler( client, i, qID=None, account=None ):
 					result = formatData( result )
 					if len(str(result,'iso-8859-1')):
 						client.send(result)
-						print( 'sent' )
+						_.pr( 'sent' )
 					dataBuffer[  account['user']  ] = None
 				time.sleep(0.1)
 
@@ -668,7 +668,7 @@ def action():
 		try:
 			# sock.settimeout(5.0)
 			client, address = sock.accept()
-			print( "{} connected".format(address) )
+			_.pr( "{} connected".format(address) )
 
 			_.threads.add( 'sessions', handler, [{'client':client,'i':i}], kwargs=True )
 			i += 1
@@ -684,16 +684,16 @@ def action():
 				sock.close()
 			except Exception as e:
 				pass
-			print('sleep')
+			_.pr('sleep')
 			while logoutComplete == 0:
 				time.sleep(.5)
 			time.sleep(5)
-			print('killAll')
+			_.pr('killAll')
 			_.threads.killAll()
 			while not logoutComplete == 2:
 				time.sleep(.5)
 			time.sleep(8)
-			print('end')
+			_.pr('end')
 			sys.exit()
 			raise
 
@@ -701,7 +701,7 @@ def action():
 def logout():
 	global logoutComplete
 	logoutComplete = 2
-	print( 'Logout' )
+	_.pr( 'Logout' )
 
 
 
@@ -739,6 +739,7 @@ epyi cloud_server -file admin
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

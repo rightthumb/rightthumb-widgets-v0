@@ -71,11 +71,11 @@ class TheChild:
 		self.focusPop = registration['focus']
 		# self.app = self.app+'.py'
 		self.imp = None
-		print( self.app )
+		_.pr( self.app )
 		try:
 			self.imp = importlib.import_module( self.app )
 		except Exception as e:
-			print( 'e:', e, self.app , 'ext 67')
+			_.pr( 'e:', e, self.app , 'ext 67')
 			pass
 		self.focus = self.imp.focus( parentApp=registration['focus'] )
 
@@ -88,7 +88,7 @@ class TheChild:
 		self.saveLogFile = True
 
 		# load()
-		print( '    made it here' )
+		_.pr( '    made it here' )
 		self.imp.registerSwitches()
 
 		# __.constructRegistration(appInfo[self.imp.focus(focus)]['file'],self.imp.focus(focus))
@@ -124,7 +124,7 @@ class TheChild:
  #    def listFunctions( self ):
  #        self.functions
  #        for func in self.functions:
- #            print( func['name'], func['args'] )
+ #            _.pr( func['name'], func['args'] )
 
  #    def pipe( self, data=[], focus=None ):
  #      # app.data('Pipe', focus=self.focusPop).set(None)
@@ -283,4 +283,5 @@ class TheChild:
  #        #   theID = threads.add( 'execute', theFunc, [ arg, self.focus ], trigger=saveThreadsLog, loaded=True )
 
  #        return theID
+
 

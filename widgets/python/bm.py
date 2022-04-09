@@ -161,8 +161,8 @@ def action():
 	if _.switches.isActive('BuildFolders'):
 		for alias in index['labels']:
 			if _.showLine(alias):
-				# print(alias)
-				# print(  _.showLine(alias),  alias)
+				# _.pr(alias)
+				# _.pr(  _.showLine(alias),  alias)
 				path = _v.resolveFolderIDs( index['labels'][alias] )
 				_.cp( [ '\n', 'cd', path, '\n', 'm', alias, '\n' ], 'cyan' )
 				script += '\n' +' '+ 'cd' +' '+ path +' '+ '\n' +' '+ 'm' +' '+ alias +' '+ '\n'
@@ -174,7 +174,7 @@ def action():
 				raw = index['labels'][alias]
 				path = _v.resolveFolderIDs( raw )
 				script += alias+'|'+raw+'\n'
-				print(script)
+				_.pr(script)
 
 		pass
 		script
@@ -195,8 +195,8 @@ def action():
 
 	sanitized = bm.sanitize()
 
-	# print( folder )
-	# print( sanitized )
+	# _.pr( folder )
+	# _.pr( sanitized )
 
 	try:
 		try:
@@ -209,7 +209,7 @@ def action():
 	except Exception as e:
 		_.colorThis( [ 'Error: no bookmarks' ], 'red' )
 
-	print( _v.sanitizeFolder(folder) )
+	_.pr( _v.sanitizeFolder(folder) )
 
 
 # def load():
@@ -232,6 +232,7 @@ import os.path
 import sys
 from os.path import join, getsize, isfile, isdir, splitext
 # import _rightThumb._vars as _v
+
 
 
 

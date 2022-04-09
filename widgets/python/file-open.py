@@ -155,7 +155,7 @@ import subprocess
 def action():
 	if _.switches.isActive('App') and _.switches.isActive('Files'):
 		for path in _.switches.values('Files'):
-			# print(__.path(path))
+			# _.pr(__.path(path))
 			subprocess.Popen([_.switches.values('App')[0], __.path(path)])
 
 
@@ -163,6 +163,7 @@ def action():
 if __name__ == '__main__':
 	action()
 	__.isExit()
+
 
 
 

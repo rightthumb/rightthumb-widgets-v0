@@ -279,7 +279,7 @@ def action():
 
 	injectThis = _v.myAppsJs + _v.slash+'auditHTML.js'
 	code = _.getText( injectThis, raw=True )
-	# print( code )
+	# _.pr( code )
 	_browser.imp.project.inject( code )
 
 	test = _browser.imp.project.injectReturn( 'return window.hackData.process();' )
@@ -297,6 +297,7 @@ def action():
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

@@ -269,7 +269,7 @@ def process( row ):
 		if theRestActive:
 			record[i] = _.colorThis( segment, theRestColor, p=0 )
 
-	print( _.switches.values('Delim')[0].join( record ) )
+	_.pr( _.switches.values('Delim')[0].join( record ) )
 
 
 
@@ -281,12 +281,13 @@ def action():
 			process( row )
 
 		if not _.switches.isActive('NoCount'):
-			print()
+			_.pr()
 			_.colorThis( len(_.appData[__.appReg]['pipe']), 'green' )
 
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

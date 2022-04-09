@@ -174,7 +174,7 @@ def process(row):
 					complete[last] = []
 				complete[last].append(row)
 				lastRow = row
-	# print(row)
+	# _.pr(row)
 
 def wordStem(word):
 	global processWordStem
@@ -249,7 +249,7 @@ def action():
 	if _.switches.isActive('Labels'):
 		for key in data:
 			if _.showLine(key):
-				print( key )
+				_.pr( key )
 		sys.exit()
 
 
@@ -271,9 +271,9 @@ def action():
 		for record in table:
 			if record['records'] == cnt:
 				i+=1
-				print()
-				print()
-				print(i)
+				_.pr()
+				_.pr()
+				_.pr(i)
 				_.colorThis(  [  record['stem']  ], 'yellow'  )
 				for key in record['keys']:
 					_.colorThis(  [  '\t', key, ' '.join( data[key] )  ], 'green'  )
@@ -317,8 +317,8 @@ def action():
 		elif _.switches.isActive('Records'):
 			for key in data:
 				if _.showLine(key):
-					print()
-					print()
+					_.pr()
+					_.pr()
 					_.colorThis( key.replace(':',''), 'yellow' )
 					for x in data[key]:
 						_.colorThis( [  '\t', x  ], 'green' )
@@ -342,6 +342,7 @@ complete = {}
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

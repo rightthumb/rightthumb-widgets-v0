@@ -284,7 +284,7 @@ def action():
 		if test == 1:
 			for char in index['char']:
 				if char['label'] in index['individual']:
-					print( char['label'],  len(char['index'])  )
+					_.pr( char['label'],  len(char['index'])  )
 
 			sys.exit()
 
@@ -321,13 +321,14 @@ def action():
 			# _.printVar( profile['dicProfile'] )
 
 			for record in profile['dicProfile']:
-				print( record['field'] )
+				_.pr( record['field'] )
 
 
 
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

@@ -258,35 +258,35 @@ def getFolder(folder):
 				if _.showLine(path):
 
 					# if _.switches.isActive('Print'):
-					# 	print( path )
+					# 	_.pr( path )
 
 					shouldPrint = False
 
 					if not _.switches.isActive('Text') and not _.switches.isActive('Binary'):
 						i = i + 1
-						# print(0,whatIsIt(path),path)
-						# print(path)
+						# _.pr(0,whatIsIt(path),path)
+						# _.pr(path)
 						shouldPrint = True
 					else:
 						if not _.switches.isActive('Binary') and  _.switches.isActive('Text') and isText(path):
 							i = i + 1
-							# print(1,whatIsIt(path),path)
-							# print(path)
+							# _.pr(1,whatIsIt(path),path)
+							# _.pr(path)
 							shouldPrint = True
 						if not _.switches.isActive('Binary') and not _.switches.isActive('Text'):
 							i = i + 1
-							# print(2,whatIsIt(path),path)
-							# print(path)
+							# _.pr(2,whatIsIt(path),path)
+							# _.pr(path)
 							shouldPrint = True
 						if not _.switches.isActive('Text') and  _.switches.isActive('Binary') and not isText(path):
 							i = i + 1
-							# print(3,whatIsIt(path),path)
-							# print(path)
+							# _.pr(3,whatIsIt(path),path)
+							# _.pr(path)
 							shouldPrint = True
 						if not _.switches.isActive('Text') and  not _.switches.isActive('Binary'):
 							i = i + 1
-							# print(4,whatIsIt(path),path)
-							# print(path)
+							# _.pr(4,whatIsIt(path),path)
+							# _.pr(path)
 							shouldPrint = True
 
 
@@ -325,7 +325,7 @@ def getFolder(folder):
 
 
 
-								# print( formatedSize, '\t', path )
+								# _.pr( formatedSize, '\t', path )
 
 
 
@@ -338,7 +338,7 @@ def getFolder(folder):
 						# if not _.switches.isActive('Plus'):
 						# 	_.colorThis( path, 'cyan' )
 						# else:
-						# 	print( _.colorPlus( path, 'cyan' ) )
+						# 	_.pr( _.colorPlus( path, 'cyan' ) )
 
 			if os.path.isdir(path):
 				newFolder = folder + _v.slash + item
@@ -348,7 +348,7 @@ def getFolder(folder):
 					except Exception as e:
 						pass
 				else:
-					print('error')
+					_.pr('error')
 
 
 
@@ -369,19 +369,19 @@ def action():
 	_.colorThis( [ '\nDatabase:', databaseFile ], 'cyan' )
 
 	if os.path.isfile( databaseFile ):
-		print()
-		print( '___________________________________________' )
+		_.pr()
+		_.pr( '___________________________________________' )
 		_nd = _.regImp( __.appReg, 'fileNameDate' )
 		_nd.pipe( [databaseFile] )
 		_nd.do( 'action' )
-		print( '___________________________________________' )
+		_.pr( '___________________________________________' )
 
 	# sys.exit()
 	# try:
 	# 	os.unlink(databaseFile)
 	# except Exception as e:
 	# 	pass
-	# print( databaseFile )
+	# _.pr( databaseFile )
 	# sys.exit()
 	conn, cursor = _dir.sqlCreateTable( databaseFile )
 	# conn = sqlite3.connect(databaseFile)
@@ -399,13 +399,13 @@ def action():
 	else:
 		folder = _.switches.values('Path')[0]
 	
-	# print( folder )
+	# _.pr( folder )
 	# sys.exit()
-	print()
-	print()
+	_.pr()
+	_.pr()
 	_.colorThis( [ 'indexing:', folder ], 'green' )
-	print()
-	print()
+	_.pr()
+	_.pr()
 
 	getFolder(folder)
 	# if _.switches.isActive('Count') == False:
@@ -413,7 +413,7 @@ def action():
 	# 		_.colorThis( [  '\n', iS, 'of', i, '\n'  ], 'yellow' )
 	# 	else:
 	# 		_.colorThis( [  '\n{}\n'.format(i)  ], 'yellow' )
-	# 	# print('\n{}\n'.format(i))
+	# 	# _.pr('\n{}\n'.format(i))
 	# _.saveTable( _dir.timeAudit, '_dir.timeAudit.json', p=0 )
 	if _.switches.isActive('Count') == False:
 		_.colorThis( [ 'Created database of meta data for', _.addComma(i), 'files in ', round(time.time()-epoch,2), 'seconds,', round(  (time.time()-epoch)/60 ,1), 'minutes' ], 'yellow' )
@@ -482,6 +482,7 @@ if __name__ == '__main__':
 # attrib
 # getAttribs
 # getExtension
+
 
 
 

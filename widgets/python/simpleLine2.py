@@ -323,8 +323,8 @@ def action():
 		# _.printVar( _.appData )
 		for i,row in enumerate( _.appData[__.appReg]['pipe'] ):
 			if _.showLine( row ):
-				print()
-				print( process( row ) )
+				_.pr()
+				_.pr( process( row ) )
 
 
 
@@ -338,6 +338,7 @@ def action():
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

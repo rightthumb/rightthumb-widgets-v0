@@ -164,7 +164,7 @@ def processFolder( folder ):
 	global data
 	global depth
 	global defaultMaxDepth
-	# print( folder )
+	# _.pr( folder )
 	for file in os.listdir( folder ):
 		path = folder + _v.slash + file
 		if _.switches.isActive( 'Recursion' ):
@@ -201,7 +201,7 @@ def action():
 				_.appData[__.appReg]['pipe'].append( row )
 	if not type( _.appData[__.appReg]['pipe'] ) == bool:
 		_.pipeCleaner()
-		# print( _.printVar(_.appData) )
+		# _.pr( _.printVar(_.appData) )
 		folders = []
 		for i,row in enumerate(_.appData[__.appReg]['pipe']):
 			if os.path.isfile( row ):
@@ -210,15 +210,15 @@ def action():
 				if not folder in folders:
 					if os.path.isdir( folder ):
 						folders.append( folder )
-						# print( folder )
+						# _.pr( folder )
 		for i,folder in enumerate(folders):
-			# print( i, folder )
+			# _.pr( i, folder )
 			depth = 0
 			processFolder( folder )
 
 		for i,row in enumerate( data ):
-			# print( i, row )
-			print( row )
+			# _.pr( i, row )
+			_.pr( row )
 
 data = []
 depth = 0
@@ -230,6 +230,7 @@ defaultMaxDepth = 10
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

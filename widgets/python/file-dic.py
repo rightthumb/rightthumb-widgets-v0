@@ -207,7 +207,7 @@ def action():
 	#--> min, architecture {:strict:}
 
 	for i,path in enumerate( _.isData(r=1) ):
-		print(path)
+		_.pr(path)
 		if os.path.isfile(path):
 			_.pv( _dir.info(path) )
 
@@ -219,6 +219,7 @@ import _rightThumb._dir as _dir
 if __name__ == '__main__':
 	action()
 	__.isExit()
+
 
 
 

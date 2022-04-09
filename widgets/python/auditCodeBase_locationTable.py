@@ -244,8 +244,8 @@ def action():
 
 	_code.imp.validator.loadProject( project=None )
 	_code.imp.validator.asset
-	print( 'data', len(_code.imp.validator.locationTable) )
-	print( 'file', len(_code.imp.validator.asset) )
+	_.pr( 'data', len(_code.imp.validator.locationTable) )
+	_.pr( 'file', len(_code.imp.validator.asset) )
 	for record in _code.imp.validator.locationTable:
 		diff = record['end']-record['start']
 		if diff > 10000:
@@ -253,20 +253,20 @@ def action():
 				os.system('cls')
 			else:
 				os.system('clear')
-			print()
-			print()
-			print()
-			print()
-			print()
-			print( 'diff:', diff )
-			print('____________________________________________________')
+			_.pr()
+			_.pr()
+			_.pr()
+			_.pr()
+			_.pr()
+			_.pr( 'diff:', diff )
+			_.pr('____________________________________________________')
 			_.printVar( record )
-			print()
-			print('__________________________')
+			_.pr()
+			_.pr('__________________________')
 			theEnd = len(_code.imp.validator.asset) - (  record['end'] )
 			payload = _code.imp.validator.asset[ record['start'] :-theEnd ]
-			print( payload )
-			print('__________________________')
+			_.pr( payload )
+			_.pr('__________________________')
 			pause=input('pause')
 
 
@@ -284,6 +284,7 @@ def action():
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

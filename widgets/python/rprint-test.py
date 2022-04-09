@@ -167,13 +167,13 @@ def action():
 	global data
 
 	# for i,record in enumerate(data):
-	# 	print( '\n'.join( record.keys() ) )
+	# 	_.pr( '\n'.join( record.keys() ) )
 	# 	sys.exit()
 
 
 	# data = _.tables.rsort( data, 'd.level' )
-	# _.tables.rprint( data, 'name,level' )
-	# print( type(action) )
+	# _.tables.r_.pr( data, 'name,level' )
+	# _.pr( type(action) )
 
 	_.tables.register( 'data', data )
 	_.tables.aggregate( 'data', ' len=add( len(name), len(level) ); ' )
@@ -189,6 +189,7 @@ def load():
 if __name__ == '__main__':
 	action()
 	_.tables.eof()
+
 
 
 

@@ -10,7 +10,7 @@
 # ###########################################################################
 # ## {C3P0D40fAe8B} ##
 
-# print('*** it loaded ***')
+# _.pr('*** it loaded ***')
 import os
 import sys
 import time
@@ -21,7 +21,7 @@ import _rightThumb._matrix as _matrix
 a, app, application = _matrix.theApp()
 appDBA = _matrix.clearFocus( __name__, __file__ )
 _matrix.appReg = appDBA
-# print( 'appDBA', appDBA )
+# _.pr( 'appDBA', appDBA )
 app.focus( appDBA )
 def focus( parentApp='', childApp='', reg=True ):
 	global appDBA
@@ -118,6 +118,7 @@ def action():
 
 if __name__ == '__main__':
 	app.asyn( 'action', action, trigger=app.focus(appDBA).unregister )
+
 
 
 

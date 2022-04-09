@@ -283,8 +283,8 @@ _.postLoad( __file__ )
 import whois
 def action():
 	domain = whois.query('mcafee-us.security-check360.com')
-	print( 'HERE' )
-	print( domain )
+	_.pr( 'HERE' )
+	_.pr( domain )
 	_.printVar( domain )
 # mcafee-us.security-check360.com
 
@@ -294,6 +294,7 @@ def action():
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

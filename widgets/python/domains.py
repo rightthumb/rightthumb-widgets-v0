@@ -160,7 +160,7 @@ def process(row):
 	# _.updateLine( '                     ' )
 	# _.updateLine( '' )
 	if not _.switches.isActive('JustReturn'):
-		print( row )
+		_.pr( row )
 	return row
 
 
@@ -220,6 +220,7 @@ color = 'yellow'
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

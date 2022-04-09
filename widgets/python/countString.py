@@ -188,13 +188,13 @@ if __name__ == '__main__':
 # START
 
 def action():
-	print( len( _.switches.value( 'String' ) ) )
+	_.pr( len( _.switches.value( 'String' ) ) )
 	if _.switches.isActive( 'Half' ):
 		x =round( len( _.switches.value( 'String' ) )/2, 1 )
 		y = str( x )
 		if '.0' in y:
 			y = y.replace( '.0', '' )
-		print( y )
+		_.pr( y )
 
 
 
@@ -205,6 +205,7 @@ def action():
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

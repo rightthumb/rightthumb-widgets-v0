@@ -188,17 +188,17 @@ def check(path=None,data=None,ext='.bat',p=True,sVars=None,suby=False):
 	while '= ' in tester:
 		tester = tester.replace('= ','=')
 	dex={}
-	# print('path',path)
+	# _.pr('path',path)
 	# dex=_.vindex(data)
 	i=0
 	while True:
 		eol=_.vindex(data,i,n='\n')
-		# print('eol',eol)
+		# _.pr('eol',eol)
 		while eol == i:
 			i+=1
-			# print('fix',i)
+			# _.pr('fix',i)
 			if i == len(data):
-				# print('break')
+				# _.pr('break')
 				break
 			eol=_.vindex(data,i,n='\n')
 
@@ -210,9 +210,9 @@ def check(path=None,data=None,ext='.bat',p=True,sVars=None,suby=False):
 
 		# line = _.rstr( data, i, eol )
 		line = data[ i: eol+1 ].replace('\n','')
-		# print(line)
-		# print(line)
-		# print(i,eol,'line',line)
+		# _.pr(line)
+		# _.pr(line)
+		# _.pr(i,eol,'line',line)
 		pass
 		test=''
 		global add_s
@@ -224,10 +224,10 @@ def check(path=None,data=None,ext='.bat',p=True,sVars=None,suby=False):
 				test+=char
 			else:
 				test+=' '
-		# print('test',test)
+		# _.pr('test',test)
 		first=True
 		for var in sVars:
-			# print('test',var,test)
+			# _.pr('test',var,test)
 			passed=False
 			if ' '+add_s+var+add_e+' '.lower() in test.lower():
 				passed=True
@@ -235,7 +235,7 @@ def check(path=None,data=None,ext='.bat',p=True,sVars=None,suby=False):
 				passed=True
 			if not suby:
 				if ext in ['.bat'] and 'set '+var+'='.lower() in tester.lower():
-					# print('set '+var+'='.lower())
+					# _.pr('set '+var+'='.lower())
 					passed=False
 			if passed:
 				if '=' in line and not '==' in line:
@@ -256,11 +256,11 @@ def check(path=None,data=None,ext='.bat',p=True,sVars=None,suby=False):
 								printed.append(str(path))
 							# if first:
 							# 	first=False
-							# print(var,_.get_supporting_line(data,i,rev=dex))
-							# print(var,sVars[var])
+							# _.pr(var,_.get_supporting_line(data,i,rev=dex))
+							# _.pr(var,sVars[var])
 							_.updateLine('')
 							_.cp([var,line],'ColorBold.gray')
-							# print(var)
+							# _.pr(var)
 					if not line in table[path][var]:
 						l=_.get_supporting_line(data,i)
 						table[path][var].append( l )
@@ -278,8 +278,8 @@ def findVariables(data,ext):
 	subVars={}
 	if type(data) == list:
 		data = ''.join(data)
-	# print('data',data)
-	# print('ext',ext,len(ext))
+	# _.pr('data',data)
+	# _.pr('ext',ext,len(ext))
 	i=0
 	while True:
 		eol=_.vindex(data,i,n='\n')
@@ -289,7 +289,7 @@ def findVariables(data,ext):
 		if not type(eol) == int: eol=len(data)-1;
 		if eol < 1: break;
 		line = data[ i: eol+1 ].replace('\n','')
-		# print('line67',line)
+		# _.pr('line67',line)
 		pass
 		pass
 		line = _str.cleanBE( line, ' ' )
@@ -303,7 +303,7 @@ def findVariables(data,ext):
 				subVars[line.split('set ')[1].split('=')[0].replace(' ','')]=_.get_supporting_line(data,i)
 		elif ext == '.sh':
 			if '=' in line and not '==' in line and not '>=' in line and not '<=' in line:
-				# print(line)
+				# _.pr(line)
 				if 'export ' in line:
 					subVars[line.split('export ')[1].split('=')[0].replace(' ','')]=_.get_supporting_line(data,i)
 				if 'alias ' in line:
@@ -337,7 +337,7 @@ def action():
 	add_s=''
 	add_e=''
 	var_pre=''
-	# print(path)
+	# _.pr(path)
 	if ext.lower().endswith('.bat'):
 		var_pre='set '
 		add_s='%'
@@ -349,21 +349,21 @@ def action():
 		folders = [os.getcwd()]
 	else:
 		folders = _.switches.values('Folders')
-	# print('folders',folders)
+	# _.pr('folders',folders)
 	subjects = _.switches.values('Subject')
 	if _.isWin:
 		for i,sub in enumerate(subjects):
 			subjects[i] = sub.lower()
 	for path2 in _.switches.values('Subject'):
 		variables = {}
-		# print(path2)
+		# _.pr(path2)
 		root=_.getText(path2)
 		all_variables=findVariables(root,ext)
-		# print('root',root)
-		# print('all_variables',all_variables)
+		# _.pr('root',root)
+		# _.pr('all_variables',all_variables)
 		table = {}
 		check(path=path2,data=root,ext=ext,p=False,sVars=all_variables,suby=True)
-		# print(table)
+		# _.pr(table)
 		if path2 in table:
 			home=table[path2]
 			# for v in home:
@@ -381,7 +381,7 @@ def action():
 			# _.pv(home)
 			# sys.exit()
 			table = {}
-			# print('home',home)
+			# _.pr('home',home)
 			for var in all_variables:
 				v=all_variables[var]
 				while '= ' in v or ' =' in v:
@@ -408,7 +408,7 @@ def action():
 				for v in variables:
 					roots=roots.replace(variables[v],'')
 					# omitLines.append(variables[v].replace('\n',''))
-					# print(variables[v])
+					# _.pr(variables[v])
 			# roots=''
 			# for ik,line in enumerate(root):
 			# 	line=line.replace('\n','')
@@ -424,17 +424,17 @@ def action():
 				backup_file(path2)
 				_.saveText(roots,path2)
 				_.cp( ['vars:',len(variables.keys())], 'green' )
-				print('<added>')
-				print(roots)
-				print('</added>')
+				_.pr('<added>')
+				_.pr(roots)
+				_.pr('</added>')
 
 			if _.switches.isActive('Var-Set-Print'):
-				print()
-				print()
+				_.pr()
+				_.pr()
 				for v in variables:
-					print(variables[v])
-				print()
-				print()
+					_.pr(variables[v])
+				_.pr()
+				_.pr()
 
 
 				sys.exit()
@@ -519,15 +519,15 @@ def action():
 
 
 
-								# print(add)
+								# _.pr(add)
 								if len(''.join(data)) < len(text):
 									try:
-										print('<add>')
-										print(add)
-										print('</add>')
-										print('<added>')
-										print(text)
-										print('</added>')
+										_.pr('<add>')
+										_.pr(add)
+										_.pr('</add>')
+										_.pr('<added>')
+										_.pr(text)
+										_.pr('</added>')
 										ask=input('save?: ')
 										if 'n' in ask.lower():
 											backup_file(path)
@@ -541,12 +541,12 @@ def action():
 	pass
 	_.cp( ['files:',len(table.keys())], 'green' )
 	if _.switches.isActive('Var-Set-Print'):
-		print()
-		print()
+		_.pr()
+		_.pr()
 		for v in variables:
-			print(variables[v])
-		print()
-		print()
+			_.pr(variables[v])
+		_.pr()
+		_.pr()
 	_.saveTable(table,'audit-widget-variable-usage.json')
 
 fileBackup = _.regImp( focus(), 'fileBackup' )
@@ -570,6 +570,7 @@ printed=[]
 if __name__ == '__main__':
 	action()
 	__.isExit()
+
 
 
 

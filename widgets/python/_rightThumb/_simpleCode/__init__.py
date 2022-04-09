@@ -197,11 +197,11 @@ class Code:
 		data = str(data)
 
 		if 0 in self.test:
-			print()
-			print()
-			print(data)
-			print()
-			print()
+			_.pr()
+			_.pr()
+			_.pr(data)
+			_.pr()
+			_.pr()
 		self.data = data
 		self.start()
 		index = {}
@@ -255,15 +255,15 @@ class Code:
 		commentID = None
 		for x in index.keys():
 			dex.append( x )
-		# print(dex)
+		# _.pr(dex)
 		dex.sort()
-		# print(dex)
+		# _.pr(dex)
 
 		self.on_line = None
 
 		for i in dex:
 			line = self.findLine( i )+1
-			# print( self.on_line,   self.logistics['indexes']['lines']['list'][self.on_line],   ': LINE: ', line, i )
+			# _.pr( self.on_line,   self.logistics['indexes']['lines']['list'][self.on_line],   ': LINE: ', line, i )
 
 
 			if not inComment or index[i] == commentID:
@@ -278,7 +278,7 @@ class Code:
 						if not self.profiles[ index[i] ]['nestable']:
 							inComment = True
 							commentID = index[i]
-						# print( 'open index', i, index[i],  )
+						# _.pr( 'open index', i, index[i],  )
 						depth[ index[i] ]+=1
 						isOpen[index[i]][ depth[ index[i] ] ] = i
 					elif self.snippet( i, len(self.profiles[ index[i] ]['subject'][1]) ) == self.profiles[ index[i] ]['subject'][1]:
@@ -288,8 +288,8 @@ class Code:
 				if isClose:
 					self.logistics['indexes']['lines']['id'][i] = line
 					o = isOpen[index[i]][ depth[ index[i] ] ]
-					# print( 'close index', i, index[i], self.snippet(o, i) )	
-					# print( 'close index', i, index[i], data[i], '\t', i-o )
+					# _.pr( 'close index', i, index[i], self.snippet(o, i) )	
+					# _.pr( 'close index', i, index[i], data[i], '\t', i-o )
 					self.index['start'][o] = index[i]
 					self.index['end'][i] = index[i]
 					records.append({   'id': index[i], 'start': o, 'end': i   })
@@ -342,8 +342,8 @@ class Code:
 			_.printVar( self.index )
 			_.printVar( self.logistics['indexes']['records'] )
 		if 3 in self.test:
-			print()
-			print()
+			_.pr()
+			_.pr()
 		# rules behavior validate patterns list settings
 		self.logistics['indexes']['rules']['behaviors'] = {}
 		for behavior in self.logistics['rules']['behavior']:
@@ -355,13 +355,13 @@ class Code:
 		for o in self.logistics['indexes']['dom']['list']:
 			self.location = o
 
-			# print( 'oooooooooooooooooooooooooooooooooooo', o )
+			# _.pr( 'oooooooooooooooooooooooooooooooooooo', o )
 			record = self.lookup( o=o )
-			print( self.snippet( record['o'], record['c'] ) )
+			_.pr( self.snippet( record['o'], record['c'] ) )
 			# { 'o': o, 'c': c, 'r': r, 'p': p, 'l': l }
 			if 3 in self.test:
-				print()
-				print(record['p']['label'])
+				_.pr()
+				_.pr(record['p']['label'])
 			rules = []
 			record['attributes'] = {}
 			totalValid = True
@@ -372,12 +372,12 @@ class Code:
 					if not valid:
 						if type(pattern) == dict:
 							resPatts = self.dicRule( record, behavior, pattern, bi, pi, record['attributes'] )
-							# print( 'resPatts', resPatts )
+							# _.pr( 'resPatts', resPatts )
 							if not resPatts is None:
 								for resPatt in resPatts:
 									if not valid:
 										result = self.rule( record, behavior, resPatt, bi, pi, record['attributes'] )
-										print('result',result)
+										_.pr('result',result)
 										if result['valid']:
 											valid = True
 
@@ -387,7 +387,7 @@ class Code:
 							valid = True
 				if result['attribute']:
 					record['attributes'][ list(result['attribute'].keys())[0] ] = result['attribute'][ list(result['attribute'].keys())[0] ]
-					# print( result['attribute'] )
+					# _.pr( result['attribute'] )
 					
 					a = [   record['attributes'][ list(result['attribute'].keys())[0] ], result['attribute'][ list(result['attribute'].keys())[0] ]   ]
 				rules.append({ 'behavior': behavior, 'pattern': pattern, 'bi': bi, 'pi': pi,  'result': result, 'attribute': a, 'valid': result['valid'] })
@@ -399,13 +399,13 @@ class Code:
 						subValid = False
 					# if rule['attribute']:
 						# record['attributes'] = rule['attributes'][rule['attribute'][0]] = rule['attribute'][1]
-					# print(self.logistics['indexes']['rules']['behaviors'])
+					# _.pr(self.logistics['indexes']['rules']['behaviors'])
 					p =str(rule['pattern'])
 					if not p in self.logistics['indexes']['rules']['behaviors'][ rule['behavior'] ]:
 						self.logistics['indexes']['rules']['behaviors'][ rule['behavior'] ][ p ] = {'o':{},'c':{}}
 					self.logistics['indexes']['rules']['behaviors'][ rule['behavior'] ][ p ]['o'][record['o']] = record['r']
 					self.logistics['indexes']['rules']['behaviors'][ rule['behavior'] ][ p ]['c'][record['c']] = record['r']
-					# print( '\t', rule['behavior'], rule['pattern'], rule['valid'],  )
+					# _.pr( '\t', rule['behavior'], rule['pattern'], rule['valid'],  )
 				record['valid'] = subValid
 				if not subValid:
 					totalValid = False
@@ -415,8 +415,8 @@ class Code:
 
 
 		if 3 in self.test:
-			print()
-			print()
+			_.pr()
+			_.pr()
 
 		self.logistics['indexes']['lines']['list']
 		self.logistics['indexes']['lines']['id']
@@ -427,7 +427,7 @@ class Code:
 
 	def rule( self, record, behavior, pattern, bi, pi, attributes ):
 		# if 4 in self.test:
-		print( '-bpa- \t ', behavior, pattern, attributes )
+		_.pr( '-bpa- \t ', behavior, pattern, attributes )
 		_.colorThis( '**********************************************************************************************************************************', 'red' )
 		a = { 'attribute': {}, 'valid': None }
 		a = { 'attribute': { 'is': 'orphan' }, 'valid': None }
@@ -442,15 +442,15 @@ class Code:
 				ps[sk] = s[sk]
 			queries = []
 			_.colorThis( 'B------------------------------------------------------------------------', 'yellow' )
-			print(  )
-			print( behavior, pattern )
-			print( '\t s:', s )
-			print( '\tps:', ps )
-			print()
-			print()
+			_.pr(  )
+			_.pr( behavior, pattern )
+			_.pr( '\t s:', s )
+			_.pr( '\tps:', ps )
+			_.pr()
+			_.pr()
 			for pat in self.logistics['rules']['behavior'][behavior]['patterns'][pattern]['patterns']:
-				# print( '\t\t', pat )
-				# print( 'pat pat pat:', pat )
+				# _.pr( '\t\t', pat )
+				# _.pr( 'pat pat pat:', pat )
 				isRequired = True
 				if type(pat) == tuple:
 					isRequired = False
@@ -459,7 +459,7 @@ class Code:
 				result = self.rule_patterns( record, pat, s, ps )
 				queries.append({ 'isRequired': isRequired, 'pattern': pat, 'query': result })
 				_.colorThis( '\t ------------------------------------------------------------------------', 'green' )
-				print( '\n\n\t rule_patterns:\n\t\t', isRequired, result )
+				_.pr( '\n\n\t rule_patterns:\n\t\t', isRequired, result )
 			pass
 
 
@@ -484,22 +484,22 @@ class Code:
 			for testing in queries:
 				if not completed:
 					# success['b'] = False
-					print()
-					print()
-					print('___')
+					_.pr()
+					_.pr()
+					_.pr('___')
 
 					for aTest in testing['query']:
 						if not completed:
 							# success['c'] = False
 							if not type(aTest) == list:
-								print( 'NOT:', aTest )
+								_.pr( 'NOT:', aTest )
 							elif type(aTest) == list:
-								print()
+								_.pr()
 								for bTest in aTest:
 									if not type(bTest) == list:
 										cTest = [bTest]
 									else:
-										print('-')
+										_.pr('-')
 										cTest = bTest
 									for dTest in cTest:
 										if not completed:
@@ -554,18 +554,18 @@ class Code:
 
 														elif type(dTest) == int:
 															p = self.logistics['profiles'][dTest]
-															print( p )
+															_.pr( p )
 															if i in self.logistics['indexes']['open']:
-																print( 'YES, open' )
+																_.pr( 'YES, open' )
 															else:
-																print( 'NO, not open' )
+																_.pr( 'NO, not open' )
 
 														pass
 														# for x in ran:
 														# 	ran[x] = True
 
 
-														# print(  )
+														# _.pr(  )
 														done = True
 
 
@@ -587,30 +587,30 @@ class Code:
 
 	def rule_patterns( self, record, pattern, s, ps ):
 		# _.colorThis( ['\t\t\t', pattern], 'purple' )
-		# print()
+		# _.pr()
 		# _.colorThis( ['\t\t\t record:', record], 'yellow' )
 		# _.colorThis( ['\t\t\t settings:', self.logistics['rules']['patterns'][pattern]], 'yellow' )
-		# print()
+		# _.pr()
 		results = []
 		valid = None
 		for pat in self.logistics['rules']['patterns'][pattern]:
 			qResults = []
-			# print( 'pat pat pat:', pat )
+			# _.pr( 'pat pat pat:', pat )
 			queries = self.rule_patterns_resolution( pat )
 			# valid = None
-			# print()
-			# print('\t',pattern)
+			# _.pr()
+			# _.pr('\t',pattern)
 			# i = record['o']
-			# print( self.data[i] )
-			# print(i)
+			# _.pr( self.data[i] )
+			# _.pr(i)
 
 			if not type(queries) == list:
 				qResults.append( queries )
 
 			if type(queries) == list:
 				for query in queries:
-					# print()
-					# print( '\t\tquery:', query )
+					# _.pr()
+					# _.pr( '\t\tquery:', query )
 					if type(query) == list:
 						# qResults.append( query )
 						for q in query:
@@ -626,9 +626,9 @@ class Code:
 
 			results.append(qResults)
 			# results.append( q )
-				# print( '\t\t\t  s:', s )
-				# print( '\t\t\t ps:', ps )
-				# print()
+				# _.pr( '\t\t\t  s:', s )
+				# _.pr( '\t\t\t ps:', ps )
+				# _.pr()
 				# valid
 			# sys.exit()
 		return results
@@ -637,12 +637,12 @@ class Code:
 		  
 		pass
 	def rule_patterns_resolution( self, patterns ):
-		# print( 'patterns patterns:', patterns )
+		# _.pr( 'patterns patterns:', patterns )
 		queries = []
 		for subject in patterns:
 			query = []
 			resolution = self.rule_patterns_resolution_item( subject )
-			# print( 'subject:', subject, resolution )
+			# _.pr( 'subject:', subject, resolution )
 
 
 			if type(resolution) == int:
@@ -667,7 +667,7 @@ class Code:
 		return queries
 
 	def rule_patterns_resolution_item( self, subject ):
-		# print( 'subject subject: ', subject )
+		# _.pr( 'subject subject: ', subject )
 		result = []
 		if type(subject) == list:
 			# _.colorThis( 'HERE LIST' )
@@ -699,7 +699,7 @@ class Code:
 				for pati in subject['patterns']:
 					for subPati in self.logistics['rules']['patterns'][pati]:
 						for x in subPati:
-							# print( 'x:', type(x) )
+							# _.pr( 'x:', type(x) )
 							pre_query.append( x )
 
 						# self.test = [4]
@@ -709,7 +709,7 @@ class Code:
 						self.logistics['indexes']['close']
 
 			if 'profiles' in subject:
-				# print( subject['profiles'] )
+				# _.pr( subject['profiles'] )
 				for profile in subject['profiles']:
 					if type(subject['profiles']) == str:
 						r = self.findProfile( profile )
@@ -728,12 +728,12 @@ class Code:
 							pre_query.append( r )
 					elif type(subject['profiles']) == list:
 						for x in subject['profiles']:
-							# print( 'HERE x:', type(x) )
+							# _.pr( 'HERE x:', type(x) )
 							r = self.findProfile( x )
-							# print('r',r,x)
+							# _.pr('r',r,x)
 							if type(r) == list:
 								for rr in r:
-									# print( 'rr:', type(rr) )
+									# _.pr( 'rr:', type(rr) )
 									pre_query.append( rr )
 							else:
 								pre_query.append( r )
@@ -742,9 +742,9 @@ class Code:
 					# _.colorThis( [ profile, r, subject, subject['profiles'] ], 'red' )
 					# sys.exit()
 					
-			# print('pre_query',pre_query)
+			# _.pr('pre_query',pre_query)
 			for x in pre_query:
-				# print( 'pre_query pre_query:', type(x), x )
+				# _.pr( 'pre_query pre_query:', type(x), x )
 				if x is None:
 					_.colorThis( [ 'ERROR: pre_query X is None', 'red' ] )
 					sys.exit()
@@ -752,7 +752,7 @@ class Code:
 				# _.colorThis( ['y',y], 'green' )
 				if type(y) == int:
 					result.append( y )
-					# print( 'ADDED', y )
+					# _.pr( 'ADDED', y )
 				elif type(y) == str:
 					result.append( y )
 				elif type(y) == tuple:
@@ -761,12 +761,12 @@ class Code:
 					for z in y:
 						result.append( z )
 		if 5 in self.test:
-			print( 'subject:', subject )
+			_.pr( 'subject:', subject )
 		counter=0
 
 		while not self.rule_patterns_resolution_items_VALID(result):
 			counter+=1
-			# print( 'counter:', counter )
+			# _.pr( 'counter:', counter )
 			temp_result = []
 			for x in result:
 				if type(x) == int:
@@ -833,10 +833,10 @@ class Code:
 
 		return True
 	def findProfile( self, subject, special='=' ):
-		# print('findProfile:',subject,special)
+		# _.pr('findProfile:',subject,special)
 		results = []
 		if subject in self.logistics['indexes']['profiles']['searches'][special]:
-			# print('subject',subject,self.logistics['indexes']['profiles']['searches'][special][subject])
+			# _.pr('subject',subject,self.logistics['indexes']['profiles']['searches'][special][subject])
 			return self.logistics['indexes']['profiles']['searches'][special][subject]
 
 		for i,x in enumerate(self.logistics['profiles']):
@@ -844,14 +844,14 @@ class Code:
 				if subject.lower() in self.logistics['profiles'][i]['label'].lower():
 				# if not subject == self.logistics['indexes']['profiles']['searches'][special]:
 					self.logistics['indexes']['profiles']['searches'][special][subject] = i
-					# print('subject',subject,self.logistics['indexes']['profiles']['searches'][special][subject])
+					# _.pr('subject',subject,self.logistics['indexes']['profiles']['searches'][special][subject])
 					return i
 
 			elif special == '~':
 				if subject.lower() in self.logistics['profiles'][i]['label'].lower():
 				# if not subject in self.logistics['indexes']['profiles']['searches'][special]:
 					# self.logistics['indexes']['profiles']['searches'][special][subject] = i
-					# print('subject',subject,self.logistics['indexes']['profiles']['searches'][special][subject])
+					# _.pr('subject',subject,self.logistics['indexes']['profiles']['searches'][special][subject])
 					results.append(i)
 					# return i
 		if special == '~':
@@ -864,7 +864,7 @@ class Code:
 
 	def a_rule_proces_pattern( self, i, s, pattern, pat ):
 		if 4 in self.test:
-			print( pat )
+			_.pr( pat )
 
 			if type(rec) == tuple: _.colorThis( 'tuple', 'yellow' );
 			if type(rec) == list:  _.colorThis( 'list', 'yellow' );
@@ -969,11 +969,11 @@ class Code:
 		if self.on_line is None:
 			self.on_line = 0
 			if 1 in self.test:
-				print()
-				print('lines')
+				_.pr()
+				_.pr('lines')
 				for x in self.logistics['indexes']['lines']['list']:
-					print(x)
-				print()
+					_.pr(x)
+				_.pr()
 		if i == 0:
 			self.on_line = 0
 			return 0
@@ -1041,7 +1041,7 @@ class Code:
 		else:
 			l['c']['s'] = self.logistics['indexes']['lines']['list'][ l['c']['l']-2 ]
 
-		# print( l )
+		# _.pr( l )
 
 		return { 'o': o, 'c': c, 'r': r, 'p': p, 'l': l }
 	def snippet( self, i, length=None, end=None ):
@@ -1093,5 +1093,6 @@ LEFT OFF:
 
 
  
+
 
 

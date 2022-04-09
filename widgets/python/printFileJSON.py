@@ -260,12 +260,13 @@ def action():
 def load():
 	global data
 	data = _.getTable2( _.switches.values('Files')[0] )
-	# print( type(data) )
+	# _.pr( type(data) )
 
 # data = []
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

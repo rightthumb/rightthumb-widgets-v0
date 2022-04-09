@@ -180,7 +180,7 @@ def action():
 	# if _.switches.isActive('Input'):
 	# 	_.setPipeData( _.getText( _.switches.value('Input') ), focus() )
 	# if not type( _.appData[__.appReg]['pipe'] ) == bool:
-	# 	print( _.printVar(_.appData) )
+	# 	_.pr( _.printVar(_.appData) )
 	# 	for i,row in enumerate(_.appData[__.appReg]['pipe']):
 	# 		pass
 
@@ -189,6 +189,7 @@ def action():
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

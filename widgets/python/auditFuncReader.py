@@ -178,7 +178,7 @@ if not sys.stdin.isatty():
 
 # _dir.sqlCreateTable( db, deleteDBFirst=True, close=True )
 # obj = _dir.fileInfo( path, sql=True )
-# print(   _dir.fileInfo( _.switches.value('Input') )['size']   )
+# _.pr(   _dir.fileInfo( _.switches.value('Input') )['size']   )
 
 # _.saveLog('queue')
 # _.saveLog('audit')
@@ -244,7 +244,7 @@ if not sys.stdin.isatty():
 # def dateScramble( data ):
 # 	d = _.date2epoch( data )
 # 	if len( str(data) ) > 0:
-# 		print( data, d )
+# 		_.pr( data, d )
 # 	return _.resolveEpochTest( d, falseBlank=True )
 
 	# data = [
@@ -386,7 +386,7 @@ if not sys.stdin.isatty():
 	###################
 
 	# try:
-	# 	print()
+	# 	_.pr()
 
 	# 	fieldList = ','.join(__.databases.getFields( 'test', 'test_table', exclude='' ))
 	# 	_.tables.register('results_table',results)
@@ -403,7 +403,7 @@ def ago( epoch ):
 	do = _.switches.value('Ago')
 	do = do.lower()
 	md = True
-	# print(do)
+	# _.pr(do)
 	# sys.exit()
 	if ',' in do:
 		md = False
@@ -453,10 +453,10 @@ def generateLogName():
 def action():
 	if _.switches.isActive('Input'):
 		logfile = generateLogName()
-		print( logfile )
+		_.pr( logfile )
 		auditLog = _.getTable( logfile )
 		if len( auditLog ) == 0:
-			print( 'Log Error' )
+			_.pr( 'Log Error' )
 			sys.exit()
 		pass
 		structure = []
@@ -468,7 +468,7 @@ def action():
 					structure.append({ 'path': k, 'edits': auditLog[k]['edits'], 'first': auditLog[k]['first'], 'last': auditLog[k]['last'],  'line': auditLog[k]['line'],  })
 
 		for record in _.tables.returnSorted( 'structure', 'a.line', structure ):
-			print( record['line'], record['path'],  )
+			_.pr( record['line'], record['path'],  )
 
 
 
@@ -480,6 +480,7 @@ backupLog = []
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

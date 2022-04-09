@@ -182,7 +182,7 @@ if not sys.stdin.isatty():
 
 # _dir.sqlCreateTable( db, deleteDBFirst=True, close=True )
 # obj = _dir.fileInfo( path, sql=True )
-# print(   _dir.fileInfo( _.switches.value('Input') )['size']   )
+# _.pr(   _dir.fileInfo( _.switches.value('Input') )['size']   )
 
 # _.saveLog('queue')
 # _.saveLog('audit')
@@ -248,7 +248,7 @@ if not sys.stdin.isatty():
 # def dateScramble( data ):
 # 	d = _.date2epoch( data )
 # 	if len( str(data) ) > 0:
-# 		print( data, d )
+# 		_.pr( data, d )
 # 	return _.resolveEpochTest( d, falseBlank=True )
 
 	# data = [
@@ -390,7 +390,7 @@ if not sys.stdin.isatty():
 	###################
 
 	# try:
-	# 	print()
+	# 	_.pr()
 
 	# 	fieldList = ','.join(__.databases.getFields( 'test', 'test_table', exclude='' ))
 	# 	_.tables.register('results_table',results)
@@ -475,24 +475,24 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
 
 
 def testDic( data ):
-	print( type( data ))
+	_.pr( type( data ))
 	data = str( data )
-	print( type( data ))
-	print( data )
-	print()
-	print( 'Got Here' )
-	print()
+	_.pr( type( data ))
+	_.pr( data )
+	_.pr()
+	_.pr( 'Got Here' )
+	_.pr()
 	newData = urllib.parse.unquote( data.split('test=')[1] ).replace( '+', ' ' )[:-1]
-	print( newData )
+	_.pr( newData )
 	theDic = True
 	try:
 		theDic = eval(newData)
 	except Exception as e:
 		theDic = False
-	print()
-	print()
-	print( type( theDic ))
-	print( theDic )
+	_.pr()
+	_.pr()
+	_.pr( type( theDic ))
+	_.pr( theDic )
 
 def action():
 	httpd = HTTPServer(('localhost', 8000), SimpleHTTPRequestHandler)
@@ -500,6 +500,7 @@ def action():
 
 if __name__ == '__main__':
 	action()
+
 
 
 

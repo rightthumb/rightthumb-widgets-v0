@@ -162,7 +162,7 @@ def action():
 		if _.switches.isActive('RefineLists'):
 			_franchise.switch( 'RefineLists', _.switches.value('RefineLists') )
 
-		print( len( __.franchises ) )
+		_.pr( len( __.franchises ) )
 		_franchise.imp.printFranchise()
 		sys.exit()
 
@@ -200,6 +200,7 @@ def action():
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

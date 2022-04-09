@@ -172,9 +172,9 @@ def action(new=None):
 		table=_.getTable('nID-Subject-ID.hash')
 		keys=_key.imp.shapeKee()
 		key=randrange(len(keys))
-		# print()
+		# _.pr()
 		if not subject in table:
-			# print(key)
+			# _.pr(key)
 			table[subject] = {
 								'subject': subject,
 								'number': 999,
@@ -183,11 +183,11 @@ def action(new=None):
 		
 		key=table[subject]['key']
 		table[subject]['number']+=1
-		# print(keys[ key ])
+		# _.pr(keys[ key ])
 		_nID.mini.password(   keys[ key ]   )
 		n=_nID.mini.gen( table[subject]['number'] )
 		_.saveTable( table, 'nID-Subject-ID.hash', p=0 )
-		print(n)
+		_.pr(n)
 		return n
 
 		return None
@@ -197,52 +197,52 @@ def action(new=None):
 			epoch=time.time()
 			xx=[]
 			for y in _key.imp.shapeKee():
-				# print(type(y),y)
+				# _.pr(type(y),y)
 				_nID.mini.password( y )
 				x = _nID.mini.gen( int(epoch) )
 				xx.append(x)
-				print(x)
+				_.pr(x)
 			return xx
 
 
 		x = _nID.mini.gen( int( time.time() ) )
-		print(x)
+		_.pr(x)
 		return x
 
 
 
 	if _.switches.isActive('Epoch'):
 		x = _nID.mini.gen( int( time.time() ) )
-		print(x)
+		_.pr(x)
 		return x
 	if _.switches.isActive('Date'):
 		x = _nID.mini.gen( int( _.isDate( ' '.join(_.switches.values('Date')), f='epoch' ) ) )
-		print(x)
+		_.pr(x)
 		return x
 
 	# if _.switches.isActive('App'):
 	# 	import random
 	# 	n = random.randint(1000000000,9999999999)
 	# 	x = _nID.mini.gen( n )
-	# 	print(x)		
+	# 	_.pr(x)		
 
 	
 
 	if _.switches.isActive('Encrypt'):
 		x = _nID.mini.gen( _.switches.values('Encrypt')[0] )
-		print(x)
+		_.pr(x)
 		if _.switches.isActive('List'):
-			print()
+			_.pr()
 			for y in _key.imp.shapeKee():
 				_nID.mini.password( y )
 				x = _nID.mini.gen( _.switches.values('Encrypt')[0] )
-				print(x)
+				_.pr(x)
 
 		return x
 
 	if _.switches.isActive('Decrypt'):
 		x = _nID.mini.resolve( _.switches.values('Decrypt')[0] )
-		print(x)
+		_.pr(x)
 		return x
 
 
@@ -257,11 +257,12 @@ def load():
 
 import _rightThumb._nID as _nID
 _keychain = _.regImp( __.appReg, 'keychain' )
-# print("_keychain.imp.key('nID')",_keychain.imp.key('nID'))
+# _.pr("_keychain.imp.key('nID')",_keychain.imp.key('nID'))
 ########################################################################################
 if __name__ == '__main__':
 	action()
 	__.isExit()
+
 
 
 

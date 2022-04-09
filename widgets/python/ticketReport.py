@@ -285,15 +285,15 @@ def action():
 	if _.switches.isActive( 'Open' ):
 		data = refineOpen()
 		for record in data:
-			print( record['session'] )
+			_.pr( record['session'] )
 	elif _.switches.isActive( 'WasOpen' ):
 		data = wasClosedSession()
 		for record in data:
-			print( record['session'] )
+			_.pr( record['session'] )
 	elif _.switches.isActive( 'Closed' ):
 		data = closedSession()
 		for record in data:
-			print( record['session'] )
+			_.pr( record['session'] )
 
 
 
@@ -304,6 +304,7 @@ data = []
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

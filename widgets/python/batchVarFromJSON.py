@@ -293,9 +293,9 @@ def action():
 
 	_.saveText( file, _v.myVars+_v.slash+'batchVarFromJSON.bat' )
 	if not _.switches.isActive('Clean'):
-		print( file )
-		print( '%myVars%\\batchVarFromJSON.bat' )
-		print(  )
+		_.pr( file )
+		_.pr( '%myVars%\\batchVarFromJSON.bat' )
+		_.pr(  )
 
 # myVars
 
@@ -477,6 +477,7 @@ YYYY
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

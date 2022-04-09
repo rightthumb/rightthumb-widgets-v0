@@ -172,16 +172,16 @@ _.postLoad( __file__ )
 # START
 
 def on_created(event):
-	print(f"hey, {event.src_path} has been created!")
+	_.pr(f"hey, {event.src_path} has been created!")
 
 def on_deleted(event):
-	print(f"what the f**k! Someone deleted {event.src_path}!")
+	_.pr(f"what the f**k! Someone deleted {event.src_path}!")
 
 def on_modified(event):
-	print(f"hey buddy, {event.src_path} has been modified")
+	_.pr(f"hey buddy, {event.src_path} has been modified")
 
 def on_moved(event):
-	print(f"ok ok ok, someone moved {event.src_path} to {event.dest_path}")
+	_.pr(f"ok ok ok, someone moved {event.src_path} to {event.dest_path}")
 
 
 # _dir.info(path)
@@ -458,6 +458,7 @@ def load():
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

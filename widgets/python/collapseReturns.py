@@ -148,7 +148,7 @@ _.postLoad( __file__ )
 def process( text ):
 	if _.switches.isActive('Undo'):
 		text = text.replace( _v.slash+'n', '\n' )
-	print( text )
+	_.pr( text )
 
 def action():
 	pass
@@ -173,6 +173,7 @@ def action():
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

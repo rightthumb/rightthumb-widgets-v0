@@ -167,8 +167,8 @@ def process( item, to=None ):
 	if not to.endswith('.zip'):
 		to+='.zip'
 	to=to.replace('.zip','')
-	print(to,item)
-	print(__.path(item,pop=True),__.path(item,file=True))
+	_.pr(to,item)
+	_.pr(__.path(item,pop=True),__.path(item,file=True))
 	shutil.make_archive(to,'zip',__.path(item,pop=True),__.path(item,file=True))
 
 def process2( item, to=None ):
@@ -176,7 +176,7 @@ def process2( item, to=None ):
 		to=item
 	if not to.endswith('.zip'):
 		to+='.zip'
-	print(item)
+	_.pr(item)
 	zipf = zipfile.ZipFile( to, 'w', zipfile.ZIP_DEFLATED )
 	zipdir(item, zipf)
 	zipf.close()
@@ -198,6 +198,7 @@ def action():
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

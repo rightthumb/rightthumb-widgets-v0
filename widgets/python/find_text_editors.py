@@ -266,11 +266,11 @@ def action():
 
 
 	if _.switches.isActive('Count'):
-		print( len(find_unix_editor) )
+		_.pr( len(find_unix_editor) )
 	else:
 		if _.isWin:
 
-			print( 'not currently windows compatable' )
+			_.pr( 'not currently windows compatable' )
 		else:
 			for editor in find_unix_editor:
 				parts = editor.split('/')
@@ -278,11 +278,12 @@ def action():
 				app = parts.pop(0)
 				del parts
 				if os.path.isfile(editor):
-					print( app )
+					_.pr( app )
 
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

@@ -276,7 +276,7 @@ def action():
 			line = process( row )
 			data.append( line + '\n' )
 			if _.switches.isActive('Print'):
-				print( line )
+				_.pr( line )
 		if _.switches.isActive('Save'):
 			_.saveText( ''.join(data), _.switches.values('Files')[0].replace( '.txt', '.csv' ) )
 
@@ -286,6 +286,7 @@ def action():
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

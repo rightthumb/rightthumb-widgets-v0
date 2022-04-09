@@ -158,13 +158,14 @@ def action():
 		parts = row.split(_v.slash)
 		parts.pop()
 		folder = _v.slash.join(parts)
-		print( folder )
+		_.pr( folder )
 
 
 
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

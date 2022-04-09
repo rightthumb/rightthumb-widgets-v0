@@ -200,14 +200,15 @@ def action():
 	now = time.time()
 	ago = _.switches.value('Ago')
 	# os.path.getmtime(aPath)
-	# print( now, ago )
-	print( now - ago )
+	# _.pr( now, ago )
+	_.pr( now - ago )
 
 
 
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

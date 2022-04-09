@@ -185,7 +185,7 @@ def process( folder ):
 			maxDepth = 4
 		if len( folder.split(_v.slash) ) - baseDepth >= maxDepth:
 			if len(_.switches.values('MaxDepth')) > 1 and 'p' in _.switches.values('MaxDepth')[1]:
-				print( folder )
+				_.pr( folder )
 
 			return None
 
@@ -221,8 +221,8 @@ def process( folder ):
 
 
 
-		# print('\n{}\n{}'.format(i,folder))
-		# print('',i)
+		# _.pr('\n{}\n{}'.format(i,folder))
+		# _.pr('',i)
 
 baseDepth = 0
 def action():
@@ -232,9 +232,9 @@ def action():
 	global baseDepth
 	i = 0
 	if not _.switches.isActive('Count'):
-		print()
+		_.pr()
 		_.colorThis( [  'Folders:\n'  ], 'green' )
-		# print('Folders:\n')
+		# _.pr('Folders:\n')
 
 	if _.switches.isActive('Folder'):
 		for folder in _.switches.values('Folder'):
@@ -257,7 +257,7 @@ def action():
 					try:
 						os.rmdir(f)
 					except OSError as e:
-						print("Error: %s : %s" % (f, e.strerror))
+						_.pr("Error: %s : %s" % (f, e.strerror))
 
 
 	if  _.switches.isActive('Blank'):
@@ -273,7 +273,7 @@ def action():
 			_.colorThis( [  '',i  ], 'yellow' )
 	
 	if not _.switches.isActive('Count') :
-		print()
+		_.pr()
 		_.colorThis( [  folder  ], 'darkcyan' )
 
 
@@ -283,6 +283,7 @@ allFolders = []
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

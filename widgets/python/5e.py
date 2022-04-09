@@ -176,14 +176,14 @@ def action():
 	found = []
 	for x in test['inDicI']:
 		found.append( int(x[0]) )
-		# print(x)
+		# _.pr(x)
 		# if not str(x) in spent:
 			# spent.append(str(x))
-	# print(test)
+	# _.pr(test)
 
-	# what = 'for x in Spells: for y in x["classes"]: print(y["name"]);'
+	# what = 'for x in Spells: for y in x["classes"]: _.pr(y["name"]);'
 	# what = '[[y["name"] for y in x["classes"]] for x in Spells]'
-	# [[ if 'cleric' in y["name"]:print(y["name"]) for y in x["classes"]] for x in Spells]
+	# [[ if 'cleric' in y["name"]:_.pr(y["name"]) for y in x["classes"]] for x in Spells]
 	# exec (what)
 
 	# for x in test['inDic']:
@@ -202,28 +202,28 @@ def action():
 				level = _.traverse_dic_research['return']
 			except Exception as e:
 				pass
-			print('levellevellevellevellevellevellevel', level)
-			print()
-			print()
-			print( r['name'] )
-			print( '\t','level:', r['level'] )
-			print( '\t','school:', r['school']['name'] )
+			_.pr('levellevellevellevellevellevellevel', level)
+			_.pr()
+			_.pr()
+			_.pr( r['name'] )
+			_.pr( '\t','level:', r['level'] )
+			_.pr( '\t','school:', r['school']['name'] )
 
-			print( '\t', 'classes:' )
+			_.pr( '\t', 'classes:' )
 			for s in r['classes']:
-				print( '\t\t', s['name'] )
+				_.pr( '\t\t', s['name'] )
 
-			print( '\t', 'subclasses:' )
+			_.pr( '\t', 'subclasses:' )
 			for s in r['subclasses']:
-				print( '\t\t', s['name'] )
+				_.pr( '\t\t', s['name'] )
 
 			if 'damage' in r:
 
 				if 'damage_at_character_level' in r['damage']:
-					print( '\t', 'damage_at_character_level:', r['damage']['damage_at_character_level'] )
+					_.pr( '\t', 'damage_at_character_level:', r['damage']['damage_at_character_level'] )
 
-		# print(r)
-		# print( list(r.keys()) )
+		# _.pr(r)
+		# _.pr( list(r.keys()) )
 
 
 
@@ -302,6 +302,7 @@ def load():
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

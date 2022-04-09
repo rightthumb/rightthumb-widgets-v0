@@ -199,7 +199,7 @@ def action():
 	for i,row in enumerate(_.isData(r=1)):
 		do = ' '.join(  _.switches.values('Action')  )
 		if _.switches.isActive('Test'):
-			print(  do.replace( '{}', row )  )
+			_.pr(  do.replace( '{}', row )  )
 		else:
 			os.system( do.replace( '{}', row ) )
 
@@ -209,6 +209,7 @@ def action():
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

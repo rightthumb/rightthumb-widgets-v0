@@ -267,8 +267,8 @@ class backupLogManager:
 
 		self.ago = ago
 
-		# print(self.ago)
-		# print( _.switches.value('Ago') )
+		# _.pr(self.ago)
+		# _.pr( _.switches.value('Ago') )
 		# sys.exit()
 
 		if noAsk:
@@ -327,8 +327,8 @@ class backupLogManager:
 				self.files[f] = []
 			self.files[f].append(i)
 			fl = _v.popFile( f )
-			# print(fl)
-			# print( len(self.log) )
+			# _.pr(fl)
+			# _.pr( len(self.log) )
 			if not fl in self.folders:
 				self.folders[fl] = []
 			self.folders[fl].append(i)
@@ -344,16 +344,16 @@ class backupLogManager:
 			last = fl
 			while not fl is None and fl.count(_v.slash) > 1:
 				fl = _v.popFile( fl )
-				# if fl == 'D:\\_Scott' and last.count('\\') == 2: print( last );
-				# if fl == 'D:\\_Scott': print( bs );
-				# if fl.startswith('d:') and fl.count(_v.slash) <= 1: print(fl);
+				# if fl == 'D:\\_Scott' and last.count('\\') == 2: _.pr( last );
+				# if fl == 'D:\\_Scott': _.pr( bs );
+				# if fl.startswith('d:') and fl.count(_v.slash) <= 1: _.pr(fl);
 
 				if not fl in self.folders_recursive:
 					self.folders_recursive[fl] = {}
 				self.folders_recursive[fl][bs] = {}
 				if not last in self.folders_recursive[fl]:
 					self.folders_recursive[fl][last] = {}
-					# if fl == 'D:\\_Scott' and last.count('\\') == 2: print( last );
+					# if fl == 'D:\\_Scott' and last.count('\\') == 2: _.pr( last );
 
 				if _.isWin:
 					if not fl[0]+':' in self.folders_recursive:
@@ -363,7 +363,7 @@ class backupLogManager:
 				last = fl
 
 
-				# print( fl, bs )
+				# _.pr( fl, bs )
 	def folder( self, subject ):
 		if _.isWin:
 			subject = _str.cleanBE( subject, _v.slash )
@@ -383,7 +383,7 @@ class backupLogManager:
 
 		if self.settings.subfolders:
 			c = subject.count(_v.slash)
-			# print(subject)
+			# _.pr(subject)
 			if self.subject(subject) in self.folders_recursive:
 				result = []
 				for f in self.folders_recursive[self.subject(subject)]:
@@ -398,9 +398,9 @@ class backupLogManager:
 					self.folder_files = []
 					self.hasID = False
 					files = []
-					# print(self.settings.files)
+					# _.pr(self.settings.files)
 					if not self.settings.files:
-						print()
+						_.pr()
 						_.cp( [ '\t', f ], 'cyan' )
 					if showFiles:
 						if self.subject(f) in self.folders:
@@ -427,7 +427,7 @@ class backupLogManager:
 
 			if not folder is None and not self.subject(folder) in self.spent_folders:
 				self.spent_folders[self.subject(folder)] = 1
-				print()
+				_.pr()
 				_.cp( [ '\t', folder ], 'cyan' )
 
 			if self.settings.copy:
@@ -452,7 +452,7 @@ class backupLogManager:
 
 
 		# for record in self.log:
-		# 	print( ' '.join(list(record.keys())) )
+		# 	_.pr( ' '.join(list(record.keys())) )
 		# 	sys.exit()
 
 	def copyFile( self, path=None, fileID=None ):
@@ -698,6 +698,7 @@ if _.switches.isActive('Copy'):
 if __name__ == '__main__':
 	action()
 	_.tables.eof()
+
 
 
 

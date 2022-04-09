@@ -297,33 +297,33 @@ def action():
 			_.colorThis( 'Error:', k, names[k] )
 
 
-	# print( ids )
+	# _.pr( ids )
 	# sys.exit()
 	i=0
 	for key in combinations.keys():
-		# print( type(combinations[key]), combinations[key].keys() )
+		# _.pr( type(combinations[key]), combinations[key].keys() )
 		if not int(key) in ids:
 			found = 0
 			for x in combinations[key][  list(combinations[key].keys())[0]  ]:
-				# print(x)
+				# _.pr(x)
 				if x[0] in ids and x[1] in ids:
 					i+=1
 
 					found += 1
-					print()
+					_.pr()
 					if found == 1:
-						print()
+						_.pr()
 						_.colorThis( [ names[ str(key) ] ] , 'yellow' )
 					_.colorThis( [ '\t', names[ str(x[0]) ] ] , 'green' )
 					_.colorThis( [ '\t', names[ str(x[1]) ] ] , 'green' )
 					# break
-		# print()
+		# _.pr()
 
 	_.colorThis( [  '\n\n', i  ], 'red' )
 		# if not len(record) == 3 and not len(record) == 2:
-		# 	print( (record) )
+		# 	_.pr( (record) )
 
-	# print( combinations.keys() )
+	# _.pr( combinations.keys() )
 	pass
 
 
@@ -343,8 +343,8 @@ def load():
 		pause=input( 'pause: ' )
 	do = 'cls'
 	os.system( '"' + do + '"' )
-	print()
-	print()
+	_.pr()
+	_.pr()
 
 
 	hack = _.getTable( 'littlealchemy_hack.js' )
@@ -357,6 +357,7 @@ combinations = []
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

@@ -185,14 +185,14 @@ def extract( data ):
 
 
 def action():
-	print( 'use: regScan' )
+	_.pr( 'use: regScan' )
 	sys.exit()
 	global data
 	load()
 
 	spent = []
-	print()
-	print()
+	_.pr()
+	_.pr()
 	for i,record in enumerate(data):
 		if _.switches.isActive('Plus'):
 			_.loadingAnimation('Searching')
@@ -223,11 +223,11 @@ def action():
 					result = _.getText( _v.txt_temp, raw=True, clean=2 )
 					if _.showLine( result ):
 
-						# print( '--------------------' )
-						# print( _v.txt_temp )
-						# # print( result )
-						# print( '--------------------' )
-						# print()
+						# _.pr( '--------------------' )
+						# _.pr( _v.txt_temp )
+						# # _.pr( result )
+						# _.pr( '--------------------' )
+						# _.pr()
 						# _.LoadingDone('Test Exit')
 						# sys.exit()
 						# pause=input('pause: ')
@@ -246,11 +246,11 @@ def action():
 								_.tables.print( theLabel, 'field,value' )
 							else:
 								for field in fields:
-									print()
+									_.pr()
 									_.colorThis( field['field'], 'Color.darkcyan' )
 									_.colorThis( '\t'+field['value'], 'Color.cyan' )
-						print()
-						print()
+						_.pr()
+						_.pr()
 
 	if _.switches.isActive('Plus'):
 		_.LoadingDone('Search Complete')
@@ -266,6 +266,7 @@ data = []
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

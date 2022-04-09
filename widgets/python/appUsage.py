@@ -178,7 +178,7 @@ def action():
 							'path': path,
 			}
 			counter[  thisFile['app']  ] = 0
-			# print( thisFile['app'] )
+			# _.pr( thisFile['app'] )
 			python.append( thisFile )
 	pass
 	for ticketSRC in ticketsFix():
@@ -193,7 +193,7 @@ def action():
 								'file': file,
 								'path': path,
 				}
-				# print(thisFile)
+				# _.pr(thisFile)
 				history = _.getText( thisFile['path'], raw=True ).lower()
 				for app in python:
 					cnt = history.count( ' '+app['app'].lower()+' ' )
@@ -217,7 +217,7 @@ def action():
 	GRAND_TOTAL = 0
 	for rec in result:
 		GRAND_TOTAL += rec['total']
-	print()
+	_.pr()
 	_.colorThis( [ '', _.addComma(GRAND_TOTAL) ], 'green' )
 
 	if _.switches.isActive('Save'):
@@ -227,6 +227,7 @@ def action():
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

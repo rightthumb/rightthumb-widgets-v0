@@ -196,7 +196,7 @@ sizes="""
 
 def action():
 	if _.switches.isActive('Print'):
-		print()
+		_.pr()
 		global sizes
 		s = []
 		for row in sizes.split('\n'):
@@ -211,9 +211,9 @@ def action():
 		if 'f' in _.switches.value('Print').lower():
 			m=False
 		if 'g' in _.switches.value('Print').lower():
-			_.size_group_print(m)
+			_.size_group__.pr(m)
 		else:
-			_.tables.rprint(s,h=0,l=0, p='  ')
+			_.tables.r_.pr(s,h=0,l=0, p='  ')
 
 
 	if len( _.switches.value('Size') ):
@@ -224,15 +224,16 @@ def action():
 					if x in _str.alphaChar:
 						byt = False
 				if byt:
-					print( _.formatSize( int(do) ) )
+					_.pr( _.formatSize( int(do) ) )
 				else:
-					print( int(_.unFormatSize( do )) )
+					_.pr( int(_.unFormatSize( do )) )
 
 
 
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

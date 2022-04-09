@@ -294,13 +294,13 @@ def timeAgo():
 	if 'd' in do:
 		start_date = datetime.date.today() + datetime.timedelta(-1 * nmb)
 	dT = str(start_date)
-	# print(dT)
-	# print(dT)
-	# print(dT)
+	# _.pr(dT)
+	# _.pr(dT)
+	# _.pr(dT)
 	d = dT.split('-')
 	result = datetime.datetime(int(d[0]),int(d[1]),int(d[2]),0,0).timestamp()
 
-	# print(start_date)
+	# _.pr(start_date)
 	return result
 def epoch(string,end=False):
 	string = str(string)
@@ -324,7 +324,7 @@ def epoch(string,end=False):
 		day = 1
 	else:
 		day = d[2]
-	# print(d)
+	# _.pr(d)
 	# sys.exit()
 	if end:
 		y = int(d[0])
@@ -464,7 +464,7 @@ def action():
 							WHERE bytes = """+str(row['bytes'])+""" AND date_modified_raw = """+str(mod)+"""  AND name = '"""+str(row['name'])+"""'  
 				"""
 
-			# print( sql )
+			# _.pr( sql )
 			try:
 				test.execute(sql)
 			except Exception as e:
@@ -476,7 +476,7 @@ def action():
 					for ii,nn in enumerate(names):
 						record[nn] = rec[ii]
 
-					# print( record )
+					# _.pr( record )
 					if not record['path'] in spent:
 						spent.append( record['path'] )
 						duplicates.append( record )
@@ -505,7 +505,7 @@ def action():
 								if di:
 									subTest += int(dupRec['bytes'])
 							if subTest < unFormatSize( _.switches.values('Min')[0] ):
-								# print(  unFormatSize( _.switches.values('Min')[0] )  )
+								# _.pr(  unFormatSize( _.switches.values('Min')[0] )  )
 								shouldInclude = False
 								all_done = True
 					if shouldInclude:
@@ -520,11 +520,11 @@ def action():
 							shouldInclude = True
 
 					if shouldInclude:
-						print()
-						print()
-						print()
+						_.pr()
+						_.pr()
+						_.pr()
 						for di,dupRec in enumerate(duplicates):
-							# print( row['size'] )
+							# _.pr( row['size'] )
 							if os.path.isfile( dupRec['path'] ):
 								if _.switches.isActive('Save'):
 									saveData.append( dupRec['path'] )
@@ -538,9 +538,9 @@ def action():
 										
 								else:
 									try:
-										print( dupRec['path'] )
+										_.pr( dupRec['path'] )
 									except Exception as e:
-										print(  repairEncoding(dupRec['path'])  )
+										_.pr(  repairEncoding(dupRec['path'])  )
 								if di:
 									totalSave += int(dupRec['bytes'])
 									subTotal += int(dupRec['bytes'])
@@ -559,9 +559,9 @@ def action():
 							_.colorThis( ['sub-total:', formatSize(totalSave)], 'yellow' )
 
 
-		print()
-		print()
-		print()
+		_.pr()
+		_.pr()
+		_.pr()
 		if _.switches.isActive('Save'):
 			saveData.append( '\n\n\n' )
 			saveData.append( 'Total: ' + formatSize(totalSave) )
@@ -695,24 +695,24 @@ def action():
 			for key in duplicates.keys():
 				if isSave: saveData.append('\n\n\n');
 				if not noPrint:
-					print()
-					print()
-					print()
+					_.pr()
+					_.pr()
+					_.pr()
 				for di,dupRec in enumerate(duplicates[key]):
 					if _.switches.isActive('Save'):
 						saveData.append( dupRec['path'] )
 					if not noPrint:
-						print( dupRec['size'], dupRec['path'] )
-						# print( dupRec['path'] )
+						_.pr( dupRec['size'], dupRec['path'] )
+						# _.pr( dupRec['path'] )
 
 					if di:
 						totalSave += int(dupRec['bytes'])
 
 
 
-		print()
-		print()
-		print()
+		_.pr()
+		_.pr()
+		_.pr()
 		if _.switches.isActive('Save'):
 			saveData.append( '\n\n\n' )
 			saveData.append( 'Total: ' + formatSize(totalSave) )
@@ -746,15 +746,15 @@ def action():
 		if 'x' in _.switches.value('ExtReport').lower():
 			restrictSize = False
 			restrictChar = False
-		# print(  )
-		# print( dbs )
+		# _.pr(  )
+		# _.pr( dbs )
 		# dbs = 'D:\\tech\\hosts\\MSI\\indexes\\D_Drive.db'
 		# sys.exit()
 		sql = "SELECT ext FROM files GROUP BY ext"
 		data = []
 		for i,db in enumerate(dbs):
 			if i in IDs:
-				# print( db )
+				# _.pr( db )
 				# sys.exit()
 				run = True
 				if run:
@@ -781,7 +781,7 @@ def action():
 		for row in set(data):
 			dataX.append({ 'row': row })
 		for row in _.tables.returnSorted( 'data', 'a.row', dataX ):
-			print( row['row'].lower() )
+			_.pr( row['row'].lower() )
 		sys.exit()
 
 	elif _.switches.isActive('Database'):
@@ -796,17 +796,17 @@ def action():
 				except Exception as e:
 					pass
 	if not _.switches.isActive('NoCount'):
-		print()
-		print('Total:')
-		print('\tFiles:\t', _.addComma(totalCount) )
-		print('\tSize:\t', formatSize(totalSize)  )
+		_.pr()
+		_.pr('Total:')
+		_.pr('\tFiles:\t', _.addComma(totalCount) )
+		_.pr('\tSize:\t', formatSize(totalSize)  )
 def do(databaseFile):
-	# print(databaseFile)
+	# _.pr(databaseFile)
 	global totalSize
 	global totalCount
 	thisRan = []
-	# print(databaseFile)
-	# print('"'+databaseFile+'"')
+	# _.pr(databaseFile)
+	# _.pr('"'+databaseFile+'"')
 	conn = sqlite3.connect(databaseFile)
 	c = conn.cursor()
 	# sql = "SELECT bytes,path FROM files WHERE path like '%0%'"
@@ -831,7 +831,7 @@ def do(databaseFile):
 	if _.switches.isActive('Text') and not  _.switches.isActive('Folder') and not _.switches.isActive('Size'):
 		thisRan.append( 10100 )
 		tv = _.switches.value('Text')
-		# print( 'tv:',tv )
+		# _.pr( 'tv:',tv )
 		if tv.startswith('*.'):
 			tv = tv.replace('*.','').lower()
 			sql = "SELECT * FROM files WHERE lower(ext) = '" + tv + "' ORDER BY bytes"
@@ -849,7 +849,7 @@ def do(databaseFile):
 		thisRan.append( 10200 )
 		s = _.switches.value('Size')
 		sA = s.split(',')
-		# print( unFormatSize(sA[1]) )
+		# _.pr( unFormatSize(sA[1]) )
 		# sys.exit()
 		if sA[0].lower() == 'g':
 			sql = "SELECT * FROM files WHERE bytes > " + str(unFormatSize(sA[1])) + " ORDER BY bytes"
@@ -857,19 +857,19 @@ def do(databaseFile):
 			sql = "SELECT * FROM files WHERE bytes < " + str(unFormatSize(sA[1])) + " ORDER BY bytes"
 		elif sA[0].lower() == 'b' and len(sA) == 3:
 			sql = "SELECT * FROM files WHERE bytes > " + str(unFormatSize(sA[1])) + " and bytes < " + str(unFormatSize(sA[2])) + " ORDER BY bytes"
-			# print(sql)
+			# _.pr(sql)
 		else:
-			print('Error:')
-			print('\tExpected:')
-			print('\t\tp dirdb -db D_Drive.db -size g 2gb')
-			print('\t\tp dirdb -db D_Drive.db -size b 1gb 3gb')
+			_.pr('Error:')
+			_.pr('\tExpected:')
+			_.pr('\t\tp dirdb -db D_Drive.db -size g 2gb')
+			_.pr('\t\tp dirdb -db D_Drive.db -size b 1gb 3gb')
 			sys.exit()
 	elif not  _.switches.isActive('Folder'):
 		thisRan.append(10300)
 		sql = "SELECT * FROM files WHERE bytes > 100000000 ORDER BY bytes"
 	if _.switches.isActive('Folder'):
 		thisRan.append(10400)
-		# print(_.switches.value('Folder'))
+		# _.pr(_.switches.value('Folder'))
 		sql = "SELECT * FROM files WHERE folder like '" + _.switches.value('Folder') + "' ORDER BY bytes"
 	if _.switches.isActive('DateUnix'):
 		s = _.switches.value('DateUnix')
@@ -878,25 +878,25 @@ def do(databaseFile):
 	if _.switches.isActive('Date'):
 		sDate = _.switches.value('Date')
 		sD = sDate.split(',')
-		# print(sD[0])
-		# print(isNu(sD[0]))
-		# print(len(sD))
+		# _.pr(sD[0])
+		# _.pr(isNu(sD[0]))
+		# _.pr(len(sD))
 		if isNu(sD[0]) and len(sD) == 2:
 			sql = "SELECT * FROM files WHERE date_modified_raw > " + str(epoch(sD[0])) + " and date_modified_raw < " + str(epoch(sD[1],True)) + " ORDER BY bytes"
 		elif len(sD) == 3:
 			sql = "SELECT * FROM files WHERE date_modified_raw > " + str(epoch(sD[1])) + " and date_modified_raw < " + str(epoch(sD[2],True)) + " ORDER BY bytes"
-			# print(sql)
+			# _.pr(sql)
 		elif len(sD) == 2:
 			if sD[0] == 'before':
 				sql = "SELECT * FROM files WHERE date_modified_raw < " + str(epoch(sD[1])) + " ORDER BY bytes"
 			elif sD[0] == 'after':
 				sql = "SELECT * FROM files WHERE date_modified_raw > " + str(epoch(sD[1])) + " ORDER BY bytes"
 			else:
-				print('before after between')
+				_.pr('before after between')
 				sys.exit()
 	if _.switches.isActive('Ago'):
 
-		# print(timeAgo())
+		# _.pr(timeAgo())
 		# sys.exit()
 		if not len( _.switches.values('Ago') ) > 1:
 			sql = "SELECT * FROM files WHERE date_modified_raw > " + str(_.switches.values('Ago')[0]) + " ORDER BY bytes"
@@ -921,38 +921,38 @@ def do(databaseFile):
 
 
 		# d = epoch()
-		# print(d)
+		# _.pr(d)
 		# sys.exit()
 
 	# sql = "SELECT bytes,path FROM files WHERE bytes > 100000000"
 	# if  _.switches.isActive('Folder'):
-		# print(sql)
+		# _.pr(sql)
 
 
 
 	
 	if _.switches.isActive('EXT'):
-		# print( 'here' )
+		# _.pr( 'here' )
 		sql = "SELECT * FROM files WHERE ext = '" + _.switches.value('EXT').lower() + "' AND path like '%" + _.switches.values('Plus')[0] + "%' ORDER BY bytes"
-		print( sql )
+		_.pr( sql )
 
 
-	# print( 'here2' )
-	# print( sql )
+	# _.pr( 'here2' )
+	# _.pr( sql )
 	# sys.exit()
 	if _.switches.isActive('Test'):
-		print()
-		print( 'thisRan:', thisRan )
-		print()
-		print(sql)
+		_.pr()
+		_.pr( 'thisRan:', thisRan )
+		_.pr()
+		_.pr(sql)
 		sys.exit()
 	c.execute(sql)
 	# c.execute('SELECT * FROM {tn} WHERE {cn} = {st}'.\
 	#         format(tn='files', cn='path', st='s'))
 	all_rows = c.fetchall()
-	# print('1):', all_rows)
+	# _.pr('1):', all_rows)
 	names = action2(databaseFile)
-	# print(names)
+	# _.pr(names)
 	global columnDefault
 	global network_replace
 
@@ -963,12 +963,12 @@ def do(databaseFile):
 
 	data = []
 	for f in all_rows:
-		# print(_.switches.value('Column'))
+		# _.pr(_.switches.value('Column'))
 
 		row = {}
 		for i,n in enumerate(names):
 			row[n] = f[i]
-		# print(row['path'])
+		# _.pr(row['path'])
 		if _.switches.isActive('Column'):
 			line = ''
 			col = _.switches.value('Column')
@@ -1009,7 +1009,7 @@ def do(databaseFile):
 						line = line.replace( network_replace[netReplaceI]['replace'].lower(), network_replace[netReplaceI]['with'] )
 						line = line.replace( network_replace[netReplaceI]['replace'].upper(), network_replace[netReplaceI]['with'] )
 					try:
-						print(line)
+						_.pr(line)
 					except Exception as e:
 						pass
 		else:
@@ -1024,10 +1024,10 @@ def do(databaseFile):
 				# if not _.switches.isActive('Folder'):
 				if columnDefault:
 					if not _.switches.isActive( 'JustCount' ):
-						print(fS,'',row['path'])
+						_.pr(fS,'',row['path'])
 
 	if not columnDefault:
-		print()
+		_.pr()
 		if not _.switches.isActive('JustCount'):
 			_.switches.fieldSet('Long','active',True)
 			_.tables.register( 'data', data )
@@ -1040,10 +1040,10 @@ def action2(databaseFile):
 	cursor = connection.execute('select * from files')
 	row = cursor.fetchone()
 	names = row.keys()
-	# print(names)
+	# _.pr(names)
 
 	# for n in names:
-	# 	print(n)
+	# 	_.pr(n)
 	# sys.exit()
 	return names
 
@@ -1065,7 +1065,7 @@ if not _.switches.isActive('Database'):
 		dbs = _v.myIndexes + _v.slash + 'C_Drive.db,' + _v.myIndexes + _v.slash + 'D_Drive.db'
 	else:
 		dbs = _v.myIndexes + _v.slash + 'C_Drive.db'
-	# print(dbs)
+	# _.pr(dbs)
 	_.switches.fieldSet('Database','active',True)
 	_.switches.fieldSet('Database','value',dbs)
 	_.switches.fieldSet('Database','values',dbs.split(','))
@@ -1132,6 +1132,7 @@ def  removeFile( path, cursr ):
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

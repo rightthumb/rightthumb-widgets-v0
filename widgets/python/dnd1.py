@@ -300,7 +300,7 @@ def prepData():
 			found+=1
 
 		if found > 1:
-			# print( i, record['level'], record['name'] )
+			# _.pr( i, record['level'], record['name'] )
 			if not data[i]['attack-save'] == '':
 				data[i]['type'] = 'hurt'
 
@@ -308,7 +308,7 @@ def prepData():
 
 	for i,record in enumerate(data):
 		if 'heal' in data[i]['description'].lower() or 'heal' in data[i]['name'].lower() or 'heal' in data[i]['damage-effect'].lower()  or 'protect' in data[i]['description'].lower() :
-			# print( i, record['level'], record['name'] )
+			# _.pr( i, record['level'], record['name'] )
 			data[i]['type'] = 'heal'
 
 
@@ -335,7 +335,7 @@ def prepData():
 def history():
 	global spell_history
 
-	# print(time.time());sys.exit();
+	# _.pr(time.time());sys.exit();
 
 	if _.switches.isActive('Ago') and len(_.switches.values('Ago')) > 1 and _.switches.values('Ago')[1] == 'one':
 		one = True
@@ -363,15 +363,15 @@ def history():
 				if spent: return None;
 				if one: spent = True;
 					
-				print()
-				print()
+				_.pr()
+				_.pr()
 				plur = 's'
 				if diff == 1:
 					plur = ''
 				lastDay = day
 				_.colorThis( [  day, '\t', diff, 'day'+plur  ], 'yellow' )
 			
-			print()
+			_.pr()
 			theLevel = record['level']
 			if theLevel is None:
 				theLevel = '___________________________________________________'
@@ -494,17 +494,17 @@ def action():
  
 
 	if _.switches.isActive('ToggleSelected'):
-		# print( type( _.switches.values('ToggleSelected') ) )
+		# _.pr( type( _.switches.values('ToggleSelected') ) )
 		# for x in _.switches.values('ToggleSelected'):
-		#   print( x, type(x) )
+		#   _.pr( x, type(x) )
 		# sys.exit()
 		for i,record in enumerate(data):
-			# print( record['i'], type(record['i']) )
+			# _.pr( record['i'], type(record['i']) )
 			try:
 				if str(record['i']) in _.switches.values('ToggleSelected'):
 					pass
 			except Exception as e:
-				print( record )
+				_.pr( record )
 				sys.exit()
 			if str(record['i']) in _.switches.values('ToggleSelected'):
 				if  record['selected'] == selection_record_text_yes:
@@ -536,14 +536,14 @@ def action():
 	
 	_.colorThis(  [ '\n\t\t  My Spells:', ' '.join(selected_IDs) ], 'yellow'  )
 	_.colorThis(  [ '\n\t\tPast Spells:', ' '.join(selected_past_IDs) ], 'blue'  )
-	print()
-	print()
+	_.pr()
+	_.pr()
 
 
 
 	_.colorThis(  [ 'Spell Slots:' ], 'yellow'  )
 
-	print()
+	_.pr()
 	_.colorThis(  [ '\tUsed:' ], 'bold'  )
 	
 	if spell_slots == {}:
@@ -556,15 +556,15 @@ def action():
 		if not slot in __.spell_slots_omit:
 			_.colorThis(  [ '\t\t', spell_slots[slot], slot ], 'cyan'  )
 		
-	print()
+	_.pr()
 	_.colorThis(  [ '\tLeft:' ], 'bold'  )
 	for slot in spell_slots_max.keys():
-		# print( slot )
+		# _.pr( slot )
 		if not slot in __.spell_slots_omit:
 			if type(spell_slots_max[slot]) == str:
 				pass
 			else:
-				# print( type(spell_slots_max[slot]), spell_slots[slot] )
+				# _.pr( type(spell_slots_max[slot]), spell_slots[slot] )
 				diff = spell_slots_max[slot] - spell_slots[slot]
 
 				if diff == 0:
@@ -576,8 +576,8 @@ def action():
 
 		
 	
-	print()
-	print()
+	_.pr()
+	_.pr()
 
 	if _.switches.isActive('All'):
 
@@ -622,9 +622,9 @@ def action():
 				description = record['description']
 				del record['description']
 				del record['html']
-				print()
+				_.pr()
 				_.printVarSimple2( record )
-				print()
+				_.pr()
 
 				_.wrapText(  description,  scan=['d4','d6','d8','d10','d12','d20','d100']  )
 				
@@ -801,7 +801,7 @@ def load():
 			for x in character['indices']:
 				character_index[x] = i
 				character_index[x.lower()] = i
-				print()
+				_.pr()
 
 			character_data.append(character)
 			spell_history = []
@@ -843,7 +843,7 @@ def load():
 	if character is None:
 		try:
 			default = _.getTableProject( 'DnD.configurations.characters', 'characters.default' )
-			# print(default)
+			# _.pr(default)
 			default = default[0]
 			character = character_data[  character_index[ default ]  ]
 		except Exception as e:
@@ -874,10 +874,10 @@ def load():
 	dex = _.getTableProject( index_path, index_file )
 
 
-	print()
-	print()
+	_.pr()
+	_.pr()
 	for key in dex:
-		print(key)
+		_.pr(key)
 
 	sys.exit()
 
@@ -947,6 +947,7 @@ data = []
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

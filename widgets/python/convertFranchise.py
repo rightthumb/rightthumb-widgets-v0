@@ -215,13 +215,13 @@ if __name__ == '__main__':
 # 1419  franchiseData[0] = {franchiseDate: str(today)}
 # 1463  for fd in set(franchiseData[0][franchiseName]):
 # 1468  franchiseData[0][franchiseOmit]
-# 1529  print(len(set(franchiseData[0][franchiseName])))
+# 1529  _.pr(len(set(franchiseData[0][franchiseName])))
 # 1593  mv = str(len(set(franchiseData[0][franchiseName]))) + ' movies\t\t
 # 4475  for k in self.franchiseData[0].keys():
 
 
 # 748  ppl = str(len(set(franchiseData[1][franchiseName]))) + ' people\t\t
-# 756  print(franchise.upper(),len(set(franchiseList)),'\t\t',ppl,mv,franchiseData[1][franchiseDate],'\t\t',str(diff.days),'days')
+# 756  _.pr(franchise.upper(),len(set(franchiseList)),'\t\t',ppl,mv,franchiseData[1][franchiseDate],'\t\t',str(diff.days),'days')
 # 1424  franchiseData[1]
 # 1432  franchiseData[1][franchiseName]
 # 1436  franchiseData[1][franchiseName] = []
@@ -230,16 +230,17 @@ if __name__ == '__main__':
 # 1550  franchiseList = list(set(franchiseData[1][franchiseName]))
 # 1551  fdtl = franchiseData[1][franchiseDate].split('-')
 # 1589  ppl = str(len(set(franchiseData[1][franchiseName]))) + ' people\t\t
-# 1597  print(franchise.upper(),len(set(franchiseList)),'\t\t',ppl,mv,franchiseData[1][franchiseDate],'\t\t',str(diff.days),'days')
+# 1597  _.pr(franchise.upper(),len(set(franchiseList)),'\t\t',ppl,mv,franchiseData[1][franchiseDate],'\t\t',str(diff.days),'days')
 
 
 # 720  franchiseData[2][franchiseName]
 # 738  for fdai,fda in enumerate(franchiseData[2][franchiseName]):
-# 740  print('\t\t\t\t',franchiseData[2][franchiseName][fdai]['year'],franchiseData[2][franchiseName][fdai]['title'])
+# 740  _.pr('\t\t\t\t',franchiseData[2][franchiseName][fdai]['year'],franchiseData[2][franchiseName][fdai]['title'])
 # 1428  franchiseData[2]
 # 1438  franchiseData[2][franchiseName]
 # 1459  franchiseData[2][franchiseName] = []
 # 1527  franchiseData[2][franchiseName].append({'year': theYearX, 'title': theTitleX, 'people': thePeopleX, })
+
 
 
 

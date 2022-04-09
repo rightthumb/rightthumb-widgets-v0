@@ -171,7 +171,7 @@ _.postLoad( __file__ )
 
 
 
-		# print( closeingChar )
+		# _.pr( closeingChar )
 def process():
 	global allFiles
 	
@@ -204,14 +204,14 @@ def process():
 
 	if test == 4:
 		index = _code.imp.validator.createIndex( allFiles, 'javascript' )
-		# print( index )
+		# _.pr( index )
 		# _.printVar( index )
 		_code.imp.validator.colorPrint()
 
 
 	if test == 5:
 
-		print( allFiles )
+		_.pr( allFiles )
 
 	if test == 6:
 		index = _code.imp.validator.createIndex( allFiles, 'javascript' )
@@ -225,10 +225,10 @@ def process():
 		data = _code.imp.validator.jsNameSpace()
 		for record in data['functions']:
 			# test = _code.imp.validator.printPos( record['linePos'] , record['open'], p=0 )
-			# print( test )
-			print( record['ns'] )
+			# _.pr( test )
+			_.pr( record['ns'] )
 		end = time.time()
-		# print( 'time:', end-start )
+		# _.pr( 'time:', end-start )
 
 		# _code.imp.validator.jsNameSpace_Old()
 		# _code.imp.validator.javascriptNamespace()
@@ -308,6 +308,7 @@ data = []
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

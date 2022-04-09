@@ -314,11 +314,11 @@ def thinkOfTheChildren( obj, parentID ):
 
 
 	# for x in dir(obj):
-	# 	print( x )
-	# print()
-	# print()
-	# print()
-	# print( obj.name )	
+	# 	_.pr( x )
+	# _.pr()
+	# _.pr()
+	# _.pr()
+	# _.pr( obj.name )	
 	# sys.exit()
 
 
@@ -351,7 +351,7 @@ def thinkOfTheChildren( obj, parentID ):
 	except Exception as e:
 		pass
 
-	# print(  'classes', record['classes'] )
+	# _.pr(  'classes', record['classes'] )
 
 
 
@@ -421,7 +421,7 @@ def thinkOfTheChildren( obj, parentID ):
 
 
 
-	# print( 'attr:', attr )
+	# _.pr( 'attr:', attr )
 
 	pass
 
@@ -472,7 +472,7 @@ def action():
 			theParent = projectReport['records'][theParent]['parentID']
 			if not theParent is None:
 				parentList.append( theParent )
-				# print( rID, theParent )
+				# _.pr( rID, theParent )
 
 
 
@@ -533,6 +533,7 @@ nextID = -1
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

@@ -168,7 +168,7 @@ def action():
 	# 	for mit in card['omit']:
 	# 		_.fields.register( 'project', 'name', mit )
 
-	# print( len(  _.fields.value( 'project', 'name', 'test', center=True )  ) );sys.exit();
+	# _.pr( len(  _.fields.value( 'project', 'name', 'test', center=True )  ) );sys.exit();
 	i=-1
 	isBack=False
 	while True:
@@ -188,12 +188,12 @@ def action():
 			_.cp( _.fields.value( 'project', 'name', card['subject'], center=True ), 'Background.green' )
 			for mit in card['omit']:
 				_.cp( _.fields.value( 'project', 'name', mit, center=True ), 'Background.red' )
-			# print( 'q(quit), b(back)' )
+			# _.pr( 'q(quit), b(back)' )
 			
-			# print()
-			# print()
-			print( _.fields.value( 'project', 'name', str(i+1)+' of '+str(total)+', '+str(len(data)), center=True ) )
-			print( _.fields.value( 'project', 'name', '(q)uit (b)ack', center=True ) )
+			# _.pr()
+			# _.pr()
+			_.pr( _.fields.value( 'project', 'name', str(i+1)+' of '+str(total)+', '+str(len(data)), center=True ) )
+			_.pr( _.fields.value( 'project', 'name', '(q)uit (b)ack', center=True ) )
 			isBack=False
 			wait=input('lvl: ')
 			if wait.lower()=='q' or wait.lower()=='x':
@@ -237,6 +237,7 @@ import random
 if __name__ == '__main__':
 	action()
 	__.isExit()
+
 
 
 

@@ -164,15 +164,15 @@ def action():
 			_.setPipeData( tmpFiles, focus() )
 
 	if type( _.appData[__.appReg]['pipe'] ) == bool:
-		print( 'Error: no input' )
+		_.pr( 'Error: no input' )
 		sys.exit()
 
 	dic = []
 	_.pipeCleaner(2)
-	# print( _.appData[__.appReg]['pipe'] )
+	# _.pr( _.appData[__.appReg]['pipe'] )
 	# if len(_.appData[__.appReg]['pipe']) == 1:
-	# 	print()
-	# 	print(  '  1      ', _.appData[__.appReg]['pipe'][0]  )
+	# 	_.pr()
+	# 	_.pr(  '  1      ', _.appData[__.appReg]['pipe'][0]  )
 	for i,row in enumerate( _.appData[__.appReg]['pipe'] ):
 		row = row.replace( '\n', '' )
 		row = row.replace( '\r', '' )
@@ -189,7 +189,7 @@ def action():
 
 
 		if len( row ):
-			# print('here')
+			# _.pr('here')
 			dic.append({ 'original': original, 'sortable': row })
 
 	data = _.tables.returnSorted( 'data', 'a.sortable', dic )
@@ -219,14 +219,14 @@ def action():
 				spent[last['sortable']] = 1
 			count = 0
 		last = record
-	# print(data[ len(data)-1 ]['sortable'])
-	# print(data[ len(data)-1 ]['sortable'] in spent)
+	# _.pr(data[ len(data)-1 ]['sortable'])
+	# _.pr(data[ len(data)-1 ]['sortable'] in spent)
 	# _.printVarSimple(result)
-	# print( spent.keys() )
+	# _.pr( spent.keys() )
 
 	if not data[ len(data)-1 ]['sortable'] in spent:
-		# print( data[ len(data)-1 ] )
-		# print( spent[data[ len(data)-1 ]['sortable']] )
+		# _.pr( data[ len(data)-1 ] )
+		# _.pr( spent[data[ len(data)-1 ]['sortable']] )
 		result.append({'cnt': counter[data[ len(data)-1 ]['sortable']]  , 'record': data[ len(data)-1 ]})
 	result0 = _.sort(result,'cnt')
 
@@ -234,16 +234,16 @@ def action():
 	if not _.switches.isActive( 'NoCount' ):
 		for data in result0:
 			if _.showLine( data['record']['original'] ):
-				# print( 'here:', data )
+				# _.pr( 'here:', data )
 				if len(data['record']['original']):
-					# print('',data['cnt'],'\t\t',data['record']['original'])
-					# print('',data['cnt'],'\t',data['record']['original'])
-					print('',  _.fields.padZeros( 'cnt', 'val', data['cnt'], space=True )  ,'\t',data['record']['original'])
+					# _.pr('',data['cnt'],'\t\t',data['record']['original'])
+					# _.pr('',data['cnt'],'\t',data['record']['original'])
+					_.pr('',  _.fields.padZeros( 'cnt', 'val', data['cnt'], space=True )  ,'\t',data['record']['original'])
 					groupCNT+=1
 	else:
 		for data in result0:
 			if _.showLine( data['record']['original'] ):
-				print(data['record']['original'])
+				_.pr(data['record']['original'])
 
 
 	_.colorThis(  [ '\n','  ','groups:', _.addComma( groupCNT ) ], 'yellow'  )
@@ -257,6 +257,7 @@ def action():
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

@@ -250,12 +250,12 @@ def action():
 					for x in result[0][1]:
 						if not x in data and len(x) > 2 and x[0] in _str.upperChar:
 							data.append( x )
-							print( x )
+							_.pr( x )
 					for x in result[1][1]:
 						if not x in data and len(x) > 2 and x[0] in _str.upperChar:
 							data.append( x )
-							print( x )
-					# print( result )
+							_.pr( x )
+					# _.pr( result )
 					# sys.exit()
 		_.saveData( data, 'listPatterns_Results' )
 
@@ -272,6 +272,7 @@ data = []
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

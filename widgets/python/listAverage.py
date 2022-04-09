@@ -165,11 +165,11 @@ def pop( data, cnt ):
 	while not i == cnt:
 		i+=1
 		data.pop( len( data )-1 )
-		print()
-		print( 'pop' )
-		print()
-		print( 'average:', formatResult( average(data) ) )
-		print( 'max:', formatResult( max( data ) ) )
+		_.pr()
+		_.pr( 'pop' )
+		_.pr()
+		_.pr( 'average:', formatResult( average(data) ) )
+		_.pr( 'max:', formatResult( max( data ) ) )
 def formatResult( data ):
 	if _.switches.isActive( 'FormatSize' ):
 		return _dir.formatSize( data )
@@ -184,9 +184,9 @@ def action():
 		for row in _.appData[__.appReg]['pipe']:
 			data.append( float(row) )
 		data.sort()
-		print( 'average:', _dir.formatSize( average(data) ) )
-		print( 'min:', formatResult(data[0]) )
-		print( 'max:', formatResult( max( data ) ) )
+		_.pr( 'average:', _dir.formatSize( average(data) ) )
+		_.pr( 'min:', formatResult(data[0]) )
+		_.pr( 'max:', formatResult( max( data ) ) )
 
 		if _.switches.isActive('Pop'):
 			pop( data, int( _.switches.value('Pop') ) )
@@ -197,6 +197,7 @@ def action():
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

@@ -280,14 +280,14 @@ def processFolder(folder, qID):
 
 
 def test(data=False,name=False):
-	print(data)
-	print(name)
+	_.pr(data)
+	_.pr(name)
 
 
 
 # def action5():
 def action():
-	# print( __.structure() )
+	# _.pr( __.structure() )
 	# sys.exit()
 	db = 'Apps_Folder.db'
 	_dir.sqlCreateTable( db, deleteDBFirst=True, close=True )
@@ -343,9 +343,9 @@ def action3():
 
 	if not type(_.appData[__.appReg]['pipe']) == str:
 		dirList = _.appData[__.appReg]['pipe']
-		print('pipe')
+		_.pr('pipe')
 	else:
-		print('no pipe')
+		_.pr('no pipe')
 	
 	# _.threads.add( 'test', trigger=complete, triggerArg=({'two', 'hi'}), loaded=False )
 	# _.threads.add( 'test', trigger=complete, triggerArg=(('one'),('two')), loaded=False )
@@ -366,7 +366,7 @@ def action3():
 			i+=1
 			_.threads.add( 'test', getFileInfo6, [item,False] ) # this spends the threads
 
-			# print(item)
+			# _.pr(item)
 			# _.threads.add( 'test', testThis, [item] ) # this spends the threads
 			# _.threads.add( 'test', testFunction, [item] ,loaded=False )
 			# _.threads.add( 'test', testFunction, [[item]], addID=False ,loaded=False )
@@ -376,7 +376,7 @@ def action3():
 
 
 
-	print('size',i)
+	_.pr('size',i)
 
 
 
@@ -391,9 +391,9 @@ def action2():
 
 	if not type(_.appData[__.appReg]['pipe']) == str:
 		dirList = _.appData[__.appReg]['pipe']
-		print('pipe')
+		_.pr('pipe')
 	else:
-		print('no pipe')
+		_.pr('no pipe')
 	
 	db = 'Apps_Folder.db'
 
@@ -428,14 +428,14 @@ def action1():
 	global cursor
 	global conn
 	folder = os.getcwd()
-	print(folder)
+	_.pr(folder)
 	dirList = os.listdir(folder)
 
 	if not type(_.appData[__.appReg]['pipe']) == str:
 		dirList = _.appData[__.appReg]['pipe']
-		print('pipe')
+		_.pr('pipe')
 	else:
-		print('no pipe')
+		_.pr('no pipe')
 	
 	databaseFile = 'Apps_Folder.db'
 
@@ -455,7 +455,7 @@ def action1():
 	_.threads.maxThreadsAuto = True
 	_.threads.autoLoaded = True
 	_.threads.autoLoadedAfter = 2
-	# print(dirList)
+	# _.pr(dirList)
 	for item in dirList:
 		item = item.replace('\n','')
 		# path = os.path.abspath(item)
@@ -488,9 +488,9 @@ def action0():
 
 	if not type(_.appData[__.appReg]['pipe']) == str:
 		dirList = _.appData[__.appReg]['pipe']
-		print('pipe')
+		_.pr('pipe')
 	else:
-		print('no pipe')
+		_.pr('no pipe')
 	
 	# _.threads.add( 'test', trigger=complete, triggerArg=({'two', 'hi'}), loaded=False )
 	# _.threads.add( 'test', trigger=complete, triggerArg=(('one'),('two')), loaded=False )
@@ -507,7 +507,7 @@ def action0():
 		path = folder + _v.slash + item
 		if os.path.isfile(item):
 			i+=1
-			# print(item)
+			# _.pr(item)
 			# _.threads.add( 'test', testThis, [item] ) # this spends the threads
 			_.threads.add( 'test', getFileInfo6, [item,False] ) # this spends the threads
 			# _.threads.add( 'test', testFunction, [item] ,loaded=False )
@@ -518,23 +518,23 @@ def action0():
 
 
 
-	print('size',i)
+	_.pr('size',i)
 
 def testThis(*args):
-	print(args)
-	# print()
-	# print(args[len(args)-1])
+	_.pr(args)
+	# _.pr()
+	# _.pr(args[len(args)-1])
 	_.threads.spent( args[len(args)-1], sys.getsizeof( 'obj') )
 	# _.threads.spent( 1, sys.getsizeof( 'obj') )
 
 def testFunctionKwargsHack(data,qID):
-	print(data,qID)
+	_.pr(data,qID)
 	data['qID']=qID
 	testFunction(**data)
 
 
 def testFunction( one=False, two=False, qID=False):
-	print(one,two,qID)
+	_.pr(one,two,qID)
 	
 	if not type(qID) == bool:
 		_.threads.spent( qID, sys.getsizeof(obj) )
@@ -542,36 +542,36 @@ def testFunction( one=False, two=False, qID=False):
 
 def complete(one=False,two=False):
 
-	print()
-	print()
-	print()
-	print('_______________________________')
-	print('Done')
-	print()
-	print()
-	print()
+	_.pr()
+	_.pr()
+	_.pr()
+	_.pr('_______________________________')
+	_.pr('Done')
+	_.pr()
+	_.pr()
+	_.pr()
 	global data
 	try:
 		data[0]
 	except Exception as e:
 		data = []
 	# # for d in data:
-	# 	# print(d)
-	# print('data:',len(data))
-	# print()
+	# 	# _.pr(d)
+	# _.pr('data:',len(data))
+	# _.pr()
 	# try:
-	# 	print(one,two)
+	# 	_.pr(one,two)
 	# except Exception as e:
 	# 	try:
-	# 		print('kwargs:',kwargs)
+	# 		_.pr('kwargs:',kwargs)
 	# 	except Exception as e:
-	# 		print('Error: arg')
+	# 		_.pr('Error: arg')
 
 
 	# _.saveTable(data,'Apps.dirCache.json')
 	# _.saveLog('queue')
 	# for d in data:
-	# 	print(d)
+	# 	_.pr(d)
 
 
 	# _.saveLog('queue')
@@ -582,6 +582,7 @@ def complete(one=False,two=False):
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

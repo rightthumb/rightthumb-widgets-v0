@@ -336,11 +336,11 @@ def action():
 	_.tables.print( 'data2', 'percentage,app,count' )
 
 
-	print( 'Total:', totalCommands )
-	print( 'Threshold: >=', threshold )
-	print( 'Set Total:', setTotal )
-	print( 'Percentage:', _.percentageDiffInt( setTotal, totalCommands ) )
-	print( 'in Set:', len(newSortedData), 'of', len(files), '%', _.percentageDiffInt( len(newSortedData), len(files) ) )
+	_.pr( 'Total:', totalCommands )
+	_.pr( 'Threshold: >=', threshold )
+	_.pr( 'Set Total:', setTotal )
+	_.pr( 'Percentage:', _.percentageDiffInt( setTotal, totalCommands ) )
+	_.pr( 'in Set:', len(newSortedData), 'of', len(files), '%', _.percentageDiffInt( len(newSortedData), len(files) ) )
 
 
 
@@ -353,6 +353,7 @@ files = []
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

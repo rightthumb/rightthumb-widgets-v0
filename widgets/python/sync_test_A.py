@@ -152,10 +152,10 @@ def action():
 	load()
 	global data
 
-	print('taco')
+	_.pr('taco')
 
 	for i,row in enumerate(_.isData(r=1)):
-		print(row)
+		_.pr(row)
 
 
 
@@ -167,6 +167,7 @@ def load():
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

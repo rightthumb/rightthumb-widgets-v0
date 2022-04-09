@@ -239,7 +239,7 @@ def rev( data ):
 	return ''.join( word )
 
 def process( row ):
-	# print( row )
+	# _.pr( row )
 	word = []
 	for x in row:
 		word.append( x )
@@ -275,7 +275,7 @@ def process( row ):
 				groups.append( rev(thisGroup) )
 				thisGroup = ''
 		if not i in spent:
-			# print(x)
+			# _.pr(x)
 			thisGroup+=x
 	if len( thisGroup ):
 		groups.append( rev(thisGroup) )
@@ -284,7 +284,7 @@ def process( row ):
 		if not x == row and not len(x) == 1:
 			newGroups.append( x )
 
-	# print( newGroups )
+	# _.pr( newGroups )
 	# return newGroups,spent,len(row)
 	newGroups.reverse()
 	return newGroups
@@ -319,6 +319,7 @@ data = []
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

@@ -166,7 +166,7 @@ def ask_question( field, label, validateionRule=False ):
 	global answerFileLabels
 	global answerBackup
 	global answerBackupLabels
-	print()
+	_.pr()
 	theEnd = ''
 	if not type(validateionRule) == bool:
 		if validateionRule == 'yn_y':
@@ -189,12 +189,12 @@ def ask_question( field, label, validateionRule=False ):
 
 
 	if shouldClean:
-		# print(data)
+		# _.pr(data)
 		data = _str.replaceDuplicate( data, ' ' )
 		data = _str.cleanBE( data, ' ' )
 
 
-	# print(data)
+	# _.pr(data)
 	result = data
 	if not type(validateionRule) == bool:
 		result = validateask_question( field, validateionRule, data )
@@ -210,8 +210,8 @@ def ask_question( field, label, validateionRule=False ):
 				display = 'no'
 		else:
 			display = result
-	# print(data)
-	print( display )
+	# _.pr(data)
+	_.pr( display )
 	answerFile.append( display )
 	# answerFileLabels.append( display + ', ' + field + ', ' + label)
 
@@ -229,7 +229,7 @@ def textOrBlank( data ):
 
 
 def isDirect( data ):
-	# print( data )
+	# _.pr( data )
 	# sys.exit()
 	if 'f' in data.lower():
 		return False
@@ -240,7 +240,7 @@ def validateask_question( field, what, data ):
 
 
 	if what == 'project_type':
-		# print( field, what, data )
+		# _.pr( field, what, data )
 		# sys.exit()
 		if 'f' in data.lower():
 			result = 'front_end'
@@ -285,14 +285,14 @@ def validateask_question( field, what, data ):
 		elif data.lower() == 'f':
 			result = False
 		elif not 'http' in data.lower():
-			print( 'Error: bad url' )
+			_.pr( 'Error: bad url' )
 			result = validateask_question( field, what, ask_question( field, 'url:' ) )
 		else:
 			result = data
 
 	elif what == 'notBlankText':
 		if not len(data):
-			print( 'Error: cannot be blank' )
+			_.pr( 'Error: cannot be blank' )
 			result = validateask_question( field, what, ask_question( field, field2Label(field) ) )
 		else:
 			result = data
@@ -309,7 +309,7 @@ def validateask_question( field, what, data ):
 
 	elif what == 'password':
 		if not len(data):
-			print( 'Error: cannot be blank' )
+			_.pr( 'Error: cannot be blank' )
 			result = validateask_question( field, what, ask_question( field, field2Label(field) ) )
 		else:
 			if data.endswith('='):
@@ -319,7 +319,7 @@ def validateask_question( field, what, data ):
 
 	elif what == 'selector':
 		if not len(data):
-			print( 'Error: cannot be blank' )
+			_.pr( 'Error: cannot be blank' )
 			result = validateask_question( field, what, ask_question( field, field2Label(field) ) )
 		else:
 			result = data
@@ -382,7 +382,7 @@ def validateask_question( field, what, data ):
 				result = 'auto'
 
 	else:
-		print( 'Error: validateAsk' )
+		_.pr( 'Error: validateAsk' )
 		sys.exit()
 
 	return result
@@ -406,9 +406,9 @@ def actionConfig():
 	# config['isDirect']
 	# config['testAsWeGo']
 	# config['scrape_js']
-	print( '________________________________' )
-	print( '            action' )
-	print()
+	_.pr( '________________________________' )
+	_.pr( '            action' )
+	_.pr()
 	thisAction = {}
 	thisAction['description'] = ask_question( 'description', 'Description:' )
 	thisAction['parentPassUrl'] = ask_question( 'parent_passed_url', 'Does the parent pass a url to process:', 'yn_n' )
@@ -431,9 +431,9 @@ def actionConfigItem():
 	global config
 	global payloadTriggerDefault
 	global payloadValidatorDefault
-	print( '________________________________' )
-	print( '         action:item' )
-	print()
+	_.pr( '________________________________' )
+	_.pr( '         action:item' )
+	_.pr()
 	thisAction = {}
 	thisAction['description'] = ask_question( 'description', 'Description:' )
 	if config['isDirect']:
@@ -471,9 +471,9 @@ def actionConfigItemSelector():
 	global config
 	global payloadTriggerDefault
 	global payloadValidatorDefault
-	print( '________________________________' )
-	print( '         action:item:selector' )
-	print()
+	_.pr( '________________________________' )
+	_.pr( '         action:item:selector' )
+	_.pr()
 	thisAction = {}
 	thisAction['payload_label'] = ask_question( 'payload_label', 'Payload Label:', 'notBlankText' )
 	thisAction['selector'] = ask_question( 'selector', 'Selector:', 'selector' )
@@ -498,8 +498,8 @@ def actionConfigItemSelector():
 						payloadTriggerDefault['instructions'] = trigger_instructions
 						payloadTriggerDefault['validates'] = thisAction['trigger_validates']
 			except Exception as e:
-				print( 'Error: unable to eval(trigger)' )
-				print( 'Result: trigger = False' )
+				_.pr( 'Error: unable to eval(trigger)' )
+				_.pr( 'Result: trigger = False' )
 				payloadTriggerDefault = { 'instructions': False, 'trigger': False, 'validates': False }
 
 
@@ -521,8 +521,8 @@ def actionConfigItemSelector():
 						payloadValidatorDefault['validator'] = thisAction['validator']
 						payloadValidatorDefault['instructions'] = validator_instructions
 			except Exception as e:
-				print( 'Error: unable to eval(validator)' )
-				print( 'Result: validator = False' )
+				_.pr( 'Error: unable to eval(validator)' )
+				_.pr( 'Result: validator = False' )
 				payloadValidatorDefault = { 'instructions': False, 'validator': False }
 
 
@@ -533,9 +533,9 @@ def actionConfigItemFunction():
 	global config
 	global payloadTriggerDefault
 	global payloadValidatorDefault
-	print( '_______________________________________' )
-	print( '         action:item:function' )
-	print()
+	_.pr( '_______________________________________' )
+	_.pr( '         action:item:function' )
+	_.pr()
 	thisAction = {}
 	thisAction['function'] = ask_question( 'function', 'Function:', 'notBlankText' )
 	thisAction['has_payload'] = ask_question( 'has_payload', 'Has Payload? y,n:', 'yn_n' )
@@ -562,8 +562,8 @@ def actionConfigItemFunction():
 							payloadTriggerDefault['instructions'] = trigger_instructions
 							payloadTriggerDefault['validates'] = thisAction['trigger_validates']
 				except Exception as e:
-					print( 'Error: unable to eval(trigger)' )
-					print( 'Result: trigger = False' )
+					_.pr( 'Error: unable to eval(trigger)' )
+					_.pr( 'Result: trigger = False' )
 					payloadTriggerDefault = { 'instructions': False, 'trigger': False, 'validates': False }
 
 
@@ -585,8 +585,8 @@ def actionConfigItemFunction():
 							payloadValidatorDefault['validator'] = thisAction['validator']
 							payloadValidatorDefault['instructions'] = validator_instructions
 				except Exception as e:
-					print( 'Error: unable to eval(validator)' )
-					print( 'Result: validator = False' )
+					_.pr( 'Error: unable to eval(validator)' )
+					_.pr( 'Result: validator = False' )
 					payloadValidatorDefault = { 'instructions': False, 'validator': False }
 
 
@@ -599,10 +599,10 @@ def action():
 	global answerBackup
 	global answerFileLabels
 	if _.switches.isActive('Config'):
-		print( 'Answer backup to pickup where you left off if problem:', answerBackup )
-		print( '________________________________' )
-		print( '         project config' )
-		print()
+		_.pr( 'Answer backup to pickup where you left off if problem:', answerBackup )
+		_.pr( '________________________________' )
+		_.pr( '         project config' )
+		_.pr()
 		config['testAsWeGo'] = ask_question( 'testAsWeGo', 'Test page as we go?', 'yn_y' )
 		config['name'] = ask_question( 'name', 'Project:' )
 		config['description'] = ask_question( 'description', 'Description:' )
@@ -637,7 +637,7 @@ def action():
 				config['login_url'] = ask_question( 'login_url', 'Login url:', 'url' )
 
 				if config['testAsWeGo'] and not type(config['login_url']) == bool:
-					# print(config['login_url'])
+					# _.pr(config['login_url'])
 					_browser.imp.project.open( config['login_url'] )
 
 				config['hasBothLP'] = ask_question( 'hasBothLP', 'Is both login and password visible?', 'yn_y' )
@@ -671,33 +671,33 @@ def action():
 			config['action'].append( actionConfig() )
 			addAnother = ask_question( 'add_another', 'Add another action?', 'yn_n' )
 		
-		print()
-		print()
+		_.pr()
+		_.pr()
 		_.saveTable( config, 'siteData_config_' + formatNameForFile( config['name'] ) + '.json')
-		print()
+		_.pr()
 		_.saveTable( answerFileLabels, 'siteData_answerFile_auto_labels.json' )
-		print()
-		print( answerBackup )
+		_.pr()
+		_.pr( answerBackup )
 					
 	else:
 
 
 
 		theProject = False
-		# print( _v.myTables + _v.slash )
+		# _.pr( _v.myTables + _v.slash )
 		dirList = os.listdir( _v.myTables + _v.slash )
 		i = 0
 		relevant = []
 		for item in dirList:
-			# print( '\t',item )
+			# _.pr( '\t',item )
 			path = _v.myTables + _v.slash + item
 			if os.path.isfile(path):
 				if item.startswith( 'siteData_config_' ) and item.lower().endswith( '.json' ):
-					# print( item )
+					# _.pr( item )
 					label = item.replace( 'siteData_config_', '' ).replace( '.json', '' ).replace( '_', ' ' )
 					relevant.append({ 'id': i, 'item': item, 'path': path, 'label': label })
 					i+=1
-		# print( len(dirList) )
+		# _.pr( len(dirList) )
 		# sys.exit()
 		selected = []
 		i = 0
@@ -710,27 +710,27 @@ def action():
 		if len( selected ) == 1:
 			theProject = selected[0]
 		elif not len( selected ):
-			print()
+			_.pr()
 			_.tables.register('data',relevant)
 			_.tables.print('data','id,label')
-			print()
+			_.pr()
 			ask = input( 'ID: ' )
 			try:
 				theProject = relevant[int(ask)]
 			except Exception as e:
-				print( 'Error: expected int' )
+				_.pr( 'Error: expected int' )
 				sys.exit()
 
 		elif len( selected ) > 1:
-			print()
+			_.pr()
 			_.tables.register('data',selected)
 			_.tables.print('data','id,label')
-			print()
+			_.pr()
 			ask = input( 'ID: ' )
 			try:
 				theProject = selected[int(ask)]
 			except Exception as e:
-				print( 'Error: expected int' )
+				_.pr( 'Error: expected int' )
 				sys.exit()
 		##
 
@@ -766,7 +766,7 @@ def takeAction( config, thisAction ):
 		try:
 			_browser.imp.project.open(thisAction['url'])
 		except Exception as e:
-			print( 'Error: action page did not load' )
+			_.pr( 'Error: action page did not load' )
 			sys.exit()
 	if config['injectjQuery']:
 		_browser.imp.project.jqueryInject()
@@ -788,14 +788,14 @@ def takeAction( config, thisAction ):
 					else:
 						payload.append( processTriggers( collection['trigger'], collection['trigger_validates'], collection['validator'], _browser.imp.project.injectReturn( collection['function'] )) )
 				if item['pause']:
-					print(  )
-					print( 'Waiting for task completion' )
+					_.pr(  )
+					_.pr( 'Waiting for task completion' )
 					ix = 0
 					while not _browser.imp.project.injectReturn('return window.taskComplete;'):
 						time.sleep( 1 )
 						ix+=1
-						print( ix, end='\r', flush=True )
-					print(  )
+						_.pr( ix, end='\r', flush=True )
+					_.pr(  )
 
 			else:
 				fields = True
@@ -805,23 +805,23 @@ def takeAction( config, thisAction ):
 			payload.append( data )
 		
 	if not type( thisAction['child'] ) == bool:
-		print()
+		_.pr()
 		for i,link in enumerate(findLinks(payload)):
-			print( 'Processing:', i )
+			_.pr( 'Processing:', i )
 			try:
 				_browser.imp.project.open( link )
 				pageLoaded = True
 			except Exception as e:
-				print( 'Error: cannot load', link )
-				print()
+				_.pr( 'Error: cannot load', link )
+				_.pr()
 				pageLoaded = False
 
 			if pageLoaded:
 				try:
 					takeAction( config, config['child'] )
 				except Exception as e:
-					print( 'Error: action failure', link )
-					print()
+					_.pr( 'Error: action failure', link )
+					_.pr()
 
 	_.printVar( payload )
 
@@ -845,7 +845,7 @@ answerBackup = _v.myTables + _v.slash+'siteData_answerFile_auto.txt'
 answerBackupLabels = _v.myTables + _v.slash+'siteData_answerFile_auto_labels.txt'
 payload = []
 
-# print( '                                                      ', 'siteData_config_generate_database_of_andriod_apps_for_this_family_member.json' )
+# _.pr( '                                                      ', 'siteData_config_generate_database_of_andriod_apps_for_this_family_member.json' )
 
 # ******************************************************************************************************
 ## all validator functions should have fields labels in case you want a master by field name
@@ -855,6 +855,7 @@ payload = []
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

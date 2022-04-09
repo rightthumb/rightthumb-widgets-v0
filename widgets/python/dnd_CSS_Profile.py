@@ -234,7 +234,7 @@ def action():
 			if row.startswith( '.' ) and '{' in row:
 				record = profileCSS( row )
 				data.append( record )
-				# print( record )
+				# _.pr( record )
 
 		records = []
 		for i,record in enumerate(data):
@@ -264,10 +264,10 @@ def action():
 
 				if not printed[record['group']]:
 					printed[record['group']] = True
-					print( iX, record['group'],'\t', count[record['group']],'\t', record['css'][0] )
+					_.pr( iX, record['group'],'\t', count[record['group']],'\t', record['css'][0] )
 					iX += 1
 
-		print( 'Data Len:', len( data ) )
+		_.pr( 'Data Len:', len( data ) )
 		# _.saveTable( data, 'dnd_CSS_Profile.json' )
 		# _.switches.fieldSet( 'Long', 'active', True )
 		# _.switches.fieldSet( 'GroupBy', 'active', True )
@@ -327,6 +327,7 @@ if __name__ == '__main__':
 #     hackData.push( $(this).text() );
 # });
 # copy( hackData )
+
 
 
 

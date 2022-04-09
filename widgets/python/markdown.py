@@ -195,13 +195,13 @@ class Server(BaseHTTPRequestHandler):
 		self.respond_OK(hello_msg)
 
 	def do_POST(self):
-		print("Post")
+		_.pr("Post")
 
 		data = self.parse_POST()
 
-		# print(data)
-		# print(type(data))
-		# print(str(data[b'butt'][0]))
+		# _.pr(data)
+		# _.pr(type(data))
+		# _.pr(str(data[b'butt'][0]))
 		shutdown=str( data[b'shutdown'][0] ,'iso-8859-1')
 
 		if shutdown=='yes':
@@ -366,7 +366,7 @@ body {
 
 def START_WEBSERVER():
 	webServer = HTTPServer((host, port), Server)
-	print("Server started http://%s:%s" % (host, port))
+	_.pr("Server started http://%s:%s" % (host, port))
 
 	try:
 		webServer.serve_forever()
@@ -374,7 +374,7 @@ def START_WEBSERVER():
 		pass
 
 	webServer.server_close()
-	print("Server stopped.")
+	_.pr("Server stopped.")
 
 # webserver end
 ########################################################################################  ########################################################################################
@@ -407,7 +407,7 @@ THE_PATH=''
 def openFile(path):
 	global THE_PATH
 	THE_PATH = __.path(path)
-	print(path)
+	_.pr(path)
 
 	global filesOpened
 	if not path in filesOpened:
@@ -428,12 +428,12 @@ def process(table):
 		if not os.path.isfile(path):
 			run=False
 		if run:
-			print()
+			_.pr()
 			fileBackup.switch( 'Input', path )
 			fileBackup.switch( 'isPreOpen' )
 			fb = fileBackup.action()
-			print(path)
-			print(fb)
+			_.pr(path)
+			_.pr(fb)
 
 def build_tables():
 	if not len(v.crypt):
@@ -473,9 +473,9 @@ def processFile(path):
 
 
 		elif filesOpened_cnt < 2 and ask is None:
-			print()
+			_.pr()
 			ask=input(' open all ?:  ')
-			print()
+			_.pr()
 			if not 'n' in ask.lower():
 				filesOpened_cnt+=1
 				openFile(path)
@@ -566,6 +566,7 @@ fileBackup.switch( 'isPreOpen', delete=True )
 if __name__ == '__main__':
 	action()
 	__.isExit()
+
 
 
 

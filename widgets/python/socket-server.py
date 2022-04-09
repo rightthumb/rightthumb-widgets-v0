@@ -187,7 +187,7 @@ def formatData( result ):
 
 class Socky:
 	def __init__( self, host='127.0.0.1', port=65432, client=None, i=0 ):
-		# print('__init__')
+		# _.pr('__init__')
 		self.i = i
 		self.socket = client
 		self.socket.settimeout(1)
@@ -195,8 +195,8 @@ class Socky:
 		self.note=''
 	def recvall( self ):
 		self.socket.settimeout(1)
-		print('recvall')
-		# print('def recvall')
+		_.pr('recvall')
+		# _.pr('def recvall')
 		BUFF_SIZE = 4096 # 4 KiB
 		data = b''
 		while True:
@@ -209,29 +209,29 @@ class Socky:
 		# if 'dmp' in d and len(d) < 5:
 		# 	pass
 		# else:
-		# 	print('r',d)
-		print('r',d)
+		# 	_.pr('r',d)
+		_.pr('r',d)
 		return d
 
 
 	def wait_for_instructions( self ):
-		# print('def wait_for_instructions')
+		# _.pr('def wait_for_instructions')
 		# if self.note == 'exit':
-		# 	print('wex')
+		# 	_.pr('wex')
 		# 	return None
-		print('w')
+		_.pr('w')
 		data = self.recvall()
-		print('d')
+		_.pr('d')
 		self.process_for_instructions( data )
 
 	def process_for_instructions( self, data ):
-		# print('def process_for_instructions')
+		# _.pr('def process_for_instructions')
 		if not len(data):
-			print( '0 len' )
+			_.pr( '0 len' )
 			self.wait_for_instructions()
 			return None
 		# else:
-		print('ddata',data)
+		_.pr('ddata',data)
 		if data == 'dmp':
 			self.wait_for_instructions()
 			return None
@@ -242,22 +242,22 @@ class Socky:
 			self.instructions = eval(data)
 
 		if 'isfile' in self.instructions:
-			# print('in isfile')
+			# _.pr('in isfile')
 			self.download()
 			# return None
 
 		if 'do-upload' in self.instructions:
-			# print('in do-upload')
+			# _.pr('in do-upload')
 			path = self.instructions
 			path = _tool.vc.FIG.path_resolve(path)
 			self.upload(path)
 			# return None
 
 		if 'hello' in self.instructions:
-			print('in hello')
+			_.pr('in hello')
 			instructions = { 'hello': self.i }
 			self.upload( '/opt/RightThumb/tech/hosts/Vulcan/projects/test.txt' )
-			print('end up')
+			_.pr('end up')
 			# self.upload( '/opt/RightThumb/tech/programs/databank/tables/mac-vendors.hash' )
 			# self.upload( '/usr/bin/jq' )
 			# self.send(j(instructions))
@@ -266,7 +266,7 @@ class Socky:
 
 		if 'kill' in self.instructions:
 			self.note = 'exit'
-			# print('in kill')
+			# _.pr('in kill')
 			v.alive = False
 			v.listening_agent.thisThread.kill()
 			# return None
@@ -275,25 +275,25 @@ class Socky:
 		if 'exit' in self.instructions or 'kill' in self.instructions:
 			self.note = 'exit'
 			# v.alive = False
-			print( 'close', self.i )
-			# print('in exit')
+			_.pr( 'close', self.i )
+			# _.pr('in exit')
 			self.socket.close()
 			if not v.threads[str(self.i)].thisThread is None:
 				v.threads[str(self.i)].thisThread.kill()
 			return None
 
 		if 'python' in self.instructions:
-			print( 'python', self.i )
+			_.pr( 'python', self.i )
 			if _.isWin:
 				result = subdo( 'p_.bat '+self.instructions['python'] )
 			else:
 				result = subdo( 'sh ./p.sh '+self.instructions['python'] )
-			print('rresult',result.count('\n'))
-			# print('resultt',result)
+			_.pr('rresult',result.count('\n'))
+			# _.pr('resultt',result)
 
 			self.longText( result )
-			print( 'close', self.i )
-			# print('in exit')
+			_.pr( 'close', self.i )
+			# _.pr('in exit')
 			self.socket.close()
 			if not v.threads[str(self.i)].thisThread is None:
 				v.threads[str(self.i)].thisThread.kill()
@@ -317,42 +317,42 @@ class Socky:
 
 		}
 		parts = chunks( data, instructions['chunk'] )
-		print( 'parts', len(parts) )
+		_.pr( 'parts', len(parts) )
 		ins = j(instructions)
 		# _.pv(instructions)
 		# self.send( j({'buf':len(ins)}) )
 		# self.recvall()
-		print( 0 )
+		_.pr( 0 )
 		self.send( ins )
-		print( 1 )
+		_.pr( 1 )
 		# return None
 		self.recvall()
-		print( 2 )
+		_.pr( 2 )
 		# self.process_for_instructions( '{"exit":True}' )
 		# return None
 		# self.send( data )
 		# b = info['bytes']
 		t = 0
 		chunky = instructions['chunk']
-		print( 3 )
+		_.pr( 3 )
 
 		for ij, chunkV in enumerate(parts):
-			print('chunkV')
+			_.pr('chunkV')
 			t+=chunky
-			print( 44, ij, len(parts) )
-			# print(chunkV)
-			# print( 440, ij, len(parts) )
+			_.pr( 44, ij, len(parts) )
+			# _.pr(chunkV)
+			# _.pr( 440, ij, len(parts) )
 			self.send(  str(chunkV)  )
-			print( 55, ij, len(parts) )
+			_.pr( 55, ij, len(parts) )
 			# self.recvall()
-			print( 66, ij, len(parts) )
+			_.pr( 66, ij, len(parts) )
 
 
 
-		print( 4 )
+		_.pr( 4 )
 		_.updateLine('')
 		self.send('C257AC605A4A49998885FB72356A1B7F')
-		print( 4.1 )
+		_.pr( 4.1 )
 		# self.recvall()
 		# self.wait_for_instructions()
 		return None
@@ -407,7 +407,7 @@ class Socky:
 		self.recvall()
 
 	def send( self, data ):
-		# print('send',data)
+		# _.pr('send',data)
 		d = formatData(data)
 		# while len(d) < 1024:
 		#   d+='.'
@@ -443,14 +443,14 @@ def j(data):
 	return simplejson.dumps(data, indent=4, sort_keys=False)
 
 def asdf():
-	print('asdf')
-	print('isAlive',v.listening_agent.thisThread.isAlive())
+	_.pr('asdf')
+	_.pr('isAlive',v.listening_agent.thisThread.isAlive())
 	if v.listening_agent.thisThread.isAlive():
 		v.listening_agent.thisThread.kill()
-	print('isAlive',v.listening_agent.thisThread.isAlive())
+	_.pr('isAlive',v.listening_agent.thisThread.isAlive())
 
 def function():
-	print('function')
+	_.pr('function')
 
 
 def newConnection( kwargs ):
@@ -460,7 +460,7 @@ def newConnection( kwargs ):
 	i = kwargs['i']
 
 # def newConnection( host, port, client, i ):
-	# print('newCo8nnection',kwargs )
+	# _.pr('newCo8nnection',kwargs )
 	v.last_sockets = Socky( host, port, client, i )
 	# v.last_sockets.open()
 	v.sockets[str(i)] = v.last_sockets
@@ -470,7 +470,7 @@ def newConnection( kwargs ):
 #   i = kwargs['i']
 #   client, address = sock.accept()
 #   v.listening = False
-#   print( "{} connected".format(address) )
+#   _.pr( "{} connected".format(address) )
 #   v.threads[str(i)] = _.Threads( str(i), func=newConnection, arg={'host': host,'port': port,'client':client,'i':i}, addID=False )
 
 def listener(kwargs):
@@ -482,7 +482,7 @@ def listener(kwargs):
 	v.alive = True
 	i=0
 	while v.alive:
-		# print('socket')
+		# _.pr('socket')
 		sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 		sock.settimeout(1)
 
@@ -492,15 +492,15 @@ def listener(kwargs):
 		
 		while v.alive:
 			i += 1
-			# print('accept',i)
+			# _.pr('accept',i)
 			try:
 				try:
 					client, address = sock.accept()
 				except Exception as e:
 					break
 				v.listening = False
-				print('connected',i)
-				# print( "{} connected".format(address) )
+				_.pr('connected',i)
+				# _.pr( "{} connected".format(address) )
 				v.threads[str(i)] = _.Threads( str(i), func=newConnection, arg={'host': host,'port': port,'client':client,'i':i}, addID=False )
 				
 				# v.listening = True
@@ -527,16 +527,16 @@ def listener(kwargs):
 			#       sock.close()
 			#   except Exception as e:
 			#       pass
-			#   print('sleep')
+			#   _.pr('sleep')
 			#   while logoutComplete == 0:
 			#       time.sleep(.5)
 			#   time.sleep(5)
-			#   print('killAll')
+			#   _.pr('killAll')
 			#   # _.threads.killAll()
 			#   while not logoutComplete == 2:
 			#       time.sleep(.5)
 			#   time.sleep(8)
-			#   print('end')
+			#   _.pr('end')
 			#   sys.exit()
 			#   raise
 
@@ -580,7 +580,7 @@ def action():
 def logout():
 	global logoutComplete
 	logoutComplete = 2
-	print( 'Logout' )
+	_.pr( 'Logout' )
 
 
 import socket
@@ -599,7 +599,7 @@ except Exception as e:
 
 def subdo(do,p=0):
 	if p:
-		print(do)
+		_.pr(do)
 	if v.subprocess is None:
 		import subprocess
 		v.subprocess = subprocess
@@ -608,7 +608,7 @@ def subdo(do,p=0):
 	except Exception as e:
 		result = ''
 	if p > 1:
-		print(result)
+		_.pr(result)
 	return result
 
 
@@ -627,6 +627,7 @@ import simplejson
 if __name__ == '__main__':
 	action()
 	__.isExit()
+
 
 
 

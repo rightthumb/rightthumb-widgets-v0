@@ -198,9 +198,9 @@ def processText(text):
 	dataRaw = ''
 	for i,line in enumerate(text):
 		line = line.replace('\n','')
-		# print(i,line)
+		# _.pr(i,line)
 		if 'appInfo'.lower() in line.lower():
-			# print(line)
+			# _.pr(line)
 			start = True
 		if start and not ranOnce:
 			
@@ -208,7 +208,7 @@ def processText(text):
 				start = False
 				depth -= 1
 				dataRaw += line.split('}')[0]
-				# print(dataRaw)
+				# _.pr(dataRaw)
 				# dataRaw = ''
 				ranOnce = True
 			elif '{' in line:
@@ -218,7 +218,7 @@ def processText(text):
 				dataRaw += line
 	if len(dataRaw) > 0:
 		data = '{' + dataRaw + '}'
-		# print(dict(data))
+		# _.pr(dict(data))
 		# sys.exit()
 		data = data.replace("'",'"')
 		data = data.replace('\n','')
@@ -241,30 +241,30 @@ def processText(text):
 			data += '[]}'
 			# sys.exit()
 
-		# print(data)
-		# print(result)
+		# _.pr(data)
+		# _.pr(result)
 		# sys.exit()
 		# result = json.loads(data)
 		try:
 			result = json.loads(data)
 		except Exception as e:
 			result = False
-			print()
-			print()
-			print()
-			print(data)
+			_.pr()
+			_.pr()
+			_.pr()
+			_.pr(data)
 			sys.exit()
 	else:
 		result = False
 	return result
 
 def test():
-	print('test')
+	_.pr('test')
 
 def action():
 	# test = {       'file': '7z.py',        'description': '7zip basics made simple',       'prerequisite': [], 'examples': [],     'columns': [],  }
-	# print(test)
-	# print(json.dumps(test))
+	# _.pr(test)
+	# _.pr(json.dumps(test))
 	# sys.exit()
 
 
@@ -282,36 +282,36 @@ def action():
 	# 	dirList = _.appData[__.appReg]['pipe']
 
 	# if shouldRun:
-	# 	print()
+	# 	_.pr()
 	# 	apps = {}
 	# 	errors0 = 0
 	# 	for fi in dirList:
 	# 		fi = fi.replace('\n','')
 	# 		fi = fi.replace('.py','')
-	# 		# print('Loading:\t',fi)
+	# 		# _.pr('Loading:\t',fi)
 	# 		try:
 	# 			apps[fi] = eval('importlib.import_module(fi)')
-	# 			# print('Loaded')
+	# 			# _.pr('Loaded')
 	# 		except Exception as e:
-	# 			print('Error: ',fi)
+	# 			_.pr('Error: ',fi)
 	# 			errors0 += 1
 			
 			
-	# 	print()
-	# 	print()
+	# 	_.pr()
+	# 	_.pr()
 	# 	errors1 = 0
 	# 	success = 0
 	# 	for infoKeys in _.appInfo.keys():
 	# 		try:
-	# 			print(_.appInfo[infoKeys]['file'],'\t',_.appInfo[infoKeys]['description'])
+	# 			_.pr(_.appInfo[infoKeys]['file'],'\t',_.appInfo[infoKeys]['description'])
 	# 			success += 1
 	# 		except Exception as e:
-	# 			print('Error:',infoKeys)
+	# 			_.pr('Error:',infoKeys)
 	# 			errors1 += 1
 		
-	# 	print('success:',success)
-	# 	print('errors0:',errors0)
-	# 	print('errors1:',errors1)
+	# 	_.pr('success:',success)
+	# 	_.pr('errors0:',errors0)
+	# 	_.pr('errors1:',errors1)
 
 
 
@@ -323,9 +323,9 @@ def action():
 	# 	text = _.appData[__.appReg]['pipe']
 
 	# if shouldRun:
-	# 	print()
+	# 	_.pr()
 	# 	data = processText(text)
-	# 	print(data)
+	# 	_.pr(data)
 
 		
 	# TEST - process list of files piped or by switch 
@@ -341,9 +341,9 @@ def action():
 		dirList = _.appData[__.appReg]['pipe']
 
 	if shouldRun:
-		print()
+		_.pr()
 		apps = {}
-		# print(dirList)
+		# _.pr(dirList)
 		
 		errors = 0
 		success = 0
@@ -356,40 +356,40 @@ def action():
 			data = processText(txtFile)
 			try:
 				if type(data) == bool:
-					print('Error:',fi)
+					_.pr('Error:',fi)
 					errors += 1
 					errors1 += 1
 				else:
 					data['livefile'] = fi
 					appRegistration.append(data)
-					# print(data)
-					# print(fi,'\t',str(data))
+					# _.pr(data)
+					# _.pr(fi,'\t',str(data))
 					success += 1
 					
 			except Exception as e:
-				print('Error:',fi)
+				_.pr('Error:',fi)
 				errors += 1
 				errors0 += 1
-		print()
-		print('success:',success)
-		print('errors:',errors)
+		_.pr()
+		_.pr('success:',success)
+		_.pr('errors:',errors)
 		if errors > 0:
-			print('errors0:',errors0)
-			print('errors1:',errors1)
+			_.pr('errors0:',errors0)
+			_.pr('errors1:',errors1)
 
 		_.saveTable(appRegistration,'appRegistration.json')
-		print()
-		print()
+		_.pr()
+		_.pr()
 		# for ar in appRegistration:
-		# 	print(ar.keys())
+		# 	_.pr(ar.keys())
 		# 	try:
 		# 		ar['file']
 		# 	except Exception as e:
-		# 		print(ar['livefile'])
+		# 		_.pr(ar['livefile'])
 
 		for ar in appRegistration:
 			if not ar['file'] == ar['livefile']:
-				print(ar['livefile'])
+				_.pr(ar['livefile'])
 
 
 
@@ -397,6 +397,7 @@ def action():
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

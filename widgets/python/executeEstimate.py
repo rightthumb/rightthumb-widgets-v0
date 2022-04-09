@@ -63,7 +63,7 @@ def appSwitches():
 	
 def addSuffixToProject(text):
 	if not type( text ) == str:
-		print('Project switch error')
+		_.pr('Project switch error')
 		sys.exit()
 	return text + '_executeEstimate'
 
@@ -181,7 +181,7 @@ if not sys.stdin.isatty():
 
 # _dir.sqlCreateTable( db, deleteDBFirst=True, close=True )
 # obj = _dir.fileInfo( path, sql=True )
-# print(   _dir.fileInfo( _.switches.value('Input') )['size']   )
+# _.pr(   _dir.fileInfo( _.switches.value('Input') )['size']   )
 
 # _.saveLog('queue')
 # _.saveLog('audit')
@@ -251,7 +251,7 @@ def execute():
 		results = _.getText( _v.tmpf )
 		for row in results:
 			row = row.replace( '\n', '' )
-			print(row)
+			_.pr(row)
 
 	projectTimer.imp.focus(focus())
 	_.switches.fieldSet( 'Note', 'active', True )
@@ -270,24 +270,24 @@ def estimate():
 	global estimatedTotal
 	
 	if done:
-		print( '                                                                       ', end='\r', flush=True )
+		_.pr( '                                                                       ', end='\r', flush=True )
 		# if _.switches.isActive('Prefix'):
-		# 	print( ' ' + _.switches.value('Prefix') + ':', '100%', end='\r', flush=True )
+		# 	_.pr( ' ' + _.switches.value('Prefix') + ':', '100%', end='\r', flush=True )
 		# else:
-		# 	print( ' ' + '100%', end='\r', flush=True )
+		# 	_.pr( ' ' + '100%', end='\r', flush=True )
 
 	else:
 
 		if estimatedTotal == 0:
 			if _.switches.isActive('Prefix'):
-				print(' ' + _.switches.value('Prefix') )
+				_.pr(' ' + _.switches.value('Prefix') )
 
 		else:
 			pDone = str(int(_.percentageDiffInt( time.time()-startTime , estimatedTotal )))
 			if _.switches.isActive('Prefix'):
-				print(' ' + _.switches.value('Prefix') + ':', pDone + '%', end='\r', flush=True)
+				_.pr(' ' + _.switches.value('Prefix') + ':', pDone + '%', end='\r', flush=True)
 			else:
-				print(' ' + pDone + '%', end='\r', flush=True)
+				_.pr(' ' + pDone + '%', end='\r', flush=True)
 			Timer( .1, estimate ).start()
 
 def action():
@@ -339,6 +339,7 @@ startTime = time.time()
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

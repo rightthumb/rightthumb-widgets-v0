@@ -155,7 +155,7 @@ if __name__ == '__main__':
 def action():
 	if not type( _.appData[__.appReg]['pipe'] ) == bool:
 		if _.switches.isActive('Batch'):
-			print( '@echo off' )
+			_.pr( '@echo off' )
 		for row in _.appData[__.appReg]['pipe']:
 			if 'REG_EXPAND_SZ' in row or 'REG_SZ' in row:
 				if 'REG_EXPAND_SZ' in row:
@@ -173,10 +173,10 @@ def action():
 						data[i] = _str.cleanBE( data[i], ' ' )
 						data[i] = _str.cleanBE( data[i], ' ' )
 					if _.switches.isActive('Batch'):
-						print( 'SET '+ data[0]+'='+data[1] )
+						_.pr( 'SET '+ data[0]+'='+data[1] )
 					else:
 						if _.showLine( data[0]+' '+data[1] ):
-							print( data[0]+' = '+data[1] )
+							_.pr( data[0]+' = '+data[1] )
 
 
 
@@ -186,6 +186,7 @@ def action():
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

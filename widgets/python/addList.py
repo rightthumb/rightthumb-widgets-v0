@@ -173,7 +173,7 @@ if not sys.stdin.isatty():
 
 # _dir.sqlCreateTable( db, deleteDBFirst=True, close=True )
 # obj = _dir.fileInfo( path, sql=True )
-# print(   _dir.fileInfo( _.switches.value('Input') )['size']   )
+# _.pr(   _dir.fileInfo( _.switches.value('Input') )['size']   )
 
 # _.saveLog('queue')
 # _.saveLog('audit')
@@ -240,15 +240,15 @@ def action():
 			if len( row ) > 0:
 				total += _str.autoFloatInt( row )
 		if _.switches.isActive('FormatSize'):
-			print( _.formatSize( total ) )
+			_.pr( _.formatSize( total ) )
 		elif _.switches.isActive('Round'):
 			r = _.switches.value('Round')
 			if len( r ):
-				print( round( total, int(r) ) )
+				_.pr( round( total, int(r) ) )
 			else:
-				print( round( total, 2 ) )
+				_.pr( round( total, 2 ) )
 		else:
-			print( total )
+			_.pr( total )
 
 
 
@@ -259,6 +259,7 @@ def action():
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

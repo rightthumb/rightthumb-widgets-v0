@@ -198,7 +198,7 @@ def action():
 	global data
 	# load()
 
-	# print( _v.chromedriver )
+	# _.pr( _v.chromedriver )
 	# sys.exit()
 
 	url                = 'https://groups.yahoo.com/neo/groups/Stargate_SG-1_and_Atlantis_Transcripts/files/Stargate%20Atlantis%20Transcripts/'
@@ -209,7 +209,7 @@ def action():
 	password_selector  = "[name='password']"
 	# password_selector  = '#login-passwd'
 
-	# print( password )
+	# _.pr( password )
 
 	_browser.imp.project.loginIndividually( url, login, password, login_selector, password_selector )
 
@@ -238,20 +238,20 @@ def action():
 		except Exception as e:
 			d = ''
 		data[i]['children'] = d
-		# print( 'Click: Pre' )
+		# _.pr( 'Click: Pre' )
 		# _browser.imp.project.clickEach( '.yg-list-title' )
-		# print( 'Click: Post' )
+		# _.pr( 'Click: Post' )
 
 		# try:
 		# except Exception as e:
-		# 	print( 'Click Error' )
+		# 	_.pr( 'Click Error' )
 
 
 		time.sleep( .5 )
 
 
 		# test = False
-		# print( test )
+		# _.pr( test )
 		# while not test:
 		# 	time.sleep( 1 )
 		# 	try:
@@ -260,7 +260,7 @@ def action():
 		# 	except Exception as e:
 		# 		test = False
 		# 		how = 1
-		# 	print( test, how )
+		# 	_.pr( test, how )
 
 		
 		# data = _browser.imp.project.injectReturn( 'return window.hack.acquire.data;' )
@@ -275,7 +275,7 @@ def action():
 		# # sys.exit()
 
 		# test = False
-		# print( test )
+		# _.pr( test )
 		# while not test:
 		# 	time.sleep( 1 )
 		# 	cnt = 0
@@ -286,7 +286,7 @@ def action():
 		# 	if cnt == len(files):
 		# 		test = True
 		# 	else:
-		# 		print( 'Waiting on downloads:', cnt, 'of', len(files) )
+		# 		_.pr( 'Waiting on downloads:', cnt, 'of', len(files) )
 
 
 
@@ -334,6 +334,7 @@ if __name__ == '__main__':
 # window.hack.acquire.done = true;
 # p dir3 -ago 1d -c n
 # p dirdb + *.py selenium chrome techApps Python36
+
 
 
 

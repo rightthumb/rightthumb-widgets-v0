@@ -283,12 +283,12 @@ def clean(string):
 
 def php_funcname(table):
 	prefix = _.switches.value('Prefix')
-	# print(prefix)
+	# _.pr(prefix)
 
-	# print(table)
+	# _.pr(table)
 	# sys.exit()
 	table = table.replace(prefix,'')
-	# print(table)
+	# _.pr(table)
 	table = table.replace('_',' ')
 	table = table.title()
 	table = table.replace(' ','_')
@@ -387,7 +387,7 @@ def php_joinsArea(crudJoins,thisTable,fields):
 		abrev = []
 		t = thisTable.replace(prefix,'')
 
-		# print(thisTable)
+		# _.pr(thisTable)
 		buildJoins = ''
 		buildfields = ''
 		buildfieldsArr = ''
@@ -427,7 +427,7 @@ def php_joinsArea(crudJoins,thisTable,fields):
 										for ytfield in ytable['fields']:
 											buildfields += ya+'.'+ytfield['field'] + ' as ' + ya+'_'+ytfield['field']+', '
 											buildfieldsArr += arrX.replace('FIELD',a+'_'+ytfield['field'])
-		# print()
+		# _.pr()
 		buildfields = _str.cleanBE(buildfields,', ')
 		queryX = queryX.replace('[JOINDATA]',buildJoins)
 		queryX = queryX.replace('[select_fields]',buildfields)
@@ -435,7 +435,7 @@ def php_joinsArea(crudJoins,thisTable,fields):
 		queryX = queryX.replace('[abrev]',thisTable.replace(prefix,''))
 		result = crudJoins.replace('[readfields]',buildfieldsArr)
 		result = result.replace('[theQuery]',queryX)
-		# print(result)
+		# _.pr(result)
 	return result
 
 def php_combineTables():
@@ -540,11 +540,11 @@ def phpaction(table,fields):
 	# 	if 'function ' in line:
 	# 		function = clean(line.split('function ')[1].split('{')[0])
 	# 		functions.append(function)
-	# 		print(function)
+	# 		_.pr(function)
 
 
 
-	# print(crud)
+	# _.pr(crud)
 
 	return crud
 
@@ -569,7 +569,7 @@ def actionable(row,omit):
 		result = False
 	if 'epoch' in row['note']:
 		result = False
-	# print(row['note'])
+	# _.pr(row['note'])
 	return result
 
 
@@ -621,7 +621,7 @@ def jsFieldVal(app,table,fields,spaces):
 			if 'label' in pf:
 				x += '[js_APP].[js_APP_TABLE].records[i].' + pf + ''
 	x += '; } catch (err) { }\n'
-	# print(label,x)
+	# _.pr(label,x)
 	if len(label) > 0:
 		x = x.replace('[js_APP]',app)
 		f += x
@@ -652,7 +652,7 @@ def jsFieldName(table,field):
 
 def jsValidateSection(app,table,fields,spaces):
 	global jsValidate
-	# print(jsValidate)
+	# _.pr(jsValidate)
 	# sys.exit()
 	abrev = []
 	f = ''
@@ -707,8 +707,8 @@ def  jsHTMLROW(jsCrudBase,app,fields):
 						for fl in d['fields']:
 							if 'label' in fl['field']:
 								tblLabel = jsFieldName(d['table'],fl['field'])
-								# print(d['table'],fl['field'])
-								# print(tblLabel)
+								# _.pr(d['table'],fl['field'])
+								# _.pr(tblLabel)
 				code = jsCrudBase['row_select']
 			elif '_id' in field['field']:
 				code = jsCrudBase['row_hidden']
@@ -753,7 +753,7 @@ def jsAdd(app,table,fields):
 	for field in fields:
 		if actionable(field,'del,*json,label_*'):
 			if table.endswith('_items') and field['field'].endswith('_id'):
-				# print(jsFieldName(table,field['field']))
+				# _.pr(jsFieldName(table,field['field']))
 				f += b.replace('FIELD',jsFieldName(table,field['field'])).replace('"DEFAULT"',app+'.'+jsAppTable(table)+'.parent')
 			else:
 				f += b.replace('FIELD',jsFieldName(table,field['field'])).replace('DEFAULT',field['default'])
@@ -826,7 +826,7 @@ def jsAddChildDiv(app,table):
 	found = False
 	for d in data['sql']:
 		if d['table'] == (table + '_items') or d['table'] == (table[:-1] + '_items'):
-			print(d['table'])
+			_.pr(d['table'])
 			found = True
 		if found:
 			# f = '$(\'[js_main_app_id]\').append(\'<div class="thechild"></div>\');'
@@ -894,7 +894,7 @@ def jsSelectPageUn(app,table,fields):
 			tx = prefix + fx
 			for i,tablex in enumerate(data['sql']):
 				if tablex['table'] == tx:
-					print(table,tx)
+					_.pr(table,tx)
 					t = jsAppTable(tx)
 					g = jsFieldName(table,field['field'])
 					found = True
@@ -983,7 +983,7 @@ def jsFieldValUpldateList(app,table,fields,spaces):
 			if 'label' in pf:
 				x += '[js_APP].[js_APP_TABLE].records[i].' + pf + ''
 	x += '; } catch (err) { }\n'
-	# print(label,x)
+	# _.pr(label,x)
 	if len(label) > 0:
 		x = x.replace('[js_APP]',app)
 		f += x
@@ -1151,12 +1151,12 @@ def action():
 	_.switches.fieldSet('Prefix','active',True)
 	_.switches.fieldSet('Prefix','value',sPrefix)
 	data = auditSQL.action()
-	# print(__.appReg)
+	# _.pr(__.appReg)
 	focus()
-	# print(__.appReg)
+	# _.pr(__.appReg)
 	
-	# print(data)
-	# print(data['sql'])
+	# _.pr(data)
+	# _.pr(data['sql'])
 
 
 
@@ -1178,18 +1178,18 @@ def action():
 
 
 	# for i,table in enumerate(data['sql']):
-	# 	print()
-	# 	print(table['table'])
+	# 	_.pr()
+	# 	_.pr(table['table'])
 	# 	for field in table['fields']:
 	# 		if actionable(field):
 	# 			pass
-	# 			print(field['field'])
+	# 			_.pr(field['field'])
 
-			# print('\t',field['field'])
-		# print(table['fields'])
+			# _.pr('\t',field['field'])
+		# _.pr(table['fields'])
 		# _.tables.register('fields',table['fields'])
 		# _.tables.print('fields','field,type,length,default,note')
-			# print(field.keys())
+			# _.pr(field.keys())
 
 def certFix(crud):
 	app = _.switches.value('App')
@@ -1345,6 +1345,7 @@ sendRecordsPages = 'process[funcname].php'
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

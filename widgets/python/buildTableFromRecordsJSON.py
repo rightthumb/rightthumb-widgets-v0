@@ -292,14 +292,14 @@ def action():
 		# _.printVar(_.appData)
 		total = len(_.appData[__.appReg]['pipe'])
 		for i,row in enumerate(_.appData[__.appReg]['pipe']):
-			print( str(i) + ' of ' + str(total), end='\r', flush=True )
+			_.pr( str(i) + ' of ' + str(total), end='\r', flush=True )
 			if _.showLine( row ):
 				process( row )
 		pass
 		if _.switches.isActive('UniqueKey'):
 			uniqueKey()
-		print( '                                                                       ', end='\r', flush=True )
-		# print( 'Done' )
+		_.pr( '                                                                       ', end='\r', flush=True )
+		# _.pr( 'Done' )
 		_.saveTable( data, _.switches.values('Label')[0] )
 
 
@@ -318,6 +318,7 @@ spent = []
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

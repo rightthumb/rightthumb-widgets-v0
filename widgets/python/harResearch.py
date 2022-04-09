@@ -176,7 +176,7 @@ def profile( data, field='text', parents=[], json=False, plus=False ):
     global pipeData
 
     def sliceVar( var, newP ):
-        # print(newP)
+        # _.pr(newP)
         n = None
         if type(var) == list:
             n = []
@@ -247,7 +247,7 @@ def profile( data, field='text', parents=[], json=False, plus=False ):
                         _.colorThis( [ 'Saved:', theFile ], 'green' )
                     except Exception as e:
                         _.colorThis( [ 'Error:', theFile ], 'red' )
-                        print( e )
+                        _.pr( e )
                         _.colorThis( [ 'Error:', theFile ], 'red' )
                 elif _.switches.values('Save')[0] == 'text':
                     try:
@@ -263,7 +263,7 @@ def profile( data, field='text', parents=[], json=False, plus=False ):
                         _.colorThis( [ 'Saved:', theFile ], 'green' )
                     except Exception as e:
                         _.colorThis( [ 'Error:', theFile ], 'red' )
-                        print( e )
+                        _.pr( e )
                         _.colorThis( [ 'Error:', theFile ], 'red' )
 
                 
@@ -287,7 +287,7 @@ def profile( data, field='text', parents=[], json=False, plus=False ):
 
             if key == 'url':
                 research['url'] = data[key]
-                # print( key )
+                # _.pr( key )
 
                 if key == 'url' and _.switches.isActive('URL') and _.showLine( data[key], _.switches.value('URL') ):
                     
@@ -296,12 +296,12 @@ def profile( data, field='text', parents=[], json=False, plus=False ):
                         _.colorThis( data[key] , 'cyan' )
 
                 if not plus and json and 'json' in data[key].lower():
-                    print()
+                    _.pr()
                     _.colorThis( data[key] , 'cyan' )
-                    # print(  )
+                    # _.pr(  )
             if plus and key == field and _.showLine( data[key] ):
-                # print( 'found in text' )
-                # print( research['url'] )
+                # _.pr( 'found in text' )
+                # _.pr( research['url'] )
                 # _.colorThis(  [len(data[key]),'char\t', ','.join(parents) ], 'yellow'  )
                 if not research['url'] in research['payload']:
                     if json:
@@ -333,9 +333,9 @@ def secondApproach():
             url = row.split('"')[3]
             lastURL = url
             if not search and json and 'json' in url.lower():
-                print()
+                _.pr()
                 _.colorThis( url, 'yellow' )
-                print()
+                _.pr()
         if search and '"text":' in row and _.showLine(row):
             if not lastURL in research['payload']:
                 if json:
@@ -365,12 +365,12 @@ def secondApproach():
 #                         if k.lower() == key:
 #                             if not value in dic_spent:
 #                                 dic_spent.append(value)
-#                                 print(value)
+#                                 _.pr(value)
 #                 yield pre + [key]
 
 #     else:
 #         # yield pre + [indict]
-#         print(pre)
+#         _.pr(pre)
 #         yield pre 
 
 
@@ -382,7 +382,7 @@ def action():
     load()
     # import pytest
     # for x in dir(pytest):
-    #   print(x)
+    #   _.pr(x)
 
     # sys.exit()
 
@@ -447,7 +447,7 @@ def action():
 
     if not _.switches.isActive('Field'):
         for url in research['payload']:
-            print()
+            _.pr()
             _.colorThis( url , 'yellow' )
     return research['payload']
 
@@ -476,6 +476,7 @@ pipeData = []
 ########################################################################################
 if __name__ == '__main__':
     action()
+
 
 
 

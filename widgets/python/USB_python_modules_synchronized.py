@@ -312,7 +312,7 @@ def action():
 		if not _.switches.isActive('View'):
 
 			if data is None:
-				print( 'Empty' )
+				_.pr( 'Empty' )
 				data = {
 							'setup': epoch,
 							'last': epoch,
@@ -327,7 +327,7 @@ def action():
 		if not _.switches.isActive('Clean'):
 			_.printVar( data )
 
-			print( logPath )
+			_.pr( logPath )
 
 	return data
 
@@ -373,6 +373,7 @@ logPath = None
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

@@ -2699,12 +2699,12 @@ alias vps.sync="echo scp /mnt/d/widgets/servers/web/vps/* root@hoth.eyeformeta.c
 alias vps.sync.get="echo scp root@hoth.eyeformeta.com:/opt/lampp/htdocs/ /mnt/d/widgets/servers/web/vps/* |vps.e"
 export vpswww="sudo ssh -L 80:localhost:80 -C -N -l scott hoth.eyeformeta.com"
 alias vps.www="ssh -L 8080:localhost:80 -C -N -l scott hoth.eyeformeta.com"
-alias vps.dt="echo localhost:59000 ; ssh -L 59000:localhost:5900 -C -N -l scott hoth.eyeformeta.com"
-alias vps.dt2="echo localhost:59001 ; ssh -L 59001:localhost:5901 -C -N -l scott hoth.eyeformeta.com"
-alias vps1.dt="echo localhost:59000 ; ssh -L 59000:localhost:5900 -C -N -l scott hoth.eyeformeta.com"
-alias vps1.dt2="echo localhost:59001 ; ssh -L 59001:localhost:5901 -C -N -l scott hoth.eyeformeta.com"
-alias vps2.dt="echo localhost:59000 ; ssh -L 59000:localhost:5900 -C -N -l scott bespin.eyeformeta.com"
-alias vps2.dt2="echo localhost:59001 ; ssh -L 59001:localhost:5901 -C -N -l scott bespin.eyeformeta.com"
+alias vps.dt="PROMPT_COMMAND='echo -ne "\\033]0; desktop \\007"';echo localhost:59000 ; ssh -L 59000:localhost:5900 -C -N -l scott hoth.eyeformeta.com"
+alias vps.dt2="PROMPT_COMMAND='echo -ne "\\033]0; desktop \\007"';echo localhost:59001 ; ssh -L 59001:localhost:5901 -C -N -l scott hoth.eyeformeta.com"
+alias vps1.dt="PROMPT_COMMAND='echo -ne "\\033]0; desktop \\007"';echo localhost:59000 ; ssh -L 59000:localhost:5900 -C -N -l scott hoth.eyeformeta.com"
+alias vps1.dt2="PROMPT_COMMAND='echo -ne "\\033]0; desktop \\007"';echo localhost:59001 ; ssh -L 59001:localhost:5901 -C -N -l scott hoth.eyeformeta.com"
+alias vps2.dt="PROMPT_COMMAND='echo -ne "\\033]0; desktop \\007"';echo localhost:59000 ; ssh -L 59000:localhost:5900 -C -N -l scott bespin.eyeformeta.com"
+alias vps2.dt2="PROMPT_COMMAND='echo -ne "\\033]0; desktop \\007"';echo localhost:59001 ; ssh -L 59001:localhost:5901 -C -N -l scott bespin.eyeformeta.com"
 alias vps.k="echo $( p keychain -get -label vps.k )"
 alias kkk="echo $( p keychain -get -label login-test )"
 alias vps.mongo="ssh -L 27017:localhost:27017 -C -N -l scott hoth.eyeformeta.com"
@@ -3183,6 +3183,10 @@ alias rms='p secure-delete-file -f'
 PROMPT_COMMAND='echo -ne "\\033]0;$( whoami ) $prompt_symbol """+c3po+""" \\007"'
 export HISTSIZE=100000
 export HISTFILESIZE=100000
+
+# x='test'
+# if [ -z ${TERM+x} ]; then TERM=dumb; fi
+
 clear
             """
             # echo "alias rr='sudo su root'" >> ~/.bashrc

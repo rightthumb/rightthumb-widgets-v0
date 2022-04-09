@@ -168,7 +168,7 @@ def action():
 		
 		if len(records):
 			if len(records) == 1:
-				print( records[0]['id'] )
+				_.pr( records[0]['id'] )
 			else:
 				_.fields.asset( 'data', records )
 				for record in records:
@@ -176,7 +176,7 @@ def action():
 					part += _.fields.value( 'data', 'name', record['name'], right=1 )
 					part += '\t'
 					part += _.fields.value( 'data', 'id', record['id'] )
-					print( part )
+					_.pr( part )
 
 	elif _.switches.isActive('ID'):
 		_.fields.asset( 'data', data )
@@ -186,7 +186,7 @@ def action():
 				part += _.fields.value( 'data', 'name', record['name'], right=1 )
 				part += '\t'
 				part += _.fields.value( 'data', 'id', record['descriptors'] )
-				print( part )				
+				_.pr( part )				
 
 
 def load():
@@ -203,6 +203,7 @@ data = []
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

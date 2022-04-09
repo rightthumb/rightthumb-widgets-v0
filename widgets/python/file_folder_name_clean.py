@@ -286,7 +286,7 @@ def process( old_name ):
 	if not file == new_name:
 		
 	
-		# print( folder, '\t', file, '\t', new_name )
+		# _.pr( folder, '\t', file, '\t', new_name )
 
 		# sys.exit()
 		# _dir.fileInfo
@@ -299,7 +299,7 @@ def process( old_name ):
 			name_new = folder + _v.slash + new_name
 		record = { 'old': file , 'new': new_name, 'ext': ext.upper(), 'path': name_old }
 		data.append( record )
-		# print(  '\t', file, '\t', new_name )
+		# _.pr(  '\t', file, '\t', new_name )
 		undo[name_new] = record
 		os.rename( name_old, name_new )
 
@@ -327,7 +327,7 @@ def unprocess( old_name ):
 	if len(name_new):
 		data.append( record )
 
-		# print(  '\t', name_old, '\t', name_new )
+		# _.pr(  '\t', name_old, '\t', name_new )
 		os.rename( name_old, name_new )
 
 
@@ -406,6 +406,7 @@ data = []
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

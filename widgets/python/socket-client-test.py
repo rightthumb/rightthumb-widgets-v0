@@ -204,14 +204,14 @@ def action():
 
 	# Connect the socket to the port where the server is listening
 	server_address = (str(HOST), PORT)
-	# print(sys.stderr, 'connecting to %s port %s' % server_address)
-	print('connecting to %s port %s' % server_address)
+	# _.pr(sys.stderr, 'connecting to %s port %s' % server_address)
+	_.pr('connecting to %s port %s' % server_address)
 	try:
 		sock.connect(server_address)
-		print( 'connected' )
+		_.pr( 'connected' )
 		sock.sendall(b'testing')
 	except Exception as e:
-		print( e )
+		_.pr( e )
 
 
 
@@ -219,6 +219,7 @@ def action():
 if __name__ == '__main__':
 	action()
 	__.isExit()
+
 
 
 

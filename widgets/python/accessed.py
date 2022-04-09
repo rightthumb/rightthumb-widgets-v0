@@ -284,20 +284,21 @@ def action():
 				if not fileField is None:
 					r += str(record[fileField])
 
-				print( r )
+				_.pr( r )
 				# if keepEpoch and hasMultiple:
-				# 	print(  record['epoch'], record['file']  )
+				# 	_.pr(  record['epoch'], record['file']  )
 				# if keepEpoch and not hasMultiple:
-				# 	print(  record['epoch']  )
+				# 	_.pr(  record['epoch']  )
 				# if not keepEpoch and hasMultiple:
-				# 	print(  record['date'], record['file']  )
+				# 	_.pr(  record['date'], record['file']  )
 				# if not keepEpoch and not hasMultiple:
-				# 	print(  record['date']  )
+				# 	_.pr(  record['date']  )
 
 
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

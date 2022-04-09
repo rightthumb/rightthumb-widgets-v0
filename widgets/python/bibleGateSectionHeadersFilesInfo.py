@@ -170,7 +170,7 @@ def pipeCleaner():
 
 # _dir.sqlCreateTable( db, deleteDBFirst=True, close=True )
 # obj = _dir.fileInfo( path, sql=True )
-# print(   _dir.fileInfo( _.switches.value('Input') )['size']   )
+# _.pr(   _dir.fileInfo( _.switches.value('Input') )['size']   )
 
 # _.saveLog('queue')
 # _.saveLog('audit')
@@ -233,7 +233,7 @@ def getInfo( file ):
 	version = getVersion( file )
 	json = _.getTable( file )
 	i = 0
-	# print(json)
+	# _.pr(json)
 	for ri in json.keys():
 		for ci in json[ri]['chapters'].keys():
 			i += len( json[ri]['chapters'][ci] )
@@ -254,9 +254,9 @@ def action():
 		if 'Bible_section_headers_biblegateway_' in item and '.json' in item:
 			i += 1
 			# if i == 2:
-				# print(path)
+				# _.pr(path)
 			getInfo( item )
-	print()
+	_.pr()
 	_.tables.returnSorted( 'data', 'd.records', data )
 	# _.tables.register('data',childItems)
 	_.tables.print('data','version,records')
@@ -267,6 +267,7 @@ data = []
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

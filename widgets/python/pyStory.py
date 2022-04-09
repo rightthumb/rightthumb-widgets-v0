@@ -288,7 +288,7 @@ def action():
 	offset = 1
 	for i,row in enumerate(data):
 		if 'if ' in row and '_.switches.isActive' in row and 'and' in row:
-			print( i+offset, inject( row ) )
+			_.pr( i+offset, inject( row ) )
 			sys.exit()
 
 
@@ -300,6 +300,7 @@ data = []
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

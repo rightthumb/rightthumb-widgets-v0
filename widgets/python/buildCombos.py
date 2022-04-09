@@ -177,7 +177,7 @@ def action():
 			_.appData[__.appReg]['pipe'].reverse()
 			inv.reverse()
 
-		print( 'bc:', __.appReg )
+		_.pr( 'bc:', __.appReg )
 
 		for data0 in _.appData[__.appReg]['pipe']:
 
@@ -191,7 +191,7 @@ def action():
 						newData = newData.replace( ',', _.switches.value('Delim') )
 					if _.switches.isActive('Prefix'):
 						newData = _.switches.value('Prefix') + ' ' + newData
-					print( newData )
+					_.pr( newData )
 
 
 
@@ -199,6 +199,7 @@ def action():
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

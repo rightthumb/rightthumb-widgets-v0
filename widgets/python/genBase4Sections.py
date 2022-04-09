@@ -190,21 +190,21 @@ def injectFirstRow( row, data ):
 	return result
 
 def clean_appReg( data ):
-	# print( data )
+	# _.pr( data )
 	result = ''
 	appReg_spent = False
 	for x in data.split('\n'):
 		shouldAdd = True
 		if 'global appReg'.lower() in x.lower():
 			if appReg_spent:
-				# print('here')
+				# _.pr('here')
 				shouldAdd = False
 			
 			appReg_spent = True
 		if shouldAdd:
-			# print(x)
+			# _.pr(x)
 			result+=x+'\n'
-	# print( result )
+	# _.pr( result )
 	# sys.exit()
 	return result
 
@@ -220,7 +220,7 @@ def selfCodeClean( code ):
 	code = code.replace( ':', '' )
 	# code = code.split(',     ')[0]+' )'
 	# code = code.replace( ') )', ')' )
-	print( code )
+	_.pr( code )
 
 	return code
 
@@ -266,7 +266,7 @@ def process( record ):
 	for pline in parts.split('\n'):
 		if ';' in pline:
 			p = pline.split(';')
-			# print( p )
+			# _.pr( p )
 			if not p[0] in spentSections:
 				spentSections.append( p[0] )
 				new = result
@@ -397,13 +397,13 @@ def process( record ):
 
 
 
-	# print(result)
+	# _.pr(result)
 	# _.printVarSimple(record)
 	# result
 	return payload
-	# print(record['name'])
-	# print(record['start'])
-	# print(record['end'])
+	# _.pr(record['name'])
+	# _.pr(record['start'])
+	# _.pr(record['end'])
 def action():
 	global file
 	global parts
@@ -421,11 +421,11 @@ def action():
 	for section in payload:
 		result+=section
 		# for line in section:
-		# 	print( line )
+		# 	_.pr( line )
 	if _.switches.isActive('Save') and len(_.switches.value('Save')):
 		_.saveText( result, _.switches.values('Save')[0] )
 	elif not _.switches.isActive('Save'):
-		print( result )
+		_.pr( result )
 	elif _.switches.isActive('Save') and not len(_.switches.value('Save')):
 		global filename
 
@@ -540,6 +540,7 @@ oc = {
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

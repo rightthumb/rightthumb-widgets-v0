@@ -175,7 +175,7 @@ if not sys.stdin.isatty():
 
 # _dir.sqlCreateTable( db, deleteDBFirst=True, close=True )
 # obj = _dir.fileInfo( path, sql=True )
-# print(   _dir.fileInfo( _.switches.value('Input') )['size']   )
+# _.pr(   _dir.fileInfo( _.switches.value('Input') )['size']   )
 
 # _.saveLog('queue')
 # _.saveLog('audit')
@@ -248,7 +248,7 @@ def action():
 				for exif in data:
 					for k in exif.keys():
 						if not _.switches.isActive('Missing') and not _.switches.isActive('Including'):
-							print( k )
+							_.pr( k )
 						else:
 							fields.append( k.lower() )
 				if _.switches.isActive('Missing'):
@@ -257,17 +257,17 @@ def action():
 						if s.lower() not in fields:
 							shouldPrint = True
 					if shouldPrint:
-						print( item )
+						_.pr( item )
 				if _.switches.isActive('Including'):
 					shouldPrint = False
 					for s in _.switches.value('Including').split(','):
 						if s.lower() in fields:
 							shouldPrint = True
 					if shouldPrint:
-						print( item )
+						_.pr( item )
 			except Exception as e:
 				pass
-				print( 'Error:', item )
+				_.pr( 'Error:', item )
 
 
 
@@ -275,6 +275,7 @@ def action():
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

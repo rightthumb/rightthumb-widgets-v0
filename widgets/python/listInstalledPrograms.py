@@ -254,7 +254,7 @@ _.postLoad( __file__ )
 
 def lookupKey( key ):
 	global data
-	# print( key )
+	# _.pr( key )
 
 	aReg = ConnectRegistry(None,HKEY_LOCAL_MACHINE)
 
@@ -264,9 +264,9 @@ def lookupKey( key ):
 	        keyname = EnumKey(aKey, i)
 	        asubkey = OpenKey(aKey, keyname)
 	        val = QueryValueEx(asubkey, "DisplayName")
-	        # print({ 'Key': keyname, 'Val': val })
+	        # _.pr({ 'Key': keyname, 'Val': val })
 	        if not _.switches.isActive('NoPrint'):
-		        print( val[0] )
+		        _.pr( val[0] )
 	        data.append( val[0] )
 
 	    except EnvironmentError:
@@ -287,6 +287,7 @@ data = []
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

@@ -163,12 +163,12 @@ import sqlite3
 
 
 def action():
-	# print(_.switches.values('Plus'))
+	# _.pr(_.switches.values('Plus'))
 	# sys.exit()
 	good = ' 0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ.-_'
 	delim = None
 
-	print( 'Processing...', end='\r' )
+	_.pr( 'Processing...', end='\r' )
 	md5 = _md5.md5(  '\n'.join(  _.isData(r=1,c=0)  )  )
 
 
@@ -203,7 +203,7 @@ def action():
 	_.nc.cnt.total = len(_.isData(c=0))
 	table = []
 	spent = []
-	print( '                                                                               ', end='\r' )
+	_.pr( '                                                                               ', end='\r' )
 	if _.switches.isActive('PlusOr'):
 		for x in _.switches.values('Plus'):
 			sql = """ SELECT * FROM file WHERE row LIKE "%"""+x+"""%" """
@@ -233,8 +233,8 @@ def action():
 						for z in _.switches.values('Plus'):
 							for y in _.caseUnspecific(x,z):
 								x = x.replace(y, _.colorThis( y, 'green', p=0 ))
-						print(rec[0],x)
-						# print(rowX)
+						_.pr(rec[0],x)
+						# _.pr(rowX)
 
 	else:
 		
@@ -264,22 +264,22 @@ def action():
 				newRow += delim
 				rowX = newRow
 
-			# print(_.switches.values('Plus'))
-			# print(_.switches.values('Plus'))
+			# _.pr(_.switches.values('Plus'))
+			# _.pr(_.switches.values('Plus'))
 			if _.showLine( rowX, end=delim ):
 				_.nc.cnt.search += 1
 				x=rec[1]
-				# print(_.switches.values('Plus'))
+				# _.pr(_.switches.values('Plus'))
 				# sys.exit()
 				for z in _.switches.values('Plus'):
-					# print( z )
+					# _.pr( z )
 					for y in _.caseUnspecific(x,z):
 						x = x.replace(y, _.colorThis( y, 'green', p=0 ))
 				if _.switches.isActive('NoLine'):
-					print(x)
+					_.pr(x)
 				else:
-					print(rec[0],x)
-					# print(rowX)
+					_.pr(rec[0],x)
+					# _.pr(rowX)
 
 	_.colorThis( [ '', _.addComma(_.nc.cnt.search), 'of', _.addComma(_.nc.cnt.total) ], 'yellow' )
 
@@ -291,6 +291,7 @@ def action():
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

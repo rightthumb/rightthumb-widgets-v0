@@ -56,8 +56,8 @@ class Appp:
 	def __init__( self ):
 		do = 'cls'
 		# os.system( '"' + do + '"' )
-		# print()
-		# print( genUUID() )
+		# _.pr()
+		# _.pr( genUUID() )
 		# _.colorThis( [ ' ****************************************** this thing just started ******************************************' ], 'green' )
 		self.theMatrix = '_rightThumb._matrix'
 		self.childFiles = [
@@ -192,12 +192,12 @@ class Appp:
 
 		try:
 			if type( record['description'] ) == list:
-				print( _.inlineBold('Description:   '))
+				_.pr( _.inlineBold('Description:   '))
 				for x in record['description']:
-					print( '                 - ', x )
-				print()
+					_.pr( '                 - ', x )
+				_.pr()
 			else:
-				print( _.inlineBold('Description:   '), record['description'] + '\n')
+				_.pr( _.inlineBold('Description:   '), record['description'] + '\n')
 			configured = True
 		except Exception as e:
 			configured = False
@@ -210,7 +210,7 @@ class Appp:
 					else:
 						_.colorizeRow( '\t\t'+ docItem , 2)
 					# _.colorizeRow('\t' + prereq,2)
-				print('\n')
+				_.pr('\n')
 		except Exception as e:
 			pass
 		try:
@@ -221,7 +221,7 @@ class Appp:
 						_.colorThis( '\t\t'+docItem[0], docItem[1]  )
 					else:
 						_.colorizeRow( '\t\t'+ docItem , 2)
-				print('\n')
+				_.pr('\n')
 		except Exception as e:
 			pass
 
@@ -236,14 +236,14 @@ class Appp:
 						_.colorizeRow( '\t\t'+ docItem , 2)
 
 					# _.colorizeRow('\t' + ex,2)
-				print('\n')
+				_.pr('\n')
 			if len(record['columns']) > 0:
 				_.printBold('Columns and abbreviations:')
 				result = ''
 				if len( record['columns'] ):
 					# fields.register( 'columns', 'name,abbreviation', script=__.triggerTest )
 					_.fields.asset( 'columns', record['columns'] )
-					print()
+					_.pr()
 
 				if __.columnAbbreviations == 0:
 					for col in record['columns']:
@@ -256,12 +256,12 @@ class Appp:
 						abbreviation =  _.fields.value( 'columns', 'abbreviation', col['abbreviation'] )
 						name =          _.fields.value( 'columns', 'name', col['name'] )
 						_.colorizeRow( '\t' + abbreviation + '\t' + name )
-						# print( '\t', col['abbreviation'], '\t', col['name']  )
+						# _.pr( '\t', col['abbreviation'], '\t', col['name']  )
 
 				if len( record['columns'] ):
-					print()
-					print()
-				# print('\n')
+					_.pr()
+					_.pr()
+				# _.pr('\n')
 		# self.print()
 
 
@@ -277,13 +277,13 @@ class Appp:
 						example = ''
 					theSwitches.append({ 'name': name, 'switches': switches, 'example': example  })
 					# if name == 'Files':
-					# 	print(dir(self.records['switch'][key]))
+					# 	_.pr(dir(self.records['switch'][key]))
 
-					# print( name, switches, example )
+					# _.pr( name, switches, example )
 			_.fields.asset( 'switches', theSwitches )
 			for switch in theSwitches:
 				if switch['name'] == 'Help':
-					print()
+					_.pr()
 				line = ''
 				line += _.fields.value( 'switches', 'name', switch['name'] )
 				line += '\t'
@@ -292,7 +292,7 @@ class Appp:
 				line += _.fields.value( 'switches', 'example', switch['example'] )
 				_.colorizeRow( line )
 
-				# print( key )
+				# _.pr( key )
 		sys.exit()
 
 	def newMasterID( self ):
@@ -420,7 +420,7 @@ class Appp:
 				focus = mainApp
 				
 			if _matrix.printSwitcheFocus or printFocus:
-				print( 'focus', focus )
+				_.pr( 'focus', focus )
 
 		if name is None:
 			name = 'Default'
@@ -546,7 +546,7 @@ class Appp:
 			
 		if not app is None:
 			registration = { 'name': name, 'app': app, 'focus': focus }
-		# print( 'here', name, app, focus, registration )
+		# _.pr( 'here', name, app, focus, registration )
 
 
 
@@ -769,7 +769,7 @@ class Appp:
 			for i,a in enumerate(arg):
 				found = False
 				for ii,key in enumerate(self.records['switch'].keys()):
-					# print(mainApp,appDBA,'\t',self.label( key, appDBA ))
+					# _.pr(mainApp,appDBA,'\t',self.label( key, appDBA ))
 					if not self.records['switch'][key].isDefault:
 						for s in self.records['switch'][key].switches.split(','):
 
@@ -809,7 +809,7 @@ class Appp:
 	def viewLog( self ):
 		_.colorThis( 'HERE', 'green' )
 		for i,record in enumerate(self.algorithmLog):
-			print( record )
+			_.pr( record )
 		_.colorThis( [ '', i, ], 'yellow' )
 
 
@@ -997,9 +997,9 @@ class Appp:
 	def counter( self, label, child, algorithm ):
 		return None
 		if child in self.sequences.keys():
-			# print( '\t\t ***************** \t\t', child, algorithm, self.sequences )
+			# _.pr( '\t\t ***************** \t\t', child, algorithm, self.sequences )
 			if not label in self.sequences[child].keys():
-				# print('reset A')
+				# _.pr('reset A')
 				self.sequences[child][label] = {}
 
 			if not algorithm in self.sequences[child][label].keys():
@@ -1007,7 +1007,7 @@ class Appp:
 				self.sequences[child][label][algorithm] = 0
 
 			self.sequences[child][label][algorithm] += 1
-			# print( '\t\t ***************** \t\t', child, label, algorithm, self.sequences[child][label][algorithm] )
+			# _.pr( '\t\t ***************** \t\t', child, label, algorithm, self.sequences[child][label][algorithm] )
 
 	def docIF( self, do, runEval=False, trackingID=None, note=None, documentation={} ):
 		documentation['eval'] = runEval
@@ -1027,7 +1027,7 @@ class Appp:
 		for key in self.records['ext'].keys():
 			total += _.get_size( self.records['ext'][key].imp )
 		callers = self.callers()
-		# print( 'memoryPrint:', memoryPrint )
+		# _.pr( 'memoryPrint:', memoryPrint )
 		if memoryPrint:
 			_.colorThis({
 					'file': callers[0]['file'],
@@ -1240,10 +1240,11 @@ algorithmResult( self, aRec, result=None )
 # 21BD8F
 # 1F59D5
 #########################
-# print( end-start )
+# _.pr( end-start )
 #########################
 memoryPrint = False
 mainApp = None
 printSwitcheFocus = False
+
 
 

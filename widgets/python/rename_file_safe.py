@@ -292,7 +292,7 @@ def action():
 			info = _dir.fileInfo(file)
 			if old.lower().endswith( '.'+info['ext'].lower() ):
 				theFiles.append({ 'match': test, 'file': file  })
-				# print( test )
+				# _.pr( test )
 		try:
 			match = _.tables.returnSorted( 'data', 'd.match',theFiles )
 
@@ -309,6 +309,7 @@ def action():
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

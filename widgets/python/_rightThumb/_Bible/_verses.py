@@ -20,11 +20,11 @@ def build(q):
 	table = []
 	if type(q) == str:
 		if ':0' in q:
-			# print( 'asdf', q )
+			# _.pr( 'asdf', q )
 			q = q.split(':0')[0]
 			xp = q.split(' ')
-			# print(xp[0])
-			# print(_B.Books)
+			# _.pr(xp[0])
+			# _.pr(_B.Books)
 			bk = str(_B.Books[xp[0]])
 			ch = str(xp[1])
 			vs = 1
@@ -54,7 +54,7 @@ def build(q):
 		i=0
 		while ii < vsE+1 and i < 1000:
 			i+=1
-			# print(ii)
+			# _.pr(ii)
 			try:
 				table.append({ 'vs': str(ii), 'word': _B.Bible[bk][ch][str(ii)] })
 			except Exception as e:
@@ -73,9 +73,9 @@ def build(q):
 		bCH = int(end.split(' ')[1].split(':')[0])
 		bVS = int(end.split(' ')[1].split(':')[1])
 
-		# print( bk )
-		# print( aCH, aVS )
-		# print( bCH, bVS )
+		# _.pr( bk )
+		# _.pr( aCH, aVS )
+		# _.pr( bCH, bVS )
 
 		ch = aCH
 		vs = aVS
@@ -90,12 +90,13 @@ def build(q):
 					table.append({ 'ch': ch })
 			if not done:
 				table.append({ 'vs': vs, 'word': _B.Bible[bk][str(ch)][str(vs)] })
-			# print( bk, ch, vs )
+			# _.pr( bk, ch, vs )
 			if ch == bCH and vs == bVS:
 				done=True
 			vs+=1
-		# print( vs ,bVS )
+		# _.pr( vs ,bVS )
 		return table
+
 
 
 
