@@ -1788,6 +1788,7 @@ pr-|{6FAB5628-94A1-410A-82D1-1D42A2A11750}/.rt/profile/projects"""
         file += '\n'
         file += 'alias k="$widgets/widgets/python/keychain.py -rc ";\n'
         file += 'alias pc="$widgets/widgets/python/pc.py -rc ";\n'
+        file += 'alias color="$widgets/widgets/python/pipe-color.py -color ";\n'
         file += '\n'
 
         # print( file )
@@ -3042,7 +3043,11 @@ alias fw.n="sudo ufw deny "
 alias vps.ssh="ssh scott@hoth.eyeformeta.com"
 alias vps2.ssh="ssh scott@bespin.eyeformeta.com"
 
+alias vh="ssh scott@hoth.eyeformeta.com"
+alias vb="ssh scott@bespin.eyeformeta.com"
+alias vm="ssh scott@mandalore.eyeformeta.com"
 alias ve="ssh scott@endor.eyeformeta.com"
+
 alias v="ssh scott@hoth.eyeformeta.com"
 alias vv="ssh scott@bespin.eyeformeta.com"
 alias vvv="ssh scott@mandalore.eyeformeta.com"
@@ -3053,6 +3058,7 @@ alias thumb="ssh vy2ehn4azpfl@thumb.eyeformeta.com"
 alias hoth="ssh scott@hoth.eyeformeta.com"
 alias bespin="ssh scott@bespin.eyeformeta.com"
 alias mandalore="ssh scott@mandalore.eyeformeta.com"
+alias endor="ssh scott@endor.eyeformeta.com"
 
 alias reph.us="ssh thisreph@reph.us"
 alias rt="ssh vy2ehn4azpfl@23.229.227.201"
@@ -3186,6 +3192,14 @@ export HISTFILESIZE=100000
 
 # x='test'
 # if [ -z ${TERM+x} ]; then TERM=dumb; fi
+
+
+alias k="$widgets/widgets/python/keychain.py -rc ";
+alias pc="$widgets/widgets/python/pc.py -rc ";
+alias color="$widgets/widgets/python/pipe-color.py -color ";
+alias epoch="echo $( date +%s )";
+
+
 
 clear
             """
