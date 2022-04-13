@@ -34,6 +34,8 @@ simplejson.dumps(rows, indent=4, sort_keys=sort_keys)
 simplejson.dumps(rows)
 '''
 
+
+
 def print_pr(text):
     if not '_rightThumb._base3 ' in text:
         return text
@@ -19314,3 +19316,28 @@ def bk(path,flag=None):
     if type(flag) == str: _fileBackup.switch( 'Flag', flag );
     return _fileBackup.do( 'action' )
 
+def life(subject):
+    return _v.life+subject.replace('/',os.sep)
+
+def ad():
+    random=__.imp('random')
+    ads=fo(_v.life+'ads')
+    ri = random.randrange(len(ads))
+    cho=ads[ri]
+    ad=getText( cho , raw=True )
+    ad=ad.replace('\r','')
+    def _cl(ad):
+        ad=_str.do('be',ad,'\n')
+        ad=_str.do('be',ad,' ')
+        ad=_str.do('be',ad,'\t')
+        return ad
+    ad=_cl(ad); ad=_cl(ad); ad=_cl(ad); ad=_cl(ad);
+    ad=_cl(ad); ad=_cl(ad); ad=_cl(ad); ad=_cl(ad);
+    sub=__.path(cho,file=True)
+    linePrint(c='green')
+    cp( sub, 'yellow' )
+    linePrint('20',c='yellow')
+    print(ad)
+    linePrint(c='green')
+    return ad
+ads=ad

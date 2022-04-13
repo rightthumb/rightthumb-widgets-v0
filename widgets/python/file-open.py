@@ -154,6 +154,7 @@ _.postLoad( __file__ )
 import subprocess
 
 def action():
+	_.ad()
 	if _.switches.isActive('App') and _.switches.isActive('Files'):
 		for path in _.switches.values('Files'):
 			# _.pr(__.path(path))

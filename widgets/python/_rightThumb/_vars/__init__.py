@@ -192,6 +192,7 @@ td = dot()
 td.a = dot()
 td.b = dot()
 td.c = dot()
+
 configFile( '.path', home  +os.sep+'.rt'+os.sep+  '.path' )
 configFile( '.config.hash', home +os.sep+'.rt'+os.sep+ '.config.hash' )
 
@@ -318,6 +319,7 @@ log_config = techFolder + slash+'widgets'+slash+'html'+slash+'projects'+slash+'l
 log_config_html = techFolder + slash+'widgets'+slash+'html'+slash+'projects'+slash+'log_config'+slash+'index.htm'
 dance = images + 'dance.gif'
 gears = images + 'gears.gif'
+life=home +os.sep+'.rt'+os.sep+'profile'+os.sep+'life'+os.sep
 if __.isWin:
 	sublime = '"C:\\Program Files\\Sublime Text 3\\sublime_text.exe"'
 elif not __.isWin:
