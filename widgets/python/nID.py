@@ -34,6 +34,7 @@ def appSwitches():
 	_.switches.register( 'Encrypt', '-en' )
 	_.switches.register( 'Decrypt', '-de' )
 	_.switches.register( 'App', '-app' )
+	_.switches.register( 'Client', '-client' )
 	_.switches.register( 'Date', '-d,-date' )
 	_.switches.register( 'Epoch', '-e,-epoch' )
 	_.switches.register( 'List', '-list' )
@@ -192,6 +193,18 @@ def action(new=None):
 
 		return None
 	load()
+	if _.switches.isActive('Client'):
+		epoch=_.friendlyDate(time.time()).split(' ')[0].replace('-','')
+		if len(_.switches.value('Client')):
+			epoch=_.switches.value('Client').replace('-','')
+		xx=[]
+		for y in _key.imp.shapeKee():
+			# _.pr(type(y),y)
+			_nID.mini.password( y )
+			x = _nID.mini.gen( int(epoch) )
+			xx.append(x)
+			_.pr(x)
+		return xx
 	if _.switches.isActive('App'):
 		if len(_.switches.value('App')):
 			epoch=time.time()

@@ -33,7 +33,7 @@ import _rightThumb._string as _str
 def appSwitches():
 	pass
 	### EXAMPLE: START
-	# _.switches.register( 'Input', '-i' )
+	_.switches.register( 'Color', '-color', 'help' )
 	# _.switches.register( 'Files', '-f,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=True )
 	### EXAMPLE: END
 
@@ -205,26 +205,32 @@ _.postLoad( __file__ )
 
 def action():
 	#--> min, architecture {:strict:}
-	load()
-	global c3po
 
-	# if _.switches.isActive('Test'): test(); return None;
+	index = {
+				'rw': 'Background.red',
+				'wr': 'BackgroundGrey.red',
+				'bw': 'Background.black',
+				'wb': 'BackgroundGrey.black',
+				'red': 'Color.red',
+				'gray': 'ColorBold.gray',
+				'blue': 'ColorBold.blue',
+				'green': 'Color.green',
+				'purple': 'Color.purple',
+	}
 
+	color = 'Background.black'
+	if _.switches.isActive('Color') and not len(_.switches.values('Color')):
+		# _.pv(index)
+		for c in index:
+			_.cp( [c,'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'], index[c])
+		return None
+	elif _.switches.isActive('Color'):
+		color=index[ _.switches.values('Color')[0] ]
 	for i,line in enumerate( _.isData(r=1) ):
 		#--> new print function
-		_.pr(line)
-
-
-
-def load():
-	global c3po
-	c3po = _.getTable( 'table' )
-	#--> new table printer
-	_.pt(c3po)
-
-#--> todo:
-# --> 	- _.prt(c3po,trigger={'epoch': _.friendlyDate})
-#--> 	- 
+		# _.cp( [line], index[color])
+		_.cp( [line], _.switches.values('Color')[0])
+		# _.pr(line)
 
 ########################################################################################
 if __name__ == '__main__':

@@ -33,6 +33,7 @@ def appSwitches():
 	pass
 	_.switches.register( 'App', '-app' )
 	_.switches.register( 'Files', '-f,-file,-files','file.txt', description='Files' )
+	_.switches.register( 'Alias', '-alias','' )
 
 _.autoBackupData = __.autoCreationConfiguration['backup']
 __.releaseAcquiredData = __.autoCreationConfiguration['logs'] 

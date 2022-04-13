@@ -304,13 +304,14 @@ def action():
 			sample = head(f, n)
 		else:
 			sample = tail(f, n)
-		for x in sample:
-			try:
-				for z in x:
-					if _.showLine(z):
-						_.pr(z)
-			except Exception as e:
-				pass
+		if not sample is None:
+			for x in sample:
+				try:
+					for z in x:
+						if _.showLine(z):
+							_.pr(z)
+				except Exception as e:
+					pass
 	else:
 
 		data = _.isData()

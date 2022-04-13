@@ -5820,7 +5820,7 @@ def colorThis( strings='', color='red', notBold=False, shouldPrint=True, ipsum=F
     ws=ws_sep(string)
     aaPre=ws[0]
     string=ws[1]
-
+    result=''
 
 
     if '.' in color:
