@@ -257,7 +257,7 @@ class karla:
 	def __init__( self ):
 		self.test = 1
 
-	def _.pr( self ):
+	def print( self ):
 		_.pr( self.test )
 
 
@@ -270,7 +270,7 @@ class Car:
 		self.paintHistory = []
 		self.paintHistory.append( color )
 
-	def _.pr( self ):
+	def print( self ):
 		_.pr()
 		_.pr( 'make:', self.make )
 		_.pr( 'model:', self.model )
@@ -357,6 +357,7 @@ def action():
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

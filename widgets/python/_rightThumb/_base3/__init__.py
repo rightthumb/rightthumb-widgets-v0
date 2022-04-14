@@ -34,6 +34,14 @@ simplejson.dumps(rows, indent=4, sort_keys=sort_keys)
 simplejson.dumps(rows)
 '''
 
+def json_(data,simp=False,s=None):
+    if not s is None: simp=s;
+    simplejson = __.imp('simplejson')
+    if type(data) == str:
+        return simplejson.loads(data)
+    if not simp:
+        return simplejson.dumps(data, indent=4, sort_keys=False)
+    return simplejson.dumps(data)
 
 
 def print_pr(text):
@@ -55,6 +63,9 @@ def print_pr(text):
         
         if replace:
             line=line.replace('print(','_.pr(')
+        line=line.replace('def _.pr(', 'def print(')
+        line=line.replace('def  _.pr(', 'def print(')
+        line=line.replace('def   _.pr(', 'def print(')
         lines.append(line)
     return '\n'.join(lines)
 

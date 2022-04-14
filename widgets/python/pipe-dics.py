@@ -9,7 +9,6 @@
 #    - Scott Taylor Reph, RightThumb.com
 # ###########################################################################
 # ## {C3P0D40fAe8B} ##
-
 ##################################################
 import os, sys, time
 ##################################################
@@ -32,25 +31,7 @@ import _rightThumb._string as _str
 
 def appSwitches():
 	pass
-	### EXAMPLE: START
-	# _.switches.register( 'Input', '-i' )
-	_.switches.register( 'Files', '-f,-file,-files','file.txt', isData='glob', description='Files')
-	### EXAMPLE: END
 
-### EXAMPLE: START
-# _.switches.trigger( 'Files', _.myFileLocations, vs=True )
-# 	finds the file in probable locations
-# 	and 
-# 		if  _.autoBackupData = True
-# 		and __.releaseAcquiredData = True
-# 			GET EPOCH FROM: hosts/hostname/logs/apps/execution_receipt-app_name-epoch.json
-# 		you can run apps on usb at a clients office
-# 			when you get home run: p app -loadepoch epoch 
-# 				backed up
-# 					pipe
-# 					files
-# 					tables
-### EXAMPLE: END
 _.autoBackupData = __.setting('receipt-log')
 __.releaseAcquiredData = __.setting('receipt-file')
 __.myFileLocations_SKIP_VALIDATION = False
@@ -65,13 +46,14 @@ __.switch_raw = []
 
 _.appInfo[focus()] = {
 	# 'app': '7facG-jo0Cxk',
-	'file': 'thisApp.py',
+	'file': 'pipe-dics.py',
 	'liveAppName': __.thisApp( __file__ ),
-	'description': 'Changes the world',
+ 	'description': 'organize the json for settings files',
 		# _.ail(1,'subject')+
 		# _.aib('one')+
 	'categories': [
-						'DEFAULT',
+						'json',
+						'tool',
 				],
 	'usage': [
 						# 'epy another',
@@ -113,11 +95,7 @@ _.appData[focus()] = {
 					'table': {'sent': [], 'received': [] }, 
 		},
 	}
-### EXAMPLE: START
-# _.appInfo[focus()]['examples'].append( 'p thisApp -file file.txt' )
 
-# _.appInfo[focus()]['columns'].append( {'name': 'name', 'abbreviation': 'n'} )
-### EXAMPLE: END
 
 
 def registerSwitches( argvProcessForce=False ):
@@ -141,13 +119,6 @@ def registerSwitches( argvProcessForce=False ):
 	_.switches.trigger( 'URL', _.urlTrigger )
 	_.switches.trigger( 'Ago', _.timeAgo )
 	_.switches.trigger( 'Duration', _.timeFuture )
-	### EXAMPLE: START
-	# _.default_switch_trigger('Plus', trigger_plus)
-	# _.switches.trigger( 'Files',_.inRelevantFolder )	
-	# _.switches.trigger( 'Watched', _.txt2Date )
-	# _.switches.trigger( 'Input',_.formatColumns )
-	# _.switches.trigger( 'Franchise',_.triggerSpace )
-	### EXAMPLE: END
 	
 	_.defaultScriptTriggers()
 	_.switches.process()
@@ -175,55 +146,36 @@ if __name__ == '__main__':
 _.postLoad( __file__ )
 
 ########################################################################################
-### EXAMPLE: START
-# data = _.tables.returnSorted( 'data', 'd.timestamp', data )
-# _.switches.fieldSet( 'Long', 'active', True )
-# _.tables.register( 'data', table )
-# _.tables.fieldProfileSet('data','timestamp','trigger',_.friendlyDate)
-# _.tables.fieldProfileSet('data','phone,email,address','alignment','center')
-# _.tables.print( 'data', 'name' )
-# _.tables.print( 'data', ','.join(_.switches.values('Column')) )
-# _.switches.isActive('Files')
-# p = _.getText( _v.pips, raw=True, clean=True ).split( '\n' )
-# os.system( '"' + do + '"' )
-# _.setPipeData( os.listdir( os.getcwd() ), focus() )
-# _.showLine( item )
-# 	if os.path.isdir( row ):
-# 	if os.path.isfile( row ):
-#	os.path.abspath(path)
-# __.appRegPipe    ( pipe data registerd focus(__.appReg) set by _.myFileLocations {if imported} , default is None )
-# for i,row in enumerate(_.t( _.appData[__.appReg]['pipe'] )):
-# for i,row in _.e( _.isData(r=1) ):
-# date = _.friendlyDate( theDate )
-# _.addComma()
-# 													if platform.system() == 'Windows':
-### EXAMPLE: END
-########################################################################################
 # START
 
-def process(path):
-	if os.path.isfile(path):
-		# _.pr(path,c='white')
-		file=_.getText(path,raw=True)
-		file2=_.print_pr(file)
-		if not file == file2:
-			# _.pr(path,c='yellow')
-			_.pr( _.bk(path), c='cyan' )
-			_.saveText(file2.split('\n'),path)
-			# time.sleep(5)
-			# _.pr( _.bk(path), c='cyan' )
+
 
 def action():
 
-	for i,path in enumerate( _.isData(r=1) ):
-		#--> new print function
-		process(path)
+	#--> 
+	c3p0 = '\n'.join(_.isData(r=1))
+	r2d2 = _.json_(c3p0)
+	# _.pr(c3p0)
 
+	mid=[]
+	for rec in r2d2:
+		re=_.json_(rec,s=1)
+		if _.switches.isActive('Sort'):
+			dic={}
+			for k in _.switches.values('Sort'):
+				dic[k]=rec[k]
+			for y in rec:
+				if not y in dic:
+					dic[y]=rec[y]
+			re=_.json_(dic,s=1)
+		mid.append( re )
 
+	_.pr('[')
+	_.pr( ',\n'.join(mid) )
+	# for rec in mid:
+	# 	_.pr('\t',rec)
+	_.pr(']')
 
-#--> todo:
-# --> 	- _.prt(c3po,trigger={'epoch': _.friendlyDate})
-#--> 	- 
 
 ########################################################################################
 if __name__ == '__main__':

@@ -213,10 +213,10 @@ def action():
 			cmd='title '+title
 		else:
 			cmd='''PROMPT_COMMAND='echo -ne "\\033]0; '''+title+''' \\007"';'''
-		# print(cmd)
+		# _.pr(cmd)
 		p=_v.ww+os.sep+'bash'+os.sep+'title2.sh'
 		_.saveText('#!/bin/bash\n'+cmd,p )
-		# print(p)
+		# _.pr(p)
 		# os.system(cmd)
 
 
@@ -225,6 +225,7 @@ def action():
 if __name__ == '__main__':
 	action()
 	__.isExit()
+
 
 
 

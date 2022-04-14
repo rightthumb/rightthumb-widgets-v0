@@ -5353,7 +5353,7 @@ class TheCinema:
 			# self.dump()
 		if shouldPrint:
 			self.childItemRows[self.thisRow].print_fullcredits()
-	def _.pr(self):
+	def print(self):
 		childItems = []
 		for ci in self.childItemRows:
 			childItems.append({'name':ci.name})
@@ -5472,7 +5472,7 @@ class ThePeople:
 			if takeAction:
 				self.childItemRows.append(TheFeature(imdbID))
 
-	def _.pr(self):
+	def print(self):
 		childItems = []
 		for ci in self.childItemRows:
 			childItems.append({'name':ci.name})
@@ -6287,6 +6287,7 @@ if __name__ == '__main__':
 		caseTest()
 	else:
 		action()
+
 
 
 

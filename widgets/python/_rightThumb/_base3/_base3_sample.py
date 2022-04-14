@@ -187,7 +187,7 @@ if not sys.stdin.isatty():
 
 # 	def register(self, name):
 # 		self.childItemRows.append(TheChildItems(name))
-# 	def _.pr(self):
+# 	def print(self):
 # 		childItems = []
 # 		for ci in self.childItemRows:
 # 			childItems.append({'name':ci.name})
@@ -284,6 +284,7 @@ def action():
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 
