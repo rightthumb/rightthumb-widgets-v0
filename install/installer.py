@@ -3108,9 +3108,9 @@ alias vps.h.c="ssh -f root@hoth.eyeformeta.com      -f '/bin/python3 /opt/rightt
 alias vps.b.c="ssh -f root@bespin.eyeformeta.com    -f '/bin/python3 /opt/rightthumb-widgets-v0/widgets/python/shClean.py -r -folder /opt '"
 alias vps.m.c="ssh -f root@mandalore.eyeformeta.com -f '/bin/python3 /opt/rightthumb-widgets-v0/widgets/python/shClean.py -r -folder /opt '"
  
-alias vps.h.sh="ssh root@hoth.eyeformeta.com 'mkdir -p /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/' ; scp -r $ww/bash/vps-srv/* root@hoth.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/bash/vps-srv/      ; ssh root@hoth.eyeformeta.com 'chmod -R 777 /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/'"
-alias vps.b.sh="ssh root@bespin.eyeformeta.com 'mkdir -p /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/' ; scp -r $ww/bash/vps-srv/* root@bespin.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/bash/vps-srv/    ; ssh root@bespin.eyeformeta.com 'chmod -R 777 /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/'"
-alias vps.m.sh="ssh root@mandalore.eyeformeta.com 'mkdir -p /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/' ; scp -r $ww/bash/vps-srv/* root@mandalore.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/bash/vps-srv/ ; ssh root@mandalore.eyeformeta.com 'chmod -R 777 /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/'"
+alias vps.h.sh=" scp -r $ww/bash/vps-srv/ root@hoth.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/bash/    ; ssh root@hoth.eyeformeta.com 'chmod -R 777 /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/'"
+alias vps.b.sh=" scp -r $ww/bash/vps-srv/ root@bespin.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/bash/    ; ssh root@bespin.eyeformeta.com 'chmod -R 777 /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/'"
+alias vps.m.sh=" scp -r $ww/bash/vps-srv/ root@mandalore.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/bash/    ; ssh root@mandalore.eyeformeta.com 'chmod -R 777 /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/'"
 
 
 
@@ -3123,9 +3123,9 @@ alias vps.h.db="scp  $ww/databank/tables/*.* root@hoth.eyeformeta.com:/opt/right
 alias vps.b.db="scp  $ww/databank/tables/*.* root@bespin.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/databank/tables/    ; ssh root@bespin.eyeformeta.com 'chmod -R 777 /opt/rightthumb-widgets-v0/'"
 alias vps.m.db="scp  $ww/databank/tables/*.* root@mandalore.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/databank/tables/ ; ssh root@mandalore.eyeformeta.com 'chmod -R 777 /opt/rightthumb-widgets-v0/'"
 
-alias vps.h.sh.="mkdir -p $ww/bash/vps-srv/ ; scp -rp root@hoth.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/bash/vps-srv/*.* $ww/bash/vps-srv/ ; chmod 777 -R $ww/bash/vps-srv/"
-alias vps.b.sh.="mkdir -p $ww/bash/vps-srv/ ; scp -rp root@bespin.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/bash/vps-srv/*.* $ww/bash/vps-srv/ ; chmod 777 -R $ww/bash/vps-srv/"
-alias vps.m.sh.="mkdir -p $ww/bash/vps-srv/ ; scp -rp root@mandalore.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/bash/vps-srv/*.* $ww/bash/vps-srv/ ; chmod 777 -R $ww/bash/vps-srv/"
+alias vps.h.sh.="scp -r root@hoth.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/bash/vps-srv/ $ww/bash/ ; chmod 777 -R $ww/bash/vps-srv/"
+alias vps.b.sh.="scp -r root@bespin.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/bash/vps-srv/ $ww/bash/ ; chmod 777 -R $ww/bash/vps-srv/"
+alias vps.m.sh.="scp -r root@mandalore.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/bash/vps-srv/ $ww/bash/ ; chmod 777 -R $ww/bash/vps-srv/"
 
 alias vps.h.db.="scp -rp root@hoth.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/databank/tables/*.* $ww/databank/tables/ ; chmod 777 -R $ww/databank/tables/"
 alias vps.b.db.="scp -rp root@bespin.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/databank/tables/*.* $ww/databank/tables/ ; chmod 777 -R $ww/databank/tables/"
@@ -3139,10 +3139,10 @@ alias vps.m.py.="scp -rp root@mandalore.eyeformeta.com:/opt/rightthumb-widgets-v
 alias vps.e.py="scp $ww/python/vps*.py root@endor.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/python/ ; ssh root@endor.eyeformeta.com \'chmod -R 777 /opt/rightthumb-widgets-v0/\'"
 alias vps.e.py2="scp /opt/rightthumb-widgets-v0/widgets/python/vps*.py root@endor.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/python/ ; ssh root@endor.eyeformeta.com \'chmod -R 777 /opt/rightthumb-widgets-v0/\'"
 alias vps.e.c="ssh -f root@endor.eyeformeta.com -f \'/bin/python3 /opt/rightthumb-widgets-v0/widgets/python/shClean.py -r -folder /opt \'"
-alias vps.e.sh="ssh root@endor.eyeformeta.com \'mkdir -p /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/\' ; scp $ww/bash/vps-srv/* root@endor.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/bash/vps-srv/ ; ssh root@endor.eyeformeta.com \'chmod -R 777 /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/\'"
+alias vps.e.sh="scp -r $ww/bash/vps-srv/ root@endor.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/bash/ ; ssh root@endor.eyeformeta.com \'chmod -R 777 /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/\'"
 alias vps.e.sh2="ssh root@endor.eyeformeta.com -f \'mkdir -p /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/\' ; scp /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/* root@endor.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/bash/vps-srv/ ; ssh root@endor.eyeformeta.com \'chmod -R 777 /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/\'"
 alias vps.e.db="scp $ww/databank/tables/*.* root@endor.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/databank/tables/ ; ssh root@endor.eyeformeta.com \'chmod -R 777 /opt/rightthumb-widgets-v0/\'"
-alias vps.e.sh.="mkdir -p $ww/bash/vps-srv/ ; scp -rp root@endor.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/bash/vps-srv/*.* $ww/bash/vps-srv/ ; chmod 777 -R $ww/bash/vps-srv/"
+alias vps.e.sh.="scp -r root@endor.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/bash/vps-srv/ $ww/bash/ ; chmod 777 -R $ww/bash/vps-srv/"
 alias vps.e.db.="scp -rp root@endor.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/databank/tables/*.* $ww/databank/tables/ ; chmod 777 -R $ww/databank/tables/"
 alias vps.e.py.="scp -rp root@endor.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/python/vps* $ww/python/ ; chmod 777 -R $ww/python/"
 

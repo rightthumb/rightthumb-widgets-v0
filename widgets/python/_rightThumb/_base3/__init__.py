@@ -19331,8 +19331,11 @@ def life(subject):
     return _v.life+subject.replace('/',os.sep)
 
 def ad():
+    global nsfw
     random=__.imp('random')
     ads=fo(_v.life+'ads')
+    if nsfw:
+        for a2 in fo(_v.life+'ads.nsfw'): ads.append(a2);
     ri = random.randrange(len(ads))
     cho=ads[ri]
     ad=getText( cho , raw=True )
@@ -19352,3 +19355,14 @@ def ad():
     linePrint(c='green')
     return ad
 ads=ad
+
+def ico():
+    random=__.imp('random')
+    ads=fo(_v.life+'ads')
+    ri = random.randrange(len(ads))
+    cho=ads[ri]
+    ic=list('🧻🧪💀🦆🦉🥓🦄🦀🖕🍣🍤🍥🍡🥃🥞🐕👾🐉🐓🐋🐌🐢👽👿🥑🐡🐗💐🏹🎨🐔🐛🎯🌯📷🛶🥕🍸🍳🐲🎣🐟🦅👀🐸🤞💪💾👻🐊🍔🌭🍀🕓🦊🍟🥝🐒🥞🐼📎🐧💩🍕🍍🦏🍗🌈🐳🦑🚀🙈🙊🙉🌮🐅🐯🍉🚽🍅👅🎩🍷')
+    for x in ic:
+        print(x)
+
+nsfw=True
