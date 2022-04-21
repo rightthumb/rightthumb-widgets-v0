@@ -389,7 +389,7 @@ appInfoScan = False # appInfo.py
 class data_default:
 	# __.data_default(file=theFile,default=[])
 	def __init__( self, file, default ):
-		self.dics = 'index,indexes,dex,ls,hash,hashes,tables,logs,lists,indices,meta,setting,settings,dic'
+		self.dics = 'index,indexes,dex,ls,hash,hashes,tables,logs,lists,indices,meta,setting,settings,dic,s,fig,conf,cnf'
 		self.lists = 'table,cache,log,list,json,config'
 		self.file = file
 		self.default_result = default

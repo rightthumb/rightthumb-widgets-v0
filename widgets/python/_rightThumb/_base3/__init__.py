@@ -45,7 +45,7 @@ def json_(data,simp=False,s=None):
 
 
 def print_pr(text):
-    if not '_rightThumb._base3 ' in text:
+    if not '_rightThum'+'b._base3 ' in text:
         return text
     text=text.replace('\r','')
     lines=[]

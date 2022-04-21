@@ -406,7 +406,9 @@ def loopText( text, cnt ):
 	return txt
 
 def postFileCleanup( fileLines, path=None, maxLines=4 ):
+
 	file = '\n'.join( fileLines )
+	file = _.print_pr(file)
 	separator = loopText( '#', 50 )+'\n'
 	separator2 = loopText( '#', 88 )+'\n'
 

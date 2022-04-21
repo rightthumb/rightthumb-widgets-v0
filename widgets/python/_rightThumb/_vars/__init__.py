@@ -350,6 +350,9 @@ myLogs = myHome + slash+'logs'
 myConfig = myHome + slash+'config'
 unixID_path = myConfig + slash + '.unix_id'
 vault_path = myConfig + slash + '.vault'
+
+
+
 configFile( '.ip.hash', myConfig + slash + '.ip.hash' )
 configFile( '.ip', myConfig + slash + '.ip' )
 # unix_editor_path = myConfig + slash + '.editor'
@@ -1196,7 +1199,7 @@ def sanitizeFolder( id_path ):
 		id_path = id_path.replace( os.environ['HOME'], folderID_profile )
 	
 	id_path = id_path.replace( thisHost, folderID_host )
-	id_path = id_path.replace( slash, '/' )	
+	id_path = id_path.replace( slash, '/' ).replace( '//', '/' ).replace( '//', '/' ).replace( '//', '/' ).replace( '//', '/' ).replace( '//', '/' )
 	return id_path
 def resolveFolderIDs( id_path ):
 	if id_path is None:
@@ -1502,12 +1505,26 @@ mkdir = createDestinationFolders
 default_powershell = ''
 config_file = None
 
+hp=myHome
+hi=myIndexes
+hc=myConfig
+ht=myTables
+hb=myBackup
+
+bk=myBackup
+tt=myTables
+
+pp = techFolder + slash+'widgets'
+w = techFolder 
+ww = techFolder + slash+'widgets'
+
 t   = techDrive
 tt  = myTables
 ttt = dbTables
 p   = home
 pp = widgets
 ta = appsFolder
+
 if not os.path.isdir(myConfig):
 	dir_structure()
 # dir_check_create

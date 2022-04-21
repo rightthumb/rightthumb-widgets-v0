@@ -33,7 +33,8 @@ import _rightThumb._string as _str
 def appSwitches():
 	pass
 	### EXAMPLE: START
-	# _.switches.register( 'Input', '-i' )
+	_.switches.register( 'Encode', '-e,-en,-encode' )
+	_.switches.register( 'Decode', '-d,-de,-decode' )
 	# _.switches.register( 'Files', '-f,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=True )
 	### EXAMPLE: END
 
@@ -202,29 +203,32 @@ _.postLoad( __file__ )
 # START
 
 
+def formatData( result ):
+	try:
+		result = str(result,'utf-8')
+	except Exception as e:
+		try:
+			result = str(result,'iso-8859-1')
+		except Exception as e:
+			result = result.encode('utf-8')
+	return result
 
 def action():
-	#--> min, architecture {:strict:}     make it a trigger/callback not like fileBackup
-	load()
-	global c3po
-
-	# if _.switches.isActive('Test'): test(); return None;
-
-	for i,line in enumerate( _.isData(r=1) ):
-		#--> new print function
-		_.pr(line)
-
+	text=_paste.imp.paste()
+	
+	if _.switches.isActive('Encode'):
+		text=base64.b64encode(formatData(text))
+	if _.switches.isActive('Decode'):
+		text=base64.b64decode(formatData(text))
+	
+	_copy.imp.copy( formatData(text) )
 
 
-def load():
-	global c3po
-	c3po = _.getTable( 'table' )
-	#--> new table printer
-	_.pt(c3po)
+import base64
 
-#--> todo:
-# --> 	- _.prt(c3po,trigger={'epoch': _.friendlyDate})
-#--> 	- 
+_paste = _.regImp( __.appReg, '-paste' )
+_copy = _.regImp( __.appReg, '-copy' )
+
 
 ########################################################################################
 if __name__ == '__main__':
