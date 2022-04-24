@@ -353,7 +353,7 @@ def tab(val,n=None, t='    ', cnt=False, add=None,  s=False):
                 lines[i] = ''
     return '\n'.join(lines)
 
-def l(subject,d=' '): return subject.split(d);
+def ll(subject,d=' '): return subject.split(d);
 
 def rev(string):
     a=list(string)
@@ -441,7 +441,7 @@ def over(txt,note='',r=None,l=None):
 
 
 def ddelim( txt=None, what='szYZhw', d=None, indices=None, f=1, r=-1 ):
-    if what.lower() in l('uuid guid'):
+    if what.lower() in ll('uuid guid'):
         what = 'uuid'
     def uu(p,r,u):
         if p:

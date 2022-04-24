@@ -230,16 +230,14 @@ def action():
 
 			_.pr()
 			def cend(sub):
-				if sub.endswith('/'):
-					return sub[-1:]
+				if sub.endswith('/'): return sub[-1:];
 				return sub
 			def cstart(sub):
-				if sub.startswith('/'):
-					return sub
+				if sub.startswith('/'): return sub;
 				return '/'+sub
 
 			def me(fi,fo): return cstart(fi.replace(fo,'').replace(os.sep,'/'));
-			def pr(sub,fi,fo, c='cyan'): _.pr('\t',(cend(sub)+me(fi,fo)).replace('//','/').replace('//','/'), c=c);
+			def pr(sub,fi,fo, c='cyan'): _.pr('\t',(cend(sub.replace('://','8f13ad0d8a77'))+me(fi,fo)).replace('//','/').replace('//','/').replace('8f13ad0d8a77','://'),c=c);
 			dic=_.fometa(subject)
 			if 'sftp' in dic:
 				_.pr('.folder.meta',_.pr(dic['folder'],p=0,c='yellow'))
@@ -248,6 +246,7 @@ def action():
 			if 'url' in dic:
 				pr( dic['url'],subject,dic['folder'], c='green' );
 			for srv in '.h .b .m .e'.split(' '):
+				_.pr()
 				dic=_.fometa(subject,srv)
 				# print(dic)
 				if 'sftp' in dic:
