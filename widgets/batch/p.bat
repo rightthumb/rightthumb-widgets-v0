@@ -12,6 +12,7 @@ rem ## {C3P0D40fAe8B} ##
 
 rem set py=python3
 
+if [%1] == [base-e] type %python%\_rightThumb\_base3\_base3_init_example.py > %python%\base-e.py
 if [%1] == [] goto:EOF
 
 :START_HERE

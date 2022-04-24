@@ -11,8 +11,9 @@ rem ###########################################################################
 rem ## {C3P0D40fAe8B} ##
 
 
-call m back
-call b myTickets
+call m back --c
+call b myTickets > nul
+
 
 :notepad %myTickets%\bill.tmp.txt
 :IF NOT EXIST "%myTickets%\bill.tmp.txt" echo error
@@ -21,6 +22,7 @@ call b myTickets
 IF NOT EXIST "%myTickets%\~"  (call t v > ~ & call bill)
 IF NOT EXIST "%myTickets%\~" GOTO END
 
+rem goto:eof
 
 
 set thisFile=bill_log_format4.php
@@ -37,9 +39,7 @@ echo.
 
 
 :END 
-
- call b back
- 
+call b back > nul
  
  
  

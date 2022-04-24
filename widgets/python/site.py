@@ -9,27 +9,25 @@
 #    - Scott Taylor Reph, RightThumb.com
 # ###########################################################################
 # ## {C3P0D40fAe8B} ##
+
 ##################################################
 import os, sys, time
 ##################################################
 import _rightThumb._construct as __
-appDBA = __.clearFocus( __name__, __file__ )
-__.appReg = appDBA
-def focus( parentApp='', childApp='', reg=True ):
-	global appDBA
-	f = __.appName( appDBA, parentApp, childApp )
-	if reg:
-		__.appReg = f
-	return f
-__.registeredApps.append( focus() )
+appDBA=__.clearFocus(__name__,__file__);__.appReg=appDBA;
+def focus(parentApp='',childApp='',reg=True):
+    global appDBA;f=__.appName(appDBA,parentApp,childApp);
+    if reg:__.appReg=f;
+    return f
 import _rightThumb._base3 as _
+fieldSet=_.l.vars(focus(),__name__,__file__,appDBA)
 _.load()
 ##################################################
-import _rightThumb._vars as _v
-import _rightThumb._string as _str
+_v = __.imp('_rightThumb._vars')
+_str = __.imp('_rightThumb._string')
 ##################################################
 
-def appSwitches():
+def sw():
 	pass
 	_.switches.register( 'Upload-Scp', '-u,-up,-upload' )
 	_.switches.register( 'Download-Scp', '-d,-dl,-down,-download' )
@@ -42,24 +40,14 @@ def appSwitches():
 
 
 
-_.autoBackupData = __.setting('receipt-log')
-__.releaseAcquiredData = __.setting('receipt-file')
-__.myFileLocations_SKIP_VALIDATION = False
-__.isRequired_Pipe = False
-__.isRequired_Pipe_or_File = False
-__.pre_error = False
-__.switch_raw = []
-# __.switch_raw = [ 'Delim' ]
-# __.isRequired_or_List = ['Pipe','Files','Plus']
-# __.setting( 'app-switches-raw', [ 'Delim' ] )
-
 
 _.appInfo[focus()] = {
-	'file': 'vps-file.py',
+	'file': 'site.py',
 	'liveAppName': __.thisApp( __file__ ),
 	'description': 'manage website files and open in url based on parentfolder meta',
 	'categories': [
 						'meta',
+						'site',
 						'test',
 				],
 	'usage': [
@@ -76,9 +64,9 @@ _.appInfo[focus()] = {
 						# '',
 	],
 	'examples': [
-						_.hp('p test -f default.js -test'),
-						_.hp('p test -f default.js -up'),
-						_.hp('p test -f default.js -dl'),
+						_.hp('p site -f default.js -test'),
+						_.hp('p site -f default.js -up'),
+						_.hp('p site -f default.js -dl'),
 						'',
 	],
 	'columns': [
@@ -106,77 +94,35 @@ _.appData[focus()] = {
 	}
 
 
-
-def registerSwitches( argvProcessForce=False ):
-	global appDBA
-	if not __.appReg == appDBA and appDBA in __.appReg:
-
-		if not __name__ == '__main__':
-			_.argvProcess = argvProcessForce
-		else:
-			_.argvProcess = True
-
-		_.load()
-		_.appInfo[__.appReg] = _.appInfo[appDBA]
-		_.appData[__.appReg] = _.appData[appDBA]
-	__.constructRegistration( _.appInfo[__.appReg]['file'],__.appReg )
-	appSwitches()
-
-	_.myFileLocation_Print = False
-	_.switches.trigger( 'Files', _.myFileLocations, vs=True )
-	_.switches.trigger( 'Folder', _.myFolderLocations )
-	_.switches.trigger( 'URL', _.urlTrigger )
-	_.switches.trigger( 'Ago', _.timeAgo )
-	_.switches.trigger( 'Duration', _.timeFuture )
-	
-	_.defaultScriptTriggers()
-	_.switches.process()
+def triggers():
+    _.switches.trigger( 'Files', _.myFileLocations, vs=True )
 
 
-if not __name__ == '__main__':
-	_.argvProcess = False
-else:
-	_.argvProcess = True
-
-registerSwitches()
-
-
-def fieldSet( switchName, switchField, switchValue, theFocus=False ):
-	if not type( theFocus ) == bool:
-		theFocus = theFocus
-	_.switches.fieldSet( switchName, switchField, switchValue, theFocus )
-
-
-if __name__ == '__main__':
-	if not sys.stdin.isatty():
-		_.setPipeData( sys.stdin.readlines(), __.appReg, clean=True )
-
-
-_.postLoad( __file__ )
+_.l.conf('clean-pipe',True)
+_.l.sw.register( triggers, sw )
 
 ########################################################################################
 # START
 
-def process(path):
+def process(path,end=''):
 	meta = {}
 	file = os.path.abspath(path)
 	folder = __.path(path,pop=True)
 	i=0
-	while not os.path.isfile( folder+os.sep+'.folder.meta' ):
+
+
+
+	while not os.path.isfile( folder+os.sep+'.folder.meta'+end ):
 		i+=1
 		if i > 100:
 			_.e('missing folder meta')
 		try:
 			folder = __.path(folder,pop=True)
 		except Exception as e:
-			pass
-	mPath = folder+os.sep+'.folder.meta'
-	if _.switches.isActive('Server'):
-		s=_.switches.value('Server')
-		if os.path.isfile(mPath+'.'+s):
-			mPath+='.'+s
-
+			break
+	mPath = folder+os.sep+'.folder.meta'+end
 	meta = _.getTable2( mPath )
+	_.cp(mPath.replace('.folder.meta'+end,''),'yellow')
 	_.pv(meta)
 	
 
@@ -274,8 +220,10 @@ def process(path):
 def action():
 	if not _.switches.isActive('Test') and not _.switches.isActive('Upload-Scp') and not _.switches.isActive('Download-Scp'):
 		_.switches.fieldSet( 'Test', 'active', True )
+	if _.switches.isActive('Server'): end='.'+_.switches.value('Server');
+	else: end='';
 	for i,path in enumerate( _.switches.values('Files') ):
-		process(path)
+		process(path,end)
 
 # _vault = _.regImp( __.appReg, '_rightThumb._vault' )
 

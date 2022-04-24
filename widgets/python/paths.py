@@ -163,6 +163,7 @@ _.postLoad( __file__ )
 ########################################################################################
 # START
 
+
 import platform
 
 def action():
@@ -184,6 +185,8 @@ def action():
 
 
 		for subject in subjects:
+
+
 			try:
 				subject = __.path(subject)
 				subby = subject.replace(os.getcwd(),'')
@@ -208,10 +211,9 @@ def action():
 					git_path = git_path.replace( ':', '' )
 					git_path = _v.slashes['u'] + git_path
 					_.pr( git_path )
-
 					wsl = '/mnt/'+ git_path[1].lower() + git_path[2:]
 					_.pr( wsl )
-					
+
 
 
 
@@ -226,7 +228,35 @@ def action():
 				pass
 
 
+			_.pr()
+			def cend(sub):
+				if sub.endswith('/'):
+					return sub[-1:]
+				return sub
+			def cstart(sub):
+				if sub.startswith('/'):
+					return sub
+				return '/'+sub
 
+			def me(fi,fo): return cstart(fi.replace(fo,'').replace(os.sep,'/'));
+			def pr(sub,fi,fo, c='cyan'): _.pr('\t',(cend(sub)+me(fi,fo)).replace('//','/').replace('//','/'), c=c);
+			dic=_.fometa(subject)
+			if 'sftp' in dic:
+				_.pr('.folder.meta',_.pr(dic['folder'],p=0,c='yellow'))
+				# if 'path' in dic['sftp']: pr( dic['sftp']['path'],subject,dic['folder'] );
+				if 'full-path' in dic['sftp']: pr( dic['sftp']['full-path'],subject,dic['folder'] );
+			if 'url' in dic:
+				pr( dic['url'],subject,dic['folder'], c='green' );
+			for srv in '.h .b .m .e'.split(' '):
+				dic=_.fometa(subject,srv)
+				# print(dic)
+				if 'sftp' in dic:
+					_.pr('.folder.meta'+srv,_.pr(dic['folder'],p=0,c='yellow'))
+					# if 'path' in dic['sftp']: pr( dic['sftp']['path'], subject,dic['folder'] );
+					if 'full-path' in dic['sftp']: pr( dic['sftp']['full-path'], subject,dic['folder'] );
+				if 'url' in dic:
+					pr( dic['url'],subject,dic['folder'], c='green' );
+			_.pr()
 
 
 

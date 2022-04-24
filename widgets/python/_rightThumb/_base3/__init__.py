@@ -34,6 +34,33 @@ simplejson.dumps(rows, indent=4, sort_keys=sort_keys)
 simplejson.dumps(rows)
 '''
 
+def fometa(path,end=''):
+    meta = {}
+    if os.path.isdir(path):
+        folder = __.path(path)
+    elif os.path.isfile(path):
+        folder = __.path(path,pop=True)
+    else:
+        folder = __.path(path)
+
+    i=0
+
+    while not os.path.isfile( folder+os.sep+'.folder.meta'+end ):
+        i+=1
+        if i > 100:
+            break
+        #     e('missing folder meta')
+        try:
+            folder = __.path(folder,pop=True)
+        except Exception as ee:
+            break
+    if os.path.isfile(folder+os.sep+'.folder.meta'+end):
+        meta = getTable2( folder+os.sep+'.folder.meta'+end )
+        meta['folder']=folder
+        return meta
+    return {}
+
+
 def json_(data,simp=False,s=None):
     if not s is None: simp=s;
     simplejson = __.imp('simplejson')
@@ -77,7 +104,13 @@ def print_(*args,p=None,c=None,pad=3,g=None,end=None):
     pre=''
     # if not g is None:
     # print_ed_group
-    for arg in args: items.append(str(arg));
+    for arg in args:
+        if type(arg) == list:
+            tmp=[]
+            for rg in arg: tmp.append(str(rg));
+            items.append( ' '.join(tmp) )
+        else:
+            items.append(str(arg))
     prn=pre+' '.join(items)
     if not c is None: prn=cp( prn, c, p=0 );
     if p is None: rint=True;
@@ -104,6 +137,7 @@ def fo(folder,r=False,script=None,first=True):
         return fo_fi
     for item in files:
         path=folder+os.sep+item
+        path=__.path(path)
         if os.path.isfile(path):
             fo_fi.append(path)
             if not script is None: script(path);
@@ -2304,11 +2338,13 @@ def loopPrint(  length=5, txt=' ', p=0 ):
     return result
 
 lp = loopPrint
-def linePrint(  label=None, text=None, txt='_', mn=50, add=5, p=2, c='', x=None ):
+def linePrint(  label=None, text=None, txt='_', mn=50, add=5, p=2, c='', x=None,pre='',length=None, center=None ):
     color=c
+    if not length is None:
+        mn=length
     ln = mn
     if text is None and label is None:
-        if __.terminal.width:
+        if length is None and __.terminal.width:
             ln = __.terminal.width
             add = 0
 
@@ -2335,6 +2371,11 @@ def linePrint(  label=None, text=None, txt='_', mn=50, add=5, p=2, c='', x=None 
                         ln = t
                         line_length_hash_table[label] = ln
 
+    if not center is None:
+        if not ln % 2==0:
+            ln-=1
+        ln=ln/2
+
     if text is None and ln > 0:
         i = 0
         result = ''
@@ -2355,6 +2396,20 @@ def linePrint(  label=None, text=None, txt='_', mn=50, add=5, p=2, c='', x=None 
         if len(result) > ln:
             r.pop(0)
             result=''.join(r)
+        res=''
+        for i,r in enumerate(result):
+            try:
+                res+=pre[i]
+            except Exception as e:
+                res+=result[i]
+        result=res
+
+
+        if not center is None:
+            result = result+' '+center+' '+result
+
+
+
 
         if p:
             if color:
@@ -19348,11 +19403,13 @@ def ad():
     ad=_cl(ad); ad=_cl(ad); ad=_cl(ad); ad=_cl(ad);
     ad=_cl(ad); ad=_cl(ad); ad=_cl(ad); ad=_cl(ad);
     sub=__.path(cho,file=True)
-    linePrint(c='green')
+    # cp( '<ad>', 'yellow' )
+    linePrint(c='green',center='ad', length=41)
     cp( sub, 'yellow' )
     linePrint('20',c='yellow')
     print(ad)
-    linePrint(c='green')
+    linePrint(c='green',center='ad', length=41)
+    # cp( '</ad>', 'yellow' )
     return ad
 ads=ad
 
@@ -19366,3 +19423,84 @@ def ico():
         print(x)
 
 nsfw=True
+
+l=dot()
+l.v=dot()
+l.sw=dot()
+
+
+def l_fieldSet( switchName, switchField, switchValue, theFocus=False ):
+    global switches
+    switches.fieldSet( switchName, switchField, switchValue, theFocus )
+def l_registerSwitches( trig=None, sw=None ):
+    global appInfo
+    global argvProcess
+    global myFileLocation_Print
+    global autoBackupData
+
+    # appInfo=l.conf('info')
+    autoBackupData = __.setting('receipt-log')
+    __.releaseAcquiredData = __.setting('receipt-file')
+    __.myFileLocations_SKIP_VALIDATION = __.setting('myFileLocations-skip-validation')
+    __.isRequired_Pipe = __.setting('require-pipe')
+    __.isRequired_Pipe_or_File = __.setting('require-pipe||file')
+    __.pre_error = __.setting('pre-error')
+    __.switch_raw = __.setting('switch-raw')
+    __.isRequired_or_List = __.setting('require-list')
+
+
+    if not l.conf('__name__') == '__main__':
+        argvProcess = False
+    else:
+        argvProcess = True
+
+    if not __.appReg == l.conf('appDBA') and l.conf('appDBA') in __.appReg:
+
+
+
+        load()
+        appInfo[__.appReg] = appInfo[l.conf('appDBA')]
+        appData[__.appReg] = appData[l.conf('appDBA')]
+    __.constructRegistration( appInfo[__.appReg]['file'],__.appReg )
+    if not sw is None: sw();
+    if not trig is None: trig();
+    
+    defaultScriptTriggers()
+    switches.process()
+
+    if l.conf('__name__') == '__main__':
+        if not sys.stdin.isatty():
+            setPipeData( sys.stdin.readlines(), __.appReg, clean=l.conf('clean-pipe' ,d=True) )
+    postLoad( l.conf('__file__') )
+    myFileLocation_Print=l.conf('myFileLocation_Print',d=False)
+    appInfo[__.appReg]['file']=appInfo[__.appReg]['liveAppName']
+l.v.cnf=dot()
+l.v.cnf.placeholder='3586006adfdc'
+l.v.cnf.default=None
+l.v.cnf.data={}
+def l_settings(subject,value=l.v.cnf.placeholder,default=l.v.cnf.default,v=None,d=None):
+    if not d is None: default=d;
+    if not v is None: value=v;
+
+    if not value == l.v.cnf.placeholder:
+        l.v.cnf.data[subject]=value
+
+    if subject in l.v.cnf.data: return l.v.cnf.data[subject];
+    else: return default;
+
+l.fieldSet=l_fieldSet
+l.sw.register=l_registerSwitches
+l.cnf=l_settings
+l.conf=l_settings
+l.config=l_settings
+l.fig=l_settings
+l.setting=l_settings
+
+def l_vars(fcs,n,f,d):
+    __.registeredApps.append( fcs )
+    l.conf('__name__',n)
+    l.conf('__file__',f)
+    l.conf('appDBA',d)
+    return l.fieldSet
+l.vars=l_vars
+

@@ -35,6 +35,7 @@ def appSwitches():
 	_.switches.register( 'Folders', '-f,-fo,-folder,-p,-path,-folders' )
 	_.switches.register( 'Recursive', '-r' )
 	_.switches.register( 'Clean', '--c' )
+	_.switches.register( 'File-Meta', '-meta' )
 	pass
 
 _.autoBackupData = __.setting('receipt-log')
@@ -153,11 +154,14 @@ _.postLoad( __file__ )
 ########################################################################################
 # START
 
-def _fig(path,r=None):
+def _fig(path,r=None,m=None):
 	if r is None: r=_.switches.isActive('Recursive');
+	if m is None: m=_.switches.isActive('File-Meta');
 	dic = {
+				'epoch': int(time.time()),
 				'path': path,
 				'recursive': r,
+				'meta': m,
 	}
 	path = __.path(path)
 	san=_v.sanitizeFolder(path)
@@ -179,6 +183,14 @@ def _f(path):
 	if not _.switches.isActive('Clean'): _.pr(san);
 	return fi
 
+def _m(path):
+	path = __.path(path)
+	san=_v.sanitizeFolder(path)
+	hashy=_md5.string(   san, 'sha256'   )
+	dex=_v.myIndexes+os.sep+'folders'+os.sep+'meta'+os.sep; _v.mkdir(dex);
+	fi=dex+hashy
+	if not _.switches.isActive('Clean'): _.pr(san);
+	return fi
 
 def action():
 	#--> min, architecture {:strict:}
@@ -200,15 +212,24 @@ def action():
 	elif _.switches.isActive('index'):
 		fo=_v.myIndexes+os.sep+'folders'+os.sep+'config'+os.sep;
 		for fig in _.fo(fo):
-			path=__.path(fo+fig)
+			path=__.path(fig)
 			cnf = _.getTable2(path)
 			file=_.fo(cnf['path'],cnf['recursive'])
 			_.saveText(file,_f(cnf['path']))
+			if cnf['meta']:
+				_dir=__.imp('_rightThumb._dir')
+				m=_m(cnf['path'])
+				records=[]
+				for fi in file:
+					records.append( _dir.info(fi) )
+				_.saveTable2(records,m)
 
 
 
 
 
+
+import _rightThumb._dir as _dir
 
 
 

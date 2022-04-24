@@ -485,3 +485,12 @@ Such a place exists, it is called programming.
 		return self.add_watermark(self.default_result)
 # __.file_headers(path).default()
 
+
+setting('myFileLocations-skip-validation',False)
+setting('require-pipe',False)
+setting('require-pipe||file',False)
+setting('pre-error',False)
+setting('switch-raw',[])
+setting('require-list',[])
+setting('receipt-log',True)
+setting('receipt-file',True)
