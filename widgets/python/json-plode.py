@@ -114,7 +114,7 @@ def process(path,plode='implode'):
     if plode.lower().startswith('i'):
         save=simplejson.dumps(json)
     else:
-        save=simplejson.dumps(rows, indent=4, sort_keys=False)
+        save=simplejson.dumps(json, indent=4, sort_keys=False)
     _.saveText(save,path)
 
 
@@ -130,9 +130,7 @@ def action():
     for i, path in enumerate( _.isData(r=0) ):
         process(path,plode)
 simplejson = __.imp('simplejson')
-simplejson.loads(var)
-simplejson.dumps(rows, indent=4, sort_keys=sort_keys)
-simplejson.dumps(rows)
+
 
 ########################################################################################
 if __name__ == '__main__':

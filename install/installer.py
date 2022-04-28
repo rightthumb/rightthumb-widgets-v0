@@ -3158,6 +3158,7 @@ alias ...b='cd rightthumb-widgets-v0 ; m w ; cd install/ ; m in ; cd .. ; cd wid
 alias watch.vnc="$widgets/widgets/bash/vnc_watch.sh> /dev/null 2>&1 & "
 
 alias rr='sudo su root'
+alias aa='sudo su admin'
 
 alias crontab.='EDITOR=nano /usr/bin/crontab'
 
