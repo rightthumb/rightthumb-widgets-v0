@@ -180,7 +180,7 @@ def path( p, ab=True, pop=False, file=False, slash=None ):
 	if slash is None:
 		slash = os.sep
 	if not p:
-		return p
+		return p.replace(os.sep+os.sep,os.sep)
 	# print(p)
 	p = p.replace( chr(92), slash )
 	p = p.replace( chr(47), slash )
@@ -207,7 +207,7 @@ def path( p, ab=True, pop=False, file=False, slash=None ):
 				# print(p)
 			if file:
 				p = path( p, file=True, slash=slash )
-			return p
+			return p.replace(os.sep+os.sep,os.sep)
 		parts = p.split(slash)
 		parts.reverse()
 		f = parts.pop(0)
@@ -215,7 +215,7 @@ def path( p, ab=True, pop=False, file=False, slash=None ):
 		p = str(slash).join(parts)
 		if file:
 			p = f
-	return p
+	return p.replace(os.sep+os.sep,os.sep)
 
 def file( p ):
 	os = imp('os')

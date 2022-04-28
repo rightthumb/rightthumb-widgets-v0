@@ -11,7 +11,7 @@
 # ## {C3P0D40fAe8B} ##
 
 ##################################################
-import sys, time
+import os, sys, time
 ##################################################
 import _rightThumb._construct as __
 appDBA=__.clearFocus(__name__,__file__);__.appReg=appDBA;
@@ -19,12 +19,12 @@ def focus(parentApp='',childApp='',reg=True):
     global appDBA;f=__.appName(appDBA,parentApp,childApp);
     if reg:__.appReg=f;
     return f
-import _rightThumb._base3 as _
+import _rightThumb._base5 as _
 fieldSet=_.l.vars(focus(),__name__,__file__,appDBA)
 _.load()
 ##################################################
-_v = __.imp('_rightThumb._vars')
-_str = __.imp('_rightThumb._string')
+# _v = __.imp('_rightThumb._vars')
+# _str = __.imp('_rightThumb._string')
 ##################################################
 
 def sw():
@@ -92,7 +92,7 @@ _.appData[focus()] = {
         'pipe': False,
         'data': {
                     'field': {'sent': [], 'received': [] }, # { 'label': '', 'context': [],  }
-                    'table': {'sent': [], 'received': [] },
+                    'table': {'sent': [], 'received': [] }, 
         },
     }
 
@@ -110,6 +110,7 @@ _.l.sw.register( triggers, sw )
 
 ########################################################################################
 # START
+
 
 def action():
     #--> min, architecture {:strict:}
@@ -130,6 +131,7 @@ def load():
     c3po = _.getTable( 'table' )
     #--> new table printer
     _.pt(c3po)
+
 
 ########################################################################################
 if __name__ == '__main__':

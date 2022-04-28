@@ -28,11 +28,9 @@ _str = __.imp('_rightThumb._string')
 ##################################################
 
 def sw():
-    pass
-    ### EXAMPLE: START
-    # _.switches.register( 'Input', '-i' )
-    # _.switches.register( 'Files', '-f,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=True )
-    ### EXAMPLE: END
+    _.switches.register( 'Files', '-f,-file,-files','file.txt', isData='glob', description='Files', isRequired=True )
+    _.switches.register( 'Implode', '-im,-in' )
+    _.switches.register( 'Explode', '-ex' )
 
 # __.setting('require-list',['Pipe','Files','Plus'])
 __.setting('require-list',[])
@@ -111,25 +109,30 @@ _.l.sw.register( triggers, sw )
 ########################################################################################
 # START
 
+def process(path,plode='implode'):
+    json=_.getTable2(path)
+    if plode.lower().startswith('i'):
+        save=simplejson.dumps(json)
+    else:
+        save=simplejson.dumps(rows, indent=4, sort_keys=False)
+    _.saveText(save,path)
+
+
 def action():
-    #--> min, architecture {:strict:}
-    #--> trigger/callback  <w#
-    load()
-    global c3po
 
-    # if _.switches.isActive('Test'): test(); return None;
+    plode='explode'
+    if _.switches.isActive('Explode'):
+        plode='explode'
+    elif _.switches.isActive('Implode'):
+        plode='implode'
 
-    for i, line, bi in _.numerate( _.isData(r=0) ):
-        #--> _.nindex(bi,h,n)  =  line.index(n)
-        #--> new print function
-        _.pr(line)
-    _.pr('ready',c='green')
 
-def load():
-    global c3po
-    c3po = _.getTable( 'table' )
-    #--> new table printer
-    _.pt(c3po)
+    for i, path in enumerate( _.isData(r=0) ):
+        process(path,plode)
+simplejson = __.imp('simplejson')
+simplejson.loads(var)
+simplejson.dumps(rows, indent=4, sort_keys=sort_keys)
+simplejson.dumps(rows)
 
 ########################################################################################
 if __name__ == '__main__':

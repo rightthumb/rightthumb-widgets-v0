@@ -30,9 +30,38 @@ from datetime import date
 '''
 simplejson = __.imp('simplejson')
 simplejson.loads(var)
-simplejson.dumps(rows, indent=4, sort_keys=sort_keys)
+simplejson.dumps(rows, indent=4, sort_keys=False)
 simplejson.dumps(rows)
 '''
+def numerate(asset,label='one'):
+    row=0
+    i=-2
+    new=[]
+    # print( len('\n'.join(asset)) )
+    # print( '\n'.join(asset).index('23') )
+    for ii,ass in enumerate(asset):
+        # print(len(ass))
+        i+=1
+        if ii:
+            b=i
+        else:
+            b=i+1
+        e=i+len(ass)
+        i=e
+        new.append( ( ii,ass,b ) )
+    return new
+
+def nindex(b,haystack,needle):
+    if not needle in haystack: return -1
+    if b == 0: return haystack.index(needle);
+    else: return haystack.index(needle)+1+b;
+
+
+
+def chScan(i,needle,label='one'):
+    global numerate_data
+    numerate_data[label]={}
+
 
 def fometa(path,end=''):
     meta = {}
@@ -399,10 +428,8 @@ def aiBullet(string,depth=None,d=None):
 def aiLine(string,lines=2):
 
     if type(string) == int:
-        s=lines
-        l=string
-        string=s
-        lines=l
+        s=lines; l=string;
+        string=s; lines=l;
 
     if lines==2:
         return '\n\n                '+string
@@ -629,7 +656,13 @@ def get_supporting_line(data,i,b=';',rev={}):
     return pre+data[i:ii]
 
 
-def vindex( code, i=0, esc='\\', n='', v=True,r=False,both=True ):
+def vindex( code, i=0, esc='\\', n='', v=True,r=False,both=True, sort=True ):
+    def _sort(sort,dic):
+        if not sort: return dic;
+        ks=list(dic.keys()); ks.sort(); new={};
+        for k in ks: new[k]=dic[k];
+        return new
+
     if type(code)==list:
         code=''.join(code)
     at=i
@@ -771,13 +804,13 @@ def vindex( code, i=0, esc='\\', n='', v=True,r=False,both=True ):
                     try:
                         s=table['brackets']['open'][table['brackets']['i']]
                     except Exception as e:
-                        return index
+                        return _sort(sort,index)
                     index[ s ]=i
                     if both:
                         index[ i ]=s
                     table['brackets']['i']-=1
                     if s==at:
-                        return index
+                        return _sort(sort,index)
                 elif not n and c == '[':
                     table['braces']['i']+=1
                     table['braces']['open'][table['braces']['i']]=i
@@ -785,13 +818,13 @@ def vindex( code, i=0, esc='\\', n='', v=True,r=False,both=True ):
                     try:
                         s=table['braces']['open'][table['braces']['i']]
                     except Exception as e:
-                        return index
+                        return _sort(sort,index)
                     index[ s ]=i
                     if both:
                         index[ i ]=s
                     table['braces']['i']-=1
                     if s==at:
-                        return index
+                        return _sort(sort,index)
                 elif not n and c == '(':
                     table['par']['i']+=1
                     table['par']['open'][table['par']['i']]=i
@@ -799,15 +832,15 @@ def vindex( code, i=0, esc='\\', n='', v=True,r=False,both=True ):
                     try:
                         s=table['par']['open'][table['par']['i']]
                     except Exception as e:
-                        return index
+                        return _sort(sort,index)
                     index[ s ]=i
                     if both:
                         index[ i ]=s
                     table['par']['i']-=1
                     if s==at:
-                        return index
+                        return _sort(sort,index)
     
-    return index
+    return _sort(sort,index)
 
 
 
@@ -7435,6 +7468,12 @@ def myFileLocations_add_file(path):
     if  not path in myFileLocation_Files:
         myFileLocation_Files.append( path )
 
+def _mfl(file):
+    if type(file) == str: file=file.replace(os.sep+os.sep,os.sep);
+    if type(file) == list and len(file) and type(file[0]) == str:
+        for i,f in enumerate(file):
+            if type(f) == str: file[i]=file[i].replace(os.sep+os.sep,os.sep);
+    return file
 
 isFirst=True
 def myFileLocations( file, silent=False, currentBaseVersion=3 ):
@@ -7484,11 +7523,11 @@ def myFileLocations( file, silent=False, currentBaseVersion=3 ):
             # return g
             # appData[__.appReg]['pipe'] = appData[__.appReg]['pipe'].split('\n')
             # print_("appData[__.appReg]['pipe']",appData[__.appReg]['pipe'])
-            return file
+            return _mfl(file)
             try:
-                return f
+                return _mfl(f)
             except Exception as e:
-                return file
+                return _mfl(file)
 
     # print_(__.myFileLocations_SKIP_VALIDATION)
     # print_(os.path.isdir(file))
@@ -7501,7 +7540,7 @@ def myFileLocations( file, silent=False, currentBaseVersion=3 ):
         if not type(appData[__.appReg]['pipe']) == list: appData[__.appReg]['pipe']=[];
         for path in glob.glob(file):
             appData[__.appReg]['pipe'].append(path)
-        return appData[__.appReg]['pipe']
+        return _mfl(appData[__.appReg]['pipe'])
 
 
 
@@ -7512,12 +7551,12 @@ def myFileLocations( file, silent=False, currentBaseVersion=3 ):
         # sys.exit()
         if not type(appData[__.appReg]['pipe']) == list:
             appData[__.appReg]['pipe']=[]
-            return None
+            return _mfl(None)
         if isFirst:
             isFirst=False
         else:
             appData[__.appReg]['pipe'].append( file )
-        return None
+        return _mfl(None)
     # if ',' in file and not os.path.isfile( file ):
     #   nFiles = []
     #   for f in file.split(','):
@@ -7601,43 +7640,43 @@ def myFileLocations( file, silent=False, currentBaseVersion=3 ):
 
 
 
-    return myFileLocation_File
+    return _mfl(myFileLocation_File)
 def myFileLocations2( file, silent=False, currentBaseVersion=3 ):
     if __.myFileLocations_SKIP_VALIDATION:
-        return file
+        return _mfl(file)
     global myFileLocation_Print
     silentSetTo = myFileLocation_Print
     if silent:
         silentSetTo = silent
 
     if os.path.isfile( file ):
-        return file
+        return _mfl(file)
 
     if 'tmpf' in file.lower():
         fx = file.lower()
         if 'tmpf' == fx:
-            return _v.tmpf
+            return _mfl(_v.tmpf)
         elif 'tmpf0' == fx:
-            return _v.tmpf0
+            return _mfl(_v.tmpf0)
         elif 'tmpf1' == fx:
-            return _v.tmpf1
+            return _mfl(_v.tmpf1)
         elif 'tmpf2' == fx:
-            return _v.tmpf2
+            return _mfl(_v.tmpf2)
         elif 'tmpf3' == fx:
-            return _v.tmpf3
+            return _mfl(_v.tmpf3)
         elif 'tmpf4' == fx:
-            return _v.tmpf4
+            return _mfl(_v.tmpf4)
         elif 'tmpf5' == fx:
-            return _v.tmpf5
+            return _mfl(_v.tmpf5)
         elif 'tmpf6' == fx:
-            return _v.tmpf6
+            return _mfl(_v.tmpf6)
         elif 'tmpf7' == fx:
-            return _v.tmpf7
+            return _mfl(_v.tmpf7)
         elif 'tmpf8' == fx:
-            return _v.tmpf8
+            return _mfl(_v.tmpf8)
         elif 'tmpf9' == fx:
-            return _v.tmpf9
-        return file
+            return _mfl(_v.tmpf9)
+        return _mfl(file)
 
     probableLocations = [
         "_v.py + _v.slash+'_rightThumb'+_v.slash + '_' + '*THEFILENAME*' + _v.slash+'__init__.py'",
@@ -7683,7 +7722,7 @@ def myFileLocations2( file, silent=False, currentBaseVersion=3 ):
                         print_( 'File not here but in:', theTest )
                         print_()
 
-                    return theTest
+                    return _mfl(theTest)
             except Exception as e:
                 pass
     
@@ -7695,13 +7734,13 @@ def myFileLocations2( file, silent=False, currentBaseVersion=3 ):
     if os.path.isfile( _v.relevant_folders ):
         for fld in getText( _v.relevant_folders, raw=True, clean=1 ).split('\n'):
             if os.path.isfile( fld  +_v.slash+  file ):
-                return fld  +_v.slash+  file
+                return _mfl(fld  +_v.slash+  file)
             if 'ext' in __.specifications:
                 if os.path.isfile( fld  +_v.slash+  file+ __.specifications['ext'] ):
-                    return fld  +_v.slash+  file
+                    return _mfl(fld  +_v.slash+  file)
             # print_(fld)
 
-    return file
+    return _mfl(file)
 
 
 
@@ -19385,33 +19424,9 @@ def bk(path,flag=None):
 def life(subject):
     return _v.life+subject.replace('/',os.sep)
 
-def ad():
-    global nsfw
-    random=__.imp('random')
-    ads=fo(_v.life+'ads')
-    if nsfw:
-        for a2 in fo(_v.life+'ads.nsfw'): ads.append(a2);
-    ri = random.randrange(len(ads))
-    cho=ads[ri]
-    ad=getText( cho , raw=True )
-    ad=ad.replace('\r','')
-    def _cl(ad):
-        ad=_str.do('be',ad,'\n')
-        ad=_str.do('be',ad,' ')
-        ad=_str.do('be',ad,'\t')
-        return ad
-    ad=_cl(ad); ad=_cl(ad); ad=_cl(ad); ad=_cl(ad);
-    ad=_cl(ad); ad=_cl(ad); ad=_cl(ad); ad=_cl(ad);
-    sub=__.path(cho,file=True)
-    # cp( '<ad>', 'yellow' )
-    linePrint(c='green',center='ad', length=41)
-    cp( sub, 'yellow' )
-    linePrint('20',c='yellow')
-    print(ad)
-    linePrint(c='green',center='ad', length=41)
-    # cp( '</ad>', 'yellow' )
-    return ad
-ads=ad
+
+
+
 
 def ico():
     random=__.imp('random')
@@ -19503,4 +19518,117 @@ def l_vars(fcs,n,f,d):
     l.conf('appDBA',d)
     return l.fieldSet
 l.vars=l_vars
+oc=vindex
+
+
+def dots(path):
+    def _dots_(pth):
+        try: exec(pth); return True;
+        except Exception as e: return False;
+    rts=path.split('.'); exec('global '+rts[0]);
+    if _dots_(path): return eval(rts[0])
+    pre=[]; thp=[];
+    for i,seg in enumerate(rts):
+        pre=thp.copy(); thp.append(seg); npre='.'.join(pre); npath='.'.join(thp)
+        if i == len(rts)-1:
+            exec('from 1 import 2'.replace('1',npre).replace('2',rts[-1]))
+            f='3=2'.replace('1',npre).replace('2',rts[-1]).replace('3',path)
+        else: f='1=dot()'.replace('1',npath);
+
+        if not _dots_(npath):
+            exec(f)
+            if i == len(rts)-1: return eval(rts[0]);
+nsfw_=False
+def ad():
+    global nsfw; global nsfw_;
+    if not nsfw_:
+        try:
+            if '1' in URL('https://eyeformeta.com/apps/terminal/switches/nsfw'): nsfw=True;
+            else: nsfw=False;1
+        except Exception as ee: nsfw=False;
+    nsfw_=True
+    random=__.imp('random')
+    ads=fo(_v.life+'ads')
+    if nsfw:
+        for a2 in fo(_v.life+'ads.nsfw'): ads.append(a2);
+    ri = random.randrange(len(ads))
+    cho=ads[ri]
+    ad=getText( cho , raw=True )
+    ad=ad.replace('\r','')
+    def _cl(ad):
+        ad=_str.do('be',ad,'\n')
+        ad=_str.do('be',ad,' ')
+        ad=_str.do('be',ad,'\t')
+        return ad
+    ad=_cl(ad); ad=_cl(ad); ad=_cl(ad); ad=_cl(ad);
+    ad=_cl(ad); ad=_cl(ad); ad=_cl(ad); ad=_cl(ad);
+    sub=__.path(cho,file=True)
+    # cp( '<ad>', 'yellow' )
+    linePrint(c='green',center='ad', length=41)
+    cp( sub, 'yellow' )
+    linePrint('20',c='yellow')
+    pr(ad)
+    linePrint(c='green',center='ad', length=41)
+    # cp( '</ad>', 'yellow' )
+    return ad
+ads=ad
+
+def URL(url):
+    requests=dots('requests.get')
+    return requests.get(url).content.decode("utf-8").replace('\\n','\n')
+
+
+def getConfig(path):
+    def _cl_(string): return _str.do('be',   _str.do('be',string,'\n')   ,' ');
+    def _val_(string):
+        if string.startswith('"'): string=string[1:]; string=string[:-1]; return _cl_(string);
+        if string.startswith("'"): string=string[1:]; string=string[:-1]; return _cl_(string);
+        if string.startswith('[') or string.startswith('{'):
+            simplejson = __.imp('simplejson')
+            return simplejson.loads(string)
+        if string.lower() == 'none': return None;
+        if string.lower() == 'null': return None;
+        if string.lower() == 'true': return True;
+        elif string.lower() == 'false': return False;
+        else:
+            has=[]
+            if '-' in string and not string.startswith('-'): return _cl_(string);
+            for s in string:
+                if s in '01234567890-' and not 'n' in has: has.append('n');
+                if s in '.' and not 'f' in has: has.append('f');
+                if s in '\n\tabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ{}()[]<>' and not 'a' in has: return _cl_(string);
+            if 'f' in has and len(has)<3 and len(has)>1: return float(string);
+            if 'n' in has and len(has)==1: return int(string);
+        return _cl_(string)
+    # print(path)
+    data=getText(path)
+    dic={}
+    for item in data:
+        item=_str.do('be',item,' ')
+        item=_str.do('be',item,'\n')
+        item=_str.do('be',item,'\t')
+        if item and not item.startswith('#'):
+            if '=' in item:
+                a=item[0:item.index('=')]
+                b=item[item.index('=')+1:len(item)]
+                dic[a]=_val_(b)
+    return dic
+
+def saveConfig(data,path):
+    def _cl_(string): return _str.do('be',   _str.do('be',string,'\n')   ,' ');
+    def _val_(string):
+        if type(string) == str and not '\n' in string: return _cl_(string);
+        elif type(string) == str and '\n' in string: return _cl_(str({'d':string})[7:-2]);
+        elif type(string) == int or type(string) == float: return _cl_(str(string));
+        elif type(string) == dict or type(string) == list:
+            simplejson = __.imp('simplejson')
+            return simplejson.dumps(string)
+
+        return _cl_(str(string))
+
+    config=[]
+    for k in data:
+        config.append(  _cl_(k)+'='+_val_(data[k])  )
+    saveText(config,path)
+    return config
 

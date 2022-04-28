@@ -11,7 +11,7 @@
 # ## {C3P0D40fAe8B} ##
 
 ##################################################
-import os, sys, time
+import sys, time
 ##################################################
 import _rightThumb._construct as __
 appDBA=__.clearFocus(__name__,__file__);__.appReg=appDBA;
@@ -30,7 +30,7 @@ _str = __.imp('_rightThumb._string')
 def sw():
     pass
     ### EXAMPLE: START
-    # _.switches.register( 'Input', '-i' )
+    _.switches.register( 'Input', '-i' )
     # _.switches.register( 'Files', '-f,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=True )
     ### EXAMPLE: END
 
@@ -111,7 +111,21 @@ _.l.sw.register( triggers, sw )
 ########################################################################################
 # START
 
-
+# dic=_.getConfig(_.switches.values('Input')[0])
+# _.pv(dic)
+data={
+        'a': 1.1,
+        'b': 1,
+        'c': 'scott',
+        'd': 'scott\nreph',
+        'e': [1,2,3],
+        'f': {
+                'g': 1,
+                'h': 2,
+        },
+}
+test=_.saveConfig(data,_.switches.values('Input')[0])
+print(  '\n'.join(test)  )
 def action():
     #--> min, architecture {:strict:}
     #--> trigger/callback  <w#
@@ -120,18 +134,17 @@ def action():
 
     # if _.switches.isActive('Test'): test(); return None;
 
-    for i,line in enumerate( _.isData(r=0) ):
+    for i, line, bi in _.numerate( _.isData(r=0) ):
+        #--> _.nindex(bi,h,n)  =  line.index(n)
         #--> new print function
         _.pr(line)
     _.pr('ready',c='green')
-
 
 def load():
     global c3po
     c3po = _.getTable( 'table' )
     #--> new table printer
     _.pt(c3po)
-
 
 ########################################################################################
 if __name__ == '__main__':

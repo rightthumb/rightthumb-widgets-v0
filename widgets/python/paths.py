@@ -230,7 +230,7 @@ def action():
 
 			_.pr()
 			def cend(sub):
-				if sub.endswith('/'): return sub[-1:];
+				if sub.endswith('/'): return sub;
 				return sub
 			def cstart(sub):
 				if sub.startswith('/'): return sub;
