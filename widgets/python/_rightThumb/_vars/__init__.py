@@ -10,6 +10,11 @@
 # ###########################################################################
 # ## {C3P0D40fAe8B} ##
 
+config_hash_default = {
+							'register.php': 'http://tools.rightthumb.com/register.php',
+							'ip.php': 'http://tools.rightthumb.com/ip.php',
+}
+
 import _rightThumb._construct as __
 import _rightThumb._string as _str
 from pathlib import Path
@@ -207,6 +212,8 @@ if os.path.isfile( configFile('.path') ):
 config_hash = {}
 if os.path.isfile( configFile('.config.hash') ):
 	config_hash = __.getTable( configFile('.config.hash') )
+	for k in config_hash_default:
+		if not k in config_hash: config_hash[k]=config_hash_default[k];
 	if 'w' in config_hash:
 		if __.isWin:
 			techDrive = config_hash['w']
@@ -320,6 +327,7 @@ log_config_html = techFolder + slash+'widgets'+slash+'html'+slash+'projects'+sla
 dance = images + 'dance.gif'
 gears = images + 'gears.gif'
 life=home +os.sep+'.rt'+os.sep+'profile'+os.sep+'life'+os.sep
+
 if __.isWin:
 	sublime = '"C:\\Program Files\\Sublime Text 3\\sublime_text.exe"'
 elif not __.isWin:
@@ -1344,6 +1352,7 @@ def ipGet(force=False):
 	global ip
 	global host_alias
 	global unixIDs
+	global config_hash
 	
 	
 	get_ip = False
@@ -1360,7 +1369,7 @@ def ipGet(force=False):
 		}
 		if os.path.isfile( configFile('.distro') ):
 			f['distro'] = open( configFile('.distro'), 'r' ).read()
-		url = 'http://tools.rightthumb.com/register.php?'+urllib.parse.urlencode(f)
+		url = config_hash['register.php']+'?'+urllib.parse.urlencode(f)
 		# _.pr(url)
 		try:
 			ip = html.fromstring(requests.get( url  ).content).text_content()
@@ -1385,7 +1394,7 @@ def ipGet(force=False):
 			import requests
 		ip_old = open(configFile('.ip'), 'r', encoding='utf-8').readlines()[0]
 		try:
-			ip = html.fromstring(requests.get('http://tools.rightthumb.com/ip.php?id='+unixIDs[8]).content).text_content()
+			ip = html.fromstring(requests.get(config_hash['ip.php']+'?id='+unixIDs[8]).content).text_content()
 			open(configFile('.ip'),'w', encoding='utf-8').write( ip )
 		except Exception as e:
 			ip = 'offline'
@@ -1534,5 +1543,5 @@ myAppsPy=py
 wprofile = myHome
 doc_sep = '__________________________________________________________________________________'
 meta=config_hash
-
+# print(life); sys.exit();
 

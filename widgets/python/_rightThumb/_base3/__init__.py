@@ -1237,6 +1237,7 @@ def isDate( theDate=None, record={}, tz=None, q=True, f=None,w=None,what=None ):
         if f=='month': return _dir.getMonthFromEpoch( epoch );
         if f=='year': return _dir.getYearFromEpoch( epoch );
         if f=='woy': return _dir.getWeekAndYear( epoch );
+        if f=='woy2': return _dir.getWeekAndYear( epoch ).replace(str(_dir.getYearFromEpoch( epoch ))+'.','');
         if f=='ago': return _dir.dateDiffText( epoch );
         if f=='days': return daysDiff(  epoch, time.time()  );
         if f=='dow': return _dir.getDOWromEpochText( epoch );
@@ -1382,6 +1383,7 @@ def isDate( theDate=None, record={}, tz=None, q=True, f=None,w=None,what=None ):
     record['month'] = _dir.getMonthFromEpoch( epoch )
     record['year'] = _dir.getYearFromEpoch( epoch )
     record['woy'] = _dir.getWeekAndYear( epoch )
+    record['woy2'] = _dir.getWeekAndYear( epoch ).replace(str(_dir.getYearFromEpoch( epoch ))+'.','')
     record['dow'] = _dir.getDOWromEpochText( epoch )
     record['ago'] = _dir.dateDiffText( epoch )
     record['days'] = daysDiff(  epoch, time.time()  )
@@ -3438,6 +3440,11 @@ class dt:
 
 
 def isData( data=None, focus=None, pipeClean=True, required=False,     r=None, c=None ):
+    def _isData_(tst):
+        global myFileLocation_Files
+        if not tst: return myFileLocation_Files;
+        return tst
+
     def isData_path_list(stuff,dAta=[]):
         for f in stuff:
             f = __.path(f)
@@ -3505,7 +3512,7 @@ def isData( data=None, focus=None, pipeClean=True, required=False,     r=None, c
             # print_('here')
             # sys.exit()
             if False and not isClean:
-                return data
+                return _isData_(data)
             elif type(data)==str:
                 # print_('here')
                 # sys.exit()
@@ -3519,7 +3526,7 @@ def isData( data=None, focus=None, pipeClean=True, required=False,     r=None, c
                 # return newData
                 # print_('here')
                 # sys.exit()
-                return data.split('\n')
+                return _isData_(data.split('\n'))
             elif type(data)==list:
                 newData=[]
                 for row in data:
@@ -3529,7 +3536,7 @@ def isData( data=None, focus=None, pipeClean=True, required=False,     r=None, c
                     row = _str.cleanBE( row, ' ' )
                     row = _str.cleanBE( row, '\t' )
                     newData.append(row)
-                return newData
+                return _isData_(newData)
 
 
 
@@ -3540,17 +3547,17 @@ def isData( data=None, focus=None, pipeClean=True, required=False,     r=None, c
     if r:
         if type(data) == bool:
             help()
-            return None
+            return _isData_(None)
         if not data:
             help()
-            return None
+            return _isData_(None)
     else:
         if type(data) == bool:
-            return []
+            return _isData_([])
         if not data:
-            return []
+            return _isData_([])
     
-    return data
+    return _isData_(data)
 
 def payloadCache( data, file=None, theFocus=None ):
     # _.payloadCache( saveFile, __file__, focus() )
@@ -7644,8 +7651,9 @@ def myFileLocations( file, silent=False, currentBaseVersion=3 ):
 def myFileLocations2( file, silent=False, currentBaseVersion=3 ):
     if __.myFileLocations_SKIP_VALIDATION:
         return _mfl(file)
-    global myFileLocation_Print
-    silentSetTo = myFileLocation_Print
+    # global myFileLocation_Print
+    # silentSetTo = myFileLocation_Print
+    silentSetTo = l.conf('myFileLocation_Print',d=False)
     if silent:
         silentSetTo = silent
 
@@ -7721,8 +7729,10 @@ def myFileLocations2( file, silent=False, currentBaseVersion=3 ):
                         print_()
                         print_( 'File not here but in:', theTest )
                         print_()
-
+                    # print(theTest)
+                    # return theTest
                     return _mfl(theTest)
+
             except Exception as e:
                 pass
     
@@ -13551,7 +13561,9 @@ def timeCalc(do, epoch=None):
 
 def timeAgo_past(do='', startDate=None):
     if startDate is None:
-        startDate = time.time()
+        startDate  = time.time()
+    # start_date = isDate(startDate,f='date')
+    # start_date = [time.time()]
     global isTime
     # return do
     if '.' in do:
@@ -13633,18 +13645,20 @@ def timeAgo_past(do='', startDate=None):
     if 'y' in do:
         # start_date = datetime.date.today() + datetime.timedelta(-365 * nmb)
         # start_date = dateMathEpoch( startDate, 365 * nmb, '-' )
-        start_date = yearMath( startDate, nmb, do='-' )
+        return yearMath( startDate, nmb, do='-' )
     if 'm' in do:
         # start_date = datetime.date.today() + datetime.timedelta(-30 * nmb)
         # start_date = dateMathEpoch( startDate, 30 * nmb, '-' )
-        start_date = monthMath( startDate, nmb, do='-' )
+        return monthMath( startDate, nmb, do='-' )
+
+        print('asdf',start_date)
     if 'w' in do:
         # start_date = datetime.date.today() + datetime.timedelta(-7 * nmb)
-        start_date = dateMathEpoch( startDate, 7 * nmb, '-' )
+        return dateMathEpoch( startDate, 7 * nmb, '-' )
     if 'd' in do:
         # start_date = datetime.date.today() + datetime.timedelta(-1 * nmb)
-        start_date = dateMathEpoch( startDate, nmb, '-' )
-    return start_date
+        return dateMathEpoch( startDate, nmb, '-' )
+    return time.time()
     # dTx = str(start_date)
     # print_(dT)
     # print_(dT)
@@ -19631,4 +19645,7 @@ def saveConfig(data,path):
         config.append(  _cl_(k)+'='+_val_(data[k])  )
     saveText(config,path)
     return config
+
+imp=__.imp
+def HID(sub): requests=imp('requests'); return int(requests.get('https://eyeformeta.com/assets/widgets/ids/index.php?subject='+sub).content.decode("utf-8").replace('\\n','\n').replace('\n',''));
 

@@ -215,7 +215,9 @@ def editor(path):
 		_file_open.switch('Files',path)
 		_file_open.action()
 	else:
-		_.pr(_v.meta['code_editor'],path)
+		_file_open.switch('Files',path)
+		_file_open.action()
+	_.pr(_v.meta['code_editor'],path)
 
 
 _file_open = _.regImp( __.appReg, 'file-open' )

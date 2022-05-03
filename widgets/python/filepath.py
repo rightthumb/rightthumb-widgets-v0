@@ -28,12 +28,9 @@ _str = __.imp('_rightThumb._string')
 ##################################################
 
 def sw():
-    pass
-    ### EXAMPLE: START
-    # _.switches.register( 'Input', '-i' )
-    # _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=True )
     # _.switches.register( 'Files', '-f,-fi,-file,-files' )
-    ### EXAMPLE: END
+    _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt',  description='Files', isRequired=True )
+
 
 # __.setting('require-list',['Pipe','Files','Plus'])
 __.setting('require-list',[])
@@ -44,7 +41,7 @@ __.setting('require-pipe',False)
 __.setting('require-pipe||file',False)
 __.setting('pre-error',False)
 __.setting('switch-raw',[])
-
+# _.l.conf('myFileLocation_Print',True)
 
 _.appInfo[focus()] = {
     # 'app': '8facG-jo0Cxk',
@@ -99,7 +96,8 @@ _.appData[focus()] = {
 
 
 def triggers():
-    _.switches.trigger( 'Files', _.myFileLocations, vs=True )
+    _.switches.trigger('Files',_.myFileLocations)
+    # _.switches.trigger( 'Files', _.myFileLocations, vs=True )
     _.switches.trigger( 'Ago', _.timeAgo )
     _.switches.trigger( 'Folder', _.myFolderLocations )
     _.switches.trigger( 'URL', _.urlTrigger )
@@ -113,24 +111,9 @@ _.l.sw.register( triggers, sw )
 # START
 
 def action():
-    #--> min, architecture {:strict:}
-    #--> trigger/callback  <w#
-    load()
-    global c3po
-
-    # if _.switches.isActive('Test'): test(); return None;
-
-    for i, line, bi in _.numerate( _.isData(r=0) ):
-        #--> _.nindex(bi,h,n)  =  line.index(n)
-        #--> new print function
-        _.pr(line)
-    _.pr('ready',c='green')
-
-def load():
-    global c3po
-    c3po = _.getTable( 'table' )
-    #--> new table printer
-    _.pt(c3po)
+    # print( _.isData(r=0) )
+    for p in _.isData(r=0):
+        _.pr(p,c='cyan')
 
 ########################################################################################
 if __name__ == '__main__':

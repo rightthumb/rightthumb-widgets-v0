@@ -86,7 +86,7 @@ v = dot()
 LOOP = {}
 
 def pathList( *paths ):
-	os = imp('os')
+	# os = imp('os')
 	result = os.sep.join(paths)
 	result = result.replace( '/', os.sep )
 	result = result.replace( '\\', os.sep )
@@ -102,7 +102,7 @@ def p( *text, w='' ):
 	txt = ' '.join( texXxt )
 	
 	if w:
-		os = imp('os')
+		# os = imp('os')
 		if os.path.isfile(w):
 			file1 = open( w , 'a' )
 			file1.write( txt+'\n' )
@@ -126,9 +126,29 @@ def uuid():
 
 
 
+def dots(path):
+    def _dots_(pth):
+        try: exec(pth); return True;
+        except Exception as e: return False;
+    rts=path.split('.'); exec('global '+rts[0]);
+    if _dots_(path): return eval(rts[0])
+    pre=[]; thp=[];
+    for i,seg in enumerate(rts):
+        pre=thp.copy(); thp.append(seg); npre='.'.join(pre); npath='.'.join(thp)
+        if i == len(rts)-1:
+            exec('from 1 import 2'.replace('1',npre).replace('2',rts[-1]))
+            f='3=2'.replace('1',npre).replace('2',rts[-1]).replace('3',path)
+        else: f='1=dot()'.replace('1',npath);
+
+        if not _dots_(npath):
+            exec(f)
+            if i == len(rts)-1: return eval(rts[0]);
+
 
 imp_table = {}
 def imp( subject, imp_table_testing=False ):
+	# print(subject); sys.exit();
+	if '.' in subject and not '_rightThumb' in subject: return dots(subject);
 	global imp_table
 	global importlib
 	if importlib is None:
@@ -176,7 +196,7 @@ def isExit():
 
 def path( p, ab=True, pop=False, file=False, slash=None ):
 	# os = vc.FIG.imp('os')
-	os = imp('os')
+	# os = imp('os')
 	if slash is None:
 		slash = os.sep
 	if not p:
@@ -218,7 +238,7 @@ def path( p, ab=True, pop=False, file=False, slash=None ):
 	return p.replace(os.sep+os.sep,os.sep)
 
 def file( p ):
-	os = imp('os')
+	# os = imp('os')
 	p = p.replace( chr(92), os.sep )
 	p = p.replace( chr(47), os.sep )
 	if not os.sep in p:
@@ -230,7 +250,7 @@ def file( p ):
 
 
 def getTable( file ):
-	os = imp('os')
+	# os = imp('os')
 	json = imp('simplejson')
 
 	if os.path.isfile(file):
@@ -494,3 +514,8 @@ setting('switch-raw',[])
 setting('require-list',[])
 setting('receipt-log',True)
 setting('receipt-file',True)
+
+os = imp('os.sep')
+os = imp('os.path.isfile')
+os = imp('os.path.isdir')
+sys = imp('sys.exit')

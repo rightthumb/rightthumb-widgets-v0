@@ -9,7 +9,6 @@
 #    - Scott Taylor Reph, RightThumb.com
 # ###########################################################################
 # ## {C3P0D40fAe8B} ##
-
 ##################################################
 import sys, time
 ##################################################
@@ -26,14 +25,11 @@ _.load()
 _v = __.imp('_rightThumb._vars')
 _str = __.imp('_rightThumb._string')
 ##################################################
-
 def sw():
-    pass
-    ### EXAMPLE: START
-    # _.switches.register( 'Input', '-i' )
-    # _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=True )
-    # _.switches.register( 'Files', '-f,-fi,-file,-files' )
-    ### EXAMPLE: END
+    _.switches.register( 'Files', '-f,-file,-files','file.txt', isData='glob', description='Files', isRequired=True )
+    # _.switches.register( 'Lat', '-lat' )
+    # _.switches.register( 'Lon', '-lon' )
+
 
 # __.setting('require-list',['Pipe','Files','Plus'])
 __.setting('require-list',[])
@@ -48,13 +44,13 @@ __.setting('switch-raw',[])
 
 _.appInfo[focus()] = {
     # 'app': '8facG-jo0Cxk',
-    'file': 'thisApp.py',
+    'file': '911.alexandria.ninja-coords.py',
     'liveAppName': __.thisApp( __file__ ),
     'description': 'Changes the world',
         # _.ail(1,'subject')+
         # _.aib('one')+
     'categories': [
-                        'DEFAULT',
+                        'alexandria.ninja',
                 ],
     'usage': [
                         # 'epy another',
@@ -70,7 +66,7 @@ _.appInfo[focus()] = {
                         # '',
     ],
     'examples': [
-                        _.hp('p thisApp -file file.txt'),
+                        _.hp('p 911.alexandria.ninja-coords -lat -lon'),
                         '',
     ],
     'columns': [
@@ -115,28 +111,24 @@ _.l.sw.register( triggers, sw )
 def action():
     #--> min, architecture {:strict:}
     #--> trigger/callback  <w#
-    load()
-    global c3po
-
     # if _.switches.isActive('Test'): test(); return None;
+    # body='911\nlat: -lat\nlon: -lon'
+    # body=body.replace('-lat',_.switches.value('Latitude'))
+    # body=body.replace('-lon',_.switches.value('Longitude'))
+    print(_.isData()[0])
+    body=_.getText(_.isData()[0],raw=True)
+    _send.imp.action( to='8136901260',body=body )
 
-    for i, line, bi in _.numerate( _.isData(r=0) ):
-        #--> _.nindex(bi,h,n)  =  line.index(n)
-        #--> new print function
-        _.pr(line)
-    _.pr('ready',c='green')
 
-def load():
-    global c3po
-    c3po = _.getTable( 'table' )
-    #--> new table printer
-    _.pt(c3po)
+_send = _.regImp( __.appReg, 'vps-srv-7facG-twilio-send' )
+
+
+# Lat Lon
 
 ########################################################################################
 if __name__ == '__main__':
     action()
     __.isExit()
-
 
 
 
