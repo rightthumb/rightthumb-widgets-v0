@@ -162,8 +162,8 @@ Recommended python modules
     pip3 install cssselect
     pip3 install colorama
     pip3 install arrow
-    if termux
-        pip3 install setuptools-rust
+    # if termux
+    #     pip3 install setuptools-rust
     pip3 install pymysql
     pip3 install Crypto
     pip3 install tzlocal
