@@ -1896,7 +1896,7 @@ pr-|{6FAB5628-94A1-410A-82D1-1D42A2A11750}/.rt/profile/projects"""
             v.bash = vc.HD.getTableSimp( v.config )
         else:
             _bash_DEF_()
-            vc.HD.saveTable( v.bash, v.config )
+            vc.HD.saveTableSimp( v.bash, v.config )
 
 
 
