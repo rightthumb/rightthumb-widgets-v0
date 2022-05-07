@@ -1894,9 +1894,9 @@ pr-|{6FAB5628-94A1-410A-82D1-1D42A2A11750}/.rt/profile/projects"""
         print(v.config)
         if os.path.isfile( v.config ):
             v.bash = vc.HD.getTableSimp( v.config )
-        else:
-            _bash_DEF_()
-            vc.HD.saveTableSimp( v.bash, v.config )
+        # else:
+        #     _bash_DEF_()
+        #     vc.HD.saveTableSimp( v.bash, v.config )
 
 
 
@@ -1984,7 +1984,8 @@ pr-|{6FAB5628-94A1-410A-82D1-1D42A2A11750}/.rt/profile/projects"""
                     color='cyan'
             cp([comment,vc.DIR.formatSize(me),v.bash['wprofile']+os.sep+'vars'+os.sep+'config.'+ext],color)
 
-            if not os.path.isfile(v.bash['wprofile']+os.sep+'vars'+os.sep+'personal.'+ext):
+            # if not os.path.isfile(v.bash['wprofile']+os.sep+'vars'+os.sep+'personal.'+ext):
+            if True:
                 vc.HD.saveText( '', v.bash['wprofile']+os.sep+'vars'+os.sep+'personal.'+ext )
                 color='yellow'
                 me=0
