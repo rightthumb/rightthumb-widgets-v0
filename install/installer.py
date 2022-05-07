@@ -1903,7 +1903,7 @@ pr-|{6FAB5628-94A1-410A-82D1-1D42A2A11750}/.rt/profile/projects"""
         # print(v.bash_defaults)
         # print( type(v.bash_defaults) )
         # sys.exit()
-        v.f.mkdir(v.bash['wprofile']+os.sep+'vars')
+        
         _bash_DEF_()
         if not v.isWin:
             if not v.gui:
@@ -1964,9 +1964,10 @@ pr-|{6FAB5628-94A1-410A-82D1-1D42A2A11750}/.rt/profile/projects"""
             export=export.replace('\\\\','\\')
         else:
             ext='sh'
+        print( export )
+        v.f.mkdir(v.bash['wprofile']+os.sep+'vars')
+        vc.HD.saveText( export, v.bash['wprofile']+os.sep+'vars'+os.sep+'config.'+ext )
         if p:
-            print( export )
-            vc.HD.saveText( export, v.bash['wprofile']+os.sep+'vars'+os.sep+'config.'+ext )
             if v.isWin:
                 comment=':'
 
@@ -1986,7 +1987,7 @@ pr-|{6FAB5628-94A1-410A-82D1-1D42A2A11750}/.rt/profile/projects"""
 
             # if not os.path.isfile(v.bash['wprofile']+os.sep+'vars'+os.sep+'personal.'+ext):
             if True:
-                vc.HD.saveText( '', v.bash['wprofile']+os.sep+'vars'+os.sep+'personal.'+ext )
+                vc.HD.saveText( export, v.bash['wprofile']+os.sep+'vars'+os.sep+'personal.'+ext )
                 color='yellow'
                 me=0
             else:
