@@ -3077,7 +3077,7 @@ alias ssh.b.r="ssh-copy-id -i ~/.ssh/id_rsa.pub root@bespin.m-eta.app"
 alias ssh.m.r="ssh-copy-id -i ~/.ssh/id_rsa.pub root@mandalore.m-eta.app"
 alias ssh.e.r="ssh-copy-id -i ~/.ssh/id_rsa.pub root@endor.m-eta.app"
 
-alias ssh..="rm -rf /mnt/c/Users/Scott/.ssh; mkdir /mnt/c/Users/Scott/.ssh; echo /mnt/c/Users/Scott/.ssh/id_rsa | $p -copy; echo /mnt/c/Users/Scott/.ssh/id_rsa; ssh-keygen -t rsa"
+alias ssh..="sudo rm -rf ~/.ssh ; sudo rm -rf /mnt/c/Users/Scott/.ssh; mkdir /mnt/c/Users/Scott/.ssh; echo /mnt/c/Users/Scott/.ssh/id_rsa | $p -copy; echo /mnt/c/Users/Scott/.ssh/id_rsa; ssh-keygen -t rsa"
 alias ssh.h.a.="ssh-copy-id -i /mnt/c/Users/Scott/.ssh/id_rsa.pub admin@hoth.m-eta.app"
 alias ssh.h.s.="ssh-copy-id -i /mnt/c/Users/Scott/.ssh/id_rsa.pub scott@hoth.m-eta.app"
 alias ssh.b.s.="ssh-copy-id -i /mnt/c/Users/Scott/.ssh/id_rsa.pub scott@bespin.m-eta.app"
