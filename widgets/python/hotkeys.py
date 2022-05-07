@@ -459,6 +459,19 @@ class CLIP:
         result.reverse()
         _copy.imp.copy(  '\n'.join(result)  , p=0 )
 
+    def ad_notes(self):
+        _copy = _.regImp( __.appReg, '-copy' )
+        _paste = _.regImp( __.appReg, '-paste' )
+        data  = _paste.imp.paste()
+        data = cleaner(data,1)
+        
+        result.reverse()
+        _copy.imp.copy(  '\n'.join(result)  , p=0 )
+
+        __.setting('hotkey-clip.ad_description-start1', False)
+
+
+
     def dirty_eval(self):
         _copy = _.regImp( __.appReg, '-copy' )
         _paste = _.regImp( __.appReg, '-paste' )
@@ -1812,19 +1825,20 @@ def load():
                 'dup-spaces': { 'raw': [ 'Key.ctrl', 'Key.cmd', 's' ], 'do': 'Clip.dup_space()' },
                 
                 'first-word': { 'raw': [ 'Key.alt', 'Key.cmd', '1' ], 'do': 'Clip.first()' },
-                'sql-crud': { 'raw': [ 'Key.alt', 'Key.cmd', 'c' ], 'do': 'Clip.SQL_to_crud()' },
                 'first-php-var': { 'raw': [ 'Key.alt', 'Key.cmd', '4' ], 'do': 'Clip.php_var()' },
                 # 'builder-one': { 'raw': [ 'Key.alt', 'Key.cmd', 'b' ], 'do': 'Clip.builder()' },
                 'builder-two': { 'raw': [ 'Key.alt', 'Key.cmd', 'y' ], 'do': 'Clip.builder2()' },
                 'range-first': { 'raw': [ 'Key.alt', 'Key.cmd', '-' ], 'do': 'Clip.range_first()' },
                 'reverse-lines': { 'raw': [ 'Key.alt', 'Key.shift', 'r' ], 'do': 'Clip.reverse_lines()' },
                 'reverse-lines': { 'raw': [ 'Key.alt', 'Key.cmd', 'd' ], 'do': 'Clip.combine_make()' },
-
                 'toggle-chars': { 'raw': [ 'Key.alt', 'Key.cmd', 't', 'c' ], 'do': 'toggle_chars()' },
-
                 'decrypt-lines': { 'raw': [ 'Key.cmd', 'c' ], 'do': 'Clip.decrypt_lines()' },
-
                 'eval-clip': { 'raw': [ 'Key.alt', 'Key.cmd', 'e' ], 'do': 'Clip.dirty_eval()' },
+
+                'sql-crud': { 'raw': [ 'Key.alt', 'Key.cmd', 'c' ], 'do': 'Clip.SQL_to_crud()' },
+                'ad-notes': { 'raw': [ 'Key.alt', 'Key.shift', 'Key.ctrl', 'a' ], 'do': 'Clip.ad_notes()' },
+
+
     }
     auto_text = _.getTableDB('hotkeys-AutoText.dex')
     hot_text  = _.getTableDB('hotkeys-Text.dex')
@@ -1847,6 +1861,8 @@ beepy=BEEPS()
 key_set = set()
 post_do = { 'status': 0 }
 print_chars = False
+__.setting('hotkey-clip.ad_description-start1', False)
+
 
 ########################################################################################
 if __name__ == '__main__':

@@ -778,16 +778,8 @@ def popFile( path ):
 	folder = slash.join(parts)
 	return folder
 def popFileDir( path ):
-	global slash
-	parts = path.split( slash )
-	parts.reverse()
-	parts.pop(0)
-	parts.reverse()
-	folder = slash.join(parts)
-	try:
-		dir_check_create(folder)
-	except Exception as e:
-		return False
+	try: dir_check_create(popFile(path));
+	except Exception as e: return False;
 	return True
 	
 def dir_structure():
@@ -1508,6 +1500,9 @@ def settings_load():
 		for k in table:
 			__.settings_table[k] = table[k]
 
+def fpath(path): return resolveFolderIDs(path.replace('\\',os.sep).replace('/',os.sep))
+
+
 path = __.path
 mkdir = createDestinationFolders
 # default_powershell = 'echo test | py $p\\app.py'
@@ -1544,4 +1539,15 @@ wprofile = myHome
 doc_sep = '__________________________________________________________________________________'
 meta=config_hash
 # print(life); sys.exit();
+
+fn=dot()
+fn.path=dot()
+fn.path.fix=fpath
+fn.path.res=resolveFolderIDs
+fn.path.san=sanitizeFolder
+fn.path.resolve=resolveFolderIDs
+fn.path.sanitize=sanitizeFolder
+fn.path.path=__.path
+fn.path.pop=popFile
+fn.path.mpop=popFileDir
 

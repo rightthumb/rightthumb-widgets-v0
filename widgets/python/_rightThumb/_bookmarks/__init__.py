@@ -179,14 +179,14 @@ class Bookmarks:
 	
 
 
-	def sanitize( self ):
-		self.folder = _v.sanitizeFolder( self.path )
+	def sanitize( self, path=None ):
+		if not path is None: self.folder = _v.sanitizeFolder( path );
+		else: self.folder = _v.sanitizeFolder( self.path );
 		return c41(self.folder)
 
 	def resolve( self, path ):
 		self.folder = _v.resolveFolderIDs(path)
-		if not _.isWin:
-			self.folder = self.folder.replace( '\\', '/' )
+		if not _.isWin: self.folder = self.folder.replace( '\\', '/' );
 		return c41(self.folder)
 
 	def file( self ):
@@ -194,8 +194,7 @@ class Bookmarks:
 
 	def log( self ):
 		log = _.getTable( 'bookmarks.logs' )
-		if not self.bm in log:
-			log[self.bm] = []
+		if not self.bm in log: log[self.bm] = [];
 		log[self.bm].append({ 'epoch': time.time(), 'alias': self.alias, 'location': self.folder, 'session': _v.session() })
 		_.saveTable( log, 'bookmarks.logs', p=0 )
 

@@ -19581,7 +19581,8 @@ def ad():
     linePrint(c='green',center='ad', length=41)
     cp( sub, 'yellow' )
     linePrint('20',c='yellow')
-    pr(ad)
+    for liner in ad.split('\n'):
+        pr('> '+liner)
     linePrint(c='green',center='ad', length=41)
     # cp( '</ad>', 'yellow' )
     return ad

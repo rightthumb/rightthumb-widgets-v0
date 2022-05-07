@@ -3,10 +3,10 @@
 set pingb=google.com
 
 if [%1] == [a] set pingb=alexandria.ninja
-if [%1] == [e] set pingb=endor.eyeformeta.com
-if [%1] == [b] set pingb=bespin.eyeformeta.com
-if [%1] == [m] set pingb=mandalore.eyeformeta.com
-if [%1] == [h] set pingb=hoth.eyeformeta.com
+if [%1] == [e] set pingb=endor.m-eta.app
+if [%1] == [b] set pingb=bespin.m-eta.app
+if [%1] == [m] set pingb=mandalore.m-eta.app
+if [%1] == [h] set pingb=hoth.m-eta.app
 
 if [%1] == [g] set pingb=google.com
 if [%1] == [bb] set pingb=bing.com

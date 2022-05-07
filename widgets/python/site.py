@@ -93,20 +93,43 @@ _.appData[focus()] = {
 		},
 	}
 
+file_trigger_data=None
+def file_trigger(data):
+	global file_trigger_data
+	data=_.myFileLocations(data)
+	# _.pr(data)
+	# _.pr(data)
+	if type(data) == list:
+		file_trigger_data=data
+		# _.switches.fieldSet( 'Files', 'values', data )
+		# _.switches.fieldSet( 'Files', 'value', data[0] )
+		# data = data[0]
+	elif not os.path.isfile(data) and not os.path.isdir(data):
+		__.trigger_isPipe='glob'
+		data=_.myFileLocations(data)
+	return data
 
 def triggers():
-    _.switches.trigger( 'Files', _.myFileLocations, vs=True )
+    _.switches.trigger( 'Files', file_trigger )
+    # _.switches.trigger( 'Files', _.myFileLocations )
 
 
 _.l.conf('clean-pipe',True)
 _.l.sw.register( triggers, sw )
+if type(file_trigger_data) == list:
+	_.switches.fieldSet( 'Files', 'values', file_trigger_data )
+	_.switches.fieldSet( 'Files', 'value', ','.join(file_trigger_data) )
+	_.setPipeData(file_trigger_data)
 
 ########################################################################################
 # START
 
 def process(path,end=''):
 	meta = {}
-	file = os.path.abspath(path)
+	try:
+		file = os.path.abspath(path)
+	except Exception as e:
+		file = path
 	folder = __.path(path,pop=True)
 	i=0
 

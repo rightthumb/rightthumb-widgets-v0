@@ -28,12 +28,9 @@ _str = __.imp('_rightThumb._string')
 ##################################################
 
 def sw():
-    pass
-    ### EXAMPLE: START
-    # _.switches.register( 'Input', '-i' )
-    # _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=True )
-    # _.switches.register( 'Files', '-f,-fi,-file,-files' )
-    ### EXAMPLE: END
+    _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='glob', description='Files' )
+    _.switches.register( 'Tags', '-t,-tag,-tags' )
+
 
 # __.setting('require-list',['Pipe','Files','Plus'])
 __.setting('require-list',[])
@@ -108,37 +105,15 @@ def triggers():
 _.l.conf('clean-pipe',True)
 _.l.sw.register( triggers, sw )
 
-########################################################################################
-### EXAMPLE: START
 
-
-    #--> make hotkey ad-description soon:  <--<w#
-    #-->    - outer most typed first
-    #-->    - blank pipe
-    #-->    __.setting('hotkey-clip.ad_description-start1',d=False)
-    #--> _________________________________
-    #--> describe selection area two
-    #--> 3 write a note here wrap text
-    #--> two dignissim
-    #--> 1 inceptos
-    #--> _________________________________
-    #--> describe selection area two
-    #-->              |           |
-    #-->              |           | - write a note here
-    #-->              |           |   wrap text
-    #-->              |           |
-    #-->              |           | - dignissim
-    #-->              |
-    #-->              | - inceptos
-
-    # if _.switches.isActive('Test'): test(); return None;
-    # result=[]; result=[ _.pr(line) for i, line, bi in _.numerate( _.isData(r=0) )]
-    #--> a=(1 if True else 0) <--# 
-    #--> m=[[row[i] for row in matrix] for i in range(4)]
-
-### EXAMPLE: END
 ########################################################################################
 # START
+
+def res(path): _bm.Bookmarks().resolve(path);
+def san(path): _bm.Bookmarks().sanitize(path);
+
+def add(tags):
+
 
 def action():
     #--> min, architecture {:strict:}
@@ -146,19 +121,21 @@ def action():
     load()
     global c3po
 
+    # if _.switches.isActive('Test'): test(); return None;
+    if _.isData():
+        for path in _.isData(): add(path,_.switches.values('Tags'));
+    else:
 
-
-    for i, line, bi in _.numerate( _.isData(r=0) ):
-        #--> _.nindex(bi,h,n)  =  line.index(n)
-        #--> new print function
-        _.pr(line)
-    _.pr('ready',c='green')
 
 def load():
     global c3po
-    c3po = _.getTable( 'table' )
+    c3po = _.getTable( 'file-tags.index' )
     #--> new table printer
     _.pt(c3po)
+
+
+
+import _rightThumb._bookmarks as _bm
 
 
 ########################################################################################

@@ -235,9 +235,15 @@ commit_count = 0
 processed_count = 0
 # NOTE:
 # 		sdate finds oldest or newsest date in accessed modified created
-def info( path, sql=False, md5=False, exif=0,   attrib=None, mime=None, db_connection=None, db_cursor=None, count=None, insert=None, last=False, sdate=None, meta=True, err=False ):
-	return fileInfo( path=path, sql=sql, md5=md5, exif=exif,   attrib=attrib, mime=mime, db_connection=db_connection, db_cursor=db_cursor, count=count, insert=insert, last=last, sdate=sdate, meta=meta, err=err )
-def fileInfo( path, sql=False, md5=False, exif=0,   attrib=None, mime=None, db_connection=None, db_cursor=None, count=None, insert=None, last=False, sdate=None, meta=True, err=False ):
+def info( path, sql=False, md5=False, exif=0,   attrib=None, mime=None, db_connection=None, db_cursor=None, count=None, insert=None, last=False, sdate=None, meta=True, err=False,       subject=None, k=None, f=None, s=None, sub=None, field=None ):
+	if not field is None: subject=field;
+	if not sub is None: subject=sub;
+	if not s is None: subject=s;
+	if not k is None: subject=k;
+	if not f is None: subject=f;
+	sub=subject
+	return fileInfo( path=path, sql=sql, md5=md5, exif=exif,   attrib=attrib, mime=mime, db_connection=db_connection, db_cursor=db_cursor, count=count, insert=insert, last=last, sdate=sdate, meta=meta, err=err, subject=subject )
+def fileInfo( path, sql=False, md5=False, exif=0,   attrib=None, mime=None, db_connection=None, db_cursor=None, count=None, insert=None, last=False, sdate=None, meta=True, err=False, subject=None ):
 	global processed_count
 	global total_records
 	processed_count += 1
@@ -257,21 +263,100 @@ def fileInfo( path, sql=False, md5=False, exif=0,   attrib=None, mime=None, db_c
 			# sys.exit()
 
 	if err:
-		return fileInfoAction( path, sql, md5, exif, attrib, mime, db_connection, db_cursor, count, insert, last, sdate, meta )
+		return fileInfoAction( path, sql, md5, exif, attrib, mime, db_connection, db_cursor, count, insert, last, sdate, meta, subject )
 	else:
 		try:
-			return fileInfoAction( path, sql, md5, exif, attrib, mime, db_connection, db_cursor, count, insert, last, sdate, meta )
+			return fileInfoAction( path, sql, md5, exif, attrib, mime, db_connection, db_cursor, count, insert, last, sdate, meta, subject )
 		except Exception as e:
 			return False
 
+def _woy_(epoch):
+	weekAndYear=round(getWOYFromEpoch(epoch) * 0.01,2) + getYearFromEpoch(epoch); weekAndYear = str(weekAndYear);
+	if len(weekAndYear) == 6: weekAndYear += '0';
+	return weekAndYear
 
+def _header_(path):
+		global header
+		theHeader = ''
+		if header:
+			theHeader = " ".join(['{:02X}'.format(byte) for byte in     open( path, 'rb' ).read(32)    ])
+			if type(header) == int:
+				theHeader = theHeader[0:header*3]
+		return theHeader
 
-def fileInfoAction( path, sql, md5, exif, getAttrib=None, getMime=None, db_connection=None, db_cursor=None, count=None, insert=None, last=False, sdate=None, meta=True ):
+def individual(path,subject):
+	path=__.path(path)
+	# return info(path)
+	# fields=' path name folder stat bytes size date_created_raw date_modified_raw date_created date_modified type typesort ext week_of_year week_of_year_ day_of_the_week month friendly_week friendly_month md5 year accessed_raw date_accessed ce me ae meta ago header error group ':
+	# if not subject in fields: return info(path);
+	dic={}
+	if ' path ' in ' '+subject+' ': dic['path'] =  os.path.realpath(path);
+	if ' name ' in ' '+subject+' ': dic['name'] =  Path(path).name;
+	if ' folder ' in ' '+subject+' ': dic['folder'] =  os.path.dirname(path);
+	if ' stat ' in ' '+subject+' ': dic['stat'] =  os.stat(path);
+	if ' bytes ' in ' '+subject+' ': dic['bytes'] =  os.stat(path).st_size;
+	if ' size ' in ' '+subject+' ': dic['size'] = formatSize(os.stat(path).st_size) ;
+	if ' date_created_raw ' in ' '+subject+' ': dic['date_created_raw'] =  os.path.getctime(path);
+	if ' date_modified_raw ' in ' '+subject+' ': dic['date_modified_raw'] =  os.path.getmtime(path);
+	if ' date_created ' in ' '+subject+' ': dic['date_created'] =  formatDate(os.path.getctime(path));
+	if ' created ' in ' '+subject+' ': dic['date_created'] =  formatDate(os.path.getctime(path));
+	if ' date_modified ' in ' '+subject+' ': dic['date_modified'] =  formatDate(os.path.getmtime(path));
+	if ' modified ' in ' '+subject+' ': dic['date_modified'] =  formatDate(os.path.getmtime(path));
+	if ' fd ' in ' '+subject+' ': dic['date_modified'] =  formatDate(os.path.getmtime(path));
+	if ' type ' in ' '+subject+' ': dic['type'] = ('File' if os.path.isfile(path) else 'Folder');
+	if ' typesort ' in ' '+subject+' ': dic['typesort'] =  (1 if os.path.isfile(path) else 0);
+	if ' ext ' in ' '+subject+' ': dic['ext'] =  getExtension(Path(path).name);
+	if ' week_of_year ' in ' '+subject+' ': dic['week_of_year'] =  _woy_(os.path.getmtime(path));
+	if ' day_of_the_week ' in ' '+subject+' ': dic['day_of_the_week'] =  getDOWromEpochText(os.path.getmtime(path));
+	if ' dow ' in ' '+subject+' ': dic['dow'] =  getDOWromEpochText(os.path.getmtime(path));
+	if ' month ' in ' '+subject+' ': dic['month'] =  str(getYearFromEpoch(os.path.getmtime(path))) + '.' + str(formatDateMonth(os.path.getmtime(path)))
+	if ' friendly_week ' in ' '+subject+' ': dic['friendly_week'] =  friendlyWeekNew(os.path.getmtime(path));
+	if ' fw ' in ' '+subject+' ': dic['fw'] =  friendlyWeekNew(os.path.getmtime(path));
+	if ' friendly_month ' in ' '+subject+' ': dic['friendly_month'] =  friendlyMonthNew(os.path.getmtime(path));
+	if ' fm ' in ' '+subject+' ': dic['fm'] =  friendlyMonthNew(os.path.getmtime(path));
+	if ' md5 ' in ' '+subject+' ': dic['md5'] =  _md5.md5File(path);
+	if ' year ' in ' '+subject+' ': dic['year'] =  getYearFromEpoch(os.path.getmtime(path));
+	if ' accessed_raw ' in ' '+subject+' ': dic['accessed_raw'] =  os.path.getatime(path);
+	if ' date_accessed ' in ' '+subject+' ': dic['date_accessed'] =  formatDate(os.path.getatime(path));
+	if ' accessed ' in ' '+subject+' ': dic['accessed'] =  formatDate(os.path.getatime(path));
+	if ' ce ' in ' '+subject+' ': dic['ce'] =  os.path.getctime(path);
+	if ' cef ' in ' '+subject+' ': dic['ce'] =  formatDate(os.path.getctime(path));
+	if ' me ' in ' '+subject+' ': dic['me'] =  os.path.getmtime(path);
+	if ' mef ' in ' '+subject+' ': dic['me'] =  formatDate(os.path.getmtime(path));
+	if ' ae ' in ' '+subject+' ': dic['ae'] =  os.path.getatime(path);
+	if ' aef ' in ' '+subject+' ': dic['ae'] =  formatDate(os.path.getatime(path));
+	if ' woy ' in ' '+subject+' ': dic['me'] =  _woy_(os.path.getmtime(path));
+	if ' me-woy ' in ' '+subject+' ': dic['me'] =  _woy_(os.path.getmtime(path));
+	if ' mwoy ' in ' '+subject+' ': dic['me'] =  _woy_(os.path.getmtime(path));
+	if ' ce-woy ' in ' '+subject+' ': dic['me'] =  _woy_(os.path.getctime(path));
+	if ' cwoy ' in ' '+subject+' ': dic['me'] =  _woy_(os.path.getctime(path));
+	if ' awoy ' in ' '+subject+' ': dic['me'] =  _woy_(os.path.getatime(path));
+	if ' ae-woy ' in ' '+subject+' ': dic['me'] =  _woy_(os.path.getatime(path));
+	if ' ae-woy ' in ' '+subject+' ': dic['me'] =  _woy_(os.path.getatime(path));
+	if ' ago ' in ' '+subject+' ': dic['ago'] =  dateDiffText(os.path.getmtime(path));
+	if ' me-ago ' in ' '+subject+' ': dic['ago'] =  dateDiffText(os.path.getmtime(path));
+	if ' ce-ago ' in ' '+subject+' ': dic['ago'] =  dateDiffText(os.path.getctime(path));
+	if ' header ' in ' '+subject+' ': dic['header'] =  _header_(path);
+	if ' head ' in ' '+subject+' ': dic['head'] =  _header_(path);
+	if ' group ' in ' '+subject+' ': dic['group'] =  size_group(os.stat(path).st_size);
+	if ' sg ' in ' '+subject+' ': dic['group'] =  size_group(os.stat(path).st_size);
+
+	# if ' meta ' in ' '+subject+' ': dic['meta'] =  run(path,subject);
+	if not dic: return info(path);
+	k=list(dic.keys())
+	if len(k) == 1: return dic[k[0]];
+	return dic
+# 'Key.alt', 'Key.cmd', '1'
+# p -paste | p line --c -make "if subject == '{}': return run(path,subject);"
+# p -paste | p line --c -make "if ' {} ' in ' '+subject+' ': dic['{}'] =  run(path,subject);"
+
+def fileInfoAction( path, sql, md5, exif, getAttrib=None, getMime=None, db_connection=None, db_cursor=None, count=None, insert=None, last=False, sdate=None, meta=True, subject=None ):
 	global touch_meta
 	global dateCalcByModified
 	global timeAudit
 	global timeAuditCollect
 
+	if not subject is None: return individual(path,subject);
 
 	hasError = 0
 

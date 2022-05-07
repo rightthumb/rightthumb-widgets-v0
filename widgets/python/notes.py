@@ -9,7 +9,6 @@
 #    - Scott Taylor Reph, RightThumb.com
 # ###########################################################################
 # ## {C3P0D40fAe8B} ##
-
 ##################################################
 import sys, time
 ##################################################
@@ -26,7 +25,6 @@ _.load()
 _v = __.imp('_rightThumb._vars')
 _str = __.imp('_rightThumb._string')
 ##################################################
-
 
 def sw():
     _.switches.register( 'Today', '-t,-today' )
@@ -48,7 +46,7 @@ __.setting('switch-raw',[])
 
 _.appInfo[focus()] = {
     # 'app': '8facG-jo0Cxk',
-    'file': 'thisApp.py',
+    'file': 'notes.py',
     'liveAppName': __.thisApp( __file__ ),
     'description': 'Changes the world',
         # _.ail(1,'subject')+
@@ -143,6 +141,7 @@ def new(what,path=None):
     _.pr(_v.json_temp)
 
     if 'person' in what:
+        op(_v.json_temp)
         _.saveTable2({
                                 'epoch': time.time(),
                                 'birthdate': 'r',
@@ -163,6 +162,8 @@ def new(what,path=None):
             fn=get['birthdate']+'-'+get['name']['init']+'-'+get['name']['nick']
             _v.mkdir( _v.life+'people'+os.sep+fn )
             _.saveTable2(get,_v.life+'people'+os.sep+fn+os.sep+'index.hash')
+            page=str(requests.post('https://eyeformeta.com/apps/whatever/file.php', data = {'path':'people'+'/'+fn+'/'+'index.hash','data':simplejson.dumps(get, indent=4, sort_keys=False)}).content,'iso-8859-1')
+            print(page)
             return get
 
 
@@ -194,9 +195,6 @@ def action():
 
 
 
-
-
-
 def load():
     global aliases
     global nis
@@ -212,11 +210,18 @@ os=_.imp('os.sep')
 os=_.imp('os.path.isdir')
 os=_.imp('os.path.isfile')
 os=_.imp('os.getcwd')
+requests=_.imp('requests.post')
+simplejson = __.imp('simplejson')
+'''
+simplejson.loads(var)
+simplejson.dumps(rows, indent=4, sort_keys=False)
+simplejson.dumps(rows)
+'''
+
 ########################################################################################
 if __name__ == '__main__':
     action()
     __.isExit()
-
 
 
 

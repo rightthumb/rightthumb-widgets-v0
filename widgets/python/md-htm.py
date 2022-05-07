@@ -31,7 +31,7 @@ def sw():
     pass
     ### EXAMPLE: START
     # _.switches.register( 'Input', '-i' )
-    # _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=True )
+    _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='glob', description='Files', isRequired=True )
     # _.switches.register( 'Files', '-f,-fi,-file,-files' )
     ### EXAMPLE: END
 
@@ -108,58 +108,35 @@ def triggers():
 _.l.conf('clean-pipe',True)
 _.l.sw.register( triggers, sw )
 
-########################################################################################
-### EXAMPLE: START
 
-
-    #--> make hotkey ad-description soon:  <--<w#
-    #-->    - outer most typed first
-    #-->    - blank pipe
-    #-->    __.setting('hotkey-clip.ad_description-start1',d=False)
-    #--> _________________________________
-    #--> describe selection area two
-    #--> 3 write a note here wrap text
-    #--> two dignissim
-    #--> 1 inceptos
-    #--> _________________________________
-    #--> describe selection area two
-    #-->              |           |
-    #-->              |           | - write a note here
-    #-->              |           |   wrap text
-    #-->              |           |
-    #-->              |           | - dignissim
-    #-->              |
-    #-->              | - inceptos
-
-    # if _.switches.isActive('Test'): test(); return None;
-    # result=[]; result=[ _.pr(line) for i, line, bi in _.numerate( _.isData(r=0) )]
-    #--> a=(1 if True else 0) <--# 
-    #--> m=[[row[i] for row in matrix] for i in range(4)]
-
-### EXAMPLE: END
 ########################################################################################
 # START
 
+def finagle(code):
+    lines=code.split('\n')
+    news=[]
+    for line in lines:
+        if '<p>~~~' in line:
+            li=line.split('<p>~~~')
+            if len(li) > 1:
+                line='<pre class="'+li[1]+'">'
+            else:
+                line='<pre>'
+            # print(li)
+            # sys.exit()
+        elif '~~~</p>' in line:
+            line='</pre>'
+        news.append(line)
+    return '\n'.join(news)
+
+def htm(path):
+    md=_.getText(path,raw=True)
+    return "<link href='https://eyeformeta.com/apps/showdown/style.css' rel='stylesheet' type='text/css'>\n"+finagle(markdown.markdown(md))
 def action():
-    #--> min, architecture {:strict:}
-    #--> trigger/callback  <w#
-    load()
-    global c3po
 
-
-
-    for i, line, bi in _.numerate( _.isData(r=0) ):
-        #--> _.nindex(bi,h,n)  =  line.index(n)
-        #--> new print function
-        _.pr(line)
-    _.pr('ready',c='green')
-
-def load():
-    global c3po
-    c3po = _.getTable( 'table' )
-    #--> new table printer
-    _.pt(c3po)
-
+    for i, path in enumerate( _.isData(r=0) ):
+        _.pr(htm(path))
+markdown=_.imp('markdown.markdown')
 
 ########################################################################################
 if __name__ == '__main__':

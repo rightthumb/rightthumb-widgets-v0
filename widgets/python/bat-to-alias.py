@@ -130,7 +130,7 @@ _.l.sw.register( triggers, sw )
     #-->              |           | - dignissim
     #-->              |
     #-->              | - inceptos
-
+    #-->
     # if _.switches.isActive('Test'): test(); return None;
     # result=[]; result=[ _.pr(line) for i, line, bi in _.numerate( _.isData(r=0) )]
     #--> a=(1 if True else 0) <--# 

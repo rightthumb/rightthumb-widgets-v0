@@ -2673,44 +2673,44 @@ alias vps.l="p keychain -label vps.l -get -temp 10"
 alias web.l="p keychain -label web.l -get -temp 10"
 alias reph.l="p keychain -label reph.l -get -temp 10"
 #################
-alias vps.socket="ssh -R 65432:localhost:65432 -C -N -l scott hoth.eyeformeta.com";
+alias vps.socket="ssh -R 65432:localhost:65432 -C -N -l scott hoth.m-eta.app";
 ################# #################
 alias reph.ssh.p="ssh thisreph@reph.us'";
-alias vps.ssh.p="ssh scott@hoth.eyeformeta.com'";
-alias vps1.ssh.p="ssh scott@hoth.eyeformeta.com'";
-alias vps2.ssh.p="ssh scott@bespin.eyeformeta.com'";
+alias vps.ssh.p="ssh scott@hoth.m-eta.app'";
+alias vps1.ssh.p="ssh scott@hoth.m-eta.app'";
+alias vps2.ssh.p="ssh scott@bespin.m-eta.app'";
 alias web.ssh.p="ssh ximlickficfp@tools.rightthumb.com'";
 ################# #################
 alias reph.ssh.y="ssh thisreph@reph.us";
-alias vps.ssh.y="ssh scott@hoth.eyeformeta.comy";
-alias vps1.ssh.y="ssh scott@hoth.eyeformeta.comy";
-alias vps2.ssh.y="ssh scott@bespin.eyeformeta.comy";
+alias vps.ssh.y="ssh scott@hoth.m-eta.appy";
+alias vps1.ssh.y="ssh scott@hoth.m-eta.appy";
+alias vps2.ssh.y="ssh scott@bespin.m-eta.appy";
 alias web.ssh.y="ssh ximlickficfp@tools.rightthumb.com";
 #################
 alias reph.ssh="ssh thisreph@reph.us";
-alias vps.ssh="ssh scott@hoth.eyeformeta.com";
-alias vps1.ssh="ssh scott@hoth.eyeformeta.com";
-alias vps2.ssh="ssh scott@bespin.eyeformeta.com";
+alias vps.ssh="ssh scott@hoth.m-eta.app";
+alias vps1.ssh="ssh scott@hoth.m-eta.app";
+alias vps2.ssh="ssh scott@bespin.m-eta.app";
 alias web.ssh="ssh ximlickficfp@tools.rightthumb.com";
 ################# #################
 alias beep.="play -nq -t alsa synth 1 sine 440"
 ################# ################# #################
 alias vps.sync.sh="$widgets/install/installer.py -sh.folder /mnt/d/widgets/webApps/vps/"
-alias vps.sync="echo scp /mnt/d/widgets/servers/web/vps/* root@hoth.eyeformeta.com:/opt/lampp/htdocs/|vps.e"
-alias vps.sync.get="echo scp root@hoth.eyeformeta.com:/opt/lampp/htdocs/ /mnt/d/widgets/servers/web/vps/* |vps.e"
-export vpswww="sudo ssh -L 80:localhost:80 -C -N -l scott hoth.eyeformeta.com"
-alias vps.www="ssh -L 8080:localhost:80 -C -N -l scott hoth.eyeformeta.com"
-alias vps.dt="PROMPT_COMMAND='echo -ne "\\033]0; desktop \\007"';echo localhost:59000 ; ssh -L 59000:localhost:5900 -C -N -l scott hoth.eyeformeta.com"
-alias vps.dt2="PROMPT_COMMAND='echo -ne "\\033]0; desktop \\007"';echo localhost:59001 ; ssh -L 59001:localhost:5901 -C -N -l scott hoth.eyeformeta.com"
-alias vps1.dt="PROMPT_COMMAND='echo -ne "\\033]0; desktop \\007"';echo localhost:59000 ; ssh -L 59000:localhost:5900 -C -N -l scott hoth.eyeformeta.com"
-alias vps1.dt2="PROMPT_COMMAND='echo -ne "\\033]0; desktop \\007"';echo localhost:59001 ; ssh -L 59001:localhost:5901 -C -N -l scott hoth.eyeformeta.com"
-alias vps2.dt="PROMPT_COMMAND='echo -ne "\\033]0; desktop \\007"';echo localhost:59000 ; ssh -L 59000:localhost:5900 -C -N -l scott bespin.eyeformeta.com"
-alias vps2.dt2="PROMPT_COMMAND='echo -ne "\\033]0; desktop \\007"';echo localhost:59001 ; ssh -L 59001:localhost:5901 -C -N -l scott bespin.eyeformeta.com"
+alias vps.sync="echo scp /mnt/d/widgets/servers/web/vps/* root@hoth.m-eta.app:/opt/lampp/htdocs/|vps.e"
+alias vps.sync.get="echo scp root@hoth.m-eta.app:/opt/lampp/htdocs/ /mnt/d/widgets/servers/web/vps/* |vps.e"
+export vpswww="sudo ssh -L 80:localhost:80 -C -N -l scott hoth.m-eta.app"
+alias vps.www="ssh -L 8080:localhost:80 -C -N -l scott hoth.m-eta.app"
+alias vps.dt="PROMPT_COMMAND='echo -ne "\\033]0; desktop \\007"';echo localhost:59000 ; ssh -L 59000:localhost:5900 -C -N -l scott hoth.m-eta.app"
+alias vps.dt2="PROMPT_COMMAND='echo -ne "\\033]0; desktop \\007"';echo localhost:59001 ; ssh -L 59001:localhost:5901 -C -N -l scott hoth.m-eta.app"
+alias vps1.dt="PROMPT_COMMAND='echo -ne "\\033]0; desktop \\007"';echo localhost:59000 ; ssh -L 59000:localhost:5900 -C -N -l scott hoth.m-eta.app"
+alias vps1.dt2="PROMPT_COMMAND='echo -ne "\\033]0; desktop \\007"';echo localhost:59001 ; ssh -L 59001:localhost:5901 -C -N -l scott hoth.m-eta.app"
+alias vps2.dt="PROMPT_COMMAND='echo -ne "\\033]0; desktop \\007"';echo localhost:59000 ; ssh -L 59000:localhost:5900 -C -N -l scott bespin.m-eta.app"
+alias vps2.dt2="PROMPT_COMMAND='echo -ne "\\033]0; desktop \\007"';echo localhost:59001 ; ssh -L 59001:localhost:5901 -C -N -l scott bespin.m-eta.app"
 alias vps.k="echo $( p keychain -get -label vps.k )"
 alias kkk="echo $( p keychain -get -label login-test )"
-alias vps.mongo="ssh -L 27017:localhost:27017 -C -N -l scott hoth.eyeformeta.com"
-alias vps.mongo1="ssh -L 2701:localhost:27017 -C -N -l scott hoth.eyeformeta.com"
-alias vps.mongo.="ssh -L 2701:localhost:27017 -C -N -l scott hoth.eyeformeta.com"
+alias vps.mongo="ssh -L 27017:localhost:27017 -C -N -l scott hoth.m-eta.app"
+alias vps.mongo1="ssh -L 2701:localhost:27017 -C -N -l scott hoth.m-eta.app"
+alias vps.mongo.="ssh -L 2701:localhost:27017 -C -N -l scott hoth.m-eta.app"
 
         """
             return self.file( path, data, { 'status': 'virtual' } )
@@ -2844,8 +2844,8 @@ alias s.tool2="sudo installer.py2";
 alias t.sh="$HOME/.rt/tool.sh";
 alias s.t.sh="sudo $HOME/.rt/tool.sh";
 alias c="clear";
-alias vps.new="ssh-keygen -f $HOME/.ssh/known_hosts -R 'hoth.eyeformeta.com';ssh-keygen -f $HOME/.ssh/known_hosts -R '45.35.203.103';";
-alias vps2.new="ssh-keygen -f '/home/scott/.ssh/known_hosts' -R 'bespin.eyeformeta.com';ssh-keygen -f '/home/scott/.ssh/known_hosts' -R '45.35.203.104';";
+alias vps.new="ssh-keygen -f $HOME/.ssh/known_hosts -R 'hoth.m-eta.app';ssh-keygen -f $HOME/.ssh/known_hosts -R '45.35.203.103';";
+alias vps2.new="ssh-keygen -f '/home/scott/.ssh/known_hosts' -R 'bespin.m-eta.app';ssh-keygen -f '/home/scott/.ssh/known_hosts' -R '45.35.203.104';";
 
 
 
@@ -3040,25 +3040,25 @@ alias listening2="lsof -i -P -n | grep LISTEN"
 alias listening="netstat -l | p simpleLine + listen - listening"
 alias fw.y="sudo ufw allow "
 alias fw.n="sudo ufw deny "
-alias vps.ssh="ssh scott@hoth.eyeformeta.com"
-alias vps2.ssh="ssh scott@bespin.eyeformeta.com"
+alias vps.ssh="ssh scott@hoth.m-eta.app"
+alias vps2.ssh="ssh scott@bespin.m-eta.app"
 
-alias vh="ssh scott@hoth.eyeformeta.com"
-alias vb="ssh scott@bespin.eyeformeta.com"
-alias vm="ssh scott@mandalore.eyeformeta.com"
-alias ve="ssh scott@endor.eyeformeta.com"
+alias vh="ssh scott@hoth.m-eta.app"
+alias vb="ssh scott@bespin.m-eta.app"
+alias vm="ssh scott@mandalore.m-eta.app"
+alias ve="ssh scott@endor.m-eta.app"
 
-alias v="ssh scott@hoth.eyeformeta.com"
-alias vv="ssh scott@bespin.eyeformeta.com"
-alias vvv="ssh scott@mandalore.eyeformeta.com"
-alias vvvv="ssh scott@endor.eyeformeta.com"
-alias vvvvv="ssh vy2ehn4azpfl@thumb.eyeformeta.com"
-alias thumb="ssh vy2ehn4azpfl@thumb.eyeformeta.com"
+alias v="ssh scott@hoth.m-eta.app"
+alias vv="ssh scott@bespin.m-eta.app"
+alias vvv="ssh scott@mandalore.m-eta.app"
+alias vvvv="ssh scott@endor.m-eta.app"
+alias vvvvv="ssh vy2ehn4azpfl@thumb.m-eta.app"
+alias thumb="ssh vy2ehn4azpfl@thumb.m-eta.app"
 
-alias hoth="ssh scott@hoth.eyeformeta.com"
-alias bespin="ssh scott@bespin.eyeformeta.com"
-alias mandalore="ssh scott@mandalore.eyeformeta.com"
-alias endor="ssh scott@endor.eyeformeta.com"
+alias hoth="ssh scott@hoth.m-eta.app"
+alias bespin="ssh scott@bespin.m-eta.app"
+alias mandalore="ssh scott@mandalore.m-eta.app"
+alias endor="ssh scott@endor.m-eta.app"
 
 alias reph.us="ssh thisreph@reph.us"
 alias rt="ssh vy2ehn4azpfl@23.229.227.201"
@@ -3067,39 +3067,39 @@ alias rt="ssh vy2ehn4azpfl@23.229.227.201"
 alias .py-pip="$widgets/bash/quick-setup.sh";
 
 alias ssh.="rm -rf ~/.ssh; ssh-keygen -t rsa"
-alias ssh.h.a="ssh-copy-id -i ~/.ssh/id_rsa.pub admin@hoth.eyeformeta.com"
-alias ssh.h.s="ssh-copy-id -i ~/.ssh/id_rsa.pub scott@hoth.eyeformeta.com"
-alias ssh.b.s="ssh-copy-id -i ~/.ssh/id_rsa.pub scott@bespin.eyeformeta.com"
-alias ssh.m.s="ssh-copy-id -i ~/.ssh/id_rsa.pub scott@mandalore.eyeformeta.com"
-alias ssh.e.s="ssh-copy-id -i ~/.ssh/id_rsa.pub scott@endor.eyeformeta.com"
-alias ssh.h.r="ssh-copy-id -i ~/.ssh/id_rsa.pub root@hoth.eyeformeta.com"
-alias ssh.b.r="ssh-copy-id -i ~/.ssh/id_rsa.pub root@bespin.eyeformeta.com"
-alias ssh.m.r="ssh-copy-id -i ~/.ssh/id_rsa.pub root@mandalore.eyeformeta.com"
-alias ssh.e.r="ssh-copy-id -i ~/.ssh/id_rsa.pub root@endor.eyeformeta.com"
+alias ssh.h.a="ssh-copy-id -i ~/.ssh/id_rsa.pub admin@hoth.m-eta.app"
+alias ssh.h.s="ssh-copy-id -i ~/.ssh/id_rsa.pub scott@hoth.m-eta.app"
+alias ssh.b.s="ssh-copy-id -i ~/.ssh/id_rsa.pub scott@bespin.m-eta.app"
+alias ssh.m.s="ssh-copy-id -i ~/.ssh/id_rsa.pub scott@mandalore.m-eta.app"
+alias ssh.e.s="ssh-copy-id -i ~/.ssh/id_rsa.pub scott@endor.m-eta.app"
+alias ssh.h.r="ssh-copy-id -i ~/.ssh/id_rsa.pub root@hoth.m-eta.app"
+alias ssh.b.r="ssh-copy-id -i ~/.ssh/id_rsa.pub root@bespin.m-eta.app"
+alias ssh.m.r="ssh-copy-id -i ~/.ssh/id_rsa.pub root@mandalore.m-eta.app"
+alias ssh.e.r="ssh-copy-id -i ~/.ssh/id_rsa.pub root@endor.m-eta.app"
 
-alias ssh..="rm -rf /mnt/c/Users/Scott/.ssh; echo /mnt/c/Users/Scott/.ssh/id_rsa; echo /mnt/c/Users/Scott/.ssh/id_rsa; ssh-keygen -t rsa"
-alias ssh.h.a.="ssh-copy-id -i /mnt/c/Users/Scott/.ssh/id_rsa.pub admin@hoth.eyeformeta.com"
-alias ssh.h.s.="ssh-copy-id -i /mnt/c/Users/Scott/.ssh/id_rsa.pub scott@hoth.eyeformeta.com"
-alias ssh.b.s.="ssh-copy-id -i /mnt/c/Users/Scott/.ssh/id_rsa.pub scott@bespin.eyeformeta.com"
-alias ssh.m.s.="ssh-copy-id -i /mnt/c/Users/Scott/.ssh/id_rsa.pub scott@mandalore.eyeformeta.com"
-alias ssh.e.s.="ssh-copy-id -i /mnt/c/Users/Scott/.ssh/id_rsa.pub scott@endor.eyeformeta.com"
-alias ssh.h.r.="ssh-copy-id -i /mnt/c/Users/Scott/.ssh/id_rsa.pub root@hoth.eyeformeta.com"
-alias ssh.b.r.="ssh-copy-id -i /mnt/c/Users/Scott/.ssh/id_rsa.pub root@bespin.eyeformeta.com"
-alias ssh.m.r.="ssh-copy-id -i /mnt/c/Users/Scott/.ssh/id_rsa.pub root@mandalore.eyeformeta.com"
-alias ssh.e.r.="ssh-copy-id -i /mnt/c/Users/Scott/.ssh/id_rsa.pub root@endor.eyeformeta.com"
+alias ssh..="rm -rf /mnt/c/Users/Scott/.ssh; mkdir /mnt/c/Users/Scott/.ssh; echo /mnt/c/Users/Scott/.ssh/id_rsa | $p -copy; echo /mnt/c/Users/Scott/.ssh/id_rsa; ssh-keygen -t rsa"
+alias ssh.h.a.="ssh-copy-id -i /mnt/c/Users/Scott/.ssh/id_rsa.pub admin@hoth.m-eta.app"
+alias ssh.h.s.="ssh-copy-id -i /mnt/c/Users/Scott/.ssh/id_rsa.pub scott@hoth.m-eta.app"
+alias ssh.b.s.="ssh-copy-id -i /mnt/c/Users/Scott/.ssh/id_rsa.pub scott@bespin.m-eta.app"
+alias ssh.m.s.="ssh-copy-id -i /mnt/c/Users/Scott/.ssh/id_rsa.pub scott@mandalore.m-eta.app"
+alias ssh.e.s.="ssh-copy-id -i /mnt/c/Users/Scott/.ssh/id_rsa.pub scott@endor.m-eta.app"
+alias ssh.h.r.="ssh-copy-id -i /mnt/c/Users/Scott/.ssh/id_rsa.pub root@hoth.m-eta.app"
+alias ssh.b.r.="ssh-copy-id -i /mnt/c/Users/Scott/.ssh/id_rsa.pub root@bespin.m-eta.app"
+alias ssh.m.r.="ssh-copy-id -i /mnt/c/Users/Scott/.ssh/id_rsa.pub root@mandalore.m-eta.app"
+alias ssh.e.r.="ssh-copy-id -i /mnt/c/Users/Scott/.ssh/id_rsa.pub root@endor.m-eta.app"
 
-alias vps.mongo="ssh -L 27017:localhost:27017 -C -N -l scott hoth.eyeformeta.com"
-alias vps.mongo1="ssh -L 2701:localhost:27017 -C -N -l scott hoth.eyeformeta.com"
-alias vps.mongo.="ssh -L 2701:localhost:27017 -C -N -l scott hoth.eyeformeta.com"
+alias vps.mongo="ssh -L 27017:localhost:27017 -C -N -l scott hoth.m-eta.app"
+alias vps.mongo1="ssh -L 2701:localhost:27017 -C -N -l scott hoth.m-eta.app"
+alias vps.mongo.="ssh -L 2701:localhost:27017 -C -N -l scott hoth.m-eta.app"
 
-alias vps.dt="ssh -L 59000:localhost:5900 -C -N -l scott hoth.eyeformeta.com"
-alias vps.dt2="ssh -L 59001:localhost:5901 -C -N -l scott hoth.eyeformeta.com"
-alias vps1.dt="ssh -L 59000:localhost:5900 -C -N -l scott hoth.eyeformeta.com"
-alias vps1.dt2="ssh -L 59001:localhost:5901 -C -N -l scott hoth.eyeformeta.com"
-alias vps2.dt="ssh -L 59000:localhost:5900 -C -N -l scott bespin.eyeformeta.com"
-alias vps2.dt2="ssh -L 59001:localhost:5901 -C -N -l scott bespin.eyeformeta.com"
-alias vps3.dt="ssh -L 59000:localhost:5900 -C -N -l scott mandalore.eyeformeta.com"
-alias vps3.dt2="ssh -L 59001:localhost:5901 -C -N -l scott mandalore.eyeformeta.com"
+alias vps.dt="ssh -L 59000:localhost:5900 -C -N -l scott hoth.m-eta.app"
+alias vps.dt2="ssh -L 59001:localhost:5901 -C -N -l scott hoth.m-eta.app"
+alias vps1.dt="ssh -L 59000:localhost:5900 -C -N -l scott hoth.m-eta.app"
+alias vps1.dt2="ssh -L 59001:localhost:5901 -C -N -l scott hoth.m-eta.app"
+alias vps2.dt="ssh -L 59000:localhost:5900 -C -N -l scott bespin.m-eta.app"
+alias vps2.dt2="ssh -L 59001:localhost:5901 -C -N -l scott bespin.m-eta.app"
+alias vps3.dt="ssh -L 59000:localhost:5900 -C -N -l scott mandalore.m-eta.app"
+alias vps3.dt2="ssh -L 59001:localhost:5901 -C -N -l scott mandalore.m-eta.app"
 
 alias .git="git clone https://github.com/rightthumb/rightthumb-widgets-v0"
 alias .git.="rm -rf rightthumb-widgets-v0 ; git clone https://github.com/rightthumb/rightthumb-widgets-v0 ; cd rightthumb-widgets-v0 ; chmod -R 777 . ; p shClean -folder -r"
@@ -3107,55 +3107,55 @@ echo '' > $stmp/.gp
 alias .gp=" pwd > $stmp/.gp ; cd /opt/rightthumb-widgets-v0 ; git reset --hard ; git pull ; sudo chmod 777 -R . ; python3 /opt/rightthumb-widgets-v0/install/installer.py -rc.d h  ; cd $( cat $stmp/.gp )"
 
 
-alias vps.h.py="scp  $ww/python/vps*.py root@hoth.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/python/      ; ssh root@hoth.eyeformeta.com 'chmod -R 777 /opt/rightthumb-widgets-v0/'"
-alias vps.b.py="scp  $ww/python/vps*.py root@bespin.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/python/    ; ssh root@bespin.eyeformeta.com 'chmod -R 777 /opt/rightthumb-widgets-v0/'"
-alias vps.m.py="scp  $ww/python/vps*.py root@mandalore.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/python/ ; ssh root@mandalore.eyeformeta.com 'chmod -R 777 /opt/rightthumb-widgets-v0/'"
+alias vps.h.py="scp  $ww/python/vps*.py root@hoth.m-eta.app:/opt/rightthumb-widgets-v0/widgets/python/      ; ssh root@hoth.m-eta.app 'chmod -R 777 /opt/rightthumb-widgets-v0/'"
+alias vps.b.py="scp  $ww/python/vps*.py root@bespin.m-eta.app:/opt/rightthumb-widgets-v0/widgets/python/    ; ssh root@bespin.m-eta.app 'chmod -R 777 /opt/rightthumb-widgets-v0/'"
+alias vps.m.py="scp  $ww/python/vps*.py root@mandalore.m-eta.app:/opt/rightthumb-widgets-v0/widgets/python/ ; ssh root@mandalore.m-eta.app 'chmod -R 777 /opt/rightthumb-widgets-v0/'"
 
-alias vps.h.py2="scp  /opt/rightthumb-widgets-v0/widgets/python/vps*.py root@hoth.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/python/       ; ssh root@hoth.eyeformeta.com 'chmod -R 777 /opt/rightthumb-widgets-v0/'"
-alias vps.b.py2="scp  /opt/rightthumb-widgets-v0/widgets/python/vps*.py root@bespin.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/python/     ; ssh root@bespin.eyeformeta.com 'chmod -R 777 /opt/rightthumb-widgets-v0/'"
-alias vps.m.py2="scp  /opt/rightthumb-widgets-v0/widgets/python/vps*.py root@mandalore.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/python/  ; ssh root@mandalore.eyeformeta.com 'chmod -R 777 /opt/rightthumb-widgets-v0/'"
+alias vps.h.py2="scp  /opt/rightthumb-widgets-v0/widgets/python/vps*.py root@hoth.m-eta.app:/opt/rightthumb-widgets-v0/widgets/python/       ; ssh root@hoth.m-eta.app 'chmod -R 777 /opt/rightthumb-widgets-v0/'"
+alias vps.b.py2="scp  /opt/rightthumb-widgets-v0/widgets/python/vps*.py root@bespin.m-eta.app:/opt/rightthumb-widgets-v0/widgets/python/     ; ssh root@bespin.m-eta.app 'chmod -R 777 /opt/rightthumb-widgets-v0/'"
+alias vps.m.py2="scp  /opt/rightthumb-widgets-v0/widgets/python/vps*.py root@mandalore.m-eta.app:/opt/rightthumb-widgets-v0/widgets/python/  ; ssh root@mandalore.m-eta.app 'chmod -R 777 /opt/rightthumb-widgets-v0/'"
 
-alias vps.h.c="ssh -f root@hoth.eyeformeta.com      -f '/bin/python3 /opt/rightthumb-widgets-v0/widgets/python/shClean.py -r -folder /opt '"
-alias vps.b.c="ssh -f root@bespin.eyeformeta.com    -f '/bin/python3 /opt/rightthumb-widgets-v0/widgets/python/shClean.py -r -folder /opt '"
-alias vps.m.c="ssh -f root@mandalore.eyeformeta.com -f '/bin/python3 /opt/rightthumb-widgets-v0/widgets/python/shClean.py -r -folder /opt '"
+alias vps.h.c="ssh -f root@hoth.m-eta.app      -f '/bin/python3 /opt/rightthumb-widgets-v0/widgets/python/shClean.py -r -folder /opt '"
+alias vps.b.c="ssh -f root@bespin.m-eta.app    -f '/bin/python3 /opt/rightthumb-widgets-v0/widgets/python/shClean.py -r -folder /opt '"
+alias vps.m.c="ssh -f root@mandalore.m-eta.app -f '/bin/python3 /opt/rightthumb-widgets-v0/widgets/python/shClean.py -r -folder /opt '"
  
-alias vps.h.sh=" scp -r $ww/bash/vps-srv/ root@hoth.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/bash/    ; ssh root@hoth.eyeformeta.com 'chmod -R 777 /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/'"
-alias vps.b.sh=" scp -r $ww/bash/vps-srv/ root@bespin.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/bash/    ; ssh root@bespin.eyeformeta.com 'chmod -R 777 /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/'"
-alias vps.m.sh=" scp -r $ww/bash/vps-srv/ root@mandalore.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/bash/    ; ssh root@mandalore.eyeformeta.com 'chmod -R 777 /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/'"
+alias vps.h.sh=" scp -r $ww/bash/vps-srv/ root@hoth.m-eta.app:/opt/rightthumb-widgets-v0/widgets/bash/    ; ssh root@hoth.m-eta.app 'chmod -R 777 /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/'"
+alias vps.b.sh=" scp -r $ww/bash/vps-srv/ root@bespin.m-eta.app:/opt/rightthumb-widgets-v0/widgets/bash/    ; ssh root@bespin.m-eta.app 'chmod -R 777 /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/'"
+alias vps.m.sh=" scp -r $ww/bash/vps-srv/ root@mandalore.m-eta.app:/opt/rightthumb-widgets-v0/widgets/bash/    ; ssh root@mandalore.m-eta.app 'chmod -R 777 /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/'"
 
 
 
-alias vps.h.sh2="ssh root@hoth.eyeformeta.com -f 'mkdir -p /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/' ; scp -r /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/* root@hoth.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/bash/vps-srv/      ; ssh root@hoth.eyeformeta.com 'chmod -R 777 /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/'"
-alias vps.b.sh2="ssh root@bespin.eyeformeta.com -f 'mkdir -p /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/' ; scp -r /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/* root@bespin.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/bash/vps-srv/    ; ssh root@bespin.eyeformeta.com 'chmod -R 777 /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/'"
-alias vps.m.sh2="ssh root@mandalore.eyeformeta.com -f 'mkdir -p /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/' ; scp -r /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/* root@mandalore.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/bash/vps-srv/ ; ssh root@mandalore.eyeformeta.com 'chmod -R 777 /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/'"
+alias vps.h.sh2="ssh root@hoth.m-eta.app -f 'mkdir -p /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/' ; scp -r /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/* root@hoth.m-eta.app:/opt/rightthumb-widgets-v0/widgets/bash/vps-srv/      ; ssh root@hoth.m-eta.app 'chmod -R 777 /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/'"
+alias vps.b.sh2="ssh root@bespin.m-eta.app -f 'mkdir -p /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/' ; scp -r /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/* root@bespin.m-eta.app:/opt/rightthumb-widgets-v0/widgets/bash/vps-srv/    ; ssh root@bespin.m-eta.app 'chmod -R 777 /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/'"
+alias vps.m.sh2="ssh root@mandalore.m-eta.app -f 'mkdir -p /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/' ; scp -r /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/* root@mandalore.m-eta.app:/opt/rightthumb-widgets-v0/widgets/bash/vps-srv/ ; ssh root@mandalore.m-eta.app 'chmod -R 777 /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/'"
 
 
-alias vps.h.db="scp  $ww/databank/tables/*.* root@hoth.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/databank/tables/      ; ssh root@hoth.eyeformeta.com 'chmod -R 777 /opt/rightthumb-widgets-v0/'"
-alias vps.b.db="scp  $ww/databank/tables/*.* root@bespin.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/databank/tables/    ; ssh root@bespin.eyeformeta.com 'chmod -R 777 /opt/rightthumb-widgets-v0/'"
-alias vps.m.db="scp  $ww/databank/tables/*.* root@mandalore.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/databank/tables/ ; ssh root@mandalore.eyeformeta.com 'chmod -R 777 /opt/rightthumb-widgets-v0/'"
+alias vps.h.db="scp  $ww/databank/tables/*.* root@hoth.m-eta.app:/opt/rightthumb-widgets-v0/widgets/databank/tables/      ; ssh root@hoth.m-eta.app 'chmod -R 777 /opt/rightthumb-widgets-v0/'"
+alias vps.b.db="scp  $ww/databank/tables/*.* root@bespin.m-eta.app:/opt/rightthumb-widgets-v0/widgets/databank/tables/    ; ssh root@bespin.m-eta.app 'chmod -R 777 /opt/rightthumb-widgets-v0/'"
+alias vps.m.db="scp  $ww/databank/tables/*.* root@mandalore.m-eta.app:/opt/rightthumb-widgets-v0/widgets/databank/tables/ ; ssh root@mandalore.m-eta.app 'chmod -R 777 /opt/rightthumb-widgets-v0/'"
 
-alias vps.h.sh.="scp -r root@hoth.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/bash/vps-srv/ $ww/bash/ ; chmod 777 -R $ww/bash/vps-srv/"
-alias vps.b.sh.="scp -r root@bespin.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/bash/vps-srv/ $ww/bash/ ; chmod 777 -R $ww/bash/vps-srv/"
-alias vps.m.sh.="scp -r root@mandalore.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/bash/vps-srv/ $ww/bash/ ; chmod 777 -R $ww/bash/vps-srv/"
+alias vps.h.sh.="scp -r root@hoth.m-eta.app:/opt/rightthumb-widgets-v0/widgets/bash/vps-srv/ $ww/bash/ ; chmod 777 -R $ww/bash/vps-srv/"
+alias vps.b.sh.="scp -r root@bespin.m-eta.app:/opt/rightthumb-widgets-v0/widgets/bash/vps-srv/ $ww/bash/ ; chmod 777 -R $ww/bash/vps-srv/"
+alias vps.m.sh.="scp -r root@mandalore.m-eta.app:/opt/rightthumb-widgets-v0/widgets/bash/vps-srv/ $ww/bash/ ; chmod 777 -R $ww/bash/vps-srv/"
 
-alias vps.h.db.="scp -rp root@hoth.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/databank/tables/*.* $ww/databank/tables/ ; chmod 777 -R $ww/databank/tables/"
-alias vps.b.db.="scp -rp root@bespin.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/databank/tables/*.* $ww/databank/tables/ ; chmod 777 -R $ww/databank/tables/"
-alias vps.m.db.="scp -rp root@mandalore.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/databank/tables/*.* $ww/databank/tables/ ; chmod 777 -R $ww/databank/tables/"
+alias vps.h.db.="scp -rp root@hoth.m-eta.app:/opt/rightthumb-widgets-v0/widgets/databank/tables/*.* $ww/databank/tables/ ; chmod 777 -R $ww/databank/tables/"
+alias vps.b.db.="scp -rp root@bespin.m-eta.app:/opt/rightthumb-widgets-v0/widgets/databank/tables/*.* $ww/databank/tables/ ; chmod 777 -R $ww/databank/tables/"
+alias vps.m.db.="scp -rp root@mandalore.m-eta.app:/opt/rightthumb-widgets-v0/widgets/databank/tables/*.* $ww/databank/tables/ ; chmod 777 -R $ww/databank/tables/"
 
-alias vps.h.py.="scp -rp root@hoth.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/python/vps* $ww/python/ ; chmod 777 -R $ww/python/"
-alias vps.b.py.="scp -rp root@bespin.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/python/vps* $ww/python/ ; chmod 777 -R $ww/python/"
-alias vps.m.py.="scp -rp root@mandalore.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/python/vps* $ww/python/ ; chmod 777 -R $ww/python/"
+alias vps.h.py.="scp -rp root@hoth.m-eta.app:/opt/rightthumb-widgets-v0/widgets/python/vps* $ww/python/ ; chmod 777 -R $ww/python/"
+alias vps.b.py.="scp -rp root@bespin.m-eta.app:/opt/rightthumb-widgets-v0/widgets/python/vps* $ww/python/ ; chmod 777 -R $ww/python/"
+alias vps.m.py.="scp -rp root@mandalore.m-eta.app:/opt/rightthumb-widgets-v0/widgets/python/vps* $ww/python/ ; chmod 777 -R $ww/python/"
 
 
-alias vps.e.py="scp $ww/python/vps*.py root@endor.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/python/ ; ssh root@endor.eyeformeta.com \'chmod -R 777 /opt/rightthumb-widgets-v0/\'"
-alias vps.e.py2="scp /opt/rightthumb-widgets-v0/widgets/python/vps*.py root@endor.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/python/ ; ssh root@endor.eyeformeta.com \'chmod -R 777 /opt/rightthumb-widgets-v0/\'"
-alias vps.e.c="ssh -f root@endor.eyeformeta.com -f \'/bin/python3 /opt/rightthumb-widgets-v0/widgets/python/shClean.py -r -folder /opt \'"
-alias vps.e.sh="scp -r $ww/bash/vps-srv/ root@endor.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/bash/ ; ssh root@endor.eyeformeta.com \'chmod -R 777 /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/\'"
-alias vps.e.sh2="ssh root@endor.eyeformeta.com -f \'mkdir -p /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/\' ; scp /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/* root@endor.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/bash/vps-srv/ ; ssh root@endor.eyeformeta.com \'chmod -R 777 /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/\'"
-alias vps.e.db="scp $ww/databank/tables/*.* root@endor.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/databank/tables/ ; ssh root@endor.eyeformeta.com \'chmod -R 777 /opt/rightthumb-widgets-v0/\'"
-alias vps.e.sh.="scp -r root@endor.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/bash/vps-srv/ $ww/bash/ ; chmod 777 -R $ww/bash/vps-srv/"
-alias vps.e.db.="scp -rp root@endor.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/databank/tables/*.* $ww/databank/tables/ ; chmod 777 -R $ww/databank/tables/"
-alias vps.e.py.="scp -rp root@endor.eyeformeta.com:/opt/rightthumb-widgets-v0/widgets/python/vps* $ww/python/ ; chmod 777 -R $ww/python/"
+alias vps.e.py="scp $ww/python/vps*.py root@endor.m-eta.app:/opt/rightthumb-widgets-v0/widgets/python/ ; ssh root@endor.m-eta.app \'chmod -R 777 /opt/rightthumb-widgets-v0/\'"
+alias vps.e.py2="scp /opt/rightthumb-widgets-v0/widgets/python/vps*.py root@endor.m-eta.app:/opt/rightthumb-widgets-v0/widgets/python/ ; ssh root@endor.m-eta.app \'chmod -R 777 /opt/rightthumb-widgets-v0/\'"
+alias vps.e.c="ssh -f root@endor.m-eta.app -f \'/bin/python3 /opt/rightthumb-widgets-v0/widgets/python/shClean.py -r -folder /opt \'"
+alias vps.e.sh="scp -r $ww/bash/vps-srv/ root@endor.m-eta.app:/opt/rightthumb-widgets-v0/widgets/bash/ ; ssh root@endor.m-eta.app \'chmod -R 777 /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/\'"
+alias vps.e.sh2="ssh root@endor.m-eta.app -f \'mkdir -p /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/\' ; scp /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/* root@endor.m-eta.app:/opt/rightthumb-widgets-v0/widgets/bash/vps-srv/ ; ssh root@endor.m-eta.app \'chmod -R 777 /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/\'"
+alias vps.e.db="scp $ww/databank/tables/*.* root@endor.m-eta.app:/opt/rightthumb-widgets-v0/widgets/databank/tables/ ; ssh root@endor.m-eta.app \'chmod -R 777 /opt/rightthumb-widgets-v0/\'"
+alias vps.e.sh.="scp -r root@endor.m-eta.app:/opt/rightthumb-widgets-v0/widgets/bash/vps-srv/ $ww/bash/ ; chmod 777 -R $ww/bash/vps-srv/"
+alias vps.e.db.="scp -rp root@endor.m-eta.app:/opt/rightthumb-widgets-v0/widgets/databank/tables/*.* $ww/databank/tables/ ; chmod 777 -R $ww/databank/tables/"
+alias vps.e.py.="scp -rp root@endor.m-eta.app:/opt/rightthumb-widgets-v0/widgets/python/vps* $ww/python/ ; chmod 777 -R $ww/python/"
 
 alias u.="p site -u -f"
 alias d.="p site -d -f"
@@ -3193,7 +3193,7 @@ export EDITOR='nano'
 
 # crontab    /var/spool/cron/user
 # ssh-keygen -t rsa
-# ssh-copy-id -i ~/.ssh/id_rsa.pub scott@hoth.eyeformeta.com
+# ssh-copy-id -i ~/.ssh/id_rsa.pub scott@hoth.m-eta.app
 
 
 alias rms='p secure-delete-file -f'

@@ -449,6 +449,12 @@ Such a place exists, it is called programming.
 '''.replace('\r','')
 		self.path = path
 		self.headers = {
+							'functions.php':  {'url':'https://apps.eyeformeta.com/templates/html/functions.php.txt'},
+							'_functions.php':  {'url':'https://apps.eyeformeta.com/templates/html/functions.php.txt'},
+							'_fn.php':  {'url':'https://apps.eyeformeta.com/templates/html/functions.php.txt'},
+							'fn.php':  {'url':'https://apps.eyeformeta.com/templates/html/functions.php.txt'},
+							'.folder.meta':  {'url':'https://apps.eyeformeta.com/templates/html/.folder.meta.h'},
+							'.folder.meta.b':  {'url':'https://apps.eyeformeta.com/templates/html/.folder.meta.b'},
 							'.txt': '__________________________________________________________________________________\n',
 							'.sh': '#!/bin/bash\n',
 							'.py': '#!/usr/bin/python3\n',
@@ -456,8 +462,6 @@ Such a place exists, it is called programming.
 							'.html': {'url':'https://apps.eyeformeta.com/templates/html/0.htm'},
 							'.htm':  {'url':'https://apps.eyeformeta.com/templates/html/1.htm'},
 							'.php':  {'url':'https://apps.eyeformeta.com/templates/html/0.php.txt'},
-							'.folder.meta':  {'url':'https://apps.eyeformeta.com/templates/html/.folder.meta.h'},
-							'.folder.meta.b':  {'url':'https://apps.eyeformeta.com/templates/html/.folder.meta.b'},
 		}
 		self.comment = {
 							# '.js': '//',
@@ -515,7 +519,10 @@ setting('require-list',[])
 setting('receipt-log',True)
 setting('receipt-file',True)
 
+os = imp('os.system')
 os = imp('os.sep')
+os = imp('os.path.abspath')
 os = imp('os.path.isfile')
 os = imp('os.path.isdir')
 sys = imp('sys.exit')
+# import os

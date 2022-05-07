@@ -347,9 +347,9 @@ def getUrlList( url, find, omit, obscure=False ):
 	# _.pr(newURL)
 	# __.xit()
 
+	# page=str(requests.post(newURL, data = {'path':path,'file':new}).content,'iso-8859-1')
 	# page = requests.get(newURL).content.decode("utf-8").replace('\\n','\n')
 	page = requests.get(newURL)
-	# page=str(requests.post(newURL, data = {'path':path,'file':new}).content,'iso-8859-1')
 	
 
 	tree = html.fromstring(page.content)
