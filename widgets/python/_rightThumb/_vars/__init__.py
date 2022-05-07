@@ -160,6 +160,7 @@ def cmdSetVar( n, v ):
 	os.environ[n.upper()] = v
 def cmdGetVar( n ):
 	return os.getenv( n.upper() )
+
 if __.isWin:
 	profileTMP = cmdGetVar('userprofile') + slash+'_AppShareTemp'
 elif not __.isWin:
@@ -1551,3 +1552,7 @@ fn.path.path=__.path
 fn.path.pop=popFile
 fn.path.mpop=popFileDir
 
+if __.isWin:
+	user = cmdGetVar('username')
+else:
+	user = cmdGetVar('USER')

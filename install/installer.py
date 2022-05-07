@@ -2710,12 +2710,14 @@ alias vps.sync="echo scp /mnt/d/widgets/servers/web/vps/* root@hoth.m-eta.app:/o
 alias vps.sync.get="echo scp root@hoth.m-eta.app:/opt/lampp/htdocs/ /mnt/d/widgets/servers/web/vps/* |vps.e"
 export vpswww="sudo ssh -L 80:localhost:80 -C -N -l scott hoth.m-eta.app"
 alias vps.www="ssh -L 8080:localhost:80 -C -N -l scott hoth.m-eta.app"
-alias vps.dt="PROMPT_COMMAND='echo -ne "\\033]0; desktop \\007"';echo localhost:59000 ; ssh -L 59000:localhost:5900 -C -N -l scott hoth.m-eta.app"
-alias vps.dt2="PROMPT_COMMAND='echo -ne "\\033]0; desktop \\007"';echo localhost:59001 ; ssh -L 59001:localhost:5901 -C -N -l scott hoth.m-eta.app"
-alias vps1.dt="PROMPT_COMMAND='echo -ne "\\033]0; desktop \\007"';echo localhost:59000 ; ssh -L 59000:localhost:5900 -C -N -l scott hoth.m-eta.app"
-alias vps1.dt2="PROMPT_COMMAND='echo -ne "\\033]0; desktop \\007"';echo localhost:59001 ; ssh -L 59001:localhost:5901 -C -N -l scott hoth.m-eta.app"
-alias vps2.dt="PROMPT_COMMAND='echo -ne "\\033]0; desktop \\007"';echo localhost:59000 ; ssh -L 59000:localhost:5900 -C -N -l scott bespin.m-eta.app"
-alias vps2.dt2="PROMPT_COMMAND='echo -ne "\\033]0; desktop \\007"';echo localhost:59001 ; ssh -L 59001:localhost:5901 -C -N -l scott bespin.m-eta.app"
+alias vps.dt="PROMPT_COMMAND='echo -ne \"\\033]0; desktop \\007\"';echo localhost:59000 ; ssh -L 59000:localhost:5900 -C -N -l scott hoth.m-eta.app"
+alias vps.dt2="PROMPT_COMMAND='echo -ne \"\\033]0; desktop \\007\"';echo localhost:59001 ; ssh -L 59001:localhost:5901 -C -N -l scott hoth.m-eta.app"
+alias vps1.dt="PROMPT_COMMAND='echo -ne \"\\033]0; desktop \\007\"';echo localhost:59000 ; ssh -L 59000:localhost:5900 -C -N -l scott hoth.m-eta.app"
+alias vps1.dt2="PROMPT_COMMAND='echo -ne \"\\033]0; desktop \\007\"';echo localhost:59001 ; ssh -L 59001:localhost:5901 -C -N -l scott hoth.m-eta.app"
+alias vps2.dt="PROMPT_COMMAND='echo -ne \"\\033]0; desktop \\007\"';echo localhost:59000 ; ssh -L 59000:localhost:5900 -C -N -l scott bespin.m-eta.app"
+alias vps2.dt2="PROMPT_COMMAND='echo -ne \"\\033]0; desktop \\007\"';echo localhost:59001 ; ssh -L 59001:localhost:5901 -C -N -l scott bespin.m-eta.app"
+alias vps3.dt2="PROMPT_COMMAND='echo -ne \"\\033]0; desktop \\007\"';echo localhost:59001 ; ssh -L 59001:localhost:5901 -C -N -l scott mandalore.m-eta.app"
+alias vps4.dt2="PROMPT_COMMAND='echo -ne \"\\033]0; desktop \\007\"';echo localhost:59001 ; ssh -L 59001:localhost:5901 -C -N -l scott endor.m-eta.app"
 alias vps.k="echo $( p keychain -get -label vps.k )"
 alias kkk="echo $( p keychain -get -label login-test )"
 alias vps.mongo="ssh -L 27017:localhost:27017 -C -N -l scott hoth.m-eta.app"
@@ -3110,7 +3112,14 @@ alias vps2.dt="ssh -L 59000:localhost:5900 -C -N -l scott bespin.m-eta.app"
 alias vps2.dt2="ssh -L 59001:localhost:5901 -C -N -l scott bespin.m-eta.app"
 alias vps3.dt="ssh -L 59000:localhost:5900 -C -N -l scott mandalore.m-eta.app"
 alias vps3.dt2="ssh -L 59001:localhost:5901 -C -N -l scott mandalore.m-eta.app"
-
+alias vps.dt="PROMPT_COMMAND='echo -ne \"\\033]0; desktop \\007\"';echo localhost:59000 ; ssh -L 59000:localhost:5900 -C -N -l scott hoth.m-eta.app"
+alias vps.dt2="PROMPT_COMMAND='echo -ne \"\\033]0; desktop \\007\"';echo localhost:59001 ; ssh -L 59001:localhost:5901 -C -N -l scott hoth.m-eta.app"
+alias vps1.dt="PROMPT_COMMAND='echo -ne \"\\033]0; desktop \\007\"';echo localhost:59000 ; ssh -L 59000:localhost:5900 -C -N -l scott hoth.m-eta.app"
+alias vps1.dt2="PROMPT_COMMAND='echo -ne \"\\033]0; desktop \\007\"';echo localhost:59001 ; ssh -L 59001:localhost:5901 -C -N -l scott hoth.m-eta.app"
+alias vps2.dt="PROMPT_COMMAND='echo -ne \"\\033]0; desktop \\007\"';echo localhost:59000 ; ssh -L 59000:localhost:5900 -C -N -l scott bespin.m-eta.app"
+alias vps2.dt2="PROMPT_COMMAND='echo -ne \"\\033]0; desktop \\007\"';echo localhost:59001 ; ssh -L 59001:localhost:5901 -C -N -l scott bespin.m-eta.app"
+alias vps3.dt2="PROMPT_COMMAND='echo -ne \"\\033]0; desktop \\007\"';echo localhost:59001 ; ssh -L 59001:localhost:5901 -C -N -l scott mandalore.m-eta.app"
+alias vps4.dt2="PROMPT_COMMAND='echo -ne \"\\033]0; desktop \\007\"';echo localhost:59001 ; ssh -L 59001:localhost:5901 -C -N -l scott endor.m-eta.app"
 alias .git="git clone https://github.com/rightthumb/rightthumb-widgets-v0"
 alias .git.="rm -rf rightthumb-widgets-v0 ; git clone https://github.com/rightthumb/rightthumb-widgets-v0 ; cd rightthumb-widgets-v0 ; chmod -R 777 . ; p shClean -folder -r"
 alias .git..="rm -rf rightthumb-widgets-v0 ; git clone https://github.com/rightthumb/rightthumb-widgets-v0 ; cd rightthumb-widgets-v0 ; chmod -R 777 . ; p shClean -folder -r ; vps.b.py.; vps.b.sh. ; vps.b.db."
@@ -3190,6 +3199,7 @@ alias watch.vnc="$widgets/widgets/bash/vnc_watch.sh> /dev/null 2>&1 & "
 
 alias rr='sudo su root'
 alias aa='sudo su admin'
+alias tf='python3 $ww/python/vps-tf.py'
 
 alias crontab.='EDITOR=nano /usr/bin/crontab'
 

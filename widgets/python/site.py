@@ -35,7 +35,7 @@ def sw():
 	# _.switches.register( 'Files', '-f,-file,-files','file.txt',  description='glob', isRequired=True )
 	_.switches.register( 'Files', '-f,-file,-files','file.txt', isRequired=True )
 	_.switches.register( 'mkdir', '-mkdir' )
-	_.switches.register( 'Server', '-srv,-server' )
+	_.switches.register( 'Server', '-v,-srv,-server' )
 	_.switches.register( 'Print', '-print' )
 
 
