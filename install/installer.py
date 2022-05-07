@@ -3222,9 +3222,8 @@ PROMPT_COMMAND='echo -ne "\\033]0;$( whoami ) $prompt_symbol """+c3po+""" \\007"
 export HISTSIZE=100000
 export HISTFILESIZE=100000
 
-# x='test'
-# if [ -z ${TERM+x} ]; then TERM=dumb; fi
 
+# if [ -z ${TERM} ]; then TERM=dumb; fi
 
 alias k="$widgets/widgets/python/keychain.py -rc ";
 alias pc="$widgets/widgets/python/pc.py -rc ";

@@ -71,6 +71,7 @@ _.appInfo[focus()] = {
     ],
     'examples': [
                         _.hp('p thisApp -file file.txt'),
+                        _.linePrint(label='simple',p=0),
                         '',
     ],
     'columns': [

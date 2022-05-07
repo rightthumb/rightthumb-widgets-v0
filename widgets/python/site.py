@@ -124,6 +124,12 @@ if type(file_trigger_data) == list:
 ########################################################################################
 # START
 
+def tail():
+	if _.isWin:
+		return ' > nul 2>&1'
+	else:
+		return ' > /dev/null 2>&1'
+
 def process(path,end=''):
 	meta = {}
 	try:
@@ -208,7 +214,7 @@ def process(path,end=''):
 			fi=__.path(fi,pop=True)
 			fi += '/'
 			path+=os.sep
-		mkdir=f'ssh -f {u}@{s} "/bin/python3 /opt/rightthumb-widgets-v0/widgets/python/mkdir.py -folder {rfo}"'
+		mkdir=f'ssh -f {u}@{s} "/bin/python3 /opt/rightthumb-widgets-v0/widgets/python/mkdir.py -folder {rfo}"'+tail()
 		_.pr(mkdir)
 		if not _.switches.isActive('Print'):
 			try:
@@ -220,14 +226,14 @@ def process(path,end=''):
 	if _.switches.isActive('Upload-Scp'):
 		# do=f'{scp} {path}  {u}@{s}:{fi}'
 		if os.path.isdir(file):
-			do=f'{scp} -r {file}  {u}@{s}:{fi}'
+			do=f'{scp} -r {file}  {u}@{s}:{fi}'+tail()
 		else:
-			do=f'{scp} {file}  {u}@{s}:{fi}'
+			do=f'{scp} {file}  {u}@{s}:{fi}'+tail()
 	if _.switches.isActive('Download-Scp'):
 		if os.path.isdir(path):
-			do=f'{scp} -r {u}@{s}:{fi} {path}'
+			do=f'{scp} -r {u}@{s}:{fi} {path}'+tail()
 		else:
-			do=f'{scp}  {u}@{s}:{fi} {path}'
+			do=f'{scp}  {u}@{s}:{fi} {path}'+tail()
 	
 	if _.switches.isActive('Upload-Scp') or _.switches.isActive('Download-Scp'):
 		_.pr(do)

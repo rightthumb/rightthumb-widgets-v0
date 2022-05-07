@@ -30,8 +30,9 @@ _str = __.imp('_rightThumb._string')
 def sw():
     pass
     ### EXAMPLE: START
-    _.switches.register( 'Input', '-i' )
-    # _.switches.register( 'Files', '-f,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=True )
+    # _.switches.register( 'Input', '-i' )
+    # _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=True )
+    # _.switches.register( 'Files', '-f,-fi,-file,-files' )
     ### EXAMPLE: END
 
 # __.setting('require-list',['Pipe','Files','Plus'])
@@ -70,6 +71,7 @@ _.appInfo[focus()] = {
     ],
     'examples': [
                         _.hp('p thisApp -file file.txt'),
+                        _.linePrint(label='simple',p=0),
                         '',
     ],
     'columns': [
@@ -92,7 +94,7 @@ _.appData[focus()] = {
         'pipe': False,
         'data': {
                     'field': {'sent': [], 'received': [] }, # { 'label': '', 'context': [],  }
-                    'table': {'sent': [], 'received': [] }, 
+                    'table': {'sent': [], 'received': [] },
         },
     }
 
@@ -107,32 +109,47 @@ def triggers():
 _.l.conf('clean-pipe',True)
 _.l.sw.register( triggers, sw )
 
+########################################################################################
+### EXAMPLE: START
 
+
+    #--> make hotkey ad-description soon:  <--<w#
+    #-->    - outer most typed first
+    #-->    - blank pipe
+    #-->    __.setting('hotkey-clip.ad_description-start1',d=False)
+    #--> _________________________________
+    #--> describe selection area two
+    #--> 3 write a note here wrap text
+    #--> two dignissim
+    #--> 1 inceptos
+    #--> _________________________________
+    #--> describe selection area two
+    #-->              |           |
+    #-->              |           | - write a note here
+    #-->              |           |   wrap text
+    #-->              |           |
+    #-->              |           | - dignissim
+    #-->              |
+    #-->              | - inceptos
+
+    # if _.switches.isActive('Test'): test(); return None;
+    # result=[]; result=[ _.pr(line) for i, line, bi in _.numerate( _.isData(r=0) )]
+    # bk=[];[  bk.append(rec['backup']) for rec in backupLog if path == rec['file']]; bk=bk[-1];
+    #--> a=(1 if True else 0) <--# 
+    #--> m=[[row[i] for row in matrix] for i in range(4)]
+
+
+### EXAMPLE: END
 ########################################################################################
 # START
 
-# dic=_.getConfig(_.switches.values('Input')[0])
-# _.pv(dic)
-data={
-        'a': 1.1,
-        'b': 1,
-        'c': 'scott',
-        'd': 'scott\nreph',
-        'e': [1,2,3],
-        'f': {
-                'g': 1,
-                'h': 2,
-        },
-}
-test=_.saveConfig(data,_.switches.values('Input')[0])
-print(  '\n'.join(test)  )
 def action():
     #--> min, architecture {:strict:}
     #--> trigger/callback  <w#
     load()
     global c3po
 
-    # if _.switches.isActive('Test'): test(); return None;
+
 
     for i, line, bi in _.numerate( _.isData(r=0) ):
         #--> _.nindex(bi,h,n)  =  line.index(n)
@@ -145,6 +162,7 @@ def load():
     c3po = _.getTable( 'table' )
     #--> new table printer
     _.pt(c3po)
+
 
 ########################################################################################
 if __name__ == '__main__':

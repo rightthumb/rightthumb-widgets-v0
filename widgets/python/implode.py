@@ -10,250 +10,144 @@
 # ###########################################################################
 # ## {C3P0D40fAe8B} ##
 
-import os
-import sys
-import time
+##################################################
+import sys, time
 ##################################################
 import _rightThumb._construct as __
-appDBA = __.clearFocus( __name__, __file__ )
-__.appReg = appDBA
-def focus( parentApp='', childApp='', reg=True ):
-	global appDBA
-	f = __.appName( appDBA, parentApp, childApp )
-	if reg:
-		__.appReg = f
-	return f
-__.registeredApps.append( focus() )
+appDBA=__.clearFocus(__name__,__file__);__.appReg=appDBA;
+def focus(parentApp='',childApp='',reg=True):
+    global appDBA;f=__.appName(appDBA,parentApp,childApp);
+    if reg:__.appReg=f;
+    return f
 import _rightThumb._base3 as _
+fieldSet=_.l.vars(focus(),__name__,__file__,appDBA)
 _.load()
 ##################################################
-import _rightThumb._vars as _v
-import _rightThumb._string as _str
+_v = __.imp('_rightThumb._vars')
+_str = __.imp('_rightThumb._string')
 ##################################################
 
-def appSwitches():
-	pass
-	_.switches.register( 'Files', '-f,-file,-files','file.txt', isPipe='name', isRequired=True, description='Files' )
-	# _.switches.register( 'Save', '-save', isRequired=True )
-	# _.switches.register( 'Compile', '-compile' )
+def sw():
+    pass
+    ### EXAMPLE: START
+    # _.switches.register( 'Input', '-i' )
+    # _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=True )
+    _.switches.register( 'Files', '-f,-fi,-file,-files' )
+    ### EXAMPLE: END
 
+# __.setting('require-list',['Pipe','Files','Plus'])
+__.setting('require-list',[])
+__.setting('receipt-log')
+__.setting('receipt-file')
+__.setting('myFileLocations-skip-validation',False)
+__.setting('require-pipe',False)
+__.setting('require-pipe||file',False)
+__.setting('pre-error',False)
+__.setting('switch-raw',[])
 
-_.autoBackupData = __.autoCreationConfiguration['backup']
-__.isRequired_Pipe = False
-__.isRequired_Pipe_or_File = True
-# __.sort_name_trigger_override = [  ['']  ]
-
-# __.isRequired_or_List = ['Pipe','Files','Plus']
 
 _.appInfo[focus()] = {
-	'file': 'implode.py',
-	'liveAppName': __.thisApp( __file__ ),
- 	'description': 'stickytape a python file to a single file not requiring any imports   AND THEN   compile',
-	'categories': [
-						'stickytape',
-						'single file',
-						'imports',
-						'import',
-						'single',
-						'python',
-						'tool',
-						'utility',
-						'convert',
-						'adapt',
-						'process',
-						'pre compile',
-						'compile',
-				],
-	'usage': [
-						# 'epy another',
-						# 'e nmap',
-						# '',
-	],
-	'relatedapps': [
-						# 'p another -file file.txt',
-						# '',
-	],
-	'prerequisite': [
-						# 'p another -file file.txt',
-						# '',
-	],
-	'examples': [
-						'p implode -f pass.py',
-						'p implode -f *.py',
-						'',
-	],
-	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
-				       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
-	],
-	'aliases': [
-				       # 'this',
-				       # 'app',
-	],
-
-	}
+    # 'app': '8facG-jo0Cxk',
+    'file': 'thisApp.py',
+    'liveAppName': __.thisApp( __file__ ),
+    'description': 'Changes the world',
+        # _.ail(1,'subject')+
+        # _.aib('one')+
+    'categories': [
+                        'DEFAULT',
+                ],
+    'usage': [
+                        # 'epy another',
+                        # 'e nmap',
+                        # '',
+    ],
+    'relatedapps': [
+                        # 'p another -file file.txt',
+                        # '',
+    ],
+    'prerequisite': [
+                        # 'p another -file file.txt',
+                        # '',
+    ],
+    'examples': [
+                        _.hp('p thisApp -file file.txt'),
+                        '',
+    ],
+    'columns': [
+                       # { 'name': 'name', 'abbreviation': 'n' },
+                       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+    ],
+    'aliases': [
+                       # 'this',
+                       # 'app',
+    ],
+    'notes': [
+                       # {},
+    ],
+}
 
 _.appData[focus()] = {
-		'start': __.startTime,
-		'uuid': '',
-		'audit': [],
-		'pipe': False,
-		'data': {
-					'field': {'sent': [], 'received': [] }, # { 'label': '', 'context': [],  }
-					'table': {'sent': [], 'received': [] }, 
-		},
-	}
+        'start': __.startTime,
+        'uuid': '',
+        'audit': [],
+        'pipe': False,
+        'data': {
+                    'field': {'sent': [], 'received': [] }, # { 'label': '', 'context': [],  }
+                    'table': {'sent': [], 'received': [] },
+        },
+    }
 
 
+def triggers():
+    # _.switches.trigger( 'Files', _.myFileLocations, vs=True )
+    # _.switches.trigger( 'Files', _.myFileLocations )
+    _.switches.trigger( 'Ago', _.timeAgo )
+    _.switches.trigger( 'Folder', _.myFolderLocations )
+    _.switches.trigger( 'URL', _.urlTrigger )
+    _.switches.trigger( 'Duration', _.timeFuture )
 
-def registerSwitches( argvProcessForce=False ):
-	global appDBA
-	if not __.appReg == appDBA and appDBA in __.appReg:
-
-		if not __name__ == '__main__':
-			_.argvProcess = argvProcessForce
-		else:
-			_.argvProcess = True
-
-		_.load()
-		_.appInfo[__.appReg] = _.appInfo[appDBA]
-		_.appData[__.appReg] = _.appData[appDBA]
-	__.constructRegistration( _.appInfo[__.appReg]['file'],__.appReg )
-	appSwitches()
-
-	_.myFileLocation_Print = False
-	_.switches.trigger( 'Files', _.myFileLocations )
-	_.switches.trigger( 'Folder', _.myFolderLocations )
-	_.switches.trigger( 'URL', _.urlTrigger )
-	
-	
-	_.defaultScriptTriggers()
-	_.switches.process()
-
-
-if not __name__ == '__main__':
-	_.argvProcess = False
-else:
-	_.argvProcess = True
-
-registerSwitches()
-
-
-def fieldSet( switchName, switchField, switchValue, theFocus=False ):
-	if not type( theFocus ) == bool:
-		theFocus = theFocus
-	_.switches.fieldSet( switchName, switchField, switchValue, theFocus )
-
-
-if __name__ == '__main__':
-	if not sys.stdin.isatty():
-		_.setPipeData( sys.stdin.readlines(), __.appReg )
-
-
-_.postLoad( __file__ )
+_.l.conf('clean-pipe',True)
+_.l.sw.register( triggers, sw )
 
 ########################################################################################
 # START
 
+
+
+
 import stickytape
-import py_compile
-import shutil
+# import py_compile
+# import shutil
 
 def saveFile( path ):
-	ff = _.fileFolder( path )
-
-	if _v.python['src']['windows'] in ff['folder']:
-		folder = _v.python['imploded']['windows']
-
-	elif _v.python['src']['unix'] in ff['folder']:
-		folder = _v.python['imploded']['unix']
-
-	# if not os.path.isdir(folder):
-	# 	os.mkdir(folder)
-	return folder + _v.slash + ff['file']
+    ff = _.fileFolder( path )
+    folder= os.getcwd()
+    file = folder + _v.slash + ff['file']
+    return file
 
 
-def pycFolder():
 
-
-	# _v.python['compiled']['unix']
-
-	f = _v.python['imploded']['windows']+_v.slash+'__pycache__'
-	if os.path.isdir(f):
-		for file in os.listdir(f):
-			if file.endswith('.pyc'):
-				oFile = f +_v.slash+ file
-				nFile = _v.python['compiled']['windows'] +_v.slash+ file.replace( 'cpython-36.', '' )
-				try:
-					shutil.move( oFile, nFile )
-				except Exception as e:
-					_.colorThis( [ 'Error: moving file', file.replace( 'cpython-36.', '' ) ], 'red' )
-		i=0
-		for file in os.listdir(f):
-			if file.endswith('.pyc'):
-				i+=1
-		if not i:
-			try:
-				shutil.rmtree(f)
-			except Exception as e:
-				_.colorThis( [ 'Error: moving folder', f ], 'red' )
-
-
-	f = _v.python['imploded']['unix']+_v.slash+'__pycache__'
-	if os.path.isdir(f):
-		for file in os.listdir(f):
-			if file.endswith('.pyc'):
-				oFile = f +_v.slash+ file
-				nFile = _v.python['compiled']['unix'] +_v.slash+ file.replace( 'cpython-36.', '' )
-				try:
-					shutil.move( oFile, nFile )
-				except Exception as e:
-					_.colorThis( [ 'Error: moving file', file.replace( 'cpython-36.', '' ) ], 'red' )
-		i=0
-		for file in os.listdir(f):
-			if file.endswith('.pyc'):
-				i+=1
-		if not i:
-			try:
-				shutil.rmtree(f)
-			except Exception as e:
-				_.colorThis( [ 'Error: moving folder', f ], 'red' )
-
-
+def process(path):
+    # _.pr( stickytape.script(path) )
+    _.pr(path)
+    _.saveText( stickytape.script( path ), saveFile( path ) )
+    _.pr(saveFile( path ))
+    # file=__.path(path,file=True)
+    # _.pr(path)
+    # _.pr(file)
 
 def action():
 
-	if not type( _.appData[__.appReg]['pipe'] ) == bool:
-		_.pipeCleaner(0)
-		# _.printVar( _.appData )
-		for i,row in enumerate( _.appData[__.appReg]['pipe'] ):
-			_.pr( row )
-			# _.pr( saveFile( row ) )
-			try:
-				if os.path.isfile(row):
-					try:
-						result = stickytape.script( row )
-						try:
-							_.saveText( result, saveFile( row ) )
-							try:
-								py_compile.compile( saveFile( row ) )
-							except Exception as e:
-								_.colorThis( '\tError: compile', 'red' )
-						except Exception as e:
-							_.colorThis( '\tError: save', 'red' )
-					except Exception as e:
-						_.colorThis( '\tError: stickytape', 'red' )
-			except Exception as e:
-				pass
-	pycFolder()
+    for file in _.switches.values('Files'):
+        path=_v.ww+os.sep+'python'+os.sep+file
+        process(path)
 
-
+import os
 
 ########################################################################################
 if __name__ == '__main__':
-	action()
-
-
+    action()
+    __.isExit()
 
 
 
