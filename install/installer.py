@@ -1882,7 +1882,6 @@ pr-|{6FAB5628-94A1-410A-82D1-1D42A2A11750}/.rt/profile/projects"""
     def bash_vars( self, p=1 ):
  
  
- 
         global v
         self.home()
         # print( v.home )
@@ -2014,6 +2013,7 @@ pr-|{6FAB5628-94A1-410A-82D1-1D42A2A11750}/.rt/profile/projects"""
         # print('    echo "alias crontab=\'EDITOR=nano /usr/bin/crontab\'" >> ~/.bashrc')
         # print()
 
+        vc.HD.saveTableSimp( v.bash, v.config )
         return export
 
 
