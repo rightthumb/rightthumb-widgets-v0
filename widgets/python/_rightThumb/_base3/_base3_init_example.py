@@ -133,8 +133,10 @@ _.l.sw.register( triggers, sw )
 
     # if _.switches.isActive('Test'): test(); return None;
     # result=[]; result=[ _.pr(line) for i, line, bi in _.numerate( _.isData(r=0) )]
+    # bk=[];[  bk.append(rec['backup']) for rec in backupLog if path == rec['file']]; bk=bk[-1];
     #--> a=(1 if True else 0) <--# 
     #--> m=[[row[i] for row in matrix] for i in range(4)]
+
 
 ### EXAMPLE: END
 ########################################################################################

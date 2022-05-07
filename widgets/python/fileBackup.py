@@ -711,10 +711,20 @@ def action(path=None,flag=None):
 			
 			# _.pr('pre')
 			if True or _.switches.isActive('Test'):
-				# secureFiles(path)
+				backupLog = _.getTable('fileBackup.json')
+				if not __.secureFilesID is None:
+					theID = __.secureFilesID
+				else:
+					theID = generateID(path)
+				idCheck = idExist(theID, backupLog, path)
+				if not type(idCheck) == bool:
+					_.cp(idCheck,'darkcyan')
 				if secureFiles(path):
 					# _.colorThis( [ 'Secure file' ], 'green' )
+					bk=[];[  bk.append(rec['backup']) for rec in backupLog if path == rec['file']];
+
 					_.colorThis( path, 'cyan' )
+					if bk: bk=bk[-1]; _.pr( bk, c='darkcyan' );
 					# _.pr(' -- TRUE -- ')
 					return None
 			
@@ -924,6 +934,7 @@ def action(path=None,flag=None):
 			if not type(idCheck) == bool:
 				if not _.switches.isActive('Silent'):
 					_.colorThis( 'Has Backup', 'yellow' )
+					_.cp(idCheck,'darkcyan')
 					# txtScheduler = _.getTable( 'fileBackupSchedule.json' )
 					# txtScheduler.append( { 'timestamp': genEpoch(), 'file': path, 'status': 0, 'app': 'fileBackup', 'group': 0 } )
 					if not _.switches.isActive('DoNotSchedule'):
@@ -1087,7 +1098,7 @@ doc_sep = '\n___________________________________________________________________
 # _bkLog.imp.validateFlag
 
 # _decrypt_docs.imp.
-
+# secureFiles (
 
 # fileBackup
 ########################################################################################
