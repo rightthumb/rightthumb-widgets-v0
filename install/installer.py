@@ -1888,9 +1888,10 @@ pr-|{6FAB5628-94A1-410A-82D1-1D42A2A11750}/.rt/profile/projects"""
         self.home()
         # print( v.home )
         def _bash_DEF_():
+            v.bash['widgets'] = vc.PATHS.path(__file__).split(os.sep+'install')[0]
             for key in v.bash_defaults.keys():
                 if not key in v.bash:
-                    v.bash[key] = v.bash_defaults[key]
+                    v.bash[key] = v.bash_defaults[key].replace('[widgets]',v.bash['widgets'])
         items = []
         if os.path.isfile( v.config ):
             v.bash = vc.HD.getTableSimp( v.config )
