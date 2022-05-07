@@ -1887,17 +1887,24 @@ pr-|{6FAB5628-94A1-410A-82D1-1D42A2A11750}/.rt/profile/projects"""
         global v
         self.home()
         # print( v.home )
+        def _bash_DEF_():
+            for key in v.bash_defaults.keys():
+                if not key in v.bash:
+                    v.bash[key] = v.bash_defaults[key]
         items = []
         if os.path.isfile( v.config ):
             v.bash = vc.HD.getTableSimp( v.config )
+        else:
+            _bash_DEF_()
+            vc.HD.saveTable( v.bash, v.config )
+
+
 
         # print(v.bash_defaults)
         # print( type(v.bash_defaults) )
         # sys.exit()
 
-        for key in v.bash_defaults.keys():
-            if not key in v.bash:
-                v.bash[key] = v.bash_defaults[key]
+        _bash_DEF_()
         if not v.isWin:
             if not v.gui:
                 for key in v.bash_defaults_no_gui.keys():
