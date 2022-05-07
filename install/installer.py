@@ -1903,7 +1903,7 @@ pr-|{6FAB5628-94A1-410A-82D1-1D42A2A11750}/.rt/profile/projects"""
         # print(v.bash_defaults)
         # print( type(v.bash_defaults) )
         # sys.exit()
-
+        v.f.mkdir(v.bash['wprofile']+os.sep+'vars')
         _bash_DEF_()
         if not v.isWin:
             if not v.gui:
