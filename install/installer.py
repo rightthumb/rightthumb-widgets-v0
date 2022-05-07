@@ -175,7 +175,6 @@ def loader():
     vc.md5 = _md5()
 
 
-
     v.isWin = isWin
     v.home = None
     v.gui = False
@@ -1893,6 +1892,7 @@ pr-|{6FAB5628-94A1-410A-82D1-1D42A2A11750}/.rt/profile/projects"""
                 if not key in v.bash:
                     v.bash[key] = v.bash_defaults[key].replace('[widgets]',v.bash['widgets'])
         items = []
+        print(v.config)
         if os.path.isfile( v.config ):
             v.bash = vc.HD.getTableSimp( v.config )
         else:
