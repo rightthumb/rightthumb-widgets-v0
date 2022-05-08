@@ -1965,6 +1965,10 @@ pr-|{6FAB5628-94A1-410A-82D1-1D42A2A11750}/.rt/profile/projects"""
         else:
             ext='sh'
         print( export )
+        self.home()
+        if not 'wprofile' in v.bash:
+            v.bash['wprofile']=v.home+os.sep+'.rt'+os.sep+'profile'
+
         v.f.mkdir(v.bash['wprofile']+os.sep+'vars')
         vc.HD.saveText( export, v.bash['wprofile']+os.sep+'vars'+os.sep+'config.'+ext )
         if p:
@@ -3204,6 +3208,7 @@ alias watch.vnc="$widgets/widgets/bash/vnc_watch.sh> /dev/null 2>&1 & "
 alias rr='sudo su root'
 alias aa='sudo su admin'
 alias tf='python3 $ww/python/vps-tf.py'
+alias tfh='cat ~/.bash_history | python3 $ww/python/vps-tf.py -me history'
 
 alias crontab.='EDITOR=nano /usr/bin/crontab'
 

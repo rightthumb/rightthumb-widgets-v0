@@ -137,6 +137,8 @@ _.l.sw.register( triggers, sw )
     # bk=[];[  bk.append(rec['backup']) for rec in backupLog if path == rec['file']]; bk=bk[-1];
     #--> a=(1 if True else 0) <--# 
     #--> m=[[row[i] for row in matrix] for i in range(4)]
+    # requests=__.imp('requests.post')
+    # data=str(requests.post(url,data={}).content,'iso-8859-1')
 
 
 ### EXAMPLE: END
