@@ -9,7 +9,6 @@
 #    - Scott Taylor Reph, RightThumb.com
 # ###########################################################################
 # ## {C3P0D40fAe8B} ##
-
 ##################################################
 import sys, time
 ##################################################
@@ -26,14 +25,9 @@ _.load()
 _v = __.imp('_rightThumb._vars')
 _str = __.imp('_rightThumb._string')
 ##################################################
-
 def sw():
     pass
-    ### EXAMPLE: START
-    # _.switches.register( 'Input', '-i' )
-    # _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=True )
     _.switches.register( 'Files', '-f,-fi,-file,-files' )
-    ### EXAMPLE: END
 
 # __.setting('require-list',['Pipe','Files','Plus'])
 __.setting('require-list',[])
@@ -48,7 +42,7 @@ __.setting('switch-raw',[])
 
 _.appInfo[focus()] = {
     # 'app': '8facG-jo0Cxk',
-    'file': 'thisApp.py',
+    'file': 'implode.py',
     'liveAppName': __.thisApp( __file__ ),
     'description': 'Changes the world',
         # _.ail(1,'subject')+
@@ -114,7 +108,6 @@ _.l.sw.register( triggers, sw )
 
 
 
-
 import stickytape
 # import py_compile
 # import shutil
@@ -130,7 +123,7 @@ def saveFile( path ):
 def process(path):
     # _.pr( stickytape.script(path) )
     _.pr(path)
-    _.saveText( stickytape.script( path ), saveFile( path ) )
+    _.saveText( '#!/usr/bin/python3\n'+stickytape.script( path ), saveFile( path ) )
     _.pr(saveFile( path ))
     # file=__.path(path,file=True)
     # _.pr(path)
@@ -148,7 +141,6 @@ import os
 if __name__ == '__main__':
     action()
     __.isExit()
-
 
 
 

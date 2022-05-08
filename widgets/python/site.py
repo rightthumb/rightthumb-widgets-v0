@@ -236,7 +236,7 @@ def process(path,end=''):
 			do=f'{scp}  {u}@{s}:{fi} {path}'+tail()
 	
 	if _.switches.isActive('Upload-Scp') or _.switches.isActive('Download-Scp'):
-		_.pr(do)
+		# _.pr(do)
 		if not _.switches.isActive('Print'):
 			try:
 				os.system( do )
