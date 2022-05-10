@@ -529,13 +529,16 @@ sys = imp('sys.exit')
 # import os
 
 def url( URL, data={}, d=None, raw=False, r=None ):
+    import _rightThumb._string as _str
+    def _url_(data): return _str.do('.sh',data);
+
     if not r is None: raw=r;
     if not d is None: data=d;
     page=imp('requests.post').post(URL, data = data)
     if raw: return page;
     result=page.content
     for encodeing in 'ISO-8859-1 UTF-8 Windows-1251 Windows-1252 GB2312 Shift GBK EUC-KR ISO-8859-9 Windows-1254 EUC-JP Big5'.lower().split(' '):
-        try: return str(result,encodeing);
+        try: return _url_(str(result,encodeing));
         except Exception as e: pass;
-    return str(result)
+    return _url_(str(result))
 page=url
