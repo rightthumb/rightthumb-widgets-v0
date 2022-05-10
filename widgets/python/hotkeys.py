@@ -460,15 +460,32 @@ class CLIP:
         _copy.imp.copy(  '\n'.join(result)  , p=0 )
 
     def ad_notes(self):
+        # _copy = _.regImp( __.appReg, '-copy' )
+        # _paste = _.regImp( __.appReg, '-paste' )
+        # data  = _paste.imp.paste()
+        # data = cleaner(data,1)
+        
+        # # result.reverse()
+        # # _copy.imp.copy(  '\n'.join(result)  , p=0 )
+
+        __.setting('hotkey-clip.ad_description-start1', False)
+
+
+
+    def replacer(self):
         _copy = _.regImp( __.appReg, '-copy' )
         _paste = _.regImp( __.appReg, '-paste' )
         data  = _paste.imp.paste()
         data = cleaner(data,1)
         
-        result.reverse()
-        _copy.imp.copy(  '\n'.join(result)  , p=0 )
+        a=__.setting('hotkey-clip.replace-a')
+        b=__.setting('hotkey-clip.replace-b')
+        while a in data:
+            data=data.replace(a,b)
 
-        __.setting('hotkey-clip.ad_description-start1', False)
+        result.reverse()
+        _copy.imp.copy(  '\n'.join(data)  , p=0 )
+
 
 
 
@@ -1837,6 +1854,7 @@ def load():
 
                 'sql-crud': { 'raw': [ 'Key.alt', 'Key.cmd', 'c' ], 'do': 'Clip.SQL_to_crud()' },
                 'ad-notes': { 'raw': [ 'Key.alt', 'Key.shift', 'Key.ctrl', 'a' ], 'do': 'Clip.ad_notes()' },
+                'clip-replace': { 'raw': [ 'Key.alt', 'Key.cmd', 'r' ], 'do': 'Clip.replacer()' },
 
 
     }
@@ -1862,6 +1880,8 @@ key_set = set()
 post_do = { 'status': 0 }
 print_chars = False
 __.setting('hotkey-clip.ad_description-start1', False)
+__.setting('hotkey-clip.replace-a', '.eyeformeta.com')
+__.setting('hotkey-clip.replace-b', '.m-eta.app')
 
 
 ########################################################################################

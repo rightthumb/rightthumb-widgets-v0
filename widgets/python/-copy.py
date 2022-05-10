@@ -185,7 +185,7 @@ def clip_set_0(data,end=''):
 
 
 def clip_set_2(data,end='',clean=True):
-	import pyperclip
+	
 	if clean:
 		pyperclip.copy( cleanString(data)+end )
 	else:
@@ -266,7 +266,7 @@ def clip_set_1(data,end='',clean=True):
 def clip_set( data, end='', p=True, clean=True ):
 	data=str(data)
 	data = _.stripColor(data)
-
+	
 	if not _.switches.isActive('NoPrint'):
 		if p:
 			_.pr(data)
@@ -361,7 +361,7 @@ def clip_get_3():
 	# return 'test'
 
 def clip_get_2():
-	import pyperclip
+	# import pyperclip
 	return cleanString( pyperclip.paste() )
 
 	# global win32clipboard
@@ -658,7 +658,10 @@ def action():
 	if not _.switches.isActive('Print'):
 		clip_set( data, _.v.end, clean )
 	
-
+try:
+	import pyperclip
+except Exception as e:
+	pass
 
 
 # from pynput import keyboard

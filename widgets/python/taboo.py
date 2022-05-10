@@ -185,9 +185,9 @@ def action():
 			isBack=True
 		if isBack or (  ( level == 0 ) and _.showLine(card['subject'])  ):
 			_.clear()
-			_.cp( _.fields.value( 'project', 'name', card['subject'], center=True ), 'Background.green' )
+			_.cp('|'+ _.fields.value( 'project', 'name', card['subject'], center=True )+'|', 'Background.green' )
 			for mit in card['omit']:
-				_.cp( _.fields.value( 'project', 'name', mit, center=True ), 'Background.red' )
+				_.cp('|'+_.fields.value( 'project', 'name', mit, center=True )+'|', 'Background.red' )
 			# _.pr( 'q(quit), b(back)' )
 			
 			# _.pr()

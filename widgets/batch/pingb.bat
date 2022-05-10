@@ -4,6 +4,7 @@ set pingb=google.com
 
 if [%1] == [a] set pingb=alexandria.ninja
 if [%1] == [e] set pingb=endor.m-eta.app
+if [%1] == [c] set pingb=coruscant.m-eta.app
 if [%1] == [b] set pingb=bespin.m-eta.app
 if [%1] == [m] set pingb=mandalore.m-eta.app
 if [%1] == [h] set pingb=hoth.m-eta.app
