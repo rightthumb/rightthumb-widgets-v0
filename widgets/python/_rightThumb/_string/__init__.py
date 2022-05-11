@@ -1207,7 +1207,6 @@ def do(what=None,string='',a=None,b=None,c=None,d=None):
     
     if what in '.sh'.split(' '): return sh(string);
     if what in 'all'.split(' '): return replaceAll(string,a,b);
-    if what in 'all'.split(' '): return replaceAll(string,a,b);
     if what in 'cleanAll'.split(' '): return cleanAll(string,a,b);
     if what in 'dup'.split(' '): return replaceDuplicate(string,a);
     if what in 'be'.split(' '): return cleanBE(string,a);
@@ -1223,3 +1222,45 @@ def sh(string):
     while '\t' in string: string = string.replace( '\t', '    ' );
     return string
 
+class st(str):
+    def sh(self): self=do('.sh',self); return string(self);
+    def all(self,a,b): self=do('all',self,a,b); return string(self);
+    def cleanAll(self,a,b): self=do('cleanAll',self,a,b); return string(self);
+    def dup(self,a): self=do('dup',self,a); return string(self);
+    def be(self,a): self=do('be',self,a); return string(self);
+    def b(self,a): self=do('b',self,a); return string(self);
+    def e(self,a): self=do('e',self,a); return string(self);
+    def alpha(self): self=do('n',self); return string(self);
+    def num(self): self=do('nu',self); return string(self);
+    def remove(self,a): self=do('remove',self,a); return string(self);
+    def ra(self,a): self=do('remove',self,a); return string(self);
+    def json(self):
+        simplejson = __.imp('simplejson')
+        json=simplejson.loads(self)
+        isa='dic'
+        if do('.sh',self).replace(' ','').replace('\n','').startswith('{'):
+            isa='dic'
+        elif do('.sh',self).replace(' ','').replace('\n','').startswith('['):
+            isa='lis'
+        self=json
+        if isa=='lis': return lis(self);
+        if isa=='dic': return dic(self);
+        return 
+
+
+
+class dic(dict):
+    def string(self):
+        simplejson = __.imp('simplejson')
+        return string(simplejson.dumps(self, indent=4, sort_keys=False))
+    def inline(self):
+        simplejson = __.imp('simplejson')
+        return string(simplejson.dumps(self))
+
+class lis(list):
+    def string(self):
+        simplejson = __.imp('simplejson')
+        return string(simplejson.dumps(self, indent=4, sort_keys=False))
+    def inline(self):
+        simplejson = __.imp('simplejson')
+        return string(simplejson.dumps(self))
