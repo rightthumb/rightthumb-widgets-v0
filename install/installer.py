@@ -3204,6 +3204,35 @@ alias vps.c.sh.="scp -r root@coruscant.m-eta.app:/opt/rightthumb-widgets-v0/widg
 alias vps.c.db.="scp -rp root@coruscant.m-eta.app:/opt/rightthumb-widgets-v0/widgets/databank/tables/*.* $ww/databank/tables/ ; chmod 777 -R $ww/databank/tables/"
 alias vps.c.py.="scp -rp root@coruscant.m-eta.app:/opt/rightthumb-widgets-v0/widgets/python/vps* $ww/python/ ; chmod 777 -R $ww/python/"
 
+alias vps.c.c="ssh -f root@coruscant.m-eta.app -f \'/bin/python3 /opt/rightthumb-widgets-v0/widgets/python/shClean.py -r -folder /opt \'"
+
+
+alias vps.c.py.v.u="scp /opt/rightthumb-widgets-v0/widgets/python/vps*.py root@coruscant.m-eta.app:/opt/rightthumb-widgets-v0/widgets/python/ ; ssh root@coruscant.m-eta.app \'chmod -R 777 /opt/rightthumb-widgets-v0/\'"
+alias vps.c.sh2.u="ssh root@coruscant.m-eta.app -f \'mkdir -p /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/\' ; scp /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/* root@coruscant.m-eta.app:/opt/rightthumb-widgets-v0/widgets/bash/vps-srv/ ; ssh root@coruscant.m-eta.app \'chmod -R 777 /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/\'"
+
+alias vps.c.py.u="scp $ww/python/vps*.py root@coruscant.m-eta.app:/opt/rightthumb-widgets-v0/widgets/python/ ; ssh root@coruscant.m-eta.app \'chmod -R 777 /opt/rightthumb-widgets-v0/\'"
+alias vps.c.sh.u="scp -r $ww/bash/vps-srv/ root@coruscant.m-eta.app:/opt/rightthumb-widgets-v0/widgets/bash/ ; ssh root@coruscant.m-eta.app \'chmod -R 777 /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/\'"
+alias vps.c.db.u="scp $ww/databank/tables/*.* root@coruscant.m-eta.app:/opt/rightthumb-widgets-v0/widgets/databank/tables/ ; ssh root@coruscant.m-eta.app \'chmod -R 777 /opt/rightthumb-widgets-v0/\'"
+alias vps.c.sh.d="scp -r root@coruscant.m-eta.app:/opt/rightthumb-widgets-v0/widgets/bash/vps-srv/ $ww/bash/ ; chmod 777 -R $ww/bash/vps-srv/"
+alias vps.c.db.d="scp -rp root@coruscant.m-eta.app:/opt/rightthumb-widgets-v0/widgets/databank/tables/*.* $ww/databank/tables/ ; chmod 777 -R $ww/databank/tables/"
+alias vps.c.py.d="scp -rp root@coruscant.m-eta.app:/opt/rightthumb-widgets-v0/widgets/python/vps* $ww/python/ ; chmod 777 -R $ww/python/"
+alias vps.c.u="vps.c.py.u; vps.c.sh.u; vps.c.db.u"
+alias vps.c.d="vps.c.py.d; vps.c.sh.d; vps.c.ub.d"
+
+alias vps.h.py.v.u="scp /opt/rightthumb-widgets-v0/widgets/python/vps*.py root@hoth.m-eta.app:/opt/rightthumb-widgets-v0/widgets/python/ ; ssh root@hoth.m-eta.app \'chmod -R 777 /opt/rightthumb-widgets-v0/\'"
+alias vps.h.sh2.u="ssh root@hoth.m-eta.app -f \'mkdir -p /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/\' ; scp /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/* root@hoth.m-eta.app:/opt/rightthumb-widgets-v0/widgets/bash/vps-srv/ ; ssh root@hoth.m-eta.app \'chmod -R 777 /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/\'"
+
+alias vps.h.py.u="scp $ww/python/vps*.py root@hoth.m-eta.app:/opt/rightthumb-widgets-v0/widgets/python/ ; ssh root@hoth.m-eta.app \'chmod -R 777 /opt/rightthumb-widgets-v0/\'"
+alias vps.h.sh.u="scp -r $ww/bash/vps-srv/ root@hoth.m-eta.app:/opt/rightthumb-widgets-v0/widgets/bash/ ; ssh root@hoth.m-eta.app \'chmod -R 777 /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/\'"
+alias vps.h.db.u="scp $ww/databank/tables/*.* root@hoth.m-eta.app:/opt/rightthumb-widgets-v0/widgets/databank/tables/ ; ssh root@hoth.m-eta.app \'chmod -R 777 /opt/rightthumb-widgets-v0/\'"
+alias vps.h.sh.d="scp -r root@hoth.m-eta.app:/opt/rightthumb-widgets-v0/widgets/bash/vps-srv/ $ww/bash/ ; chmod 777 -R $ww/bash/vps-srv/"
+alias vps.h.db.d="scp -rp root@hoth.m-eta.app:/opt/rightthumb-widgets-v0/widgets/databank/tables/*.* $ww/databank/tables/ ; chmod 777 -R $ww/databank/tables/"
+alias vps.h.py.d="scp -rp root@hoth.m-eta.app:/opt/rightthumb-widgets-v0/widgets/python/vps* $ww/python/ ; chmod 777 -R $ww/python/"
+alias vps.h.u="vps.h.py.u; vps.h.sh.u; vps.h.db.u"
+alias vps.h.d="vps.h.py.d; vps.h.sh.d; vps.h.ub.d"
+
+
+alias u..="p site -f"
 alias u.="p site -u -f"
 alias d.="p site -d -f"
 
