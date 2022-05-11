@@ -1205,7 +1205,7 @@ def do(what=None,string='',a=None,b=None,c=None,d=None):
     # if what in 'file'.split(' '): import re; return re.sub(r'[0-9a-zA-Z_\-+$ ]', '', string);
     # if what in 'file'.split(' '): import re; return re.sub(r'^[0-9a-zA-Z_\-. ]+$', '', string);
     
-    if what in '.sh'.split(' '): return dot_sh(string);
+    if what in '.sh'.split(' '): return sh(string);
     if what in 'all'.split(' '): return replaceAll(string,a,b);
     if what in 'all'.split(' '): return replaceAll(string,a,b);
     if what in 'cleanAll'.split(' '): return cleanAll(string,a,b);
@@ -1217,7 +1217,8 @@ def do(what=None,string='',a=None,b=None,c=None,d=None):
     if what in 'n'.split(' '): return removeNonNumber(string);
     if what in 'ra remove'.split(' '): return removeAll(string,a);
 
-def dot_sh(string):
+def sh(string):
+    string=str(string)
     string=string.replace( chr(10), '\n' ).replace( '\r', '' ).replace( chr(27), '' ).replace( chr(10), '\n' ).replace( '\r', '' ).replace( chr(27), '' )
     while '\t' in string: string = string.replace( '\t', '    ' );
     return string

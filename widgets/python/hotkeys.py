@@ -44,6 +44,7 @@ def appSwitches():
     _.switches.register( 'Add-Text-Text', '-text' )
     _.switches.register( 'Add-Text-Back', '-back' )
     _.switches.register( 'Add-Text-Note', '-note' )
+    _.switches.register( 'Key-search', '-k,-key,-keys,?k,?keys' )
 
 #   finds the file in probable locations
 #   and 
@@ -94,6 +95,8 @@ _.appInfo[focus()] = {
                         _.hp('p hotkeys -add ...lines -text "sum(1 for line in open(''))" -back 2 -note python-file-lines'),
                         '#      IF YOU DO NOT USE -text when -add it will take from the copied clipboard',
                         _.hp('p hotkeys -add ...lines -back 2 -note python-file-lines'),
+                        '',
+                        'hk imp',
                         '',
     ],
     'columns': [
@@ -485,6 +488,58 @@ class CLIP:
 
         result.reverse()
         _copy.imp.copy(  '\n'.join(data)  , p=0 )
+
+
+    def replacer2(self):
+        _copy = _.regImp( __.appReg, '-copy' )
+        _paste = _.regImp( __.appReg, '-paste' )
+        data  = _paste.imp.paste()
+        data = cleaner(data)
+        lines=data.split('\n')
+        a=lines.pop(0)
+        b=lines.pop(0)
+        k1='1aef6092'
+        k2='54e3f6e1'
+        c='\n'.join(lines)
+        c=c.replace(a,k1);
+        c=c.replace(b,k2);
+        c=c.replace(k1,b);
+        c=c.replace(k2,a);
+        
+        _copy.imp.copy(  c  , p=0 )
+
+
+    def swap(self):
+        _copy = _.regImp( __.appReg, '-copy' )
+        _paste = _.regImp( __.appReg, '-paste' )
+        data  = _paste.imp.paste()
+        data = cleaner(data)
+        def _test_(line):
+            line=line.replace(' ','').replace('\t','')
+            if len(line): return True
+            return False
+        def _swap_(line):
+            par=[]
+            rt=''
+            for li in line:
+                if _test_(li):
+                    if li in 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ -_"'+'"':
+                        rt+=li
+                    else:
+                        par.append(cleaner(rt)); rt='';
+                        par.append(li)
+            par.append(cleaner(rt))
+            if len(par) == 3:
+                if ' '+par[1] in line: par[1]=' '+par[1];
+                if par[1]+' ' in line: par[1]=par[1]+' ';
+                return par[2] + par[1] + par[0]
+            return line
+        pass
+        new=[]
+        for lin in data.split('\n'):
+            row=_swap_(lin)
+            new.append(row)
+        _copy.imp.copy(  '\n'.join(new)  , p=0 )
 
 
 
@@ -1731,28 +1786,54 @@ class LOADER:
 
 def action():
 
-    if _.switches.isActive('Convert-AutoText'):
-        table = Loader.autoText()
-        if table:
-            _.saveTableDB( table, 'hotkeys-AutoText.dex' )
-        return None
-    if _.switches.isActive('Add-Text-Trigger'):
-        add  = _.switches.value('Add-Text-Trigger')
-        text = _.switches.value('Add-Text-Text')
-        back = _.switches.value('Add-Text-Back')
-        note = _.switches.value('Add-Text-Note')
-        if len(back):
-            back = int(back)
-        else:
-            back = 0
-        if len(text) < 2:
-            _paste = _.regImp( __.appReg, '-paste' )
-            text = _paste.imp.paste()
-        text = text.replace('\r','')
-        Loader.add_text(add,text,back,note)
-        return None
+
+
+
+    if not _.switches.isActive('Key-search'):
+        if _.switches.isActive('Convert-AutoText'):
+            table = Loader.autoText()
+            if table:
+                _.saveTableDB( table, 'hotkeys-AutoText.dex' )
+            return None
+        if _.switches.isActive('Add-Text-Trigger'):
+            add  = _.switches.value('Add-Text-Trigger')
+            text = _.switches.value('Add-Text-Text')
+            back = _.switches.value('Add-Text-Back')
+            note = _.switches.value('Add-Text-Note')
+            if len(back):
+                back = int(back)
+            else:
+                back = 0
+            if len(text) < 2:
+                _paste = _.regImp( __.appReg, '-paste' )
+                text = _paste.imp.paste()
+            text = text.replace('\r','')
+            Loader.add_text(add,text,back,note)
+            return None
 
     load()
+
+
+    if _.switches.isActive('Key-search'):
+        global table2
+        omit=[
+                'import,os,sys,time,importlib',
+        ]
+        for key in table2:
+            txt=str(table2[key])
+            if not key in omit and _.showLine(txt): _.pr(key,'\t','\t'.join(table2[key]['raw']).replace('Key.','').replace('cmd','win'));
+        # a_t=[]
+        # for rec in auto_text:
+        #     txt=str(rec)
+        #     if _.showLine(txt):
+        #         k=list(rec.keys())[0]
+        #         a_t.append({})
+        #         _.pr(rec[ list(rec.keys())[0] ]['raw'])
+
+
+        return None
+
+
     _.pr( 'EXIT:   Win + esc' )
     with Listener(on_press=Hotkeys.process_keystroke,on_release=Hotkeys.release_key) as l:
         l.join()
@@ -1806,6 +1887,7 @@ def cleaner(subject,deep=0):
 
 def load():
     global table
+    global table2
     global auto_text
     global hot_text
     global log
@@ -1855,9 +1937,13 @@ def load():
                 'sql-crud': { 'raw': [ 'Key.alt', 'Key.cmd', 'c' ], 'do': 'Clip.SQL_to_crud()' },
                 'ad-notes': { 'raw': [ 'Key.alt', 'Key.shift', 'Key.ctrl', 'a' ], 'do': 'Clip.ad_notes()' },
                 'clip-replace': { 'raw': [ 'Key.alt', 'Key.cmd', 'r' ], 'do': 'Clip.replacer()' },
+                'clip-replace2': { 'raw': [ 'Key.ctrl,2', 'Key.shift,1', 'r' ], 'do': 'Clip.replacer2()' },
+                'clip-swap': { 'raw': [ 'Key.ctrl,2',  's' ], 'do': 'Clip.swap()' },
+                # 'clip-replace': { 'raw': [ 'Key.ctrl,2',  's' ], 'do': 'Clip.swap()' },
 
 
     }
+    table2=table
     auto_text = _.getTableDB('hotkeys-AutoText.dex')
     hot_text  = _.getTableDB('hotkeys-Text.dex')
     Loader.build_table()

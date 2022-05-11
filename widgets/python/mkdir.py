@@ -172,8 +172,9 @@ def fix(path):
 		return path
 	if not path.startswith(p):
 		path=p+os.sep+path
-	path=path.replace(os.sep+os.sep,os.sep)
-	path=path.replace(os.sep+os.sep,os.sep)
+	path=_str.do('dup',path,os.sep)
+	# path=path.replace(os.sep+os.sep,os.sep)
+	# path=path.replace(os.sep+os.sep,os.sep)
 	return path
 
 def action():

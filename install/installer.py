@@ -3134,15 +3134,22 @@ alias .git.="rm -rf rightthumb-widgets-v0 ; git clone https://github.com/rightth
 alias .git..="rm -rf rightthumb-widgets-v0 ; git clone https://github.com/rightthumb/rightthumb-widgets-v0 ; cd rightthumb-widgets-v0 ; chmod -R 777 . ; p shClean -folder -r ; vps.b.py.; vps.b.sh. ; vps.b.db."
 alias .git.c="rm -rf rightthumb-widgets-v0 ; git clone https://github.com/rightthumb/rightthumb-widgets-v0 ; cd rightthumb-widgets-v0 ; chmod -R 777 . ; p shClean -folder -r ; vps.c.py.; vps.c.sh. ; vps.c.db."
 alias .git.h="rm -rf rightthumb-widgets-v0 ; git clone https://github.com/rightthumb/rightthumb-widgets-v0 ; cd rightthumb-widgets-v0 ; chmod -R 777 . ; p shClean -folder -r ; vps.h.py.; vps.h.sh. ; vps.h.db."
-alias vps.b..="vps.b.py.; vps.b.sh. ; vps.b.db."
-alias vps..b..="vps.b.py; vps.b.sh ; vps.b.db"
-alias vps.h..="vps.h.py.; vps.h.sh. ; vps.h.db."
-alias vps..h..="vps.h.py; vps.h.sh ; vps.h.db"
-alias vps.h..="vps.h.py.; vps.h.sh. ; vps.h.db."
-alias vps.m..="vps.m.py.; vps.m.sh. ; vps.m.db."
-alias vps..m..="vps.m.py; vps.m.sh ; vps.m.db"
-alias vps.c..="vps.c.py.; vps.c.sh. ; vps.c.db."
-alias vps..c..="vps.c.py; vps.c.sh ; vps.c.db"
+
+
+alias vps.b..="vps.b.py; vps.b.sh; vps.b.db;"
+alias vps..b..="vps.b.py.; vps.b.sh .; vps.b.db.;"
+alias vps.h..="vps.h.py; vps.h.sh; vps.h.db;"
+alias vps..h..="vps.h.py.; vps.h.sh.; vps.h.db.;"
+alias vps.h..="vps.h.py; vps.h.sh; vps.h.db;"
+alias vps.m..="vps.m.py; vps.m.sh; vps.m.db;"
+alias vps..m..="vps.m.py.; vps.m.sh.; vps.m.db.;"
+alias vps.c..="vps.c.py; vps.c.sh; vps.c.db;"
+alias vps..c..="vps.c.py.; vps.c.sh.; vps.c.db.;"
+
+alias mkdir="$p mkdir -folders "
+alias mkdir.="$p mkdir -files "
+
+
 echo '' > $stmp/.gp
 alias .gp=" pwd > $stmp/.gp ; cd /opt/rightthumb-widgets-v0 ; git reset --hard ; git pull ; sudo chmod 777 -R . ; python3 /opt/rightthumb-widgets-v0/install/installer.py -rc.d h  ; cd $( cat $stmp/.gp )"
 
