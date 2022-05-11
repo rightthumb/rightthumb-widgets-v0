@@ -3148,6 +3148,8 @@ alias vps..c..="vps.c.py.; vps.c.sh.; vps.c.db.;"
 
 alias mkdir="$p mkdir -folders "
 alias mkdir.="$p mkdir -files "
+alias mkdir.fi="$p mkdir -files "
+alias mkdir.fo="$p mkdir -folders "
 
 
 echo '' > $stmp/.gp
