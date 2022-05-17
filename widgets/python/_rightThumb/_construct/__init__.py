@@ -520,8 +520,12 @@ setting('require-list',[])
 setting('receipt-log',True)
 setting('receipt-file',True)
 
+#--> todo#> create app to scan to fix this situation below
+
 os = imp('os.system')
 os = imp('os.sep')
+os = imp('os.listdir')
+os = imp('os.getcwd')
 os = imp('os.path.abspath')
 os = imp('os.path.isfile')
 os = imp('os.path.isdir')

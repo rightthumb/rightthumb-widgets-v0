@@ -3135,6 +3135,7 @@ alias .git..="rm -rf rightthumb-widgets-v0 ; git clone https://github.com/rightt
 alias .git.c="rm -rf rightthumb-widgets-v0 ; git clone https://github.com/rightthumb/rightthumb-widgets-v0 ; cd rightthumb-widgets-v0 ; chmod -R 777 . ; p shClean -folder -r ; vps.c.py.; vps.c.sh. ; vps.c.db."
 alias .git.h="rm -rf rightthumb-widgets-v0 ; git clone https://github.com/rightthumb/rightthumb-widgets-v0 ; cd rightthumb-widgets-v0 ; chmod -R 777 . ; p shClean -folder -r ; vps.h.py.; vps.h.sh. ; vps.h.db."
 
+alias pp="$p paths -f "
 
 alias vps.b..="vps.b.py; vps.b.sh; vps.b.db;"
 alias vps..b..="vps.b.py.; vps.b.sh .; vps.b.db.;"

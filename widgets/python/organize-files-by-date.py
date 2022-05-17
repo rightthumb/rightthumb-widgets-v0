@@ -30,7 +30,8 @@ _str = __.imp('_rightThumb._string')
 def sw():
     pass
     ### EXAMPLE: START
-    # _.switches.register( 'Input', '-i' )
+    _.switches.register( 'Folders', '-f,-folder,-Folders' )
+    _.switches.register( 'Recursive', '-r,recursive' )
     # _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=True )
     # _.switches.register( 'Files', '-f,-fi,-file,-files' )
     ### EXAMPLE: END
@@ -48,13 +49,14 @@ __.setting('switch-raw',[])
 
 _.appInfo[focus()] = {
     # 'app': '8facG-jo0Cxk',
-    'file': 'thisApp.py',
+    'file': 'organize-files-by-date.py',
     'liveAppName': __.thisApp( __file__ ),
-    'description': 'Changes the world',
+    'description': 'move file year/month/file',
         # _.ail(1,'subject')+
         # _.aib('one')+
     'categories': [
-                        'DEFAULT',
+                        'move',
+                        'file',
                 ],
     'usage': [
                         # 'epy another',
@@ -70,7 +72,8 @@ _.appInfo[focus()] = {
                         # '',
     ],
     'examples': [
-                        _.hp('p thisApp -file file.txt'),
+                        _.hp('b applog'),
+                        _.hp('p organize-files-by-date'),
                         _.linePrint(label='simple',p=0),
                         '',
     ],
@@ -145,28 +148,53 @@ _.l.sw.register( triggers, sw )
 ########################################################################################
 # START
 
+
+
+def process(folder):
+    global confirmed
+    try: items=os.listdir(folder)
+    except Exception as e: _.e(e)
+
+    for item in items:
+        path=folder+os.sep+item
+        if os.path.isfile(path):
+            me=_dir.info(path,f='me')
+            file=_dir.info(path)['name']
+            # _.pv(file)
+            # sys.exit()
+            # file=_dir.info(path,f='file')
+            # _.pr(me)
+            month=_.isDate(me,f='month')
+            
+
+            nf=folder+os.sep+month.replace('.',os.sep)
+            _.pr(path)
+            _.pr(nf)
+
+
+
+            if not confirmed:
+                ask=input('move ?Yn: ')
+                if not 'n' in ask.lower(): confirmed=True
+
+
+            if confirmed: _v.mkdir(nf); shutil.move(path,nf+os.sep+file);
+
+
+        elif os.path.isdir(path):
+            if _.switches.isActive('Recursive'): process(path)
+
 def action():
-    #--> min, architecture {:strict:}
-    #--> trigger/callback  <w#
-    #--> todo#> meta to scan for
-    load()
-    global c3po
+    
+    if _.switches.isActive('Folders'): folders=_.switches.values('Folders')
+    else: folders=[os.getcwd()]
 
-
-
-    for i, line, bi in _.numerate( _.isData(r=0) ):
-        #--> _.nindex(bi,h,n)  =  line.index(n)
-        #--> new print function
-        _.pr(line)
-    _.pr('ready',c='green')
-
-def load():
-    global c3po
-    c3po = _.getTable( 'table' )
-    #--> new table printer
-    _.pt(c3po)
-
-
+    for folder in folders: process(folder)
+# import shutil
+confirmed=False
+import _rightThumb._dir as _dir
+shutil=__.imp('shutil.move')
+os=__.imp('os.sep')
 ########################################################################################
 if __name__ == '__main__':
     action()

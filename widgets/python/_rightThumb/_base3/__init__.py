@@ -125,8 +125,8 @@ def print_pr(text):
         lines.append(line)
     return '\n'.join(lines)
 
-
-print_ed=[]
+try: print_ed;
+except Exception as e: print_ed=[];
 print_ed_group={}
 def print_(*args,p=None,c=None,pad=3,g=None,end=None):
     global print_ed; global print_ed_group; items=[];

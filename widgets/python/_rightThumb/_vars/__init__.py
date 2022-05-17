@@ -1551,7 +1551,7 @@ fn.path.sanitize=sanitizeFolder
 fn.path.path=__.path
 fn.path.pop=popFile
 fn.path.mpop=popFileDir
-
+applog=myAppLogs
 if __.isWin:
 	user = cmdGetVar('username')
 else:

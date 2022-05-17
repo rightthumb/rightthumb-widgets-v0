@@ -491,7 +491,7 @@ base=None
 def action():
 	if _.switches.isActive('Files') and _.switches.isActive('Meta'):
 		import urllib.parse
-		url='https://eyeformeta.com/apps/md/?vpath='+urllib.parse.quote( __.path(_.switches.values( 'Files' )[0]) )
+		url='https://eyeformeta.com/apps/meta/listener/?vpath='+urllib.parse.quote( __.path(_.switches.values( 'Files' )[0]) )
 		webbrowser.open(url, new=2)
 		return None
 

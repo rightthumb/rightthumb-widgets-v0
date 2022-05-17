@@ -9,7 +9,6 @@
 #    - Scott Taylor Reph, RightThumb.com
 # ###########################################################################
 # ## {C3P0D40fAe8B} ##
-
 ##################################################
 import sys, time
 ##################################################
@@ -26,14 +25,9 @@ _.load()
 _v = __.imp('_rightThumb._vars')
 _str = __.imp('_rightThumb._string')
 ##################################################
-
 def sw():
     pass
-    ### EXAMPLE: START
-    # _.switches.register( 'Input', '-i' )
-    # _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=True )
-    # _.switches.register( 'Files', '-f,-fi,-file,-files' )
-    ### EXAMPLE: END
+    _.switches.register( 'Encrypt', '-en' )
 
 # __.setting('require-list',['Pipe','Files','Plus'])
 __.setting('require-list',[])
@@ -48,9 +42,9 @@ __.setting('switch-raw',[])
 
 _.appInfo[focus()] = {
     # 'app': '8facG-jo0Cxk',
-    'file': 'thisApp.py',
+    'file': 'foobar.py',
     'liveAppName': __.thisApp( __file__ ),
-    'description': 'Changes the world',
+    'description': 'fake word generator',
         # _.ail(1,'subject')+
         # _.aib('one')+
     'categories': [
@@ -110,68 +104,73 @@ _.l.conf('clean-pipe',True)
 _.l.sw.register( triggers, sw )
 
 ########################################################################################
-### EXAMPLE: START
 
 
-    #--> make hotkey ad-description soon:  <--<w#
-    #-->    - outer most typed first
-    #-->    - blank pipe
-    #-->    __.setting('hotkey-clip.ad_description-start1',d=False)
-    #--> _________________________________
-    #--> describe selection area two
-    #--> 3 write a note here wrap text
-    #--> two dignissim
-    #--> 1 inceptos
-    #--> _________________________________
-    #--> describe selection area two
-    #-->              |           |
-    #-->              |           | - write a note here
-    #-->              |           |   wrap text
-    #-->              |           |
-    #-->              |           | - dignissim
-    #-->              |
-    #-->              | - inceptos
-
-    # if _.switches.isActive('Test'): test(); return None;
-    # result=[]; result=[ _.pr(line) for i, line, bi in _.numerate( _.isData(r=0) )]
-    # bk=[];[  bk.append(rec['backup']) for rec in backupLog if path == rec['file']]; bk=bk[-1];
-    #--> a=(1 if True else 0) <--# 
-    #--> m=[[row[i] for row in matrix] for i in range(4)]
-    # requests=__.imp('requests.post')
-    # data=str(requests.post(url,data={}).content,'iso-8859-1')
-
-
-### EXAMPLE: END
 ########################################################################################
 # START
 
+
+def encrypt(text,r=False):
+    random=_.imp('random.randrange')
+    n=''
+    for c in text:
+        n+=str(ord(c))
+    # _.pr(n)
+    def seek(): return random.randrange(5, 12);
+    k=seek()
+    w=''
+    for i,c in enumerate(n):
+        if i == k:
+            k=i+seek()
+            w+=' '
+        w+=c
+    # _.pr(w)
+    def _en(w5):
+        z=''
+        for part in w5.split(' '):
+            z+=_nID.mini.gen(int(part))
+            z+=' '
+        return z
+    a=_en(w)
+    w2a=list(w)
+    w2a.reverse()
+    b=_en(''.join(w2a))
+    return a, b    
+
+    _.pr(z)
+
+
+
 def action():
-    #--> min, architecture {:strict:}
-    #--> trigger/callback  <w#
-    #--> todo#> meta to scan for
-    load()
-    global c3po
+    text='test'
+    if _.switches.isActive('Encrypt'):
+        text=' '.join(_.switches.values('Encrypt'))
 
+    [ _.pr('\n',w3) for w3 in encrypt(text) ]
+    [ _.pr('\n',w3) for w3 in encrypt(text) ]
+    [ _.pr('\n',w3) for w3 in encrypt(text) ]
+    [ _.pr('\n',w3) for w3 in encrypt(text) ]
+    [ _.pr('\n',w3) for w3 in encrypt(text) ]
+    [ _.pr('\n',w3) for w3 in encrypt(text) ]
+    [ _.pr('\n',w3) for w3 in encrypt(text) ]
+    
 
-
-    for i, line, bi in _.numerate( _.isData(r=0) ):
-        #--> _.nindex(bi,h,n)  =  line.index(n)
-        #--> new print function
-        _.pr(line)
-    _.pr('ready',c='green')
 
 def load():
-    global c3po
-    c3po = _.getTable( 'table' )
-    #--> new table printer
-    _.pt(c3po)
+    if _.switches.isActive('Password'):
+        _nID.mini.password( _.switches.values('Password')[0] )
+    else:
+        # _nID.mini.password( _keychain.imp.key('nID') )
+        _nID.mini.password( _.appID_nID_password() )
+    
 
+import _rightThumb._nID as _nID
+_keychain = _.regImp( __.appReg, 'keychain' )
 
 ########################################################################################
 if __name__ == '__main__':
     action()
     __.isExit()
-
 
 
 
