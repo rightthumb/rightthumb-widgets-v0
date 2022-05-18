@@ -19,7 +19,7 @@ echo.
 if EXIST *.7z call :ARCHIVE_FILES
 goto:eof
 :ARCHIVE_FILES
-	IF NOT [%take_action%] == [y] move *.7z %archive7z%\>nul
+    IF NOT [%take_action%] == [y] move *.7z %archive7z%\>nul
 goto:eof
 
 

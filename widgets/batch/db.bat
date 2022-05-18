@@ -13,12 +13,12 @@ rem ## {C3P0D40fAe8B} ##
 echo.
 echo Try:
 echo.
-echo 	db.new
-echo 	db.del
+echo     db.new
+echo     db.del
 echo.
-echo 	b db.new
+echo     b db.new
 echo.
-echo 	clients
+echo     clients
 echo.
 
 

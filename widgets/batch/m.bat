@@ -15,9 +15,9 @@ IF NOT EXIST %myBookmarks%\ MD %myBookmarks%\
 set p=%myBookmarks%\BM-%1.txt
 
 IF [%2] == [] (
-	CALL p m -alias %*
+    CALL p m -alias %*
 ) else (
-	CALL p m -alias %* --c
+    CALL p m -alias %* --c
 )
 
 

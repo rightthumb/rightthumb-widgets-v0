@@ -48,25 +48,25 @@ IF [%extId%] == [{653103B6-8D0D-2686-6F0B-5E686CEF3AE6}] set driveFound=l119
 
 IF [%driveFound%] == [false] GOTO:EOF
 IF [%driveFound%] == [t3] (
-	echo %extDrive:~0,1%> %userprofile%\3T_drive.txt
-	set t3Drive=%extDrive:~0,1%
-	set t3=%extDrive:~0,1%
-	)
+    echo %extDrive:~0,1%> %userprofile%\3T_drive.txt
+    set t3Drive=%extDrive:~0,1%
+    set t3=%extDrive:~0,1%
+    )
 IF [%driveFound%] == [l119] (
-	echo %extDrive:~0,1%> %userprofile%\l119_drive.txt
-	set l119=%extDrive:~0,1%
-	)
+    echo %extDrive:~0,1%> %userprofile%\l119_drive.txt
+    set l119=%extDrive:~0,1%
+    )
 IF [%driveFound%] == [b32] (
-	set thisIsScriptDrive=true
-	)
+    set thisIsScriptDrive=true
+    )
 :::::::
 IF [%thisIsScriptDrive%] == [true] (
-	::::::: Script Root
-	echo %extDrive:~0,1%> %userprofile%\php_drive.txt
-	set widgets=%extDrive:~0,1%
-	set widgets=%extDrive:~0,1%
-	set widgets=%extDrive:~0,1%
-	)
+    ::::::: Script Root
+    echo %extDrive:~0,1%> %userprofile%\php_drive.txt
+    set widgets=%extDrive:~0,1%
+    set widgets=%extDrive:~0,1%
+    set widgets=%extDrive:~0,1%
+    )
 
 GOTO:EOF
 :::::::::::::::::::::::::::::::::::::::::::

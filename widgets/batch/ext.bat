@@ -11,9 +11,9 @@ rem ###########################################################################
 rem ## {C3P0D40fAe8B} ##
 
 if [%1] == [] (
-	call p ls -c ext --c -s ext | p countEach
+    call p ls -c ext --c -s ext | p countEach
 ) else (
-	call p ls -c ext --c -s ext %* | p countEach
+    call p ls -c ext --c -s ext %* | p countEach
 )
 
 

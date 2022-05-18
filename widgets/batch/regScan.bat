@@ -12,9 +12,9 @@ rem ## {C3P0D40fAe8B} ##
 
 
 if [%2] == [] (
-	CALL :ONE %1
+    CALL :ONE %1
 ) else (
-	CALL :TWO %1 %2
+    CALL :TWO %1 %2
 )
 
 GOTO:EOF

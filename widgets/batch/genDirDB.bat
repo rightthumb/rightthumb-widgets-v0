@@ -12,9 +12,9 @@ rem ## {C3P0D40fAe8B} ##
 
 
 if [%isAdmin%] == [False] (
-	echo Error: Not Admin
+    echo Error: Not Admin
 ) else (
-	CALL :GenerateDirDatabase
+    CALL :GenerateDirDatabase
 )
 GOTO:EOF
 

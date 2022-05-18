@@ -21,7 +21,7 @@ SET count=1
 FOR /F "tokens=* USEBACKQ" %%F IN (`%*`) DO (
   SET result!count!=%%F
   SET /a count=!count!+1
-	set result=%result1%
+    set result=%result1%
 )
 ENDLOCAL
 

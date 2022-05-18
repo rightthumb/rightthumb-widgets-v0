@@ -51,10 +51,10 @@ GOTO:EOF
 :SETDRIVE
 SET driveIDPath=%thisDrive:~0,1%:\drive.id.sys
 IF EXIST "%driveIDPath%" (
-		SET /p driveID=<"%driveIDPath%"
-	) else (
-		CALL :driveIDPathNOTEXIST
-	)
+        SET /p driveID=<"%driveIDPath%"
+    ) else (
+        CALL :driveIDPathNOTEXIST
+    )
 CALL timestamp default noEcho
 SET thisDMR=%manageDrivesRoot%\%driveID%
 SET thisDMRLabel=%thisDMR%\label.txt
@@ -62,37 +62,37 @@ SET thisDMRLog=%thisDMR%\log.txt
 SET thisDMRLetter=%thisDMR%\letter.txt
 SET thisDMRIndex=%thisDMR%\indexSettings.txt
 IF EXIST "%thisDMR%" (
-		SET /p driveLabel=<"%thisDMRLabel%"
-		echo %now%,%thisDrive:~0,1%,Registered>> %thisDMRLog%
-		echo %thisDrive:~0,1%>"%thisDMRLetter%"
-		IF NOT EXIST "%thisDMRIndex%" (echo F>"%thisDMRIndex%")
-	) ELSE (
-		mkdir %thisDMR%
-		ping 127.0.0.1 -n 1 > nul
-		IF EXIST "%thisDMR%" (
-				echo %now%,Created>> %thisDMRLog%
-				echo %now%,%thisDrive:~0,1%,Registered>> %thisDMRLog%
-				echo N>"%thisDMRIndex%"
-				echo %thisDrive:~0,1%>"%thisDMRLetter%"
-				echo %thisDrive:~0,1%:\>"%thisDMRLabel%"
-				notepad "%thisDMRLabel%"
-				ping 127.0.0.1 -n 1 > nul
-				SET /p driveLabel=<"%thisDMRLabel%"
-			)
-	)
-echo          %thisDrive:~0,1%:\ %driveLabel%	%driveID%
+        SET /p driveLabel=<"%thisDMRLabel%"
+        echo %now%,%thisDrive:~0,1%,Registered>> %thisDMRLog%
+        echo %thisDrive:~0,1%>"%thisDMRLetter%"
+        IF NOT EXIST "%thisDMRIndex%" (echo F>"%thisDMRIndex%")
+    ) ELSE (
+        mkdir %thisDMR%
+        ping 127.0.0.1 -n 1 > nul
+        IF EXIST "%thisDMR%" (
+                echo %now%,Created>> %thisDMRLog%
+                echo %now%,%thisDrive:~0,1%,Registered>> %thisDMRLog%
+                echo N>"%thisDMRIndex%"
+                echo %thisDrive:~0,1%>"%thisDMRLetter%"
+                echo %thisDrive:~0,1%:\>"%thisDMRLabel%"
+                notepad "%thisDMRLabel%"
+                ping 127.0.0.1 -n 1 > nul
+                SET /p driveLabel=<"%thisDMRLabel%"
+            )
+    )
+echo          %thisDrive:~0,1%:\ %driveLabel%    %driveID%
 GOTO:EOF
 
 :driveIDPathNOTEXIST
-		SET driveIDtmpFile=tmp001X.txt
-		echo '%driveIDtmpFile%'
-		CALL %scriptroot%\genguid.bat > %driveIDtmpFile%
-		ping 127.0.0.1 -n 1 > nul
-		SET /p driveID=<%driveIDtmpFile%
-		del /q %driveIDtmpFile%
-		echo %driveID%>"%driveIDPath%"
-		ping 127.0.0.1 -n 1 > nul
-		IF EXIST "%driveIDPath%" (attrib +h "%driveIDPath%")
+        SET driveIDtmpFile=tmp001X.txt
+        echo '%driveIDtmpFile%'
+        CALL %scriptroot%\genguid.bat > %driveIDtmpFile%
+        ping 127.0.0.1 -n 1 > nul
+        SET /p driveID=<%driveIDtmpFile%
+        del /q %driveIDtmpFile%
+        echo %driveID%>"%driveIDPath%"
+        ping 127.0.0.1 -n 1 > nul
+        IF EXIST "%driveIDPath%" (attrib +h "%driveIDPath%")
 GOTO:EOF
 
 :VAR

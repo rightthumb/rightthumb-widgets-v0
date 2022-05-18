@@ -44,7 +44,7 @@ set check=%moddate%-%cnt%-%input%
  IF EXIST "%check%" (
      GOTO LOOP
  ) ELSE (
-	 set ndVar=%moddate%-%cnt%-%fileName%
+     set ndVar=%moddate%-%cnt%-%fileName%
      echo %check%
  )
 

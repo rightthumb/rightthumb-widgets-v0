@@ -16,10 +16,10 @@ SET scrap2="%w%\widgets\bash\notes\RT-scrap-%unixID7%.txt"
 if not exist "%w%\widgets\bash" mkdir "%w%\widgets\bash"
 if not exist "%w%\widgets\bash\notes" mkdir "%w%\widgets\bash\notes"
 if not exist %scrap2% (
-	echo %computername% - %distro% >> %scrap2%
-	echo ______________________________________________________________________ >> %scrap2%
-	echo.  >> %scrap2%
-	echo ______________________________________________________________________ >> %scrap2%
+    echo %computername% - %distro% >> %scrap2%
+    echo ______________________________________________________________________ >> %scrap2%
+    echo.  >> %scrap2%
+    echo ______________________________________________________________________ >> %scrap2%
 )
 
 

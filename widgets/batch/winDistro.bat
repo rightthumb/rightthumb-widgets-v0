@@ -11,8 +11,8 @@ rem ###########################################################################
 rem ## {C3P0D40fAe8B} ##
 
 if [%1] == [] (
-	echo provide path to opt folder
-	goto:eof
+    echo provide path to opt folder
+    goto:eof
 )
 echo unable to change ownership in linux
 goto:eof

@@ -79,18 +79,18 @@ set /p JS=<case_include.txt
 
 
 echo ======================= >> "%log%"
-	echo ^<br^> >> "%log%"
+    echo ^<br^> >> "%log%"
 echo %date% - %time%: >> "%log%"
-	echo ^<br^> >> "%log%"
+    echo ^<br^> >> "%log%"
 
 
 echo Case: %caseID% - ^<b^>  %todo% >> "%log%"
-	echo ^</b^> >> "%log%
+    echo ^</b^> >> "%log%
 
-	echo ^<br^> >> "%log%"
+    echo ^<br^> >> "%log%"
 echo %note% >> "%log%"
 
-	echo ^<br^> >> "%log%"
+    echo ^<br^> >> "%log%"
 set did=Created Case %caseID%
 GOTO END
 
@@ -158,16 +158,16 @@ GOTO END
 ECHO ALLDONE
 set did=All Cases Closed
 echo ======================= > "%html%"
-	echo ^<br^> >> "%html%"
+    echo ^<br^> >> "%html%"
 echo %date% - %time%: >> "%html%"
-	echo ^<br^> >> "%html%"
+    echo ^<br^> >> "%html%"
 
-	echo ^<b^> >> "%html%
+    echo ^<b^> >> "%html%
 echo All Tasks have been completed >> "%html%"
-	echo ^</b^> >> "%html%
-	echo ^<br^> >> "%html%"
+    echo ^</b^> >> "%html%
+    echo ^<br^> >> "%html%"
 
-	echo ^<br^> >> "%html%"
+    echo ^<br^> >> "%html%"
 GOTO SKIPEND
 
 :VIEW

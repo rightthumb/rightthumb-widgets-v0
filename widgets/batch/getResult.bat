@@ -17,8 +17,8 @@ CALL :DeQuote doThis
 set /p result=<{6E5894A5FBA8}
 
 IF EXIST {6E5894A5FBA8} (
-		del {6E5894A5FBA8}
-	)
+        del {6E5894A5FBA8}
+    )
 set doThis=
 
 GOTO:EOF

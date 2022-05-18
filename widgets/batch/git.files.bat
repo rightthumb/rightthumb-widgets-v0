@@ -2,9 +2,9 @@
 call m back --c
 call b w > nul
 if [%1] == [] (
-	call:one
+    call:one
 ) else (
-	call:two %*
+    call:two %*
 )
 call b back > nul
 goto:eof

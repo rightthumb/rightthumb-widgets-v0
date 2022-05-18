@@ -10,11 +10,11 @@ rem    - Scott Taylor Reph, RightThumb.com
 rem ###########################################################################
 rem ## {C3P0D40fAe8B} ##
 
-	set selectedFile=%1
-	set selectedFile=%selectedFile:"=%
-	CD /D %selectedFile:~0,2%
-	cd "%~dp1"
-	set "selectedFile="
+    set selectedFile=%1
+    set selectedFile=%selectedFile:"=%
+    CD /D %selectedFile:~0,2%
+    cd "%~dp1"
+    set "selectedFile="
 
 
 set ext=%2
@@ -54,7 +54,7 @@ set check=%moddate%-%cnt%-%fileName%.%ext%
  IF EXIST "%check%" (
      GOTO LOOP
  ) ELSE (
-	 set ndVar=%moddate%-%cnt%-%fileName%.%ext%
+     set ndVar=%moddate%-%cnt%-%fileName%.%ext%
      echo %check%
  )
 

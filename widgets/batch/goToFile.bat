@@ -10,9 +10,9 @@ rem    - Scott Taylor Reph, RightThumb.com
 rem ###########################################################################
 rem ## {C3P0D40fAe8B} ##
 
-	set selectedFile=%1
-	set selectedFile=%selectedFile:"=%
-	CD /D %selectedFile:~0,2%
-	cd "%~dp1"
+    set selectedFile=%1
+    set selectedFile=%selectedFile:"=%
+    CD /D %selectedFile:~0,2%
+    cd "%~dp1"
 set "selectedFile="
 

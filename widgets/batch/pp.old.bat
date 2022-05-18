@@ -10,6 +10,17 @@ rem    - Scott Taylor Reph, RightThumb.com
 rem ###########################################################################
 rem ## {C3P0D40fAe8B} ##
 
+
+xcopy      /s/d/y/c      %python%\_rightThumb\*.py      %myPrograms%\python\_rightThumb\      >nul
+
+if not exist "%myPython%\%1.py" (
+    set originalOne=%1
+    set searched=0
+    GOTO :APP_SEARCH
+)
+
+:START_WORKING
+call u >nul
 if [%1] == [] goto:EOF
 set changeDIR=false
 set switchUsed=false
@@ -59,6 +70,82 @@ if [%switch%] == [2] (
 
 
 goto:EOF
+:APP_SEARCH
+    set /a searched=%searched%+1
+    if [%searched%] == [1] set plusClose=90
+    rem echo %plusClose%
+    if [%searched%] == [2] set plusClose=80
+    rem echo %plusClose%
+    if [%searched%] == [3] set plusClose=70
+    rem echo %plusClose%
+    echo.>"%stmp%\app(file.py)_output.txt"
+    echo Error: Does not exist>>"%stmp%\app(file.py)_output.txt"
+    echo.>>"%stmp%\app(file.py)_output.txt"
+    echo Try:>>"%stmp%\app(file.py)_output.txt"
+    rem echo %searched% %plusClose%
+    call p file -folder %myPython% -noext -label ;tApps -prefix ;t +close %plusClose% + %1>>"%stmp%\app(file.py)_output.txt"
+    GOTO :POST_ERROR_COUNT_CHECK
+goto:EOF
+
+:POST_ERROR_COUNT_CHECK
+SET /p apps_found=<"%stmp%\app(file.py)_Count.txt"
+set /a apps_found=%apps_found%+1
+set /a apps_found=%apps_found%-1
+rem echo %apps_found%
+if [%apps_found%] == [1] goto :POST_ERROR_HAS_SINGLE
+rem GOTO:EOF 
+if [%apps_found%] == [0] if %searched% LSS 3 goto :APP_SEARCH
+if [%apps_found%] == [0] if [%searched%] == [3] type "%stmp%\app(file.py)_output.txt"
+if %apps_found% GTR 0 GOTO :POST_ERROR
+goto:EOF
+:POST_ERROR
+
+
+if exist "%stmp%\app(file.py).txt" (
+    goto :POST_ERROR_HAS_SINGLE
+) else (
+    type "%stmp%\app(file.py)_output.txt"
+)
+
+
+goto:EOF
+:POST_ERROR_HAS_SINGLE
+SET /p the_new_app=<"%stmp%\app(file.py).txt"
+set argLoop=0
+set argsNew=%the_new_app%
+
+goto :BULD_ARGUMENTS
+:POST_BULD_ARGUMENTS
+rem echo %argsNew%
+set /p shouldRun= Did you mean %the_new_app% ?:  
+if [%shouldRun%] == [N] GOTO:EOF
+if [%shouldRun%] == [NO] GOTO:EOF
+if [%shouldRun%] == [n] GOTO:EOF
+if [%shouldRun%] == [no] GOTO:EOF
+if [%shouldRun%] == [] call :DOCUMENT_AND_START %argsNew%
+if [%shouldRun%] == [Y] call :DOCUMENT_AND_START %argsNew%
+if [%shouldRun%] == [YES] call :DOCUMENT_AND_START %argsNew%
+if [%shouldRun%] == [y] call :DOCUMENT_AND_START %argsNew%
+if [%shouldRun%] == [yes] call :DOCUMENT_AND_START %argsNew%
+
+GOTO:EOF
+call :START_WORKING %argsNew%
+:DOCUMENT_AND_START
+if not exist "%appAliasLog%" (
+    echo "timestamp","session","alias","original","folder">>%appAliasLog%
+)
+
+call timestamp sdel noEcho
+echo "%now%","%Session_ID%","%originalOne%","%1","%myPython%">>%appAliasLog%
+call :START_WORKING %*
+goto:EOF
+
+goto:EOF
+:BULD_ARGUMENTS
+SHIFT
+set argsNew=%argsNew% %1
+if not [%2] == [] goto :BULD_ARGUMENTS
+goto:POST_BULD_ARGUMENTS
 :TOFOLDER
 set changeDIR=true
 call m back
@@ -113,7 +200,7 @@ goto:EOF
 
 :labelLegacy
 call :TOFOLDER
-%py% "%myPython%\labelFile.py" "%myPython%\%1.py" "#835B0032-Legacy"
+%py% "%python%\labelFile.py" "%myPython%\%1.py" "#835B0032-Legacy"
 set switchAutoLegacy=true
 set switchUsed=true
 set switch=2

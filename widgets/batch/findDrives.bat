@@ -46,20 +46,20 @@ GOTO:EOF
 set foundDrive=%1
 set getDate=%2
 IF [%2] == [Y] (
-		set testTMP=Access denied
-		set result=Access denied
-		CALL getResult "attrib -H %foundDrive%:\drive.id.sys"
+        set testTMP=Access denied
+        set result=Access denied
+        CALL getResult "attrib -H %foundDrive%:\drive.id.sys"
 IF ["%result%"] == ["Access denied"] (
-		set testTMP=Access denied
-	) else (
-		set testTMP=%result:~,13%
-	)
+        set testTMP=Access denied
+    ) else (
+        set testTMP=%result:~,13%
+    )
 echo %testTMP%
-		IF ["%testTMP%"] == ["Access denied"] (
-				set getDate=N
-				echo Not Admin
-			)
-	)
+        IF ["%testTMP%"] == ["Access denied"] (
+                set getDate=N
+                echo Not Admin
+            )
+    )
 
 IF [%getDate%] == [Y] CALL :GETIDDATE %foundDrive%
 IF [%getDate%] == [N] CALL :GETID %foundDrive%
@@ -76,26 +76,26 @@ GOTO:EOF
 :GETIDDATE
 set foundDrive=%1
 IF EXIST %foundDrive%:\drive.id.sys (
-		attrib -H %foundDrive%:\drive.id.sys
-		CALL getResult "dir %foundDrive%:\drive.id.sys |+ drive.id.sys"
-		attrib +H %foundDrive%:\drive.id.sys
-		set /p foundDriveId=<%foundDrive%:\drive.id.sys
-		::set foundDriveIdDate=%result:~1,9%
-		set foundDriveIdDate=%result:~6,4%.%result:~,2%.%result:~3,2%
-	) else (
-		genGUID>%foundDrive%:\drive.id.sys
-		attrib +H %foundDrive%:\drive.id.sys
-	)
+        attrib -H %foundDrive%:\drive.id.sys
+        CALL getResult "dir %foundDrive%:\drive.id.sys |+ drive.id.sys"
+        attrib +H %foundDrive%:\drive.id.sys
+        set /p foundDriveId=<%foundDrive%:\drive.id.sys
+        ::set foundDriveIdDate=%result:~1,9%
+        set foundDriveIdDate=%result:~6,4%.%result:~,2%.%result:~3,2%
+    ) else (
+        genGUID>%foundDrive%:\drive.id.sys
+        attrib +H %foundDrive%:\drive.id.sys
+    )
 GOTO:EOF
 
 
 :GETID
 set foundDrive=%1
 IF EXIST %foundDrive%:\drive.id.sys (
-		set /p foundDriveId=<%foundDrive%:\drive.id.sys
-	) else (
-		genGUID>%foundDrive%:\drive.id.sys
-	)
+        set /p foundDriveId=<%foundDrive%:\drive.id.sys
+    ) else (
+        genGUID>%foundDrive%:\drive.id.sys
+    )
 GOTO:EOF
 
 

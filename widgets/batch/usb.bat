@@ -14,8 +14,8 @@ rem ## {C3P0D40fAe8B} ##
 CALL findUSB
 
 if not [%1] == [] (
-	SET theusb=%1
-	SET theusb=%theusb:~0,1%
+    SET theusb=%1
+    SET theusb=%theusb:~0,1%
 )
 
 cls

@@ -14,9 +14,9 @@ rem ## {C3P0D40fAe8B} ##
 SET VIDEO=%1
 CALL :dequote VIDEO
 if [%2] == [] (
-	CALL yAudio "%VIDEO%" & CALL autoMP3
+    CALL yAudio "%VIDEO%" & CALL autoMP3
 ) else (
-	CALL yAudio "%VIDEO%" & CALL autoMP3 %2
+    CALL yAudio "%VIDEO%" & CALL autoMP3 %2
 )
 
 Goto :eof

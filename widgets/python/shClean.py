@@ -238,7 +238,7 @@ def getFolder(folder):
 		path = path.replace(os.sep+os.sep,os.sep)
 		path = path.replace(os.sep+os.sep,os.sep)
 		if os.path.isfile(path):
-			if path.endswith('.sh') or path.endswith('.py'):
+			if path.endswith('.sh') or path.endswith('.py') or path.endswith('.bat'):
 				processFile(path)
 
 		if os.path.isdir(path):

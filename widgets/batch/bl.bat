@@ -3,13 +3,13 @@
 call p blank-file -f %*
 
 rem IF EXIST %1 (
-rem 	set /p ask=delete file?: 
-rem 	if [%ask%] == [y] CALL:CREATE %1 yes
-rem 	if [%ask%] == [] CALL:CREATE %1 yes
-rem 	if [%ask%] == [n] echo aborted
-rem 	if [%ask%] == [no] echo aborted
+rem     set /p ask=delete file?: 
+rem     if [%ask%] == [y] CALL:CREATE %1 yes
+rem     if [%ask%] == [] CALL:CREATE %1 yes
+rem     if [%ask%] == [n] echo aborted
+rem     if [%ask%] == [no] echo aborted
 rem ) ELSE (
-rem 	CALL:CREATE %1 no
+rem     CALL:CREATE %1 no
 rem )
 
 rem :CREATE

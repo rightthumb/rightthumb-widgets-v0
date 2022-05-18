@@ -13,7 +13,7 @@ rem ## {C3P0D40fAe8B} ##
 echo.
 set confirm=
 set /p confirm= Recover Stationery? 
-::echo =====================	
+::echo =====================    
 echo.
 IF [%confirm%] == [y] CALL :Yes
 IF NOT [%confirm%] == [y] CALL :No

@@ -30,52 +30,52 @@ IF NOT [%1] == [] (
 
 
 
-	ECHO %appServerTechApps%\7-Zip>> %appServerFiles%
-	ECHO %appServerTechApps%\KeePass-2.45>> %appServerFiles%
-	ECHO %appServerTechApps%\chrome-win>> %appServerFiles%
-	ECHO %appServerTechApps%\sublime>> %appServerFiles%
-	ECHO %appServerTechApps%\ProcessMonitor>> %appServerFiles%
-	ECHO %appServerTechApps%\tools\HijackThisPortable_2.0.5_English.paf.exe>> %appServerFiles%
-	ECHO %appServerTechApps%\tools\CCleaner_Portable.zip>> %appServerFiles%
-	ECHO %appServerTechApps%\tools\revo.exe>> %appServerFiles%
-	ECHO %appServerTechApps%\tools\putty.exe>> %appServerFiles%
-	ECHO %appServerTechApps%\tools\Tcpview.exe>> %appServerFiles%
-	ECHO %appServerTechApps%\tools\NetInfo>> %appServerFiles%
-	ECHO %appServerTechApps%\tools\PC-Audit>> %appServerFiles%
-	ECHO %appServerTechApps%\_stand_alone\WirelessKeyView>> %appServerFiles%
-	ECHO %appServerTechApps%\_stand_alone\NetBrute.exe>> %appServerFiles%
-	ECHO %appServerTechApps%\_stand_alone\WinRAR.zip>> %appServerFiles%
-	ECHO %appServerTechApps%\_stand_alone\Debuggers.zip>> %appServerFiles%
-	ECHO %appServerPro%\databank>> %appServerFiles%
-	rem ECHO %appServerPro%\exe>> %appServerFiles%
-	ECHO %appServerPro%\webApp>> %appServerFiles%
+    ECHO %appServerTechApps%\7-Zip>> %appServerFiles%
+    ECHO %appServerTechApps%\KeePass-2.45>> %appServerFiles%
+    ECHO %appServerTechApps%\chrome-win>> %appServerFiles%
+    ECHO %appServerTechApps%\sublime>> %appServerFiles%
+    ECHO %appServerTechApps%\ProcessMonitor>> %appServerFiles%
+    ECHO %appServerTechApps%\tools\HijackThisPortable_2.0.5_English.paf.exe>> %appServerFiles%
+    ECHO %appServerTechApps%\tools\CCleaner_Portable.zip>> %appServerFiles%
+    ECHO %appServerTechApps%\tools\revo.exe>> %appServerFiles%
+    ECHO %appServerTechApps%\tools\putty.exe>> %appServerFiles%
+    ECHO %appServerTechApps%\tools\Tcpview.exe>> %appServerFiles%
+    ECHO %appServerTechApps%\tools\NetInfo>> %appServerFiles%
+    ECHO %appServerTechApps%\tools\PC-Audit>> %appServerFiles%
+    ECHO %appServerTechApps%\_stand_alone\WirelessKeyView>> %appServerFiles%
+    ECHO %appServerTechApps%\_stand_alone\NetBrute.exe>> %appServerFiles%
+    ECHO %appServerTechApps%\_stand_alone\WinRAR.zip>> %appServerFiles%
+    ECHO %appServerTechApps%\_stand_alone\Debuggers.zip>> %appServerFiles%
+    ECHO %appServerPro%\databank>> %appServerFiles%
+    rem ECHO %appServerPro%\exe>> %appServerFiles%
+    ECHO %appServerPro%\webApp>> %appServerFiles%
 
 
 )
 
 IF [%1] == [] (
-	ECHO %appServerPro%\exe\exe>> %appServerFiles%
-	ECHO %appServerPro%\databank\tables>> %appServerFiles%
+    ECHO %appServerPro%\exe\exe>> %appServerFiles%
+    ECHO %appServerPro%\databank\tables>> %appServerFiles%
 
 
-	ECHO %appServerCC%>> %appServerFiles%
-	ECHO %appServerCompiledUnix%>> %appServerFiles%
-	ECHO %appServerCompiledWin%>> %appServerFiles%
-	ECHO %appServerSrcWin%>> %appServerFiles%
-	ECHO %appServerKeySub%>> %appServerFiles%
-	ECHO %appServerPython%\src>> %appServerFiles%
-	ECHO %appServerPython%\imploded\unix>> %appServerFiles%
-	ECHO %appServerPython%\imploded\windows>> %appServerFiles%
+    ECHO %appServerCC%>> %appServerFiles%
+    ECHO %appServerCompiledUnix%>> %appServerFiles%
+    ECHO %appServerCompiledWin%>> %appServerFiles%
+    ECHO %appServerSrcWin%>> %appServerFiles%
+    ECHO %appServerKeySub%>> %appServerFiles%
+    ECHO %appServerPython%\src>> %appServerFiles%
+    ECHO %appServerPython%\imploded\unix>> %appServerFiles%
+    ECHO %appServerPython%\imploded\windows>> %appServerFiles%
 
 
-	ECHO %appServerPro%\bash>> %appServerFiles%
-	ECHO %appServerPro%\batch>> %appServerFiles%
+    ECHO %appServerPro%\bash>> %appServerFiles%
+    ECHO %appServerPro%\batch>> %appServerFiles%
 
-	ECHO %appServerPro%\powershell>> %appServerFiles%
-	ECHO %appServerPro%\html>> %appServerFiles%
-	ECHO %appServerPro%\php>> %appServerFiles%
-	ECHO %appServerPro%\javascript>> %appServerFiles%
-	ECHO %appServerPro%\keys>> %appServerFiles%
+    ECHO %appServerPro%\powershell>> %appServerFiles%
+    ECHO %appServerPro%\html>> %appServerFiles%
+    ECHO %appServerPro%\php>> %appServerFiles%
+    ECHO %appServerPro%\javascript>> %appServerFiles%
+    ECHO %appServerPro%\keys>> %appServerFiles%
 )
 
 

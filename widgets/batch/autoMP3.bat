@@ -30,9 +30,9 @@ ffmpeg -i "%audioFile%" -codec:a libmp3lame -qscale:a 2 "output.mp3"
 CALL p pop_last   -string "%audioFile%" -f -p ;- .  > %tmpf%
 SET /p audioFileLabel=<%tmpf%
 if [%1] == [] (
-	rename "output.mp3" "%audioFileLabel%.mp3"
+    rename "output.mp3" "%audioFileLabel%.mp3"
 ) else (
-	rename "output.mp3" "%1 %audioFileLabel%.mp3"
+    rename "output.mp3" "%1 %audioFileLabel%.mp3"
 )
 rem rename "output.mp3" "%*.mp3"
 del "%audioFile%"

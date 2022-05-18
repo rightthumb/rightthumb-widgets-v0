@@ -54,8 +54,8 @@ GOTO:EOF
 
 :ERROR_CHECK
 IF [%theDrive%] == [] (
-		CALL :ERROR_FAIL
-	)
+        CALL :ERROR_FAIL
+    )
 GOTO:EOF
 :ERROR_FAIL
 SET theDrive=Error
@@ -67,16 +67,16 @@ IF NOT [%theDRIVE%] == [] GOTO:EOF
 SET testPath=%thisDrive:~0,1%:\drive.id.sys
 
 IF EXIST "%testPath%" (
-		CALL :DRIVECHECK %1
-	)
+        CALL :DRIVECHECK %1
+    )
 GOTO:EOF
 :DRIVECHECK
 SET /p thisDriveID=<%testPath%
 rem echo %thisDriveID% %1 %thisDrive:~0,1%
 rem echo %thisDriveID% %FIND_DRIVE% %thisDrive:~0,1%
 if [%thisDriveID%] == [%FIND_DRIVE%] (
-	SET theDRIVE=%thisDrive:~0,1%
-	)
+    SET theDRIVE=%thisDrive:~0,1%
+    )
 GOTO:EOF
 
 

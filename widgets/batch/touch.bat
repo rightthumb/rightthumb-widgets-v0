@@ -11,10 +11,10 @@ rem ###########################################################################
 rem ## {C3P0D40fAe8B} ##
 
 if [%1] == [] (
-		call :ACTION1
-	) else (
-		call :ACTION2 %*
-	)
+        call :ACTION1
+    ) else (
+        call :ACTION2 %*
+    )
 GOTO:EOF
 :ACTION1
 cls
@@ -24,10 +24,10 @@ echo.
 GOTO:EOF
 :ACTION2
 if [%2] == [] (
-		call :ACTION3 %1
-	) else (
-		call :ACTION4 %*
-	)
+        call :ACTION3 %1
+    ) else (
+        call :ACTION4 %*
+    )
 GOTO:EOF
 
 

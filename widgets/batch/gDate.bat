@@ -41,13 +41,13 @@ GOTO:EOF
 :JULIAN
 IF ["%1"] == ["print"] SHIFT
 IF [%1] == [] (
-	CALL jDate
-	SET julian=%jDate%
+    CALL jDate
+    SET julian=%jDate%
 ) ELSE IF ["%1"] == ["print"] (
-	CALL jDate
-	SET julian=%jDate%
+    CALL jDate
+    SET julian=%jDate%
 ) ELSE (
-	SET julian=%1
+    SET julian=%1
 )
 
 GOTO:EOF

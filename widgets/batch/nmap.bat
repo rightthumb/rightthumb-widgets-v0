@@ -11,9 +11,9 @@ rem ###########################################################################
 rem ## {C3P0D40fAe8B} ##
 
 IF EXIST "D:\Program Files (x86)\Nmap\nmap.exe" (
-	CALL :RUN
+    CALL :RUN
 ) else (
-	CALL :INSTALLER_CHECK
+    CALL :INSTALLER_CHECK
 )
 
 GOTO:EOF
@@ -29,16 +29,16 @@ echo.
 CALL p printMessage -message "Error: " " nmap is not installed"  -color red yellow
 echo.
 IF EXIST "%widgets%\techApps\_installers\nmap\nmap-7.80-setup.exe" (
-	CALL p printMessage -message "      installer found: %widgets%\techApps\_installers\nmap\nmap-7.80-setup.exe"  -color green
+    CALL p printMessage -message "      installer found: %widgets%\techApps\_installers\nmap\nmap-7.80-setup.exe"  -color green
 ) else (
-	CALL p printMessage -message "      installer missing: \techApps\_installers\nmap\nmap-7.80-setup.exe"  -color red
+    CALL p printMessage -message "      installer missing: \techApps\_installers\nmap\nmap-7.80-setup.exe"  -color red
 )
 IF EXIST "%widgets%\techApps\_installers\nmap\npcap-0.9991.exe" (
-	CALL p printMessage -message "      installer found: %widgets%\techApps\_installers\nmap\npcap-0.9991.exe"  -color green
+    CALL p printMessage -message "      installer found: %widgets%\techApps\_installers\nmap\npcap-0.9991.exe"  -color green
 ) else (
-	CALL p printMessage -message "      installer missing: \techApps\_installers\nmap\npcap-0.9991.exe"  -color red
-	echo.
-	CALL p printMessage -message "          *** " "NOTE: npcap installation is automatic if onine" " *** "  -color red green red
+    CALL p printMessage -message "      installer missing: \techApps\_installers\nmap\npcap-0.9991.exe"  -color red
+    echo.
+    CALL p printMessage -message "          *** " "NOTE: npcap installation is automatic if onine" " *** "  -color red green red
 )
 
 GOTO:EOF

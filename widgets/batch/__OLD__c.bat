@@ -186,34 +186,34 @@ IF [%extId%] == [{5B55D9AE-6C90-B44B-2071-5376CBB2AAAE}] set driveFound=cloudPri
 
 IF [%driveFound%] == [false] GOTO:EOF
 IF [%driveFound%] == [t3] (
-	echo %extDrive:~0,1%> %userprofile%\3T_drive.txt
-	set t3Drive=%extDrive:~0,1%
-	set t3=%extDrive:~0,1%
-	)
+    echo %extDrive:~0,1%> %userprofile%\3T_drive.txt
+    set t3Drive=%extDrive:~0,1%
+    set t3=%extDrive:~0,1%
+    )
 IF [%driveFound%] == [l119] (
-	echo %extDrive:~0,1%> %userprofile%\l119_drive.txt
-	set l119=%extDrive:~0,1%
-	)
+    echo %extDrive:~0,1%> %userprofile%\l119_drive.txt
+    set l119=%extDrive:~0,1%
+    )
 IF [%driveFound%] == [cloudPub] (
-	echo %extDrive:~0,1%> %userprofile%\cloudPub_drive.txt
-	set cloudPub=%extDrive:~0,1%
-	)
+    echo %extDrive:~0,1%> %userprofile%\cloudPub_drive.txt
+    set cloudPub=%extDrive:~0,1%
+    )
 IF [%driveFound%] == [cloudPriv] (
-	echo %extDrive:~0,1%> %userprofile%\cloudPriv_drive.txt
-	set cloudPriv=%extDrive:~0,1%
-	)
+    echo %extDrive:~0,1%> %userprofile%\cloudPriv_drive.txt
+    set cloudPriv=%extDrive:~0,1%
+    )
 IF [%driveFound%] == [b32] (
-	set thisIsScriptDrive=true
-	)
+    set thisIsScriptDrive=true
+    )
 :::::::
 IF [%thisIsScriptDrive%] == [true] (
-	::::::: Script Root
-	echo %extDrive:~0,1%> %userprofile%\.tk421
-	set widgets=%extDrive:~0,1%
-	set widgets=%extDrive:~0,1%
-	set widgets=%extDrive:~0,1%
-	set installId=%extId%
-	)
+    ::::::: Script Root
+    echo %extDrive:~0,1%> %userprofile%\.tk421
+    set widgets=%extDrive:~0,1%
+    set widgets=%extDrive:~0,1%
+    set widgets=%extDrive:~0,1%
+    set installId=%extId%
+    )
 set thisIsScriptDrive=
 set driveFound=
 set extId=
@@ -228,29 +228,29 @@ rem :SKIP_THIS_SECTION_001
 
 :AFTERDRIVE
 IF EXIST %widgets%\ (
-		set widgets=%widgets%
-		set widgets=%widgets%
-		set widgets=%widgets%
-		set /p installId=<%widgets%\tech\scripts\instanceID.sys
-	) else (
-		set /p Drive=<%userprofile%\.tk421
-		set widgets=%Drive:~0,1%
-		set widgets=%Drive:~0,1%
-		set widgets=%Drive:~0,1%
-		set widgets=%Drive:~0,1%
-		set /p installId=<%widgets%\tech\scripts\instanceID.sys
-		set Drive=
-	)
+        set widgets=%widgets%
+        set widgets=%widgets%
+        set widgets=%widgets%
+        set /p installId=<%widgets%\tech\scripts\instanceID.sys
+    ) else (
+        set /p Drive=<%userprofile%\.tk421
+        set widgets=%Drive:~0,1%
+        set widgets=%Drive:~0,1%
+        set widgets=%Drive:~0,1%
+        set widgets=%Drive:~0,1%
+        set /p installId=<%widgets%\tech\scripts\instanceID.sys
+        set Drive=
+    )
 
 rem IF [%widgets%] == [0] (
-rem 	set /p Drive=<%userprofile%\.tk421
-rem 	set widgets=%Drive:~0,1%
-rem 	set widgets=%Drive:~0,1%
-rem 	set widgets=%Drive:~0,1%
-rem 	set widgets=%Drive:~0,1%
-rem 	set /p installId=<%widgets%\tech\scripts\instanceID.sys
-rem 	set Drive=
-rem 	)
+rem     set /p Drive=<%userprofile%\.tk421
+rem     set widgets=%Drive:~0,1%
+rem     set widgets=%Drive:~0,1%
+rem     set widgets=%Drive:~0,1%
+rem     set widgets=%Drive:~0,1%
+rem     set /p installId=<%widgets%\tech\scripts\instanceID.sys
+rem     set Drive=
+rem     )
 
 
 

@@ -15,14 +15,14 @@ CLS
 CALL timestamp default noEcho
 SET indexType=
 IF [%1] == [/f] (
-		SET "indexType=FULL"
-	) ELSE (
-		IF [%1] == [/full] (
-				SET "indexType=FULL"
-			) ELSE (
-				SET "indexType=QUICK"
-			)
-	)
+        SET "indexType=FULL"
+    ) ELSE (
+        IF [%1] == [/full] (
+                SET "indexType=FULL"
+            ) ELSE (
+                SET "indexType=QUICK"
+            )
+    )
 
 echo __________________________
 echo           %indexType% 
@@ -69,58 +69,58 @@ GOTO:EOF
 :SETDRIVE
 SET driveIDPath=%thisDrive:~0,1%:\drive.id.sys
 IF EXIST "%driveIDPath%" (
-		CALL :driveIDPathEXIST
-	)
+        CALL :driveIDPathEXIST
+    )
 
 GOTO:EOF
 
 :driveIDPathEXIST
-	CALL timestamp default noEcho
-	SET /p driveID=<"%driveIDPath%"
-	SET thisDMR=%manageDrivesRoot%\%driveID%
-	SET thisDMRLabel=%thisDMR%\label.txt
-	SET thisDMRLog=%thisDMR%\log.txt
-	SET thisDMRLetter=%thisDMR%\letter.txt
-	SET thisDMRIndex=%thisDMR%\indexSettings.txt
-	SET thisDMRPriority=%thisDMR%\prioritySettings.txt
+    CALL timestamp default noEcho
+    SET /p driveID=<"%driveIDPath%"
+    SET thisDMR=%manageDrivesRoot%\%driveID%
+    SET thisDMRLabel=%thisDMR%\label.txt
+    SET thisDMRLog=%thisDMR%\log.txt
+    SET thisDMRLetter=%thisDMR%\letter.txt
+    SET thisDMRIndex=%thisDMR%\indexSettings.txt
+    SET thisDMRPriority=%thisDMR%\prioritySettings.txt
 
-	SET /p driveLabel=<"%thisDMRLabel%"
-	SET /p thisIndexSetting=<"%thisDMRIndex%"
-	SET /p thisPrioritySetting=<"%thisDMRPriority%"
-	IF [%indexType%] == [QUICK] (
-			IF [%thisIndexSetting%] == [Q] (
-					CALL :thisIndex
-				) ELSE (
-					CALL :thisNoIndex
-				)
-		)
-	IF [%indexType%] == [FULL] (
-			IF [%thisIndexSetting%] == [Q] (
-					CALL :thisIndex
-				) ELSE (
-					IF [%thisIndexSetting%] == [F] (
-							CALL :thisIndex
-						) ELSE (
-							CALL :thisNoIndex
-						)
-				)
-		)
+    SET /p driveLabel=<"%thisDMRLabel%"
+    SET /p thisIndexSetting=<"%thisDMRIndex%"
+    SET /p thisPrioritySetting=<"%thisDMRPriority%"
+    IF [%indexType%] == [QUICK] (
+            IF [%thisIndexSetting%] == [Q] (
+                    CALL :thisIndex
+                ) ELSE (
+                    CALL :thisNoIndex
+                )
+        )
+    IF [%indexType%] == [FULL] (
+            IF [%thisIndexSetting%] == [Q] (
+                    CALL :thisIndex
+                ) ELSE (
+                    IF [%thisIndexSetting%] == [F] (
+                            CALL :thisIndex
+                        ) ELSE (
+                            CALL :thisNoIndex
+                        )
+                )
+        )
 GOTO:EOF
 
 :thisIndex
-	echo %now%,%thisDrive:~0,1%,Indexed>> %thisDMRLog%
-	echo          %thisDrive:~0,1%:\ %driveLabel%	indexing
-	rem dir /s/b %thisDrive:~0,1%:\*.* > "{tmp}"
-	call p files -c -p %thisDrive:~0,1%:\ > "{tmp}"
-	type "{tmp}" > %mdrIndex%\%thisPrioritySetting%%driveID%
-	echo          %thisDrive:~0,1%:\ %driveLabel%	index complete
-	echo.
-	IF EXIST "{tmp}" (del "{tmp}")
+    echo %now%,%thisDrive:~0,1%,Indexed>> %thisDMRLog%
+    echo          %thisDrive:~0,1%:\ %driveLabel%    indexing
+    rem dir /s/b %thisDrive:~0,1%:\*.* > "{tmp}"
+    call p files -c -p %thisDrive:~0,1%:\ > "{tmp}"
+    type "{tmp}" > %mdrIndex%\%thisPrioritySetting%%driveID%
+    echo          %thisDrive:~0,1%:\ %driveLabel%    index complete
+    echo.
+    IF EXIST "{tmp}" (del "{tmp}")
 GOTO:EOF
 
 :thisNoIndex
-	echo          %thisDrive:~0,1%:\ %driveLabel%	not indexed
-	echo.
+    echo          %thisDrive:~0,1%:\ %driveLabel%    not indexed
+    echo.
 GOTO:EOF
 
 :VAR

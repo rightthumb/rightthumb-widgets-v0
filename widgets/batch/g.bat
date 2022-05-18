@@ -12,8 +12,8 @@ rem ## {C3P0D40fAe8B} ##
 
 
 IF [%1] == [] (
-	ping google.com -t
+    ping google.com -t
 ) ELSE (
-	CALL p google -q %*
+    CALL p google -q %*
 )
 

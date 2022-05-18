@@ -14,10 +14,10 @@ CLS
 echo Loading...
 IF [%1] == [r] SET api=
 IF NOT ["%api%"] == ["loaded"] (
-		CALL :LOAD
-	) else (
-		CLS
-	)
+        CALL :LOAD
+    ) else (
+        CLS
+    )
 
 CALL :TIMESTAMP
 
