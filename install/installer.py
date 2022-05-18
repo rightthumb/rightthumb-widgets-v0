@@ -3135,7 +3135,7 @@ alias .git..="rm -rf rightthumb-widgets-v0 ; git clone https://github.com/rightt
 alias .git.c="rm -rf rightthumb-widgets-v0 ; git clone https://github.com/rightthumb/rightthumb-widgets-v0 ; cd rightthumb-widgets-v0 ; chmod -R 777 . ; p shClean -folder -r ; vps.c.py.; vps.c.sh. ; vps.c.db."
 alias .git.h="rm -rf rightthumb-widgets-v0 ; git clone https://github.com/rightthumb/rightthumb-widgets-v0 ; cd rightthumb-widgets-v0 ; chmod -R 777 . ; p shClean -folder -r ; vps.h.py.; vps.h.sh. ; vps.h.db."
 
-alias pp="$p paths -f "
+alias pp="p paths -f "
 
 alias vps.b..="vps.b.py; vps.b.sh; vps.b.db;"
 alias vps..b..="vps.b.py.; vps.b.sh .; vps.b.db.;"
@@ -3147,10 +3147,10 @@ alias vps..m..="vps.m.py.; vps.m.sh.; vps.m.db.;"
 alias vps.c..="vps.c.py; vps.c.sh; vps.c.db;"
 alias vps..c..="vps.c.py.; vps.c.sh.; vps.c.db.;"
 
-alias mkdir="$p mkdir -folders "
-alias mkdir.="$p mkdir -files "
-alias mkdir.fi="$p mkdir -files "
-alias mkdir.fo="$p mkdir -folders "
+alias mkdir="p mkdir -folders "
+alias mkdir.="p mkdir -files "
+alias mkdir.fi="p mkdir -files "
+alias mkdir.fo="p mkdir -folders "
 
 
 echo '' > $stmp/.gp
@@ -3259,7 +3259,7 @@ alias dl.b='python3 $ww/python/vps-app-7facG-7GldEZ-dl-bespin.py -path '
 alias dl.h='python3 $ww/python/python/vps-app-7facG-7GldEZ-dl-hoth.py -path '
 alias dl.m='python3 $ww/python/vps-app-7facG-7GldEZ-dl-mandalore.py -path '
 
-alias bl='python3 $ww/python/blank-file.py -f '
+alias bl='p blank-file -f '
 
 alias crontab.='EDITOR=nano /usr/bin/crontab'
 
