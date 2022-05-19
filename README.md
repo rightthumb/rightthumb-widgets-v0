@@ -3,7 +3,7 @@
 
 Description
 
-    collection of handy scripts ( over 1700 )
+    collection of handy scripts ( over 1900 )
 
     p file -bin -r -ago 1d
         recursive binary files modified less than a day ago
