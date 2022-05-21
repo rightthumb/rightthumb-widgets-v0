@@ -33,6 +33,9 @@ simplejson.loads(var)
 simplejson.dumps(rows, indent=4, sort_keys=False)
 simplejson.dumps(rows)
 '''
+
+
+
 def numerate(asset,label='one'):
     row=0
     i=-2
@@ -19650,3 +19653,7 @@ def saveConfig(data,path):
 imp=__.imp
 def HID(sub): requests=imp('requests'); return int(requests.get('https://eyeformeta.com/assets/widgets/ids/index.php?subject='+sub).content.decode("utf-8").replace('\\n','\n').replace('\n',''));
 
+def cmd(run):
+    subprocess=__.imp('subprocess.check_output')
+    res = subprocess.check_output(run.split(' '))
+    return str(res,'iso-8859-1')

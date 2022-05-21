@@ -3098,6 +3098,14 @@ alias ssh.b.r="ssh-copy-id -i ~/.ssh/id_rsa.pub root@bespin.m-eta.app"
 alias ssh.m.r="ssh-copy-id -i ~/.ssh/id_rsa.pub root@mandalore.m-eta.app"
 alias ssh.c.r="ssh-copy-id -i ~/.ssh/id_rsa.pub root@coruscant.m-eta.app"
 
+# alias cd/="cd /"
+alias cd..="cd .."
+alias ping='ping -c 5'
+alias fastping='ping -c 100 -s.2'
+alias fping='ping -c 100 -s.2'
+alias ports='netstat -tulanp'
+
+
 alias ssh..="sudo rm -rf ~/.ssh ; sudo rm -rf /mnt/c/Users/Scott/.ssh; mkdir /mnt/c/Users/Scott/.ssh; echo /mnt/c/Users/Scott/.ssh/id_rsa | $p -copy; echo /mnt/c/Users/Scott/.ssh/id_rsa; ssh-keygen -t rsa"
 alias ssh.h.a.="ssh-copy-id -i /mnt/c/Users/Scott/.ssh/id_rsa.pub admin@hoth.m-eta.app"
 alias ssh.h.s.="ssh-copy-id -i /mnt/c/Users/Scott/.ssh/id_rsa.pub scott@hoth.m-eta.app"

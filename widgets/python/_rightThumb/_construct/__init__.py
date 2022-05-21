@@ -546,3 +546,112 @@ def url( URL, data={}, d=None, raw=False, r=None ):
         except Exception as e: pass;
     return _url_(str(result))
 page=url
+
+print_=print
+def getText( theFile, raw=False, clean=False,  e=0, c=0 ):
+    try: _str;
+    except Exception as e:
+        try: import _rightThumb._string as _str;
+        except Exception as e: pass;
+    if os.path.isfile(theFile): vv.opened_file_me[theFile] = os.path.getmtime( theFile );
+    # HD.chmod(theFile)
+    lines = None
+    if os.path.isfile(theFile):
+        try:
+            f = open(theFile, 'r', encoding='utf-8')
+            lines = f.readlines()
+            f.close()
+        except Exception as e:
+            try:
+                f = open(theFile, 'r', encoding='latin-1')
+                lines = f.readlines()
+                f.close()
+            except Exception as e:
+                f = open(theFile, 'r')
+                lines = f.readlines()
+                f.close()
+    else:
+        if not e:
+            return None
+        print_('(getText) Error: No File')
+        sys.exit()
+    if raw:
+        txt = ''.join( lines )
+        # txt = txt.replace( _v.slash+'n', '\n' )
+
+        if clean:
+            txt = _str.replaceDuplicate( txt, '\n' )
+            txt = _str.cleanBE( txt, '\n' )
+        if clean == 2:
+            txt = txt.replace( '\t', ' ' )
+            txt = _str.replaceDuplicate( txt, ' ' )
+            while '\n \n' in txt:
+                txt = txt.replace( '\n \n', '\n' )
+            txt = _str.replaceDuplicate( txt, '\n' )
+            txt = _str.cleanBE( txt, '\n' )
+        return txt
+    elif c > 0:
+        if c > 1:
+            txt = ''.join( lines )
+            TXT = ''
+            txt = txt.replace( "'\"\"\"'", '' )
+            if '"""' in txt:
+                for i,item in enumerate(txt.split('"""')):
+                    if i % 2 == 0:
+                        TXT+=item
+            elif not '"""' in txt:
+                TXT = txt
+            while '    ' in TXT:
+                TXT = TXT.replace( '    ', '\t' )
+            while ' (' in TXT:
+                TXT = TXT.replace( ' (', '(' )
+            while ' =' in TXT:
+                TXT = TXT.replace( ' =', '=' )
+            while '= ' in TXT:
+                TXT = TXT.replace( '= ', '=' )
+            while 'def  ' in TXT:
+                TXT = TXT.replace( 'def  ', 'def ' )
+            while 'class  ' in TXT:
+                TXT = TXT.replace( 'class  ', 'class ' )
+            lines = TXT.split('\n')
+
+        newLines = []
+        for i,row in enumerate(lines):
+            # row = row.replace('\n','')
+            row = row.replace('\r','')
+            
+            if not c > 1:
+                newLines.append(row)
+            else:
+                row = row.split('#')[0]
+                test = row
+                # while test.startswith(' ') or test.startswith('\t'):
+                #   test = _str.cleanBE( test, ' ' )
+                #   test = _str.cleanBE( test, '\t' )
+                if not test.startswith('#') and len(test):
+                    newLines.append(row)
+
+
+            
+
+
+        return newLines
+
+    elif clean:
+        # lines = _str.replaceDuplicate( lines, '\n' )
+        # lines = _str.cleanBE( lines, '\n' )
+        for i,row in enumerate(lines):
+            row = row.replace( '\n', '' )
+            row = row.replace( '\r', '' )
+            if type(clean) == int:
+                row = row.replace( '\t', ' ' )
+                row = _str.replaceDuplicate( row, ' ' )
+                row = _str.cleanBE( row, ' ' )
+            if clean == 3:
+                row = ' ' + row + ' '
+
+            # print_( row )
+            lines[i] = row
+        return lines
+    else:
+        return lines
