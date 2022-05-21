@@ -3099,6 +3099,7 @@ alias ssh.m.r="ssh-copy-id -i ~/.ssh/id_rsa.pub root@mandalore.m-eta.app"
 alias ssh.c.r="ssh-copy-id -i ~/.ssh/id_rsa.pub root@coruscant.m-eta.app"
 
 # alias cd/="cd /"
+alias x.="exit"
 alias cd..="cd .."
 alias ping='ping -c 5'
 alias fastping='ping -c 100 -s.2'
