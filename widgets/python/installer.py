@@ -3300,8 +3300,12 @@ alias pc="$widgets/widgets/python/pc.py -rc ";
 alias color="$widgets/widgets/python/pipe-color.py -color ";
 alias epoch="echo $( date +%s )";
 
-
-
+if test -f "$HOME/.bashrc-"; then
+    source "$HOME/.bashrc-";
+fi
+if test -f "$HOME/.bashrc."; then
+    source "$HOME/.bashrc.";
+fi
 clear
             """
             # echo "alias rr='sudo su root'" >> ~/.bashrc

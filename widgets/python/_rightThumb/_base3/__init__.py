@@ -19557,6 +19557,9 @@ def dots(path):
             if i == len(rts)-1: return eval(rts[0]);
 nsfw_=False
 def ad():
+    # print(_v.life+'ads')
+    # sys.exit()
+    if not os.path.isdir(_v.life+'ads'): return None
     global nsfw; global nsfw_;
     if not nsfw_:
         try:
