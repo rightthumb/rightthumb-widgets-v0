@@ -3269,6 +3269,8 @@ alias dl.h='python3 $ww/python/python/vps-app-7facG-7GldEZ-dl-hoth.py -path '
 alias dl.m='python3 $ww/python/vps-app-7facG-7GldEZ-dl-mandalore.py -path '
 
 alias bl='p blank-file -f '
+alias wget.txt='wget -q -O - '
+alias wgett='wget -q -O - '
 
 alias crontab.='EDITOR=nano /usr/bin/crontab'
 
@@ -3306,6 +3308,8 @@ fi
 if test -f "$HOME/.bashrc."; then
     source "$HOME/.bashrc.";
 fi
+
+
 clear
             """
             # echo "alias rr='sudo su root'" >> ~/.bashrc
