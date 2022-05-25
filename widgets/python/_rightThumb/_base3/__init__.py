@@ -6635,8 +6635,8 @@ def releaseAcquiredData( appDBA, theFocus, payload=None ):
     if not payload is None:
         info['payload'] = payload
 
-    if not autoBackupData:
-        saveTable2( info, log )
+    # if not autoBackupData:
+    saveTable2( info, log )
 
     if autoBackupData:
         if len( myFileLocation_Files ):
@@ -19663,3 +19663,6 @@ def cmd(run):
     subprocess=__.imp('subprocess.check_output')
     res = subprocess.check_output(run.split(' '))
     return str(res,'iso-8859-1')
+
+# releaseAcquiredData
+
