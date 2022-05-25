@@ -1222,6 +1222,8 @@ def isDate( theDate=None, record={}, tz=None, q=True, f=None,w=None,what=None ):
         return dow
     def fitem(f):
 
+        if f=='ago': return _dir.dateDiffText(epoch);
+        if f=='friendly': return friendlyDate( epoch );
         if f=='friendly': return friendlyDate( epoch );
         if f=='iso': return friendlyDate( epoch ).replace( ' ', 'T' ) + local_tz;
         if f=='woy': return _dir.getWeekAndYear( epoch );
@@ -1370,6 +1372,7 @@ def isDate( theDate=None, record={}, tz=None, q=True, f=None,w=None,what=None ):
 
     if type(epoch) == str:
         epoch = autoDate(epoch.replace('z',''))
+    record['ago'] = _dir.dateDiffText(epoch)
     record['epoch'] = epoch
     # print_( epoch )
     record['ordinal'] = datetime.datetime.fromtimestamp( epoch ).toordinal()
@@ -1388,7 +1391,7 @@ def isDate( theDate=None, record={}, tz=None, q=True, f=None,w=None,what=None ):
     record['woy'] = _dir.getWeekAndYear( epoch )
     record['woy2'] = _dir.getWeekAndYear( epoch ).replace(str(_dir.getYearFromEpoch( epoch ))+'.','')
     record['dow'] = _dir.getDOWromEpochText( epoch )
-    record['ago'] = _dir.dateDiffText( epoch )
+    # record['ago'] = _dir.dateDiffText( epoch )
     record['days'] = daysDiff(  epoch, time.time()  )
     record['tz'] = local_tz
     # record['iso'] = datetime.datetime.fromtimestamp( epoch ).isoformat()

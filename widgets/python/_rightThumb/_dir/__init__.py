@@ -1271,13 +1271,17 @@ def dateDiffText( theDate ):
 
 	# theDate = autoDate( theDate )
 	epoch = time.time()
+
+
+
+
 	# woy = getWOY( theDate )
 
-	days = int( str( (time.time() - theDate)/86400 ).split('.')[0] )
+	days = int( str( (epoch - theDate)/86400 ).split('.')[0] )
 
 	msDiff = epoch - theDate
 
-	if msDiff <= 86402:
+	if abs(msDiff) <= 86402:
 		return 'today'
 
 	# days = abs(daysDiff( theDate, epoch ))
