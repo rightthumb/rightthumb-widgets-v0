@@ -131,6 +131,7 @@ def tail():
 		return ' > /dev/null 2>&1'
 
 def process(path,end=''):
+	_.pr(path,c='cyan')
 	meta = {}
 	try:
 		file = os.path.abspath(path)

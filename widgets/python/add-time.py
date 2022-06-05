@@ -70,7 +70,7 @@ _.appInfo[focus()] = {
                         # '',
     ],
     'examples': [
-                        _.hp('p thisApp -file file.txt'),
+                        _.hp('p cat -f %tmpf0% + Duration - Media Track Selection Preview | p add-time'),
                         _.linePrint(label='simple',p=0),
                         '',
     ],
@@ -151,15 +151,32 @@ def clean(string):
         if c in '0123456789:': txt+=c;
     if txt.startswith(':'): txt=txt[1:];
     if txt.endswith(':'): txt=txt[:-1];
-    return txt
+    if txt.count(':') == 2: return txt
+    return 0
+
+
+def add(entry):
+    global total
+    pa=entry.split(':')
+    h=int(pa[0])*(60*60)
+    m=int(pa[1])*(60)
+    s=int(pa[2])
+    total+=h+m+s
 
 def action():
+    global total
     data=[]
     for i, line in enumerate( _.isData(r=0) ):
         lin=clean(line)
         if lin:
-            _.pr(lin)
-
+            add(lin)
+    # _.pr(total)
+    h=int(total)/(60*60)
+    _.pr(round(h,2),'hrs',c='green')
+    # m=int(total)/(60)
+    # print(h,m)
+    # s=int(pa[2])
+total=0
 
 ########################################################################################
 if __name__ == '__main__':

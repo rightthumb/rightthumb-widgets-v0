@@ -159,7 +159,11 @@ def print_(*args,p=None,c=None,pad=3,g=None,end=None):
 
 
 fo_fi=[]
-def fo(folder,r=False,script=None,first=True):
+def fo(folder=None,r=False,script=None,first=True):
+    if folder is None:
+        # try: os=__.imp('os.getcwd');
+        # except Exception as e: pass;
+        folder=os.getcwd()
     global fo_fi
     if first: fo_fi=[];
     if not os.path.isdir(folder): return fo_fi;
@@ -173,7 +177,7 @@ def fo(folder,r=False,script=None,first=True):
         if os.path.isfile(path):
             fo_fi.append(path)
             if not script is None: script(path);
-        if r and os.path.isdir(path): getFolder(folder,r,script,False);
+        if r and os.path.isdir(path): fo(path,r,script,False);
     return fo_fi
 
 
@@ -6593,6 +6597,7 @@ def postLoad( file, epoch=0, theFocus=False ):
 
 
 def releaseAcquiredData( appDBA, theFocus, payload=None ):
+    l_registerSwitches_vars()
     if appDBA == '__init__':
         return None
     if not __.releaseAcquiredData:
@@ -6605,6 +6610,8 @@ def releaseAcquiredData( appDBA, theFocus, payload=None ):
     global myFileLocation_Files
     global switches
     global print_ed
+
+
     log = _v.appLogs() + _v.slash+'execution_receipt-' + appDBA + '-' + str( __.startTime ) + '.json'
     rebuiltCommandRaw = theCommand( appDBA, printThis=False, separate=True )
     if len( rebuiltCommandRaw[1] ):
@@ -19467,13 +19474,7 @@ l.sw=dot()
 def l_fieldSet( switchName, switchField, switchValue, theFocus=False ):
     global switches
     switches.fieldSet( switchName, switchField, switchValue, theFocus )
-def l_registerSwitches( trig=None, sw=None ):
-    global appInfo
-    global argvProcess
-    global myFileLocation_Print
-    global autoBackupData
-
-    # appInfo=l.conf('info')
+def l_registerSwitches_vars():
     autoBackupData = __.setting('receipt-log')
     __.releaseAcquiredData = __.setting('receipt-file')
     __.myFileLocations_SKIP_VALIDATION = __.setting('myFileLocations-skip-validation')
@@ -19482,6 +19483,14 @@ def l_registerSwitches( trig=None, sw=None ):
     __.pre_error = __.setting('pre-error')
     __.switch_raw = __.setting('switch-raw')
     __.isRequired_or_List = __.setting('require-list')
+def l_registerSwitches( trig=None, sw=None ):
+    global appInfo
+    global argvProcess
+    global myFileLocation_Print
+    global autoBackupData
+    l_registerSwitches_vars()
+    # appInfo=l.conf('info')
+
 
 
     if not l.conf('__name__') == '__main__':

@@ -195,7 +195,11 @@ def isExit():
         on_exit_subjects[subject]()
 
 
-def path( p, ab=True, pop=False, file=False, slash=None ):
+def path( p, ab=True, pop=False, file=False, slash=None, folder=None, fi=None, fo=None ):
+    if not fo is None: pop=True;
+    if not folder is None: pop=True;
+    if not fi is None: file=True;
+
     # os = vc.FIG.imp('os')
     # os = imp('os')
     if slash is None:
@@ -522,14 +526,7 @@ setting('receipt-file',True)
 
 #--> todo#> create app to scan to fix this situation below
 
-os = imp('os.system')
-os = imp('os.sep')
-os = imp('os.listdir')
-os = imp('os.getcwd')
-os = imp('os.path.abspath')
-os = imp('os.path.isfile')
-os = imp('os.path.isdir')
-sys = imp('sys.exit')
+
 # import os
 
 def url( URL, data={}, d=None, raw=False, r=None ):
@@ -655,3 +652,13 @@ def getText( theFile, raw=False, clean=False,  e=0, c=0 ):
         return lines
     else:
         return lines
+
+os = imp('os.system')
+os = imp('os.sep')
+os = imp('os.listdir')
+os = imp('os.getcwd')
+os = imp('os.path.abspath')
+os = imp('os.path.isfile')
+os = imp('os.name')
+os = imp('os.stat')
+sys = imp('sys.exit')

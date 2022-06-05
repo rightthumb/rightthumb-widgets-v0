@@ -28,18 +28,17 @@ _str = __.imp('_rightThumb._string')
 ##################################################
 
 def sw():
-    _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name', description='Files' )
-    _.switches.register( 'Epoch', '-epoch', isRequired=True )
-    _.switches.register( 'Size', '-size', isRequired=True )
+    _.switches.register( 'Label', '-l,-label' )
     pass
     ### EXAMPLE: START
+    # _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=True )
     # _.switches.register( 'Files', '-f,-fi,-file,-files' )
     ### EXAMPLE: END
 
 # __.setting('require-list',['Pipe','Files','Plus'])
 __.setting('require-list',[])
 __.setting('receipt-log')
-__.setting('receipt-file',False)
+__.setting('receipt-file')
 __.setting('myFileLocations-skip-validation',False)
 __.setting('require-pipe',False)
 __.setting('require-pipe||file',False)
@@ -49,9 +48,9 @@ __.setting('switch-raw',[])
 
 _.appInfo[focus()] = {
     # 'app': '8facG-jo0Cxk',
-    'file': 'pinnacle-estimate.py',
+    'file': 'thisApp.py',
     'liveAppName': __.thisApp( __file__ ),
-    'description': 'estimate how long it will take to render a video',
+    'description': 'Changes the world',
         # _.ail(1,'subject')+
         # _.aib('one')+
     'categories': [
@@ -71,7 +70,7 @@ _.appInfo[focus()] = {
                         # '',
     ],
     'examples': [
-                        _.hp('p pinnacle-estimate -size 82gb -epoch 1653515941.548252 -f piller-dance.mp4'),
+                        _.hp('p thisApp -file file.txt'),
                         _.linePrint(label='simple',p=0),
                         '',
     ],
@@ -146,124 +145,15 @@ _.l.sw.register( triggers, sw )
 ########################################################################################
 # START
 
-def tim(epoch,now=time.time()):
-    try:
-        import datetime
-        from dateutil.relativedelta import relativedelta
-    except Exception as e:
-        _.pr(e)
-    a = _.isDate(now,f='fdate')
-    b = _.isDate(epoch,f='fdate')
-
-    start = datetime.datetime.strptime(a, '%Y-%m-%d %H:%M:%S')
-    ends = datetime.datetime.strptime(b, '%Y-%m-%d %H:%M:%S')
-
-    diff = relativedelta(start, ends)
-    d=diff.days
-    h=diff.hours
-    m=diff.minutes
-    return abs(d),abs(h),abs(m)
-    # >>> print "The difference is %d year %d month %d days %d hours %d minutes" % (diff.years, diff.months, diff.days, diff.hours, diff.minutes)
-    # The difference is 1 year 1 month 29 days 19 hours 52 minutes
-
-def cal(start_time,i,e):
-    # for i in range(1, 101):
-        # Do some work
-        current_time = time.time()
-        elapsed_time = current_time - start_time
-        time_left = e * elapsed_time / i - elapsed_time
-        return time_left
-        # print(time_left)
-def calcProcessTime(starttime, cur_iter, max_iter):
-
-    telapsed = time.time() - starttime
-    testimated = (telapsed/cur_iter)*(max_iter)
-
-    finishtime = starttime + testimated
-    finishtime = dt.datetime.fromtimestamp(finishtime).strftime("%H:%M:%S")  # in time
-
-    lefttime = testimated-telapsed  # in seconds
-
-    return (int(telapsed), int(lefttime), finishtime)
-
-
-# last_times = []
-# def get_remaining_time(i, total, time):
-#     last_times.append(time)
-#     _.saveTable(last_times,'pinnacle-estimate.list')
-#     len_last_t = len(last_times)
-#     if len_last_t > 5:
-#         last_times.pop(0)
-#     mean_t = sum(last_times) // len_last_t 
-#     remain_s_tot = mean_t * (total - i + 1) 
-#     remain_m = remain_s_tot // 60
-#     remain_s = remain_s_tot % 60
-#     # return f"{remain_m}m{remain_s}s"
-#     return remain_s_tot
-
-
 def action():
-    # global last_times
-    # last_times=_.getTable('pinnacle-estimate.list')
-    epoch=float(_.switches.value('Epoch'))
-    size=_.unFormatSize(_.switches.values('Size'))
-    ti=time.time()-epoch
+    # label='''PROMPT_COMMAND='/usr/bin/echo -ne "\\033]0; LABEL \\007"';'''.replace('LABEL',_.switches.value('Label'))
+    label='''export PROMPT_COMMAND='/usr/bin/echo -ne "\\033]0; LABEL \\007"';'''.replace('LABEL',_.switches.value('Label'))
+    # label='''PROMPT_COMMAND='echo -ne "\\033]0;SOME TITLE HERE\\007"' '''
+    # _.pr(label)
+    # system(label)
+    print("TERM=\\x1B[23t")
 
-    _.pr(  'start:',_.isDate(epoch,f='fdate'), c='Background.light_blue'  )
-
-    d,h,m=tim(epoch)
-    # _.pr('done in',str(h)+':'+str(m),c='green')
-    if d > 1:
-        _.pr('ran:',d,'days',h,'hrs',m,'min',c='Background.light_blue')
-    else:
-        _.pr('ran:',h,'hrs',m,'min',c='Background.light_blue')
-    # _.pr('time:',round(ti/60,2),'min')
-
-
-
-
-    for path in _.switches.values('Files'):
-        # _.pr(path)
-        info=_dir.info(path)
-
-
-        x=cal(epoch,info['bytes'],size)
-        # x=get_remaining_time(info['bytes'], size, ti)
-        # y=calcProcessTime(epoch,info['bytes'],size)
-        # x=y[1]
-        # _.pr('y:',y)
-        _.pr(round(x/(60*60),2),c='red')
-        # _.pr(round(y[1]/(60*60),2),c='red')
-        # print(x)
-        # _.pv(info)
-        diff=size-info['bytes']
-        #--> ti     x
-        #--> diff   size
-        # x=((ti/size)*diff)
-        # print(x)
-        # _.pr('done:',x,x/60,(x/60)/60)
-        _.pr('size:',info['size'],c='Background.purple')
-        _.pr('left:',_.formatSize(diff),c='Background.purple')
-        fro=epoch
-        fro=time.time()
-        d,h,m=tim(fro+x)
-        _.pr('end:',  _.isDate(fro+x,f='fdate'), c='Background.blue'  )
-        # _.pr('done in',str(h)+':'+str(m),c='green')
-        if d > 1:
-            _.pr('left:',d,'days',h,'hrs',m,'min',c='Background.blue')
-        else:
-            _.pr('left:',h,'hrs',m,'min',c='Background.blue')
-        d,h,m=tim(epoch,fro+x)
-        if d > 1:
-            _.pr('total:',d,'days',h,'hrs',m,'min',c='Background.red')
-        else:
-            _.pr('total:',h,'hrs',m,'min',c='Background.red')
-    # _.pr(epoch)
-    # _.pr(size)
-
-
-import _rightThumb._dir as _dir
-import datetime as dt
+from os import system
 
 ########################################################################################
 if __name__ == '__main__':

@@ -490,6 +490,26 @@ class CLIP:
         _copy.imp.copy(  '\n'.join(data)  , p=0 )
 
 
+    def space_double(self):
+        _copy = _.regImp( __.appReg, '-copy' )
+        _paste = _.regImp( __.appReg, '-paste' )
+        data  = _paste.imp.paste()
+        data = cleaner(data,0)
+        data = data.replace( '\n', '\n\n' )
+        _copy.imp.copy(  data  , p=0 )
+
+
+    def space_single(self):
+        _copy = _.regImp( __.appReg, '-copy' )
+        _paste = _.regImp( __.appReg, '-paste' )
+        data  = _paste.imp.paste()
+        data = cleaner(data,0)
+        while '\n\n' in data:
+            data=data.replace('\n\n','\n')
+        _copy.imp.copy(  data  , p=0 )
+
+
+
     def replacer2(self):
         _copy = _.regImp( __.appReg, '-copy' )
         _paste = _.regImp( __.appReg, '-paste' )
@@ -1938,7 +1958,9 @@ def load():
                 'ad-notes': { 'raw': [ 'Key.alt', 'Key.shift', 'Key.ctrl', 'a' ], 'do': 'Clip.ad_notes()' },
                 'clip-replace': { 'raw': [ 'Key.alt', 'Key.cmd', 'r' ], 'do': 'Clip.replacer()' },
                 'clip-replace2': { 'raw': [ 'Key.ctrl,2', 'Key.shift,1', 'r' ], 'do': 'Clip.replacer2()' },
-                'clip-swap': { 'raw': [ 'Key.ctrl,2',  's' ], 'do': 'Clip.swap()' },
+                'clip-swap': { 'raw': [ 'Key.ctrl,2', 'Key.shift', 's' ], 'do': 'Clip.swap()' },
+                'clip-single-space': { 'raw': [ 'Key.cmd', 'Key.shift', 'Key.alt', 's' ], 'do': 'Clip.space_single()' },
+                'clip-double-space': { 'raw': [ 'Key.cmd', 'Key.shift', 'Key.alt', 'd' ], 'do': 'Clip.space_double()' },
                 # 'clip-replace': { 'raw': [ 'Key.ctrl,2',  's' ], 'do': 'Clip.swap()' },
 
 
