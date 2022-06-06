@@ -40,6 +40,7 @@ __.isFiles=True
 
 def appSwitches():
 	if not __.isFiles:
+		_.switches.register('Not-Recursive', '--r')
 		_.switches.register('Recursive', '-r,-recursive')
 	_.switches.register('Count', '-c,-count,--c')
 	_.switches.register('Folders', '-f,-folder,-folders,-fo')
@@ -604,10 +605,11 @@ def add(path,r=False):
 				if not _.showLine(newFolder):
 					shouldRun = False
 			if r and shouldRun:
-				try:
-					getFolder(newFolder,r)
-				except Exception as e:
-					pass
+				if not _.switches.isActive('Not-Recursive'):
+					try:
+						getFolder(newFolder,r)
+					except Exception as e:
+						pass
 		else:
 			_.pr('error')
 
