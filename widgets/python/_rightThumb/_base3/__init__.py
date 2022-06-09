@@ -13612,7 +13612,7 @@ def timeAgo_past(do='', startDate=None):
         return 'one'
 
     if len(do) == 0:
-        do = switches.values('Ago')[0]
+        do = switches.value('Ago')
     do = do.lower()
 
     if 't' in do:

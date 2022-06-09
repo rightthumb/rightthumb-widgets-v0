@@ -2683,9 +2683,9 @@ alias web.ey="exp.geny;web.do"
 alias web.el="echo su root | web.e"
 ################# #################
 #################
-alias vps.l="p keychain -label vps.l -get -temp 10"
-alias web.l="p keychain -label web.l -get -temp 10"
-alias reph.l="p keychain -label reph.l -get -temp 10"
+alias vps.l="python3 $ww/python/keychain.py -label vps.l -get -temp 10"
+alias web.l="python3 $ww/python/keychain.py -label web.l -get -temp 10"
+alias reph.l="python3 $ww/python/keychain.py -label reph.l -get -temp 10"
 #################
 alias vps.socket="ssh -R 65432:localhost:65432 -C -N -l scott hoth.m-eta.app";
 ################# #################
@@ -3000,28 +3000,28 @@ alias cat.scrap="cat $notes_file"
 
 alias scrap="$widgets/widgets/bash/scrap.sh"
 alias notes="$widgets/widgets/bash/scrap.sh"
-alias ent='p imdb -ent '
-alias ee='p imdb -live -case -ep -ent '
+alias ent="python3 $ww/python/imdb.py -ent "
+alias ee="python3 $ww/python/imdb.py -live -case -ep -ent "
 
-alias uuid.m='p genuuid -strip -short'
-alias uuid.mini='p genuuid -strip -short'
-alias uuid.s='p genuuid -strip'
-alias uuid='p genuuid'
-alias uuids='p genuuid -cnt 10'
+alias uuid.m="python3 $ww/python/genuuid -strip -short"
+alias uuid.mini="python3 $ww/python/genuuid -strip -short"
+alias uuid.s="python3 $ww/python/genuuid -strip"
+alias uuid="python3 $ww/python/genuuid.py"
+alias uuids="python3 $ww/python/genuuid -cnt 10"
 alias n.rc='n ~/.bashrc'
 
 export p="/usr/bin/sh $widgets/widgets/bash/nav/p.sh"
 export config
 export widgets
 
-alias ls.g="p ls -c g s n -s g -g g";
-alias ls.d='p ls -ago 2d -c ago name -g ago -sort md'
-alias ls.='p ls -c ago name -g ago -sort md -ago '
+alias ls.g="python3 $ww/python/ls.py -c g s n -s g -g g";
+alias ls.d="python3 $ww/python/ls.py -ago 2d -c ago name -g ago -sort md"
+alias ls.="python3 $ww/python/ls.py -c ago name -g ago -sort md -ago "
 
-alias cloud='p cloud -sync'
+alias cloud="python3 $ww/python/cloud.py -sync"
 
-alias ls.p='p ls -s md -g ago --c -nocolor -c path'
-alias a.cp='p copyTool'
+alias ls.p=="python3 $ww/python/ls.py -s md -g ago --c -nocolor -c path"
+alias a.cp=="python3 $ww/python/copyTool.py"
 alias scrap.seg='echo  "_________________ _________________ _________________ _________________"'
 alias scrap.seg2='echo "################# ################# ################# #################"'
 
@@ -3047,8 +3047,8 @@ export HISTFILESIZE=100000
 
 alias up.date="echo "update"; sudo apt-get update; echo "upgrade"; sudo apt-get upgrade;"
 
-alias bbb="p hasAlias"
-alias app="p searchAppRegistrationInfo"
+alias bbb="python3 $ww/python/hasAlias.py"
+alias app="python3 $ww/python/searchAppRegistrationInfo.py"
 
 alias tool="installer.py"
 alias tool.sh="$HOME/.rt/tool.sh"
@@ -3145,7 +3145,7 @@ alias .git.c="rm -rf rightthumb-widgets-v0 ; git clone https://github.com/rightt
 alias .git.t="rm -rf rightthumb-widgets-v0 ; git clone https://github.com/rightthumb/rightthumb-widgets-v0 ; cd rightthumb-widgets-v0 ; chmod -R 777 . ; p shClean -folder -r ; vps.t.py.; vps.t.sh. ; vps.t.db."
 alias .git.h="rm -rf rightthumb-widgets-v0 ; git clone https://github.com/rightthumb/rightthumb-widgets-v0 ; cd rightthumb-widgets-v0 ; chmod -R 777 . ; p shClean -folder -r ; vps.h.py.; vps.h.sh. ; vps.h.db."
 
-alias pp="p paths -f "
+alias pp="python3 $ww/python/paths.py -f "
 
 alias vps.b..="vps.b.py; vps.b.sh; vps.b.db;"
 alias vps..b..="vps.b.py.; vps.b.sh .; vps.b.db.;"
@@ -3157,10 +3157,10 @@ alias vps..m..="vps.m.py.; vps.m.sh.; vps.m.db.;"
 alias vps.t..="vps.t.py; vps.t.sh; vps.t.db;"
 alias vps..t..="vps.t.py.; vps.t.sh.; vps.t.db.;"
 
-alias mkdir="p mkdir -folders "
-alias mkdir.="p mkdir -files "
-alias mkdir.fi="p mkdir -files "
-alias mkdir.fo="p mkdir -folders "
+alias mkdir="python3 $ww/python/mkdir.py -folders "
+alias mkdir.="python3 $ww/python/mkdir.py -files "
+alias mkdir.fi="python3 $ww/python/mkdir.py -files "
+alias mkdir.fo="python3 $ww/python/mkdir.py -folders "
 
 
 echo '' > $stmp/.gp
@@ -3245,9 +3245,9 @@ alias vps.h.u="vps.h.py.u; vps.h.sh.u; vps.h.db.u"
 alias vps.h.d="vps.h.py.d; vps.h.sh.d; vps.h.ub.d"
 
 
-alias u..="p site -f"
-alias u.="p site -u -f"
-alias d.="p site -d -f"
+alias u..="python3 $ww/python/site.py -f"
+alias u.="python3 $ww/python/site.py -u -f"
+alias d.="python3 $ww/python/site.py -d -f"
 
 alias in.='cat ~/.bashrc > ~/.bashrc.bk ; echo "" > ~/.bashrc ; rm $widgets/install/installer.py ; wget https://raw.githubusercontent.com/rightthumb/rightthumb-widgets-v0/main/install/installer.py -O $widgets/install/installer.py ; chmod 777 $widgets/install/installer.py ; python3 $widgets/install/installer.py -rc.d h'
 alias in.s='sudo cat ~/.bashrc > ~/.bashrc.bk ; echo "" > ~/.bashrc ; rm $widgets/install/installer.py ; wget https://raw.githubusercontent.com/rightthumb/rightthumb-widgets-v0/main/install/installer.py -O $widgets/install/installer.py ; chmod 777 $widgets/install/installer.py ; sudo python3 $widgets/install/installer.py -rc.d h'
@@ -3269,7 +3269,7 @@ alias dl.b='python3 $ww/python/vps-app-7facG-7GldEZ-dl-bespin.py -path '
 alias dl.h='python3 $ww/python/python/vps-app-7facG-7GldEZ-dl-hoth.py -path '
 alias dl.m='python3 $ww/python/vps-app-7facG-7GldEZ-dl-mandalore.py -path '
 
-alias bl='p blank-file -f '
+alias bl="python3 $ww/python/blank-file -f "
 alias wget.txt='wget -q -O - '
 alias wgett='wget -q -O - '
 
@@ -3289,7 +3289,7 @@ export EDITOR='nano'
 # ssh-copy-id -i ~/.ssh/id_rsa.pub scott@hoth.m-eta.app
 
 
-alias rms='p secure-delete-file -f'
+alias rms="python3 $ww/python/secure-delete-file.py -f "
 
 PROMPT_COMMAND='echo -ne "\\033]0;$( whoami ) $prompt_symbol """+c3po+""" \\007"'
 export HISTSIZE=100000
