@@ -2683,9 +2683,9 @@ alias web.ey="exp.geny;web.do"
 alias web.el="echo su root | web.e"
 ################# #################
 #################
-alias vps.l="python3 $ww/python/keychain.py -label vps.l -get -temp 10"
-alias web.l="python3 $ww/python/keychain.py -label web.l -get -temp 10"
-alias reph.l="python3 $ww/python/keychain.py -label reph.l -get -temp 10"
+alias vps.l='python3 $ww/python/keychain.py -label vps.l -get -temp 10'
+alias web.l='python3 $ww/python/keychain.py -label web.l -get -temp 10'
+alias reph.l='python3 $ww/python/keychain.py -label reph.l -get -temp 10'
 #################
 alias vps.socket="ssh -R 65432:localhost:65432 -C -N -l scott hoth.m-eta.app";
 ################# #################
@@ -3000,28 +3000,28 @@ alias cat.scrap="cat $notes_file"
 
 alias scrap="$widgets/widgets/bash/scrap.sh"
 alias notes="$widgets/widgets/bash/scrap.sh"
-alias ent="python3 $ww/python/imdb.py -ent "
-alias ee="python3 $ww/python/imdb.py -live -case -ep -ent "
+alias ent='python3 $ww/python/imdb.py -ent '
+alias ee='python3 $ww/python/imdb.py -live -case -ep -ent '
 
-alias uuid.m="python3 $ww/python/genuuid -strip -short"
-alias uuid.mini="python3 $ww/python/genuuid -strip -short"
-alias uuid.s="python3 $ww/python/genuuid -strip"
-alias uuid="python3 $ww/python/genuuid.py"
-alias uuids="python3 $ww/python/genuuid -cnt 10"
+alias uuid.m='python3 $ww/python/genuuid -strip -short'
+alias uuid.mini='python3 $ww/python/genuuid -strip -short'
+alias uuid.s='python3 $ww/python/genuuid -strip'
+alias uuid='python3 $ww/python/genuuid.py'
+alias uuids='python3 $ww/python/genuuid -cnt 10'
 alias n.rc='n ~/.bashrc'
 
 export p="/usr/bin/sh $widgets/widgets/bash/nav/p.sh"
 export config
 export widgets
 
-alias ls.g="python3 $ww/python/ls.py -c g s n -s g -g g";
-alias ls.d="python3 $ww/python/ls.py -ago 2d -c ago name -g ago -sort md"
-alias ls.="python3 $ww/python/ls.py -c ago name -g ago -sort md -ago "
+alias ls.g='python3 $ww/python/ls.py -c g s n -s g -g g';
+alias ls.d='python3 $ww/python/ls.py -ago 2d -c ago name -g ago -sort md'
+alias ls.='python3 $ww/python/ls.py -c ago name -g ago -sort md -ago '
 
-alias cloud="python3 $ww/python/cloud.py -sync"
+alias cloud='python3 $ww/python/cloud.py -sync'
 
-alias ls.p=="python3 $ww/python/ls.py -s md -g ago --c -nocolor -c path"
-alias a.cp=="python3 $ww/python/copyTool.py"
+alias ls.p=='python3 $ww/python/ls.py -s md -g ago --c -nocolor -c path'
+alias a.cp=='python3 $ww/python/copyTool.py'
 alias scrap.seg='echo  "_________________ _________________ _________________ _________________"'
 alias scrap.seg2='echo "################# ################# ################# #################"'
 
@@ -3047,8 +3047,8 @@ export HISTFILESIZE=100000
 
 alias up.date="echo "update"; sudo apt-get update; echo "upgrade"; sudo apt-get upgrade;"
 
-alias bbb="python3 $ww/python/hasAlias.py"
-alias app="python3 $ww/python/searchAppRegistrationInfo.py"
+alias bbb='python3 $ww/python/hasAlias.py'
+alias app='python3 $ww/python/searchAppRegistrationInfo.py'
 
 alias tool="installer.py"
 alias tool.sh="$HOME/.rt/tool.sh"
@@ -3097,6 +3097,7 @@ alias ssh.t.s="ssh-copy-id -i ~/.ssh/id_rsa.pub scott@tatooine.m-eta.app"
 alias ssh.b.r="ssh-copy-id -i ~/.ssh/id_rsa.pub root@bespin.m-eta.app"
 alias ssh.m.r="ssh-copy-id -i ~/.ssh/id_rsa.pub root@mandalore.m-eta.app"
 alias ssh.t.r="ssh-copy-id -i ~/.ssh/id_rsa.pub root@tatooine.m-eta.app"
+alias ssh.t.a="ssh-copy-id -i ~/.ssh/id_rsa.pub admin@tatooine.m-eta.app"
 
 # alias cd/="cd /"
 alias x.="exit"
@@ -3109,6 +3110,7 @@ alias ports='netstat -tulanp'
 
 alias ssh..="sudo rm -rf ~/.ssh ; sudo rm -rf /mnt/c/Users/Scott/.ssh; mkdir /mnt/c/Users/Scott/.ssh; echo /mnt/c/Users/Scott/.ssh/id_rsa | $p -copy; echo /mnt/c/Users/Scott/.ssh/id_rsa; ssh-keygen -t rsa"
 alias ssh.h.a.="ssh-copy-id -i /mnt/c/Users/Scott/.ssh/id_rsa.pub admin@hoth.m-eta.app"
+alias ssh.t.a.="ssh-copy-id -i /mnt/c/Users/Scott/.ssh/id_rsa.pub admin@tatooine.m-eta.app"
 alias ssh.h.s.="ssh-copy-id -i /mnt/c/Users/Scott/.ssh/id_rsa.pub scott@hoth.m-eta.app"
 alias ssh.b.s.="ssh-copy-id -i /mnt/c/Users/Scott/.ssh/id_rsa.pub scott@bespin.m-eta.app"
 alias ssh.m.s.="ssh-copy-id -i /mnt/c/Users/Scott/.ssh/id_rsa.pub scott@mandalore.m-eta.app"
@@ -3145,7 +3147,7 @@ alias .git.c="rm -rf rightthumb-widgets-v0 ; git clone https://github.com/rightt
 alias .git.t="rm -rf rightthumb-widgets-v0 ; git clone https://github.com/rightthumb/rightthumb-widgets-v0 ; cd rightthumb-widgets-v0 ; chmod -R 777 . ; p shClean -folder -r ; vps.t.py.; vps.t.sh. ; vps.t.db."
 alias .git.h="rm -rf rightthumb-widgets-v0 ; git clone https://github.com/rightthumb/rightthumb-widgets-v0 ; cd rightthumb-widgets-v0 ; chmod -R 777 . ; p shClean -folder -r ; vps.h.py.; vps.h.sh. ; vps.h.db."
 
-alias pp="python3 $ww/python/paths.py -f "
+alias pp='python3 $ww/python/paths.py -f '
 
 alias vps.b..="vps.b.py; vps.b.sh; vps.b.db;"
 alias vps..b..="vps.b.py.; vps.b.sh .; vps.b.db.;"
@@ -3157,27 +3159,28 @@ alias vps..m..="vps.m.py.; vps.m.sh.; vps.m.db.;"
 alias vps.t..="vps.t.py; vps.t.sh; vps.t.db;"
 alias vps..t..="vps.t.py.; vps.t.sh.; vps.t.db.;"
 
-alias mkdir="python3 $ww/python/mkdir.py -folders "
-alias mkdir.="python3 $ww/python/mkdir.py -files "
-alias mkdir.fi="python3 $ww/python/mkdir.py -files "
-alias mkdir.fo="python3 $ww/python/mkdir.py -folders "
+alias mkdir2="echo p mkdir -folders "
+alias mkdir.='python3 $ww/python/mkdir.py -files '
+alias mkdir.fi='python3 $ww/python/mkdir.py -files '
+alias mkdir.fo='python3 $ww/python/mkdir.py -folders '
+alias mkdir='python3 $ww/python/mkdir.py -folders '
 
 
 echo '' > $stmp/.gp
 alias .gp=" pwd > $stmp/.gp ; cd /opt/rightthumb-widgets-v0 ; git reset --hard ; git pull ; sudo chmod 777 -R . ; python3 /opt/rightthumb-widgets-v0/install/installer.py -rc.d h  ; cd $( cat $stmp/.gp )"
 
 
-alias vps.h.py="scp  $ww/python/vps*.py root@hoth.m-eta.app:/opt/rightthumb-widgets-v0/widgets/python/      ; ssh root@hoth.m-eta.app 'chmod -R 777 /opt/rightthumb-widgets-v0/'"
-alias vps.b.py="scp  $ww/python/vps*.py root@bespin.m-eta.app:/opt/rightthumb-widgets-v0/widgets/python/    ; ssh root@bespin.m-eta.app 'chmod -R 777 /opt/rightthumb-widgets-v0/'"
-alias vps.m.py="scp  $ww/python/vps*.py root@mandalore.m-eta.app:/opt/rightthumb-widgets-v0/widgets/python/ ; ssh root@mandalore.m-eta.app 'chmod -R 777 /opt/rightthumb-widgets-v0/'"
+alias vps.h.py="scp  $ww/python/vps*.py root@hoth.m-eta.app:$ww/python/      ; ssh root@hoth.m-eta.app 'chmod -R 777 /opt/rightthumb-widgets-v0/'"
+alias vps.b.py="scp  $ww/python/vps*.py root@bespin.m-eta.app:$ww/python/    ; ssh root@bespin.m-eta.app 'chmod -R 777 /opt/rightthumb-widgets-v0/'"
+alias vps.m.py="scp  $ww/python/vps*.py root@mandalore.m-eta.app:$ww/python/ ; ssh root@mandalore.m-eta.app 'chmod -R 777 /opt/rightthumb-widgets-v0/'"
 
-alias vps.h.py2="scp  /opt/rightthumb-widgets-v0/widgets/python/vps*.py root@hoth.m-eta.app:/opt/rightthumb-widgets-v0/widgets/python/       ; ssh root@hoth.m-eta.app 'chmod -R 777 /opt/rightthumb-widgets-v0/'"
-alias vps.b.py2="scp  /opt/rightthumb-widgets-v0/widgets/python/vps*.py root@bespin.m-eta.app:/opt/rightthumb-widgets-v0/widgets/python/     ; ssh root@bespin.m-eta.app 'chmod -R 777 /opt/rightthumb-widgets-v0/'"
-alias vps.m.py2="scp  /opt/rightthumb-widgets-v0/widgets/python/vps*.py root@mandalore.m-eta.app:/opt/rightthumb-widgets-v0/widgets/python/  ; ssh root@mandalore.m-eta.app 'chmod -R 777 /opt/rightthumb-widgets-v0/'"
+alias vps.h.py2="scp  $ww/python/vps*.py root@hoth.m-eta.app:$ww/python/       ; ssh root@hoth.m-eta.app 'chmod -R 777 /opt/rightthumb-widgets-v0/'"
+alias vps.b.py2="scp  $ww/python/vps*.py root@bespin.m-eta.app:$ww/python/     ; ssh root@bespin.m-eta.app 'chmod -R 777 /opt/rightthumb-widgets-v0/'"
+alias vps.m.py2="scp  $ww/python/vps*.py root@mandalore.m-eta.app:$ww/python/  ; ssh root@mandalore.m-eta.app 'chmod -R 777 /opt/rightthumb-widgets-v0/'"
 
-alias vps.h.c="ssh -f root@hoth.m-eta.app      -f '/bin/python3 /opt/rightthumb-widgets-v0/widgets/python/shClean.py -r -folder /opt '"
-alias vps.b.c="ssh -f root@bespin.m-eta.app    -f '/bin/python3 /opt/rightthumb-widgets-v0/widgets/python/shClean.py -r -folder /opt '"
-alias vps.m.c="ssh -f root@mandalore.m-eta.app -f '/bin/python3 /opt/rightthumb-widgets-v0/widgets/python/shClean.py -r -folder /opt '"
+alias vps.h.c="ssh -f root@hoth.m-eta.app      -f '/bin/python3 $ww/python/shClean.py -r -folder /opt '"
+alias vps.b.c="ssh -f root@bespin.m-eta.app    -f '/bin/python3 $ww/python/shClean.py -r -folder /opt '"
+alias vps.m.c="ssh -f root@mandalore.m-eta.app -f '/bin/python3 $ww/python/shClean.py -r -folder /opt '"
  
 alias vps.h.sh=" scp -r $ww/bash/vps-srv/ root@hoth.m-eta.app:/opt/rightthumb-widgets-v0/widgets/bash/    ; ssh root@hoth.m-eta.app 'chmod -R 777 /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/'"
 alias vps.b.sh=" scp -r $ww/bash/vps-srv/ root@bespin.m-eta.app:/opt/rightthumb-widgets-v0/widgets/bash/    ; ssh root@bespin.m-eta.app 'chmod -R 777 /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/'"
@@ -3202,52 +3205,52 @@ alias vps.h.db.="scp -rp root@hoth.m-eta.app:/opt/rightthumb-widgets-v0/widgets/
 alias vps.b.db.="scp -rp root@bespin.m-eta.app:/opt/rightthumb-widgets-v0/widgets/databank/tables/*.* $ww/databank/tables/ ; chmod 777 -R $ww/databank/tables/"
 alias vps.m.db.="scp -rp root@mandalore.m-eta.app:/opt/rightthumb-widgets-v0/widgets/databank/tables/*.* $ww/databank/tables/ ; chmod 777 -R $ww/databank/tables/"
 
-alias vps.h.py.="scp -rp root@hoth.m-eta.app:/opt/rightthumb-widgets-v0/widgets/python/vps* $ww/python/ ; chmod 777 -R $ww/python/"
-alias vps.b.py.="scp -rp root@bespin.m-eta.app:/opt/rightthumb-widgets-v0/widgets/python/vps* $ww/python/ ; chmod 777 -R $ww/python/"
-alias vps.m.py.="scp -rp root@mandalore.m-eta.app:/opt/rightthumb-widgets-v0/widgets/python/vps* $ww/python/ ; chmod 777 -R $ww/python/"
+alias vps.h.py.="scp -rp root@hoth.m-eta.app:$ww/python/vps* $ww/python/ ; chmod 777 -R $ww/python/"
+alias vps.b.py.="scp -rp root@bespin.m-eta.app:$ww/python/vps* $ww/python/ ; chmod 777 -R $ww/python/"
+alias vps.m.py.="scp -rp root@mandalore.m-eta.app:$ww/python/vps* $ww/python/ ; chmod 777 -R $ww/python/"
 
 
-alias vps.t.py="scp $ww/python/vps*.py root@tatooine.m-eta.app:/opt/rightthumb-widgets-v0/widgets/python/ ; ssh root@tatooine.m-eta.app \'chmod -R 777 /opt/rightthumb-widgets-v0/\'"
-alias vps.t.py2="scp /opt/rightthumb-widgets-v0/widgets/python/vps*.py root@tatooine.m-eta.app:/opt/rightthumb-widgets-v0/widgets/python/ ; ssh root@tatooine.m-eta.app \'chmod -R 777 /opt/rightthumb-widgets-v0/\'"
-alias vps.t.c="ssh -f root@tatooine.m-eta.app -f \'/bin/python3 /opt/rightthumb-widgets-v0/widgets/python/shClean.py -r -folder /opt \'"
+alias vps.t.py="scp $ww/python/vps*.py root@tatooine.m-eta.app:$ww/python/ ; ssh root@tatooine.m-eta.app \'chmod -R 777 /opt/rightthumb-widgets-v0/\'"
+alias vps.t.py2="scp $ww/python/vps*.py root@tatooine.m-eta.app:$ww/python/ ; ssh root@tatooine.m-eta.app \'chmod -R 777 /opt/rightthumb-widgets-v0/\'"
+alias vps.t.c="ssh -f root@tatooine.m-eta.app -f \'/bin/python3 $ww/python/shClean.py -r -folder /opt \'"
 alias vps.t.sh="scp -r $ww/bash/vps-srv/ root@tatooine.m-eta.app:/opt/rightthumb-widgets-v0/widgets/bash/ ; ssh root@tatooine.m-eta.app \'chmod -R 777 /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/\'"
 alias vps.t.sh2="ssh root@tatooine.m-eta.app -f \'mkdir -p /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/\' ; scp /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/* root@tatooine.m-eta.app:/opt/rightthumb-widgets-v0/widgets/bash/vps-srv/ ; ssh root@tatooine.m-eta.app \'chmod -R 777 /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/\'"
 alias vps.t.db="scp $ww/databank/tables/*.* root@tatooine.m-eta.app:/opt/rightthumb-widgets-v0/widgets/databank/tables/ ; ssh root@tatooine.m-eta.app \'chmod -R 777 /opt/rightthumb-widgets-v0/\'"
 alias vps.t.sh.="scp -r root@tatooine.m-eta.app:/opt/rightthumb-widgets-v0/widgets/bash/vps-srv/ $ww/bash/ ; chmod 777 -R $ww/bash/vps-srv/"
 alias vps.t.db.="scp -rp root@tatooine.m-eta.app:/opt/rightthumb-widgets-v0/widgets/databank/tables/*.* $ww/databank/tables/ ; chmod 777 -R $ww/databank/tables/"
-alias vps.t.py.="scp -rp root@tatooine.m-eta.app:/opt/rightthumb-widgets-v0/widgets/python/vps* $ww/python/ ; chmod 777 -R $ww/python/"
+alias vps.t.py.="scp -rp root@tatooine.m-eta.app:$ww/python/vps* $ww/python/ ; chmod 777 -R $ww/python/"
 
-alias vps.t.c="ssh -f root@tatooine.m-eta.app -f \'/bin/python3 /opt/rightthumb-widgets-v0/widgets/python/shClean.py -r -folder /opt \'"
+alias vps.t.c="ssh -f root@tatooine.m-eta.app -f \'/bin/python3 $ww/python/shClean.py -r -folder /opt \'"
 
 
-alias vps.t.py.v.u="scp /opt/rightthumb-widgets-v0/widgets/python/vps*.py root@tatooine.m-eta.app:/opt/rightthumb-widgets-v0/widgets/python/ ; ssh root@tatooine.m-eta.app \'chmod -R 777 /opt/rightthumb-widgets-v0/\'"
+alias vps.t.py.v.u="scp $ww/python/vps*.py root@tatooine.m-eta.app:$ww/python/ ; ssh root@tatooine.m-eta.app \'chmod -R 777 /opt/rightthumb-widgets-v0/\'"
 alias vps.t.sh2.u="ssh root@tatooine.m-eta.app -f \'mkdir -p /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/\' ; scp /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/* root@tatooine.m-eta.app:/opt/rightthumb-widgets-v0/widgets/bash/vps-srv/ ; ssh root@tatooine.m-eta.app \'chmod -R 777 /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/\'"
 
-alias vps.t.py.u="scp $ww/python/vps*.py root@tatooine.m-eta.app:/opt/rightthumb-widgets-v0/widgets/python/ ; ssh root@tatooine.m-eta.app \'chmod -R 777 /opt/rightthumb-widgets-v0/\'"
+alias vps.t.py.u="scp $ww/python/vps*.py root@tatooine.m-eta.app:$ww/python/ ; ssh root@tatooine.m-eta.app \'chmod -R 777 /opt/rightthumb-widgets-v0/\'"
 alias vps.t.sh.u="scp -r $ww/bash/vps-srv/ root@tatooine.m-eta.app:/opt/rightthumb-widgets-v0/widgets/bash/ ; ssh root@tatooine.m-eta.app \'chmod -R 777 /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/\'"
 alias vps.t.db.u="scp $ww/databank/tables/*.* root@tatooine.m-eta.app:/opt/rightthumb-widgets-v0/widgets/databank/tables/ ; ssh root@tatooine.m-eta.app \'chmod -R 777 /opt/rightthumb-widgets-v0/\'"
 alias vps.t.sh.d="scp -r root@tatooine.m-eta.app:/opt/rightthumb-widgets-v0/widgets/bash/vps-srv/ $ww/bash/ ; chmod 777 -R $ww/bash/vps-srv/"
 alias vps.t.db.d="scp -rp root@tatooine.m-eta.app:/opt/rightthumb-widgets-v0/widgets/databank/tables/*.* $ww/databank/tables/ ; chmod 777 -R $ww/databank/tables/"
-alias vps.t.py.d="scp -rp root@tatooine.m-eta.app:/opt/rightthumb-widgets-v0/widgets/python/vps* $ww/python/ ; chmod 777 -R $ww/python/"
+alias vps.t.py.d="scp -rp root@tatooine.m-eta.app:$ww/python/vps* $ww/python/ ; chmod 777 -R $ww/python/"
 alias vps.t.u="vps.t.py.u; vps.t.sh.u; vps.t.db.u"
 alias vps.t.d="vps.t.py.d; vps.t.sh.d; vps.t.ub.d"
 
-alias vps.h.py.v.u="scp /opt/rightthumb-widgets-v0/widgets/python/vps*.py root@hoth.m-eta.app:/opt/rightthumb-widgets-v0/widgets/python/ ; ssh root@hoth.m-eta.app \'chmod -R 777 /opt/rightthumb-widgets-v0/\'"
+alias vps.h.py.v.u="scp $ww/python/vps*.py root@hoth.m-eta.app:$ww/python/ ; ssh root@hoth.m-eta.app \'chmod -R 777 /opt/rightthumb-widgets-v0/\'"
 alias vps.h.sh2.u="ssh root@hoth.m-eta.app -f \'mkdir -p /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/\' ; scp /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/* root@hoth.m-eta.app:/opt/rightthumb-widgets-v0/widgets/bash/vps-srv/ ; ssh root@hoth.m-eta.app \'chmod -R 777 /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/\'"
 
-alias vps.h.py.u="scp $ww/python/vps*.py root@hoth.m-eta.app:/opt/rightthumb-widgets-v0/widgets/python/ ; ssh root@hoth.m-eta.app \'chmod -R 777 /opt/rightthumb-widgets-v0/\'"
+alias vps.h.py.u="scp $ww/python/vps*.py root@hoth.m-eta.app:$ww/python/ ; ssh root@hoth.m-eta.app \'chmod -R 777 /opt/rightthumb-widgets-v0/\'"
 alias vps.h.sh.u="scp -r $ww/bash/vps-srv/ root@hoth.m-eta.app:/opt/rightthumb-widgets-v0/widgets/bash/ ; ssh root@hoth.m-eta.app \'chmod -R 777 /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/\'"
 alias vps.h.db.u="scp $ww/databank/tables/*.* root@hoth.m-eta.app:/opt/rightthumb-widgets-v0/widgets/databank/tables/ ; ssh root@hoth.m-eta.app \'chmod -R 777 /opt/rightthumb-widgets-v0/\'"
 alias vps.h.sh.d="scp -r root@hoth.m-eta.app:/opt/rightthumb-widgets-v0/widgets/bash/vps-srv/ $ww/bash/ ; chmod 777 -R $ww/bash/vps-srv/"
 alias vps.h.db.d="scp -rp root@hoth.m-eta.app:/opt/rightthumb-widgets-v0/widgets/databank/tables/*.* $ww/databank/tables/ ; chmod 777 -R $ww/databank/tables/"
-alias vps.h.py.d="scp -rp root@hoth.m-eta.app:/opt/rightthumb-widgets-v0/widgets/python/vps* $ww/python/ ; chmod 777 -R $ww/python/"
+alias vps.h.py.d="scp -rp root@hoth.m-eta.app:$ww/python/vps* $ww/python/ ; chmod 777 -R $ww/python/"
 alias vps.h.u="vps.h.py.u; vps.h.sh.u; vps.h.db.u"
 alias vps.h.d="vps.h.py.d; vps.h.sh.d; vps.h.ub.d"
 
 
-alias u..="python3 $ww/python/site.py -f"
-alias u.="python3 $ww/python/site.py -u -f"
-alias d.="python3 $ww/python/site.py -d -f"
+alias u..='python3 $ww/python/site.py -f'
+alias u.='python3 $ww/python/site.py -u -f'
+alias d.='python3 $ww/python/site.py -d -f'
 
 alias in.='cat ~/.bashrc > ~/.bashrc.bk ; echo "" > ~/.bashrc ; rm $widgets/install/installer.py ; wget https://raw.githubusercontent.com/rightthumb/rightthumb-widgets-v0/main/install/installer.py -O $widgets/install/installer.py ; chmod 777 $widgets/install/installer.py ; python3 $widgets/install/installer.py -rc.d h'
 alias in.s='sudo cat ~/.bashrc > ~/.bashrc.bk ; echo "" > ~/.bashrc ; rm $widgets/install/installer.py ; wget https://raw.githubusercontent.com/rightthumb/rightthumb-widgets-v0/main/install/installer.py -O $widgets/install/installer.py ; chmod 777 $widgets/install/installer.py ; sudo python3 $widgets/install/installer.py -rc.d h'
@@ -3269,7 +3272,7 @@ alias dl.b='python3 $ww/python/vps-app-7facG-7GldEZ-dl-bespin.py -path '
 alias dl.h='python3 $ww/python/python/vps-app-7facG-7GldEZ-dl-hoth.py -path '
 alias dl.m='python3 $ww/python/vps-app-7facG-7GldEZ-dl-mandalore.py -path '
 
-alias bl="python3 $ww/python/blank-file -f "
+alias bl='python3 $ww/python/blank-file -f '
 alias wget.txt='wget -q -O - '
 alias wgett='wget -q -O - '
 
@@ -3289,7 +3292,7 @@ export EDITOR='nano'
 # ssh-copy-id -i ~/.ssh/id_rsa.pub scott@hoth.m-eta.app
 
 
-alias rms="python3 $ww/python/secure-delete-file.py -f "
+alias rms='python3 $ww/python/secure-delete-file.py -f '
 
 PROMPT_COMMAND='echo -ne "\\033]0;$( whoami ) $prompt_symbol """+c3po+""" \\007"'
 export HISTSIZE=100000
