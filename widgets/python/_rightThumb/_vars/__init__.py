@@ -953,7 +953,9 @@ def createDestinationFolders( folder, o=None, isFile=False, p=False ):
 			folder = techDrive + slash + folder.split(':')[1]
 	if isFile:
 		f = folder.split(thisSlash)
-		f.pop()
+		f.reverse()
+		f.pop(0)
+		f.reverse()
 		folder = thisSlash.join( f )
 	if os.path.isdir( folder ):
 		return folder
@@ -965,9 +967,13 @@ def createDestinationFolders( folder, o=None, isFile=False, p=False ):
 	except Exception as e:
 		pass
 	parts = folder.split( slash )
+	# print('here')
 	
-	if not os.path.isdir( parts[0]+slash ):
-		return folder
+	# ??????
+	# if not os.path.isdir( parts[0] ):
+	# 	return folder
+	# ??????
+
 		# _.colorThis( 'Error: Destination drive does not exist', 'red' )
 	newParts = []
 	for p in parts:
@@ -975,6 +981,7 @@ def createDestinationFolders( folder, o=None, isFile=False, p=False ):
 		f = slash.join( newParts )
 		exist = os.path.isdir( f )
 		if not exist:
+			print(f)
 			try:
 				os.mkdir( f )
 			except Exception as e:

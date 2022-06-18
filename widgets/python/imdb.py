@@ -2128,7 +2128,7 @@ def episodes(url,theYear='',theTitle=''):
 		siteBase = 'https://www.imdb.com'
 		thisURL = newURL.replace('THESEASON','1')
 		# _.pr(thisURL)
-		print_url(frameinfo=getframeinfo(currentframe()), url=url,c='cyan')
+		print_url(frameinfo=getframeinfo(currentframe()), url=thisURL,c='cyan')
 		page = requests.get(thisURL)
 		tree = html.fromstring(page.content)
 		seasons = tree.cssselect('#bySeason option')
@@ -2161,7 +2161,7 @@ def episodes(url,theYear='',theTitle=''):
 				thisURL = newURL.replace('THESEASON','-1')
 			else:
 				thisURL = newURL.replace('THESEASON',season)
-				print_url(frameinfo=getframeinfo(currentframe()), url=url,c='cyan')
+				print_url(frameinfo=getframeinfo(currentframe()), url=thisURL,c='cyan')
 				page = requests.get(thisURL)
 				tree = html.fromstring(page.content)
 				episodeCode = tree.cssselect('div[itemprop="episodes"]')

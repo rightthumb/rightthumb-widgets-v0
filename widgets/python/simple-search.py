@@ -26,6 +26,7 @@ _.load()
 _v = __.imp('_rightThumb._vars')
 _str = __.imp('_rightThumb._string')
 ##################################################
+os = __.imp('os.sep')
 
 def sw():
     _.switches.register( 'Recursive', '-r' )
@@ -168,7 +169,7 @@ def action():
             if _.showLine(line):
                 found.append({ 'i':i, 'line':line })
         if found:
-            dic[path.replace( __.path(os.getcwd()+os.sep,'') )]=found
+            dic[path.replace( __.path(os.getcwd())+os.sep,'' )]=found
 
     _.pv(dic)
 

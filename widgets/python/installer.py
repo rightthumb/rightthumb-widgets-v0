@@ -3108,7 +3108,7 @@ alias fping='ping -c 100 -s.2'
 alias ports='netstat -tulanp'
 
 
-alias ssh..="sudo rm -rf ~/.ssh ; sudo rm -rf /mnt/c/Users/Scott/.ssh; mkdir /mnt/c/Users/Scott/.ssh; echo /mnt/c/Users/Scott/.ssh/id_rsa | $p -copy; echo /mnt/c/Users/Scott/.ssh/id_rsa; ssh-keygen -t rsa"
+alias ssh..="sudo rm -rf ~/.ssh ; sudo rm -rf /mnt/c/Users/Scott/.ssh; mkdir /mnt/c/Users/Scott/.ssh; echo /mnt/c/Users/Scott/.ssh/id_rsa ; $p -copy -this /mnt/c/Users/Scott/.ssh/id_rsa; echo /mnt/c/Users/Scott/.ssh/id_rsa; ssh-keygen -t rsa"
 alias ssh.h.a.="ssh-copy-id -i /mnt/c/Users/Scott/.ssh/id_rsa.pub admin@hoth.m-eta.app"
 alias ssh.t.a.="ssh-copy-id -i /mnt/c/Users/Scott/.ssh/id_rsa.pub admin@tatooine.m-eta.app"
 alias ssh.h.s.="ssh-copy-id -i /mnt/c/Users/Scott/.ssh/id_rsa.pub scott@hoth.m-eta.app"

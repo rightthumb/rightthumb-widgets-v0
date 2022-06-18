@@ -215,6 +215,7 @@ GOTO:EOF
             SET /p quote=<%USERPROFILE%\.rt\profile\vars\quote.txt
             SET /p percentage=<%USERPROFILE%\.rt\profile\vars\percentage.txt
 
+            SET tmpf.htm=%stmp%\13cf9da8b39d.htm
             SET tmpf=%stmp%\{8E3F33E4-86AB-AB1E-6219-801DE111D9AF}
             SET tmpf0=%stmp%\{B820137A-79B8-45E3-BCBD-A6CAC50892D0}
             SET tmpf1=%stmp%\{C0FA8E56-8426-46BB-9CE8-4A14C51EA261}

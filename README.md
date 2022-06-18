@@ -1,5 +1,8 @@
 "# rightthumb-widgets-v0"
 
+~~~
+about to rebrand this tool as a python meta framework (after some code refactoring)
+~~~
 
 Description
 

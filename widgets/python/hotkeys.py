@@ -517,6 +517,18 @@ class CLIP:
 
 
 
+    def remove_dup_spaces(self):
+        _copy = _.regImp( __.appReg, '-copy' )
+        _paste = _.regImp( __.appReg, '-paste' )
+        data  = _paste.imp.paste()
+
+        data = data.replace('\r','')
+        data = _str.do('dup',data,'\n')
+
+        _copy.imp.copy(  data  , p=0 )
+
+
+
 
 
     def space_single(self):
@@ -1982,6 +1994,7 @@ def load():
                 'clip-single-space': { 'raw': [ 'win.', 'shift.', 'alt.', 's' ], 'do': 'Clip.space_single()' },
                 'clip-double-space': { 'raw': [ 'win.', 'shift.', 'alt.', 'd' ], 'do': 'Clip.space_double()' },
                 'clip-invert-quotes': { 'raw': [  'alt.', 'win.',  ';' ], 'do': 'Clip.quote_inverter()' },
+                'clip-dup-spaces': { 'raw': [  'ctrl.,2', 'r',  'd', 's' ], 'do': 'Clip.remove_dup_spaces()' },
                 # 'clip-replace': { 'raw': [ 'ctrl.,2',  's' ], 'do': 'Clip.swap()' },
 
 
@@ -1991,6 +2004,7 @@ def load():
         r=[]
         for key in  table[k]['raw']:
             t=key
+            t=t.replace('cl.','ctrl.')
             t=t.replace('crl.','ctrl.')
             t=t.replace('ctr.','ctrl.')
             t=t.replace('ctl.','ctrl.')
@@ -1998,7 +2012,7 @@ def load():
             t=t.replace('space.','Key.space')
             t=t.replace('win.','Key.cmd')
             t=t.replace('cmd.','Key.cmd')
-            t=t.replace('ctrl.','Key.shift')
+            t=t.replace('ctrl.','Key.ctrl')
             t=t.replace('shift.','Key.shift')
             t=t.replace('alt.','Key.alt')
             t=t.replace('key.','Key.')

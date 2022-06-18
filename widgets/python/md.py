@@ -37,6 +37,8 @@ def appSwitches():
     _.switches.register( 'Files', '-f,-file,-files','file.txt', description='Files' )
     _.switches.register( 'Meta', '-m,-meta' )
     _.switches.register( 'HTML', '-htm,-html' )
+    _.switches.register( 'View-Webpage', '-web,-page,-view,-v' )
+
     _.switches.register( 'Clean', '--c' )
 
 _.autoBackupData = __.setting('receipt-log')
@@ -213,7 +215,7 @@ class Server(BaseHTTPRequestHandler):
             fileBackup.switch( 'isPreOpen', delete=True )
             # fileBackup.switch( 'isPreOpen' )
             fileBackup.switch( 'Input', path )
-            if not _.switches.isActive('HTML'): fileBackup.action()
+            if not _.switches.isActive('HTML') and  not _.switches.isActive('View-Webpage'): fileBackup.action()
         else:
 
             global filesOpened
@@ -281,7 +283,7 @@ class Server(BaseHTTPRequestHandler):
             fileBackup.switch( 'isPreOpen', delete=True )
             # fileBackup.switch( 'isPreOpen' )
             fileBackup.switch( 'Input', path )
-            if not _.switches.isActive('HTML'): fileBackup.action()
+            if not _.switches.isActive('HTML')  and  not _.switches.isActive('View-Webpage'): fileBackup.action()
 
         self.respond_OK('''
 <!DOCTYPE html>
@@ -434,7 +436,7 @@ def process(table):
             if not _.switches.isActive('Clean'): _.pr()
             fileBackup.switch( 'Input', path )
             fileBackup.switch( 'isPreOpen' )
-            if not _.switches.isActive('HTML'): fb = fileBackup.action()
+            if not _.switches.isActive('HTML') and  not _.switches.isActive('View-Webpage'): fb = fileBackup.action()
             if not _.switches.isActive('Clean'): _.pr(path)
             if not _.switches.isActive('Clean'): _.pr(fb)
 
@@ -456,7 +458,7 @@ def processFile(path):
     # fileBackup.switch( 'isPreOpen', delete=True )
     fileBackup.switch( 'isPreOpen' )
     fileBackup.switch( 'Input', path )
-    if not _.switches.isActive('HTML'): fileBackup.action()
+    if not _.switches.isActive('HTML') and  not _.switches.isActive('View-Webpage'): fileBackup.action()
 
     if not os.path.isfile(path) or not path.lower().endswith('.md'):
         return None
@@ -519,7 +521,7 @@ def action():
     else:
         html = _.getText( _v.w +os.sep+ 'widgets' +os.sep+ 'html' +os.sep+ 'markdown' +os.sep+ 'showdown.min-2.0.0.js-PYTHON.htm', raw=True )
 
-    if _.switches.isActive('HTML'):
+    if _.switches.isActive('HTML') or _.switches.isActive('View-Webpage'):
         # print(_v.w +os.sep+ 'widgets' +os.sep+ 'html' +os.sep+ 'markdown' +os.sep+ 'showdown.min-2.0.0.js-PYTHON.htm')
         html = _.getText( _v.w +os.sep+ 'widgets' +os.sep+ 'html' +os.sep+ 'markdown' +os.sep+ 'showdown.min-2.0.0.js-PYTHON.htm', raw=True )
 
@@ -561,7 +563,10 @@ def action():
     global THE_PATH
     global port
     htm=html.replace( 'MARKDOWN_HERE', delim.join(markdown) ).replace( 'PATH_HERE', THE_PATH ).replace( '8080', str(port) ).replace( '[ ]', '<input type="checkbox" >' ).replace( '[x]', '<input type="checkbox" checked>' ).replace( '[X]', '<input type="checkbox" checked>' )
-    if not _.switches.isActive('HTML'):
+    if _.switches.isActive('View-Webpage'):
+        _.saveText( htm, save )
+        webbrowser.open(save, new=2)
+    elif not _.switches.isActive('HTML'):
         _.saveText( htm, save )
         webbrowser.open(save, new=2)
         START_WEBSERVER()

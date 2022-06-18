@@ -33,6 +33,7 @@ import _rightThumb._string as _str
 
 
 def appSwitches():
+	_.switches.register( 'Copy-String', '-cp,-string,-text,-txt,-str,-this' )
 	_.switches.register( 'Print', '-print' )
 	_.switches.register( 'NoPrint', '-noprint' )
 	_.switches.register( 'Subject', '-j,-subject' )
@@ -585,6 +586,14 @@ def autoText( data ):
 
 
 def action():
+
+	# print('aaa')
+	if _.switches.isActive('Copy-String'):
+		# print('bbb')
+		data = ' '.join( _.switches.values('Copy-String') )
+		clip_set(data,p=1)
+		return None
+	# print('ccc')
 
 	if __.hasPipeData:
 		# _.pr('|')

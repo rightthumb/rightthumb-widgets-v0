@@ -42,6 +42,7 @@ def appSwitches():
 	_.switches.register('Clean', '-clean')
 	_.switches.register('MaxDepth', '-depth', '3')
 
+
 	pass
 
 
@@ -226,6 +227,10 @@ def process( folder ):
 
 baseDepth = 0
 def action():
+
+	if _.switches.isActive('Clean'):
+		_.switches.fieldSet( 'Blank', 'active', True )
+
 	global activeFolders
 	global allFolders
 	global i
@@ -240,24 +245,24 @@ def action():
 		for folder in _.switches.values('Folder'):
 			baseDepth = len( folder.split(_v.slash) )
 			process( folder )
+			allFolders.append(folder)
 	else:
 		folder = os.getcwd()
 		baseDepth = len( folder.split(_v.slash) )
 		process( folder )
+		allFolders.append(folder)
 
 	# i = 0
-
+	# print(allFolders)
 	if  _.switches.isActive('Blank'):
+		allFolders.reverse()
 		ii = 0
 		for f in allFolders:
 			if not f.lower() in activeFolders:
-				ii+=1
-				_.cp( f, 'cyan' )
 				if _.switches.isActive('Clean'):
-					try:
-						os.rmdir(f)
-					except OSError as e:
-						_.pr("Error: %s : %s" % (f, e.strerror))
+					if del_folder(f):
+						ii+=1
+
 
 
 	if  _.switches.isActive('Blank'):
@@ -276,6 +281,19 @@ def action():
 		_.pr()
 		_.colorThis( [  folder  ], 'darkcyan' )
 
+
+def del_folder(folder):
+	
+
+	# return None
+	try:
+		os.rmdir(folder)
+		_.pr(folder,c='red')
+		return True
+	except OSError as e:
+		_.pr(folder,c='green')
+		return False
+		_.pr("Error: %s : %s" % (folder, e.strerror))
 
 activeFolders = {}
 allFolders = []

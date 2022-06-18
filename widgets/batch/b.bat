@@ -17,7 +17,7 @@ rem echo %result%
 call:VALIDATE ":" %result%
 if [%valid%] == [yes] (
   %result:~0,2%
-  cd %result%
+  cd "%result%"
   cd
 ) else (
   p error -err Bookmark does not exist
