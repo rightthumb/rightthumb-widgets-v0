@@ -180,6 +180,26 @@ def fo(folder=None,r=False,script=None,first=True):
         if r and os.path.isdir(path): fo(path,r,script,False);
     return fo_fi
 
+def fos(folder=None,r=False,script=None,first=True):
+    if folder is None:
+        # try: os=__.imp('os.getcwd');
+        # except Exception as e: pass;
+        folder=os.getcwd()
+    global fo_fi
+    if first: fo_fi=[];
+    if not os.path.isdir(folder): return fo_fi;
+    try:
+        files=os.listdir(folder)
+    except Exception as e:
+        return fo_fi
+    for item in files:
+        path=folder+os.sep+item
+        path=__.path(path)
+        if os.path.isdir(path):
+            if not script is None: script(path);
+            fo_fi.append(path)
+            if r: fos(path,r,script,False);
+    return fo_fi
 
 
 def printt( table, cols=None, sort=None ):

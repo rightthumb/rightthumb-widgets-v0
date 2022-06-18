@@ -30,7 +30,9 @@ from lxml import html
 import requests
 import cssselect
 import datetime
-
+from inspect import currentframe, getframeinfo
+# frameinfo = getframeinfo(currentframe())
+# print(frameinfo.filename, frameinfo.lineno)
 
 try:
 	import arrow
@@ -276,6 +278,9 @@ def fieldSet( switchName, switchField, switchValue, theFocus=False ):
 # START
 
 
+def print_url(url,c='cyan',frameinfo=None):
+	_.pr( 'line:',frameinfo.lineno, c='purple' )
+	_.pr(url,c=c)
 
 def extractUrl(string):
 	string = string.replace('/url?q=','')
@@ -342,13 +347,14 @@ def getUrlList( url, find, omit, obscure=False ):
 					'the'
 	]
 	newURL = url.replace(',','+').replace(' ','+')
-	# _.pr(newURL)
+	# print_url(frameinfo=getframeinfo(currentframe()), url=newURL)
 	# brandNewURL = 'http://www.rightthumb.com/projects/widget/proxy.php?p=' + newURL.replace('&','[and]')
-	# _.pr(newURL)
+	# print_url(frameinfo=getframeinfo(currentframe()), url=newURL)
 	# __.xit()
 
 	# page=str(requests.post(newURL, data = {'path':path,'file':new}).content,'iso-8859-1')
 	# page = requests.get(newURL).content.decode("utf-8").replace('\\n','\n')
+	print_url(frameinfo=getframeinfo(currentframe()), url=newURL)
 	page = requests.get(newURL)
 	
 
@@ -402,6 +408,7 @@ def buildUrlList(url,info=False):
 	franchiseList = []
 	try:
 		page = requests.get(url)
+		print_url(frameinfo=getframeinfo(currentframe()), url=url)
 		tree = html.fromstring(page.content)
 		# tables = tree.cssselect('#pagecontent')
 		# links = tables[0].cssselect('a')
@@ -548,10 +555,11 @@ def lookupPerson(url):
 		else:
 			os.system('clear')
 
-	# _.pr(url)
+	# print_url(frameinfo=getframeinfo(currentframe()), url=url)
 	# pause = input('pause')
 	global hallmark
-	# _.pr(url)
+	# print_url(frameinfo=getframeinfo(currentframe()), url=url)
+	print_url(frameinfo=getframeinfo(currentframe()), url=url)
 	page = requests.get(url)
 	tree = html.fromstring(page.content)
 	films = tree.cssselect('.filmo-category-section')
@@ -855,7 +863,8 @@ def lookupPerson(url):
 					description = m['description']
 				else:
 					newURL = 'http://www.imdb.com/title/' + getIdFromUrl(m['link']) + '/?ref_=ttfc_fc_tt'
-					# _.pr(newURL)
+					# print_url(frameinfo=getframeinfo(currentframe()), url=newURL)
+					print_url(frameinfo=getframeinfo(currentframe()), url=newURL)
 					page = requests.get(newURL)
 					tree = html.fromstring(page.content)
 					description0 = tree.cssselect('.summary_text')
@@ -916,7 +925,8 @@ def lookupPerson(url):
 					description = description.replace('at this time','')
 				else:
 					newURL = 'http://www.imdb.com/title/' + getIdFromUrl(m['link']) + '/?ref_=ttfc_fc_tt'
-					# _.pr(newURL)
+					# print_url(frameinfo=getframeinfo(currentframe()), url=newURL)
+					print_url(frameinfo=getframeinfo(currentframe()), url=newURL)
 					page = requests.get(newURL)
 					tree = html.fromstring(page.content)
 					description0 = tree.cssselect('.summary_text')
@@ -994,6 +1004,7 @@ def lookupPerson(url):
 			dcResult = []
 		if selection == 'bio' or selection == 'b':
 			newURL = extractUrl(url) + 'bio?ref_=nm_ov_bio_sm'
+			print_url(frameinfo=getframeinfo(currentframe()), url=newURL)
 			page = requests.get(newURL)
 			tree = html.fromstring(page.content)
 			bio0 = tree.cssselect('.soda p')
@@ -1346,7 +1357,7 @@ def lookupMovie(url):
 
 	global iHallmark
 	iHallmark = 0
-	# _.pr(url)
+	# print_url(frameinfo=getframeinfo(currentframe()), url=url)
 	if _.switches.isActive('Episode'):
 		_.pr('Loading...')
 		episodeLink(url)
@@ -1362,8 +1373,9 @@ def lookupMovie(url):
 		else:
 			os.system('clear')
 
-	# _.pr(url)
+	# print_url(frameinfo=getframeinfo(currentframe()), url=url)
 	# pause = input('pause')
+	print_url(frameinfo=getframeinfo(currentframe()), url=url)
 	page = requests.get(url)
 	tree = html.fromstring(page.content)
 	movieTitle = tree.cssselect('h3')
@@ -1681,6 +1693,7 @@ def lookupMovie(url):
 			__.xit()
 		if selection == 'description' or selection == 'd':
 			newURL = extractUrl(url) + '?ref_=ttfc_fc_tt'
+			print_url(frameinfo=getframeinfo(currentframe()), url=newURL)
 			page = requests.get(newURL)
 			tree = html.fromstring(page.content)
 			description0 = tree.cssselect('.summary_text')
@@ -1752,7 +1765,7 @@ def episodeLink(url):
 	_.switches.fieldSet('Episode','active',False)
 
 
-
+	print_url(frameinfo=getframeinfo(currentframe()), url=url)
 	page = requests.get(url)
 	tree = html.fromstring(page.content)
 	movieTitle = tree.cssselect('h3')
@@ -1781,7 +1794,7 @@ def episodeLink(url):
 	newURL = 'https://www.imdb.com/title/' + getIdFromUrl(url) + '/episodes?season='
 	siteBase = 'https://www.imdb.com'
 
-
+	print_url(frameinfo=getframeinfo(currentframe()), url=newURL)
 	page = requests.get(newURL + season)
 	tree = html.fromstring(page.content)
 
@@ -1840,10 +1853,15 @@ def episodeLink(url):
 
 
 def isSeasonZero(url):
+	print_url(frameinfo=getframeinfo(currentframe()), url=url,c='cyan')
 	page = requests.get(url)
 	tree = html.fromstring(page.content)
 	data0 = tree.cssselect('.bp_text_only')
-	data = cleanupString(data0[0].text_content())
+	try:
+		data = cleanupString(data0[0].text_content())
+	except Exception as e:
+		_.e('error')
+		# data = cleanupString(data0[0].text_content())
 	data = _str.cleanBE(data,' ')
 	if data[len(data)-1] == '0':
 		result = True
@@ -2021,7 +2039,8 @@ def crossReferenceEpisodes(iDs):
 								spent.append(dt[s['title'].lower()])
 								# dt[s['title'].lower()]
 								url = findIDMatch(dt[s['title'].lower()],s['title'])
-								# _.pr(url)
+								# print_url(frameinfo=getframeinfo(currentframe()), url=url)
+								print_url(frameinfo=getframeinfo(currentframe()), url=url,c='cyan')
 								page = requests.get(url)
 								tree = html.fromstring(page.content)
 								data0 = tree.cssselect('.summary_text')
@@ -2061,6 +2080,7 @@ def episodes(url,theYear='',theTitle=''):
 		_.pr('Processing...')
 	global seasonData
 	if theTitle == '':
+		print_url(frameinfo=getframeinfo(currentframe()), url=url,c='cyan')
 		page = requests.get(url)
 		tree = html.fromstring(page.content)
 		movieTitle = tree.cssselect('h3')
@@ -2108,6 +2128,7 @@ def episodes(url,theYear='',theTitle=''):
 		siteBase = 'https://www.imdb.com'
 		thisURL = newURL.replace('THESEASON','1')
 		# _.pr(thisURL)
+		print_url(frameinfo=getframeinfo(currentframe()), url=url,c='cyan')
 		page = requests.get(thisURL)
 		tree = html.fromstring(page.content)
 		seasons = tree.cssselect('#bySeason option')
@@ -2140,7 +2161,7 @@ def episodes(url,theYear='',theTitle=''):
 				thisURL = newURL.replace('THESEASON','-1')
 			else:
 				thisURL = newURL.replace('THESEASON',season)
-
+				print_url(frameinfo=getframeinfo(currentframe()), url=url,c='cyan')
 				page = requests.get(thisURL)
 				tree = html.fromstring(page.content)
 				episodeCode = tree.cssselect('div[itemprop="episodes"]')
@@ -2215,9 +2236,10 @@ def lookupEpisode(theYear,theTitle,showId,showTitle,url):
 	else:
 		os.system('clear')
 
-	# _.pr(url)
+	# print_url(frameinfo=getframeinfo(currentframe()), url=url)
 	# 'https://www.imdb.com/title/tt1998643/?ref_=ttep_ep1'
 	# 'https://www.imdb.com/title/tt1998643/fullcredits?ref_=tt_cl_sm#cast'
+	print_url(frameinfo=getframeinfo(currentframe()), url=url,c='cyan')
 	page = requests.get(url)
 	tree = html.fromstring(page.content)
 	shows = tree.cssselect('a[itemprop="name"]')
@@ -2227,6 +2249,7 @@ def lookupEpisode(theYear,theTitle,showId,showTitle,url):
 	ta = titleParent[0].cssselect('a')
 	parentURL = 'https://www.imdb.com' + str(ta[0].attrib['href'])
 	parentURL = parentURL.replace('?ref_=tt_ov_inf','')
+	print_url(frameinfo=getframeinfo(currentframe()), url=url,c='cyan')
 	page = requests.get(url)
 	tree = html.fromstring(page.content)
 	data0 = tree.cssselect('.summary_text')
@@ -2243,6 +2266,8 @@ def lookupEpisode(theYear,theTitle,showId,showTitle,url):
 	_.pr('\t\t\t',data)
 	_.pr()
 	_.pr()
+
+	print_url(frameinfo=getframeinfo(currentframe()), url=url.split('?')[0] + 'fullcredits?ref_=tt_cl_sm#cast',c='cyan')
 	page = requests.get(url.split('?')[0] + 'fullcredits?ref_=tt_cl_sm#cast')
 	tree = html.fromstring(page.content)
 
@@ -2346,7 +2371,9 @@ def movieRating(url):
 		title = _.switches.value('Movie')
 
 		newURL = 'https://www.imdb.com/title/' + getIdFromUrl(url) + '/ratings'
-		# _.pr(newURL)
+		# print_url(frameinfo=getframeinfo(currentframe()), url=newURL)
+
+		print_url(frameinfo=getframeinfo(currentframe()), url=newURL,c='cyan')
 		page = requests.get(newURL)
 		tree = html.fromstring(page.content)
 		description0 = tree.cssselect('.allText')
@@ -2366,7 +2393,8 @@ def movieRating(url):
 		_.printBold(title.replace(',',' '))
 
 		newURL = 'https://www.imdb.com/title/' + getIdFromUrl(url) + '/ratings'
-		# _.pr(newURL)
+		# print_url(frameinfo=getframeinfo(currentframe()), url=newURL)
+		print_url(frameinfo=getframeinfo(currentframe()), url=newURL,c='cyan')
 		page = requests.get(newURL)
 		tree = html.fromstring(page.content)
 		description0 = tree.cssselect('.allText')
@@ -2389,7 +2417,8 @@ def movieRating(url):
 			pass
 
 		newURL = 'http://www.imdb.com/title/' + getIdFromUrl(url) + '/?ref_=ttfc_fc_tt'
-		# _.pr(newURL)
+		# print_url(frameinfo=getframeinfo(currentframe()), url=newURL)
+		print_url(frameinfo=getframeinfo(currentframe()), url=newURL,c='cyan')
 		page = requests.get(newURL)
 		tree = html.fromstring(page.content)
 		description0 = tree.cssselect('.summary_text')
@@ -2412,9 +2441,9 @@ def movieRating(url):
 # cyan
 		_.pr()
 	newURL = 'http://www.imdb.com/title/' + getIdFromUrl(url) + '/parentalguide'
-	# _.pr(newURL)
+	# print_url(frameinfo=getframeinfo(currentframe()), url=newURL)
 	try:
-
+		print_url(frameinfo=getframeinfo(currentframe()), url=newURL,c='cyan')
 		page = requests.get(newURL)
 		tree = html.fromstring(page.content)
 		try:
@@ -2646,7 +2675,7 @@ def buildHallmarkTable2():
 	
 
 	def buildTableH(url):
-		_.pr(url)
+		print_url(frameinfo=getframeinfo(currentframe()), url=url,c='cyan')
 		page = requests.get(url)
 		tree = html.fromstring(page.content)
 		try:
@@ -2816,6 +2845,7 @@ def buildHallmarkPeople():
 		_.pr(len(hallmark))
 		_.pr('Unspecified Error')
 def getHallmarkPeople(url):
+	print_url(frameinfo=getframeinfo(currentframe()), url=url,c='cyan')
 	page = requests.get(url)
 	tree = html.fromstring(page.content)
 	cast = tree.cssselect('.cast_list')
@@ -2850,7 +2880,7 @@ def getHallmarkPeople(url):
 #   tr = cast[0].cssselect('tr')
 
 #   people = []
-#   _.pr(url)
+#   print_url(frameinfo=getframeinfo(currentframe()), url=url)
 #   _.pr(len(tr))
 #   for e in tr:
 #       try:
@@ -2902,7 +2932,8 @@ def google(searchFor,personMovie):
 
 		url = 'https://www.google.com/search?q=imdb+'
 		newURL = url + _str.replaceAll(_str.replaceAll(searchFor,',','+'),' ','+')
-		# _.pr(newURL)
+		# print_url(frameinfo=getframeinfo(currentframe()), url=newURL)
+		print_url(frameinfo=getframeinfo(currentframe()), url=newURL,c='cyan')
 		page = requests.get(newURL)
 		tree = html.fromstring(page.content)
 		# tables = tree.cssselect('.r')
@@ -3080,7 +3111,8 @@ def googleID(searchFor,personMovie):
 	if not foundAlias:
 		url = 'https://www.google.com/search?q=imdb+'
 		newURL = url + _str.replaceAll(_str.replaceAll(searchFor,',','+'),' ','+')
-		# _.pr(newURL)
+		# print_url(frameinfo=getframeinfo(currentframe()), url=newURL)
+		print_url(frameinfo=getframeinfo(currentframe()), url=newURL,c='cyan')
 		page = requests.get(newURL)
 		tree = html.fromstring(page.content)
 		tables = tree.cssselect('a')
@@ -3164,7 +3196,8 @@ def googleID_OLD(searchFor,personMovie):
 	if not foundAlias:
 		url = 'https://www.google.com/search?q=imdb+'
 		newURL = url + _str.replaceAll(_str.replaceAll(searchFor,',','+'),' ','+')
-		# _.pr(newURL)
+		# print_url(frameinfo=getframeinfo(currentframe()), url=newURL)
+		print_url(frameinfo=getframeinfo(currentframe()), url=newURL,c='cyan')
 		page = requests.get(newURL)
 		tree = html.fromstring(page.content)
 		tables = tree.cssselect('.r')
@@ -3224,6 +3257,7 @@ def googleID_OLD(searchFor,personMovie):
 def rottenTomatoesRank(movie):
 	url = 'https://www.google.com/search?q=rotten+tomatoes+rating+'
 	newURL = url + _str.replaceAll(_str.replaceAll(movie,',','+'),' ','+')
+	print_url(frameinfo=getframeinfo(currentframe()), url=newURL,c='cyan')
 	page = requests.get(newURL)
 	tree = html.fromstring(page.content)
 	tables = tree.cssselect('.r')
@@ -3361,6 +3395,7 @@ def dataPerson(url):
 					return dataPerson_data[url]
 			except Exception as e:
 				pass
+	print_url(frameinfo=getframeinfo(currentframe()), url=url,c='cyan')
 	page = requests.get(url)
 	tree = html.fromstring(page.content)
 	films = tree.cssselect('.filmo-category-section')
@@ -3432,7 +3467,7 @@ def dataMovie(url):
 			except Exception as e:
 				pass
 
-
+	print_url(frameinfo=getframeinfo(currentframe()), url=url,c='cyan')
 	page = requests.get(url)
 	tree = html.fromstring(page.content)
 	movieTitle = tree.cssselect('h3')
@@ -3831,6 +3866,7 @@ def idCheck(theID):
 			result = True
 	return result
 def lookupMini(url):
+	print_url(frameinfo=getframeinfo(currentframe()), url=url,c='cyan')
 	page = requests.get(url)
 	tree = html.fromstring(page.content)
 
@@ -5210,6 +5246,7 @@ class TheFeature:
 		# _.pr( '_______________' )
 		# _.pr(  )
 		# _.pr( newURL )
+		print_url(frameinfo=getframeinfo(currentframe()), url=newURL,c='cyan')
 		page = requests.get( newURL )
 		tree = html.fromstring(page.content)
 		film = tree.cssselect('a')
@@ -5222,6 +5259,7 @@ class TheFeature:
 						# _.pr()
 						# _.pr( data )
 						# _.pr( row.attrib['href'] )
+						print_url(frameinfo=getframeinfo(currentframe()), url=url,c='cyan')
 						page2 = requests.get( row.attrib['href'] )
 						tree2 = html.fromstring(page2.content)
 						_.pr( page2.content )
@@ -6226,7 +6264,7 @@ def get_cinema_fullcredits(imdbID):
 
 def get_cinema_ratings(imdbID):
 	url = __.links['imdb']['cinema']['ratings'].replace(__.ID_HERE,imdbID)
-	# _.pr(url)
+	# print_url(frameinfo=getframeinfo(currentframe()), url=url)
 	# __.xit()
 	page = requests.get(url)
 	tree = html.fromstring(page.content)
@@ -6835,7 +6873,7 @@ def personMakeSelection( data ):
 				description = m['description']
 			else:
 				newURL = 'http://www.imdb.com/title/' + getIdFromUrl(data['link']) + '/?ref_=ttfc_fc_tt'
-				# _.pr(newURL)
+				# print_url(frameinfo=getframeinfo(currentframe()), url=newURL)
 				page = requests.get(newURL)
 				tree = html.fromstring(page.content)
 				description0 = tree.cssselect('.summary_text')
@@ -6896,7 +6934,7 @@ def personMakeSelection( data ):
 				description = description.replace('at this time','')
 			else:
 				newURL = 'http://www.imdb.com/title/' + getIdFromUrl(data['link']) + '/?ref_=ttfc_fc_tt'
-				# _.pr(newURL)
+				# print_url(frameinfo=getframeinfo(currentframe()), url=newURL)
 				page = requests.get(newURL)
 				tree = html.fromstring(page.content)
 				description0 = tree.cssselect('.summary_text')
@@ -7655,6 +7693,7 @@ if __name__ == '__main__':
 
 # ForceFranchise
 # get_cinema_fullcredits
+
 
 
 

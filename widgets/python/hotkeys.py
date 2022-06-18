@@ -316,6 +316,7 @@ class HOTKEYS:
             good=True
             count=0
             for i,t in enumerate(table[k]['test']):
+
                 if '.alt' in t.lower():
                     esc=True
                 try:
@@ -497,6 +498,25 @@ class CLIP:
         data = cleaner(data,0)
         data = data.replace( '\n', '\n\n' )
         _copy.imp.copy(  data  , p=0 )
+
+
+
+    def quote_inverter(self):
+        _copy = _.regImp( __.appReg, '-copy' )
+        _paste = _.regImp( __.appReg, '-paste' )
+        data  = _paste.imp.paste()
+
+        q1='39fdb0aa0e41'
+        q2='baa900bc5061'
+
+        data=data.replace("'",q1)
+        data=data.replace('"',q2)
+        data=data.replace(q2,"'")
+        data=data.replace(q1,'"')
+        _copy.imp.copy(  data  , p=0 )
+
+
+
 
 
     def space_single(self):
@@ -1913,58 +1933,80 @@ def load():
     global log
     log = []
     table = {
-                'EXIT': { 'raw': [ 'Key.esc','Key.cmd' ], 'do': 'sys.exit()' },
-                'tester': { 'raw': [ 'Key.ctrl,3', 'test' ], 'do': '_.pr("works!!")' },
-                'win-path': { 'raw': [ 'Key.ctrl,2', 'win' ], 'do': 'Clip.win_path()' },
-                'mom': { 'raw': [ 'Key.ctrl,2', 'mom' ], 'do': 'Typing.ty("your_mother()",back=1)' },
-                'pre-clean': { 'raw': [ 'Key.ctrl,2', 'Key.space', 'del' ], 'do': 'Clip.del_activate()' },
-                'implode': { 'raw': [ 'Key.ctrl,2', 'Key.space', 'i' ], 'do': 'Clip.implode()' },
-                # 'reduction_loop': { 'raw': [ 'Key.alt', 'Key.shift', 'Key.cmd', 'r' ], 'do': 'Clip.reduction_loop()' },
-                'implode2': { 'raw': [ 'Key.alt', 'Key.cmd', 'i' ], 'do': 'Clip.implode()' },
-                'implode3': { 'raw': [ 'Key.alt', 'Key.shift', 'i' ], 'do': 'Clip.implode3()' },
-                'number': { 'raw': [ 'Key.alt', 'Key.cmd', 'n' ], 'do': 'Clip.number()' },
-                'number': { 'raw': [ 'Key.shift', 'Key.alt', 'n' ], 'do': 'Clip.numberz()' },
-                'number-a': { 'raw': [ 'Key.alt', 'Key.cmd', 'n', 'a' ], 'do': 'Clip.number_a()' },
-                'number-b': { 'raw': [ 'Key.alt', 'Key.cmd', 'n', 'b' ], 'do': 'Clip.number_b()' },
-                'number-ba': { 'raw': [ 'Key.alt', 'Key.cmd', 'n', 'b', 'a' ], 'do': 'Clip.number_ba()' },
-                'explode': { 'raw': [ 'Key.ctrl,2', 'Key.space', 'x' ], 'do': 'Clip.explode()' },
-                'explode2': { 'raw': [ 'Key.alt', 'Key.cmd', 'x' ], 'do': 'Clip.explode()' },
-                'add-slash': { 'raw': [ 'Key.shift,2',  '\\' ], 'do': 'Clip.add_slash()' },
-                'comma-to-js-dic': { 'raw': [ 'Key.ctrl,2', 'Key.space', 'dic' ], 'do': 'Clip.dic()' },
-                'clip-math': { 'raw': [ 'Key.alt', 'Key.cmd', 'M' ], 'do': 'Clip.math()' },
-                'prefix': { 'raw': [ 'Key.alt', 'Key.cmd', 'p' ], 'do': 'Clip.prefix()' },
-                'suffix': { 'raw': [ 'Key.alt', 'Key.cmd', 's' ], 'do': 'Clip.suffix()' },
-                'lower': { 'raw': [ 'Key.alt', 'Key.cmd', 'l' ], 'do': 'Clip.toLower()' },
-                'lower2': { 'raw': [ 'Key.ctrl', 'Key.cmd', 'l' ], 'do': 'Clip.toLower()' },
-                'upper': { 'raw': [ 'Key.alt', 'Key.cmd', 'u' ], 'do': 'Clip.toUpper()' },
-                'upper2': { 'raw': [ 'Key.ctrl', 'Key.cmd', 'u' ], 'do': 'Clip.toUpper()' },
+                'EXIT': { 'raw': [ 'esc.','win.' ], 'do': 'sys.exit()' },
+                'tester': { 'raw': [ 'ctrl.,3', 'test' ], 'do': '_.pr("works!!")' },
+                'win-path': { 'raw': [ 'ctrl.,2', 'win' ], 'do': 'Clip.win_path()' },
+                'mom': { 'raw': [ 'ctrl.,2', 'mom' ], 'do': 'Typing.ty("your_mother()",back=1)' },
+                'pre-clean': { 'raw': [ 'ctrl.,2', 'space.', 'del' ], 'do': 'Clip.del_activate()' },
+                'implode': { 'raw': [ 'ctrl.,2', 'space.', 'i' ], 'do': 'Clip.implode()' },
+                # 'reduction_loop': { 'raw': [ 'alt.', 'shift.', 'win.', 'r' ], 'do': 'Clip.reduction_loop()' },
+                'implode2': { 'raw': [ 'alt.', 'win.', 'i' ], 'do': 'Clip.implode()' },
+                'implode3': { 'raw': [ 'alt.', 'shift.', 'i' ], 'do': 'Clip.implode3()' },
+                'number': { 'raw': [ 'alt.', 'win.', 'n' ], 'do': 'Clip.number()' },
+                'number': { 'raw': [ 'shift.', 'alt.', 'n' ], 'do': 'Clip.numberz()' },
+                'number-a': { 'raw': [ 'alt.', 'win.', 'n', 'a' ], 'do': 'Clip.number_a()' },
+                'number-b': { 'raw': [ 'alt.', 'win.', 'n', 'b' ], 'do': 'Clip.number_b()' },
+                'number-ba': { 'raw': [ 'alt.', 'win.', 'n', 'b', 'a' ], 'do': 'Clip.number_ba()' },
+                'explode': { 'raw': [ 'ctrl.,2', 'space.', 'x' ], 'do': 'Clip.explode()' },
+                'explode2': { 'raw': [ 'alt.', 'win.', 'x' ], 'do': 'Clip.explode()' },
+                'add-slash': { 'raw': [ 'shift.,2',  '\\' ], 'do': 'Clip.add_slash()' },
+                'comma-to-js-dic': { 'raw': [ 'ctrl.,2', 'space.', 'dic' ], 'do': 'Clip.dic()' },
+                'clip-math': { 'raw': [ 'alt.', 'win.', 'M' ], 'do': 'Clip.math()' },
+                'prefix': { 'raw': [ 'alt.', 'win.', 'p' ], 'do': 'Clip.prefix()' },
+                'suffix': { 'raw': [ 'alt.', 'win.', 's' ], 'do': 'Clip.suffix()' },
+                'lower': { 'raw': [ 'alt.', 'win.', 'l' ], 'do': 'Clip.toLower()' },
+                'lower2': { 'raw': [ 'ctrl.', 'win.', 'l' ], 'do': 'Clip.toLower()' },
+                'upper': { 'raw': [ 'alt.', 'win.', 'u' ], 'do': 'Clip.toUpper()' },
+                'upper2': { 'raw': [ 'ctrl.', 'win.', 'u' ], 'do': 'Clip.toUpper()' },
 
-                'lower': { 'raw': [ 'Key.shift', 'Key.cmd', 's', 't' ], 'do': 'Clip.toString()' },
+                'lower': { 'raw': [ 'shift.', 'win.', 's', 't' ], 'do': 'Clip.toString()' },
 
-                'dup-spaces': { 'raw': [ 'Key.ctrl', 'Key.cmd', 's' ], 'do': 'Clip.dup_space()' },
+                'dup-spaces': { 'raw': [ 'ctrl.', 'win.', 's' ], 'do': 'Clip.dup_space()' },
                 
-                'first-word': { 'raw': [ 'Key.alt', 'Key.cmd', '1' ], 'do': 'Clip.first()' },
-                'first-php-var': { 'raw': [ 'Key.alt', 'Key.cmd', '4' ], 'do': 'Clip.php_var()' },
-                # 'builder-one': { 'raw': [ 'Key.alt', 'Key.cmd', 'b' ], 'do': 'Clip.builder()' },
-                'builder-two': { 'raw': [ 'Key.alt', 'Key.cmd', 'y' ], 'do': 'Clip.builder2()' },
-                'range-first': { 'raw': [ 'Key.alt', 'Key.cmd', '-' ], 'do': 'Clip.range_first()' },
-                'reverse-lines': { 'raw': [ 'Key.alt', 'Key.shift', 'r' ], 'do': 'Clip.reverse_lines()' },
-                'reverse-lines': { 'raw': [ 'Key.alt', 'Key.cmd', 'd' ], 'do': 'Clip.combine_make()' },
-                'toggle-chars': { 'raw': [ 'Key.alt', 'Key.cmd', 't', 'c' ], 'do': 'toggle_chars()' },
-                'decrypt-lines': { 'raw': [ 'Key.cmd', 'c' ], 'do': 'Clip.decrypt_lines()' },
-                'eval-clip': { 'raw': [ 'Key.alt', 'Key.cmd', 'e' ], 'do': 'Clip.dirty_eval()' },
+                'first-word': { 'raw': [ 'alt.', 'win.', '1' ], 'do': 'Clip.first()' },
+                'first-php-var': { 'raw': [ 'alt.', 'win.', '4' ], 'do': 'Clip.php_var()' },
+                # 'builder-one': { 'raw': [ 'alt.', 'win.', 'b' ], 'do': 'Clip.builder()' },
+                'builder-two': { 'raw': [ 'alt.', 'win.', 'y' ], 'do': 'Clip.builder2()' },
+                'range-first': { 'raw': [ 'alt.', 'win.', '-' ], 'do': 'Clip.range_first()' },
+                'reverse-lines': { 'raw': [ 'alt.', 'shift.', 'r' ], 'do': 'Clip.reverse_lines()' },
+                'reverse-lines': { 'raw': [ 'alt.', 'win.', 'd' ], 'do': 'Clip.combine_make()' },
+                'toggle-chars': { 'raw': [ 'alt.', 'win.', 't', 'c' ], 'do': 'toggle_chars()' },
+                'decrypt-lines': { 'raw': [ 'win.', 'c' ], 'do': 'Clip.decrypt_lines()' },
+                'eval-clip': { 'raw': [ 'alt.', 'win.', 'e' ], 'do': 'Clip.dirty_eval()' },
 
-                'sql-crud': { 'raw': [ 'Key.alt', 'Key.cmd', 'c' ], 'do': 'Clip.SQL_to_crud()' },
-                'ad-notes': { 'raw': [ 'Key.alt', 'Key.shift', 'Key.ctrl', 'a' ], 'do': 'Clip.ad_notes()' },
-                'clip-replace': { 'raw': [ 'Key.alt', 'Key.cmd', 'r' ], 'do': 'Clip.replacer()' },
-                'clip-replace2': { 'raw': [ 'Key.ctrl,2', 'Key.shift,1', 'r' ], 'do': 'Clip.replacer2()' },
-                'clip-swap': { 'raw': [ 'Key.ctrl,2', 'Key.shift', 's' ], 'do': 'Clip.swap()' },
-                'clip-single-space': { 'raw': [ 'Key.cmd', 'Key.shift', 'Key.alt', 's' ], 'do': 'Clip.space_single()' },
-                'clip-double-space': { 'raw': [ 'Key.cmd', 'Key.shift', 'Key.alt', 'd' ], 'do': 'Clip.space_double()' },
-                # 'clip-replace': { 'raw': [ 'Key.ctrl,2',  's' ], 'do': 'Clip.swap()' },
+                'sql-crud': { 'raw': [ 'alt.', 'win.', 'c' ], 'do': 'Clip.SQL_to_crud()' },
+                'ad-notes': { 'raw': [ 'alt.', 'shift.', 'ctrl.', 'a' ], 'do': 'Clip.ad_notes()' },
+                'clip-replace': { 'raw': [ 'alt.', 'win.', 'r' ], 'do': 'Clip.replacer()' },
+                'clip-replace2': { 'raw': [ 'ctrl.,2', 'shift.,1', 'r' ], 'do': 'Clip.replacer2()' },
+                'clip-swap': { 'raw': [ 'ctrl.,2', 'shift.', 's' ], 'do': 'Clip.swap()' },
+                'clip-single-space': { 'raw': [ 'win.', 'shift.', 'alt.', 's' ], 'do': 'Clip.space_single()' },
+                'clip-double-space': { 'raw': [ 'win.', 'shift.', 'alt.', 'd' ], 'do': 'Clip.space_double()' },
+                'clip-invert-quotes': { 'raw': [  'alt.', 'win.',  ';' ], 'do': 'Clip.quote_inverter()' },
+                # 'clip-replace': { 'raw': [ 'ctrl.,2',  's' ], 'do': 'Clip.swap()' },
 
 
     }
+
+    for k in table:
+        r=[]
+        for key in  table[k]['raw']:
+            t=key
+            t=t.replace('crl.','ctrl.')
+            t=t.replace('ctr.','ctrl.')
+            t=t.replace('ctl.','ctrl.')
+            t=t.replace('esc.','Key.esc')
+            t=t.replace('space.','Key.space')
+            t=t.replace('win.','Key.cmd')
+            t=t.replace('cmd.','Key.cmd')
+            t=t.replace('ctrl.','Key.shift')
+            t=t.replace('shift.','Key.shift')
+            t=t.replace('alt.','Key.alt')
+            t=t.replace('key.','Key.')
+            t=t.replace('Key.win','Key.cmd')
+            r.append(t)
+        table[k]['raw']=r
+
+
     table2=table
     auto_text = _.getTableDB('hotkeys-AutoText.dex')
     hot_text  = _.getTableDB('hotkeys-Text.dex')

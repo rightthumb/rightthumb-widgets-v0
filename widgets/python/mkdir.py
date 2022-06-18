@@ -42,8 +42,8 @@ import _rightThumb._string as _str
 
 
 def appSwitches():
-	_.switches.register( 'Folders', '-f,-folder,-folders' )
-	_.switches.register( 'Files', '-file,-files' )
+	_.switches.register( 'Folders', '-f,-folder,-folders,-fo' )
+	_.switches.register( 'Files', '-file,-files,-fi' )
 	_.switches.register( 'Prepend-Folder', '-p,-pre,-base' )
 
 	pass
