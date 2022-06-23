@@ -9,7 +9,6 @@
 #    - Scott Taylor Reph, RightThumb.com
 # ###########################################################################
 # ## {C3P0D40fAe8B} ##
-
 ##################################################
 import sys, time
 ##################################################
@@ -26,15 +25,11 @@ _.load()
 _v = __.imp('_rightThumb._vars')
 _str = __.imp('_rightThumb._string')
 ##################################################
-
 def sw():
     _.switches.register( 'Files', '-f,-fi,-file,-files', isRequired=True )
     _.switches.register( 'Clip', '-clip', isRequired=True )
     # _.switches.register( 'Save', '-save', isRequired=True )
     pass
-    ### EXAMPLE: START
-    # _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=True )
-    ### EXAMPLE: END
 
 # __.setting('require-list',['Pipe','Files','Plus'])
 __.setting('require-list',[])
@@ -49,7 +44,7 @@ __.setting('switch-raw',[])
 
 _.appInfo[focus()] = {
     # 'app': '8facG-jo0Cxk',
-    'file': 'thisApp.py',
+    'file': 'ffmpeg-clip.py',
     'liveAppName': __.thisApp( __file__ ),
     'description': 'Changes the world',
         # _.ail(1,'subject')+
@@ -111,40 +106,63 @@ _.l.conf('clean-pipe',True)
 _.l.sw.register( triggers, sw )
 
 ########################################################################################
-### EXAMPLE: START
 
 
-    #--> make hotkey ad-description soon:  <--<w#
-    #-->    - outer most typed first
-    #-->    - blank pipe
-    #-->    __.setting('hotkey-clip.ad_description-start1',d=False)
-    #--> _________________________________
-    #--> describe selection area two
-    #--> 3 write a note here wrap text
-    #--> two dignissim
-    #--> 1 inceptos
-    #--> _________________________________
-    #--> describe selection area two
-    #-->              |           |
-    #-->              |           | - write a note here
-    #-->              |           |   wrap text
-    #-->              |           |
-    #-->              |           | - dignissim
-    #-->              |
-    #-->              | - inceptos
-
-    # if _.switches.isActive('Test'): test(); return None;
-    # result=[]; result=[ _.pr(line) for i, line, bi in _.numerate( _.isData(r=0) )]
-    # bk=[];[  bk.append(rec['backup']) for rec in backupLog if path == rec['file']]; bk=bk[-1];
-    #--> a=(1 if True else 0) <--# 
-    #--> m=[[row[i] for row in matrix] for i in range(4)]
-    # requests=__.imp('requests.post')
-    # data=str(requests.post(url,data={}).content,'iso-8859-1')
-
-
-### EXAMPLE: END
 ########################################################################################
 # START
+
+def cf(string):
+    if len(string)==1:
+        return '0'+string
+    return string
+
+def timex3(string):
+    # 00:00:24.57
+    t=_.dot(); t.a='0'; t.b='0'; t.c='__'+string.replace(':','.');
+    p=string.split('-')
+    if p[0].count(':') == 1:
+        tas=p[0].split(':')[1]
+        t.a='00:'+cf(p[0].split(':')[0])+':'+cf(tas)
+    elif p[0].count(':') == 2:
+        tas1=cf(p[0].split(':')[0])
+        tas2=cf(p[0].split(':')[1])
+        tas3=cf(p[0].split(':')[2])
+        # t.a=str( tas1+tas2+tas3  )
+        t.a='tas1:tas2:tas3'.replace('tas1',tas1).replace('tas2',tas2).replace('tas3',tas3)
+    if p[1].count(':') == 1:
+        tbs=p[1].split(':')[1]
+        t.b='00:'+cf(p[1].split(':')[0])+':'+cf(tbs)
+    elif p[1].count(':') == 2:
+        tas1=cf(p[1].split(':')[0])
+        tas2=cf(p[1].split(':')[1])
+        tas3=cf(p[1].split(':')[2])
+        t.b='tas1:tas2:tas3'.replace('tas1',tas1).replace('tas2',tas2).replace('tas3',tas3)
+    return t
+
+def timex2(string):
+    # 00:00:24.57
+    t=_.dot(); t.a='0'; t.b='0'; t.c='__'+string.replace(':','.');
+    p=string.split('-')
+    if p[0].count(':') == 1:
+        tas=p[0].split(':')[1]
+        t.a='00:00:'+cf(p[0].split(':')[0])+'.'+tas
+    elif p[0].count(':') == 2:
+        tas1=cf(p[0].split(':')[0])
+        tas2=cf(p[0].split(':')[1])
+        tas3=cf(p[0].split(':')[2])
+        # t.a=str( tas1+tas2+tas3  )
+        t.a='00:tas1:tas2.tas3'.replace('tas1',tas1).replace('tas2',tas2).replace('tas3',tas3)
+    if p[1].count(':') == 1:
+        tbs=p[1].split(':')[1]
+        t.b='00:00:'+cf(p[1].split(':')[0])+'.'+tbs
+    elif p[1].count(':') == 2:
+        tas1=cf(p[1].split(':')[0])
+        tas2=cf(p[1].split(':')[1])
+        tas3=cf(p[1].split(':')[2])
+        t.b='00:tas1:tas2.tas3'.replace('tas1',tas1).replace('tas2',tas2).replace('tas3',tas3)
+    return t
+
+
 
 def timex(string):
     t=_.dot(); t.a='0'; t.b='0'; t.c='__'+string.replace(':','.');
@@ -172,13 +190,22 @@ def action():
     #--> min, architecture {:strict:}
     # s=_.switches.values('Save')[0]
     # tt=
-    # print(tt)
-    for t2 in _.switches.values('Clip'):
-        t=timex(t2)
+    # _.pr(tt)
+    clips=_.switches.values('Clip')
+    if ' ' in clips[0]:
+        clips=clips[0].split(' ')
+    for t2 in clips:
+        # print(t2)
+        # t=timex(t2)
+        # t=timex2(t2)
+        t=timex3(t2)
         for i, path in enumerate( _.switches.values('Files') ):
             if os.path.isfile(path):
                 info=_dir.info(path)
-                fx='ffmpeg -i ff1 -ss aaa -t bbb -acodec copy -vcodec copy ff2'.replace('aaa',t.a).replace('bbb',t.b).replace('ff1',info['name']).replace('ff2','clip-'+str(_.HID('ffmpeg-clip'))+'-'+info['name'].replace('.'+info['ext'].lower(),'').replace('.'+info['ext'].upper(),'').replace('.'+info['ext'],'')+t.c+'.'+info['ext'])
+                # fx='ffmpeg -i ff1 -ss aaa -t bbb -acodec copy -vcodec copy ff2'.replace('aaa',t.a).replace('bbb',t.b).replace('ff1',info['name']).replace('ff2','clip-'+str(_.HID('ffmpeg-clip'))+'-'+info['name'].replace('.'+info['ext'].lower(),'').replace('.'+info['ext'].upper(),'').replace('.'+info['ext'],'')+t.c+'.'+info['ext'])
+                # fx='ffmpeg -i ff1 -ss aaa -to bbb -c copy ff2'.replace('ff1',info['name']).replace('ff2','clip-'+str(_.HID('ffmpeg-clip'))+'-'+info['name'].replace('.'+info['ext'].lower(),'').replace('.'+info['ext'].upper(),'').replace('.'+info['ext'],'')+t.c+'.'+info['ext']).replace('aaa',t.a).replace('bbb',t.b)
+                fx='ffmpeg -nostdin -ss "aaa" -i "ff1" -to "bbb" -c copy -map 0 "ff2"'.replace('ff1',info['name']).replace('ff2','clip-'+str(_.HID('ffmpeg-clip'))+'-'+info['name'].replace('.'+info['ext'].lower(),'').replace('.'+info['ext'].upper(),'').replace('.'+info['ext'],'')+t.c+'.'+info['ext']).replace('aaa',t.a).replace('bbb',t.b)
+                
                 _.pr(fx)
         del t
 def load():
@@ -217,7 +244,6 @@ p ffmpeg-clip -f piller-17.mp4 -clip "1:23:33-1:26:56 1:31:50-1:32:55" | p execu
 if __name__ == '__main__':
     action()
     __.isExit()
-
 
 
 

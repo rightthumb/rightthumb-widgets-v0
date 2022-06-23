@@ -34,6 +34,8 @@ import _rightThumb._md5 as _md5
 ##################################################
 import pickle
 ##################################################
+__.setting('validaton-status',True)
+##################################################
 
 def appSwitches():
 	pass
@@ -2349,6 +2351,7 @@ class Validator:
 				errors.append( yyy )
 		
 		if errors:
+			__.setting('validaton-status',False)
 			_.pr()
 			_.pr()
 			_.pr()
@@ -2360,6 +2363,7 @@ class Validator:
 			_.pr()
 			_.pr()
 			_.pr()
+			__.setting('validaton-status',False)
 			return None
 			sys.exit()
 
@@ -2369,6 +2373,7 @@ class Validator:
 		del self.nestable
 
 
+			
 
 
 

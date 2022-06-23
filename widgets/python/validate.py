@@ -192,13 +192,14 @@ def process(fi):
 		B = True
 	
 
-	status = _code.imp.validator.createIndex( data, 'javascript', skipLoad=True, simple=False, A=A, B=B, C=C )
+	_code.imp.validator.createIndex( data, 'javascript', skipLoad=True, simple=False, A=A, B=B, C=C )
+	status = __.setting('validaton-status')
 	# NameSpace
 	
 	# _.printVarSimple( _code.imp.validator.identity )
 	# sys.exit()
 
-	if not status is None:
+	if status:
 		if _.switches.isActive('NameSpace'):
 			_.pr( 'name space:' )
 			ns = _code.imp.validator.link_jsNameSpace_to_function_payloads()
