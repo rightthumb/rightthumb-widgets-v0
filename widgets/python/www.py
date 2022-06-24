@@ -9,7 +9,6 @@
 #    - Scott Taylor Reph, RightThumb.com
 # ###########################################################################
 # ## {C3P0D40fAe8B} ##
-
 ##################################################
 import sys, time
 ##################################################
@@ -26,14 +25,10 @@ _.load()
 _v = __.imp('_rightThumb._vars')
 _str = __.imp('_rightThumb._string')
 ##################################################
-
 def sw():
     pass
-    ### EXAMPLE: START
     _.switches.register( 'Text', '-t,-text,-txt' )
     _.switches.register( 'URL', '-url', 'https://www.google.com/', isRequired=True )
-    # _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=True )
-    ### EXAMPLE: END
 
 # __.setting('require-list',['Files,Plus','File,Has']) # todo
 # __.setting('require-list',['Pipe','Files','Plus'])
@@ -48,7 +43,7 @@ __.setting('switch-raw',[])
 
 _.appInfo[focus()] = {
     # 'app': '8facG-jo0Cxk',
-    'file': 'thisApp.py',
+    'file': 'www.py',
     'liveAppName': __.thisApp( __file__ ),
     'description': 'Changes the world',
         # _.ail(1,'subject')+
@@ -110,47 +105,31 @@ _.l.conf('clean-pipe',True)
 _.l.sw.register( triggers, sw )
 
 ########################################################################################
-### EXAMPLE: START
 
 
-    #--> make hotkey ad-description soon:  <--<w#
-    #-->    - outer most typed first
-    #-->    - blank pipe
-    #-->    __.setting('hotkey-clip.ad_description-start1',d=False)
-    #--> _________________________________
-    #--> describe selection area two
-    #--> 3 write a note here wrap text
-    #--> two dignissim
-    #--> 1 inceptos
-    #--> _________________________________
-    #--> describe selection area two
-    #-->              |           |
-    #-->              |           | - write a note here
-    #-->              |           |   wrap text
-    #-->              |           |
-    #-->              |           | - dignissim
-    #-->              |
-    #-->              | - inceptos
-
-    # if _.switches.isActive('Test'): test(); return None;
-    # result=[]; result=[ _.pr(line) for i, line, bi in _.numerate( _.isData(r=0) )]
-    # bk=[];[  bk.append(rec['backup']) for rec in backupLog if path == rec['file']]; bk=bk[-1];
-    #--> a=(1 if True else 0) <--# 
-    #--> m=[[row[i] for row in matrix] for i in range(4)]
-    # requests=__.imp('requests.post')
-    # data=str(requests.post(url,data={}).content,'iso-8859-1')
-
-
-### EXAMPLE: END
 ########################################################################################
 # START
 
+def url_port(url):
+    url=url.replace(' ','')
+    if not url.endswith('/'):
+        url=url+'/'
+    try:
+        domain=url.split('//')[1].split('/')[0]
+        if ':' in domain:
+            return int(domain.split(':')[1])
+    except Exception as e:
+        return 80
+    return 80
+
+
 def action():
     url=_.switches.value('URL')
+    port=url_port(url)
 
     if not _.switches.isActive('Text'):
         page=__.url( url, text=_.switches.isActive('Text') )
-        print(page)
+        _.pr(page)
         return None
 
     requests=__.imp('requests.get')
@@ -158,6 +137,7 @@ def action():
     # html = urlopen(url).read()
     headers = {"User-Agent": "Mozilla/5.0 (Linux; U; Android 4.2.2; he-il; NEO-X5-116A Build/JDQ39) AppleWebKit/534.30 ("
                          "KHTML, like Gecko) Version/4.0 Safari/534.30"}
+    # response=requests.get(url, headers=headers,port=port)
     response=requests.get(url, headers=headers)
     webpage = response.content
 
@@ -171,7 +151,7 @@ def action():
     strips = list(soup.stripped_strings)
     _.linePrint()
     _.pr( '\n'.join(strips) )
-    # print(strips[:5])
+    # _.pr(strips[:5])
 
 # import warnings
 # warnings.filterwarnings("ignore", category=UserWarning, module='bs4')
@@ -183,7 +163,6 @@ from bs4 import BeautifulSoup
 if __name__ == '__main__':
     action()
     __.isExit()
-
 
 
 

@@ -19318,6 +19318,8 @@ def dict_generator(indict, pre=None, fields=[] ):
                         if not value in dict_generator_spent:
                             dict_generator_spent.append(value)
                             cp(value,'green')
+                            print_()
+                            print_()
                     else:
                         xXx = dict_generator_prefix(f) + value
                         if f ==1:

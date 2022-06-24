@@ -529,7 +529,26 @@ setting('receipt-file',True)
 
 # import os
 
-def url( URL, data={}, d=None, raw=False, r=None,txt=None,text=None,t=None ):
+def url( URL, data={}, d=None, raw=False, r=None,txt=None,text=None,t=None, dic=None ):
+    if not dic is None and dic:
+        _dic={
+            "href": "https://www.google.com/search?q=python+url+breakdown+port&rlz=1C1RXQR_enUS929US929&sxsrf=ALiCzsYDllCEJyfUu1VElV9U9f23zWE4PQ%3A1656037461579&ei=VSC1Yon9IsygkPIPwdGI-AM&ved=0ahUKEwjJ-4alhMX4AhVMEEQIHcEoAj8Q4dUDCA4&uact=5&oq=python+url+breakdown+port&gs_lcp=Cgdnd3Mtd2l6EAMyBQghEKABMgUIIRCgATIICCEQHhAWEB06BwgAEEcQsAM6CggAEOQCELADGAE6BggAEB4QFjoICAAQHhAPEBY6BQgAEIYDOgUIIRCrAkoECEEYAEoECEYYAVBzWKsKYMMMaAFwAXgAgAFtiAHjA5IBAzQuMZgBAKABAcgBDcABAdoBBggBEAEYCQ&sclient=gws-wiz",
+            "origin": "https://www.google.com",
+            "domain": "google.com",
+            "host": "www.google.com",
+            "protocol": "https",
+            "folder": "",
+            "path": "google.com/search",
+            "port": "443",
+            "param": "?q=python+url+breakdown+port&rlz=1C1RXQR_enUS929US929&sxsrf=ALiCzsYDllCEJyfUu1VElV9U9f23zWE4PQ%3A1656037461579&ei=VSC1Yon9IsygkPIPwdGI-AM&ved=0ahUKEwjJ-4alhMX4AhVMEEQIHcEoAj8Q4dUDCA4&uact=5&oq=python+url+breakdown+port&gs_lcp=Cgdnd3Mtd2l6EAMyBQghEKABMgUIIRCgATIICCEQHhAWEB06BwgAEEcQsAM6CggAEOQCELADGAE6BggAEB4QFjoICAAQHhAPEBY6BQgAEIYDOgUIIRCrAkoECEEYAEoECEYYAVBzWKsKYMMMaAFwAXgAgAFtiAHjA5IBAzQuMZgBAKABAcgBDcABAdoBBggBEAEYCQ&sclient=gws-wiz",
+            "params": {},
+            "username": "",
+            "password": ""
+        }
+
+        return _dic
+
+
     if not txt is None: t=txt;
     if not text is None: t=text;
     import _rightThumb._string as _str
