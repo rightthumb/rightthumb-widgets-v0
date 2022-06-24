@@ -35,8 +35,8 @@ def sw():
     # _.switches.register( 'Files', '-f,-fi,-file,-files' )
     ### EXAMPLE: END
 
+# __.setting('require-list',['Files,Plus','File,Has']) # todo
 # __.setting('require-list',['Pipe','Files','Plus'])
-__.setting('require-list',[])
 __.setting('receipt-log')
 __.setting('receipt-file')
 __.setting('myFileLocations-skip-validation',False)

@@ -1205,7 +1205,9 @@ def do(what=None,string='',a=None,b=None,c=None,d=None):
     # if what in 'file'.split(' '): import re; return re.sub(r'[0-9a-zA-Z_\-+$ ]', '', string);
     # if what in 'file'.split(' '): import re; return re.sub(r'^[0-9a-zA-Z_\-. ]+$', '', string);
     
-    if what in '.sh'.split(' '): return sh(string);
+
+    if what in '.sh sh bash linux 2linux fix script x +x'.split(' '): return sh(string);
+
     if what in 'all'.split(' '): return replaceAll(string,a,b);
     if what in 'cleanAll'.split(' '): return cleanAll(string,a,b);
     if what in 'dup'.split(' '): return replaceDuplicate(string,a);
@@ -1223,6 +1225,8 @@ def sh(string):
     string=str(string)
     string=string.replace( chr(10), '\n' ).replace( '\r', '' ).replace( chr(27), '' ).replace( chr(10), '\n' ).replace( '\r', '' ).replace( chr(27), '' )
     while '\t' in string: string = string.replace( '\t', '    ' );
+    while ' \n' in string: string = string.replace( ' \n', '\n' );
+    string=do('be',string,'\n')
     return string
 
 class st(str):

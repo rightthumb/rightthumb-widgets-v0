@@ -9,6 +9,7 @@
 #    - Scott Taylor Reph, RightThumb.com
 # ###########################################################################
 # ## {C3P0D40fAe8B} ##
+
 ##################################################
 import sys, time
 ##################################################
@@ -25,11 +26,18 @@ _.load()
 _v = __.imp('_rightThumb._vars')
 _str = __.imp('_rightThumb._string')
 ##################################################
-def sw():
-    pass
 
+def sw():
+    _.switches.register( 'Current-Percentage', '-cp', '14' )
+    _.switches.register( 'Start-Time', '-time' )
+    pass
+    ### EXAMPLE: START
+    # _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=True )
+    # _.switches.register( 'Files', '-f,-fi,-file,-files' )
+    ### EXAMPLE: END
+
+# __.setting('require-list',['Files,Plus','File,Has']) # todo
 # __.setting('require-list',['Pipe','Files','Plus'])
-__.setting('require-list',[])
 __.setting('receipt-log')
 __.setting('receipt-file')
 __.setting('myFileLocations-skip-validation',False)
@@ -41,7 +49,7 @@ __.setting('switch-raw',[])
 
 _.appInfo[focus()] = {
     # 'app': '8facG-jo0Cxk',
-    'file': 'calc-video-rip-times.py',
+    'file': 'thisApp.py',
     'liveAppName': __.thisApp( __file__ ),
     'description': 'Changes the world',
         # _.ail(1,'subject')+
@@ -103,64 +111,65 @@ _.l.conf('clean-pipe',True)
 _.l.sw.register( triggers, sw )
 
 ########################################################################################
+### EXAMPLE: START
 
 
+    #--> make hotkey ad-description soon:  <--<w#
+    #-->    - outer most typed first
+    #-->    - blank pipe
+    #-->    __.setting('hotkey-clip.ad_description-start1',d=False)
+    #--> _________________________________
+    #--> describe selection area two
+    #--> 3 write a note here wrap text
+    #--> two dignissim
+    #--> 1 inceptos
+    #--> _________________________________
+    #--> describe selection area two
+    #-->              |           |
+    #-->              |           | - write a note here
+    #-->              |           |   wrap text
+    #-->              |           |
+    #-->              |           | - dignissim
+    #-->              |
+    #-->              | - inceptos
+
+    # if _.switches.isActive('Test'): test(); return None;
+    # result=[]; result=[ _.pr(line) for i, line, bi in _.numerate( _.isData(r=0) )]
+    # bk=[];[  bk.append(rec['backup']) for rec in backupLog if path == rec['file']]; bk=bk[-1];
+    #--> a=(1 if True else 0) <--# 
+    #--> m=[[row[i] for row in matrix] for i in range(4)]
+    # requests=__.imp('requests.post')
+    # data=str(requests.post(url,data={}).content,'iso-8859-1')
+
+
+### EXAMPLE: END
 ########################################################################################
 # START
 
+def fix_time(string):
+    string=_str.do('be',' ')
+    if string[0] in '0123456789':
+        stamp=float(string)
+    stamp=_.autoDate(string)
+    return stamp
+
 def action():
-    #--> min, architecture {:strict:}
-    #--> trigger/callback  <w#
-    #--> todo#> meta to scan for
-    load()
-    global c3po
-
-
-
-    for i, line, bi in _.numerate( c3po.split('\n') ):
-        #--> _.nindex(bi,h,n)  =  line.index(n)
-        #--> new print function
-        _.pr(i,bi)
-    _.pr('ready',c='green')
-
-def load():
-    global c3po
-    c3po=c3po.replace('\r','')
-    c3po=c3po.replace('\t',' ')
-    c3po=_str.do('dup',c3po,' ')
-    c3po=_str.do('dup',c3po,'\n')
-    c3po=_str.do('be',c3po,'\n')
-
-
-c3po='''
-piller-10-1.mp4     1653064301.7805753     1652565643.5936503
-piller-01.mp4       1653064300.689178      1652569382.1872935
-piller-02.mp4       1653064300.8467927     1652571932.9867163
-piller-03.mp4       1653064300.9256144     1652575912.2651699
-piller-04.mp4       1653064301.1949415     1652586879.2538848
-piller-05.mp4       1653064301.2538414     1652590756.1769834
-piller-07-1.mp4     1653064301.4065015     1652727065.45464
-piller-07-2.mp4     1653064301.4972918     1652736472.8367777
-piller-09.mp4       1653064301.601054      1652739620.837456
-piller-11.mp4       1653064302.203765      1652745437.6103113
-notes.txt           1653064300.6881814     1652933855.7653308
-piller-12-1.mp4     1653411610.9753027     1653414030.1525514
-piller-12-2.mp4     1653414591.24551       1653417061.6420698
-piller-13.mp4       1653418227.1785357     1653421652.5366676
-piller-14-1.mp4     1653425781.924607      1653427326.8276126
-piller-14-2.mp4     1653431284.4555166     1653433506.3697827
-piller-15.mp4       1653434768.55589       1653438276.036759
-piller-16.mp4       1653449563.5948658     1653453375.228229
-piller-17.mp4       1653454166.2115273     1653458478.9009638
-piller-10-2.mp4     1653459805.1250346     1653461901.7615304
-'''
-
+    _.e('app not working yet')
+    if not _.switches.isActive('Start-Time'): _.e('missing time')
+    if not _.switches.isActive('Current-Percentage'): _.e('missing %')
+    _st=fix_time(_.switches.value('Start-Time'))
+    _p=float(_.switches.value('Current-Percentage'))
+    aa=0
+    ab=0
+    ba=0
+    bb=0
 
 
 ########################################################################################
 if __name__ == '__main__':
     action()
     __.isExit()
+
 
 
 
