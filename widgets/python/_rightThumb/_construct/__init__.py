@@ -529,7 +529,9 @@ setting('receipt-file',True)
 
 # import os
 
-def url( URL, data={}, d=None, raw=False, r=None ):
+def url( URL, data={}, d=None, raw=False, r=None,txt=None,text=None,t=None ):
+    if not txt is None: t=txt;
+    if not text is None: t=text;
     import _rightThumb._string as _str
     def _url_(data): return _str.do('.sh',data);
 
@@ -537,7 +539,10 @@ def url( URL, data={}, d=None, raw=False, r=None ):
     if not d is None: data=d;
     page=imp('requests.post').post(URL, data = data)
     if raw: return page;
-    result=page.content
+    if not t is None and t:
+        result=page.text
+    else:
+        result=page.content
     for encodeing in 'ISO-8859-1 UTF-8 Windows-1251 Windows-1252 GB2312 Shift GBK EUC-KR ISO-8859-9 Windows-1254 EUC-JP Big5'.lower().split(' '):
         try: return _url_(str(result,encodeing));
         except Exception as e: pass;
