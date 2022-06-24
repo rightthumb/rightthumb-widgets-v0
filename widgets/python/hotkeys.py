@@ -527,7 +527,21 @@ class CLIP:
 
         _copy.imp.copy(  data  , p=0 )
 
+    def randomize_ports(self):
+        _copy = _.regImp( __.appReg, '-copy' )
+        _paste = _.regImp( __.appReg, '-paste' )
+        data  = _paste.imp.paste()
+        data = data.replace('\r','')
+        # data = _str.do('dup',data,'\n')
 
+        for x in range(1000):
+            i='{r'+str(x)+'}'
+            if i in data:
+                port=str(random.randint(1024 , 65535))
+                data=data.replace(i,port)
+                data=data.replace(i,port)
+
+        _copy.imp.copy(  data  , p=0 )
 
 
 
@@ -1980,7 +1994,7 @@ def load():
                 # 'builder-one': { 'raw': [ 'alt.', 'win.', 'b' ], 'do': 'Clip.builder()' },
                 'builder-two': { 'raw': [ 'alt.', 'win.', 'y' ], 'do': 'Clip.builder2()' },
                 'range-first': { 'raw': [ 'alt.', 'win.', '-' ], 'do': 'Clip.range_first()' },
-                'reverse-lines': { 'raw': [ 'alt.', 'shift.', 'r' ], 'do': 'Clip.reverse_lines()' },
+                # 'reverse-lines': { 'raw': [ 'alt.', 'shift.', 'r' ], 'do': 'Clip.reverse_lines()' },
                 'reverse-lines': { 'raw': [ 'alt.', 'win.', 'd' ], 'do': 'Clip.combine_make()' },
                 'toggle-chars': { 'raw': [ 'alt.', 'win.', 't', 'c' ], 'do': 'toggle_chars()' },
                 'decrypt-lines': { 'raw': [ 'win.', 'c' ], 'do': 'Clip.decrypt_lines()' },
@@ -1988,13 +2002,15 @@ def load():
 
                 'sql-crud': { 'raw': [ 'alt.', 'win.', 'c' ], 'do': 'Clip.SQL_to_crud()' },
                 'ad-notes': { 'raw': [ 'alt.', 'shift.', 'ctrl.', 'a' ], 'do': 'Clip.ad_notes()' },
-                'clip-replace': { 'raw': [ 'alt.', 'win.', 'r' ], 'do': 'Clip.replacer()' },
+                # 'clip-replace': { 'raw': [ 'alt.', 'win.', 'r' ], 'do': 'Clip.replacer()' },
                 'clip-replace2': { 'raw': [ 'ctrl.,2', 'shift.,1', 'r' ], 'do': 'Clip.replacer2()' },
                 'clip-swap': { 'raw': [ 'ctrl.,2', 'shift.', 's' ], 'do': 'Clip.swap()' },
                 'clip-single-space': { 'raw': [ 'win.', 'shift.', 'alt.', 's' ], 'do': 'Clip.space_single()' },
                 'clip-double-space': { 'raw': [ 'win.', 'shift.', 'alt.', 'd' ], 'do': 'Clip.space_double()' },
                 'clip-invert-quotes': { 'raw': [  'alt.', 'win.',  ';' ], 'do': 'Clip.quote_inverter()' },
+                # 'clip-invert-quotes': { 'raw': [  'alt.', 'win.',  'r' ], 'do': 'Clip.quote_inverter()' },
                 'clip-dup-spaces': { 'raw': [  'ctrl.,2', 'r',  'd', 's' ], 'do': 'Clip.remove_dup_spaces()' },
+                'clip-randomize-ports': { 'raw': [   'ctrl.', 'shift.', 'r' ], 'do': 'Clip.randomize_ports()' },
                 # 'clip-replace': { 'raw': [ 'ctrl.,2',  's' ], 'do': 'Clip.swap()' },
 
 
@@ -2047,6 +2063,7 @@ __.setting('hotkey-clip.ad_description-start1', False)
 __.setting('hotkey-clip.replace-a', '.eyeformeta.com')
 __.setting('hotkey-clip.replace-b', '.m-eta.app')
 
+import random
 
 ########################################################################################
 if __name__ == '__main__':
