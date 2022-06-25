@@ -132,12 +132,11 @@ def action():
         _.pr(page)
         return None
 
-    requests=__.imp('requests.get')
-    
     # html = urlopen(url).read()
+    
+    requests=__.imp('requests.get')
     headers = {"User-Agent": "Mozilla/5.0 (Linux; U; Android 4.2.2; he-il; NEO-X5-116A Build/JDQ39) AppleWebKit/534.30 ("
                          "KHTML, like Gecko) Version/4.0 Safari/534.30"}
-    # response=requests.get(url, headers=headers,port=port)
     response=requests.get(url, headers=headers)
     webpage = response.content
 

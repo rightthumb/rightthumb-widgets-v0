@@ -1205,6 +1205,7 @@ def do(what=None,string='',a=None,b=None,c=None,d=None):
     # if what in 'file'.split(' '): import re; return re.sub(r'[0-9a-zA-Z_\-+$ ]', '', string);
     # if what in 'file'.split(' '): import re; return re.sub(r'^[0-9a-zA-Z_\-. ]+$', '', string);
     
+    if what in 'trim'.split(' '): return trim(string);
 
     if what in '.sh sh bash linux 2linux fix script x +x'.split(' '): return sh(string);
 
@@ -1217,6 +1218,18 @@ def do(what=None,string='',a=None,b=None,c=None,d=None):
     if 'alpha' in what and 'nu' in what : return stripNonAlphaNumaric(string);
     if what in 'n'.split(' '): return removeNonNumber(string);
     if what in 'ra remove'.split(' '): return removeAll(string,a);
+
+def trim(string):
+    string=string.replace('\r','')
+    def trimmer(string):
+        string=do('be',string,' ')
+        string=do('be',string,'\t')
+        string=do('be',string,'\n')
+        return string
+    test=list(' \t\n')
+    while string[0] in test or string[-1] in test:
+        string=trimmer(string)
+    return string
 
 def sh(string):
     try:

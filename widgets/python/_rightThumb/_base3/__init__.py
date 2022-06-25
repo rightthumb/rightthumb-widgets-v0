@@ -131,7 +131,11 @@ def print_pr(text):
 try: print_ed;
 except Exception as e: print_ed=[];
 print_ed_group={}
-def print_(*args,p=None,c=None,pad=3,g=None,end=None):
+def print_(*args,p=None,c=None,pad=3,g=None,end=None,pvs=None,pv=None,json=None):
+    if pvs: return printVarSimple(args[0])
+    if pv: return printVar(args[0])
+    if json: simplejson=__.imp('simplejson'); args[0]=simplejson.dumps(args[0], indent=4, sort_keys=False);
+        
     global print_ed; global print_ed_group; items=[];
     pre=''
     # if not g is None:
@@ -7160,6 +7164,11 @@ def printVar1( data ):
 
 
 def printVar( data, sort_keys=False, isDic=None ):
+    simplejson = __.imp('simplejson')
+    result = simplejson.dumps(data, indent=4, sort_keys=False)
+    printVarColor( result )
+    print_(  )
+    return result
     data = json_clean(data)
     if not isDic is None and isDic and type(data) == str:
         saveText( data, _v.myTemp + _v.slash+'printVar.json' )
@@ -18857,9 +18866,14 @@ _cryptFile.do( 'action' )
 colorPrint=colorThis
 cp=colorThis
 
-vp=printVarSimple
 pv=printVarSimple
+vp=printVarSimple
 pvs=printVarSimple
+
+ppv=printVarColor
+ppvv=printVarColor
+pvv=printVarColor
+pvpv=printVarColor
 
 def e( msg , e=None, kill=True):
     

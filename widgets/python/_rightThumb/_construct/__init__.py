@@ -529,7 +529,34 @@ setting('receipt-file',True)
 
 # import os
 
-def url( URL, data={}, d=None, raw=False, r=None,txt=None,text=None,t=None, dic=None ):
+def url( URL, data={}, d=None, raw=False, r=None,txt=None,text=None,t=None, dic=None, get=None ):
+    headers = {"User-Agent": "Mozilla/5.0 (Linux; U; Android 4.2.2; he-il; NEO-X5-116A Build/JDQ39) AppleWebKit/534.30 ("
+                         "KHTML, like Gecko) Version/4.0 Safari/534.30"}
+    if not txt is None: t=txt;
+    if not text is None: t=text;
+    import _rightThumb._string as _str
+
+    if not r is None: raw=r;
+    if not d is None: data=d;
+    def _url_(data): return _str.do('.sh',data);
+    # if not json is None and json:
+    #     page=imp('requests.get').json(URL, headers=headers)
+    #     return page
+    if not get is None and get:
+
+        page=imp('requests.get').get(URL, headers=headers)
+        if raw: return page;
+        if not t is None and t:
+            result=page.text
+        else:
+            result=page.content
+        for encodeing in 'UTF-8 ISO-8859-1 Windows-1251 Windows-1252 GB2312 Shift GBK EUC-KR ISO-8859-9 Windows-1254 EUC-JP Big5'.lower().split(' '):
+            try: return _url_(str(result,encodeing));
+            except Exception as e: pass;
+        return _url_(str(result))
+
+
+
     if not dic is None and dic:
         _dic={
             "href": "https://www.google.com/search?q=python+url+breakdown+port&rlz=1C1RXQR_enUS929US929&sxsrf=ALiCzsYDllCEJyfUu1VElV9U9f23zWE4PQ%3A1656037461579&ei=VSC1Yon9IsygkPIPwdGI-AM&ved=0ahUKEwjJ-4alhMX4AhVMEEQIHcEoAj8Q4dUDCA4&uact=5&oq=python+url+breakdown+port&gs_lcp=Cgdnd3Mtd2l6EAMyBQghEKABMgUIIRCgATIICCEQHhAWEB06BwgAEEcQsAM6CggAEOQCELADGAE6BggAEB4QFjoICAAQHhAPEBY6BQgAEIYDOgUIIRCrAkoECEEYAEoECEYYAVBzWKsKYMMMaAFwAXgAgAFtiAHjA5IBAzQuMZgBAKABAcgBDcABAdoBBggBEAEYCQ&sclient=gws-wiz",
@@ -549,13 +576,7 @@ def url( URL, data={}, d=None, raw=False, r=None,txt=None,text=None,t=None, dic=
         return _dic
 
 
-    if not txt is None: t=txt;
-    if not text is None: t=text;
-    import _rightThumb._string as _str
-    def _url_(data): return _str.do('.sh',data);
 
-    if not r is None: raw=r;
-    if not d is None: data=d;
     page=imp('requests.post').post(URL, data = data)
     if raw: return page;
     if not t is None and t:
