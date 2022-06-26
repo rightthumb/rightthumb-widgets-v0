@@ -9,7 +9,6 @@
 #    - Scott Taylor Reph, RightThumb.com
 # ###########################################################################
 # ## {C3P0D40fAe8B} ##
-
 ##################################################
 import sys, time
 ##################################################
@@ -26,15 +25,10 @@ _.load()
 _v = __.imp('_rightThumb._vars')
 _str = __.imp('_rightThumb._string')
 ##################################################
-
 def sw():
     _.switches.register( 'Datetime/Epoch', '-epoch,-t,-dt' )
     _.switches.register( 'Percentage', '-p,-per,-percentage' )
     pass
-    ### EXAMPLE: START
-    # _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=True )
-    # _.switches.register( 'Files', '-f,-fi,-file,-files' )
-    ### EXAMPLE: END
 
 # __.setting('require-list',['Files,Plus','File,Has']) # todo
 # __.setting('require-list',['Pipe','Files','Plus'])
@@ -49,7 +43,7 @@ __.setting('switch-raw',[])
 
 _.appInfo[focus()] = {
     # 'app': '8facG-jo0Cxk',
-    'file': 'thisApp.py',
+    'file': 'how-much-time-is-left.py',
     'liveAppName': __.thisApp( __file__ ),
     'description': 'Changes the world',
         # _.ail(1,'subject')+
@@ -71,7 +65,7 @@ _.appInfo[focus()] = {
                         # '',
     ],
     'examples': [
-                        _.hp('p thisApp -file file.txt'),
+                        _.hp('p how-much-time-is-left -epoch 1656220467.8824193 -p 22'),
                         _.linePrint(label='simple',p=0),
                         '',
     ],
@@ -111,43 +105,10 @@ _.l.conf('clean-pipe',True)
 _.l.sw.register( triggers, sw )
 
 ########################################################################################
-### EXAMPLE: START
 
 
-    #--> make hotkey ad-description soon:  <--<w#
-    #-->    - outer most typed first
-    #-->    - blank pipe
-    #-->    __.setting('hotkey-clip.ad_description-start1',d=False)
-    #--> _________________________________
-    #--> describe selection area two
-    #--> 3 write a note here wrap text
-    #--> two dignissim
-    #--> 1 inceptos
-    #--> _________________________________
-    #--> describe selection area two
-    #-->              |           |
-    #-->              |           | - write a note here
-    #-->              |           |   wrap text
-    #-->              |           |
-    #-->              |           | - dignissim
-    #-->              |
-    #-->              | - inceptos
-
-    # if _.switches.isActive('Test'): test(); return None;
-    # result=[]; result=[ _.pr(line) for i, line, bi in _.numerate( _.isData(r=0) )]
-    # bk=[];[  bk.append(rec['backup']) for rec in backupLog if path == rec['file']]; bk=bk[-1];
-    #--> a=(1 if True else 0) <--# 
-    #--> m=[[row[i] for row in matrix] for i in range(4)]
-    # requests=__.imp('requests.post')
-    # data=str(requests.post(url,data={}).content,'iso-8859-1')
-
-
-### EXAMPLE: END
 ########################################################################################
 # START
-
-
-
 
 
 
@@ -158,14 +119,18 @@ def action():
     dd1=_.date_diff_dic(epoch,time.time())
     diff = time.time() - epoch
     cm=_.cross_multiplication({'a':p,'b':diff,'c':100,'d':'n',})
-    projected=_.isDate(time.time()+cm)
+    # cm=cm/2
+    # cm=cm/2
+    base=time.time()
+    base=epoch
+    projected=_.isDate(base+cm)
     # _.pv(projected)
     # _.pr(cm)
     # _.pr( int((cm/60)) )
     # _.pr( int((cm/60)/60) )
     # _.pr(dd1)
     # _.pr(projected['text-datetime'])
-    dd2=_.date_diff_dic( time.time()+cm )
+    dd2=_.date_diff_dic( base+cm )
     _.pr(_.simpleDic(dd1))
     _.pr(_. simpleDic(dd2))
 
@@ -173,7 +138,6 @@ def action():
 if __name__ == '__main__':
     action()
     __.isExit()
-
 
 
 

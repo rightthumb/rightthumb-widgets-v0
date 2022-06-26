@@ -35,6 +35,7 @@ import _rightThumb._string as _str
 
 def appSwitches():
     pass
+    _.switches.register( 'Data', '-data' )
     _.switches.register( 'JSON', '-json' )
     _.switches.register( 'URL', '-url', 'font' )
     _.switches.register( 'Index', '-index' )
@@ -90,6 +91,12 @@ _.appInfo[focus()] = {
                         '',
                         'p harResearch -f www.google.com.har -field encoding base64 | p harResearch -f www.google.com.har -save base64',
                         'p file -bin --c | p fileheader -noext -rename jpg png svg gif ico',
+                        '',
+                        _.hp('p harResearch -f curaleaf.com-08.har -url + dutchie'),
+                        _.hp('p harResearch -f curaleaf.com-08.har -fields text url'),
+                        _.hp('p harResearch -f curaleaf.com-08.har -data + mango'),
+                        _.hp('p harResearch -f curaleaf.com-08.har -data 1 + mango'),
+                        _.hp('p harResearch -f curaleaf.com-08.har -data ask + mango'),
                         '',
                         '',
     ],
@@ -169,6 +176,13 @@ _.postLoad( __file__ )
 # START
 
 import base64
+__._last_val=''
+__._last_url=''
+__._last_urls=[]
+__.val_data_i=0
+__.val_data={}
+__.val_data_url={}
+__.val_data_info={}
 
 def profile( data, field='text', parents=[], json=False, plus=False ):
     global research
@@ -199,7 +213,52 @@ def profile( data, field='text', parents=[], json=False, plus=False ):
 
     if type(data) == dict:
         for key in data.keys():
+            last=__._last_val
+            __._last_val=str(data[key])
             np = sliceVar(parents, key)
+            # _.pr(data[key])
+            if _.switches.isActive('Data'):
+                if key == 'url': __._last_url=data[key]
+                # if key == 'url': _.pr(data[key])
+                if key == 'text' and last == 'application/json' and _.switches.isActive('Data'):
+                    omit_end='.js'
+                    valid=True
+                    for test5 in omit_end.split(' '):
+                        if __._last_url.endswith(test5): valid=False
+                    
+                    valid_scan='[({'
+
+                    valid2=False
+                    for test5 in list(valid_scan):
+                        for x in range(10):
+                            try:
+                                if data[key][x] == test5: valid2=True; break;
+                            except Exception as e: pass
+                    
+                    # valid2=True
+
+                    rank=data[key].count('[')+data[key].count('{')
+
+                    if valid and valid2 and rank >  __.setting('rank-threshold') and _.showLine(__._last_url) and _.showLine(data[key]):
+                        if not __._last_url in __._last_urls:
+                            __._last_urls.append(__._last_url)
+                            if rank:
+                                spread=len(data[key])/rank
+                            else:
+                                spread=0
+                            __.val_data_i+=1
+                            __.val_data[str(__.val_data_i)]=data[key]
+                            __.val_data_url[str(__.val_data_i)]=__._last_url
+                            report={
+                                        'id': __.val_data_i,
+                                        'rank': _.addComma(rank),
+                                        'spread': _.addComma(spread),
+                                        'size': _.addComma(len(data[key])),
+                                        'flags': _.addComma(data[key].count('(')),
+                            }
+                            __.val_data_info[str(__.val_data_i)]=report
+                            _.pr(__._last_url,c='green')
+                            _.pr(report,pvs=True)
 
             if _.switches.isActive('Save') and key.lower() == 'text' and research['url'].lower() in pipeData:
                 thePath = research['url'].split('/')
@@ -285,14 +344,15 @@ def profile( data, field='text', parents=[], json=False, plus=False ):
                     spent.append(research['url'])
                     _.colorThis( research['url'] , 'cyan' )
 
+
             if key == 'url':
                 research['url'] = data[key]
                 # _.pr( key )
-
                 if key == 'url' and _.switches.isActive('URL') and _.showLine( data[key], _.switches.value('URL') ):
-                    
+                    # last
                     if _.showLine( data[key] ) and not data[key] in spent:
                         spent.append(data[key])
+                        _.pr()
                         _.colorThis( data[key] , 'cyan' )
 
                 if not plus and json and 'json' in data[key].lower():
@@ -423,7 +483,27 @@ def action():
 
 
         # data = getLargeTable( file )
-        if _.switches.isActive('Plus'):
+        if _.switches.isActive('Data'):
+            profile( data, json=json, plus=plus )
+            if 'a' in _.switches.value('Data'):
+                _.linePrint(c='cyan')
+                for i in __.val_data:
+                    _.pr(str(__.val_data_info[i]).replace("'",''))
+                _.linePrint(c='cyan')
+                ask=input(' : ')
+                ask=ask.replace(' ','')
+                if ask:
+                    data=__.val_data[ask]
+                    _.pr(data)
+                    simplejson=__.imp('simplejson')
+                    data2=simplejson.loads(data)
+                    _.pr(data2,pv=1)
+                    _.pr((__.val_data_url[ask]))
+
+
+
+            return None
+        elif _.switches.isActive('Plus'):
             profile( data, json=json, plus=plus )
         elif _.switches.isActive('JSON'):
             profile( data, json=json, plus=plus )
@@ -465,6 +545,9 @@ def load():
 
 
 # getTableBIG
+__.setting('rank-threshold',5)
+if _.switches.isActive('Data') and _.switches.value('Data') and _.switches.value('Data')[0] in '0123456789':
+    __.setting('rank-threshold',int(_.switches.value('Data')))
 
 research = {
                 'url': '',

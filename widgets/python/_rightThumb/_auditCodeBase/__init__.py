@@ -428,6 +428,7 @@ class Validator:
 								# 'inline comment': {  'c': 'green', 'b': None, 'attr': None  },
 
 								'bool': {  'c': 'magenta', 'b': None, 'attr': 'bold'  },
+								'null': {  'c': 'red', 'b': None, 'attr': 'bold'  },
 
 					},
 					'parts': {
@@ -1631,6 +1632,8 @@ class Validator:
 						if txx == 4 or txx == 3:
 							sample = self.assetSnipet( identification['start'], i-1 )
 							# _.pr(sample)
+							if sample == 'null' or sample == 'None':
+								thisLabel = 'null'
 							if sample == 'true' or sample == 'True' or sample == 'false' or sample == 'False' or sample == 'TRUE' or sample == 'FALSE':
 								thisLabel = 'bool'
 
@@ -2296,6 +2299,8 @@ class Validator:
 					if txx == 4 or txx == 3:
 						sample = self.assetSnipet( identification['start'], i-1 )
 						# _.pr(sample)
+						if sample == 'null' or sample == 'None':
+							thisLabel = 'null'
 						if sample == 'true' or sample == 'True' or sample == 'false' or sample == 'False' or sample == 'TRUE' or sample == 'FALSE':
 							thisLabel = 'bool'
 
@@ -3100,6 +3105,9 @@ class Validator:
 						# if sample == '9999':
 						#   _.pr( sample, self.components['last'] )
 						# _.pr(sample)
+						if sample == 'null' or sample == 'None':
+							thisLabel = 'null'
+
 						if sample == 'true' or sample == 'True' or sample == 'false' or sample == 'False' or sample == 'TRUE' or sample == 'FALSE':
 							thisLabel = 'bool'
 

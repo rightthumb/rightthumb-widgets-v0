@@ -9,6 +9,7 @@
 #    - Scott Taylor Reph, RightThumb.com
 # ###########################################################################
 # ## {C3P0D40fAe8B} ##
+
 ##################################################
 import sys, time
 ##################################################
@@ -25,12 +26,14 @@ _.load()
 _v = __.imp('_rightThumb._vars')
 _str = __.imp('_rightThumb._string')
 ##################################################
+
 def sw():
+    _.switches.register( 'Search', '-s,-search,-c,-count' )
     pass
-    # _.switches.register( 'Text', '-t,-text,-txt' )
-    _.switches.register( 'Source', '-s,-source' )
-    _.switches.register( 'URL', '-url', 'https://www.google.com/', isRequired=True )
-    _.switches.register( 'Cookies', '-cookie,-cookies', 'name::scott' )
+    ### EXAMPLE: START
+    # _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=True )
+    # _.switches.register( 'Files', '-f,-fi,-file,-files' )
+    ### EXAMPLE: END
 
 # __.setting('require-list',['Files,Plus','File,Has']) # todo
 # __.setting('require-list',['Pipe','Files','Plus'])
@@ -45,16 +48,16 @@ __.setting('switch-raw',[])
 
 _.appInfo[focus()] = {
     # 'app': '8facG-jo0Cxk',
-    'file': 'www.py',
+    'file': 'pipe-count.py',
     'liveAppName': __.thisApp( __file__ ),
-    'description': 'download url src or page text',
-        # _.ail(1,'subject')+
-        # _.aib('one')+
+    'description': 'how many needles in the haystack',
+        # _.ail(1,'how many needles in the haystack')+
+        # _.aib('how many needles in the haystack')+
     'categories': [
-                        'www',
-                        'url',
-                        'source',
-                        'web copy',
+                        'needles',
+                        'haystack',
+                        'substring',
+                        'string',
                 ],
     'usage': [
                         # 'epy another',
@@ -70,8 +73,7 @@ _.appInfo[focus()] = {
                         # '',
     ],
     'examples': [
-                        _.hp('p www -url https://www.eyeformeta.com/'),
-                        _.hp('p www -url https://eyeformeta.com/apps/terminal/cookie.php -cookies name::scott status::epic'),
+                        _.hp('p -paste | p pipe-count -s { ['),
                         _.linePrint(label='simple',p=0),
                         '',
     ],
@@ -111,75 +113,62 @@ _.l.conf('clean-pipe',True)
 _.l.sw.register( triggers, sw )
 
 ########################################################################################
+### EXAMPLE: START
 
 
+    #--> make hotkey ad-description soon:  <--<w#
+    #-->    - outer most typed first
+    #-->    - blank pipe
+    #-->    __.setting('hotkey-clip.ad_description-start1',d=False)
+    #--> _________________________________
+    #--> describe selection area two
+    #--> 3 write a note here wrap text
+    #--> two dignissim
+    #--> 1 inceptos
+    #--> _________________________________
+    #--> describe selection area two
+    #-->              |           |
+    #-->              |           | - write a note here
+    #-->              |           |   wrap text
+    #-->              |           |
+    #-->              |           | - dignissim
+    #-->              |
+    #-->              | - inceptos
+
+    # if _.switches.isActive('Test'): test(); return None;
+    # result=[]; result=[ _.pr(line) for i, line, bi in _.numerate( _.isData(r=0) )]
+    # bk=[];[  bk.append(rec['backup']) for rec in backupLog if path == rec['file']]; bk=bk[-1];
+    #--> a=(1 if True else 0) <--# 
+    #--> m=[[row[i] for row in matrix] for i in range(4)]
+    # requests=__.imp('requests.post')
+    # data=str(requests.post(url,data={}).content,'iso-8859-1')
+
+
+### EXAMPLE: END
 ########################################################################################
 # START
 
-def url_port(url):
-    url=url.replace(' ','')
-    if not url.endswith('/'):
-        url=url+'/'
-    try:
-        domain=url.split('//')[1].split('/')[0]
-        if ':' in domain:
-            return int(domain.split(':')[1])
-    except Exception as e:
-        return 80
-    return 80
-
-
 def action():
+    #--> min, architecture {:strict:}
 
-    url=_.switches.value('URL')
-    port=url_port(url)
+    text='\n'.join(_.isData(r=0))
+    count=0
+    for search in _.switches.values('Search'):
+        c=text.count(_.ci(search))
+        _.pr(_.addComma(c), _.ci(search),c='cyan')
+        count+=c
 
-    # if not _.switches.isActive('Text'):
-    if _.switches.isActive('Source'):
-        page=__.url( url, text=_.switches.isActive('Text') )
-        _.pr(page)
-        return None
-
-    # html = urlopen(url).read()
-    cookies={
-        'c3po': 'r2d2'
-    }
-    if _.switches.isActive('Cookies'):
-        # _.pr('cookie')
-        for cookie in _.switches.values('Cookies'):
-            if '::' in cookie:
-                name  = cookie.split('::')[0]
-                value = cookie.split('::')[1]
-                cookies[name]=value
-
-    requests=__.imp('requests.get')
-    headers = {"User-Agent": "Mozilla/5.0 (Linux; U; Android 4.2.2; he-il; NEO-X5-116A Build/JDQ39) AppleWebKit/534.30 ("
-                         "KHTML, like Gecko) Version/4.0 Safari/534.30"}
-    response=requests.get(url, headers=headers,cookies=cookies)
-    webpage = response.content
-    # print(webpage)
-    soup = BeautifulSoup(webpage,features="lxml")
-
-    for script in soup(["script", "style"]):
-        script.decompose()
-    # delete out tags
+    _.pr( _.addComma(count), c='green' )
+    if count:
+        _.pr( _.addComma(len(text)/count),'spread', c='green' )
 
 
-    strips = list(soup.stripped_strings)
-    _.linePrint()
-    _.pr( '\n'.join(strips) )
-    # _.pr(strips[:5])
-
-# import warnings
-# warnings.filterwarnings("ignore", category=UserWarning, module='bs4')
-
-# import urlopen
-from bs4 import BeautifulSoup
 
 ########################################################################################
 if __name__ == '__main__':
     action()
     __.isExit()
+
 
 
 
