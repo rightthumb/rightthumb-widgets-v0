@@ -162,8 +162,11 @@ def action():
 		re=_.json_(rec,s=1)
 		if _.switches.isActive('Sort'):
 			dic={}
-			for k in _.switches.values('Sort'):
-				dic[k]=rec[k]
+			try:
+				for k in _.switches.values('Sort'):
+					dic[k]=rec[k]
+			except Exception as e:
+				pass
 			for y in rec:
 				if not y in dic:
 					dic[y]=rec[y]

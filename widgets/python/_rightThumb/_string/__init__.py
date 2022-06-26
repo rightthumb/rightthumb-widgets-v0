@@ -1220,15 +1220,19 @@ def do(what=None,string='',a=None,b=None,c=None,d=None):
     if what in 'ra remove'.split(' '): return removeAll(string,a);
 
 def trim(string):
+    if not type(string) == str: return string
     string=string.replace('\r','')
-    def trimmer(string):
-        string=do('be',string,' ')
-        string=do('be',string,'\t')
-        string=do('be',string,'\n')
-        return string
-    test=list(' \t\n')
-    while string[0] in test or string[-1] in test:
-        string=trimmer(string)
+    testing=list(' \t\n')
+    # def _trim_true_(string,testing):
+    #     r=False
+    #     for test in testing:
+    #         if (string.startswith(test)): r=True
+    #         if (string.endswith(test)): r=True
+    #     return r
+    def trimmer(string,testing):
+        for test in testing: string=do('be',string,test);
+    while string[0] in testing or string[-1] in testing: string=trimmer(string,testing)
+    # while _trim_true_(string,testing): string=trimmer(string,testing);
     return string
 
 def sh(string):

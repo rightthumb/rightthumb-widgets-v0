@@ -34,7 +34,43 @@ simplejson.dumps(rows, indent=4, sort_keys=False)
 simplejson.dumps(rows)
 '''
 
-
+def cross_multiplication(dic):
+    try:
+        n=0
+        if type(dic['a']) == int or type(dic['a']) == float: n=n+1
+        if type(dic['b']) == int or type(dic['b']) == float: n=n+1
+        if type(dic['c']) == int or type(dic['c']) == float: n=n+1
+        if type(dic['d']) == int or type(dic['d']) == float: n=n+1
+        if not n == 3:
+            raise ValueError("bad fields")
+    except Exception as ee:
+        e('cross_multiplication: (structural error) missing-dic: a/b  c/d',ee)
+    which='error'
+    w='a'
+    if not type(dic[w]) == int and not type(dic[w]) == float: which='a'
+    w='b'
+    if not type(dic[w]) == int and not type(dic[w]) == float: which='b'
+    w='c'
+    if not type(dic[w]) == int and not type(dic[w]) == float: which='c'
+    w='d'
+    if not type(dic[w]) == int and not type(dic[w]) == float: which='d'
+    try:
+        w='a'
+        if not type(dic[w]) == int and not type(dic[w]) == float: return (float(dic['b'])*float(dic['c']))/float(dic['d'])
+        w='b'
+        if not type(dic[w]) == int and not type(dic[w]) == float: return (float(dic['a'])*float(dic['d']))/float(dic['c'])
+        w='c'
+        if not type(dic[w]) == int and not type(dic[w]) == float: return (float(dic['a'])*float(dic['d']))/float(dic['b'])
+        w='d'
+        if not type(dic[w]) == int and not type(dic[w]) == float: return (float(dic['b'])*float(dic['c']))/float(dic['a'])
+    except Exception as ee:
+        pr(dic,pvs=1)
+        pr(which)
+        pr(type(dic['a']))
+        pr(type(dic['b']))
+        pr(type(dic['c']))
+        pr(type(dic['d']))
+        e('cross_multiplication: bad dic',ee)
 
 def numerate(asset,label='one'):
     row=0
@@ -1192,6 +1228,46 @@ arrow = None
 _tz = None
 pandas = None
 _sd = None
+
+def date_diff_dic(one,two=time.time()):
+    
+    def date_diff_in_seconds(dt2, dt1):
+      timedelta = dt2 - dt1
+      return timedelta.days * 24 * 3600 + timedelta.seconds
+
+    def dhms_from_seconds(seconds):
+        minutes, seconds = divmod(seconds, 60)
+        hours, minutes = divmod(minutes, 60)
+        days, hours = divmod(hours, 24)
+        return (days, hours, minutes, seconds)
+    def dt_mf(foo):
+        foo=float(foo)
+        return foo
+    one=dt_mf(autoDate(one))
+    two=dt_mf(autoDate(two))
+    # print(one,type(one))
+    # print(two,type(two))
+
+    if two > one:
+        one=datetime.datetime.fromtimestamp(one)
+        two=datetime.datetime.fromtimestamp(two)
+    else:
+        a=one
+        b=two
+        two=datetime.datetime.fromtimestamp(a)
+        # print('mf',two,type(two))
+        one=datetime.datetime.fromtimestamp(b)
+        # print(one)
+    xXx=dhms_from_seconds(date_diff_in_seconds(two, one))
+    # print(xXx)
+    # print("\n%d days, %d hours, %d minutes, %d seconds" % dhms_from_seconds(date_diff_in_seconds(two, one)))
+    txt='{ "d": %d, "h": %d, "m": %d,  "s": %d }' % dhms_from_seconds(date_diff_in_seconds(two, one))
+    # dic=dict("{ 'd': %d, 'h': %d, 'm': %d,  's': %d }" % dhms_from_seconds(date_diff_in_seconds(two, one)))
+    simplejson=__.imp('simplejson')
+    dic=simplejson.loads(txt)
+    # print(dic)
+    # print((dic))
+    return dic
 
 def isDate( theDate=None, record={}, tz=None, q=True, f=None,w=None,what=None ):
     # record={}
@@ -7817,7 +7893,23 @@ def isAdmin():
             adminStatus = False
     return adminStatus
 
+def isN(data):
+    data=_str.do('trim',data)
+    standard='.1234567890'
+    if type(data) == int: return data
+    if type(data) == float: return data
+    if not type(data) == str: return None
+    r=False
+    for d in data:
+        if not d in standard: return None
+    if '.' in data: return float(data)
+    return int(data)
+
 def autoDate( theDate ):
+    n=isN(theDate)
+    if n: theDate=n
+
+    if not theDate: return None
     # if type(theDate) == float or type(theDate) == int:
     #   return theDate
     import _rightThumb._date as _date
@@ -19710,4 +19802,4 @@ def cmd(run):
     return str(res,'iso-8859-1')
 
 # releaseAcquiredData
-
+dd=date_diff_dic
