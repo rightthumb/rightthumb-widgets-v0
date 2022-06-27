@@ -3163,7 +3163,9 @@ alias mkdir2="echo p mkdir -folders "
 alias mkdir.='python3 $ww/python/mkdir.py -files '
 alias mkdir.fi='python3 $ww/python/mkdir.py -files '
 alias mkdir.fo='python3 $ww/python/mkdir.py -folders '
-alias mkdir='python3 $ww/python/mkdir.py -folders '
+alias mkdir.0='python3 $ww/python/mkdir.py -folders '
+alias mkdir.1='$ww/python/mkdir.py -folders '
+alias mkdir.2='$ww/python/mkdir.py'
 
 
 echo '' > $stmp/.gp

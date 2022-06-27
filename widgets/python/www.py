@@ -31,6 +31,9 @@ def sw():
     _.switches.register( 'Source', '-s,-source' )
     _.switches.register( 'URL', '-url', 'https://www.google.com/', isRequired=True )
     _.switches.register( 'Cookies', '-cookie,-cookies', 'name::scott' )
+    _.switches.register( 'JSON', '-json,-JSON' )
+    _.switches.register( 'People', '-people' )
+    _.switches.register( 'Record-IDs', '-r,-recs,-records' )
 
 # __.setting('require-list',['Files,Plus','File,Has']) # todo
 # __.setting('require-list',['Pipe','Files','Plus'])
@@ -62,7 +65,7 @@ _.appInfo[focus()] = {
                         # '',
     ],
     'relatedapps': [
-                        # 'p another -file file.txt',
+                        'p cat -f %tmpf0% + 40 - http 165 urls single total starting',
                         # '',
     ],
     'prerequisite': [
@@ -72,6 +75,8 @@ _.appInfo[focus()] = {
     'examples': [
                         _.hp('p www -url https://www.eyeformeta.com/'),
                         _.hp('p www -url https://eyeformeta.com/apps/terminal/cookie.php -cookies name::scott status::epic'),
+                        _.hp('p www -json -url "https://gis.hcpafl.org/CommonServices/property/search/AdvancedSearch?zip=33606&pagesize=40&page={}" -people -recs 1-1000 > %tmpf0%'),
+                        _.hp('p www -json -url "https://gis.hcpafl.org/CommonServices/property/search/AdvancedSearch?zip=33548&pagesize=40&page={}" -people -recs 1-1000 > %tmpf0%'),
                         _.linePrint(label='simple',p=0),
                         '',
     ],
@@ -127,22 +132,61 @@ def url_port(url):
     except Exception as e:
         return 80
     return 80
+def _cleaner_(data):
+    for encodeing in 'ISO-8859-1 UTF-8 Windows-1251 Windows-1252 GB2312 Shift GBK EUC-KR ISO-8859-9 Windows-1254 EUC-JP Big5'.lower().split(' '):
+        try: return _str.do('.sh',str(data,encodeing))
+        except Exception as e:
+            try:
+                return _str.do('.sh',str(data))
+            except Exception as e:
+                return str(data)
+
+def json_code(data):
+    simplejson=__.imp('simplejson')
+    return simplejson.loads(_cleaner_(data))
+url_count=0
+def get_url(url,cookies):
+    global url_count
+    url_count+=1
+    # _.pr(url,c='yellow')
+    time.sleep(.2)
+    headers = {"User-Agent": "Mozilla/5.0 (Linux; U; Android 4.2.2; he-il; NEO-X5-116A Build/JDQ39) AppleWebKit/534.30 ("
+                         "KHTML, like Gecko) Version/4.0 Safari/534.30"}
+    response=requests.get(url, headers=headers,cookies=cookies)
+    return response.content
+
+url_id_at=None
+
+def url_next(url,_range):
+    global url_id_at
+    global url_count
+    _.linePrint(c='green')
+    _.linePrint(c='green')
+    _.pr(time.time())
+    _.pr('urls:',url_count)
+
+    if url_id_at is None:
+        url_id_at=_range['s']
+        _.pr('starting:',url_id_at)
+    else:
+        url_id_at+=1
+    if _.switches.isActive('Record-IDs') and _.switches.value('Record-IDs'):
+        if url_id_at >= _range['e']:
+            _.pr('hit threshold:',url_id_at,c='red')
+            sys.exit()
+    newURL=url.replace('{}',str(url_id_at))
+
+    _.pr(newURL,c='purple')
+    _.linePrint(c='green')
+    return newURL
 
 
 def action():
-
     url=_.switches.value('URL')
     port=url_port(url)
-
-    # if not _.switches.isActive('Text'):
-    if _.switches.isActive('Source'):
-        page=__.url( url, text=_.switches.isActive('Text') )
-        _.pr(page)
-        return None
-
     # html = urlopen(url).read()
     cookies={
-        'c3po': 'r2d2'
+        # 'c3po': 'r2d2'
     }
     if _.switches.isActive('Cookies'):
         # _.pr('cookie')
@@ -151,12 +195,75 @@ def action():
                 name  = cookie.split('::')[0]
                 value = cookie.split('::')[1]
                 cookies[name]=value
+    if _.switches.isActive('Record-IDs'):
+        if _.switches.value('Record-IDs') and '-' in _.switches.value('Record-IDs'):
+            v=_.switches.value('Record-IDs')
+            _range={
+                    's': int( v.split('-')[0] ),
+                    'e': int( v.split('-')[1] ),
+            }
+        
+        while True:
+            primary_url(url_next(url,_range),cookies)
+    else:
+        primary_url(url,cookies)
+def primary_url(url,cookies):
 
-    requests=__.imp('requests.get')
-    headers = {"User-Agent": "Mozilla/5.0 (Linux; U; Android 4.2.2; he-il; NEO-X5-116A Build/JDQ39) AppleWebKit/534.30 ("
-                         "KHTML, like Gecko) Version/4.0 Safari/534.30"}
-    response=requests.get(url, headers=headers,cookies=cookies)
-    webpage = response.content
+    # if not _.switches.isActive('Text'):
+    if 0 and _.switches.isActive('Source'):
+        page=__.url( url, text=_.switches.isActive('Text') )
+        _.pr(page)
+        return None
+
+
+
+    webpage = get_url(url,cookies)
+    # print(11)
+    if _.switches.isActive('JSON'):
+        # print(22)
+        code=json_code(webpage)
+        if not _.switches.isActive('People'):
+            _.pr(code,pvs=1)
+            return code
+        _.pr('page:',len(code),c='darkcyan')
+        ii=0
+        single=0
+        total=0
+        for rec_prop in code:
+            ii+=1
+            # if ii > 2: break
+            if 'owner' in rec_prop:
+                while '; ' in rec_prop['owner']:
+                    rec_prop['owner']=rec_prop['owner'].replace('; ',';')
+                while ' ;' in rec_prop['owner']:
+                    rec_prop['owner']=rec_prop['owner'].replace(' ;',';')
+                pass
+                for owner in rec_prop['owner'].split(';'):
+                    url2='https://gis.hcpafl.org/CommonServices/property/search/AdvancedSearch?owner=NAME&pagesize=1&page=1'
+                    if owner:
+                        url2=url2.replace( 'NAME', owner.replace(' ','+') ).replace("'",'')
+                        webpage = get_url(url2,cookies)
+                        recs_people=json_code(webpage)
+                        total+=1
+                        # _.pr(recs_people,pvs=1)
+                        if len(recs_people) == 1:
+                            single+=1
+                        elif len(recs_people) > 1:
+                            _.linePrint(c='green')
+                            _.pr(url,c='green')
+                            _.pr(url2,c='yellow')
+                            _.pr('valid:',len(recs_people),c='cyan')
+                            _.linePrint(c='green')
+                        # _.pr(recs_people,pvs=1)
+
+        if single == total:
+            _.pr('  single prop:',single,c='darkcyan')
+        else:
+            _.pr('  single prop:',single,c='darkcyan')
+            _.pr(' total people:',total,c='darkcyan')
+                    
+    if _.switches.isActive('JSON'):
+        return None
     # print(webpage)
     soup = BeautifulSoup(webpage,features="lxml")
 
@@ -175,6 +282,10 @@ def action():
 
 # import urlopen
 from bs4 import BeautifulSoup
+requests=__.imp('requests.get')
+
+# started page 9
+# p www -json -url "https://gis.hcpafl.org/CommonServices/property/search/AdvancedSearch?zip=33606&pagesize=40&page={}" -people -recs 11-1000 >> %tmpf0%
 
 ########################################################################################
 if __name__ == '__main__':
