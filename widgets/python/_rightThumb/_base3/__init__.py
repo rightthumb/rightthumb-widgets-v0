@@ -1247,7 +1247,8 @@ def date_diff_dic(one,two=time.time()):
     two=dt_mf(autoDate(two))
     # print(one,type(one))
     # print(two,type(two))
-
+    oneA=one
+    twoA=two
     if two > one:
         one=datetime.datetime.fromtimestamp(one)
         two=datetime.datetime.fromtimestamp(two)
@@ -1267,6 +1268,10 @@ def date_diff_dic(one,two=time.time()):
     dic=simplejson.loads(txt)
     # print(dic)
     # print((dic))
+    if dic['s']==59:
+        dic=date_diff_dic(oneA+1,twoA)
+        if dic['s']==58:
+            dic=date_diff_dic(oneA-1,twoA)
     return dic
 
 def isDate( theDate=None, record={}, tz=None, q=True, f=None,w=None,what=None ):
@@ -1310,23 +1315,10 @@ def isDate( theDate=None, record={}, tz=None, q=True, f=None,w=None,what=None ):
 
 
 
-    if f=='dow':
-        dow=_dir.getDOWromEpochText( epoch ).lower()
-        dci = {
-                'monday': 'mon',
-                'tuesday': 'tue',
-                'wednesday': 'wed',
-                'thursday': 'thu',
-                'friday': 'fri',
-                'saturday': 'sat',
-                'sunday': 'sun',
-        }
-        if dow in dci:
-            return dci[dow]
-        return dow
-    def fitem(f):
 
+    def fitem(f):
         if f=='ago': return _dir.dateDiffText(epoch);
+        if f=='ago-dic': return date_diff_dic(epoch);
         if f=='friendly': return friendlyDate( epoch );
         if f=='friendly': return friendlyDate( epoch );
         if f=='iso': return friendlyDate( epoch ).replace( ' ', 'T' ) + local_tz;
@@ -1400,6 +1392,20 @@ def isDate( theDate=None, record={}, tz=None, q=True, f=None,w=None,what=None ):
             except Exception as e:
                 return None
         if f=='true': return True;
+        if f=='dow':
+            dow=_dir.getDOWromEpochText( epoch ).lower()
+            dci = {
+                    'monday': 'mon',
+                    'tuesday': 'tue',
+                    'wednesday': 'wed',
+                    'thursday': 'thu',
+                    'friday': 'fri',
+                    'saturday': 'sat',
+                    'sunday': 'sun',
+            }
+            if dow in dci:
+                return dci[dow]
+            return dow
         return None
 
 
@@ -1474,36 +1480,99 @@ def isDate( theDate=None, record={}, tz=None, q=True, f=None,w=None,what=None ):
 
     ss = time.time()
 
+
+
     if type(epoch) == str:
         epoch = autoDate(epoch.replace('z',''))
-    record['ago'] = _dir.dateDiffText(epoch)
-    record['epoch'] = epoch
-    # print_( epoch )
-    record['ordinal'] = datetime.datetime.fromtimestamp( epoch ).toordinal()
-    # sys.exit()
-    record['text-date'] = datetime.datetime.fromtimestamp( epoch ).strftime('%b, %d %Y')
-    record['text-time'] = datetime.datetime.fromtimestamp( epoch ).strftime('%I:%M %p')
-    record['text-datetime'] = datetime.datetime.fromtimestamp( epoch ).strftime('%b, %d %Y @ %I:%M %p')
-    record['sdate'] = friendlyDate2( epoch )
-    record['strip'] = onlyNumbers_strip(friendlyDate( epoch ).split(' ')[0])
-    record['stript'] = onlyNumbers_strip(friendlyDate( epoch ))
-    record['date'] = friendlyDate( epoch ).split(' ')[0]
-    record['time'] = friendlyDate2( epoch ).split(' ')[1]
-    record['fdate'] = friendlyDate( epoch )
-    record['month'] = _dir.getMonthFromEpoch( epoch )
-    record['year'] = _dir.getYearFromEpoch( epoch )
-    record['woy'] = _dir.getWeekAndYear( epoch )
-    record['woy2'] = _dir.getWeekAndYear( epoch ).replace(str(_dir.getYearFromEpoch( epoch ))+'.','')
-    record['dow'] = _dir.getDOWromEpochText( epoch )
-    # record['ago'] = _dir.dateDiffText( epoch )
-    record['days'] = daysDiff(  epoch, time.time()  )
-    record['tz'] = local_tz
-    # record['iso'] = datetime.datetime.fromtimestamp( epoch ).isoformat()
-    # record['iso'] = datetime.datetime.fromtimestamp( epoch ).replace(microsecond=0).astimezone().isoformat()
-    record['iso'] = record['fdate'].replace( ' ', 'T' ) + record['tz']
-    
-    # iso 24
-    # pv(_v.config_hash)
+
+    todo='ago ago-dic epoch ordinal text-date text-time text-datetime sdate strip stript date time fdate month year woy woy2 dow days tz iso'
+
+    for k in todo.split(' '):
+        record[k]=isDate(epoch,f=k)
+
+    # record['ago'] = _dir.dateDiffText(epoch)
+    # record['epoch'] = epoch
+    # # print_( epoch )
+    # record['ordinal'] = datetime.datetime.fromtimestamp( epoch ).toordinal()
+    # # sys.exit()
+    # record['text-date'] = datetime.datetime.fromtimestamp( epoch ).strftime('%b, %d %Y')
+    # record['text-time'] = datetime.datetime.fromtimestamp( epoch ).strftime('%I:%M %p')
+    # record['text-datetime'] = datetime.datetime.fromtimestamp( epoch ).strftime('%b, %d %Y @ %I:%M %p')
+    # record['sdate'] = friendlyDate2( epoch )
+    # record['strip'] = onlyNumbers_strip(friendlyDate( epoch ).split(' ')[0])
+    # record['stript'] = onlyNumbers_strip(friendlyDate( epoch ))
+    # record['date'] = friendlyDate( epoch ).split(' ')[0]
+    # record['time'] = friendlyDate2( epoch ).split(' ')[1]
+    # record['fdate'] = friendlyDate( epoch )
+    # record['month'] = _dir.getMonthFromEpoch( epoch )
+    # record['year'] = _dir.getYearFromEpoch( epoch )
+    # record['woy'] = _dir.getWeekAndYear( epoch )
+    # record['woy2'] = _dir.getWeekAndYear( epoch ).replace(str(_dir.getYearFromEpoch( epoch ))+'.','')
+    # record['dow'] = _dir.getDOWromEpochText( epoch )
+    # # record['ago'] = _dir.dateDiffText( epoch )
+    # record['days'] = daysDiff(  epoch, time.time()  )
+    # record['tz'] = local_tz
+    # # record['iso'] = datetime.datetime.fromtimestamp( epoch ).isoformat()
+    # # record['iso'] = datetime.datetime.fromtimestamp( epoch ).replace(microsecond=0).astimezone().isoformat()
+    # record['iso'] = record['fdate'].replace( ' ', 'T' ) + record['tz']
+    # --------------------------------------------------
+    # __.isPass=None
+    # def _en_(subject):
+    #         try:
+    #             import _rightThumb._nID as _nID
+    #             if __.isPass is None:
+    #                 try:
+    #                     # _keychain = regImp( __.appReg, 'keychain' )
+    #                     # nID_password = _keychain.imp.key('nID')
+    #                     # _nID.mini.password( nID_password )
+    #                     _nID.mini.password( appID_nID_password() )
+    #                     __.isPass = 'secure'
+    #                 except Exception as e:
+    #                     _nID.mini.password( '1970' )
+    #                     __.isPass = 'unsecure'
+    #             eee = ''
+    #             ee = str(record['epoch'])
+    #             for c in ee:
+    #                 if '.' == c:
+    #                     break
+    #                 eee+=c
+    #             # record['crypt-password'] = nID_password
+    #             return _nID.mini.gen( subject )
+    #         except Exception as e:
+    #             return None
+    # # iso 24
+    # # pv(_v.config_hash)
+    # global isWin
+    # if isWin:
+    #     if 'nocrypt' in _v.config_hash:
+    #         pass
+    #     else:
+    #         sub='strip';val=_en_(record[sub]);
+    #         if val: record[sub] = val
+    #         sub='crypt-date';val=_en_(record[sub]);
+    #         if val: record[sub] = val
+    #         sub='crypt-time';val=_en_(record[sub]);
+    #         if val: record[sub] = val
+    #         sub='crypt-pass';val=_en_(record[sub]);
+    #         if val: record[sub] = val
+    #         sub='appID';val=_en_(record[sub]);
+    #         if val: record[sub] = val
+
+    #         sub='crypt-epoch';val=_en_(int(eee));
+    #         if val: record[sub] = val
+
+    #         sub='';val=_en_(record[sub]);
+    #         if val: record[sub] = sub
+
+    #         # sub=_en_(record['strip'])
+    #         # if sub: record['crypt-date'] = sub
+    #         # record['crypt-time'] = _nID.mini.gen( record['stript'] )
+    #         # record['crypt-epoch'] = _nID.mini.gen(  )
+    #         # record['appID'] = _nID.mini.gen( int(eee) )
+    #         # record['crypt-pass'] = __.isPass
+    #         del __.isPass
+    # --------------------------------------------------
+
     global isWin
     if isWin:
         if 'nocrypt' in _v.config_hash:
@@ -1534,7 +1603,6 @@ def isDate( theDate=None, record={}, tz=None, q=True, f=None,w=None,what=None ):
                 record['crypt-pass'] = isPass
             except Exception as e:
                 pass
-
 
         try:
             import _rightThumb._stardate as _sd
@@ -13632,6 +13700,11 @@ isTime = False
 timeAgoBase = []
 timeAgoBaseCount = 0
 def timeAgo( do='', startDate=None,epoch=None, d=None ):
+    new=timeAgo22( do, startDate,epoch, d )
+
+    return new
+
+def timeAgo22( do='', startDate=None,epoch=None, d=None ):
     if not epoch is None:
         startDate = epoch
     if not d is None:

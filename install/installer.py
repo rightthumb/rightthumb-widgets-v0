@@ -14161,7 +14161,7 @@ def action():
 
         if os.path.isfile( v.config ):
             v.bash = vc.HD.getTableSimp( v.config )
-        v.bash['py'] = v.bash['ww']+os.sep+'python'
+        v.bash['python'] = v.bash['ww']+os.sep+'python'
         v.bash['PY'] = sys.executable
 
         
