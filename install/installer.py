@@ -185,6 +185,7 @@ def loader():
                             'widgets': '/opt/rightthumb-widgets-v0',
                             'PY': sys.executable,
                             'PY2': '/usr/bin/python2',
+                            'pip3': 'pip3',
 
                             'SHELL': '/bin/bash',
                             'CAT': '[widgets]/widgets/python/cat.py -f',
