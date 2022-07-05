@@ -14,10 +14,7 @@ import time,signal,sys,platform
 tz = str(time.strftime("%z")).replace(':','')
 signal.signal(signal.SIGINT, lambda x, y: sys.exit(0))
 
-try:
-    importlib
-except Exception as e:
-    importlib = None
+
 
 autoCreationConfiguration = {
                             'backup': True,
@@ -145,7 +142,10 @@ def dots(path):
             if i == len(rts)-1: return eval(rts[0]);
 
 
-
+try:
+    importlib
+except Exception as e:
+    importlib = None
 imp_table = {}
 def imp( subject, imp_table_testing=False ):
     # print(subject); sys.exit();

@@ -1232,6 +1232,10 @@ def trim(string):
     def trimmer(string,testing):
         for test in testing: string=do('be',string,test);
     while string[0] in testing or string[-1] in testing: string=trimmer(string,testing)
+    # try:
+    # except Exception as e:
+    #     return string
+    
     # while _trim_true_(string,testing): string=trimmer(string,testing);
     return string
 

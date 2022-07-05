@@ -7962,7 +7962,9 @@ def isAdmin():
     return adminStatus
 
 def isN(data):
-    data=_str.do('trim',data)
+    if not type(data) == int: return data
+    if type(data) == str:
+        data=_str.do('trim',data)
     standard='.1234567890'
     if type(data) == int: return data
     if type(data) == float: return data

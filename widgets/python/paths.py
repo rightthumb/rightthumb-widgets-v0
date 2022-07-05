@@ -212,6 +212,7 @@ def action():
 					git_path = _v.slashes['u'] + git_path
 					_.pr( git_path )
 					wsl = '/mnt/'+ git_path[1].lower() + git_path[2:]
+					wsl=wsl.replace(' ','\\ ')
 					_.pr( wsl )
 
 

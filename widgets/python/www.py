@@ -34,6 +34,8 @@ def sw():
     _.switches.register( 'JSON', '-json,-JSON' )
     _.switches.register( 'People', '-people' )
     _.switches.register( 'Record-IDs', '-r,-recs,-records' )
+    _.switches.register( 'Headers-Impersonate', '-h,-head,-headers,-i,-imp,-impersonate', 'win' )
+    _.switches.register( 'Dump-Headers', '-h,-head,-header,-headers' )
 
 # __.setting('require-list',['Files,Plus','File,Has']) # todo
 # __.setting('require-list',['Pipe','Files','Plus'])
@@ -77,6 +79,9 @@ _.appInfo[focus()] = {
                         _.hp('p www -url https://eyeformeta.com/apps/terminal/cookie.php -cookies name::scott status::epic'),
                         _.hp('p www -json -url "https://gis.hcpafl.org/CommonServices/property/search/AdvancedSearch?zip=33606&pagesize=40&page={}" -people -recs 1-1000 > %tmpf0%'),
                         _.hp('p www -json -url "https://gis.hcpafl.org/CommonServices/property/search/AdvancedSearch?zip=33548&pagesize=40&page={}" -people -recs 1-1000 > %tmpf0%'),
+                        _.hp('p www -url https://eyeformeta.com/apps/misc/agent.php -h win'),
+                        _.hp('p www -url https://eyeformeta.com/apps/misc/agent.php -impersonate windows'),
+                        _.hp('p www -url https://eyeformeta.com/apps/misc/server.php -json'),
                         _.linePrint(label='simple',p=0),
                         '',
     ],
@@ -150,9 +155,18 @@ def get_url(url,cookies):
     url_count+=1
     # _.pr(url,c='yellow')
     time.sleep(.2)
-    headers = {"User-Agent": "Mozilla/5.0 (Linux; U; Android 4.2.2; he-il; NEO-X5-116A Build/JDQ39) AppleWebKit/534.30 ("
+    headers=None
+    if _.switches.isActive('Headers-Impersonate'):
+        if 'win' in _.switches.value('Headers-Impersonate'):
+            headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 ("
+                             "KHTML, like Gecko) Chrome/102.0.0.0 Safari/537.36"}
+    if headers is None:
+        headers = {"User-Agent": "Mozilla/5.0 (Linux; U; Android 4.2.2; he-il; NEO-X5-116A Build/JDQ39) AppleWebKit/534.30 ("
                          "KHTML, like Gecko) Version/4.0 Safari/534.30"}
     response=requests.get(url, headers=headers,cookies=cookies)
+    if _.switches.isActive('Dump-Headers'):
+        _.pr(dict(response.headers), pvs=1)
+        sys.exit()
     return response.content
 
 url_id_at=None
