@@ -48,13 +48,15 @@ __.setting('switch-raw',[])
 
 _.appInfo[focus()] = {
     # 'app': '8facG-jo0Cxk',
-    'file': 'thisApp.py',
+    'file': 'py-class-converter.py',
     'liveAppName': __.thisApp( __file__ ),
-    'description': 'Changes the world',
+    'description': 'Auto config classes',
         # _.ail(1,'subject')+
         # _.aib('one')+
     'categories': [
-                        'DEFAULT',
+                        'code',
+                        'py',
+                        'python3',
                 ],
     'usage': [
                         # 'epy another',
@@ -70,7 +72,7 @@ _.appInfo[focus()] = {
                         # '',
     ],
     'examples': [
-                        _.hp('p thisApp -file file.txt'),
+                        _.hp('p -paste | p py-class-converter'),
                         _.linePrint(label='simple',p=0),
                         '',
     ],
@@ -106,7 +108,7 @@ def triggers():
     _.switches.trigger( 'URL', _.urlTrigger )
     _.switches.trigger( 'Duration', _.timeFuture )
 
-_.l.conf('clean-pipe',True)
+_.l.conf('clean-pipe',False)
 _.l.sw.register( triggers, sw )
 
 ########################################################################################
@@ -141,66 +143,22 @@ _.l.sw.register( triggers, sw )
     # data=str(requests.post(url,data={}).content,'iso-8859-1')
     # for k in globals(): print(k, eval(k) )
 
-from pynput.keyboard import Key, KeyCode, Controller
-keyboard = Controller()
-
-from pynput.keyboard import Listener
-def waiting(sec,p=True):
-    if not type(sec) == int: _.e('waiting expected int')
-    
-    if not p: time.sleep(sec)
-    else:
-        
-        while not sec==0:
-            _.pr( 'waiting:', sec, end=1 )
-            time.sleep(1)
-            sec-=1
-
-while True:
-    # _.pr('waiting',end=1)
-    # _.pr('waiting',end=1)
-    waiting(30)
-    _.pr('running',end=1)
-    
-    keyboard.press(Key.esc)
-    keyboard.release(Key.esc)
-    time.sleep(1)
-    keyboard.press(Key.shift)
-    keyboard.press(Key.f5)
-    keyboard.release(Key.shift)
-    keyboard.release(Key.f5)
-    time.sleep(1)
-
-# for k in dir(Key): print(k)
-
 
 ### EXAMPLE: END
 ########################################################################################
 # START
 
 def action():
-    #--> min, architecture {:strict:}
-    #--> trigger/callback  <w#
-    #--> todo#> meta to scan for
-    load()
     global c3po
+    load()
+    _.pr( c3po )
 
-
-
-    for i, line, bi in _.numerate( _.isData(r=0) ):
-        #--> _.nindex(bi,h,n)  =  line.index(n)
-        #--> new print function
-        _.pr(line)
-    _.pr('ready',c='green')
-
+    # for i, line, bi in _.numerate(  ):
+    #     _.pr(line)
 
 def load():
     global c3po
-    c3po = _.getTable( 'table' )
-    #--> new table printer
-    _.pt(c3po)
-
-
+    c3po = '\n'.join( _.isData(r=0) )
 
 
 ########################################################################################

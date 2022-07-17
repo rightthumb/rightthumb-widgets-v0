@@ -13,7 +13,6 @@
 import os
 import sys
 import time
-
 ##################################################
 import _rightThumb._construct as __
 appDBA = __.clearFocus( __name__, __file__ )
@@ -28,20 +27,16 @@ __.registeredApps.append( focus() )
 import _rightThumb._base3 as _
 _.load()
 ##################################################
-
 import _rightThumb._vars as _v
 import _rightThumb._string as _str
 
-
 ##################################################
-### EXAMPLE: START
 # import simplejson as json
 # from threading import Timer
 # from lxml import html
 # import requests
 # import cssselect
 # import sqlite3
-### EXAMPLE: END
 ##################################################
 
 
@@ -63,11 +58,12 @@ __.isRequired_Pipe_or_File = False
 # __.isRequired_or_List = ['Pipe','Files','Plus']
 
 _.appInfo[focus()] = {
-	'file': 'thisApp.py',
+	'file': 'pipeList.py',
 	'liveAppName': __.thisApp( __file__ ),
-	'description': 'Changes the world',
+ 	'description': 'pipe list',
 	'categories': [
-						'DEFAULT',
+						'pipe',
+						'list',
 				],
 	'usage': [
 						# 'epy another',
@@ -108,11 +104,9 @@ _.appData[focus()] = {
 					'table': {'sent': [], 'received': [] }, 
 		},
 	}
-### EXAMPLE: START
 # _.appInfo[focus()]['examples'].append( 'p thisApp -file file.txt' )
 
 # _.appInfo[focus()]['columns'].append( {'name': 'name', 'abbreviation': 'n'} )
-### EXAMPLE: END
 
 
 def registerSwitches( argvProcessForce=False ):
@@ -168,7 +162,6 @@ if __name__ == '__main__':
 _.postLoad( __file__ )
 
 ########################################################################################
-### EXAMPLE: START
 # data = _.tables.returnSorted( 'data', 'd.timestamp', data )
 # _.switches.fieldSet( 'Long', 'active', True )
 # _.tables.register( 'data', table )
@@ -186,7 +179,6 @@ _.postLoad( __file__ )
 # __.appRegPipe    ( pipe data registerd focus(__.appReg) set by _.myFileLocations {if imported} , default is None )
 # date = _.friendlyDate( theDate )
 # _.addComma()
-### EXAMPLE: END
 ########################################################################################
 # START
 
@@ -211,8 +203,7 @@ def action():
 			if len(row):
 				if _.showLine( row ):
 					data.append( row )
-		_.printVar( data )
-
+		_.pr( data, pvs=1 )
 
 
 
@@ -228,7 +219,6 @@ def action():
 ########################################################################################
 if __name__ == '__main__':
 	action()
-
 
 
 

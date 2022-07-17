@@ -30,7 +30,8 @@ _str = __.imp('_rightThumb._string')
 def sw():
     pass
     ### EXAMPLE: START
-    # _.switches.register( 'Input', '-i' )
+    _.switches.register( 'Text', '-t,-text,-str,-string' )
+    _.switches.register( 'Remove', '-r,-remove,-rm' )
     # _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=True )
     # _.switches.register( 'Files', '-f,-fi,-file,-files' )
     ### EXAMPLE: END
@@ -40,7 +41,7 @@ def sw():
 __.setting('receipt-log')
 __.setting('receipt-file')
 __.setting('myFileLocations-skip-validation',False)
-__.setting('require-pipe',False)
+__.setting('require-pipe',True)
 __.setting('require-pipe||file',False)
 __.setting('pre-error',False)
 __.setting('switch-raw',[])
@@ -48,7 +49,7 @@ __.setting('switch-raw',[])
 
 _.appInfo[focus()] = {
     # 'app': '8facG-jo0Cxk',
-    'file': 'thisApp.py',
+    'file': 'pre.py',
     'liveAppName': __.thisApp( __file__ ),
     'description': 'Changes the world',
         # _.ail(1,'subject')+
@@ -70,7 +71,7 @@ _.appInfo[focus()] = {
                         # '',
     ],
     'examples': [
-                        _.hp('p thisApp -file file.txt'),
+                        _.hp('p cat -f c:\\Windows\\System32\\Drivers\\etc\\hosts --c + doubleclick.net | p pre -str #'),
                         _.linePrint(label='simple',p=0),
                         '',
     ],
@@ -139,39 +140,6 @@ _.l.sw.register( triggers, sw )
     #--> m=[[row[i] for row in matrix] for i in range(4)]
     # requests=__.imp('requests.post')
     # data=str(requests.post(url,data={}).content,'iso-8859-1')
-    # for k in globals(): print(k, eval(k) )
-
-from pynput.keyboard import Key, KeyCode, Controller
-keyboard = Controller()
-
-from pynput.keyboard import Listener
-def waiting(sec,p=True):
-    if not type(sec) == int: _.e('waiting expected int')
-    
-    if not p: time.sleep(sec)
-    else:
-        
-        while not sec==0:
-            _.pr( 'waiting:', sec, end=1 )
-            time.sleep(1)
-            sec-=1
-
-while True:
-    # _.pr('waiting',end=1)
-    # _.pr('waiting',end=1)
-    waiting(30)
-    _.pr('running',end=1)
-    
-    keyboard.press(Key.esc)
-    keyboard.release(Key.esc)
-    time.sleep(1)
-    keyboard.press(Key.shift)
-    keyboard.press(Key.f5)
-    keyboard.release(Key.shift)
-    keyboard.release(Key.f5)
-    time.sleep(1)
-
-# for k in dir(Key): print(k)
 
 
 ### EXAMPLE: END
@@ -180,25 +148,25 @@ while True:
 
 def action():
     #--> min, architecture {:strict:}
-    #--> trigger/callback  <w#
-    #--> todo#> meta to scan for
-    load()
-    global c3po
 
-
-
+    text   = ' '.join( _.switches.values('Text') )
+    remove = _.switches.isActive('Remove')
     for i, line, bi in _.numerate( _.isData(r=0) ):
-        #--> _.nindex(bi,h,n)  =  line.index(n)
-        #--> new print function
-        _.pr(line)
-    _.pr('ready',c='green')
+        if not remove:
+            _.pr( text, line )
+        else:
+            if not text in line:
+                _.pr(line)
+            else:
+                line=_str.do('be',line,' ')
+                while line.startswith(text):
+                    line=line[len(text):]
+                    line=_str.do('be',line,' ')
+                    line=_str.do('be',line,'\t')
+                    line=_str.do('be',line,'\n')
+                    line=_str.do('be',line,'\r')
 
-
-def load():
-    global c3po
-    c3po = _.getTable( 'table' )
-    #--> new table printer
-    _.pt(c3po)
+                _.pr( line )
 
 
 

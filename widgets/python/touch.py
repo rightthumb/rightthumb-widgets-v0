@@ -126,7 +126,7 @@ def registerSwitches( argvProcessForce=False ):
 
 	_.myFileLocation_Print = False
 	__.myFileLocations_SKIP_VALIDATION = False
-	_.switches.trigger( 'Files', _.myFileLocations )
+	# _.switches.trigger( 'Files', _.myFileLocations )
 	_.switches.trigger( 'Folders', _.myFolderLocations )
 	_.switches.trigger( 'URL', _.urlTrigger )
 	_.switches.trigger( 'Ago', _.timeAgo )
@@ -318,6 +318,16 @@ def process( path ):
 
 def action():
 
+	for fi in _.switches.values('Files'):
+		if not os.path.isfile(fi):
+			_.saveText('',fi)
+
+
+	# sys.exit()
+
+
+	# if _.switches.isActive('Files') and not os.path.isfile(_.switches.values('Files')):
+
 	if not _.switches.isActive('Modified'):
 		_.switches.fieldSet( 'Modified', 'active', True )
 		_.switches.fieldSet( 'Modified', 'value', 'now' )
@@ -351,7 +361,7 @@ def action():
 			for x in _.switches.values('Folders'):
 				getFolder(x)
 
-	for i,path in enumerate(_.isData()):
+	for i,path in enumerate(_.switches.values('Files')):
 		process(path)
 	if not _.switches.isActive('Meta') and (  _.switches.isActive('Created') or _.switches.isActive('Undo')  ):
 		# _.PowerShell_bashrc_name_break()

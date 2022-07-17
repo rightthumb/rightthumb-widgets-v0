@@ -141,6 +141,15 @@ _.l.sw.register( triggers, sw )
     # data=str(requests.post(url,data={}).content,'iso-8859-1')
     # for k in globals(): print(k, eval(k) )
 
+
+
+# for k in dir(Key): print(k)
+
+
+### EXAMPLE: END
+########################################################################################
+# START
+
 from pynput.keyboard import Key, KeyCode, Controller
 keyboard = Controller()
 
@@ -155,51 +164,22 @@ def waiting(sec,p=True):
             _.pr( 'waiting:', sec, end=1 )
             time.sleep(1)
             sec-=1
-
-while True:
-    # _.pr('waiting',end=1)
-    # _.pr('waiting',end=1)
-    waiting(30)
-    _.pr('running',end=1)
-    
-    keyboard.press(Key.esc)
-    keyboard.release(Key.esc)
-    time.sleep(1)
-    keyboard.press(Key.shift)
-    keyboard.press(Key.f5)
-    keyboard.release(Key.shift)
-    keyboard.release(Key.f5)
-    time.sleep(1)
-
-# for k in dir(Key): print(k)
-
-
-### EXAMPLE: END
-########################################################################################
-# START
-
 def action():
-    #--> min, architecture {:strict:}
-    #--> trigger/callback  <w#
-    #--> todo#> meta to scan for
-    load()
-    global c3po
 
-
-
-    for i, line, bi in _.numerate( _.isData(r=0) ):
-        #--> _.nindex(bi,h,n)  =  line.index(n)
-        #--> new print function
-        _.pr(line)
-    _.pr('ready',c='green')
-
-
-def load():
-    global c3po
-    c3po = _.getTable( 'table' )
-    #--> new table printer
-    _.pt(c3po)
-
+    while True:
+        # _.pr('waiting',end=1)
+        # _.pr('waiting',end=1)
+        waiting(30)
+        _.pr('running',end=1)
+        
+        keyboard.press(Key.esc)
+        keyboard.release(Key.esc)
+        time.sleep(1)
+        keyboard.press(Key.shift)
+        keyboard.press(Key.f5)
+        keyboard.release(Key.shift)
+        keyboard.release(Key.f5)
+        time.sleep(1)
 
 
 

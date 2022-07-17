@@ -1123,7 +1123,7 @@ class Asynchronous:
 					if self.print > 1:
 						_.pr( status_update )
 					else:
-						_.updateLine( status_update )
+						_.pr( status_update, end='\r' )
 
 					# _.cp( status_update, 'cyan' )
 

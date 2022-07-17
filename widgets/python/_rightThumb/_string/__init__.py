@@ -166,8 +166,12 @@ def removeUnsave( data ):
 
 def spaceba( string, what ):
     if what in string:
-        string = string.replace( ' '+what, what )
-        string = string.replace( what+' ', what )
+        i=0
+        while ' '+what in string or what+' ' in string:
+            i=i+1
+            if i > 1000: break
+            string = string.replace( ' '+what, what )
+            string = string.replace( what+' ', what )
     return string
 
 

@@ -13,6 +13,7 @@
 #    - Scott Taylor Reph, RightThumb.com
 # ###########################################################################
 # ## {C3P0D40fAe8B} ##
+
 import glob
 import sys,os,time,datetime,threading
 # from os.path import isfile, isdir
@@ -168,6 +169,9 @@ try: print_ed;
 except Exception as e: print_ed=[];
 print_ed_group={}
 def print_(*args,p=None,c=None,pad=3,g=None,end=None,pvs=None,pv=None,json=None):
+    if not end is None and (type(end) == bool or type(end) == int) and end:   end='\r';
+    else:
+        if not end is None and not end == '\r':   end=None
     if pvs: return printVarSimple(args[0])
     if pv: return printVar(args[0])
     if json: simplejson=__.imp('simplejson'); args[0]=simplejson.dumps(args[0], indent=4, sort_keys=False);
@@ -190,7 +194,8 @@ def print_(*args,p=None,c=None,pad=3,g=None,end=None,pvs=None,pv=None,json=None)
     elif not p: rint=False;
     else: rint=True;
     if rint:
-        if not end is None: print( prn, end=end );
+        if not end is None: print( linePrint(txt=' ',p=0) , end=end ); print( prn, end=end );
+        # if not end is None: print( '                                                                                        ' , end=end ); print( prn, end=end );
         else: print( prn );
     print_ed.append(prn)
     return prn
@@ -2551,6 +2556,7 @@ def loopPrint(  length=5, txt=' ', p=0 ):
     return result
 
 lp = loopPrint
+
 def linePrint(  label=None, text=None, txt='_', mn=50, add=5, p=2, c='', x=None,pre='',length=None, center=None ):
     color=c
     if not length is None:
@@ -9501,6 +9507,11 @@ updateLine_disable = False
 
 
 def updateLine( string, clear=True, color=None, sleep=None ):
+    if not sleep is None: time.sleep(sleep)
+    return print_(string,c=color,end='\r')
+
+
+    
     global updateLine_disable
     if updateLine_disable:
         clear = False
@@ -15764,6 +15775,7 @@ def ci(string):
     string = string.replace( ';delim;', __.theDelim )
     string = string.replace( ';thedelim;', __.theDelim )
     string = string.replace( ';theDelim;', __.theDelim )
+    string = string.replace( ';p', '%' )
 
 
 
@@ -19878,3 +19890,34 @@ def cmd(run):
 
 # releaseAcquiredData
 dd=date_diff_dic
+
+# def file(path):
+#     if not os.path.isfile(path): return 'error, no file'
+#     peek=open( path , 'r' ).read(32)
+#     peek=_str.do('trim',peek)
+#     if peek.startswith('[') or peek.startswith('{'):
+#         try: return getTable2(path)
+#         except Exception as ee: pass
+#     try:
+#         return getText(path,raw=True)
+#     except Exception as ee:
+#         try:
+#             return getBin(path)
+#         except Exception as ee: e(ee)
+
+
+# def save(data,path):
+#     if type(data) == str: return saveText(data,path)
+#     if type(data) == dict: return saveTable2(data,path)
+#     if type(data) == list   and len(data) and type(data[0]) == dict: return saveTable2(data,path)
+#     if type(data) == list   and len(data) and type(data[0]) == str: return saveText(data,path)
+
+#     try: return saveTable2(data,path)
+#     except Exception as ee: pass
+
+#     try: return saveText(data,path)
+#     except Exception as ee: pass
+
+#     try: return saveBin(data,path)
+#     except Exception as ee: e('_.save')
+    

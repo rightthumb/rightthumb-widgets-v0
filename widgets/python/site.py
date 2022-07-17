@@ -151,6 +151,10 @@ def process(path,end=''):
 		except Exception as e:
 			break
 	mPath = folder+os.sep+'.folder.meta'+end
+	locations=_.getTable('site-locations.list')
+	loc=locations.copy()
+	if not mPath in locations: locations.append(mPath)
+	if not locations == loc: _.saveTable(locations,'site-locations.list')
 	meta = _.getTable2( mPath )
 	_.cp(mPath.replace('.folder.meta'+end,''),'yellow')
 	_.pv(meta)

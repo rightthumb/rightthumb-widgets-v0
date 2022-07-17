@@ -143,7 +143,7 @@ def fieldSet( switchName, switchField, switchValue, theFocus=False ):
 
 if __name__ == '__main__':
 	if not sys.stdin.isatty():
-		_.setPipeData( sys.stdin.readlines(), __.appReg, clean=True )
+		_.setPipeData( sys.stdin.readlines(), __.appReg, clean=False )
 
 
 _.postLoad( __file__ )

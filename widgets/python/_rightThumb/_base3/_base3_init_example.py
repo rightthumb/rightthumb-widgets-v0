@@ -139,6 +139,7 @@ _.l.sw.register( triggers, sw )
     #--> m=[[row[i] for row in matrix] for i in range(4)]
     # requests=__.imp('requests.post')
     # data=str(requests.post(url,data={}).content,'iso-8859-1')
+    # for k in globals(): print(k, eval(k) )
 
 
 ### EXAMPLE: END
@@ -160,11 +161,14 @@ def action():
         _.pr(line)
     _.pr('ready',c='green')
 
+
 def load():
     global c3po
     c3po = _.getTable( 'table' )
     #--> new table printer
     _.pt(c3po)
+
+
 
 
 ########################################################################################
