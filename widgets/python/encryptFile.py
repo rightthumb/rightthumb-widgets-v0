@@ -16,13 +16,9 @@ import time
 # import simplejson as json
 # from threading import Timer
 
-
 ##################################################
-# construct registration
-
 import _rightThumb._construct as __
 appDBA = __.clearFocus( __name__, __file__ )
-# appDBA = __name__
 __.appReg = appDBA
 def focus( parentApp='', childApp='', reg=True ):
 	global appDBA
@@ -35,9 +31,7 @@ __.registeredApps.append(focus())
 
 import _rightThumb._base3 as _
 _.load()
-
 ##################################################
-
 import _rightThumb._vars as _v
 import _rightThumb._string as _str
 # import _rightThumb._profileVariables as _profile
@@ -73,14 +67,11 @@ import _rightThumb._dir as _dir
 # 	_file_folder.switch( 'Save,Clean' )
 # 	_file_folder.switch( 'Compair,Clean' )
 # 	_file_folder.switch( 'Folder', '' )
-
 ##################################################
-
 # from lxml import html
 # import requests
 # import cssselect
 # import sqlite3
-
 ##################################################
 
 
@@ -92,13 +83,13 @@ def appSwitches():
 	_.switches.register('Decrypt', '-decrypt')
 	
 
-_.autoBackupData = True
+_.autoBackupData = False
 
 
 _.appInfo[focus()] = {
-	'file': 'thisApp.py',
+	'file': 'encryptFile.py',
 	'liveAppName': __.thisApp( __file__ ),
-	'description': 'Changes the world',
+ 	'description': 'encrypt and decrypt files',
 	'categories': [
 						'DEFAULT'
 				],
@@ -141,8 +132,6 @@ _.appData[focus()] = {
 
 
 
-
-
 def registerSwitches( argvProcessForce=False ):
 	global appDBA
 	if not __.appReg == appDBA and appDBA in __.appReg:
@@ -169,7 +158,6 @@ def registerSwitches( argvProcessForce=False ):
 	
 	_.defaultScriptTriggers()
 	_.switches.process()
-
 
 
 
@@ -204,7 +192,7 @@ _.postLoad( __file__ )
 # os.system('"' + do + '"')
 ########################################################################################
 # START
-
+__.suffix='.crypt'
 def action():
 	# global data
 	load()
@@ -215,19 +203,19 @@ def action():
 		for i,row in enumerate(_.appData[__.appReg]['pipe']):
 			# _.printVar( _dir.fileInfo( row ) )
 
-			if row.endswith( '.blowfish' ):
+			if row.endswith( __.suffix ):
 				_.switches.fieldSet( 'Decrypt', 'active', True )
 			if not _.switches.isActive( 'Decrypt' ):
-				# out = _dir.fileInfo( row )['name']+'.blowfish'
-				out = row +'.blowfish'
+				# out = _dir.fileInfo( row )['name']+__.suffix
+				out = row +__.suffix
 				if _.switches.isActive('Password'):
 					_blowfish.encrypt( row, out, _.switches.values('Password')[0] )
 				else:
 					_blowfish.encrypt( row, out )
 			else:
 				info = _dir.fileInfo( row )
-				out = info['folder'] + _v.slash+'_' + info['name'].split( '.blowfish' )[0]
-				# out = '_' + row.split( '.blowfish' )[0]
+				out = info['folder'] + _v.slash+'_' + info['name'].split( __.suffix )[0]
+				# out = '_' + row.split( __.suffix )[0]
 				# _.pr( out )
 				# pause=input('pause')
 				if _.switches.isActive('Password'):
@@ -251,8 +239,6 @@ def load():
 ########################################################################################
 if __name__ == '__main__':
 	action()
-
-
 
 
 

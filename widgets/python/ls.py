@@ -870,6 +870,7 @@ def action():
 			for rec in data:
 				total+=rec['bytes']
 			_.cp( _.formatSize(total), 'green' )
+			if _.switches.isActive('PrintBytes'): _.cp( ['bytes:',totalBytes], 'cyan' )
 			return None
 		elif not _.switches.isActive('Totals'):
 			
@@ -1456,8 +1457,7 @@ def action():
 					txt += _.colorThis(  [  _.addComma(folderCount) + ' folders' ], 'blue', p=0 )
 					_.pr( txt )
 				_.pr()
-				if _.switches.isActive('PrintBytes'):
-					_.cp( ['bytes:',totalBytes], 'cyan' )
+				if _.switches.isActive('PrintBytes'): _.cp( ['bytes:',totalBytes], 'cyan' )
 				endPrint = time.time()
 				if _.switches.isActive('Time'):
 					_.colorThis( [ 'App Time:', round( end-start, 3 ) ], 'yellow' )

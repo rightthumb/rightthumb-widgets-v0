@@ -173,6 +173,8 @@ _.postLoad( __file__ )
 ########################################################################################
 # START
 
+
+
 import _rightThumb._dir as _dir
 
 def colorize( code ):
@@ -207,6 +209,7 @@ def colorize( code ):
 			result += _.colorThis( x, colors['cmd'], p=0 )
 		elif lastP:
 			lastSwitch = False
+			if not x in __.relevant_py and os.path.isfile(_v.py+os.sep+x+'.py'): __.relevant_py.append(x)
 			result += _.colorThis( x, colors['py'], p=0 )
 		elif x.startswith('+'):
 			lastSwitch = True
@@ -271,6 +274,8 @@ def process( path ):
 						row = '    ' + colorize(row)
 						_.pr( row )
 						theTotal+=1
+	pass
+	_.saveText(__.relevant_py,_v.tt+os.sep+'history-relevant-py.list')
 	if theTotal:
 		_.cp( [ '', theTotal ], 'yellow' )
 			# sys.exit()
@@ -315,7 +320,7 @@ def action():
 		if _.switches.isActive('Sort'): records = _.tables.returnSorted( 'data', 'asc.date_modified_raw', records );
 		for i,record in enumerate(records):
 			process( record['path'] )
-	pass
+
 	if _.switches.isActive('Copy'):
 		global history_items
 		last = 0
@@ -334,9 +339,19 @@ def action():
 				_.cp(  [ 'Copied:\n\t', item ]  , 'green' )
 				_.setClip( item )
 				break
+	pass
+	_.pr()
+	_.pr()
+	_.linePrint(c='darkcyan')
+	# _.linePrint(c='darkcyan')
+	_.pr()
+	_.pr( '\thistory-relevant-py.list', c='cyan' )
 
 
 def load():
+	if os.path.isfile(_v.tt+os.sep+'history-relevant-py.list'):
+		__.relevant_py=_.getText(_v.tt+os.sep+'history-relevant-py.list',raw=True,clean=2).split('\n')
+	else: __.relevant_py=[]
 	global records
 	folder = _v.myTickets
 	dirList = os.listdir(folder)
