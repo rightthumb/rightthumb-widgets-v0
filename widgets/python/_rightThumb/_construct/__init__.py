@@ -220,7 +220,7 @@ def path( p, ab=True, pop=False, file=False, slash=None, folder=None, fi=None, f
         p = os.path._getfinalpathname(p).lstrip(r'\?')
     except Exception as e:
         pass
-    if type(p) == str and p[1] == ':':
+    if type(p) == str and len(p)>1 and p[1] == ':':
         p = p[0].upper() + p[1:]
     if type(p) == str and ( pop or file ):
 
