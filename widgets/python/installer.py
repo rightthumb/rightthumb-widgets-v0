@@ -1783,7 +1783,9 @@ pr-|{6FAB5628-94A1-410A-82D1-1D42A2A11750}/.rt/profile/projects"""
             add=newFile
         file += add
 
-        file = file.replace( '20F543'+'59E924', nn+'.'+nt )
+        file = file.replace( '.20F543'+'59E924', '' )
+        file = file.replace( '20F543'+'59E924', '' )
+        # file = file.replace( '20F543'+'59E924', nn+'.'+nt )
 
         file += '\n'
         file += 'alias k="$widgets/widgets/python/keychain.py -rc ";\n'

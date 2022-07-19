@@ -156,7 +156,8 @@ def process(path,end=''):
 	if not mPath in locations: locations.append(mPath)
 	if not locations == loc: _.saveTable(locations,'site-locations.list')
 	meta = _.getTable2( mPath )
-	_.cp(mPath.replace('.folder.meta'+end,''),'yellow')
+	# _.cp(mPath.replace('.folder.meta'+end,''),'yellow')
+	_.cp(mPath,'yellow')
 	_.pv(meta)
 	
 

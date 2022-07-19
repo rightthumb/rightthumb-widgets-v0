@@ -169,36 +169,39 @@ try: print_ed;
 except Exception as e: print_ed=[];
 print_ed_group={}
 def print_(*args,p=None,c=None,pad=3,g=None,end=None,pvs=None,pv=None,json=None):
-    if not end is None and (type(end) == bool or type(end) == int) and end:   end='\r';
-    else:
-        if not end is None and not end == '\r':   end=None
-    if pvs: return printVarSimple(args[0])
-    if pv: return printVar(args[0])
-    if json: simplejson=__.imp('simplejson'); args[0]=simplejson.dumps(args[0], indent=4, sort_keys=False);
-        
-    global print_ed; global print_ed_group; items=[];
-    pre=''
-    # if not g is None:
-    # print_ed_group
-    for arg in args:
-        if type(arg) == list:
-            tmp=[]
-            for rg in arg: tmp.append(str(rg));
-            items.append( ' '.join(tmp) )
+    try:
+        if not end is None and (type(end) == bool or type(end) == int) and end:   end='\r';
         else:
-            items.append(str(arg))
-    prn=pre+' '.join(items)
-    if not c is None: prn=cp( prn, c, p=0 );
-    if p is None: rint=True;
-    elif p: rint=True;
-    elif not p: rint=False;
-    else: rint=True;
-    if rint:
-        if not end is None: print( linePrint(txt=' ',p=0) , end=end ); print( prn, end=end );
-        # if not end is None: print( '                                                                                        ' , end=end ); print( prn, end=end );
-        else: print( prn );
-    print_ed.append(prn)
-    return prn
+            if not end is None and not end == '\r':   end=None
+        if pvs: return printVarSimple(args[0])
+        if pv: return printVar(args[0])
+        if json: simplejson=__.imp('simplejson'); args[0]=simplejson.dumps(args[0], indent=4, sort_keys=False);
+            
+        global print_ed; global print_ed_group; items=[];
+        pre=''
+        # if not g is None:
+        # print_ed_group
+        for arg in args:
+            if type(arg) == list:
+                tmp=[]
+                for rg in arg: tmp.append(str(rg));
+                items.append( ' '.join(tmp) )
+            else:
+                items.append(str(arg))
+        prn=pre+' '.join(items)
+        if not c is None: prn=cp( prn, c, p=0 );
+        if p is None: rint=True;
+        elif p: rint=True;
+        elif not p: rint=False;
+        else: rint=True;
+        if rint:
+            if not end is None: print( linePrint(txt=' ',p=0) , end=end ); print( prn, end=end );
+            # if not end is None: print( '                                                                                        ' , end=end ); print( prn, end=end );
+            else: print( prn );
+        print_ed.append(prn)
+        return prn
+    except Exception as e:
+        return ''
 
 
 
