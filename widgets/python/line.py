@@ -405,9 +405,14 @@ def displayLine(line):
 		iStart = 1
 		shouldDelim = False
 		shouldReturn = False
+
+		# shouldDelim = True
+		# shouldReturn = True
 		if _.switches.values('MultiParseSearch')[0].startswith(';'):
 			iSub = 1
 			iStart = 2
+			if _.switches.values('MultiParseSearch')[0].startswith(';sp'):
+				shouldDelim = True
 			if _.switches.values('MultiParseSearch')[0].startswith(';c'):
 				shouldDelim = True
 			elif _.switches.values('MultiParseSearch')[0].startswith(';p'):

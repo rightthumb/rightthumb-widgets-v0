@@ -10,5 +10,8 @@ rem    - Scott Taylor Reph, RightThumb.com
 rem ###########################################################################
 rem ## {C3P0D40fAe8B} ##
 
-dir /s/b
+rem dir /s/b
+
+call p mkdir -file %d%%1
+call n %d%%1
 

@@ -8686,6 +8686,11 @@ def positiveResults(string,plus='',plusOr=False,end=None,OR=None):
         plusInput = plus
     else:
         plusInput = switches.values('Plus').copy()
+    # --> #start> this was added 2022-07-20
+    if type( plusInput ) == list:
+        for i,yh in enumerate(plusInput):
+            plusInput[i]= ci(plusInput[i])
+    # -->   #end> this was added 2022-07-20
     if not end is None:
         if type( plusInput ) == str:
             plusInput += end
@@ -8755,6 +8760,11 @@ def minusResults(string,minus=''):
         minusInput = minus
     else:
         minusInput = switches.values('Minus')
+    # --> #start> this was added 2022-07-20
+    if type( minusInput ) == list:
+        for i,yh in enumerate(minusInput):
+            minusInput[i]= ci(minusInput[i])
+    # -->   #end> this was added 2022-07-20
     if type( minusInput ) == str:
         if not switches.isActive('StrictCase'):
             minusInput = minusInput.lower()
@@ -15791,7 +15801,8 @@ def ci(string):
     string = string.replace( ';theDelim;', __.theDelim )
     string = string.replace( ';p', '%' )
     string = string.replace( ';js', '//' )
-
+    string = string.replace( ';bs', '/' )
+    string = string.replace( ';fs', '\\' )
 
     return string
 
@@ -18989,6 +19000,8 @@ ciData = (
             [ '+--+c',          '--c' ],
 
             [ '[semi]',         ';' ],
+            [ ';bs',         '/' ],
+            [ ';fs',         '\\' ],
             
             [ '[caret]',    '^' ]  )
 
