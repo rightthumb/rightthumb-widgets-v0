@@ -229,6 +229,7 @@ def registerSwitches( argvProcessForce=False ):
 	__.constructRegistration(_.appInfo[__.appReg]['file'],__.appReg)
 	appSwitches()
 
+	# _.switches.trigger( 'Minus' , _.ci )
 	_.switches.trigger( 'Size' , unFormatSize )
 	# _.switches.trigger( 'Folders' , _.bAlias )
 	# _.switches.trigger('Input',_.myFileLocations)
@@ -250,7 +251,14 @@ else:
 
 registerSwitches()
 
-
+def minusF():
+	mi=_.switches.values('Minus')
+	mii=[]
+	for m in mi:
+		m=_.ci2(m)
+		mii.append(m)
+	_.switches.fieldSet( 'Minus', 'values', mii )
+	_.switches.fieldSet( 'Minus', 'value', ','.join(mii) )
 
 def fieldSet( switchName, switchField, switchValue, theFocus=False ):
 	if not type( theFocus ) == bool:
@@ -636,6 +644,9 @@ def extensionsDatabank():
 				extensionList.append( x.lower() )
 
 def action():
+	if _.switches.isActive('Minus'): minusF()
+
+	# print( _.switches.values('Minus') ); print( _.ci(_.switches.value('Minus')) );  sys.exit();
 	global base_path
 	if  _.isData():
 		base_path=''

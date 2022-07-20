@@ -670,10 +670,8 @@ def action():
 		franchise = input('franchise: ')
 
 
-	__.franchiseFile = 'imdb-franchises-'+   franchise.upper().replace(' ','_')   +'.json'
-	
 
-	__.franchises = _.getTable(__.franchiseFile)
+
 	
 	__.franchiseFile__saved = False
 
@@ -691,12 +689,17 @@ def action():
 		obscure = False
 	franchise = franchise.replace( '?', '' )
 	franchise = franchise.replace( '!', '' )
+	franchise = franchise.replace( '!', '' )
+	franchise = franchise.replace( '!', '' )
 	franchise = franchise.lower()
 	franchise = franchise.replace( ',', ' ' )
 	# franchise = _str.basic(franchise)
 	# franchiseName = franchise.replace(' ','_')
 	franchiseName = franchise
-	
+
+	__.franchiseFile = 'imdb-franchises-'+   franchise.upper().replace(' ','_')   +'.json'
+	__.franchises = _.getTable(__.franchiseFile)
+
 	_.pr(franchise)
 
 	_.pr()
@@ -714,6 +717,7 @@ def action():
 	if force:
 		_.pr('Force')
 		_.pr()
+		_.saveTable(__.franchises,__.franchiseFile+'-'+str(time.time()).split('.')[0]+'-'+'.bk')
 		startResearch = True
 		if not type(franID) == bool:
 			__.franchises.pop(franID)

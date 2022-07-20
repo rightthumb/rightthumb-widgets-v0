@@ -172,13 +172,18 @@ def action():
 			_.pr( 'Error: nothing to compair to' )
 			return False
 	i = 0
+	links = []
 	files = []
 	folders = []
+	totalLink = 0
 	totalFile = 0
 	totalFolder = 0
 	for item in os.listdir(folder):
 		path = folder + _v.slash + item
 		# _.pr( path )
+		if os.path.islink(path):
+			if _.showLine(item):
+				links.append({ 'label':  item  })
 		if os.path.isfile(path):
 			totalFile+=1
 			if _.showLine(item):
@@ -211,8 +216,17 @@ def action():
 		else:
 
 
+			for i,item in enumerate(links):
+				links[i]['sort_by_field'] = item['label'].replace( '__', '_0_' )
+				
 			for i,item in enumerate(files):
 				files[i]['sort_by_field'] = item['label'].replace( '__', '_0_' )
+
+			if links:
+				_.pr()
+				_.colorThis( 'Links:', 'green' )
+				for f in _.tables.returnSorted( 'links', 'a.sort_by_field', links ):
+					_.colorThis( [ '\t',f['label'] ], 'cyan' )
 
 
 			_.pr()
@@ -294,9 +308,6 @@ def action():
 ########################################################################################
 if __name__ == '__main__':
 	action()
-
-
-
 
 
 

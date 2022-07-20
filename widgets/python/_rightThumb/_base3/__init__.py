@@ -15779,7 +15779,7 @@ def ci(string):
     string = string.replace( ';thedelim;', __.theDelim )
     string = string.replace( ';theDelim;', __.theDelim )
     string = string.replace( ';p', '%' )
-
+    string = string.replace( ';js', '//' )
 
 
     return string

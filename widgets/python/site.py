@@ -37,6 +37,7 @@ def sw():
 	_.switches.register( 'mkdir', '-mkdir' )
 	_.switches.register( 'Server', '-v,-srv,-server' )
 	_.switches.register( 'Print', '-print' )
+	_.switches.register( 'Status', '-status' )
 
 
 
@@ -125,6 +126,8 @@ if type(file_trigger_data) == list:
 # START
 
 def tail():
+	return ''
+	if _.switches.isActive('Status'): return ''
 	if _.isWin:
 		return ' > nul 2>&1'
 	else:
@@ -240,7 +243,9 @@ def process(path,end=''):
 			do=f'{scp} -r {u}@{s}:{fi} {path}'+tail()
 		else:
 			do=f'{scp}  {u}@{s}:{fi} {path}'+tail()
-	
+	if _.switches.isActive('Print'):
+		_.pr(do)
+
 	if _.switches.isActive('Upload-Scp') or _.switches.isActive('Download-Scp'):
 		# _.pr(do)
 		if not _.switches.isActive('Print'):
