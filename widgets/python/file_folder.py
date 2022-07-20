@@ -222,7 +222,8 @@ def action():
 			for i,item in enumerate(files):
 				files[i]['sort_by_field'] = item['label'].replace( '__', '_0_' )
 
-			if links:
+			# if links:
+			if 0:
 				_.pr()
 				_.colorThis( 'Links:', 'green' )
 				for f in _.tables.returnSorted( 'links', 'a.sort_by_field', links ):
@@ -232,7 +233,10 @@ def action():
 			_.pr()
 			_.colorThis( 'Files:', 'green' )
 			for f in _.tables.returnSorted( 'files', 'a.sort_by_field', files ):
-				_.colorThis( [ '\t',f['label'] ], 'cyan' )
+				if os.path.islink(f['label']):
+					_.colorThis( [ '\t',f['label'] ], 'yellow' )
+				else:
+					_.colorThis( [ '\t',f['label'] ], 'cyan' )
 			_.pr()
 			if totalFile == len(files):
 				_.colorThis( [ '',_.addComma(totalFile) ], 'yellow' )
@@ -241,7 +245,10 @@ def action():
 			_.pr()
 			_.colorThis( 'Folders:', 'green' )
 			for f in _.tables.returnSorted( 'folders', 'a.label', folders ):
-				_.colorThis( [ '\t',f['label'] ], 'cyan' )
+				if os.path.islink(f['label']):
+					_.colorThis( [ '\t',f['label'] ], 'yellow' )
+				else:
+					_.colorThis( [ '\t',f['label'] ], 'cyan' )
 			_.pr()
 			if totalFolder == len(folders):
 				_.colorThis( [ '',totalFolder ], 'yellow' )
