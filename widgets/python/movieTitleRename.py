@@ -10,47 +10,39 @@
 # ###########################################################################
 # ## {C3P0D40fAe8B} ##
 
-import os
-import sys
-import time
-# import platform
+##################################################
+import sys, time
 ##################################################
 import _rightThumb._construct as __
-appDBA = __.clearFocus( __name__, __file__ )
-__.appReg = appDBA
-def focus( parentApp='', childApp='', reg=True ):
-	global appDBA
-	f = __.appName( appDBA, parentApp, childApp )
-	if reg:
-		__.appReg = f
-	return f
-__.registeredApps.append( focus() )
+appDBA=__.clearFocus(__name__,__file__);__.appReg=appDBA;
+def focus(parentApp='',childApp='',reg=True):
+    global appDBA;f=__.appName(appDBA,parentApp,childApp);
+    if reg:__.appReg=f;
+    return f
 import _rightThumb._base3 as _
+fieldSet=_.l.vars(focus(),__name__,__file__,appDBA)
 _.load()
 ##################################################
-import _rightThumb._vars as _v
-import _rightThumb._string as _str
-
+_v = __.imp('_rightThumb._vars')
+_str = __.imp('_rightThumb._string')
 ##################################################
 
-
-def appSwitches():
+def sw():
 	_.switches.register( 'Test', '-test' )
 	_.switches.register( 'Size', '-size' )
-	_.switches.register( 'Files', '-f,-file,-files','file.txt', isPipe='name', description='Files' )
-	
+	_.switches.register( 'Files', '-f,-file,-files','file.txt', isData='name', description='Files' )
 
 
-# _.autoBackupData = __.autoCreationConfiguration['backup']
-_.autoBackupData = False
-__.releaseAcquiredData = __.autoCreationConfiguration['logs']
-__.myFileLocations_SKIP_VALIDATION = False
-__.isRequired_Pipe = False
-__.isRequired_Pipe_or_File = False
-__.pre_error = False
-__.switch_raw = []
-# __.switch_raw = [ 'Delim' ]
-# __.isRequired_or_List = ['Pipe','Files','Plus']
+# __.setting('require-list',['Files,Plus','File,Has']) # todo
+# __.setting('require-list',['Pipe','Files','Plus'])
+__.setting('receipt-log')
+__.setting('receipt-file')
+__.setting('myFileLocations-skip-validation',False)
+__.setting('require-pipe',False)
+__.setting('require-pipe||file',False)
+__.setting('pre-error',False)
+__.setting('switch-raw',[])
+
 
 _.appInfo[focus()] = {
 	'file': 'movieTitleRename.py',
@@ -104,56 +96,16 @@ _.appData[focus()] = {
 		},
 	}
 
+def triggers():
+    _.switches.trigger( 'Files', _.myFileLocations, vs=True )
+    _.switches.trigger( 'Ago', _.timeAgo )
+    _.switches.trigger( 'Folder', _.myFolderLocations )
+    _.switches.trigger( 'URL', _.urlTrigger )
+    _.switches.trigger( 'Duration', _.timeFuture )
 
+_.l.conf('clean-pipe',True)
+_.l.sw.register( triggers, sw )
 
-def registerSwitches( argvProcessForce=False ):
-	global appDBA
-	if not __.appReg == appDBA and appDBA in __.appReg:
-
-		if not __name__ == '__main__':
-			_.argvProcess = argvProcessForce
-		else:
-			_.argvProcess = True
-
-		_.load()
-		_.appInfo[__.appReg] = _.appInfo[appDBA]
-		_.appData[__.appReg] = _.appData[appDBA]
-	__.constructRegistration( _.appInfo[__.appReg]['file'],__.appReg )
-	appSwitches()
-
-	_.myFileLocation_Print = False
-	__.myFileLocations_SKIP_VALIDATION = False
-	_.switches.trigger( 'Files', _.myFileLocations, vs=True )
-	_.switches.trigger( 'Folder', _.myFolderLocations )
-	_.switches.trigger( 'URL', _.urlTrigger )
-	_.switches.trigger( 'Ago', _.timeAgo )
-	_.switches.trigger( 'Duration', _.timeFuture )
-	
-	
-	_.defaultScriptTriggers()
-	_.switches.process()
-
-
-if not __name__ == '__main__':
-	_.argvProcess = False
-else:
-	_.argvProcess = True
-
-registerSwitches()
-
-
-def fieldSet( switchName, switchField, switchValue, theFocus=False ):
-	if not type( theFocus ) == bool:
-		theFocus = theFocus
-	_.switches.fieldSet( switchName, switchField, switchValue, theFocus )
-
-
-if __name__ == '__main__':
-	if not sys.stdin.isatty():
-		_.setPipeData( sys.stdin.readlines(), __.appReg, clean=True )
-
-
-_.postLoad( __file__ )
 
 ########################################################################################
 # START
@@ -238,6 +190,13 @@ def removeStuff( line ):
 				'"',
 				'Dvdrip',
 				'Brrip',
+				'BrRip',
+				'YIFY',
+				'1400MB',
+				' DD ',
+				'GalaxyRG',
+				'TGx',
+				'BRrip',
 			]
 	for s in stuff:
 		line = line.replace(s,' ')
@@ -279,9 +238,25 @@ def removeStuff( line ):
 	line = _str.cleanBE(line,' ')
 	return line
 
+def extt(fi):
+
+	if not '.' in fi: return fi,''
+	par=fi.split('.')
+	par.reverse()
+	ex='.'+par[0]
+	ffi = fi[0: len(fi)-len(ex) ]
+	# print(ex)
+	# print(ffi)
+	# sys.exit()
+	return ffi, ex
 
 def action():
 	extensionsDatabank()
+	global extensionList
+
+	# print(_.isData(r=1))
+	# print( _.switches.values('Files') )
+	# sys.exit()
 	# _copy = _.regImp( __.appReg, '-copy' )
 	# _copy.imp.copy(  )
 
@@ -289,14 +264,27 @@ def action():
 	# _movieTitle.switch( 'JustVar' )
 	# import movieTitle
 
-	for i,row in enumerate( _.isData(r=1) ):
+	if _.switches.isActive('Files'):
+		data = _.switches.values('Files')
+	else:
+		data = _.isData(r=1)
+
+	for i,row in enumerate( data ):
 		row = _str.cleanBE(row,' ')
+		row = row.replace('"','')
 		# _movieTitle.imp.pipeData = []
 		# _movieTitle.imp.pipeData.append(row)
 		# _movieTitle.action()
 		# m = movieTitle.theTitle
-
-		m = removeStuff(row)
+		# sys.exit()
+		xy = extt(row)
+		m  = xy[0]
+		ex = xy[1]
+		m = removeStuff(m)
+		m = removeStuff(m)
+		m=m+ex; m=m.replace('..','.').replace(' .','.');
+		if m.endswith('.'): m=m[:-1]
+		if m.endswith(' '): m=m[:-1]
 		if _.switches.isActive('Test'):
 			_.pr()
 			_.pr(row)
@@ -313,6 +301,7 @@ def action():
 def extensionsDatabank():
 	global extensionList
 	extensionList = []
+	extensionList.append('.srt')
 	_db = _.regImp( __.appReg, 'databank' )
 	_db.switch( 'JustReturn' )
 	_db.switch( 'Tables', [ 'file', 'extensions' ] )
@@ -325,6 +314,7 @@ def extensionsDatabank():
 				x = '.'+x
 			if not x in extensionList:
 				extensionList.append( x.lower() )
+	# print(extensionList)
 
 
 

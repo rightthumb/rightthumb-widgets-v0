@@ -235,14 +235,41 @@ commit_count = 0
 processed_count = 0
 # NOTE:
 # 		sdate finds oldest or newsest date in accessed modified created
-def info( path, sql=False, md5=False, exif=0,   attrib=None, mime=None, db_connection=None, db_cursor=None, count=None, insert=None, last=False, sdate=None, meta=True, err=False,       subject=None, k=None, f=None, s=None, sub=None, field=None ):
+def info( path, sql=False, md5=False, exif=0,   attrib=None, mime=None, db_connection=None, db_cursor=None, count=None, insert=None, last=False, sdate=None, meta=True, err=False,       subject=None, k=None, f=None, s=None, sub=None, field=None, mini=False ):
 	if not field is None: subject=field;
 	if not sub is None: subject=sub;
 	if not s is None: subject=s;
 	if not k is None: subject=k;
 	if not f is None: subject=f;
 	sub=subject
-	return fileInfo( path=path, sql=sql, md5=md5, exif=exif,   attrib=attrib, mime=mime, db_connection=db_connection, db_cursor=db_cursor, count=count, insert=insert, last=last, sdate=sdate, meta=meta, err=err, subject=subject )
+	mrec=fileInfo( path=path, sql=sql, md5=md5, exif=exif,   attrib=attrib, mime=mime, db_connection=db_connection, db_cursor=db_cursor, count=count, insert=insert, last=last, sdate=sdate, meta=meta, err=err, subject=subject )
+	if mini and mrec:
+		del mrec['stat']
+		del mrec['date_created_raw']
+		del mrec['date_modified_raw']
+		del mrec['type']
+		del mrec['typesort']
+		del mrec['md5']
+		del mrec['week_of_year']
+		del mrec['week_of_year_']
+		del mrec['month']
+		del mrec['friendly_week']
+		del mrec['friendly_month']
+		del mrec['group']
+		del mrec['header']
+		del mrec['error']
+		del mrec['accessed_raw']
+		del mrec['meta']
+		del mrec['ago']
+		del mrec['day_of_the_week']
+		mrec['created']=mrec['date_created']
+		mrec['modified']=mrec['date_modified']
+		mrec['accessed']=mrec['date_accessed']
+		del mrec['date_created']
+		del mrec['date_modified']
+		del mrec['date_accessed']
+
+	return mrec
 def fileInfo( path, sql=False, md5=False, exif=0,   attrib=None, mime=None, db_connection=None, db_cursor=None, count=None, insert=None, last=False, sdate=None, meta=True, err=False, subject=None ):
 	global processed_count
 	global total_records

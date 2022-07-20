@@ -3626,6 +3626,16 @@ class dt:
         return self
 
 
+# def isData3( data=None, focus=None, pipeClean=True, required=False,     r=None, c=None ):
+#     data = isData2( data, focus, pipeClean, required, r, c )
+#     if data == ['Files']:
+#         global switches
+#         data = switches.values('Files')
+#         if len(data) and type(data[0]) == list: data = data[0]
+
+#     print(v.isData)
+#     print(data)
+#     return data
 def isData( data=None, focus=None, pipeClean=True, required=False,     r=None, c=None ):
     def _isData_(tst):
         global myFileLocation_Files
@@ -3662,7 +3672,7 @@ def isData( data=None, focus=None, pipeClean=True, required=False,     r=None, c
                         isClean=True
                     elif isD == 'name':
                         for n in switches.values(name):
-                            data.append(name)
+                            data.append(n)
                     elif isD == 'glob' and 'data' in v.isData[name]:
                         for n in switches.values(name):
                             # for f in glob.glob( n ):
