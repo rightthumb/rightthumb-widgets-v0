@@ -3725,6 +3725,7 @@ def isData( data=None, focus=None, pipeClean=True, required=False,     r=None, c
                 # sys.exit()
                 return _isData_(data.split('\n'))
             elif type(data)==list:
+                if len(data) and type(data[0]) == list: data = data[0]
                 newData=[]
                 for row in data:
                     row = row.replace('\r','')
