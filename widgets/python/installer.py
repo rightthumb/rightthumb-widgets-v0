@@ -3222,7 +3222,7 @@ alias vps.t.sh.d="scp -r root@tatooine.m-eta.app:/opt/rightthumb-widgets-v0/widg
 alias vps.t.db.d="scp -rp root@tatooine.m-eta.app:/opt/rightthumb-widgets-v0/widgets/databank/tables/*.* $ww/databank/tables/ ; chmod 777 -R $ww/databank/tables/"
 alias vps.t.py.d="scp -rp root@tatooine.m-eta.app:$ww/python/vps* $ww/python/ ; chmod 777 -R $ww/python/"
 alias vps.t.u="vps.t.py.u; vps.t.sh.u; vps.t.db.u"
-alias vps.t.d="vps.t.py.d; vps.t.sh.d; vps.t.ub.d"
+alias vps.t.d="vps.t.py.d; vps.t.sh.d; vps.t.db.d"
 #-->   end#> tatooine@m-eta.app
 
 
@@ -3264,7 +3264,7 @@ alias vps.b.sh.d="scp -r root@bespin.m-eta.app:/opt/rightthumb-widgets-v0/widget
 alias vps.b.db.d="scp -rp root@bespin.m-eta.app:/opt/rightthumb-widgets-v0/widgets/databank/tables/*.* $ww/databank/tables/ ; chmod 777 -R $ww/databank/tables/"
 alias vps.b.py.d="scp -rp root@bespin.m-eta.app:$ww/python/vps* $ww/python/ ; chmod 777 -R $ww/python/"
 alias vps.b.u="vps.b.py.u; vps.b.sh.u; vps.b.db.u"
-alias vps.b.d="vps.b.py.d; vps.b.sh.d; vps.b.ub.d"
+alias vps.b.d="vps.b.py.d; vps.b.sh.d; vps.b.db.d"
 #-->   end#> bespin@m-eta.app
 
 #--> start#> mortis@m-eta.app
@@ -3278,7 +3278,7 @@ alias vps.m.sh.d="scp -r root@mortis.m-eta.app:/opt/rightthumb-widgets-v0/widget
 alias vps.m.db.d="scp -rp root@mortis.m-eta.app:/opt/rightthumb-widgets-v0/widgets/databank/tables/*.* $ww/databank/tables/ ; chmod 777 -R $ww/databank/tables/"
 alias vps.m.py.d="scp -rp root@mortis.m-eta.app:$ww/python/vps* $ww/python/ ; chmod 777 -R $ww/python/"
 alias vps.m.u="vps.m.py.u; vps.m.sh.u; vps.m.db.u"
-alias vps.m.d="vps.m.py.d; vps.m.sh.d; vps.m.ub.d"
+alias vps.m.d="vps.m.py.d; vps.m.sh.d; vps.m.db.d"
 #-->   end#> mortis@m-eta.app
 
 
