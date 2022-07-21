@@ -19961,10 +19961,11 @@ def waiting(sec,p=True):
             time.sleep(1)
             sec-=1
         pr( '', end=1 )
-def day():
-    year  = isDate(time.time(),f='year')
-    woy   = isDate(time.time(),f='woy').split('.')[1]
-    date  = isDate(time.time(),f='date')[len('2022-'):]
+def day(epoch=None):
+    if  epoch is None: epoch = time.time()
+    year  = isDate(epoch,f='year')
+    woy   = isDate(epoch,f='woy').split('.')[1]
+    date  = isDate(epoch,f='date')[len('2022-'):]
     today = str(year)+os.sep+woy+os.sep+date+os.sep
     return today
 

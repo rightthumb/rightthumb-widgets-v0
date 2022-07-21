@@ -159,7 +159,11 @@ _md = _.regImp( __.appReg, 'md' )
 
 def load():
     global fo
-    today = _.day()
+    epoch = time.time()
+    if _.switches.isActive('Ago'): epoch = _.switches.value('Ago')
+    if _.switches.isActive('Date'): epoch = _.autoDate( _.switches.value('Date') )
+
+    today = _.day(epoch)
     fo =  _v.rtp+'daily'+os.sep+today
     # if not _.switches.isActive('Clean'): _.pr(today)
     _v.mkdir(fo)
