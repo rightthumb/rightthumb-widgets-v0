@@ -35,8 +35,8 @@ import _rightThumb._string as _str
 
 def appSwitches():
 	_.switches.register( 'Ago', '-ago', ' 2min 1h 1d 1w 1m 1y ' )
-	_.switches.register( 'Epoch', '-epoch' )
-	_.switches.register( 'Date', '-date' )
+	_.switches.register( 'Epoch', '-e,-epoch' )
+	_.switches.register( 'Date', '-d,-date' )
 	_.switches.register( 'WOY', '-woy' )
 	_.switches.register( 'Test', '-test' )
 	_.switches.register( 'TimeZone', '-tz', '+0400  OR  US/Mountain  OR  all' )

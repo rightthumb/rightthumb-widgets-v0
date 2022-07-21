@@ -168,7 +168,8 @@ def print_pr(text):
 try: print_ed;
 except Exception as e: print_ed=[];
 print_ed_group={}
-def print_(*args,p=None,c=None,pad=3,g=None,end=None,pvs=None,pv=None,json=None):
+def print_(*args,p=None,c=None,pad=3,g=None,end=None,pvs=None,pv=None,json=None, dic=None):
+    if not dic and type(dic) == bool or ( type(dic) == int and dic == 1): printDicFields(args[0]); return None
     try:
         if not end is None and (type(end) == bool or type(end) == int) and end:   end='\r';
         else:
@@ -1214,7 +1215,8 @@ class HD:
                 pass
 
 def printDicFields( dic ):
-
+    for k in dic:
+        dic[k] = str(dic[k])
     global switches
     if switches.isActive('TableJSON'):
         if len(switches.value('TableJSON')):
@@ -1340,10 +1342,13 @@ def isDate( theDate=None, record={}, tz=None, q=True, f=None,w=None,what=None ):
         if f=='text-datetime': return datetime.datetime.fromtimestamp( epoch ).strftime('%b, %d %Y @ %I:%M %p');
         if f=='sdate': return friendlyDate2( epoch );
         if f=='strip': return onlyNumbers_strip(friendlyDate( epoch ).split(' ')[0]);
+        if f=='strip': return onlyNumbers_strip(friendlyDate( epoch ).split(' ')[0]);
         if f=='stript': return onlyNumbers_strip(friendlyDate( epoch ));
+        if f=='stripa': return onlyNumbers_strip(friendlyDate( epoch ))[:-2];
         if f=='date': return friendlyDate( epoch ).split(' ')[0];
         if f=='time': return friendlyDate2( epoch ).split(' ')[1];
         if f=='fdate': return friendlyDate( epoch );
+        if f=='fdatea': return friendlyDate( epoch )[:-3];
         if f=='month': return _dir.getMonthFromEpoch( epoch );
         if f=='year': return _dir.getYearFromEpoch( epoch );
         if f=='woy': return _dir.getWeekAndYear( epoch );
@@ -1494,7 +1499,7 @@ def isDate( theDate=None, record={}, tz=None, q=True, f=None,w=None,what=None ):
     if type(epoch) == str:
         epoch = autoDate(epoch.replace('z',''))
 
-    todo='ago ago-dic epoch ordinal text-date text-time text-datetime sdate strip stript date time fdate month year woy woy2 dow days tz iso'
+    todo='ago ago-dic epoch ordinal text-date text-time text-datetime sdate strip stript stripa date time fdate fdatea month year woy woy2 dow days tz iso'
 
     for k in todo.split(' '):
         record[k]=isDate(epoch,f=k)
@@ -6832,7 +6837,12 @@ def releaseAcquiredData( appDBA, theFocus, payload=None ):
         info['payload'] = payload
 
     # if not autoBackupData:
+    # _v.mkdir( __.path(log,pop=True) )
+    _v.mkdir( log, isFile=True )
     saveTable2( info, log )
+    # print(log)
+    # print(info)
+    # print(log)
 
     if autoBackupData:
         if len( myFileLocation_Files ):
@@ -19984,5 +19994,9 @@ def day(epoch=None):
     today = str(year)+os.sep+woy+os.sep+date+os.sep
     return today
 
+def file_len(filename):
+    with open(filename) as f:
+        for i, _ in enumerate(f): pass
+    return i + 1
 
 

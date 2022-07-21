@@ -119,11 +119,26 @@ _.l.sw.register( triggers, sw )
 ########################################################################################
 # START
 
+bat = '''@echo off
+cd path
+echo path
+echo ago
+
+'''
+sh = '''#!/bin/bash
+cd path
+echo path
+echo ago
+
+'''
+
 os = __.imp('os.path.isdir')
 os = __.imp('os.system')
+os = __.imp('os.chmod')
 _docs = _.regImp( __.appReg, 'decrypt-docs' )
 _open = _.regImp( __.appReg, 'file-open' )
 _md = _.regImp( __.appReg, 'md' )
+sep=os.sep
 # _docs.switch('Files')
 
 def load():
@@ -136,6 +151,22 @@ def load():
     fo =  _v.rtp+'daily'+os.sep+today
     # if not _.switches.isActive('Clean'): _.pr(today)
     _v.mkdir(fo)
+    if _.isWin:
+        global bat
+        # script=_v.ww+sep+'batch'+sep+'.day.bat'
+        script=_v.ww+sep+'batch'+sep
+        bat = bat.replace('path',fo)
+        bat = bat.replace('ago', _.isDate(epoch,f='ago') )
+        bat = _str.do('sh',bat); _.saveText( bat, script+'.day.bat' ); _.saveText( bat, script+'.d.bat' );
+        _.pr( script, c='Background.light_blue' )
+    else:
+        global sh
+        script = _v.ww+sep+'bash'+sep+'nav'+sep+'day.sh'
+        sh = sh.replace('path',fo)
+        sh = sh.replace('ago', _.isDate(epoch,f='ago'))
+        sh = _str.do('sh',sh); _.saveText( sh, script );
+        os.chmod( script, 0o777 )
+        _.pr( script, c='Background.light_blue' )
 
 def files(fi):
     global fo

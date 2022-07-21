@@ -31,7 +31,7 @@ def sw():
     pass
     ### EXAMPLE: START
     # _.switches.register( 'Input', '-i' )
-    # _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=True )
+    _.switches.register( 'Files', '-f,-fi,-file,-files','fileBackup.json', isData='name', description='Files', isRequired=True )
     # _.switches.register( 'Files', '-f,-fi,-file,-files' )
     ### EXAMPLE: END
 
@@ -48,13 +48,19 @@ __.setting('switch-raw',[])
 
 _.appInfo[focus()] = {
     # 'app': '8facG-jo0Cxk',
-    'file': 'thisApp.py',
+    'file': 'fi-len.py',
     'liveAppName': __.thisApp( __file__ ),
-    'description': 'Changes the world',
+    'description': 'cound the length of lines in large text files cheap',
         # _.ail(1,'subject')+
         # _.aib('one')+
     'categories': [
-                        'DEFAULT',
+                        'file',
+                        'size',
+                        'len',
+                        'length',
+                        'cheap',
+                        'large',
+                        'fast',
                 ],
     'usage': [
                         # 'epy another',
@@ -70,7 +76,7 @@ _.appInfo[focus()] = {
                         # '',
     ],
     'examples': [
-                        _.hp('p thisApp -file file.txt'),
+                        _.hp('p fi-len -f fileBackup.json'),
                         _.linePrint(label='simple',p=0),
                         '',
     ],
@@ -145,28 +151,18 @@ _.l.sw.register( triggers, sw )
 ### EXAMPLE: END
 ########################################################################################
 # START
+os = __.os
+import _rightThumb._dir as _dir
 
 def action():
-    #--> min, architecture {:strict:}
-    #--> trigger/callback  <w#
-    #--> todo#> meta to scan for
-    load()
-    global c3po
-
-
-
-    for i, line, bi in _.numerate( _.isData(r=0) ):
-        #--> _.nindex(bi,h,n)  =  line.index(n)
-        #--> new print function
-        _.pr(line)
-    _.pr('ready',c='green')
-
-
-def load():
-    global c3po
-    c3po = _.getTable( 'table' )
-    #--> new table printer
-    _.pt(c3po)
+    for i, path in enumerate( _.isData(r=0) ):
+        if not os.path.isfile(path): _.e( 'error: files does not exist\n', path ); return None
+        _.pr(path,c='cyan')
+        info = _dir.info(path)
+        _.pr( '\t lines:',_.addComma( _.file_len(path) ) )
+        _.pr( '\t bytes:',_.addComma( info['bytes'] ) )
+        _.pr( '\t bytes:', info['bytes'] )
+        _.pr( '\t size:', info['size'] )
 
 
 

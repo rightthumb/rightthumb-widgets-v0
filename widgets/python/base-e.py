@@ -141,38 +141,6 @@ _.l.sw.register( triggers, sw )
     # data=str(requests.post(url,data={}).content,'iso-8859-1')
     # for k in globals(): print(k, eval(k) )
 
-from pynput.keyboard import Key, KeyCode, Controller
-keyboard = Controller()
-
-from pynput.keyboard import Listener
-def waiting(sec,p=True):
-    if not type(sec) == int: _.e('waiting expected int')
-    
-    if not p: time.sleep(sec)
-    else:
-        
-        while not sec==0:
-            _.pr( 'waiting:', sec, end=1 )
-            time.sleep(1)
-            sec-=1
-
-while True:
-    # _.pr('waiting',end=1)
-    # _.pr('waiting',end=1)
-    waiting(30)
-    _.pr('running',end=1)
-    
-    keyboard.press(Key.esc)
-    keyboard.release(Key.esc)
-    time.sleep(1)
-    keyboard.press(Key.shift)
-    keyboard.press(Key.f5)
-    keyboard.release(Key.shift)
-    keyboard.release(Key.f5)
-    time.sleep(1)
-
-# for k in dir(Key): print(k)
-
 
 ### EXAMPLE: END
 ########################################################################################
@@ -201,6 +169,8 @@ def load():
     _.pt(c3po)
 
 
+test={ "one": 1, "two": 2, "_________hi": "works", "three": 3 }
+_.pr(test,dic=1)
 
 
 ########################################################################################

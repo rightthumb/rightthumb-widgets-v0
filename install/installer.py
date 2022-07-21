@@ -2919,6 +2919,9 @@ alias s.e="sudo $widgets/widgets/bash/nav/e.sh"
 alias s.epy="sudo $widgets/widgets/bash/nav/epy.sh"
 alias s.epyi="sudo $widgets/widgets/bash/nav/epyi.sh"
 
+alias .d="$widgets/widgets/bash/nav/day.sh"
+alias .day="$widgets/widgets/bash/nav/day.sh"
+
 
 alias x="$widgets/widgets/bash/nav/x.sh"
 

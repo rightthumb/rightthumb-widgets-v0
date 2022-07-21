@@ -262,6 +262,9 @@ def process(path,end='',ft=None):
 	
 		 
 def action():
+	if _.switches.isActive('Servers') and not len(_.switches.value('Servers')):
+		_.switches.fieldSet( 'Servers', 'value', 'b,h,m,t' )
+		_.switches.fieldSet( 'Servers', 'values', 'b,h,m,t'.split(',') )
 	if not _.switches.isActive('Test') and not _.switches.isActive('Upload-Scp') and not _.switches.isActive('Download-Scp'):
 		_.switches.fieldSet( 'Test', 'active', True )
 	if _.switches.isActive('Server'): end='.'+_.switches.value('Server');
@@ -272,6 +275,13 @@ def action():
 			process(path,end)
 		else:
 			for srv in _.switches.values('Servers'):
+				srv_dic = {
+								'h': 'hoth',
+								't': 'tatooine',
+								'b': 'bespin',
+								'm': 'mortis',
+				}
+				if srv in srv_dic: srv = srv_dic[srv]
 				sv = {
 						'server': srv+'.m-eta.app'
 				}
