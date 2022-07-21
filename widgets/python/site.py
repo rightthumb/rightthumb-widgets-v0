@@ -35,7 +35,7 @@ def sw():
 	# _.switches.register( 'Files', '-f,-file,-files','file.txt',  description='glob', isRequired=True )
 	_.switches.register( 'Files', '-f,-file,-files','file.txt', isRequired=True )
 	_.switches.register( 'mkdir', '-mkdir' )
-	_.switches.register( 'Server', '-v,-srv,-server' )
+	_.switches.register( 'Servers', '-v,-srv,-server' )
 	_.switches.register( 'Print', '-print' )
 	_.switches.register( 'Status', '-status' )
 
@@ -126,14 +126,14 @@ if type(file_trigger_data) == list:
 # START
 
 def tail():
-	return ''
+	# return ''
 	if _.switches.isActive('Status'): return ''
 	if _.isWin:
 		return ' > nul 2>&1'
 	else:
 		return ' > /dev/null 2>&1'
 
-def process(path,end=''):
+def process(path,end='',ft=None):
 	_.pr(path,c='cyan')
 	meta = {}
 	try:
@@ -188,7 +188,9 @@ def process(path,end=''):
 				webbrowser.open(url, new=2)
 			except Exception as e:
 				_.e(e)
-
+	# _.pr(ftp, pvs=1)
+	if ft:
+		for k in ft: ftp[k]=ft[k]
 	scp='scp'
 	if _.isWin:
 		scp='scp'
@@ -263,7 +265,23 @@ def action():
 	if _.switches.isActive('Server'): end='.'+_.switches.value('Server');
 	else: end='';
 	for i,path in enumerate( _.switches.values('Files') ):
-		process(path,end)
+		# process(path,end)
+		if not _.switches.isActive('Servers'):
+			process(path,end)
+		else:
+			for srv in _.switches.values('Servers'):
+				sv = {
+						'server': srv+'.m-eta.app'
+				}
+				process(path,end,sv)
+				_.linePrint(c='red')
+				_.pr()
+				_.pr('\tServer Override',c='Background.red')
+				_.pr()
+				_.pr('\t\t'+srv+'.m-eta.app',c='yellow')
+				_.pr()
+
+				_.linePrint(c='red')
 
 # _vault = _.regImp( __.appReg, '_rightThumb._vault' )
 

@@ -229,6 +229,7 @@ if os.path.isfile( configFile('.config.hash') ):
 		if not __.isWin:
 			if os.path.isdir(config_hash['path']):
 				techDrive = config_hash['path']
+
 me = os.path.abspath(__file__)
 mep = me.split(os.sep)
 mep.reverse()
@@ -1561,6 +1562,7 @@ fn.path.path=__.path
 fn.path.pop=popFile
 fn.path.mpop=popFileDir
 applog=myAppLogs
+fig=config_hash
 if __.isWin:
 	user = cmdGetVar('username')
 else:

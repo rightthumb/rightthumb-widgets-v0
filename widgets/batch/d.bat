@@ -51,6 +51,19 @@ rem cd
 rem :echo ^</%pc%^>
 rem echo Files:
 rem echo.
+if [%1] == [-links] (
+    call :ACTION3 %*
+    GOTO:EOF
+)
+if [%1] == [-link] (
+    call :ACTION3 %*
+    GOTO:EOF
+)
+
+if [%1] == [-l] (
+    call :ACTION3 %*
+    GOTO:EOF
+)
 
 if [%1] == [-f] (
     call :ACTION3 %*

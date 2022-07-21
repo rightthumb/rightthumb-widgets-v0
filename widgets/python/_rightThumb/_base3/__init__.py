@@ -19962,8 +19962,11 @@ def waiting(sec,p=True):
             sec-=1
         pr( '', end=1 )
 def day():
-    year  = _.isDate(time.time(),f='year')
-    woy   = _.isDate(time.time(),f='woy').split('.')[1]
-    date  = _.isDate(time.time(),f='date')
-    today = year+os.sep+woy+os.sep+date+os.sep
+    year  = isDate(time.time(),f='year')
+    woy   = isDate(time.time(),f='woy').split('.')[1]
+    date  = isDate(time.time(),f='date')[len('2022-'):]
+    today = str(year)+os.sep+woy+os.sep+date+os.sep
     return today
+
+
+

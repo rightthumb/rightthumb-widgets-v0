@@ -30,9 +30,11 @@ _str = __.imp('_rightThumb._string')
 def sw():
     pass
     ### EXAMPLE: START
+    _.switches.register( 'Fi', '-f,-fi,-file,-files','notes.md' )
     _.switches.register( 'Date', '-date' )
     _.switches.register( 'Ago', '-ago' )
-    # _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=True )
+    _.switches.register( 'Clean', '--c' )
+    _.switches.register( 'Open', '-o,-open' )
     # _.switches.register( 'Files', '-f,-fi,-file,-files' )
     ### EXAMPLE: END
 
@@ -151,21 +153,57 @@ _.l.sw.register( triggers, sw )
 
 os = __.imp('os.path.isdir')
 _docs = _.regImp( __.appReg, 'decrypt-docs' )
+_open = _.regImp( __.appReg, 'file-open' )
+_md = _.regImp( __.appReg, 'md' )
 # _docs.switch('Files')
 
 def load():
     global fo
-    year  = _.isDate(time.time(),f='year')
-    woy   = _.isDate(time.time(),f='woy').split('.')[1]
-    date  = _.isDate(time.time(),f='date')
-    today = year+os.sep+woy+os.sep+date+os.sep
+    today = _.day()
     fo =  _v.rtp+'daily'+os.sep+today
-    _.pr(today)
+    # if not _.switches.isActive('Clean'): _.pr(today)
     _v.mkdir(fo)
-    # print(year,woy,date)
+
+def files(fi):
+    global fo
+    path=fo+fi
+    if _.isData():
+        save=True
+        txt = '\n'.join(_.isData())
+        if os.path.isfile(path):
+            ask=input(' replace file? : ')
+            if 'n' in ask.lower(): save = False
+        if save: _.saveText( txt, path ); _.pr( path, c='cyan' )
+        # return None
+    _open.switch('Files',path)
+    _open.action()
+
+
 
 def action():
+    global fo
+    load()
+    path = fo
+    
+    if _.switches.isActive('Fi'):
+        for fi in _.switches.values('Fi'):
+            files(fi)
+        return None
+    no = path+'notes.md'
+    _.pr(no,c='cyan')
+    if not os.path.isfile(no): _.saveText('___\n# '+_.isDate(time.time(),f='date')+'\n\n',no)
+    
+    _docs.switch('Files',no)
+    _docs.action()
+    if _.switches.isActive('Open'):
+        _open.switch('Files',no)
+        _open.action()
+    else:
+        _md.switch('Files',no)
+        _md.action()
 
+
+    # _.pr(path)
 
 
 

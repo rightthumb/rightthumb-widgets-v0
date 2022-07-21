@@ -154,11 +154,17 @@ _.postLoad( __file__ )
 import subprocess
 
 def action():
+	if _.isWin and not 'code_editor' in _v.fig: app = 'C:\\Windows\\System32\\notepad.exe'
+	elif _.isWin and 'code_editor' in _v.fig: app = _v.fig['code_editor']
+	elif not _.isWin and not 'code_editor' in _v.fig: app = 'nano'
+	elif not _.isWin and 'code_editor' in _v.fig: app = _v.fig['code_editor']
+	if _.switches.isActive('App'): app = _.switches.values('App')[0]
+
 	_.ad()
-	if _.switches.isActive('App') and _.switches.isActive('Files'):
+	if _.switches.isActive('Files'):
 		for path in _.switches.values('Files'):
 			# _.pr(__.path(path))
-			subprocess.Popen([_.switches.values('App')[0], __.path(path)])
+			subprocess.Popen([ app, __.path(path)])
 
 
 ########################################################################################

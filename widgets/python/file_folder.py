@@ -40,6 +40,7 @@ def appSwitches():
 	_.switches.register( 'Clean', '--c' )
 	_.switches.register( 'Compair', '-compair' )
 	_.switches.register( 'Folder', '-f,-folder' )
+	_.switches.register( 'Links', '-l,-link,-links' )
 	
 
 
@@ -222,12 +223,11 @@ def action():
 			for i,item in enumerate(files):
 				files[i]['sort_by_field'] = item['label'].replace( '__', '_0_' )
 
-			# if links:
-			if 0:
+			if _.switches.isActive('Links') and links:
 				_.pr()
 				_.colorThis( 'Links:', 'green' )
 				for f in _.tables.returnSorted( 'links', 'a.sort_by_field', links ):
-					_.colorThis( [ '\t',f['label'] ], 'cyan' )
+					_.colorThis( [ '\t',f['label'] ], 'yellow' )
 
 
 			_.pr()

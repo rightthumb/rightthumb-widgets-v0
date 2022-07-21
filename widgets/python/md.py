@@ -248,7 +248,7 @@ class Server(BaseHTTPRequestHandler):
 
 <head>
     <title>THE_TITLE</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
     <link href='https://eyeformeta.com/apps/showdown/style.css' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Old+Standard+TT:400,400italic,700' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,600' rel='stylesheet' type='text/css'>
@@ -292,7 +292,7 @@ class Server(BaseHTTPRequestHandler):
 <head>
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,600' rel='stylesheet' type='text/css'>
     <title>saved</title>
-    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
     <!-- <META http-equiv="refresh" content="1;URL=/?"> -->
     <style type="text/css">
 body {
