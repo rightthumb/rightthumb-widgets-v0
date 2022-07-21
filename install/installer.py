@@ -3237,7 +3237,7 @@ alias vps.h.sh.d="scp -r root@hoth.m-eta.app:/opt/rightthumb-widgets-v0/widgets/
 alias vps.h.db.d="scp -rp root@hoth.m-eta.app:/opt/rightthumb-widgets-v0/widgets/databank/tables/*.* $ww/databank/tables/ ; chmod 777 -R $ww/databank/tables/"
 alias vps.h.py.d="scp -rp root@hoth.m-eta.app:$ww/python/vps* $ww/python/ ; chmod 777 -R $ww/python/"
 alias vps.h.u="vps.h.py.u; vps.h.sh.u; vps.h.db.u"
-alias vps.h.d="vps.h.py.d; vps.h.sh.d; vps.h.ub.d"
+alias vps.h.d="vps.h.py.d; vps.h.sh.d; vps.h.db.d"
 #-->   end#> hoth@m-eta.app
 
 #--> start#> bespin@m-eta.app
