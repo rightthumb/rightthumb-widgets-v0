@@ -1283,6 +1283,7 @@ def date_diff_dic(one,two=time.time()):
     return dic
 
 def isDate( theDate=None, record={}, tz=None, q=True, f=None,w=None,what=None ):
+    if type(record) == str: e('expected: f='+record)
     # record={}
     if (type(theDate) == int or type(theDate) == float) and theDate < 1:
         return 0
@@ -19960,3 +19961,9 @@ def waiting(sec,p=True):
             time.sleep(1)
             sec-=1
         pr( '', end=1 )
+def day():
+    year  = _.isDate(time.time(),f='year')
+    woy   = _.isDate(time.time(),f='woy').split('.')[1]
+    date  = _.isDate(time.time(),f='date')
+    today = year+os.sep+woy+os.sep+date+os.sep
+    return today

@@ -328,6 +328,8 @@ log_config_html = techFolder + slash+'widgets'+slash+'html'+slash+'projects'+sla
 dance = images + 'dance.gif'
 gears = images + 'gears.gif'
 life=home +os.sep+'.rt'+os.sep+'profile'+os.sep+'life'+os.sep
+rtp=home +os.sep+'.rt'+os.sep+'profile'+os.sep
+rt=home +os.sep+'.rt'
 
 if __.isWin:
 	sublime = '"C:\\Program Files\\Sublime Text 3\\sublime_text.exe"'
