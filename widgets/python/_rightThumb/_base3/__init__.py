@@ -19947,4 +19947,16 @@ dd=date_diff_dic
 
 #     try: return saveBin(data,path)
 #     except Exception as ee: e('_.save')
+
+
+def waiting(sec,p=True):
+    if not type(sec) == int: e('waiting expected int')
     
+    if not p: time.sleep(sec)
+    else:
+        
+        while not sec==0:
+            pr( 'waiting:', sec, end=1 )
+            time.sleep(1)
+            sec-=1
+        pr( '', end=1 )
