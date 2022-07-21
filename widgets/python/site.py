@@ -33,9 +33,9 @@ def sw():
 	_.switches.register( 'Download-Scp', '-d,-dl,-down,-download' )
 	_.switches.register( 'Test', '-t,-test' )
 	# _.switches.register( 'Files', '-f,-file,-files','file.txt',  description='glob', isRequired=True )
-	_.switches.register( 'Files', '-f,-file,-files','file.txt', isRequired=True )
+	_.switches.register( 'Files', '-f,-file,-files','vps-tf', isRequired=True )
 	_.switches.register( 'mkdir', '-mkdir' )
-	_.switches.register( 'Servers', '-v,-srv,-server' )
+	_.switches.register( 'Servers', '-v,-srv,-server', 'b h m t' )
 	_.switches.register( 'Print', '-print' )
 	_.switches.register( 'Status', '-status' )
 
@@ -68,6 +68,8 @@ _.appInfo[focus()] = {
 						_.hp('p site -f default.js -test'),
 						_.hp('p site -f default.js -up'),
 						_.hp('p site -f default.js -dl'),
+						'',
+						_.hp('u. vps-tf -srv b h m t'),
 						'',
 	],
 	'columns': [

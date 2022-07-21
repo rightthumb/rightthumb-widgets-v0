@@ -9,7 +9,6 @@
 #    - Scott Taylor Reph, RightThumb.com
 # ###########################################################################
 # ## {C3P0D40fAe8B} ##
-
 ##################################################
 import sys, time
 ##################################################
@@ -26,17 +25,14 @@ _.load()
 _v = __.imp('_rightThumb._vars')
 _str = __.imp('_rightThumb._string')
 ##################################################
-
 def sw():
     pass
-    ### EXAMPLE: START
     _.switches.register( 'Fi', '-f,-fi,-file,-files','notes.md' )
     _.switches.register( 'Date', '-date' )
     _.switches.register( 'Ago', '-ago' )
     _.switches.register( 'Clean', '--c' )
     _.switches.register( 'Open', '-o,-open' )
-    # _.switches.register( 'Files', '-f,-fi,-file,-files' )
-    ### EXAMPLE: END
+    _.switches.register( 'Print', '-p,-print' )
 
 # __.setting('require-list',['Files,Plus','File,Has']) # todo
 # __.setting('require-list',['Pipe','Files','Plus'])
@@ -76,6 +72,9 @@ _.appInfo[focus()] = {
     ],
     'examples': [
                         _.hp('p day'),
+                        _.hp(''),
+                        _.hp('echo. | p day -f notes.md'),
+                        '|-   ##### --> timestamp#> 2022-07-21T03:03:49-0400',
                         _.linePrint(label='simple',p=0),
                         '',
     ],
@@ -115,43 +114,13 @@ _.l.conf('clean-pipe',True)
 _.l.sw.register( triggers, sw )
 
 ########################################################################################
-### EXAMPLE: START
 
 
-    #--> make hotkey ad-description soon:  <--<w#
-    #-->    - outer most typed first
-    #-->    - blank pipe
-    #-->    __.setting('hotkey-clip.ad_description-start1',d=False)
-    #--> _________________________________
-    #--> describe selection area two
-    #--> 3 write a note here wrap text
-    #--> two dignissim
-    #--> 1 inceptos
-    #--> _________________________________
-    #--> describe selection area two
-    #-->              |           |
-    #-->              |           | - write a note here
-    #-->              |           |   wrap text
-    #-->              |           |
-    #-->              |           | - dignissim
-    #-->              |
-    #-->              | - inceptos
-
-    # if _.switches.isActive('Test'): test(); return None;
-    # result=[]; result=[ _.pr(line) for i, line, bi in _.numerate( _.isData(r=0) )]
-    # bk=[];[  bk.append(rec['backup']) for rec in backupLog if path == rec['file']]; bk=bk[-1];
-    #--> a=(1 if True else 0) <--# 
-    #--> m=[[row[i] for row in matrix] for i in range(4)]
-    # requests=__.imp('requests.post')
-    # data=str(requests.post(url,data={}).content,'iso-8859-1')
-    # for k in globals(): print(k, eval(k) )
-
-
-### EXAMPLE: END
 ########################################################################################
 # START
 
 os = __.imp('os.path.isdir')
+os = __.imp('os.system')
 _docs = _.regImp( __.appReg, 'decrypt-docs' )
 _open = _.regImp( __.appReg, 'file-open' )
 _md = _.regImp( __.appReg, 'md' )
@@ -175,9 +144,14 @@ def files(fi):
         save=True
         txt = '\n'.join(_.isData())
         if os.path.isfile(path):
-            ask=input(' replace file? : ')
-            if 'n' in ask.lower(): save = False
-        if save: _.saveText( txt, path ); _.pr( path, c='cyan' )
+            _.pr('append file',c='red')
+            # ask=input2(' replace file? : ')
+            # if 'n' in ask.lower(): save = False
+        if save:
+            if os.path.isfile(path):
+                t2 = _.getText(path,raw=True)+'\n\n'+'##### --> timestamp#> '+_.isDate(time.time(),f='iso')+'\n\n'
+                txt=t2+txt
+            _.saveText( txt, path ); _.pr( path, c='cyan' )
         # return None
     _open.switch('Files',path)
     _open.action()
@@ -196,27 +170,43 @@ def action():
     no = path+'notes.md'
     _.pr(no,c='cyan')
     if not os.path.isfile(no): _.saveText('___\n# '+_.isDate(time.time(),f='date')+'\n\n',no)
+    _docs.switch('Files',no); _docs.action();
     
-    _docs.switch('Files',no)
-    _docs.action()
-    if _.switches.isActive('Open'):
-        _open.switch('Files',no)
-        _open.action()
-    else:
+    if _.switches.isActive('Print'):
+        _md.switch('View-Webpage')
         _md.switch('Files',no)
         _md.action()
+
+    if not _.isWin:
+        os.system( 'nano '+ no )
+    else:
+        if _.switches.isActive('Open'): _md.switch('Files',no); _md.action();
+        else: _open.switch('Files',no); _open.action();
 
 
     # _.pr(path)
 
+# def input2(txt=''):
+#     # p = input(txt)
+#     line=''
+#     i=0
+#     while True:
+#         i+=1
+#         if i > 1000: break
+#         try:
+#             line = input(txt)
+#         except EOFError:
+#             pass
+#             clear()
+#             # return line
 
+#     return line
 
 
 ########################################################################################
 if __name__ == '__main__':
     action()
     __.isExit()
-
 
 
 
