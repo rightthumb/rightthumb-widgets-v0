@@ -528,13 +528,16 @@ def ask(data, doneselection=False, backupfile='', originalfile=''):
 			_.pr()
 			_.pr('\tRecovered')
 			_.pr()
-			try:
-				sp.Popen([   _v.sublime.replace('"','')   ,   data[int(selection)]['file'].replace('"','')  ])
-			except Exception as e:
-				_.pr([   _v.sublime.replace('"','')   ,   data[int(selection)]['file'].replace('"','')  ])
-				_.pr('unable to open')
-			# _.pr(cpResult)
-			# _.pr(newname)
+			_.pr(data[int(selection)]['file'])
+			_.pr()
+			if _.isWin:
+				try:
+					sp.Popen([   _v.sublime.replace('"','')   ,   data[int(selection)]['file'].replace('"','')  ])
+				except Exception as e:
+					_.pr([   _v.sublime.replace('"','')   ,   data[int(selection)]['file'].replace('"','')  ])
+					_.pr('unable to open')
+				# _.pr(cpResult)
+				# _.pr(newname)
 				
 			ask(data, backupfile=data[int(selection)]['backup'], originalfile=data[int(selection)]['file'])
 

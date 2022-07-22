@@ -130,6 +130,7 @@ GOTO:EOF
             SET myTickets=%myHome%\tickets
             SET myIndexes=%myHome%\indexes
             SET i=%myHome%\indexes
+            SET day=%myHome%\daily
             SET myTables=%myHome%\tables
             SET myDatabases=%myHome%\databases
             SET myInfo=%myHome%\info

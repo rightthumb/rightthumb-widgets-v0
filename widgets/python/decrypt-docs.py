@@ -576,6 +576,8 @@ def run(path):
 	else:
 		pass
 		_.cp('in secure docs database','yellow')
+	if not os.path.isfile(path):
+		return None
 	theFILE = _.getText( path,raw=True )
 	if theFILE.startswith(doc_sep.replace('\n','')):
 		theFILE='\n'+theFILE

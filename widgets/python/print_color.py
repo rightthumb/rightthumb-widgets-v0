@@ -35,8 +35,11 @@ import _rightThumb._string as _str
 
 
 def appSwitches():
-	_.switches.register( 'Text', '-text', isRequired=True )
-	_.switches.register( 'Color', '-color', isRequired=True )
+	_.switches.register( 'Line', '-line' )
+	_.switches.register( 'Text', '-text' )
+	_.switches.register( 'Color', '-color' )
+	_.switches.register( 'Tabs', '-tab,-tabs', '1' )
+	_.switches.register( 'Fi', '-f,-file,-files', '~/pr.tmp' )
 
 
 _.autoBackupData = __.autoCreationConfiguration['backup']
@@ -151,7 +154,53 @@ _.postLoad( __file__ )
 
 
 def action():
-	_.colorThis( _.switches.values('Text'), _.switches.values('Color')[0] )
+
+	pre=''
+	if _.switches.isActive('Tabs'):
+		tabs=int(_.switches.value('Tabs'))
+		i=0
+		while not i==tabs:
+			i+=1
+			pre+='    '
+
+
+	if _.switches.isActive('Fi'):
+		for path in _.switches.values('Fi'):
+			if os.path.isfile(path):
+				for line in _.getText( path, raw=True ).split('\n'):
+					# _.pr( 55, line, c='yellow' )
+					if not type(line) == str: return None
+					if not len(line): _.pr()
+					test = _str.do('trim',line)
+					if not test:
+						_.pr()
+					else:
+						line = line.replace( '\t', '    ' )
+						line=_str.do('be',line,' ')
+						words = line.split(' ')
+						color = words[0]
+						words.pop(0)
+						txt = ' '.join(words)
+						if 'linePrint'.lower() in txt.lower():
+							_.linePrint(c=color)
+						else:
+							_.pr( pre+txt, c=color )
+					# _.pr( 66, line, c='yellow' )
+
+
+		return None
+
+
+
+
+
+
+	if _.switches.isActive('Line') and _.switches.isActive('Color'):
+		_.linePrint(c=_.switches.values('Color')[0])
+	elif _.switches.isActive('Line') and not _.switches.isActive('Color'):
+		_.linePrint()
+	else:
+		_.colorThis( pre+' '.join(_.switches.values('Text')), _.switches.values('Color')[0] )
 
 
 ########################################################################################

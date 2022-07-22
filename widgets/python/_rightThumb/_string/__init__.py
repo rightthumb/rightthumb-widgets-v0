@@ -1225,23 +1225,36 @@ def do(what=None,string='',a=None,b=None,c=None,d=None):
 
 def trim(string):
     if not type(string) == str: return string
-    string=string.replace('\r','')
-    testing=list(' \t\n')
-    # def _trim_true_(string,testing):
-    #     r=False
-    #     for test in testing:
-    #         if (string.startswith(test)): r=True
-    #         if (string.endswith(test)): r=True
-    #     return r
-    def trimmer(string,testing):
-        for test in testing: string=do('be',string,test);
-    while string[0] in testing or string[-1] in testing: string=trimmer(string,testing)
-    # try:
-    # except Exception as e:
-    #     return string
-    
-    # while _trim_true_(string,testing): string=trimmer(string,testing);
+    if not string: return string
+    string = cleanBE(string,' ')
+    if not string: return string
+    testing=[' ', '\t', '\n']
+    while string[0] in testing or string[-1] in testing:
+        for tst in testing:
+            string = cleanBE(string,tst)
     return string
+
+
+    # string=string.replace('\r','')
+    
+    # # def _trim_true_(string,testing):
+    # #     r=False
+    # #     for test in testing:
+    # #         if (string.startswith(test)): r=True
+    # #         if (string.endswith(test)): r=True
+    # #     return r
+    # def trimmer(string,testing=list(' \t\n')):
+    #     for test in testing:
+    #         string=do('be',string,test)
+    #     return string
+    # testing=list(' \t\n')
+    # while string[0] in testing or string[-1] in testing: string=trimmer(string,testing)
+    # # try:
+    # # except Exception as e:
+    # #     return string
+    
+    # # while _trim_true_(string,testing): string=trimmer(string,testing);
+    # return string
 
 def sh(string):
     try:

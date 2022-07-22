@@ -2637,7 +2637,7 @@ class virtualFiles:
         self.files = {}
     def file( self, path, data=None, meta={} ):
 
-        
+
  
  
  
@@ -2657,6 +2657,8 @@ class virtualFiles:
         c3po=c3po.split('.')[0]
         print(c3po)
  
+
+
         if path == '.bashrc-auto':
             data = """
 ################# ################# #################
@@ -2875,7 +2877,7 @@ alias vps2.new="ssh-keygen -f '/home/scott/.ssh/known_hosts' -R 'bespin.m-eta.ap
 PROMPT_COMMAND='echo -ne "\\033]0;$( whoami ) $prompt_symbol """+c3po+""" \\007"'
 export HISTSIZE=100000
 export HISTFILESIZE=100000
-clear
+
             """
             return self.file( path, data, { 'status': 'virtual' } )
 
@@ -3017,6 +3019,10 @@ alias uuids='python3 $ww/python/genuuid -cnt 10'
 alias n.rc='n ~/.bashrc'
 
 export p="/usr/bin/sh $widgets/widgets/bash/nav/p.sh"
+export bb="/usr/bin/sh $widgets/widgets/bash/nav/bb.sh"
+export b="/usr/bin/sh $widgets/widgets/bash/nav/b.sh"
+export m="/usr/bin/sh $widgets/widgets/bash/nav/m.sh"
+export cdf="/usr/bin/sh $widgets/widgets/bash/cdf.sh"
 export config
 export widgets
 
@@ -3343,6 +3349,12 @@ alias pc="$widgets/widgets/python/pc.py -rc ";
 alias color="$widgets/widgets/python/pipe-color.py -color ";
 alias epoch="echo $( date +%s )";
 
+
+
+
+
+
+
 if test -f "$HOME/.bashrc-"; then
     source "$HOME/.bashrc-";
 fi
@@ -3350,8 +3362,40 @@ if test -f "$HOME/.bashrc."; then
     source "$HOME/.bashrc.";
 fi
 
+once_file=$HOME/.bashrc.once
+once_file2=$HOME/.bashrc.once.log
+if test -f "$once_file"; then
+    source $once_file
+    echo ___ >> $once_file2
+    echo date >> $once_file2
+    cat $once_file >> $once_file2
+    rm $once_file
 
-clear
+fi
+personal_file=$HOME/.bashrc.always
+if test -f "$personal_file"; then
+    source $personal_file
+fi
+personal_file_print=$HOME/.bashrc.always.print
+if test -f "$personal_file_print"; then
+    echo ''
+    $p print_color -line -color Background.green
+    cat $personal_file_print
+    $p print_color -line -color Background.green
+    echo ''
+fi
+once_file_print=$HOME/.bashrc.once.print
+if test -f "$once_file_print"; then
+    echo ''
+    $p print_color -line -color Background.green
+    cat $once_file_print
+    $p print_color -line -color Background.green
+    echo ''
+    rm $once_file_print
+fi
+
+
+
             """
             # echo "alias rr='sudo su root'" >> ~/.bashrc
             return self.file( path, data, { 'status': 'virtual' } )

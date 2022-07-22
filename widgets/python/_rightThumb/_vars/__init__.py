@@ -334,13 +334,15 @@ rt=home +os.sep+'.rt'
 
 if __.isWin:
 	sublime = '"C:\\Program Files\\Sublime Text 3\\sublime_text.exe"'
-elif not __.isWin:
+else:
 	if os.path.isfile('/opt/sublime/sublime_text'):
 		sublime = '/opt/sublime/sublime_text'
 	elif os.path.isfile('/usr/bin/sublime_text'):
 		sublime = '/usr/bin/sublime_text'
 	elif os.path.isfile('/usr/bin/code-oss'):
 		sublime = '/usr/bin/code-oss'
+	else:
+		sublime = '/usr/bin/nano'
 # _v.sublime
 # scriptsFolder =  techFolder + slash+'scripts'
 # thisHost =  'hosts' + slash + computername2

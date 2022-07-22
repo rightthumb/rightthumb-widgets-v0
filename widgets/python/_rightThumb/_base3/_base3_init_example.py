@@ -147,25 +147,16 @@ _.l.sw.register( triggers, sw )
 # START
 
 def action():
-    #--> min, architecture {:strict:}
-    #--> trigger/callback  <w#
-    #--> todo#> meta to scan for
-    load()
-    global c3po
+    load(); global c3po;
 
-
-
-    for i, line, bi in _.numerate( _.isData(r=0) ):
-        #--> _.nindex(bi,h,n)  =  line.index(n)
-        #--> new print function
-        _.pr(line)
-    _.pr('ready',c='green')
+    #--> iterate
+    for subject in _.isData(r=0): _.pr(subject)
 
 
 def load():
     global c3po
     c3po = _.getTable( 'table' )
-    #--> new table printer
+    #--> print table
     _.pt(c3po)
 
 

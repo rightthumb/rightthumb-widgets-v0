@@ -47,7 +47,7 @@ def appSwitches():
 	_.switches.register('Binary', '-bin')
 	_.switches.register('Size', '-size',' g 10mb, L 2kb ')
 	_.switches.register('JSON', '-json')
-	_.switches.register('Ago', '-ago','1m cd, 1y, 1d')
+	_.switches.register('Ago', '-ago','1m c, 1y, 1d a')
 	_.switches.register('Time', '-time')
 	_.switches.register('Clean', '--c')
 	_.switches.register('CacheInfo', '-info')
@@ -741,6 +741,8 @@ def addFile( path, hasData=False ):
 			if len( _.switches.values('Ago') ) > 2:
 				if 'a' in _.switches.values('Ago')[2]:
 					run = 'a'
+				elif 'cd' in _.switches.values('Ago')[2]:
+					run = 'cd'
 				elif 'md' in _.switches.values('Ago')[2]:
 					run = 'md'
 				elif _.switches.isActive('Ago-Create-Date'):
@@ -751,10 +753,12 @@ def addFile( path, hasData=False ):
 					run = 'md'
 
 
-			elif len( _.switches.values('Ago') ) > 1 and type(_.switches.values('Ago')[1]) == str:
+			elif len( _.switches.values('Ago') ) == 2 and type(_.switches.values('Ago')[1]) == str:
 				# _.pr('asdf')
 				if 'a' in _.switches.values('Ago')[1]:
 					run = 'a'
+				elif 'cd' in _.switches.values('Ago')[1]:
+					run = 'cd'
 				elif 'md' in _.switches.values('Ago')[1]:
 					run = 'md'
 				elif _.switches.isActive('Ago-Create-Date'):
@@ -764,7 +768,12 @@ def addFile( path, hasData=False ):
 				elif 'm' in _.switches.values('Ago')[1]:
 					run = 'md'
 
-
+			# print(len( _.switches.values('Ago') ))
+			# print(_.switches.values('Ago'))
+			# print(run)
+			# print(run)
+			# print(run)
+			# _.e(1)
 			# _.pr(  len( _.switches.values('Ago') )  )
 			# _.pr(  ( _.switches.values('Ago') )  )
 			# sys.exit()
@@ -790,6 +799,7 @@ def addFile( path, hasData=False ):
 						# _.pr( _.friendlyDate(_.switches.values('Ago')[0]), _.switches.values('Ago')[0], record['accessed_raw'], _.friendlyDate(record['accessed_raw']) )
 						shouldAdd = True
 				elif run == 'cd':
+					# _.e()
 					if record['date_created_raw'] > _.switches.values('Ago')[0]:
 						shouldAdd = True
 				elif run == 'md':
@@ -811,6 +821,7 @@ def addFile( path, hasData=False ):
 						if record['accessed_raw'] > _.switches.values('Ago')[1]:
 							shouldAdd = True
 				elif run == 'cd':
+					# _.e()
 					if record['date_created_raw'] < _.switches.values('Ago')[0]:
 						if record['date_created_raw'] > _.switches.values('Ago')[1]:
 							shouldAdd = True

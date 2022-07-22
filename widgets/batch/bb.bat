@@ -33,7 +33,8 @@ GOTO:EOF
     SET b=%p%
     call p script-helper -replace "'%b%' '/' '\\'" > %tmpf%
     SET /p b=<%tmpf%
-    IF [%2] == [] echo ^%%b^%% = %b%
+    rem IF [%2] == [] echo ^%%b^%% = %b%
+    IF [%2] == [] echo %b%
 GOTO:EOF
 
 

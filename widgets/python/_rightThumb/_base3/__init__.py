@@ -14,6 +14,18 @@
 # ###########################################################################
 # ## {C3P0D40fAe8B} ##
 
+#--> min, architecture {:strict:}
+#--> trigger/callback  <w#
+#--> todo#> meta to scan for
+
+#--> start#> i dont remember what this is but it looks important
+# for i, line, bi in _.numerate( _.isData(r=0) ):
+#     #--> _.nindex(bi,h,n)  =  line.index(n)
+#     _.pr(line)
+# _.pr('ready',c='green')
+#-->   end#> i dont remember what this is but it looks important
+
+
 import glob
 import sys,os,time,datetime,threading
 # from os.path import isfile, isdir
@@ -1329,7 +1341,10 @@ def isDate( theDate=None, record={}, tz=None, q=True, f=None,w=None,what=None ):
 
     def fitem(f):
         if f=='ago': return _dir.dateDiffText(epoch);
-        if f=='ago-dic': return date_diff_dic(epoch);
+        if f=='ago-dic':
+            ad=_2dates(epoch,dic=1); del ad['txt'];
+            return ad;
+        if f=='ago-txt': return _2dates(epoch)
         if f=='friendly': return friendlyDate( epoch );
         if f=='friendly': return friendlyDate( epoch );
         if f=='iso': return friendlyDate( epoch ).replace( ' ', 'T' ) + local_tz;
@@ -1499,7 +1514,7 @@ def isDate( theDate=None, record={}, tz=None, q=True, f=None,w=None,what=None ):
     if type(epoch) == str:
         epoch = autoDate(epoch.replace('z',''))
 
-    todo='ago ago-dic epoch ordinal text-date text-time text-datetime sdate strip stript stripa date time fdate fdatea month year woy woy2 dow days tz iso'
+    todo='ago ago-dic ago-txt epoch ordinal text-date text-time text-datetime sdate strip stript stripa date time fdate fdatea month year woy woy2 dow days tz iso'
 
     for k in todo.split(' '):
         record[k]=isDate(epoch,f=k)
@@ -2768,6 +2783,18 @@ def secureDeleteFile(f):
     if not result == 2:
         colorThis( [ 'Error: secureDeleteFile', result ], 'red' )
 
+    return result
+
+
+def zeros3(n,total):
+    ''' calculating length of output '''
+    c=len(str(total))
+
+    result = ''
+    a = len(str(n))
+    while not len(result)+a == c:
+        result += '0'
+    result += str(n)
     return result
 
 def zeros2(n,c):
@@ -10643,6 +10670,7 @@ class Switches:
         if self.isActive('Help') or helpx:
             self.help()
 
+        # if self.isActive(''):
 
 
         if len( self.isRequired[__.appReg] ):
@@ -13763,6 +13791,9 @@ isTime = False
 timeAgoBase = []
 timeAgoBaseCount = 0
 def timeAgo( do='', startDate=None,epoch=None, d=None ):
+    if do == 'm': do = 'md'
+    if do == 'c': do = 'cd'
+    if do == 'md' or do == 'cd': return do
     new=timeAgo22( do, startDate,epoch, d )
 
     return new
@@ -19999,4 +20030,97 @@ def file_len(filename):
         for i, _ in enumerate(f): pass
     return i + 1
 
+def hush():
+    global isWin
+    if isWin: return ' > nul 2>&1'
+    else: return ' > /dev/null 2>&1'
 
+def file_break(path,lines = 4000):
+    length = file_len(path)
+    lines_per_file = lines
+    smallfile = None
+    with open(path) as bigfile:
+        for lineno, line in enumerate(bigfile):
+            if lineno % lines_per_file == 0:
+                if smallfile:
+                    smallfile.close()
+                small_filename = path+'__{}_{}'.format(lines,zeros3(lineno + lines_per_file,length))
+                smallfile = open(small_filename, "w")
+            smallfile.write(line)
+        if smallfile:
+            smallfile.close()
+
+# https://stackoverflow.com/questions/1345827/how-do-i-find-the-time-difference-between-two-datetime-objects-in-python
+
+def _2dates(d1,d2=None, dic=False):
+    if d2 is None: d2=time.time()
+    # from datetime import datetime
+    from dateutil import relativedelta
+    try: d1 = float(d1)
+    except Exception as e: pass
+    try: d2 = float(d2)
+    except Exception as e: pass
+
+    d1=autoDate(d1)
+    d2=autoDate(d2)
+    if d1 > d2: t2=d1; t1=d2;
+    else: t1=d1; t2=d2;
+    d1=t1
+    d2=t2
+    start_date = datetime.datetime.fromtimestamp(int(d1))
+    end_date = datetime.datetime.fromtimestamp(int(d2))
+    delta = relativedelta.relativedelta(end_date, start_date)
+    # for ddd in dir(delta): print(ddd)
+    rt = {
+                'y': delta.years,
+                'm': delta.months,
+                'd': delta.days,
+                'h': delta.hours,
+                'm': delta.minutes,
+                's': delta.seconds,
+    }
+
+    # tt=[]
+    # if delta.years: tt.append(str(delta.years)+' y')
+    # if delta.months: tt.append(str(delta.months)+' m')
+    # if delta.days: tt.append(str(delta.days)+' d')
+    # rt['ta1'] = ' '.join(tt)
+    # if delta.hours: tt.append(str(delta.hours)+' h')
+    # if delta.minutes: tt.append(str(delta.minutes)+' min')
+    # rt['ta2'] = ' '.join(tt)
+    # if delta.seconds: tt.append(str(delta.seconds)+' sec')
+    # rt['ta3'] = ' '.join(tt)
+
+    tt=[]
+    if delta.years:
+        if delta.years == 1: tt.append(str(delta.years)+' year')
+        else: tt.append(str(delta.years)+' years')
+
+    if delta.months:
+        if delta.months == 1: tt.append(str(delta.months)+' month')
+        else: tt.append(str(delta.months)+' months')
+
+    if delta.days:
+        if delta.days == 1: tt.append(str(delta.days)+' day')
+        else: tt.append(str(delta.days)+' days')
+
+    # rt['tb1'] = ' '.join(tt)
+
+    if not len(tt) or ( len(tt) == 1 and delta.days == 1 ):
+
+        if delta.hours:
+            if delta.hours == 1: tt.append(str(delta.hours)+' hour')
+            else: tt.append(str(delta.hours)+' hours')
+
+        if delta.minutes:
+            if delta.minutes == 1: tt.append(str(delta.minutes)+' minute')
+            else: tt.append(str(delta.minutes)+' minutes')
+
+        if delta.days == 0 and delta.hours == 0:
+            if delta.seconds:
+                if delta.seconds == 1: tt.append(str(delta.seconds)+' second')
+                else: tt.append(str(delta.seconds)+' seconds')
+
+    rt['txt'] = ' '.join(tt)
+    if not dic: return rt['txt']
+    return rt
