@@ -15,11 +15,16 @@ import glob
 import os, subprocess
 from os.path import join, getsize, isfile, isdir, splitext
 
+
+#b)--> Switches
+#e)--> Switches
+#n)--> note
+
 folder = os.getcwd()
 dirList = os.listdir(folder)
 i = 0
 for item in dirList:
-	path = folder + _v.slash + item
+	path = folder + os.sep + item
 	if os.path.isfile(item) == True:
 	# if os.path.isdir(item) == True:
 		i = i + 1

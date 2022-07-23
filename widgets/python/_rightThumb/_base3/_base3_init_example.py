@@ -141,10 +141,15 @@ _.l.sw.register( triggers, sw )
     # data=str(requests.post(url,data={}).content,'iso-8859-1')
     # for k in globals(): print(k, eval(k) )
 
+#b)--> Switches
+#e)--> Switches
+#n)--> note
 
 ### EXAMPLE: END
 ########################################################################################
 # START
+
+
 
 def action():
     load(); global c3po;

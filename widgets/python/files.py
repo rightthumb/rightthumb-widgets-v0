@@ -52,7 +52,7 @@ def appSwitches():
 	_.switches.register('Ago', '-ago', '1m')
 	_.switches.register('MaxDepth', '-depth', '3')
 	_.switches.register('Extensions', '-ext', 'db image graphic video app audio doc script archive')
-	_.switches.register('Remove-Root-Folder', '-rr')
+	_.switches.register('Toggle-Relative-Path', '-rr')
 	_.switches.register('Widget-V0', '-w,-v0')
 	_.switches.register('Ago-Create-Date', '-cd')
 	_.switches.register('Search-For-Text-Include', '-has,-search')
@@ -521,7 +521,7 @@ def add(path,r=False):
 						
 
 						if _.switches.isActive('Count'):
-							if _.switches.isActive('Remove-Root-Folder'):
+							if _.switches.isActive('Toggle-Relative-Path'):
 								process(pathX)
 							else:
 								process(path)
@@ -541,7 +541,7 @@ def add(path,r=False):
 							fs.reverse()
 							result += ' '.join(fs)
 							result += '\t'
-							if _.switches.isActive('Remove-Root-Folder'):
+							if _.switches.isActive('Toggle-Relative-Path'):
 								result += _.colorThis( pathX, 'cyan', p=0 )
 							else:
 								result += _.colorThis( path, 'cyan', p=0 )
@@ -575,7 +575,7 @@ def add(path,r=False):
 			if shouldAdd:
 				iS+=1
 				if not _.switches.isActive('Totals'):
-					if _.switches.isActive('Remove-Root-Folder'):
+					if _.switches.isActive('Toggle-Relative-Path'):
 						if not _.switches.isActive('Plus'):
 							process(pathX)
 						else:
@@ -644,6 +644,9 @@ def extensionsDatabank():
 				extensionList.append( x.lower() )
 
 def action():
+	if not __.isFiles and _.switches.isActive('Toggle-Relative-Path'): _.switches.fieldSet( 'Toggle-Relative-Path', 'active', False )
+	elif not __.isFiles and not _.switches.isActive('Toggle-Relative-Path'): _.switches.fieldSet( 'Toggle-Relative-Path', 'active', True )
+
 	if _.switches.isActive('Minus'): minusF()
 
 	# print( _.switches.values('Minus') ); print( _.ci(_.switches.value('Minus')) );  sys.exit();
@@ -657,7 +660,7 @@ def action():
 		if not __.isFiles:
 			r = _.switches.isActive('Recursive')
 			if not r:
-				_.switches.fieldSet( 'Remove-Root-Folder', 'active', True )
+				_.switches.fieldSet( 'Toggle-Relative-Path', 'active', True )
 
 		else:
 			r = True
@@ -686,7 +689,7 @@ def action():
 			# _.pr(_v.widgets)
 			# _.pr(_v.w)
 			base_path=_v.widgets
-			_.switches.fieldSet( 'Remove-Root-Folder', 'active', True )
+			_.switches.fieldSet( 'Toggle-Relative-Path', 'active', True )
 			_.switches.fieldSet( 'Minus', 'active', True )
 			_.switches.fieldSet( 'Minus', 'value', 'minecraft.py,vps-' )
 			_.switches.fieldSet( 'Minus', 'values', ['minecraft.py','vps-'] )
