@@ -137,8 +137,8 @@ commitPer = 46285
 maxFileNameLength = 35
 dateCalcByModified = True
 
-if not os.path.isdir( _v.exif_temp ):
-	os.mkdir( _v.exif_temp )
+#if not os.path.isdir( _v.exif_temp ):
+	#os.mkdir( _v.exif_temp )
 
 def fileAge( file ):
 	md = fileInfo( file )['date_modified_raw']

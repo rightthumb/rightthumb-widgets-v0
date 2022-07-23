@@ -752,6 +752,7 @@ def action(path=None,flag=None):
 				todo = []
 				global doc_sep
 				if path.lower().endswith('.md'):
+					# while theFile.count('~~~~'): theFile=theFile.replace('~~~~','~~~')
 					# _decrypt_docs = _.regImp( __.appReg, 'decrypt-docs-md' )
 					_decrypt_docs = _.regImp( __.appReg, 'decrypt-docs' )
 					doc_sep = '\n~~~\n'
@@ -784,7 +785,17 @@ def action(path=None,flag=None):
 					#   _.saveText(theFile,path)
 
 				crypy=__.specifications['fileBackup-auto-crypt']['crypt-segment']
-				
+				md_cleaner_ran=False
+				if path.lower().endswith('.md') and not theFile.count('\n~~~\n') == theFile.count('\n~~~') :
+					md_cleaner_ran=True
+					md_index={}
+					md_lines=[]
+					for mdi,line in enumerate(theFile.split('\n')):
+						if line.startswith('~~~') and not line.endswith('~~~'): line.replace('~',''); md_index[mdi]=line; line='~~~';
+						elif line.startswith('~~~'): line = '~~~'
+						md_lines.append(line)
+					theFile = '\n'.join(md_lines)
+
 				todo.append(doc_sep)
 				for doc_sep_ in todo:
 					segments=theFile.split(doc_sep_)
@@ -810,6 +821,12 @@ def action(path=None,flag=None):
 						newTemp.append(segment)
 					theFile=doc_sep_.join(newTemp)
 				if path.lower().endswith('.md'):
+					if md_cleaner_ran:
+						md_lines=[]
+						for mdi,line in enumerate(theFile.split('\n')):
+							if mdi in md_index: line = line+md_index[mdi]
+							md_lines.append(line)
+						theFile = '\n'.join(md_lines)
 					# _.pr(1)
 					theFile = _decrypt_docs.imp.vcrypyAA(theFile)
 					theFile = _decrypt_docs.imp.vcrypyB(theFile)

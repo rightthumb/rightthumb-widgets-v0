@@ -35,7 +35,7 @@ import _rightThumb._string as _str
 import _rightThumb._mimetype as _mime
 ##################################################
 
-__.isFiles=True
+__.isFiles=False
 
 
 def appSwitches():

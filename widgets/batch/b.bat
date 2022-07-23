@@ -12,12 +12,17 @@ rem ## {C3P0D40fAe8B} ##
 
 
 
-call result call p b -a %*
+call result call p b -a "%1"
+
+rem echo 5 %result%
+rem GOTO:EOF
 rem echo %result%
 call:VALIDATE ":" %result%
 if [%valid%] == [yes] (
-  %result:~0,2%
-  cd "%result%"
+  rem %result:~0,2%
+if not exist %result% call p print_color -text folder does not exist, mothafucka -color red
+if not exist %result% goto:eof
+  cd /d "%result%"
   cd
 ) else (
   p error -err Bookmark does not exist

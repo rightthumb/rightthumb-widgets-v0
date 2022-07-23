@@ -181,7 +181,7 @@ def meta_scan(path,end):
 
 def process(path,end='',ft=None):
 	global meta
-	_.pr(path,c='cyan')
+	# _.pr(path,c='cyan')
 	meta = {}
 	try:
 		file = os.path.abspath(path)

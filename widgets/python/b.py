@@ -166,7 +166,7 @@ _.postLoad( __file__ )
 
 
 def action():
-	
+	# print(_.switches.value('Alias')); sys.exit();
 	made={}
 	if 'wprofile' in _v.config_hash:
 		made['h'] = 1

@@ -744,7 +744,6 @@ def get_supporting_line(data,i,b=';',rev={}):
     return pre+data[i:ii]
 
 
-
 def vindex( code, i=0, esc='\\', n='', v=True,r=False,both=True, sort=True ):
     def _sort(sort,dic):
         if not sort: return dic;
@@ -781,7 +780,6 @@ def vindex( code, i=0, esc='\\', n='', v=True,r=False,both=True, sort=True ):
         if i >= len(code):
             break
         c=code[i]
-        
         try:
             c2=c+code[i+1]
         except Exception as e:
@@ -931,7 +929,6 @@ def vindex( code, i=0, esc='\\', n='', v=True,r=False,both=True, sort=True ):
                         return _sort(sort,index)
     
     return _sort(sort,index)
-
 
 
 
@@ -8742,7 +8739,7 @@ def closeResults( string ):
 
 def positiveResults(string,plus='',plusOr=False,end=None,OR=None):
     global switches
-    # print('here')
+
     if plusOr or switches.isActive('PlusOr'):
         plusOr = True
     
@@ -8788,7 +8785,6 @@ def positiveResults(string,plus='',plusOr=False,end=None,OR=None):
     for s in plusList:
         if not switches.isActive('StrictCase'):
             s = s.lower()
-        # print(':s:',s)
         
         if len(s) > 1 and s[0] == '!':
             s=s[1:]
