@@ -9,6 +9,7 @@
 #    - Scott Taylor Reph, RightThumb.com
 # ###########################################################################
 # ## {C3P0D40fAe8B} ##
+
 ##################################################
 import sys, time
 ##################################################
@@ -25,13 +26,17 @@ _.load()
 _v = __.imp('_rightThumb._vars')
 _str = __.imp('_rightThumb._string')
 ##################################################
+
 def sw():
     pass
-    _.switches.register( 'Folders', '-f,-folder,-Folders' )
-    _.switches.register( 'Recursive', '-r,recursive' )
+    ### EXAMPLE: START
+    # _.switches.register( 'Input', '-i' )
+    _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name', description='Files' )
+    # _.switches.register( 'Files', '-f,-fi,-file,-files' )
+    ### EXAMPLE: END
 
-# __.setting('require-list',['Pipe','Files','Plus'])
-__.setting('require-list',[])
+# __.setting('require-list',['Files,Plus','File,Has']) # todo
+__.setting('require-list',['Pipe','Files'])
 __.setting('receipt-log')
 __.setting('receipt-file')
 __.setting('myFileLocations-skip-validation',False)
@@ -43,14 +48,13 @@ __.setting('switch-raw',[])
 
 _.appInfo[focus()] = {
     # 'app': '8facG-jo0Cxk',
-    'file': 'organize-files-by-date.py',
+    'file': 'thisApp.py',
     'liveAppName': __.thisApp( __file__ ),
-    'description': 'move file year/month/file',
+    'description': 'Changes the world',
         # _.ail(1,'subject')+
         # _.aib('one')+
     'categories': [
-                        'move',
-                        'file',
+                        'DEFAULT',
                 ],
     'usage': [
                         # 'epy another',
@@ -66,8 +70,7 @@ _.appInfo[focus()] = {
                         # '',
     ],
     'examples': [
-                        _.hp('b applog'),
-                        _.hp('p organize-files-by-date'),
+                        _.hp('p thisApp -file file.txt'),
                         _.linePrint(label='simple',p=0),
                         '',
     ],
@@ -107,62 +110,70 @@ _.l.conf('clean-pipe',True)
 _.l.sw.register( triggers, sw )
 
 ########################################################################################
+### EXAMPLE: START
 
+#b)--> examples
+#d)--> code hints to quickly get started
+    #n)--> inline examples
+        # if _.switches.isActive('Test'): test(); return None;
+        # result=[]; result=[ _.pr(line) for i, line, bi in _.numerate( _.isData(r=0) )]
+        # bk=[];[  bk.append(rec['backup']) for rec in backupLog if path == rec['file']]; bk=bk[-1];
+        # a=(1 if True else 0) <--# 
+        #!)--> m=[[row[i] for row in matrix] for i in range(4)]
 
+    #n)--> python globals
+        # for k in globals(): print(k, eval(k) )
+
+    #n)--> webpage from url
+        # requests=__.imp('requests.post')
+        #!)--> data=str(requests.post(url,data={}).content,'iso-8859-1')
+
+    #n)--> import and backup example
+        # _bk = _.regImp( focus(), 'fileBackup' ); _bk.switch( 'Silent' ); _bk.switch( 'isRunOnce' ); _bk.switch( 'Flag', 'APP' ); _bk.switch( 'DoNotSchedule' )
+        # _bk.switch( 'Input', path ); bkfi = _bk.action();
+#e)--> examples
+
+### EXAMPLE: END
 ########################################################################################
 # START
 
-
-
-def process(folder):
-    global confirmed
-    try: items=os.listdir(folder)
-    except Exception as e: _.e(e)
-
-    for item in items:
-        path=folder+os.sep+item
-        if os.path.isfile(path):
-            me=_dir.info(path,f='me')
-            file=_dir.info(path)['name']
-            # # _.pv(file)
-            # # sys.exit()
-            # # file=_dir.info(path,f='file')
-            # # _.pr(me)
-            # month=_.isDate(me,f='month')
-            
-
-            nf=folder+_.day(me)
-            _.pr(path)
-            _.pr(nf)
-
-
-
-            if not confirmed:
-                ask=input('move ?Yn: ')
-                if not 'n' in ask.lower(): confirmed=True
-
-
-            if confirmed: _v.mkdir(nf); shutil.move(path,nf+os.sep+file);
-
-
-        elif os.path.isdir(path):
-            if _.switches.isActive('Recursive'): process(path)
+import _rightThumb._dir as _dir
+_dir.sha256=True
+_fi_len = _.regImp( __.appReg, 'fi-len' )
+_fi_len.switch('Just-Lines')
+_fi_len.imp.print_info=False
 
 def action():
-    
-    if _.switches.isActive('Folders'): folders=_.switches.values('Folders')
-    else: folders=[os.getcwd()]
+    #--> iterate
+    # _.clear()
+    # _.linePrint(c='yellow')
+    for path in _.isData(r=0):
+        # _.linePrint(c='yellow')
+        _fi_len.switch( 'Input', path ); _fi_len.action();
+        info = _dir.info(path,md5=True,mini=True)
+        del info['accessed']
+        del info['ae']
 
-    for folder in folders: process(folder)
-# import shutil
-confirmed=False
-import _rightThumb._dir as _dir
-shutil=__.imp('shutil.move')
-os=__.imp('os.sep')
+
+
+
+        # nfo['ago'] = str(_.isDate(nfo['me'],f='ago-dic')).replace('"','').replace('{','').replace('}','').replace("'",'').replace(',','')
+        _.linePrint(c='yellow')
+        _.pr( info, dic=1  )
+        _.linePrint(c='yellow')
+    _.linePrint(c='yellow')
+
+
+
+
+
+
+
 ########################################################################################
 if __name__ == '__main__':
     action()
     __.isExit()
+
 
 
 

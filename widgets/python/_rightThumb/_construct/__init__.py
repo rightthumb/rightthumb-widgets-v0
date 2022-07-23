@@ -17,7 +17,7 @@ signal.signal(signal.SIGINT, lambda x, y: sys.exit(0))
 
 
 autoCreationConfiguration = {
-                            'backup': True,
+                            'backup': False,
                             'logs': True,
                             'folders': True,
                             'created': { '_vars': 0 },
@@ -25,7 +25,7 @@ autoCreationConfiguration = {
 
 settings_table = {
                     'receipt-log': True,
-                    'receipt-file': True,
+                    'receipt-file': False,
 }
 
 class dot:

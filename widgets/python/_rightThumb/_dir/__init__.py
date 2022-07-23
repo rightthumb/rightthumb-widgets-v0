@@ -27,6 +27,7 @@ import time
 from pathlib import Path
 
 import _rightThumb._construct as __
+# import _rightThumb._base3 as _
 import _rightThumb._vars as _v
 import _rightThumb._md5 as _md5
 import _rightThumb._mimetype as _mime
@@ -53,46 +54,46 @@ import simplejson as json
 """
 
 [
-    {
-        "path": "D:\\tech\\programs\\python\\src\\windows\\5e.py",
-        "name_": "5e.py",
-        "name": "5e.py",
-        "folder": "D:\\tech\\programs\\python\\src\\windows",
-        "stat": [
-            33206,
-            562949953429741,
-            1319441880,
-            1,
-            0,
-            0,
-            7361,
-            1606402282,
-            1603981112,
-            1606402282
-        ],
-        "bytes": 7361,
-        "size": "7.19 KB",
-        "date_created_raw": 1606402282.416147,
-        "date_modified_raw": 1603981112.0,
-        "date_created": "2020-11-26 07:51:22",
-        "date_modified": "2020-10-29 08:18:32",
-        "type": "File",
-        "typesort": 1,
-        "ext": "py",
-        "week_of_year": "2020.44",
-        "week_of_year_": 44,
-        "day_of_the_week": "Thursday",
-        "month": "2020.10",
-        "friendly_week": "",
-        "friendly_month": "",
-        "md5": "",
-        "year": 2020,
-        "accessed_raw": 1606402282.416147,
-        "date_accessed": "2020-11-26 07:51:22",
-        "ce": 1606402282.416147,
-        "me": 1603981112.0,
-        "ae": 1606402282.416147
-    }
+	{
+		"path": "D:\\tech\\programs\\python\\src\\windows\\5e.py",
+		"name_": "5e.py",
+		"name": "5e.py",
+		"folder": "D:\\tech\\programs\\python\\src\\windows",
+		"stat": [
+			33206,
+			562949953429741,
+			1319441880,
+			1,
+			0,
+			0,
+			7361,
+			1606402282,
+			1603981112,
+			1606402282
+		],
+		"bytes": 7361,
+		"size": "7.19 KB",
+		"date_created_raw": 1606402282.416147,
+		"date_modified_raw": 1603981112.0,
+		"date_created": "2020-11-26 07:51:22",
+		"date_modified": "2020-10-29 08:18:32",
+		"type": "File",
+		"typesort": 1,
+		"ext": "py",
+		"week_of_year": "2020.44",
+		"week_of_year_": 44,
+		"day_of_the_week": "Thursday",
+		"month": "2020.10",
+		"friendly_week": "",
+		"friendly_month": "",
+		"md5": "",
+		"year": 2020,
+		"accessed_raw": 1606402282.416147,
+		"date_accessed": "2020-11-26 07:51:22",
+		"ce": 1606402282.416147,
+		"me": 1603981112.0,
+		"ae": 1606402282.416147
+	}
 ]
 
 
@@ -137,8 +138,8 @@ commitPer = 46285
 maxFileNameLength = 35
 dateCalcByModified = True
 
-#if not os.path.isdir( _v.exif_temp ):
-	#os.mkdir( _v.exif_temp )
+if not os.path.isdir( _v.exif_temp ):
+	_v.mkdir( _v.exif_temp )
 
 def fileAge( file ):
 	md = fileInfo( file )['date_modified_raw']
@@ -241,15 +242,18 @@ def info( path, sql=False, md5=False, exif=0,   attrib=None, mime=None, db_conne
 	if not s is None: subject=s;
 	if not k is None: subject=k;
 	if not f is None: subject=f;
+	# if not subject is None and type(subject) == str and (subject=='me' or subject=='m'):  return os.path.getmtime(path)
+	# if not subject is None and type(subject) == str and (subject=='ce' or subject=='c'):  return os.path.getctime(path)
 	sub=subject
 	mrec=fileInfo( path=path, sql=sql, md5=md5, exif=exif,   attrib=attrib, mime=mime, db_connection=db_connection, db_cursor=db_cursor, count=count, insert=insert, last=last, sdate=sdate, meta=meta, err=err, subject=subject )
 	if mini and mrec:
+		del mrec['name_']
 		del mrec['stat']
 		del mrec['date_created_raw']
 		del mrec['date_modified_raw']
 		del mrec['type']
 		del mrec['typesort']
-		del mrec['md5']
+		# del mrec['md5']
 		del mrec['week_of_year']
 		del mrec['week_of_year_']
 		del mrec['month']
@@ -261,6 +265,7 @@ def info( path, sql=False, md5=False, exif=0,   attrib=None, mime=None, db_conne
 		del mrec['accessed_raw']
 		del mrec['meta']
 		del mrec['ago']
+		del mrec['year']
 		del mrec['day_of_the_week']
 		mrec['created']=mrec['date_created']
 		mrec['modified']=mrec['date_modified']
@@ -268,6 +273,21 @@ def info( path, sql=False, md5=False, exif=0,   attrib=None, mime=None, db_conne
 		del mrec['date_created']
 		del mrec['date_modified']
 		del mrec['date_accessed']
+		nfo={}
+		for k in mrec:
+			if mrec[k]:
+				if k == 'day_of_the_week':
+					nfo['dow'] = mrec[k]
+				elif k.startswith('date_'):
+					nfo[k.replace('date_','')] = mrec[k]
+				else:
+					nfo[k] = mrec[k]
+		for k in nfo:
+			if type(nfo[k]) == float: nfo[k] = int(nfo[k])
+		mrec=nfo
+		mrec['created']=mrec['created'][:-3]
+		mrec['modified']=mrec['modified'][:-3]
+		mrec['accessed']=mrec['accessed'][:-3]
 
 	return mrec
 def fileInfo( path, sql=False, md5=False, exif=0,   attrib=None, mime=None, db_connection=None, db_cursor=None, count=None, insert=None, last=False, sdate=None, meta=True, err=False, subject=None ):
@@ -325,7 +345,9 @@ def individual(path,subject):
 	if ' size ' in ' '+subject+' ': dic['size'] = formatSize(os.stat(path).st_size) ;
 	if ' date_created_raw ' in ' '+subject+' ': dic['date_created_raw'] =  os.path.getctime(path);
 	if ' date_modified_raw ' in ' '+subject+' ': dic['date_modified_raw'] =  os.path.getmtime(path);
+	if ' accessed_raw ' in ' '+subject+' ': dic['accessed_raw'] =  os.path.getatime(path);
 	if ' date_created ' in ' '+subject+' ': dic['date_created'] =  formatDate(os.path.getctime(path));
+	if ' date_accessed ' in ' '+subject+' ': dic['date_accessed'] =  formatDate(os.path.getatime(path));
 	if ' created ' in ' '+subject+' ': dic['date_created'] =  formatDate(os.path.getctime(path));
 	if ' date_modified ' in ' '+subject+' ': dic['date_modified'] =  formatDate(os.path.getmtime(path));
 	if ' modified ' in ' '+subject+' ': dic['date_modified'] =  formatDate(os.path.getmtime(path));
@@ -343,8 +365,8 @@ def individual(path,subject):
 	if ' fm ' in ' '+subject+' ': dic['fm'] =  friendlyMonthNew(os.path.getmtime(path));
 	if ' md5 ' in ' '+subject+' ': dic['md5'] =  _md5.md5File(path);
 	if ' year ' in ' '+subject+' ': dic['year'] =  getYearFromEpoch(os.path.getmtime(path));
-	if ' accessed_raw ' in ' '+subject+' ': dic['accessed_raw'] =  os.path.getatime(path);
-	if ' date_accessed ' in ' '+subject+' ': dic['date_accessed'] =  formatDate(os.path.getatime(path));
+	
+	
 	if ' accessed ' in ' '+subject+' ': dic['accessed'] =  formatDate(os.path.getatime(path));
 	if ' ce ' in ' '+subject+' ': dic['ce'] =  os.path.getctime(path);
 	if ' cef ' in ' '+subject+' ': dic['ce'] =  formatDate(os.path.getctime(path));
@@ -480,6 +502,7 @@ def fileInfoAction( path, sql, md5, exif, getAttrib=None, getMime=None, db_conne
 		epoch.append({ 'label': 'week_and_year', 'epoch': time.time() })
 
 		md5Data = ''
+		sha256Data = ''
 
 		shouldMD5 = False
 		if type( md5 ) == bool:
@@ -494,14 +517,15 @@ def fileInfoAction( path, sql, md5, exif, getAttrib=None, getMime=None, db_conne
 				shouldMD5 = False
 				md5Data = md5[1]
 		# _.pr( 'shouldMD5:', shouldMD5 )
+		if sha256:
+			try: sha256Data = _md5.sha256File( path2 )
+			except Exception as e: pass
 		if shouldMD5:
 			# _.pr( 'shouldMD5:', shouldMD5 )
 			# _.pr()
 			# _.pr( 'Processing:', path2 )
-			try:
-				md5Data = _md5.md5File( path2 )
-			except Exception as e:
-				pass
+			try: md5Data = _md5.md5File( path2 )
+			except Exception as e: pass
 				
 			# _.pr( md5Data )
 			# _.pr( 'md5File', md5Data, path2 )
@@ -533,16 +557,18 @@ def fileInfoAction( path, sql, md5, exif, getAttrib=None, getMime=None, db_conne
 
 		obj = {
 				'path': path2,
+				'folder': folder,
 				'name_': fileNameLength(name,ext),
 				'name': name,
-				'folder': folder,
 				'stat': stat,
 				'bytes': size,
 				'size': sizeF,
 				'date_created_raw': createdRaw,
 				'date_modified_raw': modifiedRaw,
+				'accessed_raw': accessed_raw,
 				'date_created': formatDate(createdRaw),
 				'date_modified': formatDate(modifiedRaw),
+				'date_accessed': formatDate(accessed_raw),
 				'type': ty,
 				'typesort': typesort,
 				'ext': ext,
@@ -553,9 +579,8 @@ def fileInfoAction( path, sql, md5, exif, getAttrib=None, getMime=None, db_conne
 				'friendly_week': friendlyWeek1,
 				'friendly_month': friendlyMonth1,
 				'md5': md5Data,
+				'sha256': sha256Data,
 				'year': year,
-				'accessed_raw': accessed_raw,
-				'date_accessed': formatDate(accessed_raw),
 				'ce': createdRaw,
 				'me': modifiedRaw,
 				'ae': accessed_raw,
@@ -696,7 +721,7 @@ def fileInfoAction( path, sql, md5, exif, getAttrib=None, getMime=None, db_conne
 
 
 	return obj
-
+sha256=False
 
 def commit():
 	global conn
@@ -801,13 +826,13 @@ def friendlyWeekNew(theDate):
 
 
 def getWeekAndYear(theDate):
- 	y = getYearFromEpoch(theDate)
- 	w = getWOYFromEpoch(theDate)
- 	if w < 10:
- 		w = '0'+str(w)
- 	else:
- 		w = str(w)
- 	return str(y) +'.'+ w
+	y = getYearFromEpoch(theDate)
+	w = getWOYFromEpoch(theDate)
+	if w < 10:
+		w = '0'+str(w)
+	else:
+		w = str(w)
+	return str(y) +'.'+ w
 
 def getMonthFromEpoch(theDate):
 	return str( getYearFromEpoch(theDate) ) + '.' + str(formatDateMonth(theDate))
@@ -936,35 +961,35 @@ def fileNameLength(string,ext,l=0):
 
 
 def attrib(path, a=None, s=None, h=None, r=None, i=None):
-    attrs=[]
-    if r==True:    attrs.append('+R')
-    elif r==False: attrs.append('-R')
-    if a==True:    attrs.append('+A')
-    elif a==False: attrs.append('-A')
-    if s==True:    attrs.append('+S')
-    elif s==False: attrs.append('-S')
-    if h==True:    attrs.append('+H')
-    elif h==False: attrs.append('-H')
-    if i==True:    attrs.append('+I')
-    elif i==False: attrs.append('-I')
+	attrs=[]
+	if r==True:    attrs.append('+R')
+	elif r==False: attrs.append('-R')
+	if a==True:    attrs.append('+A')
+	elif a==False: attrs.append('-A')
+	if s==True:    attrs.append('+S')
+	elif s==False: attrs.append('-S')
+	if h==True:    attrs.append('+H')
+	elif h==False: attrs.append('-H')
+	if i==True:    attrs.append('+I')
+	elif i==False: attrs.append('-I')
 
-    if attrs: # write attributes
-        cmd = attrs
-        cmd.insert(0,'attrib')
-        cmd.append(path)
-        cmd.append('/L')
-        return subprocess.call(cmd, shell=False)
+	if attrs: # write attributes
+		cmd = attrs
+		cmd.insert(0,'attrib')
+		cmd.append(path)
+		cmd.append('/L')
+		return subprocess.call(cmd, shell=False)
 
-    else: # just read attributes
-        output = subprocess.check_output(
-            ['attrib', path, '/L'],
-            shell=False, universal_newlines=True
-        )[:9]
-        attrs = {'A':False, 'S':False, 'H':False, 'R':False, 'I':False}
-        for char in output:
-            if char in attrs:
-                attrs[char] = True
-        return attrs
+	else: # just read attributes
+		output = subprocess.check_output(
+			['attrib', path, '/L'],
+			shell=False, universal_newlines=True
+		)[:9]
+		attrs = {'A':False, 'S':False, 'H':False, 'R':False, 'I':False}
+		for char in output:
+			if char in attrs:
+				attrs[char] = True
+		return attrs
 
 
 def getAttribs(rows):

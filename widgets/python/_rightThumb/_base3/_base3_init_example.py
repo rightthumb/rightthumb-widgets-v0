@@ -112,38 +112,26 @@ _.l.sw.register( triggers, sw )
 ########################################################################################
 ### EXAMPLE: START
 
+#b)--> examples
+#d)--> code hints to quickly get started
+    #n)--> inline examples
+        # if _.switches.isActive('Test'): test(); return None;
+        # result=[]; result=[ _.pr(line) for i, line, bi in _.numerate( _.isData(r=0) )]
+        # bk=[];[  bk.append(rec['backup']) for rec in backupLog if path == rec['file']]; bk=bk[-1];
+        # a=(1 if True else 0) <--# 
+        #!)--> m=[[row[i] for row in matrix] for i in range(4)]
 
-    #--> make hotkey ad-description soon:  <--<w#
-    #-->    - outer most typed first
-    #-->    - blank pipe
-    #-->    __.setting('hotkey-clip.ad_description-start1',d=False)
-    #--> _________________________________
-    #--> describe selection area two
-    #--> 3 write a note here wrap text
-    #--> two dignissim
-    #--> 1 inceptos
-    #--> _________________________________
-    #--> describe selection area two
-    #-->              |           |
-    #-->              |           | - write a note here
-    #-->              |           |   wrap text
-    #-->              |           |
-    #-->              |           | - dignissim
-    #-->              |
-    #-->              | - inceptos
+    #n)--> python globals
+        # for k in globals(): print(k, eval(k) )
 
-    # if _.switches.isActive('Test'): test(); return None;
-    # result=[]; result=[ _.pr(line) for i, line, bi in _.numerate( _.isData(r=0) )]
-    # bk=[];[  bk.append(rec['backup']) for rec in backupLog if path == rec['file']]; bk=bk[-1];
-    #--> a=(1 if True else 0) <--# 
-    #--> m=[[row[i] for row in matrix] for i in range(4)]
-    # requests=__.imp('requests.post')
-    # data=str(requests.post(url,data={}).content,'iso-8859-1')
-    # for k in globals(): print(k, eval(k) )
+    #n)--> webpage from url
+        # requests=__.imp('requests.post')
+        #!)--> data=str(requests.post(url,data={}).content,'iso-8859-1')
 
-#b)--> Switches
-#e)--> Switches
-#n)--> note
+    #n)--> import and backup example
+        # _bk = _.regImp( focus(), 'fileBackup' ); _bk.switch( 'Silent' ); _bk.switch( 'isRunOnce' ); _bk.switch( 'Flag', 'APP' ); _bk.switch( 'DoNotSchedule' )
+        # _bk.switch( 'Input', path ); bkfi = _bk.action();
+#e)--> examples
 
 ### EXAMPLE: END
 ########################################################################################

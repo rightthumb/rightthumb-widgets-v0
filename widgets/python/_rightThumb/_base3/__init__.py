@@ -6846,7 +6846,7 @@ def releaseAcquiredData( appDBA, theFocus, payload=None ):
     global print_ed
 
 
-    log = _v.appLogs() + _v.slash+'execution_receipt-' + appDBA + '-' + str( __.startTime ) + '.json'
+    log = _v.appLogs()+_v.slash+day(time.time())+'execution_receipt-' + appDBA + '-' + str( __.startTime ) + '.json'
     rebuiltCommandRaw = theCommand( appDBA, printThis=False, separate=True )
     if len( rebuiltCommandRaw[1] ):
         rebuiltCommand = rebuiltCommandRaw[0] + ' ' + rebuiltCommandRaw[1]
@@ -6934,7 +6934,7 @@ def reclaimAcquiredData( appDBA, epoch, theFocus=False ):
     else:
         appReg = __.appReg
 
-    log = _v.appLogs() + _v.slash+'execution_receipt-' + appDBA + '-' + str( epoch ) + '.json'
+    log = _v.appLogs()+_v.slash+day(time.time()) + _v.slash+'execution_receipt-' + appDBA + '-' + str( epoch ) + '.json'
     print_(  os.path.isfile(log), log )
     if not os.path.isfile(log):
         cp( 'Error: please select a valid backup', 'error' )
@@ -18755,8 +18755,10 @@ class regImp:
         
         self.saveLog = True
 
-        
-        self.imp.registerSwitches( argvProcessForce=False)
+        try:
+            self.imp.registerSwitches( argvProcessForce=False)
+        except Exception as e:
+            self.imp.sw()
 
         appInfo[self.imp.focus(focus)] = appInfo[self.imp.focus()]
         appData[self.imp.focus(focus)] = appData[self.imp.focus()]
@@ -20087,10 +20089,10 @@ def _2dates(d1,d2=None, dic=False):
     # for ddd in dir(delta): print(ddd)
     rt = {
                 'y': delta.years,
-                'm': delta.months,
+                'mo': delta.months,
                 'd': delta.days,
                 'h': delta.hours,
-                'm': delta.minutes,
+                'mi': delta.minutes,
                 's': delta.seconds,
     }
 
@@ -20138,3 +20140,20 @@ def _2dates(d1,d2=None, dic=False):
     rt['txt'] = ' '.join(tt)
     if not dic: return rt['txt']
     return rt
+
+def dicKeys(dic,keys=None,omit=None,keep=None):
+    if not keep is None and type(keep) == str: keys=keep; keep=1;
+    if not omit is None and type(omit) == str: keys=omit; omit=1;
+    if not type(keys) == str:
+        keys=keys.replace(' ',',')
+        keys=keys.split(',')
+    if not type(dic) == dict: return dic
+    if omit is None and keep is None: omit = True
+    new={}
+    if omit:
+        for k in dic:
+            if not k in keys: new[k] = dic[k]
+    elif keep:
+        for k in dic:
+            if k in keys: new[k] = dic[k]
+    return new

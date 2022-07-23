@@ -27,7 +27,8 @@ _str = __.imp('_rightThumb._string')
 ##################################################
 def sw():
     pass
-    _.switches.register( 'Files', '-f,-fi,-file,-files','fileBackup.json', isData='name', description='Files', isRequired=True )
+    _.switches.register( 'Files', '-f,-fi,-file,-files','fileBackup.json', isData='name', description='Files' )
+    _.switches.register( 'Just-Lines', '-jl,-just-lines' )
 
 # __.setting('require-list',['Files,Plus','File,Has']) # todo
 # __.setting('require-list',['Pipe','Files','Plus'])
@@ -119,6 +120,7 @@ import _rightThumb._dir as _dir
 import _rightThumb._mimetype as _mime
 
 def action():
+    global print_info
     _.clear()
     _.linePrint(c='yellow')
     for i, path in enumerate( _.isData(r=0) ):
@@ -128,12 +130,7 @@ def action():
         _.pr()
         _.pr(path,c='cyan')
         info = _dir.info(path,mini=True)
-        del info['name_']
-        del info['folder']
-        del info['name']
-        del info['path']
-        del info['ext']
-        del info['year']
+
         # _.pr()
         # _.pr( '\t lines:',_.file_len(path) )
         # _.pr( '\t lines:',_.addComma( _.file_len(path) ) )
@@ -151,8 +148,10 @@ def action():
             out['size'] = info['size']
             del info['bytes']
             del info['size']
-            _.linePrint(c='cyan')
-            _.pr(info,dic=1)
+            if print_info and not _.switches.isActive('Just-Lines'):
+                _.linePrint(c='cyan')
+                info = _.dicKeys( info, omit='name_ folder name path ext year' )
+                _.pr(info,dic=1)
             _.linePrint(c='cyan')
             _.pr(out,dic=1)
         if not _mime.isText(path):
@@ -181,6 +180,7 @@ def action():
             #     _.pr('accessed',c='cyan')
             #     _.pr('\t',diffa['txt'], c='green')
 
+print_info=True
 
 
 ########################################################################################
