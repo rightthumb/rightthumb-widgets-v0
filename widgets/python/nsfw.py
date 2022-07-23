@@ -9,7 +9,6 @@
 #    - Scott Taylor Reph, RightThumb.com
 # ###########################################################################
 # ## {C3P0D40fAe8B} ##
-
 ##################################################
 import sys, time
 ##################################################
@@ -26,16 +25,13 @@ _.load()
 _v = __.imp('_rightThumb._vars')
 _str = __.imp('_rightThumb._string')
 ##################################################
-
 def sw():
     _.switches.register( 'On', '-on' )
     _.switches.register( 'Off', '-off' )
     _.switches.register( 'Status', '-status' )
+    _.switches.register( 'Print', '-p,-pr,-print' )
+    _.switches.register( 'Color', '-color' )
     pass
-    ### EXAMPLE: START
-    # _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=True )
-    # _.switches.register( 'Files', '-f,-fi,-file,-files' )
-    ### EXAMPLE: END
 
 # __.setting('require-list',['Files,Plus','File,Has']) # todo
 # __.setting('require-list',['Pipe','Files','Plus'])
@@ -50,7 +46,7 @@ __.setting('switch-raw',[])
 
 _.appInfo[focus()] = {
     # 'app': '8facG-jo0Cxk',
-    'file': 'thisApp.py',
+    'file': 'nsfw.py',
     'liveAppName': __.thisApp( __file__ ),
     'description': 'Changes the world',
         # _.ail(1,'subject')+
@@ -72,7 +68,11 @@ _.appInfo[focus()] = {
                         # '',
     ],
     'examples': [
-                        _.hp('p thisApp -file file.txt'),
+                        _.hp('p nsfw'),
+                        _.hp('p nsfw -on'),
+                        _.hp('p nsfw -off'),
+                        _.hp('p nsfw -color red -on "folder does not exist, mothafucka" -off "folder does not exist"'),
+                        _.hp('p nsfw -color red Background.red red -on "folder does" "not" "exist, mothafucka" -off "folder does not exist"'),
                         _.linePrint(label='simple',p=0),
                         '',
     ],
@@ -112,56 +112,63 @@ _.l.conf('clean-pipe',True)
 _.l.sw.register( triggers, sw )
 
 ########################################################################################
-### EXAMPLE: START
 
-#b)--> examples
-#d)--> code hints to quickly get started
-    #n)--> inline examples
-        # if _.switches.isActive('Test'): test(); return None;
-        # result=[]; result=[ _.pr(line) for i, line, bi in _.numerate( _.isData(r=0) )]
-        # bk=[];[  bk.append(rec['backup']) for rec in backupLog if path == rec['file']]; bk=bk[-1];
-        # a=(1 if True else 0) <--# 
-        #!)--> m=[[row[i] for row in matrix] for i in range(4)]
 
-    #n)--> python globals
-        # for k in globals(): print(k, eval(k) )
-
-    #n)--> webpage from url
-        # requests=__.imp('requests.post')
-        #!)--> data=str(requests.post(url,data={}).content,'iso-8859-1')
-
-    #n)--> import and backup example
-        # _bk = _.regImp( focus(), 'fileBackup' ); _bk.switch( 'Silent' ); _bk.switch( 'isRunOnce' ); _bk.switch( 'Flag', 'APP' ); _bk.switch( 'DoNotSchedule' )
-        # _bk.switch( 'Input', path ); bkfi = _bk.action();
-#e)--> examples
-
-### EXAMPLE: END
 ########################################################################################
 # START
 
 os=__.imp('os.path.getmtime')
 
-def action():
+
+def status(pr=0):
     should_dl=False
+    nsfw=False
+    if not os.path.isfile(_v.rtp+'vars'+os.sep+'nsfw'):
+        should_dl=True
+        if pr: _.pr('cached: does not exist',c='red')
+    else:
+        if pr: _.pr('cached: ',_.isDate(os.path.getmtime(_v.rtp+'vars'+os.sep+'nsfw'),f='ago-txt'),c='yellow')
+        diff=time.time()-os.path.getmtime(_v.rtp+'vars'+os.sep+'nsfw')
+        if diff > 14415:
+            should_dl=True
+            if pr: _.pr('stale',c='red');
+    if not should_dl:
+        if pr: _.pr('cache valid',c='green');
+        if '1' in _.getText(_v.rtp+'vars'+os.sep+'nsfw',raw=True): nsfw=True
+        else: nsfw=False
+    if should_dl:
+        if pr: _.pr('downloading',c='green');
+        try:
+            if '1' in _.URL('https://eyeformeta.com/apps/terminal/status/nsfw'): nsfw=True;
+            else: nsfw=False;
+        except Exception as ee: nsfw=False;
+        if nsfw: _.saveText('1',_v.rtp+'vars'+os.sep+'nsfw')
+        else:    _.saveText('0',_v.rtp+'vars'+os.sep+'nsfw')
+    return nsfw
+
+
+def action():
+    if _.switches.isActive('Color'):
+        _.switches.fieldSet( 'Print', 'active', True )
+    if _.switches.isActive('On') and _.switches.isActive('Off'):
+        nsfw=status(pr=0)
+        if nsfw: msg=_.switches.values('On')
+        else: msg=_.switches.values('Off')
+        if _.switches.isActive('Print'):
+            if _.switches.isActive('Color'):
+                if len(_.switches.values('Color')) > 1 and len(_.switches.values('Color')) == len(msg):
+                    note=[]
+                    for i, string in enumerate(msg):
+                        note.append( _.pr( string, c=_.switches.values('Color')[i], p=0 ) )
+                    _.pr( ' '.join(note) )
+                else:
+                    _.pr( msg, c=_.switches.values('Color')[0] )
+            else:
+                _.pr( ' '.join(msg) )
+
+        return nsfw
     if not _.switches.isActive('On') and not _.switches.isActive('Off'):
-        if not os.path.isfile(_v.rtp+'vars'+os.sep+'nsfw'): should_dl=True, _.pr('cached: does not exist',c='red')
-        else:
-            _.pr('cached: ',_.isDate(os.path.getmtime(_v.rtp+'vars'+os.sep+'nsfw'),f='ago-txt'),c='yellow')
-            diff=time.time()-os.path.getmtime(_v.rtp+'vars'+os.sep+'nsfw')
-            if diff > 14415: should_dl=True; _.pr('stale',c='red');
-        if not should_dl:
-            _.pr('cache valid',c='green');
-            if '1' in _.getText(_v.rtp+'vars'+os.sep+'nsfw',raw=True): nsfw=True
-            else: nsfw=False
-        if should_dl:
-            _.pr('downloading',c='green');
-            try:
-                if '1' in _.URL('https://eyeformeta.com/apps/terminal/status/nsfw'): nsfw=True;
-                else: nsfw=False;
-            except Exception as ee: nsfw=False;
-            if nsfw: _.saveText('1',_v.rtp+'vars'+os.sep+'nsfw')
-            else:    _.saveText('0',_v.rtp+'vars'+os.sep+'nsfw')
-        
+        nsfw=status(pr=1)
         if nsfw: _.pr('nsfw ON',c='Background.red')
         else: _.pr('nsfw OFF',c='Background.red')
         return None
@@ -176,12 +183,10 @@ def action():
 
 
 
-
 ########################################################################################
 if __name__ == '__main__':
     action()
     __.isExit()
-
 
 
 
