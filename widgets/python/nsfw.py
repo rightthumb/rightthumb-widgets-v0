@@ -167,9 +167,9 @@ def action():
                 _.pr( ' '.join(msg) )
 
         return nsfw
-    if not _.switches.isActive('On') and not _.switches.isActive('Off'):
+    if not _.switches.isActive('On') and not _.switches.isActive('Off'):  # nsfw nsfw nsfw nsfw nsfw nsfw nsfw nsfw nsfw nsfw 
         nsfw=status(pr=1)
-        if nsfw: _.pr('nsfw ON',c='Background.red')
+        if nsfw: _.pr('nsfw ON',c='Background.red')  # 444 nsfw nsfw nsfw nsfw nsfw nsfw nsfw nsfw nsfw nsfw 
         else: _.pr('nsfw OFF',c='Background.red')
         return None
     if _.switches.isActive('On'):
@@ -181,7 +181,7 @@ def action():
         _.saveText('0',_v.rtp+'vars'+os.sep+'nsfw')
         _.pr('nsfw OFF',c='Background.red')
 
-
+# nsfw nsfw nsfw nsfw nsfw nsfw nsfw nsfw nsfw nsfw 
 
 ########################################################################################
 if __name__ == '__main__':

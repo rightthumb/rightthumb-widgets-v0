@@ -21,8 +21,8 @@ call:VALIDATE ":" %result%
 if [%valid%] == [yes] (
   rem %result:~0,2%
 
-rem if not exist %result% call p nsfw -color red -on "folder does not exist, mothafucka" -off "folder does not exist"
-if not exist %result% call p nsfw -color red Background.red red -on "folder does" "not exist" ", mothafucka" -off "folder does not exist"
+if not exist %result% call p nsfw -color red -on "folder does not exist, mothafucka" -off "folder does not exist"
+rem if not exist %result% call p nsfw -color red Background.red red -on "folder does" "not exist" ", mothafucka" -off "folder does not exist"
 if not exist %result% call p print_color -text ";t%result%" -color cyan
 if not exist %result% goto:eof
   cd /d "%result%"

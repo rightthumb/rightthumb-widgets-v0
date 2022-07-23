@@ -155,6 +155,7 @@ class Validator:
 
 	def __init__( self ):
 		pass
+		self._err_=True
 
 	def register( self, asset, language, project=None ):
 		if not project is None:
@@ -2357,17 +2358,19 @@ class Validator:
 		
 		if errors:
 			__.setting('validaton-status',False)
-			print()
-			print()
-			print()
-			_.colorThis( [  'CODE NOT VALID:'  ] )
-			_.colorThis( [  '\tfound', len(errors), 'errors'  ], 'yellow' )
-			for x in errors:
-				y = {  'char': self.asset[x], 'line': self.getLine(x) }
-				_.color( [  '\t\t\t', y  ], 'yellow' )
-			print()
-			print()
-			print()
+			# print('self._err_',self._err_)
+			if self._err_:
+				print()
+				print()
+				print()
+				_.colorThis( [  'CODE NOT VALID:'  ] )
+				_.colorThis( [  '\tfound', len(errors), 'errors'  ], 'yellow' )
+				for x in errors:
+					y = {  'char': self.asset[x], 'line': self.getLine(x) }
+					_.color( [  '\t\t\t', y  ], 'yellow' )
+				print()
+				print()
+				print()
 			__.setting('validaton-status',False)
 			return None
 			sys.exit()
@@ -3175,17 +3178,18 @@ class Validator:
 				errors.append( yyy )
 		
 		if errors:
-			print()
-			print()
-			print()
-			_.colorThis( [  'FILE NOT VALID:'  ] )
-			_.colorThis( [  '\tfound', len(errors), 'errors'  ], 'yellow' )
-			for x in errors:
-				y = {  'char': self.asset[x], 'line': self.getLine(x) }
-				_.color( [  '\t\t\t', y  ], 'yellow' )
-			print()
-			print()
-			print()
+			if self._err_:
+				print()
+				print()
+				print()
+				_.colorThis( [  'FILE NOT VALID:'  ] )
+				_.colorThis( [  '\tfound', len(errors), 'errors'  ], 'yellow' )
+				for x in errors:
+					y = {  'char': self.asset[x], 'line': self.getLine(x) }
+					_.color( [  '\t\t\t', y  ], 'yellow' )
+				print()
+				print()
+				print()
 			return None
 			sys.exit()
 

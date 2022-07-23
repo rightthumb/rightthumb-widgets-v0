@@ -1408,6 +1408,21 @@ function get__THETABLE( $ID_label ){
         _copy.imp.copy( result, p=0 )
 
 
+    def remove_py_comments(self):
+        _paste = _.regImp( __.appReg, '-paste' )
+        _copy = _.regImp( __.appReg, '-copy' )
+        text = _paste.imp.paste()
+        # text=_str.replaceDuplicate( text, '\n' )
+        text=text.replace('\r','')
+        result = text.split('\n')
+        def cleanComment(line):
+            if not '#' in line: return line
+            else: return line.split('#')[0]
+        for i, line in enumerate(result): result[i] = cleanComment(result[i])
+        _copy.imp.copy( '\n'.join(result), p=0 )
+
+
+
     def eol_space(self):
         _paste = _.regImp( __.appReg, '-paste' )
         _copy = _.regImp( __.appReg, '-copy' )
@@ -1988,6 +2003,7 @@ def load():
                 'number-b': { 'raw': [ 'alt.', 'win.', 'n', 'b' ], 'do': 'Clip.number_b()' },
                 'number-ba': { 'raw': [ 'alt.', 'win.', 'n', 'b', 'a' ], 'do': 'Clip.number_ba()' },
                 'explode': { 'raw': [ 'ctrl.,2', 'space.', 'x' ], 'do': 'Clip.explode()' },
+                'remove-py-comments': { 'raw': [ 'ctrl.,2', 'space.', 'c' ], 'do': 'Clip.remove_py_comments()' },
                 'remove-eol-space': { 'raw': [ 'ctrl.,2', 'space.', 'e' ], 'do': 'Clip.eol_space()' },
                 'explode2': { 'raw': [ 'alt.', 'win.', 'x' ], 'do': 'Clip.explode()' },
                 'add-slash': { 'raw': [ 'shift.,2',  '\\' ], 'do': 'Clip.add_slash()' },
