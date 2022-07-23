@@ -3170,7 +3170,7 @@ alias pp='python3 $ww/python/paths.py -f '
 alias mkdir.fi='python3 $ww/python/mkdir.py -files '
 alias mkdir.fo='python3 $ww/python/mkdir.py -folders '
 alias mkdir.='python3 $ww/python/mkdir.py'
-alias fi.='python3 $ww/python/file.py'
+alias f='python3 $ww/python/file.py'
 
 
 echo '' > $stmp/.gp
@@ -15059,3 +15059,4 @@ if __name__ == '__main__':
 
 # vc.FIG.bash_vars(p=0)
 # 'Installer'
+
