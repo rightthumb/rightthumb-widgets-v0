@@ -131,7 +131,7 @@ def process(folder):
             # month=_.isDate(me,f='month')
             
 
-            nf=folder+_.day(me)
+            nf=folder+_v.slash+_.day(me)
             _.pr(path)
             _.pr(nf)
 
