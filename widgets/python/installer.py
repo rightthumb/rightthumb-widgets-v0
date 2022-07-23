@@ -3088,6 +3088,12 @@ alias vvvv="ssh scott@tatooine.m-eta.app"
 alias vvvvv="ssh vy2ehn4azpfl@thumb.m-eta.app"
 alias thumb="ssh vy2ehn4azpfl@thumb.m-eta.app"
 
+alias vh="ssh scott@hoth.m-eta.app"
+alias vm="ssh scott@mortis.m-eta.app"
+alias ve="ssh scott@bespin.m-eta.app"
+alias vt="ssh scott@tatooine.m-eta.app"
+alias vr="ssh vy2ehn4azpfl@23.229.227.201"
+
 alias hoth="ssh scott@hoth.m-eta.app"
 alias bespin="ssh scott@bespin.m-eta.app"
 alias mortis="ssh scott@mortis.m-eta.app"
@@ -3289,6 +3295,29 @@ alias vps.m.py.d="scp -rp root@mortis.m-eta.app:$ww/python/vps* $ww/python/ ; ch
 alias vps.m.u="vps.m.py.u; vps.m.sh.u; vps.m.db.u"
 alias vps.m.d="vps.m.py.d; vps.m.sh.d; vps.m.db.d"
 #-->   end#> mortis@m-eta.app
+
+#--> start#> endor@m-eta.app
+alias ssh.e.a="ssh-copy-id -i ~/.ssh/id_rsa.pub admin@endor.m-eta.app"
+alias ssh.e.s="ssh-copy-id -i ~/.ssh/id_rsa.pub scott@endor.m-eta.app"
+alias ssh.e.r="ssh-copy-id -i ~/.ssh/id_rsa.pub root@endor.m-eta.app"
+
+alias vps.e.mongo=" echo port: 2701; ssh -L 2701:localhost:27017 -C -N -l scott endor.m-eta.app"
+alias vps.e.mongo.="echo port: 27017; echo ssh -L 27017:localhost:27017 -C -N -l scott endor.m-eta.app"
+alias vps.e.dt="echo port: 59001; ssh -L 59001:localhost:5901 -C -N -l scott endor.m-eta.app"
+
+alias vps.e.py.v.u="scp $ww/python/vps*.py root@endor.m-eta.app:$ww/python/ ; ssh root@endor.m-eta.app \'chmod -R 777 /opt/rightthumb-widgets-v0/\'"
+alias vps.e.sh2.u="ssh root@endor.m-eta.app -f \'mkdir -p /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/\' ; scp /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/* root@endor.m-eta.app:/opt/rightthumb-widgets-v0/widgets/bash/vps-srv/ ; ssh root@endor.m-eta.app \'chmod -R 777 /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/\'"
+
+alias vps.e.py.u="scp $ww/python/vps*.py root@endor.m-eta.app:$ww/python/ ; ssh root@endor.m-eta.app \'chmod -R 777 /opt/rightthumb-widgets-v0/\'"
+alias vps.e.sh.u="scp -r $ww/bash/vps-srv/ root@endor.m-eta.app:/opt/rightthumb-widgets-v0/widgets/bash/ ; ssh root@endor.m-eta.app \'chmod -R 777 /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/\'"
+alias vps.e.db.u="scp $ww/databank/tables/*.* root@endor.m-eta.app:/opt/rightthumb-widgets-v0/widgets/databank/tables/ ; ssh root@endor.m-eta.app \'chmod -R 777 /opt/rightthumb-widgets-v0/\'"
+alias vps.e.sh.d="scp -r root@endor.m-eta.app:/opt/rightthumb-widgets-v0/widgets/bash/vps-srv/ $ww/bash/ ; chmod 777 -R $ww/bash/vps-srv/"
+alias vps.e.db.d="scp -rp root@endor.m-eta.app:/opt/rightthumb-widgets-v0/widgets/databank/tables/*.* $ww/databank/tables/ ; chmod 777 -R $ww/databank/tables/"
+alias vps.e.py.d="scp -rp root@endor.m-eta.app:$ww/python/vps* $ww/python/ ; chmod 777 -R $ww/python/"
+alias vps.e.u="vps.e.py.u; vps.e.sh.u; vps.e.db.u"
+alias vps.e.d="vps.e.py.d; vps.e.sh.d; vps.e.db.d"
+alias endor="ssh scott@endor.m-eta.app"
+#-->   end#> endor@m-eta.app
 
 
 alias u..='python3 $ww/python/site.py -f'
