@@ -341,6 +341,8 @@ elif not __.isWin:
 		sublime = '/usr/bin/sublime_text'
 	elif os.path.isfile('/usr/bin/code-oss'):
 		sublime = '/usr/bin/code-oss'
+	else:
+		sublime = '/usr/bin/nano'
 # _v.sublime
 # scriptsFolder =  techFolder + slash+'scripts'
 # thisHost =  'hosts' + slash + computername2

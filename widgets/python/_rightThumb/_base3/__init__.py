@@ -19889,10 +19889,22 @@ def ad():
     if not os.path.isdir(_v.life+'ads'): return None
     global nsfw; global nsfw_;
     if not nsfw_:
-        try:
-            if '1' in URL('https://eyeformeta.com/apps/terminal/switches/nsfw'): nsfw=True;
-            else: nsfw=False;1
-        except Exception as ee: nsfw=False;
+        should_dl=False
+        if not os.path.isfile(_v.rtp+'vars'+os.sep+'nsfw'): should_dl=True
+        else:
+            diff=time.time()-os.path.getmtime(_v.rtp+'vars'+os.sep+'nsfw')
+            if diff > 14415: should_dl=True
+        if not should_dl:
+            if '1' in getText(_v.rtp+'vars'+os.sep+'nsfw',raw=True): nsfw=True
+            else: nsfw=False
+        if should_dl:
+            try:
+                if '1' in URL('https://eyeformeta.com/apps/terminal/status/nsfw'): nsfw=True;
+                else: nsfw=False;
+            except Exception as ee: nsfw=False;
+            if nsfw: saveText('1',_v.rtp+'vars'+os.sep+'nsfw')
+            else:    saveText('0',_v.rtp+'vars'+os.sep+'nsfw')
+
     nsfw_=True
     random=__.imp('random')
     ads=fo(_v.life+'ads')

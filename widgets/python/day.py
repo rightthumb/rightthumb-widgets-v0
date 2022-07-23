@@ -185,8 +185,8 @@ def load():
     if _.switches.isActive('Date'): epoch = _.autoDate( _.switches.value('Date') )
 
     today = _.day(epoch); fo =  _v.rtp+'daily'+os.sep+today;
-    var = _v.fig['rt']+'/profile/vars/'.replace('/',os.sep)
-    vbm = _v.fig['rt']+'/profile/bookmarks/'.replace('/',os.sep)
+    var = _v.rtp+'profile/vars/'.replace('/',os.sep)
+    vbm = _v.rtp+'profile/bookmarks/'.replace('/',os.sep)
     brand_day = True
     if len(_.switches.all())==0:
         if os.path.isfile(var+'day.brand'):

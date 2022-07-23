@@ -116,6 +116,7 @@ def registerSwitches( argvProcessForce=False ):
 
 	_.myFileLocation_Print = False
 	__.myFileLocations_SKIP_VALIDATION = False
+	_.switches.trigger( 'Text', _.ci )
 	_.switches.trigger( 'Files', _.myFileLocations )
 	_.switches.trigger( 'Folder', _.myFolderLocations )
 	_.switches.trigger( 'URL', _.urlTrigger )
