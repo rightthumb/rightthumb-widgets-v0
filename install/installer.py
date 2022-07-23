@@ -3088,13 +3088,6 @@ alias vvvv="ssh scott@tatooine.m-eta.app"
 alias vvvvv="ssh vy2ehn4azpfl@thumb.m-eta.app"
 alias thumb="ssh vy2ehn4azpfl@thumb.m-eta.app"
 
-alias vh="ssh scott@hoth.m-eta.app"
-alias vm="ssh scott@mortis.m-eta.app"
-alias ve="ssh scott@bespin.m-eta.app"
-alias vt="ssh scott@tatooine.m-eta.app"
-alias vr="ssh vy2ehn4azpfl@23.229.227.201"
-alias rt="ssh vy2ehn4azpfl@23.229.227.201"
-
 alias hoth="ssh scott@hoth.m-eta.app"
 alias bespin="ssh scott@bespin.m-eta.app"
 alias mortis="ssh scott@mortis.m-eta.app"
@@ -3171,7 +3164,6 @@ alias pp='python3 $ww/python/paths.py -f '
 alias mkdir.fi='python3 $ww/python/mkdir.py -files '
 alias mkdir.fo='python3 $ww/python/mkdir.py -folders '
 alias mkdir.='python3 $ww/python/mkdir.py'
-alias fi='python3 $ww/python/file.py'
 
 
 echo '' > $stmp/.gp
