@@ -1301,6 +1301,7 @@ def isDate( theDate=None, record={}, tz=None, q=True, f=None,w=None,what=None ):
     # record={}
     if (type(theDate) == int or type(theDate) == float) and theDate < 1:
         return 0
+    # if (type(theDate) == int or type(theDate) == float): return theDate
     if theDate is None: theDate=time.time();
     if not w is None: f=w;
     if not what is None: f=what;

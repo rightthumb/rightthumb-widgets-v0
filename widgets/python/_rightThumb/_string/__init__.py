@@ -1265,6 +1265,13 @@ def sh(string):
     while '\t' in string: string = string.replace( '\t', '    ' );
     while ' \n' in string: string = string.replace( ' \n', '\n' );
     string=do('be',string,'\n')
+
+    string = string.replace( chr(10), '\n' )
+    string = string.replace( chr(27), '' )
+    string = string.replace( '\r', '' )
+    while '\t' in string:
+        string = string.replace( '\t', '    ' )
+
     return string
 
 class st(str):

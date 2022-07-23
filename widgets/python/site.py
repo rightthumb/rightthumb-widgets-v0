@@ -135,8 +135,18 @@ def tail():
 	else:
 		return ' > /dev/null 2>&1'
 
-def process(path,end='',ft=None):
-	_.pr(path,c='cyan')
+def urlpr(url):
+	if url is None: return None
+	if url.endswith('/index.html'): url = url[:-len('index.html')]
+	if url.endswith('/index.htm'): url = url[:-len('index.htm')]
+	if url.endswith('/index.php'): url = url[:-len('index.php')]
+	return url
+
+
+def meta_scan(path,end):
+	global meta
+	if not _.v.quiet:
+		_.pr(path,c='cyan')
 	meta = {}
 	try:
 		file = os.path.abspath(path)
@@ -144,9 +154,6 @@ def process(path,end='',ft=None):
 		file = path
 	folder = __.path(path,pop=True)
 	i=0
-
-
-
 	while not os.path.isfile( folder+os.sep+'.folder.meta'+end ):
 		i+=1
 		if i > 100:
@@ -162,8 +169,31 @@ def process(path,end='',ft=None):
 	if not locations == loc: _.saveTable(locations,'site-locations.list')
 	meta = _.getTable2( mPath )
 	# _.cp(mPath.replace('.folder.meta'+end,''),'yellow')
-	_.cp(mPath,'yellow')
-	_.pv(meta)
+	if not _.v.quiet:
+		_.cp(mPath,'yellow')
+		_.pv(meta)
+	url=None
+	if 'url' in meta:
+		url = file.replace( __.path(folder), meta['url'] ).replace('\\','/')
+		if os.path.isdir(path):
+			url += '/'
+	return urlpr(url)
+
+def process(path,end='',ft=None):
+	global meta
+	_.pr(path,c='cyan')
+	meta = {}
+	try:
+		file = os.path.abspath(path)
+	except Exception as e:
+		file = path
+	folder = __.path(path,pop=True)
+
+	meta_scan(path,end)
+
+
+
+
 	
 
 	# Upload-Scp Download-Scp Test
@@ -180,7 +210,7 @@ def process(path,end='',ft=None):
 		url = file.replace( __.path(folder), meta['url'] ).replace('\\','/')
 		if os.path.isdir(path):
 			url += '/'
-		_.pr(url)
+		_.pr(urlpr(url),c='Background.blue')
 		if _.switches.isActive('Test'):
 			try:
 				import webbrowser
@@ -260,8 +290,17 @@ def process(path,end='',ft=None):
 
 
 	
-		 
+
 def action():
+	global meta
+
+	if _.switches.isActive('Files') and len(_.switches.all())==1:
+		_.v.quiet = True
+		for path in _.switches.values('Files'):
+			url=meta_scan(path,'')
+			if url: _.pr(url,c='Background.blue')
+			return url
+
 	if _.switches.isActive('Servers') and not len(_.switches.value('Servers')):
 		_.switches.fieldSet( 'Servers', 'value', 'b,h,m,t' )
 		_.switches.fieldSet( 'Servers', 'values', 'b,h,m,t'.split(',') )
@@ -296,8 +335,19 @@ def action():
 				_.linePrint(c='red')
 
 # _vault = _.regImp( __.appReg, '_rightThumb._vault' )
+_fileBackup = None
+def encrypt_markdown(path):
+	if os.path.isfile(path) and path.endswith('.md'):
+		if _fileBackup is None:
+			_fileBackup = _.regImp( focus(), 'fileBackup' )
+			_fileBackup.switch( 'Silent' )
+			_fileBackup.switch( 'Flag', 'imdb' )
+			_fileBackup.switch( 'isRunOnce' )
+			_fileBackup.switch( 'DoNotSchedule' )
+		_fileBackup.switch( 'Input', path )
+		_fileBackup.action()
 
-
+_.v.quiet = False
 	
 ########################################################################################
 if __name__ == '__main__':

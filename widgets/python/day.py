@@ -34,6 +34,7 @@ def sw():
     _.switches.register( 'Clean', '--c' )
     _.switches.register( 'Open', '-o,-open' )
     _.switches.register( 'Print', '-p,-print' )
+    _.switches.register( 'Change-Dir', '-cd' )
 
 # __.setting('require-list',['Files,Plus','File,Has']) # todo
 # __.setting('require-list',['Pipe','Files','Plus'])
@@ -153,7 +154,9 @@ sed -i 's/^/\t\t/' $HOME/.bashrc.once.print
 if [ ! -f path/notes.md ] then
     touch path/notes.md
 fi
-$cdf path/notes.md
+# $cdf path/notes.md
+cd path
+$SHELL
 
 '''
 
@@ -181,7 +184,7 @@ def load():
     _v.mkdir(fo)
     # ago1=_.isDate(epoch,f='ago').replace(' <','').replace('<',''); ago2=str(_.isDate(epoch,f='ago-dic')).replace('"','').replace("'",'').replace('{','').replace('}','').replace('<','').replace('>',''); ago='( '+ago1+' ) '+ago2;
     # if ago1 == 'today': ago=ago1
-    ago=_.isDate(epoch,f='ago-txt')
+    ago=_.isDate(float(epoch),f='ago-txt')
     if _.isWin:
         global bat
         # script=_v.ww+sep+'batch'+sep+'.day.bat'
@@ -190,15 +193,15 @@ def load():
         bat = bat.replace('ago', ago )
         bat = _str.do('sh',bat); _.saveText( bat, script+'.day.bat' ); _.saveText( bat, script+'.d.bat' );
         _.pr( script, c='Background.light_blue' )
-    else:
-        global sh
-        script = _v.ww+sep+'bash'+sep+'nav'+sep+'day.sh'
-        sh = sh.replace('path',fo)
+    # else:
+    #     global sh
+    #     script = _v.ww+sep+'bash'+sep+'nav'+sep+'day.sh'
+    #     sh = sh.replace('path',fo)
+    #     sh = sh.replace('ago', ago)
         
-        sh = sh.replace('ago', ago)
-        sh = _str.do('sh',sh); _.saveText( sh, script );
-        os.chmod( script, 0o777 )
-        _.pr( script, c='Background.light_blue' )
+    #     sh = _str.do('sh',sh); _.saveText( sh, script );
+    #     os.chmod( script, 0o777 )
+    #     _.pr( script, c='Background.light_blue' )
 
 def files(fi):
     global fo
@@ -237,7 +240,18 @@ def new_file_defaults(fi):
 
 
 def action():
+    _.pr( _v.fig, dic=1 ); return None;
     global epoch; global fo; load();
+
+    if _.switches.isActive('Change-Dir'):
+
+        if _.isWin:
+            os.system('cd /d  "'+fo+'"')
+            # os.chdir(fo)
+        else:
+            os.system('cd "'+fo+'"; $SHELL;')
+        return None
+
     path = fo
     
     if _.switches.isActive('Fi'):
@@ -276,7 +290,8 @@ def action():
 #             # return line
 
 #     return line
-
+os=__.imp('os.system')
+os=__.imp('os.chdir')
 
 ########################################################################################
 if __name__ == '__main__':
