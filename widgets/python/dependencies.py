@@ -1,5 +1,27 @@
 #!/usr/bin/python3
 
+dependencies='''
+      **                                                 **                                  **                    
+     /**             ******                             /**                                 //                     
+     /**    *****   /**///**    *****    *******        /**    *****    *******     *****    **    *****     ******
+  ******   **///**  /**  /**   **///**  //**///**    ******   **///**  //**///**   **///**  /**   **///**   **//// 
+ **///**  /*******  /******   /*******   /**  /**   **///**  /*******   /**  /**  /**  //   /**  /*******  //***** 
+/**  /**  /**////   /**///    /**////    /**  /**  /**  /**  /**////    /**  /**  /**   **  /**  /**////    /////**
+//******  //******  /**       //******   ***  /**  //******  //******   ***  /**  //*****   /**  //******   ****** 
+ //////    //////   //         //////   ///   //    //////    //////   ///   //    /////    //    //////   //////  
+'''
+dependencies2='''
+      **                                       **                          **                
+     /**         ******                       /**                         //                 
+     /**  ***** /**///**  *****  *******      /**  *****  *******   *****  **  *****   ******
+  ****** **///**/**  /** **///**//**///**  ****** **///**//**///** **///**/** **///** **//// 
+ **///**/*******/****** /******* /**  /** **///**/******* /**  /**/**  // /**/*******//***** 
+/**  /**/**//// /**///  /**////  /**  /**/**  /**/**////  /**  /**/**   **/**/**////  /////**
+//******//******/**     //****** ***  /**//******//****** ***  /**//***** /**//****** ****** 
+ //////  ////// //       ////// ///   //  //////  ////// ///   //  /////  //  ////// //////  
+'''
+
+
 # ## {R2D2919B742E} ##
 # ###########################################################################
 # What if magic existed?
@@ -14,19 +36,26 @@
 from _rightThumb._base3 import template; exec(  template.header()  ); exec(  template.setting()  );
 #e)--> load
 
+#b)--> examples
+
+#e)--> examples
+
 def sw():
     pass
     #b)--> examples
-    # _.switches.register( 'Input', '-i' )
+    _.switches.register( 'No-Banner', '-nobanner' )
+    _.switches.register( 'Modules', '-m,-mod,-mods,-module,-modules', 'guesslang tensorflow' )
     # _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=True )
     #e)--> examples
 
 _.appInfo[focus()] = {
-    'file': 'thisApp.py',
+    'file': 'dependencies.py',
     'liveAppName': __.thisApp( __file__ ),
-    'description': 'Changes the world',
+    'description': 'find every imorted module or file recursively',
     'categories': [
-                        'DEFAULT',
+                        'child',
+                        'children',
+                        'sherlock',
                 ],
     'examples': [
                         _.hp('p thisApp -file file.txt'),
@@ -68,6 +97,11 @@ template.info(focus()); exec(  template.triggers()  ); _.l.sw.register( triggers
 ########################################################################################
 #n)--> start
 
+def test_app(): pass
+
+def test_module(): pass
+
+
 def action():
     load(); global c3po;
 
@@ -85,18 +119,18 @@ def load():
 
 ##################################################
 #b)--> examples
-# banner=_.Banner(dependencies)
-# goss=banner.goss
-# goss('-\t this app will sherlock tf out of any python app or python module')
+banner=_.Banner(dependencies)
+goss=banner.goss
+goss('-\t '+_.appInfo[focus()]['description'])
+goss('-\t this app will sherlock tf out of any python app or python module')
 #e)--> examples
 ##################################################
-
 ########################################################################################
 if __name__ == '__main__':
     #b)--> examples
-
-    # banner.pr()
-    # if len(_.switches.all())==0: banner.gossip()
+    if not _.switches.isActive('No-Banner'):
+        banner.pr()
+        if len(_.switches.all())==0: banner.gossip()
     
     #e)--> examples
     action()

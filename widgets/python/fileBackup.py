@@ -263,6 +263,7 @@ def PRE_BACKUP_PROCESSING( path ):
 				add_line_before = [
 										'#b)-->',
 										'########################################################################################',
+										'##################################################',
 										'_.appInfo[',
 										# '',
 				]
@@ -271,6 +272,7 @@ def PRE_BACKUP_PROCESSING( path ):
 										'#!/usr/bin/python3',
 										'#e)-->',
 										'#n)--> start',
+										'##################################################',
 										# '',
 				]
 
@@ -288,6 +290,8 @@ def PRE_BACKUP_PROCESSING( path ):
 
 				# _.saveText(xFiles,path)
 				xFiles = '\n'.join(lines)
+				xFiles = xFiles.replace('##################################################\n\n\n##################################################','')
+				xFiles = xFiles.replace('##################################################\n\n##################################################','')
 				while '\n\n\n' in xFiles: xFiles=xFiles.replace('\n\n\n','\n\n')
 
 				_this_app_ = __.path(path,file=True)

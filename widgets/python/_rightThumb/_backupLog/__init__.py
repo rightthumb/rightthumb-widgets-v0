@@ -182,6 +182,7 @@ def addFlagIfHasBackup( backup ):
 	backupLog = _.getTable('fileBackup.json')
 
 	for  i,log in enumerate(backupLog):
+		backupLog[i]['file'] == __.path(backupLog[i]['file'])
 		if log['backup'] == backup:
 			flag = log['flag']
 			flag = _str.cleanBE( flag, ' ' )

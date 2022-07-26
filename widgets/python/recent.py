@@ -263,6 +263,8 @@ def action():
 	spent = []
 	for record in backupLog:
 		t = record['timestamp']
+		##### #timestamp)--> 2022-07-26T00:52:12-0400
+		record['file']=__.path(record['file'])
 		should_include = False
 		if not ago1 is None:
 			if t > ago1 and t < ago2:

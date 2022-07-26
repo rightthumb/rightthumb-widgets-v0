@@ -33,6 +33,9 @@ def appSwitches():
 	_.switches.register( 'Replace', '-replace', '"\'haystack\' \'needle\' \'new\'"' )
 	_.switches.register( 'NoPrint', '--c' )
 	_.switches.register( 'isFile', '-fi' )
+	# _.switches.register( 'Path-Cleaner', '-path' )
+	_.switches.register( 'Files', '-f,-file,-files','file.txt', isData='name', description='Files' )
+	_.switches.register( 'Single-File', '-singlefile' )
 	pass
 
 _.autoBackupData = __.setting('receipt-log')
@@ -160,6 +163,22 @@ _.postLoad( __file__ )
 
 
 def action():
+
+	if _.switches.isActive('Files') or _.isData():
+
+		if _.switches.isActive('Single-File'):
+			path = ' '.join( _.switches.values('Files') )
+			path = __.path(  path  )
+			_.pr( path )
+			return None
+			
+		for path in _.isData():
+			path = __.path(  path  )
+			_.pr( path )
+
+
+		return None
+
 
 	# indexes
 	# relevant_OC

@@ -218,6 +218,39 @@ def print_(*args,p=None,c=None,pad=3,g=None,end=None,pvs=None,pv=None,json=None,
 	except Exception as e:
 		return ''
 
+fo_fi2=[]
+def fo2( folder=None, r=False, script=None, trigger=None, test=None, first=True ):
+	'''
+	#n)--> fo 
+
+	#n)--> trigger: fo_fi2.append(trigger(path))
+	#n)-->    test: if test(path): _add_
+	#n)-->    script: script(path);
+	'''
+
+	def _fo_fi_add(path,trigger,script):
+			if not script is None: script(path);
+			if not trigger is None: fo_fi2.append(trigger(path))
+			else: fo_fi2.append(path)
+
+
+	if folder is None: folder=os.getcwd()
+	global fo_fi2
+	if first: fo_fi2=[];
+	if not os.path.isdir(folder) and not os.path.isfile(folder): return fo_fi2;
+	if not os.path.isdir(folder) and os.path.isfile(folder): folder = __.path(folder,pop=True)
+	
+	try: files=os.listdir(folder)
+	except Exception as ee: return fo_fi2
+	for item in files:
+		path=folder+os.sep+item; path=__.path(path);
+
+		if not test is None and test(path): _fo_fi_add(path,trigger,script)
+			
+		if os.path.isfile(path) or os.path.isdir(path):
+			if test is None: _fo_fi_add(path,trigger,script)
+			if r and os.path.isdir(path): fo2(path,r,script,trigger,test,first=False);
+	return fo_fi2
 
 
 
@@ -3687,6 +3720,8 @@ class dt:
 def isData( data=None, focus=None, pipeClean=True, required=False,     r=None, c=None ):
 	def _isData_(tst):
 		global myFileLocation_Files
+		# if not tst and pipe_surfing(): tst = pipe_surfing()
+
 		if not tst: return myFileLocation_Files;
 		return tst
 
@@ -3698,13 +3733,15 @@ def isData( data=None, focus=None, pipeClean=True, required=False,     r=None, c
 		return dAta
 	if not c is None: pipeClean=c;
 	if not r is None: required = r;
+	# pr('here',data,c='gray')
 	if data is None:
 		if pipeClean:
 			pipeCleaner(0)
 		global appData
 		if focus is None:
 			focus = __.appReg
-		data = appData[focus]['pipe']
+		data = pipe_surfing()
+
 
 	if not data:
 		data=[]
@@ -3740,7 +3777,6 @@ def isData( data=None, focus=None, pipeClean=True, required=False,     r=None, c
 							if not stuff is None:
 								data=isData_path_list(stuff,data)
 
-
 					elif isD == 'data':
 						tData=[]
 						for n in switches.values(name):
@@ -3752,6 +3788,8 @@ def isData( data=None, focus=None, pipeClean=True, required=False,     r=None, c
 						# sys.exit()
 						# return data
 						# sys.exit()
+					# pass
+					# else: e('isData: else')
 
 		if data:
 			# print_('here')
@@ -7267,11 +7305,14 @@ def setUmlData( data, openUML=True ):
 		import webbrowser
 		webbrowser.open( _v.umlHtml, new=2)
 def setPipeData( data, theFocus=False, clean=True ):
+	# pr('setPipeData',c='gray')
+	# pr(data)
+	# pr('setPipeData',c='gray')
 	global appData
 	if type( theFocus ) == bool:
 		theFocus = __.appReg
 	# _.appData[__.appReg]['pipe'] = list(data)
-	if len(data) > 0:
+	if not appData[theFocus]['pipe'] and len(data) > 0:
 		appData[theFocus]['pipe'] = []
 		if not clean:
 			appData[theFocus]['pipe'].append('')
@@ -19849,9 +19890,11 @@ def l_registerSwitches( trig=None, sw=None ):
 	
 	defaultScriptTriggers()
 	switches.process()
-
+	# pr('l_registerSwitches',c='gray')
 	if l.conf('__name__') == '__main__':
+		# pr('l_registerSwitches: __main__',c='gray')
 		if not sys.stdin.isatty():
+			# pr('setPipeData( sys.stdin.readlines',c='gray')
 			setPipeData( sys.stdin.readlines(), __.appReg, clean=l.conf('clean-pipe' ,d=True) )
 	postLoad( l.conf('__file__') )
 	myFileLocation_Print=l.conf('myFileLocation_Print',d=False)
@@ -20255,8 +20298,9 @@ def isExit(_file_):
 				if 'tested' in rec and not rec['tested'] and os.path.isfile(path):
 					pr( line=1, c='green' )
 					pr( 'document tested date of '+_fi+'? ', c='green' )
-					ask=input(' Y / n: ')
-					if not ask: ask='y'
+					# ask=input(' Y / n: ')
+					ask=input(' y / N: ')
+					if not ask: ask='n'
 					if 'y' in ask.lower():
 						pr('updating documentation...',c='yellow')
 						_source = getText(path,raw=True)
@@ -20275,6 +20319,13 @@ def isExit(_file_):
 
 	elif not sys.stdin.isatty(): just_print(2)
 
+
+def pipe_surfing():
+	global appData
+	for app in appData:
+		if 'pipe'  in appData[app] and appData[app]['pipe']:
+			return appData[app]['pipe']
+	return False
 
 	
 

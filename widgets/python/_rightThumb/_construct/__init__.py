@@ -203,6 +203,7 @@ def path( p, ab=True, pop=False, file=False, slash=None, folder=None, fi=None, f
     # os = vc.FIG.imp('os')
     # os = imp('os')
     if slash is None:
+        os=imp('os.sep')
         slash = os.sep
     if not p:
         return p.replace(os.sep+os.sep,os.sep)
@@ -217,8 +218,12 @@ def path( p, ab=True, pop=False, file=False, slash=None, folder=None, fi=None, f
         except Exception as e:
             pass
     try:
+        os=imp('os.sep')
+        os=imp('os.path._getfinalpathname')
         p = os.path._getfinalpathname(p).lstrip(r'\?')
+        # print(p)
     except Exception as e:
+        # print(e)
         pass
     if type(p) == str and len(p)>1 and p[1] == ':':
         p = p[0].upper() + p[1:]

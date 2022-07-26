@@ -259,15 +259,25 @@ def load():
 def files(fi):
     global fo
     path=fo+fi
+    color='ColorBold.gray'
+    _.pr('files(fi)',c=color)
+    # print('_.isData()',_.isData())
     if _.isData():
+        _.pr('pipe detected',c=color)
         save=True
-        txt = '\n'.join(_.isData())
+        if 'e70612b5-9725-4e6f-8d92-c1a9b56910a9' in str(_.isData()):
+            txt = ''
+        else:
+            txt = '\n'.join(_.isData())
+        
         if os.path.isfile(path):
             _.pr('append file',c='red')
             # ask=input2(' replace file? : ')
             # if 'n' in ask.lower(): save = False
         if save:
+
             if os.path.isfile(path):
+                _.pr('date generated',c=color)
                 t2 = _.getText(path,raw=True)+'\n\n'+'##### #timestamp)--> '+_.isDate(time.time(),f='iso')+'\n\n'; txt=t2+txt;
             _.saveText( txt, path ); _.pr( path, c='cyan' )
         # return None
@@ -438,6 +448,7 @@ if __name__ == '__main__':
     if _.switches.isActive('Cows'):
         have_some_cows()
         sys.exit()
+    _.pr('##### #timestamp)--> '+_.isDate(time.time(),f='iso'),c='ColorBold.gray')
     action()
     __.isExit()
 

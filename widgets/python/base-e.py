@@ -14,6 +14,12 @@
 from _rightThumb._base3 import template; exec(  template.header()  ); exec(  template.setting()  );
 #e)--> load
 
+#b)--> examples
+# banner=_.Banner(thisApp)
+# goss=banner.goss
+# goss('-\t GOSSIP LABEL')
+#e)--> examples
+
 def sw():
     pass
     #b)--> examples
@@ -33,13 +39,14 @@ _.appInfo[focus()] = {
                         _.linePrint(label='simple',p=0),
                         '',
     ],
-    'created': '0000-00-00',
-    'tested':  '0000-00-00',
+    'created': None,
+    'tested': None,
 }
 
 #b)--> registration
 template.info(focus()); exec(  template.triggers()  ); _.l.sw.register( triggers, sw ); _.l.conf('clean-pipe',False);
 #e)--> registration
+
 ########################################################################################
 #b)--> examples
 #d)--> code hints to quickly get started
@@ -71,8 +78,9 @@ def action():
     load(); global c3po;
 
     #--> iterate
-    for subject in _.isData(r=0): _.pr(subject)
-
+    # for subject in _.isData(r=0): _.pr(subject)
+    #--> iterate
+    for rel in [ subject for subject in _.isData(r=0) if _.showLine(subject) ]: print(rel)
 
 def load():
     global c3po
@@ -83,10 +91,14 @@ def load():
 
 ########################################################################################
 if __name__ == '__main__':
+    #b)--> examples
+
     # banner.pr()
     # if len(_.switches.all())==0: banner.gossip()
+    
+    #e)--> examples
     action()
-    __.isExit()
+    _.isExit(__file__)
 
 
 
