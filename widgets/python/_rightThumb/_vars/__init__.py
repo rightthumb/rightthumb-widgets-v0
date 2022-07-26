@@ -155,6 +155,7 @@ def base_versions():
 		data.append( str(x) )
 		for y in alpha:
 			data.append( str(x)+y )
+	# print('_v.base_versions',data)
 	return data
 def cmdSetVar( n, v ):
 	os.environ[n.upper()] = v

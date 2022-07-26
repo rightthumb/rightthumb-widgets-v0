@@ -173,7 +173,7 @@ def action():
         else: _.pr('nsfw OFF',c='Background.red')
         return None
     if _.switches.isActive('On'):
-        _.URL('https://eyeformeta.com/apps/terminal/status/?n=nsfw&v=1')
+        _.URL('https://eyeformeta.com/apps/terminal/status/?n=nsfw&v=1') # nsfw nsfw 
         _.saveText('1',_v.rtp+'vars'+os.sep+'nsfw')
         _.pr('nsfw ON',c='Background.red')
     else:

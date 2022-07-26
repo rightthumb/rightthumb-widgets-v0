@@ -1,5 +1,14 @@
 #!/usr/bin/python3
-
+hotkeys='''
+ **      **            **   **                             
+/**     /**           /**  /**              **   **        
+/**     /**  ******  ******/**  **  *****  //** **   ******
+/********** **////**///**/ /** **  **///**  //***   **//// 
+/**//////**/**   /**  /**  /****  /*******   /**   //***** 
+/**     /**/**   /**  /**  /**/** /**////    **     /////**
+/**     /**//******   //** /**//**//******  **      ****** 
+//      //  //////     //  //  //  //////  //      //////  
+'''
 # ## {R2D2919B742E} ##
 # ###########################################################################
 # What if magic existed?
@@ -25,16 +34,32 @@ __.registeredApps.append( focus() )
 import _rightThumb._base3 as _
 _.load()
 ##################################################
+banner=_.Banner(hotkeys); 
+goss=banner.goss
+goss('-\t search hotkeys with the hk command')
+goss('-\t\t hk space')
+goss('-\t\t\t remove-eol-space ctrl,2 space e')
+goss('-\t\t\t dup-spaces ctrl win s')
+goss('-\t\t\t clip-single-space win shift alt s')
+goss('-\t\t\t clip-double-space win shift alt d')
+goss('-\t\t\t clip-dup-spaces ctrl,2 r d s')
+
+
+##################################################
 import _rightThumb._vars as _v
 import _rightThumb._string as _str
 ##################################################
+from inspect import currentframe, getframeinfo
+frameinfo = getframeinfo(currentframe())
 from threading import Timer
 import re
 try:
     import winsound
 except Exception as e:
+    frameinfo = getframeinfo(currentframe()); _.pr( _.addComma(frameinfo.lineno),'\t', e,c='red');
     pass
 import simplejson
+
 ##################################################
 
 def appSwitches():
@@ -69,7 +94,9 @@ __.switch_raw = []
 # __.setting( 'app-switches-raw', [ 'Delim' ] )
 
 
+
 _.appInfo[focus()] = {
+    'banner': banner,
     'file': 'hotkeys.py',
     'liveAppName': __.thisApp( __file__ ),
     'description': 'hotkeys',
@@ -111,6 +138,8 @@ _.appInfo[focus()] = {
                        # {},
     ],
 }
+
+
 
 _.appData[focus()] = {
         'start': __.startTime,
@@ -198,10 +227,12 @@ class HOTKEYS:
         try:
             char = str(key.char)
         except Exception as e:
+            # frameinfo = getframeinfo(currentframe()); _.pr( _.addComma(frameinfo.lineno),'\t', e,c='red');
             char = str(key).replace("'",'')
         try:
             key_set.remove(char)
         except Exception as e:
+            # frameinfo = getframeinfo(currentframe()); _.pr( _.addComma(frameinfo.lineno),'\t', e,c='red');
             key_set = set()
 
         if not key_set and post_do['status']:
@@ -237,9 +268,19 @@ class HOTKEYS:
         global key_set
         global print_chars
         global ctrl_chars
+        # _.clear()
+        # _.pr(line=1,c='yellow')
+        # _.pr()
+        # for x in dir(key):
+        #     _.pr(x)
+        # _.pr()
+        # _.pr(line=1,c='yellow')
+        # _.pr()
+        # sys.exit()
         try:
             char = str(key.char)
         except Exception as e:
+            # frameinfo = getframeinfo(currentframe()); _.pr( _.addComma(frameinfo.lineno),'\t', e,c='red');
             char = str(key).replace("'",'')
         key_set.add(char)
         if print_chars:
@@ -284,6 +325,7 @@ class HOTKEYS:
                                 found=True
 
                         except Exception as e:
+                            # frameinfo = getframeinfo(currentframe()); _.pr( _.addComma(frameinfo.lineno),'\t', e,c='red');
                             # _.pr(e)
                             pass
                 if not found:
@@ -335,6 +377,7 @@ class HOTKEYS:
                             break
 
                 except Exception as e:
+                    # frameinfo = getframeinfo(currentframe()); _.pr( _.addComma(frameinfo.lineno),'\t', e,c='red');
                     good=False
                     break
             if good:
@@ -419,6 +462,7 @@ class BEEPS:
             # Delay after the beep so it doesn't all run together
             time.sleep(self.tempo)
         except Exception as e:
+            frameinfo = getframeinfo(currentframe()); _.pr( _.addComma(frameinfo.lineno),'\t', e,c='red');
             pass
 
     def simple_beep(self):
@@ -439,7 +483,14 @@ class CLIP:
         _paste = _.regImp( __.appReg, '-paste' )
         data  = _paste.imp.paste()
         data = data.replace('\r','')
-        data = _str.do('dup',data,'\n')
+
+        lines=[]
+        for line in data.split('\n'):
+            tester=line.replace(' ','').replace('\r','').replace('\n','').replace('\t','')
+            if not  tester:line=''
+
+        while data.count('\n\n'): date=data.replace('\n\n','\n')
+        # data = _str.do('dup',data,'\n')
         _copy.imp.copy( data, p=0 )
 
     def toLower(self):
@@ -663,6 +714,7 @@ class CLIP:
                 try:
                     parts.append( cleaner(lp[ii]) )
                 except Exception as e:
+                    frameinfo = getframeinfo(currentframe()); _.pr( _.addComma(frameinfo.lineno),'\t', e,c='red');
                     pass
                 i=pf+len(fx)
             parts.append( base[i:] )
@@ -944,6 +996,7 @@ function get__THETABLE( $ID_label ){
 
 
                 except Exception as e:
+                    frameinfo = getframeinfo(currentframe()); _.pr( _.addComma(frameinfo.lineno),'\t', e,c='red');
                     pass
 
         # _.pv(fields)
@@ -1137,6 +1190,7 @@ function get__THETABLE( $ID_label ){
             try:
                 data = simplejson.load(text)
             except Exception as e:
+                frameinfo = getframeinfo(currentframe()); _.pr( _.addComma(frameinfo.lineno),'\t', e,c='red');
                 data = eval(text.replace('false','False').replace('true','True'))
             result = simplejson.dumps(data, sort_keys=False)
             result=result.replace('{','{ ').replace('}',' }')
@@ -1175,6 +1229,7 @@ function get__THETABLE( $ID_label ){
             try:
                 data = simplejson.load(text)
             except Exception as e:
+                frameinfo = getframeinfo(currentframe()); _.pr( _.addComma(frameinfo.lineno),'\t', e,c='red');
                 data = eval(text.replace('false','False').replace('true','True'))
             result = '[\n\t'
             records = []
@@ -1209,6 +1264,7 @@ function get__THETABLE( $ID_label ){
             try:
                 data = simplejson.load(text)
             except Exception as e:
+                frameinfo = getframeinfo(currentframe()); _.pr( _.addComma(frameinfo.lineno),'\t', e,c='red');
                 data = eval(text.replace('false','False').replace('true','True'))
             records = []
             for rec in data:
@@ -1638,6 +1694,7 @@ function get__THETABLE( $ID_label ){
             try:
                 data = simplejson.load(text)
             except Exception as e:
+                frameinfo = getframeinfo(currentframe()); _.pr( _.addComma(frameinfo.lineno),'\t', e,c='red');
                 data = eval(text)
             result = simplejson.dumps(data, indent=4, sort_keys=False)
             _copy.imp.copy( result, p=0 )
@@ -1815,6 +1872,7 @@ class LOADER:
         try:
             raw = _.getText( autxt, raw=True )
         except Exception as e:
+            frameinfo = getframeinfo(currentframe()); _.pr( _.addComma(frameinfo.lineno),'\t', e,c='red');
             raw = ''
         if len(raw) < 5:
             return None
@@ -1916,7 +1974,8 @@ def action():
         ]
         for key in table2:
             txt=str(table2[key])
-            if not key in omit and _.showLine(txt): _.pr(key,'\t','\t'.join(table2[key]['raw']).replace('Key.','').replace('cmd','win'));
+            # if not key in omit and _.showLine(txt): _.pr(key,'\t','\t'.join(table2[key]['raw']).replace('Key.','').replace('cmd','win'));
+            if not key in omit and _.showLine(key): _.pr(key,'\t','\t'.join(table2[key]['raw']).replace('Key.','').replace('cmd','win'));
         # a_t=[]
         # for rec in auto_text:
         #     txt=str(rec)
@@ -1930,6 +1989,9 @@ def action():
 
 
     _.pr( 'EXIT:   Win + esc' )
+    _.pr( line=1,c='gray' )
+    _.pr(  )
+
     with Listener(on_press=Hotkeys.process_keystroke,on_release=Hotkeys.release_key) as l:
         l.join()
 
@@ -2094,14 +2156,18 @@ __.setting('hotkey-clip.ad_description-start1', False)
 __.setting('hotkey-clip.replace-a', '.eyeformeta.com')
 __.setting('hotkey-clip.replace-b', '.m-eta.app')
 
+
+
 import random
 
 ########################################################################################
 if __name__ == '__main__':
+    banner.pr()
+    if len(_.switches.all())==0: banner.gossip()
     action()
     __.isExit()
 
 
-
+# dup_space
 
 

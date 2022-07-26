@@ -27,7 +27,6 @@ import time
 from pathlib import Path
 
 import _rightThumb._construct as __
-# import _rightThumb._base3 as _
 import _rightThumb._vars as _v
 import _rightThumb._md5 as _md5
 import _rightThumb._mimetype as _mime
@@ -45,7 +44,7 @@ import simplejson as json
 
 # _dir.sqlCreateTable( 'dir_temp.db' , asset=files, delete=True )
 # for file in files:
-# 	_dir.fileInfo( file, sql=True, insert=True )
+#     _dir.fileInfo( file, sql=True, insert=True )
 
 		# modified = os.path.getmtime(aPath)
 		# created = os.path.getctime(aPath)
@@ -139,7 +138,7 @@ maxFileNameLength = 35
 dateCalcByModified = True
 
 if not os.path.isdir( _v.exif_temp ):
-	_v.mkdir( _v.exif_temp )
+	os.mkdir( _v.exif_temp )
 
 def fileAge( file ):
 	md = fileInfo( file )['date_modified_raw']
@@ -225,35 +224,32 @@ def sqlCreateTable( db, deleteDBFirst=False, close=False, asset=None, length=Non
 
 
 # def insert( path, sql=True, md5=False, exif=0,   attrib=None, mime=None, db_connection=None, db_cursor=None, count=None, last ):
-# 	global conn
-# 	global cursor
-# 	record = fileInfo( path, sql, md5, exif, attrib, mime, db_connection, db_cursor, count )
-# 	if record is None:
-# 		_.pr( 'Error:', path )
-# 	else:
-# 		cursor.execute( record )
+#     global conn
+#     global cursor
+#     record = fileInfo( path, sql, md5, exif, attrib, mime, db_connection, db_cursor, count )
+#     if record is None:
+#         _.pr( 'Error:', path )
+#     else:
+#         cursor.execute( record )
 commit_count = 0
 processed_count = 0
 # NOTE:
-# 		sdate finds oldest or newsest date in accessed modified created
+#         sdate finds oldest or newsest date in accessed modified created
 def info( path, sql=False, md5=False, exif=0,   attrib=None, mime=None, db_connection=None, db_cursor=None, count=None, insert=None, last=False, sdate=None, meta=True, err=False,       subject=None, k=None, f=None, s=None, sub=None, field=None, mini=False ):
 	if not field is None: subject=field;
 	if not sub is None: subject=sub;
 	if not s is None: subject=s;
 	if not k is None: subject=k;
 	if not f is None: subject=f;
-	# if not subject is None and type(subject) == str and (subject=='me' or subject=='m'):  return os.path.getmtime(path)
-	# if not subject is None and type(subject) == str and (subject=='ce' or subject=='c'):  return os.path.getctime(path)
 	sub=subject
 	mrec=fileInfo( path=path, sql=sql, md5=md5, exif=exif,   attrib=attrib, mime=mime, db_connection=db_connection, db_cursor=db_cursor, count=count, insert=insert, last=last, sdate=sdate, meta=meta, err=err, subject=subject )
 	if mini and mrec:
-		del mrec['name_']
 		del mrec['stat']
 		del mrec['date_created_raw']
 		del mrec['date_modified_raw']
 		del mrec['type']
 		del mrec['typesort']
-		# del mrec['md5']
+		del mrec['md5']
 		del mrec['week_of_year']
 		del mrec['week_of_year_']
 		del mrec['month']
@@ -265,7 +261,6 @@ def info( path, sql=False, md5=False, exif=0,   attrib=None, mime=None, db_conne
 		del mrec['accessed_raw']
 		del mrec['meta']
 		del mrec['ago']
-		del mrec['year']
 		del mrec['day_of_the_week']
 		mrec['created']=mrec['date_created']
 		mrec['modified']=mrec['date_modified']
@@ -273,21 +268,6 @@ def info( path, sql=False, md5=False, exif=0,   attrib=None, mime=None, db_conne
 		del mrec['date_created']
 		del mrec['date_modified']
 		del mrec['date_accessed']
-		nfo={}
-		for k in mrec:
-			if mrec[k]:
-				if k == 'day_of_the_week':
-					nfo['dow'] = mrec[k]
-				elif k.startswith('date_'):
-					nfo[k.replace('date_','')] = mrec[k]
-				else:
-					nfo[k] = mrec[k]
-		for k in nfo:
-			if type(nfo[k]) == float: nfo[k] = int(nfo[k])
-		mrec=nfo
-		mrec['created']=mrec['created'][:-3]
-		mrec['modified']=mrec['modified'][:-3]
-		mrec['accessed']=mrec['accessed'][:-3]
 
 	return mrec
 def fileInfo( path, sql=False, md5=False, exif=0,   attrib=None, mime=None, db_connection=None, db_cursor=None, count=None, insert=None, last=False, sdate=None, meta=True, err=False, subject=None ):
@@ -345,9 +325,7 @@ def individual(path,subject):
 	if ' size ' in ' '+subject+' ': dic['size'] = formatSize(os.stat(path).st_size) ;
 	if ' date_created_raw ' in ' '+subject+' ': dic['date_created_raw'] =  os.path.getctime(path);
 	if ' date_modified_raw ' in ' '+subject+' ': dic['date_modified_raw'] =  os.path.getmtime(path);
-	if ' accessed_raw ' in ' '+subject+' ': dic['accessed_raw'] =  os.path.getatime(path);
 	if ' date_created ' in ' '+subject+' ': dic['date_created'] =  formatDate(os.path.getctime(path));
-	if ' date_accessed ' in ' '+subject+' ': dic['date_accessed'] =  formatDate(os.path.getatime(path));
 	if ' created ' in ' '+subject+' ': dic['date_created'] =  formatDate(os.path.getctime(path));
 	if ' date_modified ' in ' '+subject+' ': dic['date_modified'] =  formatDate(os.path.getmtime(path));
 	if ' modified ' in ' '+subject+' ': dic['date_modified'] =  formatDate(os.path.getmtime(path));
@@ -365,8 +343,8 @@ def individual(path,subject):
 	if ' fm ' in ' '+subject+' ': dic['fm'] =  friendlyMonthNew(os.path.getmtime(path));
 	if ' md5 ' in ' '+subject+' ': dic['md5'] =  _md5.md5File(path);
 	if ' year ' in ' '+subject+' ': dic['year'] =  getYearFromEpoch(os.path.getmtime(path));
-	
-	
+	if ' accessed_raw ' in ' '+subject+' ': dic['accessed_raw'] =  os.path.getatime(path);
+	if ' date_accessed ' in ' '+subject+' ': dic['date_accessed'] =  formatDate(os.path.getatime(path));
 	if ' accessed ' in ' '+subject+' ': dic['accessed'] =  formatDate(os.path.getatime(path));
 	if ' ce ' in ' '+subject+' ': dic['ce'] =  os.path.getctime(path);
 	if ' cef ' in ' '+subject+' ': dic['ce'] =  formatDate(os.path.getctime(path));
@@ -502,7 +480,6 @@ def fileInfoAction( path, sql, md5, exif, getAttrib=None, getMime=None, db_conne
 		epoch.append({ 'label': 'week_and_year', 'epoch': time.time() })
 
 		md5Data = ''
-		sha256Data = ''
 
 		shouldMD5 = False
 		if type( md5 ) == bool:
@@ -517,21 +494,20 @@ def fileInfoAction( path, sql, md5, exif, getAttrib=None, getMime=None, db_conne
 				shouldMD5 = False
 				md5Data = md5[1]
 		# _.pr( 'shouldMD5:', shouldMD5 )
-		if sha256:
-			try: sha256Data = _md5.sha256File( path2 )
-			except Exception as e: pass
 		if shouldMD5:
 			# _.pr( 'shouldMD5:', shouldMD5 )
 			# _.pr()
 			# _.pr( 'Processing:', path2 )
-			try: md5Data = _md5.md5File( path2 )
-			except Exception as e: pass
+			try:
+				md5Data = _md5.md5File( path2 )
+			except Exception as e:
+				pass
 				
 			# _.pr( md5Data )
 			# _.pr( 'md5File', md5Data, path2 )
 			# try:
 			# except Exception as e:
-			# 	pass
+			#     pass
 		epoch.append({ 'label': 'md5:'+str(shouldMD5), 'epoch': time.time() })
 		
 		if not getMime is None:
@@ -557,18 +533,16 @@ def fileInfoAction( path, sql, md5, exif, getAttrib=None, getMime=None, db_conne
 
 		obj = {
 				'path': path2,
-				'folder': folder,
 				'name_': fileNameLength(name,ext),
 				'name': name,
+				'folder': folder,
 				'stat': stat,
 				'bytes': size,
 				'size': sizeF,
 				'date_created_raw': createdRaw,
 				'date_modified_raw': modifiedRaw,
-				'accessed_raw': accessed_raw,
 				'date_created': formatDate(createdRaw),
 				'date_modified': formatDate(modifiedRaw),
-				'date_accessed': formatDate(accessed_raw),
 				'type': ty,
 				'typesort': typesort,
 				'ext': ext,
@@ -579,8 +553,9 @@ def fileInfoAction( path, sql, md5, exif, getAttrib=None, getMime=None, db_conne
 				'friendly_week': friendlyWeek1,
 				'friendly_month': friendlyMonth1,
 				'md5': md5Data,
-				'sha256': sha256Data,
 				'year': year,
+				'accessed_raw': accessed_raw,
+				'date_accessed': formatDate(accessed_raw),
 				'ce': createdRaw,
 				'me': modifiedRaw,
 				'ae': accessed_raw,
@@ -654,7 +629,7 @@ def fileInfoAction( path, sql, md5, exif, getAttrib=None, getMime=None, db_conne
 		# _.pr( exifData[0] )
 		
 		# for key in exifData[0].keys():
-		# 	_.pr( key )
+		#     _.pr( key )
 		# sys.exit()
 		for key in exifData[0].keys():
 			try:
@@ -721,7 +696,7 @@ def fileInfoAction( path, sql, md5, exif, getAttrib=None, getMime=None, db_conne
 
 
 	return obj
-sha256=False
+
 
 def commit():
 	global conn
@@ -826,13 +801,13 @@ def friendlyWeekNew(theDate):
 
 
 def getWeekAndYear(theDate):
-	y = getYearFromEpoch(theDate)
-	w = getWOYFromEpoch(theDate)
-	if w < 10:
-		w = '0'+str(w)
-	else:
-		w = str(w)
-	return str(y) +'.'+ w
+	 y = getYearFromEpoch(theDate)
+	 w = getWOYFromEpoch(theDate)
+	 if w < 10:
+		 w = '0'+str(w)
+	 else:
+		 w = str(w)
+	 return str(y) +'.'+ w
 
 def getMonthFromEpoch(theDate):
 	return str( getYearFromEpoch(theDate) ) + '.' + str(formatDateMonth(theDate))
@@ -879,14 +854,14 @@ def formatSize(size):
 	elif size > 1048576 and size < 1073741824:
 		num = round(size / 1048576, 2)
 		result = str(num) + ' MB'
-	elif size > 1073741824 and size < 1099511627776	:
+	elif size > 1073741824 and size < 1099511627776    :
 		num = round(size / 1073741824, 2)
 		result = str(num) + ' GB'
 	else:
 		num = round(size / 1099511627776, 2)
 		result = str(num) + ' TB'
 	# if size < 1:
-	# 	result = ''
+	#     result = ''
 	return result
 
 def unFormatSize(size):
@@ -1015,9 +990,9 @@ def getExtension(string):
 	return ext[0]
 	# extId = len(ext0) - 1
 	# if extId > 0:
-	# 	ext = ext0[extId]
+	#     ext = ext0[extId]
 	# else:
-	# 	ext = ''
+	#     ext = ''
 	# return ext
 
 
@@ -1053,129 +1028,129 @@ def getTable( theFile, tableTemp=False,      isDic=None, isList=None,      tmp=N
 # woy_hash_table_back = None
 # woy_hash_table_forward = None
 # def time_diff( thedate ):
-# 	if thedate <= time.time():
-# 		return time_ago( thedate )
-# 	else:
-# 		return time_2be( thedate )
+#     if thedate <= time.time():
+#         return time_ago( thedate )
+#     else:
+#         return time_2be( thedate )
 # def time_ago( thedate ):
 
-# 	woy = getWOYFromEpoch(thedate)
-# 	year = getYearFromEpoch(thedate)
-# 	weekAndYear = round(woy * 0.01,2) + year
-# 	weekAndYear = str(weekAndYear)
-# 	if len(weekAndYear) == 6:
-# 		weekAndYear += '0' 
-# 	data = weekAndYear
+#     woy = getWOYFromEpoch(thedate)
+#     year = getYearFromEpoch(thedate)
+#     weekAndYear = round(woy * 0.01,2) + year
+#     weekAndYear = str(weekAndYear)
+#     if len(weekAndYear) == 6:
+#         weekAndYear += '0' 
+#     data = weekAndYear
 
-# 	wks=10000
-# 	global woy_hash_table_back
-# 	if woy_hash_table_back is None:
-# 		KILL_ON = getYearFromEpoch( time.time() ) - 100
-# 		woy_hash_table_back = {}
-# 		def gen_woy_b( y, wy ):
-# 			wy-=1
-# 			if wy == 0:
-# 				wy=53
-# 				y-=1
-# 			if wy <= 9:
-# 				z = str(y)+'.0'+str(wy)
-# 			else:
-# 				z = str(y)+'.'+str(wy)
-# 			return y, wy, z
-# 		i=0
-# 		epoch=time.time()
-# 		y = int(getYearFromEpoch( float(epoch) ))
-# 		wy = int(getWOYFromEpoch(  float(epoch)  ))
+#     wks=10000
+#     global woy_hash_table_back
+#     if woy_hash_table_back is None:
+#         KILL_ON = getYearFromEpoch( time.time() ) - 100
+#         woy_hash_table_back = {}
+#         def gen_woy_b( y, wy ):
+#             wy-=1
+#             if wy == 0:
+#                 wy=53
+#                 y-=1
+#             if wy <= 9:
+#                 z = str(y)+'.0'+str(wy)
+#             else:
+#                 z = str(y)+'.'+str(wy)
+#             return y, wy, z
+#         i=0
+#         epoch=time.time()
+#         y = int(getYearFromEpoch( float(epoch) ))
+#         wy = int(getWOYFromEpoch(  float(epoch)  ))
 		
-# 		tdy0 = _.friendlyDate( time.time() ).split(' ')[0]
-# 		woy_hash_table_back[  tdy0  ] = 'today'
-# 		woy_hash_table_back[  gen_days_ago(1)  ] = 'yesterday'
-# 		# woy_hash_table_back[  gen_days_ago(2)  ] = '2 days'
-# 		# woy_hash_table_back[  gen_days_ago(2)  ] = '3 days'
+#         tdy0 = _.friendlyDate( time.time() ).split(' ')[0]
+#         woy_hash_table_back[  tdy0  ] = 'today'
+#         woy_hash_table_back[  gen_days_ago(1)  ] = 'yesterday'
+#         # woy_hash_table_back[  gen_days_ago(2)  ] = '2 days'
+#         # woy_hash_table_back[  gen_days_ago(2)  ] = '3 days'
 
-# 		# woy_hash_table_back[  _.friendlyDate( _.dateMathEpoch(time.time() , 0, '-' ) ).split(' ')[0]  ] = 'yesterday'
-# 		# woy_hash_table_back[  _.friendlyDate( _.dateMathEpoch(time.time() , 1, '-' ) ).split(' ')[0]  ] = '2 days ago'
-# 		# woy_hash_table_back[  _.friendlyDate( _.dateMathEpoch(time.time() , 2, '-' ) ).split(' ')[0]  ] = '2 days'
-# 		# woy_hash_table_back[  _.friendlyDate( _.dateMathEpoch(time.time() , 3, '-' ) ).split(' ')[0]  ] = '3 days'
-# 		# woy_hash_table_back[  _.friendlyDate( _.dateMathEpoch(time.time() , 4, '-' ) ).split(' ')[0]  ] = '4 days'
-# 		# woy_hash_table_back[  _.friendlyDate( _.dateMathEpoch(time.time() , 5, '-' ) ).split(' ')[0]  ] = '5 days'
-# 		# woy_hash_table_back[  _.friendlyDate( _.dateMathEpoch(time.time() , 6, '-' ) ).split(' ')[0]  ] = '6 days'
-# 		# woy_hash_table_back[  _.friendlyDate( _.dateMathEpoch(time.time() , 7, '-' ) ).split(' ')[0]  ] = '7 days'
+#         # woy_hash_table_back[  _.friendlyDate( _.dateMathEpoch(time.time() , 0, '-' ) ).split(' ')[0]  ] = 'yesterday'
+#         # woy_hash_table_back[  _.friendlyDate( _.dateMathEpoch(time.time() , 1, '-' ) ).split(' ')[0]  ] = '2 days ago'
+#         # woy_hash_table_back[  _.friendlyDate( _.dateMathEpoch(time.time() , 2, '-' ) ).split(' ')[0]  ] = '2 days'
+#         # woy_hash_table_back[  _.friendlyDate( _.dateMathEpoch(time.time() , 3, '-' ) ).split(' ')[0]  ] = '3 days'
+#         # woy_hash_table_back[  _.friendlyDate( _.dateMathEpoch(time.time() , 4, '-' ) ).split(' ')[0]  ] = '4 days'
+#         # woy_hash_table_back[  _.friendlyDate( _.dateMathEpoch(time.time() , 5, '-' ) ).split(' ')[0]  ] = '5 days'
+#         # woy_hash_table_back[  _.friendlyDate( _.dateMathEpoch(time.time() , 6, '-' ) ).split(' ')[0]  ] = '6 days'
+#         # woy_hash_table_back[  _.friendlyDate( _.dateMathEpoch(time.time() , 7, '-' ) ).split(' ')[0]  ] = '7 days'
 
-# 		if wy <= 9:
-# 			woy_hash_table_back[  str(y)+'.0'+str(wy)  ] = 'this week'
-# 		else:
-# 			woy_hash_table_back[  str(y)+'.'+str(wy)  ] = 'this week'
-# 		y, wy, z = gen_woy_b( y, wy )
-# 		woy_hash_table_back[  z  ] = 'a week ago'
-# 		i+=1
-# 		while i<=wks :
-# 			i+=1
-# 			y, wy, z = gen_woy_b( y, wy )
-# 			ixx = i
-# 			tyrs = 0
-# 			tMs = 0
-# 			if i >= 52:
-# 				tyrsZ = float(i / 52)
-# 				tyrs = int(str(tyrsZ).split('.')[0])
-# 				ixx = i - ( tyrs*52 )
-# 			if ixx >= 4:
-# 				tMsZ = float(ixx / 4)
-# 				tMs = int(str(tMsZ).split('.')[0])
-# 				ixx
-# 				nwoy = str( round(wy * 0.01,2) + y )
-# 				ixx = ixx - ( tMs*4 )-1
-# 				if nwoy == '1969.52':
-# 					break
-# 				# wmd = abs(_.daysDiff(   _.monthMath(      _.woy2dates( str( round(wy * 0.01,2) + y ) )[0]      , tMs, do='+' ), epoch   ))
-# 				# ixx = abs(int(str( wmd/7 ).split('.')[0]))
-# 				# _.pr(ixx)
-# 				# if ixx> 4:
+#         if wy <= 9:
+#             woy_hash_table_back[  str(y)+'.0'+str(wy)  ] = 'this week'
+#         else:
+#             woy_hash_table_back[  str(y)+'.'+str(wy)  ] = 'this week'
+#         y, wy, z = gen_woy_b( y, wy )
+#         woy_hash_table_back[  z  ] = 'a week ago'
+#         i+=1
+#         while i<=wks :
+#             i+=1
+#             y, wy, z = gen_woy_b( y, wy )
+#             ixx = i
+#             tyrs = 0
+#             tMs = 0
+#             if i >= 52:
+#                 tyrsZ = float(i / 52)
+#                 tyrs = int(str(tyrsZ).split('.')[0])
+#                 ixx = i - ( tyrs*52 )
+#             if ixx >= 4:
+#                 tMsZ = float(ixx / 4)
+#                 tMs = int(str(tMsZ).split('.')[0])
+#                 ixx
+#                 nwoy = str( round(wy * 0.01,2) + y )
+#                 ixx = ixx - ( tMs*4 )-1
+#                 if nwoy == '1969.52':
+#                     break
+#                 # wmd = abs(_.daysDiff(   _.monthMath(      _.woy2dates( str( round(wy * 0.01,2) + y ) )[0]      , tMs, do='+' ), epoch   ))
+#                 # ixx = abs(int(str( wmd/7 ).split('.')[0]))
+#                 # _.pr(ixx)
+#                 # if ixx> 4:
 
-# 				# 	_.pr( '\n000-time_ago' )
-# 				# 	_.pr( '000', nwoy )
-# 				# 	_.pr( '010', _.friendlyDate(_.woy2dates( str( round(wy * 0.01,2) + y ) )[0]) )
+#                 #     _.pr( '\n000-time_ago' )
+#                 #     _.pr( '000', nwoy )
+#                 #     _.pr( '010', _.friendlyDate(_.woy2dates( str( round(wy * 0.01,2) + y ) )[0]) )
 
-# 				# 	_.pr( '020', tMs, _.friendlyDate(_.monthMath(      _.woy2dates( str( round(wy * 0.01,2) + y ) )[0]      , tMs, do='+' ))    )
+#                 #     _.pr( '020', tMs, _.friendlyDate(_.monthMath(      _.woy2dates( str( round(wy * 0.01,2) + y ) )[0]      , tMs, do='+' ))    )
 					
-# 				# 	_.pr( '030', nwoy, tyrs, tMs, ixx, '  ...  ', wmd )
+#                 #     _.pr( '030', nwoy, tyrs, tMs, ixx, '  ...  ', wmd )
 
-# 				# 	import sys
-# 				# 	sys.exit()
-# 				# _.pr( wmd )
+#                 #     import sys
+#                 #     sys.exit()
+#                 # _.pr( wmd )
 
-# 				# ixx = ixx - ( tMs*4 )
+#                 # ixx = ixx - ( tMs*4 )
 
-# 			thisAgo = []
-# 			if tyrs:
-# 				thisAgo.append( str(tyrs)+'Y' )
-# 			if tMs:
-# 				thisAgo.append( str(tMs)+'M' )
-# 			if ixx > 0:
-# 				thisAgo.append( str(ixx)+'W' )
-# 			# thisAgo.append( 'ago' )
+#             thisAgo = []
+#             if tyrs:
+#                 thisAgo.append( str(tyrs)+'Y' )
+#             if tMs:
+#                 thisAgo.append( str(tMs)+'M' )
+#             if ixx > 0:
+#                 thisAgo.append( str(ixx)+'W' )
+#             # thisAgo.append( 'ago' )
 
 
-# 			woy_hash_table_back[  z  ] = ' '.join( thisAgo ) + ' <'
-# 			# woy_hash_table_back[  z  ] = str(i)+' weeks ago'
-# 			if y < KILL_ON:
-# 				break
-# 	if not woy_hash_table_back:
-# 		# _.pr(0,data)
-# 		return data
-# 	else:
-# 		if not data in woy_hash_table_back:
-# 			# _.pr(1,data)
-# 			# printVarSimple(woy_hash_table_back)
-# 			return data
-# 		else:
+#             woy_hash_table_back[  z  ] = ' '.join( thisAgo ) + ' <'
+#             # woy_hash_table_back[  z  ] = str(i)+' weeks ago'
+#             if y < KILL_ON:
+#                 break
+#     if not woy_hash_table_back:
+#         # _.pr(0,data)
+#         return data
+#     else:
+#         if not data in woy_hash_table_back:
+#             # _.pr(1,data)
+#             # printVarSimple(woy_hash_table_back)
+#             return data
+#         else:
 
 # # dateMathEpoch
-# 			if woy_hash_table_back[data] == 'this week':
-# 				ixD = _.friendlyDate( thedate ).split(' ')[0]
-# 				if ixD in woy_hash_table_back:
-# 					return woy_hash_table_back[ixD]
-# 			return woy_hash_table_back[data]
+#             if woy_hash_table_back[data] == 'this week':
+#                 ixD = _.friendlyDate( thedate ).split(' ')[0]
+#                 if ixD in woy_hash_table_back:
+#                     return woy_hash_table_back[ixD]
+#             return woy_hash_table_back[data]
 
 
 # import _rightThumb._base3 as _
@@ -1192,108 +1167,108 @@ def gen_days_2be(days=1):
 
 # def time_2be( thedate ):
 
-# 	woy = getWOYFromEpoch(thedate)
-# 	year = getYearFromEpoch(thedate)
-# 	weekAndYear = round(woy * 0.01,2) + year
-# 	weekAndYear = str(weekAndYear)
-# 	if len(weekAndYear) == 6:
-# 		weekAndYear += '0' 
-# 	data = weekAndYear
+#     woy = getWOYFromEpoch(thedate)
+#     year = getYearFromEpoch(thedate)
+#     weekAndYear = round(woy * 0.01,2) + year
+#     weekAndYear = str(weekAndYear)
+#     if len(weekAndYear) == 6:
+#         weekAndYear += '0' 
+#     data = weekAndYear
 
-# 	wks=10000
-# 	global woy_hash_table_forward
-# 	if woy_hash_table_forward is None:
-# 		KILL_ON = getYearFromEpoch( time.time() ) + 100
-# 		woy_hash_table_forward = {}
-# 		def gen_woy_f( y, wy ):
-# 			wy+=1
-# 			if wy == 53:
-# 				wy=1
-# 				y+=1
-# 			if wy <= 9:
-# 				z = str(y)+'.0'+str(wy)
-# 			else:
-# 				z = str(y)+'.'+str(wy)
-# 			return y, wy, z
-# 		i=0
-# 		epoch=time.time()
-# 		y = int(getYearFromEpoch( float(epoch) ))
-# 		wy = int(getWOYFromEpoch(  float(epoch)  ))
+#     wks=10000
+#     global woy_hash_table_forward
+#     if woy_hash_table_forward is None:
+#         KILL_ON = getYearFromEpoch( time.time() ) + 100
+#         woy_hash_table_forward = {}
+#         def gen_woy_f( y, wy ):
+#             wy+=1
+#             if wy == 53:
+#                 wy=1
+#                 y+=1
+#             if wy <= 9:
+#                 z = str(y)+'.0'+str(wy)
+#             else:
+#                 z = str(y)+'.'+str(wy)
+#             return y, wy, z
+#         i=0
+#         epoch=time.time()
+#         y = int(getYearFromEpoch( float(epoch) ))
+#         wy = int(getWOYFromEpoch(  float(epoch)  ))
 		
-# 		tdy0 = _.friendlyDate( time.time() ).split(' ')[0]
-# 		woy_hash_table_forward[  tdy0  ] = 'today'
-# 		woy_hash_table_forward[  gen_days_2be(1)  ] = 'tomorrow'
+#         tdy0 = _.friendlyDate( time.time() ).split(' ')[0]
+#         woy_hash_table_forward[  tdy0  ] = 'today'
+#         woy_hash_table_forward[  gen_days_2be(1)  ] = 'tomorrow'
 
-# 		if wy <= 9:
-# 			woy_hash_table_forward[  str(y)+'.0'+str(wy)  ] = 'this week'
-# 		else:
-# 			woy_hash_table_forward[  str(y)+'.'+str(wy)  ] = 'this week'
-# 		y, wy, z = gen_woy_f( y, wy )
-# 		woy_hash_table_forward[  z  ] = 'next week'
-# 		i+=1
-# 		while i<=wks :
-# 			i+=1
-# 			y, wy, z = gen_woy_f( y, wy )
-# 			ixx = i
-# 			tyrs = 0
-# 			tMs = 0
+#         if wy <= 9:
+#             woy_hash_table_forward[  str(y)+'.0'+str(wy)  ] = 'this week'
+#         else:
+#             woy_hash_table_forward[  str(y)+'.'+str(wy)  ] = 'this week'
+#         y, wy, z = gen_woy_f( y, wy )
+#         woy_hash_table_forward[  z  ] = 'next week'
+#         i+=1
+#         while i<=wks :
+#             i+=1
+#             y, wy, z = gen_woy_f( y, wy )
+#             ixx = i
+#             tyrs = 0
+#             tMs = 0
 
-# 			# ty = _.woy2dates( str( round(wy * 0.01,2) + y ) )[0].split(' ')[0]
-# 			# tMs = _.monthsDiff( ty, epoch )
-# 			# tmd = _.monthMath( epoch, tMs, '+' )
-# 			# ixx = abs(_.daysDiff( tmd, ty ))
-# 			# if tMs >= 12:
-# 			# 	tyrsZ = float(tMs / 12)
-# 			# 	tyrs = int(str(tyrsZ).split('.')[0])
-# 			# 	# ixx = i - ( tyrs*12 )
+#             # ty = _.woy2dates( str( round(wy * 0.01,2) + y ) )[0].split(' ')[0]
+#             # tMs = _.monthsDiff( ty, epoch )
+#             # tmd = _.monthMath( epoch, tMs, '+' )
+#             # ixx = abs(_.daysDiff( tmd, ty ))
+#             # if tMs >= 12:
+#             #     tyrsZ = float(tMs / 12)
+#             #     tyrs = int(str(tyrsZ).split('.')[0])
+#             #     # ixx = i - ( tyrs*12 )
 			
-# 			# tMs = int(str( tMs/12 ).split('.')[0])
+#             # tMs = int(str( tMs/12 ).split('.')[0])
 
 			
-# 			if i >= 52:
-# 				tyrsZ = float(i / 52)
-# 				tyrs = int(str(tyrsZ).split('.')[0])
-# 				ixx = i - ( tyrs*52 )
-# 			if ixx >= 4:
-# 				tMsZ = float(ixx / 4)
-# 				# tMs = _.monthsDiff(  )
-# 				tMs = int(str(tMsZ).split('.')[0])
-# 				ixx = ixx - ( tMs*4 )
-# 				# _.pr( '000-time_2be' )
-# 				# wmd = abs(_.daysDiff(   _.monthMath(      _.woy2dates( str( round(wy * 0.01,2) + y ) )[0]      , tMs, do='+' ), epoch   ))
-# 				# ixx = int(str( wmd/7 ).split('.')[0])
+#             if i >= 52:
+#                 tyrsZ = float(i / 52)
+#                 tyrs = int(str(tyrsZ).split('.')[0])
+#                 ixx = i - ( tyrs*52 )
+#             if ixx >= 4:
+#                 tMsZ = float(ixx / 4)
+#                 # tMs = _.monthsDiff(  )
+#                 tMs = int(str(tMsZ).split('.')[0])
+#                 ixx = ixx - ( tMs*4 )
+#                 # _.pr( '000-time_2be' )
+#                 # wmd = abs(_.daysDiff(   _.monthMath(      _.woy2dates( str( round(wy * 0.01,2) + y ) )[0]      , tMs, do='+' ), epoch   ))
+#                 # ixx = int(str( wmd/7 ).split('.')[0])
 				
 
-# 			thisAgo = []
-# 			if tyrs:
-# 				thisAgo.append( str(tyrs)+'Y' )
-# 			if tMs:
-# 				thisAgo.append( str(tMs)+'M' )
-# 			if ixx>0:
-# 				thisAgo.append( str(ixx)+'W' )
-# 			# thisAgo.append( 'ago' )
+#             thisAgo = []
+#             if tyrs:
+#                 thisAgo.append( str(tyrs)+'Y' )
+#             if tMs:
+#                 thisAgo.append( str(tMs)+'M' )
+#             if ixx>0:
+#                 thisAgo.append( str(ixx)+'W' )
+#             # thisAgo.append( 'ago' )
 
 
-# 			woy_hash_table_forward[  z  ] = ' '.join( thisAgo ) + ' >'
-# 			# woy_hash_table_forward[  z  ] = str(i)+' weeks ago'
-# 			if y > KILL_ON:
-# 				break
-# 	if not woy_hash_table_forward:
-# 		# _.pr(0,data)
-# 		return data
-# 	else:
-# 		if not data in woy_hash_table_forward:
-# 			# _.pr(1,data)
-# 			# printVarSimple(woy_hash_table_back)
-# 			return data
-# 		else:
+#             woy_hash_table_forward[  z  ] = ' '.join( thisAgo ) + ' >'
+#             # woy_hash_table_forward[  z  ] = str(i)+' weeks ago'
+#             if y > KILL_ON:
+#                 break
+#     if not woy_hash_table_forward:
+#         # _.pr(0,data)
+#         return data
+#     else:
+#         if not data in woy_hash_table_forward:
+#             # _.pr(1,data)
+#             # printVarSimple(woy_hash_table_back)
+#             return data
+#         else:
 
 # # dateMathEpoch
-# 			if woy_hash_table_forward[data] == 'this week':
-# 				ixD = _.friendlyDate( thedate ).split(' ')[0]
-# 				if ixD in woy_hash_table_forward:
-# 					return woy_hash_table_forward[ixD]
-# 			return woy_hash_table_forward[data]
+#             if woy_hash_table_forward[data] == 'this week':
+#                 ixD = _.friendlyDate( thedate ).split(' ')[0]
+#                 if ixD in woy_hash_table_forward:
+#                     return woy_hash_table_forward[ixD]
+#             return woy_hash_table_forward[data]
 
 
 # import _rightThumb._base3 as _
@@ -1304,11 +1279,11 @@ def gen_days_ago(days=1):
 	return tdy0
 	
 # def gen_woy( thisDate ):
-# 	thedate = _.autoDate(thisDate)
-# 	woy = getWOYFromEpoch(thedate)
-# 	year = getYearFromEpoch(thedate)
-# 	weekAndYear = round(woy * 0.01,2) + year
-# 	return str(weekAndYear)
+#     thedate = _.autoDate(thisDate)
+#     woy = getWOYFromEpoch(thedate)
+#     year = getYearFromEpoch(thedate)
+#     weekAndYear = round(woy * 0.01,2) + year
+#     return str(weekAndYear)
 
 
 

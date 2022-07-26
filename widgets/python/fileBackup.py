@@ -201,6 +201,8 @@ def PRE_BACKUP_PROCESSING( path ):
 		parts.reverse()
 		filename = parts[0]
 		bk = _v.stmp+os.sep+'_temp_auto_clean_fileBackup_'+filename
+		_.pr(bk,c='ColorBold.gray')
+		# sys.exit()
 		if os.path.isfile( bk ):
 			return None
 
@@ -215,12 +217,20 @@ def PRE_BACKUP_PROCESSING( path ):
 			if path.endswith( ex ):
 				_.colorThis( 'PROCESSED: registered python template', 'Background.yellow' )
 				thisExampleVX = vx
+		thisExampleVX_NEW=False
+		if thisExampleVX is None:
+			if '_rightThumb._base3' in _.getText( path, raw=True ):
+				thisExampleVX='3'
+				thisExampleVX_NEW=True
+			
 
-		if not thisExampleVX is None:
+		if not thisExampleVX is None or thisExampleVX_NEW:
 			theExampleLines = []
 			template = _.getText( path, raw=True ).split('\n')
-			start = '### EXAMPLE: START'
-			end = '### EXAMPLE: END'
+			start = '#b)--> examples'
+			end = '#e)--> examples'
+			# start = '### EXAMPLE: START'
+			# end = '### EXAMPLE: END'
 			active = False
 			theExampleLines.append('# construct registration')
 			theExampleLines.append('# appDBA = __name__')
@@ -233,9 +243,65 @@ def PRE_BACKUP_PROCESSING( path ):
 					row = _str.totalClean( row )
 					if len(row) and row.startswith('#') and not original in theExampleLines:
 						theExampleLines.append( original )
+						# print('xXx',row)
 				if end in row:
 					active = False
 			# del template
+			if thisExampleVX_NEW:
+				lines=[]
+				for line in template:
+					if not len(line.replace(' ','').replace('\r','').replace('\n','').replace('\t','')): line=''
+					if not line in theExampleLines:lines.append(line)
+				xFiles = '\n'.join( lines )
+				# while '########################################################################################\n\n' in xFiles: xFiles=xFiles.replace('########################################################################################\n\n','########################################################################################\n')
+				while '\n\n' in xFiles: xFiles=xFiles.replace('\n\n','\n')
+				xFiles=xFiles.replace('########################################################################################\n########################################################################################','########################################################################################')
+				# bk = _v.stmp+os.sep+''+filename
+				_.saveText( template, bk )
+
+				
+				add_line_before = [
+										'#b)-->',
+										'########################################################################################',
+										'_.appInfo[',
+										# '',
+				]
+				add_line_after = [
+										'# ## {C3P0D40fAe8B} ##',
+										'#!/usr/bin/python3',
+										'#e)-->',
+										'#n)--> start',
+										# '',
+				]
+
+				lines = []
+				for line in xFiles.split('\n'):
+					cl_test=line.replace(' ','').replace('\r','').replace('\n','').replace('\t','')
+					for rel_str in add_line_before:
+						if cl_test.startswith(rel_str.replace(' ','')): lines.append('')
+					if cl_test.startswith('def') and cl_test.endswith('):'): lines.append('')
+
+					lines.append(line)
+
+					for rel_str in add_line_after:
+						if cl_test.startswith(rel_str.replace(' ','')): lines.append('')
+
+				# _.saveText(xFiles,path)
+				xFiles = '\n'.join(lines)
+				while '\n\n\n' in xFiles: xFiles=xFiles.replace('\n\n\n','\n\n')
+
+				_this_app_ = __.path(path,file=True)
+				xFiles=xFiles.replace('thisApp.py',_this_app_)
+				xFiles=xFiles.replace('thisApp ',_this_app_.replace('.py','')+' ')
+				if "'created': None," in xFiles:
+					# xFiles = xFiles.replace( "'created': '0000-00-00',", "'created': '0000-00-00',".replace('0000-00-00',_.isDate(os.path.getctime(path),f='date')) )
+					xFiles = xFiles.replace( "'created': None,", "'created': None,".replace('None',str(os.path.getctime(path))) )
+					
+
+				_.saveText(xFiles,path)
+
+				_.pr('cleaned template stuff with new algorithm',c='Background.purple')
+				_.pr('bk:',bk,c='Background.purple')
 			pass
 			if len(theExampleLines):
 				# ef = _v.myTables + os.sep + _v.py_examples
@@ -259,6 +325,7 @@ def PRE_BACKUP_PROCESSING( path ):
 							'examples': theExampleLines,
 				}
 				# _.pr( data )
+
 				_.saveTable(   data,  _v.py_examples.replace( _v.import_delim , thisExampleVX  )   )
 				# del data
 				# del theExampleLines
@@ -352,8 +419,8 @@ def PRE_BACKUP_PROCESSING( path ):
 
 				if method == 2:
 
-					start = '### EXAMPLE: START'
-					end = '### EXAMPLE: END'
+					start = '#b)--> examples'
+					end = '#e)--> examples'
 					for row in file:
 						shouldAdd = False
 						row = row.replace( '\n', '' )

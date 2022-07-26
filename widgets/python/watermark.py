@@ -220,7 +220,8 @@ def action():
 			files.append(file)
 	if _.switches.isActive('Folders'):
 		for folder in _.switches.values('Folders'):
-			files.append( folder, r=_.switches.isActive('Recursive') )
+			for fi in _.fo( folder, r=_.switches.isActive('Recursive')  ):
+				files.append( fi )
 	for path in files:
 		if _.showLine(path):
 			process(path)

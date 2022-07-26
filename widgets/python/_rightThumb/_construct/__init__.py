@@ -14,7 +14,7 @@ import time,signal,sys,platform
 tz = str(time.strftime("%z")).replace(':','')
 signal.signal(signal.SIGINT, lambda x, y: sys.exit(0))
 
-
+banner=None
 
 autoCreationConfiguration = {
                             'backup': False,

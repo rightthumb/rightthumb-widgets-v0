@@ -9,7 +9,6 @@
 #    - Scott Taylor Reph, RightThumb.com
 # ###########################################################################
 # ## {C3P0D40fAe8B} ##
-
 ##################################################
 import os, sys, time
 ##################################################
@@ -37,7 +36,6 @@ def appSwitches():
 	# _.switches.register( 'Files', '-f,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=True )
 	### EXAMPLE: END
 
-### EXAMPLE: START
 # _.switches.trigger( 'Files', _.myFileLocations, vs=True )
 # 	finds the file in probable locations
 # 	and 
@@ -50,7 +48,6 @@ def appSwitches():
 # 					pipe
 # 					files
 # 					tables
-### EXAMPLE: END
 _.autoBackupData = __.setting('receipt-log')
 __.releaseAcquiredData = __.setting('receipt-file')
 __.myFileLocations_SKIP_VALIDATION = False
@@ -65,13 +62,17 @@ __.switch_raw = []
 
 _.appInfo[focus()] = {
 	# 'app': '7facG-jo0Cxk',
-	'file': 'thisApp.py',
+	'file': 'make-pipe.py',
 	'liveAppName': __.thisApp( __file__ ),
-	'description': 'Changes the world',
+ 	'description': 'pipe make',
 		# _.ail(1,'subject')+
 		# _.aib('one')+
 	'categories': [
-						'DEFAULT',
+						'pipe',
+						'make',
+						'generate',
+						'code',
+						'tool',
 				],
 	'usage': [
 						# 'epy another',
@@ -113,11 +114,9 @@ _.appData[focus()] = {
 					'table': {'sent': [], 'received': [] }, 
 		},
 	}
-### EXAMPLE: START
 # _.appInfo[focus()]['examples'].append( 'p thisApp -file file.txt' )
 
 # _.appInfo[focus()]['columns'].append( {'name': 'name', 'abbreviation': 'n'} )
-### EXAMPLE: END
 
 
 def registerSwitches( argvProcessForce=False ):
@@ -175,7 +174,6 @@ if __name__ == '__main__':
 _.postLoad( __file__ )
 
 ########################################################################################
-### EXAMPLE: START
 # data = _.tables.returnSorted( 'data', 'd.timestamp', data )
 # _.switches.fieldSet( 'Long', 'active', True )
 # _.tables.register( 'data', table )
@@ -197,21 +195,80 @@ _.postLoad( __file__ )
 # date = _.friendlyDate( theDate )
 # _.addComma()
 # 													if platform.system() == 'Windows':
-### EXAMPLE: END
 ########################################################################################
 # START
-
+cows='''flaming-sheep
+apt
+tux
+sheep
+ren
+milk
+dragon
+vader-koala
+bud-frogs
+koala
+elephant
+snowman
+moose
+unipony
+kangaroo
+turkey
+ghostbusters
+cheese
+turtle
+eyes
+pony-smaller
+hellokitty
+cower
+three-eyes
+www
+elephant-in-snake
+skeleton
+moofasa
+suse
+luke-koala
+unipony-smaller
+mech-and-cow
+daemon
+stegosaurus
+duck
+fox
+vader
+cock
+default
+kiss
+gnu
+pony
+calvin
+bunny
+kosh
+stimpy'''.split('\n')
+cow=-1
+def have_a_cow():
+	global cows
+	global cow
+	cow+=1
+	try: cows[cow]
+	except Exception as ee: cow = 0
+	return cows[cow]
 
 
 def action():
-
+	cnt=0
 	text = _.ci(' '.join( _.switches.values('Text') ))
 
 	for i,row in enumerate( _.isData(r=1) ):
-		line = text.replace( '{{}}', row.replace(' ','_') )
-		line = line.replace( '{}', row )
-		_.pr(line)
+		if _.showLine(row):
+			line = text.replace( '{{}}', row.replace(' ','_') )
+			line = line.replace( '{}', row )
+			if '{cow}' in line:
+				line=line.replace('{cow}',have_a_cow())
+			if '{n}' in line:
+				cnt+=1
+				line=line.replace('{n}',_.zeros3(cnt,len(_.isData())))
 
+			line = line.replace( '{}', row )
+			_.pr(line)
 
 
 
@@ -219,8 +276,6 @@ def action():
 if __name__ == '__main__':
 	action()
 	__.isExit()
-
-
 
 
 

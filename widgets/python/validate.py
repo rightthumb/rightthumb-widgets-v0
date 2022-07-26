@@ -1,5 +1,14 @@
 #!/usr/bin/python3
-
+validate='''
+ **      **     **     **       ** *******       **     ********** ********
+/**     /**    ****   /**      /**/**////**     ****   /////**/// /**///// 
+/**     /**   **//**  /**      /**/**    /**   **//**      /**    /**      
+//**    **   **  //** /**      /**/**    /**  **  //**     /**    /******* 
+ //**  **   **********/**      /**/**    /** **********    /**    /**////  
+  //****   /**//////**/**      /**/**    ** /**//////**    /**    /**      
+   //**    /**     /**/********/**/*******  /**     /**    /**    /********
+	//     //      // //////// // ///////   //      //     //     //////// 
+'''
 # ## {R2D2919B742E} ##
 # ###########################################################################
 # What if magic existed?
@@ -27,6 +36,16 @@ __.registeredApps.append( focus() )
 import _rightThumb._base3 as _
 _.load()
 ##################################################
+banner=_.Banner(validate); 
+goss=banner.goss
+# goss('-\t search hotkeys with the hk command')
+# goss('-\t\t hk space')
+# goss('-\t\t\t remove-eol-space ctrl,2 space e')
+# goss('-\t\t\t dup-spaces ctrl win s')
+# goss('-\t\t\t clip-single-space win shift alt s')
+# goss('-\t\t\t clip-double-space win shift alt d')
+# goss('-\t\t\t clip-dup-spaces ctrl,2 r d s')
+##################################################
 import _rightThumb._vars as _v
 import _rightThumb._string as _str
 ##################################################
@@ -50,7 +69,7 @@ __.pre_error = False
 _.appInfo[focus()] = {
 	'file': 'validate.py',
 	'liveAppName': __.thisApp( __file__ ),
- 	'description': 'validate code',
+	'description': 'validate code',
 	'categories': [
 						'validate',
 						'code',
@@ -79,15 +98,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
-				       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					   # { 'name': 'name', 'abbreviation': 'n' },
+					   # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					   # 'this',
+					   # 'app',
 	],
 	'notes': [
-				       # {},
+					   # {},
 	],
 }
 
@@ -292,6 +311,8 @@ _code = _.regImp( __.appReg, '_rightThumb._auditCodeBase' )
 
 ########################################################################################
 if __name__ == '__main__':
+	banner.pr()
+	# banner.gossip()
 	action()
 
 

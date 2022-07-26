@@ -35,6 +35,9 @@ def sw():
     _.switches.register( 'Open', '-o,-open' )
     _.switches.register( 'Print', '-p,-print' )
     _.switches.register( 'Change-Dir', '-cd' )
+    _.switches.register( 'Cows', '-cow,-cows' )
+    _.switches.register( 'mf', '-mf' )
+    _.switches.register( 'Color', '-color', 'mf' )
 
 # __.setting('require-list',['Files,Plus','File,Has']) # todo
 # __.setting('require-list',['Pipe','Files','Plus'])
@@ -265,7 +268,7 @@ def files(fi):
             # if 'n' in ask.lower(): save = False
         if save:
             if os.path.isfile(path):
-                t2 = _.getText(path,raw=True)+'\n\n'+'##### --> timestamp#> '+_.isDate(time.time(),f='iso')+'\n\n'; txt=t2+txt;
+                t2 = _.getText(path,raw=True)+'\n\n'+'##### #timestamp)--> '+_.isDate(time.time(),f='iso')+'\n\n'; txt=t2+txt;
             _.saveText( txt, path ); _.pr( path, c='cyan' )
         # return None
     if path.lower().endswith('.md'):
@@ -323,6 +326,81 @@ def action():
         else: _open.switch('Files',no); _open.action();
 
 
+colors='''ColorBold.gray
+ColorBold.red
+ColorBold.green
+ColorBold.yellow
+ColorBold.blue
+ColorBold.magenta
+ColorBold.cyan
+ColorBold.white
+Color.purple
+Color.cyan
+Color.darkcyan
+Color.blue
+Color.green
+Color.yellow
+Color.red
+Color.bold
+Background.red
+Background.green
+Background.yellow
+Background.blue
+Background.purple
+Background.light_blue
+Background.grey
+Background.black
+BackgroundGrey.black
+BackgroundGrey.red
+BackgroundGrey.green
+BackgroundGrey.brown
+BackgroundGrey.blue
+BackgroundGrey.magenta
+BackgroundGrey.cyan
+BackgroundGrey.gray
+BackgroundGreyBold.black
+BackgroundGreyBold.red
+BackgroundGreyBold.green
+BackgroundGreyBold.blue
+BackgroundGreyBold.magenta
+BackgroundGreyBold.cyan
+BackgroundGreyBold.gray'''.split('\n')
+
+def have_a_cow():
+    global colors
+    # sys.exit()
+    os=__.imp('os.path.isdir')
+    fo=_v.rtp+'projects/cows/flock/'.replace('/',os.sep)
+    # print(fo)
+    if os.path.isdir(fo):
+        files=[]
+        for path in _.fo(fo):
+            files.append(path)
+        _.pr(_.getText(random.choice(files),raw=True),c=random.choice(colors))
+
+def have_some_cows():
+    # _.clear()
+    cows=random.choice([1,2,3,4])
+    if _.switches.isActive('Cows'):
+        if _.switches.values('Cows'):
+            cows=int(_.switches.value('Cows'))
+
+    i=0
+    while not i==cows:
+        i+=1
+        have_a_cow()
+
+
+import _rightThumb._banners as _banners
+
+        
+
+
+            # print(path)
+
+
+# C:\\Users\\Scott\\.rt\\profile\\projects\\cows\\flock
+
     # _.pr(path)
 
 # def input2(txt=''):
@@ -342,11 +420,24 @@ def action():
 #     return line
 os=__.imp('os.system')
 os=__.imp('os.chdir')
-
+import random
 # p organize-files-by-date
 
 ########################################################################################
 if __name__ == '__main__':
+    if _.switches.isActive('mf'):
+        if _.switches.values('mf'):
+            clear=1
+        else: clear=0
+        if _.switches.isActive('Color'):
+            _banners.mothafucka(clear,c=_.switches.value('Color'))
+        else:
+            _banners.mothafucka(clear)
+
+        sys.exit()
+    if _.switches.isActive('Cows'):
+        have_some_cows()
+        sys.exit()
     action()
     __.isExit()
 

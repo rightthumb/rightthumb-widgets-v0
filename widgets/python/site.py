@@ -35,7 +35,7 @@ def sw():
 	# _.switches.register( 'Files', '-f,-file,-files','file.txt',  description='glob', isRequired=True )
 	_.switches.register( 'Files', '-f,-file,-files','vps-tf', isRequired=True )
 	_.switches.register( 'mkdir', '-mkdir' )
-	_.switches.register( 'Servers', '-v,-srv,-server', 'b h m t' )
+	_.switches.register( 'Servers', '-v,-srv,-server,-vps', 'b h m t' )
 	_.switches.register( 'Print', '-print' )
 	_.switches.register( 'Status', '-status' )
 
@@ -144,6 +144,7 @@ def urlpr(url):
 
 
 def meta_scan(path,end):
+	global folder
 	global meta
 	if not _.v.quiet:
 		_.pr(path,c='cyan')
@@ -180,6 +181,7 @@ def meta_scan(path,end):
 	return urlpr(url)
 
 def process(path,end='',ft=None):
+	global folder
 	global meta
 	# _.pr(path,c='cyan')
 	meta = {}
@@ -187,7 +189,7 @@ def process(path,end='',ft=None):
 		file = os.path.abspath(path)
 	except Exception as e:
 		file = path
-	folder = __.path(path,pop=True)
+	# folder = __.path(path,pop=True)
 
 	meta_scan(path,end)
 

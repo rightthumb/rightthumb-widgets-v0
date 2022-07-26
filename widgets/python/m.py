@@ -48,6 +48,7 @@ def appSwitches():
 	_.switches.register('Alias', '-a,-i,-alias','d,sendto,docs')
 	_.switches.register('Print', '-print')
 	_.switches.register('Clean', '--c')
+	_.switches.register('Folder', '-f,-fo,-folder')
 	
 
 	
@@ -157,7 +158,7 @@ if not sys.stdin.isatty():
 # 	_.saveTableDB( log, 'bookmarks_index_log.tables', p=0 )
 
 # def action():
-# 	p = _v.sanitizeFolder( os.getcwd() )
+# 	p = _v.sanitizeFolder( folder )
 # 	b = _v.bookmarkFormat.replace( 'ALIASHERE', _.switches.value('Alias') )
 	
 # 	if len(_.switches.value('Alias')) == 0:
@@ -197,7 +198,7 @@ if not sys.stdin.isatty():
 # 				index['paths'][p].append( _.switches.value('Alias') )
 # 		_.saveTableDB( index, 'bookmarks.index', p=0 )
 # 		if not _.switches.isActive('Clean'):
-# 			_.colorThis( [  _.switches.value('Alias'), os.getcwd()  ], 'cyan' )
+# 			_.colorThis( [  _.switches.value('Alias'), folder  ], 'cyan' )
 
 
 # 	if _.switches.isActive('Print'):
@@ -207,6 +208,12 @@ if not sys.stdin.isatty():
 
 
 def action():
+
+	if _.switches.isActive('Folder'):
+		folder = _.switches.values('Folder')[0]
+	else:
+		folder = os.getcwd()
+
 	made={}
 	if 'wprofile' in _v.config_hash:
 		made['h'] = 1
@@ -226,7 +233,7 @@ def action():
 		except Exception as e:
 			pass
 
-	x = _bm.Bookmarks( _.switches.value('Alias'), os.getcwd() ).save()
+	x = _bm.Bookmarks( _.switches.value('Alias'), folder ).save()
 
 	if not _.isWin:
 		bashrc_path = os.getenv('HOME') + _v.slash + '.bashrc'

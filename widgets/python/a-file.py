@@ -9,7 +9,6 @@
 #    - Scott Taylor Reph, RightThumb.com
 # ###########################################################################
 # ## {C3P0D40fAe8B} ##
-
 ##################################################
 import sys, time
 ##################################################
@@ -26,14 +25,9 @@ _.load()
 _v = __.imp('_rightThumb._vars')
 _str = __.imp('_rightThumb._string')
 ##################################################
-
 def sw():
     pass
-    ### EXAMPLE: START
-    # _.switches.register( 'Input', '-i' )
     _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name', description='Files' )
-    # _.switches.register( 'Files', '-f,-fi,-file,-files' )
-    ### EXAMPLE: END
 
 # __.setting('require-list',['Files,Plus','File,Has']) # todo
 __.setting('require-list',['Pipe','Files'])
@@ -48,7 +42,7 @@ __.setting('switch-raw',[])
 
 _.appInfo[focus()] = {
     # 'app': '8facG-jo0Cxk',
-    'file': 'thisApp.py',
+    'file': 'a-file.py',
     'liveAppName': __.thisApp( __file__ ),
     'description': 'Changes the world',
         # _.ail(1,'subject')+
@@ -110,35 +104,12 @@ _.l.conf('clean-pipe',True)
 _.l.sw.register( triggers, sw )
 
 ########################################################################################
-### EXAMPLE: START
 
-#b)--> examples
-#d)--> code hints to quickly get started
-    #n)--> inline examples
-        # if _.switches.isActive('Test'): test(); return None;
-        # result=[]; result=[ _.pr(line) for i, line, bi in _.numerate( _.isData(r=0) )]
-        # bk=[];[  bk.append(rec['backup']) for rec in backupLog if path == rec['file']]; bk=bk[-1];
-        # a=(1 if True else 0) <--# 
-        #!)--> m=[[row[i] for row in matrix] for i in range(4)]
 
-    #n)--> python globals
-        # for k in globals(): print(k, eval(k) )
-
-    #n)--> webpage from url
-        # requests=__.imp('requests.post')
-        #!)--> data=str(requests.post(url,data={}).content,'iso-8859-1')
-
-    #n)--> import and backup example
-        # _bk = _.regImp( focus(), 'fileBackup' ); _bk.switch( 'Silent' ); _bk.switch( 'isRunOnce' ); _bk.switch( 'Flag', 'APP' ); _bk.switch( 'DoNotSchedule' )
-        # _bk.switch( 'Input', path ); bkfi = _bk.action();
-#e)--> examples
-
-### EXAMPLE: END
 ########################################################################################
 # START
 
 import _rightThumb._dir as _dir
-_dir.sha256=True
 _fi_len = _.regImp( __.appReg, 'fi-len' )
 _fi_len.switch('Just-Lines')
 _fi_len.imp.print_info=False
@@ -150,10 +121,9 @@ def action():
     for path in _.isData(r=0):
         # _.linePrint(c='yellow')
         _fi_len.switch( 'Input', path ); _fi_len.action();
-        info = _dir.info(path,md5=True,mini=True)
+        info = _dir.info(path,md5=True,mini=True,sha256=True)
         del info['accessed']
         del info['ae']
-
 
 
 
@@ -165,15 +135,10 @@ def action():
 
 
 
-
-
-
-
 ########################################################################################
 if __name__ == '__main__':
     action()
     __.isExit()
-
 
 
 

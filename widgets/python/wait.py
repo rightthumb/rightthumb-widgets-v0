@@ -10,13 +10,7 @@
 # ###########################################################################
 # ## {C3P0D40fAe8B} ##
 
-##################################################
-# What if magic existed?
-# What if a place existed where your every thought and dream come to life.
-# There is only one catch: it has to be written down.
-# Such a place exists, it is called programming.
-# - Scott Taylor Reph (rightthumb.com)
-##################################################
+
 import os, sys, time
 ##################################################
 import _rightThumb._construct as __
@@ -37,13 +31,36 @@ import _rightThumb._string as _str
 ##################################################
 
 def appSwitches():
-	_.switches.register( 'Wait', '-w,-wait' )
+	_.switches.register( 'Wait', '''
+										-w,
+										-wait,
+
+										-sleep,
+										
+										-t,
+										-timout,
+										
+										-d,
+										-duration,
+										
+										-l,
+										-length,
+										
+										-i,
+										-input,
+										
+										-f,
+										-for,
+										
+										-a,
+										-amount
+						'''.replace(' ','').replace('\n','').replace('\t','') )
+	_.switches.register( 'Print', '-print' )
 	pass
 	### EXAMPLE: START
 	# _.switches.register( 'Files', '-f,-file,-files','file.txt', isPipe='glob,name,data,clean', description='Files' )
 	### EXAMPLE: END
 
-### EXAMPLE: START
 # _.switches.trigger( 'Files', _.myFileLocations, vs=True )
 # 	finds the file in probable locations
 # 	and 
@@ -56,7 +73,6 @@ def appSwitches():
 # 					pipe
 # 					files
 # 					tables
-### EXAMPLE: END
 _.autoBackupData = __.autoCreationConfiguration['backup']
 __.releaseAcquiredData = __.autoCreationConfiguration['logs'] 
 __.myFileLocations_SKIP_VALIDATION = False
@@ -70,11 +86,12 @@ __.switch_raw = []
 
 
 _.appInfo[focus()] = {
-	'file': 'thisApp.py',
+	'file': 'wait.py',
 	'liveAppName': __.thisApp( __file__ ),
-	'description': 'Changes the world',
+ 	'description': 'wait time.sleep(n)',
 	'categories': [
-						'DEFAULT',
+						'wait',
+						'time.sleep(n)',
 				],
 	'usage': [
 						# 'epy another',
@@ -116,11 +133,9 @@ _.appData[focus()] = {
 					'table': {'sent': [], 'received': [] }, 
 		},
 	}
-### EXAMPLE: START
 # _.appInfo[focus()]['examples'].append( 'p thisApp -file file.txt' )
 
 # _.appInfo[focus()]['columns'].append( {'name': 'name', 'abbreviation': 'n'} )
-### EXAMPLE: END
 
 
 def registerSwitches( argvProcessForce=False ):
@@ -177,7 +192,6 @@ if __name__ == '__main__':
 _.postLoad( __file__ )
 
 ########################################################################################
-### EXAMPLE: START
 # data = _.tables.returnSorted( 'data', 'd.timestamp', data )
 # _.switches.fieldSet( 'Long', 'active', True )
 # _.tables.register( 'data', table )
@@ -199,14 +213,16 @@ _.postLoad( __file__ )
 # date = _.friendlyDate( theDate )
 # _.addComma()
 # 													if platform.system() == 'Windows':
-### EXAMPLE: END
 ########################################################################################
 # START
 
 
 
 def action():
-	time.sleep( int(_.switches.value('Wait')) )
+	if _.switches.isActive('Print'):
+		_.waiting( int(_.switches.value('Wait')) )
+	else:
+		time.sleep( int(_.switches.value('Wait')) )
 
 
 
@@ -214,7 +230,6 @@ def action():
 if __name__ == '__main__':
 	action()
 	__.isExit()
-
 
 
 

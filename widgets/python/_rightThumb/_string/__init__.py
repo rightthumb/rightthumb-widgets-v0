@@ -1229,9 +1229,14 @@ def trim(string):
     string = cleanBE(string,' ')
     if not string: return string
     testing=[' ', '\t', '\n']
-    while string[0] in testing or string[-1] in testing:
-        for tst in testing:
-            string = cleanBE(string,tst)
+    if not len(string.replace(' ','').replace('\r','').replace('\n','').replace('\t','')): return ''
+    try:
+        while string[0] in testing or string[-1] in testing:
+            for tst in testing: string = cleanBE(string,tst)
+    except Exception as e:
+        try: _
+        except Exception as e: import _rightThumb._base3 as _
+        _.pr('trim:',e,c='red')
     return string
 
 
@@ -1274,11 +1279,36 @@ def sh(string):
 
     return string
 
+# class st(str):
+#     def sh(self): self=do('.sh',self); return self.string(self);
+#     def all(self,a,b): self=do('all',self,a,b); return self.string(self);
+#     def cleanAll(self,a,b): self=do('cleanAll',self,a,b); return self.string(self);
+#     def dup(self,a): self=do('dup',self,a); return self.string(self);
+#     def be(self,a): self=do('be',self,a); return self.string(self);
+#     def b(self,a): self=do('b',self,a); return self.string(self);
+#     def e(self,a): self=do('e',self,a); return self.string(self);
+#     def alpha(self): self=do('n',self); return self.string(self);
+#     def num(self): self=do('nu',self); return self.string(self);
+#     def remove(self,a): self=do('remove',self,a); return self.string(self);
+#     def ra(self,a): self=do('remove',self,a); return self.string(self);
+#     def json(self):
+#         simplejson = __.imp('simplejson')
+#         json=simplejson.loads(self)
+#         isa='dic'
+#         if do('.sh',self).replace(' ','').replace('\n','').startswith('{'):
+#             isa='dic'
+#         elif do('.sh',self).replace(' ','').replace('\n','').startswith('['):
+#             isa='lis'
+#         self=json
+#         if isa=='lis': return lis(self);
+#         if isa=='dic': return dic(self);
+#         return 
+
 class st(str):
     def sh(self): self=do('.sh',self); return string(self);
     def all(self,a,b): self=do('all',self,a,b); return string(self);
     def cleanAll(self,a,b): self=do('cleanAll',self,a,b); return string(self);
-    def dup(self,a): self=do('dup',self,a); return string(self);
+    def dup(self,a): self=do('dup',self,a); return self.string(self);
     def be(self,a): self=do('be',self,a); return string(self);
     def b(self,a): self=do('b',self,a); return string(self);
     def e(self,a): self=do('e',self,a); return string(self);
@@ -1298,8 +1328,6 @@ class st(str):
         if isa=='lis': return lis(self);
         if isa=='dic': return dic(self);
         return 
-
-
 
 class dic(dict):
     def string(self):
