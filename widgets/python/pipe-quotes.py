@@ -22,19 +22,19 @@ def sw():
     #e)--> examples
 
 _.appInfo[focus()] = {
-    'file': 'thisApp.py',
+    'file': 'pipe-quotes.py',
     'liveAppName': __.thisApp( __file__ ),
     'description': 'Changes the world',
     'categories': [
                         'DEFAULT',
                 ],
     'examples': [
-                        _.hp('p thisApp -file file.txt'),
+                        _.hp(' p files + *.py --c | p f3 + os.environ |  p pipe-quotes'),
                         _.linePrint(label='simple',p=0),
                         '',
     ],
     'created': None,
-    'tested': None,
+    'tested': 1658904289.9009602,
 }
 
 #b)--> registration
@@ -71,18 +71,27 @@ template.info(focus()); exec(  template.triggers()  ); _.l.sw.register( triggers
 ########################################################################################
 #n)--> start
 
+def process():
+    text='\n'.join( _.isData(r=0) )
+    validator._err_ = False
+    index = validator.createIndex( text, 'javascript', skipLoad=True, simple=False, A=None, B=True, C=None )
+    for k in validator.identity['location']['open']:
+        quote = validator.assetSnipetClean(k,validator.identity['location']['open'][k])
+        if quote.startswith('"') or quote.startswith("'"):
+            quote=quote[:-1]; quote=quote[1:];
+            if _.showLine(quote): _.pr(quote)
 def action():
-    load(); global c3po;
-
-    #--> iterate
-    for subject in _.isData(r=0): _.pr(subject)
+    try: process()
+    except Exception as e: pass
     
 
-def load():
-    global c3po
-    c3po = _.getTable( 'table' )
-    #--> print table
-    _.pt(c3po)
+
+    
+_code = _.regImp( __.appReg, '_rightThumb._auditCodeBase' )
+validator = _code.imp.Validator()
+
+
+
 
 
 ##################################################

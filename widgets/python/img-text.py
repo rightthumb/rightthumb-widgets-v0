@@ -19,6 +19,9 @@ def sw():
     #b)--> examples
     # _.switches.register( 'Input', '-i' )
     # _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=True )
+    
+    #n)--> epyi base -file template
+    
     #e)--> examples
 
 _.appInfo[focus()] = {
@@ -59,7 +62,7 @@ template.info(focus()); exec(  template.triggers()  ); _.l.sw.register( triggers
         #!)--> data=str(requests.post(url,data={}).content,'iso-8859-1')
 
     #n)--> import and backup example
-        # _bk = _.regImp( focus(), 'fileBackup' ); _bk.switch( 'Silent' ); _bk.switch( 'isRunOnce' ); _bk.switch( 'Flag', 'APP' ); _bk.switch( 'DoNotSchedule' )
+        # _bk = _.regImp( focus(), 'fileBackup' ); _bk.switch( 'Silent' ); _bk.switch( 'isRunOnce' ); _bk.switch( 'Flag', focus() ); _bk.switch( 'DoNotSchedule' )
         # _bk.switch( 'Input', path ); bkfi = _bk.action();
     
     #n)--> inline
@@ -71,19 +74,28 @@ template.info(focus()); exec(  template.triggers()  ); _.l.sw.register( triggers
 ########################################################################################
 #n)--> start
 
+
+from PIL import Image
+import pytesseract
+
+
+
+# Code From here: https://www.youtube.com/watch?v=kxHp5ng6Rgw
+
+
 def action():
-    load(); global c3po;
 
     #--> iterate
-    for subject in _.isData(r=0): _.pr(subject)
-    
+    for path in _.isData(r=0):
+        image = path
+        text = pytesseract.image_to_string(Image.open(image), lang="eng")
+        print(text)
 
-def load():
-    global c3po
-    c3po = _.getTable( 'table' )
-    #--> print table
-    _.pt(c3po)
-
+# get dpi
+# identify -format '%x,%y\n' or5.jpg
+# tesseract or5.jpg recital --dpi 72
+# tesseract or5.jpg bold --dpi 72
+# tesseract or5.jpg bold --dpi 150
 
 ##################################################
 #b)--> examples
@@ -103,3 +115,10 @@ if __name__ == '__main__':
     #e)--> examples
     action()
     _.isExit(__file__)
+
+
+
+
+#eol)--> f660e2ae-df8c-42b9-bf38-f82ba67a8a44
+
+

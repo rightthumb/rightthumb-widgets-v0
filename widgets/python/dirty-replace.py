@@ -13,16 +13,17 @@
 #b)--> load
 from _rightThumb._base3 import template; exec(  template.header()  ); exec(  template.setting()  );
 #e)--> load
-
 def sw():
     pass
     #b)--> examples
-    # _.switches.register( 'Input', '-i' )
-    # _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=True )
+    _.switches.register( 'Replace', '-replace' )
+    _.switches.register( 'Insert', '-insert' )
+    _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name', description='Files', isRequired=True )
     #e)--> examples
+__.setting('require-list',['Pipe','Files'])
 
 _.appInfo[focus()] = {
-    'file': 'thisApp.py',
+    'file': 'dirty-replace.py',
     'liveAppName': __.thisApp( __file__ ),
     'description': 'Changes the world',
     'categories': [
@@ -71,18 +72,26 @@ template.info(focus()); exec(  template.triggers()  ); _.l.sw.register( triggers
 ########################################################################################
 #n)--> start
 
+os=__.imp('os.sep')
+
+def processFile(path):
+    if os.path.isfile(path):
+        file=_.getText(path,raw=True)
+        vr=' '.join(_.switches.values('Replace'))
+        vi=' '.join(_.switches.values('Insert'))
+        if vr in file:
+            _bk.switch( 'Input', path ); bkfi = _bk.action();
+            file=file.replace(vr,vi)
+            _.saveText( file, path )
+            # while vr in file: 
+
 def action():
-    load(); global c3po;
 
     #--> iterate
-    for subject in _.isData(r=0): _.pr(subject)
+    for path in _.isData(r=0): processFile(path)
     
 
-def load():
-    global c3po
-    c3po = _.getTable( 'table' )
-    #--> print table
-    _.pt(c3po)
+_bk = _.regImp( focus(), 'fileBackup' ); _bk.switch( 'Silent' ); _bk.switch( 'isRunOnce' ); _bk.switch( 'Flag', focus() ); _bk.switch( 'DoNotSchedule' )
 
 
 ##################################################
@@ -103,3 +112,5 @@ if __name__ == '__main__':
     #e)--> examples
     action()
     _.isExit(__file__)
+
+

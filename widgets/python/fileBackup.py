@@ -836,6 +836,9 @@ def action(path=None,flag=None):
 				_.colorThis(  [ 'registered: documentation file' ], 'Background.light_blue'  )
 				theFile = '\n'+_.getText( path, raw=True ).replace('!vault!','!V!').replace('!VAULT!','!V!').replace('!v!','!V!').replace('!crypt!','!V!').replace('!CRYPT!','!V!')
 				theFile = theFile.replace('\r','')
+				while '\t\n' in theFile:
+					theFile = theFile.replace('\t\n','\n')
+					while ' \n' in theFile: theFile = theFile.replace(' \n','\n')
 				# tF = theFile
 				if path.lower().endswith('.md'):
 					todo.append('\n___\n')
