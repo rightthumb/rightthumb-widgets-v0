@@ -524,6 +524,13 @@ def ask(data, doneselection=False, backupfile='', originalfile=''):
 					# _.pr( 'HERE', 1 )
 					cpResult = copyfile(data[int(selection)]['file'],newname)
 					origalFile = newname
+			if _.isWin:
+				try:
+					sp.Popen([   _v.sublime.replace('"','')   ,   data[int(selection)]['file'].replace('"','')  ])
+					_.waiting(3)
+				except Exception as e:
+					_.pr([   _v.sublime.replace('"','')   ,   data[int(selection)]['file'].replace('"','')  ])
+					_.pr('unable to open')
 			cpResult = copyfile(data[int(selection)]['backup'], data[int(selection)]['file'])
 			_.pr()
 			_.pr('\tRecovered')

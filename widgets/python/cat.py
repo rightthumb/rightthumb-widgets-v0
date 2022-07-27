@@ -35,7 +35,8 @@ import _rightThumb._string as _str
 
 def appSwitches():
 	pass
-	_.switches.register( 'Files', '-f,-file,-files','file.txt', isPipe='glob', description='Files' )
+	# _.switches.register( 'Files', '-f,-file,-files','file.txt', isPipe='glob', description='Files' )
+	_.switches.register( 'Files', '-f,-file,-files','file.txt', isPipe='name', description='Files' )
 	_.switches.register( 'Clean', '--c', 'noline' )
 	_.switches.register( 'Head', '-head', '10' )
 	_.switches.register( 'Tail', '-tail', '10' )
@@ -182,7 +183,8 @@ def action():
 	focus()
 	# _.pr(_.isData())
 	# sys.exit()
-	files = _.switches.values('Files')
+	# files = _.switches.values('Files')
+	files = _.isData()
 	if type(files[0]) == list:
 		files = files[0]
 	for i,filepath in enumerate(files):

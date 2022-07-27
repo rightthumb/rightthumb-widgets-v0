@@ -210,6 +210,68 @@ _.postLoad( __file__ )
 ########################################################################################
 # START
 
+
+def ws_line_cleaner_MF(data):
+    data=str(data)
+    data = data.replace('\r','')
+
+    lines5=[]
+    for i, line in enumerate(data.split('\n')):
+        tester=line.replace(' ','').replace('\r','').replace('\t','')
+        for elem in string.whitespace:
+            while elem in tester: tester = tester.replace(elem, '')
+        if len(tester) == 0:
+            line=''
+        lines5.append(line)
+    data5='\n'.join(lines5)
+    return data5
+
+def single_space_MF(data):
+    data = ws_line_cleaner_MF(data)
+    # print('while: b',type(data))
+    while '\n\n' in data:data=data.replace('\n\n','\n')
+    # print('while: e')
+    return data
+def py_space_fix_MF(xFiles):
+    add_line_before = [
+                            '#b)-->',
+                            '########################################################################################',
+                            '##################################################',
+                            '_.appInfo[',
+                            "if __name__ == '__main__':",
+                            # '',
+    ]
+    add_line_after = [
+                            '# ## {C3P0D'+'40fAe8B} ##',
+                            '#!/usr/bin/python3',
+                            '#e)-->',
+                            '#n)--> start',
+                            '##################################################',
+                            # '',
+    ]
+
+    lines = []
+    for line in xFiles.split('\n'):
+        cl_test=line.replace(' ','').replace('\r','').replace('\n','').replace('\t','')
+        
+        for rel_str in add_line_before:
+            if cl_test.startswith(rel_str.replace(' ','')): lines.append('')
+        if cl_test.startswith('def') and cl_test.endswith('):'): lines.append('')
+
+        lines.append(line)
+
+        for rel_str in add_line_after:
+            if cl_test.startswith(rel_str.replace(' ','')): lines.append('')
+        if line=='}': lines.append('')
+
+    # _.saveText(xFiles,path)
+    xFiles = '\n'.join(lines)
+    xFiles = xFiles.replace('##################################################\n\n\n##################################################','')
+    xFiles = xFiles.replace('##################################################\n\n##################################################','')
+    while '\n\n\n' in xFiles: xFiles=xFiles.replace('\n\n\n','\n\n')
+    return xFiles
+
+
 from pynput.keyboard import Key, KeyCode, Controller
 keyboard = Controller()
 
@@ -482,14 +544,7 @@ class CLIP:
         _copy = _.regImp( __.appReg, '-copy' )
         _paste = _.regImp( __.appReg, '-paste' )
         data  = _paste.imp.paste()
-        data = data.replace('\r','')
-
-        lines=[]
-        for line in data.split('\n'):
-            tester=line.replace(' ','').replace('\r','').replace('\n','').replace('\t','')
-            if not  tester:line=''
-
-        while data.count('\n\n'): date=data.replace('\n\n','\n')
+        data = single_space_MF(data)
         # data = _str.do('dup',data,'\n')
         _copy.imp.copy( data, p=0 )
 
@@ -546,7 +601,8 @@ class CLIP:
         _copy = _.regImp( __.appReg, '-copy' )
         _paste = _.regImp( __.appReg, '-paste' )
         data  = _paste.imp.paste()
-        data = cleaner(data,0)
+        # data = cleaner(data,0)
+        data = single_space_MF(data)
         data = data.replace( '\n', '\n\n' )
         _copy.imp.copy(  data  , p=0 )
 
@@ -573,8 +629,9 @@ class CLIP:
         _paste = _.regImp( __.appReg, '-paste' )
         data  = _paste.imp.paste()
 
-        data = data.replace('\r','')
-        data = _str.do('dup',data,'\n')
+        data = single_space_MF(data)
+        # data = data.replace('\r','')
+        # data = _str.do('dup',data,'\n')
 
         _copy.imp.copy(  data  , p=0 )
 
@@ -600,9 +657,10 @@ class CLIP:
         _copy = _.regImp( __.appReg, '-copy' )
         _paste = _.regImp( __.appReg, '-paste' )
         data  = _paste.imp.paste()
-        data = cleaner(data,0)
-        while '\n\n' in data:
-            data=data.replace('\n\n','\n')
+        data = single_space_MF(data)
+        # data = cleaner(data,0)
+        # while '\n\n' in data:
+        #     data=data.replace('\n\n','\n')
         _copy.imp.copy(  data  , p=0 )
 
 
@@ -1464,6 +1522,32 @@ function get__THETABLE( $ID_label ){
         _copy.imp.copy( result, p=0 )
 
 
+    def remove_py_comments_spaces(self):
+        _paste = _.regImp( __.appReg, '-paste' )
+        _copy = _.regImp( __.appReg, '-copy' )
+        text = _paste.imp.paste()
+        # text=_str.replaceDuplicate( text, '\n' )
+        text=ws_line_cleaner_MF(text)
+        text=text.replace('\r','')
+        result = text.split('\n')
+        def cleanComment(line):
+            if not '#' in line: return line
+            else: return line.split('#')[0]
+        for i, line in enumerate(result): result[i] = cleanComment(result[i])
+        data=single_space_MF('\n'.join(result))
+        data=py_space_fix_MF(data)
+        _copy.imp.copy( data, p=0 )
+        beepy.simple_beep()
+
+        # self.remove_py_comments()
+        # # _.waiting(2)
+        # self.dup_space()
+        # # _.waiting(2)
+
+        # self.remove_py_comments()
+        # self.space_single()
+
+
     def remove_py_comments(self):
         _paste = _.regImp( __.appReg, '-paste' )
         _copy = _.regImp( __.appReg, '-copy' )
@@ -2066,6 +2150,7 @@ def load():
                 'number-ba': { 'raw': [ 'alt.', 'win.', 'n', 'b', 'a' ], 'do': 'Clip.number_ba()' },
                 'explode': { 'raw': [ 'ctrl.,2', 'space.', 'x' ], 'do': 'Clip.explode()' },
                 'remove-py-comments': { 'raw': [ 'ctrl.,2', 'space.', 'c' ], 'do': 'Clip.remove_py_comments()' },
+                'remove-py-comments-and-spaces': { 'raw': [ 'ctrl.,2', 'space.,2', 'c', 's' ], 'do': 'Clip.remove_py_comments_spaces()' },
                 'remove-eol-space': { 'raw': [ 'ctrl.,2', 'space.', 'e' ], 'do': 'Clip.eol_space()' },
                 'explode2': { 'raw': [ 'alt.', 'win.', 'x' ], 'do': 'Clip.explode()' },
                 'add-slash': { 'raw': [ 'shift.,2',  '\\' ], 'do': 'Clip.add_slash()' },
@@ -2159,6 +2244,9 @@ __.setting('hotkey-clip.replace-b', '.m-eta.app')
 
 
 import random
+import string
+# for elem in string.whitespace: sample_str = sample_str.replace(elem, '')
+
 
 ########################################################################################
 if __name__ == '__main__':

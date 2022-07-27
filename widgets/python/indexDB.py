@@ -88,6 +88,9 @@ _.appInfo[focus()] = {
 						'p indexDB -folder c:\\ -db %i%\\C_Drive.db',
 						'p indexDB -folder d:\\ -db %i%\\D_Drive.db',
 						'',
+						'p indexDB -folder c:\\ -db %i%\\C_Drive.db |  p did -beep',
+						'p indexDB -folder d:\\ -db %i%\\D_Drive.db |  p did -beep',
+						'',
 	],
 	'columns': [
 				       # { 'name': 'name', 'abbreviation': 'n' },

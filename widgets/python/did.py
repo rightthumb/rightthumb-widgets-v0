@@ -30,6 +30,7 @@ def sw():
     _.switches.register( 'Listen', '-l,-listen,-wait' )
     _.switches.register( 'Done', '-d,-done' )
     _.switches.register( 'Wait', '-w,-wait,-t', '15' )
+    _.switches.register( 'Just-Beep', '-beep' )
 
 
 # __.setting('require-list',['Files,Plus','File,Has']) # todo
@@ -137,11 +138,18 @@ def load():
 
 
 def action():
+
+    if _.switches.isActive('Just-Beep'):
+        _beep.mission_impossible()
+        return None
+
     global v1
     global srv
     global sub
     global wait
     load()
+
+
 
     if _.switches.isActive('Done'):
         __.url(srv+v1)

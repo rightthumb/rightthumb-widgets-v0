@@ -25,7 +25,7 @@ def sw():
     #e)--> examples
 
 _.appInfo[focus()] = {
-    'file': 'thisApp.py',
+    'file': 'netstat.py',
     'liveAppName': __.thisApp( __file__ ),
     'description': 'Changes the world',
     'categories': [
@@ -74,6 +74,17 @@ template.info(focus()); exec(  template.triggers()  ); _.l.sw.register( triggers
 ########################################################################################
 #n)--> start
 
+#n)--> ephemeral: 1024–65535
+
+# def scrape():
+
+# linux list of all connected IPs
+
+# https://mkyong.com/linux/list-all-ip-addresses-connected-to-your-server/
+# netstat -tn 2>/dev/null | grep :80 | awk '{print $5}' | cut -d: -f1 | sort | uniq -c | sort -nr | head
+
+
+
 def action():
     load(); global c3po;
 
@@ -87,6 +98,8 @@ def load():
     #--> print table
     _.pt(c3po)
 
+
+_netblock = _.regImp( __.appReg, 'netblock' )
 
 ##################################################
 #b)--> examples
@@ -106,6 +119,8 @@ if __name__ == '__main__':
     #e)--> examples
     action()
     _.isExit(__file__)
+
+
 
 
 

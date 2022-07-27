@@ -359,6 +359,7 @@ def add(path,r=False):
 	if os.path.isfile(path):
 		pathX=path
 		pathX=pathX.replace(base_path+os.sep,'')
+
 		i = i + 1
 
 		if _.showLine(path):
@@ -552,11 +553,12 @@ def add(path,r=False):
 
 
 			if shouldAdd :
-
 				global extensionList
+				try: record
+				except Exception as ee: record = None
 				if len( extensionList ):
 					if record is None:
-						record = _dir.fileInfo( path )
+						record = _dir.info( path )
 					if not len( record['ext'] ):
 						shouldAdd = False
 					else:
@@ -633,15 +635,20 @@ def extensionsDatabank():
 	_db = _.regImp( __.appReg, 'databank' )
 	_db.switch( 'JustReturn' )
 	_db.switch( 'Tables', [ 'file', 'extensions' ] )
-
+	useDB=True
 	for index in _.switches.values('Extensions'):
-		_db.switch( 'Plus', [index] )
-		for i,x in enumerate(_db.do( 'action' )):
-			x = x.replace('.','')
-			if not x.startswith('.'):
-				x = '.'+x
-			if not x in extensionList:
-				extensionList.append( x.lower() )
+		if index.startswith('.'):
+			useDB=False
+			extensionList.append(index)
+	if useDB:
+		for index in _.switches.values('Extensions'):
+			_db.switch( 'Plus', [index] )
+			for i,x in enumerate(_db.do( 'action' )):
+				x = x.replace('.','')
+				if not x.startswith('.'):
+					x = '.'+x
+				if not x in extensionList:
+					extensionList.append( x.lower() )
 
 def action():
 	if __.isFiles:
@@ -652,23 +659,40 @@ def action():
 		if _.switches.isActive('Toggle-Relative-Path'): _.v.show_full_path = True
 	if _.switches.isActive('Minus'): minusF()
 
-	# print( _.switches.values('Minus') ); print( _.ci(_.switches.value('Minus')) );  sys.exit();
 	global base_path
-	if  _.isData():
+	if _.switches.isActive('Extensions'): extensionsDatabank()
+	if _.isData():
 		base_path=''
-		for path in _.isData():
-			add(path)
+		if _.switches.isActive('Toggle-Relative-Path'):
+			fi0=_.isData()[0]
+			err=0
 
+			while True:
+				try: fi0=__.path(fi0,pop=True)
+				except Exception as ee: err=1; break;
+				good=True
+				for path in _.isData():
+
+					if not path.lower().startswith(fi0.lower()) and os.path.isfile(path):
+						print(fi0,path,path.lower().startswith(fi0.lower()))
+						good=False; break;
+				if not os.sep in fi0 or fi0 == os.sep:
+					err=1; break;
+				if good:
+					base_path=fi0
+					break
+			if base_path: _.v.show_full_path = False
+		for path in _.isData():
+			if os.path.isfile(path):
+				add(path)
+	
 	elif not _.isData():
 		if not __.isFiles:
 			r = _.switches.isActive('Recursive')
-			# if not r:
-			# 	_.switches.fieldSet( 'Toggle-Relative-Path', 'active', True )
 
 		else:
 			r = True
-		if _.switches.isActive('Extensions'):
-			extensionsDatabank()
+
 
 
 		_.fields.register( 'files', 'name', '1000.43 KB' )
@@ -906,10 +930,5 @@ import _rightThumb._dir as _dir
 ########################################################################################
 if __name__ == '__main__':
 	action()
-
-
-
-
-
 
 

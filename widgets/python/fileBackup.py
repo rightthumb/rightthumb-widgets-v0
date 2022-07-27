@@ -263,7 +263,6 @@ def PRE_BACKUP_PROCESSING( path ):
 				add_line_before = [
 										'#b)-->',
 										'########################################################################################',
-										'##################################################',
 										'_.appInfo[',
 										# '',
 				]
@@ -272,21 +271,23 @@ def PRE_BACKUP_PROCESSING( path ):
 										'#!/usr/bin/python3',
 										'#e)-->',
 										'#n)--> start',
-										'##################################################',
 										# '',
 				]
 
 				lines = []
 				for line in xFiles.split('\n'):
-					cl_test=line.replace(' ','').replace('\r','').replace('\n','').replace('\t','')
+					# cl_test=line.replace(' ','').replace('\r','').replace('\n','').replace('\t','')
+					cl_test=_str.do('trim',line)
 					for rel_str in add_line_before:
-						if cl_test.startswith(rel_str.replace(' ','')): lines.append('')
+						if cl_test.startswith(rel_str): lines.append('')
 					if cl_test.startswith('def') and cl_test.endswith('):'): lines.append('')
+					if line == '##################################################':  lines.append('')
 
 					lines.append(line)
 
+					if line == '##################################################':  lines.append('')
 					for rel_str in add_line_after:
-						if cl_test.startswith(rel_str.replace(' ','')): lines.append('')
+						if cl_test.startswith(rel_str): lines.append('')
 
 				# _.saveText(xFiles,path)
 				xFiles = '\n'.join(lines)

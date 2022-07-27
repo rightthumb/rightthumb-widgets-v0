@@ -1,4 +1,5 @@
 import _rightThumb._construct as __
+
 # Column
 
 # ## {R2D2919B742E} ##
@@ -165,6 +166,7 @@ def removeUnsave( data ):
     return result
 
 def spaceba( string, what ):
+    import string
     if what in string:
         i=0
         while ' '+what in string or what+' ' in string:
@@ -203,6 +205,11 @@ def namespace( app, data ):
     #   return app, result
 
     return result
+
+def _ws():
+    string=__.imp('string')
+    return string.whitespace
+
 
 # import MySQLdb
 
@@ -439,14 +446,19 @@ def removeAll(string,rWhat):
     return replaceAll(string,rWhat,rWith)
 
 def replaceDuplicate(string,rWhat):
+    if not type(string) == str: return string;
     if not len(rWhat): return string;
     if not rWhat in string:
         return string
-    rWith = rWhat
-    rWhat = str(rWhat) + str(rWhat)
-    string = replaceAll(string,rWhat,rWith)
-    for x in range(10):
-        string = string.replace( rWhat, rWith )
+    string = str(string)
+    rWith = str(rWhat)
+
+    while rWhat+rWhat in string: string = string.replace(rWhat+rWhat,rWhat)
+
+    # rWhat = 
+    # string = replaceAll(string,rWhat,rWith)
+    # for x in range(10):
+    #     string = string.replace( rWhat, rWith )
     return string
 
 def cleanBE(string,rWhat):
@@ -462,9 +474,11 @@ def cleanEnd(string,rWhat):
     string = str(string)
     rWhat = str(rWhat)
     # string = replaceDuplicate(string,rWhat)
-    string +=  '*?*'
-    string = string.replace(rWhat + '*?*', '')
-    string = string.replace('*?*', '')
+    while string.endswith(rWhat): string=string[:-1]
+
+    # string +=  '*?*'
+    # string = string.replace(rWhat + '*?*', '')
+    # string = string.replace('*?*', '')
     if string.endswith(rWhat):
         string = cleanEnd(string,rWhat)
 
@@ -496,10 +510,13 @@ def cleanFirst(string,rWhat):
         return string
     string = str(string)
     rWhat = str(rWhat)
+
+    while string.startswith(rWhat): string=string[1:]
+
     # string = replaceDuplicate(string,rWhat)
-    string = '*?*' + str(string)
-    string = string.replace('*?*' + rWhat, '')
-    string = string.replace('*?*', '')
+    # string = '*?*' + str(string)
+    # string = string.replace('*?*' + rWhat, '')
+    # string = string.replace('*?*', '')
     if string.startswith(rWhat):
         string = cleanFirst(string,rWhat)
     return string
@@ -515,15 +532,20 @@ def cleanAll(string,rWhat,rWith):
         else:
             done=True
     return string
-
+import sys
 def cleanSpecial(line,special1=False):
     global slash
     line = str(line)
+    if line.startswith("b'") and line.endswith("'"): line=line[:-1]; line=line[2:];
+    if not len(line): return line
+    OG_MF=line[0]
     if not special1:
         line = replaceAll(str(line),slash,'--/--')
         try:
             pass
             line = line.encode('latin-1')
+            line = str(line)
+            if line.startswith("b'") and line.endswith("'"): line=line[:-1]; line=line[2:];
             line = replaceAll(line,slash+'t',' ')
             line = replaceAll(line,slash+'xa0',' ')
             line = replaceAll(line,slash+'xe9',"'")
@@ -531,6 +553,7 @@ def cleanSpecial(line,special1=False):
             line = cleanFirst(line,' ')
             line = cleanLast(line,' ')
         except Exception as e:
+            pass
             try:
                 line = line.encode('utf-8')
                 pass
@@ -542,6 +565,7 @@ def cleanSpecial(line,special1=False):
         line = line.replace('…','...')
     except Exception as e:
         pass
+    if line.startswith("b'") and line.endswith("'"): line=line[:-1]; line=line[2:];
     i = 0
     skip = False
     string = ''
@@ -574,6 +598,7 @@ def cleanSpecial(line,special1=False):
         line = cleanFirst(str(line),'b"')
         line = cleanFirst(str(line),'.')
         # line = line.replace('  ',' ')
+    # if not OG_MF[0]==line[0] and len(line) > len(OG_MF) and line.startswith("'"): line=line[1:]
     return line
 
 def cleanSpecial2(line,special1=False):
@@ -1210,6 +1235,7 @@ def do(what=None,string='',a=None,b=None,c=None,d=None):
     # if what in 'file'.split(' '): import re; return re.sub(r'^[0-9a-zA-Z_\-. ]+$', '', string);
     
     if what in 'trim'.split(' '): return trim(string);
+    if what in 'nows'.split(' '): return nows(string);
 
     if what in '.sh sh bash linux 2linux fix script x +x'.split(' '): return sh(string);
 
@@ -1223,21 +1249,34 @@ def do(what=None,string='',a=None,b=None,c=None,d=None):
     if what in 'n'.split(' '): return removeNonNumber(string);
     if what in 'ra remove'.split(' '): return removeAll(string,a);
 
+def nows(string):
+    if not type(string) == str: return string
+    if not string: return string
+    for ws in _ws():
+        while ws in string: string = string.replace(ws,'')
+    return string
+
+
 def trim(string):
     if not type(string) == str: return string
     if not string: return string
-    string = cleanBE(string,' ')
-    if not string: return string
-    testing=[' ', '\t', '\n']
-    if not len(string.replace(' ','').replace('\r','').replace('\n','').replace('\t','')): return ''
-    try:
-        while string[0] in testing or string[-1] in testing:
-            for tst in testing: string = cleanBE(string,tst)
-    except Exception as e:
-        try: _
-        except Exception as e: import _rightThumb._base3 as _
-        _.pr('trim:',e,c='red')
+    for ws in _ws():
+        string = cleanBE(string,ws)
     return string
+
+
+    # if not string: return string
+    # for elem in string.whitespace: sample_str = sample_str.replace(elem, '')
+    # testing=[' ', '\t', '\n']
+    # if not len(string.replace(' ','').replace('\r','').replace('\n','').replace('\t','')): return ''
+    # try:
+    #     while string[0] in testing or string[-1] in testing:
+    #         for tst in testing: string = cleanBE(string,tst)
+    # except Exception as e:
+    #     try: _
+    #     except Exception as e: import _rightThumb._base3 as _
+    #     _.pr('trim:',e,c='red')
+    # return string
 
 
     # string=string.replace('\r','')

@@ -18,26 +18,23 @@ def sw():
     pass
     #b)--> examples
     # _.switches.register( 'Input', '-i' )
-    # _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=True )
-    
-    #n)--> epyi base -file template
-    
+    _.switches.register( 'Files', '-f,-fi,-file,-files','file.py', isData='name', description='Files' )
     #e)--> examples
-
+__.setting('require-list',['Pipe','Files'])
 _.appInfo[focus()] = {
-    'file': 'thisApp.py',
+    'file': 'find-print.py',
     'liveAppName': __.thisApp( __file__ ),
     'description': 'Changes the world',
     'categories': [
                         'DEFAULT',
                 ],
     'examples': [
-                        _.hp('p thisApp -file file.txt'),
+                        _.hp('p find-print -file file.py'),
                         _.linePrint(label='simple',p=0),
                         '',
     ],
     'created': None,
-    'tested': None,
+    'tested': 1658814211.728284,
 }
 
 #b)--> registration
@@ -62,7 +59,7 @@ template.info(focus()); exec(  template.triggers()  ); _.l.sw.register( triggers
         #!)--> data=str(requests.post(url,data={}).content,'iso-8859-1')
 
     #n)--> import and backup example
-        # _bk = _.regImp( focus(), 'fileBackup' ); _bk.switch( 'Silent' ); _bk.switch( 'isRunOnce' ); _bk.switch( 'Flag', focus() ); _bk.switch( 'DoNotSchedule' )
+        # _bk = _.regImp( focus(), 'fileBackup' ); _bk.switch( 'Silent' ); _bk.switch( 'isRunOnce' ); _bk.switch( 'Flag', 'APP' ); _bk.switch( 'DoNotSchedule' )
         # _bk.switch( 'Input', path ); bkfi = _bk.action();
     
     #n)--> inline
@@ -73,19 +70,42 @@ template.info(focus()); exec(  template.triggers()  ); _.l.sw.register( triggers
 #e)--> examples
 ########################################################################################
 #n)--> start
+counter=0
+def inject(line):
+    if not '_.pr(' in line: return line
+    global counter
+    counter+=1
+    line=line.replace('_.pr(','_.pr('+str(counter)+',')
+    # pr(line)
+    return line
+
+def process(path):
+
+    _bk.switch( 'Input', path ); bkfi = _bk.action();
+    _.pr(bkfi,c='darkcyan')
+    file=_.getText(path,raw=True).split('\n')
+    for i, line in enumerate(file):
+
+        file[i]=inject(line)
+    _.saveText(file,path)
+
 
 def action():
-    load(); global c3po;
+    # load(); global c3po;
 
     #--> iterate
-    for subject in _.isData(r=0): _.pr(subject)
-    
+    for path in _.isData(r=0):
+        process(path)
+        
 
-def load():
-    global c3po
-    c3po = _.getTable( 'table' )
-    #--> print table
-    _.pt(c3po)
+# def load():
+#     global c3po
+#     c3po = _.getTable( 'table' )
+#     #--> print table
+#     _.pt(c3po)
+
+_bk = _.regImp( focus(), 'fileBackup' ); _bk.switch( 'Silent' ); _bk.switch( 'isRunOnce' ); _bk.switch( 'Flag', focus() ); _bk.switch( 'DoNotSchedule' )
+
 
 
 ##################################################

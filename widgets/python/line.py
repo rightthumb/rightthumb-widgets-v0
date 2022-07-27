@@ -110,8 +110,8 @@ _.appInfo[focus()] = {
 						'generate',
 						'gen',
 				],
-    'examples': [
-                        '',
+	'examples': [
+						'',
 						'dd | p line -p \\ 1',
 						'dd | p line -p \\ e 2',
 						'dd | p line -p \\ "1;2;3"',
@@ -161,8 +161,8 @@ _.appInfo[focus()] = {
 						'',
 						'\t\t\ttype auto_setup.sh | p line + "pip3 install" python3  - sudo # upgrade -p ;sp 5',
 						'',
-                        '',
-    ],
+						'',
+	],
 	'relatedapps': [],
 	'prerequisite': [],
 	'columns': [],
@@ -942,6 +942,13 @@ if _.switches.isActive('CrossReferenceReverse') == False:
 		line = line.replace('\n','')
 		lineOriginal = line
 		thePrintLine = lineOriginal
+		focus()
+
+		if _.switches.isActive('Plus') and len(_.switches.records('relevant'))==1:
+			if _.showLine(line): _.pr(line); continue;
+		if _.switches.isActive('Plus') and _.switches.isActive('Minus') and len(_.switches.records('relevant'))==2:
+			if _.showLine(line): _.pr(line); continue;
+
 
 		if _.switches.isActive('Upper') == True:
 			line = line.upper()
@@ -989,6 +996,7 @@ if _.switches.isActive('CrossReferenceReverse') == False:
 			# _.pr(line)
 			if _.switches.isActive('FixCSV') == True:
 				line = fixCSV(line)
+			
 			if _.switches.isActive('NoClean') == False:
 				try:
 					if _.switches.isActive('FixChar') == True:
@@ -1032,6 +1040,7 @@ if _.switches.isActive('CrossReferenceReverse') == False:
 						_.pr(line)
 				
 			else:
+				# _.pr(55,line); sys.exit();
 				if _.switches.isActive('Unique') == True:
 					resultList.append(line)
 				if _.switches.isActive('LineNumber') == True:

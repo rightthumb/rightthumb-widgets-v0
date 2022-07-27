@@ -181,6 +181,7 @@ try: print_ed;
 except Exception as e: print_ed=[];
 print_ed_group={}
 def print_(*args,p=None,c=None,pad=3,g=None,end=None,pvs=None,pv=None,json=None, dic=None, line=None): 
+	if pvs: pvs=None; pv=1;
 	if not dic and type(dic) == bool or ( type(dic) == int and dic == 1): printDicFields(args[0]); return None
 	try:
 		if not end is None and (type(end) == bool or type(end) == int) and end:   end='\r';
@@ -779,8 +780,9 @@ def get_supporting_line(data,i,b=';',rev={}):
 	return pre+data[i:ii]
 
 
-
-def vindex( code, i=0, esc='\\', n='', v=True,r=False,both=True, sort=True ):
+def vindex(  code, i=0, esc='\\', n='', v=True,r=False,both=True, sort=True, isArg=False ):
+	if isArg: a_='-+'
+	else: a_=''
 	def _sort(sort,dic):
 		if not sort: return dic;
 		ks=list(dic.keys()); ks.sort(); new={};
@@ -790,7 +792,6 @@ def vindex( code, i=0, esc='\\', n='', v=True,r=False,both=True, sort=True ):
 	if type(code)==list:
 		code=''.join(code)
 	at=i
-
 		
 	table={}
 	
@@ -805,9 +806,6 @@ def vindex( code, i=0, esc='\\', n='', v=True,r=False,both=True, sort=True ):
 	table['par'] = {}
 	table['par']['i']=0
 	table['par']['open'] = {}
-
-
-
 	index={}
 
 	i-=1
@@ -816,7 +814,6 @@ def vindex( code, i=0, esc='\\', n='', v=True,r=False,both=True, sort=True ):
 		if i >= len(code):
 			break
 		c=code[i]
-		
 		try:
 			c2=c+code[i+1]
 		except Exception as e:
@@ -875,10 +872,10 @@ def vindex( code, i=0, esc='\\', n='', v=True,r=False,both=True, sort=True ):
 					if both:
 						index[ii] = i
 					i=ii
-				elif not n and c in 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ':
+				elif not n and c in a_+'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ':
 					cx = c
 					ii=i-1
-					while cx in '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ._':
+					while cx in a_+'0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ._':
 						ii+=1
 						try:
 							cx=code[ii]
@@ -894,32 +891,32 @@ def vindex( code, i=0, esc='\\', n='', v=True,r=False,both=True, sort=True ):
 						index[ii] = i
 					i=ii
 				elif not n and c3 == '"""':
-					s=vindex(code,i+3,esc,n='"""',v=0)
+					s=vindex(code,i+3,esc,n='"""',v=0,isArg=isArg)
 					index[i] = s
 					if both:
 						index[s] = i
 					i=s
 				elif not n and c3 == "'''":
-					s=vindex(code,i+3,esc,n="'''",v=0)
+					s=vindex(code,i+3,esc,n="'''",v=0,isArg=isArg)
 					index[i] = s
 					if both:
 						index[s] = i
 				elif not n and c == "'":
-					s=vindex(code,i+1,esc,n="'",v=0)
+					s=vindex(code,i+1,esc,n="'",v=0,isArg=isArg)
 					index[i] = s
 					if both:
 						index[s] = i
 					i=s
 				elif not n and c == '"':
-					s=vindex(code,i+1,esc,n='"',v=0)
+					s=vindex(code,i+1,esc,n='"',v=0,isArg=isArg)
 					index[i] = s
 					if both:
 						index[s] = i
 					i = s
 				elif not n and c2 == '/*':
-					i = vindex(code,i+2,esc,n='*/',v=0)
+					i = vindex(code,i+2,esc,n='*/',v=0,isArg=isArg)
 				elif not n and c2 == '//':
-					i = vindex(code,i+2,esc,n='\n',v=0)+1
+					i = vindex(code,i+2,esc,n='\n',v=0,isArg=isArg)+1
 
 
 				elif not n and c == '{':
@@ -964,7 +961,6 @@ def vindex( code, i=0, esc='\\', n='', v=True,r=False,both=True, sort=True ):
 					table['par']['i']-=1
 					if s==at:
 						return _sort(sort,index)
-	
 	return _sort(sort,index)
 
 
@@ -9921,6 +9917,10 @@ class Switches:
 								shouldAdd = False
 
 					if shouldAdd:
+						if not row.values:
+							for ii,rec in enumerate(self.switches):
+								if not i == ii and rec.name == row.name and rec.values: shouldAdd = False
+					if shouldAdd:
 						result.append({
 											'active': row.active,
 											'name': row.name,
@@ -9928,17 +9928,31 @@ class Switches:
 											'values': row.values,
 											'appReg': row.appReg,
 						})
+		# _result=[]
+		# _spent=[]
+		# for i, rec in result:
+		# 	cnt=0
+		# 	for i, rec in result:
+
+
+
 		return result
 
 
 
+
 	def records( self, formating=None, appReg=None ):
+	# def records( self, formating=None, appReg=None, empty=True, v=None ):
+		# if not v is None and v: empty=False
+		# elif not v is None and v: empty=True
 		if formating is None:
 			colorThis( 'formating options:', 'bold' )
 			colorThis( [ '\t', 'list' ], 'yellow' )
 			colorThis( [ '\t', 'dic_a-v', '\t', "{ 'isActive': {}, 'values': {} }" ], 'yellow' )
 			colorThis( [ '\t', 'dic_on-off-v', '\t', "{ 'on': [], 'off': [], 'values': {} }" ], 'yellow' )
 			colorThis( [ '\t', 'dump' ], 'yellow' )
+			colorThis( [ '\t', 'relevant' ], 'yellow' )
+			colorThis( [ '\t', 'dump2' ], 'yellow' )
 			sys.exit()
 
 			colorThis(  )
@@ -9951,28 +9965,59 @@ class Switches:
 						'dic_a-v': { 'active': self.active(), 'isActive': {}, 'values': {} },
 						'dic_on-off-v': { 'on': [], 'off': [], 'values': {} },
 						'dump': [],
+						'dump2': {},
 		}
 
 
 		for i,switch in enumerate(self.switches):
 
-			if self.switches[i].appReg == appReg:
-				records['list'].append({ 'name': switch.name, 'values': switch.values })
+			#b)--> dump2
+			if not switch.appReg in records['dump2']: records['dump2'][switch.appReg]={}
+			if not 'on' in records['dump2'][switch.appReg]:
+				records['dump2'][switch.appReg]['on']={}
+				records['dump2'][switch.appReg]['off']={}
 
-
-				records['dic_a-v']['isActive'][switch.name] = switch.active
-				records['dic_a-v']['values'][switch.name] = switch.values
-
-
-				records['dump'] = dict((name, getattr(switch, name)) for name in dir(switch) if not name.startswith('__'))
-
-
-				records['dic_on-off-v']['values'][switch.name] = switch.values
-				if switch.active:
-					records['dic_on-off-v']['on'].append( switch.name )
+			if switch.active:
+				if switch.name in records['dump2'][switch.appReg]['on'] and switch.values:
+					records['dump2'][switch.appReg]['on'][switch.name] = switch.values
 				else:
-					records['dic_on-off-v']['off'].append( switch.name )
+					records['dump2'][switch.appReg]['on'][switch.name] = switch.values
+			else: records['dump2'][switch.appReg]['off'][switch.name] = switch.values
+			#e)--> dump2
 
+			
+			
+			#b)--> duplicate fix
+			##### #timestamp)--> 2022-07-26T17:09:11-0400
+			shouldAdd = True
+			for ii,rec in enumerate(self.switches):
+				if not i == ii and rec.name == switch.name and rec.values: shouldAdd = False
+			if shouldAdd:
+			#e)--> duplicate fix
+			
+				if self.switches[i].appReg == appReg:
+					records['list'].append({ 'name': switch.name, 'values': switch.values })
+
+
+					records['dic_a-v']['isActive'][switch.name] = switch.active
+					records['dic_a-v']['values'][switch.name] = switch.values
+
+
+					records['dump'] = dict((name, getattr(switch, name)) for name in dir(switch) if not name.startswith('__'))
+					records['dic_on-off-v']['values'][switch.name] = switch.values
+
+					
+					if switch.active:
+						records['dic_on-off-v']['on'].append( switch.name )
+					else:
+						records['dic_on-off-v']['off'].append( switch.name )
+		
+		#b)--> relevant
+		records['relevant']={}
+		for on in records['dic_on-off-v']['on']:
+			records['relevant'][on] = records['dic_on-off-v']['values'][on]
+		if formating.startswith('r'): formating = 'relevant'
+		#e)--> relevant
 		return records[ formating ]
 	def documentation( self, name, data ):
 		result = False
@@ -15920,7 +15965,7 @@ def genLine(count,what, p=1):
 	return result
 
 
-def ci(string): 
+def ci(string):
 	#switchValueClean
 	global ciData
 	# print_( ciData )
@@ -20285,16 +20330,23 @@ def isExit(_file_):
 	#n)--> ask will not work if executed after pipe, checking...
 		#n)--> yes, i am sure, it is NOT: if not
 	if sys.stdin.isatty():
+		os=__.imp('os.stat'); sl=os.sep;
 		os=__.imp('os.path.getctime'); sl=os.sep;
 		_fo=_v.py+sl
 		for k in appInfo:
 			rec=appInfo[k]
+			if not rec: continue
 			if 'liveAppName' in rec:
 				_fi=rec['liveAppName']+'.py'
 				# path=_file_
 				path=_fo+_fi
-				ce=str(os.path.getctime(path))
-				pr(path,c='cyan')
+				try:
+					ce=str(os.path.getctime(path))
+				except Exception as ee: return None
+				# print(rec)
+				# pr(rec,pvs=1)
+				# sys.exit()
+				# pr(path,c='cyan')
 				if 'tested' in rec and not rec['tested'] and os.path.isfile(path):
 					pr( line=1, c='green' )
 					pr( 'document tested date of '+_fi+'? ', c='green' )
