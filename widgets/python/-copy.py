@@ -482,6 +482,42 @@ _.postLoad( 'D:\\\\tech\\\\hosts\\\\VULCAN\\\\widgets\\\\python\\\\testing123.py
 		subject['matrix'] = {}
 		subject['matrix']['import'] = subject['base']['import']
 		
+		subject['hacks'] = {}
+		subject['hacks']['murray']='''
+_the_i_=500;
+Array.prototype.slice.call(
+  document.querySelectorAll('img')).map(function(tag){
+  	_the_i_++; tag.src = 'https://www.fillmurray.com/500/'+_the_i_;
+});
+'''
+		subject['hacks']['steven']='''
+_the_i_=500;
+Array.prototype.slice.call(
+  document.querySelectorAll('img')).map(function(tag){
+  	_the_i_++; tag.src = 'https://www.stevensegallery.com/500/'+_the_i_;
+});
+'''
+
+		subject['hacks']['cage']='''
+_the_i_=500;
+Array.prototype.slice.call(
+  document.querySelectorAll('img')).map(function(tag){
+  	_the_i_++; tag.src = 'https://www.placecage.com/500/'+_the_i_;
+});
+'''
+
+
+		subject['hacks']['rotate']='''
+Array.prototype.slice.call(
+  document.querySelectorAll(
+    'div,p,span,img,a,body')).map(function(tag){
+    tag.style['transform'] = 'rotate(' + (
+    Math.floor(Math.random() * 3) - 1) + 'deg)';
+});
+'''
+
+
+
 		subject['tools'] = {}
 		subject['tools']['ssh'] = _v.config().cloud.ssh.password
 		subject['tools']['vps'] = 'O8zLx1LUTOS1r+htI/XklVfXa4Fseeqkf/8PGhHbjVqQQa1SX7Rf1A=='

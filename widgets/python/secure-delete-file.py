@@ -32,10 +32,11 @@ import _rightThumb._string as _str
 def appSwitches():
 	pass
 	# _.switches.register( 'Files', '-f,-file,-files','file.txt', description='Files' )
-	_.switches.register( 'Files', '-f,-file,-files','file.txt', isData='glob', description='Files', isRequired=True )
-
+	_.switches.register( 'Files', '-f,-file,-files','file.txt', isData='name', description='Files' )
 _.autoBackupData = False
 __.releaseAcquiredData = False
+__.setting('receipt-log',False)
+__.setting('receipt-file',False)
 __.myFileLocations_SKIP_VALIDATION = False
 __.isRequired_Pipe = False
 __.isRequired_Pipe_or_File = False

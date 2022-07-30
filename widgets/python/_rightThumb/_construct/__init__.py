@@ -16,6 +16,19 @@ signal.signal(signal.SIGINT, lambda x, y: sys.exit(0))
 
 banner=None
 
+
+def name(path):
+    path=path(path)
+    par=path.split(os.sep)
+    par.reverse()
+    app=par[0]
+    fo=par[1]
+    root=par[2]
+    app=app.replace('.py','')
+    if app == '__init__': app=root+'.'+fo
+    return app
+
+
 autoCreationConfiguration = {
                             'backup': False,
                             'logs': True,

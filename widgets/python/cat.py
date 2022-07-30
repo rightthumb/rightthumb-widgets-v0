@@ -60,7 +60,7 @@ __.switch_raw = []
 _.appInfo[focus()] = {
 	'file': 'cat.py',
 	'liveAppName': __.thisApp( __file__ ),
- 	'description': 'cat encrypted files',
+	'description': 'cat encrypted files',
 	'categories': [
 						'cat',
 						'cat',
@@ -97,15 +97,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
-				       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					   # { 'name': 'name', 'abbreviation': 'n' },
+					   # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					   # 'this',
+					   # 'app',
 	],
 	'notes': [
-				       # {},
+					   # {},
 	],
 }
 
@@ -177,7 +177,10 @@ _.postLoad( __file__ )
 ########################################################################################
 # START
 
-
+def cleaner(line):
+	line=_str.do('sh', line)
+	while line.endswith(' ') or line.endswith('\t') : line=line[:-1]
+	return line
 
 def action():
 	focus()
@@ -229,6 +232,9 @@ def action():
 			# sys.exit()
 			newFile = []
 			theFile = _.getText(filepath,raw=True).split('\n')
+			
+			for i, line in enumerate(theFile): theFile[i]=cleaner(line)
+
 			lX = 10
 			if _.switches.isActive('Head'):
 				# _.pr('Head')

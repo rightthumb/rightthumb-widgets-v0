@@ -63,7 +63,7 @@ import socket
 
 
 def appSwitches():
-	_.switches.register('Input', '-i,-ip','37.229.205.59')
+	_.switches.register('Input', '-i,-ip','8.8.8.8')
 	_.switches.register('Host', '-host','google.com')
 	_.switches.register('JSON', '-json')
 	_.switches.register('Dump', '-dump')

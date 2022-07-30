@@ -34,7 +34,7 @@ def appSwitches():
 	_.switches.register( 'Files', '-f,-file,-files','file.txt', isPipe='data', description='Files' )
 
 
-_.autoBackupData = __.autoCreationConfiguration['backup']
+_.autoBackupData = False
 __.releaseAcquiredData = __.autoCreationConfiguration['logs']
 __.myFileLocations_SKIP_VALIDATION = False
 __.isRequired_Pipe = False
@@ -52,6 +52,7 @@ _.appInfo[focus()] = {
 	'description': 'decrypt registered documentation files',
 	'categories': [
 						'decrypt',
+						'crypt',
 						'docs',
 						'tool',
 						'file',
@@ -561,21 +562,29 @@ def run(path):
 	global indexP
 	indexP = {}
 	table = _.getTable('crypt-docs.list')
-	test=table.copy()
-	if not __.path(path) in table:
-		table.append( __.path(path) )
-	# _.pv( table )
-	newTable = []
-	for ntf in table:
-		if not ntf in newTable:
-			newTable.append(ntf)
-	table = newTable
-	if not str(table)==str(test):
-		_.saveTable( table, 'crypt-docs.list', p=0 )
-		_.cp('added to secure docs database','yellow')
+	_cryptFi = _.getTable('secure-crypt-local.meta')
+	if path in _cryptFi:
+		if path in table:
+			_.pr( 'cleaned file from crypt docs' )
+			del table[table.index(path)]
+			_.saveTable( table, 'crypt-docs.list', p=0 )
+			return None
 	else:
-		pass
-		_.cp('in secure docs database','yellow')
+		test=table.copy()
+		if not __.path(path) in table:
+			table.append( __.path(path) )
+		# _.pv( table )
+		newTable = []
+		for ntf in table:
+			if not ntf in newTable:
+				newTable.append(ntf)
+		table = newTable
+		if not str(table)==str(test):
+			_.saveTable( table, 'crypt-docs.list', p=0 )
+			_.cp('added to secure docs database','yellow')
+		else:
+			pass
+			_.cp('in secure docs database','yellow')
 	if not os.path.isfile(path):
 		return None
 	theFILE = _.getText( path,raw=True )

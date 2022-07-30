@@ -34,6 +34,7 @@ def appSwitches():
 	_.switches.register( 'App', '-app' )
 	_.switches.register( 'Files', '-f,-file,-files','file.txt', description='Files' )
 	_.switches.register( 'Alias', '-alias','' )
+	_.switches.register( 'Backup', '-backup' )
 
 _.autoBackupData = __.autoCreationConfiguration['backup']
 __.releaseAcquiredData = __.autoCreationConfiguration['logs'] 
@@ -152,17 +153,56 @@ _.postLoad( __file__ )
 # START
 
 import subprocess
+# focus()
+# if _.switches.isActive('Backup'): 
+# _bk.switch( 'Silent' ); _bk.switch( 'isRunOnce' ); _bk.switch( 'Flag', 'APP' ); _bk.switch( 'DoNotSchedule' )
+# focus()
 
 def action():
+	paths=[]
+	if _.switches.isActive('Files'):
+		paths=_.switches.values('Files')
+	elif _.isData():
+		paths=_.isData()
+
 	if _.isWin and not 'code_editor' in _v.fig: app = 'C:\\Windows\\System32\\notepad.exe'
 	elif _.isWin and 'code_editor' in _v.fig: app = _v.fig['code_editor']
 	elif not _.isWin and not 'code_editor' in _v.fig: app = 'nano'
 	elif not _.isWin and 'code_editor' in _v.fig: app = _v.fig['code_editor']
 	if _.switches.isActive('App'): app = _.switches.values('App')[0]
+	if _.switches.isActive('Alias'):
+		_aliases=_.switches.values('Alias')
+		aliases=_.getTable('file-open-aliases.hash')
 
+
+		if not aliases and paths:
+			aliases={
+						'aliases':{},
+						'files':{},
+			}
+		elif not aliases:
+			_.e('no aliases, create an alias','p file-open -alias important -f file.md')
+		if paths:
+			for path in paths:
+				path=__.path(path)
+				for _alias in _aliases: aliases['aliases'][_alias]=path; aliases['files'][path]=_alias;
+			_.saveTable(aliases,'file-open-aliases.hash')
+		elif not paths:
+			for _alias in _aliases:
+				if _alias in aliases['aliases']:
+					paths.append( aliases['aliases'][_alias] )
+
+
+
+	appReg=__.appReg
+	__.appReg=appReg
 	_.ad()
-	if _.switches.isActive('Files'):
-		for path in _.switches.values('Files'):
+	if paths:
+		
+		for path in paths:
+			# print('Backup',_.switches.isActive('Backup'))
+			if _.switches.isActive('Backup'): _bk = _.regImp( __.appReg, 'fileBackup' ); __.appReg=appReg; _bk.switch( 'isPreOpen' ); _bk.switch( 'Input', path ); bkfi = _bk.action();
+			# if _.switches.isActive('Backup'): _bk = _.regImp( __.appReg, 'fileBackup' ); bkfi = _bk.imp.action(path,o=1);
 			# _.pr(__.path(path))
 			subprocess.Popen([ app, __.path(path)])
 

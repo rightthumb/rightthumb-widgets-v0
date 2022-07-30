@@ -18,7 +18,7 @@ def sw():
     #b)--> examples
     _.switches.register( 'Replace', '-replace' )
     _.switches.register( 'Insert', '-insert' )
-    _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name', description='Files', isRequired=True )
+    _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name', description='Files' )
     #e)--> examples
 __.setting('require-list',['Pipe','Files'])
 

@@ -37,6 +37,7 @@ import _rightThumb._string as _str
 def appSwitches():
 	pass
 	_.switches.register( 'Files', '-f,-file,-files','file.txt', isPipe='data,clean', description='Files' )
+	_.switches.register( 'Test', '-test' )
 
 
 _.autoBackupData = __.autoCreationConfiguration['backup']
@@ -204,6 +205,72 @@ def testPattern( i ):
 
 	return True
 
+def find_pattern():
+	global data
+	global theLines
+	# _.pr(theLines,pvs=1)
+	streaks_be={}
+	last=[]
+	lines=[]
+	for i,line in enumerate(data):
+		if line in theLines:
+			groot=theLines[line]
+			tester=_._2lists(lines,groot)
+			# print('tester',tester)
+			if not tester: lines.append(i)
+			con=[]
+			for la in last:
+				for gro in groot:
+					if la == gro-1:
+
+						lala=la-1
+						found=False
+						while lala in streaks_be:
+							found=True
+							lala-=1
+						if not found: lala=la
+						else: lala+=1
+
+						if not lala in streaks_be: streaks_be[lala]={}
+						streaks_be[lala]=gro
+			last=groot
+	winner=None
+	largest=0
+	patterns={}
+	index={}
+	for b in streaks_be:
+		e = streaks_be[b]
+		ln = e - b
+		if not ln in patterns: patterns[ln] = []
+		patterns[ln].append(_.zeros3(b,len(data) ))
+		index
+	_patterns={}
+	for i in sorted(patterns.keys()):
+		_patterns[_.zeros3(i,len(data))]=patterns[i]
+	patterns=_patterns
+
+	# _streaks_be={}
+	for b in streaks_be:
+		e = streaks_be[b]
+		ln = e - b
+		if ln > largest:
+			largest=ln
+			winner=b
+	_.pr(line=1,c='gray')
+	_.pr(line=1,c='green')
+	_.pr()
+	_.pr('winner:',winner,c='cyan')
+	_.pr('largest:',largest,c='cyan')
+	_.pr()
+	_.pr(patterns,pvs=1)
+	sys.exit()
+	_.pr()
+	_.pr(line=1,c='green')
+	_.pr()
+
+	for i in lines:
+		_.pr(data[i])
+	_.pr(streaks_be,pvs=1)
 
 def action():
 	global data
@@ -211,18 +278,23 @@ def action():
 	global spent
 
 	method = 1
-	
+	if _.switches.isActive('Test'): method = -3000
 	
 	data = _.isData(r=1)
 
 	for i,row in enumerate(data):
-		if not row in theLines:
-			theLines[ row ] = []
-		theLines[ row ].append(i)
+		try:
+			if not row in theLines:
+				theLines[ row ] = []
+			theLines[ row ].append(i)
+		except Exception as e: pass
 
 
+	if method == -3000:
+		pass
+		find_pattern()
 	
-	if method == 1:
+	elif method == 1:
 
 		for i,row in enumerate(data):
 

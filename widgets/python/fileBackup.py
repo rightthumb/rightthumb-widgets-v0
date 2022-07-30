@@ -281,11 +281,11 @@ def PRE_BACKUP_PROCESSING( path ):
 					for rel_str in add_line_before:
 						if cl_test.startswith(rel_str): lines.append('')
 					if cl_test.startswith('def') and cl_test.endswith('):'): lines.append('')
-					if line == '##################################################':  lines.append('')
+					# if line == '##################################################':  lines.append('')
 
 					lines.append(line)
 
-					if line == '##################################################':  lines.append('')
+					# if line == '##################################################':  lines.append('')
 					for rel_str in add_line_after:
 						if cl_test.startswith(rel_str): lines.append('')
 
@@ -676,7 +676,7 @@ def secureFiles(path):
 
 
 	if cryptScan:
-		if not _.switches.isActive('isPreOpen'):
+		if not __.fileBackup.isPreOpen:
 			return False
 		global _decrypt_docs
 		if _decrypt_docs is None:
@@ -688,7 +688,7 @@ def secureFiles(path):
 		_.cp( [ 'SECURE FILE' ], 'Background.red' )
 
 		_decrypt_docs.imp.run(path)
-		if _.switches.isActive('isPreOpen'):
+		if __.fileBackup.isPreOpen:
 			return True
 		else:
 			return False
@@ -706,7 +706,7 @@ def secureFiles(path):
 			return True
 
 		elif secure_record['noBackup'] and secure_record['Encrypt']:
-			if _.switches.isActive( 'isPreOpen', focus() ) and _.isCrypt(path):
+			if __.fileBackup.isPreOpen and _.isCrypt(path):
 				secureFiles_Decrypt( path, secure_record['Password'] )
 			return True
 		
@@ -720,19 +720,19 @@ def secureFiles(path):
 				secureFiles_Decrypt( path, secure_record['Password'] )
 				__.secureFilesID = generateID(path)
 
-		elif secure_record['Encrypt'] and _.switches.isActive( 'isPreOpen', focus() ):
+		elif secure_record['Encrypt'] and __.fileBackup.isPreOpen:
 			if _.isCrypt(path):
 				secureFiles_Decrypt( path, secure_record['Password'] )
 
-		# _.pr( 'isPreOpen', _.switches.isActive('isPreOpen') )
+		# _.pr( 'isPreOpen', __.fileBackup.isPreOpen )
 
 
 		
 		if secure_record['Encrypt']:
-			if not _.switches.isActive( 'isPreOpen', focus() ) and not _.isCrypt(path):
+			if not __.fileBackup.isPreOpen and not _.isCrypt(path):
 				secureFiles_Encrypt( path, secure_record['Password'] )
 
-			elif _.switches.isActive( 'isPreOpen', focus() ) and _.isCrypt(path):
+			elif __.fileBackup.isPreOpen and _.isCrypt(path):
 				secureFiles_Decrypt( path, secure_record['Password'] )
 
 		
@@ -752,8 +752,21 @@ def secureFiles(path):
 
 
 
-
-def action(path=None,flag=None):
+__.fileBackup=_.dot()
+__.fileBackup.isPreOpen = _.switches.isActive('isPreOpen')
+# __.fileBackup.isPreOpen
+# __.fileBackup.isPreOpen
+def action(path=None,flag=None,o=None):
+	# __.fileBackup=_.dot()
+	# print('isPreOpen-o',o)
+	# print('isPreOpen',_.switches.isActive('isPreOpen'))
+	# print('isPreOpen2',_.switches.isActive2('isPreOpen'))
+	if _.switches.isActive('isPreOpen'): __.fileBackup.isPreOpen=True
+	if _.switches.isActive2('isPreOpen'): __.fileBackup.isPreOpen=True
+	if not o is None and o:
+		__.fileBackup.isPreOpen=True
+	# print('isPreOpen3',__.fileBackup.isPreOpen)
+	# print('isPreOpen',__.fileBackup.isPreOpen); sys.exit();
 	if not path is None:
 		path = __.path(  os.path.abspath(path)  )
 		_.switches.fieldSet( 'Silent', 'active', True )
@@ -762,7 +775,7 @@ def action(path=None,flag=None):
 		if not flag is None:
 			_.switches.fieldSet( 'Flag', 'active', True )
 			_.switches.fieldSet( 'Flag', 'value', flag )
-			_.switches.fieldSet( 'Flag', 'values', 'flag' )
+			_.switches.fieldSet( 'Flag', 'values', [flag] )
 
 	__.openSecure = False
 	__.secureFilesID = None

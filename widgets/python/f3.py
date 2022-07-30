@@ -124,7 +124,8 @@ def registerSwitches( argvProcessForce=False ):
 		# trigger settings
 	_.myFileLocation_Print = True
 
-	# _.switches.trigger('Watched', _.txt2Date)
+	# _.switches.trigger('Plus', _.ci)
+	# _.switches.trigger('Minus', _.ci)
 	# _.switches.trigger('Input',_.formatColumns)
 	_.switches.process()
 

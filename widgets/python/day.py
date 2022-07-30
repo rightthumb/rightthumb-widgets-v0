@@ -172,8 +172,12 @@ os = __.imp('os.path.isdir')
 os = __.imp('os.system')
 os = __.imp('os.chmod')
 _docs = _.regImp( __.appReg, 'decrypt-docs' )
+focus()
 _open = _.regImp( __.appReg, 'file-open' )
+_open.switch('Backup')
+focus()
 _md = _.regImp( __.appReg, 'md' )
+focus()
 sep=os.sep
 # _docs.switch('Files')
 
@@ -184,10 +188,11 @@ def load():
     epoch = time.time()
     ep=epoch
     if _.switches.isActive('Epoch'): epoch = float(_.switches.value('Epoch'))
-    if _.switches.isActive('Ago'): epoch = _.switches.value('Ago'); epoch-=5; print('here')
+    if _.switches.isActive('Ago'): epoch = _.switches.value('Ago'); epoch-=5;
     if _.switches.isActive('Date'): epoch = _.autoDate( _.switches.value('Date') )
 
     today = _.day(epoch); fo =  _v.rtp+'daily'+os.sep+today;
+    _v.mkdir(fo)
     var = _v.rtp+'profile/vars/'.replace('/',os.sep)
     vbm = _v.rtp+'profile/bookmarks/'.replace('/',os.sep)
     brand_day = True
@@ -201,6 +206,7 @@ def load():
             if _.isWin: pesonal_day+'bat'
             else:  pesonal_day+'sh'
             today = _.day(epoch); fo =  _v.rtp+'daily'+os.sep+today;
+            _v.mkdir(fo)
             bm = _.getTable('bookmarks.index')
             # _.saveTable(bm,'bookmarks-day.index')
             # print(bm); sys.exit();
@@ -233,19 +239,19 @@ def load():
 
     
 
-    # if not _.switches.isActive('Clean'): _.pr(today)
-    _v.mkdir(fo)
-    # ago1=_.isDate(epoch,f='ago').replace(' <','').replace('<',''); ago2=str(_.isDate(epoch,f='ago-dic')).replace('"','').replace("'",'').replace('{','').replace('}','').replace('<','').replace('>',''); ago='( '+ago1+' ) '+ago2;
-    # if ago1 == 'today': ago=ago1
-    ago=_.isDate(float(epoch),f='ago-txt')
-    if _.isWin:
-        global bat
-        # script=_v.ww+sep+'batch'+sep+'.day.bat'
-        script=_v.ww+sep+'batch'+sep
-        bat = bat.replace('path',fo)
-        bat = bat.replace('ago', ago )
-        bat = _str.do('sh',bat); _.saveText( bat, script+'.day.bat' ); _.saveText( bat, script+'.d.bat' );
-        _.pr( script, c='Background.light_blue' )
+            # if not _.switches.isActive('Clean'): _.pr(today)
+            _v.mkdir(fo)
+            # ago1=_.isDate(epoch,f='ago').replace(' <','').replace('<',''); ago2=str(_.isDate(epoch,f='ago-dic')).replace('"','').replace("'",'').replace('{','').replace('}','').replace('<','').replace('>',''); ago='( '+ago1+' ) '+ago2;
+            # if ago1 == 'today': ago=ago1
+            ago=_.isDate(float(epoch),f='ago-txt')
+            if _.isWin:
+                global bat
+                # script=_v.ww+sep+'batch'+sep+'.day.bat'
+                script=_v.ww+sep+'batch'+sep
+                bat = bat.replace('path',fo)
+                bat = bat.replace('ago', ago )
+                bat = _str.do('sh',bat); _.saveText( bat, script+'.day.bat' ); _.saveText( bat, script+'.d.bat' );
+                _.pr( script, c='Background.light_blue' )
     # else:
     #     global sh
     #     script = _v.ww+sep+'bash'+sep+'nav'+sep+'day.sh'
@@ -262,6 +268,9 @@ def files(fi):
     color='ColorBold.gray'
     _.pr('files(fi)',c=color)
     # print('_.isData()',_.isData())
+
+    _cryptFi = _.getTable('secure-crypt-local.meta')
+    
     if _.isData():
         _.pr('pipe detected',c=color)
         save=True
@@ -286,7 +295,7 @@ def files(fi):
         if not os.path.isfile(path):
             crypt = False; ask = input(' crypt doc: ');
             if 'y' in ask.lower(): crypt = True
-        if crypt: _docs.switch('Files',path); _docs.action();
+        if not path in _cryptFi and crypt: _docs.switch('Files',path); _docs.action();
     _open.switch('Files',path); _open.action();
 
     # if not os.path.isfile(path):
@@ -304,7 +313,9 @@ def new_file_defaults(fi):
 
 def action():
     # _.pr( _v.fig, dic=1 ); return None;
+    print('Loading...')
     global epoch; global fo; load();
+    print('Loaded')
 
     if _.switches.isActive('Change-Dir'):
 
@@ -324,8 +335,24 @@ def action():
         return None
     no = path+'notes.md'
     _.pr(no,c='cyan')
+
     if not os.path.isfile(no): _.saveText('___\n# '+_.isDate(epoch,f='date')+'\n\n',no)
-    _docs.switch('Files',no); _docs.action();
+
+
+    # _cryptFi = _.getTable('secure-crypt-local.meta')
+    # ef=False
+    # for k in _cryptFi.keys():
+    #     print(k)
+    #     if k.lower() == no.lower():
+    #         print('yes')
+    #         ef=True
+    # print(no)
+    # if ef:
+    if no in _.getTable('secure-crypt-local.meta'):
+        _.pr('entire file is encrypted',c='red')
+    else:    
+        _.pr('file is particularly encrypted',c='red')
+        _docs.switch('Files',no); _docs.action();
     
     if _.switches.isActive('Print'): _md.switch('View-Webpage'); _md.switch('Files',no); _md.action();
 
@@ -375,18 +402,40 @@ BackgroundGreyBold.blue
 BackgroundGreyBold.magenta
 BackgroundGreyBold.cyan
 BackgroundGreyBold.gray'''.split('\n')
-
+_all_colors_tact_='''ColorBold.gray
+ColorBold.red
+ColorBold.green
+ColorBold.yellow
+ColorBold.blue
+ColorBold.magenta
+ColorBold.cyan
+ColorBold.white
+Color.purple
+Color.cyan
+Color.darkcyan
+Color.blue
+Color.green
+Color.yellow
+Color.red
+Color.bold
+Background.red
+Background.green
+Background.yellow
+Background.blue
+Background.purple
+Background.light_blue'''.split('\n')
 def have_a_cow():
     global colors
+    global _all_colors_tact_
     # sys.exit()
     os=__.imp('os.path.isdir')
-    fo=_v.rtp+'projects/cows/flock/'.replace('/',os.sep)
-    # print(fo)
-    if os.path.isdir(fo):
+    cfo=_v.rtp+'projects/cows/flock/'.replace('/',os.sep)
+    # print(cfo)
+    if os.path.isdir(cfo):
         files=[]
-        for path in _.fo(fo):
+        for path in _.fo(cfo):
             files.append(path)
-        _.pr(_.getText(random.choice(files),raw=True),c=random.choice(colors))
+        _.pr(_.getText(random.choice(files),raw=True),c=random.choice(_all_colors_tact_))
 
 def have_some_cows():
     # _.clear()

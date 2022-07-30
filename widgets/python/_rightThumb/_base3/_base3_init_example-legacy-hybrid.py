@@ -10,10 +10,9 @@
 # ###########################################################################
 # ## {C3P0D40fAe8B} ##
 
-
-##################################################
+#b)--> load
 import sys, time
-##################################################
+#n)--> rightThumb.com widgets
 import _rightThumb._construct as __
 appDBA=__.clearFocus(__name__,__file__);__.appReg=appDBA;
 def focus(parentApp='',childApp='',reg=True):
@@ -23,11 +22,10 @@ def focus(parentApp='',childApp='',reg=True):
 import _rightThumb._base3 as _
 fieldSet=_.l.vars(focus(),__name__,__file__,appDBA)
 _.load()
-##################################################
+#n)--> common(loaded in other things so might as well)
 _v = __.imp('_rightThumb._vars')
 _str = __.imp('_rightThumb._string')
-##################################################
-
+#e)--> load
 
 def sw():
     pass
@@ -47,59 +45,22 @@ __.setting('pre-error',False)
 __.setting('switch-raw',[])
 
 
-
 _.appInfo[focus()] = {
-    # 'app': '8facG-jo0Cxk',
     'file': 'thisApp.py',
     'liveAppName': __.thisApp( __file__ ),
     'description': 'Changes the world',
-        # _.ail(1,'subject')+
-        # _.aib('one')+
     'categories': [
                         'DEFAULT',
                 ],
-    'usage': [
-                        # 'epy another',
-                        # 'e nmap',
-                        # '',
-    ],
-    'relatedapps': [
-                        # 'p another -file file.txt',
-                        # '',
-    ],
-    'prerequisite': [
-                        # 'p another -file file.txt',
-                        # '',
-    ],
     'examples': [
                         _.hp('p thisApp -file file.txt'),
                         _.linePrint(label='simple',p=0),
                         '',
     ],
-    'columns': [
-                       # { 'name': 'name', 'abbreviation': 'n' },
-                       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
-    ],
-    'aliases': [
-                       # 'this',
-                       # 'app',
-    ],
-    'notes': [
-                       # {},
-    ],
+    'created': None,
+    'tested': None,
 }
-
-_.appData[focus()] = {
-        'start': __.startTime,
-        'uuid': '',
-        'audit': [],
-        'pipe': False,
-        'data': {
-                    'field': {'sent': [], 'received': [] }, # { 'label': '', 'context': [],  }
-                    'table': {'sent': [], 'received': [] },
-        },
-    }
-
+template.info(focus());
 
 def triggers():
     _.switches.trigger( 'Files', _.myFileLocations, vs=True )
@@ -173,3 +134,4 @@ if __name__ == '__main__':
     #e)--> examples
     action()
     _.isExit(__file__)
+

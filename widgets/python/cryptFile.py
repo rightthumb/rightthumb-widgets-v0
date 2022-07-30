@@ -36,7 +36,7 @@ import _rightThumb._encryptString as _blowfish
 
 def appSwitches():
 	_.switches.register( 'Files', '-f,-file,-files','file.txt', isPipe='name', description='Files', isRequired=True )
-	_.switches.register( 'Encrypt', '-en,-encrypt,-password' )
+	_.switches.register( 'Encrypt', '-en,-encrypt' )
 	_.switches.register( 'Decrypt', '-de,-decrypt' )
 	_.switches.register( 'Password', '-password' )
 	_.switches.register( 'Vault', '-vault' )
@@ -174,7 +174,8 @@ def action():
 	# sys.exit()
 
 	if _.switches.isActive('Files',appDBA):
-		for fii, filepath in enumerate(_.switches.values('Files',appDBA)):
+		files=_.switches.values('Files',appDBA)
+		for fii, filepath in enumerate(files):
 			original = filepath
 			done = False
 			if not os.path.isfile(filepath):

@@ -179,8 +179,112 @@ def print_pr(text):
 
 try: print_ed;
 except Exception as e: print_ed=[];
+
+_all_colors_='''ColorBold.gray
+ColorBold.red
+ColorBold.green
+ColorBold.yellow
+ColorBold.blue
+ColorBold.magenta
+ColorBold.cyan
+ColorBold.white
+Color.purple
+Color.cyan
+Color.darkcyan
+Color.blue
+Color.green
+Color.yellow
+Color.red
+Color.bold
+Background.red
+Background.green
+Background.yellow
+Background.blue
+Background.purple
+Background.light_blue
+Background.grey
+Background.black
+BackgroundGrey.black
+BackgroundGrey.red
+BackgroundGrey.green
+BackgroundGrey.brown
+BackgroundGrey.blue
+BackgroundGrey.magenta
+BackgroundGrey.cyan
+BackgroundGrey.gray
+BackgroundGreyBold.black
+BackgroundGreyBold.red
+BackgroundGreyBold.green
+BackgroundGreyBold.blue
+BackgroundGreyBold.magenta
+BackgroundGreyBold.cyan
+BackgroundGreyBold.gray'''.split('\n')
+_all_colors_nobk_='''ColorBold.gray
+ColorBold.red
+ColorBold.green
+ColorBold.yellow
+ColorBold.blue
+ColorBold.magenta
+ColorBold.cyan
+ColorBold.white
+Color.purple
+Color.cyan
+Color.darkcyan
+Color.blue
+Color.green
+Color.yellow
+Color.red
+Color.bold'''.split('\n')
+_all_colors_nobk_='''ColorBold.gray
+ColorBold.red
+ColorBold.green
+ColorBold.yellow
+ColorBold.blue
+ColorBold.magenta
+ColorBold.cyan
+ColorBold.white
+Color.purple
+Color.cyan
+Color.darkcyan
+Color.blue
+Color.green
+Color.yellow
+Color.red
+Color.bold'''.split('\n')
+_all_colors_tact_='''ColorBold.gray
+ColorBold.red
+ColorBold.green
+ColorBold.yellow
+ColorBold.blue
+ColorBold.magenta
+ColorBold.cyan
+ColorBold.white
+Color.purple
+Color.cyan
+Color.darkcyan
+Color.blue
+Color.green
+Color.yellow
+Color.red
+Color.bold
+Background.red
+Background.green
+Background.yellow
+Background.blue
+Background.purple
+Background.light_blue'''.split('\n')
+
+def random_color():
+	global _all_colors_
+	global _all_colors_nobk_
+	global _all_colors_tact_
+	import random
+	return random.choice(_all_colors_tact_)
+
 print_ed_group={}
-def print_(*args,p=None,c=None,pad=3,g=None,end=None,pvs=None,pv=None,json=None, dic=None, line=None): 
+def print_(*args,p=None,c=None,pad=3,g=None,end=None,pvs=None,pv=None,json=None, dic=None, line=None):
+	if c == 'r' or c == 'random': c=random_color()
+
 	if pvs: pvs=None; pv=1;
 	if not dic and type(dic) == bool or ( type(dic) == int and dic == 1): printDicFields(args[0]); return None
 	try:
@@ -8891,8 +8995,25 @@ def minusResults(string,minus=''):
 		minusInput = switches.values('Minus')
 	# --> #start> this was added 2022-07-20
 	if type( minusInput ) == list:
+
+		#b)--> slow
+		# _minusInput=[]
+		# for i,yh in enumerate(minusInput):
+		# 	if not switches.isActive('StrictCase'):
+		# 		_yh=ci(yh).lower()
+		# 	else:
+		# 		_yh=ci(yh)
+		# 	_minusInput.append( _yh )
+		# 	# minusInput[i]= ci(minusInput[i])
+		# minusInput=_minusInput.copy()
+		# del _minusInput
+		#e)--> slow
+
 		for i,yh in enumerate(minusInput):
-			minusInput[i]= ci(minusInput[i])
+			if not switches.isActive('StrictCase'):
+				minusInput[i]= ci(minusInput[i]).lower()
+			else:
+				minusInput[i]= ci(minusInput[i])
 	# -->   #end> this was added 2022-07-20
 	if type( minusInput ) == str:
 		if not switches.isActive('StrictCase'):
@@ -10330,6 +10451,12 @@ class Switches:
 						result = eval('row.' + column)
 		return result
 
+	def isActive2( self, name, theFocus=False ):
+			for i,row in enumerate(self.switches):
+				if self.switches[i].name == name and self.switches[i].active: return True
+			return False
+
+
 	def isActive( self, name, theFocus=False ):# isSwitchActive
 		return self.fieldGet( name, 'active', theFocus )
 
@@ -11073,10 +11200,7 @@ class Switches:
 # def getSwitchSelf(name):
 #   global switches
 #   return switches.getSelf(name)
-def ci2(string):
-	string = ci(string)
-	string = _str.replaceAll(string,',',' ')
-	return string
+
 
 class TableView:
 
@@ -15964,6 +16088,64 @@ def genLine(count,what, p=1):
 		print_(result)
 	return result
 
+ciData = (  
+			[ ';sp',   ' ' ],
+			[ '_;192A;_',   ',' ],
+			[ '_;192B;_',   ':' ],
+			[ ';;',         ',' ],
+			[ ';c',         ',' ],
+			
+			[ ';_',         '-' ],
+			[ ';-',         '-' ],
+
+			[ ';p;',        '%' ],
+			[ ';p',         '%' ],
+			[ ';.',         ':' ],
+			[ ";;'",        _v.slash+'"' ],
+
+			[ _v.slash+'n',        '\n' ],
+			[ ';n',         '\n' ],
+			[ ';return',    '\n' ],
+			[ ';t',         '\t' ],
+
+			[ ";'",         '"' ],
+			[ ';q;',        '"' ],
+			[ '"\'"',       "'" ],
+			[ 'null00',     '"",' ],
+			[ '"\'", "\'"', "','" ],
+
+			[ '[star]',     '*' ],
+			[ '[a]',        '*' ],
+			[ '[s]',        '$' ],
+			[ '[eq]',       '=' ],
+			[ ';opar;',     '[' ],
+			[ ';bkt0;',     '[' ],
+			[ ';bkt1;',     ']' ],
+			[ '[pipe]',     '|' ],
+			[ '[p]',     '|' ],
+			[ '[htmlopen]', '<' ],
+			[ '[htmlclose]','>' ],
+			[ '[gtr]',      '>' ],
+			[ '[lss]',      '<' ],
+			[ ';6',         '^' ],
+			[ ';+',         '+' ],
+
+			[ '+--+c',      '--c' ],
+
+			[ '[semi]',      ';' ],
+			[ ';bs',         '/' ],
+			[ ';fs',         '\\' ],
+			[ ';d;',         __.theDelim ],
+			[';delim;',         __.theDelim ],
+			[';thedelim;',         __.theDelim ],
+			[';theDelim;',         __.theDelim ],
+			[';p',                 '%' ],
+			[';js',                '//' ],
+			[';bs',                '/' ],
+			[';fs',                '\\' ],
+			[';t',                 '\t' ],
+			
+			[ '[caret]',    '^' ]  )
 
 def ci(string):
 	#switchValueClean
@@ -15974,18 +16156,12 @@ def ci(string):
 		if cx[0] in string:
 			# print_( 'HERE', cx )
 			string = string.replace( cx[0], cx[1] )
-	
-	string = string.replace( ';d;', __.theDelim )
-	string = string.replace( ';delim;', __.theDelim )
-	string = string.replace( ';thedelim;', __.theDelim )
-	string = string.replace( ';theDelim;', __.theDelim )
-	string = string.replace( ';p', '%' )
-	string = string.replace( ';js', '//' )
-	string = string.replace( ';bs', '/' )
-	string = string.replace( ';fs', '\\' )
-
 	return string
 
+def ci2(string):
+	string = ci(string)
+	string = _str.replaceAll(string,',',' ')
+	return string
 
 """ {7DB6A001-0637-4F13-B328-2B17A481CF35}
 def randomTrueFalse(fix=2):
@@ -19140,52 +19316,6 @@ def autoKwargsGetArgsFromApp(app):
 
 ############################################### ###############################################
 
-ciData = (  
-			[ '_;192A;_',   ',' ],
-			[ '_;192B;_',   ':' ],
-			[ ';;',         ',' ],
-			[ ';c',         ',' ],
-			
-			[ ';_',         '-' ],
-			[ ';-',         '-' ],
-
-			[ ';p;',        '%' ],
-			[ ';p',         '%' ],
-			[ ';.',         ':' ],
-			[ ";;'",        _v.slash+'"' ],
-
-			[ _v.slash+'n',        '\n' ],
-			[ ';n',         '\n' ],
-			[ ';return',    '\n' ],
-			[ ';t',         '\t' ],
-
-			[ ";'",         '"' ],
-			[ ';q;',        '"' ],
-			[ '"\'"',       "'" ],
-			[ 'null00',     '"",' ],
-			[ '"\'", "\'"', "','" ],
-
-			[ '[star]',     '*' ],
-			[ '[a]',        '*' ],
-			[ '[s]',        '$' ],
-			[ '[eq]',       '=' ],
-			[ ';opar;',     '[' ],
-			[ '[pipe]',     '|' ],
-			[ '[p]',     '|' ],
-			[ '[htmlopen]', '<' ],
-			[ '[htmlclose]','>' ],
-			[ '[gtr]',      '>' ],
-			[ '[lss]',      '<' ],
-			[ ';6',         '^' ],
-			[ ';+',         '+' ],
-
-			[ '+--+c',          '--c' ],
-
-			[ '[semi]',         ';' ],
-			[ ';bs',         '/' ],
-			[ ';fs',         '\\' ],
-			
-			[ '[caret]',    '^' ]  )
 
 leap_years_table = None
 ###############################################
@@ -19994,7 +20124,7 @@ def dots(path):
 			exec(f)
 			if i == len(rts)-1: return eval(rts[0]);
 nsfw_=False
-def ad():
+def ad(path=None):
 	# print(_v.life+'ads')
 	# sys.exit()
 	if not os.path.isdir(_v.life+'ads'): return None
@@ -20016,13 +20146,20 @@ def ad():
 			if nsfw: saveText('1',_v.rtp+'vars'+os.sep+'nsfw')
 			else:    saveText('0',_v.rtp+'vars'+os.sep+'nsfw')
 
-	nsfw_=True
-	random=__.imp('random')
-	ads=fo(_v.life+'ads')
-	if nsfw:
-		for a2 in fo(_v.life+'ads.nsfw'): ads.append(a2);
-	ri = random.randrange(len(ads))
-	cho=ads[ri]
+	
+	if path:
+		cho=__.path(path)
+		sub=__.path(cho,file=True)
+	elif not path:
+		nsfw_=True
+		random=__.imp('random')
+		ads=fo(_v.life+'ads')
+		if nsfw:
+			for a2 in fo(_v.life+'ads.nsfw'): ads.append(a2);
+		
+		ri = random.randrange(len(ads))
+		cho=ads[ri]
+		sub=__.path(cho,file=True)
 	ad=getText( cho , raw=True )
 	ad=ad.replace('\r','')
 	def _cl(ad):
@@ -20032,13 +20169,26 @@ def ad():
 		return ad
 	ad=_cl(ad); ad=_cl(ad); ad=_cl(ad); ad=_cl(ad);
 	ad=_cl(ad); ad=_cl(ad); ad=_cl(ad); ad=_cl(ad);
-	sub=__.path(cho,file=True)
 	# cp( '<ad>', 'yellow' )
 	linePrint(c='green',center='ad', length=41)
 	cp( sub, 'yellow' )
 	linePrint('20',c='yellow')
+	_the_color_=random_color()
+
+	mx=0
 	for liner in ad.split('\n'):
-		pr('> '+liner)
+		leg=len(liner)
+		if leg > mx:
+			mx=leg
+	def _ad_space_(line,mx):
+		i=0
+		while not len(line)==mx:
+			line+=' '
+		return '|  '+line+'  |'
+
+	for liner in ad.split('\n'):
+		pr( pr('#ad)-->  ',c='gray',p=0) +pr(  _ad_space_(liner,mx)  ,c=_the_color_,p=0))
+		# pr( pr('#ad)--> |\t',c='gray',p=0) +liner)
 	linePrint(c='green',center='ad', length=41)
 	# cp( '</ad>', 'yellow' )
 	return ad
@@ -20190,6 +20340,10 @@ def file_break(path,lines = 4000):
 			smallfile.close()
 
 # https://stackoverflow.com/questions/1345827/how-do-i-find-the-time-difference-between-two-datetime-objects-in-python
+
+
+def _2lists(list1,list2): return list(set(list1).intersection(list2))
+
 
 def _2dates(d1,d2=None, dic=False):
 	if d2 is None: d2=time.time()

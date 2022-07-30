@@ -119,8 +119,8 @@ def action():
     xFile=file
     #n)--> manage comment settings
     remove_comments=False
-    # if path.endswith('.py'): SLC='#';remove_comments=True;
-    # if path.endswith('.js'): SLC='//';remove_comments=True;
+    if path.endswith('.py'): SLC='#';remove_comments=True;
+    if path.endswith('.js'): SLC='//';remove_comments=True;
     if _.switches.isActive('Comment'): SLC=_.switches.values('Comment')[0];remove_comments=True;
     if not _.switches.isActive('Disable-Auto-Language-Comment-Detect'):
         common_comments = [

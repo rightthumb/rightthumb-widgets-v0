@@ -2242,10 +2242,10 @@ __.setting('hotkey-clip.replace-a', '.eyeformeta.com')
 __.setting('hotkey-clip.replace-b', '.m-eta.app')
 
 
-
 import random
 import string
 # for elem in string.whitespace: sample_str = sample_str.replace(elem, '')
+
 
 
 ########################################################################################

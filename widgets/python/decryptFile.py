@@ -15,9 +15,11 @@ import sys
 import time
 
 ##################################################
+
 import _rightThumb._construct as __
 appDBA = __.clearFocus( __name__, __file__ )
 __.appReg = appDBA
+
 def focus( parentApp='', childApp='', reg=True ):
 	global appDBA
 	f = __.appName( appDBA, parentApp, childApp )
@@ -27,13 +29,14 @@ def focus( parentApp='', childApp='', reg=True ):
 __.registeredApps.append( focus() )
 import _rightThumb._base3 as _
 _.load()
+
 ##################################################
 
 import _rightThumb._vars as _v
 import _rightThumb._string as _str
 
-
 ##################################################
+
 ### EXAMPLE: START
 # import simplejson as json
 # from threading import Timer
@@ -42,8 +45,8 @@ import _rightThumb._string as _str
 # import cssselect
 # import sqlite3
 ### EXAMPLE: END
-##################################################
 
+##################################################
 
 def appSwitches():
 	pass
@@ -54,17 +57,14 @@ def appSwitches():
 	# _.switches.register( 'Files', '-f,-file,-files','file.txt', isPipe=True, isRequired=True, description='Files' )
 	# _.switches.register( 'Files', '-f,-file,-files','file.txt', isPipe='name,data,clean', description='Files' )
 	### EXAMPLE: END
-
-
-_.autoBackupData = __.autoCreationConfiguration['backup']
+_.autoBackupData = False
 __.isRequired_Pipe = False
 __.isRequired_Pipe_or_File = False
 # __.sort_name_trigger_override = [  ['']  ]
-
 # __.isRequired_or_List = ['Pipe','Files','Plus']
 
 _.appInfo[focus()] = {
-	'file': 'thisApp.py',
+	'file': 'decryptFile.py',
 	'liveAppName': __.thisApp( __file__ ),
 	'description': 'Changes the world',
 	'categories': [
@@ -84,7 +84,7 @@ _.appInfo[focus()] = {
 						# '',
 	],
 	'examples': [
-						'p thisApp -file file.txt',
+						'p decryptFile -file file.txt',
 						'',
 	],
 	'columns': [
@@ -95,9 +95,7 @@ _.appInfo[focus()] = {
 				       # 'this',
 				       # 'app',
 	],
-
 	}
-
 _.appData[focus()] = {
 		'start': __.startTime,
 		'uuid': '',
@@ -109,62 +107,48 @@ _.appData[focus()] = {
 		},
 	}
 ### EXAMPLE: START
-# _.appInfo[focus()]['examples'].append( 'p thisApp -file file.txt' )
-
+# _.appInfo[focus()]['examples'].append( 'p decryptFile -file file.txt' )
 # _.appInfo[focus()]['columns'].append( {'name': 'name', 'abbreviation': 'n'} )
 ### EXAMPLE: END
-
 
 def registerSwitches( argvProcessForce=False ):
 	global appDBA
 	if not __.appReg == appDBA and appDBA in __.appReg:
-
 		if not __name__ == '__main__':
 			_.argvProcess = argvProcessForce
 		else:
 			_.argvProcess = True
-
 		_.load()
+
 		_.appInfo[__.appReg] = _.appInfo[appDBA]
 		_.appData[__.appReg] = _.appData[appDBA]
 	__.constructRegistration( _.appInfo[__.appReg]['file'],__.appReg )
 	appSwitches()
-
 	_.myFileLocation_Print = False
 	_.switches.trigger( 'Files', _.myFileLocations )
 	_.switches.trigger( 'Folder', _.myFolderLocations )
 	_.switches.trigger( 'URL', _.urlTrigger )
 	### EXAMPLE: START
 	# _.switches.trigger( 'Files',_.inRelevantFolder )
-	
 	# _.switches.trigger( 'Watched', _.txt2Date )
 	# _.switches.trigger( 'Input',_.formatColumns )
 	# _.switches.trigger( 'Franchise',_.triggerSpace )
 	### EXAMPLE: END
-	
 	_.defaultScriptTriggers()
 	_.switches.process()
-
-
 if not __name__ == '__main__':
 	_.argvProcess = False
 else:
 	_.argvProcess = True
-
 registerSwitches()
-
 
 def fieldSet( switchName, switchField, switchValue, theFocus=False ):
 	if not type( theFocus ) == bool:
 		theFocus = theFocus
 	_.switches.fieldSet( switchName, switchField, switchValue, theFocus )
-
-
 if __name__ == '__main__':
 	if not sys.stdin.isatty():
 		_.setPipeData( sys.stdin.readlines(), __.appReg )
-
-
 _.postLoad( __file__ )
 
 ########################################################################################
@@ -187,51 +171,31 @@ _.postLoad( __file__ )
 # date = _.friendlyDate( theDate )
 # _.addComma()
 ### EXAMPLE: END
+
 ########################################################################################
 # START
-
 import _rightThumb._encryptFile as _crypt
 
 def action():
+	focus()
 	pass
-
-
 	_crypt.decrypt2( _.switches.values('In')[0], _.switches.values('Out')[0], _.switches.values('Password')[0] )
-
-
 	# import Crypto as _cipher
 	# import Crypto.Cipher as _cipher
-
 	# for x in dir(_cipher):
 		# _.pr(x)
-
 	# global data
 	# load()
-
 	# if not type( _.appData[__.appReg]['pipe'] ) == bool:
 	# 	_.pipeCleaner(0)
 	# 	# _.printVar( _.appData )
 	# 	for i,row in enumerate( _.appData[__.appReg]['pipe'] ):
 	# 		pass
-
-
-
-
 # def load():
 # 	global data
 # 	data = _.getTable( 'table' )
-
-
 # data = []
-
-
 
 ########################################################################################
 if __name__ == '__main__':
 	action()
-
-
-
-
-
-

@@ -166,7 +166,7 @@ def removeUnsave( data ):
     return result
 
 def spaceba( string, what ):
-    import string
+    # import string
     if what in string:
         i=0
         while ' '+what in string or what+' ' in string:
@@ -1308,13 +1308,12 @@ def sh(string):
     string=string.replace( chr(10), '\n' ).replace( '\r', '' ).replace( chr(27), '' ).replace( chr(10), '\n' ).replace( '\r', '' ).replace( chr(27), '' )
     while '\t' in string: string = string.replace( '\t', '    ' );
     while ' \n' in string: string = string.replace( ' \n', '\n' );
+    while '    ' in string: string = string.replace( '    ', '\t' );
     string=do('be',string,'\n')
 
     string = string.replace( chr(10), '\n' )
     string = string.replace( chr(27), '' )
     string = string.replace( '\r', '' )
-    while '\t' in string:
-        string = string.replace( '\t', '    ' )
 
     return string
 

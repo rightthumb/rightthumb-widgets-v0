@@ -235,14 +235,14 @@ commit_count = 0
 processed_count = 0
 # NOTE:
 #         sdate finds oldest or newsest date in accessed modified created
-def info( path, sql=False, md5=False, exif=0,   attrib=None, mime=None, db_connection=None, db_cursor=None, count=None, insert=None, last=False, sdate=None, meta=True, err=False,       subject=None, k=None, f=None, s=None, sub=None, field=None, mini=False ):
+def info( path, sql=False, md5=False, exif=0,   attrib=None, mime=None, db_connection=None, db_cursor=None, count=None, insert=None, last=False, sdate=None, meta=True, err=False,       subject=None, k=None, f=None, s=None, sub=None, field=None, mini=False, sha256=False ):
 	if not field is None: subject=field;
 	if not sub is None: subject=sub;
 	if not s is None: subject=s;
 	if not k is None: subject=k;
 	if not f is None: subject=f;
 	sub=subject
-	mrec=fileInfo( path=path, sql=sql, md5=md5, exif=exif,   attrib=attrib, mime=mime, db_connection=db_connection, db_cursor=db_cursor, count=count, insert=insert, last=last, sdate=sdate, meta=meta, err=err, subject=subject )
+	mrec=fileInfo( path=path, sql=sql, md5=md5, exif=exif,   attrib=attrib, mime=mime, db_connection=db_connection, db_cursor=db_cursor, count=count, insert=insert, last=last, sdate=sdate, meta=meta, err=err, subject=subject, sha256=sha256 )
 	if mini and mrec:
 		del mrec['stat']
 		del mrec['date_created_raw']
@@ -270,7 +270,7 @@ def info( path, sql=False, md5=False, exif=0,   attrib=None, mime=None, db_conne
 		del mrec['date_accessed']
 
 	return mrec
-def fileInfo( path, sql=False, md5=False, exif=0,   attrib=None, mime=None, db_connection=None, db_cursor=None, count=None, insert=None, last=False, sdate=None, meta=True, err=False, subject=None ):
+def fileInfo( path, sql=False, md5=False, exif=0,   attrib=None, mime=None, db_connection=None, db_cursor=None, count=None, insert=None, last=False, sdate=None, meta=True, err=False, subject=None, sha256=False ):
 	global processed_count
 	global total_records
 	processed_count += 1
@@ -290,10 +290,10 @@ def fileInfo( path, sql=False, md5=False, exif=0,   attrib=None, mime=None, db_c
 			# sys.exit()
 
 	if err:
-		return fileInfoAction( path, sql, md5, exif, attrib, mime, db_connection, db_cursor, count, insert, last, sdate, meta, subject )
+		return fileInfoAction( path, sql, md5, exif, attrib, mime, db_connection, db_cursor, count, insert, last, sdate, meta, subject, sha256 )
 	else:
 		try:
-			return fileInfoAction( path, sql, md5, exif, attrib, mime, db_connection, db_cursor, count, insert, last, sdate, meta, subject )
+			return fileInfoAction( path, sql, md5, exif, attrib, mime, db_connection, db_cursor, count, insert, last, sdate, meta, subject, sha256 )
 		except Exception as e:
 			return False
 
@@ -342,6 +342,8 @@ def individual(path,subject):
 	if ' friendly_month ' in ' '+subject+' ': dic['friendly_month'] =  friendlyMonthNew(os.path.getmtime(path));
 	if ' fm ' in ' '+subject+' ': dic['fm'] =  friendlyMonthNew(os.path.getmtime(path));
 	if ' md5 ' in ' '+subject+' ': dic['md5'] =  _md5.md5File(path);
+	if ' sha ' in ' '+subject+' ': dic['md5'] =  _md5.sha256File(path);
+	if ' sha256 ' in ' '+subject+' ': dic['md5'] =  _md5.sha256File(path);
 	if ' year ' in ' '+subject+' ': dic['year'] =  getYearFromEpoch(os.path.getmtime(path));
 	if ' accessed_raw ' in ' '+subject+' ': dic['accessed_raw'] =  os.path.getatime(path);
 	if ' date_accessed ' in ' '+subject+' ': dic['date_accessed'] =  formatDate(os.path.getatime(path));
@@ -377,7 +379,7 @@ def individual(path,subject):
 # p -paste | p line --c -make "if subject == '{}': return run(path,subject);"
 # p -paste | p line --c -make "if ' {} ' in ' '+subject+' ': dic['{}'] =  run(path,subject);"
 
-def fileInfoAction( path, sql, md5, exif, getAttrib=None, getMime=None, db_connection=None, db_cursor=None, count=None, insert=None, last=False, sdate=None, meta=True, subject=None ):
+def fileInfoAction( path, sql, md5, exif, getAttrib=None, getMime=None, db_connection=None, db_cursor=None, count=None, insert=None, last=False, sdate=None, meta=True, subject=None, sha256=False ):
 	global touch_meta
 	global dateCalcByModified
 	global timeAudit
@@ -480,6 +482,7 @@ def fileInfoAction( path, sql, md5, exif, getAttrib=None, getMime=None, db_conne
 		epoch.append({ 'label': 'week_and_year', 'epoch': time.time() })
 
 		md5Data = ''
+		sha256Data = ''
 
 		shouldMD5 = False
 		if type( md5 ) == bool:
@@ -494,20 +497,14 @@ def fileInfoAction( path, sql, md5, exif, getAttrib=None, getMime=None, db_conne
 				shouldMD5 = False
 				md5Data = md5[1]
 		# _.pr( 'shouldMD5:', shouldMD5 )
+		
+		if sha256:
+			try: sha256Data = _md5.sha256File( path2 )
+			except Exception as e: pass
+
 		if shouldMD5:
-			# _.pr( 'shouldMD5:', shouldMD5 )
-			# _.pr()
-			# _.pr( 'Processing:', path2 )
-			try:
-				md5Data = _md5.md5File( path2 )
-			except Exception as e:
-				pass
-				
-			# _.pr( md5Data )
-			# _.pr( 'md5File', md5Data, path2 )
-			# try:
-			# except Exception as e:
-			#     pass
+			try: md5Data = _md5.md5File( path2 )
+			except Exception as e: pass
 		epoch.append({ 'label': 'md5:'+str(shouldMD5), 'epoch': time.time() })
 		
 		if not getMime is None:
@@ -553,6 +550,7 @@ def fileInfoAction( path, sql, md5, exif, getAttrib=None, getMime=None, db_conne
 				'friendly_week': friendlyWeek1,
 				'friendly_month': friendlyMonth1,
 				'md5': md5Data,
+				'sha256': sha256Data,
 				'year': year,
 				'accessed_raw': accessed_raw,
 				'date_accessed': formatDate(accessed_raw),

@@ -40,6 +40,11 @@ _.appInfo['examples'].append('p drive -index usb internal')
 _.appInfo['examples'].append('p drive -index C:\\Users\\Scott\\Desktop Desktop')
 _.appInfo['examples'].append('p drive -index C:\\ D:'+_v.slash)
 _.appInfo['examples'].append('p drive -index cloud')
+_.appInfo['examples'].append('')
+_.appInfo['examples'].append('')
+_.appInfo['examples'].append('found an id, here is how to research it...')
+_.appInfo['examples'].append('\tp dirdb + indexTable_drives - backup --c | p f3 + CDE18F2D7BEF -jn')
+_.appInfo['examples'].append('')
 
 _.appInfo['columns'].append({'name': 'name', 'abbreviation': 'n'})
 _.appInfo['columns'].append({'name': 'initiated', 'abbreviation': 'i'})
@@ -497,8 +502,8 @@ if __name__ == '__main__':
 
 
 
-
-
+# found an id, here is how to research it...
+	# p dirdb + indexTable_drives - backup --c | p f3 + CDE18F2D7BEF -jn
 
 
 

@@ -10,106 +10,36 @@
 # ###########################################################################
 # ## {C3P0D40fAe8B} ##
 
-
-##################################################
-import sys, time
-##################################################
-import _rightThumb._construct as __
-appDBA=__.clearFocus(__name__,__file__);__.appReg=appDBA;
-def focus(parentApp='',childApp='',reg=True):
-    global appDBA;f=__.appName(appDBA,parentApp,childApp);
-    if reg:__.appReg=f;
-    return f
-import _rightThumb._base3 as _
-fieldSet=_.l.vars(focus(),__name__,__file__,appDBA)
-_.load()
-##################################################
-_v = __.imp('_rightThumb._vars')
-_str = __.imp('_rightThumb._string')
-##################################################
-
+#b)--> load
+from _rightThumb._base3 import template; exec(  template.header()  ); exec(  template.setting()  );
+#e)--> load
 
 def sw():
     pass
     #b)--> examples
-    # _.switches.register( 'Input', '-i' )
+    _.switches.register( 'Domains', '-dom,-domain,-domains', 'min or minimal' )
     # _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=True )
     #e)--> examples
 
-# __.setting('require-list',['Files,Plus','File,Has']) # todo
-# __.setting('require-list',['Pipe','Files','Plus'])
-__.setting('receipt-log')
-__.setting('receipt-file')
-__.setting('myFileLocations-skip-validation',False)
-__.setting('require-pipe',False)
-__.setting('require-pipe||file',False)
-__.setting('pre-error',False)
-__.setting('switch-raw',[])
-
-
-
 _.appInfo[focus()] = {
-    # 'app': '8facG-jo0Cxk',
-    'file': 'thisApp.py',
+    'file': 'dirty-url-skimmer.py',
     'liveAppName': __.thisApp( __file__ ),
     'description': 'Changes the world',
-        # _.ail(1,'subject')+
-        # _.aib('one')+
     'categories': [
                         'DEFAULT',
                 ],
-    'usage': [
-                        # 'epy another',
-                        # 'e nmap',
-                        # '',
-    ],
-    'relatedapps': [
-                        # 'p another -file file.txt',
-                        # '',
-    ],
-    'prerequisite': [
-                        # 'p another -file file.txt',
-                        # '',
-    ],
     'examples': [
                         _.hp('p thisApp -file file.txt'),
                         _.linePrint(label='simple',p=0),
                         '',
     ],
-    'columns': [
-                       # { 'name': 'name', 'abbreviation': 'n' },
-                       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
-    ],
-    'aliases': [
-                       # 'this',
-                       # 'app',
-    ],
-    'notes': [
-                       # {},
-    ],
+    'created': None,
+    'tested': 1658926278.0647678,
 }
 
-_.appData[focus()] = {
-        'start': __.startTime,
-        'uuid': '',
-        'audit': [],
-        'pipe': False,
-        'data': {
-                    'field': {'sent': [], 'received': [] }, # { 'label': '', 'context': [],  }
-                    'table': {'sent': [], 'received': [] },
-        },
-    }
-
-
-def triggers():
-    _.switches.trigger( 'Files', _.myFileLocations, vs=True )
-    _.switches.trigger( 'Ago', _.timeAgo )
-    _.switches.trigger( 'Folder', _.myFolderLocations )
-    _.switches.trigger( 'URL', _.urlTrigger )
-    _.switches.trigger( 'Duration', _.timeFuture )
-
-_.l.conf('clean-pipe',True)
-_.l.sw.register( triggers, sw )
+#b)--> registration
+template.info(focus()); exec(  template.triggers()  ); _.l.sw.register( triggers, sw ); _.l.conf('clean-pipe',False);
+#e)--> registration
 
 ########################################################################################
 #b)--> examples
@@ -129,7 +59,7 @@ _.l.sw.register( triggers, sw )
         #!)--> data=str(requests.post(url,data={}).content,'iso-8859-1')
 
     #n)--> import and backup example
-        # _bk = _.regImp( __.appReg, 'fileBackup' ); _bk.switch( 'Silent' ); _bk.switch( 'isRunOnce' ); _bk.switch( 'Flag', 'APP' ); _bk.switch( 'DoNotSchedule' )
+        # _bk = _.regImp( focus(), 'fileBackup' ); _bk.switch( 'Silent' ); _bk.switch( 'isRunOnce' ); _bk.switch( 'Flag', 'APP' ); _bk.switch( 'DoNotSchedule' )
         # _bk.switch( 'Input', path ); bkfi = _bk.action();
     
     #n)--> inline
@@ -141,18 +71,63 @@ _.l.sw.register( triggers, sw )
 ########################################################################################
 #n)--> start
 
+
+def skim0(data):
+    test=''
+    for ch in data:
+        if ch in '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTU-_VWX.YZ:/':
+            test+=ch
+        else:
+            test+=' '
+    while '  ' in test: test=test.replace('  ',' ')
+
+    for crap in test.split(' '):
+        if 'http:' in crap or 'https:' in crap:
+            print(crap)
+
+def skim(data):
+    global extractor
+    focus()
+    urls = extractor.find_urls(data)
+    for url in urls:
+        if _.switches.isActive('Domains'):
+            url = urlparse(url).netloc
+            if 'min' in _.switches.value('Domains'):
+                if url.count('.') > 1:
+                    par = url.split('.')
+                    par.reverse()
+                    ur=[par.pop(0),par.pop(0)]
+                    ur.reverse()
+                    url='.'.join(ur)
+
+        _.pr(url)
+    # print(urls)
+    # print(type(urls))
+
+
+
 def action():
     load(); global c3po;
 
-    #n)--> iterate
-    for subject in _.isData(r=0): _.pr(subject)
+    skim( '\n'.join( _.isData(r=0) ) )
+    #--> iterate
+    # for data in _.isData(r=0):
+
     
 
 def load():
     global c3po
     c3po = _.getTable( 'table' )
-    #n)--> print table
+    #--> print table
     _.pt(c3po)
+
+focus()
+import re
+import urlextract
+extractor = urlextract.URLExtract()
+if _.switches.isActive('Domains'):
+    from urllib.parse import urlparse
+
 
 
 ##################################################
@@ -173,3 +148,5 @@ if __name__ == '__main__':
     #e)--> examples
     action()
     _.isExit(__file__)
+
+

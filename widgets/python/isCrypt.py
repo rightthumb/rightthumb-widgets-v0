@@ -39,7 +39,7 @@ def appSwitches():
 	_.switches.register( 'Files', '-f,-file,-files','file.txt', isPipe='name', description='Files' )
 
 
-_.autoBackupData = __.autoCreationConfiguration['backup']
+_.autoBackupData = False
 __.releaseAcquiredData = __.autoCreationConfiguration['logs']
 __.myFileLocations_SKIP_VALIDATION = False
 __.isRequired_Pipe = False

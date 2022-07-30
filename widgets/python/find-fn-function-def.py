@@ -10,10 +10,9 @@
 # ###########################################################################
 # ## {C3P0D40fAe8B} ##
 
-
-##################################################
+#b)--> load
 import sys, time
-##################################################
+#n)--> rightThumb.com widgets
 import _rightThumb._construct as __
 appDBA=__.clearFocus(__name__,__file__);__.appReg=appDBA;
 def focus(parentApp='',childApp='',reg=True):
@@ -23,17 +22,16 @@ def focus(parentApp='',childApp='',reg=True):
 import _rightThumb._base3 as _
 fieldSet=_.l.vars(focus(),__name__,__file__,appDBA)
 _.load()
-##################################################
+#n)--> common(loaded in other things so might as well)
 _v = __.imp('_rightThumb._vars')
 _str = __.imp('_rightThumb._string')
-##################################################
-
+#e)--> load
 
 def sw():
     pass
     #b)--> examples
     # _.switches.register( 'Input', '-i' )
-    # _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=True )
+    _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name', description='Files' )
     #e)--> examples
 
 # __.setting('require-list',['Files,Plus','File,Has']) # todo
@@ -47,10 +45,9 @@ __.setting('pre-error',False)
 __.setting('switch-raw',[])
 
 
-
 _.appInfo[focus()] = {
     # 'app': '8facG-jo0Cxk',
-    'file': 'thisApp.py',
+    'file': 'find-fn-function-def.py',
     'liveAppName': __.thisApp( __file__ ),
     'description': 'Changes the world',
         # _.ail(1,'subject')+
@@ -72,7 +69,7 @@ _.appInfo[focus()] = {
                         # '',
     ],
     'examples': [
-                        _.hp('p thisApp -file file.txt'),
+                        _.hp('p find-fn-function-def -file file.py'),
                         _.linePrint(label='simple',p=0),
                         '',
     ],
@@ -139,37 +136,87 @@ _.l.sw.register( triggers, sw )
         # banner=_.Banner(app); goss=banner.goss;
 #e)--> examples
 ########################################################################################
-#n)--> start
+counter=0
+os=__.imp('os.sep')
+
+def clean(text):
+    while '  ' in text: text=text.replace('  ',' ')
+    while text.startswith(' '): text[1:]
+    while text.endsswith(' '): text[:-1]
+    return text
+
+def inject(path,fn,spaces):
+    fna=''
+    for f in fn:
+        if f in '0_123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ':
+            fna+=f
+        else:
+            fna+=' '
+    global counter
+    counter+=1
+    app=__.name(path)
+    i=0
+    space_the_final_frontier=''
+    while not i == spaces:
+        i+=1
+        space_the_final_frontier+=' '
+    space_the_final_frontier+='    '
+    space_the_final_frontier+="print('"+app+"',"+str(counter)+")"
+    return space_the_final_frontier
+
+def process(path):
+
+    _bk.switch( 'Input', path ); bkfi = _bk.action();
+    _.pr(bkfi,c='darkcyan')
+    file=_.getText(path,raw=True).split('\n')
+    while '\t' in file: file=file.replace('\t','    ')
+    lines=[]
+    for i, line in enumerate(file):
+        hasComment=False
+        if '#' in line:
+            hasComment=True
+            original=line
+
+            com=line.split('#')
+            line=com[0]
+            if not line: lines.append(original); continue;
+            comment=line[len(line):len(original)]
+        lines.append(file[i])
+        if ' def ' in ' '+liner:
+            spaces=0
+            test=file[i]
+            while test.startswith(' '):
+                spaces+=1
+                test=test[1:]
+            lines.append(inject(path,file[i]spaces))
+
+
+    _.saveText(lines,path)
+
 
 def action():
-    load(); global c3po;
+    # load(); global c3po;
 
-    #n)--> iterate
-    for subject in _.isData(r=0): _.pr(subject)
-    
+    #--> iterate
+    for path in _.isData(r=0):
+        process(path)
+        
 
-def load():
-    global c3po
-    c3po = _.getTable( 'table' )
-    #n)--> print table
-    _.pt(c3po)
+# def load():
+#     global c3po
+#     c3po = _.getTable( 'table' )
+#     #--> print table
+#     _.pt(c3po)
 
-
-##################################################
-#b)--> examples
-# banner=_.Banner(dependencies)
-# goss=banner.goss
-# goss('-\t this app will sherlock tf out of any python app or python module')
-#e)--> examples
-##################################################
+_bk = _.regImp( focus(), 'fileBackup' ); _bk.switch( 'Silent' ); _bk.switch( 'isRunOnce' ); _bk.switch( 'Flag', focus() ); _bk.switch( 'DoNotSchedule' )
 
 ########################################################################################
 if __name__ == '__main__':
-    #b)--> examples
-
-    # banner.pr()
-    # if len(_.switches.all())==0: banner.gossip()
-    
-    #e)--> examples
     action()
-    _.isExit(__file__)
+    __.isExit()
+
+
+
+
+
+

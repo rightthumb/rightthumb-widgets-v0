@@ -3050,7 +3050,7 @@ alias c.s.="$widgets/widgets/bash/nav/p.sh cloud -sync"
 alias c.s.dl.="$widgets/widgets/bash/nav/p.sh cloud -sync -download"
 
 
-alias py="python3"
+alias py="$widgets/widgets/bash/py.sh"
 
 
 export HISTSIZE=100000

@@ -11,10 +11,14 @@
 # ## {C3P0D40fAe8B} ##
 
 ##################################################
+
 import sys, time
+
 ##################################################
+
 import _rightThumb._construct as __
 appDBA=__.clearFocus(__name__,__file__);__.appReg=appDBA;
+
 def focus(parentApp='',childApp='',reg=True):
     global appDBA;f=__.appName(appDBA,parentApp,childApp);
     if reg:__.appReg=f;
@@ -22,9 +26,12 @@ def focus(parentApp='',childApp='',reg=True):
 import _rightThumb._base3 as _
 fieldSet=_.l.vars(focus(),__name__,__file__,appDBA)
 _.load()
+
 ##################################################
+
 _v = __.imp('_rightThumb._vars')
 _str = __.imp('_rightThumb._string')
+
 ##################################################
 
 def sw():
@@ -35,7 +42,6 @@ def sw():
     # _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=True )
     # _.switches.register( 'Files', '-f,-fi,-file,-files' )
     ### EXAMPLE: END
-
 # __.setting('require-list',['Pipe','Files','Plus'])
 __.setting('require-list',[])
 __.setting('receipt-log')
@@ -46,10 +52,9 @@ __.setting('require-pipe||file',False)
 __.setting('pre-error',False)
 __.setting('switch-raw',[])
 
-
 _.appInfo[focus()] = {
     # 'app': '8facG-jo0Cxk',
-    'file': 'thisApp.py',
+    'file': 'fo.py',
     'liveAppName': __.thisApp( __file__ ),
     'description': 'Changes the world',
         # _.ail(1,'subject')+
@@ -71,7 +76,7 @@ _.appInfo[focus()] = {
                         # '',
     ],
     'examples': [
-                        _.hp('p thisApp -file file.txt'),
+                        _.hp('p fo -file file.txt'),
                         _.linePrint(label='simple',p=0),
                         '',
     ],
@@ -87,7 +92,6 @@ _.appInfo[focus()] = {
                        # {},
     ],
 }
-
 _.appData[focus()] = {
         'start': __.startTime,
         'uuid': '',
@@ -99,21 +103,17 @@ _.appData[focus()] = {
         },
     }
 
-
 def triggers():
     _.switches.trigger( 'Files', _.myFileLocations, vs=True )
     _.switches.trigger( 'Ago', _.timeAgo )
     _.switches.trigger( 'Folder', _.myFolderLocations )
     _.switches.trigger( 'URL', _.urlTrigger )
     _.switches.trigger( 'Duration', _.timeFuture )
-
 _.l.conf('clean-pipe',True)
 _.l.sw.register( triggers, sw )
 
 ########################################################################################
 ### EXAMPLE: START
-
-
     #--> make hotkey ad-description soon:  <--<w#
     #-->    - outer most typed first
     #-->    - blank pipe
@@ -132,7 +132,6 @@ _.l.sw.register( triggers, sw )
     #-->              |           | - dignissim
     #-->              |
     #-->              | - inceptos
-
     # if _.switches.isActive('Test'): test(); return None;
     # result=[]; result=[ _.pr(line) for i, line, bi in _.numerate( _.isData(r=0) )]
     # bk=[];[  bk.append(rec['backup']) for rec in backupLog if path == rec['file']]; bk=bk[-1];
@@ -140,12 +139,10 @@ _.l.sw.register( triggers, sw )
     #--> m=[[row[i] for row in matrix] for i in range(4)]
     # requests=__.imp('requests.post')
     # data=str(requests.post(url,data={}).content,'iso-8859-1')
-
-
 ### EXAMPLE: END
+
 ########################################################################################
 # START
-
 os=__.imp('os.sep')
 
 def action():
@@ -154,11 +151,9 @@ def action():
     #--> todo#> meta to scan for
     load()
     global c3po
-
-
     for fo in c3po:
-        _.pr(fo,c='cyan')
-
+        if _.showLine(fo):
+            _.pr(fo,c='cyan')
 
 def load():
     global c3po
@@ -171,13 +166,7 @@ def load():
         for i, fo in enumerate(c3po):
             c3po[i]=fo.replace( __.path(os.getcwd())+os.sep, '' )
 
-
 ########################################################################################
 if __name__ == '__main__':
     action()
     __.isExit()
-
-
-
-
-
