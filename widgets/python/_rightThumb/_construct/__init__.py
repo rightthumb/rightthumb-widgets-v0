@@ -215,8 +215,15 @@ def path( p, ab=True, pop=False, file=False, slash=None, folder=None, fi=None, f
 
     # os = vc.FIG.imp('os')
     # os = imp('os')
+    os=imp('os.sep')
+    try: os.path.abspath
+    except Exception as e: os=imp('os.path.abspath')
+    try: os.path.isfile
+    except Exception as e: os=imp('os.path.isfile')
+    try: os.path.isdir
+    except Exception as e: os=imp('os.path.isdir')
+
     if slash is None:
-        os=imp('os.sep')
         slash = os.sep
     if not p:
         return p.replace(os.sep+os.sep,os.sep)
@@ -226,12 +233,12 @@ def path( p, ab=True, pop=False, file=False, slash=None, folder=None, fi=None, f
     while slash+slash in p:
         p = p.replace(slash+slash,slash)
     if ab:
-        try:
-            p = os.path.abspath(p)
-        except Exception as e:
-            pass
+        if os.path.isfile(p) or os.path.isdir(p):
+            try:
+                p = os.path.abspath(p)
+            except Exception as e:
+                pass
     try:
-        os=imp('os.sep')
         os=imp('os.path._getfinalpathname')
         p = os.path._getfinalpathname(p).lstrip(r'\?')
         # print(p)

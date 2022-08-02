@@ -3817,7 +3817,8 @@ class dt:
 #     print(v.isData)
 #     print(data)
 #     return data
-def isData( data=None, focus=None, pipeClean=True, required=False,     r=None, c=None ):
+def isData( data=None, focus=None, pipeClean=True, required=False,     r=None, c=None, noclean=None ):
+	if not noclean is None: pipeClean=noclean
 	def _isData_(tst):
 		global myFileLocation_Files
 		# if not tst and pipe_surfing(): tst = pipe_surfing()
@@ -3847,78 +3848,50 @@ def isData( data=None, focus=None, pipeClean=True, required=False,     r=None, c
 		data=[]
 		global switches
 		isClean=False
-		# print_('v.isData',v.isData,__.appReg)
+
 		for name in v.isData:
-			# print_('val',switches.values(name),len(switches.values(name)),name)
 			if len(switches.values(name)):
 				for isD in v.isData[name].split(','):
-					# print_('isD',isD)
-					if isD == 'clean':
+					if isD == 'clean' and noclean is None:
 						isClean=True
 					elif isD == 'name':
 						for n in switches.values(name):
 							data.append(n)
 					elif isD == 'glob' and 'data' in v.isData[name]:
 						for n in switches.values(name):
-							# for f in glob.glob( n ):
 							for f in isData_path_list( glob.glob( n ) ):
 								for xXx in getText( f, raw=True ).split('\n'):
 									data.append(xXx)
 					elif isD == 'glob':
-						# print_('9e1647494350')
 						for n in switches.values(name):
-							# print_('3e1647480669',n)
-							# print_('n',n)
-							# sys.exit()
 							if type(n) == list:
 								stuff = n
 							if type(n) == str:
 								stuff = glob.glob( n )
 							if not stuff is None:
 								data=isData_path_list(stuff,data)
-
 					elif isD == 'data':
 						tData=[]
 						for n in switches.values(name):
 							tData.append(getText(n,raw=True))
-						# print_(tData[0])
 						data = '\n'.join(tData)
-						# print_(data)
-						# print_(type(data))
-						# sys.exit()
-						# return data
-						# sys.exit()
-					# pass
-					# else: e('isData: else')
 
 		if data:
-			# print_('here')
-			# sys.exit()
 			if False and not isClean:
 				return _isData_(data)
 			elif type(data)==str:
-				# print_('here')
-				# sys.exit()
 				newData=''
-				data = data.replace('\r','')
-				# data = _str.replaceDuplicate( data, '\n' )
-				# for row in data.split('\n'):
-				#   row = _str.cleanBE( row, ' ' )
-				#   row = _str.cleanBE( row, '\t' )
-				#   newData+=row+'\n'
-				# return newData
-				# print_('here')
-				# sys.exit()
+				# data = data.replace('\r','')
+				data = _str.do('sh',data)
 				return _isData_(data.split('\n'))
 			elif type(data)==list:
 				if len(data) and type(data[0]) == list: data = data[0]
+				_data='\n'.join(data)
+				_data=_str.do('sh',_data)
+				data=_data.split('\n')
 				newData=[]
 				for row in data:
-					row = row.replace('\r','')
-					row = row.replace('\n','')
 					row = _str.replaceDuplicate( row, ' ' )
-					row = _str.cleanBE( row, ' ' )
-					row = _str.cleanBE( row, '\t' )
 					newData.append(row)
 				return _isData_(newData)
 
@@ -7414,8 +7387,8 @@ def setPipeData( data, theFocus=False, clean=True ):
 	# _.appData[__.appReg]['pipe'] = list(data)
 	if not appData[theFocus]['pipe'] and len(data) > 0:
 		appData[theFocus]['pipe'] = []
-		if not clean:
-			appData[theFocus]['pipe'].append('')
+		# if not clean:
+		# 	appData[theFocus]['pipe'].append('')
 		for pd in data:
 			if clean:
 				pd = pd.replace('\n','')
@@ -8352,7 +8325,8 @@ def uuidEpoc( uuid, f='iso' ):
 		return _.isDate( d, f=f)
 	return None
 
-def genUUID( project='', label='', uniqueTimestamp=False, note=None, r=None, e=None, n=None, c=False, epoch=None,    small=None, t=None, tiny=None ):
+def genUUID( project='', label='', uniqueTimestamp=False, note=None, r=None, e=None, n=None, c=False, epoch=None,    small=None, t=None, tiny=None, focus=None, save=None ):
+	if focus is None: focus=__.appReg
 	if not tiny is None: small=tiny;    #KEEP 1ST
 	if not t is None: small=t;          #KEEP 2ND
 	if small: return miniUUID();        #KEEP 3RD
@@ -8402,49 +8376,75 @@ def genUUID( project='', label='', uniqueTimestamp=False, note=None, r=None, e=N
 	else:
 		string = '{' + ss + '}'
 	try:
-		type(appData[__.appReg]['uuid'])
+		type(appData[focus]['uuid'])
 		good = True
 	except Exception as e:
 		good = False
 	if good:
 
 		try:
-			timestamp = appData[__.appReg]['start']
+			timestamp = appData[focus]['start']
 		except Exception as e:
 			timestamp = time.time()
 
+		if not project == '' and not label == '':
+			rec={}
+			rec['app'] = appInfo[focus]['file']
+			rec['uuid'] = string
+			rec['timestamp'] = timestamp
+			rec['project'] = ''
+			rec['label'] = ''
+			if uniqueTimestamp:
+				rec['timestamp'] = time.time()
+
+			if not project == '':
+				rec['project'] = project
+
+			if not label == '':
+				rec['label'] = label
+				
+			uuidLog = getTable('uuid_log.json')
+			uuidLog.append(rec)
+			saveTable(uuidLog,'uuid_log.json',printThis=False)
+			if not save is None and type(save) is str:
+				index=_.getTable(save)
+				index[string] = rec
+				_.saveTable(index,save)
+
+
 		if not project == '' or not label == '':
-			if type(appData[__.appReg]['uuid']) == str:
+
+			if type(appData[focus]['uuid']) == str:
 				# print_()
-				# print_( '__.appReg', __.appReg )
+				# print_( 'focus', focus )
 				# print_()
 				# print_(d2json( appData ))
 				# print_()
-				appData[__.appReg]['uuid'] = {}
-				# print_(appInfo[__.appReg]['file'])
+				appData[focus]['uuid'] = {}
+				# print_(appInfo[focus]['file'])
 				# sys.exit()
-				appData[__.appReg]['uuid']['app'] = appInfo[__.appReg]['file']
+				appData[focus]['uuid']['app'] = appInfo[focus]['file']
 
-			if not type(appData[__.appReg]['uuid']) == str:
+			if not type(appData[focus]['uuid']) == str:
 				
-				appData[__.appReg]['uuid']['uuid'] = string
-				appData[__.appReg]['uuid']['timestamp'] = timestamp
-				appData[__.appReg]['uuid']['project'] = ''
-				appData[__.appReg]['uuid']['label'] = ''
+				appData[focus]['uuid']['uuid'] = string
+				appData[focus]['uuid']['timestamp'] = timestamp
+				appData[focus]['uuid']['project'] = ''
+				appData[focus]['uuid']['label'] = ''
 
 				if uniqueTimestamp:
-					appData[__.appReg]['uuid']['timestamp'] = time.time()
+					appData[focus]['uuid']['timestamp'] = time.time()
 
 				if not project == '':
-					appData[__.appReg]['uuid']['project'] = project
+					appData[focus]['uuid']['project'] = project
 
 				if not label == '':
-					appData[__.appReg]['uuid']['label'] = label
+					appData[focus]['uuid']['label'] = label
 					
 				uuidLog = getTable('uuid_log.json')
-				uuidLog.append(appData[__.appReg]['uuid'])
+				uuidLog.append(appData[focus]['uuid'])
 				saveTable(uuidLog,'uuid_log.json',printThis=False)
-			# appData[__.appReg]['uuid'] = { 'uuid': theID, 'timestamp': time.time(), 'project': theProject, 'app': 'guid' }
+			# appData[focus]['uuid'] = { 'uuid': theID, 'timestamp': time.time(), 'project': theProject, 'app': 'guid' }
 	return string
 
 
@@ -20124,7 +20124,7 @@ def dots(path):
 			exec(f)
 			if i == len(rts)-1: return eval(rts[0]);
 nsfw_=False
-def ad(path=None):
+def ad(path=None,label='ad'): 
 	# print(_v.life+'ads')
 	# sys.exit()
 	if not os.path.isdir(_v.life+'ads'): return None
@@ -20150,6 +20150,7 @@ def ad(path=None):
 	if path:
 		cho=__.path(path)
 		sub=__.path(cho,file=True)
+		sub=sub.replace('.txt','').replace('-',' ').replace('_',' ')
 	elif not path:
 		nsfw_=True
 		random=__.imp('random')
@@ -20167,10 +20168,11 @@ def ad(path=None):
 		ad=_str.do('be',ad,' ')
 		ad=_str.do('be',ad,'\t')
 		return ad
-	ad=_cl(ad); ad=_cl(ad); ad=_cl(ad); ad=_cl(ad);
-	ad=_cl(ad); ad=_cl(ad); ad=_cl(ad); ad=_cl(ad);
+	# ad=_cl(ad); ad=_cl(ad); ad=_cl(ad); ad=_cl(ad);
+	# ad=_cl(ad); ad=_cl(ad); ad=_cl(ad); ad=_cl(ad);
 	# cp( '<ad>', 'yellow' )
-	linePrint(c='green',center='ad', length=41)
+	_width=__.terminal.width - 15 - ( len(label)/2 ) - 1
+	linePrint(c='green',center=label, length=_width)
 	cp( sub, 'yellow' )
 	linePrint('20',c='yellow')
 	_the_color_=random_color()
@@ -20187,9 +20189,8 @@ def ad(path=None):
 		return '|  '+line+'  |'
 
 	for liner in ad.split('\n'):
-		pr( pr('#ad)-->  ',c='gray',p=0) +pr(  _ad_space_(liner,mx)  ,c=_the_color_,p=0))
-		# pr( pr('#ad)--> |\t',c='gray',p=0) +liner)
-	linePrint(c='green',center='ad', length=41)
+		pr( pr('#'+label+')-->  ',c='gray',p=0) +pr(  _ad_space_(liner,mx)  ,c=_the_color_,p=0))
+	linePrint(c='green',center=label, length=_width)
 	# cp( '</ad>', 'yellow' )
 	return ad
 ads=ad

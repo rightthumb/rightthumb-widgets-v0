@@ -202,7 +202,20 @@ def process( path ):
 		stampM = now
 		stampA = now
 		default = True
-
+		if _.switches.isActive('Created'):
+			if _.switches.value('Created') == '':
+				created_date = now
+			elif _.switches.value('Created') == 'now':
+				created_date = now
+			elif _.isFloat( _.switches.value('Created') ):
+				created_date = float(_.switches.value('Created'))
+			else:
+				created_date = _.autoDate(' '.join( _.switches.values('Created') ))
+			# _.pr(created_date)
+			_.changeC( path, created_date,   meta=_.switches.isActive('Meta')   ,p=1)
+			if not default:
+				# _.pr(stamp)
+				_.changeM( path, stampM, stampA,   meta=_.switches.isActive('Meta')   ,p=1)
 		if not _.switches.isActive('Modified'):
 			stampM = _dir.info(path)['me']
 		if _.switches.isActive('Modified'):
@@ -236,20 +249,7 @@ def process( path ):
 		# if not path in _.nc.tables.data:
 			# _.nc.tables.data[path] = _dir.info(path)
 		
-		if _.switches.isActive('Created'):
-			if _.switches.value('Created') == '':
-				created_date = now
-			elif _.switches.value('Created') == 'now':
-				created_date = now
-			elif _.isFloat( _.switches.value('Created') ):
-				created_date = float(_.switches.value('Created'))
-			else:
-				created_date = _.autoDate(' '.join( _.switches.values('Created') ))
-			# _.pr(created_date)
-			_.changeC( path, created_date,   meta=_.switches.isActive('Meta')   ,p=1)
-			if not default:
-				# _.pr(stamp)
-				_.changeM( path, stampM, stampA,   meta=_.switches.isActive('Meta')   ,p=1)
+
 		else:
 			# _.pr('here')
 			_.changeM( path, stampM, stampA,   meta=_.switches.isActive('Meta')   ,p=1)

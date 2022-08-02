@@ -35,7 +35,7 @@ import _rightThumb._string as _str
 
 
 def appSwitches():
-	pass
+	_.switches.register( 'Folders', '-f,-fo,-folder' )
 
 
 _.autoBackupData = __.autoCreationConfiguration['backup']
@@ -174,9 +174,13 @@ def action():
 	my_event_handler.on_modified = on_modified
 	my_event_handler.on_moved = on_moved
 
-
+	for x in dir(my_event_handler):
+		print('my_event_handler.',x)
 
 	path = "."
+	if _.switches.isActive('Folder'): path = __.path(_.switches.values('Folder')[0])
+
+
 	go_recursively = True
 	my_observer = Observer()
 	my_observer.schedule(my_event_handler, path, recursive=go_recursively)
@@ -193,16 +197,13 @@ def action():
 
 
 
+
+import _rightThumb._dir as _dir
 from watchdog.observers import Observer
 from watchdog.events import PatternMatchingEventHandler
 
 ########################################################################################
 if __name__ == '__main__':
 	action()
-
-
-
-
-
 
 

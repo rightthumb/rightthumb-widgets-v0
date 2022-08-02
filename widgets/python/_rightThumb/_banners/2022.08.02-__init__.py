@@ -51,7 +51,7 @@ banners['valid']='''
    //**      /**     /**  /********  /**  /*******  
     //       //      //   ////////   //   ///////   
 '''
-banners['fuck']='''
+banners['f*ck']='''
  ********   **     **     ******    **   **
 /**/////   /**    /**    **////**  /**  ** 
 /**        /**    /**   **    //   /** **  
@@ -61,7 +61,7 @@ banners['fuck']='''
 /**        //*******    //******   /** //**
 //          ///////      //////    //   // 
 '''
-banners['shit']='''
+banners['sh*t']='''
   ********   **      **   **   **********
  **//////   /**     /**  /**  /////**/// 
 /**         /**     /**  /**      /**    
@@ -73,7 +73,7 @@ banners['shit']='''
 '''
 
 letters={}
-letters['M']='''
+letters['_']='''
  ****     ****
 /**/**   **/**
 /**//** ** /**
@@ -83,7 +83,7 @@ letters['M']='''
 /**        /**
 //         // 
 '''
-letters['MO']='''
+letters['__']='''
  ****     ****   *******  
 /**/**   **/**  **/////** 
 /**//** ** /** **     //**
@@ -93,7 +93,7 @@ letters['MO']='''
 /**        /** //*******  
 //         //   ///////   
 '''
-letters['MOT']='''
+letters['___']='''
  ****     ****   *******   **********
 /**/**   **/**  **/////** /////**/// 
 /**//** ** /** **     //**    /**    
@@ -104,7 +104,7 @@ letters['MOT']='''
 //         //   ///////       //     
 '''
 
-letters['MOTH']='''
+letters['____']='''
  ****     ****   *******   ********** **      **
 /**/**   **/**  **/////** /////**/// /**     /**
 /**//** ** /** **     //**    /**    /**     /**
@@ -115,7 +115,7 @@ letters['MOTH']='''
 //         //   ///////       //     //      // 
 '''
 
-letters['MOTA']='''
+letters['_____']='''
  ****     ****   *******   ********** **      **     **    
 /**/**   **/**  **/////** /////**/// /**     /**    ****   
 /**//** ** /** **     //**    /**    /**     /**   **//**  
@@ -126,7 +126,7 @@ letters['MOTA']='''
 //         //   ///////       //     //      // //      // 
 '''
 
-letters['MOTAF']='''
+letters['______']='''
  ****     ****   *******   ********** **      **     **     ********
 /**/**   **/**  **/////** /////**/// /**     /**    ****   /**///// 
 /**//** ** /** **     //**    /**    /**     /**   **//**  /**      
@@ -137,7 +137,7 @@ letters['MOTAF']='''
 //         //   ///////       //     //      // //      // //       
 '''
 
-letters['MOTAFU']='''
+letters['_______']='''
  ****     ****   *******   ********** **      **     **     ******** **     **
 /**/**   **/**  **/////** /////**/// /**     /**    ****   /**///// /**    /**
 /**//** ** /** **     //**    /**    /**     /**   **//**  /**      /**    /**
@@ -148,7 +148,7 @@ letters['MOTAFU']='''
 //         //   ///////       //     //      // //      // //        ///////  
 '''
 
-letters['MOTAFUC']='''
+letters['________']='''
  ****     ****   *******   ********** **      **     **     ******** **     **   ****** 
 /**/**   **/**  **/////** /////**/// /**     /**    ****   /**///// /**    /**  **////**
 /**//** ** /** **     //**    /**    /**     /**   **//**  /**      /**    /** **    // 
@@ -159,7 +159,7 @@ letters['MOTAFUC']='''
 //         //   ///////       //     //      // //      // //        ///////    //////  
 '''
 
-letters['MOTAFUCK']='''
+letters['_________']='''
  ****     ****   *******   ********** **      **     **     ******** **     **   ******  **   **
 /**/**   **/**  **/////** /////**/// /**     /**    ****   /**///// /**    /**  **////**/**  ** 
 /**//** ** /** **     //**    /**    /**     /**   **//**  /**      /**    /** **    // /** **  
@@ -170,7 +170,7 @@ letters['MOTAFUCK']='''
 //         //   ///////       //     //      // //      // //        ///////    //////  //   // 
 '''
 
-letters['MOTAFUCKA']='''
+letters['__________']='''
  ****     ****   *******   ********** **      **     **     ******** **     **   ******  **   **     **    
 /**/**   **/**  **/////** /////**/// /**     /**    ****   /**///// /**    /**  **////**/**  **     ****   
 /**//** ** /** **     //**    /**    /**     /**   **//**  /**      /**    /** **    // /** **     **//**  
@@ -363,31 +363,53 @@ BackgroundGreyBold.blue
 BackgroundGreyBold.magenta
 BackgroundGreyBold.cyan
 BackgroundGreyBold.gray'''.split('\n')
-
+_all_colors_tact_='''ColorBold.gray
+ColorBold.red
+ColorBold.green
+ColorBold.yellow
+ColorBold.blue
+ColorBold.magenta
+ColorBold.cyan
+ColorBold.white
+Color.purple
+Color.cyan
+Color.darkcyan
+Color.blue
+Color.green
+Color.yellow
+Color.red
+Color.bold
+Background.red
+Background.green
+Background.yellow
+Background.blue
+Background.purple
+Background.light_blue'''.split('\n')
 # import _rightThumb._banners as _banners
 
 import random
-# _banners.mothafucka()
-def mothafucka(clear=False,single=False,c=None,loops=10):
+def mf(clear=False,single=False,c=None,loops=10):
+    global colors
+    global _all_colors_tact_
     global letters
     if not c is None: single=True
     if single:
         if c is None:
-            _.pr(letters['MOTAFUCKA'],c='red')
+            _.pr(letters['__________'],c='red')
         else:
-            _.pr(letters['MOTAFUCKA'],c=c)
+            _.pr(letters['__________'],c=c)
         return None
     _mf=''
-    for mf in 'MOTAFUCKA':
+    for mf in '__________':
         _mf+=mf
         _.clear()
-        _.pr(letters[_mf],c=random.choice(colors))
+        _.pr(letters[_mf],c=random.choice(_all_colors_tact_))
         time.sleep(1)
     l=0
     while l < loops:
         if not clear: _.clear()
         l+=1
-        _.pr(letters[_mf],c=random.choice(colors))
+        _.pr(letters[_mf],c=random.choice(_all_colors_tact_))
         time.sleep(1)
     if not clear: _.clear()
     _.pr(letters[_mf],c='red')

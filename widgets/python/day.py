@@ -435,7 +435,8 @@ def have_a_cow():
         files=[]
         for path in _.fo(cfo):
             files.append(path)
-        _.pr(_.getText(random.choice(files),raw=True),c=random.choice(_all_colors_tact_))
+        # _.pr(_.getText(random.choice(files),raw=True),c=random.choice(_all_colors_tact_))
+        _.ad(random.choice(files),'cow')
 
 def have_some_cows():
     # _.clear()

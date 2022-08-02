@@ -10,281 +10,183 @@
 # ###########################################################################
 # ## {C3P0D40fAe8B} ##
 
-import os
-import sys
-import time
-# import platform
+
+##################################################
+import sys, time
 ##################################################
 import _rightThumb._construct as __
-appDBA = __.clearFocus( __name__, __file__ )
-__.appReg = appDBA
-def focus( parentApp='', childApp='', reg=True ):
-	global appDBA
-	f = __.appName( appDBA, parentApp, childApp )
-	if reg:
-		__.appReg = f
-	return f
-__.registeredApps.append( focus() )
+appDBA=__.clearFocus(__name__,__file__);__.appReg=appDBA;
+def focus(parentApp='',childApp='',reg=True):
+    global appDBA;f=__.appName(appDBA,parentApp,childApp);
+    if reg:__.appReg=f;
+    return f
 import _rightThumb._base3 as _
+fieldSet=_.l.vars(focus(),__name__,__file__,appDBA)
 _.load()
 ##################################################
-import _rightThumb._vars as _v
-import _rightThumb._string as _str
-
+_v = __.imp('_rightThumb._vars')
+_str = __.imp('_rightThumb._string')
 ##################################################
 
 
-def appSwitches():
-	_.switches.register( 'Files', '-f,-file,-files','file.txt', isData='glob', description='Files', isRequired=True )
-	_.switches.register( 'Implode', '-i,-imp,-implode' )
-	_.switches.register( 'Explode', '-e,-x,-explode' )
-	_.switches.register( 'Add', '-add', 'name;scott py;python3' )
-	_.switches.register( 'Clean1', '-cc' )
-	_.switches.register( 'Clean', '--c' )
-	_.switches.register( 'Order', '-o,-order', 'name year  OR  n y' )
-	_.switches.register( 'Alphabetical', '-alpha' )
-	_.switches.register( 'Delete', '-del,-delete', 'testing' )
-	pass
+def sw():
+	_.switches.register( 'Files', '-f,-file,-files','file.txt', isData='name', description='Files' )
+	_.switches.register( 'Hashes', '-h,-hash,-hashes', 'md5 sha1 sha224 sha256 sha384 sha512 sha3_224 sha3_256 sha3_384 sha3_512')
+
+    #b)--> examples
+    # _.switches.register( 'Input', '-i' )
+    #e)--> examples
+    # _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=True )
+
+__.setting('require-list',['Pipe','Files'])
+__.setting('require-pipe||file',True)
+__.setting('receipt-log',False)
+__.setting('receipt-file',False)
+__.setting('myFileLocations-skip-validation',False)
+__.setting('require-pipe',False)
+__.setting('pre-error',False)
+__.setting('switch-raw',[])
 
 
-_.autoBackupData = __.autoCreationConfiguration['backup']
-__.releaseAcquiredData = __.autoCreationConfiguration['logs']
-__.myFileLocations_SKIP_VALIDATION = False
-__.isRequired_Pipe = False
-__.isRequired_Pipe_or_File = False
-__.pre_error = False
-__.switch_raw = []
-# __.switch_raw = [ 'Delim' ]
-# __.isRequired_or_List = ['Pipe','Files','Plus']
 
 _.appInfo[focus()] = {
-	'file': 'hash.py',
-	'liveAppName': __.thisApp( __file__ ),
- 	'description': 'manipulate hash file',
-	'categories': [
-						'index',
-						'hash',
-						'hashtable',
-						'table',
-						'manipulate',
-						'indent',
-						'flatten',
-						'flat',
-						'explode',
-						'format',
-				],
-	'usage': [
-						# 'epy another',
-						# 'e nmap',
-						# '',
-	],
-	'relatedapps': [
-						# 'p another -file file.txt',
-						# '',
-	],
-	'prerequisite': [
-						# 'p another -file file.txt',
-						# '',
-	],
-	'examples': [
-						'p hash -f file.json -implode -add name;scott -order name year',
-						'',
-						'p hash -f 2file.json -add name;scott year;2021 -implode',
-						'p hash -f 2file.json ',
-						'p hash -f 2file.json -add py;python3',
-						'p hash -f 2file.json -i',
-						'',
-						'p hash -f 2file.json -alpha',
-						'p hash -f 2file.json -order name year py',
-						'',
-						'p hash -f 2file.json -order p n',
-						'',
-	],
-	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
-				       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
-	],
-	'aliases': [
-				       # 'this',
-				       # 'app',
-	],
-	'notes': [
-				       # {},
-	],
+    # 'app': '8facG-jo0Cxk',
+    'file': 'thisApp.py',
+    'liveAppName': __.thisApp( __file__ ),
+    'description': 'Changes the world',
+        # _.ail(1,'subject')+
+        # _.aib('one')+
+    'categories': [
+                        'DEFAULT',
+                ],
+    'usage': [
+                        # 'epy another',
+                        # 'e nmap',
+                        # '',
+    ],
+    'relatedapps': [
+                        # 'p another -file file.txt',
+                        # '',
+    ],
+    'prerequisite': [
+                        # 'p another -file file.txt',
+                        # '',
+    ],
+    'examples': [
+                        _.hp('p thisApp -file file.txt'),
+                        _.linePrint(label='simple',p=0),
+                        '',
+    ],
+    'columns': [
+                       # { 'name': 'name', 'abbreviation': 'n' },
+                       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+    ],
+    'aliases': [
+                       # 'this',
+                       # 'app',
+    ],
+    'notes': [
+                       # {},
+    ],
 }
 
 _.appData[focus()] = {
-		'start': __.startTime,
-		'uuid': '',
-		'audit': [],
-		'pipe': False,
-		'data': {
-					'field': {'sent': [], 'received': [] }, # { 'label': '', 'context': [],  }
-					'table': {'sent': [], 'received': [] }, 
-		},
-	}
+        'start': __.startTime,
+        'uuid': '',
+        'audit': [],
+        'pipe': False,
+        'data': {
+                    'field': {'sent': [], 'received': [] }, # { 'label': '', 'context': [],  }
+                    'table': {'sent': [], 'received': [] },
+        },
+    }
 
 
+def triggers():
+    _.switches.trigger( 'Files', _.myFileLocations, vs=True )
+    _.switches.trigger( 'Ago', _.timeAgo )
+    _.switches.trigger( 'Folder', _.myFolderLocations )
+    _.switches.trigger( 'URL', _.urlTrigger )
+    _.switches.trigger( 'Duration', _.timeFuture )
 
-def registerSwitches( argvProcessForce=False ):
-	global appDBA
-	if not __.appReg == appDBA and appDBA in __.appReg:
-
-		if not __name__ == '__main__':
-			_.argvProcess = argvProcessForce
-		else:
-			_.argvProcess = True
-
-		_.load()
-		_.appInfo[__.appReg] = _.appInfo[appDBA]
-		_.appData[__.appReg] = _.appData[appDBA]
-	__.constructRegistration( _.appInfo[__.appReg]['file'],__.appReg )
-	appSwitches()
-
-	_.myFileLocation_Print = False
-	__.myFileLocations_SKIP_VALIDATION = False
-	_.switches.trigger( 'Files', _.myFileLocations, vs=True )
-	_.switches.trigger( 'Folder', _.myFolderLocations )
-	_.switches.trigger( 'URL', _.urlTrigger )
-	_.switches.trigger( 'Ago', _.timeAgo )
-	_.switches.trigger( 'Duration', _.timeFuture )
-	
-	
-	_.defaultScriptTriggers()
-	_.switches.process()
-
-
-if not __name__ == '__main__':
-	_.argvProcess = False
-else:
-	_.argvProcess = True
-
-registerSwitches()
-
-
-def fieldSet( switchName, switchField, switchValue, theFocus=False ):
-	if not type( theFocus ) == bool:
-		theFocus = theFocus
-	_.switches.fieldSet( switchName, switchField, switchValue, theFocus )
-
-
-if __name__ == '__main__':
-	if not sys.stdin.isatty():
-		_.setPipeData( sys.stdin.readlines(), __.appReg, clean=True )
-
-
-_.postLoad( __file__ )
+_.l.conf('clean-pipe',True)
+_.l.sw.register( triggers, sw )
 
 ########################################################################################
-# START
+#b)--> examples
+#d)--> code hints to quickly get started
+    #n)--> inline examples
+        # if _.switches.isActive('Test'): test(); return None;
+        # result=[]; result=[ _.pr(line) for i, line, bi in _.numerate( _.isData(r=0) )]
+        # bk=[];[  bk.append(rec['backup']) for rec in backupLog if path == rec['file']]; bk=bk[-1];
+        # a=(1 if True else 0) <--# 
+        #!)--> m=[[row[i] for row in matrix] for i in range(4)]
 
+    #n)--> python globals
+        # for k in globals(): print(k, eval(k) )
+
+    #n)--> webpage from url
+        # requests=__.imp('requests.post')
+        #!)--> data=str(requests.post(url,data={}).content,'iso-8859-1')
+
+    #n)--> import and backup example
+        # _bk = _.regImp( __.appReg, 'fileBackup' ); _bk.switch( 'Silent' ); _bk.switch( 'isRunOnce' ); _bk.switch( 'Flag', 'APP' ); _bk.switch( 'DoNotSchedule' )
+        # _bk.switch( 'Input', path ); bkfi = _bk.action();
+    
+    #n)--> inline
+        # for rel in [ subject for subject in _.isData(r=0) if _.showLine(subject) ]: print(rel)
+
+    #n)--> banner
+        # banner=_.Banner(app); goss=banner.goss;
+#e)--> examples
+########################################################################################
+#n)--> start
 
 
 def action():
-
-	fileBackup = _.regImp( focus(), 'fileBackup' )
-	fileBackup.switch( 'Silent' )
-	fileBackup.switch( 'Flag', 'hash' )
-	fileBackup.switch( 'isRunOnce' )
-	fileBackup.switch( 'DoNotSchedule' )
-
-	for i,file in enumerate( _.isData(r=1) ):
-		if file == '?config':
-			file = _v.home +os.sep+'.rt'+os.sep+ '.config.hash'
-		if file == '??config':
-			file = _v.myConfig + os.sep + '.config.hash'
-		sort_keys  = False
-		indentCode = True
-
-
-		if not os.path.isfile(file):
-			data = {}
-		elif os.path.isfile(file):
-			fileBackup.switch( 'Input', file )
-			fb = fileBackup.action()
-			# if not _.switches.isActive('Clean'):
-			# 	_.pr( fb )
-			data = _.getTable2( file )
-		if not type(data) == dict:
-			_.cp( 'Error: not dic', 'red' )
-			_.pr(data)
-			return None
-		if _.switches.isActive('Add'):
-			for add in _.switches.values('Add'):
-				item = add.split(';')
-				# _.pr(item)
-				data[ item[0] ] = item[1]
-		if _.switches.isActive('Order'):
-			newData = {}
-			theOrder = _.switches.values('Order')
-			for i,order in enumerate(theOrder):
-				if not order in data:
-					for k in data:
-						if k.lower().startswith(order.lower()):
-							theOrder[i] = k
-							break
-			for order in theOrder:
-				if order in data:
-					newData[order] = data[order]
-
-			for k in data:
-				if not k in _.switches.values('Order'):
-					newData[k] = data[k]
-			data = newData
-		if _.switches.isActive('Alphabetical'):
-			sort_keys = True
-		if _.switches.isActive('Delete'):
-			theOrder = _.switches.values('Delete')
-			for i,order in enumerate(theOrder):
-				if not order in data:
-					for k in data:
-						if k.lower().startswith(order.lower()):
-							theOrder[i] = k
-							break
-			for d in theOrder:
-				ask = input( 'Delete: '+d+'?  ' )
-				if not ask.lower().startswith('n'):
-					if d in data:
-						del data[d]
-
-
-		# if not _.switches.isActive('Clean'):
-		# 	_.pv(data)
-		if _.switches.isActive('Implode'):
-			indentCode = False
-		if _.switches.isActive('Explode'):
-			indentCode = True
-		if data:
-			_.saveTable2( data, file, sort_keys=sort_keys, indentCode=indentCode )
-		elif os.path.isfile(file):
-			os.unlink(file)
-		if not os.path.isfile(file):
-			_.e( 'does not exist', file )
-		else:
-			test = _.getText( file, raw=True )
-			if not _.switches.isActive('Clean'):
-				if not _.switches.isActive('Clean1'):
-					_.pr()
-				_.pr(test)
-				if not _.switches.isActive('Clean1'):
-					_.pr()
-					_.pr(os.path.abspath(file))
-					try:
-						_.pr( fb )
-					except Exception as e:
-						pass
+	if _.switches.isActive('Hashes'):
+		hashes = _.switches.values('Hashes')
+		if not hashes: hashes = ['md5']
+		if hashes[0] == 'all': hashes='md5 sha1 sha224 sha256 sha384 sha512 sha3_224 sha3_256 sha3_384 sha3_512'.split(' ')
+		if hashes[0] in '123456789' or hashes[0] == '10':
+			mx=int(hashes[0])
+			_hashes='md5 sha1 sha224 sha256 sha384 sha512 sha3_224 sha3_256 sha3_384 sha3_512'.split(' ')
+			hashes=[]
+			for ha in _hashes:
+				if len(hashes) < mx: hashes.append(ha)
+	else: hashes = ['md5']
 
 
 
+	for path in _.isData():
+		index={}
+		index['path']=path
+		# _.pr(path)
+
+		for ha in hashes:
+			ash = _hash.file( path, h=ha )
+			index[ha]=ash
+			
+		_.pr(index,dic=1)
+
+import _rightThumb._md5 as _hash
+
+
+##################################################
+#b)--> examples
+# banner=_.Banner(dependencies)
+# goss=banner.goss
+# goss('-\t this app will sherlock tf out of any python app or python module')
+#e)--> examples
+##################################################
 
 ########################################################################################
 if __name__ == '__main__':
-	action()
-	_.tables.eof()
+    #b)--> examples
 
-
-
-
-
-
-
+    # banner.pr()
+    # if len(_.switches.all())==0: banner.gossip()
+    
+    #e)--> examples
+    action()
+    _.isExit(__file__)

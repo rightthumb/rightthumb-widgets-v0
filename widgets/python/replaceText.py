@@ -197,7 +197,7 @@ def action():
 	if _.switches.isActive('Insert'):
 		shouldRun = True
 		insertText = _.ci(_.switches.value('Insert'))
-		insertText = _str.cleanBE( insertText, ' ' )
+		# insertText = _str.cleanBE( insertText, ' ' )
 
 
 
@@ -213,7 +213,7 @@ def action():
 	if _.switches.isActive('Replace'):
 		shouldRun = True
 		replaceText = _.ci(_.switches.value('Replace'))
-		replaceText = _str.cleanBE( replaceText, ' ' )
+		# replaceText = _str.cleanBE( replaceText, ' ' )
 
 	if len(insertText) == 0:
 		confirm = input('Insert blank, run? ')

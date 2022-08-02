@@ -483,22 +483,43 @@ _.postLoad( 'D:\\\\tech\\\\hosts\\\\VULCAN\\\\widgets\\\\python\\\\testing123.py
 		subject['matrix']['import'] = subject['base']['import']
 		
 		subject['hacks'] = {}
-		subject['hacks']['murray']='''
+		subject['code'] = {}
+
+		subject['code']['fn']='''
+ b py                                
+ p ls -ago 5d c -long -c p --c > %tmpf
+cat %tmpf% | p line --c -make "p inFunc -f {} | + clean" | p execute 
+'''
+
+
+		subject['hacks']['murray2']='''
 _the_i_=500;
 Array.prototype.slice.call(
   document.querySelectorAll('img')).map(function(tag){
   	_the_i_++; tag.src = 'https://www.fillmurray.com/500/'+_the_i_;
 });
 '''
-		subject['hacks']['steven']='''
+		subject['hacks']['murray']='''
+Array.prototype.slice.call(
+  document.querySelectorAll('img')).map(function(tag){
+    tag.src = 'https://www.fillmurray.com/'+tag.getAttribute('width')+'/'+tag.getAttribute('height')+'/';
+});
+'''
+		subject['hacks']['steven2']='''
 _the_i_=500;
 Array.prototype.slice.call(
   document.querySelectorAll('img')).map(function(tag){
   	_the_i_++; tag.src = 'https://www.stevensegallery.com/500/'+_the_i_;
 });
 '''
+		subject['hacks']['steven']='''
+Array.prototype.slice.call(
+  document.querySelectorAll('img')).map(function(tag){
+    tag.src = 'https://www.stevensegallery.com/'+tag.getAttribute('width')+'/'+tag.getAttribute('height')+'/';
+});
+'''
 
-		subject['hacks']['cage']='''
+		subject['hacks']['cage2']='''
 _the_i_=500;
 Array.prototype.slice.call(
   document.querySelectorAll('img')).map(function(tag){
@@ -506,7 +527,12 @@ Array.prototype.slice.call(
 });
 '''
 
-
+		subject['hacks']['cage']='''
+Array.prototype.slice.call(
+  document.querySelectorAll('img')).map(function(tag){
+    tag.src = 'https://www.placecage.com/'+tag.getAttribute('width')+'/'+tag.getAttribute('height')+'/';
+});
+'''
 		subject['hacks']['rotate']='''
 Array.prototype.slice.call(
   document.querySelectorAll(

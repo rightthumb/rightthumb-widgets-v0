@@ -360,6 +360,7 @@ def add(path,r=False):
 	global base_path
 	path = path.replace(_v.slash+_v.slash,_v.slash)
 	if os.path.isfile(path):
+		path = __.path(path)
 		pathX=path
 		pathX=pathX.replace(base_path+os.sep,'')
 

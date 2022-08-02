@@ -10,10 +10,15 @@
 # ###########################################################################
 # ## {C3P0D40fAe8B} ##
 
+#b)--> legacy registration system
 config_hash_default = {
 							'register.php': 'http://tools.rightthumb.com/register.php',
 							'ip.php': 'http://tools.rightthumb.com/ip.php',
 }
+#n)--> DISABLED
+__register_php=False
+__ip_php=False
+#e)--> legacy registration system
 
 import _rightThumb._construct as __
 import _rightThumb._string as _str
@@ -1359,8 +1364,13 @@ def ipGet(force=False):
 	global host_alias
 	global unixIDs
 	global config_hash
+	global __ip_php
+	global __register_php
+	if not __ip_php: return '0.0.0.0'
+	if not __register_php: return '0.0.0.0'
 	
 	
+
 	get_ip = False
 	hasImported = False
 	if not os.path.isfile(configFile('.ip')):

@@ -833,6 +833,78 @@ def action(path=None,flag=None,o=None):
 			
 
 
+
+
+#b)--> backup: 2022-05-07 13:36:14
+			# if cryptScan:
+			# 	todo = []
+			# 	global doc_sep
+			# 	if path.lower().endswith('.md'):
+			# 		# _decrypt_docs = _.regImp( __.appReg, 'decrypt-docs-md' )
+			# 		_decrypt_docs = _.regImp( __.appReg, 'decrypt-docs' )
+			# 		doc_sep = '\n~~~\n'
+			# 		_decrypt_docs.imp.isMD = True
+			# 	else:
+			# 		# _decrypt_docs.imp.isMD = False
+			# 		_decrypt_docs = _.regImp( __.appReg, 'decrypt-docs' )
+			# 		doc_sep = '\n__________________________________________________________________________________\n'
+			# 	_.colorThis(  [ 'registered: documentation file' ], 'Background.light_blue'  )
+			# 	theFile = '\n'+_.getText( path, raw=True ).replace('!vault!','!V!').replace('!VAULT!','!V!').replace('!v!','!V!').replace('!crypt!','!V!').replace('!CRYPT!','!V!')
+			# 	theFile = theFile.replace('\r','')
+			# 	# tF = theFile
+			# 	if path.lower().endswith('.md'):
+			# 		todo.append('\n___\n')
+			# 		# _.pr('A')
+			# 		theFile = _decrypt_docs.imp.md_clean(theFile)
+			# 		# _.pr('B')
+			# 		# if not tF == theFile:
+			# 		#   _.saveText(theFile,path)
+			# 		#   _.cp('FIXED: .md lines','yellow')
+			# 	elif not path.lower().endswith('.md'):
+			# 		while '___________________________________________________________________________________' in theFile:
+			# 			theFile = theFile.replace('___________________________________________________________________________________','__________________________________________________________________________________')
+			# 		while '\t\n' in theFile:
+			# 			theFile = theFile.replace('\t\n','\n')
+			# 		while ' \n' in theFile:
+			# 			theFile = theFile.replace(' \n','\n')
+			# 		# if not tF == theFile:
+			# 		#   _.cp('FIXED: space after line end','yellow')
+			# 		#   _.saveText(theFile,path)
+
+			# 	crypy=__.specifications['fileBackup-auto-crypt']['crypt-segment']
+				
+			# 	todo.append(doc_sep)
+			# 	for doc_sep_ in todo:
+			# 		segments=theFile.split(doc_sep_)
+			# 		newTemp=[]
+			# 		crypt_segment = False
+			# 		for segment in segments:
+			# 			# _.pr(segment.split('\n')[0])
+			# 			# if crypy+' ' in segment or crypy+'\n' in segment or crypy+'\t' in segment:
+			# 			if crypy+' ' in segment.split('\n')[0] or crypy+'\n' in segment.split('\n')[0]+'\n' or crypy+'\t' in segment.split('\n')[0]:
+			# 				segment=segment.replace('!V!','')
+			# 				segy=[]
+			# 				for si, segsy in enumerate(segment.split('\n')):
+			# 					if not si:
+			# 						segy.append(  segsy  )
+			# 					else:
+			# 						if _decrypt_docs.imp.identify(segsy):
+			# 							segy.append(  segsy  )
+			# 						else:
+			# 							segy.append(  _blowfish.encrypt( segsy, _vault.key() )  )
+
+			# 					crypt_segment = True
+			# 				segment = '\n'.join( segy )
+			# 			newTemp.append(segment)
+			# 		theFile=doc_sep_.join(newTemp)
+			# 	if path.lower().endswith('.md'):
+			# 		# _.pr(1)
+			# 		theFile = _decrypt_docs.imp.vcrypyAA(theFile)
+			# 		theFile = _decrypt_docs.imp.vcrypyB(theFile)
+			# 		# _.pr(2)
+#e)--> backup: 2022-05-07 13:36:14
+
+#b)--> backup: 2022-07-26 22:18:12
 			if cryptScan:
 				todo = []
 				global doc_sep
@@ -919,6 +991,99 @@ def action(path=None,flag=None,o=None):
 					theFile = _decrypt_docs.imp.vcrypyAA(theFile)
 					theFile = _decrypt_docs.imp.vcrypyB(theFile)
 					# _.pr(2)
+#e)--> backup: 2022-07-26 22:18:12
+#b)--> original
+			# if cryptScan:
+			# 	todo = []
+			# 	global doc_sep
+			# 	if path.lower().endswith('.md'):
+			# 		# while theFile.count('~~~~'): theFile=theFile.replace('~~~~','~~~')
+			# 		# _decrypt_docs = _.regImp( __.appReg, 'decrypt-docs-md' )
+			# 		_decrypt_docs = _.regImp( __.appReg, 'decrypt-docs' )
+			# 		doc_sep = '\n~~~\n'
+			# 		_decrypt_docs.imp.isMD = True
+			# 	else:
+			# 		# _decrypt_docs.imp.isMD = False
+			# 		_decrypt_docs = _.regImp( __.appReg, 'decrypt-docs' )
+			# 		doc_sep = '\n__________________________________________________________________________________\n'
+			# 	_.colorThis(  [ 'registered: documentation file' ], 'Background.light_blue'  )
+			# 	theFile = '\n'+_.getText( path, raw=True ).replace('!vault!','!V!').replace('!VAULT!','!V!').replace('!v!','!V!').replace('!crypt!','!V!').replace('!CRYPT!','!V!')
+			# 	theFile = theFile.replace('\r','')
+			# 	while '\t\n' in theFile:
+			# 		theFile = theFile.replace('\t\n','\n')
+			# 		while ' \n' in theFile: theFile = theFile.replace(' \n','\n')
+			# 	# tF = theFile
+			# 	if path.lower().endswith('.md'):
+			# 		todo.append('\n___\n')
+			# 		# _.pr('A')
+			# 		theFile = _decrypt_docs.imp.md_clean(theFile)
+			# 		# _.pr('B')
+			# 		# if not tF == theFile:
+			# 		#   _.saveText(theFile,path)
+			# 		#   _.cp('FIXED: .md lines','yellow')
+			# 	elif not path.lower().endswith('.md'):
+			# 		while '___________________________________________________________________________________' in theFile:
+			# 			theFile = theFile.replace('___________________________________________________________________________________','__________________________________________________________________________________')
+			# 		while '\t\n' in theFile:
+			# 			theFile = theFile.replace('\t\n','\n')
+			# 		while ' \n' in theFile:
+			# 			theFile = theFile.replace(' \n','\n')
+			# 		# if not tF == theFile:
+			# 		#   _.cp('FIXED: space after line end','yellow')
+			# 		#   _.saveText(theFile,path)
+
+			# 	crypy=__.specifications['fileBackup-auto-crypt']['crypt-segment']
+			# 	md_cleaner_ran=False
+			# 	if path.lower().endswith('.md') and not theFile.count('\n~~~\n') == theFile.count('\n~~~') :
+			# 		md_cleaner_ran=True
+			# 		md_index={}
+			# 		md_lines=[]
+			# 		for mdi,line in enumerate(theFile.split('\n')):
+			# 			if line.startswith('~~~') and not line.endswith('~~~'): line.replace('~',''); md_index[mdi]=line; line='~~~';
+			# 			elif line.startswith('~~~'): line = '~~~'
+			# 			md_lines.append(line)
+			# 		theFile = '\n'.join(md_lines)
+
+			# 	todo.append(doc_sep)
+			# 	for doc_sep_ in todo:
+			# 		segments=theFile.split(doc_sep_)
+			# 		newTemp=[]
+			# 		crypt_segment = False
+			# 		for segment in segments:
+			# 			# _.pr(segment.split('\n')[0])
+			# 			# if crypy+' ' in segment or crypy+'\n' in segment or crypy+'\t' in segment:
+			# 			if crypy+' ' in segment.split('\n')[0] or crypy+'\n' in segment.split('\n')[0]+'\n' or crypy+'\t' in segment.split('\n')[0]:
+			# 				segment=segment.replace('!V!','')
+			# 				segy=[]
+			# 				for si, segsy in enumerate(segment.split('\n')):
+			# 					if not si:
+			# 						segy.append(  segsy  )
+			# 					else:
+			# 						if _decrypt_docs.imp.identify(segsy):
+			# 							segy.append(  segsy  )
+			# 						else:
+			# 							segy.append(  _blowfish.encrypt( segsy, _vault.key() )  )
+
+			# 					crypt_segment = True
+			# 				segment = '\n'.join( segy )
+			# 			newTemp.append(segment)
+			# 		theFile=doc_sep_.join(newTemp)
+			# 	if path.lower().endswith('.md'):
+			# 		if md_cleaner_ran:
+			# 			md_lines=[]
+			# 			for mdi,line in enumerate(theFile.split('\n')):
+			# 				if mdi in md_index: line = line+md_index[mdi]
+			# 				md_lines.append(line)
+			# 			theFile = '\n'.join(md_lines)
+			# 		# _.pr(1)
+			# 		theFile = _decrypt_docs.imp.vcrypyAA(theFile)
+			# 		theFile = _decrypt_docs.imp.vcrypyB(theFile)
+			# 		md_index={'zero':0}
+			# 		md_lines=[0,0,0]
+			# 		del md_index
+			# 		del md_lines
+			# 		# _.pr(2)
+#e)--> original
 
 				if crypt_segment or __.specifications['fileBackup-auto-crypt']['scanA'] in theFile  or  __.specifications['fileBackup-auto-crypt']['scanB'] in theFile or crypy in theFile:
 
