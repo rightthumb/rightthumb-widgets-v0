@@ -490,9 +490,9 @@ if __name__ == '__main__':
             clear=1
         else: clear=0
         if _.switches.isActive('Color'):
-            _banners.mothafucka(clear,c=_.switches.value('Color'))
+            _banners.mf(clear,c=_.switches.value('Color'))
         else:
-            _banners.mothafucka(clear)
+            _banners.mf(clear)
 
         sys.exit()
     if _.switches.isActive('Cows'):
