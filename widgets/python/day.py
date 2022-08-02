@@ -485,16 +485,16 @@ import random
 
 ########################################################################################
 if __name__ == '__main__':
-    if _.switches.isActive('mf'):
-        if _.switches.values('mf'):
-            clear=1
-        else: clear=0
-        if _.switches.isActive('Color'):
-            _banners.mf(clear,c=_.switches.value('Color'))
-        else:
-            _banners.mf(clear)
+    # if _.switches.isActive('mf'):
+    #     if _.switches.values('mf'):
+    #         clear=1
+    #     else: clear=0
+    #     if _.switches.isActive('Color'):
+    #         _banners.mf(clear,c=_.switches.value('Color'))
+    #     else:
+    #         _banners.mf(clear)
 
-        sys.exit()
+    #     sys.exit()
     if _.switches.isActive('Cows'):
         have_some_cows()
         sys.exit()
