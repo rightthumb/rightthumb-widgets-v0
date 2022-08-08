@@ -1,2 +1,2 @@
 @echo off
-call p file-open -app %code_editor% -alias %*
+call p file-open -backup -app %code_editor% -alias %*

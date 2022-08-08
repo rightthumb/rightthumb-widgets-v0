@@ -79,7 +79,7 @@ _.appInfo[focus()] = {
                         _.hp('p day'),
                         _.hp(''),
                         _.hp('echo. | p day -f notes.md'),
-                        '|-   ##### --> timestamp#> 2022-07-21T03:03:49-0400',
+                        '|-   ##### #t) 2022-07-21T03:03:49-0400',
                         _.linePrint(label='simple',p=0),
                         '',
     ],
@@ -287,7 +287,7 @@ def files(fi):
 
             if os.path.isfile(path):
                 _.pr('date generated',c=color)
-                t2 = _.getText(path,raw=True)+'\n\n'+'##### #timestamp)--> '+_.isDate(time.time(),f='iso')+'\n\n'; txt=t2+txt;
+                t2 = _.getText(path,raw=True)+'\n\n'+'##### #t) '+_.isDate(time.time(),f='iso')+'\n\n'; txt=t2+txt;
             _.saveText( txt, path ); _.pr( path, c='cyan' )
         # return None
     if path.lower().endswith('.md'):
@@ -336,7 +336,7 @@ def action():
     no = path+'notes.md'
     _.pr(no,c='cyan')
 
-    if not os.path.isfile(no): _.saveText('___\n# '+_.isDate(epoch,f='date')+'\n\n',no)
+    if not os.path.isfile(no): _.saveText('# '+_.isDate(epoch,f='date')+'\n___\n## today\n- one\n\n~~~\n\n~~~\n___\n',no)
 
 
     # _cryptFi = _.getTable('secure-crypt-local.meta')
@@ -498,7 +498,7 @@ if __name__ == '__main__':
     if _.switches.isActive('Cows'):
         have_some_cows()
         sys.exit()
-    _.pr('##### #timestamp)--> '+_.isDate(time.time(),f='iso'),c='ColorBold.gray')
+    _.pr('##### #t) '+_.isDate(time.time(),f='iso'),c='ColorBold.gray')
     action()
     __.isExit()
 

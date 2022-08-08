@@ -15,6 +15,7 @@ import sys, time
 ##################################################
 import _rightThumb._construct as __
 appDBA=__.clearFocus(__name__,__file__);__.appReg=appDBA;
+
 def focus(parentApp='',childApp='',reg=True):
     global appDBA;f=__.appName(appDBA,parentApp,childApp);
     if reg:__.appReg=f;
@@ -35,7 +36,6 @@ def sw():
     # _.switches.register( 'Files', '-f,-fi,-file,-files' )
     _.switches.register( 'Save', '-f,-fi,-file,-files,-save' )
     ### EXAMPLE: END
-
 # __.setting('require-list',['Files,Plus','File,Has']) # todo
 # __.setting('require-list',['Pipe','Files','Plus'])
 __.setting('receipt-log')
@@ -46,10 +46,9 @@ __.setting('require-pipe||file',False)
 __.setting('pre-error',False)
 __.setting('switch-raw',[])
 
-
 _.appInfo[focus()] = {
     # 'app': '8facG-jo0Cxk',
-    'file': 'thisApp.py',
+    'file': 'pipe-save.py',
     'liveAppName': __.thisApp( __file__ ),
     'description': 'Changes the world',
         # _.ail(1,'subject')+
@@ -71,7 +70,7 @@ _.appInfo[focus()] = {
                         # '',
     ],
     'examples': [
-                        _.hp('p thisApp -file file.txt'),
+                        _.hp('p pipe-save -file file.txt'),
                         _.linePrint(label='simple',p=0),
                         '',
     ],
@@ -87,7 +86,6 @@ _.appInfo[focus()] = {
                        # {},
     ],
 }
-
 _.appData[focus()] = {
         'start': __.startTime,
         'uuid': '',
@@ -99,46 +97,21 @@ _.appData[focus()] = {
         },
     }
 
-
 def triggers():
     _.switches.trigger( 'Files', _.myFileLocations, vs=True )
     _.switches.trigger( 'Ago', _.timeAgo )
     _.switches.trigger( 'Folder', _.myFolderLocations )
     _.switches.trigger( 'URL', _.urlTrigger )
     _.switches.trigger( 'Duration', _.timeFuture )
-
 _.l.conf('clean-pipe',False)
 _.l.sw.register( triggers, sw )
 
 ########################################################################################
 ### EXAMPLE: START
-
-#b)--> examples
-#d)--> code hints to quickly get started
-    #n)--> inline examples
-        # if _.switches.isActive('Test'): test(); return None;
-        # result=[]; result=[ _.pr(line) for i, line, bi in _.numerate( _.isData(r=0) )]
-        # bk=[];[  bk.append(rec['backup']) for rec in backupLog if path == rec['file']]; bk=bk[-1];
-        # a=(1 if True else 0) <--# 
-        #!)--> m=[[row[i] for row in matrix] for i in range(4)]
-
-    #n)--> python globals
-        # for k in globals(): print(k, eval(k) )
-
-    #n)--> webpage from url
-        # requests=__.imp('requests.post')
-        #!)--> data=str(requests.post(url,data={}).content,'iso-8859-1')
-
-    #n)--> import and backup example
-        # _bk = _.regImp( focus(), 'fileBackup' ); _bk.switch( 'Silent' ); _bk.switch( 'isRunOnce' ); _bk.switch( 'Flag', 'APP' ); _bk.switch( 'DoNotSchedule' )
-        # _bk.switch( 'Input', path ); bkfi = _bk.action();
-#e)--> examples
-
 ### EXAMPLE: END
+
 ########################################################################################
 # START
-
-
 
 def action():
     if _.switches.isActive('Save'):
@@ -146,16 +119,7 @@ def action():
     else:
         _.pr( '\n'.join(_.isData(r=0)) )
 
-
-
-
-
 ########################################################################################
 if __name__ == '__main__':
     action()
     __.isExit()
-
-
-
-
-

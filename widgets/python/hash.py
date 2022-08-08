@@ -1,4 +1,16 @@
 #!/usr/bin/python3
+_hash_='''
+   @@@  @@@      @@@@@@       @@@@@@      @@@  @@@  
+   @@@  @@@     @@@@@@@@     @@@@@@@      @@@  @@@  
+   @@!  @@@     @@!  @@@     !@@          @@!  @@@  
+   !@!  @!@     !@!  @!@     !@!          !@!  @!@  
+   @!@!@!@!     @!@!@!@!     !!@@!!       @!@!@!@!  
+   !!!@!!!!     !!!@!!!!      !!@!!!      !!!@!!!!  
+   !!:  !!!     !!:  !!!          !:!     !!:  !!!  
+   :!:  !:!     :!:  !:!         !:!      :!:  !:!  
+   ::   :::     ::   :::     :::: ::      ::   :::  
+    :   : :      :   : :     :: : :        :   : :  
+'''
 
 # ## {R2D2919B742E} ##
 # ###########################################################################
@@ -174,9 +186,12 @@ import _rightThumb._md5 as _hash
 
 ##################################################
 #b)--> examples
-# banner=_.Banner(dependencies)
-# goss=banner.goss
-# goss('-\t this app will sherlock tf out of any python app or python module')
+banner=_.Banner(_hash_)
+goss=banner.goss
+goss('-\t p hash -f file.exe')
+goss('-\t p hash -f file.exe -h 4')
+goss('-\t p hash -f file.exe -h sha256')
+goss('-\t p hash -f file.exe -h md5 sha1 sha224 sha256 sha384 sha512 sha3_224 sha3_256 sha3_384 sha3_512')
 #e)--> examples
 ##################################################
 
@@ -184,8 +199,8 @@ import _rightThumb._md5 as _hash
 if __name__ == '__main__':
     #b)--> examples
 
-    # banner.pr()
-    # if len(_.switches.all())==0: banner.gossip()
+    banner.pr()
+    if len(_.switches.all())==0: banner.gossip()
     
     #e)--> examples
     action()

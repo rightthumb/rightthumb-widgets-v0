@@ -679,12 +679,7 @@ def secureFiles(path):
 		if not __.fileBackup.isPreOpen:
 			return False
 		global _decrypt_docs
-		if _decrypt_docs is None:
-			if path.lower().endswith('.md'):
-				# _decrypt_docs = _.regImp( __.appReg, 'decrypt-docs-md' )
-				_decrypt_docs = _.regImp( __.appReg, 'decrypt-docs' )
-			else:
-				_decrypt_docs = _.regImp( __.appReg, 'decrypt-docs' )
+		if _decrypt_docs is None: _decrypt_docs = _.regImp( __.appReg, 'decrypt-docs' )
 		_.cp( [ 'SECURE FILE' ], 'Background.red' )
 
 		_decrypt_docs.imp.run(path)

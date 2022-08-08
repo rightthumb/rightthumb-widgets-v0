@@ -273,6 +273,7 @@ class Server(BaseHTTPRequestHandler):
 
                 HTML = HTML.replace('THE_TITLE',get_title(file))
                 HTML = HTML.replace('CODE_HERE',html)
+                HTML = HTML.replace('a href','a target="_blank" href')
                 webbrowser.open(path[:-2]+'htm', new=2)
                 _.saveText( HTML,path[:-2]+'htm' )
 
@@ -563,6 +564,7 @@ def action():
     global THE_PATH
     global port
     htm=html.replace( 'MARKDOWN_HERE', delim.join(markdown) ).replace( 'PATH_HERE', THE_PATH ).replace( '8080', str(port) ).replace( '[ ]', '<input type="checkbox" >' ).replace( '[x]', '<input type="checkbox" checked>' ).replace( '[X]', '<input type="checkbox" checked>' )
+    htm = htm.replace('a href','a target="_blank" href')
     if _.switches.isActive('View-Webpage'):
         _.saveText( htm, save )
         webbrowser.open(save, new=2)

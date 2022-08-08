@@ -536,11 +536,17 @@ def genMeta():
 
 
 
-
-
-
+_docs_list = _.getTable('crypt-docs.list')
 def process( subject ):
 	global settings
+	global _docs_list
+	_path=__.path(subject)
+	if _path in _docs_list:
+		_decrypt_docs = _.regImp( __.appReg, 'decrypt-docs' )
+		_decrypt_docs.imp.run( _path )
+		_docs_list.pop(  _docs_list.index(_path)  )
+		_.saveTable( _docs_list, 'crypt-docs.list' )
+
 
 	# Encrypt Password noBackup Backup
 	pw = _.switches.value('Password')
@@ -657,6 +663,8 @@ def action():
 		if _.switches.isActive('Files'):
 			for i,row in enumerate(_.switches.values('Files')):
 				f = _v.sanitizeFolder(  row )
+				if row in settings['files']:
+					del settings['files'][row]
 				if f in settings['files']:
 					del settings['files'][f]
 

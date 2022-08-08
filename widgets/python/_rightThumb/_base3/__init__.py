@@ -4878,6 +4878,7 @@ def textClean( txt ):
 	return txt
 
 def get_size(obj, seen=None):
+	'Recursively finds size of objects'
 	# return 0
 	if obj is None:
 		return 0
@@ -4886,7 +4887,6 @@ def get_size(obj, seen=None):
 	#   searched for: python how much memory usage of list of dict
 	#   https://goshippo.com/blog/measure-real-size-any-python-object/
 
-	"""Recursively finds size of objects"""
 	size = sys.getsizeof(obj)
 	if seen is None:
 		seen = set()
@@ -6573,8 +6573,9 @@ def patternMatch( one, two, best=True, simple=True, both=False, unsorted=False )
 				return result[0],result[1]
 			else:
 				return result[1],result[0]
-		
+
 def testPatterns( one, two, simple=True ):
+	if one == two: return 100
 
 	test = False
 	spent = []
@@ -6694,7 +6695,126 @@ def testPatterns( one, two, simple=True ):
 	else:
 		return newResult, tuple(patterns)
 
+def testPatterns22( one, two, simple=True ):
+	if one == two: return 100
 
+	test = False
+	spent = []
+	patterns = []
+	matches = []
+	def tempDataset( datasetX ):
+		newDataset = []
+		for dat in datasetX:
+			newDataset.append( dat )
+		return newDataset
+	def genChars( datasetY, x=False ):
+		chars = []
+		for d in datasetY:
+			chars.append( one[d] )
+			if x:
+				print_( one[d], d )
+		return ''.join( chars )
+	def addSpent( datasetY ):
+		for d in datasetY:
+			spent.append( d )
+
+	def addMatch( datasetY ):
+		for d in datasetY:
+			if not d in matches:
+				matches.append( d )
+
+	def testSpent( datasetX ):
+		for d in datasetX:
+			if d in spent:
+				return False
+		return True
+
+	def expandTest( datasetX ):
+		if testSpent( datasetX ):
+			first = datasetX[0]
+			last = datasetX[len(datasetX)-1]
+			theLast = len(datasetX)-1
+			theMax = len(one)-1
+
+			datasetY = tempDataset( datasetX )
+			if not datasetX[0] == 0:
+				nextFirst = int(first)
+				for x in range(1,100000):
+					nextFirst = first - 1
+					if nextFirst >= 0:
+						datasetY.append( nextFirst )
+						datasetY.sort()
+						if not genChars( datasetY ) in two:
+							datasetY.pop(0)
+							break
+					else:
+						break
+			if not datasetY[len(datasetY)-1] == theMax:
+				nextLast = int(datasetY[len(datasetY)-1])
+				# print_()
+				# print_( 'nextLast:', nextLast )
+				for x in range(1,100000):
+					# print_()
+					# print_( nextLast, x, nextLast + x )
+					nextLast = nextLast + 1
+					if nextLast <= theMax:
+						datasetY.append( nextLast )
+						datasetY.sort()
+						if not genChars( datasetY, x=False ) in two:
+							datasetY.reverse()
+							datasetY.pop(0)
+							datasetY.reverse()
+							addSpent( datasetY )
+							addMatch( datasetY )
+							patterns.append( genChars( datasetY ) )
+							# print_( '\t1' )
+							break
+					else:
+						addSpent( datasetY )
+						addMatch( datasetY )
+						patterns.append( genChars( datasetY ) )
+						# print_( '\t2' )
+						break
+			else:
+				addSpent( datasetY )
+				addMatch( datasetY )
+				patterns.append( genChars( datasetY ) )
+				# print_( '\t3' )
+
+	def runTest( patternLength ):
+		data = generatePatterns( one, 2 )
+		# data = generatePatterns( one, 2 )
+		# print_( len(data) )
+		i = 0
+		ii = 0
+		for dataset in data:
+			x = genChars( dataset )
+			if x in two:
+				addMatch( dataset )
+				expandTest( dataset )
+				# print_( x )
+				if test:
+					print_( x )
+				i += 1
+			else:
+				ii += 1
+
+		result = percentageDiffInt( i, len(data) )
+		return result
+	resultX = []
+
+	for x in range(2,10):
+		if len( one ) > x:
+			resultX.append( runTest( x ) )
+
+
+	newResult = percentageDiffInt( len(matches), len(one) )
+	# print_( patterns )
+	# print_( newResult )
+	if simple:
+		return newResult
+	else:
+		return newResult, tuple(patterns)
 
 def generatePatterns( string, patternLength=2 ):
 
@@ -20343,6 +20463,23 @@ def file_break(path,lines = 4000):
 # https://stackoverflow.com/questions/1345827/how-do-i-find-the-time-difference-between-two-datetime-objects-in-python
 
 
+def _2files(sub1,sub2,path=False,p=None,diff=False,d=None):
+	if not d is None: diff=d
+	if not p is None: path=p
+	if path:
+		if os.path.isfile(sub1): sub1=getText(sub1,raw=True)
+		if os.path.isfile(sub2): sub2=getText(sub2,raw=True)
+	if sub1 == sub2 and diff: return ''
+	if sub1 == sub2 and not diff: return 100
+
+	return None
+
+def _2lines(line1,line2):
+
+	return None
+
+
+
 def _2lists(list1,list2): return list(set(list1).intersection(list2))
 
 
@@ -20436,11 +20573,15 @@ def dicKeys(dic,keys=None,omit=None,keep=None):
 			if k in keys: new[k] = dic[k]
 	return new
 
+
+
 class Banner:
 	""" https://onlineasciitools.com/convert-text-to-ascii-art """
 	def __init__( self, banner ):
 		self.banner=banner
 		self.code=[]
+
+
 
 	def gossip( self ):
 		pr(line=1,c='yellow')
@@ -20456,8 +20597,25 @@ class Banner:
 	def pr( self ):
 		if self.banner:
 			clear()
+			# print(__.terminal.width)
+
+			mx=0
+			for line in self.banner.split('\n'):
+				ln=len(line)
+				if ln > mx: mx=ln
+
+			sides = (__.terminal.width/2) - (mx/2)-1
+			sides = abs(int(sides))
+			# sides = sides/2
+			# sides = abs(int(sides))
+			# sides = sides/2
+			# sides = abs(int(sides))
+			sp=_str.sp(sides)
+			
+			# print('sides',sides)
+			brand = _str.es(self.banner,m=sp,be='|')
 			pr(line=1,c='green'); pr(line=1,c='green');
-			pr(self.banner,c='red')
+			pr(brand,c=random_color())
 			pr(line=1,c='green'); pr(line=1,c='green');
 
 
@@ -20535,5 +20693,32 @@ def pipe_surfing():
 	return False
 
 	
-
+def fnak(*args, **kwargs):
+	''' 
+		text fn args kwargs,
+		(  args[0]  ,  fi=kwargs['fi']  )
+		code generator
+	'''
+	function=''
+	if kwargs:
+		kwargs=dict(kwargs).copy()
+	iargs=[]
+	command=function+'('
+	if args:
+		for i in range(len(args)):
+			iargs.append(str(i))
+		_args='args['+'], args['.join(iargs)+']'
+		command+='  '+_args
+	if args and kwargs:
+		command+='  ,  '
+	if kwargs:
+		kw=[]
+		for kwa in kwargs:
+			_k=kwa+'='"kwargs['"+kwa+"']"
+			kw.append(_k)
+		command+=','.join(kw)
+	if args or kwargs:
+		command+='  '
+	command+=')'
+	return command
 

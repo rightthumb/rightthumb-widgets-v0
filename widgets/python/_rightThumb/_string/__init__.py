@@ -1237,6 +1237,7 @@ def do(what=None,string='',a=None,b=None,c=None,d=None):
     if what in 'trim'.split(' '): return trim(string);
     if what in 'nows'.split(' '): return nows(string);
 
+    if what in 'sh2'.split(' '): return sh2(string);
     if what in '.sh sh bash linux 2linux fix script x +x'.split(' '): return sh(string);
 
     if what in 'all'.split(' '): return replaceAll(string,a,b);
@@ -1248,6 +1249,39 @@ def do(what=None,string='',a=None,b=None,c=None,d=None):
     if 'alpha' in what and 'nu' in what : return stripNonAlphaNumaric(string);
     if what in 'n'.split(' '): return removeNonNumber(string);
     if what in 'ra remove'.split(' '): return removeAll(string,a);
+
+def sp(cnt,t=' '):
+    '''  spaces '''
+    output=''
+    while not len(output) == cnt: output+=t
+    # print('sp:',cnt,'|'+output+'|')
+    return output
+
+def es(data,be='',margin='',m=None):
+    '''  endspace '''
+    if not m is None: margin=m
+    if type(be) == int: be=sp(be)
+    if type(margin) == float: margin=int(margin)
+    if type(margin) == int: margin=abs(margin)
+    if type(margin) == int: margin=sp(margin)
+    if type(data) == list: data='\n'.join(data)
+    def _ad_space_(line,mx,be='',margin=''):
+        while not len(line)==mx: line+=' '
+        # print(mx,be+margin+line+margin+be)
+        _out=be+margin+line+margin+be
+        if len(_out) == __.terminal.width-1:_out=be+margin+line+margin+margin[0]+be
+
+        return _out
+    # data=do('sh',data)
+    lines=[]
+    mx=0
+    for line in data.split('\n'):
+        ln=len(line)
+        if ln > mx: mx=ln
+    for line in data.split('\n'):
+        lines.append( _ad_space_(line, mx, be, margin) )
+    # print('\n'.join(lines))
+    return '\n'.join(lines)
 
 def nows(string):
     if not type(string) == str: return string
@@ -1300,7 +1334,7 @@ def trim(string):
     # # while _trim_true_(string,testing): string=trimmer(string,testing);
     # return string
 
-def sh(string):
+def sh2(string):
     try:
         if os.path.isfile(string): string=__.getText(string,raw=True);
     except Exception as e: pass;
@@ -1316,6 +1350,53 @@ def sh(string):
     string = string.replace( '\r', '' )
 
     return string
+
+def sh(string):
+    try:
+        if os.path.isfile(string): string=__.getText(string,raw=True);
+    except Exception as e: pass;
+    string=str(string)
+
+
+    string=string.replace( chr(10), '\n' ).replace( '\r', '' ).replace( chr(27), '' )
+    string=string.replace( chr(10), '\n' ).replace( '\r', '' ).replace( chr(27), '' )
+    string=do('be',string,'\n')
+    lines=string.split('\n')
+    for i, line in enumerate(lines):
+        if not line.replace(' ','').replace('\t',''):
+            lines[i]=''
+        while lines[i].endswith(' ') or lines[i].endswith('\t'): lines[i]=lines[i][:-1]
+    string='\n'.join(lines)
+    # if string.startswith('#!'):
+    #     if '#!/bin/' in string or '#!/usr/bin/' in string:
+    #         while '\t' in string: string = string.replace( '\t', '    ' );
+    #         while '    ' in string: string = string.replace( '    ', '\t' );
+
+    # string=string.replace( chr(10), '\n' ).replace( '\r', '' ).replace( chr(27), '' )
+    string=do('be',string,'\n')
+    string=string.replace( chr(10), '\n' ).replace( '\r', '' ).replace( chr(27), '' )
+
+    return string
+
+#b)--> before 2022-08-03
+# def sh(string):
+#     try:
+#         if os.path.isfile(string): string=__.getText(string,raw=True);
+#     except Exception as e: pass;
+#     string=str(string)
+#     string=string.replace( chr(10), '\n' ).replace( '\r', '' ).replace( chr(27), '' ).replace( chr(10), '\n' ).replace( '\r', '' ).replace( chr(27), '' )
+#     while '\t' in string: string = string.replace( '\t', '    ' );
+#     while ' \n' in string: string = string.replace( ' \n', '\n' );
+#     while '    ' in string: string = string.replace( '    ', '\t' );
+#     string=do('be',string,'\n')
+
+#     string = string.replace( chr(10), '\n' )
+#     string = string.replace( chr(27), '' )
+#     string = string.replace( '\r', '' )
+
+#     return string
+#e)--> before 2022-08-03
+
 
 # class st(str):
 #     def sh(self): self=do('.sh',self); return self.string(self);

@@ -185,7 +185,11 @@ def action():
 		if paths:
 			for path in paths:
 				path=__.path(path)
-				for _alias in _aliases: aliases['aliases'][_alias]=path; aliases['files'][path]=_alias;
+				for _alias in _aliases:
+					aliases['aliases'][_alias]=path
+					if not path in aliases['files']: aliases['files'][path]=[]
+					if not _alias in aliases['files'][path]: aliases['files'][path].append(_alias)
+
 			_.saveTable(aliases,'file-open-aliases.hash')
 		elif not paths:
 			for _alias in _aliases:
