@@ -3084,6 +3084,89 @@ alias listening="netstat -l | p simpleLine + listen - listening"
 alias fw.y="sudo ufw allow "
 alias fw.n="sudo ufw deny "
 
+alias vps.ssh="ssh scott@hoth.m-eta.app"
+alias vps2.ssh="ssh scott@bespin.m-eta.app"
+
+alias vh="ssh scott@hoth.m-eta.app"
+alias vb="ssh scott@bespin.m-eta.app"
+alias vm="ssh scott@mortis.m-eta.app"
+alias vc="ssh scott@tatooine.m-eta.app"
+alias vt="ssh scott@tatooine.m-eta.app"
+
+alias v="ssh scott@hoth.m-eta.app"
+alias vv="ssh scott@bespin.m-eta.app"
+alias vvv="ssh scott@mortis.m-eta.app"
+alias vvvv="ssh scott@tatooine.m-eta.app"
+alias vvvvv="ssh vy2ehn4azpfl@thumb.m-eta.app"
+alias thumb="ssh vy2ehn4azpfl@thumb.m-eta.app"
+
+alias vh="ssh scott@hoth.m-eta.app"
+alias vb="ssh scott@bespin.m-eta.app"
+alias vm="ssh scott@mortis.m-eta.app"
+alias vt="ssh scott@tatooine.m-eta.app"
+alias vr="vy2ehn4azpfl@23.229.227.201"
+alias rt="vy2ehn4azpfl@23.229.227.201"
+
+alias hoth="ssh scott@hoth.m-eta.app"
+alias bespin="ssh scott@bespin.m-eta.app"
+alias mortis="ssh scott@mortis.m-eta.app"
+alias endor="ssh scott@tatooine.m-eta.app"
+
+alias reph.us="ssh thisreph@reph.us"
+
+
+alias ssh.="rm -rf ~/.ssh; ssh-keygen -t rsa"
+alias ssh.h.a="ssh-copy-id -i ~/.ssh/id_rsa.pub admin@hoth.m-eta.app"
+alias ssh.h.s="ssh-copy-id -i ~/.ssh/id_rsa.pub scott@hoth.m-eta.app"
+alias ssh.h.r="ssh-copy-id -i ~/.ssh/id_rsa.pub root@hoth.m-eta.app"
+alias ssh.b.s="ssh-copy-id -i ~/.ssh/id_rsa.pub scott@bespin.m-eta.app"
+alias ssh.m.s="ssh-copy-id -i ~/.ssh/id_rsa.pub scott@mortis.m-eta.app"
+alias ssh.t.s="ssh-copy-id -i ~/.ssh/id_rsa.pub scott@tatooine.m-eta.app"
+alias ssh.b.r="ssh-copy-id -i ~/.ssh/id_rsa.pub root@bespin.m-eta.app"
+alias ssh.m.r="ssh-copy-id -i ~/.ssh/id_rsa.pub root@mortis.m-eta.app"
+alias ssh.t.r="ssh-copy-id -i ~/.ssh/id_rsa.pub root@tatooine.m-eta.app"
+alias ssh.t.a="ssh-copy-id -i ~/.ssh/id_rsa.pub admin@tatooine.m-eta.app"
+
+
+#b)--> .ssh manager
+alias ssh..="sudo rm -rf ~/.ssh ; sudo rm -rf /mnt/c/Users/Scott/.ssh; mkdir /mnt/c/Users/Scott/.ssh; echo /mnt/c/Users/Scott/.ssh/id_rsa ; $p -copy -this /mnt/c/Users/Scott/.ssh/id_rsa; echo /mnt/c/Users/Scott/.ssh/id_rsa; ssh-keygen -t rsa"
+alias ssh.h.a.="ssh-copy-id -i /mnt/c/Users/Scott/.ssh/id_rsa.pub admin@hoth.m-eta.app"
+alias ssh.t.a.="ssh-copy-id -i /mnt/c/Users/Scott/.ssh/id_rsa.pub admin@tatooine.m-eta.app"
+
+alias ssh.h.s.="ssh-copy-id -i /mnt/c/Users/Scott/.ssh/id_rsa.pub scott@hoth.m-eta.app"
+alias ssh.b.s.="ssh-copy-id -i /mnt/c/Users/Scott/.ssh/id_rsa.pub scott@bespin.m-eta.app"
+alias ssh.m.s.="ssh-copy-id -i /mnt/c/Users/Scott/.ssh/id_rsa.pub scott@mortis.m-eta.app"
+alias ssh.t.s.="ssh-copy-id -i /mnt/c/Users/Scott/.ssh/id_rsa.pub scott@tatooine.m-eta.app"
+
+alias ssh.h.r.="ssh-copy-id -i /mnt/c/Users/Scott/.ssh/id_rsa.pub root@hoth.m-eta.app"
+alias ssh.b.r.="ssh-copy-id -i /mnt/c/Users/Scott/.ssh/id_rsa.pub root@bespin.m-eta.app"
+alias ssh.m.r.="ssh-copy-id -i /mnt/c/Users/Scott/.ssh/id_rsa.pub root@mortis.m-eta.app"
+alias ssh.t.r.="ssh-copy-id -i /mnt/c/Users/Scott/.ssh/id_rsa.pub root@tatooine.m-eta.app"
+#e)--> .ssh manager
+
+#b)--> mongo srv
+alias vps.mongo="ssh -L 27017:localhost:27017 -C -N -l scott hoth.m-eta.app"
+alias vps.mongo1="ssh -L 2701:localhost:27017 -C -N -l scott hoth.m-eta.app"
+alias vps.mongo.="ssh -L 2701:localhost:27017 -C -N -l scott hoth.m-eta.app"
+#e)--> mongo srv
+
+#b)--> desktop manager
+alias vps.b.dt="ssh -L 59001:localhost:5901 -C -N -l scott bespin.m-eta.app"
+alias vps.t.dt="ssh -L 59001:localhost:5901 -C -N -l scott tatooine.m-eta.app"
+alias vps.h.dt="ssh -L 59001:localhost:5901 -C -N -l scott hoth.m-eta.app"
+#e)--> desktop manager
+
+#b)--> desktop manager
+alias vps.h.sql="ssh -L 3306:localhost:3306 -C -N -l scott hoth.m-eta.app"
+#e)--> desktop manager
+
+
+#b)--> git clone this project
+alias .git.b="rm -rf rightthumb-widgets-v0 ; git clone https://github.com/rightthumb/rightthumb-widgets-v0 ; cd rightthumb-widgets-v0 ; chmod -R 777 . ; p shClean -folder -r ; vps.b.py.; vps.b.sh. ; vps.b.db."
+alias .git.c="rm -rf rightthumb-widgets-v0 ; git clone https://github.com/rightthumb/rightthumb-widgets-v0 ; cd rightthumb-widgets-v0 ; chmod -R 777 . ; p shClean -folder -r ; vps.t.py.; vps.t.sh. ; vps.t.db."
+alias .git.t="rm -rf rightthumb-widgets-v0 ; git clone https://github.com/rightthumb/rightthumb-widgets-v0 ; cd rightthumb-widgets-v0 ; chmod -R 777 . ; p shClean -folder -r ; vps.t.py.; vps.t.sh. ; vps.t.db."
+alias .git.h="rm -rf rightthumb-widgets-v0 ; git clone https://github.com/rightthumb/rightthumb-widgets-v0 ; cd rightthumb-widgets-v0 ; chmod -R 777 . ; p shClean -folder -r ; vps.h.py.; vps.h.sh. ; vps.h.db."
+#e)--> git clone this project
 
 
 
