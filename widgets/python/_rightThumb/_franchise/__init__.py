@@ -632,6 +632,17 @@ def getUrlList( url, find, omit, obscure=False ):
 						_.pr(theURL)
 					if not theURL in __.spentLists:
 						__.spentLists[ theURL ] = 1
+
+						text=text.replace('\u203a','')
+						text=text.replace('www.imdb.com\\u203a','')
+						text=text.replace('www.imdb.com \\u203a','')
+						text=text.replace('www.imdb.com','')
+						text=text.replace('\\u203a','')
+						text=text.replace('\\u203','')
+						text=text.replace('\\u20','')
+						text=text.replace('\\u2','')
+						text=text.replace('\\u','')
+						
 						theList.append({'name': text,'link': theURL})
 	return theList
 

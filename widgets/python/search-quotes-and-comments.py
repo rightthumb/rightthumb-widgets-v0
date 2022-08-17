@@ -20,6 +20,7 @@ def sw():
     _.switches.register( 'Search-In-Comments-Too', '-in,-ic,-all,-incomments,-inc', 'if you select this "Invert" is automaticaly activated' )
     _.switches.register( 'Comment', '-comment', '#' )
     _.switches.register( 'Disable-Auto-Language-Comment-Detect', '-no-auto' )
+    _.switches.register( 'Dump-Quotes', '-dq,-dumpq,-dumpquotes' )
 
 
 
@@ -34,7 +35,7 @@ __.setting('switch-raw',[])
 
 _.appInfo[focus()] = {
     
-    'file': 'search-quotes.py',
+    'file': 'search-quotes-and-comments.py',
     'liveAppName': __.thisApp( __file__ ),
     'description': 'Search only text that is in \'quotation\' "marks" or the inverse eveything but quotation marks',
         
@@ -56,10 +57,10 @@ _.appInfo[focus()] = {
                         
     ],
     'examples': [
-                        _.hp('p search-quotes -f nsfw.py + nsfw '),
-                        _.hp('p search-quotes -f nsfw.py + nsfw -i '),
-                        _.hp('p search-quotes -f nsfw.py + nsfw -i -all'),
-                        _.hp('p search-quotes -f nsfw.py + nsfw -comment "#" '),
+                        _.hp('p search-quotes-and-comments -f nsfw.py + nsfw '),
+                        _.hp('p search-quotes-and-comments -f nsfw.py + nsfw -i '),
+                        _.hp('p search-quotes-and-comments -f nsfw.py + nsfw -i -all'),
+                        _.hp('p search-quotes-and-comments -f nsfw.py + nsfw -comment "#" '),
                         _.linePrint(label='simple',p=0),
                         '',
     ],
@@ -117,6 +118,21 @@ def action():
     path = _.switches.values('Files')[0]
     file = _.getText(path,raw=True)
     xFile=file
+
+
+    if _.switches.isActive('Dump-Quotes'):
+        validator._err_ = False
+        index = validator.createIndex( file, 'javascript', skipLoad=True, simple=False, A=None, B=True, C=None )
+        for k in validator.identity['location']['open']:
+            x = validator.assetSnipetClean(k,validator.identity['location']['open'][k])
+            if x.startswith('"') or x.startswith("'"):
+                _.pr(x,c='Background.light_blue')
+                # uuuid = _.genUUID()
+                # cleaner[uuuid]=x
+                # file=file.replace(x,uuuid)
+
+        
+
     #n)--> manage comment settings
     remove_comments=False
     if path.endswith('.py'): SLC='#';remove_comments=True;

@@ -562,6 +562,9 @@ def displayLine(line):
 				remove = str2(p[0]) + end + extraEnd
 				line = line.replace(remove,'') + str2(p[0]) #######################
 				line = line.replace(extraEnd,'')
+		elif p1 == 'f':
+			line2 = line.split(str2(p[0]))
+			line = line2[0]
 		elif p1 == 'e':
 			line2 = line.split(str2(p[0]))
 			try:
@@ -689,7 +692,7 @@ def make(string):
 			string = string.replace(pp,l)
 			i += 1
 	else:
-		sub = _.switches.value('Make')
+		sub = ' '.join( _.switches.values('Make') )
 		sub =  _str.replaceAll(sub,";'",'"')
 		sub =  _str.replaceAll(sub,"\\n",'\n')
 		sub =  _str.replaceAll(sub,";n",'\n')

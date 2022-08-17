@@ -1204,6 +1204,7 @@ def clean_filename(filename, dup=False, replace=None, whitelist=None):
     return cleaned_filename[:char_limit]
 
 def do(what=None,string='',a=None,b=None,c=None,d=None):
+    '''( what=None, string='', a=None, b=None, c=None, d=None )'''
 
     # if what in 'file'.split(' ') and not string: _.pr( '(filename, dup=False, replace=None, whitelist=None)' );
     if what in 'an alphan'.split(' '): return totalStrip1b( string, a );
@@ -1238,7 +1239,7 @@ def do(what=None,string='',a=None,b=None,c=None,d=None):
     if what in 'nows'.split(' '): return nows(string);
 
     if what in 'sh2'.split(' '): return sh2(string);
-    if what in '.sh sh bash linux 2linux fix script x +x'.split(' '): return sh(string);
+    if what in '.sh sh sh1 bash linux 2linux fix script x +x'.split(' '): return sh(string);
 
     if what in 'all'.split(' '): return replaceAll(string,a,b);
     if what in 'cleanAll'.split(' '): return cleanAll(string,a,b);

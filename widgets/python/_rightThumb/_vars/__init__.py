@@ -338,6 +338,8 @@ life=home +os.sep+'.rt'+os.sep+'profile'+os.sep+'life'+os.sep
 rtp=home +os.sep+'.rt'+os.sep+'profile'+os.sep
 rt=home +os.sep+'.rt'
 
+
+
 if __.isWin:
 	sublime = '"C:\\Program Files\\Sublime Text 3\\sublime_text.exe"'
 elif not __.isWin:
@@ -1527,6 +1529,8 @@ def settings_load():
 def fpath(path): return resolveFolderIDs(path.replace('\\',os.sep).replace('/',os.sep))
 
 
+figpath=home +os.sep+'.rt'+os.sep+ '.config.hash'
+
 path = __.path
 mkdir = createDestinationFolders
 # default_powershell = 'echo test | py $p\\app.py'
@@ -1553,6 +1557,8 @@ p   = home
 pp = widgets
 ta = appsFolder
 
+
+
 if not os.path.isdir(myConfig):
 	dir_structure()
 # dir_check_create
@@ -1563,6 +1569,8 @@ wprofile = myHome
 doc_sep = '__________________________________________________________________________________'
 meta=config_hash
 # print(life); sys.exit();
+
+
 
 fn=dot()
 fn.path=dot()

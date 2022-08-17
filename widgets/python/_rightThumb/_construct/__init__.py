@@ -41,9 +41,10 @@ settings_table = {
                     'receipt-file': False,
 }
 
-class dot:
+class Meta_Namespace():
     def __init__( self ):
         pass
+dot=Meta_Namespace
 fn=dot()
 
 def settings( subjects, d=None, val='71e9-a678' ):

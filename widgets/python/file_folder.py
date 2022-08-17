@@ -41,6 +41,7 @@ def appSwitches():
 	_.switches.register( 'Compair', '-compair' )
 	_.switches.register( 'Folder', '-f,-folder' )
 	_.switches.register( 'Links', '-l,-link,-links' )
+	_.switches.register( 'Copy', '-copy,-cp' )
 	
 
 
@@ -73,11 +74,11 @@ _.appInfo[focus()] = {
 						''
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
+					   # { 'name': 'name', 'abbreviation': 'n' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					   # 'this',
+					   # 'app',
 	],
 
 	}
@@ -155,6 +156,8 @@ _.postLoad( __file__ )
 # START
 
 def action():
+	global copied
+	_copy_this=[]
 	if _.switches.isActive( 'Folder' ):
 		if len( _.switches.values( 'Folder' ) ):
 			folder = _.switches.values( 'Folder' )[0]
@@ -229,14 +232,20 @@ def action():
 				for f in _.tables.returnSorted( 'links', 'a.sort_by_field', links ):
 					_.colorThis( [ '\t',f['label'] ], 'yellow' )
 
-
+			files=_.tables.returnSorted( 'files', 'a.sort_by_field', files )	
+			for f in files: _copy_this.append(f['label'])
 			_.pr()
 			_.colorThis( 'Files:', 'green' )
-			for f in _.tables.returnSorted( 'files', 'a.sort_by_field', files ):
+
+			for f in files:
 				if os.path.islink(f['label']):
 					_.colorThis( [ '\t',f['label'] ], 'yellow' )
 				else:
 					_.colorThis( [ '\t',f['label'] ], 'cyan' )
+
+
+
+
 			_.pr()
 			if totalFile == len(files):
 				_.colorThis( [ '',_.addComma(totalFile) ], 'yellow' )
@@ -303,14 +312,19 @@ def action():
 			if totalFolder == len(folders):
 				_.colorThis( [ '',_.addComma(totalFolder) ], 'yellow' )
 			else:
-
 				_.pr('',_.colorThis( [ _.addComma(len(folders)) ], 'yellow', p=0 ),'of',_.colorThis( [ _.addComma(totalFolder) ], 'yellow', p=0 ))
 			_.pr()
 			_.pr(folder)
 			_.pr()
 		return newItems
+	if _.switches.isActive('Copy'):
+		_copy.imp.copy( '\n'.join(_copy_this), p=0 ); copied=True;
 
+	if copied: _.pr(' * copied *',c='r')
 
+if _.switches.isActive('Copy'):
+	_copy = _.regImp( __.appReg, '-copy' )
+copied=False
 
 ########################################################################################
 if __name__ == '__main__':

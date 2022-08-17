@@ -10,12 +10,12 @@
 # ###########################################################################
 # ## {C3P0D40fAe8B} ##
 
-
 ##################################################
 import sys, time
 ##################################################
 import _rightThumb._construct as __
 appDBA=__.clearFocus(__name__,__file__);__.appReg=appDBA;
+
 def focus(parentApp='',childApp='',reg=True):
     global appDBA;f=__.appName(appDBA,parentApp,childApp);
     if reg:__.appReg=f;
@@ -28,14 +28,9 @@ _v = __.imp('_rightThumb._vars')
 _str = __.imp('_rightThumb._string')
 ##################################################
 
-
 def sw():
     pass
-    #b)--> examples
-    # _.switches.register( 'Input', '-i' )
-    #e)--> examples
     # _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=True )
-
 # __.setting('require-list',['Files,Plus','File,Has']) # todo
 # __.setting('require-list',['Pipe','Files'])
 __.setting('receipt-log')
@@ -46,11 +41,9 @@ __.setting('require-pipe||file',False)
 __.setting('pre-error',False)
 __.setting('switch-raw',[])
 
-
-
 _.appInfo[focus()] = {
     # 'app': '8facG-jo0Cxk',
-    'file': 'thisApp.py',
+    'file': 'tmpf3.py',
     'liveAppName': __.thisApp( __file__ ),
     'description': 'Changes the world',
         # _.ail(1,'subject')+
@@ -72,7 +65,7 @@ _.appInfo[focus()] = {
                         # '',
     ],
     'examples': [
-                        _.hp('p thisApp -file file.txt'),
+                        _.hp('p tmpf3 -file file.txt'),
                         _.linePrint(label='simple',p=0),
                         '',
     ],
@@ -88,7 +81,6 @@ _.appInfo[focus()] = {
                        # {},
     ],
 }
-
 _.appData[focus()] = {
         'start': __.startTime,
         'uuid': '',
@@ -100,7 +92,6 @@ _.appData[focus()] = {
         },
     }
 
-
 def triggers():
     _.switches.trigger( 'Files', _.myFileLocations, vs=True )
     _.switches.trigger( 'Ago', _.timeAgo )
@@ -108,68 +99,50 @@ def triggers():
     _.switches.trigger( 'URL', _.urlTrigger )
     _.switches.trigger( 'Duration', _.timeFuture )
 
-_.l.conf('clean-pipe',True)
+
+
+_.l.conf('clean-pipe',False)
+# _.l.conf('clean-pipe',True)
+
+
 _.l.sw.register( triggers, sw )
 
 ########################################################################################
-#b)--> examples
-#d)--> code hints to quickly get started
-    #n)--> inline examples
-        # if _.switches.isActive('Test'): test(); return None;
-        # result=[]; result=[ _.pr(line) for i, line, bi in _.numerate( _.isData(r=0) )]
-        # bk=[];[  bk.append(rec['backup']) for rec in backupLog if path == rec['file']]; bk=bk[-1];
-        # a=(1 if True else 0) <--# 
-        #!)--> m=[[row[i] for row in matrix] for i in range(4)]
-
-    #n)--> python globals
-        # for k in globals(): print(k, eval(k) )
-
-    #n)--> webpage from url
-        # requests=__.imp('requests.post')
-        #!)--> data=str(requests.post(url,data={}).content,'iso-8859-1')
-
-    #n)--> import and backup example
-        # _bk = _.regImp( __.appReg, 'fileBackup' ); _bk.switch( 'Silent' ); _bk.switch( 'isRunOnce' ); _bk.switch( 'Flag', 'APP' ); _bk.switch( 'DoNotSchedule' )
-        # _bk.switch( 'Input', path ); bkfi = _bk.action();
-    
-    #n)--> inline
-        # for rel in [ subject for subject in _.isData(r=0) if _.showLine(subject) ]: print(rel)
-
-    #n)--> banner
-        # banner=_.Banner(app); goss=banner.goss;
-#e)--> examples
-########################################################################################
 #n)--> start
+import uuid
+# import pickle
 
 def action():
-    load(); global c3po;
+    data = '\n'.join(_.isData(r=0))
+    data=data=_str.do('.sh',data)
+    data=data.split('\n')
+    start=time.time()
+    # for line in data: uuid.uuid5(uuid.NAMESPACE_URL, line ).hex
+    for line in data: uuid.uuid5(uuid.NAMESPACE_URL, line ).hex
+    end=time.time()
+    diff=end-start
+    _.pr(    ' diff:',  diff)
+    _.pr(    '  int:',  int(diff))
+    _.pr(    ' i/60:',  int(diff)/60)
+    _.pr(    'lines:',  _.addComma(len(data)) )
+    _.pr(    'chars:',  _.addComma(len( '\n'.join(data) )) )
 
-    #n)--> iterate
-    for subject in _.isData(r=0): _.pr(subject)
-    
+    _.pr(line=1,c='red')
 
-def load():
-    global c3po
-    c3po = _.getTable( 'table' )
-    #n)--> print table
-    _.pt(c3po)
+    start=time.time()
+    uuid_md5=uuid.uuid5(uuid.NAMESPACE_URL, '\n'.join(data) ).hex
+    end=time.time()
+    diff=end-start
+    _.pr(    ' diff:',  diff)
+    _.pr(    '  int:',  int(diff))
+    _.pr(    ' i/60:',  int(diff)/60)
+    _.pr(    'lines:',  _.addComma(len(data)) )
+    _.pr(    'chars:',  _.addComma(len( '\n'.join(data) )) )
+    _.pr(    'uuid-md5:',  uuid_md5 )
 
 
 ##################################################
-#b)--> examples
-# banner=_.Banner(dependencies)
-# goss=banner.goss
-# goss('-\t this app will sherlock tf out of any python app or python module')
-#e)--> examples
-##################################################
-
-########################################################################################
+######################################
 if __name__ == '__main__':
-    #b)--> examples
-
-    # banner.pr()
-    # if len(_.switches.all())==0: banner.gossip()
-    
-    #e)--> examples
     action()
     _.isExit(__file__)

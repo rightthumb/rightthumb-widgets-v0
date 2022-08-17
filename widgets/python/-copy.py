@@ -406,8 +406,22 @@ def subject():
     subject['base'] = {}
     subject['base']['import'] = '''
 #!/usr/bin/python3
-import os,sys,time,importlib
+import os,sys,time,importlib,simplejson
+if sys.platform[0] == 'w': figpath=os.getenv('USERPROFILE') +os.sep+'.rt'+os.sep+ '.config.hash'
+else: figpath=os.getenv('HOME') +os.sep+'.rt'+os.sep+ '.config.hash'
+
+
+def getTable( file ):
+    json_data={}
+    if os.path.isfile(file):
+        with open(file,'r', encoding="latin-1") as json_file: json_data = simplejson.load(json_file)
+    return json_data
+
+
+fig=getTable(figpath)
+sys.path.append( fig['w']+'/widgets/python'.replace('/',os.sep) )
 import _rightThumb._construct as __
+import _rightThumb._vars as _v
 __.appReg = __.clearFocus( '__main__', 'D:\\\\tech\\\\hosts\\\\VULCAN\\\\widgets\\\\python\\\\testing123.py' )
 f = __.appName( __.appReg, '', '' )
 __.registeredApps.append( __.appReg )
@@ -415,7 +429,6 @@ import _rightThumb._matrix as _matrix
 import _rightThumb._base3 as _
 _.load()
 import _rightThumb._base4 as ___
-import _rightThumb._vars as _v
 import _rightThumb._string as _str
 import _rightThumb._dir as _dir
 
@@ -439,8 +452,6 @@ _.postLoad( 'D:\\\\tech\\\\hosts\\\\VULCAN\\\\widgets\\\\python\\\\testing123.py
 # fileBackup.switch( 'Silent,isRunOnce,DoNotSchedule,Flag', 'dirty' )
 # fileBackup.switch( 'Input',  _.f('appData',2)  )
 # fileBackup.action()
-
-
 
 # imp = importlib.import_module(app)
 # _.wrapText(  ' '.join(  _.files(  _.back()  )  )  )

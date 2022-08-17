@@ -34,16 +34,15 @@ import _rightThumb._string as _str
 
 
 def appSwitches():
-	pass
-	# _.switches.register( 'Files', '-f,-file,-files','file.txt', isPipe='glob', description='Files' )
 	_.switches.register( 'Files', '-f,-file,-files','file.txt', isPipe='name', description='Files' )
-	_.switches.register( 'Clean', '--c', 'noline' )
 	_.switches.register( 'Head', '-head', '10' )
 	_.switches.register( 'Tail', '-tail', '10' )
 	_.switches.register( 'Line', '-l,-ln,-line' )
 	_.switches.register( 'NoComment', '-nc' )
 	_.switches.register( 'StripPreNumber', '-sn' )
 	_.switches.register( 'Comment', '-comment', '"#"' )
+	_.switches.register( 'Clean', '--c', 'noline' )
+	_.switches.register( 'NotCleanForce', '-pr,-print,--nc,---c,-c-', 'noline' )
 
 
 
@@ -174,6 +173,8 @@ if __name__ == '__main__':
 
 _.postLoad( __file__ )
 
+if _.switches.isActive('NotCleanForce') and _.switches.isActive('Clean'): _.switches.fieldSet( 'Clean', 'active', False )
+
 ########################################################################################
 # START
 
@@ -184,6 +185,7 @@ def cleaner(line):
 
 def action():
 	focus()
+
 	# _.pr(_.isData())
 	# sys.exit()
 	# files = _.switches.values('Files')

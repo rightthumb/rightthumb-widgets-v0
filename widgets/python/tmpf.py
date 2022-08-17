@@ -40,16 +40,36 @@ template.info(focus()); exec(  template.triggers()  ); _.l.sw.register( triggers
 ########################################################################################
 #n)--> start
 
-def action():
-    load(); global c3po;
-    #--> iterate
-    for subject in _.isData(r=0): _.pr(subject)
+# def action():
+#     # import subprocess
+#     # print(subprocess.getoutput(''))
+#     # print(subprocess.getoutput('doskey /history'))
+#     # import os
+#     # os.system('doskey /history')
+#     if _.isWin:
+#         import subprocess
+#         cmd_history = subprocess.check_output(["doskey", "/history"])
+#         print(str(cmd_history,'iso-8859-1'))
+#     else:
+#         # import readline; print('\n'.join([str(readline.get_history_item(i + 1)) for i in range(readline.get_current_history_length())]))
+#         import readline
+#         for i in range(readline.get_current_history_length()):
+#             print (readline.get_history_item(i + 1))
+#     # for line in dir(cmd_history):
+#     # print(cmd_history.encode('latin1', 'ignore'))
+#     # print(str(cmd_history))
+#     # for line in cmd_history:
+#     #     print(line)
 
-def load():
-    global c3po
-    c3po = _.getTable( 'table' )
-    #--> print table
-    _.pt(c3po)
+
+
+
+
+
+
+# print( key() )
+
+def action(): pass
 
 ########################################################################################
 if __name__ == '__main__':

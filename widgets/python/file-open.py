@@ -180,24 +180,45 @@ def action():
 						'aliases':{},
 						'files':{},
 			}
-		elif not aliases:
-			_.e('no aliases, create an alias','p file-open -alias important -f file.md')
+		elif not aliases: _.e('no aliases, create an alias','p file-open -alias important -f file.md')
+
 		if paths:
 			for path in paths:
 				path=__.path(path)
 				for _alias in _aliases:
+
+					#b)--> actual code
 					aliases['aliases'][_alias]=path
 					if not path in aliases['files']: aliases['files'][path]=[]
 					if not _alias in aliases['files'][path]: aliases['files'][path].append(_alias)
+					#e)--> actual code
+					
+					#b)--> testing
+					# if _alias in aliases['aliases']:
+					# 	# _.pr('taco',c='r')
+					# 	if (list == type(aliases['aliases'][_alias]) and path in aliases['aliases'][_alias]) or (str == type(aliases['aliases'][_alias]) and path == aliases['aliases'][_alias]):
+					# 		_.e('works')
+					#e)--> testing
+
+
+
+
+
+
 
 			_.saveTable(aliases,'file-open-aliases.hash')
 		elif not paths:
 			for _alias in _aliases:
 				if _alias in aliases['aliases']:
-					paths.append( aliases['aliases'][_alias] )
+					if list == type(aliases['aliases'][_alias]):
+						for _al in aliases['aliases'][_alias]:
+							paths.append( _al )
+
+					elif str == type(aliases['aliases'][_alias]):
+						paths.append( aliases['aliases'][_alias] )
 
 
-
+	print(paths)
 	appReg=__.appReg
 	__.appReg=appReg
 	_.ad()

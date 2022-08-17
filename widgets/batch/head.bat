@@ -1,2 +1,2 @@
 @echo off 
-call p fileTail -head %*
+call p fileTail -head -f %*

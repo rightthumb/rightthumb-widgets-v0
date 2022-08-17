@@ -75,7 +75,7 @@ template.info(focus()); exec(  template.triggers()  ); _.l.sw.register( triggers
 def skim0(data):
     test=''
     for ch in data:
-        if ch in '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTU-_VWX.YZ:/':
+        if ch in '@0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTU-_VWX.YZ:/':
             test+=ch
         else:
             test+=' '

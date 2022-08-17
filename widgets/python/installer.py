@@ -3401,7 +3401,9 @@ if test -f "$once_file_print"; then
     rm $once_file_print
 fi
 
-
+if [[ ( "$PWD" == "/home/scott" && "$HOME" != "/home/scott" ) ]]; then
+    cd $HOME
+fi
 
             """
             # echo "alias rr='sudo su root'" >> ~/.bashrc

@@ -72,6 +72,7 @@ def appSwitches():
 	_.switches.register('PlusFile', '-pf,-pn,-plusfile')
 	_.switches.register('Ago-Create-Date', '-cd')
 	_.switches.register('PrintBytes', '-bytes')
+	_.switches.register('Disable-Intelligence', '-showall')
 	# _.switches.register('WOYCreatedDate', '-cwoy')
 
 
@@ -160,8 +161,10 @@ _.appInfo[focus()] = {
 	'columns': [
 						{ 'name': 'group', 'abbreviation': 'g', 'sort': 'bytes' },
 						{ 'name': 'path', 'abbreviation': 'p', 'sort': '' },
-						{ 'name': 'name', 'abbreviation': 'n', 'sort': '' },
-						{ 'name': 'folder', 'abbreviation': 'f', 'sort': '' },
+						{ 'name': 'name', 'abbreviation': 'n', 'sort': 'path' },
+						{ 'name': 'folder', 'abbreviation': 'f', 'sort': 'path' },
+						{ 'name': 'relative', 'abbreviation': 'r', 'sort': 'path' },
+						{ 'name': 'parent', 'abbreviation': 'pa,par,rent', 'sort': 'path' },
 						{ 'name': 'bytes', 'abbreviation': 'b', 'sort': '' },
 						{ 'name': 'size', 'abbreviation': 's', 'sort': 'bytes' },
 						{ 'name': 'size', 'abbreviation': 'size', 'sort': 'bytes' },
@@ -537,6 +540,11 @@ def whatIsIt(file):
 
 def getFolder(folder):
 
+	if not os.path.isdir(folder): return None
+
+	if not _.v.do_not_hide__pycache:
+		if '__pycache__' in folder.split(os.sep)[-1]: return None
+
 	if _.switches.isActive('Minus'):
 		if not _.showLine(folder):
 			return None
@@ -631,6 +639,9 @@ def process( path ):
 
 
 def addFile( path, hasData=False ):
+
+	if not _.v.do_not_hide__pycache and path.endswith('.pyc'): return None
+
 	global data
 	global i
 	global omit
@@ -838,6 +849,9 @@ def addFile( path, hasData=False ):
 			shouldAdd = True
 
 	if shouldAdd:
+		if not _.v.do_not_hide__pycache and record['path'].endswith('.pyc'): shouldAdd=False
+
+	if shouldAdd:
 
 		if _.switches.isActive('MovieTitle'):
 			record['movie'] = ''
@@ -864,6 +878,8 @@ def addFile( path, hasData=False ):
 				data.append(  _dir.fileInfo( path, sdate=__.sdate, meta=meta )  )
 
 def action():
+	_.v.do_not_hide__pycache = _.switches.isActive('Disable-Intelligence')
+	if 165 < list(os.get_terminal_size())[0] and not _.switches.isActive('Long'): _.switches.fieldSet( 'Long', 'active', True )
 	global data
 	# _.pr('_.isData()',_.isData())
 	# focus()
@@ -1163,19 +1179,20 @@ def action():
 							data[i][h] = _hash.file( record['path'], h=h )
 			# Cache FolderRefine Duplicate Hash mimeType MovieTitle
 			saveFile = {
-								'isLegacy': False,
-								'switches': {
-									'active': [],
-									'isActive': {},
-									'values': {},
-								},
+								'argv': sys.argv,
+								# 'switches': {
+								# 	'active': [],
+								# 	'isActive': {},
+								# 	'values': {},
+								# },
 								'folder': folder,
 								'folders': folderCount,
 								'files': fileCount,
 								'data': data,
+								'isLegacy': False,
 			}
 			
-			saveFile['switches'] = _.switches.records('dic_a-v')
+			# saveFile['switches'] = _.switches.records('dic_a-v')
 
 			_.payloadCache( saveFile )
 			

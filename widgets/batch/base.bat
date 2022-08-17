@@ -11,13 +11,28 @@ rem ###########################################################################
 rem ## {C3P0D40fAe8B} ##
 
 
-call m back --c    
+:#title) bookmarks are depreciated in %0
+:#t) 2022-08-16 09:01:00
+:#change) 
+:#after) changes in -copy.py
+:#after) modified sys.path in -copy.py
+:#change-backup) C:\Users\Scott\.rt\profile\backup\txt\1655565178.0501478-2022_05_18-14_20_35-base.bat
 
-call b py
 
+
+:#title) bookmarks are depreciated in %0
 call p -copy -subject base import -noprint
 
 %py%
 
-call b back
 
+
+rem #title) bookmarks are depreciated in %0
+rem #t) 2022-08-16 09:01:00
+rem #change) 
+rem #after) changes in -copy.py
+rem #after) modified sys.path in -copy.py
+rem #change-backup) C:\Users\Scott\.rt\profile\backup\txt\1655565178.0501478-2022_05_18-14_20_35-base.bat
+
+
+rem #title) bookmarks are depreciated in %0

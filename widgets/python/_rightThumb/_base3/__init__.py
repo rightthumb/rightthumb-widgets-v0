@@ -285,14 +285,23 @@ print_ed_group={}
 def print_(*args,p=None,c=None,pad=3,g=None,end=None,pvs=None,pv=None,json=None, dic=None, line=None):
 	if c == 'r' or c == 'random': c=random_color()
 
-	if pvs: pvs=None; pv=1;
+	# if pvs: pvs=None; pv=1;
 	if not dic and type(dic) == bool or ( type(dic) == int and dic == 1): printDicFields(args[0]); return None
 	try:
 		if not end is None and (type(end) == bool or type(end) == int) and end:   end='\r';
 		else:
 			if not end is None and not end == '\r':   end=None
 		if pvs and not p: return printVarColor_OLD(args[0])
-		if pvs: return printVarSimple(args[0])
+		
+		if pvs:
+			if type(args[0]) == str:
+				return printVarSimpleFake(args[0])
+				
+			try:
+				if type(args[0]) == dict or type(args[0]) == list: return printVarSimple(args[0])
+
+			except: return printVarSimpleFake(args[0])
+
 		if pv: return printVar(args[0])
 		if json: simplejson=__.imp('simplejson'); args[0]=simplejson.dumps(args[0], indent=4, sort_keys=False);
 		if not line is None and line:
@@ -403,7 +412,10 @@ def fos(folder=None,r=False,script=None,first=True):
 	return fo_fi
 
 
-def printt( table, cols=None, sort=None ):
+def printt( table, cols=None, sort=None,    c=None,s=None  ):
+	''' ( table, cols=None, sort=None,    c=None,s=None  ) '''
+	if not c is None: cols = c
+	if not s is None: sort = s
 	if not table: return None;
 	global switches
 	global tables
@@ -1186,10 +1198,10 @@ def reFormatSize( start ):
 
 ######################################################
 
-class dot:
-	def __init__( self ):
-		pass
-
+class Meta_Namespace():
+    def __init__( self ):
+        pass
+dot=Meta_Namespace
 __.tableLine = '‽'
 v = dot()
 vv = dot()
@@ -8000,6 +8012,8 @@ def _mfl(file):
 
 isFirst=True
 def myFileLocations( file, silent=False, currentBaseVersion=3 ):
+	if isWin and type(file) == str and '/' in file: file=file.replace('/',os.sep)
+	if isWin and type(file) == str and file.startswith('~'): file=_v.home+file[1:]
 	if __.isRequired_Pipe_or_File:
 		return file
 	# return file
@@ -8977,6 +8991,7 @@ def calculate_monthdelta(date1, date2):
 
 
 def showLine( string, plus = '', minus = '',plusOr = False, end=None,isSub=False, OR=None ):
+	'''( string, plus='', minus='', plusOr=False, end=None, isSub=False, OR=None )'''
 	# print_(plus)
 	# print_(string)
 	global switches
@@ -9395,6 +9410,7 @@ def getTableDB( theFile,     isDic=None, isList=None ):
 	if os.path.isfile(theFile): vv.opened_file_me[theFile] = os.path.getmtime( theFile );
 	simplejson = __.imp('simplejson')
 	theFile = _v.dbTables + _v.slash + theFile
+	# print(theFile)
 	if os.path.isfile(theFile):
 		if isTar.bz2(theFile) or isTar.gz(theFile):
 			global _tar
@@ -16266,7 +16282,7 @@ ciData = (
 			[';t',                 '\t' ],
 			
 			[ '[caret]',    '^' ]  )
-
+ci_spent=[]
 def ci(string):
 	#switchValueClean
 	global ciData
@@ -19136,9 +19152,15 @@ regImps = {}
 
 class regImp:
 
-	def __init__( self, focus, app, argvProcessForce=False, dirty=False ):
+	def __init__( self, focus=None, app=None, argvProcessForce=False, dirty=False, a=None, i=None ):
+		if not a is None: app=a
+		if not i is None: app=i
 		global regImps
 		global appInfo
+		if app is None:
+			e( 'class regImp', 'expected: _.regImp(__.appReg,app)  or _.regImp(focus(),app)' )
+
+		if focus is None: focus = __.appReg
 
 		regImps[focus] = {}
 
@@ -20721,4 +20743,6 @@ def fnak(*args, **kwargs):
 		command+='  '
 	command+=')'
 	return command
+
+# class: regImp
 

@@ -13,17 +13,11 @@
 import os
 import sys
 import time
-# import simplejson as json
-# from threading import Timer
-
-
 ##################################################
-# construct registration
-
 import _rightThumb._construct as __
 appDBA = __.clearFocus( __name__, __file__ )
-# appDBA = __name__
 __.appReg = appDBA
+
 def focus( parentApp='', childApp='', reg=True ):
 	global appDBA
 	f = __.appName( appDBA, parentApp, childApp )
@@ -31,42 +25,30 @@ def focus( parentApp='', childApp='', reg=True ):
 		__.appReg = f
 	return f
 __.registeredApps.append(focus())
-
-
 import _rightThumb._base3 as _
 _.load()
-
 ##################################################
-
 import _rightThumb._vars as _v
 import _rightThumb._string as _str
-
 ##################################################
-
 # from lxml import html
 # import requests
 # import cssselect
 # import sqlite3
-
 ##################################################
-
 
 def appSwitches():
 	pass
 	# _.switches.register('Input', '-i,-input','file.txt')
 	_.switches.register('Files', '-f,-file,-files','file.txt')
 	_.switches.register('NotSorted', '-notsorted')
-	_.switches.register('Unique', '-u,-unique')
+	_.switches.register('Unique', '-u,-unique',' use this switch ')
 	_.switches.register('LastFolder', '-last,-lastfolder')
 	_.switches.register('Validate', '-v,-validate')
 	_.switches.register('Report', '-r,-report')
 	_.switches.register('NoPrint', '-noprint')
 	_.switches.register('JustReturn', '-justreturn')
-
-
-
 _.autoBackupData = True
-
 
 _.appInfo[focus()] = {
 	'file': 'filePathPatterns.py',
@@ -101,9 +83,7 @@ _.appInfo[focus()] = {
 				       # 'this',
 				       # 'app',
 	],
-
 	}
-
 _.appData[focus()] = {
 	'start': __.startTime,
 	'uuid': '',
@@ -114,65 +94,44 @@ _.appData[focus()] = {
 				'table': {'sent': [], 'received': [] }, 
 	},
 	}
-
-# _.appInfo[focus()]['examples'].append('p thisApp -file file.txt')
-
+# _.appInfo[focus()]['examples'].append('p filePathPatterns -file file.txt')
 # _.appInfo[focus()]['columns'].append({'name': 'name', 'abbreviation': 'n'})
-
-
-
-
 
 def registerSwitches( argvProcessForce=False ):
 	global appDBA
 	if not __.appReg == appDBA and appDBA in __.appReg:
-
 		if not __name__ == '__main__':
 			_.argvProcess = argvProcessForce
 		else:
 			_.argvProcess = True
-
 		_.load()
+
 		_.appInfo[__.appReg] = _.appInfo[appDBA]
 		_.appData[__.appReg] = _.appData[appDBA]
 	__.constructRegistration(_.appInfo[__.appReg]['file'],__.appReg)
 	appSwitches()
-
 	_.myFileLocation_Print = False
 	_.switches.trigger('Files',_.myFileLocations)
 	# _.switches.trigger('Files',_.inRelevantFolder)
-	
-
 	# _.switches.trigger('Watched', _.txt2Date)
 	# _.switches.trigger('Input',_.formatColumns)
 	# _.switches.trigger('Franchise',_.triggerSpace)
-	
 	_.defaultScriptTriggers()
 	_.switches.process()
-
-
-
-
 if not __name__ == '__main__':
 	_.argvProcess = False
 else:
 	_.argvProcess = True
-
 registerSwitches()
-
-
 
 def fieldSet( switchName, switchField, switchValue, theFocus=False ):
 	if not type( theFocus ) == bool:
 		theFocus = theFocus
 	_.switches.fieldSet( switchName, switchField, switchValue, theFocus )
-
-
 _.appData[__.appReg]['pipe'] = False
 if __name__ == '__main__':
 	if not sys.stdin.isatty():
 		_.setPipeData( sys.stdin.readlines(), __.appReg )
-
 _.postLoad( __file__ )
 
 ########################################################################################
@@ -183,6 +142,7 @@ _.postLoad( __file__ )
 # p = _.getText( _v.pips, raw=True, clean=True ).split('\n')
 # os.system('"' + do + '"')
 # if os.path.isfile(item):
+
 ########################################################################################
 # START
 
@@ -191,7 +151,6 @@ def collectFolders( data ):
 	for folder in data:
 		if not folder in allFolders:
 			allFolders.append( folder )
-
 
 def fileInfo( path ):
 	folderList = []
@@ -207,8 +166,6 @@ def fileInfo( path ):
 			folderList.append( _v.slash.join( pTemp ) )
 			if i == 0:
 				last = pFolder
-
-
 	# last = parts[len(parts)-1]
 	collectFolders( folderList )
 	info = {
@@ -224,7 +181,6 @@ def fileInfo( path ):
 
 def folderInfo( folder ):
 	folderList = []
-
 	parts = folder.split( _v.slash )
 	folderList.append( folder )
 	pTemp = parts
@@ -235,8 +191,6 @@ def folderInfo( folder ):
 			folderList.append( _v.slash.join( pTemp ) )
 			if i == 0:
 				last = pFolder
-
-
 	# last = parts[len(parts)-1]
 	collectFolders( folderList )
 	info = {
@@ -246,7 +200,6 @@ def folderInfo( folder ):
 				'folderList' : folderList,
 	}
 	return info
-
 
 def theFolder( path ):
 	folderParts = path.split( _v.slash )
@@ -259,7 +212,6 @@ def lastFolderOne( path ):
 	folderParts = folderPath.split( _v.slash )
 	folderParts.reverse()
 	return folderParts[0]
-
 
 def uniqueData(setPipe=True):
 	data = []
@@ -291,9 +243,7 @@ def folderReport():
 			_.pr( _.switches.isActive('JustReturn') )
 			_.printVar( folderInfo(folder) )
 			sys.exit()
-
 		folderData.append( folderInfo(folder) )
-
 	allFoldersData = {}
 	for folder in allFolders:
 		allFoldersData[folder] = { 'omit': False, 'percent': 0, 'total': 0, 'isCount': 0, 'hasCount': 0, 'level': folder.count(_v.slash), 'folder': folder, 'info': folderInfo(folder) }
@@ -301,7 +251,6 @@ def folderReport():
 		folder = theFolder( path )
 		longest = 0
 		for aFolder in allFolders:
-
 			if aFolder.lower() == folder.lower():
 				allFoldersData[aFolder]['isCount']+=1
 			elif aFolder in folder:
@@ -313,10 +262,8 @@ def folderReport():
 		allFoldersData[folder]['percent'] = _.percentageDiffInt( allFoldersData[folder]['hasCount'], total )
 		allFoldersData[folder]['total'] = _.percentageDiffInt( allFoldersData[folder]['count'], total )
 		patternX[allFoldersData[folder]['total']] = []
-
 	for folder in allFoldersData.keys():
 		patternX[allFoldersData[folder]['total']].append( allFoldersData[folder] )
-
 	for folder in allFoldersData.keys():
 		omit = []
 		for record in patternX[ allFoldersData[folder]['total'] ]:
@@ -326,19 +273,12 @@ def folderReport():
 		for record in patternX[ allFoldersData[folder]['total'] ]:
 			if record['folder'] in omit:
 				allFoldersData[ record['folder'] ]['omit'] = True
-
-
-
-
 	report = []
-	
 	if len( _.switches.value( 'Report' ) ):
 		try:
 			totalThreshold = int( _.switches.value( 'Report' ) )
 		except Exception as e:
 			pass
-
-		
 	for folder in allFoldersData.keys():
 		if not allFoldersData[folder]['omit'] and allFoldersData[folder]['total'] > totalThreshold:
 			report.append( allFoldersData[folder] )
@@ -349,10 +289,7 @@ def folderReport():
 		_.pr()
 		_.pr( 'total:', _.addComma(total) )
 	return report
-		
 
-
-	
 def folderReportNew():
 	global allFolders
 	allFolders = []
@@ -366,10 +303,6 @@ def folderReportNew():
 		else:
 			isCount[ allFolders.index( folder ) ] += 1
 
-
-
-
-
 def action():
 	load()
 	# _.pr( _.appData[__.appReg]['pipe'] )
@@ -382,8 +315,6 @@ def action():
 			_.switches.fieldSet( 'NoPrint', 'active', True )
 			_.appData[__.appReg]['pipe'] = sorted(_.appData[__.appReg]['pipe'], key=lambda v: (v.upper(), v[0].islower()))
 			return folderReport()
-
-
 		if _.switches.isActive( 'NotSorted' ):
 			_.appData[__.appReg]['pipe'] = sorted(_.appData[__.appReg]['pipe'], key=lambda v: (v.upper(), v[0].islower()))
 		# _.pr( 'HERE' )
@@ -403,8 +334,6 @@ def action():
 			if shouldPrint:
 				_.pr( row )
 
-
-
 def load():
 	if _.switches.isActive('Files'):
 		tmpFiles = []
@@ -421,15 +350,9 @@ def load():
 				_.appData[__.appReg]['pipe'] = []
 				for row in _.switches.value('Files').split( ',' ):
 					_.appData[__.appReg]['pipe'].append( row )
-
 allFolders = []
 totalThreshold = 50
+
 ########################################################################################
 if __name__ == '__main__':
 	action()
-
-
-
-
-
-

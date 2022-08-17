@@ -61,6 +61,7 @@ def appSwitches():
 	_.switches.register('Search-For-Text-Exclude', '-not')
 	_.switches.register('Search-Print-Line', '-p,-print','all')
 	_.switches.register('Contains-IPs', '-ip','domains')
+	_.switches.register('Disable-Intelligence', '-showall')
 
 
 fse=False
@@ -294,8 +295,13 @@ def whatIsIt(file):
 
 
 def getFolder(folder,r=True):
-	folder=folder.replace(os.sep+os.sep,os.sep)
-	folder=folder.replace(os.sep+os.sep,os.sep)
+	while os.sep+os.sep in folder: folder=folder.replace(os.sep+os.sep,os.sep)
+
+	if not os.path.isdir(folder): return None
+
+	if not _.v.do_not_hide__pycache:
+		if '__pycache__' in folder.split(os.sep)[-1]: return None
+
 	# if not _.isWin:
 	#   for test in '/bin /boot /dev /lib /lib64 /lost+found /media /mnt /proc /srv /sys'.split(' '):
 	#       if folder.startswith(test+'/'):
@@ -581,6 +587,8 @@ def add(path,r=False):
 			if shouldAdd and _.switches.isActive('Encrypted') and not _.isCrypt(path): shouldAdd = False
 
 
+			if shouldAdd:
+				if not _.v.do_not_hide__pycache and path.endswith('.pyc'): shouldAdd=False
 
 			if shouldAdd:
 				iS+=1
@@ -659,6 +667,9 @@ def extensionsDatabank():
 					extensionList.append( x.lower() )
 
 def action():
+	_.v.do_not_hide__pycache = _.switches.isActive('Disable-Intelligence')
+
+
 	if __.isFiles:
 		_.v.show_full_path = True
 		if _.switches.isActive('Toggle-Relative-Path'):_.v.show_full_path = False

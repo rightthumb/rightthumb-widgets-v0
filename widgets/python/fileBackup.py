@@ -918,7 +918,19 @@ def action(path=None,flag=None,o=None):
 				theFile = theFile.replace('\r','')
 				while '\t\n' in theFile:
 					theFile = theFile.replace('\t\n','\n')
-					while ' \n' in theFile: theFile = theFile.replace(' \n','\n')
+				while ' \n' in theFile: theFile = theFile.replace(' \n','\n')
+				
+
+				#b) converting backticks to tildes
+					#method:~)--> while '\n```' in theFile: theFile = theFile.replace('\n```','\n~~~')
+					#epoch) 1660600468.2705994
+				theFile='\n'+theFile
+				while '\n```' in theFile: theFile = theFile.replace('\n```','\n~~~')
+				theFile=theFile[1:]
+					#e) converting backticks to tildes
+
+
+
 				# tF = theFile
 				if path.lower().endswith('.md'):
 					todo.append('\n___\n')

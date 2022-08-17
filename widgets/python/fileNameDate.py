@@ -308,7 +308,7 @@ def searchFolder( folder ):
 	for file in os.listdir(folder):
 		if _.showLine( file ):
 			if os.path.isfile( file ):
-				theFiles.append( os.path.abspath( folder + _v.slash + file ) )
+				theFiles.append( __.path( folder + _v.slash + file ) )
 		if _.switches.isActive( 'Recursive' ):
 			if os.path.isdir( file ):
 				# searchFolder( folder + _v.slash + file )
@@ -477,7 +477,7 @@ def action():
 						info['original'] = ''
 
 
-					theID = findRecord_path_ID( os.path.abspath( row ) )
+					theID = findRecord_path_ID( __.path( row ) )
 					if type( theID ) == bool:
 						pass
 						# _.pr( 'Error:', row )
@@ -557,7 +557,7 @@ def action():
 						status = True
 					except Exception as e:
 						status = False
-					log['path'].append( os.path.abspath( record['folder'] +_v.slash+ log['new'] ) )
+					log['path'].append( __.path( record['folder'] +_v.slash+ log['new'] ) )
 					# _.pr( log['original'] )
 					if len( log['path']) == 2 and not log['path'][0] == log['path'][1]:
 						data.append( log )
