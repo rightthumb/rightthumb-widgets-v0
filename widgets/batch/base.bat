@@ -21,7 +21,8 @@ rem ## {C3P0D40fAe8B} ##
 
 
 :#title) bookmarks are depreciated in %0
-call p -copy -subject base import -noprint
+rem call p -copy -subject base import -noprint
+call p -copy -subject base micro -noprint
 
 %py%
 

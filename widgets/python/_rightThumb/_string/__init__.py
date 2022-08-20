@@ -1,5 +1,5 @@
 import _rightThumb._construct as __
-
+import sys
 # Column
 
 # ## {R2D2919B742E} ##
@@ -532,7 +532,6 @@ def cleanAll(string,rWhat,rWith):
         else:
             done=True
     return string
-import sys
 def cleanSpecial(line,special1=False):
     global slash
     line = str(line)
@@ -1352,7 +1351,10 @@ def sh2(string):
 
     return string
 
-def sh(string):
+def sh(string='f928ca8e68c6'):
+    if string=='f928ca8e68c6':
+        import _rightThumb._base3 as _
+        _.e("_str.do('sh')",'missing data')
     try:
         if os.path.isfile(string): string=__.getText(string,raw=True);
     except Exception as e: pass;

@@ -877,9 +877,14 @@ def addFile( path, hasData=False ):
 			else:
 				data.append(  _dir.fileInfo( path, sdate=__.sdate, meta=meta )  )
 
+# print(list(os.get_terminal_size())[0])
+# sys.exit()
+
 def action():
 	_.v.do_not_hide__pycache = _.switches.isActive('Disable-Intelligence')
-	if 165 < list(os.get_terminal_size())[0] and not _.switches.isActive('Long'): _.switches.fieldSet( 'Long', 'active', True )
+	try:
+		if 165 < list(os.get_terminal_size())[0] and not _.switches.isActive('Long'): _.switches.fieldSet( 'Long', 'active', True )
+	except Exception as e: _.switches.fieldSet( 'Long', 'active', True )
 	global data
 	# _.pr('_.isData()',_.isData())
 	# focus()

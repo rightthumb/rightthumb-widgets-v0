@@ -36,6 +36,7 @@ def appSwitches():
     _.switches.register( 'Index', '-index' )
     _.switches.register( 'Search', '-Search' )
     _.switches.register( 'Files', '-f,-file,-files','file.txt', description='Files' )
+    _.switches.register( 'Scan-for-Fields', '-field,-fields,-ld,-lds' )
     ### EXAMPLE: END
 
 ### EXAMPLE: START
@@ -172,7 +173,7 @@ def fieldSet( switchName, switchField, switchValue, theFocus=False ):
 
 if __name__ == '__main__':
     if not sys.stdin.isatty():
-        _.setPipeData( sys.stdin.readlines(), __.appReg, clean=True )
+        _.setPipeData( sys.stdin.readlines(), __.appReg, clean=False )
 
 
 _.postLoad( __file__ )
@@ -204,11 +205,44 @@ _.postLoad( __file__ )
 ########################################################################################
 # START
 
-
+def clean(text):
+    while '  ' in text: text=text.replace('  ',' ')
+    while text.startswith(' '): text[1:]
+    while text.endswith(' '): text[:-1]
+    return text
 
 def action():
-    for file in _.switches.values('Files'):
-        data = _.getTable2( file )
+    queue=[]
+    if _.switches.isActive('Files'):
+        for file in _.switches.values('Files'): queue.append(_.getTable2( file ))
+    elif _.isData():
+        os=__.imp('os.path.isfile')
+        isDs='\n'.join(_.isData())
+        isDatais='text'
+
+        for ch in isDs:
+            if not ch in ' \t\n\r':
+                if ch in '{[':
+                    isDatais='json'
+                    break
+        if isDatais=='json':
+            simplejson=__.imp('simplejson')
+            queue.append(simplejson.loads(isDs))
+        elif isDatais=='text':
+            for path in _.isData():
+                path=clean(path)
+                if path and os.path.isfile(path): queue.append(_.getTable2( path ))
+
+
+
+    for data in queue:
+        if _.switches.isActive('Scan-for-Fields'):
+            lds=_.switches.values('Scan-for-Fields')
+            for field_value in lds: _.pr( field_value, c='cyan' )
+            if len(lds) == 1: lds=lds[0]
+            for value in _.dicf(data,f=lds):
+                if _.showLine(value): _.pr(value)
+            return None
 
         if _.switches.isActive('Index'):
             _.switches.fieldSet( 'Long', 'active', True )

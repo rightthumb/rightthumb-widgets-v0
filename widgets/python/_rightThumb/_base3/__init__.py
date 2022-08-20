@@ -895,8 +895,107 @@ def get_supporting_line(data,i,b=';',rev={}):
 		
 	return pre+data[i:ii]
 
+def idlen(_len):
+	if type(_len)==str: _len=len(_len)
+	if not _len: return ''
+	result=''
+	while not len(result) > _len:
+		result+=genUUID3()
+	return result[0:_len]
 
-def vindex(  code, i=0, esc='\\', n='', v=True,r=False,both=True, sort=True, isArg=False ):
+def strip_comments(data,comment='#'):
+	dex=qindex(data)
+	inde={}
+	for o in dex:
+		c=dex[o]+1
+		if not data[o:c] in inde:
+			inde[data[o:c]]=idlen(len(data[o:c]))
+		data = data[0:o] + inde[data[o:c]] + data[c: ]
+	datal=data.split('\n')
+	for i,line in enumerate(datal):
+		if comment in line:
+			par=line.split(comment)
+			line=par[0]
+			par.pop(0)
+			datal[i]=line.split(comment)[0]
+	data='\n'.join(datal)
+
+	for quo in inde:
+		data=data.replace(inde[quo],quo)
+
+	return data
+
+def ephemeral_strip(data,comment='#',script=None):
+	comments={}
+
+	dex=qindex(data)
+	inde={}
+	for o in dex:
+		c=dex[o]+1
+		if not data[o:c] in inde:
+			inde[data[o:c]]=idlen(len(data[o:c]))
+		data = data[0:o] + inde[data[o:c]] + data[c: ]
+	datal=data.split('\n')
+	for i,line in enumerate(datal):
+		if comment in line:
+			par=line.split(comment)
+			line=par[0]
+			par.pop(0)
+			comments[i]=comment+comment.join(par)
+			datal[i]=line.split(comment)[0]
+	data='\n'.join(datal)
+	data=_str.do('sh',data)
+	#n)--> stuff stripped out
+
+	try: data=script(data)
+	except Exception as e: pass
+
+	datal=data.split('\n')
+	#n)--> adding stuff back in
+	for i,line in enumerate(datal):
+		if i in comments: datal[i]+=comments[i]
+
+	for quo in inde:
+		data=data.replace(inde[quo],quo)
+
+	return data
+
+def qindex( data, comment='#' ):
+	''' find ids of all quotes including triplet avoiding comments 
+
+	def print_all_quotes():
+		data = '\n'.join(_.isData())
+		dex=_.qindex(data)
+		print(dex)
+		for o in dex:
+			c=dex[o]+1
+			_.pr( data[o:c] )
+	'''
+	dex={}
+	def qtest(data,i):
+		try: data[i]; return True;
+		except: return False
+		return False
+	i=0
+	while qtest(data,i):
+		c=data[i]
+		if c == comment:
+			eof=False
+			while not data[i] == '\n':
+				i+=1; exec("try:data[i]\nexcept:eof=True");
+				if eof: i-=1; break;
+		if c in '`"'+"'":
+			vi=vindex(data,i,comment=comment)
+			if i in vi:
+				dex[i]=vi[i]
+				i=vi[i]+1
+			else: i+=1
+		else: i+=1
+	return dex
+
+
+def vindex(  code, i=0, esc='\\', n='', v=True,r=False,both=True, sort=True, isArg=False, comment='//' ):
+	ari=i
 	if isArg: a_='-+'
 	else: a_=''
 	def _sort(sort,dic):
@@ -1007,32 +1106,50 @@ def vindex(  code, i=0, esc='\\', n='', v=True,r=False,both=True, sort=True, isA
 						index[ii] = i
 					i=ii
 				elif not n and c3 == '"""':
-					s=vindex(code,i+3,esc,n='"""',v=0,isArg=isArg)
-					index[i] = s
-					if both:
-						index[s] = i
-					i=s
+					ss=vindex(code,i+3,esc,n='"""',v=0,isArg=isArg,comment=comment)
+					if type(ss)==int or i in ss:
+						if type(ss)==int: s=ss
+						else: s=ss[i]
+						index[i] = s
+						if both:
+							index[s] = i
+						i=s+2
 				elif not n and c3 == "'''":
-					s=vindex(code,i+3,esc,n="'''",v=0,isArg=isArg)
-					index[i] = s
-					if both:
-						index[s] = i
+					ss=vindex(code,i+3,esc,n="'''",v=0,isArg=isArg,comment=comment)
+					# if i in ss: s=ss[i]
+					if type(ss)==int or i in ss:
+						if type(ss)==int: s=ss
+						else: s=ss[i]
+						index[i] = s
+						if both:
+							index[s] = i
+						i=s+2
 				elif not n and c == "'":
-					s=vindex(code,i+1,esc,n="'",v=0,isArg=isArg)
-					index[i] = s
-					if both:
-						index[s] = i
-					i=s
+					ss=vindex(code,i+1,esc,n="'",v=0,isArg=isArg,comment=comment)
+					if type(ss)==int or i in ss:
+						if type(ss)==int: s=ss
+						else: s=ss[i]
+						index[i] = s
+						if both:
+							# print(index,s,i,type(index),c)
+							index[s] = i
+						i=s
+					# else: pr('err',i,ss,c='yellow')
 				elif not n and c == '"':
-					s=vindex(code,i+1,esc,n='"',v=0,isArg=isArg)
-					index[i] = s
-					if both:
-						index[s] = i
-					i = s
+					ss=vindex(code,i+1,esc,n='"',v=0,isArg=isArg,comment=comment)
+					if type(ss)==int or i in ss:
+						if type(ss)==int: s=ss
+						else: s=ss[i]
+						index[i] = s
+						if both:
+							index[s] = i
+						i = s
 				elif not n and c2 == '/*':
-					i = vindex(code,i+2,esc,n='*/',v=0,isArg=isArg)
-				elif not n and c2 == '//':
-					i = vindex(code,i+2,esc,n='\n',v=0,isArg=isArg)+1
+					i = vindex(code,i+2,esc,n='*/',v=0,isArg=isArg,comment=comment)
+				elif not n and len(comment)==1 and c == comment and not code[ari] in '`"'+"'":
+					i = vindex(code,i+1,esc,n='\n',v=0,isArg=isArg,comment=comment)+1
+				elif not n and len(comment)==2 and c2 == comment and not code[ari] in '`"'+"'":
+					i = vindex(code,i+2,esc,n='\n',v=0,isArg=isArg,comment=comment)+1
 
 
 				elif not n and c == '{':
@@ -1199,8 +1316,8 @@ def reFormatSize( start ):
 ######################################################
 
 class Meta_Namespace():
-    def __init__( self ):
-        pass
+	def __init__( self ):
+		pass
 dot=Meta_Namespace
 __.tableLine = '‽'
 v = dot()
@@ -1532,6 +1649,7 @@ def isDate( theDate=None, record={}, tz=None, q=True, f=None,w=None,what=None ):
 		if f=='dow': return _dir.getDOWromEpochText( epoch );
 		if f=='dow2': return _dow_[_dir.getDOWromEpochText( epoch )];
 		if f=='tz': return local_tz;
+		if f=='fo': return day(epoch);
 		if f in 'crypt-date crypt-time crypt-epoch appID app crypt-pass'.split(' '):
 			try:
 				import _rightThumb._nID as _nID
@@ -1674,7 +1792,7 @@ def isDate( theDate=None, record={}, tz=None, q=True, f=None,w=None,what=None ):
 	if type(epoch) == str:
 		epoch = autoDate(epoch.replace('z',''))
 
-	todo='ago ago-dic ago-txt epoch ordinal text-date text-time text-datetime sdate strip stript stripa date time fdate fdatea month year woy woy2 dow dow2 days tz iso'
+	todo='ago ago-dic ago-txt epoch ordinal text-date text-time text-datetime sdate strip stript stripa date time fdate fdatea month year woy woy2 dow dow2 days tz iso fo'
 
 	for k in todo.split(' '):
 		record[k]=isDate(epoch,f=k)
@@ -4889,6 +5007,59 @@ def textClean( txt ):
 		txt = _str.cleanBE( txt, '\n' )
 	return txt
 
+def dicf(obj, seen=None, f=None):
+	'Recursively scan for dic fields'
+	global dicf_payload
+	dicf_payload=[]
+	dicf_()
+	return dicf_payload
+
+def dicf_(obj, seen=None, f=None):
+	'Recursively scan for dic fields'
+	global dicf_payload
+	if f is None: e('dicf_',"expected: _.indic(obj,f='field')")
+
+
+	# return 0
+	if obj is None:
+		return 0
+	
+	# function source documentation:
+	#   searched for: python how much memory usage of list of dict
+	#   https://goshippo.com/blog/measure-real-size-any-python-object/
+
+	size = sys.getsizeof(obj)
+	if seen is None:
+		seen = set()
+	obj_id = id(obj)
+	if obj_id in seen:
+		return 0
+	# Important mark as seen *before* entering recursion to gracefully handle
+	# self-referential objects
+	seen.add(obj_id)
+	if isinstance(obj, dict):
+		if type(f) == str:
+			for ii,k in enumerate(obj.keys()):
+				if k.lower() == f.lower():
+					v=list(obj.values())[ii]
+					dicf_payload.append(v)
+					# if not v in dicf_payload: dicf_payload.append(v)
+		elif type(f) == list:
+			for ii,k in enumerate(obj.keys()):
+				for ff in f:
+					if k.lower() == ff.lower():
+						v=list(obj.values())[ii]
+						dicf_payload.append(v)
+						# if not v in dicf_payload: dicf_payload.append(v)
+
+		size += sum([dicf_(v, seen, f) for v in obj.values()])
+		size += sum([dicf_(k, seen, f) for k in obj.keys()])
+	elif hasattr(obj, '__dict__'):
+		size += dicf_(obj.__dict__, seen, f)
+	elif hasattr(obj, '__iter__') and not isinstance(obj, (str, bytes, bytearray)):
+		size += sum([dicf_(i, seen, f) for i in obj])
+	return size
+
 def get_size(obj, seen=None):
 	'Recursively finds size of objects'
 	# return 0
@@ -7074,8 +7245,9 @@ def postLoad( file, epoch=0, theFocus=False ):
 		releaseAcquiredData( appDBA, theFocus )
 
 
-
+raq_err=True
 def releaseAcquiredData( appDBA, theFocus, payload=None ):
+	global raq_err
 	l_registerSwitches_vars()
 	if appDBA == '__init__':
 		return None
@@ -7124,7 +7296,9 @@ def releaseAcquiredData( appDBA, theFocus, payload=None ):
 	# if not autoBackupData:
 	# _v.mkdir( __.path(log,pop=True) )
 	_v.mkdir( log, isFile=True )
-	saveTable2( info, log )
+	try: saveTable2( info, log )
+	except:
+		if raq_err: pr('d8f3',c='red')
 	# print(log)
 	# print(info)
 	# print(log)
@@ -8458,6 +8632,9 @@ def uuidEpoc( uuid, f='iso' ):
 		d=int(uuid.split('epoc')[1][:10])
 		return _.isDate( d, f=f)
 	return None
+
+def genUUID3(): return genUUID()[1:-1].replace('-','')
+def genUUID2(): return genUUID()[1:-1]
 
 def genUUID( project='', label='', uniqueTimestamp=False, note=None, r=None, e=None, n=None, c=False, epoch=None,    small=None, t=None, tiny=None, focus=None, save=None ):
 	if focus is None: focus=__.appReg
@@ -16247,6 +16424,7 @@ ciData = (
 			[ ";'",         '"' ],
 			[ ';q;',        '"' ],
 			[ '"\'"',       "'" ],
+			[ ';sq',       "'" ],
 			[ 'null00',     '"",' ],
 			[ '"\'", "\'"', "','" ],
 
@@ -19297,7 +19475,17 @@ class regImp:
 		return result
 
 
-	def do( self, func, arg=False, focusPop=True ):
+	# def do( self, func, arg=False, focusPop=True ):
+	def do(self, *args, **kwargs):
+		focusPop=True
+		args=list(args)
+		func=args.pop(0)
+		_kwargs={}
+		for k in kwargs:
+			if k == 'focusPop': focusPop=kwargs[k]
+			else: _kwargs[k]=kwargs[k]
+
+		
 
 		__.appReg = self.focus
 
@@ -19306,14 +19494,17 @@ class regImp:
 		else:
 			theFunction = func
 
-		if type( arg ) == bool:
-			result = theFunction()
-		elif type( arg ) == dict:
-			result = theFunction(**arg)
-		elif type( arg ) == list:
-			result = theFunction(*arg)
-		else:
-			result = theFunction(arg)
+		result = 'theFunction'+fak(args,kwargs)
+
+
+		# if type( arg ) == bool:
+		# 	result = theFunction()
+		# elif type( arg ) == dict:
+		# 	result = theFunction(**arg)
+		# elif type( arg ) == list:
+		# 	result = theFunction(*arg)
+		# else:
+		# 	result = theFunction(arg)
 
 		
 
@@ -20305,6 +20496,15 @@ def ad(path=None,label='ad'):
 		sub=__.path(cho,file=True)
 	ad=getText( cho , raw=True )
 	ad=ad.replace('\r','')
+
+	if '#title)' in ad:
+		#title)
+		ad2=[];_adGO=False;
+		for line in ad.split('\n'):
+			if '#title)' in line: _adGO=True
+			if _adGO: ad2.append(line)
+		ad='\n'.join(ad2)
+
 	def _cl(ad):
 		ad=_str.do('be',ad,'\n')
 		ad=_str.do('be',ad,' ')
@@ -20449,12 +20649,17 @@ def waiting(sec,p=True):
 			time.sleep(1)
 			sec-=1
 		pr( '', end=1 )
-def day(epoch=None):
+def day(epoch=None,sep=None,end=None, e=None):
+	if end == None and e == None: e=True
+	if not end == None: e=end
+	if sep is None: sep=os.sep
 	if  epoch is None: epoch = time.time()
+
 	year  = isDate(epoch,f='year')
 	woy   = isDate(epoch,f='woy').split('.')[1]
 	date  = isDate(epoch,f='date')[len('2022-'):]
-	today = str(year)+os.sep+woy+os.sep+date+os.sep
+	today = str(year)+sep+woy+sep+date
+	if e: today += sep
 	return today
 
 def file_len(filename):
@@ -20715,11 +20920,15 @@ def pipe_surfing():
 	return False
 
 	
-def fnak(*args, **kwargs):
+def fak(*args, **kwargs):
 	''' 
-		text fn args kwargs,
-		(  args[0]  ,  fi=kwargs['fi']  )
 		code generator
+			eval function args kwargs
+
+				value = eval('function'+_.fak(args,kwargs))
+		
+					(  args[0], args[1], args[2]  ,  fi=kwargs['fi'],foo=kwargs['foo']  )
+
 	'''
 	function=''
 	if kwargs:
@@ -20744,5 +20953,26 @@ def fnak(*args, **kwargs):
 	command+=')'
 	return command
 
-# class: regImp
+def osvardump():
+	varTXT=''
+	subprocess=__.imp('subprocess')
+	if isWin: varTXT= subprocess.getoutput('set')
+	else: varTXT= subprocess.getoutput('printenv')
+	return varTXT
 
+def osvar(var=None,val=None):
+	if var is None: return osvardump()
+	if val is None:
+		try: return os.environ[var]
+		except: return ''
+	try:
+		os.environ[var]=val
+		return True
+	except: return False
+		
+
+	# printenv
+	# os.environ['USERPROFILE']
+
+imp=regImp
+# class regImp:

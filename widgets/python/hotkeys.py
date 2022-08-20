@@ -1,13 +1,13 @@
 #!/usr/bin/python3
 hotkeys='''
- **      **            **   **                             
-/**     /**           /**  /**              **   **        
+ **      **            **   **
+/**     /**           /**  /**              **   **
 /**     /**  ******  ******/**  **  *****  //** **   ******
-/********** **////**///**/ /** **  **///**  //***   **//// 
-/**//////**/**   /**  /**  /****  /*******   /**   //***** 
+/********** **////**///**/ /** **  **///**  //***   **////
+/**//////**/**   /**  /**  /****  /*******   /**   //*****
 /**     /**/**   /**  /**  /**/** /**////    **     /////**
-/**     /**//******   //** /**//**//******  **      ****** 
-//      //  //////     //  //  //  //////  //      //////  
+/**     /**//******   //** /**//**//******  **      ******
+//      //  //////     //  //  //  //////  //      //////
 '''
 # ## {R2D2919B742E} ##
 # ###########################################################################
@@ -34,7 +34,7 @@ __.registeredApps.append( focus() )
 import _rightThumb._base3 as _
 _.load()
 ##################################################
-banner=_.Banner(hotkeys); 
+banner=_.Banner(hotkeys);
 goss=banner.goss
 goss('-\t search hotkeys with the hk command')
 goss('-\t\t hk space')
@@ -72,18 +72,18 @@ def appSwitches():
 	_.switches.register( 'Key-search', '-k,-key,-keys,?k,?keys' )
 
 #   finds the file in probable locations
-#   and 
+#   and
 #       if  _.autoBackupData = True
 #       and __.releaseAcquiredData = True
 #           GET EPOCH FROM: hosts/hostname/logs/apps/execution_receipt-app_name-epoch.json
 #       you can run apps on usb at a clients office
-#           when you get home run: p app -loadepoch epoch 
+#           when you get home run: p app -loadepoch epoch
 #               backed up
 #                   pipe
 #                   files
 #                   tables
 _.autoBackupData = __.autoCreationConfiguration['backup']
-__.releaseAcquiredData = __.autoCreationConfiguration['logs'] 
+__.releaseAcquiredData = __.autoCreationConfiguration['logs']
 __.myFileLocations_SKIP_VALIDATION = False
 __.isRequired_Pipe = False
 __.isRequired_Pipe_or_File = False
@@ -148,7 +148,7 @@ _.appData[focus()] = {
 		'pipe': False,
 		'data': {
 					'field': {'sent': [], 'received': [] }, # { 'label': '', 'context': [],  }
-					'table': {'sent': [], 'received': [] }, 
+					'table': {'sent': [], 'received': [] },
 		},
 	}
 
@@ -175,8 +175,8 @@ def registerSwitches( argvProcessForce=False ):
 	_.switches.trigger( 'URL', _.urlTrigger )
 	_.switches.trigger( 'Ago', _.timeAgo )
 	_.switches.trigger( 'Duration', _.timeFuture )
-	# _.switches.trigger( 'Files',_.inRelevantFolder )  
-	
+	# _.switches.trigger( 'Files',_.inRelevantFolder )
+
 	_.defaultScriptTriggers()
 	_.switches.process()
 
@@ -253,7 +253,7 @@ def py_space_fix_MF(xFiles):
 	lines = []
 	for line in xFiles.split('\n'):
 		cl_test=line.replace(' ','').replace('\r','').replace('\n','').replace('\t','')
-		
+
 		for rel_str in add_line_before:
 			if cl_test.startswith(rel_str.replace(' ','')): lines.append('')
 		if cl_test.startswith('def') and cl_test.endswith('):'): lines.append('')
@@ -281,7 +281,7 @@ class HOTKEYS:
 	def __init__( self ):
 		pass
 
-			
+
 
 	def release_key( self, key ):
 		global post_do
@@ -311,7 +311,7 @@ class HOTKEYS:
 
 				keyboard.press(Key.esc)
 				keyboard.release(Key.esc)
-			
+
 				keyboard.press(Key.esc)
 				keyboard.release(Key.esc)
 
@@ -324,7 +324,7 @@ class HOTKEYS:
 			_.pr(k)
 			exec(do)
 			# beepy.simple_beep2()
-		 
+
 	def process_keystroke( self, key ):
 		global post_do
 		global key_set
@@ -366,7 +366,7 @@ class HOTKEYS:
 		for k in table:
 			good=True
 			count=0
-		
+
 			for kk in key_set:
 				found=False
 				for i,t in enumerate(table[k]['test']):
@@ -415,7 +415,7 @@ class HOTKEYS:
 				break
 
 		# process history
-			
+
 		for k in table:
 			good=True
 			count=0
@@ -463,7 +463,7 @@ class HOTKEYS:
 # class Hotkeys:END
 
 def _pad(var): return ' '+str(var)+' '
-		
+
 
 class BEEPS:
 	def __init__( self ):
@@ -538,32 +538,221 @@ class BEEPS:
 
 class CLIP:
 
+	# def browser_f12(self,code):
+
+	def browser_f12_gen_md_link(self):
+		global keyboard
+		_copy = _.regImp( __.appReg, '-copy' )
+		_copy.imp.dirty=True
+		_paste = _.regImp( __.appReg, '-paste' )
+		_paste.imp.dirty=True
+		# Subject
+		_.pr('NEED TO ADD COOL STUFF HERE',c='Background.red')
+		_copy.imp.copy( "copy('['+document.title+']('+window.location.href+')')", p=0 )
+		keyboard.press(Key.f12)
+		keyboard.release(Key.f12)
+		time.sleep(.7)
+		with keyboard.pressed(Key.ctrl):
+			keyboard.press('`')
+			keyboard.release('`')
+		time.sleep(.2)
+		with keyboard.pressed(Key.ctrl):
+			keyboard.press('v')
+			keyboard.release('v')
+		time.sleep(.7)
+		keyboard.press(Key.enter)
+		keyboard.release(Key.enter)
+		keyboard.press(Key.enter)
+		keyboard.release(Key.enter)
+		time.sleep(.7)
+		keyboard.press(Key.f12)
+		keyboard.release(Key.f12)
+
+
+	def browser_f12_tooljs_table(self):
+		tooljs='D:\\websites\\domains\\eyeformeta.com\\public_html\\tools\\tool.js'
+		if not os.path.isfile(tooljs):
+			_.pr('missing:',tooljs,c='red')
+			return None
+		global keyboard
+		_copy = _.regImp( __.appReg, '-copy' )
+		# _copy.imp.dirty=True
+		# _paste = _.regImp( __.appReg, '-paste' )
+		# _paste.imp.dirty=True
+		inject='''
+hackTool.hack.instructions = [
+    {
+        "name": "label",
+        "location": "table",
+        "type": "table",
+        "settings": { "labels": "h2" }
+    }
+]
+hackTool.autoHack();
+copy(  hackTool.payload.label  )
+'''
+
+		code=_.getText(tooljs,raw=True)+"\n\n"+inject
+		# print(code)
+		_copy.imp.copy( code, p=0 )
+		keyboard.press(Key.f12)
+		keyboard.release(Key.f12)
+		time.sleep(1)
+		with keyboard.pressed(Key.ctrl):
+			keyboard.press('`')
+			keyboard.release('`')
+		time.sleep(.2)
+		with keyboard.pressed(Key.ctrl):
+			keyboard.press('v')
+			keyboard.release('v')
+		time.sleep(.5)
+		keyboard.press(Key.enter)
+		keyboard.release(Key.enter)
+		keyboard.press(Key.enter)
+		keyboard.release(Key.enter)
+		time.sleep(.7)
+		keyboard.press(Key.f12)
+		keyboard.release(Key.f12)
+
+
+
+	def browser_f12_tooljs_table0(self):
+		tooljs='D:\\websites\\domains\\eyeformeta.com\\public_html\\tools\\tool.js'
+		if not os.path.isfile(tooljs):
+			_.pr('missing:',tooljs,c='red')
+			return None
+		global keyboard
+		_copy = _.regImp( __.appReg, '-copy' )
+		# _copy.imp.dirty=True
+		_paste = _.regImp( __.appReg, '-paste' )
+		# _paste.imp.dirty=True
+		inject='''
+hackTool.hack.instructions = [
+    {
+        "name": "label",
+        "location": "table",
+        "type": "table",
+        "settings": { }
+    }
+]
+hackTool.autoHack();
+copy(  hackTool.payload.label  )
+'''
+		pa=_paste.imp.paste()
+		pax=True
+		if not pa: pax=False
+		if '\n' in pa: pax=False
+		if ' ' in pa and not '.' in pa and not '#' in pa: pax=False
+		if pax:
+			inject=inject.replace('ELEMENT',pa)
+		else:
+			inject=inject.replace('ELEMENT','pre')
+		code=_.getText(tooljs,raw=True)+"\n\n"+inject
+		# print(code)
+		_copy.imp.copy( code, p=0 )
+		keyboard.press(Key.f12)
+		keyboard.release(Key.f12)
+		time.sleep(1)
+		with keyboard.pressed(Key.ctrl):
+			keyboard.press('`')
+			keyboard.release('`')
+		time.sleep(.2)
+		with keyboard.pressed(Key.ctrl):
+			keyboard.press('v')
+			keyboard.release('v')
+		time.sleep(.7)
+		keyboard.press(Key.enter)
+		keyboard.release(Key.enter)
+		keyboard.press(Key.enter)
+		keyboard.release(Key.enter)
+		time.sleep(.7)
+		keyboard.press(Key.f12)
+		keyboard.release(Key.f12)
+
+
+
+	def browser_f12_tooljs_text(self):
+		tooljs='D:\\websites\\domains\\eyeformeta.com\\public_html\\tools\\tool.js'
+		if not os.path.isfile(tooljs):
+			_.pr('missing:',tooljs,c='red')
+			return None
+		global keyboard
+		_copy = _.regImp( __.appReg, '-copy' )
+		# _copy.imp.dirty=True
+		_paste = _.regImp( __.appReg, '-paste' )
+		# _paste.imp.dirty=True
+		inject='''
+hackTool.hack.instructions = [
+    {
+        "name": "label",
+        "location": "ELEMENT",
+        "type": "list",
+        "settings": { "convert": "text" }
+    }
+]
+hackTool.autoHack();
+copy(  hackTool.payload.label  )
+'''
+		pa=_paste.imp.paste()
+		pax=True
+		if not pa: pax=False
+		if '\n' in pa: pax=False
+		if ' ' in pa and not '.' in pa and not '#' in pa: pax=False
+		if pax:
+			inject=inject.replace('ELEMENT',pa)
+		else:
+			inject=inject.replace('ELEMENT','pre')
+		code=_.getText(tooljs,raw=True)+"\n\n"+inject
+		# print(code)
+		_copy.imp.copy( code, p=0 )
+		keyboard.press(Key.f12)
+		keyboard.release(Key.f12)
+		time.sleep(1)
+		with keyboard.pressed(Key.ctrl):
+			keyboard.press('`')
+			keyboard.release('`')
+		time.sleep(.2)
+		with keyboard.pressed(Key.ctrl):
+			keyboard.press('v')
+			keyboard.release('v')
+		time.sleep(.5)
+		keyboard.press(Key.enter)
+		keyboard.release(Key.enter)
+		time.sleep(.7)
+		keyboard.press(Key.f12)
+		keyboard.release(Key.f12)
+
+
+
 
 	def test_py(self):
 		_copy = _.regImp( __.appReg, '-copy' )
+		_copy.imp.dirty=True
 		_paste = _.regImp( __.appReg, '-paste' )
+		_paste.imp.dirty=True
 		data  = _paste.imp.paste()
-		data = _str.do('sh')
+		data = _.strip_comments(data)
+		# _.pr(0)
+		# print(data)
+		datal = data.split('\n')
+		data = '\n'.join(datal)
+		# _.pr(line=1,c='r')
+		data = _.ephemeral_strip(data)
 		data = _str.do('dup',data,'\n')
-		data = _str.do('be',data,'\n')
+		while '\t' in data: data=data.replace('\t','    ')
 		datal = data.split('\n')
 		closest = 9999
-
-		def _0sp():
-			for ch in line:
-				if ch == ' ': _sp+=1
-
 		for i,line in enumerate(datal):
 			_sp=len(line) - len(line.lstrip())
 			if _sp == 0: closest=0
 			if _sp < closest: closest=_sp
-
+		# print('closest',closest)
 		if not _pad(closest) in ' 9999 0 ':
 			for i,line in enumerate(datal):
 				datal[i] = line[closest:]
-
 		data = '\n'.join(datal)
-		# data = _str.do('dup',data,'\n')
+		# print(data)
+		# _.pr(line=1,c='r')
 		_copy.imp.copy( data, p=0 )
 
 	def dup_space(self):
@@ -600,7 +789,7 @@ class CLIP:
 		# _paste = _.regImp( __.appReg, '-paste' )
 		# data  = _paste.imp.paste()
 		# data = cleaner(data,1)
-		
+
 		# # result.reverse()
 		# # _copy.imp.copy(  '\n'.join(result)  , p=0 )
 
@@ -613,7 +802,7 @@ class CLIP:
 		_paste = _.regImp( __.appReg, '-paste' )
 		data  = _paste.imp.paste()
 		data = cleaner(data,1)
-		
+
 		a=__.setting('hotkey-clip.replace-a')
 		b=__.setting('hotkey-clip.replace-b')
 		while a in data:
@@ -706,7 +895,7 @@ class CLIP:
 		c=c.replace(b,k2);
 		c=c.replace(k1,b);
 		c=c.replace(k2,a);
-		
+
 		_copy.imp.copy(  c  , p=0 )
 
 
@@ -990,7 +1179,7 @@ function add_all__THETABLE( FIELDS_ALL_var_comma ){
 function update_most__THETABLE( $ID_label, FIELDS_MOST_var_comma ){
 	$FIELD_MOST_text_label =ingenuity_clean($FIELD_MOST_text_label);
 	dbquery(  "
-		UPDATE THETABLE SET 
+		UPDATE THETABLE SET
 			FIELD_MOST_label=FIELD_data
 		WHERE ID_label=ID_data
 	", false);
@@ -999,7 +1188,7 @@ function update_most__THETABLE( $ID_label, FIELDS_MOST_var_comma ){
 function update_all__THETABLE( FIELDS_ALL_var_comma ){
 	$FIELD_ALL_text_label =ingenuity_clean($FIELD_ALL_text_label);
 	dbquery(  "
-		UPDATE THETABLE SET 
+		UPDATE THETABLE SET
 			FIELDS_ALL_label=FIELD_data
 		WHERE ID_label=ID_data
 	", false);
@@ -1008,7 +1197,7 @@ function update_all__THETABLE( FIELDS_ALL_var_comma ){
 function get__THETABLE( $ID_label ){
 	global $theDatabase;
 	$query=" SELECT * FROM THETABLE WHERE ID_label=ID_data ORDER BY ID_label DESC";
-	
+
 	$result = $theDatabase->query($query);$i=0;
 	while ($row = mysqli_fetch_assoc($result)) {
 	$resultArray[$i] = array(
@@ -1110,7 +1299,7 @@ function get__THETABLE( $ID_label ){
 		skip.append( fields[0] )
 
 
-				
+
 		sql = sql.replace( 'THETABLE', table )
 		sql = sql.replace( 'ID_label', fields[0] )
 		sql = sql.replace( 'ID_data', field_data(fields[0],dic[fields[0]]) )
@@ -1285,7 +1474,7 @@ function get__THETABLE( $ID_label ){
 		# text = text.replace('\n','')
 		# text = text.replace(', ',',')
 		# text = text.replace(',','\n')
-		
+
 		_copy.imp.copy( text, p=0 )
 
 		text=_str.replaceDuplicate( text, ' ' )
@@ -1321,7 +1510,7 @@ function get__THETABLE( $ID_label ){
 				records.append( simplejson.dumps(record, sort_keys=False) )
 			result += ',\n\t'.join(records)
 			result += '\n]'
-			
+
 			result=result.replace('{','{ ').replace('}',' }')
 			_copy.imp.copy( result, p=0 )
 			return None
@@ -1389,7 +1578,7 @@ function get__THETABLE( $ID_label ){
 				result += text + ' ' + line + '\n'
 			else:
 				result += '\n'
-				
+
 		result=_str.cleanBE( result, '\n' )
 		_copy.imp.copy( result, p=0 )
 		time.sleep(1)
@@ -1441,7 +1630,7 @@ function get__THETABLE( $ID_label ){
 		result=''
 		for i,line in enumerate(a):
 			result += text.replace( '{1}', a[i] ).replace( '{2}', b[i] )+'\n'
-				
+
 		result=_str.cleanBE( result, '\n' )
 		result=result.replace("''",'"')
 		_copy.imp.copy( result, p=0 )
@@ -1473,7 +1662,7 @@ function get__THETABLE( $ID_label ){
 		lines = _paste.imp.paste()
 		lines=_str.cleanBE( lines, '\n' )
 		lines = lines.replace('\r','')
-		
+
 		project = _.genUUID()
 		_.fields.register( project, 'single' )
 		for line in lines.split('\n'):
@@ -1486,7 +1675,7 @@ function get__THETABLE( $ID_label ){
 				result += _.fields.value( project, 'single', line ) + ' ' + text + '\n'
 			else:
 				result += '\n'
-		
+
 		result=_str.cleanBE( result, '\n' )
 		_copy.imp.copy( result, p=0 )
 		time.sleep(1)
@@ -1509,7 +1698,7 @@ function get__THETABLE( $ID_label ){
 		for line in text.split('\n'):
 			if len(line.replace(' ','').replace('\t','')):
 				i_max+=1
-		
+
 		i_char = len(str(i_max))
 		i=0
 		for line in text.split('\n'):
@@ -1595,12 +1784,16 @@ function get__THETABLE( $ID_label ){
 		text = _paste.imp.paste()
 		# text=_str.replaceDuplicate( text, '\n' )
 		text=text.replace('\r','')
-		result = text.split('\n')
-		def cleanEnd(line):
-			while line.endswith(' '): line = line[:-1]
-			return line
-		for i, line in enumerate(result): result[i] = cleanEnd(result[i])
-		_copy.imp.copy( '\n'.join(result), p=0 )
+		while ' \n' in text: text=text.replace(' \n','\n')
+		while '\t\n' in text: text=text.replace('\t\n','\n')
+		_copy.imp.copy( text, p=0 )
+
+		# result = text.split('\n')
+		# def cleanEnd(line):
+		# 	while line.endswith(' '): line = line[:-1]
+		# 	return line
+		# for i, line in enumerate(result): result[i] = cleanEnd(result[i])
+		# _copy.imp.copy( '\n'.join(result), p=0 )
 
 
 	def numberz(self):
@@ -1644,7 +1837,7 @@ function get__THETABLE( $ID_label ){
 		for line in text.split('\n'):
 			if len(line.replace(' ','').replace('\t','')):
 				i_max+=1
-		
+
 		i_char = len(str(i_max))
 		i=0
 		for line in text.split('\n'):
@@ -1693,7 +1886,7 @@ function get__THETABLE( $ID_label ){
 		for line in text.split('\n'):
 			if len(line.replace(' ','').replace('\t','')):
 				i_max+=1
-		
+
 		i_char = len(str(i_max))
 		i=0
 		for line in text.split('\n'):
@@ -1748,7 +1941,7 @@ function get__THETABLE( $ID_label ){
 		for line in text.split('\n'):
 			if len(line.replace(' ','').replace('\t','')):
 				i_max+=1
-		
+
 		i_char = len(str(i_max))
 		i=0
 		for line in text.split('\n'):
@@ -1801,7 +1994,7 @@ function get__THETABLE( $ID_label ){
 		text = text.replace('\r','')
 		text = text.replace('\n','')
 		keepcomma=False
-		if text.startswith(',,'): 
+		if text.startswith(',,'):
 			text=text[2:]
 			keepcomma=True
 		if text.startswith('{') or text.startswith('['):
@@ -1960,16 +2153,16 @@ class TYPING:
 		elif t == '\t':
 			keyboard.press(Key.tab)
 			keyboard.release(Key.tab)
-			
+
 			# keyboard.press(Key.space)
 			# keyboard.release(Key.space)
-			
+
 			# keyboard.press(Key.space)
 			# keyboard.release(Key.space)
-			
+
 			# keyboard.press(Key.space)
 			# keyboard.release(Key.space)
-			
+
 			# keyboard.press(Key.space)
 			# keyboard.release(Key.space)
 
@@ -2199,7 +2392,7 @@ def load():
 				'lower': { 'raw': [ 'shift.', 'win.', 's', 't' ], 'do': 'Clip.toString()' },
 
 				'dup-spaces': { 'raw': [ 'ctrl.', 'win.', 's' ], 'do': 'Clip.dup_space()' },
-				
+
 				'first-word': { 'raw': [ 'alt.', 'win.', '1' ], 'do': 'Clip.first()' },
 				'first-php-var': { 'raw': [ 'alt.', 'win.', '4' ], 'do': 'Clip.php_var()' },
 				# 'builder-one': { 'raw': [ 'alt.', 'win.', 'b' ], 'do': 'Clip.builder()' },
@@ -2223,6 +2416,11 @@ def load():
 				'clip-dup-spaces': { 'raw': [  'ctrl.,2', 'r',  'd', 's' ], 'do': 'Clip.remove_dup_spaces()' },
 				'clip-randomize-ports': { 'raw': [   'ctrl.', 'shift.', 'r' ], 'do': 'Clip.randomize_ports()' },
 				'clip-test-py': { 'raw': [   'ctrl.,2', 'space.,2', 'p', 'y' ], 'do': 'Clip.test_py()' },
+				'f12-console-gen-md-link': { 'raw': [   'shift.,2',   'u','u',  'm','d'   ], 'do': 'Clip.browser_f12_gen_md_link()' },
+				'f12-console-tool.js-text': { 'raw': [   'shift.,2',   'u','u',  't','x','t'   ], 'do': 'Clip.browser_f12_tooljs_text()' },
+				'f12-console-tool.js-text2': { 'raw': [   'shift.,2',   'u','u',  't','e','x','t'   ], 'do': 'Clip.browser_f12_tooljs_text()' },
+				'f12-console-tool.js-table-0': { 'raw': [   'shift.,2',   'u','u',  't','0'   ], 'do': 'Clip.browser_f12_tooljs_table0()' },
+				'f12-console-tool.js-table-h2': { 'raw': [   'shift.,2',   'u','u',  't','t'   ], 'do': 'Clip.browser_f12_tooljs_table()' },
 				# 'clip-replace': { 'raw': [ 'ctrl.,2',  's' ], 'do': 'Clip.swap()' },
 
 
@@ -2284,12 +2482,10 @@ import string
 
 ########################################################################################
 if __name__ == '__main__':
-	banner.pr()
-	if len(_.switches.all())==0: banner.gossip()
+
+	if len(_.switches.all())==0: banner.pr(); banner.gossip();
 	action()
 	__.isExit()
 
 
 # dup_space
-
-

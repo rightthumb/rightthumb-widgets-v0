@@ -1,5 +1,7 @@
 #!/usr/bin/python3
 
+dirty=False
+
 # ## {R2D2919B742E} ##
 # ###########################################################################
 # What if magic existed?
@@ -152,6 +154,8 @@ _.postLoad( __file__ )
 # START
 
 def cleanString(data):
+	global dirty
+	if dirty: return data
 	data = cleanStringA(data)
 	data = cleanStringA(data)
 	data = cleanStringA(data)
@@ -160,6 +164,8 @@ def cleanString(data):
 	return data
 
 def cleanStringA(data):
+	global dirty
+	if dirty: return data
 	if len(_v.default_powershell):
 		data = _str.cleanBE(data,_v.default_powershell)
 	data = _str.cleanBE(data,'\r')
@@ -262,7 +268,8 @@ win32clipboard = None
 paste = clip_get
 
 def cleaner(textR):
-
+	global dirty
+	if dirty: return textR
 	text=''
 	for x in textR:
 		if x in _str.printable2:

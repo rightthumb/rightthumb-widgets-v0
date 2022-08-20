@@ -21,6 +21,7 @@ def sw():
     _.switches.register( 'Comment', '-comment', '#' )
     _.switches.register( 'Disable-Auto-Language-Comment-Detect', '-no-auto' )
     _.switches.register( 'Dump-Quotes', '-dq,-dumpq,-dumpquotes' )
+    _.switches.register( 'Print-Striped-File', '-strip' )
 
 
 
@@ -120,13 +121,17 @@ def action():
     xFile=file
 
 
+    
+
+
     if _.switches.isActive('Dump-Quotes'):
         validator._err_ = False
         index = validator.createIndex( file, 'javascript', skipLoad=True, simple=False, A=None, B=True, C=None )
         for k in validator.identity['location']['open']:
             x = validator.assetSnipetClean(k,validator.identity['location']['open'][k])
             if x.startswith('"') or x.startswith("'"):
-                _.pr(x,c='Background.light_blue')
+                if not _.switches.isActive('Print-Striped-File'):
+                    _.pr(x,c='Background.light_blue')
                 # uuuid = _.genUUID()
                 # cleaner[uuuid]=x
                 # file=file.replace(x,uuuid)
@@ -158,13 +163,16 @@ def action():
             for detect in possible:
                 if possible[detect] == greatest:
                     SLC=detect;remove_comments=True;
-                    _.pr( 'detected comments:',detect ,c='Background.light_blue' )
+                    if not _.switches.isActive('Print-Striped-File'):
+                        _.pr( 'detected comments:',detect ,c='Background.light_blue' )
 
 
 
     if not remove_comments:
-        _.pr( 'Advanced comment detect ?',c='yellow' )
-        ask=input('yN : ')
+        if not _.switches.isActive('Print-Striped-File'): ask='y'
+        elif not _.switches.isActive('Print-Striped-File'):
+            _.pr( 'Advanced comment detect ?',c='yellow' )
+            ask=input('yN : ')
         if 'y' in ask.lower():
             #n)--> advanced comment detection
             possible={}
@@ -209,14 +217,16 @@ def action():
                     if greatest > 4:
                         if po2 and (greatest == greatest2 or greatest2 > greatest):
                             SLC=po2;remove_comments=True;
-                            _.pr( 'detected comments:',po2 ,c='Background.light_blue' )
+                            if not _.switches.isActive('Print-Striped-File'):
+                                _.pr( 'detected comments:',po2 ,c='Background.light_blue' )
                         else:
                             SLC=detect;remove_comments=True;
-                            _.pr( 'detected comments:',detect ,c='Background.light_blue' )
+                            if not _.switches.isActive('Print-Striped-File'):
+                                _.pr( 'detected comments:',detect ,c='Background.light_blue' )
 
 
 
-    if remove_comments:
+    if remove_comments or _.switches.isActive('Print-Striped-File'):
         lines=[]
         for i,line in enumerate(file.split('\n')):
             if line.startswith(SLC):
@@ -231,6 +241,12 @@ def action():
             lines.append(line)
         pass
         file='\n'.join(lines)
+        file=_str.do('sh',file)
+        while '\n\n\n' in file: file=file.replace('\n\n\n','\n\n')
+        if _.switches.isActive('Print-Striped-File'):
+            for line in file.split('\n'):
+                print(line)
+
 
 
 
@@ -269,7 +285,8 @@ def action():
                 if showLine:
                     if line:
                         if i in comments: line+=comments[i]
-                        _.pr(_.pr(_.zeros3(i,fi_len),c='yellow',p=0),line)
+                        if not _.switches.isActive('Print-Striped-File'):
+                            _.pr(_.pr(_.zeros3(i,fi_len),c='yellow',p=0),line)
                         activity+=1
 
 
@@ -301,7 +318,8 @@ def action():
                         for uu in cleaner:
                             line = line.replace(uu, cleaner[uu])
                         if i in comments: line+=comments[i]
-                        _.pr(_.pr(_.zeros3(i,fi_len),c='yellow',p=0),' ',line)
+                        if not _.switches.isActive('Print-Striped-File'):
+                            _.pr(_.pr(_.zeros3(i,fi_len),c='yellow',p=0),' ',line)
                         activity+=1
         elif  _.switches.isActive('Search-In-Comments-Too'):
             # comments={}
@@ -314,29 +332,31 @@ def action():
                     line=color(line)
                     for uu in cleaner:
                         line = line.replace(uu, cleaner[uu])
-                    _.pr(_.pr(_.zeros3(i,fi_len),c='yellow',p=0),' ',_.pr(line,pvs=1,p=0))
+                    if not _.switches.isActive('Print-Striped-File'):
+                        _.pr(_.pr(_.zeros3(i,fi_len),c='yellow',p=0),' ',_.pr(line,pvs=1,p=0))
                     activity+=1
-    if activity:
-        _.pr()
-        _.pr(line=1,c='green')
-        _.pr(line=1,c='green')
-        _.pr()
-        _.pr('Found:',_.addComma(activity),'lines out of',_.addComma(fi_len),c='yellow')
-        _.pr()
-        _.pr(line=1,c='cyan')
-        _.pr()
-        _.pr( '- enter a line number or space deliminated number(s) and view '+str(_.v.lines)+' lines...', c='darkcyan' )
-        _.pr( '    ...above and below the selected line so you figure out what going on in that section', c='darkcyan' )
-        _.pr()
-        _.pr( '- to change number of lines that print above and below chosen line: L 10', c='darkcyan' )
-        _.pr()
-        _.pr( '- leave blank and hit enter, to exit', c='darkcyan' )
-        _.pr()
-        _.pr(line=1,c='cyan')
-        while True:
+    if not _.switches.isActive('Print-Striped-File'):
+        if activity:
+            _.pr()
+            _.pr(line=1,c='green')
+            _.pr(line=1,c='green')
+            _.pr()
+            _.pr('Found:',_.addComma(activity),'lines out of',_.addComma(fi_len),c='yellow')
+            _.pr()
             _.pr(line=1,c='cyan')
             _.pr()
-            loop()
+            _.pr( '- enter a line number or space deliminated number(s) and view '+str(_.v.lines)+' lines...', c='darkcyan' )
+            _.pr( '    ...above and below the selected line so you figure out what going on in that section', c='darkcyan' )
+            _.pr()
+            _.pr( '- to change number of lines that print above and below chosen line: L 10', c='darkcyan' )
+            _.pr()
+            _.pr( '- leave blank and hit enter, to exit', c='darkcyan' )
+            _.pr()
+            _.pr(line=1,c='cyan')
+            while True:
+                _.pr(line=1,c='cyan')
+                _.pr()
+                loop()
 
 def color(line):
     subjects=[]

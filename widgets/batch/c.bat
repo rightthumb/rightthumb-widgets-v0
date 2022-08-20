@@ -195,6 +195,7 @@ GOTO:EOF
             CALL :run_process_exe_folders
 
             ::::::: Command Paths
+            SET javabin=C:\Program Files\Java\jdk-18.0.2
 
             SET appPaths=%batch%;%python%;%myBatch%;%myPython%;%exe_folders%;%USERPROFILE%
             if exist "%pyf%\Scripts" ( SET appPaths=%appPaths%;%pyf%\Scripts )
@@ -202,7 +203,7 @@ GOTO:EOF
             if exist "%pyf2%\Lib" ( SET SET pathPython=%pyf2%;%pyf2%\Lib;%pyf2%\Lib\site-packages;%pyf2%;%pyf2%\Scripts )
             CALL %batch%\originalPath.bat
             SET originalPath=%Path%
-            SET pathBuilder=%appPaths%;%pathPython%;%originalPath%;%pathPython%
+            SET pathBuilder=%appPaths%;%pathPython%;%originalPath%;%pathPython%;%javabin%
             IF EXIST "D:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\bin\Hostx64\x64" (
                 SET "pathBuilder=%pathBuilder%;D:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\bin\Hostx64\x64"
             )

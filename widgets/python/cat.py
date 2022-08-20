@@ -43,6 +43,7 @@ def appSwitches():
 	_.switches.register( 'Comment', '-comment', '"#"' )
 	_.switches.register( 'Clean', '--c', 'noline' )
 	_.switches.register( 'NotCleanForce', '-pr,-print,--nc,---c,-c-', 'noline' )
+	_.switches.register( 'Count', '-cnt,-count' )
 
 
 
@@ -185,7 +186,12 @@ def cleaner(line):
 
 def action():
 	focus()
-
+	
+	Count = []
+	Count_=0
+	if _.switches.isActive('Count'):
+		Count=_.switches.values('Count')
+		for i,C in enumerate(Count): Count[i]=_.ci(C)
 	# _.pr(_.isData())
 	# sys.exit()
 	# files = _.switches.values('Files')
@@ -348,7 +354,18 @@ def action():
 						if _.switches.isActive('Line'):
 							_.pr( _.cp(i+1, 'yellow', p=0),'\t', row )
 						else:
-							_.pr(row)
+							if not Count:
+								_.pr(row)
+							else:
+								_cnt=0
+								if len(Count)==1: _cnt=row.lower().count(Count[0])
+								else:
+									_row=row.lower()
+									for C in Count:_row+=_row.count(C)
+								Count_+=_cnt
+								if _cnt:
+									_.pr(  _.pr(_.zeros3(_cnt,333),c='yellow',p=0)  ,row)
+
 
 			if wasCrypt:
 				if False and not _.switches.isActive('Clean'):
@@ -362,12 +379,15 @@ def action():
 				pass
 	pass
 	if not _.switches.isActive('Clean'):
-		if vVv.total:
-			_.pr()
-			if vVv.total == vVv.print:
-				_.cp( [ '', _.addComma(vVv.total) ], 'yellow' )
-			else:
-				_.cp( [ '', _.addComma(vVv.print), 'of', _.addComma(vVv.total) ], 'yellow' )
+		if Count_:
+			_.cp( [ '', _.addComma(Count_) ], 'yellow' )
+		else:
+			if vVv.total:
+				_.pr()
+				if vVv.total == vVv.print:
+					_.cp( [ '', _.addComma(vVv.total) ], 'yellow' )
+				else:
+					_.cp( [ '', _.addComma(vVv.print), 'of', _.addComma(vVv.total) ], 'yellow' )
 
 
 def simpleClean(data):
@@ -391,7 +411,7 @@ _cryptFile.imp.appDBA = _cryptFile.focus
 focus()
 import _rightThumb._dir as _dir
 
-
+355
 
 ########################################################################################
 if __name__ == '__main__':

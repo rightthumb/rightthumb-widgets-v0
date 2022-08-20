@@ -1,4 +1,4 @@
-@echo off
+    @echo off
 
 rem ## {R2D2919B742E} ##
 rem ###########################################################################
@@ -51,6 +51,14 @@ rem cd
 rem :echo ^</%pc%^>
 rem echo Files:
 rem echo.
+if [%1] == [-copy] (
+    call :ACTION3 %*
+    GOTO:EOF
+)
+if [%1] == [-cp] (
+    call :ACTION3 %*
+    GOTO:EOF
+)
 if [%1] == [-links] (
     call :ACTION3 %*
     GOTO:EOF
