@@ -34,7 +34,7 @@ def sw():
     #b)--> examples
     # _.switches.register( 'Input', '-i' )
     #e)--> examples
-    # _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=True )
+    _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name', description='Files', isRequired=0 )
 
 # __.setting('require-list',['Files,Plus','File,Has']) # todo
 # __.setting('require-list',['Pipe','Files'])
@@ -118,7 +118,7 @@ _.l.sw.register( triggers, sw )
         # if _.switches.isActive('Test'): test(); return None;
         # result=[]; result=[ _.pr(line) for i, line, bi in _.numerate( _.isData(r=0) )]
         # bk=[];[  bk.append(rec['backup']) for rec in backupLog if path == rec['file']]; bk=bk[-1];
-        # a=(1 if True else 0) <--# 
+        # a=(1 if True else 0) <--#
         #!)--> m=[[row[i] for row in matrix] for i in range(4)]
 
     #n)--> python globals
@@ -134,7 +134,7 @@ _.l.sw.register( triggers, sw )
     #n)--> import and backup example
         # _bk = _.regImp( __.appReg, 'fileBackup' ); _bk.switch( 'Silent' ); _bk.switch( 'isRunOnce' ); _bk.switch( 'Flag', 'APP' ); _bk.switch( 'DoNotSchedule' )
         # _bk.switch( 'Input', path ); bkfi = _bk.action();
-    
+
     #n)--> inline
         # for rel in [ subject for subject in _.isData(r=0) if _.showLine(subject) ]: print(rel)
 
@@ -145,17 +145,13 @@ _.l.sw.register( triggers, sw )
 #n)--> start
 
 def action():
-    load(); global c3po;
 
     #n)--> iterate
-    for subject in _.isData(r=0): _.pr(subject)
-    
+    for subject in _.isData(r=0): _.pr(_dir.info(subject))
 
-def load():
-    global c3po
-    c3po = _.getTable( 'table' )
-    #n)--> print table
-    _.pt(c3po)
+
+import _rightThumb._dir as _dir
+
 
 
 ##################################################
@@ -172,7 +168,9 @@ if __name__ == '__main__':
 
     # banner.pr()
     # if len(_.switches.all())==0: banner.gossip()
-    
+
     #e)--> examples
     action()
     _.isExit(__file__)
+
+

@@ -46,6 +46,8 @@ def appSwitches():
 
 	_.switches.register('ListCount', '-l')
 	_.switches.register('ListTypes', '-type', 'f m s tv')
+	_.switches.register('ListTestOnly', '-test')
+	_.switches.register('ListRAW', '-rawlist')
 
 
 def ListTypes_trigger(data):
@@ -154,6 +156,34 @@ if __name__ == '__main__':
 _franchise = _.regImp( __.appReg, '_rightThumb._franchise' )
 
 def action():
+
+	if _.switches.isActive('ListTestOnly'): _franchise.switch( 'ListTestOnly', _.switches.value('ListTestOnly') )
+	if _.switches.isActive('ListRAW'): _franchise.switch( 'ListRAW', _.switches.value('ListRAW') )
+	
+
+
+
+
+	if _.switches.isActive('Franchise'):
+		_franchise.switch( 'Franchise', _.switches.value('Franchise') )
+		
+	if _.switches.isActive('Alias'):
+		_franchise.switch( 'Alias', _.switches.value('Alias') )
+	
+	if _.switches.isActive('ListCount'):
+		_franchise.switch( 'ListCount', _.switches.value('ListCount') )
+
+	if _.switches.isActive('ListTypes'):
+		_franchise.switch( 'ListTypes', _.switches.value('ListTypes') )
+
+
+
+
+
+	#n)--> THE ABOVE WAS JUST ADDED
+
+
+
 	if _.switches.isActive('Print'):
 		_franchise.switch( 'Franchise', _.switches.value('Franchise') )
 
@@ -177,8 +207,8 @@ def action():
 	if _.switches.isActive('Alias'):
 		_franchise.switch( 'Alias', _.switches.value('Alias') )
 	
-	if _.switches.isActive('RawPrint'):
-		_franchise.switch( 'RawPrint', 'data' )
+	if _.switches.isActive('ListTestOnly'):
+		_franchise.switch( 'ListTestOnly', _.switches.value('ListTestOnly') )
 	
 
 	if _.switches.isActive('ListCount'):

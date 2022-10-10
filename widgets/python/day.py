@@ -295,7 +295,6 @@ def files(fi):
 			# ask=input2(' replace file? : ')
 			# if 'n' in ask.lower(): save = False
 		if save:
-
 			if os.path.isfile(path):
 				_.pr('date generated',c=color)
 				t2 = _.getText(path,raw=True)+'\n\n'+'##### #t) '+_.isDate(time.time(),f='iso')+'\n\n'; txt=t2+txt;
@@ -373,9 +372,9 @@ def action():
 	#         ef=True
 	# print(no)
 	# if ef:
-	_.pr('C3P0-pre')
+	# _.pr('C3P0-pre')
 	_.pr("__.setting('Crypt-daily/notes.md-Default') = "+str(__.setting('Crypt-daily/notes.md-Default')),pvs=1)
-	_.pr('C3P0-post')
+	# _.pr('C3P0-post')
 	if no in _.getTable('secure-crypt-local.meta'):
 		_.pr('entire file is encrypted',c='red')
 	elif __.setting('Crypt-daily/notes.md-Default'):

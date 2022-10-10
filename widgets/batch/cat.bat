@@ -20,3 +20,18 @@ if [%1] == [] (
 )
 
 rem related to cat
+
+rem if cat does not work
+rem if cat does not work
+rem if cat does not work
+rem set file=%1
+rem shift /1
+rem set "remainingArgs="
+rem :getRemainingArgs
+rem if "%~1" neq "" (
+rem   set ^"remainingArgs=%remainingArgs% %1"
+rem   shift /1
+rem   goto :getRemainingArgs
+rem )
+rem echo remainingArgs=%remainingArgs%
+rem type %file% | p line %remainingArgs%

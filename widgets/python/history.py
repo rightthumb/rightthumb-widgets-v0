@@ -38,6 +38,7 @@ def appSwitches():
 	_.switches.register('Select_I', '-i','0')
 	_.switches.register('DoNotColorize', '-nocolor')
 	_.switches.register('Copy', '-copy', 'inBackup -1')
+	_.switches.register('App-Switches', '-sw','ls.py')
 
 
 
@@ -280,6 +281,16 @@ def process( path ):
 		_.cp( [ '', theTotal ], 'yellow' )
 			# sys.exit()
 def action():
+	if _.switches.isActive('App-Switches') and _.switches.values('App-Switches'):
+		_sw=_.getTableDB('history_index[py-switches].index')
+		for app in _.switches.values('App-Switches'):
+			app=app.replace('.py','')
+			if app in _sw:
+				for k in _sw[app]:
+					_.pr(k)
+		return None
+
+
 	# if not _.switches.isActive('Select_I') and not _.switches.isActive('Count'):
 
 	if not _.switches.isActive('Sort'):

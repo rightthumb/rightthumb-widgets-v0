@@ -118,14 +118,11 @@ _.l.sw.register( triggers, sw )
         # if _.switches.isActive('Test'): test(); return None;
         # result=[]; result=[ _.pr(line) for i, line, bi in _.numerate( _.isData(r=0) )]
         # bk=[];[  bk.append(rec['backup']) for rec in backupLog if path == rec['file']]; bk=bk[-1];
-        # a=(1 if True else 0) <--# 
+        # a=(1 if True else 0) <--#
         #!)--> m=[[row[i] for row in matrix] for i in range(4)]
 
     #n)--> python globals
         # for k in globals(): print(k, eval(k) )
-
-    #n)--> webpage from url
-        # for subject in _.caseUnspecific( line, needle ): line = line.replace( subject, _.colorThis( subject, 'green', p=0 ) )
 
     #n)--> webpage from url
         # requests=__.imp('requests.post')
@@ -134,7 +131,7 @@ _.l.sw.register( triggers, sw )
     #n)--> import and backup example
         # _bk = _.regImp( __.appReg, 'fileBackup' ); _bk.switch( 'Silent' ); _bk.switch( 'isRunOnce' ); _bk.switch( 'Flag', 'APP' ); _bk.switch( 'DoNotSchedule' )
         # _bk.switch( 'Input', path ); bkfi = _bk.action();
-    
+
     #n)--> inline
         # for rel in [ subject for subject in _.isData(r=0) if _.showLine(subject) ]: print(rel)
 
@@ -144,18 +141,42 @@ _.l.sw.register( triggers, sw )
 ########################################################################################
 #n)--> start
 
+terms={}
+
+def process(dic):
+    global terms
+    terms[dic['Massage Term']] = dic['Definition']
+
 def action():
-    load(); global c3po;
+    load()
+    global c3po
+    global terms
 
     #n)--> iterate
-    for subject in _.isData(r=0): _.pr(subject)
+    for xXx in c3po:
+        for kk in xXx:
+            for vVv in xXx[kk]:
+                process(vVv)
+                # _.pr(vVv)
+                # for zz in vVv:
+                #     for g in xXx[kk][zz]:
+                #         _.pr(zz)
+
+        
+        # _.pr(k)
     
+    for k in terms:
+        if _.showLine(k+terms[k]):
+            _.pr()
+            _.pr()
+            _.pr(k,c='cyan')
+            _.pr(terms[k])
+
+
 
 def load():
     global c3po
-    c3po = _.getTable( 'table' )
-    #n)--> print table
-    _.pt(c3po)
+    c3po = _.getTable( 'table.json' )
 
 
 ##################################################
@@ -172,7 +193,9 @@ if __name__ == '__main__':
 
     # banner.pr()
     # if len(_.switches.all())==0: banner.gossip()
-    
+
     #e)--> examples
     action()
     _.isExit(__file__)
+
+

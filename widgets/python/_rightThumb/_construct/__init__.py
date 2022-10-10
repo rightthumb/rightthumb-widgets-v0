@@ -37,7 +37,8 @@ autoCreationConfiguration = {
 }
 
 settings_table = {
-                    'receipt-log': True,
+                    #t)--> edit: 1661227949.7667239
+                    'receipt-log': False,
                     'receipt-file': False,
 }
 

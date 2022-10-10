@@ -1,6 +1,11 @@
 #!/usr/bin/python3
 
 
+MINI_ADS = True
+MINI_ADS = False
+
+# ¯\_(ツ)_/¯
+
 # sudo apt install libpython2.7-stdlib
 # import json
 
@@ -20363,7 +20368,7 @@ def l_fieldSet( switchName, switchField, switchValue, theFocus=False ):
 	switches.fieldSet( switchName, switchField, switchValue, theFocus )
 def l_registerSwitches_vars():
 	autoBackupData = __.setting('receipt-log')
-	__.releaseAcquiredData = __.setting('receipt-file')
+	__.releaseAcquiredData = __.setting('receipt-file') 
 	__.myFileLocations_SKIP_VALIDATION = __.setting('myFileLocations-skip-validation')
 	__.isRequired_Pipe = __.setting('require-pipe')
 	__.isRequired_Pipe_or_File = __.setting('require-pipe||file')
@@ -20457,7 +20462,10 @@ def dots(path):
 			exec(f)
 			if i == len(rts)-1: return eval(rts[0]);
 nsfw_=False
-def ad(path=None,label='ad'): 
+def ad(path=None,label='ad'):
+	global MINI_ADS
+	
+
 	# print(_v.life+'ads')
 	# sys.exit()
 	if not os.path.isdir(_v.life+'ads'): return None
@@ -20488,6 +20496,8 @@ def ad(path=None,label='ad'):
 		nsfw_=True
 		random=__.imp('random')
 		ads=fo(_v.life+'ads')
+		for a2 in fo(_v.life+'ads.quotes'): ads.append(a2);
+
 		if nsfw:
 			for a2 in fo(_v.life+'ads.nsfw'): ads.append(a2);
 		
@@ -20497,7 +20507,7 @@ def ad(path=None,label='ad'):
 	ad=getText( cho , raw=True )
 	ad=ad.replace('\r','')
 
-	if '#title)' in ad:
+	if MINI_ADS and '#title)' in ad:
 		#title)
 		ad2=[];_adGO=False;
 		for line in ad.split('\n'):
@@ -20531,7 +20541,7 @@ def ad(path=None,label='ad'):
 		return '|  '+line+'  |'
 
 	for liner in ad.split('\n'):
-		pr( pr('#'+label+')-->  ',c='gray',p=0) +pr(  _ad_space_(liner,mx)  ,c=_the_color_,p=0))
+		pr( pr('#'+label+')  ',c='gray',p=0) +pr(  _ad_space_(liner,mx)  ,c=_the_color_,p=0))
 	linePrint(c='green',center=label, length=_width)
 	# cp( '</ad>', 'yellow' )
 	return ad
@@ -20638,14 +20648,19 @@ dd=date_diff_dic
 #     except Exception as ee: e('_.save')
 
 
-def waiting(sec,p=True):
+def waiting(sec,p=True,txt=''):
+	if type(txt) == list:
+		for i,x in enumerate(txt):
+			txt[i]=str(x)
+		txt=' | '.join(txt)
+	if txt: txt='| '+txt
 	if not type(sec) == int: e('waiting expected int')
 	
 	if not p: time.sleep(sec)
 	else:
 		
 		while not sec==0:
-			pr( 'waiting:', sec, end=1 )
+			pr( 'waiting:', sec, txt, end=1 )
 			time.sleep(1)
 			sec-=1
 		pr( '', end=1 )

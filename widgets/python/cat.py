@@ -215,14 +215,17 @@ def action():
 			if not _.isCrypt(filepath):
 				if not _.switches.isActive('Clean'):
 					if __.path(filepath).startswith( _v.pp+os.sep+'configs'+os.sep ):
-						_.colorThis( [filepath.replace('-',os.sep)], 'green' )
+						_.colorThis( [filepath.replace('-',os.sep)], 'cyan' )
+						_.pr()
 					else:
-						_.colorThis( [filepath], 'green' )
+						_.colorThis( [filepath], 'cyan' )
+						_.pr()
 
 			else:
 				epoch = _dir.info(filepath)['me']
 				if not _.switches.isActive('Clean'):
 					_.colorThis( ['Encrypted:',filepath], 'red' )
+					_.pr()
 				wasCrypt = True
 				_cryptFile.switch( 'Decrypt' )
 				_cryptFile.switch( 'Encrypt', delete=True )

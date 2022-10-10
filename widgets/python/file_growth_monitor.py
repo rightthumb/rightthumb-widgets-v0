@@ -30,7 +30,7 @@ _str = __.imp('_rightThumb._string')
 def sw():
     pass
     ### EXAMPLE: START
-    # _.switches.register( 'Input', '-i' )
+    _.switches.register( 'Start-Epoch', '-start,-epoch' )
     _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name', description='Files', isRequired=True )
     # _.switches.register( 'Files', '-f,-fi,-file,-files' )
     ### EXAMPLE: END
@@ -157,26 +157,36 @@ def action():
 
     for path in _.isData(r=0): index[path] = b(path)
     done=0
-    start=time.time()
-    _.pr('start:',start)
+    if _.switches.isActive('Start-Epoch'):
+        start=float(_.switches.value('Start-Epoch'))
+    else:
+        start=time.time()
+    _.pr('epoch:',start,c='darkcyan')
+    _.pr('start:',_.isDate( start, f='fdatea' ),c='cyan')
     while True:
-        _.waiting(10)
+        _.waiting(120,txt=[ _dir.info(path,f='size'), _dir.info(path,f='bytes'), _._2dates(time.time(),start) ])
         for path in _.isData(r=0):
             by = b(path)
             if by == index[path]:
-                _.linePrint(c='yellow')
+                _.pr(line=1,c='yellow')
                 _.pr('file stopped growing',c='green')
                 _.pr(path,c='cyan')
                 _beep.mission_impossible()
                 done+=1
-                if done == len(list(index.keys())): break
+                if done == len(_.isData()): break
+            index[path]=by
+        if done == len(_.isData()): break
     end=time.time()
     _.linePrint(c='yellow')
-    _.pr('start:',start)
-    _.pr('end:',end)
+    _.pr('start:',start,c='darkcyan')
+    _.pr('end:',end,c='darkcyan')
+    _.pr('diff:',  _._2dates(time.time(),start)  ,c='cyan')
+    for path in _.isData(r=0):
+        _.pr(path)
+        _.pr('\tsize:',_dir.info(path,f='size'))
 
 
-
+import _rightThumb._dir as _dir
 
 
 ########################################################################################

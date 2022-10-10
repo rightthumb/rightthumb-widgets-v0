@@ -769,6 +769,13 @@ copy(  hackTool.payload.label  )
 		data  = _paste.imp.paste()
 		_copy.imp.copy( data.lower(), p=0 )
 
+	def space_2_underscore_text(self):
+		_copy = _.regImp( __.appReg, '-copy' )
+		_paste = _.regImp( __.appReg, '-paste' )
+		data  = _paste.imp.paste()
+		while ' ' in data: data=data.replace(' ','_')
+		_copy.imp.copy( data, p=0 )
+
 	def toUpper(self):
 		_copy = _.regImp( __.appReg, '-copy' )
 		_paste = _.regImp( __.appReg, '-paste' )
@@ -2421,6 +2428,7 @@ def load():
 				'f12-console-tool.js-text2': { 'raw': [   'shift.,2',   'u','u',  't','e','x','t'   ], 'do': 'Clip.browser_f12_tooljs_text()' },
 				'f12-console-tool.js-table-0': { 'raw': [   'shift.,2',   'u','u',  't','0'   ], 'do': 'Clip.browser_f12_tooljs_table0()' },
 				'f12-console-tool.js-table-h2': { 'raw': [   'shift.,2',   'u','u',  't','t'   ], 'do': 'Clip.browser_f12_tooljs_table()' },
+				'space-2-underscore': { 'raw': [   'space.,2',   's','p','u'   ], 'do': 'Clip.space_2_underscore_text()' },
 				# 'clip-replace': { 'raw': [ 'ctrl.,2',  's' ], 'do': 'Clip.swap()' },
 
 

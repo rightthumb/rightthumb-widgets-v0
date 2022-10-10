@@ -54,6 +54,10 @@ def appSwitches():
 	
 	_.switches.register('ListCount', '-l')
 	_.switches.register('ListTypes', '-type', 'f m s tv')
+	
+
+	_.switches.register('ListTestOnly', '-test')
+	_.switches.register('ListRAW', '-rawlist')
 
 	
 
@@ -378,6 +382,34 @@ def buildUrlList( url, label='', buildUrlListLast={}, buildUrlListDuplicate=[] )
 	global dataDump
 	# _.pr( url )
 	# sys.exit()
+
+	# __.THE_FRANCHISE_TEST
+
+	# if type(label) == tuple and len(label) > 1:
+	# 	TEST = '_'+label[1].lower()+'_'
+	# if type(label) == str:
+	# 	TEST = '_'+label.lower()+'_'
+
+	# THIS = 'actor,top,like'
+
+	# for testing in THIS.split(','):
+	# 	if  '_'+testing+'_' in TEST    and    not '_'+testing+'_' in __.THE_FRANCHISE_TEST: return None
+
+
+
+	# print( type(label) )
+	# print( type(label) )
+	# print( type(label) )
+	# print( type(label) )
+	# print( label )
+	# print( label )
+	# print( label )
+	# print( label )
+	# print( label )
+
+	# sys.exit()
+	 
+
 	if len(label):
 		if _.switches.isActive('RawPrint'):
 			_.pr( label )
@@ -519,10 +551,14 @@ def buildUrlList( url, label='', buildUrlListLast={}, buildUrlListDuplicate=[] )
 					# _.pr( 'next page' )
 					# sys.exit()
 					if 'http' in nextPage.lower():
-						__.asyn.register( name='franchiseList', category='franchiseList', fn=buildUrlList, k={ 'url':nextPage, 'label':label, 'buildUrlListLast':buildUrlListLast, 'buildUrlListDuplicate':buildUrlListDuplicate }, timeout=120 )
+
+
+						if GOOD_LIST(label): __.asyn.register( name='franchiseList', category='franchiseList', fn=buildUrlList, k={ 'url':nextPage, 'label':label, 'buildUrlListLast':buildUrlListLast, 'buildUrlListDuplicate':buildUrlListDuplicate }, timeout=120 )
 						# _.threads.add( 'franchiseList', buildUrlList, [ { 'url':nextPage, 'label':label, 'buildUrlListLast':buildUrlListLast, 'buildUrlListDuplicate':buildUrlListDuplicate } ], pID=qID, kwargs=True )
 		except Exception as e:
 			pass
+
+
 
 
 	# try:
@@ -707,7 +743,7 @@ def action():
 	# franchise = _str.basic(franchise)
 	# franchiseName = franchise.replace(' ','_')
 	franchiseName = franchise
-
+	__.THE_FRANCHISE_TEST = '_'+franchise.lower()+'_'
 	__.franchiseFile = 'imdb-franchises-'+   franchise.upper().replace(' ','_')   +'.json'
 	__.franchises = _.getTable(__.franchiseFile)
 
@@ -917,7 +953,7 @@ def action():
 			if 'http' in lnk['link'].lower():
 
 				# _.threads.add( 'franchiseList', buildUrlList, [ { 'url':lnk['link'], 'label':label } ], kwargs=True )
-				__.asyn.register( name='franchiseList', category='franchiseList', fn=buildUrlList, k={ 'url':lnk['link'], 'label':label }, timeout=120 )
+				if GOOD_LIST(label): __.asyn.register( name='franchiseList', category='franchiseList', fn=buildUrlList, k={ 'url':lnk['link'], 'label':label }, timeout=120 )
 
 			# for xxx in do:
 			# 	# if 'tt1375666' in xxx:
@@ -1281,6 +1317,37 @@ def genOmitLink( franchise ):
 		return result
 	else:
 		return ''
+
+
+def GOOD_LIST(label):
+
+	if _.switches.isActive('ListRAW'): return True
+
+
+	TEST='error, mf'
+	if type(label) == tuple and len(label) > 1:
+		TEST = '_'+label[1].lower()+'_'
+	elif type(label) == str:
+		TEST = '_'+label.lower()+'_'
+
+	TEST=TEST.replace( ' ', '_')
+
+	THIS = 'actor,top,like,type'
+
+	GOOD = True
+
+	for testing in THIS.split(','):
+		if  '_'+testing+'_' in TEST      and      not '_'+testing+'_' in __.THE_FRANCHISE_TEST:   GOOD = False
+
+	if _.switches.isActive('ListTestOnly')  or   _.switches.isActive('RawPrint'):		
+		if GOOD:
+			_.pr(GOOD, TEST  , c='Background.green')
+		else:
+			_.pr(GOOD, TEST  , c='Background.red')
+
+	if _.switches.isActive('ListTestOnly'): return False
+	return GOOD
+
 
 dataDump = []
 theListOfMoviesToSave = []
