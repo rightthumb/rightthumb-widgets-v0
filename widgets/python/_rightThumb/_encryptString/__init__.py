@@ -10,8 +10,10 @@ import sys
 # ###########################################################################
 # ## {C3P0D40fAe8B} ##
 
-errors=False
+
+
 errors=True
+errors=False
 hasErrors=False
 try:
 	import base64
@@ -44,8 +46,11 @@ except Exception as e:
 	if errors: print(e);
 	pass
 
-if errors and hasErrors:
-	sys.exit()
+
+# print(5552424)
+if errors and hasErrors: sys.exit()
+
+
 
 def genPassword( password=False ):
 	return newKey( password )

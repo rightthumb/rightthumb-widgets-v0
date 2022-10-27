@@ -18,7 +18,7 @@ echo.
 echo Reminder run   r.t   once a week.
 echo.
 
-call p fileBackup -f %wprofile%\projects\project-log.txt
+rem call p fileBackup -f %wprofile%\projects\project-log.txt
 
 SET ORIGINAL_Session_ID=%Session_ID%
 

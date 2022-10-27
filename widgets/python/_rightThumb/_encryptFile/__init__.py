@@ -15,7 +15,12 @@
 
 import os
 import base64
-from Crypto.Cipher import Blowfish
+
+try:
+	from Crypto.Cipher import Blowfish
+except Exception as e:
+	pass
+	# raise e
 
 import _rightThumb._vars as _v
 import _rightThumb._string as _str

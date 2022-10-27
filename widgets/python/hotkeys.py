@@ -1487,6 +1487,50 @@ function get__THETABLE( $ID_label ){
 		text=_str.replaceDuplicate( text, ' ' )
 		_copy.imp.copy( text, p=0 )
 
+
+
+
+	def implode_clean(self):
+		_paste = _.regImp( __.appReg, '-paste' )
+		_copy = _.regImp( __.appReg, '-copy' )
+		text = _paste.imp.paste()
+		text=_str.replaceDuplicate( text, '\n' )
+		text=_str.cleanBE( text, '\n' )
+		text=_str.cleanBE( text, '\t' )
+		text=_str.cleanBE( text, ' ' )
+		text = text.replace('\r','')
+
+		text=_str.cleanBE( text, '\n' )
+		text=_str.cleanBE( text, '\t' )
+		text=_str.cleanBE( text, ' ' )
+		text=_str.cleanBE( text, '\n' )
+		text=_str.cleanBE( text, '\t' )
+		text=_str.cleanBE( text, ' ' )
+		if text.startswith('{') or text.startswith('['):
+			try:
+				data = simplejson.load(text)
+			except Exception as e:
+				frameinfo = getframeinfo(currentframe()); _.pr( _.addComma(frameinfo.lineno),'\t', e,c='red');
+				data = eval(text.replace('false','False').replace('true','True'))
+			result = simplejson.dumps(data, sort_keys=False)
+			result=result.replace('{','{ ').replace('}',' }')
+			_copy.imp.copy( result, p=0 )
+			return None
+		text = text.replace('\n',' ')
+		text = text.replace('\r','')
+		# text = text.replace('\n','')
+		# text = text.replace(', ',',')
+		# text = text.replace(',','\n')
+
+		_copy.imp.copy( text, p=0 )
+
+		text=_str.replaceDuplicate( text, ' ' )
+		_copy.imp.copy( text, p=0 )
+
+
+
+
+
 	def implode3(self):
 		_paste = _.regImp( __.appReg, '-paste' )
 		_copy = _.regImp( __.appReg, '-copy' )
@@ -2373,8 +2417,11 @@ def load():
 				'mom': { 'raw': [ 'ctrl.,2', 'mom' ], 'do': 'Typing.ty("your_mother()",back=1)' },
 				'pre-clean': { 'raw': [ 'ctrl.,2', 'space.', 'del' ], 'do': 'Clip.del_activate()' },
 				'implode': { 'raw': [ 'ctrl.,2', 'space.', 'i' ], 'do': 'Clip.implode()' },
+				# 'implode-clean': { 'raw': [ 'ctrl.,2', 'space.', 'i', 'Key.up' ], 'do': 'Clip.implode_clean()' },
 				# 'reduction_loop': { 'raw': [ 'alt.', 'shift.', 'win.', 'r' ], 'do': 'Clip.reduction_loop()' },
 				'implode2': { 'raw': [ 'alt.', 'win.', 'i' ], 'do': 'Clip.implode()' },
+				# 'implode-clean': { 'raw': [ 'shift.', 'alt.', 'win.', 'i' ], 'do': 'Clip.implode()' },
+				'implode-clean': { 'raw': [ 'alt.', 'win.', 'Key.down' ], 'do': 'Clip.implode_clean()' },
 				'implode3': { 'raw': [ 'alt.', 'shift.', 'i' ], 'do': 'Clip.implode3()' },
 				'number': { 'raw': [ 'alt.', 'win.', 'n' ], 'do': 'Clip.number()' },
 				'number': { 'raw': [ 'shift.', 'alt.', 'n' ], 'do': 'Clip.numberz()' },

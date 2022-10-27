@@ -1483,7 +1483,8 @@ def f( search=None, path=False,       p=None, s=None, r=False ):
 	return result
 
 def chmod(path):
-	if not __.isWin and os.path.isfile(path):
+	global switches
+	if not __.isWin and os.path.isfile(path) and switches.isActive('chmod'):
 		try:
 			os.chmod( path, 0o777 )
 		except Exception as e:
@@ -1492,7 +1493,8 @@ def chmod(path):
 class HD:
 
 	def chmod(path):
-		if not __.isWin and os.path.isfile(path):
+		global switches
+		if not __.isWin and os.path.isfile(path) and switches.isActive('chmod'):
 			try:
 				os.chmod( path, 0o777 )
 			except Exception as e:
@@ -19317,6 +19319,7 @@ def load():
 		switches.register('NoColor', '-nocolor', space=True)
 		switches.register('LoadEpoch', '-loadepoch')
 		switches.register('PrintEpoch', '-printepoch')
+		switches.register('chmod', '-chmod,-777')
 		# switches.register('SkipColumnTriggers', '-skiptriggers')
 		defaultScriptTriggers_do()
 		

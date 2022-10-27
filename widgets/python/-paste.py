@@ -38,6 +38,11 @@ import _rightThumb._string as _str
 
 def appSwitches():
 	_.switches.register( 'Clean', '-clean' )
+	_.switches.register( 'Dirty-Raw', '-dirty,-raw' )
+
+
+
+
 
 
 _.autoBackupData = __.autoCreationConfiguration['backup']
@@ -152,6 +157,8 @@ _.postLoad( __file__ )
 
 ########################################################################################
 # START
+
+if _.switches.isActive('Dirty-Raw'): dirty=True
 
 def cleanString(data):
 	global dirty

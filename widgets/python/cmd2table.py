@@ -575,10 +575,11 @@ def action():
 			for k in rec.keys():
 				for num in _.switches.values('Int'):
 					if num.lower() == k.lower():
+						# _.pr(k)
 						cleaned = ''
 						temp = str( records[i][k] )
 						for xy in temp:
-							if xy in ',0123456789':
+							if xy in '0123456789':
 								cleaned+=xy
 
 						if not len(cleaned):
@@ -587,6 +588,9 @@ def action():
 							records[i][k] = int( cleaned )
 						except Exception as e:
 							pass
+						records[i][k]=int(cleaned)
+						# _.pr(cleaned)
+						# sys.exit()
 
 
 

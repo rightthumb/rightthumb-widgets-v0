@@ -108,11 +108,11 @@ GOTO:EOF
             SET Drive=
 
             ::::::: PHP Drive
-            if EXIST D:\xampp\php\php.exe (
-                SET php=D:\xampp\php\php.exe
-            ) else (
-                SET php=D:\techApps\xampp\php\php.exe
-            )
+            rem if EXIST D:\xampp\php\php.exe (
+            rem     SET php=D:\xampp\php\php.exe
+            rem ) else (
+            rem     SET php=D:\techApps\xampp\php\php.exe
+            rem )
             ::::::: App shortcuts
             ::::::: API Variable Extras
             set "computername2=%computername: =_%"

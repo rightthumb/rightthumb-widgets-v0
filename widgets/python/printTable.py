@@ -42,7 +42,15 @@ def appSwitches():
 	# _.switches.register('JSON', '-json')
 	_.switches.register('Int', '-int', 'Mem_Usage')
 
-	
+
+__.setting('receipt-log',True)
+__.setting('receipt-file',True)
+__.setting('require-pipe||file',True)
+# __.setting('require-pipe',True)
+# __.setting('pre-error',False)
+# __.setting('myFileLocations-skip-validation',False)
+# __.setting('switch-raw',[])
+
 
 
 _.appInfo[focus()] = {
