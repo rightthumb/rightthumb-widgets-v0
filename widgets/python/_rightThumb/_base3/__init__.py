@@ -1270,7 +1270,7 @@ def bAlias(subject):
 		subjects = subject
 	else:
 		print_(type(subject))
-		_.e( 'bAlias', subject )
+		err( 'bAlias', subject )
 
 	results=[]
 
@@ -19542,7 +19542,7 @@ class regImp:
 		global regImps
 		global appInfo
 		if app is None:
-			e( 'class regImp', 'expected: _.regImp(__.appReg,app)  or _.regImp(focus(),app)' )
+			err( 'class regImp', 'expected: _.regImp(__.appReg,app)  or _.regImp(focus(),app)' )
 
 		if focus is None: focus = __.appReg
 
@@ -19937,7 +19937,7 @@ ppvv=printVarColor
 pvv=printVarColor
 pvpv=printVarColor
 
-def e( msg , e=None, kill=True):
+def err( msg , e=None, kill=True):
 	
 	cp( linePrint(txt='*',p=0), 'red' )
 	
@@ -19996,13 +19996,14 @@ def e( msg , e=None, kill=True):
 	if kill:
 		sys.exit()
 	# △ ▽
+e=err
 
 def key( subject ):
 	try:
 		table = getTableDB( 'secureStrings.hash' )
 		return table[subject]
 	except Exception as ee:
-		e( 'secureString', ee )
+		err( 'secureString', ee )
 
 
 
