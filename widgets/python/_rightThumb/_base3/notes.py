@@ -1,5 +1,13 @@
 -aggregate @ eof
 
+***
+_.switches.fieldSet( 'Long', 'active', True )
+
+_.tables.register( 'data', table )
+1_.tables.print( 'data', 'name' )
+
+***
+
 # ## {R2D2919B742E} ##
 # ###########################################################################
 # What if magic existed?

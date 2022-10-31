@@ -311,7 +311,7 @@ def action():
 					if _.switches.isActive('Plus'):
 						for plusSearchX in _.switches.values('Plus'):
 							plusSearchX = _.ci( plusSearchX )
-							for subject in _.caseUnspecific( row, plusSearchX ):
+							for subject in _.caseUnspecificCode( row, plusSearchX ):
 								row = row.replace( subject, _.colorThis( subject, 'green', p=0 ) )
 					if _.switches.isActive('StripPreNumber'):
 						row2 = simpleClean(row)

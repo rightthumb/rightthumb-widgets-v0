@@ -776,6 +776,12 @@ copy(  hackTool.payload.label  )
 		while ' ' in data: data=data.replace(' ','_')
 		_copy.imp.copy( data, p=0 )
 
+	def toRandomCase(self):
+		_copy = _.regImp( __.appReg, '-copy' )
+		_paste = _.regImp( __.appReg, '-paste' )
+		data  = _paste.imp.paste()
+		_copy.imp.copy( _.randomizeCase(data), p=0 )
+
 	def toUpper(self):
 		_copy = _.regImp( __.appReg, '-copy' )
 		_paste = _.regImp( __.appReg, '-paste' )
@@ -2440,6 +2446,7 @@ def load():
 				'suffix': { 'raw': [ 'alt.', 'win.', 's' ], 'do': 'Clip.suffix()' },
 				'lower': { 'raw': [ 'alt.', 'win.', 'l' ], 'do': 'Clip.toLower()' },
 				'lower2': { 'raw': [ 'ctrl.', 'win.', 'l' ], 'do': 'Clip.toLower()' },
+				'randomC': { 'raw': [ 'alt.', 'win.', 'k' ], 'do': 'Clip.toRandomCase()' },
 				'upper': { 'raw': [ 'alt.', 'win.', 'u' ], 'do': 'Clip.toUpper()' },
 				'upper2': { 'raw': [ 'ctrl.', 'win.', 'u' ], 'do': 'Clip.toUpper()' },
 

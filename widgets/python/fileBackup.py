@@ -629,7 +629,7 @@ def secureFiles_Decrypt( path, pw ):
 	_cryptFile.switch( 'Files', path )
 
 	epoch = _dir.info(path)['me']
-	_cryptFile.do( 'action' )
+	_cryptFile.action()
 	while epoch == _dir.info(path)['me']:
 		time.sleep(.2)
 
@@ -637,19 +637,31 @@ def secureFiles_Encrypt( path, pw ):
 	__.openSecure = False
 	if _.isCrypt(path):
 		return None
-	
+	isTest0=False
 	_.cp( 'crypt.en', 'Background.light_blue' )
 	_cryptFile.switch( 'Password', delete=True )
 	if len(pw):
+		if isTest0: _.pr('pw0')
 		_cryptFile.switch( 'Password', _blowfish.decrypt( pw, _vault.key() ) )
+	
+	if isTest0: _.pr('001')
 	_cryptFile.switch( 'Encrypt' )
 	_cryptFile.switch( 'Decrypt', delete=True )
 	_cryptFile.switch( 'Files', path )
 
 	epoch = _dir.info(path)['me']
-	_cryptFile.do( 'action' )
-	while epoch == _dir.info(path)['me']:
+	if isTest0: _.pr('002')
+
+	# if isTest0: _cryptFile.switch(dump=True)
+
+
+	_cryptFile.action()
+	if isTest0: _.pr('003')
+	done=False
+	while not done:
 		time.sleep(.2)
+		if not epoch == _dir.info(path)['me']: done=True
+	if isTest0: _.pr('004')
 
 
 

@@ -1,8 +1,8 @@
 #!/usr/bin/python3
 
 
-MINI_ADS = True
 MINI_ADS = False
+MINI_ADS = True
 
 # ¯\_(ツ)_/¯
 
@@ -288,8 +288,19 @@ def random_color():
 
 print_ed_group={}
 def print_(*args,p=None,c=None,pad=3,g=None,end=None,pvs=None,pv=None,json=None, dic=None, line=None):
+	args=list(args)
 	if c == 'r' or c == 'random': c=random_color()
 
+	if p is None: rint=True;
+	elif p: rint=True;
+	elif not p: rint=False;
+	else: rint=True;
+
+	if json:
+		simplejson=__.imp('simplejson'); args[0]=simplejson.dumps(args[0], indent=4, sort_keys=False);
+		if rint:
+			print(args[0])
+		return args[0]
 	# if pvs: pvs=None; pv=1;
 	if not dic and type(dic) == bool or ( type(dic) == int and dic == 1): printDicFields(args[0]); return None
 	try:
@@ -1220,6 +1231,10 @@ except Exception as e:
 import _rightThumb._construct as __
 import _rightThumb._vars as _v
 import _rightThumb._string as _str
+
+__.sw=__.dot()
+__.sw.PlusCode=[]
+
 
 __.print_path = False
 ######################################################
@@ -5334,7 +5349,18 @@ def plusColor( row, color='green' ):
 
 	return row
 
-def caseUnspecific( data, subject, isPlus=False, minus=None ):
+def caseUnspecificCode( data, subject, isPlus=False, minus=None ):
+	if __.sw.PlusCode:   return caseISspecific(data, subject, isPlus, minus)
+	else:                return caseUnspecific(data, subject, isPlus, minus)
+
+
+
+def caseUnspecific( data, subject, isPlus=False, minus=None, code=False ):
+
+	if __.sw.PlusCode and 'color' in __.sw.PlusCode: code = True
+
+	if code: return caseUnspecificCode(data, subject, isPlus, minus)
+
 
 	if not minus is None:
 		if type(minus) == list:
@@ -5380,6 +5406,55 @@ def caseUnspecific( data, subject, isPlus=False, minus=None ):
 			results.append( subjectY )
 		data = data.replace( subjectY, '' )
 	return results
+
+
+def caseISspecific( data, subject, isPlus=False, minus=None ):
+
+	if not minus is None:
+		if type(minus) == list:
+			for remove in minus:
+				for deleteThis in caseISspecific( data, remove, isPlus=False ):
+					data = data.replace( deleteThis, '' )
+		elif type(minus) == str:
+			for deleteThis in caseISspecific( data, minus, isPlus=False ):
+				data = data.replace( deleteThis, '' )
+
+	results = []
+	subject = subject
+	if isPlus:
+		if '*' in subject and len(subject) > 1:
+			if subject.startswith('*'):
+				subject = subject.replace( '*', '' )
+				subject = ci(subject)
+				if data.endswith( subject ):
+					return [{ 'data': data[-len(subject):], 'pos': 'last' }]
+				return []
+			if subject.endswith('*'):
+				subject = subject.replace( '*', '' )
+				subject = ci(subject)
+				if data.startswith( subject ):
+					return [{ 'data': data[:len(subject)], 'pos': 'first' }]
+				return []
+		subject = ci(subject)
+			
+
+	while data.find( subject ) > -1:
+		scanning = data.find( subject )
+		subjectY = ''
+		scanComplete = False
+		while not scanComplete:
+			if len(subjectY) == len(subject):
+				scanComplete = True
+			elif scanning > len(data)-1:
+				scanComplete = True
+			else:
+				subjectY += data[ scanning ]
+			scanning += 1
+		if not subjectY in results:
+			results.append( subjectY )
+		data = data.replace( subjectY, '' )
+	return results
+
 
 def nth_repl(s, sub, repl, nth):
 
@@ -9187,7 +9262,10 @@ def showLine( string, plus = '', minus = '',plusOr = False, end=None,isSub=False
 	else:
 		if switches.isActive('Plus') or not plus == '':
 			# print_('asdf')
-			result = positiveResults(string,plus,plusOr,end,OR=OR)
+			if switches.isActive('PlusCode'):
+				result = positiveResultsCode(string,plus,plusOr,end,OR=OR)
+			else:
+				result = positiveResults(string,plus,plusOr,end,OR=OR)
 			if not result and switches.isActive('PlusClose'):
 				result = closeResults( string )
 
@@ -9222,6 +9300,109 @@ def closeResults( string ):
 		return True
 	else:
 		return False
+
+
+
+
+def positiveResultsCode(string,plus='',plusOr=False,end=None,OR=None):
+
+	# __.sw.PlusCode
+
+	global switches
+	if plusOr or switches.isActive('PlusOr'):
+		plusOr = True
+	
+	if not OR is None:
+		plusOr=OR
+	if not plus == '':
+		plusInput = plus
+	else:
+		plusInput = switches.values('Plus').copy()
+
+
+	if type( plusInput ) == list:
+		for i,yh in enumerate(plusInput):
+			plusInput[i]= ci(plusInput[i])
+	# -->   #end> this was added 2022-07-20
+	if not end is None:
+		if type( plusInput ) == str:
+			plusInput += end
+		else:
+			for i,yh in enumerate(plusInput):
+				plusInput[i] += end
+	
+	pi = []
+	for x in plusInput:
+		pi.append( ci(x) )
+	plusInput = pi
+	del pi
+	if type( plusInput ) == str:
+		plusList = [plusInput]
+	else:
+		plusList = plusInput
+	length = len(plusList)
+
+	if length == 1 and not plusList[0] in string: return False
+	elif length == 2:
+		if not plusList[0] in string: return False
+		if not plusList[1] in string: return False
+	elif length == 3:
+		if not plusList[0] in string: return False
+		if not plusList[1] in string: return False
+		if not plusList[3] in string: return False
+
+	cnt = 0
+	result = False
+	noBreak='[]()_01`23456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"'+"'" + ''.join(plusList)
+	stringN=' '
+	xstringx=string
+	for vgo in string:
+		if vgo in noBreak: stringN+=vgo
+		else: stringN+=' '
+	stringN+=' '
+	# string=stringN
+
+
+	for s in plusList:
+		sN=' '+s+' '
+		if '=' in __.sw.PlusCode:
+			if string == s:
+				cnt += 1
+		# elif len(s) > 1 and s[0] == '*':
+		elif '*x' in __.sw.PlusCode:
+			if string.endswith(s):
+				cnt += 1
+		# elif len(s) > 1 and s[-1] == '*':
+		elif 'x*' in __.sw.PlusCode:
+			if string.startswith(s):
+				cnt += 1
+		else:
+			# if s in string: cnt += 1
+			if sN in stringN: cnt += 1
+		# if 'opus' in string:
+		#   print_(cnt, string)
+		if length == cnt:
+			result = True
+			break
+		if plusOr:
+			if cnt > 0:
+				result = True
+	# print(cnt)
+	return result
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -10531,6 +10712,7 @@ class Switches:
 		return result
 
 	def dumpSwitches(self,includeBlank=False):
+		self.fieldSet('Long','active',True)
 		data = []
 		for i,row in enumerate(self.switches):
 			# if not row.value is None:
@@ -11237,6 +11419,17 @@ class Switches:
 			if somethingPrinted:
 				sys.exit()
 
+		if self.isActive('PlusCode'):
+			__.sw.PlusCode.append('0a72b2d27816')
+			for xCode in self.values('PlusCode'):
+				if len(xCode) > 1:
+					if xCode.startswith('*'): __.sw.PlusCode.append('*x')
+					elif xCode.endswith('*'): __.sw.PlusCode.append('x*')
+				else:
+					if xCode == '=': __.sw.PlusCode.append('=')
+					elif xCode == '!': __.sw.PlusCode.append('=')
+
+
 		if self.isActive('Help') or helpx:
 			self.help()
 
@@ -11279,6 +11472,9 @@ class Switches:
 
 
 
+		if self.isActive('DumpSwitches'):
+			self.dumpSwitches()
+			sys.exit()
 		if self.isActive('Debug') == True or self.isActive('Errors') == True:
 			# self.print()
 			self.printStatus()
@@ -16484,7 +16680,7 @@ def ci2(string):
 	string = _str.replaceAll(string,',',' ')
 	return string
 
-""" {7DB6A001-0637-4F13-B328-2B17A481CF35}
+# """ {7DB6A001-0637-4F13-B328-2B17A481CF35}
 def randomTrueFalse(fix=2):
 	import random
 
@@ -16529,7 +16725,7 @@ def randomizeCase(string):
 					ch = ch.upper()
 		result += ch
 	return result
-"""
+# """
 
 
 def onlyAlpha(string):
@@ -19290,6 +19486,7 @@ def load():
 		switches.register('Column', '-c,-column', 'size, name')
 		switches.register('Sort','-s,-sort', 'Asc:type, Desc:ext')
 		switches.register('Debug', '-debug')
+		switches.register('DumpSwitches', '-dump')
 		switches.register('Errors', '-Error,-Errors', '8,11 OR hide:8,11')
 		switches.register('Timeout', '-t,-Timeout')
 		switches.register('GroupBy', '-g,-group,-groupby', 'ext, month')
@@ -19313,6 +19510,7 @@ def load():
 		switches.register('Plus-Sub', '++','any')
 		switches.register('PlusOr', '-or')
 		switches.register('PlusClose', '+close', '90%')
+		switches.register('PlusCode', '+code','=  OR  *x  OR  x*  AND/OR color' )
 		switches.register('PlusDuplicate', '+dup,+duplicate', '90%')
 		switches.register('StrictCase', '-case,-strictcase')
 		switches.register('PrintAutoAbbreviations', ',-printa,-aprint')
@@ -19421,47 +19619,51 @@ class regImp:
 		except Exception as e:
 			pass
 
-	def switch( self, names, value=None, appReg=False, delete=False,        d=False ):
+	def switch( self, names=[], value=None, appReg=False, dump=False, delete=False,        d=False ):
 		global appData
 		global switches
 
 		if type(appReg) == bool:
 			appReg = self.focusPop
 
-		for name in names.split(','):
-			vl = value
-			if name == 'Password' or name == 'Key':
-				vl = '*******'
-			if not value is None:
-				try:
-					appData[self.focus]['data']['field']['received']
-					profile = _profile.records.audit( name, vl, appReg=[appReg,self.focus] )
-					appData[appReg]['data']['field']['sent'].append( profile )
-					appData[self.focus]['data']['field']['received'].append( profile )
-				except Exception as e:
-					pass
-
-
-			# print_(self.focus)
-			__.appReg = self.focus
-
-			if delete or d:
-				switches.fieldSet( name, 'active', False )
-
-			else:
-
-				switches.fieldSet( name, 'active', True )
-
-				# if not type ( value ) == bool:
+		if dump:
+			switches.dumpSwitches()
+		else:
+			for name in names.split(','):
+				vl = value
+				if name == 'Password' or name == 'Key':
+					vl = '*******'
 				if not value is None:
-					if type( value ) == list:
-						switches.fieldSet( name, 'values', value )
-						switches.fieldSet( name, 'value', ','.join(value) )
-					else:
-						switches.fieldSet( name, 'value', value )
-						switches.fieldSet( name, 'values', [value] )
+					try:
+						appData[self.focus]['data']['field']['received']
+						profile = _profile.records.audit( name, vl, appReg=[appReg,self.focus] )
+						appData[appReg]['data']['field']['sent'].append( profile )
+						appData[self.focus]['data']['field']['received'].append( profile )
+					except Exception as e:
+						pass
 
 
+				# print_(self.focus)
+				__.appReg = self.focus
+
+				if delete or d:
+					switches.fieldSet( name, 'active', False )
+
+				else:
+
+					switches.fieldSet( name, 'active', True )
+
+					# if not type ( value ) == bool:
+					if not value is None:
+						if type( value ) == list:
+							switches.fieldSet( name, 'values', value )
+							switches.fieldSet( name, 'value', ','.join(value) )
+						else:
+							switches.fieldSet( name, 'value', value )
+							switches.fieldSet( name, 'values', [value] )
+
+
+			pass
 		__.appReg = self.focusPop
 
 	def deleteSwitch( self, name ):
@@ -19475,6 +19677,7 @@ class regImp:
 	def action( self, focusPop=True ):
 		__.appReg = self.focus
 
+		self.imp.appDBA = self.focus
 		result = self.imp.action()
 
 		if focusPop:
@@ -20994,3 +21197,9 @@ def osvar(var=None,val=None):
 
 imp=regImp
 # class regImp:
+
+
+# positiveResultsCode
+# __.sw.PlusCode
+# def caseUnspecific
+# caseISspecific

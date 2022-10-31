@@ -3116,6 +3116,11 @@ alias ssh.b.r="ssh-copy-id -i ~/.ssh/id_rsa.pub root@bespin.m-eta.app"
 alias ssh.m.r="ssh-copy-id -i ~/.ssh/id_rsa.pub root@mortis.m-eta.app"
 alias ssh.t.r="ssh-copy-id -i ~/.ssh/id_rsa.pub root@tatooine.m-eta.app"
 alias ssh.t.a="ssh-copy-id -i ~/.ssh/id_rsa.pub admin@tatooine.m-eta.app"
+alias ssh.d.s="ssh-copy-id -i ~/.ssh/id_rsa.pub scott@dantooine.m-eta.app"
+alias ssh.d.r="ssh-copy-id -i ~/.ssh/id_rsa.pub root@dantooine.m-eta.app"
+
+
+
 
 # alias cd/="cd /"
 alias x.="exit"
@@ -3134,11 +3139,14 @@ alias ssh.h.s.="ssh-copy-id -i /mnt/c/Users/Scott/.ssh/id_rsa.pub scott@hoth.m-e
 alias ssh.b.s.="ssh-copy-id -i /mnt/c/Users/Scott/.ssh/id_rsa.pub scott@bespin.m-eta.app"
 alias ssh.m.s.="ssh-copy-id -i /mnt/c/Users/Scott/.ssh/id_rsa.pub scott@mortis.m-eta.app"
 alias ssh.t.s.="ssh-copy-id -i /mnt/c/Users/Scott/.ssh/id_rsa.pub scott@tatooine.m-eta.app"
+alias ssh.d.s.="ssh-copy-id -i /mnt/c/Users/Scott/.ssh/id_rsa.pub scott@dantooine.m-eta.app"
 
 alias ssh.h.r.="ssh-copy-id -i /mnt/c/Users/Scott/.ssh/id_rsa.pub root@hoth.m-eta.app"
 alias ssh.b.r.="ssh-copy-id -i /mnt/c/Users/Scott/.ssh/id_rsa.pub root@bespin.m-eta.app"
 alias ssh.m.r.="ssh-copy-id -i /mnt/c/Users/Scott/.ssh/id_rsa.pub root@mortis.m-eta.app"
 alias ssh.t.r.="ssh-copy-id -i /mnt/c/Users/Scott/.ssh/id_rsa.pub root@tatooine.m-eta.app"
+alias ssh.d.r.="ssh-copy-id -i /mnt/c/Users/Scott/.ssh/id_rsa.pub root@dantooine.m-eta.app"
+
 #-->   end#> .ssh manager
 
 #--> start#> mongo srv
@@ -3245,7 +3253,6 @@ alias vps.t.d="vps.t.py.d; vps.t.sh.d; vps.t.db.d"
 #--> start#> hoth@m-eta.app
 alias vps.h.py.v.u="scp $ww/python/vps*.py root@hoth.m-eta.app:$ww/python/ ; ssh root@hoth.m-eta.app \'chmod -R 777 /opt/rightthumb-widgets-v0/\'"
 alias vps.h.sh2.u="ssh root@hoth.m-eta.app -f \'mkdir -p /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/\' ; scp /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/* root@hoth.m-eta.app:/opt/rightthumb-widgets-v0/widgets/bash/vps-srv/ ; ssh root@hoth.m-eta.app \'chmod -R 777 /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/\'"
-
 alias vps.h.py.u="scp $ww/python/vps*.py root@hoth.m-eta.app:$ww/python/ ; ssh root@hoth.m-eta.app \'chmod -R 777 /opt/rightthumb-widgets-v0/\'"
 alias vps.h.sh.u="scp -r $ww/bash/vps-srv/ root@hoth.m-eta.app:/opt/rightthumb-widgets-v0/widgets/bash/ ; ssh root@hoth.m-eta.app \'chmod -R 777 /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/\'"
 alias vps.h.db.u="scp $ww/databank/tables/*.* root@hoth.m-eta.app:/opt/rightthumb-widgets-v0/widgets/databank/tables/ ; ssh root@hoth.m-eta.app \'chmod -R 777 /opt/rightthumb-widgets-v0/\'"
@@ -3266,16 +3273,12 @@ alias vps.b.db="scp $ww/databank/tables/*.* root@bespin.m-eta.app:/opt/rightthum
 alias vps.b.sh.="scp -r root@bespin.m-eta.app:/opt/rightthumb-widgets-v0/widgets/bash/vps-srv/ $ww/bash/ ; chmod 777 -R $ww/bash/vps-srv/"
 alias vps.b.db.="scp -rp root@bespin.m-eta.app:/opt/rightthumb-widgets-v0/widgets/databank/tables/*.* $ww/databank/tables/ ; chmod 777 -R $ww/databank/tables/"
 alias vps.b.py.="scp -rp root@bespin.m-eta.app:$ww/python/vps* $ww/python/ ; chmod 777 -R $ww/python/"
-
 alias vps.b.c="ssh -f root@bespin.m-eta.app -f \'/bin/python3 $ww/python/shClean.py -r -folder /opt \'"
-
 alias vps.b.py.v.u="scp $ww/python/vps*.py root@bespin.m-eta.app:$ww/python/ ; ssh root@bespin.m-eta.app \'chmod -R 777 /opt/rightthumb-widgets-v0/\'"
 alias vps.b.sh2.u="ssh root@bespin.m-eta.app -f \'mkdir -p /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/\' ; scp /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/* root@bespin.m-eta.app:/opt/rightthumb-widgets-v0/widgets/bash/vps-srv/ ; ssh root@bespin.m-eta.app \'chmod -R 777 /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/\'"
-
 alias vps.b.py.u="scp $ww/python/vps*.py root@bespin.m-eta.app:$ww/python/ ; ssh root@bespin.m-eta.app \'chmod -R 777 /opt/rightthumb-widgets-v0/\'"
 alias vps.b.sh.u="scp -r $ww/bash/vps-srv/ root@bespin.m-eta.app:/opt/rightthumb-widgets-v0/widgets/bash/ ; ssh root@bespin.m-eta.app \'chmod -R 777 /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/\'"
 alias vps.b.db.u="scp $ww/databank/tables/*.* root@bespin.m-eta.app:/opt/rightthumb-widgets-v0/widgets/databank/tables/ ; ssh root@bespin.m-eta.app \'chmod -R 777 /opt/rightthumb-widgets-v0/\'"
-
 alias vps.b.sh.d="scp -r root@bespin.m-eta.app:/opt/rightthumb-widgets-v0/widgets/bash/vps-srv/ $ww/bash/ ; chmod 777 -R $ww/bash/vps-srv/"
 alias vps.b.db.d="scp -rp root@bespin.m-eta.app:/opt/rightthumb-widgets-v0/widgets/databank/tables/*.* $ww/databank/tables/ ; chmod 777 -R $ww/databank/tables/"
 alias vps.b.py.d="scp -rp root@bespin.m-eta.app:$ww/python/vps* $ww/python/ ; chmod 777 -R $ww/python/"
@@ -3283,10 +3286,27 @@ alias vps.b.u="vps.b.py.u; vps.b.sh.u; vps.b.db.u"
 alias vps.b.d="vps.b.py.d; vps.b.sh.d; vps.b.db.d"
 #-->   end#> bespin@m-eta.app
 
+
+#--> start#> dantooine@m-eta.app
+alias ssh.d.a="ssh-copy-id -i ~/.ssh/id_rsa.pub admin@dantooine.m-eta.app"
+alias ssh.d.s="ssh-copy-id -i ~/.ssh/id_rsa.pub scott@dantooine.m-eta.app"
+alias ssh.d.r="ssh-copy-id -i ~/.ssh/id_rsa.pub root@dantooine.m-eta.app"
+alias vps.d.py.v.u="scp $ww/python/vps*.py root@dantooine.m-eta.app:$ww/python/ ; ssh root@dantooine.m-eta.app \'chmod -R 777 /opt/rightthumb-widgets-v0/\'"
+alias vps.d.sh2.u="ssh root@dantooine.m-eta.app -f \'mkdir -p /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/\' ; scp /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/* root@dantooine.m-eta.app:/opt/rightthumb-widgets-v0/widgets/bash/vps-srv/ ; ssh root@dantooine.m-eta.app \'chmod -R 777 /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/\'"
+alias vps.d.py.u="scp $ww/python/vps*.py root@dantooine.m-eta.app:$ww/python/ ; ssh root@dantooine.m-eta.app \'chmod -R 777 /opt/rightthumb-widgets-v0/\'"
+alias vps.d.sh.u="scp -r $ww/bash/vps-srv/ root@dantooine.m-eta.app:/opt/rightthumb-widgets-v0/widgets/bash/ ; ssh root@dantooine.m-eta.app \'chmod -R 777 /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/\'"
+alias vps.d.db.u="scp $ww/databank/tables/*.* root@dantooine.m-eta.app:/opt/rightthumb-widgets-v0/widgets/databank/tables/ ; ssh root@dantooine.m-eta.app \'chmod -R 777 /opt/rightthumb-widgets-v0/\'"
+alias vps.d.sh.d="scp -r root@dantooine.m-eta.app:/opt/rightthumb-widgets-v0/widgets/bash/vps-srv/ $ww/bash/ ; chmod 777 -R $ww/bash/vps-srv/"
+alias vps.d.db.d="scp -rp root@dantooine.m-eta.app:/opt/rightthumb-widgets-v0/widgets/databank/tables/*.* $ww/databank/tables/ ; chmod 777 -R $ww/databank/tables/"
+alias vps.d.py.d="scp -rp root@dantooine.m-eta.app:$ww/python/vps* $ww/python/ ; chmod 777 -R $ww/python/"
+alias vps.d.u="vps.d.py.u; vps.d.sh.u; vps.d.db.u"
+alias vps.d.d="vps.d.py.d; vps.d.sh.d; vps.d.db.d"
+#-->   end#> dantooine@m-eta.app
+
+
 #--> start#> mortis@m-eta.app
 alias vps.m.py.v.u="scp $ww/python/vps*.py root@mortis.m-eta.app:$ww/python/ ; ssh root@mortis.m-eta.app \'chmod -R 777 /opt/rightthumb-widgets-v0/\'"
 alias vps.m.sh2.u="ssh root@mortis.m-eta.app -f \'mkdir -p /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/\' ; scp /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/* root@mortis.m-eta.app:/opt/rightthumb-widgets-v0/widgets/bash/vps-srv/ ; ssh root@mortis.m-eta.app \'chmod -R 777 /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/\'"
-
 alias vps.m.py.u="scp $ww/python/vps*.py root@mortis.m-eta.app:$ww/python/ ; ssh root@mortis.m-eta.app \'chmod -R 777 /opt/rightthumb-widgets-v0/\'"
 alias vps.m.sh.u="scp -r $ww/bash/vps-srv/ root@mortis.m-eta.app:/opt/rightthumb-widgets-v0/widgets/bash/ ; ssh root@mortis.m-eta.app \'chmod -R 777 /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/\'"
 alias vps.m.db.u="scp $ww/databank/tables/*.* root@mortis.m-eta.app:/opt/rightthumb-widgets-v0/widgets/databank/tables/ ; ssh root@mortis.m-eta.app \'chmod -R 777 /opt/rightthumb-widgets-v0/\'"

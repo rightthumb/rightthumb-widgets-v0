@@ -153,22 +153,24 @@ _.postLoad( __file__ )
 
 
 def identify(row):
-	if 'sUW+UyzaAo1BuzZ/2UahGCp4kHgiwk+xKniQeCLCT7GlpF8/aeR6NXE0uVp6/Kb/w3tFeg3Qb+9KnIbZ+6+nWijD//xIEr3Q' in row:
-		return True
-	if ' ' in row:
-		return False
-	if '!V!' in row:
-		return False
-	if row.endswith('='):
-		return True
-	# if len(row) > 15:
-	#   return True
+	if not row:            return False
+	if ' ' in row:         return False
+	if '!V!' in row:       return False
+	if row == row.lower(): return False
+	if not any(ele in row for ele in list('0123456789')): return False
+	if row.endswith('='):  return True
+	if 'sUW+UyzaAo1BuzZ/2UahGCp4kHgiwk+xKniQeCLCT7GlpF8/aeR6NXE0uVp6/Kb/w3tFeg3Qb+9KnIbZ+6+nWijD//xIEr3Q' in row: return True
+
+	# if len(row) > 15: return True
+
+
 
 	n = '0123456789'
 	l = 'abcdefghijklmnopqrstuvwxyz'
 	u = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 	aa = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
 	chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ/+='
+
 
 
 	hasAlpha=False

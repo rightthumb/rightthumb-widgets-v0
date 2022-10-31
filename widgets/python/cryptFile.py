@@ -248,11 +248,16 @@ def action():
 
 					output = filepath+encrypted_file_ext_use
 					filepath = os.path.abspath(filepath)
-					output = _.replaceFile( filepath, output )
+					if output.lower() == filepath.lower():
+						output=filepath
+
+					if not output == filepath:
+						output = _.replaceFile( filepath, output )
 					# decrypt
 					tmp = False
 					outputBK = output
 					if filepath == output:
+						_.pr('same',c='red')
 						tmp = True
 						# os.rename( output, filepath )
 						# time.sleep(.2)
@@ -268,6 +273,7 @@ def action():
 						time.sleep(.2)
 						if os.path.isfile(filepath):
 							os.remove( filepath )
+						time.sleep(.2)
 						os.rename( output, outputBK )
 						time.sleep(.2)
 						if os.path.isfile(output):
