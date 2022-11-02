@@ -10,12 +10,15 @@ rem    - Scott Taylor Reph, RightThumb.com
 rem ###########################################################################
 rem ## {C3P0D40fAe8B} ##
 
-title Fix Printer
+rem title Fix Printer
 echo Fixing Printer
 echo ------------------
 net stop spooler
+dir /s %systemroot%\system32\spool\printers\*.shd
+dir /s %systemroot%\system32\spool\printers\*.spl
 del %systemroot%\system32\spool\printers\*.shd
 del %systemroot%\system32\spool\printers\*.spl
 net start spooler
+echo ------------------
 rem pause
 

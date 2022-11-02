@@ -14605,7 +14605,10 @@ def timeAgo22( do='', startDate=None,epoch=None, d=None ):
 	if len(timeAgoBase) > 1 and do == timeAgoBase[1]:
 		if timeAgoBaseCount == 3 or timeAgoBaseCount == 5 :
 			pass
-			ts += 86400-1
+			try:
+				ts += 86400-1
+			except Exception as ee:
+				pass
 	# print_( timeAgoBaseCount, ts )
 	return ts
 
