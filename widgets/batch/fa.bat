@@ -14,4 +14,4 @@ if [%2] == [] (
 	shift
 	call p file-open -backup -alias %alias% -f %*
 	rem echo bb
-)
+) 

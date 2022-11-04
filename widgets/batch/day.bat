@@ -10,4 +10,5 @@ if [%1] == [] (
 	call p day -ago 3d
 ) else (
 	call p day -ago %*
-)
+) 
+ 

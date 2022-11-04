@@ -18,3 +18,4 @@ set /p do=Enter Comand:
 runas /netonly /user:"%c%\%u%" "%do%"
 echo done
 
+ 

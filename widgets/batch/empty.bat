@@ -13,3 +13,4 @@ rem ## {C3P0D40fAe8B} ##
 dir /b /a "%1\*" | >nul findstr "^" && (echo Folder Not Empty) || (echo Folder Empty) 
 
 
+ 

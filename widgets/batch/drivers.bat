@@ -13,3 +13,4 @@ rem ## {C3P0D40fAe8B} ##
 driverquery /v
 :: drivers > ~out.txt & cleanSpaces ~out.txt > ~out2.txt & parse ~out2.txt "," 2  & del ~out*
 
+ 

@@ -84,3 +84,4 @@ echo "%myvar2%" %1
 "c:\Program Files (x86)\7-Zip\7z.exe" a "%myvar2%" %1
 
 
+ 

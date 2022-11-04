@@ -26,3 +26,4 @@ start notepad "%log%"
 cls
 call %0
 
+ 

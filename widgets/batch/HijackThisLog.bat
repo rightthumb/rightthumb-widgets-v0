@@ -18,3 +18,4 @@ echo.
 start "" notepad HijackThis_WhitelistCMD.txt
 call b stmp
 
+ 

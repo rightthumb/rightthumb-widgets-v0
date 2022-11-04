@@ -28,3 +28,4 @@ echo.
 ::IF EXIST ~ipOwner.txt (del ~ipOwner.txt)
 
 
+ 

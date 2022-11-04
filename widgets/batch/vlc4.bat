@@ -1,1 +1,1 @@
-"D:\Program Files\VideoLAN\VLC\vlc.exe" "New Folder2"
+"D:\Program Files\VideoLAN\VLC\vlc.exe" "New Folder2" 

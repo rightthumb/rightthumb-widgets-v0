@@ -22,3 +22,4 @@ IF ["%testTMP%"] == ["Access denied"] (
     )
 set result=
 
+ 

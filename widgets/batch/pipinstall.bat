@@ -15,3 +15,4 @@ rem CALL p pipReg -command "pip install %*" -module %*
 
 rem "%USERPROFILE%\AppData\Local\Programs\Python\Python36-32\Scripts\pip.exe" install %*
 
+ 

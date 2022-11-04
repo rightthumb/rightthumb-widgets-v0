@@ -1,2 +1,2 @@
 @echo off 
-call p -paste
+call p -paste 

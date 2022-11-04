@@ -12,3 +12,4 @@ rem ## {C3P0D40fAe8B} ##
 
 REG Query HKLM\Software /V /F %1 /S
 
+ 

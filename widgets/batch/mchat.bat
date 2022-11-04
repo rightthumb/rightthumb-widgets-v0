@@ -25,3 +25,4 @@ set /p m=Enter the single line Message:)
 net send %to% %m%
 echo success
 
+ 

@@ -17,3 +17,4 @@ CALL p files -folder %widgets%\widgets\python\ + *.py | p f -jn  - #  + %*
 
 
 
+ 

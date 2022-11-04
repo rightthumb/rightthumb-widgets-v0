@@ -13,3 +13,4 @@ rem ## {C3P0D40fAe8B} ##
 type %myTables%\wifi_passwords.txt | p line -p "," 0;5 -make ";n      id: {0};npassword: {1}" %*
 
 
+ 

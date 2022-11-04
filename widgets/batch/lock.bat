@@ -1,2 +1,2 @@
 @echo off
-call p lock-files
+call p lock-files 

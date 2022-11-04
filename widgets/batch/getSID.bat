@@ -35,3 +35,4 @@ FOR %%i IN ("a=A" "b=B" "c=C" "d=D" "e=E" "f=F" "g=G" "h=H" "i=I" "j=J" "k=K" "l
 set machineID={%machineID:~0,8%-%machineID:~8,4%-%machineID:~12,4%-%machineID:~16,4%-%machineID:~20,12%}
 set thisSIDMD5=
 
+ 

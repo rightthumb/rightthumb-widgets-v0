@@ -14,3 +14,4 @@ set thisFile=stripHTML.php
 %php% %phpFiles%\%thisFile%
 
 
+ 

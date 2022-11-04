@@ -9,4 +9,4 @@ if "%~1" neq "" (
   shift /1
   goto :getRemainingArgs
 )
-echo remainingArgs=%remainingArgs%
+echo remainingArgs=%remainingArgs% 

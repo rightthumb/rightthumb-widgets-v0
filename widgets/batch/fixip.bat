@@ -17,3 +17,4 @@ ipconfig /renew
 
 call myip
 
+ 

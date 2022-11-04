@@ -9,3 +9,4 @@ goto:eof
 echo two %*
 set fn_two=%*
 goto:eof 
+ 

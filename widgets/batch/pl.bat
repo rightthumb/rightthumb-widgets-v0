@@ -1,2 +1,2 @@
 @echo off 
-call p pl -add
+call p pl -add 

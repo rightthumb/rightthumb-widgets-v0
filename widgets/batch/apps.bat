@@ -15,3 +15,4 @@ REG Query HKLM\Software\WOW6432Node\RegisteredApplications\  /S > %stmp%\app_lis
 
 call p appList
 
+ 

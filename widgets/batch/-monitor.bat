@@ -185,3 +185,4 @@ GOTO loop
 :netsh wlan show all |+ ssid |- number |- bssid |- name |++ "     "
 
 
+ 

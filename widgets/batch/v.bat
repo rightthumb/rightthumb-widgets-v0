@@ -18,3 +18,4 @@ if [%1]==[] (
 :Same as view.bat
 :checkout notes in above script
 
+ 

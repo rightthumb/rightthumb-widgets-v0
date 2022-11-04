@@ -1,1 +1,1 @@
-echo "%1" >> %jess%
+echo "%1" >> %jess% 

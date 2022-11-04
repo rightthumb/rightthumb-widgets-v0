@@ -36,4 +36,4 @@ rem #after) modified sys.path in -copy.py
 rem #change-backup) C:\Users\Scott\.rt\profile\backup\txt\1655565178.0501478-2022_05_18-14_20_35-base.bat
 
 
-rem #title) bookmarks are depreciated in %0
+rem #title) bookmarks are depreciated in %0 

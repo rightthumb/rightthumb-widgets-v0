@@ -1,2 +1,2 @@
 @echo off
-call p secure-delete-file -f %*
+call p secure-delete-file -f %* 

@@ -12,3 +12,4 @@ if "%~1" neq "" (
 rem echo remainingArgs=%remainingArgs%
 
 call p bot -r "%remainingArgs%"
+ 

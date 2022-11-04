@@ -1,2 +1,2 @@
 @echo off
-p keychain -temp -get -label %1
+p keychain -temp -get -label %1 

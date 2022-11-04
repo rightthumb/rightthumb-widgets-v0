@@ -17,3 +17,4 @@ IF [%1] == [] (
     CALL p google -q %*
 )
 
+ 

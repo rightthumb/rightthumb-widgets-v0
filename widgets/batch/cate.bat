@@ -28,4 +28,4 @@ call cat %cate_subject% %remainingArgs%
 rem echo %1
 rem shift
 rem echo %1
-rem call cat %cate%
+rem call cat %cate% 

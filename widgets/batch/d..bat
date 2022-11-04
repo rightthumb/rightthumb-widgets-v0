@@ -1,2 +1,2 @@
 @echo off
-call p site -d -f %*
+call p site -d -f %* 

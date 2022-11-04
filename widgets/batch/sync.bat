@@ -24,3 +24,4 @@ xcopy /s/d/y/c  "%appPath%\Python36-32\" "D:\Apps\Python\Python36-32\*.*">> %app
 
 
 
+ 

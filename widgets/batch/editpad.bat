@@ -13,3 +13,4 @@ rem ## {C3P0D40fAe8B} ##
 start "D:\Documents and Settings\76613\Favorites\Office\PA\Notepad++Portable" "D:\Documents and Settings\76613\Favorites\Office\PA\Notepad++Portable\Notepad++Portable.exe"
 
 
+ 

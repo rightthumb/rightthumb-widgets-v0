@@ -54,3 +54,4 @@ if [%shouldEcho%] == [true] ECHO %JDate%
 SET shouldEcho=
 GOTO:EOF
 
+ 

@@ -20,3 +20,4 @@ set /a counter=0
 for /l %%x in (1, 1, %argCount%) do (
 set /a counter=!counter!+1 )
 
+ 

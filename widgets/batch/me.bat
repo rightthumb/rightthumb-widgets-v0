@@ -1,1 +1,1 @@
-call name.bat %1
+call name.bat %1 

@@ -167,3 +167,4 @@ GOTO:EOF
     IF EXIST "%mdrIndex%\*%thisSelected%*" (rename "%mdrIndex%\*%thisSelected%*" "%settingPriority:~0,2%%thisSelected%.txt")
 GOTO:EOF
 
+ 

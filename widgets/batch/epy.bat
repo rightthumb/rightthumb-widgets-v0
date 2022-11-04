@@ -24,3 +24,4 @@ if not [%3] == [] (
 rem start "EDIT" %code_editor% "%python%\%1.py"
 call p file-open -app %code_editor% -f "%python%\%1.py"
 
+ 

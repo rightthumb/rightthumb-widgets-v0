@@ -16,4 +16,4 @@ mode 30,2
 color 2f
 call %userprofile%\rr
 echo hotkeys listener
-call p hotkeys
+call p hotkeys 

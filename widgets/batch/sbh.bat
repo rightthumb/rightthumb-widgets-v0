@@ -15,3 +15,4 @@ echo =============== >> "%file%"
 echo %date% @ %time% >> "%file%"
 doskey /history >> "%file%"
 
+ 

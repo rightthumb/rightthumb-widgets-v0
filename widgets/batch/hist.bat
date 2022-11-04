@@ -21,3 +21,4 @@ for /f "usebackq delims=" %%a in (c:\index\history) do (
 :printme
 echo %%a
 
+ 

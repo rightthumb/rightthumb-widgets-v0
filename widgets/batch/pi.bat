@@ -15,4 +15,4 @@ if [%1] == [bb] set pingb=bing.com
 if [%1] == [y] set pingb=yahoo.com
 
 echo ping %pingb% -t
-ping %pingb% -t
+ping %pingb% -t 

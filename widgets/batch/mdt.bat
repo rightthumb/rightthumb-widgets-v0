@@ -20,3 +20,4 @@ call mdtShift
 rem cd>>%mdt%
 :also mdtoday
 
+ 

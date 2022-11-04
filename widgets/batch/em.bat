@@ -12,3 +12,4 @@ rem ## {C3P0D40fAe8B} ##
 
 call star %1 %2 %3
 
+ 

@@ -86,3 +86,4 @@ echo "%myvar2%" %1
 rename "%myvar2%" "%ndVar%"
 
 
+ 

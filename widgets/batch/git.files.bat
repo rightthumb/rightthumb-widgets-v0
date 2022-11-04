@@ -14,3 +14,4 @@ goto:eof
 :two
 call p files -w --c -ago %* | p line --c -make "git add {}" | p execute
 goto:eof
+ 

@@ -16,3 +16,4 @@ set n=%code_editor%
 echo %code_editor%>"%myVars%\notepad.txt"
 
 
+ 

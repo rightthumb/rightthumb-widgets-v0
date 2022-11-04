@@ -32,3 +32,4 @@ color %blink_1_color%
 exit
 
 
+ 

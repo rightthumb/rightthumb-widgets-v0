@@ -22,3 +22,4 @@ xcopy /s/d/y/c "%appPath%\Python36-32\*.*" "%USERPROFILE%\AppData\Local\Programs
 
 
 
+ 

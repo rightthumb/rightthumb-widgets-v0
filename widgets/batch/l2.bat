@@ -25,3 +25,4 @@ nslookup <%in% >> %out%
 start notepad %out%
 http://www.microsoft.com/windowsxp/home/using/productdoc/en/default.asp?url=/windowsxp/home/using/productdoc/en/redirection.asp
 
+ 

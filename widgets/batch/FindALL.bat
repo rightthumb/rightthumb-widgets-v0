@@ -47,3 +47,4 @@ cd\
 dir %search% %switch% >> "%log%"
 
 
+ 

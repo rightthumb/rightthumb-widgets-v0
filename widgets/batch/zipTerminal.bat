@@ -18,3 +18,4 @@ SET do=%1
 zip appServer.%do% appServer.%do%
 SET /p pause=pause: 
 
+ 

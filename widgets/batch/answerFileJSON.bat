@@ -40,3 +40,4 @@ for (var i in obj) WSH.Echo('JSON[' + i + ']=' + obj[i]);
 rem echo %JSON%
 
 
+ 

@@ -12,3 +12,4 @@ rem ## {C3P0D40fAe8B} ##
 
 start "D:\Windows\System32\rundll32.exe D:\WINDOWS\system32\shimgvw.dll,ImageView_Fullscre en" %1
 
+ 
