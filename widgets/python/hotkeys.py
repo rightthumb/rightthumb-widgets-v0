@@ -2446,7 +2446,7 @@ def load():
 				'suffix': { 'raw': [ 'alt.', 'win.', 's' ], 'do': 'Clip.suffix()' },
 				'lower': { 'raw': [ 'alt.', 'win.', 'l' ], 'do': 'Clip.toLower()' },
 				'lower2': { 'raw': [ 'ctrl.', 'win.', 'l' ], 'do': 'Clip.toLower()' },
-				'randomC': { 'raw': [ 'alt.', 'win.', 'k' ], 'do': 'Clip.toRandomCase()' },
+				# 'randomC': { 'raw': [ 'alt.', 'win.', 'k' ], 'do': 'Clip.toRandomCase()' },
 				'upper': { 'raw': [ 'alt.', 'win.', 'u' ], 'do': 'Clip.toUpper()' },
 				'upper2': { 'raw': [ 'ctrl.', 'win.', 'u' ], 'do': 'Clip.toUpper()' },
 
@@ -2551,3 +2551,7 @@ if __name__ == '__main__':
 
 
 # dup_space
+
+# toRandomCase
+# 	crashes
+

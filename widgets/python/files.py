@@ -740,8 +740,8 @@ def action():
 			_.switches.fieldSet( 'Minus', 'value', 'minecraft.py,vps-' )
 			_.switches.fieldSet( 'Minus', 'values', ['minecraft.py','vps-'] )
 			_.switches.fieldSet( 'Plus', 'active', True )
-			_.switches.fieldSet( 'Plus', 'value', '*.py,*.sh,*.bat,*.MD' )
-			_.switches.fieldSet( 'Plus', 'values', ['*.py','*.sh','*.bat','*.MD'] )
+			_.switches.fieldSet( 'Plus', 'value', '*.py,*.sh,*.bat,*.MD,*.ad' )
+			_.switches.fieldSet( 'Plus', 'values', ['*.py','*.sh','*.bat','*.MD','*.ad'] )
 			_.switches.fieldSet( 'PlusOr', 'active', True )
 			getFolder(_v.ww+os.sep+'python')
 			getFolder(_v.ww+os.sep+'batch', r=False)
@@ -749,6 +749,7 @@ def action():
 			getFolder(_v.ww+os.sep+'php', r=False)
 			getFolder(_v.ww+os.sep+'windows')
 			getFolder(_v.ww+os.sep+'bash')
+			getFolder(_v.ww+os.sep+'ads')
 			getFolder(_v.widgets+os.sep+'install')
 			getFolder(_v.widgets, r=False)
 		

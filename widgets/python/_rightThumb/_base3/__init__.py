@@ -12800,7 +12800,13 @@ class Table:
 							for cn in str(v['data']):
 								if cn in '0123456789.':
 									nX.append(cn)
-					result = float(''.join(nX))
+					
+					try:
+						result = float(''.join(nX))
+					except Exception as e:
+						nXj=[]
+						for x99 in nX:nXj.append(str(x99))
+						result = ''.join(nXj)
 					if str(result).endswith('.0'):
 						result = int(result)
 					# print_(result)
@@ -14604,11 +14610,8 @@ def timeAgo22( do='', startDate=None,epoch=None, d=None ):
 
 	if len(timeAgoBase) > 1 and do == timeAgoBase[1]:
 		if timeAgoBaseCount == 3 or timeAgoBaseCount == 5 :
-			pass
-			try:
-				ts += 86400-1
-			except Exception as ee:
-				pass
+			try: ts += 86400-1
+			except Exception as ee: pass
 	# print_( timeAgoBaseCount, ts )
 	return ts
 
@@ -20559,7 +20562,7 @@ def life(subject):
 
 def ico():
 	random=__.imp('random')
-	ads=fo(_v.life+'ads')
+	ads=fo(_v.life+'apps')
 	ri = random.randrange(len(ads))
 	cho=ads[ri]
 	ic=list('🧻🧪💀🦆🦉🥓🦄🦀🖕🍣🍤🍥🍡🥃🥞🐕👾🐉🐓🐋🐌🐢👽👿🥑🐡🐗💐🏹🎨🐔🐛🎯🌯📷🛶🥕🍸🍳🐲🎣🐟🦅👀🐸🤞💪💾👻🐊🍔🌭🍀🕓🦊🍟🥝🐒🥞🐼📎🐧💩🍕🍍🦏🍗🌈🐳🦑🚀🙈🙊🙉🌮🐅🐯🍉🚽🍅👅🎩🍷')
@@ -20673,12 +20676,17 @@ def dots(path):
 			if i == len(rts)-1: return eval(rts[0]);
 nsfw_=False
 def ad(path=None,label='ad'):
+	if not os.path.isdir(_v.ads+os.sep+'apps'): return None
 	global MINI_ADS
+	global ads
+	ads = []
 	
+	def add_ad_fo(ad_fo):
+		global ads
+		for a2 in fo(_v.ads+os.sep+ad_fo): ads.append(a2);
 
-	# print(_v.life+'ads')
+	# print(_v.life+'apps')
 	# sys.exit()
-	if not os.path.isdir(_v.life+'ads'): return None
 	global nsfw; global nsfw_;
 	if not nsfw_:
 		should_dl=False
@@ -20705,11 +20713,13 @@ def ad(path=None,label='ad'):
 	elif not path:
 		nsfw_=True
 		random=__.imp('random')
-		ads=fo(_v.life+'ads')
-		for a2 in fo(_v.life+'ads.quotes'): ads.append(a2);
+		add_ad_fo('apps')
+		add_ad_fo('quotes')
+		
 
 		if nsfw:
-			for a2 in fo(_v.life+'ads.nsfw'): ads.append(a2);
+			add_ad_fo('nsfw')
+			
 		
 		ri = random.randrange(len(ads))
 		cho=ads[ri]
@@ -20755,7 +20765,7 @@ def ad(path=None,label='ad'):
 	linePrint(c='green',center=label, length=_width)
 	# cp( '</ad>', 'yellow' )
 	return ad
-ads=ad
+# ads=ad
 
 def URL(url):
 	requests=dots('requests.get')
