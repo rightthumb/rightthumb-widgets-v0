@@ -1321,7 +1321,7 @@ __.specifications['fileBackup-auto-crypt'] = {
 										],
 
 										'folders': [
-														_v.ww  +os.sep+  'documentation'  ,
+														# _v.ww  +os.sep+  'documentation'  ,
 														_v.ww  +os.sep+  'bash'+os.sep+'notes'  ,
 										],
 }

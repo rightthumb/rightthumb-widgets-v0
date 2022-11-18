@@ -39,6 +39,7 @@ def appSwitches():
 	_.switches.register('DoNotColorize', '-nocolor')
 	_.switches.register('Copy', '-copy', 'inBackup -1')
 	_.switches.register('App-Switches', '-sw','ls.py')
+	_.switches.register('Path', '-path')
 
 
 
@@ -239,7 +240,11 @@ def colorize( code ):
 	return result
 
 def process( path ):
-	
+	ticket = path.split(os.sep)[-1].replace('.txt','')
+	ticket = ticket.replace( 'closed-','' )
+	if 'op' in ticket: tStatus = 'open'
+	else: tStatus = 'closed'
+
 	file = _.getText( path, raw=True, clean=2 )
 	hasPrinted = False
 	theTotal = 0
@@ -251,20 +256,31 @@ def process( path ):
 		if not row.startswith('<'):
 			if row.startswith('Session:'):
 				hasPrinted = False
+				
 				if 'isAdmin:True' in row:
 					# fileLabel = _.colorThis( row+'______________________________________ ______________________________________', 'Background.red', p=0 )
-					fileLabel = _.linePrint(p=0,c='Background.red')
-
+					# fileLabel = _.linePrint(p=0,c='Background.red')
+					fileLabel = _.linePrint(p=0,c='red')
+					header = _.pr( row, c='red', p=0 )
 				else:
-					fileLabel = _.linePrint(p=0,c='Background.green')
+					# fileLabel = _.linePrint(p=0,c='Background.green')
+					fileLabel = _.linePrint(p=0,c='green')
+					header = _.pr( row.replace(' isAdmin:False', ''), c='green', p=0 )
 					# fileLabel = _.colorThis( row, 'Background.green', p=0 )
+
 			else:
 				if _.showLine( row ):
 					if not hasPrinted:
 						hasPrinted = True
 						# _.colorThis( ['\n\n___________________________________________________________________________________________________________'], 'red' )
-						_.pr(); _.pr(); _.linePrint(c='red');
+						# _.pr(); _.pr(); _.linePrint(c='red');
+						_.pr(); _.pr(); _.linePrint(c='white');
 						_.pr( fileLabel )
+						_.pr( header )
+						if tStatus == 'open': _.pr( tStatus, c='red' )
+						if _.switches.isActive('Path'): _.pr(path)
+
+						# _.pr( ticket )
 					if 'echo this is ' in row and 'test' in row and 'file.txt' in row and '>' in row and not 'force' in row.lower():
 						pass
 					else:
