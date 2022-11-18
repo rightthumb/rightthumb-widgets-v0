@@ -3375,6 +3375,8 @@ alias k="$widgets/widgets/python/keychain.py -rc ";
 alias pc="$widgets/widgets/python/pc.py -rc ";
 alias color="$widgets/widgets/python/pipe-color.py -color ";
 alias epoch="echo $( date +%s )";
+alias whitelist="/opt/rightthumb-widgets-v0/widgets/bash/whitelist.sh"
+alias wl="/opt/rightthumb-widgets-v0/widgets/bash/whitelist.sh"
 
 
 
