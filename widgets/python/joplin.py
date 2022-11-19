@@ -17,6 +17,7 @@ import time
 import _rightThumb._construct as __
 appDBA = __.clearFocus( __name__, __file__ )
 __.appReg = appDBA
+
 def focus( parentApp='', childApp='', reg=True ):
 	global appDBA
 	f = __.appName( appDBA, parentApp, childApp )
@@ -33,8 +34,6 @@ import _rightThumb._string as _str
 
 def appSwitches():
 	pass
-
-
 _.autoBackupData = __.autoCreationConfiguration['backup']
 __.isRequired_Pipe = False
 __.isRequired_Pipe_or_File = False
@@ -76,7 +75,6 @@ _.appInfo[focus()] = {
 				       # {},
 	],
 	}
-
 _.appData[focus()] = {
 		'start': __.startTime,
 		'uuid': '',
@@ -88,53 +86,39 @@ _.appData[focus()] = {
 		},
 	}
 
-
-
 def registerSwitches( argvProcessForce=False ):
 	global appDBA
 	if not __.appReg == appDBA and appDBA in __.appReg:
-
 		if not __name__ == '__main__':
 			_.argvProcess = argvProcessForce
 		else:
 			_.argvProcess = True
-
 		_.load()
+
 		_.appInfo[__.appReg] = _.appInfo[appDBA]
 		_.appData[__.appReg] = _.appData[appDBA]
 	__.constructRegistration( _.appInfo[__.appReg]['file'],__.appReg )
 	appSwitches()
-
 	_.myFileLocation_Print = False
 	__.myFileLocations_SKIP_VALIDATION = False
 	_.switches.trigger( 'Files', _.myFileLocations )
 	_.switches.trigger( 'Folder', _.myFolderLocations )
 	_.switches.trigger( 'URL', _.urlTrigger )
-	
-	
 	_.defaultScriptTriggers()
 	_.switches.process()
-
-
 if not __name__ == '__main__':
 	_.argvProcess = False
 else:
 	_.argvProcess = True
-
 registerSwitches()
-
 
 def fieldSet( switchName, switchField, switchValue, theFocus=False ):
 	if not type( theFocus ) == bool:
 		theFocus = theFocus
 	_.switches.fieldSet( switchName, switchField, switchValue, theFocus )
-
-
 if __name__ == '__main__':
 	if not sys.stdin.isatty():
 		_.setPipeData( sys.stdin.readlines(), __.appReg, clean=True )
-
-
 _.postLoad( __file__ )
 
 ########################################################################################
@@ -143,7 +127,6 @@ _.postLoad( __file__ )
 def standardize():
 	global data
 	fields = []
-
 	for i,record in enumerate(data):
 		for key in record.keys():
 			if not key in fields:
@@ -152,7 +135,6 @@ def standardize():
 		for field in fields:
 			if not field in record.keys():
 				data[i][field] = ''
-
 
 def process( level=0, parent='' ):
 	global data
@@ -164,9 +146,7 @@ def process( level=0, parent='' ):
 			if not record['id'] in spent['A']:
 				table.append( record )
 				spent['A'].append( record['id'] )
-
 	table = _.tables.returnSorted( 'table', 'a.title', table )
-
 	for record in table:
 		# _.printTest(record)
 		# _.pr('HERE')
@@ -174,11 +154,7 @@ def process( level=0, parent='' ):
 		if not record['id'] in spent['B']:
 			spent['B'].append(record['id'])
 			process( level=level+1, parent=record['id'] )
-
-
-
 		# printLevel( record['title'], level )
-
 
 def printLevel( level, record ):
 	global prefix
@@ -186,7 +162,6 @@ def printLevel( level, record ):
 	i=0
 	pre = ''
 	while not i == level:
-
 		# _.pr('here', i, text, level)
 		# sys.exit()
 		pre += prefix
@@ -196,7 +171,6 @@ def printLevel( level, record ):
 		_.pr( record['id'], pre, record['title'], record['parent_id'] )
 		# _.pr( record['type_'], pre, record['title'] )
 		# _.pr( pre, record['title'] )
-	
 
 def process2( parent='' ):
 	global data
@@ -209,23 +183,18 @@ def process2( parent='' ):
 				record['children'] = process2( parent=record['id'] )
 				table.append( record )
 				spent['A'].append( record['id'] )
-	
 	return _.sort( table, 'type_,title' )
 
-
 def printLevel2( records, level ):
-
 	global prefix
 	global spent
 	i=0
 	pre = ''
 	while not i == level:
-
 		# _.pr('here', i, text, level)
 		# sys.exit()
 		pre += prefix
 		i+=1
-
 	for record in records:
 		if record['type_'] == 2:
 			_.pr( pre, _.colorThis( record['title'], 'green', p=0 ) )
@@ -235,19 +204,14 @@ def printLevel2( records, level ):
 			_.pr( pre, _.colorThis( record['title'], 'yellow', p=0 ) )
 		printLevel2( records=record['children'], level=level+1 )
 
-
 def action():
 	global data
 	global NewData
 	load()
 	standardize()
-
 	_.printVarSimple( data )
-
 	# NewData = process2()
 	# printLevel2( records=NewData, level=0 )
-
-			
 
 def load():
 	global data
@@ -255,17 +219,12 @@ def load():
 		folder = _.switches.values( 'Folder' )[0]
 	else:
 		folder = os.getcwd()
-
 	folder = _v.programs + _v.slash+'Joplin'+_v.slash+'export'+_v.slash
 	folder = _v.programs + _v.slash+'Joplin'+_v.slash+'export'
-	
-
 	dirList = os.listdir(folder)
 	for file in dirList:
 		if file.endswith('.json'):
 			data.append( _.getTable2( folder+_v.slash+file ) )
-
-
 data = []
 prefix = '  '
 spent = []
@@ -276,13 +235,7 @@ spent = {
 			'C': [],
 }
 NewData = []
+
 ########################################################################################
 if __name__ == '__main__':
 	action()
-
-
-
- 
-
-
-

@@ -163,7 +163,7 @@ def action():
 
     base=os.getcwd()
 
-
+    mirror='null'
     if _.switches.isActive('Mirror'):
         mirror = _.switches.values('Mirror')[0]
     if _.switches.isActive('View-Mirror'):
