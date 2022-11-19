@@ -37,6 +37,9 @@ _str = __.imp('_rightThumb._string')
 def sw():
     _.switches.register('Recursive', '-r')
     _.switches.register('Full-Path', '-path')
+    _.switches.register('Mirror', '-m,-mirror')
+    _.switches.register('View-Mirror', '-v,-view')
+
     ### EXAMPLE: START
     # _.switches.register( 'Input', '-i' )
     # _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=True )
@@ -56,11 +59,15 @@ _.appInfo[focus()] = {
     # 'app': '8facG-jo0Cxk',
     'file': 'fo.py',
     'liveAppName': __.thisApp( __file__ ),
-    'description': 'Changes the world',
+    'description': 'Folder Stuff',
         # _.ail(1,'subject')+
         # _.aib('one')+
     'categories': [
-                        'DEFAULT',
+                        'folder',
+                        'os folder',
+                        'cache',
+                        'mirror',
+                        'structure',
                 ],
     'usage': [
                         # 'epy another',
@@ -151,12 +158,36 @@ def action():
     #--> todo#> meta to scan for
     load()
     global c3po
+    global index
+    records=[]
+
+    base=os.getcwd()
+
+
+    if _.switches.isActive('Mirror'):
+        mirror = _.switches.values('Mirror')[0]
+    if _.switches.isActive('View-Mirror'):
+        # _.pr('Mirror:\n')
+        mirror = _.switches.values('View-Mirror')[0]
+        base=index[mirror]['base']
+        c3po = index[mirror]['folders']
+
     for fo in c3po:
+        if not _.switches.isActive('View-Mirror'): records.append(fo)
         if _.showLine(fo):
-            _.pr(fo,c='cyan')
+            print(fo)
+            # _.pr(fo,c='cyan')
+    index[mirror]={'base':os.getcwd(),'folders':records}
+    if _.switches.isActive('Mirror') and not _.switches.isActive('View-Mirror'): _.saveTableDB(index,'fo.index')
+
+
+
 
 def load():
     global c3po
+    global index
+    index = _.getTableDB('fo.index')
+    # print(index)
     if _.switches.isActive('Recursive'):
         r=1
     else:
