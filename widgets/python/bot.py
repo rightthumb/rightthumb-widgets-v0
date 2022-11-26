@@ -134,6 +134,8 @@ _.appInfo[focus()] = {
 						_.hp('p bot -r '),
 						_.linePrint(label='simple',p=0),
 						'',
+						'ai-bot-interaction.index',
+						'',
 	],
 	'columns': [
 					   # { 'name': 'name', 'abbreviation': 'n' },
@@ -260,7 +262,9 @@ def genPrompt():
 	if len(_.switches.all())==0 and _.isData():
 		prompt="\"\"\"\n"+ '\n'.join(_.isData()) +"\n\"\"\""
 		return prompt
-
+	elif len(_.switches.all())==1 and _.isData() and _.switches.isActive('Files'):
+		prompt="\"\"\"\n"+ '\n'.join(_.isData()) +"\n\"\"\""
+		return prompt
 
 	if _.switches.isActive('Convert'):
 		prompt="\"\"\"\n\n"+  _.switches.values('Convert')[0]+'\n\n'+ ' '.join(_.isData()) +'\n\n'+'# Convert to '+_.switches.values('Convert')[1][1:]   +"\n\"\"\""
@@ -281,6 +285,8 @@ def genPrompt():
 	_.pr(line=1,c='red')
 	return prompt
 def action():
+	# print(_.isData())
+	# sys.exit()
 	global prompt
 	interact=_.getTable('ai-bot-interaction.index')
 
@@ -367,7 +373,7 @@ def action():
 	_.pr(answer,c='green')
 	# _.pr('answer',type(answer))
 	_.pr()
-
+	# _.pr('...')
 	if _.isData():
 		ask='l'
 	elif not _.isData():
@@ -442,7 +448,7 @@ def action():
 	if 's' in ask: interact['success'].append(rec)
 	elif 'c' in ask: interact['chat'].append(rec)
 	else: interact['failure'].append(rec)
-	_.saveTable(interact,'ai-bot-interaction.index')
+	_.saveTable(interact,'ai-bot-interaction.index',p=0)
 
 
 def clean(text):

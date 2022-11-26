@@ -108,18 +108,31 @@ def action():
 
     for path in _.isData(r=0):
         lines = _.getText(path,raw=1,clean=2).replace('\r','').split('\n')
+        run = 1
         for line in lines:
-            if 'audio-chunks' in line or 'p speech -f' in line:
-                line=line.strip()
-                # print()
-                # print(line)
-                # for l in line: print(l)
-                # print()
-                # sys.exit()
+            if 'audio-chunks' in line or 'p speech -f' in line :
+                run = 2
+        for line in lines:
+            line=line.strip()
 
+            if run==1:
+                wav=True
+                if not 'transcribe.py' in line:
+                    pass
+                    # line = line[line.index(' ')+2:]
+                else:
+                    p = line[line.index('.py')+4:].replace('.mp3.wav','').split('_')
+                    line = p[0]+'-'+p[1]+'-'+p[2]+' @ '+p[3]+':'+p[4]+':'+p[5].split(' ')[0]
+                    wav=True
+                    print('\n________________________________________________')
 
+                if _.showLine(line):
+                    print(line.strip())
+                    if wav: print()
+
+            elif run==2:
                 wav=False
-                if line.startswith('audio-chunks'):
+                if line.startswith('audio-chunks') or 'transcribe.py' in line:
                     line = line[line.index(' ')+2:]
                 elif '-f' in line:
                     p = line[line.index(' -f ')+3:].replace('.mp3.wav','').split('_')

@@ -210,7 +210,10 @@ def isExit():
         on_exit_subjects[subject]()
 
 
-def path( p, ab=True, pop=False, file=False, slash=None, folder=None, fi=None, fo=None ):
+def path( p, ab=True, pop=False, file=False, slash=None, folder=None, fi=None, fo=None, fix=True ):
+    p_bk=p
+    # fix used in fileBackup.py
+
     if not fo is None: pop=True;
     if not folder is None: pop=True;
     if not fi is None: file=True;
@@ -224,6 +227,19 @@ def path( p, ab=True, pop=False, file=False, slash=None, folder=None, fi=None, f
     except Exception as e: os=imp('os.path.isfile')
     try: os.path.isdir
     except Exception as e: os=imp('os.path.isdir')
+
+    if ab:
+        if os.path.isfile(p) or os.path.isdir(p):
+            try:
+                p = os.path.abspath(p)
+            except Exception as e:
+                pass
+
+    if fix and not os.path.isfile(p) and not os.path.isdir(p) and not os.sep in p and p:
+        p = os.getcwd() +os.sep+ p
+        return p
+
+
 
     if slash is None:
         slash = os.sep
@@ -247,6 +263,7 @@ def path( p, ab=True, pop=False, file=False, slash=None, folder=None, fi=None, f
     except Exception as e:
         # print(e)
         pass
+    if p_bk[1] == ':' and not p[1] == ':': p = p_bk
     if type(p) == str and len(p)>1 and p[1] == ':':
         p = p[0].upper() + p[1:]
     if type(p) == str and ( pop or file ):

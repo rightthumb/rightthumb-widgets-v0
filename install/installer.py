@@ -14294,9 +14294,9 @@ def action():
         vc.FIG.bashrc(settings=['strip'])
         if v.isWin:
             cc_bat='''@echo off
-call %userprofile%\\.rt\\profile\\vars\\config.bat
-rem call %widgets%\\widgets\\batch\\resetVars.bat
-call %widgets%\\widgets\\batch\\c.bat %1 
+call "%userprofile%\\.rt\\profile\\vars\\config.bat"
+rem call "%widgets%\\widgets\\batch\\resetVars.bat"
+call "%widgets%\\widgets\\batch\\c.bat" %1 
             '''
             # vc.HD.saveText( cc_bat, v.home+os.sep+'rt.bat' )
             vc.HD.saveText( cc_bat, v.home+os.sep+'rr.bat' )

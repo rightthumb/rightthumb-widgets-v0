@@ -45,6 +45,7 @@ except Exception as e:
 def appSwitches():
 	_.switches.register('Database', '-db,-database')
 	_.switches.register('MD5', '-md5')
+	_.switches.register('Mimetype', '-m,-mime,-mimetype')
 	_.switches.register('Count', '-c,-count,--c')
 	_.switches.register('Path', '-p,-path,-f,-folder')
 	_.switches.register('Text', '-t,-text,-txt')
@@ -81,15 +82,17 @@ _.appInfo[focus()] = {
 						'p indexDB -size L 2mb',
 						'p indexDB -size g 2mb --c -folder D:\\techApps\\Python\\Python36-32'+_v.slash,
 						'',
-						'p indexDB -folder d:\\ -db %myIndexes%\\D_Drive.db',
-						'p indexDB -folder c:\\ -db %myIndexes%\\C_Drive.db',
+						'p indexDB -folder C:\\ -db %myIndexes%\\C_Drive.db',
+						'p indexDB -folder D:\\ -db %myIndexes%\\D_Drive.db',
+						'p indexDB -folder C:\\ -db %myIndexes%\\C_Drive.db -md5 -mimetype',
+						'p indexDB -folder D:\\ -db %myIndexes%\\D_Drive.db -md5 -mimetype',
 						'p indexDB -folder %theUSB%:\\ -db %myIndexes%\\3T_Drive.db',
 						'',
-						'p indexDB -folder c:\\ -db %i%\\C_Drive.db',
-						'p indexDB -folder d:\\ -db %i%\\D_Drive.db',
+						'p indexDB -folder C:\\ -db %i%\\C_Drive.db',
+						'p indexDB -folder D:\\ -db %i%\\D_Drive.db',
 						'',
-						'p indexDB -folder c:\\ -db %i%\\C_Drive.db |  p did -beep',
-						'p indexDB -folder d:\\ -db %i%\\D_Drive.db |  p did -beep',
+						'p indexDB -folder C:\\ -db %i%\\C_Drive.db |  p did -beep',
+						'p indexDB -folder D:\\ -db %i%\\D_Drive.db |  p did -beep',
 						'',
 	],
 	'columns': [
@@ -334,9 +337,11 @@ def getFolder(folder):
 
 					if shouldPrint:
 						global checkMD5
+						global mimetype
 						global conn
 						global cursor
-						sql = _dir.fileInfo( path, sql=True, md5=checkMD5, db_connection=conn, db_cursor=cursor, count=i )
+
+						sql = _dir.fileInfo( path, sql=True, md5=checkMD5, db_connection=conn, db_cursor=cursor, count=i, mime=mimetype )
 						# saveRecord(sql)
 						# if not _.switches.isActive('Plus'):
 						# 	_.colorThis( path, 'cyan' )
@@ -379,11 +384,10 @@ def action():
 		_nd.do( 'action' )
 		_.pr( '___________________________________________' )
 
+
+		try: os.unlink(databaseFile)
+		except: pass
 	# sys.exit()
-	# try:
-	# 	os.unlink(databaseFile)
-	# except Exception as e:
-	# 	pass
 	# _.pr( databaseFile )
 	# sys.exit()
 	conn, cursor = _dir.sqlCreateTable( databaseFile )
@@ -454,6 +458,7 @@ _dir.commitPer = 46285
 if _.switches.isActive('Commit-Per'):
 	_dir.commitPer = int(  _.switches.value('Commit-Per').replace( ',', '' )  )
 checkMD5 = _.switches.isActive('MD5')
+mimetype = _.switches.isActive('Mimetype')
 ########################################################################################
 if __name__ == '__main__':
 	action()

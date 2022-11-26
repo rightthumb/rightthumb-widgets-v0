@@ -793,13 +793,13 @@ def action(path=None,flag=None,o=None):
 	# secureFiles
 
 	now = genEpoch()
-
+	# print(path)
 	if _.switches.isActive('Input') or not path is None:
 		if path is None:
 			path = _.switches.value('Input')
 		# _.pr( 'path::::', path )
 		if os.path.isfile(path):
-			path = __.path(  os.path.abspath(path)  )
+			path = __.path(  path  )
 			
 			# _.pr('pre')
 			if True or _.switches.isActive('Test'):
@@ -1188,7 +1188,7 @@ def action(path=None,flag=None,o=None):
 
 
 		txtScheduler = _.getTable( 'fileBackupSchedule.json' )
-		txtScheduler.append( { 'timestamp': genEpoch(), 'file': path, 'status': 0, 'app': 'fileBackup', 'group': 0, 'session': os.getenv('Session_ID') } )
+		txtScheduler.append( { 'timestamp': genEpoch(), 'file': __.path(path), 'status': 0, 'app': 'fileBackup', 'group': 0, 'session': os.getenv('Session_ID') } )
 		_.saveTable( txtScheduler,'fileBackupSchedule.json', p=0 )
 		if __.openSecure:
 			_.colorThis( 'secure open and scheduled', 'yellow' )

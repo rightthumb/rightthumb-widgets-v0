@@ -3995,7 +3995,7 @@ def isData( data=None, focus=None, pipeClean=True, required=False,     r=None, c
 			focus = __.appReg
 		data = pipe_surfing()
 
-
+	if type(data) ==list and  len(data)==1 and data[0]=='': data=[]
 	if not data:
 		data=[]
 		global switches

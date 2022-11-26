@@ -35,6 +35,7 @@ _str = __.imp('_rightThumb._string')
 ##################################################
 
 def sw():
+    _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='data', description='Files' )
     pass
 # __.setting('require-list',['Files,Plus','File,Has']) # todo
 # __.setting('require-list',['Pipe','Files','Plus'])
@@ -118,22 +119,49 @@ def clean(text):
     return text
 
 
-def skim(file):
-    global c3po
+def skim(data):
+    # for file in data.split('\n'):
+    # print(0)
+    file=data
     file = file.replace( '"', ' ' )
     file = file.replace( "'", ' ' )
     file=clean(file)
     # print(file)
     _file=''
+    testing = '0 12 +-_./\\:3456789abcdefghijklmnop%$qrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'+'''!#$%&'()+,-./:;=?@[\\]^_`{}~ ®··èéìò'''
     for ch in file:
-        if ch in '0 12 +-_./\\:3456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'+'''!#$%&'()+,-./:;=?@[\\]^_`{}~ ®··èéìò''':
+        if ch in testing:
             _file+=ch
         else:
             _file+='|'
     # print(_file)
     for scrap in _file.split('|'):
-        if '\\'  in scrap or '/' in scrap:
-            _.pr(scrap)
+        scrap=scrap.strip()
+        # print(1)
+        good=True
+        while '  ' in scrap: scrap=scrap.replace('  ',' ')
+        if " " in scrap and (not "'" in scrap and not '"' in scrap ):
+            for tmp in scrap.split(' '):
+                if good and( '\\'  in tmp or '/' in tmp ):
+                    # print(tmp)
+                    scrap=tmp
+        not_included = [
+                            'set /p ',
+                            '^',
+                            'if not exist',
+                            'if exist',
+        ]
+        for xXx in not_included:
+            if xXx in scrap.lower(): good=False
+        if '=' in scrap.lower():
+
+            while '= ' in scrap: scrap=scrap.replace('= ','=')
+            while ' =' in scrap: scrap=scrap.replace(' =','=')
+            scrap = scrap.split('=')[1]
+        scrap=scrap.strip()
+        if len(scrap) < 4: good=False
+        if good and( '\\'  in scrap or '/' in scrap ): _.pr(scrap)
+        # elif scrap: _.pr(scrap)
 
 
 
@@ -141,7 +169,13 @@ def skim(file):
 def action():
     global c3po
     c3po=[]
-    skim( '\n'.join(_.isData(r=0)) )
+    _.isData(r=0)
+    if type(_.isData()) == list: data = '\n'.join(_.isData())
+    else: data = _.isData()
+
+    # if type(data) == list: data = '\n'.join(data)
+    skim( data )
+    sys.exit()
 
 
 ########################################################################################

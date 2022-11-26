@@ -16,6 +16,7 @@ import os, sys, time
 import _rightThumb._construct as __
 appDBA = __.clearFocus( __name__, __file__ )
 __.appReg = appDBA
+
 def focus( parentApp='', childApp='', reg=True ):
 	global appDBA
 	f = __.appName( appDBA, parentApp, childApp )
@@ -34,9 +35,8 @@ def appSwitches():
 	pass
 	### EXAMPLE: START
 	# _.switches.register( 'Input', '-i' )
-	_.switches.register( 'Files', '-f,-file,-files','file.txt', isData='glob', description='Files', isRequired=True )
+	_.switches.register( 'Files', '-f,-file,-files','file.txt', isData='name', description='Files', isRequired=True )
 	### EXAMPLE: END
-
 ### EXAMPLE: START
 # _.switches.trigger( 'Files', _.myFileLocations, vs=True )
 # 	finds the file in probable locations
@@ -62,10 +62,9 @@ __.switch_raw = []
 # __.isRequired_or_List = ['Pipe','Files','Plus']
 # __.setting( 'app-switches-raw', [ 'Delim' ] )
 
-
 _.appInfo[focus()] = {
 	# 'app': '7facG-jo0Cxk',
-	'file': 'thisApp.py',
+	'file': 'remove-duplicate-lines.py',
 	'liveAppName': __.thisApp( __file__ ),
 	'description': 'Changes the world',
 		# _.ail(1,'subject')+
@@ -87,7 +86,7 @@ _.appInfo[focus()] = {
 						# '',
 	],
 	'examples': [
-						_.hp('p thisApp -file file.txt'),
+						_.hp('p remove-duplicate-lines -file file.txt'),
 						'',
 	],
 	'columns': [
@@ -102,7 +101,6 @@ _.appInfo[focus()] = {
 				       # {},
 	],
 }
-
 _.appData[focus()] = {
 		'start': __.startTime,
 		'uuid': '',
@@ -114,27 +112,23 @@ _.appData[focus()] = {
 		},
 	}
 ### EXAMPLE: START
-# _.appInfo[focus()]['examples'].append( 'p thisApp -file file.txt' )
-
+# _.appInfo[focus()]['examples'].append( 'p remove-duplicate-lines -file file.txt' )
 # _.appInfo[focus()]['columns'].append( {'name': 'name', 'abbreviation': 'n'} )
 ### EXAMPLE: END
-
 
 def registerSwitches( argvProcessForce=False ):
 	global appDBA
 	if not __.appReg == appDBA and appDBA in __.appReg:
-
 		if not __name__ == '__main__':
 			_.argvProcess = argvProcessForce
 		else:
 			_.argvProcess = True
-
 		_.load()
+
 		_.appInfo[__.appReg] = _.appInfo[appDBA]
 		_.appData[__.appReg] = _.appData[appDBA]
 	__.constructRegistration( _.appInfo[__.appReg]['file'],__.appReg )
 	appSwitches()
-
 	_.myFileLocation_Print = False
 	_.switches.trigger( 'Files', _.myFileLocations, vs=True )
 	_.switches.trigger( 'Folder', _.myFolderLocations )
@@ -148,30 +142,21 @@ def registerSwitches( argvProcessForce=False ):
 	# _.switches.trigger( 'Input',_.formatColumns )
 	# _.switches.trigger( 'Franchise',_.triggerSpace )
 	### EXAMPLE: END
-	
 	_.defaultScriptTriggers()
 	_.switches.process()
-
-
 if not __name__ == '__main__':
 	_.argvProcess = False
 else:
 	_.argvProcess = True
-
 registerSwitches()
-
 
 def fieldSet( switchName, switchField, switchValue, theFocus=False ):
 	if not type( theFocus ) == bool:
 		theFocus = theFocus
 	_.switches.fieldSet( switchName, switchField, switchValue, theFocus )
-
-
 if __name__ == '__main__':
 	if not sys.stdin.isatty():
 		_.setPipeData( sys.stdin.readlines(), __.appReg, clean=True )
-
-
 _.postLoad( __file__ )
 
 ########################################################################################
@@ -198,16 +183,25 @@ _.postLoad( __file__ )
 # _.addComma()
 # 													if platform.system() == 'Windows':
 ### EXAMPLE: END
+
 ########################################################################################
 # START
 
 def process(path):
-	file=_.getText(path,raw=True,clean=2)
-	_.saveText(file,path)
+	data=_.getText(path,raw=True)
+	data = data.replace('\r','')
+	lines=[]
+	for line in data.split('\n'): lines.append(line.rstrip())
+	data = '\n'.join(lines)
+	while '\n\n' in data: data = data.replace('\n\n','\n')
+	if data.startswith('\n'): data = data[1:]
+	if data.endswith('\n'): data = data[:-1]
+	_.saveText(data,path)
+
+
 
 def action():
 	#--> min, architecture {:strict:}
-
 	for i,path in enumerate( _.isData(r=1) ):
 		process(path)
 
@@ -219,8 +213,3 @@ def action():
 if __name__ == '__main__':
 	action()
 	__.isExit()
-
-
-
-
-

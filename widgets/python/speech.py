@@ -10,12 +10,12 @@
 # ###########################################################################
 # ## {C3P0D40fAe8B} ##
 
-
 ##################################################
 import sys, time
 ##################################################
 import _rightThumb._construct as __
 appDBA=__.clearFocus(__name__,__file__);__.appReg=appDBA;
+
 def focus(parentApp='',childApp='',reg=True):
     global appDBA;f=__.appName(appDBA,parentApp,childApp);
     if reg:__.appReg=f;
@@ -28,14 +28,9 @@ _v = __.imp('_rightThumb._vars')
 _str = __.imp('_rightThumb._string')
 ##################################################
 
-
 def sw():
     pass
-    #b)--> examples
-    # _.switches.register( 'Input', '-i' )
-    #e)--> examples
-    # _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=True )
-
+    _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name', description='Files' )
 # __.setting('require-list',['Files,Plus','File,Has']) # todo
 # __.setting('require-list',['Pipe','Files'])
 __.setting('receipt-log')
@@ -46,11 +41,9 @@ __.setting('require-pipe||file',False)
 __.setting('pre-error',False)
 __.setting('switch-raw',[])
 
-
-
 _.appInfo[focus()] = {
     # 'app': '8facG-jo0Cxk',
-    'file': 'thisApp.py',
+    'file': 'speech.py',
     'liveAppName': __.thisApp( __file__ ),
     'description': 'Changes the world',
         # _.ail(1,'subject')+
@@ -72,7 +65,7 @@ _.appInfo[focus()] = {
                         # '',
     ],
     'examples': [
-                        _.hp('p thisApp -file file.txt'),
+                        _.hp('p speech -file file.txt'),
                         _.linePrint(label='simple',p=0),
                         '',
     ],
@@ -88,7 +81,6 @@ _.appInfo[focus()] = {
                        # {},
     ],
 }
-
 _.appData[focus()] = {
         'start': __.startTime,
         'uuid': '',
@@ -100,80 +92,84 @@ _.appData[focus()] = {
         },
     }
 
-
 def triggers():
     _.switches.trigger( 'Files', _.myFileLocations, vs=True )
     _.switches.trigger( 'Ago', _.timeAgo )
     _.switches.trigger( 'Folder', _.myFolderLocations )
     _.switches.trigger( 'URL', _.urlTrigger )
     _.switches.trigger( 'Duration', _.timeFuture )
-
 _.l.conf('clean-pipe',True)
 _.l.sw.register( triggers, sw )
 
 ########################################################################################
-#b)--> examples
-#d)--> code hints to quickly get started
-    #n)--> inline examples
-        # any(ele in 'scott5' for ele in list('0123456789'))
-        # if _.switches.isActive('Test'): test(); return None;
-        # result=[]; result=[ _.pr(line) for i, line, bi in _.numerate( _.isData(r=0) )]
-        # bk=[];[  bk.append(rec['backup']) for rec in backupLog if path == rec['file']]; bk=bk[-1];
-        # a=(1 if True else 0) <--# 
-        #!)--> m=[[row[i] for row in matrix] for i in range(4)]
-
-    #n)--> python globals
-        # for k in globals(): print(k, eval(k) )
-
-    #n)--> webpage from url
-        # for subject in _.caseUnspecific( line, needle ): line = line.replace( subject, _.colorThis( subject, 'green', p=0 ) )
-
-    #n)--> webpage from url
-        # requests=__.imp('requests.post')
-        #!)--> data=str(requests.post(url,data={}).content,'iso-8859-1')
-
-    #n)--> import and backup example
-        # _bk = _.regImp( __.appReg, 'fileBackup' ); _bk.switch( 'Silent' ); _bk.switch( 'isRunOnce' ); _bk.switch( 'Flag', 'APP' ); _bk.switch( 'DoNotSchedule' )
-        # _bk.switch( 'Input', path ); bkfi = _bk.action();
-    
-    #n)--> inline
-        # for rel in [ subject for subject in _.isData(r=0) if _.showLine(subject) ]: print(rel)
-
-    #n)--> banner
-        # banner=_.Banner(app); goss=banner.goss;
-#e)--> examples
-########################################################################################
 #n)--> start
 
 def action():
-    load(); global c3po;
+    for path in _.isData():
+        try: get_large_audio_transcription(path)
+        except Exception as e: pass
 
-    #n)--> iterate
-    for subject in _.isData(r=0): _.pr(subject)
-    
 
-def load():
-    global c3po
-    c3po = _.getTable( 'table' )
-    #n)--> print table
-    _.pt(c3po)
+
+
+# importing libraries 
+import speech_recognition as sr 
+import os 
+from pydub import AudioSegment
+from pydub.silence import split_on_silence
+
+# create a speech recognition object
+r = sr.Recognizer()
+
+# a function that splits the audio file into chunks
+# and applies speech recognition
+def get_large_audio_transcription(path):
+    """
+    Splitting the large audio file into chunks
+    and apply speech recognition on each of these chunks
+    """
+    # open the audio file using pydub
+    sound = AudioSegment.from_wav(path)  
+    # split audio sound where silence is 700 miliseconds or more and get chunks
+    chunks = split_on_silence(sound,
+        # experiment with this value for your target audio file
+        min_silence_len = 500,
+        # adjust this per requirement
+        silence_thresh = sound.dBFS-14,
+        # keep the silence for 1 second, adjustable as well
+        keep_silence=500,
+    )
+    folder_name = "audio-chunks"
+    # create a directory to store the audio chunks
+    if not os.path.isdir(folder_name):
+        os.mkdir(folder_name)
+    whole_text = ""
+    # process each chunk 
+    for i, audio_chunk in enumerate(chunks, start=1):
+        # export audio chunk and save it in
+        # the `folder_name` directory.
+        chunk_filename = os.path.join(folder_name, f"chunk{i}.wav")
+        audio_chunk.export(chunk_filename, format="wav")
+        # recognize the chunk
+        with sr.AudioFile(chunk_filename) as source:
+            audio_listened = r.record(source)
+            # try converting it to text
+            try:
+                text = r.recognize_google(audio_listened)
+            except sr.UnknownValueError as e:
+                print("Error:", str(e))
+            else:
+                text = f"{text.capitalize()}. "
+                print(chunk_filename, ":", text)
+                whole_text += text
+    # return the text for all chunks detected
+    return whole_text
+
+
 
 
 ##################################################
-#b)--> examples
-# banner=_.Banner(dependencies)
-# goss=banner.goss
-# goss('-\t this app will sherlock tf out of any python app or python module')
-#e)--> examples
-##################################################
-
-########################################################################################
+######################################
 if __name__ == '__main__':
-    #b)--> examples
-
-    # banner.pr()
-    # if len(_.switches.all())==0: banner.gossip()
-    
-    #e)--> examples
     action()
     _.isExit(__file__)

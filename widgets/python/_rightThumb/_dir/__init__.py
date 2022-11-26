@@ -140,11 +140,12 @@ def sqlCreateTable( db, deleteDBFirst=False, close=False, asset=None, length=Non
 			total_records = len(asset)
 	if not delete is None:
 		deleteDBFirst = delete
-	if deleteDBFirst:
-		try:
-			os.unlink(db)
-		except Exception as e:
-			pass
+	# if deleteDBFirst:
+	if os.path.isfile(db) and not deleteDBFirst:
+		if 'y' in input(' delete db? ').lower(): os.unlink(db); print('deleted');
+	# if os.path.isfile(db) and deleteDBFirst:
+	# 	try: os.unlink(db)
+	# 	except: pass
 	conn = sqlite3.connect(db)
 	cursor = conn.cursor()
 	sql =  'CREATE TABLE files (path text, name_ text, name text, folder text, stat text, attrib text, bytes int, size text, date_created_raw double, date_modified_raw double, date_created text, date_modified text, type text, typesort text, ext text, week_of_year text, week_of_year_ text, day_of_the_week text, month text, friendly_week text, friendly_month text, accessed_raw double, date_accessed text                        , ce double, me double, ae double, meta text, header text, err int        )'

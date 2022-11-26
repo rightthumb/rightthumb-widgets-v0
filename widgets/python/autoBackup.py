@@ -261,8 +261,10 @@ def action():
 
 
 	
-	# _.pr( 'runOnceFiles:', runOnceFiles )
-	# _.pr( 'doNotBackup:', doNotBackup )
+	_.pr( 'runOnceFiles:', runOnceFiles )
+	_.pr( 'doNotBackup:', doNotBackup )
+	_.pr( 'log:', log )
+
 	# pause=input('pause')
 
 	maxEpochDate = _.resolveEpochTest( maxEpoch )

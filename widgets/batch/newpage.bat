@@ -10,8 +10,10 @@ rem    - Scott Taylor Reph, RightThumb.com
 rem ###########################################################################
 rem ## {C3P0D40fAe8B} ##
 
-set wwwPage_0=D:\techApps\Library\WEB\newpage\blank0.htm
-set wwwPage_1=D:\techApps\Library\WEB\newpage\blank1.htm
+rem set wwwPage_0=D:\techApps\Library\WEB\newpage\blank0.htm
+rem set wwwPage_1=D:\techApps\Library\WEB\newpage\blank1.htm
+set wwwPage_0=D:\websites\domains\apps.eyeformeta.com\public_html\templates\html\0.htm
+set wwwPage_1=D:\websites\domains\apps.eyeformeta.com\public_html\templates\html\1.htm
 set wwwPage_2=D:\techApps\Library\WEB\newpage\blank2.htm
 set wwwPage_3=D:\techApps\Library\WEB\newpage\blank3.htm
 set wwwPage_4=D:\techApps\Library\WEB\newpage\blank4.htm
