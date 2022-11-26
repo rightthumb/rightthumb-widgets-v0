@@ -163,6 +163,55 @@ except Exception as e:
     importlib = None
 imp_table = {}
 def imp( subject, imp_table_testing=False ):
+    try:
+        return imp_run( subject, imp_table_testing )
+    except:
+        imp_install(mod)
+        return imp_run( subject, imp_table_testing )
+
+def imp_install(mod):
+    if '.' in mod: mod = mod.split('.')[0]
+
+    dic = {
+            'all': {},
+            'win': {},
+            'linux': {},
+    }
+
+    dic['win']['magic'] = 'python-magic-bin==0.4.14'
+    dic['linux']['magic'] = 'python-magic'
+
+    if       sys.platform == 'win32' and mod in dic['win']: mod = dic['win'][mod]
+    elif not sys.platform == 'win32' and mod in dic['linux']: mod = dic['linux'][mod]
+    elif mod in dic['linux']: mod = dic['all'][mod]
+
+
+    if mod in dic: mod=dic[mod]
+
+    if sys.platform == 'win32':
+        # os.system('pip3 install python-magic-bin==0.4.14')
+        os.system('pip3 install '+mod+' >nul 2>&1')
+    else:
+
+        def _pipy_(mod):
+            mod0=mod
+            try:
+                import pip
+                if '=' in mod: mod = mod.split('=')[0]
+                pip.main(['install', mod])
+            except: print('pip3 install '+mod0)
+
+        if len(subprocess.getoutput('sudo cat /etc/sudoers').split('\n')) > 3:
+            try: os.system('sudo pip3 install '+mod+'  > /dev/null 2>&1')
+            except: _pipy_(mod)
+        else:
+            try: os.system('pip3 install '+mod+'  > /dev/null 2>&1')
+            except:_pipy_(mod)
+
+
+
+
+def imp_run( subject, imp_table_testing=False ):
     # print(subject); sys.exit();
     if '.' in subject and not '_rightThumb' in subject: return dots(subject);
     global imp_table
