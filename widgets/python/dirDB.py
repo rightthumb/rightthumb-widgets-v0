@@ -60,6 +60,7 @@ def appSwitches():
 	_.switches.register('Clean', '-clean')
 	_.switches.register('Test', '-test')
 	_.switches.register('Prefix', '-prefix', 'ADD THIS LATER')
+	# _.switches.register('Save-Results', '-save')
 
 	
 
@@ -365,7 +366,7 @@ def repairEncoding( result ):
 	result = str(result,'iso-8859-1')
 
 def action():
-
+	global theData
 
 	if _.switches.isActive('Duplicates') and not len(_.switches.value('Duplicates')):
 		saveData = []
@@ -791,19 +792,28 @@ def action():
 			databaseFile = "defaultDir.db"
 		for dbFile in databaseFile.split(','):
 			if os.path.isfile(dbFile):
-				try:
-					do(dbFile)
-				except Exception as e:
-					pass
+				try: do(dbFile)
+				except: pass
+		if _.switches.isActive('Save'):
+			if _.switches.value('Save'):
+				saveAs = _.switches.values('Save')[0]
+			else:
+				saveAs = 'dirDB-save.txt'
+			_.saveText(theData,saveAs)
+			_.pr('\n Saved:',saveAs,c='cyan')
+			
 	if not _.switches.isActive('NoCount'):
 		_.pr()
 		_.pr('Total:')
 		_.pr('\tFiles:\t', _.addComma(totalCount) )
 		_.pr('\tSize:\t', formatSize(totalSize)  )
+theData=[]
 def do(databaseFile):
+	global theData
 	# _.pr(databaseFile)
 	global totalSize
 	global totalCount
+	isSave = _.switches.isActive('Save')
 	thisRan = []
 	# _.pr(databaseFile)
 	# _.pr('"'+databaseFile+'"')
@@ -952,6 +962,8 @@ def do(databaseFile):
 	all_rows = c.fetchall()
 	# _.pr('1):', all_rows)
 	names = action2(databaseFile)
+
+
 	# _.pr(names)
 	global columnDefault
 	global network_replace
@@ -961,70 +973,88 @@ def do(databaseFile):
 		if nrX['file'].lower() in databaseFile.lower():
 			netReplaceI = nrXi
 
+	# for i,n in enumerate(names): _.pr(i,n)
+	# sys.exit()
+	# print(all_rows)
+	if isSave:
+		# s=time.time()
+		# print(1,len(all_rows))
+		paths = singleRow(all_rows,0)
+		theData = theData + paths
+		# print(2,len(new),time.time()-s)
+	# print(5,new)
+	# sys.exit()
+
+
 	data = []
-	for f in all_rows:
-		# _.pr(_.switches.value('Column'))
+	# if False:
+	# if True:
+	if not isSave:
+		for f in all_rows:
+			# _.pr(_.switches.value('Column'))
 
-		row = {}
-		for i,n in enumerate(names):
-			row[n] = f[i]
-		# _.pr(row['path'])
-		if _.switches.isActive('Column'):
-			line = ''
-			col = _.switches.value('Column')
-			for ii,tc in enumerate(col.split(',')):
-				i = ii + 1
-				if tc == 'md5':
-					try:
-						line += str(md5(row['path']))
+			row = {}
+			for i,n in enumerate(names):
+				row[n] = f[i]
+			# _.pr(row['path'])
+			if _.switches.isActive('Column'):
+				line = ''
+				col = _.switches.value('Column')
+				for ii,tc in enumerate(col.split(',')):
+					i = ii + 1
+					if tc == 'md5':
+						try:
+							line += str(md5(row['path']))
+							if not len(col.split(',')) == i:
+								line += str('\t')
+						except Exception as e:
+							line += '* MD5 Error *'
+							if not len(col.split(',')) == i:
+								line += str('\t')
+						
+					else:
+						line += str(row[tc])
 						if not len(col.split(',')) == i:
 							line += str('\t')
-					except Exception as e:
-						line += '* MD5 Error *'
-						if not len(col.split(',')) == i:
-							line += str('\t')
-					
-				else:
-					line += str(row[tc])
-					if not len(col.split(',')) == i:
-						line += str('\t')
-		# if _.showLine(line) and os.path.isfile(row['path']):
-		includeResult = False
-		if _.showLine(row['path']):
-			includeResult = True
-			if not os.path.isfile( row['path'] ):
-				includeResult = False
-				removeFile( row['path'], c )
-		if includeResult:
+			# if _.showLine(line) and os.path.isfile(row['path']):
+			includeResult = False
+			if _.showLine(row['path']):
+				includeResult = True
+				if not os.path.isfile( row['path'] ):
+					includeResult = False
+					removeFile( row['path'], c )
+			if includeResult:
 
-			data.append( row )
-			# if not '$Recycle.Bin' in row['path']:
-			totalCount += 1
-			totalSize += row['bytes']
-			# if not _.switches.isActive('Folder'):
-			if columnDefault:
-				if not _.switches.isActive( 'JustCount' ):
-					if not netReplaceI is None:
-						line = line.replace( network_replace[netReplaceI]['replace'], network_replace[netReplaceI]['with'] )
-						line = line.replace( network_replace[netReplaceI]['replace'].lower(), network_replace[netReplaceI]['with'] )
-						line = line.replace( network_replace[netReplaceI]['replace'].upper(), network_replace[netReplaceI]['with'] )
-					try:
-						_.pr(line)
-					except Exception as e:
-						pass
-		else:
-			if _.showLine(row['path']) and os.path.isfile(row['path']):
 				data.append( row )
 				# if not '$Recycle.Bin' in row['path']:
 				totalCount += 1
 				totalSize += row['bytes']
-				fS = formatSize(row['bytes'])
-				while len(fS) < 10:
-					fS += ' '
 				# if not _.switches.isActive('Folder'):
 				if columnDefault:
 					if not _.switches.isActive( 'JustCount' ):
-						_.pr(fS,'',row['path'])
+						if not netReplaceI is None:
+							line = line.replace( network_replace[netReplaceI]['replace'], network_replace[netReplaceI]['with'] )
+							line = line.replace( network_replace[netReplaceI]['replace'].lower(), network_replace[netReplaceI]['with'] )
+							line = line.replace( network_replace[netReplaceI]['replace'].upper(), network_replace[netReplaceI]['with'] )
+						
+						try: _.pr(line)
+						except: pass
+			else:
+				if _.showLine(row['path']) and os.path.isfile(row['path']):
+					data.append( row )
+					# if not '$Recycle.Bin' in row['path']:
+					totalCount += 1
+					totalSize += row['bytes']
+					fS = formatSize(row['bytes'])
+					while len(fS) < 10:
+						fS += ' '
+					# if not _.switches.isActive('Folder'):
+					if columnDefault:
+						if not _.switches.isActive( 'JustCount' ):
+							_.pr(fS,'',row['path'])
+
+	# if not isSave: END END
+
 
 	if not columnDefault:
 		_.pr()
@@ -1033,7 +1063,7 @@ def do(databaseFile):
 			_.tables.register( 'data', data )
 			_.tables.print( 'data', _.switches.value('Column') )
 
-
+def singleRow(lst,i): return [item[i] for item in lst]
 def action2(databaseFile):
 	connection = sqlite3.connect(databaseFile)
 	connection.row_factory = sqlite3.Row

@@ -10,14 +10,16 @@
 # ###########################################################################
 # ## {C3P0D40fAe8B} ##
 
+import subprocess
+
 #b)--> load
 from _rightThumb._base3 import template; exec(  template.header()  ); exec(  template.setting()  );
 #e)--> load
-
 def sw():
     pass
     #b)--> examples
-    # _.switches.register( 'Input', '-i' )
+    _.switches.register( 'Do-Not-Open', '-noopen' )
+    _.switches.register( 'Default-Print-Command', '-d,-default' )
     _.switches.register( 'Files', '-f,-fi,-file,-files','file.py', isData='name', description='Files' )
     #e)--> examples
 __.setting('require-list',['Pipe','Files'])
@@ -70,19 +72,31 @@ template.info(focus()); exec(  template.triggers()  ); _.l.sw.register( triggers
 #e)--> examples
 ########################################################################################
 #n)--> start
-counter=0
+
+if _.switches.isActive('Default-Print-Command'): print_command = 'print('
+else: print_command = '_.pr('
+
+counter=40000
 def inject(line):
-    if not '_.pr(' in line: return line
+    if line.strip().startswith('#'): return line
+    global print_command
+    if not print_command in line: return line
+    for TEST in '.,_'.split(','):
+        if TEST+print_command in line: return line
     global counter
     counter+=1
-    line=line.replace('_.pr(','_.pr('+str(counter)+',')
+    line=line.replace(print_command,print_command+str(counter)+',')
     # pr(line)
     return line
-
+spent=[]
 def process(path):
-
+    global spent
+    if path in spent: return None
+    spent.append(path)
+    if not _.switches.isActive('Do-Not-Open'): subprocess.Popen([ _v.fig['code_editor'], __.path(path)])
     _bk.switch( 'Input', path ); bkfi = _bk.action();
     _.pr(bkfi,c='darkcyan')
+    _.pr(path)
     file=_.getText(path,raw=True).split('\n')
     for i, line in enumerate(file):
 
