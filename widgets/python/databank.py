@@ -744,7 +744,8 @@ def thePath( data ):
 def action():
 	if _.switches.isActive('Clean') and _.switches.isActive('Subject'):
 
-		fileBackup = _.regImp( focus(), 'fileBackup' )
+		# fileBackup = _.regImp( focus(), 'fileBackup' )
+		fileBackup = _.regImp( __.appReg, 'fileBackup' )
 		fileBackup.switch( 'Silent' )
 		fileBackup.switch( 'Flag', 'imdb' )
 		fileBackup.switch( 'isRunOnce' )

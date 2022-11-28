@@ -659,12 +659,14 @@ def extensionsDatabank():
 	if useDB:
 		for index in _.switches.values('Extensions'):
 			_db.switch( 'Plus', [index] )
-			for i,x in enumerate(_db.do( 'action' )):
+			for i,x in enumerate(_db.action()):
+				# print(x)
 				x = x.replace('.','')
 				if not x.startswith('.'):
 					x = '.'+x
 				if not x in extensionList:
 					extensionList.append( x.lower() )
+	# print(extensionList); sys.exit();
 
 def action():
 	_.v.do_not_hide__pycache = _.switches.isActive('Disable-Intelligence')
