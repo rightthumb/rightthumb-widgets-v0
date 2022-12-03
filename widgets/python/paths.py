@@ -183,7 +183,10 @@ def action():
 		else:
 			subjects = [os.getcwd()]
 
-
+		# _site = _.regImp(__.appReg,'site')
+		# _site = _.regImp( __.appReg, 'site' )
+		# _site.switch('Files',subjects)
+		# _site.action()
 		for subject in subjects:
 
 

@@ -166,7 +166,7 @@ def imp( subject, imp_table_testing=False ):
     try:
         return imp_run( subject, imp_table_testing )
     except:
-        imp_install(mod)
+        imp_install(subject)
         return imp_run( subject, imp_table_testing )
 
 def imp_install(mod):
@@ -200,7 +200,7 @@ def imp_install(mod):
                 if '=' in mod: mod = mod.split('=')[0]
                 pip.main(['install', mod])
             except: print('pip3 install '+mod0)
-
+        import subprocess
         if len(subprocess.getoutput('sudo cat /etc/sudoers').split('\n')) > 3:
             try: os.system('sudo pip3 install '+mod+'  > /dev/null 2>&1')
             except: _pipy_(mod)
@@ -229,17 +229,20 @@ def imp_run( subject, imp_table_testing=False ):
         else:
             del imp_table_tmp
 
+        imp_table[subject] = importlib.import_module(subject)
+        if imp_table_testing:
+            print( 'imp.DID' )
+        return imp_table[subject]
 
-
-        try:
-            imp_table[subject] = importlib.import_module(subject)
-            if imp_table_testing:
-                print( 'imp.DID' )
-            return imp_table[subject]
-        except Exception as e:
-            if imp_table_testing:
-                print( 'imp.NO' )
-            return None
+        # try:
+        #     imp_table[subject] = importlib.import_module(subject)
+        #     if imp_table_testing:
+        #         print( 'imp.DID' )
+        #     return imp_table[subject]
+        # except Exception as e:
+        #     if imp_table_testing:
+        #         print( 'imp.NO' )
+        #     return None
     if imp_table_testing:
         print( 'imp.YES' )
     return imp_table[subject]
@@ -267,6 +270,7 @@ def path( p, ab=True, pop=False, file=False, slash=None, folder=None, fi=None, f
     if not folder is None: pop=True;
     if not fi is None: file=True;
 
+
     # os = vc.FIG.imp('os')
     # os = imp('os')
     os=imp('os.sep')
@@ -276,6 +280,12 @@ def path( p, ab=True, pop=False, file=False, slash=None, folder=None, fi=None, f
     except Exception as e: os=imp('os.path.isfile')
     try: os.path.isdir
     except Exception as e: os=imp('os.path.isdir')
+
+    global isWin
+    if not isWin:
+        if p.startswith('/'):
+            if   os.path.isdir(p): return p
+            elif os.path.isfile(p): return p
 
     if ab:
         if os.path.isfile(p) or os.path.isdir(p):

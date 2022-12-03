@@ -58,6 +58,7 @@ def appSwitches():
 	_.switches.register('Search-For-Text-Include', '-has,-search')
 	_.switches.register('Search-For-Text-Exclude', '-not')
 	_.switches.register('Search-Print-Line', '-p,-print','all')
+	_.switches.register('No-Extension', '-noext')
 
 
 fse=False
@@ -357,9 +358,10 @@ def add(path,r=False):
 	global base_path
 	path = path.replace(_v.slash+_v.slash,_v.slash)
 	if os.path.isfile(path):
-		pathX=path
-		pathX=pathX.replace(base_path+os.sep,'')
-
+		pathX=path.replace(base_path,'')
+		if pathX.startswith(os.sep): pathX=pathX[1:]
+		
+		# print(pathX)
 		i = i + 1
 
 		if _.showLine(path):
@@ -523,7 +525,8 @@ def add(path,r=False):
 
 						if _.switches.isActive('Count'):
 							if not _.v.show_full_path:
-								process(pathX)
+								# process(pathX)
+								process(path)
 							else:
 								process(path)
 						else:
@@ -579,9 +582,11 @@ def add(path,r=False):
 				if not _.switches.isActive('Totals'):
 					if not _.v.show_full_path:
 						if not _.switches.isActive('Plus'):
-							process(pathX)
+							# process(pathX)
+							process(path)
 						else:
-							process(pathX)
+							# process(pathX)
+							process(path)
 					else:
 						if not _.switches.isActive('Plus'):
 							process(path)
@@ -651,6 +656,7 @@ def extensionsDatabank():
 					extensionList.append( x.lower() )
 
 def action():
+	_.v.no_extension = _.switches.isActive('No-Extension')
 	if __.isFiles:
 		_.v.show_full_path = True
 		if _.switches.isActive('Toggle-Relative-Path'):_.v.show_full_path = False
@@ -811,6 +817,7 @@ spent=[]
 def printer(path,ni=0):
 	global spent
 	global infile
+	global base_path
 	if _.isWin:
 		p = path.lower()
 	else:
@@ -818,6 +825,14 @@ def printer(path,ni=0):
 	if p in spent:
 		return None
 	spent.append(p)
+	if not _.v.show_full_path:
+		path=path.replace(base_path,'')
+		if path.startswith(os.sep): path=path[1:]
+
+		if _.v.no_extension and '.' in path:
+			path=path[:-len(path.split('.')[-1])-1]
+
+
 	_.pr( _.colorThis( path, 'cyan', p=0 ) )
 	infile+=1
 

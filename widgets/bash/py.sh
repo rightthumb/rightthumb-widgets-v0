@@ -16,6 +16,6 @@ if [ $# -eq 0 ]
     then
         python3
     else
-         $p -file  -folder $widgets/widgets/python/ -rr + $@
+         $p -file  -folder $widgets/widgets/python/ -noext  + $@
 fi
 

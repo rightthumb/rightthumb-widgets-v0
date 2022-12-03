@@ -3971,6 +3971,14 @@ class dt:
 #     print(data)
 #     return data
 def isData( data=None, focus=None, pipeClean=True, required=False,     r=None, c=None, noclean=None ):
+	global switches
+	if data is None and switches.isActive('Paste-isData-json'):
+		simplejson=__.imp('simplejson')
+		d=getClip().strip()
+		return simplejson.loads(d)
+	elif data is None and switches.isActive('Paste-isData'): return getClip().split('\n')
+	
+	
 	if not noclean is None: pipeClean=noclean
 	def _isData_(tst):
 		global myFileLocation_Files
@@ -3999,7 +4007,7 @@ def isData( data=None, focus=None, pipeClean=True, required=False,     r=None, c
 	if type(data) ==list and  len(data)==1 and data[0]=='': data=[]
 	if not data:
 		data=[]
-		global switches
+		# global switches
 		isClean=False
 
 		for name in v.isData:
@@ -19525,6 +19533,8 @@ def load():
 		switches.register('LoadEpoch', '-loadepoch')
 		switches.register('PrintEpoch', '-printepoch')
 		switches.register('chmod', '-chmod,-777')
+		switches.register( 'Paste-isData', '-ppa,-ppaste,-ispa,-idpa' )
+		switches.register( 'Paste-isData-json', '--json,-pjson,-jsonp' )
 		# switches.register('SkipColumnTriggers', '-skiptriggers')
 		defaultScriptTriggers_do()
 		
@@ -19561,6 +19571,12 @@ class regImp:
 		self.parent = focus
 		# print_( 'self.imp = importlib.import_module', app )
 		self.imp = importlib.import_module(app)
+		# print(app)
+		# print(app)
+		# print(app)
+		# for x in dir(self.imp):
+		# 	print(x)
+		# sys.exit()
 		# self.imp = importlib.util.spec_from_file_location( app, _v.py + _v.slash + app + '.py' )
 		# print_( os.path.isfile( _v.py + _v.slash + app + '.py' ) )
 		# print_( self.imp )
@@ -19682,6 +19698,7 @@ class regImp:
 		__.appReg = self.focusPop
 
 	def action( self, focusPop=True ):
+		# focusBK = __.appReg
 		__.appReg = self.focus
 
 		self.imp.appDBA = self.focus
@@ -19695,15 +19712,16 @@ class regImp:
 
 	# def do( self, func, arg=False, focusPop=True ):
 	def do(self, *args, **kwargs):
+		# focusBK = __.appReg
 		focusPop=True
+
 		args=list(args)
+		if len(args) == 1 and args[0] == 'action': return self.action()
 		func=args.pop(0)
 		_kwargs={}
 		for k in kwargs:
 			if k == 'focusPop': focusPop=kwargs[k]
 			else: _kwargs[k]=kwargs[k]
-
-		
 
 		__.appReg = self.focus
 
@@ -21209,6 +21227,34 @@ def osvar(var=None,val=None):
 
 	# printenv
 	# os.environ['USERPROFILE']
+
+def pyApp(path):
+	os=__.imp('os.sep')
+	path=__.path(path)
+	paths=path.split(os.sep)
+	file = paths[-1]
+	# return file
+	# return paths[-3]
+	# return os.sep
+	# return 'test'
+
+	if len(paths)>1 and paths[-2] == '_rightThumb':
+		if file == '__init__.py':
+			return '_rightThumb'
+		else:
+			return '_rightThumb.'+file[:-3]
+	elif len(paths)>2 and paths[-3] == '_rightThumb':
+		if file == '__init__.py':
+			return '_rightThumb.'+paths[-2]
+		else:
+			return '_rightThumb.'+paths[-2]+'.'+file[:-3]
+
+
+	else:
+		if file == '__init__.py' and len(paths)>1:
+			return paths[-2]
+		else:
+			return file[:-3]
 
 imp=regImp
 # class regImp:

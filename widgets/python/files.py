@@ -62,6 +62,7 @@ def appSwitches():
 	_.switches.register('Search-Print-Line', '-p,-print','all')
 	_.switches.register('Contains-IPs', '-ip','domains')
 	_.switches.register('Disable-Intelligence', '-showall')
+	_.switches.register('No-Extension', '-noext')
 
 
 fse=False
@@ -367,8 +368,8 @@ def add(path,r=False):
 	path = path.replace(_v.slash+_v.slash,_v.slash)
 	if os.path.isfile(path):
 		path = __.path(path)
-		pathX=path
-		pathX=pathX.replace(base_path+os.sep,'')
+		pathX=path.replace(base_path,'')
+		if pathX.startswith(os.sep): pathX=pathX[1:]
 
 		i = i + 1
 
@@ -533,7 +534,8 @@ def add(path,r=False):
 
 						if _.switches.isActive('Count'):
 							if not _.v.show_full_path:
-								process(pathX)
+								# process(pathX)
+								process(path)
 							else:
 								process(path)
 						else:
@@ -558,6 +560,8 @@ def add(path,r=False):
 								result += _.colorThis( path, 'cyan', p=0 )
 
 							_.pr( result )
+							global totals_bytes
+							totals_bytes+=size
 						
 						# _.pr( formatedSize, '\t', path )
 
@@ -595,9 +599,11 @@ def add(path,r=False):
 				if not _.switches.isActive('Totals'):
 					if not _.v.show_full_path:
 						if not _.switches.isActive('Plus'):
-							process(pathX)
+							# process(pathX)
+							process(path)
 						else:
-							process(pathX)
+							# process(pathX)
+							process(path)
 					else:
 						if not _.switches.isActive('Plus'):
 							process(path)
@@ -669,6 +675,7 @@ def extensionsDatabank():
 	# print(extensionList); sys.exit();
 
 def action():
+	_.v.no_extension = _.switches.isActive('No-Extension')
 	_.v.do_not_hide__pycache = _.switches.isActive('Disable-Intelligence')
 
 
@@ -732,6 +739,9 @@ def action():
 		base_path=folder
 		if not _.switches.isActive('Widget-V0'):
 			getFolder(folder,r=r)
+			if _.switches.isActive('Size'):
+				_.pr()
+				_.pr('total:',formatSize(totals_bytes),c='Background.light_blue')
 		else:
 			# _.pr(_v.ww)
 			# _.pr(_v.widgets)
@@ -892,6 +902,7 @@ def IPs(text,domains=False):
 def printer(path,ni=0):
 	global spent
 	global infile
+	global base_path
 	if _.isWin:
 		p = path.lower()
 	else:
@@ -899,7 +910,18 @@ def printer(path,ni=0):
 	if p in spent:
 		return None
 	spent.append(p)
+	# path = _.pyApp(path)
+	if not _.v.show_full_path:
+		path=path.replace(base_path,'')
+		if path.startswith(os.sep): path=path[1:]
+
+		if _.v.no_extension and '.' in path:
+			path=path[:-len(path.split('.')[-1])-1]
+
+
 	_.pr( _.colorThis( path, 'cyan', p=0 ) )
+	# _.pr( _.colorThis( [_.pyApp(path)], 'cyan', p=0 ) )
+	# _.pr( _.colorThis( [_.pyApp(path),path], 'cyan', p=0 ) )
 	infile+=1
 
 def process(path):
@@ -1003,6 +1025,7 @@ def sw(path):
 	return True
 
 
+totals_bytes=0
 
 # import chardet
 

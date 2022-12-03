@@ -157,10 +157,10 @@ def process(row):
 	global data
 	global last
 	global lastRow
-	if ':' in row and not row.lower().startswith('http'):
+	if ':' in row and not 'http' in row.lower():
 		last = row
 	else:
-		if 'tiktok' in row and row.lower().startswith('http'):
+		if 'tiktok' in row and 'http' in row.lower():
 			if not last in data:
 				data[last] = []
 			data[last].append(row)
@@ -300,12 +300,12 @@ def action():
 						spent.append(key)
 						if first:
 							first = False
-							_.colorThis(  [  '\n_____________________________________________\n'  ], 'red'  )
+							_.colorThis(  [  '\n___\n'  ], 'red'  )
 						_.colorThis(  [  '\n\t', key  ], 'yellow'  )
 						for url in data[key]:
 							_.colorThis(  [  '\t\t', url  ], 'green'  )
 
-			sys.exit()
+			# sys.exit()
 
 
 		_.tables.print( 'table', 'records,stem' )

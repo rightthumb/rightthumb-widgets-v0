@@ -198,8 +198,8 @@ def load():
 	_v.mkdir(fo)
 	var = _v.rtp+'profile/vars/'.replace('/',os.sep)
 	vbm = _v.rtp+'profile/bookmarks/'.replace('/',os.sep)
-	brand_day = True
 	if len(_.switches.all())==0:
+		brand_day = True
 		if os.path.isfile(var+'day.brand'):
 			L = _.isDate( float( _.getText(var+'day.brand', raw=True) ) ,f='date')
 			N = _.isDate(epoch,f='date')
@@ -209,52 +209,57 @@ def load():
 			if _.isWin: pesonal_day+'bat'
 			else:  pesonal_day+'sh'
 			today = _.day(epoch); fo =  _v.rtp+'daily'+os.sep+today;
-			_v.mkdir(fo)
-			bm = _.getTable('bookmarks.index')
-			# _.saveTable(bm,'bookmarks-day.index')
-			# print(bm); sys.exit();
-			bm['labels'][str(0)]=fo;  _.saveText(fo,vbm+'BM-0.txt');
-			bm['labels']['day']=fo;   _.saveText(fo,vbm+'BM-day.txt');
-			bm['labels']['today']=fo; _.saveText(fo,vbm+'BM-today.txt');
-			dA=epoch-86400
-			dayX = _.day(dA); dX = _v.rtp+'daily'+os.sep+dayX;
-			we=_.isDate(dA,f='dow2'); bm['labels'][we]=dX;  _.saveText(dX,vbm+'BM-'+we+'.txt');
-			bm['labels'][str(1)]=dX;  _.saveText(dX,vbm+'BM-1.txt');
-			bm['labels']['yesterday']=dX;  _.saveText(dX,vbm+'BM-yesterday.txt');
-			bm['labels']['y']=dX;  _.saveText(dX,vbm+'BM-yy.txt');
-			bm['labels']['y']=dX;  _.saveText(dX,vbm+'BM-yy.txt');
-			dA=epoch-86400-86400; dayX = _.day(dA); dX = _v.rtp+'daily'+os.sep+dayX; bm['labels'][str(2)]=dX; _.saveText(dX,vbm+'BM-2.txt'); we=_.isDate(dA,f='dow2'); bm['labels'][we]=dX;  _.saveText(dX,vbm+'BM-'+we+'.txt');
-			dA=epoch-86400-86400-86400; dayX = _.day(dA); dX = _v.rtp+'daily'+os.sep+dayX; bm['labels'][str(3)]=dX; _.saveText(dX,vbm+'BM-3.txt'); we=_.isDate(dA,f='dow2'); bm['labels'][we]=dX;  _.saveText(dX,vbm+'BM-'+we+'.txt');
-			dA=epoch-86400-86400-86400-86400; dayX = _.day(dA); dX = _v.rtp+'daily'+os.sep+dayX; bm['labels'][str(4)]=dX; _.saveText(dX,vbm+'BM-4.txt'); we=_.isDate(dA,f='dow2'); bm['labels'][we]=dX;  _.saveText(dX,vbm+'BM-'+we+'.txt');
-			dA=epoch-86400-86400-86400-86400-86400; dayX = _.day(dA); dX = _v.rtp+'daily'+os.sep+dayX; bm['labels'][str(5)]=dX; _.saveText(dX,vbm+'BM-5.txt'); we=_.isDate(dA,f='dow2'); bm['labels'][we]=dX;  _.saveText(dX,vbm+'BM-'+we+'.txt');
-			dA=epoch-86400-86400-86400-86400-86400-86400; dayX = _.day(dA); dX = _v.rtp+'daily'+os.sep+dayX; bm['labels'][str(6)]=dX; _.saveText(dX,vbm+'BM-6.txt'); we=_.isDate(dA,f='dow2'); bm['labels'][we]=dX;  _.saveText(dX,vbm+'BM-'+we+'.txt');
-			dA=epoch-86400-86400-86400-86400-86400-86400-86400; dayX = _.day(dA); dX = _v.rtp+'daily'+os.sep+dayX; bm['labels'][str(7)]=dX; _.saveText(dX,vbm+'BM-7.txt'); we=_.isDate(dA,f='dow2'); bm['labels'][we]=dX;  _.saveText(dX,vbm+'BM-'+we+'.txt');
+			# print(fo+'notes.md')
+			# print(fo+'notes.md')
+			# print(fo+'notes.md')
+			if not os.path.isfile(fo+'notes.md'):
+				_.pr('branding day',c='red')
+				_v.mkdir(fo)
+				bm = _.getTable('bookmarks.index')
+				# _.saveTable(bm,'bookmarks-day.index')
+				# print(bm); sys.exit();
+				bm['labels'][str(0)]=fo;  _.saveText(fo,vbm+'BM-0.txt');
+				bm['labels']['day']=fo;   _.saveText(fo,vbm+'BM-day.txt');
+				bm['labels']['today']=fo; _.saveText(fo,vbm+'BM-today.txt');
+				dA=epoch-86400
+				dayX = _.day(dA); dX = _v.rtp+'daily'+os.sep+dayX;
+				we=_.isDate(dA,f='dow2'); bm['labels'][we]=dX;  _.saveText(dX,vbm+'BM-'+we+'.txt');
+				bm['labels'][str(1)]=dX;  _.saveText(dX,vbm+'BM-1.txt');
+				bm['labels']['yesterday']=dX;  _.saveText(dX,vbm+'BM-yesterday.txt');
+				bm['labels']['y']=dX;  _.saveText(dX,vbm+'BM-yy.txt');
+				bm['labels']['y']=dX;  _.saveText(dX,vbm+'BM-yy.txt');
+				dA=epoch-86400-86400; dayX = _.day(dA); dX = _v.rtp+'daily'+os.sep+dayX; bm['labels'][str(2)]=dX; _.saveText(dX,vbm+'BM-2.txt'); we=_.isDate(dA,f='dow2'); bm['labels'][we]=dX;  _.saveText(dX,vbm+'BM-'+we+'.txt');
+				dA=epoch-86400-86400-86400; dayX = _.day(dA); dX = _v.rtp+'daily'+os.sep+dayX; bm['labels'][str(3)]=dX; _.saveText(dX,vbm+'BM-3.txt'); we=_.isDate(dA,f='dow2'); bm['labels'][we]=dX;  _.saveText(dX,vbm+'BM-'+we+'.txt');
+				dA=epoch-86400-86400-86400-86400; dayX = _.day(dA); dX = _v.rtp+'daily'+os.sep+dayX; bm['labels'][str(4)]=dX; _.saveText(dX,vbm+'BM-4.txt'); we=_.isDate(dA,f='dow2'); bm['labels'][we]=dX;  _.saveText(dX,vbm+'BM-'+we+'.txt');
+				dA=epoch-86400-86400-86400-86400-86400; dayX = _.day(dA); dX = _v.rtp+'daily'+os.sep+dayX; bm['labels'][str(5)]=dX; _.saveText(dX,vbm+'BM-5.txt'); we=_.isDate(dA,f='dow2'); bm['labels'][we]=dX;  _.saveText(dX,vbm+'BM-'+we+'.txt');
+				dA=epoch-86400-86400-86400-86400-86400-86400; dayX = _.day(dA); dX = _v.rtp+'daily'+os.sep+dayX; bm['labels'][str(6)]=dX; _.saveText(dX,vbm+'BM-6.txt'); we=_.isDate(dA,f='dow2'); bm['labels'][we]=dX;  _.saveText(dX,vbm+'BM-'+we+'.txt');
+				dA=epoch-86400-86400-86400-86400-86400-86400-86400; dayX = _.day(dA); dX = _v.rtp+'daily'+os.sep+dayX; bm['labels'][str(7)]=dX; _.saveText(dX,vbm+'BM-7.txt'); we=_.isDate(dA,f='dow2'); bm['labels'][we]=dX;  _.saveText(dX,vbm+'BM-'+we+'.txt');
 
-			# print(bm['labels'][str(7)]); sys.exit();
-			_.saveText(str(epoch),var+'day.brand')
-			# if os.path.isfile(_v.tt+'/tables/bookmarks-day.index'.replace('/',os.sep)): os.unlink(_v.tt+'/tables/bookmarks.index'.replace('/',os.sep))
-			_.saveTable(bm,'bookmarks.index')
-			
-			
-			_.saveText(str(epoch),var+'day.brand')
-			_.saveText(dX,vbm+'BM-day.txt')
-			_.pr('day branded',c='Background.red')
+				# print(bm['labels'][str(7)]); sys.exit();
+				_.saveText(str(epoch),var+'day.brand')
+				# if os.path.isfile(_v.tt+'/tables/bookmarks-day.index'.replace('/',os.sep)): os.unlink(_v.tt+'/tables/bookmarks.index'.replace('/',os.sep))
+				_.saveTable(bm,'bookmarks.index')
+				
+				
+				_.saveText(str(epoch),var+'day.brand')
+				_.saveText(dX,vbm+'BM-day.txt')
+				_.pr('day branded',c='Background.red')
 
-	
+		
 
-			# if not _.switches.isActive('Clean'): _.pr(today)
-			_v.mkdir(fo)
-			# ago1=_.isDate(epoch,f='ago').replace(' <','').replace('<',''); ago2=str(_.isDate(epoch,f='ago-dic')).replace('"','').replace("'",'').replace('{','').replace('}','').replace('<','').replace('>',''); ago='( '+ago1+' ) '+ago2;
-			# if ago1 == 'today': ago=ago1
-			ago=_.isDate(float(epoch),f='ago-txt')
-			if _.isWin:
-				global bat
-				# script=_v.ww+sep+'batch'+sep+'.day.bat'
-				script=_v.ww+sep+'batch'+sep
-				bat = bat.replace('path',fo)
-				bat = bat.replace('ago', ago )
-				bat = _str.do('sh',bat); _.saveText( bat, script+'.day.bat' ); _.saveText( bat, script+'.d.bat' );
-				_.pr( script, c='Background.light_blue' )
+				# if not _.switches.isActive('Clean'): _.pr(today)
+				_v.mkdir(fo)
+				# ago1=_.isDate(epoch,f='ago').replace(' <','').replace('<',''); ago2=str(_.isDate(epoch,f='ago-dic')).replace('"','').replace("'",'').replace('{','').replace('}','').replace('<','').replace('>',''); ago='( '+ago1+' ) '+ago2;
+				# if ago1 == 'today': ago=ago1
+				ago=_.isDate(float(epoch),f='ago-txt')
+				if _.isWin:
+					global bat
+					# script=_v.ww+sep+'batch'+sep+'.day.bat'
+					script=_v.ww+sep+'batch'+sep
+					bat = bat.replace('path',fo)
+					bat = bat.replace('ago', ago )
+					bat = _str.do('sh',bat); _.saveText( bat, script+'.day.bat' ); _.saveText( bat, script+'.d.bat' );
+					_.pr( script, c='Background.light_blue' )
 	# else:
 	#     global sh
 	#     script = _v.ww+sep+'bash'+sep+'nav'+sep+'day.sh'

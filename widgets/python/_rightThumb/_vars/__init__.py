@@ -1237,7 +1237,7 @@ def resolveFolderIDs( id_path ):
 	id_path = id_path.replace( folderID_tech, techFolder )
 	if __.isWin:
 		id_path = id_path.replace( folderID_profile, os.environ['USERPROFILE'] )
-	elif not __.isWin:
+	else:
 		id_path = id_path.replace( folderID_profile, os.environ['HOME'] )
 	
 	id_path = id_path.replace( folderID_host, thisHost )
@@ -1252,6 +1252,7 @@ def resolveFolderIDs( id_path ):
 	id_path = id_path.replace( '4FD4030911', slash )
 	id_path = id_path.replace( '/', slash )
 	id_path = id_path.replace( '\\', slash )
+	return id_path
 	return __.path(id_path)
 def filePath(path):
 	return 'file://' + os.path.realpath(path)
@@ -1589,3 +1590,5 @@ if __.isWin:
 	user = cmdGetVar('username')
 else:
 	user = cmdGetVar('USER')
+
+# return __.path(id_path)

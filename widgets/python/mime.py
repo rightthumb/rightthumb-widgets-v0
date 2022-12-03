@@ -151,17 +151,7 @@ _.l.sw.register( triggers, sw )
 #n)--> start
 os=__.imp('os.system')
 import sys
-try:
-    import magic
-except:
-    if sys.platform == 'win32':
-        os.system('pip3 install python-magic-bin==0.4.14')
-    else:
-        try:
-            os.system('pip3 install python-magic  > /dev/null 2>&1')
-        except:
-            os.system('sudo pip3 install python-magic  > /dev/null 2>&1')
-    import magic
+magic = __.imp('magic')
 import sys
 
 
@@ -260,15 +250,14 @@ def script(path):
     # _.pr(path)
     path = __.path(path)
     path2=path
-    if not full: path2 = path[len(base):]
+    if not full and path.startswith(base): path2 = path[len(base):]
     m = genMime(path)
     m=m.strip()
     # print('tb',tb)
     if tb:
-
         if m == 'inode/x-empty': return None
         elif tb == 'c' and not m.startswith('corrupt/'): return None
-        elif m.startswith('corrupt/'): return None
+        elif tb == 'b' and m.startswith('corrupt/'): return None
         elif tb == 'b' and m.startswith('text/'): return None
 
     if _.showLine(m+'  '+path2) and not 'No such file or directory' in m:
@@ -287,7 +276,7 @@ def action():
     
     # mime.from_file("HelpPane.exe")
     
-    # _.fields.register( 'mime', 'mimetype','application/application' )
+    _.fields.register( 'mime', 'mimetype','text/ssh-key-private' )
     # _.fields.register( 'mime', 'mimetype','application/office-wordprocessingml' )
 
     if _.isData():
@@ -302,6 +291,7 @@ if _.switches.isActive('Text'): tb = 't'
 elif _.switches.isActive('Binary'): tb = 'b'
 elif _.switches.isActive('Corrupt'): tb = 'c'
 else: tb = None
+# print('tb',tb)
 
 
 full=_.switches.isActive('Full-Path')
@@ -349,6 +339,7 @@ mimetypes['application/octet-stream'] = {
                 'lnk': 'application/website-link',
 }
 for k in corrupt: mimetypes['text/plain'][k]=corrupt[k]
+
 text_plain = {
                 'key': [
                             {'size':35,'scan':'OPENSSH,PRIVATE,KEY','mime':'text/ssh-key-private'}

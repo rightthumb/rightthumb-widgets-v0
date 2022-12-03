@@ -3119,8 +3119,7 @@ alias ssh.t.a="ssh-copy-id -i ~/.ssh/id_rsa.pub admin@tatooine.m-eta.app"
 alias ssh.d.s="ssh-copy-id -i ~/.ssh/id_rsa.pub scott@dantooine.m-eta.app"
 alias ssh.d.r="ssh-copy-id -i ~/.ssh/id_rsa.pub root@dantooine.m-eta.app"
 
-
-
+alias grep.r="grep -R -l"
 
 # alias cd/="cd /"
 alias x.="exit"
@@ -3427,6 +3426,12 @@ fi
 if [[ ( "$PWD" == "/home/scott" && "$HOME" != "/home/scott" ) ]]; then
     cd $HOME
 fi
+
+if [ -f "$HOME/bashrc.sh" ]; then
+source $HOME/bashrc.sh
+fi
+
+
 
             """
             # echo "alias rr='sudo su root'" >> ~/.bashrc

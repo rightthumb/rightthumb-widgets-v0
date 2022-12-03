@@ -232,7 +232,10 @@ ECHO  %%I %%J
 
 GOTO ENDEND
 :VIEW_WWW
-set did=View Tickets
+set did=View myTickets
+type %caseroot%\html\header > %html%
+type %caseroot%\open-* >> %html%
+type %caseroot%\html\footer >> %html%
 start "chrome" %chrome% "%html%"
 GOTO END
 

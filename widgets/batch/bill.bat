@@ -14,7 +14,7 @@ rem ## {C3P0D40fAe8B} ##
 call m back --c
 call b myTickets > nul
 
-
+echo "=if((E2<15),15,E2)"
 :notepad %myTickets%\bill.tmp.txt
 :IF NOT EXIST "%myTickets%\bill.tmp.txt" echo error
 :IF NOT EXIST "%myTickets%\bill.tmp.txt" GOTO END
