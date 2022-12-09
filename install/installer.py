@@ -3348,7 +3348,7 @@ alias wgett='wget -q -O - '
 alias crontab.='EDITOR=nano /usr/bin/crontab'
 
 alias rr='sudo su root'
-alias vps="echo 'bespin hoth mortis'"
+alias vps="echo 'hoth bespin tatooine mandalore endor mortis dantooine yavin'"
 
 alias pbcopy='xclip -selection clipboard'
 alias pbpaste='xclip -selection clipboard -o'
@@ -3377,6 +3377,48 @@ alias epoch="echo $( date +%s )";
 alias whitelist="/opt/rightthumb-widgets-v0/widgets/bash/whitelist.sh"
 alias wl="/opt/rightthumb-widgets-v0/widgets/bash/whitelist.sh"
 alias ssh...="sudo cp -r ./.ssh/* /mnt/c/Users/Scott/.ssh"
+
+
+
+
+
+
+alias vy="ssh scott@yavin.m-eta.app"
+alias yavin="ssh scott@yavin.m-eta.app"
+alias ssh.y.s="ssh-copy-id -i ~/.ssh/id_rsa.pub scott@yavin.m-eta.app"
+alias ssh.y.r="ssh-copy-id -i ~/.ssh/id_rsa.pub root@yavin.m-eta.app"
+alias ssh.y.s.="ssh-copy-id -i /mnt/c/Users/Scott/.ssh/id_rsa.pub scott@yavin.m-eta.app"
+alias ssh.y.r.="ssh-copy-id -i /mnt/c/Users/Scott/.ssh/id_rsa.pub root@yavin.m-eta.app"
+alias vps.y.dt="ssh -L 59001:localhost:5901 -C -N -l scott yavin.m-eta.app"
+alias vps.y.py="scp  $ww/python/vps*.py root@yavin.m-eta.app:$ww/python/    ; ssh root@yavin.m-eta.app 'chmod -R 777 /opt/rightthumb-widgets-v0/'"
+alias vps.y.py2="scp  $ww/python/vps*.py root@yavin.m-eta.app:$ww/python/     ; ssh root@yavin.m-eta.app 'chmod -R 777 /opt/rightthumb-widgets-v0/'"
+alias vps.y.c="ssh -f root@yavin.m-eta.app    -f '/bin/python3 $ww/python/shClean.py -r -folder /opt '"
+alias vps.y.sh=" scp -r $ww/bash/vps-srv/ root@yavin.m-eta.app:/opt/rightthumb-widgets-v0/widgets/bash/    ; ssh root@yavin.m-eta.app 'chmod -R 777 /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/'"
+alias vps.y.sh2="ssh root@yavin.m-eta.app -f 'mkdir -p /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/' ; scp -r /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/* root@yavin.m-eta.app:/opt/rightthumb-widgets-v0/widgets/bash/vps-srv/    ; ssh root@yavin.m-eta.app 'chmod -R 777 /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/'"
+alias vps.y.db="scp  $ww/databank/tables/*.* root@yavin.m-eta.app:/opt/rightthumb-widgets-v0/widgets/databank/tables/    ; ssh root@yavin.m-eta.app 'chmod -R 777 /opt/rightthumb-widgets-v0/'"
+alias vps.y.sh.="scp -r root@yavin.m-eta.app:/opt/rightthumb-widgets-v0/widgets/bash/vps-srv/ $ww/bash/ ; chmod 777 -R $ww/bash/vps-srv/"
+alias vps.y.db.="scp -rp root@yavin.m-eta.app:/opt/rightthumb-widgets-v0/widgets/databank/tables/*.* $ww/databank/tables/ ; chmod 777 -R $ww/databank/tables/"
+alias vps.y.py.="scp -rp root@yavin.m-eta.app:$ww/python/vps* $ww/python/ ; chmod 777 -R $ww/python/"
+alias vps.y.py="scp $ww/python/vps*.py root@yavin.m-eta.app:$ww/python/ ; ssh root@yavin.m-eta.app \'chmod -R 777 /opt/rightthumb-widgets-v0/\'"
+alias vps.y.py2="scp $ww/python/vps*.py root@yavin.m-eta.app:$ww/python/ ; ssh root@yavin.m-eta.app \'chmod -R 777 /opt/rightthumb-widgets-v0/\'"
+alias vps.y.c="ssh -f root@yavin.m-eta.app -f \'/bin/python3 $ww/python/shClean.py -r -folder /opt \'"
+alias vps.y.sh="scp -r $ww/bash/vps-srv/ root@yavin.m-eta.app:/opt/rightthumb-widgets-v0/widgets/bash/ ; ssh root@yavin.m-eta.app \'chmod -R 777 /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/\'"
+alias vps.y.sh2="ssh root@yavin.m-eta.app -f \'mkdir -p /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/\' ; scp /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/* root@yavin.m-eta.app:/opt/rightthumb-widgets-v0/widgets/bash/vps-srv/ ; ssh root@yavin.m-eta.app \'chmod -R 777 /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/\'"
+alias vps.y.db="scp $ww/databank/tables/*.* root@yavin.m-eta.app:/opt/rightthumb-widgets-v0/widgets/databank/tables/ ; ssh root@yavin.m-eta.app \'chmod -R 777 /opt/rightthumb-widgets-v0/\'"
+alias vps.y.sh.="scp -r root@yavin.m-eta.app:/opt/rightthumb-widgets-v0/widgets/bash/vps-srv/ $ww/bash/ ; chmod 777 -R $ww/bash/vps-srv/"
+alias vps.y.db.="scp -rp root@yavin.m-eta.app:/opt/rightthumb-widgets-v0/widgets/databank/tables/*.* $ww/databank/tables/ ; chmod 777 -R $ww/databank/tables/"
+alias vps.y.py.="scp -rp root@yavin.m-eta.app:$ww/python/vps* $ww/python/ ; chmod 777 -R $ww/python/"
+alias vps.y.c="ssh -f root@yavin.m-eta.app -f \'/bin/python3 $ww/python/shClean.py -r -folder /opt \'"
+alias vps.y.py.v.u="scp $ww/python/vps*.py root@yavin.m-eta.app:$ww/python/ ; ssh root@yavin.m-eta.app \'chmod -R 777 /opt/rightthumb-widgets-v0/\'"
+alias vps.y.sh2.u="ssh root@yavin.m-eta.app -f \'mkdir -p /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/\' ; scp /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/* root@yavin.m-eta.app:/opt/rightthumb-widgets-v0/widgets/bash/vps-srv/ ; ssh root@yavin.m-eta.app \'chmod -R 777 /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/\'"
+alias vps.y.py.u="scp $ww/python/vps*.py root@yavin.m-eta.app:$ww/python/ ; ssh root@yavin.m-eta.app \'chmod -R 777 /opt/rightthumb-widgets-v0/\'"
+alias vps.y.sh.u="scp -r $ww/bash/vps-srv/ root@yavin.m-eta.app:/opt/rightthumb-widgets-v0/widgets/bash/ ; ssh root@yavin.m-eta.app \'chmod -R 777 /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/\'"
+alias vps.y.db.u="scp $ww/databank/tables/*.* root@yavin.m-eta.app:/opt/rightthumb-widgets-v0/widgets/databank/tables/ ; ssh root@yavin.m-eta.app \'chmod -R 777 /opt/rightthumb-widgets-v0/\'"
+alias vps.y.sh.d="scp -r root@yavin.m-eta.app:/opt/rightthumb-widgets-v0/widgets/bash/vps-srv/ $ww/bash/ ; chmod 777 -R $ww/bash/vps-srv/"
+alias vps.y.db.d="scp -rp root@yavin.m-eta.app:/opt/rightthumb-widgets-v0/widgets/databank/tables/*.* $ww/databank/tables/ ; chmod 777 -R $ww/databank/tables/"
+alias vps.y.py.d="scp -rp root@yavin.m-eta.app:$ww/python/vps* $ww/python/ ; chmod 777 -R $ww/python/"
+alias vps.y.u="vps.y.py.u; vps.y.sh.u; vps.y.db.u"
+alias vps.y.d="vps.y.py.d; vps.y.sh.d; vps.y.db.d"
 
 
 
