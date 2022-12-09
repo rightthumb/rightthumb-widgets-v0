@@ -769,6 +769,34 @@ copy(  hackTool.payload.label  )
 		data  = _paste.imp.paste()
 		_copy.imp.copy( data.lower(), p=0 )
 
+
+
+
+	def yaml2json(self):
+		yaml = __.imp('yaml')
+		simplejson = __.imp('simplejson')
+		_copy = _.regImp( __.appReg, '-copy' )
+		_paste = _.regImp( __.appReg, '-paste' )
+		data  = _paste.imp.paste()
+		data = data.replace('\t','    ')
+		y=yaml.safe_load(data)
+		j = simplejson.dumps(y, indent=4, sort_keys=False)
+		_copy.imp.copy( j, p=0 )
+
+	def json2yaml(self):
+		yaml = __.imp('yaml')
+		simplejson = __.imp('simplejson')
+		_copy = _.regImp( __.appReg, '-copy' )
+		_paste = _.regImp( __.appReg, '-paste' )
+		data  = _paste.imp.paste()
+		data = data.replace('\t','    ')
+		j = simplejson.loads(data)
+		y=yaml.dump( j, sort_keys=False )
+		_copy.imp.copy( y, p=0 )
+
+
+
+
 	def space_2_underscore_text(self):
 		_copy = _.regImp( __.appReg, '-copy' )
 		_paste = _.regImp( __.appReg, '-paste' )
@@ -2483,6 +2511,9 @@ def load():
 				'f12-console-tool.js-table-0': { 'raw': [   'shift.,2',   'u','u',  't','0'   ], 'do': 'Clip.browser_f12_tooljs_table0()' },
 				'f12-console-tool.js-table-h2': { 'raw': [   'shift.,2',   'u','u',  't','t'   ], 'do': 'Clip.browser_f12_tooljs_table()' },
 				'space-2-underscore': { 'raw': [   'space.,2',   's','p','u'   ], 'do': 'Clip.space_2_underscore_text()' },
+				
+				'yaml-2-json': { 'raw': [   'ctrl.,2',   'y','2','j'   ], 'do': 'Clip.yaml2json()' },
+				'json-2-yaml': { 'raw': [   'ctrl.,2',   'j','2','y'   ], 'do': 'Clip.json2yaml()' },
 				# 'clip-replace': { 'raw': [ 'ctrl.,2',  's' ], 'do': 'Clip.swap()' },
 
 

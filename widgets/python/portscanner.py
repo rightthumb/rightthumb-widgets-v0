@@ -48,6 +48,7 @@ def appSwitches():
 	_.switches.register( 'DisplayFilter', '-filter','ports' )
 	_.switches.register( 'HelpPortDescription', '-hp,-pd','53, 110, 80, 22, 21, 443, 995, 993, 143, 3306' )
 	_.switches.register( 'Ridiculous', '-rd,-ridiculous' )
+	_.switches.register( 'UDP', '-udp' )
 
 	# _.switches.register( 'Quick', '-q' )
 
@@ -366,7 +367,7 @@ def resolution_results():
 		# get_name(address)
 		rec = THE_IP_DIC(a=address,v=vend)
 		del rec['p']
-		records.append( rec )
+		records.append( dic_cleaner(rec) )
 		
 
 
@@ -377,7 +378,7 @@ def resolution_results():
 			for rec in records:
 				# _.pr( type(rec['ports']), rec['ports'])
 				if len(rec['ports']):
-					recs.append(rec)
+					recs.append(dic_cleaner(rec))
 			records = recs
 	_.tables.register( 'IPS', records )
 	_.tables.print( 'IPS', 'address,name,vendor,mac,ports' )
@@ -481,6 +482,7 @@ def scan_address(address):
 					ports = __.ports_hash['200']['tcp']
 				elif 'u' in  _.switches.values('Top')[1].lower():
 					ports = __.ports_hash['200']['udp']
+					_.switches.fieldSet( 'UDP', 'active', True )
 			else:
 				# _.pr(' HERE C ')
 				if int(  _.switches.values('Top')[0]  ) > len(__.ports_hash['top']):
@@ -641,6 +643,21 @@ def report_fix_test():
 
 
 
+def check_port_udp(host, port):
+	# https://stackoverflow.com/questions/42867192/python-check-udp-port-open
+    import socket
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    s.settimeout(2)
+    try:
+        s.sendto('ping'.encode(), (host, port))
+        s.recvfrom(1024)
+    except socket.timeout:
+        s.close()
+        return 0
+    s.close()
+    return 1
+
+
 def scan_port( ip, port ):
 	# _.pr( ip, port )
 	port = int(port)
@@ -657,22 +674,27 @@ def scan_port( ip, port ):
 		return None
 
 	# Create a new socket
-	tcp = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-	# _.pr( tcp.gettimeout() )
+	if _.switches.isActive('UDP'):
+		# if check_port_udp(ip,port):
+		# 	THE_IP_DIC( a=ip, p=str(port) )
+		connection = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+	else:
+		connection = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+	# _.pr( connection.gettimeout() )
 	# sys.exit()
-	tcp.settimeout(2)
-	# _.pr( tcp.connect_ex((ip, port)), port )
+	connection.settimeout(2)
+	# _.pr( connection.connect_ex((ip, port)), port )
 
 
 	# Print if the port is open
-	result = tcp.connect_ex((ip, port))
+	result = connection.connect_ex((ip, port))
 	# _.pr( result, port )
 
 	# for x in dir(result):
 	# 	_.pr(x)
 
 	try:
-		tcp.close()
+		connection.close()
 	except Exception as e:
 		pass
 
@@ -725,6 +747,12 @@ from getmac import get_mac_address
 
 if _.switches.isActive('CIDR'):
 	from netaddr import IPNetwork
+
+
+def dic_cleaner(rec):
+	if 'address' in rec and 'name' in rec:
+		if rec['name'] == rec['address']: rec['name']=''
+	return rec
 
 
 ########################################################################################

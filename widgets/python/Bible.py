@@ -17,6 +17,7 @@ import time
 import _rightThumb._construct as __
 appDBA = __.clearFocus( __name__, __file__ )
 __.appReg = appDBA
+
 def focus( parentApp='', childApp='', reg=True ):
 	global appDBA
 	f = __.appName( appDBA, parentApp, childApp )
@@ -37,9 +38,6 @@ def appSwitches():
 	_.switches.register( 'Verses', '-v,-vs,-verse,-verses' )
 	_.switches.register( 'Build', '-build', 'indices' )
 	_.switches.register( 'EditCMDs', '-edit' )
-
-
-
 _.autoBackupData = __.autoCreationConfiguration['backup']
 __.isRequired_Pipe = False
 __.isRequired_Pipe_or_File = False
@@ -86,7 +84,6 @@ _.appInfo[focus()] = {
 				       # {},
 	],
 }
-
 _.appData[focus()] = {
 		'start': __.startTime,
 		'uuid': '',
@@ -98,77 +95,58 @@ _.appData[focus()] = {
 		},
 	}
 
-
-
 def registerSwitches( argvProcessForce=False ):
 	global appDBA
 	if not __.appReg == appDBA and appDBA in __.appReg:
-
 		if not __name__ == '__main__':
 			_.argvProcess = argvProcessForce
 		else:
 			_.argvProcess = True
-
 		_.load()
+
 		_.appInfo[__.appReg] = _.appInfo[appDBA]
 		_.appData[__.appReg] = _.appData[appDBA]
 	__.constructRegistration( _.appInfo[__.appReg]['file'],__.appReg )
 	appSwitches()
-
 	_.myFileLocation_Print = False
 	__.myFileLocations_SKIP_VALIDATION = False
 	_.switches.trigger( 'Files', _.myFileLocations )
 	_.switches.trigger( 'Folder', _.myFolderLocations )
 	_.switches.trigger( 'URL', _.urlTrigger )
 	# _.switches.trigger( 'Verses', Verses_trigger )
-	
-	
 	_.defaultScriptTriggers()
 	_.switches.process()
-
-
 if not __name__ == '__main__':
 	_.argvProcess = False
 else:
 	_.argvProcess = True
-
 registerSwitches()
-
 
 def fieldSet( switchName, switchField, switchValue, theFocus=False ):
 	if not type( theFocus ) == bool:
 		theFocus = theFocus
 	_.switches.fieldSet( switchName, switchField, switchValue, theFocus )
-
-
 if __name__ == '__main__':
 	if not sys.stdin.isatty():
 		_.setPipeData( sys.stdin.readlines(), __.appReg, clean=True )
-
-
 _.postLoad( __file__ )
 
 ########################################################################################
 # START
 
-
-
 def action():
 	load()
-
 	mx = 200
 	for q in _B.query:
 		_.pr()
 		_.pr()
 		_print.label(q)
-
 		cnt = 0
 		result = []
 		for vs in _verses.build(q):
 			if 'ch' in vs:
 				cnt = 0
 				_.pr()
-				
 				result.append( '\n'+  _.colorThis( vs['ch'], 'yellow', p=0 )  + '\n' )
 			else:
 				# if _.showLine(vs['word']):
@@ -197,12 +175,8 @@ def action():
 							for y in _.caseUnspecific(rx,x):
 								rx = rx.replace( y, _.colorThis( y, 'cyan', p=0 ) )
 					result.append( rx )
-						
-
 		_.pr( ''.join( result ) )
 			# _.pr(vs)
-		
-
 
 def load():
 	if _.switches.isActive('EditCMDs'):
@@ -214,9 +188,7 @@ def load():
 	epyi Bible -file _print
 	epyi Bible -file _build_indices
 	epyi Bible -file _query_indices
-
 			""" )
-
 		# _.pr(' epy Bible ')
 		# _.pr(' epyi Bible ')
 		# _.pr(' epyi Bible -file _query ')
@@ -225,16 +197,11 @@ def load():
 		# _.pr(' epyi Bible -file _build_indices ')
 		# _.pr(' epyi Bible -file _query_indices ')
 		sys.exit()
-
-
-
 	_B.load()
 	if _.switches.isActive('Verses'):
 		_query.build()
-
 	elif _.switches.isActive('Plus'):
 		_query_indices.query( _.switches.values('Plus') )
-
 	# buildTables()
 	if _.switches.isActive('Build'):
 		if _.switches.value('Build') == 'indices':
@@ -242,15 +209,9 @@ def load():
 		else:
 			_build_indices.all(include_query=False)
 	# _build_indices.search_indices()
-
-
-
 # p Bible -vs 1 jn 1:1-2 2:4 - 6 3:4-7 1 jn 3:16
 # p Bible -vs 1 jn 1:1- 2:4 - 6 3:4-7 1 jn 3:16
-
-
 import _rightThumb._Bible as _B
-
 if _.switches.isActive('ListBooks'):
 	# labels Books Bible
 	_B.load()
@@ -267,11 +228,9 @@ if _.switches.isActive('ListBooks'):
 			BKs[_B.Books[i]] = i.lower()
 		# _.pr( i, _B.Books[i] )
 	# _.pr( _B.Books )
-	
 	# for i in BKs:
 	# 	# _.pr( i, type(i) )
 	# 	_.pr( i, BKs[i] )
-
 	table = []
 	for i in _B.labels:
 		# table.append({ 'number': i, 'book': _B.labels[i] })
@@ -279,7 +238,6 @@ if _.switches.isActive('ListBooks'):
 			if not _.switches.isActive('Plus') and int(i) == 40:
 				table.append({ 'number': '', 'book': '', 'mini': '' })
 				table.append({ 'number': '', 'book': '', 'mini': '' })
-
 			table.append({ 'number': i, 'book': _B.labels[i], 'mini': BKs[int(i)] })
 		# _.pr( i, _B.labels[i] )
 	_.tables.register( 'Books', table )
@@ -290,34 +248,18 @@ if _.switches.isActive('ListBooks'):
 	# _.tables.print( 'Books', 'number,mini,book' )
 	_.tables.print( 'Books', 'book,mini,number' )
 	sys.exit()
-
 from _rightThumb._Bible import _query
 from _rightThumb._Bible import _verses
 from _rightThumb._Bible import _print
 from _rightThumb._Bible import _build_indices
 from _rightThumb._Bible import _query_indices
-
-
-
 """
-
-
-
 ISSUE
 	capital letters in index ????????????????????????????????????????
-
-
 pp nest_dim_sort_test
-
 """
-
-
-
-
 # from os.path import isfile, isdir
 
 ########################################################################################
 if __name__ == '__main__':
 	action()
-
-

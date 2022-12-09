@@ -517,23 +517,39 @@ appInfoScan = False # appInfo.py
 class data_default:
     # __.data_default(file=theFile,default=[])
     def __init__( self, file, default ):
-        self.dics = 'index,indexes,dex,ls,hash,hashes,tables,logs,lists,indices,meta,setting,settings,dic,s,fig,conf,cnf'
-        self.lists = 'table,cache,log,list,json,config'
+        self.dics = 'yml yaml i index indexes dex ls hash hashes tables logs lists indices meta setting settings dic s fig conf cnf'
+        self.lists = 't tbl table cache log list lists l json config'
+        while '  ' in self.dics:  self.dics  = self.dics.replace('  ',' ')
+        while '  ' in self.lists: self.lists = self.lists.replace('  ',' ')
         self.file = file
         self.default_result = default
     def default( self ):
 
-        for x in self.dics.split(','):
+        for x in self.dics.split(' '):
             if self.file.lower().endswith( '.'+x+'.json' ):
                 return {}
-        for x in self.lists.split(','):
+        for x in self.lists.split(' '):
             if self.file.lower().endswith( '.'+x+'.json' ):
                 return []
 
-        for x in self.dics.split(','):
+        for x in self.dics.split(' '):
+            if self.file.lower().endswith( '.'+x+'.yml' ):
+                return {}
+        for x in self.lists.split(' '):
+            if self.file.lower().endswith( '.'+x+'.yml' ):
+                return []
+
+        for x in self.dics.split(' '):
+            if self.file.lower().endswith( '.'+x+'.yaml' ):
+                return {}
+        for x in self.lists.split(' '):
+            if self.file.lower().endswith( '.'+x+'.yaml' ):
+                return []
+
+        for x in self.dics.split(' '):
             if self.file.lower().endswith( '.'+x ):
                 return {}
-        for x in self.lists.split(','):
+        for x in self.lists.split(' '):
             if self.file.lower().endswith( '.'+x ):
                 return []
         return self.default_result
