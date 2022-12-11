@@ -146,7 +146,7 @@ rem echo x
 
 
 
-rem call p autoBackup -ago 1d
+call p autoBackup -ago 1d
 echo %Session_ID%
 echo %myVars%\ID.sys
 rem pause
@@ -196,11 +196,11 @@ IF [%BackupRunOnce%] == [Y] (
 
     echo BackupRunOnce: STARTED
     call:autoBackup_A
-    rem call p autoBackup -date "%open_timestamp2%" -include_once
+    call p autoBackup -date "%open_timestamp2%" -include_once
 ) ELSE (
     echo BackupRunOnce: SKIPPED
     call:autoBackup_B
-    rem call p autoBackup -date "%open_timestamp2%"
+    call p autoBackup -date "%open_timestamp2%"
 )
 
 if not [%ORIGINAL_Session_ID%] == [%Session_ID%] ( CALL p ticket_transfer -old %ORIGINAL_Session_ID% -new %Session_ID%)
@@ -215,9 +215,12 @@ if [%skip_backup%] == [YES] (
 call c
 echo skip_backup
 ) else (
+    call:RunOnceBackupAsk2
+)
+goto:eof
+
     SET /p roAsk=Backup run once? (n)  
     IF NOT [%roAsk%] == [] SET BackupRunOnce=Y
-)
 goto:eof
 
 :FILENAME

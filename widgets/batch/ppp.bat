@@ -20,6 +20,5 @@ set /p project=Project:
 
 title %today%-%time% %project%
 call grn
-
-
- 
+rem echo p beeps -session 
+call timer

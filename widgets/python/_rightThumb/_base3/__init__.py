@@ -302,6 +302,11 @@ def print_(*args,p=None,c=None,pad=3,g=None,end=None,pvs=None,pv=None,json=None,
 			print(args[0])
 		return args[0]
 	# if pvs: pvs=None; pv=1;
+
+	if dic == 5:
+		for i,a in enumerate(args):
+			if type(a) == dict: args[i] = str(a).replace('{','').replace('}','').replace("'",'').replace(', | ',' | ')
+
 	if not dic and type(dic) == bool or ( type(dic) == int and dic == 1): printDicFields(args[0]); return None
 	try:
 		if not end is None and (type(end) == bool or type(end) == int) and end:   end='\r';
@@ -10969,6 +10974,10 @@ class Switches:
 
 
 	def isActive( self, name, theFocus=False ):# isSwitchActive
+		if not theFocus: theFocus = __.appReg
+		if theFocus in self.dex and name in self.dex[theFocus]:
+			# print('from index')
+			return self.switches[self.dex[theFocus][name]].active
 		return self.fieldGet( name, 'active', theFocus )
 
 	def getField( self, name, field, theFocus=False ):
@@ -21256,11 +21265,57 @@ def pyApp(path):
 		else:
 			return file[:-3]
 
+
+def getYML(path,here=False,h=None,auto=True,a=None):
+	if not a is None: auto=a
+	if not h is None: here=h
+	if here: auto = False
+	if not auto: here=True
+	loaded=False
+	yaml = __.imp('yaml')
+	os = __.imp('os.path.isfile')
+	if os.path.isfile(path):
+		data = getText( path, raw=True )
+		loaded=True
+	elif not here and  os.path.isfile(_v.myTables + _v.slash + path):
+		data = getText( _v.myTables + _v.slash + path, raw=True )
+		loaded=True
+	if loaded: data = data.replace('\t','    ')
+	if not loaded: return {}
+	return yaml.safe_load(data)
+
+
+def saveYML(data,path,here=False,h=None):
+	if not h is None: here = h
+	yaml = __.imp('yaml')
+	os = __.imp('os.sep')
+	y=yaml.dump( data, sort_keys=False )
+	if not here and not os.sep in path:
+		path = _v.myTables + _v.slash + path
+	saveText(y,path)
+
+def saveYML2(data,path): return saveYML(data,path,here=True)
+def getYML2(path): return getYML(path,here=True)
+
+# class auditor:
+# 	def __init__(self, label='default'):
+# 		time=__.imp('time.time')
+# 		self.label = label
+# 		self.epoch=time.time()
+# 	def stamp( location='default', line=None,    l=None ):
+# 		if not l is None: line=l
+
+
+
+getYAML2=getYML2
+getYAML=getYML
+saveYAML=saveYML
+saveYAML2=saveYML2
 imp=regImp
 # class regImp:
-
-
 # positiveResultsCode
 # __.sw.PlusCode
 # def caseUnspecific
 # caseISspecific
+
+

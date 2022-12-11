@@ -157,6 +157,7 @@ Recommended python modules
     apt-get install fonts-emojione
     apt-get install wget
     apt-get install unzip
+    apt install iputils-ping
 
     pip3 install simplejson
     pip3 install datefinder
@@ -193,6 +194,7 @@ Recommended python modules
     pip3 install num2word
     pip3 install -e git+https://github.com/izderadicka/unistego#egg=unistego
     pip3 install python-magic-bin==0.4.14
+    pip3 install lxml
 
 
 Create new python widget with

@@ -10,16 +10,42 @@ rem    - Scott Taylor Reph, RightThumb.com
 rem ###########################################################################
 rem ## {C3P0D40fAe8B} ##
 
-CALL p unix
+set burnME="%stmp%\unclaimed_tickets_history\history-%Session_ID%.txt"
+
+if exist %burnME% (
+	CALL:ASK
+) else (
+	echo.
+	echo no history
+	echo.
+	CALL:ASK
+)
+GOTO:EOF
+
+:ASK
+set /p ask= burn?  
+if [%ask%] == [n] (
+	echo no burn
+) else (
+	if [%ask%] == [N] GOTO:NOPE
+	if exist %burnME% del %burnME%
+	exit
+)
+GOTO:EOF
+
+:NOPE
+echo no burn
+GOTO:EOF
 
 
-rmdir /s /q %widgets%\widgets\python\burn\windows
-rmdir /s /q %widgets%\widgets\python\burn\unix
-mkdir %widgets%\widgets\python\burn\windows
-mkdir %widgets%\widgets\python\burn\unix
+rem CALL p unix
+rem rmdir /s /q %widgets%\widgets\python\burn\windows
+rem rmdir /s /q %widgets%\widgets\python\burn\unix
+rem mkdir %widgets%\widgets\python\burn\windows
+rem mkdir %widgets%\widgets\python\burn\unix
 
-xcopy /s/d/y/c %widgets%\widgets\python\src\unix\*.py %widgets%\widgets\python\burn\unix\
-xcopy /s/d/y/c %widgets%\widgets\python\*.py %widgets%\widgets\python\burn\windows\
+rem xcopy /s/d/y/c %widgets%\widgets\python\src\unix\*.py %widgets%\widgets\python\burn\unix\
+rem xcopy /s/d/y/c %widgets%\widgets\python\*.py %widgets%\widgets\python\burn\windows\
 
 
 

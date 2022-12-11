@@ -536,16 +536,17 @@ def genMeta():
 
 
 
-_docs_list = _.getTable('crypt-docs.list')
+# _docs_list = _.getTable('crypt-docs.list')
 def process( subject ):
 	global settings
 	global _docs_list
 	_path=__.path(subject)
-	if _path in _docs_list:
-		_decrypt_docs = _.regImp( __.appReg, 'decrypt-docs' )
-		_decrypt_docs.imp.run( _path )
-		_docs_list.pop(  _docs_list.index(_path)  )
-		_.saveTable( _docs_list, 'crypt-docs.list' )
+	check_decrypt_docs_database(_path)
+	# if _path in _docs_list:
+	# 	_decrypt_docs = _.regImp( __.appReg, 'decrypt-docs' )
+	# 	_decrypt_docs.imp.run( _path )
+	# 	_docs_list.pop(  _docs_list.index(_path)  )
+	# 	_.saveTable( _docs_list, 'crypt-docs.list' )
 
 
 	# Encrypt Password noBackup Backup
@@ -636,6 +637,23 @@ def scanLock( lock=False ):
 			_.pr()
 			# _.cp( f, 'cyan' )
 			secureFiles( f, lock=True )
+
+def check_decrypt_docs_database(path):
+	table = _.getTable('crypt-docs.list')
+	new = []
+	found=False
+	for fi in table:
+		if not fi == path: new.append(fi)
+		else: found=True
+
+	if found:
+		_.cp('in decrypt-docs database','yellow')
+		appReg=__.appReg
+		_bk=_.regImp( __.appReg, 'fileBackup' ); __.appReg=appReg; _bk.switch( 'isPreOpen' ); _bk.switch( 'Silent' );
+		_bk.switch( 'Input', path ); bkfi = _bk.action();
+		__.appReg=appReg
+		_.saveTable(new,'crypt-docs.list',p=0)
+
 def action():
 	load()
 
@@ -647,40 +665,147 @@ def action():
 	# sys.exit()
 	global appDBA
 	global settings
+	global spent
+	global removed
+	spent={}
+	removed={}
+	# secure-crypt-local.meta
+	# secure-files-local.settings
+	# secure-crypt-local.settings
+
+	settings2   = _.getTable('secure-crypt-local.meta')
+	settings3   = _.getTable('secure-files-local.settings')
+	settings4   = _.getTable('secure-crypt-local.settings')
 
 
 	if _.switches.isActive('Delete'):
+		appReg=__.appReg
+		_bk=_.regImp( __.appReg, 'fileBackup' ); __.appReg=appReg; _bk.switch( 'isPreOpen' );
+		__.appReg=appReg
+		def pre_delete_decryption(_path_):
+			global spent
+			global removed
+			removed[_path_]=1
+			if os.path.isdir(_path_):
+				_.fo(folder=_path_,r=True,script=pre_delete_decryption)
+			else:
+				if not _path_ in spent:
+					spent[_path_] = 1
+					__.appReg=appReg
+					_bk.switch( 'Input', _path_ ); bkfi = _bk.action();
+					__.appReg=appReg
+					_.cp( ['decrypted and removed from secureFiles database',_path_] ,'red');
 
+			# _.cp('in secureFiles database','yellow'); pre_delete_decryption(_path_);
 		if _.switches.isActive('Folders'):
 			if not len(_.switches.value('Folders')):
 				_.switches.fieldSet( 'Folders', 'value', os.getcwd() )
 				_.switches.fieldSet( 'Folders', 'values', [os.getcwd()] )
 
 			for i,row in enumerate(_.switches.values('Folders')):
+				row=__.path(row)
 				f = _v.sanitizeFolder(  row )
 				if f in settings['folders']:
+					_.cp('in secureFiles database','yellow'); pre_delete_decryption(row);
 					del settings['folders'][f]
+				if row in settings2:
+					_.cp('in secureFiles database','yellow'); pre_delete_decryption(row);
+					del settings2[row]
+
+				if row in settings3:
+					_.cp('in secureFiles database','yellow'); pre_delete_decryption(row);
+					del settings3[row]
+
+				if row in settings4:
+					_.cp('in secureFiles database','yellow'); pre_delete_decryption(row);
+					del settings4[row]
+
+
 		if _.switches.isActive('Files'):
 			for i,row in enumerate(_.switches.values('Files')):
+				row=__.path(row)
 				f = _v.sanitizeFolder(  row )
 				if row in settings['files']:
+					_.cp('in secureFiles database','yellow'); pre_delete_decryption(row);
 					del settings['files'][row]
 				if f in settings['files']:
+					_.cp('in secureFiles database','yellow'); pre_delete_decryption(row);
 					del settings['files'][f]
+				if row in settings2:
+					_.cp('in secureFiles database','yellow'); pre_delete_decryption(row);
+					del settings2[row]
+
+
+				if row in settings3:
+					_.cp('in secureFiles database','yellow'); pre_delete_decryption(row);
+					del settings3[row]
+
+
+
+				if row in settings4:
+					_.cp('in secureFiles database','yellow'); pre_delete_decryption(row);
+					del settings4[row]
+
+
 
 		if type(_.appData[appDBA]['pipe']) == list:
 			for i,row in enumerate( _.appData[appDBA]['pipe'] ):
 				row = __.path(row)
+				f = _v.sanitizeFolder(  row )
 				if os.path.isfile(row):
-					f = _v.sanitizeFolder(  row )
+					if row in settings['files']:
+						_.cp('in secureFiles database','yellow'); pre_delete_decryption(row);
+						del settings['files'][row]
 					if f in settings['files']:
+						_.cp('in secureFiles database','yellow'); pre_delete_decryption(row);
 						del settings['files'][f]
 				elif os.path.isdir(row):
-					f = _v.sanitizeFolder(  row )
+					if row in settings['folders']:
+						_.cp('in secureFiles database','yellow'); pre_delete_decryption(row);
+						del settings['folders'][row]
 					if f in settings['folders']:
+						_.cp('in secureFiles database','yellow'); pre_delete_decryption(row);
 						del settings['folders'][f]
+				if os.path.isfile(row):
+					if row in settings2:
+						_.cp('in secureFiles database','yellow'); pre_delete_decryption(row);
+						del settings2[row]
+				elif os.path.isdir(row):
+					if row in settings2:
+						_.cp('in secureFiles database','yellow'); pre_delete_decryption(row);
+						del settings2[row]
 
-		_.saveTableDB(   settings,   'secure-files.settings'   )
+
+
+				if os.path.isfile(row):
+					if row in settings3:
+						_.cp('in secureFiles database','yellow'); pre_delete_decryption(row);
+						del settings3[row]
+				elif os.path.isdir(row):
+					if row in settings3:
+						_.cp('in secureFiles database','yellow'); pre_delete_decryption(row);
+						del settings3[row]
+
+
+
+				if os.path.isfile(row):
+					if row in settings4:
+						_.cp('in secureFiles database','yellow'); pre_delete_decryption(row);
+						del settings4[row]
+				elif os.path.isdir(row):
+					if row in settings4:
+						_.cp('in secureFiles database','yellow'); pre_delete_decryption(row);
+						del settings4[row]
+
+
+
+
+		if removed:
+			_.saveTableDB(   settings,   'secure-files.settings'  ,p=1 )
+			_.saveTable(   settings2,   'secure-crypt-local.meta'   )
+			_.saveTable(   settings3,   'secure-files-local.settings'   )
+			_.saveTable(   settings4,   'secure-crypt-local.settings'   )
+
 		scanLock( lock=_.switches.isActive('Lock') )
 		return None
 
@@ -716,6 +841,9 @@ __.v.secure = _.dot()
 def load():
 	global settings
 	settings   = _.getTableDB( 'secure-files.settings' )
+
+
+
 	if settings == {}:
 		settings = {
 						'folders': {},
@@ -725,6 +853,7 @@ def load():
 	# _.pr(settings)
 	# sys.exit()
 settings = {}
+
 
 import _rightThumb._vault as _vault
 import _rightThumb._encryptString as _blowfish

@@ -185,13 +185,17 @@ def addFlagIfHasBackup( backup ):
 		backupLog[i]['file'] == __.path(backupLog[i]['file'])
 		if log['backup'] == backup:
 			flag = log['flag']
-			flag = _str.cleanBE( flag, ' ' )
+			# flag = _str.cleanBE( flag, ' ' )
+			flag = flag.strip()
 			flag = _str.cleanBE( flag, ',' )
 
 			if len( str(flag) ) > 0:
 				backupLog[i]['flag'] = flag + ',' + _.switches.value('Flag')
 			else:
 				backupLog[i]['flag'] = flag = _.switches.value('Flag')
+
+			backupLog[i]['flag'] = backupLog[i]['flag'].strip()
+			backupLog[i]['flag'] = _str.cleanBE( backupLog[i]['flag'], ',' )
 			
 	_.saveTable( backupLog, 'fileBackup.json', printThis=False )
 

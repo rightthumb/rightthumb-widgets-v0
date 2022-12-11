@@ -430,7 +430,7 @@ def action():
 		if _.switches.value('Clipboard').lower().startswith('p'):
 			_.pr( clip )
 
-		clip_set(  clip  )
+		clip_set(  clip.rstrip()  )
 
 		if  _.switches.isActive('Temp'):
 			

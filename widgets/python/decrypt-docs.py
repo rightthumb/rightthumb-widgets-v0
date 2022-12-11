@@ -32,9 +32,10 @@ import _rightThumb._string as _str
 def appSwitches():
 	_.switches.register( 'Test', '-test' )
 	_.switches.register( 'Files', '-f,-file,-files','file.txt', isPipe='data', description='Files' )
+	_.switches.register( 'Delete', '-d,-delete' )
 
 
-_.autoBackupData = False
+_.autoBackupData = __.autoCreationConfiguration['backup']
 __.releaseAcquiredData = __.autoCreationConfiguration['logs']
 __.myFileLocations_SKIP_VALIDATION = False
 __.isRequired_Pipe = False
@@ -52,7 +53,6 @@ _.appInfo[focus()] = {
 	'description': 'decrypt registered documentation files',
 	'categories': [
 						'decrypt',
-						'crypt',
 						'docs',
 						'tool',
 						'file',
@@ -153,24 +153,22 @@ _.postLoad( __file__ )
 
 
 def identify(row):
-	if not row:            return False
-	if ' ' in row:         return False
-	if '!V!' in row:       return False
-	if row == row.lower(): return False
-	if not any(ele in row for ele in list('0123456789')): return False
-	if row.endswith('='):  return True
-	if 'sUW+UyzaAo1BuzZ/2UahGCp4kHgiwk+xKniQeCLCT7GlpF8/aeR6NXE0uVp6/Kb/w3tFeg3Qb+9KnIbZ+6+nWijD//xIEr3Q' in row: return True
-
-	# if len(row) > 15: return True
-
-
+	if 'sUW+UyzaAo1BuzZ/2UahGCp4kHgiwk+xKniQeCLCT7GlpF8/aeR6NXE0uVp6/Kb/w3tFeg3Qb+9KnIbZ+6+nWijD//xIEr3Q' in row:
+		return True
+	if ' ' in row:
+		return False
+	if '!V!' in row:
+		return False
+	if row.endswith('='):
+		return True
+	# if len(row) > 15:
+	#   return True
 
 	n = '0123456789'
 	l = 'abcdefghijklmnopqrstuvwxyz'
 	u = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 	aa = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
 	chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ/+='
-
 
 
 	hasAlpha=False
@@ -552,7 +550,44 @@ def process_doc_sep(theFILE,doc_sep,doc_seps):
 	data = vcrypyB(data)
 	return data
 
+deleteSpent = {}
+
 def run(path):
+
+	table = _.getTable('crypt-docs.list')
+	if _.switches.isActive('Delete'):
+		path=__.path(path)
+
+
+		found=False
+		new=[]
+		for fi in table:
+			if not fi == path: new.append(fi)
+			else: found=True
+
+		if found:
+			global deleteSpent
+			if not path in deleteSpent:
+				deleteSpent[path]=1
+				appReg=__.appReg
+				_bk=_.regImp( __.appReg, 'fileBackup' ); _bk.switch( 'isPreOpen' ); _bk.switch( 'Silent' );
+				_bk.switch( 'Input', path ); bkfi = _bk.action();
+				__.appReg=appReg
+				# decrypt(path)
+				_.cp('decrypted and removed from decrypt-docs database','yellow')
+				_.saveTable(new,'crypt-docs.list',p=0)
+		return None
+	if _.switches.isActive('Delete'): return None
+	if _.switches.isActive('Delete'): return None
+	
+	appReg=__.appReg
+	_secureFiles=_.regImp( __.appReg, 'secureFiles' )
+	__.appReg=appReg
+	_secureFiles.switch( 'Delete' )
+	_secureFiles.switch( 'Files', path )
+	_secureFiles.action()
+	__.appReg=appReg
+
 	global isMD
 	if path.lower().endswith('.md'):
 		isMD = True
@@ -564,31 +599,21 @@ def run(path):
 	global indexP
 	indexP = {}
 	table = _.getTable('crypt-docs.list')
-	_cryptFi = _.getTable('secure-crypt-local.meta')
-	if path in _cryptFi:
-		if path in table:
-			_.pr( 'cleaned file from crypt docs' )
-			del table[table.index(path)]
-			_.saveTable( table, 'crypt-docs.list', p=0 )
-			return None
+	test=table.copy()
+	if not __.path(path) in table:
+		table.append( __.path(path) )
+	# _.pv( table )
+	newTable = []
+	for ntf in table:
+		if not ntf in newTable:
+			newTable.append(ntf)
+	table = newTable
+	if not str(table)==str(test):
+		_.saveTable( table, 'crypt-docs.list', p=0 )
+		_.cp('added to secure docs database','yellow')
 	else:
-		test=table.copy()
-		if not __.path(path) in table:
-			table.append( __.path(path) )
-		# _.pv( table )
-		newTable = []
-		for ntf in table:
-			if not ntf in newTable:
-				newTable.append(ntf)
-		table = newTable
-		if not str(table)==str(test):
-			_.saveTable( table, 'crypt-docs.list', p=0 )
-			_.cp('added to secure docs database','yellow')
-		else:
-			pass
-			_.cp('in secure docs database','yellow')
-	if not os.path.isfile(path):
-		return None
+		pass
+		_.cp('in secure docs database','yellow')
 	theFILE = _.getText( path,raw=True )
 	if theFILE.startswith(doc_sep.replace('\n','')):
 		theFILE='\n'+theFILE

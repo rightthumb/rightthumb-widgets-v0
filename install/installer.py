@@ -3380,7 +3380,7 @@ alias ssh...="sudo cp -r ./.ssh/* /mnt/c/Users/Scott/.ssh"
 
 
 
-
+alias myip='curl ifconfig.co/'
 
 
 alias vy="ssh scott@yavin.m-eta.app"

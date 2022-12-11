@@ -158,10 +158,19 @@ def process(table):
 			run=False
 		if run:
 			_.pr()
+			fileBackup = _.regImp( focus(), 'fileBackup' )
+			fileBackup.switch( 'Silent' )
+			fileBackup.switch( 'Flag', 'lock' )
+			fileBackup.switch( 'isRunOnce' )
+			fileBackup.switch( 'DoNotSchedule' )
 			fileBackup.switch( 'Input', path )
+			if _.switches.isActive('Unlock'):
+				fileBackup.switch( 'isPreOpen' )
 			fb = fileBackup.action()
 			_.pr(path)
 			_.pr(fb)
+			del fileBackup
+			fileBackup=None
 
 def action():
 
@@ -170,13 +179,8 @@ def action():
 
 
 
-fileBackup = _.regImp( focus(), 'fileBackup' )
-fileBackup.switch( 'Silent' )
-fileBackup.switch( 'Flag', 'imdb' )
-fileBackup.switch( 'isRunOnce' )
-fileBackup.switch( 'DoNotSchedule' )
-if _.switches.isActive('Unlock'):
-	fileBackup.switch( 'isPreOpen' )
+
+
 
 ########################################################################################
 if __name__ == '__main__':
