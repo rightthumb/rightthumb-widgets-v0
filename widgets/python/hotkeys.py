@@ -548,7 +548,7 @@ class CLIP:
 		_paste.imp.dirty=True
 		# Subject
 		_.pr('NEED TO ADD COOL STUFF HERE',c='Background.red')
-		_copy.imp.copy( "copy('['+document.title+']('+window.location.href+')')", p=0 )
+		_copy.imp.copy( "var md0='['+document.title+']('+window.location.href+')';\nconsole.log(md0);\ncopy(md0);", p=0 )
 		keyboard.press(Key.f12)
 		keyboard.release(Key.f12)
 		time.sleep(.7)
@@ -2505,11 +2505,11 @@ def load():
 				'clip-dup-spaces': { 'raw': [  'ctrl.,2', 'r',  'd', 's' ], 'do': 'Clip.remove_dup_spaces()' },
 				'clip-randomize-ports': { 'raw': [   'ctrl.', 'shift.', 'r' ], 'do': 'Clip.randomize_ports()' },
 				'clip-test-py': { 'raw': [   'ctrl.,2', 'space.,2', 'p', 'y' ], 'do': 'Clip.test_py()' },
-				'f12-console-gen-md-link': { 'raw': [   'shift.,2',   'u','u',  'm','d'   ], 'do': 'Clip.browser_f12_gen_md_link()' },
-				'f12-console-tool.js-text': { 'raw': [   'shift.,2',   'u','u',  't','x','t'   ], 'do': 'Clip.browser_f12_tooljs_text()' },
-				'f12-console-tool.js-text2': { 'raw': [   'shift.,2',   'u','u',  't','e','x','t'   ], 'do': 'Clip.browser_f12_tooljs_text()' },
-				'f12-console-tool.js-table-0': { 'raw': [   'shift.,2',   'u','u',  't','0'   ], 'do': 'Clip.browser_f12_tooljs_table0()' },
-				'f12-console-tool.js-table-h2': { 'raw': [   'shift.,2',   'u','u',  't','t'   ], 'do': 'Clip.browser_f12_tooljs_table()' },
+				'f12-console-gen-md-link': { 'raw': [   'shift.,2',   'w',  'm','d'   ], 'do': 'Clip.browser_f12_gen_md_link()' },
+				'f12-console-tool.js-text': { 'raw': [   'shift.,2',   'w',  't','x','t'   ], 'do': 'Clip.browser_f12_tooljs_text()' },
+				'f12-console-tool.js-text2': { 'raw': [   'shift.,2',   'w',  't','e','x','t'   ], 'do': 'Clip.browser_f12_tooljs_text()' },
+				'f12-console-tool.js-table-0': { 'raw': [   'shift.,2',   'w',  't','0'   ], 'do': 'Clip.browser_f12_tooljs_table0()' },
+				'f12-console-tool.js-table-h2': { 'raw': [   'shift.,2',   'w',  't','t'   ], 'do': 'Clip.browser_f12_tooljs_table()' },
 				'space-2-underscore': { 'raw': [   'space.,2',   's','p','u'   ], 'do': 'Clip.space_2_underscore_text()' },
 				
 				'yaml-2-json': { 'raw': [   'ctrl.,2',   'y','2','j'   ], 'do': 'Clip.yaml2json()' },
