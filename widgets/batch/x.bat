@@ -146,7 +146,7 @@ rem echo x
 
 
 
-call p autoBackup -ago 1d
+rem call p autoBackup -ago 1d
 echo %Session_ID%
 echo %myVars%\ID.sys
 rem pause

@@ -198,6 +198,8 @@ def clean(text):
 def action():
     global idle_group
     global idle_time
+    global aw
+    global fi
     Timer( .1, idle_monitor ).start()
     # return None
     load(); global c3po;
@@ -213,18 +215,21 @@ def action():
     
 
     aw=_.dot()
+    aw.log=[]
+    aw.index={}
+    aw.indexg={}
+    aw.idle={}
+    aw.idleg={}
+
+
+
     if LOG:
         aw.log=_.getTable(fi.log)
         aw.index=_.getTable(fi.index)
         aw.indexg=_.getTable(fi.groups)
     else:
         _.pr('no logging',c='red')
-        _.pr('no logging',c='red')
-        aw.log=[]
-        aw.index={}
-        aw.indexg={}
-        aw.idle={}
-        aw.idleg={}
+
     aw.aw=''
     aw.group=''
     aw.saved=time.time()
@@ -236,7 +241,7 @@ def action():
     isStop=False
 
 
-    while True:
+    while __.v.active:
         aw.aw=str(get_active_window()).replace('(LICENSE UPGRADE REQUIRED)','')
         aw.aw=clean(aw.aw)
         if isStop and scan(aw.aw) == 'start': isStop=False;continue;
@@ -400,10 +405,10 @@ def scan(win):
 idle_group=0
 idle_time=0
 def idle_monitor():
-    print('idle_monitor')
-    print('idle_monitor')
-    print('idle_monitor')
-    print('idle_monitor')
+    # print('idle_monitor')
+    # print('idle_monitor')
+    # print('idle_monitor')
+    # print('idle_monitor')
     global idle_group
     global idle_time
 
@@ -426,7 +431,7 @@ def idle_monitor():
         millis = windll.kernel32.GetTickCount() - lastInputInfo.dwTime
         return millis / 1000.0
     last=0
-    while 1:
+    while __.v.active:
         GetLastInputInfo = int(get_idle_duration())
         # print(GetLastInputInfo)
         if last and not GetLastInputInfo : idle_group+=1
@@ -487,17 +492,39 @@ def get_idle_duration():
     millis = windll.kernel32.GetTickCount() - lastInputInfo.dwTime
     return millis / 1000.0
 
-
-
-
-
-
-
 def load():
     global c3po
     c3po = _.getTable( 'active_window.json' )
     #n)--> print table
     _.pt(c3po)
+
+
+
+__.v.active = True
+import signal
+import sys
+import time
+
+def sigint_handler(signal, frame):
+    global aw
+    global fi
+    __.v.active = False
+    print()
+    _.pr('Closing...',end=1)
+    time.sleep(1)
+    _.pr('               ',end=1)
+    if _.switches.isActive('Log'):
+        _.pr('Saved',c='green')
+        _.saveTable(aw.log,fi.log,p=0)
+        _.saveTable(aw.index,fi.index,p=0)
+        _.saveTable(aw.indexg,fi.groups,p=0)
+    sys.exit()
+
+signal.signal(signal.SIGINT, sigint_handler)
+
+
+
+
 ##################################################
 ######################################
 if __name__ == '__main__':
