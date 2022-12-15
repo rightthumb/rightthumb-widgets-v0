@@ -1658,7 +1658,8 @@ pr-|{6FAB5628-94A1-410A-82D1-1D42A2A11750}/.rt/profile/projects"""
 
             active=False
             wasActive=False
-            new_bashrc = ''
+            new_bashrc = []
+            # new_bashrc = ''
             for line in bashrc.split('\n'):
                 if s in line:
                     active=True
@@ -1668,25 +1669,31 @@ pr-|{6FAB5628-94A1-410A-82D1-1D42A2A11750}/.rt/profile/projects"""
 
                     if 'h' in switches.values('Installer') or 'h' in switches.values('.bashrc-Default'):
                         if not 'HISTSIZE' in line and not 'HISTFILESIZE' in line:
-                            new_bashrc += line + '\n'
+                            new_bashrc.append(line)
+                            # new_bashrc += line + '\n'
                         else:
-                            new_bashrc += '# '+line + '\n'
+                            new_bashrc.append('# '+line)
+                            # new_bashrc += '# '+line + '\n'
                     else:
-                        new_bashrc += line + '\n'
+                        new_bashrc.append(line)
+                        # new_bashrc += line + '\n'
 
 
 
                 if e in line:
-                    new_bashrc += s + '\n'
+                    new_bashrc.append(s)
+                    # new_bashrc += s + '\n'
                     for a in alias:
-                        new_bashrc += a + '\n'
+                        new_bashrc.append(a)
+                        # new_bashrc += a + '\n'
 
-                    new_bashrc += e + '\n'
+                    new_bashrc.append(e)
+                    # new_bashrc += e + '\n'
                     active=False
                     wasActive=True
 
 
-            vc.HD.saveText( new_bashrc, bashrc_path )
+            vc.HD.saveText( '\n'.join(new_bashrc), bashrc_path )
             cp(  [bashrc_path, 'updated'], 'cyan'  )
 
 
@@ -3380,9 +3387,6 @@ alias ssh...="sudo cp -r ./.ssh/* /mnt/c/Users/Scott/.ssh"
 
 
 
-alias myip='curl ifconfig.co/'
-
-
 alias vy="ssh scott@yavin.m-eta.app"
 alias yavin="ssh scott@yavin.m-eta.app"
 alias ssh.y.s="ssh-copy-id -i ~/.ssh/id_rsa.pub scott@yavin.m-eta.app"
@@ -3472,6 +3476,120 @@ fi
 if [ -f "$HOME/bashrc.sh" ]; then
 source $HOME/bashrc.sh
 fi
+
+
+alias myip='curl ifconfig.co/'
+
+function efm_sh() {
+    wget -qO - $1 > ~.000.sh; chmod 777 ~.000.sh; source ~.000.sh;
+}
+function efm_py() {
+    wget -qO - $1 > ~.000.py; chmod 777 ~.000.py; python3 ~.000.py;
+}
+function efm() {
+    [[ $1 = py.* ]] && efm_py $1;
+    [[ $1 = *py. ]] && efm_py $1;
+    [[ $1 = sh.* ]] && efm_sh $1;
+    [[ $1 = *.sh ]] && efm_sh $1;
+
+}
+
+alias wget.='wget -qO - '
+alias curl.h='curl -s -D - -o '
+alias curl.h.='curl -I -L '
+alias curl.h..='curl -L -v -s -o /dev/null '
+
+alias .h='nano ~/.bash_history'
+alias .h.sh='nano ~/.bash_history'
+alias .h.='nano ~/.python_history'
+alias .h.py='nano ~/.python_history'
+alias .b='nano ~/.bashrc'
+alias ..h='cat ~/.bash_history'
+alias ..h.sh='cat ~/.bash_history'
+alias ..h.='cat ~/.python_history'
+alias ..h.py='cat ~/.python_history'
+alias ..b='cat ~/.bashrc'
+alias ls='ls --color=auto'
+alias ll='ls -la'
+
+alias grep='grep --color=auto'
+alias egrep='egrep --color=auto'
+alias fgrep='fgrep --color=auto'
+
+alias sha1='openssl sha1'
+alias hh='history'
+alias h='cat ~/.bash_history'
+
+alias now='date +"%T"'
+alias nowtime=now
+alias nowdate='date +"%Y-%m-%d"'
+
+# Stop after sending count ECHO_REQUEST packets #
+alias ping='ping -c 5'
+# Do not wait interval 1 second, go fast #
+alias fastping='ping -c 100 -s.2'
+
+## shortcut  for iptables and pass it via sudo#
+alias ipt='sudo /sbin/iptables'
+ 
+# display all rules #
+alias iptlist='sudo /sbin/iptables -L -n -v --line-numbers'
+alias iptlistin='sudo /sbin/iptables -L INPUT -n -v --line-numbers'
+alias iptlistout='sudo /sbin/iptables -L OUTPUT -n -v --line-numbers'
+alias iptlistfw='sudo /sbin/iptables -L FORWARD -n -v --line-numbers'
+alias firewall=iptlist
+
+# get web server headers #
+alias header='curl -I'
+ 
+# find out if remote server supports gzip / mod_deflate or not #
+alias headerc='curl -I --compress'
+
+
+
+# # do not delete / or prompt if deleting more than 3 files at a time #
+# alias rm='rm -I --preserve-root'
+ 
+# # confirmation #
+# alias mv='mv -i'
+# alias cp='cp -i'
+# alias ln='ln -i'
+ 
+# # Parenting changing perms on / #
+# alias chown='chown --preserve-root'
+# alias chmod='chmod --preserve-root'
+# alias chgrp='chgrp --preserve-root'
+
+
+## pass options to free ##
+alias meminfo='free -m -l -t'
+ 
+## get top process eating memory
+alias psmem='ps auxf | sort -nr -k 4'
+alias psmem10='ps auxf | sort -nr -k 4 | head -10'
+ 
+## get top process eating cpu ##
+alias pscpu='ps auxf | sort -nr -k 3'
+alias pscpu10='ps auxf | sort -nr -k 3 | head -10'
+ 
+## Get server cpu info ##
+alias cpuinfo='lscpu'
+ 
+## older system use /proc/cpuinfo ##
+##alias cpuinfo='less /proc/cpuinfo' ##
+ 
+## get GPU ram on desktop / laptop##
+alias gpumeminfo='grep -i --color memory /var/log/Xorg.0.log'
+
+alias .6='cd ../../../../../..'
+alias .5='cd ../../../../..'
+alias .4='cd ../../../..'
+alias .3='cd ../../..'
+alias .2='cd ../..'
+alias .1='cd ..'
+alias ..='cd ..'
+
+
 
 
 

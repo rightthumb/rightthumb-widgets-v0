@@ -48,8 +48,8 @@ from datetime import date
 '''
 simplejson = __.imp('simplejson')
 simplejson.loads(var)
-simplejson.dumps(rows, indent=4, sort_keys=False)
-simplejson.dumps(rows)
+simplejson.dumps(rows, indent=4, sort_keys=False, default=str)
+simplejson.dumps(rows, sort_keys=False, default=str)
 '''
 
 def cross_multiplication(dic):
@@ -153,8 +153,8 @@ def json_(data,simp=False,s=None):
 	if type(data) == str:
 		return simplejson.loads(data)
 	if not simp:
-		return simplejson.dumps(data, indent=4, sort_keys=False)
-	return simplejson.dumps(data)
+		return simplejson.dumps(data, indent=4, sort_keys=False, default=str)
+	return simplejson.dumps(data, sort_keys=False, default=str)
 
 
 def print_pr(text):
@@ -297,7 +297,7 @@ def print_(*args,p=None,c=None,pad=3,g=None,end=None,pvs=None,pv=None,json=None,
 	else: rint=True;
 
 	if json:
-		simplejson=__.imp('simplejson'); args[0]=simplejson.dumps(args[0], indent=4, sort_keys=False);
+		simplejson=__.imp('simplejson'); args[0]=simplejson.dumps(args[0], indent=4, sort_keys=False, default=str);
 		if rint:
 			print(args[0])
 		return args[0]
@@ -324,7 +324,7 @@ def print_(*args,p=None,c=None,pad=3,g=None,end=None,pvs=None,pv=None,json=None,
 			except: return printVarSimpleFake(args[0])
 
 		if pv: return printVar(args[0])
-		if json: simplejson=__.imp('simplejson'); args[0]=simplejson.dumps(args[0], indent=4, sort_keys=False);
+		if json: simplejson=__.imp('simplejson'); args[0]=simplejson.dumps(args[0], indent=4, sort_keys=False, default=str);
 		if not line is None and line:
 			args=[linePrint(c=c,p=0)]
 		global print_ed; global print_ed_group; items=[];
@@ -1668,6 +1668,7 @@ def isDate( theDate=None, record={}, tz=None, q=True, f=None,w=None,what=None ):
 		if f=='time': return friendlyDate2( epoch ).split(' ')[1];
 		if f=='fdate': return friendlyDate( epoch );
 		if f=='fdatea': return friendlyDate( epoch )[:-3];
+		if f=='cmd': return friendlyDate( epoch )[:-3].replace(' ',' @ ').replace('-','.').replace(':','.');
 		if f=='month': return _dir.getMonthFromEpoch( epoch );
 		if f=='year': return _dir.getYearFromEpoch( epoch );
 		if f=='woy': return _dir.getWeekAndYear( epoch );
@@ -1820,7 +1821,7 @@ def isDate( theDate=None, record={}, tz=None, q=True, f=None,w=None,what=None ):
 	if type(epoch) == str:
 		epoch = autoDate(epoch.replace('z',''))
 
-	todo='ago ago-dic ago-txt epoch ordinal text-date text-time text-datetime sdate strip stript stripa date time fdate fdatea month year woy woy2 dow dow2 days tz iso fo'
+	todo='ago ago-dic ago-txt epoch ordinal text-date text-time text-datetime sdate strip stript stripa date time fdate fdatea cmd month year woy woy2 dow dow2 days tz iso fo'
 
 	for k in todo.split(' '):
 		record[k]=isDate(epoch,f=k)
@@ -2788,9 +2789,9 @@ def saveCryptTable( rows, theFile, db=False, bank=False, index=False, temp=False
 			px = file0
 
 	if indentCode:
-		dataDump = simplejson.dumps(rows, indent=4, sort_keys=sort_keys)
+		dataDump = simplejson.dumps(rows, indent=4, sort_keys=sort_keys, default=str)
 	else:
-		dataDump = simplejson.dumps(rows)
+		dataDump = simplejson.dumps(rows, sort_keys=False, default=str)
 	
 	if archive:
 		import _rightThumb._md5 as _md5
@@ -2974,7 +2975,7 @@ def linePrint(  label=None, text=None, txt='_', mn=50, add=5, p=2, c='', x=None,
 def dic_key_sort( table, n=False ):
 	saveTable( table, '-tmp-dic_key_sort.json', tableTemp=True, printThis=False,  sort_keys=True )
 	return getTable( '-tmp-dic_key_sort.json', tableTemp=True )
-	# dataDump = json.dumps(table, indent=4, sort_keys=True)
+	# dataDump = json.dumps(table, indent=4, sort_keys=True, default=str)
 	# print_(dataDump)
 	# sys.exit()
 	# return json.load( str(dataDump) )
@@ -7890,7 +7891,7 @@ def d2json( data, sort_keys=False ):
 	# saveTable2( data, _v.json_temp )
 	# txt = getText( _v.json_temp, raw=True )
 
-	return simplejson.dumps(data, indent=4, sort_keys=sort_keys)
+	return simplejson.dumps(data, indent=4, sort_keys=sort_keys, default=str)
 
 def printVar1( data ):
 	print_( d2json( data ) )
@@ -7898,7 +7899,7 @@ def printVar1( data ):
 
 def printVar( data, sort_keys=False, isDic=None ):
 	simplejson = __.imp('simplejson')
-	result = simplejson.dumps(data, indent=4, sort_keys=False)
+	result = simplejson.dumps(data, indent=4, sort_keys=False, default=str)
 	printVarColor( result )
 	print_(  )
 	return result
@@ -7998,7 +7999,7 @@ def printVar2( data, sort_keys=False ):
 def printVarSimple( data, sort_keys=False, isDic=None, prefix=None, remove=None, d=None, p=True, r=None ):
 	#n)--> r, stands for just return and not print
 	simplejson = __.imp('simplejson')
-	dump=simplejson.dumps(data, indent=4, sort_keys=sort_keys)
+	dump=simplejson.dumps(data, indent=4, sort_keys=sort_keys, default=str)
 	if d:
 		if p:
 			print_(dump)
@@ -9603,9 +9604,9 @@ def saveLog( logname, rows=[], focus=True, printThis=True ):
 	file0 = _v.myTables + _v.slash+'applogs'+_v.slash + log
 
 	if indentCode:
-		dataDump = simplejson.dumps(rows, indent=4, sort_keys=True)
+		dataDump = simplejson.dumps(rows, indent=4, sort_keys=True, default=str)
 	else:
-		dataDump = simplejson.dumps(rows)
+		dataDump = simplejson.dumps(rows, sort_keys=False, default=str)
 	f = open(file0,'w')
 	f.write(str(dataDump))
 	f.close()
@@ -9643,9 +9644,9 @@ def saveTable( rows, theFile, tableTemp=False, printThis=True, indentCode=True, 
 	if __.print_path:
 		print_(file0)
 	if indentCode:
-		dataDump = simplejson.dumps(rows, indent=4, sort_keys=sort_keys)
+		dataDump = simplejson.dumps(rows, indent=4, sort_keys=sort_keys, default=str)
 	else:
-		dataDump = simplejson.dumps(rows)
+		dataDump = simplejson.dumps(rows, sort_keys=False, default=str)
 	
 	if archive:
 		import _rightThumb._md5 as _md5
@@ -9837,11 +9838,11 @@ def saveTableProject( project, rows=[], theFile='', printThis=False, sort_keys=F
 		print_(theFile)
 		return None
 	if indentCode:
-		dataDump = simplejson.dumps(rows, indent=4, sort_keys=sort_keys)
+		dataDump = simplejson.dumps(rows, indent=4, sort_keys=sort_keys, default=str)
 	else:
-		dataDump = simplejson.dumps(rows)
+		dataDump = simplejson.dumps(rows, sort_keys=False, default=str)
 
-	# dataDump = simplejson.dumps(rows, indent=4, sort_keys=sort_keys)
+	# dataDump = simplejson.dumps(rows, indent=4, sort_keys=sort_keys, default=str)
 	f = open(theFile,'w')
 	f.write(str(dataDump))
 	f.close()
@@ -9859,11 +9860,11 @@ def saveTableDB( rows, theFile, printThis=False, sort_keys=False, indentCode=Tru
 	if __.print_path:
 		print_(theFile)
 	if indentCode:
-		dataDump = simplejson.dumps(rows, indent=4, sort_keys=sort_keys)
+		dataDump = simplejson.dumps(rows, indent=4, sort_keys=sort_keys, default=str)
 	else:
-		dataDump = simplejson.dumps(rows)
+		dataDump = simplejson.dumps(rows, sort_keys=False, default=str)
 
-	# dataDump = simplejson.dumps(rows, indent=4, sort_keys=sort_keys)
+	# dataDump = simplejson.dumps(rows, indent=4, sort_keys=sort_keys, default=str)
 	f = open(theFile,'w')
 	f.write(str(dataDump))
 	f.close()
@@ -9884,11 +9885,11 @@ def saveTable2( rows, theFile, printThis=False, sort_keys=False, indentCode=True
 		theFile = _v.stmp + _v.slash + theFile
 
 	if indentCode:
-		dataDump = simplejson.dumps(rows, indent=4, sort_keys=sort_keys)
+		dataDump = simplejson.dumps(rows, indent=4, sort_keys=sort_keys, default=str)
 	else:
-		dataDump = simplejson.dumps(rows)
+		dataDump = simplejson.dumps(rows, sort_keys=False, default=str)
 
-	# dataDump = simplejson.dumps(rows, indent=4, sort_keys=sort_keys)
+	# dataDump = simplejson.dumps(rows, indent=4, sort_keys=sort_keys, default=str)
 	f = open(theFile,'w')
 	f.write(str(dataDump))
 	f.close()
@@ -9901,7 +9902,7 @@ def saveTable3( rows, theFile, printThis=False, me=0 ):
 	HD.chmod(theFile)
 	simplejson = __.imp('simplejson')
 	# print_('*******************',theFile)
-	dataDump = simplejson.dumps(rows)
+	dataDump = simplejson.dumps(rows, sort_keys=False, default=str)
 	f = open(theFile,'w')
 	f.write(str(dataDump))
 	f.close()
@@ -10406,7 +10407,7 @@ def saveTableSplitNew( rows,theFile,tableTemp = True,printThis = True, project=F
 		cnt += 1
 		path = file0 + count(cnt) + suffix
 	simplejson = __.imp('simplejson')
-	dataDump = simplejson.dumps(rows, indent=4, sort_keys=True)
+	dataDump = simplejson.dumps(rows, indent=4, sort_keys=True, default=str)
 	f = open(path,'w')
 	f.write(str(dataDump))
 	f.close()
@@ -13787,7 +13788,7 @@ class Table:
 			file0 = str(_v.myTables) + str(_v.slash) + str(theFile)
 		else:
 			file0 = _v.stmp + _v.slash + theFile
-		dataDump = simplejson.dumps(self.asset, indent=4, sort_keys=True)
+		dataDump = simplejson.dumps(self.asset, indent=4, sort_keys=True, default=str)
 		f = open(file0,'w')
 		f.write(str(dataDump))
 		f.close()
@@ -19542,7 +19543,7 @@ def load():
 		switches.register('LoadEpoch', '-loadepoch')
 		switches.register('PrintEpoch', '-printepoch')
 		switches.register('chmod', '-chmod,-777')
-		switches.register( 'Paste-isData', '-ppa,-ppaste,-ispa,-idpa' )
+		switches.register( 'Paste-isData', '--pa,--paste,-ppa,-ppaste,-ispa,-idpa' )
 		switches.register( 'Paste-isData-json', '--json,-pjson,-jsonp' )
 		# switches.register('SkipColumnTriggers', '-skiptriggers')
 		defaultScriptTriggers_do()
@@ -19706,12 +19707,15 @@ class regImp:
 
 		__.appReg = self.focusPop
 
-	def action( self, focusPop=True ):
+	def action( self, arg='c766f06b', focusPop=True ):
 		# focusBK = __.appReg
 		__.appReg = self.focus
 
 		self.imp.appDBA = self.focus
-		result = self.imp.action()
+		if not arg == 'c766f06b':
+			result = self.imp.action(arg)
+		else:
+			result = self.imp.action()
 
 		if focusPop:
 			__.appReg = self.focusPop
@@ -20844,7 +20848,7 @@ def saveConfig(data,path):
 		elif type(string) == int or type(string) == float: return _cl_(str(string));
 		elif type(string) == dict or type(string) == list:
 			simplejson = __.imp('simplejson')
-			return simplejson.dumps(string)
+			return simplejson.dumps(string, sort_keys=False, default=str)
 
 		return _cl_(str(string))
 
@@ -21280,6 +21284,12 @@ def getYML(path,here=False,h=None,auto=True,a=None):
 	elif not here and  os.path.isfile(_v.myTables + _v.slash + path):
 		data = getText( _v.myTables + _v.slash + path, raw=True )
 		loaded=True
+	data = data.replace('\r','')
+	lines=[]
+	for line in data.split('\n'):
+		if line.strip(): lines.append(  line.rstrip()  )
+	data='\n'.join(lines)
+	data = data.replace('\t','    ')
 	if loaded: data = data.replace('\t','    ')
 	if not loaded: return {}
 	return yaml.safe_load(data)
@@ -21318,4 +21328,26 @@ imp=regImp
 # def caseUnspecific
 # caseISspecific
 
-
+def inject( snippet='', data='', header='', b='9a26c2d7f6b0', e='71564a5f3d65', be='## {xXx} ##' ):
+	def _clean_(d): return d.replace('\r','')
+	snippet=_clean_(snippet);data=_clean_(data);header=_clean_(header);
+	bb = be.replace( 'xXx', b ); ee = be.replace( 'xXx', e );
+	if not bb in data: data += '\n'+bb+'\n'+ee+'\n'
+	active=False; result = [];
+	for line in data.split('\n'):
+		if bb in line: active=True
+		if not active: result.append(line)
+		if ee in line:
+			result.append(bb)
+			for snip in header.split('\n'):  result.append(snip)
+			for snip in snippet.split('\n'): result.append(snip)
+			result.append('')
+			result.append(ee)
+			active=False
+	if False:
+		lines=[]
+		for line in result:
+			if line.strip(): lines.append(line.rstrip())
+		result=lines
+	return '\n'.join(result)
+# stuff = _.inject('77',stuff); print(stuff);
