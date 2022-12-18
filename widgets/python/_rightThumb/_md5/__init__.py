@@ -94,7 +94,7 @@ def file( fname, h='md5' ):
 
 
 def string( chunk, h='md5' ):
-	
+	chunk=str(chunk)
 	hashes = [
 				'md5',
 				'sha1',

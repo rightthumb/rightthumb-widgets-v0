@@ -21269,6 +21269,8 @@ def pyApp(path):
 		else:
 			return file[:-3]
 
+def fromYML(text): return __.imp('yaml').safe_load(text)
+def toYML(dic): return __.imp('yaml').dump( dic, sort_keys=False )
 
 def getYML(path,here=False,h=None,auto=True,a=None):
 	if not a is None: auto=a

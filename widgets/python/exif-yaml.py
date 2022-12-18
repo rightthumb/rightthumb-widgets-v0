@@ -10,12 +10,12 @@
 # ###########################################################################
 # ## {C3P0D40fAe8B} ##
 
+
 ##################################################
 import sys, time
 ##################################################
 import _rightThumb._construct as __
 appDBA=__.clearFocus(__name__,__file__);__.appReg=appDBA;
-
 def focus(parentApp='',childApp='',reg=True):
     global appDBA;f=__.appName(appDBA,parentApp,childApp);
     if reg:__.appReg=f;
@@ -28,15 +28,15 @@ _v = __.imp('_rightThumb._vars')
 _str = __.imp('_rightThumb._string')
 ##################################################
 
+
 def sw():
     pass
-    _.switches.register( 'Beep-Minute', '-beep,-m,-min,-mins', '2' )
-    _.switches.register( 'Session-Timer', '-cmd,-ss,-session' )
-    _.switches.register( 'Add-Hours', '+hr', '.25' )
-    _.switches.register( 'Add-Min', '+min', '15' )
-    _.switches.register( 'Minus-Hours', '-hr', '.25' )
-    _.switches.register( 'Minus-Min', '-min', '15' )
+    #b)--> examples
+    _.switches.register( 'YAML', '-yml,-yaml' )
+    _.switches.register( 'JSON', '-json' )
+    #e)--> examples
     # _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=False )
+
 # __.setting('require-list',['Files,Plus','File,Has']) # todo
 # __.setting('require-list',['Pipe','Files'])
 __.setting('receipt-log')
@@ -47,15 +47,19 @@ __.setting('require-pipe||file',False)
 __.setting('pre-error',False)
 __.setting('switch-raw',[])
 
+
+
 _.appInfo[focus()] = {
     # 'app': '8facG-jo0Cxk',
-    'file': 'beeps.py',
+    'file': 'exif-yaml.py',
     'liveAppName': __.thisApp( __file__ ),
     'description': 'Changes the world',
         # _.ail(1,'subject')+
         # _.aib('one')+
     'categories': [
-                        'DEFAULT',
+                        'exif',
+                        'yml',
+                        'yaml',
                 ],
     'usage': [
                         # 'epy another',
@@ -71,7 +75,7 @@ _.appInfo[focus()] = {
                         # '',
     ],
     'examples': [
-                        _.hp('p terminal-timer -file file.txt'),
+                        _.hp('exiftool vid.mkv | p exif-yaml'),
                         _.linePrint(label='simple',p=0),
                         '',
     ],
@@ -87,6 +91,7 @@ _.appInfo[focus()] = {
                        # {},
     ],
 }
+
 _.appData[focus()] = {
         'start': __.startTime,
         'uuid': '',
@@ -98,106 +103,82 @@ _.appData[focus()] = {
         },
     }
 
+
 def triggers():
     _.switches.trigger( 'Files', _.myFileLocations, vs=True )
     _.switches.trigger( 'Ago', _.timeAgo )
     _.switches.trigger( 'Folder', _.myFolderLocations )
     _.switches.trigger( 'URL', _.urlTrigger )
     _.switches.trigger( 'Duration', _.timeFuture )
+
 _.l.conf('clean-pipe',True)
 _.l.sw.register( triggers, sw )
 
 ########################################################################################
+#b)--> examples
+#d)--> code hints to quickly get started
+    #n)--> inline examples
+        # any(ele in 'scott5' for ele in list('0123456789'))
+        # if _.switches.isActive('Test'): test(); return None;
+        # result=[]; result=[ _.pr(line) for i, line, bi in _.numerate( _.isData(r=0) )]
+        # bk=[];[  bk.append(rec['backup']) for rec in backupLog if path == rec['file']]; bk=bk[-1];
+        # a=(1 if True else 0) <--#
+        #!)--> m=[[row[i] for row in matrix] for i in range(4)]
+
+    #n)--> python globals
+        # for k in globals(): print(k, eval(k) )
+
+    #n)--> webpage from url
+        # for subject in _.caseUnspecific( line, needle ): line = line.replace( subject, _.colorThis( subject, 'green', p=0 ) )
+
+    #n)--> webpage from url
+        # requests=__.imp('requests.post')
+        #!)--> data=str(requests.post(url,data={}).content,'iso-8859-1')
+
+    #n)--> import and backup example
+        # _bk = _.regImp( __.appReg, 'fileBackup' ); _bk.switch( 'Silent' ); _bk.switch( 'isRunOnce' ); _bk.switch( 'Flag', 'APP' ); _bk.switch( 'DoNotSchedule' )
+        # _bk.switch( 'Input', path ); bkfi = _bk.action();
+
+    #n)--> inline
+        # for rel in [ subject for subject in _.isData(r=0) if _.showLine(subject) ]: print(rel)
+
+    #n)--> banner
+        # banner=_.Banner(app); goss=banner.goss;
+#e)--> examples
+########################################################################################
 #n)--> start
 
-def timer(total=0):
-    if _.switches.isActive('Session-Timer') and _.isWin:
-        start = _v.cmdGetVar('timestamp_start')
-        epoch = _.autoDate(start)
-        dic = _.isDate(epoch,f='ago-dic')
-        dic2={}
-        for k in dic:
-            if not k == 's':
-                if not dic[k] == 0:
-                    if k == 'mi': dic2['m']=dic[k]
-                    else: dic2[k]=dic[k]
-        return dic2
-    return total
-    print(start)
-    print(epoch)
-    print(dic2)
-    sys.exit()
-
-def run(mins=2):
-    tt = 'total'
-    if _.switches.isActive('Session-Timer'): tt = 'session-total'
-    timer()
-    total=0
-    while True:
-        _beep.play_note(3, "c", "half")
-        m=0
-        s=0
-        done=False
-        while not done:
-            time.sleep(1)
-            s+=1
-            if s%60 == 0:
-                s=0
-                m+=1
-                total+=1
-                if m == mins:
-                    done=True
-            to=timer(total)
-            t={ tt: to, '| beep':mins,'m': m, 's':s }
-            _.pr('\t',t,dic=5,end=1)
-
 def action():
-
-    if _.switches.isActive('Add-Hours') and _.switches.value('Add-Hours'):
-        ti = float(_.switches.value('Add-Hours')) * 60 * 60
-        epoch = _.autoDate(_v.cmdGetVar('timestamp_start'))
-        epoch -= ti; new = _.isDate(epoch,f='cmd'); print(new);
+    text = '\n'.join(_.isData(r=0)) 
+    dic = _.fromYML(text)
+    json = __.imp('simplejson').dumps(dic, indent=4, sort_keys=False, default=str)
+    # _.pr(text)
+    if not _.switches.isActive('YAML') and not _.switches.isActive('JSON') :
+        _.pr(_.toYML(dic))
+        _.pr(json)
         return None
-    if _.switches.isActive('Add-Min') and _.switches.value('Add-Min'):
-        ti = float(_.switches.value('Add-Min')) * 60
-        epoch = _.autoDate(_v.cmdGetVar('timestamp_start'))
-        epoch -= ti; new = _.isDate(epoch,f='cmd'); print(new);
-        return None
-
-    if _.switches.isActive('Minus-Hours') and _.switches.value('Minus-Hours'):
-        ti = float(_.switches.value('Minus-Hours')) * 60 * 60
-        epoch = _.autoDate(_v.cmdGetVar('timestamp_start'))
-        epoch += ti; new = _.isDate(epoch,f='cmd'); print(new);
-        return None
-    if _.switches.isActive('Minus-Min') and _.switches.value('Minus-Min'):
-        ti = float(_.switches.value('Minus-Min')) * 60
-        epoch = _.autoDate(_v.cmdGetVar('timestamp_start'))
-        epoch += ti; new = _.isDate(epoch,f='cmd'); print(new);
-        return None
+    elif _.switches.isActive('YAML'): _.pr(_.toYML(dic))
+    elif _.switches.isActive('JSON'): _.pr(json)
 
 
-    mins=2
-    if _.switches.isActive('Beep-Minute'):
-        mins=int(_.switches.value('Beep-Minute'))
-    run(mins)
-    # try: run(mins)
-    # except KeyboardInterrupt:
-    #     sys.exit()
-# cmdGetVar
-import signal
-import sys
 
-def sigint_handler(signal, frame):
-    # time.sleep(2)
-    # _.pr('                                                          ',end=1)
-    # _.pr('p beeps -session',end=1)
-    # time.sleep(3)
-    _.pr('                                                          ',end=1)
-    sys.exit(0)
-signal.signal(signal.SIGINT, sigint_handler)
-import _rightThumb._beep as _beep
 ##################################################
-######################################
+#b)--> examples
+# banner=_.Banner(dependencies)
+# goss=banner.goss
+# goss('-\t this app will sherlock tf out of any python app or python module')
+#e)--> examples
+##################################################
+
+########################################################################################
 if __name__ == '__main__':
+    #b)--> examples
+
+    # banner.pr()
+    # if len(_.switches.all())==0: banner.gossip()
+
+    #e)--> examples
     action()
     _.isExit(__file__)
+
+

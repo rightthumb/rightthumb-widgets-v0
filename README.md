@@ -150,14 +150,13 @@ How the installer works
 
 Recommended python modules
 
-    sudo python3 -m ensurepip
     python3 -m pip install --upgrade pip
-    apt-get install python3
-    apt-get install python3-pip
-    apt-get install fonts-emojione
-    apt-get install wget
-    apt-get install unzip
-    apt install iputils-ping
+    apt-get install python3  -y
+    apt-get install fonts-emojione  -y
+    apt-get install wget  -y
+    apt-get install unzip  -y
+    apt install iputils-ping  -y
+    apt-get install python3-pip -y
 
     pip3 install simplejson
     pip3 install datefinder

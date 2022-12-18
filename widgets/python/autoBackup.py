@@ -194,9 +194,7 @@ def action():
 	# sys.exit()
 
 
-	fileBackup = _.regImp( __.appReg, 'fileBackup' )
-	fileBackup.switch( 'Flag', 'X' )
-	fileBackup.switch( 'DoNotSchedule' )
+
 
 	fileList = []
 	runOnceFiles = []
@@ -225,8 +223,7 @@ def action():
 	# if _.switches.isActive('BackupRunOnce'):
 	# 	_.pr( 'BackupRunOnce: Active' )
 	# 	pause=input('pause')
-							
-	fileBackup.switch( 'isRunOnce' )
+
 	for ii,log in enumerate(schedulerLog):
 		if not 'status' in log:log['status'] = status['default'];
 		if log['status'] == status['default'] or log['status'] == status['defaultSpent']:
@@ -240,15 +237,15 @@ def action():
 					notice = _.colorThis( [  'Special: '  ], 'green', p=0 )
 					notice += _.colorThis( [  log['file']  ], 'cyan', p=0 )
 					_.pr( notice )
-
-
-					fileBackup.deleteSwitch( 'Session' )
+					fileBackup=_fileBackup()
 					if 'session' in log:
 						fileBackup.switch( 'Session', log['session'] )
 
 
 					fileBackup.switch( 'Input', log['file'] )
-					fileBackup.do( 'action' )
+					fileBackup.do( 	'action' )
+					del fileBackup
+					fileBackup=None
 
 
 					schedulerLog[ii]['status'] = status['onceSpent']
@@ -269,7 +266,7 @@ def action():
 
 	maxEpochDate = _.resolveEpochTest( maxEpoch )
 
-	fileBackup.switch( 'isRunOnce', delete=True )
+	# fileBackup.switch( 'isRunOnce', delete=True )
 
 	i=0
 	for ii,log in enumerate(schedulerLog):
@@ -335,7 +332,7 @@ def action():
 									# 	_.pr( 'Scheduler', _.resolveEpochTest( log['timestamp'] ) )
 									# 	_.pr( _.resolveEpochTest(fd['date_modified_raw']), maxEpochDate )
 									# 	_.printTest( log )
-									fileBackup.deleteSwitch( 'Session' )
+									fileBackup=_fileBackup()
 									if 'session' in log:
 										fileBackup.switch( 'Session', log['session'] )
 
@@ -369,8 +366,7 @@ def action():
 				log['status'] = status['defaultSpentAltID']
 
 			if log['status'] == status['default']:
-
-				fileBackup.deleteSwitch( 'Session' )
+				fileBackup=_fileBackup()
 				if 'session' in log:
 					fileBackup.switch( 'Session', log['session'] )
 
@@ -479,7 +475,7 @@ def action():
 											# 	_.pr( 'Backup Log', _.resolveEpochTest( log['timestamp'] ) )
 											# 	_.pr( _.resolveEpochTest(fd['date_modified_raw']), maxEpochDate )
 											# 	_.printTest( log )
-											fileBackup.deleteSwitch( 'Session' )
+											fileBackup=_fileBackup()
 											if 'session' in log:
 												fileBackup.switch( 'Session', log['session'] )
 											
@@ -498,6 +494,18 @@ def action():
 								# _.pr( fd['date_modified'], log['file'] )
 
 __.spent = []
+
+def _fileBackup():
+    appReg=__.appReg
+    if 'fileBackup' in globals(): globals()['fileBackup'] = None
+    fileBackup = _.regImp( __.appReg, 'fileBackup' )
+    __.appReg=appReg
+    fileBackup.switch( 'Flag', 'A' )
+    fileBackup.switch( 'DoNotSchedule' )
+    fileBackup.switch( 'isRunOnce' )
+    fileBackup.deleteSwitch( 'Session' )
+    __.appReg=appReg
+    return fileBackup
 
 ########################################################################################
 if __name__ == '__main__':

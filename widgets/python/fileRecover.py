@@ -713,7 +713,10 @@ def action():
 						# for k in rec:
 						# 	_.pr(k, rec[k])
 						# sys.exit()
-						data[i]['size'] = _dir.info( rec['backup'] )['size']
+						try:
+							data[i]['size'] = _dir.info( rec['backup'] )['size']
+						except:
+							data[i]['size'] = '0B'
 						if rec['name'] == '__init__.py':
 							data[i]['name'] = initName( rec )
 

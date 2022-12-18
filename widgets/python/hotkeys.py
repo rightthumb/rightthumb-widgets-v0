@@ -778,9 +778,17 @@ copy(  hackTool.payload.label  )
 		_copy = _.regImp( __.appReg, '-copy' )
 		_paste = _.regImp( __.appReg, '-paste' )
 		data  = _paste.imp.paste()
+		data = data.replace('\r','')
+		lines=[]
+		for line in data.split('\n'):
+			if line.strip():
+				lines.append(line)
+		data='\n'.join(lines)
 		data = data.replace('\t','    ')
+		# _copy.imp.copy( data, p=0 )
 		y=yaml.safe_load(data)
-		j = simplejson.dumps(y, indent=4, sort_keys=False)
+		# print(y)
+		j = simplejson.dumps(y, indent=4, sort_keys=False, default=str)
 		_copy.imp.copy( j, p=0 )
 
 	def json2yaml(self):

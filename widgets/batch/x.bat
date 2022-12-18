@@ -17,7 +17,6 @@ call %widgets%\widgets\batch\c.bat %1
 echo.
 echo Reminder run   r.t   once a week.
 echo.
-
 rem call p fileBackup -f %wprofile%\projects\project-log.txt
 
 SET ORIGINAL_Session_ID=%Session_ID%
@@ -33,6 +32,7 @@ SET /p runOnceStatus=<%myVars%\hasRunOnceScheduled
 
 IF [%runOnceStatus%] == [YES] CALL :RunOnceBackupAsk
 
+set skip_backup=NO
 
 
 
@@ -145,8 +145,9 @@ rem echo x
 
 
 
-
+rem call p autoBackup -date "%open_timestamp2%" -include_once
 rem call p autoBackup -ago 1d
+
 echo %Session_ID%
 echo %myVars%\ID.sys
 rem pause
@@ -209,6 +210,7 @@ rem pause
 echo.
 echo.
 IF [%reclaim_tickets%] == [yes] CALL p unclaimed_tickets
+rem call:autoBackup_B
 exit
 :RunOnceBackupAsk
 if [%skip_backup%] == [YES] (
@@ -296,9 +298,7 @@ goto:eof
 if [%skip_backup%] == [YES] (
     echo skip_backup
 ) else (
+    echo autoBackup running...
     call p autoBackup -date "%open_timestamp2%"
 )
 goto:eof
-
-
- 

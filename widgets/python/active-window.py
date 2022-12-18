@@ -386,6 +386,7 @@ def action():
             # _.pr(a,'-',_._2dates(guess),aw.aw,'-',aw.group,end=1)
         time.sleep(.2)
         if idle_time > 600:
+            if not aw.aw in aw.idle: aw.idle[aw.aw] ={}
             if not idle_group in aw.idle[aw.aw]: aw.idle[aw.aw][idle_group]=idle_time
             else: aw.idle[aw.aw][idle_group]+=idle_time-aw.idle[aw.aw][idle_group]
             if not idle_group in aw.group.idleg[aw.group]: aw.group.idleg[aw.group][idle_group]=idle_time

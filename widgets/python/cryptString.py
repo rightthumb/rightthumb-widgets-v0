@@ -39,9 +39,10 @@ def appSwitches():
 	_.switches.register( 'Password', '-password,-p', 'only -p if password is VAULT' )
 	_.switches.register( 'Vault', '-v,-vault' )
 	_.switches.register( 'Machine', '-m' )
-	_.switches.register( 'Clipboard', '-clip,-copy,-copied,-clipboard' )
 	_.switches.register( 'JustReturn', '-jr' )
 	_.switches.register( 'Temp', '-temp' )
+	_.switches.register( 'String', '-string,-txt,-text' )
+	_.switches.register( 'Clipboard', '-clip,-copy,-copied,-clipboard' )
 	
 	
 
@@ -390,6 +391,7 @@ def cleanStringA(data):
 
 def action():
 
+	if _.switches.isActive('Paste-isData'): _.switches.fieldSet( 'Clipboard', 'active', True )
 
 	# _.pr(1010,_.switches.isActive('Encrypt'))
 	password = None
@@ -410,6 +412,20 @@ def action():
 
 		if password is None:
 			password = _vault.key()
+
+	if  _.switches.isActive('String'):
+		for data in _.switches.values('String'):
+			data = cleanString( data )
+
+			if data.endswith('=') or data.endswith('/U') or _.switches.isActive('Decrypt'):
+				string = _blowfish.decrypt( data, _vault.key() )
+			else:
+				string = _blowfish.encrypt( data, _vault.key() )
+
+			string = cleanString( string )
+			_.pr( string )
+		return None
+
 
 	if  _.switches.isActive('Clipboard'):
 		

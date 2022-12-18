@@ -96,8 +96,9 @@ import _rightThumb._md5 as _md5
 def appSwitches():
 	pass
 	
-	_.switches.register( 'Files', '-f,-file,-files','file.txt', isData='glob', description='Files', isRequired=True )
+	_.switches.register( 'Files', '-f,-file,-files','file.txt', isData='glob', description='Files', isRequired=False )
 	_.switches.register( 'Time', '-time' )
+	# _.switches.register( 'Paste', '-pa,-paste' )
 
 	
 
@@ -124,6 +125,8 @@ _.appInfo[focus()] = {
 	],
 	'examples': [
 						'p md5 -file file.txt',
+						''
+						'p md5 --pa raw',
 						''
 	],
 	'columns': [
@@ -219,13 +222,23 @@ def action():
 	# if not type( _.appData[__.appReg]['pipe'] ) == bool:
 		# _.pipeCleaner(0)
 		# _.printVar( _.appData )
-	for i,row in enumerate( _.isData(r=1) ):
-		start=time.time()
-		_.pr(row)
-		data = _md5.md5File( row )
-		_.pr( data )
-		if _.switches.isActive('Time'):
-			_.pr(time.time()-start)
+
+
+	if _.switches.isActive('Paste-isData'):
+		_paste = _.regImp( __.appReg, '-paste' )
+		# subject=_paste.imp.paste()
+		subject='\n'.join( _.isData(r=1))
+		if not _.switches.value('Paste-isData') == 'raw': subject=subject.strip()
+		x = _md5.string(subject)
+		print(x)
+	else:
+		for i,row in enumerate( _.isData(r=1) ):
+			start=time.time()
+			_.pr(row)
+			data = _md5.md5File( row )
+			_.pr( data )
+			if _.switches.isActive('Time'):
+				_.pr(time.time()-start)
 
 
 
