@@ -3010,7 +3010,7 @@ alias register_terminal="$widgets/widgets/bash/register_terminal.sh"
 notes_folder="$widgets/widgets/bash/notes"
 notes_file="$notes_folder/RT-SCRAP-$unixID7.txt"
 
-alias cat.scrap="cat $notes_file"
+alias cat.scrap="$p cat -f $notes_file"
 
 
 alias scrap="$widgets/widgets/bash/scrap.sh"
@@ -3504,11 +3504,11 @@ alias .h.sh='nano ~/.bash_history'
 alias .h.='nano ~/.python_history'
 alias .h.py='nano ~/.python_history'
 alias .b='nano ~/.bashrc'
-alias ..h='cat ~/.bash_history'
-alias ..h.sh='cat ~/.bash_history'
-alias ..h.='cat ~/.python_history'
-alias ..h.py='cat ~/.python_history'
-alias ..b='cat ~/.bashrc'
+alias ..h='$p cat -f ~/.bash_history'
+alias ..h.sh='$p cat -f ~/.bash_history'
+alias ..h.='$p cat -f ~/.python_history'
+alias ..h.py='$p cat -f ~/.python_history'
+alias cat..='$p cat -f ~/.bashrc'
 alias ls='ls --color=auto'
 alias ll='ls -la'
 
@@ -3518,7 +3518,7 @@ alias fgrep='fgrep --color=auto'
 
 alias sha1='openssl sha1'
 alias hh='history'
-alias h='cat ~/.bash_history'
+alias h='$p cat -f ~/.bash_history'
 
 alias now='date +"%T"'
 alias nowtime=now

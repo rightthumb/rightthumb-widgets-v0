@@ -211,6 +211,11 @@ echo.
 echo.
 IF [%reclaim_tickets%] == [yes] CALL p unclaimed_tickets
 rem call:autoBackup_B
+rem if not [%timer%] == [] if not [%lab%] == [] (
+rem     echo %lab%>%myTickets%\timer-%Session_ID%.lab
+rem )
+
+call lab-timer
 exit
 :RunOnceBackupAsk
 if [%skip_backup%] == [YES] (

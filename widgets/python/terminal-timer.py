@@ -36,7 +36,7 @@ def sw():
     _.switches.register( 'Add-Min', '+min', '15' )
     _.switches.register( 'Minus-Hours', '-hr', '.25' )
     _.switches.register( 'Minus-Min', '-min', '15' )
-    # _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=False )
+    _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name', description='Files', isRequired=False )
 # __.setting('require-list',['Files,Plus','File,Has']) # todo
 # __.setting('require-list',['Pipe','Files'])
 __.setting('receipt-log')
@@ -151,7 +151,21 @@ def run(mins=2):
             t={ tt: to, '| beep':mins,'m': m, 's':s }
             _.pr('\t',t,dic=5,end=1)
 
+os=__.imp('os.sep')
+
 def action():
+
+    if _.isData():
+        for path in _.isData():
+            if not os.path.isfile(path):
+                path = _v.ticketPath(path)
+            if not os.path.isfile(path):
+                _.pr('path error',c='red')
+                sys.exit()
+            path=__.path(path)
+            print(path)
+        return None
+
 
     if _.switches.isActive('Add-Hours') and _.switches.value('Add-Hours'):
         ti = float(_.switches.value('Add-Hours')) * 60 * 60

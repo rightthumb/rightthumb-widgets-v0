@@ -1,2 +1,2 @@
 @echo off 
-call beeps
+call timer
