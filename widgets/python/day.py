@@ -182,6 +182,16 @@ focus()
 sep=os.sep
 # _docs.switch('Files')
 
+def popper(path,cnt=1):
+	if path.endswith(os.sep): path = path[:-1]
+	c=0
+	while not c == cnt:
+		c+=1
+		pp = path.split(os.sep)
+		pp.pop()
+		path = os.sep.join(pp)
+	return path
+
 def load():
 	global fo
 	global epoch
@@ -195,6 +205,12 @@ def load():
 	if _.switches.isActive('Date'): epoch = _.autoDate( _.switches.value('Date') )
 
 	today = _.day(epoch); fo =  _v.rtp+'daily'+os.sep+today;
+	# print( today )
+	# woy=os.sep+popper(today,1)
+	# year=os.sep+popper(today,2)
+	# print( ' woy:',woy )
+	# print( 'year:',year )
+	# sys.exit()
 	_v.mkdir(fo)
 	var = _v.rtp+'profile/vars/'.replace('/',os.sep)
 	vbm = _v.rtp+'profile/bookmarks/'.replace('/',os.sep)
@@ -218,24 +234,45 @@ def load():
 				bm = _.getTable('bookmarks.index')
 				# _.saveTable(bm,'bookmarks-day.index')
 				# print(bm); sys.exit();
+				# _wsl = wsl(fo)
+				# print('wsl:',_wsl)
+				# print('wsl:',_wsl)
+				# print('wsl:',_wsl)
+				# print('wsl:',_wsl)
+				# print('wsl:',_wsl)
+				aliases = []
+				
+				woy=os.sep+popper(today,1)
+				year=os.sep+popper(today,2)
+				aliases.append('alias woy="cd '+wsl(_v.rtp+'daily'+woy)+'"')
+				aliases.append('alias y="cd '+wsl(_v.rtp+'daily'+year)+'"')
+				aliases.append('alias yr="cd '+wsl(_v.rtp+'daily'+year)+'"')
+				aliases.append('alias year="cd '+wsl(_v.rtp+'daily'+year)+'"')
+				aliases.append('alias day="cd '+wsl(_v.rtp+'daily')+'"')
+				aliases.append('alias 00="cd '+wsl(_v.rtp+'daily')+'"')
+				aliases.append('alias da="cd '+wsl(_v.rtp+'daily')+'"')
+				aliases.append('alias daily="cd '+wsl(_v.rtp+'daily')+'"')
+
+				aliases.append('alias 0="cd '+wsl(fo)+'"')
 				bm['labels'][str(0)]=fo;  _.saveText(fo,vbm+'BM-0.txt');
 				bm['labels']['day']=fo;   _.saveText(fo,vbm+'BM-day.txt');
 				bm['labels']['today']=fo; _.saveText(fo,vbm+'BM-today.txt');
 				dA=epoch-86400
-				dayX = _.day(dA); dX = _v.rtp+'daily'+os.sep+dayX;
+				dayX = _.day(dA); dX = _v.rtp+'daily'+os.sep+dayX; aliases.append('alias 1="cd '+wsl(dX)+'"');
 				we=_.isDate(dA,f='dow2'); bm['labels'][we]=dX;  _.saveText(dX,vbm+'BM-'+we+'.txt');
 				bm['labels'][str(1)]=dX;  _.saveText(dX,vbm+'BM-1.txt');
 				bm['labels']['yesterday']=dX;  _.saveText(dX,vbm+'BM-yesterday.txt');
 				bm['labels']['y']=dX;  _.saveText(dX,vbm+'BM-yy.txt');
 				bm['labels']['y']=dX;  _.saveText(dX,vbm+'BM-yy.txt');
-				dA=epoch-86400-86400; dayX = _.day(dA); dX = _v.rtp+'daily'+os.sep+dayX; bm['labels'][str(2)]=dX; _.saveText(dX,vbm+'BM-2.txt'); we=_.isDate(dA,f='dow2'); bm['labels'][we]=dX;  _.saveText(dX,vbm+'BM-'+we+'.txt');
-				dA=epoch-86400-86400-86400; dayX = _.day(dA); dX = _v.rtp+'daily'+os.sep+dayX; bm['labels'][str(3)]=dX; _.saveText(dX,vbm+'BM-3.txt'); we=_.isDate(dA,f='dow2'); bm['labels'][we]=dX;  _.saveText(dX,vbm+'BM-'+we+'.txt');
-				dA=epoch-86400-86400-86400-86400; dayX = _.day(dA); dX = _v.rtp+'daily'+os.sep+dayX; bm['labels'][str(4)]=dX; _.saveText(dX,vbm+'BM-4.txt'); we=_.isDate(dA,f='dow2'); bm['labels'][we]=dX;  _.saveText(dX,vbm+'BM-'+we+'.txt');
-				dA=epoch-86400-86400-86400-86400-86400; dayX = _.day(dA); dX = _v.rtp+'daily'+os.sep+dayX; bm['labels'][str(5)]=dX; _.saveText(dX,vbm+'BM-5.txt'); we=_.isDate(dA,f='dow2'); bm['labels'][we]=dX;  _.saveText(dX,vbm+'BM-'+we+'.txt');
-				dA=epoch-86400-86400-86400-86400-86400-86400; dayX = _.day(dA); dX = _v.rtp+'daily'+os.sep+dayX; bm['labels'][str(6)]=dX; _.saveText(dX,vbm+'BM-6.txt'); we=_.isDate(dA,f='dow2'); bm['labels'][we]=dX;  _.saveText(dX,vbm+'BM-'+we+'.txt');
-				dA=epoch-86400-86400-86400-86400-86400-86400-86400; dayX = _.day(dA); dX = _v.rtp+'daily'+os.sep+dayX; bm['labels'][str(7)]=dX; _.saveText(dX,vbm+'BM-7.txt'); we=_.isDate(dA,f='dow2'); bm['labels'][we]=dX;  _.saveText(dX,vbm+'BM-'+we+'.txt');
+				dA=epoch-86400-86400; dayX = _.day(dA); dX = _v.rtp+'daily'+os.sep+dayX; aliases.append('alias 2="cd '+wsl(dX)+'"'); bm['labels'][str(2)]=dX; _.saveText(dX,vbm+'BM-2.txt'); we=_.isDate(dA,f='dow2'); bm['labels'][we]=dX;  _.saveText(dX,vbm+'BM-'+we+'.txt');
+				dA=epoch-86400-86400-86400; dayX = _.day(dA); dX = _v.rtp+'daily'+os.sep+dayX; aliases.append('alias 3="cd '+wsl(dX)+'"'); bm['labels'][str(3)]=dX; _.saveText(dX,vbm+'BM-3.txt'); we=_.isDate(dA,f='dow2'); bm['labels'][we]=dX;  _.saveText(dX,vbm+'BM-'+we+'.txt');
+				dA=epoch-86400-86400-86400-86400; dayX = _.day(dA); dX = _v.rtp+'daily'+os.sep+dayX; aliases.append('alias 4="cd '+wsl(dX)+'"'); bm['labels'][str(4)]=dX; _.saveText(dX,vbm+'BM-4.txt'); we=_.isDate(dA,f='dow2'); bm['labels'][we]=dX;  _.saveText(dX,vbm+'BM-'+we+'.txt');
+				dA=epoch-86400-86400-86400-86400-86400; dayX = _.day(dA); dX = _v.rtp+'daily'+os.sep+dayX; aliases.append('alias 5="cd '+wsl(dX)+'"'); bm['labels'][str(5)]=dX; _.saveText(dX,vbm+'BM-5.txt'); we=_.isDate(dA,f='dow2'); bm['labels'][we]=dX;  _.saveText(dX,vbm+'BM-'+we+'.txt');
+				dA=epoch-86400-86400-86400-86400-86400-86400; dayX = _.day(dA); dX = _v.rtp+'daily'+os.sep+dayX; aliases.append('alias 6="cd '+wsl(dX)+'"'); bm['labels'][str(6)]=dX; _.saveText(dX,vbm+'BM-6.txt'); we=_.isDate(dA,f='dow2'); bm['labels'][we]=dX;  _.saveText(dX,vbm+'BM-'+we+'.txt');
+				dA=epoch-86400-86400-86400-86400-86400-86400-86400; dayX = _.day(dA); dX = _v.rtp+'daily'+os.sep+dayX; aliases.append('alias 7="cd '+wsl(dX)+'"'); bm['labels'][str(7)]=dX; _.saveText(dX,vbm+'BM-7.txt'); we=_.isDate(dA,f='dow2'); bm['labels'][we]=dX;  _.saveText(dX,vbm+'BM-'+we+'.txt');
 
 				# print(bm['labels'][str(7)]); sys.exit();
+				_.saveText(aliases,_v.rtp+'daily'+os.sep+'.seven.sh')
 				_.saveText(str(epoch),var+'day.brand')
 				# if os.path.isfile(_v.tt+'/tables/bookmarks-day.index'.replace('/',os.sep)): os.unlink(_v.tt+'/tables/bookmarks.index'.replace('/',os.sep))
 				_.saveTable(bm,'bookmarks.index')
@@ -481,6 +518,18 @@ def have_some_cows():
 	while not i==cows:
 		i+=1
 		have_a_cow()
+
+
+def wsl(path):
+	if not _.isWin: return path
+	subject = path
+	git_path = subject
+	git_path = git_path.replace( _v.slashes['w'], _v.slashes['u'] )
+	git_path = git_path.replace( ':', '' )
+	git_path = _v.slashes['u'] + git_path
+	wsl5 = '/mnt/'+ git_path[1].lower() + git_path[2:]
+	wsl5=wsl5.replace(' ','\\ ')
+	return wsl5
 
 
 import _rightThumb._banners as _banners

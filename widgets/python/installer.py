@@ -3426,56 +3426,17 @@ alias vps.y.d="vps.y.py.d; vps.y.sh.d; vps.y.db.d"
 
 
 
+alias vps.b.dt.="$p keychain -get -label dt -clip; ssh -L 59001:localhost:5901 -C -N -l scott bespin.m-eta.app"
+alias vps.t.dt.="$p keychain -get -label dt -clip; ssh -L 59001:localhost:5901 -C -N -l scott tatooine.m-eta.app"
+alias vps.h.dt.="$p keychain -get -label dt -clip; ssh -L 59001:localhost:5901 -C -N -l scott hoth.m-eta.app"
+alias vps.y.dt.="$p keychain -get -label dt -clip; ssh -L 59001:localhost:5901 -C -N -l scott yavin.m-eta.app"
 
 
-
-
-if test -f "$HOME/.bashrc-"; then
-    source "$HOME/.bashrc-";
-fi
-if test -f "$HOME/.bashrc."; then
-    source "$HOME/.bashrc.";
-fi
-
-once_file=$HOME/.bashrc.once
-once_file2=$HOME/.bashrc.once.log
-if test -f "$once_file"; then
-    source $once_file
-    echo ___ >> $once_file2
-    echo date >> $once_file2
-    cat $once_file >> $once_file2
-    rm $once_file
-
-fi
-personal_file=$HOME/.bashrc.always
-if test -f "$personal_file"; then
-    source $personal_file
-fi
-personal_file_print=$HOME/.bashrc.always.print
-if test -f "$personal_file_print"; then
-    echo ''
-    $p print_color -line -color Background.green
-    cat $personal_file_print
-    $p print_color -line -color Background.green
-    echo ''
-fi
-once_file_print=$HOME/.bashrc.once.print
-if test -f "$once_file_print"; then
-    echo ''
-    $p print_color -line -color Background.green
-    cat $once_file_print
-    $p print_color -line -color Background.green
-    echo ''
-    rm $once_file_print
-fi
 
 if [[ ( "$PWD" == "/home/scott" && "$HOME" != "/home/scott" ) ]]; then
     cd $HOME
 fi
 
-if [ -f "$HOME/bashrc.sh" ]; then
-source $HOME/bashrc.sh
-fi
 
 
 alias myip='curl ifconfig.co/'
@@ -3590,8 +3551,56 @@ alias .1='cd ..'
 alias ..='cd ..'
 
 
+# a3bc42ec51e9
 
+if test -f "/mnt/c/Users/Scott/.rt/profile/daily/.seven.sh"; then
+    sudo service cron start > /dev/null 2>&1 & 
+    $p shClean -f /mnt/c/Users/Scott/.rt/profile/daily/.seven.sh --c
+    source "/mnt/c/Users/Scott/.rt/profile/daily/.seven.sh";
+fi
 
+if test -f "$HOME/.bashrc-"; then
+    source "$HOME/.bashrc-";
+fi
+if test -f "$HOME/.bashrc."; then
+    source "$HOME/.bashrc.";
+fi
+
+once_file=$HOME/.bashrc.once
+once_file2=$HOME/.bashrc.once.log
+if test -f "$once_file"; then
+    source $once_file
+    echo ___ >> $once_file2
+    echo date >> $once_file2
+    cat $once_file >> $once_file2
+    rm $once_file
+
+fi
+personal_file=$HOME/.bashrc.always
+if test -f "$personal_file"; then
+    source $personal_file
+fi
+personal_file_print=$HOME/.bashrc.always.print
+if test -f "$personal_file_print"; then
+    echo ''
+    $p print_color -line -color Background.green
+    cat $personal_file_print
+    $p print_color -line -color Background.green
+    echo ''
+fi
+once_file_print=$HOME/.bashrc.once.print
+if test -f "$once_file_print"; then
+    echo ''
+    $p print_color -line -color Background.green
+    cat $once_file_print
+    $p print_color -line -color Background.green
+    echo ''
+    rm $once_file_print
+fi
+if [ -f "$HOME/bashrc.sh" ]; then
+source $HOME/bashrc.sh
+fi
+# a3bc42ec51e9
 
             """
             # echo "alias rr='sudo su root'" >> ~/.bashrc
@@ -15250,7 +15259,7 @@ if __name__ == '__main__':
 # vc.FIG.bash_vars(p=0)
 # 'Installer'
 
-
+# bashrc eof a3bc42ec51e9
 
 
 

@@ -82,6 +82,8 @@ _.appInfo[focus()] = {
 	],
 	'examples': [
 						'p keychain -get',
+						'p keychain -add -label -joplin-token -clip',
+						'p keychain -add -label -joplin-token --pa',
 						'',
 	],
 	'columns': [
@@ -175,7 +177,7 @@ def add():
 		password = _.switches.values('Password')[0]
 
 	table[label] = _vault.imp.s.en( password )
-
+	if 'eof' in table: del table['eof']; table['eof']='';
 	_.saveTableDB( table, 'keychain.hash' )
 
 	if _.switches.isActive('Alias'):
@@ -252,7 +254,7 @@ def changePassword():
 
 	for label in table:
 		table[label] = _vault.imp.s.en(table[label])
-
+	if 'eof' in table: del table['eof']; table['eof']='';
 	_.saveTableDB( table, 'keychain.hash' )
 
 def addAlias():
@@ -264,11 +266,8 @@ def addAlias():
 			aliases[alias] = label
 		_.saveTableDB( aliases, 'keychain-aliases.hash' )
 
-
-
-def action():
-	if _.switches.isActive('.bashrc-Aliases'):
-		aliases = """
+def bashrc_aliases():
+	aliases = """
 ################# ################# #################
 alias exp.gen="$tech_drive/tech/programs/python/src/unity/expect-gen.py -p "
 alias exp.geny="$tech_drive/tech/programs/python/src/unity/expect-gen.py -p -y "
@@ -328,8 +327,13 @@ alias vps.dt2="echo    'ssh -L 59001:localhost:5901 -C -N -l scott vps.rightthum
 alias vps.k="echo $( p keychain -get -label vps.k )"
 alias kk="echo $( p keychain -get -label login-test )"
 
-		"""
-		_.pr( aliases )
+	"""
+	_.pr( aliases )
+
+def action():
+	if _.switches.isActive('Paste-isData'): _.switches.fieldSet( 'Clipboard', 'active', True )
+	if _.switches.isActive('.bashrc-Aliases'):
+		bashrc_aliases()
 		return None
 
 	load()

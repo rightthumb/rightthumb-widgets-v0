@@ -5365,7 +5365,9 @@ def plusColor( row, color='green' ):
 	return row
 
 def caseUnspecificCode( data, subject, isPlus=False, minus=None ):
-	if __.sw.PlusCode:   return caseISspecific(data, subject, isPlus, minus)
+	global switches
+
+	if __.sw.PlusCode or switches.isActive('StrictCase'):   return caseISspecific(data, subject, isPlus, minus)
 	else:                return caseUnspecific(data, subject, isPlus, minus)
 
 
@@ -19564,6 +19566,10 @@ regImps = {}
 class regImp:
 
 	def __init__( self, focus=None, app=None, argvProcessForce=False, dirty=False, a=None, i=None ):
+		if '.' in focus or app is None:
+			pr('_.imp should be __.imp, auto corrected', focus, c='r')
+			return __.imp(focus)
+
 		if not a is None: app=a
 		if not i is None: app=i
 		global regImps
@@ -19595,6 +19601,7 @@ class regImp:
 		# print_(self.imp.focus())
 
 		self.focus = self.imp.focus( parentApp=focus )
+		# print('self.focus:',self.focus)
 		self.focusPop = focus
 		
 		self.saveLog = True
@@ -20859,7 +20866,7 @@ def saveConfig(data,path):
 	return config
 
 imp=__.imp
-def HID(sub): requests=imp('requests'); return int(requests.get('https://eyeformeta.com/assets/widgets/ids/index.php?subject='+sub).content.decode("utf-8").replace('\\n','\n').replace('\n',''));
+def HID(sub): requests=__.imp('requests'); return int(requests.get('https://eyeformeta.com/assets/widgets/ids/index.php?subject='+sub).content.decode("utf-8").replace('\\n','\n').replace('\n',''));
 
 def cmd(run):
 	subprocess=__.imp('subprocess.check_output')
@@ -21114,6 +21121,7 @@ class Banner:
 
 
 def isExit(_file_):
+	# print(__.appReg)
 	# print('_file_:',_file_)
 	__.isExit()
 	global appInfo

@@ -44,6 +44,7 @@ def appSwitches():
 	_.switches.register('Folder', '-folder')
 	_.switches.register('Recursive', '-r,-recursive')
 	_.switches.register('Editor', '-editor')
+	_.switches.register('NoPrint', '--c')
 	# _.switches.register('Path', '-p')
 	# _.switches.register('Text', '-t,-text')
 	# _.switches.register('Binary', '-bin')
@@ -253,7 +254,7 @@ def processFile(path):
 		return None
 	if not _.isWin:
 		os.chmod( path, 0o777 )
-	_.cp( [ 'CLEANED:', path ], 'cyan' )
+	if not _.switches.isActive('NoPrint'): _.cp( [ 'CLEANED:', path ], 'cyan' )
 	file = _.getText( path, raw=True )
 	file = file.replace( chr(10), '\n' )
 	file = file.replace( chr(27), '' )
