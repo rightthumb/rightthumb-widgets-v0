@@ -1279,7 +1279,7 @@ def action(path=None,flag=None,o=None):
 						log['flag'] = _.switches.value('Flag')
 				log = log_default_fields(log)
 				backupLog.append(log)
-
+				# _.saveCSV(   backupLog, 'fileBackup.csv',  p=0 )
 				try:
 					result = copyfile(path, newname)
 					for i,row in enumerate(backupLog):
@@ -1288,9 +1288,17 @@ def action(path=None,flag=None,o=None):
 								backupLog[i]['flag'] = ''
 						except Exception as e:
 							backupLog[i]['flag'] = ''
-					
+					# _.pr('logs',c='gray')
+					# _.pr('saving',c='gray')
 					_.saveTable( backupLog, 'fileBackup.json', p=0 )
-					_.saveCSV(   backupLog, 'fileBackup.csv',  p=0 )
+					# _.pr('saving..',c='gray')
+					# _.pr('.json',c='gray')
+					# _.saveCSV(   backupLog, 'fileBackup.csv',  p=0 )
+					# _.pr('saving...',c='gray')
+					# _.pr('.csv',c='gray')
+					# _.saveYML(   backupLog, 'fileBackup.yml',  p=0 )
+					# _.pr('.yml',c='gray')
+					# _.pr('db saved',c='gray')
 				except Exception as e:
 					result = 'Error'
 				if _.switches.isActive('Result'):

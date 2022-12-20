@@ -41,6 +41,7 @@ def appSwitches():
 	_.switches.register('Blank', '-blank')
 	_.switches.register('Clean', '-clean')
 	_.switches.register('MaxDepth', '-depth', '3')
+	_.switches.register('Relative-Path', '-rr,-rel,-relative')
 
 
 	pass
@@ -179,6 +180,7 @@ def process( folder ):
 
 
 	global baseDepth
+	global base_path
 	if _.switches.isActive('MaxDepth'):
 		if len(_.switches.value('MaxDepth')):
 			maxDepth = int(_.switches.values('MaxDepth')[0])
@@ -217,7 +219,11 @@ def process( folder ):
 				allFolders.append( path )
 				i = i + 1
 				if not _.switches.isActive('Blank'):
-					_.colorThis( [  path  ], 'cyan' )
+					if _.switches.isActive('Relative-Path'):
+						pAth = path.replace(base_path,'')[1:]
+						_.pr( pAth, c='cyan' )
+					else:
+						_.pr( path, c='cyan' )
 			process( path )
 
 
@@ -235,6 +241,7 @@ def action():
 	global allFolders
 	global i
 	global baseDepth
+	global base_path
 	i = 0
 	if not _.switches.isActive('Count'):
 		_.pr()
@@ -244,11 +251,13 @@ def action():
 	if _.switches.isActive('Folder'):
 		for folder in _.switches.values('Folder'):
 			baseDepth = len( folder.split(_v.slash) )
+			base_path=folder
 			process( folder )
 			allFolders.append(folder)
 	else:
 		folder = os.getcwd()
 		baseDepth = len( folder.split(_v.slash) )
+		base_path=folder
 		process( folder )
 		allFolders.append(folder)
 

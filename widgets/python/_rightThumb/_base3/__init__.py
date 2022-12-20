@@ -5375,6 +5375,7 @@ def caseUnspecificCode( data, subject, isPlus=False, minus=None ):
 def caseUnspecific( data, subject, isPlus=False, minus=None, code=False ):
 
 	if __.sw.PlusCode and 'color' in __.sw.PlusCode: code = True
+	if switches.isActive('StrictCase'): code = True
 
 	if code: return caseUnspecificCode(data, subject, isPlus, minus)
 
@@ -5736,8 +5737,12 @@ def saveCSV( data, file, printThis=True,                p=None, me=0 ):
 		for record in data:
 			writer.writerow( record )
 	cleanFile = getText( theFile, raw=True )
-	cleanFile = _str.replaceDuplicate( cleanFile, '\n' )
-	saveText( cleanFile, theFile )
+	lines = []
+	for line in cleanFile.split('\n'):
+		line = line.strip()
+		if line: lines.append(line)
+
+	saveText( lines, theFile )
 	if printThis:
 		printBold('Saved: ' + px, 'blue')
 	if me and theFile in vv.opened_file_me: changeM( theFile, vv.opened_file_me[theFile] );

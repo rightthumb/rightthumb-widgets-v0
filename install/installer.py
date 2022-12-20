@@ -3383,7 +3383,7 @@ alias color="$widgets/widgets/python/pipe-color.py -color ";
 alias epoch="echo $( date +%s )";
 alias whitelist="/opt/rightthumb-widgets-v0/widgets/bash/whitelist.sh"
 alias wl="/opt/rightthumb-widgets-v0/widgets/bash/whitelist.sh"
-alias ssh...="sudo cp -r ./.ssh/* /mnt/c/Users/Scott/.ssh"
+alias ssh...="sudo cp -r ~/.ssh/* /mnt/c/Users/Scott/.ssh"
 
 
 
@@ -3550,6 +3550,8 @@ alias .2='cd ../..'
 alias .1='cd ..'
 alias ..='cd ..'
 
+alias 2icon="$widgets/widgets/bash/tools/2icon.sh ";
+alias 2ico="$widgets/widgets/bash/tools/2icon.sh ";
 
 # a3bc42ec51e9
 

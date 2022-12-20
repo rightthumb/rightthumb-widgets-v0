@@ -1,5 +1,11 @@
 [
     {
+        "extension": "JEX",
+        "signature": "30 30 30 33 39",
+        "description": "Joplin    Export / Backup",
+        "src": "rightthumb"
+    },
+    {
         "extension": "*",
         "signature": "41 43 53 44",
         "description": "AOL parameter|info files",
