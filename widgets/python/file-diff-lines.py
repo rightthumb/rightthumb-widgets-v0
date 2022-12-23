@@ -32,7 +32,7 @@ _str = __.imp('_rightThumb._string')
 def sw():
     pass
     #b)--> examples
-    # _.switches.register( 'Input', '-i' )
+    _.switches.register( 'Input', '-i' )
     #e)--> examples
     # _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=False )
 
@@ -50,7 +50,7 @@ __.setting('switch-raw',[])
 
 _.appInfo[focus()] = {
     # 'app': '8facG-jo0Cxk',
-    'file': 'thisApp.py',
+    'file': 'file-diff-lines.py',
     'liveAppName': __.thisApp( __file__ ),
     'description': 'Changes the world',
         # _.ail(1,'subject')+
@@ -72,7 +72,7 @@ _.appInfo[focus()] = {
                         # '',
     ],
     'examples': [
-                        _.hp('p thisApp -file file.txt'),
+                        _.hp('p file-diff-lines -file one.txt two.txt'),
                         _.linePrint(label='simple',p=0),
                         '',
     ],
@@ -145,18 +145,35 @@ _.l.sw.register( triggers, sw )
 ########################################################################################
 #n)--> start
 
+import _rightThumb._dir as _dir
+
+def clean(line):
+    line=line.strip()
+    line=line.replace('\t',' ')
+    line=line.replace('\r','')
+    while '  ' in line: line=line.replace('  ',' ')
+    while '\n ' in line: line=line.replace('\n ','\n')
+    while ' \n' in line: line=line.replace(' \n','\n')
+    return line.lower()
+
 def action():
-    load(); global c3po;
-
-    #n)--> iterate
-    for subject in _.isData(r=0): _.pr(subject)
-    
-
-def load():
-    global c3po
-    c3po = _.getTable( 'table' )
-    #n)--> print table
-    _.pt(c3po)
+    f1 = _.switches.values('Files')[0]
+    f2 = _.switches.values('Files')[1]
+    f1m = _dir.info(  f1  )['bytes']
+    f2m = _dir.info(  f2  )['bytes']
+    if f2m > f1m:
+        a=f1m;b=f2m;
+        fsm=f1;fbg=f2;
+    else:
+        a=f2m;b=f1m;
+        fsm=f2;fbg=f1;
+    fb=_.getText(fbg,raw=True)
+    fs=_.getText(fsm,raw=True)
+    fb=clean(fb)
+    fs=clean(fs)
+    fbn=[]
+    for line in fs.split('\n'):
+        
 
 
 ##################################################

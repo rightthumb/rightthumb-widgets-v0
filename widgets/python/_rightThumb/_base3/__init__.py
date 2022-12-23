@@ -4669,11 +4669,16 @@ def saveBin( data, file, me=0 ):
 	HD.chmod(file)
 	if me and theFile in vv.opened_file_me: changeM( theFile, vv.opened_file_me[theFile] );
 
-def pDiff( one, two, use=None ):
+def pDiff( one, two, use=None,r=None ):
 	if not use is None:
 		use = use.lower()
-	a = percentageDiffInt(one,two)
-	b = percentageDiffInt(two, one)
+	if not r is None:
+		
+		a = percentageDiffInt(one,two,rnd=r,isFloat=True)
+		b = percentageDiffInt(two, one,rnd=r,isFloat=True)
+	else:
+		a = percentageDiffInt(one,two)
+		b = percentageDiffInt(two, one)
 	if use == None:
 		return str(a)+'%, '+str(b)+'%'
 	if a > b:
@@ -19039,6 +19044,7 @@ def percentageInt( percent, whole, isFloat=False ):
 		return round( (percent * whole) / 100.0 , 1)
 
 def percentageDiffInt( smaller, bigger, isFloat=False, rnd=1 ):
+	# fr = force rounding
 	# return int((smaller/bigger)*100)
 	try:
 

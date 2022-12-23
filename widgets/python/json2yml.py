@@ -34,15 +34,15 @@ def sw():
     #b)--> examples
     # _.switches.register( 'Input', '-i' )
     #e)--> examples
-    # _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=False )
+    _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='glob', description='Files', isRequired=False )
 
 # __.setting('require-list',['Files,Plus','File,Has']) # todo
-# __.setting('require-list',['Pipe','Files'])
+__.setting('require-list',['Pipe','Files'])
 __.setting('receipt-log')
 __.setting('receipt-file')
 __.setting('myFileLocations-skip-validation',False)
 __.setting('require-pipe',False)
-__.setting('require-pipe||file',False)
+__.setting('require-pipe||file',True)
 __.setting('pre-error',False)
 __.setting('switch-raw',[])
 
@@ -50,7 +50,7 @@ __.setting('switch-raw',[])
 
 _.appInfo[focus()] = {
     # 'app': '8facG-jo0Cxk',
-    'file': 'thisApp.py',
+    'file': 'json2yml.py',
     'liveAppName': __.thisApp( __file__ ),
     'description': 'Changes the world',
         # _.ail(1,'subject')+
@@ -119,7 +119,7 @@ _.l.sw.register( triggers, sw )
         # if _.switches.isActive('Test'): test(); return None;
         # result=[]; result=[ _.pr(line) for i, line, bi in _.numerate( _.isData(r=0) )]
         # bk=[];[  bk.append(rec['backup']) for rec in backupLog if path == rec['file']]; bk=bk[-1];
-        # a=(1 if True else 0) <--# 
+        # a=(1 if True else 0) <--#
         #!)--> m=[[row[i] for row in matrix] for i in range(4)]
 
     #n)--> python globals
@@ -135,7 +135,7 @@ _.l.sw.register( triggers, sw )
     #n)--> import and backup example
         # _bk = _.regImp( __.appReg, 'fileBackup' ); _bk.switch( 'Silent' ); _bk.switch( 'isRunOnce' ); _bk.switch( 'Flag', 'APP' ); _bk.switch( 'DoNotSchedule' )
         # _bk.switch( 'Input', path ); bkfi = _bk.action();
-    
+
     #n)--> inline
         # for rel in [ subject for subject in _.isData(r=0) if _.showLine(subject) ]: print(rel)
 
@@ -146,17 +146,11 @@ _.l.sw.register( triggers, sw )
 #n)--> start
 
 def action():
-    load(); global c3po;
+    for path in _.isData(r=0):
+        data = _.getTable2(path)
+        _.pv(data)
+        _.saveYML(data,path+'.yml')
 
-    #n)--> iterate
-    for subject in _.isData(r=0): _.pr(subject)
-    
-
-def load():
-    global c3po
-    c3po = _.getTable( 'table' )
-    #n)--> print table
-    _.pt(c3po)
 
 
 ##################################################
@@ -173,7 +167,9 @@ if __name__ == '__main__':
 
     # banner.pr()
     # if len(_.switches.all())==0: banner.gossip()
-    
+
     #e)--> examples
     action()
     _.isExit(__file__)
+
+

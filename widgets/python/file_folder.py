@@ -177,6 +177,7 @@ def action():
 			return False
 	i = 0
 	links = []
+	links2 = []
 	files = []
 	folders = []
 	totalLink = 0
@@ -188,6 +189,7 @@ def action():
 		if os.path.islink(path):
 			if _.showLine(item):
 				links.append({ 'label':  item  })
+				links2.append(path)
 		if os.path.isfile(path):
 			totalFile+=1
 			if _.showLine(item):
@@ -237,11 +239,23 @@ def action():
 			_.pr()
 			_.colorThis( 'Files:', 'green' )
 
+			# for f in files:
+			# 	if os.path.islink(f['label']):
+			# 		_.colorThis( [ '\t',f['label'] ], 'yellow' )
+			# 	else:
+			# 		_.colorThis( [ '\t',f['label'] ], 'cyan' )
+
+
+
+			for f in files:
+				if not os.path.islink(f['label']):
+					_.colorThis( [ '\t',f['label'] ], 'cyan' )
+
+
 			for f in files:
 				if os.path.islink(f['label']):
 					_.colorThis( [ '\t',f['label'] ], 'yellow' )
-				else:
-					_.colorThis( [ '\t',f['label'] ], 'cyan' )
+
 
 
 

@@ -15,15 +15,11 @@ import sys
 import time
 # import simplejson as json
 # from threading import Timer
-
-
 ##################################################
-# construct registration
-
 import _rightThumb._construct as __
 appDBA = __.clearFocus( __name__, __file__ )
-# appDBA = __name__
 __.appReg = appDBA
+
 def focus( parentApp='', childApp='', reg=True ):
 	global appDBA
 	f = __.appName( appDBA, parentApp, childApp )
@@ -33,33 +29,23 @@ def focus( parentApp='', childApp='', reg=True ):
 __.registeredApps.append(focus())
 import _rightThumb._base3 as _
 _.load()
-
 ##################################################
-
 import _rightThumb._vars as _v
 import _rightThumb._string as _str
 # import _rightThumb._date as _date
 # import _rightThumb._dir as _dir
 # import _rightThumb._md5 as _md5
 # import _rightThumb._mimetype as _mime
-
 ##################################################
-
 # from lxml import html
 # import requests
 # import cssselect
-
 ##################################################
-
 
 def appSwitches():
 	_.switches.register('Threaded', '-t,-thread,-threaded')
 	_.switches.register('Stats', '-stats,-stat')
-
 	_.switches.register('NoCount', '--c')
-
-
-
 
 _.appInfo[focus()] = {
 	'file': 'execute.py',
@@ -73,7 +59,6 @@ _.appInfo[focus()] = {
 	'examples': [],
 	'columns': [],
 	}
-
 _.appData[focus()] = {
 	'start': time.time(),
 	'uuid': '',
@@ -82,21 +67,20 @@ _.appData[focus()] = {
 	}
 
 _.appInfo[focus()]['examples'].append('type %tmpf1% | p execute')
+
 _.appInfo[focus()]['examples'].append('')
+
 _.appInfo[focus()]['examples'].append('type %tmpf1% | p execute -t --c -stats')
+
 _.appInfo[focus()]['examples'].append('')
-
 # _.appInfo[focus()]['columns'].append({'name': 'name', 'abbreviation': 'n'})
-
-
-
-
 
 def registerSwitches( argvProcessForce=False ):
 	global appDBA
 	if not __.appReg == appDBA and appDBA in __.appReg:
 		_.argvProcess = True
 		_.load()
+
 		_.appInfo[__.appReg] = _.appInfo[appDBA]
 		_.appData[__.appReg] = _.appData[appDBA]
 	__.constructRegistration(_.appInfo[__.appReg]['file'],__.appReg)
@@ -105,19 +89,11 @@ def registerSwitches( argvProcessForce=False ):
 	# _.switches.trigger('Watched', _.txt2Date)
 	# _.switches.trigger('Input',_.formatColumns)
 	_.switches.process()
-
-
-
 if not __name__ == '__main__':
 	_.argvProcess = False
 else:
 	_.argvProcess = True
-
 registerSwitches()
-
-
-
-
 
 def fieldSet( switchName, switchField, switchValue, theFocus=False ):
 	if not type( theFocus ) == bool:
@@ -140,27 +116,24 @@ def pipeCleaner():
 				_.appData[__.appReg]['pipe'][0] = _.appData[__.appReg]['pipe'][0][1:]
 			for i,pipeData in enumerate(_.appData[__.appReg]['pipe']):
 				_.appData[__.appReg]['pipe'][i] = _.appData[__.appReg]['pipe'][i].replace('\n','')
-
-
-
-
 _.appData[__.appReg]['pipe'] = False
 if not sys.stdin.isatty():
 	setPipeData( sys.stdin.readlines() )
 	# _.appData[__.appReg]['pipe'] = sys.stdin.readlines()
 	# pipeCleaner()
 
-
-
-########################################################################################
-
 ########################################################################################
 # START
 
 def notThreaded():
+	code = '\n'.join(_.appData[__.appReg]['pipe'])
+	if '********************************************************' in code or '**' in code:
+		print(code)
+		sys.exit()
 	for pip in _.appData[__.appReg]['pipe']:
 		if not  _.switches.isActive('NoCount'):
 			_.pr(pip)
+		
 		try:
 			os.system(pip)
 		except Exception as e:
@@ -172,20 +145,15 @@ def threaded():
 	_.threads.scheduleLoop = .01
 	_.threads.auditLoop = .1
 	# _.threads.timeout = 1
-
 	# _.threads.maxThreads = 100
 	# _.threads.maxThreadsSafe = 250
 	# _.threads.minThreads = 50
-
-
-
 	if _.switches.isActive('Stats'):
 		_.threads.report = True
 		_.threads.auditPrint = True
 	else:
 		_.threads.report = False
 		_.threads.auditPrint = False
-
 	for pip in _.appData[__.appReg]['pipe']:
 		_.threads.add( 'execute', executePipeRow, [ pip ] )
 
@@ -196,32 +164,21 @@ def executePipeRow( pip, qID=False ):
 		os.system(pip)
 	except Exception as e:
 		_.pr('Error')
-
-	
 	if not type(qID) == bool:
 		_.threads.spent( qID, sys.getsizeof( 'obj') )
 
 def action():
 	if not type( _.appData[__.appReg]['pipe'] ) == bool:
-
 		if _.switches.isActive('Threaded'):
 			threaded()
 		else:
 			notThreaded()
-
 
 def complete():
 	_.pr()
 	_.pr()
 	_.pr( 'done' )
 
-
 ########################################################################################
 if __name__ == '__main__':
 	action()
-
-
-
-
-
-

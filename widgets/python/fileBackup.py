@@ -1212,8 +1212,7 @@ def action(path=None,flag=None,o=None):
 				_.colorThis( [  'Scheduled'  ], 'purple' )
 				
 		else:
-			if _.switches.isActive('PythonDocumentation'):
-				PRE_BACKUP_PROCESSING( path )
+			# if _.switches.isActive('PythonDocumentation'): PRE_BACKUP_PROCESSING( path )
 			backupLog = _.getTable('fileBackup.json')
 			if not __.secureFilesID is None:
 				theID = __.secureFilesID
@@ -1398,6 +1397,9 @@ doc_sep = '\n___________________________________________________________________
 # secureFiles (
 
 # fileBackup
+
+# SKIPPED PRE_BACKUP_PROCESSING
+
 ########################################################################################
 if __name__ == '__main__':
 	action()

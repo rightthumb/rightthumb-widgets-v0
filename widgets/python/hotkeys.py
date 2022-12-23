@@ -69,7 +69,8 @@ def appSwitches():
 	_.switches.register( 'Add-Text-Text', '-text' )
 	_.switches.register( 'Add-Text-Back', '-back' )
 	_.switches.register( 'Add-Text-Note', '-note' )
-	_.switches.register( 'Key-search', '-k,-key,-keys,?k,?keys' )
+	_.switches.register( 'Key-Subject', '-k,-key,-keys,?k,?keys,-subject,-sub' )
+	_.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='data', description='Files', isRequired=False )
 
 #   finds the file in probable locations
 #   and
@@ -117,6 +118,8 @@ _.appInfo[focus()] = {
 						# '',
 	],
 	'examples': [
+						_.hp('p hotkeys'),
+						_.hp('p hotkeys'),
 						_.hp('p hotkeys'),
 						'',
 						_.hp('p hotkeys -add ...lines -text "sum(1 for line in open(''))" -back 2 -note python-file-lines'),
@@ -2342,10 +2345,24 @@ class LOADER:
 
 def action():
 
+	if _.isData():
+		if _.switches.isActive('Key-Subject'):
+			global table
+			# global table2
+			# global auto_text
+			# global hot_text
+			# global log
+			load()
+			table
+			for k in table:
+				# print(k)
+				# for y in table[k]: print(y)
+				if 'raw' in table[k]: print(table[k]['raw'])
+		return None
 
 
 
-	if not _.switches.isActive('Key-search'):
+	if not _.switches.isActive('Key-Subject'):
 		if _.switches.isActive('Convert-AutoText'):
 			table = Loader.autoText()
 			if table:
@@ -2370,7 +2387,7 @@ def action():
 	load()
 
 
-	if _.switches.isActive('Key-search'):
+	if _.switches.isActive('Key-Subject'):
 		global table2
 		omit=[
 				'import,os,sys,time,importlib',

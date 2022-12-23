@@ -32,7 +32,7 @@ _str = __.imp('_rightThumb._string')
 def sw():
     pass
     #b)--> examples
-    # _.switches.register( 'Input', '-i' )
+    _.switches.register( 'Input', '-i' )
     #e)--> examples
     # _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=False )
 

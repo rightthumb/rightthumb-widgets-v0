@@ -29,6 +29,7 @@ def sw():
     _.switches.register( 'Files', '-f,-fi,-file,-files' )
     _.switches.register( 'Clip', '-clip' )
     _.switches.register( 'exiftool', '-exif,-exiftool' )
+    # _.switches.register( 'MP3', '-mp3' )
     # _.switches.register( 'Save', '-save', isRequired=True )
     pass
 
@@ -431,11 +432,15 @@ def action():
                 # fx='ffmpeg -nostdin -ss "aaa" -i "ff1" -to "bbb" -c copy -map 0 "ff2"'.replace('ff1',info['name']).replace('ff2','clip-'+str(_.HID('ffmpeg-clip'))+'-'+info['name'].replace('.'+info['ext'].lower(),'').replace('.'+info['ext'].upper(),'').replace('.'+info['ext'],'')+t.c+'.'+info['ext']).replace('aaa',t.a).replace('bbb',t.b)
                 # fx='mencoder -ss aaa -endpos bbb -oac pcm -ovc copy ff1 -o ff2'.replace('ff1',info['name']).replace('ff2','clip-'+str(_.HID('ffmpeg-clip'))+'-'+info['name'].replace('.'+info['ext'].lower(),'').replace('.'+info['ext'].upper(),'').replace('.'+info['ext'],'')+t.c+'.'+info['ext']).replace('aaa',t.a).replace('bbb',t.b)
                 _.pr(fx)
+                # if _.switches.isActive('MP3'):
+                #     fx='ffmpeg -i ff2 ff2.mp3'.replace('aaa',t.a).replace('bbb',t.b).replace('ff1',info['name']).replace('ff2','clip-'+str(_.HID('ffmpeg-clip'))+'-'+info['name'].replace('.'+info['ext'].lower(),'').replace('.'+info['ext'].upper(),'').replace('.'+info['ext'],'')+t.c+'.'+info['ext'])
+                #     _.pr(fx)
         del t
 def load():
     global  c3po
 
-os=_.imp('os.sep')
+# os=__.imp('os.sep')
+import os
 import _rightThumb._dir as _dir
 """
 p ffmpeg-clip -f piller-10-2.mp4 -clip "0:38-7:03" | p execute

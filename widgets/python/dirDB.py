@@ -1067,7 +1067,7 @@ def singleRow(lst,i): return [item[i] for item in lst]
 def action2(databaseFile):
 	connection = sqlite3.connect(databaseFile)
 	connection.row_factory = sqlite3.Row
-	cursor = connection.execute('select * from files')
+	cursor = connection.execute('select * from files LIMIT 1')
 	row = cursor.fetchone()
 	names = row.keys()
 	# _.pr(names)

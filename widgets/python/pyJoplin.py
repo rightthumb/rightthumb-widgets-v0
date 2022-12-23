@@ -34,6 +34,8 @@ def sw():
 	#b)--> examples
 	_.switches.register( 'Notes', '-n,-note,-notes' )
 	_.switches.register( 'Download', '-dl,-download' )
+	_.switches.register( 'Search-Notes-Content', '-db,--c,-cnt,-content' )
+	_.switches.register( 'Print', '-p,-print' )
 	#e)--> examples
 	# _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=False )
 
@@ -53,7 +55,7 @@ _.appInfo[focus()] = {
 	# 'app': '8facG-jo0Cxk',
 	'file': 'pyJoplin.py',
 	'liveAppName': __.thisApp( __file__ ),
-	'description': 'Changes the world',
+	'description': 'Query the LIVE Joplin Desktop Database',
 		# _.ail(1,'subject')+
 		# _.aib('one')+
 	'categories': [
@@ -73,7 +75,7 @@ _.appInfo[focus()] = {
 						# '',
 	],
 	'examples': [
-						_.hp('p thisApp -file file.txt'),
+						_.hp('p pyJoplin  + alexandria -content'),
 						_.linePrint(label='simple',p=0),
 						'',
 	],
@@ -254,17 +256,36 @@ def _hierarchy(paths):
 	# print('eof')
 
 
-def reverse(ID,r=0):
+def fullpath2(ID):
+	paths = fullpath(ID)
+	if not ID in paths: paths.append(ID)
+	for p in paths: _.v.IDs[p]=1
+	names=[]
+	for p in paths:
+		if p in index['folders']['ids']: names.append(index['folders']['ids'][p]['title'])
+		if p in index['notes']['ids']:   names.append(index['notes']['ids'][p]['title'])
+	return '  / '.join(names)
+
+def fullpath(ID,r=0):
 	global index
 	if not r: _.v.path=[]
 	_.v.path = [ID] + _.v.path
 	# .append(ID)
-	if ID in index['folders']['ids']:
-		rec = index['folders']['ids'][ID]
-		if rec['parent_id']:
-			return reverse(rec['parent_id'],r=1)
+	try:
+		if ID in index['folders']['ids']:
+			rec = index['folders']['ids'][ID]
+			if rec['parent_id']:
+				return fullpath(rec['parent_id'],r=1)
+	except Exception as e:
+		pass
+		# _.e(e)
+	if not ID in _.v.path: _.v.path.append(ID)
+	for i in _.v.path: _.v.IDs[i]=1
 	_hierarchy(_.v.path)
-	return _.v.path.copy()
+	PATHS=[]
+	for p in _.v.path:
+		if not p in PATHS: PATHS.append(p)
+	return PATHS.copy()
 
 def tabs(cnt):
 	cnt-=1
@@ -286,13 +307,13 @@ def buildChildren(ID):
 		if not rec['parent_id']: level = 0
 		# print( index['folders']['ids'] )
 		# print( ID, p, rec['title'] )
-		paths = reverse(ID)
+		paths = fullpath(ID)
 		level = len(paths)
 		if 0 and ID == '88903608dadf4da2991c1adb9ed3a8e4':
 			print(level,paths)
-			# paths.reverse()
+			# paths.fullpath()
 			for i in paths:
-				print( tabs(len(reverse(i))), index['folders']['ids'][i]['title'] )
+				print( tabs(len(fullpath(i))), index['folders']['ids'][i]['title'] )
 
 		# print( ID, level, rec['title'], rec['parent_id'] )
 		if False:
@@ -309,28 +330,48 @@ def buildChildren(ID):
 
 hierarchy = {}
 _.v.IDs={}
-def traverse(dic):
+def traverse(dic,r=0):
+	if not r: _hierarchy(_.v.path)
 	global index
 	for k in dic:
-		l=len(reverse(k))
-		if k in _.v.IDs:
-			_.pr( l, tabs(l), index['folders']['ids'][k]['title'].strip(), c='cyan' )
+		l=len(fullpath(k))
+		# if k in _.v.IDs or not _.switches.isActive('Plus'):
+		if True:
+			if k in index['folders']['ids']: _.pr( l, tabs(l), index['folders']['ids'][k]['title'].strip(), c='cyan' )
+			# if k in index['notes']['ids']: _.pr( l, tabs(l), index['notes']['ids'][k]['title'].strip(), c='cyan' )
+			
+
+
+			# xref = set(list(_.v.IDs.keys())) & set(list(dic[k].keys()))
+			# for xr in xref:
+			# 	if xr in index['notes']['ids']: _.pr( l+1, tabs(l+1), index['notes']['ids'][xr]['title'].strip(), c='darkcyan' )
+			# 	if xr in index['folders']['ids']: _.pr( l+1, tabs(l+1), index['folders']['ids'][xr]['title'].strip(), c='darkcyan' )
+			
+
 			if _.switches.isActive('Notes'):
 				if k in index['notes']['parents']:
-					for c in index['notes']['parents'][k]:
-						# if _.showLine(index['notes']['ids'][c]['title']):
-						if c in _.v.IDs or not _.switches.isActive('Plus'):
-							_.pr( l+1, tabs(l+1), index['notes']['ids'][c]['title'].strip(), c='darkcyan' )
-		traverse(dic[k])
+					if k in index['notes']['parents']:
+						xref = set(list(_.v.IDs.keys())) & set(index['notes']['parents'][k])
+						for xr in xref: _.pr( l+1, tabs(l+1), index['notes']['ids'][xr]['title'].strip(), c='darkcyan' )
+					# if k in index['folders']['parents']:
+					# 	xref = set(list(_.v.IDs.keys())) & set(index['folders']['parents'][k])
+					# 	for xr in xref: _.pr( l+1, tabs(l+1), index['folders']['ids'][xr]['title'].strip(), c='darkcyan' )
+
+					# # print("index['notes']['parents'][k]",index['notes']['parents'][k])
+					# for c in index['notes']['parents'][k]:
+					# 	# if _.showLine(index['notes']['ids'][c]['title']):
+					# 	if c in _.v.IDs or not _.switches.isActive('Plus'):
+					# 		_.pr( l+1, tabs(l+1), index['notes']['ids'][c]['title'].strip(), c='darkcyan' )
+		traverse(dic[k],r=1)
 _.v.print=False
 def traverseSearch(dic,r=0):
 	global index
 	global hierarchy
-	if not r: hierarchy={};_.v.IDs={1:1};
+	if not r: hierarchy={};_.v.IDs={};
 	_.v.print=False
 	for k in dic:
 		if _.showLine(index['folders']['ids'][k]['title']):
-			l=len(reverse(k))
+			l=len(fullpath(k))
 			# _.pr( l, tabs(l), index['folders']['ids'][k]['title'].strip(), c='cyan' )
 		if _.switches.isActive('Notes'):
 			if k in index['notes']['parents']:
@@ -338,32 +379,48 @@ def traverseSearch(dic,r=0):
 					# if c in index['notes']['ids']:
 					if _.showLine(index['notes']['ids'][c]['title']):
 						_.v.IDs[c]=1
-						reverse(k)
+						fullpath(c)
 						# _.pr( l+1, tabs(l+1), index['notes']['ids'][c]['title'].strip(), c='darkcyan' )
 		traverseSearch(dic[k],r=1)
 
 
-def theCORN():
+def process():
 	global hierarchy
-	h=hierarchy.copy()
-	hierarchy={};_.v.IDs={1:1};
-	if _.switches.isActive('Plus'):
-		traverseSearch(h.copy())
+	if _.switches.isActive('Plus') or _.switches.isActive('Minus'):
+		_.v.IDs={}
+		if not _.switches.isActive('Search-Notes-Content'):
+			for i in index['folders']['ids']: fullpath(i)
+			# _.pv(hierarchy)
+			traverseSearch(hierarchy.copy())
+		else:
+			_.pr(line=1,c='ColorBold.gray')
+			queryDB(sql = "SELECT DISTINCT * FROM notes QUERY ")
+			_.pr(line=1,c='ColorBold.gray')
+			queryDB(sql = "SELECT DISTINCT * FROM folders QUERY ")
+	_.pr(line=1,c='ColorBold.gray')
 	traverse(hierarchy)
 	# print(_.toYML(hierarchy))
 
 def action():
+	_.pr(line=1,c='green')
+	_.pr(line=1,c='green')
+	if _.switches.isActive('Search-Notes-Content'): _.switches.fieldSet( 'Notes', 'active', True )
+	# if _.switches.isActive('Search-Notes-Content'): queryDB(); return None;
 	load()
 	all_data('folders')
 	all_data('notes')
+	
+
 	global index
 
 	# for k in index: print(k)
-
-	for i in index['folders']['ids']: reverse(i)
+	if not _.switches.isActive('Plus') and not _.switches.isActive('Minus'):
+		for i in index['folders']['ids']: fullpath(i)
 
 	# for ID in index['top']: buildChildren(ID)
-	theCORN()
+	process()
+	# _.pv(index)
+	# _.pr( _.toYML(_.v.IDs), c='green' )
 
 	# _.pv(data)
 
@@ -396,14 +453,92 @@ config = {}
 data = _.dot()
 _keychain = _.regImp( __.appReg, 'keychain' )
 simplejson = __.imp('simplejson')
-
+_.v.db='C:\\Users\\Scott\\.config\\joplin-desktop\\database.sqlite'
 ##################################################
 #b)--> examples
 # banner=_.Banner(dependencies)
 # goss=banner.goss
 # goss('-\t this app will sherlock tf out of any python app or python module')
 #e)--> examples
-##################################################
+def fields(t='notes'):
+	connection = sqlite3.connect(_.v.db)
+	connection.row_factory = sqlite3.Row
+	sql = 'SELECT * FROM notes LIMIT 1'.replace('notes',t)
+	cursor = connection.execute(sql)
+	row = cursor.fetchone()
+	names = row.keys()
+	return names
+
+import sqlite3
+def queryDB(sql = "SELECT DISTINCT * FROM notes QUERY LIMIT 2"):
+	while '  ' in sql: sql=sql.replace('  ',' ')
+	table=sql.lower().split(' from ')[1].split(' ')[0]
+
+
+	# sql = 'SELECT id, parend_id FROM notes LIMIT 2'
+	
+	y = "(body LIKE '%FIELD%')"
+	n = "(body NOT LIKE '%FIELD%')"
+	yL=[]
+	yL2=[]
+	nL=[]
+	if table == 'notes':
+		for f in _.switches.values('Plus'): yL.append(y.replace('FIELD',f))
+		for f in _.switches.values('Minus'): nL.append(y.replace('FIELD',f))
+	for f in _.switches.values('Plus'): yL2.append(y.replace('body','title').replace('FIELD',f))
+	for f in _.switches.values('Minus'): nL.append(y.replace('body','title').replace('FIELD',f))
+
+	add=[]
+	if yL: add.append(' AND '.join(yL))
+	if yL2: add.append(' AND '.join(yL2))
+	if nL: add.append(' OR '.join(nL))
+	if add:
+		BOTH = ' ( '+' ) OR ( '.join(add)+ ' ) '
+		# print(BOTH)
+	else: BOTH=''
+	if BOTH: BOTH = ' WHERE '+BOTH
+	else: sql=sql.replace('DISTINCT','')
+	sql = sql.replace('QUERY',BOTH)
+	# print(sql)
+	nm = fields(table)
+	# ' AND '.join()
+	conn = sqlite3.connect(_.v.db)
+	c = conn.cursor()
+	c.execute(sql)
+	records = c.fetchall()
+	_.pr(len(records), sql,c='purple')
+	for rec in records:
+		r={}
+		for i,k in enumerate(nm): r[k]=rec[i]
+		# _.pr( fullpath(r['parent_id']) )
+		fullpath(r['id'])
+		fullpath(r['parent_id'])
+		_.v.IDs[r['id']]=1
+		_.v.IDs[r['parent_id']]=1
+		if r['parent_id']: fullpath(r['parent_id'])
+		# _.pv(r)
+		if _.switches.isActive('Print'):
+
+			_.pr('    ID:',r['id'],c='yellow')
+			if fullpath2(r['id']):
+				_.pr(' path:',fullpath2(r['id']),c='darkcyan')
+			_.pr(' path:',fullpath2(r['parent_id']),c='Background.yellow')
+			_.pr(' title:',r['title'],c='Background.blue')
+		if not 'body' in r:
+			if _.switches.isActive('Print'): _.pr('  type: folder',c='green')
+			_.v.IDs[r['id']]=1
+
+		else:
+		# if 'body' in r:
+			_.v.IDs[r['id']]=1
+			if _.showLine(r['body']):
+				fullpath(r['parent_id'])
+				if _.switches.isActive('Print'):
+					body=r['body']
+					for item in _.switches.values('Plus'):
+						for vVv in _.caseUnspecific(r['body'],item): body=body.replace(vVv,_.pr(vVv,c='green',p=0))
+					_.pr('  BODY:',body)
+
 
 ########################################################################################
 if __name__ == '__main__':
@@ -415,5 +550,21 @@ if __name__ == '__main__':
 	#e)--> examples
 	action()
 	_.isExit(__file__)
+
+# buildChildren
+
+# process
+# _.v.IDs[
+# _.v.IDs=
+# len(fullpath
+
+
+# todo: turn stuff on
+# todo: turn stuff on
+# todo: turn stuff on
+# todo: turn stuff on
+# todo: turn stuff on
+# todo: turn stuff on
+
 
 

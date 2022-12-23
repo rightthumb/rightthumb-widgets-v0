@@ -209,7 +209,8 @@ scriptTrigger=False
 
 import os
 import openai
-openai.api_key = _blowfish.decrypt('3cH4NSWCVF8FWsrXyFleWGuRw7rl80It4Qksu3xT/KPUyQKZC+AzxWlDU6ClZn8aaw0+4NlfxUU=', _vault.key() )
+# openai.api_key = _blowfish.decrypt('3cH4NSWCVF8FWsrXyFleWGuRw7rl80It4Qksu3xT/KPUyQKZC+AzxWlDU6ClZn8aaw0+4NlfxUU=', _vault.key() )
+openai.api_key = _blowfish.decrypt('+WDUtsrHiXMJ2Rk2Z7QMSyoo+xzLW/BhSw/kTcUwPmZGQBDpZs7LcGpy2hm+rAWQ+ZtzKKLFVO8=', _vault.key() )
 prompt=''
 def runSomeCode(prompt):
 	response = openai.Completion.create(

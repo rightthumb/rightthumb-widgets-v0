@@ -82,8 +82,8 @@ _.appInfo[focus()] = {
 	],
 	'examples': [
 						'p keychain -get',
-						'p keychain -add -label -joplin-token -clip',
-						'p keychain -add -label -joplin-token --pa',
+						'p keychain -add -label joplin-token -clip',
+						'p keychain -add -label joplin-token --pa',
 						'',
 	],
 	'columns': [
