@@ -10,15 +10,19 @@ rem    - Scott Taylor Reph, RightThumb.com
 rem ###########################################################################
 rem ## {C3P0D40fAe8B} ##
 
-call m current
-call b py
+rem call m current
+rem call b py
 
-echo.
-call p f -in *.py + %*
-echo.
+rem echo.
+rem call p f -in *.py + %*
+rem echo.
 
-call b current
+rem call b current
 
 
+rem THE NEW ALGORITHM
+rem THE NEW ALGORITHM
+
+call p files + *.py --c -folder D:\.rightthumb-widgets\widgets\python | p f3 -jn + %* | p ls -s a.md -c path 
 
  

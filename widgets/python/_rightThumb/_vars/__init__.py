@@ -532,6 +532,7 @@ if not __.isWin:
 					break
 		except Exception as e:
 			pass
+if __.isWin: sublime = '"C:\\Program Files\\Sublime Text 3\\sublime_text.exe"'
 unixID = None
 unixIDs = []
 unixID_NEW = False
@@ -645,6 +646,7 @@ myAppsBatch = myApps + slash+'batch'
 # chromedriver = myApps + slash+'exe'+slash+'ChromeDriver'+slash+'75.0.3770.90'+slash+'chromedriver.exe'
 # chromedriver = myApps + slash+'exe'+slash+'ChromeDriver'+slash+'76.0.3809.25'+slash+'chromedriver.exe'
 if __.isWin:
+	# D:\.rightthumb-widgets\widgets\exe\ChromeDriver\80.0.3987.16\chromedriver.exe
 	chromedriver = myApps + slash+'exe'+slash+'ChromeDriver'+slash+'80.0.3987.16'+slash+'chromedriver.exe'
 	geckodriver = myApps + slash+'exe'+slash+'gecko'+slash+'0.24.0'+slash+'geckodriver.exe'
 	chromePortable = appsFolder + slash+'chrome-win'+slash+'chrome.exe'
@@ -656,7 +658,7 @@ elif platform.system() == 'Darwin':
 	chromePortable = chromedriver
 stmp = myHome + slash+'temp'
 rtstmp = home +slash+'.rt'+slash+ 'profile'+slash+'temp'
-
+chromedriver = myApps + slash+'exe'+slash+'ChromeDriver'+slash+'80.0.3987.16'+slash+'chromedriver.exe'
 exif_temp = stmp + slash+'exif'
 json_temp = stmp + slash+'_temp.json'
 txt_temp = stmp + slash+'_temp.txt'
@@ -1592,3 +1594,9 @@ else:
 	user = cmdGetVar('USER')
 
 # return __.path(id_path)
+# chromedriver = myApps + slash+'exe'+slash+'ChromeDriver'+slash+'80.0.3987.16'+slash+'chromedriver.exe'
+# chromedriver = 'D:\\.rightthumb-widgets\\widgets\\exe\\ChromeDriver\\74.0.3729.6\\chromedriver.exe'
+# chromedriver = 'D:\\.rightthumb-widgets\\widgets\\exe\\ChromeDriver\\109.0.5414.25\\chromedriver.exe'
+# chromedriver = 'D:\\.rightthumb-widgets\\widgets\\exe\\ChromeDriver\\109.0.5414.25\\chromedriver.exe'
+chromedriver = 'D:\\techApps\\chrome-win\\chrome.exe'
+chromePortable = 'D:\\techApps\\chrome-win\\chrome.exe'

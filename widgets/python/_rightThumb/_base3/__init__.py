@@ -3650,7 +3650,7 @@ def color( strings='', c='?', b=None, shouldPrint=True, attr=None,       p=None 
 	if switches.isActive( 'NoColor' ):
 		if shouldPrint:
 
-			print_(str(strings))
+			print_(str(strings).replace('‽',''))
 			return strings
 		else:
 			return strings
@@ -6285,7 +6285,7 @@ def colorizeRow( row, tableID=False, prefix='', prefixColor='', haltColorShift=F
 		prefix = colorThis( prefix, prefixColor, p=0 )
 	global switches
 	if switches.isActive( 'NoColor' ):
-		print_( row )
+		print_( row.replace('‽','') )
 		return False
 
 	if type(tableID) == bool:
@@ -6553,7 +6553,7 @@ def colorThis( strings='', color='red', notBold=False, shouldPrint=True, ipsum=F
 	global switches
 	if switches.isActive( 'NoColor' ):
 		if shouldPrint:
-			print_(string)
+			print_(string.replace('‽',''))
 			return string
 		else:
 			return string
@@ -6699,7 +6699,7 @@ def inlineColor( string, color='red' ):
 
 	global switches
 	if switches.isActive( 'NoColor' ):
-		return string
+		return string.replace('‽','')
 
 	color = color.lower()
 	if not type(string) == str:
@@ -6724,7 +6724,7 @@ def printColor( string, color='red' ):
 
 	global switches
 	if switches.isActive( 'NoColor' ):
-		print_( string )
+		print_( string.replace('‽','') )
 		return False
 
 	color = color.lower()
@@ -6764,7 +6764,7 @@ def printBold( string, color='white', prefix='' ):
 	
 	global switches
 	if switches.isActive( 'NoColor' ):
-		print_( string )
+		print_( string.replace('‽','') )
 		return False
 
 	color = color.lower()
@@ -6814,7 +6814,7 @@ def inlineColorGroup( row, tableID=False ):
 def inlineBold( string, color='white' ):
 	global switches
 	if switches.isActive( 'NoColor' ):
-		return string
+		return string.replace('‽','')
 	
 	string = str(string)
 	color = color.lower()
@@ -11910,6 +11910,8 @@ class Table:
 		
 		# print_(name,00)
 		# rows[0][name]
+		for i,rec in enumerate(self.asset):
+			if not name in rec: self.asset[i][name]=''
 		try:
 			pass
 			if name in rows[0]:
@@ -13698,7 +13700,7 @@ class Table:
 			# print_( k )
 			# sys.exit()
 
-	def sort(self,fields=''):# sortThis
+	def sort(self,fields=''):# sortThis  
 		rows = self.asset
 
 		if not len(self.asset):
@@ -16853,6 +16855,8 @@ def formatColumns(columns):
 	else:
 		for c in columns.split(','):
 			hasPre = False
+			if c.startswith('d.'): c=c.replace('d.','d:')
+			if c.startswith('a.'): c=c.replace('a.','a:')
 			if ':' in c:
 				hasPre = True
 				# c = c.replace(':','.')
@@ -16875,17 +16879,34 @@ def formatColumns(columns):
 
 
 def formatColumnsSort(columns):
-
+	sorting={}
+	# Asc:type, Desc:ext
 	if type(columns) == str:
-		if columns.startswith('a.'):
-			columns = 'a:' + columns[2:]
-		if ',a.' in columns:
-			columns = columns.replace( ',a.', ',a:' )
+		col=[]
+		for i,co in enumerate(columns.split(',')):
+			if co.lower().startswith('a') or co.lower().startswith('d'):
+				if co[1] == '.' or co[1] == ':':
+					c=co[2:]
+					sorting[i]=co[0]
+				elif len(co)>4 and (  co[4] == '.' or co[4] == ':'  ):
+					c=co[5:]
+					sorting[i]=co[0].lower()
+				elif len(co)>3 and (  co[3] == '.' or co[3] == ':'  ):
+					c=co[4:]
+					sorting[i]=co[0].lower()
+				else: c=co
+			else: c=co
+			col.append(c)
+		columns=','.join(col)
+		# if columns.startswith('a.'):
+		# 	columns = 'a:' + columns[2:]
+		# if ',a.' in columns:
+		# 	columns = columns.replace( ',a.', ',a:' )
 
-		if columns.startswith('d.'):
-			columns = 'd:' + columns[2:]
-		if ',d.' in columns:
-			columns = columns.replace( ',d.', ',d:' )
+		# if columns.startswith('d.'):
+		# 	columns = 'd:' + columns[2:]
+		# if ',d.' in columns:
+		# 	columns = columns.replace( ',d.', ',d:' )
 
 
 	# print_(__.appReg)
@@ -16923,6 +16944,17 @@ def formatColumnsSort(columns):
 			result += c + ','
 		result = result[:-1]
 	# print_( result )
+
+	col=[]
+	for i,co in enumerate(result.split(',')):
+		if i in sorting:
+			c = sorting[i] +':'+co
+		else: c = co
+		col.append(c)
+	result=','.join(col)
+
+	# print(result)
+	# sys.exit()
 	return result
 
 
@@ -19522,7 +19554,7 @@ def load():
 		switchDefault = switches.length()
 		switches.register('Help', '?,??,/?,/??,-?,-??,--??,/h,/help,-help,--help', 'copy  OR ids  OR  12  OR  ?? x')
 		switches.register('Column', '-c,-column', 'size, name')
-		switches.register('Sort','-s,-sort', 'Asc:type, Desc:ext')
+		switches.register('Sort','-s,-sort', 'a.type, d.ext')
 		switches.register('Debug', '-debug')
 		switches.register('DumpSwitches', '-dump')
 		switches.register('Errors', '-Error,-Errors', '8,11 OR hide:8,11')
@@ -19577,6 +19609,12 @@ regImps = {}
 class regImp:
 
 	def __init__( self, focus=None, app=None, argvProcessForce=False, dirty=False, a=None, i=None ):
+		# if app == 'file-open': self.switch('Clean')
+		DEFAULTS = {
+						'file-open': {'Clean': 1},
+		}
+
+
 		if '.' in focus or app is None:
 			pr('_.imp should be __.imp, auto corrected', focus, c='r')
 			return __.imp(focus)
@@ -19636,6 +19674,17 @@ class regImp:
 
 
 		# self.provideImport()
+
+		if app in DEFAULTS:
+			for sw in DEFAULTS[app]:
+				if type(DEFAULTS[app][sw]) == str:
+					self.switch(sw,DEFAULTS[app][sw])
+				elif DEFAULTS[app][sw]:
+					self.switch(sw)
+				else:
+					self.switch(sw,delete=True)
+		# if app == 'file-open': self.switch('Clean')
+
 
 	def provideImport( self ):
 		return self.imp
@@ -21372,3 +21421,8 @@ def inject( snippet='', data='', header='', b='9a26c2d7f6b0', e='71564a5f3d65', 
 		result=lines
 	return '\n'.join(result)
 # stuff = _.inject('77',stuff); print(stuff);
+
+
+# def sort(self,fields=''):# sortThis 
+# switches.trigger(
+# formatColumnsSort

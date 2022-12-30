@@ -282,56 +282,92 @@ class FrontEnd(object):
 
 	def initialize( self ):
 		if self.browser is None:
-			# _.pr( 'HERE' )
+			if _.isWin:
+				import time
+				from selenium import webdriver
+				# from selenium.webdriver.chrome.options import Options
+				# from selenium.webdriver.chrome.service import Service
+				# from selenium.webdriver.common.by import By
+				# from selenium.webdriver.common.keys import Keys
+				# from webdriver_manager.chrome import ChromeDriverManager
 
-			# import chromedriver_binary
-			# self.browser = webdriver.Chrome()
-			# options.binary_location = "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe"
-			# options.binary_location = "D:\\techApps\\GoogleChromePortable\\GoogleChromePortable.exe"
-			# options.binary_location = "D:\\techApps\\chrome-win\\chrome.exe"
-			# _.pr( _v.chromePortable )
-			options = webdriver.ChromeOptions()
-			# 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36'
-			# options.add_argument('--user-agent="Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)"')
-			# options.add_argument('--user-agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36"')
+				# options = Options()
+				# # options.add_argument('--headless')
+				# # options.add_argument('--no-sandbox')
+				# options.add_argument('--disable-dev-shm-usage')
+				# self.browser = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
+				
+				self.browser = webdriver.Chrome(executable_path='C:\\Users\\Scott\\.rt\\profile\\exe\\chromedriver.exe')
 
-			try:
-				__.har
-			except Exception as e:
-				__.har = False
-			if __.har:
+				# options = webdriver.ChromeOptions()
+				# # import chromedriver_binary
+				# # self.browser = webdriver.Chrome()
+				# # options.binary_location = "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe"
+				# # options.binary_location = "D:\\techApps\\GoogleChromePortable\\GoogleChromePortable.exe"
+				# # options.binary_location = "D:\\techApps\\chrome-win\\chrome.exe"
+				# # _.pr( _v.chromePortable )
+				# # 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36'
+				# # options.add_argument('--user-agent="Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)"')
+				# # options.add_argument('--user-agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36"')
 
-				proxy = ProxyManager()
-				server = proxy.start_server()
-				self.client = proxy.start_client()
-				self.client.new_har( "google.com" )
-				_.pr( self.client.proxy )
-				# options.add_argument("--proxy-server={}".format(self.client.proxy))
+				# try:
+				# 	__.har
+				# except Exception as e:
+				# 	__.har = False
+				# if __.har:
 
-			options.binary_location = _v.chromePortable
-			self.browser = webdriver.Chrome( chrome_options=options, executable_path=_v.chromedriver )
+				# 	proxy = ProxyManager()
+				# 	server = proxy.start_server()
+				# 	self.client = proxy.start_client()
+				# 	self.client.new_har( "google.com" )
+				# 	_.pr( self.client.proxy )
+				# 	# options.add_argument("--proxy-server={}".format(self.client.proxy))
 
-
-
-			if False and not __.har:
-				self.close()
-			# self.browser = webdriver.Chrome(chrome_options=options, executable_path="D:\\tech\\programs\\exe\\ChromeDriver\\80.0.3987.16\\chromedriver.exe")
-			# self.browser = webdriver.Chrome( _v.chromedriver )
-			# self.url('http://www.google.com')
-			# _.pr( 'DONE' )
-
+				# options.binary_location = _v.chromePortable
+				# self.browser = webdriver.Chrome( chrome_options=options, executable_path=_v.chromedriver )
 
 
-			# options = webdriver.ChromeOptions()
-			# # options.add_argument('--user-agent="Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)"')
-			# # prefs = { 'download.default_directory':'C:\Users\Scott\Downloads' }
-			# prefs = {}
-			# prefs['download.default_directory'] = 'C:\\Users\\Scott\\Downloads'
-			# prefs['download.prompt_for_download'] = False
-			# prefs['browser.helperApps.neverAsk.saveToDisk'] = self.download_default
-			# options.add_experimental_option("prefs", prefs)
-			if False and not __.har:
-				self.browser = webdriver.Chrome( _v.chromedriver, chrome_options=options )
+
+				# if False and not __.har:
+				# 	self.close()
+				# # self.browser = webdriver.Chrome(chrome_options=options, executable_path="D:\\tech\\programs\\exe\\ChromeDriver\\80.0.3987.16\\chromedriver.exe")
+				# # self.browser = webdriver.Chrome( _v.chromedriver )
+				# # self.url('http://www.google.com')
+				# # _.pr( 'DONE' )
+
+
+
+				# # options = webdriver.ChromeOptions()
+				# # # options.add_argument('--user-agent="Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)"')
+				# # # prefs = { 'download.default_directory':'C:\Users\Scott\Downloads' }
+				# # prefs = {}
+				# # prefs['download.default_directory'] = 'C:\\Users\\Scott\\Downloads'
+				# # prefs['download.prompt_for_download'] = False
+				# # prefs['browser.helperApps.neverAsk.saveToDisk'] = self.download_default
+				# # options.add_experimental_option("prefs", prefs)
+				# if False and not __.har:
+				# 	self.browser = webdriver.Chrome( _v.chromedriver, chrome_options=options )
+			elif not _.isWin:
+				import time
+				from selenium import webdriver
+				from selenium.webdriver.chrome.options import Options
+				from selenium.webdriver.chrome.service import Service
+				from selenium.webdriver.common.by import By
+				from selenium.webdriver.common.keys import Keys
+				from webdriver_manager.chrome import ChromeDriverManager
+
+				options = Options()
+				# options.add_argument('--headless')
+				# options.add_argument('--no-sandbox')
+				options.add_argument('--disable-dev-shm-usage')
+				self.browser = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
+				# self.browser.get('http://www.google.com')
+				# search = self.browser.find_element(by=By.NAME, value="q")
+				# search.send_keys("Hey, Tecadmin")
+				# search.send_keys(Keys.RETURN)
+
+				# time.sleep(5)
+				# self.browser.close()
 
 
 

@@ -35,6 +35,7 @@ def appSwitches():
 	_.switches.register( 'Files', '-f,-file,-files','file.txt', description='Files' )
 	_.switches.register( 'Alias', '-alias','' )
 	_.switches.register( 'Backup', '-backup' )
+	_.switches.register( 'Clean', '--c,-clean' )
 
 _.autoBackupData = __.autoCreationConfiguration['backup']
 __.releaseAcquiredData = __.autoCreationConfiguration['logs'] 
@@ -158,12 +159,15 @@ import subprocess
 # _bk.switch( 'Silent' ); _bk.switch( 'isRunOnce' ); _bk.switch( 'Flag', 'APP' ); _bk.switch( 'DoNotSchedule' )
 # focus()
 
-def action():
+def action(path=None):
 	paths=[]
-	if _.switches.isActive('Files'):
-		paths=_.switches.values('Files')
-	elif _.isData():
-		paths=_.isData()
+	if not path is None:
+		paths=[path]
+	else:
+		if _.switches.isActive('Files'):
+			paths=_.switches.values('Files')
+		elif _.isData():
+			paths=_.isData()
 
 	if _.isWin and not 'code_editor' in _v.fig: app = 'C:\\Windows\\System32\\notepad.exe'
 	elif _.isWin and 'code_editor' in _v.fig: app = _v.fig['code_editor']
@@ -218,10 +222,11 @@ def action():
 						paths.append( aliases['aliases'][_alias] )
 
 
-	print(paths)
 	appReg=__.appReg
 	__.appReg=appReg
-	_.ad()
+	if not _.switches.isActive('Clean'):
+		print(paths)
+		_.ad()
 	if paths:
 		
 		for path in paths:

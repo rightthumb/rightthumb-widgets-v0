@@ -442,7 +442,8 @@ def ask(data, doneselection=False, backupfile='', originalfile=''):
 			_.pr()
 			_.pr(data[int(selection)]['backup'])
 			_.pr()
-			sp.Popen([_v.sublime, data[int(selection)]['backup']])
+			# sp.Popen([_v.sublime, data[int(selection)]['backup']])
+			_file_open.action(data[int(selection)]['backup'])
 
 		except Exception as e:
 			selection = '?'
@@ -526,7 +527,8 @@ def ask(data, doneselection=False, backupfile='', originalfile=''):
 					origalFile = newname
 			if _.isWin:
 				try:
-					sp.Popen([   _v.sublime.replace('"','')   ,   data[int(selection)]['file'].replace('"','')  ])
+					# sp.Popen([   _v.sublime.replace('"','')   ,   data[int(selection)]['file'].replace('"','')  ])
+					_file_open.action(data[int(selection)]['file'].replace('"',''))
 					_.waiting(3)
 				except Exception as e:
 					_.pr([   _v.sublime.replace('"','')   ,   data[int(selection)]['file'].replace('"','')  ])
@@ -539,7 +541,8 @@ def ask(data, doneselection=False, backupfile='', originalfile=''):
 			_.pr()
 			if _.isWin:
 				try:
-					sp.Popen([   _v.sublime.replace('"','')   ,   data[int(selection)]['file'].replace('"','')  ])
+					# sp.Popen([   _v.sublime.replace('"','')   ,   data[int(selection)]['file'].replace('"','')  ])
+					_file_open.action(data[int(selection)]['file'].replace('"',''))
 				except Exception as e:
 					_.pr([   _v.sublime.replace('"','')   ,   data[int(selection)]['file'].replace('"','')  ])
 					_.pr('unable to open')
@@ -790,6 +793,15 @@ import _rightThumb._dir as _dir
 hasSearched = False
 originalData = []
 origalFile = False
+
+
+# sp.Popen
+_file_open = _.regImp( __.appReg, 'file-open' )
+_file_open.switch('App',_v.meta['code_editor'])
+# _file_open.switch('Clean')
+# _file_open.switch('Files',path)
+# _file_open.action()
+# _file_open.action(path)
 
 ########################################################################################
 if __name__ == '__main__':
