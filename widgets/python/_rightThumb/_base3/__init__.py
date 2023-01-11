@@ -1,8 +1,8 @@
 #!/usr/bin/python3
 
 
-MINI_ADS = False
 MINI_ADS = True
+MINI_ADS = False
 
 # ¯\_(ツ)_/¯
 
@@ -1670,7 +1670,8 @@ def isDate( theDate=None, record={}, tz=None, q=True, f=None,w=None,what=None ):
 		if f=='fdatea': return friendlyDate( epoch )[:-3];
 		if f=='cmd': return friendlyDate( epoch )[:-3].replace(' ',' @ ').replace('-','.').replace(':','.');
 		if f=='month': return _dir.getMonthFromEpoch( epoch );
-		if f=='year': return _dir.getYearFromEpoch( epoch );
+		if f=='year': return friendlyDate( epoch ).split('-')[0]
+		if f=='year2': return _dir.getYearFromEpoch( epoch ); # prioritizes week over actual year (if jan 01 and week 52 of last year)
 		if f=='woy': return _dir.getWeekAndYear( epoch );
 		if f=='woy2': return _dir.getWeekAndYear( epoch ).replace(str(_dir.getYearFromEpoch( epoch ))+'.','');
 		if f=='ago': return _dir.dateDiffText( epoch );
@@ -9276,7 +9277,7 @@ def calculate_monthdelta(date1, date2):
 #     x.start()
 
 
-def showLine( string, plus = '', minus = '',plusOr = False, end=None,isSub=False, OR=None ):
+def showLine( string, plus = '', minus = '',plusOr = False, end=None,isSub=False, OR=None, code=False ):
 	'''( string, plus='', minus='', plusOr=False, end=None, isSub=False, OR=None )'''
 	# print_(plus)
 	# print_(string)
@@ -9287,8 +9288,8 @@ def showLine( string, plus = '', minus = '',plusOr = False, end=None,isSub=False
 	if plus is None :
 		result = True
 	else:
-		if switches.isActive('Plus') or not plus == '':
-			# print_('asdf')
+		if switches.isActive('Plus') or code or not plus == '':
+			# print('asdf',plus);sys.exit();
 			if switches.isActive('PlusCode'):
 				result = positiveResultsCode(string,plus,plusOr,end,OR=OR)
 			else:
@@ -9520,6 +9521,17 @@ def minusResults(string,minus=''):
 		minusInput = minus
 	else:
 		minusInput = switches.values('Minus')
+
+	# 23-01-04
+	string=string.strip() #:    //*   #* 
+	if minusInput and '*' in minusInput[0]:
+		mi = minusInput[0].replace('*','')
+		if minusInput[0].endswith('*'):
+			if string.startswith(mi): return False
+		if minusInput[0].startswith('*'):
+			if string.endswith(mi): return False
+
+
 	# --> #start> this was added 2022-07-20
 	if type( minusInput ) == list:
 
@@ -11906,6 +11918,15 @@ class Table:
 		rows = self.asset
 		spacer = 1
 		# print_('*** ' + name)
+
+		# 23-01-09 14:19
+		# an attempt to fix    p ls -r    long folder names that include new trigger   _.tables.fieldProfileSet( 'data', 'folder', 'trigger', relative_folder )
+			# def fn(field):return field
+			# for i,x in enumerate(self.tableProfile):
+			# 	if self.tableProfile[i]['name'] == name and '' in self.tableProfile[i] and  'function' in type(self.tableProfile[i]['trigger']):
+			# 		fn=self.tableProfile[i]['trigger']
+		# did not work
+
 		size = len(name) + spacer
 		
 		# print_(name,00)
@@ -13227,6 +13248,8 @@ class Table:
 			if not switches.isActive('Help'):
 				if switches.isActive('Column'):
 					column = switches.value('Column')
+					if column == '*' and self.asset:
+						column = ','.join( list( self.asset[0].keys() ) )
 			
 				if switches.isActive('Sort'):
 					self.asset = self.sort()
@@ -21337,7 +21360,7 @@ def pyApp(path):
 		else:
 			return file[:-3]
 
-def fromYML(text): return __.imp('yaml').safe_load(text)
+def fromYML(text): return __.imp('yaml').safe_load(text.replace('\t','    '))
 def toYML(dic): return __.imp('yaml').dump( dic, sort_keys=False )
 
 def getYML(path,here=False,h=None,auto=True,a=None):

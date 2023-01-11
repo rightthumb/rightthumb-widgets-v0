@@ -389,10 +389,10 @@ def action():
             if not aw.aw in aw.idle: aw.idle[aw.aw] ={}
             if not idle_group in aw.idle[aw.aw]: aw.idle[aw.aw][idle_group]=idle_time
             else: aw.idle[aw.aw][idle_group]+=idle_time-aw.idle[aw.aw][idle_group]
-            if not idle_group in aw.group.idleg[aw.group]: aw.group.idleg[aw.group][idle_group]=idle_time
-            else: aw.group.idleg[aw.group][idle_group]+=idle_time-aw.group.idleg[aw.group][idle_group]
+            if not idle_group in aw.idleg[aw.group]: aw.idleg[aw.group][idle_group]=idle_time
+            else: aw.idleg[aw.group][idle_group]+=idle_time-aw.idleg[aw.group][idle_group]
 
-    # aw.group.idleg[aw.group]
+    # aw.idleg[aw.group]
     # aw.idleg[aw.group]
     # global idle_group
     # global idle_time

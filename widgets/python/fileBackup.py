@@ -704,6 +704,7 @@ def secureFiles(path):
 
 	if path in __.v.secure.files:
 		_.cp( [ 'SECURE FILE' ], 'Background.red' )
+		_.v.secure=True
 		
 		if path in __.v.secure.files:
 			secure_record = __.v.secure.files[ path ]
@@ -811,6 +812,7 @@ def action(path=None,flag=None,o=None):
 				idCheck = idExist(theID, backupLog, path)
 				if not type(idCheck) == bool:
 					_.cp(idCheck,'darkcyan')
+				_.v.secure=False				
 				if secureFiles(path):
 					# _.colorThis( [ 'Secure file' ], 'green' )
 					bk=[];[  bk.append(rec['backup']) for rec in backupLog if path == rec['file']];
@@ -1179,7 +1181,13 @@ def action(path=None,flag=None,o=None):
 			libFile = _v.library + os.sep + libFile['id']+'-'+libFile['label']+'-'+tmpB
 			
 			if not __.openSecure:
-				copyfile( path,  libFile)
+				copyThis=True
+				if _.v.secure and not _.isCrypt(path):copyThis=False
+				if copyThis:
+					copyfile( path,  libFile)
+				else:
+					_.pr('not encrypted',c='red')
+					sys.exit()
 
 			if os.path.isfile(libFile):
 				if os.path.isfile(path):
@@ -1279,6 +1287,16 @@ def action(path=None,flag=None,o=None):
 				log = log_default_fields(log)
 				backupLog.append(log)
 				# _.saveCSV(   backupLog, 'fileBackup.csv',  p=0 )
+				copyThis=True
+				if _.v.secure and not _.isCrypt(path):copyThis=False
+				if not copyThis:
+					_.pr('not encrypted',c='red')
+
+					txtScheduler = _.getTable( 'fileBackupSchedule.json' )
+					txtScheduler.append( { 'timestamp': genEpoch(), 'file': __.path(path), 'status': 0, 'app': 'fileBackup', 'group': 0, 'session': os.getenv('Session_ID') } )
+					_.saveTable( txtScheduler,'fileBackupSchedule.json', p=1 )
+
+					sys.exit()
 				try:
 					result = copyfile(path, newname)
 					for i,row in enumerate(backupLog):

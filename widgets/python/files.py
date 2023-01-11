@@ -962,6 +962,7 @@ def process(path):
 
 		else:
 			fast=False
+		if _.switches.isActive('PlusCode'): fast=False
 
 		# with open(path,encoding=char) as f:
 		# _.pr(os.path.isfile(path),path)
@@ -989,14 +990,12 @@ def process(path):
 				# _.pr(inc)
 				# _.pr(ex)
 				# sys.exit()
-				if _.showLine(line, plus=inc, minus=ex,OR=False):
-					if pr:
-						_.pr()
+				if _.showLine(line, plus=inc, minus=ex,OR=False,code=True):
+					# print('here');sys.exit();
+					if pr: _.pr()
 					printer(path,ni=1)
-					if pr:
-						print_line(i,line,inc)
-					if pr == 1:
-						return path
+					if pr: print_line(i,line,inc)
+					if pr == 1: return path
 
 def cleaner(line):
 	line=line.replace('\r','').replace('\n','')

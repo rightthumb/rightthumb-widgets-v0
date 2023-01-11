@@ -30,7 +30,7 @@ rem rem CALL :DeQuote pp
 rem echo %pp%>"%p%"
 
 
-SET /p back=<"%p%"
+SET /p back=<"%p%"> nul
 rem call set back=%%back:{A8693D4B-8A80-898F-83F0-E806D2F36800}=%widgets%%%
 :END
 

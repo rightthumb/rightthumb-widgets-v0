@@ -880,6 +880,10 @@ def addFile( path, hasData=False ):
 # print(list(os.get_terminal_size())[0])
 # sys.exit()
 
+def relative_folder(path):
+	return path.replace(os.getcwd()+os.sep,'')
+
+
 def action():
 	_.v.do_not_hide__pycache = _.switches.isActive('Disable-Intelligence')
 	try:
@@ -907,6 +911,7 @@ def action():
 		elif not _.switches.isActive('Totals'):
 			
 			_.tables.register( 'data', data, w=1 )
+			_.tables.fieldProfileSet( 'data', 'folder', 'trigger', relative_folder )
 			# _.tables.fieldProfileSet( 'data', 'week_of_year', 'trigger', _.woyTrigger )
 			_.tables.fieldProfileSet( 'data', 'meta.epoch.me', 'trigger', _.friendlyDate )
 			_.tables.fieldProfileSet( 'data', 'meta.epoch.ae', 'trigger', _.friendlyDate )
@@ -1367,6 +1372,7 @@ def action():
 
 
 				_.tables.register( 'data', data, w=1 )
+				_.tables.fieldProfileSet( 'data', 'folder', 'trigger', relative_folder )
 				# _.tables.fieldProfileSet( 'data', 'week_of_year', 'trigger', _.woyTrigger )
 				_.tables.fieldProfileSet( 'data', 'meta.epoch.me', 'trigger', _.friendlyDate )
 				_.tables.fieldProfileSet( 'data', 'meta.epoch.ae', 'trigger', _.friendlyDate )

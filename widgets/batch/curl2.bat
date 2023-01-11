@@ -10,23 +10,12 @@ rem    - Scott Taylor Reph, RightThumb.com
 rem ###########################################################################
 rem ## {C3P0D40fAe8B} ##
 
-rem echo  %*
-%*>"%stmp%\result.tmp"
-set /p result=<"%stmp%\result.tmp"> nul
-rem echo %result%
-
-GOTO:EOF
-SETLOCAL ENABLEDELAYEDEXPANSION
-SET count=1
-FOR /F "tokens=* USEBACKQ" %%F IN (`%*`) DO (
-  SET result!count!=%%F
-  SET /a count=!count!+1
-    set result=%result1%
-)
-ENDLOCAL
-
-GOTO:EOF
-
-
+set url=%1
+set do=%2
+set thisFile=curl.php
+%php% %phpFiles%\%thisFile%
+echo.
+echo.
+: copied as g
 
  

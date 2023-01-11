@@ -101,7 +101,7 @@ goto:EOF
 goto:EOF
 
 :POST_ERROR_COUNT_CHECK
-SET /p apps_found=<"%stmp%\app(file.py)_Count.txt"
+SET /p apps_found=<"%stmp%\app(file.py)_Count.txt"> nul
 set /a apps_found=%apps_found%+1
 set /a apps_found=%apps_found%-1
 rem echo %apps_found%
@@ -123,7 +123,8 @@ if exist "%stmp%\app(file.py).txt" (
 
 goto:EOF
 :POST_ERROR_HAS_SINGLE
-SET /p the_new_app=<"%stmp%\app(file.py).txt"
+echo HERE, "%stmp%\app(file.py).txt"
+SET /p the_new_app=<"%stmp%\app(file.py).txt"> nul
 set argLoop=0
 set argsNew=%the_new_app%
 

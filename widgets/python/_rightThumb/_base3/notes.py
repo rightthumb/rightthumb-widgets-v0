@@ -6,6 +6,8 @@ _.switches.fieldSet( 'Long', 'active', True )
 _.tables.register( 'data', table )
 _.tables.print( 'data', 'name' )
 
+
+logCheck = _.tables.returnSorted( 'data', 'd.timestamp', _.getTable('fileBackup.json') )
 ***
 
 # ## {R2D2919B742E} ##

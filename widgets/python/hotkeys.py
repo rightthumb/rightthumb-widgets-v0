@@ -2528,7 +2528,7 @@ def load():
 				'clip-invert-quotes': { 'raw': [  'alt.', 'win.',  ';' ], 'do': 'Clip.quote_inverter()' },
 				# 'clip-invert-quotes': { 'raw': [  'alt.', 'win.',  'r' ], 'do': 'Clip.quote_inverter()' },
 				'clip-dup-spaces': { 'raw': [  'ctrl.,2', 'r',  'd', 's' ], 'do': 'Clip.remove_dup_spaces()' },
-				'clip-randomize-ports': { 'raw': [   'ctrl.', 'shift.', 'r' ], 'do': 'Clip.randomize_ports()' },
+				# 'clip-randomize-ports': { 'raw': [   'ctrl.', 'shift.', 'r' ], 'do': 'Clip.randomize_ports()' },
 				'clip-test-py': { 'raw': [   'ctrl.,2', 'space.,2', 'p', 'y' ], 'do': 'Clip.test_py()' },
 				'f12-console-gen-md-link': { 'raw': [   'shift.,2',   'w',  'm','d'   ], 'do': 'Clip.browser_f12_gen_md_link()' },
 				'f12-console-tool.js-text': { 'raw': [   'shift.,2',   'w',  't','x','t'   ], 'do': 'Clip.browser_f12_tooljs_text()' },

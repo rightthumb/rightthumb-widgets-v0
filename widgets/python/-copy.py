@@ -36,7 +36,7 @@ import _rightThumb._string as _str
 def appSwitches():
     _.switches.register( 'Copy-String', '-cp,-string,-text,-txt,-str,-this' )
     _.switches.register( 'Print', '-print' )
-    _.switches.register( 'NoPrint', '-noprint' )
+    _.switches.register( 'NoPrint', '-noprint,--c' )
     _.switches.register( 'Subject', '-j,-subject' )
     _.switches.register( 'Specific', '-specific' )
     _.switches.register( 'Save', '-save' )
