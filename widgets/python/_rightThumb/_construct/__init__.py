@@ -170,6 +170,9 @@ def imp( subject, imp_table_testing=False ):
         return imp_run( subject, imp_table_testing )
 
 def imp_install(mod):
+    print()
+    print('__.imp_install('+mod+')')
+    print()
     if '.' in mod: mod = mod.split('.')[0]
 
     dic = {
@@ -188,25 +191,27 @@ def imp_install(mod):
 
     if mod in dic: mod=dic[mod]
 
-    if sys.platform == 'win32':
-        # os.system('pip3 install python-magic-bin==0.4.14')
-        os.system('pip3 install '+mod+' >nul 2>&1')
-    else:
+    os.system('pip3 install '+mod+' >nul 2>&1')
+    
+    # if sys.platform == 'win32':
+    #     # os.system('pip3 install python-magic-bin==0.4.14')
+    #     os.system('pip3 install '+mod+' >nul 2>&1')
+    # else:
 
-        def _pipy_(mod):
-            mod0=mod
-            try:
-                import pip
-                if '=' in mod: mod = mod.split('=')[0]
-                pip.main(['install', mod])
-            except: print('pip3 install '+mod0)
-        import subprocess
-        if len(subprocess.getoutput('sudo cat /etc/sudoers').split('\n')) > 3:
-            try: os.system('sudo pip3 install '+mod+'  > /dev/null 2>&1')
-            except: _pipy_(mod)
-        else:
-            try: os.system('pip3 install '+mod+'  > /dev/null 2>&1')
-            except:_pipy_(mod)
+    #     def _pipy_(mod):
+    #         mod0=mod
+    #         try:
+    #             import pip
+    #             if '=' in mod: mod = mod.split('=')[0]
+    #             pip.main(['install', mod])
+    #         except: print('pip3 install '+mod0)
+    #     import subprocess
+    #     if len(subprocess.getoutput('sudo cat /etc/sudoers').split('\n')) > 3:
+    #         try: os.system('sudo pip3 install '+mod+'  > /dev/null 2>&1')
+    #         except: _pipy_(mod)
+    #     else:
+    #         try: os.system('pip3 install '+mod+'  > /dev/null 2>&1')
+    #         except:_pipy_(mod)
 
 
 

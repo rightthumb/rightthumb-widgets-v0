@@ -60,6 +60,7 @@ def appSwitches():
 	_.switches.register('Clean', '-clean')
 	_.switches.register('Test', '-test')
 	_.switches.register('Prefix', '-prefix', 'ADD THIS LATER')
+	_.switches.register('Totals', '-totals')
 	# _.switches.register('Save-Results', '-save')
 
 	
@@ -219,12 +220,12 @@ if __name__ == '__main__':
 # START
 
 def md5(fname):
-    hash_md5 = hashlib.md5()
-    with open(fname, "rb") as f:
-        for chunk in iter(lambda: f.read(4096), b""):
-            hash_md5.update(chunk)
-    return hash_md5.hexdigest()
-    return hash_md5.hexdigest()
+	hash_md5 = hashlib.md5()
+	with open(fname, "rb") as f:
+		for chunk in iter(lambda: f.read(4096), b""):
+			hash_md5.update(chunk)
+	return hash_md5.hexdigest()
+	return hash_md5.hexdigest()
 
 
 def formatSize(size):
@@ -365,6 +366,8 @@ def repairEncoding( result ):
 	return result
 	result = str(result,'iso-8859-1')
 
+_.v.totals=0
+
 def action():
 	global theData
 
@@ -431,6 +434,10 @@ def action():
 		c = conn.cursor()
 		c.execute(sql)
 		records = c.fetchall()
+		_.v.totals+=len(records)
+		if _.switches.isActive('Totals'):
+			_.pr(_.addComma(len(records)),c='cyan')
+			sys.exit()
 
 		conn2 = sqlite3.connect(db)
 		test = conn2.cursor()
@@ -471,7 +478,7 @@ def action():
 			except Exception as e:
 				pass
 			else:
-
+				_.v.totals+=len(test.fetchall())
 				for rec in test.fetchall():
 					record = {}
 					for ii,nn in enumerate(names):
@@ -654,6 +661,10 @@ def action():
 		c = conn.cursor()
 		c.execute(sql)
 		records = c.fetchall()
+		_.v.totals+=len(records)
+		if _.switches.isActive('Totals'):
+			_.pr(_.addComma(len(records)),c='cyan')
+			sys.exit()
 
 		conn2 = sqlite3.connect(db)
 		test = conn2.cursor()
@@ -711,6 +722,8 @@ def action():
 
 
 
+
+
 		_.pr()
 		_.pr()
 		_.pr()
@@ -763,6 +776,10 @@ def action():
 					c = conn.cursor()
 					c.execute(sql)
 					records = c.fetchall()
+					_.v.totals+=len(records)
+					if _.switches.isActive('Totals'):
+						_.pr(_.addComma(len(records)),c='cyan')
+						sys.exit()
 					# names = action2(databaseFile)
 					for record in records:
 						shouldAdd = True
@@ -802,11 +819,15 @@ def action():
 			_.saveText(theData,saveAs)
 			_.pr('\n Saved:',saveAs,c='cyan')
 			
-	if not _.switches.isActive('NoCount'):
-		_.pr()
-		_.pr('Total:')
-		_.pr('\tFiles:\t', _.addComma(totalCount) )
-		_.pr('\tSize:\t', formatSize(totalSize)  )
+	if not _.switches.isActive('Totals'):
+		if not _.switches.isActive('NoCount'):
+			_.pr()
+			_.pr('Total:')
+			_.pr('\tFiles:\t', _.addComma(totalCount) )
+			_.pr('\tSize:\t', formatSize(totalSize)  )
+	elif _.switches.isActive('Totals'):
+		if not _.switches.isActive('NoCount'):
+			_.pr('Total:',_.addComma(_.v.totals),c='cyan')
 theData=[]
 def do(databaseFile):
 	global theData
@@ -960,6 +981,10 @@ def do(databaseFile):
 	# c.execute('SELECT * FROM {tn} WHERE {cn} = {st}'.\
 	#         format(tn='files', cn='path', st='s'))
 	all_rows = c.fetchall()
+	_.v.totals+=len(all_rows)
+	if _.switches.isActive('Totals'):
+		_.pr(_.addComma(len(all_rows)),c='cyan')
+		sys.exit()
 	# _.pr('1):', all_rows)
 	names = action2(databaseFile)
 
@@ -1086,8 +1111,8 @@ def action3():
 			databaseFile = "defaultDir.db"
 		con = sqlite3.connect(databaseFile)
 		with open('dump.sql', 'w') as f:
-		    for line in con.iterdump():
-		        f.write('%s\n' % line)
+			for line in con.iterdump():
+				f.write('%s\n' % line)
 
 
 if not _.switches.isActive('Database'):
@@ -1112,45 +1137,45 @@ if not _.switches.isActive('Column'):
 	_.switches.fieldSet('Column','value','path')
 
 network_replace =   [{
-                        'file': 'TBCN_shared.db',
-                        'replace': 'Y:'+_v.slash,
-                        'with': '\\\\tbcnad\\shared'+_v.slash,
-                    },
-                    {
-                        'file': 'TBCN_Users.db',
-                        'replace': 'X:'+_v.slash,
-                        'with': '\\\\tbcnad\\Users'+_v.slash,
-                    },
-                    {
-                        'file': 'TBCN_E.D.Files.db',
-                        'replace': 'W:'+_v.slash,
-                        'with': '\\\\tbcnad\\E.D. Files'+_v.slash,
-                    },
-                    {
-                        'file': 'TBCN_erica.db',
-                        'replace': 'V:'+_v.slash,
-                        'with': '\\\\tbcnad\\erica'+_v.slash,
-                    },
-                    {
-                        'file': 'TBCN_Facil.db',
-                        'replace': 'U:'+_v.slash,
-                        'with': '\\\\tbcnad\\Facil'+_v.slash,
-                    },
-                    {
-                        'file': 'TBCN_Finance.db',
-                        'replace': 'T:'+_v.slash,
-                        'with': '\\\\tbcnad\\Finance'+_v.slash,
-                    },
-                    {
-                        'file': 'TBCN_MasterControle.db',
-                        'replace': 'S:'+_v.slash,
-                        'with': '\\\\tbcnad\\MasterControle'+_v.slash,
-                    },
-                    {
-                        'file': 'TBCN_MasterControle2.db',
-                        'replace': 'S:'+_v.slash,
-                        'with': '\\\\tbcnad\\MasterControle2'+_v.slash,
-                    },]
+						'file': 'TBCN_shared.db',
+						'replace': 'Y:'+_v.slash,
+						'with': '\\\\tbcnad\\shared'+_v.slash,
+					},
+					{
+						'file': 'TBCN_Users.db',
+						'replace': 'X:'+_v.slash,
+						'with': '\\\\tbcnad\\Users'+_v.slash,
+					},
+					{
+						'file': 'TBCN_E.D.Files.db',
+						'replace': 'W:'+_v.slash,
+						'with': '\\\\tbcnad\\E.D. Files'+_v.slash,
+					},
+					{
+						'file': 'TBCN_erica.db',
+						'replace': 'V:'+_v.slash,
+						'with': '\\\\tbcnad\\erica'+_v.slash,
+					},
+					{
+						'file': 'TBCN_Facil.db',
+						'replace': 'U:'+_v.slash,
+						'with': '\\\\tbcnad\\Facil'+_v.slash,
+					},
+					{
+						'file': 'TBCN_Finance.db',
+						'replace': 'T:'+_v.slash,
+						'with': '\\\\tbcnad\\Finance'+_v.slash,
+					},
+					{
+						'file': 'TBCN_MasterControle.db',
+						'replace': 'S:'+_v.slash,
+						'with': '\\\\tbcnad\\MasterControle'+_v.slash,
+					},
+					{
+						'file': 'TBCN_MasterControle2.db',
+						'replace': 'S:'+_v.slash,
+						'with': '\\\\tbcnad\\MasterControle2'+_v.slash,
+					},]
 
 def  removeFile( path, cursr ):
 	# sql = "SELECT * FROM files WHERE path like '%" + tv + "%' ORDER BY bytes"

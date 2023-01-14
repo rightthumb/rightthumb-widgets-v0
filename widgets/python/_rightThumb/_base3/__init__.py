@@ -19638,8 +19638,8 @@ class regImp:
 		}
 
 
-		if '.' in focus or app is None:
-			pr('_.imp should be __.imp, auto corrected', focus, c='r')
+		if (not '__' and '.' in focus) or app is None:
+			# pr('_.imp should be __.imp, auto corrected', focus, c='r')
 			return __.imp(focus)
 
 		if not a is None: app=a

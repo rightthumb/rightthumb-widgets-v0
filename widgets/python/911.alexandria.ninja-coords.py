@@ -119,7 +119,7 @@ def action():
     body=_.getText(_.isData()[0],raw=True)
     _send.imp.action( to='8136901260',body=body )
 
-
+# print('--',__.appReg)
 _send = _.regImp( __.appReg, 'vps-srv-7facG-twilio-send' )
 
 
