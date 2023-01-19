@@ -113,6 +113,9 @@ def action():
 
 	if play:
 		theSong = mFolder + _v.slash + song
+		
+		theSong = "D:\\drive-archive\\256-btn\\techApps\\MP3\\Metalica\\Fuel - Metallica [HD] [1080p].mp3"
+
 		mplayerQ = '"' + mplayer + '"'
 		theSongQ = '"' + theSong + '"'
 

@@ -1,8 +1,8 @@
 #!/usr/bin/python3
 
 
-MINI_ADS = True
 MINI_ADS = False
+MINI_ADS = True
 
 # ¯\_(ツ)_/¯
 
@@ -4699,7 +4699,33 @@ def pDiff( one, two, use=None,r=None ):
 		return b
 
 
+def pDiff2( one, two, use=None,r=None ):
+	if not use is None:
+		use = use.lower()
+	if not r is None:
+		
+		a = percentageDiff(one,two,rnd=r,isFloat=True)
+		b = percentageDiff(two, one,rnd=r,isFloat=True)
+	else:
+		a = percentageDiff(one,two)
+		b = percentageDiff(two, one)
+	if use == None:
+		return str(a)+'%, '+str(b)+'%'
+	if a > b:
+		g = a
+		l = b
+	else:
+		l = a
+		g = b
 
+	if 'g' in use:
+		return g
+	elif 'l' in use:
+		return l
+	elif '1' in use or 'f' in use or 'a' in use or 'one' in use:
+		return a
+	elif '3' in use or 's' in use or 'b' in use or 'two' in use:
+		return b
 
 	
 def clean_dic( dic, omit ):
@@ -19126,6 +19152,35 @@ def percentageDiffInt( smaller, bigger, isFloat=False, rnd=1 ):
 				return 0
 			return r
 
+def percentageDiff( smaller, bigger, isFloat=False ):
+	# fr = force rounding
+	# return int((smaller/bigger)*100)
+	try:
+
+		if not isFloat:
+			return abs(smaller/bigger)*100
+		else:
+			r = abs(smaller/bigger)*100
+			if str(r) == '0.0':
+				return 0
+			# if str(r).endswtih('.0'):
+			#     return int(r)
+
+			return r
+
+	except Exception as e:
+		return 0
+		smaller+=1
+		bigger+=1
+		if not isFloat:
+			return abs(smaller/bigger)*100
+		else:
+			r = abs(smaller/bigger)*100
+			if str(r) == '0.0':
+				return 0
+			return r
+
+
 def percentageDiffIntAuto( smaller, bigger, isFloat=False ):
 	if smaller < bigger:
 		s = smaller
@@ -21449,3 +21504,13 @@ def inject( snippet='', data='', header='', b='9a26c2d7f6b0', e='71564a5f3d65', 
 # def sort(self,fields=''):# sortThis 
 # switches.trigger(
 # formatColumnsSort
+
+
+def percentageReduce(n,p): return n*(1-(p/100))
+def percentageAdd(n,p): return n*(1+(p/100))
+
+# _.percentageMinus(75000,25)
+# _.percentageAdd(56250,25)
+
+
+

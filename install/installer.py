@@ -12,6 +12,12 @@
 
 import os,sys,datetime,time,platform
 
+def _printME_(*args):
+    pr=[]
+    for p in args: pr.append(str(p))
+    print(' '.join(pr))
+
+
 try:
     import pickle
 except Exception as e:
@@ -105,9 +111,9 @@ def testImport(app):
     try:
         exec( 'import ' + app )
     except Exception as e:
-        print( 'no' )
+        _printME_( 'no' )
     else:
-        print( 'yes' )
+        _printME_( 'yes' )
 
 try:
     import colorama
@@ -118,7 +124,7 @@ except Exception as e:
 ######################################################
 def subdo(do,p=0):
     if p:
-        print(do)
+        _printME_(do)
     if v.subprocess is None:
         import subprocess
         v.subprocess = subprocess
@@ -127,7 +133,7 @@ def subdo(do,p=0):
     except Exception as e:
         result = ''
     if p > 1:
-        print(result)
+        _printME_(result)
     return result
 ######################################################
 def loader():
@@ -521,7 +527,7 @@ def linePrint(  label=None, text=None, txt='_', mn=50, add=5, p=2 ):
             result += txt
             i+=1
         if p:
-            print( result )
+            _printME_( result )
         return result
 
 
@@ -537,12 +543,12 @@ def cp( string, color='red', p=1 ):
     if colorama is None:
         # print('no colorama installed')
         if p:
-            print('error')
-            print( string )
+            _printME_('error')
+            _printME_( string )
         return string
     subject = inlineColor( string, color )
     if p:
-        print( subject )
+        _printME_( subject )
     return subject
 
 
@@ -791,12 +797,12 @@ class Switches:
  
         p = 'FB2DEDECEA7E'
         return None
-        print( 'print aborted' )
+        _printME_( 'print aborted' )
 def printVar( data , p=1 ):
     simplejson = vc.FIG.imp('simplejson')
     j = simplejson.dumps(data, indent=4, sort_keys=False)
     if p:
-        print(j)
+        _printME_(j)
     return j
 
 def jsoncode( data ):
@@ -1074,7 +1080,7 @@ class HD:
             open(theFile, 'w').write(rows)
 
             if errors:
-                print( 'Auto correction when saving text' )
+                _printME_( 'Auto correction when saving text' )
 
     def saveTableSimp( self, data, file ):
         if os.sep in file:
@@ -1414,7 +1420,7 @@ class IS:
 
         for c in head:
             if not c in isBinCharTest:
-                print('error',c)
+                _printME_('error',c)
                 return True
         return False
     def isText( self, path ):
@@ -1635,7 +1641,7 @@ pr-|{6FAB5628-94A1-410A-82D1-1D42A2A11750}/.rt/profile/projects"""
 
 
             self.bashrc_spent.append(bashrc_path)
-            print( 'whoami:', username )
+            _printME_( 'whoami:', username )
             # print( 'running:',bashrc_path )
             bashrc = vc.HD.getText( bashrc_path, raw=True )
             
@@ -1811,7 +1817,7 @@ pr-|{6FAB5628-94A1-410A-82D1-1D42A2A11750}/.rt/profile/projects"""
         if save:
             self.save_bashrc( file )
         else:
-            print(file)
+            _printME_(file)
 
     def home( self ):
  
@@ -1901,7 +1907,7 @@ pr-|{6FAB5628-94A1-410A-82D1-1D42A2A11750}/.rt/profile/projects"""
                 if not key in v.bash:
                     v.bash[key] = v.bash_defaults[key].replace('[widgets]',v.bash['widgets'])
         items = []
-        print(v.config)
+        _printME_(v.config)
         if os.path.isfile( v.config ):
             v.bash = vc.HD.getTableSimp( v.config )
         # else:
@@ -1974,7 +1980,7 @@ pr-|{6FAB5628-94A1-410A-82D1-1D42A2A11750}/.rt/profile/projects"""
             export=export.replace('\\\\','\\')
         else:
             ext='sh'
-        print( export )
+        _printME_( export )
         self.home()
         if not 'wprofile' in v.bash:
             v.bash['wprofile']=v.home+os.sep+'.rt'+os.sep+'profile'
@@ -2142,22 +2148,22 @@ pr-|{6FAB5628-94A1-410A-82D1-1D42A2A11750}/.rt/profile/projects"""
                 return None
             self.importlib = importlib
             if testing:
-                print('\n\n\t\timport importlib\n\n')
+                _printME_('\n\n\t\timport importlib\n\n')
 
         if not subject in self.imp_table:
 
             try:
                 self.imp_table[subject] = self.importlib.import_module(subject)
                 if testing:
-                    print( 'imp.DID' )
+                    _printME_( 'imp.DID' )
                 return self.imp_table[subject]
             except Exception as e:
                 cp( 'missing '+subject, 'red' )
                 if testing:
-                    print( 'imp.NO' )
+                    _printME_( 'imp.NO' )
                 return None
         if testing:
-            print( 'imp.YES' )
+            _printME_( 'imp.YES' )
         return self.imp_table[subject]
 
     def uuid( self ):
@@ -2210,7 +2216,7 @@ def printDic( data, p=1 ):
     text += ',\n'.join( table )
     text += '\n}'
     if p:
-        print(text)
+        _printME_(text)
     return text 
 
 def pp(path):
@@ -2246,7 +2252,7 @@ def createDestinationFolders( folder, isFile=False, p=False ):
     try:
         os.mkdir( folder )
         if p:
-            print( folder )
+            _printME_( folder )
         return folder
     except Exception as e:
         pass
@@ -2612,7 +2618,7 @@ class ONLINE:
                     if os.path.isfile(p):
                         os.unlink(p)
                     if not os.path.isfile( p ):
-                        print()
+                        _printME_()
                         cp( [ 'downloading:', l ], 'yellow' )
                         url = 'http://reph.us/tools/'+l
                         page = requests.get(url)
@@ -2623,7 +2629,7 @@ class ONLINE:
                         vc.HD.saveText( page_code, p )
                         cp( [ 'saved:', p ], 'yellow' )
                 else:
-                    print(rec)
+                    _printME_(rec)
 
     download = download_updates
     
@@ -2660,9 +2666,9 @@ class virtualFiles:
     def myFile( self, path ):
  
         c3po = vc.HD.getText( '/etc/hostname', raw=True, clean=2 )
-        print(c3po)
+        _printME_(c3po)
         c3po=c3po.split('.')[0]
-        print(c3po)
+        _printME_(c3po)
  
 
 
@@ -3756,10 +3762,10 @@ class DATE:
         if test == 1:
 
             if showPrintTry:
-                print( 'try:', 1 )
+                _printME_( 'try:', 1 )
             try:
                 if showPrint:
-                    print( 'success:', 1 )
+                    _printME_( 'success:', 1 )
                 result = ' { { ' + str(datetime.datetime.fromtimestamp(float(word)).strftime('%Y-%m-%d %H:%M:%S')) + ' } } '
                 epoch = str(datetime.datetime.fromtimestamp(float(word)).strftime('%Y-%m-%d %H:%M:%S'))
                 rData = [ result, epoch ]
@@ -3771,10 +3777,10 @@ class DATE:
         if test == 2:
 
             if showPrintTry:
-                print( 'try:', 2 )
+                _printME_( 'try:', 2 )
             try:
                 if showPrint:
-                    print( 'success:', 2 )
+                    _printME_( 'success:', 2 )
                 result = ' { { ' + str(time.strftime('%m/%d/%Y %H:%M:%S', time.gmtime(float(word)/1000.))) + ' } } '
                 epoch = str(time.strftime('%m/%d/%Y %H:%M:%S', time.gmtime(float(word)/1000.)))
                 rData = [ result, epoch ]
@@ -3787,10 +3793,10 @@ class DATE:
         if test == 3:
 
             if showPrintTry:
-                print( 'try:', 3 )
+                _printME_( 'try:', 3 )
             try:
                 if showPrint:
-                    print( 'success:', 3 )
+                    _printME_( 'success:', 3 )
                 result = ' { { ' + str(datetime.datetime.fromtimestamp(float(word)/1000.)) + ' } } '
                 epoch = str(datetime.datetime.fromtimestamp(float(word)/1000.))
                 rData = [ result, epoch ]
@@ -3802,10 +3808,10 @@ class DATE:
         if test == 4:
 
             if showPrintTry:
-                print( 'try:', 4 )
+                _printME_( 'try:', 4 )
             try:
                 if showPrint:
-                    print( 'success:', 4 )
+                    _printME_( 'success:', 4 )
                 result = ' { { ' + str(time.ctime(float(word))) + ' } } '
                 epoch = str(time.ctime(float(word)))
                 rData = [ result, epoch ]
@@ -3818,10 +3824,10 @@ class DATE:
         if test == 5:
 
             if showPrintTry:
-                print( 'try:', 5 )
+                _printME_( 'try:', 5 )
             try:
                 if showPrint:
-                    print( 'success:', 5 )
+                    _printME_( 'success:', 5 )
                 result = ' { { ' + str(time.strftime('%m/%d/%Y %H:%M:%S', time.gmtime(float(word)/1000.))) + ' } } '
                 epoch = str(time.strftime('%m/%d/%Y %H:%M:%S', time.gmtime(float(word)/1000.)))
                 rData = [ result, epoch ]
@@ -3832,10 +3838,10 @@ class DATE:
         if test == 6:
 
             if showPrintTry:
-                print( 'try:', 6 )
+                _printME_( 'try:', 6 )
             try:
                 if showPrint:
-                    print( 'success:', 6 )
+                    _printME_( 'success:', 6 )
                 result = ' { { ' + str(datetime.datetime.fromtimestamp(float(word)).strftime('%Y-%m-%d %H:%M:%S')) + ' } } '
                 epoch = str(datetime.datetime.fromtimestamp(float(word)).strftime('%Y-%m-%d %H:%M:%S'))
                 rData = [ result, epoch ]
@@ -4121,7 +4127,7 @@ class DATE:
         data = str( data )
         if not vc.STR.hasInt( data ):
             if fail:
-                print( 'Error: not a date', 0 )
+                _printME_( 'Error: not a date', 0 )
                 sys.exit()
             data = False
         data = vc.STR.singlDelim( data )
@@ -4143,7 +4149,7 @@ class DATE:
             if len( delims ) == 0:
                 if not vc.STR.isEpoch( data ):
                     if fail:
-                        print( 'Error: not a date', 1 )
+                        _printME_( 'Error: not a date', 1 )
                         sys.exit()
                     data = False
                 else:
@@ -4154,7 +4160,7 @@ class DATE:
             else:
                 if not self.hasYear( data ):
                     if fail:
-                        print( 'Error: not a date', 2 )
+                        _printME_( 'Error: not a date', 2 )
                         sys.exit()
                     data = False
                 else:
@@ -4162,7 +4168,7 @@ class DATE:
                         # print('here')
                         data = self.date2epoch( data, delims[0] )
                         if fail and type(data) == bool:
-                            print( 'Error: not a date', 3 )
+                            _printME_( 'Error: not a date', 3 )
                             sys.exit()
 
                     elif len( delims ) == 5:
@@ -4172,7 +4178,7 @@ class DATE:
                             data = test.timestamp()
                         except Exception as e:
                             if fail:
-                                print( 'Error: not a date', 4 )
+                                _printME_( 'Error: not a date', 4 )
                                 sys.exit()
                             data = False
                     elif len( delims ) == 4:
@@ -4182,12 +4188,12 @@ class DATE:
                             data = test.timestamp()
                         except Exception as e:
                             if fail:
-                                print( 'Error: not a date', 5 )
+                                _printME_( 'Error: not a date', 5 )
                                 sys.exit()
                             data = False
                     else:
                         if fail:
-                            print( 'Error: not a date', 6 )
+                            _printME_( 'Error: not a date', 6 )
                             sys.exit()
                         data = False
 
@@ -5148,28 +5154,28 @@ class PATHS:
                     if not v.isWin and subby.startswith(os.sep):
                         subby = '.'+subby
 
-                    print(subby)
-                print( subject )
+                    _printME_(subby)
+                _printME_( subject )
 
                 if v.isWin:
-                    print( subject.replace( '\\', '\\\\' ) )
+                    _printME_( subject.replace( '\\', '\\\\' ) )
                     git_path = subject
                     git_path = git_path.replace( '\\', '/' )
                     git_path = git_path.replace( ':', '' )
                     git_path = '/' + git_path
-                    print( git_path )
+                    _printME_( git_path )
 
                     wsl = '/mnt/'+ git_path[1].lower() + git_path[2:]
-                    print( wsl )
+                    _printME_( wsl )
                     
 
 
 
 
-                print( self.path2url( subject ) )
+                _printME_( self.path2url( subject ) )
 
                 if vc.FIG.path_secure( subject ).startswith('{'):
-                    print( vc.FIG.path_secure( subject ) )
+                    _printME_( vc.FIG.path_secure( subject ) )
 
                 
         
@@ -6696,9 +6702,9 @@ class Table:
             errors.append({'id': 9, 'function': 'tabGetMaxSpace()', 'cnt': 1, 'location': 'rows[0][name]', 'vars': [{'name': 'rows', 'value': 'nope to that, to big'}, {'name': 'name', 'value': name}], 'error': e})
             printBold('Error:','red')
             printBold('\tBad column input.')
-            print(9)
-            print(name)
-            print(  'rows[0]["' + '"]["'.join(name.split('.')) + '"]'  )
+            _printME_(9)
+            _printME_(name)
+            _printME_(  'rows[0]["' + '"]["'.join(name.split('.')) + '"]'  )
             printVarSimple(rows[0])
             printBold('record sample','red')
             os._exit(0)
@@ -6918,14 +6924,14 @@ class Table:
                         if groupBy.split(',')[0] == column:
                             pass
                             if self.group_space:
-                                print(self.groupLine(columnList,columnHeaderLength))
+                                _printME_(self.groupLine(columnList,columnHeaderLength))
                             if not self.isExtraRecord:
                                 for g in groupBy.split(','):
                                     groupByList[g] = ''
                         else:
                             pass
                             if self.group_space:
-                                print('')
+                                _printME_('')
                         
 
                         if not self.isExtraRecord:
@@ -7873,9 +7879,9 @@ class Table:
                     cp( 'Error: aggregate, group error', 'red' )
                     cp( '\t expected:', 'yellow' )
                     cp( '\t\t eog?level?group-len=add(len)', 'green' )
-                    print()
+                    _printME_()
                     cp( [ 'Specifically:', e ], 'red' )
-                    print()
+                    _printME_()
                     sys.exit()
 
 
@@ -7945,7 +7951,7 @@ class Table:
 
 
         if not type(self.asset) == list or len(self.asset) == 0:
-            print('Null Set')
+            _printME_('Null Set')
             sys.exit()
 
 
@@ -8023,7 +8029,7 @@ class Table:
         # print(self.assets)
         # rows = self.asset
         if not type(self.asset) == list or len(self.asset) == 0:
-            print('Null Set')
+            _printME_('Null Set')
             sys.exit()
         global errors
         global switchDefault
@@ -8248,10 +8254,10 @@ class Table:
 
         if printColumns:
             columnHeader = self.tab['table']+loopPrint(__.table_prefix_padding) + columnHeader.replace( '\n', '' )
-            print()
+            _printME_()
             printBold( columnHeader )
             # printBold( columnHeader, prefix=self.tab['header'] )
-            print()
+            _printME_()
         i = 0
         # print(self.asset)
         self.isExtraRecord_0001 = {}
@@ -8283,12 +8289,12 @@ class Table:
                     pass
                     result += self.showColumn(c,i,columnHeaderLength) + self.columnTab
                 except Exception as e:
-                    errors.append({'id': 12, 'function': 'print()', 'cnt': 1, 'location': "result += showColumn(rows,c,i) + os.sep+'t'", 'vars': [{'name': 'folder', 'value': 'folder'}, {'name': 'column', 'value': column}], 'error': e})
+                    errors.append({'id': 12, 'function': '_printME_()', 'cnt': 1, 'location': "result += showColumn(rows,c,i) + os.sep+'t'", 'vars': [{'name': 'folder', 'value': 'folder'}, {'name': 'column', 'value': column}], 'error': e})
                     printBold('Error:','red')
                     printBold('\tBad column input.')
-                    print(12)
-                    print(c)
-                    print(12)
+                    _printME_(12)
+                    _printME_(c)
+                    _printME_(12)
                     os._exit(0)
             # print(_str.totalStrip5(result)) #TESTING
             
@@ -8321,7 +8327,7 @@ class Table:
                 if '??' in __.switch_skimmer.active:
                     sys.exit()
                 pass
-                print('')
+                _printME_('')
         # if len(oldData) > 0:
         #   self.asset = oldData
         self.asset = self.backup.asset.copy()
@@ -8389,7 +8395,7 @@ class Table:
                     # footer[ theKey ] = __.aggregate.storage[k][y]['data']
                     footer[ theKey ] = __.aggregate.obj.format( [k,y], __.aggregate.storage[k][y]['data'] )
         if footer:
-            print()
+            _printME_()
             # print()
             footer_txt = []
             footer_txt.append( __.aggregate.prefix )
@@ -8400,7 +8406,7 @@ class Table:
                 footer_txt.append( spaces(2) )
             cp( footer_txt, 'cyan' ) 
             # print( __.aggregate.config )
-            print()
+            _printME_()
                     # print( f, y, __.aggregate.storage[k][y]['data'] )
             # print( k )
             # sys.exit()
@@ -8522,7 +8528,7 @@ class Table:
         f.close()
         HD.chmod(theFile)
         if printThis:
-            print('Saved: ' + file0)
+            _printME_('Saved: ' + file0)
     def get(self,theFile = '',tableTemp = True,printThis = False):
         simplejson = __.imp('simplejson')
         if theFile == '':
@@ -8534,7 +8540,7 @@ class Table:
         else:
             file0 = v.temp + os.sep + theFile
         if printThis:
-            print('Loaded: ' + file0)
+            _printME_('Loaded: ' + file0)
         if os.path.isfile(file0) == True:
             with open(file0,'r', encoding="latin-1") as json_file:
                 json_data = simplejson.load(json_file)
@@ -8590,7 +8596,7 @@ class Tables:
         self.tables[ self.index[name] ].aggregate( code )
 
 
-    def rprint( self, asset, columns, name=None, n=None, sc=True ):
+    def r_printME_( self, asset, columns, name=None, n=None, sc=True ):
         if not n is None:
             name = n
         if name is None:
@@ -8706,7 +8712,7 @@ class Tables:
                     self.tables[i].print(fields,fieldLengths,printColumns=printColumns)
                     sI = i
                 else:
-                    print('Null Set')
+                    _printME_('Null Set')
             i += 1
         if switches.isActive('FieldTotal'):
             fieldTotals = {}
@@ -8723,10 +8729,10 @@ class Tables:
                                     thisFieldB.append(char)
                             thisFieldC = int(''.join(thisFieldB))
                             fieldTotals[field]['total'] += thisFieldC
-            print()
-            print()
+            _printME_()
+            _printME_()
             for field in fieldTotals:
-                print( addComma(fieldTotals[field]['total']),'\t', fieldTotals[field]['actual'] )
+                _printME_( addComma(fieldTotals[field]['total']),'\t', fieldTotals[field]['actual'] )
 
 
 
@@ -8898,8 +8904,8 @@ class Tables:
             shouldPrint = False
 
         if shouldPrint:
-            print()
-            print()
+            _printME_()
+            _printME_()
 
             linePrint()
 
@@ -8971,7 +8977,7 @@ class Tables:
                     # footer[ theKey ] = __.aggregate.eof.storage[k][y]['data']
                     footer[ theKey ] = __.aggregate.obj.format( [k,y], __.aggregate.eof.storage[k][y]['data'] )
         if footer:
-            print()
+            _printME_()
             # print()
             footer_txt = []
             footer_txt.append( __.aggregate.prefix )
@@ -8982,7 +8988,7 @@ class Tables:
                 footer_txt.append( spaces(2) )
             cp( footer_txt, 'cyan' ) 
             # print( __.aggregate.config )
-            print()
+            _printME_()
                     # print( f, y, __.aggregate.storage[k][y]['data'] )
             # print( k )
 
@@ -9017,7 +9023,7 @@ class _md5:
                     hashData.update(chunk)
             return hashData.hexdigest()
         else:
-            print('Error: md5 no file')
+            _printME_('Error: md5 no file')
             sys.exit()
 
     def sha256File( self, fname ):
@@ -9029,7 +9035,7 @@ class _md5:
                     hashData.update(chunk)
             return hashData.hexdigest()
         else:
-            print('Error: md5 no file')
+            _printME_('Error: md5 no file')
             sys.exit()
 
 
@@ -9049,8 +9055,8 @@ class _md5:
                         'sha3_512',
             ]
             if not h in hashes:
-                print( 'Error: hash type not valid' )
-                print( '\t Try:', ' , '.join( hashes ) )
+                _printME_( 'Error: hash type not valid' )
+                _printME_( '\t Try:', ' , '.join( hashes ) )
                 sys.exit()
             if h == 'md5':
                 hashData = hashlib.md5()
@@ -9079,7 +9085,7 @@ class _md5:
                     hashData.update(chunk)
             return hashData.hexdigest()
         else:
-            print('Error: not a file')
+            _printME_('Error: not a file')
             sys.exit()
 
 
@@ -9098,8 +9104,8 @@ class _md5:
                     'sha3_512',
         ]
         if not h in hashes:
-            print( 'Error: hash type not valid' )
-            print( '\t Try:', ' , '.join( hashes ) )
+            _printME_( 'Error: hash type not valid' )
+            _printME_( '\t Try:', ' , '.join( hashes ) )
             sys.exit()
         if h == 'md5':
             hashData = hashlib.md5()
@@ -9143,8 +9149,8 @@ class _md5:
                     'sha3_512',
         ]
         if not h in hashes:
-            print( 'Error: hash type not valid' )
-            print( '\t Try:', ' , '.join( hashes ) )
+            _printME_( 'Error: hash type not valid' )
+            _printME_( '\t Try:', ' , '.join( hashes ) )
             sys.exit()
         if h == 'md5':
             hashData = hashlib.md5()
@@ -9274,17 +9280,17 @@ class Validator:
         for i in self.idOmitCache:
             char=self.asset[i]
             result +=char
-        print( result )
+        _printME_( result )
     def printPos( self, start, end, p=True ):
         if p:
-            print( 'diff:', end-start )
-            print( '__________________________' )
+            _printME_( 'diff:', end-start )
+            _printME_( '__________________________' )
         theEnd=len(self.asset) -(  end )
         payload=self.asset[ start :-theEnd ]
         if p:
-            print( 'payload:' )
+            _printME_( 'payload:' )
             cp( payload )
-            print( '__________________________' )
+            _printME_( '__________________________' )
         return payload
     def process( self ):
         self.idCache=[]
@@ -9304,7 +9310,7 @@ class Validator:
         self.buildIDCache()
         self.buildRelevantTable()
         self.buildLocationTable()
-        print( 'closed:', len(self.locationTable) )
+        _printME_( 'closed:', len(self.locationTable) )
         vc.HD.saveTable( self.tickets, 'auditCodeBase_errors.json' )
         self.dump()
     def createIndex( self, asset, language='global', skipLoad=False, simple=False, A=None, B=None, C=None, addString=None ):
@@ -9321,7 +9327,7 @@ class Validator:
         self.logistics={'characters': [{'id': 0, 'char': '[', 'print': '[', 'database': [], 'profiles': [{'language': 'global', 'groupID': 0, 'tags': ['list'], 'set': [], 'escape': [], 'rules': [], 'nest': True, 'isOpen': True, 'hasClose': True}]}, {'id': 1, 'char': ']', 'print': ']', 'database': [], 'profiles': [{'language': 'global', 'groupID': 0, 'tags': ['list'], 'set': [], 'escape': [], 'rules': [], 'nest': True, 'isOpen': False, 'hasClose': False}]}, {'id': 2, 'char': '(', 'print': '(', 'database': [], 'profiles': [{'language': 'global', 'groupID': 1, 'tags': ['parentheses'], 'set': [], 'escape': [], 'rules': [], 'nest': True, 'isOpen': True, 'hasClose': True}]}, {'id': 3, 'char': ')', 'print': ')', 'database': [], 'profiles': [{'language': 'global', 'groupID': 1, 'tags': ['parentheses'], 'set': [], 'escape': [], 'rules': [], 'nest': True, 'isOpen': False, 'hasClose': False}]}, {'id': 4, 'char': '{', 'print': '{', 'database': [], 'profiles': [{'language': 'global', 'groupID': 2, 'tags': ['dict'], 'set': [], 'escape': [], 'rules': [], 'nest': True, 'isOpen': True, 'hasClose': True}]}, {'id': 5, 'char': '}', 'print': '}', 'database': [], 'profiles': [{'language': 'global', 'groupID': 2, 'tags': ['dict'], 'set': [], 'escape': [], 'rules': [], 'nest': True, 'isOpen': False, 'hasClose': False}]}, {'id': 6, 'char': '/', 'print': '/', 'database': [], 'profiles': [{'language': 'javascript', 'groupID': 4, 'tags': ['inline comment'], 'set': [6], 'escape': [], 'rules': [], 'nest': False, 'isOpen': True, 'hasClose': True}, {'language': 'javascript', 'groupID': 3, 'tags': ['comment'], 'set': [7], 'escape': [], 'rules': [], 'nest': False, 'isOpen': True, 'hasClose': True}, {'language': 'global', 'groupID': False, 'tags': ['regex'], 'set': [], 'escape': [18], 'rules': [], 'nest': False, 'isOpen': True, 'hasClose': True}]}, {'id': 7, 'char': '*', 'print': '*', 'database': [], 'profiles': [{'language': 'global', 'groupID': False, 'tags': [], 'set': [], 'escape': [], 'rules': [], 'nest': True, 'isOpen': False, 'hasClose': False}, {'language': 'javascript', 'groupID': 3, 'tags': ['comment'], 'set': [6], 'escape': [], 'rules': [], 'nest': False, 'isOpen': False, 'hasClose': False}]}, {'id': 8, 'char': '\n', 'print': '\\n', 'database': [], 'profiles': [{'language': 'global', 'groupID': False, 'tags': ['carriage', 'end', 'return'], 'set': [], 'escape': [], 'rules': [], 'nest': True, 'isOpen': False, 'hasClose': False}, {'language': 'global', 'groupID': 4, 'tags': ['carriage', 'end', 'return'], 'set': [], 'escape': [], 'rules': [], 'nest': True, 'isOpen': False, 'hasClose': False}]}, {'id': 9, 'char': ' ', 'print': ' ', 'database': [], 'profiles': [{'language': 'global', 'groupID': False, 'tags': ['whitespace'], 'set': [], 'escape': [], 'rules': [], 'nest': True, 'isOpen': False, 'hasClose': False}]}, {'id': 10, 'char': '\t', 'print': '\\t', 'database': [], 'profiles': [{'language': 'global', 'groupID': False, 'tags': ['tab'], 'set': [], 'escape': [], 'rules': [], 'nest': True, 'isOpen': False, 'hasClose': False}, {'language': 'javascript', 'groupID': False, 'tags': ['whitespace'], 'set': [], 'escape': [], 'rules': [], 'nest': True, 'isOpen': False, 'hasClose': False}]}, {'id': 11, 'char': "'", 'print': "'", 'database': [], 'profiles': [{'language': 'global', 'groupID': False, 'tags': ['quote'], 'set': [], 'escape': [18], 'rules': [], 'nest': False, 'isOpen': True, 'hasClose': True}, {'language': 'python', 'groupID': False, 'tags': ['quote'], 'set': [11, 11], 'escape': [18], 'rules': [], 'nest': False, 'isOpen': True, 'hasClose': True}]}, {'id': 12, 'char': '"', 'print': '"', 'database': [], 'profiles': [{'language': 'global', 'groupID': False, 'tags': ['quote'], 'set': [], 'escape': [18], 'rules': [], 'nest': False, 'isOpen': True, 'hasClose': True}, {'language': 'python', 'groupID': False, 'tags': ['quote'], 'rules': [], 'nest': False, 'set': [12, 12], 'escape': [], 'isOpen': True, 'hasClose': True}]}, {'id': 13, 'char': '=', 'print': '=', 'database': [], 'profiles': [{'language': 'global', 'groupID': False, 'tags': ['equals'], 'set': [], 'escape': [], 'rules': [], 'nest': True, 'isOpen': False, 'hasClose': False}]}, {'id': 14, 'char': ';', 'print': ';', 'database': [], 'profiles': [{'language': 'global', 'groupID': False, 'tags': [], 'set': [], 'escape': [], 'rules': [], 'nest': True, 'isOpen': False, 'hasClose': False}, {'language': 'javascript', 'groupID': False, 'tags': ['end'], 'set': [], 'escape': [], 'rules': [], 'nest': True, 'isOpen': False, 'hasClose': False}]}, {'id': 15, 'char': ':', 'print': ':', 'database': [], 'profiles': [{'language': 'global', 'groupID': False, 'tags': [], 'set': [], 'escape': [], 'rules': [], 'nest': True, 'isOpen': False, 'hasClose': False}, {'language': 'javascript_Archive', 'groupID': 5, 'tags': ['nsField'], 'set': [], 'escape': [], 'rules': [], 'nest': True, 'isOpen': True, 'hasClose': False}]}, {'id': 16, 'char': '#', 'print': '#', 'database': [], 'profiles': [{'language': 'global', 'groupID': False, 'tags': [], 'set': [], 'escape': [], 'rules': [], 'nest': True, 'isOpen': False, 'hasClose': False}, {'language': 'python', 'groupID': False, 'tags': ['inline comment'], 'set': [], 'escape': [], 'rules': [], 'nest': False, 'isOpen': True, 'hasClose': False}]}, {'id': 17, 'char': ',', 'print': ',', 'database': [], 'profiles': [{'language': 'global', 'groupID': False, 'tags': ['delimiter'], 'set': [], 'escape': [], 'rules': [], 'nest': True, 'isOpen': False, 'hasClose': False}, {'language': 'javascript', 'groupID': 5, 'tags': [], 'set': [], 'escape': [], 'rules': [], 'nest': True, 'isOpen': False, 'hasClose': False}]}, {'id': 18, 'char': '\\', 'print': '\\', 'database': [], 'profiles': [{'language': 'global', 'groupID': False, 'tags': [], 'set': [], 'escape': [], 'rules': [], 'nest': True, 'isOpen': False, 'hasClose': False}, {'language': 'javascript', 'groupID': False, 'tags': [], 'set': [], 'escape': [], 'rules': [], 'nest': True, 'isOpen': False, 'hasClose': False}]}, {'id': 19, 'char': '<', 'print': '<', 'database': [], 'profiles': [{'language': 'global', 'groupID': False, 'tags': [], 'set': [], 'escape': [], 'rules': [], 'nest': True, 'isOpen': False, 'hasClose': False}, {'language': 'java', 'groupID': 6, 'tags': ['angle'], 'set': [], 'escape': [], 'rules': [], 'nest': True, 'isOpen': False, 'hasClose': False}]}, {'id': 20, 'char': '>', 'print': '>', 'database': [], 'profiles': [{'language': 'global', 'groupID': False, 'tags': [], 'set': [], 'escape': [], 'rules': [], 'nest': True, 'isOpen': False, 'hasClose': False}, {'language': 'java', 'groupID': 6, 'tags': ['angle'], 'set': [], 'escape': [], 'rules': [], 'nest': True, 'isOpen': False, 'hasClose': False}]}, {'id': 21, 'char': '.', 'print': '.', 'database': [], 'profiles': [{'language': 'global', 'groupID': False, 'tags': [], 'set': [], 'escape': [], 'rules': [], 'nest': True, 'isOpen': False, 'hasClose': False}]}, {'id': 22, 'char': '+', 'print': '+', 'database': [], 'profiles': [{'language': 'global', 'groupID': False, 'tags': [], 'set': [], 'escape': [], 'rules': [], 'nest': True, 'isOpen': False, 'hasClose': False}]}], 'action': [{'id': 0, 'description': 'namespace', 'language': 'javascript', 'patterns': [{'type': 'text', 'strict': 0, 'test': 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-.'}, {'type': 'text', 'strict': 1, 'test': '='}, {'type': 'index', 'strict': 1, 'test': '{'}], 'specific': False, 'caseStrict': False, 'start': True, 'type': [3], 'rules': ['validate namespace']}], 'type': [{'id': 0, 'name': 'function'}, {'id': 1, 'name': 'class'}, {'id': 2, 'name': 'label'}, {'id': 3, 'name': 'variable'}, {'id': 4, 'name': 'command'}], 'rules': [{'id': 0, 'language': 'javascript', 'tags': 'namespace,validate', 'description': 'validate namespace', 'loop': True, 'rules': [], 'patterns': [{'type': 'text', 'strict': 0, 'test': 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-.', 'rules': []}, {'type': 'text', 'strict': 1, 'test': ':', 'rules': []}, {'type': 'scan', 'strict': 1, 'test': 'namespace variable', 'rules': []}, {'type': 'text', 'strict': 5, 'test': ',', 'rules': []}]}, {'id': 1, 'language': 'javascript', 'tags': 'namespace,variable,quote', 'description': 'namespace variable', 'loop': False, 'rules': [], 'patterns': [{'type': 'index', 'strict': 1, 'test': '"', 'rules': []}]}, {'id': 2, 'language': 'javascript', 'tags': 'namespace,variable,quote', 'description': 'namespace variable', 'loop': False, 'rules': [], 'patterns': [{'type': 'index', 'strict': 1, 'test': "'", 'rules': []}]}, {'id': 3, 'language': 'javascript', 'tags': 'namespace,variable,braces', 'description': 'namespace variable', 'loop': False, 'rules': ['validate namespace'], 'patterns': [{'type': 'index', 'strict': 1, 'test': '{', 'rules': []}]}, {'id': 4, 'language': 'javascript', 'tags': 'namespace,variable,bracket', 'description': 'namespace variable', 'loop': False, 'rules': ['validate bracket'], 'patterns': [{'type': 'index', 'strict': 1, 'test': '[', 'rules': []}]}, {'id': 5, 'language': 'javascript', 'tags': 'namespace,variable,bracket', 'description': 'namespace variable', 'loop': False, 'rules': ['validate bracket'], 'patterns': [{'type': 'index', 'strict': 1, 'test': '[', 'rules': []}]}, {'id': 6, 'language': 'javascript', 'tags': 'namespace,variable,function', 'description': 'namespace variable', 'loop': False, 'rules': ['validate bracket'], 'patterns': [{'type': 'text', 'strict': 1, 'test': 'function', 'rules': []}, {'type': 'index', 'strict': 1, 'test': '(', 'rules': []}, {'type': 'index', 'strict': 1, 'test': '{', 'rules': []}]}, {'id': 7, 'language': 'javascript', 'tags': 'namespace,variable,number', 'description': 'namespace variable', 'loop': False, 'rules': [], 'patterns': [{'type': 'text', 'strict': 0, 'test': '0123456789.', 'rules': []}, {'type': 'text', 'strict': 1, 'test': ',', 'rules': []}]}, {'id': 8, 'language': 'javascript', 'tags': 'scan,namespace', 'description': 'scan', 'loop': False, 'rules': [], 'patterns': [{'type': 'text', 'strict': 0, 'test': 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-.', 'rules': []}, {'type': 'text', 'strict': 1, 'test': '=', 'rules': []}, {'type': 'index', 'strict': 1, 'test': '{', 'rules': ['validate namespace']}]}]}
         self.backupLoaded={ 'attempted': False, 'indexes': False, 'validaton': False, 'profile': False }
         if not len( asset ):
-            print( 'No Data' )
+            _printME_( 'No Data' )
             return []
         self.asset=asset
         self.language=language
@@ -9356,13 +9362,13 @@ class Validator:
         
         return self.indexes
     def filePath( self ):
-        print( self.projectFile.replace( 'PROJECT', 'indexes' ) )
-        print( self.projectFile.replace( 'PROJECT', 'validaton' ) )
+        _printME_( self.projectFile.replace( 'PROJECT', 'indexes' ) )
+        _printME_( self.projectFile.replace( 'PROJECT', 'validaton' ) )
     def lookupChars( self ):
-        print( '"', ord('"') )
-        print()
+        _printME_( '"', ord('"') )
+        _printME_()
         for i,char in enumerate(self.asset):
-            print( char, ord( char ) )
+            _printME_( char, ord( char ) )
         sys.exit()
     def colorPrint_old( self ):
         
@@ -9426,17 +9432,17 @@ class Validator:
             
             if setColor is None:
                 pass
-                print( char, end='' )
+                _printME_( char, end='' )
             else:
                 
                 
                 
-                print( cp( char, color=setColor, shouldPrint=False ), end='' )
+                _printME_( cp( char, color=setColor, shouldPrint=False ), end='' )
                 
         pass
 
     def dicFix( self, f,var, add ):
-        print(type(var),type(add))
+        _printME_(type(var),type(add))
         table = {}
         table2 = {}
         if type(var) == dict:
@@ -9759,7 +9765,7 @@ class Validator:
                     txt=self.assetSnipet( o, c )
                     
                     
-                    print( nothing( txt, c=dent['c'], b=dent['b'], attr=dent['attr'], p=0 ), end='' )
+                    _printME_( nothing( txt, c=dent['c'], b=dent['b'], attr=dent['attr'], p=0 ), end='' )
                     
                     o=c
                 elif ident in colors['parts']:
@@ -9781,17 +9787,17 @@ class Validator:
                     io=o + ooo
                     ic=c - ccc
                     txt=self.assetSnipet( o, oc )
-                    print( nothing( txt, c=dent[0]['c'], b=dent[0]['b'], attr=dent[0]['attr'], p=0 ), end='' )
+                    _printME_( nothing( txt, c=dent[0]['c'], b=dent[0]['b'], attr=dent[0]['attr'], p=0 ), end='' )
                     txt=self.assetSnipet( io, ic )
-                    print( nothing( txt, c=dent[1]['c'], b=dent[1]['b'], attr=dent[1]['attr'], p=0 ), end='' )
+                    _printME_( nothing( txt, c=dent[1]['c'], b=dent[1]['b'], attr=dent[1]['attr'], p=0 ), end='' )
                     
                     if not ic==c-1:
                         icc=ic
                         while not icc==c-1:
                             icc+=1
-                            print( self.asset[icc], end='' )
+                            _printME_( self.asset[icc], end='' )
                     txt=self.assetSnipet( c, cc )
-                    print( nothing( txt, c=dent[0]['c'], b=dent[0]['b'], attr=dent[0]['attr'], p=0 ), end='' )
+                    _printME_( nothing( txt, c=dent[0]['c'], b=dent[0]['b'], attr=dent[0]['attr'], p=0 ), end='' )
                     o=cc
                 elif ident in colors['ends']:
                     dent=colors['ends'][ident]
@@ -9807,7 +9813,7 @@ class Validator:
                             oc+=ooo
                         io=o + ooo
                         txt=self.assetSnipet( o, oc )
-                        print( nothing( txt, c=dent['c'], b=dent['b'], attr=dent['attr'], p=0 ), end='' )
+                        _printME_( nothing( txt, c=dent['c'], b=dent['b'], attr=dent['attr'], p=0 ), end='' )
                         o-=1
                         o+=ooo
                     elif o in close:
@@ -9820,18 +9826,18 @@ class Validator:
                             cc+=ccc
                         ic=c - ccc
                         txt=self.assetSnipet( c, cc )
-                        print( nothing( txt, c=dent['c'], b=dent['b'], attr=dent['attr'], p=0 ), end='' )
+                        _printME_( nothing( txt, c=dent['c'], b=dent['b'], attr=dent['attr'], p=0 ), end='' )
                         o-=1
                         o+=ccc
                 else:
-                    print( self.asset[o], end='' )
+                    _printME_( self.asset[o], end='' )
             elif self.asset[o] in colors['chars']:
                 dent=colors['chars'][ self.asset[o] ]
-                print( nothing( self.asset[o], c=dent['c'], b=dent['b'], attr=dent['attr'], p=0 ), end='' )
+                _printME_( nothing( self.asset[o], c=dent['c'], b=dent['b'], attr=dent['attr'], p=0 ), end='' )
             else:
-                print( self.asset[o], end='' )
+                _printME_( self.asset[o], end='' )
             o+=1
-        print()
+        _printME_()
         return None
         sys.exit()
         ident=[]
@@ -9846,12 +9852,12 @@ class Validator:
         for i,char in enumerate(self.asset):
             if setColor is None:
                 pass
-                print( char, end='' )
+                _printME_( char, end='' )
             else:
                 
                 
                 
-                print( cp( char, color=setColor, shouldPrint=False ), end='' )
+                _printME_( cp( char, color=setColor, shouldPrint=False ), end='' )
     def query( self, label=None, special=None, iID=None, gID=None, cID=None, rID=None, pID=None, oc='open,close', tag=None, pos=None, justIDs=None, isOpen=None, justIndex=False, isChar=False, isGroup=False, quoteComment=False ):
         
         locationLabel=None
@@ -10095,7 +10101,7 @@ class Validator:
             self.scanIsOpen[ self.action_queue ]=False
             self.action_queue +=1
         else:
-            print( 'Omited Dupicate', xID )
+            _printME_( 'Omited Dupicate', xID )
         
     def buildCarriageIndex( self ):
         
@@ -10388,16 +10394,16 @@ class Validator:
                                     if False and i==5:
                                         sys.exit()
                                     if False and aID==1:
-                                        print( '\t', i, aID, self.scanID[ str(aID)+'open' ], self.action[ aID ]['open']['label'] )
+                                        _printME_( '\t', i, aID, self.scanID[ str(aID)+'open' ], self.action[ aID ]['open']['label'] )
                                     if self.action[ aID ]['open']['label'][ self.scanID[ str(aID)+'open' ] ]==char:
                                         self.scanID[ str(aID)+'open' ] +=1
                                         if False and aID==1:
-                                            print( i, aID, 'Found:', self.action[ aID ]['open']['label'], self.scanID[ str(aID)+'open' ], self.asset[i+1] )
+                                            _printME_( i, aID, 'Found:', self.action[ aID ]['open']['label'], self.scanID[ str(aID)+'open' ], self.asset[i+1] )
                                     else:
                                         if False and aID==1:
-                                            print( i, aID, 'Not Found:', self.action[ aID ]['open']['label'], self.scanID[ str(aID)+'open' ], self.asset[i], self.action[ aID ]['open']['label'][ self.scanID[ str(aID)+'open' ]-1 ],self.action[ aID ]['open']['label'][ self.scanID[ str(aID)+'open' ] ] )
-                                            print(  self.asset[i], self.action[ aID ]['open']['label'][ self.scanID[ str(aID)+'open' ] ] )
-                                            print(  "'"+self.asset[i]+"'", "'"+self.action[ aID ]['open']['label'][ self.scanID[ str(aID)+'open' ] ] +"'" )
+                                            _printME_( i, aID, 'Not Found:', self.action[ aID ]['open']['label'], self.scanID[ str(aID)+'open' ], self.asset[i], self.action[ aID ]['open']['label'][ self.scanID[ str(aID)+'open' ]-1 ],self.action[ aID ]['open']['label'][ self.scanID[ str(aID)+'open' ] ] )
+                                            _printME_(  self.asset[i], self.action[ aID ]['open']['label'][ self.scanID[ str(aID)+'open' ] ] )
+                                            _printME_(  "'"+self.asset[i]+"'", "'"+self.action[ aID ]['open']['label'][ self.scanID[ str(aID)+'open' ] ] +"'" )
                                         self.scanID[ str(aID)+'open' ]=0
                                         if False and aID==1:
                                             cp( '02 ' +str(i)+ self.action[ aID ]['open']['label'], 'green' )
@@ -11072,17 +11078,17 @@ class Validator:
                 errors.append( yyy )
         
         if errors:
-            print()
-            print()
-            print()
+            _printME_()
+            _printME_()
+            _printME_()
             cp( [  'CODE NOT VALID:'  ] )
             cp( [  '\tfound', len(errors), 'errors'  ], 'yellow' )
             for x in errors:
                 y={  'char': self.asset[x], 'line': self.getLine(x) }
                 nothing( [  '\t\t\t', y  ], 'yellow' )
-            print()
-            print()
-            print()
+            _printME_()
+            _printME_()
+            _printME_()
             return None
             sys.exit()
         
@@ -11560,26 +11566,26 @@ class Validator:
             try:
                 vbs={ 'label': self.components['lastLabel'][ thisItem ], 'values': self.components['sub'][ thisItem  ] }
             except Exception as e:
-                print( thisItem, self.components['char'][thisItem] )
+                _printME_( thisItem, self.components['char'][thisItem] )
                 sys.exit()
             asdf=False
             if asdf:
-                print()
-                print(thisItem, vbs)
+                _printME_()
+                _printME_(thisItem, vbs)
             for x in self.components['lastLabel'][ thisItem ]:
                 if x in self.identity['location']['open']:
                     txt=self.assetSnipet( x, self.identity['location']['open'][x] )
                 else:
                     txt=self.asset[x]
                 if asdf:
-                    print( '\t LABEL', txt )
+                    _printME_( '\t LABEL', txt )
             for x in self.components['sub'][ thisItem  ]:
                 if x in self.identity['location']['open']:
                     txt=self.assetSnipet( x, self.identity['location']['open'][x] )
                 else:
                     txt=self.asset[x]
                 if asdf:
-                    print( '\t VALUE', txt )
+                    _printME_( '\t VALUE', txt )
             self.components['sub'][ thisItem  ]=[]
             self.components['builder'][ thisItem ].append(vbs)
         self.breaks={
@@ -11684,17 +11690,17 @@ class Validator:
                 errors.append( yyy )
         
         if errors:
-            print()
-            print()
-            print()
+            _printME_()
+            _printME_()
+            _printME_()
             cp( [  'FILE NOT VALID:'  ] )
             cp( [  '\tfound', len(errors), 'errors'  ], 'yellow' )
             for x in errors:
                 y={  'char': self.asset[x], 'line': self.getLine(x) }
                 nothing( [  '\t\t\t', y  ], 'yellow' )
-            print()
-            print()
-            print()
+            _printME_()
+            _printME_()
+            _printME_()
             return None
             sys.exit()
         
@@ -11796,7 +11802,7 @@ class Validator:
         
         
         test=self.validateDic(o,c)
-        print( 'validateDic:', test )
+        _printME_( 'validateDic:', test )
         for rec in test:
             
             
@@ -11863,9 +11869,9 @@ class Validator:
                 self.identity['dicType'][o]='fn'
             cp( self.identity['dicType'][o] )
         elif self.asset[o]=='(': 
-            print( '(' )
+            _printME_( '(' )
         elif self.asset[o]=='[': 
-            print( '[' )
+            _printME_( '[' )
         else:
             closeLen=''
             if type(o)==int:
@@ -11894,22 +11900,22 @@ class Validator:
                     pix+=1
                     prefix+='\t'
                 if not prefix is None and not color is None:
-                    print( prefix, o, cp( txt, color, p=0 ), l, closeLen )
+                    _printME_( prefix, o, cp( txt, color, p=0 ), l, closeLen )
                 else:
-                    print( o, cp( txt, 'yellow', p=0 ), l, closeLen )
+                    _printME_( o, cp( txt, 'yellow', p=0 ), l, closeLen )
             else:
-                print( type(i) )
-                print( str(i) )
+                _printME_( type(i) )
+                _printME_( str(i) )
     def the_validation_process( self, start=None, end=None ):
         result=self.preValidate()
         
-        print(  )
-        print( '____' )
-        print(  )
+        _printME_(  )
+        _printME_( '____' )
+        _printME_(  )
         for group in result:
-            print(  )
+            _printME_(  )
             if type(group)==dict:
-                print( group )
+                _printME_( group )
                 
                 self.the_validation_process_items( group['values'], group['label'] )
             elif type(group)==list:
@@ -11991,7 +11997,7 @@ class Validator:
                     try:
                         c=self.identity['location']['open'][i]
                     except Exception as e:
-                        print( 'Error:', self.asset[i] )
+                        _printME_( 'Error:', self.asset[i] )
                     i=c
                     
                     
@@ -12167,7 +12173,7 @@ class Validator:
                     for x in outer:
                         self.indexes['group'][groupID]['index'].append( x )
                 except Exception as e:
-                    print( outer, self.indexes['group'][groupID]['index'] )
+                    _printME_( outer, self.indexes['group'][groupID]['index'] )
                 
                 pass
                 
@@ -12211,8 +12217,8 @@ class Validator:
         
         
         for record in self.indexes['char']:
-            print()
-            print()
+            _printME_()
+            _printME_()
             cp( record['label'] )
             cp( len(record['index']), 'green' )
             chars=[]
@@ -12232,7 +12238,7 @@ class Validator:
         self.action_queue +=1
     def multiLanguageValidation( self ):
         if self.backupLoaded['validaton']:
-            print( 'Validation Loaded' )
+            _printME_( 'Validation Loaded' )
             sys.exit()
         self.scanID={}
         self.testID={}
@@ -12350,7 +12356,7 @@ class Validator:
             if not i:
                 
                 validaton=self.runRules( {'open': ns['open']+1, "close": ns['close']-1}, 'validate namespace' )
-                print( text )
+                _printME_( text )
                 
         
     def runRules( self, on, run, returnFirst=False, shouldLoop=False, scanStart=None, scanEnd=None ):
@@ -12476,7 +12482,7 @@ class Validator:
                             else:
                                 theChar=asset[i]
                             
-                            print( '___ A', self.rls[rID]['action'][aID]['patterns'][testID]['type'], aID, testID, loopCount, loopICount, i, asset[i] )
+                            _printME_( '___ A', self.rls[rID]['action'][aID]['patterns'][testID]['type'], aID, testID, loopCount, loopICount, i, asset[i] )
                             
                             if self.rls[rID]['action'][aID]['patterns'][testID]['type']=='text':
                                 
@@ -12486,7 +12492,7 @@ class Validator:
                                     else:
                                         self.rls[rID]['scanID'][aID]=0
                                         self.rls[rID]['action'][aID]['active']=False
-                                        print( 'Fail 01', self.rls[rID]['testID'][aID],'-', asset[i], theChar )
+                                        _printME_( 'Fail 01', self.rls[rID]['testID'][aID],'-', asset[i], theChar )
                                         
                                         self.rls[rID]['data'][aID]=[]
                                     if self.rls[rID]['scanID'][aID]==len(self.rls[rID]['action'][aID]['patterns'][testID]['test']):
@@ -12508,46 +12514,46 @@ class Validator:
                                         else:
                                             self.rls[rID]['scanID'][aID]=0
                                             self.rls[rID]['action'][aID]['active']=False
-                                            print( 'Fail 02', self.rls[rID]['testID'][aID],'-', asset[i], theChar )
+                                            _printME_( 'Fail 02', self.rls[rID]['testID'][aID],'-', asset[i], theChar )
                                             
                                             self.rls[rID]['data'][aID]=[]
                                     else:
-                                        print( 'asdf test' )
+                                        _printME_( 'asdf test' )
                             elif self.rls[rID]['action'][aID]['patterns'][testID]['type']=='index':
-                                print( 'index HERE' )
+                                _printME_( 'index HERE' )
                                 if self.rls[rID]['action'][aID]['patterns'][testID]['test'][ self.rls[rID]['scanID'][aID] ]==theChar:
                                     self.rls[rID]['scanID'][aID] +=1
                                 else:
                                     self.rls[rID]['scanID'][aID]=0
                                     self.rls[rID]['action'][aID]['active']=False
-                                    print( 'Fail 03', self.rls[rID]['testID'][aID],'-', asset[i], theChar )
+                                    _printME_( 'Fail 03', self.rls[rID]['testID'][aID],'-', asset[i], theChar )
                                     
                                     
                                     self.rls[rID]['data'][aID]=[]
                                 if self.rls[rID]['scanID'][aID]==len(self.rls[rID]['action'][aID]['patterns'][testID]['test']):
-                                    print( 'works' )
+                                    _printME_( 'works' )
                                     self.rls[rID]['pattern'][aID]=True
                                     
                             elif self.rls[rID]['action'][aID]['patterns'][testID]['type']=='scan':
                                 
                                 cp( '\nSTARTING SCAN\n', 'cyan' )
-                                print( i+1, asset[i], startOn, asset[ i+startOn ] )
+                                _printME_( i+1, asset[i], startOn, asset[ i+startOn ] )
                                 scan=self.runRules( self.asset, self.rls[rID]['action'][aID]['patterns'][testID]['test'], returnFirst=True, scanStart=i+startOn, scanEnd=None )
                                 cp( '\nSCAN COMPLETE\n', 'darkcyan' )
-                                print( scan )
+                                _printME_( scan )
                                 self.rls[rID]['pattern'][aID]=True
                             if self.rls[rID]['pattern'][aID]:
                                 
                                 cp( [ self.rls[rID]['action'][aID]['tags'], testID ], 'white' )
                                 cp( [ 'pattern', asset[ii] ], 'green' )
                                 if self.rls[rID]['action'][aID]['patterns'][testID]['type']=='text':
-                                    print( 'pattern text' )
+                                    _printME_( 'pattern text' )
                                     text=self.assetSnipet( i-self.rls[rID]['scanID'][aID], i, asset )
                                     cp( [ 'text:', text ], 'cyan' )
                                     self.rls[rID]['data'][aID].append({ 'id': self.rls[rID]['action'][aID]['id'], 'pattern': testID, 'data': text })
                                 
                                 elif False and self.rls[rID]['action'][aID]['patterns'][testID]['type']=='index':
-                                    print( 'pattern index' )
+                                    _printME_( 'pattern index' )
                                     
                                     oc=list(filter(lambda data: data['open']==startOn+i, self.indexes['group'][ self.itemLabel( asset[i], 'group' ) ]['oc']))
                                     try:
@@ -12568,9 +12574,9 @@ class Validator:
                                     
                                     text=self.assetSnipet( oc[0]['open'], oc[0]['close'], asset )
                                     cp( [ 'text:', text ], 'cyan' )
-                                    print( text )
-                                    print( rID, self.rlID, i, startOn+i, asset[i], oc, self.itemLabel( asset[i], 'group' ), self.indexes['group'][ self.itemLabel( asset[i], 'group' ) ]['oc'] )
-                                    print( oc[0]['close'] )
+                                    _printME_( text )
+                                    _printME_( rID, self.rlID, i, startOn+i, asset[i], oc, self.itemLabel( asset[i], 'group' ), self.indexes['group'][ self.itemLabel( asset[i], 'group' ) ]['oc'] )
+                                    _printME_( oc[0]['close'] )
                                     i=oc[0]['close'] + 1
                                 elif self.rls[rID]['action'][aID]['patterns'][testID]['type']=='scan':
                                     text=self.assetSnipet( oc[0]['open'], oc[0]['close'], self.asset )
@@ -12612,7 +12618,7 @@ class Validator:
                                         aIDx+=1
                                 
                             
-                            print( '___ B', self.rls[rID]['action'][aID]['patterns'][testID]['type'], aID, testID, loopCount, loopICount, i, asset[i] )
+                            _printME_( '___ B', self.rls[rID]['action'][aID]['patterns'][testID]['type'], aID, testID, loopCount, loopICount, i, asset[i] )
                             
                         pass
                         
@@ -12629,7 +12635,7 @@ class Validator:
                     pass
                     skippedWS=False
                     if allFail:
-                        print( testID )
+                        _printME_( testID )
                         cp( [ 'All Fail', scanStart ], 'red' )
                         return records
             pass
@@ -12652,7 +12658,7 @@ class Validator:
             try:
                 result +=asset[x]
             except Exception as e:
-                print( asset )
+                _printME_( asset )
                 cp( [ len(asset), start, end, 'self.assetSnipet' ], 'red' )
                 return None
                 
@@ -12752,19 +12758,19 @@ class Validator:
                 except Exception as e:
                     theTotals[ str(len(cleanKeys[key])) ]=1
             for key in theTotals.keys():
-                print( key, theTotals[key] )
+                _printME_( key, theTotals[key] )
         if 1 in test:
             for key in cleanKeys.keys():
                 if not len( cleanKeys[key] )==2:
                     cp( '_________________________________________', 'red' )
-                    print( 'line:', cp(str(cleanKeys[key][0]['line']), 'green')  )
-                    print( len( cleanKeys[key] ), cleanKeys[key] )
+                    _printME_( 'line:', cp(str(cleanKeys[key][0]['line']), 'green')  )
+                    _printME_( len( cleanKeys[key] ), cleanKeys[key] )
                     self.printPos( cleanKeys[key][0]['start']-20, cleanKeys[key][0]['start']+20 )
         
         if 2 in test:
             for key in cleanKeys.keys():
                 if len( cleanKeys[key] )==2 and cleanKeys[key][0]['label']=="'":
-                    print( 'line:', cp(str(cleanKeys[key][0]['line']), 'green')  )
+                    _printME_( 'line:', cp(str(cleanKeys[key][0]['line']), 'green')  )
                     self.printPos( cleanKeys[key][0]['start'], cleanKeys[key][1]['end'] )
     def buildIndexes2( self ):
         self.index_structure={ 
@@ -12844,7 +12850,7 @@ class Validator:
         
         
         
-        print( 'done' )
+        _printME_( 'done' )
         sys.exit()
         
         
@@ -12934,16 +12940,16 @@ class Validator:
                 return True
         if not label is None and not pID is None and not gID is None:
             if not self.inIndex( label=label ):
-                print( 'Error: test for label first' )
+                _printME_( 'Error: test for label first' )
                 sys.exit()
             if not self.inIndex( gID=gID ):
-                print( 'Error: test for gID first' )
+                _printME_( 'Error: test for gID first' )
                 sys.exit()
                 if pID in self.indexes['group'][gID]['open']['pIDs']:
                     return True
         if not label is None and not pID is None:
             if not self.inIndex( label=label ):
-                print( 'Error: test for label first' )
+                _printME_( 'Error: test for label first' )
                 sys.exit()
                 for item in self.indexes['group']:
                     if item['label']==label:
@@ -12955,7 +12961,7 @@ class Validator:
                                 return True
         elif not rID is None and not gID is None:
             if not self.inIndex( gID=gID ):
-                print( 'Error: test for gID first' )
+                _printME_( 'Error: test for gID first' )
                 sys.exit()
             if 'open' in oc:
                 if self.indexes['group'][gID]['open']['rID']==rID:
@@ -13121,7 +13127,7 @@ class Validator:
             if not ticket['isOpen']:
                 self.omitRanges.append({ 'start': ticket['start'], 'end': ticket['end'], })
                 closed+=1
-        print( 'closed:', closed )
+        _printME_( 'closed:', closed )
     def buildLocationTable( self ):
         relevantTable=self.relevantTable
         end=len(self.asset)-1
@@ -13177,7 +13183,7 @@ class Validator:
                         else:
                             close=self.charByGroupIdClose( lan['groupID'] )
                         if type(close)==bool:
-                            print( 'Error: line 292... ish' )
+                            _printME_( 'Error: line 292... ish' )
                             sys.exit()
                         if not close['char'] in self.tickets['scanningFor']['char']:
                             self.tickets['scanningFor']['char'].append( close['char'] )
@@ -13334,7 +13340,7 @@ class Validator:
                     isComment=False
                     tagList=[]
                     if lan['isOpen'] and 'comment' in lan['tags'] :
-                        print( lan['tags'] )
+                        _printME_( lan['tags'] )
                         tagList.append( 'comment' )
                         isComment=True
                         theClose=''
@@ -13721,7 +13727,7 @@ class Validator:
         for i in xref.keys():
             cp( self.namespaceFunctions[i]['ns'] )
             for x in xref[i]:
-                print( '\t', x )
+                _printME_( '\t', x )
     # def quickTest( self ):
     #   dataSample=vc.HD.getTable( 'auditCodeBase_js_field_tmp.json', 1 )
     #   self.tableAudit=_profile.records.audit( 'tableAudit', dataSample )
@@ -13769,7 +13775,7 @@ class Validator:
                 self.idOmitCache.append( i )
             i +=1
         if not( len(self.idOmitCache) + len(self.idCache) )==len(self.asset):
-            print( 'Error xy' )
+            _printME_( 'Error xy' )
     def findCode( self, start, end ):
         return self.asset[ start :-( len(self.asset) - end ) ]
     def buildCarriageReturnTable( self ):
@@ -13786,7 +13792,7 @@ class Validator:
         
     def noComment( self ):
         commentRecords=self.query( tag='comment', justIDs=True )
-        print( commentRecords )
+        _printME_( commentRecords )
         sys.exit()
 def loadProject( project=None ):
     
@@ -14070,7 +14076,7 @@ class PY3TO2:
         line = line.replace( '  ', '\t' )
         lx = self.spaceOut(' '+line+' ')
         if not '.print(' in line and ' print ' in lx and not ' def ' in lx and not "'print" and not '"print' and 'print(' in line:
-            line = line.replace( 'print(', 'print ' )
+            line = line.replace( '_printME_(', 'print ' )
             line = self.cleanMe( line, ' ' )
             if line.endswith(')'):
                 line = line[:-1]
@@ -14079,7 +14085,7 @@ class PY3TO2:
         line = line.replace( 'except '+'Exception, e:', 'except e:' )
         line = line.replace( 'except '+'Exception, ee:', 'except ee:' )
         line = line.replace( 'except '+'Exception, error:', 'except error:' )
-        line = line.replace( 'def '+'print(', 'def print2(' )
+        line = line.replace( 'def '+'_printME_(', 'def print2(' )
         line = line.replace( 'self'+'.print(', 'self.print2(' )
         line = line.replace( '#!/usr/bin'+'/python3', '#!/usr/bin'+'/python2' )
         line = line.replace( 'ð', '' )
@@ -14165,55 +14171,55 @@ class PY3TO2:
                 cp( [ 'Saved:', t ], 'cyan' )
 
         else:
-            print(file)
+            _printME_(file)
 
 
 def print_help():
     cp( 'help', 'yellow' )
     # os.system('cls')
-    print('')
+    _printME_('')
 
     try:
-        print('Version: \t', cp( v.appInfo['version'], 'cyan', p=0 ) + '\n')
+        _printME_('Version: \t', cp( v.appInfo['version'], 'cyan', p=0 ) + '\n')
         configured = True
     except Exception as e:
         configured = False
 
     try:
-        print('Description: \t', v.appInfo['description'] + '\n')
+        _printME_('Description: \t', v.appInfo['description'] + '\n')
         configured = True
     except Exception as e:
         configured = False
 
     try:
         if len(v.appInfo['prerequisite']) > 0:
-            print('Prerequisite:')
+            _printME_('Prerequisite:')
             for prereq in v.appInfo['prerequisite']:
-                print('\t' + prereq)
-            print('\n')
+                _printME_('\t' + prereq)
+            _printME_('\n')
     except Exception as e:
         pass
     if configured:
         if len(v.appInfo['examples']) > 0:
-            print('Examples:')
+            _printME_('Examples:')
             for ex in v.appInfo['examples']:
-                print('\t' + ex)
-            print('\n')
+                _printME_('\t' + ex)
+            _printME_('\n')
         if len(v.appInfo['columns']) > 0:
-            print('Columns and abbreviations:')
+            _printME_('Columns and abbreviations:')
             result = ''
             for col in v.appInfo['columns']:
                 result += col['name'] + '(' + col['abbreviation'] + '), '
             result = result[:-2]
-            print('\t' + result + '\n')
+            _printME_('\t' + result + '\n')
             # print('\n')
     switches.print()
 
     pass
     if 'a' in switches.values('Help') or 'all' in switches.values('Help'):
-        print('ALL:')
+        _printME_('ALL:')
         for sw in switches.switches:
-            print( '\t', 't ', switches.switches[sw].switch.split(',')[0] )
+            _printME_( '\t', 't ', switches.switches[sw].switch.split(',')[0] )
             # for x in switches.switches[sw]:
             # print(x)
             # sys.exit()
@@ -14461,7 +14467,7 @@ def action():
         if v.bash:
             vc.HD.saveTableSimp( v.bash, v.config )
         test = vc.HD.getText( v.config, raw=True )
-        print( test )
+        _printME_( test )
         if os.path.isfile(v.config):
             cp( pp(v.config) , 'cyan' )
         else:
@@ -14478,9 +14484,9 @@ call "%widgets%\\widgets\\batch\\c.bat" %1
             vc.HD.saveText( cc_bat, v.home+os.sep+'rr.bat' )
             vc.HD.saveText( cc_bat, v.home+os.sep+'cc.bat' )
             A.ff.getFolders( v.bash['widgets']+'\\widgets\\powershell', r=False )
-            print()
-            print()
-            print()
+            _printME_()
+            _printME_()
+            _printME_()
             template='Set-Variable -Name "!VAR!" -Value "!PATH!" -Visibility Public'
             # template='New-Variable -Name "!VAR!" -Value "!PATH!" -Visibility Public'
             powershellVars=''
@@ -14517,7 +14523,7 @@ call "%widgets%\\widgets\\batch\\c.bat" %1
                     theFile = theFile.replace('# 3DF20E1B1A8A',powershellVars)
                     vc.HD.saveText( theFile, to )
                 cp( [ ':','installed powershell tools', v.home+'\\OneDrive\\Documents\\WindowsPowerShell' ], 'green' )
-                print( ':','which python3;     now works in powershell, widgets, etc' )
+                _printME_( ':','which python3;     now works in powershell, widgets, etc' )
             elif os.path.isdir(v.home+'\\Documents\\WindowsPowerShell'):
                 too=v.home+'\\Documents\\WindowsPowerShell\\'
                 if not os.path.isfile(too+'backup.rt'):
@@ -14532,7 +14538,7 @@ call "%widgets%\\widgets\\batch\\c.bat" %1
                     theFile = theFile.replace('# 3DF20E1B1A8A',powershellVars)
                     vc.HD.saveText( theFile, to )
                 cp( [ ':','installed powershell tools', v.home+'\\Documents\\WindowsPowerShell' ], 'green' )
-                print( ':','which python3;     now works in powershell, widgets, etc' )
+                _printME_( ':','which python3;     now works in powershell, widgets, etc' )
         if os.path.isfile(v.home+os.sep+'.rt'+os.sep+'.config.hash'):
             try:
                 os.system(v.bash['code_editor'] +' '+ v.home+os.sep+'.rt'+os.sep+'.config.hash')
@@ -14548,7 +14554,7 @@ call "%widgets%\\widgets\\batch\\c.bat" %1
 
     if switches.isActive('Setting-PIPE-Print'):
         for x in v.pipe:
-            print(x)
+            _printME_(x)
         if switches.values('Setting-PIPE-Print'):
             return None
 
@@ -14569,13 +14575,13 @@ call "%widgets%\\widgets\\batch\\c.bat" %1
                     if x == '/n' or x == chr(10) or x == '\r':
                         break
                     phead+=x
-                print(phead)
+                _printME_(phead)
             else:
                 head = vc.HD.head(path)
                 # x = ''.join([chr(int(''.join(c), 16)) for c in zip(head[0::2],head[1::2])])
                 resolved = vc.HD.asciiHeaderRun( head )
-                print( resolved['hex'] )
-                print( resolved['ascii'] )
+                _printME_( resolved['hex'] )
+                _printME_( resolved['ascii'] )
                 # print( isB )
 
         return None
@@ -14613,7 +14619,7 @@ example: ~/.rt/.config.hash
 }
                 """
             pass
-            print(asdf)
+            _printME_(asdf)
 
 
         else: 
@@ -14630,11 +14636,11 @@ example: ~/.rt/.config.hash
                             else:
                                 items.append( 'export '+cl(key)+'='+table[key]+'\n' )
                     items.append('\n')
-                    print( ''.join(items) )
+                    _printME_( ''.join(items) )
         return None
     if switches.isActive('Header-Fix'):
         vc.FIG.home()
-        print( v.home )
+        _printME_( v.home )
         return None
     if switches.isActive('Bash-Vars'):
         vc.FIG.bash_vars()
@@ -14652,7 +14658,7 @@ example: ~/.rt/.config.hash
         if v.bash:
             vc.HD.saveTableSimp( v.bash, v.config )
         test = vc.HD.getText( v.config, raw=True )
-        print( test )
+        _printME_( test )
         if os.path.isfile(v.config):
             cp( pp(v.config) , 'cyan' )
         else:
@@ -14675,11 +14681,11 @@ example: ~/.rt/.config.hash
             os.unlink(v.config)
             
         if not os.path.isfile(v.config):
-            print( {} )
+            _printME_( {} )
             return None
 
         test = vc.HD.getText( v.config, raw=True )
-        print( test )
+        _printME_( test )
         if os.path.isfile(v.config):
             cp( pp(v.config) , 'cyan' )
         else:
@@ -14704,7 +14710,7 @@ example: ~/.rt/.config.hash
         if v.bash:
             vc.HD.saveTableSimp( v.bash, v.config )
         test = vc.HD.getText( v.config, raw=True )
-        print( test )
+        _printME_( test )
         if os.path.isfile(v.config):
             cp( pp(v.config) , 'cyan' )
         else:
@@ -14723,7 +14729,7 @@ example: ~/.rt/.config.hash
         if v.bash:
             vc.HD.saveTableSimp( v.bash, v.config )
         test = vc.HD.getText( v.config, raw=True )
-        print( test )
+        _printME_( test )
         if os.path.isfile(v.config):
             cp( pp(v.config) , 'cyan' )
         else:
@@ -14743,7 +14749,7 @@ example: ~/.rt/.config.hash
         if v.bash:
             vc.HD.saveTableSimp( v.bash, v.config )
         test = vc.HD.getText( v.config, raw=True )
-        print( test )
+        _printME_( test )
         if os.path.isfile(v.config):
             cp( pp(v.config) , 'cyan' )
         else:
@@ -14763,7 +14769,7 @@ example: ~/.rt/.config.hash
         if v.bash:
             vc.HD.saveTableSimp( v.bash, v.config )
         test = vc.HD.getText( v.config, raw=True )
-        print( test )
+        _printME_( test )
         if os.path.isfile(v.config):
             cp( pp(v.config) , 'cyan' )
         else:
@@ -14809,7 +14815,7 @@ example: ~/.rt/.config.hash
         if v.bash:
             vc.HD.saveTableSimp( v.bash, v.config )
         test = vc.HD.getText( v.config, raw=True )
-        print( test )
+        _printME_( test )
         if os.path.isfile(v.config):
             cp( pp(v.config) , 'cyan' )
         else:
@@ -14833,9 +14839,9 @@ example: ~/.rt/.config.hash
             vc.HD.saveTableSimp( v.bash, v.config )
         if os.path.isfile(v.config):
             test = vc.HD.getText( v.config, raw=True )
-            print( test )
+            _printME_( test )
         else:
-            print('{}')
+            _printME_('{}')
         if os.path.isfile(v.config):
             cp( pp(v.config) , 'cyan' )
         else:
@@ -14848,18 +14854,18 @@ example: ~/.rt/.config.hash
         cp( 'example:', 'yellow' )
         printDic( v.bash_defaults )
 
-        print('________________________')
+        _printME_('________________________')
         cp( 'config file:', 'yellow' )
         if os.path.isfile(v.config):
             test = vc.HD.getText( v.config, raw=True )
-            print( test )
+            _printME_( test )
         else:
-            print('{}')
+            _printME_('{}')
         if os.path.isfile(v.config):
             cp( pp(v.config) , 'cyan' )
         else:
             cp( pp(v.config) , 'red' )
-        print('________________________')
+        _printME_('________________________')
         
         cp( 'live:', 'yellow' )
         vc.FIG.bash_vars(p=0)
@@ -14879,7 +14885,7 @@ example: ~/.rt/.config.hash
         if v.bash:
             vc.HD.saveTableSimp( v.bash, v.config )
         test = vc.HD.getText( v.config, raw=True )
-        print( test )
+        _printME_( test )
         if os.path.isfile(v.config):
             cp( pp(v.config) , 'cyan' )
         else:
@@ -14909,7 +14915,7 @@ example: ~/.rt/.config.hash
         try:
             from operator import itemgetter
         except Exception as e:
-            print( 'missing operator' )
+            _printME_( 'missing operator' )
         vc.FIG.bash_vars(p=0)
         if switches.isActive('Folder-Extensions'):
             items = switches.values('Folder-Extensions')
@@ -14925,7 +14931,7 @@ example: ~/.rt/.config.hash
             exData.append({ 'ext': key, 'cnt': v.ext[key]})
         v.exData = sorted(exData, key=itemgetter('cnt'))
         for rec in v.exData:
-            print( rec['ext'], rec['cnt'] )
+            _printME_( rec['ext'], rec['cnt'] )
         return v.exData
 
     if switches.isActive('Download-Tool-Updates'):
@@ -14936,7 +14942,7 @@ example: ~/.rt/.config.hash
         url = switches.values('URL-Requests')[0]
         page_code = vc.ONLINE.page(url)
         if not switches.isActive('URL-Requests-Save'):
-            print( page_code )
+            _printME_( page_code )
         if switches.isActive('URL-Requests-Save'):
             vc.HD.saveText( page_code, switches.values('URL-Requests-Save')[0] )
         return None
@@ -14945,7 +14951,7 @@ example: ~/.rt/.config.hash
         try:
             import wget
         except Exception as e:
-            print('missing wget')
+            _printME_('missing wget')
             return None
         url = switches.values('URL-WGET')[0]
         s = switches.values('URL-WGET_Save')[0]
@@ -14995,7 +15001,7 @@ example: ~/.rt/.config.hash
             ft = A.ff.files[f]
             if len(ft):
                 cp( [ '\t', ft ], 'cyan' )
-        print()
+        _printME_()
         cp( 'Folders:', 'yellow' )
         for f in A.ff.folders:
             ft = A.ff.folders[f]
@@ -15010,7 +15016,7 @@ example: ~/.rt/.config.hash
         if type(s) == bool:
             if s:
                 prn = cp( 'online', 'green', p=0 ) +': '+ cp( vc.ONLINE.ip, 'yellow', p=0 )
-                print(prn)
+                _printME_(prn)
             else:
                 cp( 'offline', 'red' )
         else:
@@ -15075,7 +15081,7 @@ example: ~/.rt/.config.hash
     if switches.isActive('File-Valid'):
         for path in switches.values('File-Valid'):
             records = vc.HD.json(path)
-            print(records)
+            _printME_(records)
         return None
 
 
@@ -15089,7 +15095,7 @@ example: ~/.rt/.config.hash
         _bm = Bookmarks()
         for a in switches.values('App-m'):
             b = _bm.b(a)
-            print(b)
+            _printME_(b)
         return None
 
     if switches.isActive('App-bm-gen'):
@@ -15118,10 +15124,10 @@ example: ~/.rt/.config.hash
         for i,line in enumerate(v.pipe):
             if showLine(line):
                 if switches.isActive('Clean'):
-                    print(line)
+                    _printME_(line)
                 else:
                     pad = len(str(v.pipe))
-                    print(vc.STR.padZero( i, pad ),line)
+                    _printME_(vc.STR.padZero( i, pad ),line)
         return None
 
     if switches.isActive('Server-Utility-Port-PS-Kill'):
@@ -15262,6 +15268,7 @@ if __name__ == '__main__':
 # 'Installer'
 
 # bashrc eof a3bc42ec51e9
+
 
 
 

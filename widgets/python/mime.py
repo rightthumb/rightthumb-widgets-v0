@@ -206,6 +206,10 @@ def fix(path,mimetype):
     if parts[-1] in mimetypes[mimetype]: return mimetypes[mimetype][parts[-1]]
     return None
 def genMime(path):
+    result = genMimeRun(path)
+    if result.startswith('application/office-') and result.endswith('ml'): result = result[0:len(result)-2]
+    return result
+def genMimeRun(path):
     global slowAF
     if path in slowAF:
         if os.stat( path ).st_size == slowAF[path]['bytes']: return slowAF[path]['mimetype']
@@ -238,7 +242,8 @@ def genMime(path):
                 sys.exit()
             
             xx = xx.replace('application/','application/office-')
-            return 'application/office-'+xx
+            yy = 'application/office-'+xx
+            return yy
     else: return mimetype
 
 def script(path):

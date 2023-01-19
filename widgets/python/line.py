@@ -948,9 +948,9 @@ if _.switches.isActive('CrossReferenceReverse') == False:
 		focus()
 
 		if _.switches.isActive('Plus') and len(_.switches.records('relevant'))==1:
-			if _.showLine(line): _.pr(line); continue;
+			if _.showLine(line): _.pr(line); cnt+=1; continue;
 		if _.switches.isActive('Plus') and _.switches.isActive('Minus') and len(_.switches.records('relevant'))==2:
-			if _.showLine(line): _.pr(line); continue;
+			if _.showLine(line): _.pr(line); cnt+=1; continue;
 
 
 		if _.switches.isActive('Upper') == True:
