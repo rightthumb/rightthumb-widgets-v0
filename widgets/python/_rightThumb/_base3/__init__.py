@@ -1,8 +1,8 @@
 #!/usr/bin/python3
 
 
-MINI_ADS = True
 MINI_ADS = False
+MINI_ADS = True
 
 # ¯\_(ツ)_/¯
 
@@ -48,8 +48,8 @@ from datetime import date
 '''
 simplejson = __.imp('simplejson')
 simplejson.loads(var)
-simplejson.dumps(rows, indent=4, sort_keys=False)
-simplejson.dumps(rows)
+simplejson.dumps(rows, indent=4, sort_keys=False, default=str)
+simplejson.dumps(rows, sort_keys=False, default=str)
 '''
 
 def cross_multiplication(dic):
@@ -153,8 +153,8 @@ def json_(data,simp=False,s=None):
 	if type(data) == str:
 		return simplejson.loads(data)
 	if not simp:
-		return simplejson.dumps(data, indent=4, sort_keys=False)
-	return simplejson.dumps(data)
+		return simplejson.dumps(data, indent=4, sort_keys=False, default=str)
+	return simplejson.dumps(data, sort_keys=False, default=str)
 
 
 def print_pr(text):
@@ -287,7 +287,7 @@ def random_color():
 	return random.choice(_all_colors_tact_)
 
 print_ed_group={}
-def print_(*args,p=None,c=None,pad=3,g=None,end=None,pvs=None,pv=None,json=None, dic=None, line=None):
+def print_(*args,p=None,c=None,pad=3,g=None,end=None,pvs=None,pv=None,json=None, dic=None, line=None, rstrip=True):
 	args=list(args)
 	if c == 'r' or c == 'random': c=random_color()
 
@@ -297,11 +297,16 @@ def print_(*args,p=None,c=None,pad=3,g=None,end=None,pvs=None,pv=None,json=None,
 	else: rint=True;
 
 	if json:
-		simplejson=__.imp('simplejson'); args[0]=simplejson.dumps(args[0], indent=4, sort_keys=False);
+		simplejson=__.imp('simplejson'); args[0]=simplejson.dumps(args[0], indent=4, sort_keys=False, default=str);
 		if rint:
 			print(args[0])
 		return args[0]
 	# if pvs: pvs=None; pv=1;
+
+	if dic == 5:
+		for i,a in enumerate(args):
+			if type(a) == dict: args[i] = str(a).replace('{','').replace('}','').replace("'",'').replace(', | ',' | ')
+
 	if not dic and type(dic) == bool or ( type(dic) == int and dic == 1): printDicFields(args[0]); return None
 	try:
 		if not end is None and (type(end) == bool or type(end) == int) and end:   end='\r';
@@ -319,7 +324,7 @@ def print_(*args,p=None,c=None,pad=3,g=None,end=None,pvs=None,pv=None,json=None,
 			except: return printVarSimpleFake(args[0])
 
 		if pv: return printVar(args[0])
-		if json: simplejson=__.imp('simplejson'); args[0]=simplejson.dumps(args[0], indent=4, sort_keys=False);
+		if json: simplejson=__.imp('simplejson'); args[0]=simplejson.dumps(args[0], indent=4, sort_keys=False, default=str);
 		if not line is None and line:
 			args=[linePrint(c=c,p=0)]
 		global print_ed; global print_ed_group; items=[];
@@ -334,6 +339,7 @@ def print_(*args,p=None,c=None,pad=3,g=None,end=None,pvs=None,pv=None,json=None,
 			else:
 				items.append(str(arg))
 		prn=pre+' '.join(items)
+		if rstrip: prn=prn.rstrip()
 		if not c is None: prn=cp( prn, c, p=0 );
 		if p is None: rint=True;
 		elif p: rint=True;
@@ -1270,7 +1276,7 @@ def bAlias(subject):
 		subjects = subject
 	else:
 		print_(type(subject))
-		_.e( 'bAlias', subject )
+		err( 'bAlias', subject )
 
 	results=[]
 
@@ -1662,6 +1668,7 @@ def isDate( theDate=None, record={}, tz=None, q=True, f=None,w=None,what=None ):
 		if f=='time': return friendlyDate2( epoch ).split(' ')[1];
 		if f=='fdate': return friendlyDate( epoch );
 		if f=='fdatea': return friendlyDate( epoch )[:-3];
+		if f=='cmd': return friendlyDate( epoch )[:-3].replace(' ',' @ ').replace('-','.').replace(':','.');
 		if f=='month': return _dir.getMonthFromEpoch( epoch );
 		if f=='year': return _dir.getYearFromEpoch( epoch );
 		if f=='woy': return _dir.getWeekAndYear( epoch );
@@ -1814,7 +1821,7 @@ def isDate( theDate=None, record={}, tz=None, q=True, f=None,w=None,what=None ):
 	if type(epoch) == str:
 		epoch = autoDate(epoch.replace('z',''))
 
-	todo='ago ago-dic ago-txt epoch ordinal text-date text-time text-datetime sdate strip stript stripa date time fdate fdatea month year woy woy2 dow dow2 days tz iso fo'
+	todo='ago ago-dic ago-txt epoch ordinal text-date text-time text-datetime sdate strip stript stripa date time fdate fdatea cmd month year woy woy2 dow dow2 days tz iso fo'
 
 	for k in todo.split(' '):
 		record[k]=isDate(epoch,f=k)
@@ -2782,9 +2789,9 @@ def saveCryptTable( rows, theFile, db=False, bank=False, index=False, temp=False
 			px = file0
 
 	if indentCode:
-		dataDump = simplejson.dumps(rows, indent=4, sort_keys=sort_keys)
+		dataDump = simplejson.dumps(rows, indent=4, sort_keys=sort_keys, default=str)
 	else:
-		dataDump = simplejson.dumps(rows)
+		dataDump = simplejson.dumps(rows, sort_keys=False, default=str)
 	
 	if archive:
 		import _rightThumb._md5 as _md5
@@ -2968,7 +2975,7 @@ def linePrint(  label=None, text=None, txt='_', mn=50, add=5, p=2, c='', x=None,
 def dic_key_sort( table, n=False ):
 	saveTable( table, '-tmp-dic_key_sort.json', tableTemp=True, printThis=False,  sort_keys=True )
 	return getTable( '-tmp-dic_key_sort.json', tableTemp=True )
-	# dataDump = json.dumps(table, indent=4, sort_keys=True)
+	# dataDump = json.dumps(table, indent=4, sort_keys=True, default=str)
 	# print_(dataDump)
 	# sys.exit()
 	# return json.load( str(dataDump) )
@@ -3970,6 +3977,14 @@ class dt:
 #     print(data)
 #     return data
 def isData( data=None, focus=None, pipeClean=True, required=False,     r=None, c=None, noclean=None ):
+	global switches
+	if data is None and switches.isActive('Paste-isData-json'):
+		simplejson=__.imp('simplejson')
+		d=getClip().strip()
+		return simplejson.loads(d)
+	elif data is None and switches.isActive('Paste-isData'): return getClip().split('\n')
+	
+	
 	if not noclean is None: pipeClean=noclean
 	def _isData_(tst):
 		global myFileLocation_Files
@@ -3995,10 +4010,10 @@ def isData( data=None, focus=None, pipeClean=True, required=False,     r=None, c
 			focus = __.appReg
 		data = pipe_surfing()
 
-
+	if type(data) ==list and  len(data)==1 and data[0]=='': data=[]
 	if not data:
 		data=[]
-		global switches
+		# global switches
 		isClean=False
 
 		for name in v.isData:
@@ -7876,7 +7891,7 @@ def d2json( data, sort_keys=False ):
 	# saveTable2( data, _v.json_temp )
 	# txt = getText( _v.json_temp, raw=True )
 
-	return simplejson.dumps(data, indent=4, sort_keys=sort_keys)
+	return simplejson.dumps(data, indent=4, sort_keys=sort_keys, default=str)
 
 def printVar1( data ):
 	print_( d2json( data ) )
@@ -7884,7 +7899,7 @@ def printVar1( data ):
 
 def printVar( data, sort_keys=False, isDic=None ):
 	simplejson = __.imp('simplejson')
-	result = simplejson.dumps(data, indent=4, sort_keys=False)
+	result = simplejson.dumps(data, indent=4, sort_keys=False, default=str)
 	printVarColor( result )
 	print_(  )
 	return result
@@ -7984,7 +7999,7 @@ def printVar2( data, sort_keys=False ):
 def printVarSimple( data, sort_keys=False, isDic=None, prefix=None, remove=None, d=None, p=True, r=None ):
 	#n)--> r, stands for just return and not print
 	simplejson = __.imp('simplejson')
-	dump=simplejson.dumps(data, indent=4, sort_keys=sort_keys)
+	dump=simplejson.dumps(data, indent=4, sort_keys=sort_keys, default=str)
 	if d:
 		if p:
 			print_(dump)
@@ -9589,9 +9604,9 @@ def saveLog( logname, rows=[], focus=True, printThis=True ):
 	file0 = _v.myTables + _v.slash+'applogs'+_v.slash + log
 
 	if indentCode:
-		dataDump = simplejson.dumps(rows, indent=4, sort_keys=True)
+		dataDump = simplejson.dumps(rows, indent=4, sort_keys=True, default=str)
 	else:
-		dataDump = simplejson.dumps(rows)
+		dataDump = simplejson.dumps(rows, sort_keys=False, default=str)
 	f = open(file0,'w')
 	f.write(str(dataDump))
 	f.close()
@@ -9629,9 +9644,9 @@ def saveTable( rows, theFile, tableTemp=False, printThis=True, indentCode=True, 
 	if __.print_path:
 		print_(file0)
 	if indentCode:
-		dataDump = simplejson.dumps(rows, indent=4, sort_keys=sort_keys)
+		dataDump = simplejson.dumps(rows, indent=4, sort_keys=sort_keys, default=str)
 	else:
-		dataDump = simplejson.dumps(rows)
+		dataDump = simplejson.dumps(rows, sort_keys=False, default=str)
 	
 	if archive:
 		import _rightThumb._md5 as _md5
@@ -9823,11 +9838,11 @@ def saveTableProject( project, rows=[], theFile='', printThis=False, sort_keys=F
 		print_(theFile)
 		return None
 	if indentCode:
-		dataDump = simplejson.dumps(rows, indent=4, sort_keys=sort_keys)
+		dataDump = simplejson.dumps(rows, indent=4, sort_keys=sort_keys, default=str)
 	else:
-		dataDump = simplejson.dumps(rows)
+		dataDump = simplejson.dumps(rows, sort_keys=False, default=str)
 
-	# dataDump = simplejson.dumps(rows, indent=4, sort_keys=sort_keys)
+	# dataDump = simplejson.dumps(rows, indent=4, sort_keys=sort_keys, default=str)
 	f = open(theFile,'w')
 	f.write(str(dataDump))
 	f.close()
@@ -9845,11 +9860,11 @@ def saveTableDB( rows, theFile, printThis=False, sort_keys=False, indentCode=Tru
 	if __.print_path:
 		print_(theFile)
 	if indentCode:
-		dataDump = simplejson.dumps(rows, indent=4, sort_keys=sort_keys)
+		dataDump = simplejson.dumps(rows, indent=4, sort_keys=sort_keys, default=str)
 	else:
-		dataDump = simplejson.dumps(rows)
+		dataDump = simplejson.dumps(rows, sort_keys=False, default=str)
 
-	# dataDump = simplejson.dumps(rows, indent=4, sort_keys=sort_keys)
+	# dataDump = simplejson.dumps(rows, indent=4, sort_keys=sort_keys, default=str)
 	f = open(theFile,'w')
 	f.write(str(dataDump))
 	f.close()
@@ -9870,11 +9885,11 @@ def saveTable2( rows, theFile, printThis=False, sort_keys=False, indentCode=True
 		theFile = _v.stmp + _v.slash + theFile
 
 	if indentCode:
-		dataDump = simplejson.dumps(rows, indent=4, sort_keys=sort_keys)
+		dataDump = simplejson.dumps(rows, indent=4, sort_keys=sort_keys, default=str)
 	else:
-		dataDump = simplejson.dumps(rows)
+		dataDump = simplejson.dumps(rows, sort_keys=False, default=str)
 
-	# dataDump = simplejson.dumps(rows, indent=4, sort_keys=sort_keys)
+	# dataDump = simplejson.dumps(rows, indent=4, sort_keys=sort_keys, default=str)
 	f = open(theFile,'w')
 	f.write(str(dataDump))
 	f.close()
@@ -9887,7 +9902,7 @@ def saveTable3( rows, theFile, printThis=False, me=0 ):
 	HD.chmod(theFile)
 	simplejson = __.imp('simplejson')
 	# print_('*******************',theFile)
-	dataDump = simplejson.dumps(rows)
+	dataDump = simplejson.dumps(rows, sort_keys=False, default=str)
 	f = open(theFile,'w')
 	f.write(str(dataDump))
 	f.close()
@@ -10392,7 +10407,7 @@ def saveTableSplitNew( rows,theFile,tableTemp = True,printThis = True, project=F
 		cnt += 1
 		path = file0 + count(cnt) + suffix
 	simplejson = __.imp('simplejson')
-	dataDump = simplejson.dumps(rows, indent=4, sort_keys=True)
+	dataDump = simplejson.dumps(rows, indent=4, sort_keys=True, default=str)
 	f = open(path,'w')
 	f.write(str(dataDump))
 	f.close()
@@ -10960,6 +10975,10 @@ class Switches:
 
 
 	def isActive( self, name, theFocus=False ):# isSwitchActive
+		if not theFocus: theFocus = __.appReg
+		if theFocus in self.dex and name in self.dex[theFocus]:
+			# print('from index')
+			return self.switches[self.dex[theFocus][name]].active
 		return self.fieldGet( name, 'active', theFocus )
 
 	def getField( self, name, field, theFocus=False ):
@@ -12800,7 +12819,13 @@ class Table:
 							for cn in str(v['data']):
 								if cn in '0123456789.':
 									nX.append(cn)
-					result = float(''.join(nX))
+					
+					try:
+						result = float(''.join(nX))
+					except Exception as e:
+						nXj=[]
+						for x99 in nX:nXj.append(str(x99))
+						result = ''.join(nXj)
 					if str(result).endswith('.0'):
 						result = int(result)
 					# print_(result)
@@ -13763,7 +13788,7 @@ class Table:
 			file0 = str(_v.myTables) + str(_v.slash) + str(theFile)
 		else:
 			file0 = _v.stmp + _v.slash + theFile
-		dataDump = simplejson.dumps(self.asset, indent=4, sort_keys=True)
+		dataDump = simplejson.dumps(self.asset, indent=4, sort_keys=True, default=str)
 		f = open(file0,'w')
 		f.write(str(dataDump))
 		f.close()
@@ -14604,8 +14629,8 @@ def timeAgo22( do='', startDate=None,epoch=None, d=None ):
 
 	if len(timeAgoBase) > 1 and do == timeAgoBase[1]:
 		if timeAgoBaseCount == 3 or timeAgoBaseCount == 5 :
-			pass
-			ts += 86400-1
+			try: ts += 86400-1
+			except Exception as ee: pass
 	# print_( timeAgoBaseCount, ts )
 	return ts
 
@@ -19518,6 +19543,8 @@ def load():
 		switches.register('LoadEpoch', '-loadepoch')
 		switches.register('PrintEpoch', '-printepoch')
 		switches.register('chmod', '-chmod,-777')
+		switches.register( 'Paste-isData', '--pa,--paste,-ppa,-ppaste,-ispa,-idpa' )
+		switches.register( 'Paste-isData-json', '--json,-pjson,-jsonp' )
 		# switches.register('SkipColumnTriggers', '-skiptriggers')
 		defaultScriptTriggers_do()
 		
@@ -19542,7 +19569,7 @@ class regImp:
 		global regImps
 		global appInfo
 		if app is None:
-			e( 'class regImp', 'expected: _.regImp(__.appReg,app)  or _.regImp(focus(),app)' )
+			err( 'class regImp', 'expected: _.regImp(__.appReg,app)  or _.regImp(focus(),app)' )
 
 		if focus is None: focus = __.appReg
 
@@ -19554,6 +19581,12 @@ class regImp:
 		self.parent = focus
 		# print_( 'self.imp = importlib.import_module', app )
 		self.imp = importlib.import_module(app)
+		# print(app)
+		# print(app)
+		# print(app)
+		# for x in dir(self.imp):
+		# 	print(x)
+		# sys.exit()
 		# self.imp = importlib.util.spec_from_file_location( app, _v.py + _v.slash + app + '.py' )
 		# print_( os.path.isfile( _v.py + _v.slash + app + '.py' ) )
 		# print_( self.imp )
@@ -19674,11 +19707,15 @@ class regImp:
 
 		__.appReg = self.focusPop
 
-	def action( self, focusPop=True ):
+	def action( self, arg='c766f06b', focusPop=True ):
+		# focusBK = __.appReg
 		__.appReg = self.focus
 
 		self.imp.appDBA = self.focus
-		result = self.imp.action()
+		if not arg == 'c766f06b':
+			result = self.imp.action(arg)
+		else:
+			result = self.imp.action()
 
 		if focusPop:
 			__.appReg = self.focusPop
@@ -19688,15 +19725,16 @@ class regImp:
 
 	# def do( self, func, arg=False, focusPop=True ):
 	def do(self, *args, **kwargs):
+		# focusBK = __.appReg
 		focusPop=True
+
 		args=list(args)
+		if len(args) == 1 and args[0] == 'action': return self.action()
 		func=args.pop(0)
 		_kwargs={}
 		for k in kwargs:
 			if k == 'focusPop': focusPop=kwargs[k]
 			else: _kwargs[k]=kwargs[k]
-
-		
 
 		__.appReg = self.focus
 
@@ -19937,7 +19975,7 @@ ppvv=printVarColor
 pvv=printVarColor
 pvpv=printVarColor
 
-def e( msg , e=None, kill=True):
+def err( msg , e=None, kill=True):
 	
 	cp( linePrint(txt='*',p=0), 'red' )
 	
@@ -19996,13 +20034,14 @@ def e( msg , e=None, kill=True):
 	if kill:
 		sys.exit()
 	# △ ▽
+e=err
 
 def key( subject ):
 	try:
 		table = getTableDB( 'secureStrings.hash' )
 		return table[subject]
 	except Exception as ee:
-		e( 'secureString', ee )
+		err( 'secureString', ee )
 
 
 
@@ -20555,7 +20594,7 @@ def life(subject):
 
 def ico():
 	random=__.imp('random')
-	ads=fo(_v.life+'ads')
+	ads=fo(_v.life+'apps')
 	ri = random.randrange(len(ads))
 	cho=ads[ri]
 	ic=list('🧻🧪💀🦆🦉🥓🦄🦀🖕🍣🍤🍥🍡🥃🥞🐕👾🐉🐓🐋🐌🐢👽👿🥑🐡🐗💐🏹🎨🐔🐛🎯🌯📷🛶🥕🍸🍳🐲🎣🐟🦅👀🐸🤞💪💾👻🐊🍔🌭🍀🕓🦊🍟🥝🐒🥞🐼📎🐧💩🍕🍍🦏🍗🌈🐳🦑🚀🙈🙊🙉🌮🐅🐯🍉🚽🍅👅🎩🍷')
@@ -20669,12 +20708,17 @@ def dots(path):
 			if i == len(rts)-1: return eval(rts[0]);
 nsfw_=False
 def ad(path=None,label='ad'):
+	if not os.path.isdir(_v.ads+os.sep+'apps'): return None
 	global MINI_ADS
+	global ads
+	ads = []
 	
+	def add_ad_fo(ad_fo):
+		global ads
+		for a2 in fo(_v.ads+os.sep+ad_fo): ads.append(a2);
 
-	# print(_v.life+'ads')
+	# print(_v.life+'apps')
 	# sys.exit()
-	if not os.path.isdir(_v.life+'ads'): return None
 	global nsfw; global nsfw_;
 	if not nsfw_:
 		should_dl=False
@@ -20701,11 +20745,13 @@ def ad(path=None,label='ad'):
 	elif not path:
 		nsfw_=True
 		random=__.imp('random')
-		ads=fo(_v.life+'ads')
-		for a2 in fo(_v.life+'ads.quotes'): ads.append(a2);
+		add_ad_fo('apps')
+		add_ad_fo('quotes')
+		
 
 		if nsfw:
-			for a2 in fo(_v.life+'ads.nsfw'): ads.append(a2);
+			add_ad_fo('nsfw')
+			
 		
 		ri = random.randrange(len(ads))
 		cho=ads[ri]
@@ -20751,7 +20797,7 @@ def ad(path=None,label='ad'):
 	linePrint(c='green',center=label, length=_width)
 	# cp( '</ad>', 'yellow' )
 	return ad
-ads=ad
+# ads=ad
 
 def URL(url):
 	requests=dots('requests.get')
@@ -20802,7 +20848,7 @@ def saveConfig(data,path):
 		elif type(string) == int or type(string) == float: return _cl_(str(string));
 		elif type(string) == dict or type(string) == list:
 			simplejson = __.imp('simplejson')
-			return simplejson.dumps(string)
+			return simplejson.dumps(string, sort_keys=False, default=str)
 
 		return _cl_(str(string))
 
@@ -21195,11 +21241,91 @@ def osvar(var=None,val=None):
 	# printenv
 	# os.environ['USERPROFILE']
 
+def pyApp(path):
+	os=__.imp('os.sep')
+	path=__.path(path)
+	paths=path.split(os.sep)
+	file = paths[-1]
+	# return file
+	# return paths[-3]
+	# return os.sep
+	# return 'test'
+
+	if len(paths)>1 and paths[-2] == '_rightThumb':
+		if file == '__init__.py':
+			return '_rightThumb'
+		else:
+			return '_rightThumb.'+file[:-3]
+	elif len(paths)>2 and paths[-3] == '_rightThumb':
+		if file == '__init__.py':
+			return '_rightThumb.'+paths[-2]
+		else:
+			return '_rightThumb.'+paths[-2]+'.'+file[:-3]
+
+
+	else:
+		if file == '__init__.py' and len(paths)>1:
+			return paths[-2]
+		else:
+			return file[:-3]
+
+
+def getYML(path,here=False,h=None,auto=True,a=None):
+	if not a is None: auto=a
+	if not h is None: here=h
+	if here: auto = False
+	if not auto: here=True
+	loaded=False
+	yaml = __.imp('yaml')
+	os = __.imp('os.path.isfile')
+	if os.path.isfile(path):
+		data = getText( path, raw=True )
+		loaded=True
+	elif not here and  os.path.isfile(_v.myTables + _v.slash + path):
+		data = getText( _v.myTables + _v.slash + path, raw=True )
+		loaded=True
+	data = data.replace('\r','')
+	lines=[]
+	for line in data.split('\n'):
+		if line.strip(): lines.append(  line.rstrip()  )
+	data='\n'.join(lines)
+	data = data.replace('\t','    ')
+	if loaded: data = data.replace('\t','    ')
+	if not loaded: return {}
+	return yaml.safe_load(data)
+
+
+def saveYML(data,path,here=False,h=None):
+	if not h is None: here = h
+	yaml = __.imp('yaml')
+	os = __.imp('os.sep')
+	y=yaml.dump( data, sort_keys=False )
+	if not here and not os.sep in path:
+		path = _v.myTables + _v.slash + path
+	saveText(y,path)
+
+def saveYML2(data,path): return saveYML(data,path,here=True)
+def getYML2(path): return getYML(path,here=True)
+
+# class auditor:
+# 	def __init__(self, label='default'):
+# 		time=__.imp('time.time')
+# 		self.label = label
+# 		self.epoch=time.time()
+# 	def stamp( location='default', line=None,    l=None ):
+# 		if not l is None: line=l
+
+
+
+getYAML2=getYML2
+getYAML=getYML
+saveYAML=saveYML
+saveYAML2=saveYML2
 imp=regImp
 # class regImp:
-
-
 # positiveResultsCode
 # __.sw.PlusCode
 # def caseUnspecific
 # caseISspecific
+
+
