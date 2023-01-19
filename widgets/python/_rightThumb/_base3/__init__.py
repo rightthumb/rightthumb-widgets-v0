@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 
+# 1674156772
 
 MINI_ADS = False
 MINI_ADS = True
@@ -4699,7 +4700,33 @@ def pDiff( one, two, use=None,r=None ):
 		return b
 
 
+def pDiff2( one, two, use=None,r=None ):
+	if not use is None:
+		use = use.lower()
+	if not r is None:
+		
+		a = percentageDiff(one,two,rnd=r,isFloat=True)
+		b = percentageDiff(two, one,rnd=r,isFloat=True)
+	else:
+		a = percentageDiff(one,two)
+		b = percentageDiff(two, one)
+	if use == None:
+		return str(a)+'%, '+str(b)+'%'
+	if a > b:
+		g = a
+		l = b
+	else:
+		l = a
+		g = b
 
+	if 'g' in use:
+		return g
+	elif 'l' in use:
+		return l
+	elif '1' in use or 'f' in use or 'a' in use or 'one' in use:
+		return a
+	elif '3' in use or 's' in use or 'b' in use or 'two' in use:
+		return b
 
 	
 def clean_dic( dic, omit ):
@@ -9277,7 +9304,7 @@ def calculate_monthdelta(date1, date2):
 #     x.start()
 
 
-def showLine( string, plus = '', minus = '',plusOr = False, end=None,isSub=False, OR=None ):
+def showLine( string, plus = '', minus = '',plusOr = False, end=None,isSub=False, OR=None, code=False ):
 	'''( string, plus='', minus='', plusOr=False, end=None, isSub=False, OR=None )'''
 	# print_(plus)
 	# print_(string)
@@ -9288,8 +9315,8 @@ def showLine( string, plus = '', minus = '',plusOr = False, end=None,isSub=False
 	if plus is None :
 		result = True
 	else:
-		if switches.isActive('Plus') or not plus == '':
-			# print_('asdf')
+		if switches.isActive('Plus') or code or not plus == '':
+			# print('asdf',plus);sys.exit();
 			if switches.isActive('PlusCode'):
 				result = positiveResultsCode(string,plus,plusOr,end,OR=OR)
 			else:
@@ -11918,6 +11945,15 @@ class Table:
 		rows = self.asset
 		spacer = 1
 		# print_('*** ' + name)
+
+		# 23-01-09 14:19
+		# an attempt to fix    p ls -r    long folder names that include new trigger   _.tables.fieldProfileSet( 'data', 'folder', 'trigger', relative_folder )
+			# def fn(field):return field
+			# for i,x in enumerate(self.tableProfile):
+			# 	if self.tableProfile[i]['name'] == name and '' in self.tableProfile[i] and  'function' in type(self.tableProfile[i]['trigger']):
+			# 		fn=self.tableProfile[i]['trigger']
+		# did not work
+
 		size = len(name) + spacer
 		
 		# print_(name,00)
@@ -19117,6 +19153,35 @@ def percentageDiffInt( smaller, bigger, isFloat=False, rnd=1 ):
 				return 0
 			return r
 
+def percentageDiff( smaller, bigger, isFloat=False ):
+	# fr = force rounding
+	# return int((smaller/bigger)*100)
+	try:
+
+		if not isFloat:
+			return abs(smaller/bigger)*100
+		else:
+			r = abs(smaller/bigger)*100
+			if str(r) == '0.0':
+				return 0
+			# if str(r).endswtih('.0'):
+			#     return int(r)
+
+			return r
+
+	except Exception as e:
+		return 0
+		smaller+=1
+		bigger+=1
+		if not isFloat:
+			return abs(smaller/bigger)*100
+		else:
+			r = abs(smaller/bigger)*100
+			if str(r) == '0.0':
+				return 0
+			return r
+
+
 def percentageDiffIntAuto( smaller, bigger, isFloat=False ):
 	if smaller < bigger:
 		s = smaller
@@ -19629,8 +19694,8 @@ class regImp:
 		}
 
 
-		if '.' in focus or app is None:
-			pr('_.imp should be __.imp, auto corrected', focus, c='r')
+		if (not '__' and '.' in focus) or app is None:
+			# pr('_.imp should be __.imp, auto corrected', focus, c='r')
 			return __.imp(focus)
 
 		if not a is None: app=a
@@ -21440,3 +21505,13 @@ def inject( snippet='', data='', header='', b='9a26c2d7f6b0', e='71564a5f3d65', 
 # def sort(self,fields=''):# sortThis 
 # switches.trigger(
 # formatColumnsSort
+
+
+def percentageReduce(n,p): return n*(1-(p/100))
+def percentageAdd(n,p): return n*(1+(p/100))
+
+# _.percentageMinus(75000,25)
+# _.percentageAdd(56250,25)
+
+
+
