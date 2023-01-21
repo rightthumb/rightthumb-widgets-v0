@@ -170,6 +170,11 @@ def imp( subject, imp_table_testing=False ):
         return imp_run( subject, imp_table_testing )
 
 def imp_install(mod):
+    mod = mod.split('.')[0]
+    try:
+        exec('import os')
+    except Exception as e:
+        raise e
     print()
     print('__.imp_install('+mod+')')
     print()
@@ -320,13 +325,14 @@ def path( p, ab=True, pop=False, file=False, slash=None, folder=None, fi=None, f
                 p = os.path.abspath(p)
             except Exception as e:
                 pass
-    try:
-        os=imp('os.path._getfinalpathname')
-        p = os.path._getfinalpathname(p).lstrip(r'\?')
-        # print(p)
-    except Exception as e:
-        # print(e)
-        pass
+    if isWin:
+        try:
+            os=imp('os.path._getfinalpathname')
+            p = os.path._getfinalpathname(p).lstrip(r'\?')
+            # print(p)
+        except Exception as e:
+            # print(e)
+            pass
     if p_bk[1] == ':' and not p[1] == ':': p = p_bk
     if type(p) == str and len(p)>1 and p[1] == ':':
         p = p[0].upper() + p[1:]
