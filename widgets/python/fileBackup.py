@@ -1187,7 +1187,8 @@ def action(path=None,flag=None,o=None):
 					copyfile( path,  libFile)
 				else:
 					_.pr('not encrypted',c='red')
-					sys.exit()
+					return path
+					# sys.exit()
 
 			if os.path.isfile(libFile):
 				if os.path.isfile(path):
@@ -1295,8 +1296,8 @@ def action(path=None,flag=None,o=None):
 					txtScheduler = _.getTable( 'fileBackupSchedule.json' )
 					txtScheduler.append( { 'timestamp': genEpoch(), 'file': __.path(path), 'status': 0, 'app': 'fileBackup', 'group': 0, 'session': os.getenv('Session_ID') } )
 					_.saveTable( txtScheduler,'fileBackupSchedule.json', p=1 )
-
-					sys.exit()
+					return path
+					# sys.exit()
 				try:
 					result = copyfile(path, newname)
 					for i,row in enumerate(backupLog):
