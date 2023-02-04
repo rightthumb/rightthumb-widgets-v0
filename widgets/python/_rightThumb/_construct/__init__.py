@@ -273,6 +273,18 @@ def isExit():
 
 
 def path( p, ab=True, pop=False, file=False, slash=None, folder=None, fi=None, fo=None, fix=True ):
+    if isWin or not pop: return _path_( p, ab, pop, file, slash, folder, fi, fo, fix )
+    os=imp('os.path.abspath')
+    p1 = os.path.abspath(p)
+    try: p1 = os.path.abspath(p)
+    except: pass
+    p2 = _path_( p, ab, pop, file, slash, folder, fi, fo, fix )
+    if p1 == p2:
+        parts = p1.split(os.sep)
+        parts.pop(-1)
+        return os.sep.join(parts)
+    return p1
+def _path_( p, ab=True, pop=False, file=False, slash=None, folder=None, fi=None, fo=None, fix=True ):
     p_bk=p
     # fix used in fileBackup.py
 
@@ -299,10 +311,8 @@ def path( p, ab=True, pop=False, file=False, slash=None, folder=None, fi=None, f
 
     if ab:
         if os.path.isfile(p) or os.path.isdir(p):
-            try:
-                p = os.path.abspath(p)
-            except Exception as e:
-                pass
+            try: p = os.path.abspath(p)
+            except: pass
 
     if fix and not os.path.isfile(p) and not os.path.isdir(p) and not os.sep in p and p:
         p = os.getcwd() +os.sep+ p

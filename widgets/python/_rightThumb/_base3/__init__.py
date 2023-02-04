@@ -142,7 +142,9 @@ def fometa(path,end=''):
 		except Exception as ee:
 			break
 	if os.path.isfile(folder+os.sep+'.folder.meta'+end):
-		meta = getTable2( folder+os.sep+'.folder.meta'+end )
+		mPath = folder+os.sep+'.folder.meta'+end
+		if getText( mPath, raw=True ).strip().startswith('{'): meta = getTable2( mPath )
+		else: meta = getYML( mPath )
 		meta['folder']=folder
 		return meta
 	return {}

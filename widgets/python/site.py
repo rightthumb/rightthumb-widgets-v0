@@ -153,9 +153,11 @@ def meta_scan(path,end):
 		file = os.path.abspath(path)
 	except Exception as e:
 		file = path
-	folder = __.path(path)
+	if os.path.isfile(path): folder = __.path(path,pop=True)
+	else: folder = __.path(path)
 	i=0
 	while not os.path.isfile( folder+os.sep+'.folder.meta'+end ):
+		# print(os.path.isfile( folder+os.sep+'.folder.meta'+end ),folder+os.sep+'.folder.meta'+end)
 		i+=1
 		if i > 100:
 			_.e('missing folder meta')
@@ -179,8 +181,7 @@ def meta_scan(path,end):
 	url=None
 	if 'url' in meta:
 		url = file.replace( __.path(folder), meta['url'] ).replace('\\','/')
-		if os.path.isdir(path):
-			url += '/'
+		if os.path.isdir(path) and not url.endswith('/'): url += '/'
 	return urlpr(url)
 
 def process(path,end='',ft=None):
