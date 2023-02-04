@@ -153,7 +153,7 @@ def meta_scan(path,end):
 		file = os.path.abspath(path)
 	except Exception as e:
 		file = path
-	folder = __.path(path,pop=True)
+	folder = __.path(path)
 	i=0
 	while not os.path.isfile( folder+os.sep+'.folder.meta'+end ):
 		i+=1
@@ -168,7 +168,10 @@ def meta_scan(path,end):
 	loc=locations.copy()
 	if not mPath in locations: locations.append(mPath)
 	if not locations == loc: _.saveTable(locations,'site-locations.list')
-	meta = _.getTable2( mPath )
+
+	if _.getText( mPath, raw=True ).strip().startswith('{'): meta = _.getTable2( mPath )
+	else: meta = _.getYML( mPath )
+	
 	# _.cp(mPath.replace('.folder.meta'+end,''),'yellow')
 	if not _.v.quiet:
 		_.cp(mPath,'yellow')
