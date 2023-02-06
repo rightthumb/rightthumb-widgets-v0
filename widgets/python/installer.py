@@ -3476,6 +3476,8 @@ alias ..h.sh='$p cat -f ~/.bash_history'
 alias ..h.='$p cat -f ~/.python_history'
 alias ..h.py='$p cat -f ~/.python_history'
 alias cat..='$p cat -f ~/.bashrc'
+alias cat..='$p cat -f ~/.bashrc'
+alias .rc='$p cat -f ~/.bashrc'
 alias ls='ls --color=auto'
 alias ll='ls -la'
 
