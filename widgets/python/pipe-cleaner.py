@@ -32,7 +32,10 @@ _str = __.imp('_rightThumb._string')
 def sw():
     pass
     #b)--> examples
-    # _.switches.register( 'Input', '-i' )
+    _.switches.register( 'Remove-String', '-remove', 'string' )
+    _.switches.register( 'Remove-Extension', '-ext' )
+    _.switches.register( 'Replace-String', '-replace', 'name scott' )
+    _.switches.register( 'Clean', '--c', '(no blank lines)' )
     #e)--> examples
     # _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=False )
 
@@ -147,18 +150,32 @@ _.l.sw.register( triggers, sw )
 ########################################################################################
 #n)--> start
 
+def cleaner(line):
+    if _.switches.isActive('Replace-String') and len(_.switches.values('Replace-String')) > 1:
+        val = _.switches.values('Replace-String')
+        line=line.replace(  _.ci(val[0]), _.ci(val[1])  )
+    if _.switches.isActive('Replace-String'):
+        val = _.switches.values('Replace-String')
+        for v in val:
+            v=_.ci(v)
+            line=line.replace(v,'')
+
+    if _.switches.isActive('Remove-Extension'):
+        p=line.split('.')
+        # print(p)
+        p.pop(-1)
+        line='.'.join(p)
+    return line
 def action():
-    load(); global c3po;
+    for line in _.isData():
+        line=cleaner(line)
+        if not _.switches.isActive('Clean'):
+            print(line)
+        else:
+            if line: print(line)
 
-    #n)--> iterate
-    for subject in _.isData(r=0): _.pr(subject)
-    
 
-def load():
-    global c3po
-    c3po = _.getTable( 'table' )
-    #n)--> print table
-    _.pt(c3po)
+
 
 
 ##################################################

@@ -147,18 +147,42 @@ _.l.sw.register( triggers, sw )
 ########################################################################################
 #n)--> start
 
+
+def _thread_(*args, **kwargs):
+    for _script in ['_fn_','script']:
+        if kwargs and _script in kwargs:
+            script=kwargs[_script]
+            kw={}
+            for k in kwargs:
+                if not k == _script:
+                    kw[k]=kwargs[k]
+            ags=[]
+            for i,ar in enumerate(args): ags.append('args['+str(i)+']')
+            a=','.join(ags)
+            kwg=[]
+            for k in kw: kwg.append(k+'=kwargs["'+k+'"]')
+            k=','.join(kwg)
+            ak=[]
+            if a: ak.append(a)
+            if k: ak.append(k)
+            if ak: exec('script('+ ','.join(ak) +')')
+            else:exec('script()')
+            break
+
+
+
+
+def test(a=0,b=0,c=0, name=None):
+    print(a,b,c,name)
+
+threads=[]
+import threading
+
+
 def action():
-    load(); global c3po;
-
-    #n)--> iterate
-    for subject in _.isData(r=0): _.pr(subject)
-    
-
-def load():
-    global c3po
-    c3po = _.getTable( 'table' )
-    #n)--> print table
-    _.pt(c3po)
+    t = threading.Thread(target=_thread_, args=(1,2,3), kwargs={'name':'scott','script':test})
+    threads.append(t)
+    t.start()
 
 
 ##################################################

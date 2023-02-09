@@ -180,8 +180,13 @@ def meta_scan(path,end):
 		_.pv(meta)
 	url=None
 	if 'url' in meta:
+
 		url = file.replace( __.path(folder), meta['url'] ).replace('\\','/')
 		if os.path.isdir(path) and not url.endswith('/'): url += '/'
+		try:
+			_.v.fp=url.replace(meta['url']+'/',meta['sftp']['full-path']+'/')
+			_.v.fp=_.v.fp.replace('//','/').replace('//','/')
+		except: pass
 	return urlpr(url)
 
 def process(path,end='',ft=None):
@@ -217,6 +222,10 @@ def process(path,end='',ft=None):
 		if os.path.isdir(path):
 			url += '/'
 		_.pr(urlpr(url),c='Background.blue')
+		try: _.pr(_.v.fp,c='Background.light_blue')
+		except: pass
+		
+
 		if _.switches.isActive('Test'):
 			try:
 				import webbrowser

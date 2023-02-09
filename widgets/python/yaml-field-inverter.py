@@ -32,9 +32,10 @@ _str = __.imp('_rightThumb._string')
 def sw():
     pass
     #b)--> examples
-    # _.switches.register( 'Input', '-i' )
+    _.switches.register( 'Save', '-save', 'save.yml' )
+    _.switches.register( 'First', '-first' )
     #e)--> examples
-    # _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=False )
+    _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name', description='Files', isRequired=False )
 
 # __.setting('require-list',['Files,Plus','File,Has']) # todo
 # __.setting('require-list',['Pipe','Files'])
@@ -108,8 +109,6 @@ def triggers():
     _.switches.trigger( 'URL', _.urlTrigger )
     _.switches.trigger( 'Duration', _.timeFuture )
 
-def _local_(do): exec(do)
-
 _.l.conf('clean-pipe',True)
 _.l.sw.register( triggers, sw )
 
@@ -148,17 +147,26 @@ _.l.sw.register( triggers, sw )
 #n)--> start
 
 def action():
-    load(); global c3po;
+    cnt={}
+    yml=_.fromYML(_.isData2())
+    rev={}
+    for k in yml:
+        c=yml[k]
+        if _.switches.isActive('First'):
+            c=c.split(' ')[0]
+        if not c in cnt: cnt[c]=0
+        cnt[c]+=1
+        rev[c]=k
+    fi=_.toYML(rev)
+    print(fi)
+    # _.pv(rev)
+    print(len(yml))
+    print(len(rev))
+    for c in cnt:
+        if cnt[c] >1:
+            print(c)
 
-    #n)--> iterate
-    for subject in _.isData(r=0): _.pr(subject)
-    
-
-def load():
-    global c3po
-    c3po = _.getTable( 'table' )
-    #n)--> print table
-    _.pt(c3po)
+    if _.switches.isActive('Save'): _.saveText( fi, _.switches.values('Save')[0] )
 
 
 ##################################################

@@ -940,6 +940,7 @@ def dir_structure():
 	if home_created:
 		create_default_profile()
 def createDestinationFolders( folder, o=None, isFile=False, p=False ):
+	_pr=p
 	folder=path_fix(folder)
 	global techDrive
 	global slashes
@@ -977,7 +978,7 @@ def createDestinationFolders( folder, o=None, isFile=False, p=False ):
 		return folder
 	try:
 		os.mkdir(  folder )
-		if p:
+		if _pr:
 			_.pr( folder )
 		return folder
 	except Exception as e:
@@ -997,7 +998,7 @@ def createDestinationFolders( folder, o=None, isFile=False, p=False ):
 		f = slash.join( newParts )
 		exist = os.path.isdir( f )
 		if not exist:
-			print(f)
+			if _pr: print(f)
 			try:
 				os.mkdir( f )
 			except Exception as e:
@@ -1536,7 +1537,7 @@ def fpath(path): return resolveFolderIDs(path.replace('\\',os.sep).replace('/',o
 figpath=home +os.sep+'.rt'+os.sep+ '.config.hash'
 
 path = __.path
-mkdir = createDestinationFolders
+mkdir=createDestinationFolders
 # default_powershell = 'echo test | py $p\\app.py'
 default_powershell = ''
 config_file = None

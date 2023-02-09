@@ -843,6 +843,9 @@ else:
 
 inc=_.switches.values('Search-For-Text-Include')
 ex=_.switches.values('Search-For-Text-Exclude')
+for i,x in enumerate(inc): inc[i]=_.ci(x)
+for i,x in enumerate(ex): ex[i]=_.ci(x)
+
 infile=0
 
 def process3(path):

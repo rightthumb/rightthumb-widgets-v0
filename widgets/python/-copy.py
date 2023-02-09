@@ -188,14 +188,14 @@ def clip_set_0(data,end=''):
     win32clipboard.CloseClipboard()
 
 
-def clip_set_2(data,end='',clean=True):
+def clip_set_2(data,end='',clean=False):
     
     if clean:
         pyperclip.copy( cleanString(data)+end )
     else:
         pyperclip.copy( data+end )
 
-def clip_set_3(data,end='',clean=True):
+def clip_set_3(data,end='',clean=False):
     import subprocess
     if _.isWin:
         if not _.switches.isActive('NoPrint'):
@@ -256,7 +256,7 @@ def clip_set_3(data,end='',clean=True):
     return None
 
 
-def clip_set_1(data,end='',clean=True):
+def clip_set_1(data,end='',clean=False):
     from tkinter import Tk
     r = Tk()
     r.withdraw()
@@ -267,7 +267,7 @@ def clip_set_1(data,end='',clean=True):
         r.clipboard_append( data+end )
     # r.destroy()
 
-def clip_set( data, end='', p=True, clean=True ):
+def clip_set( data, end='', p=True, clean=False ):
     data=str(data)
     data = _.stripColor(data)
     
@@ -408,8 +408,8 @@ def cleanStringA(data):
     data = _str.cleanBE(data,' ')
     return data
 
-copy = clip_set
-paste = clip_get
+copy=clip_set
+paste=clip_get
 
 win32clipboard = None
 

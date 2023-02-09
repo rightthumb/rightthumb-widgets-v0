@@ -289,6 +289,7 @@ class HOTKEYS:
 	def release_key( self, key ):
 		global post_do
 		global key_set
+		global force_clean
 		try:
 			char = str(key.char)
 		except Exception as e:
@@ -324,7 +325,20 @@ class HOTKEYS:
 					ii+=1
 					keyboard.press(Key.backspace)
 					keyboard.release(Key.backspace)
-			_.pr(k)
+			if not os.path.isfile(_v.tt+os.sep+'hotkeys-log.csv'): _.saveText('epoch,label',_v.tt+os.sep+'hotkeys-log.csv')
+			log=_.getText(_v.tt+os.sep+'hotkeys-log.csv',raw=True).strip()+'\n'
+			log+=str(time.time()).split('.')[0]+','+str(k)
+			_.saveText(log,_v.tt+os.sep+'hotkeys-log.csv')
+			# print(_v.tt+os.sep+'hotkeys-log.csv')
+			# for line in log.split('\n'):print(line)
+			_.pr(k,c='green')
+			if k in force_clean:
+				i=0
+				# print('force_clean[k]',force_clean[k])
+				while not i==force_clean[k]:
+					i+=1
+					keyboard.press(Key.backspace)
+					keyboard.release(Key.backspace)
 			exec(do)
 			# beepy.simple_beep2()
 
@@ -531,12 +545,19 @@ class BEEPS:
 			pass
 
 	def simple_beep(self):
-		oct = 3
-		self.play_note(oct, 'g', 'half')
+		_oct = 2
+		self.play_note(_oct, 'g', 'quarter')
 
 	def simple_beep2(self):
-		oct = 3
-		self.play_note(oct, 'e', 'half')
+		_oct = 3
+		self.play_note(_oct, 'e', 'quarter')
+	def note(self,n='c',*args):
+		_oct=3
+		nt='half'
+		for a in args:
+			if type(a) == str: nt=a
+			if type(a) == int: _oct=a
+		self.play_note(_oct, n, nt)
 
 
 class CLIP:
@@ -774,6 +795,15 @@ copy(  hackTool.payload.label  )
 
 
 
+	def auto_yaml_json_converter(self):
+		_paste = _.regImp( __.appReg, '-paste' )
+		data   = _paste.imp.paste()
+		if data.startswith('{') or data.startswith('['):
+			self.json2yaml()
+		else:
+			self.yaml2json()
+
+
 
 	def yaml2json(self):
 		yaml = __.imp('yaml')
@@ -805,7 +835,71 @@ copy(  hackTool.payload.label  )
 		y=yaml.dump( j, sort_keys=False )
 		_copy.imp.copy( y, p=0 )
 
+	def d100(self):
+		yaml = __.imp('yaml')
+		simplejson = __.imp('simplejson')
+		_copy = _.regImp( __.appReg, '-copy' )
+		_paste = _.regImp( __.appReg, '-paste' )
+		data  = _paste.imp.paste()
+		data = data.replace('\t',' ')
+		data = data.replace('\r','')
+		data = data.strip()
 
+		lines=[]
+		n=1
+		first=False
+		aline=[]
+		for i,line in enumerate(data.split('\n')):
+			line=line.strip()
+			if not i: listname=line
+			if not line == listname and not line == 'd100 Description':
+			
+				if line == str(n) or line.split(' ')[0] == str(n):
+					n+=1
+					if aline: lines.append( ' '.join( aline ).replace('  ',' ').replace('  ',' ') )
+					aline=[]
+				aline.append(line)
+		if aline: lines.append( ' '.join( aline ).replace('  ',' ').replace('  ',' ') )
+		y = '\n'.join(lines)
+		_.saveText(y,'C:\\Users\\Scott\\.rt\\profile\\documents\\dnd\\etsy\\D100 Roll Chart Mega-Pack  DM Tools  PDF  DnD Dungeons & Dragons (5e)  Tabletop RPG\\d100-text\\'+listname.replace(' ','_')+'.txt')
+		_copy.imp.copy( y, p=0 )
+
+
+	def strip1(self):
+		_copy = _.regImp( __.appReg, '-copy' )
+		_paste = _.regImp( __.appReg, '-paste' )
+		data  = _paste.imp.paste()
+		data = data.replace('\t',' ')
+		data = data.replace('\r',' ')
+		data = data.strip()
+
+		lines=[]
+		n=1
+		first=False
+		aline=[]
+		for i,line in enumerate(data.split('\n')):
+			line=line.strip()
+			while '  ' in line: line=line.replace('  ',' ')
+			if line: lines.append(line)
+		y = '\n'.join(lines)
+
+		_copy.imp.copy( y, p=0 )
+
+	def strip2(self):
+		_copy = _.regImp( __.appReg, '-copy' )
+		_paste = _.regImp( __.appReg, '-paste' )
+		data  = _paste.imp.paste()
+		data = data.replace('\r','')
+
+		lines=[]
+		n=1
+		first=False
+		aline=[]
+		data=data.rstrip()
+		lines = [line.rstrip() for line in data.split('\n')]
+		y = '\n'.join(lines)
+		while '\n\n\n' in y: y=y.replace('\n\n\n','\n\n')
+		_copy.imp.copy( y, p=0 )
 
 
 	def space_2_underscore_text(self):
@@ -1696,6 +1790,30 @@ function get__THETABLE( $ID_label ){
 			rows.append(row)
 		_copy.imp.copy( '\n'.join(rows), p=0 )
 
+
+	def encrypt_lines(self):
+		_paste = _.regImp( __.appReg, '-paste' )
+		_copy = _.regImp( __.appReg, '-copy' )
+		_decrypt_docs = _.regImp( __.appReg, 'decrypt-docs' )
+		_vault = _.regImp( __.appReg, '_rightThumb._vault' )
+		text = _paste.imp.paste()
+		text = text.replace('\r','')
+		rows = []
+		for row in text.split('\n'):
+			row = _vault.imp.s.en( row )
+			rows.append(row)
+		_copy.imp.copy( '\n'.join(rows), p=0 )
+
+	def encrypt_all(self):
+		_paste = _.regImp( __.appReg, '-paste' )
+		_copy = _.regImp( __.appReg, '-copy' )
+		_decrypt_docs = _.regImp( __.appReg, 'decrypt-docs' )
+		_vault = _.regImp( __.appReg, '_rightThumb._vault' )
+		text = _paste.imp.paste()
+		text = text.replace('\r','')
+		en = _vault.imp.s.en( text )
+		_copy.imp.copy( en, p=0 )
+
 	def combine_make(self):
 		_paste = _.regImp( __.appReg, '-paste' )
 		_copy = _.regImp( __.appReg, '-copy' )
@@ -2090,6 +2208,9 @@ function get__THETABLE( $ID_label ){
 		text = text.replace('\r','')
 		text = text.replace('\n','')
 		keepcomma=False
+
+		if text.count(';') > text.count(','): text=text.replace(';',',')
+
 		if text.startswith(',,'):
 			text=text[2:]
 			keepcomma=True
@@ -2241,6 +2362,10 @@ class TYPING:
 			keyboard.press(Key.left)
 			keyboard.release(Key.left)
 
+
+	def type(self,k,back=0): self.ty_a(k,back=0)
+
+
 	def keyboard_typing(self,t):
 		global keyboard
 		if t == '\n':
@@ -2344,7 +2469,7 @@ class LOADER:
 # class LOADER:END
 
 def action():
-
+	beepy.note('a#','quarter',2)
 	if _.isData():
 		if _.switches.isActive('Key-Subject'):
 			global table
@@ -2446,21 +2571,28 @@ ctrl_chars = {
 }
 
 def cleaner(subject,deep=0):
-	subject=_str.cleanBE( subject, '\n' )
-	subject=_str.cleanBE( subject, '\t' )
-	subject=_str.cleanBE( subject, ' ' )
-	subject = subject.replace('\r','')
+	subject=_str.cleanBE( subject, '\n' )          
+	subject=_str.cleanBE( subject, '\t' )            
+	subject=_str.cleanBE( subject, ' ' )          
+	subject = subject.replace('\r','')              
 
-	subject=_str.cleanBE( subject, '\n' )
+	subject=_str.cleanBE( subject, '\n' )                           
 	subject=_str.cleanBE( subject, '\t' )
-	subject=_str.cleanBE( subject, ' ' )
+	subject=_str.cleanBE( subject, ' ' )                     
 	subject=_str.cleanBE( subject, '\n' )
-	subject=_str.cleanBE( subject, '\t' )
-	subject=_str.cleanBE( subject, ' ' )
+	subject=_str.cleanBE( subject, '\t' )            
+	subject=_str.cleanBE( subject, ' ' )            
 	if deep:
 		subject=_str.replaceDuplicate( subject, ' ' )
-		subject=_str.replaceDuplicate( subject, '\n' )
+		subject=_str.replaceDuplicate( subject, '\n' )                 
 	return subject
+
+def toggle_chars():
+	global print_chars
+	if print_chars:
+		print_chars = False
+	else:
+		print_chars = True
 
 def load():
 	global table
@@ -2484,9 +2616,9 @@ def load():
 				'implode3': { 'raw': [ 'alt.', 'shift.', 'i' ], 'do': 'Clip.implode3()' },
 				'number': { 'raw': [ 'alt.', 'win.', 'n' ], 'do': 'Clip.number()' },
 				'number': { 'raw': [ 'shift.', 'alt.', 'n' ], 'do': 'Clip.numberz()' },
-				'number-a': { 'raw': [ 'alt.', 'win.', 'n', 'a' ], 'do': 'Clip.number_a()' },
-				'number-b': { 'raw': [ 'alt.', 'win.', 'n', 'b' ], 'do': 'Clip.number_b()' },
-				'number-ba': { 'raw': [ 'alt.', 'win.', 'n', 'b', 'a' ], 'do': 'Clip.number_ba()' },
+				'number-a': { 'raw': [ 'alt.', 'win.', 'na' ], 'do': 'Clip.number_a()' },
+				'number-b': { 'raw': [ 'alt.', 'win.', 'nb' ], 'do': 'Clip.number_b()' },
+				'number-ba': { 'raw': [ 'alt.', 'win.', 'nba' ], 'do': 'Clip.number_ba()' },
 				'explode': { 'raw': [ 'ctrl.,2', 'space.', 'x' ], 'do': 'Clip.explode()' },
 				'remove-py-comments': { 'raw': [ 'ctrl.,2', 'space.', 'c' ], 'do': 'Clip.remove_py_comments()' },
 				'remove-py-comments-and-spaces': { 'raw': [ 'ctrl.,2', 'space.,2', 'c', 's' ], 'do': 'Clip.remove_py_comments_spaces()' },
@@ -2529,6 +2661,7 @@ def load():
 				# 'clip-invert-quotes': { 'raw': [  'alt.', 'win.',  'r' ], 'do': 'Clip.quote_inverter()' },
 				'clip-dup-spaces': { 'raw': [  'ctrl.,2', 'r',  'd', 's' ], 'do': 'Clip.remove_dup_spaces()' },
 				# 'clip-randomize-ports': { 'raw': [   'ctrl.', 'shift.', 'r' ], 'do': 'Clip.randomize_ports()' },
+				# 'clip-replace': { 'raw': [ 'ctrl.,2',  's' ], 'do': 'Clip.swap()' },
 				'clip-test-py': { 'raw': [   'ctrl.,2', 'space.,2', 'p', 'y' ], 'do': 'Clip.test_py()' },
 				'f12-console-gen-md-link': { 'raw': [   'shift.,2',   'w',  'm','d'   ], 'do': 'Clip.browser_f12_gen_md_link()' },
 				'f12-console-tool.js-text': { 'raw': [   'shift.,2',   'w',  't','x','t'   ], 'do': 'Clip.browser_f12_tooljs_text()' },
@@ -2539,12 +2672,27 @@ def load():
 				
 				'yaml-2-json': { 'raw': [   'ctrl.,2',   'y','2','j'   ], 'do': 'Clip.yaml2json()' },
 				'json-2-yaml': { 'raw': [   'ctrl.,2',   'j','2','y'   ], 'do': 'Clip.json2yaml()' },
-				# 'clip-replace': { 'raw': [ 'ctrl.,2',  's' ], 'do': 'Clip.swap()' },
 
+				'd100-cleaner': { 'raw': [   'ctrl.,2',   'd','1','0','0'   ], 'do': 'Clip.d100()' },
+				
+
+
+				# 'cmd-procmon': { 'raw': [   'ctrl.,2',    'p','r','o','c'   ], 'do': 'cmd__procmon()' },
+
+				'test': { 'raw': [ 'win.',  'alt.', 't' ], 'do': '_test_()' },
+
+				# 'space-strip': { 'raw': [  'esc.,2',  'cln1'    ], 'do': 'Clip.strip1()' },
+				'space-strip1': { 'raw': [  'esc.',  'cln1'    ], 'do': 'Clip.strip1()', 'bk': True },
+				'space-strip2': { 'raw': [  'esc.',  'cln1'    ], 'do': 'Clip.strip2()', 'bk': True },
+
+				'the-listener': { 'raw': [  'ctrl.','shift.',  'l'    ], 'do': '_listener_()' },
 
 	}
 
+	global force_clean
+	
 	for k in table:
+		leni=0
 		r=[]
 		for key in  table[k]['raw']:
 			t=key
@@ -2561,7 +2709,12 @@ def load():
 			t=t.replace('alt.','Key.alt')
 			t=t.replace('key.','Key.')
 			t=t.replace('Key.win','Key.cmd')
-			r.append(t)
+			if '.' in t: r.append(t)
+			elif len(t) == 1:  r.append(t)
+			else: [(r.append(at))for at in t]
+
+		leni += sum(1 for y in r if len(y) == 1 or 'Key.space' ==  y)
+		if 'bk' in table[k]: force_clean[k]=leni
 		table[k]['raw']=r
 
 
@@ -2572,12 +2725,37 @@ def load():
 	Loader.flip_table_test()
 	# _.pv(table)
 
-def toggle_chars():
-	global print_chars
-	if print_chars:
-		print_chars = False
-	else:
-		print_chars = True
+########################################################################################
+
+threads = []
+
+def listening(): os.system('call p listen -print')
+
+def _listener_():
+	# beepy.note('d',3,'dotted_eigth')
+	listening()
+	# beepy.note('d',3,'whole')
+def _listener_2():
+	global threads
+	import threading
+	t = threading.Thread(target=listening)
+	threads.append(t)
+	t.start()
+
+
+
+
+
+########################################################################################
+
+
+def cmd__procmon(): os.system('start "proc" "D:\\techApps\\ProcessMonitor\\Procmon64.exe"  ')
+
+def _test_(): return None
+
+
+
+########################################################################################
 
 Hotkeys=HOTKEYS()
 Typing=TYPING()
@@ -2590,11 +2768,22 @@ print_chars = False
 __.setting('hotkey-clip.ad_description-start1', False)
 __.setting('hotkey-clip.replace-a', '.eyeformeta.com')
 __.setting('hotkey-clip.replace-b', '.m-eta.app')
-
+force_clean={}
 
 import random
 import string
 # for elem in string.whitespace: sample_str = sample_str.replace(elem, '')
+
+# beepy.note('d#') # (:g e:) c,    c#, d, d#, e, f, f#, g, g#, a, a#
+# beepy.note('c',3)
+# beepy.note('c')
+# beepy.note('c#')
+# beepy.note('d')
+# beepy.note('d#')
+# beepy.note('d')
+# beepy.note('f')
+# beepy.note('f#')
+# beepy.note('a')
 
 
 
@@ -2610,4 +2799,5 @@ if __name__ == '__main__':
 
 # toRandomCase
 # 	crashes
-
+# count+=1
+# release_key

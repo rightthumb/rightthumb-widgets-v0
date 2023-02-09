@@ -32,9 +32,10 @@ _str = __.imp('_rightThumb._string')
 def sw():
     pass
     #b)--> examples
-    # _.switches.register( 'Input', '-i' )
+    _.switches.register( 'To', '-to' )
+    _.switches.register( 'From', '-from' )
     #e)--> examples
-    # _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=False )
+    _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name', description='Files', isRequired=False )
 
 # __.setting('require-list',['Files,Plus','File,Has']) # todo
 # __.setting('require-list',['Pipe','Files'])
@@ -108,8 +109,6 @@ def triggers():
     _.switches.trigger( 'URL', _.urlTrigger )
     _.switches.trigger( 'Duration', _.timeFuture )
 
-def _local_(do): exec(do)
-
 _.l.conf('clean-pipe',True)
 _.l.sw.register( triggers, sw )
 
@@ -147,18 +146,38 @@ _.l.sw.register( triggers, sw )
 ########################################################################################
 #n)--> start
 
+# simplejson = 
+# simplejson(var)
+# simplejson.dumps(rows, indent=4, sort_keys=False, default=str)
+# simplejson.dumps(rows, sort_keys=False, default=str)
+
+
+
 def action():
-    load(); global c3po;
+    os=__.imp('os.path.isfile')
+    d=_.isData(r=0)
+    if os.path.isfile(d[0]):
+        data=_.getText(d[0],raw=True)
+    else:
+        data = '\n'.join( d )
+    if not _.switches.isActive('To') and not _.switches.isActive('From'):
+        data=data.strip()
+        if data.startswith('{') or data.startswith('['):
+            _.switches.fieldSet( 'To', 'active', True )
+        else:
+            _.switches.fieldSet( 'From', 'active', True )
 
-    #n)--> iterate
-    for subject in _.isData(r=0): _.pr(subject)
+
+    r = ''
+    if _.switches.isActive('To'):
+        d = __.imp('simplejson').loads(data)
+        r = _.toYML(d)
+
+    if _.switches.isActive('From'):
+        d = _.fromYML(data)
+        r = __.imp('simplejson').dumps(d, indent=4, sort_keys=False, default=str)
     
-
-def load():
-    global c3po
-    c3po = _.getTable( 'table' )
-    #n)--> print table
-    _.pt(c3po)
+    print(r)
 
 
 ##################################################
@@ -179,4 +198,3 @@ if __name__ == '__main__':
     #e)--> examples
     action()
     _.isExit(__file__)
-

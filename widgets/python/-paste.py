@@ -259,7 +259,7 @@ def clip_get_3():
 
 def clip_get_2():
 	import pyperclip
-	return cleanString( pyperclip.paste() )
+	return pyperclip.paste()
 
 	# global win32clipboard
 	# if win32clipboard is None:
@@ -272,7 +272,7 @@ def clip_get_2():
 
 win32clipboard = None
 
-paste = clip_get
+paste=clip_get
 
 def cleaner(textR):
 	global dirty

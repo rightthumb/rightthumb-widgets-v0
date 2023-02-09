@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+# alt+29 ↔ is space
 
 # 1674156772
 
@@ -5743,7 +5744,8 @@ def ipsumParagraph( count=1, shouldPrint=False, returnList=False, lorem=True ):
 	else:
 		return '\n\n'.join( result )
 
-def saveCSV( data, file, printThis=True,                p=None, me=0 ):
+def saveCSV( data, file, printThis=True,here=False,                p=None, me=0,h=None ):
+	if not h is None: here=h
 	theFile=file
 	HD.chmod(file)
 	if not p is None:
@@ -5762,7 +5764,7 @@ def saveCSV( data, file, printThis=True,                p=None, me=0 ):
 	else:
 		theFile = _v.myTables + _v.slash + file
 		px = file
-
+	if here: theFile=file
 
 	with open( theFile , mode='w') as csv_file:
 		fields = list(data[0].keys())
@@ -11066,6 +11068,9 @@ class Switches:
 
 
 		switchInput = sys.argv
+		for i,a in enumerate(switchInput): switchInput[i]=a.replace('↔',' ')
+		# print(switchInput)
+		# sys.exit()
 
 		try:
 			switchInput[self.fieldGet(name,'pos') + 1]
@@ -11100,6 +11105,7 @@ class Switches:
 
 	def value3(self,name):
 		switchInput = sys.argv
+		for i,a in enumerate(switchInput): switchInput[i]=a.replace('↔',' ')
 		data = []
 		try:
 			switchInput[self.fieldGet(name,'pos') + 1]
@@ -11429,6 +11435,7 @@ class Switches:
 
 		if argvProcess:
 			for i,a in enumerate(sys.argv):
+				a=a.replace('↔',' ')
 				if a in __.switch_skimmer.scan:
 					__.switch_skimmer.active.append( a )
 				a = a.replace(':','')
@@ -16752,6 +16759,7 @@ ciData = (
 			[';bs',                '/' ],
 			[';fs',                '\\' ],
 			[';t',                 '\t' ],
+			['↔',                 ' ' ],
 			
 			[ '[caret]',    '^' ]  )
 ci_spent=[]
@@ -21435,6 +21443,7 @@ def getYML(path,here=False,h=None,auto=True,a=None):
 	elif not here and  os.path.isfile(_v.myTables + _v.slash + path):
 		data = getText( _v.myTables + _v.slash + path, raw=True )
 		loaded=True
+	else: return {}
 	data = data.replace('\r','')
 	lines=[]
 	for line in data.split('\n'):
@@ -21515,5 +21524,44 @@ def percentageAdd(n,p): return n*(1+(p/100))
 # _.percentageMinus(75000,25)
 # _.percentageAdd(56250,25)
 
+def isData2():
+    os=__.imp('os.path.isfile')
+    d=isData(r=0)
+    # print(d)
+    if not d: e('no data','_.isData2()')
+    if os.path.isfile(d[0]):
+        data=getText(d[0],raw=True)
+    else:
+        data = '\n'.join( d )
+    return data
+	# isDataR=isData2
+	# isDatar=isData2
+	# isDatr=isData2
 
+def _thread_(*args, **kwargs):
+    # threads=[]
+    # import threading
+    # t = threading.Thread(target=_thread_, args=(1,2,3), kwargs={'name':'scott','script':test})
+    # threads.append(t)
+    # t.start()
+    for _script in ['_fn_','script']:
+        if kwargs and _script in kwargs:
+            script=kwargs[_script]
+            kw={}
+            for k in kwargs:
+                if not k == _script:
+                    kw[k]=kwargs[k]
+            ags=[]
+            for i,ar in enumerate(args): ags.append('args['+str(i)+']')
+            a=','.join(ags)
+            kwg=[]
+            for k in kw: kwg.append(k+'=kwargs["'+k+'"]')
+            k=','.join(kwg)
+            ak=[]
+            if a: ak.append(a)
+            if k: ak.append(k)
+            if ak: exec('script('+ ','.join(ak) +')')
+            else:exec('script()')
+            break
 
+# alt+29 ↔ is space

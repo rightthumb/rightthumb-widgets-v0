@@ -4834,6 +4834,7 @@ class TheFeature:
 			pickle.dump(self, objSelf, pickle.HIGHEST_PROTOCOL)
 
 	def objFile(self):
+		# print('loaded');sys.exit();
 		return __.objectLocation['objects'].replace(__.ID_HERE,self.imdbID)
 
 	def isCanceled( self ):
@@ -4886,6 +4887,7 @@ class TheFeature:
 			self.acquisitionDataReset()
 			
 	def isExpired( self, section ):
+		# print('self.isExpired(section)',self.expirationDateDefault); sys.exit();
 		done = False
 		self.validateFields( section )
 		try:
@@ -5167,7 +5169,7 @@ class TheFeature:
 			else:
 				_.printBold('isCanceled:'+' '+str(self.isCanceled()),'green')
 		if self.isCanceled():
-			self.expirationDateDefault = 'never'
+			# self.expirationDateDefault = 'never'
 			ldEpoch = float(_.date2epoch(lastDate,'-'))
 			if ldEpoch > time.time():
 				_.printBold('show is in season')
@@ -5419,10 +5421,11 @@ class TheFeature:
 def aliases( data ):
 	results = []
 	results.append( data )
-	if _.switches.isActive('Franchise'):
-		add = ''
-	else:
-		add = input( 'Aliases for '+data+' (,): ' )
+	add = ''
+	# if _.switches.isActive('Franchise'):
+	# 	add = ''
+	# else:
+	# 	add = input( 'Aliases for '+data+' (,): ' )
 	for x in add.split(','):
 		x = _str.replaceDuplicate( x, ' ' )
 		x = _str.cleanBE( x, ' ' )
@@ -7694,9 +7697,9 @@ if __name__ == '__main__':
 # ForceFranchise
 # get_cinema_fullcredits
 
-
-
-
+# print('self.isExpired(section)',self.expirationDateDefault); sys.exit();
+# self.expirationDateDefault = 'never'
+# __.objectLocation['objects']
 
 
 
