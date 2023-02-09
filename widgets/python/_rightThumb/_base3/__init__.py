@@ -21690,13 +21690,16 @@ def pattern_probability(string1,string2,w=False):
 		d['offset']=0
 
 	d['%off']=d['%0']+d['offset']
-	d['seq']=sequential(d['s1'],d['s2'])
+	_seq1=sequential(d['s1'],d['s2'])
+	_seq2=sequential(d['s2'],d['s1'])
+	if _seq1 > _seq2:
+		_seq0=_seq1
+	else:
+		_seq0=_seq2
+	d['seq']=_seq0
 	d['seq_weight']=round(percentageDiff(d['seq'],d['len0']),3)
 	seq=d['seq']
-	if not d['seq_weight']:
-		d['seq']=sequential(d['s2'],d['s1'])
-		seq=d['seq']
-		d['seq_weight']=round(percentageDiff(d['seq'],d['len0']),3)
+
 	
 	
 	weighted = {}
@@ -21712,6 +21715,12 @@ def pattern_probability(string1,string2,w=False):
 	weighted['seq_offset']=round(percentageDiff(d['seq']+3,d['len0']+3)-d['seq_weight'],3)
 	weighted['seq_weight_offsetted']=round(weighted['seq_weight']+weighted['seq_offset'],2)
 	# return weighted
+
+	
+
+	if weighted['seq_weight_offsetted'] == 100 and not string1 == string2: weighted['seq_weight_offsetted']=99
+	if weighted['seq_weight'] == 100 and not string1 == string2: weighted['seq_weight']=99
+
 	if w: return weighted['seq_weight_offsetted']
 	return weighted['seq_weight']
 
