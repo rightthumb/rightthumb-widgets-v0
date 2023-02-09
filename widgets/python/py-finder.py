@@ -196,11 +196,15 @@ def action():
 
         probable=_.pattern_probability_list(test,files)
 
+        if not probable:
+            _.e('Not Found','Zero Probable Matches')
+
         if not _.switches.isActive('Percentage'):
             print( probable[0]['li'] )
         else:
             print()
-            print( str(probable[0]['wprobability'])+'%','\t', probable[0]['li'] )
+            for i,prob in enumerate(probable):
+                print( str(probable[i]['wprobability'])+'%','\t', probable[i]['li'] )
             print()
             print()
 

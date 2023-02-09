@@ -21748,17 +21748,18 @@ def pattern_probability_list(_str,_list):
 		if rec['pdiff']:
 			px=percentageDiff( rec['pdiff'], top['pdiff'] )
 			if not px or px > 50:
-			# if i < 10:
-				# print()
-				# print(px)
-				# print(rec)
-				probability=pattern_probability(_str,rec['li'])
-				w_probability=pattern_probability(_str,rec['li'],w=True)
-				if probability:
-					# print(probability)
-					rec['probability']=probability
-					rec['wprobability']=w_probability
-					probable.append(rec)
+				if rec['pdiff'] > 50:
+				# if i < 10:
+					# print()
+					# print(px)
+					# print(rec)
+					probability=pattern_probability(_str,rec['li'])
+					w_probability=pattern_probability(_str,rec['li'],w=True)
+					if probability and probability >= 50:
+						# print(probability)
+						rec['probability']=probability
+						rec['wprobability']=w_probability
+						probable.append(rec)
 	# sys.exit()
 	if len(probable) > 1: probable = tables.returnSorted( 'data', 'd.probability', probable )
 	if not probable: return None

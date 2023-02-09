@@ -82,22 +82,30 @@ if [%switch%] == [2] (
 
 goto:EOF
 :APP_SEARCH
-    set /a searched=%searched%+1
-    if [%searched%] == [1] set plusClose=90
-    if [%searched%] == [2] set plusClose=80
-    if [%searched%] == [3] set plusClose=70
-    if [%searched%] == [4] set plusClose=50
-    echo pattern: %plusClose%^%%
-    echo.>"%stmp%\app(file.py)_output.txt"
-    echo Error: Does not exist>>"%stmp%\app(file.py)_output.txt"
-    echo.>>"%stmp%\app(file.py)_output.txt"
-    echo Try:>>"%stmp%\app(file.py)_output.txt"
-    rem echo %searched% %plusClose%
-    call p file -folder %python% -noext -label ;tApps -prefix ;t +close %plusClose% + %1>>"%stmp%\app(file.py)_output.txt"
+
+    echo.
+    echo did you mean
+
+
+    call p py-finder -percentage + %1
+
+    rem set /a searched=%searched%+1
+    rem if [%searched%] == [1] set plusClose=90
+    rem if [%searched%] == [2] set plusClose=80
+    rem if [%searched%] == [3] set plusClose=70
+    rem if [%searched%] == [4] set plusClose=50
+
+    rem echo pattern: %plusClose%^%%
+    rem echo.>"%stmp%\app(file.py)_output.txt"
+    rem echo Error: Does not exist>>"%stmp%\app(file.py)_output.txt"
+    rem echo.>>"%stmp%\app(file.py)_output.txt"
+    rem echo Try:>>"%stmp%\app(file.py)_output.txt"
+    rem rem echo %searched% %plusClose%
+    rem call p file -folder %python% -noext -label ;tApps -prefix ;t +close %plusClose% + %1>>"%stmp%\app(file.py)_output.txt"
     rem GOTO:EOF
     rem echo call p file -folder %python% -noext -label ;tApps -prefix ;t +close %plusClose% + %1>>"%stmp%\app(file.py)_output.txt"
     rem type "%stmp%\app(file.py)_output.txt"
-    GOTO :POST_ERROR_COUNT_CHECK
+    rem GOTO :POST_ERROR_COUNT_CHECK
 goto:EOF
 
 :POST_ERROR_COUNT_CHECK
