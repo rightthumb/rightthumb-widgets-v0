@@ -28,9 +28,13 @@ py_folder=$widgets/widgets/python/
 if [ -f "$subject_path" ]; then
     $PY $subject_path $@
 else
+    echo ""
     echo "did you mean"
-    echo $subject_path
-    $PY $py_file -folder $py_folder + $subject -noext -label ";tApps" -prefix ";t" +close "75"
+#    echo $subject_path
+#    $PY $py_file -folder $py_folder + $subject -noext -label ";tApps" -prefix ";t" +close "75"
+#    $p py-finder -percentage  + $@
+#/bin/bash $widgets/widgets/bash/py.sh $@
+    $p py-finder -percentage  + $subject
 fi
 
 

@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 # alt+29 ↔ is space
+ 
 
 # 1674156772
 
@@ -7192,6 +7193,20 @@ def generatePatterns2( data, patternLength=2 ):
 		if good:
 			records.append( rec )
 	return records
+
+def patternz(string):
+	pat = generatePatterns2( string )
+	ptz=[]
+	for x in pat:
+		z=[]
+		for y in x:
+			z.append(string[y])
+		ptz.append(''.join(z))
+	return ptz
+
+
+
+
 
 
 def stringDiff( one, two ):
@@ -21564,4 +21579,232 @@ def _thread_(*args, **kwargs):
             else:exec('script()')
             break
 
+
+
+def pattern_probability(string1,string2,w=False):
+	off='b9e086cad1834395a9aae81d869fd17b'
+	off='b9e086cad1834395'
+	off='b9e086ca'
+	# string1=off+string1
+	# string2=off+string2
+	def _chr_(n):
+		r=''; i=0;
+		while not i==n: i+=1; r+='*';
+		return r
+	def pattern_length_offset(off,xstring1,xstring2):
+		def pldiff(str1,str2):
+			l1=len(str1)
+			l2=len(str2)
+			ll1=l1
+			ll2=l2
+			if l2 < l1:
+				ll1=l2
+				ll2=l1
+			plen=round(percentageDiff(ll1,ll2),3)
+			diff=ll2-ll1
+			return diff,plen
+		d,p=pldiff(xstring1,xstring2)
+		# print(d,p)
+		d,p=pldiff(off,off+_chr_(d))
+		# print(d,p)
+		return p
+
+	
+	def function_name(_string1_,_string2_):
+		y={}
+		y['s1']=patternz(_string1_)
+		y['s2']=patternz(_string2_)
+
+		common = list(set(y['s1']) & set(y['s2']))
+
+		plen=percentageDiffInt(len(_string1_),len(_string2_))
+
+
+		p1=percentageDiff(len(common),len(y['s1']))
+		p2=percentageDiff(len(common),len(y['s2']))
+		p0=p1
+		if p2 < p1: p0=p2
+
+		y['1s']=_string1_
+		y['2s']=_string2_
+		y['ptn1']=str(y['s1'])
+		y['ptn2']=str(y['s2'])
+		y['ptn_len1']=len(y['s1'])
+		y['ptn_len2']=len(y['s2'])
+		y['tcommon']=len(common)
+		y['common']=str(common)
+
+
+		len1=len(_string1_)
+		len2=len(_string2_)
+		len0=len1
+		if len2 < len1: len0=len2
+		y['len1']=len1
+		y['len2']=len2
+		y['len0']=len0
+
+		y['%len']=plen
+		# y['weight']=
+		# y['offsetted']=
+		y['%1']=round(p1,3)
+		y['%2']=round(p2,3)
+		y['%0']=round(p0,3)
+		return y
+
+	def sequential(s1,s2):
+		seq={}
+		_range=6
+		for i,p in enumerate( s2 ):
+			for j in range(0,_range):
+				try:
+					if s2[i]==s1[i+j]:
+						if not j in seq:
+							if j==0: default=True
+							else: default=False
+							seq[j]={'cnt':0,'last': default}
+						if seq[j]['last']: seq[j]['cnt']+=1
+						seq[j]['last']=True
+						# print(j)
+
+					else:
+						if j in seq: seq[j]['last']=False
+				except:
+					if j in seq: seq[j]['last']=False
+		seq['max']=0
+		for j in range(0,_range):
+			if j in seq and seq[j]['last']: seq[j]['cnt']+=1
+			if j in seq:
+				if seq[j]['cnt'] > seq['max']: seq['max']=seq[j]['cnt']
+		# pv(seq)
+		return seq['max']
+
+	
+
+	d = function_name(string1,string2)
+
+	_min=8
+	d['%lenoff']=pattern_length_offset( _chr_(_min) ,string1,string2)
+	if d['%lenoff'] > d['%len']:
+		d['offset'] = round(d['%lenoff']-d['%len'],3)
+	else:
+		d['offset']=0
+
+	d['%off']=d['%0']+d['offset']
+	d['seq']=sequential(d['s1'],d['s2'])
+	d['seq_weight']=round(percentageDiff(d['seq'],d['len0']),3)
+	seq=d['seq']
+	if not d['seq_weight']:
+		d['seq']=sequential(d['s2'],d['s1'])
+		seq=d['seq']
+		d['seq_weight']=round(percentageDiff(d['seq'],d['len0']),3)
+	
+	
+	weighted = {}
+	# weighted['vVv']=d['vVv']
+	weighted['1s']=d['1s']
+	weighted['2s']=d['2s']
+	weighted['%0']=d['%0']
+	weighted['offset']=d['offset']
+	weighted['%off']=d['%off']
+	weighted['len0']=d['len0']
+	weighted['seq']=d['seq']
+	weighted['seq_weight']=d['seq_weight']
+	weighted['seq_offset']=round(percentageDiff(d['seq']+3,d['len0']+3)-d['seq_weight'],3)
+	weighted['seq_weight_offsetted']=round(weighted['seq_weight']+weighted['seq_offset'],2)
+	# return weighted
+	if w: return weighted['seq_weight_offsetted']
+	return weighted['seq_weight']
+
+def pattern_probability_list(_str,_list):
+	# pattern_probability(string1,string2,w=False)
+	pattern_list=[]
+	l_str=len(_str)
+	l_list=list(_str)
+	for li in _list:
+		l_li=len(li)
+		lg=l_list
+		ll=l_li
+		if l_li > l_str:
+			lg=l_li
+			ll=l_str
+		else:
+			lg=l_str
+			ll=l_li
+		diff=lg-ll
+		common=list(set(l_list) & set(list(li)))
+
+		p1=percentageDiff(len(common),l_str)
+		p2=percentageDiff(len(common),l_li)
+		p0=p1
+		if p2 < p1: p0=p2
+
+		pattern_list.append({ 'pdiff': p0, 'diff': diff, 'li': li, 'len': l_li, 'common': common })
+	# pattern_list = tables.returnSorted( 'data', 'd.diff,d.cnt,d.common', pattern_list )
+	pattern_list = tables.returnSorted( 'data', 'd.pdiff', pattern_list )
+	top=pattern_list[0]
+	probable=[]
+
+	for i,rec in enumerate(pattern_list):
+		if rec['pdiff']:
+			px=percentageDiff( rec['pdiff'], top['pdiff'] )
+			if not px or px > 50:
+			# if i < 10:
+				# print()
+				# print(px)
+				# print(rec)
+				probability=pattern_probability(_str,rec['li'])
+				w_probability=pattern_probability(_str,rec['li'],w=True)
+				if probability:
+					# print(probability)
+					rec['probability']=probability
+					rec['wprobability']=w_probability
+					probable.append(rec)
+	# sys.exit()
+	if len(probable) > 1: probable = tables.returnSorted( 'data', 'd.probability', probable )
+	if not probable: return None
+	return probable
+
+
+
+
+
+def pattern_offset_generator():
+	def _chr_(n):
+		r=''
+		i=0
+		while not i==n:
+			i+=1
+			r+='*'
+		return r
+	offsets={}
+	table=[]
+	for x in range(1,6):
+		first=None
+		string1='57e857769b7a47b08bfa71bf1cae37b7'
+		string2=string1+_chr_(x)
+		while not len(string1) ==2:
+			l1=len(string1)
+			l2=len(string2)
+			diff=l2-l1
+			plen=round(percentageDiff(l1,l2),3)
+			if first is None:
+				first=plen
+			offset=round(first-plen,3)
+
+			if not l1 in offsets:
+				offsets[l1]={}
+			offsets[l1][diff]=offset
+			table.append({  'l1':l1, 'l2': l2, 'diff':diff, 'plen':plen,  'offset': offset })
+			# print(diff,plen,l1,l2,'  ',offset)
+			string1=string1[1:]
+			string2=string2[1:]
+	# pv(offsets)
+	table = tables.returnSorted( 'data', 'd.l1', table )
+	pt(table)
+
+
+
+
+
 # alt+29 ↔ is space
+# EOF
