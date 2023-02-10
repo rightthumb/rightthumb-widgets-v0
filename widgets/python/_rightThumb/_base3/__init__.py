@@ -21718,8 +21718,8 @@ def pattern_probability(string1,string2,w=False):
 
 	
 
-	if weighted['seq_weight_offsetted'] == 100 and not string1 == string2: weighted['seq_weight_offsetted']=99
-	if weighted['seq_weight'] == 100 and not string1 == string2: weighted['seq_weight']=99
+	if weighted['seq_weight_offsetted'] > 99 and not string1 == string2: weighted['seq_weight_offsetted']=99
+	if weighted['seq_weight'] > 99 and not string1 == string2: weighted['seq_weight']=99
 
 	if w: return weighted['seq_weight_offsetted']
 	return weighted['seq_weight']
@@ -21747,17 +21747,17 @@ def pattern_probability_list(_str,_list):
 		p0=p1
 		if p2 < p1: p0=p2
 
-		pattern_list.append({ 'pdiff': p0, 'diff': diff, 'li': li, 'len': l_li, 'common': common })
+		pattern_list.append({ 'pCommon': p0, 'diff': diff, 'li': li, 'len': l_li, 'common': common })
 	# pattern_list = tables.returnSorted( 'data', 'd.diff,d.cnt,d.common', pattern_list )
-	pattern_list = tables.returnSorted( 'data', 'd.pdiff', pattern_list )
+	pattern_list = tables.returnSorted( 'data', 'd.pCommon', pattern_list )
 	top=pattern_list[0]
 	probable=[]
 
 	for i,rec in enumerate(pattern_list):
-		if rec['pdiff']:
-			px=percentageDiff( rec['pdiff'], top['pdiff'] )
+		if rec['pCommon']:
+			px=percentageDiff( rec['pCommon'], top['pCommon'] )
 			if not px or px > 50:
-				if rec['pdiff'] > 50:
+				if rec['pCommon'] > 50:
 				# if i < 10:
 					# print()
 					# print(px)
