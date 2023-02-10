@@ -902,6 +902,28 @@ copy(  hackTool.payload.label  )
 		_copy.imp.copy( y, p=0 )
 
 
+	def base64_encode(self):
+		_copy = _.regImp( __.appReg, '-copy' )
+		_paste = _.regImp( __.appReg, '-paste' )
+		data  = _paste.imp.paste()
+		data = data.replace('\r','')
+		import base64
+		data=base64.b64encode(data.encode('utf-8'))
+		# data=base64.b64decode(data)
+		y=str(data.decode('utf-8'))
+		_copy.imp.copy( y, p=0 )
+
+	def base64_decode(self):
+		_copy = _.regImp( __.appReg, '-copy' )
+		_paste = _.regImp( __.appReg, '-paste' )
+		data  = _paste.imp.paste()
+		data = data.replace('\r','')
+		import base64
+		# data=base64.b64encode(data)
+		data=base64.b64decode(data)
+		y=str(data.decode('utf-8'))
+		_copy.imp.copy( y, p=0 )
+
 	def space_2_underscore_text(self):
 		_copy = _.regImp( __.appReg, '-copy' )
 		_paste = _.regImp( __.appReg, '-paste' )
@@ -2687,8 +2709,9 @@ def load():
 
 				'the-listener': { 'raw': [  'ctrl.','shift.',  'l'    ], 'do': '_listener_()' },
 
+				'base64_encode': { 'raw': [  'ctrl.','shift.',  'e'    ], 'do': 'Clip.base64_encode()', 'bk': True },
+				'base64_decode': { 'raw': [  'ctrl.','shift.',  'd'    ], 'do': 'Clip.base64_decode()', 'bk': True },
 	}
-
 	global force_clean
 	
 	for k in table:

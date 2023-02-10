@@ -30,7 +30,12 @@ GOTO:EOF
     SET PYTHON_BASE=3
     DOSKEY /LISTSIZE=999
     SET noClear=FALSE
-    if [%1] == [c] SET noClear=TRUE
+    rem if [%1] == [c] SET noClear=TRUE
+    if [%1] == [c] SET noTOP=TRUE
+    if [%1] == [t] SET "noTOP="
+    if [%1] == [tt] SET noTOP=TRUE
+    if [%1] == [top] SET "noTOP="
+    if [%1] == [cc] SET "noTOP="
     if [%1] == [test] SET noClear=TRUE
 
     CALL:CLEAR_SCREEN
@@ -59,7 +64,10 @@ GOTO:EOF
 
 :CLEAR_SCREEN
     IF NOT [%noClear%] == [TRUE] (
+        rem prompt - 
         CLS
+        if [%noTOP%] == [] %py% %widgets%\widgets\python\windows-terminal-header.py
+        rem echo %noTOP%
     )
 GOTO:EOF
 
@@ -287,6 +295,7 @@ GOTO:EOF
             SET api=loaded
             CALL:CLEAR_SCREEN
             echo.
+            rem cls
             prompt - 
 GOTO:EOF
 

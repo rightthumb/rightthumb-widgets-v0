@@ -176,6 +176,7 @@ def _listener_():
 
 def _translate_(speech):
     global hk
+    if speech.lower().replace(' ','')=='andcode': speech='encode'
     # os.system('say '+speech)
     if _.switches.isActive('Print'):
         print('said:',speech)
@@ -354,6 +355,8 @@ dic = {
 
             'remove comments and spaces': 'Clip.remove_py_comments_spaces()',
             'remove comments': 'Clip.remove_py_comments()',
+            'encode': 'Clip.base64_encode()',
+            'decode': 'Clip.base64_decode()',
 
             'math': 'Clip.math()',
 

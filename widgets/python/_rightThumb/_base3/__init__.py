@@ -21772,28 +21772,11 @@ def pattern_probability(string1,string2,w=False):
 		off='b9e086ca'
 		# string1=off+string1
 		# string2=off+string2
+
 		def _chr_(n):
 				r=''; i=0;
 				while not i==n: i+=1; r+='*';
 				return r
-		def pattern_length_offset(off,xstring1,xstring2):
-				def pldiff(str1,str2):
-						l1=len(str1)
-						l2=len(str2)
-						ll1=l1
-						ll2=l2
-						if l2 < l1:
-								ll1=l2
-								ll2=l1
-						plen=round(percentageDiff(ll1,ll2),3)
-						diff=ll2-ll1
-						return diff,plen
-				d,p=pldiff(xstring1,xstring2)
-				# print(d,p)
-				d,p=pldiff(off,off+_chr_(d))
-				# print(d,p)
-				return p
-
 
 		def function_name(_string1_,_string2_):
 				y={}
@@ -21894,14 +21877,7 @@ def pattern_probability(string1,string2,w=False):
 
 		d = function_name(string1,string2)
 
-		_min=8
-		d['%lenoff']=pattern_length_offset( _chr_(_min) ,string1,string2)
-		if d['%lenoff'] > d['%len']:
-				d['offset'] = round(d['%lenoff']-d['%len'],3)
-		else:
-				d['offset']=0
 
-		d['%off']=d['%0']+d['offset']
 
 
 		# ↓ THERE ARE 2 WAYS OF DOING THIS ↓ 
@@ -21932,9 +21908,7 @@ def pattern_probability(string1,string2,w=False):
 		weighted['1s']=d['1s']
 		weighted['2s']=d['2s']
 		weighted['%0']=d['%0']
-		weighted['offset']=d['offset']
-		weighted['%off']=d['%off']
-		weighted['len0']=d['len0']
+		weighted['len']=d['len0']
 		weighted['seq']=d['seq']
 		weighted['seq_weight']=d['seq_weight']
 		weighted['seq_offset']=round(percentageDiff(d['seq']+3,d['len0']+3)-d['seq_weight'],3)
