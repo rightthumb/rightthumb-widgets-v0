@@ -164,8 +164,20 @@ def action():
     # x=_.pattern_probability('-copy','-2copy')
     # x=_.pattern_probability('-copy','-copypat')
     # # _.pattern_offset_generator()
-    # x=_.pattern_probability('-copy','-co3py')
+    a='abcdefghijklmnopqrstuvwxyz'
+    b='abcde-fghijklmnopqrstuvwxyz'
+    b='a-bcdefghijklmnopqrstuvwxyz'
+    a='ap2px'
+    b='appx'
+    # a='a2bcd'
+    # b='abcd'
+    x=_.pattern_probability(a,b)
+    # print('x:',x)
     # _.pv(x)
+    # common=list(set(list(a)) & set(list(b)))
+    # print(len(common),common)
+    # print(a)
+    # print(b)
     # sys.exit()
 
     test=''.join(_.switches.values('Plus'))

@@ -21540,190 +21540,421 @@ def percentageAdd(n,p): return n*(1+(p/100))
 # _.percentageAdd(56250,25)
 
 def isData2():
-    os=__.imp('os.path.isfile')
-    d=isData(r=0)
-    # print(d)
-    if not d: e('no data','_.isData2()')
-    if os.path.isfile(d[0]):
-        data=getText(d[0],raw=True)
-    else:
-        data = '\n'.join( d )
-    return data
+	os=__.imp('os.path.isfile')
+	d=isData(r=0)
+	# print(d)
+	if not d: e('no data','_.isData2()')
+	if os.path.isfile(d[0]):
+		data=getText(d[0],raw=True)
+	else:
+		data = '\n'.join( d )
+	return data
 	# isDataR=isData2
 	# isDatar=isData2
 	# isDatr=isData2
 
 def _thread_(*args, **kwargs):
-    # threads=[]
-    # import threading
-    # t = threading.Thread(target=_thread_, args=(1,2,3), kwargs={'name':'scott','script':test})
-    # threads.append(t)
-    # t.start()
-    for _script in ['_fn_','script']:
-        if kwargs and _script in kwargs:
-            script=kwargs[_script]
-            kw={}
-            for k in kwargs:
-                if not k == _script:
-                    kw[k]=kwargs[k]
-            ags=[]
-            for i,ar in enumerate(args): ags.append('args['+str(i)+']')
-            a=','.join(ags)
-            kwg=[]
-            for k in kw: kwg.append(k+'=kwargs["'+k+'"]')
-            k=','.join(kwg)
-            ak=[]
-            if a: ak.append(a)
-            if k: ak.append(k)
-            if ak: exec('script('+ ','.join(ak) +')')
-            else:exec('script()')
-            break
+	# threads=[]
+	# import threading
+	# t = threading.Thread(target=_thread_, args=(1,2,3), kwargs={'name':'scott','script':test})
+	# threads.append(t)
+	# t.start()
+	for _script in ['_fn_','script']:
+		if kwargs and _script in kwargs:
+			script=kwargs[_script]
+			kw={}
+			for k in kwargs:
+				if not k == _script:
+					kw[k]=kwargs[k]
+			ags=[]
+			for i,ar in enumerate(args): ags.append('args['+str(i)+']')
+			a=','.join(ags)
+			kwg=[]
+			for k in kw: kwg.append(k+'=kwargs["'+k+'"]')
+			k=','.join(kwg)
+			ak=[]
+			if a: ak.append(a)
+			if k: ak.append(k)
+			if ak: exec('script('+ ','.join(ak) +')')
+			else:exec('script()')
+			break
+
+
+# def pattern_probability(string1,string2,w=False):
+# 		off='b9e086cad1834395a9aae81d869fd17b'
+# 		off='b9e086cad1834395'
+# 		off='b9e086ca'
+# 		# string1=off+string1
+# 		# string2=off+string2
+# 		def _chr_(n):
+# 				r=''; i=0;
+# 				while not i==n: i+=1; r+='*';
+# 				return r
+# 		def pattern_length_offset(off,xstring1,xstring2):
+# 				def pldiff(str1,str2):
+# 						l1=len(str1)
+# 						l2=len(str2)
+# 						ll1=l1
+# 						ll2=l2
+# 						if l2 < l1:
+# 								ll1=l2
+# 								ll2=l1
+# 						plen=round(percentageDiff(ll1,ll2),3)
+# 						diff=ll2-ll1
+# 						return diff,plen
+# 				d,p=pldiff(xstring1,xstring2)
+# 				# print(d,p)
+# 				d,p=pldiff(off,off+_chr_(d))
+# 				# print(d,p)
+# 				return p
+
+
+# 		def function_name(_string1_,_string2_):
+# 				y={}
+# 				y['s1']=patternz(_string1_)
+# 				y['s2']=patternz(_string2_)
+
+# 				common = list(set(y['s1']) & set(y['s2']))
+
+# 				plen=percentageDiffInt(len(_string1_),len(_string2_))
+
+
+# 				p1=percentageDiff(len(common),len(y['s1']))
+# 				p2=percentageDiff(len(common),len(y['s2']))
+# 				p0=p1
+# 				if p2 < p1: p0=p2
+
+# 				y['1s']=_string1_
+# 				y['2s']=_string2_
+# 				y['ptn1']=str(y['s1'])
+# 				y['ptn2']=str(y['s2'])
+# 				y['ptn_len1']=len(y['s1'])
+# 				y['ptn_len2']=len(y['s2'])
+# 				y['tcommon']=len(common)
+# 				y['common']=str(common)
+
+
+# 				len1=len(_string1_)
+# 				len2=len(_string2_)
+# 				len0=len1
+# 				if len2 < len1: len0=len2
+# 				y['len1']=len1
+# 				y['len2']=len2
+# 				y['len0']=len0
+
+# 				y['%len']=plen
+# 				# y['weight']=
+# 				# y['offsetted']=
+# 				y['%1']=round(p1,3)
+# 				y['%2']=round(p2,3)
+# 				y['%0']=round(p0,3)
+# 				return y
+
+# 		def sequential(s1,s2):
+# 			# print('s1,s2',s1,s2)
+# 			seq={}
+# 			_range=6
+# 			mx=-10
+# 			for i,p in enumerate( s2 ):
+# 				found=False
+# 				for j in range(-2,_range):
+# 					if i+j >mx:
+# 						try:
+# 							if not found and s2[i]==s1[i+j]:
+# 								mx=i+j
+# 							# print(s2[i],s1[i+j])
+# 							# if s2[i]==s1[i+j]:
+# 								# print(99)
+# 								if not j in seq:
+# 									if j==0: default=False
+# 									else: default=False
+# 									seq[j]={'cnt':0,'last': default}
+# 								if seq[j]['last']:
+# 									seq[j]['cnt']+=1
+
+# 									try:
+# 										if not s2[i+1]==s1[i+j+1]:
+# 											# print(i,j,s2[i],'1-here')
+# 											seq[j]['cnt']+=1
+# 									except:
+# 										# print(i,j,s2[i+1],'2-here',8)
+# 										# print(i,j,'2-here',8)
+# 										seq[j]['cnt']+=1
+# 								seq[j]['last']=True
+# 								# print(j)
+
+# 							# else:
+# 							# 	if j in seq: seq[j]['last']=False
+# 						except:
+# 							pass
+# 							# if j in seq: seq[j]['last']=False
+# 			seq['max']=0
+# 			for j in range(-2,_range):
+# 			# 	if j in seq and seq[j]['last']: seq[j]['cnt']+=1
+# 				if j in seq:
+# 					seq['max']+=seq[j]['cnt']
+
+# 			if s1[0] == s2[0] and not s1[1] == s2[1]: seq['max']+=1
+# 			# pv(seq)
+# 			# pr(s1,s2,c='Background.red')
+# 			# pr(seq['max'],c='red')
+# 			# sys.exit()
+# 			fx=[len(s1),len(s2)]
+# 			fx.sort()
+# 			# if fx[0]<seq['max']: seq['max']=fx[0]
+# 			return seq['max']
+
+
+
+# 		d = function_name(string1,string2)
+
+# 		_min=8
+# 		d['%lenoff']=pattern_length_offset( _chr_(_min) ,string1,string2)
+# 		if d['%lenoff'] > d['%len']:
+# 				d['offset'] = round(d['%lenoff']-d['%len'],3)
+# 		else:
+# 				d['offset']=0
+
+# 		d['%off']=d['%0']+d['offset']
+
+
+# 		# ↓ THERE ARE 2 WAYS OF DOING THIS ↓ 
+
+# 		# ↓ by charecter ↓
+# 		# _seq1=sequential(string1,string2)
+# 		# _seq2=sequential(string2,string1)
+
+# 		# ↓ by pattern ↓
+# 		_seq1=sequential(d['s1'],d['s2'])
+# 		_seq2=sequential(d['s2'],d['s1'])
+		
+# 		# ↑ THERE ARE 2 WAYS OF DOING THIS ↑
+
+# 		_seqL=[_seq1,_seq2]
+# 		_seqL.sort()
+# 		# print('_seqL:',_seqL)
+# 		d['seq']=_seqL[-1]
+# 		if d['seq'] > d['len0']: d['seq'] = _seqL[0]
+# 		d['seq_weight']=round(percentageDiff(d['seq'],d['len0']),3)
+# 		# pr(d['seq'],d['len0'],c='purple')
+# 		seq=d['seq']
+
+# 		# pv(d)
+
+# 		weighted = {}
+# 		# weighted['vVv']=d['vVv']
+# 		weighted['1s']=d['1s']
+# 		weighted['2s']=d['2s']
+# 		weighted['%0']=d['%0']
+# 		weighted['offset']=d['offset']
+# 		weighted['%off']=d['%off']
+# 		weighted['len0']=d['len0']
+# 		weighted['seq']=d['seq']
+# 		weighted['seq_weight']=d['seq_weight']
+# 		weighted['seq_offset']=round(percentageDiff(d['seq']+3,d['len0']+3)-d['seq_weight'],3)
+# 		weighted['seq_weight_offsetted']=round(weighted['seq_weight']+weighted['seq_offset'],2)
+# 		# return weighted
+
+
+
+# 		if weighted['seq_weight_offsetted'] > 99 and not string1 == string2: weighted['seq_weight_offsetted']=99
+# 		if weighted['seq_weight'] > 99 and not string1 == string2: weighted['seq_weight']=99
+
+# 		if w: return weighted['seq_weight_offsetted']
+# 		return weighted['seq_weight']
+
 
 
 
 def pattern_probability(string1,string2,w=False):
-	off='b9e086cad1834395a9aae81d869fd17b'
-	off='b9e086cad1834395'
-	off='b9e086ca'
-	# string1=off+string1
-	# string2=off+string2
-	def _chr_(n):
-		r=''; i=0;
-		while not i==n: i+=1; r+='*';
-		return r
-	def pattern_length_offset(off,xstring1,xstring2):
-		def pldiff(str1,str2):
-			l1=len(str1)
-			l2=len(str2)
-			ll1=l1
-			ll2=l2
-			if l2 < l1:
-				ll1=l2
-				ll2=l1
-			plen=round(percentageDiff(ll1,ll2),3)
-			diff=ll2-ll1
-			return diff,plen
-		d,p=pldiff(xstring1,xstring2)
-		# print(d,p)
-		d,p=pldiff(off,off+_chr_(d))
-		# print(d,p)
-		return p
-
-	
-	def function_name(_string1_,_string2_):
-		y={}
-		y['s1']=patternz(_string1_)
-		y['s2']=patternz(_string2_)
-
-		common = list(set(y['s1']) & set(y['s2']))
-
-		plen=percentageDiffInt(len(_string1_),len(_string2_))
+		off='b9e086cad1834395a9aae81d869fd17b'
+		off='b9e086cad1834395'
+		off='b9e086ca'
+		# string1=off+string1
+		# string2=off+string2
+		def _chr_(n):
+				r=''; i=0;
+				while not i==n: i+=1; r+='*';
+				return r
+		def pattern_length_offset(off,xstring1,xstring2):
+				def pldiff(str1,str2):
+						l1=len(str1)
+						l2=len(str2)
+						ll1=l1
+						ll2=l2
+						if l2 < l1:
+								ll1=l2
+								ll2=l1
+						plen=round(percentageDiff(ll1,ll2),3)
+						diff=ll2-ll1
+						return diff,plen
+				d,p=pldiff(xstring1,xstring2)
+				# print(d,p)
+				d,p=pldiff(off,off+_chr_(d))
+				# print(d,p)
+				return p
 
 
-		p1=percentageDiff(len(common),len(y['s1']))
-		p2=percentageDiff(len(common),len(y['s2']))
-		p0=p1
-		if p2 < p1: p0=p2
+		def function_name(_string1_,_string2_):
+				y={}
+				y['s1']=patternz(_string1_)
+				y['s2']=patternz(_string2_)
 
-		y['1s']=_string1_
-		y['2s']=_string2_
-		y['ptn1']=str(y['s1'])
-		y['ptn2']=str(y['s2'])
-		y['ptn_len1']=len(y['s1'])
-		y['ptn_len2']=len(y['s2'])
-		y['tcommon']=len(common)
-		y['common']=str(common)
+				common = list(set(y['s1']) & set(y['s2']))
+
+				plen=percentageDiffInt(len(_string1_),len(_string2_))
 
 
-		len1=len(_string1_)
-		len2=len(_string2_)
-		len0=len1
-		if len2 < len1: len0=len2
-		y['len1']=len1
-		y['len2']=len2
-		y['len0']=len0
+				p1=percentageDiff(len(common),len(y['s1']))
+				p2=percentageDiff(len(common),len(y['s2']))
+				p0=p1
+				if p2 < p1: p0=p2
 
-		y['%len']=plen
-		# y['weight']=
-		# y['offsetted']=
-		y['%1']=round(p1,3)
-		y['%2']=round(p2,3)
-		y['%0']=round(p0,3)
-		return y
+				y['1s']=_string1_
+				y['2s']=_string2_
+				y['ptn1']=str(y['s1'])
+				y['ptn2']=str(y['s2'])
+				y['ptn_len1']=len(y['s1'])
+				y['ptn_len2']=len(y['s2'])
+				y['tcommon']=len(common)
+				y['common']=str(common)
 
-	def sequential(s1,s2):
-		seq={}
-		_range=6
-		for i,p in enumerate( s2 ):
-			for j in range(0,_range):
-				try:
-					if s2[i]==s1[i+j]:
-						if not j in seq:
-							if j==0: default=True
-							# else: default=False
-							else: default=False
-							seq[j]={'cnt':0,'last': default}
-						if seq[j]['last']: seq[j]['cnt']+=1
-						seq[j]['last']=True
-						# print(j)
 
-					else:
-						if j in seq: seq[j]['last']=False
-				except:
-					if j in seq: seq[j]['last']=False
-		seq['max']=0
-		for j in range(0,_range):
-			if j in seq and seq[j]['last']: seq[j]['cnt']+=1
-			if j in seq:
-				if seq[j]['cnt'] > seq['max']: seq['max']=seq[j]['cnt']
-		# pv(seq)
-		return seq['max']
+				len1=len(_string1_)
+				len2=len(_string2_)
+				len0=len1
+				if len2 < len1: len0=len2
+				y['len1']=len1
+				y['len2']=len2
+				y['len0']=len0
 
-	
+				y['%len']=plen
+				# y['weight']=
+				# y['offsetted']=
+				y['%1']=round(p1,3)
+				y['%2']=round(p2,3)
+				y['%0']=round(p0,3)
+				return y
 
-	d = function_name(string1,string2)
+		def sequential(s1,s2):
+			# print('s1,s2',s1,s2)
+			seq={}
+			_range=6
+			mx=-10
+			for i,p in enumerate( s2 ):
+				found=False
+				for j in range(-2,_range):
+					if i+j >mx:
+						try:
+							if not found and s2[i]==s1[i+j]:
+								mx=i+j
+							# print(s2[i],s1[i+j])
+							# if s2[i]==s1[i+j]:
+								# print(99)
+								if not j in seq:
+									if j==0: default=False
+									else: default=False
+									seq[j]={'cnt':0,'last': default}
+								if seq[j]['last']:
+									seq[j]['cnt']+=1
 
-	_min=8
-	d['%lenoff']=pattern_length_offset( _chr_(_min) ,string1,string2)
-	if d['%lenoff'] > d['%len']:
-		d['offset'] = round(d['%lenoff']-d['%len'],3)
-	else:
-		d['offset']=0
+									try:
+										if not s2[i+1]==s1[i+j+1]:
+											# print(i,j,s2[i],'1-here')
+											seq[j]['cnt']+=1
+									except:
+										# print(i,j,s2[i+1],'2-here',8)
+										# print(i,j,'2-here',8)
+										seq[j]['cnt']+=1
+								seq[j]['last']=True
+								# print(j)
 
-	d['%off']=d['%0']+d['offset']
-	_seq1=sequential(d['s1'],d['s2'])
-	_seq2=sequential(d['s2'],d['s1'])
-	if _seq1 > _seq2:
-		_seq0=_seq1
-	else:
-		_seq0=_seq2
-	d['seq']=_seq0
-	d['seq_weight']=round(percentageDiff(d['seq'],d['len0']),3)
-	seq=d['seq']
+							# else:
+							# 	if j in seq: seq[j]['last']=False
+						except:
+							pass
+							# if j in seq: seq[j]['last']=False
+			seq['max']=0
+			for j in range(-2,_range):
+			# 	if j in seq and seq[j]['last']: seq[j]['cnt']+=1
+				if j in seq:
+					seq['max']+=seq[j]['cnt']
 
-	
-	
-	weighted = {}
-	# weighted['vVv']=d['vVv']
-	weighted['1s']=d['1s']
-	weighted['2s']=d['2s']
-	weighted['%0']=d['%0']
-	weighted['offset']=d['offset']
-	weighted['%off']=d['%off']
-	weighted['len0']=d['len0']
-	weighted['seq']=d['seq']
-	weighted['seq_weight']=d['seq_weight']
-	weighted['seq_offset']=round(percentageDiff(d['seq']+3,d['len0']+3)-d['seq_weight'],3)
-	weighted['seq_weight_offsetted']=round(weighted['seq_weight']+weighted['seq_offset'],2)
-	# return weighted
+			if s1[0] == s2[0] and not s1[1] == s2[1]: seq['max']+=1
+			# pv(seq)
+			# pr(s1,s2,c='Background.red')
+			# pr(seq['max'],c='red')
+			# sys.exit()
+			fx=[len(s1),len(s2)]
+			fx.sort()
+			# if fx[0]<seq['max']: seq['max']=fx[0]
+			return seq['max']
 
-	
 
-	if weighted['seq_weight_offsetted'] > 99 and not string1 == string2: weighted['seq_weight_offsetted']=99
-	if weighted['seq_weight'] > 99 and not string1 == string2: weighted['seq_weight']=99
 
-	if w: return weighted['seq_weight_offsetted']
-	return weighted['seq_weight']
+		d = function_name(string1,string2)
+
+		_min=8
+		d['%lenoff']=pattern_length_offset( _chr_(_min) ,string1,string2)
+		if d['%lenoff'] > d['%len']:
+				d['offset'] = round(d['%lenoff']-d['%len'],3)
+		else:
+				d['offset']=0
+
+		d['%off']=d['%0']+d['offset']
+
+
+		# ↓ THERE ARE 2 WAYS OF DOING THIS ↓ 
+
+		# ↓ by charecter ↓
+		# _seq1=sequential(string1,string2)
+		# _seq2=sequential(string2,string1)
+
+		# ↓ by pattern ↓
+		_seq1=sequential(d['s1'],d['s2'])
+		_seq2=sequential(d['s2'],d['s1'])
+		
+		# ↑ THERE ARE 2 WAYS OF DOING THIS ↑
+
+		_seqL=[_seq1,_seq2]
+		_seqL.sort()
+		# print('_seqL:',_seqL)
+		d['seq']=_seqL[-1]
+		if d['seq'] > d['len0']: d['seq'] = _seqL[0]
+		d['seq_weight']=round(percentageDiff(d['seq'],d['len0']),3)
+		# pr(d['seq'],d['len0'],c='purple')
+		seq=d['seq']
+
+		# pv(d)
+
+		weighted = {}
+		# weighted['vVv']=d['vVv']
+		weighted['1s']=d['1s']
+		weighted['2s']=d['2s']
+		weighted['%0']=d['%0']
+		weighted['offset']=d['offset']
+		weighted['%off']=d['%off']
+		weighted['len0']=d['len0']
+		weighted['seq']=d['seq']
+		weighted['seq_weight']=d['seq_weight']
+		weighted['seq_offset']=round(percentageDiff(d['seq']+3,d['len0']+3)-d['seq_weight'],3)
+		weighted['seq_weight_offsetted']=round(weighted['seq_weight']+weighted['seq_offset'],2)
+		# return weighted
+
+
+
+		if weighted['seq_weight_offsetted'] > 99 and not string1 == string2: weighted['seq_weight_offsetted']=99
+		if weighted['seq_weight'] > 99 and not string1 == string2: weighted['seq_weight']=99
+
+		if w: return weighted['seq_weight_offsetted']
+		return weighted['seq_weight']
+
+
+
+
+
+
+
 
 def pattern_probability_list(_str,_list):
 	# pattern_probability(string1,string2,w=False)
@@ -21778,40 +22009,6 @@ def pattern_probability_list(_str,_list):
 
 
 
-
-def pattern_offset_generator():
-	def _chr_(n):
-		r=''
-		i=0
-		while not i==n:
-			i+=1
-			r+='*'
-		return r
-	offsets={}
-	table=[]
-	for x in range(1,6):
-		first=None
-		string1='57e857769b7a47b08bfa71bf1cae37b7'
-		string2=string1+_chr_(x)
-		while not len(string1) ==2:
-			l1=len(string1)
-			l2=len(string2)
-			diff=l2-l1
-			plen=round(percentageDiff(l1,l2),3)
-			if first is None:
-				first=plen
-			offset=round(first-plen,3)
-
-			if not l1 in offsets:
-				offsets[l1]={}
-			offsets[l1][diff]=offset
-			table.append({  'l1':l1, 'l2': l2, 'diff':diff, 'plen':plen,  'offset': offset })
-			# print(diff,plen,l1,l2,'  ',offset)
-			string1=string1[1:]
-			string2=string2[1:]
-	# pv(offsets)
-	table = tables.returnSorted( 'data', 'd.l1', table )
-	pt(table)
 
 
 
