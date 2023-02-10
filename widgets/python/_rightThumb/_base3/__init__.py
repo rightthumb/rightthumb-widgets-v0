@@ -21661,7 +21661,7 @@ def pattern_probability(string1,string2,w=False):
 						if not j in seq:
 							if j==0: default=True
 							# else: default=False
-							else: default=True
+							else: default=False
 							seq[j]={'cnt':0,'last': default}
 						if seq[j]['last']: seq[j]['cnt']+=1
 						seq[j]['last']=True
