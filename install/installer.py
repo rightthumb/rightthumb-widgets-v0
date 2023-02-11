@@ -2774,7 +2774,7 @@ if [ "$color_prompt" = yes ]; then
     fi
     PS1=$prompt_color'\n┌──${debian_chroot:+($debian_chroot)──}('$info_color'\\u${prompt_symbol}\\h'$prompt_color')-[\\[\033[0;1m\\]\\w'$prompt_color'].20F54359E924\n'$prompt_color'└─'$info_color'\\$\\[\033[0m\\] '
 else
-    PS1='┌── (\\u${prompt_symbol}\\h)──[\\w].20F54359E924\\n└─── $ '
+    PS1='\n┌── (\\u${prompt_symbol}\\h)──[\\w].20F54359E924\\n└─── $ '
 fi
 unset color_prompt force_color_prompt
 
