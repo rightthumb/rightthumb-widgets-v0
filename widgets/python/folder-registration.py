@@ -32,7 +32,9 @@ _str = __.imp('_rightThumb._string')
 def sw():
     pass
     #b)--> examples
-    # _.switches.register( 'Input', '-i' )
+    _.switches.register( 'Relevent', '-r' )
+    _.switches.register( 'WSL', '-wsl' )
+    _.switches.register( 'Ago', '-ago', '1m' )
     #e)--> examples
     # _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=False )
 
@@ -149,19 +151,82 @@ _.l.sw.register( triggers, sw )
 #n)--> start
 
 
-
-
-
 def action():
+    if len(_.switches.all())==0:
+        register()
+        return None
+
+    if _.switches.isActive('Relevent'):
+        relevent()
+        return None
+
+
+def relevent():
     load()
     global epoch
     global day
     global last
     global lastFi
     global xFo
-    global session
 
-    fo = os.getcwd()
+    threshold_bytes = 20
+    threshold_lines = 20
+    # threshold_ago   = _.timeAgo('5min')
+    threshold_ago   = _.timeAgo('1d')
+    if _.switches.isActive('Ago'): threshold_ago = _.switches.value('Ago')
+
+
+
+    _relevent=xFo+'relevent'
+    relevent=[]
+    import _rightThumb._dir as _dir
+    records=[]
+    for path in _.fo(xFo+'log'):
+        rec = _dir.info(path,lines=True)
+        records.append(rec)
+    records = _.tables.returnSorted( 'data', 'd.lines', records )
+    for i,rec in enumerate(records):
+        if not rec['me']: rec['me']=0
+        path=rec['path']
+        good=False
+
+        # if rec['bytes'] > threshold_bytes: good=True
+        if rec['lines'] > threshold_lines: good=True
+        if rec['me'] > threshold_ago: good=True
+        if good:
+            print(path)
+            # print(rec)
+            p=path.split(os.sep)
+            fi=p.pop(-1)
+            f0=xFo+'resolve'+os.sep+fi
+            f1=_v.resolveFolderIDs(_.getText(f0,raw=True,clean=2))
+            relevent.append(f1)
+            # print(fi,rec['lines'],f1)
+            # print (path)
+            # print(fi)
+            # print(f0)
+            # _.pv(rec)
+            # sys.exit()
+    _.saveText(relevent,_relevent)
+    _.pr(_relevent,c='cyan')
+
+
+def register():
+    load()
+    global epoch
+    global day
+    global last
+    global lastFi
+    global xFo
+    
+    session = os.environ['Session_ID']
+    _v.mkdir(day+session)
+
+    lastFi = day+session+os.sep+'id'
+    if os.path.isfile(lastFi): last=_.getText(lastFi,raw=True,clean=2)
+
+
+    fo = _v.sanitizeFolder(os.getcwd())
     sha = _md5.string(fo,'sha1')
 
     sess = day+session+'.csv'
@@ -178,7 +243,8 @@ def action():
         if not os.path.isfile(xFo+'resolve'+os.sep+sha): _.saveText(fo,xFo+'resolve'+os.sep+sha)
         _.saveText(sha,lastFi)
 
-    _.afile(str(epoch)+','+sha,sess,'epoch,id')
+    
+    _.afile(str(epoch),day+session+os.sep+sha)
 
 
 
@@ -188,17 +254,23 @@ def load():
     global last
     global lastFi
     global xFo
-    global session
+
     epoch=int(str(time.time()).split('.')[0])
     last=''
-    xFo=_v.tt+os.sep+'fo'+os.sep
+
+    if _.switches.isActive('WSL'):
+        tt='/mnt/c/Users/Scott/.rt/profile/tables'
+    else:
+        tt=_v.tt
+
+    xFo=tt+os.sep+'fo'+os.sep
     day = xFo+'daily'+os.sep+_.day(epoch)
     _v.mkdir(day)
     _v.mkdir(xFo+'resolve')
     _v.mkdir(xFo+'log')
-    session = os.environ['Session_ID']
-    lastFi = day+session+'.id'
-    if os.path.isfile(lastFi): last=_.getText(lastFi,raw=True,clean=2)
+
+
+
 
 
 
