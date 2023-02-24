@@ -50,9 +50,9 @@ __.setting('switch-raw',[])
 
 _.appInfo[focus()] = {
     # 'app': '8facG-jo0Cxk',
-    'file': 'thisApp.py',
+    'file': 'folder-registration.py',
     'liveAppName': __.thisApp( __file__ ),
-    'description': 'Changes the world',
+    'description': 'Realtime(ish) documentation of folder usage',
         # _.ail(1,'subject')+
         # _.aib('one')+
     'categories': [
@@ -148,19 +148,64 @@ _.l.sw.register( triggers, sw )
 ########################################################################################
 #n)--> start
 
-def action():
-    load(); global c3po;
 
-    #n)--> iterate
-    for subject in _.isData(r=0): _.pr(subject)
-    
+
+
+
+def action():
+    load()
+    global epoch
+    global day
+    global last
+    global lastFi
+    global xFo
+    global session
+
+    fo = os.getcwd()
+    sha = _md5.string(fo,'sha1')
+
+    sess = day+session+'.csv'
+
+
+    # print(day)
+    # print(last)
+    # print(sha)
+
+
+    if not sha == last:
+        # print(os.path.isfile(lastFi))
+        _.afile(epoch,xFo+'log'+os.sep+sha)
+        if not os.path.isfile(xFo+'resolve'+os.sep+sha): _.saveText(fo,xFo+'resolve'+os.sep+sha)
+        _.saveText(sha,lastFi)
+
+    _.afile(str(epoch)+','+sha,sess,'epoch,id')
+
+
 
 def load():
-    global c3po
-    c3po = _.getTable( 'table' )
-    #n)--> print table
-    _.pt(c3po)
+    global epoch
+    global day
+    global last
+    global lastFi
+    global xFo
+    global session
+    epoch=int(str(time.time()).split('.')[0])
+    last=''
+    xFo=_v.tt+os.sep+'fo'+os.sep
+    day = xFo+'daily'+os.sep+_.day(epoch)
+    _v.mkdir(day)
+    _v.mkdir(xFo+'resolve')
+    _v.mkdir(xFo+'log')
+    session = os.environ['Session_ID']
+    lastFi = day+session+'.id'
+    if os.path.isfile(lastFi): last=_.getText(lastFi,raw=True,clean=2)
 
+
+
+
+import _rightThumb._md5 as _md5
+
+import os
 
 ##################################################
 #b)--> examples

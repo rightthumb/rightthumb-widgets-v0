@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 
 dirty=False
+dirty=True
 
 # ## {R2D2919B742E} ##
 # ###########################################################################
@@ -58,7 +59,7 @@ __.switch_raw = []
 _.appInfo[focus()] = {
 	'file': '-paste.py',
 	'liveAppName': __.thisApp( __file__ ),
- 	'description': 'paste clipboard',
+	'description': 'paste clipboard',
 	'categories': [
 						'clipboard',
 						'paste',
@@ -81,15 +82,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
-				       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					   # { 'name': 'name', 'abbreviation': 'n' },
+					   # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					   # 'this',
+					   # 'app',
 	],
 	'notes': [
-				       # {},
+					   # {},
 	],
 }
 
@@ -161,6 +162,9 @@ _.postLoad( __file__ )
 if _.switches.isActive('Dirty-Raw'): dirty=True
 
 def cleanString(data):
+	data=data.rstrip()
+	while ' \n' in data:  data=data.replace(' \n','\n')
+	while '\t\n' in data: data=data.replace('\t\n','\n')
 	global dirty
 	if dirty: return data
 	data = cleanStringA(data)
@@ -196,19 +200,19 @@ def formatData( result ):
 
 def clip_get():
 	result = 'error'
-	result = clip_get_2()
-	try:
-		result = clip_get_2()
-	except Exception as e:
-		_.cp( '\tpython3 -m pip install pyperclip', 'yellow' )
-		try:
-			result = clip_get_1()
-		except Exception as e:
-			try:
-				result = clip_get_3()
-			except Exception as e:
-				_.cp( 'Error: clipboard error', 'red' )
-				_.cp( '\tpython3 -m pip install pyperclip', 'yellow' )
+	result = cleanString(clip_get_2())
+	# try:
+	# 	result = clip_get_2()
+	# except Exception as e:
+	# 	_.cp( '\tpython3 -m pip install pyperclip', 'yellow' )
+	# 	try:
+	# 		result = clip_get_1()
+	# 	except Exception as e:
+	# 		try:
+	# 			result = clip_get_3()
+	# 		except Exception as e:
+	# 			_.cp( 'Error: clipboard error', 'red' )
+	# 			_.cp( '\tpython3 -m pip install pyperclip', 'yellow' )
 
 	if not result:
 		_.cp( 'Error: clipboard error', 'red' )
@@ -224,7 +228,7 @@ def clip_get_1():
 	r = Tk()
 	r.withdraw()
 	r.clipboard_clear()
-	return r.clipboard_get()
+	return cleanString(r.clipboard_get())
 
 
 def clip_get_3():
@@ -259,7 +263,7 @@ def clip_get_3():
 
 def clip_get_2():
 	import pyperclip
-	return pyperclip.paste()
+	return cleanString(pyperclip.paste())
 
 	# global win32clipboard
 	# if win32clipboard is None:
@@ -274,11 +278,14 @@ win32clipboard = None
 
 paste=clip_get
 
-def cleaner(textR):
+def cleaner(data):
+	data=data.rstrip()
+	while ' \n' in data:  data=data.replace(' \n','\n')
+	while '\t\n' in data: data=data.replace('\t\n','\n')
 	global dirty
-	if dirty: return textR
+	if dirty: return data
 	text=''
-	for x in textR:
+	for x in data:
 		if x in _str.printable2:
 			text+=x
 		else:

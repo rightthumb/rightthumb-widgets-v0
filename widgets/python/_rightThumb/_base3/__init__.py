@@ -1,11 +1,24 @@
 #!/usr/bin/python3
+########################################################################################
 # alt+29 ↔ is space
- 
+##################################################
+import _rightThumb._construct as __
+import _rightThumb._vars as _v
+import _rightThumb._string as _str
+##################################################
+import glob
+import sys,os,time,datetime,threading
+from operator import itemgetter
+from datetime import datetime as dt, timedelta
+from datetime import date
+##################################################
+MINI_ADS = False
+MINI_ADS = True
+
+##################################################
 
 # 1674156772
 
-MINI_ADS = False
-MINI_ADS = True
 
 # ¯\_(ツ)_/¯
 
@@ -34,13 +47,10 @@ MINI_ADS = True
 #-->   end#> i dont remember what this is but it looks important
 
 
-import glob
-import sys,os,time,datetime,threading
+
 # from os.path import isfile, isdir
 # import uuid
-from operator import itemgetter
-from datetime import datetime as dt, timedelta
-from datetime import date
+
 # from threading import Timer
 # import simplejson as json
 # try:
@@ -1239,9 +1249,6 @@ except Exception as e:
 # from threading import Thread
 
 
-import _rightThumb._construct as __
-import _rightThumb._vars as _v
-import _rightThumb._string as _str
 
 __.sw=__.dot()
 __.sw.PlusCode=[]
@@ -19668,7 +19675,7 @@ def load():
 		switches.register('NoWrapTable', '-nowrap')
 		# switches.register('NoTableLines', '-nolines')
 		switches.register('YesTableLines', '-yl,-yeslines')
-		switches.register('TableJSON', ',-tjson,-tablejson')
+		switches.register('TableJSON', '-tjson,-tablejson')
 		switches.register('FieldTotal', '-fieldtotal', 'mem_usage')
 		switches.register('Aggregate', '-aggregate', '" eof-field-len= add(len(version),len(backup)); config(var,eof,isFirst); "')
 		switches.register('GroupSpaces', '-gs,-space,-groupspaces')
@@ -19687,7 +19694,7 @@ def load():
 		switches.register('PlusCode', '+code','=  OR  *x  OR  x*  AND/OR color' )
 		switches.register('PlusDuplicate', '+dup,+duplicate', '90%')
 		switches.register('StrictCase', '-case,-strictcase')
-		switches.register('PrintAutoAbbreviations', ',-printa,-aprint')
+		switches.register('PrintAutoAbbreviations', '-printa,-aprint')
 		switches.register('NoColor', '-nocolor', space=True)
 		switches.register('LoadEpoch', '-loadepoch')
 		switches.register('PrintEpoch', '-printepoch')
@@ -21492,16 +21499,7 @@ def getYML2(path): return getYML(path,here=True)
 
 
 
-getYAML2=getYML2
-getYAML=getYML
-saveYAML=saveYML
-saveYAML2=saveYML2
-imp=regImp
-# class regImp:
-# positiveResultsCode
-# __.sw.PlusCode
-# def caseUnspecific
-# caseISspecific
+
 
 def inject( snippet='', data='', header='', b='9a26c2d7f6b0', e='71564a5f3d65', be='## {xXx} ##' ):
 	def _clean_(d): return d.replace('\r','')
@@ -21981,12 +21979,30 @@ def pattern_probability_list(_str,_list):
 	return probable
 
 
+def afile(line,path,first=None,   f=None):
+	if not f is None: first=f
+	ifile=os.path.isfile(path)
+	f = open(path, "a")
+	if not first is None and not ifile: f.write(str(first)+'\n')
+	f.write(str(line)+'\n')
+	f.close()
 
 
-
-
-
-
-
+##################################################
+getYAML2=getYML2
+getYAML=getYML
+saveYAML=saveYML
+saveYAML2=saveYML2
+imp=regImp
+##################################################
+# class regImp:
+# positiveResultsCode
+# __.sw.PlusCode
+# def caseUnspecific
+# caseISspecific
+##################################################
+# globals()['var']
+##################################################
 # alt+29 ↔ is space
+########################################################################################
 # EOF

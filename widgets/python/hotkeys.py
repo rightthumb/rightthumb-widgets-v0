@@ -1812,7 +1812,6 @@ function get__THETABLE( $ID_label ){
 			rows.append(row)
 		_copy.imp.copy( '\n'.join(rows), p=0 )
 
-
 	def encrypt_lines(self):
 		_paste = _.regImp( __.appReg, '-paste' )
 		_copy = _.regImp( __.appReg, '-copy' )
@@ -2709,9 +2708,14 @@ def load():
 
 				'the-listener': { 'raw': [  'ctrl.','shift.',  'l'    ], 'do': '_listener_()' },
 
-				'base64_encode': { 'raw': [  'ctrl.','shift.',  'e'    ], 'do': 'Clip.base64_encode()', 'bk': True },
-				'base64_decode': { 'raw': [  'ctrl.','shift.',  'd'    ], 'do': 'Clip.base64_decode()', 'bk': True },
+				'base64_encode': { 'raw': [  'ctrl.','shift.',  'eb'    ], 'do': 'Clip.base64_encode()', 'bk': False },
+				'base64_decode': { 'raw': [  'ctrl.','shift.',  'db'    ], 'do': 'Clip.base64_decode()', 'bk': False },
+
+				'encrypt_all': { 'raw': [  'ctrl.','alt.',  'en'    ], 'do': 'Clip.encrypt_all()', 'bk': False },
+				'decrypt_lines': { 'raw': [  'ctrl.','alt.',  'de'    ], 'do': 'Clip.decrypt_lines()', 'bk': False },
 	}
+
+
 	global force_clean
 	
 	for k in table:
@@ -2737,7 +2741,7 @@ def load():
 			else: [(r.append(at))for at in t]
 
 		leni += sum(1 for y in r if len(y) == 1 or 'Key.space' ==  y)
-		if 'bk' in table[k]: force_clean[k]=leni
+		if 'bk' in table[k] and table[k]['bk']: force_clean[k]=leni
 		table[k]['raw']=r
 
 
@@ -2750,24 +2754,16 @@ def load():
 
 ########################################################################################
 
+import threading
 threads = []
-
-def listening(): os.system('call p listen -print')
+_listen = _.regImp( __.appReg, 'listen' )
+_listen.switch('Print')
 
 def _listener_():
-	# beepy.note('d',3,'dotted_eigth')
-	listening()
-	# beepy.note('d',3,'whole')
-def _listener_2():
 	global threads
-	import threading
-	t = threading.Thread(target=listening)
+	t = threading.Thread(target=_listen.action)
 	threads.append(t)
 	t.start()
-
-
-
-
 
 ########################################################################################
 

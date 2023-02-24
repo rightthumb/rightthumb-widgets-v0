@@ -45,6 +45,7 @@ def appSwitches():
 	_.switches.register( 'NoPrint', '--c' )
 	_.switches.register( 'Pre-Date', '-e,-epoch' )
 	_.switches.register( 'Find-Date', '-uuid,-guid' )
+	_.switches.register( 'Multiple', '-n,-nth,-multi' )
 
 
 
@@ -231,7 +232,17 @@ from random import randrange
 
 ########################################################################################
 if __name__ == '__main__':
-	action()
+	if _.switches.isActive('Multiple'):
+		if _.switches.value('Multiple'):
+			n=int(_.switches.value('Multiple'))
+		else:
+			n=10
+		i=0
+		while not i==n:
+			i+=1
+			action()
+	else:
+		action()
 
 
 

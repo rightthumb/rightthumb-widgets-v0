@@ -1,5 +1,5 @@
 @echo off
-
+chcp 65001 > nul
 rem ## {R2D2919B742E} ##
 rem ###########################################################################
 rem What if magic existed?
@@ -38,8 +38,8 @@ GOTO:EOF
     if [%1] == [cc] SET "noTOP="
     if [%1] == [test] SET noClear=TRUE
 
-    CALL:CLEAR_SCREEN
-    IF NOT [%Session_ID%] == [] (
+    rem CALL:CLEAR_SCREEN
+    IF [%Session_ID%] == [] (
         echo Loading...
     )
     rem echo ... saving history
@@ -57,7 +57,7 @@ GOTO:EOF
         CALL:CLEAR_SCREEN
     )
     CALL :TIMESTAMP >nul 2>&1
-    CALL:CLEAR_SCREEN
+    rem CALL:CLEAR_SCREEN
 GOTO:EOF
 
 
@@ -67,6 +67,7 @@ GOTO:EOF
         rem prompt - 
         CLS
         if [%noTOP%] == [] %py% %widgets%\widgets\python\windows-terminal-header.py
+        %py% %widgets%\widgets\python\folder-registration.py
         rem echo %noTOP%
     )
 GOTO:EOF
@@ -85,7 +86,7 @@ GOTO:EOF
     SET today=%timestamp_start%  - %nowTime%
     if not ["%lab%"] == [""] (
         rem title %lab% - %Session_ID%
-        title lab:   %lab%
+        title loc-%Session_ID%  lab: %lab%
     ) else (
         title loc-%Session_ID%
         rem title %today%
@@ -294,9 +295,10 @@ GOTO:EOF
             IF ["%Session_ID%"] == [""] CALL :GENERATE_API_ID
             SET api=loaded
             CALL:CLEAR_SCREEN
-            echo.
+            rem echo.
             rem cls
-            prompt - 
+            prompt └─ 
+            rem prompt - 
 GOTO:EOF
 
 

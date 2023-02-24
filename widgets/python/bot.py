@@ -214,7 +214,9 @@ openai.api_key = _blowfish.decrypt('+WDUtsrHiXMJ2Rk2Z7QMSyoo+xzLW/BhSw/kTcUwPmZG
 prompt=''
 def runSomeCode(prompt):
 	response = openai.Completion.create(
-		engine="text-davinci-002",
+		engine="text-davinci-003",
+		# engine="text-davinci-002",
+		# engine="code-davinci-002",
 		# engine="text-babbage-001",
 		# engine="text-curie-001",
 		# engine="text-ada-001",

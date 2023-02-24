@@ -282,13 +282,24 @@ _.postLoad( __file__ )
 
 import whois
 def action():
-	domain = whois.query('mcafee-us.security-check360.com')
-	_.pr( 'HERE' )
-	_.pr( domain )
-	_.printVar( domain )
+	# domain = whois.query('mcafee-us.security-check360.com')
+	domain = whois.query('eyeformeta.com')
+	
+	# for x in dir(domain): print(x)
+
+	# _.pr( domain )
+	_.pr( domain.name )
+	_.pr( domain.registrar )
+	# _.printVar( domain )
 # mcafee-us.security-check360.com
 
-
+# creation_date
+# expiration_date
+# last_updated
+# name
+# name_servers
+# registrar
+# status
 
 
 ########################################################################################

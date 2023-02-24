@@ -22,5 +22,5 @@ for x in str(decoded.decode('utf-8')):
 
 icons=list(emojis)
 
-base='┌──('+user+choice(icons)+host+')-['+os.getcwd()+']'
+base='┌──('+user+choice(icons)+host+')-[ '+os.getcwd()+' ]'
 print(base)

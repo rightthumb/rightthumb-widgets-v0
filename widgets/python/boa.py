@@ -34,7 +34,7 @@ def sw():
     #b)--> examples
     # _.switches.register( 'Input', '-i' )
     #e)--> examples
-    # _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=False )
+    _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name', description='Files', isRequired=False )
 
 # __.setting('require-list',['Files,Plus','File,Has']) # todo
 # __.setting('require-list',['Pipe','Files'])
@@ -77,7 +77,9 @@ _.appInfo[focus()] = {
                         '',
     ],
     'columns': [
-                       # { 'name': 'name', 'abbreviation': 'n' },
+                       { 'name': 'date', 'abbreviation': 'd', 'sort': 'epoch' },
+                       { 'name': 'amount', 'abbreviation': 'a' },
+                       { 'name': 'payee', 'abbreviation': 'p' },
                        # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
     ],
     'aliases': [
@@ -148,19 +150,31 @@ _.l.sw.register( triggers, sw )
 ########################################################################################
 #n)--> start
 
+
 def action():
-    load(); global c3po;
-
-    #n)--> iterate
-    for subject in _.isData(r=0): _.pr(subject)
+    # Posted Date,Reference Number,Payee,Address,Amount
+    records=[]
+    total=0
+    for path in _.isData():
+        # print(path)
+        for rec in _.csv(path):
+            rec['epoch']=int(_.autoDate(rec['Posted Date']))
+            if rec['Amount'].startswith('-'):
+                rec['Amount']=rec['Amount'].replace('-','')
+                if _.showLine(str(rec)):
+                    total+=float(rec['Amount'])
+                    del rec['Reference Number']
+                    del rec['Address']
+                    r2={}
+                    for k in rec:
+                        if k == 'Posted Date': kk='Date'
+                        else: kk = k
+                        kk=kk.lower()
+                        r2[kk]=rec[k]
+                    records.append(r2)
     
-
-def load():
-    global c3po
-    c3po = _.getTable( 'table' )
-    #n)--> print table
-    _.pt(c3po)
-
+    _.pt(records,'date,amount,payee', sort='d.epoch')
+    _.pr('Total:',round(total,2), c='green')
 
 ##################################################
 #b)--> examples

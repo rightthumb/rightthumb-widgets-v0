@@ -19,24 +19,26 @@ rem GOTO:EOF
 rem echo %result%
 call:VALIDATE ":" %result%
 if [%valid%] == [yes] (
-  rem %result:~0,2%
+    rem %result:~0,2%
 
 if not exist %result% call p nsfw -color red -on "folder does not exist, mothafucka" -off "folder does not exist"
 rem if not exist %result% call p nsfw -color red Background.red red -on "folder does" "not exist" ", mothafucka" -off "folder does not exist"
 if not exist %result% call p print_color -text ";t%result%" -color cyan
 if not exist %result% goto:eof
-  cd /d "%result%"
-  cd
+    %py% %widgets%\widgets\python\folder-registration.py
+    cd /d "%result%"
+    %py% %widgets%\widgets\python\folder-registration.py
+    cd
 ) else (
-  p error -err Bookmark does not exist
+    p error -err Bookmark does not exist
 )
 goto:eof
 :VALIDATE
 echo.%2 | findstr /C:"%1" 1>nul
 if errorlevel 1 (
-  set valid=no
+    set valid=no
 ) ELSE (
-  set valid=yes
+    set valid=yes
 )
 goto:eof
 rem THE END *************************************************************
@@ -45,14 +47,14 @@ rem THE END *************************************************************
 SETLOCAL ENABLEDELAYEDEXPANSION
 SET count=1
 FOR /F "tokens=* USEBACKQ" %%F IN (`p b -a %*`) DO (
-  SET result!count!=%%F
-  SET result=%%F
-  SET /a count=!count!+1
+    SET result!count!=%%F
+    SET result=%%F
+    SET /a count=!count!+1
 )
 ENDLOCAL
 echo %var1%
 cd %var1%
-
+%py% %widgets%\widgets\python\folder-registration.py
 goto:eof
 CALL p b -a %* > "%stmp%\bookmark.tmp"
 set /p back=<"%stmp%\bookmark.tmp"
@@ -65,7 +67,6 @@ set /p back=<"%stmp%\bookmark.tmp"
 set drive_letter=%back:~0,2%
 %drive_letter%
 cd "%back%"
-
 GOTO:EOF
 
 IF [%1] == [HELP] GOTO HELP
@@ -91,7 +92,9 @@ IF [%1] == [HELP] GOTO HELP
 
 set drive_letter=%back:~0,2%
 %drive_letter%
+%py% %widgets%\widgets\python\folder-registration.py
 cd "%back%"
+%py% %widgets%\widgets\python\folder-registration.py
 GOTO END
 
 
