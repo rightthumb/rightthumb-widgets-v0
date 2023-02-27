@@ -3440,7 +3440,7 @@ alias vps.y.d="vps.y.py.d; vps.y.sh.d; vps.y.db.d"
 
 # alias vps.b.dt.="$p keychain -get -label dt -clip; ssh -L 59001:localhost:5901 -C -N -l scott bespin.m-eta.app"
 # alias vps.h.dt.="$p keychain -get -label dt -clip; ssh -L 59001:localhost:5901 -C -N -l scott hoth.m-eta.app"
-# alias vps.t.dt.="$ww/bash/dt/vps.t.dt.sh"
+alias vps.t.dt.="$ww/bash/dt/vps.t.dt.sh"
 alias vps.y.dt.="$ww/bash/dt/vps.y.dt.sh"
 
 
