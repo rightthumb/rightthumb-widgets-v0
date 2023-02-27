@@ -175,13 +175,14 @@ def process( i, url ):
 		do = 'ymp3 "THE_URL"'
 		# do = 'yAudio "THE_URL" & autoMP3'
 	do = do.replace( 'THE_URL', url )
+	# do='yt-dlp --extract-audio --audio-format mp3 '+url
 	os.system( '"' + do + '"' )
 
 def action():
 	_.fields.register( 'cnt', 'val', 7, m=2 )
-
-	if type( _.appData[__.appReg]['pipe'] ) == bool:
-		_.appData[__.appReg]['pipe'] = _.switches.values('URLS')
+	if _.switches.isActive('URLS'):
+		if type( _.appData[__.appReg]['pipe'] ) == bool:
+			_.appData[__.appReg]['pipe'] = _.switches.values('URLS')
 	if not type( _.appData[__.appReg]['pipe'] ) == bool:
 		_.pipeCleaner(0)
 		# _.printVar( _.appData )

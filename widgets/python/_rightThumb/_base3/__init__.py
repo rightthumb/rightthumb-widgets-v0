@@ -59,6 +59,7 @@ MINI_ADS = True
 #   pass
 
 '''
+__.imp('simplejson').loads(var)
 simplejson = __.imp('simplejson')
 simplejson.loads(var)
 simplejson.dumps(rows, indent=4, sort_keys=False, default=str)
@@ -21925,8 +21926,68 @@ def pattern_probability(string1,string2,w=False):
 
 
 
+def pattern_probability_list_best(_str,_list,clean=None,omit=[],i=0):
+	# a.playlist playlist.txt Metallica
+	#	type %1 | call p youtubeSearch -official -song -band %2 | p youtube
+	#	type %1 | p prefix-file-number-by-patterns -f *.mp3 -omit %2
+	
+	_i_=i
+	_str_=_str
+	_str=_str.replace('’',"'")
+	_str=_str.lower()
+	def _sp_(txt):
+		while '  ' in txt: txt=txt.replace('  ',' ')
+		txt=txt.strip()
+		return txt
+	def _omit_(txt):
+		for o in omit:
+			o=o.lower()
+			if o in txt.lower():
+				i=txt.lower().index(o)
+				txt=txt[0:i]+txt[i+len(o)+1:]
+		txt=_sp_(txt)
+		return txt
 
 
+	def _clean_(li,clean):
+		def _cl2_(xt):
+			tx=''
+			for c in xt:
+				if c in '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'+"'":
+					tx+=c
+				else:
+					tx+=' '
+			return _sp_(tx)
+		li=_omit_(li)
+		if clean is None: return li
+		if type(clean) == str and 'file' in clean:
+			if '.' in li and len(li.split('.')[-1]) < 6:
+				cli=li.split('.')
+				cli.pop(-1)
+				li='.'.join(cli)
+		sub='()'
+		while sub[0] in li and sub[1] in li: li = li[0:li.index(sub[0])]+li[li.index(sub[1])+1:]
+		sub='[]'
+		while sub[0] in li and sub[1] in li: li = li[0:li.index(sub[0])]+li[li.index(sub[1])+1:]
+		# li=_sp_(li)
+		li=_cl2_(li)
+		return li
+	_str=_clean_(_str,clean)
+	results=[]
+	for li in _list:
+		li=li.replace('’',"'")
+		li=li.lower()
+		lic=_clean_(li,clean)
+		probability=pattern_probability(_str,lic)
+		probability=pattern_probability(_str,lic)
+		w_probability=pattern_probability(_str,li.lower(),w=True)
+		results.append({'i': _i_, 'p':probability, 'wp': w_probability, 'str':_str_, 'lic':lic, 'li':li })
+		# print(probability,w_probability)
+	results = tables.returnSorted( 'data', 'd.p', results )
+	# pt(results)
+	# sys.exit()
+	return results[0]
+	return results[0]['li'],results[0]['p'],results[0]['lic']
 
 def pattern_probability_list(_str,_list):
 	# pattern_probability(string1,string2,w=False)
@@ -21986,6 +22047,33 @@ def afile(line,path,first=None,   f=None):
 	if not first is None and not ifile: f.write(str(first)+'\n')
 	f.write(str(line)+'\n')
 	f.close()
+
+def replace_line_in_file(file_path, search_string, replace_string):
+    # https://chat.openai.com/chat
+    with open(file_path, 'r') as file:
+        lines = file.readlines()
+    
+    with open(file_path, 'w') as file:
+        for line in lines:
+            if search_string in line:
+                line = replace_string + '\n'
+            file.write(line)
+
+def replace_lines_in_file(file_path, lst):
+    # https://chat.openai.com/chat
+    with open(file_path, 'r') as file:
+        lines = file.readlines()
+    
+    with open(file_path, 'w') as file:
+        for line in lines:
+            for item in lst:
+                search_string  = item[0]
+                replace_string = item[1]
+                if search_string in line:
+                    line = replace_string + '\n'
+            file.write(line)
+
+
 
 
 ##################################################

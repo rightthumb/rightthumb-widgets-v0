@@ -38,6 +38,7 @@ def appSwitches():
 	_.switches.register( 'Search', '-search' )
 	_.switches.register( 'Official', '-o,-off,-official' )
 	_.switches.register( 'Song', '-song' )
+	_.switches.register( 'Band', '-band' )
 	_.switches.register( 'Offset', '-offset', '1' )
 	_.switches.register( 'PrintTestStuff', '-test' )
 
@@ -233,15 +234,19 @@ def action():
 	global printTestStuff
 	base = 'https://www.google.com/search?q=site%3Awww.youtube.com+'
 	youtubeVideos = []
-	_.switches.fieldSet( 'Plus', 'active', True )
-	if type( _.appData[__.appReg]['pipe'] ) == bool:
-		_.appData[__.appReg]['pipe'] = [ ' '.join( _.switches.values('Search') ) ]
+	# _.switches.fieldSet( 'Plus', 'active', True )
+	if _.switches.isActive('Search'):
+		if type( _.appData[__.appReg]['pipe'] ) == bool:
+			_.appData[__.appReg]['pipe'] = [ ' '.join( _.switches.values('Search') ) ]
 	if not type( _.appData[__.appReg]['pipe'] ) == bool:
 		_.pipeCleaner(0)
 		# _.printVar( _.appData )
 		for i,row in enumerate( _.appData[__.appReg]['pipe'] ):
 			if len(row):
-
+				if _.switches.isActive('Band'):
+					row = _.switches.values('Band')[0] + ' ' + row
+					# print(row)
+					# sys.exit()
 				row = row.replace( "'s", 's' )
 				row = row.replace( "'S", 'S' )
 				row = _str.stripNonAlphaNumaric( row, also='+_-' )

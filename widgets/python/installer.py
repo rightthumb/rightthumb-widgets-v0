@@ -3432,10 +3432,16 @@ alias vps.y.d="vps.y.py.d; vps.y.sh.d; vps.y.db.d"
 
 
 
-alias vps.b.dt.="$p keychain -get -label dt -clip; ssh -L 59001:localhost:5901 -C -N -l scott bespin.m-eta.app"
-alias vps.t.dt.="$p keychain -get -label dt -clip; ssh -L 59001:localhost:5901 -C -N -l scott tatooine.m-eta.app"
-alias vps.h.dt.="$p keychain -get -label dt -clip; ssh -L 59001:localhost:5901 -C -N -l scott hoth.m-eta.app"
-alias vps.y.dt.="$p keychain -get -label dt -clip; ssh -L 59001:localhost:5901 -C -N -l scott yavin.m-eta.app"
+# alias vps.b.dt.="$p keychain -get -label dt -clip; ssh -L 59001:localhost:5901 -C -N -l scott bespin.m-eta.app"
+# alias vps.t.dt.="$p keychain -get -label dt -clip; ssh -L 59001:localhost:5901 -C -N -l scott tatooine.m-eta.app"
+# alias vps.h.dt.="$p keychain -get -label dt -clip; ssh -L 59001:localhost:5901 -C -N -l scott hoth.m-eta.app"
+# alias vps.y.dt.="$p keychain -get -label dt -clip; ssh -L 59001:localhost:5901 -C -N -l scott yavin.m-eta.app"
+
+
+# alias vps.b.dt.="$p keychain -get -label dt -clip; ssh -L 59001:localhost:5901 -C -N -l scott bespin.m-eta.app"
+# alias vps.h.dt.="$p keychain -get -label dt -clip; ssh -L 59001:localhost:5901 -C -N -l scott hoth.m-eta.app"
+# alias vps.t.dt.="$ww/bash/dt/vps.t.dt.sh"
+alias vps.y.dt.="$ww/bash/dt/vps.y.dt.sh"
 
 
 
@@ -3564,9 +3570,23 @@ alias 2ico="$widgets/widgets/bash/tools/2icon.sh ";
 # a3bc42ec51e9
 
 if test -f "/mnt/c/Users/Scott/.rt/profile/daily/.seven.sh"; then
-    sudo service cron start > /dev/null 2>&1 & 
+    # sudo service cron start > /dev/null 2>&1 & 
+    # 
+    $p b0 -0
     $p shClean -f /mnt/c/Users/Scott/.rt/profile/daily/.seven.sh --c
     source "/mnt/c/Users/Scott/.rt/profile/daily/.seven.sh";
+
+
+    #################################################
+    # Check if cron is running
+    if ! pgrep -x cron > /dev/null; then
+        echo "cron is not running, starting it now..."
+        sudo service cron start > /dev/null 2>&1 &
+    fi
+    #################################################
+
+
+
 fi
 
 if test -f "$HOME/.bashrc-"; then

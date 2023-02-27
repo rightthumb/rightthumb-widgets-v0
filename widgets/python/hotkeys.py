@@ -58,7 +58,7 @@ try:
 except Exception as e:
 	frameinfo = getframeinfo(currentframe()); _.pr( _.addComma(frameinfo.lineno),'\t', e,c='red');
 	pass
-import simplejson
+simplejson = __.imp('simplejson')
 
 ##################################################
 
@@ -290,6 +290,7 @@ class HOTKEYS:
 		global post_do
 		global key_set
 		global force_clean
+		global no_escape
 		try:
 			char = str(key.char)
 		except Exception as e:
@@ -304,20 +305,21 @@ class HOTKEYS:
 		if not key_set and post_do['status']:
 			post_do['status'] = 0
 			count = post_do['count']
-			k = post_do['label']
 			do = post_do['do']
-			if post_do['esc']:
-				keyboard.press(Key.esc)
-				keyboard.release(Key.esc)
+			k = post_do['label']
+			if not k in no_escape:
+				if post_do['esc']:
+					keyboard.press(Key.esc)
+					keyboard.release(Key.esc)
 
-				keyboard.press(Key.esc)
-				keyboard.release(Key.esc)
+					keyboard.press(Key.esc)
+					keyboard.release(Key.esc)
 
-				keyboard.press(Key.esc)
-				keyboard.release(Key.esc)
+					keyboard.press(Key.esc)
+					keyboard.release(Key.esc)
 
-				keyboard.press(Key.esc)
-				keyboard.release(Key.esc)
+					keyboard.press(Key.esc)
+					keyboard.release(Key.esc)
 
 			ii=0
 			if ii<count:
@@ -1629,7 +1631,7 @@ function get__THETABLE( $ID_label ){
 		text=_str.cleanBE( text, ' ' )
 		if text.startswith('{') or text.startswith('['):
 			try:
-				data = simplejson.load(text)
+				data = simplejson.loads(text)
 			except Exception as e:
 				frameinfo = getframeinfo(currentframe()); _.pr( _.addComma(frameinfo.lineno),'\t', e,c='red');
 				data = eval(text.replace('false','False').replace('true','True'))
@@ -1669,7 +1671,7 @@ function get__THETABLE( $ID_label ){
 		text=_str.cleanBE( text, ' ' )
 		if text.startswith('{') or text.startswith('['):
 			try:
-				data = simplejson.load(text)
+				data = simplejson.loads(text)
 			except Exception as e:
 				frameinfo = getframeinfo(currentframe()); _.pr( _.addComma(frameinfo.lineno),'\t', e,c='red');
 				data = eval(text.replace('false','False').replace('true','True'))
@@ -1712,7 +1714,7 @@ function get__THETABLE( $ID_label ){
 			# _.pr(text)
 			# sys.exit()
 			try:
-				data = simplejson.load(text)
+				data = simplejson.loads(text)
 			except Exception as e:
 				frameinfo = getframeinfo(currentframe()); _.pr( _.addComma(frameinfo.lineno),'\t', e,c='red');
 				data = eval(text.replace('false','False').replace('true','True'))
@@ -1747,7 +1749,7 @@ function get__THETABLE( $ID_label ){
 			# _.pr(text)
 			# sys.exit()
 			try:
-				data = simplejson.load(text)
+				data = simplejson.loads(text)
 			except Exception as e:
 				frameinfo = getframeinfo(currentframe()); _.pr( _.addComma(frameinfo.lineno),'\t', e,c='red');
 				data = eval(text.replace('false','False').replace('true','True'))
@@ -2237,7 +2239,7 @@ function get__THETABLE( $ID_label ){
 			keepcomma=True
 		if text.startswith('{') or text.startswith('['):
 			try:
-				data = simplejson.load(text)
+				data = simplejson.loads(text)
 			except Exception as e:
 				frameinfo = getframeinfo(currentframe()); _.pr( _.addComma(frameinfo.lineno),'\t', e,c='red');
 				data = eval(text)
@@ -2251,6 +2253,20 @@ function get__THETABLE( $ID_label ){
 			text = text.replace(',','\n')
 		_copy.imp.copy( text, p=0 )
 
+	def clean_terminal_copy(self):
+		import pyperclip
+		import pyautogui
+		import time
+
+		pyautogui.doubleClick()
+		pyautogui.click()
+		pyautogui.rightClick()
+
+		clipboard_text = pyperclip.paste()
+		print(clipboard_text)
+		pyperclip.copy(clipboard_text.strip())
+		print("Copied to clipboard: " + clipboard_text)
+
 	def math(self):
 		_paste = _.regImp( __.appReg, '-paste' )
 		_copy = _.regImp( __.appReg, '-copy' )
@@ -2258,10 +2274,16 @@ function get__THETABLE( $ID_label ){
 		text=_str.replaceDuplicate( text, ' ' )
 		text = text.replace('\t','')
 		text = text.replace('\r','')
-		text = text.replace('\n','')
-		text = text.replace(',','')
+		text = text.replace('\n','+')
+		text = text.replace(',','+')
 		text = text.replace('x','*')
 		text = text.replace('X','*')
+		text=_str.cleanBE( text, '+' )
+		text=_str.cleanBE( text, '*' )
+		text=_str.cleanBE( text, '/' )
+		text=_str.replaceDuplicate( text, '+' )
+		text=_str.replaceDuplicate( text, '*' )
+		text=_str.replaceDuplicate( text, '/' )
 		string = ''
 		for x in text:
 			if x in '0123456789/*-+()':
@@ -2621,6 +2643,7 @@ def load():
 	global auto_text
 	global hot_text
 	global log
+	global toggler
 	log = []
 	table = {
 				'EXIT': { 'raw': [ 'esc.','win.' ], 'do': 'sys.exit()' },
@@ -2647,7 +2670,7 @@ def load():
 				'explode2': { 'raw': [ 'alt.', 'win.', 'x' ], 'do': 'Clip.explode()' },
 				'add-slash': { 'raw': [ 'shift.,2',  '\\' ], 'do': 'Clip.add_slash()' },
 				'comma-to-js-dic': { 'raw': [ 'ctrl.,2', 'space.', 'dic' ], 'do': 'Clip.dic()' },
-				'clip-math': { 'raw': [ 'alt.', 'win.', 'M' ], 'do': 'Clip.math()' },
+				
 				'prefix': { 'raw': [ 'alt.', 'win.', 'p' ], 'do': 'Clip.prefix()' },
 				'suffix': { 'raw': [ 'alt.', 'win.', 's' ], 'do': 'Clip.suffix()' },
 				'lower': { 'raw': [ 'alt.', 'win.', 'l' ], 'do': 'Clip.toLower()' },
@@ -2708,15 +2731,26 @@ def load():
 
 				'the-listener': { 'raw': [  'ctrl.','shift.',  'l'    ], 'do': '_listener_()' },
 
-				'base64_encode': { 'raw': [  'ctrl.','shift.',  'eb'    ], 'do': 'Clip.base64_encode()', 'bk': False },
-				'base64_decode': { 'raw': [  'ctrl.','shift.',  'db'    ], 'do': 'Clip.base64_decode()', 'bk': False },
+				'base64_encode': { 'raw': [  'ctrl.','shift.',  'eb'    ], 'do': 'Clip.base64_encode()' },
+				'base64_decode': { 'raw': [  'ctrl.','shift.',  'db'    ], 'do': 'Clip.base64_decode()' },
 
-				'encrypt_all': { 'raw': [  'ctrl.','alt.',  'en'    ], 'do': 'Clip.encrypt_all()', 'bk': False },
-				'decrypt_lines': { 'raw': [  'ctrl.','alt.',  'de'    ], 'do': 'Clip.decrypt_lines()', 'bk': False },
+				'encrypt_all': { 'raw': [  'ctrl.','alt.',  'en'    ], 'do': 'Clip.encrypt_all()' },
+				'decrypt_lines': { 'raw': [  'ctrl.','alt.',  'de'    ], 'do': 'Clip.decrypt_lines()' },
+
 	}
+
+	toggles={
+				'alt_win_m': {
+					'clip-math': { 'raw': [ 'alt.', 'win.', 'M' ], 'do': 'Clip.math()' },
+					'clean-terminal-copy': { 'raw': [ 'alt.', 'win.', 'm' ], 'do': 'Clip.clean_terminal_copy()', 'no-esc': True },
+				},
+	}
+	for k in toggler:
+		table[toggler[k]]=toggles[k][toggler[k]]
 
 
 	global force_clean
+	global no_escape
 	
 	for k in table:
 		leni=0
@@ -2742,6 +2776,7 @@ def load():
 
 		leni += sum(1 for y in r if len(y) == 1 or 'Key.space' ==  y)
 		if 'bk' in table[k] and table[k]['bk']: force_clean[k]=leni
+		if 'no-esc' in table[k] and table[k]['no-esc']: no_escape[k]=leni
 		table[k]['raw']=r
 
 
@@ -2788,6 +2823,7 @@ __.setting('hotkey-clip.ad_description-start1', False)
 __.setting('hotkey-clip.replace-a', '.eyeformeta.com')
 __.setting('hotkey-clip.replace-b', '.m-eta.app')
 force_clean={}
+no_escape={}
 
 import random
 import string
@@ -2805,7 +2841,11 @@ import string
 # beepy.note('a')
 
 
-
+##################################################
+toggler={}
+toggler['alt_win_m'] = 'clip-math'
+toggler['alt_win_m'] = 'clean-terminal-copy'
+##################################################
 ########################################################################################
 if __name__ == '__main__':
 

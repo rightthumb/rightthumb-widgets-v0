@@ -14,8 +14,10 @@ rem ## {C3P0D40fAe8B} ##
 SET VIDEO=%1
 CALL :dequote VIDEO
 if [%2] == [] (
+    echo yAudio "%VIDEO%" & CALL autoMP3
     CALL yAudio "%VIDEO%" & CALL autoMP3
 ) else (
+    echo yAudio "%VIDEO%" & CALL autoMP3 %2
     CALL yAudio "%VIDEO%" & CALL autoMP3 %2
 )
 

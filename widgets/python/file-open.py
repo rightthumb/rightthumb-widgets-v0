@@ -160,6 +160,19 @@ import subprocess
 # focus()
 
 def action(path=None):
+
+	if _.switches.isActive('Alias') and not _.switches.isActive('Files') and len(_.switches.values('Alias')) ==2:
+		aa=None
+		for a in _.switches.values('Alias'):
+			if os.path.isfile(a):
+				_.switches.fieldSet( 'Files', 'active', True )
+				_.switches.fieldSet( 'Files', 'value', a )
+				_.switches.fieldSet( 'Files', 'values', [a] )
+			else:
+				aa=a
+		
+		_.switches.fieldSet( 'Alias', 'value', aa )
+		_.switches.fieldSet( 'Alias', 'values', [aa] )
 	paths=[]
 	if not path is None:
 		paths=[path]
