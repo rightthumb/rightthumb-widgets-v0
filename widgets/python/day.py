@@ -212,8 +212,8 @@ def load():
 	# print( 'year:',year )
 	# sys.exit()
 	_v.mkdir(fo)
-	var = _v.rtp+'profile/vars/'.replace('/',os.sep)
-	vbm = _v.rtp+'profile/bookmarks/'.replace('/',os.sep)
+	var = _v.rtp+'vars'+os.sep
+	vbm = _v.rtp+'bookmarks'+os.sep
 	if len(_.switches.all())==0:
 		brand_day = True
 		if os.path.isfile(var+'day.brand'):

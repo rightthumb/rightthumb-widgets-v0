@@ -1495,7 +1495,7 @@ def tableAlts(t,omit=True):
 # popFileDir(path)
 # _.pr('end')
 def config( subject='?' ):
-	global mymyConfig
+	global myConfig
 	global config_file
 	global config_hash
 	global config_default

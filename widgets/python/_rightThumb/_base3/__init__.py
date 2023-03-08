@@ -66,6 +66,8 @@ simplejson.dumps(rows, indent=4, sort_keys=False, default=str)
 simplejson.dumps(rows, sort_keys=False, default=str)
 '''
 
+__.isData_Switches={}
+
 def cross_multiplication(dic):
 	try:
 		n=0
@@ -424,7 +426,7 @@ def fo(folder=None,r=False,script=None,first=True):
 		path=__.path(path)
 		if os.path.isfile(path):
 			fo_fi.append(path)
-			if not script is None: script(path);
+		if not script is None: script(path);
 		if r and os.path.isdir(path): fo(path,r,script,False);
 	return fo_fi
 
@@ -1361,7 +1363,7 @@ dot=Meta_Namespace
 __.tableLine = '‽'
 v = dot()
 vv = dot()
-v.isData = {}
+vv.isData = {}
 vv.opened_file_me = {}
 __.switch_skimmer = dot()
 __.switch_skimmer.scan = [ '??','-??','--??','/??' ]
@@ -1534,7 +1536,8 @@ class HD:
 			except Exception as e:
 				pass
 
-def printDicFields( dic ):
+def printDicFields( dic,title=None ,t=None ):
+	if not t is None: title=t
 	for k in dic:
 		dic[k] = str(dic[k])
 	global switches
@@ -1551,8 +1554,14 @@ def printDicFields( dic ):
 		fields.register( 'dic', 'field', str(k)+':' )
 		fields.register( 'dic', 'value', str(dic[k]) )
 
+	if title:
+		fields.register( 'dic', 'title', str(title) )
+		for k in dic: fields.register( 'dic', 'title', fields.value( 'dic', 'field', str(k)+':', right=True )+fields.value( 'dic', 'value', str(dic[k]) ) )
+		ti='↓'+fields.value( 'dic', 'title', str(title), center=True )+'↓';  pr(ti,c='Background.blue');
 	for k in dic:
-		print_( fields.value( 'dic', 'field', str(k)+':', right=True ), fields.value( 'dic', 'value', str(dic[k]) ) )
+		print_( pr(fields.value( 'dic', 'field', str(k)+':', right=True ),c='darkcyan',p=0), pr(fields.value( 'dic', 'value', str(dic[k]) ),c='cyan',p=0) )
+	# if title: ti='↑'+fields.value( 'dic', 'title', str(title), center=True )+'↑';  pr(ti,c='Background.blue');
+	# if title: ti='↑'+fields.value( 'dic', 'title', ' ', center=True )+'↑';  pr(ti,c='Background.blue');
 
 arrow = None
 _tz = None
@@ -3987,11 +3996,13 @@ class dt:
 #         data = switches.values('Files')
 #         if len(data) and type(data[0]) == list: data = data[0]
 
-#     print(v.isData)
+#     print(vv.isData)
 #     print(data)
 #     return data
 def isData( data=None, focus=None, pipeClean=True, required=False,     r=None, c=None, noclean=None ):
 	global switches
+	for sw in __.isData_Switches:
+		if not sw == 'Files': return switches.values(sw)
 	if data is None and switches.isActive('Paste-isData-json'):
 		simplejson=__.imp('simplejson')
 		d=getClip().strip()
@@ -4030,15 +4041,15 @@ def isData( data=None, focus=None, pipeClean=True, required=False,     r=None, c
 		# global switches
 		isClean=False
 
-		for name in v.isData:
+		for name in vv.isData:
 			if len(switches.values(name)):
-				for isD in v.isData[name].split(','):
+				for isD in vv.isData[name].split(','):
 					if isD == 'clean' and noclean is None:
 						isClean=True
 					elif isD == 'name':
 						for n in switches.values(name):
 							data.append(n)
-					elif isD == 'glob' and 'data' in v.isData[name]:
+					elif isD == 'glob' and 'data' in vv.isData[name]:
 						for n in switches.values(name):
 							for f in isData_path_list( glob.glob( n ) ):
 								for xXx in getText( f, raw=True ).split('\n'):
@@ -5753,7 +5764,26 @@ def ipsumParagraph( count=1, shouldPrint=False, returnList=False, lorem=True ):
 	else:
 		return '\n\n'.join( result )
 
-def saveCSV( data, file, printThis=True,here=False,                p=None, me=0,h=None ):
+
+
+def saveCSV(data, filename):
+	"""
+	Save a list of dictionaries as a CSV file.
+	
+	Arguments:
+		data: A list of dictionaries containing the data to be saved.
+		filename: The name of the file to be saved.
+	"""
+	import csv
+	with open(filename, 'w', newline='') as csvfile:
+		fieldnames = data[0].keys()
+		writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+		writer.writeheader()
+		for row in data:
+			writer.writerow(row)
+
+
+def saveCSV2( data, file, printThis=True,here=False,                p=None, me=0,h=None ):
 	if not h is None: here=h
 	theFile=file
 	HD.chmod(file)
@@ -5861,6 +5891,11 @@ def csv( file, save=False, json_file='',printThis=True ):
 							del record[field]
 		return csv_rows
 	return False
+
+
+
+
+
 
 def csv2( data, file, printThis=True, p=None ):
 	if not p is None:
@@ -10846,10 +10881,11 @@ class Switches:
 
 		
 		if not isPipe is None:
+			__.isData_Switches[name]=isPipe
 			if type(isPipe) == bool and isPipe:
 				isPipe = 'data'
-			v.isData[name]=isPipe
-
+			vv.isData[name]=isPipe
+			isPipe=isPipe.replace('raw','name')
 			if 'name' in isPipe and ( 'data' in isPipe or 'clean' in isPipe ):
 				pass
 			elif 'name' in isPipe:
@@ -11837,7 +11873,7 @@ class Table:
 		global switches
 		global _dir
 		
-
+		self.GroupTotals={}
 		self.webtable = webtable
 		self.group_space = group_space
 		self.name = name
@@ -12209,6 +12245,7 @@ class Table:
 
 
 		groupBy = switches.value('GroupBy')
+		GroupTotals = switches.values('GroupTotals')
 		try:
 			tabFix = self.spaces[column]
 		except Exception as e:
@@ -12217,6 +12254,9 @@ class Table:
 			self.spaces[column] = tabFix
 
 		if switches.isActive('GroupBy') == True:
+			if column in GroupTotals:
+				if not column in self.GroupTotals: self.GroupTotals[column]=0
+				self.GroupTotals[column]+=float(self.asset[i][column])
 			for gb in groupBy.split(','):
 				gb = str(gb)
 				if column == gb:
@@ -12249,6 +12289,8 @@ class Table:
 						if len(self.isExtraRecord_000x):
 							self.isExtraRecord_0001[ self.isExtraRecord_000x.split('-')[0] ] = 1
 						text = ''
+						if not column in self.Groups: self.Groups[column]={'lines':[]}
+						self.Groups[column]['lines'].append(i)
 						
 		alignment = self.fieldProfileGet(column,'alignment')
 		# print_(alignment)
@@ -13283,6 +13325,25 @@ class Table:
 	def print( self, column, fieldLengths=False, pc=None, printColumns=True, force=False, l=None, p=None ):
 		global switches
 
+		if switches.isActive('GroupBy') and self.asset:
+			val=[]
+			for k in self.asset[0]:
+				for y in switches.values('GroupBy'):
+					if k.lower().replace(' ','_') in y.lower().replace(' ','_'): val.append(k)
+			switches.fieldSet('GroupBy','value',','.join(val))
+			switches.fieldSet('GroupBy','values',val)
+
+
+
+
+		if switches.isActive('GroupTotals') and self.asset:
+			val=[]
+			for k in self.asset[0]:
+				for y in switches.values('GroupTotals'):
+					if k.lower().replace(' ','_') in y.lower().replace(' ','_'): val.append(k)
+			switches.fieldSet('GroupTotals','value',','.join(val))
+			switches.fieldSet('GroupTotals','values',val)
+
 		if switches.isActive('TableJSON'):
 			if len(switches.value('TableJSON')):
 				saveTable2( self.asset, switches.values('TableJSON')[0] )
@@ -13633,6 +13694,45 @@ class Table:
 		elif not l:
 			tableLine = ''
 
+		self.Groups={}
+		for c in switches.values('GroupTotals'):
+			self.Groups[c]={
+								'lines': [],
+			}
+		def addField(text,column):
+
+			try:
+				tabFix = self.spaces[column]
+			except Exception as e:
+				# errors.append({'id': 10, 'function': 'showColumn()', 'cnt': 1, 'location': 'tabFix = spaces[column]', 'vars': [{'name': 'rows', 'value': 'nope to that, to big'}, {'name': 'column', 'value': column}, {'name': 'i', 'value': i}], 'error': e})
+				tabFix = self.tabGetMaxSpace(column)
+				self.spaces[column] = tabFix
+			tabFix+=4
+			alignment = self.fieldProfileGet(column,'alignment')
+			# print_(alignment)
+			# if alignment == 'left':
+			result = text + self.addSpace(text,tabFix)
+			if alignment == 'left':
+				result = text + self.addSpace(text,tabFix)
+			if alignment == 'right':
+				result = self.addSpace(text,tabFix) + text
+			if alignment == 'center':
+				totalSpace = int(tabFix) - len(text)
+				if totalSpace > 0:
+					if totalSpace % 2 == 0:
+						div2 = totalSpace/2
+						theLeft = div2
+						theRight = div2
+					else:
+						divTMP = totalSpace - 1
+						div2 = divTMP/2
+						theLeft = div2 + 1
+						theRight = div2
+				else:
+					theLeft = 0
+					theRight = 0
+				result = self.addSpace2(theLeft) + text + self.addSpace2(theRight)
+			return result
 		for item in self.asset:
 			# print_(item)
 			result = ''
@@ -13655,6 +13755,7 @@ class Table:
 
 				if self.wrapTableKey+'-sort' in item and not item[self.wrapTableKey+'-sort'].endswith('-0001'):
 					self.isExtraRecord = True
+
 				try:
 					pass
 					result += self.showColumn(c,i,columnHeaderLength) + self.columnTab+tableLine
@@ -13687,7 +13788,46 @@ class Table:
 				# if self.isExtraRecord:
 				#   print_( self.isExtraRecord )
 
+
 				if shouldPrint:
+
+
+
+
+
+					hasTotal=False
+					_result_=''
+					for c in column.split(','):
+						if c in self.Groups and not i in self.Groups[c]['lines'] and i-1 in self.Groups[c]['lines']:
+							hasTotal=True
+					if hasTotal:
+
+
+
+						for c in column.split(','):
+							total={}
+							for gc in self.GroupTotals:
+								total[gc]=0
+							_g_=switches.values('GroupBy')[0]
+							_sub_=self.asset[i-1][_g_]
+							for ass in self.asset:
+								if _g_ in ass and ass[_g_] == _sub_:
+									for gc in self.GroupTotals:
+										total[gc]+=ass[gc]
+										
+							if c in self.GroupTotals:
+								# _result_+=addField( addComma(self.GroupTotals[c]) ,c)
+								_result_+=addField( addComma(total[c]) ,c)
+								self.GroupTotals[c]=0
+							else:
+								_result_+=addField('',c)
+						# colorizeRow( tableLine+_result_, prefix=self.tab['table']+loopPrint(__.table_prefix_padding), prefixColor=self.tab_color, haltColorShift=self.isExtraRecord )
+						cp(' '+tableLine+_result_,c='green')
+
+
+
+
+
 					if self.groupID_KEY in item and item[self.groupID_KEY].endswith('-B'):
 						cp( [ self.tab['table']+loopPrint(__.table_prefix_padding) + result ], 'BackgroundGrey.blue' )
 					else:
@@ -16783,6 +16923,7 @@ ciData = (
 			[';fs',                '\\' ],
 			[';t',                 '\t' ],
 			['↔',                 ' ' ],
+			['--',                 '-' ],
 			
 			[ '[caret]',    '^' ]  )
 ci_spent=[]
@@ -17105,6 +17246,7 @@ def defaultScriptTriggers_do():
 			switches.trigger('Column',formatColumns)
 			switches.trigger('Sort',formatColumnsSort)
 			switches.trigger('GroupBy',formatColumns)
+			switches.trigger('GroupTotals',formatColumns)
 		switches.trigger('PlusClose',plusCloseClean)
 		switches.trigger('Ago',timeAgo)
 		switches.trigger('PrintEpoch',print_epoch_trigger)
@@ -19672,6 +19814,7 @@ def load():
 		switches.register('Errors', '-Error,-Errors', '8,11 OR hide:8,11')
 		switches.register('Timeout', '-t,-Timeout')
 		switches.register('GroupBy', '-g,-group,-groupby', 'ext, month')
+		switches.register('GroupTotals', '-gt,-grouptotal,-gtotal,-gtotals', 'mem_usage')
 		switches.register('WrapTable', '-wrap', 'n p  OR  2  OR  path')
 		switches.register('NoWrapTable', '-nowrap')
 		# switches.register('NoTableLines', '-nolines')
@@ -21359,10 +21502,11 @@ def isExit(_file_):
 	elif not sys.stdin.isatty(): just_print(2)
 
 
-def pipe_surfing():
+def pipe_surfing(data=None):
 	global appData
 	for app in appData:
 		if 'pipe'  in appData[app] and appData[app]['pipe']:
+			if not data is None: appData[app]['pipe']=data
 			return appData[app]['pipe']
 	return False
 
@@ -21766,6 +21910,7 @@ def _thread_(*args, **kwargs):
 
 
 def pattern_probability(string1,string2,w=False):
+		if string1==string2: return 100
 		off='b9e086cad1834395a9aae81d869fd17b'
 		off='b9e086cad1834395'
 		off='b9e086ca'
@@ -22049,29 +22194,29 @@ def afile(line,path,first=None,   f=None):
 	f.close()
 
 def replace_line_in_file(file_path, search_string, replace_string):
-    # https://chat.openai.com/chat
-    with open(file_path, 'r') as file:
-        lines = file.readlines()
-    
-    with open(file_path, 'w') as file:
-        for line in lines:
-            if search_string in line:
-                line = replace_string + '\n'
-            file.write(line)
+	# https://chat.openai.com/chat
+	with open(file_path, 'r') as file:
+		lines = file.readlines()
+	
+	with open(file_path, 'w') as file:
+		for line in lines:
+			if search_string in line:
+				line = replace_string + '\n'
+			file.write(line)
 
 def replace_lines_in_file(file_path, lst):
-    # https://chat.openai.com/chat
-    with open(file_path, 'r') as file:
-        lines = file.readlines()
-    
-    with open(file_path, 'w') as file:
-        for line in lines:
-            for item in lst:
-                search_string  = item[0]
-                replace_string = item[1]
-                if search_string in line:
-                    line = replace_string + '\n'
-            file.write(line)
+	# https://chat.openai.com/chat
+	with open(file_path, 'r') as file:
+		lines = file.readlines()
+	
+	with open(file_path, 'w') as file:
+		for line in lines:
+			for item in lst:
+				search_string  = item[0]
+				replace_string = item[1]
+				if search_string in line:
+					line = replace_string + '\n'
+			file.write(line)
 
 
 

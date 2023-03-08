@@ -39,6 +39,8 @@ def sw():
     _.switches.register('Full-Path', '-path')
     _.switches.register('Mirror', '-m,-mirror')
     _.switches.register('View-Mirror', '-v,-view')
+    _.switches.register('Folders', '-f,-fo,-fos,-folder,-folders')
+    # _.switches.register('Pop', '-pop', 'first')
 
     ### EXAMPLE: START
     # _.switches.register( 'Input', '-i' )
@@ -83,7 +85,9 @@ _.appInfo[focus()] = {
                         # '',
     ],
     'examples': [
-                        _.hp('p fo -file file.txt'),
+                        _.hp('p fo'),
+                        _.hp('p fo -r -fo _docs_\\ai'),
+                        _.hp('p fo -r -fo _docs_/ai'),
                         _.linePrint(label='simple',p=0),
                         '',
     ],
@@ -192,10 +196,25 @@ def load():
         r=1
     else:
         r=0
-    c3po = _.fos(r=r)
+    if not _.switches.isActive('Folders'):
+        c3po = _.fos(r=r)
+    else:
+        c3po=[]
+        for f in _.switches.values('Folders'):
+            for fo in _.fos(f,r=r):
+                # print(fo)
+                # sys.exit()
+                if not _.switches.isActive('Full-Path'):
+                    fo = fo.replace( __.path(os.getcwd())+os.sep+f+os.sep, '' )
+                c3po.append(fo)
+    # sys.exit()
     if not _.switches.isActive('Full-Path'):
         for i, fo in enumerate(c3po):
             c3po[i]=fo.replace( __.path(os.getcwd())+os.sep, '' )
+    c3=[]
+    for i, fo in enumerate(c3po):
+        if _.showLine(fo): c3.append(fo)
+    c3po=c3
 
 ########################################################################################
 if __name__ == '__main__':

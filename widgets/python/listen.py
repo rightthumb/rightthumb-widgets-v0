@@ -261,8 +261,11 @@ def action():
 
 
 def ai():
+
 	max_tokens=1024
-	if _.switches.isActive('Print'): print('ai: initialization')
+	if _.switches.isActive('Print'):
+		print('ai: initialization')
+		print(_.v.prompt)
 	global interact
 	# Sally paste  convert the folling python to a single line
 	prompt = _.v.prompt.replace('sally','')
@@ -299,10 +302,16 @@ def ai():
 		# engine="text-davinci-002",
 		engine="text-davinci-003",
 		prompt=prompt,
+		temperature=0.9,
+		top_p=1,
+		frequency_penalty=0.0,
+		presence_penalty=0.6,
+		# max_tokens=150,
+		# stop=[" Human:", " AI:"],
 		max_tokens=max_tokens,
-		n=1,
+		# n=1,
 		stop=None,
-		temperature=0.5,
+		# temperature=0.5,
 	)
 
 	# Print the response
@@ -594,6 +603,7 @@ dic = {
 			'sally': 'ai()',
 			'auto scrape': 'auto_scrape()',
 
+			'md5': 'Clip.md5()',
 			'explode': 'Clip.explode()',
 			'implode': 'Clip.implode()',
 			'first': 'Clip.first()',
@@ -606,6 +616,9 @@ dic = {
 
 			'extract table': 'Clip.browser_f12_tooljs_table()',
 			'scrape table': 'Clip.browser_f12_tooljs_table()',
+
+			'markdown link': 'Clip.browser_f12_gen_md_link()',
+			'markdown url': 'Clip.browser_f12_gen_md_link()',
 
 			'scrape table no header': 'Clip.browser_f12_tooljs_table0()',
 			'extract table no header': 'Clip.browser_f12_tooljs_table0()',

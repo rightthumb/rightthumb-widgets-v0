@@ -55,6 +55,7 @@ def appSwitches():
 	_.switches.register('Remove-Root-Folder', '-rr')
 	_.switches.register('Widget-V0', '-w,-v0')
 	_.switches.register('Ago-Create-Date', '-cd')
+	_.switches.register('NoExtension', '-noext')
 
 
 
@@ -496,12 +497,22 @@ def getFolder(folder,r=True):
 					if shouldAdd:
 						iS+=1
 						if not _.switches.isActive('Totals'):
+
+
 							if _.switches.isActive('Remove-Root-Folder'):
+								if _.switches.isActive('NoExtension'):
+									prt=pathX.split('.')
+									prt.pop(-1)
+									pathX='.'.join(prt)
 								if not _.switches.isActive('Plus'):
 									_.colorThis( pathX, 'cyan' )
 								else:
 									_.pr( _.colorPlus( pathX, 'cyan' ) )
 							else:
+								if _.switches.isActive('NoExtension'):
+									prt=path.split('.')
+									prt.pop(-1)
+									path='.'.join(prt)
 								if not _.switches.isActive('Plus'):
 									_.colorThis( path, 'cyan' )
 								else:

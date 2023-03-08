@@ -42,7 +42,7 @@ rem if errorlevel==8 set error=8
 rem if errorlevel==9 set error=9
 
 
-
+%py% %widgets%\widgets\python\folder-registration.py
 rem echo --------
 rem :echo ^<%pc%^>
 rem :echo Just Ran:

@@ -32,10 +32,10 @@ _str = __.imp('_rightThumb._string')
 def sw():
     pass
     #b)--> examples
-    # _.switches.register( 'Input', '-i' )
+    _.switches.register( 'Match', '-m', 'D:\\websites\\backup\\RightThumb.com\\public_html\\Beth.gif  /home/rightthumb/public_html/Beth.gif' )
     # _.switches.register( 'URL', '-u,-url,-urls', 'https://efm.cx/', isData='raw' )
     #e)--> examples
-    # _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name,data,clean', description='Files', isRequired=False )
+    _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name', description='Files', isRequired=False )
 
 # __.setting('require-list',['Files,Plus','File,Has']) # todo
 # __.setting('require-list',['Pipe','Files'])
@@ -51,13 +51,17 @@ __.setting('switch-raw',[])
 
 _.appInfo[focus()] = {
     # 'app': '8facG-jo0Cxk',
-    'file': 'thisApp.py',
+    'file': 'files-compare.py',
     'liveAppName': __.thisApp( __file__ ),
     'description': 'Changes the world',
         # _.ail(1,'subject')+
         # _.aib('one')+
     'categories': [
-                        'DEFAULT',
+                        'lists',
+                        'compare',
+                        'data',
+                        'files',
+                        'paths',
                 ],
     'usage': [
                         # 'epy another',
@@ -73,7 +77,8 @@ _.appInfo[focus()] = {
                         # '',
     ],
     'examples': [
-                        _.hp('p thisApp -file file.txt'),
+                        _.hp('p files-compare  -f   local-8131.txt  yavin-8124.txt    -m  D:\\websites\\backup\\RightThumb.com\\public_html\\Beth.gif  /home/rightthumb/public_html/Beth.gif'),
+                        _.hp(''),
                         _.linePrint(label='simple',p=0),
                         '',
     ],
@@ -150,17 +155,61 @@ _.l.sw.register( triggers, sw )
 #n)--> start
 
 def action():
-    load(); global c3po;
+    clean=[]
+    if _.switches.isActive('Match'):
+        match = []
+        for m in _.switches.values('Match'):
+            while '\\\\' in m: m = m.replace('\\\\','\\')
+            m = m.replace('\\','/')
+            m = m[::-1]
+            match.append(m)
 
-    #n)--> iterate
-    for subject in _.isData(r=0): _.pr(subject)
+        i=-1
+        for c in m:
+            i+=1
+            try:
+                if not match[0][i] == match[1][i]: break
+            except: break
+
+        for m in match:
+            # print(m)
+            y = m[i:]
+            y = y[::-1]+'/'
+            if y[1] == ':': y=y.replace('/','\\')
+            clean.append(y)
+
+        
+
+
+    indexes={}
+    for i,path in enumerate(_.switches.values('Files')):
+        indexes[i]={}
+        indexes[i][0]=_.getText(path,raw=True,clean=2).split('\n')
+        indexes[i][1]=[]
+        for li in indexes[i][0]:
+            # print(li)
+            for c in clean:
+                if li.startswith(c): li=li[len(c):]
+            indexes[i][1].append(li.replace('\\','/'))
+
+    lsts=[]
+    for i in indexes: lsts.append(indexes[i][1])
     
+    main_list=[]
+    if len(lsts) == 2: main_list = list(set(lsts[0]) - set(lsts[1]))
+    if len(lsts) == 3: main_list = list(set(lsts[0]) - set(lsts[1]) - set(lsts[2]))
+    if len(lsts) == 4: main_list = list(set(lsts[0]) - set(lsts[1]) - set(lsts[2]) - set(lsts[3]))
 
-def load():
-    global c3po
-    c3po = _.getTable( 'table' )
-    #n)--> print table
-    _.pt(c3po)
+
+    for li in main_list:
+        for i in indexes:
+            if li in indexes[i][1]:
+                print(  indexes[i][0][  indexes[i][1].index(li)  ]  )
+
+    # for i in indexes: lsts.append(indexes[i][1])
+
+        
+    
 
 
 ##################################################

@@ -33,9 +33,8 @@ def sw():
     pass
     #b)--> examples
     # _.switches.register( 'Input', '-i' )
-    # _.switches.register( 'URL', '-u,-url,-urls', 'https://efm.cx/', isData='raw' )
     #e)--> examples
-    # _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name,data,clean', description='Files', isRequired=False )
+    _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name', description='Files', isRequired=False )
 
 # __.setting('require-list',['Files,Plus','File,Has']) # todo
 # __.setting('require-list',['Pipe','Files'])
@@ -109,8 +108,6 @@ def triggers():
     _.switches.trigger( 'URL', _.urlTrigger )
     _.switches.trigger( 'Duration', _.timeFuture )
 
-def _local_(do): exec(do)
-
 _.l.conf('clean-pipe',True)
 _.l.sw.register( triggers, sw )
 
@@ -126,7 +123,6 @@ _.l.sw.register( triggers, sw )
         #!)--> m=[[row[i] for row in matrix] for i in range(4)]
 
     #n)--> python globals
-        # globals()['var']
         # for k in globals(): print(k, eval(k) )
 
     #n)--> webpage from url
@@ -150,19 +146,21 @@ _.l.sw.register( triggers, sw )
 #n)--> start
 
 def action():
-    load(); global c3po;
-
-    #n)--> iterate
-    for subject in _.isData(r=0): _.pr(subject)
-    
-
-def load():
-    global c3po
-    c3po = _.getTable( 'table' )
-    #n)--> print table
-    _.pt(c3po)
-
-
+    emails=[]
+    records=[]
+    import os
+    for path in _.isData():
+        path=__.path(path)
+        db=_.csv(path)
+        # print(db)
+        for rec in db:
+            if not rec['Email'] in emails:
+                # del rec['Subject']
+                emails.append(rec['Email'])
+                records.append(rec)
+                # print(rec)
+                # sys.exit()
+    _.saveCSV(records,path.replace('with_duplacates','no_duplacates'))
 ##################################################
 #b)--> examples
 # banner=_.Banner(dependencies)
@@ -181,4 +179,3 @@ if __name__ == '__main__':
     #e)--> examples
     action()
     _.isExit(__file__)
-

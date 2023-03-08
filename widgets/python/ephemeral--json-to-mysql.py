@@ -149,18 +149,78 @@ _.l.sw.register( triggers, sw )
 ########################################################################################
 #n)--> start
 
-def action():
-    load(); global c3po;
+def action(): pass
 
-    #n)--> iterate
-    for subject in _.isData(r=0): _.pr(subject)
-    
+import json
+import pymysql.cursors
 
-def load():
-    global c3po
-    c3po = _.getTable( 'table' )
-    #n)--> print table
-    _.pt(c3po)
+# Set up the MySQL connection
+connection = pymysql.connect(
+    host='localhost',
+    user='username',
+    password='password',
+    db='database_name',
+    charset='utf8mb4',
+    cursorclass=pymysql.cursors.DictCursor
+)
+
+# Define the JSON file path and the table name
+json_file = 'path/to/file.json'
+table_name = 'table_name'
+
+# Read the JSON file
+with open(json_file) as f:
+    data = json.load(f)
+
+# Determine the data types of the first few records
+sample_size = 10
+sample_data = data[:sample_size]
+data_types = {}
+for record in sample_data:
+    for key, value in record.items():
+        if key not in data_types:
+            if isinstance(value, int):
+                data_types[key] = 'INT'
+            elif isinstance(value, float):
+                data_types[key] = 'FLOAT'
+            else:
+                data_types[key] = 'VARCHAR(255)'
+
+# Create the table in MySQL
+create_table_sql = f"CREATE TABLE IF NOT EXISTS {table_name} ("
+for key, value in data_types.items():
+    create_table_sql += f"{key} {value}, "
+create_table_sql = create_table_sql[:-2] + ");"
+with connection.cursor() as cursor:
+    cursor.execute(create_table_sql)
+connection.commit()
+
+# Import the data into the MySQL table
+insert_sql = f"INSERT INTO {table_name} ("
+for key in data_types.keys():
+    insert_sql += f"{key}, "
+insert_sql = insert_sql[:-2] + ") VALUES ("
+for i in range(len(data_types)):
+    insert_sql += "%s, "
+insert_sql = insert_sql[:-2] + ");"
+with connection.cursor() as cursor:
+    for record in data:
+        values = []
+        for key in data_types.keys():
+            values.append(record.get(key))
+        cursor.execute(insert_sql, tuple(values))
+connection.commit()
+
+# Save the SQL code as a file
+sql_file = f"{table_name}.sql"
+with open(sql_file, 'w') as f:
+    f.write(create_table_sql + "\n")
+    for record in data:
+        values = []
+        for key in data_types.keys():
+            values.append(record.get(key))
+        f.write(insert_sql % tuple(values) + "\n")
+
 
 
 ##################################################

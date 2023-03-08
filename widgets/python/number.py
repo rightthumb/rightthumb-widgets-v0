@@ -33,9 +33,10 @@ def sw():
     pass
     #b)--> examples
     # _.switches.register( 'Input', '-i' )
+    _.switches.register( 'Prefix', '-p,-pre,-prefix', 'can replace numbers or prefix' )
     # _.switches.register( 'URL', '-u,-url,-urls', 'https://efm.cx/', isData='raw' )
     #e)--> examples
-    # _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name,data,clean', description='Files', isRequired=False )
+    # _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=False )
 
 # __.setting('require-list',['Files,Plus','File,Has']) # todo
 # __.setting('require-list',['Pipe','Files'])
@@ -73,7 +74,8 @@ _.appInfo[focus()] = {
                         # '',
     ],
     'examples': [
-                        _.hp('p thisApp -file file.txt'),
+                        _.hp('pa | p number | cp'),
+                        _.hp('pa | p number -pre * | cp'),
                         _.linePrint(label='simple',p=0),
                         '',
     ],
@@ -149,18 +151,60 @@ _.l.sw.register( triggers, sw )
 ########################################################################################
 #n)--> start
 
+def cleaner(line):
+    global pre
+    for p in pre:
+        if line.startswith(p):
+            line = line[len(p):].strip()
+    if not line[0] in '0123456789': return line
+    li=line.split(' ')
+    li.pop(0)
+    return ' '.join(li).strip()
+
+def nu(n):
+    n=str(n)
+    if len(n) == 1: return n+'. '
+    return n+'.'
+
+def hasPrefix(lines):
+    global pre
+    global space
+    space=''
+    startswith=[]
+    first=False
+    tabs=False
+    for line in lines:
+        if line and not first:
+            first=True
+            line=line.rstrip()
+            if not line == line.strip():
+                if line[0] == '\t': tabs=True
+                line=line.replace('\t','    ')
+                for c in line:
+                    if not c == ' ': break
+                    space+=' '
+
+        line=line.strip()
+        if line and not line[0] in '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ[(_':
+            startswith.append(line.split(' ')[0])
+    pre=[*set(startswith)]
+
+    if tabs:
+        while '    ' in space: space=space.replace('    ','\t')
+    return lines
+
+def printer(i,line):
+    global space
+    n=nu(i+1)
+    if _.switches.isActive('Prefix'): n = _.ci(_.switches.values('Prefix')[0])
+    if not space: _.pr(n,line)
+    else: _.pr(space+n,line)
+
 def action():
-    load(); global c3po;
-
-    #n)--> iterate
-    for subject in _.isData(r=0): _.pr(subject)
-    
-
-def load():
-    global c3po
-    c3po = _.getTable( 'table' )
-    #n)--> print table
-    _.pt(c3po)
+    lines=hasPrefix(_.isData(r=0))
+    for i, line in enumerate(lines):
+        line=line.strip();
+        if line: printer(i,cleaner(line))
 
 
 ##################################################

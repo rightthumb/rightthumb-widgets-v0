@@ -33,7 +33,7 @@ def sw():
 	_.switches.register( 'Download-Scp', '-d,-dl,-down,-download' )
 	_.switches.register( 'Test', '-t,-test' )
 	# _.switches.register( 'Files', '-f,-file,-files','file.txt',  description='glob', isRequired=True )
-	_.switches.register( 'Files', '-f,-file,-files','vps-tf', isRequired=True )
+	_.switches.register( 'Files', '-f,-file,-files','vps-tf', isData="name", isRequired=False )
 	_.switches.register( 'mkdir', '-mkdir' )
 	_.switches.register( 'Servers', '-v,-srv,-server,-vps', 'b h m t' )
 	_.switches.register( 'Print', '-print' )
@@ -323,7 +323,8 @@ def action():
 		_.switches.fieldSet( 'Test', 'active', True )
 	if _.switches.isActive('Server'): end='.'+_.switches.value('Server');
 	else: end='';
-	for i,path in enumerate( _.switches.values('Files') ):
+	# for i,path in enumerate( _.switches.values('Files') ):
+	for i,path in enumerate( _.isData(r=1) ):
 		# process(path,end)
 		if not _.switches.isActive('Servers'):
 			process(path,end)

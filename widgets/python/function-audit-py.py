@@ -35,10 +35,10 @@ def sw():
     # _.switches.register( 'Input', '-i' )
     # _.switches.register( 'URL', '-u,-url,-urls', 'https://efm.cx/', isData='raw' )
     #e)--> examples
-    # _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name,data,clean', description='Files', isRequired=False )
+    _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name', description='Files', isRequired=False )
 
 # __.setting('require-list',['Files,Plus','File,Has']) # todo
-# __.setting('require-list',['Pipe','Files'])
+__.setting('require-list',['Pipe','Files'])
 __.setting('receipt-log')
 __.setting('receipt-file')
 __.setting('myFileLocations-skip-validation',False)
@@ -149,19 +149,103 @@ _.l.sw.register( triggers, sw )
 ########################################################################################
 #n)--> start
 
-def action():
-    load(); global c3po;
+def label(line):
+    line=line.strip()
+    while '  ' in line: line=line.replace('  ',' ')
+    lab=''
+    for c in line.split(' ')[1]:
+        if c in '_0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ': lab+=c
+        else: break
+    return lab
 
-    #n)--> iterate
-    for subject in _.isData(r=0): _.pr(subject)
+def whitespace(line):
+    ws=''
+    for c in line:
+        if c in ' \t': ws+=c
+        else: break
+    return ws
+
+def process(path):
+    _.pr(path)
+    _file_open.action(path)
+    # sys.exit()
+    file=_.getText(path,raw=True).replace('\r','')
+    while '\t' in file: file=file.replace('\t','    ')
+    while '    ' in file: file=file.replace('    ','\t')
+    lines=file.split('\n')
+    Parent={}
+    counters={
+                'class': 0,
+                'def': 0,
+                'def-def': 0,
+                'class-def': 0,
+                'def-all': 0,
+    }
+    _lines_=[]
+    i=0
+    active=False
+    for line in lines:
+        i+=1
+        inject=False
+        if line.strip().startswith('class ') and ':' in line:
+            Parent={'class':label(line)}
+            counters['class']+=1
+        elif line.strip().startswith('def ') and ':' in line:
+            Def=label(line)
+            ws=whitespace(line)
+            if not ws: Parent={'def':label(line)}
+            counters['def-all']+=1
+
+            # counters
+            if ws:
+                if 'def' in Parent: counters['def-def']+=1
+                elif 'class' in Parent: counters['class-def']+=1
+            if not ws: counters['def']+=1
+
+
+            # print
+            if ws:
+                if 'def' in Parent: _.pr('d',Parent['def'],Def,c='cyan')
+                elif 'class' in Parent: _.pr('c',Parent['class'],Def,c='darkcyan')
+            if not ws: _.pr(Def,c='green')
+
+
+            # inject tracer
+            if ws:
+                if 'def' in Parent: am=['d',Parent['def'],Def]
+                elif 'class' in Parent: am=['c',Parent['class'],Def]
+            if not ws: am=[Def]
+            
+            if not ws and Def == 'registerSwitches':
+                active=True
+            elif active:
+                inject_0 = str(i)+',"'+' '.join(am)+'"'
+                inject_1 = '\t'+ws+'_.pr('+inject_0+',c="red")'
+                inject=True
+
+
+        _lines_.append(line)
+        if inject:
+            _lines_.append(inject_1)
+            i+=1
+
+    pass
+    _.saveText(_lines_,path)
+
+            # if not ws: print(Def)
+    print()
+    # _.pr('Totals:',c='Background.blue')
+    _.printDicFields(counters,'Totals')
+
+
+def action():
+    for path in _.isData(r=0):
+        if path.endswith('.py'):
+            process(path)
     
 
-def load():
-    global c3po
-    c3po = _.getTable( 'table' )
-    #n)--> print table
-    _.pt(c3po)
-
+_file_open = _.regImp( __.appReg, 'file-open' )
+_file_open.switch('Backup')
 
 ##################################################
 #b)--> examples

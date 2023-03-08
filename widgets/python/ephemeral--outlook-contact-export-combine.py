@@ -35,7 +35,7 @@ def sw():
     # _.switches.register( 'Input', '-i' )
     # _.switches.register( 'URL', '-u,-url,-urls', 'https://efm.cx/', isData='raw' )
     #e)--> examples
-    # _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name,data,clean', description='Files', isRequired=False )
+    _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name', description='Files', isRequired=False )
 
 # __.setting('require-list',['Files,Plus','File,Has']) # todo
 # __.setting('require-list',['Pipe','Files'])
@@ -149,19 +149,27 @@ _.l.sw.register( triggers, sw )
 ########################################################################################
 #n)--> start
 
+
+records=[]
+def process(path):
+    global records
+    path=__.path(path)
+    vVv=path.split(os.sep)[-1].replace('.CSV','').replace('-','')
+    print(vVv)
+    recs=_.csv(path)
+    for i,rec in enumerate(recs):
+        recs[i]['theFolder']=vVv
+        records.append(recs[i])
+    # print(fi)
+    # sys.exit()
+
+
 def action():
-    load(); global c3po;
+    global records
+    for path in _.isData(r=0): process(path)
+    _.saveCSV(records,'everything.csv')
 
-    #n)--> iterate
-    for subject in _.isData(r=0): _.pr(subject)
-    
-
-def load():
-    global c3po
-    c3po = _.getTable( 'table' )
-    #n)--> print table
-    _.pt(c3po)
-
+os=__.imp('os.sep')
 
 ##################################################
 #b)--> examples

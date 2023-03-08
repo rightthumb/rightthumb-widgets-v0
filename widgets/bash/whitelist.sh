@@ -18,6 +18,11 @@ echo "csf -a $ip"
 ufw reload
 fi
 
+if which iptables >/dev/null; then
+iptables -I INPUT -s $ip -p tcp --dport 22 -j ACCEPT;
+echo "iptables -I INPUT -s $ip -p tcp --dport 22 -j ACCEPT;"
+fi
+
 if [ -d "/etc/virtual/" ]; then
 declare -A _fi1
 _fi1=()

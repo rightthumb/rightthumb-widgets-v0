@@ -733,6 +733,8 @@ def action():
 			folder = os.getcwd()
 		else:
 			folder = _.switches.value('Folders')
+		folder = __.path(folder)
+		# print(folder)
 		global baseDepth
 		# global base_path
 		baseDepth = len( folder.split(_v.slash) )

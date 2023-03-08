@@ -1814,6 +1814,15 @@ function get__THETABLE( $ID_label ){
 			rows.append(row)
 		_copy.imp.copy( '\n'.join(rows), p=0 )
 
+	def md5(self):
+		_paste = _.regImp( __.appReg, '-paste' )
+		_copy = _.regImp( __.appReg, '-copy' )
+		import _rightThumb._md5 as _hash
+		text = _paste.imp.paste()
+		text = text.replace('\r','')
+		_copy.imp.copy( _hash.string(text), p=0 )
+
+
 	def encrypt_lines(self):
 		_paste = _.regImp( __.appReg, '-paste' )
 		_copy = _.regImp( __.appReg, '-copy' )

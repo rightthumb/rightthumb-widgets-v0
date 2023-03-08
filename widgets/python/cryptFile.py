@@ -360,7 +360,10 @@ focus()
 
 ########################################################################################
 if __name__ == '__main__':
+	start=time.time()
 	action()
+	diff=time.time()-start
+	print(diff)
 
 
 

@@ -33,9 +33,9 @@ def sw():
     pass
     #b)--> examples
     # _.switches.register( 'Input', '-i' )
-    # _.switches.register( 'URL', '-u,-url,-urls', 'https://efm.cx/', isData='raw' )
     #e)--> examples
-    # _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name,data,clean', description='Files', isRequired=False )
+    # _.switches.register( 'Files', '-url,-urls,-f,-fi,-file,-files','file.txt', isData='name', description='Files', isRequired=False )
+    _.switches.register( 'URL', '-u,-url,-urls', 'https://efm.cx/', isData='raw' )
 
 # __.setting('require-list',['Files,Plus','File,Has']) # todo
 # __.setting('require-list',['Pipe','Files'])
@@ -103,7 +103,7 @@ _.appData[focus()] = {
 
 
 def triggers():
-    _.switches.trigger( 'Files', _.myFileLocations, vs=True )
+    # _.switches.trigger( 'Files', _.myFileLocations, vs=True )
     _.switches.trigger( 'Ago', _.timeAgo )
     _.switches.trigger( 'Folder', _.myFolderLocations )
     _.switches.trigger( 'URL', _.urlTrigger )
@@ -149,18 +149,15 @@ _.l.sw.register( triggers, sw )
 ########################################################################################
 #n)--> start
 
+
 def action():
-    load(); global c3po;
+    for url in _.isData(r=0):
+        fi = url.split('/')[-1]
+        _.pr(fi,url)
+        urllib.request.urlretrieve(url, fi)
 
-    #n)--> iterate
-    for subject in _.isData(r=0): _.pr(subject)
-    
 
-def load():
-    global c3po
-    c3po = _.getTable( 'table' )
-    #n)--> print table
-    _.pt(c3po)
+import urllib.request
 
 
 ##################################################

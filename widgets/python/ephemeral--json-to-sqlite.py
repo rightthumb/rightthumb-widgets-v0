@@ -149,18 +149,107 @@ _.l.sw.register( triggers, sw )
 ########################################################################################
 #n)--> start
 
-def action():
-    load(); global c3po;
+def action(): pass
 
-    #n)--> iterate
-    for subject in _.isData(r=0): _.pr(subject)
-    
+import simplejson
+import sqlite3
 
-def load():
-    global c3po
-    c3po = _.getTable( 'table' )
-    #n)--> print table
-    _.pt(c3po)
+def clean_field_names(field_names):
+    """
+    Clean field names by removing any non-alphanumeric characters and converting to lowercase.
+
+    Args:
+        field_names (list of str): The original field names.
+
+    Returns:
+        list of str: The cleaned field names.
+    """
+    cleaned_names = []
+    for field_name in field_names:
+        cleaned_name = ''.join(char for char in field_name if char.isalnum()).lower()
+        cleaned_names.append(cleaned_name)
+    return cleaned_names
+
+def determine_column_types(sample_data):
+    """
+    Determine the data types of each column based on a sample of data.
+
+    Args:
+        sample_data (list of dict): A sample of data from the JSON file.
+
+    Returns:
+        list of str: The data types of each column.
+    """
+    column_types = []
+    for field_name in sample_data[0].keys():
+        column_type = None
+        for row in sample_data:
+            if isinstance(row[field_name], (int, float)):
+                column_type = 'REAL'
+                break
+            elif isinstance(row[field_name], str):
+                column_type = 'TEXT'
+        if column_type is None:
+            column_type = 'TEXT'
+        column_types.append(column_type)
+    return column_types
+
+def create_sqlite_table(table_name, field_names, column_types):
+    """
+    Create a SQLite table with the specified name, field names, and column types.
+
+    Args:
+        table_name (str): The name of the table to create.
+        field_names (list of str): The cleaned field names.
+        column_types (list of str): The data types of each column.
+    """
+    conn = sqlite3.connect('example.db')
+    c = conn.cursor()
+    column_names = ','.join(field_names)
+    column_defs = ','.join([f'{name} {column_types[i]}' for i, name in enumerate(field_names)])
+    create_table_query = f'CREATE TABLE {table_name} ({column_defs})'
+    c.execute(create_table_query)
+    conn.commit()
+    conn.close()
+
+def import_json_data(table_name, filename):
+    """
+    Import data from a JSON file into a SQLite table.
+
+    Args:
+        table_name (str): The name of the table to import the data into.
+        filename (str): The name of the JSON file to import data from.
+    """
+    conn = sqlite3.connect('example.db')
+    c = conn.cursor()
+    with open(filename) as f:
+        data = simplejson.load(f)
+        for row in data:
+            values = [row[field_name] for field_name in cleaned_headers]
+            insert_query = f'INSERT INTO {table_name} VALUES ({",".join(["?" for _ in range(len(values))])})'
+            c.execute(insert_query, values)
+    conn.commit()
+    conn.close()
+
+# Read the JSON file and extract the first 5 records
+with open('example.json') as f:
+    data = simplejson.load(f)
+    sample_data = data[:5]
+
+# Clean the field names
+cleaned_headers = clean_field_names(sample_data[0].keys())
+
+# Determine the data types of each column
+column_types = determine_column_types(sample_data)
+
+# Create the SQLite table
+table_name = 'example_table'
+create_sqlite_table(table_name, cleaned_headers, column_types)
+
+# Import data from the JSON file into the SQLite table
+import_json_data(table_name, 'example.json')
+
+
 
 
 ##################################################

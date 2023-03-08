@@ -281,8 +281,8 @@ def action():
 			shoulRunPreGame = False
 
 		# if _.resolveEpochTest( log['timestamp'] ) < maxEpochDate:
-		if ( log['timestamp'] ) < maxEpoch:
-			shoulRunPreGame = False
+		# if ( log['timestamp'] ) < maxEpoch:
+		# 	shoulRunPreGame = False
 
 		if log['file'] in fileList:
 			shoulRunPreGame = False
@@ -299,10 +299,15 @@ def action():
 
 
 			if shouldBackup:
+				if not os.path.isfile(log['file']): shouldBackup = False
+				else:
+					me = os.path.getmtime(log['file'])
+					if not me: shouldBackup = False
+					# if me > maxEpoch: shouldBackup = False
+					# print(shouldBackup,maxEpoch,me,log['file'])
+
+			if shouldBackup:
 				
-
-
-
 				fileList.append( log['file'] )
 				if os.path.isfile(log['file']):
 					# fd = _dir.fileInfo( log['file'] )
@@ -320,7 +325,8 @@ def action():
 
 					if shoulRun:
 						# if not _.resolveEpochTest(fd['date_modified_raw']) < maxEpochDate:
-						if not (fd['date_modified_raw']) < maxEpoch:
+						# if (fd['date_modified_raw']) < maxEpoch:
+						if True:
 							i=0
 							# _.pr( _.resolveEpochTest( fd['date_modified_raw'] ) )
 							if True and ( not 'fileBackup.json' in log['file'] and not 'fileBackupSchedule.json' in log['file'] and not 'ID.sys' in log['file'] ):
@@ -418,8 +424,8 @@ def action():
 				shoulRunPreGame = False
 
 			# if _.resolveEpochTest( log['timestamp'] ) < maxEpochDate:
-			if ( log['timestamp'] ) < maxEpoch:
-				shoulRunPreGame = False
+			# if ( log['timestamp'] ) < maxEpoch:
+			# 	shoulRunPreGame = False
 
 			if log['file'] in fileList:
 				shoulRunPreGame = False
@@ -435,6 +441,12 @@ def action():
 					shouldBackup = False
 
 
+				if shouldBackup:
+					if not os.path.isfile(log['file']): shouldBackup = False
+					else:
+						me = os.path.getmtime(log['file'])
+						if not me: shouldBackup = False
+						if me > maxEpoch: shouldBackup = False
 				if shouldBackup:
 
 					fileList.append( log['file'] )
@@ -457,7 +469,7 @@ def action():
 						# fd['date_modified_raw']date_modified_raw
 						# if shoulRun:
 							# if not _.resolveEpochTest(fd['date_modified_raw']) < maxEpochDate:
-							if not (fd['date_modified_raw']) < maxEpoch:
+							if (fd['date_modified_raw']) < maxEpoch:
 								i=0
 								_.pr( _.resolveEpochTest( fd['date_modified_raw'] ) )
 								if not 'fileBackup.json' in log['file'] and not 'fileBackupSchedule.json' in log['file'] and not 'ID.sys' in log['file']:
@@ -496,23 +508,26 @@ def action():
 __.spent = []
 
 def _fileBackup():
-    appReg=__.appReg
-    if 'fileBackup' in globals(): globals()['fileBackup'] = None
-    fileBackup = _.regImp( __.appReg, 'fileBackup' )
-    __.appReg=appReg
+    
+    _.v=_.dot()
+
     fileBackup.switch( 'Flag', 'A' )
     fileBackup.switch( 'DoNotSchedule' )
     fileBackup.switch( 'isRunOnce' )
     fileBackup.deleteSwitch( 'Session' )
     __.appReg=appReg
     return fileBackup
+appReg=__.appReg
+if 'fileBackup' in globals(): globals()['fileBackup'] = None
+fileBackup = _.regImp( __.appReg, 'fileBackup' )
+__.appReg=appReg
 
 ########################################################################################
 if __name__ == '__main__':
 	action()
 
 # autoBackup
-
+# if shouldBackup:
 
 
 

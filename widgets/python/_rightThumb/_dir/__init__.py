@@ -15,6 +15,18 @@ import _rightThumb._md5 as _md5
 import _rightThumb._mimetype as _mime
 import hashlib
 import simplejson as json
+import _rightThumb._base3 as _
+
+def _lines_(filename):
+
+	try:
+	    with open(filename) as f:
+	        for i, asdf in enumerate(f): pass
+	    return i + 1
+	except Exception as e:
+		_.pr(e,c='red')
+		return 1
+
 """
 [
 	{
@@ -157,14 +169,14 @@ def sqlCreateTable( db, deleteDBFirst=False, close=False, asset=None, length=Non
 commit_count = 0
 processed_count = 0
 
-def info( path, sql=False, md5=False, exif=0,   attrib=None, mime=None, db_connection=None, db_cursor=None, count=None, insert=None, last=False, sdate=None, meta=True, err=False,       subject=None, k=None, f=None, s=None, sub=None, field=None, mini=False, sha256=False ):
+def info( path, sql=False, md5=False, exif=0,   attrib=None, mime=None, db_connection=None, db_cursor=None, count=None, insert=None, last=False, sdate=None, meta=True, err=False,       subject=None, k=None, f=None, s=None, sub=None, field=None, mini=False, sha256=False, lines=False ):
 	if not field is None: subject=field;
 	if not sub is None: subject=sub;
 	if not s is None: subject=s;
 	if not k is None: subject=k;
 	if not f is None: subject=f;
 	sub=subject
-	mrec=fileInfo( path=path, sql=sql, md5=md5, exif=exif,   attrib=attrib, mime=mime, db_connection=db_connection, db_cursor=db_cursor, count=count, insert=insert, last=last, sdate=sdate, meta=meta, err=err, subject=subject, sha256=sha256 )
+	mrec=fileInfo( path=path, sql=sql, md5=md5, exif=exif,   attrib=attrib, mime=mime, db_connection=db_connection, db_cursor=db_cursor, count=count, insert=insert, last=last, sdate=sdate, meta=meta, err=err, subject=subject, sha256=sha256, _lines=lines )
 	if mini and mrec:
 		del mrec['stat']
 		del mrec['date_created_raw']
@@ -192,7 +204,7 @@ def info( path, sql=False, md5=False, exif=0,   attrib=None, mime=None, db_conne
 		del mrec['date_accessed']
 	return mrec
 
-def fileInfo( path, sql=False, md5=False, exif=0,   attrib=None, mime=None, db_connection=None, db_cursor=None, count=None, insert=None, last=False, sdate=None, meta=True, err=False, subject=None, sha256=False ):
+def fileInfo( path, sql=False, md5=False, exif=0,   attrib=None, mime=None, db_connection=None, db_cursor=None, count=None, insert=None, last=False, sdate=None, meta=True, err=False, subject=None, sha256=False, _lines=False ):
 	global processed_count
 	global total_records
 	processed_count += 1
@@ -206,10 +218,10 @@ def fileInfo( path, sql=False, md5=False, exif=0,   attrib=None, mime=None, db_c
 			db_cursor = cursor
 			count = processed_count
 	if err:
-		return fileInfoAction( path, sql, md5, exif, attrib, mime, db_connection, db_cursor, count, insert, last, sdate, meta, subject, sha256 )
+		return fileInfoAction( path, sql, md5, exif, attrib, mime, db_connection, db_cursor, count, insert, last, sdate, meta, subject, sha256, _lines )
 	else:
 		try:
-			return fileInfoAction( path, sql, md5, exif, attrib, mime, db_connection, db_cursor, count, insert, last, sdate, meta, subject, sha256 )
+			return fileInfoAction( path, sql, md5, exif, attrib, mime, db_connection, db_cursor, count, insert, last, sdate, meta, subject, sha256, _lines )
 		except Exception as e:
 			return False
 
@@ -287,7 +299,7 @@ def individual(path,subject):
 	if len(k) == 1: return dic[k[0]];
 	return dic
 
-def fileInfoAction( path, sql, md5, exif, getAttrib=None, getMime=None, db_connection=None, db_cursor=None, count=None, insert=None, last=False, sdate=None, meta=True, subject=None, sha256=False ):
+def fileInfoAction( path, sql, md5, exif, getAttrib=None, getMime=None, db_connection=None, db_cursor=None, count=None, insert=None, last=False, sdate=None, meta=True, subject=None, sha256=False, _lines=False ):
 	global touch_meta
 	global dateCalcByModified
 	global timeAudit
@@ -406,6 +418,17 @@ def fileInfoAction( path, sql, md5, exif, getAttrib=None, getMime=None, db_conne
 			theHeader = " ".join(['{:02X}'.format(byte) for byte in     open( aPath, 'rb' ).read(32)    ])
 			if type(header) == int:
 				theHeader = theHeader[0:header*3]
+		# print(_lines_(path2))
+		__lines=0
+		try:
+			if _lines:
+				__lines=_lines_(path2)
+			else:
+				__lines=0
+		except Exception as e:
+			_.pr(e,c='red')
+			pass
+
 		obj = {
 				'path': path2,
 				'name_': fileNameLength(name,ext),
@@ -442,7 +465,9 @@ def fileInfoAction( path, sql, md5, exif, getAttrib=None, getMime=None, db_conne
 				'header': theHeader,
 				'error': hasError,
 				'group': size_group(size),
+				'lines': __lines,
 		}
+
 		_cwd=os.getcwd()
 		if _cwd+os.sep in path2:
 			obj['relative'] = path2[ len(_cwd)+1: ]

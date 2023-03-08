@@ -21,10 +21,12 @@ commitPer = 46285
 
 class nID:
 	def __init__( self ):
+		self.delim=''
 		# self.code = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_'
 		# self.code = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~'
 		self.hasRun = False
 		self.code = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
+		# self.code = list('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ')
 		self.code_default = self.code
 		# self.max = 100000000
 		self.max = 10000
@@ -85,14 +87,15 @@ class nID:
 				if len(self.code) == self.max_unsafe+1:
 					break
 		# _.pr(self.code)
-		self.code = self.code.replace(self.ph,'')
+		if type(self.code) == str: self.code = self.code.replace(self.ph,'')
+		elif self.ph in self.code: self.code.pop(self.code.index(self.ph)) 
 		# _.pr( len( self.code ) )
 		# sys.exit()
 		table = []
 		for x in self.code:
 			if not x in table:
 				table.append(x)
-		self.code = ''.join(table)
+		self.code = self.delim.join(table) 
 		if not self.passwordRan:
 			self.password()
 		self.base = len(self.code)

@@ -12,10 +12,34 @@
 
 source $HOME/.bashrc
 
-if [ $# -eq 0 ]
+
+#!/bin/bash
+
+stuff() {
+    if [ -e "$1" ]
     then
-        python3
+        python3 "$@"
     else
-         $p py-finder  + $@ -percentage
+        # $p py-finder  + $@ -percentage
+        # cat 0-index.list | p line --c + "$@" | p pipe-cleaner -ext
+        $p file -prefix -noext --c -folder "$widgets"/widgets/python + "$@"
+    fi
+}
+
+if [ -z "$1" ]
+then
+    python3
+else
+    stuff "$@"
 fi
+
+
+
+
+# if [ $# -eq 0 ]
+#     then
+#         python3
+#     else
+#          $p py-finder  + $@ -percentage
+# fi
 

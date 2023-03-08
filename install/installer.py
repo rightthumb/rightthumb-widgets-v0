@@ -3393,12 +3393,22 @@ alias ssh...="sudo cp -r ~/.ssh/* /mnt/c/Users/Scott/.ssh"
 
 
 
+alias ssh.y.rt="ssh-copy-id -i ~/.ssh/id_rsa.pub rightthumb@yavin.m-eta.app"
+alias ssh.y.rt.="ssh-copy-id -i /mnt/c/Users/Scott/.ssh/id_rsa.pub rightthumb@yavin.m-eta.app"
+
+alias ssh.y.e="ssh-copy-id -i ~/.ssh/id_rsa.pub efm@yavin.m-eta.app"
+alias ssh.y.e.="ssh-copy-id -i /mnt/c/Users/Scott/.ssh/id_rsa.pub efm@yavin.m-eta.app"
+
+alias ssh.y.p="ssh-copy-id -i ~/.ssh/id_rsa.pub programmer@yavin.m-eta.app"
+alias ssh.y.p.="ssh-copy-id -i /mnt/c/Users/Scott/.ssh/id_rsa.pub programmer@yavin.m-eta.app"
+
 alias vy="ssh scott@yavin.m-eta.app"
 alias yavin="ssh scott@yavin.m-eta.app"
 alias ssh.y.s="ssh-copy-id -i ~/.ssh/id_rsa.pub scott@yavin.m-eta.app"
 alias ssh.y.r="ssh-copy-id -i ~/.ssh/id_rsa.pub root@yavin.m-eta.app"
 alias ssh.y.s.="ssh-copy-id -i /mnt/c/Users/Scott/.ssh/id_rsa.pub scott@yavin.m-eta.app"
 alias ssh.y.r.="ssh-copy-id -i /mnt/c/Users/Scott/.ssh/id_rsa.pub root@yavin.m-eta.app"
+
 alias vps.y.dt="ssh -L 59001:localhost:5901 -C -N -l scott yavin.m-eta.app"
 alias vps.y.py="scp  $ww/python/vps*.py root@yavin.m-eta.app:$ww/python/    ; ssh root@yavin.m-eta.app 'chmod -R 777 /opt/rightthumb-widgets-v0/'"
 alias vps.y.py2="scp  $ww/python/vps*.py root@yavin.m-eta.app:$ww/python/     ; ssh root@yavin.m-eta.app 'chmod -R 777 /opt/rightthumb-widgets-v0/'"

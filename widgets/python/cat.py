@@ -44,6 +44,7 @@ def appSwitches():
 	_.switches.register( 'Clean', '--c', 'noline' )
 	_.switches.register( 'NotCleanForce', '-pr,-print,--nc,---c,-c-', 'noline' )
 	_.switches.register( 'Count', '-cnt,-count' )
+	_.switches.register( 'Function', '-fn' )
 
 
 
@@ -184,9 +185,27 @@ def cleaner(line):
 	while line.endswith(' ') or line.endswith('\t') : line=line[:-1]
 	return line
 
+
+def pr(*args):
+	global Function
+	arg=' '.join(args)
+	if Function:
+		arg=arg.strip()
+		a=''
+		for c in arg:
+			if c in '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_.': a+=c
+			elif c =='(': a+=c+' '
+			else: a+=' '
+		while '  ' in arg: arg=arg.replace('  ',' ')
+		for x in a.split(' '):
+			if '(' in x and  _.showLine(x): return x
+		return ''
+	return arg
+
+
 def action():
 	focus()
-	
+	global Function
 	Count = []
 	Count_=0
 	if _.switches.isActive('Count'):
@@ -308,6 +327,8 @@ def action():
 				vVv.total += 1
 				shouldAdd = _.showLine(row)
 				if shouldAdd:
+					row=pr(row)
+					if Function and not row: continue
 					if _.switches.isActive('Plus'):
 						for plusSearchX in _.switches.values('Plus'):
 							plusSearchX = _.ci( plusSearchX )
@@ -413,6 +434,8 @@ _cryptFile.switch( 'Clean' )
 _cryptFile.imp.appDBA = _cryptFile.focus
 focus()
 import _rightThumb._dir as _dir
+
+Function=_.switches.isActive('Function')
 
 355
 

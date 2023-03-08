@@ -765,6 +765,9 @@ __.fileBackup.isPreOpen = _.switches.isActive('isPreOpen')
 # __.fileBackup.isPreOpen
 # __.fileBackup.isPreOpen
 def action(path=None,flag=None,o=None):
+	global INDEX
+	global _BYTES_
+	global backupLog
 	# __.fileBackup=_.dot()
 	# print('isPreOpen-o',o)
 	# print('isPreOpen',_.switches.isActive('isPreOpen'))
@@ -801,17 +804,10 @@ def action(path=None,flag=None,o=None):
 		# _.pr( 'path::::', path )
 		if os.path.isfile(path):
 			path = __.path(  path  )
-			
-			# _.pr('pre')
+			# print(os.stat(path).st_size)
 			if True or _.switches.isActive('Test'):
-				backupLog = _.getTable('fileBackup.json')
-				if not __.secureFilesID is None:
-					theID = __.secureFilesID
-				else:
-					theID = generateID(path)
-				idCheck = idExist(theID, backupLog, path)
-				if not type(idCheck) == bool:
-					_.cp(idCheck,'darkcyan')
+				# if not type(idCheck) == bool:
+				# 	_.cp(idCheck,'darkcyan')
 				_.v.secure=False				
 				if secureFiles(path):
 					# _.colorThis( [ 'Secure file' ], 'green' )
@@ -821,6 +817,12 @@ def action(path=None,flag=None,o=None):
 					if bk: bk=bk[-1]; _.pr( bk, c='darkcyan' );
 					# _.pr(' -- TRUE -- ')
 					return None
+			if path in INDEX and os.path.getmtime(path) == INDEX[path]['timestamp']:
+				_.pr(path, c='cyan')
+				_.pr(INDEX[path]['backup'], c='darkcyan')
+				_.pr('File not modified since last backup',c='yellow')
+				return INDEX[path]['backup']
+			# _.pr('pre')
 			
 			# _.pr('post')
 			global crypt_docs
@@ -1222,30 +1224,54 @@ def action(path=None,flag=None,o=None):
 				
 		else:
 			# if _.switches.isActive('PythonDocumentation'): PRE_BACKUP_PROCESSING( path )
-			backupLog = _.getTable('fileBackup.json')
-			if not __.secureFilesID is None:
-				theID = __.secureFilesID
-			else:
-				theID = generateID(path)
-			idCheck = idExist(theID, backupLog, path)
-			if not type(idCheck) == bool:
+
+			# idCheck = idExist(theID, backupLog, path)
+			# if not type(idCheck) == bool:
+			# os.stat(path).st_size
+			# if path in INDEX and INDEX[path]['id'] == theID:
+			modifiedRaw = os.path.getmtime(path)
+			byte = os.stat(path).st_size
+			T42_HB = False
+			if path in INDEX and os.stat(INDEX[path]['backup']).st_size  == byte:
+				T42_HB = True
+				if not byte < _BYTES_:
+					if not _.switches.isActive('Silent'):
+						_.colorThis( INDEX[path]['backup'], 'darkcyan' )
+						_.pr( 'Has Backup *', c='yellow' )
+						# _.pr( 'Has Backup',_.formatSize(byte), c='yellow' )
+					return INDEX[path]['backup']					
+				else:
+					if not __.secureFilesID is None:
+						theID = __.secureFilesID
+					else:
+						theID = generateID(path)
+					if not INDEX[path]['id'] == theID:
+						T42_HB = False
+
+			if T42_HB:
 				if not _.switches.isActive('Silent'):
+					_.colorThis( INDEX[path]['backup'], 'darkcyan' )
 					_.colorThis( 'Has Backup', 'yellow' )
-					_.cp(idCheck,'darkcyan')
-					# txtScheduler = _.getTable( 'fileBackupSchedule.json' )
-					# txtScheduler.append( { 'timestamp': genEpoch(), 'file': path, 'status': 0, 'app': 'fileBackup', 'group': 0 } )
-					if not _.switches.isActive('DoNotSchedule'):
-						_.colorThis( [  'Scheduled'  ], 'purple' )
-						# _.saveTable( txtScheduler,'fileBackupSchedule.json', p=0 )
-				if _.switches.isActive('Flag'):
-					thisFlag = _.switches.value('Flag')
-					_bkLog.switch( 'Flag', thisFlag )
-					_bkLog.imp.addFlagIfHasBackup( idCheck )
+				return INDEX[path]['backup']
+				# if _.switches.isActive('Flag'):
+				# 	thisFlag = _.switches.value('Flag')
+				# 	_bkLog.switch( 'Flag', thisFlag )
+				# 	_bkLog.imp.addFlagIfHasBackup( idCheck )
 				# _.pr(idCheck)
-				return idCheck
 			else:
 
-				modifiedRaw = os.path.getmtime(path)
+
+				if not __.secureFilesID is None:
+					theID = __.secureFilesID
+				else:
+					theID = generateID(path)
+				idCheck = idExist(theID, backupLog, path)
+				if not type(idCheck) == bool:
+					_.colorThis( INDEX[path]['backup'], 'darkcyan' )
+					_.colorThis( 'Backup ID found in older backup', 'yellow' )
+					return INDEX[path]['backup']
+
+				
 				modified = formatDate(modifiedRaw)
 				if _mime.isText(path):
 					newname = _v.myTXT + os.sep + str(now) + '-' + modified +  '-' + name
@@ -1265,16 +1291,13 @@ def action(path=None,flag=None,o=None):
 				
 				# changed timestamp on 1620919454
 				#   previously...    'timestamp': now 
-				try:
-					modified_epoch = _dir.info(os.path.abspath(path))['me']
-				except Exception as e:
-					modified_epoch = now
+
 			
 
 				if _.switches.isActive('isRunOnce'):
-					log = { 'id': theID, 'timestamp': modified_epoch, 'file': os.path.abspath(path), 'backup': newname,'mime': mime, 'status': 100, 'name': name, 'log': '' }
+					log = { 'id': theID, 'timestamp': modifiedRaw, 'file': os.path.abspath(path), 'backup': newname,'mime': mime, 'status': 100, 'name': name, 'log': '' }
 				else:
-					log = { 'id': theID, 'timestamp': modified_epoch, 'file': os.path.abspath(path), 'backup': newname,'mime': mime, 'status': 1, 'name': name, 'log': '' }
+					log = { 'id': theID, 'timestamp': modifiedRaw, 'file': os.path.abspath(path), 'backup': newname,'mime': mime, 'status': 1, 'name': name, 'log': '' }
 				log = log_default_fields(log)
 				if _.switches.isActive('Session'):
 					log['session'] = _.switches.value('Session')
@@ -1324,9 +1347,10 @@ def action(path=None,flag=None,o=None):
 				else:
 					pass
 					# _.pr(result)
+					INDEX[path]=log
 					if not _.switches.isActive('Silent'):
-						_.printBold('Backup Successful', 'green')
 						_.cp(newname,'darkcyan')
+						_.printBold('Backup Successful', 'green')
 					# _.pr(newname)
 					return newname
 	return True
@@ -1402,8 +1426,15 @@ try:
 except Exception as e:
 	_.colorThis( 'Error: missing pyAesCrypt', 'red' )
 
-
+_BYTES_ = 10240
 crypt_docs = _.getTable('crypt-docs.list')
+backupLog = _.getTable('fileBackup.json')
+INDEX={}
+for rec in backupLog:
+	if not rec['file'] in INDEX:
+		INDEX[rec['file']] = rec
+	if rec['timestamp'] > INDEX[rec['file']]['timestamp']:
+		INDEX[rec['file']] = rec
 
 focus()
 _decrypt_docs = None

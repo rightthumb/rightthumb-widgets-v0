@@ -161,8 +161,7 @@ _.postLoad( __file__ )
 
 if _.switches.isActive('Dirty-Raw'): dirty=True
 
-def cleanString	(data):
-	data=data.replace('\r','')
+def cleanString(data):
 	data=data.rstrip()
 	while ' \n' in data:  data=data.replace(' \n','\n')
 	while '\t\n' in data: data=data.replace('\t\n','\n')

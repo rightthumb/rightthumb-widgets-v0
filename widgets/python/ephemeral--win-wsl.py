@@ -33,9 +33,8 @@ def sw():
     pass
     #b)--> examples
     # _.switches.register( 'Input', '-i' )
-    # _.switches.register( 'URL', '-u,-url,-urls', 'https://efm.cx/', isData='raw' )
     #e)--> examples
-    # _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name,data,clean', description='Files', isRequired=False )
+    # _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=False )
 
 # __.setting('require-list',['Files,Plus','File,Has']) # todo
 # __.setting('require-list',['Pipe','Files'])
@@ -149,19 +148,36 @@ _.l.sw.register( triggers, sw )
 ########################################################################################
 #n)--> start
 
+
+def wsl(path):
+    subject = path
+    git_path = subject
+    git_path = git_path.replace( _v.slashes['w'], _v.slashes['u'] )
+    git_path = git_path.replace( ':', '' )
+    git_path = _v.slashes['u'] + git_path
+    wsl5 = '/mnt/'+ git_path[1].lower() + git_path[2:]
+    wsl5=wsl5.replace(' ','\\ ')
+    return wsl5
+
 def action():
-    load(); global c3po;
+    if _.isWin:
+        cf = myConfig +os.sep+ '.config.hash'
+    else:
+        cf = '/mnt/c/Users/Scott/.rt/.config.hash'
 
-    #n)--> iterate
-    for subject in _.isData(r=0): _.pr(subject)
-    
+    if os.path.isfile(cf):
+        config = _.getTable2(cf)
 
-def load():
-    global c3po
-    c3po = _.getTable( 'table' )
-    #n)--> print table
-    _.pt(c3po)
+        for k in config:
+            it = wsl(config[k])
+            if not '.exe' in config[k]:
+                print('export '+k+'='+it)
+            
+            # print(it)
+            # sys.exit()
 
+
+import os
 
 ##################################################
 #b)--> examples

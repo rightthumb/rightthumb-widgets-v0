@@ -160,19 +160,10 @@ def process( row ):
 			isNext = False
 			newRow = []
 			for part in parts:
-				if isNext:
-					if part.startswith('-') or part.startswith('+'):
-						isNext = False
-					if isNext:
-						part = '******'
-
-			# if '-password' in part.lower() or '-pass' in part.lower() or '-pw' in part.lower() or '-en' in part.lower() or '-de' in part.lower():
-			
-			for test in '-password -pass -pw -en -de -key'.split(' '):
-				if test in part.lower():
-					isNext = True
-
+				if isNext: part = '******'
+				if part in '-password -pass -pw -en -de -key'.split(' '): isNext = True
 				newRow.append( part )
+				if isNext and part == '******': isNext = False
 			row = ' '.join( newRow )
 	return row
 

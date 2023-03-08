@@ -1,5 +1,120 @@
 #!/usr/bin/python3
 
+
+import sys
+import datetime
+import _rightThumb._vars as _v
+
+if '-0' in sys.argv:
+    import time
+    import _rightThumb._date as _date
+    from os import sep
+    def replace_lines_in_file(file_path, lst):
+        # https://chat.openai.com/chat
+        with open(file_path, 'r') as file:
+            lines = file.readlines()
+        
+        with open(file_path, 'w') as file:
+            for line in lines:
+                for item in lst:
+                    search_string  = item[0]
+                    replace_string = item[1]
+                    if search_string in line:
+                        line = replace_string + '\n'
+                file.write(line)
+
+
+
+    def _woy(theDate):
+        w=str(datetime.datetime.fromtimestamp( int(theDate) ).isocalendar()[1])
+        if len(w)==1:w='0'+w
+        return w
+
+    def epochs(dy=0):
+        dy=int(dy)
+        # https://chat.openai.com/chat
+        if dy==0: return time.time()
+        dt = datetime.datetime.fromtimestamp(time.time())
+        ndt = dt - datetime.timedelta(days=dy)
+        return int(ndt.timestamp())
+
+    def yr(theDate): return str(datetime.datetime.fromtimestamp( int(theDate) ).isocalendar()[0])
+    def day(theDate):
+        year  = yr(theDate)
+        woy   = _woy(theDate)
+        date  = _date.friendlyDate( theDate )[len('2022-'):].split(' ')[0]
+        today = str(year)+sep+woy+sep+date
+        print(today)
+        return today
+
+    def wsl(path):
+        subject = path
+        git_path = subject
+        git_path = git_path.replace( _v.slashes['w'], _v.slashes['u'] )
+        git_path = git_path.replace( ':', '' )
+        git_path = _v.slashes['u'] + git_path
+        wsl5 = '/mnt/'+ git_path[1].lower() + git_path[2:]
+        wsl5=wsl5.replace(' ','\\ ')
+        return wsl5
+    def fdrA(dy=0):
+        dy=int(dy)
+        fo = _v.rtp+'daily'+sep+day(epochs(dy));
+        _v.mkdir(fo)
+        return 'alias '+str(dy)+'="cd '+wsl(fo)+'"'
+    def replacer():
+
+        lst=[
+                [ 'alias woy=', 'alias woy="cd /mnt/c/Users/Scott/.rt/profile/daily/'+yr(time.time())+'/'+_woy(time.time())+'"' ],
+                [ 'alias 0=', fdrA(0) ],
+                [ 'alias 1=', fdrA(1) ],
+                [ 'alias 2=', fdrA(2) ],
+                [ 'alias 3=', fdrA(3) ],
+                [ 'alias 4=', fdrA(4) ],
+                [ 'alias 5=', fdrA(5) ],
+                [ 'alias 6=', fdrA(6) ],
+                [ 'alias 7=', fdrA(7) ],
+        ]        
+        seven='/mnt/c/Users/Scott/.rt/profile/daily/.seven.sh'
+        replace_lines_in_file(seven, lst)
+    # replacer()
+    
+
+    lines=[
+                'alias woy="cd /mnt/c/Users/Scott/.rt/profile/daily/'+yr(time.time())+'/'+_woy(time.time())+'"',
+                'alias y="cd /mnt/c/Users/Scott/.rt/profile/daily/'+yr(time.time())'"',
+                'alias yr="cd /mnt/c/Users/Scott/.rt/profile/daily/'+yr(time.time())'"',
+                'alias year="cd /mnt/c/Users/Scott/.rt/profile/daily/'+yr(time.time())'"',
+
+                'alias 00="cd /mnt/c/Users/Scott/.rt/profile/daily"',
+                'alias da="cd /mnt/c/Users/Scott/.rt/profile/daily"',
+                'alias daily="cd /mnt/c/Users/Scott/.rt/profile/daily"',
+                'alias day="cd /mnt/c/Users/Scott/.rt/profile/daily"',
+
+                fdrA(0),
+                fdrA(1),
+                fdrA(2),
+                fdrA(3),
+                fdrA(4),
+                fdrA(5),
+                fdrA(6),
+                fdrA(7),
+
+    ]
+
+    sys.exit()
+import os
+vbm = _v.rtp+'bookmarks'+os.sep
+b0 = vbm+'BM-0.txt'
+today = datetime.date.today()
+day_str = today.strftime('%Y-%m-%d')
+day = datetime.datetime.strptime(day_str, "%Y-%m-%d").date()
+start_of_day = datetime.datetime.combine(day, datetime.time.min)
+epoch_of_day_start = int(start_of_day.timestamp())
+file_modified_time = os.path.getmtime(b0)
+
+# import _rightThumb._base3 as _; print(_.getText(b0,raw=True,clean=2));
+if file_modified_time >= epoch_of_day_start: sys.exit()
+print('b0')
 # ## {R2D2919B742E} ##
 # ###########################################################################
 # What if magic existed?
@@ -33,9 +148,8 @@ def sw():
     pass
     #b)--> examples
     # _.switches.register( 'Input', '-i' )
-    # _.switches.register( 'URL', '-u,-url,-urls', 'https://efm.cx/', isData='raw' )
     #e)--> examples
-    # _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name,data,clean', description='Files', isRequired=False )
+    # _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=False )
 
 # __.setting('require-list',['Files,Plus','File,Has']) # todo
 # __.setting('require-list',['Pipe','Files'])
@@ -150,17 +264,16 @@ _.l.sw.register( triggers, sw )
 #n)--> start
 
 def action():
-    load(); global c3po;
-
-    #n)--> iterate
-    for subject in _.isData(r=0): _.pr(subject)
-    
-
-def load():
-    global c3po
-    c3po = _.getTable( 'table' )
-    #n)--> print table
-    _.pt(c3po)
+    global vbm
+    global b0
+    epoch = time.time()
+    today = _.day(epoch)
+    fo =  _v.rtp+'daily'+os.sep+today
+    _v.mkdir(fo)
+    _.saveText(fo,b0)
+    bm = _.getTable('bookmarks.index')
+    bm['labels'][str(0)]=fo
+    _.saveTable(bm,'bookmarks.index',p=0)
 
 
 ##################################################

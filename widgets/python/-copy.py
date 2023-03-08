@@ -381,6 +381,7 @@ def clip_get_2():
 win32clipboard = None
 
 def cleanString(data):
+	data=data.replace('\r','')
 	data=data.rstrip()
 	while ' \n' in data:  data=data.replace(' \n','\n')
 	while '\t\n' in data: data=data.replace('\t\n','\n')
