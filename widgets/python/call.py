@@ -32,7 +32,7 @@ _str = __.imp('_rightThumb._string')
 def sw():
     pass
     #b)--> examples
-    _.switches.register( 'To', '-to', '813-244-9301' )
+    _.switches.register( 'To', '-to', '813-690-1260' )
     # _.switches.register( 'URL', '-u,-url,-urls', 'https://efm.cx/', isData='raw' )
     #e)--> examples
     # _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=False )
