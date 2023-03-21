@@ -47,6 +47,8 @@ import datetime
 from datetime import date
 ##################################################
 
+__.setting('receipt-log',True)
+
 def appSwitches():
 	_.switches.register('Ago', '-ago')
 	_.switches.register('Date', '-date')
@@ -311,7 +313,7 @@ def action():
 				fileList.append( log['file'] )
 				if os.path.isfile(log['file']):
 					# fd = _dir.fileInfo( log['file'] )
-					fd = { 'date_modified_raw': _.mod( log['file'] ) }
+					fd = { 'date_modified_raw': os.path.getmtime( log['file'] ) }
 
 					shoulRun = False
 					try:
@@ -325,8 +327,9 @@ def action():
 
 					if shoulRun:
 						# if not _.resolveEpochTest(fd['date_modified_raw']) < maxEpochDate:
-						# if (fd['date_modified_raw']) < maxEpoch:
-						if True:
+
+						if (log['timestamp']) > maxEpoch:
+						# if True:
 							i=0
 							# _.pr( _.resolveEpochTest( fd['date_modified_raw'] ) )
 							if True and ( not 'fileBackup.json' in log['file'] and not 'fileBackupSchedule.json' in log['file'] and not 'ID.sys' in log['file'] ):
@@ -452,7 +455,7 @@ def action():
 					fileList.append( log['file'] )
 					if os.path.isfile(log['file']):
 						# fd = _dir.fileInfo( log['file'] )
-						fd = { 'date_modified_raw': _.mod( log['file'] ) }
+						fd = { 'date_modified_raw': os.path.getmtime( log['file'] ) }
 
 						shoulRun = False
 						try:
@@ -469,7 +472,7 @@ def action():
 						# fd['date_modified_raw']date_modified_raw
 						# if shoulRun:
 							# if not _.resolveEpochTest(fd['date_modified_raw']) < maxEpochDate:
-							if (fd['date_modified_raw']) < maxEpoch:
+							if (fd['date_modified_raw']) > maxEpoch:
 								i=0
 								_.pr( _.resolveEpochTest( fd['date_modified_raw'] ) )
 								if not 'fileBackup.json' in log['file'] and not 'fileBackupSchedule.json' in log['file'] and not 'ID.sys' in log['file']:

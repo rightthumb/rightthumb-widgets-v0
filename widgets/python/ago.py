@@ -157,6 +157,7 @@ def registerSwitches( argvProcessForce=False ):
 	_.switches.trigger( 'Ago', _.timeAgo )
 	_.switches.trigger( 'Duration', _.timeFuture )
 	_.switches.trigger( 'Epoch', epoch2float )
+	_.switches.trigger( 'Date', _.autoDate )
 	
 	
 	_.defaultScriptTriggers()

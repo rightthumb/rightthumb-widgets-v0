@@ -587,6 +587,17 @@ def auto_scrape():
 
 
 
+def ipsum():
+	print('ipsum')
+	import lorem
+	lines=[]
+	lines.append(lorem.paragraph())
+	lines.append(lorem.paragraph())
+	lines.append(lorem.paragraph())
+	lines.append(lorem.paragraph())
+	lines.append(lorem.paragraph())
+	_copy.imp.copy('\n\n'.join(lines))
+
 
 
 # time.sleep(ti['min'])
@@ -602,6 +613,9 @@ def auto_scrape():
 dic = {
 			'sally': 'ai()',
 			'auto scrape': 'auto_scrape()',
+
+			'ipsum': 'ipsum()',
+			'lorem': 'ipsum()',
 
 			'md5': 'Clip.md5()',
 			'explode': 'Clip.explode()',
@@ -662,10 +676,18 @@ dic = {
 
 
 }
-_.v.local=['sally','auto scrape']
+_.v.local=[
+				'sally',
+				'auto scrape',
+				'ipsum',
+				'lorem',
+		]
 
 _.v.finagling={
 	'_replace': {
+		'epsom': 'ipsum',
+		'lauren': 'lorem',
+		'floor m': 'lorem',
 		'cobalt': 'kobold',
 		'auto script': 'auto scrape',
 	},
@@ -698,6 +720,9 @@ hk=hkr.imp
 
 _paste = _.regImp( __.appReg, '-paste' )
 _copy = _.regImp( __.appReg, '-copy' )
+
+# ipsum()
+
 ##################################################
 import _rightThumb._vault as _vault
 import _rightThumb._encryptString as _blowfish

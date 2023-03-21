@@ -1174,6 +1174,11 @@ def getUserProfile():
 	output = output.replace('\r','')
 	output = _str.cleanBE( output, ' ' )
 	return output
+def md5(string,_id=False):
+	import _rightThumb._md5 as _md5
+	md5 = _md5.md5(string)
+	if _id: md5 = _md5.md52GUID(md5,True)
+	return md5
 def getMachineID():
 # machineID = _v.getMachineID()
 	import _rightThumb._md5 as _md5

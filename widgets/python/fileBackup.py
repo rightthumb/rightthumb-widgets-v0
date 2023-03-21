@@ -768,6 +768,7 @@ def action(path=None,flag=None,o=None):
 	global INDEX
 	global _BYTES_
 	global backupLog
+	global txtScheduler
 	# __.fileBackup=_.dot()
 	# print('isPreOpen-o',o)
 	# print('isPreOpen',_.switches.isActive('isPreOpen'))
@@ -810,17 +811,28 @@ def action(path=None,flag=None,o=None):
 				# 	_.cp(idCheck,'darkcyan')
 				_.v.secure=False				
 				if secureFiles(path):
+					if not __.secureFilesID is None:
+						theID = __.secureFilesID
+					else:
+						theID = generateID(path)
+					idCheck = idExist(theID, backupLog, path)
 					# _.colorThis( [ 'Secure file' ], 'green' )
 					bk=[];[  bk.append(rec['backup']) for rec in backupLog if path == rec['file']];
 
 					_.colorThis( path, 'cyan' )
 					if bk: bk=bk[-1]; _.pr( bk, c='darkcyan' );
 					# _.pr(' -- TRUE -- ')
+					if _.switches.isActive('isPreOpen'):
+						txtScheduler.append( { 'timestamp': genEpoch(), 'file': __.path(path), 'status': 0, 'app': 'fileBackup', 'group': 0, 'session': os.getenv('Session_ID') } )
+						_.saveTable( txtScheduler,'fileBackupSchedule.json', p=1 )
 					return None
 			if path in INDEX and os.path.getmtime(path) == INDEX[path]['timestamp']:
 				_.pr(path, c='cyan')
 				_.pr(INDEX[path]['backup'], c='darkcyan')
 				_.pr('File not modified since last backup',c='yellow')
+				if _.switches.isActive('isPreOpen'):
+					txtScheduler.append( { 'timestamp': genEpoch(), 'file': __.path(path), 'status': 0, 'app': 'fileBackup', 'group': 0, 'session': os.getenv('Session_ID') } )
+					_.saveTable( txtScheduler,'fileBackupSchedule.json', p=1 )
 				return INDEX[path]['backup']
 			# _.pr('pre')
 			
@@ -1189,6 +1201,9 @@ def action(path=None,flag=None,o=None):
 					copyfile( path,  libFile)
 				else:
 					_.pr('not encrypted',c='red')
+					if _.switches.isActive('isPreOpen'):
+						txtScheduler.append( { 'timestamp': genEpoch(), 'file': __.path(path), 'status': 0, 'app': 'fileBackup', 'group': 0, 'session': os.getenv('Session_ID') } )
+						_.saveTable( txtScheduler,'fileBackupSchedule.json', p=1 )
 					return path
 					# sys.exit()
 
@@ -1198,7 +1213,7 @@ def action(path=None,flag=None,o=None):
 					os.utime(libFile,(fMod, fMod))
 
 
-		txtScheduler = _.getTable( 'fileBackupSchedule.json' )
+		
 		txtScheduler.append( { 'timestamp': genEpoch(), 'file': __.path(path), 'status': 0, 'app': 'fileBackup', 'group': 0, 'session': os.getenv('Session_ID') } )
 		_.saveTable( txtScheduler,'fileBackupSchedule.json', p=0 )
 		if __.openSecure:
@@ -1239,6 +1254,9 @@ def action(path=None,flag=None,o=None):
 						_.colorThis( INDEX[path]['backup'], 'darkcyan' )
 						_.pr( 'Has Backup *', c='yellow' )
 						# _.pr( 'Has Backup',_.formatSize(byte), c='yellow' )
+					if _.switches.isActive('isPreOpen'):
+						txtScheduler.append( { 'timestamp': genEpoch(), 'file': __.path(path), 'status': 0, 'app': 'fileBackup', 'group': 0, 'session': os.getenv('Session_ID') } )
+						_.saveTable( txtScheduler,'fileBackupSchedule.json', p=1 )
 					return INDEX[path]['backup']					
 				else:
 					if not __.secureFilesID is None:
@@ -1252,6 +1270,9 @@ def action(path=None,flag=None,o=None):
 				if not _.switches.isActive('Silent'):
 					_.colorThis( INDEX[path]['backup'], 'darkcyan' )
 					_.colorThis( 'Has Backup', 'yellow' )
+				if _.switches.isActive('isPreOpen'):
+					txtScheduler.append( { 'timestamp': genEpoch(), 'file': __.path(path), 'status': 0, 'app': 'fileBackup', 'group': 0, 'session': os.getenv('Session_ID') } )
+					_.saveTable( txtScheduler,'fileBackupSchedule.json', p=1 )
 				return INDEX[path]['backup']
 				# if _.switches.isActive('Flag'):
 				# 	thisFlag = _.switches.value('Flag')
@@ -1269,6 +1290,9 @@ def action(path=None,flag=None,o=None):
 				if not type(idCheck) == bool:
 					_.colorThis( INDEX[path]['backup'], 'darkcyan' )
 					_.colorThis( 'Backup ID found in older backup', 'yellow' )
+					if _.switches.isActive('isPreOpen'):
+						txtScheduler.append( { 'timestamp': genEpoch(), 'file': __.path(path), 'status': 0, 'app': 'fileBackup', 'group': 0, 'session': os.getenv('Session_ID') } )
+						_.saveTable( txtScheduler,'fileBackupSchedule.json', p=1 )
 					return INDEX[path]['backup']
 
 				
@@ -1429,13 +1453,13 @@ except Exception as e:
 _BYTES_ = 10240
 crypt_docs = _.getTable('crypt-docs.list')
 backupLog = _.getTable('fileBackup.json')
+txtScheduler = _.getTable( 'fileBackupSchedule.json' )
 INDEX={}
 for rec in backupLog:
 	if not rec['file'] in INDEX:
 		INDEX[rec['file']] = rec
 	if rec['timestamp'] > INDEX[rec['file']]['timestamp']:
 		INDEX[rec['file']] = rec
-
 focus()
 _decrypt_docs = None
 doc_sep = '\n__________________________________________________________________________________\n'

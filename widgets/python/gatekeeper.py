@@ -12,7 +12,7 @@
 
 
 ##################################################
-import sys, time
+import sys, time, os
 ##################################################
 import _rightThumb._construct as __
 appDBA=__.clearFocus(__name__,__file__);__.appReg=appDBA;
@@ -33,6 +33,8 @@ def sw():
 	_.switches.register( 'NewProject', '-new,-project,-register', 'RightThumb.com' )
 	_.switches.register( 'AddUser', '-u,-user', 'Scott 813-555-2424' )
 	_.switches.register( 'API', '-api', 'ecf5c74ae83545feac983e5f526bb4ff' )
+	_.switches.register( 'Register', '-r,-register' )
+
 
 # __.setting('require-list',['Files,Plus','File,Has']) # todo
 # __.setting('require-list',['Pipe','Files'])
@@ -259,9 +261,26 @@ def text():
 	
 
 
+def editor(path):
+	_file_open = _.regImp( __.appReg, 'file-open' )
+	_file_open.switch('App',_v.meta['code_editor'])
+	_file_open.switch('Files',path)
+	_file_open.action()
+	_.pr(path)
+	# _.pr(_v.meta['code_editor'],path)
 
 
 def action():
+	if _.switches.isActive('Register'):
+		import webbrowser
+		url = 'https://eyeformeta.com/apps/gatekeeper/api/'
+		webbrowser.open(url, new=2)
+		path = _v.tt+os.sep+'gatekeeper.api'
+		editor(path)
+		return None
+
+
+
 	global gatekeeper
 	global gatepath
 	load()
