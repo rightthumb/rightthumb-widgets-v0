@@ -22238,6 +22238,7 @@ def appAPI(app='_admin_',api=None):
     return api
 
 def secureURL(url,app='_admin_',data={},headers={}):
+    test=True
     test=False
     requests=__.imp('requests.post')
     _data=data
@@ -22259,6 +22260,7 @@ def secureURL(url,app='_admin_',data={},headers={}):
     if test: print('page:',page)
 
     if not '!!REQUEST!!' in page: return page
+    if not 'ACCESS EXPIRED' in page: e(app,page)
 
     headers = {
         'User-Agent': 'Mozilla/5.0',

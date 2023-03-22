@@ -2,7 +2,8 @@
 
 set pingb=google.com
 
-if [%1] == [a] set pingb=alexandria.ninja
+if [%1] == [n] set pingb=alexandria.ninja
+if [%1] == [a] set pingb=alderaan.m-eta.app
 if [%1] == [e] set pingb=endor.m-eta.app
 if [%1] == [t] set pingb=tatooine.m-eta.app
 if [%1] == [c] set pingb=coruscant.m-eta.app

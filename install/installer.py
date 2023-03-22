@@ -3132,6 +3132,11 @@ alias ssh.t.a="ssh-copy-id -i ~/.ssh/id_rsa.pub admin@tatooine.m-eta.app"
 alias ssh.d.s="ssh-copy-id -i ~/.ssh/id_rsa.pub scott@dantooine.m-eta.app"
 alias ssh.d.r="ssh-copy-id -i ~/.ssh/id_rsa.pub root@dantooine.m-eta.app"
 
+alias ssh.a.s="ssh-copy-id -i ~/.ssh/id_rsa.pub scott@alderaan.m-eta.app"
+alias ssh.a.r="ssh-copy-id -i ~/.ssh/id_rsa.pub root@alderaan.m-eta.app"
+alias ssh.a.s.="ssh-copy-id -i /mnt/c/Users/Scott/.ssh/id_rsa.pub scott@alderaan.m-eta.app"
+alias ssh.a.r.="ssh-copy-id -i /mnt/c/Users/Scott/.ssh/id_rsa.pub root@alderaan.m-eta.app"
+
 alias grep.r="grep -R -l"
 
 # alias cd/="cd /"
@@ -3329,6 +3334,19 @@ alias vps.m.u="vps.m.py.u; vps.m.sh.u; vps.m.db.u"
 alias vps.m.d="vps.m.py.d; vps.m.sh.d; vps.m.db.d"
 #-->   end#> mortis@m-eta.app
 
+
+#--> start#> alderaan@m-eta.app
+alias vps.a.py.v.u="scp $ww/python/vps*.py root@alderaan.m-eta.app:$ww/python/ ; ssh root@alderaan.m-eta.app \'chmod -R 777 /opt/rightthumb-widgets-v0/\'"
+alias vps.a.sh2.u="ssh root@alderaan.m-eta.app -f \'mkdir -p /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/\' ; scp /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/* root@alderaan.m-eta.app:/opt/rightthumb-widgets-v0/widgets/bash/vps-srv/ ; ssh root@alderaan.m-eta.app \'chmod -R 777 /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/\'"
+alias vps.a.py.u="scp $ww/python/vps*.py root@alderaan.m-eta.app:$ww/python/ ; ssh root@alderaan.m-eta.app \'chmod -R 777 /opt/rightthumb-widgets-v0/\'"
+alias vps.a.sh.u="scp -r $ww/bash/vps-srv/ root@alderaan.m-eta.app:/opt/rightthumb-widgets-v0/widgets/bash/ ; ssh root@alderaan.m-eta.app \'chmod -R 777 /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/\'"
+alias vps.a.db.u="scp $ww/databank/tables/*.* root@alderaan.m-eta.app:/opt/rightthumb-widgets-v0/widgets/databank/tables/ ; ssh root@alderaan.m-eta.app \'chmod -R 777 /opt/rightthumb-widgets-v0/\'"
+alias vps.a.sh.d="scp -r root@alderaan.m-eta.app:/opt/rightthumb-widgets-v0/widgets/bash/vps-srv/ $ww/bash/ ; chmod 777 -R $ww/bash/vps-srv/"
+alias vps.a.db.d="scp -rp root@alderaan.m-eta.app:/opt/rightthumb-widgets-v0/widgets/databank/tables/*.* $ww/databank/tables/ ; chmod 777 -R $ww/databank/tables/"
+alias vps.a.py.d="scp -rp root@alderaan.m-eta.app:$ww/python/vps* $ww/python/ ; chmod 777 -R $ww/python/"
+alias vps.a.u="vps.a.py.u; vps.a.sh.u; vps.a.db.u"
+alias vps.a.d="vps.a.py.d; vps.a.sh.d; vps.a.db.d"
+#-->   end#> alderaan@m-eta.app
 
 alias u..='python3 $ww/python/site.py -f'
 alias u.='python3 $ww/python/site.py -u -f'
