@@ -3340,6 +3340,17 @@ alias ssh.a.r="ssh-copy-id -i ~/.ssh/id_rsa.pub root@alderaan.m-eta.app"
 alias ssh.a.s.="ssh-copy-id -i /mnt/c/Users/Scott/.ssh/id_rsa.pub scott@alderaan.m-eta.app"
 alias ssh.a.r.="ssh-copy-id -i /mnt/c/Users/Scott/.ssh/id_rsa.pub root@alderaan.m-eta.app"
 
+alias vps.a.dt="ssh -L 59001:localhost:5901 -C -N -l scott alderaan.m-eta.app"
+alias .git.h="rm -rf rightthumb-widgets-v0 ; git clone https://github.com/rightthumb/rightthumb-widgets-v0 ; cd rightthumb-widgets-v0 ; chmod -R 777 . ; p shClean -folder -r ; vps.a.py.; vps.a.sh. ; vps.a.db."
+alias vps.a.py="scp  $ww/python/vps*.py root@alderaan.m-eta.app:$ww/python/      ; ssh root@alderaan.m-eta.app 'chmod -R 777 /opt/rightthumb-widgets-v0/'"
+alias vps.a.py2="scp  $ww/python/vps*.py root@alderaan.m-eta.app:$ww/python/       ; ssh root@alderaan.m-eta.app 'chmod -R 777 /opt/rightthumb-widgets-v0/'"
+alias vps.a.c="ssh -f root@alderaan.m-eta.app      -f '/bin/python3 $ww/python/shClean.py -r -folder /opt '"
+alias vps.a.sh=" scp -r $ww/bash/vps-srv/ root@alderaan.m-eta.app:/opt/rightthumb-widgets-v0/widgets/bash/    ; ssh root@alderaan.m-eta.app 'chmod -R 777 /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/'"
+alias vps.a.sh2="ssh root@alderaan.m-eta.app -f 'mkdir -p /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/' ; scp -r /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/* root@alderaan.m-eta.app:/opt/rightthumb-widgets-v0/widgets/bash/vps-srv/      ; ssh root@alderaan.m-eta.app 'chmod -R 777 /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/'"
+alias vps.a.db="scp  $ww/databank/tables/*.* root@alderaan.m-eta.app:/opt/rightthumb-widgets-v0/widgets/databank/tables/      ; ssh root@alderaan.m-eta.app 'chmod -R 777 /opt/rightthumb-widgets-v0/'"
+alias vps.a.sh.="scp -r root@alderaan.m-eta.app:/opt/rightthumb-widgets-v0/widgets/bash/vps-srv/ $ww/bash/ ; chmod 777 -R $ww/bash/vps-srv/"
+alias vps.a.db.="scp -rp root@alderaan.m-eta.app:/opt/rightthumb-widgets-v0/widgets/databank/tables/*.* $ww/databank/tables/ ; chmod 777 -R $ww/databank/tables/"
+alias vps.a.py.="scp -rp root@alderaan.m-eta.app:$ww/python/vps* $ww/python/ ; chmod 777 -R $ww/python/"
 alias vps.a.py.v.u="scp $ww/python/vps*.py root@alderaan.m-eta.app:$ww/python/ ; ssh root@alderaan.m-eta.app \'chmod -R 777 /opt/rightthumb-widgets-v0/\'"
 alias vps.a.sh2.u="ssh root@alderaan.m-eta.app -f \'mkdir -p /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/\' ; scp /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/* root@alderaan.m-eta.app:/opt/rightthumb-widgets-v0/widgets/bash/vps-srv/ ; ssh root@alderaan.m-eta.app \'chmod -R 777 /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/\'"
 alias vps.a.py.u="scp $ww/python/vps*.py root@alderaan.m-eta.app:$ww/python/ ; ssh root@alderaan.m-eta.app \'chmod -R 777 /opt/rightthumb-widgets-v0/\'"
@@ -3430,6 +3441,22 @@ alias ssh.y.s="ssh-copy-id -i ~/.ssh/id_rsa.pub scott@yavin.m-eta.app"
 alias ssh.y.r="ssh-copy-id -i ~/.ssh/id_rsa.pub root@yavin.m-eta.app"
 alias ssh.y.s.="ssh-copy-id -i /mnt/c/Users/Scott/.ssh/id_rsa.pub scott@yavin.m-eta.app"
 alias ssh.y.r.="ssh-copy-id -i /mnt/c/Users/Scott/.ssh/id_rsa.pub root@yavin.m-eta.app"
+
+
+
+alias ssh.y.rt="ssh-copy-id -i ~/.ssh/id_rsa.pub rightthumb@yavin.m-eta.app"
+alias ssh.y.rt.="ssh-copy-id -i /mnt/c/Users/Scott/.ssh/id_rsa.pub rightthumb@yavin.m-eta.app"
+
+alias ssh.y.e="ssh-copy-id -i ~/.ssh/id_rsa.pub efm@yavin.m-eta.app"
+alias ssh.y.e.="ssh-copy-id -i /mnt/c/Users/Scott/.ssh/id_rsa.pub efm@yavin.m-eta.app"
+
+alias ssh.y.p="ssh-copy-id -i ~/.ssh/id_rsa.pub programmer@yavin.m-eta.app"
+alias ssh.y.p.="ssh-copy-id -i /mnt/c/Users/Scott/.ssh/id_rsa.pub programmer@yavin.m-eta.app"
+
+alias ssh.y.x="ssh-copy-id -i ~/.ssh/id_rsa.pub xan@yavin.m-eta.app"
+alias ssh.y.x.="ssh-copy-id -i /mnt/c/Users/Scott/.ssh/id_rsa.pub xan@yavin.m-eta.app"
+
+
 
 alias vps.y.dt="ssh -L 59001:localhost:5901 -C -N -l scott yavin.m-eta.app"
 alias vps.y.py="scp  $ww/python/vps*.py root@yavin.m-eta.app:$ww/python/    ; ssh root@yavin.m-eta.app 'chmod -R 777 /opt/rightthumb-widgets-v0/'"
