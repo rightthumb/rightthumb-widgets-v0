@@ -11742,7 +11742,10 @@ class Switches:
                     active = 'True'
                 else:
                     active = ''
-                value = sw.value
+                v=[]
+                for x in sw.values: v.append(str(x))
+                value = ' | '.join(v)
+
                 if sw.value == True:
                     value = 'True'
                 elif sw.value == False:

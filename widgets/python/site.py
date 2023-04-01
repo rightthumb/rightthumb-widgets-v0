@@ -184,7 +184,7 @@ def meta_scan(path,end):
 		url = file.replace( __.path(folder), meta['url'] ).replace('\\','/')
 		if os.path.isdir(path) and not url.endswith('/'): url += '/'
 		try:
-			_.v.fp=url.replace(meta['url']+'/',meta['sftp']['full-path']+'/')
+			_.v.fp=url.replace(meta['url']+'/',meta['sftp']['path']+'/')
 			_.v.fp=_.v.fp.replace('//','/').replace('//','/')
 		except: pass
 	return urlpr(url)
@@ -212,7 +212,7 @@ def process(path,end='',ft=None):
 	url=None
 	for k in meta:
 		for su in meta[k]:
-			if su == 'full-path':
+			if su == 'path':
 				ftp=meta[k]
 				break
 		if not ftp is None:
@@ -247,7 +247,7 @@ def process(path,end='',ft=None):
 		# if ftp is None or url is None:
 		# 	_.e('meta missing fields')
 		s=ftp['server']
-		f=ftp['full-path']
+		f=ftp['path']
 		u=ftp['user']
 		# pw=_vault.imp.s.de( ftp['password'] )
 		fi = file.replace( __.path(folder), f ).replace('\\','/')
@@ -263,7 +263,7 @@ def process(path,end='',ft=None):
 
 	if _.switches.isActive('mkdir'):
 		s=ftp['server']
-		f=ftp['full-path']
+		f=ftp['path']
 		u=ftp['user']
 		fi = file.replace( __.path(folder), f ).replace('\\','/')
 		rfo = _.tailpop(fi,'/')

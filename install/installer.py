@@ -3106,7 +3106,7 @@ alias vb="ssh scott@bespin.m-eta.app"
 alias vm="ssh scott@mortis.m-eta.app"
 alias vt="ssh scott@tatooine.m-eta.app"
 alias vr="vy2ehn4azpfl@23.229.227.201"
-alias rt="vy2ehn4azpfl@23.229.227.201"
+
 
 alias hoth="ssh scott@hoth.m-eta.app"
 alias bespin="ssh scott@bespin.m-eta.app"
@@ -3377,6 +3377,7 @@ alias watch.vnc="$widgets/widgets/bash/vnc_watch.sh> /dev/null 2>&1 & "
 
 alias rr='sudo su root'
 alias aa='sudo su admin'
+alias rt='sudo su rightthumb'
 alias tf='python3 $ww/python/vps-tf.py'
 alias tfh='cat ~/.bash_history | python3 $ww/python/vps-tf.py -me history'
 

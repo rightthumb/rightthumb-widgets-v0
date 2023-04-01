@@ -448,6 +448,7 @@ def add(path,r=False):
 					agoRange = True
 
 				# _.pr( run, agoRange, _.switches.values('Ago')[0], _.friendlyDate(_.switches.values('Ago')[0]) )
+				# _.pr( run, agoRange, _.switches.values('Ago')[0], _.friendlyDate(_.switches.values('Ago')[0]), _.switches.values('Ago')[1], _.friendlyDate(_.switches.values('Ago')[1]) )
 
 				if not agoRange:
 					if run == 'default':
@@ -469,26 +470,19 @@ def add(path,r=False):
 							shouldAdd = True
 				elif agoRange:
 					if run == 'default':
-						# _.pr(record['date_modified_raw'])
-						# _.pr(_.switches.values('Ago'))
-						if record['date_modified_raw'] < _.switches.values('Ago')[0] or record['date_created_raw'] < _.switches.values('Ago')[0]:
-							if record['date_modified_raw'] > _.switches.values('Ago')[1] or record['date_created_raw'] > _.switches.values('Ago')[1]:
+						if (record['date_modified_raw'] < _.switches.values('Ago')[0] or record['date_created_raw'] < _.switches.values('Ago')[0]) and (record['date_modified_raw'] > _.switches.values('Ago')[1] or record['date_created_raw'] > _.switches.values('Ago')[1]):
 								shouldAdd = True
 					elif run == 'resent':
-						if record['date_modified_raw'] < _.switches.values('Ago')[0] or record['date_created_raw'] < _.switches.values('Ago')[0] or record['accessed_raw'] < _.switches.values('Ago')[0]:
-							if record['date_modified_raw'] > _.switches.values('Ago')[1] or record['date_created_raw'] > _.switches.values('Ago')[1] or record['accessed_raw'] > _.switches.values('Ago')[1]:
+						if (record['date_modified_raw'] < _.switches.values('Ago')[0] or record['date_created_raw'] < _.switches.values('Ago')[0] or record['accessed_raw'] < _.switches.values('Ago')[0]) and (record['date_modified_raw'] > _.switches.values('Ago')[1] or record['date_created_raw'] > _.switches.values('Ago')[1] or record['accessed_raw'] > _.switches.values('Ago')[1]):
 								shouldAdd = True
 					elif run == 'a':
-						if record['accessed_raw'] < _.switches.values('Ago')[0]:
-							if record['accessed_raw'] > _.switches.values('Ago')[1]:
+						if (record['accessed_raw'] < _.switches.values('Ago')[0]) and (record['accessed_raw'] > _.switches.values('Ago')[1]):
 								shouldAdd = True
 					elif run == 'cd':
-						if record['date_created_raw'] < _.switches.values('Ago')[0]:
-							if record['date_created_raw'] > _.switches.values('Ago')[1]:
+						if (record['date_created_raw'] < _.switches.values('Ago')[0]) and (record['date_created_raw'] > _.switches.values('Ago')[1]):
 								shouldAdd = True
 					elif run == 'md':
-						if record['date_modified_raw'] < _.switches.values('Ago')[0]:
-							if record['date_modified_raw'] > _.switches.values('Ago')[1]:
+						if (record['date_modified_raw'] < _.switches.values('Ago')[0]) and (record['date_modified_raw'] > _.switches.values('Ago')[1]):
 								shouldAdd = True
 
 
