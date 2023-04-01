@@ -3378,6 +3378,7 @@ alias watch.vnc="$widgets/widgets/bash/vnc_watch.sh> /dev/null 2>&1 & "
 alias rr='sudo su root'
 alias aa='sudo su admin'
 alias rt='sudo su rightthumb'
+alias r='sudo su rightthumb'
 alias e='sudo su efm'
 alias tf='python3 $ww/python/vps-tf.py'
 alias tfh='cat ~/.bash_history | python3 $ww/python/vps-tf.py -me history'
