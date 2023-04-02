@@ -67,7 +67,10 @@ def newKey( password ):
 		else:
 			result = _v.myCrypto()
 
-	return _md5.md5( result )
+	return _md5.md5( result ).encode('utf-8')
+
+
+
 
 
 def pad_string( string ):
@@ -99,16 +102,17 @@ def decrypt( data, password=False ):
 
 
 def encrypt( data, password=False ):
+	data=str(data)
 	crypt_obj = Blowfish.new(newKey(password), Blowfish.MODE_ECB)
 	try:
-		ciphertext = crypt_obj.encrypt(pad_string(str(data)))
+		ciphertext = crypt_obj.encrypt(pad_string(data).encode('utf-8'))
 	except Exception as e:
 		works = False
 		space = ' '
 		i = 0
 		while works == False:
 			try:
-				ciphertext = crypt_obj.encrypt(pad_string(str(data)) + space)
+				ciphertext = crypt_obj.encrypt(str(pad_string(data) + space).encode('utf-8'))
 				works = True
 			except Exception as e:
 				pass
