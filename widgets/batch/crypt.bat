@@ -29,6 +29,7 @@ GOTO:EOF
 :PARTIAL
 
 echo PARTIAL selected
+call p secureFiles -delete  -en -f  %fi%
 call p decrypt-docs -f  %fi%
 echo partial encryption configured
 
@@ -43,6 +44,7 @@ GOTO:EOF
 
 :ENTIRE
 echo ENTIRE selected
+call p decrypt-docs -delete -f  %fi%
 call p secureFiles -en -f  %fi%
 echo entire-file encryption configured
 GOTO:EOF

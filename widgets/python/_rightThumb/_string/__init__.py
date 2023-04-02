@@ -17,8 +17,8 @@ import sys
 
 '''
 
-        line = cleanFirst(line,' ')
-        line = cleanLast(line,' ')
+		line = cleanFirst(line,' ')
+		line = cleanLast(line,' ')
 
 replaceAll(string,rWhat,rWith)
 cleanAll(string,rWhat,rWith)
@@ -70,9 +70,9 @@ _str.hasAlpha( row )
 import platform
 slash = 0
 if platform.system() == 'Windows':
-    slash = chr(92)
+	slash = chr(92)
 else:
-    slash = chr(47)
+	slash = chr(47)
 
 import re
 
@@ -88,127 +88,127 @@ notFilenameSafe = '/\\?%*:|"<>'
 
 
 def printClean(text):
-    global printable
-    text = str(text)
-    fix = []
-    for x in text:
-        if x in printable:
-            fix.append(x)
-    return ''.join(fix)
+	global printable
+	text = str(text)
+	fix = []
+	for x in text:
+		if x in printable:
+			fix.append(x)
+	return ''.join(fix)
 
 def minimalistClean( row ):
-    global printable
-    result = ''
-    for x in row:
-        if not x in printable:
-            result+=' '
-        else:
-            result+=x
-    result = replaceDuplicate( result, ' ' )
-    result = cleanBE( result, ' ' )
-    return result
+	global printable
+	result = ''
+	for x in row:
+		if not x in printable:
+			result+=' '
+		else:
+			result+=x
+	result = replaceDuplicate( result, ' ' )
+	result = cleanBE( result, ' ' )
+	return result
 
 
 
 
 def hasAlpha( row ):
-    row = str(row)
-    global alphaChar
-    for r in row:
-        for a in alphaChar:
-            if r == a:
-                return True
-    return False
+	row = str(row)
+	global alphaChar
+	for r in row:
+		for a in alphaChar:
+			if r == a:
+				return True
+	return False
 
 def totalClean( row ):
-    row = row.replace( '\n', '' )
-    row = row.replace( '\r', '' )
-    row = replaceDuplicate( row, ' ' )
-    row = replaceDuplicate( row, '\t' )
-    row = cleanBE( row, ' ' )
-    row = cleanBE( row, '\t' )
-    return row
+	row = row.replace( '\n', '' )
+	row = row.replace( '\r', '' )
+	row = replaceDuplicate( row, ' ' )
+	row = replaceDuplicate( row, '\t' )
+	row = cleanBE( row, ' ' )
+	row = cleanBE( row, '\t' )
+	return row
 
 
 
 def filenameSafe( data ):
-    global printable
-    global notFilenameSafe
+	global printable
+	global notFilenameSafe
 
-    PERMITTED_CHARS = printable
-    data = str( data )
+	PERMITTED_CHARS = printable
+	data = str( data )
 
-    result = ''
-    for d in data:
-        if d in PERMITTED_CHARS and not d in notFilenameSafe:
-            result += d
-        else:
-            result += ' '
-    result = replaceDuplicate( result, ' ' )
-    result = cleanBE( result, ' ' )
-    return result
+	result = ''
+	for d in data:
+		if d in PERMITTED_CHARS and not d in notFilenameSafe:
+			result += d
+		else:
+			result += ' '
+	result = replaceDuplicate( result, ' ' )
+	result = cleanBE( result, ' ' )
+	return result
 
 
 
 def hasVisible( data ):
-    global visibleChar
-    for char in data:
-        if char in visibleChar:
-            return True
-    return False
+	global visibleChar
+	for char in data:
+		if char in visibleChar:
+			return True
+	return False
 
 def removeUnsave( data ):
-    global safeChar
-    result = ''
-    for char in data:
-        if char in safeChar:
-            result += char
-    return result
+	global safeChar
+	result = ''
+	for char in data:
+		if char in safeChar:
+			result += char
+	return result
 
 def spaceba( string, what ):
-    # import string
-    if what in string:
-        i=0
-        while ' '+what in string or what+' ' in string:
-            i=i+1
-            if i > 1000: break
-            string = string.replace( ' '+what, what )
-            string = string.replace( what+' ', what )
-    return string
+	# import string
+	if what in string:
+		i=0
+		while ' '+what in string or what+' ' in string:
+			i=i+1
+			if i > 1000: break
+			string = string.replace( ' '+what, what )
+			string = string.replace( what+' ', what )
+	return string
 
 
 def makePrintable( string, replaceWith=' ', appropriate=False ):
-    global safeChar
-    if type(appropriate) == bool:
-        appropriate = printable
-    result = ''
+	global safeChar
+	if type(appropriate) == bool:
+		appropriate = printable
+	result = ''
 
-    for char in string:
-        if char in appropriate:
-            result += char
-        else:
-            result += replaceWith
-    result = replaceDuplicate( result, replaceWith )
-    result = cleanBE( result, replaceWith )
-    return result
+	for char in string:
+		if char in appropriate:
+			result += char
+		else:
+			result += replaceWith
+	result = replaceDuplicate( result, replaceWith )
+	result = cleanBE( result, replaceWith )
+	return result
 
 def namespace( app, data ):
-    string = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_.'
-    data = makePrintable( data, replaceWith=' ', appropriate=string )
-    result = False
-    # _.pr( type( app ) )
-    for row in data.split(' '):
-        if row.startswith( str(app)+'.' ):
-            result = row
-    # try:
-    # except Exception as e:
-    #   return app, result
+	string = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_.'
+	data = makePrintable( data, replaceWith=' ', appropriate=string )
+	result = False
+	# _.pr( type( app ) )
+	for row in data.split(' '):
+		if row.startswith( str(app)+'.' ):
+			result = row
+	# try:
+	# except Exception as e:
+	#   return app, result
 
-    return result
+	return result
 
 def _ws():
-    string=__.imp('string')
-    return string.whitespace
+	string=__.imp('string')
+	return string.whitespace
 
 
 # import MySQLdb
@@ -216,218 +216,218 @@ def _ws():
 ############################################### ###############################################
 
 LATIN_1_CHARS = (
-    ( '\xe2\x80\x99', "'" ),
-    ( '\xc3\xa9', 'e' ),
-    ( '\xe2\x80\x90', '-' ),
-    ( '\xe2\x80\x91', '-' ),
-    ( '\xe2\x80\x92', '-' ),
-    ( '\xe2\x80\x93', '-' ),
-    ( '\xe2\x80\x94', '-' ),
-    ( '\xe2\x80\x94', '-' ),
-    ( '\xe2\x80\x98', "'" ),
-    ( '\xe2\x80\x9b', "'" ),
-    ( '\xe2\x80\x9c', '"' ),
-    ( '\xe2\x80\x9c', '"' ),
-    ( '\xe2\x80\x9d', '"' ),
-    ( '\xe2\x80\x9e', '"' ),
-    ( '\xe2\x80\x9f', '"' ),
-    ( '\xe2\x80\xa6', '...' ),
-    ( '\xe2\x80\xb2', "'" ),
-    ( '\xe2\x80\xb3', "'" ),
-    ( '\xe2\x80\xb4', "'" ),
-    ( '\xe2\x80\xb5', "'" ),
-    ( '\xe2\x80\xb6', "'" ),
-    ( '\xe2\x80\xb7', "'" ),
-    ( '\xe2\x81\xba', "+" ),
-    ( '\xe2\x81\xbb', "-" ),
-    ( '\xe2\x81\xbc', "=" ),
-    ( '\xe2\x81\xbd', "( " ),
-    ( '\xb3', '' ),
-    ( '\xe2\x81\xbe', ")" )
+	( '\xe2\x80\x99', "'" ),
+	( '\xc3\xa9', 'e' ),
+	( '\xe2\x80\x90', '-' ),
+	( '\xe2\x80\x91', '-' ),
+	( '\xe2\x80\x92', '-' ),
+	( '\xe2\x80\x93', '-' ),
+	( '\xe2\x80\x94', '-' ),
+	( '\xe2\x80\x94', '-' ),
+	( '\xe2\x80\x98', "'" ),
+	( '\xe2\x80\x9b', "'" ),
+	( '\xe2\x80\x9c', '"' ),
+	( '\xe2\x80\x9c', '"' ),
+	( '\xe2\x80\x9d', '"' ),
+	( '\xe2\x80\x9e', '"' ),
+	( '\xe2\x80\x9f', '"' ),
+	( '\xe2\x80\xa6', '...' ),
+	( '\xe2\x80\xb2', "'" ),
+	( '\xe2\x80\xb3', "'" ),
+	( '\xe2\x80\xb4', "'" ),
+	( '\xe2\x80\xb5', "'" ),
+	( '\xe2\x80\xb6', "'" ),
+	( '\xe2\x80\xb7', "'" ),
+	( '\xe2\x81\xba', "+" ),
+	( '\xe2\x81\xbb', "-" ),
+	( '\xe2\x81\xbc', "=" ),
+	( '\xe2\x81\xbd', "( " ),
+	( '\xb3', '' ),
+	( '\xe2\x81\xbe', ")" )
 )
 
 def xChar( data ):
-    global slash
-    char = 'abcdefghijklmnopqrstuvwxyz0123456789'
+	global slash
+	char = 'abcdefghijklmnopqrstuvwxyz0123456789'
 
-    for x in char:
-        for y in char:
-            data = data.replace( slash+'x' + x + y, ' ' )
-    
-    data = replaceDuplicate( data, ' ' )
-    data = cleanBE( data, ' ' )
+	for x in char:
+		for y in char:
+			data = data.replace( slash+'x' + x + y, ' ' )
+	
+	data = replaceDuplicate( data, ' ' )
+	data = cleanBE( data, ' ' )
 
-    return data
+	return data
 
 
 def clean_latin1( data ):
-    global LATIN_1_CHARS
-    global slash
-    # data = str( data )
-    data = data.encode('latin1', 'ignore')
-    data = data.decode('latin1')
-    # Source: https://gist.github.com/tushortz/9fbde5d023c0a0204333267840b592f9
-    # data = data.encode('utf-8')
-    # try:
-    #   pass
-    #   # return data.encode('latin1')
-    #   # return data.encode('utf-8')
-    #   data = data.decode('iso-8859-1')
-    # except UnicodeDecodeError:
-    #   pass
-    for _hex, _char in LATIN_1_CHARS:
-        data = data.replace( _hex, _char )
-    # return data.encode('utf8')
-    # return data.encode('latin1')
-    data = data.replace( 'Alien\\xb3', 'Alien 3' )
-    if slash+'x' in data:
-        data = xChar( data )
-    return data
+	global LATIN_1_CHARS
+	global slash
+	# data = str( data )
+	data = data.encode('latin1', 'ignore')
+	data = data.decode('latin1')
+	# Source: https://gist.github.com/tushortz/9fbde5d023c0a0204333267840b592f9
+	# data = data.encode('utf-8')
+	# try:
+	#   pass
+	#   # return data.encode('latin1')
+	#   # return data.encode('utf-8')
+	#   data = data.decode('iso-8859-1')
+	# except UnicodeDecodeError:
+	#   pass
+	for _hex, _char in LATIN_1_CHARS:
+		data = data.replace( _hex, _char )
+	# return data.encode('utf8')
+	# return data.encode('latin1')
+	data = data.replace( 'Alien\\xb3', 'Alien 3' )
+	if slash+'x' in data:
+		data = xChar( data )
+	return data
 
 def cleanChar( data ):
-    # data = str( data )
-    
-    # Source: https://stackoverflow.com/questions/6539881/python-converting-from-iso-8859-1-latin1-to-utf-8
+	# data = str( data )
+	
+	# Source: https://stackoverflow.com/questions/6539881/python-converting-from-iso-8859-1-latin1-to-utf-8
 
-    # data = data.encode('ascii', 'ignore') 
-    # data = data.decode('latin1').encode('utf8').rstrip()
-    # data = data.decode('utf8').encode('latin1', 'ignore') 
-    # data = str( data )
-    # data = str( data )
-    data = clean_latin1( data )
-    # data = data.encode('ascii', 'ignore')
-    data = data.encode('latin1', 'ignore')
-    # data = data.decode('latin1').encode('utf8')
-    # data = data.decode('utf8').encode('latin1', 'ignore') 
-    data = data.decode('latin1')
-    # data = str( data )
-    return data
+	# data = data.encode('ascii', 'ignore') 
+	# data = data.decode('latin1').encode('utf8').rstrip()
+	# data = data.decode('utf8').encode('latin1', 'ignore') 
+	# data = str( data )
+	# data = str( data )
+	data = clean_latin1( data )
+	# data = data.encode('ascii', 'ignore')
+	data = data.encode('latin1', 'ignore')
+	# data = data.decode('latin1').encode('utf8')
+	# data = data.decode('utf8').encode('latin1', 'ignore') 
+	data = data.decode('latin1')
+	# data = str( data )
+	return data
 
 ############################################### ###############################################
 
 def stripNonAlphaNumaric( data, also='' ):
-    PERMITTED_CHARS = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789' + also
-    data = str( data )
+	PERMITTED_CHARS = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789' + also
+	data = str( data )
 
-    result = ''
-    for d in data:
-        if d in PERMITTED_CHARS:
-            result += d
-        else:
-            result += ' '
-    result = replaceDuplicate( result, ' ' )
-    result = cleanBE( result, ' ' )
-    return result
+	result = ''
+	for d in data:
+		if d in PERMITTED_CHARS:
+			result += d
+		else:
+			result += ' '
+	result = replaceDuplicate( result, ' ' )
+	result = cleanBE( result, ' ' )
+	return result
 
 
 def autoFloatInt( data ):
-    if isInt( data ):
-        return int( data )
-    if isFloat( data ):
-        return float( data )
-    return data
+	if isInt( data ):
+		return int( data )
+	if isFloat( data ):
+		return float( data )
+	return data
 
 def isInt( data ):
-    data = str( data )
-    d = '0123456789'
-    result = True
-    for c in data:
-        if not c in d:
-            result = False
-    return result
+	data = str( data )
+	d = '0123456789'
+	result = True
+	for c in data:
+		if not c in d:
+			result = False
+	return result
 
 def isFloat( data ):
-    data = str( data )
-    result = True
-    if isInt( data ):
-        result = False
-    else:
-        try:
-            float( data )
-        except Exception as e:
-            result = False
+	data = str( data )
+	result = True
+	if isInt( data ):
+		result = False
+	else:
+		try:
+			float( data )
+		except Exception as e:
+			result = False
 
-    return result
+	return result
 
 def removeNonNumber( string ):
-    PERMITTED_CHARS = '0123456789'
-    string = str(string)
+	PERMITTED_CHARS = '0123456789'
+	string = str(string)
 
-    result = ''
+	result = ''
 
-    for cha in string:
-        if cha in PERMITTED_CHARS:
-            result += cha
-    return result
+	for cha in string:
+		if cha in PERMITTED_CHARS:
+			result += cha
+	return result
 
 def removeNonAlpha( string ):
-    PERMITTED_CHARS = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
-    string = str(string)
+	PERMITTED_CHARS = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
+	string = str(string)
 
-    result = ''
+	result = ''
 
-    for cha in string:
-        if cha in PERMITTED_CHARS:
-            result += cha
-    return result
+	for cha in string:
+		if cha in PERMITTED_CHARS:
+			result += cha
+	return result
 
 def removeNonAlpha2( string ):
-    PERMITTED_CHARS = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ '
-    string = str(string)
+	PERMITTED_CHARS = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ '
+	string = str(string)
 
-    result = ''
+	result = ''
 
-    for cha in string:
-        if cha in PERMITTED_CHARS:
-            result += cha
-    return result
+	for cha in string:
+		if cha in PERMITTED_CHARS:
+			result += cha
+	return result
 
 def padZeros(string,count):
-    string = str(string)
+	string = str(string)
 
-    diff = count - len(string)
-    pre = ''
-    for x in range(1,diff+1):
-        pre += '0'
-    result = pre + string
-    return result
+	diff = count - len(string)
+	pre = ''
+	for x in range(1,diff+1):
+		pre += '0'
+	result = pre + string
+	return result
 
 
 def replaceAll(string,rWhat,rWith):
-    if not len(rWhat): return string;
-    if not rWhat in string:
-        return string
-    tmp = '{C9DCAA81-3B8A-68E9-E4CF-A405E2199CB9}'
+	if not len(rWhat): return string;
+	if not rWhat in string:
+		return string
+	tmp = '{C9DCAA81-3B8A-68E9-E4CF-A405E2199CB9}'
 
 
-    done=False
-    string = str(string)
-    while done == False:
-        if string.count(str(rWhat)) > 0:
-            string = string.replace(str(rWhat),tmp)
-        else:
-            done=True
+	done=False
+	string = str(string)
+	while done == False:
+		if string.count(str(rWhat)) > 0:
+			string = string.replace(str(rWhat),tmp)
+		else:
+			done=True
 
 
-    done=False
-    string = str(string)
-    while done == False:
-        if string.count(str(rWhat)) > 0:
-            string = string.replace(str(rWhat),tmp)
-        else:
-            done=True
+	done=False
+	string = str(string)
+	while done == False:
+		if string.count(str(rWhat)) > 0:
+			string = string.replace(str(rWhat),tmp)
+		else:
+			done=True
 
 
 
-    done=False
-    while done == False:
-        if string.count(tmp) > 0:
-            string = string.replace(tmp,str(rWith))
-        else:
-            done=True
+	done=False
+	while done == False:
+		if string.count(tmp) > 0:
+			string = string.replace(tmp,str(rWith))
+		else:
+			done=True
 
-    string = string.replace(tmp,str(rWith))
-    return string
+	string = string.replace(tmp,str(rWith))
+	return string
 # def replaceAll(string,rWhat,rWith):
 #   if not rWhat == rWith:
 #       done=False
@@ -439,485 +439,485 @@ def replaceAll(string,rWhat,rWith):
 #   return string
 
 def removeAll(string,rWhat):
-    if not len(rWhat): return string;
-    if not rWhat in string:
-        return string
-    rWith = ''
-    return replaceAll(string,rWhat,rWith)
+	if not len(rWhat): return string;
+	if not rWhat in string:
+		return string
+	rWith = ''
+	return replaceAll(string,rWhat,rWith)
 
 def replaceDuplicate(string,rWhat):
-    if not type(string) == str: return string;
-    if not len(rWhat): return string;
-    if not rWhat in string:
-        return string
-    string = str(string)
-    rWith = str(rWhat)
+	if not type(string) == str: return string;
+	if not len(rWhat): return string;
+	if not rWhat in string:
+		return string
+	string = str(string)
+	rWith = str(rWhat)
 
-    while rWhat+rWhat in string: string = string.replace(rWhat+rWhat,rWhat)
+	while rWhat+rWhat in string: string = string.replace(rWhat+rWhat,rWhat)
 
-    # rWhat = 
-    # string = replaceAll(string,rWhat,rWith)
-    # for x in range(10):
-    #     string = string.replace( rWhat, rWith )
-    return string
+	# rWhat = 
+	# string = replaceAll(string,rWhat,rWith)
+	# for x in range(10):
+	#     string = string.replace( rWhat, rWith )
+	return string
 
 def cleanBE(string,rWhat):
-    if not len(rWhat): return string;
-    if not rWhat in string:
-        return string
-    string = cleanEnd(string,rWhat)
-    string = cleanFirst(string,rWhat)
-    return string
+	if not len(rWhat): return string;
+	if not rWhat in string:
+		return string
+	string = cleanEnd(string,rWhat)
+	string = cleanFirst(string,rWhat)
+	return string
 def cleanEnd(string,rWhat):
-    if not rWhat in string:
-        return string
-    string = str(string)
-    rWhat = str(rWhat)
-    # string = replaceDuplicate(string,rWhat)
-    while string.endswith(rWhat): string=string[:-1]
+	if not rWhat in string:
+		return string
+	string = str(string)
+	rWhat = str(rWhat)
+	# string = replaceDuplicate(string,rWhat)
+	while string.endswith(rWhat): string=string[:-1]
 
-    # string +=  '*?*'
-    # string = string.replace(rWhat + '*?*', '')
-    # string = string.replace('*?*', '')
-    if string.endswith(rWhat):
-        string = cleanEnd(string,rWhat)
+	# string +=  '*?*'
+	# string = string.replace(rWhat + '*?*', '')
+	# string = string.replace('*?*', '')
+	if string.endswith(rWhat):
+		string = cleanEnd(string,rWhat)
 
-    return string
+	return string
 
 def cleanEnd2(string,rWhat):
-    if not len(rWhat): return string;
-    if not rWhat in string:
-        return string
-    string = str(string)
-    rWhat = str(rWhat)
-    string = totalStrip3(string)
-    string = cleanSpecial(string)
-    string = replaceDuplicate(string,rWhat)
-    string +=  '*?*'
-    string = string.replace(rWhat + '*?*', '')
-    string = string.replace('*?*', '')
-    return string
+	if not len(rWhat): return string;
+	if not rWhat in string:
+		return string
+	string = str(string)
+	rWhat = str(rWhat)
+	string = totalStrip3(string)
+	string = cleanSpecial(string)
+	string = replaceDuplicate(string,rWhat)
+	string +=  '*?*'
+	string = string.replace(rWhat + '*?*', '')
+	string = string.replace('*?*', '')
+	return string
 
 def cleanLast(string,rWhat):
-    if not len(rWhat): return string;
-    if not rWhat in string:
-        return string
-    return cleanEnd(string,rWhat)
+	if not len(rWhat): return string;
+	if not rWhat in string:
+		return string
+	return cleanEnd(string,rWhat)
 
 def cleanFirst(string,rWhat):
-    if not len(rWhat): return string;
-    if not rWhat in string:
-        return string
-    string = str(string)
-    rWhat = str(rWhat)
+	if not len(rWhat): return string;
+	if not rWhat in string:
+		return string
+	string = str(string)
+	rWhat = str(rWhat)
 
-    while string.startswith(rWhat): string=string[1:]
+	while string.startswith(rWhat): string=string[1:]
 
-    # string = replaceDuplicate(string,rWhat)
-    # string = '*?*' + str(string)
-    # string = string.replace('*?*' + rWhat, '')
-    # string = string.replace('*?*', '')
-    if string.startswith(rWhat):
-        string = cleanFirst(string,rWhat)
-    return string
+	# string = replaceDuplicate(string,rWhat)
+	# string = '*?*' + str(string)
+	# string = string.replace('*?*' + rWhat, '')
+	# string = string.replace('*?*', '')
+	if string.startswith(rWhat):
+		string = cleanFirst(string,rWhat)
+	return string
 
 def cleanAll(string,rWhat,rWith):
-    if not len(rWhat): return string;
-    if not rWhat in string:
-        return string
-    done=False
-    while done == False:
-        if string.count(rWhat) > 0:
-            string = string.replace(rWhat,rWith)
-        else:
-            done=True
-    return string
+	if not len(rWhat): return string;
+	if not rWhat in string:
+		return string
+	done=False
+	while done == False:
+		if string.count(rWhat) > 0:
+			string = string.replace(rWhat,rWith)
+		else:
+			done=True
+	return string
 def cleanSpecial(line,special1=False):
-    global slash
-    line = str(line)
-    if line.startswith("b'") and line.endswith("'"): line=line[:-1]; line=line[2:];
-    if not len(line): return line
-    OG_MF=line[0]
-    if not special1:
-        line = replaceAll(str(line),slash,'--/--')
-        try:
-            pass
-            line = line.encode('latin-1')
-            line = str(line)
-            if line.startswith("b'") and line.endswith("'"): line=line[:-1]; line=line[2:];
-            line = replaceAll(line,slash+'t',' ')
-            line = replaceAll(line,slash+'xa0',' ')
-            line = replaceAll(line,slash+'xe9',"'")
-            line = replaceDuplicate(line,' ')
-            line = cleanFirst(line,' ')
-            line = cleanLast(line,' ')
-        except Exception as e:
-            pass
-            try:
-                line = line.encode('utf-8')
-                pass
-            except Exception as e:
-                pass
-    else:
-        line = replaceAll(line,'\u0092',"'")
-    try:
-        line = line.replace('…','...')
-    except Exception as e:
-        pass
-    if line.startswith("b'") and line.endswith("'"): line=line[:-1]; line=line[2:];
-    i = 0
-    skip = False
-    string = ''
-    for char in str(line):
-        # _.pr(item)
-        char = str(char)
-        if char == slash:
-            i = 0
-            skip = True
-        if skip == True:
-            if i == 4:
-                i = 0
-                skip = False
-            else:
-                i += 1
-        if skip == False:
-            string += char
-        else:
-            string += ' '
+	global slash
+	line = str(line)
+	if line.startswith("b'") and line.endswith("'"): line=line[:-1]; line=line[2:];
+	if not len(line): return line
+	OG_MF=line[0]
+	if not special1:
+		line = replaceAll(str(line),slash,'--/--')
+		try:
+			pass
+			line = line.encode('latin-1')
+			line = str(line)
+			if line.startswith("b'") and line.endswith("'"): line=line[:-1]; line=line[2:];
+			line = replaceAll(line,slash+'t',' ')
+			line = replaceAll(line,slash+'xa0',' ')
+			line = replaceAll(line,slash+'xe9',"'")
+			line = replaceDuplicate(line,' ')
+			line = cleanFirst(line,' ')
+			line = cleanLast(line,' ')
+		except Exception as e:
+			pass
+			try:
+				line = line.encode('utf-8')
+				pass
+			except Exception as e:
+				pass
+	else:
+		line = replaceAll(line,'\u0092',"'")
+	try:
+		line = line.replace('…','...')
+	except Exception as e:
+		pass
+	if line.startswith("b'") and line.endswith("'"): line=line[:-1]; line=line[2:];
+	i = 0
+	skip = False
+	string = ''
+	for char in str(line):
+		# _.pr(item)
+		char = str(char)
+		if char == slash:
+			i = 0
+			skip = True
+		if skip == True:
+			if i == 4:
+				i = 0
+				skip = False
+			else:
+				i += 1
+		if skip == False:
+			string += char
+		else:
+			string += ' '
 
-    # line = string
-    if not special1:
-        line = replaceAll(str(line),'--/--',slash)
-        # line = replaceAll(str(line),'_-_',',')
-        line = replaceDuplicate(str(line),  ' ')
-        line = cleanEnd(str(line),'"')
-        line = cleanEnd(str(line),"'")
-        line = cleanEnd(str(line),' ')
-        line = cleanFirst(str(line),"b'")
-        line = cleanFirst(str(line),'b"')
-        line = cleanFirst(str(line),'.')
-        # line = line.replace('  ',' ')
-    # if not OG_MF[0]==line[0] and len(line) > len(OG_MF) and line.startswith("'"): line=line[1:]
-    return line
+	# line = string
+	if not special1:
+		line = replaceAll(str(line),'--/--',slash)
+		# line = replaceAll(str(line),'_-_',',')
+		line = replaceDuplicate(str(line),  ' ')
+		line = cleanEnd(str(line),'"')
+		line = cleanEnd(str(line),"'")
+		line = cleanEnd(str(line),' ')
+		line = cleanFirst(str(line),"b'")
+		line = cleanFirst(str(line),'b"')
+		line = cleanFirst(str(line),'.')
+		# line = line.replace('  ',' ')
+	# if not OG_MF[0]==line[0] and len(line) > len(OG_MF) and line.startswith("'"): line=line[1:]
+	return line
 
 def cleanSpecial2(line,special1=False):
-    global slash
-    line = str(line)
-    def cleanup(line):
-        line = replaceAll(line,slash+'t',' ')
-        line = replaceAll(line,slash+'xc3',' ')
-        
-        line = replaceAll(line,slash+'xb1',' ')
-        line = replaceAll(line,slash+'xf3',' ')
-        line = replaceAll(line,slash+'xf6',' ')
-        line = replaceAll(line,slash+'xe4',' ')
+	global slash
+	line = str(line)
+	def cleanup(line):
+		line = replaceAll(line,slash+'t',' ')
+		line = replaceAll(line,slash+'xc3',' ')
+		
+		line = replaceAll(line,slash+'xb1',' ')
+		line = replaceAll(line,slash+'xf3',' ')
+		line = replaceAll(line,slash+'xf6',' ')
+		line = replaceAll(line,slash+'xe4',' ')
 
-        line = replaceAll(line,slash+'xa0',' ')
-        line = replaceAll(line,slash+'xe9',"'")
-        line = replaceAll(line,slash+'xe2\\x80\\x93','-')
-        line = replaceAll(line,slash+'\\xe2\\\\x80\\\\x93','-')
-    if not special1:
-        line = replaceAll(str(line),slash,'--/--')
-        try:
-            pass
-            try:
-                line = cleanup(line)
-                line = line.decode('utf-8','ignore')
-            except Exception as e:
-                pass
-            try:
-                line = cleanup(line)
-                line = line.encode('utf-8').decode('utf-8')
-            except Exception as e:
-                pass
-            try:
-                line = cleanup(line)
-                line = line.encode('latin-1')
-            except Exception as e:
-                pass
-            try:
-                line = cleanup(line)
-                line = line.encode('latin-1').decode('latin-1')
-            except Exception as e:
-                pass
-            try:
-                line = cleanup(line)
-            except Exception as e:
-                pass
+		line = replaceAll(line,slash+'xa0',' ')
+		line = replaceAll(line,slash+'xe9',"'")
+		line = replaceAll(line,slash+'xe2\\x80\\x93','-')
+		line = replaceAll(line,slash+'\\xe2\\\\x80\\\\x93','-')
+	if not special1:
+		line = replaceAll(str(line),slash,'--/--')
+		try:
+			pass
+			try:
+				line = cleanup(line)
+				line = line.decode('utf-8','ignore')
+			except Exception as e:
+				pass
+			try:
+				line = cleanup(line)
+				line = line.encode('utf-8').decode('utf-8')
+			except Exception as e:
+				pass
+			try:
+				line = cleanup(line)
+				line = line.encode('latin-1')
+			except Exception as e:
+				pass
+			try:
+				line = cleanup(line)
+				line = line.encode('latin-1').decode('latin-1')
+			except Exception as e:
+				pass
+			try:
+				line = cleanup(line)
+			except Exception as e:
+				pass
 
 
 
-            line = replaceDuplicate(line,' ')
-            line = cleanFirst(line,' ')
-            line = cleanLast(line,' ')
-        except Exception as e:
-            try:
-                line = line.encode('utf-8')
-                pass
-            except Exception as e:
-                pass
-    else:
-        line = replaceAll(line,'\u0092',"'")
-    try:
-        line = line.replace('…','...')
-    except Exception as e:
-        pass
-    i = 0
-    skip = False
-    string = ''
-    for char in str(line):
-        # _.pr(item)
-        char = str(char)
-        if char == slash:
-            i = 0
-            skip = True
-        if skip == True:
-            if i == 4:
-                i = 0
-                skip = False
-            else:
-                i += 1
-        if skip == False:
-            string += char
-        else:
-            string += ' '
+			line = replaceDuplicate(line,' ')
+			line = cleanFirst(line,' ')
+			line = cleanLast(line,' ')
+		except Exception as e:
+			try:
+				line = line.encode('utf-8')
+				pass
+			except Exception as e:
+				pass
+	else:
+		line = replaceAll(line,'\u0092',"'")
+	try:
+		line = line.replace('…','...')
+	except Exception as e:
+		pass
+	i = 0
+	skip = False
+	string = ''
+	for char in str(line):
+		# _.pr(item)
+		char = str(char)
+		if char == slash:
+			i = 0
+			skip = True
+		if skip == True:
+			if i == 4:
+				i = 0
+				skip = False
+			else:
+				i += 1
+		if skip == False:
+			string += char
+		else:
+			string += ' '
 
-    # line = string
-    if not special1:
-        line = replaceAll(str(line),'--/--',slash)
-        # line = replaceAll(str(line),'_-_',',')
-        line = replaceDuplicate(str(line),  ' ')
-        line = cleanEnd(str(line),'"')
-        line = cleanEnd(str(line),"'")
-        line = cleanEnd(str(line),' ')
-        line = cleanFirst(str(line),"b'")
-        line = cleanFirst(str(line),'b"')
-        line = cleanFirst(str(line),'.')
-        # line = line.replace('  ',' ')
-    return line
+	# line = string
+	if not special1:
+		line = replaceAll(str(line),'--/--',slash)
+		# line = replaceAll(str(line),'_-_',',')
+		line = replaceDuplicate(str(line),  ' ')
+		line = cleanEnd(str(line),'"')
+		line = cleanEnd(str(line),"'")
+		line = cleanEnd(str(line),' ')
+		line = cleanFirst(str(line),"b'")
+		line = cleanFirst(str(line),'b"')
+		line = cleanFirst(str(line),'.')
+		# line = line.replace('  ',' ')
+	return line
 
 def totalStrip(line):
-    PERMITTED_CHARS = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_.,-@:'#\""
-    section = ''
-    for word in line.split(' '):
-        section += ''.join(c for c in word if c in PERMITTED_CHARS)
-        section += ' '
-    line = section + ']'
-    line = line.replace(' ]','')
-    line = line.replace(']','')
-    return line
+	PERMITTED_CHARS = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_.,-@:'#\""
+	section = ''
+	for word in line.split(' '):
+		section += ''.join(c for c in word if c in PERMITTED_CHARS)
+		section += ' '
+	line = section + ']'
+	line = line.replace(' ]','')
+	line = line.replace(']','')
+	return line
 def alpha(line):
-    PERMITTED_CHARS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'"
-    section = ''
-    for word in line.split(' '):
-        section += ''.join(c for c in word if c in PERMITTED_CHARS)
-        section += ' '
-    line = section + ']'
-    line = line.replace(' ]','')
-    line = line.replace(']','')
-    return line
+	PERMITTED_CHARS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'"
+	section = ''
+	for word in line.split(' '):
+		section += ''.join(c for c in word if c in PERMITTED_CHARS)
+		section += ' '
+	line = section + ']'
+	line = line.replace(' ]','')
+	line = line.replace(']','')
+	return line
 def totalStrip1b(line,add=''):
-    if add is None: add='';
-    PERMITTED_CHARS = " 0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"+add
-    section = ''
-    for word in line.split(' '):
-        section += ''.join(c for c in word if c in PERMITTED_CHARS)
-        section += ' '
-    line = section + ']'
-    line = line.replace(' ]','')
-    line = line.replace(']','')
-    return line
+	if add is None: add='';
+	PERMITTED_CHARS = " 0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"+add
+	section = ''
+	for word in line.split(' '):
+		section += ''.join(c for c in word if c in PERMITTED_CHARS)
+		section += ' '
+	line = section + ']'
+	line = line.replace(' ]','')
+	line = line.replace(']','')
+	return line
 def totalStrip2(line):
-    PERMITTED_CHARS = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-" 
-    section = ''
-    for word in line.split(' '):
-        section += ''.join(c for c in word if c in PERMITTED_CHARS)
-        section += ' '
-    line = section + ']'
-    line = line.replace(' ]','')
-    line = line.replace(']','')
-    return line
+	PERMITTED_CHARS = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-" 
+	section = ''
+	for word in line.split(' '):
+		section += ''.join(c for c in word if c in PERMITTED_CHARS)
+		section += ' '
+	line = section + ']'
+	line = line.replace(' ]','')
+	line = line.replace(']','')
+	return line
 def totalStrip2b(line):
-    PERMITTED_CHARS = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_ " 
-    section = ''
-    for word in line.split(' '):
-        section += ''.join(c for c in word if c in PERMITTED_CHARS)
-        section += ' '
-    line = section + ']'
-    line = line.replace(' ]','')
-    line = line.replace(']','')
-    return line
+	PERMITTED_CHARS = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_ " 
+	section = ''
+	for word in line.split(' '):
+		section += ''.join(c for c in word if c in PERMITTED_CHARS)
+		section += ' '
+	line = section + ']'
+	line = line.replace(' ]','')
+	line = line.replace(']','')
+	return line
 def totalStrip3(line):
-    PERMITTED_CHARS = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-," 
-    section = ''
-    for word in line.split(' '):
-        section += ''.join(c for c in word if c in PERMITTED_CHARS)
-        section += ' '
-    line = section + ']'
-    line = line.replace(' ]','')
-    line = line.replace(']','')
-    return line
+	PERMITTED_CHARS = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-," 
+	section = ''
+	for word in line.split(' '):
+		section += ''.join(c for c in word if c in PERMITTED_CHARS)
+		section += ' '
+	line = section + ']'
+	line = line.replace(' ]','')
+	line = line.replace(']','')
+	return line
 def totalStrip4(line):
-    PERMITTED_CHARS = "0123456789" 
-    section = ''
-    for word in line.split(' '):
-        section += ''.join(c for c in word if c in PERMITTED_CHARS)
-        section += ' '
-    line = section + ']'
-    line = line.replace(' ]','')
-    line = line.replace(']','')
-    return line
+	PERMITTED_CHARS = "0123456789" 
+	section = ''
+	for word in line.split(' '):
+		section += ''.join(c for c in word if c in PERMITTED_CHARS)
+		section += ' '
+	line = section + ']'
+	line = line.replace(' ]','')
+	line = line.replace(']','')
+	return line
 def totalStrip5(line):
-    PERMITTED_CHARS = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_.,-@:'#\"()"
-    section = ''
-    for word in line.split(' '):
-        section += ''.join(c for c in word if c in PERMITTED_CHARS)
-        section += ' '
-    line = section + ''
-    # line = section + ']'
-    # line = line.replace(' ]','')
-    # line = line.replace(']','')
-    return line
+	PERMITTED_CHARS = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_.,-@:'#\"()"
+	section = ''
+	for word in line.split(' '):
+		section += ''.join(c for c in word if c in PERMITTED_CHARS)
+		section += ' '
+	line = section + ''
+	# line = section + ']'
+	# line = line.replace(' ]','')
+	# line = line.replace(']','')
+	return line
 def totalStrip6(line):
-    line = removeAll(line,'\n')
-    line = removeAll(line,'\r')
-    line = characterClean(line)
-    PERMITTED_CHARS = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_.,-@:'#\"()"
-    section = ''
-    for word in line.split(' '):
-        section += ''.join(c for c in word if c in PERMITTED_CHARS)
-        section += ' '
-    line = section + ']'
-    line = line.replace(' ]','')
-    line = line.replace(']','')
-    return line
+	line = removeAll(line,'\n')
+	line = removeAll(line,'\r')
+	line = characterClean(line)
+	PERMITTED_CHARS = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_.,-@:'#\"()"
+	section = ''
+	for word in line.split(' '):
+		section += ''.join(c for c in word if c in PERMITTED_CHARS)
+		section += ' '
+	line = section + ']'
+	line = line.replace(' ]','')
+	line = line.replace(']','')
+	return line
 def totalStrip9(line):
-    line = removeAll(line,'\n')
-    line = removeAll(line,'\r')
-    line = underscore(line)
-    # line = cleanupString(line)
-    # line = cleanSpecial2(line)
-    # line = characterClean(line)
-    PERMITTED_CHARS = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ."
-    section = ''
-    for cha in line:
-        if cha in PERMITTED_CHARS:
-            section += cha
-        else:
-            section += ' '
-    line = section
-    line = cleanBE(line,' ')
-    line = replaceDuplicate(line,' ')
-    return line
+	line = removeAll(line,'\n')
+	line = removeAll(line,'\r')
+	line = underscore(line)
+	# line = cleanupString(line)
+	# line = cleanSpecial2(line)
+	# line = characterClean(line)
+	PERMITTED_CHARS = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ."
+	section = ''
+	for cha in line:
+		if cha in PERMITTED_CHARS:
+			section += cha
+		else:
+			section += ' '
+	line = section
+	line = cleanBE(line,' ')
+	line = replaceDuplicate(line,' ')
+	return line
 def underscore(line):
-    # http://www.fileformat.info/
-    line = line.replace('\u005F',' ')
-    line = line.replace('\uFF3F',' ')
-    line = line.replace('\u2017',' ')
-    line = line.replace('\u203E',' ')
-    line = line.replace('\u0332',' ')
-    line = line.replace('_',' ')
-    return line
+	# http://www.fileformat.info/
+	line = line.replace('\u005F',' ')
+	line = line.replace('\uFF3F',' ')
+	line = line.replace('\u2017',' ')
+	line = line.replace('\u203E',' ')
+	line = line.replace('\u0332',' ')
+	line = line.replace('_',' ')
+	return line
 
 def totalStrip7(line):
-    line = removeAll(line,'\n')
-    line = removeAll(line,'\r')
-    line = underscore(line)
-    # line = cleanupString(line)
-    # line = cleanSpecial2(line)
-    # line = characterClean(line)
-    PERMITTED_CHARS = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ."
-    section = ''
-    for word in line.split(' '):
-        section += ''.join(c for c in word if c in PERMITTED_CHARS)
-        section += ' '
-    line = section
-    line = cleanBE(line,' ')
-    line = replaceDuplicate(line,' ')
-    return line
+	line = removeAll(line,'\n')
+	line = removeAll(line,'\r')
+	line = underscore(line)
+	# line = cleanupString(line)
+	# line = cleanSpecial2(line)
+	# line = characterClean(line)
+	PERMITTED_CHARS = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ."
+	section = ''
+	for word in line.split(' '):
+		section += ''.join(c for c in word if c in PERMITTED_CHARS)
+		section += ' '
+	line = section
+	line = cleanBE(line,' ')
+	line = replaceDuplicate(line,' ')
+	return line
 def onlyDigits(line):
-    line = removeAll(line,'\n')
-    line = removeAll(line,'\r')
-    line = characterClean(line)
-    PERMITTED_CHARS = "0123456789-"
-    section = ''
-    for word in line.split(' '):
-        section += ''.join(c for c in word if c in PERMITTED_CHARS)
-        section += ' '
-    line = section + ']'
-    line = line.replace(' ]','')
-    line = line.replace(']','')
-    return line
+	line = removeAll(line,'\n')
+	line = removeAll(line,'\r')
+	line = characterClean(line)
+	PERMITTED_CHARS = "0123456789-"
+	section = ''
+	for word in line.split(' '):
+		section += ''.join(c for c in word if c in PERMITTED_CHARS)
+		section += ' '
+	line = section + ']'
+	line = line.replace(' ]','')
+	line = line.replace(']','')
+	return line
 def onlyDigits2(line):
-    line = str( line )
-    line = line.replace( '–', '-' )
-    PERMITTED_CHARS = '0123456789-'
-    result = ''
-    for char in line:
-        if char in PERMITTED_CHARS:
-            result += char
-    return result
+	line = str( line )
+	line = line.replace( '–', '-' )
+	PERMITTED_CHARS = '0123456789-'
+	result = ''
+	for char in line:
+		if char in PERMITTED_CHARS:
+			result += char
+	return result
 def totalStrip8(line):
-    line = removeAll(line,'\n')
-    line = removeAll(line,'\r')
-    line = characterClean(line)
-    PERMITTED_CHARS = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_.,-@:'#\"()"
-    section = ''
-    for word in line.split(' '):
-        section += ''.join(c for c in word if c in PERMITTED_CHARS)
-        section += ' '
-    line = section + ']'
-    line = line.replace(' ]','')
-    line = line.replace(']','')
-    return line
+	line = removeAll(line,'\n')
+	line = removeAll(line,'\r')
+	line = characterClean(line)
+	PERMITTED_CHARS = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_.,-@:'#\"()"
+	section = ''
+	for word in line.split(' '):
+		section += ''.join(c for c in word if c in PERMITTED_CHARS)
+		section += ' '
+	line = section + ']'
+	line = line.replace(' ]','')
+	line = line.replace(']','')
+	return line
 def cleanupString0(string):
-    string = replaceAll(string,'\n',' ')
-    string = replaceDuplicate(string,' ')
-    string = cleanLast(string,' ')
-    string = cleanFirst(string,' ')
-    string = cleanSpecial(string)
-    string = cleanFirst(string,' ')
-    return string
+	string = replaceAll(string,'\n',' ')
+	string = replaceDuplicate(string,' ')
+	string = cleanLast(string,' ')
+	string = cleanFirst(string,' ')
+	string = cleanSpecial(string)
+	string = cleanFirst(string,' ')
+	return string
 def cleanupString(string,beforeAfter=True):
-    string = replaceAll(string,'\n',' ')
-    string = replaceAll(string,'\t',' ')
-    string = replaceDuplicate(string,' ')
-    string = cleanLast(string,' ')
-    string = cleanFirst(string,' ')
-    string = cleanSpecial(string)
-    string = cleanFirst(string,' ')
-    string = string.replace(slash+'xe2\\x80\\x93','-')
-    string = string.replace(slash+'\\xe2\\\\x80\\\\x93','-')
-    if beforeAfter:
-        string = string.split('(')[0]
-    else:
-        string = string.split('(')[1]
-    string = string.split('/')[0]
-    return string
+	string = replaceAll(string,'\n',' ')
+	string = replaceAll(string,'\t',' ')
+	string = replaceDuplicate(string,' ')
+	string = cleanLast(string,' ')
+	string = cleanFirst(string,' ')
+	string = cleanSpecial(string)
+	string = cleanFirst(string,' ')
+	string = string.replace(slash+'xe2\\x80\\x93','-')
+	string = string.replace(slash+'\\xe2\\\\x80\\\\x93','-')
+	if beforeAfter:
+		string = string.split('(')[0]
+	else:
+		string = string.split('(')[1]
+	string = string.split('/')[0]
+	return string
 
 def characterClean(string):
-    global slash
-    string = string.replace('\xe2\x80\x9c','"').replace('\xe2\x80\x9d','"').replace('\xe2\x80\x99',"'").replace(slash+'xe2\\x80\\x93','-')
-    # string = string.encode('latin-1')
-    return string
+	global slash
+	string = string.replace('\xe2\x80\x9c','"').replace('\xe2\x80\x9d','"').replace('\xe2\x80\x99',"'").replace(slash+'xe2\\x80\\x93','-')
+	# string = string.encode('latin-1')
+	return string
 
 def basic(string):
-    pattern = re.compile('([^\s\w]|_)+')
-    string = pattern.sub('', string)
-    string = replaceDuplicate(string,' ')
-    string = cleanFirst(string,' ')
-    string = cleanLast(string,' ')
+	pattern = re.compile('([^\s\w]|_)+')
+	string = pattern.sub('', string)
+	string = replaceDuplicate(string,' ')
+	string = cleanFirst(string,' ')
+	string = cleanLast(string,' ')
 
-    return string
+	return string
 
 def charFix( string ):
-    global slash
-    global charFixData
-    for ch in charFixData:
-        chs = ch[1].split(',')
-        for c in chs:
-            string = string.replace( slash+c, ch[0] )
-    return string
+	global slash
+	global charFixData
+	for ch in charFixData:
+		chs = ch[1].split(',')
+		for c in chs:
+			string = string.replace( slash+c, ch[0] )
+	return string
 
 charFixData = ['','x00'],
 ['','x01'],
@@ -1177,209 +1177,209 @@ charFixData = ['','x00'],
 ['','xc3,xbf']
 
 def clean_filename(filename, dup=False, replace=None, whitelist=None):
-    if not filename:
-        return ''
-    unicodedata = __.imp('unicodedata')
-    string = __.imp('string')
-    valid_filename_chars = "-_.() %s%s" % (string.ascii_letters, string.digits)
-    char_limit = 255
-    if whitelist is None: whitelist = valid_filename_chars;
-    if replace is None: replace = ' ';
-    # replace spaces
-    for r in replace:
-        if r:
-            filename = filename.replace(r,replace)
-    
-    # keep only valid ascii chars
-    cleaned_filename = unicodedata.normalize('NFKD', filename).encode('ASCII', 'ignore').decode()
-    
-    # keep only whitelisted chars
-    cleaned_filename = ''.join(c for c in cleaned_filename if c in whitelist)
-    cleaned_filename = cleanBE(cleaned_filename,' ')
-    if len(cleaned_filename)>char_limit:
-        _.pr("Warning, filename truncated because it was over {}. Filenames may no longer be unique".format(char_limit))
-    if dup:
-        cleaned_filename = do( 'dup', cleaned_filename, replace )
-    return cleaned_filename[:char_limit]
+	if not filename:
+		return ''
+	unicodedata = __.imp('unicodedata')
+	string = __.imp('string')
+	valid_filename_chars = "-_.() %s%s" % (string.ascii_letters, string.digits)
+	char_limit = 255
+	if whitelist is None: whitelist = valid_filename_chars;
+	if replace is None: replace = ' ';
+	# replace spaces
+	for r in replace:
+		if r:
+			filename = filename.replace(r,replace)
+	
+	# keep only valid ascii chars
+	cleaned_filename = unicodedata.normalize('NFKD', filename).encode('ASCII', 'ignore').decode()
+	
+	# keep only whitelisted chars
+	cleaned_filename = ''.join(c for c in cleaned_filename if c in whitelist)
+	cleaned_filename = cleanBE(cleaned_filename,' ')
+	if len(cleaned_filename)>char_limit:
+		_.pr("Warning, filename truncated because it was over {}. Filenames may no longer be unique".format(char_limit))
+	if dup:
+		cleaned_filename = do( 'dup', cleaned_filename, replace )
+	return cleaned_filename[:char_limit]
 
 def do(what=None,string='',a=None,b=None,c=None,d=None):
-    '''( what=None, string='', a=None, b=None, c=None, d=None )'''
+	'''( what=None, string='', a=None, b=None, c=None, d=None )'''
 
-    # if what in 'file'.split(' ') and not string: _.pr( '(filename, dup=False, replace=None, whitelist=None)' );
-    if what in 'an alphan'.split(' '): return totalStrip1b( string, a );
-    if what in 'file'.split(' '): return clean_filename( string, a, b, c );
+	# if what in 'file'.split(' ') and not string: _.pr( '(filename, dup=False, replace=None, whitelist=None)' );
+	if what in 'an alphan'.split(' '): return totalStrip1b( string, a );
+	if what in 'file'.split(' '): return clean_filename( string, a, b, c );
 
-    if what is None:
-        import _rightThumb._base3 as _
-        _.pv('''
-            if what in 'an'.split(' '): return re.sub(r'[^A-Za-z0-9 ]+', '', string);
-            if what in 'all'.split(' '): return replaceAll(string,a,b);
-            if what in 'cleanAll'.split(' '): return cleanAll(string,a,b);
-            if what in 'dup'.split(' '): return replaceDuplicate(string,a);
-            if what in 'be'.split(' '): return cleanBE(string,a);
-            if what in 'b'.split(' '): return cleanFirst(string,a);
-            if what in 'e'.split(' '): return cleanEnd(string,a);
-            if 'alpha' in what and 'nu' in what : return stripNonAlphaNumaric(string);
-            if what in 'n'.split(' '): return removeNonNumber(string);
-            if what in 'ra remove'.split(' '): return removeAll(string,a);
-        ''')
-        sys.exit()
+	if what is None:
+		import _rightThumb._base3 as _
+		_.pv('''
+			if what in 'an'.split(' '): return re.sub(r'[^A-Za-z0-9 ]+', '', string);
+			if what in 'all'.split(' '): return replaceAll(string,a,b);
+			if what in 'cleanAll'.split(' '): return cleanAll(string,a,b);
+			if what in 'dup'.split(' '): return replaceDuplicate(string,a);
+			if what in 'be'.split(' '): return cleanBE(string,a);
+			if what in 'b'.split(' '): return cleanFirst(string,a);
+			if what in 'e'.split(' '): return cleanEnd(string,a);
+			if 'alpha' in what and 'nu' in what : return stripNonAlphaNumaric(string);
+			if what in 'n'.split(' '): return removeNonNumber(string);
+			if what in 'ra remove'.split(' '): return removeAll(string,a);
+		''')
+		sys.exit()
 
-    try:
-        if what in 'an'.split(' '): import re; return re.sub(r'[^A-Za-z0-9 ]+', '', string);
-    except Exception as e:
-        if what in 'an'.split(' '): return re.sub(r'[^A-Za-z0-9 ]+', '', string);
+	try:
+		if what in 'an'.split(' '): import re; return re.sub(r'[^A-Za-z0-9 ]+', '', string);
+	except Exception as e:
+		if what in 'an'.split(' '): return re.sub(r'[^A-Za-z0-9 ]+', '', string);
 
-    
-    # if what in 'file'.split(' '): import re; return re.sub(r'[0-9a-zA-Z_\-+$ ]', '', string);
-    # if what in 'file'.split(' '): import re; return re.sub(r'^[0-9a-zA-Z_\-. ]+$', '', string);
-    
-    if what in 'trim'.split(' '): return trim(string);
-    if what in 'nows'.split(' '): return nows(string);
+	
+	# if what in 'file'.split(' '): import re; return re.sub(r'[0-9a-zA-Z_\-+$ ]', '', string);
+	# if what in 'file'.split(' '): import re; return re.sub(r'^[0-9a-zA-Z_\-. ]+$', '', string);
+	
+	if what in 'trim'.split(' '): return trim(string);
+	if what in 'nows'.split(' '): return nows(string);
 
-    if what in 'sh2'.split(' '): return sh2(string);
-    if what in '.sh sh sh1 bash linux 2linux fix script x +x'.split(' '): return sh(string);
+	if what in 'sh2'.split(' '): return sh2(string);
+	if what in '.sh sh sh1 bash linux 2linux fix script x +x'.split(' '): return sh(string);
 
-    if what in 'all'.split(' '): return replaceAll(string,a,b);
-    if what in 'cleanAll'.split(' '): return cleanAll(string,a,b);
-    if what in 'dup'.split(' '): return replaceDuplicate(string,a);
-    if what in 'be'.split(' '): return cleanBE(string,a);
-    if what in 'b'.split(' '): return cleanFirst(string,a);
-    if what in 'e'.split(' '): return cleanEnd(string,a);
-    if 'alpha' in what and 'nu' in what : return stripNonAlphaNumaric(string);
-    if what in 'n'.split(' '): return removeNonNumber(string);
-    if what in 'ra remove'.split(' '): return removeAll(string,a);
+	if what in 'all'.split(' '): return replaceAll(string,a,b);
+	if what in 'cleanAll'.split(' '): return cleanAll(string,a,b);
+	if what in 'dup'.split(' '): return replaceDuplicate(string,a);
+	if what in 'be'.split(' '): return cleanBE(string,a);
+	if what in 'b'.split(' '): return cleanFirst(string,a);
+	if what in 'e'.split(' '): return cleanEnd(string,a);
+	if 'alpha' in what and 'nu' in what : return stripNonAlphaNumaric(string);
+	if what in 'n'.split(' '): return removeNonNumber(string);
+	if what in 'ra remove'.split(' '): return removeAll(string,a);
 
 def sp(cnt,t=' '):
-    '''  spaces '''
-    output=''
-    while not len(output) == cnt: output+=t
-    # print('sp:',cnt,'|'+output+'|')
-    return output
+	'''  spaces '''
+	output=''
+	while not len(output) == cnt: output+=t
+	# print('sp:',cnt,'|'+output+'|')
+	return output
 
 def es(data,be='',margin='',m=None):
-    '''  endspace '''
-    if not m is None: margin=m
-    if type(be) == int: be=sp(be)
-    if type(margin) == float: margin=int(margin)
-    if type(margin) == int: margin=abs(margin)
-    if type(margin) == int: margin=sp(margin)
-    if type(data) == list: data='\n'.join(data)
-    def _ad_space_(line,mx,be='',margin=''):
-        while not len(line)==mx: line+=' '
-        # print(mx,be+margin+line+margin+be)
-        _out=be+margin+line+margin+be
-        if len(_out) == __.terminal.width-1:_out=be+margin+line+margin+margin[0]+be
+	'''  endspace '''
+	if not m is None: margin=m
+	if type(be) == int: be=sp(be)
+	if type(margin) == float: margin=int(margin)
+	if type(margin) == int: margin=abs(margin)
+	if type(margin) == int: margin=sp(margin)
+	if type(data) == list: data='\n'.join(data)
+	def _ad_space_(line,mx,be='',margin=''):
+		while not len(line)==mx: line+=' '
+		# print(mx,be+margin+line+margin+be)
+		_out=be+margin+line+margin+be
+		if len(_out) == __.terminal.width-1:_out=be+margin+line+margin+margin[0]+be
 
-        return _out
-    # data=do('sh',data)
-    lines=[]
-    mx=0
-    for line in data.split('\n'):
-        ln=len(line)
-        if ln > mx: mx=ln
-    for line in data.split('\n'):
-        lines.append( _ad_space_(line, mx, be, margin) )
-    # print('\n'.join(lines))
-    return '\n'.join(lines)
+		return _out
+	# data=do('sh',data)
+	lines=[]
+	mx=0
+	for line in data.split('\n'):
+		ln=len(line)
+		if ln > mx: mx=ln
+	for line in data.split('\n'):
+		lines.append( _ad_space_(line, mx, be, margin) )
+	# print('\n'.join(lines))
+	return '\n'.join(lines)
 
 def nows(string):
-    if not type(string) == str: return string
-    if not string: return string
-    for ws in _ws():
-        while ws in string: string = string.replace(ws,'')
-    return string
+	if not type(string) == str: return string
+	if not string: return string
+	for ws in _ws():
+		while ws in string: string = string.replace(ws,'')
+	return string
 
 
 def trim(string):
-    if not type(string) == str: return string
-    if not string: return string
-    for ws in _ws():
-        string = cleanBE(string,ws)
-    return string
+	if not type(string) == str: return string
+	if not string: return string
+	for ws in _ws():
+		string = cleanBE(string,ws)
+	return string
 
 
-    # if not string: return string
-    # for elem in string.whitespace: sample_str = sample_str.replace(elem, '')
-    # testing=[' ', '\t', '\n']
-    # if not len(string.replace(' ','').replace('\r','').replace('\n','').replace('\t','')): return ''
-    # try:
-    #     while string[0] in testing or string[-1] in testing:
-    #         for tst in testing: string = cleanBE(string,tst)
-    # except Exception as e:
-    #     try: _
-    #     except Exception as e: import _rightThumb._base3 as _
-    #     _.pr('trim:',e,c='red')
-    # return string
+	# if not string: return string
+	# for elem in string.whitespace: sample_str = sample_str.replace(elem, '')
+	# testing=[' ', '\t', '\n']
+	# if not len(string.replace(' ','').replace('\r','').replace('\n','').replace('\t','')): return ''
+	# try:
+	#     while string[0] in testing or string[-1] in testing:
+	#         for tst in testing: string = cleanBE(string,tst)
+	# except Exception as e:
+	#     try: _
+	#     except Exception as e: import _rightThumb._base3 as _
+	#     _.pr('trim:',e,c='red')
+	# return string
 
 
-    # string=string.replace('\r','')
-    
-    # # def _trim_true_(string,testing):
-    # #     r=False
-    # #     for test in testing:
-    # #         if (string.startswith(test)): r=True
-    # #         if (string.endswith(test)): r=True
-    # #     return r
-    # def trimmer(string,testing=list(' \t\n')):
-    #     for test in testing:
-    #         string=do('be',string,test)
-    #     return string
-    # testing=list(' \t\n')
-    # while string[0] in testing or string[-1] in testing: string=trimmer(string,testing)
-    # # try:
-    # # except Exception as e:
-    # #     return string
-    
-    # # while _trim_true_(string,testing): string=trimmer(string,testing);
-    # return string
+	# string=string.replace('\r','')
+	
+	# # def _trim_true_(string,testing):
+	# #     r=False
+	# #     for test in testing:
+	# #         if (string.startswith(test)): r=True
+	# #         if (string.endswith(test)): r=True
+	# #     return r
+	# def trimmer(string,testing=list(' \t\n')):
+	#     for test in testing:
+	#         string=do('be',string,test)
+	#     return string
+	# testing=list(' \t\n')
+	# while string[0] in testing or string[-1] in testing: string=trimmer(string,testing)
+	# # try:
+	# # except Exception as e:
+	# #     return string
+	
+	# # while _trim_true_(string,testing): string=trimmer(string,testing);
+	# return string
 
 def sh2(string):
-    try:
-        if os.path.isfile(string): string=__.getText(string,raw=True);
-    except Exception as e: pass;
-    string=str(string)
-    string=string.replace( chr(10), '\n' ).replace( '\r', '' ).replace( chr(27), '' ).replace( chr(10), '\n' ).replace( '\r', '' ).replace( chr(27), '' )
-    while '\t' in string: string = string.replace( '\t', '    ' );
-    while ' \n' in string: string = string.replace( ' \n', '\n' );
-    while '    ' in string: string = string.replace( '    ', '\t' );
-    string=do('be',string,'\n')
+	try:
+		if os.path.isfile(string): string=__.getText(string,raw=True);
+	except Exception as e: pass;
+	string=str(string)
+	string=string.replace( chr(10), '\n' ).replace( '\r', '' ).replace( chr(27), '' ).replace( chr(10), '\n' ).replace( '\r', '' ).replace( chr(27), '' )
+	while '\t' in string: string = string.replace( '\t', '    ' );
+	while ' \n' in string: string = string.replace( ' \n', '\n' );
+	while '    ' in string: string = string.replace( '    ', '\t' );
+	string=do('be',string,'\n')
 
-    string = string.replace( chr(10), '\n' )
-    string = string.replace( chr(27), '' )
-    string = string.replace( '\r', '' )
+	string = string.replace( chr(10), '\n' )
+	string = string.replace( chr(27), '' )
+	string = string.replace( '\r', '' )
 
-    return string
+	return string
 
 def sh(string='f928ca8e68c6'):
-    if string=='f928ca8e68c6':
-        import _rightThumb._base3 as _
-        _.e("_str.do('sh')",'missing data')
-    try:
-        if os.path.isfile(string): string=__.getText(string,raw=True);
-    except Exception as e: pass;
-    string=str(string)
+	if string=='f928ca8e68c6':
+		import _rightThumb._base3 as _
+		_.e("_str.do('sh')",'missing data')
+	try:
+		if os.path.isfile(string): string=__.getText(string,raw=True);
+	except Exception as e: pass;
+	string=str(string)
 
 
-    string=string.replace( chr(10), '\n' ).replace( '\r', '' ).replace( chr(27), '' )
-    string=string.replace( chr(10), '\n' ).replace( '\r', '' ).replace( chr(27), '' )
-    string=do('be',string,'\n')
-    lines=string.split('\n')
-    for i, line in enumerate(lines):
-        if not line.replace(' ','').replace('\t',''):
-            lines[i]=''
-        while lines[i].endswith(' ') or lines[i].endswith('\t'): lines[i]=lines[i][:-1]
-    string='\n'.join(lines)
-    # if string.startswith('#!'):
-    #     if '#!/bin/' in string or '#!/usr/bin/' in string:
-    #         while '\t' in string: string = string.replace( '\t', '    ' );
-    #         while '    ' in string: string = string.replace( '    ', '\t' );
+	string=string.replace( chr(10), '\n' ).replace( '\r', '' ).replace( chr(27), '' )
+	string=string.replace( chr(10), '\n' ).replace( '\r', '' ).replace( chr(27), '' )
+	string=do('be',string,'\n')
+	lines=string.split('\n')
+	for i, line in enumerate(lines):
+		if not line.replace(' ','').replace('\t',''):
+			lines[i]=''
+		while lines[i].endswith(' ') or lines[i].endswith('\t'): lines[i]=lines[i][:-1]
+	string='\n'.join(lines)
+	# if string.startswith('#!'):
+	#     if '#!/bin/' in string or '#!/usr/bin/' in string:
+	#         while '\t' in string: string = string.replace( '\t', '    ' );
+	#         while '    ' in string: string = string.replace( '    ', '\t' );
 
-    # string=string.replace( chr(10), '\n' ).replace( '\r', '' ).replace( chr(27), '' )
-    string=do('be',string,'\n')
-    string=string.replace( chr(10), '\n' ).replace( '\r', '' ).replace( chr(27), '' )
+	# string=string.replace( chr(10), '\n' ).replace( '\r', '' ).replace( chr(27), '' )
+	string=do('be',string,'\n')
+	string=string.replace( chr(10), '\n' ).replace( '\r', '' ).replace( chr(27), '' )
 
-    return string
+	return string
 
 #b)--> before 2022-08-03
 # def sh(string):
@@ -1427,42 +1427,42 @@ def sh(string='f928ca8e68c6'):
 #         return 
 
 class st(str):
-    def sh(self): self=do('.sh',self); return string(self);
-    def all(self,a,b): self=do('all',self,a,b); return string(self);
-    def cleanAll(self,a,b): self=do('cleanAll',self,a,b); return string(self);
-    def dup(self,a): self=do('dup',self,a); return self.string(self);
-    def be(self,a): self=do('be',self,a); return string(self);
-    def b(self,a): self=do('b',self,a); return string(self);
-    def e(self,a): self=do('e',self,a); return string(self);
-    def alpha(self): self=do('n',self); return string(self);
-    def num(self): self=do('nu',self); return string(self);
-    def remove(self,a): self=do('remove',self,a); return string(self);
-    def ra(self,a): self=do('remove',self,a); return string(self);
-    def json(self):
-        simplejson = __.imp('simplejson')
-        json=simplejson.loads(self)
-        isa='dic'
-        if do('.sh',self).replace(' ','').replace('\n','').startswith('{'):
-            isa='dic'
-        elif do('.sh',self).replace(' ','').replace('\n','').startswith('['):
-            isa='lis'
-        self=json
-        if isa=='lis': return lis(self);
-        if isa=='dic': return dic(self);
-        return 
+	def sh(self): self=do('.sh',self); return string(self);
+	def all(self,a,b): self=do('all',self,a,b); return string(self);
+	def cleanAll(self,a,b): self=do('cleanAll',self,a,b); return string(self);
+	def dup(self,a): self=do('dup',self,a); return self.string(self);
+	def be(self,a): self=do('be',self,a); return string(self);
+	def b(self,a): self=do('b',self,a); return string(self);
+	def e(self,a): self=do('e',self,a); return string(self);
+	def alpha(self): self=do('n',self); return string(self);
+	def num(self): self=do('nu',self); return string(self);
+	def remove(self,a): self=do('remove',self,a); return string(self);
+	def ra(self,a): self=do('remove',self,a); return string(self);
+	def json(self):
+		simplejson = __.imp('simplejson')
+		json=simplejson.loads(self)
+		isa='dic'
+		if do('.sh',self).replace(' ','').replace('\n','').startswith('{'):
+			isa='dic'
+		elif do('.sh',self).replace(' ','').replace('\n','').startswith('['):
+			isa='lis'
+		self=json
+		if isa=='lis': return lis(self);
+		if isa=='dic': return dic(self);
+		return 
 
 class dic(dict):
-    def string(self):
-        simplejson = __.imp('simplejson')
-        return string(simplejson.dumps(self, indent=4, sort_keys=False))
-    def inline(self):
-        simplejson = __.imp('simplejson')
-        return string(simplejson.dumps(self))
+	def string(self):
+		simplejson = __.imp('simplejson')
+		return string(simplejson.dumps(self, indent=4, sort_keys=False))
+	def inline(self):
+		simplejson = __.imp('simplejson')
+		return string(simplejson.dumps(self))
 
 class lis(list):
-    def string(self):
-        simplejson = __.imp('simplejson')
-        return string(simplejson.dumps(self, indent=4, sort_keys=False))
-    def inline(self):
-        simplejson = __.imp('simplejson')
-        return string(simplejson.dumps(self))
+	def string(self):
+		simplejson = __.imp('simplejson')
+		return string(simplejson.dumps(self, indent=4, sort_keys=False))
+	def inline(self):
+		simplejson = __.imp('simplejson')
+		return string(simplejson.dumps(self))

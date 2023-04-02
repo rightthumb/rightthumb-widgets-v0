@@ -804,7 +804,10 @@ def action(path=None,flag=None,o=None):
 			path = _.switches.value('Input')
 		# _.pr( 'path::::', path )
 		if os.path.isfile(path):
-			path = __.path(  path  )
+			path = __.path(  path  ) 
+			if not _.switches.isActive('Silent'):
+				if _.isCrypt(path): _.pr('encrypted <-- yes ',c='red')
+				# else: _.pr('encrypted <-- no ',c='green')
 			# print(os.stat(path).st_size)
 			if True or _.switches.isActive('Test'):
 				# if not type(idCheck) == bool:

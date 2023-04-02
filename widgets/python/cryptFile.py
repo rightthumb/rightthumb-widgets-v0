@@ -257,7 +257,8 @@ def action():
 					tmp = False
 					outputBK = output
 					if filepath == output:
-						_.pr('same',c='red')
+						if not _.switches.isActive('Clean'):
+							_.pr('same',c='red')
 						tmp = True
 						# os.rename( output, filepath )
 						# time.sleep(.2)

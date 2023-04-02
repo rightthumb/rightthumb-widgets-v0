@@ -32,6 +32,8 @@ import _rightThumb._string as _str
 def appSwitches():
 	_.switches.register( 'Widgets', '-w' )
 	_.switches.register( 'Unlock', '-unlock' )
+	_.switches.register( 'View', '-view' )
+	_.switches.register( 'All', '-all' )
 
 _.autoBackupData = __.setting('receipt-log')
 __.releaseAcquiredData = __.setting('receipt-file')
@@ -48,7 +50,7 @@ __.switch_raw = []
 _.appInfo[focus()] = {
 	'file': 'lock-files.py',
 	'liveAppName': __.thisApp( __file__ ),
- 	'description': 'lock secure files',
+	'description': 'lock secure files',
 	'categories': [
 						'lock',
 						'files',
@@ -72,15 +74,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
-				       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					   # { 'name': 'name', 'abbreviation': 'n' },
+					   # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					   # 'this',
+					   # 'app',
 	],
 	'notes': [
-				       # {},
+					   # {},
 	],
 }
 
@@ -172,12 +174,43 @@ def process(table):
 			del fileBackup
 			fileBackup=None
 
+def view(table):
+	global dirs
+	global good
+	global errors
+	for i,path in enumerate( table ):
+		run = True
+		if _.switches.isActive('Widgets'):
+			run = False
+			if path.lower().startswith(_v.w.lower()):
+				run = True
+		if os.path.isdir(path): dirs.append(path)
+		if os.path.isfile(path): good.append(path)
+		else:  errors.append(path)
+
+
+
 def action():
+	if _.switches.isActive('View'):
+		global dirs
+		global good
+		global errors
+		dirs=[]
+		good=[]
+		errors=[]
+		view(  _.getTable('crypt-docs.list')  )
+		view(  _.getTable('secure-crypt-local.meta')  )
+		# dirs=_.sort(dirs)
+		# good=_.sort(good)
+		# errors=_.sort(errors)
+		for path in dirs: _.pr(path,c='darkcyan')
+		for path in good: _.pr(path,c='cyan')
 
-	process(  _.getTable('crypt-docs.list')  )
-	process(  _.getTable('secure-crypt-local.meta')  )
-
-
+		if _.switches.isActive('All'):
+			for path in errors: _.pr(path,c='red')
+	else:
+		process(  _.getTable('crypt-docs.list')  )
+		process(  _.getTable('secure-crypt-local.meta')  )
 
 
 
