@@ -3375,6 +3375,8 @@ alias ...b='cd rightthumb-widgets-v0 ; m w ; cd install/ ; m in ; cd .. ; cd wid
 
 alias watch.vnc="$widgets/widgets/bash/vnc_watch.sh> /dev/null 2>&1 & "
 
+alias etc='sudo su etc'
+alias et='sudo su etc'
 alias rr='sudo su root'
 alias aa='sudo su admin'
 alias rt='sudo su rightthumb'
@@ -3435,6 +3437,9 @@ alias ssh.y.rt.="ssh-copy-id -i /mnt/c/Users/Scott/.ssh/id_rsa.pub rightthumb@ya
 
 alias ssh.y.e="ssh-copy-id -i ~/.ssh/id_rsa.pub efm@yavin.m-eta.app"
 alias ssh.y.e.="ssh-copy-id -i /mnt/c/Users/Scott/.ssh/id_rsa.pub efm@yavin.m-eta.app"
+
+alias ssh.y.etc="ssh-copy-id -i ~/.ssh/id_rsa.pub etc@yavin.m-eta.app"
+alias ssh.y.etc.="ssh-copy-id -i /mnt/c/Users/Scott/.ssh/id_rsa.pub etc@yavin.m-eta.app"
 
 alias ssh.y.p="ssh-copy-id -i ~/.ssh/id_rsa.pub programmer@yavin.m-eta.app"
 alias ssh.y.p.="ssh-copy-id -i /mnt/c/Users/Scott/.ssh/id_rsa.pub programmer@yavin.m-eta.app"
