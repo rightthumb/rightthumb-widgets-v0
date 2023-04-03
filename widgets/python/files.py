@@ -733,11 +733,13 @@ def action():
 		# global base_path
 		baseDepth = len( folder.split(_v.slash) )
 		base_path=folder
+
 		if not _.switches.isActive('Widget-V0'):
 			getFolder(folder,r=r)
 			if _.switches.isActive('Size'):
-				_.pr()
-				_.pr('total:',formatSize(totals_bytes),c='Background.light_blue')
+				if not _.switches.isActive('Count'):
+					_.pr()
+					_.pr('total:',formatSize(totals_bytes),c='Background.light_blue')
 		else:
 			# _.pr(_v.ww)
 			# _.pr(_v.widgets)

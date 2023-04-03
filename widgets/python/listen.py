@@ -290,7 +290,9 @@ def ai():
 		print(prompt)
 		print('_________________')
 	# Apply the API key
-	openai.api_key = _blowfish.decrypt('+WDUtsrHiXMJ2Rk2Z7QMSyoo+xzLW/BhSw/kTcUwPmZGQBDpZs7LcGpy2hm+rAWQ+ZtzKKLFVO8=', _vault.key() )
+	# openai.api_key = _blowfish.decrypt('+WDUtsrHiXMJ2Rk2Z7QMSyoo+xzLW/BhSw/kTcUwPmZGQBDpZs7LcGpy2hm+rAWQ+ZtzKKLFVO8=', _vault.key() )
+	
+	openai.api_key = os.environ['OPENAI_API_KEY']
 
 	# Define your prompt
 	# prompt = "Write a short story about a person who finds a treasure."
@@ -722,7 +724,7 @@ _paste = _.regImp( __.appReg, '-paste' )
 _copy = _.regImp( __.appReg, '-copy' )
 
 # ipsum()
-
+import os
 ##################################################
 import _rightThumb._vault as _vault
 import _rightThumb._encryptString as _blowfish

@@ -174,8 +174,7 @@ def action():
 	my_event_handler.on_modified = on_modified
 	my_event_handler.on_moved = on_moved
 
-	for x in dir(my_event_handler):
-		print('my_event_handler.',x)
+	# for x in dir(my_event_handler): print('my_event_handler.',x)
 
 	path = "."
 	if _.switches.isActive('Folder'): path = __.path(_.switches.values('Folder')[0])

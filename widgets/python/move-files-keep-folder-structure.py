@@ -32,19 +32,21 @@ _str = __.imp('_rightThumb._string')
 def sw():
     pass
     #b)--> examples
-    _.switches.register( 'Sites', '-site,-sites', 'eyeformeta.com rightthumb.com efm.cx thumb.cx etc.ac' )
-    _.switches.register( 'Remove', '-r,-remove', 'relationshipideas.xyz' )
+    # _.switches.register( 'DisableAutoLink', '-nolink' )
+    _.switches.register( 'Delete', '-unlink,-del,-delete' )
     # _.switches.register( 'URL', '-u,-url,-urls', 'https://efm.cx/', isData='raw' )
     #e)--> examples
-    # _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name,data,clean', description='Files', isRequired=False )
+    _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name', description='Files', isRequired=False )
+    _.switches.register( 'FolderBase', '-base', 'D:\\websites\\domains\\eyeformeta.com\\public_html', isRequired=True )
+    _.switches.register( 'To', '-to', 'D:\\websites\\domains\\eyeformeta.com\\LARGE', isRequired=True )
 
 # __.setting('require-list',['Files,Plus','File,Has']) # todo
 # __.setting('require-list',['Pipe','Files'])
+__.setting('require-pipe||file',True)
 __.setting('receipt-log')
 __.setting('receipt-file')
 __.setting('myFileLocations-skip-validation',False)
 __.setting('require-pipe',False)
-__.setting('require-pipe||file',False)
 __.setting('pre-error',False)
 __.setting('switch-raw',[])
 
@@ -52,9 +54,9 @@ __.setting('switch-raw',[])
 
 _.appInfo[focus()] = {
     # 'app': '8facG-jo0Cxk',
-    'file': 'htaccess-builder.py',
+    'file': 'move-files-keep-folder-structure.py',
     'liveAppName': __.thisApp( __file__ ),
-    'description': 'Changes the world',
+    'description': 'Move Files',
         # _.ail(1,'subject')+
         # _.aib('one')+
     'categories': [
@@ -74,7 +76,12 @@ _.appInfo[focus()] = {
                         # '',
     ],
     'examples': [
-                        _.hp('p htaccess-builder -sites eyeformeta.com rightthumb.com efm.cx thumb.cx etc.ac efm.cx alexandria.ninja biblicalheart.com emloisevil.com eyeformeta.com icosahedron.quest luketheawesomeone.com m-eta.app metaframe.work relationshipideas.xyz reph.vip rightthumb.com ronanwins.com stark-minecraft.com theprogramming.guru understand.quest vp-servers.com xan.guru'),
+                        _.hp('p files -size g 5mb --c | p move-files-keep-folder-structure  -base D:\\websites\\domains\\eyeformeta.com\\public_html  -to D:\\websites\\domains\\eyeformeta.com\\LARGE'),
+                        _.hp('p files -size g 5mb --c | p move-files-keep-folder-structure  -base D:\\websites\\domains\\eyeformeta.com\\public_html  -to D:\\websites\\domains\\eyeformeta.com\\LARGE -delete'),
+                        _.hp('p files + *.mp3 --c | p move-files-keep-folder-structure  -base D:\\websites\\domains\\eyeformeta.com\\public_html  -to D:\\websites\\domains\\eyeformeta.com\\LARGE -delete'),
+                        _.linePrint(label='simple',p=0),
+                        _.hp('reverse'),
+                        _.hp('p files --c | p move-files-keep-folder-structure  -to D:\\websites\\domains\\eyeformeta.com\\public_html  -base D:\\websites\\domains\\eyeformeta.com\\LARGE -delete'),
                         _.linePrint(label='simple',p=0),
                         '',
     ],
@@ -150,95 +157,87 @@ _.l.sw.register( triggers, sw )
 ########################################################################################
 #n)--> start
 
+errors=[]
+notDeleted=[]
 
-from urllib.parse import urlparse
-import tldextract
-
-def extract_domain(url):
-    if not ':' in url: return url
-    parsed_url = urlparse(url)
-    return f"{parsed_url.scheme}://{parsed_url.netloc}"
-
-
-def separate_domain_tld(domain):
-    extracted = tldextract.extract(domain)
-    domain_name = f"{extracted.subdomain}.{extracted.domain}"
-    tld = extracted.suffix
-    if domain_name.startswith('.'): domain_name=domain_name[1:]
-    return domain_name, tld
+def clean(path):
+    while os.sep+os.sep in path:
+        path=path.replace(os.sep+os.sep, os.sep)
+    return path
 
 
+def convert(path):
+    global errors
+    global bases
+    global to
+    for fo in bases:
+        if fo in path: return path.replace(fo,to)
+    errors.append(path)
+    return None
 
+def process(path):
+    path=clean(path)
+    global delete
+    global notDeleted
+    new = convert(path)
+    if new is None:
+        _.pr(path,c='red')
+        return None
+    _.pr(path,c='cyan')
+    # print(new)
+    # print(path)
+    # sys.exit()
+    _v.mkdir(new,isFile=True)
+    # if _.isWin:
+    if os.path.isfile(new):
+        if delete:
+            try: os.unlink(new)
+            except: notDeleted.append(new)
+                
 
-def action():
-    global base
-    sites=[]
-    if os.path.isfile('.htaccess.site'): sites=_.getText('.htaccess.site',raw=True,clean=2).replace('\r','').strip().split('\n')
-    for site in _.switches.values('Sites'): sites.append(site)
+    if not os.path.isfile(new):
+        try: os.link(path,new)
+        except: shutil.copy(path,new)
 
-    remove=[]
-    for site in _.switches.values('Remove'):
-        site=site.lower()
-        try: site=extract_domain(site)
-        except: pass
-        remove.append(site)
-
-    # print(1,sites)
-    items=[]
-    for i,site in enumerate(sites):
-        site=site.lower()
-        sites[i]=sites[i].lower()
-        try: sites[i]=extract_domain(site)
-        except: pass
-        site = sites[i]
-    # print(1,sites)
-    sites=list(set(sites))
-    sit=[]
-    for site in sites:
-        if not site in remove and not ':' in site: sit.append(site)
-    sites=sit
-    # print(1,sites)
-    for i,site in enumerate(sites):
-        domain, tld = separate_domain_tld(site)
-        items.append(domain+'\\'+'.'+tld)
-    # print(1,sites)
-    domains='|'.join(items)
-    htaccess = base.replace('vVv',domains)
-    _.saveText(sites,'.htaccess.site')
-    if os.path.isfile('.htaccess'):
-        _.saveText( _.getText('.htaccess',raw=True) ,'.htaccess-'+_.friendlyDate(_.mod('.htaccess')).split(' ')[0])
-
-    _.saveText(htaccess,'.htaccess')
-    print(htaccess)
+    if delete:
+        try: os.unlink(path)
+        except: notDeleted.append(path)
 
 
 
     
-    # rightthumb\\.com|eyeformeta\\.com
 
-base='''
-#Rewrite everything to https
-RewriteEngine On
-RewriteCond %{HTTPS} !=on
-RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
-<IfModule mod_headers.c>
-    SetEnvIf Origin "^http(s)?://(.+\\.)?(vVv)$" origin_is=$0
-    Header always set Access-Control-Allow-Origin %{origin_is}e env=origin_is
-</IfModule>
-'''
-base=base.strip()
+def action():
+    global errors
+    global notDeleted
+    load()
+
+    for path in _.isData(r=0):
+        if os.path.isfile(path): process(path)
+
+    if errors: _.pr('Errors:')
+    for err in errors: _.pr('\t',err,c='red')
+
+    if notDeleted: _.pr('Not Deleted:')
+    for err in notDeleted: _.pr('\t',err,c='red')
+
+def load():
+    global bases
+    global to
+    global delete
+    delete = _.switches.isActive('Delete')
+    
+    bases = _.switches.values('FolderBase')
+    for i,b in enumerate(bases):
+        if b.endswith(os.sep): b=b[:-1]
+        bases[i] = clean(b)
+    to = _.switches.values('To')[0]
+    to=clean(to)
+    if to.endswith(os.sep): to=to[:-1]
+    
 import os
-
-BLOCK_ACCESS='Deny from all'
-SITE_ROOT='''
-# php -- BEGIN cPanel-generated handler, do not edit
-# Set the “ea-php80” package as the default “PHP” programming language.
-<IfModule mime_module>
-  AddHandler application/x-httpd-ea-php80 .php .php8 .phtml
-</IfModule>
-# php -- END cPanel-generated handler, do not edit
-'''
+import shutil
 
 ##################################################
 #b)--> examples

@@ -31,6 +31,7 @@ def sw():
     _.switches.register( 'Clipboard', '-clip' )
     _.switches.register( 'Ports', '-p,-port,-ports','default' )
     _.switches.register( 'Text', '-text' )
+    _.switches.register( 'Case', '-case' )
     pass
     ### EXAMPLE: START
     # _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=True )
@@ -167,6 +168,17 @@ def clip_randomize_ports():
 def randomize_ports():
     lines = _.isData()
 
+import random
+
+def randomize_case(s):
+    return ''.join(random.choice([str.upper, str.lower])(c) for c in s)
+
+def randomize_string(s):
+    chars = list(s)
+    random.shuffle(chars)
+    randomized_s = ''.join(chars)
+    return randomized_s
+
 def action():
 
     if not _.switches.isActive('Text'):
@@ -180,6 +192,17 @@ def action():
         clip_randomize_ports()
     elif _.switches.isActive('Ports'):
         randomize_ports()
+    elif _.switches.isActive('Clipboard') and _.switches.isActive('Case'):
+        _copy = _.regImp( __.appReg, '-copy' )
+        _paste = _.regImp( __.appReg, '-paste' )
+        data  = _paste.imp.paste()
+        print(randomize_case(data))
+    elif _.switches.isActive('Clipboard'):
+        _copy = _.regImp( __.appReg, '-copy' )
+        _paste = _.regImp( __.appReg, '-paste' )
+        data  = _paste.imp.paste()
+        print(randomize_string(data))
+
 
 import random
 

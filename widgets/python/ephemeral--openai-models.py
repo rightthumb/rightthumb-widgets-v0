@@ -32,8 +32,7 @@ _str = __.imp('_rightThumb._string')
 def sw():
     pass
     #b)--> examples
-    _.switches.register( 'Sites', '-site,-sites', 'eyeformeta.com rightthumb.com efm.cx thumb.cx etc.ac' )
-    _.switches.register( 'Remove', '-r,-remove', 'relationshipideas.xyz' )
+    # _.switches.register( 'Input', '-i' )
     # _.switches.register( 'URL', '-u,-url,-urls', 'https://efm.cx/', isData='raw' )
     #e)--> examples
     # _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name,data,clean', description='Files', isRequired=False )
@@ -52,7 +51,7 @@ __.setting('switch-raw',[])
 
 _.appInfo[focus()] = {
     # 'app': '8facG-jo0Cxk',
-    'file': 'htaccess-builder.py',
+    'file': 'thisApp.py',
     'liveAppName': __.thisApp( __file__ ),
     'description': 'Changes the world',
         # _.ail(1,'subject')+
@@ -74,7 +73,7 @@ _.appInfo[focus()] = {
                         # '',
     ],
     'examples': [
-                        _.hp('p htaccess-builder -sites eyeformeta.com rightthumb.com efm.cx thumb.cx etc.ac efm.cx alexandria.ninja biblicalheart.com emloisevil.com eyeformeta.com icosahedron.quest luketheawesomeone.com m-eta.app metaframe.work relationshipideas.xyz reph.vip rightthumb.com ronanwins.com stark-minecraft.com theprogramming.guru understand.quest vp-servers.com xan.guru'),
+                        _.hp('p thisApp -file file.txt'),
                         _.linePrint(label='simple',p=0),
                         '',
     ],
@@ -150,95 +149,158 @@ _.l.sw.register( triggers, sw )
 ########################################################################################
 #n)--> start
 
-
-from urllib.parse import urlparse
-import tldextract
-
-def extract_domain(url):
-    if not ':' in url: return url
-    parsed_url = urlparse(url)
-    return f"{parsed_url.scheme}://{parsed_url.netloc}"
-
-
-def separate_domain_tld(domain):
-    extracted = tldextract.extract(domain)
-    domain_name = f"{extracted.subdomain}.{extracted.domain}"
-    tld = extracted.suffix
-    if domain_name.startswith('.'): domain_name=domain_name[1:]
-    return domain_name, tld
-
-
-
-
 def action():
-    global base
-    sites=[]
-    if os.path.isfile('.htaccess.site'): sites=_.getText('.htaccess.site',raw=True,clean=2).replace('\r','').strip().split('\n')
-    for site in _.switches.values('Sites'): sites.append(site)
-
-    remove=[]
-    for site in _.switches.values('Remove'):
-        site=site.lower()
-        try: site=extract_domain(site)
-        except: pass
-        remove.append(site)
-
-    # print(1,sites)
-    items=[]
-    for i,site in enumerate(sites):
-        site=site.lower()
-        sites[i]=sites[i].lower()
-        try: sites[i]=extract_domain(site)
-        except: pass
-        site = sites[i]
-    # print(1,sites)
-    sites=list(set(sites))
-    sit=[]
-    for site in sites:
-        if not site in remove and not ':' in site: sit.append(site)
-    sites=sit
-    # print(1,sites)
-    for i,site in enumerate(sites):
-        domain, tld = separate_domain_tld(site)
-        items.append(domain+'\\'+'.'+tld)
-    # print(1,sites)
-    domains='|'.join(items)
-    htaccess = base.replace('vVv',domains)
-    _.saveText(sites,'.htaccess.site')
-    if os.path.isfile('.htaccess'):
-        _.saveText( _.getText('.htaccess',raw=True) ,'.htaccess-'+_.friendlyDate(_.mod('.htaccess')).split(' ')[0])
-
-    _.saveText(htaccess,'.htaccess')
-    print(htaccess)
 
 
+    import os
+    import openai
+    # import json
 
-    
-    # rightthumb\\.com|eyeformeta\\.com
+    openai.organization = os.getenv("OPENAI_API_ORG")
+    openai.api_key = os.getenv("OPENAI_API_KEY")
 
-base='''
-#Rewrite everything to https
-RewriteEngine On
-RewriteCond %{HTTPS} !=on
-RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+    response = openai.Model.list()
+    models = response['data']
 
-<IfModule mod_headers.c>
-    SetEnvIf Origin "^http(s)?://(.+\\.)?(vVv)$" origin_is=$0
-    Header always set Access-Control-Allow-Origin %{origin_is}e env=origin_is
-</IfModule>
-'''
-base=base.strip()
-import os
+    for model in models:
+        if 'root' in model:
+            print(model.root)
 
-BLOCK_ACCESS='Deny from all'
-SITE_ROOT='''
-# php -- BEGIN cPanel-generated handler, do not edit
-# Set the “ea-php80” package as the default “PHP” programming language.
-<IfModule mime_module>
-  AddHandler application/x-httpd-ea-php80 .php .php8 .phtml
-</IfModule>
-# php -- END cPanel-generated handler, do not edit
-'''
+
+"""
+    babbage
+    davinci
+    text-davinci-edit-001
+    babbage-code-search-code
+    text-similarity-babbage-001
+    code-davinci-edit-001
+    text-davinci-001
+    ada
+    babbage-code-search-text
+    babbage-similarity
+    whisper-1
+    code-search-babbage-text-001
+    text-curie-001
+    code-search-babbage-code-001
+    text-ada-001
+    text-embedding-ada-002
+    text-similarity-ada-001
+    curie-instruct-beta
+    ada-code-search-code
+    ada-similarity
+    text-davinci-003
+    code-search-ada-text-001
+    text-search-ada-query-001
+    davinci-search-document
+    ada-code-search-text
+    text-search-ada-doc-001
+    davinci-instruct-beta
+    text-similarity-curie-001
+    code-search-ada-code-001
+    ada-search-query
+    text-search-davinci-query-001
+    curie-search-query
+    gpt-3.5-turbo-0301
+    davinci-search-query
+    babbage-search-document
+    ada-search-document
+    text-search-curie-query-001
+    text-search-babbage-doc-001
+    gpt-3.5-turbo
+    curie-search-document
+    text-search-curie-doc-001
+    babbage-search-query
+    text-babbage-001
+    text-search-davinci-doc-001
+    text-search-babbage-query-001
+    curie-similarity
+    curie
+    text-similarity-davinci-001
+    text-davinci-002
+    davinci-similarity
+    cushman:2020-05-03
+    ada:2020-05-03
+    babbage:2020-05-03
+    curie:2020-05-03
+    davinci:2020-05-03
+    if-davinci-v2
+    if-curie-v2
+    if-davinci:3.0.0
+    davinci-if:3.0.0
+    davinci-instruct-beta:2.0.0
+    text-ada:001
+    text-davinci:001
+    text-curie:001
+    text-babbage:001
+"""
+
+# sorted
+"""
+    ada
+    ada-code-search-code
+    ada-code-search-text
+    ada-search-document
+    ada-search-query
+    ada-similarity
+    ada:2020-05-03
+    babbage
+    babbage-code-search-code
+    babbage-code-search-text
+    babbage-search-document
+    babbage-search-query
+    babbage-similarity
+    babbage:2020-05-03
+    code-davinci-edit-001
+    code-search-ada-code-001
+    code-search-ada-text-001
+    code-search-babbage-code-001
+    code-search-babbage-text-001
+    curie
+    curie-instruct-beta
+    curie-search-document
+    curie-search-query
+    curie-similarity
+    curie:2020-05-03
+    cushman:2020-05-03
+    davinci
+    davinci-if:3.0.0
+    davinci-instruct-beta
+    davinci-instruct-beta:2.0.0
+    davinci-search-document
+    davinci-search-query
+    davinci-similarity
+    davinci:2020-05-03
+    gpt-3.5-turbo
+    gpt-3.5-turbo-0301
+    if-curie-v2
+    if-davinci-v2
+    if-davinci:3.0.0
+    text-ada-001
+    text-ada:001
+    text-babbage-001
+    text-babbage:001
+    text-curie-001
+    text-curie:001
+    text-davinci-001
+    text-davinci-002
+    text-davinci-003
+    text-davinci-edit-001
+    text-davinci:001
+    text-embedding-ada-002
+    text-search-ada-doc-001
+    text-search-ada-query-001
+    text-search-babbage-doc-001
+    text-search-babbage-query-001
+    text-search-curie-doc-001
+    text-search-curie-query-001
+    text-search-davinci-doc-001
+    text-search-davinci-query-001
+    text-similarity-ada-001
+    text-similarity-babbage-001
+    text-similarity-curie-001
+    text-similarity-davinci-001
+    whisper-1
+"""
 
 ##################################################
 #b)--> examples
