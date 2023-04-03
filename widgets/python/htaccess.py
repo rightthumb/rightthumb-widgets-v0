@@ -52,7 +52,7 @@ __.setting('switch-raw',[])
 
 _.appInfo[focus()] = {
     # 'app': '8facG-jo0Cxk',
-    'file': 'thisApp.py',
+    'file': 'htaccess-builder.py',
     'liveAppName': __.thisApp( __file__ ),
     'description': 'Changes the world',
         # _.ail(1,'subject')+
@@ -74,7 +74,7 @@ _.appInfo[focus()] = {
                         # '',
     ],
     'examples': [
-                        _.hp('p thisApp -file file.txt'),
+                        _.hp('p htaccess-builder -sites eyeformeta.com rightthumb.com efm.cx thumb.cx etc.ac efm.cx alexandria.ninja biblicalheart.com emloisevil.com eyeformeta.com icosahedron.quest luketheawesomeone.com m-eta.app metaframe.work relationshipideas.xyz reph.vip rightthumb.com ronanwins.com stark-minecraft.com theprogramming.guru understand.quest vp-servers.com xan.guru'),
                         _.linePrint(label='simple',p=0),
                         '',
     ],
