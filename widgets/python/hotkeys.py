@@ -213,6 +213,43 @@ _.postLoad( __file__ )
 ########################################################################################
 # START
 
+def cleanComment(line):
+    if not '#' in line:
+        return line.rstrip()
+    else:
+        triple_quotes = ('"""', "'''")
+        single_quotes = ('"', "'")
+        in_single_quote = in_double_quote = in_triple_quote = False
+        quote_char = None
+        result = []
+
+        i = 0
+        while i < len(line):
+            char = line[i]
+            if not (in_single_quote or in_double_quote or in_triple_quote):
+                if char == '#':
+                    break
+                if char in single_quotes:
+                    in_single_quote = True
+                    quote_char = char
+                elif char in triple_quotes and i < len(line) - 2 and line[i:i + 3] in triple_quotes:
+                    in_triple_quote = True
+                    quote_char = line[i:i + 3]
+                    i += 2
+                result.append(char)
+            else:
+                if in_single_quote and char == quote_char:
+                    in_single_quote = False
+                elif in_triple_quote and i < len(line) - 2 and line[i:i + 3] == quote_char:
+                    in_triple_quote = False
+                    i += 2
+                result.append(char)
+            i += 1
+
+        return ''.join(result).rstrip()
+
+
+
 
 def ws_line_cleaner_MF(data):
 	data=str(data)
@@ -1991,13 +2028,11 @@ function get__THETABLE( $ID_label ){
 		text=ws_line_cleaner_MF(text)
 		text=text.replace('\r','')
 		result = text.split('\n')
-		def cleanComment(line):
-			if not '#' in line: return line
-			else: return line.split('#')[0]
+
 		for i, line in enumerate(result): result[i] = cleanComment(result[i])
 		data=single_space_MF('\n'.join(result))
 		data=py_space_fix_MF(data)
-		_copy.imp.copy( data, p=0 )
+		_copy.imp.copy( data.strip(), p=0 )
 		beepy.simple_beep()
 
 		# self.remove_py_comments()
@@ -2016,11 +2051,9 @@ function get__THETABLE( $ID_label ){
 		# text=_str.replaceDuplicate( text, '\n' )
 		text=text.replace('\r','')
 		result = text.split('\n')
-		def cleanComment(line):
-			if not '#' in line: return line
-			else: return line.split('#')[0]
+
 		for i, line in enumerate(result): result[i] = cleanComment(result[i])
-		_copy.imp.copy( '\n'.join(result), p=0 )
+		_copy.imp.copy( '\n'.join(result).strip(), p=0 )
 
 
 
@@ -2869,3 +2902,4 @@ if __name__ == '__main__':
 # 	crashes
 # count+=1
 # release_key
+# cleanComment

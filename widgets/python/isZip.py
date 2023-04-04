@@ -32,10 +32,10 @@ _str = __.imp('_rightThumb._string')
 def sw():
     pass
     #b)--> examples
-    _.switches.register( 'To', '-to', '813-690-1260' )
+    # _.switches.register( 'Input', '-i' )
     # _.switches.register( 'URL', '-u,-url,-urls', 'https://efm.cx/', isData='raw' )
     #e)--> examples
-    # _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=False )
+    _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name', description='Files', isRequired=False )
 
 # __.setting('require-list',['Files,Plus','File,Has']) # todo
 # __.setting('require-list',['Pipe','Files'])
@@ -151,31 +151,10 @@ _.l.sw.register( triggers, sw )
 
 def action():
 
+    for path in _.isData(r=0):
+        print(_.isZip(path),path)
 
-    account_sid = _keychain.imp.key('twillio-account-sid')
-    auth_token  = _keychain.imp.key('twillio-auth-token')
 
-
-    # Download the helper library from https://www.twilio.com/docs/python/install
-    import os
-    from twilio.rest import Client
-    to='+18136901260'
-    if _.switches.isActive('To'):
-        to=_.switches.values('To')[0]
-        if not to.startswith('1'):
-            to='+1'+to
-
-    client = Client(account_sid, auth_token)
-
-    call = client.calls.create(
-                            url='https://eyeformeta.com/assets/mp3/rickroll.mp3',
-                            to=to,
-                            from_='+17755356008'
-                        )
-
-    print(call.sid)
-
-_keychain = _.regImp( __.appReg, 'keychain' )
 
 ##################################################
 #b)--> examples

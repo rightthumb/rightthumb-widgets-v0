@@ -195,7 +195,7 @@ def process():
 	if _.switches.isActive('nID'):
 		import _rightThumb._nID as _nID
 		# _nID.mini.password( '1970' )
-		_nID.mini.password( _blowfish.decrypt( 'EPyhTvP79tg8D06LDwSgGw==', _vault.key() ) )
+		_nID.mini.password( _keychain.imp.key('nID') )
 
 		for o in _.switches.values('nID'):
 			oo = str(_nID.mini.resolve( o ))
@@ -422,9 +422,7 @@ def action():
 import datetime
 
 import _rightThumb._dir as _dir
-import _rightThumb._vault as _vault
-import _rightThumb._encryptString as _blowfish
-
+_keychain = _.regImp( __.appReg, 'keychain' )
 
 ########################################################################################
 if __name__ == '__main__':

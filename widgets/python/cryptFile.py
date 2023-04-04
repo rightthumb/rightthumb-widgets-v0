@@ -295,8 +295,9 @@ def action():
 
 					# new = _blowfish.decrypt( file, password )
 					output = filepath
-					if output.endswith(encrypted_file_ext):
-						output = output[:len(output) - len(encrypted_file_ext)]
+					if not _.switches.isActive('NoExt'):
+						if output.endswith(encrypted_file_ext):
+							output = output[:len(output) - len(encrypted_file_ext)]
 
 					if len(_.switches.value('Decrypt',appDBA)):
 						output = _.switches.values('Decrypt',appDBA)[fii]
@@ -320,9 +321,11 @@ def action():
 								# decrypt file stream
 								pyAesCrypt.decryptStream(fIn, fOut, password, bufferSize, encFileSize)
 						except ValueError:
-							_.pr('Err:', 0)
+							if not _.switches.isActive('Clean'):
+								_.pr('Err:', 0)
 							if os.path.isfile( output ):
-								_.pr('Err:', 1)
+								if not _.switches.isActive('Clean'):
+									_.pr('Err:', 1)
 								os.remove( output )
 								time.sleep(.2)
 							# remove output file on error
@@ -349,7 +352,10 @@ def action():
 
 encrypted_file_ext = '.crypt'
 
-# _vault = _.regImp( __.appReg, '_rightThumb._vault' )
+# __.appRegBK=__.appReg
+# _del = _.regImp( __.appReg, 'secure-delete-file' )
+# _del.switch('Files', output); _del.action();
+
 import _rightThumb._vault as _vault
 import _rightThumb._encryptString as _blowfish
 try:

@@ -61,6 +61,7 @@ def appSwitches():
 	_.switches.register('Test', '-test')
 	_.switches.register('Prefix', '-prefix', 'ADD THIS LATER')
 	_.switches.register('Totals', '-totals')
+	_.switches.register('IncludeBackups', '--bk,--backup,--backups')
 	# _.switches.register('Save-Results', '-save')
 
 	
@@ -370,6 +371,16 @@ _.v.totals=0
 
 def action():
 	global theData
+
+	if not _.switches.isActive('IncludeBackups'):
+		if not _.switches.isActive('Minus'):
+			_.switches.fieldSet( 'Minus', 'active', True )
+			values = []
+		else: values = _.switches.values('Minus')
+		values.append(_v.myBackup)
+		_.switches.fieldSet( 'Minus', 'values', values )
+		_.switches.fieldSet( 'Minus', 'value', ','.join(values) )
+	# else: _.e('here')
 
 	if _.switches.isActive('Duplicates') and not len(_.switches.value('Duplicates')):
 		saveData = []

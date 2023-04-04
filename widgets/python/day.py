@@ -340,7 +340,8 @@ def files(fi):
 			if os.path.isfile(path):
 				_.pr('date generated',c=color)
 				t2 = _.getText(path,raw=True)+'\n\n'+'##### #t) '+_.isDate(time.time(),f='iso')+'\n\n'; txt=t2+txt;
-			_.saveText( txt, path ); _.pr( path, c='cyan' )
+			_.saveText( txt, path )
+			# _.pr( path, c='cyan' )
 		# return None
 	if os.path.isfile(path):
 		if path.lower().endswith('.md')     and     not path in _cryptFi:
@@ -399,7 +400,7 @@ def action():
 			new_file_defaults(fi)
 		return None
 	no = path+'notes.md'
-	_.pr(no,c='cyan')
+	# _.pr(no,c='cyan')
 
 	# if not os.path.isfile(no): _.saveText('# '+_.isDate(epoch,f='date')+'\n___\n## today\n- one\n\n~~~\n\n~~~\n___\n',no)
 	if not os.path.isfile(no): _.saveText('# '+_.isDate(epoch,f='date')+'\n___\n',no)

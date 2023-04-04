@@ -241,13 +241,15 @@ def action(path=None):
 		print(paths)
 		_.ad()
 	if paths:
-		
 		for path in paths:
+			path=_.zZip(path)
 			# print('Backup',_.switches.isActive('Backup'))
 			if _.switches.isActive('Backup'): _bk = _.regImp( __.appReg, 'fileBackup' ); __.appReg=appReg; _bk.switch( 'isPreOpen' ); _bk.switch( 'Input', path ); bkfi = _bk.action();
 			# if _.switches.isActive('Backup'): _bk = _.regImp( __.appReg, 'fileBackup' ); bkfi = _bk.imp.action(path,o=1);
 			# _.pr(__.path(path))
 			subprocess.Popen([ app, __.path(path)])
+		_.cleanUnzip()
+
 
 
 ########################################################################################

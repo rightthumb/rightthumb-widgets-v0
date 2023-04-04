@@ -218,6 +218,7 @@ def action():
 	if type(files[0]) == list:
 		files = files[0]
 	for i,filepath in enumerate(files):
+		filepath=_.zZip(filepath)
 		maxLEN = 5
 		midID = 'FCA4D034-357B-444E-B193-328E8E6EA011'
 		wasCrypt = False
@@ -412,6 +413,7 @@ def action():
 					_.cp( [ '', _.addComma(vVv.total) ], 'yellow' )
 				else:
 					_.cp( [ '', _.addComma(vVv.print), 'of', _.addComma(vVv.total) ], 'yellow' )
+	_.cleanUnzip()
 
 
 def simpleClean(data):

@@ -36,7 +36,7 @@ def appSwitches():
 	pass
 	_.switches.register( 'Encrypt', '-en,-encrypt' )
 	_.switches.register( 'Decrypt', '-de,-decrypt' )
-	_.switches.register( 'Password', '-password,-p', 'only -p if password is VAULT' )
+	_.switches.register( 'Password', '-password', 'BLANK for VAULT' )
 	_.switches.register( 'Vault', '-v,-vault' )
 	_.switches.register( 'Machine', '-m' )
 	_.switches.register( 'JustReturn', '-jr' )

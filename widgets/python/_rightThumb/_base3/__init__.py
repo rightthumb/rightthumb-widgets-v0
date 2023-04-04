@@ -12,19 +12,19 @@ from operator import itemgetter
 from datetime import datetime as dt, timedelta
 from datetime import date
 ##################################################
-MINI_ADS = False
 MINI_ADS = True
-
+SHOW_ADS = False
 ##################################################
 
-# 1674156772
+ 
+#                  ¯\_(ツ)_/¯
 
 
-# ¯\_(ツ)_/¯
-
+##################################################
 # sudo apt install libpython2.7-stdlib
 # import json
-
+# 1674156772
+##################################################
 # ## {R2D2919B742E} ##
 # ###########################################################################
 # What if magic existed?
@@ -7491,13 +7491,14 @@ def releaseAcquiredData( appDBA, theFocus, payload=None ):
 				'epoch': __.startTime,
 				'app': appDBA,
 				'session': _v.session(),
-				'rebuiltCommand': rebuiltCommand,
-				'rebuiltCommandEpoch': rebuiltCommandEpoch,
+				'rebuiltCommand': password_filter(rebuiltCommand),
+				'rebuiltCommandEpoch': password_filter(rebuiltCommandEpoch),
 				'files': [],
-				'switches': switches.getTable(),
+				'switches': mask_password(switches.getTable()),
 				'errors': [],
 				'printed': print_ed,
 	}
+	# pv(info); sys.exit();	
 	if not payload is None:
 		info['payload'] = payload
 
@@ -16879,67 +16880,62 @@ def genLine(count,what, p=1):
 		print_(result)
 	return result
 
-ciData = (  
-			[ ';sp',   ' ' ],
-			[ '_;192A;_',   ',' ],
-			[ '_;192B;_',   ':' ],
-			[ ';;',         ',' ],
-			[ ';c',         ',' ],
-			
-			[ ';_',         '-' ],
-			[ ';-',         '-' ],
+ciData = (
+		[ ';sp',        ' '       ],
+		[ '_;192A;_',   ','       ],
+		[ '_;192B;_',   ':'       ],
+		[ ';;',         ','       ],
+		[ ';c',         ','       ],
+		[ ';_',         '-'       ],
+		[ ';-',         '-'       ],
+		[ ';p;',        '%'       ],
+		[ ';p',         '%'       ],
+		[ ';.',         ':'       ],
+		[ ";;'",        _v.slash+'"' ],
+		[ _v.slash+'n', '\n'      ],
+		[ ';n',         '\n'      ],
+		[ ';return',    '\n'      ],
+		[ ';t',         '\t'      ],
+		[ ";'",         '"'       ],
+		[ ';q;',        '"'       ],
+		[ '"\'"',       "'"       ],
+		[ ';sq',        "'"       ],
+		[ 'null00',     '"",'     ],
+		[ '"\'", "\'"', "','"      ],
+		[ '[star]',     '*'       ],
+		[ '[a]',        '*'       ],
+		[ '[s]',        '$'       ],
+		[ '[eq]',       '='       ],
+		[ ';opar;',     '['       ],
+		[ ';bkt0;',     '['       ],
+		[ ';bkt1;',     ']'       ],
+		[ '[pipe]',     '|'       ],
+		[ '[p]',        '|'       ],
+		[ '[htmlopen]', '<'       ],
+		[ '[htmlclose]','>'       ],
+		[ '[gtr]',      '>'       ],
+		[ '[lss]',      '<'       ],
+		[ ';6',         '^'       ],
+		[ ';+',         '+'       ],
+		[ '+--+c',      '--c'     ],
+		[ '[semi]',     ';'       ],
+		[ ';bs',        '/'       ],
+		[ ';fs',        '\\'      ],
+		[';d;',         __.theDelim ],
+		[';delim;',     __.theDelim ],
+		[';thedelim;',  __.theDelim ],
+		[';theDelim;',  __.theDelim ],
+		[';p',          '%'       ],
+		[';js',         '//'      ],
+		[';bs',         '/'       ],
+		[';fs',         '\\'      ],
+		[';t',          '\t'      ],
+		['↔',           ' '       ],
+		['--',          '-'       ],
+		[';bk',         _v.myBackup ],
+		[ '[caret]',    '^'       ]
 
-			[ ';p;',        '%' ],
-			[ ';p',         '%' ],
-			[ ';.',         ':' ],
-			[ ";;'",        _v.slash+'"' ],
-
-			[ _v.slash+'n',        '\n' ],
-			[ ';n',         '\n' ],
-			[ ';return',    '\n' ],
-			[ ';t',         '\t' ],
-
-			[ ";'",         '"' ],
-			[ ';q;',        '"' ],
-			[ '"\'"',       "'" ],
-			[ ';sq',       "'" ],
-			[ 'null00',     '"",' ],
-			[ '"\'", "\'"', "','" ],
-
-			[ '[star]',     '*' ],
-			[ '[a]',        '*' ],
-			[ '[s]',        '$' ],
-			[ '[eq]',       '=' ],
-			[ ';opar;',     '[' ],
-			[ ';bkt0;',     '[' ],
-			[ ';bkt1;',     ']' ],
-			[ '[pipe]',     '|' ],
-			[ '[p]',     '|' ],
-			[ '[htmlopen]', '<' ],
-			[ '[htmlclose]','>' ],
-			[ '[gtr]',      '>' ],
-			[ '[lss]',      '<' ],
-			[ ';6',         '^' ],
-			[ ';+',         '+' ],
-
-			[ '+--+c',      '--c' ],
-
-			[ '[semi]',      ';' ],
-			[ ';bs',         '/' ],
-			[ ';fs',         '\\' ],
-			[ ';d;',         __.theDelim ],
-			[';delim;',         __.theDelim ],
-			[';thedelim;',         __.theDelim ],
-			[';theDelim;',         __.theDelim ],
-			[';p',                 '%' ],
-			[';js',                '//' ],
-			[';bs',                '/' ],
-			[';fs',                '\\' ],
-			[';t',                 '\t' ],
-			['↔',                 ' ' ],
-			['--',                 '-' ],
-			
-			[ '[caret]',    '^' ]  )
+ )
 ci_spent=[]
 def ci(string):
 	#switchValueClean
@@ -21045,6 +21041,8 @@ def dots(path):
 nsfw_=False
 def ad(path=None,label='ad'):
 	if not os.path.isdir(_v.ads+os.sep+'apps'): return None
+	global SHOW_ADS
+	if not SHOW_ADS: return None
 	global MINI_ADS
 	global ads
 	ads = []
@@ -22338,12 +22336,140 @@ def sort(table,s=None):
 	return table
 
 ##################################################
+# path=_.zZip(path);   _.cleanUnzip()
+
+def isZip(filepath):
+	if not os.path.isfile(filepath): return False
+	if " ".join(['{:02X}'.format(byte) for byte in     open( filepath, 'rb' ).read(32)    ]).startswith( '50 4B 03 04' ): return True
+	else: return False
+
+def zip( a, b=None, d=None ):
+	if isZip(a): unzip_file(a,b)
+	else: zip_file(a,b,d)
+	
+def zip_file(input_file, output_zip=None, d=None):
+	import zipfile
+	if output_zip is None: output_zip = input_file+'.zip'
+	with zipfile.ZipFile(output_zip, 'w', zipfile.ZIP_DEFLATED) as zipf:
+		zipf.write(input_file)
+	if not d is None and d:
+		os.unlink(input_file)
+
+
+def unzip_file(zip_file, output_file=None):
+	if not isZip(zip_file): return zip_file
+	zip_file=__.path(zip_file)
+	extracted_file_path = None
+	output_folder=None
+	import zipfile
+	with zipfile.ZipFile(zip_file, 'r') as zipf:
+		if len(zipf.namelist()) == 1:
+			file_to_extract = zipf.namelist()[0]
+			if output_folder is None:
+				output_folder = os.path.dirname(zip_file)
+			extracted_file_path = os.path.join(output_folder, file_to_extract)
+			if os.path.isfile(extracted_file_path): toTMP(extracted_file_path)
+			zipf.extract(file_to_extract, output_folder)
+		else:
+			return unzip_files(zip_file, output_file=output_file)
+
+	return extracted_file_path
+			
+
+
+def unzip_files(zip_file, output_file=None):
+	if not isZip(zip_file): return zip_file
+	import zipfile
+	if output_file is None:
+		if zip_file.endswith('.zip'):
+			output_file = zip_file[:-len('.zip')]
+		else:
+			output_file = zip_file+'.unzip'
+	if os.path.isfile(output_file): toTMP(output_file)
+	with zipfile.ZipFile(zip_file, 'r') as zipf:
+		zipf.extractall(output_file)
+	return output_file
+foundZip=[]
+def zZip(path):
+	# maybe a zip
+	if isZip(path):
+		global foundZip
+		path0=path
+		path=unzip_file(path)
+		if not path0 == path:
+			foundZip.append(path)
+	return path
+
+def cleanUnzip():
+	# after maybe a zip
+	global foundZip
+	if foundZip:
+		time.sleep(.5)
+		for path in foundZip: toTMP(path)
+
+def toTMP(path):
+	import shutil
+	import _rightThumb._dir as _dir
+	zFo=_v.stmp+os.sep+'unzipped'+os.sep
+	_v.mkdir(zFo)
+	tmp=zFo+os.sep+str(mod(path))+'___'+_dir.info(path,k='name')
+	shutil.move(path, tmp )
+	# pr(tmp,c='red')
+
+# path=_.zZip(path);   _.cleanUnzip()
+##################################################
+def enFi(path,ext=True):
+	# print('enFi',isCrypt(path))
+	if os.path.isfile(path) and not isCrypt(path):
+		# print('enFi')
+		_cryptFile = regImp( __.appReg, 'cryptFile' )
+		_cryptFile.switch( 'Decrypt', delete=True )
+		if ext: _cryptFile.switch( 'NoExt',delete=True )
+		else:   _cryptFile.switch( 'NoExt' )
+		_cryptFile.switch( 'Clean' )
+		_cryptFile.switch( 'Encrypt' )
+		_cryptFile.switch( 'Files', path )
+		_cryptFile.do( 'action' )
+def deFi(path,ext=True):
+	# print('deFi',isCrypt(path))
+	if os.path.isfile(path) and isCrypt(path):
+		# print('deFi')
+		_cryptFile = regImp( __.appReg, 'cryptFile' )
+		_cryptFile.switch( 'Decrypt' )
+		if ext: _cryptFile.switch( 'NoExt',delete=True )
+		else:   _cryptFile.switch( 'NoExt' )
+		_cryptFile.switch( 'Clean' )
+		_cryptFile.switch( 'Encrypt', delete=True )
+		_cryptFile.switch( 'Files', path )
+		_cryptFile.do( 'action' )
+##################################################
 crypt_header = b'AES_ENCRYPTED_4a2e'
 def has_crypt_header(file_path):
 	global crypt_header
 	with open(file_path, 'rb') as file:
 		file_header = file.read(len(crypt_header))
 	return file_header == crypt_header
+##################################################
+def password_filter( cmd ):
+	scan = '-password -pass -pw -en -de -key -crypt'.split(' ')
+	for test in scan:
+		if test in cmd.lower():
+			parts = cmd.split(' ')
+			isNext = False
+			newCMD = []
+			for part in parts:
+				if isNext: part = '*****'
+				if part in scan: isNext = True
+				newCMD.append( part )
+				if isNext and part == '*****': isNext = False
+			cmd = ' '.join( newCMD )
+	return cmd
+def mask_password(data):
+	for item in data:
+		if isinstance(item, dict) and item.get("name") == "Password":
+			item["value"] = '******'
+			item["values"] = ['******']
+	return data
 ##################################################
 getYAML2=getYML2
 getYAML=getYML
@@ -22356,6 +22482,7 @@ imp=regImp
 # __.sw.PlusCode
 # def caseUnspecific
 # caseISspecific
+# releaseAcquiredData
 ##################################################
 # globals()['var']
 ##################################################

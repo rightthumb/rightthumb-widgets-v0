@@ -31,7 +31,7 @@ import _rightThumb._string as _str
 
 def appSwitches():
 	_.switches.register( 'Continue', '-y' )
-	_.switches.register( 'Password', '-p' )
+	_.switches.register( 'Password', '-password' )
 	_.switches.register( 'Sudo', '-sudo' )
 
 

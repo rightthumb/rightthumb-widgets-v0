@@ -152,26 +152,10 @@ _.postLoad( __file__ )
 ########################################################################################
 # START
 
-def process( row ):
-	# if '-password' in row or '-pass' in row.lower() or '-pw' in row.lower() or 'crypt' in row.lower() or '-en' in row.lower() or '-de' in row.lower():
-	for test in '-password -pass -pw -en -de -key crypt'.split(' '):
-		if test in row.lower():
-			parts = row.split(' ')
-			isNext = False
-			newRow = []
-			for part in parts:
-				if isNext: part = '******'
-				if part in '-password -pass -pw -en -de -key'.split(' '): isNext = True
-				newRow.append( part )
-				if isNext and part == '******': isNext = False
-			row = ' '.join( newRow )
-	return row
-
-
 def action():
 	theFile = []
 	for i,row in enumerate( _.isData(r=1) ):
-		newRow = process( row )
+		newRow = _.password_filter( row )
 		theFile.append(newRow)
 		_.pr( newRow )
 

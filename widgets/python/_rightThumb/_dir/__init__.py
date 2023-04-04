@@ -243,6 +243,7 @@ def individual(path,subject):
 	path=__.path(path)
 	dic={}
 	if ' path ' in ' '+subject+' ': dic['path'] =  __.path(path);
+	if ' file ' in ' '+subject+' ': dic['name'] =  Path(path).name;
 	if ' name ' in ' '+subject+' ': dic['name'] =  Path(path).name;
 	if ' folder ' in ' '+subject+' ': dic['folder'] =  os.path.dirname(path);
 	if ' stat ' in ' '+subject+' ': dic['stat'] =  os.stat(path);

@@ -230,7 +230,7 @@ RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 base=base.strip()
 import os
 
-BLOCK_ACCESS='Deny from all'
+BLOCK_ACCESS_TO_SELF_AND_CHILDRED='Deny from all'
 SITE_ROOT='''
 # php -- BEGIN cPanel-generated handler, do not edit
 # Set the “ea-php80” package as the default “PHP” programming language.

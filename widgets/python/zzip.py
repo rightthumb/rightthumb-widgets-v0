@@ -32,10 +32,10 @@ _str = __.imp('_rightThumb._string')
 def sw():
     pass
     #b)--> examples
-    _.switches.register( 'To', '-to', '813-690-1260' )
+    # _.switches.register( 'Input', '-i' )
     # _.switches.register( 'URL', '-u,-url,-urls', 'https://efm.cx/', isData='raw' )
     #e)--> examples
-    # _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=False )
+    _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name', description='Files', isRequired=False )
 
 # __.setting('require-list',['Files,Plus','File,Has']) # todo
 # __.setting('require-list',['Pipe','Files'])
@@ -115,84 +115,17 @@ _.l.conf('clean-pipe',True)
 _.l.sw.register( triggers, sw )
 
 ########################################################################################
-#b)--> examples
-#d)--> code hints to quickly get started
-    #n)--> inline examples
-        # any(ele in 'scott5' for ele in list('0123456789'))
-        # if _.switches.isActive('Test'): test(); return None;
-        # result=[]; result=[ _.pr(line) for i, line, bi in _.numerate( _.isData(r=0) )]
-        # bk=[];[  bk.append(rec['backup']) for rec in backupLog if path == rec['file']]; bk=bk[-1];
-        # a=(1 if True else 0) <--# 
-        #!)--> m=[[row[i] for row in matrix] for i in range(4)]
-
-    #n)--> python globals
-        # globals()['var']
-        # for k in globals(): print(k, eval(k) )
-
-    #n)--> webpage from url
-        # for subject in _.caseUnspecific( line, needle ): line = line.replace( subject, _.colorThis( subject, 'green', p=0 ) )
-
-    #n)--> webpage from url
-        # requests=__.imp('requests.post')
-        #!)--> data=str(requests.post(url,data={}).content,'iso-8859-1')
-
-    #n)--> import and backup example
-        # _bk = _.regImp( __.appReg, 'fileBackup' ); _bk.switch( 'Silent' ); _bk.switch( 'isRunOnce' ); _bk.switch( 'Flag', 'APP' ); _bk.switch( 'DoNotSchedule' )
-        # _bk.switch( 'Input', path ); bkfi = _bk.action();
-    
-    #n)--> inline
-        # for rel in [ subject for subject in _.isData(r=0) if _.showLine(subject) ]: print(rel)
-
-    #n)--> banner
-        # banner=_.Banner(app); goss=banner.goss;
-#e)--> examples
 ########################################################################################
 #n)--> start
 
+
 def action():
+    for path in _.isData(r=0):
+        _.zip(path,d=True)
 
-
-    account_sid = _keychain.imp.key('twillio-account-sid')
-    auth_token  = _keychain.imp.key('twillio-auth-token')
-
-
-    # Download the helper library from https://www.twilio.com/docs/python/install
-    import os
-    from twilio.rest import Client
-    to='+18136901260'
-    if _.switches.isActive('To'):
-        to=_.switches.values('To')[0]
-        if not to.startswith('1'):
-            to='+1'+to
-
-    client = Client(account_sid, auth_token)
-
-    call = client.calls.create(
-                            url='https://eyeformeta.com/assets/mp3/rickroll.mp3',
-                            to=to,
-                            from_='+17755356008'
-                        )
-
-    print(call.sid)
-
-_keychain = _.regImp( __.appReg, 'keychain' )
-
-##################################################
-#b)--> examples
-# banner=_.Banner(dependencies)
-# goss=banner.goss
-# goss('-\t this app will sherlock tf out of any python app or python module')
-#e)--> examples
-##################################################
 
 ########################################################################################
 if __name__ == '__main__':
-    #b)--> examples
-
-    # banner.pr()
-    # if len(_.switches.all())==0: banner.gossip()
-    
-    #e)--> examples
     action()
     _.isExit(__file__)
 

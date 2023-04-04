@@ -26,7 +26,7 @@ import _rightThumb._string as _str
 # _.switches.register('Move', '-move','completed_in-folder_name')
 
 _.switches.register('Input', '-i,-f,-file','file.txt')
-_.switches.register('Password', '-p','123')
+_.switches.register('Password', '-password','123')
 _.switches.register('NamePassword', '-pn,-np')
 _.switches.register('NameDate', '-nd')
 _.switches.register('UnZip', '-u,-unzip')

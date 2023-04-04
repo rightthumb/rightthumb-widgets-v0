@@ -43,7 +43,7 @@ import datetime
 
 def appSwitches():
 	_.switches.register('Input', '-i,-f,-file','file.txt')
-	_.switches.register('Password', '-p,-pw,-password','123')
+	_.switches.register('Password', '-password','123')
 	_.switches.register('NamePassword', '-pn,-np')
 	_.switches.register('NameDate', '-nd')
 	_.switches.register('UnZip', '-u,-unzip')

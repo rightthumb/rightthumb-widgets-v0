@@ -79,7 +79,7 @@ def appSwitches():
 	pass
 	# _.switches.register('Input', '-i,-input','file.txt')
 	_.switches.register('Files', '-f,-file,-files','file.txt')
-	_.switches.register('Password', '-p,-pass,-password','Test!')
+	_.switches.register('Password', '-password','Test!')
 	_.switches.register('Decrypt', '-decrypt')
 	
 

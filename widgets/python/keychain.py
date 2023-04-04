@@ -45,6 +45,7 @@ def appSwitches():
 	_.switches.register( 'Temp', '-temp', '8' )
 	_.switches.register( 'JustPrint', '-jp', 'r' )
 	_.switches.register( '.bashrc-Aliases', '-ap,-rc', 'r' )
+	_.switches.register( 'Backup', '-b,-backup' )
 
 
 _.autoBackupData = __.autoCreationConfiguration['backup']
@@ -177,7 +178,7 @@ def add():
 		password = _.switches.values('Password')[0]
 
 	table[label] = _vault.imp.s.en( password )
-	if 'eof' in table: del table['eof']; table['eof']='';
+	# if 'eof' in table: del table['eof']; table['eof']='';
 	_.saveTableDB( table, 'keychain.hash' )
 
 	if _.switches.isActive('Alias'):
@@ -254,7 +255,7 @@ def changePassword():
 
 	for label in table:
 		table[label] = _vault.imp.s.en(table[label])
-	if 'eof' in table: del table['eof']; table['eof']='';
+	# if 'eof' in table: del table['eof']; table['eof']='';
 	_.saveTableDB( table, 'keychain.hash' )
 
 def addAlias():
@@ -353,9 +354,40 @@ def load():
 	global table
 	global label
 	global aliases
+	def _bk_(yml,save):
+		if os.path.isfile(save):
+			_.deFi(save,ext=False)
+			time.sleep(.3)
+			bk=_.getText(save,raw=True,clean=2).split('\n')
+		else:
+			bk=[]
+		bk.append('___')
+		bk.append(_.friendlyDate(__.startTime))
+		for line in yml.split('\n'):
+			bk.append(line)
+		_.saveText(bk,save)
+		time.sleep(.1)
+		bk=_.getText(save,raw=True,clean=2).split('\n')
+		time.sleep(.1)
+		_.saveText(bk,save)
+		time.sleep(.3)
+		_.enFi(save,ext=False)
 	if table is None:
 		table = _.getTableDB( 'keychain.hash' )
 		aliases = _.getTableDB( 'keychain-aliases.hash' )
+		if _.switches.isActive('Backup'):
+			backup={}
+			for k in table:
+				backup[k]=_vault.imp.s.de(table[k])
+			yml=_.toYML(backup)
+			save = _v.tt+os.sep+'keychain.crypt'
+			save2 = _v.tt+os.sep+'keychain'+'-'+_.friendlyDate(__.startTime).split(' ')[0]+'.crypt'
+			_bk_(yml,save)
+			# try: _bk_(yml,save)
+			# except: _bk_(yml,save2)
+
+
+			return None
 		_.v.p = _.switches.isActive('Print')
 		label = _.switches.value('Label')
 		if _.switches.isActive('Label'):

@@ -33,7 +33,7 @@ def sw():
     pass
     #b)--> examples
     # _.switches.register( 'Input', '-i' )
-    # _.switches.register( 'URL', '-u,-url,-urls', 'https://efm.cx/', isData='raw' )
+    # _.switches.register( 'URL', '-u,-url,-urls', 'https://etc.ac/', isData='raw' )
     #e)--> examples
     # _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name,data,clean', description='Files', isRequired=False )
 

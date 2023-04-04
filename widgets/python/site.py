@@ -38,6 +38,7 @@ def sw():
 	_.switches.register( 'Servers', '-v,-srv,-server,-vps', 'b h m t' )
 	_.switches.register( 'Print', '-print' )
 	_.switches.register( 'Status', '-status' )
+	_.switches.register( 'NotWSL', '-notwsl' )
 
 
 
@@ -206,7 +207,6 @@ def process(path,end='',ft=None):
 
 
 	
-
 	# Upload-Scp Download-Scp Test
 	ftp=None
 	url=None
@@ -217,97 +217,128 @@ def process(path,end='',ft=None):
 				break
 		if not ftp is None:
 			break
-	if 'url' in meta:
-		url = file.replace( __.path(folder), meta['url'] ).replace('\\','/')
-		if os.path.isdir(path):
-			url += '/'
-		_.pr(urlpr(url),c='Background.blue')
-		try: _.pr(_.v.fp,c='Background.light_blue')
-		except: pass
-		
 
-		if _.switches.isActive('Test'):
-			try:
-				import webbrowser
-			except Exception as e:
-				pass
-			try:
-				webbrowser.open(url, new=2)
-			except Exception as e:
-				_.e(e)
-	# _.pr(ftp, pvs=1)
-	if ft:
-		for k in ft: ftp[k]=ft[k]
 	scp='scp'
+	ssh='ssh'
 	if _.isWin:
-		scp='scp'
 		scp='"C:\\Program Files\\Git\\usr\\bin\\scp.exe"'
-
-	if _.switches.isActive('Upload-Scp') or _.switches.isActive('Download-Scp'):
-		# if ftp is None or url is None:
-		# 	_.e('meta missing fields')
-		s=ftp['server']
+	if type(ftp['server']) == list:
+		servers = ftp['server']
+	else:
+		servers = [ftp['server']]
+	
+	for s in servers:
 		f=ftp['path']
 		u=ftp['user']
-		# pw=_vault.imp.s.de( ftp['password'] )
-		fi = file.replace( __.path(folder), f ).replace('\\','/')
-		if os.path.isdir(path):
-			fi=__.path(fi,pop=True)
-			fi += '/'
-			path+=os.sep
+		pw=_vault.imp.s.de( ftp['password'] )
+		_ssh=sshpass(pw,'ssh')
+		_scp=sshpass(pw,'scp')
 
-
-		
-		
-
-
-	if _.switches.isActive('mkdir'):
-		s=ftp['server']
-		f=ftp['path']
-		u=ftp['user']
-		fi = file.replace( __.path(folder), f ).replace('\\','/')
-		rfo = _.tailpop(fi,'/')
-		# pw=_vault.imp.s.de( ftp['password'] )
-		if os.path.isdir(path):
-			fi=__.path(fi,pop=True)
-			fi += '/'
-			path+=os.sep
-		mkdir=f'ssh -f {u}@{s} "/bin/python3 /opt/rightthumb-widgets-v0/widgets/python/mkdir.py -folder {rfo}"'+tail()
-		_.pr(mkdir)
-		if not _.switches.isActive('Print'):
-			try:
-				_.cp('creating folder structure','yellow')
-				os.system( mkdir )
-			except Exception as e:
-				_.e(e)
-
-	if _.switches.isActive('Upload-Scp'):
-		# do=f'{scp} {path}  {u}@{s}:{fi}'
-		if os.path.isdir(file):
-			do=f'{scp} -r {file}  {u}@{s}:{fi}'+tail()
+		if _.isWin and not _.switches.isActive('NotWSL'):
+			scp=_scp
+			ssh=_ssh
+			_file=wsl(file)
+			_path=wsl(path)
 		else:
-			do=f'{scp} {file}  {u}@{s}:{fi}'+tail()
-	if _.switches.isActive('Download-Scp'):
-		if os.path.isdir(path):
-			do=f'{scp} -r {u}@{s}:{fi} {path}'+tail()
-		else:
-			do=f'{scp}  {u}@{s}:{fi} {path}'+tail()
-	if _.switches.isActive('Print'):
-		_.pr(do)
+			_file=file
+			_path=path
 
-	if _.switches.isActive('Upload-Scp') or _.switches.isActive('Download-Scp'):
-		# _.pr(do)
-		if not _.switches.isActive('Print'):
-			try:
-				os.system( do )
-			except Exception as e:
-				_.e(e)
+
+
+		if 'url' in meta:
+			url = file.replace( __.path(folder), meta['url'] ).replace('\\','/')
+			if os.path.isdir(path):
+				url += '/'
+			_.pr(urlpr(url),c='Background.blue')
+			try: _.pr(_.v.fp,c='Background.light_blue')
+			except: pass
+			
+
+			if _.switches.isActive('Test'):
+				try:
+					import webbrowser
+				except Exception as e:
+					pass
+				try:
+					webbrowser.open(url, new=2)
+				except Exception as e:
+					_.e(e)
+		# _.pr(ftp, pvs=1)
+		if ft:
+			for k in ft: ftp[k]=ft[k]
+
+
+		if _.switches.isActive('Upload-Scp') or _.switches.isActive('Download-Scp'):
+			# if ftp is None or url is None:
+			# 	_.e('meta missing fields')
+
+			fi = file.replace( __.path(folder), f ).replace('\\','/')
+			if os.path.isdir(path):
+				fi=__.path(fi,pop=True)
+				fi += '/'
+				path+=os.sep
+
+
+		# if _.switches.isActive('mkdir'):
+		if True:
+			fi = file.replace( __.path(folder), f ).replace('\\','/')
+			rfo = _.tailpop(fi,'/')
+			pw=_vault.imp.s.de( ftp['password'] )
+			if os.path.isdir(path):
+				fi=__.path(fi,pop=True)
+				fi += '/'
+				path+=os.sep
+			
+			mkdir=f'{ssh} -f {u}@{s} "/bin/python3 /opt/rightthumb-widgets-v0/widgets/python/mkdir.py -folder {rfo}"'+tail()
+			# _.pr(mkdir)
+			if not _.switches.isActive('Print'):
+				try:
+					# _.cp('creating folder structure','yellow')
+					os.system( mkdir )
+				except Exception as e:
+					_.e(e)
+
+
+
+
+		# wsl sshpass -p 'THE_PASSWORD' scp /mnt/c/Users/Scott/.rt/profile/tables/keychain.crypt root@yavin.m-eta.app:/opt/
+		#                                                                                                                                <--( WSL )
+
+		#                                                                                                                                <--( WSL )
+
+
+
+
+		if _.switches.isActive('Upload-Scp'):
+			# do=f'{scp} {path}  {u}@{s}:{fi}'
+			if os.path.isdir(file):
+				do=f'{scp} -r {_file}  {u}@{s}:{fi}'+tail()
+			else:
+				do=f'{scp} {_file}  {u}@{s}:{fi}'+tail()
+		if _.switches.isActive('Download-Scp'):
+			if os.path.isdir(path):
+				do=f'{scp} -r {u}@{s}:{fi} {_path}'+tail()
+			else:
+				do=f'{scp}  {u}@{s}:{fi} {_path}'+tail()
+		if _.switches.isActive('Print'):
+			_.pr(do)
+
+		if _.switches.isActive('Upload-Scp') or _.switches.isActive('Download-Scp'):
+			# _.pr(do)
+			if not _.switches.isActive('Print'):
+				try:
+					os.system( do )
+				except Exception as e:
+					_.e(e)
 
 
 	
 
 def action():
 	global meta
+
+	# print( wsl(_.switches.values('Files')[0]) )
+	# sys.exit()
 
 	if _.switches.isActive('Files') and len(_.switches.all())==1:
 		_.v.quiet = True
@@ -350,7 +381,6 @@ def action():
 
 				_.linePrint(c='red')
 
-# _vault = _.regImp( __.appReg, '_rightThumb._vault' )
 _fileBackup = None
 def encrypt_markdown(path):
 	if os.path.isfile(path) and path.endswith('.md'):
@@ -363,6 +393,20 @@ def encrypt_markdown(path):
 		_fileBackup.switch( 'Input', path )
 		_fileBackup.action()
 
+
+def wsl(path):
+	subject = __.path(path)
+	git_path = subject
+	git_path = git_path.replace( _v.slashes['w'], _v.slashes['u'] )
+	git_path = git_path.replace( ':', '' )
+	git_path = _v.slashes['u'] + git_path
+	wsl5 = '/mnt/'+ git_path[1].lower() + git_path[2:]
+	wsl5=wsl5.replace(' ','\\ ')
+	return wsl5
+
+def sshpass(pw,cmd): return f"wsl sshpass -p '{pw}' {cmd} "
+
+_vault = _.regImp( __.appReg, '_rightThumb._vault' )
 _.v.quiet = False
 	
 ########################################################################################

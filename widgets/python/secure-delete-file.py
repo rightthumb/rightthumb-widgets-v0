@@ -31,7 +31,7 @@ import _rightThumb._string as _str
 
 def appSwitches():
 	pass
-	# _.switches.register( 'Files', '-f,-file,-files','file.txt', description='Files' )
+	_.switches.register( 'Clean', '--c' )
 	_.switches.register( 'Files', '-f,-file,-files','file.txt', isData='name', description='Files' )
 _.autoBackupData = False
 __.releaseAcquiredData = False
@@ -165,9 +165,11 @@ def action():
 				newFile+='0'
 
 			_.saveText( newFile, path )
-			_.cp( ['secure',_.addComma(i)], 'green' )
+			if not _.switches.isActive('Clean'):
+				_.cp( ['secure',_.addComma(i)], 'green' )
 			os.unlink(path)
-			_.cp( [ 'deleted:', path ], 'red' )
+			if not _.switches.isActive('Clean'):
+				_.cp( [ 'deleted:', path ], 'red' )
 
 
 
