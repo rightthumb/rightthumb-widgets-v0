@@ -270,6 +270,7 @@ def isExit():
 	global on_exit_subjects
 	for subject in on_exit_subjects:
 		on_exit_subjects[subject]()
+	sys.exit()
 
 
 def path( p, ab=True, pop=False, file=False, slash=None, folder=None, fi=None, fo=None, fix=True ):
@@ -428,7 +429,8 @@ try:
 	startTime
 except Exception as e:
 	startTime = time.time()
-	
+	startTime2 = int(str(startTime).split('.')[0])
+
 trigger_isPipe = False
 isRequired_Pipe = False
 isRequired_Pipe_or_File = False

@@ -241,15 +241,24 @@ def action(path=None):
 		print(paths)
 		_.ad()
 	if paths:
+		logFi = _v.tt+os.sep+'file-open'+os.sep+_.day()[:-1]+'.hash'
+		_v.mkdir(logFi,f=1)
+		log = _.getTable2(logFi)
+		try: session = os.getenv('Session_ID')
+		except: session = _v.machine()+'-'+str(__.startTime2)
+		if len(session) < 1: session = _v.machine()+'-'+str(__.startTime2)
 		for path in paths:
+			path=__.path(path)
 			path=_.zZip(path)
 			# print('Backup',_.switches.isActive('Backup'))
 			if _.switches.isActive('Backup'): _bk = _.regImp( __.appReg, 'fileBackup' ); __.appReg=appReg; _bk.switch( 'isPreOpen' ); _bk.switch( 'Input', path ); bkfi = _bk.action();
 			# if _.switches.isActive('Backup'): _bk = _.regImp( __.appReg, 'fileBackup' ); bkfi = _bk.imp.action(path,o=1);
 			# _.pr(__.path(path))
-			subprocess.Popen([ app, __.path(path)])
+			subprocess.Popen([ app, path])
+			if not path in log: log[path] = []
+			log[path].append({'epoch':__.startTime,'session': session})
+		_.saveTable2(log,logFi)
 		_.cleanUnzip()
-
 
 
 ########################################################################################

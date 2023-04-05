@@ -939,7 +939,8 @@ def dir_structure():
 
 	if home_created:
 		create_default_profile()
-def createDestinationFolders( folder, o=None, isFile=False, p=False ):
+def createDestinationFolders( folder, o=None, isFile=False, p=False, f=None ):
+	if not f is None: isFile=f
 	_pr=p
 	folder=path_fix(folder)
 	global techDrive
@@ -1174,11 +1175,20 @@ def getUserProfile():
 	output = output.replace('\r','')
 	output = _str.cleanBE( output, ' ' )
 	return output
-def md5(string,_id=False):
+def md5(string,_id=False,mini=False):
 	import _rightThumb._md5 as _md5
-	md5 = _md5.md5(string)
-	if _id: md5 = _md5.md52GUID(md5,True)
-	return md5
+	MD5 = _md5.md5(string)
+	if _id: MD5 = _md5.md52GUID(MD5,True)
+	elif mini:
+		a = MD5[:3]
+		b = MD5[3:7]
+		MD5 = f'{a}-{b}'
+	return MD5
+def machine():
+	import uuid
+	return md5(  str(uuid.UUID(int=uuid.getnode()))  ,mini=True)
+
+
 def getMachineID():
 # machineID = _v.getMachineID()
 	import _rightThumb._md5 as _md5
