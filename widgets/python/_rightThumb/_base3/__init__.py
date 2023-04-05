@@ -22336,6 +22336,68 @@ def sort(table,s=None):
 	return table
 
 ##################################################
+def columnAbbreviations(data,appReg=None):
+	global appInfo
+	if appReg is None: appReg = __.appReg
+	if data:
+		abbrev=[]
+		abbr={}
+		for k in data[0]:
+			ks=k.strip()
+			kk=ks.replace(' ','_')
+			kl=kk.lower()
+			if '_' in kk:
+				aa=''
+				for i,w in enumerate(kl.split('_')): aa+=w[0]
+
+				if aa in abbrev:
+					aa=''
+					for i,w in enumerate(kl.split('_')):
+						if w:
+							if i == 0:
+								aa+=w[0]+w[1]
+							else:
+								aa+=w[0]
+					if aa in abbrev:
+						aa=''
+						for i,w in enumerate(kl.split('_')):
+							if w:
+								aa+=w[0]+w[1]
+						if aa in abbrev:
+							aa=''
+							for i,w in enumerate(kl.split('_')):
+								aa+=w[0]+w[1]+w[2]
+				if not aa in abbrev and aa:
+					abbrev.append(aa)
+					if not k in abbr: abbr[k]=[]
+					abbr[k].append(aa)
+			else:
+				aa=kl[0]
+				if aa in abbrev:
+					aa=''
+					for c in kl:
+						if aa in abbrev:
+							aa+=c
+						else: break
+
+
+
+
+				if not aa in abbrev and aa:
+					abbrev.append(aa)
+					if not k in abbr: abbr[k]=[]
+					abbr[k].append(aa)
+		for k in data[0]:
+			ks=k.strip()
+			kl=ks.lower()
+			if not kl[0] in abbrev and kl[0]:
+				abbrev.append(kl[0])
+				if not k in abbr: abbr[k]=[]
+				abbr[k].append(kl[0])
+			# if not k in abbr: _.e(k,abbr)
+			if k in abbr:
+				appInfo[appReg]['columns'].append({'name': k, 'abbreviation': ','.join(abbr[k])})
+##################################################
 # path=_.zZip(path);   _.cleanUnzip()
 
 def isZip(filepath):
