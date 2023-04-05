@@ -241,7 +241,7 @@ def action(path=None):
 		print(paths)
 		_.ad()
 	if paths:
-		logFi = _v.tt+os.sep+'file-open'+os.sep+_.day()[:-1]+'.hash'
+		logFi = _v.tt+os.sep+'file-open'+os.sep+_.friendlyDate(time.time()).split(' ')[0]+'.hash'
 		_v.mkdir(logFi,f=1)
 		log = _.getTable2(logFi)
 		session = str(__.startTime2)
@@ -260,7 +260,7 @@ def action(path=None):
 				command = f'{app} {path}'
 				os.system(command)
 			if not path in log: log[path] = []
-			log[path].append({'epoch':__.startTime,'session': session})
+			log[path].append(session)
 		_.saveTable2(log,logFi)
 		_.cleanUnzip()
 

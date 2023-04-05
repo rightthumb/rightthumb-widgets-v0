@@ -22476,6 +22476,7 @@ getYAML=getYML
 saveYAML=saveYML
 saveYAML2=saveYML2
 imp=regImp
+ago=timeAgo
 ##################################################
 # class regImp:
 # positiveResultsCode

@@ -175,7 +175,7 @@ def action():
 	schedulerLog = _.tables.returnSorted( 'schedulerLog', 'a.timestamp', _.getTable('fileBackupSchedule.json') )
 	# backupLog = _.getTable('fileBackup.json')
 	backupLog.reverse()
-	maxEpoch = time.time()
+	maxEpoch = _.ago('1d')
 
 	if _.switches.isActive('Ago'):
 		maxEpoch = _.autoDate(_.resolveEpochTest(ago()))
@@ -507,7 +507,29 @@ def action():
 								# _.pr(log['file'])
 							# else:
 								# _.pr( fd['date_modified'], log['file'] )
+	pass
+	# logFi = _v.tt+os.sep+'file-open'+os.sep+_.day()[:-1]+'.hash'
+	def script(jsonFi):
+		if os.path.isfile(jsonFi):
+			_.pr('file-open:', jsonFi)
+			table = _.getTable2(jsonFi)
+			for path in table:
+				a=False
+				if not path in __.spent:
+					a=True
+					__.spent.append(path)
+					sessions = []
+					fileBackup = _fileBackup()
+					fileBackup.switch( 'Session', '-',join(table[path]) )
+					fileBackup.switch( 'Input', path )
+					fileBackup.do( 'action' )
+				print(a,path)
+			os.unlink(jsonFi)
 
+
+
+	_.fo(_v.tt+os.sep+'file-open',script=script,r=1)
+		
 __.spent = []
 
 def _fileBackup():

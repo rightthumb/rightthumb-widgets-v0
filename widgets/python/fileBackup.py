@@ -54,6 +54,7 @@ def appSwitches():
 	_.switches.register('Session', '-session')
 	_.switches.register('isPreOpen', '-open,-isPreOpen')
 	_.switches.register('Test', '-test')
+	# _.switches.register('Session_ID', '-session')
 
 	
 
@@ -146,6 +147,13 @@ if not sys.stdin.isatty():
 
 ########################################################################################
 # START
+
+
+if _.switches.isActive('Session'):
+	__.Session_ID = _.switches.values('Session')
+else:
+	__.Session_ID = os.getenv('Session')
+
 
 def log_default_fields(record):
 	info = {
@@ -826,7 +834,7 @@ def action(path=None,flag=None,o=None):
 					if bk: bk=bk[-1]; _.pr( bk, c='darkcyan' );
 					# _.pr(' -- TRUE -- ')
 					if _.switches.isActive('isPreOpen'):
-						txtScheduler.append( { 'timestamp': genEpoch(), 'file': __.path(path), 'status': 0, 'app': 'fileBackup', 'group': 0, 'session': os.getenv('Session_ID') } )
+						txtScheduler.append( { 'timestamp': genEpoch(), 'file': __.path(path), 'status': 0, 'app': 'fileBackup', 'group': 0, 'session': __.Session_ID } )
 						_.saveTable( txtScheduler,'fileBackupSchedule.json', p=1 )
 					return None
 			if path in INDEX and os.path.getmtime(path) == INDEX[path]['timestamp']:
@@ -834,7 +842,7 @@ def action(path=None,flag=None,o=None):
 				_.pr(INDEX[path]['backup'], c='darkcyan')
 				_.pr('File not modified since last backup',c='yellow')
 				if _.switches.isActive('isPreOpen'):
-					txtScheduler.append( { 'timestamp': genEpoch(), 'file': __.path(path), 'status': 0, 'app': 'fileBackup', 'group': 0, 'session': os.getenv('Session_ID') } )
+					txtScheduler.append( { 'timestamp': genEpoch(), 'file': __.path(path), 'status': 0, 'app': 'fileBackup', 'group': 0, 'session': __.Session_ID } )
 					_.saveTable( txtScheduler,'fileBackupSchedule.json', p=1 )
 				return INDEX[path]['backup']
 			# _.pr('pre')
@@ -1205,7 +1213,7 @@ def action(path=None,flag=None,o=None):
 				else:
 					_.pr('not encrypted',c='red')
 					if _.switches.isActive('isPreOpen'):
-						txtScheduler.append( { 'timestamp': genEpoch(), 'file': __.path(path), 'status': 0, 'app': 'fileBackup', 'group': 0, 'session': os.getenv('Session_ID') } )
+						txtScheduler.append( { 'timestamp': genEpoch(), 'file': __.path(path), 'status': 0, 'app': 'fileBackup', 'group': 0, 'session': __.Session_ID } )
 						_.saveTable( txtScheduler,'fileBackupSchedule.json', p=1 )
 					return path
 					# sys.exit()
@@ -1217,7 +1225,7 @@ def action(path=None,flag=None,o=None):
 
 
 		
-		txtScheduler.append( { 'timestamp': genEpoch(), 'file': __.path(path), 'status': 0, 'app': 'fileBackup', 'group': 0, 'session': os.getenv('Session_ID') } )
+		txtScheduler.append( { 'timestamp': genEpoch(), 'file': __.path(path), 'status': 0, 'app': 'fileBackup', 'group': 0, 'session': __.Session_ID } )
 		_.saveTable( txtScheduler,'fileBackupSchedule.json', p=0 )
 		if __.openSecure:
 			_.colorThis( 'secure open and scheduled', 'yellow' )
@@ -1258,7 +1266,7 @@ def action(path=None,flag=None,o=None):
 						_.pr( 'Has Backup *', c='yellow' )
 						# _.pr( 'Has Backup',_.formatSize(byte), c='yellow' )
 					if _.switches.isActive('isPreOpen'):
-						txtScheduler.append( { 'timestamp': genEpoch(), 'file': __.path(path), 'status': 0, 'app': 'fileBackup', 'group': 0, 'session': os.getenv('Session_ID') } )
+						txtScheduler.append( { 'timestamp': genEpoch(), 'file': __.path(path), 'status': 0, 'app': 'fileBackup', 'group': 0, 'session': __.Session_ID } )
 						_.saveTable( txtScheduler,'fileBackupSchedule.json', p=1 )
 					return INDEX[path]['backup']					
 				else:
@@ -1274,7 +1282,7 @@ def action(path=None,flag=None,o=None):
 					_.colorThis( INDEX[path]['backup'], 'darkcyan' )
 					_.colorThis( 'Has Backup', 'yellow' )
 				if _.switches.isActive('isPreOpen'):
-					txtScheduler.append( { 'timestamp': genEpoch(), 'file': __.path(path), 'status': 0, 'app': 'fileBackup', 'group': 0, 'session': os.getenv('Session_ID') } )
+					txtScheduler.append( { 'timestamp': genEpoch(), 'file': __.path(path), 'status': 0, 'app': 'fileBackup', 'group': 0, 'session': __.Session_ID } )
 					_.saveTable( txtScheduler,'fileBackupSchedule.json', p=1 )
 				return INDEX[path]['backup']
 				# if _.switches.isActive('Flag'):
@@ -1294,7 +1302,7 @@ def action(path=None,flag=None,o=None):
 					_.colorThis( INDEX[path]['backup'], 'darkcyan' )
 					_.colorThis( 'Backup ID found in older backup', 'yellow' )
 					if _.switches.isActive('isPreOpen'):
-						txtScheduler.append( { 'timestamp': genEpoch(), 'file': __.path(path), 'status': 0, 'app': 'fileBackup', 'group': 0, 'session': os.getenv('Session_ID') } )
+						txtScheduler.append( { 'timestamp': genEpoch(), 'file': __.path(path), 'status': 0, 'app': 'fileBackup', 'group': 0, 'session': __.Session_ID } )
 						_.saveTable( txtScheduler,'fileBackupSchedule.json', p=1 )
 					return INDEX[path]['backup']
 
@@ -1329,7 +1337,7 @@ def action(path=None,flag=None,o=None):
 				if _.switches.isActive('Session'):
 					log['session'] = _.switches.value('Session')
 				else:
-					log['session'] = os.getenv('Session_ID')
+					log['session'] = __.Session_ID
 				if _.switches.isActive('Flag'):
 					if len( _.switches.value('Flag')) == 0:
 						log['flag'] = 'F'
@@ -1344,7 +1352,7 @@ def action(path=None,flag=None,o=None):
 					_.pr('not encrypted',c='red')
 
 					txtScheduler = _.getTable( 'fileBackupSchedule.json' )
-					txtScheduler.append( { 'timestamp': genEpoch(), 'file': __.path(path), 'status': 0, 'app': 'fileBackup', 'group': 0, 'session': os.getenv('Session_ID') } )
+					txtScheduler.append( { 'timestamp': genEpoch(), 'file': __.path(path), 'status': 0, 'app': 'fileBackup', 'group': 0, 'session': __.Session_ID } )
 					_.saveTable( txtScheduler,'fileBackupSchedule.json', p=1 )
 					return path
 					# sys.exit()
