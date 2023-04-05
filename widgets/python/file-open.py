@@ -254,7 +254,11 @@ def action(path=None):
 			if _.switches.isActive('Backup'): _bk = _.regImp( __.appReg, 'fileBackup' ); __.appReg=appReg; _bk.switch( 'isPreOpen' ); _bk.switch( 'Input', path ); bkfi = _bk.action();
 			# if _.switches.isActive('Backup'): _bk = _.regImp( __.appReg, 'fileBackup' ); bkfi = _bk.imp.action(path,o=1);
 			# _.pr(__.path(path))
-			subprocess.Popen([ app, path])
+			if _.isWin:
+				subprocess.Popen([ app, path])
+			else:
+				command = f'{app} {path}'
+				os.system(command)
 			if not path in log: log[path] = []
 			log[path].append({'epoch':__.startTime,'session': session})
 		_.saveTable2(log,logFi)
