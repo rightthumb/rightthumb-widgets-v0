@@ -115,7 +115,7 @@ goto:eof
     if [%initOpen%] == [y] (
 
             call p fileBackup -open -i %childExample% -python
-            start "EDIT" %code_editor% %childExample%
+            call p file-open -app %code_editor% -f %childExample%
             goto:eof
 
         ) else (
@@ -133,7 +133,7 @@ goto:eof
     if [%initOpen%] == [y] (
             if not exist "%importFolder%\" md "%importFolder%\"
             call p fileBackup -open -i %child% -python
-            start "EDIT" %code_editor% %child%
+            call p file-open -app %code_editor% -f %child%
             echo %child%
         ) else (
             goto:eof
@@ -153,7 +153,7 @@ goto:eof
         if [%fileName%] == [] goto:eof
 
         call p fileBackup -open -i "%importFolder%\%fileName%.py" -python
-        start "EDIT" %code_editor% "%importFolder%\%fileName%.py"
+        call p file-open -app %code_editor% -f "%importFolder%\%fileName%.py"
         rem echo %importFolder%\%fileName%.py
 
     goto:eof
@@ -179,7 +179,7 @@ goto:eof
     call p fileBackup -open -i "%python%\%fileName%.py" -python
     type %initExample% > "%python%\%fileName%.py"
     call p fileBackup -open -i "%python%\%fileName%.py" -python
-    start "EDIT" %code_editor% "%python%\%fileName%.py"
+    call p file-open -app %code_editor% -f "%python%\%fileName%.py"
     rem echo %python%\%fileName%.py
     goto:eof
 :BUILDFILE_TRUE
@@ -192,7 +192,7 @@ goto:eof
             call p fileBackup -open -i "%python%\%fileName%.py" -python
         )
 
-    start "EDIT" %code_editor% "%python%\%fileName%.py"
+    call p file-open -app %code_editor% -f "%python%\%fileName%.py"
     rem echo %python%\%fileName%.py
     goto:eof
 :INIT
@@ -208,7 +208,7 @@ goto:eof
             call p fileBackup -open -i %__init__% -python
             if [%isNew%] == [Y] echo %template% %__init__%
             if [%isNew%] == [Y] type %template% > %__init__%
-            start "EDIT" %code_editor% %__init__%
+            call p file-open -app %code_editor% -f %__init__%
             rem echo %__init__%
         ) else (
             goto:eof
@@ -216,12 +216,12 @@ goto:eof
     goto:eof
 :EXAMPLE
     call p fileBackup -open -i %initExample% -python
-    start "EDIT" %code_editor% %initExample%
+    call p file-open -app %code_editor% -f %initExample%
     rem echo %initExample%
     goto:eof
 :SAMPLE
     call p fileBackup -open -i %childSample% -python
-    start "EDIT" %code_editor% %childSample%
+    call p file-open -app %code_editor% -f %childSample%
     rem echo %childSample%
     goto:eof
 :CMDP
@@ -231,7 +231,7 @@ goto:eof
             type %childCommands%
         ) else (
             call p fileBackup -open -i %childCommands% -python
-            start "EDIT" %code_editor% %childCommands%
+            call p file-open -app %code_editor% -f %childCommands%
             rem echo %childCommands%
         )
     echo.
@@ -241,7 +241,7 @@ goto:eof
     goto:eof
 :CMDE
     call p fileBackup -open -i %childCommands% -python
-    start "EDIT" %code_editor% %childCommands%
+    call p file-open -app %code_editor% -f %childCommands%
     rem echo %childCommands%
     echo.
     echo.
@@ -254,5 +254,3 @@ goto:eof
 rem epyi
 rem eeee
 
-
- 

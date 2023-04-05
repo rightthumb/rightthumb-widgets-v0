@@ -3119,6 +3119,7 @@ alias reph.us="ssh thisreph@reph.us"
 alias .py-pip="$widgets/bash/quick-setup.sh";
 
 alias ssh.="rm -rf ~/.ssh; ssh-keygen -t rsa"
+alias .ssh.="ssh-keygen -t rsa"
 alias ssh.h.a="ssh-copy-id -i ~/.ssh/id_rsa.pub admin@hoth.m-eta.app"
 alias ssh.h.s="ssh-copy-id -i ~/.ssh/id_rsa.pub scott@hoth.m-eta.app"
 alias ssh.h.r="ssh-copy-id -i ~/.ssh/id_rsa.pub root@hoth.m-eta.app"
@@ -3581,6 +3582,12 @@ alias iptlistin='sudo /sbin/iptables -L INPUT -n -v --line-numbers'
 alias iptlistout='sudo /sbin/iptables -L OUTPUT -n -v --line-numbers'
 alias iptlistfw='sudo /sbin/iptables -L FORWARD -n -v --line-numbers'
 alias firewall=iptlist
+
+#################################
+#             misc              #
+alias l="$widgets/widgets/bash/l.sh"
+#################################
+
 
 # get web server headers #
 alias header='curl -I'
