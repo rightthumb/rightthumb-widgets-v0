@@ -3642,7 +3642,7 @@ alias ..='cd ..'
 alias 2icon="$widgets/widgets/bash/tools/2icon.sh ";
 alias 2ico="$widgets/widgets/bash/tools/2icon.sh ";
 
-# a3bc42ec51e9
+export Session_ID=$(date +%s)
 
 if test -f "/mnt/c/Users/Scott/.rt/profile/daily/.seven.sh"; then
     # sudo service cron start > /dev/null 2>&1 & 
