@@ -244,9 +244,9 @@ def action(path=None):
 		logFi = _v.tt+os.sep+'file-open'+os.sep+_.day()[:-1]+'.hash'
 		_v.mkdir(logFi,f=1)
 		log = _.getTable2(logFi)
+		session = str(__.startTime2)
 		try: session = os.getenv('Session_ID')
-		except: session = _v.machine()+'-'+str(__.startTime2)
-		if len(session) < 1: session = _v.machine()+'-'+str(__.startTime2)
+		except: pass
 		for path in paths:
 			path=__.path(path)
 			path=_.zZip(path)
