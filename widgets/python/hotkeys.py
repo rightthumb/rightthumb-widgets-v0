@@ -53,6 +53,7 @@ from inspect import currentframe, getframeinfo
 frameinfo = getframeinfo(currentframe())
 from threading import Timer
 import re
+import regex
 try:
 	import winsound
 except Exception as e:
@@ -213,40 +214,143 @@ _.postLoad( __file__ )
 ########################################################################################
 # START
 
+
+def extract_urls0(text):
+	url_pattern = re.compile(r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\\(\\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+')
+	urls = re.findall(url_pattern, text)
+	return urls
+
+def scrape_windows_file_paths(text):
+	text=text.replace('\\\\','\\')
+	windows_path_pattern = r'[a-zA-Z]:[\\/](?:[^<>:"\\/|?*\s]+[\\/]?)*'
+	windows_paths = re.findall(windows_path_pattern, text)
+	return windows_paths
+
+
+from bs4 import BeautifulSoup
+import urllib.parse
+
+
+def extract_urls(html_string, base_url=None):
+	soup = BeautifulSoup(html_string, 'html.parser')
+	urls = []
+
+	# List of tags and their respective attributes containing URLs
+	url_tags = [
+		('a', 'href'),
+		('link', 'href'),
+		('script', 'src'),
+		('img', 'src'),
+		('img', 'srcset'),
+		('picture', 'srcset'),
+		('iframe', 'src'),
+		('source', 'src'),
+		('embed', 'src'),
+		('object', 'data'),
+		('video', 'poster'),
+		('audio', 'src'),
+		('base', 'href'),
+		('input', 'src'),
+		('area', 'href'),
+		('track', 'src'),
+		('param', 'value'),
+		# ('meta', 'content'),
+		('blockquote', 'cite'),
+		('q', 'cite'),
+		('del', 'cite'),
+		('ins', 'cite'),
+		('form', 'action'),
+		('applet', 'code'),
+		('applet', 'archive'),
+		('command', 'icon')
+	]
+
+	for tag, attr in url_tags:
+		for element in soup.find_all(tag, **{attr: True}):
+			url = element[attr]
+			if base_url:
+				url = urllib.parse.urljoin(base_url, url)
+			urls.append(url)
+
+	return urls
+
+
+
+def scrape_linux_file_paths(text):
+	for url in scrape_urls(text):
+		text=text.replace(url,'')
+	linux_path_pattern = r'(?<!https?:)\/(?:[^\/\0\s]+\/)*[^\/\0\s]*'
+	linux_paths = regex.findall(linux_path_pattern, text)
+	return set(linux_paths)
+
+
+def scrape_urls(text):
+	url_pattern = r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+'
+	urls = re.findall(url_pattern, text)
+	return set(urls)
+
+def scrape_all(text):
+	windows_paths = scrape_windows_file_paths(text)
+	linux_paths = scrape_linux_file_paths(text)
+	urls = scrape_urls(text)
+	return windows_paths, linux_paths, urls
+
+
+
+def is_html(text):
+	text=text.strip()
+	if not text.startswith('<'): return False
+
+
+	text=text.lower()
+
+	html_tags = [
+		'</title>', '</a>', '<img', '</table>', '</p>', '</ul>',
+		'</ol>', '</li>', '</div>', '</span>',
+		'</form>', '</input>', '</button>', '</select>',
+		'</option>', '</textarea>', '</label>', 
+	]
+	for tag in html_tags:
+		if tag in text:
+			return True
+	return False	
+
+
+
 def cleanComment(line):
-    if not '#' in line:
-        return line.rstrip()
-    else:
-        triple_quotes = ('"""', "'''")
-        single_quotes = ('"', "'")
-        in_single_quote = in_double_quote = in_triple_quote = False
-        quote_char = None
-        result = []
+	if not '#' in line:
+		return line.rstrip()
+	else:
+		triple_quotes = ('"""', "'''")
+		single_quotes = ('"', "'")
+		in_single_quote = in_double_quote = in_triple_quote = False
+		quote_char = None
+		result = []
 
-        i = 0
-        while i < len(line):
-            char = line[i]
-            if not (in_single_quote or in_double_quote or in_triple_quote):
-                if char == '#':
-                    break
-                if char in single_quotes:
-                    in_single_quote = True
-                    quote_char = char
-                elif char in triple_quotes and i < len(line) - 2 and line[i:i + 3] in triple_quotes:
-                    in_triple_quote = True
-                    quote_char = line[i:i + 3]
-                    i += 2
-                result.append(char)
-            else:
-                if in_single_quote and char == quote_char:
-                    in_single_quote = False
-                elif in_triple_quote and i < len(line) - 2 and line[i:i + 3] == quote_char:
-                    in_triple_quote = False
-                    i += 2
-                result.append(char)
-            i += 1
+		i = 0
+		while i < len(line):
+			char = line[i]
+			if not (in_single_quote or in_double_quote or in_triple_quote):
+				if char == '#':
+					break
+				if char in single_quotes:
+					in_single_quote = True
+					quote_char = char
+				elif char in triple_quotes and i < len(line) - 2 and line[i:i + 3] in triple_quotes:
+					in_triple_quote = True
+					quote_char = line[i:i + 3]
+					i += 2
+				result.append(char)
+			else:
+				if in_single_quote and char == quote_char:
+					in_single_quote = False
+				elif in_triple_quote and i < len(line) - 2 and line[i:i + 3] == quote_char:
+					in_triple_quote = False
+					i += 2
+				result.append(char)
+			i += 1
 
-        return ''.join(result).rstrip()
+		return ''.join(result).rstrip()
 
 
 
@@ -395,11 +499,15 @@ class HOTKEYS:
 		# _.pr(line=1,c='yellow')
 		# _.pr()
 		# sys.exit()
-		try:
-			char = str(key.char)
-		except Exception as e:
-			# frameinfo = getframeinfo(currentframe()); _.pr( _.addComma(frameinfo.lineno),'\t', e,c='red');
-			char = str(key).replace("'",'')
+
+		if hasattr(key, 'vk') and 32 <= key.vk <= 126:
+			char = chr(key.vk)
+		else:
+			try:
+				char = str(key.char)
+			except Exception as e:
+				# frameinfo = getframeinfo(currentframe()); _.pr( _.addComma(frameinfo.lineno),'\t', e,c='red');
+				char = str(key).replace("'",'')
 		key_set.add(char)
 		if print_chars:
 			_.pr('____________')
@@ -409,7 +517,10 @@ class HOTKEYS:
 		global log
 		global table
 		global keyboard
-		# _.pr(key)
+		# _.pr('char:',char)
+		# _.pr('key:',key)
+		# try: print('key.char:',key.char)
+		# except Exception as e: pass
 		key = str(key).replace("'", "")
 		log.append(key)
 		if _.switches.isActive('Print-Keys'):
@@ -644,12 +755,12 @@ class CLIP:
 		# _paste.imp.dirty=True
 		inject='''
 hackTool.hack.instructions = [
-    {
-        "name": "label",
-        "location": "table",
-        "type": "table",
-        "settings": { "labels": "h2" }
-    }
+	{
+		"name": "label",
+		"location": "table",
+		"type": "table",
+		"settings": { "labels": "h2" }
+	}
 ]
 hackTool.autoHack();
 copy(  hackTool.payload.label  )
@@ -691,12 +802,12 @@ copy(  hackTool.payload.label  )
 		# _paste.imp.dirty=True
 		inject='''
 hackTool.hack.instructions = [
-    {
-        "name": "label",
-        "location": "table",
-        "type": "table",
-        "settings": { }
-    }
+	{
+		"name": "label",
+		"location": "table",
+		"type": "table",
+		"settings": { }
+	}
 ]
 hackTool.autoHack();
 copy(  hackTool.payload.label  )
@@ -746,12 +857,12 @@ copy(  hackTool.payload.label  )
 		# _paste.imp.dirty=True
 		inject='''
 hackTool.hack.instructions = [
-    {
-        "name": "label",
-        "location": "ELEMENT",
-        "type": "list",
-        "settings": { "convert": "text" }
-    }
+	{
+		"name": "label",
+		"location": "ELEMENT",
+		"type": "list",
+		"settings": { "convert": "text" }
+	}
 ]
 hackTool.autoHack();
 copy(  hackTool.payload.label  )
@@ -1851,6 +1962,114 @@ function get__THETABLE( $ID_label ){
 			rows.append(row)
 		_copy.imp.copy( '\n'.join(rows), p=0 )
 
+
+	def scrape_paths(self):
+		import pyautogui
+
+		pyautogui.doubleClick()
+		pyautogui.click()
+		time.sleep(.1)
+		pyautogui.rightClick()
+
+		_paste = _.regImp( __.appReg, '-paste' )
+		_copy = _.regImp( __.appReg, '-copy' )
+		text = _paste.imp.paste().strip()
+		
+		isHTML=is_html(text)
+
+		if isHTML:
+			items=extract_urls(text)
+		else:
+			text = text.replace('└─','')
+
+			windows_paths, linux_paths, urls = scrape_all(text)
+			result=[]
+			for path in windows_paths: result.append(path)
+			for path in linux_paths:
+				if path.endswith(';'):
+					path=path[:-len(';')]
+				result.append(path)
+			for path in urls: result.append(path)
+			scan = _scan.imp.app.scan.process( text, 'A02F28B2' )
+			for k in scan:
+				for item in scan[k]:
+					if not item in result:
+						result.append(item)
+			items=[]
+			for i,item in enumerate(result):
+				item=item.strip()
+				if item.endswith(')') and not '(' in item:
+					item=item[:-len(')')]
+				if item.endswith('}') and not '{' in item:
+					item=item[:-len('}')]
+				if item.endswith(']') and not '[' in item:
+					item=item[:-len(']')]
+				if item.endswith("']"):
+					item=item[:-len("']")]
+				if item.endswith("'"):
+					item=item[:-len("'")]
+				if item.endswith('"'):
+					item=item[:-len('"')]
+				if item.startswith('"'):
+					item=item[len('"'):]
+				if item.startswith("'"):
+					item=item[len("'"):]
+				if item.endswith('}') and not '{' in item:
+					item=item[:-len('}')]
+				if not item in items and len(item) > 1:
+					items.append(item)
+
+		if not len(items):
+			text=text.replace('\t',' ')
+			explode=text.split(' ')
+			for frag in explode:
+				if '.' in frag:
+					dots=frag.split('.')
+					ldt=len(dots[-1])
+					if ldt < 6:
+						items.append(frag)
+
+
+
+		if len(items):
+			_copy.imp.copy( '\n'.join(items), p=0 )
+		else:
+			_copy.imp.copy( ' ' , p=0 )
+
+	def center_to_top_comment(self):
+		_paste = _.regImp( __.appReg, '-paste' )
+		_copy = _.regImp( __.appReg, '-copy' )
+		text = _paste.imp.paste().strip()
+		text = text.replace('\r','').strip()
+		first = text.split('\n')[0]
+		second = text.split('\n')[1].replace('#','').strip()
+		fl=len(first)
+		sl=len(second)+2
+		fx = fl-sl
+		if (fx % 2) == 0:
+			even=True
+			add1=0
+		else:
+			add1=1
+			even=False
+		if even:
+			fx=fx-1
+
+		spaces_on_either_side = int(fx/2)
+
+		first_line = "#" + " " * spaces_on_either_side + second + " " * spaces_on_either_side + "#"
+
+		second_line = "#" + " " * spaces_on_either_side + second + " " * (spaces_on_either_side+add1) + '#'
+
+		rows=[]
+		rows.append(first)
+		rows.append(second_line)
+		_copy.imp.copy( '\n'.join(rows), p=0 )
+
+
+
+
+
 	def md5(self):
 		_paste = _.regImp( __.appReg, '-paste' )
 		_copy = _.regImp( __.appReg, '-copy' )
@@ -2298,16 +2517,14 @@ function get__THETABLE( $ID_label ){
 	def clean_terminal_copy(self):
 		import pyperclip
 		import pyautogui
-		import time
 
 		pyautogui.doubleClick()
 		pyautogui.click()
 		pyautogui.rightClick()
 
 		clipboard_text = pyperclip.paste()
-		print(clipboard_text)
+		clipboard_text = clipboard_text.replace('└─','')
 		pyperclip.copy(clipboard_text.strip())
-		print("Copied to clipboard: " + clipboard_text)
 
 	def math(self):
 		_paste = _.regImp( __.appReg, '-paste' )
@@ -2737,7 +2954,7 @@ def load():
 				'eval-clip': { 'raw': [ 'alt.', 'win.', 'e' ], 'do': 'Clip.dirty_eval()' },
 
 				'sql-crud': { 'raw': [ 'alt.', 'win.', 'c' ], 'do': 'Clip.SQL_to_crud()' },
-				'ad-notes': { 'raw': [ 'alt.', 'shift.', 'ctrl.', 'a' ], 'do': 'Clip.ad_notes()' },
+				# 'ad-notes': { 'raw': [ 'alt.', 'shift.', 'ctrl.', 'a' ], 'do': 'Clip.ad_notes()' },
 				# 'clip-replace': { 'raw': [ 'alt.', 'win.', 'r' ], 'do': 'Clip.replacer()' },
 				'clip-replace2': { 'raw': [ 'ctrl.,2', 'shift.,1', 'r' ], 'do': 'Clip.replacer2()' },
 				'clip-swap': { 'raw': [ 'ctrl.,2', 'shift.', 's' ], 'do': 'Clip.swap()' },
@@ -2778,6 +2995,11 @@ def load():
 
 				'encrypt_all': { 'raw': [  'ctrl.','alt.',  'en'    ], 'do': 'Clip.encrypt_all()' },
 				'decrypt_lines': { 'raw': [  'ctrl.','alt.',  'de'    ], 'do': 'Clip.decrypt_lines()' },
+
+
+				'center-to-top-comment': { 'raw': [   'ctrl.,4', 'shift.,2',  'center'   ], 'do': 'Clip.center_to_top_comment()' },
+
+				'scrape-paths': { 'raw': [   'ctrl.', 'win.', 'h'   ], 'do': 'Clip.scrape_paths()' },
 
 	}
 
@@ -2882,7 +3104,8 @@ import string
 # beepy.note('f#')
 # beepy.note('a')
 
-
+# C:\Users\Scott\.rt\profile\documents\hotkey_combinations.txt
+_scan = _.regImp( __.appReg, 'record-cleaner' )
 ##################################################
 toggler={}
 toggler['alt_win_m'] = 'clip-math'
@@ -2903,3 +3126,4 @@ if __name__ == '__main__':
 # count+=1
 # release_key
 # cleanComment
+# scrape_paths

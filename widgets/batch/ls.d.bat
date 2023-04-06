@@ -10,7 +10,22 @@ rem    - Scott Taylor Reph, RightThumb.com
 rem ###########################################################################
 rem ## {C3P0D40fAe8B} ##
 
+if [%1] == [-date] if [%2] == [] (
+    call p simpFi -ago 1d -date
+    GOTO:EOF
+)
+if [%1] == [-d] if [%2] == [] (
+    call p simpFi -ago 1d -date
+    GOTO:EOF
+)
 
+if [%1] == [] (
+    call p simpFi -ago 1d
+) else (
+    call p simpFi %*
+)
+
+GOTO:EOF
 CALL:DO_A %*
 GOTO:EOF
 
