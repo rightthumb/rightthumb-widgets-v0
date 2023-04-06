@@ -124,7 +124,7 @@ _.isData()
     OR PASTE copied text
         p app --pa
         or
-        pa | p app
+        p -paste | p app
 
 To ues the ' + ' and ' - ' switches: _.showLine(data)
 
@@ -133,8 +133,17 @@ To ues the ' + ' and ' - ' switches: _.showLine(data)
         if _.showLine(path):
             process(path)
 
+Don't forget to try this:
+    os=__.imp('os.path.isfile')
+
 ~~~
 
+## Note
+### The use of '-' dashes in the file names is because framework apps are imported via class
+~~~
+example:
+    _paste = _.regImp( __.appReg, '-paste' )
+~~~
 
 ## Automatically profile every app in the framework (including ones you create)
 ~~~
