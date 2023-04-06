@@ -118,6 +118,7 @@ scroll down to '#n)--> start'
 _.isData()
     Switch arguments
         _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name', description='Files', isRequired=False )
+            if you specify isData='date' or isData='date,clean' it will get the contents of the file
     OR PIPE
         cat paths.txt | p app
     OR PASTE copied text
