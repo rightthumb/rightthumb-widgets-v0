@@ -117,7 +117,7 @@ scroll down to '#n)--> start'
 
 _.isData()
     Switch arguments
-        _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name,data,clean', description='Files', isRequired=False )
+        _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name', description='Files', isRequired=False )
     OR PIPE
         cat paths.txt | p app
     OR PASTE copied text
