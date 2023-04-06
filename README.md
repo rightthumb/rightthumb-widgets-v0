@@ -32,7 +32,7 @@ ___
 - Thousands of features
 
 ## Anecdote
-When covid began, I create an app called harResearch to identify how websites communicate with the server. I then bypass their website and create programs that talk to the servers directly.
+When covid began, I created an app called harResearch to identify how websites communicate with the server. I then use their data sources in my apps.
 
 ## Installation
 ~~~
