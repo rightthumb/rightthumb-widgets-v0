@@ -29,6 +29,7 @@ ___
 - How to recursivly find a '.md' file modified in the last week with 'abc' in the file name without 'xyz' in file name with 'due 2025-12-25' inside the file 'p files + \*.md -ago 1w + abc - xyz -has "due 2025-12-25"'.
 - How do I extract stuff from a website?
     + Put my mouse over it.
+    + Hit 10 on my mouse
     + Say 'auto scrape'
 - How to find all emails, urls, mailing addresses, windows paths, linux paths in copied text 'ctrl win h', then paste the results.
 - Thousands of features
