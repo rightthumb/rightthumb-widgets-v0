@@ -20,7 +20,8 @@ ___
     + How to view all of the files and folders ' d ', to search for something  'd something'. Linked files and folders are yellow.
 - Encryption
     + How to register a document for encryption 'crypt pw.md'.
-    + How to open an important encrypted document 'n pw.md', if you are not in that folder 'fa pw'. how to create that alias 'fa pw pw.md'.
+    + How to open an important encrypted document 'n pw.md', if you are not in that folder 'fa pw'. 
+        * How to create that alias 'fa pw pw.md'.
     + How do you encrypt the file without closing the terminal 'p fileBackup -f pw.md'.
 - Search in files even if they are Zipped or Encrypted
     + How to view content of a file 'p cat -f pw.md + site.com'
