@@ -27,7 +27,9 @@ ___
 - How to do automated franchise research of everything from a franchise including video games 'p franchise -franchise marvel'. How to view the results 'p franchiseView -franchise marvel'.
 - Checksum 'p checksum -f pop-os_20.10_amd64_nvidia_10.iso ' or 'p checksum -f pop-os_20.10_amd64_nvidia_10.iso -test 412c49dcdda20dfa69b574f255a63d10dcfe20aa'
 - How to recursivly find a '.md' file modified in the last week with 'abc' in the file name without 'xyz' in file name with 'due 2025-12-25' inside the file 'p files + \*.md -ago 1w + abc - xyz -has "due 2025-12-25"'.
-- How to scrape text from a webpage, copy the selector, tap 'shift shift w txt' (for me button 10 on my mouse then I say 'scrape text').
+- How do I extract stuff from a website?
+    1 Put my mouse over it.
+    2 Say 'auto scrape'
 - How to find all emails, urls, mailing addresses, windows paths, linux paths in copied text 'ctrl win h', then paste the results.
 - Thousands of features
 
