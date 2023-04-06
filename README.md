@@ -1,26 +1,26 @@
 # rightthumb.com framework
 
 ## Hype
-I push 10 on my [mouse](https://www.amazon.com/dp/B088B3ZM76) to activate voice commands and say "Sally paste, convert this python to javascript" (using chatGPT). I then paste the results.
-The hotkeys.py app uses keyboard shortcuts. A programmable mouse can activate any of them.
-How to navigate to the Downloads folder'b dl'. How to create a new bookmark 'm name'.
-How to view all of the files and folders ' d ', to search for somthing ' d somthing '. Linked files and folders are yellow.
-How to register a document for encryption 'crypt pw.md'.
-How to open an important encrypted document 'n pw.md', if you are not in that folder 'fa pw'. how to create that alias 'fa pw pw.md'.
-How to close the terminal ' x ' (backs everything up that you opened since you started the terminal and encrypts registered encrypted files).
-How do you encrypt the file without closing the terminal 'p fileBackup -f pw.md'.
-Copy the CREATE TABLE sql, hit alt+win+c to automatically generate the create, read, update, delete of a table in php (crud), then paste the results.
-How to find a file that was modified within the last day 'p file -ago 1d', week 'p file -ago 1w', month 'p file -ago 1m', 10 minutes 'p file -ago 10min'.
-How to view all of the episodes of a tv show 'ee the flash'.
-How to do automated franchise research of everything from a franchise including video games 'p franchise -franchise marvel'. How to view the results 'p franchiseView -franchise marvel'.
-Checksum 'p checksum -f pop-os_20.10_amd64_nvidia_10.iso ' or 'p checksum -f pop-os_20.10_amd64_nvidia_10.iso -test 412c49dcdda20dfa69b574f255a63d10dcfe20aa'
-How to recursivly find a '.md' file modified in the last week with 'abc' in the file name without 'xyz' in file name with 'due 2025-12-25' inside the file 'p files + \*.md -ago 1w + abc - xyz -has "due 2025-12-25"'.
-How to scrape text from a webpage, copy the selector, tap 'shift shift w txt' (for me button 10 on my mouse then I say 'scrape text').
-How to find all emails, urls, mailing addresses, windows paths, linux paths in copied text 'ctrl win h', then paste the results.
-Thousands of features
+- I push 10 on my [mouse](https://www.amazon.com/dp/B088B3ZM76) to activate voice commands and say "Sally paste, convert this python to javascript" (using chatGPT). I then paste the results.
+- The hotkeys.py app uses keyboard shortcuts. A programmable mouse can activate any of them.
+- How to navigate to the Downloads folder'b dl'. How to create a new bookmark 'm name'.
+- How to view all of the files and folders ' d ', to search for somthing ' d somthing '. Linked files and folders are yellow.
+- How to register a document for encryption 'crypt pw.md'.
+- How to open an important encrypted document 'n pw.md', if you are not in that folder 'fa pw'. how to create that alias 'fa pw pw.md'.
+- How to close the terminal ' x ' (backs everything up that you opened since you started the terminal and encrypts registered encrypted files).
+- How do you encrypt the file without closing the terminal 'p fileBackup -f pw.md'.
+- Copy the CREATE TABLE sql, hit alt+win+c to automatically generate the create, read, update, delete of a table in php (crud), then paste the results.
+- How to find a file that was modified within the last day 'p file -ago 1d', week 'p file -ago 1w', month 'p file -ago 1m', 10 minutes 'p file -ago 10min'.
+- How to view all of the episodes of a tv show 'ee the flash'.
+- How to do automated franchise research of everything from a franchise including video games 'p franchise -franchise marvel'. How to view the results 'p franchiseView -franchise marvel'.
+- Checksum 'p checksum -f pop-os_20.10_amd64_nvidia_10.iso ' or 'p checksum -f pop-os_20.10_amd64_nvidia_10.iso -test 412c49dcdda20dfa69b574f255a63d10dcfe20aa'
+- How to recursivly find a '.md' file modified in the last week with 'abc' in the file name without 'xyz' in file name with 'due 2025-12-25' inside the file 'p files + \*.md -ago 1w + abc - xyz -has "due 2025-12-25"'.
+- How to scrape text from a webpage, copy the selector, tap 'shift shift w txt' (for me button 10 on my mouse then I say 'scrape text').
+- How to find all emails, urls, mailing addresses, windows paths, linux paths in copied text 'ctrl win h', then paste the results.
+- Thousands of features
 
 ## Platform Support
-The Framework is designed to work on the following platforms:
+### The Framework is designed to work on the following platforms:
 - Windows
 - Linux
 - macOS
@@ -77,8 +77,8 @@ in linux
 
 
 ## Misc
-Have a movie drive?
-Auto franchise hirarchy
+### Have a movie drive?
+### Auto franchise hirarchy
 ~~~
 Marvel                      Avengers                   2019 Avengers: Endgame
                                                        2018 Avengers: Infinity War
@@ -150,7 +150,7 @@ it saves a json file here:
 ~~~
 
 ## Side note
-To install my scraping tool as a chrome link.
+### To install my scraping tool as a chrome link.
 1 create a new link.
 2 paste the bellow code as the url.
 3 view the JavaScript console for instructions.
