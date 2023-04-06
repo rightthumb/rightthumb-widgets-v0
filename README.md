@@ -78,7 +78,7 @@ in linux
 
 ## Misc
 ### Have a movie drive?
-### Auto franchise hirarchy
+#### Auto franchise hirarchy
 ~~~
 Marvel                      Avengers                   2019 Avengers: Endgame
                                                        2018 Avengers: Infinity War
