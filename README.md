@@ -1,5 +1,9 @@
 # rightthumb.com framework
 
+___
+## Just sharing how I customized my terminal.
+___
+
 ## Platform Support
 ### The Framework is designed to work on the following platforms:
 - Windows
@@ -11,8 +15,8 @@
 ## Hype
 - I push 10 on my [mouse](https://www.amazon.com/dp/B088B3ZM76) to activate voice commands and say "Sally paste, convert this python to javascript" (using chatGPT). I then paste the results.
 - The hotkeys.py app uses keyboard shortcuts. A programmable mouse can activate any of them.
-- How to navigate to the Downloads folder'b dl'. How to create a new bookmark 'm name'.
-- How to view all of the files and folders ' d ', to search for somthing ' d somthing '. Linked files and folders are yellow.
+- How to navigate to the Downloads folder 'b dl'. How to create a new bookmark 'm name'.
+- How to view all of the files and folders ' d ', to search for something  'd something'. Linked files and folders are yellow.
 - How to register a document for encryption 'crypt pw.md'.
 - How to open an important encrypted document 'n pw.md', if you are not in that folder 'fa pw'. how to create that alias 'fa pw pw.md'.
 - How to close the terminal ' x ' (backs everything up that you opened since you started the terminal and encrypts registered encrypted files).
@@ -26,6 +30,9 @@
 - How to scrape text from a webpage, copy the selector, tap 'shift shift w txt' (for me button 10 on my mouse then I say 'scrape text').
 - How to find all emails, urls, mailing addresses, windows paths, linux paths in copied text 'ctrl win h', then paste the results.
 - Thousands of features
+
+## Anecdote
+When covid began, I create an app called harResearch to identify how websites communicate with the server. I then bypass their website and create programs that talk to the servers directly.
 
 ## Installation
 ~~~
@@ -77,7 +84,7 @@ in linux
 
 
 ## Have a movie drive?
-### Auto franchise hirarchy
+### Auto franchise hierarchy
 ~~~
 Marvel                      Avengers                   2019 Avengers: Endgame
                                                        2018 Avengers: Infinity War
@@ -125,7 +132,7 @@ _.isData()
         or
         p -paste | p app
 
-To ues the ' + ' and ' - ' switches: _.showLine(data)
+To use the ' + ' and ' - ' switches: _.showLine(data)
 
 # example:
     for path in _.isData():
@@ -158,8 +165,7 @@ it saves a json file here:
     widgets/databank/tables/appRegistration.hash
 ~~~
 
-## Side note
-### To install my scraping tool as a chrome link.
+## To install my scraping tool as a chrome link.
 1 create a new link.
 2 paste the bellow code as the url.
 3 view the JavaScript console for instructions.
