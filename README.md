@@ -14,7 +14,7 @@ ___
 
 ## Hype
 - I push 10 on my [mouse](https://www.amazon.com/dp/B088B3ZM76) to activate voice commands and say "Sally paste, convert this python to javascript" (using chatGPT). I then paste the results.
-- The hotkeys.py app uses keyboard shortcuts. A programmable mouse can activate any of them.
+    + The hotkeys.py app uses keyboard shortcuts. A programmable mouse can activate any of them.
 - How to navigate to the Downloads folder 'b dl'. How to create a new bookmark 'm name'.
 - How to view all of the files and folders ' d ', to search for something  'd something'. Linked files and folders are yellow.
 - How to register a document for encryption 'crypt pw.md'.
@@ -29,7 +29,7 @@ ___
 - How to recursivly find a '.md' file modified in the last week with 'abc' in the file name without 'xyz' in file name with 'due 2025-12-25' inside the file 'p files + \*.md -ago 1w + abc - xyz -has "due 2025-12-25"'.
 - How do I extract stuff from a website?
     + Put my mouse over it.
-    + Hit 10 on my mouse
+    + Hit 10 on my mouse ()
     + Say 'auto scrape'
 - How to find all emails, urls, mailing addresses, windows paths, linux paths in copied text 'ctrl win h', then paste the results.
 - Thousands of features
