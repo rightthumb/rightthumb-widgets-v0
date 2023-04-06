@@ -15,27 +15,36 @@ ___
 ## Hype
 - I push 10 on my [mouse](https://www.amazon.com/dp/B088B3ZM76) to activate voice commands and say "Sally paste, convert this python to javascript" (using chatGPT). I then paste the results.
     + The hotkeys.py app uses keyboard shortcuts. A programmable mouse can activate any of them.
-- How to navigate to the Downloads folder 'b dl'. How to create a new bookmark 'm name'.
-- How to view all of the files and folders ' d ', to search for something  'd something'. Linked files and folders are yellow.
-- How to register a document for encryption 'crypt pw.md'.
-- How to open an important encrypted document 'n pw.md', if you are not in that folder 'fa pw'. how to create that alias 'fa pw pw.md'.
-- How to close the terminal ' x ' (backs everything up that you opened since you started the terminal and encrypts registered encrypted files).
-- How do you encrypt the file without closing the terminal 'p fileBackup -f pw.md'.
-- Copy the CREATE TABLE sql, hit alt+win+c to automatically generate the create, read, update, delete of a table in php (crud), then paste the results.
-- How to find a file that was modified within the last day 'p file -ago 1d', week 'p file -ago 1w', month 'p file -ago 1m', 10 minutes 'p file -ago 10min'.
-- How to view all of the episodes of a tv show 'ee the flash'.
-- How to do automated franchise research of everything from a franchise including video games 'p franchise -franchise marvel'. How to view the results 'p franchiseView -franchise marvel'.
+- Folder Navigation
+    + How to navigate to the Downloads folder 'b dl'. How to create a new bookmark 'm name'.
+    + How to view all of the files and folders ' d ', to search for something  'd something'. Linked files and folders are yellow.
+- Encryption
+    + How to register a document for encryption 'crypt pw.md'.
+    + How to open an important encrypted document 'n pw.md', if you are not in that folder 'fa pw'. how to create that alias 'fa pw pw.md'.
+    + How do you encrypt the file without closing the terminal 'p fileBackup -f pw.md'.
+- Search in files even if they are Zipped or Encrypted
+    + How to view content of a file 'p cat -f pw.md + site.com'
+- Auto Backup, Auto Encryption, Auto save terminal history, Index every app and switch used associated with a history ID.
+    + How to close the terminal ' x ' (backs everything up that you opened since you started the terminal and encrypts registered encrypted files).
+- Generate PHP code
+    + Copy the CREATE TABLE sql, hit alt+win+c to automatically generate the create, read, update, delete of a table in php (crud), then paste the results.
+- File Search
+    + How to find a file that was modified within the last day 'p file -ago 1d', week 'p file -ago 1w', month 'p file -ago 1m', 10 minutes 'p file -ago 10min'.
+    + How to recursively find a '.md' file modified in the last week with 'abc' in the file name without 'xyz' in file name with 'due 2025-12-25' inside the file 'p files + \*.md -ago 1w + abc - xyz -has "due 2025-12-25"'.
 - Checksum 'p checksum -f pop-os_20.10_amd64_nvidia_10.iso ' or 'p checksum -f pop-os_20.10_amd64_nvidia_10.iso -test 412c49dcdda20dfa69b574f255a63d10dcfe20aa'
-- How to recursivly find a '.md' file modified in the last week with 'abc' in the file name without 'xyz' in file name with 'due 2025-12-25' inside the file 'p files + \*.md -ago 1w + abc - xyz -has "due 2025-12-25"'.
+- Entertainment
+    + How to view all of the episodes of a tv show 'ee the flash'.
+    + How to do automated franchise research of everything from a franchise including video games 'p franchise -franchise marvel'. How to view the results 'p franchiseView -franchise marvel'.
 - How do I extract stuff from a website?
     + Put my mouse over it.
     + Hit 10 on my mouse ()
     + Say 'auto scrape'
-- How to find all emails, urls, mailing addresses, windows paths, linux paths in copied text 'ctrl win h', then paste the results.
-- Thousands of features
+- Mine the clipboard
+    + How to find all emails, urls, mailing addresses, windows paths, linux paths in copied text 'ctrl win h', then paste the results.
+# Thousands of apps with many features
 
 ## Anecdote
-When covid began, I created an app called harResearch to identify how websites communicate with the server. I then use their data sources in my apps.
+When covid began, I created an app called harResearch to identify how websites communicate with the server. I then use their data sources in my apps for Realtime covid research. (why I write apps securely)
 
 ## Installation
 ~~~
