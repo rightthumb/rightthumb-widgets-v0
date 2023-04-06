@@ -42,6 +42,7 @@ ___
     + Say 'auto scrape'
 - Mine the clipboard
     + How to find all emails, urls, mailing addresses, windows paths, linux paths in copied text 'ctrl win h', then paste the results.
+        * I just hit 7 on my mouse
 # Thousands of apps with many features
 
 ## Anecdote
