@@ -1,5 +1,13 @@
 # rightthumb.com framework
 
+## Platform Support
+### The Framework is designed to work on the following platforms:
+- Windows
+- Linux
+- macOS
+- phone or tablets
+    + Additionally, the framework can be used on mobile devices running Termux or similar environments.
+
 ## Hype
 - I push 10 on my [mouse](https://www.amazon.com/dp/B088B3ZM76) to activate voice commands and say "Sally paste, convert this python to javascript" (using chatGPT). I then paste the results.
 - The hotkeys.py app uses keyboard shortcuts. A programmable mouse can activate any of them.
@@ -18,14 +26,6 @@
 - How to scrape text from a webpage, copy the selector, tap 'shift shift w txt' (for me button 10 on my mouse then I say 'scrape text').
 - How to find all emails, urls, mailing addresses, windows paths, linux paths in copied text 'ctrl win h', then paste the results.
 - Thousands of features
-
-## Platform Support
-### The Framework is designed to work on the following platforms:
-- Windows
-- Linux
-- macOS
-- phone or tablets
-    + Additionally, the framework can be used on mobile devices running Termux or similar environments.
 
 ## Installation
 ~~~
