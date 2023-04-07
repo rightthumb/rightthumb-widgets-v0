@@ -241,9 +241,13 @@ sftp:
   path: /home/user/public_html
 ~~~
 
-## Dungeons and Dragons
+## Dungeons and Dragons app (dnd.py)
+Created this when I was learning dnd and python. I have learned a lot since I created this app.
+- Manage sorcerer spells
+- Categorizes spells as Heal, Hurt, and Help <--
+    + Having a battle
+        * Look for Hurt, Distance, and Hit Dice <--
 - Check a DND website I just started [icosahedron.quest](https://icosahedron.quest/)
-
 
 
 ## About
