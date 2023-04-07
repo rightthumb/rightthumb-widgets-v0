@@ -64,6 +64,7 @@ ___
     + Active window monitors (to see how long you are in each file to see how long it takes to accomplish a particular task)
     + Folder usage monitor (to identify relevant folders)
     + Website file manager
+    + Billing system
 
 # Thousands of apps with many features
 
