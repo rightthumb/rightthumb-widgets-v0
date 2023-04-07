@@ -21,22 +21,36 @@ ___
 - Tasklist
     + Grouped memory usage subtotals and grand total
         * ' task -report '
-    + Search in tasklist
+    + Search tasklist
         * ' task + chrome '
             - try 'kill chrome'
-        
 - Folder Navigation
     + How to navigate to the Downloads folder 'b dl'. How to create a new bookmark 'm name'.
-    + How to view all of the files and folders ' d ', to search for something  'd something'. Linked files and folders are yellow.
-- Encryption
-    + How to register a document for encryption 'crypt pw.md'.
-    + How to open an important encrypted document 'n pw.md', if you are not in that folder 'fa pw'. 
-        * How to create that alias 'fa pw pw.md'.
-    + How do you encrypt the file without closing the terminal 'p fileBackup -f pw.md'.
-- Search in files even if they are Zipped or Encrypted
-    + How to view content of a file 'p cat -f pw.md + site.com'
+    + How to view files and folders ' d ', to search for something  'd something'. Linked items are yellow.
+- List all python apps ' list '
+    + Search for an app that does something with json ' list json ' or ' py json '
+- Responsive tables
+    + Make the terminal full screen
+    + Run ' p ls '
+    * Resize the terminal smaller
+    + Run ' p ls '
+    * Resize the terminal smaller
+    + Run ' p ls '
+    * Resize the terminal smaller
+    + Run ' p ls '
 - Auto Backup, Auto Encryption, Auto save terminal history, Index every app and switch used associated with a history ID.
     + How to close the terminal ' x ' (backs everything up that you opened since you started the terminal and encrypts registered encrypted files).
+- How to logout 'p logout'
+    + Login is automatic when a passord is  needed it will ask, or you can use 'p login'
+- Encryption
+    + How to register a document for encryption 'crypt file.md'.
+    + How to open a document a text file, including encrypted, 'n file.md'
+        * if you are not in that folder 'fa label'. 
+            - How to create that alias 'fa label file.md'.
+    + How do you encrypt the file without closing the terminal 'p fileBackup -f file.md'.
+- Search in files even if they are Zipped or Encrypted
+    + How to view content of a file 'p cat -f file.md + user@domain.com'
+        * How to zip a file in a way it can be searched 'p zzip -f file.md'
 - Generate PHP code
     + Copy the CREATE TABLE sql, hit alt+win+c to automatically generate the create, read, update, delete of a table in php (crud), then paste the results.
 - File Search
