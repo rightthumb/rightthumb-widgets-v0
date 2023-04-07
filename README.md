@@ -17,10 +17,11 @@ ___
     + The hotkeys.py app uses keyboard shortcuts. A programmable mouse can activate any of them.
         * View all keyboard shortcuts 'p hotkeys -k'
 - Tasklist
-    + Grouped memory usage subtotals
+    + Grouped memory usage subtotals and grand total
         * ' task -report '
     + Search in tasklist
         * ' task + chrome '
+            - try 'kill chrome'
         
 - Folder Navigation
     + How to navigate to the Downloads folder 'b dl'. How to create a new bookmark 'm name'.
@@ -50,6 +51,18 @@ ___
 - Mine the clipboard
     + How to find all emails, urls, mailing addresses, windows paths, linux paths in copied text 'ctrl win h', then paste the results.
         * I just hit 7 on my mouse
+- Windows terminal
+    + List all keyboard shortcuts 'p wt -key actions'
+    + List all profiles 'p wt -key profiles' (displays index for keyboard shortcuts)
+    + List all keyboard shortcuts associated with a profile 'p wt -key actions + index'
+- Misc
+    + There are file monitor
+    + Database up monitor
+    + Ping monitor
+    + Active window monitors (to see how long you are in each file to see how long it takes to accomplish a particular task)
+    + Folder usage monitor (to identify relevant folders)
+    + Website file manager
+- Efficently do a range 
 # Thousands of apps with many features
 
 ## Anecdote
@@ -205,6 +218,21 @@ it saves a json file here:
 ~~~
 javascript:{ var script = document.createElement('script');script.type = 'text/javascript'; if (location.protocol === 'https:') { script.src = 'https://eyeformeta.com/tools/tool.js'; } else { script.src = 'http://eyeformeta.com/tools/tool.js'; } document.head.appendChild(script);}
 ~~~
+
+## Website management
+To upload a file 'u. index.htm' or 'p site -f index.htm -u' (automatically creating entire necessary folder structure) then if displays the full url to a file (unless it is an index file which it displays cleanly) 
+- To accomplish this add a file called '.folder.meta' in the site root.
+    + It accepts json or yaml
+- To encrypt the password, copy it then 'p cryptString -clip' and paste
+~~~
+url: https://domain.com
+sftp:
+  server: domain.com
+  user: admin
+  password: Uebt27i4dLAT8VxdwcJRd3MWdcdYN2+t2uVNPWnT8sIqeJB4IsJPsQ==
+  path: /home/user/public_html
+~~~
+
 
 ## About
 ~~~
