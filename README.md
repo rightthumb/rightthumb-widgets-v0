@@ -48,7 +48,6 @@ ___
     + How to do automated franchise research of everything from a franchise including video games 'p franchise -franchise marvel'. How to view the results 'p franchiseView -franchise marvel'.
 - How do I extract stuff from a website?
     + method 1
-        * Copy the selector
         * Hit 10 on my [mouse](https://www.amazon.com/dp/B088B3ZM76)
         * Say 'scrape table'
     + method 2
