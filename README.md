@@ -203,7 +203,27 @@ The Accurate way
 it saves a json file here:
     widgets/databank/tables/appRegistration.hash
 ~~~
- 
+
+___
+
+## Website management
+To upload a file 'u. index.htm' or 'p site -f index.htm -u' (automatically creating entire necessary folder structure) then if displays the full url to a file (unless it is an index file which it displays cleanly) 
+- To accomplish this add a file called '.folder.meta' in the site root.
+    + It accepts json or yaml
+- To encrypt the password, copy it then 'p cryptString -clip' and paste
+~~~
+url: https://domain.com
+sftp:
+  server: domain.com
+  user: admin
+  password: Uebt27i4dLAT8VxdwcJRd3MWdcdYN2+t2uVNPWnT8sIqeJB4IsJPsQ==
+  path: /home/user/public_html
+~~~
+___
+___
+# Misc
+___
+___
 ## How do I extract stuff from a website?
 - method 1
     + Hit 10 on my [mouse](https://www.amazon.com/dp/B088B3ZM76)
@@ -226,24 +246,8 @@ it saves a json file here:
 ~~~
 javascript:{ var script = document.createElement('script');script.type = 'text/javascript'; if (location.protocol === 'https:') { script.src = 'https://eyeformeta.com/tools/tool.js'; } else { script.src = 'http://eyeformeta.com/tools/tool.js'; } document.head.appendChild(script);}
 ~~~
-###### example: copy and paste one of the suggestions "hackTool.help( {'tags': 'tables_w_labels'} )" then "copy(hackTool.helper)" and paste in the console.
-___
-I created a chrome extension that scrapes data from webpages in a variety of formats for instant access in apps. That is what the databank app does.
-___
-
-## Website management
-To upload a file 'u. index.htm' or 'p site -f index.htm -u' (automatically creating entire necessary folder structure) then if displays the full url to a file (unless it is an index file which it displays cleanly) 
-- To accomplish this add a file called '.folder.meta' in the site root.
-    + It accepts json or yaml
-- To encrypt the password, copy it then 'p cryptString -clip' and paste
-~~~
-url: https://domain.com
-sftp:
-  server: domain.com
-  user: admin
-  password: Uebt27i4dLAT8VxdwcJRd3MWdcdYN2+t2uVNPWnT8sIqeJB4IsJPsQ==
-  path: /home/user/public_html
-~~~
+##### example: copy and paste one of the suggestions "hackTool.help( {'tags': 'tables_w_labels'} )" then "copy(hackTool.helper)" and paste in the console.
+I also created a chrome extension that scrapes data from webpages in a variety of formats for instant access in apps. That is what the databank app does.
 
 ## Dungeons and Dragons app (dnd.py)
 Created this when I was learning dnd and python. I have learned a lot since I created this app.
