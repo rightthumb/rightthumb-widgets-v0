@@ -9,8 +9,9 @@ ___
 - Windows
 - Linux
 - macOS
-- phone or tablets
-    + Additionally, the framework can be used on mobile devices running Termux or similar environments.
+- iOS
+- Android
+- etc
 
 ## Hype
 - Efficiently accomplish a wide range of tasks in a short amount of time.
