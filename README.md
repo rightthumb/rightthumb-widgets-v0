@@ -41,7 +41,7 @@ ___
 - Auto Backup, Auto Encryption, Auto save terminal history, Index every app and switch used associated with a history ID.
     + How to close the terminal ' x ' (backs everything up that you opened since you started the terminal and encrypts registered encrypted files).
 - How to logout 'p logout'
-    + Login is automatic when a passord is  needed it will ask, or you can use 'p login'
+    + Login is automatic when a password is needed, it will ask, or you can use 'p login'
 - Encryption
     + How to register a document for encryption 'crypt file.md'.
     + How to open a document a text file, including encrypted, 'n file.md'
