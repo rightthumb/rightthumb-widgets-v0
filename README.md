@@ -248,7 +248,7 @@ javascript:{ var script = document.createElement('script');script.type = 'text/j
 - view the JavaScript console for instructions.
     + example: copy and paste one of the suggestions "hackTool.help( {'tags': 'tables_w_labels'} )" then "copy(hackTool.helper)" and paste in the console.
 - Note: I also created a chrome extension that scrapes data from webpages in a variety of formats for instant access in apps. That is what the databank app does.
-
+- Note: Voice commands are managed by using the hotkeys.py app that talks to the listen.py app.
 ## Dungeons and Dragons app (dnd.py)
 Created this when I was learning dnd and python. I have learned a lot since I created this app.
 - Manage sorcerer spells
