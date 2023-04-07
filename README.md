@@ -51,7 +51,7 @@ ___
     + Hit 10 on my [mouse](https://www.amazon.com/dp/B088B3ZM76)
     + Say 'auto scrape'
 - Mine the clipboard
-    + How to find all emails, urls, mailing addresses, windows paths, linux paths in copied text 'ctrl win h', then paste the results.
+    + How to find all emails, urls, mailing addresses, Windows paths, Linux paths in copied text 'ctrl win h', then paste the results.
         * I just hit 7 on my mouse
 - Windows terminal
     + List all keyboard shortcuts 'p wt -key actions'
@@ -64,6 +64,7 @@ ___
     + Active window monitors (to see how long you are in each file to see how long it takes to accomplish a particular task)
     + Folder usage monitor (to identify relevant folders)
     + Website file manager
+
 # Thousands of apps with many features
 
 ## Anecdote
@@ -85,8 +86,11 @@ pip3 install -r require.txt
 ## How to install the framework
 ~~~
 cd install
-python3 installer.py -install h
-python3 installer.py -rc.d h
+
+python3 installer.py -install
+
+After that if you are running Linux
+    python3 installer.py -rc.d h
 
 add a default editor
     which nano | python3 installer.py -config.editor
@@ -101,15 +105,15 @@ How to recover a file
 
 How the installer works
 
-in windows
+in Windows
     a file %USERPROFILE%\rr.bat
         i recommend copying it to %SYSTEMROOT%\System32\rr.bat
-    when you open windows terminal type rr
+    when you open Windows terminal type rr
     or
-    in windows terminal
+    in Windows terminal
         "commandline": "cmd /k \"C:\\Users\\Scott\\rr.bat\"",
     
-in linux
+in Linux
     the .bashrc is modified
     NOTHING IS REMOVED!!!
     variables and aliases between ## {E45D09D22184} ## and ## {AEC80B4D3338} ##
@@ -155,9 +159,9 @@ Marvel                      Avengers                   2019 Avengers: Endgame
 
 ## Create your own apps
 ~~~
-in windows
+in Windows
     epyi base -build myApp
-linux
+Linux
     epyiBuild myApp
 
 To edit the framework new app template
@@ -236,6 +240,10 @@ sftp:
   password: Uebt27i4dLAT8VxdwcJRd3MWdcdYN2+t2uVNPWnT8sIqeJB4IsJPsQ==
   path: /home/user/public_html
 ~~~
+
+## Dungeons and Dragons
+- Check a DND website I just started [icosahedron.quest](https://icosahedron.quest/)
+
 
 
 ## About
