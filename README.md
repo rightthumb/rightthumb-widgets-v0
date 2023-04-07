@@ -1,4 +1,4 @@
-# rightthumb.com framework
+ rightthumb.com framework
 
 ___
 ## Just sharing how I customized my terminal.
@@ -13,6 +13,7 @@ ___
     + Additionally, the framework can be used on mobile devices running Termux or similar environments.
 
 ## Hype
+- Efficiently accomplish a wide range of tasks in a short amount of time.
 - I push 10 on my [mouse](https://www.amazon.com/dp/B088B3ZM76) to activate voice commands and say "Sally paste, convert this python to javascript" (using chatGPT). I then paste the results.
     + The hotkeys.py app uses keyboard shortcuts. A programmable mouse can activate any of them.
         * View all keyboard shortcuts 'p hotkeys -k'
@@ -62,7 +63,6 @@ ___
     + Active window monitors (to see how long you are in each file to see how long it takes to accomplish a particular task)
     + Folder usage monitor (to identify relevant folders)
     + Website file manager
-- Efficently do a range 
 # Thousands of apps with many features
 
 ## Anecdote
