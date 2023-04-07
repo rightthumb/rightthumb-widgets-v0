@@ -246,7 +246,7 @@ ___
     + Copy the selector
     + Hit 10 on my [mouse](https://www.amazon.com/dp/B088B3ZM76)
     + Say 'auto text'
-- method 3
+- method 3 (beta)
     + Put my mouse over it.
     + Hit 10 on my [mouse](https://www.amazon.com/dp/B088B3ZM76)
     + Say 'auto scrape'
