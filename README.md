@@ -15,6 +15,13 @@ ___
 ## Hype
 - I push 10 on my [mouse](https://www.amazon.com/dp/B088B3ZM76) to activate voice commands and say "Sally paste, convert this python to javascript" (using chatGPT). I then paste the results.
     + The hotkeys.py app uses keyboard shortcuts. A programmable mouse can activate any of them.
+        * View all keyboard shortcuts 'p hotkeys -k'
+- Tasklist
+    + Grouped memory usage subtotals
+        * ' task -report '
+    + Search in tasklist
+        * ' task + chrome '
+        
 - Folder Navigation
     + How to navigate to the Downloads folder 'b dl'. How to create a new bookmark 'm name'.
     + How to view all of the files and folders ' d ', to search for something  'd something'. Linked files and folders are yellow.
@@ -96,6 +103,17 @@ in linux
     VERY EASY TO REMOVE
 ~~~
 
+## Help
+~~~
+Every app has multiple switches per registerd switch.
+    Help Switches
+        -?, -??, --??, ?, ??, /?, /??, /h, /help, -help, --help
+
+Help that includes global switches (included in all apps).
+    p ls ?
+Help that is just for that app.
+    p ls ??
+~~~
 
 ## Have a movie drive?
 ### Auto franchise hierarchy
