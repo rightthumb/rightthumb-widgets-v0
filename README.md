@@ -47,9 +47,15 @@ ___
     + How to view all of the episodes of a tv show 'ee the flash'.
     + How to do automated franchise research of everything from a franchise including video games 'p franchise -franchise marvel'. How to view the results 'p franchiseView -franchise marvel'.
 - How do I extract stuff from a website?
-    + Put my mouse over it.
-    + Hit 10 on my [mouse](https://www.amazon.com/dp/B088B3ZM76)
-    + Say 'auto scrape'
+    + method 1
+        * Copy the selector
+        * Hit 10 on my [mouse](https://www.amazon.com/dp/B088B3ZM76)
+        * Say 'scrape table'
+    + method 2
+        * Put my mouse over it.
+        * Hit 10 on my [mouse](https://www.amazon.com/dp/B088B3ZM76)
+        * Say 'auto scrape'
+
 - Mine the clipboard
     + How to find all emails, urls, mailing addresses, Windows paths, Linux paths in copied text 'ctrl win h', then paste the results.
         * I just hit 7 on my mouse
