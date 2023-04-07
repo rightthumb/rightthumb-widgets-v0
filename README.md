@@ -219,6 +219,9 @@ it saves a json file here:
 ~~~
 javascript:{ var script = document.createElement('script');script.type = 'text/javascript'; if (location.protocol === 'https:') { script.src = 'https://eyeformeta.com/tools/tool.js'; } else { script.src = 'http://eyeformeta.com/tools/tool.js'; } document.head.appendChild(script);}
 ~~~
+___
+I created a chrome extension that scrapes data from webpages in a variety of formats for instant access in apps. That is what the databank app does.
+___
 
 ## Website management
 To upload a file 'u. index.htm' or 'p site -f index.htm -u' (automatically creating entire necessary folder structure) then if displays the full url to a file (unless it is an index file which it displays cleanly) 
