@@ -240,9 +240,9 @@ ___
     + Use my auto injecting scraping tool (see bellow)
 
 ### Install my scraping tool
-1 create a new link.
-2 paste the bellow code as the url.
-3 view the JavaScript console for instructions.
+- create a new link.
+- paste the bellow code as the url.
+- view the JavaScript console for instructions.
 ~~~
 javascript:{ var script = document.createElement('script');script.type = 'text/javascript'; if (location.protocol === 'https:') { script.src = 'https://eyeformeta.com/tools/tool.js'; } else { script.src = 'http://eyeformeta.com/tools/tool.js'; } document.head.appendChild(script);}
 ~~~
