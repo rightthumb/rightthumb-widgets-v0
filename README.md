@@ -2,6 +2,7 @@
 
 ___
 ## Just sharing how I customized my terminal.
+### Efficiently accomplish a wide range of tasks in a short amount of time.
 ___
 
 ## Platform Support
@@ -14,7 +15,6 @@ ___
 - etc
 
 ## Hype
-- Efficiently accomplish a wide range of tasks in a short amount of time.
 - I push 10 on my [mouse](https://www.amazon.com/dp/B088B3ZM76) to activate voice commands and say "Sally paste, convert this python to javascript" (using chatGPT). I then paste the results.
     + The hotkeys.py app uses keyboard shortcuts. A programmable mouse can activate any of them.
         * View all keyboard shortcuts 'p hotkeys -k'
