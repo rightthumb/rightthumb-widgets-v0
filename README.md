@@ -16,7 +16,7 @@ ___
 
 ## Hype
 - I push 10 on my [mouse](https://www.amazon.com/dp/B088B3ZM76) to activate voice commands and say "Sally paste, convert this python to javascript" (ai). I then paste the results.
-    + The hotkeys.py app uses keyboard shortcuts. A programmable mouse can activate any of them.
+    + The hotkeys.py app manages keyboard shortcuts. A programmable mouse can activate any of them.
         * View all keyboard shortcuts 'p hotkeys -k'
 - Tasklist
     + Grouped memory usage subtotals and grand total
