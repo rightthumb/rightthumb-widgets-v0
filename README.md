@@ -51,6 +51,10 @@ ___
         * Hit 10 on my [mouse](https://www.amazon.com/dp/B088B3ZM76)
         * Say 'scrape table'
     + method 2
+        * Copy the selector
+        * Hit 10 on my [mouse](https://www.amazon.com/dp/B088B3ZM76)
+        * Say 'auto text'
+    + method 3
         * Put my mouse over it.
         * Hit 10 on my [mouse](https://www.amazon.com/dp/B088B3ZM76)
         * Say 'auto scrape'
