@@ -3514,6 +3514,7 @@ alias vps.y.dt.="$ww/bash/dt/vps.y.dt.sh"
 
 
 
+
 if [[ ( "$PWD" == "/home/scott" && "$HOME" != "/home/scott" ) ]]; then
     cd $HOME
 fi
@@ -3641,6 +3642,8 @@ alias ..='cd ..'
 
 alias 2icon="$widgets/widgets/bash/tools/2icon.sh ";
 alias 2ico="$widgets/widgets/bash/tools/2icon.sh ";
+
+alias crypt="$ww/bash/crypt.sh"
 
 export Session_ID=$(date +%s)
 
