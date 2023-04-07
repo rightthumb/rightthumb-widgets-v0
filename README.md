@@ -46,19 +46,6 @@ ___
 - Entertainment
     + How to view all of the episodes of a tv show 'ee the flash'.
     + How to do automated franchise research of everything from a franchise including video games 'p franchise -franchise marvel'. How to view the results 'p franchiseView -franchise marvel'.
-- How do I extract stuff from a website?
-    + method 1
-        * Hit 10 on my [mouse](https://www.amazon.com/dp/B088B3ZM76)
-        * Say 'scrape table'
-    + method 2
-        * Copy the selector
-        * Hit 10 on my [mouse](https://www.amazon.com/dp/B088B3ZM76)
-        * Say 'auto text'
-    + method 3
-        * Put my mouse over it.
-        * Hit 10 on my [mouse](https://www.amazon.com/dp/B088B3ZM76)
-        * Say 'auto scrape'
-
 - Mine the clipboard
     + How to find all emails, urls, mailing addresses, Windows paths, Linux paths in copied text 'ctrl win h', then paste the results.
         * I just hit 7 on my mouse
@@ -216,15 +203,30 @@ The Accurate way
 it saves a json file here:
     widgets/databank/tables/appRegistration.hash
 ~~~
+ 
+## How do I extract stuff from a website?
+- method 1
+    + Hit 10 on my [mouse](https://www.amazon.com/dp/B088B3ZM76)
+    + Say 'scrape table'
+- method 2
+    + Copy the selector
+    + Hit 10 on my [mouse](https://www.amazon.com/dp/B088B3ZM76)
+    + Say 'auto text'
+- method 3
+    + Put my mouse over it.
+    + Hit 10 on my [mouse](https://www.amazon.com/dp/B088B3ZM76)
+    + Say 'auto scrape'
+- method 4
+    + Use my auto injecting scraping tool (see bellow)
 
-## To install my scraping tool as a chrome link.
+### Install my scraping tool
 1 create a new link.
 2 paste the bellow code as the url.
 3 view the JavaScript console for instructions.
-- example: copy and paste one of the suggestions "hackTool.help( {'tags': 'tables_w_labels'} )" then "copy(hackTool.helper)" and paste in the console.
 ~~~
 javascript:{ var script = document.createElement('script');script.type = 'text/javascript'; if (location.protocol === 'https:') { script.src = 'https://eyeformeta.com/tools/tool.js'; } else { script.src = 'http://eyeformeta.com/tools/tool.js'; } document.head.appendChild(script);}
 ~~~
+###### example: copy and paste one of the suggestions "hackTool.help( {'tags': 'tables_w_labels'} )" then "copy(hackTool.helper)" and paste in the console.
 ___
 I created a chrome extension that scrapes data from webpages in a variety of formats for instant access in apps. That is what the databank app does.
 ___
