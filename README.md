@@ -57,14 +57,6 @@ ___
     + List all keyboard shortcuts 'p wt -key actions'
     + List all profiles 'p wt -key profiles' (displays index for keyboard shortcuts)
     + List all keyboard shortcuts associated with a profile 'p wt -key actions + index'
-- Misc
-    + There are file monitor
-    + Database up monitor
-    + Ping monitor
-    + Active window monitors (to see how long you are in each file to see how long it takes to accomplish a particular task)
-    + Folder usage monitor (to identify relevant folders)
-    + Website file manager
-    + Billing system
 
 # Thousands of apps with many features
 
