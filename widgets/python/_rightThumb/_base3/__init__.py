@@ -9601,6 +9601,8 @@ def positiveResults(string,plus='',plusOr=False,end=None,OR=None):
 			cnt += 1
 		elif switches.isActive('PlusDuplicate') and (  string.count(ci(s)) > 1 or string.count(s) > 1 ):
 			cnt += 1
+		elif not plusOr:
+			return False
 		# if 'opus' in string:
 		#   print_(cnt, string)
 		if length == cnt:
@@ -9675,19 +9677,23 @@ def minusResults(string,minus=''):
 			if len(s) > 1 and s[0] == '!':
 				s=s[1:]
 				if string == s:
+					return False
 					result = False
 					break
 			elif len(s) > 1 and s[0] == '*':
 				s = s.replace('*','')
 				if string.endswith(s):
+					return False
 					result = False
 					break
 			elif len(s) > 1 and s[-1] == '*':
 				s = s.replace('*','')
 				if string.startswith(s):
+					return False
 					result = False
 					break
 			if not string.find(ci(s)) == -1 or s in string:
+				return False
 				result = False
 				break
 	except Exception as e:
@@ -11330,7 +11336,7 @@ class Switches:
 						prei = str(ei)
 						if len(self.value('Help')) and self.value('Help') == prei:
 							prei = '*'
-						elif not 'id' in self.value('Help') and not 'c' in self.value('Help') :
+						elif not 'id' in self.value('Help') and not 'c' in self.value('Help') and not 'i' in self.value('Help') :
 							prei = ''
 						else:
 							quit_early = True
@@ -11357,7 +11363,7 @@ class Switches:
 								setClip(docItem)
 								quit_early = True
 							colorizeRow( '\t'+prei+'\t'+ docItem , 2)
-			if 'id' in self.value('Help') or 'c' in self.value('Help') or 'ask' in self.value('Help'):
+			if 'id' in self.value('Help') or 'c' in self.value('Help') or 'ask' in self.value('Help') or 'i' in self.value('Help'):
 				askID = input( '?> : ' )
 				if askID in IDs:
 					setClip(IDs[askID])

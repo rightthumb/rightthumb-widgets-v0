@@ -12,7 +12,7 @@
 
 
 ##################################################
-import sys, time, os
+import sys, time
 ##################################################
 import _rightThumb._construct as __
 appDBA=__.clearFocus(__name__,__file__);__.appReg=appDBA;
@@ -30,11 +30,12 @@ _str = __.imp('_rightThumb._string')
 
 
 def sw():
-	_.switches.register( 'NewProject', '-new,-project,-register', 'RightThumb.com' )
-	_.switches.register( 'AddUser', '-u,-user', 'Scott 813-555-2424' )
-	_.switches.register( 'API', '-api', 'ecf5c74ae83545feac983e5f526bb4ff' )
-	_.switches.register( 'Register', '-r,-register' )
-
+	pass
+	#b)--> examples
+	# _.switches.register( 'Input', '-i' )
+	# _.switches.register( 'URL', '-u,-url,-urls', 'https://etc.ac/', isData='raw' )
+	#e)--> examples
+	# _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name,data,clean', description='Files', isRequired=False )
 
 # __.setting('require-list',['Files,Plus','File,Has']) # todo
 # __.setting('require-list',['Pipe','Files'])
@@ -50,7 +51,7 @@ __.setting('switch-raw',[])
 
 _.appInfo[focus()] = {
 	# 'app': '8facG-jo0Cxk',
-	'file': 'gatekeeper.py',
+	'file': 'thisApp.py',
 	'liveAppName': __.thisApp( __file__ ),
 	'description': 'Changes the world',
 		# _.ail(1,'subject')+
@@ -72,10 +73,7 @@ _.appInfo[focus()] = {
 						# '',
 	],
 	'examples': [
-						_.hp('p gatekeeper'),
-						_.hp('p gatekeeper'),
-						_.hp('p gatekeeper -project RightThumb.com'),
-						_.hp('p gatekeeper -user Scott 813-555-2424'),
+						_.hp('p thisApp -file file.txt'),
 						_.linePrint(label='simple',p=0),
 						'',
 	],
@@ -153,162 +151,42 @@ _.l.sw.register( triggers, sw )
 
 
 
+import re
+import regex
+
+def scrape_windows_file_paths(text):
+	windows_path_pattern = r'[a-zA-Z]:[\\/](?:[a-zA-Z0-9\s_@\-^!#$%&+={}\[\]]+[\\/])*'
+	windows_paths = re.findall(windows_path_pattern, text)
+	return set(windows_paths)
 
 
+def scrape_linux_file_paths(text):
+	for url in scrape_urls(text):
+		text=text.replace(url,'')
+	linux_path_pattern = r'(?<!https?:)\/(?:[^\/\0\s]+\/)*[^\/\0\s]*'
+	linux_paths = regex.findall(linux_path_pattern, text)
+	return set(linux_paths)
 
 
+def scrape_urls(text):
+	url_pattern = r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+'
+	urls = re.findall(url_pattern, text)
+	return set(urls)
 
-
-
-# def scanner(folder):
-	# global gatekeeper
-	# global gatepath
-	# fo=folder
-	# i=0
-	# while not os.path.isfile( folder+os.sep+_.v.gateFi ):
-	# 	print(folder+os.sep+_.v.gateFi)
-	# 	# print(os.path.isfile( folder+os.sep+'.folder.meta'+end ),folder+os.sep+'.folder.meta'+end)
-	# 	i+=1
-	# 	if i > 100:
-	# 		_.e('missing folder meta')
-	# 	try:
-	# 		folder = __.path(folder,pop=True)
-	# 	except Exception as e:
-	# 		break
-	# if os.path.isfile(folder+os.sep+_.v.gateFi):
-	# 	gatekeeper=_.getYML(folder+os.sep+_.v.gateFi)
-	# 	# gatekeeper['path']=folder+os.sep+_.v.gateFi
-	# 	if not type(gatekeeper) == dict: gatekeeper = {}
-	# 	gatepath = folder+os.sep+_.v.gateFi
-	# else:
-	# 	gatekeeper = {}
-	# 	gatepath = fo+os.sep+_.v.gateFi
-	# return gatekeeper, gatepath
-
-
-
-
-
-import os
-
-class Gatekeeper:
-	def __init__(self):
-		# Define the filename to search for
-		self.filename = '.gatekeeper_7ea5cf8b'
-
-	def yamlIndex(self, index):
-		# Open the file for reading
-		with open(index, 'r') as file:
-			# Initialize an empty dictionary
-			dictionary = {}
-
-			# Loop through each line of the file
-			for line in file:
-				# Split the line into the hash and phone number using the colon separator
-				parts = line.split(':')
-
-				# Add the hash and phone number to the dictionary
-				dictionary[parts[0]] = parts[1].strip()
-
-		# Return the dictionary
-		return dictionary
-
-	def scan(self):
-		# Get the current directory
-		directory = os.getcwd()
-
-		# Loop through each parent directory until we reach the root
-		while directory != '/'  and not directory[1:] == ':\\':
-			# print(directory)
-			# Check if the file exists in the current directory
-			if os.path.exists(f'{directory}/{self.filename}'):
-				# print(f'Found {self.filename} in {directory}')
-				return self.yamlIndex(f'{directory}/{self.filename}')
-				break
-
-			# Go up one level to the parent directory
-			directory = os.path.dirname(directory)
-
-		# If we reached the root and still haven't found the file, it doesn't exist
-		if directory == '/' or directory[1:] == ':\\':
-			return {}
-
-
-def scanner(folder):
-
-	gk = Gatekeeper()
-	gatekeeper=gk.scan()
-	print(gatekeeper)
-
-
-
-
-
-
-def create(project):
-	folder=os.getcwd()
-	fi=folder+os.sep+_.v.gateFi
-	print(fi)
-	_.saveTable2( config, fi )
-
-
-def addUser(name,phone):
-	global gatekeeper
-
-def text():
-	_sms = _.regImp( __.appReg, 'vps-srv-7facG-twilio-send' )
-	_sms.imp.action( to='813-690-1260', body='thank you' )
-	
-
-
-def editor(path):
-	_file_open = _.regImp( __.appReg, 'file-open' )
-	_file_open.switch('App',_v.meta['code_editor'])
-	_file_open.switch('Files',path)
-	_file_open.action()
-	_.pr(path)
-	# _.pr(_v.meta['code_editor'],path)
-
+def scrape_all(text):
+	windows_paths = scrape_windows_file_paths(text)
+	linux_paths = scrape_linux_file_paths(text)
+	urls = scrape_urls(text)
+	return windows_paths, linux_paths, urls
 
 def action():
-	if _.switches.isActive('Register'):
-		import webbrowser
-		url = 'https://eyeformeta.com/apps/gatekeeper/api/'
-		webbrowser.open(url, new=2)
-		path = _v.tt+os.sep+'gatekeeper.api'
-		editor(path)
-		return None
+	# Example usage
+	text = "Here's a Windows path: C:\\Users\\John\\Documents\\file.txt, a Linux path: /home/john/documents/file.txt, and a URL: https://www.example.com  https://www.google.com/search?q=this+is+a+test&rlz=1C1RXQR_enUS1042US1042&oq=this+is+a+test&aqs=chrome.0.0i355i512j46i512l3j0i512l2j46i512j0i512l3.2290j0j15&sourceid=chrome&ie=UTF-8"
+	windows_paths, linux_paths, urls = scrape_all(text)
 
-
-
-	global gatekeeper
-	global gatepath
-	load()
-	if _.switches.isActive('NewProject'):
-		project = _.switches.values('NewProject')[0]
-		create(project)
-		return None
-	if _.switches.isActive('AddUser'):
-		phone=None
-		name=None
-		for user in _.switches.values('AddUser'):
-			scan=_scan.imp.app.scan.process( user, 'A02F28B2' )
-			if 'phone' in scan: phone=scan['phone']
-			else: name=user
-		addUser(name,phone)
-		# if not name is None and not phone is None:
-		return None
-def load():
-	global gatekeeper
-	global gatepath
-	scanner(os.getcwd())
-	
-
-_.v.gateFi = '.gatekeeper_7ea5cf8b'
-gatekeeper={}
-# os=__.imp('os.sep')
-import os
-_scan = _.regImp( __.appReg, 'record-cleaner' )
+	print("Windows paths:", windows_paths)
+	print("Linux paths:", linux_paths)
+	print("URLs:", urls)
 
 ##################################################
 #b)--> examples

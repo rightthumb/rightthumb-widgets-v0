@@ -41,7 +41,7 @@ then
 else
     $p  autoBackup -ago 1d
 fi
-terminal_name=$( sed -n '7p' < $wprofile/config/.terminal )
+terminal_name=$TERM
 if [[ ! -e $terminal_name ]]; then
     read -p 'close all terminals?: ' shouldClose
     if [[ "$shouldClose" == "y" ]]; then

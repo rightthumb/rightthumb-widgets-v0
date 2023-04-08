@@ -969,7 +969,13 @@ def process(path):
 		# _.pr(os.path.isfile(path),path)
 		if not os.path.isfile(path):
 			return path
-		for line in _.getText(path,raw=True).split('\n'):
+		the_file=_.getText(path,raw=True)
+		if _.showLine(the_file, plus=inc, minus=ex,OR=False,code=True):
+			pass
+		else:
+			return path
+
+		for line in the_file.split('\n'):
 			# for line in f:
 			i+=1
 			

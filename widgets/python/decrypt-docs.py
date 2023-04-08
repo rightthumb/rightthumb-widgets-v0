@@ -576,6 +576,7 @@ def run(path):
 				# decrypt(path)
 				_.cp('decrypted and removed from decrypt-docs database','yellow')
 				_.saveTable(new,'crypt-docs.list',p=0)
+		__.isExit()
 		return None
 	if _.switches.isActive('Delete'): return None
 	if _.switches.isActive('Delete'): return None

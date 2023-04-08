@@ -228,6 +228,7 @@ def process(path,end='',ft=None):
 		servers = [ftp['server']]
 	
 	for s in servers:
+		_.pr(s,c='green')
 		f=ftp['path']
 		u=ftp['user']
 		pw=_vault.imp.s.de( ftp['password'] )
@@ -242,6 +243,10 @@ def process(path,end='',ft=None):
 		else:
 			_file=file
 			_path=path
+		if not _.isWin:
+			scp=_scp[len('wsl '):]
+			ssh=_ssh[len('wsl '):]
+
 
 
 
@@ -279,8 +284,8 @@ def process(path,end='',ft=None):
 				path+=os.sep
 
 
-		# if _.switches.isActive('mkdir'):
-		if True:
+		if _.switches.isActive('mkdir'):
+		# if True:
 			fi = file.replace( __.path(folder), f ).replace('\\','/')
 			rfo = _.tailpop(fi,'/')
 			pw=_vault.imp.s.de( ftp['password'] )

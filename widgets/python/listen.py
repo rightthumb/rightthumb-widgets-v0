@@ -559,6 +559,10 @@ ti={
 
 
 def auto_scrape():
+
+	# prompt
+	# i created an algorithm where i can put my mouse over an element on a webpage and it automatically right clicks, goes to inspect, collects element information, goes up an element more than once. It then tries to identify how to extract information from that webpage.
+
 	print('auto_scrape')
 	global mouse
 	global keyboard
@@ -619,6 +623,8 @@ dic = {
 
 			'ipsum': 'ipsum()',
 			'lorem': 'ipsum()',
+
+			'center comment': 'Clip.center_to_top_comment()',
 
 			'md5': 'Clip.md5()',
 			'explode': 'Clip.explode()',

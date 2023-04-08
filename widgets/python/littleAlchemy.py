@@ -193,19 +193,20 @@ def load():
 	global names
 	global combinations
 	hasError = False
-	if not os.path.isfile( 'littlealchemy_names.json' ):
-		_.colorThis( [ 'Missing file: littlealchemy_names.json' ], 'red' )
+	if not os.path.isfile( 'names.json' ):
+		_.colorThis( [ 'Missing file: names.json' ], 'red' )
 		hasError = True
 
-	if not os.path.isfile( 'littlealchemy_combinations.json' ):
-		_.colorThis( [ 'Missing file: littlealchemy_combinations.json' ], 'red' )
+	if not os.path.isfile( 'combinations.json' ):
+		_.colorThis( [ 'Missing file: combinations.json' ], 'red' )
 		hasError = True
 	if hasError:
 		sys.exit()
 
-	names = _.getTable2( 'littlealchemy_names.json' )
-	combinations = _.getTable2( 'littlealchemy_combinations.json' )
+	names = _.getTable2( 'names.json' )
+	combinations = _.getTable2( 'combinations.json' )
 	hack = "hackData = []\n$('.elementName').each(function() {\n	hackData.push($(this).text());\n});\ncopy(hackData)"
+	# hack = "hackData = []\n$('.elementName').each(function() {\n	hackData.push($(this).text());\n});\ncopy(hackData.join('\\n'))"
 	
 	if not os.path.isfile( 'littlealchemy_hack.js' ):
 		ask = 'y'

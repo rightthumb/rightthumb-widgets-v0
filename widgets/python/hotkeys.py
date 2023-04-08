@@ -1995,29 +1995,28 @@ function get__THETABLE( $ID_label ){
 				for item in scan[k]:
 					if not item in result:
 						result.append(item)
-			items=[]
-			for i,item in enumerate(result):
-				item=item.strip()
-				if item.endswith(')') and not '(' in item:
-					item=item[:-len(')')]
-				if item.endswith('}') and not '{' in item:
-					item=item[:-len('}')]
-				if item.endswith(']') and not '[' in item:
-					item=item[:-len(']')]
-				if item.endswith("']"):
-					item=item[:-len("']")]
-				if item.endswith("'"):
-					item=item[:-len("'")]
-				if item.endswith('"'):
-					item=item[:-len('"')]
-				if item.startswith('"'):
-					item=item[len('"'):]
-				if item.startswith("'"):
-					item=item[len("'"):]
-				if item.endswith('}') and not '{' in item:
-					item=item[:-len('}')]
-				if not item in items and len(item) > 1:
-					items.append(item)
+		def cleanScrape(item):
+			item=item.strip()
+			def csi(item,e):
+				if item.endswith(e): item=item[:-len(e)]
+				return item
+			def csi2(item,e,n):
+				if item.endswith(e) and not n in item: item=item[:-len(e)]
+				return item
+
+			item=csi(item,',')
+			item=csi2(item,')','(')
+			item=csi2(item,'}','{')
+			item=csi2(item,']','[')
+			item=csi2(item,']','[')
+			item=csi(item,"'")
+			item=csi(item,'"')
+			return item
+		items=[]
+		for i,item in enumerate(result):
+			item=cleanScrape(item)
+			if not item in items and len(item) > 1:
+				items.append(item)
 
 		if not len(items):
 			text=text.replace('\t',' ')

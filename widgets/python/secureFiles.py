@@ -732,8 +732,9 @@ def action():
 					_.cp('in secureFiles database','yellow'); pre_delete_decryption(row);
 					del settings['files'][f]
 				if row in settings2:
-					_.cp('in secureFiles database','yellow'); pre_delete_decryption(row);
+					_.pr(line=True,c='red')
 					del settings2[row]
+					_.cp('in secureFiles database','yellow'); pre_delete_decryption(row);
 
 
 				if row in settings3:
@@ -801,10 +802,12 @@ def action():
 
 
 		if removed:
+			print('removed')
 			_.saveTableDB(   settings,   'secure-files.settings'  ,p=1 )
 			_.saveTable(   settings2,   'secure-crypt-local.meta'   )
 			_.saveTable(   settings3,   'secure-files-local.settings'   )
 			_.saveTable(   settings4,   'secure-crypt-local.settings'   )
+			__.isExit()
 
 		scanLock( lock=_.switches.isActive('Lock') )
 		return None

@@ -41,7 +41,7 @@ def appSwitches():
 	_.switches.register( 'Get', '-get' )
 	_.switches.register( 'Print', '-print' )
 	_.switches.register( 'Alias', '-alias' )
-	_.switches.register( 'AddAlias', '-addalias' )
+	# _.switches.register( 'AddAlias', '-addalias' )
 	_.switches.register( 'Temp', '-temp', '8' )
 	_.switches.register( 'JustPrint', '-jp', 'r' )
 	_.switches.register( '.bashrc-Aliases', '-ap,-rc', 'r' )
@@ -82,7 +82,7 @@ _.appInfo[focus()] = {
 						# '',
 	],
 	'examples': [
-						'p keychain -get',
+						'p keychain -get -label dt',
 						'p keychain -add -label joplin-token -clip',
 						'p keychain -add -label joplin-token --pa',
 						'',
@@ -172,6 +172,13 @@ def add():
 	global label
 	global aliases
 	password = None
+
+	if _.switches.isActive('Alias'):
+		for alias in _.switches.values('Alias'):
+			aliases[alias] = label
+		_.saveTableDB( aliases, 'keychain-aliases.hash' )
+		return None
+
 	if _.switches.isActive('Clipboard'):
 		password = _copy.imp.paste()
 	if _.switches.isActive('Password'):
@@ -181,10 +188,7 @@ def add():
 	# if 'eof' in table: del table['eof']; table['eof']='';
 	_.saveTableDB( table, 'keychain.hash' )
 
-	if _.switches.isActive('Alias'):
-		for alias in _.switches.values('Alias'):
-			aliases[alias] = label
-		_.saveTableDB( aliases, 'keychain-aliases.hash' )
+
 
 def possibly_wait():
 	if  _.switches.isActive('Temp'):
@@ -241,7 +245,7 @@ def get(theLabel=None):
 		possibly_wait()
 		return password
 	else:
-		_.e( str(theLabel)+': key does not exist' )
+		return None
 	
 
 def changePassword():
@@ -364,7 +368,8 @@ def load():
 		bk.append('___')
 		bk.append(_.friendlyDate(__.startTime))
 		for line in yml.split('\n'):
-			bk.append(line)
+			if not line in bk:
+				bk.append(line)
 		_.saveText(bk,save)
 		time.sleep(.1)
 		bk=_.getText(save,raw=True,clean=2).split('\n')
@@ -380,6 +385,7 @@ def load():
 			for k in table:
 				backup[k]=_vault.imp.s.de(table[k])
 			yml=_.toYML(backup)
+
 			save = _v.tt+os.sep+'keychain.crypt'
 			save2 = _v.tt+os.sep+'keychain'+'-'+_.friendlyDate(__.startTime).split(' ')[0]+'.crypt'
 			_bk_(yml,save)

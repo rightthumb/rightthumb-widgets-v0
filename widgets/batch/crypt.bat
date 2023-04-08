@@ -7,13 +7,13 @@ if [%2] == [-d] (
 	call p decrypt-docs -delete -f  %fi%
 	call p secureFiles -delete  -en -f  %fi%
 	echo done
-	rem echo removed encryption settings
 	GOTO:EOF
 )
 
 if [%2] == [-delete] (
 	call p secureFiles -delete  -en -f  %fi%
 	call p decrypt-docs -delete -f  %fi%
+	echo done
 	GOTO:EOF
 )
 

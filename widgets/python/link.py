@@ -35,7 +35,7 @@ import _rightThumb._string as _str
 
 
 def appSwitches():
-	_.switches.register( 'Source', '-src' )
+	_.switches.register( 'Source', '-f,-src' )
 	_.switches.register( 'Destination', '-dst' )
 
 	_.switches.register( 'Symbolic', '-sym,-symbol,-symbolic' )
@@ -161,22 +161,27 @@ _.postLoad( __file__ )
 
 
 def action():
+	if not _.switches.isActive('Source'): _.e('No source','Please specify a source')
+	Source = __.path(_.switches.values('Source')[0])
 
+	if not _.switches.isActive('Destination'):
+		Destination = __.path(os.getcwd() +os.sep+ Source.split(os.sep)[-1])
+	else:
+		Destination = __.path(_.switches.values('Destination')[0])
+	folder = os.path.dirname(__.path(Destination))
 	try:
 
 
 		if _.switches.isActive('Symbolic'):
-			if os.path.isfile(_.switches.values('Destination')[0]):
-				os.unlink(_.switches.values('Destination')[0])
-			folder=__.path(_.switches.values('Destination')[0],pop=True)
+			if os.path.isfile(Destination):
+				os.unlink(Destination)
 			_v.mkdir(folder)
-			os.symlink( _.switches.values('Source')[0], _.switches.values('Destination')[0] )
+			os.symlink( Source, Destination )
 		else:
-			if os.path.isfile(_.switches.values('Destination')[0]):
-				os.unlink(_.switches.values('Destination')[0])
-			folder=__.path(_.switches.values('Destination')[0],pop=True)
+			if os.path.isfile(Destination):
+				os.unlink(Destination)
 			_v.mkdir(folder)
-			os.link( _.switches.values('Source')[0], _.switches.values('Destination')[0] )
+			os.link( Source, Destination )
 
 
 	except Exception as e:

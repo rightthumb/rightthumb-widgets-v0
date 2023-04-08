@@ -1,2 +1,3 @@
 @echo off
-call p site -f %* 
+call p site -mkdir -u -f %* 
+ 

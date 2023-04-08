@@ -520,7 +520,7 @@ def action():
 					__.spent.append(path)
 					sessions = []
 					fileBackup = _fileBackup()
-					fileBackup.switch( 'Session', '-',join(table[path]) )
+					fileBackup.switch( 'Session', '-'.join(table[path]) )
 					fileBackup.switch( 'Input', path )
 					fileBackup.do( 'action' )
 				print(a,path)
