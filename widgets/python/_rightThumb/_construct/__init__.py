@@ -10,6 +10,22 @@
 # ###########################################################################
 # ## {C3P0D40fAe8B} ##
 
+autoCreationConfiguration = {
+							'backup': False,
+							'logs': True,
+							'folders': True,
+							'created': { '_vars': 0 },
+}
+
+settings_table = {
+					#t)--> edit: 1661227949.7667239
+					'receipt-log': True,
+					'receipt-file': True,
+}
+
+truePath = False
+truePath = True
+
 import time,signal,sys,platform
 tz = str(time.strftime("%z")).replace(':','')
 signal.signal(signal.SIGINT, lambda x, y: sys.exit(0))
@@ -27,20 +43,6 @@ def name(path):
 	app=app.replace('.py','')
 	if app == '__init__': app=root+'.'+fo
 	return app
-
-
-autoCreationConfiguration = {
-							'backup': False,
-							'logs': True,
-							'folders': True,
-							'created': { '_vars': 0 },
-}
-
-settings_table = {
-					#t)--> edit: 1661227949.7667239
-					'receipt-log': False,
-					'receipt-file': False,
-}
 
 class Meta_Namespace():
 	def __init__( self ):
@@ -286,6 +288,7 @@ def path( p, ab=True, pop=False, file=False, slash=None, folder=None, fi=None, f
 		return os.sep.join(parts)
 	return p1
 def _path_( p, ab=True, pop=False, file=False, slash=None, folder=None, fi=None, fo=None, fix=True ):
+	
 	p_bk=p
 	# fix used in fileBackup.py
 
@@ -337,13 +340,12 @@ def _path_( p, ab=True, pop=False, file=False, slash=None, folder=None, fi=None,
 			except Exception as e:
 				pass
 	if isWin:
-		try:
-			os=imp('os.path._getfinalpathname')
-			p = os.path._getfinalpathname(p).lstrip(r'\?')
-			# print(p)
-		except Exception as e:
-			# print(e)
-			pass
+		global truePath
+		if truePath:
+			try:
+				os=imp('os.path._getfinalpathname')
+				p = os.path._getfinalpathname(p).lstrip(r'\?')
+			except: pass
 	if p_bk[1] == ':' and not p[1] == ':': p = p_bk
 	if type(p) == str and len(p)>1 and p[1] == ':':
 		p = p[0].upper() + p[1:]

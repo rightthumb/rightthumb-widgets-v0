@@ -85,6 +85,9 @@ _.appInfo[focus()] = {
 						'p keychain -get -label dt',
 						'p keychain -add -label joplin-token -clip',
 						'p keychain -add -label joplin-token --pa',
+						_.linePrint(label='simple',p=0,c='yellow'),
+						'p keychain -label rightthumb@yavin.m-eta.app   -add   -alias rt',
+						'p keychain -get -label rt',
 						'',
 	],
 	'columns': [

@@ -113,8 +113,8 @@ def registerSwitches( argvProcessForce=False ):
 	appSwitches()
 
 	_.myFileLocation_Print = False
-	_.switches.trigger( 'Files', _.myFileLocations, vs=True )
-	_.switches.trigger( 'Folder', _.myFolderLocations )
+	# _.switches.trigger( 'Files', _.myFileLocations, vs=True )
+	# _.switches.trigger( 'Folder', _.myFolderLocations )
 	_.switches.trigger( 'URL', _.urlTrigger )
 	_.switches.trigger( 'Ago', _.timeAgo )
 	_.switches.trigger( 'Duration', _.timeFuture )

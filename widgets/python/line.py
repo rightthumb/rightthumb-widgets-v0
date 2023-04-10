@@ -354,6 +354,10 @@ _.postLoad( __file__ )
 
 
 if _.switches.isActive('Make'):
+	m=' '.join(_.switches.values('Make'))
+	if not '{}' in m: m+=' {}'
+	_.switches.fieldSet( 'Make', 'value', m )
+	_.switches.fieldSet( 'Make', 'values', [m] )
 	_.switches.fieldSet( 'NoCount', 'active', True )
 
 

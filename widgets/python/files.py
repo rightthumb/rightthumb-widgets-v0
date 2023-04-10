@@ -63,6 +63,7 @@ def appSwitches():
 	_.switches.register('Contains-IPs', '-ip','domains')
 	_.switches.register('Disable-Intelligence', '-showall')
 	_.switches.register('No-Extension', '-noext')
+	_.switches.register('Symlink-Path-Integrity', '-si,-spi,-sym,-symlink')
 
 
 fse=False
@@ -1030,6 +1031,9 @@ def sw(path):
 			return False
 	return True
 
+
+if _.switches.isActive('Symlink-Path-Integrity'):
+	__.truePath = False
 
 totals_bytes=0
 

@@ -169,6 +169,9 @@ def action():
 	else:
 		Destination = __.path(_.switches.values('Destination')[0])
 	folder = os.path.dirname(__.path(Destination))
+	if os.path.isfile(Destination):
+		_.switches.fieldSet( 'Symbolic', 'active', True )
+
 	try:
 
 

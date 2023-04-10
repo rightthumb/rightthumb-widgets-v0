@@ -305,7 +305,7 @@ def random_color():
 	return random.choice(_all_colors_tact_)
 
 print_ed_group={}
-def print_(*args,p=None,c=None,pad=3,g=None,end=None,pvs=None,pv=None,json=None, dic=None, line=None, rstrip=True):
+def print_(*args,p=None,c=None,pad=3,g=None,end=None,pvs=None,pv=None,json=None, dic=None, line=None, rstrip=True, lineMinus=0, lineLen=None):
 	args=list(args)
 	if c == 'r' or c == 'random': c=random_color()
 
@@ -344,7 +344,10 @@ def print_(*args,p=None,c=None,pad=3,g=None,end=None,pvs=None,pv=None,json=None,
 		if pv: return printVar(args[0])
 		if json: simplejson=__.imp('simplejson'); args[0]=simplejson.dumps(args[0], indent=4, sort_keys=False, default=str);
 		if not line is None and line:
-			args=[linePrint(c=c,p=0)]
+			if not lineLen is None:
+				args=[linePrint(c=c,p=0,minus=lineMinus,length=lineLen)]
+			else:
+				args=[linePrint(c=c,p=0,minus=lineMinus)]
 		global print_ed; global print_ed_group; items=[];
 		pre=''
 		# if not g is None:
@@ -364,7 +367,11 @@ def print_(*args,p=None,c=None,pad=3,g=None,end=None,pvs=None,pv=None,json=None,
 		elif not p: rint=False;
 		else: rint=True;
 		if rint:
-			if not end is None: print( linePrint(txt=' ',p=0) , end=end ); print( prn, end=end );
+			if not end is None:
+				if not lineLen is None:
+					print( linePrint(txt=' ',p=0,minus=lineMinus) , end=end ); print( prn, end=end );
+				else:
+					print( linePrint(txt=' ',p=0,minus=lineMinus,length=lineLen) , end=end ); print( prn, end=end );
 			# if not end is None: print( '                                                                                        ' , end=end ); print( prn, end=end );
 			else: print( prn );
 		print_ed.append(prn)
@@ -2018,7 +2025,6 @@ pyAesCrypt = None
 shutil = None
 _md5 = None
 readline = None
-
 win32clipboard = None
 __.raw_table = None
 class RawTableLength:
@@ -2911,7 +2917,7 @@ def loopPrint(  length=5, txt=' ', p=0 ):
 
 lp = loopPrint
 
-def linePrint(  label=None, text=None, txt='_', mn=50, add=5, p=2, c='', x=None,pre='',length=None, center=None ):
+def linePrint(  label=None, text=None, txt='_', mn=50, add=5, p=2, c='', x=None,pre='',length=None, center=None, minus=0 ):
 	color=c
 	if not length is None:
 		mn=length
@@ -2920,7 +2926,7 @@ def linePrint(  label=None, text=None, txt='_', mn=50, add=5, p=2, c='', x=None,
 		if length is None and __.terminal.width:
 			ln = __.terminal.width
 			add = 0
-
+	ln-=minus
 	if not x is None:
 		ln=int(ln*x)
 	if not label is None:
@@ -4319,6 +4325,7 @@ def unixAutoColumns( asset, columns, focus=None ):
 		return columns
 
 	cols = __.terminal.width
+	cols-=10
 	if focus is None:
 		focus = __.appReg
 	global appInfo
@@ -5712,13 +5719,7 @@ def loadingGifX(loading):
 
 
 
-server_proxy = []
-server_proxy.append( '' )
-server_proxy.append( 'http://www.rightthumb.com/projects/widget/proxy.php?p=' )
-server_proxy.append( 'http://rephrecruiting.com/proxy.php?p=' )
-server_proxy.append( 'http://www.pillerbeauty.com/proxy.php?p=' )
-server_proxy.append( 'http://signaturemassageandfacialspa.com/p.php?p=' )
-server_proxy.append( 'https://signaturemassagetampa.com/payroll/p.php?p=' )
+
 
 appProxy = 'appProxy.json'
 
@@ -7489,6 +7490,7 @@ def releaseAcquiredData( appDBA, theFocus, payload=None ):
 
 	info = {
 				'epoch': __.startTime,
+				'folder': os.getcwd(),
 				'app': appDBA,
 				'session': _v.session(),
 				'rebuiltCommand': password_filter(rebuiltCommand),
@@ -9032,20 +9034,7 @@ def UUID_Epoch(vVv,dec=2,epoch=None):
 
 
 
-UUID=genUUID
-guid=genUUID
 
-UUIDm=miniUUID
-UUIDM=miniUUID
-MUUID=miniUUID
-mUUID=miniUUID
-
-UUIDE=UUID_Epoch
-guidE=UUID_Epoch
-uuidE=UUID_Epoch
-
-UUIDe=uuidEpoc
-uuide=uuidEpoc
 
 ## UUID ## END ############################################################################################################################
 
@@ -19768,23 +19757,6 @@ class Fields:
 
 
 
-thisTest = 'hello'
-
-
-
-errors = []
-appInfo = {}
-appData = {}
-
-argvProcess = True
-
-fields = Fields()
-
-threads = Queue()
-switches = Switches()
-tables = Tables()
-databases = Databases()
-__.databases = Databases()
 
 
 def appInfoDump():
@@ -19864,16 +19836,9 @@ def load():
 		# switches.register('SkipColumnTriggers', '-skiptriggers')
 		defaultScriptTriggers_do()
 		
-
-
-
 import importlib
 
-
-
 regImps = {}
-
-
 
 ##############################
 
@@ -20301,17 +20266,6 @@ _cryptFile.do( 'action' )
 ############################################### ###############################################
 # alias
 
-colorPrint=colorThis
-cp=colorThis
-
-pv=printVarSimple
-vp=printVarSimple
-pvs=printVarSimple
-
-ppv=printVarColor
-ppvv=printVarColor
-pvv=printVarColor
-pvpv=printVarColor
 
 def err( msg , e=None, kill=True):
 	
@@ -20372,7 +20326,7 @@ def err( msg , e=None, kill=True):
 	if kill:
 		sys.exit()
 	# △ ▽
-e=err
+
 
 def key( subject ):
 	try:
@@ -20664,10 +20618,7 @@ def size_group_size(g,f=1):
 
 # self.columnTab+tableLine
 
-__.onExit(tables.eof)
 
-hp = historyPrint
-ph = historyPrint
 
 # class regImp:
 # 'WebTable'
@@ -20899,21 +20850,7 @@ def newid(subject):
 	page = requests.get(url).content.decode("utf-8").replace('\\n','\n').replace('\n','').replace('\r','').replace(' ','').replace('\t','')
 	return page
 	
-aib=aiBullet
-ail=aiLine
-bu=aiBullet
-bull=aiBullet
-lbu=aiLine
 
-nw=n2w
-
-## UUID ##
-
-
-# print_( 1,2,3,4, c='yellow' ); sys.exit();
-pr=print_
-prt=printt
-pt=printt
 _fileBackup=None
 def bk(path,flag=None):
 	global _fileBackup
@@ -20938,12 +20875,6 @@ def ico():
 	ic=list('🧻🧪💀🦆🦉🥓🦄🦀🖕🍣🍤🍥🍡🥃🥞🐕👾🐉🐓🐋🐌🐢👽👿🥑🐡🐗💐🏹🎨🐔🐛🎯🌯📷🛶🥕🍸🍳🐲🎣🐟🦅👀🐸🤞💪💾👻🐊🍔🌭🍀🕓🦊🍟🥝🐒🥞🐼📎🐧💩🍕🍍🦏🍗🌈🐳🦑🚀🙈🙊🙉🌮🐅🐯🍉🚽🍅👅🎩🍷')
 	for x in ic:
 		print(x)
-
-nsfw=True
-
-l=dot()
-l.v=dot()
-l.sw=dot()
 
 
 def l_fieldSet( switchName, switchField, switchValue, theFocus=False ):
@@ -20995,6 +20926,9 @@ def l_registerSwitches( trig=None, sw=None ):
 	postLoad( l.conf('__file__') )
 	myFileLocation_Print=l.conf('myFileLocation_Print',d=False)
 	appInfo[__.appReg]['file']=appInfo[__.appReg]['liveAppName']
+l=dot()
+l.v=dot()
+l.sw=dot()
 l.v.cnf=dot()
 l.v.cnf.placeholder='3586006adfdc'
 l.v.cnf.default=None
@@ -22519,7 +22453,7 @@ def has_crypt_header(file_path):
 	return file_header == crypt_header
 ##################################################
 def password_filter( cmd ):
-	scan = '-password -pass -pw -en -de -key -crypt'.split(' ')
+	scan = '-password -pass -pw -en -de -key -crypt -p'.split(' ')
 	for test in scan:
 		if test in cmd.lower():
 			parts = cmd.split(' ')
@@ -22539,6 +22473,67 @@ def mask_password(data):
 			item["values"] = ['******']
 	return data
 ##################################################
+fields = Fields()
+threads = Queue()
+switches = Switches()
+tables = Tables()
+databases = Databases()
+__.databases = Databases()
+
+__.onExit(tables.eof)
+##################################################
+errors = []
+appInfo = {}
+appData = {}
+argvProcess = True
+##################################################
+
+server_proxy = []
+server_proxy.append( '' )
+server_proxy.append( 'http://www.rightthumb.com/projects/widget/proxy.php?p=' )
+server_proxy.append( 'http://rephrecruiting.com/proxy.php?p=' )
+server_proxy.append( 'http://www.pillerbeauty.com/proxy.php?p=' )
+server_proxy.append( 'http://signaturemassageandfacialspa.com/p.php?p=' )
+server_proxy.append( 'https://signaturemassagetampa.com/payroll/p.php?p=' )
+
+##################################################
+nsfw=True
+
+UUID=genUUID
+guid=genUUID
+UUIDm=miniUUID
+UUIDM=miniUUID
+MUUID=miniUUID
+mUUID=miniUUID
+UUIDE=UUID_Epoch
+guidE=UUID_Epoch
+uuidE=UUID_Epoch
+UUIDe=uuidEpoc
+uuide=uuidEpoc
+
+hp = historyPrint
+ph = historyPrint
+e=err
+colorPrint=colorThis
+cp=colorThis
+pv=printVarSimple
+vp=printVarSimple
+pvs=printVarSimple
+ppv=printVarColor
+ppvv=printVarColor
+pvv=printVarColor
+pvpv=printVarColor
+
+aib=aiBullet
+ail=aiLine
+bu=aiBullet
+bull=aiBullet
+lbu=aiLine
+nw=n2w
+prLine=linePrint
+pr=print_
+prt=printt
+pt=printt
 getYAML2=getYML2
 getYAML=getYML
 saveYAML=saveYML

@@ -2016,7 +2016,10 @@ function get__THETABLE( $ID_label ){
 		for i,item in enumerate(result):
 			item=cleanScrape(item)
 			if not item in items and len(item) > 1:
-				items.append(item)
+				if len(item) == 3 and item.endswith(':/'):
+					continue
+				else:
+					items.append(item)
 
 		if not len(items):
 			text=text.replace('\t',' ')
