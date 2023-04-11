@@ -3112,7 +3112,7 @@ def googleID(searchFor,personMovie):
 		url = 'https://www.google.com/search?q=imdb+'
 		newURL = url + _str.replaceAll(_str.replaceAll(searchFor,',','+'),' ','+')
 		# print_url(frameinfo=getframeinfo(currentframe()), url=newURL)
-		print_url(frameinfo=getframeinfo(currentframe()), url=newURL,c='cyan')
+		# print_url(frameinfo=getframeinfo(currentframe()), url=newURL,c='cyan')
 		page = requests.get(newURL)
 		tree = html.fromstring(page.content)
 		tables = tree.cssselect('a')
@@ -6362,7 +6362,9 @@ def get_cinema_seasons(imdbID):
 	page = requests.get(thisURL)
 	tree = html.fromstring(page.content)
 	seasons = tree.cssselect('#bySeason option')
-	seasonTest0 = seasons[len(seasons)-1].text_content()
+	try:
+		seasonTest0 = seasons[len(seasons)-1].text_content()
+	except: _.e('Nothing Found','No Episode Information Available')
 	seasonTest = cleanupString(seasonTest0)
 	global zeroList
 	zeroList = zeroList.lower()
@@ -7700,6 +7702,6 @@ if __name__ == '__main__':
 # print('self.isExpired(section)',self.expirationDateDefault); sys.exit();
 # self.expirationDateDefault = 'never'
 # __.objectLocation['objects']
-
+# print_url(frameinfo=getframeinfo(currentframe()), url=newURL,c='cyan')
 
 

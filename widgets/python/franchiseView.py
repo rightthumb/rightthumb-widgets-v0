@@ -192,9 +192,9 @@ def action():
 				_.tables.print( 'data', 'year,name' )
 				_.pr()
 				if not len( movies ) == len( record['movies'] ):
-					_.pr( '', len(movies),'of', len( record['movies'] ), 'Screenplays' )
+					_.pr( '', len(movies),'of', len( record['movies'] ) )
 				else:
-					_.pr( '', len( record['movies'] ), 'Screenplays' )
+					_.pr( '', len( record['movies'] ) )
 				# for movie in :
 				# 	_.pr( movie['year'], movie['name'] )
 

@@ -744,7 +744,7 @@ class CLIP:
 
 
 	def browser_f12_tooljs_table(self):
-		tooljs=_v.ww+os.sep+'tool.js'
+		tooljs=_v.ww+os.sep+'javascript'+os.sep+'tool.js'
 		if not os.path.isfile(tooljs):
 			_.pr('missing:',tooljs,c='red')
 			return None
@@ -791,7 +791,7 @@ copy(  hackTool.payload.label  )
 
 
 	def browser_f12_tooljs_table0(self):
-		tooljs=_v.ww+os.sep+'tool.js'
+		tooljs=_v.ww+os.sep+'javascript'+os.sep+'tool.js'
 		if not os.path.isfile(tooljs):
 			_.pr('missing:',tooljs,c='red')
 			return None
@@ -846,7 +846,7 @@ copy(  hackTool.payload.label  )
 
 
 	def browser_f12_tooljs_text(self):
-		tooljs=_v.ww+os.sep+'tool.js'
+		tooljs=_v.ww+os.sep+'javascript'+os.sep+'tool.js'
 		if not os.path.isfile(tooljs):
 			_.pr('missing:',tooljs,c='red')
 			return None
