@@ -173,8 +173,9 @@ def action():
                 if ask.strip().lower() == 'y': _.saveText(package[p]['json'],'composer.json')
             else:
                 _.saveText(package[p]['json'],'composer.json')
-            pk = package['twilio']['require']
-            os.system( f'composer require {pk}')
+            os.system( f'composer install')
+            # pk = package['twilio']['require']
+            # os.system( f'composer require {pk}')
             autoload()
 
 
@@ -185,15 +186,16 @@ def action():
 
 package={}
 package['twilio']={}
-package['twilio']['require']='twilio/sdk'
+# package['twilio']['require']='twilio/sdk'
 
 package['twilio']['json']='''
 {
     "require": {
-        "twilio/sdk": "^7.2"
+        "twilio/sdk": "^6.0"
     }
 }
 '''.strip()
+        # "twilio/sdk": "^6.0"
 
 
 

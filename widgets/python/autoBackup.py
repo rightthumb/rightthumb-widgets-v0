@@ -511,7 +511,7 @@ def action():
 	# logFi = _v.tt+os.sep+'file-open'+os.sep+_.day()[:-1]+'.hash'
 	def script(jsonFi):
 		if os.path.isfile(jsonFi):
-			_.pr('file-open:', jsonFi)
+			_.pr('file-open:', jsonFi,c='yellow')
 			table = _.getTable2(jsonFi)
 			for path in table:
 				a=False

@@ -3,6 +3,7 @@
 ___
 ## Just sharing how I customized my terminal.
 ### Efficiently accomplish a wide range of tasks in a short amount of time.
+###### a few thousand apps I made to increase efficiency over my 20 year career
 ___
 
 ## Platform Support
@@ -15,6 +16,8 @@ ___
 - etc
 
 ## Hype
+- Generate PHP code
+    + Copy the CREATE TABLE sql, hit alt+win+c to automatically generate the create, read, update, delete of a table in php (crud), then paste the results.
 - I push 10 on my [mouse](https://www.amazon.com/dp/B088B3ZM76) to activate voice commands and say "Sally paste, convert this python to javascript" (ai). I then paste the results.
     + The hotkeys.py app manages keyboard shortcuts. A programmable mouse can activate any of them.
         * View all keyboard shortcuts 'p hotkeys -k'
@@ -51,8 +54,6 @@ ___
 - Search in files even if they are Zipped or Encrypted
     + How to view content of a file 'p cat -f file.md + user@domain.com'
         * How to zip a file in a way it can be searched 'p zzip -f file.md'
-- Generate PHP code
-    + Copy the CREATE TABLE sql, hit alt+win+c to automatically generate the create, read, update, delete of a table in php (crud), then paste the results.
 - File Search
     + How to find a file that was modified within the last day 'p file -ago 1d', week 'p file -ago 1w', month 'p file -ago 1m', 10 minutes 'p file -ago 10min'.
     + How to recursively find a '.md' file modified in the last week with 'abc' in the file name without 'xyz' in file name with 'due 2025-12-25' inside the file 'p files + \*.md -ago 1w + abc - xyz -has "due 2025-12-25"'.

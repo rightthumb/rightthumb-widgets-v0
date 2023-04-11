@@ -235,7 +235,7 @@ SITE_ROOT='''
 # php -- BEGIN cPanel-generated handler, do not edit
 # Set the “ea-php80” package as the default “PHP” programming language.
 <IfModule mime_module>
-  AddHandler application/x-httpd-ea-php80 .php .php8 .phtml
+  AddHandler application/x-httpd-ea-php80 .php .php8 .phtml .js
 </IfModule>
 # php -- END cPanel-generated handler, do not edit
 '''
