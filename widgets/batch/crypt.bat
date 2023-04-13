@@ -4,6 +4,7 @@ SET fi=%1
 SET entire=n
 
 if [%2] == [-d] (
+	call p fileBackup -open -f %fi%
 	call p decrypt-docs -delete -f  %fi%
 	call p secureFiles -delete  -en -f  %fi%
 	echo done
@@ -11,6 +12,7 @@ if [%2] == [-d] (
 )
 
 if [%2] == [-delete] (
+	call p fileBackup -open -f %fi%
 	call p secureFiles -delete  -en -f  %fi%
 	call p decrypt-docs -delete -f  %fi%
 	echo done

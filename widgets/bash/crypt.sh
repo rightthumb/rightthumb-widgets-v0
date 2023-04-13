@@ -4,6 +4,7 @@ fi=$1
 entire="n"
 
 if [ "$2" == "-d" ]; then
+    $p fileBackup -open -f %fi%
     $p decrypt-docs -delete -f "$fi"
     $p secureFiles -delete -en -f "$fi"
     echo "done"
@@ -11,6 +12,7 @@ if [ "$2" == "-d" ]; then
 fi
 
 if [ "$2" == "-delete" ]; then
+    $p fileBackup -open -f %fi%
     $p secureFiles -delete -en -f "$fi"
     $p decrypt-docs -delete -f "$fi"
     echo "done"
