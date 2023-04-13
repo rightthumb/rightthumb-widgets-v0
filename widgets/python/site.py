@@ -39,6 +39,7 @@ def sw():
 	_.switches.register( 'Print', '-print' )
 	_.switches.register( 'Status', '-status' )
 	_.switches.register( 'NotWSL', '-notwsl' )
+	_.switches.register( 'SSH-Remote_Folder', '-remote' )
 
 
 
@@ -246,6 +247,10 @@ def process(path,end='',ft=None):
 		if not _.isWin:
 			scp=_scp[len('wsl '):]
 			ssh=_ssh[len('wsl '):]
+			if _scp.startswith('wsl '):
+				scp=_scp[len('wsl '):]
+			if _ssh.startswith('wsl '):
+				ssh=_ssh[len('wsl '):]
 
 
 
@@ -295,13 +300,12 @@ def process(path,end='',ft=None):
 				path+=os.sep
 			
 			mkdir=f'{ssh} -f {u}@{s} "/bin/python3 /opt/rightthumb-widgets-v0/widgets/python/mkdir.py -folder {rfo}"'+tail()
-			# _.pr(mkdir)
-			if not _.switches.isActive('Print'):
-				try:
-					# _.cp('creating folder structure','yellow')
-					os.system( mkdir )
-				except Exception as e:
-					_.e(e)
+			if _.switches.isActive('Print'):
+				_.pr(password_filter(mkdir))
+			try:
+				os.system( mkdir )
+			except Exception as e:
+				_.e(e)
 
 
 
@@ -329,21 +333,74 @@ def process(path,end='',ft=None):
 			_.pr(do)
 
 		if _.switches.isActive('Upload-Scp') or _.switches.isActive('Download-Scp'):
-			# _.pr(do)
-			if not _.switches.isActive('Print'):
-				try:
-					os.system( do )
-				except Exception as e:
-					_.e(e)
+			if _.switches.isActive('Print'):
+				_.pr(password_filter(do))
+			try:
+				os.system( do )
+			except Exception as e:
+				_.e(e)
 
 
 	
 
+def remoteFolder():
+	global meta
+	global folder
+	path=os.getcwd()
+	meta_scan(path,'')
+	ftp=None
+	# Upload-Scp Download-Scp Test
+	for k in meta:
+		for su in meta[k]:
+			if su == 'path':
+				ftp=meta[k]
+				break
+		if not ftp is None:
+			break
+
+	ssh='ssh'
+	if type(ftp['server']) == list:
+		servers = ftp['server']
+	else:
+		servers = [ftp['server']]
+	
+	for s in servers:
+		_.pr(s,c='green')
+		f=ftp['path']
+		u=ftp['user']
+		pw=_vault.imp.s.de( ftp['password'] )
+		_ssh=sshpass(pw,'ssh')
+		# print(_.isWin)
+		# print(_.switches.isActive('NotWSL'))
+		# sys.exit()
+		if _.isWin and not _.switches.isActive('NotWSL'):
+			ssh=_ssh
+			_path=wsl(path)
+			folder=wsl(folder)
+			# print(_path)
+			# sys.exit()
+		else:
+			_path=path
+		if not _.isWin:
+			ssh=_ssh[len('wsl '):]
+		
+		fo = _path.replace( folder, f ).replace('\\','/')
+		fo += '/'
+		us=u+'@'+s
+		ssh+=f' -t "{us}" "cd \"{fo}\"; exec bash -l";'
+		# print(ssh)
+		# sys.exit()
+		os.system(ssh)
+		sys.exit()
+
 def action():
 	global meta
 
+
 	# print( wsl(_.switches.values('Files')[0]) )
 	# sys.exit()
+	if _.switches.isActive('SSH-Remote_Folder'):
+		remoteFolder()
 
 	if _.switches.isActive('Files') and len(_.switches.all())==1:
 		_.v.quiet = True
