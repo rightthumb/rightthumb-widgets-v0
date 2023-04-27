@@ -30,10 +30,12 @@ _str = __.imp('_rightThumb._string')
 
 
 def sw():
-    _.switches.register( 'Clipboard', '-clip' )
-    _.switches.register( 'Text', '-text' )
-    _.switches.register( 'Case', '-case' )
-    _.switches.register( 'NoAutoQuote', '-noquote' )
+    pass
+    #b)--> examples
+    # _.switches.register( 'Input', '-i' )
+    # _.switches.register( 'URL', '-u,-url,-urls', 'https://etc.ac/', isData='raw' )
+    #e)--> examples
+    # _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name,data,clean', description='Files', isRequired=False )
 
 # __.setting('require-list',['Files,Plus','File,Has']) # todo
 # __.setting('require-list',['Pipe','Files'])
@@ -148,71 +150,68 @@ _.l.sw.register( triggers, sw )
 #n)--> start
 
 
-import random
+import csv
+import json
+import os
+from typing import List
 
-def randomize_case(s):
-    return ''.join(random.choice([str.upper, str.lower])(c) for c in s)
+def read_csv(file_path: str, columns: List[str]) -> List[dict]:
+    data = []
+    with open(file_path, 'r') as csv_file:
+        reader = csv.DictReader(csv_file)
+        for row in reader:
+            selected_data = {col: row[col] for col in columns}
+            data.append(selected_data)
+    return data
 
-def randomize_string(s):
-    chars = list(s)
-    random.shuffle(chars)
-    randomized_s = ''.join(chars)
-    return randomized_s
+def read_json(file_path: str, columns: List[str]) -> List[dict]:
+    with open(file_path, 'r') as json_file:
+        data = json.load(json_file)
+        selected_data = [{col: row[col] for col in columns} for row in data]
+    return selected_data
 
+def generate_html(data: List[dict], output_file: str) -> None:
+    with open(output_file, 'w') as html_file:
+        html_file.write('<html>\n')
+        html_file.write('<head>\n')
+        html_file.write('<title>Data</title>\n')
+        html_file.write('</head>\n')
+        html_file.write('<body>\n')
+        html_file.write('<table border="1">\n')
+        # Write table header
+        html_file.write('<tr>\n')
+        for header in data[0].keys():
+            html_file.write(f'<th>{header}</th>\n')
+        html_file.write('</tr>\n')
+        # Write table data
+        for row in data:
+            html_file.write('<tr>\n')
+            for value in row.values():
+                html_file.write(f'<td>{value}</td>\n')
+            html_file.write('</tr>\n')
+        html_file.write('</table>\n')
+        html_file.write('</body>\n')
+        html_file.write('</html>\n')
 
-
-import re
-import random
-import string
-
-def randomize_text(text):
-    def randomize(match):
-        domains = ['domain.com', 'domain.net', 'domain.org', 'domain.quest', 'domain.xyz', 'domain.guru', 'domain.cx', 'domain.ac', 'domain.work', 'domain.app', 'domain.vip', 'example.com', 'example.net', 'example.org', 'example.quest', 'example.xyz', 'example.guru', 'example.cx', 'example.ac', 'example.work', 'example.app', 'example.vip', 'site.com', 'site.net', 'site.org', 'site.quest', 'site.xyz', 'site.guru', 'site.cx', 'site.ac', 'site.work', 'site.app', 'site.vip']
-
-        s = match.group(0)
-        if re.match(r'[\'\"]\+?\d+[\'\"]', s):
-            phone_number = s.strip('\'\"')
-            area_code, rest = phone_number[:4], phone_number[4:]
-            randomized_rest = ''.join(random.choice(string.digits) for _ in range(len(rest)))
-            return f'"{area_code}{randomized_rest}"'
-        elif re.match(r'[\'\"].+?@.+?[\'\"]', s):
-            local, domain = s.strip('\'\"').split('@')
-            domain = random.choice(domains)
-            local = ''.join(random.choice(string.ascii_letters + string.digits) for _ in range(len(local)))
-            return f'"{local}@{domain}"'
-        else:
-            randomized = ''.join(random.choice(string.ascii_letters + string.digits) for _ in range(len(s) - 2))
-            return f'{s[0]}{randomized}{s[-1]}'
-
-    pattern = r'[\'\"].+?[\'\"]'
-    result = re.sub(pattern, randomize, text)
-    return result
-
+def main(file_path: str, columns: List[str], output_file: str) -> None:
+    file_extension = os.path.splitext(file_path)[1]
+    if file_extension == '.csv':
+        data = read_csv(file_path, columns)
+    elif file_extension == '.json':
+        data = read_json(file_path, columns)
+    else:
+        raise ValueError('Unsupported file format')
+    generate_html(data, output_file)
 
 
 def action():
-    if _.switches.isActive('Clipboard'):
-        _copy = _.regImp( __.appReg, '-copy' )
-        _paste = _.regImp( __.appReg, '-paste' )
-        data  = _paste.imp.paste()
-    elif _.switches.isActive('Text'):
-        data = ' '.join(_.switches.values('Text'))
-
-    ran=False
-    if not _.switches.isActive('NoAutoQuote'):
-        if '"' in data or "'" in data:
-            ran=True
-            result=randomize_text(data)
-    if not ran:
-        if _.switches.isActive('Case'):
-            result = randomize_case(data)
-        else:
-            result = randomize_string(data)
-
-    if _.switches.isActive('Clipboard'):
-        _copy.imp.copy( result )
-    else:
-        print(result)
+    # Specify the input file, columns, and output file
+    input_file = 'data.csv'  # or 'data.json'
+    selected_columns = ['column1', 'column2']
+    output_html = 'output.html'
+    
+    # Generate the HTML webpage
+    main(input_file, selected_columns, output_html)
 
 
 ##################################################

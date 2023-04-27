@@ -14820,8 +14820,92 @@ def unFormatSize2(size):
 	if rt.endswith('.0'):
 		return int(result)
 	return result
-isTime = False
 
+
+
+def to_bytes(size_str):
+	if 'Kb' in size_str: size_str = size_str.replace('Kb', 'kbit')
+	if 'Mb' in size_str: size_str = size_str.replace('Mb', 'mbit')
+	if 'Gb' in size_str: size_str = size_str.replace('Gb', 'gbit')
+	if 'Tb' in size_str: size_str = size_str.replace('Tb', 'tbit')
+	if 'Pb' in size_str: size_str = size_str.replace('Pb', 'pbyte')
+	if 'Eb' in size_str: size_str = size_str.replace('Eb', 'ebyte')
+	if 'Zb' in size_str: size_str = size_str.replace('Zb', 'zbyte')
+	if 'Yb' in size_str: size_str = size_str.replace('Yb', 'ybyte')
+
+	size_str = size_str.lower()
+	unit_map = {
+		'b': 1,
+		'kb': 1024,
+		'mb': 1024**2,
+		'gb': 1024**3,
+		'tb': 1024**4,
+		'pb': 1024**5,
+		'eb': 1024**6,
+		'zb': 1024**7,
+		'yb': 1024**8,
+		'byte': 1,
+		'kbyte': 1024,
+		'mbyte': 1024**2,
+		'gbyte': 1024**3,
+		'tbyte': 1024**4,
+		'pbyte': 1024**5,
+		'ebyte': 1024**6,
+		'zbyte': 1024**7,
+		'ybyte': 1024**8,
+		'kbit': 1024/8,
+		'mbit': 1024**2/8,
+		'gbit': 1024**3/8,
+		'tbit': 1024**4/8,
+		'pbit': 1024**5/8,
+		'ebit': 1024**6/8,
+		'zbit': 1024**7/8,
+		'ybit': 1024**8/8,
+		'bit': 1/8
+	}
+	try:
+		size, unit = size_str.split()
+		size = float(size)
+		if unit[-1] in ['b', 'e', 't', 'p', 'z', 'y']:
+			unit = unit[:-1]
+		if unit[-1] == 'k':
+			unit = unit[:-1] + 'byte'
+		elif unit[-1] == 'm':
+			unit = unit[:-1] + 'byte'
+		elif unit[-1] == 'g':
+			unit = unit[:-1] + 'byte'
+		elif unit[-1] == 't':
+			unit = unit[:-1] + 'byte'
+		elif unit[-1] == 'p':
+			unit = unit[:-1] + 'byte'
+		elif unit[-1] == 'e':
+			unit = unit[:-1] + 'byte'
+		elif unit[-1] == 'z':
+			unit = unit[:-1] + 'byte'
+		elif unit[-1] == 'y':
+			unit = unit[:-1] + 'byte'
+		return int
+	except:
+		raise ValueError(f'Invalid size string: {size_str}')
+
+def count_bytes(fo, recursive=True):
+	total_files = 0
+	total_bytes = 0
+	try:
+		for entry in os.scandir(fo):
+			if entry.is_file():
+				total_files += 1
+				total_bytes += entry.stat().st_size
+			elif entry.is_dir() and recursive:
+				sub_total_files, sub_total_bytes = count_bytes(entry.path)
+				total_files += sub_total_files
+				total_bytes += sub_total_bytes
+
+	except Exception as e:
+		pr(e,c='red')
+	return total_files, total_bytes
+
+isTime = False
 timeAgoBase = []
 timeAgoBaseCount = 0
 def timeAgo( do='', startDate=None,epoch=None, d=None ):
@@ -22473,6 +22557,59 @@ def mask_password(data):
 			item["values"] = ['******']
 	return data
 ##################################################
+def getTextFirst(file_path):
+	try:
+		with open(file_path, 'r') as file:
+			first_char = file.read(1)  # Read the first character
+			return first_char
+	except FileNotFoundError:
+		print(f"File '{file_path}' not found.")
+	except Exception as e:
+		print(f"An error occurred: {e}")
+##################################################
+def query(db_path, query, params=()):
+    """
+    Query an SQLite database and return the results.
+
+    Args:
+        db_path: Path to the SQLite database file.
+        query: SQL query to execute.
+        params: Parameters to use in the SQL query (optional).
+
+    Returns:
+        List of tuples representing the query results.
+    """
+    import sqlite3
+    # Connect to the SQLite database
+    conn = sqlite3.connect(db_path)
+    
+    # Create a cursor object to execute queries
+    cursor = conn.cursor()
+    
+    # Execute the query
+    cursor.execute(query, params)
+    
+    # Fetch all the results
+    results = cursor.fetchall()
+    
+    # Close the cursor and connection
+    cursor.close()
+    conn.close()
+    
+    return results
+
+# conn = sqlite3.connect("example.db")
+# cursor = conn.cursor()
+# cursor.execute("CREATE TABLE IF NOT EXISTS users (name TEXT, age INTEGER)")
+# cursor.execute("INSERT INTO users (name, age) VALUES (?, ?)", ("Alice", 35))
+# cursor.execute("INSERT INTO users (name, age) VALUES (?, ?)", ("Bob", 25))
+# conn.commit()
+# cursor.close()
+# conn.close()
+
+# data = _.query("example.db", "SELECT * FROM users WHERE age > ?", (27,))
+
+##################################################
 fields = Fields()
 threads = Queue()
 switches = Switches()
@@ -22540,6 +22677,8 @@ saveYAML=saveYML
 saveYAML2=saveYML2
 imp=regImp
 ago=timeAgo
+toBytes=to_bytes
+
 ##################################################
 # class regImp:
 # positiveResultsCode

@@ -30,10 +30,12 @@ _str = __.imp('_rightThumb._string')
 
 
 def sw():
-    _.switches.register( 'Clipboard', '-clip' )
-    _.switches.register( 'Text', '-text' )
-    _.switches.register( 'Case', '-case' )
-    _.switches.register( 'NoAutoQuote', '-noquote' )
+    pass
+    #b)--> examples
+    _.switches.register( 'Recursive', '-r,-recursive' )
+    # _.switches.register( 'URL', '-u,-url,-urls', 'https://etc.ac/', isData='raw' )
+    #e)--> examples
+    # _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name,data,clean', description='Files', isRequired=False )
 
 # __.setting('require-list',['Files,Plus','File,Has']) # todo
 # __.setting('require-list',['Pipe','Files'])
@@ -147,72 +149,61 @@ _.l.sw.register( triggers, sw )
 ########################################################################################
 #n)--> start
 
+import os
 
-import random
-
-def randomize_case(s):
-    return ''.join(random.choice([str.upper, str.lower])(c) for c in s)
-
-def randomize_string(s):
-    chars = list(s)
-    random.shuffle(chars)
-    randomized_s = ''.join(chars)
-    return randomized_s
-
-
-
-import re
-import random
-import string
-
-def randomize_text(text):
-    def randomize(match):
-        domains = ['domain.com', 'domain.net', 'domain.org', 'domain.quest', 'domain.xyz', 'domain.guru', 'domain.cx', 'domain.ac', 'domain.work', 'domain.app', 'domain.vip', 'example.com', 'example.net', 'example.org', 'example.quest', 'example.xyz', 'example.guru', 'example.cx', 'example.ac', 'example.work', 'example.app', 'example.vip', 'site.com', 'site.net', 'site.org', 'site.quest', 'site.xyz', 'site.guru', 'site.cx', 'site.ac', 'site.work', 'site.app', 'site.vip']
-
-        s = match.group(0)
-        if re.match(r'[\'\"]\+?\d+[\'\"]', s):
-            phone_number = s.strip('\'\"')
-            area_code, rest = phone_number[:4], phone_number[4:]
-            randomized_rest = ''.join(random.choice(string.digits) for _ in range(len(rest)))
-            return f'"{area_code}{randomized_rest}"'
-        elif re.match(r'[\'\"].+?@.+?[\'\"]', s):
-            local, domain = s.strip('\'\"').split('@')
-            domain = random.choice(domains)
-            local = ''.join(random.choice(string.ascii_letters + string.digits) for _ in range(len(local)))
-            return f'"{local}@{domain}"'
-        else:
-            randomized = ''.join(random.choice(string.ascii_letters + string.digits) for _ in range(len(s) - 2))
-            return f'{s[0]}{randomized}{s[-1]}'
-
-    pattern = r'[\'\"].+?[\'\"]'
-    result = re.sub(pattern, randomize, text)
-    return result
+def rename_files_with_double_spaces(directory, recursive=False):
+    # Iterate over the files and directories in the specified directory
+    for entry in os.scandir(directory):
+        # If the entry is a file
+        if entry.is_file():
+            new_name = entry.name
+            # Remove all occurrences of double spaces
+            while '  ' in new_name:
+                new_name = new_name.replace('  ', ' ')
+            # If the name has changed, rename the file
+            if new_name != entry.name:
+                new_path = os.path.join(directory, new_name)
+                try:
+                    os.rename(entry.path, new_path)
+                except Exception as e:
+                    _.pr(e,c='red')
+        # If the entry is a directory and the recursive flag is set to True
+        elif entry.is_dir() and recursive:
+            # Recursively call the function on the subdirectory
+            rename_files_with_double_spaces(entry.path, recursive=True)
 
 
+
+def rename_directories_with_double_spaces(directory, recursive=False):
+    # Iterate over the files and directories in the specified directory
+    for entry in os.scandir(directory):
+        # If the entry is a directory
+        if entry.is_dir():
+            new_name = entry.name
+            # Remove all occurrences of double spaces
+            while '  ' in new_name:
+                new_name = new_name.replace('  ', ' ')
+            # If the name has changed, rename the directory
+            if new_name != entry.name:
+                new_path = os.path.join(directory, new_name)
+                try:
+                    os.rename(entry.path, new_path)
+                except Exception as e:
+                    _.pr(e,c='red')
+                    # new_path = os.path.join(directory, new_name.replace)
+                    # os.rename(entry.path, new_path)
+                    pass
+                # Update the entry path to the new path for recursive processing
+                entry = new_path
+            # If the recursive flag is set to True
+            if recursive:
+                # Recursively call the function on the subdirectory
+                rename_directories_with_double_spaces(entry.path, recursive=True)
 
 def action():
-    if _.switches.isActive('Clipboard'):
-        _copy = _.regImp( __.appReg, '-copy' )
-        _paste = _.regImp( __.appReg, '-paste' )
-        data  = _paste.imp.paste()
-    elif _.switches.isActive('Text'):
-        data = ' '.join(_.switches.values('Text'))
+    rename_directories_with_double_spaces(os.getcwd(), recursive=_.switches.isActive('Recursive'))
+    rename_files_with_double_spaces(os.getcwd(), recursive=_.switches.isActive('Recursive'))
 
-    ran=False
-    if not _.switches.isActive('NoAutoQuote'):
-        if '"' in data or "'" in data:
-            ran=True
-            result=randomize_text(data)
-    if not ran:
-        if _.switches.isActive('Case'):
-            result = randomize_case(data)
-        else:
-            result = randomize_string(data)
-
-    if _.switches.isActive('Clipboard'):
-        _copy.imp.copy( result )
-    else:
-        print(result)
 
 
 ##################################################

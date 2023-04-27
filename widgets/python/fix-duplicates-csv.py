@@ -30,10 +30,13 @@ _str = __.imp('_rightThumb._string')
 
 
 def sw():
-    _.switches.register( 'Clipboard', '-clip' )
-    _.switches.register( 'Text', '-text' )
-    _.switches.register( 'Case', '-case' )
-    _.switches.register( 'NoAutoQuote', '-noquote' )
+    pass
+    #b)--> examples
+    _.switches.register( 'Key', '-key', 'Mobile_Number', isRequired=True )
+    # _.switches.register( 'URL', '-u,-url,-urls', 'https://etc.ac/', isData='raw' )
+    #e)--> examples
+    _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name', description='Files', isRequired=True )
+    _.switches.register( 'Save', '-save', 'done.csv', isRequired=True )
 
 # __.setting('require-list',['Files,Plus','File,Has']) # todo
 # __.setting('require-list',['Pipe','Files'])
@@ -49,7 +52,7 @@ __.setting('switch-raw',[])
 
 _.appInfo[focus()] = {
     # 'app': '8facG-jo0Cxk',
-    'file': 'thisApp.py',
+    'file': 'fix-duplicates-csv.py',
     'liveAppName': __.thisApp( __file__ ),
     'description': 'Changes the world',
         # _.ail(1,'subject')+
@@ -71,7 +74,9 @@ _.appInfo[focus()] = {
                         # '',
     ],
     'examples': [
-                        _.hp('p thisApp -file file.txt'),
+                        _.hp('p fix-duplicates-csv -key Mobile_Number -f export.csv -save clean.csv'),
+                        _.hp('p fix-duplicates-csv -key Email -f clean.csv -save clean2.csv'),
+                        _.hp('p fix-duplicates-csv -key First_Name Last_Name  -f clean2.csv -save crm.csv'),
                         _.linePrint(label='simple',p=0),
                         '',
     ],
@@ -147,72 +152,53 @@ _.l.sw.register( triggers, sw )
 ########################################################################################
 #n)--> start
 
-
-import random
-
-def randomize_case(s):
-    return ''.join(random.choice([str.upper, str.lower])(c) for c in s)
-
-def randomize_string(s):
-    chars = list(s)
-    random.shuffle(chars)
-    randomized_s = ''.join(chars)
-    return randomized_s
-
-
-
-import re
-import random
-import string
-
-def randomize_text(text):
-    def randomize(match):
-        domains = ['domain.com', 'domain.net', 'domain.org', 'domain.quest', 'domain.xyz', 'domain.guru', 'domain.cx', 'domain.ac', 'domain.work', 'domain.app', 'domain.vip', 'example.com', 'example.net', 'example.org', 'example.quest', 'example.xyz', 'example.guru', 'example.cx', 'example.ac', 'example.work', 'example.app', 'example.vip', 'site.com', 'site.net', 'site.org', 'site.quest', 'site.xyz', 'site.guru', 'site.cx', 'site.ac', 'site.work', 'site.app', 'site.vip']
-
-        s = match.group(0)
-        if re.match(r'[\'\"]\+?\d+[\'\"]', s):
-            phone_number = s.strip('\'\"')
-            area_code, rest = phone_number[:4], phone_number[4:]
-            randomized_rest = ''.join(random.choice(string.digits) for _ in range(len(rest)))
-            return f'"{area_code}{randomized_rest}"'
-        elif re.match(r'[\'\"].+?@.+?[\'\"]', s):
-            local, domain = s.strip('\'\"').split('@')
-            domain = random.choice(domains)
-            local = ''.join(random.choice(string.ascii_letters + string.digits) for _ in range(len(local)))
-            return f'"{local}@{domain}"'
-        else:
-            randomized = ''.join(random.choice(string.ascii_letters + string.digits) for _ in range(len(s) - 2))
-            return f'{s[0]}{randomized}{s[-1]}'
-
-    pattern = r'[\'\"].+?[\'\"]'
-    result = re.sub(pattern, randomize, text)
-    return result
-
-
+def uniqueID(keys,rec):
+    k=''
+    for f in keys: k+=rec[f].strip().lower()
+    return k
 
 def action():
-    if _.switches.isActive('Clipboard'):
-        _copy = _.regImp( __.appReg, '-copy' )
-        _paste = _.regImp( __.appReg, '-paste' )
-        data  = _paste.imp.paste()
-    elif _.switches.isActive('Text'):
-        data = ' '.join(_.switches.values('Text'))
+    index={}
+    data = _.csv(  _.isData(r=0)[0]  )
 
-    ran=False
-    if not _.switches.isActive('NoAutoQuote'):
-        if '"' in data or "'" in data:
-            ran=True
-            result=randomize_text(data)
-    if not ran:
-        if _.switches.isActive('Case'):
-            result = randomize_case(data)
+    keys = _.switches.values('Key')
+    col=list(data[0].keys())
+    columns=[]
+    for c in col: columns.append(c.replace(' ','_'))
+
+    for i,k in enumerate(keys):
+        kk=k.replace('_',' ')
+        if not k in col and kk in col: keys[i]=kk
+        if not keys[i] in col: _.e('Bad Key', 'keys: '+', '.join(columns) )
+
+    for rec in data:
+        k=uniqueID(keys,rec)
+        if k:
+            if not k in index: index[k] = rec
+            else:
+                for f in rec:
+                    if rec[f].strip() and not index[k][f].strip():
+                        index[k][f]=rec[f]
+    records=[]
+    spent={}
+    for rec in data:
+        k=uniqueID(keys,rec)
+        if not k: records.append(rec)
         else:
-            result = randomize_string(data)
+            if not k in spent:
+                spent[k]=1
+                rec=index[k]
+                records.append(rec)
+    _.saveCSV(records,_.switches.values('Save')[0])
 
-    if _.switches.isActive('Clipboard'):
-        _copy.imp.copy( result )
-    else:
-        print(result)
+
+
+        
+    
+
+
+
+
 
 
 ##################################################

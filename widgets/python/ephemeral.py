@@ -149,31 +149,20 @@ _.l.sw.register( triggers, sw )
 ########################################################################################
 #n)--> start
 
-def action():
-    load(); global c3po;
+def action(): pass
 
-    #n)--> iterate
-    for subject in _.isData(r=0): _.pr(subject)
-    
 
-def load():
-    global c3po
-    c3po = _.getTable( 'table' )
-    #n)--> print table
-    _.pt(c3po)
+# import sys
 
-test='''
-🔥 Welcome to my Fiverr profile! 🔥
-
-Are you in need of a highly skilled Full Stack Developer, IT Specialist, or Network & Database Expert? Look no further! I'm your one-stop solution for all your tech needs.
-
-As a versatile professional with a diverse skill set, I am passionate about helping businesses and individuals achieve their goals. Here's how I can make a difference for you:
-
-💻 Full Stack Development: I have extensive experience in developing responsive, scalable, and user-friendly web applications using the latest technologies.
-
-🛠 Building Computers: From simple office setups to hig
-'''.strip()
-print(len(test))
+# Read piped input data from stdin
+# input_data = sys.stdin.readlines()
+input_data = _.isData()
+for line in input_data:
+    line = line.strip()
+    while '  ' in line: line=line.replace('  ',' ')
+    if ' ' in line and ',' in line: mem=line.split(' ')[1]
+    if line.count(',') > 1: print(line.strip())
+    elif line.count(',') == 1: print(mem.split(',')[0])
 
 
 ##################################################

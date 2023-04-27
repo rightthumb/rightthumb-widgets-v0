@@ -2933,7 +2933,7 @@ def google(searchFor,personMovie):
 		url = 'https://www.google.com/search?q=imdb+'
 		newURL = url + _str.replaceAll(_str.replaceAll(searchFor,',','+'),' ','+')
 		# print_url(frameinfo=getframeinfo(currentframe()), url=newURL)
-		print_url(frameinfo=getframeinfo(currentframe()), url=newURL,c='cyan')
+		# print_url(frameinfo=getframeinfo(currentframe()), url=newURL,c='cyan')
 		page = requests.get(newURL)
 		tree = html.fromstring(page.content)
 		# tables = tree.cssselect('.r')

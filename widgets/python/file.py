@@ -283,7 +283,7 @@ def getFolder(folder,r=True):
 				pathX=pathX.replace(base_path+os.sep,'')
 				i = i + 1
 
-				if _.showLine(path):
+				if _.showLine(os.path.basename(path)):
 					shouldAdd = False
 
 					if not _.switches.isActive('Text') and not _.switches.isActive('Binary'):

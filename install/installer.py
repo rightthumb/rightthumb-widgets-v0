@@ -3708,6 +3708,7 @@ fi
 if [ -f "$HOME/bashrc.sh" ]; then
 source $HOME/bashrc.sh
 fi
+alias rotate="/opt/rightthumb-widgets-v0/widgets/bash/rotate.sh"
 # a3bc42ec51e9
 
             """

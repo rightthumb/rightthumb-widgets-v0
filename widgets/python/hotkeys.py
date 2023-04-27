@@ -220,12 +220,42 @@ def extract_urls0(text):
 	urls = re.findall(url_pattern, text)
 	return urls
 
-def scrape_windows_file_paths(text):
+def scrape_windows_file_pathsA(text):
 	text=text.replace('\\\\','\\')
 	windows_path_pattern = r'[a-zA-Z]:[\\/](?:[^<>:"\\/|?*\s]+[\\/]?)*'
 	windows_paths = re.findall(windows_path_pattern, text)
 	return windows_paths
 
+
+
+
+def scrape_windows_file_pathsBB(text):
+    text = text.replace('\\\\', '\\')
+    windows_path_pattern = r'(?:[a-zA-Z]:)?[\\/](?:[\w\s.-]+[\\/])+[\w\s.-]+(?:\.[\w]+)?'
+    windows_paths = re.findall(windows_path_pattern, text)
+    return windows_paths
+
+def scrape_windows_file_paths2BB(text):
+    text = text.replace('\\\\', '\\')
+    windows_path_pattern = r'(?:\b[a-zA-Z]:)?\\(?:[\w\s.-]+\\)*[\w\s.-]+(?:\.[\w]+)?'
+    windows_paths = re.findall(windows_path_pattern, text)
+    return windows_paths
+
+
+
+def scrape_windows_file_paths(text):
+    text = text.replace('\\\\', '\\')
+    windows_path_pattern = r'(?:[a-zA-Z]:)?(?:[\\/])?(?:[^<>:"\\/|?*\s]+[\\/])+(?:[^<>:"\\/|?*\s]+[\\/]?)*'
+    windows_paths = re.findall(windows_path_pattern, text)
+    return windows_paths
+
+def scrape_windows_file_paths2(text):
+    text = text.replace('\\\\', '\\')
+    # Update the regular expression pattern to match only drive letters followed by a colon (":").
+    # The pattern ensures that the second character is a colon (":").
+    windows_path_pattern = r'\b[a-zA-Z]:\\(?:[^\\<>:"|?*\r\n]+\\)*[^\\<>:"|?*\r\n]+\b'
+    windows_paths = re.findall(windows_path_pattern, text)
+    return windows_paths
 
 from bs4 import BeautifulSoup
 import urllib.parse
@@ -289,11 +319,37 @@ def scrape_urls(text):
 	urls = re.findall(url_pattern, text)
 	return set(urls)
 
+
+
+
 def scrape_all(text):
-	windows_paths = scrape_windows_file_paths(text)
-	linux_paths = scrape_linux_file_paths(text)
-	urls = scrape_urls(text)
-	return windows_paths, linux_paths, urls
+    windows_paths = scrape_windows_file_paths(text)
+    windows_paths2 = scrape_windows_file_paths2(text)
+
+    combined_windows_paths = []
+
+    for path in windows_paths:
+        duplicate_found = False
+
+        for path2 in windows_paths2:
+            if path2.startswith(path):
+                duplicate_found = True
+                if path2 not in combined_windows_paths:
+                	if not ':\\...' in path2 and '\\' in path2 and not '\\...\\' in path2:
+                		if path2.count('\\') == 1 and "\\'" in path2: pass
+	                	else: combined_windows_paths.append(path2)
+                break
+
+        if not duplicate_found and path not in combined_windows_paths:
+        	if not ':\\...' in path and '\\' in path and not '\\...\\' in path:
+        		if path.count('\\') == 1 and "\\'" in path: pass
+        		else: combined_windows_paths.append(path)
+
+    linux_paths = scrape_linux_file_paths(text)
+    urls = scrape_urls(text)
+
+    return combined_windows_paths, linux_paths, urls
+
 
 
 
@@ -1974,11 +2030,12 @@ function get__THETABLE( $ID_label ){
 		_paste = _.regImp( __.appReg, '-paste' )
 		_copy = _.regImp( __.appReg, '-copy' )
 		text = _paste.imp.paste().strip()
+		print(text)
 		
 		isHTML=is_html(text)
 
 		if isHTML:
-			items=extract_urls(text)
+			result=extract_urls(text)
 		else:
 			text = text.replace('└─','')
 
@@ -1995,6 +2052,7 @@ function get__THETABLE( $ID_label ){
 				for item in scan[k]:
 					if not item in result:
 						result.append(item)
+
 		def cleanScrape(item):
 			item=item.strip()
 			def csi(item,e):
@@ -2009,14 +2067,28 @@ function get__THETABLE( $ID_label ){
 			item=csi2(item,'}','{')
 			item=csi2(item,']','[')
 			item=csi2(item,']','[')
+			# item=csi2(item,'>','<')
 			item=csi(item,"'")
 			item=csi(item,'"')
+			item=csi(item,'">')
+			item=csi(item,'>')
+			if '"' in item:
+				it=item.split('"')
+				if len(it) > 1:
+					lengths=[]
+					for t in it: lengths.append(len(t))
+					lengths.sort(reverse=True)
+					for t in it:
+						if len(t) == lengths[0]: item=t
+
+
 			return item
 		items=[]
 		for i,item in enumerate(result):
 			item=cleanScrape(item)
 			if not item in items and len(item) > 1:
-				if len(item) == 3 and item.endswith(':/'):
+				# if len(item) == 3 and item.endswith(':/') or (len(item) > 2 and item.startswith('/') and item[2] == ':'):
+				if len(item) == 3 and item.endswith(':/') or ( item.startswith('/') and ':' in item ):
 					continue
 				else:
 					items.append(item)
@@ -2031,6 +2103,24 @@ function get__THETABLE( $ID_label ){
 					if ldt < 6:
 						items.append(frag)
 
+		if not len(items):
+			text=text.replace('\t',' ')
+			explode=text.split(' ')
+			for frag in explode:
+				if '.' in frag:
+					dots=frag.split('.')
+					ldt=len(dots[-1])
+					# if ldt < 6:
+					items.append(frag)
+		result=items	
+		items=[]
+		for i,item in enumerate(result):
+			item=cleanScrape(item)
+			if not item in items and len(item) > 1:
+				if len(item) == 3 and item.endswith(':/'):
+					continue
+				else:
+					items.append(item)
 
 
 		if len(items):
@@ -3129,3 +3219,4 @@ if __name__ == '__main__':
 # release_key
 # cleanComment
 # scrape_paths
+# scrape_windows_file_paths2

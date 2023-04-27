@@ -65,6 +65,12 @@ ORs = ['repair "success rates" achieved','technology support']
 ANDs = 'references'
 NOTs = 'salesforce "washington ave"'
 
+
+ANDs = ''
+NOTs = ''
+ORs = [' RCF ', 'RC', ' B ', '(B']
+
+
 sql = builder(ANDs,NOTs,ORs)
 print(sql)
 

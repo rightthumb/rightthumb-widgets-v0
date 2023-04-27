@@ -195,6 +195,7 @@ def _translate_(speech):
 					if _.switches.isActive('Print'):
 						print(0,dic[sub])
 					subject = sub
+					# print(99,sub,sub in _.v.local)
 					if not sub in _.v.local:
 						hkr.do(dic[sub])
 					else:
@@ -613,13 +614,56 @@ def ipsum():
 
 
 
+def randomize_text():
+	_paste = _.regImp( __.appReg, '-paste' )
+	text = _paste.imp.paste()
+	_copy = _.regImp( __.appReg, '-copy' )
+
+	import re
+	import random
+	import string
+	def randomize(match):
+		domains = ['domain.com', 'domain.net', 'domain.org', 'domain.quest', 'domain.xyz', 'domain.guru', 'domain.cx', 'domain.ac', 'domain.work', 'domain.app', 'domain.vip', 'example.com', 'example.net', 'example.org', 'example.quest', 'example.xyz', 'example.guru', 'example.cx', 'example.ac', 'example.work', 'example.app', 'example.vip', 'site.com', 'site.net', 'site.org', 'site.quest', 'site.xyz', 'site.guru', 'site.cx', 'site.ac', 'site.work', 'site.app', 'site.vip']
+		firsts = ['Emma', 'Liam', 'Olivia', 'Ava', 'Isabella', 'Sophia', 'Mia', 'Charlotte', 'Amelia', 'Evelyn', 'Emily', 'Sofia', 'Avery', 'Ella', 'Grace', 'Madison', 'Aiden', 'Lucas', 'Ethan', 'Sebastian', 'Jack', 'Daniel', 'Samuel', 'Matthew', 'Michael', 'Andrew', 'Joshua', 'Ryan', 'Nathan', 'Adam', 'Robert', 'Nicholas', 'Anthony', 'John', 'Thomas', 'Charles', 'Zachary', 'Aaron', 'Jacob', 'Justin', 'Tyler', 'Austin', 'Jordan', 'Kyle']
+		s = match.group(0)
+		if re.match(r'[\'\"]\+?\d+[\'\"]', s):
+			phone_number = s.strip('\'\"')
+			area_code, rest = phone_number[:4], phone_number[4:]
+			randomized_rest = ''.join(random.choice(string.digits) for _ in range(len(rest)))
+			return f'"{area_code}{randomized_rest}"'
+		elif re.match(r'[\'\"].+?@.+?[\'\"]', s):
+			local, domain = s.strip('\'\"').split('@')
+			domain = random.choice(domains)
+			# local = ''.join(random.choice(string.ascii_letters + string.digits) for _ in range(len(local)))
+			local = random.choice(firsts)
+			
+			return f'"{local}@{domain}"'
+		else:
+			randomized = ''.join(random.choice(string.ascii_letters + string.digits) for _ in range(len(s) - 2))
+			return f'{s[0]}{randomized}{s[-1]}'
+
+	pattern = r'[\'\"].+?[\'\"]'
+	result = re.sub(pattern, randomize, text)
+	_copy.imp.copy( result )
+	return result
+
 
 # sys.exit()
 
 ##################################################
+_.v.local=[
+				'sally',
+				'auto scrape',
+				'ipsum',
+				'lorem',
+				'secure',
+		]
+
 dic = {
 			'sally': 'ai()',
 			'auto scrape': 'auto_scrape()',
+
+			'secure': 'randomize_text()',
 
 			'ipsum': 'ipsum()',
 			'lorem': 'ipsum()',
@@ -685,12 +729,6 @@ dic = {
 
 
 }
-_.v.local=[
-				'sally',
-				'auto scrape',
-				'ipsum',
-				'lorem',
-		]
 
 _.v.finagling={
 	'_replace': {

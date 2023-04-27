@@ -354,11 +354,42 @@ _.postLoad( __file__ )
 
 
 if _.switches.isActive('Make'):
-	m=' '.join(_.switches.values('Make'))
-	if not '{}' in m: m+=' {}'
-	_.switches.fieldSet( 'Make', 'value', m )
-	_.switches.fieldSet( 'Make', 'values', [m] )
-	_.switches.fieldSet( 'NoCount', 'active', True )
+	lines=[]
+	started=False
+	for line in _.isData():
+		if line.strip(): started=True
+		if started: lines.append(line.rstrip())
+	_isData='\n'.join(_.isData())
+	isData=lines
+	# isData=_.isData()
+	if '{}' in _isData or '{a}' in _isData or '{0}' in _isData or '{1}' in _isData:
+		make=_.switches.values('Make')
+		alpha='abcdefghijklmnopqrstuvwxyz'
+		if '{}' in _isData:
+			for line in isData: print(line.replace('{}',make[0]))
+		else:
+
+			for line in isData:
+				for i,a in enumerate(alpha):
+					x='{'+a+'}'
+					y='{'+str(i)+'}'
+					if x in line: line = line.replace(x,make[i])
+					elif y in line: line = line.replace(y,make[i])
+				print(line)				
+		sys.exit()
+	else:
+		m=' '.join(_.switches.values('Make'))
+		if not '{}' in m: m+=' {}'
+		_.switches.fieldSet( 'Make', 'value', m )
+		_.switches.fieldSet( 'Make', 'values', [m] )
+		_.switches.fieldSet( 'NoCount', 'active', True )
+
+
+				
+
+
+
+
 
 
 if _.switches.isActive('PrintDelimLines'):
