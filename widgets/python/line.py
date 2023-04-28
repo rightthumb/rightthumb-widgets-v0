@@ -53,7 +53,7 @@ def appSwitches():
 	_.switches.register('Alpha', '-a,-alpha')
 	_.switches.register('Word', '-w,-word')
 	_.switches.register('Progress', '-progress')
-	_.switches.register('Make', '-m,-make')
+	_.switches.register('Make', '-m,-make,--make')
 	_.switches.register('Substitute', '-sub,-substitute')
 	_.switches.register('Unique', '-u,-unique')
 	_.switches.register('Character', '-char,-Character')
@@ -383,8 +383,9 @@ if _.switches.isActive('Make'):
 		_.switches.fieldSet( 'Make', 'value', m )
 		_.switches.fieldSet( 'Make', 'values', [m] )
 		_.switches.fieldSet( 'NoCount', 'active', True )
-
-
+	if '--make' in sys.argv:
+		_.switches.fieldSet( 'Make', 'value', m.replace("'",'"') )
+		_.switches.fieldSet( 'Make', 'values', [m.replace("'",'"')] )
 				
 
 

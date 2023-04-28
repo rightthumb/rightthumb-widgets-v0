@@ -2603,6 +2603,7 @@ function get__THETABLE( $ID_label ){
 		if keepcomma:
 			text = text.replace(',',',\n')
 		else:
+			text = text.replace('\t',',')
 			text = text.replace(',','\n')
 		_copy.imp.copy( text, p=0 )
 

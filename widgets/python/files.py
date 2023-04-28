@@ -64,6 +64,7 @@ def appSwitches():
 	_.switches.register('Disable-Intelligence', '-showall')
 	_.switches.register('No-Extension', '-noext')
 	_.switches.register('Symlink-Path-Integrity', '-si,-spi,-sym,-symlink')
+	_.switches.register('Relative-Path-Persistent', '-rrr')
 
 
 fse=False
@@ -669,7 +670,46 @@ def extensionsDatabank():
 					extensionList.append( x.lower() )
 	# print(extensionList); sys.exit();
 
+def Relative_Path_Persistent():
+	def rpp_notify(say,m=False):
+		c='yellow'
+		_.pr()
+		if m:
+			_.pr('','Relative-Path-Persistent:',say,'min',c=c)
+		else:
+			_.pr('','Relative-Path-Persistent:',say,c=c)
+		_.pr()
+	rpp_fig='files_Relative-Path-Persistent.fig'
+	Session_ID = os.environ['Session_ID']
+	fig=_.getTable(rpp_fig)
+	# _.pv(fig)
+	if _.switches.isActive('Relative-Path-Persistent'):
+
+		rpp = False
+		if Session_ID in fig and time.time() < fig[Session_ID]:
+			rpp=True
+
+		if _.switches.value('Relative-Path-Persistent'):
+			mins=int(_.switches.value('Relative-Path-Persistent'))
+		else:
+			mins=15
+		if rpp:
+			rpp_notify('disabled')
+			fig[Session_ID]=time.time()-(60*mins)
+			_.saveTable(fig,rpp_fig,p=0)
+			return None
+
+
+		rpp_notify(mins,m=1)
+		fig[Session_ID]=time.time()+(60*mins)
+		_.saveTable(fig,rpp_fig,p=0)
+
+	if Session_ID in fig and time.time() < fig[Session_ID]:
+		_.switches.fieldSet( 'Toggle-Relative-Path', 'active', True )
+
 def action():
+	Relative_Path_Persistent()
+
 	_.v.no_extension = _.switches.isActive('No-Extension')
 	_.v.do_not_hide__pycache = _.switches.isActive('Disable-Intelligence')
 

@@ -36,11 +36,13 @@ def sw():
 	_.switches.register( 'Location', '-location' )
 	_.switches.register( 'Build', '-re,-rebuild,-build' )
 	_.switches.register( 'Upload', '-u,-upload' )
-	_.switches.register( 'Reprocess-Addresses', '-reprocess' )
 	_.switches.register( 'Extract-Data', '-extract' )
 	_.switches.register( 'Additional-Data', '-add' )
 	_.switches.register( 'Folders', '-fo,-folder,-fos,-folders' )
 	_.switches.register( 'ZipFolder', '-zip', 'C:\\tech\\document-database' )
+	_.switches.register( 'Reprocess-Addresses', '-reprocess' )
+	_.switches.register( 'Reprocess-Headers', '-h,-head,-headers' )
+
 	# _.switches.register( 'URL', '-u,-url,-urls', 'https://efm.cx/', isData='raw' )
 	#e)--> examples
 	# _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name,data,clean', description='Files', isRequired=False )
@@ -327,25 +329,7 @@ import os
 
 
 
-def getContents(file_path):
-    path = Path(file_path)
-    text = ""
 
-    try:
-        if path.suffix == ".docx":
-            doc = docx.Document(file_path)
-            full_text = []
-
-            for paragraph in doc.paragraphs:
-                full_text.append(paragraph.text)
-
-            text = "\n".join(full_text)
-        else:
-            text = textract.process(file_path).decode("utf-8")
-    except Exception as e:
-        print(f"Error processing {file_path}: {e}")
-
-    return text
 
 
 
@@ -393,9 +377,55 @@ def getContents(file_path):
 
 
 
+def getContents2(file_path):
+	path = Path(file_path)
+	text = ""
+
+	try:
+		if path.suffix == ".docx":
+			doc = docx.Document(file_path)
+			full_text = []
+
+			for paragraph in doc.paragraphs:
+				full_text.append(paragraph.text)
+
+			text = "\n".join(full_text)
+		else:
+			text = textract.process(file_path).decode("utf-8")
+	except Exception as e:
+		print(f"Error processing {file_path}: {e}")
+
+	return text
 
 
+def getContents(path):
+	fi=''
+	if path.endswith('.txt') or path.endswith('.md'):
+		fi = _.getText(path,raw=True)
+	elif path.endswith('.pdf'):
+		fi = ''
+		try:
+			pdf_file = open(path, 'rb')
+			reader = PyPDF2.PdfReader(pdf_file)
+			for page in reader.pages: fi += page.extract_text()+'\n'
+		except:
+			pass
+	else:
+		try:
+			if path.endswith('.doc') or path.endswith('.rtf'):
+				fi = textract.process(path)
+			else:
+				fi = docx2txt.process(path)
+		except:
+			word = win32com.client.Dispatch("Word.Application")
+			word.visible = False
+			wb = word.Documents.Open(path)
+			doc = word.ActiveDocument
+			fi = doc.Range().Text
+			doc.Close()
+			word.Quit()
 
+	return fi
 
 
 
@@ -425,33 +455,10 @@ def process(path):
 	if shouldRun:
 		_.pr(path)
 		
-		# if path.endswith('.txt') or path.endswith('.md'):
-		# 	fi = _.getText(path,raw=True)
-		# elif path.endswith('.pdf'):
-		# 	fi = ''
-		# 	try:
-		# 		pdf_file = open(path, 'rb')
-		# 		reader = PyPDF2.PdfReader(pdf_file)
-		# 		for page in reader.pages: fi += page.extract_text()+'\n'
-		# 	except:
-		# 		pass
-		# else:
-		# 	try:
-		# 		if path.endswith('.doc') or path.endswith('.rtf'):
-		# 			fi = textract.process(path)
-		# 		else:
-		# 			fi = docx2txt.process(path)
-		# 	except:
-		# 		word = win32com.client.Dispatch("Word.Application")
-		# 		word.visible = False
-		# 		wb = word.Documents.Open(path)
-		# 		doc = word.ActiveDocument
-		# 		fi = doc.Range().Text
-		# 		doc.Close()
-		# 		word.Quit()
-
-		# _.pr(path)
-		fi = getContents(path)
+		try:
+			fi = getContents2(path)
+		except Exception as e:
+			fi = getContents(path)
 		fi = cleaner(fi)
 		print(len(fi.split('\n')),len(fi.split(' ')))
 		info = _dir.info(path)
@@ -539,6 +546,11 @@ def upload():
 
 
 def action():
+	if _.switches.isActive('Reprocess-Headers'):
+		Reprocess_Headers()
+		return None
+
+
 	load(); global documents;
 
 	for path in documents:
@@ -773,8 +785,91 @@ def reprocess_addresses():
 	conn.close()
 
 
+import re
+
+def extract_all_phone_numbers(text):
+	# Formats: 813-555-2424, (813)555-2424, (813) 555-2424, 8135552424, 18135552424, 813.555.2424, etc.
+	pattern = r'(\+?1\s*[-.\s]?)?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}'
+	matches = re.finditer(pattern, text)
+
+	formatted_phone_numbers = []
+	for match in matches:
+		# Remove any non-digit characters
+		digits = re.sub(r'\D', '', match.group(0))
+
+		# Format the phone number as 'XXX-XXX-XXXX'
+		formatted_phone = f'{digits[-10:-7]}-{digits[-7:-4]}-{digits[-4:]}'
+		formatted_phone_numbers.append(formatted_phone)
+
+	return formatted_phone_numbers
 
 
+def extract_email_addresses(text):
+	pattern = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
+	email_addresses = re.findall(pattern, text)
+	return email_addresses
+
+
+def skim_and_filter_numbers(content):
+	result = ''
+	sub=[]
+	for subject in extract_all_phone_numbers(content):
+		if not subject == '813-967-7127':
+			sub.append(subject)
+	if sub: result=sub[0]
+	return result
+
+# if not dat == 'dennis@theperformersnetwork.com' and not dat == '813-967-7127':
+def skim_and_filter_emails(content):
+	content=content.lower()
+	result = ''
+	sub=[]
+	for subject in extract_email_addresses(content):
+		if not subject == 'dennis@theperformersnetwork.com':
+			sub.append(subject)
+	if sub: result=sub[0]
+	return result
+
+def extract_headers_footers(path):
+	try:
+	    headers = []
+	    footers = []
+	    doc = docx.Document(path)
+	    for section in doc.sections:
+	        for paragraph in section.header.paragraphs:
+	            headers.append(paragraph.text)
+	        for paragraph in section.footer.paragraphs:
+	            footers.append(paragraph.text)
+
+	    return "\n".join(headers)+"\n".join(footers)
+	except:
+		return ''
+
+def Reprocess_Headers():
+	if not _.switches.isActive('DB'): _.e('No DB','Specify a database')
+	import sqlite3
+	conn = sqlite3.connect(_.switches.value('DB'))
+	cursor = conn.cursor()
+	cursor.execute("SELECT path, name, phone, email FROM documents WHERE phone = '' OR email = '' ")
+	rows = cursor.fetchall()
+	for row in rows:
+		path, name, phone, email = row
+		print(name)
+		text=extract_headers_footers(name)
+		if not text: continue
+		else: _.pr(name)
+		ran=False
+		if not phone.strip():
+			phone = skim_and_filter_numbers(text)
+			if phone: ran=True
+		if not email.strip():
+			email = skim_and_filter_emails(text)
+			if email: ran=True
+		if ran:
+			_.pr('ran:',name)
+			cursor.execute("UPDATE documents SET phone = ? WHERE path = ?", (processed_phone, path))
+	conn.commit()
+	conn.close()
 
 
 _.v.dd = _.dot()
