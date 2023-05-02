@@ -1154,7 +1154,8 @@ def app7z():
 			os.system( 'sudo apt-get install p7zip-full' )
 		return '/usr/bin/7z'
 	else:
-		app7z0 = "c:\\Program Files (x86)\\7-Zip\\7z.exe"
+		# app7z0 = "c:\\Program Files (x86)\\7-Zip\\7z.exe"
+		app7z0 = "C:\\Program Files\\7-Zip\\7z.exe"
 		app7z1 = appsFolder + "\\7-Zip\\7z.exe"
 		app = ""
 		if os.path.isfile(app7z0):
@@ -1162,7 +1163,7 @@ def app7z():
 		elif os.path.isfile(app7z1):
 			app = app7z1
 		else:
-			_.pr('Error: no 7z')
+			print('Error: no 7z')
 			sys.exit()
 		app = '"' + app + '"'
 	return app

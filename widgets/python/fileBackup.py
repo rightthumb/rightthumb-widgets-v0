@@ -835,7 +835,7 @@ def action(path=None,flag=None,o=None):
 					# _.pr(' -- TRUE -- ')
 					if _.switches.isActive('isPreOpen'):
 						txtScheduler.append( { 'timestamp': genEpoch(), 'file': __.path(path), 'status': 0, 'app': 'fileBackup', 'group': 0, 'session': __.Session_ID } )
-						_.saveTable( txtScheduler,'fileBackupSchedule.json', p=1 )
+						_.saveTable( txtScheduler,'fileBackupSchedule.json', p=0 )
 					return None
 			if path in INDEX and os.path.getmtime(path) == INDEX[path]['timestamp']:
 				_.pr(path, c='cyan')
@@ -843,7 +843,7 @@ def action(path=None,flag=None,o=None):
 				_.pr('File not modified since last backup',c='yellow')
 				if _.switches.isActive('isPreOpen'):
 					txtScheduler.append( { 'timestamp': genEpoch(), 'file': __.path(path), 'status': 0, 'app': 'fileBackup', 'group': 0, 'session': __.Session_ID } )
-					_.saveTable( txtScheduler,'fileBackupSchedule.json', p=1 )
+					_.saveTable( txtScheduler,'fileBackupSchedule.json', p=0 )
 				return INDEX[path]['backup']
 			# _.pr('pre')
 			
@@ -1214,7 +1214,7 @@ def action(path=None,flag=None,o=None):
 					_.pr('not encrypted',c='red')
 					if _.switches.isActive('isPreOpen'):
 						txtScheduler.append( { 'timestamp': genEpoch(), 'file': __.path(path), 'status': 0, 'app': 'fileBackup', 'group': 0, 'session': __.Session_ID } )
-						_.saveTable( txtScheduler,'fileBackupSchedule.json', p=1 )
+						_.saveTable( txtScheduler,'fileBackupSchedule.json', p=0 )
 					return path
 					# sys.exit()
 
@@ -1267,7 +1267,7 @@ def action(path=None,flag=None,o=None):
 						# _.pr( 'Has Backup',_.formatSize(byte), c='yellow' )
 					if _.switches.isActive('isPreOpen'):
 						txtScheduler.append( { 'timestamp': genEpoch(), 'file': __.path(path), 'status': 0, 'app': 'fileBackup', 'group': 0, 'session': __.Session_ID } )
-						_.saveTable( txtScheduler,'fileBackupSchedule.json', p=1 )
+						_.saveTable( txtScheduler,'fileBackupSchedule.json', p=0 )
 					return INDEX[path]['backup']					
 				else:
 					if not __.secureFilesID is None:
@@ -1283,7 +1283,7 @@ def action(path=None,flag=None,o=None):
 					_.colorThis( 'Has Backup', 'yellow' )
 				if _.switches.isActive('isPreOpen'):
 					txtScheduler.append( { 'timestamp': genEpoch(), 'file': __.path(path), 'status': 0, 'app': 'fileBackup', 'group': 0, 'session': __.Session_ID } )
-					_.saveTable( txtScheduler,'fileBackupSchedule.json', p=1 )
+					_.saveTable( txtScheduler,'fileBackupSchedule.json', p=0 )
 				return INDEX[path]['backup']
 				# if _.switches.isActive('Flag'):
 				# 	thisFlag = _.switches.value('Flag')
@@ -1303,7 +1303,7 @@ def action(path=None,flag=None,o=None):
 					_.colorThis( 'Backup ID found in older backup', 'yellow' )
 					if _.switches.isActive('isPreOpen'):
 						txtScheduler.append( { 'timestamp': genEpoch(), 'file': __.path(path), 'status': 0, 'app': 'fileBackup', 'group': 0, 'session': __.Session_ID } )
-						_.saveTable( txtScheduler,'fileBackupSchedule.json', p=1 )
+						_.saveTable( txtScheduler,'fileBackupSchedule.json', p=0 )
 					return INDEX[path]['backup']
 
 				
@@ -1353,7 +1353,7 @@ def action(path=None,flag=None,o=None):
 
 					txtScheduler = _.getTable( 'fileBackupSchedule.json' )
 					txtScheduler.append( { 'timestamp': genEpoch(), 'file': __.path(path), 'status': 0, 'app': 'fileBackup', 'group': 0, 'session': __.Session_ID } )
-					_.saveTable( txtScheduler,'fileBackupSchedule.json', p=1 )
+					_.saveTable( txtScheduler,'fileBackupSchedule.json', p=0 )
 					return path
 					# sys.exit()
 				try:
