@@ -762,7 +762,7 @@ keyboard = mController()
 try: import speech_recognition as sr
 except: pass
 import os
-hkr = _.regImp( __.appReg, 'hotkeys' )
+hkr = _.regImp( __.appReg, 'KeyWise' )
 hk=hkr.imp
 
 _paste = _.regImp( __.appReg, '-paste' )

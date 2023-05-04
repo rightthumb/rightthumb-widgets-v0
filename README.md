@@ -19,8 +19,8 @@ ___
 - Generate PHP code
     + Copy the CREATE TABLE sql, hit alt+win+c to automatically generate the create, read, update, delete of a table in php (crud), then paste the results.
 - I push 10 on my [mouse](https://www.amazon.com/dp/B088B3ZM76) to activate voice commands and say "Sally paste, convert this python to javascript" (ai). I then paste the results.
-    + The hotkeys.py app manages keyboard shortcuts. A programmable mouse can activate any of them.
-        * View all keyboard shortcuts 'p hotkeys -k'
+    + The KeyWise.py app manages keyboard shortcuts. A programmable mouse can activate any of them.
+        * View all keyboard shortcuts 'p KeyWise -k'
 - Tasklist
     + Grouped memory usage subtotals and grand total
         * ' task -report '
@@ -263,7 +263,7 @@ javascript:{ var script = document.createElement('script');script.type = 'text/j
 - view the JavaScript console for instructions.
     + example: copy and paste one of the suggestions "hackTool.help( {'tags': 'tables_w_labels'} )" then "copy(hackTool.helper)" and paste in the console.
 - Note: I also created a chrome extension that scrapes data from webpages in a variety of formats for instant access in apps. That is what the databank app does.
-- Note: Voice commands are managed by using the hotkeys.py app that talks to the listen.py app.
+- Note: Voice commands are managed by using the KeyWise.py app that talks to the listen.py app.
 
 ## Dungeons and Dragons app (dnd.py)
 Created this when I was learning dnd and python. I have learned a lot since I created this app.
