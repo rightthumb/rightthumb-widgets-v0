@@ -40,6 +40,7 @@ def sw():
 	_.switches.register( 'Status', '-status' )
 	_.switches.register( 'NotWSL', '-notwsl' )
 	_.switches.register( 'SSH-Remote_Folder', '-remote' )
+	_.switches.register( 'URL', '-url,-edit' )
 
 
 
@@ -399,7 +400,40 @@ def remoteFolder():
 		_.pr(os.getcwd(),c='cyan')
 		sys.exit()
 
+
+def URL():
+	_file_open = _.regImp( __.appReg, 'file-open' )
+	_file_open.switch('App',_v.meta['code_editor'])
+	for url in _.switches.values('URL'):
+		sites=_.getTable('site-locations.list')
+		for mPath in sites:
+			if os.path.isfile(mPath):
+				p = __.path(mPath,pop=True)
+				if _.getText( mPath, raw=True ).strip().startswith('{'): meta = _.getTable2( mPath )
+				else: meta = _.getYML( mPath )
+				if 'url' in meta:
+					u = meta['url']
+					if url.startswith(u):
+						x=url[len(u):].replace('/',os.sep)
+						y=p+os.sep+x
+
+						if os.path.isdir(y):
+							test='index.php index.htm index.html'.split(' ')
+							for t in test:
+								yt=str(y+os.sep+t).replace(os.sep+os.sep,os.sep)
+								if os.path.isfile(ty):
+									y=yt
+						y=y.replace(os.sep+os.sep,os.sep)
+						if os.path.isfile(y):
+							_.pr(y,c='yellow')
+							_file_open.switch('Files',y)
+							_file_open.action()
+
+
 def action():
+	if _.switches.isActive('URL'):
+		URL()
+		return None
 	global meta
 
 
@@ -484,6 +518,6 @@ if __name__ == '__main__':
 	__.isExit()
 
 
-
+# URL()
 
 

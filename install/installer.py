@@ -3375,7 +3375,7 @@ alias vps.a.u="vps.a.py.u; vps.a.sh.u; vps.a.db.u"
 alias vps.a.d="vps.a.py.d; vps.a.sh.d; vps.a.db.d"
 #-->   end#> alderaan@m-eta.app
 
-alias u..='python3 $ww/python/site.py -f'
+alias u..='python3 $ww/python/site.py -mkdir -u -f '
 alias u.='python3 $ww/python/site.py -u -f'
 alias d.='python3 $ww/python/site.py -d -f'
 
