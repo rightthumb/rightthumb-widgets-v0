@@ -205,7 +205,7 @@ def action():
             for key in record.keys():
                 try:
                     if not len(record[key]):
-                        data[i][key] = '-'
+                        data[i][key] = ''
                 except Exception as e:
                     pass
 

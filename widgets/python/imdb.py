@@ -3395,7 +3395,9 @@ def dataPerson(url):
 					return dataPerson_data[url]
 			except Exception as e:
 				pass
+	# 3aaf1206
 	print_url(frameinfo=getframeinfo(currentframe()), url=url,c='cyan')
+	
 	page = requests.get(url)
 	tree = html.fromstring(page.content)
 	films = tree.cssselect('.filmo-category-section')
@@ -3432,18 +3434,26 @@ def dataPerson(url):
 		age = int(year) - int(birthYear)
 	except Exception as e:
 		age = ''
+	for pn in personName:
+		theirName0 = cleanupString(pn.text_content())
+		if len(theirName0) > 0:
+			theirName = theirName0
 	img0 = tree.cssselect('img')
 	img = ''
 	found = False
 	for img1 in img0:
 		img2 = img1.attrib['src']
-		if '317_AL_.jpg' in img2 and not found:
+		alt=img1.get('alt')
+		if not found:
+			if '317_AL_.jpg' in img2 or theirName == alt:
+				found = True
+				img = img2
+	if not found:
+		img_element = tree.xpath('//img[@loading="eager"]')
+		if img_element:
 			found = True
-			img = img2
-	for pn in personName:
-		theirName0 = cleanupString(pn.text_content())
-		if len(theirName0) > 0:
-			theirName = theirName0
+			img = img_element[0].get('src')
+
 	dataPerson_data[url] = { 'name': theirName, 'age': age, 'img': img, 'timestamp': time.time() }
 	if _async is None:
 		_.saveTable( dataPerson_data, '-imdb-dataPerson.index', p=0 )
@@ -3684,6 +3694,9 @@ def crossReference():
 			temp_file_label = '-imdb-xREF-__'+pageMoviePersonLabel.replace(' ','_').replace('_and_','__AND__')+'.htm'
 			temp_file_label_path = _v.stmp +os.sep+ temp_file_label
 			if os.path.isfile(  temp_file_label_path  ):
+				e5de297b=str(requests.post('https://etc.ac/a/imdb/upload.php', data = { 'data': '\n'.join(_.getText(temp_file_label_path)) }).content,'iso-8859-1')
+				print('https://etc.ac/a/imdb/')
+				print(e5de297b)
 				_.pr( temp_file_label_path )
 				try:
 					webbrowser.open(  'file://' + os.path.realpath(temp_file_label_path) , new=2)
@@ -3813,6 +3826,9 @@ def crossReference():
 			_.saveTable( dataMovie_data, '-imdb-dataMovie.index', p=0 )
 			_.tempFile(rows, temp_file_label )
 			_.tempFile(rows,theFile)
+			e5de297b=str(requests.post('https://etc.ac/a/imdb/upload.php', data = { 'data': '\n'.join(rows) }).content,'iso-8859-1')
+			print('https://etc.ac/a/imdb/')
+			print(e5de297b)
 
 			_.saveTable( dataPerson_data, '-imdb-dataPerson.index', p=0 )
 			_.saveTable( dataMovie_data, '-imdb-dataMovie.index', p=0 )
@@ -4409,6 +4425,9 @@ def crossReferenceDepth(back):
 			temp_file_label = '-imdb-xREF-__'+pageMoviePersonLabel.replace(' ','_').replace('_and_','__AND__')+'.htm'
 			temp_file_label_path = _v.stmp +os.sep+ temp_file_label
 			if os.path.isfile(  temp_file_label_path  ):
+				e5de297b=str(requests.post('https://etc.ac/a/imdb/upload.php', data = { 'data': '\n'.join(_.getText(temp_file_label_path)) }).content,'iso-8859-1')
+				print('https://etc.ac/a/imdb/')
+				print(e5de297b)
 				_.pr( temp_file_label_path )
 				try:
 					webbrowser.open(  'file://' + os.path.realpath(temp_file_label_path) , new=2)
@@ -7704,4 +7723,6 @@ if __name__ == '__main__':
 # __.objectLocation['objects']
 # print_url(frameinfo=getframeinfo(currentframe()), url=newURL,c='cyan')
 
-
+# e5de297b upload
+# 3aaf1206 page url
+# def dataPerson(

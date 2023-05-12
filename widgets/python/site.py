@@ -260,6 +260,9 @@ def process(path,end='',ft=None):
 			if os.path.isdir(path):
 				url += '/'
 			_.pr(urlpr(url),c='Background.blue')
+			if url.endswith('.js'): _.pr( '<script src="'+url+'"></script>' ,c='yellow')
+			
+
 			try: _.pr(_.v.fp,c='Background.light_blue')
 			except: pass
 			
@@ -391,6 +394,9 @@ def remoteFolder():
 		# print(ssh)
 		# sys.exit()
 		os.system(ssh)
+		_.pr()
+		_.pr()
+		_.pr(os.getcwd(),c='cyan')
 		sys.exit()
 
 def action():
@@ -407,6 +413,7 @@ def action():
 		for path in _.switches.values('Files'):
 			url=meta_scan(path,'')
 			if url: _.pr(url,c='Background.blue')
+			if url.endswith('.js'): _.pr( '<script src="'+url+'"></script>' ,c='yellow')
 			return url
 
 	if _.switches.isActive('Servers') and not len(_.switches.value('Servers')):

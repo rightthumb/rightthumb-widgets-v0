@@ -1368,6 +1368,7 @@ class Meta_Namespace():
 		pass
 dot=Meta_Namespace
 __.tableLine = '‽'
+__.tableLine = '\t'
 v = dot()
 vv = dot()
 vv.isData = {}

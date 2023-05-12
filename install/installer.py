@@ -904,12 +904,23 @@ class HD:
             return []
 
 
+    def yamlSimp(yaml_string):
+        table = {}
+        lines = yaml_string.split('\n')
+        for line in lines:
+            if ':' in line:
+                key, value = line.split(':', 1)
+                table[key.strip()] = value.strip()
+            return table
+
+
     def getTableSimp( self, file ):
  
  
  
         # print(file)
         txt = vc.HD.getText(file,raw=True)
+        if not txt[0] == '{': return vc.HD.yamlSimp(txt)
         # print(type(txt))
         # print(txt)
         table = {}
@@ -3709,6 +3720,20 @@ if [ -f "$HOME/bashrc.sh" ]; then
 source $HOME/bashrc.sh
 fi
 alias rotate="/opt/rightthumb-widgets-v0/widgets/bash/rotate.sh"
+
+alias linkFo="/opt/rightthumb-widgets-v0/widgets/bash/linkFo.sh"
+alias fig="/opt/rightthumb-widgets-v0/widgets/bash/_figlet.sh"
+alias _figlet="/opt/rightthumb-widgets-v0/widgets/bash/_figlet.sh"
+alias cow="/opt/rightthumb-widgets-v0/widgets/bash/_cowsay.sh"
+alias cows="/opt/rightthumb-widgets-v0/widgets/bash/_cowsay.sh"
+alias figs="/opt/rightthumb-widgets-v0/widgets/bash/_figlet.sh"
+
+alias cl="$p shClean -f"
+alias loadBK="/opt/rightthumb-widgets-v0/widgets/bash/loadBK.sh"
+alias exref="$p imdb -xref -ent"
+alias text="$p vps-srv-7facG-twilio-send"
+alias textme="$p vps-srv-7facG-twilio-send -to 8136901260 -body "
+
 # a3bc42ec51e9
 
             """

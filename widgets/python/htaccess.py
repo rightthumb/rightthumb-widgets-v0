@@ -217,6 +217,9 @@ def action():
     # rightthumb\\.com|eyeformeta\\.com
 
 base='''
+<IfModule mime_module>
+  AddHandler application/x-httpd-ea-php80 .php .php8 .phtml .js
+</IfModule>
 #Rewrite everything to https
 RewriteEngine On
 RewriteCond %{HTTPS} !=on

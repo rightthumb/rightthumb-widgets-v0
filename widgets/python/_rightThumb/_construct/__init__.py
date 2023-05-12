@@ -381,8 +381,26 @@ def file( p ):
 	return f
 
 
+def yamlSimp(yaml_string):
+	table = {}
+	lines = yaml_string.split('\n')
+	for line in lines:
+		if ':' in line:
+			key, value = line.split(':', 1)
+			table[key.strip()] = value.strip()
+		return table
+def get_first_char(filename):
+	 with open(filename, 'r') as file: first_char = file.read(1)
+	 return first_char
+
+def get_file_content(filename):
+	 with open(filename, 'r') as file: content = file.read()
+	 return content
+
 def getTable( file ):
 	# os = imp('os')
+	if not get_first_char(file) == '{' and  not get_first_char(file) == '[':
+		return yamlSimp(get_file_content(file))
 	json = imp('simplejson')
 
 	if os.path.isfile(file):
@@ -591,7 +609,7 @@ What if magic existed?
 What if a place existed where your every thought and dream come to life.
 There is only one catch: it has to be written down.
 Such a place exists, it is called programming.
-   - Scott Taylor Reph, RightThumb.com
+	- Scott Taylor Reph, RightThumb.com
 ###########################################################################
 ## {C3P0D40fAe8B} ##
 

@@ -10,6 +10,9 @@ rem    - Scott Taylor Reph, RightThumb.com
 rem ###########################################################################
 rem ## {C3P0D40fAe8B} ##
 
-CALL p dir -cache %mData% -movietitle -movies  - 24    %*
-
+rem CALL p dir -cache %mData% -movietitle -movies  - 24    %*
+type  %tmpf0%-franchise  | p cmd2table -print | p printTable -g first second -s first second label
+rem type  %tmpf0%-franchise-marvel  | p cmd2table -print | p printTable -g first second -s first second label
  
+rem p dir -cache %mData% -movietitle -movies -franchise marvel
+

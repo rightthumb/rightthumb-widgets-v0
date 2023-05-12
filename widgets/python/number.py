@@ -196,9 +196,12 @@ def hasPrefix(lines):
 def printer(i,line):
     global space
     n=nu(i+1)
-    if _.switches.isActive('Prefix'): n = _.ci(_.switches.values('Prefix')[0])
-    if not space: _.pr(n,line)
-    else: _.pr(space+n,line)
+    if _.switches.isActive('Prefix'): n = _.ci(_.switches.value('Prefix'))
+    if not n:
+        _.pr(line)
+    else:
+        if not space: _.pr(n,line)
+        else: _.pr(space+n,line)
 
 def action():
     lines=hasPrefix(_.isData(r=0))
