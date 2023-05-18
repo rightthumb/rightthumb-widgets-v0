@@ -414,15 +414,18 @@ def fo2( folder=None, r=False, script=None, trigger=None, test=None, first=True 
 	return fo_fi2
 
 
-
+fo_rel=''
 fo_fi=[]
-def fo(folder=None,r=False,script=None,first=True):
+def fo(folder=None,r=False,script=None,first=True,rel=False):
+	global fo_rel
 	if folder is None:
 		# try: os=__.imp('os.getcwd');
 		# except Exception as e: pass;
 		folder=os.getcwd()
 	global fo_fi
-	if first: fo_fi=[];
+	if first:
+		fo_rel = folder
+		fo_fi=[];
 	if not os.path.isdir(folder): return fo_fi;
 	try:
 		files=os.listdir(folder)
@@ -431,19 +434,27 @@ def fo(folder=None,r=False,script=None,first=True):
 	for item in files:
 		path=folder+os.sep+item
 		path=__.path(path)
+		relative=path[len(fo_rel)+1:]
 		if os.path.isfile(path):
-			fo_fi.append(path)
+			if rel:
+				fo_fi.append(relative)
+			else:
+				fo_fi.append(path)
+
 		if not script is None: script(path);
-		if r and os.path.isdir(path): fo(path,r,script,False);
+		if r and os.path.isdir(path): fo(path,r,script,False,rel);
 	return fo_fi
 
-def fos(folder=None,r=False,script=None,first=True):
+def fos(folder=None,r=False,script=None,first=True,rel=False):
+	global fo_rel
 	if folder is None:
 		# try: os=__.imp('os.getcwd');
 		# except Exception as e: pass;
 		folder=os.getcwd()
 	global fo_fi
-	if first: fo_fi=[];
+	if first:
+		fo_rel = folder
+		fo_fi=[];
 	if not os.path.isdir(folder): return fo_fi;
 	try:
 		files=os.listdir(folder)
@@ -452,10 +463,14 @@ def fos(folder=None,r=False,script=None,first=True):
 	for item in files:
 		path=folder+os.sep+item
 		path=__.path(path)
+		relative=path[len(fo_rel)+1:]
 		if os.path.isdir(path):
 			if not script is None: script(path);
-			fo_fi.append(path)
-			if r: fos(path,r,script,False);
+			if rel:
+				fo_fi.append(relative)
+			else:
+				fo_fi.append(path)
+			if r: fos(path,r,script,False,rel);
 	return fo_fi
 
 
@@ -7501,7 +7516,7 @@ def releaseAcquiredData( appDBA, theFocus, payload=None ):
 				'errors': [],
 				'printed': print_ed,
 	}
-	# pv(info); sys.exit();	
+	# pv(info); sys.exit(); 
 	if not payload is None:
 		info['payload'] = payload
 
@@ -20352,7 +20367,7 @@ _cryptFile.do( 'action' )
 # alias
 
 
-def err( msg , e=None, kill=True):
+def err( msg='STOP' , e=None, kill=True):
 	
 	cp( linePrint(txt='*',p=0), 'red' )
 	
@@ -22569,35 +22584,35 @@ def getTextFirst(file_path):
 		print(f"An error occurred: {e}")
 ##################################################
 def query(db_path, query, params=()):
-    """
-    Query an SQLite database and return the results.
+	"""
+	Query an SQLite database and return the results.
 
-    Args:
-        db_path: Path to the SQLite database file.
-        query: SQL query to execute.
-        params: Parameters to use in the SQL query (optional).
+	Args:
+		db_path: Path to the SQLite database file.
+		query: SQL query to execute.
+		params: Parameters to use in the SQL query (optional).
 
-    Returns:
-        List of tuples representing the query results.
-    """
-    import sqlite3
-    # Connect to the SQLite database
-    conn = sqlite3.connect(db_path)
-    
-    # Create a cursor object to execute queries
-    cursor = conn.cursor()
-    
-    # Execute the query
-    cursor.execute(query, params)
-    
-    # Fetch all the results
-    results = cursor.fetchall()
-    
-    # Close the cursor and connection
-    cursor.close()
-    conn.close()
-    
-    return results
+	Returns:
+		List of tuples representing the query results.
+	"""
+	import sqlite3
+	# Connect to the SQLite database
+	conn = sqlite3.connect(db_path)
+	
+	# Create a cursor object to execute queries
+	cursor = conn.cursor()
+	
+	# Execute the query
+	cursor.execute(query, params)
+	
+	# Fetch all the results
+	results = cursor.fetchall()
+	
+	# Close the cursor and connection
+	cursor.close()
+	conn.close()
+	
+	return results
 
 # conn = sqlite3.connect("example.db")
 # cursor = conn.cursor()
@@ -22609,6 +22624,12 @@ def query(db_path, query, params=()):
 # conn.close()
 
 # data = _.query("example.db", "SELECT * FROM users WHERE age > ?", (27,))
+
+##################################################
+def sortFo(file_paths):
+    return sorted(file_paths, key=lambda path: (path.count('/'), path.count(os.sep), path.count('/' + os.sep)))
+def sortFo2(file_paths):
+    return sorted(file_paths, key=lambda path: tuple(int(s) if s.isdigit() else s for s in path.split(os.sep)))
 
 ##################################################
 fields = Fields()

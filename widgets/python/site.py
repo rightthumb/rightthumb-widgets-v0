@@ -304,8 +304,9 @@ def process(path,end='',ft=None):
 				path+=os.sep
 			
 			mkdir=f'{ssh} -f {u}@{s} "/bin/python3 /opt/rightthumb-widgets-v0/widgets/python/mkdir.py -folder {rfo}"'+tail()
+
 			if _.switches.isActive('Print'):
-				_.pr(password_filter(mkdir))
+				_.pr(_.password_filter(mkdir))
 			try:
 				os.system( mkdir )
 			except Exception as e:

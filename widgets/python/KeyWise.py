@@ -654,15 +654,18 @@ class HOTKEYS:
         # _.pr(line=1,c='yellow')
         # _.pr()
         # sys.exit()
-
-        if hasattr(key, 'vk') and 32 <= key.vk <= 126:
-            char = chr(key.vk)
-        else:
-            try:
-                char = str(key.char)
-            except Exception as e:
-                # frameinfo = getframeinfo(currentframe()); _.pr( _.addComma(frameinfo.lineno),'\t', e,c='red');
-                char = str(key).replace("'",'')
+        try:
+            if hasattr(key, 'vk') and 32 <= key.vk <= 126:
+                char = chr(key.vk)
+            else:
+                try:
+                    char = str(key.char)
+                except Exception as e:
+                    # frameinfo = getframeinfo(currentframe()); _.pr( _.addComma(frameinfo.lineno),'\t', e,c='red');
+                    char = str(key).replace("'",'')
+        except:
+            _.pr('Error:',"hasattr(key, 'vk')",c='red')
+            char=''
         key_set.add(char)
         if print_chars:
             _.pr('____________')
