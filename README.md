@@ -7,7 +7,7 @@ ___
 ___
 
 ## Platform Support
-### The Framework is designed to work on the following platforms:
+### The Framework is designed to work on the following:
 - PowerShell
 - Windows
 - Linux
