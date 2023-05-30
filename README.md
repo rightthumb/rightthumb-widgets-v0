@@ -8,13 +8,12 @@ ___
 
 ## Platform Support
 ### The Framework is designed to work on the following:
-- PowerShell
 - Windows
 - Linux
 - macOS
 - iOS
 - Android
-- etc
+- Other: PowerShell, etc
 
 ## Hype
 - Generate PHP code
