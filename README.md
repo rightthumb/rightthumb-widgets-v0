@@ -13,7 +13,7 @@ ___
 - macOS
 - iOS
 - Android
-- Other: PowerShell, etc
+- Other:  PowerShell, etc
 
 ## Hype
 - Generate PHP code
