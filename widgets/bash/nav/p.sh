@@ -37,4 +37,7 @@ else
     $p py-finder -percentage  + $subject
 fi
 
+if [ -f "$h/vars/terminal/$Session_ID.sh" ]; then
+    source "$h/vars/terminal/$Session_ID.sh"
+fi
 

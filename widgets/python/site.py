@@ -422,7 +422,7 @@ def URL():
 							test='index.php index.htm index.html'.split(' ')
 							for t in test:
 								yt=str(y+os.sep+t).replace(os.sep+os.sep,os.sep)
-								if os.path.isfile(ty):
+								if os.path.isfile(yt):
 									y=yt
 						y=y.replace(os.sep+os.sep,os.sep)
 						if os.path.isfile(y):

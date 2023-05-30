@@ -14747,7 +14747,7 @@ def unFormatSize(size):
 	result = round(size * factor,0)
 	# print_( size, factor )
 	# result = size * factor
-	return result
+	return int(result)
 
 def unFormatSize2(size):
 	size = str(size)
@@ -21645,8 +21645,8 @@ def pyApp(path):
 		else:
 			return file[:-3]
 
-def fromYML(text): return __.imp('yaml').safe_load(text.replace('\t','    '))
-def toYML(dic): return __.imp('yaml').dump( dic, sort_keys=False )
+def fromYML(text): return __.fromYML(text)
+def toYML(dic,path=None): return __.toYML(dic,path)
 
 def getYML(path,here=False,h=None,auto=True,a=None):
 	if not a is None: auto=a

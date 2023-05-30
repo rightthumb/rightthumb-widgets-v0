@@ -381,26 +381,74 @@ def file( p ):
 	return f
 
 
-def yamlSimp(yaml_string):
-	table = {}
-	lines = yaml_string.split('\n')
-	for line in lines:
-		if ':' in line:
-			key, value = line.split(':', 1)
-			table[key.strip()] = value.strip()
-		return table
+def fromYML(text):
+	if os.path.isfile(text):
+		text=getText(text)
+	elif not '\n' in text and text.count(os.sep):
+		return {}
+	try:
+		import yaml
+		return yaml.safe_load(text.replace('\t','    '))
+	except Exception as e:
+		table = {}
+		lines = text.split('\n')
+		for line in lines:
+			if ':' in line:
+				key, value = line.split(':', 1)
+				table[key.strip()] = value.strip()
+			return table
+def toYML(dic,path=None):
+	text =  imp('yaml').dump( dic, sort_keys=False )
+	if path is None:
+		return text
+	else:
+		mkdir(path,isFile=True)
+		f = open(path,'w')
+		f.write(str(text))
+		f.close()
+
+getYML=fromYML
+saveYML=toYML
+
+def yamlSimp(text):
+	return fromYML(text)
+
+
 def get_first_char(filename):
 	 with open(filename, 'r') as file: first_char = file.read(1)
 	 return first_char
 
-def get_file_content(filename):
+def getText(filename):
 	 with open(filename, 'r') as file: content = file.read()
 	 return content
+def saveText(text, path):
+	mkdir(path,isFile=True)
+	try:
+		with open(path, 'w') as file:
+			file.write(text)
+	except IOError:
+		print("An error occurred while saving the text to the file.")
+
+
+get_file_content=saveText
+
+
+def mkdir(path,isFile=False,pop=False):
+	if pop: isFile=True
+	if isFile:
+		os=imp('os.path.dirname')
+		path = os.path.dirname(path)
+	os=imp('os.path.abspath')
+	os=imp('os.path.exists')
+	absolute_path = os.path.abspath(path)
+	if not os.path.exists(absolute_path):
+		os.makedirs(absolute_path)
+	return absolute_path
 
 def getTable( file ):
 	# os = imp('os')
 	if not get_first_char(file) == '{' and  not get_first_char(file) == '[':
-		return yamlSimp(get_file_content(file))
+		return yamlSimp(saveText(file))
 	json = imp('simplejson')
 
 	if os.path.isfile(file):
@@ -752,11 +800,12 @@ def url( URL, data={}, d=None, raw=False, r=None,txt=None,text=None,t=None, dic=
 page=url
 
 print_=print
-def getText( theFile, raw=False, clean=False,  e=0, c=0 ):
+def getText2( theFile, raw=False, clean=False,  e=0, c=0 ):
 	try: _str;
 	except Exception as e:
 		try: import _rightThumb._string as _str;
 		except Exception as e: pass;
+	os=imp('os.path.getmtime')
 	if os.path.isfile(theFile): vv.opened_file_me[theFile] = os.path.getmtime( theFile );
 	# HD.chmod(theFile)
 	lines = None

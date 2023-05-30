@@ -291,7 +291,9 @@ if exist %1\%2.py (
 :run_app
 
 %py% "%python%\%1.py" %*
-
+if exist %myVars%\terminal\%Session_ID%.bat (
+    call %myVars%\terminal\%Session_ID%.bat
+)
     goto:EOF
 
 

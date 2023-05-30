@@ -631,6 +631,17 @@ webapp = techFolder +os.sep+ os.sep.join( 'widgets/servers/web/crud'.split('/') 
 library = techFolder + slash+'widgets'+slash+'library'
 myDatabases = myHome + slash+'databases'
 myVars = myHome + slash+'vars'
+terminal = myHome + slash+'vars'+slash+'terminal'+slash
+try:
+	terminal_variables = terminal+os.getenv('Session_ID')
+	# terminal_variables = terminal+os.environ['Session_ID']
+	tvy=terminal_variables+'.yml'
+	# print('has Session_ID')
+except:
+	pass
+	# print('no Session_ID')
+	
+
 myNotes = myHome + slash+'notes'
 umlJson = myHome + slash+'json-uml-tree'+slash+'data.js'
 umlHtml = myHome + slash+'json-uml-tree'+slash+'index.htm'
@@ -692,6 +703,38 @@ safeChar = printable
 cryptoKeyPad = '{D0A25D57-37B9-4DCA-A290-F7F5D2B4E869-ED89EEC8-FC42-4E36-B57A-BD2756F58071-1358EA50-2BED-4533-99C7-4D90BB450D7F-40A9A7E8-6AF5-4C32-9062-F975CDF12209}'
 myLogs = myHome + slash+'logs'
 myAppLogs = myHome + slash+'logs'+slash+'apps'
+
+def tv(var=None,val='a80cc434'):
+	global terminal_variables
+	global tvy
+	vs = __.getYML(tvy)
+	if var is None:
+		return vs
+	elif val=='a80cc434':
+		if var in vs:
+			return vs[var]
+		else:
+			return ''
+	else:
+		if val is None:
+			if var in vs:
+				del vs[var]
+		else:
+			vs[var]=str(val)
+		__.saveYML(vs,tvy)
+		script=[]
+		if __.isWin:
+			tvx=terminal_variables+'.bat'
+			for v in vs: script.append('SET '+v+'='+vs[v])
+		else:
+			# for v in vs: os.environ[v]=vs[v]
+			import subprocess
+			tvx=terminal_variables+'.sh'
+			script.append('#!/bin/bash')
+			for v in vs: script.append('export '+v+'="'+vs[v]+'"')
+		__.saveText('\n'.join(script), tvx )
+		if not __.isWin: os.chmod( tvx, 0o777 )
+
 def cloud_path( path ):
 	global techDrive
 	global slash
@@ -836,6 +879,7 @@ def dir_structure():
 	global updates
 	global myHome
 	global py
+	global terminal
 	dir_check_create( py )
 	home_created = dir_check_create( myHome )
 	dir_check_create( myIndexes )
@@ -844,6 +888,7 @@ def dir_structure():
 	dir_check_create( myBackup )
 	dir_check_create( myDatabases )
 	dir_check_create( myVars )
+	dir_check_create( terminal )
 	dir_check_create( myNotes )
 	dir_check_create( myLogs )
 	dir_check_create( myConfig )
@@ -939,7 +984,8 @@ def dir_structure():
 
 	if home_created:
 		create_default_profile()
-def createDestinationFolders( folder, o=None, isFile=False, p=False, f=None ):
+def createDestinationFolders( folder, o=None, isFile=False, p=False, f=None, pop=False ):
+	if pop: isFile=True
 	if not f is None: isFile=f
 	_pr=p
 	folder=path_fix(folder)

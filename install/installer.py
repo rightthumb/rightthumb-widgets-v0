@@ -2685,6 +2685,11 @@ class virtualFiles:
 
         if path == '.bashrc-auto':
             data = """
+
+if [ -z "$Session_ID" ]; then
+  export Session_ID=$(date +%s)
+fi
+
 ################# ################# #################
 alias s.exp.gen="$widgets/widgets/python/expect-gen.py -sudo -p"
 alias exp.gen="$widgets/widgets/python/expect-gen.py -p "
@@ -2761,7 +2766,9 @@ alias vps.mongo.="ssh -L 2701:localhost:27017 -C -N -l scott hoth.m-eta.app"
             return self.file( path, data, { 'status': 'virtual' } )
         if path == '.bashrc-all':
             data = """
-
+if [ -z "$Session_ID" ]; then
+  export Session_ID=$(date +%s)
+fi
 force_color_prompt=yes
 
 if [ -n "$force_color_prompt" ]; then
@@ -2794,8 +2801,9 @@ unset color_prompt force_color_prompt
             return self.file( path, data, { 'status': 'virtual' } )
         if path == '.bashrc.mini':
             data = """
-
-
+if [ -z "$Session_ID" ]; then
+  export Session_ID=$(date +%s)
+fi
 ################# ################# ################# #################
 [ ! -d $HOME/.rt ] && mkdir $HOME/.rt
 [ ! -d $HOME/.rt/profile ] && mkdir $HOME/.rt/profile
@@ -2907,7 +2915,9 @@ export HISTFILESIZE=100000
 
         if path == '.bashrc.full':
             data = """
-
+if [ -z "$Session_ID" ]; then
+  export Session_ID=$(date +%s)
+fi
 chmod -R 777 $HOME/.rt/
 
 ################# ################# ################# #################
@@ -2927,7 +2937,11 @@ alias s.p="sudo $widgets/widgets/bash/nav/p.sh"
 alias s.pp="sudo $widgets/widgets/bash/nav/pp.sh"
 alias p.sudo="sudo $widgets/widgets/bash/nav/p.sh"
 alias pp.sudo="sudo $widgets/widgets/bash/nav/pp.sh"
-alias p="$widgets/widgets/bash/nav/p.sh"
+# alias p="$widgets/widgets/bash/nav/p.sh"
+p() {
+    source "$widgets/widgets/bash/nav/p.sh"
+}
+
 alias pp="$widgets/widgets/bash/nav/pp.sh"
 alias b="$widgets/widgets/bash/nav/b.sh"
 alias bb="$widgets/widgets/bash/nav/bb.sh"
@@ -3656,7 +3670,7 @@ alias 2ico="$widgets/widgets/bash/tools/2icon.sh ";
 
 alias crypt="$ww/bash/crypt.sh"
 
-export Session_ID=$(date +%s)
+# export Session_ID=$(date +%s)
 
 if test -f "/mnt/c/Users/Scott/.rt/profile/daily/.seven.sh"; then
     # sudo service cron start > /dev/null 2>&1 & 

@@ -12,7 +12,7 @@
 
 
 ##################################################
-import os, sys, time
+import sys, time
 ##################################################
 import _rightThumb._construct as __
 appDBA=__.clearFocus(__name__,__file__);__.appReg=appDBA;
@@ -32,13 +32,10 @@ _str = __.imp('_rightThumb._string')
 def sw():
     pass
     #b)--> examples
+    # _.switches.register( 'Input', '-i' )
     # _.switches.register( 'URL', '-u,-url,-urls', 'https://etc.ac/', isData='raw' )
     #e)--> examples
-    _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name', description='Files', isRequired=False )
-    _.switches.register( 'Folders', '-fo,-fos,-folder,-folders' )
-    _.switches.register( 'Recursive', '-r,-recursive' )
-    _.switches.register( 'JSON', '-json' )
-    _.switches.register( 'Dump', '-dmp' )
+    # _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name,data,clean', description='Files', isRequired=False )
 
 # __.setting('require-list',['Files,Plus','File,Has']) # todo
 # __.setting('require-list',['Pipe','Files'])
@@ -152,174 +149,19 @@ _.l.sw.register( triggers, sw )
 ########################################################################################
 #n)--> start
 
-import pylnk3
-
-def file(path):
-    directory, filename = os.path.split(path)
-    name, extension = os.path.splitext(filename)
-    return name
-
-
-
-
-def info(path):
-    lnk_info = {}
-    with open(path, "rb") as f:
-        lnk = pylnk3.parse(f)
-
-        lnk_info["name"] = file(path)
-        try:
-            lnk_info["access_time"] = lnk.access_time
-        except AttributeError:
-            lnk_info["access_time"] = None
-        try:
-            lnk_info["arguments"] = lnk.arguments
-        except AttributeError:
-            lnk_info["arguments"] = None
-        try:
-            lnk_info["creation_time"] = lnk.creation_time
-        except AttributeError:
-            lnk_info["creation_time"] = None
-        try:
-            lnk_info["description"] = lnk.description
-        except AttributeError:
-            lnk_info["description"] = None
-        try:
-            lnk_info["extra_data"] = lnk.extra_data
-        except AttributeError:
-            lnk_info["extra_data"] = None
-        try:
-            lnk_info["file"] = lnk.file
-        except AttributeError:
-            lnk_info["file"] = None
-        try:
-            lnk_info["file_flags"] = lnk.file_flags
-        except AttributeError:
-            lnk_info["file_flags"] = None
-        try:
-            lnk_info["file_size"] = lnk.file_size
-        except AttributeError:
-            lnk_info["file_size"] = None
-        try:
-            lnk_info["hot_key"] = lnk.hot_key
-        except AttributeError:
-            lnk_info["hot_key"] = None
-        try:
-            lnk_info["icon"] = lnk.icon
-        except AttributeError:
-            lnk_info["icon"] = None
-        try:
-            lnk_info["icon_index"] = lnk.icon_index
-        except AttributeError:
-            lnk_info["icon_index"] = None
-        try:
-            lnk_info["link_flags"] = lnk.link_flags
-        except AttributeError:
-            lnk_info["link_flags"] = None
-        try:
-            lnk_info["link_info"] = lnk.link_info
-        except AttributeError:
-            lnk_info["link_info"] = None
-        try:
-            lnk_info["modification_time"] = lnk.modification_time
-        except AttributeError:
-            lnk_info["modification_time"] = None
-        try:
-            lnk_info["path"] = lnk.path
-        except AttributeError:
-            lnk_info["path"] = None
-        try:
-            lnk_info["relative_path"] = lnk.relative_path
-        except AttributeError:
-            lnk_info["relative_path"] = None
-        try:
-            lnk_info["shell_item_id_list"] = lnk.shell_item_id_list
-        except AttributeError:
-            lnk_info["shell_item_id_list"] = None
-        try:
-            lnk_info["show_command"] = lnk.show_command
-        except AttributeError:
-            lnk_info["show_command"] = None
-        try:
-            lnk_info["specify_local_location"] = lnk.specify_local_location
-        except AttributeError:
-            lnk_info["specify_local_location"] = None
-        try:
-            lnk_info["specify_remote_location"] = lnk.specify_remote_location
-        except AttributeError:
-            lnk_info["specify_remote_location"] = None
-        try:
-            lnk_info["window_mode"] = lnk.window_mode
-        except AttributeError:
-            lnk_info["window_mode"] = None
-        try:
-            lnk_info["work_dir"] = lnk.work_dir
-        except AttributeError:
-            lnk_info["work_dir"] = None
-        try:
-            lnk_info["working_dir"] = lnk.work_dir
-        except AttributeError:
-            lnk_info["working_dir"] = None
-        try:
-            lnk_info["write"] = lnk.work_dir
-        except AttributeError:
-            lnk_info["write"] = None
-    if _.switches.isActive('Dump'):
-        _.pr(_.toYML(lnk_info))
-
-    return lnk_info
-
-
-
-
-
-
-def process(path):
-    if os.path.isfile(path):
-        global records
-        try:
-            rec = info(path)
-            records.append(rec)
-        except: pass
-
-
-
 def action():
-    global records
-    records=[]
-    paths=[]
+    # print(os.environ['test01'])
+    os.environ['test01']='123'
+    # print(os.environ['test01'])
 
-    if not _.switches.isActive('Folders') and not _.isData():
-        _.switches.fieldSet( 'Folders', 'active', True )
-        _.switches.fieldSet( 'Folders', 'value', os.getcwd() )
-        _.switches.fieldSet( 'Folders', 'values', [os.getcwd()] )
+    # for x in dir(_v):
+    #     y=eval('_v.'+x)
+    #     if type(y)==str:
+    #         print(x,y)
 
-    if _.switches.isActive('Folders'):
-        paths=_.switches.values('Folders')
-    else:
-        paths=_.isData()
+    _v.tv('sample01','123')
 
-    for path in paths:
-        if os.path.isfile(path):
-            process(path)
-        elif os.path.isdir(path):
-            _.fo(path,script=process,r=_.switches.isActive('Recursive'))
-    pass
-    if _.switches.isActive('JSON'):
-        return None
-
-    if len(records) == 0:
-        _.e('No Records','No records were found')
-    elif len(records) == 1:
-        print(records[0]['path'])
-        # _.pr( _.toYML(records[0]) )
-    else:
-        _.pt(records,'name,path')
-        _.pr('',len(records),c='yellow')
-
-
-_.switches.fieldSet( 'Long', 'active', True )
-
+import os
 
 ##################################################
 #b)--> examples
