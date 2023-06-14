@@ -1,4 +1,40 @@
-from __future__ import (absolute_import, division, print_function, unicode_literals)
+#!/usr/bin/python3
+
+
+##################################################
+'''
+ def URL
+ class ProxyManager
+     def __init__
+     def start_server
+     def start_client
+     def client
+     def server
+ class FrontEnd(object)
+     def __init__
+     def is_cookie_expired
+     def extractDomain
+     def preURL
+     def postURL
+     def url
+     def getCookies
+     def initialize
+     def select
+     def setField
+     def login
+     def loginIndividually
+     def open
+     def jqueryInject
+     def inject
+     def injectReturn
+     def injectFile
+     def close
+     def wait
+     def code
+'''
+##################################################
+
+
 
 # ## {R2D2919B742E} ##
 # ###########################################################################
@@ -11,15 +47,6 @@ from __future__ import (absolute_import, division, print_function, unicode_liter
 # ## {C3P0D40fAe8B} ##
 
 
-import copy
-import random
-import socket
-import sys
-import time
-import unicodedata
-import urllib
-
-from subprocess import call
 
 
 # from selenium import webdriver
@@ -27,10 +54,7 @@ from subprocess import call
 # from selenium.webdriver.common.keys import Keys
 
 
-from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.support.ui import Select
-from selenium.webdriver.support.ui import WebDriverWait
+
 
 # from selenium.webdriver.chrome.options import Options
 ##################################################
@@ -59,6 +83,27 @@ import _rightThumb._encryptString as _blowfish
 	# _blowfish.defaultKey()
 # import _rightThumb._md5 as _md5
 ##################################################
+# from __future__ import (absolute_import, division, print_function, unicode_literals)
+import copy
+import random
+import socket
+import unicodedata
+import urllib
+from subprocess import call
+##################################################
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.ui import Select
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.common.by import By
+# from selenium.common.exceptions import StaleElementReferenceException
+
+if not __.isWin:
+	from selenium.webdriver.chrome.service import Service
+	from webdriver_manager.chrome import ChromeDriverManager
+	from selenium.webdriver.chrome.options import Options
+##################################################
+
 
 def appSwitches():
 	pass
@@ -153,6 +198,10 @@ if __name__ == '__main__':
 # from browswermobproxy import Server
 # from browsermobproxy import Server
 
+def URL(url,data={}):
+	return str(__.imp('requests.post').post(url, data=data).content,'iso-8859-1').replace('\\n','\n')
+	return __.imp('requests.get').get(url).content.decode("utf-8").replace('\\n','\n')
+
 
 class ProxyManager:
 
@@ -189,7 +238,7 @@ class ProxyManager:
 class FrontEnd(object):
 
 	def __init__( self ):
-		self.jqueryFile = _v.myAppsJs + _v.slash+'jquery-1.11.3.js'
+		self.jqueryFile = _v.myAppsJs + os.sep+'jquery-1.11.3.js'
 		# self.jquery = jquery.theCode()
 		self.browser = None
 		self.download_default = 'text/plain'
@@ -201,6 +250,8 @@ class FrontEnd(object):
 		
 		self.active = False
 
+	def select( self, selector ): return self.selector(selector)
+	def selector( self, selector ): return self.browser.find_elements(By.CSS_SELECTOR, selector)
 	def is_cookie_expired( self, epoch, isCookie=False ):
 		if isCookie:
 			if epoch > time.time():
@@ -212,7 +263,7 @@ class FrontEnd(object):
 
 	def extractDomain( self, url ):
 		foundDomain = False
-		for x in url.split(_v.slash):
+		for x in url.split(os.sep):
 			return x
 		return None
 
@@ -265,7 +316,11 @@ class FrontEnd(object):
 
 
 	def url( self, url ):
+		self.initialize()
 		self.preURL( url )
+		# print('_______________________')
+		# for x in dir(self.browser): print(x)
+		# print('_______________________')
 		self.browser.get( url )
 		self.active = True
 		self.postURL( url )
@@ -282,101 +337,24 @@ class FrontEnd(object):
 
 	def initialize( self ):
 		if self.browser is None:
-			if _.isWin:
-				import time
-				from selenium import webdriver
-				# from selenium.webdriver.chrome.options import Options
-				# from selenium.webdriver.chrome.service import Service
-				# from selenium.webdriver.common.by import By
-				# from selenium.webdriver.common.keys import Keys
-				# from webdriver_manager.chrome import ChromeDriverManager
-
-				# options = Options()
-				# # options.add_argument('--headless')
-				# # options.add_argument('--no-sandbox')
-				# options.add_argument('--disable-dev-shm-usage')
-				# self.browser = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
-				
+			if __.isWin:
 				self.browser = webdriver.Chrome(executable_path='C:\\Users\\Scott\\.rt\\profile\\exe\\chromedriver.exe')
-
-				# options = webdriver.ChromeOptions()
-				# # import chromedriver_binary
-				# # self.browser = webdriver.Chrome()
-				# # options.binary_location = "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe"
-				# # options.binary_location = "D:\\techApps\\GoogleChromePortable\\GoogleChromePortable.exe"
-				# # options.binary_location = "D:\\techApps\\chrome-win\\chrome.exe"
-				# # _.pr( _v.chromePortable )
-				# # 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36'
-				# # options.add_argument('--user-agent="Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)"')
-				# # options.add_argument('--user-agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36"')
-
-				# try:
-				# 	__.har
-				# except Exception as e:
-				# 	__.har = False
-				# if __.har:
-
-				# 	proxy = ProxyManager()
-				# 	server = proxy.start_server()
-				# 	self.client = proxy.start_client()
-				# 	self.client.new_har( "google.com" )
-				# 	_.pr( self.client.proxy )
-				# 	# options.add_argument("--proxy-server={}".format(self.client.proxy))
-
-				# options.binary_location = _v.chromePortable
-				# self.browser = webdriver.Chrome( chrome_options=options, executable_path=_v.chromedriver )
+			elif not __.isWin:
+				chrome_options = Options()
+				chrome_options.add_argument("--headless")  # Ensure GUI is off
+				chrome_options.add_argument("--no-sandbox")
+				chrome_options.add_argument("--disable-dev-shm-usage")
+				service = Service(ChromeDriverManager().install())
+				self.browser = webdriver.Chrome(service=service, options=chrome_options)
 
 
 
-				# if False and not __.har:
-				# 	self.close()
-				# # self.browser = webdriver.Chrome(chrome_options=options, executable_path="D:\\tech\\programs\\exe\\ChromeDriver\\80.0.3987.16\\chromedriver.exe")
-				# # self.browser = webdriver.Chrome( _v.chromedriver )
-				# # self.url('http://www.google.com')
-				# # _.pr( 'DONE' )
-
-
-
-				# # options = webdriver.ChromeOptions()
-				# # # options.add_argument('--user-agent="Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)"')
-				# # # prefs = { 'download.default_directory':'C:\Users\Scott\Downloads' }
-				# # prefs = {}
-				# # prefs['download.default_directory'] = 'C:\\Users\\Scott\\Downloads'
-				# # prefs['download.prompt_for_download'] = False
-				# # prefs['browser.helperApps.neverAsk.saveToDisk'] = self.download_default
-				# # options.add_experimental_option("prefs", prefs)
-				# if False and not __.har:
-				# 	self.browser = webdriver.Chrome( _v.chromedriver, chrome_options=options )
-			elif not _.isWin:
-				import time
-				from selenium import webdriver
-				from selenium.webdriver.chrome.options import Options
-				from selenium.webdriver.chrome.service import Service
-				from selenium.webdriver.common.by import By
-				from selenium.webdriver.common.keys import Keys
-				from webdriver_manager.chrome import ChromeDriverManager
-
-				options = Options()
-				# options.add_argument('--headless')
-				# options.add_argument('--no-sandbox')
-				options.add_argument('--disable-dev-shm-usage')
-				self.browser = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
-				# self.browser.get('http://www.google.com')
-				# search = self.browser.find_element(by=By.NAME, value="q")
-				# search.send_keys("Hey, Tecadmin")
-				# search.send_keys(Keys.RETURN)
-
-				# time.sleep(5)
-				# self.browser.close()
-
-
-
-	def select( self, selector ):
-		if not '.' in selector and not '#' in selector and not '[' in selector and not '=' in selector:
-			elem = self.browser.find_element_by_name( selector )
-		else:
-			elem = self.browser.find_element_by_css_selector( selector )
-		return elem
+	# def select( self, selector ):
+	# 	if not '.' in selector and not '#' in selector and not '[' in selector and not '=' in selector:
+	# 		elem = self.browser.find_element_by_name( selector )
+	# 	else:
+	# 		elem = self.browser.find_element_by_css_selector( selector )
+	# 	return elem
 	def setField( self, data, selector, enter=False, click=False ):
 		elem = self.select( selector )
 		elem.send_keys( data )
@@ -482,9 +460,18 @@ class FrontEnd(object):
 
 		# time.sleep( 2 )
 
-	def jqueryInject( self ):
-		# self.browser.execute_script( self.jquery )
-		self.injectFile( self.jqueryFile )
+	def js( self, path=None ):
+		if path is None:
+			return self.jq()
+		elif path.startwith('https://') or path.startwith('http://'):
+			return self.injectURL( path )
+		elif os.path.isfile(path):
+			return self.injectFile( path )
+		else:
+			return self.injectReturn( path )
+
+	def jq( self ): return self.jqueryInject()
+	def jqueryInject( self ): return self.injectURL( 'https://rightthumb.com/apps/selenium/jquery-1.11.3.js' )
 
 	def inject( self, code ):
 		newCode = ''
@@ -501,11 +488,14 @@ class FrontEnd(object):
 		else:
 			return self.browser.execute_script( code )
 
+	def injectURL( self, url ):
+		code = URL(url)
+		return self.browser.execute_script(code)
 	def injectFile( self, file ):
 		with open( file, 'r' ) as item: 
 			code = item.read() 
-			self.browser.execute_script(code)
-		time.sleep( 2 )
+			return self.browser.execute_script(code)
+		# time.sleep( 2 )
 
 	# def click( self, selector ):
 	#   if not '.' in selector and not '#' in selector and not '[' in selector and not '=' in selector:

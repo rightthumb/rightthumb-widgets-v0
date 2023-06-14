@@ -556,8 +556,9 @@ ti={
 }
 
 
-
-
+def clean_text():
+	lines = _paste.imp.paste().replace('\r','').split('\n')
+	_copy.imp.copy(' '.join(lines))
 
 def auto_scrape():
 
@@ -657,11 +658,13 @@ _.v.local=[
 				'ipsum',
 				'lorem',
 				'secure',
+				'clean text',
 		]
 
 dic = {
 			'sally': 'ai()',
 			'auto scrape': 'auto_scrape()',
+			'clean text': 'clean_text()',
 
 			'secure': 'randomize_text()',
 

@@ -1696,6 +1696,7 @@ def isDate( theDate=None, record={}, tz=None, q=True, f=None,w=None,what=None ):
 		if f=='ago-txt': return _2dates(epoch)
 		if f=='friendly': return friendlyDate( epoch );
 		if f=='friendly': return friendlyDate( epoch );
+		if f=='friendly3': return friendlyDate3( epoch );
 		if f=='iso': return friendlyDate( epoch ).replace( ' ', 'T' ) + local_tz;
 		if f=='woy': return _dir.getWeekAndYear( epoch );
 		if f=='month': return _dir.getMonthFromEpoch( epoch );
@@ -1867,7 +1868,7 @@ def isDate( theDate=None, record={}, tz=None, q=True, f=None,w=None,what=None ):
 	if type(epoch) == str:
 		epoch = autoDate(epoch.replace('z',''))
 
-	todo='ago ago-dic ago-txt epoch ordinal text-date text-time text-datetime sdate strip stript stripa date time fdate fdatea cmd month year woy woy2 dow dow2 days tz iso fo'
+	todo='ago ago-dic ago-txt epoch ordinal text-date text-time text-datetime sdate strip stript stripa date time fdate fdatea cmd month year woy woy2 dow dow2 days tz iso fo friendly friendly3'
 
 	for k in todo.split(' '):
 		record[k]=isDate(epoch,f=k)
@@ -2907,6 +2908,10 @@ def saveCryptTable( rows, theFile, db=False, bank=False, index=False, temp=False
 	return file0
 
 
+
+def head( path ):
+	file = open( path, 'rb' ).read(32)
+	return " ".join(['{:02X}'.format(byte) for byte in file])
 
 def hex2ascii( hx ):
 	if type(hx) == str:
@@ -8739,6 +8744,12 @@ def friendlyDate2( theDate ):
 		# if fd.startswith('21-'):
 		#   fd = fd[3:]
 	return fd
+
+def friendlyDate3( theDate ):
+	theDate = autoDate(theDate)
+	return str(datetime.datetime.fromtimestamp(float(theDate)).strftime('%Y-%m-%d %H:%M:%S'))
+	return str(time.strftime('%m/%d/%Y %H:%M:%S',  time.gmtime(theDate)))
+
 
 def friendlyDate( theDate ):
 	import _rightThumb._date as _date

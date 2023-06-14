@@ -1,5 +1,40 @@
 #!/usr/bin/python3
 
+##################################################
+'''
+epyi toolsScrapeFrontEnd
+
+ def URL
+ class ProxyManager
+     def __init__
+     def start_server
+     def start_client
+     def client
+     def server
+ class FrontEnd(object)
+     def __init__
+     def is_cookie_expired
+     def extractDomain
+     def preURL
+     def postURL
+     def url
+     def getCookies
+     def initialize
+     def select
+     def setField
+     def login
+     def loginIndividually
+     def open
+     def jqueryInject
+     def inject
+     def injectReturn
+     def injectFile
+     def close
+     def wait
+     def code
+'''
+##################################################
+
 # ## {R2D2919B742E} ##
 # ###########################################################################
 # What if magic existed?
@@ -10,9 +45,7 @@
 # ###########################################################################
 # ## {C3P0D40fAe8B} ##
 
-from selenium import webdriver
-from selenium.common.exceptions import StaleElementReferenceException
-from selenium.webdriver.common.keys import Keys
+
 
 # import os
 import sys
@@ -160,6 +193,18 @@ import _rightThumb._encryptString as _blowfish
 
 
 def action():
+	project = _browser.imp.FrontEnd()
+	# project.initialize()
+	project.url('https://www.google.com/search?q=computer')
+	for i,result in enumerate(project.select('h3')):
+		text = result.text.strip()
+		if text: print(i,text)
+	project.close()
+	
+	
+
+	
+
 	# string = 'scott'
 	# en = _blowfish.encrypt( string )
 	# _.pr( en )
@@ -168,31 +213,31 @@ def action():
 
 	# sys.exit()
 	
-	who = 'mom'
-	if who == 'dad':
-		username = 's.rephsr@gmail.com'
-		password = 'OntNu4Y13rXWB8UMWROHHw=='
-	elif who == 'mom':
-		username = 'aireph51@gmail.com'
-		password = 'TWaNVzohgkGth877srTXjw=='
-	else:
-		username = 'scott.reph@gmail.com'
-		password = 'YYHeOQgMCOk9e6ETwJzd+Q=='
+	# who = 'mom'
+	# if who == 'dad':
+	# 	username = 's.rephsr@gmail.com'
+	# 	password = 'OntNu4Y13rXWB8UMWROHHw=='
+	# elif who == 'mom':
+	# 	username = 'aireph51@gmail.com'
+	# 	password = 'TWaNVzohgkGth877srTXjw=='
+	# else:
+	# 	username = 'scott.reph@gmail.com'
+	# 	password = 'YYHeOQgMCOk9e6ETwJzd+Q=='
 
-	_browser.imp.project.loginIndividually( 'https://play.google.com/apps', username, password, '#identifierId', '[type=password]', click1='span.RveJvd' )
+	# _browser.imp.project.loginIndividually( 'https://play.google.com/apps', username, password, '#identifierId', '[type=password]', login_button='span.RveJvd' )
 
 
-	# _browser.imp.project.open( 'http://www.pillerbeauty.com/blank.htm' )
-	code = _.getText( _v.myAppsJs + _v.slash+'test2.js' )
+	# # _browser.imp.project.open( 'http://www.pillerbeauty.com/blank.htm' )
+	# code = _.getText( _v.myAppsJs + _v.slash+'test2.js' )
+	# # _browser.imp.project.inject( code )
+	# _browser.imp.project.jqueryInject()
 	# _browser.imp.project.inject( code )
-	_browser.imp.project.jqueryInject()
-	_browser.imp.project.inject( code )
-	# _browser.imp.project.inject( 'window.scrollEnd();' )
-	# pause = input( 'pause' )
-	data = _browser.imp.project.injectReturn( 'window.acquirePayload()' )
-	for row in data:
-		_.pr( row['name'] )
-	_browser.imp.project.close()
+	# # _browser.imp.project.inject( 'window.scrollEnd();' )
+	# # pause = input( 'pause' )
+	# data = _browser.imp.project.injectReturn( 'window.acquirePayload()' )
+	# for row in data:
+		# _.pr( row['name'] )
+	
 	
 
 

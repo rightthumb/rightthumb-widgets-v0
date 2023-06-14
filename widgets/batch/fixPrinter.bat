@@ -10,6 +10,19 @@ rem    - Scott Taylor Reph, RightThumb.com
 rem ###########################################################################
 rem ## {C3P0D40fAe8B} ##
 
+
+goto check_Permissions
+
+:check_Permissions    
+    net session >nul 2>&1
+    if %errorLevel% == 0 (
+        rem echo Success: Administrative permissions confirmed.
+    ) else (
+        echo Failure: Current permissions inadequate.
+        goto:eof
+    )
+    
+
 rem title Fix Printer
 echo Fixing Printer
 echo ------------------
