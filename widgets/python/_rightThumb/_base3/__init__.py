@@ -11176,8 +11176,7 @@ class Switches:
 						break
 					else:
 						if not name in __.switch_raw:
-							if switchInput[i] == ':':
-								switchInput[i] = switchInput[i].replace(':','_;192B;_')
+							if switchInput[i] == ':': switchInput[i] = switchInput[i].replace(':','_;192B;_')
 							if switchInput[i] == ',':
 								switchInput[i] = switchInput[i].replace(',','_;192A;_')
 						result += str(switchInput[i]) + ','
@@ -22712,6 +22711,8 @@ imp=regImp
 ago=timeAgo
 toBytes=to_bytes
 
+##################################################
+# __.switch_raw
 ##################################################
 # class regImp:
 # positiveResultsCode

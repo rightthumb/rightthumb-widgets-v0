@@ -3748,6 +3748,8 @@ alias exref="$p imdb -xref -ent"
 alias text="$p vps-srv-7facG-twilio-send"
 alias textme="$p vps-srv-7facG-twilio-send -to 8136901260 -body "
 
+alias foSize='python3 $ww/python/folderSizeTotals.py'
+
 # a3bc42ec51e9
 
             """

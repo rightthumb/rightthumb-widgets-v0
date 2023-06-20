@@ -12,7 +12,7 @@
 
 
 ##################################################
-import sys, time
+import os, sys, time
 ##################################################
 import _rightThumb._construct as __
 appDBA=__.clearFocus(__name__,__file__);__.appReg=appDBA;
@@ -652,7 +652,105 @@ def randomize_text():
 # sys.exit()
 
 ##################################################
+# _var='''
+# _v.stmp={home}/.rt/profile/temp
+# _v.tempFile={home}/.rt/profile/temp/{8E3F33E4-86AB-AB1E-6219-801DE111D9AF}
+# _v.terminal={home}/.rt/profile/vars/terminal/
+# _v.terminal_variables={home}/.rt/profile/vars/terminal/16910
+# _v.text_temp={home}/.rt/profile/temp/_temp.txt
+# _v.thisHost={home}/.rt/profile
+# _v.tmpbat={home}/.rt/profile/temp/44E28BDF-8269-EEAE-D1DC-9B05B63E5F93.bat
+# _v.tmpf={home}/.rt/profile/temp/{8E3F33E4-86AB-AB1E-6219-801DE111D9AF}
+# _v.tmpf0={home}/.rt/profile/temp/{B820137A-79B8-45E3-BCBD-A6CAC50892D0}
+# _v.tmpf2={home}/.rt/profile/temp/{5FBF34C0-9A95-4C7E-BA53-44F84ECECCB5}
+# _v.tmpf3={home}/.rt/profile/temp/{F139D191-FA1A-44D5-855C-7E5141B30E0D}
+# _v.tmpf4={home}/.rt/profile/temp/{AA8EC8E1-EA9D-460D-A593-7B0FAEB9243E}
+# _v.tmpf5={home}/.rt/profile/temp/{201D82D6-2DC0-4552-A598-54F5481399A1}
+# _v.tmpf6={home}/.rt/profile/temp/{26B3B9C6-0A59-432A-9386-D432B53001CB}
+# _v.tmpf7={home}/.rt/profile/temp/{C03C0132-CFFC-4E3A-8F0F-614BB95164C7}
+# _v.tmpf8={home}/.rt/profile/temp/{4CCA3EBD-4535-42B7-9C75-05EFAACB00E0}
+# _v.tmpf9={home}/.rt/profile/temp/{DF1D4EBC-838E-419C-9C58-943C1767391A}
+# _v.tt={home}/.rt/profile/tables
+# _v.tvy={home}/.rt/profile/vars/terminal/16910.yml
+# _v.txt_temp={home}/.rt/profile/temp/_temp.txt
+# _v.umlHtml={home}/.rt/profile/json-uml-tree/index.htm
+# _v.umlJson={home}/.rt/profile/json-uml-tree/data.js
+# _v.unixID_path={home}/.rt/profile/config/.unix_id
+# _v.vault_path={home}/.rt/profile/config/.vault
+# _v.wprofile={home}/.rt/profile
+
+# _v.t={w}
+# _v.ta={w}/techApps
+# _v.tablesDB={w}/widgets/databank/tables
+# _v.techDrive={w}
+# _v.techFolder={w}
+# _v.ttt={w}/widgets/databank/tables
+# _v.updates={w}/widgets/project/updates
+# _v.w={w}
+# _v.webapp={w}/widgets/servers/web/crud
+# _v.widgets={w}
+# _v.ww={w}/widgets
+# '''.strip().replace('\r','').replace('\n\n','\n').replace('/',os.sep).split('\n')
+
+# _vTerm='''
+# stmp={home}/.rt/profile/temp
+# h={home}/.rt/profile
+# pr={home}/.rt/profile/projects
+# rt={home}/.rt
+# tt={home}/.rt/profile/tables
+# tmpf8={home}/.rt/profile/temp/{4CCA3EBD-4535-42B7-9C75-05EFAACB00E0}
+# tmpf9={home}/.rt/profile/temp/{DF1D4EBC-838E-419C-9C58-943C1767391A}
+# tmpf6={home}/.rt/profile/temp/{26B3B9C6-0A59-432A-9386-D432B53001CB}
+# tmpf7={home}/.rt/profile/temp/{C03C0132-CFFC-4E3A-8F0F-614BB95164C7}
+# tmpf4={home}/.rt/profile/temp/{AA8EC8E1-EA9D-460D-A593-7B0FAEB9243E}
+# tmpf5={home}/.rt/profile/temp/{201D82D6-2DC0-4552-A598-54F5481399A1}
+# tmpf2={home}/.rt/profile/temp/{5FBF34C0-9A95-4C7E-BA53-44F84ECECCB5}
+# tmpf3={home}/.rt/profile/temp/{F139D191-FA1A-44D5-855C-7E5141B30E0D}
+# tmpf0={home}/.rt/profile/temp/{B820137A-79B8-45E3-BCBD-A6CAC50892D0}
+# tmpf1={home}/.rt/profile/temp/{C0FA8E56-8426-46BB-9CE8-4A14C51EA261}
+# wprofile={home}/.rt/profile
+# config={home}/.rt/profile/config
+
+# ttt={w}/widgets/databank/tables
+# db={w}/widgets/databank
+# w={w}
+# s={w}/widgets/batch
+# bash={w}/widgets/bash
+# ps={w}/widgets/powershell
+# bat={w}/widgets/batch
+# ww={w}/widgets
+# widgets={w}
+# js={w}/widgets/javascript
+# '''.strip().replace('\r','').replace('\n\n','\n').replace('/',os.sep).split('\n')
+
+# def variable():
+# 	global _var
+# 	global _vTerm
+# 	_paste = _.regImp( __.appReg, '-paste' )
+# 	data = _paste.imp.paste()
+# 	l=data.count('l')
+# 	w=data.count('\\')
+# 	if l > w: lw = '/'
+# 	else:     lw = '\\'
+# 	data = data.replace(lw,os.sep)
+# 	for line in data.split('\n'):
+# 		has1=[]
+# 		has2=[]
+# 		for li in _var:
+# 			if li in line: has1.append({'line':line,'cnt':len(li)},'li':li)
+# 		has1 = _.sort(has1,'cnt')
+# 		for li in _vTerm:
+# 			if li in line: has2.append({'line':line,'cnt':len(li)},'li':li)
+# 		has2 = _.sort(has2,'cnt')
+
+# 		for x in has1: print(x)
+# 		_.pr(line=1)
+# 		for x in has2: print(x)
+		
+
+##################################################
 _.v.local=[
+				'variable',
 				'sally',
 				'auto scrape',
 				'ipsum',
@@ -662,6 +760,7 @@ _.v.local=[
 		]
 
 dic = {
+			'variable': 'variable()',
 			'sally': 'ai()',
 			'auto scrape': 'auto_scrape()',
 			'clean text': 'clean_text()',
@@ -764,7 +863,7 @@ keyboard = mController()
 
 try: import speech_recognition as sr
 except: pass
-import os
+
 hkr = _.regImp( __.appReg, 'KeyWise' )
 hk=hkr.imp
 
@@ -772,7 +871,7 @@ _paste = _.regImp( __.appReg, '-paste' )
 _copy = _.regImp( __.appReg, '-copy' )
 
 # ipsum()
-import os
+
 ##################################################
 # import _rightThumb._vault as _vault
 # import _rightThumb._encryptString as _blowfish
@@ -792,4 +891,6 @@ if __name__ == '__main__':
 	_.isExit(__file__)
 
 # https://www.imdb.com/chart/top/
+
+# _.v.local
 
