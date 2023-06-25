@@ -10,6 +10,13 @@ rem    - Scott Taylor Reph, RightThumb.com
 rem ###########################################################################
 rem ## {C3P0D40fAe8B} ##
 
-CALL p genuuid -short -e %*
+if [%1] == [] (
+	rem this was u
+	CALL p genuuid -e -strip be %*
+) else (
+	CALL p genuuid -short -e %*
+)
+
+
 
  
