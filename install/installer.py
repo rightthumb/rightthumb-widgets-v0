@@ -2686,6 +2686,8 @@ class virtualFiles:
         if path == '.bashrc-auto':
             data = """
 
+# 82977d555926
+
 if [ -z "$Session_ID" ]; then
   export Session_ID=$(date +%s)
 fi
@@ -3733,22 +3735,37 @@ fi
 if [ -f "$HOME/bashrc.sh" ]; then
 source $HOME/bashrc.sh
 fi
-alias rotate="/opt/rightthumb-widgets-v0/widgets/bash/rotate.sh"
+alias rotate="$widgets/widgets/bash/rotate.sh"
 
-alias linkFo="/opt/rightthumb-widgets-v0/widgets/bash/linkFo.sh"
-alias fig="/opt/rightthumb-widgets-v0/widgets/bash/_figlet.sh"
-alias _figlet="/opt/rightthumb-widgets-v0/widgets/bash/_figlet.sh"
-alias cow="/opt/rightthumb-widgets-v0/widgets/bash/_cowsay.sh"
-alias cows="/opt/rightthumb-widgets-v0/widgets/bash/_cowsay.sh"
-alias figs="/opt/rightthumb-widgets-v0/widgets/bash/_figlet.sh"
+alias linkFo="$widgets/widgets/bash/linkFo.sh"
+alias fig="$widgets/widgets/bash/_figlet.sh"
+alias _figlet="$widgets/widgets/bash/_figlet.sh"
+alias cow="$widgets/widgets/bash/_cowsay.sh"
+alias cows="$widgets/widgets/bash/_cowsay.sh"
+alias figs="$widgets/widgets/bash/_figlet.sh"
 
 alias cl="$p shClean -f"
-alias loadBK="/opt/rightthumb-widgets-v0/widgets/bash/loadBK.sh"
+alias loadBK="$widgets/widgets/bash/loadBK.sh"
 alias exref="$p imdb -xref -ent"
 alias text="$p vps-srv-7facG-twilio-send"
 alias textme="$p vps-srv-7facG-twilio-send -to 8136901260 -body "
 
 alias foSize='python3 $ww/python/folderSizeTotals.py'
+alias z='python3 $ww/python/folderSizeTotals.py'
+alias dl.mp3="youtube-dlc -x --audio-format mp3 "
+alias dl.mp3.="sudo youtube-dlc -x --audio-format mp3 "
+alias dl.vid="youtube-dlc -f best "
+alias dl.vid.="sudo youtube-dlc -f best "
+alias dl.video="youtube-dlc -f best "
+alias dl.video.="sudo youtube-dlc -f best "
+alias dl.mp4="youtube-dlc -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]' "
+alias dl.mp4.="sudo youtube-dlc -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]' "
+alias yt.dl="sudo wget https://github.com/blackjack4494/yt-dlc/releases/latest/download/youtube-dlc -O /usr/local/bin/youtube-dlc ; sudo chmod a+rx /usr/local/bin/youtube-dlc"
+
+
+alias url="$widgets/widgets/bash/url.sh"
+alias u="$widgets/widgets/bash/url.sh"
+
 
 # a3bc42ec51e9
 
@@ -15409,8 +15426,5 @@ if __name__ == '__main__':
 # vc.FIG.bash_vars(p=0)
 # 'Installer'
 
+# bashrc bof 82977d555926
 # bashrc eof a3bc42ec51e9
-
-
-
-

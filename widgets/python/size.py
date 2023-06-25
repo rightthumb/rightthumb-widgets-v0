@@ -35,7 +35,7 @@ import _rightThumb._string as _str
 
 
 def appSwitches():
-	_.switches.register( 'Size', '-z,-size', '15mb  OR 356900864  ' )
+	_.switches.register( 'Size', '-z,-size,-i', '15mb  OR 356900864  ' )
 	_.switches.register( 'Print', '-print' )
 	pass
 

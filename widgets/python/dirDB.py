@@ -393,41 +393,23 @@ def action():
 		totalSave = 0
 
 
-		db = _v.slash.join( _.switches.values('Database') )
-		
-		names = action2( db )
-		sizePre = 0
-		sizeMax = 0
-		if _.switches.isActive('Size'):
-			sizePre = _.switches.values('Size')[0]
-			if len(_.switches.values('Size')) > 1:
-				sizeMax = unFormatSize(_.switches.values('Size')[1])
-		size = unFormatSize(sizePre)
-		if sizeMax:
-			sql = """
-						SELECT *
-						FROM files
-						WHERE bytes > """+str(size)+""" and bytes < """+str(sizeMax)+"""
-						GROUP BY bytes, date_modified_raw
-						HAVING count(*) > 1
-						ORDER BY bytes Desc
-			"""
-		else:
-			sql = """
-						SELECT *
-						FROM files
-						WHERE bytes > """+str(size)+"""
-						GROUP BY bytes, date_modified_raw
-						HAVING count(*) > 1
-						ORDER BY bytes Desc
-			"""
-		if includeName:
+
+		for db in _.switches.values('Database'):
+			names = action2( db )
+			sizePre = 0
+			sizeMax = 0
+			size = unFormatSize(sizeMax)
+			if _.switches.isActive('Size'):
+				sizePre = _.switches.values('Size')[0]
+				if len(_.switches.values('Size')) > 1:
+					size = unFormatSize((_.switches.values('Size')[0]))
+					sizeMax = unFormatSize((_.switches.values('Size')[1]))
 			if sizeMax:
 				sql = """
 							SELECT *
 							FROM files
 							WHERE bytes > """+str(size)+""" and bytes < """+str(sizeMax)+"""
-							GROUP BY bytes, date_modified_raw, name
+							GROUP BY bytes
 							HAVING count(*) > 1
 							ORDER BY bytes Desc
 				"""
@@ -436,158 +418,177 @@ def action():
 							SELECT *
 							FROM files
 							WHERE bytes > """+str(size)+"""
-							GROUP BY bytes, date_modified_raw, name
+							GROUP BY bytes
 							HAVING count(*) > 1
 							ORDER BY bytes Desc
 				"""
-
-		conn = sqlite3.connect(db)
-		c = conn.cursor()
-		c.execute(sql)
-		records = c.fetchall()
-		_.v.totals+=len(records)
-		if _.switches.isActive('Totals'):
-			_.pr(_.addComma(len(records)),c='cyan')
-			sys.exit()
-
-		conn2 = sqlite3.connect(db)
-		test = conn2.cursor()
-
-
-
-		c.execute(sql)
-		all_done = False
-		for f in records:
-			if all_done:
-				break
-			row = {}
-			duplicates = []
-			for i,n in enumerate(names):
-				row[n] = f[i]
-
-			# _.printTest( row, x=0 )
-
-
-			mod = str(row['date_modified_raw'])
-			if not '.'  in mod:
-				mod = mod+'.0'
-			sql = """
-						SELECT *
-						FROM files
-						WHERE bytes = """+str(row['bytes'])+""" AND date_modified_raw = """+str(mod)+"""   
-			"""
 			if includeName:
+				if sizeMax:
+					sql = """
+								SELECT *
+								FROM files
+								WHERE bytes > """+str(size)+""" and bytes < """+str(sizeMax)+"""
+								GROUP BY bytes, name
+								HAVING count(*) > 1
+								ORDER BY bytes Desc
+					"""
+				else:
+					sql = """
+								SELECT *
+								FROM files
+								WHERE bytes > """+str(size)+"""
+								GROUP BY bytes, name
+								HAVING count(*) > 1
+								ORDER BY bytes Desc
+					"""
+
+			conn = sqlite3.connect(db)
+			c = conn.cursor()
+			c.execute(sql)
+			records = c.fetchall()
+			_.v.totals+=len(records)
+			if _.switches.isActive('Totals'):
+				_.pr(_.addComma(len(records)),c='cyan')
+
+			conn2 = sqlite3.connect(db)
+			test = conn2.cursor()
+
+
+
+			c.execute(sql)
+			all_done = False
+			for f in records:
+				if all_done:
+					break
+				row = {}
+				duplicates = []
+				for i,n in enumerate(names):
+					row[n] = f[i]
+
+				# _.printTest( row, x=0 )
+
+
+				mod = str(row['date_modified_raw'])
+				if not '.'  in mod:
+					mod = mod+'.0'
 				sql = """
 							SELECT *
 							FROM files
-							WHERE bytes = """+str(row['bytes'])+""" AND date_modified_raw = """+str(mod)+"""  AND name = '"""+str(row['name'])+"""'  
+							WHERE bytes = """+str(row['bytes'])+"""
 				"""
+				if includeName:
+					sql = """
+								SELECT *
+								FROM files
+								WHERE bytes = """+str(row['bytes'])+"""  AND name = '"""+str(row['name'])+"""'  
+					"""
 
-			# _.pr( sql )
-			try:
-				test.execute(sql)
-			except Exception as e:
-				pass
-			else:
-				_.v.totals+=len(test.fetchall())
-				for rec in test.fetchall():
-					record = {}
-					for ii,nn in enumerate(names):
-						record[nn] = rec[ii]
+				# _.pr( sql )
+				try:
+					test.execute(sql)
+				except Exception as e:
+					pass
+				else:
+					_.v.totals+=len(test.fetchall())
+					for rec in test.fetchall():
+						record = {}
+						for ii,nn in enumerate(names):
+							record[nn] = rec[ii]
 
-					# _.pr( record )
-					if not record['path'] in spent:
-						spent.append( record['path'] )
-						duplicates.append( record )
-						
+						# _.pr( record )
+						if not record['path'] in spent:
+							spent.append( record['path'] )
+							duplicates.append( record )
+							
 
 
-				pass
-				if len( duplicates ) > 1:
-					subTotal = 0
+					pass
+					if len( duplicates ) > 1:
+						subTotal = 0
 
-					if _.switches.isActive('Save'):
-						saveData.append('\n\n\n')
-						saveDataSetGroup = []
+						if _.switches.isActive('Save'):
+							saveData.append('\n\n\n')
+							saveDataSetGroup = []
 
-					shouldInclude = True
-					if _.switches.isActive('Plus'):
-						shouldInclude = False
-						for di,dupRec in enumerate(duplicates):
-							if _.showLine( dupRec['path'] ):
+						shouldInclude = True
+						if _.switches.isActive('Plus'):
+							shouldInclude = False
+							for di,dupRec in enumerate(duplicates):
+								if _.showLine( dupRec['path'] ):
+									shouldInclude = True
+
+						if shouldInclude:
+							if _.switches.isActive('Min'):
+								subTest = 0
+								for di,dupRec in enumerate(duplicates):
+									if di:
+										subTest += int(dupRec['bytes'])
+								if subTest < unFormatSize( _.switches.values('Min')[0] ):
+									# _.pr(  unFormatSize( _.switches.values('Min')[0] )  )
+									shouldInclude = False
+									all_done = True
+						if shouldInclude:
+							cnt = 0
+							for di,dupRec in enumerate(duplicates):
+								if not os.path.isfile( dupRec['path'] ):
+									shouldInclude = False
+									removeFile( dupRec['path'], c )
+								else:
+									cnt+=1
+							if cnt > 1:
 								shouldInclude = True
 
-					if shouldInclude:
-						if _.switches.isActive('Min'):
-							subTest = 0
+						if shouldInclude:
+							_.pr()
+							_.pr()
+							_.pr()
 							for di,dupRec in enumerate(duplicates):
-								if di:
-									subTest += int(dupRec['bytes'])
-							if subTest < unFormatSize( _.switches.values('Min')[0] ):
-								# _.pr(  unFormatSize( _.switches.values('Min')[0] )  )
-								shouldInclude = False
-								all_done = True
-					if shouldInclude:
-						cnt = 0
-						for di,dupRec in enumerate(duplicates):
-							if not os.path.isfile( dupRec['path'] ):
-								shouldInclude = False
-								removeFile( dupRec['path'], c )
-							else:
-								cnt+=1
-						if cnt > 1:
-							shouldInclude = True
+								# _.pr( row['size'] )
+								if os.path.isfile( dupRec['path'] ):
+									if _.switches.isActive('Save'):
+										saveData.append( dupRec['path'] )
+										saveDataSetGroup.append( dupRec['path'] )
 
-					if shouldInclude:
-						_.pr()
-						_.pr()
-						_.pr()
-						for di,dupRec in enumerate(duplicates):
-							# _.pr( row['size'] )
-							if os.path.isfile( dupRec['path'] ):
-								if _.switches.isActive('Save'):
-									saveData.append( dupRec['path'] )
-									saveDataSetGroup.append( dupRec['path'] )
+									if not row['name'].lower() == dupRec['name'].lower():
+										try:
+											_.colorThis( dupRec['path'], 'red' )
+										except Exception as e:
+											_.colorThis(   repairEncoding(dupRec['path'])  , 'red' )
+											
+									else:
+										try:
+											_.pr( dupRec['path'] )
+										except Exception as e:
+											_.pr(  repairEncoding(dupRec['path'])  )
+									if di:
+										totalSave += int(dupRec['bytes'])
+										subTotal += int(dupRec['bytes'])
 
-								if not row['name'].lower() == dupRec['name'].lower():
-									try:
-										_.colorThis( dupRec['path'], 'red' )
-									except Exception as e:
-										_.colorThis(   repairEncoding(dupRec['path'])  , 'red' )
-										
+
+									if _.switches.isActive('Save'):
+										saveDataSet.append({ 'files': saveDataSetGroup, 'bytes': subTotal, 'size': formatSize(subTotal) })
+
+							if not _.switches.isActive('NoCount'):
+								if 'GB' in formatSize(subTotal):
+									col = 'red'
 								else:
-									try:
-										_.pr( dupRec['path'] )
-									except Exception as e:
-										_.pr(  repairEncoding(dupRec['path'])  )
-								if di:
-									totalSave += int(dupRec['bytes'])
-									subTotal += int(dupRec['bytes'])
+									col = 'green'
+
+								_.colorThis( [' group -1:', formatSize(subTotal)], col )
+								_.colorThis( ['sub-total:', formatSize(totalSave)], 'yellow' )
 
 
-								if _.switches.isActive('Save'):
-									saveDataSet.append({ 'files': saveDataSetGroup, 'bytes': subTotal, 'size': formatSize(subTotal) })
-
-						if not _.switches.isActive('NoCount'):
-							if 'GB' in formatSize(subTotal):
-								col = 'red'
-							else:
-								col = 'green'
-
-							_.colorThis( [' group -1:', formatSize(subTotal)], col )
-							_.colorThis( ['sub-total:', formatSize(totalSave)], 'yellow' )
-
-
-		_.pr()
-		_.pr()
-		_.pr()
-		if _.switches.isActive('Save'):
-			saveData.append( '\n\n\n' )
-			saveData.append( 'Total: ' + formatSize(totalSave) )
-			_.saveText( saveData, _.switches.values('Save')[0] )
-			# _.saveText( saveData, _.switches.values('Save')[0].split('.')[0]+'-print.'+_.switches.values('Save')[0].split('.')[1] )
-			_.saveText( saveDataSet, _.switches.values('Save')[0].split('.')[0]+'-set.'+_.switches.values('Save')[0].split('.')[1] )
-		_.colorThis( [  'Total',  formatSize(totalSave) ], 'red' )
+			_.pr()
+			_.pr()
+			_.pr()
+			if _.switches.isActive('Save'):
+				saveData.append( '\n\n\n' )
+				saveData.append( 'Total: ' + formatSize(totalSave) )
+				_.saveText( saveData, _.switches.values('Save')[0] )
+				# _.saveText( saveData, _.switches.values('Save')[0].split('.')[0]+'-print.'+_.switches.values('Save')[0].split('.')[1] )
+				_.saveText( saveDataSet, _.switches.values('Save')[0].split('.')[0]+'-set.'+_.switches.values('Save')[0].split('.')[1] )
+			_.colorThis( [  'Total',  formatSize(totalSave) ], 'red' )
+			pass
 		sys.exit()
 
 

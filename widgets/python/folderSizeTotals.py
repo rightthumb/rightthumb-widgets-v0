@@ -35,6 +35,10 @@ def sw():
     _.switches.register( 'DefaultDatabases', '-d,-default' )
     _.switches.register( 'Database', '-db' )
     _.switches.register( 'Folders', '-f,-fo,-fos,-folder,-folders' )
+    _.switches.register( 'RebuildCache', '-r' )
+    # _.switches.register( 'RebuildAllCache', '-a,-ra,,-all,-rebuild' )
+    _.switches.register( 'CacheFolders', '-cf' )
+
     # _.switches.register( 'URL', '-u,-url,-urls', 'https://etc.ac/', isData='raw' )
     #e)--> examples
     # _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name,data,clean', description='Files', isRequired=False )
@@ -53,7 +57,7 @@ __.setting('switch-raw',[])
 
 _.appInfo[focus()] = {
     # 'app': '8facG-jo0Cxk',
-    'file': 'thisApp.py',
+    'file': 'folderSizeTotals.py',
     'liveAppName': __.thisApp( __file__ ),
     'description': 'Changes the world',
         # _.ail(1,'subject')+
@@ -75,7 +79,11 @@ _.appInfo[focus()] = {
                         # '',
     ],
     'examples': [
-                        _.hp('p thisApp -file file.txt'),
+                        _.hp('p folderSizeTotals'),
+                        _.hp('p folderSizeTotals -fo C:\\'),
+                        _.hp('foSize'),
+                        _.hp('z'),
+                        _.hp('z -cf | .mx z -fo {} -r'),
                         _.linePrint(label='simple',p=0),
                         '',
     ],
@@ -182,7 +190,7 @@ def get_subfolder_sizes(database, table, folder):
     return folder_sizes
 
 
-import _rightThumb._dir as _dir
+# import _rightThumb._dir as _dir
 __.v.db  = ''
 
 def scriptFoDB(path):
@@ -212,7 +220,8 @@ total_current_folder_bytes=0
 def scriptFoCurrentTotal(path):
     global total_current_folder_bytes
     path=__.path(path)
-    total_current_folder_bytes+=_dir.info(path)['bytes']
+    try: total_current_folder_bytes+=os.stat(path).st_size
+    except: pass
 
 
 
@@ -233,7 +242,7 @@ def check_table_exists(db_path, table_name):
         return True
     else:
         return False
-
+cache = {}
 loop=0
 table = 'files'
 def action():
@@ -243,10 +252,17 @@ def action():
         _.e('unable to auto fix database selection','select a database: -db database.db')
     loop+=1
     # print(calculate_percentage(30,100))
+    global cache
     global table
     global total_all_bytes
     global total_current_folder_bytes
     
+    if not cache: cache = _.getTable('folderSizeTotals.index')
+
+    if _.switches.isActive('CacheFolders'):
+        for folder in cache:
+            print(folder)
+        return None
 
     if not _.switches.isActive('Folders'):
         folders = [os.getcwd()]
@@ -254,6 +270,12 @@ def action():
         folders = []
         for fo in _.switches.values('Folders'):
             folders.append(__.path(fo))
+
+    if _.switches.isActive('RebuildAllCache'):
+        _.switches.fieldSet( 'RebuildCache', 'active', True )
+        folders = []
+        for folder in cache: folders.append(folder)
+
 
     databases=[]
 
@@ -272,9 +294,11 @@ def action():
                 for fo in folders:
                     if not c and fo.lower().startswith('c:'):
                         c=True
+                        # databases.append(_v.myIndexes+os.sep+'2023-04-04__C_Drive.db')
                         databases.append(_v.myIndexes+os.sep+'C_Drive.db')
                     if not d and fo.lower().startswith('d:'):
                         d=True
+                        # databases.append(_v.myIndexes+os.sep+'2023-04-04__D_Drive.db')
                         databases.append(_v.myIndexes+os.sep+'D_Drive.db')
             
     else:
@@ -282,6 +306,9 @@ def action():
     for database in databases:
 
         for folder in folders:
+            if not _.switches.isActive('RebuildCache'):
+                if folder in cache: continue
+
             total_all_bytes = 0
             total_current_folder_bytes = 0
             try:
@@ -293,23 +320,29 @@ def action():
                     _.switches.fieldSet( 'DefaultDatabases', 'active', True )
                     action()
                     return None
+            
             _.fo(folder,script=scriptFoCurrentTotal)
             current = {'folder': '.'+os.sep+os.path.basename(folder), 'bytes': total_current_folder_bytes, 'size': _.formatSize(total_current_folder_bytes)}
             folder_sizes.append(current)
             total_all_bytes+=total_current_folder_bytes
             for i,rec in enumerate(folder_sizes):
-                # print(rec['bytes'],type(rec['bytes']))
-                # print(total_all_bytes,type(total_all_bytes))
                 try:
                     folder_sizes[i]['percentage'] = str(calculate_percentage(rec['bytes'], total_all_bytes))
                     if folder_sizes[i]['percentage'] == '0.0': folder_sizes[i]['percentage']=0
                     folder_sizes[i]['percentage'] += '%'
                 except Exception as e:
                     folder_sizes[i]['percentage'] = '0%'
-            _.pt(folder_sizes,'folder,size,percentage','bytes')
-            _.pr('\n\ttotal:',_.formatSize(total_all_bytes),c='yellow')
-            # for size in folder_sizes:
-                # print(size)
+
+            record = {'bytes': total_all_bytes, 'folders': folder_sizes }
+            cache[folder] = record
+            _.saveTable(cache,'folderSizeTotals.index',p=0)
+
+    for folder in folders:
+        record = cache[folder]
+        _.pr(folder,c='green')
+        folder_sizes = record['folders']
+        _.pt(folder_sizes,'folder,size,percentage','bytes')
+        _.pr('\n\ttotal:',_.formatSize(record['bytes']),c='yellow')
 
 ##################################################
 #b)--> examples

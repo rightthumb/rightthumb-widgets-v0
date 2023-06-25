@@ -664,7 +664,7 @@ class HOTKEYS:
                     # frameinfo = getframeinfo(currentframe()); _.pr( _.addComma(frameinfo.lineno),'\t', e,c='red');
                     char = str(key).replace("'",'')
         except:
-            _.pr('Error:',"hasattr(key, 'vk')",c='red')
+            # _.pr('Error:',"hasattr(key, 'vk')",c='red')
             char=''
         key_set.add(char)
         if print_chars:

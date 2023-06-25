@@ -305,7 +305,8 @@ def random_color():
 	return random.choice(_all_colors_tact_)
 
 print_ed_group={}
-def print_(*args,p=None,c=None,pad=3,g=None,end=None,pvs=None,pv=None,json=None, dic=None, line=None, rstrip=True, lineMinus=0, lineLen=None):
+def print_(*args,p=None,c=None,pad=3,g=None,end=None,pvs=None,pv=None,json=None, dic=None, line=None, rstrip=True, lineMinus=0, lineLen=None, r=None):
+	if not r is None: end=r
 	args=list(args)
 	if c == 'r' or c == 'random': c=random_color()
 

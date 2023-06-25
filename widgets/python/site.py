@@ -40,7 +40,7 @@ def sw():
 	_.switches.register( 'Status', '-status' )
 	_.switches.register( 'NotWSL', '-notwsl' )
 	_.switches.register( 'SSH-Remote_Folder', '-remote' )
-	_.switches.register( 'URL', '-url,-edit' )
+	_.switches.register( 'URL', '-url,-edit,--u' )
 
 
 
@@ -339,7 +339,7 @@ def process(path,end='',ft=None):
 
 		if _.switches.isActive('Upload-Scp') or _.switches.isActive('Download-Scp'):
 			if _.switches.isActive('Print'):
-				_.pr(password_filter(do))
+				_.pr(_.password_filter(do))
 			try:
 				os.system( do )
 			except Exception as e:
@@ -406,6 +406,7 @@ def URL():
 	_file_open = _.regImp( __.appReg, 'file-open' )
 	_file_open.switch('App',_v.meta['code_editor'])
 	for url in _.switches.values('URL'):
+		if '?' in url: url=url.split('?')[0]
 		sites=_.getTable('site-locations.list')
 		for mPath in sites:
 			if os.path.isfile(mPath):
