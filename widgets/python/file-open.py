@@ -238,7 +238,7 @@ def action(path=None):
 	appReg=__.appReg
 	__.appReg=appReg
 	if not _.switches.isActive('Clean'):
-		print(paths)
+		# print(paths)
 		_.ad()
 	if paths:
 		logFi = _v.tt+os.sep+'file-open'+os.sep+_.friendlyDate(time.time()).split(' ')[0]+'.hash'
@@ -250,10 +250,8 @@ def action(path=None):
 		for path in paths:
 			path=__.path(path)
 			path=_.zZip(path)
-			# print('Backup',_.switches.isActive('Backup'))
-			if _.switches.isActive('Backup'): _bk = _.regImp( __.appReg, 'fileBackup' ); __.appReg=appReg; _bk.switch( 'isPreOpen' ); _bk.switch( 'Input', path ); bkfi = _bk.action();
-			# if _.switches.isActive('Backup'): _bk = _.regImp( __.appReg, 'fileBackup' ); bkfi = _bk.imp.action(path,o=1);
-			# _.pr(__.path(path))
+			_.pr(path)
+			if _.switches.isActive('Backup'): backup(path)
 			if _.isWin:
 				subprocess.Popen([ app, path])
 			else:
@@ -264,6 +262,15 @@ def action(path=None):
 		_.saveTable2(log,logFi)
 		_.cleanUnzip()
 
+def backup(path):
+	appReg=__.appReg
+	_bk = _.regImp( __.appReg, 'fileBackup' )
+	_bk.switch( 'Silent' )
+	_bk.switch( 'isPreOpen' )
+	_bk.switch( 'Input', path )
+	bkfi = _bk.action()
+	__.appReg=appReg
+	return bkfi
 
 ########################################################################################
 if __name__ == '__main__':

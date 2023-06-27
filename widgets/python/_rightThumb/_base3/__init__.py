@@ -16,7 +16,7 @@ MINI_ADS = True
 SHOW_ADS = False
 ##################################################
 
- 
+
 #                  ¯\_(ツ)_/¯
 
 
@@ -8400,6 +8400,7 @@ def myFileLocationsXYZ( file, silent=False, currentBaseVersion=3 ):
 			return myFileLocation_Files
 
 def myFileLocations_add_file(path):
+	file = aliases_file_open(path)
 	global appData
 	global myFileLocation_Files
 	if __.myFileLocations_SKIP_VALIDATION:
@@ -8419,8 +8420,20 @@ def _mfl(file):
 			if type(f) == str: file[i]=file[i].replace(os.sep+os.sep,os.sep);
 	return file
 
+file_open_aliases=None
+def aliases_file_open(file):
+	if not os.path.isfile(file):
+		global file_open_aliases
+		if file_open_aliases is None: file_open_aliases = getTable('file-open-aliases.hash')
+		if 'aliases' in file_open_aliases and file in file_open_aliases['aliases']:
+			a=file
+			file = file_open_aliases['aliases'][file]
+			# print(a,file)
+	return file
+
 isFirst=True
 def myFileLocations( file, silent=False, currentBaseVersion=3 ):
+	file = aliases_file_open(file)
 	if isWin and type(file) == str and '/' in file: file=file.replace('/',os.sep)
 	if isWin and type(file) == str and file.startswith('~'): file=_v.home+file[1:]
 	if __.isRequired_Pipe_or_File:
@@ -22294,12 +22307,22 @@ def appAPI(app='_admin_',api=None):
 	# print(api)
 	return api
 
-def secureURL(url,app='_admin_',data={},headers={}):
+def secureURL(url,app='_admin_',data={},headers={},showError=True,inject=False):
 	test=True
 	test=False
 	requests=__.imp('requests.post')
 	_data=data
 	_headers=headers
+
+	machine = {
+				'app': app,
+				'machine': _v.getMachineID(),
+				'node': _v.computername,
+				'user': _v.user,
+	}
+	if inject:
+		for k in machine: data[k]=machine[k]
+
 	if not 'User-Agent' in headers: headers['User-Agent'] = 'Mozilla/5.0'
 	if not 'API' in headers and not 'APP-API-KEY' in headers:
 		headers['API'] = appAPI(app)
@@ -22317,7 +22340,7 @@ def secureURL(url,app='_admin_',data={},headers={}):
 	if test: print('page:',page)
 
 	if not '!!REQUEST!!' in page: return page
-	if not 'ACCESS EXPIRED' in page: e(app,page)
+	# if not 'ACCESS EXPIRED' in page: e(app,page)
 
 	headers = {
 		'User-Agent': 'Mozilla/5.0',
@@ -22329,16 +22352,15 @@ def secureURL(url,app='_admin_',data={},headers={}):
 	scan=_scan.imp.app.scan.process( phone, 'A02F28B2' )
 	if 'phone' in scan: phone=scan['phone'][0]
 	# print('phone:',phone)
-	data = {
-				'app': app,
-				'phone': phone,
-				'machine': _v.getMachineID(),
-				'node': _v.computername,
-				'user': _v.user,
-	}
+	data=machine
+	data['phone']=phone
+
 
 	page=str(requests.post(url, headers=headers, data = data ).content,'iso-8859-1')
-	if test: print('page:',page)
+	if test:
+		pv(headers)
+		pv(data)
+		print('page:',page)
 
 	if page.startswith('??') and page.endswith('??'):
 		uuid=page[2:-2]
@@ -22353,12 +22375,13 @@ def secureURL(url,app='_admin_',data={},headers={}):
 			_headers['APP-API-KEY'] = page
 			_headers['API'] = page
 			return secureURL(url,app,_data,_headers)
-		e('pin',page)
-		return page
+		if showError:
+			e('pin',page)
+		return None
 	else:
-		
-		e('pre-pin',page)
-		return page
+		if showError:
+			e('pre-pin',page)
+		return None
 
 ##################################################
 def _secure_files_():

@@ -32,8 +32,7 @@ _str = __.imp('_rightThumb._string')
 def sw():
     pass
     #b)--> examples
-    _.switches.register( 'Sites', '-site,-sites', 'eyeformeta.com rightthumb.com efm.cx thumb.cx etc.ac' )
-    _.switches.register( 'Remove', '-r,-remove', 'relationshipideas.xyz' )
+    # _.switches.register( 'Input', '-i' )
     # _.switches.register( 'URL', '-u,-url,-urls', 'https://efm.cx/', isData='raw' )
     #e)--> examples
     # _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name,data,clean', description='Files', isRequired=False )
@@ -52,7 +51,7 @@ __.setting('switch-raw',[])
 
 _.appInfo[focus()] = {
     # 'app': '8facG-jo0Cxk',
-    'file': 'htaccess-builder.py',
+    'file': 'thisApp.py',
     'liveAppName': __.thisApp( __file__ ),
     'description': 'Changes the world',
         # _.ail(1,'subject')+
@@ -74,7 +73,7 @@ _.appInfo[focus()] = {
                         # '',
     ],
     'examples': [
-                        _.hp('p htaccess -sites eyeformeta.com rightthumb.com efm.cx thumb.cx etc.ac efm.cx alexandria.ninja biblicalheart.com emloisevil.com eyeformeta.com icosahedron.quest luketheawesomeone.com m-eta.app metaframe.work relationshipideas.xyz reph.vip rightthumb.com ronanwins.com stark-minecraft.com theprogramming.guru understand.quest vp-servers.com xan.guru'),
+                        _.hp('p thisApp -file file.txt'),
                         _.linePrint(label='simple',p=0),
                         '',
     ],
@@ -150,129 +149,60 @@ _.l.sw.register( triggers, sw )
 ########################################################################################
 #n)--> start
 
+# import base64
 
-from urllib.parse import urlparse
-import tldextract
+# def encrypt(string, password):
+#     shift_amount = sum(ord(c) for c in password) % len(string)
+#     new_string = string[shift_amount:] + string[:shift_amount]
+#     return new_string
 
-def extract_domain(url):
-    if not ':' in url: return url
-    parsed_url = urlparse(url)
-    return f"{parsed_url.scheme}://{parsed_url.netloc}"
-
-
-def separate_domain_tld(domain):
-    extracted = tldextract.extract(domain)
-    domain_name = f"{extracted.subdomain}.{extracted.domain}"
-    tld = extracted.suffix
-    if domain_name.startswith('.'): domain_name=domain_name[1:]
-    return domain_name, tld
+# def decrypt(string, password):
+#     shift_amount = sum(ord(c) for c in password) % len(string)
+#     new_string = string[-shift_amount:] + string[:-shift_amount]
+#     return new_string
 
 
-def backup(path):
-    appReg=__.appReg
-    _bk = _.regImp( __.appReg, 'fileBackup' )
-    _bk.switch( 'Silent' )
-    _bk.switch( 'isPreOpen' )
-    _bk.switch( 'Input', path )
-    bkfi = _bk.action()
-    __.appReg=appReg
+# def action():
+#     pass
 
-def cl(text):
-    text=text.strip()
-    while '  ' in text: text.replace('  ',' ')
-    return text
+
+# password=str(time.time())
+
+# # Encoding a string to base64
+# original_string = "Hello, world!"
+# original_string = str(time.time())
+# encoded_string = base64.b64encode(original_string.encode()).decode()
+# print(f"Encoded: {encoded_string}")
+# crypt = encrypt(encoded_string, password)
+# print(f"Encrypted: {crypt}")
+
+# encoded_string=decrypt(crypt, password)
+# # Decoding a base64 string
+# decoded_string = base64.b64decode(encoded_string.encode()).decode()
+# print(f"Decoded: {decoded_string}")
+
+
+
+
+
 
 def action():
-    global base
-    sites=[]
-    var={}
-    vv=[]
-    backup('.htaccess')
-    if os.path.isfile('.htaccess'):
-        ht=_.getText('.htaccess')
-        for line in ht:
-            line=cl(line)
-            if line and line.startswith('SetEnv'): var[line]=0;vv.append(line);
-    # print(vv); sys.exit();
-    if os.path.isfile('.htaccess.site'): sites=_.getText('.htaccess.site',raw=True,clean=2).replace('\r','').strip().split('\n')
-    for site in _.switches.values('Sites'): sites.append(site)
-
-    remove=[]
-    for site in _.switches.values('Remove'):
-        site=site.lower()
-        try: site=extract_domain(site)
-        except: pass
-        remove.append(site)
-
-    # print(1,sites)
-    items=[]
-    for i,site in enumerate(sites):
-        site=site.lower()
-        sites[i]=sites[i].lower()
-        try: sites[i]=extract_domain(site)
-        except: pass
-        site = sites[i]
-    # print(1,sites)
-    sites=list(set(sites))
-    sit=[]
-    for site in sites:
-        if not site in remove and not ':' in site: sit.append(site)
-    sites=sit
-    # print(1,sites)
-    for i,site in enumerate(sites):
-        domain, tld = separate_domain_tld(site)
-        items.append(domain+'\\'+'.'+tld)
-    # print(1,sites)
-    domains='|'.join(items)
-    htaccess = base.replace('vVv',domains)
-    _.saveText(sites,'.htaccess.site')
-    if os.path.isfile('.htaccess'):
-        _.saveText( _.getText('.htaccess',raw=True) ,'.htaccess-'+_.friendlyDate(_.mod('.htaccess')).split(' ')[0])
-    if type(htaccess)==str: htaccess=htaccess.split('\n')
-
-    for line in htaccess:
-        line=cl(line)
-        if line in var: var[line]=1
-    vv.reverse()
-    for v in vv:
-        if not var[v]:
-            htaccess.insert(0,v)
-
-    for line in htaccess: print(line)
-    _.saveText(htaccess,'.htaccess')
-    backup('.htaccess')
+    # _.secureURL(url,app='_admin_',data={},headers={})
+    url = 'https://eyeformeta.com/apps/secure/py/test.php'
+    # _.appAPI(app='_admin_',api='789d6ecbfe23e2c29d64ca0912ea1d2552820b84')
+    __.ran=False
+    page = _.secureURL(url,'secure-code',showError=False,inject=True)
+    if not page is None:
+        exec(page)
+    print('Ran:',__.ran)
 
 
 
-    
-    # rightthumb\\.com|eyeformeta\\.com
 
-base='''
-<IfModule mime_module>
-  AddHandler application/x-httpd-ea-php80 .php .php8 .phtml .srv.js .php.js
-</IfModule>
-#Rewrite everything to https
-RewriteEngine On
-RewriteCond %{HTTPS} !=on
-RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
-<IfModule mod_headers.c>
-    SetEnvIf Origin "^http(s)?://(.+\\.)?(vVv)$" origin_is=$0
-    Header always set Access-Control-Allow-Origin %{origin_is}e env=origin_is
-</IfModule>
-'''
-base=base.strip()
-import os
 
-BLOCK_ACCESS_TO_SELF_AND_CHILDRED='Deny from all'
-SITE_ROOT='''
-# php -- BEGIN cPanel-generated handler, do not edit
-# Set the “ea-php80” package as the default “PHP” programming language.
-<IfModule mime_module>
-  AddHandler application/x-httpd-ea-php80 .php .php8 .phtml .js
-</IfModule>
-# php -- END cPanel-generated handler, do not edit
-'''
+
+
 
 ##################################################
 #b)--> examples

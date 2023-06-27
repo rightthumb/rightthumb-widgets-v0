@@ -223,7 +223,8 @@ def PRE_BACKUP_PROCESSING( path ):
 			if path.endswith( bf ):
 				thisBaseVX = vx
 			if path.endswith( ex ):
-				_.colorThis( 'PROCESSED: registered python template', 'Background.yellow' )
+				if not _.switches.isActive('Silent'):
+					_.colorThis( 'PROCESSED: registered python template', 'Background.yellow' )
 				thisExampleVX = vx
 		thisExampleVX_NEW=False
 		if thisExampleVX is None:
@@ -522,17 +523,21 @@ def postFileCleanup( fileLines, path=None, maxLines=4 ):
 		_.pr()
 		txt = _.colorThis( [ ' Please add a description for the app ' ] , 'yellow', p=0 )
 		txt += _.colorThis( [ filenameDisplay.split('.')[0] ] , 'red', p=0 )
-		_.pr( txt )
+		if not _.switches.isActive('Silent'):
+			_.pr( txt )
 		description = ''
 		description = input( '\n\tDescription: ' )
-		_.pr()
+		if not _.switches.isActive('Silent'):
+			_.pr()
 		file = file.replace( "\t'description': 'Changes the world'," ," \t'description': '"+description+"'," )
 	aTag = "\t\t\t\t\t\t'DEFAULT',\n"
 	if aTag in file:
-		_.pr()
+		if not _.switches.isActive('Silent'):
+			_.pr()
 		txt = _.colorThis( [ ' Please add a hashtags for the app ' ] , 'yellow', p=0 )
 		txt += _.colorThis( [ filenameDisplay.split('.')[0] ] , 'red', p=0 )
-		_.pr( txt )
+		if not _.switches.isActive('Silent'):
+			_.pr( txt )
 		hashtags = '' 
 		hashtags = input( '\n\tHashtags(one,two): ' )
 		newTags = []
@@ -544,7 +549,8 @@ def postFileCleanup( fileLines, path=None, maxLines=4 ):
 				
 
 			file = file.replace( aTag , ''.join( newTags ) )
-		_.pr()
+		if not _.switches.isActive('Silent'):
+			_.pr()
 	if not isImport:
 		xExample = 'p thisApp -file file.txt'
 		aExample = "\t\t\t\t\t\t_.hp('"+xExample+"'),\n"
@@ -575,18 +581,22 @@ def postFileCleanup( fileLines, path=None, maxLines=4 ):
 				if line.lower().startswith( 'p '+fn.lower()+' ' ):
 					if first:
 						first = False
-						_.pr(  )
-						_.pr(  )
-						_.pr( txt )
-					_.colorThis( [ '\n\tAdd example (y): ' ] , 'cyan' )
+						if not _.switches.isActive('Silent'):
+							_.pr(  )
+							_.pr(  )
+							_.pr( txt )
+					if not _.switches.isActive('Silent'):
+						_.colorThis( [ '\n\tAdd example (y): ' ] , 'cyan' )
 					if not 'n' in input( '\n\t\t ?: '+line ):
 						addExample = aExample.replace('\\','\\\\')
 						addExample = addExample.replace( xExample, line )
 						newExample.append( addExample )
-						_.colorThis( [ '\n\t\t\t Added' ] , 'green' )
-						_.pr( addExample )
+						if not _.switches.isActive('Silent'):
+							_.colorThis( [ '\n\t\t\t Added' ] , 'green' )
+							_.pr( addExample )
 					else:
-						_.colorThis( [ '\n\t\t\t NOT Added' ] , 'red' )
+						if not _.switches.isActive('Silent'):
+							_.colorThis( [ '\n\t\t\t NOT Added' ] , 'red' )
 
 			if len(newExample):
 				addExample = aExample.replace('\\','\\\\')
@@ -829,18 +839,21 @@ def action(path=None,flag=None,o=None):
 					idCheck = idExist(theID, backupLog, path)
 					# _.colorThis( [ 'Secure file' ], 'green' )
 					bk=[];[  bk.append(rec['backup']) for rec in backupLog if path == rec['file']];
-
-					_.colorThis( path, 'cyan' )
-					if bk: bk=bk[-1]; _.pr( bk, c='darkcyan' );
+					if not _.switches.isActive('Silent'):
+						_.colorThis( path, 'cyan' )
+					if bk:
+						bk=bk[-1]
+						if not _.switches.isActive('Silent'): _.pr( bk, c='darkcyan' )
 					# _.pr(' -- TRUE -- ')
 					if _.switches.isActive('isPreOpen'):
 						txtScheduler.append( { 'timestamp': genEpoch(), 'file': __.path(path), 'status': 0, 'app': 'fileBackup', 'group': 0, 'session': __.Session_ID } )
 						_.saveTable( txtScheduler,'fileBackupSchedule.json', p=0 )
 					return None
 			if path in INDEX and os.path.getmtime(path) == INDEX[path]['timestamp']:
-				_.pr(path, c='cyan')
-				_.pr(INDEX[path]['backup'], c='darkcyan')
-				_.pr('File not modified since last backup',c='yellow')
+				if not _.switches.isActive('Silent'):
+					_.pr(path, c='cyan')
+					_.pr(INDEX[path]['backup'], c='darkcyan')
+					_.pr('File not modified since last backup',c='yellow')
 				if _.switches.isActive('isPreOpen'):
 					txtScheduler.append( { 'timestamp': genEpoch(), 'file': __.path(path), 'status': 0, 'app': 'fileBackup', 'group': 0, 'session': __.Session_ID } )
 					_.saveTable( txtScheduler,'fileBackupSchedule.json', p=0 )
@@ -1228,7 +1241,8 @@ def action(path=None,flag=None,o=None):
 		txtScheduler.append( { 'timestamp': genEpoch(), 'file': __.path(path), 'status': 0, 'app': 'fileBackup', 'group': 0, 'session': __.Session_ID } )
 		_.saveTable( txtScheduler,'fileBackupSchedule.json', p=0 )
 		if __.openSecure:
-			_.colorThis( 'secure open and scheduled', 'yellow' )
+			if not _.switches.isActive('Silent'):
+				_.colorThis( 'secure open and scheduled', 'yellow' )
 
 		if not _.switches.isActive('Silent'):
 			_.colorThis( [  path  ], 'cyan' )
@@ -1299,8 +1313,9 @@ def action(path=None,flag=None,o=None):
 					theID = generateID(path)
 				idCheck = idExist(theID, backupLog, path)
 				if not type(idCheck) == bool:
-					_.colorThis( INDEX[path]['backup'], 'darkcyan' )
-					_.colorThis( 'Backup ID found in older backup', 'yellow' )
+					if not _.switches.isActive('Silent'):
+						_.colorThis( INDEX[path]['backup'], 'darkcyan' )
+						_.colorThis( 'Backup ID found in older backup', 'yellow' )
 					if _.switches.isActive('isPreOpen'):
 						txtScheduler.append( { 'timestamp': genEpoch(), 'file': __.path(path), 'status': 0, 'app': 'fileBackup', 'group': 0, 'session': __.Session_ID } )
 						_.saveTable( txtScheduler,'fileBackupSchedule.json', p=0 )
@@ -1313,9 +1328,10 @@ def action(path=None,flag=None,o=None):
 					mime = 'text'
 				else:
 					mime = 'binary'
-					_.colorThis( [  '********************'  ], 'yellow' )
-					_.colorThis( [  '   File is BINARY'  ], 'yellow' )
-					_.colorThis( [  '********************'  ], 'yellow' )
+					if not _.switches.isActive('Silent'):
+						_.colorThis( [  '********************'  ], 'yellow' )
+						_.colorThis( [  '   File is BINARY'  ], 'yellow' )
+						_.colorThis( [  '********************'  ], 'yellow' )
 					newname = _v.myBIN + os.sep + str(now) + '-' + modified +  '-' + name
 
 				name = ''
