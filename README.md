@@ -1,9 +1,9 @@
- rightthumb.com framework
+# rightthumb.com framework
 
 ___
 ## Just sharing how I customized my terminal.
 ### Efficiently accomplish a wide range of tasks in a short amount of time.
-#### with a few thousand apps I made over my 20 year career
+#### with a few thousand apps I made over my 20+ year career
 ___
 
 ## Platform Support
