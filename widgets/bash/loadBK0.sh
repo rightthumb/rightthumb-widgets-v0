@@ -26,8 +26,8 @@ tempdir=$(mktemp -d)
 
 
 # Download the file to the temporary directory
-# wget -P "$tempdir" "$url"
-curl -fsSL "$url" -o "$tempdir"
+wget -P "$tempdir" "$url"
+
 # Determine the file extension and use the appropriate decompression method
 case "$filename" in
     *.zip)
@@ -87,45 +87,43 @@ case "$filename" in
         apt-get install -y unace
         unace x -y "$tempdir/$filename" -o "$tempdir"
         ;;
-    *.tar.Z)
-        tar -xZf "$tempdir/$filename" -C "$tempdir"
-        ;;
-    *.tar.lz)
-        apt-get install -y lzip
-        lzip -d "$tempdir/$filename"
-        tar -xf "$tempdir/$(basename "$filename" .lz)" -C "$tempdir"
-        ;;
-    *.tar.lzma)
-        apt-get install -y xz-utils
-        unlzma -c "$tempdir/$filename" | tar -xf - -C "$tempdir"
-        ;;
-    *.tar.lzo)
-        apt-get install -y lzo
-        lzop -d "$tempdir/$filename"
-        tar -xf "$tempdir/$(basename "$filename" .lzo)" -C "$tempdir"
-        ;;
-    *.tar.lrz)
-        apt-get install -y lrzip
-        lrzuntar "$tempdir/$filename" "$tempdir"
-        ;;
-    *.tar.lzop)
-        apt-get install -y lzop
-        lzop -d "$tempdir/$filename"
-        tar -xf "$tempdir/$(basename "$filename" .lzop)" -C "$tempdir"
-        ;;
     *)
         echo "Unsupported file extension."
         exit 1
         ;;
 esac
 
-payload_dir=$(python3 /opt/rightthumb-widgets-v0/widgets/python/locateDecompressedFiles.py "$tempdir")
+payload_dir=$( python3 /opt/rightthumb-widgets-v0/widgets/python/locateDecompressedFiles.py  "$tempdir")
+
+
+# source $HOME/.bashrc
+# $p files
+# echo "python3 /opt/rightthumb-widgets-v0/widgets/python/locateDecompressedFiles.py  $tempdir"
+# echo "mv $payload_dir/* $destination"
+
 
 [ -d "$payload_dir" ] && mv "$payload_dir"/* "$destination"
 
-# Clean up the temporary directory
-rm -rf "$tempdir"
 
-echo "Files have been successfully extracted and moved to the destination directory."
+# # Move the payload to the destination directory
+# # Find the first regular file within the extracted contents
+# first_file=$(find "$tempdir" -type f | head -n 1)
 
-exit 0
+# if [ -n "$first_file" ]; then
+#     # Extract the parent directory of the first file found
+#     payload_dir=$(dirname "$first_file")
+    
+#     # Move the contents of the payload directory to the destination directory
+#     mv "$payload_dir"/* "$destination"
+# else
+#     echo "No files found in the extracted contents."
+#     exit 1
+# fi
+
+# # Clean up the temporary directory
+# rm -rf "$tempdir"
+
+# echo "Files have been successfully extracted and moved to the destination directory."
+
+# exit 0
+

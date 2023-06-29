@@ -47,6 +47,7 @@ def appSwitches():
 	_.switches.register('Binary', '-bin')
 	_.switches.register('Size', '-size',' g 10mb, L 2kb ')
 	_.switches.register('JSON', '-json')
+	_.switches.register('YAML', '-yml,-yaml')
 	_.switches.register('Ago', '-ago','1m c, 1y, 1d a')
 	_.switches.register('Time', '-time')
 	_.switches.register('Clean', '--c')
@@ -885,6 +886,28 @@ def relative_folder(path):
 
 
 def action():
+	global i
+	global fileCount
+	global folderCount
+	global _mime
+	global meta
+	if _.switches.isActive('Files') and (_.switches.isActive('JSON') or _.switches.isActive('YAML')):
+		__.dir.print=True
+		if _.switches.isActive('JSON') and len(_.switches.value('JSON')):
+			__.dir.print=False
+		if _.switches.isActive('YAML') and len(_.switches.value('YAML')):
+			__.dir.print=False
+
+		records = []
+		for file in _.switches.values('Files'):
+			records.append( _dir.fileInfoAction( file, sdate=__.sdate, meta=meta ) )
+		if len(records) ==1: records=records[0]
+		if _.switches.isActive('JSON'):
+			_.pv( records )
+		elif _.switches.isActive('YAML'):
+			print(_.toYML(records))
+
+		sys.exit()
 	_.v.do_not_hide__pycache = _.switches.isActive('Disable-Intelligence')
 	try:
 		if 165 < list(os.get_terminal_size())[0] and not _.switches.isActive('Long'): _.switches.fieldSet( 'Long', 'active', True )
@@ -946,11 +969,7 @@ def action():
 		_.switches.fieldSet( 'Size', 'value', 'l,'+s )
 		_.switches.fieldSet( 'Size', 'values', ['l',s] )
 
-	global i
-	global fileCount
-	global folderCount
-	global _mime
-	global meta
+
 
 	isLegacy = False
 	# load()
@@ -974,13 +993,6 @@ def action():
 		_.switches.fieldSet( 'Files', 'values', _.appData[__.appReg]['pipe'] )
 		_.switches.fieldSet( 'Files', 'value', ','.join(_.appData[__.appReg]['pipe']) )
 		# _.pr( _.switches.values('Files') )
-
-	if _.switches.isActive('Files') and _.switches.isActive('JSON'):
-		records = []
-		for file in _.switches.values('Files'):
-			records.append( _dir.info( file, sdate=__.sdate, meta=meta ) )
-		_.printVarSimple( records )
-		sys.exit()
 
 
 	if _.switches.isActive('Database'):

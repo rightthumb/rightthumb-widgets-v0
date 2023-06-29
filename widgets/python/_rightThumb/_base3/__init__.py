@@ -2913,7 +2913,7 @@ def saveCryptTable( rows, theFile, db=False, bank=False, index=False, temp=False
 def head( path ):
 	file = open( path, 'rb' ).read(32)
 	return " ".join(['{:02X}'.format(byte) for byte in file])
-
+def header(path): return head(path)
 def hex2ascii( hx ):
 	if type(hx) == str:
 		hx = hx.replace(' ','')
@@ -8422,7 +8422,7 @@ def _mfl(file):
 
 file_open_aliases=None
 def aliases_file_open(file):
-	if not os.path.isfile(file):
+	if not os.path.exists(file):
 		global file_open_aliases
 		if file_open_aliases is None: file_open_aliases = getTable('file-open-aliases.hash')
 		if 'aliases' in file_open_aliases and file in file_open_aliases['aliases']:
@@ -8443,7 +8443,7 @@ def myFileLocations( file, silent=False, currentBaseVersion=3 ):
 	global isFirst
 	if '*' in file:
 		__.trigger_isPipe = 'glob'
-	if os.path.isfile(file):
+	if os.path.exists(file):
 		myFileLocations_add_file(file)
 
 	# print_('here')
@@ -8609,7 +8609,7 @@ def myFileLocations2( file, silent=False, currentBaseVersion=3 ):
 	if silent:
 		silentSetTo = silent
 
-	if os.path.isfile( file ):
+	if os.path.exists( file ):
 		return _mfl(file)
 
 	if 'tmpf' in file.lower():
@@ -19626,6 +19626,22 @@ def loadingGraphicEnd():
 	# theLoadingGraphic.destroy()
 	# theLoadingGraphic.quit()
 """
+###################################################################################################################
+def isTextFi(path, num_chars=20):
+    with open(path, 'rb') as file:
+        content = file.read(num_chars)        
+        try:
+            content.decode('utf-8')
+            return True
+        except UnicodeDecodeError:
+            return False
+def isTextFiGet(path, num_chars=20):
+    with open(path, 'rb') as file:
+        content = file.read(num_chars)        
+        try:
+            return content.decode('utf-8')
+        except UnicodeDecodeError:
+            return ''
 ###################################################################################################################
 
 def isText( data ):

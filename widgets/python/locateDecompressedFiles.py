@@ -5,7 +5,8 @@ import sys
 # List of extensions to ignore
 IGNORE_EXTENSIONS = [
     ".zip", ".tar", ".tar.gz", ".tar.bz2", ".gz", ".bz2", ".rar", ".xz",
-    ".tar.xz", ".7z", ".zst", ".lzma", ".lz4", ".lzh", ".cab", ".ace"
+    ".tar.xz", ".7z", ".zst", ".lzma", ".lz4", ".lzh", ".cab", ".ace",
+    ".tar.Z", ".tar.lz", ".tar.lzma", ".tar.lzo", ".tar.lrz", ".tar.lzop"
 ]
 
 def should_ignore_file(filename):

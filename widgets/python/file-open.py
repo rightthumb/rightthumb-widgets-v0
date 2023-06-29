@@ -250,7 +250,7 @@ def action(path=None):
 		for path in paths:
 			path=__.path(path)
 			path=_.zZip(path)
-			_.pr(path)
+			_.pr(path,c='yellow')
 			if _.switches.isActive('Backup'): backup(path)
 			if _.isWin:
 				subprocess.Popen([ app, path])

@@ -156,8 +156,10 @@ def meta_scan(path,end):
 		file = os.path.abspath(path)
 	except Exception as e:
 		file = path
-	if os.path.isfile(path): folder = __.path(path,pop=True)
-	else: folder = __.path(path)
+	folder = __.path(path,pop=True)
+	if os.path.isdir(path):folder+=os.sep
+	# if os.path.isfile(path): folder = __.path(path,pop=True)
+	# else: folder = __.path(path)
 	i=0
 	while not os.path.isfile( folder+os.sep+'.folder.meta'+end ):
 		# print(os.path.isfile( folder+os.sep+'.folder.meta'+end ),folder+os.sep+'.folder.meta'+end)
@@ -193,6 +195,7 @@ def meta_scan(path,end):
 	return urlpr(url)
 
 def process(path,end='',ft=None):
+	if not os.path.exists(path): return None
 	global folder
 	global meta
 	# _.pr(path,c='cyan')
@@ -287,21 +290,23 @@ def process(path,end='',ft=None):
 			# 	_.e('meta missing fields')
 
 			fi = file.replace( __.path(folder), f ).replace('\\','/')
+			# _.pr(fi,c='cyan')
 			if os.path.isdir(path):
-				fi=__.path(fi,pop=True)
-				fi += '/'
-				path+=os.sep
+				fi = "/".join(fi.split("/")[:-1])+'/'
 
-
+			# 	fi=__.path(fi,pop=True)
+			# 	fi += '/'
+			# 	path+=os.sep
+			# _.pr(fi,c='yellow')
 		if _.switches.isActive('mkdir'):
 		# if True:
 			fi = file.replace( __.path(folder), f ).replace('\\','/')
 			rfo = _.tailpop(fi,'/')
 			pw=_vault.imp.s.de( ftp['password'] )
-			if os.path.isdir(path):
-				fi=__.path(fi,pop=True)
-				fi += '/'
-				path+=os.sep
+			# if os.path.isdir(path):
+			# 	fi=__.path(fi,pop=True)
+			# 	fi += '/'
+			# 	path+=os.sep
 			
 			mkdir=f'{ssh} -f {u}@{s} "/bin/python3 /opt/rightthumb-widgets-v0/widgets/python/mkdir.py -folder {rfo}"'+tail()
 
@@ -334,12 +339,14 @@ def process(path,end='',ft=None):
 				do=f'{scp} -r {u}@{s}:{fi} {_path}'+tail()
 			else:
 				do=f'{scp}  {u}@{s}:{fi} {_path}'+tail()
-		if _.switches.isActive('Print'):
-			_.pr(do)
+		# if _.switches.isActive('Print'): _.pr(do)
 
 		if _.switches.isActive('Upload-Scp') or _.switches.isActive('Download-Scp'):
 			if _.switches.isActive('Print'):
-				_.pr(_.password_filter(do))
+				if 'p' in _.switches.value('Print'):
+					_.pr(do)
+				else:
+					_.pr(_.password_filter(do))
 			try:
 				os.system( do )
 			except Exception as e:
@@ -406,6 +413,7 @@ def URL():
 	_file_open = _.regImp( __.appReg, 'file-open' )
 	_file_open.switch('App',_v.meta['code_editor'])
 	for url in _.switches.values('URL'):
+		url=url.replace('https://www.','https://')
 		if '?' in url: url=url.split('?')[0]
 		sites=_.getTable('site-locations.list')
 		for mPath in sites:
@@ -414,11 +422,10 @@ def URL():
 				if _.getText( mPath, raw=True ).strip().startswith('{'): meta = _.getTable2( mPath )
 				else: meta = _.getYML( mPath )
 				if 'url' in meta:
-					u = meta['url']
+					u = meta['url'].replace('https://www.','https://')
 					if url.startswith(u):
 						x=url[len(u):].replace('/',os.sep)
 						y=p+os.sep+x
-
 						if os.path.isdir(y):
 							test='index.php index.htm index.html'.split(' ')
 							for t in test:
@@ -427,7 +434,7 @@ def URL():
 									y=yt
 						y=y.replace(os.sep+os.sep,os.sep)
 						if os.path.isfile(y):
-							_.pr(y,c='yellow')
+							# _.pr(y,c='yellow')
 							_file_open.switch('Files',y)
 							_file_open.action()
 

@@ -16,7 +16,9 @@ import _rightThumb._mimetype as _mime
 import hashlib
 import simplejson as json
 import _rightThumb._base3 as _
-
+__.dir=_.dot()
+__.dir.print=False
+print_fields = 'path, name, parent, bytes, size, date_created, date_modified, ext, week_of_year, day_of_the_week, md5, sha256, date_accessed, ce, me, ae, ago, header, lines'.split(', ')
 def _lines_(filename):
 
 	try:
@@ -300,7 +302,7 @@ def individual(path,subject):
 	if len(k) == 1: return dic[k[0]];
 	return dic
 
-def fileInfoAction( path, sql, md5, exif, getAttrib=None, getMime=None, db_connection=None, db_cursor=None, count=None, insert=None, last=False, sdate=None, meta=True, subject=None, sha256=False, _lines=False ):
+def fileInfoAction( path, sql=False, md5=False, exif=0, getAttrib=None, getMime=None, db_connection=None, db_cursor=None, count=None, insert=None, last=False, sdate=None, meta=True, subject=None, sha256=False, _lines=False ):
 	global touch_meta
 	global dateCalcByModified
 	global timeAudit
@@ -442,8 +444,10 @@ def fileInfoAction( path, sql, md5, exif, getAttrib=None, getMime=None, db_conne
 				'size': sizeF,
 				'date_created_raw': createdRaw,
 				'date_modified_raw': modifiedRaw,
+				'date_accessed_raw': accessed_raw,
 				'date_created': formatDate(createdRaw),
 				'date_modified': formatDate(modifiedRaw),
+				'date_accessed': formatDate(accessed_raw),
 				'type': ty,
 				'typesort': typesort,
 				'ext': ext,
@@ -456,18 +460,17 @@ def fileInfoAction( path, sql, md5, exif, getAttrib=None, getMime=None, db_conne
 				'md5': md5Data,
 				'sha256': sha256Data,
 				'year': year,
-				'accessed_raw': accessed_raw,
-				'date_accessed': formatDate(accessed_raw),
 				'ce': createdRaw,
 				'me': modifiedRaw,
 				'ae': accessed_raw,
 				'meta': {},
 				'ago': dateDiffText(calcBy),
-				'header': theHeader,
+				'header': _header_(path2),
 				'error': hasError,
 				'group': size_group(size),
 				'lines': __lines,
 		}
+
 
 		_cwd=os.getcwd()
 		if _cwd+os.sep in path2:
@@ -509,6 +512,16 @@ def fileInfoAction( path, sql, md5, exif, getAttrib=None, getMime=None, db_conne
 						obj['ae'] = touch_meta[path2]['epoch']['ae']
 						obj['accessed_raw'] = obj['ae']
 						obj['date_accessed'] = formatDate(obj['ae'])
+		pass
+		if __.dir.print:
+			global print_fields
+			oj={}
+			for k in obj:
+				keep=True
+				if k in obj and not obj[k]: keep=False
+				if k in obj and not k in print_fields: keep=False
+				if keep: oj[k]=obj[k]
+			obj=oj
 		pass
 		if not getAttrib is None:
 			obj['attrib'] = attribs
@@ -928,3 +941,11 @@ def daysDiff( one, two ):
 	delta = one - two
 	return delta.days
 header = 0
+"""
+changes
+____
+2023-06-27 11:31:44
+accessed_raw to date_accessed_raw
+____
+"""
+# __.dir.print

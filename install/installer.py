@@ -3765,6 +3765,12 @@ alias yt.dl="sudo wget https://github.com/blackjack4494/yt-dlc/releases/latest/d
 
 alias url="$widgets/widgets/bash/url.sh"
 alias u="$widgets/widgets/bash/url.sh"
+alias uploadFolder="$widgets/widgets/bash/uploadFolder.sh"
+alias uploadFo="$widgets/widgets/bash/uploadFolder.sh"
+alias upFo="$widgets/widgets/bash/uploadFolder.sh"
+alias uf="$widgets/widgets/bash/uploadFolder.sh"
+alias loadBK="$widgets/widgets/bash/loadBK.sh"
+alias foBackup="$widgets/widgets/bash/foBackup.sh"
 
 
 # a3bc42ec51e9
