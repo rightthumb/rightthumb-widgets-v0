@@ -241,6 +241,8 @@ def action():
 	epochCount = 0
 	idCount = 0
 	for line in pipeResults:
+		line2=line
+		line=line.replace('.',' ')
 		line = line.replace('\n','')
 		
 		if _.switches.isActive('End'):
@@ -269,7 +271,7 @@ def action():
 				epochCount += 1
 			if len(theID) > 0:
 				idCount += 1
-			data.append({ 'id': theID, 'epoch': epoch, 'line': line })
+			data.append({ 'id': theID, 'epoch': epoch, 'line': line2 })
 
 	_.tables.register('resolvedData',data)
 	_.tables.fieldProfileSet('resolvedData','id','alignment','right')
