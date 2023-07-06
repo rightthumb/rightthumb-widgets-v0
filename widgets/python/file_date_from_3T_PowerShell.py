@@ -94,15 +94,15 @@ _.appInfo[focus()] = {
 						'p file + *.bat --c | p file_date_from_3T_PowerShell > %tmpf1%',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
-				       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-				       # {},
+					# {},
 	],
 }
 
@@ -192,13 +192,13 @@ _.postLoad( __file__ )
 # os.system( '"' + do + '"' )
 # _.setPipeData( os.listdir( os.getcwd() ), focus() )
 # _.showLine( item )
-# 	if os.path.isdir( row ):
-# 	if os.path.isfile( row ):
-#	os.path.abspath(path)
+#     if os.path.isdir( row ):
+#     if os.path.isfile( row ):
+#    os.path.abspath(path)
 # __.appRegPipe    ( pipe data registerd focus(__.appReg) set by _.myFileLocations {if imported} , default is None )
 # date = _.friendlyDate( theDate )
 # _.addComma()
-# 													if platform.system() == 'Windows':
+#                                                     if platform.system() == 'Windows':
 ### EXAMPLE: END
 ########################################################################################
 # START

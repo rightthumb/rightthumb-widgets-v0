@@ -41,7 +41,7 @@ _.load()
 import _rightThumb._vars as _v
 import _rightThumb._string as _str
 # import _rightThumb._profileVariables as _profile
-# 	profile = _profile.records.audit( 'name', asset )
+#     profile = _profile.records.audit( 'name', asset )
 # import _rightThumb._encryptString as _blowfish
 	# _blowfish.defaultKey()
 	# en = _blowfish.encrypt( string )
@@ -103,11 +103,11 @@ _.appInfo[focus()] = {
 						''
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': 'name', 'abbreviation': 'n' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 
 	}
@@ -199,8 +199,8 @@ def action():
 
 
 # def load():
-# 	global data
-# 	data = _.getTable( 'table.json' )
+#     global data
+#     data = _.getTable( 'table.json' )
 # data = []
 ########################################################################################
 if __name__ == '__main__':

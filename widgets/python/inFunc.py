@@ -429,8 +429,8 @@ def action():
 								
 								# _.pr( 'listColor:', rowX )
 								# for x in _.switches.values('Plus'):
-								# 	_.pr( 'x:', x )
-								# 	rowX = rowX.replace( str(x), _.colorThis( str(x), 'green', p=0 ) )
+								#     _.pr( 'x:', x )
+								#     rowX = rowX.replace( str(x), _.colorThis( str(x), 'green', p=0 ) )
 								for search in _.switches.values('Plus'):
 									printLine = printLine.replace( search, _.inlineBold( search, 'green' ) )
 								if not _.switches.isActive('JustReturn'):
@@ -507,7 +507,7 @@ def action():
 			# _.pr()
 			# _.pr()
 			# for m in md5Data:
-			# 	_.pr( m )
+			#     _.pr( m )
 			# _.pr()
 			# _.pr()
 			if _.switches.isActive('Log'):

@@ -78,15 +78,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-					   # { 'name': 'name', 'abbreviation': 'n' },
-					   # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-					   # 'this',
-					   # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-					   # {},
+					# {},
 	],
 }
 
@@ -150,15 +150,15 @@ _.l.sw.register( triggers, sw )
 #n)--> start
 
 def sort_string(s):
-    return ''.join(sorted(s))
+	return ''.join(sorted(s))
 
 def has_repeated_chars(s):
-    char_count = {}
-    for char in s:
-        if char in char_count:
-            return True  # A repeated character is found
-        char_count[char] = 1
-    return False  # No repeated characters
+	char_count = {}
+	for char in s:
+		if char in char_count:
+			return True  # A repeated character is found
+		char_count[char] = 1
+	return False  # No repeated characters
 
 def generate_three_letter_combinations():
 	alphabet = 'abcdefghijklmnopqrstuvwxyz'

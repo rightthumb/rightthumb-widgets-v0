@@ -359,7 +359,7 @@ def scanDrives():
 					driveID = genGUID()
 					drive_records.append(appendRecord(driveID,letter,time.time()))
 					file = open(idFile,'w') 
-					file.write(driveID)				 
+					file.write(driveID)                 
 					file.close()
 					os.system('attrib +h ' + idFile)
 					# _.pr(letter,driveID)
@@ -741,9 +741,9 @@ class Documentation_Initial:
 					self.findSerial()
 
 				# for x in dir(window):
-				# 	x = str(x)
-				# 	if not x.startswith('_'):
-				# 		_.pr(x)
+				#     x = str(x)
+				#     if not x.startswith('_'):
+				#         _.pr(x)
 				self.save = True
 				window.destroy()
 				window.quit()
@@ -1087,7 +1087,7 @@ class Documentation_Initial:
 		factor = ''
 
 		if 'TB' in size:
-			factor = 1099511627776	
+			factor = 1099511627776    
 		elif 'GB' in size:
 			factor = 1073741824
 		elif 'MB' in size:
@@ -1110,27 +1110,27 @@ class Documentation_Initial:
 		return size / 1073741824
 
 	def extractSerials( self, data ):
-	    data = str( data )
-	    drive = False
-	    serial = False
-	    c = 'PHYSICALDRIVE0"'
-	    d = 'PHYSICALDRIVE1"'
-	    if 'Tag' in data:
-	        if c in data:
-	            drive = 'c'
-	        if d in data:
-	            drive = 'd'
-	        sData = data.split('\n')
-	        for i,x in enumerate(sData):
-	            if 'Serial'.lower() in x.lower():
-	                y = x.split('"')[1].replace( ' ', '' )
-	                serial = y
-	    return [drive,serial]
+		data = str( data )
+		drive = False
+		serial = False
+		c = 'PHYSICALDRIVE0"'
+		d = 'PHYSICALDRIVE1"'
+		if 'Tag' in data:
+			if c in data:
+				drive = 'c'
+			if d in data:
+				drive = 'd'
+			sData = data.split('\n')
+			for i,x in enumerate(sData):
+				if 'Serial'.lower() in x.lower():
+					y = x.split('"')[1].replace( ' ', '' )
+					serial = y
+		return [drive,serial]
 	def getSerials( self ):
 		result = []
 		c = wmi.WMI()
 		for i,x in enumerate(c.Win32_PhysicalMedia()):
-		    result.append( self.extractSerials( x ) )
+			result.append( self.extractSerials( x ) )
 		return result
 	def crossRefSerials( self, serialNumbers ):
 		global drive_records

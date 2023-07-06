@@ -24,7 +24,7 @@ _.switches.register('SkipFirst', '-first,-skip')
 # _.switches.register('Output', '-o','folder\\appOut.py')
 # _.switches.register('Move', '-move','completed_in-folder_name')
 
-_.appInfo=	{
+_.appInfo=    {
 	'file': 'countEach.py',
 	'description': 'counts each',
 	'prerequisite': [],
@@ -61,7 +61,7 @@ def action():
 	for line in pipeData:
 		line = line.replace('\n','')
 		if _.switches.isActive('CleanUp'):
-			line = line.lower()	
+			line = line.lower()    
 			line = line.replace(' ','')
 		count += 1
 		if not line == last:

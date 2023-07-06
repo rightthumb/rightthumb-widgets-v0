@@ -22,7 +22,7 @@ import _rightThumb._string as _str
 _.switches.register('Songs', '-songs')
 _.switches.register('Song', '-song')
 
-_.appInfo=	{
+_.appInfo=    {
 	'file': 'done.py',
 	'description': 'Changes the world',
 	'prerequisite': [],
@@ -41,12 +41,12 @@ _.switches.process()
 # pipeData = ''
 
 # if not sys.stdin.isatty():
-# 	pipeData = sys.stdin.readlines()
-# 	try:
-# 		if pipeData[0][0].isalnum() == False:
-# 			pipeData[0] = pipeData[0][1:]
-# 	except Exception as e:
-# 		pass
+#     pipeData = sys.stdin.readlines()
+#     try:
+#         if pipeData[0][0].isalnum() == False:
+#             pipeData[0] = pipeData[0][1:]
+#     except Exception as e:
+#         pass
 
 ########################################################################################
 def action():
@@ -85,13 +85,13 @@ def action():
 	# mplayer = _v.techDrive + ':"+_v.slash+"techApps"+_v.slash+"VLCPortable"+_v.slash+"VLCPortable.exe'
 	mplayer = _v.techDrive + ':'+_v.slash+'techApps'+_v.slash+'XMPlayPortable'+_v.slash+'XMPlayPortable.exe'
 	# if not os.path.isfile( mplayer ):
-	# 	mplayer = _v.techDrive + ':"+_v.slash+"techApps"+_v.slash+"VLCPortable"+_v.slash+"VLCPortable.exe'
+	#     mplayer = _v.techDrive + ':"+_v.slash+"techApps"+_v.slash+"VLCPortable"+_v.slash+"VLCPortable.exe'
 	
 	# mFolder = 'D:"+_v.slash+"_Scott"+_v.slash+"S_Music'
 	mFolder = _v.appsFolder+_v.slash+'MP3'
 	print(mFolder)
 	# if not os.path.isdir( mFolder ):
-	# 	mFolder = _v.techDrive + ':"+_v.slash+"techApps"+_v.slash+"MP3'
+	#     mFolder = _v.techDrive + ':"+_v.slash+"techApps"+_v.slash+"MP3'
 
 	play = False
 

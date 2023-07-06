@@ -272,9 +272,9 @@ def estimate():
 	if done:
 		_.pr( '                                                                       ', end='\r', flush=True )
 		# if _.switches.isActive('Prefix'):
-		# 	_.pr( ' ' + _.switches.value('Prefix') + ':', '100%', end='\r', flush=True )
+		#     _.pr( ' ' + _.switches.value('Prefix') + ':', '100%', end='\r', flush=True )
 		# else:
-		# 	_.pr( ' ' + '100%', end='\r', flush=True )
+		#     _.pr( ' ' + '100%', end='\r', flush=True )
 
 	else:
 

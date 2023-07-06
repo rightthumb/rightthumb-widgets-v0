@@ -52,7 +52,7 @@ __.pre_error = False
 _.appInfo[focus()] = {
 	'file': 'size.py',
 	'liveAppName': __.thisApp( __file__ ),
- 	'description': 'to bytes or from bytes',
+	'description': 'to bytes or from bytes',
 	'categories': [
 						'size',
 						'calc',
@@ -101,15 +101,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
-				       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-				       # {},
+					# {},
 	],
 }
 

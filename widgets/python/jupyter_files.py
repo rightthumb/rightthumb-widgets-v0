@@ -29,14 +29,14 @@ print my_file2.read()
 print '--------------------------------'
 
 for line in open('test.txt'):
-    print line
+	print line
 
 print '----------'
 
 i=0
 for one_liner in open('test.txt'):
-    print 'Line: {} = {}'.format(i,one_liner)
-    i+=1
+	print 'Line: {} = {}'.format(i,one_liner)
+	i+=1
 
 
 

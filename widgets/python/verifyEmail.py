@@ -28,7 +28,7 @@ _.switches.register('Email', '-email','example@example.com')
 # _.switches.register('Output', '-o','folder\\appOut.py')
 # _.switches.register('Move', '-move','completed_in-folder_name')
 
-_.appInfo=	{
+_.appInfo=    {
 	'file': 'thisApp.py',
 	'description': 'Changes the world',
 	'prerequisite': [],
@@ -148,9 +148,9 @@ def action():
 	match = re.match('^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$', addressToVerify)
 
 	# if match == None:
-	# 	print('Bad Syntax in ' + addressToVerify)
-	# 	print('N')
-	# 	sys.exit()
+	#     print('Bad Syntax in ' + addressToVerify)
+	#     print('N')
+	#     sys.exit()
 		# raise ValueError('Bad Syntax')
 
 	#Step 2: Getting MX record

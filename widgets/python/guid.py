@@ -50,25 +50,25 @@ _.appInfo[__name__]['examples'].append('p guid')
 
 
 # def formatColumns(columns):
-# 	result = ''
-# 	for c in columns.split(','):
-# 		hasPre = False
-# 		if '.' in c or ':' in c:
-# 			hasPre = True
-# 			c = c.replace(':','.')
-# 			preDataR = c.split('.')
-# 			preData = preDataR[0]
-# 			c = preDataR[1]
+#     result = ''
+#     for c in columns.split(','):
+#         hasPre = False
+#         if '.' in c or ':' in c:
+#             hasPre = True
+#             c = c.replace(':','.')
+#             preDataR = c.split('.')
+#             preData = preDataR[0]
+#             c = preDataR[1]
 
-# 		for col in _.appInfo[__name__]['columns']:
-# 			for a in col['abbreviation'].split(','):
-# 				if a == c:
-# 					c = col['name']
-# 		if hasPre:
-# 			c = preData + '.' + c
-# 		result += c + ','
-# 	result = result[:-1]
-# 	return result
+#         for col in _.appInfo[__name__]['columns']:
+#             for a in col['abbreviation'].split(','):
+#                 if a == c:
+#                     c = col['name']
+#         if hasPre:
+#             c = preData + '.' + c
+#         result += c + ','
+#     result = result[:-1]
+#     return result
 
 # _.switches.trigger('Column',formatColumns)
 # _.switches.trigger('Sort',formatColumns)
@@ -117,8 +117,8 @@ def pipeCleaner():
 
 # _.appData[focus()]['pipe'] = ''
 # if not sys.stdin.isatty():
-# 	_.appData[focus()]['pipe'] = sys.stdin.readlines()
-# 	pipeCleaner()
+#     _.appData[focus()]['pipe'] = sys.stdin.readlines()
+#     pipeCleaner()
 
 
 
@@ -135,91 +135,91 @@ def pipeCleaner():
 
 
 # if _.switches.isActive('_File_'):
-# 	_.tables.register('toCheck') # table, rows = []
-# 	_.switches.fieldSet('_File_','active',True)
-# 	_.switches.fieldSet('_File_','value','toCheck.json')
-# 	_.tables.get('toCheck',_.switches.value('_File_'))
-# 	_.tables.trigger('toCheck','stamp,time,date',_.float2Dated,True)
-# 	_.tables.sort('toCheck', 'name')
+#     _.tables.register('toCheck') # table, rows = []
+#     _.switches.fieldSet('_File_','active',True)
+#     _.switches.fieldSet('_File_','value','toCheck.json')
+#     _.tables.get('toCheck',_.switches.value('_File_'))
+#     _.tables.trigger('toCheck','stamp,time,date',_.float2Dated,True)
+#     _.tables.sort('toCheck', 'name')
 
-# 	_.tables.registerView('test_table','sample3','name,age','age') # table, view, fields, sort
-# 	_.tables.view('test_table','sample') # table, view
+#     _.tables.registerView('test_table','sample3','name,age','age') # table, view, fields, sort
+#     _.tables.view('test_table','sample') # table, view
 
-# 	_.switches.fieldGet('Column','pos')
-# 	if _.switches.exists('Column2'):
-# 		print('This is a switch')
-
-
+#     _.switches.fieldGet('Column','pos')
+#     if _.switches.exists('Column2'):
+#         print('This is a switch')
 
 
-# 	if _.switches.isActive('Output') == True:
 
 
-# 	if _.switches.isActive('Move') == True:
-# 	        shutil.move(_.ci(_.switches.value('Input')), _.switches.value('Move') + '\\' + _.ci(_.switches.value('Input')))
-# 	# if _.showLine(string):
-# 		# print(line)
+#     if _.switches.isActive('Output') == True:
+
+
+#     if _.switches.isActive('Move') == True:
+#             shutil.move(_.ci(_.switches.value('Input')), _.switches.value('Move') + '\\' + _.ci(_.switches.value('Input')))
+#     # if _.showLine(string):
+#         # print(line)
 
 
 
 ########################################################################################
 # class TheChildItems:
 
-# 	def __init__(self, name, switch):
-# 		self.name = name
-# 		self.active = False
-# 		self.value = None
+#     def __init__(self, name, switch):
+#         self.name = name
+#         self.active = False
+#         self.value = None
 
-# 	def trigger(self,script):
-# 		self.script_trigger = script
+#     def trigger(self,script):
+#         self.script_trigger = script
 
-# 	def changeStatus(self,newStatus):
-# 		self.active = newStatus
+#     def changeStatus(self,newStatus):
+#         self.active = newStatus
 # class TheParentItems:
 
-# 	def __init__(self):
-# 		self.childItemRows = []
+#     def __init__(self):
+#         self.childItemRows = []
 
-# 	def register(self, name):
-# 		self.childItemRows.append(TheChildItems(name))
-# 	def print(self):
-# 		childItems = []
-# 		for ci in self.childItemRows:
-# 			childItems.append({'name':ci.name})
-# 		_.tables.register('childClassItems',childItems)
-# 		# tables.trigger('switches','switch,name',test,True)
-# 		_.tables.print('childClassItems','name')
-# 	def printStatus(self):
-# 		childItems = []
-# 		for ci in self.childItemRows:
-# 			if ci.active:
-# 				active = 'True'
-# 			else:
-# 				active = 'False'
-# 			value = ci.value
-# 			if ci.value == True:
-# 				value = 'True'
-# 			elif ci.value == False:
-# 				value = 'False'
+#     def register(self, name):
+#         self.childItemRows.append(TheChildItems(name))
+#     def print(self):
+#         childItems = []
+#         for ci in self.childItemRows:
+#             childItems.append({'name':ci.name})
+#         _.tables.register('childClassItems',childItems)
+#         # tables.trigger('switches','switch,name',test,True)
+#         _.tables.print('childClassItems','name')
+#     def printStatus(self):
+#         childItems = []
+#         for ci in self.childItemRows:
+#             if ci.active:
+#                 active = 'True'
+#             else:
+#                 active = 'False'
+#             value = ci.value
+#             if ci.value == True:
+#                 value = 'True'
+#             elif ci.value == False:
+#                 value = 'False'
 
-# 			childItems.append({'name':ci.name ,'active':active,'value': value})
-# 		_.tables.register('childClassItems',childItems)
-# 		_.tables.print('childClassItems','name,active,value')
-# 	def status(self,name,newStatus):
-# 		for i,ci in enumerate(self.childItemRows):
-# 			if ci.name == name:
-# 				self.childItemRows[i].changeStatus(newStatus)
+#             childItems.append({'name':ci.name ,'active':active,'value': value})
+#         _.tables.register('childClassItems',childItems)
+#         _.tables.print('childClassItems','name,active,value')
+#     def status(self,name,newStatus):
+#         for i,ci in enumerate(self.childItemRows):
+#             if ci.name == name:
+#                 self.childItemRows[i].changeStatus(newStatus)
 
 # if _.switches.isActive('Move'):
-    # shutil.move(_.ci(_.switches.value('Input')), _.switches.value('Move') + '\\' + _.ci(_.switches.value('Input')))
+	# shutil.move(_.ci(_.switches.value('Input')), _.switches.value('Move') + '\\' + _.ci(_.switches.value('Input')))
 
 
 ########################################
 
 
 
-# 	json = _.getTable('base64Key.json')
-#	books = _.getText(_v.myTables + '\\bible_books.csv')
+#     json = _.getTable('base64Key.json')
+#    books = _.getText(_v.myTables + '\\bible_books.csv')
 
 # _mime.isText(file)
 # _mime.isBinary(file)

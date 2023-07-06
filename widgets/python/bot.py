@@ -137,15 +137,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-					   # { 'name': 'name', 'abbreviation': 'n' },
-					   # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-					   # 'this',
-					   # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-					   # {},
+					# {},
 	],
 }
 
@@ -318,9 +318,9 @@ def action():
 					logs.append(rec2)
 
 		# for rec in logs:
-		# 	if 1660871568 == rec['epoch']:
-		# 		for ch in rec['answer']:
-		# 			print(ch,ord(ch))
+		#     if 1660871568 == rec['epoch']:
+		#         for ch in rec['answer']:
+		#             print(ch,ord(ch))
 		# sys.exit()
 
 		logs = _.tables.returnSorted( 'data', 'epoch', logs )

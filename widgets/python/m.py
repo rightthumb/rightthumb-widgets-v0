@@ -146,64 +146,64 @@ if not sys.stdin.isatty():
 # START
 
 # def profileClean( label ):
-# 	label = label.replace( ,  )
+#     label = label.replace( ,  )
 
 
 
 # def bmLog(p):
-# 	log = _.getTableDB( 'bookmarks_index_log.tables' )
-# 	if not 'm' in log:
-# 		log['m'] = []
-# 	log['m'].append({ 'epoch': time.time(), 'bm': _.switches.value('Alias'), 'location': p, 'session': _v.session() })
-# 	_.saveTableDB( log, 'bookmarks_index_log.tables', p=0 )
+#     log = _.getTableDB( 'bookmarks_index_log.tables' )
+#     if not 'm' in log:
+#         log['m'] = []
+#     log['m'].append({ 'epoch': time.time(), 'bm': _.switches.value('Alias'), 'location': p, 'session': _v.session() })
+#     _.saveTableDB( log, 'bookmarks_index_log.tables', p=0 )
 
 # def action():
-# 	p = _v.sanitizeFolder( folder )
-# 	b = _v.bookmarkFormat.replace( 'ALIASHERE', _.switches.value('Alias') )
+#     p = _v.sanitizeFolder( folder )
+#     b = _v.bookmarkFormat.replace( 'ALIASHERE', _.switches.value('Alias') )
 	
-# 	if len(_.switches.value('Alias')) == 0:
-# 		_.pr( 'Error' )
-# 	else:
-# 		_.saveText( p, b )
+#     if len(_.switches.value('Alias')) == 0:
+#         _.pr( 'Error' )
+#     else:
+#         _.saveText( p, b )
 
-# 		bmLog(p)
+#         bmLog(p)
 
-# 		index = _.getTableDB( 'bookmarks.index' )
-# 		# labels paths
-# 		if _.switches.value('Alias') in index['labels'].keys():
-# 			old = index['labels'][_.switches.value('Alias')]
-# 			if p in index['paths'].keys():
-# 				nX = []
-# 				for record in index['paths'][p]:
-# 					if not record == _.switches.value('Alias'):
-# 						nX.append( record )
-# 				index['paths'][p] = nX
-# 			if not _.switches.isActive('Clean'):
-# 				_.colorThis( [  '\told', old  ], 'yellow' )
-# 			if os.path.isdir(old):
-# 				status = 'still exists'
-# 				if not _.switches.isActive('Clean'):
-# 					_.colorThis( [  '\t\t', status  ], 'green' )
-# 			else:
-# 				status = 'no longer exists'
-# 				if not _.switches.isActive('Clean'):
-# 					_.colorThis( [  '\t\t', status  ], 'red' )
-# 		index['labels'][_.switches.value('Alias')] = p
+#         index = _.getTableDB( 'bookmarks.index' )
+#         # labels paths
+#         if _.switches.value('Alias') in index['labels'].keys():
+#             old = index['labels'][_.switches.value('Alias')]
+#             if p in index['paths'].keys():
+#                 nX = []
+#                 for record in index['paths'][p]:
+#                     if not record == _.switches.value('Alias'):
+#                         nX.append( record )
+#                 index['paths'][p] = nX
+#             if not _.switches.isActive('Clean'):
+#                 _.colorThis( [  '\told', old  ], 'yellow' )
+#             if os.path.isdir(old):
+#                 status = 'still exists'
+#                 if not _.switches.isActive('Clean'):
+#                     _.colorThis( [  '\t\t', status  ], 'green' )
+#             else:
+#                 status = 'no longer exists'
+#                 if not _.switches.isActive('Clean'):
+#                     _.colorThis( [  '\t\t', status  ], 'red' )
+#         index['labels'][_.switches.value('Alias')] = p
 
-# 		if p in index['paths'].keys():
-# 			index['paths'][p].append( _.switches.value('Alias') )
-# 		else:
-# 			index['paths'][p] = []
-# 			if not _.switches.value('Alias') in index['paths'][p]:
-# 				index['paths'][p].append( _.switches.value('Alias') )
-# 		_.saveTableDB( index, 'bookmarks.index', p=0 )
-# 		if not _.switches.isActive('Clean'):
-# 			_.colorThis( [  _.switches.value('Alias'), folder  ], 'cyan' )
+#         if p in index['paths'].keys():
+#             index['paths'][p].append( _.switches.value('Alias') )
+#         else:
+#             index['paths'][p] = []
+#             if not _.switches.value('Alias') in index['paths'][p]:
+#                 index['paths'][p].append( _.switches.value('Alias') )
+#         _.saveTableDB( index, 'bookmarks.index', p=0 )
+#         if not _.switches.isActive('Clean'):
+#             _.colorThis( [  _.switches.value('Alias'), folder  ], 'cyan' )
 
 
-# 	if _.switches.isActive('Print'):
-# 		_.pr( p )
-# 		_.pr( b )
+#     if _.switches.isActive('Print'):
+#         _.pr( p )
+#         _.pr( b )
 
 
 
@@ -289,40 +289,40 @@ def action():
 		# s = '## {42F74F699A95} ##'
 		# e = '## {6D2B143FF720} ##'
 		# if not s in bashrc:
-		# 	bashrc += '\n\n'
-		# 	bashrc += s
-		# 	bashrc += '\n\n'
-		# 	bashrc += e
-		# 	bashrc += '\n\n'
+		#     bashrc += '\n\n'
+		#     bashrc += s
+		#     bashrc += '\n\n'
+		#     bashrc += e
+		#     bashrc += '\n\n'
 
 		# bm = _.getTableDB( 'bookmarks.index' )
 
 		# alias = []
 		# for label in bm['labels']:
-		# 	path = _bm.Bookmarks().resolve(bm['labels'][label])
-		# 	if os.path.isdir(path):
-		# 		a = "alias LABEL='cd PATH'".replace( 'LABEL', 'b.'+label ).replace( 'PATH', path )
-		# 		alias.append(a)
+		#     path = _bm.Bookmarks().resolve(bm['labels'][label])
+		#     if os.path.isdir(path):
+		#         a = "alias LABEL='cd PATH'".replace( 'LABEL', 'b.'+label ).replace( 'PATH', path )
+		#         alias.append(a)
 
 		# active=False
 		# wasActive=False
 		# new_bashrc = ''
 		# for line in bashrc.split('\n'):
-		# 	if s in line:
-		# 		active=True
+		#     if s in line:
+		#         active=True
 
 
-		# 	if not active:
-		# 		new_bashrc += line + '\n'
+		#     if not active:
+		#         new_bashrc += line + '\n'
 
-		# 	if e in line:
-		# 		new_bashrc += s + '\n'
-		# 		for a in alias:
-		# 			new_bashrc += a + '\n'
+		#     if e in line:
+		#         new_bashrc += s + '\n'
+		#         for a in alias:
+		#             new_bashrc += a + '\n'
 
-		# 		new_bashrc += e + '\n'
-		# 		active=False
-		# 		wasActive=True
+		#         new_bashrc += e + '\n'
+		#         active=False
+		#         wasActive=True
 
 
 		# _.saveText( new_bashrc, bashrc_path )

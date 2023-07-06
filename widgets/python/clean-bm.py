@@ -89,15 +89,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
-				       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-				       # {},
+					# {},
 	],
 }
 
@@ -171,7 +171,7 @@ _.postLoad( __file__ )
 def action():
 
 	# if not os.path.isfile(  _v.dbTables  +_v.slash+ 'bookmarks.index'  ):
-	# 	_.colorThis( [ '' ] )
+	#     _.colorThis( [ '' ] )
 
 	# _.pr( _v.thisHost )
 	# sys.exit()

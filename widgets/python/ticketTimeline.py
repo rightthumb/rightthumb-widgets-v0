@@ -179,7 +179,7 @@ def records():
 						e = _.resolveEpochTest(end)
 						# x = 0
 						# if type(e) == bool:
-						# 	tickets.append({ 'id': idx, 'start': s, 'end': e, 'path': path })
+						#     tickets.append({ 'id': idx, 'start': s, 'end': e, 'path': path })
 
 						i+=1
 						if returnFiles:
@@ -232,7 +232,7 @@ def action():
 
 
 			# if i > 10:
-			# 	sys.exit()
+			#     sys.exit()
 	_.saveTable( log, 'ticketTimeline.json', printThis=False )
 
 
@@ -306,7 +306,7 @@ def tickets_of_the_day():
 
 
 			# if i > 10:
-			# 	sys.exit()
+			#     sys.exit()
 	_.saveTable( log, 'ticketTimeline_Day.json', printThis=False )
 
 

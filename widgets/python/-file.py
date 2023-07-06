@@ -125,11 +125,11 @@ _.appInfo[focus()] = {
 						fs('p files - /bin /boot /dev /lib /lib64 /lost+found /media /mnt /proc /srv /sys -f / -r'),
 	],
 	'columns': [
-					   # { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': 'name', 'abbreviation': 'n' },
 	],
 	'aliases': [
-					   # 'this',
-					   # 'app',
+					# 'this',
+					# 'app',
 	],
 
 	}
@@ -303,7 +303,7 @@ def getFolder(folder,r=True):
 
 
 	# if _.switches.isActive('Minus') and not _.showLine(folder,):
-	# 	return None
+	#     return None
 	
 
 	if not sw(folder):

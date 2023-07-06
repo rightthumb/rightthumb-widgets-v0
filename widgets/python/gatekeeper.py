@@ -80,15 +80,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-					   # { 'name': 'name', 'abbreviation': 'n' },
-					   # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-					   # 'this',
-					   # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-					   # {},
+					# {},
 	],
 }
 
@@ -166,23 +166,23 @@ _.l.sw.register( triggers, sw )
 	# fo=folder
 	# i=0
 	# while not os.path.isfile( folder+os.sep+_.v.gateFi ):
-	# 	print(folder+os.sep+_.v.gateFi)
-	# 	# print(os.path.isfile( folder+os.sep+'.folder.meta'+end ),folder+os.sep+'.folder.meta'+end)
-	# 	i+=1
-	# 	if i > 100:
-	# 		_.e('missing folder meta')
-	# 	try:
-	# 		folder = __.path(folder,pop=True)
-	# 	except Exception as e:
-	# 		break
+	#     print(folder+os.sep+_.v.gateFi)
+	#     # print(os.path.isfile( folder+os.sep+'.folder.meta'+end ),folder+os.sep+'.folder.meta'+end)
+	#     i+=1
+	#     if i > 100:
+	#         _.e('missing folder meta')
+	#     try:
+	#         folder = __.path(folder,pop=True)
+	#     except Exception as e:
+	#         break
 	# if os.path.isfile(folder+os.sep+_.v.gateFi):
-	# 	gatekeeper=_.getYML(folder+os.sep+_.v.gateFi)
-	# 	# gatekeeper['path']=folder+os.sep+_.v.gateFi
-	# 	if not type(gatekeeper) == dict: gatekeeper = {}
-	# 	gatepath = folder+os.sep+_.v.gateFi
+	#     gatekeeper=_.getYML(folder+os.sep+_.v.gateFi)
+	#     # gatekeeper['path']=folder+os.sep+_.v.gateFi
+	#     if not type(gatekeeper) == dict: gatekeeper = {}
+	#     gatepath = folder+os.sep+_.v.gateFi
 	# else:
-	# 	gatekeeper = {}
-	# 	gatepath = fo+os.sep+_.v.gateFi
+	#     gatekeeper = {}
+	#     gatepath = fo+os.sep+_.v.gateFi
 	# return gatekeeper, gatepath
 
 

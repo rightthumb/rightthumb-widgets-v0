@@ -103,11 +103,11 @@ _.appInfo[focus()] = {
 						''
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': 'name', 'abbreviation': 'n' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 
 	}
@@ -244,7 +244,7 @@ def action():
 
 		# try:
 		# except Exception as e:
-		# 	_.pr( 'Click Error' )
+		#     _.pr( 'Click Error' )
 
 
 		time.sleep( .5 )
@@ -253,21 +253,21 @@ def action():
 		# test = False
 		# _.pr( test )
 		# while not test:
-		# 	time.sleep( 1 )
-		# 	try:
-		# 		test = _browser.imp.project.injectReturn( 'window.hack.acquire.pause()' )
-		# 		how = 0
-		# 	except Exception as e:
-		# 		test = False
-		# 		how = 1
-		# 	_.pr( test, how )
+		#     time.sleep( 1 )
+		#     try:
+		#         test = _browser.imp.project.injectReturn( 'window.hack.acquire.pause()' )
+		#         how = 0
+		#     except Exception as e:
+		#         test = False
+		#         how = 1
+		#     _.pr( test, how )
 
 		
 		# data = _browser.imp.project.injectReturn( 'return window.hack.acquire.data;' )
 
 		# files = []
 		# for rec in data:
-		# 	files.append( rec['file'] )
+		#     files.append( rec['file'] )
 			
 
 		# _.printVar( data )
@@ -277,16 +277,16 @@ def action():
 		# test = False
 		# _.pr( test )
 		# while not test:
-		# 	time.sleep( 1 )
-		# 	cnt = 0
-		# 	downloads = os.listdir( _v.downloads )
-		# 	for file in files:
-		# 		if file in downloads:
-		# 			cnt += 1
-		# 	if cnt == len(files):
-		# 		test = True
-		# 	else:
-		# 		_.pr( 'Waiting on downloads:', cnt, 'of', len(files) )
+		#     time.sleep( 1 )
+		#     cnt = 0
+		#     downloads = os.listdir( _v.downloads )
+		#     for file in files:
+		#         if file in downloads:
+		#             cnt += 1
+		#     if cnt == len(files):
+		#         test = True
+		#     else:
+		#         _.pr( 'Waiting on downloads:', cnt, 'of', len(files) )
 
 
 
@@ -322,8 +322,8 @@ def action():
 
 
 # def load():
-# 	global data
-# 	data = _.getTable( 'table.json' )
+#     global data
+#     data = _.getTable( 'table.json' )
 data = []
 ########################################################################################
 if __name__ == '__main__':

@@ -33,15 +33,15 @@ _.load()
 import _rightThumb._vars as _v
 import _rightThumb._string as _str
 # import _rightThumb._profileVariables as _profile
-# 	profile = _profile.records.audit( 'name', asset )
+#     profile = _profile.records.audit( 'name', asset )
 # import _rightThumb._encryptString as _blowfish
 	# _blowfish.genPassword()
 	# _blowfish.genPassword('string')
 	# en = _blowfish.encrypt( string )
 	# de = _blowfish.decrypt( en )
 # import _rightThumb._encryptFile as _blowfish
-# 	_blowfish.encrypt( infilepath, outfilepath, key )
-# 	_blowfish.decrypt( infilepath, outfilepath, key )
+#     _blowfish.encrypt( infilepath, outfilepath, key )
+#     _blowfish.decrypt( infilepath, outfilepath, key )
 # _browser = _.regImp( __.appReg, '_rightThumb._toolsScrapeFrontEnd' )
 # _browserX = _.regImp( __.appReg, '_rightThumb._toolsScrapeDirect' )
 # import _rightThumb._date as _date
@@ -62,9 +62,9 @@ import _rightThumb._string as _str
 	# _inDic.imp.testAll( 'fight' )
 	# _inDic.imp.testOne( 'austen' )
 # _file_folder = _.regImp( __.appReg, 'file_folder' )
-# 	_file_folder.switch( 'Save,Clean' )
-# 	_file_folder.switch( 'Compair,Clean' )
-# 	_file_folder.switch( 'Folder', '' )
+#     _file_folder.switch( 'Save,Clean' )
+#     _file_folder.switch( 'Compair,Clean' )
+#     _file_folder.switch( 'Folder', '' )
 ##################################################
 
 def appSwitches():
@@ -100,11 +100,11 @@ _.appInfo[focus()] = {
 						''
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': 'name', 'abbreviation': 'n' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 
 	}
@@ -181,8 +181,8 @@ _.postLoad( __file__ )
 # p = _.getText( _v.pips, raw=True, clean=True ).split('\n')
 # os.system('"' + do + '"')
 # _.setPipeData( os.listdir(os.getcwd()), focus() )
-# 	if os.path.isdir(row):
-# 	if os.path.isfile(row):
+#     if os.path.isdir(row):
+#     if os.path.isfile(row):
 ########################################################################################
 # START
 

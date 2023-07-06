@@ -218,9 +218,9 @@ def action():
 	
 	pass
 	# if _.switches.isActive('Input'):
-	# 	_.setPipeData( _.getText( _.switches.value('Input') ), focus() )
+	#     _.setPipeData( _.getText( _.switches.value('Input') ), focus() )
 	# if not type( _.appData[__.appReg]['pipe'] ) == bool:
-	# 	pass
+	#     pass
 	# _.pr( _.d2json(_.appData) )
 
 

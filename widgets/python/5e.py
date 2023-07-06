@@ -44,7 +44,7 @@ __.pre_error = False
 _.appInfo[focus()] = {
 	'file': '5e.py',
 	'liveAppName': __.thisApp( __file__ ),
- 	'description': 'dungeons and dragons databases',
+	'description': 'dungeons and dragons databases',
 	'categories': [
 						'dnd',
 						'dungeons and dragons',
@@ -69,15 +69,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
-				       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-				       # {},
+					# {},
 	],
 }
 
@@ -187,8 +187,8 @@ def action():
 	# exec (what)
 
 	# for x in test['inDic']:
-	# 	base = 'Spells'
-	# 	for y in x:
+	#     base = 'Spells'
+	#     for y in x:
 
 
 

@@ -49,7 +49,7 @@ __.pre_error = False
 _.appInfo[focus()] = {
 	'file': 'war.py',
 	'liveAppName': __.thisApp( __file__ ),
- 	'description': 'plays the card game war',
+	'description': 'plays the card game war',
 	'categories': [
 						'cards',
 						'game',
@@ -73,15 +73,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
-				       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-				       # {},
+					# {},
 	],
 }
 
@@ -167,26 +167,26 @@ values = {
 }
 
 # def test( data ):
-# 	global values
-# 	tmp = []
+#     global values
+#     tmp = []
 
-# 	for i,c in enumerate(data):
-# 		tmp.append({ 'card': c, 'val': values[c[:-1]], 'player': i+1 })
-# 	sortedDeck = _.tables.returnSorted( 'data', 'd.val', tmp )
-# 	return sortedDeck
+#     for i,c in enumerate(data):
+#         tmp.append({ 'card': c, 'val': values[c[:-1]], 'player': i+1 })
+#     sortedDeck = _.tables.returnSorted( 'data', 'd.val', tmp )
+#     return sortedDeck
 	# _.pr( sortedDeck )
 	# sys.exit()
 	# aa = a[:-1]
 	# bb = b[:-1]
 
 	# if values[aa] > values[bb]:
-	# 	return 1
+	#     return 1
 	# elif values[aa] < values[bb]:
-	# 	return 2
+	#     return 2
 	# elif values[aa] == values[bb]:
-	# 	return 3
+	#     return 3
 	# else:
-	# 	return 4
+	#     return 4
 
 
 def shuffle( deck ):
@@ -308,7 +308,7 @@ def war( battling ):
 
 	
 	# for p in battling:
-	# 	_.pr( p, len(hands[p]) )
+	#     _.pr( p, len(hands[p]) )
 	cg = {}
 	for p in battling:
 		cg[p] = []
@@ -440,7 +440,7 @@ def newGame():
 	# players = 8
 	for p in range(1,players+1):
 		hands[p] = []
-	# 	pass
+	#     pass
 	p = 1
 	for c in deck:
 		try:
@@ -452,7 +452,7 @@ def newGame():
 		if p > players:
 			p = 1
 	# for p in hands:
-	# 	_.pr( p, len(hands[p]) )
+	#     _.pr( p, len(hands[p]) )
 	play()
 	# _.pr( 'wars:', total_wars['war'] )
 	# _.pr( 'multi-wars:', total_wars['multi'] )

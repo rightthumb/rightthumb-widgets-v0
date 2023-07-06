@@ -72,11 +72,11 @@ _.appInfo[focus()] = {
 						''
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': 'name', 'abbreviation': 'n' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 
 	}
@@ -191,15 +191,15 @@ def action():
 			_.pr( row['sortable'] )
 
 	# for d in sorted(pipeData, key=lambda v: (v.upper(), v[0].islower())):
-	# 	d = d.replace('\n','')
-	# 	d = d.replace('\r','')
-	# 	_.pr(d)
+	#     d = d.replace('\n','')
+	#     d = d.replace('\r','')
+	#     _.pr(d)
 
 
 
 # def load():
-# 	global data
-# 	data = _.getTable( 'table.json' )
+#     global data
+#     data = _.getTable( 'table.json' )
 # data = []
 ########################################################################################
 if __name__ == '__main__':

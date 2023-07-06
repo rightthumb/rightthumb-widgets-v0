@@ -16,9 +16,9 @@ import sys, time
 import _rightThumb._construct as __
 appDBA=__.clearFocus(__name__,__file__);__.appReg=appDBA;
 def focus(parentApp='',childApp='',reg=True):
-    global appDBA;f=__.appName(appDBA,parentApp,childApp);
-    if reg:__.appReg=f;
-    return f
+	global appDBA;f=__.appName(appDBA,parentApp,childApp);
+	if reg:__.appReg=f;
+	return f
 import _rightThumb._base3 as _
 fieldSet=_.l.vars(focus(),__name__,__file__,appDBA)
 _.load()
@@ -28,11 +28,11 @@ _str = __.imp('_rightThumb._string')
 #e)--> load
 
 def sw():
-    pass
-    #b)--> examples
-    # _.switches.register( 'Input', '-i' )
-    # _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=True )
-    #e)--> examples
+	pass
+	#b)--> examples
+	# _.switches.register( 'Input', '-i' )
+	# _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=True )
+	#e)--> examples
 
 # __.setting('require-list',['Files,Plus','File,Has']) # todo
 # __.setting('require-list',['Pipe','Files','Plus'])
@@ -46,28 +46,28 @@ __.setting('switch-raw',[])
 
 
 _.appInfo[focus()] = {
-    'file': 'thisApp.py',
-    'liveAppName': __.thisApp( __file__ ),
-    'description': 'Changes the world',
-    'categories': [
-                        'DEFAULT',
-                ],
-    'examples': [
-                        _.hp('p thisApp -file file.txt'),
-                        _.linePrint(label='simple',p=0),
-                        '',
-    ],
-    'created': None,
-    'tested': None,
+	'file': 'thisApp.py',
+	'liveAppName': __.thisApp( __file__ ),
+	'description': 'Changes the world',
+	'categories': [
+						'DEFAULT',
+				],
+	'examples': [
+						_.hp('p thisApp -file file.txt'),
+						_.linePrint(label='simple',p=0),
+						'',
+	],
+	'created': None,
+	'tested': None,
 }
 template.info(focus());
 
 def triggers():
-    _.switches.trigger( 'Files', _.myFileLocations, vs=True )
-    _.switches.trigger( 'Ago', _.timeAgo )
-    _.switches.trigger( 'Folder', _.myFolderLocations )
-    _.switches.trigger( 'URL', _.urlTrigger )
-    _.switches.trigger( 'Duration', _.timeFuture )
+	_.switches.trigger( 'Files', _.myFileLocations, vs=True )
+	_.switches.trigger( 'Ago', _.timeAgo )
+	_.switches.trigger( 'Folder', _.myFolderLocations )
+	_.switches.trigger( 'URL', _.urlTrigger )
+	_.switches.trigger( 'Duration', _.timeFuture )
 
 _.l.conf('clean-pipe',True)
 _.l.sw.register( triggers, sw )
@@ -75,45 +75,45 @@ _.l.sw.register( triggers, sw )
 ########################################################################################
 #b)--> examples
 #d)--> code hints to quickly get started
-    #n)--> inline examples
-        # if _.switches.isActive('Test'): test(); return None;
-        # result=[]; result=[ _.pr(line) for i, line, bi in _.numerate( _.isData(r=0) )]
-        # bk=[];[  bk.append(rec['backup']) for rec in backupLog if path == rec['file']]; bk=bk[-1];
-        # a=(1 if True else 0) <--# 
-        #!)--> m=[[row[i] for row in matrix] for i in range(4)]
+	#n)--> inline examples
+		# if _.switches.isActive('Test'): test(); return None;
+		# result=[]; result=[ _.pr(line) for i, line, bi in _.numerate( _.isData(r=0) )]
+		# bk=[];[  bk.append(rec['backup']) for rec in backupLog if path == rec['file']]; bk=bk[-1];
+		# a=(1 if True else 0) <--# 
+		#!)--> m=[[row[i] for row in matrix] for i in range(4)]
 
-    #n)--> python globals
-        # for k in globals(): print(k, eval(k) )
+	#n)--> python globals
+		# for k in globals(): print(k, eval(k) )
 
-    #n)--> webpage from url
-        # requests=__.imp('requests.post')
-        #!)--> data=str(requests.post(url,data={}).content,'iso-8859-1')
+	#n)--> webpage from url
+		# requests=__.imp('requests.post')
+		#!)--> data=str(requests.post(url,data={}).content,'iso-8859-1')
 
-    #n)--> import and backup example
-        # _bk = _.regImp( __.appReg, 'fileBackup' ); _bk.switch( 'Silent' ); _bk.switch( 'isRunOnce' ); _bk.switch( 'Flag', 'APP' ); _bk.switch( 'DoNotSchedule' )
-        # _bk.switch( 'Input', path ); bkfi = _bk.action();
-    
-    #n)--> inline
-        # for rel in [ subject for subject in _.isData(r=0) if _.showLine(subject) ]: print(rel)
+	#n)--> import and backup example
+		# _bk = _.regImp( __.appReg, 'fileBackup' ); _bk.switch( 'Silent' ); _bk.switch( 'isRunOnce' ); _bk.switch( 'Flag', 'APP' ); _bk.switch( 'DoNotSchedule' )
+		# _bk.switch( 'Input', path ); bkfi = _bk.action();
+	
+	#n)--> inline
+		# for rel in [ subject for subject in _.isData(r=0) if _.showLine(subject) ]: print(rel)
 
-    #n)--> banner
-        # banner=_.Banner(app); goss=banner.goss;
+	#n)--> banner
+		# banner=_.Banner(app); goss=banner.goss;
 #e)--> examples
 ########################################################################################
 #n)--> start
 
 def action():
-    load(); global c3po;
+	load(); global c3po;
 
-    #n)--> iterate
-    for subject in _.isData(r=0): _.pr(subject)
-    
+	#n)--> iterate
+	for subject in _.isData(r=0): _.pr(subject)
+	
 
 def load():
-    global c3po
-    c3po = _.getTable( 'table' )
-    #n)--> print table
-    _.pt(c3po)
+	global c3po
+	c3po = _.getTable( 'table' )
+	#n)--> print table
+	_.pt(c3po)
 
 
 ##################################################
@@ -126,12 +126,12 @@ def load():
 
 ########################################################################################
 if __name__ == '__main__':
-    #b)--> examples
+	#b)--> examples
 
-    # banner.pr()
-    # if len(_.switches.all())==0: banner.gossip()
-    
-    #e)--> examples
-    action()
-    _.isExit(__file__)
+	# banner.pr()
+	# if len(_.switches.all())==0: banner.gossip()
+	
+	#e)--> examples
+	action()
+	_.isExit(__file__)
 

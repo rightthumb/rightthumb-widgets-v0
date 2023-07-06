@@ -109,11 +109,11 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': 'name', 'abbreviation': 'n' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 
 	}
@@ -147,14 +147,14 @@ def formatSize(size):
 	elif size > 1048576 and size < 1073741824:
 		num = round(size / 1048576, 2)
 		result = str(num) + ' MB'
-	elif size > 1073741824 and size < 1099511627776	:
+	elif size > 1073741824 and size < 1099511627776    :
 		num = round(size / 1073741824, 2)
 		result = str(num) + ' GB'
 	else:
 		num = round(size / 1099511627776, 2)
 		result = str(num) + ' TB'
 	# if size < 1:
-	# 	result = ''
+	#     result = ''
 	return result
 
 def unFormatSize(size):
@@ -172,7 +172,7 @@ def unFormatSize(size):
 	factor = ''
 
 	if 'TB' in size:
-		factor = 1099511627776	
+		factor = 1099511627776    
 	elif 'GB' in size:
 		factor = 1073741824
 	elif 'MB' in size:
@@ -381,9 +381,9 @@ def getFolder(folder):
 					if shouldPrint:
 						_dir.fileInfo(path)
 						# if not _.switches.isActive('Plus'):
-						# 	_.colorThis( path, 'cyan' )
+						#     _.colorThis( path, 'cyan' )
 						# else:
-						# 	_.pr( _.colorPlus( path, 'cyan' ) )
+						#     _.pr( _.colorPlus( path, 'cyan' ) )
 
 			if os.path.isdir(path):
 				newFolder = folder + _v.slash + item
@@ -444,8 +444,8 @@ def action():
 i = 0
 iS = 0
 # def load():
-# 	global data
-# 	data = _.getTable( 'table.json' )
+#     global data
+#     data = _.getTable( 'table.json' )
 # data = []
 
 

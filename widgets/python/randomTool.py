@@ -94,15 +94,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
-				       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-				       # {},
+					# {},
 	],
 }
 
@@ -175,47 +175,47 @@ import random
 
 def true_false(fix=2):
 
-    global randomTrueFalseLast
-    global randomTrueFalseCount
-    global randomTrueFalseSame
-    try:
-        randomTrueFalseLast
-    except Exception as e:
-        randomTrueFalseLast = True
-        randomTrueFalseSame = 0
-        randomTrueFalseCount = 0
+	global randomTrueFalseLast
+	global randomTrueFalseCount
+	global randomTrueFalseSame
+	try:
+		randomTrueFalseLast
+	except Exception as e:
+		randomTrueFalseLast = True
+		randomTrueFalseSame = 0
+		randomTrueFalseCount = 0
 
-    ran = random.randint(1,101)
-    result = ran % 2 == 0
-    i = 0
-    while i < fix:
-        i+=1
-        if result == randomTrueFalseLast:
-            ran = random.randint(100,200)
-            result = ran % 2 == 0
+	ran = random.randint(1,101)
+	result = ran % 2 == 0
+	i = 0
+	while i < fix:
+		i+=1
+		if result == randomTrueFalseLast:
+			ran = random.randint(100,200)
+			result = ran % 2 == 0
 
-    if result == randomTrueFalseLast:
-        randomTrueFalseSame += 1
-    randomTrueFalseCount += 1
-    randomTrueFalseLast = result
-    return result
+	if result == randomTrueFalseLast:
+		randomTrueFalseSame += 1
+	randomTrueFalseCount += 1
+	randomTrueFalseLast = result
+	return result
 def case(string):
-    
+	
 
-    result = ''
-    for ch in string:
-        if ch.isalnum():
-            try:
-                int(ch)
-            except Exception as e:
-                ran = random.randint(1,101)
-                test = ran % 2 == 0
-                if true_false():
-                    ch = ch.lower()
-                else:
-                    ch = ch.upper()
-        result += ch
-    return result
+	result = ''
+	for ch in string:
+		if ch.isalnum():
+			try:
+				int(ch)
+			except Exception as e:
+				ran = random.randint(1,101)
+				test = ran % 2 == 0
+				if true_false():
+					ch = ch.lower()
+				else:
+					ch = ch.upper()
+		result += ch
+	return result
 
 
 def percentage( part, whole, i=1 ):
@@ -227,8 +227,8 @@ def percentage( part, whole, i=1 ):
 def tf():
 	# n = '0'
 	# for x in str(uuid.uuid4()):
-	# 	if x in '0123456789':
-	# 		n+=x
+	#     if x in '0123456789':
+	#         n+=x
 	# nn = int(n)
 	if (  random.randint(100,200)   % 2) == 0:
 	# if (  nn   % 2) == 0:
@@ -417,7 +417,7 @@ def action():
 			while not i == e:
 				i+=1
 				x = random.randint(int(_.switches.values('Between')[0].split('-')[0]), int(_.switches.values('Between')[0].split('-')[1]))
-				_.pr(x)	
+				_.pr(x)    
 		return None
 
 	# _.pr( percent_of( 100, 5 ) )

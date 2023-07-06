@@ -82,15 +82,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-					   # { 'name': 'name', 'abbreviation': 'n' },
-					   # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-					   # 'this',
-					   # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-					   # {},
+					# {},
 	],
 }
 
@@ -202,17 +202,17 @@ def clip_get():
 	result = 'error'
 	result = cleanString(clip_get_2())
 	# try:
-	# 	result = clip_get_2()
+	#     result = clip_get_2()
 	# except Exception as e:
-	# 	_.cp( '\tpython3 -m pip install pyperclip', 'yellow' )
-	# 	try:
-	# 		result = clip_get_1()
-	# 	except Exception as e:
-	# 		try:
-	# 			result = clip_get_3()
-	# 		except Exception as e:
-	# 			_.cp( 'Error: clipboard error', 'red' )
-	# 			_.cp( '\tpython3 -m pip install pyperclip', 'yellow' )
+	#     _.cp( '\tpython3 -m pip install pyperclip', 'yellow' )
+	#     try:
+	#         result = clip_get_1()
+	#     except Exception as e:
+	#         try:
+	#             result = clip_get_3()
+	#         except Exception as e:
+	#             _.cp( 'Error: clipboard error', 'red' )
+	#             _.cp( '\tpython3 -m pip install pyperclip', 'yellow' )
 
 	if not result:
 		_.cp( 'Error: clipboard error', 'red' )
@@ -267,7 +267,7 @@ def clip_get_2():
 
 	# global win32clipboard
 	# if win32clipboard is None:
-	# 	import win32clipboard
+	#     import win32clipboard
 	# # get clipboard data
 	# win32clipboard.OpenClipboard()
 	# data = win32clipboard.GetClipboardData()

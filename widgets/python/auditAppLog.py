@@ -224,7 +224,7 @@ if not sys.stdin.isatty():
 ########################################################################################
 # START
 def average( lst ): 
-    return round(sum(lst) / len(lst), 2)
+	return round(sum(lst) / len(lst), 2)
 
 def section( section, data, dataType='' ):
 	_.pr()

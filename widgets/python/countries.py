@@ -23,7 +23,7 @@ _.switches.register('States', '-states')
 _.switches.register('Count', '-count')
 _.switches.register('HasStates', '-hasstates')
 
-_.appInfo=	{
+_.appInfo=    {
 	'file': 'countries.py',
 	'description': 'Manages drives and indexes',
 	'prerequisite': [],

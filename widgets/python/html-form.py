@@ -93,15 +93,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
-				       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-				       # {},
+					# {},
 	],
 }
 
@@ -259,19 +259,19 @@ html='''<!DOCTYPE html>
 <html lang="en-US">
 
 <head>
-        <title>title</title>
-        <meta charset="utf-8">
-        <!-- <META http-equiv="refresh" content="1;URL=/?"> -->
+		<title>title</title>
+		<meta charset="utf-8">
+		<!-- <META http-equiv="refresh" content="1;URL=/?"> -->
 
-        <link rel="stylesheet" href="https://eyeformeta.com/assets/forms/fields/default.css">
-        
+		<link rel="stylesheet" href="https://eyeformeta.com/assets/forms/fields/default.css">
+		
 </head>
 
 <body>
 <form>
 HERE
 </form>
-        <!-- -->
+		<!-- -->
 </body>
 
 </html>'''

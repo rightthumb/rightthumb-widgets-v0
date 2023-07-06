@@ -80,15 +80,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
-				       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-				       # {},
+					# {},
 	],
 }
 
@@ -155,7 +155,7 @@ _.postLoad( __file__ )
 ########################################################################################
 # START
 
-# 	grey,red,green,yellow,blue,magenta,cyan,white;grey,red,green,yellow,blue,magenta,cyan,white
+#     grey,red,green,yellow,blue,magenta,cyan,white;grey,red,green,yellow,blue,magenta,cyan,white
 
 def build( data ):
 	if not data:
@@ -215,7 +215,7 @@ def action():
 			_.pr( 'skipped:',_pID.mini.skip_count )
 
 		# for x in _pID.mini.skip_table:
-		# 	_.pr(x)
+		#     _.pr(x)
 		# input( ' : ' )
 		if _.switches.isActive('Print'):
 			for x in table:

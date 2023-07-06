@@ -50,7 +50,7 @@ __.switch_raw = []
 _.appInfo[focus()] = {
 	'file': 'meta.py',
 	'liveAppName': __.thisApp( __file__ ),
- 	'description': 'simple meta editor ( in external json files )',
+	'description': 'simple meta editor ( in external json files )',
 	'categories': [
 						'meta',
 						'file',
@@ -74,15 +74,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
-				       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-				       # {},
+					# {},
 	],
 }
 
@@ -170,9 +170,9 @@ def scan_meta(pathy=None):
 		if not os.sep in p:
 			return children_meta
 		# try:
-		# 	p = __.path(p,pop=True)
+		#     p = __.path(p,pop=True)
 		# except Exception as e:
-		# 	return children_meta
+		#     return children_meta
 
 
 
@@ -258,8 +258,8 @@ def meta_folders_table(path):
 		_.saveTable( table, 'meta-folders.list', p=0 )
 		_.cp(['added',path,'to meta database'],'yellow')
 	# else:
-	# 	pass
-	# 	_.cp('in meta database','yellow')
+	#     pass
+	#     _.cp('in meta database','yellow')
 
 
 def template(subject):
@@ -268,11 +268,11 @@ def template(subject):
 		return ''
 
 	ftp = {
-			'server':		'',
-			'user':			'',
-			'password':		'',
-			'path':			'',
-			'full-path':	'',
+			'server':        '',
+			'user':            '',
+			'password':        '',
+			'path':            '',
+			'full-path':    '',
 	}
 	if subject == 'ftp':
 		return ftp

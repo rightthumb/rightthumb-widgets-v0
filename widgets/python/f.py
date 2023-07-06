@@ -42,7 +42,7 @@ p = 'Papa_Laptop_2017.11.23'
 p = 'Papa_*'
 
 # for item in sys.argv:
-# 	print(item)
+#     print(item)
 
 _.switches.register('_Raw', '')
 _.switches.register('Dad', '-d,-dad')
@@ -132,9 +132,9 @@ if _.switches.isActive('SearchIn') == True:
 	indexFiles = _.switches.value('SearchIn')
 # if _.switches.isActive('Help') == True:
 
-# 	_.tables.register('Auto',_.switch)
-# 	_.tables.print('Auto','name,switch,expected_input_example')
-# 	sys.exit()
+#     _.tables.register('Auto',_.switch)
+#     _.tables.print('Auto','name,switch,expected_input_example')
+#     sys.exit()
 
 def replaceDo(line):
 	global replaceWith
@@ -171,35 +171,35 @@ def executeSearch(filename,files,search):
 		line = line.replace('\n','')
 		line = line.replace('\r','')
 		if searchName(files,line) == True:
-		 	if _.switches.isActive('Replace') == True:
-		 		line = replaceDo(line)
-		 	if _.switches.isActive('Bookmarks') == True:
-		 		if _.switches.isActive('FileName') == True:
-		 			print(filename)
-		 		else:
-		 			clean = _v.myBookmarks + _v.slash+'BM-'
-		 			if os.path.isdir(line) == True:
-		 				found = 'Good'
-		 			else:
-		 				found = 'Bad'
-		 			print(found + '\t ' + filename.replace(clean,'').replace('.txt','') + ' = ' + line)
-		 	elif _.switches.isActive('FileName') == True:
-		 		# print(filename + ':' + line)
-		 		newLine = line
-		 		newLine = _str.removeAll(newLine,'\t')
-		 		newLine = newLine.replace('\n','')
-		 		newLine = newLine.replace('\r','')
-		 		newLine = _str.replaceDuplicate(newLine,' ')
-		 		newLine = _str.cleanFirst(newLine,' ')
-		 		theList.append({'filename': filename,'string': newLine,'line': i})
-		 	elif _.switches.isActive('JustName') == True:
-		 		if _.switches.isActive('NotInFile'):
-		 			foundInFile.append(filename)
-		 		else:
-		 			print(filename)
-		 		break
-		 	else:
-		 		print(line)
+			if _.switches.isActive('Replace') == True:
+				line = replaceDo(line)
+			if _.switches.isActive('Bookmarks') == True:
+				if _.switches.isActive('FileName') == True:
+					print(filename)
+				else:
+					clean = _v.myBookmarks + _v.slash+'BM-'
+					if os.path.isdir(line) == True:
+						found = 'Good'
+					else:
+						found = 'Bad'
+					print(found + '\t ' + filename.replace(clean,'').replace('.txt','') + ' = ' + line)
+			elif _.switches.isActive('FileName') == True:
+				# print(filename + ':' + line)
+				newLine = line
+				newLine = _str.removeAll(newLine,'\t')
+				newLine = newLine.replace('\n','')
+				newLine = newLine.replace('\r','')
+				newLine = _str.replaceDuplicate(newLine,' ')
+				newLine = _str.cleanFirst(newLine,' ')
+				theList.append({'filename': filename,'string': newLine,'line': i})
+			elif _.switches.isActive('JustName') == True:
+				if _.switches.isActive('NotInFile'):
+					foundInFile.append(filename)
+				else:
+					print(filename)
+				break
+			else:
+				print(line)
 def takeAction():
 	global indexFiles
 	global theList
@@ -326,18 +326,18 @@ if type(pipeResults) == list:
 				indexFiles.append(str(path))
 		i += 1
 	# for path in pipeResults:
-	# 	path = path.replace('\r','')
-	# 	path = path.replace('\n','')
-	# 	if os.path.isfile(path) == True:
-	# 		# print(path)
-	# 		shouldUseFile = True
-	# 		if _.switches.isActive('Text'):
-	# 			mime = mimetypes.guess_type(path)
-	# 			if not str(mime) == "('text/plain', None)":
-	# 				shouldUseFile = False
+	#     path = path.replace('\r','')
+	#     path = path.replace('\n','')
+	#     if os.path.isfile(path) == True:
+	#         # print(path)
+	#         shouldUseFile = True
+	#         if _.switches.isActive('Text'):
+	#             mime = mimetypes.guess_type(path)
+	#             if not str(mime) == "('text/plain', None)":
+	#                 shouldUseFile = False
 
-	# 		if shouldUseFile:
-	# 			indexFiles.append(str(path))
+	#         if shouldUseFile:
+	#             indexFiles.append(str(path))
 	takeAction()
 else:
 	pass

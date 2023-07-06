@@ -24,11 +24,11 @@ appDBA = __.clearFocus( __name__, __file__ )
 # appDBA = __name__
 __.appReg = appDBA
 def focus( parentApp='', childApp='', reg=True ):
-    global appDBA
-    f = __.appName( appDBA, parentApp, childApp )
-    if reg:
-        __.appReg = f
-    return f
+	global appDBA
+	f = __.appName( appDBA, parentApp, childApp )
+	if reg:
+		__.appReg = f
+	return f
 __.registeredApps.append(focus())
 
 
@@ -61,32 +61,32 @@ import _rightThumb._string as _str
 
 
 def appSwitches():
-    pass
-    # _.switches.register('Input', '-i,-f,-file','file.txt')
-    # activate trigger in registerSwitches 
-    
+	pass
+	# _.switches.register('Input', '-i,-f,-file','file.txt')
+	# activate trigger in registerSwitches 
+	
 
 
 
 _.appInfo[focus()] = {
-    'file': 'thisApp.py',
-    'description': 'Changes the world',
-    'categories': [
-                        'research',
-                        'text manipulation',
-                ],
-    'relatedapps': [],
-    'prerequisite': [],
-    'examples': [],
-    'columns': [],
-    }
+	'file': 'thisApp.py',
+	'description': 'Changes the world',
+	'categories': [
+						'research',
+						'text manipulation',
+				],
+	'relatedapps': [],
+	'prerequisite': [],
+	'examples': [],
+	'columns': [],
+	}
 
 _.appData[focus()] = {
-    'start': time.time(),
-    'uuid': '',
-    'audit': [],
-    'pipe': [],
-    }
+	'start': time.time(),
+	'uuid': '',
+	'audit': [],
+	'pipe': [],
+	}
 
 _.appInfo[focus()]['examples'].append('p thisApp -file file.txt')
 
@@ -97,49 +97,49 @@ _.appInfo[focus()]['examples'].append('p thisApp -file file.txt')
 
 
 def registerSwitches( argvProcessForce=False ):
-    global appDBA
-    if not __.appReg == appDBA and appDBA in __.appReg:
+	global appDBA
+	if not __.appReg == appDBA and appDBA in __.appReg:
 
-        if not __name__ == '__main__':
-            _.argvProcess = argvProcessForce
-        else:
-            _.argvProcess = True
+		if not __name__ == '__main__':
+			_.argvProcess = argvProcessForce
+		else:
+			_.argvProcess = True
 
-        _.load()
-        _.appInfo[__.appReg] = _.appInfo[appDBA]
-        _.appData[__.appReg] = _.appData[appDBA]
-    __.constructRegistration(_.appInfo[__.appReg]['file'],__.appReg)
-    appSwitches()
-    _.defaultScriptTriggers()
+		_.load()
+		_.appInfo[__.appReg] = _.appInfo[appDBA]
+		_.appData[__.appReg] = _.appData[appDBA]
+	__.constructRegistration(_.appInfo[__.appReg]['file'],__.appReg)
+	appSwitches()
+	_.defaultScriptTriggers()
 
-    # _.switches.trigger('Input',_.myFileLocations)
-        # trigger settings
-    _.myFileLocation_Print = True
+	# _.switches.trigger('Input',_.myFileLocations)
+		# trigger settings
+	_.myFileLocation_Print = True
 
-    # _.switches.trigger('Watched', _.txt2Date)
-    # _.switches.trigger('Input',_.formatColumns)
-    _.switches.process()
+	# _.switches.trigger('Watched', _.txt2Date)
+	# _.switches.trigger('Input',_.formatColumns)
+	_.switches.process()
 
 
 
 if not __name__ == '__main__':
-    _.argvProcess = False
+	_.argvProcess = False
 else:
-    _.argvProcess = True
+	_.argvProcess = True
 
 registerSwitches()
 
 
 
 def fieldSet( switchName, switchField, switchValue, theFocus=False ):
-    if not type( theFocus ) == bool:
-        theFocus = theFocus
-    _.switches.fieldSet( switchName, switchField, switchValue, theFocus )
+	if not type( theFocus ) == bool:
+		theFocus = theFocus
+	_.switches.fieldSet( switchName, switchField, switchValue, theFocus )
 
 _.appData[__.appReg]['pipe'] = False
 if __name__ == '__main__':
-    if not sys.stdin.isatty():
-        _.setPipeData( sys.stdin.readlines(), __.appReg )
+	if not sys.stdin.isatty():
+		_.setPipeData( sys.stdin.readlines(), __.appReg )
 
 
 ########################################################################################
@@ -147,18 +147,18 @@ if __name__ == '__main__':
 # START
 
 def action():
-    pass
-    # if _.switches.isActive('Input'):
-    #     _.setPipeData( _.getText( _.switches.value('Input') ), focus() )
-    # if not type( _.appData[__.appReg]['pipe'] ) == bool:
-    #     pass
-    # _.pr( _.d2json(_.appData) )
+	pass
+	# if _.switches.isActive('Input'):
+	#     _.setPipeData( _.getText( _.switches.value('Input') ), focus() )
+	# if not type( _.appData[__.appReg]['pipe'] ) == bool:
+	#     pass
+	# _.pr( _.d2json(_.appData) )
 
 
 
 ########################################################################################
 if __name__ == '__main__':
-    action()
+	action()
 
 
 

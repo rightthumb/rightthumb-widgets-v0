@@ -52,7 +52,7 @@ __.switch_raw = []
 _.appInfo[focus()] = {
 	'file': 'file-open.py',
 	'liveAppName': __.thisApp( __file__ ),
- 	'description': 'open files such as a text file with sublime',
+	'description': 'open files such as a text file with sublime',
 	'categories': [
 						'open',
 						'file',
@@ -78,15 +78,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
-				       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-				       # {},
+					# {},
 	],
 }
 
@@ -161,6 +161,35 @@ import subprocess
 
 def action(path=None):
 
+
+	if _.switches.isActive('Files'):
+		paths=[]
+		for _path_ in _.switches.values('Files'):
+			if _path_.startswith('http:') or _path_.startswith('https:'):
+				_path_=_.url2file(_path_)
+			paths.append(_path_)
+		_.switches.fieldSet( 'Files', 'value', ','.join(paths) )
+		_.switches.fieldSet( 'Files', 'values', paths )
+	if _.switches.isActive('Alias') and not _.switches.isActive('Files') and len(_.switches.values('Alias')) ==1:
+		_path_=_.switches.values('Alias')[0]
+		if _path_.startswith('http:') or _path_.startswith('https:'):
+			_path_=_.url2file(_path_)
+			# print('here'); sys.exit();
+			_.switches.fieldSet( 'Alias', 'active', False )
+			_.switches.fieldSet( 'Files', 'active', True )
+			_.switches.fieldSet( 'Files', 'value', _path_ )
+			_.switches.fieldSet( 'Files', 'values', [_path_] )
+
+	if _.switches.isActive('Alias') and not _.switches.isActive('Files') and len(_.switches.values('Alias')) ==1 and os.path.isfile(_.switches.values('Alias')[0]):
+		aliases=_.getTable('file-open-aliases.hash')
+		a=_.switches.values('Alias')[0]
+		if 'aliases' in aliases and not a in aliases['aliases']:
+			_.switches.fieldSet( 'Alias', 'active', False )
+			_.switches.fieldSet( 'Files', 'active', True )
+			_.switches.fieldSet( 'Files', 'value', a )
+			_.switches.fieldSet( 'Files', 'values', [a] )
+
+
 	if _.switches.isActive('Alias') and not _.switches.isActive('Files') and len(_.switches.values('Alias')) ==2:
 		aa=None
 		for a in _.switches.values('Alias'):
@@ -192,6 +221,7 @@ def action(path=None):
 		aliases=_.getTable('file-open-aliases.hash')
 
 
+
 		if not aliases and paths:
 			aliases={
 						'aliases':{},
@@ -212,9 +242,9 @@ def action(path=None):
 					
 					#b)--> testing
 					# if _alias in aliases['aliases']:
-					# 	# _.pr('taco',c='r')
-					# 	if (list == type(aliases['aliases'][_alias]) and path in aliases['aliases'][_alias]) or (str == type(aliases['aliases'][_alias]) and path == aliases['aliases'][_alias]):
-					# 		_.e('works')
+					#     # _.pr('taco',c='r')
+					#     if (list == type(aliases['aliases'][_alias]) and path in aliases['aliases'][_alias]) or (str == type(aliases['aliases'][_alias]) and path == aliases['aliases'][_alias]):
+					#         _.e('works')
 					#e)--> testing
 
 
@@ -251,24 +281,63 @@ def action(path=None):
 			path=__.path(path)
 			path=_.zZip(path)
 			_.pr(path,c='yellow')
+			aliases=_.getTable('file-open-aliases.hash')
+			if not 'aliases' in aliases: aliases['aliases']={}
+			if not 'files' in aliases: aliases['files']={}
+			aliases['aliases']['last']=path
+			_.saveTable(aliases,'file-open-aliases.hash',p=0)
 			if _.switches.isActive('Backup'): backup(path)
 			if _.isWin:
-				subprocess.Popen([ app, path])
+				if os.path.isfile(path):
+					found=False
+					ext=_v.rt+os.sep+'file-open-ext.yml'
+					if os.path.isfile(ext):
+						exts=_.getYML(ext)
+						for ex in exts:
+							if path.endswith('.'+ex):
+								found=True
+								app=exts[ex]
+
+					if not found:
+						head=_v.rt+os.sep+'file-open-headers.yml'
+						if os.path.isfile(head):
+							headers=_.getYML(head)
+							for header in headers:
+								if _.IS(path,header): app = headers[header]
+				if app == 0:
+					subprocess.Popen([path])
+				else:
+					subprocess.Popen([ app, path])
 			else:
 				command = f'{app} {path}'
 				os.system(command)
 			if not path in log: log[path] = []
 			log[path].append(session)
+			if _.switches.isActive('Backup') and 'secure' in  _.switches.value('Backup'):
+				if __.setting('fileBackup-secure_file'):
+					backup(path,False)
+
 		_.saveTable2(log,logFi)
 		_.cleanUnzip()
+bki=0
 
-def backup(path):
+def backup(path,pre=True):
+	global bki
+	bki+=1
 	appReg=__.appReg
-	_bk = _.regImp( __.appReg, 'fileBackup' )
-	_bk.switch( 'Silent' )
-	_bk.switch( 'isPreOpen' )
-	_bk.switch( 'Input', path )
-	bkfi = _bk.action()
+	_bk={}
+	_bk[bki] = _.regImp( __.appReg, 'fileBackup' )
+	
+	if pre:
+		_bk[bki].switch( 'Silent' )
+		_bk[bki].switch( 'isPreOpen' )
+		isPreOpen=True
+	else:
+		_bk[bki].switch( 'Silent',delete=True )
+		_bk[bki].switch( 'isPreOpen', delete=True )
+		isPreOpen=False
+	_bk[bki].switch( 'Input', path )
+	bkfi = _bk[bki].kwargs(pre=isPreOpen)
 	__.appReg=appReg
 	return bkfi
 

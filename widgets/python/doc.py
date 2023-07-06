@@ -78,15 +78,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-					   # { 'name': 'name', 'abbreviation': 'n' },
-					   # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-					   # 'this',
-					   # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-					   # {},
+					# {},
 	],
 }
 
@@ -185,60 +185,60 @@ from pathlib import Path
 import textract
 
 def extract_headers_footers(doc):
-    headers = []
-    footers = []
+	headers = []
+	footers = []
 
-    for section in doc.sections:
-        for paragraph in section.header.paragraphs:
-            headers.append(paragraph.text)
-        for paragraph in section.footer.paragraphs:
-            footers.append(paragraph.text)
+	for section in doc.sections:
+		for paragraph in section.header.paragraphs:
+			headers.append(paragraph.text)
+		for paragraph in section.footer.paragraphs:
+			footers.append(paragraph.text)
 
-    return "\n".join(headers), "\n".join(footers)
+	return "\n".join(headers), "\n".join(footers)
 
 def extract_phone_numbers2(text):
-    phone_regex = re.compile(r'\b\d{3}[-\.\s]??\d{3}[-\.\s]??\d{4}\b')
-    return phone_regex.findall(text)
+	phone_regex = re.compile(r'\b\d{3}[-\.\s]??\d{3}[-\.\s]??\d{4}\b')
+	return phone_regex.findall(text)
 
 def extract_phone_numbers(text):
-    phone_regex = re.compile(r'\(?\b\d{3}\)?[-\.\s]??\d{3}[-\.\s]??\d{4}\b')
-    return phone_regex.findall(text)
+	phone_regex = re.compile(r'\(?\b\d{3}\)?[-\.\s]??\d{3}[-\.\s]??\d{4}\b')
+	return phone_regex.findall(text)
 
 
 def extract_emails(text):
-    email_regex = re.compile(r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b')
-    return email_regex.findall(text)
+	email_regex = re.compile(r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b')
+	return email_regex.findall(text)
 
 def extract_addresses(text):
-    address_regex = re.compile(r'\d+\s[A-Za-z0-9]+\s[A-Za-z0-9\s,]*[A-Za-z]\s\d{5}(-\d{4})?')
-    return address_regex.findall(text)
+	address_regex = re.compile(r'\d+\s[A-Za-z0-9]+\s[A-Za-z0-9\s,]*[A-Za-z]\s\d{5}(-\d{4})?')
+	return address_regex.findall(text)
 
 def getContents2(file_path):
-    path = Path(file_path)
-    text = ""
+	path = Path(file_path)
+	text = ""
 
-    try:
-        if path.suffix == ".docx":
-            doc = docx.Document(file_path)
-            full_text = []
+	try:
+		if path.suffix == ".docx":
+			doc = docx.Document(file_path)
+			full_text = []
 
-            for paragraph in doc.paragraphs:
-                full_text.append(paragraph.text)
+			for paragraph in doc.paragraphs:
+				full_text.append(paragraph.text)
 
-            headers, footers = extract_headers_footers(doc)
-            # print(headers, footers)
-            text = "\n".join([headers, "\n".join(full_text), footers])
-        else:
-            text = textract.process(file_path).decode("utf-8")
-    except Exception as e:
-        print(f"Error processing {file_path}: {e}")
-    print(text)
+			headers, footers = extract_headers_footers(doc)
+			# print(headers, footers)
+			text = "\n".join([headers, "\n".join(full_text), footers])
+		else:
+			text = textract.process(file_path).decode("utf-8")
+	except Exception as e:
+		print(f"Error processing {file_path}: {e}")
+	print(text)
 
-    phone_numbers = extract_phone_numbers(text)
-    emails = extract_emails(text)
-    addresses = extract_addresses(text)
+	phone_numbers = extract_phone_numbers(text)
+	emails = extract_emails(text)
+	addresses = extract_addresses(text)
 
-    return text, phone_numbers, emails, addresses
+	return text, phone_numbers, emails, addresses
 
 # file_path = "your_file_path_here.docx"
 # text, phone_numbers, emails, addresses = getContents2(file_path)

@@ -77,15 +77,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
-				       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-				       # {},
+					# {},
 	],
 }
 
@@ -203,22 +203,22 @@ def action():
 			if _.switches.isActive('Delete'):
 				_.saveTable( newLog, 'fileBackup.json' )
 			_.cp( ['',found], 'yellow' )
-    # {
-    #     "id": "{CE9728A3-099F-FB91-EA3A-67DC4E9E48FF}",
-    #     "timestamp": 1376586282.0,
-    #     "file": "D:\\projects\\backup_scripts\\Bud_Stansell\\server.bat",
-    #     "backup": "D:\\.rightthumb-widgets\\hosts\\VULCAN\\backup\\txt\\1623522385.0573013-2013_08_15-13_04_42-server.bat",
-    #     "mime": "text",
-    #     "status": 1,
-    #     "session": "",
-    #     "version": "0.0.0.1",
-    #     "v": 0,
-    #     "v1": 0,
-    #     "v2": 0,
-    #     "v3": 1,
-    #     "name": "server.bat",
-    #     "flag": ""
-    # }
+	# {
+	#     "id": "{CE9728A3-099F-FB91-EA3A-67DC4E9E48FF}",
+	#     "timestamp": 1376586282.0,
+	#     "file": "D:\\projects\\backup_scripts\\Bud_Stansell\\server.bat",
+	#     "backup": "D:\\.rightthumb-widgets\\hosts\\VULCAN\\backup\\txt\\1623522385.0573013-2013_08_15-13_04_42-server.bat",
+	#     "mime": "text",
+	#     "status": 1,
+	#     "session": "",
+	#     "version": "0.0.0.1",
+	#     "v": 0,
+	#     "v1": 0,
+	#     "v2": 0,
+	#     "v3": 1,
+	#     "name": "server.bat",
+	#     "flag": ""
+	# }
 
 
 ########################################################################################

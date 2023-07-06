@@ -47,7 +47,7 @@ __.pre_error = False
 _.appInfo[focus()] = {
 	'file': 'Bible.py',
 	'liveAppName': __.thisApp( __file__ ),
- 	'description': 'Bible Reader',
+	'description': 'Bible Reader',
 	'categories': [
 						'Bible',
 						'reader',
@@ -73,15 +73,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
-				       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-				       # {},
+					# {},
 	],
 }
 _.appData[focus()] = {
@@ -223,14 +223,14 @@ if _.switches.isActive('ListBooks'):
 	for i in _B.Books:
 		# BKs[_B.Books[i]][i] = {}
 		# if _B.Books[i] == 55:
-		# 	_.pr( i )
+		#     _.pr( i )
 		if len(i) <= len(BKs[_B.Books[i]]):
 			BKs[_B.Books[i]] = i.lower()
 		# _.pr( i, _B.Books[i] )
 	# _.pr( _B.Books )
 	# for i in BKs:
-	# 	# _.pr( i, type(i) )
-	# 	_.pr( i, BKs[i] )
+	#     # _.pr( i, type(i) )
+	#     _.pr( i, BKs[i] )
 	table = []
 	for i in _B.labels:
 		# table.append({ 'number': i, 'book': _B.labels[i] })

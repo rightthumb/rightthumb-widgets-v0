@@ -54,7 +54,7 @@ def appSwitches():
 
 _.appInfo[focus()] = {
 	'file': 'fileNameDate.py',
- 	'description': 'Rename files to include the modified date',
+	'description': 'Rename files to include the modified date',
 	'categories': [
 						'DEFAULT'
 				],
@@ -78,11 +78,11 @@ _.appInfo[focus()] = {
 						''
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': 'name', 'abbreviation': 'n' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 
 	}
@@ -458,7 +458,7 @@ def action():
 
 		# _.pr()
 		# for i,row in enumerate( theFiles ):
-		# 	_.pr(row)
+		#     _.pr(row)
 		# sys.exit()
 
 		thisFolder = os.getcwd()

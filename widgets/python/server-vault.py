@@ -75,15 +75,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
-				       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-				       # {},
+					# {},
 	],
 }
 
@@ -126,7 +126,7 @@ def registerSwitches( argvProcessForce=False ):
 	_.switches.trigger( 'Ago', _.timeAgo )
 	_.switches.trigger( 'Duration', _.timeFuture )
 	### EXAMPLE: START
-	# _.switches.trigger( 'Files',_.inRelevantFolder )	
+	# _.switches.trigger( 'Files',_.inRelevantFolder )    
 	# _.switches.trigger( 'Watched', _.txt2Date )
 	# _.switches.trigger( 'Input',_.formatColumns )
 	# _.switches.trigger( 'Franchise',_.triggerSpace )
@@ -171,15 +171,15 @@ _.postLoad( __file__ )
 # os.system( '"' + do + '"' )
 # _.setPipeData( os.listdir( os.getcwd() ), focus() )
 # _.showLine( item )
-# 	if os.path.isdir( row ):
-# 	if os.path.isfile( row ):
-#	os.path.abspath(path)
+#     if os.path.isdir( row ):
+#     if os.path.isfile( row ):
+#    os.path.abspath(path)
 # __.appRegPipe    ( pipe data registerd focus(__.appReg) set by _.myFileLocations {if imported} , default is None )
 # for i,row in enumerate(_.t( _.appData[__.appReg]['pipe'] )):
 # for i,row in _.e( _.isData(r=1) ):
 # date = _.friendlyDate( theDate )
 # _.addComma()
-# 													if platform.system() == 'Windows':
+#                                                     if platform.system() == 'Windows':
 ### EXAMPLE: END
 ########################################################################################
 # START
@@ -188,26 +188,26 @@ v = _.dot()
 v.exit = False
 v.IPd = '0.0.0.0'
 v.ports = {
-			 'ssh': 22,
-			 'cpanel': 443,
-			 'smb': [139,445],
-			 'rdp': 3389,
-			 'mysql': 3306,
-			 'l2tp': [500,4500],
-			 'pptp': 1723,
-			 'ssl-ftp': [989, 990],
-			 'ftp': 21,
-			 'sftp': 22,
-			 'tftp': 69,
-			 'tftp': 69,
-			 'pop3': 110,
-			 'smtp': 25,
-			 'imap': 143,
-			 'pop3-ssl': 995,
-			 'smtp-ssl': 465,
-			 'imap-ssl': 993,
-			 'ntp': 123,
-			 'ldap': 389,
+			'ssh': 22,
+			'cpanel': 443,
+			'smb': [139,445],
+			'rdp': 3389,
+			'mysql': 3306,
+			'l2tp': [500,4500],
+			'pptp': 1723,
+			'ssl-ftp': [989, 990],
+			'ftp': 21,
+			'sftp': 22,
+			'tftp': 69,
+			'tftp': 69,
+			'pop3': 110,
+			'smtp': 25,
+			'imap': 143,
+			'pop3-ssl': 995,
+			'smtp-ssl': 465,
+			'imap-ssl': 993,
+			'ntp': 123,
+			'ldap': 389,
 }
 
 def autoPorts(srv):
@@ -263,7 +263,7 @@ def fields(record):
 			else:
 				_.pr( '\n'.join(wt) )
 			# for w in wt:
-			# 	_.pr(w)
+			#     _.pr(w)
 			val = ask( k )
 			if val == '!':
 				keep = True

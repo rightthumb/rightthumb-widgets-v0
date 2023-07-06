@@ -33,7 +33,7 @@ _.load()
 import _rightThumb._vars as _v
 import _rightThumb._string as _str
 # import _rightThumb._profileVariables as _profile
-# 	profile = _profile.records.audit( 'name', asset )
+#     profile = _profile.records.audit( 'name', asset )
 # import _rightThumb._encryptString as _blowfish
 	# en = _blowfish.encrypt( string )
 	# de = _blowfish.decrypt( en )
@@ -69,7 +69,7 @@ def appSwitches():
 
 _.appInfo[focus()] = {
 	'file': 'franchiseView.py',
- 	'description': 'view franchise table',
+	'description': 'view franchise table',
 	'categories': [
 						'imdb'
 						'franchise'
@@ -90,11 +90,11 @@ _.appInfo[focus()] = {
 						''
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': 'name', 'abbreviation': 'n' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 
 	}
@@ -176,7 +176,7 @@ def action():
 
 	for record in __.franchises:
 		# for key in record.keys():
-		# 	_.pr( key )
+		#     _.pr( key )
 		for alias in record['aliases']:
 			# _.pr( ' '.join(_.switches.values( 'Franchise' )).lower() in  alias )
 			if ' '.join(_.switches.values( 'Franchise' )).lower() in alias:
@@ -196,7 +196,7 @@ def action():
 				else:
 					_.pr( '', len( record['movies'] ) )
 				# for movie in :
-				# 	_.pr( movie['year'], movie['name'] )
+				#     _.pr( movie['year'], movie['name'] )
 
 
 def load():

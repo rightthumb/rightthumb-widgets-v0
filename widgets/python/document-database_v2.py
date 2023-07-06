@@ -97,15 +97,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-					   # { 'name': 'name', 'abbreviation': 'n' },
-					   # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-					   # 'this',
-					   # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-					   # {},
+					# {},
 	],
 }
 
@@ -300,153 +300,153 @@ except: pass
 
 # Phone number extraction methods
 def extract_phone_numbers_regex(text):
-    pattern = re.compile(r'(\+?\d{1,2}\s?)?(\d{3}|\(\d{3}\))\s?\d{3}[-\.\s]?\d{4}')
-    return pattern.findall(text)
+	pattern = re.compile(r'(\+?\d{1,2}\s?)?(\d{3}|\(\d{3}\))\s?\d{3}[-\.\s]?\d{4}')
+	return pattern.findall(text)
 
 def extract_phone_numbers_phonenumbers(text, region="US"):
-    phone_numbers = []
-    for match in phonenumbers.PhoneNumberMatcher(text, region):
-        phone_numbers.append(phonenumbers.format_number(match.number, phonenumbers.PhoneNumberFormat.E164))
-    return phone_numbers
+	phone_numbers = []
+	for match in phonenumbers.PhoneNumberMatcher(text, region):
+		phone_numbers.append(phonenumbers.format_number(match.number, phonenumbers.PhoneNumberFormat.E164))
+	return phone_numbers
 
 # Email extraction methods
 def find_emails_regex(text):
-    pattern = re.compile(r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}')
-    return pattern.findall(text)
+	pattern = re.compile(r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}')
+	return pattern.findall(text)
 
 # Phone number formatting method
 def format_phone_number(phone_number):
-    # Remove all non-numeric characters
-    digits = ''.join(filter(str.isdigit, phone_number))
-    # Check if the phone number has the correct number of digits
-    if len(digits) != 10:
-        return ''
-        # print(phone_number)
-        # raise ValueError("Invalid phone number length. Expected 10 digits.")
-    # Format the phone number as (xxx) xxx-xxxx
-    formatted_number = f"({digits[:3]}) {digits[3:6]}-{digits[6:]}"
-    return formatted_number
+	# Remove all non-numeric characters
+	digits = ''.join(filter(str.isdigit, phone_number))
+	# Check if the phone number has the correct number of digits
+	if len(digits) != 10:
+		return ''
+		# print(phone_number)
+		# raise ValueError("Invalid phone number length. Expected 10 digits.")
+	# Format the phone number as (xxx) xxx-xxxx
+	formatted_number = f"({digits[:3]}) {digits[3:6]}-{digits[6:]}"
+	return formatted_number
 
 
 
 
 def extract_phone_numbers_basic_loop(text):
-    phone_numbers = []
-    number = ''
-    for char in text:
-        if char.isdigit():
-            number += char
-            if len(number) == 10:
-                phone_numbers.append(number)
-                number = ''
-        elif number:
-            number = ''
-    return phone_numbers
+	phone_numbers = []
+	number = ''
+	for char in text:
+		if char.isdigit():
+			number += char
+			if len(number) == 10:
+				phone_numbers.append(number)
+				number = ''
+		elif number:
+			number = ''
+	return phone_numbers
 
 def extract_phone_numbers_list_comprehension(text):
-    digits = ''.join(filter(str.isdigit, text))
-    return [digits[i:i+10] for i in range(0, len(digits), 10) if len(digits[i:i+10]) == 10]
+	digits = ''.join(filter(str.isdigit, text))
+	return [digits[i:i+10] for i in range(0, len(digits), 10) if len(digits[i:i+10]) == 10]
 
 
 
 def find_emails_string_methods(text):
-    emails = []
-    words = text.split()
-    for word in words:
-        if '@' in word and '.' in word:
-            emails.append(word)
-    return emails
+	emails = []
+	words = text.split()
+	for word in words:
+		if '@' in word and '.' in word:
+			emails.append(word)
+	return emails
 
 
 def find_emails_basic_loop(text):
-    emails = []
-    email = ''
-    for char in text:
-        if char.isalnum() or char in ['@', '.', '_', '-']:
-            email += char
-        elif email and '@' in email and '.' in email:
-            emails.append(email)
-            email = ''
-        else:
-            email = ''
-    if email and '@' in email and '.' in email:
-        emails.append(email)
-    return emails
+	emails = []
+	email = ''
+	for char in text:
+		if char.isalnum() or char in ['@', '.', '_', '-']:
+			email += char
+		elif email and '@' in email and '.' in email:
+			emails.append(email)
+			email = ''
+		else:
+			email = ''
+	if email and '@' in email and '.' in email:
+		emails.append(email)
+	return emails
 
 def find_emails_list_comprehension(text):
-    words = text.split()
-    return [word for word in words if '@' in word and '.' in word]
+	words = text.split()
+	return [word for word in words if '@' in word and '.' in word]
 
 
 
 def dive_in_MF(db_path):
-    # Connect to the SQLite database
-    conn = sqlite3.connect(db_path)
-    cursor = conn.cursor()
+	# Connect to the SQLite database
+	conn = sqlite3.connect(db_path)
+	cursor = conn.cursor()
 
-    # Select all records from the "documents" table
-    cursor.execute('SELECT content, phone, email, path  FROM documents')
-    records = cursor.fetchall()
+	# Select all records from the "documents" table
+	cursor.execute('SELECT content, phone, email, path  FROM documents')
+	records = cursor.fetchall()
 
-    for record in records:
-        # print(record)
-        # Extract the relevant fields from the record
-        i=-1
-        i+=1; content = record[i].lower().replace('(','').replace(') ','-').replace(')','-')
-        i+=1; phone = record[i]
-        i+=1; email = record[i]
-        i+=1; path = record[i]
-        if not _.showLine(path): continue
-        print(path)
-        # content = record['content'].lower()
-        # phone = record['phone']
-        # email = record['email']
-        # path = record['path']
+	for record in records:
+		# print(record)
+		# Extract the relevant fields from the record
+		i=-1
+		i+=1; content = record[i].lower().replace('(','').replace(') ','-').replace(')','-')
+		i+=1; phone = record[i]
+		i+=1; email = record[i]
+		i+=1; path = record[i]
+		if not _.showLine(path): continue
+		print(path)
+		# content = record['content'].lower()
+		# phone = record['phone']
+		# email = record['email']
+		# path = record['path']
 
-        # If the "phone" field is empty, scan for phone numbers
-        if not phone:
-            phone_numbers = extract_phone_numbers_regex(content)
-            if not phone_numbers: phone_numbers = extract_phone_numbers_phonenumbers(content)
-            # if not phone_numbers: phone_numbers = extract_phone_numbers_basic_loop(content)
-            # if not phone_numbers: phone_numbers = extract_phone_numbers_list_comprehension(content)
+		# If the "phone" field is empty, scan for phone numbers
+		if not phone:
+			phone_numbers = extract_phone_numbers_regex(content)
+			if not phone_numbers: phone_numbers = extract_phone_numbers_phonenumbers(content)
+			# if not phone_numbers: phone_numbers = extract_phone_numbers_basic_loop(content)
+			# if not phone_numbers: phone_numbers = extract_phone_numbers_list_comprehension(content)
 
-            if phone_numbers:
-                pn=[]
-                for n in phone_numbers:
-                    n = format_phone_number(n)
-                    if not n == '813-967-7127':
-                        if n:
-                            pn.append(n)
-                if pn:
-                    phone = pn[0]
+			if phone_numbers:
+				pn=[]
+				for n in phone_numbers:
+					n = format_phone_number(n)
+					if not n == '813-967-7127':
+						if n:
+							pn.append(n)
+				if pn:
+					phone = pn[0]
 
-        # If the "email" field is empty, scan for emails
-        if not email:
-            emails = find_emails_regex(content)
-            if not emails: emails = find_emails_string_methods(content)
-            if not emails: emails = find_emails_basic_loop(content)
-            if not emails: emails = find_emails_list_comprehension(content)
-            if emails:
-                e=[]
-                for mail in emails:
-                    mail=mail.lower()
-                    if not mail == 'dennis@theperformersnetwork.com':
-                        e.append(mail)
+		# If the "email" field is empty, scan for emails
+		if not email:
+			emails = find_emails_regex(content)
+			if not emails: emails = find_emails_string_methods(content)
+			if not emails: emails = find_emails_basic_loop(content)
+			if not emails: emails = find_emails_list_comprehension(content)
+			if emails:
+				e=[]
+				for mail in emails:
+					mail=mail.lower()
+					if not mail == 'dennis@theperformersnetwork.com':
+						e.append(mail)
 
 
-                if e:
-                    email = e[0]
+				if e:
+					email = e[0]
 
-        # Update the record with the extracted information
-        cursor.execute('''
-            UPDATE documents
-            SET phone = ?, email = ?
-            WHERE path = ?
-        ''', (phone, email, path))
+		# Update the record with the extracted information
+		cursor.execute('''
+			UPDATE documents
+			SET phone = ?, email = ?
+			WHERE path = ?
+		''', (phone, email, path))
 
-    # Commit the changes and close the connection
-    conn.commit()
-    conn.close()
+	# Commit the changes and close the connection
+	conn.commit()
+	conn.close()
 
 
 ########################################################################################
@@ -532,16 +532,16 @@ import os
 
 def extract_headers_footers(path):
 	try:
-	    headers = []
-	    footers = []
-	    doc = docx.Document(path)
-	    for section in doc.sections:
-	        for paragraph in section.header.paragraphs:
-	            headers.append(paragraph.text)
-	        for paragraph in section.footer.paragraphs:
-	            footers.append(paragraph.text)
+		headers = []
+		footers = []
+		doc = docx.Document(path)
+		for section in doc.sections:
+			for paragraph in section.header.paragraphs:
+				headers.append(paragraph.text)
+			for paragraph in section.footer.paragraphs:
+				footers.append(paragraph.text)
 
-	    return "\n".join(headers), "\n".join(footers)
+		return "\n".join(headers), "\n".join(footers)
 	except:
 		return '',''
 
@@ -669,39 +669,39 @@ def process(path):
 
 			###########################################################
 
-	        # If the "phone" field is empty, scan for phone numbers
-	        if not 'phone' in _info:
-	            phone_numbers = extract_phone_numbers_regex(fi)
-	            if not phone_numbers: phone_numbers = extract_phone_numbers_phonenumbers(fi)
-	            # if not phone_numbers: phone_numbers = extract_phone_numbers_basic_loop(fi)
-	            # if not phone_numbers: phone_numbers = extract_phone_numbers_list_comprehension(fi)
+			# If the "phone" field is empty, scan for phone numbers
+			if not 'phone' in _info:
+				phone_numbers = extract_phone_numbers_regex(fi)
+				if not phone_numbers: phone_numbers = extract_phone_numbers_phonenumbers(fi)
+				# if not phone_numbers: phone_numbers = extract_phone_numbers_basic_loop(fi)
+				# if not phone_numbers: phone_numbers = extract_phone_numbers_list_comprehension(fi)
 
-	            if phone_numbers:
-	                pn=[]
-	                for n in phone_numbers:
-	                    n = format_phone_number(n)
-	                    if not n == '813-967-7127':
-	                        if n:
-	                            pn.append(n)
-	                if pn:
-	                	_info['phone'] = pn[0]
+				if phone_numbers:
+					pn=[]
+					for n in phone_numbers:
+						n = format_phone_number(n)
+						if not n == '813-967-7127':
+							if n:
+								pn.append(n)
+					if pn:
+						_info['phone'] = pn[0]
 
-	        
-	        if not 'email' in _info:
-	            emails = find_emails_regex(fi)
-	            if not emails: emails = find_emails_string_methods(fi)
-	            if not emails: emails = find_emails_basic_loop(fi)
-	            if not emails: emails = find_emails_list_comprehension(fi)
-	            if emails:
-	                e=[]
-	                for mail in emails:
-	                    mail=mail.lower()
-	                    if not mail == 'dennis@theperformersnetwork.com':
-	                        e.append(mail)
+			
+			if not 'email' in _info:
+				emails = find_emails_regex(fi)
+				if not emails: emails = find_emails_string_methods(fi)
+				if not emails: emails = find_emails_basic_loop(fi)
+				if not emails: emails = find_emails_list_comprehension(fi)
+				if emails:
+					e=[]
+					for mail in emails:
+						mail=mail.lower()
+						if not mail == 'dennis@theperformersnetwork.com':
+							e.append(mail)
 
 
-	                if e:
-	                    _info['email'] = e[0]
+					if e:
+						_info['email'] = e[0]
 
 			###########################################################
 			if not 'address' in _info: _info['address'] = extract_mailing_address(fi)
@@ -1069,16 +1069,16 @@ def skim_and_filter_emails(content):
 
 def extract_headers_footers(path):
 	try:
-	    headers = []
-	    footers = []
-	    doc = docx.Document(path)
-	    for section in doc.sections:
-	        for paragraph in section.header.paragraphs:
-	            headers.append(paragraph.text)
-	        for paragraph in section.footer.paragraphs:
-	            footers.append(paragraph.text)
+		headers = []
+		footers = []
+		doc = docx.Document(path)
+		for section in doc.sections:
+			for paragraph in section.header.paragraphs:
+				headers.append(paragraph.text)
+			for paragraph in section.footer.paragraphs:
+				footers.append(paragraph.text)
 
-	    return "\n".join(headers)+"\n".join(footers)
+		return "\n".join(headers)+"\n".join(footers)
 	except:
 		return ''
 

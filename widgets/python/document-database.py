@@ -97,15 +97,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-					   # { 'name': 'name', 'abbreviation': 'n' },
-					   # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-					   # 'this',
-					   # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-					   # {},
+					# {},
 	],
 }
 
@@ -832,16 +832,16 @@ def skim_and_filter_emails(content):
 
 def extract_headers_footers(path):
 	try:
-	    headers = []
-	    footers = []
-	    doc = docx.Document(path)
-	    for section in doc.sections:
-	        for paragraph in section.header.paragraphs:
-	            headers.append(paragraph.text)
-	        for paragraph in section.footer.paragraphs:
-	            footers.append(paragraph.text)
+		headers = []
+		footers = []
+		doc = docx.Document(path)
+		for section in doc.sections:
+			for paragraph in section.header.paragraphs:
+				headers.append(paragraph.text)
+			for paragraph in section.footer.paragraphs:
+				footers.append(paragraph.text)
 
-	    return "\n".join(headers)+"\n".join(footers)
+		return "\n".join(headers)+"\n".join(footers)
 	except:
 		return ''
 

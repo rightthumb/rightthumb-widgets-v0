@@ -170,11 +170,11 @@ reg.documentation = {
 						{ 'name': 'dps', 'abbreviation': 'sdate', 'sort': 'sdate_raw' },
 						{ 'name': 'header', 'abbreviation': 'h' },
 						# { 'name': 'hash', 'abbreviation': '?', 'sort': '' },
-				       
+					
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 
 	}
@@ -206,7 +206,7 @@ def unFormatSize(size):
 	factor = ''
 
 	if 'TB' in size:
-		factor = 1099511627776	
+		factor = 1099511627776    
 	elif 'GB' in size:
 		factor = 1073741824
 	elif 'MB' in size:
@@ -298,7 +298,7 @@ if app.switch.isActive('Ago_by_Created'):
 	# if not app.switch.isActive('GroupBy'):
 		# app.switch.field_set( 'Sort', 'active', True )
 		# WEEK OF YEAR
-	# 	date_modified_raw
+	#     date_modified_raw
 
 	# print('cwoy ')
 
@@ -643,7 +643,7 @@ def addFile( path, hasData=False ):
 			
 			found = False
 			# if '.'+record['ext'].lower() in extensionList:
-			# 	found = True
+			#     found = True
 			pathX = record['path'].lower()
 			for x in extensionList:
 				if pathX.endswith(x):
@@ -845,11 +845,11 @@ def action():
 		_dir.sqlCreateTable( db , delete=True )
 
 	# if not type( reg.data['pipe'] ) == bool:
-	# 	app.pipeCleaner(0)
-	# 	# app.printVar( app.appData )
-	# 	for i,row in enumerate( reg.data['pipe'] ):
-	# 		print( row )
-	# 		process( row )
+	#     app.pipeCleaner(0)
+	#     # app.printVar( app.appData )
+	#     for i,row in enumerate( reg.data['pipe'] ):
+	#         print( row )
+	#         process( row )
 
 	else:
 		if app.switch.isActive('Folder'):
@@ -936,10 +936,10 @@ def action():
 				sys.exit()
 
 			# {
-			# 	'folder': folder,
-			# 	'folders': folderCount,
-			# 	'files': fileCount,
-			# 	'data': data,
+			#     'folder': folder,
+			#     'folders': folderCount,
+			#     'files': fileCount,
+			#     'data': data,
 			# }
 
 			for x in dataCacheX:
@@ -958,16 +958,16 @@ def action():
 	else:
 		end = time.time()
 		# if app.switch.isActive('Ago'):
-		# 	newData = []
-		# 	ago = app.switch.value('Ago')
-		# 	for record in data:
-		# 		if record['date_modified_raw'] < ago:
-		# 			newData.append( record )
-		# 	data = newData
+		#     newData = []
+		#     ago = app.switch.value('Ago')
+		#     for record in data:
+		#         if record['date_modified_raw'] < ago:
+		#             newData.append( record )
+		#     data = newData
 
 		if app.switch.isActive('JSON'):
 			# for x in data[0].keys():
-			# 	print(x)
+			#     print(x)
 			# sys.exit()
 			app.printVarSimple( data )
 		else:
@@ -1019,7 +1019,7 @@ def action():
 							data[i][h] = _hash.file( record['path'], h=h )
 			# Cache FolderRefine Duplicate Hash mimeType MovieTitle
 			saveFile = {
-								'isLegacy':	False,
+								'isLegacy':    False,
 								'switches': {
 									'active': [],
 									'isActive': {},
@@ -1317,8 +1317,8 @@ def action():
 # app.printVar( _dir.fileInfo( path ) )
 
 # def load():
-# 	global data
-# 	data = app.getTable( 'table' )
+#     global data
+#     data = app.getTable( 'table' )
 
 # test
 # test

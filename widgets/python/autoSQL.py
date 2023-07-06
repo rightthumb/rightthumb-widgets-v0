@@ -23,7 +23,7 @@ _.switches.register('Input', '-i','appIn.json')
 _.switches.register('Output', '-o','folder\\appOut.db')
 # _.switches.register('Move', '-move','completed_in-folder_name')
 
-_.appInfo=	{
+_.appInfo=    {
 	'file': 'autoSQL.py',
 	'description': 'Changes the world',
 	'prerequisite': [],

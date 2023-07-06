@@ -288,7 +288,7 @@ class Code:
 				if isClose:
 					self.logistics['indexes']['lines']['id'][i] = line
 					o = isOpen[index[i]][ depth[ index[i] ] ]
-					# _.pr( 'close index', i, index[i], self.snippet(o, i) )	
+					# _.pr( 'close index', i, index[i], self.snippet(o, i) )    
 					# _.pr( 'close index', i, index[i], data[i], '\t', i-o )
 					self.index['start'][o] = index[i]
 					self.index['end'][i] = index[i]
@@ -562,7 +562,7 @@ class Code:
 
 														pass
 														# for x in ran:
-														# 	ran[x] = True
+														#     ran[x] = True
 
 
 														# _.pr(  )
@@ -617,7 +617,7 @@ class Code:
 							if type(q) == list:
 								qResults.append( q )
 								# for qq in q:
-								# 	qResults.append( qq )
+								#     qResults.append( qq )
 							else:
 								qResults.append( q )
 					else:
@@ -634,7 +634,7 @@ class Code:
 		return results
 
 
-		  
+		
 		pass
 	def rule_patterns_resolution( self, patterns ):
 		# _.pr( 'patterns patterns:', patterns )
@@ -1081,8 +1081,8 @@ EXAMPLES:
 
 LEFT OFF:
 
-	413		self.rule
-		446		self.rule_patterns
+	413        self.rule
+		446        self.rule_patterns
 			solve the STEP for validation
 
 

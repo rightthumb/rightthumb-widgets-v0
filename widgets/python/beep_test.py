@@ -56,7 +56,7 @@ __.pre_error = False
 _.appInfo[focus()] = {
 	'file': 'beep_test.py',
 	'liveAppName': __.thisApp( __file__ ),
- 	'description': 'beep',
+	'description': 'beep',
 	'categories': [
 						'beep',
 				],
@@ -78,15 +78,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
-				       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-				       # {},
+					# {},
 	],
 }
 

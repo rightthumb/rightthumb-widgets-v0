@@ -46,7 +46,7 @@ __.sort_name_trigger_override = [  ['']  ]
 _.appInfo[focus()] = {
 	'file': 'lunar_report.py',
 	'liveAppName': __.thisApp( __file__ ),
- 	'description': 'Lunar Report',
+	'description': 'Lunar Report',
 	'categories': [
 						'report',
 				],
@@ -74,12 +74,12 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-					   # { 'name': 'name', 'abbreviation': 'n' },
-					   # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-					   # 'this',
-					   # 'app',
+					# 'this',
+					# 'app',
 	],
 
 	}
@@ -238,9 +238,9 @@ def audit( search ):
 	global delta
 	global deltaType
 	# if not type(delta) == int:
-	# 	delta = 1
+	#     delta = 1
 	# if delta < 1:
-	# 	delta = 1
+	#     delta = 1
 
 	records = []
 	for record in lunar:
@@ -339,10 +339,10 @@ def action():
 
 
 	# for record in theDates:
-	# 	diff = record['end'] - record['start']
-	# 	diffX = [diff,diff/60,(diff/60)/60]
-	# 	diffX = epochHRs(record['start'],record['end'])
-	# 	_.pr( _.friendlyDate(record['start']), _.friendlyDate(record['end']), diffX )
+	#     diff = record['end'] - record['start']
+	#     diffX = [diff,diff/60,(diff/60)/60]
+	#     diffX = epochHRs(record['start'],record['end'])
+	#     _.pr( _.friendlyDate(record['start']), _.friendlyDate(record['end']), diffX )
 
 	# _.printVar( report )
 
@@ -395,9 +395,9 @@ window.open('http://www.pillerbeauty.com/js/jquery-1.11.3.js', 'new')
 
 hackData = []
 $('article').each(function() {
-    var title = $(this).find('a').attr('title')
-    var date = $(this).find('time').attr('datetime')
-    hackData.push({ 'title': title, 'date': date });
+	var title = $(this).find('a').attr('title')
+	var date = $(this).find('time').attr('datetime')
+	hackData.push({ 'title': title, 'date': date });
 });
 console.log( hackData )
 

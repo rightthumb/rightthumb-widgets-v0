@@ -24,7 +24,7 @@ _.switches.register('Input', '-i','appIn.py')
 _.switches.register('Output', '-o','folder\\appOut.py')
 _.switches.register('Move', '-move','completed_in-folder_name')
 
-_.appInfo=	{
+_.appInfo=    {
 	'file': 'convertBase.py',
 	'description': 'Converts old apps to new base',
 	'prerequisite': [],
@@ -134,8 +134,8 @@ def printColumns(line):
 		# found = False
 		# result = ''
 		# for tl in theLine:
-		# 	if found == False and (tl == ' ' or tl == '\t'):
-		# 		result += tl
+		#     if found == False and (tl == ' ' or tl == '\t'):
+		#         result += tl
 		result = theLine.split('_.printColumns(')[0]
 		return result
 
@@ -148,7 +148,7 @@ def printColumns(line):
 		code = '_.printColumns(' + str(dic0[1].split(')')[0]) + ')'
 		pre_spaces = getSpaces(line)
 		replacementCode = '_.tables.print(\'Auto\',\'' + fields + '\')'
-		 # + '\n' + line + '\n' + code + '\n' + fields0 + '\n'
+		# + '\n' + line + '\n' + code + '\n' + fields0 + '\n'
 		newLine = pre_spaces + '_.tables.register(\'Auto\',' + dic + ')\n' + line.replace(code,replacementCode)
 		line = newLine
 	except Exception as e:
@@ -164,23 +164,23 @@ def action():
 		# i = 0
 		# activeFunction = False
 		# for line in file:
-		# 	line = line.replace('\n','')
-		# 	if activeFunction == True and not line.startswith(' ') and not line.startswith('\t'):
-		# 		activeFunction = False
-		# 		end = i - 1
-		# 		if not functions[len(functions) - 1]['start'] == end:
-		# 			functions[len(functions) - 1]['end'] = end
-		# 			functions[len(functions) - 1]['length'] = end - functions[len(functions) - 1]['start']
-		# 	if line.startswith('def ') and '(' in line and ':' in line:
-		# 		activeFunction = True
-		# 		name0 = line.replace('def ','')
-		# 		name1 = name0.split('(')
-		# 		name = name1[0]
-		# 		functions.append({'line': line, 'name': name, 'start': i, 'end': 0, 'length': 0, 'hasGlobalX': False})
-		# 	i += 1
+		#     line = line.replace('\n','')
+		#     if activeFunction == True and not line.startswith(' ') and not line.startswith('\t'):
+		#         activeFunction = False
+		#         end = i - 1
+		#         if not functions[len(functions) - 1]['start'] == end:
+		#             functions[len(functions) - 1]['end'] = end
+		#             functions[len(functions) - 1]['length'] = end - functions[len(functions) - 1]['start']
+		#     if line.startswith('def ') and '(' in line and ':' in line:
+		#         activeFunction = True
+		#         name0 = line.replace('def ','')
+		#         name1 = name0.split('(')
+		#         name = name1[0]
+		#         functions.append({'line': line, 'name': name, 'start': i, 'end': 0, 'length': 0, 'hasGlobalX': False})
+		#     i += 1
 
 		# for fun in functions:
-		# 	print(fun['start'],'\t',fun['end'],'\t',fun['length'],'\t',fun['name'])
+		#     print(fun['start'],'\t',fun['end'],'\t',fun['length'],'\t',fun['name'])
 		# sys.exit()
 		convertedFile = []
 		for line in file:
@@ -210,7 +210,7 @@ def action():
 		_.saveText(convertedFile,_.ci(_.switches.value('Output')))
 
 	if _.switches.isActive('Move') == True:
-	        shutil.move(_.ci(_.switches.value('Input')), _.switches.value('Move') + _v.slash + _.ci(_.switches.value('Input')))
+			shutil.move(_.ci(_.switches.value('Input')), _.switches.value('Move') + _v.slash + _.ci(_.switches.value('Input')))
 
 ########################################################################################
 if __name__ == '__main__':

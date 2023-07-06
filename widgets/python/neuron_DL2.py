@@ -26,7 +26,7 @@ for j in range(60000):
 	syn1 += l1.T.dot(l2_delta)
 	syn0 += X.T.dot(l1_delta)
 	# if j%1000==0:
-	# 	print(syn0)
-	# 	print(syn1)
-	# 	print()
+	#     print(syn0)
+	#     print(syn1)
+	#     print()
 

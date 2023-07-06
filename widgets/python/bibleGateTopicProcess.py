@@ -23,7 +23,7 @@ import re
 _.switches.register('GenerateData', '-generate')
 _.switches.register('GenerateTopicList', '-topics')
 
-_.appInfo=	{
+_.appInfo=    {
 	'file': 'bibleGateTopicProcess.py',
 	'description': 'Process bibleGateTopic data (biblegateway.json)',
 	'prerequisite': [],
@@ -63,7 +63,7 @@ def action():
 				# #####x  print(res)
 
 		# for bX in books:
-		# 	#####x  print(bX)
+		#     #####x  print(bX)
 		maxChapter = []
 		maxVerse = []
 		last0 = ''
@@ -132,7 +132,7 @@ def action():
 			# ATONEMENT 6 Peter
 			preProcess = preProcess.replace(' ','').lower()
 			# if '9:1,17;10:20,21' in preProcess:
-			# 	preProcess = '20samuel9:1,17;10:20,21'
+			#     preProcess = '20samuel9:1,17;10:20,21'
 			# #####x  print('**',preProcess)
 			# if i == 0:
 			result_found = False
@@ -169,13 +169,13 @@ def action():
 						except Exception as e:
 							good = False
 					# if not good:
-					# 	print(pI)
+					#     print(pI)
 						# try:
-						# 	nx = books[last-1]['name'] + ' ' +  pI
-						# 	pI = nx
-						# 	good = True
+						#     nx = books[last-1]['name'] + ' ' +  pI
+						#     pI = nx
+						#     good = True
 						# except Exception as e:
-						# 	pass
+						#     pass
 
 					if good:
 						if len(nameCheck) > 0:
@@ -237,11 +237,11 @@ def action():
 		_.saveTable(topicsU,'bible_topic_words.json')
 			# #####x  print(tCs)
 		# for tCs in topicsU:
-		# 	#####x  print(tCs)
+		#     #####x  print(tCs)
 
 		# for tCs in topics:
-		# 	t = prepText(tCs)
-		# 	#####x  print()
+		#     t = prepText(tCs)
+		#     #####x  print()
 		bad = []
 		for tCs in topics:
 			t = tCs['description'].replace(_v.slash+'xbb','').lower()
@@ -325,37 +325,37 @@ def checkVerseExist(i,vs,data0,ref):
 
 
 		# for bC in books[rF[0]-1]['chapter_verses']:
-		# 	vsCount = bC['verses']
-		# 	# print(bC)
-		# 	if int(bC['chapter']) == int(rF[1]):
-		# 		if int(vsCount) < int(rF[2]):
-		# 			found = False
-		# 			print(books[rF[0]-1]['name'],data0,int(mXv), int(rF[2]))
+		#     vsCount = bC['verses']
+		#     # print(bC)
+		#     if int(bC['chapter']) == int(rF[1]):
+		#         if int(vsCount) < int(rF[2]):
+		#             found = False
+		#             print(books[rF[0]-1]['name'],data0,int(mXv), int(rF[2]))
 
 
 
 
 
 	# sys.exit()
-    # {
-    #     "id": 65,
-    #     "name": "Jude",
-    #     "abbrev": "Jude",
-    #     "chapter_verses": [
-    #         {
-    #             "chapter": 1,
-    #             "verses": 25
-    #         }
-    #     ],
-    #     "chapters": 1,
-    #     "verses": 25
-    # },
+	# {
+	#     "id": 65,
+	#     "name": "Jude",
+	#     "abbrev": "Jude",
+	#     "chapter_verses": [
+	#         {
+	#             "chapter": 1,
+	#             "verses": 25
+	#         }
+	#     ],
+	#     "chapters": 1,
+	#     "verses": 25
+	# },
 	# if not found:
-	# 	print()
-	# 	print(vs,books[i]['name'])
-	# 	print(books[i]['chapter_verses'][int(xYc)-1])
+	#     print()
+	#     print(vs,books[i]['name'])
+	#     print(books[i]['chapter_verses'][int(xYc)-1])
 
-	# 	print(i,xY_xx,xYc,xY_mXv,xYv)
+	#     print(i,xY_xx,xYc,xY_mXv,xYv)
 	return found
 sameIssue = []
 autoWord = []
@@ -454,12 +454,12 @@ def lineProcess(string,data,test=False):
 					# print()
 
 	# try:
-	# 	result
+	#     result
 	# except Exception as e:
-	# 	pass
-	# 	# result = [1,'1']
-	# 	#####x  print('Found 0')
-	# 	# sys.exit()
+	#     pass
+	#     # result = [1,'1']
+	#     #####x  print('Found 0')
+	#     # sys.exit()
 	return result
 
 def expandRef(data0):
@@ -576,8 +576,8 @@ def buildList(data):
 
 	# s = re.sub('[^0-9a-zA-Z]+', ' ', data['word'].split('(')[0].lower())
 	# for w in s.split(' '):
-	# 	if not w in omit and len(w) > 1:
-	# 		search.append(w)
+	#     if not w in omit and len(w) > 1:
+	#         search.append(w)
 
 	d = prepText(data)
 	#####x  print(d)
@@ -607,24 +607,24 @@ def buildList(data):
 ########################################################################################
 if False: # Example
 
-    {
-        "word": "AARON",
-        "description": "Lineage of ",
-        "vs": "Exodus 6:16-20; Joshua 21:4,10; 1 Chronicles 6:2,3;23:13"
-    },
-    {
-        "id": 65,
-        "name": "Jude",
-        "abbrev": "Jude",
-        "chapter_verses": [
-            {
-                "chapter": 1,
-                "verses": 25
-            }
-        ],
-        "chapters": 1,
-        "verses": 25
-    },
+	{
+		"word": "AARON",
+		"description": "Lineage of ",
+		"vs": "Exodus 6:16-20; Joshua 21:4,10; 1 Chronicles 6:2,3;23:13"
+	},
+	{
+		"id": 65,
+		"name": "Jude",
+		"abbrev": "Jude",
+		"chapter_verses": [
+			{
+				"chapter": 1,
+				"verses": 25
+			}
+		],
+		"chapters": 1,
+		"verses": 25
+	},
 
 ########################################################################################
 if __name__ == '__main__':

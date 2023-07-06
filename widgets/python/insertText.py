@@ -259,150 +259,150 @@ if not sys.stdin.isatty():
 # NEW database stuff
 
 # def testTrigger( data ):
-# 	return data * 5
+#     return data * 5
 
 # def dateScramble( data ):
-# 	d = _.date2epoch( data )
-# 	if len( str(data) ) > 0:
-# 		_.pr( data, d )
-# 	return _.resolveEpochTest( d, falseBlank=True )
+#     d = _.date2epoch( data )
+#     if len( str(data) ) > 0:
+#         _.pr( data, d )
+#     return _.resolveEpochTest( d, falseBlank=True )
 
 	# data = [
-	# 			{
-	# 						'first': 'Scott',
-	# 						'last': 'Reph',
-	# 						'test': 3,
-	# 			},
-	# 			{
-	# 						'first': 'Alpha',
-	# 						'last': 'Reph',
-	# 						'test': 7,
-	# 			},
+	#             {
+	#                         'first': 'Scott',
+	#                         'last': 'Reph',
+	#                         'test': 3,
+	#             },
+	#             {
+	#                         'first': 'Alpha',
+	#                         'last': 'Reph',
+	#                         'test': 7,
+	#             },
 	# ]
 	# fieldConfig = [{
-	# 			'table': 'test_table',
-	# 			'name': 'test',
-	# 			'trigger': testTrigger,
-	# 	},{
-	# 			'table': 'test_table',
-	# 			'name': 'date_modified',
-	# 			'trigger': dateScramble,
-	# 	}]
+	#             'table': 'test_table',
+	#             'name': 'test',
+	#             'trigger': testTrigger,
+	#     },{
+	#             'table': 'test_table',
+	#             'name': 'date_modified',
+	#             'trigger': dateScramble,
+	#     }]
 
 	# testSet = 0
 	# if testSet == 1:
-	# 	__.databases.register(
-	# 							name='test',
-	# 							table='test_table',
-	# 							file='__first_test.db',
-	# 							records=data,
-	# 							delete=True,
-	# 							fields=fieldConfig,
-	# 							# printFileActivity=True,
-	# 	)
+	#     __.databases.register(
+	#                             name='test',
+	#                             table='test_table',
+	#                             file='__first_test.db',
+	#                             records=data,
+	#                             delete=True,
+	#                             fields=fieldConfig,
+	#                             # printFileActivity=True,
+	#     )
 	# elif testSet == 0:
-	# 	__.databases.register(
-	# 							name='test',
-	# 							file='__first_test.db',
-	# 	)
+	#     __.databases.register(
+	#                             name='test',
+	#                             file='__first_test.db',
+	#     )
 	# elif testSet == 2:
-	# 	testSet = 1
-	# 	__.databases.register(
-	# 							name='test',
-	# 							file='__first_test____X.db',
-	# 							fields=fieldConfig,
-	# 	)
+	#     testSet = 1
+	#     __.databases.register(
+	#                             name='test',
+	#                             file='__first_test____X.db',
+	#                             fields=fieldConfig,
+	#     )
 	# elif testSet == 3:
-	# 	testSet = 1
-	# 	__.databases.register(
-	# 							name='test',
-	# 							file='__first_test____X.db',
-	# 							delete=True,
-	# 	)
+	#     testSet = 1
+	#     __.databases.register(
+	#                             name='test',
+	#                             file='__first_test____X.db',
+	#                             delete=True,
+	#     )
 
 
 
 	# if testSet == 1:
-	# 	records = []
+	#     records = []
 
-	# 	records.append({
-	# 									'first': 'Jessica',
-	# 									'last': 'Reph',
-	# 									'test': 55,
-	# 	})
+	#     records.append({
+	#                                     'first': 'Jessica',
+	#                                     'last': 'Reph',
+	#                                     'test': 55,
+	#     })
 
-	# 	records.append({
-	# 									'first': 'Nana',
-	# 									'last': 'Reph',
-	# 									'test': 100,
-	# 	})
+	#     records.append({
+	#                                     'first': 'Nana',
+	#                                     'last': 'Reph',
+	#                                     'test': 100,
+	#     })
 
-	# 	__.databases.insertRecords( name='test', table='test_table', records=records )
+	#     __.databases.insertRecords( name='test', table='test_table', records=records )
 
 
-	# 	__.databases.update(
-	# 							name='test',
-	# 							info={
-	# 									'table': 'test_table',
-	# 									'record': {
-	# 													'first': 'Sam',
-	# 													'last': 'Test',
-	# 													'test': 99,
-	# 									},
-	# 									'update': 'id=1',
-	# 							}
-	# 	)
+	#     __.databases.update(
+	#                             name='test',
+	#                             info={
+	#                                     'table': 'test_table',
+	#                                     'record': {
+	#                                                     'first': 'Sam',
+	#                                                     'last': 'Test',
+	#                                                     'test': 99,
+	#                                     },
+	#                                     'update': 'id=1',
+	#                             }
+	#     )
 
 
 
 	# results = __.databases.search(
-	# 						name='test',
-	# 						info={
-	# 								'table': 'test_table',
-	# 								'custom': 'select * from test_table',
-	# 								'force': True,
-	# 						}
+	#                         name='test',
+	#                         info={
+	#                                 'table': 'test_table',
+	#                                 'custom': 'select * from test_table',
+	#                                 'force': True,
+	#                         }
 	# )
 
 	###################
 	# __.databases.trigger(
-	# 						name='test',
-	# 						table='test_table',
-	# 						field='test',
-	# 						trigger=testTrigger,
+	#                         name='test',
+	#                         table='test_table',
+	#                         field='test',
+	#                         trigger=testTrigger,
 	# )
 
 	# results = __.databases.search(
-	# 						name='test',
-	# 						info={
-	# 								'table': 'test_table',
-	# 								'type': 'text',
-	# 								'field': 'first',
-	# 								'search': 'Scott',
-	# 								'custom': False,
-	# 								'force': False,
+	#                         name='test',
+	#                         info={
+	#                                 'table': 'test_table',
+	#                                 'type': 'text',
+	#                                 'field': 'first',
+	#                                 'search': 'Scott',
+	#                                 'custom': False,
+	#                                 'force': False,
 
-	# 						}
+	#                         }
 	# )
 
 	# results = __.databases.search(
-	# 						name='test',
-	# 						info={
-	# 								'table': 'test_table',
-	# 								'custom': 'test<10 and test>5',
-	# 								'force': False,
-	# 						}
+	#                         name='test',
+	#                         info={
+	#                                 'table': 'test_table',
+	#                                 'custom': 'test<10 and test>5',
+	#                                 'force': False,
+	#                         }
 	# )
 	###################
 
 	# try:
-	# 	_.pr()
+	#     _.pr()
 
-	# 	fieldList = ','.join(__.databases.getFields( 'test', 'test_table', exclude='' ))
-	# 	_.tables.register('results_table',results)
-	# 	_.tables.print('results_table',fieldList)
+	#     fieldList = ','.join(__.databases.getFields( 'test', 'test_table', exclude='' ))
+	#     _.tables.register('results_table',results)
+	#     _.tables.print('results_table',fieldList)
 	# except Exception as e:
-	# 	pass
+	#     pass
 
 
 ########################################################################################

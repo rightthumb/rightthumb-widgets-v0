@@ -314,15 +314,15 @@ def substitute(string):
 	p[0] = _.ci(p[0])
 	p[1] = _.ci(p[1])
 	# print(p)
-	# print(p)	
+	# print(p)    
 	# os._exit(0)
 	# result = _str.replaceAll(str(string),p[0],p[1])
 	result = string.replace(p[0],p[1])
 	# try:
-	#	 p = _.ci(_.switches.value('Substitute').split(',')[0])
-	#	 result = _str.replaceAll(str(string),p[0],p[1])
+	#     p = _.ci(_.switches.value('Substitute').split(',')[0])
+	#     result = _str.replaceAll(str(string),p[0],p[1])
 	# except Exception as e:
-	#	 pass
+	#     pass
 	return result
 def make(string):
 	if _.switches.isActive('Parse') == True:
@@ -351,7 +351,7 @@ def get_change(current, previous):
 	if current == previous:
 		return 100.0
 	try:
-	   return round(100 - (((abs(current - previous))/previous)*100.0),1)
+	return round(100 - (((abs(current - previous))/previous)*100.0),1)
 	except ZeroDivisionError:
 		return 0
 
@@ -591,7 +591,7 @@ if _.switches.isActive('CrossReferenceReverse') == False:
 				line = line.encode('UTF-8').decode('latin-1')
 			except Exception as e:
 				pass
-		# 	if _.switches.isActive('Progress') == False:
+		#     if _.switches.isActive('Progress') == False:
 				# if _.switches.isActive('Count') == False:
 		if countThisLine(line) == True:
 			parse0 = _.switches.value('Parse')

@@ -80,15 +80,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
-				       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-				       # {},
+					# {},
 	],
 }
 
@@ -205,7 +205,7 @@ def action():
 		slotCnt = int(_.switches.value('Slots'))
 
 	# for x in range(0,slotCnt):
-	# 	_.pr(x)
+	#     _.pr(x)
 	# sys.exit()
 	_.pr( 'Processing...', end='\r' )
 	for x in range(0,slotCnt):
@@ -257,9 +257,9 @@ def action():
 			m = 10
 		tbl = []
 		# for s in slots:
-		# 	if not slots[s] == default:
-		# 		if slots[s] <= m:
-		# 			tbl.append(slots[s])
+		#     if not slots[s] == default:
+		#         if slots[s] <= m:
+		#             tbl.append(slots[s])
 		for t in dex:
 			if t <= m:
 				tbl.append(t)

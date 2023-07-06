@@ -198,30 +198,30 @@ project = Direct()
 
 
 # https://selenium-python.readthedocs.io/locating-elements.html
-# 	self.browser.find_elements_by_tag_name("img")
+#     self.browser.find_elements_by_tag_name("img")
 
-# 	find_element_by_id
-# 	find_element_by_name
-# 	find_element_by_xpath
-# 	find_element_by_link_text
-# 	find_element_by_partial_link_text
-# 	find_element_by_tag_name
-# 	find_element_by_class_name
-# 	find_element_by_css_selector
+#     find_element_by_id
+#     find_element_by_name
+#     find_element_by_xpath
+#     find_element_by_link_text
+#     find_element_by_partial_link_text
+#     find_element_by_tag_name
+#     find_element_by_class_name
+#     find_element_by_css_selector
 
 # https://selenium-python.readthedocs.io/api.html
-# 	i.get_attribute("src")
+#     i.get_attribute("src")
 
 # searches:
-# 	python webdriver find_element_by_css_selector
+#     python webdriver find_element_by_css_selector
 
 
 def action():
 	pass
 	# if _.switches.isActive('Input'):
-	# 	_.setPipeData( _.getText( _.switches.value('Input') ), focus() )
+	#     _.setPipeData( _.getText( _.switches.value('Input') ), focus() )
 	# if not type( _.appData[__.appReg]['pipe'] ) == bool:
-	# 	pass
+	#     pass
 	# _.pr( _.d2json(_.appData) )
 
 

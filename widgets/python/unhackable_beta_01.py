@@ -35,7 +35,7 @@ _.switches.register('DecryptionTable', '-decryptiontable','DecryptionTable_._000
 _.switches.register('Scramble', '-scramble')
 _.switches.register('Password', '-password')
 
-_.appInfo=	{
+_.appInfo=    {
 	'file': 'unhackable.py',
 	'description': 'Changes the world',
 	'prerequisite': [],
@@ -60,12 +60,12 @@ if _.switches.isActive('Password'):
 # pipeData = ''
 
 # if not sys.stdin.isatty():
-# 	pipeData = sys.stdin.readlines()
-# 	try:
-# 		if pipeData[0][0].isalnum() == False:
-# 			pipeData[0] = pipeData[0][1:]
-# 	except Exception as e:
-# 		pass
+#     pipeData = sys.stdin.readlines()
+#     try:
+#         if pipeData[0][0].isalnum() == False:
+#             pipeData[0] = pipeData[0][1:]
+#     except Exception as e:
+#         pass
 
 
 ########################################################################################
@@ -289,7 +289,7 @@ def scramble():
 		i += 1
 	# print(len(bank))
 	# for d in bank:
-	# 	print(d)
+	#     print(d)
 	newBank = _.sort(bank,'sort_field')
 	del bank
 	del data

@@ -33,8 +33,8 @@ import _rightThumb._vars as _v
 import _rightThumb._string as _str
 
 # _nd = _.regImp( __.appReg, 'fileNameDate' )
-# 	_nd.pipe( [databaseFile] )
-# 	_nd.do( 'action' )
+#     _nd.pipe( [databaseFile] )
+#     _nd.do( 'action' )
 
 # _textIndex = _.regImp( __.appReg, 'words' )
 	# _textIndex.switch( 'Alpha' )
@@ -44,44 +44,44 @@ import _rightThumb._string as _str
 	# _textIndex.switch( 'PartsOfSpeech' )
 	# _textIndex.switch( 'Clean' )
 	# _textIndex.pipe( data )
-# 	index = _textIndex.do( 'action' )
+#     index = _textIndex.do( 'action' )
 
 # _bm = _.regImp( __.appReg, 'bookmarks' )
 	# index = _bm.imp.index()
 # _dirList = _.regImp( __.appReg, 'dirList' )
-# 	_dirList.switch( 'Files' )
-# 	_dirList.switch( 'Recursion' )
-# 	_dirList.switch( 'Binary' )
-# 	_dirList.switch( 'Path','D:\\Apps' )
-# 	files = _dirList.do( 'action' )
+#     _dirList.switch( 'Files' )
+#     _dirList.switch( 'Recursion' )
+#     _dirList.switch( 'Binary' )
+#     _dirList.switch( 'Path','D:\\Apps' )
+#     files = _dirList.do( 'action' )
 
 # import _rightThumb._profileVariables as _profile
-# 	profile = _profile.records.audit( 'name', asset )
+#     profile = _profile.records.audit( 'name', asset )
 # import _rightThumb._encryptString as _blowfish
 	# _blowfish.genPassword()
 	# _blowfish.genPassword( 'string' )
 	# en = _blowfish.encrypt( string )
 	# de = _blowfish.decrypt( en )
 # import _rightThumb._encryptFile as _blowfish
-# 	_blowfish.encrypt( infilepath, outfilepath, key )
-# 	_blowfish.decrypt( infilepath, outfilepath, key )
+#     _blowfish.encrypt( infilepath, outfilepath, key )
+#     _blowfish.decrypt( infilepath, outfilepath, key )
 # _browserX = _.regImp( __.appReg, '_rightThumb._toolsScrapeDirect' )
 
 # _browser = _.regImp( __.appReg, '_rightThumb._toolsScrapeFrontEnd' )
-# 	_browser.imp.project.open( url )
-# 	code = _.getText( _v.myAppsJs + '\\Church_Directory.js' )
-# 	_browser.imp.project.jqueryInject()
-# 	_browser.imp.project.inject( code )
-# 	while not _browser.imp.project.injectReturn('return window.taskComplete;'): pass
-# 	data =_browser.imp.project.injectReturn( 'window.hack.acquire.payload()' )
-# 	_browser.imp.project.close()
+#     _browser.imp.project.open( url )
+#     code = _.getText( _v.myAppsJs + '\\Church_Directory.js' )
+#     _browser.imp.project.jqueryInject()
+#     _browser.imp.project.inject( code )
+#     while not _browser.imp.project.injectReturn('return window.taskComplete;'): pass
+#     data =_browser.imp.project.injectReturn( 'window.hack.acquire.payload()' )
+#     _browser.imp.project.close()
 
 # import _rightThumb._date as _date
 # import _rightThumb._dir as _dir
 	# _.printVar( _dir.fileInfo( path ) )
 # import _rightThumb._md5 as _hash
-# 	.file .string .bin  ( data, h )
-# 	md5 sha1 sha224 sha256 sha384 sha512 sha3_224 sha3_256 sha3_384 sha3_512 shake_128 shake_256
+#     .file .string .bin  ( data, h )
+#     md5 sha1 sha224 sha256 sha384 sha512 sha3_224 sha3_256 sha3_384 sha3_512 shake_128 shake_256
 
 # import _rightThumb._mimetype as _mime
 
@@ -97,36 +97,36 @@ import _rightThumb._string as _str
 	# _inDic.imp.testAll( 'fight' )
 	# _inDic.imp.testOne( 'austen' )
 # _file_folder = _.regImp( __.appReg, 'file_folder' )
-# 	_file_folder.switch( 'Save,Clean' )
-# 	_file_folder.switch( 'Compair,Clean' )
-# 	_file_folder.switch( 'Folder', '' )
+#     _file_folder.switch( 'Save,Clean' )
+#     _file_folder.switch( 'Compair,Clean' )
+#     _file_folder.switch( 'Folder', '' )
 # _fileNameDate = _.regImp( __.appReg, 'fileNameDate' )
-# 	_fileNameDate.imp.newName( filename )
-# 	_fileNameDate.imp.newName( filename, _dir.fileInfo( filename ) )
+#     _fileNameDate.imp.newName( filename )
+#     _fileNameDate.imp.newName( filename, _dir.fileInfo( filename ) )
 # _filePathPatterns = _.regImp( __.appReg, 'filePathPatterns' )
 	# _filePathPatterns.switch( 'NoPrint' )
 	# _filePathPatterns.switch( 'Files', _.switches.value( 'Files' ) )
 	# folderReport = _filePathPatterns.action()
 # fileBackup = _.regImp( __.appReg, 'fileBackup' )
-# 	fileBackup.switch( 'Input', filename )
-# 	fileBackup.switch( 'Flag', 'pre replaceText' )
-# 	recoveryFile = fileBackup.do( 'action' )
+#     fileBackup.switch( 'Input', filename )
+#     fileBackup.switch( 'Flag', 'pre replaceText' )
+#     recoveryFile = fileBackup.do( 'action' )
 # _folderContent = _.regImp( __.appReg, 'file' )
-# 	_folderContent.switch( 'Silent' )
-# 	_folderContent.switch( 'Folder', _v.myAppsBatch )
-# 	_folderContent.switch( 'NoExtension' )
+#     _folderContent.switch( 'Silent' )
+#     _folderContent.switch( 'Folder', _v.myAppsBatch )
+#     _folderContent.switch( 'NoExtension' )
 
-# 	_folderContent.switch( 'Recursive' )
+#     _folderContent.switch( 'Recursive' )
 
-# 	_folderContent.switch( 'Text' )
-# 	_folderContent.switch( 'Binary' )
-# 	_folderContent.switch( 'Label', 'App: ' )
-# 	_folderContent.switch( 'Prefix', ';t' )
-# 	files = _folderContent.do( 'action' )['files']
-# 	folders = _folderContent.do( 'action' )['folders']
+#     _folderContent.switch( 'Text' )
+#     _folderContent.switch( 'Binary' )
+#     _folderContent.switch( 'Label', 'App: ' )
+#     _folderContent.switch( 'Prefix', ';t' )
+#     files = _folderContent.do( 'action' )['files']
+#     folders = _folderContent.do( 'action' )['folders']
 # _tickets = _.regImp( __.appReg, 'ticketTimeline' )
-# 	_tickets.switch( 'ReturnFiles' )
-# 	records = _tickets.do( 'records' )
+#     _tickets.switch( 'ReturnFiles' )
+#     records = _tickets.do( 'records' )
 ##################################################
 
 def appSwitches():
@@ -136,14 +136,14 @@ def appSwitches():
 
 
 	# _.switches.documentation( 'Test', { 
-	# 									'examples': [
-	# 													'',
-	# 												],
+	#                                     'examples': [
+	#                                                     '',
+	#                                                 ],
 
-	# 									'required': [],
-	# 									'related': [],
-	# 									'isRequired': False,
-	# 								} )
+	#                                     'required': [],
+	#                                     'related': [],
+	#                                     'isRequired': False,
+	#                                 } )
 
 
 _.autoBackupData = True
@@ -180,13 +180,13 @@ _.appInfo[focus()] = {
 						''
 	],
 	'columns': [
-				       { 'name': 'date', 'abbreviation': 'd,y,year' },
-				       { 'name': 'title', 'abbreviation': 't,n,l,name,label' },
-				       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					{ 'name': 'date', 'abbreviation': 'd,y,year' },
+					{ 'name': 'title', 'abbreviation': 't,n,l,name,label' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 
 	}
@@ -269,28 +269,28 @@ def action():
 
 
 	# if 'title' in _.switches.values('MustInclude'):
-	# 	_.pr( 'here' )
+	#     _.pr( 'here' )
 
 	# sys.exit()
 
 # franchise
-# 	<class 'float'> date_acquired
-# 	<class 'float'> epoch
-# 	<class 'str'> date
-# 	<class 'str'> label
-# 	<class 'list'> aliases
-# 	<class 'list'> parts
-# 	<class 'list'> movieIDS
-# 	<class 'list'> peopleIDS
-# 	<class 'list'> movies
-# 	<class 'list'> list
+#     <class 'float'> date_acquired
+#     <class 'float'> epoch
+#     <class 'str'> date
+#     <class 'str'> label
+#     <class 'list'> aliases
+#     <class 'list'> parts
+#     <class 'list'> movieIDS
+#     <class 'list'> peopleIDS
+#     <class 'list'> movies
+#     <class 'list'> list
 
 # franchise['movies']
-# 	<class 'str'> imdbID
-# 	<class 'str'> year
-# 	<class 'str'> name
-# 	<class 'str'> link
-# 	<class 'int'> people
+#     <class 'str'> imdbID
+#     <class 'str'> year
+#     <class 'str'> name
+#     <class 'str'> link
+#     <class 'int'> people
 
 # for x in movie.keys(): _.pr( type(movie[x]), x );
 	if platform.system() == 'Windows':

@@ -711,7 +711,7 @@ def secureFiles(path):
 		global _decrypt_docs
 		if _decrypt_docs is None: _decrypt_docs = _.regImp( __.appReg, 'decrypt-docs' )
 		_.cp( [ 'SECURE FILE' ], 'Background.red' )
-
+		__.setting('fileBackup-secure_file',True)
 		_decrypt_docs.imp.run(path)
 		if __.fileBackup.isPreOpen:
 			return True
@@ -722,6 +722,7 @@ def secureFiles(path):
 
 	if path in __.v.secure.files:
 		_.cp( [ 'SECURE FILE' ], 'Background.red' )
+		__.setting('fileBackup-secure_file',True)
 		_.v.secure=True
 		
 		if path in __.v.secure.files:
@@ -782,7 +783,7 @@ __.fileBackup=_.dot()
 __.fileBackup.isPreOpen = _.switches.isActive('isPreOpen')
 # __.fileBackup.isPreOpen
 # __.fileBackup.isPreOpen
-def action(path=None,flag=None,o=None):
+def action(path=None,flag=None,o=None,pre=None):
 	global INDEX
 	global _BYTES_
 	global backupLog
@@ -791,8 +792,11 @@ def action(path=None,flag=None,o=None):
 	# print('isPreOpen-o',o)
 	# print('isPreOpen',_.switches.isActive('isPreOpen'))
 	# print('isPreOpen2',_.switches.isActive2('isPreOpen'))
-	if _.switches.isActive('isPreOpen'): __.fileBackup.isPreOpen=True
-	if _.switches.isActive2('isPreOpen'): __.fileBackup.isPreOpen=True
+	if pre is None:
+		if _.switches.isActive('isPreOpen'): __.fileBackup.isPreOpen=True
+		if _.switches.isActive2('isPreOpen'): __.fileBackup.isPreOpen=True
+	else:
+		__.fileBackup.isPreOpen=pre
 	if not o is None and o:
 		__.fileBackup.isPreOpen=True
 	# print('isPreOpen3',__.fileBackup.isPreOpen)
@@ -1305,7 +1309,17 @@ def action(path=None,flag=None,o=None):
 				# 	_bkLog.imp.addFlagIfHasBackup( idCheck )
 				# _.pr(idCheck)
 			else:
-
+				modified = formatDate(modifiedRaw)
+				if _mime.isText(path) and _.isTextFi(path,100):
+					newname = _v.myTXT + os.sep + str(now) + '-' + modified +  '-' + name
+					mime = 'text'
+				else:
+					mime = 'binary'
+					if not _.switches.isActive('Silent'):
+						_.colorThis( [  '********************'  ], 'yellow' )
+						_.colorThis( [  '   File is BINARY'  ], 'yellow' )
+						_.colorThis( [  '********************'  ], 'yellow' )
+					newname = _v.myBIN + os.sep + str(now) + '-' + modified +  '-' + name
 
 				if not __.secureFilesID is None:
 					theID = __.secureFilesID
@@ -1322,17 +1336,7 @@ def action(path=None,flag=None,o=None):
 					return INDEX[path]['backup']
 
 				
-				modified = formatDate(modifiedRaw)
-				if _mime.isText(path):
-					newname = _v.myTXT + os.sep + str(now) + '-' + modified +  '-' + name
-					mime = 'text'
-				else:
-					mime = 'binary'
-					if not _.switches.isActive('Silent'):
-						_.colorThis( [  '********************'  ], 'yellow' )
-						_.colorThis( [  '   File is BINARY'  ], 'yellow' )
-						_.colorThis( [  '********************'  ], 'yellow' )
-					newname = _v.myBIN + os.sep + str(now) + '-' + modified +  '-' + name
+
 
 				name = ''
 				parts = os.path.abspath(path).split(os.sep)
@@ -1506,7 +1510,7 @@ if __name__ == '__main__':
 	action()
 	__.isExit()
 
-
+# isTextFi
 
 
 

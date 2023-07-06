@@ -78,9 +78,9 @@ if __name__ == '__main__':
 						print( '\t', item )
 
 	# if _.switches.isActive('Count') == False and _.switches.isActive('NoFolder') == False:
-	# 	print('\n{}\n{}'.format(i,folder))
+	#     print('\n{}\n{}'.format(i,folder))
 	# if _.switches.isActive('NoFolder') == True:
-	# 	print('',i)
+	#     print('',i)
 	if not _.switches.isActive('Count'):
 		print('',i)
 

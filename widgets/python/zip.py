@@ -80,15 +80,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-					   # { 'name': 'name', 'abbreviation': 'n' },
-					   # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-					   # 'this',
-					   # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-					   # {},
+					# {},
 	],
 }
 
@@ -270,7 +270,7 @@ Please note that this application is a basic implementation and may not handle a
 	_.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name', description='Files', isRequired=False )
 	_.switches.register( 'Extraction-Folder', '-fo,-folder' )
 	_.switches.register( 'Extract', '-e,-extract' )
-	_.switches.register( 'Delete', '-d,-delete' )	
+	_.switches.register( 'Delete', '-d,-delete' )    
 
 
 '''

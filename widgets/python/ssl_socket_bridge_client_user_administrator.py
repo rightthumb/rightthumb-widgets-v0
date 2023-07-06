@@ -52,9 +52,9 @@ done = False
 while not done:
 	print('loop')
 	# try:
-	# 	sock.connect((hostname, port))
+	#     sock.connect((hostname, port))
 	# except Exception as e:
-	# 	pass
+	#     pass
 	if not loggedIn:
 		loggedIn = True
 		data = {
@@ -77,14 +77,14 @@ while not done:
 		# validation = str(data,'iso-8859-1')
 		# print( 'validation', validation )
 		# if expecting == validation:
-		# 	print( 'validation pass' )
+		#     print( 'validation pass' )
 		# else:
-		# 	print( 'validation fail' )
+		#     print( 'validation fail' )
 		# sock.close()
 		# try:
-		# 	sock.connect((hostname, port))
+		#     sock.connect((hostname, port))
 		# except Exception as e:
-		# 	pass
+		#     pass
 	# Read the message from keyboard
 
 	u = input( 'Send to user: - ' );

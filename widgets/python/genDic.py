@@ -23,7 +23,7 @@ _.switches.register('Input', '-i','file.txt')
 _.switches.register('Output', '-o','file.json')
 _.switches.register('Enumerate', '-enu')
 
-_.appInfo=	{
+_.appInfo=    {
 	'file': 'genDic.py',
 	'description': 'Generates dictionary',
 	'prerequisite': [],
@@ -50,12 +50,12 @@ _.switches.process()
 # pipeData = ''
 
 # if not sys.stdin.isatty():
-# 	pipeData = sys.stdin.readlines()
-# 	try:
-# 		if pipeData[0][0].isalnum() == False:
-# 			pipeData[0] = pipeData[0][1:]
-# 	except Exception as e:
-# 		pass
+#     pipeData = sys.stdin.readlines()
+#     try:
+#         if pipeData[0][0].isalnum() == False:
+#             pipeData[0] = pipeData[0][1:]
+#     except Exception as e:
+#         pass
 
 ########################################################################################
 def action():

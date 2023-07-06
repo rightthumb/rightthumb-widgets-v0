@@ -27,7 +27,7 @@ import _rightThumb._mimetype as _mime
 # _.switches.register('Output', '-o','folder\\appOut.py')
 # _.switches.register('Move', '-move','completed_in-folder_name')
 
-_.appInfo=	{
+_.appInfo=    {
 	'file': 'isText.py',
 	'description': 'Changes the world',
 	'prerequisite': [],

@@ -43,7 +43,7 @@ __.pre_error = False
 _.appInfo[focus()] = {
 	'file': 'drive',
 	'liveAppName': __.thisApp( __file__ ),
- 	'description': 'Drive Classes',
+	'description': 'Drive Classes',
 	'categories': [
 						'drive',
 						'tool',
@@ -65,15 +65,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
-				       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-				       # {},
+					# {},
 	],
 }
 
@@ -142,32 +142,32 @@ _.postLoad( __file__ )
 
 
 class Drive:
-    def __init__( self ):
-        self.machineID = _v.getMachineID()
-        self.file_drives = 'indexTable_drives-' + self.machineID + '.json'
-        self.file_driveLog = 'indexTable_logs-' + self.machineID + '.json'
-        self.index_folder = _v.myIndexes+_v.slash
+	def __init__( self ):
+		self.machineID = _v.getMachineID()
+		self.file_drives = 'indexTable_drives-' + self.machineID + '.json'
+		self.file_driveLog = 'indexTable_logs-' + self.machineID + '.json'
+		self.index_folder = _v.myIndexes+_v.slash
 
 
 class Index( Drive ):
-    def __init__( self ):
-    	pass
+	def __init__( self ):
+		pass
 
 
 class Scan( Drive ):
-    def __init__( self ):
-        super().__init__()
+	def __init__( self ):
+		super().__init__()
 
 class Documentation( Drive ):
-    def __init__( self ):
-        super().__init__()
+	def __init__( self ):
+		super().__init__()
 
 class Reports( Drive ):
-    """
-        Manage Index Folder
-    """
-    def __init__( self ):
-        super().__init__()
+	"""
+		Manage Index Folder
+	"""
+	def __init__( self ):
+		super().__init__()
 
 
 

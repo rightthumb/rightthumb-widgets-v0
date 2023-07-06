@@ -33,7 +33,7 @@ _.load()
 import _rightThumb._vars as _v
 import _rightThumb._string as _str
 # import _rightThumb._profileVariables as _profile
-# 	profile = _profile.records.audit( 'name', asset )
+#     profile = _profile.records.audit( 'name', asset )
 # import _rightThumb._encryptString as _blowfish
 	# en = _blowfish.encrypt( string )
 	# de = _blowfish.decrypt( en )
@@ -71,7 +71,7 @@ def appSwitches():
 
 _.appInfo[focus()] = {
 	'file': 'generateRelevantFolders.py',
- 	'description': 'generate relevant folders for apps',
+	'description': 'generate relevant folders for apps',
 	'categories': [
 						'app'
 						'default'
@@ -93,11 +93,11 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': 'name', 'abbreviation': 'n' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 
 	}

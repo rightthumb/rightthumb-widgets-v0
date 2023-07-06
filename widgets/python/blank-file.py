@@ -48,7 +48,7 @@ __.switch_raw = []
 _.appInfo[focus()] = {
 	'file': 'blank-file.py',
 	'liveAppName': __.thisApp( __file__ ),
- 	'description': 'create blank file with header or template',
+	'description': 'create blank file with header or template',
 	'categories': [
 						'.sh',
 						'.bat',
@@ -79,15 +79,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
-				       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-				       # {},
+					# {},
 	],
 }
 
@@ -155,11 +155,11 @@ _.postLoad( __file__ )
 # START
 
 def confirm():
-    _.cp( _.linePrint(txt='*',p=0), 'red' )
-    _.cp( [ '  \t', 'ABOUT TO ERASE FILE!!!!!!!!!' ], 'yellow' )
-    _.cp( _.linePrint(txt='*',p=0), 'red' )
-    
-        
+	_.cp( _.linePrint(txt='*',p=0), 'red' )
+	_.cp( [ '  \t', 'ABOUT TO ERASE FILE!!!!!!!!!' ], 'yellow' )
+	_.cp( _.linePrint(txt='*',p=0), 'red' )
+	
+		
 
 
 def process(path):

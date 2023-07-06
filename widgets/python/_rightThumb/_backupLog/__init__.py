@@ -125,48 +125,48 @@ if __name__ == '__main__':
 def action():
 	pass
 	# if _.switches.isActive('Input'):
-	# 	setPipeData( _.getText( _.switches.value('Input') ) )
+	#     setPipeData( _.getText( _.switches.value('Input') ) )
 
 	# if not type( _.appData[__.appReg]['pipe'] ) == bool:
-	# 	pass
+	#     pass
 
 
 
 # def diffDic( x, y ):
-# 	if x > y:
-# 		a = x
-# 		b = y
-# 	else:
-# 		a = y
-# 		b = x
-# 	dt1 = datetime.datetime.fromtimestamp(b)
-# 	dt2 = datetime.datetime.fromtimestamp(a)
-# 	rd = dateutil.relativedelta.relativedelta (dt2, dt1)
-# 	return { 'y': rd.years, 'm': rd.months, 'd': rd.days, 'h': rd.hours, 'm': rd.minutes, 's': rd.seconds }
+#     if x > y:
+#         a = x
+#         b = y
+#     else:
+#         a = y
+#         b = x
+#     dt1 = datetime.datetime.fromtimestamp(b)
+#     dt2 = datetime.datetime.fromtimestamp(a)
+#     rd = dateutil.relativedelta.relativedelta (dt2, dt1)
+#     return { 'y': rd.years, 'm': rd.months, 'd': rd.days, 'h': rd.hours, 'm': rd.minutes, 's': rd.seconds }
 
 # def diffList( x, y ):
-# 	if x > y:
-# 		a = x
-# 		b = y
-# 	else:
-# 		a = y
-# 		b = x
-# 	dt1 = datetime.datetime.fromtimestamp(b)
-# 	dt2 = datetime.datetime.fromtimestamp(a)
-# 	rd = dateutil.relativedelta.relativedelta (dt2, dt1)
-# 	return [rd.years, rd.months, rd.days, rd.hours, rd.minutes, rd.seconds]
+#     if x > y:
+#         a = x
+#         b = y
+#     else:
+#         a = y
+#         b = x
+#     dt1 = datetime.datetime.fromtimestamp(b)
+#     dt2 = datetime.datetime.fromtimestamp(a)
+#     rd = dateutil.relativedelta.relativedelta (dt2, dt1)
+#     return [rd.years, rd.months, rd.days, rd.hours, rd.minutes, rd.seconds]
 
 # def diffPrint( x, y ):
-# 	if x > y:
-# 		a = x
-# 		b = y
-# 	else:
-# 		a = y
-# 		b = x
-# 	dt1 = datetime.datetime.fromtimestamp(b)
-# 	dt2 = datetime.datetime.fromtimestamp(a)
-# 	rd = dateutil.relativedelta.relativedelta (dt2, dt1)
-# 	return "%d years, %d months, %d days, %d hours, %d minutes and %d seconds" % (rd.years, rd.months, rd.days, rd.hours, rd.minutes, rd.seconds)
+#     if x > y:
+#         a = x
+#         b = y
+#     else:
+#         a = y
+#         b = x
+#     dt1 = datetime.datetime.fromtimestamp(b)
+#     dt2 = datetime.datetime.fromtimestamp(a)
+#     rd = dateutil.relativedelta.relativedelta (dt2, dt1)
+#     return "%d years, %d months, %d days, %d hours, %d minutes and %d seconds" % (rd.years, rd.months, rd.days, rd.hours, rd.minutes, rd.seconds)
 
 def epochSec( x, y ):
 	if x > y:
@@ -420,14 +420,14 @@ def cleanRecord( i, record ):
 	# try:
 	# except Exception as e:
 
-	# 	if False:
-	# 		fv[f] = {
-	# 					"epoch": epoch,
-	# 					"v": 0,
-	# 					"v1": 0,
-	# 					"v2": 0,
-	# 					"v3": 1
-	# 		}
+	#     if False:
+	#         fv[f] = {
+	#                     "epoch": epoch,
+	#                     "v": 0,
+	#                     "v1": 0,
+	#                     "v2": 0,
+	#                     "v3": 1
+	#         }
 
 	newRecord['version'] = str(fv[f]['v']) + '.' + str(fv[f]['v1']) + '.' + str(fv[f]['v2']) + '.' + str(fv[f]['v3'])
 	if f in lastVersion:
@@ -463,20 +463,20 @@ def cleanRecord( i, record ):
 
 
 # def updateAutoVersion( epoch ):
-# 	global backupLog
+#     global backupLog
 
-# 	for  i,record in enumerate(backupLog):
-# 		if record['timestamp'] == epoch:
-# 			flag = record['flag']
-# 			flag = _str.cleanBE( flag, ' ' )
-# 			flag = _str.cleanBE( flag, ',' )
-# 			flags = flag.lower().split(',')
-# 			backupLog[i]['v1'] += 1
-# 			backupLog[i]['v2'] = 0
-# 			if not 'mv' in flags:
-# 				backupLog[i]['flag'] = str(flag) + ',MV'
-# 			backupLog[i]['flag'] = _str.cleanBE( backupLog[i]['flag'], ' ' )
-# 			backupLog[i]['flag'] = _str.cleanBE( backupLog[i]['flag'], ',' )
+#     for  i,record in enumerate(backupLog):
+#         if record['timestamp'] == epoch:
+#             flag = record['flag']
+#             flag = _str.cleanBE( flag, ' ' )
+#             flag = _str.cleanBE( flag, ',' )
+#             flags = flag.lower().split(',')
+#             backupLog[i]['v1'] += 1
+#             backupLog[i]['v2'] = 0
+#             if not 'mv' in flags:
+#                 backupLog[i]['flag'] = str(flag) + ',MV'
+#             backupLog[i]['flag'] = _str.cleanBE( backupLog[i]['flag'], ' ' )
+#             backupLog[i]['flag'] = _str.cleanBE( backupLog[i]['flag'], ',' )
 
 
 

@@ -55,7 +55,7 @@ __.pre_error = False
 _.appInfo[focus()] = {
 	'file': 'fix_dates_from_file_meta_db.py',
 	'liveAppName': __.thisApp( __file__ ),
- 	'description': 'fix create and modified dates',
+	'description': 'fix create and modified dates',
 	'categories': [
 						'tool',
 						'date',
@@ -88,15 +88,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
-				       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-				       # {},
+					# {},
 	],
 }
 
@@ -561,33 +561,33 @@ def process( path ):
 		# changeC( path, index[f][p]['ce'] )
 		# if info['ce'] > index[f][p]['ce']:
 			# if ( info['ce'] - index[f][p]['ce'] ) > 123521:
-			# 	changeC( path, index[f][p]['ce'] )
+			#     changeC( path, index[f][p]['ce'] )
 			# elif ( index[f][p]['ce'] -info['ce'] ) > 123521:
-			# 	changeC( path, index[f][p]['ce'] )
+			#     changeC( path, index[f][p]['ce'] )
 
 		# if len( records ):
-		# 	ce = records[0][0]
-		# 	me = records[0][1]
+		#     ce = records[0][0]
+		#     me = records[0][1]
 
-		# 	if info['me'] < threshhold:
-		# 		_.pr( ce, me )
-		# 		_.pr( _.friendlyDate(ce), _.friendlyDate(me) )
+		#     if info['me'] < threshhold:
+		#         _.pr( ce, me )
+		#         _.pr( _.friendlyDate(ce), _.friendlyDate(me) )
 
 
 
 		# for record in records:
-		# 	_.pr(record)
+		#     _.pr(record)
 
 
 
 # def action():
-# 	global conn
-# 	global c
-# 	db = 'D:\\tech\\hosts\\MSI\\indexes\\D_Drive.db'
-# 	conn = sqlite3.connect(db)
-# 	c = conn.cursor()
+#     global conn
+#     global c
+#     db = 'D:\\tech\\hosts\\MSI\\indexes\\D_Drive.db'
+#     conn = sqlite3.connect(db)
+#     c = conn.cursor()
 
-# 	process( _.switches.values('Input')[0] )
+#     process( _.switches.values('Input')[0] )
 
 
 threshhold = _.autoDate('2020-11-30 07:51:21')

@@ -134,8 +134,8 @@ _.appInfo[focus()] = {
 						{ 'name': 'selected', 'abbreviation': 'sel' },
 	],
 	'aliases': [
-					   # 'this',
-					   # 'app',
+					# 'this',
+					# 'app',
 	],
 
 	}

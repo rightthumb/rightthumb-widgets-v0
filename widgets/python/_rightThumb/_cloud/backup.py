@@ -87,15 +87,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-					   # { 'name': 'name', 'abbreviation': 'n' },
-					   # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-					   # 'this',
-					   # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-					   # {},
+					# {},
 	],
 }
 
@@ -184,9 +184,9 @@ _.postLoad( __file__ )
 # os.system( '"' + do + '"' )
 # _.setPipeData( os.listdir( os.getcwd() ), focus() )
 # _.showLine( item )
-# 	if os.path.isdir( row ):
-# 	if os.path.isfile( row ):
-#	os.path.abspath(path)
+#     if os.path.isdir( row ):
+#     if os.path.isfile( row ):
+#    os.path.abspath(path)
 # __.appRegPipe    ( pipe data registerd focus(__.appReg) set by _.myFileLocations {if imported} , default is None )
 # date = _.friendlyDate( theDate )
 # _.addComma()
@@ -469,13 +469,13 @@ class Cloud:
 				record['remote'] = paths['remote']
 
 				# if not os.path.isfile( record['local'] ):
-				# 	_.pr( record['local'] )
+				#     _.pr( record['local'] )
 				if os.path.isfile( record['local'] ):
 					_.pr( 'del', record['local'] )
 					# fileBackup.switch( 'Input', record['local'] )
 					# backup_file = fileBackup.do( 'action' )
 					# if os.path.isfile(backup_file):
-					# 	os.unlink(backup_file)
+					#     os.unlink(backup_file)
 					# os.link( record['local'], backup_file )
 					# _.pr( 'backup:', backup_file )
 					# os.unlink( record['local'] )
@@ -881,7 +881,7 @@ class Cloud:
 				newParts.append( p )
 				f = slash.join( newParts )
 				# if not techDrive in f:
-				# 	f = techDrive+dDim+slash+f
+				#     f = techDrive+dDim+slash+f
 				f = f.replace( _v.slashes['u']+_v.slashes['u'], _v.slashes['u'] )
 				# _.pr(f)
 
@@ -960,11 +960,11 @@ class DB:
 		# __.cloud.db.table_prefix = 'cloud'
 		# _.colorThis( 'status: db B', 'yellow' )
 		# self.tables_app_list = [
-		# 						'accounts',
-		# 						'files',
-		# 						'log_connection',
-		# 						'log_transfer',
-		# 						'log_error',
+		#                         'accounts',
+		#                         'files',
+		#                         'log_connection',
+		#                         'log_transfer',
+		#                         'log_error',
 		# ]
 		self.tables_app_live = []
 		self.tables_app_list = [
@@ -1009,7 +1009,7 @@ class DB:
 		
 		_.colorThis( 'status: db ssh connected', 'yellow' )
 		# for x in dir(self.ssh):
-		# 	_.pr(x)
+		#     _.pr(x)
 		_.colorThis( 'status: db pymysql connecting', 'yellow' )
 
 		task_completed = False
@@ -1615,15 +1615,15 @@ def actionRequest( classy, label, action=None, error=None, success=None ):
 			return True
 			
 # def result( classy, label, record=None ):
-# 	attempt = '0012814A-B08D-448D-89C9-715BEB6182F1'
-# 	if record is None:
-# 		on = 
+#     attempt = '0012814A-B08D-448D-89C9-715BEB6182F1'
+#     if record is None:
+#         on = 
 
 
 
 # class Negotiator:
-# 	def __init__( self, db ):
-# 		self.db = db
+#     def __init__( self, db ):
+#         self.db = db
 
 def error_rest( cnt, eN ):
 	_.colorThis(   ['Attempt:', eN, 'resting for', cnt], 'red'   )

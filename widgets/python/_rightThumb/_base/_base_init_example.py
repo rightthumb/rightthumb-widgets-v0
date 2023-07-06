@@ -19,7 +19,7 @@ import _rightThumb._string as _str
 
 _.switch.append({'name': 'File','switch': '-file', 'pos': None, 'active': False,'expected_input_example': None})
 
-_.appInfo=	{
+_.appInfo=    {
 	'file': 'drive.py',
 	'description': 'Manages drives and indexes',
 	'prerequisite': [],

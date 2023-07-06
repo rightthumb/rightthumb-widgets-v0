@@ -33,7 +33,7 @@ class MyHTTPRequestHandler(BaseHTTPRequestHandler):
 		# send header first
 		self.send_header('Content-type', 'text/html')
 		self.send_header('Last-Modified',
-						 self.date_time_string(time.time()))
+						self.date_time_string(time.time()))
 		# send file content to client
 		self.end_headers()
 
@@ -45,7 +45,7 @@ class MyHTTPRequestHandler(BaseHTTPRequestHandler):
 		# send header first
 		self.send_header('Content-type', 'application/json')
 		# self.send_header('Last-Modified',
-		# 				 self.date_time_string(time.time()))
+		#                  self.date_time_string(time.time()))
 		# send file content to client
 		self.end_headers()
 
@@ -96,7 +96,7 @@ class MyHTTPRequestHandler(BaseHTTPRequestHandler):
 			fp=self.rfile,
 			headers=self.headers,
 			environ={'REQUEST_METHOD':'POST',
-					 'CONTENT_TYPE':self.headers['Content-Type'],
+					'CONTENT_TYPE':self.headers['Content-Type'],
 					})
 
 		# Begin the response

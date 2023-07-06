@@ -153,11 +153,11 @@ _.appInfo[focus()] = {
 						''
 	],
 	'columns': [
-					   # { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': 'name', 'abbreviation': 'n' },
 	],
 	'aliases': [
-					   # 'this',
-					   # 'app',
+					# 'this',
+					# 'app',
 	],
 
 	}
@@ -314,11 +314,11 @@ def thinkOfTheChildren( obj, parentID ):
 
 
 	# for x in dir(obj):
-	# 	_.pr( x )
+	#     _.pr( x )
 	# _.pr()
 	# _.pr()
 	# _.pr()
-	# _.pr( obj.name )	
+	# _.pr( obj.name )    
 	# sys.exit()
 
 
@@ -466,7 +466,7 @@ def action():
 
 		# theParent = projectReport['records'][rID]['parentID']
 		# if not theParent is None:
-		# 	parentList.append( theParent )
+		#     parentList.append( theParent )
 
 		while not theParent is None:
 			theParent = projectReport['records'][theParent]['parentID']
@@ -489,9 +489,9 @@ def action():
 					# var theParent = window.hackData.records[ keys[i] ].parentID;
 					# if ( typeof theParent === 'number' ) { parentList.push( theParent ); }
 					# while ( typeof theParent === 'number' ) {
-					# 	theParent = window.hackData.records[ theParent ].parentID;
-					# 	// console.log( 'theParent:', theParent );
-					# 	if ( typeof theParent === 'number' ) { parentList.push( theParent ); }
+					#     theParent = window.hackData.records[ theParent ].parentID;
+					#     // console.log( 'theParent:', theParent );
+					#     if ( typeof theParent === 'number' ) { parentList.push( theParent ); }
 					# }
 
 
@@ -501,7 +501,7 @@ def action():
 
 	# try:
 	# except Exception as e:
-	# 	pass
+	#     pass
 
 
 

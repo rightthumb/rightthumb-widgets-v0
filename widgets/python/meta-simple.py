@@ -17,11 +17,11 @@ import _rightThumb._construct as __
 appDBA = __.clearFocus( __name__, __file__ )
 __.appReg = appDBA
 def focus( parentApp='', childApp='', reg=True ):
-    global appDBA
-    f = __.appName( appDBA, parentApp, childApp )
-    if reg:
-        __.appReg = f
-    return f
+	global appDBA
+	f = __.appName( appDBA, parentApp, childApp )
+	if reg:
+		__.appReg = f
+	return f
 __.registeredApps.append( focus() )
 import _rightThumb._base3 as _
 _.load()
@@ -31,11 +31,11 @@ import _rightThumb._string as _str
 ##################################################
 
 def appSwitches():
-    _.switches.register( 'Subject', '-app,-sub,subject', 'ftp' )
-    pass
-    ### EXAMPLE: START
-    # _.switches.register( 'Files', '-f,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=True )
-    ### EXAMPLE: END
+	_.switches.register( 'Subject', '-app,-sub,subject', 'ftp' )
+	pass
+	### EXAMPLE: START
+	# _.switches.register( 'Files', '-f,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=True )
+	### EXAMPLE: END
 
 ### EXAMPLE: START
 # _.switches.trigger( 'Files', _.myFileLocations, vs=True )
@@ -64,52 +64,52 @@ __.switch_raw = []
 
 
 _.appInfo[focus()] = {
-    'file': 'thisApp.py',
-    'liveAppName': __.thisApp( __file__ ),
-    'description': 'Changes the world',
-    'categories': [
-                        'DEFAULT',
-                ],
-    'usage': [
-                        # 'epy another',
-                        # 'e nmap',
-                        # '',
-    ],
-    'relatedapps': [
-                        # 'p another -file file.txt',
-                        # '',
-    ],
-    'prerequisite': [
-                        # 'p another -file file.txt',
-                        # '',
-    ],
-    'examples': [
-                        _.hp('p thisApp -file file.txt'),
-                        '',
-    ],
-    'columns': [
-                       # { 'name': 'name', 'abbreviation': 'n' },
-                       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
-    ],
-    'aliases': [
-                       # 'this',
-                       # 'app',
-    ],
-    'notes': [
-                       # {},
-    ],
+	'file': 'thisApp.py',
+	'liveAppName': __.thisApp( __file__ ),
+	'description': 'Changes the world',
+	'categories': [
+						'DEFAULT',
+				],
+	'usage': [
+						# 'epy another',
+						# 'e nmap',
+						# '',
+	],
+	'relatedapps': [
+						# 'p another -file file.txt',
+						# '',
+	],
+	'prerequisite': [
+						# 'p another -file file.txt',
+						# '',
+	],
+	'examples': [
+						_.hp('p thisApp -file file.txt'),
+						'',
+	],
+	'columns': [
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+	],
+	'aliases': [
+					# 'this',
+					# 'app',
+	],
+	'notes': [
+					# {},
+	],
 }
 
 _.appData[focus()] = {
-        'start': __.startTime,
-        'uuid': '',
-        'audit': [],
-        'pipe': False,
-        'data': {
-                    'field': {'sent': [], 'received': [] }, # { 'label': '', 'context': [],  }
-                    'table': {'sent': [], 'received': [] }, 
-        },
-    }
+		'start': __.startTime,
+		'uuid': '',
+		'audit': [],
+		'pipe': False,
+		'data': {
+					'field': {'sent': [], 'received': [] }, # { 'label': '', 'context': [],  }
+					'table': {'sent': [], 'received': [] }, 
+		},
+	}
 ### EXAMPLE: START
 # _.appInfo[focus()]['examples'].append( 'p thisApp -file file.txt' )
 
@@ -118,55 +118,55 @@ _.appData[focus()] = {
 
 
 def registerSwitches( argvProcessForce=False ):
-    global appDBA
-    if not __.appReg == appDBA and appDBA in __.appReg:
+	global appDBA
+	if not __.appReg == appDBA and appDBA in __.appReg:
 
-        if not __name__ == '__main__':
-            _.argvProcess = argvProcessForce
-        else:
-            _.argvProcess = True
+		if not __name__ == '__main__':
+			_.argvProcess = argvProcessForce
+		else:
+			_.argvProcess = True
 
-        _.load()
-        _.appInfo[__.appReg] = _.appInfo[appDBA]
-        _.appData[__.appReg] = _.appData[appDBA]
-    __.constructRegistration( _.appInfo[__.appReg]['file'],__.appReg )
-    appSwitches()
+		_.load()
+		_.appInfo[__.appReg] = _.appInfo[appDBA]
+		_.appData[__.appReg] = _.appData[appDBA]
+	__.constructRegistration( _.appInfo[__.appReg]['file'],__.appReg )
+	appSwitches()
 
-    _.myFileLocation_Print = False
-    _.switches.trigger( 'Files', _.myFileLocations, vs=True )
-    _.switches.trigger( 'Folder', _.myFolderLocations )
-    _.switches.trigger( 'URL', _.urlTrigger )
-    _.switches.trigger( 'Ago', _.timeAgo )
-    _.switches.trigger( 'Duration', _.timeFuture )
-    ### EXAMPLE: START
-    # _.default_switch_trigger('Plus', trigger_plus)
-    # _.switches.trigger( 'Files',_.inRelevantFolder )    
-    # _.switches.trigger( 'Watched', _.txt2Date )
-    # _.switches.trigger( 'Input',_.formatColumns )
-    # _.switches.trigger( 'Franchise',_.triggerSpace )
-    ### EXAMPLE: END
-    
-    _.defaultScriptTriggers()
-    _.switches.process()
+	_.myFileLocation_Print = False
+	_.switches.trigger( 'Files', _.myFileLocations, vs=True )
+	_.switches.trigger( 'Folder', _.myFolderLocations )
+	_.switches.trigger( 'URL', _.urlTrigger )
+	_.switches.trigger( 'Ago', _.timeAgo )
+	_.switches.trigger( 'Duration', _.timeFuture )
+	### EXAMPLE: START
+	# _.default_switch_trigger('Plus', trigger_plus)
+	# _.switches.trigger( 'Files',_.inRelevantFolder )    
+	# _.switches.trigger( 'Watched', _.txt2Date )
+	# _.switches.trigger( 'Input',_.formatColumns )
+	# _.switches.trigger( 'Franchise',_.triggerSpace )
+	### EXAMPLE: END
+	
+	_.defaultScriptTriggers()
+	_.switches.process()
 
 
 if not __name__ == '__main__':
-    _.argvProcess = False
+	_.argvProcess = False
 else:
-    _.argvProcess = True
+	_.argvProcess = True
 
 registerSwitches()
 
 
 def fieldSet( switchName, switchField, switchValue, theFocus=False ):
-    if not type( theFocus ) == bool:
-        theFocus = theFocus
-    _.switches.fieldSet( switchName, switchField, switchValue, theFocus )
+	if not type( theFocus ) == bool:
+		theFocus = theFocus
+	_.switches.fieldSet( switchName, switchField, switchValue, theFocus )
 
 
 if __name__ == '__main__':
-    if not sys.stdin.isatty():
-        _.setPipeData( sys.stdin.readlines(), __.appReg, clean=True )
+	if not sys.stdin.isatty():
+		_.setPipeData( sys.stdin.readlines(), __.appReg, clean=True )
 
 
 _.postLoad( __file__ )
@@ -199,44 +199,44 @@ _.postLoad( __file__ )
 # START
 
 def template(subject):
-    global meta
-    if subject == 'url':
-        return ''
-    if subject == 'ftp':
-        return {
-                                                'server':        '',
-                                                'user':            '',
-                                                'password':        '',
-                                                'path':            '',
-                                                'full-path':            '',
-                                            }
-    pass
-    return {}
+	global meta
+	if subject == 'url':
+		return ''
+	if subject == 'ftp':
+		return {
+												'server':        '',
+												'user':            '',
+												'password':        '',
+												'path':            '',
+												'full-path':            '',
+											}
+	pass
+	return {}
 
 def action():
-    load()
-    global meta
-    for k in _.switches.values('Subject'):
-        if not k in meta:
-            meta[k] = template(k)
+	load()
+	global meta
+	for k in _.switches.values('Subject'):
+		if not k in meta:
+			meta[k] = template(k)
 
-    _.saveTable2( meta, '.folder.meta' )
-    os.system( 'n .folder.meta' )
+	_.saveTable2( meta, '.folder.meta' )
+	os.system( 'n .folder.meta' )
 
 
 
 
 
 def load():
-    global meta
-    meta = _.getTable2( '.folder.meta' )
+	global meta
+	meta = _.getTable2( '.folder.meta' )
 
 
 
 ########################################################################################
 if __name__ == '__main__':
-    action()
-    __.isExit()
+	action()
+	__.isExit()
 
 
 

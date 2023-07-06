@@ -188,7 +188,7 @@ def clip_get_2():
 
 	# global win32clipboard
 	# if win32clipboard is None:
-	# 	import win32clipboard
+	#     import win32clipboard
 	# # get clipboard data
 	# win32clipboard.OpenClipboard()
 	# data = win32clipboard.GetClipboardData()

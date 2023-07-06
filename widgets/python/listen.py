@@ -78,15 +78,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-					   # { 'name': 'name', 'abbreviation': 'n' },
-					   # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-					   # 'this',
-					   # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-					   # {},
+					# {},
 	],
 }
 
@@ -724,28 +724,28 @@ def randomize_text():
 # '''.strip().replace('\r','').replace('\n\n','\n').replace('/',os.sep).split('\n')
 
 # def variable():
-# 	global _var
-# 	global _vTerm
-# 	_paste = _.regImp( __.appReg, '-paste' )
-# 	data = _paste.imp.paste()
-# 	l=data.count('l')
-# 	w=data.count('\\')
-# 	if l > w: lw = '/'
-# 	else:     lw = '\\'
-# 	data = data.replace(lw,os.sep)
-# 	for line in data.split('\n'):
-# 		has1=[]
-# 		has2=[]
-# 		for li in _var:
-# 			if li in line: has1.append({'line':line,'cnt':len(li)},'li':li)
-# 		has1 = _.sort(has1,'cnt')
-# 		for li in _vTerm:
-# 			if li in line: has2.append({'line':line,'cnt':len(li)},'li':li)
-# 		has2 = _.sort(has2,'cnt')
+#     global _var
+#     global _vTerm
+#     _paste = _.regImp( __.appReg, '-paste' )
+#     data = _paste.imp.paste()
+#     l=data.count('l')
+#     w=data.count('\\')
+#     if l > w: lw = '/'
+#     else:     lw = '\\'
+#     data = data.replace(lw,os.sep)
+#     for line in data.split('\n'):
+#         has1=[]
+#         has2=[]
+#         for li in _var:
+#             if li in line: has1.append({'line':line,'cnt':len(li)},'li':li)
+#         has1 = _.sort(has1,'cnt')
+#         for li in _vTerm:
+#             if li in line: has2.append({'line':line,'cnt':len(li)},'li':li)
+#         has2 = _.sort(has2,'cnt')
 
-# 		for x in has1: print(x)
-# 		_.pr(line=1)
-# 		for x in has2: print(x)
+#         for x in has1: print(x)
+#         _.pr(line=1)
+#         for x in has2: print(x)
 		
 
 ##################################################

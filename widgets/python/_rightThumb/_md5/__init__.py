@@ -204,14 +204,14 @@ def md5Bin( data ):
 
 def md5(chunk):
 	# try:
-	# 	pass
-	# 	chunk = line.encode('UTF-8').decode('latin-1')
+	#     pass
+	#     chunk = line.encode('UTF-8').decode('latin-1')
 	# except Exception as e:
-	# 	pass
+	#     pass
 	hashData = hashlib.md5()
 	hashData.update(bytes(chunk, 'utf-8'))
 	return hashData.hexdigest()
-            
+			
 def md52GUID(string,brackets):
 	string = string.upper()
 	result = ''

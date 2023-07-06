@@ -76,12 +76,12 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
-				       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 
 	}
@@ -315,9 +315,9 @@ def process():
 
 	pass
 	# if not _.switches.isActive('Save') or not len(_.switches.value('Save')):
-	# 	if not _.switches.isActive('Print'):
-	# 		for record in newRecords:
-	# 			_.pr( record )
+	#     if not _.switches.isActive('Print'):
+	#         for record in newRecords:
+	#             _.pr( record )
 	return newRecords
 	# _.pr( len(records), len(newRecords) )
 
@@ -435,12 +435,12 @@ def action():
 			r.append( record[key] )
 		_.pr( ','.join(r) )
 
-	# _.printVarSimple( records )	
+	# _.printVarSimple( records )    
 
 	# if _.switches.isActive('Save') and len(_.switches.value('Save')):
-	# 	_.saveTable2( records, _.switches.values('Save')[0] )
+	#     _.saveTable2( records, _.switches.values('Save')[0] )
 	# elif _.switches.isActive('Print'):
-	# 	_.printVarSimple( records )
+	#     _.printVarSimple( records )
 
 
 def load():

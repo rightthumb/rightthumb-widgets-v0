@@ -80,15 +80,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-					   # { 'name': 'name', 'abbreviation': 'n' },
-					   # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-					   # 'this',
-					   # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-					   # {},
+					# {},
 	],
 }
 
@@ -344,8 +344,8 @@ def traverse(dic,r=0):
 
 			# xref = set(list(_.v.IDs.keys())) & set(list(dic[k].keys()))
 			# for xr in xref:
-			# 	if xr in index['notes']['ids']: _.pr( l+1, tabs(l+1), index['notes']['ids'][xr]['title'].strip(), c='darkcyan' )
-			# 	if xr in index['folders']['ids']: _.pr( l+1, tabs(l+1), index['folders']['ids'][xr]['title'].strip(), c='darkcyan' )
+			#     if xr in index['notes']['ids']: _.pr( l+1, tabs(l+1), index['notes']['ids'][xr]['title'].strip(), c='darkcyan' )
+			#     if xr in index['folders']['ids']: _.pr( l+1, tabs(l+1), index['folders']['ids'][xr]['title'].strip(), c='darkcyan' )
 			
 
 			if _.switches.isActive('Notes'):
@@ -354,14 +354,14 @@ def traverse(dic,r=0):
 						xref = set(list(_.v.IDs.keys())) & set(index['notes']['parents'][k])
 						for xr in xref: _.pr( l+1, tabs(l+1), index['notes']['ids'][xr]['title'].strip(), c='darkcyan' )
 					# if k in index['folders']['parents']:
-					# 	xref = set(list(_.v.IDs.keys())) & set(index['folders']['parents'][k])
-					# 	for xr in xref: _.pr( l+1, tabs(l+1), index['folders']['ids'][xr]['title'].strip(), c='darkcyan' )
+					#     xref = set(list(_.v.IDs.keys())) & set(index['folders']['parents'][k])
+					#     for xr in xref: _.pr( l+1, tabs(l+1), index['folders']['ids'][xr]['title'].strip(), c='darkcyan' )
 
 					# # print("index['notes']['parents'][k]",index['notes']['parents'][k])
 					# for c in index['notes']['parents'][k]:
-					# 	# if _.showLine(index['notes']['ids'][c]['title']):
-					# 	if c in _.v.IDs or not _.switches.isActive('Plus'):
-					# 		_.pr( l+1, tabs(l+1), index['notes']['ids'][c]['title'].strip(), c='darkcyan' )
+					#     # if _.showLine(index['notes']['ids'][c]['title']):
+					#     if c in _.v.IDs or not _.switches.isActive('Plus'):
+					#         _.pr( l+1, tabs(l+1), index['notes']['ids'][c]['title'].strip(), c='darkcyan' )
 		traverse(dic[k],r=1)
 _.v.print=False
 def traverseSearch(dic,r=0):

@@ -332,23 +332,23 @@ def processDic( rows, thisDic, parent=[]):
 					# print('dic')
 			except Exception as e:
 				# try:
-				# 	print(rows[0][tK])
+				#     print(rows[0][tK])
 				# except Exception as e:
-				# 	pass
+				#     pass
 				# print(rows[0][tK])
 				# print(tK)
 
 
 				
 				# if 'date_test' in tK:
-				# 	print("'"+tK+"'")
-				# 	print('it was found')
-				# 	print(rows)
-				# 	# fields.append({'type': thisDic[tK]+'3', 'field': tK, 'zChildren': processRows2(rows[0][tK])})
-				# 	print('done')
-				# 	sys.exit()
+				#     print("'"+tK+"'")
+				#     print('it was found')
+				#     print(rows)
+				#     # fields.append({'type': thisDic[tK]+'3', 'field': tK, 'zChildren': processRows2(rows[0][tK])})
+				#     print('done')
+				#     sys.exit()
 				# else:
-				# 	fields.append({'type': thisDic[tK]+'3', 'field': tK})
+				#     fields.append({'type': thisDic[tK]+'3', 'field': tK})
 				fields.append({'type': thisDic[tK]+'3', 'field': tK, 'parent': parent })
 		else:
 			__.dictProfile_fields.append({ 'type': thisDic[tK], 'field': tK, 'parent': parent })

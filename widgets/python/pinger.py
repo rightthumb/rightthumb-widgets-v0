@@ -64,12 +64,12 @@ program = {
 						'',
 	],
 	'columns': [
-					   # { 'name': 'name', 'abbreviation': 'n' },
-					   # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-					   # 'this',
-					   # 'app',
+					# 'this',
+					# 'app',
 	],
 
 }
@@ -138,11 +138,11 @@ import socket
 def isOpen(ip,port):
    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
    try:
-      s.connect((ip, int(port)))
-      s.shutdown(2)
-      return True
+	s.connect((ip, int(port)))
+	s.shutdown(2)
+	return True
    except:
-      return False
+	return False
 
 
 def formatData( result ):

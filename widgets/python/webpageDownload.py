@@ -103,11 +103,11 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': 'name', 'abbreviation': 'n' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 
 	}
@@ -217,25 +217,25 @@ def action2():
 	# tree = html.fromstring(page.content)
 	# tables = tree.cssselect('.r')
 	# for t in tables:
-	# 	try:
-	# 		item = t.text_content()
-	# 	except Exception as e:
-	# 		item = ''
-	# 	if 'imdb' in item.lower():
-	# 		links = t.cssselect('a')
-	# 		link = str(links[0].attrib['href'])
-	# 		link = link.replace('/url?q=http:','http:')
-	# 		text = t.text_content()
-	# 		# _.pr(text)
-	# 		_.pr()
-	# 		_.pr(text)
+	#     try:
+	#         item = t.text_content()
+	#     except Exception as e:
+	#         item = ''
+	#     if 'imdb' in item.lower():
+	#         links = t.cssselect('a')
+	#         link = str(links[0].attrib['href'])
+	#         link = link.replace('/url?q=http:','http:')
+	#         text = t.text_content()
+	#         # _.pr(text)
+	#         _.pr()
+	#         _.pr(text)
 
 
 
 # https://raw.githubusercontent.com/benjamincrom/scrabble/master/scrabble/dictionary.json
 # def load():
-# 	global data
-# 	data = _.getTable( 'table' )
+#     global data
+#     data = _.getTable( 'table' )
 
 
 # data = []

@@ -231,21 +231,21 @@ def action():
 	else:
 		for i,record in enumerate(data):
 			# if type(record['description']) == str:
-			# 	if _.showLine( record['description'] ):
-			# 		IDs.append( i )
+			#     if _.showLine( record['description'] ):
+			#         IDs.append( i )
 			# elif type(record['description']) == str:
-			# 	for description_xXx in record['description'] :
-			# 		if _.showLine( description_xXx ):
-			# 			IDs.append( i )
+			#     for description_xXx in record['description'] :
+			#         if _.showLine( description_xXx ):
+			#             IDs.append( i )
 
 			# elif _.showLine( record['file'] ):
-			# 	IDs.append( i )
+			#     IDs.append( i )
 			# elif _.showLine( record['live_file'] ):
-			# 	IDs.append( i )
+			#     IDs.append( i )
 			# else:
-			# 	for row in record['categories']:
-			# 		if _.showLine( row ):
-			# 			IDs.append( i )
+			#     for row in record['categories']:
+			#         if _.showLine( row ):
+			#             IDs.append( i )
 
 
 

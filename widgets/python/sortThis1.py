@@ -21,7 +21,7 @@ import _rightThumb._string as _str
 
 _.switches.register('Level', '-level')
 
-_.appInfo=	{
+_.appInfo=    {
 	'file': 'sortThis.py',
 	'description': 'Changes the world',
 	'prerequisite': [],

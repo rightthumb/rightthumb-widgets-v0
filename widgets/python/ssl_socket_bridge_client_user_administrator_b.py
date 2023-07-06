@@ -46,11 +46,11 @@ sock = establish()
 loggedIn = False
 first = True
 # def handler( sock, i=0, qID=None, account=None, test=None ):
-# 	while True:
-# 		pass
-# 		# dataIn = sock.recv(1000)
-# 		# data = str(dataIn,'iso-8859-1')
-# 		# print(data)
+#     while True:
+#         pass
+#         # dataIn = sock.recv(1000)
+#         # data = str(dataIn,'iso-8859-1')
+#         # print(data)
 # Thread(target=handler, args=('sock')).start()
 # Thread(target=handler, args=(client, i)).start()
 
@@ -70,9 +70,9 @@ while active:
 	# print('loop')
 	print()
 	# try:
-	# 	sock.connect((hostname, port))
+	#     sock.connect((hostname, port))
 	# except Exception as e:
-	# 	pass
+	#     pass
 	if not loggedIn:
 		loggedIn = True
 		data = {
@@ -91,14 +91,14 @@ while active:
 		# validation = str(data,'iso-8859-1')
 		# print( 'validation', validation )
 		# if expecting == validation:
-		# 	print( 'validation pass' )
+		#     print( 'validation pass' )
 		# else:
-		# 	print( 'validation fail' )
+		#     print( 'validation fail' )
 		# sock.close()
 		# try:
-		# 	sock.connect((hostname, port))
+		#     sock.connect((hostname, port))
 		# except Exception as e:
-		# 	pass
+		#     pass
 	# Read the message from keyboard
 
 	u = input( 'Subject: - ' );

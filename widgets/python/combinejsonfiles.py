@@ -23,7 +23,7 @@ _.switches.register('Input', '-i','file0.json file2.json')
 _.switches.register('Output', '-o','combined\file.json')
 _.switches.register('Move', '-move','folder_2_move_completed_input_files')
 
-_.appInfo=	{
+_.appInfo=    {
 	'file': 'combinejsonfiles.py',
 	'description': 'Combine json files',
 	'prerequisite': [],

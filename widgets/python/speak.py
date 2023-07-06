@@ -87,15 +87,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-					   # { 'name': 'name', 'abbreviation': 'n' },
-					   # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-					   # 'this',
-					   # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-					   # {},
+					# {},
 	],
 }
 _.appData[focus()] = {
@@ -170,15 +170,15 @@ _.postLoad( __file__ )
 # os.system( '"' + do + '"' )
 # _.setPipeData( os.listdir( os.getcwd() ), focus() )
 # _.showLine( item )
-# 	if os.path.isdir( row ):
-# 	if os.path.isfile( row ):
-#	os.path.abspath(path)
+#     if os.path.isdir( row ):
+#     if os.path.isfile( row ):
+#    os.path.abspath(path)
 # __.appRegPipe    ( pipe data registerd focus(__.appReg) set by _.myFileLocations {if imported} , default is None )
 # for i,row in enumerate(_.t( _.appData[__.appReg]['pipe'] )):
 # for i,row in _.e( _.isData(r=1) ):
 # date = _.friendlyDate( theDate )
 # _.addComma()
-# 													if platform.system() == 'Windows':
+#                                                     if platform.system() == 'Windows':
 ### EXAMPLE: END
 
 ########################################################################################
@@ -216,7 +216,7 @@ def action():
 	pygame.mixer.music.play()
 
 	while pygame.mixer.music.get_busy():
-	    pygame.time.Clock().tick(10)
+		pygame.time.Clock().tick(10)
 	return None
 	if _.isWin:
 		# subprocess.Popen()

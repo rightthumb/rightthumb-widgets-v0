@@ -35,7 +35,7 @@ _.switches.register('MD5', '-md5')
 # _.switches.register('Output', '-o','folder\\appOut.py')
 # _.switches.register('Move', '-move','completed_in-folder_name')
 
-_.appInfo=	{
+_.appInfo=    {
 	'file': 'dirDBMD5.py',
 	'description': 'Changes the world',
 	'prerequisite': [],
@@ -102,21 +102,21 @@ _.switches.process()
 # pipeData = ''
 
 # if not sys.stdin.isatty():
-# 	pipeData = sys.stdin.readlines()
-# 	try:
-# 		if pipeData[0][0].isalnum() == False:
-# 			pipeData[0] = pipeData[0][1:]
-# 	except Exception as e:
-# 		pass
+#     pipeData = sys.stdin.readlines()
+#     try:
+#         if pipeData[0][0].isalnum() == False:
+#             pipeData[0] = pipeData[0][1:]
+#     except Exception as e:
+#         pass
 
 ########################################################################################
 def md5(fname):
-    hash_md5 = hashlib.md5()
-    with open(fname, "rb") as f:
-        for chunk in iter(lambda: f.read(4096), b""):
-            hash_md5.update(chunk)
-    return hash_md5.hexdigest()
-    return hash_md5.hexdigest()
+	hash_md5 = hashlib.md5()
+	with open(fname, "rb") as f:
+		for chunk in iter(lambda: f.read(4096), b""):
+			hash_md5.update(chunk)
+	return hash_md5.hexdigest()
+	return hash_md5.hexdigest()
 
 
 def formatSize(size):
@@ -132,14 +132,14 @@ def formatSize(size):
 	elif size > 1048576 and size < 1073741824:
 		num = round(size / 1048576, 2)
 		result = str(num) + ' MB'
-	elif size > 1073741824 and size < 1099511627776	:
+	elif size > 1073741824 and size < 1099511627776    :
 		num = round(size / 1073741824, 2)
 		result = str(num) + ' GB'
 	else:
 		num = round(size / 1099511627776, 2)
 		result = str(num) + ' TB'
 	# if size < 1:
-	# 	result = ''
+	#     result = ''
 	return result
 
 
@@ -191,9 +191,9 @@ def action():
 			_.tables.print('Auto','md5,bytes,name')
 
 			# if _.switches.value('Column') == 'name' or _.switches.value('Column') == 'n':
-			# 	print(f[1])
+			#     print(f[1])
 			# else:
-			# 	print(formatSize(f[0]),'\t',f[1])
+			#     print(formatSize(f[0]),'\t',f[1])
 
 def action2():
 	if _.switches.isActive('Database'):
@@ -220,8 +220,8 @@ def action3():
 			databaseFile = "defaultDir.db"
 		con = sqlite3.connect(databaseFile)
 		with open('dump.sql', 'w') as f:
-		    for line in con.iterdump():
-		        f.write('%s\n' % line)
+			for line in con.iterdump():
+				f.write('%s\n' % line)
 ########################################################################################
 if __name__ == '__main__':
 	action()

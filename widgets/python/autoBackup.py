@@ -223,8 +223,8 @@ def action():
 
 
 	# if _.switches.isActive('BackupRunOnce'):
-	# 	_.pr( 'BackupRunOnce: Active' )
-	# 	pause=input('pause')
+	#     _.pr( 'BackupRunOnce: Active' )
+	#     pause=input('pause')
 
 	for ii,log in enumerate(schedulerLog):
 		if not 'status' in log:log['status'] = status['default'];
@@ -245,7 +245,7 @@ def action():
 
 
 					fileBackup.switch( 'Input', log['file'] )
-					fileBackup.do( 	'action' )
+					fileBackup.do(     'action' )
 					del fileBackup
 					fileBackup=None
 
@@ -284,7 +284,7 @@ def action():
 
 		# if _.resolveEpochTest( log['timestamp'] ) < maxEpochDate:
 		# if ( log['timestamp'] ) < maxEpoch:
-		# 	shoulRunPreGame = False
+		#     shoulRunPreGame = False
 
 		if log['file'] in fileList:
 			shoulRunPreGame = False
@@ -338,9 +338,9 @@ def action():
 								if log['status'] == status['default'] or log['status'] == status['defaultSpent']:
 
 									# if 'netblock.py' in log['file']:
-									# 	_.pr( 'Scheduler', _.resolveEpochTest( log['timestamp'] ) )
-									# 	_.pr( _.resolveEpochTest(fd['date_modified_raw']), maxEpochDate )
-									# 	_.printTest( log )
+									#     _.pr( 'Scheduler', _.resolveEpochTest( log['timestamp'] ) )
+									#     _.pr( _.resolveEpochTest(fd['date_modified_raw']), maxEpochDate )
+									#     _.printTest( log )
 									fileBackup=_fileBackup()
 									if 'session' in log:
 										fileBackup.switch( 'Session', log['session'] )
@@ -362,7 +362,7 @@ def action():
 	pass
 	
 
-	############################		############################
+	############################        ############################
 	# _.pr( 'Should have backed up' )
 	# pause=input('pause')
 
@@ -393,31 +393,31 @@ def action():
 			# shoulRunPreGame = True
 
 			# if log['status'] == status['default'] or log['status'] == status['defaultSpent']:
-			# 	pass
+			#     pass
 			# else:
-			# 	shoulRunPreGame = False
+			#     shoulRunPreGame = False
 
 			# # if _.resolveEpochTest( log['timestamp'] ) > maxEpochDate:
 			# if ( log['timestamp'] ) > maxEpoch:
-			# 	shoulRunPreGame = False
+			#     shoulRunPreGame = False
 
 			# if log['file'] in fileList:
-			# 	shoulRunPreGame = False
+			#     shoulRunPreGame = False
 
 			# if shoulRunPreGame:
-			# 	fileList.append( log['file'] )
-			# 	if os.path.isfile(log['file']):
-			# 		# fd = _dir.fileInfo( log['file'] )
-			# 		fd = { 'date_modified_raw': _.mod( log['file'] ) }
-			# 		# _.pr( log['file'] )
-			# 		shoulRun = False
-			# 		try:
-			# 			if not type( fd['date_modified_raw'] ) == bool:
-			# 				shoulRun = True
-			# 			else:
-			# 				shoulRun = False
-			# 		except Exception as e:
-			# 			shoulRun = False
+			#     fileList.append( log['file'] )
+			#     if os.path.isfile(log['file']):
+			#         # fd = _dir.fileInfo( log['file'] )
+			#         fd = { 'date_modified_raw': _.mod( log['file'] ) }
+			#         # _.pr( log['file'] )
+			#         shoulRun = False
+			#         try:
+			#             if not type( fd['date_modified_raw'] ) == bool:
+			#                 shoulRun = True
+			#             else:
+			#                 shoulRun = False
+			#         except Exception as e:
+			#             shoulRun = False
 
 
 			if not 'status' in log:log['status'] = status['default'];
@@ -428,7 +428,7 @@ def action():
 
 			# if _.resolveEpochTest( log['timestamp'] ) < maxEpochDate:
 			# if ( log['timestamp'] ) < maxEpoch:
-			# 	shoulRunPreGame = False
+			#     shoulRunPreGame = False
 
 			if log['file'] in fileList:
 				shoulRunPreGame = False
@@ -487,9 +487,9 @@ def action():
 
 
 											# if 'netblock.py' in log['file']:
-											# 	_.pr( 'Backup Log', _.resolveEpochTest( log['timestamp'] ) )
-											# 	_.pr( _.resolveEpochTest(fd['date_modified_raw']), maxEpochDate )
-											# 	_.printTest( log )
+											#     _.pr( 'Backup Log', _.resolveEpochTest( log['timestamp'] ) )
+											#     _.pr( _.resolveEpochTest(fd['date_modified_raw']), maxEpochDate )
+											#     _.printTest( log )
 											fileBackup=_fileBackup()
 											if 'session' in log:
 												fileBackup.switch( 'Session', log['session'] )
@@ -533,15 +533,15 @@ def action():
 __.spent = []
 
 def _fileBackup():
-    
-    _.v=_.dot()
+	
+	_.v=_.dot()
 
-    fileBackup.switch( 'Flag', 'A' )
-    fileBackup.switch( 'DoNotSchedule' )
-    fileBackup.switch( 'isRunOnce' )
-    fileBackup.deleteSwitch( 'Session' )
-    __.appReg=appReg
-    return fileBackup
+	fileBackup.switch( 'Flag', 'A' )
+	fileBackup.switch( 'DoNotSchedule' )
+	fileBackup.switch( 'isRunOnce' )
+	fileBackup.deleteSwitch( 'Session' )
+	__.appReg=appReg
+	return fileBackup
 appReg=__.appReg
 if 'fileBackup' in globals(): globals()['fileBackup'] = None
 fileBackup = _.regImp( __.appReg, 'fileBackup' )

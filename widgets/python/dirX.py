@@ -109,7 +109,7 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n', 'sort': '' },
+					# { 'name': 'name', 'abbreviation': 'n', 'sort': '' },
 						{ 'name': 'path', 'abbreviation': 'p', 'sort': '' },
 						{ 'name': 'name', 'abbreviation': 'n', 'sort': '' },
 						{ 'name': 'folder', 'abbreviation': 'f', 'sort': '' },
@@ -125,11 +125,11 @@ _.appInfo[focus()] = {
 						{ 'name': 'week_of_year', 'abbreviation': 'woy', 'sort': 'date_modified_raw' },
 						{ 'name': 'day_of_the_week', 'abbreviation': 'dow', 'sort': 'date_modified_raw' },
 						{ 'name': 'date_accessed', 'abbreviation': 'a,ad,da', 'sort': '' },
-				       
+					
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 
 	}
@@ -163,7 +163,7 @@ def unFormatSize(size):
 	factor = ''
 
 	if 'TB' in size:
-		factor = 1099511627776	
+		factor = 1099511627776    
 	elif 'GB' in size:
 		factor = 1073741824
 	elif 'MB' in size:
@@ -356,7 +356,7 @@ def addFile( path, hasData=False ):
 			
 			found = False
 			# if '.'+record['ext'].lower() in extensionList:
-			# 	found = True
+			#     found = True
 
 
 			pathX = record['path'].lower()
@@ -502,11 +502,11 @@ def action():
 
 
 	# if not type( _.appData[__.appReg]['pipe'] ) == bool:
-	# 	_.pipeCleaner(0)
-	# 	# _.printVar( _.appData )
-	# 	for i,row in enumerate( _.appData[__.appReg]['pipe'] ):
-	# 		_.pr( row )
-	# 		process( row )
+	#     _.pipeCleaner(0)
+	#     # _.printVar( _.appData )
+	#     for i,row in enumerate( _.appData[__.appReg]['pipe'] ):
+	#         _.pr( row )
+	#         process( row )
 
 
 
@@ -601,10 +601,10 @@ def action():
 
 
 			# {
-			# 	'folder': folder,
-			# 	'folders': folderCount,
-			# 	'files': fileCount,
-			# 	'data': data,
+			#     'folder': folder,
+			#     'folders': folderCount,
+			#     'files': fileCount,
+			#     'data': data,
 			# }
 
 			for x in dataCacheX:
@@ -622,16 +622,16 @@ def action():
 	else:
 		end = time.time()
 		# if _.switches.isActive('Ago'):
-		# 	newData = []
-		# 	ago = _.switches.value('Ago')
-		# 	for record in data:
-		# 		if record['date_modified_raw'] < ago:
-		# 			newData.append( record )
-		# 	data = newData
+		#     newData = []
+		#     ago = _.switches.value('Ago')
+		#     for record in data:
+		#         if record['date_modified_raw'] < ago:
+		#             newData.append( record )
+		#     data = newData
 
 		if _.switches.isActive('JSON'):
 			# for x in data[0].keys():
-			# 	_.pr(x)
+			#     _.pr(x)
 			# sys.exit()
 			_.printVarSimple( data )
 		else:
@@ -677,7 +677,7 @@ def action():
 			if _.switches.isActive('Save'):
 
 				_.saveTable2( {
-								'isLegacy':	False,
+								'isLegacy':    False,
 								'switches': {
 									'isActive': {
 										'Recursive': _.switches.isActive('Recursive'),
@@ -816,8 +816,8 @@ def action():
 # _.printVar( _dir.fileInfo( path ) )
 
 # def load():
-# 	global data
-# 	data = _.getTable( 'table' )
+#     global data
+#     data = _.getTable( 'table' )
 
 
 def extensionsDatabank():

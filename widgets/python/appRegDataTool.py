@@ -62,7 +62,7 @@ _.autoBackupData = True
 _.appInfo[focus()] = {
 	'file': 'appRegDataTool.py',
 	'liveAppName': __.thisApp( __file__ ),
- 	'description': 'Search application registration information, specific fields',
+	'description': 'Search application registration information, specific fields',
 	'categories': [
 						'DEFAULT'
 				],
@@ -79,11 +79,11 @@ _.appInfo[focus()] = {
 						''
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': 'name', 'abbreviation': 'n' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 
 	}

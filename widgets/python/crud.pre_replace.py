@@ -49,15 +49,15 @@ _.appInfo[__name__]['examples'].append('p crud -prefix _reph_signature_ -app sig
 
 
 # def formatColumns(columns):
-# 	result = ''
-# 	for c in columns.split(','):
-# 		for col in _.appInfo[__name__]['columns']:
-# 			for a in col['abbreviation'].split(','):
-# 				if a == c:
-# 					c = col['name']
-# 		result += c + ','
-# 	result = result[:-1]
-# 	return result
+#     result = ''
+#     for c in columns.split(','):
+#         for col in _.appInfo[__name__]['columns']:
+#             for a in col['abbreviation'].split(','):
+#                 if a == c:
+#                     c = col['name']
+#         result += c + ','
+#     result = result[:-1]
+#     return result
 
 # _.switches.trigger('Column',formatColumns)
 
@@ -81,100 +81,100 @@ def focus( parentApp='', childApp='', reg=True ):
 # pipeData = ''
 
 # if not sys.stdin.isatty():
-# 	pipeData = sys.stdin.readlines()
-# 	try:
-# 		if pipeData[0][0].isalnum() == False:
-# 			pipeData[0] = pipeData[0][1:]
-# 	except Exception as e:
-# 		pass
+#     pipeData = sys.stdin.readlines()
+#     try:
+#         if pipeData[0][0].isalnum() == False:
+#             pipeData[0] = pipeData[0][1:]
+#     except Exception as e:
+#         pass
 
 
 # if _.switches.isActive('_File_'):
-# 	_.tables.register('toCheck') # table, rows = []
-# 	_.switches.fieldSet('_File_','active',True)
-# 	_.switches.fieldSet('_File_','value','toCheck.json')
-# 	_.tables.get('toCheck',_.switches.value('_File_'))
-# 	_.tables.trigger('toCheck','stamp,time,date',_.float2Dated,True)
-# 	_.tables.sort('toCheck', 'name')
+#     _.tables.register('toCheck') # table, rows = []
+#     _.switches.fieldSet('_File_','active',True)
+#     _.switches.fieldSet('_File_','value','toCheck.json')
+#     _.tables.get('toCheck',_.switches.value('_File_'))
+#     _.tables.trigger('toCheck','stamp,time,date',_.float2Dated,True)
+#     _.tables.sort('toCheck', 'name')
 
-# 	_.tables.registerView('test_table','sample3','name,age','age') # table, view, fields, sort
-# 	_.tables.view('test_table','sample') # table, view
+#     _.tables.registerView('test_table','sample3','name,age','age') # table, view, fields, sort
+#     _.tables.view('test_table','sample') # table, view
 
-# 	_.switches.fieldGet('Column','pos')
-# 	if _.switches.exists('Column2'):
-# 		print('This is a switch')
-
-
+#     _.switches.fieldGet('Column','pos')
+#     if _.switches.exists('Column2'):
+#         print('This is a switch')
 
 
-# 	if _.switches.isActive('Output') == True:
 
 
-# 	if _.switches.isActive('Move') == True:
-# 	        shutil.move(_.ci(_.switches.value('Input')), _.switches.value('Move') + _v.slash + _.ci(_.switches.value('Input')))
-# 	# if _.showLine(string):
-# 		# print(line)
+#     if _.switches.isActive('Output') == True:
+
+
+#     if _.switches.isActive('Move') == True:
+#             shutil.move(_.ci(_.switches.value('Input')), _.switches.value('Move') + _v.slash + _.ci(_.switches.value('Input')))
+#     # if _.showLine(string):
+#         # print(line)
 
 
 
 ########################################################################################
 # class TheChildItems:
 
-# 	def __init__(self, name, switch):
-# 		self.name = name
-# 		self.active = False
-# 		self.value = None
+#     def __init__(self, name, switch):
+#         self.name = name
+#         self.active = False
+#         self.value = None
 
-# 	def trigger(self,script):
-# 		self.script_trigger = script
+#     def trigger(self,script):
+#         self.script_trigger = script
 
-# 	def changeStatus(self,newStatus):
-# 		self.active = newStatus
+#     def changeStatus(self,newStatus):
+#         self.active = newStatus
 # class TheParentItems:
 
-# 	def __init__(self):
-# 		self.childItemRows = []
+#     def __init__(self):
+#         self.childItemRows = []
 
-# 	def register(self, name):
-# 		self.childItemRows.append(TheChildItems(name))
-# 	def print(self):
-# 		childItems = []
-# 		for ci in self.childItemRows:
-# 			childItems.append({'name':ci.name})
-# 		_.tables.register('childClassItems',childItems)
-# 		# tables.trigger('switches','switch,name',test,True)
-# 		_.tables.print('childClassItems','name')
-# 	def printStatus(self):
-# 		childItems = []
-# 		for ci in self.childItemRows:
-# 			if ci.active:
-# 				active = 'True'
-# 			else:
-# 				active = 'False'
-# 			value = ci.value
-# 			if ci.value == True:
-# 				value = 'True'
-# 			elif ci.value == False:
-# 				value = 'False'
+#     def register(self, name):
+#         self.childItemRows.append(TheChildItems(name))
+#     def print(self):
+#         childItems = []
+#         for ci in self.childItemRows:
+#             childItems.append({'name':ci.name})
+#         _.tables.register('childClassItems',childItems)
+#         # tables.trigger('switches','switch,name',test,True)
+#         _.tables.print('childClassItems','name')
+#     def printStatus(self):
+#         childItems = []
+#         for ci in self.childItemRows:
+#             if ci.active:
+#                 active = 'True'
+#             else:
+#                 active = 'False'
+#             value = ci.value
+#             if ci.value == True:
+#                 value = 'True'
+#             elif ci.value == False:
+#                 value = 'False'
 
-# 			childItems.append({'name':ci.name ,'active':active,'value': value})
-# 		_.tables.register('childClassItems',childItems)
-# 		_.tables.print('childClassItems','name,active,value')
-# 	def status(self,name,newStatus):
-# 		for i,ci in enumerate(self.childItemRows):
-# 			if ci.name == name:
-# 				self.childItemRows[i].changeStatus(newStatus)
+#             childItems.append({'name':ci.name ,'active':active,'value': value})
+#         _.tables.register('childClassItems',childItems)
+#         _.tables.print('childClassItems','name,active,value')
+#     def status(self,name,newStatus):
+#         for i,ci in enumerate(self.childItemRows):
+#             if ci.name == name:
+#                 self.childItemRows[i].changeStatus(newStatus)
 
 # if _.switches.isActive('Move'):
-    # shutil.move(_.ci(_.switches.value('Input')), _.switches.value('Move') + _v.slash + _.ci(_.switches.value('Input')))
+	# shutil.move(_.ci(_.switches.value('Input')), _.switches.value('Move') + _v.slash + _.ci(_.switches.value('Input')))
 
 
 ########################################
 
 
 
-# 	json = _.getTable('base64Key.json')
-#	books = _.getText(_v.myTables + _v.slash+'bible_books.csv')
+#     json = _.getTable('base64Key.json')
+#    books = _.getText(_v.myTables + _v.slash+'bible_books.csv')
 
 # _.saveTable(jsonFile,'file.json')
 # _.saveText(convertedFile,_.ci(_.switches.value('Output')))
@@ -238,12 +238,12 @@ def php_readfields(table,fields):
 	prefix = _.switches.value('Prefix')
 	abrev = []
 	t = table.replace(prefix,'')
-	b = "\n		'FIELD1' => $row['FIELD2'],"
+	b = "\n        'FIELD1' => $row['FIELD2'],"
 	f = ''
 	for field in fields:
 		if actionable(field,'del'):
 			fx = t + '_' + field['field']
-			f += b.replace('FIELD2',field['field']).replace('FIELD1',	(fx))
+			f += b.replace('FIELD2',field['field']).replace('FIELD1',    (fx))
 	f = _str.cleanBE(f,', ')
 	return f
 
@@ -302,7 +302,7 @@ def php_joinsArea(crudJoins,thisTable,fields):
 			buildfields += thisTable.replace(prefix,'')+'.'+field['field'] + ' as ' + thisTable.replace(prefix,'')+'_'+field['field']+', '
 
 		joinX = 'JOIN [join_table] AS [join_abrev] ON [abrev].[join_field] = [join_abrev].guid \n'
-		arrX = "\n		'FIELD' => $row['FIELD'],"
+		arrX = "\n        'FIELD' => $row['FIELD'],"
 		for field in fields:
 			buildfieldsArr += arrX.replace('FIELD',t+'_'+field['field'])
 			if field['note'] == 'altID':
@@ -360,7 +360,7 @@ def php_processRecordsFields(table,fields):
 	prefix = _.switches.value('Prefix')
 	abrev = []
 	t = table.replace(prefix,'')
-	b = "\n		$FIELD2=$item[FIELD1];"
+	b = "\n        $FIELD2=$item[FIELD1];"
 	f = ''
 	for field in fields:
 		if actionable(field,''):
@@ -444,10 +444,10 @@ def phpaction(table,fields):
 
 
 	# for line in crud.split('\n'):
-	# 	if 'function ' in line:
-	# 		function = clean(line.split('function ')[1].split('{')[0])
-	# 		functions.append(function)
-	# 		print(function)
+	#     if 'function ' in line:
+	#         function = clean(line.split('function ')[1].split('{')[0])
+	#         functions.append(function)
+	#         print(function)
 
 
 
@@ -741,9 +741,9 @@ def jsAddChildDiv(app,table):
 
 def jsMainAppId(app,table):
 	# if table.endswith('_items'):
-	# 	f = '.thechild'
+	#     f = '.thechild'
 	# else:
-	# 	f = '#manage'
+	#     f = '#manage'
 	# return f
 	return '#manage'
 
@@ -986,17 +986,17 @@ def pagesIndexMenu():
 
 
 # def pages():
-# 	# global pageData
-# 	app = _.switches.value('App')
-# 	# pageData['index']
-# 	return 
+#     # global pageData
+#     app = _.switches.value('App')
+#     # pageData['index']
+#     return 
 
 def php_allTablesDownload():
 	global data
 	global phpCrudBase
 
 	app = _.switches.value('App')
-	b = '	$tables["[js_APP_TABLE]"] = the_table_[funcname]();\n'
+	b = '    $tables["[js_APP_TABLE]"] = the_table_[funcname]();\n'
 	f = ''
 	for d in data['sql']:
 		table = jsAppTable(d['table'])
@@ -1009,7 +1009,7 @@ def php_allTablesUpload():
 	global phpCrudBase
 
 	app = _.switches.value('App')
-	b = '	process_records_[funcname](json_encode($data["[js_APP_TABLE]"]));\n'
+	b = '    process_records_[funcname](json_encode($data["[js_APP_TABLE]"]));\n'
 	f = ''
 	for d in data['sql']:
 		table = jsAppTable(d['table'])
@@ -1082,12 +1082,12 @@ def action():
 
 
 	# for i,table in enumerate(data['sql']):
-	# 	print()
-	# 	print(table['table'])
-	# 	for field in table['fields']:
-	# 		if actionable(field):
-	# 			pass
-	# 			print(field['field'])
+	#     print()
+	#     print(table['table'])
+	#     for field in table['fields']:
+	#         if actionable(field):
+	#             pass
+	#             print(field['field'])
 
 			# print('\t',field['field'])
 		# print(table['fields'])

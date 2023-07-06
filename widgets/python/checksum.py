@@ -57,7 +57,7 @@ __.sort_name_trigger_override = [  ['']  ]
 _.appInfo[focus()] = {
 	'file': 'checksum.py',
 	'liveAppName': __.thisApp( __file__ ),
- 	'description': 'generate all major checksums and/or check for match',
+	'description': 'generate all major checksums and/or check for match',
 	'categories': [
 						'checksum',
 						'hash',
@@ -99,12 +99,12 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
-				       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 
 	}
@@ -203,7 +203,7 @@ def action():
 
 	# _.pr( _.appData[__.appReg]['pipe'] )
 	# sys.exit()
-	hashes = 	{
+	hashes =     {
 					"md5": "e400cf095a5ce8d540be1ffff5380829",
 					"sha1": "1c451f944709ce0eea7e41c4df9b2fcf46fe1746",
 					"sha224": "b57de62df4f94ed25df5654618621e386f361022118ca7a90ddb714b",
@@ -224,7 +224,7 @@ def action():
 			for h in hashes.keys():
 				if len( hashes[h] ) == len(_.switches.value('Test')):
 					testHashes.append( h )
-			if len(testHashes):	
+			if len(testHashes):    
 				_.switches.fieldSet( 'Hash', 'active', True )
 				_.switches.fieldSet( 'Hash', 'value', ','.join(testHashes) )
 				_.switches.fieldSet( 'Hash', 'values', testHashes )

@@ -43,7 +43,7 @@ __.isRequired_Pipe_or_File = False
 _.appInfo[focus()] = {
 	'file': 'tab.py',
 	'liveAppName': __.thisApp( __file__ ),
- 	'description': 'Tab through',
+	'description': 'Tab through',
 	'categories': [
 						'tab',
 						'build',
@@ -69,15 +69,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
-				       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-				       # {},
+					# {},
 	],
 }
 

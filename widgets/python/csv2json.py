@@ -35,15 +35,15 @@ _.load()
 import _rightThumb._vars as _v
 import _rightThumb._string as _str
 # import _rightThumb._profileVariables as _profile
-# 	profile = _profile.records.audit( 'name', asset )
+#     profile = _profile.records.audit( 'name', asset )
 # import _rightThumb._encryptString as _blowfish
 	# _blowfish.genPassword()
 	# _blowfish.genPassword('string')
 	# en = _blowfish.encrypt( string )
 	# de = _blowfish.decrypt( en )
 # import _rightThumb._encryptFile as _blowfish
-# 	_blowfish.encrypt( infilepath, outfilepath, key )
-# 	_blowfish.decrypt( infilepath, outfilepath, key )
+#     _blowfish.encrypt( infilepath, outfilepath, key )
+#     _blowfish.decrypt( infilepath, outfilepath, key )
 # _browser = _.regImp( __.appReg, '_rightThumb._toolsScrapeFrontEnd' )
 # _browserX = _.regImp( __.appReg, '_rightThumb._toolsScrapeDirect' )
 # import _rightThumb._date as _date
@@ -64,20 +64,20 @@ import _rightThumb._string as _str
 	# _inDic.imp.testAll( 'fight' )
 	# _inDic.imp.testOne( 'austen' )
 # _file_folder = _.regImp( __.appReg, 'file_folder' )
-# 	_file_folder.switch( 'Save,Clean' )
-# 	_file_folder.switch( 'Compair,Clean' )
-# 	_file_folder.switch( 'Folder', '' )
+#     _file_folder.switch( 'Save,Clean' )
+#     _file_folder.switch( 'Compair,Clean' )
+#     _file_folder.switch( 'Folder', '' )
 # _fileNameDate = _.regImp( __.appReg, 'fileNameDate' )
-# 	_fileNameDate.imp.newName( filename )
-# 	_fileNameDate.imp.newName( filename, _dir.fileInfo( filename ) )
+#     _fileNameDate.imp.newName( filename )
+#     _fileNameDate.imp.newName( filename, _dir.fileInfo( filename ) )
 # _filePathPatterns = _.regImp( __.appReg, 'filePathPatterns' )
 	# _filePathPatterns.switch( 'NoPrint' )
 	# _filePathPatterns.switch( 'Files', _.switches.value('Files') )
 	# folderReport = _filePathPatterns.action()
 # txtBackup = _.regImp( __.appReg, 'txtBackup' )
-# 	txtBackup.switch( 'Input', filename )
-# 	txtBackup.switch( 'Flag', 'pre replaceText' )
-# 	recoveryFile = txtBackup.do( 'action' )
+#     txtBackup.switch( 'Input', filename )
+#     txtBackup.switch( 'Flag', 'pre replaceText' )
+#     recoveryFile = txtBackup.do( 'action' )
 ##################################################
 # from lxml import html
 # import requests
@@ -126,11 +126,11 @@ _.appInfo[focus()] = {
 						''
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': 'name', 'abbreviation': 'n' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 
 	}
@@ -207,8 +207,8 @@ _.postLoad( __file__ )
 # os.system('"' + do + '"')
 # _.setPipeData( os.listdir(os.getcwd()), focus() )
 # _.showLine(item)
-# 	if os.path.isdir(row):
-# 	if os.path.isfile(row):
+#     if os.path.isdir(row):
+#     if os.path.isfile(row):
 # __.appRegPipe
 ########################################################################################
 # START
@@ -218,17 +218,17 @@ _.postLoad( __file__ )
 def action():
 
 	# if not type( _.appData[__.appReg]['pipe'] ) == bool:
-	# 	_.pipeCleaner()
-	# 	# _.printVar(_.appData)
-	# 	for i,row in enumerate(_.appData[__.appReg]['pipe']):
-	# 		out = ''
-	# 		if _.switches.isActive('Output'):
-	# 			try:
-	# 				out = _.switches.values('Output')[i]
-	# 			except Exception as e:
-	# 				out = _.changeExtension( row, 'json' )
-	# 		else:
-	# 			out = _.changeExtension( row, 'json' )
+	#     _.pipeCleaner()
+	#     # _.printVar(_.appData)
+	#     for i,row in enumerate(_.appData[__.appReg]['pipe']):
+	#         out = ''
+	#         if _.switches.isActive('Output'):
+	#             try:
+	#                 out = _.switches.values('Output')[i]
+	#             except Exception as e:
+	#                 out = _.changeExtension( row, 'json' )
+	#         else:
+	#             out = _.changeExtension( row, 'json' )
 	data=_.csv( _.switches.values('Files')[0] )
 	_.saveTable2(data,_.switches.values('Output')[0])
 

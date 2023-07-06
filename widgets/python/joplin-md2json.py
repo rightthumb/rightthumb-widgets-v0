@@ -47,7 +47,7 @@ __.switch_raw = []
 _.appInfo[focus()] = {
 	'file': 'joplin-md2json.py',
 	'liveAppName': __.thisApp( __file__ ),
- 	'description': 'convert Joplin .md ( RAW ) export to .json',
+	'description': 'convert Joplin .md ( RAW ) export to .json',
 	'categories': [
 						'joplin',
 						'md',
@@ -73,15 +73,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
-				       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-				       # {},
+					# {},
 	],
 }
 
@@ -235,7 +235,7 @@ def processFolder(rec):
 			if rec in records['folders']:
 				level += 1
 				for recF in records['folders'][rec]:
-				# 	_.pr( pre(), records['files'][recF]['data'].split('\n')[0] )
+				#     _.pr( pre(), records['files'][recF]['data'].split('\n')[0] )
 				# sys.exit()
 					processFolder(recF)
 				level -= 1

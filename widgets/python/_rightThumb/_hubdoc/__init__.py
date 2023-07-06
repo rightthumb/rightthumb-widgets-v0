@@ -38,22 +38,22 @@ a.s=app.switch
 alias a.s=app.switch
 
 def sw():
-    app.switch.reg( 'Name', '-n', 'description', req=1 )
+	app.switch.reg( 'Name', '-n', 'description', req=1 )
 
 
 def xyz:
-    a.a( o(r()), fn=' description '  )
-    if app.switch('Files').status:
-        pass
-    if a.s('Files').s:
-    __.softExit()
+	a.a( o(r()), fn=' description '  )
+	if app.switch('Files').status:
+		pass
+	if a.s('Files').s:
+	__.softExit()
 
 if a.f() and ( True ) and a.a( o(r()), fi=' description '  ):
 
 
 if __name__ == '__main__':
-    action()
-    __.isExit(diagram=False)
+	action()
+	__.isExit(diagram=False)
 
 app architecture diagram
 

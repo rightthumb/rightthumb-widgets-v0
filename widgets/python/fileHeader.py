@@ -62,7 +62,7 @@ __.isRequired_Pipe_or_File = False
 _.appInfo[focus()] = {
 	'file': 'fileHeader.py',
 	'liveAppName': __.thisApp( __file__ ),
- 	'description': 'Read the header. Can show header. Can tell you what the file is.',
+	'description': 'Read the header. Can show header. Can tell you what the file is.',
 	'categories': [
 						'file',
 						'file header',
@@ -88,11 +88,11 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-					   # { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': 'name', 'abbreviation': 'n' },
 	],
 	'aliases': [
-					   # 'this',
-					   # 'app',
+					# 'this',
+					# 'app',
 	],
 
 	}
@@ -228,11 +228,11 @@ def addSig(sig):
 			theDescription=input( 'description: ' )
 			if len(theDescription):
 				data.append({
-						        "extension": theExtension,
-						        "signature": theSignature,
-						        "description": theDescription,
-						        "src": "manually added"
-						    })
+								"extension": theExtension,
+								"signature": theSignature,
+								"description": theDescription,
+								"src": "manually added"
+							})
 				_.saveTableDB( data, 'hex_headers.json' )
 				_.colorThis( 'Added', 'green' )
 def action():
@@ -246,7 +246,7 @@ def action():
 			_.pipeCleaner(0)
 			# _.printVar( _.appData )
 			# for i,row in enumerate( _.appData[__.appReg]['pipe'] ):
-			for i,row in enumerate(_.switches.values('Files')):
+			for i,row in enumerate(_.pp()):
 				if not os.path.isfile(row):
 					_.colorThis(  ['Not a file:',row], 'red' )
 					# sys.exit()
@@ -364,11 +364,11 @@ def action():
 		# sig = {}
 
 		# for record in data:
-		# 	x = len( record['signature'].split(' ') )+1
-		# 	try:
-		# 		sig[x] += 1
-		# 	except Exception as e:
-		# 		sig[x] = 1
+		#     x = len( record['signature'].split(' ') )+1
+		#     try:
+		#         sig[x] += 1
+		#     except Exception as e:
+		#         sig[x] = 1
 
 		# _.printVar( sig )
 		
@@ -428,7 +428,7 @@ def action():
 						h = headerParts( rec['header'], i )
 						if h is None:
 							good = False
-						else:	
+						else:    
 							if not rec['header'].startswith( h ):
 								good = False
 
@@ -544,7 +544,7 @@ def action():
 						h = headerParts( rec['header'], i )
 						if h is None:
 							good = False
-						else:	
+						else:    
 							if not rec['header'].startswith( h ):
 								good = False
 
@@ -626,7 +626,7 @@ def action():
 
 
 		# for i,record in enumerate(data):
-		# 	data[i]['src'] = 'filesignatures.net'
+		#     data[i]['src'] = 'filesignatures.net'
 		# _.saveTable( data, 'hex_headers.json' )
 
 def asciiHeader( header, p=1 ):

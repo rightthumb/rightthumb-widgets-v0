@@ -86,7 +86,7 @@ __.ageCheck = 20
 # DEFAULT_TIMEOUT = 1
 
 # for x in sys.argv:
-# 	print(x)
+#     print(x)
 # print('')
 # os.listdir(sys.argv[1]) # returns list
 
@@ -320,14 +320,14 @@ def formatSize(size):
 	elif size > 1048576 and size < 1073741824:
 		num = round(size / 1048576, 2)
 		result = str(num) + ' MB'
-	elif size > 1073741824 and size < 1099511627776	:
+	elif size > 1073741824 and size < 1099511627776    :
 		num = round(size / 1073741824, 2)
 		result = str(num) + ' GB'
 	else:
 		num = round(size / 1099511627776, 2)
 		result = str(num) + ' TB'
 	# if size < 1:
-	# 	result = ''
+	#     result = ''
 	return result
 
 def unFormatSize(size):
@@ -336,7 +336,7 @@ def unFormatSize(size):
 	factor = ''
 
 	if 'TB' in size:
-		factor = 1099511627776	
+		factor = 1099511627776    
 	elif 'GB' in size:
 		factor = 1073741824
 	elif 'MB' in size:
@@ -614,7 +614,7 @@ def buildResult(subF,folder):
 					# friendlyMonth1 = friendlyMonthNew(modifiedRaw)
 					# friendlyWeek1 = friendlyWeekNew(modifiedRaw)
 					# if isSwitchActive('GroupBy') == False:
-					# 	# if len(friendlyMonth1) > 0:
+					#     # if len(friendlyMonth1) > 0:
 					# dirRows.append({'path': path2, 'name_': fileNameLength(item,''), 'name': item, 'folder': folder, 'stat': '', 'attrib': '', 'bytes': size, 'size': sizeF, 'date_created_raw': createdRaw, 'date_modified_raw': modifiedRaw, 'date_created': created, 'date_modified': modified, 'type': 'Folder', 'typesort': 0, 'ext': '', 'week_of_year': weekAndYear, 'week_of_year_': woy, 'day_of_the_week': dow, 'month': month, 'friendly_week': friendlyWeek1, 'friendly_month': friendlyMonth1})
 
 
@@ -734,7 +734,7 @@ def buildResult(subF,folder):
 								md5 = md5Gen(path)
 							except Exception as e:
 								md5 = 'Error'
-							# cursor2.execute("""CREATE TABLE md5 (md5 text, path text, name text, folder text, bytes int, date_created_raw int, date_modified_raw int )""")							
+							# cursor2.execute("""CREATE TABLE md5 (md5 text, path text, name text, folder text, bytes int, date_created_raw int, date_modified_raw int )""")                            
 							# cursor2.execute("INSERT INTO md5 VALUES ('"+str(md5)+"', '"+str(path2)+"',  '"+str(item)+"', '"+str(folder)+"', '"+str(size)+"', '"+int(createdRaw)+"', '"+int(modifiedRaw)+"')")
 							# conn2.commit()
 					else:
@@ -1275,9 +1275,9 @@ def showColumn(isDir,rows,column,i):
 							if isSwitchActive('GroupSegment'):
 								print('')
 						# if len(groupBy.split(',')) > 1:
-						# 	print('__________________________________________________________________________________________')
+						#     print('__________________________________________________________________________________________')
 						# else:
-						# 	print('')
+						#     print('')
 						groupByList[gb] = text
 					else:
 						text = ''
@@ -1546,7 +1546,7 @@ def displayLineIncludeString(string):
 
 def positiveResults( string, plus='', plusOr=False ):
 	# if plusOr or isSwitchActive('PlusOr'):
-	# 	plusOr = True
+	#     plusOr = True
 	
 	plusOr = False
 	if not plus == '':
@@ -1989,7 +1989,7 @@ def dirPrintColumn(folder,column):
 		printBold(columnHeader)
 		titles = []
 		for item in rows:
-			result = ''	
+			result = ''    
 			for c in column.split(','):
 				c = columnNickname2(c)
 				try:
@@ -2022,18 +2022,18 @@ def dirPrintColumn(folder,column):
 				movieTitle.action()
 				movieList.append(movieTitle.theTitle)
 				# if not movieTitle.theTitle in titles:
-				# 	titles.append( movieTitle.theTitle )
+				#     titles.append( movieTitle.theTitle )
 				movieListX.append({ 'label': movieTitle.theTitle, 'data': item })
 			else:
 				colorizeRow(result)
 			i += 1
 	# try:
-	# 	print('\n',totalLINE)
-	# 	# print('\n\t','Total Size:',formatSize(totalSize(rows)))
-	# 	# print('\t','Total Count:',len(rows))
-	# 	print('\n\t',len(rows),'files',formatSize(totalSize(rows)))
+	#     print('\n',totalLINE)
+	#     # print('\n\t','Total Size:',formatSize(totalSize(rows)))
+	#     # print('\t','Total Count:',len(rows))
+	#     print('\n\t',len(rows),'files',formatSize(totalSize(rows)))
 	# except Exception as e:
-	# 	pass
+	#     pass
 	if not isSwitchActive('CSV') and not isSwitchActive('NoCount'):
 		printBold('\n\t '+str(len(rows))+' files ' + formatSize(totalSize(rows)), 'green')
 
@@ -2055,7 +2055,7 @@ def listPrintColumn(rows,column):
 	columnHeader = ''
 	printBold(showColumnHeader(False,rows,column))
 	for item in rows:
-		result = ''		
+		result = ''        
 		for c in column.split(','):
 			try:
 				result += showColumn(False,rows,c,i) + columnTab
@@ -2392,7 +2392,7 @@ def formatSwitchValueHelperC(column,typ):
 		if typ == 1:
 			columnList.append({'direction': direction, 'column': sb})
 		else:
-			columnList.append({'column': sb})		
+			columnList.append({'column': sb})        
 		i += 1
 	return columnList
 def formatSwitchValueColumn(name,column):
@@ -2604,8 +2604,8 @@ def takeAction():
 			updateSwitchField( 'Cache', 'value', defaultCachFile )
 		# global switch
 		# for sw in switch:
-		# 	if sw['active']:
-		# 		print( sw['name'], sw['value'] )
+		#     if sw['active']:
+		#         print( sw['name'], sw['value'] )
 		# sys.exit()
 
 
@@ -2629,8 +2629,8 @@ def takeAction():
 		if True and '*' in me:
 			# addIP = ''
 			# if isSwitchActive('InPath'):
-			# 	addIP += ','
-			# 	addIP += getSwitchValue('InPath')
+			#     addIP += ','
+			#     addIP += getSwitchValue('InPath')
 
 			updateSwitchField('PlusOr','active',True)
 			# updateSwitchField( 'InPath', 'active', True )
@@ -2659,7 +2659,7 @@ def takeAction():
 			pass
 
 		conn = sqlite3.connect(databaseFile)
-		cursor = conn.cursor()		 
+		cursor = conn.cursor()         
 		cursor.execute("""CREATE TABLE files (path text, name_ text, name text, folder text, stat text, attrib text, bytes int, size text, date_created_raw int, date_modified_raw int, date_created text, date_modified text, type text, typesort text, ext text, week_of_year text, week_of_year_ text, day_of_the_week text, month text, friendly_week text, friendly_month text)""")
 
 		if isSwitchActive('MD5'):
@@ -2669,7 +2669,7 @@ def takeAction():
 			except Exception as e:
 				pass
 			conn2 = sqlite3.connect(databaseFile.replace('.db','_MD5.db'))
-			cursor2 = conn2.cursor()		 
+			cursor2 = conn2.cursor()         
 			cursor2.execute("""CREATE TABLE md5 (md5 text, path text, name text, folder text, bytes int, date_created_raw int, date_modified_raw int )""")
 
 
@@ -2729,15 +2729,15 @@ def takeAction():
 		updateSwitchField('GroupBy','groupByDefault',True)
 
 	# if isSwitchActive('GroupBy'):
-	# 	if isSwitchActive('Column'):
-	# 		groupByDefault = False
-	# 	elif isSwitchActive('GroupBy'):
-	# 		groupByDefault = True
-	# 	else:
-	# 		groupByDefault = False
+	#     if isSwitchActive('Column'):
+	#         groupByDefault = False
+	#     elif isSwitchActive('GroupBy'):
+	#         groupByDefault = True
+	#     else:
+	#         groupByDefault = False
 	# else:
-	# 	groupByDefault = False
-	# 	groupBy = ''
+	#     groupByDefault = False
+	#     groupBy = ''
 
 
 
@@ -2801,11 +2801,11 @@ def takeAction():
 		updateSwitchField('Column','value','n,f,fm, fw, d, md')
 
 		# if getSwitchValue('ReportDatePath') == 'cd':
-		# 	updateSwitchField('Sort','value','asc:cd')
-		# 	updateSwitchField('Column','value','n,f,fm, fw, d, cd')
+		#     updateSwitchField('Sort','value','asc:cd')
+		#     updateSwitchField('Column','value','n,f,fm, fw, d, cd')
 		# else:
-		# 	updateSwitchField('Sort','value','asc:md')
-		# 	updateSwitchField('Column','value','n,f,fm, fw, d, md')
+		#     updateSwitchField('Sort','value','asc:md')
+		#     updateSwitchField('Column','value','n,f,fm, fw, d, md')
 
 
 
@@ -2884,7 +2884,7 @@ def takeAction():
 		print('\n-----------------------------------------------\n'+inlineBold('List of switches:')+'\n')
 		listPrintColumn(switch,'name,switch,expected_input_example')
 		# for s in switch:
-		# 	print('{}: {}'.format(s['name'],s['switch']))
+		#     print('{}: {}'.format(s['name'],s['switch']))
 	elif isSwitchActive('Debug'):
 		printSwitches()
 		print(isSwitchActive('ShortFileName'))
@@ -3014,7 +3014,7 @@ def takeAction():
 			dirPrintColumn(folder,'size,name,folder')
 		else:
 			# if type(pipeResults) == list and isSwitchActive('GroupBy'):
-			# 		dirPrintColumn(folder,'name,' + getSwitchValue('GroupBy'))
+			#         dirPrintColumn(folder,'name,' + getSwitchValue('GroupBy'))
 			if type(pipeResults) == list and not isSwitchActive('GroupBy'):
 				updateSwitchField('GroupBy','active',True)
 				updateSwitchField('GroupBy','groupByDefault',True)
@@ -3094,10 +3094,10 @@ def takeAction():
 
 
 	# if isSwitchActive('Pass'):
-	# 	global dirRows
-	# 	print( dirRows )
-	# 	sys.exit()
-	# 	return dirRows
+	#     global dirRows
+	#     print( dirRows )
+	#     sys.exit()
+	#     return dirRows
 
 def getTable(theFile,tableTemp = True,printThis = False):
 	# defaults to myTables
@@ -3245,31 +3245,31 @@ if not sys.stdin.isatty():
 # filename = '{80262020-053B-9560-BD50-788984050DC7}'
 
 # def getImport():
-# 	global filename
-# 	importedList = []
-# 	f = open(filename,'r')
-# 	for line in f:
-# 		importedList.append(line)
-# 	f.close()
-# 	os.remove(filename)
-# 	return importedList
+#     global filename
+#     importedList = []
+#     f = open(filename,'r')
+#     for line in f:
+#         importedList.append(line)
+#     f.close()
+#     os.remove(filename)
+#     return importedList
 # if os.path.isfile(filename):
-# 	pipeResults = getImport()
+#     pipeResults = getImport()
 # if not sys.stdin.isatty() and os.path.isfile(filename):
-# 	pipeResults = getImport()
+#     pipeResults = getImport()
 # elif not sys.stdin.isatty():
-# 	pipeResults = sys.stdin.readlines()
-# 	if pipeResults[0][0].isalnum() == False:
-# 		pipeResults[0] = pipeResults[0][1:]
-# 	f = open(filename,'w')
-# 	for line in pipeResults:
-# 			f.write(line.replace('\n',''))
-# 	f.close()
+#     pipeResults = sys.stdin.readlines()
+#     if pipeResults[0][0].isalnum() == False:
+#         pipeResults[0] = pipeResults[0][1:]
+#     f = open(filename,'w')
+#     for line in pipeResults:
+#             f.write(line.replace('\n',''))
+#     f.close()
 	
 # else:
-# 	pass
-# 	if os.path.isfile(filename):
-# 		os.remove(filename)
+#     pass
+#     if os.path.isfile(filename):
+#         os.remove(filename)
 
 # print(pipeResults)
 

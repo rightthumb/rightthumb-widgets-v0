@@ -103,15 +103,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
-				       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-				       # {},
+					# {},
 	],
 }
 
@@ -273,7 +273,7 @@ def action():
 						_.colorThis( coll, 'yellow', p=0 ),
 						' | ',
 						_.colorThis( _.addComma( my_collection.count_documents({}) ), 'cyan', p=0 ),
-						 )
+						)
 					try:
 						theKeys = list(client[x][coll].find_one().keys())
 						# _.pr( theKeys )

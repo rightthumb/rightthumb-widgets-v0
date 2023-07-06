@@ -35,7 +35,7 @@ _.switches.register('Save', '-save','file.json')
 _.switches.register('DecryptionTable', '-decryptiontable','DecryptionTable_._000000.json')
 _.switches.register('Scramble', '-scramble')
 
-_.appInfo=	{
+_.appInfo=    {
 	'file': 'unhackable.py',
 	'description': 'Changes the world',
 	'prerequisite': [],
@@ -315,7 +315,7 @@ def scramble():
 		i += 1
 	# print(len(bank))
 	# for d in bank:
-	# 	print(d)
+	#     print(d)
 	newBank = _.sort(bank,'sort_field')
 	del bank
 	del data
@@ -366,7 +366,7 @@ def bible():
 	# sys.exit()
 	# print(len(bank))
 	# for d in bank:
-	# 	print(d)
+	#     print(d)
 	newBank = _.sort(bank,'sort_field')
 	del bank
 	del data
@@ -374,11 +374,11 @@ def bible():
 
 	# i = 0
 	# for d in blank:
-	# 	if blank[i]['char'] == '=':
-	# 		blank[i]['ids'] = eq
-	# 	if blank[i]['char'] == '[RETURN]':
-	# 		blank[i]['ids'] = rtn
-	# 	i += 1
+	#     if blank[i]['char'] == '=':
+	#         blank[i]['ids'] = eq
+	#     if blank[i]['char'] == '[RETURN]':
+	#         blank[i]['ids'] = rtn
+	#     i += 1
 	# del eq
 	# del rtn
 	# print(newBank)
@@ -421,7 +421,7 @@ def buildFile():
 	# sys.exit()
 	# print(len(bank))
 	# for d in bank:
-	# 	print(d)
+	#     print(d)
 	newBank = _.sort(bank,'sort_field')
 	del bank
 	del data
@@ -429,11 +429,11 @@ def buildFile():
 
 	# i = 0
 	# for d in blank:
-	# 	if blank[i]['char'] == '=':
-	# 		blank[i]['ids'] = eq
-	# 	if blank[i]['char'] == '[RETURN]':
-	# 		blank[i]['ids'] = rtn
-	# 	i += 1
+	#     if blank[i]['char'] == '=':
+	#         blank[i]['ids'] = eq
+	#     if blank[i]['char'] == '[RETURN]':
+	#         blank[i]['ids'] = rtn
+	#     i += 1
 	# del eq
 	# del rtn
 	# print(newBank)

@@ -339,7 +339,7 @@ def report( configFile, parentIn='', fieldsIn='', allFields=False ):
 	# global fields
 	fields = ''
 	# while not 'endall' in fields:
-	# 	if not 'endall' in fields:
+	#     if not 'endall' in fields:
 	while not fields == 'x' and not 'endall' in fields:
 		_.pr(  )
 		_.pr(  )
@@ -389,11 +389,11 @@ def report( configFile, parentIn='', fieldsIn='', allFields=False ):
 							childrenRecords[child].append( ch )
 
 					# if  allFields:
-					# 	for label in childrenRecords[child][0].keys():
-					# 		if not label == 'id' and not label in childrenFields:
-					# 			childrenFields.append( label )
-					# 	childfields = ','.join( childrenFields )
-					# 	reportData = report( childrenRecords[child], child, fieldsIn=childfields )
+					#     for label in childrenRecords[child][0].keys():
+					#         if not label == 'id' and not label in childrenFields:
+					#             childrenFields.append( label )
+					#     childfields = ','.join( childrenFields )
+					#     reportData = report( childrenRecords[child], child, fieldsIn=childfields )
 					# else:
 					reportData = report( childrenRecords[child], child )
 					# if sys.getsizeof( str(reportData) ) > 5:
@@ -491,7 +491,7 @@ def action():
 	_.pr()
 	_.pr()
 	# for a in attributesTable:
-	# 	_.pr( a )
+	#     _.pr( a )
 	for key in attributesTable.keys():
 		# _.pr( key )
 		_.pr()
@@ -541,7 +541,7 @@ def surfData( data, path, parent=False ):
 			# _.pr( 'auditType:', auditType( data[ key ] ) )
 
 			# if hasPID( data[ key ] ):
-			# 	addAttributes( data[ key ], path2 )
+			#     addAttributes( data[ key ], path2 )
 
 
 		if hasGroups:
@@ -569,7 +569,7 @@ def surfData( data, path, parent=False ):
 
 
 		# if hasPID( data):
-		# 	addAttributes( data, path2 )
+		#     addAttributes( data, path2 )
 		# _.pr( 'implode:', implode( data ).split(',') )
 		for key in implode( data ).split(','):
 			if parent:
@@ -596,7 +596,7 @@ def papp( data, addText, parent=False ):
 			_.pr( 'papp:', addText )
 		if not len( data ):
 			data.append( addText )
-		else:	
+		else:    
 			if not data[ len(data)-1 ] == addText and not data[ len(data)-2 ] == addText:
 				data.append( addText )
 

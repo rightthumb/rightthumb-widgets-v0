@@ -30,14 +30,14 @@ def md52(string):
 	return hash_md5.hexdigest()
 
 # try:
-# 	result = md5(sys.argv[len(sys.argv)-1])
-# 	print(result)
-# 	# print(result,sys.argv[len(sys.argv)-1])
+#     result = md5(sys.argv[len(sys.argv)-1])
+#     print(result)
+#     # print(result,sys.argv[len(sys.argv)-1])
 # except Exception as e:
-# 	print('* Fail *',sys.argv[len(sys.argv)-1])
-# 	# print('* Fail *')
+#     print('* Fail *',sys.argv[len(sys.argv)-1])
+#     # print('* Fail *')
 
 print(md52('string'))
 # for i in sys.argv:
-# 	print(i)
+#     print(i)
 

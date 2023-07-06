@@ -195,22 +195,22 @@ function acquirePayload() {
 			if (testLink.includes('/store/')) { theLink=testLink; }
 		});
 
-        var thisName = $(this).find('.title').text().trim();
-        var thisURL = 'https://play.google.com'+theLink;
+		var thisName = $(this).find('.title').text().trim();
+		var thisURL = 'https://play.google.com'+theLink;
 
-        var thisDescription = $(this).find('.description').text().trim();
+		var thisDescription = $(this).find('.description').text().trim();
 		var ts = $(this).find('.tiny-star').attr('aria-label').trim();
-        try {
-            var tss = ts.split( ' ' );
-            var thisStars = tss[1];
-        } catch(err) {
-            var thisStars = '';
-        }
-        
+		try {
+			var tss = ts.split( ' ' );
+			var thisStars = tss[1];
+		} catch(err) {
+			var thisStars = '';
+		}
+		
 
-        hackElements.push({ 'name': thisName, 'url': thisURL, 'description': thisDescription, 'stars': thisStars });
+		hackElements.push({ 'name': thisName, 'url': thisURL, 'description': thisDescription, 'stars': thisStars });
 	});
-    // copy( hackElements )
+	// copy( hackElements )
 	
 	console.log( '' );
 	console.log( 'Done' );
@@ -253,7 +253,7 @@ function scrollEnd() {
 function checkLen() {
 	hackElements = [];
 	$( '.id-card-list .title' ).each(function( index ) {
-	        hackElements.push( $(this).text() );
+			hackElements.push( $(this).text() );
 	});
 	if (lastLength == hackElements.length) {
 		return true;
@@ -346,7 +346,7 @@ def complete():
 	_.pr()
 
 	# for i,app in enumerate(selectedApps):
-	# 	_.pr( i, '\t', app['name'] )
+	#     _.pr( i, '\t', app['name'] )
 	_.switches.fieldSet( 'Long', 'active', True )
 
 	if not _.switches.isActive('GroupBy') and not _.switches.isActive('Sort'):
@@ -490,15 +490,15 @@ def getGenre( url ):
 			pass
 
 	# try:
-	# 	page = requests.get(url)
-	# 	tree = html.fromstring(page.content)
-	# 	tables = tree.cssselect('a[itemprop]')
-	# 	for t in tables:
-	# 		if 'genre' in str(t.attrib['itemprop']):
-	# 			result = cleanupString0( t.text_content() )
-	# 			break
+	#     page = requests.get(url)
+	#     tree = html.fromstring(page.content)
+	#     tables = tree.cssselect('a[itemprop]')
+	#     for t in tables:
+	#         if 'genre' in str(t.attrib['itemprop']):
+	#             result = cleanupString0( t.text_content() )
+	#             break
 	# except Exception as e:
-	# 	pass
+	#     pass
 	
 	# https://play.google.com/store/apps/dev?id=
 
@@ -507,23 +507,23 @@ def getGenre( url ):
 def copyManual():
 	m = """
 function acquirePayload() {
-    var genre='';
-    var company='';
+	var genre='';
+	var company='';
 
-    var links = document.querySelectorAll('a');
-    for(var i = 0; i < links.length; i++){
-        if ( links[i].href.includes('https://play.google.com/store/apps/dev?id=') || links[i].href.includes('https://play.google.com/store/apps/developer?id=') ) {
-            console.log( links[i].text.trim() );
-            company = links[i].text.trim();
-            if ( company.length > 0) {
-                break
-            }
-        }
-    };
-    var links = document.querySelectorAll('a[itemprop="genre"]');
-    genre = links[0].text.trim();
-    
-    return { 'g': genre, 'c': company }
+	var links = document.querySelectorAll('a');
+	for(var i = 0; i < links.length; i++){
+		if ( links[i].href.includes('https://play.google.com/store/apps/dev?id=') || links[i].href.includes('https://play.google.com/store/apps/developer?id=') ) {
+			console.log( links[i].text.trim() );
+			company = links[i].text.trim();
+			if ( company.length > 0) {
+				break
+			}
+		}
+	};
+	var links = document.querySelectorAll('a[itemprop="genre"]');
+	genre = links[0].text.trim();
+	
+	return { 'g': genre, 'c': company }
 }
 copy( JSON.stringify(acquirePayload())+_v.slash+'n' );
 	"""

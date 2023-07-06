@@ -140,7 +140,7 @@ class TheChild:
 					'active': self.active,
 					'values': self.values,
 					'value': self.value,
-		}		
+		}        
 		return _matrix.app.algorithmResult( algorithm, result=result )
 
 

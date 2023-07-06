@@ -134,8 +134,8 @@ _.appInfo[focus()] = {
 						{ 'name': 'selected', 'abbreviation': 'sel' },
 	],
 	'aliases': [
-					   # 'this',
-					   # 'app',
+					# 'this',
+					# 'app',
 	],
 
 	}
@@ -251,17 +251,17 @@ def prepData():
 	for i,record in enumerate(data):
 		found = 0
 		# if 'd12' in data[i]['description']:
-		# 	found+=1
+		#     found+=1
 		if 'damage' in data[i]['description']:
 			found+=1
 		# if 'd8' in data[i]['description']:
-		# 	found+=1
+		#     found+=1
 		# if 'd4' in data[i]['description']:
-		# 	found+=1
+		#     found+=1
 		# if 'd6' in data[i]['description']:
-		# 	found+=1
+		#     found+=1
 		# if 'd10' in data[i]['description']:
-		# 	found+=1
+		#     found+=1
 		if 'Ranged' in data[i]['attack-save']:
 			found+=1
 		if 'Force' in data[i]['damage-effect']:
@@ -402,84 +402,84 @@ def action():
 	# maxSpells = 8
 
 	# spell_slots_max = {
-	# 				'Cantrip': '*',
-	# 				'1st': 4,
-	# 				'2nd': 3,
+	#                 'Cantrip': '*',
+	#                 '1st': 4,
+	#                 '2nd': 3,
 	# }
 
 	# if type(spell_slots) == list or type(spell_slots) == dict and len(list(spell_slots.keys())) == 0:
-	# 	spell_slots = {}
-	# 	for k in spell_slots_max.keys():
-	# 		spell_slots[k] = 0
+	#     spell_slots = {}
+	#     for k in spell_slots_max.keys():
+	#         spell_slots[k] = 0
 
 
 	# if _.switches.isActive('ResetSpellSlots'):
-	# 	spell_slots = []
-	# 	_.saveTableDB( spell_slots, 'sorcerer_spell_book.json' )
+	#     spell_slots = []
+	#     _.saveTableDB( spell_slots, 'sorcerer_spell_book.json' )
 	# if _.switches.isActive('CastSpell') and len( _.switches.values('CastSpell') ):
 
-	# 	if type(spell_slots) == list or type(spell_slots) == dict and len(list(spell_slots.keys())) == 0:
-	# 		spell_slots = {}
-	# 		for k in spell_slots_max.keys():
-	# 			spell_slots[k] = 0
+	#     if type(spell_slots) == list or type(spell_slots) == dict and len(list(spell_slots.keys())) == 0:
+	#         spell_slots = {}
+	#         for k in spell_slots_max.keys():
+	#             spell_slots[k] = 0
 
-	# 	cp = ''
-	# 	notes = []
-	# 	for i,x in enumerate(_.switches.values('CastSpell')) :
-	# 		if not i:
-	# 			cp = x
-	# 		else:
-	# 			notes.append( x )
+	#     cp = ''
+	#     notes = []
+	#     for i,x in enumerate(_.switches.values('CastSpell')) :
+	#         if not i:
+	#             cp = x
+	#         else:
+	#             notes.append( x )
 
-	# 	for i,record in enumerate(data):
-	# 		if str(record['i']) == cp:
-	# 			spell_history.append({  'id': record['i'], 'name': record['name'], 'epoch': time.time(), 'notes': ' '.join(notes) })
-	# 			spell_slots[ record['level'] ] += 1
+	#     for i,record in enumerate(data):
+	#         if str(record['i']) == cp:
+	#             spell_history.append({  'id': record['i'], 'name': record['name'], 'epoch': time.time(), 'notes': ' '.join(notes) })
+	#             spell_slots[ record['level'] ] += 1
 
 
-	# 	_.saveTableDB( spell_history, 'sorcerer_spell_history.json' )
-	# 	_.saveTableDB( spell_slots, 'sorcerer_spell_book.json' )
+	#     _.saveTableDB( spell_history, 'sorcerer_spell_history.json' )
+	#     _.saveTableDB( spell_slots, 'sorcerer_spell_book.json' )
  
 
 	# if _.switches.isActive('ToggleSelected'):
-	# 	# _.pr( type( _.switches.values('ToggleSelected') ) )
-	# 	# for x in _.switches.values('ToggleSelected'):
-	# 	# 	_.pr( x, type(x) )
-	# 	# sys.exit()
-	# 	for i,record in enumerate(data):
-	# 		# _.pr( record['i'], type(record['i']) )
-	# 		try:
-	# 			if str(record['i']) in _.switches.values('ToggleSelected'):
-	# 				pass
-	# 		except Exception as e:
-	# 			_.pr( record )
-	# 			sys.exit()
-	# 		if str(record['i']) in _.switches.values('ToggleSelected'):
-	# 			if  record['selected'] == selection_record_text_yes:
-	# 				data[i]['selected'] = selection_record_text_no_used
-	# 			else:
-	# 				data[i]['selected'] = selection_record_text_yes 
+	#     # _.pr( type( _.switches.values('ToggleSelected') ) )
+	#     # for x in _.switches.values('ToggleSelected'):
+	#     #     _.pr( x, type(x) )
+	#     # sys.exit()
+	#     for i,record in enumerate(data):
+	#         # _.pr( record['i'], type(record['i']) )
+	#         try:
+	#             if str(record['i']) in _.switches.values('ToggleSelected'):
+	#                 pass
+	#         except Exception as e:
+	#             _.pr( record )
+	#             sys.exit()
+	#         if str(record['i']) in _.switches.values('ToggleSelected'):
+	#             if  record['selected'] == selection_record_text_yes:
+	#                 data[i]['selected'] = selection_record_text_no_used
+	#             else:
+	#                 data[i]['selected'] = selection_record_text_yes 
 
 
 
-	# 	_.saveTableDB( data, 'sorcerer.json' )
+	#     _.saveTableDB( data, 'sorcerer.json' )
 
 	# for i,record in enumerate(data):
-	# 	if '*' in record['selected']:
-	# 		selected_past_IDs.append( str(record['i']) )
-	# 	if record['selected'] == selection_record_text_yes:
-	# 		selected_IDs_All.append( str(record['i']) )
-	# 	if record['selected'] == selection_record_text_yes and not record['level'] == 'Cantrip':
-	# 		selected_IDs.append( str(record['i']) )
+	#     if '*' in record['selected']:
+	#         selected_past_IDs.append( str(record['i']) )
+	#     if record['selected'] == selection_record_text_yes:
+	#         selected_IDs_All.append( str(record['i']) )
+	#     if record['selected'] == selection_record_text_yes and not record['level'] == 'Cantrip':
+	#         selected_IDs.append( str(record['i']) )
 
 	# if len( selected_IDs ) > maxSpells:
-	# 	_.colorThis(  [ '\nTotal:', len( selected_IDs ) ], 'red'  )
-	# 	_.colorThis(  [ '\tMax Spells:', maxSpells ], 'red'  )
-	# 	_.colorThis(  [ '\tRemove:', len( selected_IDs ) - maxSpells ], 'red'  )
+	#     _.colorThis(  [ '\nTotal:', len( selected_IDs ) ], 'red'  )
+	#     _.colorThis(  [ '\tMax Spells:', maxSpells ], 'red'  )
+	#     _.colorThis(  [ '\tRemove:', len( selected_IDs ) - maxSpells ], 'red'  )
 	# else:
-	# 	_.colorThis(  [ '\nTotal:', len( selected_IDs ), '\tWith Cantrips:', len(selected_IDs_All) ], 'green'  )
-	# 	if not len( selected_IDs ) == maxSpells:
-	# 		_.colorThis(  [ '\tNot enough spells, Add:', maxSpells - len( selected_IDs ) ], 'red'  )
+	#     _.colorThis(  [ '\nTotal:', len( selected_IDs ), '\tWith Cantrips:', len(selected_IDs_All) ], 'green'  )
+	#     if not len( selected_IDs ) == maxSpells:
+	#         _.colorThis(  [ '\tNot enough spells, Add:', maxSpells - len( selected_IDs ) ], 'red'  )
 	
 	# _.colorThis(  [ '\n\t\t  My Spells:', ' '.join(selected_IDs) ], 'yellow'  )
 	# _.colorThis(  [ '\n\t\tPast Spells:', ' '.join(selected_past_IDs) ], 'blue'  )
@@ -493,23 +493,23 @@ def action():
 	# _.pr()
 	# _.colorThis(  [ '\tUsed:' ], 'bold'  )
 	# for slot in spell_slots_max.keys():
-	# 	_.colorThis(  [ '\t\t', spell_slots[slot], slot ], 'cyan'  )
+	#     _.colorThis(  [ '\t\t', spell_slots[slot], slot ], 'cyan'  )
 		
 	# _.pr()
 	# _.colorThis(  [ '\tLeft:' ], 'bold'  )
 	# for slot in spell_slots_max.keys():
-	# 	# _.pr( slot )
-	# 	if type(spell_slots_max[slot]) == str:
-	# 		pass
-	# 	else:
-	# 		# _.pr( type(spell_slots_max[slot]), spell_slots[slot] )
-	# 		diff = spell_slots_max[slot] - spell_slots[slot]
-	# 		if diff == 0:
-	# 			_.colorThis(  [ '\t\t', diff, slot ], 'cyan'  )
-	# 		elif diff > 0:
-	# 			_.colorThis(  [ '\t\t', diff, slot ], 'green'  )
-	# 		else:
-	# 			_.colorThis(  [ '\t\t', diff, slot ], 'red'  )
+	#     # _.pr( slot )
+	#     if type(spell_slots_max[slot]) == str:
+	#         pass
+	#     else:
+	#         # _.pr( type(spell_slots_max[slot]), spell_slots[slot] )
+	#         diff = spell_slots_max[slot] - spell_slots[slot]
+	#         if diff == 0:
+	#             _.colorThis(  [ '\t\t', diff, slot ], 'cyan'  )
+	#         elif diff > 0:
+	#             _.colorThis(  [ '\t\t', diff, slot ], 'green'  )
+	#         else:
+	#             _.colorThis(  [ '\t\t', diff, slot ], 'red'  )
 
 		
 	

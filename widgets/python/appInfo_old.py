@@ -273,45 +273,45 @@ def action():
 
 	# shouldRun = False
 	# if _.switches.isActive('Input'):
-	# 	shouldRun = True
-	# 	dirList = file.split(',')
-	# 	file = _.switches.value('Input')
+	#     shouldRun = True
+	#     dirList = file.split(',')
+	#     file = _.switches.value('Input')
 
 	# if not type(_.appData[__.appReg]['pipe']) == str:
-	# 	shouldRun = True
-	# 	dirList = _.appData[__.appReg]['pipe']
+	#     shouldRun = True
+	#     dirList = _.appData[__.appReg]['pipe']
 
 	# if shouldRun:
-	# 	_.pr()
-	# 	apps = {}
-	# 	errors0 = 0
-	# 	for fi in dirList:
-	# 		fi = fi.replace('\n','')
-	# 		fi = fi.replace('.py','')
-	# 		# _.pr('Loading:\t',fi)
-	# 		try:
-	# 			apps[fi] = eval('importlib.import_module(fi)')
-	# 			# _.pr('Loaded')
-	# 		except Exception as e:
-	# 			_.pr('Error: ',fi)
-	# 			errors0 += 1
+	#     _.pr()
+	#     apps = {}
+	#     errors0 = 0
+	#     for fi in dirList:
+	#         fi = fi.replace('\n','')
+	#         fi = fi.replace('.py','')
+	#         # _.pr('Loading:\t',fi)
+	#         try:
+	#             apps[fi] = eval('importlib.import_module(fi)')
+	#             # _.pr('Loaded')
+	#         except Exception as e:
+	#             _.pr('Error: ',fi)
+	#             errors0 += 1
 			
 			
-	# 	_.pr()
-	# 	_.pr()
-	# 	errors1 = 0
-	# 	success = 0
-	# 	for infoKeys in _.appInfo.keys():
-	# 		try:
-	# 			_.pr(_.appInfo[infoKeys]['file'],'\t',_.appInfo[infoKeys]['description'])
-	# 			success += 1
-	# 		except Exception as e:
-	# 			_.pr('Error:',infoKeys)
-	# 			errors1 += 1
+	#     _.pr()
+	#     _.pr()
+	#     errors1 = 0
+	#     success = 0
+	#     for infoKeys in _.appInfo.keys():
+	#         try:
+	#             _.pr(_.appInfo[infoKeys]['file'],'\t',_.appInfo[infoKeys]['description'])
+	#             success += 1
+	#         except Exception as e:
+	#             _.pr('Error:',infoKeys)
+	#             errors1 += 1
 		
-	# 	_.pr('success:',success)
-	# 	_.pr('errors0:',errors0)
-	# 	_.pr('errors1:',errors1)
+	#     _.pr('success:',success)
+	#     _.pr('errors0:',errors0)
+	#     _.pr('errors1:',errors1)
 
 
 
@@ -319,13 +319,13 @@ def action():
 
 	# shouldRun = False
 	# if not type(_.appData[__.appReg]['pipe']) == str:
-	# 	shouldRun = True
-	# 	text = _.appData[__.appReg]['pipe']
+	#     shouldRun = True
+	#     text = _.appData[__.appReg]['pipe']
 
 	# if shouldRun:
-	# 	_.pr()
-	# 	data = processText(text)
-	# 	_.pr(data)
+	#     _.pr()
+	#     data = processText(text)
+	#     _.pr(data)
 
 		
 	# TEST - process list of files piped or by switch 
@@ -381,11 +381,11 @@ def action():
 		_.pr()
 		_.pr()
 		# for ar in appRegistration:
-		# 	_.pr(ar.keys())
-		# 	try:
-		# 		ar['file']
-		# 	except Exception as e:
-		# 		_.pr(ar['livefile'])
+		#     _.pr(ar.keys())
+		#     try:
+		#         ar['file']
+		#     except Exception as e:
+		#         _.pr(ar['livefile'])
 
 		for ar in appRegistration:
 			if not ar['file'] == ar['livefile']:

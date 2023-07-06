@@ -23,7 +23,7 @@ _.switches.register('First', '-f,-first','ju*')
 _.switches.register('Last', '-l,-last','p*')
 # _.switches.register('Data', '-data','f,e')
 
-_.appInfo=	{
+_.appInfo=    {
 	'file': 'churchDir.py',
 	'description': 'Lookup directory information',
 	'prerequisite': [],
@@ -57,12 +57,12 @@ _.switches.process()
 # pipeData = ''
 
 # if not sys.stdin.isatty():
-# 	pipeData = sys.stdin.readlines()
-# 	try:
-# 		if pipeData[0][0].isalnum() == False:
-# 			pipeData[0] = pipeData[0][1:]
-# 	except Exception as e:
-# 		pass
+#     pipeData = sys.stdin.readlines()
+#     try:
+#         if pipeData[0][0].isalnum() == False:
+#             pipeData[0] = pipeData[0][1:]
+#     except Exception as e:
+#         pass
 data = _.getTable2('D:\\_Scott\\S_Documents\\Projects\\self\\Church_Directory\\Church_Directory.json')
 ########################################################################################
 def action():
@@ -112,14 +112,14 @@ def action():
 
 	if _.switches.isActive('Last') == False and _.switches.isActive('First') == False:
 		# for family in data:
-		# 	print()
-		# 	print('___________________________________')
-		# 	print(family['last'])
+		#     print()
+		#     print('___________________________________')
+		#     print(family['last'])
 
-		# 	print('\t',_str.cleanEnd2(family['address1'],' ') + ', ' + family['address2'])
-		# 	print()
-		# 	_.tables.register('members',family['people'])
-		# 	_.tables.print('members','first,phone,email')
+		#     print('\t',_str.cleanEnd2(family['address1'],' ') + ', ' + family['address2'])
+		#     print()
+		#     _.tables.register('members',family['people'])
+		#     _.tables.print('members','first,phone,email')
 
 		print()
 		_.tables.register('members',newData)
@@ -168,7 +168,7 @@ def action():
 				_.switches.fieldSet('Plus','value',_.switches.value('Last'))
 				if _.showLine(person['last']):
 					_.switches.fieldSet('Plus','value',_.switches.value('First'))
-					if _.showLine(person['first']):	
+					if _.showLine(person['first']):    
 						data.append({'first': person['first'], 'last': person['last'], 'phone': person['phone'], 'email': person['email'], 'address': _str.cleanEnd2(family['address1'],' ') + ', ' + family['address2']})
 		_.tables.register('members',data)
 		if _.switches.isActive('Column'):

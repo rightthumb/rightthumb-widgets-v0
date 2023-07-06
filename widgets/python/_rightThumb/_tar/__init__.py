@@ -45,8 +45,8 @@ def tar( files, tarball=None, gz=False, ext=None  ):
 		ext = '.tar.bz2'
 		w = 'bz2'
 	# if _.switches.isActive('NoExt'):
-	# 	ext = ''
-	# 	w = 'bz2'
+	#     ext = ''
+	#     w = 'bz2'
 	tarball = None
 	if not tarball is None:
 		tarball = tarball
@@ -58,8 +58,8 @@ def tar( files, tarball=None, gz=False, ext=None  ):
 			path = path[0]
 			files[i] = path
 		# if type(path) == list:
-		# 	path = path[0]
-		# 	files[i] = path
+		#     path = path[0]
+		#     files[i] = path
 		# _.pr(type(path), path)
 		# sys.exit()
 		if not os.path.isdir(path) and not _.isTar.gz(path) and not _.isTar.bz2(path):

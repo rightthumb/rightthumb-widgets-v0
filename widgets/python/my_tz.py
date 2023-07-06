@@ -47,7 +47,7 @@ __.pre_error = False
 _.appInfo[focus()] = {
 	'file': 'my_tz.py',
 	'liveAppName': __.thisApp( __file__ ),
- 	'description': 'display timezone',
+	'description': 'display timezone',
 	'categories': [
 						'timezone',
 				],
@@ -69,15 +69,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
-				       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-				       # {},
+					# {},
 	],
 }
 

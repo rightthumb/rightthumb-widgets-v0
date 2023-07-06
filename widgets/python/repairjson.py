@@ -29,12 +29,12 @@ import shutil
 
 
 _.appInfo=  {
-    'file': 'repairjson.py',
-    'description': 'add a field and set data for an entire json file',
-    'prerequisite': [],
-    'examples': [],
-    'columns': [],
-    }
+	'file': 'repairjson.py',
+	'description': 'add a field and set data for an entire json file',
+	'prerequisite': [],
+	'examples': [],
+	'columns': [],
+	}
 
 # _.appInfo['examples'].append('p jsonfields2 -i file.json -o appended\\file.json -move done -fields "Business City" "Other City" -newfield City')
 _.appInfo['examples'].append('p repairjson -i file.json -o repaired\\file.json ')
@@ -45,39 +45,39 @@ _.switches.process()
 
 ########################################################################################
 def fixJSON(badjson):
-    s = badjson
-    idx = 0
-    while True:
-        try:
-            start = s.index( '": "', idx) + 4
-            end1  = s.index( '",\n',idx)
-            end2  = s.index( '"\n', idx)
-            if end1 < end2:
-                end = end1
-            else:
-                end = end2
-            content = s[start:end]
-            content = content.replace('"', _v.slash+'"')
-            s = s[:start] + content + s[end:]
-            idx = start + len(content) + 6
-        except:
-            return s
+	s = badjson
+	idx = 0
+	while True:
+		try:
+			start = s.index( '": "', idx) + 4
+			end1  = s.index( '",\n',idx)
+			end2  = s.index( '"\n', idx)
+			if end1 < end2:
+				end = end1
+			else:
+				end = end2
+			content = s[start:end]
+			content = content.replace('"', _v.slash+'"')
+			s = s[:start] + content + s[end:]
+			idx = start + len(content) + 6
+		except:
+			return s
 def action():
-    if _.switches.isActive('Input') == False or _.switches.isActive('Output') == False or _.switches.isActive('Fields') == False:
-        print('Error: Missing input')
-        sys.exit()
-    # print(_.ci(_.switches.value('Input')))
-    # sys.exit()
-    jsonFile = _.getTable2(_.ci(_.switches.value('Input')))
-    # jsonFile = _.getTable2('Alababama_b.CSV.json')
-    # sys.exit()
+	if _.switches.isActive('Input') == False or _.switches.isActive('Output') == False or _.switches.isActive('Fields') == False:
+		print('Error: Missing input')
+		sys.exit()
+	# print(_.ci(_.switches.value('Input')))
+	# sys.exit()
+	jsonFile = _.getTable2(_.ci(_.switches.value('Input')))
+	# jsonFile = _.getTable2('Alababama_b.CSV.json')
+	# sys.exit()
 
 
 
-    _.saveTable2(fixJSON(jsonFile),_.switches.value('Output'))
+	_.saveTable2(fixJSON(jsonFile),_.switches.value('Output'))
 
-    if _.switches.isActive('Move') == True:
-        shutil.move(_.ci(_.switches.value('Input')), _.switches.value('Move') + _v.slash + _.ci(_.switches.value('Input')))
+	if _.switches.isActive('Move') == True:
+		shutil.move(_.ci(_.switches.value('Input')), _.switches.value('Move') + _v.slash + _.ci(_.switches.value('Input')))
 
 
 
@@ -103,12 +103,12 @@ Address City State Zip Email Phone Fax
 
 '''
 
-    
+	
 
 
 ########################################################################################
 if __name__ == '__main__':
-    action()
+	action()
 
 
 

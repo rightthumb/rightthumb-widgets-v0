@@ -3121,11 +3121,11 @@ alias vm="ssh scott@mortis.m-eta.app"
 alias vc="ssh scott@tatooine.m-eta.app"
 alias vt="ssh scott@tatooine.m-eta.app"
 
-alias v="ssh scott@hoth.m-eta.app"
-alias vv="ssh scott@bespin.m-eta.app"
-alias vvv="ssh scott@mortis.m-eta.app"
-alias vvvv="ssh scott@tatooine.m-eta.app"
-alias vvvvv="ssh vy2ehn4azpfl@thumb.m-eta.app"
+# alias v="ssh scott@hoth.m-eta.app"
+# alias vv="ssh scott@bespin.m-eta.app"
+# alias vvv="ssh scott@mortis.m-eta.app"
+# alias vvvv="ssh scott@tatooine.m-eta.app"
+# alias vvvvv="ssh vy2ehn4azpfl@thumb.m-eta.app"
 alias thumb="ssh vy2ehn4azpfl@thumb.m-eta.app"
 
 alias vh="ssh scott@hoth.m-eta.app"
@@ -3771,6 +3771,14 @@ alias upFo="$widgets/widgets/bash/uploadFolder.sh"
 alias uf="$widgets/widgets/bash/uploadFolder.sh"
 alias loadBK="$widgets/widgets/bash/loadBK.sh"
 alias foBackup="$widgets/widgets/bash/foBackup.sh"
+
+alias fa="$p file-open  -backup -alias "
+alias zip.="zip -9 -r "
+alias zipp="zip -9 -r "
+alias zzip="zip -9 -r "
+
+
+
 
 
 
@@ -15432,6 +15440,9 @@ if __name__ == '__main__':
 
 # vc.FIG.bash_vars(p=0)
 # 'Installer'
+
+# /etc/bash.bashrc
+# unalias v
 
 # bashrc bof 82977d555926
 # bashrc eof a3bc42ec51e9

@@ -70,10 +70,10 @@ _.appInfo[focus()] = {
 						'p auditJavascript -i textOverflow_audit_log.json  -g f'
 	],
 	'columns': [
-				       { 'name': 'function', 'abbreviation': 'f' },
-				       { 'name': 'action', 'abbreviation': 'a' },
-				       { 'name': 'milliseconds', 'abbreviation': 'm' },
-				       { 'name': 'seconds', 'abbreviation': 's' }
+					{ 'name': 'function', 'abbreviation': 'f' },
+					{ 'name': 'action', 'abbreviation': 'a' },
+					{ 'name': 'milliseconds', 'abbreviation': 'm' },
+					{ 'name': 'seconds', 'abbreviation': 's' }
 	]
 	}
 

@@ -21,7 +21,7 @@ import csv
 
 _.switches.register('Input', '-input')
 
-_.appInfo=	{
+_.appInfo=    {
 	'file': 'csvfix.py',
 	'description': 'Manages drives and indexes',
 	'prerequisite': [],
@@ -41,9 +41,9 @@ def action():
 	csv.register_dialect('myDialect', delimiter='/', quoting=csv.QUOTE_NONE)
 
 	with open(_.switches.value('Input'), newline='') as myFile:  
-	   reader = csv.reader(myFile, dialect='myDialect')
-	   for row in reader:
-	       print(row) 
+	reader = csv.reader(myFile, dialect='myDialect')
+	for row in reader:
+		print(row) 
 
 
 ########################################################################################

@@ -76,15 +76,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-					   # { 'name': 'name', 'abbreviation': 'n' },
-					   # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-					   # 'this',
-					   # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-					   # {},
+					# {},
 	],
 }
 
@@ -629,9 +629,9 @@ def run(path):
 	if path.lower().endswith('.md'):
 		theFILE = md_clean(theFILE)
 		# if theFILE.startswith('\n'):
-		# 	_.saveText(theFILE[1:],path)
+		#     _.saveText(theFILE[1:],path)
 		# else:
-		# 	_.saveText(theFILE,path)
+		#     _.saveText(theFILE,path)
 		theFILE = process_doc_sep(theFILE, doc_seps[2],doc_seps)
 		theFILE = process_doc_sep(theFILE, doc_seps[1],doc_seps)
 

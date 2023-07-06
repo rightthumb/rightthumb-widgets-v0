@@ -22,9 +22,9 @@ print_fields = 'path, name, parent, bytes, size, date_created, date_modified, ex
 def _lines_(filename):
 
 	try:
-	    with open(filename) as f:
-	        for i, asdf in enumerate(f): pass
-	    return i + 1
+		with open(filename) as f:
+			for i, asdf in enumerate(f): pass
+		return i + 1
 	except Exception as e:
 		_.pr(e,c='red')
 		return 1
@@ -158,8 +158,8 @@ def sqlCreateTable( db, deleteDBFirst=False, close=False, asset=None, length=Non
 	if os.path.isfile(db) and not deleteDBFirst:
 		if 'y' in input(' delete db? ').lower(): os.unlink(db); print('deleted');
 	# if os.path.isfile(db) and deleteDBFirst:
-	# 	try: os.unlink(db)
-	# 	except: pass
+	#     try: os.unlink(db)
+	#     except: pass
 	conn = sqlite3.connect(db)
 	cursor = conn.cursor()
 	sql =  'CREATE TABLE files (path text, name_ text, name text, folder text, stat text, attrib text, bytes int, size text, date_created_raw double, date_modified_raw double, date_created text, date_modified text, type text, typesort text, ext text, week_of_year text, week_of_year_ text, day_of_the_week text, month text, friendly_week text, friendly_month text, accessed_raw double, date_accessed text                        , ce double, me double, ae double, meta text, header text, err int        )'
@@ -672,13 +672,13 @@ def friendlyWeekNew(theDate):
 	return friendlyWeek1
 
 def getWeekAndYear(theDate):
-	 y = getYearFromEpoch(theDate)
-	 w = getWOYFromEpoch(theDate)
-	 if w < 10:
-		 w = '0'+str(w)
-	 else:
-		 w = str(w)
-	 return str(y) +'.'+ w
+	y = getYearFromEpoch(theDate)
+	w = getWOYFromEpoch(theDate)
+	if w < 10:
+		w = '0'+str(w)
+	else:
+		w = str(w)
+	return str(y) +'.'+ w
 
 def getMonthFromEpoch(theDate):
 	return str( getYearFromEpoch(theDate) ) + '.' + str(formatDateMonth(theDate))

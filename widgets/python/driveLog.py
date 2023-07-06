@@ -41,15 +41,15 @@ _.load()
 import _rightThumb._vars as _v
 import _rightThumb._string as _str
 # import _rightThumb._profileVariables as _profile
-# 	profile = _profile.records.audit( 'name', asset )
+#     profile = _profile.records.audit( 'name', asset )
 # import _rightThumb._encryptString as _blowfish
 	# _blowfish.genPassword()
 	# _blowfish.genPassword('string')
 	# en = _blowfish.encrypt( string )
 	# de = _blowfish.decrypt( en )
 # import _rightThumb._encryptFile as _blowfish
-# 	_blowfish.encrypt( infilepath, outfilepath, key )
-# 	_blowfish.decrypt( infilepath, outfilepath, key )
+#     _blowfish.encrypt( infilepath, outfilepath, key )
+#     _blowfish.decrypt( infilepath, outfilepath, key )
 # _browser = _.regImp( __.appReg, '_rightThumb._toolsScrapeFrontEnd' )
 # _browserX = _.regImp( __.appReg, '_rightThumb._toolsScrapeDirect' )
 # import _rightThumb._date as _date
@@ -70,12 +70,12 @@ import _rightThumb._string as _str
 	# _inDic.imp.testAll( 'fight' )
 	# _inDic.imp.testOne( 'austen' )
 # _file_folder = _.regImp( __.appReg, 'file_folder' )
-# 	_file_folder.switch( 'Save,Clean' )
-# 	_file_folder.switch( 'Compair,Clean' )
-# 	_file_folder.switch( 'Folder', '' )
+#     _file_folder.switch( 'Save,Clean' )
+#     _file_folder.switch( 'Compair,Clean' )
+#     _file_folder.switch( 'Folder', '' )
 # _fileNameDate = _.regImp( __.appReg, 'fileNameDate' )
-# 	_fileNameDate.imp.newName( filename )
-# 	_fileNameDate.imp.newName( filename, _dir.fileInfo( filename ) )
+#     _fileNameDate.imp.newName( filename )
+#     _fileNameDate.imp.newName( filename, _dir.fileInfo( filename ) )
 
 ##################################################
 
@@ -121,11 +121,11 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': 'name', 'abbreviation': 'n' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 
 	}
@@ -228,8 +228,8 @@ _.postLoad( __file__ )
 # p = _.getText( _v.pips, raw=True, clean=True ).split('\n')
 # os.system('"' + do + '"')
 # _.setPipeData( os.listdir(os.getcwd()), focus() )
-# 	if os.path.isdir(row):
-# 	if os.path.isfile(row):
+#     if os.path.isdir(row):
+#     if os.path.isfile(row):
 ########################################################################################
 # START
 
@@ -238,10 +238,10 @@ def action():
 	load()
 
 	# if not type( _.appData[__.appReg]['pipe'] ) == bool:
-	# 	_.pipeCleaner()
-	# 	# _.printVar(_.appData)
-	# 	for i,row in enumerate(_.appData[__.appReg]['pipe']):
-	# 		pass
+	#     _.pipeCleaner()
+	#     # _.printVar(_.appData)
+	#     for i,row in enumerate(_.appData[__.appReg]['pipe']):
+	#         pass
 
 
 
@@ -295,48 +295,48 @@ def load():
 
 
 
-    # {
-    #     "serial": null,
-    #     "name": "Papa's_74GB_archive_023_WD_SATA",
-    #     "type": "archive",
-    #     "priority": 8,
-    #     "drive": "F:\\",
-    #     "id": "{C1CB0F3E-AA5E-47BE-9A7B-8BBE69FE46E9}",
-    #     "machineID": "{B1669E09-DB5B-E77C-7B53-65EE04FBF88E}",
-    #     "pc": "MSI",
-    #     "initiated": 1569087967.6843686,
-    #     "timestamp": 1569087999.3618705,
-    #     "volumesizeused": "7.71GB",
-    #     "volumesizefree": "66.82GB",
-    #     "volumesize": "74.53GB",
-    #     "drivesize": 137438953472.0,
-    #     "descriptors": "023,WD,SATA",
-    #     "owner": "Papa"
-    # }
+	# {
+	#     "serial": null,
+	#     "name": "Papa's_74GB_archive_023_WD_SATA",
+	#     "type": "archive",
+	#     "priority": 8,
+	#     "drive": "F:\\",
+	#     "id": "{C1CB0F3E-AA5E-47BE-9A7B-8BBE69FE46E9}",
+	#     "machineID": "{B1669E09-DB5B-E77C-7B53-65EE04FBF88E}",
+	#     "pc": "MSI",
+	#     "initiated": 1569087967.6843686,
+	#     "timestamp": 1569087999.3618705,
+	#     "volumesizeused": "7.71GB",
+	#     "volumesizefree": "66.82GB",
+	#     "volumesize": "74.53GB",
+	#     "drivesize": 137438953472.0,
+	#     "descriptors": "023,WD,SATA",
+	#     "owner": "Papa"
+	# }
 
 
 
 	# _.appData[__.appReg]['uuid'] = {  'app': _.appInfo[focus()]['liveAppName'], 'project': 'app_instance' }
 
 	# if _.switches.isActive('Files'):
-	# 	tmpFiles = []
-	# 	hasFiles = False
-	# 	justNames = False
-	# 	if justNames:
-	# 		_.setPipeData( _.switches.values('Files'), focus() )
-	# 	else:
-	# 		for file in _.switches.values('Files'):
-	# 			if os.path.isfile( file ):
-	# 				hasFiles = True
-	# 				for row in _.getText( file, raw=True, clean=2 ).split('\n'):
-	# 					tmpFiles.append( row )
-	# 	if hasFiles:
-	# 		_.setPipeData( tmpFiles, focus() )
-	# 	if not hasFiles:
-	# 		if type( _.appData[__.appReg]['pipe'] ) == bool:
-	# 			_.appData[__.appReg]['pipe'] = []
-	# 			for row in _.switches.value('Files').split( ',' ):
-	# 				_.appData[__.appReg]['pipe'].append( row )
+	#     tmpFiles = []
+	#     hasFiles = False
+	#     justNames = False
+	#     if justNames:
+	#         _.setPipeData( _.switches.values('Files'), focus() )
+	#     else:
+	#         for file in _.switches.values('Files'):
+	#             if os.path.isfile( file ):
+	#                 hasFiles = True
+	#                 for row in _.getText( file, raw=True, clean=2 ).split('\n'):
+	#                     tmpFiles.append( row )
+	#     if hasFiles:
+	#         _.setPipeData( tmpFiles, focus() )
+	#     if not hasFiles:
+	#         if type( _.appData[__.appReg]['pipe'] ) == bool:
+	#             _.appData[__.appReg]['pipe'] = []
+	#             for row in _.switches.value('Files').split( ',' ):
+	#                 _.appData[__.appReg]['pipe'].append( row )
 
 data = []
 ########################################################################################

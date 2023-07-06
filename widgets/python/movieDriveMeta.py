@@ -84,15 +84,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
-				       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-				       # {},
+					# {},
 	],
 	}
 
@@ -179,9 +179,9 @@ _.postLoad( __file__ )
 # os.system( '"' + do + '"' )
 # _.setPipeData( os.listdir( os.getcwd() ), focus() )
 # _.showLine( item )
-# 	if os.path.isdir( row ):
-# 	if os.path.isfile( row ):
-#	os.path.abspath(path)
+#     if os.path.isdir( row ):
+#     if os.path.isfile( row ):
+#    os.path.abspath(path)
 # __.appRegPipe    ( pipe data registerd focus(__.appReg) set by _.myFileLocations {if imported} , default is None )
 # date = _.friendlyDate( theDate )
 # _.addComma()
@@ -304,7 +304,7 @@ def action():
 			else:
 				imdbID = google( record['movie'][0]+' '+record['movie'][1] )
 				if not imdbID is None:
-					_.pr( imdbID,	 record['movie'][0]+' '+record['movie'][1], _.colorThis( index['imdb'][imdbID], 'green', p=0 ) )
+					_.pr( imdbID,     record['movie'][0]+' '+record['movie'][1], _.colorThis( index['imdb'][imdbID], 'green', p=0 ) )
 
 				else:
 					_.colorThis( record['movie'], 'red' )
@@ -316,8 +316,8 @@ def load():
 	index = _.getTableDB('imdb-search.index')
 	# _.pr(index)
 	# sys.exit()
-	# 			_.pr( index.keys() )
-	# 			_.pr( index['searches'].keys() )
+	#             _.pr( index.keys() )
+	#             _.pr( index['searches'].keys() )
 
 records = []
 index = {}

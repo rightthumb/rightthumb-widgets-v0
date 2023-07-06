@@ -73,15 +73,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
-				       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-				       # {},
+					# {},
 	],
 	}
 
@@ -200,16 +200,16 @@ def action():
 	# load()
 
 	# if not type( _.appData[__.appReg]['pipe'] ) == bool:
-	# 	_.pipeCleaner(0)
-	# 	# _.printVar( _.appData )
-	# 	for i,row in enumerate( _.appData[__.appReg]['pipe'] ):
-	# 		pass
+	#     _.pipeCleaner(0)
+	#     # _.printVar( _.appData )
+	#     for i,row in enumerate( _.appData[__.appReg]['pipe'] ):
+	#         pass
 
 
 
 # def load():
-# 	global data
-# 	data = _.getTable( 'table' )
+#     global data
+#     data = _.getTable( 'table' )
 
 
 # data = []

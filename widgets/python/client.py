@@ -45,7 +45,7 @@ _.switches.register('Decrypt', '-decrypt')
 _.switches.register('Auto', '-auto')
 _.switches.register('Secure', '-secure,-unhackable','password')
 
-_.appInfo=	{
+_.appInfo=    {
 	'file': 'client.py',
 	'description': 'Get data that is pushed',
 	'prerequisite': [],
@@ -67,12 +67,12 @@ _.switches.process()
 # pipeData = ''
 
 # if not sys.stdin.isatty():
-# 	pipeData = sys.stdin.readlines()
-# 	try:
-# 		if pipeData[0][0].isalnum() == False:
-# 			pipeData[0] = pipeData[0][1:]
-# 	except Exception as e:
-# 		pass
+#     pipeData = sys.stdin.readlines()
+#     try:
+#         if pipeData[0][0].isalnum() == False:
+#             pipeData[0] = pipeData[0][1:]
+#     except Exception as e:
+#         pass
 
 ########################################################################################
 encryptionKey = '{3DDED2AD-AFA6-58A3-3D7C-55D93A9AE84E}'
@@ -82,7 +82,7 @@ salt = []
 # def convert_encoding(data, new_coding = 'UTF-8'):
 # def convert_encoding(data, new_coding = 'iso-8859-1'):
 #   if not type(data) == str:
-#   	data = str(data,'iso-8859-1')
+#       data = str(data,'iso-8859-1')
 #   # data = data.encode().decode()
 #   print(cchardet.detect(data))
 #   encoding = cchardet.detect(data)['encoding']
@@ -206,9 +206,9 @@ def unhack():
 		# pu_IP = _.switches.value('IP')
 		# pu_Port = _.switches.value('Port')
 		# if _.switches.isActive('Decrypt'):
-		# 	pu_Decrypt = True
+		#     pu_Decrypt = True
 		# else:
-		# 	pu_Decrypt = False
+		#     pu_Decrypt = False
 		if _.switches.isActive('Auto'):
 			pu_Auto = True
 		else:
@@ -249,9 +249,9 @@ def action():
 	# print()
 	def isEven(x):
 		if x & 1:
-		   return False
+		return False
 		else:
-		   return True
+		return True
 
 
 	# Create a TCP/IP socket
@@ -365,8 +365,8 @@ def action():
 						# pause = input('pause')
 						# newString = ''
 						# for rn in resultNew:
-						# 	print(str(rn,'iso-8859-1'))
-						# 	newString += str(rn,'iso-8859-1')
+						#     print(str(rn,'iso-8859-1'))
+						#     newString += str(rn,'iso-8859-1')
 						# _.saveText(newString,textFilePath2)
 						# result = _str.replaceAll(result,'\n\n','\n')
 						# _.saveText(result,thisID)
@@ -503,17 +503,17 @@ def action():
 
 						# sys.exit()
 						# if _.switches.isActive('Decrypt'):
-						# 	# plaintext = 'test'
-						# 	crypt_obj = Blowfish.new('{3DDED2AD-AFA6-58A3-3D7C-55D93A9AE84E}', Blowfish.MODE_ECB)
-						# 	# ciphertext = crypt_obj.encrypt(pad_string(plaintext))
-						# 	decoded = base64.b64decode(result)
-						# 	decrypt = crypt_obj.decrypt(decoded)
-						# 	result = decrypt
+						#     # plaintext = 'test'
+						#     crypt_obj = Blowfish.new('{3DDED2AD-AFA6-58A3-3D7C-55D93A9AE84E}', Blowfish.MODE_ECB)
+						#     # ciphertext = crypt_obj.encrypt(pad_string(plaintext))
+						#     decoded = base64.b64decode(result)
+						#     decrypt = crypt_obj.decrypt(decoded)
+						#     result = decrypt
 						# result = _str.removeAll(result,' ')
 						# decoded = base64.b64decode(result)
 						# result = decoded
 						# with open(_.switches.value('File'), 'wb') as file:
-						# 	file.write(result)
+						#     file.write(result)
 					elif _.switches.isActive('Message'):
 						print()
 						print()
@@ -540,13 +540,13 @@ def action():
 							sys.exit()
 						pass
 					# elif shouldAsk and False:
-					# 	_.switches.fieldSet('Auto','value',True)
+					#     _.switches.fieldSet('Auto','value',True)
 					else:
 						wait = input('Wait? (y)')
 						if wait == 'n':
 							sys.exit()
 					# else:
-					# 	shouldAsk = True
+					#     shouldAsk = True
 					# sys.exit()
 					break
 		finally:

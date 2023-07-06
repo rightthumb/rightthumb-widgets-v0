@@ -106,15 +106,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-					   # { 'name': 'name', 'abbreviation': 'n' },
-					   # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-					   # 'this',
-					   # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-					   # {},
+					# {},
 	],
 }
 
@@ -353,31 +353,31 @@ def action():
 	if _.switches.isActive('Fields'):
 		fields = '''
 				epoch
-			  ordinal
+			ordinal
 			text-date
 			text-time
 		text-datetime
 				sdate
 				strip
-			   stript
-				 date
-				 time
+			stript
+				date
+				time
 				fdate
 				month
-				 year
-				  woy
-				  dow
-				  ago
-				 days
-				   tz
-				  iso
-		   crypt-date
-		   crypt-time
-		  crypt-epoch
+				year
+				woy
+				dow
+				ago
+				days
+				tz
+				iso
+		crypt-date
+		crypt-time
+		crypt-epoch
 				appID
-		   crypt-pass
-			 stardate
-			  quarter
+		crypt-pass
+			stardate
+			quarter
 		'''
 		fields = fields.replace(' ','')
 		fields = fields.replace('\t','')

@@ -101,7 +101,7 @@ _.appInfo[focus()] = {
 						''
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': 'name', 'abbreviation': 'n' },
 	],
 	}
 
@@ -178,11 +178,11 @@ if __name__ == '__main__':
 def action():
 	pass
 	# if _.switches.isActive('Input'):
-	# 	_.setPipeData( _.getText( _.switches.value('Input') ), focus() )
+	#     _.setPipeData( _.getText( _.switches.value('Input') ), focus() )
 	# if not type( _.appData[__.appReg]['pipe'] ) == bool:
-	# 	_.pr( _.printVar(_.appData) )
-	# 	for i,row in enumerate(_.appData[__.appReg]['pipe']):
-	# 		pass
+	#     _.pr( _.printVar(_.appData) )
+	#     for i,row in enumerate(_.appData[__.appReg]['pipe']):
+	#         pass
 
 
 

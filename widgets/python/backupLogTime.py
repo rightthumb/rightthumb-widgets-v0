@@ -102,11 +102,11 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': 'name', 'abbreviation': 'n' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 
 	}
@@ -183,8 +183,8 @@ _.postLoad( __file__ )
 # os.system('"' + do + '"')
 # _.setPipeData( os.listdir(os.getcwd()), focus() )
 # _.showLine(item)
-# 	if os.path.isdir(row):
-# 	if os.path.isfile(row):
+#     if os.path.isdir(row):
+#     if os.path.isfile(row):
 # __.appRegPipe
 ########################################################################################
 # START
@@ -240,17 +240,17 @@ def buildFields( record ):
 	records.append( thisRecord )
 	pass
 	# if len( result ) == 6:
-	# 	_.pr( result[0], result[1], result[2], result[3], result[4], result[5] )
+	#     _.pr( result[0], result[1], result[2], result[3], result[4], result[5] )
 	# if len( result ) == 5:
-	# 	_.pr( result[0], result[1], result[2], result[3], result[4] )
+	#     _.pr( result[0], result[1], result[2], result[3], result[4] )
 	# if len( result ) == 4:
-	# 	_.pr( result[0], result[1], result[2], result[3] )
+	#     _.pr( result[0], result[1], result[2], result[3] )
 	# if len( result ) == 3:
-	# 	_.pr( result[0], result[1], result[2] )
+	#     _.pr( result[0], result[1], result[2] )
 	# if len( result ) == 2:
-	# 	_.pr( result[0], result[1] )
+	#     _.pr( result[0], result[1] )
 	# if len( result ) == 1:
-	# 	_.pr( result[0] )
+	#     _.pr( result[0] )
 
 
 def action():
@@ -271,9 +271,9 @@ def action():
 	for record in data:
 
 		# try:
-		# 	statusValues[record['status']]+=1
+		#     statusValues[record['status']]+=1
 		# except Exception as e:
-		# 	statusValues[record['status']]=1
+		#     statusValues[record['status']]=1
 			
 		if (record['timestamp']) > (ago):
 			

@@ -83,15 +83,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
-				       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-				       # {},
+					# {},
 	],
 }
 
@@ -246,57 +246,57 @@ def run(rows=[],split=[' '],sLine=None,sResult=None,before=None,after=None):
 
 		# subs = []
 		# for i,row in enumerate( rows ):
-		# 	last = ''
-		# 	for s in split:
-		# 		for x in _.caseUnspecific(row, s):
-		# 			row = row.replace( x, delim )
-		# 		item = row.split(delim) ##########################################################################
-		# 		item.reverse() ##########################################################################
-		# 		for sub in row.split(item):
-		# 			for af in after:
-		# 				if af.lower() in sub.lower():
-		# 					last = af
-		# 			# _.pr(row, last, after)
-		# 			if last in after and not last.lower() in sub.lower():
+		#     last = ''
+		#     for s in split:
+		#         for x in _.caseUnspecific(row, s):
+		#             row = row.replace( x, delim )
+		#         item = row.split(delim) ##########################################################################
+		#         item.reverse() ##########################################################################
+		#         for sub in row.split(item):
+		#             for af in after:
+		#                 if af.lower() in sub.lower():
+		#                     last = af
+		#             # _.pr(row, last, after)
+		#             if last in after and not last.lower() in sub.lower():
 
-		# 				shouldAdd=False
-		# 				if not sResult is None:
-		# 					for x in _.caseUnspecific(sub, sResult):
-		# 						shouldAdd = True
-		# 				else:
-		# 					shouldAdd = True
-		# 				# _.pr( after, shouldAdd, last, sub )
-		# 				if shouldAdd:
-		# 					subject.append( sub )
-		# 					last = ''
-		# 	subject.reverse() ##########################################################################
-		# 	subs.append(subject)
+		#                 shouldAdd=False
+		#                 if not sResult is None:
+		#                     for x in _.caseUnspecific(sub, sResult):
+		#                         shouldAdd = True
+		#                 else:
+		#                     shouldAdd = True
+		#                 # _.pr( after, shouldAdd, last, sub )
+		#                 if shouldAdd:
+		#                     subject.append( sub )
+		#                     last = ''
+		#     subject.reverse() ##########################################################################
+		#     subs.append(subject)
 		# subs.reverse() ##########################################################################
 
 
 		# for i,row in enumerate( rows ):
-		# 	last = ''		
-		# 	for s in split:
-		# 		for x in _.caseUnspecific(row, s):
-		# 			row = row.replace( x, delim )
-		# 		item = row.split(delim)
-		# 		item.reverse() ##########################################################################
-		# 		for sub in item:
-		# 			for af in before:
-		# 				if af.lower() in sub.lower():
-		# 					last = af
+		#     last = ''        
+		#     for s in split:
+		#         for x in _.caseUnspecific(row, s):
+		#             row = row.replace( x, delim )
+		#         item = row.split(delim)
+		#         item.reverse() ##########################################################################
+		#         for sub in item:
+		#             for af in before:
+		#                 if af.lower() in sub.lower():
+		#                     last = af
 				
-		# 		if last in before:
-		# 			shouldAdd=False
-		# 			if not sResult is None:
-		# 				for x in _.caseUnspecific(sub, sResult):
-		# 					shouldAdd = True
-		# 			else:
-		# 				shouldAdd = True
-		# 			if shouldAdd:
-		# 				subject.append( sub )
-		# 				last = ''
-		# 		subject.reverse() ##########################################################################
+		#         if last in before:
+		#             shouldAdd=False
+		#             if not sResult is None:
+		#                 for x in _.caseUnspecific(sub, sResult):
+		#                     shouldAdd = True
+		#             else:
+		#                 shouldAdd = True
+		#             if shouldAdd:
+		#                 subject.append( sub )
+		#                 last = ''
+		#         subject.reverse() ##########################################################################
 
 		
 

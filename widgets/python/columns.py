@@ -51,7 +51,7 @@ __.pre_error = False
 _.appInfo[focus()] = {
 	'file': 'columns.py',
 	'liveAppName': __.thisApp( __file__ ),
- 	'description': 'pipe list to columns',
+	'description': 'pipe list to columns',
 	'categories': [
 						'tool',
 						'columns',
@@ -76,15 +76,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
-				       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-				       # {},
+					# {},
 	],
 }
 

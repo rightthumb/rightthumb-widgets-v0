@@ -251,9 +251,9 @@ td.path = techDrive
 	# fileNameHost = home + slash+'.ncc1701'
 	# fileName = fileName.replace( slashes['windows'], slash )
 	# if not os.path.isfile( fileNameHost ):
-	# 	open(fileNameHost,'w', encoding='utf-8').write(computername)
+	#     open(fileNameHost,'w', encoding='utf-8').write(computername)
 	# if not os.path.isfile( fileName ):
-	# 	open(fileName,'w', encoding='utf-8').write(home)
+	#     open(fileName,'w', encoding='utf-8').write(home)
 	# techDrive = open( fileName, 'r' ).read()
 def ddDim(xyz):
 	global dDim
@@ -741,7 +741,7 @@ def create_default_profile():
 	# global hostDefault
 	# global myBookmarks
 	# if os.path.isdir( hostDefault ):
-	# 	for file in os.listdir( hostDefault + slash+'bookmarks' ):
+	#     for file in os.listdir( hostDefault + slash+'bookmarks' ):
 		# hostDefault =  'hosts' + slash+'{D599DDFE-28B1-4CBD-B300-78DB4BCA7DF5}'
 		# myBookmarks = myHome + slash+'bookmarks'
 def popFile( path ):
@@ -987,7 +987,7 @@ def dir_check_create( folder ):
 		techDrive = techDrive.replace( slashes['windows'], slash )
 		techDrive = techDrive.replace( ':', '' )
 	# if techDrive in folder:
-	# 	folder = techDrive+dDim+slash+folder
+	#     folder = techDrive+dDim+slash+folder
 	# _.pr(folder)
 	# _.pr( folder )
 	if os.path.isdir( folder ):
@@ -1014,7 +1014,7 @@ def dir_check_create( folder ):
 		f = slash.join( newParts )
 		f = t+slash+f
 		# if not techDrive in f:
-		# 	f = techDrive+dDim+slash+f
+		#     f = techDrive+dDim+slash+f
 		# _.pr(f)
 		exist = os.path.isdir( f )
 		# _.pr( 'exist:', exist, f, '\r\n' )
@@ -1181,7 +1181,7 @@ def sanitizeFolder( id_path ):
 		id_path = id_path.replace( os.environ['HOME'], folderID_profile )
 	
 	id_path = id_path.replace( thisHost, folderID_host )
-	id_path = id_path.replace( slash, '/' )	
+	id_path = id_path.replace( slash, '/' )    
 	return id_path
 def resolveFolderIDs( id_path ):
 	if id_path is None:
@@ -1203,9 +1203,9 @@ def resolveFolderIDs( id_path ):
 	id_path = id_path.replace( folderID_host, thisHost )
 	# id_path = id_path.replace( folderID_tech, techFolder )
 	# if __.isWin:
-	# 	id_path = id_path.replace( os.environ['USERPROFILE'], folderID_profile )
+	#     id_path = id_path.replace( os.environ['USERPROFILE'], folderID_profile )
 	# elif not __.isWin:
-	# 	id_path = id_path.replace( os.environ['HOME'], folderID_profile )
+	#     id_path = id_path.replace( os.environ['HOME'], folderID_profile )
 	
 	# id_path = id_path.replace( folderID_host, thisHost )
 	# if not __.isWin:

@@ -320,17 +320,17 @@ def action():
 		path = folder + _v.slash + item
 		if os.path.isfile(item) == True:
 			# _.pr(item)
-			# threadAdd(False,1.0, test, ({'name': item}))	# fail
-			# threadAdd(False,1.0, test, (('test')))		# fail
-			# threadAdd(False,1.0, test, ('test'))			# fail
+			# threadAdd(False,1.0, test, ({'name': item}))    # fail
+			# threadAdd(False,1.0, test, (('test')))        # fail
+			# threadAdd(False,1.0, test, ('test'))            # fail
 
-			# threadAdd(False,1.0, test, ['test'])			# WORKS
-			# threadAdd(False,1.0, test3, ('test','two'))	# WORKS
-			# threadAdd(False,1.0, test, [{'name': item}])	# WORKS
-			# threadAdd(False,1.0, test2, ['test','two'])	# WORKS
-			# threadAdd(False,1.0, test3, ['test','two'])	# WORKS
+			# threadAdd(False,1.0, test, ['test'])            # WORKS
+			# threadAdd(False,1.0, test3, ('test','two'))    # WORKS
+			# threadAdd(False,1.0, test, [{'name': item}])    # WORKS
+			# threadAdd(False,1.0, test2, ['test','two'])    # WORKS
+			# threadAdd(False,1.0, test3, ['test','two'])    # WORKS
 			i+=1
-			threadAdd2(__.queueID,getFileInfo4, [item])	# WORKS
+			threadAdd2(__.queueID,getFileInfo4, [item])    # WORKS
 	_.pr('size',i)
 	__.queueLoaded = True
 
@@ -347,14 +347,14 @@ def complete():
 
 
 # _.appQueueDefault = {
-# 	'queueID': 1,
-# 	'queue': [],
-# 	'queueCount': 0,
-# 	'queueLoaded': False,
-# 	'queueCompleteFunc': '',
-# 	'queueMax': 20,
-# 	'queueMonitorCount': 0,
-# 	}
+#     'queueID': 1,
+#     'queue': [],
+#     'queueCount': 0,
+#     'queueLoaded': False,
+#     'queueCompleteFunc': '',
+#     'queueMax': 20,
+#     'queueMonitorCount': 0,
+#     }
 
 __.queueID = 1
 __.queue = []

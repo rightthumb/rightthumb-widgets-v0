@@ -107,11 +107,11 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-					   # { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': 'name', 'abbreviation': 'n' },
 	],
 	'aliases': [
-					   # 'this',
-					   # 'app',
+					# 'this',
+					# 'app',
 	],
 
 	}
@@ -402,11 +402,11 @@ class DataBank:
 
 
 # {
-# 	'case': 'lower',
-# 	'': ',(/&'+_v.slash,
-# 	'chars': '.-0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ',
-# 	'startswith': '.',
-# 	'lengths': [3,4],
+#     'case': 'lower',
+#     '': ',(/&'+_v.slash,
+#     'chars': '.-0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ',
+#     'startswith': '.',
+#     'lengths': [3,4],
 # },
 
 
@@ -557,7 +557,7 @@ def process( file ):
 				for fxyz in fxy.split('-'):
 					rec.append( fxyz )
 				cacheTables.append( rec )
-				 
+				
 
 
 

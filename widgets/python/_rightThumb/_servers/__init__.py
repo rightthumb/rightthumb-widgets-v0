@@ -83,15 +83,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
-				       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-				       # {},
+					# {},
 	],
 	}
 
@@ -178,9 +178,9 @@ _.postLoad( __file__ )
 # os.system( '"' + do + '"' )
 # _.setPipeData( os.listdir( os.getcwd() ), focus() )
 # _.showLine( item )
-# 	if os.path.isdir( row ):
-# 	if os.path.isfile( row ):
-#	os.path.abspath(path)
+#     if os.path.isdir( row ):
+#     if os.path.isfile( row ):
+#    os.path.abspath(path)
 # __.appRegPipe    ( pipe data registerd focus(__.appReg) set by _.myFileLocations {if imported} , default is None )
 # date = _.friendlyDate( theDate )
 # _.addComma()
@@ -198,17 +198,17 @@ def action():
 	# load()
 
 	# if not type( _.appData[__.appReg]['pipe'] ) == bool:
-	# 	_.pipeCleaner(0)
-	# 	# _.printVar( _.appData )
-	# 	for i,row in enumerate( _.appData[__.appReg]['pipe'] ):
-	# 		pass
+	#     _.pipeCleaner(0)
+	#     # _.printVar( _.appData )
+	#     for i,row in enumerate( _.appData[__.appReg]['pipe'] ):
+	#         pass
 
 
 
 
 # def load():
-# 	global data
-# 	data = _.getTable( 'table' )
+#     global data
+#     data = _.getTable( 'table' )
 
 
 # data = []
@@ -218,7 +218,7 @@ def action():
 
 
 """
-       ** originaly in  ftp.py **
+	** originaly in  ftp.py **
 
 Google:
 	python ftp upload to folder
@@ -255,40 +255,40 @@ NEXT STEP:
 
 
 
-    epyi servers -file _sftp
-    epyi servers -file _php_json
-    epyi servers -file _php_files
+	epyi servers -file _sftp
+	epyi servers -file _php_json
+	epyi servers -file _php_files
 
 
-    ftp
-        Google: python ftp upload to folder
-            https://stackoverflow.com/questions/5663787/upload-folders-from-local-system-to-ftp-using-python-script
+	ftp
+		Google: python ftp upload to folder
+			https://stackoverflow.com/questions/5663787/upload-folders-from-local-system-to-ftp-using-python-script
 
-    sftp
-        Google: sftp python
-            https://pypi.org/project/pysftp/
+	sftp
+		Google: sftp python
+			https://pypi.org/project/pysftp/
 
-    tftp
-        Google: python tftp client example
-            https://github.com/olafurjohannsson/tftp-client
+	tftp
+		Google: python tftp client example
+			https://github.com/olafurjohannsson/tftp-client
 
-        Google: python tftp server example
-            client and server
-                https://pypi.org/project/ptftpd/
-    
-    scp
-        Google: python scp example
-            https://pypi.org/project/scp/
+		Google: python tftp server example
+			client and server
+				https://pypi.org/project/ptftpd/
+	
+	scp
+		Google: python scp example
+			https://pypi.org/project/scp/
 
 
-    google drive
-        Google: python google drive
-            API:
-                https://developers.google.com/drive/api/v3/quickstart/python
-                https://developers.google.com/drive/activity/v2/quickstart/python
-                https://www.thepythoncode.com/article/using-google-drive--api-in-python
-            Other:
-                https://pypi.org/project/PyDrive/
+	google drive
+		Google: python google drive
+			API:
+				https://developers.google.com/drive/api/v3/quickstart/python
+				https://developers.google.com/drive/activity/v2/quickstart/python
+				https://www.thepythoncode.com/article/using-google-drive--api-in-python
+			Other:
+				https://pypi.org/project/PyDrive/
 
 """
 

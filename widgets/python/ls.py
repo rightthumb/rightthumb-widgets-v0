@@ -187,11 +187,11 @@ _.appInfo[focus()] = {
 						{ 'name': 'dps', 'abbreviation': 'sdate', 'sort': 'sdate_raw' },
 						{ 'name': 'header', 'abbreviation': 'h' },
 						# { 'name': 'hash', 'abbreviation': '?', 'sort': '' },
-					   
+					
 	],
 	'aliases': [
-					   # 'this',
-					   # 'app',
+					# 'this',
+					# 'app',
 	],
 
 	}
@@ -1203,9 +1203,9 @@ def action():
 			saveFile = {
 								'argv': sys.argv,
 								# 'switches': {
-								# 	'active': [],
-								# 	'isActive': {},
-								# 	'values': {},
+								#     'active': [],
+								#     'isActive': {},
+								#     'values': {},
 								# },
 								'folder': folder,
 								'folders': folderCount,

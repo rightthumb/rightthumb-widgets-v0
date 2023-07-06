@@ -537,7 +537,7 @@ def identify():
 				cnt += 1
 				t = record['type']
 				# if t == 'Phone':
-				# 	t = 'Mobile'
+				#     t = 'Mobile'
 				try:
 					noGroup[t].append( record )
 				except Exception as e:

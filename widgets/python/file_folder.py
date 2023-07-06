@@ -74,11 +74,11 @@ _.appInfo[focus()] = {
 						''
 	],
 	'columns': [
-					   # { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': 'name', 'abbreviation': 'n' },
 	],
 	'aliases': [
-					   # 'this',
-					   # 'app',
+					# 'this',
+					# 'app',
 	],
 
 	}
@@ -234,16 +234,16 @@ def action():
 				for f in _.tables.returnSorted( 'links', 'a.sort_by_field', links ):
 					_.colorThis( [ '\t',f['label'] ], 'yellow' )
 
-			files=_.tables.returnSorted( 'files', 'a.sort_by_field', files )	
+			files=_.tables.returnSorted( 'files', 'a.sort_by_field', files )    
 			for f in files: _copy_this.append(f['label'])
 			_.pr()
 			_.colorThis( 'Files:', 'green' )
 
 			# for f in files:
-			# 	if os.path.islink(f['label']):
-			# 		_.colorThis( [ '\t',f['label'] ], 'yellow' )
-			# 	else:
-			# 		_.colorThis( [ '\t',f['label'] ], 'cyan' )
+			#     if os.path.islink(f['label']):
+			#         _.colorThis( [ '\t',f['label'] ], 'yellow' )
+			#     else:
+			#         _.colorThis( [ '\t',f['label'] ], 'cyan' )
 
 
 

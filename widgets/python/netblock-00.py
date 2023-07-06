@@ -51,9 +51,9 @@ import _rightThumb._string as _str
 	# _inDic.imp.testOne( 'austen' )
 
 
-# 	fileBackup.switch( 'Input', filename )
-# 	fileBackup.switch( 'Flag', 'pre replaceText' )
-# 	recoveryFile = fileBackup.do( 'action' )
+#     fileBackup.switch( 'Input', filename )
+#     fileBackup.switch( 'Flag', 'pre replaceText' )
+#     recoveryFile = fileBackup.do( 'action' )
 ##################################################
 from lxml import html
 import requests
@@ -75,7 +75,7 @@ def appSwitches():
 
 _.appInfo[focus()] = {
 	'file': 'netblock.py',
- 	'description': 'lookup netblock owner',
+	'description': 'lookup netblock owner',
 	'categories': [
 						'DEFAULT'
 				],
@@ -237,14 +237,14 @@ def process( ip ):
 
 
 		# header = {
-		# 			'q': 'requests+language:python'
+		#             'q': 'requests+language:python'
 		# }
 		# page = requests.get( url, params=header )
 		# # thePath = _v.stmp + _v.slash + 'netblock_' + str( time.time() ) + '.txt'
 		# # _.saveText( page.content, thePath )
 		# # dump = _.getText( thePath, raw=True, clean=2 ).split('\n')
 		# for line in page.content.decode('utf-8').split('\n'):
-		# 	_.printBold( line, 'green' )
+		#     _.printBold( line, 'green' )
 		# # _.printBold( thePath, 'red' )
 		# sys.exit()
 	else:
@@ -313,7 +313,7 @@ def process( ip ):
 			data['co'] = resolveCountry( data['country'] )
 			# try:
 			# except Exception as e:
-			# 	data['co'] = ''
+			#     data['co'] = ''
 			if not type( data ) == dict:
 				_.pr()
 				_.pr( 'Error: BAD CODE !!!!!!!!!!!!' )
@@ -330,12 +330,12 @@ def process( ip ):
 		return False
 		# _.printFields( eval( page.content ) )
 	# for row in  li:
-	# 	span = tables.cssselect('span')
-	# 	_.pr( cleanupString(span[0]), '\t', cleanupString(span[1]) )
-	# 	_.pr(x.text_content())
+	#     span = tables.cssselect('span')
+	#     _.pr( cleanupString(span[0]), '\t', cleanupString(span[1]) )
+	#     _.pr(x.text_content())
 
 	# for x in dir( page ):
-	# 	_.pr(x)
+	#     _.pr(x)
 	# _.pr( tree.body )
 	# _.pr( tree.text_content() )
 	# tables = tree.cssselect('.r')
@@ -388,7 +388,7 @@ def action():
 						errors.append( row )
 					# try:
 					# except Exception as e:
-					# 	pass
+					#     pass
 
 		if _.switches.isActive('JSON'):
 			data = cleanData( data )

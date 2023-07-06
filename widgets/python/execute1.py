@@ -21,7 +21,7 @@ import _rightThumb._string as _str
 
 _.switches.register('NoCount', '--c')
 
-_.appInfo=	{
+_.appInfo=    {
 	'file': 'execute.py',
 	'description': 'Execute pipe data',
 	'prerequisite': [],

@@ -174,7 +174,7 @@ def action():
 		show = False
 		for f in file:
 			f = f.replace('\n','')
-			if 'Session:' in f:				
+			if 'Session:' in f:                
 				result.append(f)
 			if '</pre>' in f:
 				show = False

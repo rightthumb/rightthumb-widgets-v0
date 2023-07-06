@@ -45,11 +45,11 @@ class TheChild:
 				pass
 
 		# if registration['isIF']:
-		# 	print()
-		# 	for x in self.auto:
-		# 		print( x )
-		# 	print()
-		# 	return True
+		#     print()
+		#     for x in self.auto:
+		#         print( x )
+		#     print()
+		#     return True
 		_matrix.app.algorithmResult( algorithm, result=None )
 
 

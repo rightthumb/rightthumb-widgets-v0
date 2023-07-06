@@ -45,7 +45,7 @@ class Compute(object):
 		(Earthdate, Stardate)
 		"""
 		# with open("sdconfig.json") as f:
-		# 	return json.load(f)
+		#     return json.load(f)
 
 	def ask_integer(message: str, range, error_message: str = ""):
 		"""
@@ -99,13 +99,13 @@ class Compute(object):
 			elif len(pp) == 16 and pp.count('-') == 2 and pp.count(':') == 1:
 				res_date = datetime.datetime.strptime( pp , "%Y-%m-%d %H:%M")
 			# elif len(pp) == 21 and pp.count('-') == 4:
-			#  	res_date = datetime.datetime.strptime(  pp  ,  '%Y-%m-%d'  )
+			#      res_date = datetime.datetime.strptime(  pp  ,  '%Y-%m-%d'  )
 			elif len(pp) == 10 and pp.count('-') == 2:
-			 	res_date = datetime.datetime.strptime(  pp  ,  '%Y-%m-%d'  )
+				res_date = datetime.datetime.strptime(  pp  ,  '%Y-%m-%d'  )
 
-			 # _.pr(res_date)
-			 # sys.exit()
-			 # datetime.datetime.strptime('0001-01-01T00:00:00', "%Y-%m-%dT%H:%M:%S")
+			# _.pr(res_date)
+			# sys.exit()
+			# datetime.datetime.strptime('0001-01-01T00:00:00', "%Y-%m-%dT%H:%M:%S")
 
 
 
@@ -141,15 +141,15 @@ class Compute(object):
 
 		return float(format(((Compute.config()["stardate"] +
 								(1000*(t.tm_year - Compute.config()["earthdate"]))) +
-							  ((1000/((Compute.leapyr(t.tm_year))*1440.0))*(((
+							((1000/((Compute.leapyr(t.tm_year))*1440.0))*(((
 									t.tm_yday - 1.0)*1440.0) +
 								(t.tm_hour*60.0) + t.tm_min))), '.2f'))
 
 		# return format(((Compute.config()["stardate"] +
-		# 				(1000*(y - Compute.config()["earthdate"]))) +
-		# 			  ((1000/((Compute.leapyr(y))*1440.0))*(((
-		# 					d - 1.0)*1440.0) +
-		# 				(h*60.0) + m))), '.2f')
+		#                 (1000*(y - Compute.config()["earthdate"]))) +
+		#               ((1000/((Compute.leapyr(y))*1440.0))*(((
+		#                     d - 1.0)*1440.0) +
+		#                 (h*60.0) + m))), '.2f')
 
 	def sdtranslate(sd):
 
@@ -164,7 +164,7 @@ class Compute(object):
 
 		dlist = []
 		ed_year = int(((sd - Compute.config()["stardate"]) // 1000) +
-					  Compute.config()["earthdate"])
+					Compute.config()["earthdate"])
 		ey = str(ed_year)
 		if int(ed_year) < 1000:
 			ey = str(ed_year)
@@ -176,7 +176,7 @@ class Compute(object):
 				ey = '000'+ey
 		dlist.append(ey)
 		ed_time = (((sd - Compute.config()["stardate"]) % 1000) /
-				   (1000 / (1440*Compute.leapyr(ed_year))))
+				(1000 / (1440*Compute.leapyr(ed_year))))
 		ed_day = (ed_time//1440)+1
 		dlist.append(int(ed_day))
 		ed_hour = (ed_time-((ed_day-1)*1440))//60

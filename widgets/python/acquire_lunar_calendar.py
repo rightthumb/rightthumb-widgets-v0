@@ -46,7 +46,7 @@ __.sort_name_trigger_override = [  ['']  ]
 _.appInfo[focus()] = {
 	'file': 'acquire_lunar_calendar.py',
 	'liveAppName': __.thisApp( __file__ ),
- 	'description': 'Extract lunar calendar from online resources',
+	'description': 'Extract lunar calendar from online resources',
 	'categories': [
 						'scrape',
 						'lunar',
@@ -67,12 +67,12 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
-				       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 
 	}
@@ -160,17 +160,17 @@ def processYear( year ):
 	_.printVarSimple( payload )
 
 	# try:
-	# 	_browser.imp.project.open( url )
-	# 	_browser.imp.project.wait()
-	# 	_browser.imp.project.jqueryInject()
-	# 	_browser.imp.project.inject( code )
+	#     _browser.imp.project.open( url )
+	#     _browser.imp.project.wait()
+	#     _browser.imp.project.jqueryInject()
+	#     _browser.imp.project.inject( code )
 	# except Exception as e:
-	# 	error = True
+	#     error = True
 	# payload = []
 	# try:
-	# 	payload = _browser.imp.project.injectReturn( 'window.hackData.process();' )
+	#     payload = _browser.imp.project.injectReturn( 'window.hackData.process();' )
 	# except Exception as e:
-	# 	error = True
+	#     error = True
 		
 
 	if type(payload) == list:

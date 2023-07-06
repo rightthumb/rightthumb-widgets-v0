@@ -70,12 +70,12 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
-				       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 
 	}
@@ -285,7 +285,7 @@ def processCompareStatsD( database, record ):
 			if thisDice > maxDice:
 				maxDice = thisDice
 					
-	 
+	
 	dice[record['type']][record['level']][database] += maxDice
 	diceSum[record['type']][database] += maxDice
 

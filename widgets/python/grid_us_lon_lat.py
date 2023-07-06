@@ -84,12 +84,12 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
-				       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 
 	}
@@ -177,9 +177,9 @@ _.postLoad( __file__ )
 # os.system( '"' + do + '"' )
 # _.setPipeData( os.listdir( os.getcwd() ), focus() )
 # _.showLine( item )
-# 	if os.path.isdir( row ):
-# 	if os.path.isfile( row ):
-#	os.path.abspath(path)
+#     if os.path.isdir( row ):
+#     if os.path.isfile( row ):
+#    os.path.abspath(path)
 # __.appRegPipe    ( pipe data registerd focus(__.appReg) set by _.myFileLocations {if imported} , default is None )
 # date = _.friendlyDate( theDate )
 # _.addComma()
@@ -279,49 +279,49 @@ def findDistance( lon, lat, distance, what='lat' ):
 
 
 	# while test < distance:
-	# 	coordinates['one'][what] += 1
+	#     coordinates['one'][what] += 1
 
-	# 	result =  geopy.distance.vincenty( (  coordinates['one']['lon'], coordinates['one']['lat']  ) , (  coordinates['two']['lon'], coordinates['two']['lat']  )  ).km
-	# 	test = km2US(result)
-	# 	_.pr( test )
+	#     result =  geopy.distance.vincenty( (  coordinates['one']['lon'], coordinates['one']['lat']  ) , (  coordinates['two']['lon'], coordinates['two']['lat']  )  ).km
+	#     test = km2US(result)
+	#     _.pr( test )
 
 
 	# if test == distance:
-	# 	return coordinates['two']
+	#     return coordinates['two']
 
 	# _.pr()
 
 	# while test > distance:
-	# 	coordinates['one'][what] -= .001
+	#     coordinates['one'][what] -= .001
 
-	# 	result =  geopy.distance.vincenty( (  coordinates['one']['lon'], coordinates['one']['lat']  ) , (  coordinates['two']['lon'], coordinates['two']['lat']  )  ).km
-	# 	test = km2US(result)
-	# 	_.pr( test )
+	#     result =  geopy.distance.vincenty( (  coordinates['one']['lon'], coordinates['one']['lat']  ) , (  coordinates['two']['lon'], coordinates['two']['lat']  )  ).km
+	#     test = km2US(result)
+	#     _.pr( test )
 
 	# if test == distance:
-	# 	return coordinates['two']
+	#     return coordinates['two']
 
 	# _.pr()
 
 	# while test < distance:
-	# 	coordinates['one'][what] += .0001
+	#     coordinates['one'][what] += .0001
 
-	# 	result =  geopy.distance.vincenty( (  coordinates['one']['lon'], coordinates['one']['lat']  ) , (  coordinates['two']['lon'], coordinates['two']['lat']  )  ).km
-	# 	test = km2US(result)
-	# 	_.pr( test )
+	#     result =  geopy.distance.vincenty( (  coordinates['one']['lon'], coordinates['one']['lat']  ) , (  coordinates['two']['lon'], coordinates['two']['lat']  )  ).km
+	#     test = km2US(result)
+	#     _.pr( test )
 
 	# sys.exit()
 	# if test == distance:
-	# 	return coordinates['two']
+	#     return coordinates['two']
 
 	# _.pr()
 
 	# while not test > distance:
-	# 	coordinates['one'][what] += .00001
+	#     coordinates['one'][what] += .00001
 
-	# 	result =  geopy.distance.vincenty( (  coordinates['one']['lon'], coordinates['one']['lat']  ) , (  coordinates['two']['lon'], coordinates['two']['lat']  )  ).km
-	# 	test = km2US(result)
-	# 	_.pr( test )
+	#     result =  geopy.distance.vincenty( (  coordinates['one']['lon'], coordinates['one']['lat']  ) , (  coordinates['two']['lon'], coordinates['two']['lat']  )  ).km
+	#     test = km2US(result)
+	#     _.pr( test )
 
 	# print
 
@@ -360,7 +360,7 @@ def load():
 	global miles
 	global base
 	miles = int( _.switches.value('Miles') )
-	base = 	{
+	base =     {
 						'start' : {
 							'lon': 25.4492618,
 							'lat': -124.701721,

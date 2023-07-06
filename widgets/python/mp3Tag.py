@@ -25,18 +25,18 @@ del mp3.album
 """
 Allowed tags:
 
-    - artist;
-    - album;
-    - song;
-    - track;
-    - comment;
-    - year;
-    - genre;
-    - band (version 2.x);
-    - composer (version 2.x);
-    - copyright (version 2.x);
-    - url (version 2.x);
-    - publisher (version 2.x).
+	- artist;
+	- album;
+	- song;
+	- track;
+	- comment;
+	- year;
+	- genre;
+	- band (version 2.x);
+	- composer (version 2.x);
+	- copyright (version 2.x);
+	- url (version 2.x);
+	- publisher (version 2.x).
 """
 
 # Get all tags.

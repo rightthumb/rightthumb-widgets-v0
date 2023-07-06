@@ -72,11 +72,11 @@ _.appInfo[focus()] = {
 						''
 	],
 	'columns': [
-					   # { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': 'name', 'abbreviation': 'n' },
 	],
 	'aliases': [
-					   # 'this',
-					   # 'app',
+					# 'this',
+					# 'app',
 	],
 
 	}
@@ -2118,8 +2118,8 @@ class Validator:
 										runTHIS = True
 
 										# if self.nestable['close'] == aID:
-										# 	if item == 'open':
-										# 		runTHIS = False
+										#     if item == 'open':
+										#         runTHIS = False
 
 										if runTHIS:
 											if not self.action[aID][item]['label'] is None:
@@ -2170,9 +2170,9 @@ class Validator:
 				elif self.nestable['close'] == aID:
 
 					# if not self.action[aID]['close']['label'] is None and self.action[aID]['close']['label'][0] == char:
-					# 	isValid = True
+					#     isValid = True
 					# else:
-					# 	isValid = False
+					#     isValid = False
 
 
 					isValid = True
@@ -4256,7 +4256,7 @@ class Validator:
 
 
 							loopCount+=1
-							 
+							
 							testID = self.rls[rID]['testID'][aID]
 
 							# _.colorThis( [ self.rls[rID]['description'], testID ], 'Color.yellow' )
@@ -6101,7 +6101,7 @@ class simpleCode:
 		self.build()
 		return self.segments
 		# for x in self.segments:
-		# 	print(x)
+		#     print(x)
 
 
 
@@ -6236,7 +6236,7 @@ class simpleCode:
 			# pa = self.segments[ pax['i'] ]
 			o = pax['i']
 			# if ip:
-			# 	print('o:',o)
+			#     print('o:',o)
 			probable = None
 			probableID = None
 			if not pax['status']:
@@ -6246,10 +6246,10 @@ class simpleCode:
 						probable = seg['c']
 						probableID = i
 						# if ip:
-						# 	print('i:',i)
+						#     print('i:',i)
 					if not probable is None and seg['c'] < o and seg['c'] > probable and 'alpha' in seg['l']:
 						# if ip:
-						# 	print('ii:',i)
+						#     print('ii:',i)
 						probable = seg['c']
 						probableID = i
 
@@ -6275,14 +6275,14 @@ class simpleCode:
 					self.segments[probableID]['status'] = 0
 
 		# for i,seg in enumerate(self.segments):
-		# 	self.segments[i]['i'] = i
+		#     self.segments[i]['i'] = i
 
 		for i,seg in enumerate(self.segments):
 			# print(seg)
 			if seg['status']:
 				self.children(i)
 		# for i,seg in enumerate(self.segments):
-		# 	print(seg)
+		#     print(seg)
 
 		return None
 	def children( self, i, p=None ):

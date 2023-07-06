@@ -50,7 +50,7 @@ __.isRequired_Pipe_or_File = False
 _.appInfo[focus()] = {
 	'file': 'bm.py',
 	'liveAppName': __.thisApp( __file__ ),
- 	'description': 'Bookmark tool',
+	'description': 'Bookmark tool',
 	'categories': [
 						'bm',
 						'bookmark',
@@ -71,11 +71,11 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': 'name', 'abbreviation': 'n' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 
 	}
@@ -213,12 +213,12 @@ def action():
 
 
 # def load():
-# 	global index
-# 	if _.switches.isActive('Index'):
-# 		_bm = _.regImp( __.appReg, 'bookmarks' )
-# 		index = _bm.imp.index()
-# 	else:
-# 		index = _.getTable( 'bookmarks_index.json' )
+#     global index
+#     if _.switches.isActive('Index'):
+#         _bm = _.regImp( __.appReg, 'bookmarks' )
+#         index = _bm.imp.index()
+#     else:
+#         index = _.getTable( 'bookmarks_index.json' )
 
 index = []
 ########################################################################################

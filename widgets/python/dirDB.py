@@ -60,7 +60,7 @@ def appSwitches():
 	_.switches.register('Clean', '-clean')
 	_.switches.register('Test', '-test')
 	_.switches.register('Prefix', '-prefix', 'ADD THIS LATER')
-	_.switches.register('Totals', '-totals')
+	_.switches.register('Totals', '-totals','t <-- Just +')
 	_.switches.register('IncludeBackups', '--bk,--backup,--backups')
 	# _.switches.register('Save-Results', '-save')
 
@@ -241,14 +241,14 @@ def formatSize(size):
 	elif size > 1048576 and size < 1073741824:
 		num = round(size / 1048576, 2)
 		result = str(num) + ' MB'
-	elif size > 1073741824 and size < 1099511627776	:
+	elif size > 1073741824 and size < 1099511627776    :
 		num = round(size / 1073741824, 2)
 		result = str(num) + ' GB'
 	else:
 		num = round(size / 1099511627776, 2)
 		result = str(num) + ' TB'
 	# if size < 1:
-	# 	result = ''
+	#     result = ''
 	return result
 
 def unFormatSize(size):
@@ -257,7 +257,7 @@ def unFormatSize(size):
 	factor = ''
 
 	if 'TB' in size:
-		factor = 1099511627776	
+		factor = 1099511627776    
 	elif 'GB' in size:
 		factor = 1073741824
 	elif 'MB' in size:
@@ -698,9 +698,9 @@ def action():
 
 			key = str(row['bytes'])+'_'+str(row['date_modified_raw'])
 			# if not key in spentKeys:
-			# 	spentKeys.append(key)
-			# 	# theKeySort.append({  'key': key, 'orderby':   _.fields.padZeros( 'bytes', 'val', row['bytes'] )  })
-			# 	theKeySort.append({  'key': key, 'orderby':   row['bytes']  })
+			#     spentKeys.append(key)
+			#     # theKeySort.append({  'key': key, 'orderby':   _.fields.padZeros( 'bytes', 'val', row['bytes'] )  })
+			#     theKeySort.append({  'key': key, 'orderby':   row['bytes']  })
 
 			try:
 				duplicates[ key ].append( row )
@@ -823,6 +823,10 @@ def action():
 			if os.path.isfile(dbFile):
 				try: do(dbFile)
 				except: pass
+		if _.switches.isActive('Totals') and 't' in _.switches.value('Totals'):
+			_.pr('Files:',_.addComma(__.dirDB_Totals_file))
+			_.pr('Size:',_.formatSize(__.dirDB_Totals_bytes))
+			return None
 		if _.switches.isActive('Save'):
 			if _.switches.value('Save'):
 				saveAs = _.switches.values('Save')[0]
@@ -841,6 +845,8 @@ def action():
 		if not _.switches.isActive('NoCount'):
 			_.pr('Total:',_.addComma(_.v.totals),c='cyan')
 theData=[]
+__.dirDB_Totals_bytes=0
+__.dirDB_Totals_file=0
 def do(databaseFile):
 	global theData
 	# _.pr(databaseFile)
@@ -856,6 +862,22 @@ def do(databaseFile):
 	# sql = "SELECT * FROM files WHERE bytes < 101 and bytes > 49  ORDER BY bytes"
 	# sql = "SELECT bytes,path FROM files WHERE bytes < 101 and bytes > 49  ORDER BY bytes"
 	# sql = "SELECT bytes,path FROM files WHERE bytes < 10000000 and bytes > 200  ORDER BY bytes"
+	if _.switches.isActive('Totals') and 't' in _.switches.value('Totals'):
+		searches=[]
+		for plus in _.switches.values('Plus'):
+			searches.append(' path like "%'+plus+'%" ')
+		search='AND'.join(searches)
+
+		sql= 'SELECT COUNT(*) AS row_count, SUM(bytes) AS total_bytes FROM files WHERE '+search+';'
+		c.execute(sql)
+		records = c.fetchall()
+
+
+		__.dirDB_Totals_file+=records[0][0]
+		__.dirDB_Totals_bytes+=records[0][1]
+		# print(sql); sys.exit();
+		return None
+	
 	if _.switches.isActive('Plus') and not _.switches.isActive('Folder'):
 		pv = _.switches.value('Plus')
 		pvX = []
@@ -1110,7 +1132,7 @@ def action2(databaseFile):
 	# _.pr(names)
 
 	# for n in names:
-	# 	_.pr(n)
+	#     _.pr(n)
 	# sys.exit()
 	return names
 

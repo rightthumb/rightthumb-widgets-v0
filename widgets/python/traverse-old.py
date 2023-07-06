@@ -117,15 +117,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
-				       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-				       # {},
+					# {},
 	],
 }
 
@@ -359,13 +359,13 @@ def start(thisFILE):
 
 							# bld = 'record'
 							# for st in x.split('.'):
-							# 	bld+='["'+st+'"]'
+							#     bld+='["'+st+'"]'
 							# _.pr( bld )
 							# # _.pr( _.colorThis( x+':', 'yellow', p=0 ), _.colorThis( eval(bld), 'green', p=0 ) )
 							# try:
-							# 	display.append({ 'field': x, 'value': str(eval(bld)) })
+							#     display.append({ 'field': x, 'value': str(eval(bld)) })
 							# except Exception as e:
-							# 	pass
+							#     pass
 					pass
 					_.fields.asset( 'project',  display )
 					if not __.fieldSettings['primary'] is None and  len(display) > 1:
@@ -466,9 +466,9 @@ def action():
 					_.colorThis( ['\t',y], 'cyan' )
 		sys.exit()
 	# if _.switches.isActive('Search'):
-	# 	_.pr( 'search active' )
-	# 	_.pr( _.switches.value('Search') )
-	# 	_.pr( _.switches.values('Search') )
+	#     _.pr( 'search active' )
+	#     _.pr( _.switches.value('Search') )
+	#     _.pr( _.switches.values('Search') )
 
 	global data
 	global fileFirst

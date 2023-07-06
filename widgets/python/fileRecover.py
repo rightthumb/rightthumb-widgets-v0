@@ -558,16 +558,16 @@ def cleanLog(printThis=True):
 	newLog = []
 	for i,row in enumerate(backupLog):
 		data = {
-					'id':			backupLog[i]['id'],
-					'file':			backupLog[i]['file'],
-					'flag':			backupLog[i]['flag'],
-					'backup':		backupLog[i]['backup'],
-					'timestamp': 	backupLog[i]['timestamp'],
-			        "version": 		backupLog[i]['version'],
-			        "v": 			backupLog[i]['v'],
-			        "v1": 			backupLog[i]['v1'],
-			        "v2": 			backupLog[i]['v2'],
-			        "v3": 			backupLog[i]['v3']
+					'id':            backupLog[i]['id'],
+					'file':            backupLog[i]['file'],
+					'flag':            backupLog[i]['flag'],
+					'backup':        backupLog[i]['backup'],
+					'timestamp':     backupLog[i]['timestamp'],
+					"version":         backupLog[i]['version'],
+					"v":             backupLog[i]['v'],
+					"v1":             backupLog[i]['v1'],
+					"v2":             backupLog[i]['v2'],
+					"v3":             backupLog[i]['v3']
 		}
 
 		try:
@@ -714,7 +714,7 @@ def action():
 
 					for i,rec in enumerate(data):
 						# for k in rec:
-						# 	_.pr(k, rec[k])
+						#     _.pr(k, rec[k])
 						# sys.exit()
 						try:
 							data[i]['size'] = _dir.info( rec['backup'] )['size']

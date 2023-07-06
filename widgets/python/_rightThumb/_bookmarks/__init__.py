@@ -72,15 +72,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
-				       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-				       # {},
+					# {},
 	],
 }
 
@@ -213,7 +213,10 @@ class Bookmarks:
 						nX.append( record )
 				self.index['paths'][p] = nX
 			if not _.switches.isActive('Clean'):
+				old2=self.resolve(old)
 				_.colorThis( [  '\told', old  ], 'yellow' )
+				if not old==old2:
+					_.colorThis( [  '\told', old2  ], 'yellow' )
 			if os.path.isdir(  self.resolve(old)  ):
 				status = 'still exists'
 				if not _.switches.isActive('Clean'):

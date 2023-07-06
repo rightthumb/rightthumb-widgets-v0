@@ -35,15 +35,15 @@ _.load()
 import _rightThumb._vars as _v
 import _rightThumb._string as _str
 # import _rightThumb._profileVariables as _profile
-# 	profile = _profile.records.audit( 'name', asset )
+#     profile = _profile.records.audit( 'name', asset )
 # import _rightThumb._encryptString as _blowfish
 	# _blowfish.genPassword()
 	# _blowfish.genPassword('string')
 	# en = _blowfish.encrypt( string )
 	# de = _blowfish.decrypt( en )
 import _rightThumb._encryptFile as _blowfish
-# 	_blowfish.encrypt( infilepath, outfilepath, key )
-# 	_blowfish.decrypt( infilepath, outfilepath, key )
+#     _blowfish.encrypt( infilepath, outfilepath, key )
+#     _blowfish.decrypt( infilepath, outfilepath, key )
 # _browser = _.regImp( __.appReg, '_rightThumb._toolsScrapeFrontEnd' )
 # _browserX = _.regImp( __.appReg, '_rightThumb._toolsScrapeDirect' )
 # import _rightThumb._date as _date
@@ -64,9 +64,9 @@ import _rightThumb._dir as _dir
 	# _inDic.imp.testAll( 'fight' )
 	# _inDic.imp.testOne( 'austen' )
 # _file_folder = _.regImp( __.appReg, 'file_folder' )
-# 	_file_folder.switch( 'Save,Clean' )
-# 	_file_folder.switch( 'Compair,Clean' )
-# 	_file_folder.switch( 'Folder', '' )
+#     _file_folder.switch( 'Save,Clean' )
+#     _file_folder.switch( 'Compair,Clean' )
+#     _file_folder.switch( 'Folder', '' )
 ##################################################
 # from lxml import html
 # import requests
@@ -89,7 +89,7 @@ _.autoBackupData = False
 _.appInfo[focus()] = {
 	'file': 'encryptFile.py',
 	'liveAppName': __.thisApp( __file__ ),
- 	'description': 'encrypt and decrypt files',
+	'description': 'encrypt and decrypt files',
 	'categories': [
 						'DEFAULT'
 				],
@@ -106,11 +106,11 @@ _.appInfo[focus()] = {
 						''
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': 'name', 'abbreviation': 'n' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 
 	}
@@ -223,11 +223,11 @@ def action():
 				else:
 					_blowfish.decrypt( row, out )
 
-# 	_blowfish.decrypt( infilepath, outfilepath, key )
+#     _blowfish.decrypt( infilepath, outfilepath, key )
 
 def load():
-# 	global data
-# 	data = _.getTable( 'table.json' )
+#     global data
+#     data = _.getTable( 'table.json' )
 
 	# _.appData[__.appReg]['uuid'] = {  'app': _.appInfo[focus()]['liveAppName'], 'project': 'app_instance' }
 

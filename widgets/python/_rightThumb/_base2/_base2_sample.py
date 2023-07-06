@@ -22,7 +22,7 @@ _.switches.register('Input', '-i','appIn.py')
 _.switches.register('Output', '-o','folder\\appOut.py')
 _.switches.register('Move', '-move','completed_in-folder_name')
 
-_.appInfo=	{
+_.appInfo=    {
 	'file': 'thisApp.py',
 	'description': 'Changes the world',
 	'prerequisite': [],
@@ -74,7 +74,7 @@ if _.switches.isActive('_File_'):
 		# _.saveText(convertedFile,_.ci(_.switches.value('Output')))
 
 	if _.switches.isActive('Move') == True:
-	        shutil.move(_.ci(_.switches.value('Input')), _.switches.value('Move') + _v.slash + _.ci(_.switches.value('Input')))
+			shutil.move(_.ci(_.switches.value('Input')), _.switches.value('Move') + _v.slash + _.ci(_.switches.value('Input')))
 	# if _.showLine(string):
 		# print(line)
 

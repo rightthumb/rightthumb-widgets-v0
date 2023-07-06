@@ -77,11 +77,11 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-					   # { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': 'name', 'abbreviation': 'n' },
 	],
 	'aliases': [
-					   # 'this',
-					   # 'app',
+					# 'this',
+					# 'app',
 	],
 
 	}
@@ -312,7 +312,7 @@ def action():
 						filepath = output+'-'+_.genUUID()+'.en'
 
 						os.rename( output, filepath )
-						time.sleep(.2)	
+						time.sleep(.2)    
 						output = output+'-'+_.genUUID()+'.de'
 
 					with open(  filepath, 'rb'  ) as fIn:

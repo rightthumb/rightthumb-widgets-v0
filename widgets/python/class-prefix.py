@@ -49,7 +49,7 @@ __.switch_raw = []
 _.appInfo[focus()] = {
 	'file': 'class-prefix.py',
 	'liveAppName': __.thisApp( __file__ ),
- 	'description': 'gen class prefix in temp file',
+	'description': 'gen class prefix in temp file',
 	'categories': [
 						'class',
 						'prefix',
@@ -74,15 +74,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
-				       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-				       # {},
+					# {},
 	],
 }
 

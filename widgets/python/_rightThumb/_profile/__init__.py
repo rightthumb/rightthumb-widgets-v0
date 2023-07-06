@@ -94,11 +94,11 @@ _.appInfo[focus()] = {
 						''
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': 'name', 'abbreviation': 'n' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 
 	}
@@ -174,16 +174,16 @@ def action():
 	# load()
 
 	# if not type( _.appData[__.appReg]['pipe'] ) == bool:
-	# 	_.pipeCleaner(0)
-	# 	# _.printVar( _.appData )
-	# 	for i,row in enumerate( _.appData[__.appReg]['pipe'] ):
-	# 		pass
+	#     _.pipeCleaner(0)
+	#     # _.printVar( _.appData )
+	#     for i,row in enumerate( _.appData[__.appReg]['pipe'] ):
+	#         pass
 
 
 
 # def load():
-# 	global data
-# 	data = _.getTable( 'table' )
+#     global data
+#     data = _.getTable( 'table' )
 
 
 # data = []

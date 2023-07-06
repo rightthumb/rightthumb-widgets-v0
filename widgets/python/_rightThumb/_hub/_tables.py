@@ -481,7 +481,7 @@ class Table:
 							pass
 							if self.group_space:
 								print('')
-						 
+						
 
 						if not self.isExtraRecord:
 							groupByList[gb] = text
@@ -493,7 +493,7 @@ class Table:
 						#   print(text)
 					else:
 						pass
-						 
+						
 						if len(self.isExtraRecord_000x):
 							self.isExtraRecord_0001[ self.isExtraRecord_000x.split('-')[0] ] = 1
 						text = ''
@@ -1253,7 +1253,7 @@ class Table:
 						self.asset[i] = isDate( result, self.asset[i] )
 						
 						# month year woy dow ago
-						 
+						
 
 						month = _dir.getMonthFromEpoch
 						# year = _dir.getYearFromEpoch

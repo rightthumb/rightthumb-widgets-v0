@@ -40,7 +40,7 @@ import _rightThumb._vars as _v
 # DEFAULT_TIMEOUT = 1
 
 # for x in sys.argv:
-# 	print(x)
+#     print(x)
 # print('')
 # os.listdir(sys.argv[1]) # returns list
 
@@ -48,9 +48,9 @@ import _rightThumb._vars as _v
 #################################################################
 
 def getSize(fileobject):
-    fileobject.seek(0,2) # move the cursor to the end of the file
-    size = fileobject.tell()
-    return size
+	fileobject.seek(0,2) # move the cursor to the end of the file
+	size = fileobject.tell()
+	return size
 
 def formatSize(size):
 	result = ''
@@ -64,14 +64,14 @@ def formatSize(size):
 	elif size > 1048576 and size < 1073741824:
 		num = round(size / 1048576, 2)
 		result = str(num) + ' MB'
-	elif size > 1073741824 and size < 1099511627776	:
+	elif size > 1073741824 and size < 1099511627776    :
 		num = round(size / 1073741824, 2)
 		result = str(num) + ' GB'
 	else:
 		num = round(size / 1099511627776, 2)
 		result = str(num) + ' TB'
 	# if size < 1:
-	# 	result = ''
+	#     result = ''
 	return result
 
 def unFormatSize(size):
@@ -80,7 +80,7 @@ def unFormatSize(size):
 	factor = ''
 
 	if 'TB' in size:
-		factor = 1099511627776	
+		factor = 1099511627776    
 	elif 'GB' in size:
 		factor = 1073741824
 	elif 'MB' in size:
@@ -126,16 +126,16 @@ def folderDepth(folder):
 	return True
 	# return base
 def folderSizeX(path):
-    size = 0
-    if os.path.isdir(path) == True:
-	    for item in os.walk(path):
-	        for file in item[2]:
-	            try:
-	                size += getsize(join(item[0], file))
-	            except:
-	            	size = 0
-	                # print("error with file:  " + join(item[0], file))
-    return size
+	size = 0
+	if os.path.isdir(path) == True:
+		for item in os.walk(path):
+			for file in item[2]:
+				try:
+					size += getsize(join(item[0], file))
+				except:
+					size = 0
+					# print("error with file:  " + join(item[0], file))
+	return size
 
 def folderSizeX2(folder):
 	global errors
@@ -191,35 +191,35 @@ def folderSizeX2(folder):
 	return base
 
 def attrib(path, a=None, s=None, h=None, r=None, i=None):
-    attrs=[]
-    if r==True:    attrs.append('+R')
-    elif r==False: attrs.append('-R')
-    if a==True:    attrs.append('+A')
-    elif a==False: attrs.append('-A')
-    if s==True:    attrs.append('+S')
-    elif s==False: attrs.append('-S')
-    if h==True:    attrs.append('+H')
-    elif h==False: attrs.append('-H')
-    if i==True:    attrs.append('+I')
-    elif i==False: attrs.append('-I')
+	attrs=[]
+	if r==True:    attrs.append('+R')
+	elif r==False: attrs.append('-R')
+	if a==True:    attrs.append('+A')
+	elif a==False: attrs.append('-A')
+	if s==True:    attrs.append('+S')
+	elif s==False: attrs.append('-S')
+	if h==True:    attrs.append('+H')
+	elif h==False: attrs.append('-H')
+	if i==True:    attrs.append('+I')
+	elif i==False: attrs.append('-I')
 
-    if attrs: # write attributes
-        cmd = attrs
-        cmd.insert(0,'attrib')
-        cmd.append(path)
-        cmd.append('/L')
-        return subprocess.call(cmd, shell=False)
+	if attrs: # write attributes
+		cmd = attrs
+		cmd.insert(0,'attrib')
+		cmd.append(path)
+		cmd.append('/L')
+		return subprocess.call(cmd, shell=False)
 
-    else: # just read attributes
-        output = subprocess.check_output(
-            ['attrib', path, '/L'],
-            shell=False, universal_newlines=True
-        )[:9]
-        attrs = {'A':False, 'S':False, 'H':False, 'R':False, 'I':False}
-        for char in output:
-            if char in attrs:
-                attrs[char] = True
-        return attrs
+	else: # just read attributes
+		output = subprocess.check_output(
+			['attrib', path, '/L'],
+			shell=False, universal_newlines=True
+		)[:9]
+		attrs = {'A':False, 'S':False, 'H':False, 'R':False, 'I':False}
+		for char in output:
+			if char in attrs:
+				attrs[char] = True
+		return attrs
 
 #########################################################
 #########################################################
@@ -692,17 +692,17 @@ def months_between(start_date, end_date):
 	months = calculate_monthdelta(start, end)
 	return months 
 def calculate_monthdelta(date1, date2):
-    def is_last_day_of_the_month(date):
-        days_in_month = calendar.monthrange(date.year, date.month)[1]
-        return date.day == days_in_month
-    imaginary_day_2 = 31 if is_last_day_of_the_month(date2) else date2.day
-    monthdelta = (
-        (date2.month - date1.month) +
-        (date2.year - date1.year) * 12 +
-        (-1 if date1.day > imaginary_day_2 else 0)
-        )
-    # print monthdelta
-    return monthdelta
+	def is_last_day_of_the_month(date):
+		days_in_month = calendar.monthrange(date.year, date.month)[1]
+		return date.day == days_in_month
+	imaginary_day_2 = 31 if is_last_day_of_the_month(date2) else date2.day
+	monthdelta = (
+		(date2.month - date1.month) +
+		(date2.year - date1.year) * 12 +
+		(-1 if date1.day > imaginary_day_2 else 0)
+		)
+	# print monthdelta
+	return monthdelta
 def dowConvert(dow):
 	result = ''
 	if dow == 1:
@@ -809,20 +809,20 @@ def showColumn(isDir,rows,column,i):
 			for gb in groupBy.split(','):
 				gb = str(columnNickname2(gb))
 				if column == gb:
-		 			if not test(groupByList[gb],text) == True:
-		 				if columnNickname2(groupBy.split(',')[0]) == column:
-		 					print(groupLine())
-		 					for g in groupBy.split(','):
-		 						groupByList[g] = ''
-		 				else:
-		 					print('')
-		 				# if len(groupBy.split(',')) > 1:
-		 				# 	print('__________________________________________________________________________________________')
-		 				# else:
-		 				# 	print('')
-		 				groupByList[gb] = text
-		 			else:
-		 				text = ''
+					if not test(groupByList[gb],text) == True:
+						if columnNickname2(groupBy.split(',')[0]) == column:
+							print(groupLine())
+							for g in groupBy.split(','):
+								groupByList[g] = ''
+						else:
+							print('')
+						# if len(groupBy.split(',')) > 1:
+						#     print('__________________________________________________________________________________________')
+						# else:
+						#     print('')
+						groupByList[gb] = text
+					else:
+						text = ''
 	result = text + addSpace(text,tabFix)
 	return result
 
@@ -1139,7 +1139,7 @@ def dirPrintColumn(folder,column):
 			if isSwitchActive('NoSave') == False:
 				dirCacheSave(rows,_dirCache_p)
 			# print('test')
-		    # rows = buildResultFromPipe()
+			# rows = buildResultFromPipe()
 			# rows = buildResult(0,folder)
 		else:
 			if isSwitchActive('Cache') == False:
@@ -1192,7 +1192,7 @@ def dirPrintColumn(folder,column):
 		columnHeaderLength = len(columnHeader)
 		print(columnHeader)
 		for item in rows:
-			result = ''	
+			result = ''    
 			for c in column.split(','):
 				c = columnNickname2(c)
 				try:
@@ -1208,16 +1208,16 @@ def dirPrintColumn(folder,column):
 					print(12)
 					os._exit(0)
 			if isSwitchActive('CSV') == True:
-				result = result[:-1]		
+				result = result[:-1]        
 			print(result)
 			i += 1
 	# try:
-	# 	print('\n',totalLINE)
-	# 	# print('\n\t','Total Size:',formatSize(totalSize(rows)))
-	# 	# print('\t','Total Count:',len(rows))
-	# 	print('\n\t',len(rows),'files',formatSize(totalSize(rows)))
+	#     print('\n',totalLINE)
+	#     # print('\n\t','Total Size:',formatSize(totalSize(rows)))
+	#     # print('\t','Total Count:',len(rows))
+	#     print('\n\t',len(rows),'files',formatSize(totalSize(rows)))
 	# except Exception as e:
-	# 	pass
+	#     pass
 	if isSwitchActive('CSV') == False and isSwitchActive('NoCount') == False:
 		print('\n\t',len(rows),'files',formatSize(totalSize(rows)))
 
@@ -1237,7 +1237,7 @@ def listPrintColumn(rows,column):
 	columnHeader = ''
 	print(showColumnHeader(False,rows,column))
 	for item in rows:
-		result = ''		
+		result = ''        
 		for c in column.split(','):
 			try:
 				result += showColumn(False,rows,c,i) + columnTab
@@ -1573,7 +1573,7 @@ def formatSwitchValueHelperC(column,typ):
 		if typ == 1:
 			columnList.append({'direction': direction, 'column': sb})
 		else:
-			columnList.append({'column': sb})		
+			columnList.append({'column': sb})        
 		i += 1
 	return columnList
 def formatSwitchValueColumn(name,column):
@@ -1769,15 +1769,15 @@ def takeAction():
 		updateSwitchField('GroupBy','groupByDefault',True)
 
 	# if isSwitchActive('GroupBy') == True:
-	# 	if isSwitchActive('Column') == True:
-	# 		groupByDefault = False
-	# 	elif isSwitchActive('GroupBy') == True:
-	# 		groupByDefault = True
-	# 	else:
-	# 		groupByDefault = False
+	#     if isSwitchActive('Column') == True:
+	#         groupByDefault = False
+	#     elif isSwitchActive('GroupBy') == True:
+	#         groupByDefault = True
+	#     else:
+	#         groupByDefault = False
 	# else:
-	# 	groupByDefault = False
-	# 	groupBy = ''
+	#     groupByDefault = False
+	#     groupBy = ''
 
 	if isSwitchActive('Bookmark') == True and isSwitchActive('Column') == False:
 		updateSwitchField('Column','active',True)
@@ -1836,7 +1836,7 @@ def takeAction():
 		print('\n-----------------------------------------------\nList of switches:\n')
 		listPrintColumn(switch,'name,switch,expected_input_example')
 		# for s in switch:
-		# 	print('{}: {}'.format(s['name'],s['switch']))
+		#     print('{}: {}'.format(s['name'],s['switch']))
 	elif isSwitchActive('Debug') == True:
 		printSwitches()
 		print(isSwitchActive('ShortFileName'))
@@ -2029,31 +2029,31 @@ if not sys.stdin.isatty():
 # filename = '{80262020-053B-9560-BD50-788984050DC7}'
 
 # def getImport():
-# 	global filename
-# 	importedList = []
-# 	f = open(filename,'r')
-# 	for line in f:
-# 		importedList.append(line)
-# 	f.close()
-# 	os.remove(filename)
-# 	return importedList
+#     global filename
+#     importedList = []
+#     f = open(filename,'r')
+#     for line in f:
+#         importedList.append(line)
+#     f.close()
+#     os.remove(filename)
+#     return importedList
 # if os.path.isfile(filename) == True:
-# 	pipeResults = getImport()
+#     pipeResults = getImport()
 # if not sys.stdin.isatty() and os.path.isfile(filename) == True:
-# 	pipeResults = getImport()
+#     pipeResults = getImport()
 # elif not sys.stdin.isatty():
-# 	pipeResults = sys.stdin.readlines()
-# 	if pipeResults[0][0].isalnum() == False:
-# 		pipeResults[0] = pipeResults[0][1:]
-# 	f = open(filename,'w')
-# 	for line in pipeResults:
-# 			f.write(line.replace('\n',''))
-# 	f.close()
+#     pipeResults = sys.stdin.readlines()
+#     if pipeResults[0][0].isalnum() == False:
+#         pipeResults[0] = pipeResults[0][1:]
+#     f = open(filename,'w')
+#     for line in pipeResults:
+#             f.write(line.replace('\n',''))
+#     f.close()
 	
 # else:
-# 	pass
-# 	if os.path.isfile(filename) == True:
-# 		os.remove(filename)
+#     pass
+#     if os.path.isfile(filename) == True:
+#         os.remove(filename)
 
 # print(pipeResults)
 

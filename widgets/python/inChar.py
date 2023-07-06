@@ -21,7 +21,7 @@ import _rightThumb._string as _str
 
 # _.switches.register('File', '-file','file.txt')
 
-_.appInfo=	{
+_.appInfo=    {
 	'file': 'inChar.py',
 	'description': 'Changes the world',
 	'prerequisite': [],

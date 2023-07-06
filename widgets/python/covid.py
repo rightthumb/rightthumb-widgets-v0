@@ -78,11 +78,11 @@ _.appInfo[focus()] = {
 						''
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': 'name', 'abbreviation': 'n' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 
 	}
@@ -349,17 +349,17 @@ def action():
 	for i,record in enumerate(data['features']):
 		records.append( record['attributes'] )
 		# if not i:
-		# 	for x in record.keys():
-		# 		print(x)
+		#     for x in record.keys():
+		#         print(x)
 		# print( record )
 
 	# profile( data, 'text', 'Hillsborough' )
 
 
 	# for i,record in enumerate( records ):
-	# 	if not i:
-	# 		for x in record.keys():
-	# 			print(x)
+	#     if not i:
+	#         for x in record.keys():
+	#             print(x)
 
 	# for x in data[]
 	records = _.tables.returnSorted( 'data', 'd.CasesAll', records )
@@ -424,8 +424,8 @@ def autoCat( record, fields, totalField='CasesAll' ):
 	colors = 'green purple cyan yellow red'
 
 	# for x in fields:
-	# 	if 'dea' in x.lower():
-	# 		print( x )
+	#     if 'dea' in x.lower():
+	#         print( x )
 
 
 	groups = [ 'Age', 'ED', 'Hosp' ]
@@ -596,8 +596,8 @@ def action2():
 
 
 # def load():
-# 	global data
-# 	data = _.getTable( 'table' )
+#     global data
+#     data = _.getTable( 'table' )
 
 
 # data = []

@@ -221,17 +221,17 @@ md.append('')
 for line in md: print(line)
 # ask=''
 # while True:
-# 	os.system('cls')
-# 	for mpath in _clean:
-# 		print(mpath[:-len('.__doc__')])
-# 	print(len(_clean))
-# 	ask=ask.replace(' ','')
-# 	if not len(ask):
-# 		ask=input(' : ')
-# 		ask=ask.replace(' ','')
-# 	if not len(ask): ask=''; break;
-# 	if not ask.startswith(sys.argv[-1]): ask=''; break;
-# 	if not '.__doc__' in ask:
-# 		print(eval(ask+'.__doc__'))
-# 	print()
-# 	ask=input(' : ')
+#     os.system('cls')
+#     for mpath in _clean:
+#         print(mpath[:-len('.__doc__')])
+#     print(len(_clean))
+#     ask=ask.replace(' ','')
+#     if not len(ask):
+#         ask=input(' : ')
+#         ask=ask.replace(' ','')
+#     if not len(ask): ask=''; break;
+#     if not ask.startswith(sys.argv[-1]): ask=''; break;
+#     if not '.__doc__' in ask:
+#         print(eval(ask+'.__doc__'))
+#     print()
+#     ask=input(' : ')

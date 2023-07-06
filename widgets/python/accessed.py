@@ -103,11 +103,11 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': 'name', 'abbreviation': 'n' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 
 	}
@@ -286,13 +286,13 @@ def action():
 
 				_.pr( r )
 				# if keepEpoch and hasMultiple:
-				# 	_.pr(  record['epoch'], record['file']  )
+				#     _.pr(  record['epoch'], record['file']  )
 				# if keepEpoch and not hasMultiple:
-				# 	_.pr(  record['epoch']  )
+				#     _.pr(  record['epoch']  )
 				# if not keepEpoch and hasMultiple:
-				# 	_.pr(  record['date'], record['file']  )
+				#     _.pr(  record['date'], record['file']  )
 				# if not keepEpoch and not hasMultiple:
-				# 	_.pr(  record['date']  )
+				#     _.pr(  record['date']  )
 
 
 ########################################################################################

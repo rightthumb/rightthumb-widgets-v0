@@ -85,11 +85,11 @@ _.appInfo[focus()] = {
 						''
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': 'name', 'abbreviation': 'n' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 
 	}
@@ -171,8 +171,8 @@ _.postLoad( __file__ )
 # os.system( '"' + do + '"' )
 # _.setPipeData( os.listdir( os.getcwd() ), focus() )
 # _.showLine( item )
-# 	if os.path.isdir( row ):
-# 	if os.path.isfile( row ):
+#     if os.path.isdir( row ):
+#     if os.path.isfile( row ):
 # __.appRegPipe
 ########################################################################################
 # START
@@ -289,7 +289,7 @@ class ThisThread(threading.Thread):
 		self.wasKilled = True
 		thread_id = self.getID()
 		res = ctypes.pythonapi.PyThreadState_SetAsyncExc(thread_id,
-			  ctypes.py_object(SystemExit))
+			ctypes.py_object(SystemExit))
 		if res > 1:
 			ctypes.pythonapi.PyThreadState_SetAsyncExc(thread_id, 0)
 
@@ -446,27 +446,27 @@ def test():
 	cursor = cnxn.cursor()
 
 	# cursor.execute("""
-	# 						CREATE TABLE Persons (
-	# 						    PersonID int,
-	# 						    LastName varchar(255),
-	# 						    FirstName varchar(255),
-	# 						    Address varchar(255),
-	# 						    City varchar(255)
-	# 						);
+	#                         CREATE TABLE Persons (
+	#                             PersonID int,
+	#                             LastName varchar(255),
+	#                             FirstName varchar(255),
+	#                             Address varchar(255),
+	#                             City varchar(255)
+	#                         );
 	# """)
 	# cursor.execute("SHOW TABLES")
 	# rows = cursor.fetchall()
 	# # _.pr( rows[1] )
 	# for row in rows:
-	# 	_.pr(row)
+	#     _.pr(row)
 
 
 
 
 
 	# cursor.execute("""
-	# 					INSERT INTO Persons (PersonID, LastName, FirstName, Address, City )
-	# 					VALUES ( 1, 'Reph', 'Scott', '4477 Amberly Oaks Court', 'Tampa' );
+	#                     INSERT INTO Persons (PersonID, LastName, FirstName, Address, City )
+	#                     VALUES ( 1, 'Reph', 'Scott', '4477 Amberly Oaks Court', 'Tampa' );
 	# """)
 	# cnxn.commit()
 	# _.pr( 'Added' )
@@ -494,7 +494,7 @@ def test():
 
 	# _.pr( rows[1] )
 	# for row in rows:
-	# 	_.pr(row)
+	#     _.pr(row)
 
 class Asset_Manager:
 
@@ -533,9 +533,9 @@ class Asset_Manager:
 
 
 		# status:
-		# 		0 free
-		# 		1 in use
-		# 		2 in waiting
+		#         0 free
+		#         1 in use
+		#         2 in waiting
 
 		self.sql_statistics_factored = {}
 
@@ -602,8 +602,8 @@ class Asset_Manager:
 			return False
 
 	# def accessStart( self, asset, threadID ):
-	# 	self.assets[asset]['epoch'] = time.time()
-	# 	self.last_start = time.time()
+	#     self.assets[asset]['epoch'] = time.time()
+	#     self.last_start = time.time()
 	def omitIt( self ):
 		omitIs = ['and', 'or'," ' ", ' " ', ' % ', '0', '1', 'select', ' = ', ' < ', ' > ', ' , ' ]
 		for x in self.sql_factors:
@@ -719,7 +719,7 @@ next steps
 		while requestAccess( 'database', threadID ): time.sleep(0.001)
 
 
-	releaseAsset( 'database', threadID )	
+	releaseAsset( 'database', threadID )    
 	managed_asset_queue
 		register assets
 			type label
@@ -746,12 +746,12 @@ def action():
 	# # mgr.monitor
 
 	# mgr.registeredThreads.append(
-	# 				ThisThread(
-	# 							name = 'Test 1',
-	# 							fn = test,
-	# 							# k = { 'arg1': 'a', 'arg2': 'b' },
-	# 							timeout = None
-	# 				)
+	#                 ThisThread(
+	#                             name = 'Test 1',
+	#                             fn = test,
+	#                             # k = { 'arg1': 'a', 'arg2': 'b' },
+	#                             timeout = None
+	#                 )
 	# )
 
 
@@ -776,7 +776,7 @@ def action():
 	)
 
 
-	threadMonitor()	
+	threadMonitor()    
 
 	time.sleep(5)
 	_.pr( 'killing' )

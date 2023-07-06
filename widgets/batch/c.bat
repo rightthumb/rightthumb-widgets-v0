@@ -103,6 +103,7 @@ GOTO:EOF
     SET Session_ID_BK=%Session_ID%
     echo %Session_ID% > %myVars%\ID.sys
     CALL timestamp ats2 noEcho
+    CALL p files -folder %myVars% -rrr > nul
     SET timestamp_start=%now%
 GOTO:EOF
 

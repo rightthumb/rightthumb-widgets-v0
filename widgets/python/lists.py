@@ -23,7 +23,7 @@ import _rightThumb._string as _str
 _.switches.register('File1', '-f1','file1.txt')
 _.switches.register('File2', '-f2','file2.txt')
 
-_.appInfo=	{
+_.appInfo=    {
 	'file': 'lists.py',
 	'description': 'Changes the world',
 	'prerequisite': [],
@@ -42,12 +42,12 @@ _.switches.process()
 # pipeData = ''
 
 # if not sys.stdin.isatty():
-# 	pipeData = sys.stdin.readlines()
-# 	try:
-# 		if pipeData[0][0].isalnum() == False:
-# 			pipeData[0] = pipeData[0][1:]
-# 	except Exception as e:
-# 		pass
+#     pipeData = sys.stdin.readlines()
+#     try:
+#         if pipeData[0][0].isalnum() == False:
+#             pipeData[0] = pipeData[0][1:]
+#     except Exception as e:
+#         pass
 
 ########################################################################################
 def action():
@@ -76,37 +76,37 @@ def action():
 		return result
 	if os.path.isfile(f1) == True:
 		with open(f1,  'r', encoding='latin-1') as f:
-		    for line in f:
-		    	data = {}
-		    	line = line.replace('\n','')
-		    	file1Raw.append(line)
-		    	data = {'line': line}
-		    	i=0
-		    	for c in chars:
-		    		cnt = line.lower().count(c)
-		    		i+=cnt
-		    		data[c] = cnt
-		    	if i > 2:
-			    	file1.append(data)
-			    	files.append(line)
-			    	files2.append(line)
-		    f.close()
+			for line in f:
+				data = {}
+				line = line.replace('\n','')
+				file1Raw.append(line)
+				data = {'line': line}
+				i=0
+				for c in chars:
+					cnt = line.lower().count(c)
+					i+=cnt
+					data[c] = cnt
+				if i > 2:
+					file1.append(data)
+					files.append(line)
+					files2.append(line)
+			f.close()
 	if os.path.isfile(f2) == True:
 		with open(f2,  'r', encoding='latin-1') as f:
-		    for line in f:
-		    	data = {}
-		    	line = line.replace('\n','')
-		    	data = {'line': line}
-		    	i=0
-		    	for c in chars:
-		    		cnt = line.lower().count(c)
-		    		# print(cnt)
-		    		i+=cnt
-		    		data[c] = cnt
-		    	if i > 2:
-			    	file2.append(data)
-			    	files.append(line)
-		    f.close()
+			for line in f:
+				data = {}
+				line = line.replace('\n','')
+				data = {'line': line}
+				i=0
+				for c in chars:
+					cnt = line.lower().count(c)
+					# print(cnt)
+					i+=cnt
+					data[c] = cnt
+				if i > 2:
+					file2.append(data)
+					files.append(line)
+			f.close()
 	if len(file1) < len(file2):
 		tmp2 = file2
 		tmp1 = file1
@@ -128,7 +128,7 @@ def action():
 			t.append({'line': d['line'], 'rank': numpy.mean(a)})
 		ttt = sorted(t, key=lambda k: k['rank']) 
 		# for tt in ttt:
-		# 	print(tt['rank'],tt['line'])
+		#     print(tt['rank'],tt['line'])
 		# sys.exit()
 		return ttt[len(ttt)-1]
 	
@@ -174,16 +174,16 @@ def action():
 
 	# missing = []
 	# for bad in files:
-	# 	if not bad in files2:
-	# 		missing.append(bad)
+	#     if not bad in files2:
+	#         missing.append(bad)
 	# print('Missing:',len(missing))
 	# for m in missing:
-	# 	print(m)
+	#     print(m)
 	# totalDif = 0
 	# if len(file1) > len(file2):
-	# 	totalDif = len(file1) - len(file2)
+	#     totalDif = len(file1) - len(file2)
 	# else:
-	# 	totalDif = len(file2) - len(file1)
+	#     totalDif = len(file2) - len(file1)
 	# print()
 	# print(len(file1),len(file2), totalDif)
 ########################################################################################

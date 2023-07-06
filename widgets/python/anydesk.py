@@ -20,7 +20,7 @@ import _rightThumb._base1 as _
 import _rightThumb._vars as _v
 import _rightThumb._string as _str
 
-_.appInfo=	{
+_.appInfo=    {
 	'file': 'anydesk.py',
 	'description': 'AnyDesk IDs',
 	'prerequisite': [],
@@ -40,15 +40,15 @@ _.appInfo['examples'].append('p anydesk -search cl')
 
 
 # def formatColumns(columns):
-# 	result = ''
-# 	for c in columns.split(','):
-# 		for col in _.appInfo['columns']:
-# 			for a in col['abbreviation'].split(','):
-# 				if a == c:
-# 					c = col['name']
-# 		result += c + ','
-# 	result = result[:-1]
-# 	return result
+#     result = ''
+#     for c in columns.split(','):
+#         for col in _.appInfo['columns']:
+#             for a in col['abbreviation'].split(','):
+#                 if a == c:
+#                     c = col['name']
+#         result += c + ','
+#     result = result[:-1]
+#     return result
 
 # _.switches.trigger('Column',formatColumns)
 if __name__ == '__main__':

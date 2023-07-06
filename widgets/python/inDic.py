@@ -288,14 +288,14 @@ def testAll( word ):
 
 	if not found:
 		if word.endswith( 's' ):
-			return testAll( word[:-1] )	
+			return testAll( word[:-1] )    
 		return 'unknown'
 	if _.switches.isActive( 'Print' ):
 		_.pr( str(word) + ':', result )
 	result = _str.cleanBE( result, ',' )
 	return result
 	# else:
-	# 	_.pr( 'unknown' )
+	#     _.pr( 'unknown' )
 
 
 

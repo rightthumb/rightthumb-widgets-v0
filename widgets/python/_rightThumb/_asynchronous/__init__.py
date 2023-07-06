@@ -90,15 +90,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
-				       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-				       # {},
+					# {},
 	],
 }
 
@@ -188,15 +188,15 @@ _.postLoad( __file__ )
 # os.system( '"' + do + '"' )
 # _.setPipeData( os.listdir( os.getcwd() ), focus() )
 # _.showLine( item )
-# 	if os.path.isdir( row ):
-# 	if os.path.isfile( row ):
-#	os.path.abspath(path)
+#     if os.path.isdir( row ):
+#     if os.path.isfile( row ):
+#    os.path.abspath(path)
 # __.appRegPipe    ( pipe data registerd focus(__.appReg) set by _.myFileLocations {if imported} , default is None )
 # for i,row in enumerate( _.appData[__.appReg]['pipe'] ):
 # for i,row in enumerate(_.isData(r=1)):
 # date = _.friendlyDate( theDate )
 # _.addComma()
-# 													if platform.system() == 'Windows':
+#                                                     if platform.system() == 'Windows':
 ### EXAMPLE: END
 ########################################################################################
 # START
@@ -310,7 +310,7 @@ class ThisAsyncThread(threading.Thread):
 		self.wasKilled = True
 		thread_id = self.getID()
 		res = ctypes.pythonapi.PyThreadState_SetAsyncExc(thread_id,
-			  ctypes.py_object(SystemExit))
+			ctypes.py_object(SystemExit))
 		if res > 1:
 			ctypes.pythonapi.PyThreadState_SetAsyncExc(thread_id, 0)
 
@@ -356,27 +356,27 @@ def test():
 	cursor = cnxn.cursor()
 
 	# cursor.execute("""
-	# 						CREATE TABLE Persons (
-	# 						    PersonID int,
-	# 						    LastName varchar(255),
-	# 						    FirstName varchar(255),
-	# 						    Address varchar(255),
-	# 						    City varchar(255)
-	# 						);
+	#                         CREATE TABLE Persons (
+	#                             PersonID int,
+	#                             LastName varchar(255),
+	#                             FirstName varchar(255),
+	#                             Address varchar(255),
+	#                             City varchar(255)
+	#                         );
 	# """)
 	# cursor.execute("SHOW TABLES")
 	# rows = cursor.fetchall()
 	# # _.pr( rows[1] )
 	# for row in rows:
-	# 	_.pr(row)
+	#     _.pr(row)
 
 
 
 
 
 	# cursor.execute("""
-	# 					INSERT INTO Persons (PersonID, LastName, FirstName, Address, City )
-	# 					VALUES ( 1, 'Reph', 'Scott', '4477 Amberly Oaks Court', 'Tampa' );
+	#                     INSERT INTO Persons (PersonID, LastName, FirstName, Address, City )
+	#                     VALUES ( 1, 'Reph', 'Scott', '4477 Amberly Oaks Court', 'Tampa' );
 	# """)
 	# cnxn.commit()
 	# _.pr( 'Added' )
@@ -404,7 +404,7 @@ def test():
 
 	# _.pr( rows[1] )
 	# for row in rows:
-	# 	_.pr(row)
+	#     _.pr(row)
 
 class Asset_Manager:
 
@@ -443,9 +443,9 @@ class Asset_Manager:
 
 
 		# status:
-		# 		0 free
-		# 		1 in use
-		# 		2 in waiting
+		#         0 free
+		#         1 in use
+		#         2 in waiting
 
 		self.sql_statistics_factored = {}
 
@@ -512,8 +512,8 @@ class Asset_Manager:
 			return False
 
 	# def accessStart( self, asset, threadID ):
-	# 	self.assets[asset]['epoch'] = time.time()
-	# 	self.last_start = time.time()
+	#     self.assets[asset]['epoch'] = time.time()
+	#     self.last_start = time.time()
 	def omitIt( self ):
 		omitIs = ['and', 'or'," ' ", ' " ', ' % ', '0', '1', 'select', ' = ', ' < ', ' > ', ' , ' ]
 		for x in self.sql_factors:
@@ -629,7 +629,7 @@ next steps
 		while requestAccess( 'database', threadID ): time.sleep(0.001)
 
 
-	releaseAsset( 'database', threadID )	
+	releaseAsset( 'database', threadID )    
 	managed_asset_queue
 		register assets
 			type label
@@ -656,12 +656,12 @@ def action():
 	# # mgr.monitor
 
 	# mgr.registeredThreads.append(
-	# 				ThisThread(
-	# 							name = 'Test 1',
-	# 							fn = test,
-	# 							# k = { 'arg1': 'a', 'arg2': 'b' },
-	# 							timeout = None
-	# 				)
+	#                 ThisThread(
+	#                             name = 'Test 1',
+	#                             fn = test,
+	#                             # k = { 'arg1': 'a', 'arg2': 'b' },
+	#                             timeout = None
+	#                 )
 	# )
 
 
@@ -686,7 +686,7 @@ def action():
 	)
 
 
-	threadMonitor()	
+	threadMonitor()    
 
 	time.sleep(5)
 	_.pr( 'killing' )
@@ -890,17 +890,17 @@ class Asynchronous:
 		if p > self.priority_max:
 			self.priority_max
 		self.queue.append({
-								'status': 	0,
-								'record': 	{
-												'name':		name,
-												'category':	category,
-												'fn': 		fn,
-												'a':  		a,
-												't':  		t,
-												'k':  		k,
-												'p':  		p,
-												'timeout': 	timeout,
-												'start':	start
+								'status':     0,
+								'record':     {
+												'name':        name,
+												'category':    category,
+												'fn':         fn,
+												'a':          a,
+												't':          t,
+												'k':          k,
+												'p':          p,
+												'timeout':     timeout,
+												'start':    start
 											},
 		})
 
@@ -915,15 +915,15 @@ class Asynchronous:
 		self.last_activity = time.time()
 		self.THREADS.append(
 									ThisAsyncThread(
-													name= 		self.queue[i]['record']['name'],
-													category= 	self.queue[i]['record']['category'],
-													fn=			self.queue[i]['record']['fn'],
-													a=			self.queue[i]['record']['a'],
-													t=			self.queue[i]['record']['t'],
-													k=			self.queue[i]['record']['k'],
-													p=			self.queue[i]['record']['p'],
-													timeout=	self.queue[i]['record']['timeout'],
-													start=		self.queue[i]['record']['start']
+													name=         self.queue[i]['record']['name'],
+													category=     self.queue[i]['record']['category'],
+													fn=            self.queue[i]['record']['fn'],
+													a=            self.queue[i]['record']['a'],
+													t=            self.queue[i]['record']['t'],
+													k=            self.queue[i]['record']['k'],
+													p=            self.queue[i]['record']['p'],
+													timeout=    self.queue[i]['record']['timeout'],
+													start=        self.queue[i]['record']['start']
 									)
 		)
 
@@ -954,7 +954,7 @@ class Asynchronous:
 
 		return loaded
 
-		 # and self.fully_loaded and
+		# and self.fully_loaded and
 	def queue_manager( self ):
 		self.status_check()
 		index = {}
@@ -1052,7 +1052,7 @@ class Asynchronous:
 			length = time.time() - start
 		
 		# if not len(self.THREADS):
-		# 	self.done = True
+		#     self.done = True
 
 
 	def monitor( self ):

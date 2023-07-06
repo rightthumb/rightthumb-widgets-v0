@@ -28,7 +28,7 @@ _.switches.register('Fields', '-fields','City State')
 
 _.switches.register('GetColumns', '-gc,-getcolumns')
 
-_.appInfo=	{
+_.appInfo=    {
 	'file': 'csvColumnOrder.py',
 	'description': 'Manages drives and indexes',
 	'prerequisite': [],
@@ -42,20 +42,20 @@ _.appInfo['examples'].append('p file --c + .csv | p line --c -make "p csvColumnO
 _.switches.process()
 
 # if _.switches.isActive('File') == False:
-# 	file = _.switches.value('File')
-# 	variable = _.getTable(file)
-# 	_.saveTable(xRefList,file)
-# 	line = _str.replaceAll(line,'  ',' ')
-# 	line = _str.cleanFirst(line,' ')
-# 	line = _str.cleanLast(line,' ')
-# 	line = _str.cleanSpecial(line)
-# 	line = _str.totalStrip(line)
-# 	line = _str.removeAll(line)
-# 	line = _str.replaceDuplicate(line,' ')
-# 	if _isSwitchActive('Sort'):
-# 		xRefList = _.sort(xRefList, _.switches.value('Sort'))
-# 	_.tables.register('Auto',_.switch)
-# 	_.tables.print('Auto','name,switch,expected_input_example')
+#     file = _.switches.value('File')
+#     variable = _.getTable(file)
+#     _.saveTable(xRefList,file)
+#     line = _str.replaceAll(line,'  ',' ')
+#     line = _str.cleanFirst(line,' ')
+#     line = _str.cleanLast(line,' ')
+#     line = _str.cleanSpecial(line)
+#     line = _str.totalStrip(line)
+#     line = _str.removeAll(line)
+#     line = _str.replaceDuplicate(line,' ')
+#     if _isSwitchActive('Sort'):
+#         xRefList = _.sort(xRefList, _.switches.value('Sort'))
+#     _.tables.register('Auto',_.switch)
+#     _.tables.print('Auto','name,switch,expected_input_example')
 
 
 ########################################################################################
@@ -63,13 +63,13 @@ def refineColumns():
 	currentColumns = []
 	file = _.switches.value('Input')
 	with open(file, mode='r', encoding='utf-8') as f:
-		 reader = csv.DictReader(f, delimiter=',')
-		 i = 0
-		 for row in reader:
-		 	 if i == 0:
-		 	 	for col in reader.fieldnames:
-		 	 		currentColumns.append(col)
-		 	 i += 1
+		reader = csv.DictReader(f, delimiter=',')
+		i = 0
+		for row in reader:
+			if i == 0:
+				for col in reader.fieldnames:
+					currentColumns.append(col)
+			i += 1
 	newColumns = []
 	fields = _.switches.value('Fields').split(',')
 	for flds in fields:
@@ -85,27 +85,27 @@ def refineColumns():
 def action():
 	if _.switches.isActive('Input') == True and _.switches.isActive('Output') == True and _.switches.isActive('Fields') == True:
 		with open(_.switches.value('Input'), 'r') as infile, open(_.switches.value('Output'), 'a') as outfile:
-			 # output dict needs a list for new column ordering
-			 # fieldnames = _.switches.value('Fields').split(',')
-			 fieldnames = refineColumns()
-			 writer = csv.DictWriter(outfile, fieldnames=fieldnames)
-			 # reorder the header first
-			 writer.writeheader()
-			 for row in csv.DictReader(infile):
-			 	 # writes the reordered rows to the new file
-			 	 writer.writerow(row)
+			# output dict needs a list for new column ordering
+			# fieldnames = _.switches.value('Fields').split(',')
+			fieldnames = refineColumns()
+			writer = csv.DictWriter(outfile, fieldnames=fieldnames)
+			# reorder the header first
+			writer.writeheader()
+			for row in csv.DictReader(infile):
+				# writes the reordered rows to the new file
+				writer.writerow(row)
 	elif _.switches.isActive('GetColumns') == True:
 		# refineColumns()
 
 		file = _.switches.value('Input')
 		with open(file, mode='r', encoding='utf-8') as f:
-			 reader = csv.DictReader(f, delimiter=',')
-			 i = 0
-			 for row in reader:
-			 	 if i == 0:
-			 	 	for col in reader.fieldnames:
-			 	 		print('"' + col + '"')
-			 	 i += 1
+			reader = csv.DictReader(f, delimiter=',')
+			i = 0
+			for row in reader:
+				if i == 0:
+					for col in reader.fieldnames:
+						print('"' + col + '"')
+				i += 1
 
 
 

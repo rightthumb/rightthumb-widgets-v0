@@ -58,7 +58,7 @@ __.switch_raw = []
 _.appInfo[focus()] = {
 	'file': 'send-gmail.py',
 	'liveAppName': __.thisApp( __file__ ),
- 	'description': 'send email with gmail',
+	'description': 'send email with gmail',
 	'categories': [
 						'gmail',
 						'email',
@@ -81,15 +81,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-					   # { 'name': 'name', 'abbreviation': 'n' },
-					   # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-					   # 'this',
-					   # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-					   # {},
+					# {},
 	],
 }
 
@@ -179,17 +179,17 @@ def action():
 	# list of email_id to send the mail
 	# li = ["xxxxx@gmail.com", "yyyyy@gmail.com"]
 	# try:
-	# 	for dest in to:
-	# 	    s = smtplib.SMTP('smtp.gmail.com', 587)
-	# 	    s.starttls()
-	# 	    s.login(gmail_user, gmail_password)
-	# 	    message = "Message_you_need_to_send"
-	# 	    s.sendmail(sent_from, dest, message)
-	# 	    s.quit()
+	#     for dest in to:
+	#         s = smtplib.SMTP('smtp.gmail.com', 587)
+	#         s.starttls()
+	#         s.login(gmail_user, gmail_password)
+	#         message = "Message_you_need_to_send"
+	#         s.sendmail(sent_from, dest, message)
+	#         s.quit()
 		
 	# except Exception as e:
-	# 	_.cp('Error')
-	# 	_.pr(e)
+	#     _.cp('Error')
+	#     _.pr(e)
 
 
 

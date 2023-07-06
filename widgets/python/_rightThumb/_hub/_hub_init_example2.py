@@ -38,15 +38,15 @@ reg.documentation = {
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
-				       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-				       # {},
+					# {},
 	],
 }
 reg.data = {
@@ -70,7 +70,7 @@ app.switches()
 
 
 def app_switches():
-    app.switch.reg( 'Name', '-n', 'description', req=1 )
+	app.switch.reg( 'Name', '-n', 'description', req=1 )
 
 
 
@@ -123,19 +123,19 @@ app.post_load( __file__ )
 
 def action:
 	# should be   Single-Task   OR   Imply-Architecture-Functions   OR   CLASSES!!
-    # app.arch( o(r()), fn=' description '  )
-    if app.switch('Files').status:
-        pass
-    if a.s('Files').s:
-    __.softExit()
+	# app.arch( o(r()), fn=' description '  )
+	if app.switch('Files').status:
+		pass
+	if a.s('Files').s:
+	__.softExit()
 
 if a.f() and ( True ) and a.a( o(r()), fi=' description '  ):
 	pass
 
 
 if __name__ == '__main__':
-    action()
-    __.isExit(diagram=False)
+	action()
+	__.isExit(diagram=False)
 
 
 

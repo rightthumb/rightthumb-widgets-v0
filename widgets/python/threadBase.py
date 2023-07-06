@@ -269,7 +269,7 @@ def processFolder(folder, qID):
 
 	# data=[]
 	# data.append({'name': 'Scott'})
-	# theID = _.threads.spent( qID, sys.getsizeof( 'obj') )	
+	# theID = _.threads.spent( qID, sys.getsizeof( 'obj') )    
 	# _.threads.listen( theID, test )
 	# _.threads.spent( qID, sys.getsizeof( 'obj'), trigger=test )
 	# _.threads.spent( qID, sys.getsizeof( 'obj'), trigger=test, data=data )
@@ -444,7 +444,7 @@ def action1():
 	except Exception as e:
 		pass
 	conn = sqlite3.connect(databaseFile)
-	cursor = conn.cursor()		 
+	cursor = conn.cursor()         
 	cursor.execute("""CREATE TABLE files (path text, name_ text, name text, folder text, stat text, attrib text, bytes int, size text, date_created_raw int, date_modified_raw int, date_created text, date_modified text, type text, typesort text, ext text, week_of_year text, week_of_year_ text, day_of_the_week text, month text, friendly_week text, friendly_month text)""")
 
 
@@ -556,22 +556,22 @@ def complete(one=False,two=False):
 	except Exception as e:
 		data = []
 	# # for d in data:
-	# 	# _.pr(d)
+	#     # _.pr(d)
 	# _.pr('data:',len(data))
 	# _.pr()
 	# try:
-	# 	_.pr(one,two)
+	#     _.pr(one,two)
 	# except Exception as e:
-	# 	try:
-	# 		_.pr('kwargs:',kwargs)
-	# 	except Exception as e:
-	# 		_.pr('Error: arg')
+	#     try:
+	#         _.pr('kwargs:',kwargs)
+	#     except Exception as e:
+	#         _.pr('Error: arg')
 
 
 	# _.saveTable(data,'Apps.dirCache.json')
 	# _.saveLog('queue')
 	# for d in data:
-	# 	_.pr(d)
+	#     _.pr(d)
 
 
 	# _.saveLog('queue')

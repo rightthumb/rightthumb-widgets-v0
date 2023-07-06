@@ -446,7 +446,7 @@ def processApp( path ):
 	global data
 	
 	# for x in myApps():
-	# 	_.pr(x)
+	#     _.pr(x)
 
 	# return {}
 	test = False
@@ -563,9 +563,9 @@ def processApp( path ):
 		imp = importlib.import_module( appName )
 
 		# if test:
-		# 	_.pr( 'imp:' )
-		# 	_.printVar( imp._.appInfo )
-		# 	_.pr()
+		#     _.pr( 'imp:' )
+		#     _.printVar( imp._.appInfo )
+		#     _.pr()
 		
 
 		iKeys = 0
@@ -688,7 +688,7 @@ def action():
 			info = processApp( row )
 			# try:
 			# except Exception as e:
-			# 	info = False
+			#     info = False
 			if not type( info ) == bool:
 				a = info['file']
 				if 'liveAppName' in info:

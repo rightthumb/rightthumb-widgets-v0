@@ -252,20 +252,20 @@ def processPage( i, book, url, qID=0 ):
 	tree = html.fromstring(page.content)
 	tr = tree.cssselect('tr')
 	for td in tr:
-		 if len(td) == 2:
-		 	verses = cleanupString(td[0].text_content()).replace('.','')
-		 	text = cleanupString(td[1].text_content())
+		if len(td) == 2:
+			verses = cleanupString(td[0].text_content()).replace('.','')
+			text = cleanupString(td[1].text_content())
 
-		 	try:
-		 		if len(data[i]['abbreviation']) < 2:
-			 		data[i]['abbreviation'] = verses.split(' ')[0]
-		 	except Exception as e:
-		 		data[i] = {}
-		 		data[i]['book'] = book
-		 		data[i]['abbreviation'] = verses.split(' ')[0]
-		 		data[i]['data'] = []
+			try:
+				if len(data[i]['abbreviation']) < 2:
+					data[i]['abbreviation'] = verses.split(' ')[0]
+			except Exception as e:
+				data[i] = {}
+				data[i]['book'] = book
+				data[i]['abbreviation'] = verses.split(' ')[0]
+				data[i]['data'] = []
 
-		 	data[i]['data'].append( { 'verses': verses, 'text': text } )
+			data[i]['data'].append( { 'verses': verses, 'text': text } )
 
 	_.pr(book,'complete')
 	_.threads.spent( qID, sys.getsizeof( 'obj') )

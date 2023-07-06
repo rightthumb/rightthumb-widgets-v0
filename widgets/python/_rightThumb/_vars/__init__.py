@@ -278,7 +278,7 @@ if __.isWin:
 	# fileName = home + slash+'.tk421'
 	fileName = home + slash+'.tk421'
 	# if not os.path.isfile( fileName ):
-	# 	open(fileName,'w', encoding='utf-8').write('C:\\.rightthumb-widgets')
+	#     open(fileName,'w', encoding='utf-8').write('C:\\.rightthumb-widgets')
 	# techDrive = open( fileName, 'r' ).read()
 	# techDrive = techDrive
 	# _.pr('techDrive',techDrive)
@@ -290,20 +290,20 @@ if __.isWin:
 			open(fileName,'w', encoding='utf-8').write( techDrive )
 w=techDrive
 # elif not __.isWin:
-# 	techDrive = '/opt/RightThumb'
-# 	try:
-# 		if not os.path.isdir(techDrive):
-# 			os.mkdir(techDrive)
-# 	except Exception as e:
-# 		if os.path.isdir('/home/ximlickficfp/cloud/files'):
-# 			techDrive = '/home/ximlickficfp/cloud/files'
+#     techDrive = '/opt/RightThumb'
+#     try:
+#         if not os.path.isdir(techDrive):
+#             os.mkdir(techDrive)
+#     except Exception as e:
+#         if os.path.isdir('/home/ximlickficfp/cloud/files'):
+#             techDrive = '/home/ximlickficfp/cloud/files'
 	# fileName = home + slash+'.tk421'
 	# fileNameHost = home + slash+'.ncc1701'
 	# fileName = fileName.replace( slashes['windows'], slash )
 	# if not os.path.isfile( fileNameHost ):
-	# 	open(fileNameHost,'w', encoding='utf-8').write(computername)
+	#     open(fileNameHost,'w', encoding='utf-8').write(computername)
 	# if not os.path.isfile( fileName ):
-	# 	open(fileName,'w', encoding='utf-8').write(home)
+	#     open(fileName,'w', encoding='utf-8').write(home)
 	# techDrive = open( fileName, 'r' ).read()
 def ddDim(xyz):
 	return xyz
@@ -1035,7 +1035,7 @@ def createDestinationFolders( folder, o=None, isFile=False, p=False, f=None, pop
 	
 	# ??????
 	# if not os.path.isdir( parts[0] ):
-	# 	return folder
+	#     return folder
 	# ??????
 
 		# _.colorThis( 'Error: Destination drive does not exist', 'red' )
@@ -1068,7 +1068,7 @@ def dir_check_create( folder ):
 		techDrive = techDrive.replace( slashes['windows'], slash )
 		techDrive = techDrive.replace( ':', '' )
 	# if techDrive in folder:
-	# 	folder = techDrive+dDim+slash+folder
+	#     folder = techDrive+dDim+slash+folder
 	# _.pr(folder)
 	# _.pr( folder )
 	if os.path.isdir( folder ):
@@ -1095,7 +1095,7 @@ def dir_check_create( folder ):
 		f = slash.join( newParts )
 		f = t+slash+f
 		# if not techDrive in f:
-		# 	f = techDrive+dDim+slash+f
+		#     f = techDrive+dDim+slash+f
 		# _.pr(f)
 		exist = os.path.isdir( f )
 		# _.pr( 'exist:', exist, f, '\r\n' )
@@ -1308,9 +1308,9 @@ def resolveFolderIDs( id_path ):
 	id_path = id_path.replace( folderID_host, thisHost )
 	# id_path = id_path.replace( folderID_tech, techFolder )
 	# if __.isWin:
-	# 	id_path = id_path.replace( os.environ['USERPROFILE'], folderID_profile )
+	#     id_path = id_path.replace( os.environ['USERPROFILE'], folderID_profile )
 	# elif not __.isWin:
-	# 	id_path = id_path.replace( os.environ['HOME'], folderID_profile )
+	#     id_path = id_path.replace( os.environ['HOME'], folderID_profile )
 	
 	# id_path = id_path.replace( folderID_host, thisHost )
 	# if not __.isWin:
@@ -1401,18 +1401,18 @@ def batch_files():
 		global slash
 		## OLD_INSTALLER
 		# if __.isWin:
-		# 	if not os.path.isfile( widgets+os.sep+'widgets'+ slash+'batch\\c.bat' ):
-		# 		from _rightThumb._vars import batch_c
-		# 		batch_c.GENERATE_FILE(widgets)
-		# 	if not os.path.isfile( home + slash+'cc.bat' ):
-		# 		from _rightThumb._vars import batch_cc
-		# 		batch_cc.GENERATE_FILE(home)
-		# 	if not os.path.isfile( widgets+os.sep+'widgets'+ slash+'batch\\timestamp.bat' ):
-		# 		from _rightThumb._vars import batch_timestamp
-		# 		batch_timestamp.GENERATE_FILE(widgets)
-		# 	if not os.path.isfile( widgets+os.sep+'widgets'+ slash+'batch\\theUSB.bat' ):
-		# 		from _rightThumb._vars import batch_theUSB
-		# 		batch_theUSB.GENERATE_FILE(widgets)
+		#     if not os.path.isfile( widgets+os.sep+'widgets'+ slash+'batch\\c.bat' ):
+		#         from _rightThumb._vars import batch_c
+		#         batch_c.GENERATE_FILE(widgets)
+		#     if not os.path.isfile( home + slash+'cc.bat' ):
+		#         from _rightThumb._vars import batch_cc
+		#         batch_cc.GENERATE_FILE(home)
+		#     if not os.path.isfile( widgets+os.sep+'widgets'+ slash+'batch\\timestamp.bat' ):
+		#         from _rightThumb._vars import batch_timestamp
+		#         batch_timestamp.GENERATE_FILE(widgets)
+		#     if not os.path.isfile( widgets+os.sep+'widgets'+ slash+'batch\\theUSB.bat' ):
+		#         from _rightThumb._vars import batch_theUSB
+		#         batch_theUSB.GENERATE_FILE(widgets)
 if not __.autoCreationConfiguration['created']['_vars']:
 	dir_structure()
 	batch_files()

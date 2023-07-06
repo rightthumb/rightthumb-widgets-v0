@@ -72,12 +72,12 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
-				       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 
 	}
@@ -178,20 +178,20 @@ def action():
 				sys.exit()
 
 	"""
-    {
-        "id": "{05A05E79-56FA-86EC-69F5-9913529FA9AC}",
-        "timestamp": 1551215270.9417222,
-        "file": "D:\\tech\\programs\\python\\src\\windows\\txtRecover.py",
-        "backup": "D:\\tech\\hosts\\MSI\\backup\\txt\\1551215270.9417222-2019_02_26-16_03_41-txtRecover.py",
-        "mime": "text",
-        "status": 1,
-        "version": "0.0.0.1",
-        "v": 0,
-        "v1": 0,
-        "v2": 0,
-        "v3": 1,
-        "flag": ""
-    }
+	{
+		"id": "{05A05E79-56FA-86EC-69F5-9913529FA9AC}",
+		"timestamp": 1551215270.9417222,
+		"file": "D:\\tech\\programs\\python\\src\\windows\\txtRecover.py",
+		"backup": "D:\\tech\\hosts\\MSI\\backup\\txt\\1551215270.9417222-2019_02_26-16_03_41-txtRecover.py",
+		"mime": "text",
+		"status": 1,
+		"version": "0.0.0.1",
+		"v": 0,
+		"v1": 0,
+		"v2": 0,
+		"v3": 1,
+		"flag": ""
+	}
 	"""
 
 

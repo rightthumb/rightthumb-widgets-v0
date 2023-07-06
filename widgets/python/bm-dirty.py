@@ -48,7 +48,7 @@ __.switch_raw = []
 _.appInfo[focus()] = {
 	'file': 'bm-dirty.py',
 	'liveAppName': __.thisApp( __file__ ),
- 	'description': 'auto add bookmarks',
+	'description': 'auto add bookmarks',
 	'categories': [
 						'bookmarks',
 						'default',
@@ -83,15 +83,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
-				       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-				       # {},
+					# {},
 	],
 }
 

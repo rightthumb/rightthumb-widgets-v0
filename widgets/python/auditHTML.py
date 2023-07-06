@@ -285,195 +285,195 @@ def getPageStructure(url,report):
 	except Exception as e:
 		pass
 # def getPageStructure(url,report):
-# 	global projectReport
-# 	global theCount
-# 	global duplicateText
-# 	global thisWebPage
+#     global projectReport
+#     global theCount
+#     global duplicateText
+#     global thisWebPage
 
-# 	projectReport = []
-# 	thisWebPage = getPage(url)
-# 	_.pr()
-# 	_.pr()
-# 	_.pr(url)
-# 	_.pr()
-# 	_.pr()
-# 	first_child = thisWebPage.find("body")
-# 	for i,ch in enumerate(first_child.children):
-# 		data = { 'data': [], 'el': [], 'ids': [], 'timestart': time.time()}
-# 		thinkOfTheChildren(ch,data)
-# 	report['structure'] = projectReport
-# 	# try:
-# 	# except Exception as e:
-# 	# 	_.pr('children error')
-# 	# 	return ''
-# 	return report
+#     projectReport = []
+#     thisWebPage = getPage(url)
+#     _.pr()
+#     _.pr()
+#     _.pr(url)
+#     _.pr()
+#     _.pr()
+#     first_child = thisWebPage.find("body")
+#     for i,ch in enumerate(first_child.children):
+#         data = { 'data': [], 'el': [], 'ids': [], 'timestart': time.time()}
+#         thinkOfTheChildren(ch,data)
+#     report['structure'] = projectReport
+#     # try:
+#     # except Exception as e:
+#     #     _.pr('children error')
+#     #     return ''
+#     return report
 ####################################################################################
 
 # def thinkOfTheChildren(obj,report,path='-'):
-# 	global projectReport
-# 	global theCount
-# 	global pathOmitList
-# 	global objOmitList
-# 	global objOmitListContains
-# 	global duplicateText
+#     global projectReport
+#     global theCount
+#     global pathOmitList
+#     global objOmitList
+#     global objOmitListContains
+#     global duplicateText
 
-# 	objLength = 4
-# 	try:
-# 		path += ':' + obj.name
-# 	except Exception as e:
-# 		path += ':-'
-# 	try:
-# 		# if not scriptText in path:
-# 		# 	ids = str(obj.get('id'))
-# 		# 	if not ids == 'None':
-# 		report['ids'].append()
-# 	except Exception as e:
-# 		pass
-# 	try:
-# 		# path += ':[' + obj.name + ':' + obj.get('id') + '(' + obj.get('class') + ')]'
-# 		path += '[' + obj.get('id') + ']'
-# 	except Exception as e:
-# 		pass
-# 	# try:
-# 	# 	if len(str(obj)) > 2:
-# 	# 		report['el'].append({'path': path,'obj': str(obj)})
-# 	# except Exception as e:
-# 	# 	pass
-# 	# try:
-# 	# 	# path += ':[' + obj.name + ':' + obj.get('id') + '(' + obj.get('class') + ')]'
-# 	# 	# path += '(' + obj.get('class') + ')'
-# 	# 	try:
-# 	# 		pass
-# 	# 		shouldAdd = True
-# 	# 		for omit in pathOmitList:
-# 	# 			if omit in path:
-# 	# 				shouldAdd = False
+#     objLength = 4
+#     try:
+#         path += ':' + obj.name
+#     except Exception as e:
+#         path += ':-'
+#     try:
+#         # if not scriptText in path:
+#         #     ids = str(obj.get('id'))
+#         #     if not ids == 'None':
+#         report['ids'].append()
+#     except Exception as e:
+#         pass
+#     try:
+#         # path += ':[' + obj.name + ':' + obj.get('id') + '(' + obj.get('class') + ')]'
+#         path += '[' + obj.get('id') + ']'
+#     except Exception as e:
+#         pass
+#     # try:
+#     #     if len(str(obj)) > 2:
+#     #         report['el'].append({'path': path,'obj': str(obj)})
+#     # except Exception as e:
+#     #     pass
+#     # try:
+#     #     # path += ':[' + obj.name + ':' + obj.get('id') + '(' + obj.get('class') + ')]'
+#     #     # path += '(' + obj.get('class') + ')'
+#     #     try:
+#     #         pass
+#     #         shouldAdd = True
+#     #         for omit in pathOmitList:
+#     #             if omit in path:
+#     #                 shouldAdd = False
 
-# 	# 		if shouldAdd and not obj == '\n' and len(obj) > objLength and not obj.startswith('<!'):
-# 	# 			report['data'].append({'path': path,'attrib': dict(obj.attrs.values())})
-# 	# 	except Exception as e:
-# 	# 		try:
-# 	# 			shouldAdd = True
-# 	# 			for omit in pathOmitList:
-# 	# 				if omit in path:
-# 	# 					shouldAdd = False
+#     #         if shouldAdd and not obj == '\n' and len(obj) > objLength and not obj.startswith('<!'):
+#     #             report['data'].append({'path': path,'attrib': dict(obj.attrs.values())})
+#     #     except Exception as e:
+#     #         try:
+#     #             shouldAdd = True
+#     #             for omit in pathOmitList:
+#     #                 if omit in path:
+#     #                     shouldAdd = False
 
-# 	# 			if shouldAdd and not obj == '\n' and len(obj) > objLength and not obj.startswith('<!'):
-# 	# 				report['data'].append({'path': path,'attrib': list(obj.attrs.values())})
-# 	# 		except Exception as e:
-# 	# 			pass
-# 	# except Exception as e:
-# 	# 	pass
+#     #             if shouldAdd and not obj == '\n' and len(obj) > objLength and not obj.startswith('<!'):
+#     #                 report['data'].append({'path': path,'attrib': list(obj.attrs.values())})
+#     #         except Exception as e:
+#     #             pass
+#     # except Exception as e:
+#     #     pass
 
-# 	# try:
-# 	# 	test = 1
-# 	# 	for ch in obj.children:
-# 	# 		pass
-# 	# 		# thinkOfTheChildren(ch,report,path)
-# 	# except Exception as e:
-# 	# 	test = 0
-
-
-# 	shouldFindChildren = True
-# 	shouldAdd = True
-# 	showError = True
-
-# 	if not obj.children:
-# 	# if True:
-# 	# if False:
-# 		_.pr('no children')
-# 		try:
-# 			obj = cleanText(obj)
-# 			if showError:
-# 				_.pr()
-# 			if shouldAdd:
-# 				for omit in pathOmitList:
-# 					if omit in path:
-# 						shouldAdd = False
-# 						# shouldFindChildren = False
-# 						if showError:
-# 							_.pr(0)
-# 			if shouldAdd:
-# 				for omit in objOmitListContains:
-# 					if omit.lower() in obj.lower():
-# 						shouldAdd = False
-# 						if showError:
-# 							_.pr(1)
-# 			if shouldAdd:
-# 				for omit in objOmitList:
-# 					if omit == obj:
-# 						shouldAdd = False
-# 						# shouldFindChildren = False
-# 						if showError:
-# 							_.pr(2)
-# 			if shouldAdd:
-# 				for omit in duplicateText:
-# 					if omit == obj and not path.endswith('span:-"') and not path.endswith('span"'):
-# 						shouldAdd = False
-# 						if showError:
-# 							_.pr(3)
-# 			if shouldAdd:
-# 				if obj.startswith('.'):
-# 					shouldAdd = False
-# 					if showError:
-# 						_.pr(4)
-# 			if shouldAdd:
-# 				if len(obj) <= objLength:
-# 					shouldAdd = False
-# 					if showError:
-# 						_.pr(5)
-# 			# if shouldAdd:
-# 			# 	if not obj.startswith('<!'):
-# 			# 		shouldAdd = False
-# 			# 		if showError:
-# 			# 			_.pr(6)
-# 			if shouldAdd:
-# 				if path == '-:-':
-# 					shouldAdd = False
-# 					if showError:
-# 						_.pr(7)
-# 		except Exception as e:
-# 			shouldAdd = False
+#     # try:
+#     #     test = 1
+#     #     for ch in obj.children:
+#     #         pass
+#     #         # thinkOfTheChildren(ch,report,path)
+#     # except Exception as e:
+#     #     test = 0
 
 
+#     shouldFindChildren = True
+#     shouldAdd = True
+#     showError = True
+
+#     if not obj.children:
+#     # if True:
+#     # if False:
+#         _.pr('no children')
+#         try:
+#             obj = cleanText(obj)
+#             if showError:
+#                 _.pr()
+#             if shouldAdd:
+#                 for omit in pathOmitList:
+#                     if omit in path:
+#                         shouldAdd = False
+#                         # shouldFindChildren = False
+#                         if showError:
+#                             _.pr(0)
+#             if shouldAdd:
+#                 for omit in objOmitListContains:
+#                     if omit.lower() in obj.lower():
+#                         shouldAdd = False
+#                         if showError:
+#                             _.pr(1)
+#             if shouldAdd:
+#                 for omit in objOmitList:
+#                     if omit == obj:
+#                         shouldAdd = False
+#                         # shouldFindChildren = False
+#                         if showError:
+#                             _.pr(2)
+#             if shouldAdd:
+#                 for omit in duplicateText:
+#                     if omit == obj and not path.endswith('span:-"') and not path.endswith('span"'):
+#                         shouldAdd = False
+#                         if showError:
+#                             _.pr(3)
+#             if shouldAdd:
+#                 if obj.startswith('.'):
+#                     shouldAdd = False
+#                     if showError:
+#                         _.pr(4)
+#             if shouldAdd:
+#                 if len(obj) <= objLength:
+#                     shouldAdd = False
+#                     if showError:
+#                         _.pr(5)
+#             # if shouldAdd:
+#             #     if not obj.startswith('<!'):
+#             #         shouldAdd = False
+#             #         if showError:
+#             #             _.pr(6)
+#             if shouldAdd:
+#                 if path == '-:-':
+#                     shouldAdd = False
+#                     if showError:
+#                         _.pr(7)
+#         except Exception as e:
+#             shouldAdd = False
 
 
 
-# 		if shouldAdd:
-# 			if showError:
-# 				_.pr('attempt')
-# 			duplicateText.append(obj)
-# 			# _.pr(obj)
-# 			report['el'].append({'path': path,'obj': obj})
-# 			report['timeend'] = time.time()
-# 			# if theCount <= 100:
-# 			projectReport.append(report)
-# 			# _.pr(report)
-# 			# theCount += 1
-# 			# report = []
-# 		if not shouldAdd:
-# 			pass
-# 			# report = []
+
+
+#         if shouldAdd:
+#             if showError:
+#                 _.pr('attempt')
+#             duplicateText.append(obj)
+#             # _.pr(obj)
+#             report['el'].append({'path': path,'obj': obj})
+#             report['timeend'] = time.time()
+#             # if theCount <= 100:
+#             projectReport.append(report)
+#             # _.pr(report)
+#             # theCount += 1
+#             # report = []
+#         if not shouldAdd:
+#             pass
+#             # report = []
 
 
 
-# 	try:
-# 		if shouldFindChildren:
-# 			for ch in obj.children:
-# 				thinkOfTheChildren(ch,report,path)
-# 	except Exception as e:
-# 		pass
-# 		# _.pr(path,obj)
+#     try:
+#         if shouldFindChildren:
+#             for ch in obj.children:
+#                 thinkOfTheChildren(ch,report,path)
+#     except Exception as e:
+#         pass
+#         # _.pr(path,obj)
 
 
 
 # def checkComplete(pinID):
-# 	global projectReport
-# 	result = True
-# 	for pr in projectReport:
-# 		if pr['pinID'] == pinID:
-# 			result = False
-# 	return result
+#     global projectReport
+#     result = True
+#     for pr in projectReport:
+#         if pr['pinID'] == pinID:
+#             result = False
+#     return result
 ####################################################################################
 
 ####################################################################################
@@ -490,11 +490,11 @@ def thinkOfTheChildren(obj,report,path='-'):
 	except Exception as e:
 		path += ':-'
 	# try:
-	# 	ids = str(obj.get('id'))
-	# 	if not ids == 'None':
-	# 		report['ids'].append(ids)
+	#     ids = str(obj.get('id'))
+	#     if not ids == 'None':
+	#         report['ids'].append(ids)
 	# except Exception as e:
-	# 	pass
+	#     pass
 	try:
 		path += '[' + obj.get('id') + ']'
 	except Exception as e:
@@ -509,12 +509,12 @@ def thinkOfTheChildren(obj,report,path='-'):
 	except Exception as e:
 		pass
 		# try:
-		# 	report['data'].append( { 'path': path, 'pathlength': path.count(':'), 'attrib': dict(obj.attrs.values()) } )
+		#     report['data'].append( { 'path': path, 'pathlength': path.count(':'), 'attrib': dict(obj.attrs.values()) } )
 		# except Exception as e:
-		# 	try:
-		# 		report['data'].append( { 'path': path, 'pathlength': path.count(':'), 'attrib': list(obj.attrs.values()) } )
-		# 	except Exception as e:
-		# 		pass
+		#     try:
+		#         report['data'].append( { 'path': path, 'pathlength': path.count(':'), 'attrib': list(obj.attrs.values()) } )
+		#     except Exception as e:
+		#         pass
 
 
 
@@ -538,15 +538,15 @@ def thinkOfTheChildren(obj,report,path='-'):
 			# _.pr('added')
 			# pause = input('pause')
 			# try:
-			# 	try:
-			# 		attrib = dict(obj.attrs.values())
-			# 	except Exception as e:
-			# 		try:
-			# 			attrib = list(obj.attrs.values())
-			# 		except Exception as e:
-			# 			attrib = False
+			#     try:
+			#         attrib = dict(obj.attrs.values())
+			#     except Exception as e:
+			#         try:
+			#             attrib = list(obj.attrs.values())
+			#         except Exception as e:
+			#             attrib = False
 			# except Exception as e:
-			# 	attrib = False
+			#     attrib = False
 			# _.pr(obj)
 
 
@@ -603,7 +603,7 @@ def shouldThisBeAdded(objx,path):
 		if len(obj) < 5:
 			shouldAdd = False
 			# if showError:
-			# 	_.pr('00 first len')
+			#     _.pr('00 first len')
 		else:
 			obj = cleanText(obj)
 			objW = obj
@@ -668,8 +668,8 @@ def shouldThisBeAdded(objx,path):
 			# _.pr('not shouldAdd')
 			objW = ''
 		# else:
-		# 	if pauseError:
-		# 		pause = input('pause')
+		#     if pauseError:
+		#         pause = input('pause')
 		return cleanText(objW)
 	except Exception as e:
 		obj = ''
@@ -677,47 +677,47 @@ def shouldThisBeAdded(objx,path):
 		# _.pr('obj 4:',len(obj),obj)
 		return ''
 	# if shouldAdd:
-	# 	_.pr('pass 0')
-	# 	_.pr('obj:',len(obj),obj)
+	#     _.pr('pass 0')
+	#     _.pr('obj:',len(obj),obj)
 
 ####################################################################################
 ####################################################################################
 # def thinkOfTheChildren(obj,report,path='-'):
-# 	global projectReport
-# 	try:
-# 		path += ':' + obj.name
-# 	except Exception as e:
-# 		path += ':-'
-# 	try:
-# 		ids = str(obj.get('id'))
-# 		if not ids == 'None':
-# 			report['ids'].append()
-# 	except Exception as e:
-# 		pass
-# 	try:
-# 		path += '[' + obj.get('id') + ']'
-# 	except Exception as e:
-# 		pass
-# 	try:
-# 		try:
-# 			report['data'].append({'path': path,'attrib': dict(obj.attrs.values())})
-# 		except Exception as e:
-# 			try:
-# 				report['data'].append({'path': path,'attrib': list(obj.attrs.values())})
-# 			except Exception as e:
-# 				pass
-# 	except Exception as e:
-# 		pass
-# 	try:
-# 		test = 1
-# 		for ch in obj.children:
-# 			thinkOfTheChildren(ch,report,path)
-# 	except Exception as e:
-# 		test = 0
-# 	if not test:
-# 		report['el'].append({'path': path,'obj': obj})
-# 		report['timeend'] = time.time()
-# 		projectReport.append(report)
+#     global projectReport
+#     try:
+#         path += ':' + obj.name
+#     except Exception as e:
+#         path += ':-'
+#     try:
+#         ids = str(obj.get('id'))
+#         if not ids == 'None':
+#             report['ids'].append()
+#     except Exception as e:
+#         pass
+#     try:
+#         path += '[' + obj.get('id') + ']'
+#     except Exception as e:
+#         pass
+#     try:
+#         try:
+#             report['data'].append({'path': path,'attrib': dict(obj.attrs.values())})
+#         except Exception as e:
+#             try:
+#                 report['data'].append({'path': path,'attrib': list(obj.attrs.values())})
+#             except Exception as e:
+#                 pass
+#     except Exception as e:
+#         pass
+#     try:
+#         test = 1
+#         for ch in obj.children:
+#             thinkOfTheChildren(ch,report,path)
+#     except Exception as e:
+#         test = 0
+#     if not test:
+#         report['el'].append({'path': path,'obj': obj})
+#         report['timeend'] = time.time()
+#         projectReport.append(report)
 ####################################################################################
 ####################################################################################
 
@@ -746,9 +746,9 @@ def action():
 			saveResults(getRemote(url))
 		else:
 			# try:
-			# 	thisWebPage = getPage(url)
+			#     thisWebPage = getPage(url)
 			# except Exception as e:
-			# 	thisWebPage = ''
+			#     thisWebPage = ''
 			pageTitle = getPageTitle(url)
 			_.pr('title:',pageTitle)
 			pinID = extractID(url)
@@ -779,15 +779,15 @@ def action():
 					_.pr()
 						# _.pr(pinID)
 					# try:
-					# 	thisWebPage = getPage(td)
+					#     thisWebPage = getPage(td)
 					# except Exception as e:
-					# 	thisWebPage = ''
+					#     thisWebPage = ''
 					# if thisWebPage == '':
-					# 	_.pr('get error:',pinID)
+					#     _.pr('get error:',pinID)
 					# else:
 					# try:
 					# except Exception as e:
-					# 	pass
+					#     pass
 					_.pr(_dir.formatSize(_dir.getSize(td)),pinID)
 					pageTitle = getPageTitle(td)
 					# _.pr('title:',pageTitle)
@@ -796,7 +796,7 @@ def action():
 					getPageStructure(td,report)
 					
 					# except Exception as e:
-					# 	pass
+					#     pass
 					thisWebPage = True
 					dataPath = 'D:\\Pinterest_Cache_Report\\Pinterest_Page_Cache_Report_ID-THEID.json'
 					jsonFile = dataPath.replace('THEID',pinID)
@@ -807,20 +807,20 @@ def action():
 						if projectReportSize > 100:
 							_.pr('memory:',projectReportSize)
 							# _.pr(projectReport)
-							_.saveTable2(projectReport,jsonFile, printThis=True	)
+							_.saveTable2(projectReport,jsonFile, printThis=True    )
 						else:
 							_.pr('Memory error:',projectReportSize)
 						projectReport = []
 
 
 		# for item in dirList:
-		# 	path = folder + _v.slash + item
-		# 	if os.path.isfile(item):
-		# 	# if os.path.isdir(item) == True:
-		# 		if _mime.isText(item) and _.showLine(item):
-		# 			saveResults(getLocal(item))
+		#     path = folder + _v.slash + item
+		#     if os.path.isfile(item):
+		#     # if os.path.isdir(item) == True:
+		#         if _mime.isText(item) and _.showLine(item):
+		#             saveResults(getLocal(item))
 					
-		# 			i = i + 1
+		#             i = i + 1
 # saveResults(getLocal(item))
 if __name__ == '__main__':
 	projectReport = []

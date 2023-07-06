@@ -23,25 +23,25 @@ t1 = datetime.now()
 # We also put in some error handling for catching errors
 
 try:
-    for port in range(1, 1025):
-        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        sock.settimeout(.10)
-        result = sock.connect_ex((remoteServerIP, port))
-        if result == 0:
-            print("Port {}: \t Open".format(port))
-        sock.close()
+	for port in range(1, 1025):
+		sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+		sock.settimeout(.10)
+		result = sock.connect_ex((remoteServerIP, port))
+		if result == 0:
+			print("Port {}: \t Open".format(port))
+		sock.close()
 
 except KeyboardInterrupt:
-    print("You pressed Ctrl+C")
-    sys.exit()
+	print("You pressed Ctrl+C")
+	sys.exit()
 
 except socket.gaierror:
-    print('Hostname could not be resolved. Exiting')
-    sys.exit()
+	print('Hostname could not be resolved. Exiting')
+	sys.exit()
 
 except socket.error:
-    print("Couldn't connect to server")
-    sys.exit()
+	print("Couldn't connect to server")
+	sys.exit()
 
 # Checking the time again
 t2 = datetime.now()

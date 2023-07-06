@@ -41,7 +41,7 @@ _.load()
 import _rightThumb._vars as _v
 import _rightThumb._string as _str
 # import _rightThumb._profileVariables as _profile
-# 	profile = _profile.records.audit( 'name', asset )
+#     profile = _profile.records.audit( 'name', asset )
 # import _rightThumb._encryptString as _blowfish
 	# en = _blowfish.encrypt( string )
 	# de = _blowfish.decrypt( en )
@@ -104,11 +104,11 @@ _.appInfo[focus()] = {
 						''
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': 'name', 'abbreviation': 'n' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 
 	}
@@ -297,16 +297,16 @@ def getPage( url ):
 def action():
 	load()
 	# if _.switches.isActive( 'Folder' ):
-	# 	if os.path.isdir( _.switches.value( 'Folder' ) ):
-	# 		folder = _.switches.value( 'Folder' )
-	# 	else:
-	# 		folder = _.ci( _.switches.value( 'Folder' ) )
+	#     if os.path.isdir( _.switches.value( 'Folder' ) ):
+	#         folder = _.switches.value( 'Folder' )
+	#     else:
+	#         folder = _.ci( _.switches.value( 'Folder' ) )
 	# else:
-	# 	folder = os.getcwd()
+	#     folder = os.getcwd()
 
 	# if not os.path.isdir( folder ):
-	# 	_.pr( 'Error: folder' )
-	# 	sys.exit()
+	#     _.pr( 'Error: folder' )
+	#     sys.exit()
 	if not _.switches.isActive( 'Input' ):
 		getPage( 'https://wtffunfact.com/' )
 	else:

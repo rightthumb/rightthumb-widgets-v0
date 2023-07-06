@@ -98,15 +98,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-					   # { 'name': 'name', 'abbreviation': 'n' },
-					   # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-					   # 'this',
-					   # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-					   # {},
+					# {},
 	],
 }
 
@@ -293,7 +293,7 @@ def process(fi):
 		# _.pr(  x, _code.imp.validator.identity['identity'][x]  )
 
 	# for x in index['list']:
-	# 	_.pr(  _code.imp.validator.assetSnipet( x['start'], x['end'] )  )
+	#     _.pr(  _code.imp.validator.assetSnipet( x['start'], x['end'] )  )
 
 
 	# indexes profile

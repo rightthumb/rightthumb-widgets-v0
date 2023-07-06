@@ -89,11 +89,11 @@ _.appInfo[focus()] = {
 						''
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': 'name', 'abbreviation': 'n' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 
 	}
@@ -245,9 +245,9 @@ def process():
 	# # _.printVar( namespace )
 
 	# for ns in namespace:
-	# 	if ns['ns'] == 'family.talk.adherence':
-	# 		_.printVar( ns )
-	# 		_code.imp.validator.printPos( ns['record']['start'], ns['record']['end'] )
+	#     if ns['ns'] == 'family.talk.adherence':
+	#         _.printVar( ns )
+	#         _code.imp.validator.printPos( ns['record']['start'], ns['record']['end'] )
 
 
 

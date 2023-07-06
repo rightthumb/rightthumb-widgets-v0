@@ -18,7 +18,7 @@ decoded = base64.b64decode(emoji_encoded)
 emojis = ''
 
 for x in str(decoded.decode('utf-8')):
-    emojis+=x
+	emojis+=x
 
 icons=list(emojis)
 

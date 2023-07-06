@@ -130,22 +130,22 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-				       { 'name': 'name', 'abbreviation': 'n' },
-				       # { 'name': 'path', 'abbreviation': 'p' },
-				       { 'name': 'resolved', 'abbreviation': 'r' },
-				       { 'name': 'date', 'abbreviation': 'd' },
-				       { 'name': 'backup', 'abbreviation': 'b' },
-				       { 'name': 'copied', 'abbreviation': 'c' },
-				       { 'name': 'version', 'abbreviation': 'v' },
-				       { 'name': 'timestamp', 'abbreviation': 't' },
-				       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					{ 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': 'path', 'abbreviation': 'p' },
+					{ 'name': 'resolved', 'abbreviation': 'r' },
+					{ 'name': 'date', 'abbreviation': 'd' },
+					{ 'name': 'backup', 'abbreviation': 'b' },
+					{ 'name': 'copied', 'abbreviation': 'c' },
+					{ 'name': 'version', 'abbreviation': 'v' },
+					{ 'name': 'timestamp', 'abbreviation': 't' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-				       # {},
+					# {},
 	],
 }
 
@@ -261,8 +261,8 @@ class backupLogManager:
 
 
 		# if copy and self.settings.versions:
-		# 	_.cp( [ 'Disabled: log.settings.versions' ], 'green' )
-		# 	self.settings.versions = False
+		#     _.cp( [ 'Disabled: log.settings.versions' ], 'green' )
+		#     self.settings.versions = False
 
 
 		self.ago = ago
@@ -452,8 +452,8 @@ class backupLogManager:
 
 
 		# for record in self.log:
-		# 	_.pr( ' '.join(list(record.keys())) )
-		# 	sys.exit()
+		#     _.pr( ' '.join(list(record.keys())) )
+		#     sys.exit()
 
 	def copyFile( self, path=None, fileID=None ):
 		if not fileID is None:
@@ -528,7 +528,7 @@ class backupLogManager:
 							for ext in self.extensions:
 								if file['name'].lower().endswith( ext ):
 									shouldAdd = True
-						 
+						
 						if self.settings.fileExists:
 							if not os.path.isfile( file['file'] ):
 								shouldAdd = False

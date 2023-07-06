@@ -51,7 +51,7 @@ __.isRequired_Pipe_or_File = False
 _.appInfo[focus()] = {
 	'file': 'Bible_Patterns.py',
 	'liveAppName': __.thisApp( __file__ ),
- 	'description': 'Build index of every pattern in the Bible',
+	'description': 'Build index of every pattern in the Bible',
 	'categories': [
 						'Bible',
 						'pattern',
@@ -74,11 +74,11 @@ _.appInfo[focus()] = {
 						''
 	],
 	'columns': [
-					   # { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': 'name', 'abbreviation': 'n' },
 	],
 	'aliases': [
-					   # 'this',
-					   # 'app',
+					# 'this',
+					# 'app',
 	],
 
 	}
@@ -194,9 +194,9 @@ def newAbbreviations():
 		# _.pr( br )
 		abbreviation = br.split(',')[1]
 		n = {
-				'book':		br.split(',')[0],
-				'abbreviation':	br.split(',')[1],
-				'minimal':	sections[str(i)]['abbreviation']
+				'book':        br.split(',')[0],
+				'abbreviation':    br.split(',')[1],
+				'minimal':    sections[str(i)]['abbreviation']
 		}
 		booksNew.append( n )
 
@@ -254,7 +254,7 @@ def action():
 	global omit_words
 	from nltk.stem import PorterStemmer
 	from nltk.tokenize import word_tokenize
-	   
+	
 	ps = PorterStemmer() 
 	if _.switches.isActive('Verses'):
 
@@ -432,13 +432,13 @@ def action():
 
 				newPattern = ''
 				for pos in index[k][i]['pos']:
-				  nW = test[i]['data'][pos]
-				  if nW in cache.keys():
-					  pst = cache[   nW   ]
-				  else:
-					  pst = ps.stem( nW )
-					  cache[   nW   ] = ps.stem( nW )
-				  newPattern += '_' + pst
+				nW = test[i]['data'][pos]
+				if nW in cache.keys():
+					pst = cache[   nW   ]
+				else:
+					pst = ps.stem( nW )
+					cache[   nW   ] = ps.stem( nW )
+				newPattern += '_' + pst
 				newPattern = _str.cleanBE( newPattern , '_' )
 				index[k][i]['pattern'] = newPattern
 				# _.pr(index[k][i]['pattern'])
@@ -446,16 +446,16 @@ def action():
 
 
 				# if index[k][i]['pattern'] in pattern_index.keys():
-				# 	MxPx = str(index[k][i])
-				# 	found = False
-				# 	for MyPy in pattern_index[ index[k][i]['pattern']  ]:
-				# 		if MxPx == str(MyPy):
-				# 			found = True
-				# 	if not found:
-				# 		pattern_index[ index[k][i]['pattern']  ].append( index[k][i] )
+				#     MxPx = str(index[k][i])
+				#     found = False
+				#     for MyPy in pattern_index[ index[k][i]['pattern']  ]:
+				#         if MxPx == str(MyPy):
+				#             found = True
+				#     if not found:
+				#         pattern_index[ index[k][i]['pattern']  ].append( index[k][i] )
 				# else:
-				# 	pattern_index[ index[k][i]['pattern']  ] = []
-				# 	pattern_index[ index[k][i]['pattern']  ].append( index[k][i] )
+				#     pattern_index[ index[k][i]['pattern']  ] = []
+				#     pattern_index[ index[k][i]['pattern']  ].append( index[k][i] )
 
 
 
@@ -510,18 +510,18 @@ def action():
 				index[k][i]['pos'].sort()
 								
 			# for add in test[xK]['add']:
-			# 	words['pos'].append(add)
+			#     words['pos'].append(add)
 			# words['pos'].sort()
 
 				newPattern = ''
 				for pos in index[k][i]['pos']:
-				  nW = test[i]['data'][pos]
-				  if nW in cache.keys():
-					  pst = cache[   nW   ]
-				  else:
-					  pst = ps.stem( nW )
-					  cache[   nW   ] = ps.stem( nW )
-				  newPattern += '_' + pst
+				nW = test[i]['data'][pos]
+				if nW in cache.keys():
+					pst = cache[   nW   ]
+				else:
+					pst = ps.stem( nW )
+					cache[   nW   ] = ps.stem( nW )
+				newPattern += '_' + pst
 				newPattern = _str.cleanBE( newPattern , '_' )
 				index[k][i]['pattern'] = newPattern
 				# _.pr(index[k][i]['pattern'])
@@ -569,31 +569,31 @@ def action():
 
 
 	# for k in index.keys():
-	# 	for i, words in enumerate(index[k]):
-	# 		text = getVerseByIndex( words['id'] )
-	# 		if len( words['pos'] ) > 2:
-	# 			thisPattern = []
-	# 			for pos in words['pos']:
-	# 				spentIDs[ words['id'] ].append( pos )
-	# 				if text[  pos  ] in cache.keys():
-	# 					pst = cache[   text[  pos  ]   ]
-	# 				else:
-	# 					pst = ps.stem( text[  pos  ] )
-	# 					cache[   text[  pos  ]   ] = ps.stem( text[  pos  ] )
-	# 				thisPattern.append( pst )
-	# 			words['pattern'] = '_'.join( thisPattern )
-	# 			# _.pr( words['pattern'] )
+	#     for i, words in enumerate(index[k]):
+	#         text = getVerseByIndex( words['id'] )
+	#         if len( words['pos'] ) > 2:
+	#             thisPattern = []
+	#             for pos in words['pos']:
+	#                 spentIDs[ words['id'] ].append( pos )
+	#                 if text[  pos  ] in cache.keys():
+	#                     pst = cache[   text[  pos  ]   ]
+	#                 else:
+	#                     pst = ps.stem( text[  pos  ] )
+	#                     cache[   text[  pos  ]   ] = ps.stem( text[  pos  ] )
+	#                 thisPattern.append( pst )
+	#             words['pattern'] = '_'.join( thisPattern )
+	#             # _.pr( words['pattern'] )
 
-	# 			if words['pattern'] in pattern_index.keys():
-	# 				pattern_index[ words['pattern']  ].append( words )
-	# 			else:
-	# 				pattern_index[ words['pattern']  ] = []
-	# 				pattern_index[ words['pattern']  ].append( words )
+	#             if words['pattern'] in pattern_index.keys():
+	#                 pattern_index[ words['pattern']  ].append( words )
+	#             else:
+	#                 pattern_index[ words['pattern']  ] = []
+	#                 pattern_index[ words['pattern']  ].append( words )
 
 
 
 			# for words in index[k]:
-			# 	_.pr( words )
+			#     _.pr( words )
 			# sys.exit()
 
 		_.saveTable2( pattern_index, 'bible_patterns_min_3.json' )

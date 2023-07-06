@@ -27,7 +27,7 @@ _.switches.register('Move', '-move','folder_2_move_completed_input_files')
 import shutil
 
 
-_.appInfo=	{
+_.appInfo=    {
 	'file': 'appendjson.py',
 	'description': 'add a field and set data for an entire json file',
 	'prerequisite': [],

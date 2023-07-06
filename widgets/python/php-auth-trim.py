@@ -17,9 +17,9 @@ import _rightThumb._construct as __
 appDBA=__.clearFocus(__name__,__file__);__.appReg=appDBA;
 
 def focus(parentApp='',childApp='',reg=True):
-    global appDBA;f=__.appName(appDBA,parentApp,childApp);
-    if reg:__.appReg=f;
-    return f
+	global appDBA;f=__.appName(appDBA,parentApp,childApp);
+	if reg:__.appReg=f;
+	return f
 import _rightThumb._base3 as _
 fieldSet=_.l.vars(focus(),__name__,__file__,appDBA)
 _.load()
@@ -29,8 +29,8 @@ _str = __.imp('_rightThumb._string')
 ##################################################
 
 def sw():
-    pass
-    # _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=True )
+	pass
+	# _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=True )
 # __.setting('require-list',['Files,Plus','File,Has']) # todo
 # __.setting('require-list',['Pipe','Files'])
 __.setting('receipt-log')
@@ -42,62 +42,62 @@ __.setting('pre-error',False)
 __.setting('switch-raw',[])
 
 _.appInfo[focus()] = {
-    # 'app': '8facG-jo0Cxk',
-    'file': 'php-prefix-fix.py',
-    'liveAppName': __.thisApp( __file__ ),
-    'description': 'Changes the world',
-        # _.ail(1,'subject')+
-        # _.aib('one')+
-    'categories': [
-                        'DEFAULT',
-                ],
-    'usage': [
-                        # 'epy another',
-                        # 'e nmap',
-                        # '',
-    ],
-    'relatedapps': [
-                        # 'p another -file file.txt',
-                        # '',
-    ],
-    'prerequisite': [
-                        # 'p another -file file.txt',
-                        # '',
-    ],
-    'examples': [
-                        _.hp('p php-prefix-fix'),
-                        _.linePrint(label='simple',p=0),
-                        '',
-    ],
-    'columns': [
-                       # { 'name': 'name', 'abbreviation': 'n' },
-                       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
-    ],
-    'aliases': [
-                       # 'this',
-                       # 'app',
-    ],
-    'notes': [
-                       # {},
-    ],
+	# 'app': '8facG-jo0Cxk',
+	'file': 'php-prefix-fix.py',
+	'liveAppName': __.thisApp( __file__ ),
+	'description': 'Changes the world',
+		# _.ail(1,'subject')+
+		# _.aib('one')+
+	'categories': [
+						'DEFAULT',
+				],
+	'usage': [
+						# 'epy another',
+						# 'e nmap',
+						# '',
+	],
+	'relatedapps': [
+						# 'p another -file file.txt',
+						# '',
+	],
+	'prerequisite': [
+						# 'p another -file file.txt',
+						# '',
+	],
+	'examples': [
+						_.hp('p php-prefix-fix'),
+						_.linePrint(label='simple',p=0),
+						'',
+	],
+	'columns': [
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+	],
+	'aliases': [
+					# 'this',
+					# 'app',
+	],
+	'notes': [
+					# {},
+	],
 }
 _.appData[focus()] = {
-        'start': __.startTime,
-        'uuid': '',
-        'audit': [],
-        'pipe': False,
-        'data': {
-                    'field': {'sent': [], 'received': [] }, # { 'label': '', 'context': [],  }
-                    'table': {'sent': [], 'received': [] },
-        },
-    }
+		'start': __.startTime,
+		'uuid': '',
+		'audit': [],
+		'pipe': False,
+		'data': {
+					'field': {'sent': [], 'received': [] }, # { 'label': '', 'context': [],  }
+					'table': {'sent': [], 'received': [] },
+		},
+	}
 
 def triggers():
-    _.switches.trigger( 'Files', _.myFileLocations, vs=True )
-    _.switches.trigger( 'Ago', _.timeAgo )
-    _.switches.trigger( 'Folder', _.myFolderLocations )
-    _.switches.trigger( 'URL', _.urlTrigger )
-    _.switches.trigger( 'Duration', _.timeFuture )
+	_.switches.trigger( 'Files', _.myFileLocations, vs=True )
+	_.switches.trigger( 'Ago', _.timeAgo )
+	_.switches.trigger( 'Folder', _.myFolderLocations )
+	_.switches.trigger( 'URL', _.urlTrigger )
+	_.switches.trigger( 'Duration', _.timeFuture )
 _.l.conf('clean-pipe',True)
 _.l.sw.register( triggers, sw )
 
@@ -105,17 +105,17 @@ _.l.sw.register( triggers, sw )
 #n)--> start
 
 def php_trigger(path):
-    if path.endswith('.php'):
-        file = _.getText(path,raw=True)
-        if "$auth==='pass'" in file:
-            file = file.replace( "$auth==='pass'", "trim($auth)==='pass'" )
-            _.saveText(file, path)
-            _.pr(path,c='green')
+	if path.endswith('.php'):
+		file = _.getText(path,raw=True)
+		if "$auth==='pass'" in file:
+			file = file.replace( "$auth==='pass'", "trim($auth)==='pass'" )
+			_.saveText(file, path)
+			_.pr(path,c='green')
 
 def action():
-    _.fo(r=True,script=php_trigger)
+	_.fo(r=True,script=php_trigger)
 ##################################################
 ######################################
 if __name__ == '__main__':
-    action()
-    _.isExit(__file__)
+	action()
+	_.isExit(__file__)

@@ -70,13 +70,13 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-				       { 'name': 'subject', 'abbreviation': 's,string,n,name,f,file' },
-				       { 'name': 'length', 'abbreviation': 'l,r,rows' },
-				       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					{ 'name': 'subject', 'abbreviation': 's,string,n,name,f,file' },
+					{ 'name': 'length', 'abbreviation': 'l,r,rows' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 
 	}
@@ -230,14 +230,14 @@ def action():
 					c = 'bold'
 				table.append({
 								'subject':   _.colorThis( row, 'yellow', p=0 ),
-								 'length':   _.colorThis( _.addComma(process(row)), 'green', p=0 ),
-								  'label':   _.colorThis( l, c, p=0 )
+								'length':   _.colorThis( _.addComma(process(row)), 'green', p=0 ),
+								'label':   _.colorThis( l, c, p=0 )
 							})
 				# table.append({
-				# 				'subject':   row,
-				# 			 	 'length':   process(row),
-				# 				  'label':   label(row),
-				# 			})
+				#                 'subject':   row,
+				#                   'length':   process(row),
+				#                   'label':   label(row),
+				#             })
 
 			pass
 			_.fields.asset( 'length', table )
@@ -292,16 +292,16 @@ def load():
 
 
 		# for string in _.switches.values('String'):
-		# 	table.append({ 'string':   _.colorThis( string, 'yellow', p=0 )   , 'length':   _.colorThis( len(string), 'green', p=0 )   })
+		#     table.append({ 'string':   _.colorThis( string, 'yellow', p=0 )   , 'length':   _.colorThis( len(string), 'green', p=0 )   })
 		# _.pr()
 		# _.fields.asset( 'strings', table )
 		# _.pr()
 		# for record in table:
-		# 	row = '\t'
-		# 	row += _.fields.value( 'strings', 'string',   _.colorThis( record['string'], 'yellow', p=0 )   )
-		# 	row += '\t'
-		# 	row += _.fields.value( 'strings', 'length',   _.colorThis( record['length'], 'green', p=0 )   )
-		# 	_.pr( row )
+		#     row = '\t'
+		#     row += _.fields.value( 'strings', 'string',   _.colorThis( record['string'], 'yellow', p=0 )   )
+		#     row += '\t'
+		#     row += _.fields.value( 'strings', 'length',   _.colorThis( record['length'], 'green', p=0 )   )
+		#     _.pr( row )
 		# _.pr()
 
 

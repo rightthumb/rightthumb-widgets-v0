@@ -50,7 +50,7 @@ __.switch_raw = []
 _.appInfo[focus()] = {
 	'file': 'recover-py-apps.py',
 	'liveAppName': __.thisApp( __file__ ),
- 	'description': 'recover a bunch of apps to a  specific date to test if legacy versions work',
+	'description': 'recover a bunch of apps to a  specific date to test if legacy versions work',
 	'categories': [
 						'python',
 						'py',
@@ -77,15 +77,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
-				       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-				       # {},
+					# {},
 	],
 }
 
@@ -222,7 +222,7 @@ def action():
 		f = f.replace(os.sep+os.sep,os.sep)
 		# if not f in done and f in paths:
 		# if 'decrypt-docs.py' in f:
-		# 	_.pr(f, f in paths)
+		#     _.pr(f, f in paths)
 		if f in paths:
 			# _.pr(f)
 			if not f in done and os.path.isfile(rec['backup']):

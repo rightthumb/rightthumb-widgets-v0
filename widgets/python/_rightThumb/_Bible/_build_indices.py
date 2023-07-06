@@ -67,13 +67,13 @@ def search_indices():
 
 
 	def wordStem(word):
-	    global processWordStem
-	    if processWordStem is None:
-	        import nltk
-	        from nltk.stem import PorterStemmer
-	        from nltk.tokenize import word_tokenize
-	        processWordStem = PorterStemmer()
-	    return processWordStem.stem(word)
+		global processWordStem
+		if processWordStem is None:
+			import nltk
+			from nltk.stem import PorterStemmer
+			from nltk.tokenize import word_tokenize
+			processWordStem = PorterStemmer()
+		return processWordStem.stem(word)
 
 	bk = 1
 	ch = 1
@@ -82,7 +82,7 @@ def search_indices():
 	i=0
 	while not done:
 		# if i>100:
-		# 	done = True
+		#     done = True
 		i+=1
 		if not done and not str(vs) in _B.Bible[str(bk)][str(ch)]:
 			vs = 1
@@ -140,7 +140,7 @@ def search_indices():
 			# sys.exit()
 
 		vs+=1
-	 
+	
 	_.saveTableProject( 'Bible.query.indices', indexes['single'], _B.files['query']['single'], indentCode=False  )
 	_.saveTableProject( 'Bible.query.indices', indexes['double'], _B.files['query']['double'], indentCode=False  )
 
@@ -162,7 +162,7 @@ def books():
 	for i,record in enumerate(theBooksA):
 		bID = i+1
 		tmpBooks[record['name']] = bID
-	# 	_.pr( bID, record['name'] )
+	#     _.pr( bID, record['name'] )
 	# sys.exit()
 	for i,record in enumerate(theBooksB.split('\n')):
 		bID = i+1
@@ -173,10 +173,10 @@ def books():
 			_.colorThis( ['ERROR: ',bID,  record], 'red' )
 
 		# try:
-		# 	_.pr( bID, tmpBooks[recs[0]], recs[0],  )
-		# 	# _.pr( bID, theBooksA[i], recs[0], tmpBooks[recs[0]] )
+		#     _.pr( bID, tmpBooks[recs[0]], recs[0],  )
+		#     # _.pr( bID, theBooksA[i], recs[0], tmpBooks[recs[0]] )
 		# except Exception as e:
-		# 	_.colorThis( ['ERROR: ',bID,  record], 'red' )
+		#     _.colorThis( ['ERROR: ',bID,  record], 'red' )
 		for rec in recs:
 			_B.Books[rec] = bID
 			_B.Books[rec.lower()] = bID

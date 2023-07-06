@@ -98,12 +98,12 @@ _.appInfo[focus()] = {
 						'p appServer -crypt en -f pass.py dirX.py',
 	],
 	'columns': [
-					   # { 'name': 'name', 'abbreviation': 'n' },
-					   # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-					   # 'this',
-					   # 'app',
+					# 'this',
+					# 'app',
 	],
 
 	}
@@ -355,8 +355,8 @@ def encrypt2( fileIN, fileOUT ):
 
 	# encrypt
 	with open(fileIN, "rb") as fIn:
-	    with open(fileOUT, "wb") as fOut:
-	        pyAesCrypt.encryptStream(fIn, fOut, key, bufferSize)
+		with open(fileOUT, "wb") as fOut:
+			pyAesCrypt.encryptStream(fIn, fOut, key, bufferSize)
 
 def decrypt2( fileIN, fileOUT ):
 	import pyAesCrypt
@@ -367,16 +367,16 @@ def decrypt2( fileIN, fileOUT ):
 	bufferSize = 64 * 1024
 	# decrypt
 	with open(fileIN, "rb") as fIn:
-	    try:
-	        with open(fileOUT, "wb") as fOut:
-	            # decrypt file stream
-	            pyAesCrypt.decryptStream(fIn, fOut, key, bufferSize, encFileSize)
-	    except ValueError:
-	    	try:
-	        	os.remove(fileOUT)
-	    	except Exception as e:
-	    		pass
-	        # remove output file on error
+		try:
+			with open(fileOUT, "wb") as fOut:
+				# decrypt file stream
+				pyAesCrypt.decryptStream(fIn, fOut, key, bufferSize, encFileSize)
+		except ValueError:
+			try:
+				os.remove(fileOUT)
+			except Exception as e:
+				pass
+			# remove output file on error
 
 
 def process( path, alias=None ):

@@ -148,8 +148,8 @@ _.appInfo[focus()] = {
 						{ 'name': 'selected', 'abbreviation': 'sel' },
 	],
 	'aliases': [
-					   # 'this',
-					   # 'app',
+					# 'this',
+					# 'app',
 	],
 
 	}
@@ -587,16 +587,16 @@ def action():
 		relevant = list( spell_slots_max.keys() )
 
 		# relevant = [
-		# 				'Cantrip',
-		# 				'1st',
-		# 				'2nd',
-		# 				'3rd',
-		# 				# '4th',
-		# 				# '5th',
-		# 				# '6th',
-		# 				# '7th',
-		# 				# '8th',
-		# 				# '9th'
+		#                 'Cantrip',
+		#                 '1st',
+		#                 '2nd',
+		#                 '3rd',
+		#                 # '4th',
+		#                 # '5th',
+		#                 # '6th',
+		#                 # '7th',
+		#                 # '8th',
+		#                 # '9th'
 		# ]
 
 
@@ -754,11 +754,11 @@ def load():
 
 	# GameGroup GameCampaign GamePlayer GameCharacter  CharacterIndex AddGameCharacter  CharacterLevel CharacterDefault
 	# default_character = {
-	# 						'group': 'Church',
-	# 						'campaign': 'The Heroes of Eisendell',
-	# 						'player': 'Scott Reph',
-	# 						'character': 'Kolvar',
-	# 						'indices': 'Kolvar,cKolvar,Church,Scott,Eisendell',
+	#                         'group': 'Church',
+	#                         'campaign': 'The Heroes of Eisendell',
+	#                         'player': 'Scott Reph',
+	#                         'character': 'Kolvar',
+	#                         'indices': 'Kolvar,cKolvar,Church,Scott,Eisendell',
 	# }
 	# default_character = 'Kolvar'
 	character_data = _.getTableProject( 'DnD.configurations.characters', 'characters.json' )

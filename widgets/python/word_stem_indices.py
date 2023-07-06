@@ -78,15 +78,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
-				       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-				       # {},
+					# {},
 	],
 }
 
@@ -156,18 +156,18 @@ _.postLoad( __file__ )
 processWordStem = None
 index_of_word_stems = {}
 def wordStem(word):
-    global processWordStem
-    global index_of_word_stems
-    if processWordStem is None:
-        import nltk
-        from nltk.stem import PorterStemmer
-        from nltk.tokenize import word_tokenize
-        processWordStem = PorterStemmer()
-    stem = processWordStem.stem(word)
-    if not stem in index_of_word_stems:
-    	index_of_word_stems[stem] = {}
-    index_of_word_stems[stem][word] = {}
-    return stem
+	global processWordStem
+	global index_of_word_stems
+	if processWordStem is None:
+		import nltk
+		from nltk.stem import PorterStemmer
+		from nltk.tokenize import word_tokenize
+		processWordStem = PorterStemmer()
+	stem = processWordStem.stem(word)
+	if not stem in index_of_word_stems:
+		index_of_word_stems[stem] = {}
+	index_of_word_stems[stem][word] = {}
+	return stem
 
 def action():
 	table = []

@@ -23,7 +23,7 @@ _.switches.register('Input', '-i','appIn.py')
 _.switches.register('Output', '-o','folder\\appOut.py')
 _.switches.register('Move', '-move','completed_in-folder_name')
 
-_.appInfo=	{
+_.appInfo=    {
 	'file': 'thisApp.py',
 	'description': 'Changes the world',
 	'prerequisite': [],
@@ -53,10 +53,10 @@ if not sys.stdin.isatty():
 def action():
 	global pipeData
 	# for word in pipeData:
-	# 	print(_str.alpha(word))
+	#     print(_str.alpha(word))
 
 	# for word in pipeData:
-	# 	print(word.lower())
+	#     print(word.lower())
 	
 	for word in pipeData:
 		print(word.replace("'s",''))

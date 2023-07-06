@@ -51,7 +51,7 @@ __.pre_error = False
 _.appInfo[focus()] = {
 	'file': 'paths.py',
 	'liveAppName': __.thisApp( __file__ ),
- 	'description': 'Print to full path to specified files',
+	'description': 'Print to full path to specified files',
 	'categories': [
 						'tool',
 						'path',
@@ -83,15 +83,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
-				       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-				       # {},
+					# {},
 	],
 }
 
@@ -166,17 +166,20 @@ _.postLoad( __file__ )
 
 def wsl(path):
 	subject = path
-	if not _.switches.isActive('WSL'): _.pr( subject.replace( '\\', '\\\\' ) )
+	if not _.switches.isActive('WSL'): _pr( subject.replace( '\\', '\\\\' ) )
 	git_path = subject
 	git_path = git_path.replace( _v.slashes['w'], _v.slashes['u'] )
 	git_path = git_path.replace( ':', '' )
 	git_path = _v.slashes['u'] + git_path
-	if not _.switches.isActive('WSL'): _.pr( git_path )
+	if not _.switches.isActive('WSL'): _pr( git_path )
 	wsl5 = '/mnt/'+ git_path[1].lower() + git_path[2:]
 	wsl5=wsl5.replace(' ','\\ ')
-	# _.pr( wsl5 )
+	# _pr( wsl5 )
 	return wsl5
 
+def _pr(*args,**kwargs):
+	if args:
+		_.pr(*args,**kwargs)
 
 
 import platform
@@ -215,33 +218,38 @@ def action():
 						subby = subby[1:]
 					if not __.isWin and subby.startswith(os.sep):
 						subby = '.'+subby
-					if not _.switches.isActive('WSL'): _.pr(subby)
-				if not _.switches.isActive('WSL'): _.pr( subject )
+					if not _.switches.isActive('WSL'): _pr(subby)
+				if not _.switches.isActive('WSL'):
+					_copy = _.regImp( __.appReg, '-copy' )
+					try:
+						_copy.imp.copy( subject )
+					except:
+						_pr( subject )
 				if subject.startswith('/mnt/'):
 					sub = subject[5:]
 					dr=sub[0]
 					sub = sub[1:]
-					if not _.switches.isActive('WSL'): _.pr( dr.upper()+':'+sub.replace('/','\\') )
+					if not _.switches.isActive('WSL'): _pr( dr.upper()+':'+sub.replace('/','\\') )
 
 				if platform.system() == 'Windows':
-					_.pr(wsl(subject))
+					_pr(wsl(subject))
 
 
 
 
 
 
-				if not _.switches.isActive('WSL'): _.pr( _.path2url( subject ) )
+				if not _.switches.isActive('WSL'): _pr( _.path2url( subject ) )
 
 				if _v.sanitizeFolder( subject ).startswith('{'):
-					if not _.switches.isActive('WSL'): _.pr( _v.sanitizeFolder( subject ) )
+					if not _.switches.isActive('WSL'): _pr( _v.sanitizeFolder( subject ) )
 		
 
 			except Exception as e:
 				pass
 
 
-			if not _.switches.isActive('WSL'): _.pr()
+			if not _.switches.isActive('WSL'): _pr()
 			def cend(sub):
 				if sub.endswith('/'): return sub;
 				return sub
@@ -250,25 +258,25 @@ def action():
 				return '/'+sub
 
 			def me(fi,fo): return cstart(fi.replace(fo,'').replace(os.sep,'/'));
-			def pr(sub,fi,fo, c='cyan'): _.pr('\t',(cend(sub.replace('://','8f13ad0d8a77'))+me(fi,fo)).replace('//','/').replace('//','/').replace('8f13ad0d8a77','://'),c=c);
+			def pr(sub,fi,fo, c='cyan'): _pr('\t',(cend(sub.replace('://','8f13ad0d8a77'))+me(fi,fo)).replace('//','/').replace('//','/').replace('8f13ad0d8a77','://'),c=c);
 			dic=_.fometa(subject)
 			if 'sftp' in dic:
-				if not _.switches.isActive('WSL'): _.pr('.folder.meta',_.pr(dic['folder'],p=0,c='yellow'))
+				if not _.switches.isActive('WSL'): _pr('.folder.meta',_.pr(dic['folder'],p=0,c='yellow'))
 				# if 'path' in dic['sftp']: pr( dic['sftp']['path'],subject,dic['folder'] );
 				if 'full-path' in dic['sftp']: pr( dic['sftp']['full-path'],subject,dic['folder'] );
 			if 'url' in dic:
 				if not _.switches.isActive('WSL'): pr( dic['url'],subject,dic['folder'], c='green' );
 			for srv in '.h .b .m .e'.split(' '):
-				if not _.switches.isActive('WSL'): _.pr()
+				if not _.switches.isActive('WSL'): _pr()
 				dic=_.fometa(subject,srv)
-				# print(dic)
+				# _pr(dic)
 				if 'sftp' in dic:
-					if not _.switches.isActive('WSL'): _.pr('.folder.meta'+srv,_.pr(dic['folder'],p=0,c='yellow'))
+					if not _.switches.isActive('WSL'): _pr('.folder.meta'+srv,_pr(dic['folder'],p=0,c='yellow'));
 					# if 'path' in dic['sftp']: pr( dic['sftp']['path'], subject,dic['folder'] );
 					if 'full-path' in dic['sftp']: pr( dic['sftp']['full-path'], subject,dic['folder'] );
 				if 'url' in dic:
 					if not _.switches.isActive('WSL'): pr( dic['url'],subject,dic['folder'], c='green' );
-			if not _.switches.isActive('WSL'): _.pr()
+			if not _.switches.isActive('WSL'): _pr()
 
 
 
@@ -290,6 +298,7 @@ def action():
 ########################################################################################
 if __name__ == '__main__':
 	action()
+
 
 
 

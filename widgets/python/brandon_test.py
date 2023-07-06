@@ -47,7 +47,7 @@ __.sort_name_trigger_override = [  ['']  ]
 _.appInfo[focus()] = {
 	'file': 'brandon_test.py',
 	'liveAppName': __.thisApp( __file__ ),
- 	'description': 'Brandon test',
+	'description': 'Brandon test',
 	'categories': [
 						'brandon',
 						'cool',
@@ -66,12 +66,12 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
-				       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 
 	}
@@ -155,8 +155,8 @@ def action():
 
 
 # def load():
-# 	global data
-# 	data = _.getTable( 'table' )
+#     global data
+#     data = _.getTable( 'table' )
 
 
 # data = []

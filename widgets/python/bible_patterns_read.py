@@ -48,7 +48,7 @@ __.isRequired_Pipe_or_File = False
 _.appInfo[focus()] = {
 	'file': 'bible_patterns_read.py',
 	'liveAppName': __.thisApp( __file__ ),
- 	'description': 'Search the index for patterns',
+	'description': 'Search the index for patterns',
 	'categories': [
 						'Bible',
 						'research',
@@ -69,11 +69,11 @@ _.appInfo[focus()] = {
 						''
 	],
 	'columns': [
-					   # { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': 'name', 'abbreviation': 'n' },
 	],
 	'aliases': [
-					   # 'this',
-					   # 'app',
+					# 'this',
+					# 'app',
 	],
 
 	}
@@ -154,9 +154,9 @@ def newAbbreviations():
 		# _.pr( br )
 		abbreviation = br.split(',')[1]
 		n = {
-				'book':		br.split(',')[0],
-				'abbreviation':	br.split(',')[1],
-				'minimal':	sections[str(i)]['abbreviation']
+				'book':        br.split(',')[0],
+				'abbreviation':    br.split(',')[1],
+				'minimal':    sections[str(i)]['abbreviation']
 		}
 		theBooks.append( n )
 
@@ -168,7 +168,7 @@ def action():
 	load()
 
 	# for key in data.keys():
-	# 	_.pr( key, len( data[key] ) )
+	#     _.pr( key, len( data[key] ) )
 
 	# _.pr( len(_.appData[__.appReg]['pipe']) )
 

@@ -53,7 +53,7 @@ __.switch_raw = []
 _.appInfo[focus()] = {
 	'file': 'singleLine.py',
 	'liveAppName': __.thisApp( __file__ ),
- 	'description': 'single line. used in history management',
+	'description': 'single line. used in history management',
 	'categories': [
 						'history',
 						'line',
@@ -76,15 +76,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
-				       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-				       # {},
+					# {},
 	],
 }
 
@@ -200,8 +200,8 @@ def testPattern( i ):
 				# _.pr(i, '\t x: \t',data[i], '\t\t' ,data[i-1] )
 				return False
 		# else:
-		# 	if i-1 in theLines[ data[i-1] ]:
-		# 		return False
+		#     if i-1 in theLines[ data[i-1] ]:
+		#         return False
 
 	return True
 

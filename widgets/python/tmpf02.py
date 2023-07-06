@@ -27,33 +27,33 @@ from pykeyboard import PyKeyboardEvent
 TIMEOUT = 3
 
 class MonitorSuper(PyKeyboardEvent):
-    def tap(self, keycode, character, press):
-        if press:
-            None
-        else:
-            if character == 'Caps_Lock':
-                capsStatus = subprocess.getoutput("xset q | grep Caps | tr -s ' ' | cut -d ' ' -f 5")
-                if capsStatus == 'off':
-                    cmd = "kdialog --title \"%s\" --passivepopup \"<p style='text-align: center'>Caps Lock <b>OFF</b></p>\" %s" % (__appname__, TIMEOUT)
-                    os.system(cmd)
-                if capsStatus == 'on':
-                    cmd = "kdialog --title \"%s\" --passivepopup \"<p style='text-align: center'>Caps Lock <b>ON</b></p>\" %s" % (__appname__, TIMEOUT)
-                    os.system(cmd) 
-            if character == 'Num_Lock':
-                numStatus = subprocess.getoutput("xset q | grep Caps | tr -s ' ' | cut -d ' ' -f 9")
-                if numStatus == 'off':
-                    cmd = "kdialog --title \"%s\" --passivepopup \"<p style='text-align: center'>Num Lock <b>OFF</b></p>\" %s" % (__appname__, TIMEOUT)
-                    os.system(cmd)
-                if numStatus == 'on':
-                    cmd = "kdialog --title \"%s\" --passivepopup \"<p style='text-align: center'>Num Lock <b>ON</b></p>\" %s" % (__appname__, TIMEOUT)
-                    os.system(cmd)
-            if character == 'Scroll_Lock':
-                scrollStatus = subprocess.getoutput("xset q | grep Caps | tr -s ' ' | cut -d ' ' -f 13")
-                if scrollStatus == 'off':
-                    cmd = "kdialog --title \"%s\" --passivepopup \"<p style='text-align: center'>Scroll Lock <b>OFF</b></p>\" %s" % (__appname__, TIMEOUT)
-                    os.system(cmd)
-                if scrollStatus == 'on':
-                    cmd = "kdialog --title \"%s\" --passivepopup \"<p style='text-align: center'>Scroll Lock <b>ON</b></p>\" %s" % (__appname__, TIMEOUT)
-                    os.system(cmd)
+	def tap(self, keycode, character, press):
+		if press:
+			None
+		else:
+			if character == 'Caps_Lock':
+				capsStatus = subprocess.getoutput("xset q | grep Caps | tr -s ' ' | cut -d ' ' -f 5")
+				if capsStatus == 'off':
+					cmd = "kdialog --title \"%s\" --passivepopup \"<p style='text-align: center'>Caps Lock <b>OFF</b></p>\" %s" % (__appname__, TIMEOUT)
+					os.system(cmd)
+				if capsStatus == 'on':
+					cmd = "kdialog --title \"%s\" --passivepopup \"<p style='text-align: center'>Caps Lock <b>ON</b></p>\" %s" % (__appname__, TIMEOUT)
+					os.system(cmd) 
+			if character == 'Num_Lock':
+				numStatus = subprocess.getoutput("xset q | grep Caps | tr -s ' ' | cut -d ' ' -f 9")
+				if numStatus == 'off':
+					cmd = "kdialog --title \"%s\" --passivepopup \"<p style='text-align: center'>Num Lock <b>OFF</b></p>\" %s" % (__appname__, TIMEOUT)
+					os.system(cmd)
+				if numStatus == 'on':
+					cmd = "kdialog --title \"%s\" --passivepopup \"<p style='text-align: center'>Num Lock <b>ON</b></p>\" %s" % (__appname__, TIMEOUT)
+					os.system(cmd)
+			if character == 'Scroll_Lock':
+				scrollStatus = subprocess.getoutput("xset q | grep Caps | tr -s ' ' | cut -d ' ' -f 13")
+				if scrollStatus == 'off':
+					cmd = "kdialog --title \"%s\" --passivepopup \"<p style='text-align: center'>Scroll Lock <b>OFF</b></p>\" %s" % (__appname__, TIMEOUT)
+					os.system(cmd)
+				if scrollStatus == 'on':
+					cmd = "kdialog --title \"%s\" --passivepopup \"<p style='text-align: center'>Scroll Lock <b>ON</b></p>\" %s" % (__appname__, TIMEOUT)
+					os.system(cmd)
 mon = MonitorSuper()
 mon.run()

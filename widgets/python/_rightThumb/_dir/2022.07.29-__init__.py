@@ -799,13 +799,13 @@ def friendlyWeekNew(theDate):
 
 
 def getWeekAndYear(theDate):
-	 y = getYearFromEpoch(theDate)
-	 w = getWOYFromEpoch(theDate)
-	 if w < 10:
-		 w = '0'+str(w)
-	 else:
-		 w = str(w)
-	 return str(y) +'.'+ w
+	y = getYearFromEpoch(theDate)
+	w = getWOYFromEpoch(theDate)
+	if w < 10:
+		w = '0'+str(w)
+	else:
+		w = str(w)
+	return str(y) +'.'+ w
 
 def getMonthFromEpoch(theDate):
 	return str( getYearFromEpoch(theDate) ) + '.' + str(formatDateMonth(theDate))

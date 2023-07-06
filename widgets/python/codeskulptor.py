@@ -30,16 +30,16 @@ print("----")
 testVar = "this"
 
 if testVar == "this":
-    print("true")
+	print("true")
 else:
-    print("false")
-    
-    
-    
-    
-    print("THIS IS A TAB TEST (4 space)")
-    
-    
+	print("false")
+	
+	
+	
+	
+	print("THIS IS A TAB TEST (4 space)")
+	
+	
 print("------------")
 str (2)
 testVar = "from var"
@@ -67,8 +67,8 @@ print("----") ###########
 
 i = 0
 for item in vec:
-    print("array item " + str(i) + ": " + str(item))
-    i += 1
+	print("array item " + str(i) + ": " + str(item))
+	i += 1
 
 print("----") ###########
 # https://snakify.org/lessons/two_dimensional_lists_arrays/
@@ -83,12 +83,12 @@ i = 0
 ii = 0
 
 for item in vec:
-    print("" + str(i))
-    for subItem in item:
-        print("array item [" + str(i) + "][" + str(ii) + "]: " + str(subItem))
-        ii += 1
-    i += 1
-    ii = 0
+	print("" + str(i))
+	for subItem in item:
+		print("array item [" + str(i) + "][" + str(ii) + "]: " + str(subItem))
+		ii += 1
+	i += 1
+	ii = 0
 
 
 print("------------")
@@ -103,14 +103,14 @@ print(testVar[6:10])
 print("------------") #for
 
 for i in range(4):
-    print(i)
+	print(i)
 print("----")
 for i in range(3,8):
-    print(i)
+	print(i)
 print("----")
 
 for i in range(1, 102, 20):
-    print(i)
+	print(i)
 
 
 print("------------") #loops
@@ -131,11 +131,11 @@ for index in range(len(fruits)):
 print("--")
 
 for item in fruits:
-    print(item)
+	print(item)
 print("----") #loops #break
 for letter in 'Python':     # First Example
    if letter == 'h':
-      break
+	break
    print('Letter :', letter)
 print("--")
 var = 10                    # Second Example
@@ -143,26 +143,26 @@ while var > 0:
    print('Value :', var)
    var = var -1
    if var == 5:
-      break
+	break
 print("----") #loops #continue ( skips )
 for letter in 'Python':     # First Example
    if letter == 'h':
-      continue
+	continue
    print('Letter :', letter)
 print("--")
 var = 10                    # Second Example
 while var > 0:              
    var = var -1
    if var >= 3 and var < 7:
-        print("-")
-        continue
+		print("-")
+		continue
 
    print('Value :', var)
 print("----") #loops #pass ( function placeholder without skip )
 for letter in 'Python': 
    if letter == 'h':
-      pass
-      print('This is pass block')
+	pass
+	print('This is pass block')
    print('Current Letter :', letter)
 
 
@@ -178,7 +178,7 @@ function_name("Function Success")
 
 print("----")
 def doMe(str):
-    return str
+	return str
 
 doMe("Return instead of print") #no_print
 print(doMe("Return instead of print"))
@@ -187,11 +187,11 @@ print(doMe("Return instead of print"))
 print("----") #function #type
 
 def beverage(drink):
-    if type(drink) == type(""):
-        print("Have you had a cup of " + drink + " today??")
-    else:
-        print("Please input string")
-    return drink
+	if type(drink) == type(""):
+		print("Have you had a cup of " + drink + " today??")
+	else:
+		print("Please input string")
+	return drink
 
 print(beverage(1))
 print("-")

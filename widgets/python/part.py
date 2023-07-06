@@ -241,9 +241,9 @@ import csv
 # _.pr(fmt_str.format("Drive", "Type", "Opts"))
 # # Only show a couple of different types of devices, for brevity.
 # for i,d in enumerate(list(dps)):
-# 	dp = dps[i]
-# 	_.pr(dp)
-# 	_.pr(fmt_str.format(dp.device, dp.fstype, dp.opts))
+#     dp = dps[i]
+#     _.pr(dp)
+#     _.pr(fmt_str.format(dp.device, dp.fstype, dp.opts))
 
 # _.pr((dps))
 # _.pr()
@@ -251,30 +251,30 @@ import csv
 
 
 def cpuinfo():
-    men=psutil.virtual_memory()
-    menab=(men.available)/(1024*1024)
-    menta=(men.total)/(1024*1024)
-    menus=(men.used)/(1024*1024)
-    disk=psutil.disk_usage('/')
-    diskta=(disk.total)/(1024*1024*1024)
-    diskus=(disk.used)/(1024*1024*1024)
-    diskfr=(disk.free)/(1024*1024*1024)
-    time = datetime.datetime.now()
-    with open('eggs.csv', 'a') as csvfile:
-        spamwriter = csv.writer(csvfile, delimiter=' ',
-                                quotechar='|', quoting=csv.QUOTE_MINIMAL)
-        spamwriter.writerow({"%s"%time})
-        spamwriter.writerow({"cpu: %d%s"%(psutil.cpu_percent(interval=1),"%")})
-        spamwriter.writerow({"%sMB" % int(menta)})
-        spamwriter.writerow({"%sMB" % int(menus)})
-        spamwriter.writerow({"%sMB" % int(menab)})
-        spamwriter.writerow({"%sG" % int(diskta)})
-        spamwriter.writerow({"%sG" % int(diskus)})
-        spamwriter.writerow({"%sG" % int(diskfr)})
-    with open('eggs.csv', 'r') as csvfile:
-          spamreader = csv.reader(csvfile, delimiter=' ', quotechar='|')
-          for row in spamreader:
-             _.pr(row) 
+	men=psutil.virtual_memory()
+	menab=(men.available)/(1024*1024)
+	menta=(men.total)/(1024*1024)
+	menus=(men.used)/(1024*1024)
+	disk=psutil.disk_usage('/')
+	diskta=(disk.total)/(1024*1024*1024)
+	diskus=(disk.used)/(1024*1024*1024)
+	diskfr=(disk.free)/(1024*1024*1024)
+	time = datetime.datetime.now()
+	with open('eggs.csv', 'a') as csvfile:
+		spamwriter = csv.writer(csvfile, delimiter=' ',
+								quotechar='|', quoting=csv.QUOTE_MINIMAL)
+		spamwriter.writerow({"%s"%time})
+		spamwriter.writerow({"cpu: %d%s"%(psutil.cpu_percent(interval=1),"%")})
+		spamwriter.writerow({"%sMB" % int(menta)})
+		spamwriter.writerow({"%sMB" % int(menus)})
+		spamwriter.writerow({"%sMB" % int(menab)})
+		spamwriter.writerow({"%sG" % int(diskta)})
+		spamwriter.writerow({"%sG" % int(diskus)})
+		spamwriter.writerow({"%sG" % int(diskfr)})
+	with open('eggs.csv', 'r') as csvfile:
+		spamreader = csv.reader(csvfile, delimiter=' ', quotechar='|')
+		for row in spamreader:
+			_.pr(row) 
 
 def action():
 	pass

@@ -222,7 +222,7 @@ def csv(file, save=False, json_file='',printThis=True):
 		title = reader.fieldnames
 		# print( title )
 		# for t in title:
-		# 	print( t )
+		#     print( t )
 		for row in reader:
 			csv_rows.extend([{title[i]:row[title[i]] for i in range(len(title))}])
 		csv_rows = convertTimestamp( csv_rows )
@@ -555,57 +555,57 @@ row_colors_ID = 0
 
 def colorHelp( ipsum=False ):
 	colorList = [
-	    "ColorBold.gray",
-	    "ColorBold.red",
-	    "ColorBold.green",
-	    "ColorBold.yellow",
-	    "ColorBold.blue",
-	    "ColorBold.magenta",
-	    "ColorBold.cyan",
-	    "ColorBold.white",
+		"ColorBold.gray",
+		"ColorBold.red",
+		"ColorBold.green",
+		"ColorBold.yellow",
+		"ColorBold.blue",
+		"ColorBold.magenta",
+		"ColorBold.cyan",
+		"ColorBold.white",
 
-	    "",
+		"",
 
-	    "Color.purple",
-	    "Color.cyan",
-	    "Color.darkcyan",
-	    "Color.blue",
-	    "Color.green",
-	    "Color.yellow",
-	    "Color.red",
-	    "Color.bold",
-	    
-	    "",
+		"Color.purple",
+		"Color.cyan",
+		"Color.darkcyan",
+		"Color.blue",
+		"Color.green",
+		"Color.yellow",
+		"Color.red",
+		"Color.bold",
+		
+		"",
 
-	    "Background.red",
-	    "Background.green",
-	    "Background.yellow",
-	    "Background.blue",
-	    "Background.purple",
-	    "Background.light_blue",
-	    "Background.grey",
-	    "Background.black",
+		"Background.red",
+		"Background.green",
+		"Background.yellow",
+		"Background.blue",
+		"Background.purple",
+		"Background.light_blue",
+		"Background.grey",
+		"Background.black",
 
-	    "",
+		"",
 
-	    "BackgroundGrey.black",
-	    "BackgroundGrey.red",
-	    "BackgroundGrey.green",
-	    "BackgroundGrey.brown",
-	    "BackgroundGrey.blue",
-	    "BackgroundGrey.magenta",
-	    "BackgroundGrey.cyan",
-	    "BackgroundGrey.gray",
+		"BackgroundGrey.black",
+		"BackgroundGrey.red",
+		"BackgroundGrey.green",
+		"BackgroundGrey.brown",
+		"BackgroundGrey.blue",
+		"BackgroundGrey.magenta",
+		"BackgroundGrey.cyan",
+		"BackgroundGrey.gray",
 
-	    "",
+		"",
 
-	    "BackgroundGreyBold.black",
-	    "BackgroundGreyBold.red",
-	    "BackgroundGreyBold.green",
-	    "BackgroundGreyBold.blue",
-	    "BackgroundGreyBold.magenta",
-	    "BackgroundGreyBold.cyan",
-	    "BackgroundGreyBold.gray"
+		"BackgroundGreyBold.black",
+		"BackgroundGreyBold.red",
+		"BackgroundGreyBold.green",
+		"BackgroundGreyBold.blue",
+		"BackgroundGreyBold.magenta",
+		"BackgroundGreyBold.cyan",
+		"BackgroundGreyBold.gray"
 	]
 	for sample in colorList:
 		if not len( sample ):
@@ -1100,7 +1100,7 @@ def stringDiff( one, two ):
 		a = len(two)
 	d = a - b
 	# if d > 2:
-	# 	return False
+	#     return False
 	setA = 0
 	theTotal_one = 0
 	theTotal_two = 0
@@ -1410,22 +1410,22 @@ def inRelevantFolderSearch( file ):
 		return os.getcwd() +_v.slash+ file
 
 	probableLocations = [
-	    "_v.myAppsPy + _v.slash+_v.slash + '*THEFILENAME*' + '.py'",
-	    "_v.myAppsPy + _v.slash+_v.slash + '*THEFILENAME*'",
-	    "_v.myTables + _v.slash+_v.slash + '*THEFILENAME*'",
-	    "_v.myApps + _v.slash+'\\batch'+_v.slash + '*THEFILENAME*'",
-	    "_v.myApps + _v.slash+'\\batch'+_v.slash + '*THEFILENAME*' + '.bat'",
-	    "_v.myDatabases + _v.slash+_v.slash + '*THEFILENAME*'",
-	    "os.environ['USERPROFILE'] + _v.slash+'\\Desktop'+_v.slash + '*THEFILENAME*'",
-	    "os.environ['USERPROFILE'] + _v.slash+'\\Documents'+_v.slash + '*THEFILENAME*'",
-	    "os.environ['USERPROFILE'] + _v.slash+'\\Downloads'+_v.slash + '*THEFILENAME*'",
-	    "_v.myTXT + _v.slash+_v.slash + '*THEFILENAME*'",
-	    "_v.myTXT + _v.slash+_v.slash + '*THEFILENAME*'",
-	    "_v.myApps + _v.slash+'\\exe'+_v.slash + '*THEFILENAME*'",
-	    "_v.myApps + _v.slash+'\\php'+_v.slash + '*THEFILENAME*'",
-	    "_v.myApps + _v.slash+'\\php'+_v.slash + '*THEFILENAME*' + '.php'",
-	    "_v.myApps + _v.slash+'\\powershell'+_v.slash + '*THEFILENAME*'",
-	    "_v.myApps + _v.slash+'\\vbs'+_v.slash + '*THEFILENAME*'",
+		"_v.myAppsPy + _v.slash+_v.slash + '*THEFILENAME*' + '.py'",
+		"_v.myAppsPy + _v.slash+_v.slash + '*THEFILENAME*'",
+		"_v.myTables + _v.slash+_v.slash + '*THEFILENAME*'",
+		"_v.myApps + _v.slash+'\\batch'+_v.slash + '*THEFILENAME*'",
+		"_v.myApps + _v.slash+'\\batch'+_v.slash + '*THEFILENAME*' + '.bat'",
+		"_v.myDatabases + _v.slash+_v.slash + '*THEFILENAME*'",
+		"os.environ['USERPROFILE'] + _v.slash+'\\Desktop'+_v.slash + '*THEFILENAME*'",
+		"os.environ['USERPROFILE'] + _v.slash+'\\Documents'+_v.slash + '*THEFILENAME*'",
+		"os.environ['USERPROFILE'] + _v.slash+'\\Downloads'+_v.slash + '*THEFILENAME*'",
+		"_v.myTXT + _v.slash+_v.slash + '*THEFILENAME*'",
+		"_v.myTXT + _v.slash+_v.slash + '*THEFILENAME*'",
+		"_v.myApps + _v.slash+'\\exe'+_v.slash + '*THEFILENAME*'",
+		"_v.myApps + _v.slash+'\\php'+_v.slash + '*THEFILENAME*'",
+		"_v.myApps + _v.slash+'\\php'+_v.slash + '*THEFILENAME*' + '.php'",
+		"_v.myApps + _v.slash+'\\powershell'+_v.slash + '*THEFILENAME*'",
+		"_v.myApps + _v.slash+'\\vbs'+_v.slash + '*THEFILENAME*'",
 	]
 
 	for test in probableLocations:
@@ -1758,23 +1758,23 @@ def printVarColor_OLD( data ):
 
 
 # def inlineColor( string, color='RED' ):
-# 	color = color.upper()
-# 	if not type(string) == str:
-# 		string = str(string)
-# 	if color == 'RED':
-# 		return Color.RED + string + Color.END
-# 	elif color == 'CYAN':
-# 		return Color.CYAN + string + Color.END
-# 	elif color == 'DARKCYAN' or color == 'grey':
-# 		return Color.DARKCYAN + string + Color.END
-# 	elif color == 'BLUE':
-# 		return Color.BLUE + string + Color.END
-# 	elif color == 'GREEN':
-# 		return Color.GREEN + string + Color.END
-# 	elif color == 'YELLOW':
-# 		return Color.YELLOW + string + Color.END
-# 	elif color == 'UNDERLINE':
-# 		return Color.UNDERLINE + string + Color.END
+#     color = color.upper()
+#     if not type(string) == str:
+#         string = str(string)
+#     if color == 'RED':
+#         return Color.RED + string + Color.END
+#     elif color == 'CYAN':
+#         return Color.CYAN + string + Color.END
+#     elif color == 'DARKCYAN' or color == 'grey':
+#         return Color.DARKCYAN + string + Color.END
+#     elif color == 'BLUE':
+#         return Color.BLUE + string + Color.END
+#     elif color == 'GREEN':
+#         return Color.GREEN + string + Color.END
+#     elif color == 'YELLOW':
+#         return Color.YELLOW + string + Color.END
+#     elif color == 'UNDERLINE':
+#         return Color.UNDERLINE + string + Color.END
 
 
 def printVarColorChar( data ):
@@ -1864,13 +1864,13 @@ myFileLocation_Pipe = []
 def myFileLocations( file, silent=False, currentBaseVersion=3 ):
 	global myFileLocation_File
 	# if ',' in file and not os.path.isfile( file ):
-	# 	nFiles = []
-	# 	for f in file.split(','):
-	# 		nFiles.append( myFileLocations2( f, silent, currentBaseVersion ) )
-	# 	file = ','.join( nFiles )
+	#     nFiles = []
+	#     for f in file.split(','):
+	#         nFiles.append( myFileLocations2( f, silent, currentBaseVersion ) )
+	#     file = ','.join( nFiles )
 		
 	# else:
-	# 	myFileLocation_File = myFileLocations2( file, silent, currentBaseVersion )
+	#     myFileLocation_File = myFileLocations2( file, silent, currentBaseVersion )
 
 	myFileLocation_File = myFileLocations2( file, silent, currentBaseVersion )
 	if os.path.isfile( myFileLocation_File ) and not myFileLocation_File in myFileLocation_Files:
@@ -1916,10 +1916,10 @@ def myFileLocations( file, silent=False, currentBaseVersion=3 ):
 									appData[__.appReg]['pipe'].append( row )
 									# tmpFiles.append( row )
 			# if hasFiles:
-			# 	if 'clean' in __.trigger_isPipe:
-			# 		setPipeData( tmpFiles, __.appReg, clean=True )
-			# 	else:
-			# 		setPipeData( tmpFiles, __.appReg, clean=False )
+			#     if 'clean' in __.trigger_isPipe:
+			#         setPipeData( tmpFiles, __.appReg, clean=True )
+			#     else:
+			#         setPipeData( tmpFiles, __.appReg, clean=False )
 			if not hasFiles:
 				if type( appData[__.appReg]['pipe'] ) == bool:
 					appData[__.appReg]['pipe'] = []
@@ -1967,23 +1967,23 @@ def myFileLocations2( file, silent=False, currentBaseVersion=3 ):
 			return _v.tmpf9
 
 	probableLocations = [
-	    "_v.myAppsPy + _v.slash+'\\_rightThumb\\\\_' + '*THEFILENAME*' + _v.slash+'\\__init__.py'",
-	    "_v.myAppsPy + _v.slash+_v.slash + '*THEFILENAME*' + '.py'",
-	    "_v.myAppsPy + _v.slash+_v.slash + '*THEFILENAME*'",
-	    "_v.myTables + _v.slash+_v.slash + '*THEFILENAME*'",
-	    "_v.myApps + _v.slash+'\\batch'+_v.slash + '*THEFILENAME*'",
-	    "_v.myApps + _v.slash+'\\batch'+_v.slash + '*THEFILENAME*' + '.bat'",
-	    "_v.myDatabases + _v.slash+_v.slash + '*THEFILENAME*'",
-	    "os.environ['USERPROFILE'] + _v.slash+'\\Desktop'+_v.slash + '*THEFILENAME*'",
-	    "os.environ['USERPROFILE'] + _v.slash+'\\Documents'+_v.slash + '*THEFILENAME*'",
-	    "os.environ['USERPROFILE'] + _v.slash+'\\Downloads'+_v.slash + '*THEFILENAME*'",
-	    "_v.myTXT + _v.slash+_v.slash + '*THEFILENAME*'",
-	    "_v.myTXT + _v.slash+_v.slash + '*THEFILENAME*'",
-	    "_v.myApps + _v.slash+'\\exe'+_v.slash + '*THEFILENAME*'",
-	    "_v.myApps + _v.slash+'\\php'+_v.slash + '*THEFILENAME*'",
-	    "_v.myApps + _v.slash+'\\php'+_v.slash + '*THEFILENAME*' + '.php'",
-	    "_v.myApps + _v.slash+'\\powershell'+_v.slash + '*THEFILENAME*'",
-	    "_v.myApps + _v.slash+'\\vbs'+_v.slash + '*THEFILENAME*'",
+		"_v.myAppsPy + _v.slash+'\\_rightThumb\\\\_' + '*THEFILENAME*' + _v.slash+'\\__init__.py'",
+		"_v.myAppsPy + _v.slash+_v.slash + '*THEFILENAME*' + '.py'",
+		"_v.myAppsPy + _v.slash+_v.slash + '*THEFILENAME*'",
+		"_v.myTables + _v.slash+_v.slash + '*THEFILENAME*'",
+		"_v.myApps + _v.slash+'\\batch'+_v.slash + '*THEFILENAME*'",
+		"_v.myApps + _v.slash+'\\batch'+_v.slash + '*THEFILENAME*' + '.bat'",
+		"_v.myDatabases + _v.slash+_v.slash + '*THEFILENAME*'",
+		"os.environ['USERPROFILE'] + _v.slash+'\\Desktop'+_v.slash + '*THEFILENAME*'",
+		"os.environ['USERPROFILE'] + _v.slash+'\\Documents'+_v.slash + '*THEFILENAME*'",
+		"os.environ['USERPROFILE'] + _v.slash+'\\Downloads'+_v.slash + '*THEFILENAME*'",
+		"_v.myTXT + _v.slash+_v.slash + '*THEFILENAME*'",
+		"_v.myTXT + _v.slash+_v.slash + '*THEFILENAME*'",
+		"_v.myApps + _v.slash+'\\exe'+_v.slash + '*THEFILENAME*'",
+		"_v.myApps + _v.slash+'\\php'+_v.slash + '*THEFILENAME*'",
+		"_v.myApps + _v.slash+'\\php'+_v.slash + '*THEFILENAME*' + '.php'",
+		"_v.myApps + _v.slash+'\\powershell'+_v.slash + '*THEFILENAME*'",
+		"_v.myApps + _v.slash+'\\vbs'+_v.slash + '*THEFILENAME*'",
 	]
 
 	if file == 'base':
@@ -2377,23 +2377,23 @@ def getSize(fileobject):
 	return size
 
 # def formatSize(size):
-# 	result = ''
-# 	if size == None:
-# 		result = ''
-# 	elif size < 1024:
-# 		result = str(size) + ' B'
-# 	elif size > 1024 and size < 1048576:
-# 		num = round(size / 1024, 2)
-# 		result = str(num) + ' KB'
-# 	elif size > 1048576 and size < 1073741824:
-# 		num = round(size / 1048576, 2)
-# 		result = str(num) + ' MB'
-# 	elif size > 1073741824 and size < 137438953472:
-# 		num = round(size / 1073741824, 2)
-# 		result = str(num) + ' GB'
-# 	# if size < 1:
-# 	# 	result = ''
-# 	return result
+#     result = ''
+#     if size == None:
+#         result = ''
+#     elif size < 1024:
+#         result = str(size) + ' B'
+#     elif size > 1024 and size < 1048576:
+#         num = round(size / 1024, 2)
+#         result = str(num) + ' KB'
+#     elif size > 1048576 and size < 1073741824:
+#         num = round(size / 1048576, 2)
+#         result = str(num) + ' MB'
+#     elif size > 1073741824 and size < 137438953472:
+#         num = round(size / 1073741824, 2)
+#         result = str(num) + ' GB'
+#     # if size < 1:
+#     #     result = ''
+#     return result
 
 def monthByNumber(month):
 	result = ''
@@ -2729,7 +2729,7 @@ def tempFile(rows,theFile):
 	file0 = _v.stmp + _v.slash + theFile
 	file = open(file0,'w')
 	for r in rows:
-		file.write(r)				 
+		file.write(r)                 
 	file.close()
 
 def stamp2Date(ts):
@@ -2957,22 +2957,22 @@ def figureOutDate(theDate, theFormat):
 				found = True
 				info['m'] = mNumber
 		if not found:
-			 ans = input('What Month? ')
-			 if len(ans) == 0:
-			 	print('Month error')
-			 	sys.exit()
-			 try:
-			 	int(ans)
-			 except Exception as e:
-			 	printBold('Month error','red')
-			 	sys.exit()
-			 if len(ans) == 1:
-				 info['m'] = 0 + ans
-			 elif len(ans) == 2:
-				 info['m'] = ans
-			 else:
-			 	printBold('Month error','red')
-			 	sys.exit()
+			ans = input('What Month? ')
+			if len(ans) == 0:
+				print('Month error')
+				sys.exit()
+			try:
+				int(ans)
+			except Exception as e:
+				printBold('Month error','red')
+				sys.exit()
+			if len(ans) == 1:
+				info['m'] = 0 + ans
+			elif len(ans) == 2:
+				info['m'] = ans
+			else:
+				printBold('Month error','red')
+				sys.exit()
 
 	ifoy = info['y']
 	ifom = info['m']
@@ -3101,12 +3101,12 @@ def formatPhone2(data):
 	return newData
 
 def updateLine(string):
-    string = str(string)
-    sys.stdout.write("\b" * len(string))
-    sys.stdout.write(" " * len(string))
-    sys.stdout.write("\b" * len(string))
-    sys.stdout.write(string)
-    sys.stdout.flush()
+	string = str(string)
+	sys.stdout.write("\b" * len(string))
+	sys.stdout.write(" " * len(string))
+	sys.stdout.write("\b" * len(string))
+	sys.stdout.write(string)
+	sys.stdout.flush()
 
 def getLastTableSplit(theFile,tableTemp = 'split'):
 	if tableTemp == 'split':
@@ -3252,9 +3252,9 @@ class Switch:
 		# print()
 
 		# for key in dir(self):
-		# 	if not key.startswith('_'):
-		# 		x = 'self.'+key
-		# 		print( x, eval(x) )
+		#     if not key.startswith('_'):
+		#         x = 'self.'+key
+		#         print( x, eval(x) )
 
 	def trigger(self,script):
 		self.script_trigger = script
@@ -3423,9 +3423,9 @@ class Switches:
 						exec('self.switches[i].' + column + '= value')
 						# value = str(value)
 						# try:
-						# 	exec('self.switches[i].' + column + '=str(\'' + value + '\')')
+						#     exec('self.switches[i].' + column + '=str(\'' + value + '\')')
 						# except Exception as e:
-						# 	exec('self.switches[i].' + column + '=\'' + value + '\'')
+						#     exec('self.switches[i].' + column + '=\'' + value + '\'')
 			
 		return ''
 
@@ -3814,7 +3814,7 @@ class Switches:
 		pass
 		pass
 		# for i,record in enumerate(self.switches):
-		# 	self.index[ self.switches[i].name +'._.'+ self.switches[i].appReg ] = i
+		#     self.index[ self.switches[i].name +'._.'+ self.switches[i].appReg ] = i
 
 		
 		
@@ -3842,8 +3842,8 @@ class Switches:
 			if self.switches[i].appReg == __.appReg:
 				switch.append({'name':sw.name ,'switch':sw.switch,'expected_input_example': sw.expected_input_example})
 		# def test(value):
-		# 	value = value + '_V_'
-		# 	return value
+		#     value = value + '_V_'
+		#     return value
 		tables.register('switches',switch)
 		# tables.trigger('switches','switch,name',test,True)
 		tables.print('switches','name,switch,expected_input_example')
@@ -3864,8 +3864,8 @@ class Switches:
 
 				switch.append({'name':sw.name ,'active':active,'value': value})
 		# def test(value):
-		# 	value = value + '_V_'
-		# 	return value
+		#     value = value + '_V_'
+		#     return value
 		tables.register('switches',switch)
 		# tables.trigger('switches','switch,name',test,True)
 		tables.print('switches','name,active,value')
@@ -3951,15 +3951,15 @@ class Switches:
 
 
 
-# 	def getSelf(self,name):
-# 		result = ''
-# 		for sw in self.switches:
-# 			if sw.name == name:
-# 				result = sw
-# 		return result
+#     def getSelf(self,name):
+#         result = ''
+#         for sw in self.switches:
+#             if sw.name == name:
+#                 result = sw
+#         return result
 # def getSwitchSelf(name):
-# 	global switches
-# 	return switches.getSelf(name)
+#     global switches
+#     return switches.getSelf(name)
 def ci2(string):
 	string = ci(string)
 	string = _str.replaceAll(string,',',' ')
@@ -4005,7 +4005,7 @@ class Table:
 		for tp in self.views:
 			# print()
 			# for x in dir(self.views[i]):
-			# 	print(x)
+			#     print(x)
 
 			if self.views[i].name == name:
 				# print('found')
@@ -4015,13 +4015,13 @@ class Table:
 				# try:
 					
 				# except Exception as e:
-				# 	pass
+				#     pass
 				# print('name:',name)
 				self.print(self.views[i].fields)
 			i += 1
 
 	# def trigger(self,field,script,includes):
-	# 	self.views.append({'name': field, 'script_trigger': script , 'includes': includes })
+	#     self.views.append({'name': field, 'script_trigger': script , 'includes': includes })
 
 
 	def nameLength(self,string,suffix):
@@ -4316,7 +4316,7 @@ class Table:
 			result = self.addSpace2(theLeft) + text + self.addSpace2(theRight)
 			# print(column,theLeft,theRight,'0' + result + '0')
 			# print(totalSpace,theLeft,theRight)
-		# 	result = theLeft + text + theRight
+		#     result = theLeft + text + theRight
 		return result
 
 	def groupLine(self,columnList,columnHeaderLength):
@@ -4514,8 +4514,8 @@ class Table:
 								# if cnt > 0:
 									# rowInclude = True
 										# if switches.isActive('PlusOr') == True:
-										# 	if cnt > 0:
-										# 		rowInclude = True
+										#     if cnt > 0:
+										#         rowInclude = True
 							if len(dataNo) > 0 and rowInclude:
 								# print('ISNOT')
 								rowInclude = True
@@ -4556,7 +4556,7 @@ class Table:
 
 
 
- 		# if not len(groupByList):
+		# if not len(groupByList):
 		self.groupByList = {}
 		try:
 			for gb in switches.value('GroupBy').split(','):
@@ -4584,7 +4584,7 @@ class Table:
 		# print(self.asset)
 		for item in self.asset:
 			# print(item)
-			result = ''	
+			result = ''    
 			for c in column.split(','):
 				try:
 					pass
@@ -4925,53 +4925,53 @@ class Tables:
 		###### How it works:
 		# totalColumnWidth = 0
 		# for m in self.meta['data']:
-		# 	tables.register(m['table'],m['fields'])
-		# 	spaces = tables.getLength(m['table'],'type,field,max,min,average')
-		# 	if spaces > totalColumnWidth:
-		# 		totalColumnWidth = spaces
+		#     tables.register(m['table'],m['fields'])
+		#     spaces = tables.getLength(m['table'],'type,field,max,min,average')
+		#     if spaces > totalColumnWidth:
+		#         totalColumnWidth = spaces
 
 
 		# fieldLengths = 0
 		# for m in self.meta['data']:
-		# 	tables.register(m['table'],m['fields'])
-		# 	data = tables.getFieldLengths(m['table'],'type,field,max,min,average')
-		# 	if not type(fieldLengths) == dict:
-		# 		fieldLengths = data
-		# 	for name in fieldLengths.keys():
-		# 		if data[name] > fieldLengths[name]:
-		# 			fieldLengths[name] = data[name]
+		#     tables.register(m['table'],m['fields'])
+		#     data = tables.getFieldLengths(m['table'],'type,field,max,min,average')
+		#     if not type(fieldLengths) == dict:
+		#         fieldLengths = data
+		#     for name in fieldLengths.keys():
+		#         if data[name] > fieldLengths[name]:
+		#             fieldLengths[name] = data[name]
 
 
 
 
 		# for m in self.meta['data']:
-		# 	genLine(totalColumnWidth,'=')
-		# 	print('Table:\t',m['table'])
-		# 	print('Parent:\t',m['parent'])
-		# 	print('Records:',m['count'])
-		# 	print()
-		# 	tables.register(m['table'],m['fields'])
-		# 	tables.fieldProfileSet(m['table'],'*','alignment','center')
-		# 	tables.print(m['table'],'type,field,max,min,average',fieldLengths)
+		#     genLine(totalColumnWidth,'=')
+		#     print('Table:\t',m['table'])
+		#     print('Parent:\t',m['parent'])
+		#     print('Records:',m['count'])
+		#     print()
+		#     tables.register(m['table'],m['fields'])
+		#     tables.fieldProfileSet(m['table'],'*','alignment','center')
+		#     tables.print(m['table'],'type,field,max,min,average',fieldLengths)
 
-		# 	genLine(totalColumnWidth,'=')
+		#     genLine(totalColumnWidth,'=')
 		# print()
 		# print('Records:',self.meta['records'])
 		# print()
 		# print('Errors:')
 		# for e in self.meta['errors']:
-		# 	print('\t',e)
+		#     print('\t',e)
 
 		return result
 
 ###########################################################################################
 def md5(fname):
-    hash_md5 = hashlib.md5()
-    with open(fname, "rb") as f:
-        for chunk in iter(lambda: f.read(4096), b""):
-            hash_md5.update(chunk)
-    return hash_md5.hexdigest()
-    return hash_md5.hexdigest()
+	hash_md5 = hashlib.md5()
+	with open(fname, "rb") as f:
+		for chunk in iter(lambda: f.read(4096), b""):
+			hash_md5.update(chunk)
+	return hash_md5.hexdigest()
+	return hash_md5.hexdigest()
 
 
 def formatSize(size):
@@ -4990,14 +4990,14 @@ def formatSize(size):
 	elif size > 1048576 and size < 1073741824:
 		num = round(size / 1048576, 2)
 		result = str(num) + ' MB'
-	elif size > 1073741824 and size < 1099511627776	:
+	elif size > 1073741824 and size < 1099511627776    :
 		num = round(size / 1073741824, 2)
 		result = str(num) + ' GB'
 	else:
 		num = round(size / 1099511627776, 2)
 		result = str(num) + ' TB'
 	# if size < 1:
-	# 	result = ''
+	#     result = ''
 	return result
 
 def unFormatSize(size):
@@ -5006,7 +5006,7 @@ def unFormatSize(size):
 	factor = ''
 
 	if 'TB' in size:
-		factor = 1099511627776	
+		factor = 1099511627776    
 	elif 'GB' in size:
 		factor = 1073741824
 	elif 'MB' in size:
@@ -5130,10 +5130,10 @@ def number2Words(n):
 ###########################################################################################
 ###########################################################################################
 def checkKey(dict, key):
-    if key in dict.keys():
-        return True
-    else:
-        return False
+	if key in dict.keys():
+		return True
+	else:
+		return False
 
 class Databases:
 
@@ -5299,32 +5299,32 @@ class Database:
 
 	# def update( self, info ):
 
-	# 	sql = "update "+info['table']+" set [x] where " + info['update'] + " "
-	# 	u = ''
-	# 	for f in info['record'].keys():
-	# 		t = self.getFieldType( info['table'], f )
-	# 		if 'int' in t:
-	# 			u += f + " = " + str(info['record'][f]) + ","
-	# 		else:
-	# 			u += f + " = '" + str(info['record'][f]) + "',"
-	# 	u = _str.cleanBE( u, ',' )
+	#     sql = "update "+info['table']+" set [x] where " + info['update'] + " "
+	#     u = ''
+	#     for f in info['record'].keys():
+	#         t = self.getFieldType( info['table'], f )
+	#         if 'int' in t:
+	#             u += f + " = " + str(info['record'][f]) + ","
+	#         else:
+	#             u += f + " = '" + str(info['record'][f]) + "',"
+	#     u = _str.cleanBE( u, ',' )
 
-	# 	sql = sql.replace( '[x]', u )
+	#     sql = sql.replace( '[x]', u )
 
-	# 	conn = sqlite3.connect( self.file )
-	# 	cursor = conn.cursor()
-	# 	tables = []
-	# 	rows = cursor.execute( sql )
+	#     conn = sqlite3.connect( self.file )
+	#     cursor = conn.cursor()
+	#     tables = []
+	#     rows = cursor.execute( sql )
 
-	# 	fields = self.getFields( info['table'] )
-	# 	results = []
-	# 	for row in (rows):
-	# 		d = {}
-	# 		for i,column in enumerate(row):
-	# 			d[ fields[i] ] = row[i]
-	# 		results.append( d )
-	# 	conn.commit()
-	# 	conn.close()
+	#     fields = self.getFields( info['table'] )
+	#     results = []
+	#     for row in (rows):
+	#         d = {}
+	#         for i,column in enumerate(row):
+	#             d[ fields[i] ] = row[i]
+	#         results.append( d )
+	#     conn.commit()
+	#     conn.close()
 
 	def update( self, info ):
 
@@ -5419,7 +5419,7 @@ class Database:
 			# n = ''
 
 			# for field in fields:
-			# 	n += field['name'] + ' ' + field['type'] + ','
+			#     n += field['name'] + ' ' + field['type'] + ','
 
 			# n = _str.cleanBE( n, ',' )
 			# sql = sql.replace( '[n]', n )
@@ -5589,7 +5589,7 @@ class Database:
 			nn = _str.cleanBE( nn, ',' )
 			sql = sql.replace( '[n]', n )
 			cursor.execute( sql )
-			sql =	"CREATE TRIGGER UpdateLastTime UPDATE OF "+nn+" ON "+table+" "\
+			sql =    "CREATE TRIGGER UpdateLastTime UPDATE OF "+nn+" ON "+table+" "\
 					" BEGIN"\
 					"  UPDATE "+table+" SET date_modified=datetime('now','localtime') WHERE id=old.id;"\
 					" END;"
@@ -5701,25 +5701,25 @@ class Database2:
 				result = self.tables[i].getCount()
 		return result
 # {
-# 	'table': 'table,name',
-# 	'fields': [
-# 		{'names': 'one,two'},
-# 		{'names': 'three', 'table': 'name', 'as': 'threeish'}
-# 	],
-# 	'action': [
-#		{ 'type': 'text', 'names': 'field', 'table': 'your_mom', 'search': '*.txt,desktop'},
-#		{ 'type': 'text', 'names': 'testy', 'and_or': 'or', 'table': 'or_test', 'search': '*.py,*.txt'},
-# 		{ 'type': 'field_type(text)', 'table': 'name', 'names': 'field,names', 'and_or': 'and',  'search': '*.py,tech'},
-# 		{ 'type': 'field_type(number)', 'names': 'field,names', 'search': '1000,2000'},
-# 		{ 'type': 'field_type(number)', 'names': 'field,names', 'search': 'g,1000'},
-# 		{ 'type': 'field_type(number)', 'names': 'field,names', 'search': 'l,1000'},
-# 		{ 'type': 'field_type(number)', 'names': 'field,names', 'search': 'str(ago(2000))'},
-# 		{ 'type': 'field_type(number)', 'names': 'field,names', 'search': 'str(epoch(2018.07))'},
-# 		{ 'type': 'field_type(number)', 'names': 'field,names', 'search': 'str(epoch(2018.07)),str(epoch('2018.10',True))'},
-# 		{ 'type': 'field_type(sort)', 'names': 'field', 'order': 'asc'},
-# 		{ 'type': 'field_type(sort)', 'names': 'field', 'order': 'desc'},
-# 	]
-# }	
+#     'table': 'table,name',
+#     'fields': [
+#         {'names': 'one,two'},
+#         {'names': 'three', 'table': 'name', 'as': 'threeish'}
+#     ],
+#     'action': [
+#        { 'type': 'text', 'names': 'field', 'table': 'your_mom', 'search': '*.txt,desktop'},
+#        { 'type': 'text', 'names': 'testy', 'and_or': 'or', 'table': 'or_test', 'search': '*.py,*.txt'},
+#         { 'type': 'field_type(text)', 'table': 'name', 'names': 'field,names', 'and_or': 'and',  'search': '*.py,tech'},
+#         { 'type': 'field_type(number)', 'names': 'field,names', 'search': '1000,2000'},
+#         { 'type': 'field_type(number)', 'names': 'field,names', 'search': 'g,1000'},
+#         { 'type': 'field_type(number)', 'names': 'field,names', 'search': 'l,1000'},
+#         { 'type': 'field_type(number)', 'names': 'field,names', 'search': 'str(ago(2000))'},
+#         { 'type': 'field_type(number)', 'names': 'field,names', 'search': 'str(epoch(2018.07))'},
+#         { 'type': 'field_type(number)', 'names': 'field,names', 'search': 'str(epoch(2018.07)),str(epoch('2018.10',True))'},
+#         { 'type': 'field_type(sort)', 'names': 'field', 'order': 'asc'},
+#         { 'type': 'field_type(sort)', 'names': 'field', 'order': 'desc'},
+#     ]
+# }    
 
 	def queryBuilder(self,data): # queryBuilder
 		self.data = data
@@ -5983,7 +5983,7 @@ class Database2:
 						if not type(average[aKey]['datapoints']) == list:
 							average[aKey] = {'max': 0, 'min': 'first', 'average': 0, 'datapoints': [], 'count': 0}
 
-						# print(type())						
+						# print(type())                        
 					except Exception as e:
 						average[aKey] = {'max': 0, 'min': 'first', 'average': 0, 'datapoints': [], 'count': 0}
 					average[aKey]
@@ -6052,13 +6052,13 @@ class Database2:
 
 		# fieldLengths = 0
 		# for m in self.meta['data']:
-		# 	tables.register(m['table'],m['fields'])
-		# 	data = tables.getFieldLengths(m['table'],'type,field,max,min,average')
-		# 	if not type(fieldLengths) == dict:
-		# 		fieldLengths = data
-		# 	for name in fieldLengths.keys():
-		# 		if data[name] > fieldLengths[name]:
-		# 			fieldLengths[name] = data[name]
+		#     tables.register(m['table'],m['fields'])
+		#     data = tables.getFieldLengths(m['table'],'type,field,max,min,average')
+		#     if not type(fieldLengths) == dict:
+		#         fieldLengths = data
+		#     for name in fieldLengths.keys():
+		#         if data[name] > fieldLengths[name]:
+		#             fieldLengths[name] = data[name]
 
 
 
@@ -6090,9 +6090,9 @@ class Database2:
 	def findParent(self,table):
 		# parent = 'Error'
 		# for m in self.meta['data']:
-		# 	if m['table'] == table:
-		# 		parent = m['parent']
-		# 		break
+		#     if m['table'] == table:
+		#         parent = m['parent']
+		#         break
 		if self.tableDelim in table:
 			parent = ''
 			mx = len(table.split(self.tableDelim))-1
@@ -6240,41 +6240,41 @@ class ColumnsDB:
 		self.kind = kind
 
 	# def trigger(self,script):
-	# 	self.script_trigger = script
+	#     self.script_trigger = script
 
 	# def changeStatus(self,newStatus):
-	# 	self.active = newStatus
+	#     self.active = newStatus
 
 	# def print(self):
-	# 	childItems = []
-	# 	for ci in self.columns:
-	# 		childItems.append({'name':ci.name})
-	# 	tables.register('childClassItems',childItems)
-	# 	# tables.trigger('switches','switch,name',test,True)
-	# 	tables.print('childClassItems','name')
+	#     childItems = []
+	#     for ci in self.columns:
+	#         childItems.append({'name':ci.name})
+	#     tables.register('childClassItems',childItems)
+	#     # tables.trigger('switches','switch,name',test,True)
+	#     tables.print('childClassItems','name')
 
 
-	# 		childItems.append({'name':ci.name ,'active':active,'value': value})
-	# 	tables.register('childClassItems',childItems)
-	# 	tables.print('childClassItems','name,active,value')
+	#         childItems.append({'name':ci.name ,'active':active,'value': value})
+	#     tables.register('childClassItems',childItems)
+	#     tables.print('childClassItems','name,active,value')
 
 	# def status(self,name,newStatus):
-	# 	for i,ci in enumerate(self.columns):
-	# 		if ci.name == name:
-	# 			self.columns[i].changeStatus(newStatus)
+	#     for i,ci in enumerate(self.columns):
+	#         if ci.name == name:
+	#             self.columns[i].changeStatus(newStatus)
 
 
 ###########################################################################################
 def get_size(obj, seen=None):
-    # https://medium.com/@alexmaisiura/python-how-to-reduce-memory-consumption-by-half-by-adding-just-one-line-of-code-56be6443d524
-    # From https://goshippo.com/blog/measure-real-size-any-python-object/
-    # Recursively finds size of objects
-    size = sys.getsizeof(obj)
-    if seen is None:
-        seen = set()
-    obj_id = id(obj)
-    if obj_id in seen:
-        return 0
+	# https://medium.com/@alexmaisiura/python-how-to-reduce-memory-consumption-by-half-by-adding-just-one-line-of-code-56be6443d524
+	# From https://goshippo.com/blog/measure-real-size-any-python-object/
+	# Recursively finds size of objects
+	size = sys.getsizeof(obj)
+	if seen is None:
+		seen = set()
+	obj_id = id(obj)
+	if obj_id in seen:
+		return 0
 
 
 ###########################################################################################
@@ -6393,7 +6393,7 @@ def longID(howMany=2):
 
 
 # def resolveLocal(file):
-# 	if os.path.isfile(file):
+#     if os.path.isfile(file):
 # %python%\%*.py
 # %phpFiles%\%*.php
 # %scriptroot%\%*.bat
@@ -6537,7 +6537,7 @@ def autoAbbreviations():
 									if flagged[i]['id'] == x:
 										flagsResolved += 1
 										flagged[i]['assigned'] = True
-										approvedAbbreviations.append({ 'key': data[x]['key'], 'abbreviations': k })			
+										approvedAbbreviations.append({ 'key': data[x]['key'], 'abbreviations': k })            
 
 				if not flagsResolved == len(flagged):
 					for i,f in enumerate(flagged):
@@ -6629,14 +6629,14 @@ class Threads:
 		__.threadActivity[self.qID]['log'] = False
 
 		# try:
-		# 	self.instance = appInfo[focus]['instance']
+		#     self.instance = appInfo[focus]['instance']
 		# except Exception as e:
 			
 
 
 		self.log = { 
 						'id':       self.qID,
-						'parent':	self.pID,
+						'parent':    self.pID,
 						'app':      self.app,
 						'func':     self.func.__name__,
 						'arg':      self.arg,
@@ -6856,8 +6856,8 @@ class Queue:
 
 			__.projectData[focus][name] = {}
 			# if not 'folder' in name:
-			# 	print( 'zero' )
-			# 	sys.exit()
+			#     print( 'zero' )
+			#     sys.exit()
 
 			__.projectData[focus][name][0] = {}
 			__.projectData[focus][name][0]['saveInitiated'] = False
@@ -7375,7 +7375,7 @@ class Queue:
 									if len(errors) > 0:
 										saveTableSplitNew( errors, logName+'__ERRORS__', project=True )
 									# except Exception as e:
-									# 	saveTableSplitNew( __.projectData[focus][name][__.projectData[focus][name][pdID]['saveInitiated']['pdID']]['data'], __.projectData[focus][name][pdID]['saveInitiated']['logname'], project=True )
+									#     saveTableSplitNew( __.projectData[focus][name][__.projectData[focus][name][pdID]['saveInitiated']['pdID']]['data'], __.projectData[focus][name][pdID]['saveInitiated']['logname'], project=True )
 									
 
 
@@ -7685,30 +7685,30 @@ class Queue:
 
 # watch
 
-# 							if self.records[f]['names'][n]['maxThreads'] == 0:
-# 								newMax = self.opened
-# 						percentageInt(percent, whole)
-# 						if not self.records[f]['names'][n]['loaded']:
-# 							self.records[f]['names'][n]['maxThreads'] = True
+#                             if self.records[f]['names'][n]['maxThreads'] == 0:
+#                                 newMax = self.opened
+#                         percentageInt(percent, whole)
+#                         if not self.records[f]['names'][n]['loaded']:
+#                             self.records[f]['names'][n]['maxThreads'] = True
 
-# 							self.records[f]['names'][n]['maxThreads'] = 
+#                             self.records[f]['names'][n]['maxThreads'] = 
 
 
-# 		self.auditPercentReduceByOverMax = 15		self.maxThreads = 1000
-# 		self.auditPercentReduceByOverMaxBy = 30
+#         self.auditPercentReduceByOverMax = 15        self.maxThreads = 1000
+#         self.auditPercentReduceByOverMaxBy = 30
 
 
 # self.auditPercentReduceByDrastic
-# 		self.auditPercentChangeMin = 10
-# 		self. = 5
+#         self.auditPercentChangeMin = 10
+#         self. = 5
 
-# 		self.auditPercentChangeMin = 10
-# 		self.auditPercentReduceBy = 5
+#         self.auditPercentChangeMin = 10
+#         self.auditPercentReduceBy = 5
 
 # self.records[focus]['names'][name]['maxThreads']
 # self.auditPercentChangeMax
-# 			__.queueCountAudit += 1
-# 			Timer( .5, threadSchedule ).start()
+#             __.queueCountAudit += 1
+#             Timer( .5, threadSchedule ).start()
 
 # threadTimer
 # thread = Timer( .0001, threadKwargs, data ).start()
@@ -7836,7 +7836,7 @@ def enableThreadDataSwap():
 	print( 'key test1:', __.projectData[ __.processing[0] ].keys() )
 
 # def hasTimedOut():
-# 	print( 'hasTimedOut' )
+#     print( 'hasTimedOut' )
 
 # @timeout( 10, hasTimedOut() )
 def threadTimer( tim, func, args=False, qID=False ):
@@ -7876,10 +7876,10 @@ def threadTimer( tim, func, args=False, qID=False ):
 			# https://stackoverflow.com/questions/34562473/most-pythonic-way-to-kill-a-thread-after-some-period-of-time
 			# __.threadQueue[qID].join(30)
 			# if __.threadQueue[qID].is_alive():
-			# 	print( 'Has Timed Out' )
-			# 	e.set()
+			#     print( 'Has Timed Out' )
+			#     e.set()
 			# else:
-			# 	pass
+			#     pass
 		except Exception as e:
 			print('Thread Error:',__.queueCountTimer)
 
@@ -7952,42 +7952,42 @@ def loadingGraphic():
 	global theLoadingGraphic
 
 	class ImageLabel(tk.Label):
-	    """
-	    A Label that displays images, and plays them if they are gifs
+		"""
+		A Label that displays images, and plays them if they are gifs
 
-	    :im: A PIL Image instance or a string filename
-	    """
-	    def load(self, im):
-	        if isinstance(im, str):
-	            im = Image.open(im)
-	        frames = []
+		:im: A PIL Image instance or a string filename
+		"""
+		def load(self, im):
+			if isinstance(im, str):
+				im = Image.open(im)
+			frames = []
 
-	        try:
-	            for i in count(1):
-	                frames.append(ImageTk.PhotoImage(im.copy()))
-	                im.seek(i)
-	        except EOFError:
-	            pass
-	        self.frames = cycle(frames)
+			try:
+				for i in count(1):
+					frames.append(ImageTk.PhotoImage(im.copy()))
+					im.seek(i)
+			except EOFError:
+				pass
+			self.frames = cycle(frames)
 
-	        try:
-	            self.delay = im.info['duration']
-	        except:
-	            self.delay = 100
+			try:
+				self.delay = im.info['duration']
+			except:
+				self.delay = 100
 
-	        if len(frames) == 1:
-	            self.config(image=next(self.frames))
-	        else:
-	            self.next_frame()
+			if len(frames) == 1:
+				self.config(image=next(self.frames))
+			else:
+				self.next_frame()
 
-	    def unload(self):
-	        self.config(image=None)
-	        self.frames = None
+		def unload(self):
+			self.config(image=None)
+			self.frames = None
 
-	    def next_frame(self):
-	        if self.frames:
-	            self.config(image=next(self.frames))
-	            self.after(self.delay, self.next_frame)
+		def next_frame(self):
+			if self.frames:
+				self.config(image=next(self.frames))
+				self.after(self.delay, self.next_frame)
 
 	theLoadingGraphic = tk.Tk()
 	theLoadingGraphic.wait_visibility(theLoadingGraphic)
@@ -8048,7 +8048,7 @@ class Field:
 		while not len(value) == self.maxField:
 			value += ' '
 		# for x in range(1,addPadding+1):
-		# 	value += ' '
+		#     value += ' '
 		# return str(self.maxField)+' '+str(len( value ))+value
 		return value
 
@@ -8196,9 +8196,9 @@ def appInfoDump2():
 
 
 # def appInfoDump2():
-# 	global appInfo
-# 	for k in appInfo.keys():
-# 		print(k,appInfo[k]['columns'])
+#     global appInfo
+#     for k in appInfo.keys():
+#         print(k,appInfo[k]['columns'])
 
 
 def load():
@@ -8404,7 +8404,7 @@ class regImp:
 
 		# if self.saveLog:
 		# else:
-		# 	theID = threads.add( 'execute', theFunc, [ arg, self.focus ], trigger=saveThreadsLog, loaded=True )
+		#     theID = threads.add( 'execute', theFunc, [ arg, self.focus ], trigger=saveThreadsLog, loaded=True )
 
 		return theID
 
@@ -8494,8 +8494,8 @@ def autoKwargsGetArgsFromApp(app):
 
 ### NOTES ###
 	# types of timestamps:
-	# 						1522705321.1137724		file create, modification
-	# 						1517338060740			int(round(time.time() * 1000))
+	#                         1522705321.1137724        file create, modification
+	#                         1517338060740            int(round(time.time() * 1000))
 	
 
 
@@ -8520,42 +8520,42 @@ def autoKwargsGetArgsFromApp(app):
 
 ############################################### ###############################################
 
-ciData = (	[ ';;',			',' ],
-			[ ';c',			',' ],
-			[ '_;192A;_',	',' ],
+ciData = (    [ ';;',            ',' ],
+			[ ';c',            ',' ],
+			[ '_;192A;_',    ',' ],
 			
-			[ ';_',			'-' ],
-			[ ';-',			'-' ],
+			[ ';_',            '-' ],
+			[ ';-',            '-' ],
 
-			[ ';p',			'%' ],
-			[ ';p;',		'%' ],
-			[ ';.',			':' ],
-			[ '_;192B;_',	':' ],
-			[ ";;'",		_v.slash+'"' ],
+			[ ';p',            '%' ],
+			[ ';p;',        '%' ],
+			[ ';.',            ':' ],
+			[ '_;192B;_',    ':' ],
+			[ ";;'",        _v.slash+'"' ],
 
-			[ _v.slash+'n',		'\n' ],
-			[ ';n',			'\n' ],
-			[ ';return',	'\n' ],
-			[ ';t',			'\t' ],
+			[ _v.slash+'n',        '\n' ],
+			[ ';n',            '\n' ],
+			[ ';return',    '\n' ],
+			[ ';t',            '\t' ],
 
-			[ ";'",			'"' ],
-			[ ';q;',		'"' ],
-			[ '"\'"',		"'" ],
-			[ 'null00',		'"",' ],
-			[ '"\'", "\'"',	"','" ],
+			[ ";'",            '"' ],
+			[ ';q;',        '"' ],
+			[ '"\'"',        "'" ],
+			[ 'null00',        '"",' ],
+			[ '"\'", "\'"',    "','" ],
 
-			[ '[star]',		'*' ],
-			[ '[a]',		'*' ],
-			[ '[eq]',		'=' ],
-			[ ';opar;',		'[' ],
-			[ '[pipe]',		'|' ],
+			[ '[star]',        '*' ],
+			[ '[a]',        '*' ],
+			[ '[eq]',        '=' ],
+			[ ';opar;',        '[' ],
+			[ '[pipe]',        '|' ],
 			[ '[htmlopen]', '<' ],
 			[ '[htmlclose]','>' ],
-			[ '[gtr]',		'>' ],
-			[ '[lss]',		'<' ],
-			[ ';6',			'^' ],
-			[ ';+',			'+' ],
-			[ '[caret]',	'^' ]  )
+			[ '[gtr]',        '>' ],
+			[ '[lss]',        '<' ],
+			[ ';6',            '^' ],
+			[ ';+',            '+' ],
+			[ '[caret]',    '^' ]  )
 
 ############################################### ###############################################
 

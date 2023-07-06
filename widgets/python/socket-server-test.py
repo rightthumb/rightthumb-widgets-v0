@@ -49,7 +49,7 @@ __.switch_raw = []
 _.appInfo[focus()] = {
 	'file': 'socket-server-test.py',
 	'liveAppName': __.thisApp( __file__ ),
- 	'description': 'socket server test',
+	'description': 'socket server test',
 	'categories': [
 						'socket',
 						'server',
@@ -73,15 +73,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
-				       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-				       # {},
+					# {},
 	],
 }
 
@@ -162,17 +162,17 @@ def action():
 	
 
 	with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-	    s.bind((HOST, PORT))
-	    s.listen()
-	    conn, addr = s.accept()
-	    with conn:
-	        _.pr('Connected by', addr)
-	        while True:
-	            data = conn.recv(1024)
-	            if not data:
-	                break
-	            _.pr(data)
-	            conn.sendall(data)
+		s.bind((HOST, PORT))
+		s.listen()
+		conn, addr = s.accept()
+		with conn:
+			_.pr('Connected by', addr)
+			while True:
+				data = conn.recv(1024)
+				if not data:
+					break
+				_.pr(data)
+				conn.sendall(data)
 
 
 

@@ -94,15 +94,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
-				       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-				       # {},
+					# {},
 	],
 }
 
@@ -240,7 +240,7 @@ def action():
 	backupLog = _.getTable('fileBackup.json')
 
 	# if os.path.isfile(fileBackup_archive()):
-	# 	backupLog = backupLog + _.getTable2( fileBackup_archive() )
+	#     backupLog = backupLog + _.getTable2( fileBackup_archive() )
 
 	if _.switches.isActive('Ago'):
 		ago = _.switches.value('Ago')

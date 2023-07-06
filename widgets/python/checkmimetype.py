@@ -29,7 +29,7 @@ import _rightThumb._mimetype as _mime
 # _.switches.register('Output', '-o','folder\\appOut.py')
 # _.switches.register('Move', '-move','completed_in-folder_name')
 
-_.appInfo=	{
+_.appInfo=    {
 	'file': 'checkmimetype.py',
 	'description': 'Changes the world',
 	'prerequisite': [],
@@ -74,7 +74,7 @@ def action():
 			files.append({'file': data, 'mimetype': binORtext(data)})
 
 	_.tables.register('files',files)
-	_.tables.print('files','file,mimetype')		
+	_.tables.print('files','file,mimetype')        
 
 _.switches.fieldSet('Long','active',True)
 ########################################################################################

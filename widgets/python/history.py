@@ -83,7 +83,7 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n', 'sort': '' },
+					# { 'name': 'name', 'abbreviation': 'n', 'sort': '' },
 						{ 'name': 'path', 'abbreviation': 'p', 'sort': '' },
 						{ 'name': 'name', 'abbreviation': 'n', 'sort': '' },
 						{ 'name': 'folder', 'abbreviation': 'f', 'sort': '' },
@@ -101,14 +101,14 @@ _.appInfo[focus()] = {
 						{ 'name': 'date_accessed', 'abbreviation': 'a,ad,da', 'sort': '' },
 						{ 'name': 'movie', 'abbreviation': 'mv,mt', 'sort': '' },
 						# { 'name': 'hash', 'abbreviation': '?', 'sort': '' },
-				       
+					
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-				       # {},
+					# {},
 	],
 }
 
@@ -251,7 +251,7 @@ def process( path ):
 	for row in file.split('\n'):
 
 		# if row.startswith('<'):
-		# 	_.pr( row )
+		#     _.pr( row )
 		# if True:
 		if not row.startswith('<'):
 			if row.startswith('Session:'):
@@ -324,7 +324,7 @@ def action():
 
 	
 
-	 
+	
 	if _.switches.isActive('Count'):
 		if _.switches.isActive('Sort'): records = _.tables.returnSorted( 'data', 'desc.date_modified_raw', records );
 		mx = int( _.switches.values('Count')[0] )

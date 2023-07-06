@@ -78,15 +78,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
-				       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-				       # {},
+					# {},
 	],
 }
 
@@ -255,7 +255,7 @@ def check(path=None,data=None,ext='.bat',p=True,sVars=None,suby=False):
 								_.cp(path,'cyan')
 								printed.append(str(path))
 							# if first:
-							# 	first=False
+							#     first=False
 							# _.pr(var,_.get_supporting_line(data,i,rev=dex))
 							# _.pr(var,sVars[var])
 							_.updateLine('')
@@ -345,7 +345,7 @@ def action():
 	elif ext.lower().endswith('.sh'):
 		add_s='$'
 		add_e=''
-	if not _.switches.isActive('Folders'):	
+	if not _.switches.isActive('Folders'):    
 		folders = [os.getcwd()]
 	else:
 		folders = _.switches.values('Folders')
@@ -367,17 +367,17 @@ def action():
 		if path2 in table:
 			home=table[path2]
 			# for v in home:
-			# 	while v in all_variables:
-			# 		del all_variables[v]
+			#     while v in all_variables:
+			#         del all_variables[v]
 			# while True:
-			# 	d=0
-			# 	for v in home:
-			# 		if len(home[v]) == 1:
-			# 			d+=1
-			# 			del home[v]
-			# 			break
-			# 	if not d:
-			# 		break
+			#     d=0
+			#     for v in home:
+			#         if len(home[v]) == 1:
+			#             d+=1
+			#             del home[v]
+			#             break
+			#     if not d:
+			#         break
 			# _.pv(home)
 			# sys.exit()
 			table = {}
@@ -391,10 +391,10 @@ def action():
 					if _.showLine(var) and not var in abort:
 						shouldAdd=True
 						# for v in home:
-						# 	# if add_s+var+add_e in home[v]:
-						# 	if var in home:
-						# 		# _.cp( ['err',var,home[v]] )
-						# 		shouldAdd=False
+						#     # if add_s+var+add_e in home[v]:
+						#     if var in home:
+						#         # _.cp( ['err',var,home[v]] )
+						#         shouldAdd=False
 
 						if shouldAdd:
 							variables[var]=all_variables[var]
@@ -411,14 +411,14 @@ def action():
 					# _.pr(variables[v])
 			# roots=''
 			# for ik,line in enumerate(root):
-			# 	line=line.replace('\n','')
-			# 	if not line in omitLines:
-			# 		newFile+=line+'\n'
-			# 	else:
-			# 		if not path2 in backup_log:
-			# 			backup_log[path2]={}
-			# 		backup_log[path2][ik]=line
-			# 		newFile+='\n'
+			#     line=line.replace('\n','')
+			#     if not line in omitLines:
+			#         newFile+=line+'\n'
+			#     else:
+			#         if not path2 in backup_log:
+			#             backup_log[path2]={}
+			#         backup_log[path2][ik]=line
+			#         newFile+='\n'
 			if not _.switches.isActive('Var-Set-Print'):
 				_.saveTable( backup_log, 'audit-widget-variable-usage_CLEANED.json' )
 				backup_file(path2)

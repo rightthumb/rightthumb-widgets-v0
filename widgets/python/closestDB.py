@@ -50,7 +50,7 @@ __.pre_error = False
 _.appInfo[focus()] = {
 	'file': 'closestDB.py',
 	'liveAppName': __.thisApp( __file__ ),
- 	'description': 'Find strings that are closest to each other.',
+	'description': 'Find strings that are closest to each other.',
 	'categories': [
 						'javascript',
 						'find',
@@ -75,15 +75,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
-				       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-				       # {},
+					# {},
 	],
 }
 
@@ -181,9 +181,9 @@ def action():
 	db = _v.myTemp+_v.slash+'closestDB-'+md5+'.db'
 	# _.pr(db)
 	# try:
-	# 	os.unlink(db)
+	#     os.unlink(db)
 	# except Exception as e:
-	# 	pass
+	#     pass
 
 	if _.switches.isActive('ClearCache'):
 		if os.path.isfile(db):
@@ -273,9 +273,9 @@ def action():
 			m = 10
 		tbl = []
 		# for s in slots:
-		# 	if not slots[s] == default:
-		# 		if slots[s] <= m:
-		# 			tbl.append(slots[s])
+		#     if not slots[s] == default:
+		#         if slots[s] <= m:
+		#             tbl.append(slots[s])
 		for t in dex:
 			if t <= m:
 				tbl.append(t)

@@ -98,7 +98,7 @@ _.appInfo[focus()] = {
 						''
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': 'name', 'abbreviation': 'n' },
 	],
 	}
 
@@ -234,7 +234,7 @@ def action():
 
 	# _.pr( _.printVar(_.appData) )
 	if _.switches.isActive('Input'):
-	# 	_.setPipeData( _.getText( _.switches.value('Input') ), focus() )
+	#     _.setPipeData( _.getText( _.switches.value('Input') ), focus() )
 		if type( _.appData[__.appReg]['pipe'] ) == bool:
 			_.appData[__.appReg]['pipe'] = []
 			for row in _.switches.value('Input').split( ',' ):

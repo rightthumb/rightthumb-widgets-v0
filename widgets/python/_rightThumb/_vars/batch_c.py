@@ -336,12 +336,12 @@ SET archive7z=%techDrive%:\\tech\\archive_7z_files
 IF NOT EXIST %archive7z% (md %archive7z%) 
 
 
-    net session >nul 2>&1
-    if %errorLevel% == 0 (
-        SET isAdmin=True
-    ) else (
-        SET isAdmin=False
-    )
+	net session >nul 2>&1
+	if %errorLevel% == 0 (
+		SET isAdmin=True
+	) else (
+		SET isAdmin=False
+	)
 
 SET dircache=%myTables%\\dirCache.json
 SET dircachep=%myTables%\\dirCacheP.json

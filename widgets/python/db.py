@@ -56,7 +56,7 @@ __.switch_raw = [ 'Delim' ]
 _.appInfo[focus()] = {
 	'file': 'db.py',
 	'liveAppName': __.thisApp( __file__ ),
- 	'description': 'query database',
+	'description': 'query database',
 	'categories': [
 						'db',
 						'sql',
@@ -86,15 +86,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
-				       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-				       # {},
+					# {},
 	],
 }
 
@@ -172,7 +172,7 @@ def table_fields(databaseFile,table):
 	# _.pr(names)
 
 	# for n in names:
-	# 	_.pr(n)
+	#     _.pr(n)
 	# sys.exit()
 	return names
 

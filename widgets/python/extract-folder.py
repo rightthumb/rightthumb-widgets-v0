@@ -53,7 +53,7 @@ __.isRequired_or_List = ['Pipe','Files']
 _.appInfo[focus()] = {
 	'file': 'extract-folder.py',
 	'liveAppName': __.thisApp( __file__ ),
- 	'description': 'end file on a specific folder and remove duplicates',
+	'description': 'end file on a specific folder and remove duplicates',
 	'categories': [
 						'folder',
 						'pop file',
@@ -83,15 +83,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
-				       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-				       # {},
+					# {},
 	],
 }
 

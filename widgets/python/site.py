@@ -16,9 +16,9 @@ import os, sys, time
 import _rightThumb._construct as __
 appDBA=__.clearFocus(__name__,__file__);__.appReg=appDBA;
 def focus(parentApp='',childApp='',reg=True):
-    global appDBA;f=__.appName(appDBA,parentApp,childApp);
-    if reg:__.appReg=f;
-    return f
+	global appDBA;f=__.appName(appDBA,parentApp,childApp);
+	if reg:__.appReg=f;
+	return f
 import _rightThumb._base3 as _
 fieldSet=_.l.vars(focus(),__name__,__file__,appDBA)
 _.load()
@@ -41,6 +41,7 @@ def sw():
 	_.switches.register( 'NotWSL', '-notwsl' )
 	_.switches.register( 'SSH-Remote_Folder', '-remote' )
 	_.switches.register( 'URL', '-url,-edit,--u' )
+
 
 
 
@@ -76,15 +77,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-					   # { 'name': 'name', 'abbreviation': 'n' },
-					   # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-					   # 'this',
-					   # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-					   # {},
+					# {},
 	],
 }
 
@@ -116,8 +117,8 @@ def file_trigger(data):
 	return data
 
 def triggers():
-    _.switches.trigger( 'Files', file_trigger )
-    # _.switches.trigger( 'Files', _.myFileLocations )
+	_.switches.trigger( 'Files', file_trigger )
+	# _.switches.trigger( 'Files', _.myFileLocations )
 
 
 _.l.conf('clean-pipe',True)
@@ -265,6 +266,7 @@ def process(path,end='',ft=None):
 				url += '/'
 			_.pr(urlpr(url),c='Background.blue')
 			if url.endswith('.js'): _.pr( '<script src="'+url+'"></script>' ,c='yellow')
+			if url.endswith('.css'): _.pr( '<link rel="stylesheet" href="'+url+'">' ,c='yellow')
 			
 
 			try: _.pr(_.v.fp,c='Background.light_blue')
@@ -287,16 +289,16 @@ def process(path,end='',ft=None):
 
 		if _.switches.isActive('Upload-Scp') or _.switches.isActive('Download-Scp'):
 			# if ftp is None or url is None:
-			# 	_.e('meta missing fields')
+			#     _.e('meta missing fields')
 
 			fi = file.replace( __.path(folder), f ).replace('\\','/')
 			# _.pr(fi,c='cyan')
 			if os.path.isdir(path):
 				fi = "/".join(fi.split("/")[:-1])+'/'
 
-			# 	fi=__.path(fi,pop=True)
-			# 	fi += '/'
-			# 	path+=os.sep
+			#     fi=__.path(fi,pop=True)
+			#     fi += '/'
+			#     path+=os.sep
 			# _.pr(fi,c='yellow')
 		if _.switches.isActive('mkdir'):
 		# if True:
@@ -304,9 +306,9 @@ def process(path,end='',ft=None):
 			rfo = _.tailpop(fi,'/')
 			pw=_vault.imp.s.de( ftp['password'] )
 			# if os.path.isdir(path):
-			# 	fi=__.path(fi,pop=True)
-			# 	fi += '/'
-			# 	path+=os.sep
+			#     fi=__.path(fi,pop=True)
+			#     fi += '/'
+			#     path+=os.sep
 			
 			mkdir=f'{ssh} -f {u}@{s} "/bin/python3 /opt/rightthumb-widgets-v0/widgets/python/mkdir.py -folder {rfo}"'+tail()
 
@@ -409,10 +411,21 @@ def remoteFolder():
 		sys.exit()
 
 
-def URL():
-	_file_open = _.regImp( __.appReg, 'file-open' )
-	_file_open.switch('App',_v.meta['code_editor'])
-	for url in _.switches.values('URL'):
+def URL(urls=None):
+
+	spent=[]
+	RETURN=False
+	if not __.site_url is None:
+		RETURN=True
+	if not urls is None:
+		RETURN=True
+		if type(urls) == str:
+			urls=[urls]
+	if not RETURN:
+		urls=_.switches.values('URL')
+		_file_open = _.regImp( __.appReg, 'file-open' )
+		_file_open.switch('App',_v.meta['code_editor'])
+	for url in urls:
 		url=url.replace('https://www.','https://')
 		if '?' in url: url=url.split('?')[0]
 		sites=_.getTable('site-locations.list')
@@ -434,9 +447,15 @@ def URL():
 									y=yt
 						y=y.replace(os.sep+os.sep,os.sep)
 						if os.path.isfile(y):
-							# _.pr(y,c='yellow')
-							_file_open.switch('Files',y)
-							_file_open.action()
+							if not y in spent:
+								spent.append(y)
+								# _.pr(y,c='yellow')
+								if RETURN:
+									__.site_url = y
+									return y
+								else:
+									_file_open.switch('Files',y)
+									_file_open.action()
 
 
 def action():

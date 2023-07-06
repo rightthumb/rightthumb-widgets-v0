@@ -1,5 +1,9 @@
 @echo off
-call p file-open -backup -alias %*
+if [%1] == [] (
+	call p file-open -backup secure -alias last
+) else (
+	call p file-open -backup secure -alias %*
+)
 rem if [%2] == [] (
 rem 	call p file-open -backup -alias %*
 rem ) else if exist %1  (

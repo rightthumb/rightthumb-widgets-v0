@@ -29,7 +29,7 @@ while True:
 		with context.wrap_socket(sock, server_hostname=hostname) as ssock:
 			# print(ssock.version())
 			# for x in dir(ssock):
-			# 	print(x)
+			#     print(x)
 			shouldExit = False
 			s = ssock
 			# Build a connection
@@ -56,7 +56,7 @@ while True:
 			expecting = _md5.md5( str(result,'iso-8859-1') )
 			s.send( result );
 			#s.sendall('Hello, world')
-			 
+			
 			# Receive the feedback from server
 			data = s.recv(1024)
 			s.close()

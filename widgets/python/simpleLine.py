@@ -68,15 +68,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
-				       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-				       # {},
+					# {},
 	],
 }
 
@@ -164,7 +164,7 @@ def action():
 	_.colorThis( [ '', _.addComma(_.nc.cnt.search), 'of', _.addComma(_.nc.cnt.total) ], 'yellow' )
 
 # def load():
-# 	global data; data = _.getTable( 'table' );
+#     global data; data = _.getTable( 'table' );
 
 
 

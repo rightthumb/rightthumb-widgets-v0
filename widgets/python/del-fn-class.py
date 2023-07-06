@@ -54,7 +54,7 @@ __.switch_raw = []
 _.appInfo[focus()] = {
 	'file': 'copy-fn-class.py',
 	'liveAppName': __.thisApp( __file__ ),
- 	'description': 'copy classes or functions to another python app',
+	'description': 'copy classes or functions to another python app',
 	'categories': [
 						'copy',
 						'app',
@@ -81,15 +81,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
-				       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-				       # {},
+					# {},
 	],
 }
 
@@ -232,7 +232,7 @@ def process(subject):
 			# _.pr('delete supporting '+ta+':')
 			# ask = input(': ')
 			# if 'y' in ask.lower():
-			# 	process(ta)
+			#     process(ta)
 
 
 

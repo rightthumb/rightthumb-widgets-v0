@@ -64,7 +64,7 @@ def appSwitches():
 
 _.appInfo[focus()] = {
 	'file': 'hasAlias.py',
- 	'description': 'check if a folder has any bookmarks (bm)',
+	'description': 'check if a folder has any bookmarks (bm)',
 	'categories': [
 						'research',
 						'text manipulation',

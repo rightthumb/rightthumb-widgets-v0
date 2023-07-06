@@ -46,7 +46,7 @@ __.pre_error = False
 _.appInfo[focus()] = {
 	'file': 'ticket_transfer.py',
 	'liveAppName': __.thisApp( __file__ ),
- 	'description': 'Ticket Transfer',
+	'description': 'Ticket Transfer',
 	'categories': [
 						'session',
 						'ticket',
@@ -70,15 +70,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
-				       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-				       # {},
+					# {},
 	],
 }
 

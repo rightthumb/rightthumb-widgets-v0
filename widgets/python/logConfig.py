@@ -39,7 +39,7 @@ _.load()
 import _rightThumb._vars as _v
 import _rightThumb._string as _str
 # import _rightThumb._profileVariables as _profile
-# 	profile = _profile.records.audit( 'name', asset )
+#     profile = _profile.records.audit( 'name', asset )
 # import _rightThumb._encryptString as _blowfish
 	# en = _blowfish.encrypt( string )
 	# de = _blowfish.decrypt( en )
@@ -277,7 +277,7 @@ def action():
 			else:
 				newLog = [log[len(log)-1]]
 				# for l in log:
-				# 	newLog.append( log )
+				#     newLog.append( log )
 
 			# _.pr( 1 )
 			info = {
@@ -341,14 +341,14 @@ def action():
 				_.saveTable( theLog, 'logConfig.json', printThis=True )
 			
 				# try:
-				# 	generatedLog = _.getTable2(generatedLogFile)
-				# 	os.remove(generatedLogFile)
-				# 	if len( generatedLog ) > 0:
-				# 		theLog = _.getTable('logConfig.json')
-				# 		theLog.append( generatedLog )
-				# 		_.saveTable( theLog, 'logConfig.json', printThis=True )
+				#     generatedLog = _.getTable2(generatedLogFile)
+				#     os.remove(generatedLogFile)
+				#     if len( generatedLog ) > 0:
+				#         theLog = _.getTable('logConfig.json')
+				#         theLog.append( generatedLog )
+				#         _.saveTable( theLog, 'logConfig.json', printThis=True )
 				# except Exception as e:
-				# 	_.pr( 'Error: unable to update log' )
+				#     _.pr( 'Error: unable to update log' )
 
 	if runOld:
 		if _.switches.isActive('Input'):

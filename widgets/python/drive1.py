@@ -26,7 +26,7 @@ _.switches.register('Index', '-i,-index','usb, C:\\ D:'+_v.slash)
 _.switches.register('History', '-h,-history')
 _.switches.register('Path', '-p,-path')
 
-_.appInfo=	{
+_.appInfo=    {
 	'file': 'drive.py',
 	'description': 'Manages drives and indexes',
 	'prerequisite': [],
@@ -75,7 +75,7 @@ _.tables.register('Auto')
 _.tables.fieldProfileSet('Auto','timestamp','trigger',_.float2Date)
 
 # if _.switches.isActive('Path') == False:
-# 	Folder = _.switches.value('Path')
+#     Folder = _.switches.value('Path')
 
 
 
@@ -85,19 +85,19 @@ _.tables.fieldProfileSet('Auto','timestamp','trigger',_.float2Date)
 
 
 # if _.switches.isActive('Path') == False:
-# 	folder = _.switches.value('Path')
+#     folder = _.switches.value('Path')
 
 # if _.switches.isActive('Help') == True:
-# 	print('Drive Log\n')
-# 	print('Example:')
-# 	print('\tp drive -s')
-# 	print('\tp drive -h {F8E01519-3977-04B8-3416-1F0048BD97C3} | p line -p " " 0 -u')
-# 	print()
-# 	print('Columns:')
-# 	print('\tdrive name id type priority machineID pc timestamp\n')
-# 	_.tables.register('Auto',_.switch)
-# 	_.tables.print('Auto','name,switch,expected_input_example')
-# 	sys.exit()
+#     print('Drive Log\n')
+#     print('Example:')
+#     print('\tp drive -s')
+#     print('\tp drive -h {F8E01519-3977-04B8-3416-1F0048BD97C3} | p line -p " " 0 -u')
+#     print()
+#     print('Columns:')
+#     print('\tdrive name id type priority machineID pc timestamp\n')
+#     _.tables.register('Auto',_.switch)
+#     _.tables.print('Auto','name,switch,expected_input_example')
+#     sys.exit()
 
 def getID(drive):
 	# print(drive)
@@ -209,7 +209,7 @@ def scanDrives():
 				driveID = genGUID()
 				records_drives.append(appendRecord(driveID,letter,int(round(time.time() * 1000))))
 				file = open(idFile,'w') 
-				file.write(driveID)				 
+				file.write(driveID)                 
 				file.close()
 				os.system('attrib +h ' + idFile)
 				# print(letter,driveID)
@@ -342,7 +342,7 @@ def index():
 	success = False
 	global records_drives
 	indexWhat = _.switches.value('Index')
-	if ',' in indexWhat:	
+	if ',' in indexWhat:    
 		indexWhat = indexWhat.split(',')
 		indexWhat[0] = _.ci(indexWhat[0])
 		indexWhat[1] = _.ci(indexWhat[1])

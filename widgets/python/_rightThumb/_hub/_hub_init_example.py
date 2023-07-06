@@ -60,15 +60,15 @@ reg.documentation = {
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
-				       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-				       # {},
+					# {},
 	],
 }
 
@@ -109,7 +109,7 @@ def sw( argvProcessForce=False ):
 	app.switch.trigger( 'Ago', app.timeAgo )
 	app.switch.trigger( 'Duration', app.timeFuture )
 	### EXAMPLE: START
-	# app.switch.trigger( 'Files',app.inRelevantFolder )	
+	# app.switch.trigger( 'Files',app.inRelevantFolder )    
 	# app.switch.trigger( 'Watched', app.txt2Date )
 	# app.switch.trigger( 'Input',app.formatColumns )
 	# app.switch.trigger( 'Franchise',app.triggerSpace )

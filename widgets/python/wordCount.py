@@ -17,11 +17,11 @@ def getFiles():
 	global descriptions
 	global words
 	with open('exportDescription_FINAL.txt') as f:
-	    descriptions = f.read().splitlines()
+		descriptions = f.read().splitlines()
 
 
 	with open('words1.txt') as f:
-	    words = f.read().splitlines()
+		words = f.read().splitlines()
 
 
 def getCount(line,word):

@@ -139,8 +139,8 @@ def pipeCleaner():
 
 # _.appData[__.appReg]['pipe'] = ''
 # if not sys.stdin.isatty():
-# 	_.appData[__.appReg]['pipe'] = sys.stdin.readlines()
-# 	pipeCleaner()
+#     _.appData[__.appReg]['pipe'] = sys.stdin.readlines()
+#     pipeCleaner()
 
 
 
@@ -327,13 +327,13 @@ def action():
 
 
 # def action2():
-# 	global data
-# 	_.threads.add( 'headers', trigger=complete, loaded=False ) # kwargs 
-# 	_.threads.maxThreadsSafe = 250
-# 	_.threads.report = True
-# 	_.threads.auditPrint = True
-# 	url = 'https://www.biblegateway.com/passage/?version=NIV&interface=amp&search=' + 'Genesis+9'
-# 	_.threads.add( 'headers', processSection, [ 0, 'Genesis', 9, url ] )
+#     global data
+#     _.threads.add( 'headers', trigger=complete, loaded=False ) # kwargs 
+#     _.threads.maxThreadsSafe = 250
+#     _.threads.report = True
+#     _.threads.auditPrint = True
+#     url = 'https://www.biblegateway.com/passage/?version=NIV&interface=amp&search=' + 'Genesis+9'
+#     _.threads.add( 'headers', processSection, [ 0, 'Genesis', 9, url ] )
 
 def complete():
 	global data

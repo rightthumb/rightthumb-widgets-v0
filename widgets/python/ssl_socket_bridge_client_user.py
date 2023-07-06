@@ -165,23 +165,23 @@ while True:
 			# result += str(data,'iso-8859-1')
 
 			# if data:
-			# 	result = _md5.md5( str(data,'iso-8859-1') )
-			# 	try:
-			# 		result = str(result,'utf-8')
-			# 	except Exception as e:
-			# 		try:
-			# 			result = str(result,'iso-8859-1')
-			# 		except Exception as e:
-			# 			result = result.encode('utf-8')
-			# 	sock.sendall(result)
+			#     result = _md5.md5( str(data,'iso-8859-1') )
+			#     try:
+			#         result = str(result,'utf-8')
+			#     except Exception as e:
+			#         try:
+			#             result = str(result,'iso-8859-1')
+			#         except Exception as e:
+			#             result = result.encode('utf-8')
+			#     sock.sendall(result)
 			# else:
 
-			# 	# works
+			#     # works
 
-			# 	print( 'Payload:', result )
+			#     print( 'Payload:', result )
 
 
-			# 	break
+			#     break
 	finally:
 		# print('the end')
 		pass

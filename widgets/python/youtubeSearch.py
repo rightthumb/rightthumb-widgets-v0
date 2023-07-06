@@ -79,11 +79,11 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': 'name', 'abbreviation': 'n' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 
 	}
@@ -278,10 +278,10 @@ def action():
 					_.pr( result )
 				except Exception as e:
 					pass
-	# 			youtubeVideos.append( unquote(records[0]['link']).split('&')[0] )
+	#             youtubeVideos.append( unquote(records[0]['link']).split('&')[0] )
 
 	# for url in youtubeVideos:
-	# 	_.pr( url )
+	#     _.pr( url )
 
 
 printTestStuff = _.switches.isActive( 'PrintTestStuff' )

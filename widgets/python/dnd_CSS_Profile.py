@@ -41,7 +41,7 @@ _.load()
 import _rightThumb._vars as _v
 import _rightThumb._string as _str
 # import _rightThumb._profileVariables as _profile
-# 	profile = _profile.records.audit( 'name', asset )
+#     profile = _profile.records.audit( 'name', asset )
 # import _rightThumb._encryptString as _blowfish
 	# _blowfish.genPassword()
 	# _blowfish.genPassword('string')
@@ -67,9 +67,9 @@ import _rightThumb._string as _str
 	# _inDic.imp.testAll( 'fight' )
 	# _inDic.imp.testOne( 'austen' )
 # _file_folder = _.regImp( __.appReg, 'file_folder' )
-# 	_file_folder.switch( 'Save,Clean' )
-# 	_file_folder.switch( 'Compair,Clean' )
-# 	_file_folder.switch( 'Folder', '' )
+#     _file_folder.switch( 'Save,Clean' )
+#     _file_folder.switch( 'Compair,Clean' )
+#     _file_folder.switch( 'Folder', '' )
 
 ##################################################
 
@@ -112,11 +112,11 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': 'name', 'abbreviation': 'n' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 
 	}
@@ -310,12 +310,12 @@ if __name__ == '__main__':
 
 
 # div#page23-div
-# 	p.ft245	font-size:28px;	Class Features
-# 		p.ft244	font-size:16px;	Hit Points
-# 			p.ft246	font-size:11px;	<b>Hit Dice:</b> 1d8 per cleric level
-# 				p.ft243	font-size:11px;	Constitution modifier per cleric level after 1st
-# 	p.ft248	font-size:16px;	Creating a Cleric ( Underlined )
-# 	p.ft231	font-size:13px;	Chapter 3: Classes ( bottom of page )
+#     p.ft245    font-size:28px;    Class Features
+#         p.ft244    font-size:16px;    Hit Points
+#             p.ft246    font-size:11px;    <b>Hit Dice:</b> 1d8 per cleric level
+#                 p.ft243    font-size:11px;    Constitution modifier per cleric level after 1st
+#     p.ft248    font-size:16px;    Creating a Cleric ( Underlined )
+#     p.ft231    font-size:13px;    Chapter 3: Classes ( bottom of page )
 	
 
 

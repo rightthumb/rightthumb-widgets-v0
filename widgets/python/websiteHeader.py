@@ -86,12 +86,12 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
-				       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 
 	}
@@ -178,9 +178,9 @@ _.postLoad( __file__ )
 # os.system( '"' + do + '"' )
 # _.setPipeData( os.listdir( os.getcwd() ), focus() )
 # _.showLine( item )
-# 	if os.path.isdir( row ):
-# 	if os.path.isfile( row ):
-#	os.path.abspath(path)
+#     if os.path.isdir( row ):
+#     if os.path.isfile( row ):
+#    os.path.abspath(path)
 # __.appRegPipe    ( pipe data registerd focus(__.appReg) set by _.myFileLocations {if imported} , default is None )
 # date = _.friendlyDate( theDate )
 # _.addComma()
@@ -190,7 +190,7 @@ _.postLoad( __file__ )
 
 import requests as req
 
-
+import simplejson
 
 def action():
 
@@ -199,8 +199,9 @@ def action():
 	response = req.get( _.switches.values('URL')[0] )
 
 	headers = response.headers
-
-	_.printVar( str(headers).replace( "'", '"' ), isDic=True )
+	# print(headers.replace(",",'"'))
+	_.pr(_.toYML(dict(headers)),c='BackgroundGrey.green')
+	# _.printVar( str(headers).replace( "'", '"' ), isDic=True )
 
 	# html = response.text
 

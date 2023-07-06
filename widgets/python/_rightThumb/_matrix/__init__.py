@@ -277,7 +277,7 @@ class Appp:
 						example = ''
 					theSwitches.append({ 'name': name, 'switches': switches, 'example': example  })
 					# if name == 'Files':
-					# 	_.pr(dir(self.records['switch'][key]))
+					#     _.pr(dir(self.records['switch'][key]))
 
 					# _.pr( name, switches, example )
 			_.fields.asset( 'switches', theSwitches )

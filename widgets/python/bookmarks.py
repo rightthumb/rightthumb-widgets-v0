@@ -36,22 +36,22 @@ import _rightThumb._vars as _v
 import _rightThumb._string as _str
 
 # _dirList = _.regImp( __.appReg, 'dirList' )
-# 	_dirList.switch( 'Files' )
-# 	_dirList.switch( 'Recursion' )
-# 	_dirList.switch( 'Binary' )
-# 	_dirList.switch( 'Path','D:\\Apps' )
-# 	files = _dirList.do( 'action' )
+#     _dirList.switch( 'Files' )
+#     _dirList.switch( 'Recursion' )
+#     _dirList.switch( 'Binary' )
+#     _dirList.switch( 'Path','D:\\Apps' )
+#     files = _dirList.do( 'action' )
 
 # import _rightThumb._profileVariables as _profile
-# 	profile = _profile.records.audit( 'name', asset )
+#     profile = _profile.records.audit( 'name', asset )
 # import _rightThumb._encryptString as _blowfish
 	# _blowfish.genPassword()
 	# _blowfish.genPassword( 'string' )
 	# en = _blowfish.encrypt( string )
 	# de = _blowfish.decrypt( en )
 # import _rightThumb._encryptFile as _blowfish
-# 	_blowfish.encrypt( infilepath, outfilepath, key )
-# 	_blowfish.decrypt( infilepath, outfilepath, key )
+#     _blowfish.encrypt( infilepath, outfilepath, key )
+#     _blowfish.decrypt( infilepath, outfilepath, key )
 # _browser = _.regImp( __.appReg, '_rightThumb._toolsScrapeFrontEnd' )
 # _browserX = _.regImp( __.appReg, '_rightThumb._toolsScrapeDirect' )
 # import _rightThumb._date as _date
@@ -72,36 +72,36 @@ import _rightThumb._string as _str
 	# _inDic.imp.testAll( 'fight' )
 	# _inDic.imp.testOne( 'austen' )
 # _file_folder = _.regImp( __.appReg, 'file_folder' )
-# 	_file_folder.switch( 'Save,Clean' )
-# 	_file_folder.switch( 'Compair,Clean' )
-# 	_file_folder.switch( 'Folder', '' )
+#     _file_folder.switch( 'Save,Clean' )
+#     _file_folder.switch( 'Compair,Clean' )
+#     _file_folder.switch( 'Folder', '' )
 # _fileNameDate = _.regImp( __.appReg, 'fileNameDate' )
-# 	_fileNameDate.imp.newName( filename )
-# 	_fileNameDate.imp.newName( filename, _dir.fileInfo( filename ) )
+#     _fileNameDate.imp.newName( filename )
+#     _fileNameDate.imp.newName( filename, _dir.fileInfo( filename ) )
 # _filePathPatterns = _.regImp( __.appReg, 'filePathPatterns' )
 	# _filePathPatterns.switch( 'NoPrint' )
 	# _filePathPatterns.switch( 'Files', _.switches.value( 'Files' ) )
 	# folderReport = _filePathPatterns.action()
 # fileBackup = _.regImp( __.appReg, 'fileBackup' )
-# 	fileBackup.switch( 'Input', filename )
-# 	fileBackup.switch( 'Flag', 'pre replaceText' )
-# 	recoveryFile = fileBackup.do( 'action' )
+#     fileBackup.switch( 'Input', filename )
+#     fileBackup.switch( 'Flag', 'pre replaceText' )
+#     recoveryFile = fileBackup.do( 'action' )
 # _folderContent = _.regImp( __.appReg, 'file' )
-# 	_folderContent.switch( 'Silent' )
-# 	_folderContent.switch( 'Folder', _v.myAppsBatch )
-# 	_folderContent.switch( 'NoExtension' )
+#     _folderContent.switch( 'Silent' )
+#     _folderContent.switch( 'Folder', _v.myAppsBatch )
+#     _folderContent.switch( 'NoExtension' )
 
-# 	_folderContent.switch( 'Recursive' )
+#     _folderContent.switch( 'Recursive' )
 
-# 	_folderContent.switch( 'Text' )
-# 	_folderContent.switch( 'Binary' )
-# 	_folderContent.switch( 'Label', 'App: ' )
-# 	_folderContent.switch( 'Prefix', ';t' )
-# 	files = _folderContent.do( 'action' )['files']
-# 	folders = _folderContent.do( 'action' )['folders']
+#     _folderContent.switch( 'Text' )
+#     _folderContent.switch( 'Binary' )
+#     _folderContent.switch( 'Label', 'App: ' )
+#     _folderContent.switch( 'Prefix', ';t' )
+#     files = _folderContent.do( 'action' )['files']
+#     folders = _folderContent.do( 'action' )['folders']
 # _tickets = _.regImp( __.appReg, 'ticketTimeline' )
-# 	_tickets.switch( 'ReturnFiles' )
-# 	records = _tickets.do( 'records' )
+#     _tickets.switch( 'ReturnFiles' )
+#     records = _tickets.do( 'records' )
 ##################################################
 # from lxml import html
 # import requests
@@ -158,11 +158,11 @@ _.appInfo[focus()] = {
 						''
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': 'name', 'abbreviation': 'n' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 
 	}
@@ -310,8 +310,8 @@ def action():
 
 # _v.myBookmarks _v.bookmarkFormat ALIASHERE
 
-# _v.folderID_tech		_v.folderID_profile		_v.folderID_host
-# _v.techFolder			_v.userprofile			_v.thisHost
+# _v.folderID_tech        _v.folderID_profile        _v.folderID_host
+# _v.techFolder            _v.userprofile            _v.thisHost
 data = { 'bad': [], 'good': [], 'both': []  }
 ########################################################################################
 if __name__ == '__main__':

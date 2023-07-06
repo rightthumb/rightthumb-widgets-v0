@@ -52,13 +52,13 @@ def table( *values ):
 	sys.exit()
 
 # class fields:
-# 	# placeholder
-# 	def __init__( *values ):
-# 		print( 'error: before usinh this, __.fields()' )
-# 		sys.exit()
-# 	def register( *values ):
-# 		print( 'error: before usinh this, __.fields()' )
-# 		sys.exit()
+#     # placeholder
+#     def __init__( *values ):
+#         print( 'error: before usinh this, __.fields()' )
+#         sys.exit()
+#     def register( *values ):
+#         print( 'error: before usinh this, __.fields()' )
+#         sys.exit()
 
 
 
@@ -276,9 +276,9 @@ def default_script_triggers_do():
 		return None
 		# if len(appInfo[__.rent_bk]['columns']) > 0:
 
-		# 	switch.trigger('Column',formatColumns)
-		# 	switch.trigger('Sort',formatColumnsSort)
-		# 	switch.trigger('GroupBy',formatColumns)
+		#     switch.trigger('Column',formatColumns)
+		#     switch.trigger('Sort',formatColumnsSort)
+		#     switch.trigger('GroupBy',formatColumns)
 		# switch.trigger('PlusClose',plusCloseClean)
 		# switch.trigger('Ago',timeAgo)
 		# switch.trigger('PrintEpoch',print_epoch_trigger)
@@ -868,7 +868,7 @@ def save_table( rows, theFile, tableTemp=False, printThis=True, indentCode=True,
 	if not p: printThis = False;
 		
 
-	   
+	
 	# defaults to myTables
 	px = ''
 	if theFile.startswith('temp'+_v.slash):

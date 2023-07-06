@@ -19,6 +19,6 @@ keyboard = Controller()
 time.sleep(5)
 
 while True:
-    keyboard.press(Key.num_lock)
-    keyboard.release(Key.num_lock)
-    time.sleep(0.1)
+	keyboard.press(Key.num_lock)
+	keyboard.release(Key.num_lock)
+	time.sleep(0.1)

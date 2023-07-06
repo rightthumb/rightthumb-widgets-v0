@@ -362,9 +362,9 @@ def newAbbreviations():
 		# _.pr( br )
 		abbreviation = br.split(',')[1]
 		n = {
-				'book':		br.split(',')[0],
-				'abbreviation':	br.split(',')[1],
-				'minimal':	data[str(i)]['abbreviation']
+				'book':        br.split(',')[0],
+				'abbreviation':    br.split(',')[1],
+				'minimal':    data[str(i)]['abbreviation']
 		}
 		booksNew.append( n )
 	# _.saveTable( booksNew , 'Bible_abbreviation_minimal.json', printThis=True )

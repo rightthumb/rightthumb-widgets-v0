@@ -92,15 +92,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
-				       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-				       # {},
+					# {},
 	],
 }
 
@@ -196,8 +196,8 @@ def processImport():
 
 	# _.pr( imp )
 	# for line in imp:
-	# 	line = line.replace( ' ', '•' )
-	# 	_.pr(line)
+	#     line = line.replace( ' ', '•' )
+	#     _.pr(line)
 
 	pass
 	isClass = False
@@ -205,7 +205,7 @@ def processImport():
 	functions = []
 	for line in imp:
 		# if line.startswith('class '):
-		# 	# _.pr(line)
+		#     # _.pr(line)
 
 		if line.startswith('class ') and not line == 'class dot:' and not line == 'class DOT:' and not line == 'class Dot:':
 			# _.pr(line)
@@ -281,7 +281,7 @@ def processImport():
 				line = line.replace(' ','')
 				v = line.split(x)[0]
 				# if not '.' in v:
-				# 	v = pre+'.'+v
+				#     v = pre+'.'+v
 				if not v.startswith('self.') and not '(' in v:
 					v = v.replace('..','.')
 					v = v.replace('_._','_.')
@@ -499,53 +499,53 @@ def action():
 
 	# _.saveTableDB( dump, 'audit-import-'+_.switches.values('Import')[0]+'.json' )
 	# for k in table.classes:
-	# 	if table.classes[k]['i']:
-	# 		newChildren = {}
-	# 		for child in table.classes[k]['children']:
-	# 			if table.classes[k]['children'][child]['i']:
-	# 				newChildren[child] = table.classes[k]['children'][child]
-	# 		table.classes[k]['children'] = newChildren
+	#     if table.classes[k]['i']:
+	#         newChildren = {}
+	#         for child in table.classes[k]['children']:
+	#             if table.classes[k]['children'][child]['i']:
+	#                 newChildren[child] = table.classes[k]['children'][child]
+	#         table.classes[k]['children'] = newChildren
 
 
 	# for k in table.classes:
-	# 	if table.classes[k]['i']:
-	# 		pass
-	# 		_.vp( table.classes[k] )
+	#     if table.classes[k]['i']:
+	#         pass
+	#         _.vp( table.classes[k] )
 
 	# _.vp(table.classes)
 	# _.vp(table.variables)
 	# _.vp(table.functions)
 	# test = {}
 	# for k in table.classes:
-	# 	if table.classes[k]['i']:
-	# 		test[k] = table.classes[k]
+	#     if table.classes[k]['i']:
+	#         test[k] = table.classes[k]
 
 
 	# _.vp(test)
 	# IMPY = '\n'.join( imp )
 	# _.pr(IMPY)
 	# for k in table.variables:
-	# 	if table.variables[k]['i'] < 1:
-	# 		_.pr( 0, k )
+	#     if table.variables[k]['i'] < 1:
+	#         _.pr( 0, k )
 			# ixi = impy.lower().count(k.lower())
 			# table.variables[k]['i'] = ixi
 			# if table.variables[k]['i'] < 1:
-			# 	# _.pr()
-			# 	# _.pr()
+			#     # _.pr()
+			#     # _.pr()
 
-			# 	# _.pr(table.variables[k]['i'], k)
-			# 	# for x in k:
-			# 	# 	_.pr( ord(x), chr(ord(x)) )
-			# 	# _.pr()
-			# 	# _.pr()
+			#     # _.pr(table.variables[k]['i'], k)
+			#     # for x in k:
+			#     #     _.pr( ord(x), chr(ord(x)) )
+			#     # _.pr()
+			#     # _.pr()
 			# test[k] = table.variables[k]
 			# _.vp( table.variables[k] )
 
 
 	# test = {}
 	# for k in table.functions:
-	# 	if table.functions[k]['i']:
-	# 		test[k] = table.functions[k]
+	#     if table.functions[k]['i']:
+	#         test[k] = table.functions[k]
 	# _.vp( test )
 
 	if _.switches.isActive('AppCount'):

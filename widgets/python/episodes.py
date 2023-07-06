@@ -76,15 +76,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
-				       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-				       # {},
+					# {},
 	],
 }
 
@@ -200,9 +200,9 @@ def sections(line):
 	# epb = ep
 	# par = ep.split('.')
 	# if len(par) < 2:
-	# 	return ''
+	#     return ''
 	# if len(par[1]) == 1:
-	# 	ep = par[0]+'.0'+par[1]
+	#     ep = par[0]+'.0'+par[1]
 	
 	# line = ep + line[ len(epb)+1 : ]
 

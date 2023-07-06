@@ -50,7 +50,7 @@ __.isRequired_Pipe_or_File = True
 _.appInfo[focus()] = {
 	'file': 'filePart.py',
 	'liveAppName': __.thisApp( __file__ ),
- 	'description': 'Return part of file',
+	'description': 'Return part of file',
 	'categories': [
 						'peek',
 						'file',
@@ -74,15 +74,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
-				       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-				       # {},
+					# {},
 	],
 }
 

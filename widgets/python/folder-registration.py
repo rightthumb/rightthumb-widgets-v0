@@ -17,9 +17,9 @@ import sys, time
 import _rightThumb._construct as __
 appDBA=__.clearFocus(__name__,__file__);__.appReg=appDBA;
 def focus(parentApp='',childApp='',reg=True):
-    global appDBA;f=__.appName(appDBA,parentApp,childApp);
-    if reg:__.appReg=f;
-    return f
+	global appDBA;f=__.appName(appDBA,parentApp,childApp);
+	if reg:__.appReg=f;
+	return f
 import _rightThumb._base3 as _
 fieldSet=_.l.vars(focus(),__name__,__file__,appDBA)
 _.load()
@@ -30,13 +30,13 @@ _str = __.imp('_rightThumb._string')
 
 
 def sw():
-    pass
-    #b)--> examples
-    _.switches.register( 'Relevent', '-r' )
-    _.switches.register( 'WSL', '-wsl' )
-    _.switches.register( 'Ago', '-ago', '1m' )
-    #e)--> examples
-    # _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=False )
+	pass
+	#b)--> examples
+	_.switches.register( 'Relevent', '-r' )
+	_.switches.register( 'WSL', '-wsl' )
+	_.switches.register( 'Ago', '-ago', '1m' )
+	#e)--> examples
+	# _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=False )
 
 # __.setting('require-list',['Files,Plus','File,Has']) # todo
 # __.setting('require-list',['Pipe','Files'])
@@ -51,64 +51,64 @@ __.setting('switch-raw',[])
 
 
 _.appInfo[focus()] = {
-    # 'app': '8facG-jo0Cxk',
-    'file': 'folder-registration.py',
-    'liveAppName': __.thisApp( __file__ ),
-    'description': 'Realtime(ish) documentation of folder usage',
-        # _.ail(1,'subject')+
-        # _.aib('one')+
-    'categories': [
-                        'DEFAULT',
-                ],
-    'usage': [
-                        # 'epy another',
-                        # 'e nmap',
-                        # '',
-    ],
-    'relatedapps': [
-                        # 'p another -file file.txt',
-                        # '',
-    ],
-    'prerequisite': [
-                        # 'p another -file file.txt',
-                        # '',
-    ],
-    'examples': [
-                        _.hp('p thisApp -file file.txt'),
-                        _.linePrint(label='simple',p=0),
-                        '',
-    ],
-    'columns': [
-                       # { 'name': 'name', 'abbreviation': 'n' },
-                       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
-    ],
-    'aliases': [
-                       # 'this',
-                       # 'app',
-    ],
-    'notes': [
-                       # {},
-    ],
+	# 'app': '8facG-jo0Cxk',
+	'file': 'folder-registration.py',
+	'liveAppName': __.thisApp( __file__ ),
+	'description': 'Realtime(ish) documentation of folder usage',
+		# _.ail(1,'subject')+
+		# _.aib('one')+
+	'categories': [
+						'DEFAULT',
+				],
+	'usage': [
+						# 'epy another',
+						# 'e nmap',
+						# '',
+	],
+	'relatedapps': [
+						# 'p another -file file.txt',
+						# '',
+	],
+	'prerequisite': [
+						# 'p another -file file.txt',
+						# '',
+	],
+	'examples': [
+						_.hp('p thisApp -file file.txt'),
+						_.linePrint(label='simple',p=0),
+						'',
+	],
+	'columns': [
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+	],
+	'aliases': [
+					# 'this',
+					# 'app',
+	],
+	'notes': [
+					# {},
+	],
 }
 
 _.appData[focus()] = {
-        'start': __.startTime,
-        'uuid': '',
-        'audit': [],
-        'pipe': False,
-        'data': {
-                    'field': {'sent': [], 'received': [] }, # { 'label': '', 'context': [],  }
-                    'table': {'sent': [], 'received': [] },
-        },
-    }
+		'start': __.startTime,
+		'uuid': '',
+		'audit': [],
+		'pipe': False,
+		'data': {
+					'field': {'sent': [], 'received': [] }, # { 'label': '', 'context': [],  }
+					'table': {'sent': [], 'received': [] },
+		},
+	}
 
 
 def triggers():
-    _.switches.trigger( 'Files', _.myFileLocations, vs=True )
-    _.switches.trigger( 'Ago', _.timeAgo )
-    _.switches.trigger( 'Folder', _.myFolderLocations )
-    _.switches.trigger( 'URL', _.urlTrigger )
-    _.switches.trigger( 'Duration', _.timeFuture )
+	_.switches.trigger( 'Files', _.myFileLocations, vs=True )
+	_.switches.trigger( 'Ago', _.timeAgo )
+	_.switches.trigger( 'Folder', _.myFolderLocations )
+	_.switches.trigger( 'URL', _.urlTrigger )
+	_.switches.trigger( 'Duration', _.timeFuture )
 
 def _local_(do): exec(do)
 
@@ -118,156 +118,156 @@ _.l.sw.register( triggers, sw )
 ########################################################################################
 #b)--> examples
 #d)--> code hints to quickly get started
-    #n)--> inline examples
-        # any(ele in 'scott5' for ele in list('0123456789'))
-        # if _.switches.isActive('Test'): test(); return None;
-        # result=[]; result=[ _.pr(line) for i, line, bi in _.numerate( _.isData(r=0) )]
-        # bk=[];[  bk.append(rec['backup']) for rec in backupLog if path == rec['file']]; bk=bk[-1];
-        # a=(1 if True else 0) <--# 
-        #!)--> m=[[row[i] for row in matrix] for i in range(4)]
+	#n)--> inline examples
+		# any(ele in 'scott5' for ele in list('0123456789'))
+		# if _.switches.isActive('Test'): test(); return None;
+		# result=[]; result=[ _.pr(line) for i, line, bi in _.numerate( _.isData(r=0) )]
+		# bk=[];[  bk.append(rec['backup']) for rec in backupLog if path == rec['file']]; bk=bk[-1];
+		# a=(1 if True else 0) <--# 
+		#!)--> m=[[row[i] for row in matrix] for i in range(4)]
 
-    #n)--> python globals
-        # globals()['var']
-        # for k in globals(): print(k, eval(k) )
+	#n)--> python globals
+		# globals()['var']
+		# for k in globals(): print(k, eval(k) )
 
-    #n)--> webpage from url
-        # for subject in _.caseUnspecific( line, needle ): line = line.replace( subject, _.colorThis( subject, 'green', p=0 ) )
+	#n)--> webpage from url
+		# for subject in _.caseUnspecific( line, needle ): line = line.replace( subject, _.colorThis( subject, 'green', p=0 ) )
 
-    #n)--> webpage from url
-        # requests=__.imp('requests.post')
-        #!)--> data=str(requests.post(url,data={}).content,'iso-8859-1')
+	#n)--> webpage from url
+		# requests=__.imp('requests.post')
+		#!)--> data=str(requests.post(url,data={}).content,'iso-8859-1')
 
-    #n)--> import and backup example
-        # _bk = _.regImp( __.appReg, 'fileBackup' ); _bk.switch( 'Silent' ); _bk.switch( 'isRunOnce' ); _bk.switch( 'Flag', 'APP' ); _bk.switch( 'DoNotSchedule' )
-        # _bk.switch( 'Input', path ); bkfi = _bk.action();
-    
-    #n)--> inline
-        # for rel in [ subject for subject in _.isData(r=0) if _.showLine(subject) ]: print(rel)
+	#n)--> import and backup example
+		# _bk = _.regImp( __.appReg, 'fileBackup' ); _bk.switch( 'Silent' ); _bk.switch( 'isRunOnce' ); _bk.switch( 'Flag', 'APP' ); _bk.switch( 'DoNotSchedule' )
+		# _bk.switch( 'Input', path ); bkfi = _bk.action();
+	
+	#n)--> inline
+		# for rel in [ subject for subject in _.isData(r=0) if _.showLine(subject) ]: print(rel)
 
-    #n)--> banner
-        # banner=_.Banner(app); goss=banner.goss;
+	#n)--> banner
+		# banner=_.Banner(app); goss=banner.goss;
 #e)--> examples
 ########################################################################################
 #n)--> start
 
 
 def action():
-    if len(_.switches.all())==0:
-        register()
-        return None
+	if len(_.switches.all())==0:
+		register()
+		return None
 
-    if _.switches.isActive('Relevent'):
-        relevent()
-        return None
+	if _.switches.isActive('Relevent'):
+		relevent()
+		return None
 
 
 def relevent():
-    load()
-    global epoch
-    global day
-    global last
-    global lastFi
-    global xFo
+	load()
+	global epoch
+	global day
+	global last
+	global lastFi
+	global xFo
 
-    threshold_bytes = 20
-    threshold_lines = 20
-    # threshold_ago   = _.timeAgo('5min')
-    threshold_ago   = _.timeAgo('1d')
-    if _.switches.isActive('Ago'): threshold_ago = _.switches.value('Ago')
+	threshold_bytes = 20
+	threshold_lines = 20
+	# threshold_ago   = _.timeAgo('5min')
+	threshold_ago   = _.timeAgo('1d')
+	if _.switches.isActive('Ago'): threshold_ago = _.switches.value('Ago')
 
 
 
-    _relevent=xFo+'relevent'
-    relevent=[]
-    import _rightThumb._dir as _dir
-    records=[]
-    for path in _.fo(xFo+'log'):
-        rec = _dir.info(path,lines=True)
-        records.append(rec)
-    records = _.tables.returnSorted( 'data', 'd.lines', records )
-    for i,rec in enumerate(records):
-        if not rec['me']: rec['me']=0
-        path=rec['path']
-        good=False
+	_relevent=xFo+'relevent'
+	relevent=[]
+	import _rightThumb._dir as _dir
+	records=[]
+	for path in _.fo(xFo+'log'):
+		rec = _dir.info(path,lines=True)
+		records.append(rec)
+	records = _.tables.returnSorted( 'data', 'd.lines', records )
+	for i,rec in enumerate(records):
+		if not rec['me']: rec['me']=0
+		path=rec['path']
+		good=False
 
-        # if rec['bytes'] > threshold_bytes: good=True
-        if rec['lines'] > threshold_lines: good=True
-        if rec['me'] > threshold_ago: good=True
-        if good:
-            print(path)
-            # print(rec)
-            p=path.split(os.sep)
-            fi=p.pop(-1)
-            f0=xFo+'resolve'+os.sep+fi
-            f1=_v.resolveFolderIDs(_.getText(f0,raw=True,clean=2))
-            relevent.append(f1)
-            # print(fi,rec['lines'],f1)
-            # print (path)
-            # print(fi)
-            # print(f0)
-            # _.pv(rec)
-            # sys.exit()
-    _.saveText(relevent,_relevent)
-    _.pr(_relevent,c='cyan')
+		# if rec['bytes'] > threshold_bytes: good=True
+		if rec['lines'] > threshold_lines: good=True
+		if rec['me'] > threshold_ago: good=True
+		if good:
+			print(path)
+			# print(rec)
+			p=path.split(os.sep)
+			fi=p.pop(-1)
+			f0=xFo+'resolve'+os.sep+fi
+			f1=_v.resolveFolderIDs(_.getText(f0,raw=True,clean=2))
+			relevent.append(f1)
+			# print(fi,rec['lines'],f1)
+			# print (path)
+			# print(fi)
+			# print(f0)
+			# _.pv(rec)
+			# sys.exit()
+	_.saveText(relevent,_relevent)
+	_.pr(_relevent,c='cyan')
 
 
 def register():
-    load()
-    global epoch
-    global day
-    global last
-    global lastFi
-    global xFo
-    
-    session = os.environ['Session_ID']
-    _v.mkdir(day+session)
+	load()
+	global epoch
+	global day
+	global last
+	global lastFi
+	global xFo
+	
+	session = os.environ['Session_ID']
+	_v.mkdir(day+session)
 
-    lastFi = day+session+os.sep+'id'
-    if os.path.isfile(lastFi): last=_.getText(lastFi,raw=True,clean=2)
-
-
-    fo = _v.sanitizeFolder(os.getcwd())
-    sha = _md5.string(fo,'sha1')
-
-    sess = day+session+'.csv'
+	lastFi = day+session+os.sep+'id'
+	if os.path.isfile(lastFi): last=_.getText(lastFi,raw=True,clean=2)
 
 
-    # print(day)
-    # print(last)
-    # print(sha)
+	fo = _v.sanitizeFolder(os.getcwd())
+	sha = _md5.string(fo,'sha1')
+
+	sess = day+session+'.csv'
 
 
-    if not sha == last:
-        # print(os.path.isfile(lastFi))
-        _.afile(epoch,xFo+'log'+os.sep+sha)
-        if not os.path.isfile(xFo+'resolve'+os.sep+sha): _.saveText(fo,xFo+'resolve'+os.sep+sha)
-        _.saveText(sha,lastFi)
+	# print(day)
+	# print(last)
+	# print(sha)
 
-    
-    _.afile(str(epoch),day+session+os.sep+sha)
+
+	if not sha == last:
+		# print(os.path.isfile(lastFi))
+		_.afile(epoch,xFo+'log'+os.sep+sha)
+		if not os.path.isfile(xFo+'resolve'+os.sep+sha): _.saveText(fo,xFo+'resolve'+os.sep+sha)
+		_.saveText(sha,lastFi)
+
+	
+	_.afile(str(epoch),day+session+os.sep+sha)
 
 
 
 def load():
-    global epoch
-    global day
-    global last
-    global lastFi
-    global xFo
+	global epoch
+	global day
+	global last
+	global lastFi
+	global xFo
 
-    epoch=int(str(time.time()).split('.')[0])
-    last=''
+	epoch=int(str(time.time()).split('.')[0])
+	last=''
 
-    if _.switches.isActive('WSL'):
-        tt='/mnt/c/Users/Scott/.rt/profile/tables'
-    else:
-        tt=_v.tt
+	if _.switches.isActive('WSL'):
+		tt='/mnt/c/Users/Scott/.rt/profile/tables'
+	else:
+		tt=_v.tt
 
-    xFo=tt+os.sep+'fo'+os.sep
-    day = xFo+'daily'+os.sep+_.day(epoch)
-    _v.mkdir(day)
-    _v.mkdir(xFo+'resolve')
-    _v.mkdir(xFo+'log')
+	xFo=tt+os.sep+'fo'+os.sep
+	day = xFo+'daily'+os.sep+_.day(epoch)
+	_v.mkdir(day)
+	_v.mkdir(xFo+'resolve')
+	_v.mkdir(xFo+'log')
 
 
 
@@ -289,12 +289,12 @@ import os
 
 ########################################################################################
 if __name__ == '__main__':
-    #b)--> examples
+	#b)--> examples
 
-    # banner.pr()
-    # if len(_.switches.all())==0: banner.gossip()
-    
-    #e)--> examples
-    action()
-    _.isExit(__file__)
+	# banner.pr()
+	# if len(_.switches.all())==0: banner.gossip()
+	
+	#e)--> examples
+	action()
+	_.isExit(__file__)
 

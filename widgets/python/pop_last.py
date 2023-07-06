@@ -25,11 +25,11 @@ appDBA = __.clearFocus( __name__, __file__ )
 # appDBA = __name__
 __.appReg = appDBA
 def focus( parentApp='', childApp='', reg=True ):
-    global appDBA
-    f = __.appName( appDBA, parentApp, childApp )
-    if reg:
-        __.appReg = f
-    return f
+	global appDBA
+	f = __.appName( appDBA, parentApp, childApp )
+	if reg:
+		__.appReg = f
+	return f
 __.registeredApps.append( focus() )
 
 
@@ -45,17 +45,17 @@ import _rightThumb._string as _str
 
 
 # _textIndex = _.regImp( __.appReg, 'words' )
-    # _textIndex.switch( 'Alpha' )
-    # _textIndex.switch( 'Unique' )
-    # _textIndex.switch( 'MinLength', 2 )
-    # _textIndex.switch( 'Stemming' )
-    # _textIndex.switch( 'PartsOfSpeech' )
-    # _textIndex.switch( 'Clean' )
-    # _textIndex.pipe( data )
+	# _textIndex.switch( 'Alpha' )
+	# _textIndex.switch( 'Unique' )
+	# _textIndex.switch( 'MinLength', 2 )
+	# _textIndex.switch( 'Stemming' )
+	# _textIndex.switch( 'PartsOfSpeech' )
+	# _textIndex.switch( 'Clean' )
+	# _textIndex.pipe( data )
 #   index = _textIndex.do( 'action' )
 
 # _bm = _.regImp( __.appReg, 'bookmarks' )
-    # index = _bm.imp.index()
+	# index = _bm.imp.index()
 # _dirList = _.regImp( __.appReg, 'dirList' )
 #   _dirList.switch( 'Files' )
 #   _dirList.switch( 'Recursion' )
@@ -66,10 +66,10 @@ import _rightThumb._string as _str
 # import _rightThumb._profileVariables as _profile
 #   profile = _profile.records.audit( 'name', asset )
 # import _rightThumb._encryptString as _blowfish
-    # _blowfish.genPassword()
-    # _blowfish.genPassword( 'string' )
-    # en = _blowfish.encrypt( string )
-    # de = _blowfish.decrypt( en )
+	# _blowfish.genPassword()
+	# _blowfish.genPassword( 'string' )
+	# en = _blowfish.encrypt( string )
+	# de = _blowfish.decrypt( en )
 # import _rightThumb._encryptFile as _blowfish
 #   _blowfish.encrypt( infilepath, outfilepath, key )
 #   _blowfish.decrypt( infilepath, outfilepath, key )
@@ -77,7 +77,7 @@ import _rightThumb._string as _str
 # _browserX = _.regImp( __.appReg, '_rightThumb._toolsScrapeDirect' )
 # import _rightThumb._date as _date
 # import _rightThumb._dir as _dir
-    # _.printVar( _dir.fileInfo( path ) )
+	# _.printVar( _dir.fileInfo( path ) )
 # import _rightThumb._md5 as _md5
 # import _rightThumb._mimetype as _mime
 
@@ -87,11 +87,11 @@ import _rightThumb._string as _str
 # import _rightThumb._auditCodeBase as _code
 # _code = _.regImp( __.appReg, '_rightThumb._auditCodeBase' )
 # _omit = _.regImp( __.appReg, 'omitTable' )
-    # _omit.imp.inTable( 'the' )
+	# _omit.imp.inTable( 'the' )
 # _inDic = _.regImp( __.appReg, 'inDic' )
-    # _inDic.switch( 'All' )
-    # _inDic.imp.testAll( 'fight' )
-    # _inDic.imp.testOne( 'austen' )
+	# _inDic.switch( 'All' )
+	# _inDic.imp.testAll( 'fight' )
+	# _inDic.imp.testOne( 'austen' )
 # _file_folder = _.regImp( __.appReg, 'file_folder' )
 #   _file_folder.switch( 'Save,Clean' )
 #   _file_folder.switch( 'Compair,Clean' )
@@ -100,9 +100,9 @@ import _rightThumb._string as _str
 #   _fileNameDate.imp.newName( filename )
 #   _fileNameDate.imp.newName( filename, _dir.fileInfo( filename ) )
 # _filePathPatterns = _.regImp( __.appReg, 'filePathPatterns' )
-    # _filePathPatterns.switch( 'NoPrint' )
-    # _filePathPatterns.switch( 'Files', _.switches.value( 'Files' ) )
-    # folderReport = _filePathPatterns.action()
+	# _filePathPatterns.switch( 'NoPrint' )
+	# _filePathPatterns.switch( 'Files', _.switches.value( 'Files' ) )
+	# folderReport = _filePathPatterns.action()
 # fileBackup = _.regImp( __.appReg, 'fileBackup' )
 #   fileBackup.switch( 'Input', filename )
 #   fileBackup.switch( 'Flag', 'pre replaceText' )
@@ -135,25 +135,25 @@ import _rightThumb._string as _str
 
 
 def appSwitches():
-    pass
-    _.switches.register( 'String', '-str,-string', isRequired=True )
-    _.switches.register( 'Delimiter', '-p,-del,-delimiter', isRequired=True )
-    _.switches.register( 'FileNameSafe', '-f,-filename')
-    # _.switches.register( 'Files', '-f,-file,-files','file.txt', isPipe=True, isRequired=True, description='Files' )
-    # _.switches.register( 'Files', '-f,-file,-files','file.txt', isPipe='name,data,clean', description='Files' )
+	pass
+	_.switches.register( 'String', '-str,-string', isRequired=True )
+	_.switches.register( 'Delimiter', '-p,-del,-delimiter', isRequired=True )
+	_.switches.register( 'FileNameSafe', '-f,-filename')
+	# _.switches.register( 'Files', '-f,-file,-files','file.txt', isPipe=True, isRequired=True, description='Files' )
+	# _.switches.register( 'Files', '-f,-file,-files','file.txt', isPipe='name,data,clean', description='Files' )
 
 
-    """
-    _.switches.documentation( 'Test', { 
-                                        'examples': [
-                                                        '',
-                                                    ],
+	"""
+	_.switches.documentation( 'Test', { 
+										'examples': [
+														'',
+													],
 
-                                        'required': [],
-                                        'related': [],
-                                        'isRequired': False,
-                                    } )
-    """
+										'required': [],
+										'related': [],
+										'isRequired': False,
+									} )
+	"""
 
 
 _.autoBackupData = True
@@ -162,44 +162,44 @@ __.isRequired_Pipe_or_File = False
 # __.isRequired_or_List = ['Pipe','Files','Plus']
 
 _.appInfo[focus()] = {
-    'file': 'thisApp.py',
-    'liveAppName': __.thisApp( __file__ ),
-    'description': 'Changes the world',
-    'categories': [
-                        'DEFAULT',
-                ],
-    'relatedapps': [
-                        # 'p another -file file.txt',
-                        # '',
-    ],
-    'prerequisite': [
-                        # 'p another -file file.txt',
-                        # '',
-    ],
-    'examples': [
-                        'p thisApp -file file.txt',
-                        ''
-    ],
-    'columns': [
-                       # { 'name': 'name', 'abbreviation': 'n' },
-    ],
-    'aliases': [
-                       # 'this',
-                       # 'app',
-    ],
+	'file': 'thisApp.py',
+	'liveAppName': __.thisApp( __file__ ),
+	'description': 'Changes the world',
+	'categories': [
+						'DEFAULT',
+				],
+	'relatedapps': [
+						# 'p another -file file.txt',
+						# '',
+	],
+	'prerequisite': [
+						# 'p another -file file.txt',
+						# '',
+	],
+	'examples': [
+						'p thisApp -file file.txt',
+						''
+	],
+	'columns': [
+					# { 'name': 'name', 'abbreviation': 'n' },
+	],
+	'aliases': [
+					# 'this',
+					# 'app',
+	],
 
-    }
+	}
 
 _.appData[focus()] = {
-    'start': __.startTime,
-    'uuid': '',
-    'audit': [],
-    'pipe': False,
-    'data': {
-                'field': {'sent': [], 'received': [] }, # { 'label': '', 'context': [],  }
-                'table': {'sent': [], 'received': [] }, 
-    },
-    }
+	'start': __.startTime,
+	'uuid': '',
+	'audit': [],
+	'pipe': False,
+	'data': {
+				'field': {'sent': [], 'received': [] }, # { 'label': '', 'context': [],  }
+				'table': {'sent': [], 'received': [] }, 
+	},
+	}
 
 # _.appInfo[focus()]['examples'].append( 'p thisApp -file file.txt' )
 
@@ -208,52 +208,52 @@ _.appData[focus()] = {
 
 
 def registerSwitches( argvProcessForce=False ):
-    global appDBA
-    if not __.appReg == appDBA and appDBA in __.appReg:
+	global appDBA
+	if not __.appReg == appDBA and appDBA in __.appReg:
 
-        if not __name__ == '__main__':
-            _.argvProcess = argvProcessForce
-        else:
-            _.argvProcess = True
+		if not __name__ == '__main__':
+			_.argvProcess = argvProcessForce
+		else:
+			_.argvProcess = True
 
-        _.load()
-        _.appInfo[__.appReg] = _.appInfo[appDBA]
-        _.appData[__.appReg] = _.appData[appDBA]
-    __.constructRegistration( _.appInfo[__.appReg]['file'],__.appReg )
-    appSwitches()
+		_.load()
+		_.appInfo[__.appReg] = _.appInfo[appDBA]
+		_.appData[__.appReg] = _.appData[appDBA]
+	__.constructRegistration( _.appInfo[__.appReg]['file'],__.appReg )
+	appSwitches()
 
-    _.myFileLocation_Print = False
-    _.switches.trigger( 'Files', _.myFileLocations )
-    _.switches.trigger( 'Folder', _.myFolderLocations )
-    _.switches.trigger( 'URL', _.urlTrigger )
-    
-    # _.switches.trigger( 'Files',_.inRelevantFolder )
-    
-    # _.switches.trigger( 'Watched', _.txt2Date )
-    # _.switches.trigger( 'Input',_.formatColumns )
-    # _.switches.trigger( 'Franchise',_.triggerSpace )
-    
-    _.defaultScriptTriggers()
-    _.switches.process()
+	_.myFileLocation_Print = False
+	_.switches.trigger( 'Files', _.myFileLocations )
+	_.switches.trigger( 'Folder', _.myFolderLocations )
+	_.switches.trigger( 'URL', _.urlTrigger )
+	
+	# _.switches.trigger( 'Files',_.inRelevantFolder )
+	
+	# _.switches.trigger( 'Watched', _.txt2Date )
+	# _.switches.trigger( 'Input',_.formatColumns )
+	# _.switches.trigger( 'Franchise',_.triggerSpace )
+	
+	_.defaultScriptTriggers()
+	_.switches.process()
 
 
 if not __name__ == '__main__':
-    _.argvProcess = False
+	_.argvProcess = False
 else:
-    _.argvProcess = True
+	_.argvProcess = True
 
 registerSwitches()
 
 
 def fieldSet( switchName, switchField, switchValue, theFocus=False ):
-    if not type( theFocus ) == bool:
-        theFocus = theFocus
-    _.switches.fieldSet( switchName, switchField, switchValue, theFocus )
+	if not type( theFocus ) == bool:
+		theFocus = theFocus
+	_.switches.fieldSet( switchName, switchField, switchValue, theFocus )
 
 
 if __name__ == '__main__':
-    if not sys.stdin.isatty():
-        _.setPipeData( sys.stdin.readlines(), __.appReg )
+	if not sys.stdin.isatty():
+		_.setPipeData( sys.stdin.readlines(), __.appReg )
 
 
 _.postLoad( __file__ )
@@ -275,29 +275,29 @@ _.postLoad( __file__ )
 
 def action():
 
-    found = False
-    string = ' '.join( _.switches.values('String') )
-    for delim in _.switches.values('Delimiter'):
-        delim = _.ci( delim )
-        if delim in string:
-            found = True
-            subject = string.split(delim)
-            # _.pr( subject )
-            subject.pop()
-            result = delim.join( subject )
-            if _.switches.isActive('FileNameSafe'):
-                result = _str.filenameSafe( result )
-            result = _str.replaceDuplicate( result, ' ' )
-            result = _str.cleanBE( result, ' ' )
-            _.pr( result )
-            return result
-    return string
+	found = False
+	string = ' '.join( _.switches.values('String') )
+	for delim in _.switches.values('Delimiter'):
+		delim = _.ci( delim )
+		if delim in string:
+			found = True
+			subject = string.split(delim)
+			# _.pr( subject )
+			subject.pop()
+			result = delim.join( subject )
+			if _.switches.isActive('FileNameSafe'):
+				result = _str.filenameSafe( result )
+			result = _str.replaceDuplicate( result, ' ' )
+			result = _str.cleanBE( result, ' ' )
+			_.pr( result )
+			return result
+	return string
 
 
 
 ########################################################################################
 if __name__ == '__main__':
-    action()
+	action()
 
 
 

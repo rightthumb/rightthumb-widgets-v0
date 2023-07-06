@@ -85,15 +85,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-					   # { 'name': 'name', 'abbreviation': 'n' },
-					   # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-					   # 'this',
-					   # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-					   # {},
+					# {},
 	],
 }
 
@@ -221,237 +221,237 @@ def action(payload=None):
 
 
 _cidr_=[
-    {
-        "CIDR": "/32",
-        "SUBNET MASK": "255.255.255.255",
-        "WILDCARD MASK": "0.0.0.0",
-        "# OF IP ADDRESSES": "1",
-        "# OF USABLE IP ADDRESSES": "1"
-    },
-    {
-        "CIDR": "/31",
-        "SUBNET MASK": "255.255.255.254",
-        "WILDCARD MASK": "0.0.0.1",
-        "# OF IP ADDRESSES": "2",
-        "# OF USABLE IP ADDRESSES": "2*"
-    },
-    {
-        "CIDR": "/30",
-        "SUBNET MASK": "255.255.255.252",
-        "WILDCARD MASK": "0.0.0.3",
-        "# OF IP ADDRESSES": "4",
-        "# OF USABLE IP ADDRESSES": "2"
-    },
-    {
-        "CIDR": "/29",
-        "SUBNET MASK": "255.255.255.248",
-        "WILDCARD MASK": "0.0.0.7",
-        "# OF IP ADDRESSES": "8",
-        "# OF USABLE IP ADDRESSES": "6"
-    },
-    {
-        "CIDR": "/28",
-        "SUBNET MASK": "255.255.255.240",
-        "WILDCARD MASK": "0.0.0.15",
-        "# OF IP ADDRESSES": "16",
-        "# OF USABLE IP ADDRESSES": "14"
-    },
-    {
-        "CIDR": "/27",
-        "SUBNET MASK": "255.255.255.224",
-        "WILDCARD MASK": "0.0.0.31",
-        "# OF IP ADDRESSES": "32",
-        "# OF USABLE IP ADDRESSES": "30"
-    },
-    {
-        "CIDR": "/26",
-        "SUBNET MASK": "255.255.255.192",
-        "WILDCARD MASK": "0.0.0.63",
-        "# OF IP ADDRESSES": "64",
-        "# OF USABLE IP ADDRESSES": "62"
-    },
-    {
-        "CIDR": "/25",
-        "SUBNET MASK": "255.255.255.128",
-        "WILDCARD MASK": "0.0.0.127",
-        "# OF IP ADDRESSES": "128",
-        "# OF USABLE IP ADDRESSES": "126"
-    },
-    {
-        "CIDR": "/24",
-        "SUBNET MASK": "255.255.255.0",
-        "WILDCARD MASK": "0.0.0.255",
-        "# OF IP ADDRESSES": "256",
-        "# OF USABLE IP ADDRESSES": "254"
-    },
-    {
-        "CIDR": "/23",
-        "SUBNET MASK": "255.255.254.0",
-        "WILDCARD MASK": "0.0.1.255",
-        "# OF IP ADDRESSES": "512",
-        "# OF USABLE IP ADDRESSES": "510"
-    },
-    {
-        "CIDR": "/22",
-        "SUBNET MASK": "255.255.252.0",
-        "WILDCARD MASK": "0.0.3.255",
-        "# OF IP ADDRESSES": "1,024",
-        "# OF USABLE IP ADDRESSES": "1,022"
-    },
-    {
-        "CIDR": "/21",
-        "SUBNET MASK": "255.255.248.0",
-        "WILDCARD MASK": "0.0.7.255",
-        "# OF IP ADDRESSES": "2,048",
-        "# OF USABLE IP ADDRESSES": "2,046"
-    },
-    {
-        "CIDR": "/20",
-        "SUBNET MASK": "255.255.240.0",
-        "WILDCARD MASK": "0.0.15.255",
-        "# OF IP ADDRESSES": "4,096",
-        "# OF USABLE IP ADDRESSES": "4,094"
-    },
-    {
-        "CIDR": "/19",
-        "SUBNET MASK": "255.255.224.0",
-        "WILDCARD MASK": "0.0.31.255",
-        "# OF IP ADDRESSES": "8,192",
-        "# OF USABLE IP ADDRESSES": "8,190"
-    },
-    {
-        "CIDR": "/18",
-        "SUBNET MASK": "255.255.192.0",
-        "WILDCARD MASK": "0.0.63.255",
-        "# OF IP ADDRESSES": "16,384",
-        "# OF USABLE IP ADDRESSES": "16,382"
-    },
-    {
-        "CIDR": "/17",
-        "SUBNET MASK": "255.255.128.0",
-        "WILDCARD MASK": "0.0.127.255",
-        "# OF IP ADDRESSES": "32,768",
-        "# OF USABLE IP ADDRESSES": "32,766"
-    },
-    {
-        "CIDR": "/16",
-        "SUBNET MASK": "255.255.0.0",
-        "WILDCARD MASK": "0.0.255.255",
-        "# OF IP ADDRESSES": "65,536",
-        "# OF USABLE IP ADDRESSES": "65,534"
-    },
-    {
-        "CIDR": "/15",
-        "SUBNET MASK": "255.254.0.0",
-        "WILDCARD MASK": "0.1.255.255",
-        "# OF IP ADDRESSES": "131,072",
-        "# OF USABLE IP ADDRESSES": "131,070"
-    },
-    {
-        "CIDR": "/14",
-        "SUBNET MASK": "255.252.0.0",
-        "WILDCARD MASK": "0.3.255.255",
-        "# OF IP ADDRESSES": "262,144",
-        "# OF USABLE IP ADDRESSES": "262,142"
-    },
-    {
-        "CIDR": "/13",
-        "SUBNET MASK": "255.248.0.0",
-        "WILDCARD MASK": "0.7.255.255",
-        "# OF IP ADDRESSES": "524,288",
-        "# OF USABLE IP ADDRESSES": "524,286"
-    },
-    {
-        "CIDR": "/12",
-        "SUBNET MASK": "255.240.0.0",
-        "WILDCARD MASK": "0.15.255.255",
-        "# OF IP ADDRESSES": "1,048,576",
-        "# OF USABLE IP ADDRESSES": "1,048,574"
-    },
-    {
-        "CIDR": "/11",
-        "SUBNET MASK": "255.224.0.0",
-        "WILDCARD MASK": "0.31.255.255",
-        "# OF IP ADDRESSES": "2,097,152",
-        "# OF USABLE IP ADDRESSES": "2,097,150"
-    },
-    {
-        "CIDR": "/10",
-        "SUBNET MASK": "255.192.0.0",
-        "WILDCARD MASK": "0.63.255.255",
-        "# OF IP ADDRESSES": "4,194,304",
-        "# OF USABLE IP ADDRESSES": "4,194,302"
-    },
-    {
-        "CIDR": "/9",
-        "SUBNET MASK": "255.128.0.0",
-        "WILDCARD MASK": "0.127.255.255",
-        "# OF IP ADDRESSES": "8,388,608",
-        "# OF USABLE IP ADDRESSES": "8,388,606"
-    },
-    {
-        "CIDR": "/8",
-        "SUBNET MASK": "255.0.0.0",
-        "WILDCARD MASK": "0.255.255.255",
-        "# OF IP ADDRESSES": "16,777,216",
-        "# OF USABLE IP ADDRESSES": "16,777,214"
-    },
-    {
-        "CIDR": "/7",
-        "SUBNET MASK": "254.0.0.0",
-        "WILDCARD MASK": "1.255.255.255",
-        "# OF IP ADDRESSES": "33,554,432",
-        "# OF USABLE IP ADDRESSES": "33,554,430"
-    },
-    {
-        "CIDR": "/6",
-        "SUBNET MASK": "252.0.0.0",
-        "WILDCARD MASK": "3.255.255.255",
-        "# OF IP ADDRESSES": "67,108,864",
-        "# OF USABLE IP ADDRESSES": "67,108,862"
-    },
-    {
-        "CIDR": "/5",
-        "SUBNET MASK": "248.0.0.0",
-        "WILDCARD MASK": "7.255.255.255",
-        "# OF IP ADDRESSES": "134,217,728",
-        "# OF USABLE IP ADDRESSES": "134,217,726"
-    },
-    {
-        "CIDR": "/4",
-        "SUBNET MASK": "240.0.0.0",
-        "WILDCARD MASK": "15.255.255.255",
-        "# OF IP ADDRESSES": "268,435,456",
-        "# OF USABLE IP ADDRESSES": "268,435,454"
-    },
-    {
-        "CIDR": "/3",
-        "SUBNET MASK": "224.0.0.0",
-        "WILDCARD MASK": "31.255.255.255",
-        "# OF IP ADDRESSES": "536,870,912",
-        "# OF USABLE IP ADDRESSES": "536,870,910"
-    },
-    {
-        "CIDR": "/2",
-        "SUBNET MASK": "192.0.0.0",
-        "WILDCARD MASK": "63.255.255.255",
-        "# OF IP ADDRESSES": "1,073,741,824",
-        "# OF USABLE IP ADDRESSES": "1,073,741,822"
-    },
-    {
-        "CIDR": "/1",
-        "SUBNET MASK": "128.0.0.0",
-        "WILDCARD MASK": "127.255.255.255",
-        "# OF IP ADDRESSES": "2,147,483,648",
-        "# OF USABLE IP ADDRESSES": "2,147,483,646"
-    },
-    {
-        "CIDR": "/0",
-        "SUBNET MASK": "0.0.0.0",
-        "WILDCARD MASK": "255.255.255.255",
-        "# OF IP ADDRESSES": "4,294,967,296",
-        "# OF USABLE IP ADDRESSES": "4,294,967,294"
-    }
+	{
+		"CIDR": "/32",
+		"SUBNET MASK": "255.255.255.255",
+		"WILDCARD MASK": "0.0.0.0",
+		"# OF IP ADDRESSES": "1",
+		"# OF USABLE IP ADDRESSES": "1"
+	},
+	{
+		"CIDR": "/31",
+		"SUBNET MASK": "255.255.255.254",
+		"WILDCARD MASK": "0.0.0.1",
+		"# OF IP ADDRESSES": "2",
+		"# OF USABLE IP ADDRESSES": "2*"
+	},
+	{
+		"CIDR": "/30",
+		"SUBNET MASK": "255.255.255.252",
+		"WILDCARD MASK": "0.0.0.3",
+		"# OF IP ADDRESSES": "4",
+		"# OF USABLE IP ADDRESSES": "2"
+	},
+	{
+		"CIDR": "/29",
+		"SUBNET MASK": "255.255.255.248",
+		"WILDCARD MASK": "0.0.0.7",
+		"# OF IP ADDRESSES": "8",
+		"# OF USABLE IP ADDRESSES": "6"
+	},
+	{
+		"CIDR": "/28",
+		"SUBNET MASK": "255.255.255.240",
+		"WILDCARD MASK": "0.0.0.15",
+		"# OF IP ADDRESSES": "16",
+		"# OF USABLE IP ADDRESSES": "14"
+	},
+	{
+		"CIDR": "/27",
+		"SUBNET MASK": "255.255.255.224",
+		"WILDCARD MASK": "0.0.0.31",
+		"# OF IP ADDRESSES": "32",
+		"# OF USABLE IP ADDRESSES": "30"
+	},
+	{
+		"CIDR": "/26",
+		"SUBNET MASK": "255.255.255.192",
+		"WILDCARD MASK": "0.0.0.63",
+		"# OF IP ADDRESSES": "64",
+		"# OF USABLE IP ADDRESSES": "62"
+	},
+	{
+		"CIDR": "/25",
+		"SUBNET MASK": "255.255.255.128",
+		"WILDCARD MASK": "0.0.0.127",
+		"# OF IP ADDRESSES": "128",
+		"# OF USABLE IP ADDRESSES": "126"
+	},
+	{
+		"CIDR": "/24",
+		"SUBNET MASK": "255.255.255.0",
+		"WILDCARD MASK": "0.0.0.255",
+		"# OF IP ADDRESSES": "256",
+		"# OF USABLE IP ADDRESSES": "254"
+	},
+	{
+		"CIDR": "/23",
+		"SUBNET MASK": "255.255.254.0",
+		"WILDCARD MASK": "0.0.1.255",
+		"# OF IP ADDRESSES": "512",
+		"# OF USABLE IP ADDRESSES": "510"
+	},
+	{
+		"CIDR": "/22",
+		"SUBNET MASK": "255.255.252.0",
+		"WILDCARD MASK": "0.0.3.255",
+		"# OF IP ADDRESSES": "1,024",
+		"# OF USABLE IP ADDRESSES": "1,022"
+	},
+	{
+		"CIDR": "/21",
+		"SUBNET MASK": "255.255.248.0",
+		"WILDCARD MASK": "0.0.7.255",
+		"# OF IP ADDRESSES": "2,048",
+		"# OF USABLE IP ADDRESSES": "2,046"
+	},
+	{
+		"CIDR": "/20",
+		"SUBNET MASK": "255.255.240.0",
+		"WILDCARD MASK": "0.0.15.255",
+		"# OF IP ADDRESSES": "4,096",
+		"# OF USABLE IP ADDRESSES": "4,094"
+	},
+	{
+		"CIDR": "/19",
+		"SUBNET MASK": "255.255.224.0",
+		"WILDCARD MASK": "0.0.31.255",
+		"# OF IP ADDRESSES": "8,192",
+		"# OF USABLE IP ADDRESSES": "8,190"
+	},
+	{
+		"CIDR": "/18",
+		"SUBNET MASK": "255.255.192.0",
+		"WILDCARD MASK": "0.0.63.255",
+		"# OF IP ADDRESSES": "16,384",
+		"# OF USABLE IP ADDRESSES": "16,382"
+	},
+	{
+		"CIDR": "/17",
+		"SUBNET MASK": "255.255.128.0",
+		"WILDCARD MASK": "0.0.127.255",
+		"# OF IP ADDRESSES": "32,768",
+		"# OF USABLE IP ADDRESSES": "32,766"
+	},
+	{
+		"CIDR": "/16",
+		"SUBNET MASK": "255.255.0.0",
+		"WILDCARD MASK": "0.0.255.255",
+		"# OF IP ADDRESSES": "65,536",
+		"# OF USABLE IP ADDRESSES": "65,534"
+	},
+	{
+		"CIDR": "/15",
+		"SUBNET MASK": "255.254.0.0",
+		"WILDCARD MASK": "0.1.255.255",
+		"# OF IP ADDRESSES": "131,072",
+		"# OF USABLE IP ADDRESSES": "131,070"
+	},
+	{
+		"CIDR": "/14",
+		"SUBNET MASK": "255.252.0.0",
+		"WILDCARD MASK": "0.3.255.255",
+		"# OF IP ADDRESSES": "262,144",
+		"# OF USABLE IP ADDRESSES": "262,142"
+	},
+	{
+		"CIDR": "/13",
+		"SUBNET MASK": "255.248.0.0",
+		"WILDCARD MASK": "0.7.255.255",
+		"# OF IP ADDRESSES": "524,288",
+		"# OF USABLE IP ADDRESSES": "524,286"
+	},
+	{
+		"CIDR": "/12",
+		"SUBNET MASK": "255.240.0.0",
+		"WILDCARD MASK": "0.15.255.255",
+		"# OF IP ADDRESSES": "1,048,576",
+		"# OF USABLE IP ADDRESSES": "1,048,574"
+	},
+	{
+		"CIDR": "/11",
+		"SUBNET MASK": "255.224.0.0",
+		"WILDCARD MASK": "0.31.255.255",
+		"# OF IP ADDRESSES": "2,097,152",
+		"# OF USABLE IP ADDRESSES": "2,097,150"
+	},
+	{
+		"CIDR": "/10",
+		"SUBNET MASK": "255.192.0.0",
+		"WILDCARD MASK": "0.63.255.255",
+		"# OF IP ADDRESSES": "4,194,304",
+		"# OF USABLE IP ADDRESSES": "4,194,302"
+	},
+	{
+		"CIDR": "/9",
+		"SUBNET MASK": "255.128.0.0",
+		"WILDCARD MASK": "0.127.255.255",
+		"# OF IP ADDRESSES": "8,388,608",
+		"# OF USABLE IP ADDRESSES": "8,388,606"
+	},
+	{
+		"CIDR": "/8",
+		"SUBNET MASK": "255.0.0.0",
+		"WILDCARD MASK": "0.255.255.255",
+		"# OF IP ADDRESSES": "16,777,216",
+		"# OF USABLE IP ADDRESSES": "16,777,214"
+	},
+	{
+		"CIDR": "/7",
+		"SUBNET MASK": "254.0.0.0",
+		"WILDCARD MASK": "1.255.255.255",
+		"# OF IP ADDRESSES": "33,554,432",
+		"# OF USABLE IP ADDRESSES": "33,554,430"
+	},
+	{
+		"CIDR": "/6",
+		"SUBNET MASK": "252.0.0.0",
+		"WILDCARD MASK": "3.255.255.255",
+		"# OF IP ADDRESSES": "67,108,864",
+		"# OF USABLE IP ADDRESSES": "67,108,862"
+	},
+	{
+		"CIDR": "/5",
+		"SUBNET MASK": "248.0.0.0",
+		"WILDCARD MASK": "7.255.255.255",
+		"# OF IP ADDRESSES": "134,217,728",
+		"# OF USABLE IP ADDRESSES": "134,217,726"
+	},
+	{
+		"CIDR": "/4",
+		"SUBNET MASK": "240.0.0.0",
+		"WILDCARD MASK": "15.255.255.255",
+		"# OF IP ADDRESSES": "268,435,456",
+		"# OF USABLE IP ADDRESSES": "268,435,454"
+	},
+	{
+		"CIDR": "/3",
+		"SUBNET MASK": "224.0.0.0",
+		"WILDCARD MASK": "31.255.255.255",
+		"# OF IP ADDRESSES": "536,870,912",
+		"# OF USABLE IP ADDRESSES": "536,870,910"
+	},
+	{
+		"CIDR": "/2",
+		"SUBNET MASK": "192.0.0.0",
+		"WILDCARD MASK": "63.255.255.255",
+		"# OF IP ADDRESSES": "1,073,741,824",
+		"# OF USABLE IP ADDRESSES": "1,073,741,822"
+	},
+	{
+		"CIDR": "/1",
+		"SUBNET MASK": "128.0.0.0",
+		"WILDCARD MASK": "127.255.255.255",
+		"# OF IP ADDRESSES": "2,147,483,648",
+		"# OF USABLE IP ADDRESSES": "2,147,483,646"
+	},
+	{
+		"CIDR": "/0",
+		"SUBNET MASK": "0.0.0.0",
+		"WILDCARD MASK": "255.255.255.255",
+		"# OF IP ADDRESSES": "4,294,967,296",
+		"# OF USABLE IP ADDRESSES": "4,294,967,294"
+	}
 ]
 
 

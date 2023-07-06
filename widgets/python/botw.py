@@ -108,15 +108,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-					   # { 'name': 'name', 'abbreviation': 'n' },
-					   # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-					   # 'this',
-					   # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-					   # {},
+					# {},
 	],
 }
 
@@ -1012,7 +1012,7 @@ def action():
 
 			if _.switches.isActive('NoAsk'):
 				_.saveTableDB(list(set(done)),'botw.list')
-				_.cp('Saved','green')				
+				_.cp('Saved','green')                
 			else:
 				ask=input('  Save? Y/n: ')
 				_.pr()

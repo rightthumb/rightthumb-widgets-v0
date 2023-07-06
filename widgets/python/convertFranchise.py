@@ -167,10 +167,10 @@ def action():
 	franchiseData = _.getTable('imdb_franchises.json')
 	display = _.getTable('imdb_franchise_display.json')
 
-    # {
-    #     "actual": "bond",
-    #     "proper": "James Bond"
-    # }
+	# {
+	#     "actual": "bond",
+	#     "proper": "James Bond"
+	# }
 
 	f = {
 			'label': '',

@@ -6,32 +6,32 @@ epyi toolsScrapeFrontEnd
 
  def URL
  class ProxyManager
-     def __init__
-     def start_server
-     def start_client
-     def client
-     def server
+	def __init__
+	def start_server
+	def start_client
+	def client
+	def server
  class FrontEnd(object)
-     def __init__
-     def is_cookie_expired
-     def extractDomain
-     def preURL
-     def postURL
-     def url
-     def getCookies
-     def initialize
-     def select
-     def setField
-     def login
-     def loginIndividually
-     def open
-     def jqueryInject
-     def inject
-     def injectReturn
-     def injectFile
-     def close
-     def wait
-     def code
+	def __init__
+	def is_cookie_expired
+	def extractDomain
+	def preURL
+	def postURL
+	def url
+	def getCookies
+	def initialize
+	def select
+	def setField
+	def login
+	def loginIndividually
+	def open
+	def jqueryInject
+	def inject
+	def injectReturn
+	def injectFile
+	def close
+	def wait
+	def code
 '''
 ##################################################
 
@@ -215,14 +215,14 @@ def action():
 	
 	# who = 'mom'
 	# if who == 'dad':
-	# 	username = 's.rephsr@gmail.com'
-	# 	password = 'OntNu4Y13rXWB8UMWROHHw=='
+	#     username = 's.rephsr@gmail.com'
+	#     password = 'OntNu4Y13rXWB8UMWROHHw=='
 	# elif who == 'mom':
-	# 	username = 'aireph51@gmail.com'
-	# 	password = 'TWaNVzohgkGth877srTXjw=='
+	#     username = 'aireph51@gmail.com'
+	#     password = 'TWaNVzohgkGth877srTXjw=='
 	# else:
-	# 	username = 'scott.reph@gmail.com'
-	# 	password = 'YYHeOQgMCOk9e6ETwJzd+Q=='
+	#     username = 'scott.reph@gmail.com'
+	#     password = 'YYHeOQgMCOk9e6ETwJzd+Q=='
 
 	# _browser.imp.project.loginIndividually( 'https://play.google.com/apps', username, password, '#identifierId', '[type=password]', login_button='span.RveJvd' )
 

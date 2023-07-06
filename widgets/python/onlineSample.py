@@ -31,9 +31,9 @@ print(result)
 
 
 capitals = {
-    "Alabama": "Montgomery",
-    "Alaska": "Juneau",
-    "Arizona": "Phoenix",
+	"Alabama": "Montgomery",
+	"Alaska": "Juneau",
+	"Arizona": "Phoenix",
 }
 print(capitals)
 

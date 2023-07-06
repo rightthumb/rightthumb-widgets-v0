@@ -67,7 +67,7 @@ __.pre_error = False
 _.appInfo[focus()] = {
 	'file': 'meta.py',
 	'liveAppName': __.thisApp( __file__ ),
- 	'description': 'manage file and folder meta data',
+	'description': 'manage file and folder meta data',
 	'categories': [
 						'meta',
 						'file',
@@ -96,15 +96,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
-				       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-				       # {},
+					# {},
 	],
 }
 
@@ -217,7 +217,7 @@ def build( path, typ=None, ask=False ):
 
 
 	else:
-		 # _.colorThis( typ, 'white' )
+		# _.colorThis( typ, 'white' )
 		if typ == 'list':
 			try:
 
@@ -530,9 +530,9 @@ def action():
 		for x in _.switches.values('Library'):
 			p = os.path.abspath( _.switches.values('Files')[0] )
 			k = genKey(cp)
-			library_label[x] = 		{ 'id': k, 'path': p, 'label': x }
-			library_path[p] = 		{ 'id': k, 'path': p, 'label': x }
-			library_id[k] = 		{ 'id': k, 'path': p, 'label': x }
+			library_label[x] =         { 'id': k, 'path': p, 'label': x }
+			library_path[p] =         { 'id': k, 'path': p, 'label': x }
+			library_id[k] =         { 'id': k, 'path': p, 'label': x }
 
 		_.saveTableDB( library_label, 'library-label.hash' )
 		_.saveTableDB( library_path, 'library-path.hash' )
@@ -618,7 +618,7 @@ def action():
 			elif _.switches.isActive('Delete'):
 				do = 'delete'
 
-			category_action( item, category, do )	
+			category_action( item, category, do )    
 
 			if _.switches.isActive('Test'):
 				i=0
@@ -659,7 +659,7 @@ def load():
 
 							'account': {
 								'LABEL': {
-									'client':			False,
+									'client':            False,
 								},
 							},
 
@@ -671,25 +671,25 @@ def load():
 									'cPanel': {
 										'account': {
 											'LABEL': {
-												'client':			False,
+												'client':            False,
 												'ssh': {
-													'server':		'',
-													'user':			'',
-													'password':		'',
+													'server':        '',
+													'user':            '',
+													'password':        '',
 												},
 												'db': {
-													'server':		'',
-													'user':			'',
-													'password':		'',
-													'db':			'',
-													'prefix':		'',
+													'server':        '',
+													'user':            '',
+													'password':        '',
+													'db':            '',
+													'prefix':        '',
 												},
 												'sync': {
 													'upload': False,
 													'download': False,
 													'delay': 120,
 												},
-												'path':		'',
+												'path':        '',
 											},
 										},
 									},
@@ -697,11 +697,11 @@ def load():
 									'ftp': {
 										'account': {
 											'LABEL': {
-												'server':		'',
-												'user':			'',
-												'password':		'',
-												'path':			'',
-												'full-path':			'',
+												'server':        '',
+												'user':            '',
+												'password':        '',
+												'path':            '',
+												'full-path':            '',
 											},
 										},
 

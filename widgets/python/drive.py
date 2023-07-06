@@ -51,7 +51,7 @@ __.pre_error = False
 _.appInfo[focus()] = {
 	'file': 'drive.py',
 	'liveAppName': __.thisApp( __file__ ),
- 	'description': 'Manages drives and indexes',
+	'description': 'Manages drives and indexes',
 	'categories': [
 						'index',
 						'drive',
@@ -81,8 +81,8 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
-				       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 						{ 'name': 'name', 'abbreviation': 'n' },
 						{ 'name': 'initiated', 'abbreviation': 'i' },
 						{ 'name': 'type', 'abbreviation': 't' },
@@ -92,11 +92,11 @@ _.appInfo[focus()] = {
 						{ 'name': 'timestamp', 'abbreviation': 'tstimedate' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-				       # {},
+					# {},
 	],
 }
 _.appData[focus()] = {

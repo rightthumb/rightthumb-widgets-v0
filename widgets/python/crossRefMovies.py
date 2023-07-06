@@ -566,7 +566,7 @@ def action():
 		# noFranchise()
 		# words()
 		# for data in fileOneTrueList:
-		# 	xRefTrue( data )
+		#     xRefTrue( data )
 	if _.switches.isActive('Exif'):
 		exif()
 	if _.switches.isActive('CSV'):

@@ -192,7 +192,7 @@ def printTable():
 	# try:
 		
 	# except Exception as e:
-	# 	pass
+	#     pass
 	_.tables.fieldProfileSet( 'data', 'id', 'trigger', quickTrigger )
 	_.tables.fieldProfileSet( 'data', 'm', 'trigger', quickTriggerMem )
 	fields = []

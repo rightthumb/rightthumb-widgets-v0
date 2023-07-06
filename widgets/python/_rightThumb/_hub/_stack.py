@@ -24,7 +24,7 @@ class Subject:
 								"imports.txt.py",
 								"terminal.py",
 								"tmp.py",
-								"type",								"_construct.py",
+								"type",                                "_construct.py",
 								"_fields.py",
 								"_func.py",
 								"_hub_init_example.py",

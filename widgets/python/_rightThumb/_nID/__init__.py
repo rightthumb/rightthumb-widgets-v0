@@ -48,7 +48,7 @@ class nID:
 		self.passwordRan = False
 	def password( self, pw=None ):
 		# if self.passwordRan:
-		# 	return None
+		#     return None
 		# if not pw is None:
 		self.passwordRan = True
 		self.code = self.code_default
@@ -164,17 +164,17 @@ class nID:
 				placeValue = rec['pv']
 
 		# if num >= self.table[6][0]:
-		# 	placeValue = 7
+		#     placeValue = 7
 		# elif num >= self.table[5][0]:
-		# 	placeValue = 6
+		#     placeValue = 6
 		# elif num >= self.table[4][0]:
-		# 	placeValue = 5
+		#     placeValue = 5
 		# elif num >= self.table[3][0]:
-		# 	placeValue = 4
+		#     placeValue = 4
 		# elif num >= self.table[2][0]:
-		# 	placeValue = 3
+		#     placeValue = 3
 		# elif num >= self.table[1][0]:
-		# 	placeValue = 2
+		#     placeValue = 2
 
 
 		return placeValue
@@ -224,7 +224,7 @@ class nID:
 					sys.exit()
 
 				# if num >= 3906:
-				# 	_.pr( run )
+				#     _.pr( run )
 				# if not n == 0:
 				if pvD > 1:
 					while not pvD == 1:
@@ -236,7 +236,7 @@ class nID:
 				pv = run['pv']
 
 		# if num >= 3906:
-		# 	_.pr( table )
+		#     _.pr( table )
 
 		placeValue = self.placeValueQuery( num )
 
@@ -260,14 +260,14 @@ class nID:
 
 
 		# if num >= 3579345993194:
-		# 	shouldAdd = True
-		# 	for i,x in enumerate(miniID):
-		# 		if i and not x == '-':
-		# 			shouldAdd = True
-		# 	if shouldAdd:
-		# 		miniID+='-'
-		# 		if num >= 221919451578090:
-		# 			miniID+='-'
+		#     shouldAdd = True
+		#     for i,x in enumerate(miniID):
+		#         if i and not x == '-':
+		#             shouldAdd = True
+		#     if shouldAdd:
+		#         miniID+='-'
+		#         if num >= 221919451578090:
+		#             miniID+='-'
 
 
 		if self.return_test:
@@ -381,12 +381,12 @@ class nID:
 
 
 			# else:
-			# 	# test = test - lastT
-			# 	test = self.index[lastP][idFix(lastID)] - lastT
-			# 	if not save:
-			# 		return test, idFix(lastID), self.index[lastP][idFix(lastID)], lastP
-			# 		return test, idFix(lastID), lastT, lastP
-			# 		return test, lastID
+			#     # test = test - lastT
+			#     test = self.index[lastP][idFix(lastID)] - lastT
+			#     if not save:
+			#         return test, idFix(lastID), self.index[lastP][idFix(lastID)], lastP
+			#         return test, idFix(lastID), lastT, lastP
+			#         return test, lastID
 
 
 
@@ -396,12 +396,12 @@ class nID:
 
 				# _.pr( len(theSet), self.base )
 				# if not len(theSet) == self.base:
-				# 	while not len(theSet) == self.base:
-				# 		theSet.pop()
+				#     while not len(theSet) == self.base:
+				#         theSet.pop()
 				# if not len(master):
-				# 	theSet.reverse()
-				# 	theSet.append(0)
-				# 	theSet.reverse()
+				#     theSet.reverse()
+				#     theSet.append(0)
+				#     theSet.reverse()
 			# if i and 1 and i % (self.base-1) == 0:
 				
 		if save:
@@ -653,7 +653,7 @@ class checksum:
 
 		# self.start()
 		# self.chunk(chunk)
-		# self.digest()	
+		# self.digest()    
 
 	def start( self ):
 		self.location = 0
@@ -689,14 +689,14 @@ class checksum:
 				p = t.split('.')[1]
 				nn += self.digitB( self.n[i], int(p) )
 				# if len(p) < 4:
-				# 	nn += self.digit( self.n[i], int(p) )
+				#     nn += self.digit( self.n[i], int(p) )
 				# else:
-				# 	ii=0
-				# 	pp = ''
-				# 	while not ii == 3:
-				# 		pp += p[ii]
-				# 		ii+=1
-				# 	nn += self.digit( self.n[i], int(pp) )
+				#     ii=0
+				#     pp = ''
+				#     while not ii == 3:
+				#         pp += p[ii]
+				#         ii+=1
+				#     nn += self.digit( self.n[i], int(pp) )
 		self.n = nn
 		# _.pr(self.n)
 		# _.pr()
@@ -792,27 +792,27 @@ class checksum:
 				p = t.split('.')[1]
 				nn += self.digitB( self.n[i], int(p) )
 				# if len(p) < 4:
-				# 	nn += self.digit( self.n[i], int(p) )
+				#     nn += self.digit( self.n[i], int(p) )
 				# else:
-				# 	ii=0
-				# 	pp = ''
-				# 	while not ii == 3:
-				# 		pp += p[ii]
-				# 		ii+=1
-				# 	nn += self.digit( self.n[i], int(pp) )
+				#     ii=0
+				#     pp = ''
+				#     while not ii == 3:
+				#         pp += p[ii]
+				#         ii+=1
+				#     nn += self.digit( self.n[i], int(pp) )
 		self.n = nn
 
 			
 		# for x in self.index.keys():
-		# 	self.index[x] = self.digit( self.index[x], len(self.data) )
+		#     self.index[x] = self.digit( self.index[x], len(self.data) )
 
 		# newA = ''
 		# for x in self.n:
-		# 	newA += self.index[x]
+		#     newA += self.index[x]
 		
 		# newB = ''
 		# for i,x in enumerate(newA):
-		# 	newB += self.digit( x, self.slots[i] )
+		#     newB += self.digit( x, self.slots[i] )
 
 		return int(self.n)
 
@@ -877,18 +877,18 @@ class checksum:
 		# divsA = 1
 		# divsB = 5
 		# for i,x in enumerate(self.n):
-		# 	ix = i+1
-		# 	self.slots[i] = 0
-		# 	self.index[x] = x
-		# 	divsI = divsA
-		# 	while not divsI == divsB:
-		# 		if ix%divsI==0:
-		# 			try:
-		# 				self.divs[divsI].append(i)
-		# 			except Exception as e:
-		# 				self.divs[divsI] = []
-		# 				self.divs[divsI].append(i)
-		# 		divsI+=1
+		#     ix = i+1
+		#     self.slots[i] = 0
+		#     self.index[x] = x
+		#     divsI = divsA
+		#     while not divsI == divsB:
+		#         if ix%divsI==0:
+		#             try:
+		#                 self.divs[divsI].append(i)
+		#             except Exception as e:
+		#                 self.divs[divsI] = []
+		#                 self.divs[divsI].append(i)
+		#         divsI+=1
 
 
 	def digitB( self, z, much ):

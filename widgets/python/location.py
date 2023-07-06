@@ -86,15 +86,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-					   # { 'name': 'name', 'abbreviation': 'n' },
-					   # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-					   # 'this',
-					   # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-					   # {},
+					# {},
 	],
 }
 
@@ -183,13 +183,13 @@ _.postLoad( __file__ )
 # os.system( '"' + do + '"' )
 # _.setPipeData( os.listdir( os.getcwd() ), focus() )
 # _.showLine( item )
-# 	if os.path.isdir( row ):
-# 	if os.path.isfile( row ):
-#	os.path.abspath(path)
+#     if os.path.isdir( row ):
+#     if os.path.isfile( row ):
+#    os.path.abspath(path)
 # __.appRegPipe    ( pipe data registerd focus(__.appReg) set by _.myFileLocations {if imported} , default is None )
 # date = _.friendlyDate( theDate )
 # _.addComma()
-# 													if platform.system() == 'Windows':
+#                                                     if platform.system() == 'Windows':
 ### EXAMPLE: END
 ########################################################################################
 # START
@@ -228,8 +228,8 @@ def action():
 
 	# user_agent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.47 Safari/537.36'
 	# header = {
-	# 			'User-Agent': user_agent,
-	# 			'Accept': 'application/json'
+	#             'User-Agent': user_agent,
+	#             'Accept': 'application/json'
 	# }
 	# request = urllib.request.Request(url,headers=header)
 	# response = urllib.request.urlopen(request)
@@ -245,9 +245,9 @@ def action():
 
 	# _.pr( url )
 	# try:
-	# 	result = html.fromstring(requests.get( url ).content).text_content()
+	#     result = html.fromstring(requests.get( url ).content).text_content()
 	# except Exception as e:
-	# 	result = 'offline'
+	#     result = 'offline'
 	# _.pr(result)
 
 

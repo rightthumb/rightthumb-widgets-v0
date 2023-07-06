@@ -54,7 +54,7 @@ class TheChild:
 		self.size = _.get_size(self.imp)
 		# try:
 		# except Exception as e:
-		# 	pass
+		#     pass
 
 		
 		self.saveLogFile = True
@@ -76,9 +76,9 @@ class TheChild:
 	def unregister( self, trackingID=None ):
 		algorithm = _matrix.app.algorithmRegister(trackingID=trackingID)
 		# _.pr( 'unregistered' )
-	  # for key in _matrix.app.records['data'].keys():
-	  #     if self.name in _matrix.app.records['data'][key].focus:
-	  #         _matrix.app.records['data'][key].unregister()
+	# for key in _matrix.app.records['data'].keys():
+	#     if self.name in _matrix.app.records['data'][key].focus:
+	#         _matrix.app.records['data'][key].unregister()
 		appDBA = self.imp.appDBA
 		self.status = False
 		self.imp = None
@@ -99,7 +99,7 @@ class TheChild:
 
 
 		# if focusPop:
-		# 	_matrix.appReg = self.focusPop
+		#     _matrix.appReg = self.focusPop
 
 		if unload:
 			self.unregister()
@@ -148,14 +148,14 @@ class TheChild:
 	def scheduleRunAction( self, dataID=None, unload=False, trackingID=None ):
 		algorithm = _matrix.app.algorithmRegister(trackingID=trackingID)
 		# if not dataID is None:
-		# 	_matrix.appReg = self.focus
+		#     _matrix.appReg = self.focus
 
 		result = self.imp.action()
 		_matrix.app.id( dataID ).singleSet(result)
 
 
 		# if focusPop:
-		# 	_matrix.appReg = self.focusPop
+		#     _matrix.appReg = self.focusPop
 
 		if unload:
 			self.unregister()

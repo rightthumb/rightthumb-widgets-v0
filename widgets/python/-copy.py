@@ -83,15 +83,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-							 # { 'name': 'name', 'abbreviation': 'n' },
-							 # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+							# { 'name': 'name', 'abbreviation': 'n' },
+							# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-							 # 'this',
-							 # 'app',
+							# 'this',
+							# 'app',
 	],
 	'notes': [
-							 # {},
+							# {},
 	],
 }
 
@@ -574,8 +574,8 @@ Array.prototype.slice.call(
 '''
 
 		subject['hacks']['cage33']='''
-	 cat settings.json | p -copy
-	 p -paste | p pipe-dics -sort keys command
+	cat settings.json | p -copy
+	p -paste | p pipe-dics -sort keys command
 '''
 
 

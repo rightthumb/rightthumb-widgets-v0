@@ -53,7 +53,7 @@ __.isRequired_Pipe_or_File = False
 _.appInfo[focus()] = {
 		'file': 'genKeySSL.py',
 		'liveAppName': __.thisApp( __file__ ),
-	 	'description': 'Generate SSL keys public.crt private.pem',
+		'description': 'Generate SSL keys public.crt private.pem',
 		'categories': [
 												'ssl',
 						'key',
@@ -74,11 +74,11 @@ _.appInfo[focus()] = {
 												''
 		],
 		'columns': [
-											 # { 'name': 'name', 'abbreviation': 'n' },
+											# { 'name': 'name', 'abbreviation': 'n' },
 		],
 		'aliases': [
-											 # 'this',
-											 # 'app',
+											# 'this',
+											# 'app',
 		],
 
 		}
@@ -214,7 +214,7 @@ def TestFrankenCert():
 	_.pr( "SSL test fail" )
 
 # if __name__ == "__main__":
-# 	TestFrankenCert()
+#     TestFrankenCert()
 
 
 

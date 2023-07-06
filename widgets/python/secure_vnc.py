@@ -50,7 +50,7 @@ __.pre_error = False
 _.appInfo[focus()] = {
 	'file': 'secure_vnc.py',
 	'liveAppName': __.thisApp( __file__ ),
- 	'description': 'secure vnc, used on phone',
+	'description': 'secure vnc, used on phone',
 	'categories': [
 						'vnc',
 						'secure',
@@ -73,15 +73,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-					   # { 'name': 'name', 'abbreviation': 'n' },
-					   # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-					   # 'this',
-					   # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-					   # {},
+					# {},
 	],
 }
 
@@ -148,7 +148,7 @@ if __name__ == '__main__':
 _.postLoad( __file__ )
 
 ########################################################################################
-# __.appRegPipe	( pipe data registerd focus(__.appReg) set by _.myFileLocations {if imported} , default is None )
+# __.appRegPipe    ( pipe data registerd focus(__.appReg) set by _.myFileLocations {if imported} , default is None )
 ########################################################################################
 # START
 

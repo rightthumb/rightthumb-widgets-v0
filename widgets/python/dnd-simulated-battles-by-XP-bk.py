@@ -51,17 +51,17 @@ def appSwitches():
 
 ### EXAMPLE: START
 # _.switches.trigger( 'Files', _.myFileLocations, vs=True )
-# 	finds the file in probable locations
-# 	and 
-# 		if  _.autoBackupData = True
-# 		and __.releaseAcquiredData = True
-# 			GET EPOCH FROM: hosts/hostname/logs/apps/execution_receipt-app_name-epoch.json
-# 		you can run apps on usb at a clients office
-# 			when you get home run: p app -loadepoch epoch 
-# 				backed up
-# 					pipe
-# 					files
-# 					tables
+#     finds the file in probable locations
+#     and 
+#         if  _.autoBackupData = True
+#         and __.releaseAcquiredData = True
+#             GET EPOCH FROM: hosts/hostname/logs/apps/execution_receipt-app_name-epoch.json
+#         you can run apps on usb at a clients office
+#             when you get home run: p app -loadepoch epoch 
+#                 backed up
+#                     pipe
+#                     files
+#                     tables
 ### EXAMPLE: END
 _.autoBackupData = __.setting('receipt-log')
 __.releaseAcquiredData = __.setting('receipt-file')
@@ -101,15 +101,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
-				       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-				       # {},
+					# {},
 	],
 }
 
@@ -152,7 +152,7 @@ def registerSwitches( argvProcessForce=False ):
 	_.switches.trigger( 'Ago', _.timeAgo )
 	_.switches.trigger( 'Duration', _.timeFuture )
 	### EXAMPLE: START
-	# _.switches.trigger( 'Files',_.inRelevantFolder )	
+	# _.switches.trigger( 'Files',_.inRelevantFolder )    
 	# _.switches.trigger( 'Watched', _.txt2Date )
 	# _.switches.trigger( 'Input',_.formatColumns )
 	# _.switches.trigger( 'Franchise',_.triggerSpace )
@@ -197,121 +197,121 @@ _.postLoad( __file__ )
 # os.system( '"' + do + '"' )
 # _.setPipeData( os.listdir( os.getcwd() ), focus() )
 # _.showLine( item )
-# 	if os.path.isdir( row ):
-# 	if os.path.isfile( row ):
-#	os.path.abspath(path)
+#     if os.path.isdir( row ):
+#     if os.path.isfile( row ):
+#    os.path.abspath(path)
 # __.appRegPipe    ( pipe data registerd focus(__.appReg) set by _.myFileLocations {if imported} , default is None )
 # for i,row in enumerate(_.t( _.appData[__.appReg]['pipe'] )):
 # for i,row in _.e( _.isData(r=1) ):
 # date = _.friendlyDate( theDate )
 # _.addComma()
-# 													if platform.system() == 'Windows':
+#                                                     if platform.system() == 'Windows':
 ### EXAMPLE: END
 ########################################################################################
 # START
 
 XP_LEVEL =     [
-        {
-            "XP": "0",
-            "Level": "1",
-            "Prof": "+2"
-        },
-        {
-            "XP": "300",
-            "Level": "2",
-            "Prof": "+2"
-        },
-        {
-            "XP": "900",
-            "Level": "3",
-            "Prof": "+2"
-        },
-        {
-            "XP": "2,700",
-            "Level": "4",
-            "Prof": "+2"
-        },
-        {
-            "XP": "6,500",
-            "Level": "5",
-            "Prof": "+3"
-        },
-        {
-            "XP": "14,000",
-            "Level": "6",
-            "Prof": "+3"
-        },
-        {
-            "XP": "23,000",
-            "Level": "7",
-            "Prof": "+3"
-        },
-        {
-            "XP": "34,000",
-            "Level": "8",
-            "Prof": "+3"
-        },
-        {
-            "XP": "48,000",
-            "Level": "9",
-            "Prof": "+4"
-        },
-        {
-            "XP": "64,000",
-            "Level": "10",
-            "Prof": "+4"
-        },
-        {
-            "XP": "85,000",
-            "Level": "11",
-            "Prof": "+4"
-        },
-        {
-            "XP": "100,000",
-            "Level": "12",
-            "Prof": "+4"
-        },
-        {
-            "XP": "120,000",
-            "Level": "13",
-            "Prof": "+5"
-        },
-        {
-            "XP": "140,000",
-            "Level": "14",
-            "Prof": "+5"
-        },
-        {
-            "XP": "165,000",
-            "Level": "15",
-            "Prof": "+5"
-        },
-        {
-            "XP": "195,000",
-            "Level": "16",
-            "Prof": "+5"
-        },
-        {
-            "XP": "225,000",
-            "Level": "17",
-            "Prof": "+6"
-        },
-        {
-            "XP": "265,000",
-            "Level": "18",
-            "Prof": "+6"
-        },
-        {
-            "XP": "305,000",
-            "Level": "19",
-            "Prof": "+6"
-        },
-        {
-            "XP": "355,000",
-            "Level": "20",
-            "Prof": "+6"
-        }
-    ]
+		{
+			"XP": "0",
+			"Level": "1",
+			"Prof": "+2"
+		},
+		{
+			"XP": "300",
+			"Level": "2",
+			"Prof": "+2"
+		},
+		{
+			"XP": "900",
+			"Level": "3",
+			"Prof": "+2"
+		},
+		{
+			"XP": "2,700",
+			"Level": "4",
+			"Prof": "+2"
+		},
+		{
+			"XP": "6,500",
+			"Level": "5",
+			"Prof": "+3"
+		},
+		{
+			"XP": "14,000",
+			"Level": "6",
+			"Prof": "+3"
+		},
+		{
+			"XP": "23,000",
+			"Level": "7",
+			"Prof": "+3"
+		},
+		{
+			"XP": "34,000",
+			"Level": "8",
+			"Prof": "+3"
+		},
+		{
+			"XP": "48,000",
+			"Level": "9",
+			"Prof": "+4"
+		},
+		{
+			"XP": "64,000",
+			"Level": "10",
+			"Prof": "+4"
+		},
+		{
+			"XP": "85,000",
+			"Level": "11",
+			"Prof": "+4"
+		},
+		{
+			"XP": "100,000",
+			"Level": "12",
+			"Prof": "+4"
+		},
+		{
+			"XP": "120,000",
+			"Level": "13",
+			"Prof": "+5"
+		},
+		{
+			"XP": "140,000",
+			"Level": "14",
+			"Prof": "+5"
+		},
+		{
+			"XP": "165,000",
+			"Level": "15",
+			"Prof": "+5"
+		},
+		{
+			"XP": "195,000",
+			"Level": "16",
+			"Prof": "+5"
+		},
+		{
+			"XP": "225,000",
+			"Level": "17",
+			"Prof": "+6"
+		},
+		{
+			"XP": "265,000",
+			"Level": "18",
+			"Prof": "+6"
+		},
+		{
+			"XP": "305,000",
+			"Level": "19",
+			"Prof": "+6"
+		},
+		{
+			"XP": "355,000",
+			"Level": "20",
+			"Prof": "+6"
+		}
+	]
 
 for i,rec in enumerate(XP_LEVEL):
 	XP_LEVEL[i]['Level'] = int(rec['Level'])
@@ -443,7 +443,7 @@ def battle():
 	ROUND = 0
 
 	while len(mobs) and HEALTH:
-		ROUND+=1		
+		ROUND+=1        
 
 		# PLAYER MOVE X2 Because of Ronan AND Shade
 		mi = random.randint(0,len(mobs)-1)
@@ -587,7 +587,7 @@ def action():
 	_.pr('Potions average of',_.addComma(ip)+':',Average(POTIONS_USED_LIST))
 
 def Average(lst):
-    return sum(lst) / len(lst)
+	return sum(lst) / len(lst)
 
 def simulation_of_years():
 	global POTIONS_USED_LIST

@@ -49,7 +49,7 @@ __.switch_raw = []
 _.appInfo[focus()] = {
 	'file': 'unicode.py',
 	'liveAppName': __.thisApp( __file__ ),
- 	'description': 'unicode to string',
+	'description': 'unicode to string',
 	'categories': [
 						'icons',
 						'tool',
@@ -73,15 +73,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
-				       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-				       # {},
+					# {},
 	],
 }
 
@@ -150,20 +150,20 @@ _.postLoad( __file__ )
 import urllib.parse
 
 # def cleanupString0( string ):
-# 	string = formatData( string )
-# 	string = string.replace( '\xe2\x80', '-' ).replace( _v.slash+'xe2\\x80', '-' )
-# 	for x in txt_clean_list:
-# 		string = string.replace( x, '' )
-# 	string = _str.replaceAll(string,'\n',' ')
-# 	string = _str.replaceDuplicate(string,' ')
-# 	string = _str.cleanLast(string,' ')
-# 	string = _str.cleanFirst(string,' ')
-# 	string = _str.cleanSpecial(string)
-# 	string = _str.replaceDuplicate(string,' ')
-# 	string = _str.cleanFirst(string,' ')
-# 	string = printClean( string )
-# 	string = _str.cleanBE(string,' ')
-# 	return string
+#     string = formatData( string )
+#     string = string.replace( '\xe2\x80', '-' ).replace( _v.slash+'xe2\\x80', '-' )
+#     for x in txt_clean_list:
+#         string = string.replace( x, '' )
+#     string = _str.replaceAll(string,'\n',' ')
+#     string = _str.replaceDuplicate(string,' ')
+#     string = _str.cleanLast(string,' ')
+#     string = _str.cleanFirst(string,' ')
+#     string = _str.cleanSpecial(string)
+#     string = _str.replaceDuplicate(string,' ')
+#     string = _str.cleanFirst(string,' ')
+#     string = printClean( string )
+#     string = _str.cleanBE(string,' ')
+#     return string
 def cleanupString(string,beforeAfter=True):
 	# string = formatData( string )
 	string = string.replace( '\xa0', '' ).replace( _v.slash+'xa0', '-' )
@@ -190,7 +190,7 @@ def cleanupString(string,beforeAfter=True):
 	string = _str.replaceDuplicate(string,' ')
 	string = _str.cleanBE(string,' ')
 	# if string == 'b':
-	# 	string = ''
+	#     string = ''
 	return string
 
 def download(subject):

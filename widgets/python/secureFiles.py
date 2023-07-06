@@ -100,15 +100,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
-				       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-				       { 'test': 'one' },
+					{ 'test': 'one' },
 	],
 }
 
@@ -429,9 +429,9 @@ def scanFolders(sync=False, meta=False):
 
 	# local = {}
 	# for f in loco:
-	# 	if os.path.isfile( _v.resolveFolderIDs(f) ):
-	# 		p = __.path(os.path.abspath( _v.resolveFolderIDs(f) ))
-	# 		local[p] = loco[f]
+	#     if os.path.isfile( _v.resolveFolderIDs(f) ):
+	#         p = __.path(os.path.abspath( _v.resolveFolderIDs(f) ))
+	#         local[p] = loco[f]
 		
 	_.saveTable( __.v.secure.crypt, 'secure-crypt-local.settings', p=0 )
 	_.saveTable( __.v.secure.files, 'secure-files-local.settings', p=0 )
@@ -543,10 +543,10 @@ def process( subject ):
 	_path=__.path(subject)
 	check_decrypt_docs_database(_path)
 	# if _path in _docs_list:
-	# 	_decrypt_docs = _.regImp( __.appReg, 'decrypt-docs' )
-	# 	_decrypt_docs.imp.run( _path )
-	# 	_docs_list.pop(  _docs_list.index(_path)  )
-	# 	_.saveTable( _docs_list, 'crypt-docs.list' )
+	#     _decrypt_docs = _.regImp( __.appReg, 'decrypt-docs' )
+	#     _decrypt_docs.imp.run( _path )
+	#     _docs_list.pop(  _docs_list.index(_path)  )
+	#     _.saveTable( _docs_list, 'crypt-docs.list' )
 
 
 	# Encrypt Password noBackup Backup
@@ -837,7 +837,7 @@ def action():
 	return None
 
 	# for i,row in enumerate(_.isData(r=1)):
-	# 	_.pr(row)
+	#     _.pr(row)
 
 __.v.secure = _.dot()
 
@@ -870,7 +870,9 @@ if __name__ == '__main__':
 	__.isExit()
 
 
-
+# wsl hang here processFiles( path, record, sync )
+#     due to very old ttt secure-files.settings 
+#       stuck scanning large root folders
 
 
 

@@ -47,7 +47,7 @@ __.pre_error = False
 _.appInfo[focus()] = {
 	'file': 'sync_test_A.py',
 	'liveAppName': __.thisApp( __file__ ),
- 	'description': 'test',
+	'description': 'test',
 	'categories': [
 						'test',
 				],
@@ -69,15 +69,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
-				       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-				       # {},
+					# {},
 	],
 }
 

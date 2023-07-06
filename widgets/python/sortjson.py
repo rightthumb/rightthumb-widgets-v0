@@ -22,7 +22,7 @@ from collections import OrderedDict
 _.switches.register('File', '-file')
 _.switches.register('Order', '-order')
 
-_.appInfo=	{
+_.appInfo=    {
 	'file': 'sortjson.py',
 	'description': 'Change the order of json fields',
 	'prerequisite': [],

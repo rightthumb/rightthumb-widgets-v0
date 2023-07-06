@@ -51,7 +51,7 @@ __.switch_raw = []
 _.appInfo[focus()] = {
 	'file': 'tableDB.py',
 	'liveAppName': __.thisApp( __file__ ),
- 	'description': 'print tables',
+	'description': 'print tables',
 	'categories': [
 						'json',
 						'tables',
@@ -77,15 +77,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
-				       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-				       # {},
+					# {},
 	],
 }
 
@@ -197,13 +197,13 @@ def load():
 		# p = _v.myTables+os.sep+_.switches.values('Table')[0]
 		# _.pr(os.path.isfile(p),p)
 		# if os.path.isfile(p):
-		# 	data = _.getText( p )
+		#     data = _.getText( p )
 	else:
 		data = _.getTableDB( _.switches.values('Table')[0] )
 		# p = _v.ttt +os.sep+ _.switches.values('Table')[0]
 		# _.pr(os.path.isfile(p),p)
 		# if os.path.isfile(p):
-		# 	data = _.getText( p )
+		#     data = _.getText( p )
 
 	data = process(data)
 	if len(data):

@@ -83,11 +83,11 @@ _.appInfo[focus()] = {
 						''
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': 'name', 'abbreviation': 'n' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 
 	}
@@ -194,7 +194,7 @@ def action():
 	# load()
 	# _.appData[__.appReg]['uuid'] = {  'app': _.appInfo[focus()]['file'], 'project': 'app_instance' }
 	if _.switches.isActive('Input'):
-	# 	_.setPipeData( _.getText( _.switches.value('Input') ), focus() )
+	#     _.setPipeData( _.getText( _.switches.value('Input') ), focus() )
 		if type( _.appData[__.appReg]['pipe'] ) == bool:
 			_.appData[__.appReg]['pipe'] = []
 			for row in _.switches.value('Input').split( ',' ):
@@ -224,8 +224,8 @@ data = []
 depth = 0
 defaultMaxDepth = 10
 # def load():
-# 	global data
-# 	data = _.getTable( 'table.json' )
+#     global data
+#     data = _.getTable( 'table.json' )
 # data = []
 ########################################################################################
 if __name__ == '__main__':

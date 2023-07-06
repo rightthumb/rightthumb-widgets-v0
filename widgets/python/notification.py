@@ -89,15 +89,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
-				       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-				       # {},
+					# {},
 	],
 }
 
@@ -186,13 +186,13 @@ _.postLoad( __file__ )
 # os.system( '"' + do + '"' )
 # _.setPipeData( os.listdir( os.getcwd() ), focus() )
 # _.showLine( item )
-# 	if os.path.isdir( row ):
-# 	if os.path.isfile( row ):
-#	os.path.abspath(path)
+#     if os.path.isdir( row ):
+#     if os.path.isfile( row ):
+#    os.path.abspath(path)
 # __.appRegPipe    ( pipe data registerd focus(__.appReg) set by _.myFileLocations {if imported} , default is None )
 # date = _.friendlyDate( theDate )
 # _.addComma()
-# 													if platform.system() == 'Windows':
+#                                                     if platform.system() == 'Windows':
 ### EXAMPLE: END
 ########################################################################################
 # START
@@ -229,12 +229,12 @@ def email( body='cmd event', event='ALERT', subject='terminal', to = ['813690126
 	text = body
 	html = """\
 	<html>
-	  <body>
-	  	<p>""" +event+"""</p>
-	  	<p>
-	    """ +body+"""
-	    </p>
-	  </body>
+	<body>
+		<p>""" +event+"""</p>
+		<p>
+		""" +body+"""
+		</p>
+	</body>
 	</html>
 	"""
 
@@ -250,10 +250,10 @@ def email( body='cmd event', event='ALERT', subject='terminal', to = ['813690126
 	# Create secure connection with server and send email
 	context = ssl.create_default_context()
 	with smtplib.SMTP_SSL(the_server, 465, context=context) as server:
-	    server.login(sender_email, password)
-	    server.sendmail(
-	        sender_email, receiver_email, message.as_string()
-	    )
+		server.login(sender_email, password)
+		server.sendmail(
+			sender_email, receiver_email, message.as_string()
+		)
 
 
 

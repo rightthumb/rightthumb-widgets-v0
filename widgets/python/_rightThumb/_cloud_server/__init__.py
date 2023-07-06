@@ -75,15 +75,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
-				       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-				       # {},
+					# {},
 	],
 }
 
@@ -163,47 +163,47 @@ _.postLoad( __file__ )
 from cryptography.fernet import Fernet
 
 def write_key():
-    key = Fernet.generate_key()
-    with open("key.key", "wb") as key_file:
-        key_file.write(key)
+	key = Fernet.generate_key()
+	with open("key.key", "wb") as key_file:
+		key_file.write(key)
 
 
 def load_key():
-    return open("key.key", "rb").read()
+	return open("key.key", "rb").read()
 
 
 def encrypt(fin, fout, key):
-    f = Fernet(key)
-    with open(fin, "rb") as file:
-        # read all file data
-        file_data = file.read()
-    encrypted_data = f.encrypt(file_data)
+	f = Fernet(key)
+	with open(fin, "rb") as file:
+		# read all file data
+		file_data = file.read()
+	encrypted_data = f.encrypt(file_data)
 
-    # write the encrypted file
-    with open(fout, "wb") as file:
-        file.write(encrypted_data)
+	# write the encrypted file
+	with open(fout, "wb") as file:
+		file.write(encrypted_data)
 
 def decrypt(fin, fout, key):
-    f = Fernet(key)
-    with open(fin, "rb") as file:
-        # read the encrypted data
-        encrypted_data = file.read()
-    # decrypt data
-    decrypted_data = f.decrypt(encrypted_data)
-    # write the original file
-    with open(fout, "wb") as file:
-        file.write(decrypted_data)
+	f = Fernet(key)
+	with open(fin, "rb") as file:
+		# read the encrypted data
+		encrypted_data = file.read()
+	# decrypt data
+	decrypted_data = f.decrypt(encrypted_data)
+	# write the original file
+	with open(fout, "wb") as file:
+		file.write(decrypted_data)
 
 def decrypt2(fin, fout, key):
-    f = Fernet(key)
-    # with open(fin, "rb") as file:
-    #     # read the encrypted data
-    #     encrypted_data = file.read()
-    # # decrypt data
-    decrypted_data = f.decrypt(fin)
-    # write the original file
-    with open(fout, "wb") as file:
-        file.write(decrypted_data)
+	f = Fernet(key)
+	# with open(fin, "rb") as file:
+	#     # read the encrypted data
+	#     encrypted_data = file.read()
+	# # decrypt data
+	decrypted_data = f.decrypt(fin)
+	# write the original file
+	with open(fout, "wb") as file:
+		file.write(decrypted_data)
 
 
 
@@ -211,13 +211,13 @@ def decrypt2(fin, fout, key):
 
 
 def encryptVar( data, key ):
-    f = Fernet(key)
-    return f.encrypt(data)
+	f = Fernet(key)
+	return f.encrypt(data)
 
 
 def decryptVar( data, key ):
-    f = Fernet(key)
-    return f.decrypt(data)
+	f = Fernet(key)
+	return f.decrypt(data)
 
 ########################################################################################################################
 
@@ -372,20 +372,20 @@ class Data:
 
 # class Databases:
 
-# 	def __init__( self ):
-# 		self.databases = {}
+#     def __init__( self ):
+#         self.databases = {}
 
-# 	def create( self, db ):
-# 		pass
+#     def create( self, db ):
+#         pass
 
-# 	def insert( self, db, sql ):
-# 		pass
+#     def insert( self, db, sql ):
+#         pass
 
-# 	def query( self, sql ):
-# 		pass
+#     def query( self, sql ):
+#         pass
 
-# 	def buildSQL( self, dic ):
-# 		pass
+#     def buildSQL( self, dic ):
+#         pass
 
 
 
@@ -518,9 +518,9 @@ def handler( client, i, qID=None, account=None ):
 						history.append({ 'epoch': time.time(), 'user': instructions['user'], 'send': instructions['send'] })
 
 						# if instructions['send'] == 'exit':
-						# 	time.sleep(2)
-						# 	users[instructions['user']]['status'] = 0
-						# 	users[instructions['user']]['logout'] = time.time()
+						#     time.sleep(2)
+						#     users[instructions['user']]['status'] = 0
+						#     users[instructions['user']]['logout'] = time.time()
 
 						if instructions['user'] == 'request':
 							

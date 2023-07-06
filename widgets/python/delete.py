@@ -76,15 +76,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
-				       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-				       # {},
+					# {},
 	],
 }
 
@@ -177,7 +177,7 @@ def action():
 	global records
 
 	# if _.switches.isActive('Files'):
-	# 	files = _.switches.values('Files')
+	#     files = _.switches.values('Files')
 	# else:
 	files = _.isData(r=1)
 

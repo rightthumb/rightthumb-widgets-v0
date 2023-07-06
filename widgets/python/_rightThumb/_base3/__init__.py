@@ -1595,8 +1595,8 @@ _sd = None
 def date_diff_dic(one,two=time.time()):
 	
 	def date_diff_in_seconds(dt2, dt1):
-	  timedelta = dt2 - dt1
-	  return timedelta.days * 24 * 3600 + timedelta.seconds
+		timedelta = dt2 - dt1
+		return timedelta.days * 24 * 3600 + timedelta.seconds
 
 	def dhms_from_seconds(seconds):
 		minutes, seconds = divmod(seconds, 60)
@@ -2910,9 +2910,7 @@ def saveCryptTable( rows, theFile, db=False, bank=False, index=False, temp=False
 
 
 
-def head( path ):
-	file = open( path, 'rb' ).read(32)
-	return " ".join(['{:02X}'.format(byte) for byte in file])
+def head( path ): return IS(path)
 def header(path): return head(path)
 def hex2ascii( hx ):
 	if type(hx) == str:
@@ -3097,26 +3095,21 @@ def dic_key_sort2( table, n=False, ip=False, r=False ):
 		for x in nKeys:
 			dic[  str(int(x))  ] = table[str(int(x))]
 		return dic
-def isCrypt(filepath):
-	if " ".join(['{:02X}'.format(byte) for byte in     open( filepath, 'rb' ).read(32)    ]).startswith( '41 45 53 02 00 00 1B' ):
-		return True
+def isCrypt(path):
+	if IS(path,'41 45 53 02 00 00 1B'): return True
 	else:
-		if has_crypt_header(filepath):
+		if has_crypt_header(path):
 			return True
 		else:
 			return False
 
-def isGz(filepath):
-	if " ".join(['{:02X}'.format(byte) for byte in     open( filepath, 'rb' ).read(32)    ]).startswith( '1F 8B 08 08' ):
-		return True
-	else:
-		return False
+def isGz(path):
+	if IS(path,'1F 8B 08 08'): return True	
+	else: return False
 
-def isBz2(filepath):
-	if " ".join(['{:02X}'.format(byte) for byte in     open( filepath, 'rb' ).read(32)    ]).startswith( '42 5A 68' ):
-		return True
-	else:
-		return False
+def isBz2(path):
+	if IS(path,'42 5A 68'): return True
+	else: return False
 
 
 isTar = dot()
@@ -8431,8 +8424,39 @@ def aliases_file_open(file):
 			# print(a,file)
 	return file
 
+def url2file(path):
+	url=path
+	if path.startswith('https:') or path.startswith('http:'):
+		url=url.replace('https://www.','https://')
+		url=url.replace('http://www.','http://')
+		if '?' in url: url=url.split('?')[0]
+		sites=getTable('site-locations.list')
+		for mPath in sites:
+			if os.path.isfile(mPath):
+				p = __.path(mPath,pop=True)
+				if getText( mPath, raw=True ).strip().startswith('{'): meta = getTable2( mPath )
+				else: meta = getYML( mPath )
+				if 'url' in meta:
+					u = meta['url'].replace('https://www.','https://')
+					u = meta['url'].replace('http://www.','http://')
+					if url.startswith(u):
+						x=url[len(u):].replace('/',os.sep)
+						# print(x);sys.exit()
+						y=p+os.sep+x
+						if os.path.isdir(y):
+							test='index.php index.htm index.html'.split(' ')
+							for t in test:
+								yt=str(y+os.sep+t).replace(os.sep+os.sep,os.sep)
+								if os.path.isfile(yt):
+									y=yt
+						y=y.replace(os.sep+os.sep,os.sep)
+						if os.path.isfile(y):
+							path=y
+	return path
+
 isFirst=True
 def myFileLocations( file, silent=False, currentBaseVersion=3 ):
+	file=url2file(file)
 	file = aliases_file_open(file)
 	if isWin and type(file) == str and '/' in file: file=file.replace('/',os.sep)
 	if isWin and type(file) == str and file.startswith('~'): file=_v.home+file[1:]
@@ -9785,7 +9809,7 @@ def saveTable( rows, theFile, tableTemp=False, printThis=True, indentCode=True, 
 	if not p: printThis = False;
 		
 
-	   
+	
 
 
 	# defaults to myTables
@@ -9960,7 +9984,7 @@ def getTableDB( theFile,     isDic=None, isList=None ):
 				_tar.unzip( theFile )
 
 
-		with open(theFile,'r', encoding="latin-1") as json_file:
+		with open(theFile,'r', encoding="utf-8") as json_file:
 			json_data = simplejson.load(json_file)
 			# json_data = simplejson.load(json_file, object_pairs_hook=OrderedDict)
 		return json_data
@@ -10321,9 +10345,9 @@ def figureOutDate(theDate, theFormat):
 				printBold('Month error','red')
 				sys.exit()
 			if len(ans) == 1:
-				 info['m'] = 0 + ans
+				info['m'] = 0 + ans
 			elif len(ans) == 2:
-				 info['m'] = ans
+				info['m'] = ans
 			else:
 				printBold('Month error','red')
 				sys.exit()
@@ -10646,10 +10670,11 @@ def blank_script_trigger(data):
 
 class Switch:
 
-	def __init__(self, name, switch, expected_input_example, description, space):
+	def __init__(self, name, switch, expected_input_example, description, space, default):
 		self.appReg = __.appReg
 		self.name = name
 		self.switch = switch
+		self.default = default
 		self.pos = 0
 		self.active = False
 		self.value = None
@@ -10901,7 +10926,7 @@ class Switches:
 		tables.register('data',data)
 		tables.print('data','appreg,name,value')
 
-	def register(self, name, switch, expected_input_example = None, isRequired=False, isPipe=None, isData=None, description='', space=False):
+	def register(self, name, switch, expected_input_example = None, isRequired=False, isPipe=None, isData=None, description='', space=False, default=False):
 
 		if not isPipe is None:
 			__.trigger_isPipe = isPipe
@@ -10915,7 +10940,7 @@ class Switches:
 			self.dex[__.appReg]={}
 		self.dex[__.appReg][name]=i
 
-		self.switches.append(Switch(name, switch, expected_input_example, description, space))
+		self.switches.append(Switch(name, switch, expected_input_example, description, space, default))
 
 		try:
 			if not type(self.isRequired[__.appReg]) == list:
@@ -11658,7 +11683,10 @@ class Switches:
 
 
 		if self.isActive('DumpSwitches'):
-			self.dumpSwitches()
+			if self.value('DumpSwitches'):
+				pv(self.all())
+			else:
+				self.dumpSwitches()
 			sys.exit()
 		if self.isActive('Debug') == True or self.isActive('Errors') == True:
 			# self.print()
@@ -11767,7 +11795,8 @@ class Switches:
 		global tables
 		for i,sw in enumerate(self.switches):
 			if self.switches[i].appReg == __.appReg:
-				switch.append({'name':sw.name ,'switch':sw.switch,'expected_input_example': sw.expected_input_example})
+				if __.switch_skimmer.active and not self.switches[i].default:
+					switch.append({'name':sw.name ,'switch':sw.switch,'expected_input_example': sw.expected_input_example})
 		# def test(value):
 		#   value = value + '_V_'
 		#   return value
@@ -12323,7 +12352,7 @@ class Table:
 							pass
 							if self.group_space:
 								print_('')
-						 
+						
 
 						if not self.isExtraRecord:
 							groupByList[gb] = text
@@ -12335,7 +12364,7 @@ class Table:
 						#   print_(text)
 					else:
 						pass
-						 
+						
 						if len(self.isExtraRecord_000x):
 							self.isExtraRecord_0001[ self.isExtraRecord_000x.split('-')[0] ] = 1
 						text = ''
@@ -13129,7 +13158,7 @@ class Table:
 						self.asset[i] = isDate( result, self.asset[i] )
 						
 						# month year woy dow ago
-						 
+						
 
 						month = _dir.getMonthFromEpoch
 						# year = _dir.getYearFromEpoch
@@ -13884,9 +13913,8 @@ class Table:
 						colorizeRow( tableLine+result, prefix=self.tab['table']+loopPrint(__.table_prefix_padding), prefixColor=self.tab_color, haltColorShift=self.isExtraRecord )
 			i += 1
 			if 'expected_input_example' in column and 'switch' in column and  switchDefault == i:
-				# if '??' in __.switch_skimmer.active:
-				if __.switch_skimmer.active:
-					sys.exit()
+
+				# if __.switch_skimmer.active: sys.exit()
 				pass
 				print_('')
 		# if len(oldData) > 0:
@@ -19555,7 +19583,7 @@ def percentageDiffCalc( smaller, bigger, isFloat=False, rnd=1 ):
 			return r
 
 
-	 # = 0.2 = 20%
+	# = 0.2 = 20%
  # |5 - 6|/5 = 1/5 = 0.2 = 20%
 
 
@@ -19627,22 +19655,6 @@ def loadingGraphicEnd():
 	# theLoadingGraphic.quit()
 """
 ###################################################################################################################
-def isTextFi(path, num_chars=20):
-    with open(path, 'rb') as file:
-        content = file.read(num_chars)        
-        try:
-            content.decode('utf-8')
-            return True
-        except UnicodeDecodeError:
-            return False
-def isTextFiGet(path, num_chars=20):
-    with open(path, 'rb') as file:
-        content = file.read(num_chars)        
-        try:
-            return content.decode('utf-8')
-        except UnicodeDecodeError:
-            return ''
-###################################################################################################################
 
 def isText( data ):
 	if type( data ) == str:
@@ -19651,11 +19663,15 @@ def isText( data ):
 	else:
 		return False
 
-def isNum( data ):
+def isNum( data, c=False ):
 	if type( data ) == int:
 		return True
 	else:
-		return False
+		if not c: return False
+		try:
+			data=int(data)
+			return True
+		except: return False
 
 def isFloat( data ):
 	if type( data ) == str:
@@ -19934,46 +19950,46 @@ def load():
 		# switches.trigger('Column',formatColumns)
 
 		switchDefault = switches.length()
-		switches.register('Help', '?,??,/?,/??,-?,-??,--??,/h,/help,-help,--help', 'copy  OR ids  OR  12  OR  ?? x')
-		switches.register('Column', '-c,-column', 'size, name')
-		switches.register('Sort','-s,-sort', 'a.type, d.ext')
-		switches.register('Debug', '-debug')
-		switches.register('DumpSwitches', '-dump')
-		switches.register('Errors', '-Error,-Errors', '8,11 OR hide:8,11')
-		switches.register('Timeout', '-t,-Timeout')
-		switches.register('GroupBy', '-g,-group,-groupby', 'ext, month')
-		switches.register('GroupTotals', '-gt,-grouptotal,-gtotal,-gtotals', 'mem_usage')
-		switches.register('WrapTable', '-wrap', 'n p  OR  2  OR  path')
-		switches.register('NoWrapTable', '-nowrap')
-		# switches.register('NoTableLines', '-nolines')
-		switches.register('YesTableLines', '-yl,-yeslines')
-		switches.register('TableJSON', '-tjson,-tablejson')
-		switches.register('FieldTotal', '-fieldtotal', 'mem_usage')
-		switches.register('Aggregate', '-aggregate', '" eof-field-len= add(len(version),len(backup)); config(var,eof,isFirst); "')
-		switches.register('GroupSpaces', '-gs,-space,-groupspaces')
-		switches.register('TableProfile', '-tp,-table',' *;c *;l  h;l header;left  size;l,gs')
-		# switches.register('ShortenColumn', '-sc,-shortencolumn')
-		switches.register('WebTable', '-web')
-		switches.register('Long', '-long')
-		switches.register('Short', '-sc,-short')
-		switches.register('Length', '-length','x3')
-		# switches.register('Report', '-report')
-		switches.register('Plus', '+','all unless -or')
-		switches.register('Minus', '-')
-		switches.register('Plus-Sub', '++','any')
-		switches.register('PlusOr', '-or')
-		switches.register('PlusClose', '+close', '90%')
-		switches.register('PlusCode', '+code','=  OR  *x  OR  x*  AND/OR color' )
-		switches.register('PlusDuplicate', '+dup,+duplicate', '90%')
-		switches.register('StrictCase', '-case,-strictcase')
-		switches.register('PrintAutoAbbreviations', '-printa,-aprint')
-		switches.register('NoColor', '-nocolor', space=True)
-		switches.register('LoadEpoch', '-loadepoch')
-		switches.register('PrintEpoch', '-printepoch')
-		switches.register('chmod', '-chmod,-777')
-		switches.register( 'Paste-isData', '--pa,--paste,-ppa,-ppaste,-ispa,-idpa' )
-		switches.register( 'Paste-isData-json', '--json,-pjson,-jsonp' )
-		# switches.register('SkipColumnTriggers', '-skiptriggers')
+		switches.register('Help', '?,??,/?,/??,-?,-??,--??,/h,/help,-help,--help', 'copy  OR ids  OR  12  OR  ?? x', default=True)
+		switches.register('Column', '-c,-column', 'size, name', default=True)
+		switches.register('Sort','-s,-sort', 'a.type, d.ext', default=True)
+		switches.register('Debug', '-debug', default=True)
+		switches.register('DumpSwitches', '-dump', 'all', default=True)
+		switches.register('Errors', '-Error,-Errors', '8,11 OR hide:8,11', default=True)
+		switches.register('Timeout', '-t,-Timeout', default=True)
+		switches.register('GroupBy', '-g,-group,-groupby', 'ext, month', default=True)
+		switches.register('GroupTotals', '-gt,-grouptotal,-gtotal,-gtotals', 'mem_usage', default=True)
+		switches.register('WrapTable', '-wrap', 'n p  OR  2  OR  path', default=True)
+		switches.register('NoWrapTable', '-nowrap', default=True)
+		# switches.register('NoTableLines', '-nolines', default=True)
+		switches.register('YesTableLines', '-yl,-yeslines', default=True)
+		switches.register('TableJSON', '-tjson,-tablejson', default=True)
+		switches.register('FieldTotal', '-fieldtotal', 'mem_usage', default=True)
+		switches.register('Aggregate', '-aggregate', '" eof-field-len= add(len(version),len(backup)); config(var,eof,isFirst); "', default=True)
+		switches.register('GroupSpaces', '-gs,-space,-groupspaces', default=True)
+		switches.register('TableProfile', '-tp,-table',' *;c *;l  h;l header;left  size;l,gs', default=True)
+		# switches.register('ShortenColumn', '-sc,-shortencolumn', default=True)
+		switches.register('WebTable', '-web', default=True)
+		switches.register('Long', '-long', default=True)
+		switches.register('Short', '-sc,-short', default=True)
+		switches.register('Length', '-length','x3', default=True)
+		# switches.register('Report', '-report', default=True)
+		switches.register('Plus', '+','all unless -or', default=True)
+		switches.register('Minus', '-', default=True)
+		switches.register('Plus-Sub', '++','any', default=True)
+		switches.register('PlusOr', '-or', default=True)
+		switches.register('PlusClose', '+close', '90%', default=True)
+		switches.register('PlusCode', '+code','=  OR  *x  OR  x*  AND/OR color' , default=True)
+		switches.register('PlusDuplicate', '+dup,+duplicate', '90%', default=True)
+		switches.register('StrictCase', '-case,-strictcase', default=True)
+		switches.register('PrintAutoAbbreviations', '-printa,-aprint', default=True)
+		switches.register('NoColor', '-nocolor', space=True, default=True)
+		switches.register('LoadEpoch', '-loadepoch', default=True)
+		switches.register('PrintEpoch', '-printepoch', default=True)
+		switches.register('chmod', '-chmod,-777', default=True)
+		switches.register( 'Paste-isData', '--pa,--paste,-ppa,-ppaste,-ispa,-idpa' , default=True)
+		switches.register( 'Paste-isData-json', '--json,-pjson,-jsonp' , default=True)
+		# switches.register('SkipColumnTriggers', '-skiptriggers', default=True)
 		defaultScriptTriggers_do()
 		
 import importlib
@@ -20012,13 +20028,13 @@ class regImp:
 		self.parent = focus
 		# print_( 'self.imp = importlib.import_module', app )
 		self.imp = importlib.import_module(app)
+		# self.imp = importlib.util.spec_from_file_location( app, _v.py + _v.slash + app + '.py' )
 		# print(app)
 		# print(app)
 		# print(app)
 		# for x in dir(self.imp):
 		#   print(x)
 		# sys.exit()
-		# self.imp = importlib.util.spec_from_file_location( app, _v.py + _v.slash + app + '.py' )
 		# print_( os.path.isfile( _v.py + _v.slash + app + '.py' ) )
 		# print_( self.imp )
 		# print_( self.imp.test )
@@ -20150,6 +20166,29 @@ class regImp:
 
 		__.appReg = self.focusPop
 
+
+	def kwargs( self, *args, **kwargs ):
+		focusPop=True
+		if 'focusPop' in kwargs:
+			focusPop=kwargs['focusPop']
+			del kwargs['focusPop']
+
+		__.appReg = self.focus
+
+		self.imp.appDBA = self.focus
+		if args and kwargs:
+			result = self.imp.action(*args, **kwargs)
+		elif args:
+			result = self.imp.action(*args)
+		elif kwargs:
+			result = self.imp.action(**kwargs)
+		else:
+			result = self.imp.action()
+		
+		if focusPop:
+			__.appReg = self.focusPop
+
+		return result
 	def action( self, arg='c766f06b', focusPop=True ):
 		# focusBK = __.appReg
 		__.appReg = self.focus
@@ -21688,7 +21727,7 @@ def pyApp(path):
 def fromYML(text): return __.fromYML(text)
 def toYML(dic,path=None): return __.toYML(dic,path)
 
-def getYML(path,here=False,h=None,auto=True,a=None):
+def getYML(path,here=False,h=None,auto=True,a=None,t=False):
 	if not a is None: auto=a
 	if not h is None: here=h
 	if here: auto = False
@@ -21696,6 +21735,7 @@ def getYML(path,here=False,h=None,auto=True,a=None):
 	loaded=False
 	yaml = __.imp('yaml')
 	os = __.imp('os.path.isfile')
+	if t: path=_v.tt+os.sep+path
 	if os.path.isfile(path):
 		data = getText( path, raw=True )
 		loaded=True
@@ -22489,23 +22529,33 @@ def columnAbbreviations(data,appReg=None):
 				appInfo[appReg]['columns'].append({'name': k, 'abbreviation': ','.join(abbr[k])})
 ##################################################
 # path=_.zZip(path);   _.cleanUnzip()
+def IS(path,check=1):
+	header=" ".join(['{:02X}'.format(byte) for byte in     open( path, 'rb' ).read(32)    ])
+	if check == 1: return header
+	if header.startswith(check): return True
+	return False
 
-def isZip(filepath):
-	if not os.path.isfile(filepath): return False
-	if " ".join(['{:02X}'.format(byte) for byte in     open( filepath, 'rb' ).read(32)    ]).startswith( '50 4B 03 04' ): return True
+
+def isZip(path):
+	if not os.path.isfile(path): return False
+	if path.endswith('.docx'): return False
+	if IS(path,'50 4B 03 04'): return True 
+	if IS(path,'50 4B 05 06'): return True 
 	else: return False
 
-def zip( a, b=None, d=None ):
+def zip( a, b=None, d=None, p=1 ):
 	if isZip(a): unzip_file(a,b)
-	else: zip_file(a,b,d)
+	else: return zip_file(a,b,d,p)
 	
-def zip_file(input_file, output_zip=None, d=None):
+def zip_file(input_file, output_zip=None, d=None, p=1):
 	import zipfile
-	if output_zip is None: output_zip = input_file+'.zip'
-	with zipfile.ZipFile(output_zip, 'w', zipfile.ZIP_DEFLATED) as zipf:
-		zipf.write(input_file)
+	if output_zip is None or not output_zip: output_zip = input_file+'.zip'
+	zip9(input_file,output_zip)
 	if not d is None and d:
-		os.unlink(input_file)
+		if not input_file == output_zip:
+			os.unlink(input_file)
+			if p: pr('Deleted',c='red')
+	return output_zip
 
 
 def unzip_file(zip_file, output_file=None):
@@ -22677,9 +22727,9 @@ def query(db_path, query, params=()):
 
 ##################################################
 def sortFo(file_paths):
-    return sorted(file_paths, key=lambda path: (path.count('/'), path.count(os.sep), path.count('/' + os.sep)))
+	return sorted(file_paths, key=lambda path: (path.count('/'), path.count(os.sep), path.count('/' + os.sep)))
 def sortFo2(file_paths):
-    return sorted(file_paths, key=lambda path: tuple(int(s) if s.isdigit() else s for s in path.split(os.sep)))
+	return sorted(file_paths, key=lambda path: tuple(int(s) if s.isdigit() else s for s in path.split(os.sep)))
 
 ##################################################
 fields = Fields()
@@ -22750,7 +22800,44 @@ saveYAML2=saveYML2
 imp=regImp
 ago=timeAgo
 toBytes=to_bytes
-
+##################################################
+def isTextFi(path, num_chars=20):
+	with open(path, 'rb') as file:
+		content = file.read(num_chars)        
+		try:
+			content.decode('utf-8')
+			return True
+		except UnicodeDecodeError:
+			return False
+def isTextFiGet(path, num_chars=20):
+	with open(path, 'rb') as file:
+		content = file.read(num_chars)        
+		try:
+			return content.decode('utf-8')
+		except UnicodeDecodeError:
+			return ''
+##################################################
+def searchColor(row,search,c='green',p=1):
+	for sub in caseUnspecificCode(row,search):row=row.replace(sub,pr(sub,c,p=0))
+	if p: print(row)
+	return row
+##################################################
+def pp():
+	if not isData(r=0):
+		_paste = regImp( __.appReg, '-paste' )
+		data=_paste.imp.paste().split('\n')
+	else: data=isData()
+	return data
+##################################################
+def zip9(folder_path, zip_path):
+	zipfile=__.imp('zipfile')
+	with zipfile.ZipFile(zip_path, 'w', compression=zipfile.ZIP_BZIP2) as zipf:
+		for root, dirs, files in os.walk(folder_path):
+			for file in files:
+				file_path = os.path.join(root, file)
+				relative_path = os.path.relpath(file_path, folder_path)
+				zipf.write(file_path, arcname=relative_path)
+	return zip_path
 ##################################################
 # __.switch_raw
 ##################################################
@@ -22764,5 +22851,10 @@ toBytes=to_bytes
 # globals()['var']
 ##################################################
 # alt+29 ↔ is space
+##################################################
+# self.value('Help')
+# 'DumpSwitches'
+# __.switch_skimmer.active
+# 11780
 ########################################################################################
 # EOF

@@ -58,7 +58,7 @@ __.switch_raw = []
 _.appInfo[focus()] = {
 	'file': 'nID.py',
 	'liveAppName': __.thisApp( __file__ ),
- 	'description': 'Compress and encrypt numbers, and reverse',
+	'description': 'Compress and encrypt numbers, and reverse',
 	'categories': [
 						'nid',
 						'compress',
@@ -87,15 +87,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
-				       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-				       # {},
+					# {},
 	],
 }
 
@@ -234,10 +234,10 @@ def action(new=None):
 		return x
 
 	# if _.switches.isActive('App'):
-	# 	import random
-	# 	n = random.randint(1000000000,9999999999)
-	# 	x = _nID.mini.gen( n )
-	# 	_.pr(x)		
+	#     import random
+	#     n = random.randint(1000000000,9999999999)
+	#     x = _nID.mini.gen( n )
+	#     _.pr(x)        
 
 	
 

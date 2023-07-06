@@ -46,7 +46,7 @@ __.sort_name_trigger_override = [  ['']  ]
 _.appInfo[focus()] = {
 	'file': 'ftp_test.py',
 	'liveAppName': __.thisApp( __file__ ),
- 	'description': 'sftp',
+	'description': 'sftp',
 	'categories': [
 						'sftp',
 				],
@@ -63,12 +63,12 @@ _.appInfo[focus()] = {
 						''
 	],
 	'columns': [
-					   # { 'name': 'name', 'abbreviation': 'n' },
-					   # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-					   # 'this',
-					   # 'app',
+					# 'this',
+					# 'app',
 	],
 
 	}
@@ -226,16 +226,16 @@ def action():
 	# sftp.chdir('')
 	# files = sftp.listdir()
 	# for x in files:
-	# 	_.pr( x )
+	#     _.pr( x )
 
 	# mod = sftp.stat( '{43E97BB4-EEB6-43A7-8A20-61A8123C17C1}.crypt' ).st_mtime
 	# _.pr( mod )
 
 
 	# try:
-	# 	sftp.chdir(remote_path)  # Test if remote_path exists
+	#     sftp.chdir(remote_path)  # Test if remote_path exists
 	# except IOError:
-	# 	sftp.mkdir(remote_path)  # Create remote_path
+	#     sftp.mkdir(remote_path)  # Create remote_path
 
 
 	sftp.close()

@@ -39,17 +39,17 @@ def appSwitches():
 	### EXAMPLE: END
 ### EXAMPLE: START
 # _.switches.trigger( 'Files', _.myFileLocations, vs=True )
-# 	finds the file in probable locations
-# 	and 
-# 		if  _.autoBackupData = True
-# 		and __.releaseAcquiredData = True
-# 			GET EPOCH FROM: hosts/hostname/logs/apps/execution_receipt-app_name-epoch.json
-# 		you can run apps on usb at a clients office
-# 			when you get home run: p app -loadepoch epoch 
-# 				backed up
-# 					pipe
-# 					files
-# 					tables
+#     finds the file in probable locations
+#     and 
+#         if  _.autoBackupData = True
+#         and __.releaseAcquiredData = True
+#             GET EPOCH FROM: hosts/hostname/logs/apps/execution_receipt-app_name-epoch.json
+#         you can run apps on usb at a clients office
+#             when you get home run: p app -loadepoch epoch 
+#                 backed up
+#                     pipe
+#                     files
+#                     tables
 ### EXAMPLE: END
 _.autoBackupData = __.setting('receipt-log')
 __.releaseAcquiredData = __.setting('receipt-file')
@@ -90,15 +90,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
-				       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-				       # {},
+					# {},
 	],
 }
 _.appData[focus()] = {
@@ -137,7 +137,7 @@ def registerSwitches( argvProcessForce=False ):
 	_.switches.trigger( 'Duration', _.timeFuture )
 	### EXAMPLE: START
 	# _.default_switch_trigger('Plus', trigger_plus)
-	# _.switches.trigger( 'Files',_.inRelevantFolder )	
+	# _.switches.trigger( 'Files',_.inRelevantFolder )    
 	# _.switches.trigger( 'Watched', _.txt2Date )
 	# _.switches.trigger( 'Input',_.formatColumns )
 	# _.switches.trigger( 'Franchise',_.triggerSpace )
@@ -173,15 +173,15 @@ _.postLoad( __file__ )
 # os.system( '"' + do + '"' )
 # _.setPipeData( os.listdir( os.getcwd() ), focus() )
 # _.showLine( item )
-# 	if os.path.isdir( row ):
-# 	if os.path.isfile( row ):
-#	os.path.abspath(path)
+#     if os.path.isdir( row ):
+#     if os.path.isfile( row ):
+#    os.path.abspath(path)
 # __.appRegPipe    ( pipe data registerd focus(__.appReg) set by _.myFileLocations {if imported} , default is None )
 # for i,row in enumerate(_.t( _.appData[__.appReg]['pipe'] )):
 # for i,row in _.e( _.isData(r=1) ):
 # date = _.friendlyDate( theDate )
 # _.addComma()
-# 													if platform.system() == 'Windows':
+#                                                     if platform.system() == 'Windows':
 ### EXAMPLE: END
 
 ########################################################################################

@@ -44,22 +44,22 @@ import _rightThumb._string as _str
 # _bm = _.regImp( __.appReg, 'bookmarks' )
 	# index = _bm.imp.index()
 # _dirList = _.regImp( __.appReg, 'dirList' )
-# 	_dirList.switch( 'Files' )
-# 	_dirList.switch( 'Recursion' )
-# 	_dirList.switch( 'Binary' )
-# 	_dirList.switch( 'Path','D:\\Apps' )
-# 	files = _dirList.do( 'action' )
+#     _dirList.switch( 'Files' )
+#     _dirList.switch( 'Recursion' )
+#     _dirList.switch( 'Binary' )
+#     _dirList.switch( 'Path','D:\\Apps' )
+#     files = _dirList.do( 'action' )
 
 # import _rightThumb._profileVariables as _profile
-# 	profile = _profile.records.audit( 'name', asset )
+#     profile = _profile.records.audit( 'name', asset )
 # import _rightThumb._encryptString as _blowfish
 	# _blowfish.genPassword()
 	# _blowfish.genPassword( 'string' )
 	# en = _blowfish.encrypt( string )
 	# de = _blowfish.decrypt( en )
 # import _rightThumb._encryptFile as _blowfish
-# 	_blowfish.encrypt( infilepath, outfilepath, key )
-# 	_blowfish.decrypt( infilepath, outfilepath, key )
+#     _blowfish.encrypt( infilepath, outfilepath, key )
+#     _blowfish.decrypt( infilepath, outfilepath, key )
 # _browser = _.regImp( __.appReg, '_rightThumb._toolsScrapeFrontEnd' )
 # _browserX = _.regImp( __.appReg, '_rightThumb._toolsScrapeDirect' )
 # import _rightThumb._date as _date
@@ -80,36 +80,36 @@ import _rightThumb._string as _str
 	# _inDic.imp.testAll( 'fight' )
 	# _inDic.imp.testOne( 'austen' )
 # _file_folder = _.regImp( __.appReg, 'file_folder' )
-# 	_file_folder.switch( 'Save,Clean' )
-# 	_file_folder.switch( 'Compair,Clean' )
-# 	_file_folder.switch( 'Folder', '' )
+#     _file_folder.switch( 'Save,Clean' )
+#     _file_folder.switch( 'Compair,Clean' )
+#     _file_folder.switch( 'Folder', '' )
 # _fileNameDate = _.regImp( __.appReg, 'fileNameDate' )
-# 	_fileNameDate.imp.newName( filename )
-# 	_fileNameDate.imp.newName( filename, _dir.fileInfo( filename ) )
+#     _fileNameDate.imp.newName( filename )
+#     _fileNameDate.imp.newName( filename, _dir.fileInfo( filename ) )
 # _filePathPatterns = _.regImp( __.appReg, 'filePathPatterns' )
 	# _filePathPatterns.switch( 'NoPrint' )
 	# _filePathPatterns.switch( 'Files', _.switches.value( 'Files' ) )
 	# folderReport = _filePathPatterns.action()
 # fileBackup = _.regImp( __.appReg, 'fileBackup' )
-# 	fileBackup.switch( 'Input', filename )
-# 	fileBackup.switch( 'Flag', 'pre replaceText' )
-# 	recoveryFile = fileBackup.do( 'action' )
+#     fileBackup.switch( 'Input', filename )
+#     fileBackup.switch( 'Flag', 'pre replaceText' )
+#     recoveryFile = fileBackup.do( 'action' )
 # _folderContent = _.regImp( __.appReg, 'file' )
-# 	_folderContent.switch( 'Silent' )
-# 	_folderContent.switch( 'Folder', _v.myAppsBatch )
-# 	_folderContent.switch( 'NoExtension' )
+#     _folderContent.switch( 'Silent' )
+#     _folderContent.switch( 'Folder', _v.myAppsBatch )
+#     _folderContent.switch( 'NoExtension' )
 
-# 	_folderContent.switch( 'Recursive' )
+#     _folderContent.switch( 'Recursive' )
 
-# 	_folderContent.switch( 'Text' )
-# 	_folderContent.switch( 'Binary' )
-# 	_folderContent.switch( 'Label', 'App: ' )
-# 	_folderContent.switch( 'Prefix', ';t' )
-# 	files = _folderContent.do( 'action' )['files']
-# 	folders = _folderContent.do( 'action' )['folders']
+#     _folderContent.switch( 'Text' )
+#     _folderContent.switch( 'Binary' )
+#     _folderContent.switch( 'Label', 'App: ' )
+#     _folderContent.switch( 'Prefix', ';t' )
+#     files = _folderContent.do( 'action' )['files']
+#     folders = _folderContent.do( 'action' )['folders']
 # _tickets = _.regImp( __.appReg, 'ticketTimeline' )
-# 	_tickets.switch( 'ReturnFiles' )
-# 	records = _tickets.do( 'records' )
+#     _tickets.switch( 'ReturnFiles' )
+#     records = _tickets.do( 'records' )
 
 ##################################################
 
@@ -178,11 +178,11 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': 'name', 'abbreviation': 'n' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 
 	}
@@ -266,8 +266,8 @@ _.postLoad( __file__ )
 # os.system( '"' + do + '"' )
 # _.setPipeData( os.listdir( os.getcwd() ), focus() )
 # _.showLine( item )
-# 	if os.path.isdir( row ):
-# 	if os.path.isfile( row ):
+#     if os.path.isdir( row ):
+#     if os.path.isfile( row ):
 # __.appRegPipe
 ########################################################################################
 # START
@@ -331,12 +331,12 @@ def php_readfields(table,fields):
 	prefix = _.switches.value('Prefix')
 	abrev = []
 	t = table.replace(prefix,'')
-	b = "\n		'FIELD1' => $row['FIELD2'],"
+	b = "\n        'FIELD1' => $row['FIELD2'],"
 	f = ''
 	for field in fields:
 		if actionable(field,'del'):
 			fx = t + '_' + field['field']
-			f += b.replace('FIELD2',field['field']).replace('FIELD1',	(fx))
+			f += b.replace('FIELD2',field['field']).replace('FIELD1',    (fx))
 	f = _str.cleanBE(f,', ')
 	return f
 
@@ -395,7 +395,7 @@ def php_joinsArea(crudJoins,thisTable,fields):
 			buildfields += thisTable.replace(prefix,'')+'.'+field['field'] + ' as ' + thisTable.replace(prefix,'')+'_'+field['field']+', '
 
 		joinX = 'JOIN [join_table] AS [join_abrev] ON [abrev].[join_field] = [join_abrev].guid \n'
-		arrX = "\n		'FIELD' => $row['FIELD'],"
+		arrX = "\n        'FIELD' => $row['FIELD'],"
 		for field in fields:
 			buildfieldsArr += arrX.replace('FIELD',t+'_'+field['field'])
 			if field['note'] == 'altID':
@@ -453,7 +453,7 @@ def php_processRecordsFields(table,fields):
 	prefix = _.switches.value('Prefix')
 	abrev = []
 	t = table.replace(prefix,'')
-	b = "\n		$FIELD2=$item[FIELD1];"
+	b = "\n        $FIELD2=$item[FIELD1];"
 	f = ''
 	for field in fields:
 		if actionable(field,''):
@@ -537,10 +537,10 @@ def phpaction(table,fields):
 
 
 	# for line in crud.split('\n'):
-	# 	if 'function ' in line:
-	# 		function = clean(line.split('function ')[1].split('{')[0])
-	# 		functions.append(function)
-	# 		_.pr(function)
+	#     if 'function ' in line:
+	#         function = clean(line.split('function ')[1].split('{')[0])
+	#         functions.append(function)
+	#         _.pr(function)
 
 
 
@@ -837,9 +837,9 @@ def jsAddChildDiv(app,table):
 
 def jsMainAppId(app,table):
 	# if table.endswith('_items'):
-	# 	f = '.thechild'
+	#     f = '.thechild'
 	# else:
-	# 	f = '#manage'
+	#     f = '#manage'
 	# return f
 	return '#manage'
 
@@ -1082,17 +1082,17 @@ def pagesIndexMenu():
 
 
 # def pages():
-# 	# global pageData
-# 	app = _.switches.value('App')
-# 	# pageData['index']
-# 	return 
+#     # global pageData
+#     app = _.switches.value('App')
+#     # pageData['index']
+#     return 
 
 def php_allTablesDownload():
 	global data
 	global phpCrudBase
 
 	app = _.switches.value('App')
-	b = '	$tables["[js_APP_TABLE]"] = the_table_[funcname]();\n'
+	b = '    $tables["[js_APP_TABLE]"] = the_table_[funcname]();\n'
 	f = ''
 	for d in data['sql']:
 		table = jsAppTable(d['table'])
@@ -1105,7 +1105,7 @@ def php_allTablesUpload():
 	global phpCrudBase
 
 	app = _.switches.value('App')
-	b = '	process_records_[funcname](json_encode($data["[js_APP_TABLE]"]));\n'
+	b = '    process_records_[funcname](json_encode($data["[js_APP_TABLE]"]));\n'
 	f = ''
 	for d in data['sql']:
 		table = jsAppTable(d['table'])
@@ -1178,12 +1178,12 @@ def action():
 
 
 	# for i,table in enumerate(data['sql']):
-	# 	_.pr()
-	# 	_.pr(table['table'])
-	# 	for field in table['fields']:
-	# 		if actionable(field):
-	# 			pass
-	# 			_.pr(field['field'])
+	#     _.pr()
+	#     _.pr(table['table'])
+	#     for field in table['fields']:
+	#         if actionable(field):
+	#             pass
+	#             _.pr(field['field'])
 
 			# _.pr('\t',field['field'])
 		# _.pr(table['fields'])

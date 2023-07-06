@@ -85,15 +85,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
-				       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-				       # {},
+					# {},
 	],
 }
 
@@ -267,20 +267,20 @@ def action():
 								pass
 
 		pass
-		sys.exit()		
+		sys.exit()        
 
 
 
 	# ssh_server, ssh_user, ssh_password, db_server, db_user, db_password, db
 	cloud.connect(
-						ssh_server=		'tools.rightthumb.com',
-						ssh_user=		'ximlickficfp',
-						ssh_password=	_keychain.imp.key('cloud-ssh-pass'),
-						db_server=		'localhost',
-						db_user=		'scott_20',
-						db_password=	_keychain.imp.key('cloud-db-pass'),
-						db_name=		'tools_2020',
-						db_prefix=		'cloud',
+						ssh_server=        'tools.rightthumb.com',
+						ssh_user=        'ximlickficfp',
+						ssh_password=    _keychain.imp.key('cloud-ssh-pass'),
+						db_server=        'localhost',
+						db_user=        'scott_20',
+						db_password=    _keychain.imp.key('cloud-db-pass'),
+						db_name=        'tools_2020',
+						db_prefix=        'cloud',
 	)
 	focus()
 	if _.switches.isActive('Sync'):

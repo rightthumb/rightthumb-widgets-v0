@@ -71,11 +71,11 @@ _.appInfo[focus()] = {
 						''
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': 'name', 'abbreviation': 'n' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 
 	}
@@ -171,8 +171,8 @@ def action():
 	_.pipeCleaner(2)
 	# _.pr( _.appData[__.appReg]['pipe'] )
 	# if len(_.appData[__.appReg]['pipe']) == 1:
-	# 	_.pr()
-	# 	_.pr(  '  1      ', _.appData[__.appReg]['pipe'][0]  )
+	#     _.pr()
+	#     _.pr(  '  1      ', _.appData[__.appReg]['pipe'][0]  )
 	for i,row in enumerate( _.appData[__.appReg]['pipe'] ):
 		row = row.replace( '\n', '' )
 		row = row.replace( '\r', '' )
@@ -251,8 +251,8 @@ def action():
 
 
 # def load():
-# 	global data
-# 	data = _.getTable( 'table.json' )
+#     global data
+#     data = _.getTable( 'table.json' )
 # data = []
 ########################################################################################
 if __name__ == '__main__':

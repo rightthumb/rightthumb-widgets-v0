@@ -141,8 +141,8 @@ def pipeCleaner():
 
 # _.appData[__.appReg]['pipe'] = ''
 # if not sys.stdin.isatty():
-# 	_.appData[__.appReg]['pipe'] = sys.stdin.readlines()
-# 	pipeCleaner()
+#     _.appData[__.appReg]['pipe'] = sys.stdin.readlines()
+#     pipeCleaner()
 
 
 

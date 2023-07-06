@@ -82,15 +82,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
-				       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-				       # {},
+					# {},
 	],
 }
 
@@ -177,9 +177,9 @@ _.postLoad( __file__ )
 # os.system( '"' + do + '"' )
 # _.setPipeData( os.listdir( os.getcwd() ), focus() )
 # _.showLine( item )
-# 	if os.path.isdir( row ):
-# 	if os.path.isfile( row ):
-#	os.path.abspath(path)
+#     if os.path.isdir( row ):
+#     if os.path.isfile( row ):
+#    os.path.abspath(path)
 # __.appRegPipe    ( pipe data registerd focus(__.appReg) set by _.myFileLocations {if imported} , default is None )
 # date = _.friendlyDate( theDate )
 # _.addComma()
@@ -293,7 +293,7 @@ class ThisThread(threading.Thread):
 		self.wasKilled = True
 		thread_id = self.getID()
 		res = ctypes.pythonapi.PyThreadState_SetAsyncExc(thread_id,
-			  ctypes.py_object(SystemExit))
+			ctypes.py_object(SystemExit))
 		if res > 1:
 			ctypes.pythonapi.PyThreadState_SetAsyncExc(thread_id, 0)
 
@@ -307,75 +307,75 @@ class ThisThread(threading.Thread):
 
 # class ThreadManager:
 	
-# 	def __init__( self ):
-# 		self.registeredThreads = []
-# 		self.timeout = 1
-# 		self.tasks = []
+#     def __init__( self ):
+#         self.registeredThreads = []
+#         self.timeout = 1
+#         self.tasks = []
 		
-# 	def wait( self ):
-# 		length = 0
-# 		start = time.time()
-# 		while not len(self.registeredThreads) and length < self.timeout:
-# 			length = time.time() - start
+#     def wait( self ):
+#         length = 0
+#         start = time.time()
+#         while not len(self.registeredThreads) and length < self.timeout:
+#             length = time.time() - start
 		
-# 		if not len(self.registeredThreads):
-# 			self.done = True
+#         if not len(self.registeredThreads):
+#             self.done = True
 
-# 	def monitor( self ):
-# 		global log
-# 		self.done = False
-# 		while not self.done:
+#     def monitor( self ):
+#         global log
+#         self.done = False
+#         while not self.done:
 			
-# 			self.wait()
+#             self.wait()
 
-# 			if not self.done:
-# 				# _.pr()
-# 				# _.pr()
-# 				for thisThread in self.registeredThreads:
-# 					if not thisThread.killOn is None:
-# 						if thisThread.duration is None:
+#             if not self.done:
+#                 # _.pr()
+#                 # _.pr()
+#                 for thisThread in self.registeredThreads:
+#                     if not thisThread.killOn is None:
+#                         if thisThread.duration is None:
 
-# 							_.pr()
-# 							_.pr()
-# 							_.pr( '        name:', thisThread.name )
-# 							_.pr( 'duration Var:', thisThread.duration )
-# 							_.pr( '    duration:', time.time() - thisThread.epoch )
-# 							_.pr( '      killOn:', thisThread.killOn )
-# 						if thisThread.duration is None and (  time.time() - thisThread.epoch ) > thisThread.killOn:
-# 							_.colorThis( 'TIMEOUT', 'red' )
-# 							thisThread.kill()
-# 							thisThread.join()
+#                             _.pr()
+#                             _.pr()
+#                             _.pr( '        name:', thisThread.name )
+#                             _.pr( 'duration Var:', thisThread.duration )
+#                             _.pr( '    duration:', time.time() - thisThread.epoch )
+#                             _.pr( '      killOn:', thisThread.killOn )
+#                         if thisThread.duration is None and (  time.time() - thisThread.epoch ) > thisThread.killOn:
+#                             _.colorThis( 'TIMEOUT', 'red' )
+#                             thisThread.kill()
+#                             thisThread.join()
 
-# 				# _.pr()
-# 				# _.pr()
-
-
-# 				complete = 0
-# 				for thisThread in self.registeredThreads:
-# 					if not thisThread.duration is None:
-# 						complete += 1
-
-# 				if len( self.registeredThreads ) == complete:
-# 					self.done = True
-
-# 				time.sleep(.2)
-
-# 		pass
-# 		# _.printVar( log )
-# 		self.isExit()
+#                 # _.pr()
+#                 # _.pr()
 
 
-# 	def atExit( self, script, args=None, kwargs=False ):
-# 		self.tasks.append({ 'script': script, 'args': args })
+#                 complete = 0
+#                 for thisThread in self.registeredThreads:
+#                     if not thisThread.duration is None:
+#                         complete += 1
 
-# 	def isExit( self ):
-# 		for task in self.tasks:
-# 			if task['args'] is None:
-# 				task['script']()
-# 			# elif task is None:
-# 			# 	pass
+#                 if len( self.registeredThreads ) == complete:
+#                     self.done = True
 
-# 		self.tasks.append({ 'script': script, 'args': args })
+#                 time.sleep(.2)
+
+#         pass
+#         # _.printVar( log )
+#         self.isExit()
+
+
+#     def atExit( self, script, args=None, kwargs=False ):
+#         self.tasks.append({ 'script': script, 'args': args })
+
+#     def isExit( self ):
+#         for task in self.tasks:
+#             if task['args'] is None:
+#                 task['script']()
+#             # elif task is None:
+#             #     pass
+
+#         self.tasks.append({ 'script': script, 'args': args })
 
 
 
@@ -411,27 +411,27 @@ def test():
 	cursor = cnxn.cursor()
 
 	# cursor.execute("""
-	# 						CREATE TABLE Persons (
-	# 						    PersonID int,
-	# 						    LastName varchar(255),
-	# 						    FirstName varchar(255),
-	# 						    Address varchar(255),
-	# 						    City varchar(255)
-	# 						);
+	#                         CREATE TABLE Persons (
+	#                             PersonID int,
+	#                             LastName varchar(255),
+	#                             FirstName varchar(255),
+	#                             Address varchar(255),
+	#                             City varchar(255)
+	#                         );
 	# """)
 	# cursor.execute("SHOW TABLES")
 	# rows = cursor.fetchall()
 	# # _.pr( rows[1] )
 	# for row in rows:
-	# 	_.pr(row)
+	#     _.pr(row)
 
 
 
 
 
 	# cursor.execute("""
-	# 					INSERT INTO Persons (PersonID, LastName, FirstName, Address, City )
-	# 					VALUES ( 1, 'Reph', 'Scott', '4477 Amberly Oaks Court', 'Tampa' );
+	#                     INSERT INTO Persons (PersonID, LastName, FirstName, Address, City )
+	#                     VALUES ( 1, 'Reph', 'Scott', '4477 Amberly Oaks Court', 'Tampa' );
 	# """)
 	# cnxn.commit()
 	# _.pr( 'Added' )
@@ -459,7 +459,7 @@ def test():
 
 	# _.pr( rows[1] )
 	# for row in rows:
-	# 	_.pr(row)
+	#     _.pr(row)
 
 class Asset_Manager:
 
@@ -498,9 +498,9 @@ class Asset_Manager:
 
 
 		# status:
-		# 		0 free
-		# 		1 in use
-		# 		2 in waiting
+		#         0 free
+		#         1 in use
+		#         2 in waiting
 
 		self.sql_statistics_factored = {}
 
@@ -567,8 +567,8 @@ class Asset_Manager:
 			return False
 
 	# def accessStart( self, asset, threadID ):
-	# 	self.assets[asset]['epoch'] = time.time()
-	# 	self.last_start = time.time()
+	#     self.assets[asset]['epoch'] = time.time()
+	#     self.last_start = time.time()
 	def omitIt( self ):
 		omitIs = ['and', 'or'," ' ", ' " ', ' % ', '0', '1', 'select', ' = ', ' < ', ' > ', ' , ' ]
 		for x in self.sql_factors:
@@ -684,7 +684,7 @@ next steps
 		while requestAccess( 'database', threadID ): time.sleep(0.001)
 
 
-	releaseAsset( 'database', threadID )	
+	releaseAsset( 'database', threadID )    
 	managed_asset_queue
 		register assets
 			type label

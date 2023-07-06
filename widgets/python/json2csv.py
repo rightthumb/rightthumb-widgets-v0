@@ -25,7 +25,7 @@ import csv
 _.switches.register('Input', '-i')
 _.switches.register('Output', '-o')
 
-_.appInfo=	{
+_.appInfo=    {
 	'file': 'json2csv.py',
 	'description': 'Convert json to csv',
 	'prerequisite': [],
@@ -43,20 +43,20 @@ _.switches.process()
 ########################################################################################
 def jsonFile(json_file):
 	with open(json_file, 'r') as fh:
-	    bad_json = fh.read()
-	    #print(bad_json)
-	    improved_json  = re.sub(r'"\s*$', '",', bad_json, flags=re.MULTILINE)
-	    #print(improved_json)
+		bad_json = fh.read()
+		#print(bad_json)
+		improved_json  = re.sub(r'"\s*$', '",', bad_json, flags=re.MULTILINE)
+		#print(improved_json)
 
-	    # good_json = re.sub(r'(?<!")(?P<word>[\w-]+)\b(?!")', '"\g<word>"',
-	    #   improved_json)
-	    # good_json = re.sub(r'(?<[\{\s])(?P<word>[\w-]+)(?=[:\s])', '"\g<word>"',
-	    #   improved_json)
-	    # good_json = re.sub(r'([\{\[\s])(?P<word>[\w-]+)([:,\]\s])', '\1"\g<word>"\3',
-	    #   improved_json)
-	    good_json = re.sub(r'(?<=[\{\[\s])(?P<word>[\w-]+)(?=[:,\]\s])', '"\g<word>"',
-	      improved_json)
-	    #print(good_json)
+		# good_json = re.sub(r'(?<!")(?P<word>[\w-]+)\b(?!")', '"\g<word>"',
+		#   improved_json)
+		# good_json = re.sub(r'(?<[\{\s])(?P<word>[\w-]+)(?=[:\s])', '"\g<word>"',
+		#   improved_json)
+		# good_json = re.sub(r'([\{\[\s])(?P<word>[\w-]+)([:,\]\s])', '\1"\g<word>"\3',
+		#   improved_json)
+		good_json = re.sub(r'(?<=[\{\[\s])(?P<word>[\w-]+)(?=[:,\]\s])', '"\g<word>"',
+		improved_json)
+		#print(good_json)
 
 	# with open('out.js', 'w') as fh:
 	#     fh.write(good_json)

@@ -104,11 +104,11 @@ _.appInfo[focus()] = {
 						''
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': 'name', 'abbreviation': 'n' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 
 	}
@@ -217,7 +217,7 @@ def pipProcess( what ):
 
 def action():
 	# for row in help("modules"):
-	# 	_.pr( row )
+	#     _.pr( row )
 	# sys.exit()
 
 	if type( _.appData[__.appReg]['pipe'] ) == bool and _.switches.isActive( 'Input' ):
@@ -228,13 +228,13 @@ def action():
 	# load()
 	# _.appData[__.appReg]['uuid'] = {  'app': _.appInfo[focus()]['file'], 'project': 'app_instance' }
 	# if _.switches.isActive('Input'):
-	# 	if os.path.isfile(path):
-	# 		_.setPipeData( _.getText( _.switches.value('Input') ), focus() )
-	# 	else:
-	# 		if type( _.appData[__.appReg]['pipe'] ) == bool:
-	# 			_.appData[__.appReg]['pipe'] = []
-	# 			for row in _.switches.value('Input').split( ',' ):
-	# 				_.appData[__.appReg]['pipe'].append( row )
+	#     if os.path.isfile(path):
+	#         _.setPipeData( _.getText( _.switches.value('Input') ), focus() )
+	#     else:
+	#         if type( _.appData[__.appReg]['pipe'] ) == bool:
+	#             _.appData[__.appReg]['pipe'] = []
+	#             for row in _.switches.value('Input').split( ',' ):
+	#                 _.appData[__.appReg]['pipe'].append( row )
 	if not type( _.appData[__.appReg]['pipe'] ) == bool:
 		_.pipeCleaner()
 		# _.pr( _.printVar(_.appData) )
@@ -247,8 +247,8 @@ def action():
 
 
 # def load():
-# 	global data
-# 	data = _.getTable( 'table.json' )
+#     global data
+#     data = _.getTable( 'table.json' )
 # data = []
 ########################################################################################
 if __name__ == '__main__':

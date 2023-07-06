@@ -243,66 +243,66 @@ if not sys.stdin.isatty():
 # NEW database stuff
 
 # def testTrigger( data ):
-# 	return data * 5
+#     return data * 5
 
 # def dateScramble( data ):
-# 	d = _.date2epoch( data )
-# 	if len( str(data) ) > 0:
-# 		_.pr( data, d )
-# 	return _.resolveEpochTest( d, falseBlank=True )
+#     d = _.date2epoch( data )
+#     if len( str(data) ) > 0:
+#         _.pr( data, d )
+#     return _.resolveEpochTest( d, falseBlank=True )
 
 	# data = [
-	# 			{
-	# 						'first': 'Scott',
-	# 						'last': 'Reph',
-	# 						'test': 3,
-	# 			},
-	# 			{
-	# 						'first': 'Alpha',
-	# 						'last': 'Reph',
-	# 						'test': 7,
-	# 			},
+	#             {
+	#                         'first': 'Scott',
+	#                         'last': 'Reph',
+	#                         'test': 3,
+	#             },
+	#             {
+	#                         'first': 'Alpha',
+	#                         'last': 'Reph',
+	#                         'test': 7,
+	#             },
 	# ]
 	# fieldConfig = [{
-	# 			'table': 'test_table',
-	# 			'name': 'test',
-	# 			'trigger': testTrigger,
-	# 	},{
-	# 			'table': 'test_table',
-	# 			'name': 'date_modified',
-	# 			'trigger': dateScramble,
-	# 	}]
+	#             'table': 'test_table',
+	#             'name': 'test',
+	#             'trigger': testTrigger,
+	#     },{
+	#             'table': 'test_table',
+	#             'name': 'date_modified',
+	#             'trigger': dateScramble,
+	#     }]
 
 	# testSet = 0
 	# if testSet == 1:
-	# 	__.databases.register(
-	# 							name='test',
-	# 							table='test_table',
-	# 							file='__first_test.db',
-	# 							records=data,
-	# 							delete=True,
-	# 							fields=fieldConfig,
-	# 							# printFileActivity=True,
-	# 	)
+	#     __.databases.register(
+	#                             name='test',
+	#                             table='test_table',
+	#                             file='__first_test.db',
+	#                             records=data,
+	#                             delete=True,
+	#                             fields=fieldConfig,
+	#                             # printFileActivity=True,
+	#     )
 	# elif testSet == 0:
-	# 	__.databases.register(
-	# 							name='test',
-	# 							file='__first_test.db',
-	# 	)
+	#     __.databases.register(
+	#                             name='test',
+	#                             file='__first_test.db',
+	#     )
 	# elif testSet == 2:
-	# 	testSet = 1
-	# 	__.databases.register(
-	# 							name='test',
-	# 							file='__first_test____X.db',
-	# 							fields=fieldConfig,
-	# 	)
+	#     testSet = 1
+	#     __.databases.register(
+	#                             name='test',
+	#                             file='__first_test____X.db',
+	#                             fields=fieldConfig,
+	#     )
 	# elif testSet == 3:
-	# 	testSet = 1
-	# 	__.databases.register(
-	# 							name='test',
-	# 							file='__first_test____X.db',
-	# 							delete=True,
-	# 	)
+	#     testSet = 1
+	#     __.databases.register(
+	#                             name='test',
+	#                             file='__first_test____X.db',
+	#                             delete=True,
+	#     )
 
 
 
@@ -311,35 +311,35 @@ if not sys.stdin.isatty():
 
 
 	# if testSet == 1:
-	# 	records = []
+	#     records = []
 
-	# 	records.append({
-	# 									'first': 'Jessica',
-	# 									'last': 'Reph',
-	# 									'test': 55,
-	# 	})
+	#     records.append({
+	#                                     'first': 'Jessica',
+	#                                     'last': 'Reph',
+	#                                     'test': 55,
+	#     })
 
-	# 	records.append({
-	# 									'first': 'Nana',
-	# 									'last': 'Reph',
-	# 									'test': 100,
-	# 	})
+	#     records.append({
+	#                                     'first': 'Nana',
+	#                                     'last': 'Reph',
+	#                                     'test': 100,
+	#     })
 
-	# 	__.databases.insertRecords( name='test', table='test_table', records=records )
+	#     __.databases.insertRecords( name='test', table='test_table', records=records )
 
 
-	# 	__.databases.update(
-	# 							name='test',
-	# 							info={
-	# 									'table': 'test_table',
-	# 									'record': {
-	# 													'first': 'Sam',
-	# 													'last': 'Test',
-	# 													'test': 99,
-	# 									},
-	# 									'update': 'id=1',
-	# 							}
-	# 	)
+	#     __.databases.update(
+	#                             name='test',
+	#                             info={
+	#                                     'table': 'test_table',
+	#                                     'record': {
+	#                                                     'first': 'Sam',
+	#                                                     'last': 'Test',
+	#                                                     'test': 99,
+	#                                     },
+	#                                     'update': 'id=1',
+	#                             }
+	#     )
 
 
 
@@ -350,53 +350,53 @@ if not sys.stdin.isatty():
 
 
 	# results = __.databases.search(
-	# 						name='test',
-	# 						info={
-	# 								'table': 'test_table',
-	# 								'custom': 'select * from test_table',
-	# 								'force': True,
-	# 						}
+	#                         name='test',
+	#                         info={
+	#                                 'table': 'test_table',
+	#                                 'custom': 'select * from test_table',
+	#                                 'force': True,
+	#                         }
 	# )
 
 	###################
 	# __.databases.trigger(
-	# 						name='test',
-	# 						table='test_table',
-	# 						field='test',
-	# 						trigger=testTrigger,
+	#                         name='test',
+	#                         table='test_table',
+	#                         field='test',
+	#                         trigger=testTrigger,
 	# )
 
 	# results = __.databases.search(
-	# 						name='test',
-	# 						info={
-	# 								'table': 'test_table',
-	# 								'type': 'text',
-	# 								'field': 'first',
-	# 								'search': 'Scott',
-	# 								'custom': False,
-	# 								'force': False,
+	#                         name='test',
+	#                         info={
+	#                                 'table': 'test_table',
+	#                                 'type': 'text',
+	#                                 'field': 'first',
+	#                                 'search': 'Scott',
+	#                                 'custom': False,
+	#                                 'force': False,
 
-	# 						}
+	#                         }
 	# )
 
 	# results = __.databases.search(
-	# 						name='test',
-	# 						info={
-	# 								'table': 'test_table',
-	# 								'custom': 'test<10 and test>5',
-	# 								'force': False,
-	# 						}
+	#                         name='test',
+	#                         info={
+	#                                 'table': 'test_table',
+	#                                 'custom': 'test<10 and test>5',
+	#                                 'force': False,
+	#                         }
 	# )
 	###################
 
 	# try:
-	# 	_.pr()
+	#     _.pr()
 
-	# 	fieldList = ','.join(__.databases.getFields( 'test', 'test_table', exclude='' ))
-	# 	_.tables.register('results_table',results)
-	# 	_.tables.print('results_table',fieldList)
+	#     fieldList = ','.join(__.databases.getFields( 'test', 'test_table', exclude='' ))
+	#     _.tables.register('results_table',results)
+	#     _.tables.print('results_table',fieldList)
 	# except Exception as e:
-	# 	pass
+	#     pass
 
 
 ########################################################################################
@@ -412,66 +412,66 @@ from io import BytesIO
 
 class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
 
-    def do_GET(self):
-        self.send_response(200)
-        self.end_headers()
-        self.wfile.write(b"""
+	def do_GET(self):
+		self.send_response(200)
+		self.end_headers()
+		self.wfile.write(b"""
 								<!DOCTYPE html>
 								<html lang="en">
 
 								<head>
 									<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
-								    <meta charset="utf-8">
-								    <title>test</title>
-								    <!-- <META http-equiv="refresh" content="1;URL=/?"> -->
+									<meta charset="utf-8">
+									<title>test</title>
+									<!-- <META http-equiv="refresh" content="1;URL=/?"> -->
 								</head>
 
 								<body>
 									<input type="text" name="code" id="code" value='{ "first": "Scott", "last": "Reph" }'><br>
-								    <input type="submit" value="Submit" onclick="python.send()">
+									<input type="submit" value="Submit" onclick="python.send()">
 								</body>
 								<script>
 
 									python = {
-									    items: [],
-									    itemID: 0,
-									    fix: function() {
-									    	var data = JSON.parse($("#code").val());
-									    	$("#code").val(JSON.stringify(data))
-									    	
-									    }, //==============================================
-									    send: function() {
-									    	//python.fix();
-									        $.post(
-									            "http://127.0.0.1:8000/", {
-									                'test': $("#code").val()
-									            },
-									            function(data) {
-									                $('body').prepend( '<div id="giftcertificateArea" style=" position: fixed; z-index: 9; background-color: #FFF; width: 300px; height: 190px; left: calc( 50% - 150px ); top: calc( 50% - 95px ); border: whitesmoke; border-style: solid; border-width: 10px; " ><div id="giftcertificateClose" style=" width: 100%; text-align: right; color: crimson; font-weight: bolder; " onclick=" $(this).parent().remove(); " >Close</div><div id="giftcertificate" style=" width: 100%; text-align: left; " ></div></div>' );
-									                $('#giftcertificate').html(data)
-									            }
-									        )
-									    } // END
+										items: [],
+										itemID: 0,
+										fix: function() {
+											var data = JSON.parse($("#code").val());
+											$("#code").val(JSON.stringify(data))
+											
+										}, //==============================================
+										send: function() {
+											//python.fix();
+											$.post(
+												"http://127.0.0.1:8000/", {
+													'test': $("#code").val()
+												},
+												function(data) {
+													$('body').prepend( '<div id="giftcertificateArea" style=" position: fixed; z-index: 9; background-color: #FFF; width: 300px; height: 190px; left: calc( 50% - 150px ); top: calc( 50% - 95px ); border: whitesmoke; border-style: solid; border-width: 10px; " ><div id="giftcertificateClose" style=" width: 100%; text-align: right; color: crimson; font-weight: bolder; " onclick=" $(this).parent().remove(); " >Close</div><div id="giftcertificate" style=" width: 100%; text-align: left; " ></div></div>' );
+													$('#giftcertificate').html(data)
+												}
+											)
+										} // END
 									}
 
 								</script>
 								</html>
 
-        	""")
+			""")
 
-    def do_POST(self):
-        content_length = int(self.headers['Content-Length'])
-        body = self.rfile.read(content_length)
-        self.send_response(200)
-        self.end_headers()
-        response = BytesIO()
-        response.write(b'This is POST request. ')
-        response.write(b'Received: ')
-        response.write(body)
-        submitedData = response.getvalue()
-        self.wfile.write( submitedData )
-        testDic( submitedData )
+	def do_POST(self):
+		content_length = int(self.headers['Content-Length'])
+		body = self.rfile.read(content_length)
+		self.send_response(200)
+		self.end_headers()
+		response = BytesIO()
+		response.write(b'This is POST request. ')
+		response.write(b'Received: ')
+		response.write(body)
+		submitedData = response.getvalue()
+		self.wfile.write( submitedData )
+		testDic( submitedData )
 
 
 def testDic( data ):

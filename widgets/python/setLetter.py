@@ -99,11 +99,11 @@ _.appInfo[focus()] = {
 						''
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': 'name', 'abbreviation': 'n' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 
 	}
@@ -197,9 +197,9 @@ def action():
 	if _.switches.isActive('Input'):
 		_.setPipeData( _.getText( _.switches.value('Input') ), focus() )
 		# if type( _.appData[__.appReg]['pipe'] ) == bool:
-		# 	_.appData[__.appReg]['pipe'] = []
-		# 	for row in _.switches.value('Input').split( ',' ):
-		# 		_.appData[__.appReg]['pipe'].append( row )
+		#     _.appData[__.appReg]['pipe'] = []
+		#     for row in _.switches.value('Input').split( ',' ):
+		#         _.appData[__.appReg]['pipe'].append( row )
 	if not type( _.appData[__.appReg]['pipe'] ) == bool:
 		_.pipeCleaner()
 		# _.pr( _.printVar(_.appData) )
@@ -219,10 +219,10 @@ def action():
 								spent.append( code[0] )
 
 						# if c.upper() == 'B':
-						# 	_.pr( c, code )
+						#     _.pr( c, code )
 						c = code[1].upper()
 						# if c.upper() == 'O':
-						# 	_.pr( c, code )
+						#     _.pr( c, code )
 						break
 			result += c
 					
@@ -312,18 +312,18 @@ def dicWord():
 	_.pr( i )
 
 # def find( criteria, test ):
-# 	if criteria.startswith('*') and criteria.endswith('*'):
-# 		criteria = criteria.replace( '*', '' )
-# 		if 'criteria' in test and not test.startswith( criteria ) and not test.endswith( criteria ):
-# 			return True
-# 	elif criteria.startswith('*') and test.startswith( criteria ):
-# 			return True
-# 	elif criteria.endswith('*') and test.endswith( criteria ):
-# 			return True
-# 	elif criteria in test:
-# 			return True
-# 	else:
-# 			return False
+#     if criteria.startswith('*') and criteria.endswith('*'):
+#         criteria = criteria.replace( '*', '' )
+#         if 'criteria' in test and not test.startswith( criteria ) and not test.endswith( criteria ):
+#             return True
+#     elif criteria.startswith('*') and test.startswith( criteria ):
+#             return True
+#     elif criteria.endswith('*') and test.endswith( criteria ):
+#             return True
+#     elif criteria in test:
+#             return True
+#     else:
+#             return False
 
 
 def load():

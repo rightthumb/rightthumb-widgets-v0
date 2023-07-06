@@ -15,22 +15,22 @@ from _rightThumb._base3 import template; exec(  template.header()  ); exec(  tem
 #e)--> load
 
 def sw():
-    pass
+	pass
 
 _.appInfo[focus()] = {
-    'file': 'tmpf.py',
-    'liveAppName': __.thisApp( __file__ ),
-    'description': 'Changes the world',
-    'categories': [
-                        'DEFAULT',
-                ],
-    'examples': [
-                        _.hp('p tmpf -file file.txt'),
-                        _.linePrint(label='simple',p=0),
-                        '',
-    ],
-    'created': 1658773060.0103693,
-    'tested': 1658773060.0103693,
+	'file': 'tmpf.py',
+	'liveAppName': __.thisApp( __file__ ),
+	'description': 'Changes the world',
+	'categories': [
+						'DEFAULT',
+				],
+	'examples': [
+						_.hp('p tmpf -file file.txt'),
+						_.linePrint(label='simple',p=0),
+						'',
+	],
+	'created': 1658773060.0103693,
+	'tested': 1658773060.0103693,
 }
 
 #b)--> registration
@@ -73,5 +73,5 @@ def action(): pass
 
 ########################################################################################
 if __name__ == '__main__':
-    action()
-    _.isExit(__file__)
+	action()
+	_.isExit(__file__)

@@ -29,7 +29,7 @@ _.switches.register('Default', '-default','Dallas')
 import shutil
 
 
-_.appInfo=	{
+_.appInfo=    {
 	'file': 'jsonfields2.py',
 	'description': 'add a field and set data for an entire json file',
 	'prerequisite': [],

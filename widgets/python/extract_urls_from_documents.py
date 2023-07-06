@@ -78,15 +78,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-					   # { 'name': 'name', 'abbreviation': 'n' },
-					   # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-					   # 'this',
-					   # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-					   # {},
+					# {},
 	],
 }
 
@@ -168,13 +168,13 @@ def extract_urls_from_docx(file_path):
 	return extract_urls_from_text(content)
 
 def extract_urls_from_pdf(file_path):
-    with open(file_path, 'rb') as pdf_file:
-        pdf_reader = PyPDF2.PdfReader(pdf_file)
-        content = ''
-        for page_num in range(len(pdf_reader.pages)):
-            page = pdf_reader.pages[page_num]
-            content += page.extract_text()
-    return extract_urls_from_text(content)
+	with open(file_path, 'rb') as pdf_file:
+		pdf_reader = PyPDF2.PdfReader(pdf_file)
+		content = ''
+		for page_num in range(len(pdf_reader.pages)):
+			page = pdf_reader.pages[page_num]
+			content += page.extract_text()
+	return extract_urls_from_text(content)
 
 def extract_urls_from_pdf_OLD(file_path):
 	pdf_file = open(file_path, 'rb')

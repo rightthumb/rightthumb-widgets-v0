@@ -58,7 +58,7 @@ __.isRequired_Pipe_or_File = False
 _.appInfo[focus()] = {
 	'file': 'google.py',
 	'liveAppName': __.thisApp( __file__ ),
- 	'description': 'search google',
+	'description': 'search google',
 	'categories': [
 						'google',
 						'web',
@@ -78,11 +78,11 @@ _.appInfo[focus()] = {
 						''
 	],
 	'columns': [
-					   # { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': 'name', 'abbreviation': 'n' },
 	],
 	'aliases': [
-					   # 'this',
-					   # 'app',
+					# 'this',
+					# 'app',
 	],
 
 	}
@@ -163,7 +163,7 @@ except ImportError:
 
 
 # for x in dir( search ):
-# 	_.pr( x )
+#     _.pr( x )
 # sys.exit()
 
 def action():
@@ -197,7 +197,7 @@ def action():
 	else:
 		srcSave = 0
 		data = []
-	  
+	
 	if not srcSave:
 
 		# for j in search(query, tld="co.in", num=10, stop=1, pause=2):

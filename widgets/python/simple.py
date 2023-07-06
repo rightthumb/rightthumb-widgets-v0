@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-appInfo=	{
+appInfo=    {
 	'file': 'thisApp.py',
 	'description': 'Changes the world',
 	'categories': [
@@ -26,17 +26,17 @@ except Exception as e:
 	print( 'simplejson not installed' )
 
 # class Switch:
-# 	def __init__( self ):
-# 		pass
+#     def __init__( self ):
+#         pass
 
 
 # class Switches:
-# 	def __init__( self ):
-# 		pass
+#     def __init__( self ):
+#         pass
 
-# 	def process( self ):
-# 		for ar in sys.argv:
-# 			print( ar )
+#     def process( self ):
+#         for ar in sys.argv:
+#             print( ar )
 		
 
 

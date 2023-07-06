@@ -49,7 +49,7 @@ __.sort_name_trigger_override = [  ['']  ]
 _.appInfo[focus()] = {
 	'file': 'findDriveID.py',
 	'liveAppName': __.thisApp( __file__ ),
- 	'description': 'Find drive ID by searching label or descriptors',
+	'description': 'Find drive ID by searching label or descriptors',
 	'categories': [
 						'drive',
 						'search',
@@ -78,12 +78,12 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
-				       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 
 	}

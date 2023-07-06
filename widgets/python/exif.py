@@ -101,11 +101,11 @@ _.appInfo[focus()] = {
 						''
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': 'name', 'abbreviation': 'n' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 
 	}
@@ -222,12 +222,12 @@ def action():
 	# load()
 	# _.appData[__.appReg]['uuid'] = {  'app': _.appInfo[focus()]['file'], 'project': 'app_instance' }
 	if _.switches.isActive('Input'):
-	# 	_.setPipeData( _.getText( _.switches.value('Input') ), focus() )
+	#     _.setPipeData( _.getText( _.switches.value('Input') ), focus() )
 		if type( _.appData[__.appReg]['pipe'] ) == bool:
 			_.setPipeData( _.switches.values('Input') , focus() )
 			# _.appData[__.appReg]['pipe'] = []
 			# for row in _.switches.value('Input').split( ',' ):
-			# 	_.appData[__.appReg]['pipe'].append( row )
+			#     _.appData[__.appReg]['pipe'].append( row )
 	if not type( _.appData[__.appReg]['pipe'] ) == bool:
 		_.pipeCleaner()
 		# _.pr( _.printVar(_.appData) )
@@ -253,7 +253,7 @@ def action():
 				
 				# try:
 				# except Exception as e:
-				# 	pass
+				#     pass
 				doThis = do.replace( 'THEFILE', row )
 				if _.switches.isActive( 'Folder' ):
 					doThis = doThis.replace( 'MOD_BYTES', _.switches.value( 'Folder' ) +_v.slash+ str(info['date_modified_raw'])+'_'+str(info['bytes']) )
@@ -268,8 +268,8 @@ def action():
 
 isSingle = False
 # def load():
-# 	global data
-# 	data = _.getTable( 'table.json' )
+#     global data
+#     data = _.getTable( 'table.json' )
 # data = []
 ########################################################################################
 if __name__ == '__main__':

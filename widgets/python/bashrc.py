@@ -49,7 +49,7 @@ __.pre_error = False
 _.appInfo[focus()] = {
 	'file': 'bashrc.py',
 	'liveAppName': __.thisApp( __file__ ),
- 	'description': 'edit bashrc',
+	'description': 'edit bashrc',
 	'categories': [
 						'bashrc',
 						'linux',
@@ -72,15 +72,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
-				       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-				       # {},
+					# {},
 	],
 }
 
@@ -509,11 +509,11 @@ export HISTFILESIZE=100000
 force_color_prompt=yes
 
 if [ -n "$force_color_prompt" ]; then
-    if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
+	if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
 	color_prompt=yes
-    else
+	else
 	color_prompt=
-    fi
+	fi
 fi
 
 EMOJIS=(🧻 🧪 💀 🦆 🦉 🥓 🦄 🦀 🖕 🍣 🍤 🍥 🍡 🥃 🥞 🐕 👾 🐉 🐓 🐋 🐌 🐢 👽 👿 🥑 🐡 🐗 💐 🏹 🎨 🐔 🐛 🎯 🌯 📷 🛶 🥕 🍒 🍸 🍳 🐲 🎣 🐟 🦅 👀 🐸 🤞 💪 💾 👻 🐊 🍔 🌭 🍀 🕓 🦊 🍟 🥝 🖕 🐒 🥞 🐼 📎 🐧 💩 🍕 🍍 🦏 🍗 🌈 🐳 🦑 🚀 🙈 🙊 🙉 🌮 🥒 🐅 🐯 🍉 🚽 🍅 👅 🎩 🍷)
@@ -521,17 +521,17 @@ prompt_symbol=${EMOJIS[$RANDOM % ${#EMOJIS[@]}]};
 
 
 if [ "$color_prompt" = yes ]; then
-    prompt_color='\\[\033[;32m\\]'
-    info_color='\\[\033[1;34m\\]'
-    #prompt_symbol=㉿
-    if [ "$EUID" -eq 0 ]; then # Change prompt colors for root user
+	prompt_color='\\[\033[;32m\\]'
+	info_color='\\[\033[1;34m\\]'
+	#prompt_symbol=㉿
+	if [ "$EUID" -eq 0 ]; then # Change prompt colors for root user
 	prompt_color='\\[\033[;94m\\]'
 	info_color='\\[\033[1;31m\\]'
 	#prompt_symbol=💀
-    fi
-    PS1=$prompt_color'┌──${debian_chroot:+($debian_chroot)──}('$info_color'\\u${prompt_symbol}\\h'$prompt_color')-[\\[\033[0;1m\\]\\w'$prompt_color']\n'$prompt_color'└─'$info_color'\\$\\[\033[0m\\] '
+	fi
+	PS1=$prompt_color'┌──${debian_chroot:+($debian_chroot)──}('$info_color'\\u${prompt_symbol}\\h'$prompt_color')-[\\[\033[0;1m\\]\\w'$prompt_color']\n'$prompt_color'└─'$info_color'\\$\\[\033[0m\\] '
 else
-    # PS1='${debian_chroot:+($debian_chroot)}\\u@\\h:\\w\\$ '
+	# PS1='${debian_chroot:+($debian_chroot)}\\u@\\h:\\w\\$ '
 	PS1='┌── (\\u${prompt_symbol}\\h)──[\\w] \\n└─── $ '
 fi
 unset color_prompt force_color_prompt
@@ -547,8 +547,8 @@ alias up.date="echo "update"; sudo apt-get update; echo "upgrade"; sudo apt-get 
 
 
 	# if [ "${#XDG_CURRENT_DESKTOP}" -lt 2 -a "${#GDMSESSION}" -lt 2 ]; then
-	# 	touch "$config/.isTerminal"
-	# 			if [[  -e "$config/.editor.pre" ]]; then
+	#     touch "$config/.isTerminal"
+	#             if [[  -e "$config/.editor.pre" ]]; then
 
 
 

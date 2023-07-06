@@ -35,7 +35,7 @@ program = {
 
 	'file': 'matrix1.py',
 	'liveAppName': _matrix.thisApp( __file__ ),
- 	'description': 'matrix test 1',
+	'description': 'matrix test 1',
 	
 	'categories': [
 						'matrix',
@@ -64,12 +64,12 @@ program = {
 						'',
 	],
 	'columns': [
-					   { 'name': 'name', 'abbreviation': 'n' },
-					   # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					{ 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-					   # 'this',
-					   # 'app',
+					# 'this',
+					# 'app',
 	],
 
 }
@@ -156,8 +156,8 @@ def five(i):
 	return four( i )
 
 def fn(i):
-    fn.f += i
-    return fn.f
+	fn.f += i
+	return fn.f
 
 # sys.getfilesystemencoding()
 # _.pr( 'mem', app.switch('Memory').isActive() )

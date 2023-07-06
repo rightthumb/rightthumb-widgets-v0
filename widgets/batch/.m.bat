@@ -1,2 +1,2 @@
 @echo off
-call p -paste | p line --make "%*"
+callp pipe-or-paste |  p line --make "%*"

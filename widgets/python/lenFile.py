@@ -21,7 +21,7 @@ import _rightThumb._string as _str
 
 # _.switches.register('Input', '-i','appIn.py')
 
-_.appInfo=	{
+_.appInfo=    {
 	'file': 'thisApp.py',
 	'description': 'Changes the world',
 	'prerequisite': [],
@@ -40,12 +40,12 @@ _.switches.process()
 # pipeData = ''
 
 # if not sys.stdin.isatty():
-# 	pipeData = sys.stdin.readlines()
-# 	try:
-# 		if pipeData[0][0].isalnum() == False:
-# 			pipeData[0] = pipeData[0][1:]
-# 	except Exception as e:
-# 		pass
+#     pipeData = sys.stdin.readlines()
+#     try:
+#         if pipeData[0][0].isalnum() == False:
+#             pipeData[0] = pipeData[0][1:]
+#     except Exception as e:
+#         pass
 
 ########################################################################################
 def action():
@@ -54,8 +54,8 @@ def action():
 	fname = sys.argv[len(sys.argv)-1]
 	num_lines = 0
 	with open(fname, 'r', encoding='latin-1') as f:
-	    for line in f:
-	        num_lines += 1
+		for line in f:
+			num_lines += 1
 	# print("Number of lines:")
 	# print(num_lines)
 	# print(num_lines,'lines')

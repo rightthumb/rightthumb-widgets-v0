@@ -50,7 +50,7 @@ __.switch_raw = []
 _.appInfo[focus()] = {
 	'file': 'table-format.py',
 	'liveAppName': __.thisApp( __file__ ),
- 	'description': 'format table',
+	'description': 'format table',
 	'categories': [
 						'json',
 						'format',
@@ -75,15 +75,15 @@ _.appInfo[focus()] = {
 						_.hp('p ago -ordinal 738023  -tjson  | p -copy | p table-format -copy'),
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
-				       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-				       # {},
+					# {},
 	],
 }
 

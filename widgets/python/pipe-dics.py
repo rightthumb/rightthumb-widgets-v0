@@ -48,7 +48,7 @@ _.appInfo[focus()] = {
 	# 'app': '7facG-jo0Cxk',
 	'file': 'pipe-dics.py',
 	'liveAppName': __.thisApp( __file__ ),
- 	'description': 'organize the json for settings files',
+	'description': 'organize the json for settings files',
 		# _.ail(1,'subject')+
 		# _.aib('one')+
 	'categories': [
@@ -73,15 +73,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
-				       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-				       # {},
+					# {},
 	],
 }
 
@@ -176,7 +176,7 @@ def action():
 	_.pr('[')
 	_.pr( ',\n'.join(mid) )
 	# for rec in mid:
-	# 	_.pr('\t',rec)
+	#     _.pr('\t',rec)
 	_.pr(']')
 
 

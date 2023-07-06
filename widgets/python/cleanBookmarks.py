@@ -64,7 +64,7 @@ def appSwitches():
 
 _.appInfo[focus()] = {
 	'file': 'cleanBookmarks.py',
- 	'description': 'clean bookmarks',
+	'description': 'clean bookmarks',
 	'categories': [
 						'research',
 						'text manipulation',
@@ -177,10 +177,10 @@ def action():
 						# if _.switches.isActive( 'Delete' ):
 							# os.remove( path )
 					# else:
-					# 	p = _v.sanitizeFolder( location )
+					#     p = _v.sanitizeFolder( location )
 
-					# 	if not file == p:
-					# 		_.saveText( p, b )
+					#     if not file == p:
+					#         _.saveText( p, b )
 
 				except Exception as e:
 					pass

@@ -1,2 +1,2 @@
 @echo off
-p -paste | p line --make "%*" | p -copy
+p pipe-or-paste | p line --make "%*" | p -copy

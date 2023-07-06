@@ -125,10 +125,10 @@ if __name__ == '__main__':
 def action():
 	pass
 	# if _.switches.isActive('Input'):
-	# 	setPipeData( _.getText( _.switches.value('Input') ) )
+	#     setPipeData( _.getText( _.switches.value('Input') ) )
 
 	# if not type( _.appData[__.appReg]['pipe'] ) == bool:
-	# 	pass
+	#     pass
 
 
 
@@ -386,11 +386,11 @@ def cleanRecord( i, record ):
 		fv[f]['i'] = i
 	except Exception as e:
 		fv[f] = {
-			        "epoch": epoch,
-			        "v": 0,
-			        "v1": 0,
-			        "v2": 0,
-			        "v3": 1
+					"epoch": epoch,
+					"v": 0,
+					"v1": 0,
+					"v2": 0,
+					"v3": 1
 		}
 
 	newRecord['version'] = str(fv[f]['v']) + '.' + str(fv[f]['v1']) + '.' + str(fv[f]['v2']) + '.' + str(fv[f]['v3'])
@@ -409,20 +409,20 @@ def cleanRecord( i, record ):
 
 
 # def updateAutoVersion( epoch ):
-# 	global backupLog
+#     global backupLog
 
-# 	for  i,record in enumerate(backupLog):
-# 		if record['timestamp'] == epoch:
-# 			flag = record['flag']
-# 			flag = _str.cleanBE( flag, ' ' )
-# 			flag = _str.cleanBE( flag, ',' )
-# 			flags = flag.lower().split(',')
-# 			backupLog[i]['v1'] += 1
-# 			backupLog[i]['v2'] = 0
-# 			if not 'mv' in flags:
-# 				backupLog[i]['flag'] = str(flag) + ',MV'
-# 			backupLog[i]['flag'] = _str.cleanBE( backupLog[i]['flag'], ' ' )
-# 			backupLog[i]['flag'] = _str.cleanBE( backupLog[i]['flag'], ',' )
+#     for  i,record in enumerate(backupLog):
+#         if record['timestamp'] == epoch:
+#             flag = record['flag']
+#             flag = _str.cleanBE( flag, ' ' )
+#             flag = _str.cleanBE( flag, ',' )
+#             flags = flag.lower().split(',')
+#             backupLog[i]['v1'] += 1
+#             backupLog[i]['v2'] = 0
+#             if not 'mv' in flags:
+#                 backupLog[i]['flag'] = str(flag) + ',MV'
+#             backupLog[i]['flag'] = _str.cleanBE( backupLog[i]['flag'], ' ' )
+#             backupLog[i]['flag'] = _str.cleanBE( backupLog[i]['flag'], ',' )
 
 
 

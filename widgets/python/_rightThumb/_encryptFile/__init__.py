@@ -94,10 +94,10 @@ from struct import pack
 
 
 # def reversebytes(data):
-# 	return bytes(data)
-# 	# """ Takes data and reverses byte order to fit
-# 	# blowfish-compat format. For example, using
-# 	# reversebytes('12345678') will return 43218765."""
+#     return bytes(data)
+#     # """ Takes data and reverses byte order to fit
+#     # blowfish-compat format. For example, using
+#     # reversebytes('12345678') will return 43218765."""
 #  #    data_size = 0
 #  #    for n in data:
 #  #        data_size += 1
@@ -129,8 +129,8 @@ from struct import pack
 
 
 ### with open(fname, "rb") as f:
-### 	for chunk in iter(lambda: f.read(4096), b""):
-### 		hash_md5.update(chunk)
+###     for chunk in iter(lambda: f.read(4096), b""):
+###         hash_md5.update(chunk)
 ### return hash_md5.hexdigest()
 
 		
@@ -264,7 +264,7 @@ def encrypt( filenameIn, filenameOut, password=False ):
 	thePayload = str(result,'iso-8859-1')
 	saveText( thePayload, filenameOut )
 	# except Exception as e:
-	# 	pass
+	#     pass
 
 	return thePayload
 

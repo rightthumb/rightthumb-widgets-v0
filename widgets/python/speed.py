@@ -78,15 +78,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-					   # { 'name': 'name', 'abbreviation': 'n' },
-					   # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-					   # 'this',
-					   # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-					   # {},
+					# {},
 	],
 }
 
@@ -164,16 +164,16 @@ def action():
 	
 	option = int(input('''
 	What speed do you want to test:  
-	  
+	
 	1) Download Speed  
-	  
+	
 	2) Upload Speed  
-	  
+	
 	3) Ping 
-	  
+	
 	Your Choice:
 	'''))
-	  
+	
 	start=time.time()
 	if option == 1:
 		size=st.download()

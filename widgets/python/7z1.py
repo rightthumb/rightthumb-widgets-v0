@@ -34,7 +34,7 @@ _.switches.register('UnZipNoFolder', '-nf')
 
 
 
-_.appInfo=	{
+_.appInfo=    {
 	'file': '7z.py',
 	'description': '7zip basics made simple',
 	'prerequisite': [],
@@ -53,12 +53,12 @@ _.switches.process()
 # pipeData = ''
 
 # if not sys.stdin.isatty():
-# 	pipeData = sys.stdin.readlines()
-# 	try:
-# 		if pipeData[0][0].isalnum() == False:
-# 			pipeData[0] = pipeData[0][1:]
-# 	except Exception as e:
-# 		pass
+#     pipeData = sys.stdin.readlines()
+#     try:
+#         if pipeData[0][0].isalnum() == False:
+#             pipeData[0] = pipeData[0][1:]
+#     except Exception as e:
+#         pass
 def getExtension(string):
 	ext0 = string.split('.')
 	extId = len(ext0) - 1

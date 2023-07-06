@@ -47,7 +47,7 @@ __.switch_raw = []
 _.appInfo[focus()] = {
 	'file': 'taboo.py',
 	'liveAppName': __.thisApp( __file__ ),
- 	'description': 'taboo game',
+	'description': 'taboo game',
 	'categories': [
 						'game',
 						'taboo',
@@ -70,15 +70,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
-				       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-				       # {},
+					# {},
 	],
 }
 
@@ -160,13 +160,13 @@ def action():
 
 
 	# for i,card in enumerate(data):
-	# 	data[i]['level']=0
+	#     data[i]['level']=0
 	# _.saveTableDB( data, 'taboo.json' )
 	# sys.exit()
-	# 	_.clear()
-	# 	_.fields.register( 'project', 'name', card['subject'] )
-	# 	for mit in card['omit']:
-	# 		_.fields.register( 'project', 'name', mit )
+	#     _.clear()
+	#     _.fields.register( 'project', 'name', card['subject'] )
+	#     for mit in card['omit']:
+	#         _.fields.register( 'project', 'name', mit )
 
 	# _.pr( len(  _.fields.value( 'project', 'name', 'test', center=True )  ) );sys.exit();
 	i=-1

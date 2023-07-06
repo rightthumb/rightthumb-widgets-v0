@@ -41,7 +41,7 @@ _.switches.register('DBMax', '-dbmax','200')
 # chatFile = '_chat_out'
 
 
-_.appInfo=	{
+_.appInfo=    {
 	'file': 'secureChat.py',
 	'description': 'Changes the world',
 	'prerequisite': [],
@@ -171,7 +171,7 @@ def genPassword():
 			if loT > loX[1]:
 				lo = loT
 			# else:
-			# 	lo = loT
+			#     lo = loT
 		times += 1
 		# lo = 2
 		r = []

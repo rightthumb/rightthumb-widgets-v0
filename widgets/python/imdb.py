@@ -3999,9 +3999,9 @@ def kevinBacon(url):
 	# os.system('cls')
 	def isEven(x):
 		if x & 1:
-		   return False
+		return False
 		else:
-		   return True
+		return True
 	def done(timeAudit):
 		try:
 			global allPeople
@@ -5061,7 +5061,7 @@ class TheFeature:
 			
 			self.seasonData[0]['year'] = _clean(self.seasonData[0]['year'])
 			# for x in _.tinydic(self.seasonData,skim=None,lan='py',prev=True,dump=None,list0=True):
-			# 	_.pr(x)
+			#     _.pr(x)
 			_.cp(_clean(self.seasonData[0]['year'])+' '+self.seasonData[0]['title']+' '+self.seasonData[0]['id'], 'yellow')
 			_.cp( '\n\tSeasons: '+' '+str(len(self.seasonData[0]['seasons'])), 'green' )
 			_.pr()
@@ -5442,9 +5442,9 @@ def aliases( data ):
 	results.append( data )
 	add = ''
 	# if _.switches.isActive('Franchise'):
-	# 	add = ''
+	#     add = ''
 	# else:
-	# 	add = input( 'Aliases for '+data+' (,): ' )
+	#     add = input( 'Aliases for '+data+' (,): ' )
 	for x in add.split(','):
 		x = _str.replaceDuplicate( x, ' ' )
 		x = _str.cleanBE( x, ' ' )

@@ -24,7 +24,7 @@ import _rightThumb._string as _str
 # _.switches.register('Input', '-i','appIn.py')
 
 
-_.appInfo[__name__]=	{
+_.appInfo[__name__]=    {
 	'file': 'findfunc.py',
 	'description': 'returns the function that contains the search string',
 	'relatedapps': [],
@@ -98,9 +98,9 @@ def cleanupString(string,beforeAfter=True):
 	string = string.replace(_v.slash+'xe2\\x80\\x93','-')
 	string = string.replace(_v.slash+'\\xe2\\\\x80\\\\x93','-')
 	# if beforeAfter:
-	# 	string = string.split('(')[0]
+	#     string = string.split('(')[0]
 	# else:
-	# 	string = string.split('(')[1]
+	#     string = string.split('(')[1]
 	# string = string.split('/')[0]
 	return string
 

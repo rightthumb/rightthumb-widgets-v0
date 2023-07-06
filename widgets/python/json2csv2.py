@@ -16,8 +16,8 @@ import sys
 
 # i = 0
 # for a in sys.argv:
-# 	print(i,a,len(a))
-# 	i += 1
+#     print(i,a,len(a))
+#     i += 1
 
 exit = True
 

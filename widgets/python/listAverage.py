@@ -158,7 +158,7 @@ if __name__ == '__main__':
 # START
 
 def average( lst ): 
-    return round(sum(lst) / len(lst), 2)
+	return round(sum(lst) / len(lst), 2)
 
 def pop( data, cnt ):
 	i = 0

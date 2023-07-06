@@ -91,7 +91,7 @@ __.myFileLocations_SKIP_VALIDATION = False
 __.isRequired_Pipe = False
 __.isRequired_Pipe_or_File = False
 __.pre_error = False
-__.switch_raw = []
+__.switch_raw = ['Make']
 
 
 _.appInfo[focus()] = {
@@ -177,7 +177,7 @@ _.appData[focus()] = {
 
 
 # 2021-03-19 07:19:35
-# 						1616152775.719822
+#                         1616152775.719822
 
 # _.appInfo[focus()]['examples'].append('dd | p line -p \\ 1')
 # _.appInfo[focus()]['examples'].append('dd | p line -p \\ e 2')
@@ -290,7 +290,11 @@ if not sys.stdin.isatty():
 	_.appData[__.appReg]['pipe'] = sys.stdin.readlines()
 	# pipeCleaner()
 """
-
+def MAKE(data):
+	try:
+		return _.ci(data)
+	except:
+		return data
 def registerSwitches( argvProcessForce=False ):
 	global appDBA
 	if not __.appReg == appDBA and appDBA in __.appReg:
@@ -313,6 +317,7 @@ def registerSwitches( argvProcessForce=False ):
 	_.switches.trigger( 'URL', _.urlTrigger )
 	_.switches.trigger( 'Ago', _.timeAgo )
 	_.switches.trigger( 'Duration', _.timeFuture )
+	_.switches.trigger( 'Make', MAKE )
 	### EXAMPLE: START
 	# _.switches.trigger( 'Files',_.inRelevantFolder )
 	
@@ -354,6 +359,9 @@ _.postLoad( __file__ )
 
 
 if _.switches.isActive('Make'):
+	# print(_.switches.values('Make'))
+	# print('here')
+	# sys.exit()
 	lines=[]
 	started=False
 	for line in _.isData():
@@ -375,7 +383,7 @@ if _.switches.isActive('Make'):
 					y='{'+str(i)+'}'
 					if x in line: line = line.replace(x,make[i])
 					elif y in line: line = line.replace(y,make[i])
-				print(line)				
+				print(line)                
 		sys.exit()
 	else:
 		m=' '.join(_.switches.values('Make'))
@@ -703,15 +711,15 @@ def substitute(string):
 	p[0] = _.ci(p[0])
 	p[1] = _.ci(p[1])
 	# _.pr(p)
-	# _.pr(p)	
+	# _.pr(p)    
 	# os._exit(0)
 	# result = _str.replaceAll(str2(string),p[0],p[1])
 	result = string.replace(p[0],p[1])
 	# try:
-	#	 p = _.ci(_.switches.value('Substitute').split(',')[0])
-	#	 result = _str.replaceAll(str2(string),p[0],p[1])
+	#     p = _.ci(_.switches.value('Substitute').split(',')[0])
+	#     result = _str.replaceAll(str2(string),p[0],p[1])
 	# except Exception as e:
-	#	 pass
+	#     pass
 	return result
 def make(string):
 	if _.switches.isActive('Parse') == True:
@@ -753,7 +761,7 @@ def get_change(current, previous):
 	if current == previous:
 		return 100.0
 	try:
-	   return round(100 - (((abs(current - previous))/previous)*100.0),1)
+		return round(100 - (((abs(current - previous))/previous)*100.0),1)
 	except ZeroDivisionError:
 		return 0
 
@@ -1004,7 +1012,7 @@ if _.switches.isActive('CrossReferenceReverse') == False:
 				line = line.encode('UTF-8').decode('latin-1')
 			except Exception as e:
 				pass
-		# 	if _.switches.isActive('Progress') == False:
+		#     if _.switches.isActive('Progress') == False:
 				# if _.switches.isActive('Count') == False:
 		if countThisLine(line) == True:
 			parse0 = _.switches.value('Parse')
@@ -1101,19 +1109,19 @@ if _.switches.isActive('CrossReferenceReverse') == False:
 
 
 								# if ( thePrintLine.lower().find( plusSearchX ) > -1 ):
-								# 	scanning = thePrintLine.lower().find( plusSearchX )
-								# 	plusSearchXY = ''
-								# 	scanComplete = False
-								# 	while not scanComplete:
-								# 		_.pr( len(plusSearchX)-1, len(thePrintLine)-1, scanning )
-								# 		if len(plusSearchXY) == len(plusSearchX):
-								# 			scanComplete = True
-								# 		elif scanning > len(thePrintLine)-1:
-								# 			scanComplete = True
-								# 		else:
-								# 			plusSearchXY += thePrintLine[ scanning ]
-								# 		scanning += 1
-								# 	thePrintLine = thePrintLine.replace( plusSearchXY, _.colorThis( plusSearchXY, 'green', p=0 ) )
+								#     scanning = thePrintLine.lower().find( plusSearchX )
+								#     plusSearchXY = ''
+								#     scanComplete = False
+								#     while not scanComplete:
+								#         _.pr( len(plusSearchX)-1, len(thePrintLine)-1, scanning )
+								#         if len(plusSearchXY) == len(plusSearchX):
+								#             scanComplete = True
+								#         elif scanning > len(thePrintLine)-1:
+								#             scanComplete = True
+								#         else:
+								#             plusSearchXY += thePrintLine[ scanning ]
+								#         scanning += 1
+								#     thePrintLine = thePrintLine.replace( plusSearchXY, _.colorThis( plusSearchXY, 'green', p=0 ) )
 
 
 

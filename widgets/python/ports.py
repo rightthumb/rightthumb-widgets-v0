@@ -107,13 +107,13 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-					   # { 'name': 'name', 'abbreviation': 'n' },
-					   # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
-					   # { 'name': 'Port', 'abbreviation': 'p', 'sort': 'port_sort' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'Port', 'abbreviation': 'p', 'sort': 'port_sort' },
 	],
 	'aliases': [
-					   # 'this',
-					   # 'app',
+					# 'this',
+					# 'app',
 	],
 
 	}
@@ -240,7 +240,7 @@ def scan_port( ip, port ):
 		# try:
 				
 		# except Exception:
-		# 	pass
+		#     pass
 
 
 	# a_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -275,13 +275,13 @@ def processPortRow(row):
 		ipsPorts[ip][port] = {}
 	# if port not in data:
 	# else:
-	# 	ipsPorts[ip][port] = data[port]
-	# 	# _.pr()
+	#     ipsPorts[ip][port] = data[port]
+	#     # _.pr()
 		# if _.switches.isActive('All'):
-		# 	_.pr(port)
-		# 	_.printVarSimple( data[port] )
+		#     _.pr(port)
+		#     _.printVarSimple( data[port] )
 		# else:
-		# 	_.pr( '  ', _.cp( port, 'yellow', p=0 ), _.cp( data[port]['Description'], 'cyan', p=0 ) )
+		#     _.pr( '  ', _.cp( port, 'yellow', p=0 ), _.cp( data[port]['Description'], 'cyan', p=0 ) )
 
 		# _.pr()
 
@@ -386,8 +386,8 @@ def action():
 
 
 	# if type( _.appData[__.appReg]['pipe'] ) == list:
-	# 	for port in _.appData[__.appReg]['pipe']:
-	# 		if port in 
+	#     for port in _.appData[__.appReg]['pipe']:
+	#         if port in 
 	
 	
 	if _.switches.isActive('PortScan'):
@@ -527,7 +527,7 @@ def load():
 						data[ port ]['Description'] = 'http server'
 
 					# else:
-					# 	_.pr( 'skipped:', port )
+					#     _.pr( 'skipped:', port )
 
 
 			except Exception as e:

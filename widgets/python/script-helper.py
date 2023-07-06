@@ -80,20 +80,20 @@ _.appInfo[focus()] = {
 						_.hp('p script-helper -replace "\'C:\\\\Users\\\\Scott\\\\OneDrive\\\\Pictures\\\\terminal-wallpaper\\\\\' \'\\\\\\\\\' \'\\\\\'"'),
 						_.hp(''),
 						_.hp('.bat'),
-						_.hp('	call p script-helper -replace "\'%b%\' \'/\' \'\\\\\'" > %tmpf%'),
-						_.hp('	SET /p b=<%tmpf%'),
+						_.hp('    call p script-helper -replace "\'%b%\' \'/\' \'\\\\\'" > %tmpf%'),
+						_.hp('    SET /p b=<%tmpf%'),
 						_.hp(''),
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
-				       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-				       # {},
+					# {},
 	],
 }
 

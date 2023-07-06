@@ -45,7 +45,7 @@ __.pre_error = False
 _.appInfo[focus()] = {
 	'file': 'history_indices.py',
 	'liveAppName': __.thisApp( __file__ ),
- 	'description': 'Search history indices',
+	'description': 'Search history indices',
 	'categories': [
 						'history',
 				],
@@ -69,15 +69,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
-				       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-				       # {},
+					# {},
 	],
 }
 
@@ -155,7 +155,7 @@ def action():
 	opened = 'open-0000.txt'
 
 
-	try:	
+	try:    
 		x = data[ _.switches.values('CMD')[0].lower() ]
 	except Exception as e:
 		_.pr()

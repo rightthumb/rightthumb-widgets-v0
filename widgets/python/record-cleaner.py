@@ -47,7 +47,7 @@ __.switch_raw = []
 _.appInfo[focus()] = {
 	'file': 'record-cleaner.py',
 	'liveAppName': __.thisApp( __file__ ),
- 	'description': 'clean fields and move data to appropriate fields',
+	'description': 'clean fields and move data to appropriate fields',
 	'categories': [
 						'json',
 						'clean',
@@ -72,15 +72,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-					   # { 'name': 'name', 'abbreviation': 'n' },
-					   # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-					   # 'this',
-					   # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-					   # {},
+					# {},
 	],
 }
 
@@ -444,10 +444,10 @@ class Record:
 			if both:
 				
 				if not Id in [
-                            '7ebcdea8-05e3-4a6e-84c1-5bba01ac11f8',
-                            '3bc840f9-7e4f-4c8f-a20b-7b885d6559e1',
-                            '9f87dd22-d1b3-4100-a966-40c46c185951',
-                        ]:
+							'7ebcdea8-05e3-4a6e-84c1-5bba01ac11f8',
+							'3bc840f9-7e4f-4c8f-a20b-7b885d6559e1',
+							'9f87dd22-d1b3-4100-a966-40c46c185951',
+						]:
 					if not len(clp['address']):
 						blanks.append(Id)
 					IDS.append( { Id: both } )
@@ -523,16 +523,16 @@ class Record:
 								dic['all'].append(fat)
 
 			# for wes in dat:
-			# 	_.pr(wes)
-			# 	sys.exit()
+			#     _.pr(wes)
+			#     sys.exit()
 				# if not wes == 'self':
-				# 	if not wes in dic['fields']:
-				# 		dic['fields'][wes]=[]
-				# 	if not wes in dic['fields'][wes]:
-				# 		dic['fields'][wes].append(wes)
+				#     if not wes in dic['fields']:
+				#         dic['fields'][wes]=[]
+				#     if not wes in dic['fields'][wes]:
+				#         dic['fields'][wes].append(wes)
 
-				# 	if not wes in dic['all']:
-				# 		dic['all'].append(wes)
+				#     if not wes in dic['all']:
+				#         dic['all'].append(wes)
 		for k in dic['fields']:
 			if len(dic['fields'][k]) and type(dic['fields'][k][0]) == list:
 				dic['fields'][k] = dic['fields'][k][0]
@@ -677,15 +677,15 @@ class Scanner:
 		dic = {}
 
 		# if not subject == 'phone':
-		# 	for line in data.split('\n'):
-		# 		found=False
-		# 		for item in re.finditer(r"\(?\b[2-9][0-9]{2}\)?[-. ]?[2-9][0-9]{2}[-. ]?[0-9]{4}\b", line):
-		# 			found=True
-		# 		if found:
-		# 			if not 'phone' in dic:
-		# 				dic['phone'] = []
-		# 			dic['phone'].append(line)
-		# 			data = data.replace(line,'')
+		#     for line in data.split('\n'):
+		#         found=False
+		#         for item in re.finditer(r"\(?\b[2-9][0-9]{2}\)?[-. ]?[2-9][0-9]{2}[-. ]?[0-9]{4}\b", line):
+		#             found=True
+		#         if found:
+		#             if not 'phone' in dic:
+		#                 dic['phone'] = []
+		#             dic['phone'].append(line)
+		#             data = data.replace(line,'')
 
 
 
@@ -722,11 +722,11 @@ class Scanner:
 				data = data.replace(url,'')
 
 			# for item in re.findall('https?://(?:[-\w.]|(?:%[\da-fA-F]{2}))+', data):
-			# 	# item = item.group(0)
-			# 	if not 'website' in dic:
-			# 		dic['website'] = []
-			# 	dic['website'].append(item)
-			# 	data = data.replace(item,'')
+			#     # item = item.group(0)
+			#     if not 'website' in dic:
+			#         dic['website'] = []
+			#     dic['website'].append(item)
+			#     data = data.replace(item,'')
 
 		if not subject == 'address':
 			for item in re.findall("[0-9]{1,3} .+, .+, [A-Z]{2} [0-9]{5}", data):
@@ -764,7 +764,7 @@ app.flags = Flags()
 
 
 # x=app.scan.process( '(727) 443-7736', 'asdf' )
-# x=app.scan.process( 'Don 813-469-3530	', 'asdf' )
+# x=app.scan.process( 'Don 813-469-3530    ', 'asdf' )
 # x=app.scan.process( 'scott.reph@gmail.com', 'asdf' )
 # x=app.scan.process( '44 West 22nd Street, New York, NY 12345', 'asdf' )
 # x=app.scan.process( 'https://eyeformeta.com/', 'asdf' )

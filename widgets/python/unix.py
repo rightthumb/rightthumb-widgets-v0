@@ -17,63 +17,63 @@ import _rightThumb._vars as _v
 # from shutil import copyfile
 
 def getText( theFile ):
-    lines = None
-    if os.path.isfile(theFile):
-        try:
-            f = open(theFile, 'r', encoding='utf-8')
-            lines = f.readlines()
-            f.close()
-        except Exception as e:
-            try:
-                f = open(theFile, 'r', encoding='latin-1')
-                lines = f.readlines()
-                f.close()
-            except Exception as e:
-                f = open(theFile, 'r')
-                lines = f.readlines()
-                f.close()
-    result = ''
-    if type(lines) == list:
-    	for x in lines:
-    		result += x
-    elif type(lines) == str:
-    	result = lines
+	lines = None
+	if os.path.isfile(theFile):
+		try:
+			f = open(theFile, 'r', encoding='utf-8')
+			lines = f.readlines()
+			f.close()
+		except Exception as e:
+			try:
+				f = open(theFile, 'r', encoding='latin-1')
+				lines = f.readlines()
+				f.close()
+			except Exception as e:
+				f = open(theFile, 'r')
+				lines = f.readlines()
+				f.close()
+	result = ''
+	if type(lines) == list:
+		for x in lines:
+			result += x
+	elif type(lines) == str:
+		result = lines
 
-    return result
+	return result
 
 
 
 def saveText( rows, theFile, errors=True ):
-    try:
-        if type(rows) == bytes:
-            rows = str(rows,'utf-8')
-        f = open(theFile,'w', encoding='utf-8')
+	try:
+		if type(rows) == bytes:
+			rows = str(rows,'utf-8')
+		f = open(theFile,'w', encoding='utf-8')
   
 
-        if type(rows) == str:
-            f.write(rows)
-        else:
-            for i,row in enumerate(rows):
-                if i == 0:
-                    if len(str(row)) > 0:
-                        f.write(str(row) + '\n')
-                else:
-                    f.write(str(row) + '\n')
-        f.close()
-    except Exception as e:
-        if type(rows) == list:
-            result = ''
-            for i,row in enumerate(rows):
-                if i == 0:
-                    if len(str(row)) > 0:
-                        result += str(row) + '\n'
-                else:
-                    result += str(row) + '\n'
+		if type(rows) == str:
+			f.write(rows)
+		else:
+			for i,row in enumerate(rows):
+				if i == 0:
+					if len(str(row)) > 0:
+						f.write(str(row) + '\n')
+				else:
+					f.write(str(row) + '\n')
+		f.close()
+	except Exception as e:
+		if type(rows) == list:
+			result = ''
+			for i,row in enumerate(rows):
+				if i == 0:
+					if len(str(row)) > 0:
+						result += str(row) + '\n'
+				else:
+					result += str(row) + '\n'
 
-            rows = result
-        open(theFile, 'wb').write(rows)
-        if errors:
-            print( 'Auto correction when saving text' )
+			rows = result
+		open(theFile, 'wb').write(rows)
+		if errors:
+			print( 'Auto correction when saving text' )
 if os.name == 'nt':
 	slash = _v.slash
 else:

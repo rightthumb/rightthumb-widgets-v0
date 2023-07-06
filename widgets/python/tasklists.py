@@ -98,15 +98,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-					   # { 'name': 'name', 'abbreviation': 'n' },
-					   # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-					   # 'this',
-					   # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-					   # {},
+					# {},
 	],
 }
 
@@ -208,8 +208,8 @@ def get_top_5_memory_usage(tasks):
 	return top_5_memory_usage, grand_total
 
 def kilobytes_to_bytes(kilobytes):
-    bytes_value = kilobytes * 1024
-    return bytes_value
+	bytes_value = kilobytes * 1024
+	return bytes_value
 
 def size(mem): return _.formatSize(kilobytes_to_bytes(mem))
 

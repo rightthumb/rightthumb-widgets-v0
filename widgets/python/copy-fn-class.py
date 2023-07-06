@@ -54,7 +54,7 @@ __.switch_raw = []
 _.appInfo[focus()] = {
 	'file': 'copy-fn-class.py',
 	'liveAppName': __.thisApp( __file__ ),
- 	'description': 'copy classes or functions to another python app',
+	'description': 'copy classes or functions to another python app',
 	'categories': [
 						'copy',
 						'app',
@@ -81,15 +81,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
-				       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-				       # {},
+					# {},
 	],
 }
 
@@ -192,19 +192,19 @@ def find_supporting(file,change):
 					# new=''
 					# i=-1
 					# while not i == len(file)-1:
-					# 	i+=1
-					# 	ch = file[i]
-					# 	if i == ii+1:
-					# 		new+=change
-					# 		done2=None
-					# 		iii=i-1
-					# 		while not done2:
-					# 			iii+=1
-					# 			if file[iii] == '(':
-					# 				done2=True
-					# 		i=iii-1
+					#     i+=1
+					#     ch = file[i]
+					#     if i == ii+1:
+					#         new+=change
+					#         done2=None
+					#         iii=i-1
+					#         while not done2:
+					#             iii+=1
+					#             if file[iii] == '(':
+					#                 done2=True
+					#         i=iii-1
 
-					# 	new+=ch
+					#     new+=ch
 					# file = new
 		pass
 		# sys.exit()
@@ -298,13 +298,13 @@ def process(subject):
 	if altB in table:
 		sub = altB
 	# if not do or sub is None:
-	# 	for k in table:
-	# 		if subject == k:
-	# 			sub = k
-	# 		if altA == k:
-	# 			sub = k
-	# 		if altB == k:
-	# 			sub = k
+	#     for k in table:
+	#         if subject == k:
+	#             sub = k
+	#         if altA == k:
+	#             sub = k
+	#         if altB == k:
+	#             sub = k
 
 	if not do or sub is None and not sub in addedFunctions:
 		# _.pv(table)
@@ -395,9 +395,9 @@ def process(subject):
 def find_global(data):
 	# if type(data) == str:
 		# isStr=True
-	# 	data = data.split('\n')
+	#     data = data.split('\n')
 	# else:
-	# 	isStr=False
+	#     isStr=False
 	isStr=True
 	glo = {}
 

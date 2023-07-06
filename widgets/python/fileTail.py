@@ -58,7 +58,7 @@ __.isRequired_Pipe_or_File = False
 _.appInfo[focus()] = {
 	'file': 'fileTail.py',
 	'liveAppName': __.thisApp( __file__ ),
- 	'description': 'file tail',
+	'description': 'file tail',
 	'categories': [
 						'tool',
 						'file',
@@ -82,11 +82,11 @@ _.appInfo[focus()] = {
 						''
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': 'name', 'abbreviation': 'n' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 
 	}
@@ -163,8 +163,8 @@ _.postLoad( __file__ )
 # os.system('"' + do + '"')
 # _.setPipeData( os.listdir(os.getcwd()), focus() )
 # _.showLine(item)
-# 	if os.path.isdir(row):
-# 	if os.path.isfile(row):
+#     if os.path.isdir(row):
+#     if os.path.isfile(row):
 # __.appRegPipe
 ########################################################################################
 # START
@@ -267,27 +267,27 @@ def head(file, n):
 		_.pr(line)
 
 def tail(fn, n, offset=None):
-    """Reads a n lines from f with an offset of offset lines.  The return
-    value is a tuple in the form ``(lines, has_more)`` where `has_more` is
-    an indicator that is `True` if there are more lines in the file.
-    """
-    f = open(fn, 'r')
-    avg_line_length = 74
-    to_read = n + (offset or 0)
+	"""Reads a n lines from f with an offset of offset lines.  The return
+	value is a tuple in the form ``(lines, has_more)`` where `has_more` is
+	an indicator that is `True` if there are more lines in the file.
+	"""
+	f = open(fn, 'r')
+	avg_line_length = 74
+	to_read = n + (offset or 0)
 
-    while 1:
-        try:
-            f.seek(-(avg_line_length * to_read), 2)
-        except IOError:
-            # woops.  apparently file is smaller than what we want
-            # to step back, go to the beginning instead
-            f.seek(0)
-        pos = f.tell()
-        lines = f.read().splitlines()
-        if len(lines) >= to_read or pos == 0:
-            return lines[-to_read:offset and -offset or None], \
-                   len(lines) > to_read or pos > 0
-        avg_line_length *= 1.3
+	while 1:
+		try:
+			f.seek(-(avg_line_length * to_read), 2)
+		except IOError:
+			# woops.  apparently file is smaller than what we want
+			# to step back, go to the beginning instead
+			f.seek(0)
+		pos = f.tell()
+		lines = f.read().splitlines()
+		if len(lines) >= to_read or pos == 0:
+			return lines[-to_read:offset and -offset or None], \
+				len(lines) > to_read or pos > 0
+		avg_line_length *= 1.3
 
 
 

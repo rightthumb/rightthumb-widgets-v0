@@ -28,51 +28,51 @@ _.switches.register('Countries', '-countries,-test')
 _.switches.register('IP', '-ip')
 _.switches.register('All', '-all')
 
-# _.appInfo=	{
-# 	'file': 'origin.py',
-# 	'description': 'Manages drives and indexes',
-# 	'prerequisite': [],
-# 	'examples': [],
-# 	'columns': [],
-# 	}
+# _.appInfo=    {
+#     'file': 'origin.py',
+#     'description': 'Manages drives and indexes',
+#     'prerequisite': [],
+#     'examples': [],
+#     'columns': [],
+#     }
 
 # _.appInfo['examples'].append('p drive -scan')
 
 # _.appInfo['columns'].append({'name': 'name', 'abbreviation': 'n'})
 
 # def formatColumns(columns):
-# 	result = ''
-# 	for c in columns.split(','):
-# 		for col in _.appInfo['columns']:
-# 			for a in col['abbreviation'].split(','):
-# 				if a == c:
-# 					c = col['name']
-# 		result += c + ','
-# 	result = result[:-1]
-# 	return result
+#     result = ''
+#     for c in columns.split(','):
+#         for col in _.appInfo['columns']:
+#             for a in col['abbreviation'].split(','):
+#                 if a == c:
+#                     c = col['name']
+#         result += c + ','
+#     result = result[:-1]
+#     return result
 
 # _.switches.trigger('Column',formatColumns)
 _.switches.process()
 
 # _.tableProfile.append({
-# 	'field': 'timestamp', 
-# 	'script_trigger_external': _.float2Date
-# 	})
+#     'field': 'timestamp', 
+#     'script_trigger_external': _.float2Date
+#     })
 
 # if _.switches.isActive('File') == False:
-# 	file = _.switches.value('File')
-# 	variable = _.getTable(file)
-# 	_.saveTable(xRefList,file)
-# 	line = _str.replaceAll(line,'  ',' ')
-# 	line = _str.cleanFirst(line,' ')
-# 	line = _str.cleanLast(line,' ')
-# 	line = _str.cleanSpecial(line)
-# 	line = _str.totalStrip(line)
-# 	line = _str.removeAll(line)
-# 	line = _str.replaceDuplicate(line,' ')
-# 	xRefList = _.sort(xRefList, 'new')
-# 	_.tables.register('Auto',_.switch)
-# 	_.tables.print('Auto','name,switch,expected_input_example')
+#     file = _.switches.value('File')
+#     variable = _.getTable(file)
+#     _.saveTable(xRefList,file)
+#     line = _str.replaceAll(line,'  ',' ')
+#     line = _str.cleanFirst(line,' ')
+#     line = _str.cleanLast(line,' ')
+#     line = _str.cleanSpecial(line)
+#     line = _str.totalStrip(line)
+#     line = _str.removeAll(line)
+#     line = _str.replaceDuplicate(line,' ')
+#     xRefList = _.sort(xRefList, 'new')
+#     _.tables.register('Auto',_.switch)
+#     _.tables.print('Auto','name,switch,expected_input_example')
 	# _.saveTable(rows,theFile,tableTemp = True,printThis = True)
 	# theTable = _.getTable(theFile,tableTemp = True,printThis = False)
 
@@ -80,23 +80,23 @@ _.switches.process()
 ########################################################################################
 
 def netmask_to_cidr(netmask):
-    '''
-    :param netmask: netmask ip addr (eg: 255.255.255.0)
-    :return: equivalent cidr number to given netmask ip (eg: 24)
-    '''
-    return sum([bin(int(x)).count('1') for x in netmask.split('.')])
+	'''
+	:param netmask: netmask ip addr (eg: 255.255.255.0)
+	:return: equivalent cidr number to given netmask ip (eg: 24)
+	'''
+	return sum([bin(int(x)).count('1') for x in netmask.split('.')])
 
 def makeMask(n):
-    "return a mask of n bits as a long integer"
-    return (2<<n-1) - 1
+	"return a mask of n bits as a long integer"
+	return (2<<n-1) - 1
 
 def dottedQuadToNum(ip):
-    "convert decimal dotted quad string to long integer"
-    return struct.unpack('L',socket.inet_aton(ip))[0]
+	"convert decimal dotted quad string to long integer"
+	return struct.unpack('L',socket.inet_aton(ip))[0]
 
 def networkMask(ip,bits):
-    "Convert a network address to a long integer" 
-    return dottedQuadToNum(ip) & makeMask(bits)
+	"Convert a network address to a long integer" 
+	return dottedQuadToNum(ip) & makeMask(bits)
 
 def addressInNetwork(ip, net):
    import socket,struct

@@ -361,7 +361,7 @@ def scanDrives():
 					driveID = genGUID()
 					drive_records.append(appendRecord(driveID,letter,time.time()))
 					file = open(idFile,'w') 
-					file.write(driveID)				 
+					file.write(driveID)                 
 					file.close()
 					os.system('attrib +h ' + idFile)
 					# _.pr(letter,driveID)
@@ -751,9 +751,9 @@ class Documentation_Initial:
 					self.findSerial()
 
 				# for x in dir(window):
-				# 	x = str(x)
-				# 	if not x.startswith('_'):
-				# 		_.pr(x)
+				#     x = str(x)
+				#     if not x.startswith('_'):
+				#         _.pr(x)
 				self.save = True
 				window.destroy()
 				window.quit()
@@ -1195,7 +1195,7 @@ def unFormatSize( size ):
 	factor = ''
 
 	if 'TB' in size:
-		factor = 1099511627776	
+		factor = 1099511627776    
 	elif 'GB' in size:
 		factor = 1073741824
 	elif 'MB' in size:

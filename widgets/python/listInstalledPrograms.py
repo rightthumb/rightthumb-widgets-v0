@@ -41,15 +41,15 @@ _.load()
 import _rightThumb._vars as _v
 import _rightThumb._string as _str
 # import _rightThumb._profileVariables as _profile
-# 	profile = _profile.records.audit( 'name', asset )
+#     profile = _profile.records.audit( 'name', asset )
 # import _rightThumb._encryptString as _blowfish
 	# _blowfish.genPassword()
 	# _blowfish.genPassword('string')
 	# en = _blowfish.encrypt( string )
 	# de = _blowfish.decrypt( en )
 # import _rightThumb._encryptFile as _blowfish
-# 	_blowfish.encrypt( infilepath, outfilepath, key )
-# 	_blowfish.decrypt( infilepath, outfilepath, key )
+#     _blowfish.encrypt( infilepath, outfilepath, key )
+#     _blowfish.decrypt( infilepath, outfilepath, key )
 # _browser = _.regImp( __.appReg, '_rightThumb._toolsScrapeFrontEnd' )
 # _browserX = _.regImp( __.appReg, '_rightThumb._toolsScrapeDirect' )
 # import _rightThumb._date as _date
@@ -70,36 +70,36 @@ import _rightThumb._string as _str
 	# _inDic.imp.testAll( 'fight' )
 	# _inDic.imp.testOne( 'austen' )
 # _file_folder = _.regImp( __.appReg, 'file_folder' )
-# 	_file_folder.switch( 'Save,Clean' )
-# 	_file_folder.switch( 'Compair,Clean' )
-# 	_file_folder.switch( 'Folder', '' )
+#     _file_folder.switch( 'Save,Clean' )
+#     _file_folder.switch( 'Compair,Clean' )
+#     _file_folder.switch( 'Folder', '' )
 # _fileNameDate = _.regImp( __.appReg, 'fileNameDate' )
-# 	_fileNameDate.imp.newName( filename )
-# 	_fileNameDate.imp.newName( filename, _dir.fileInfo( filename ) )
+#     _fileNameDate.imp.newName( filename )
+#     _fileNameDate.imp.newName( filename, _dir.fileInfo( filename ) )
 # _filePathPatterns = _.regImp( __.appReg, 'filePathPatterns' )
 	# _filePathPatterns.switch( 'NoPrint' )
 	# _filePathPatterns.switch( 'Files', _.switches.value('Files') )
 	# folderReport = _filePathPatterns.action()
 # txtBackup = _.regImp( __.appReg, 'txtBackup' )
-# 	txtBackup.switch( 'Input', filename )
-# 	txtBackup.switch( 'Flag', 'pre replaceText' )
-# 	recoveryFile = txtBackup.do( 'action' )
+#     txtBackup.switch( 'Input', filename )
+#     txtBackup.switch( 'Flag', 'pre replaceText' )
+#     recoveryFile = txtBackup.do( 'action' )
 # _folderContent = _.regImp( __.appReg, 'file' )
-# 	_folderContent.switch( 'Silent' )
-# 	_folderContent.switch( 'Folder', _v.myAppsBatch )
-# 	_folderContent.switch( 'NoExtension' )
+#     _folderContent.switch( 'Silent' )
+#     _folderContent.switch( 'Folder', _v.myAppsBatch )
+#     _folderContent.switch( 'NoExtension' )
 
-# 	_folderContent.switch( 'Recursive' )
+#     _folderContent.switch( 'Recursive' )
 
-# 	_folderContent.switch( 'Text' )
-# 	_folderContent.switch( 'Binary' )
-# 	_folderContent.switch( 'Label', 'App: ' )
-# 	_folderContent.switch( 'Prefix', ';t' )
-# 	files = _folderContent.do( 'action' )['files']
-# 	folders = _folderContent.do( 'action' )['folders']
+#     _folderContent.switch( 'Text' )
+#     _folderContent.switch( 'Binary' )
+#     _folderContent.switch( 'Label', 'App: ' )
+#     _folderContent.switch( 'Prefix', ';t' )
+#     files = _folderContent.do( 'action' )['files']
+#     folders = _folderContent.do( 'action' )['folders']
 # _tickets = _.regImp( __.appReg, 'ticketTimeline' )
-# 	_tickets.switch( 'ReturnFiles' )
-# 	records = _tickets.do( 'records' )
+#     _tickets.switch( 'ReturnFiles' )
+#     records = _tickets.do( 'records' )
 
 ##################################################
 
@@ -158,11 +158,11 @@ _.appInfo[focus()] = {
 						''
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': 'name', 'abbreviation': 'n' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 
 	}
@@ -246,8 +246,8 @@ _.postLoad( __file__ )
 # os.system('"' + do + '"')
 # _.setPipeData( os.listdir(os.getcwd()), focus() )
 # _.showLine(item)
-# 	if os.path.isdir(row):
-# 	if os.path.isfile(row):
+#     if os.path.isdir(row):
+#     if os.path.isfile(row):
 # __.appRegPipe
 ########################################################################################
 # START
@@ -260,23 +260,23 @@ def lookupKey( key ):
 
 	aKey = OpenKey(aReg, r""+key)
 	for i in range(1024):
-	    try:
-	        keyname = EnumKey(aKey, i)
-	        asubkey = OpenKey(aKey, keyname)
-	        val = QueryValueEx(asubkey, "DisplayName")
-	        # _.pr({ 'Key': keyname, 'Val': val })
-	        if not _.switches.isActive('NoPrint'):
-		        _.pr( val[0] )
-	        data.append( val[0] )
+		try:
+			keyname = EnumKey(aKey, i)
+			asubkey = OpenKey(aKey, keyname)
+			val = QueryValueEx(asubkey, "DisplayName")
+			# _.pr({ 'Key': keyname, 'Val': val })
+			if not _.switches.isActive('NoPrint'):
+				_.pr( val[0] )
+			data.append( val[0] )
 
-	    except EnvironmentError:
-	        pass
+		except EnvironmentError:
+			pass
 	for i in range(1024):
-	    try:
-	    	keyname = EnumKey(aKey, i)
-	    	lookupKey( key + _v.slash + keyname )
-	    except Exception as e:
-	    	pass
+		try:
+			keyname = EnumKey(aKey, i)
+			lookupKey( key + _v.slash + keyname )
+		except Exception as e:
+			pass
 
 def action():
 	lookupKey( 'SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall' )

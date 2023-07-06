@@ -94,7 +94,7 @@ from collections import OrderedDict
 # DEFAULT_TIMEOUT = 1
 
 # for x in sys.argv:
-# 	print(x)
+#     print(x)
 # print('')
 # os.listdir(sys.argv[1]) # returns list
 
@@ -122,7 +122,7 @@ def formatSize(size):
 		num = round(size / 1073741824, 2)
 		result = str(num) + ' GB'
 	# if size < 1:
-	# 	result = ''
+	#     result = ''
 	return result
 
 
@@ -373,7 +373,7 @@ def printColumns(rows,column):
 	print(columnHeader)
 	i = 0
 	for item in rows:
-		result = ''	
+		result = ''    
 		for c in column.split(','):
 			# result += showColumn(rows,c,i,columnHeaderLength) + columnTab
 			try:
@@ -474,10 +474,10 @@ def getSwitchValue2(name):
 		i = 0
 		# print(switchInput[getSwitchField(name,'pos')].split(':')[1])
 		# try:
-		# 	result = switchInput[getSwitchField(name,'pos')].split(':')[1]
+		#     result = switchInput[getSwitchField(name,'pos')].split(':')[1]
 		# except Exception as e:
-		# 	# errors.append({'id': 14, 'function': 'getSwitchValue()', 'cnt': 2, 'location': "result = switchInput[getSwitchField(name,'pos')].split(':')[1]", 'vars': [{'name': 'name', 'value': name}], 'error': e})
-		# 	result = ''
+		#     # errors.append({'id': 14, 'function': 'getSwitchValue()', 'cnt': 2, 'location': "result = switchInput[getSwitchField(name,'pos')].split(':')[1]", 'vars': [{'name': 'name', 'value': name}], 'error': e})
+		#     result = ''
 		result = ''
 
 		for a in switchInput:
@@ -536,8 +536,8 @@ def processSwitches(inList):
 		updateSwitchField('_Raw','value',processSwitchFormatting('_Raw'))
 		# i = 0
 		# for a in switchInput:
-		# 	print(i,a)
-		# 	i += 1
+		#     print(i,a)
+		#     i += 1
 	if isSwitchActive('Help') == True:
 		# os.system('cls')
 		print('')
@@ -757,7 +757,7 @@ def formatSwitchValueHelperC(column,typ):
 		if typ == 1:
 			columnList.append({'direction': direction, 'column': sb})
 		else:
-			columnList.append({'column': sb})		
+			columnList.append({'column': sb})        
 		i += 1
 	return columnList
 def formatSwitchValueColumn(name,column):
@@ -893,7 +893,7 @@ class switches:
 
 	def __init__(self, name):
 		self.name = name
-		self.tricks = []	# creates a new empty list for each dog
+		self.tricks = []    # creates a new empty list for each dog
 
 	def add_trick(self, trick):
 		self.tricks.append(trick)
@@ -990,20 +990,20 @@ def external(func,funcIn0=None,funcIn1=None,funcIn2=None,funcIn3=None,funcIn4=No
 
 
 # def inputCheck():
-# 	global replaceWith
+#     global replaceWith
 
-# 	replaceWit = "*,*"
-# 	replaceWith = replaceWit.split(',')
-# 	if _.isSwitchActive('Replace') == True:
-# 		replaceWith = _.getSwitchValue('Replace').split(',')
+#     replaceWit = "*,*"
+#     replaceWith = replaceWit.split(',')
+#     if _.isSwitchActive('Replace') == True:
+#         replaceWith = _.getSwitchValue('Replace').split(',')
 
 
-# 	if len(_.getSwitchValue('Plus')) == 0:
-# 		_.updateSwitchField('Plus','value',_.getSwitchValue('_Raw'))
-# 		_.updateSwitchField('Plus','pos',_.getSwitchField('_Raw','pos'))
+#     if len(_.getSwitchValue('Plus')) == 0:
+#         _.updateSwitchField('Plus','value',_.getSwitchValue('_Raw'))
+#         _.updateSwitchField('Plus','pos',_.getSwitchField('_Raw','pos'))
 
-# 	_.updateSwitchField('Plus','active',True)
-# 	_.updateSwitchField('_Raw','active',False)
+#     _.updateSwitchField('Plus','active',True)
+#     _.updateSwitchField('_Raw','active',False)
 
 
 # inputCheck()
@@ -1114,7 +1114,7 @@ def tempFile(rows,theFile):
 	file0 = _v.stmp + _v.slash + theFile
 	file = open(file0,'w')
 	for r in rows:
-		file.write(r)				 
+		file.write(r)                 
 	file.close()
 
 def stamp2Date(ts):
@@ -1143,12 +1143,12 @@ def svc(string):
 	return string
 
 def updateLine(string):
-    string = str(string)
-    sys.stdout.write("\b" * len(string))
-    sys.stdout.write(" " * len(string))
-    sys.stdout.write("\b" * len(string))
-    sys.stdout.write(string)
-    sys.stdout.flush()
+	string = str(string)
+	sys.stdout.write("\b" * len(string))
+	sys.stdout.write(" " * len(string))
+	sys.stdout.write("\b" * len(string))
+	sys.stdout.write(string)
+	sys.stdout.flush()
 
 
 def saveTableSplitNew(rows,theFile,tableTemp = True,printThis = True):

@@ -98,11 +98,11 @@ _.appInfo[focus()] = {
 						''
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': 'name', 'abbreviation': 'n' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 
 	}
@@ -189,9 +189,9 @@ def action():
 	if _.switches.isActive('Input'):
 		_.setPipeData( _.getText( _.switches.value('Input') ), focus() )
 		# if type( _.appData[__.appReg]['pipe'] ) == bool:
-		# 	_.appData[__.appReg]['pipe'] = []
-		# 	for row in _.switches.value('Input').split( ',' ):
-		# 		_.appData[__.appReg]['pipe'].append( row )
+		#     _.appData[__.appReg]['pipe'] = []
+		#     for row in _.switches.value('Input').split( ',' ):
+		#         _.appData[__.appReg]['pipe'].append( row )
 	if not type( _.appData[__.appReg]['pipe'] ) == bool:
 		_.pipeCleaner()
 		# _.pr( _.printVar(_.appData) )
@@ -204,8 +204,8 @@ def action():
 # cleanEnd
 
 # def load():
-# 	global data
-# 	data = _.getTable( 'table.json' )
+#     global data
+#     data = _.getTable( 'table.json' )
 # data = []
 ########################################################################################
 if __name__ == '__main__':

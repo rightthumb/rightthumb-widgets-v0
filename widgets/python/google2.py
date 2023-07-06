@@ -111,11 +111,11 @@ _.appInfo[focus()] = {
 						''
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': 'name', 'abbreviation': 'n' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 
 	}
@@ -297,9 +297,9 @@ def printRecord( record ):
 	_.pr( '________________________________________________' )
 	_.pr( record['q'] )
 	# if not record['search'] == record['q']:
-	# 	_.pr()
-	# 	_.pr( '\t(', record['search'],')' )
-	# 	_.pr()
+	#     _.pr()
+	#     _.pr( '\t(', record['search'],')' )
+	#     _.pr()
 	_.pr()
 	_.pr( record['a'] )
 	if len( record['notes'] ):

@@ -47,7 +47,7 @@ __.sort_name_trigger_override = [  ['']  ]
 _.appInfo[focus()] = {
 	'file': 'genBase4Sections.py',
 	'liveAppName': __.thisApp( __file__ ),
- 	'description': 'Construct2 tool this is named wrong',
+	'description': 'Construct2 tool this is named wrong',
 	'categories': [
 						'construct2',
 						'base4',
@@ -67,12 +67,12 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
-				       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 
 	}
@@ -421,7 +421,7 @@ def action():
 	for section in payload:
 		result+=section
 		# for line in section:
-		# 	_.pr( line )
+		#     _.pr( line )
 	if _.switches.isActive('Save') and len(_.switches.value('Save')):
 		_.saveText( result, _.switches.values('Save')[0] )
 	elif not _.switches.isActive('Save'):

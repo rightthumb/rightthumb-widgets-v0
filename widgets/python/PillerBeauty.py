@@ -94,15 +94,15 @@ _.appInfo[focus()] = {
 						'\tp PillerBeauty -build',
 	],
 	'columns': [
-					   # { 'name': 'name', 'abbreviation': 'n' },
-					   # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-					   # 'this',
-					   # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-					   # {},
+					# {},
 	],
 }
 
@@ -245,7 +245,7 @@ class Documentation_Initial:
 			window.destroy()
 			window.quit()
 			self.done()
-			 
+			
 
 
 
@@ -347,12 +347,12 @@ def build(config):
 	section_img = """
 
 
-        if ( strtotime('now') > strtotime('|start| 6:01:00') && strtotime('now') < strtotime('|end| 6:01:00') ) {
-        ?>
-            <div style="margin: auto;max-width: 700px;">
-                <img src="images/popup/|graphic|" id="ad" alt="" style="max-width: 700px;" />
-            </div>
-        <? }
+		if ( strtotime('now') > strtotime('|start| 6:01:00') && strtotime('now') < strtotime('|end| 6:01:00') ) {
+		?>
+			<div style="margin: auto;max-width: 700px;">
+				<img src="images/popup/|graphic|" id="ad" alt="" style="max-width: 700px;" />
+			</div>
+		<? }
 
 
 	"""
@@ -360,9 +360,9 @@ def build(config):
 
 
 			if ( strtotime('now') > strtotime('|start| 6:01:00') && strtotime('now') < strtotime('|end| 6:01:00') ) {
-			   $PROMO_CODE = '|promo_code|';
-			   $PROMO_MSG_PRE = '|promo_msg_pre|';
-			   $PROMO_MSG_POST = '|promo_msg_post|';
+			$PROMO_CODE = '|promo_code|';
+			$PROMO_MSG_PRE = '|promo_msg_pre|';
+			$PROMO_MSG_POST = '|promo_msg_post|';
 			}
 
 
@@ -475,7 +475,7 @@ def build(config):
 			section_promo_items_pDiscount_LIST.append( section_promo_items_pDiscount.replace( '|pDiscount_ID|', x ) )
 		# if ',' in config['pDiscount_IDs']:
 		# else:
-		# 	section_promo_items_pDiscount_LIST.append( section_promo_items_pDiscount.replace( '|pDiscount_ID|', config['pDiscount_IDs'] ) )
+		#     section_promo_items_pDiscount_LIST.append( section_promo_items_pDiscount.replace( '|pDiscount_ID|', config['pDiscount_IDs'] ) )
 
 	if not config['BOGO_IDs'] == '-' and not config['BOGO_IDs'] == '*' and  not config['BOGO_IDs'] == '':
 		hasBOGO = True

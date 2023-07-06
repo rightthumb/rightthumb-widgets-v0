@@ -26,7 +26,7 @@ _.switches.register('Input', '-i')
 _.switches.register('WordThreshold', '-wordthreshold','Default is 6')
 _.switches.register('GroupThreshold', '-groupthreshold','Default is 80 (it is a percent but dont add the percent sign)')
 
-_.appInfo=	{
+_.appInfo=    {
 	'file': 'jsonIntelligentDataKeyGrouping.py',
 	'description': 'Convert json to csv',
 	'prerequisite': [],
@@ -229,7 +229,7 @@ def action():
 		data = keyGrouping(data0)
 		# print(data)
 		# for kg in data:
-		# 	print(kg['count'],'\t',kg['word'])
+		#     print(kg['count'],'\t',kg['word'])
 		# print(data)
 		# _.tables.register('Auto',words)
 		# _.tables.print('Auto','word,count,relevant') # ,implode

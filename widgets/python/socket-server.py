@@ -73,15 +73,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-					   # { 'name': 'name', 'abbreviation': 'n' },
-					   # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-					   # 'this',
-					   # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-					   # {},
+					# {},
 	],
 }
 
@@ -207,9 +207,9 @@ class Socky:
 				break
 		d=str(data,'iso-8859-1')
 		# if 'dmp' in d and len(d) < 5:
-		# 	pass
+		#     pass
 		# else:
-		# 	_.pr('r',d)
+		#     _.pr('r',d)
 		_.pr('r',d)
 		return d
 
@@ -217,8 +217,8 @@ class Socky:
 	def wait_for_instructions( self ):
 		# _.pr('def wait_for_instructions')
 		# if self.note == 'exit':
-		# 	_.pr('wex')
-		# 	return None
+		#     _.pr('wex')
+		#     return None
 		_.pr('w')
 		data = self.recvall()
 		_.pr('d')

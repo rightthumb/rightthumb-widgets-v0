@@ -60,10 +60,10 @@ def saveThePin(pinID,data):
 
 
 with open('RelationshipResearch_PinterestIDs_Sample.txt') as f:
-    IDs = f.read().splitlines()
+	IDs = f.read().splitlines()
 
 with open('pinterestProcessList_SuccessLog.txt') as f:
-    CompletedIDs = f.read().splitlines()
+	CompletedIDs = f.read().splitlines()
 
 # print IDs
 

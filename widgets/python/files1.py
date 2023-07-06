@@ -28,7 +28,7 @@ if __name__ == '__main__':
 	# _.switches.register('Output', '-o','folder\\appOut.py')
 	# _.switches.register('Move', '-move','completed_in-folder_name')
 
-	_.appInfo=	{
+	_.appInfo=    {
 		'file': 'files.py',
 		'description': 'Lists files',
 		'prerequisite': [],
@@ -51,11 +51,11 @@ if __name__ == '__main__':
 def isText(file):
 	# result = True
 	# if _.switches.isActive('Text') == True:
-	# 	mime = mimetypes.guess_type(file)
-	# 	if str(mime) == "('text/plain', None)":
-	# 		result = True
-	# 	else:
-	# 		result = False
+	#     mime = mimetypes.guess_type(file)
+	#     if str(mime) == "('text/plain', None)":
+	#         result = True
+	#     else:
+	#         result = False
 	return _mime.isText(file)
 
 def whatIsIt(file):

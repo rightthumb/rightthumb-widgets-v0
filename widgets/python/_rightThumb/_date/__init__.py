@@ -27,6 +27,8 @@ class Color:
 	underline = '\033[4m'
 	end = '\033[0m'
 
+def dayStrip():
+	return str(datetime.datetime.fromtimestamp(time.time()).strftime('%Y%m%d'))
 
 def friendlyDate( theDate ):
 	try:

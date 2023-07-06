@@ -48,27 +48,27 @@ import ssl
 	# _textIndex.switch( 'PartsOfSpeech' )
 	# _textIndex.switch( 'Clean' )
 	# _textIndex.pipe( data )
-# 	index = _textIndex.do( 'action' )
+#     index = _textIndex.do( 'action' )
 
 # _bm = _.regImp( __.appReg, 'bookmarks' )
 	# index = _bm.imp.index()
 # _dirList = _.regImp( __.appReg, 'dirList' )
-# 	_dirList.switch( 'Files' )
-# 	_dirList.switch( 'Recursion' )
-# 	_dirList.switch( 'Binary' )
-# 	_dirList.switch( 'Path','D:\\Apps' )
-# 	files = _dirList.do( 'action' )
+#     _dirList.switch( 'Files' )
+#     _dirList.switch( 'Recursion' )
+#     _dirList.switch( 'Binary' )
+#     _dirList.switch( 'Path','D:\\Apps' )
+#     files = _dirList.do( 'action' )
 
 # import _rightThumb._profileVariables as _profile
-# 	profile = _profile.records.audit( 'name', asset )
+#     profile = _profile.records.audit( 'name', asset )
 # import _rightThumb._encryptString as _blowfish
 	# _blowfish.genPassword()
 	# _blowfish.genPassword( 'string' )
 	# en = _blowfish.encrypt( string )
 	# de = _blowfish.decrypt( en )
 # import _rightThumb._encryptFile as _blowfish
-# 	_blowfish.encrypt( infilepath, outfilepath, key )
-# 	_blowfish.decrypt( infilepath, outfilepath, key )
+#     _blowfish.encrypt( infilepath, outfilepath, key )
+#     _blowfish.decrypt( infilepath, outfilepath, key )
 # _browser = _.regImp( __.appReg, '_rightThumb._toolsScrapeFrontEnd' )
 # _browserX = _.regImp( __.appReg, '_rightThumb._toolsScrapeDirect' )
 # import _rightThumb._date as _date
@@ -89,36 +89,36 @@ import ssl
 	# _inDic.imp.testAll( 'fight' )
 	# _inDic.imp.testOne( 'austen' )
 # _file_folder = _.regImp( __.appReg, 'file_folder' )
-# 	_file_folder.switch( 'Save,Clean' )
-# 	_file_folder.switch( 'Compair,Clean' )
-# 	_file_folder.switch( 'Folder', '' )
+#     _file_folder.switch( 'Save,Clean' )
+#     _file_folder.switch( 'Compair,Clean' )
+#     _file_folder.switch( 'Folder', '' )
 # _fileNameDate = _.regImp( __.appReg, 'fileNameDate' )
-# 	_fileNameDate.imp.newName( filename )
-# 	_fileNameDate.imp.newName( filename, _dir.fileInfo( filename ) )
+#     _fileNameDate.imp.newName( filename )
+#     _fileNameDate.imp.newName( filename, _dir.fileInfo( filename ) )
 # _filePathPatterns = _.regImp( __.appReg, 'filePathPatterns' )
 	# _filePathPatterns.switch( 'NoPrint' )
 	# _filePathPatterns.switch( 'Files', _.switches.value( 'Files' ) )
 	# folderReport = _filePathPatterns.action()
 # fileBackup = _.regImp( __.appReg, 'fileBackup' )
-# 	fileBackup.switch( 'Input', filename )
-# 	fileBackup.switch( 'Flag', 'pre replaceText' )
-# 	recoveryFile = fileBackup.do( 'action' )
+#     fileBackup.switch( 'Input', filename )
+#     fileBackup.switch( 'Flag', 'pre replaceText' )
+#     recoveryFile = fileBackup.do( 'action' )
 # _folderContent = _.regImp( __.appReg, 'file' )
-# 	_folderContent.switch( 'Silent' )
-# 	_folderContent.switch( 'Folder', _v.myAppsBatch )
-# 	_folderContent.switch( 'NoExtension' )
+#     _folderContent.switch( 'Silent' )
+#     _folderContent.switch( 'Folder', _v.myAppsBatch )
+#     _folderContent.switch( 'NoExtension' )
 
-# 	_folderContent.switch( 'Recursive' )
+#     _folderContent.switch( 'Recursive' )
 
-# 	_folderContent.switch( 'Text' )
-# 	_folderContent.switch( 'Binary' )
-# 	_folderContent.switch( 'Label', 'App: ' )
-# 	_folderContent.switch( 'Prefix', ';t' )
-# 	files = _folderContent.do( 'action' )['files']
-# 	folders = _folderContent.do( 'action' )['folders']
+#     _folderContent.switch( 'Text' )
+#     _folderContent.switch( 'Binary' )
+#     _folderContent.switch( 'Label', 'App: ' )
+#     _folderContent.switch( 'Prefix', ';t' )
+#     files = _folderContent.do( 'action' )['files']
+#     folders = _folderContent.do( 'action' )['folders']
 # _tickets = _.regImp( __.appReg, 'ticketTimeline' )
-# 	_tickets.switch( 'ReturnFiles' )
-# 	records = _tickets.do( 'records' )
+#     _tickets.switch( 'ReturnFiles' )
+#     records = _tickets.do( 'records' )
 ##################################################
 
 def appSwitches():
@@ -136,7 +136,7 @@ __.isRequired_Pipe_or_File = False
 _.appInfo[focus()] = {
 	'file': 'ssl_socket_bridge_user_mgt_server_b.py',
 	'liveAppName': __.thisApp( __file__ ),
- 	'description': 'ssl bridge server',
+	'description': 'ssl bridge server',
 	'categories': [
 						'ssl',
 						'bridge',
@@ -156,11 +156,11 @@ _.appInfo[focus()] = {
 						''
 	],
 	'columns': [
-					   # { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': 'name', 'abbreviation': 'n' },
 	],
 	'aliases': [
-					   # 'this',
-					   # 'app',
+					# 'this',
+					# 'app',
 	],
 
 	}
@@ -237,58 +237,58 @@ _.postLoad( __file__ )
 from cryptography.fernet import Fernet
 
 def write_key():
-    key = Fernet.generate_key()
-    with open("key.key", "wb") as key_file:
-        key_file.write(key)
+	key = Fernet.generate_key()
+	with open("key.key", "wb") as key_file:
+		key_file.write(key)
 
 
 def load_key():
-    return open("key.key", "rb").read()
+	return open("key.key", "rb").read()
 
 
 def encrypt(fin, fout, key):
-    f = Fernet(key)
-    with open(fin, "rb") as file:
-        # read all file data
-        file_data = file.read()
-    encrypted_data = f.encrypt(file_data)
+	f = Fernet(key)
+	with open(fin, "rb") as file:
+		# read all file data
+		file_data = file.read()
+	encrypted_data = f.encrypt(file_data)
 
-    # write the encrypted file
-    with open(fout, "wb") as file:
-        file.write(encrypted_data)
+	# write the encrypted file
+	with open(fout, "wb") as file:
+		file.write(encrypted_data)
 
 def decrypt(fin, fout, key):
-    f = Fernet(key)
-    with open(fin, "rb") as file:
-        # read the encrypted data
-        encrypted_data = file.read()
-    # decrypt data
-    decrypted_data = f.decrypt(encrypted_data)
-    # write the original file
-    with open(fout, "wb") as file:
-        file.write(decrypted_data)
+	f = Fernet(key)
+	with open(fin, "rb") as file:
+		# read the encrypted data
+		encrypted_data = file.read()
+	# decrypt data
+	decrypted_data = f.decrypt(encrypted_data)
+	# write the original file
+	with open(fout, "wb") as file:
+		file.write(decrypted_data)
 
 def decrypt2(fin, fout, key):
-    f = Fernet(key)
-    # with open(fin, "rb") as file:
-    #     # read the encrypted data
-    #     encrypted_data = file.read()
-    # # decrypt data
-    decrypted_data = f.decrypt(fin)
-    # write the original file
-    with open(fout, "wb") as file:
-        file.write(decrypted_data)
+	f = Fernet(key)
+	# with open(fin, "rb") as file:
+	#     # read the encrypted data
+	#     encrypted_data = file.read()
+	# # decrypt data
+	decrypted_data = f.decrypt(fin)
+	# write the original file
+	with open(fout, "wb") as file:
+		file.write(decrypted_data)
 
 
 
 def encryptVar( data, key ):
-    f = Fernet(key)
-    return f.encrypt(data)
+	f = Fernet(key)
+	return f.encrypt(data)
 
 
 def decryptVar( data, key ):
-    f = Fernet(key)
-    return f.decrypt(data)
+	f = Fernet(key)
+	return f.decrypt(data)
 
 ########################################################################################################################
 from Crypto.Cipher import Blowfish
@@ -426,20 +426,20 @@ class Data:
 
 # class Databases:
 
-# 	def __init__( self ):
-# 		self.databases = {}
+#     def __init__( self ):
+#         self.databases = {}
 
-# 	def create( self, db ):
-# 		pass
+#     def create( self, db ):
+#         pass
 
-# 	def insert( self, db, sql ):
-# 		pass
+#     def insert( self, db, sql ):
+#         pass
 
-# 	def query( self, sql ):
-# 		pass
+#     def query( self, sql ):
+#         pass
 
-# 	def buildSQL( self, dic ):
-# 		pass
+#     def buildSQL( self, dic ):
+#         pass
 
 
 
@@ -568,9 +568,9 @@ def handler( client, i, qID=None, account=None ):
 						history.append({ 'epoch': time.time(), 'user': instructions['user'], 'send': instructions['send'] })
 
 						# if instructions['send'] == 'exit':
-						# 	time.sleep(2)
-						# 	users[instructions['user']]['status'] = 0
-						# 	users[instructions['user']]['logout'] = time.time()
+						#     time.sleep(2)
+						#     users[instructions['user']]['status'] = 0
+						#     users[instructions['user']]['logout'] = time.time()
 
 						if instructions['user'] == 'request':
 							

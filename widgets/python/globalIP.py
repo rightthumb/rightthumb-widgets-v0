@@ -72,10 +72,10 @@ links = tree.cssselect('a')  # or tree.xpath('//a')
 
 out = []
 for link in links:
-    # we use this if just in case some <a> tags lack an href attribute
-    if 'href' in link.attrib:
-        out.append({'name': link.text_content(), 'url': link.attrib['href']})
-        test = link
+	# we use this if just in case some <a> tags lack an href attribute
+	if 'href' in link.attrib:
+		out.append({'name': link.text_content(), 'url': link.attrib['href']})
+		test = link
 countries = []
 start = False
 i = 0

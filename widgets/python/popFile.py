@@ -38,7 +38,7 @@ def appSwitches():
 	### EXAMPLE: START
 	# _.switches.register( 'Input', '-i' )
 	# _.switches.register( 'Files', '-f,-file,-files','file.txt', isPipe=True, isRequired=True, description='Files' )
-	_.switches.register( 'Files', '-f,-file,-files','file.txt', isPipe='name', description='Files' )
+	_.switches.register( 'File', '-f,-file,-files','file.txt', description='Files' )
 	### EXAMPLE: END
 
 
@@ -78,15 +78,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-					   # { 'name': 'name', 'abbreviation': 'n' },
-					   # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-					   # 'this',
-					   # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-					   # {},
+					# {},
 	],
 }
 
@@ -163,13 +163,41 @@ _.postLoad( __file__ )
 ########################################################################################
 # START
 
+def httpCheck(path):
+	if path.startswith('https:') or path.startswith('http:'):
+		url=path
+		url=url.replace('https://www.','https://')
+		if '?' in url: url=url.split('?')[0]
+		sites=_.getTable('site-locations.list')
+		for mPath in sites:
+			if os.path.isfile(mPath):
+				p = __.path(mPath,pop=True)
+				if _.getText( mPath, raw=True ).strip().startswith('{'): meta = _.getTable2( mPath )
+				else: meta = _.getYML( mPath )
+				if 'url' in meta:
+					u = meta['url'].replace('https://www.','https://')
+					if url.startswith(u):
+						x=url[len(u):].replace('/',os.sep)
+						y=p+os.sep+x
+						if os.path.isdir(y):
+							test='index.php index.htm index.html'.split(' ')
+							for t in test:
+								yt=str(y+os.sep+t).replace(os.sep+os.sep,os.sep)
+								if os.path.isfile(yt):
+									y=yt
+						y=y.replace(os.sep+os.sep,os.sep)
+						if os.path.isfile(y):
+							path=y
+	return path
 
 
 def action():
-	files=_.isData()
-	if _.switches.isActive('Files'):
-		files=_.switches.values('Files')
+	# files=_.isData()
+	# if _.switches.isActive('Files'):
+	files=_.switches.values('File')
 	for i,path in enumerate(files):
+		# print(path);sys.exit()
+		path=httpCheck(path)
 		_.pr( __.path(path,pop=True) )
 
 

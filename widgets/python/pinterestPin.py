@@ -52,18 +52,18 @@ logged_in = pinterest.login()
 #     IDs = f.read().splitlines()
 
 # for pinID in IDs:
-# 	try:
-# 		pins = pinterest.thisPin(pin=pinID)
-# 		link = ''
-# 		try:
-# 			link = pins['pins'][pinID]['tracked_link']
-# 		except Exception as e:
-# 			pass
-# 		print str(pinID) + ',' + str(link)
-# 		with open('pin_url.csv','a') as logFile:
-# 			logFile.write(str('\n' + pinID) + ',' + str(link))
-# 	except Exception as e:
-# 		pass
+#     try:
+#         pins = pinterest.thisPin(pin=pinID)
+#         link = ''
+#         try:
+#             link = pins['pins'][pinID]['tracked_link']
+#         except Exception as e:
+#             pass
+#         print str(pinID) + ',' + str(link)
+#         with open('pin_url.csv','a') as logFile:
+#             logFile.write(str('\n' + pinID) + ',' + str(link))
+#     except Exception as e:
+#         pass
 data = pinterest.thisPin(pin=sys.argv[0])
 jsonData = json.dumps(data, sort_keys=True, indent=4, separators=(',', ': '))
 print jsonData

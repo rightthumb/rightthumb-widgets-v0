@@ -9,7 +9,7 @@
 #    - Scott Taylor Reph, RightThumb.com
 # ###########################################################################
 # ## {C3P0D40fAe8B} ##
-
+site_url=None
 autoCreationConfiguration = {
 							'backup': False,
 							'logs': True,
@@ -415,12 +415,12 @@ def yamlSimp(text):
 
 
 def get_first_char(filename):
-	 with open(filename, 'r') as file: first_char = file.read(1)
-	 return first_char
+	with open(filename, 'r') as file: first_char = file.read(1)
+	return first_char
 
 def getText(filename):
-	 with open(filename, 'r') as file: content = file.read()
-	 return content
+	with open(filename, 'r') as file: content = file.read()
+	return content
 def saveText(text, path):
 	mkdir(path,isFile=True)
 	try:
@@ -733,6 +733,7 @@ setting('switch-raw',[])
 setting('require-list',[])
 setting('receipt-log',True)
 setting('receipt-file',True)
+setting('fileBackup-secure_file',False)
 
 #--> todo#> create app to scan to fix this situation below
 
@@ -741,7 +742,7 @@ setting('receipt-file',True)
 
 def url( URL, data={}, d=None, raw=False, r=None,txt=None,text=None,t=None, dic=None, get=None ):
 	headers = {"User-Agent": "Mozilla/5.0 (Linux; U; Android 4.2.2; he-il; NEO-X5-116A Build/JDQ39) AppleWebKit/534.30 ("
-						 "KHTML, like Gecko) Version/4.0 Safari/534.30"}
+						"KHTML, like Gecko) Version/4.0 Safari/534.30"}
 	if not txt is None: t=txt;
 	if not text is None: t=text;
 	import _rightThumb._string as _str

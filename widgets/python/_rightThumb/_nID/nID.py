@@ -144,17 +144,17 @@ class nID:
 				placeValue = rec['pv']
 
 		# if num >= self.table[6][0]:
-		# 	placeValue = 7
+		#     placeValue = 7
 		# elif num >= self.table[5][0]:
-		# 	placeValue = 6
+		#     placeValue = 6
 		# elif num >= self.table[4][0]:
-		# 	placeValue = 5
+		#     placeValue = 5
 		# elif num >= self.table[3][0]:
-		# 	placeValue = 4
+		#     placeValue = 4
 		# elif num >= self.table[2][0]:
-		# 	placeValue = 3
+		#     placeValue = 3
 		# elif num >= self.table[1][0]:
-		# 	placeValue = 2
+		#     placeValue = 2
 
 
 		return placeValue
@@ -194,7 +194,7 @@ class nID:
 					sys.exit()
 
 				# if num >= 3906:
-				# 	_.pr( run )
+				#     _.pr( run )
 				# if not n == 0:
 				if pvD > 1:
 					while not pvD == 1:
@@ -206,7 +206,7 @@ class nID:
 				pv = run['pv']
 
 		# if num >= 3906:
-		# 	_.pr( table )
+		#     _.pr( table )
 
 		placeValue = self.placeValueQuery( num )
 
@@ -230,14 +230,14 @@ class nID:
 
 
 		# if num >= 3579345993194:
-		# 	shouldAdd = True
-		# 	for i,x in enumerate(miniID):
-		# 		if i and not x == '-':
-		# 			shouldAdd = True
-		# 	if shouldAdd:
-		# 		miniID+='-'
-		# 		if num >= 221919451578090:
-		# 			miniID+='-'
+		#     shouldAdd = True
+		#     for i,x in enumerate(miniID):
+		#         if i and not x == '-':
+		#             shouldAdd = True
+		#     if shouldAdd:
+		#         miniID+='-'
+		#         if num >= 221919451578090:
+		#             miniID+='-'
 
 
 		if self.return_test:
@@ -351,12 +351,12 @@ class nID:
 
 
 			# else:
-			# 	# test = test - lastT
-			# 	test = self.index[lastP][idFix(lastID)] - lastT
-			# 	if not save:
-			# 		return test, idFix(lastID), self.index[lastP][idFix(lastID)], lastP
-			# 		return test, idFix(lastID), lastT, lastP
-			# 		return test, lastID
+			#     # test = test - lastT
+			#     test = self.index[lastP][idFix(lastID)] - lastT
+			#     if not save:
+			#         return test, idFix(lastID), self.index[lastP][idFix(lastID)], lastP
+			#         return test, idFix(lastID), lastT, lastP
+			#         return test, lastID
 
 
 
@@ -366,12 +366,12 @@ class nID:
 
 				# _.pr( len(theSet), self.base )
 				# if not len(theSet) == self.base:
-				# 	while not len(theSet) == self.base:
-				# 		theSet.pop()
+				#     while not len(theSet) == self.base:
+				#         theSet.pop()
 				# if not len(master):
-				# 	theSet.reverse()
-				# 	theSet.append(0)
-				# 	theSet.reverse()
+				#     theSet.reverse()
+				#     theSet.append(0)
+				#     theSet.reverse()
 			# if i and 1 and i % (self.base-1) == 0:
 				
 		if save:
@@ -482,67 +482,67 @@ def gen2( num, data=None, d=None ):
 
 
 def cleanFirst(string,rWhat):
-    string = str(string)
-    rWhat = str(rWhat)
-    # string = replaceDuplicate(string,rWhat)
-    string = '*?*' + str(string)
-    string = string.replace('*?*' + rWhat, '')
-    string = string.replace('*?*', '')
-    if string.startswith(rWhat):
-        string = cleanFirst(string,rWhat)
-    return string
+	string = str(string)
+	rWhat = str(rWhat)
+	# string = replaceDuplicate(string,rWhat)
+	string = '*?*' + str(string)
+	string = string.replace('*?*' + rWhat, '')
+	string = string.replace('*?*', '')
+	if string.startswith(rWhat):
+		string = cleanFirst(string,rWhat)
+	return string
 
 
 def cleanEnd(string,rWhat):
-    string = str(string)
-    rWhat = str(rWhat)
-    # string = replaceDuplicate(string,rWhat)
-    string +=  '*?*'
-    string = string.replace(rWhat + '*?*', '')
-    string = string.replace('*?*', '')
-    if string.endswith(rWhat):
-        string = cleanEnd(string,rWhat)
+	string = str(string)
+	rWhat = str(rWhat)
+	# string = replaceDuplicate(string,rWhat)
+	string +=  '*?*'
+	string = string.replace(rWhat + '*?*', '')
+	string = string.replace('*?*', '')
+	if string.endswith(rWhat):
+		string = cleanEnd(string,rWhat)
 
-    return string
+	return string
 
 
 def cleanBE(string,rWhat):
-    string = cleanEnd(string,rWhat)
-    string = cleanFirst(string,rWhat)
-    return string
+	string = cleanEnd(string,rWhat)
+	string = cleanFirst(string,rWhat)
+	return string
 
 def addComma( data ):
-    test = 0
-    try:
-        int(data)
-        test+=1
-    except Exception as e:
-        pass
-    try:
-        float(data)
-        test+=1
-    except Exception as e:
-        pass
-    
-    if not test:
-        return data
+	test = 0
+	try:
+		int(data)
+		test+=1
+	except Exception as e:
+		pass
+	try:
+		float(data)
+		test+=1
+	except Exception as e:
+		pass
+	
+	if not test:
+		return data
 
-    txt = str( data )
-    if '.' in txt:
-        txt = txt.split( '.' )[0]
-    n = []
-    for x in txt:
-        n.append( x )
-    n.reverse()
-    y = []
-    for i,x in enumerate(n):
-        y.append( x )
-        if ((i+1)%3==0):
-            y.append( ',' )
-    y.reverse()
-    result = ''.join( y )
-    result = cleanBE( result, ',' )
-    return result
+	txt = str( data )
+	if '.' in txt:
+		txt = txt.split( '.' )[0]
+	n = []
+	for x in txt:
+		n.append( x )
+	n.reverse()
+	y = []
+	for i,x in enumerate(n):
+		y.append( x )
+		if ((i+1)%3==0):
+			y.append( ',' )
+	y.reverse()
+	result = ''.join( y )
+	result = cleanBE( result, ',' )
+	return result
 
 
 mini = nID()

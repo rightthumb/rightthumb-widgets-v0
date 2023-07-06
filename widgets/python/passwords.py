@@ -17,9 +17,9 @@ import _rightThumb._construct as __
 appDBA=__.clearFocus(__name__,__file__);__.appReg=appDBA;
 
 def focus(parentApp='',childApp='',reg=True):
-    global appDBA;f=__.appName(appDBA,parentApp,childApp);
-    if reg:__.appReg=f;
-    return f
+	global appDBA;f=__.appName(appDBA,parentApp,childApp);
+	if reg:__.appReg=f;
+	return f
 import _rightThumb._base3 as _
 fieldSet=_.l.vars(focus(),__name__,__file__,appDBA)
 _.load()
@@ -29,9 +29,9 @@ _str = __.imp('_rightThumb._string')
 ##################################################
 
 def sw():
-    pass
-    _.switches.register( 'Adverbs', '-a,-adverbs' )
-    _.switches.register( 'Random-Case', '-r,-random' )
+	pass
+	_.switches.register( 'Adverbs', '-a,-adverbs' )
+	_.switches.register( 'Random-Case', '-r,-random' )
 # __.setting('require-list',['Files,Plus','File,Has']) # todo
 # __.setting('require-list',['Pipe','Files'])
 __.setting('receipt-log')
@@ -43,62 +43,62 @@ __.setting('pre-error',False)
 __.setting('switch-raw',[])
 
 _.appInfo[focus()] = {
-    # 'app': '8facG-jo0Cxk',
-    'file': 'gen-password.py',
-    'liveAppName': __.thisApp( __file__ ),
-    'description': 'Changes the world',
-        # _.ail(1,'subject')+
-        # _.aib('one')+
-    'categories': [
-                        'DEFAULT',
-                ],
-    'usage': [
-                        # 'epy another',
-                        # 'e nmap',
-                        # '',
-    ],
-    'relatedapps': [
-                        # 'p another -file file.txt',
-                        # '',
-    ],
-    'prerequisite': [
-                        # 'p another -file file.txt',
-                        # '',
-    ],
-    'examples': [
-                        _.hp('p gen-password -file file.txt'),
-                        _.linePrint(label='simple',p=0),
-                        '',
-    ],
-    'columns': [
-                       # { 'name': 'name', 'abbreviation': 'n' },
-                       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
-    ],
-    'aliases': [
-                       # 'this',
-                       # 'app',
-    ],
-    'notes': [
-                       # {},
-    ],
+	# 'app': '8facG-jo0Cxk',
+	'file': 'gen-password.py',
+	'liveAppName': __.thisApp( __file__ ),
+	'description': 'Changes the world',
+		# _.ail(1,'subject')+
+		# _.aib('one')+
+	'categories': [
+						'DEFAULT',
+				],
+	'usage': [
+						# 'epy another',
+						# 'e nmap',
+						# '',
+	],
+	'relatedapps': [
+						# 'p another -file file.txt',
+						# '',
+	],
+	'prerequisite': [
+						# 'p another -file file.txt',
+						# '',
+	],
+	'examples': [
+						_.hp('p gen-password -file file.txt'),
+						_.linePrint(label='simple',p=0),
+						'',
+	],
+	'columns': [
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+	],
+	'aliases': [
+					# 'this',
+					# 'app',
+	],
+	'notes': [
+					# {},
+	],
 }
 _.appData[focus()] = {
-        'start': __.startTime,
-        'uuid': '',
-        'audit': [],
-        'pipe': False,
-        'data': {
-                    'field': {'sent': [], 'received': [] }, # { 'label': '', 'context': [],  }
-                    'table': {'sent': [], 'received': [] },
-        },
-    }
+		'start': __.startTime,
+		'uuid': '',
+		'audit': [],
+		'pipe': False,
+		'data': {
+					'field': {'sent': [], 'received': [] }, # { 'label': '', 'context': [],  }
+					'table': {'sent': [], 'received': [] },
+		},
+	}
 
 def triggers():
-    _.switches.trigger( 'Files', _.myFileLocations, vs=True )
-    _.switches.trigger( 'Ago', _.timeAgo )
-    _.switches.trigger( 'Folder', _.myFolderLocations )
-    _.switches.trigger( 'URL', _.urlTrigger )
-    _.switches.trigger( 'Duration', _.timeFuture )
+	_.switches.trigger( 'Files', _.myFileLocations, vs=True )
+	_.switches.trigger( 'Ago', _.timeAgo )
+	_.switches.trigger( 'Folder', _.myFolderLocations )
+	_.switches.trigger( 'URL', _.urlTrigger )
+	_.switches.trigger( 'Duration', _.timeFuture )
 _.l.conf('clean-pipe',True)
 _.l.sw.register( triggers, sw )
 
@@ -116,34 +116,34 @@ randomSpecial = list('!@#$%&+-')
 import random
 
 def gen():
-    global randomVerbs
-    global randomNouns
-    global randomAdjectives
-    global randomNumber
-    global randomSpecial
-    if _.switches.isActive('Adverbs'):
-        return random.choice(randomAdverbs)+'-'+random.choice(randomVerbs)+'-'+random.choice(randomNouns)+'-'+random.choice(randomAdjectives)+random.choice(randomNumber)+random.choice(randomNumber)+random.choice(randomSpecial)
-    else:
-        return random.choice(randomVerbs)+'-'+random.choice(randomNouns)+'-'+random.choice(randomAdjectives)+random.choice(randomNumber)+random.choice(randomNumber)+random.choice(randomSpecial)
+	global randomVerbs
+	global randomNouns
+	global randomAdjectives
+	global randomNumber
+	global randomSpecial
+	if _.switches.isActive('Adverbs'):
+		return random.choice(randomAdverbs)+'-'+random.choice(randomVerbs)+'-'+random.choice(randomNouns)+'-'+random.choice(randomAdjectives)+random.choice(randomNumber)+random.choice(randomNumber)+random.choice(randomSpecial)
+	else:
+		return random.choice(randomVerbs)+'-'+random.choice(randomNouns)+'-'+random.choice(randomAdjectives)+random.choice(randomNumber)+random.choice(randomNumber)+random.choice(randomSpecial)
 
 def action():
-    i=1
-    while not i == 20:
-        i+=1
-        pw = gen()
-        # _.pr()
-        # _.pr(_.randomizeCase(pw),c='green')
-        if _.switches.isActive('Random-Case'):
-            _.pr(_.randomizeCase(pw),c='green')
-        else:
-            _.pr(pw,c='cyan')
-        # _.pr()
-        if i%3 == 0: _.pr()
+	i=1
+	while not i == 20:
+		i+=1
+		pw = gen()
+		# _.pr()
+		# _.pr(_.randomizeCase(pw),c='green')
+		if _.switches.isActive('Random-Case'):
+			_.pr(_.randomizeCase(pw),c='green')
+		else:
+			_.pr(pw,c='cyan')
+		# _.pr()
+		if i%3 == 0: _.pr()
 
 
 
 ##################################################
 ######################################
 if __name__ == '__main__':
-    action()
-    _.isExit(__file__)
+	action()
+	_.isExit(__file__)

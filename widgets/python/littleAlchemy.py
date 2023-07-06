@@ -50,7 +50,7 @@ __.isRequired_Pipe_or_File = False
 _.appInfo[focus()] = {
 	'file': 'littleAlchemy.py',
 	'liveAppName': __.thisApp( __file__ ),
- 	'description': 'little alchemy cheat',
+	'description': 'little alchemy cheat',
 	'categories': [
 						'little alchemy',
 						'cheat',
@@ -68,11 +68,11 @@ _.appInfo[focus()] = {
 						''
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': 'name', 'abbreviation': 'n' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 
 	}
@@ -182,7 +182,7 @@ def action():
 
 	_.colorThis( [  '\n\n', i  ], 'red' )
 		# if not len(record) == 3 and not len(record) == 2:
-		# 	print( (record) )
+		#     print( (record) )
 
 	# print( combinations.keys() )
 	pass
@@ -205,8 +205,8 @@ def load():
 
 	names = _.getTable2( 'names.json' )
 	combinations = _.getTable2( 'combinations.json' )
-	hack = "hackData = []\n$('.elementName').each(function() {\n	hackData.push($(this).text());\n});\ncopy(hackData)"
-	# hack = "hackData = []\n$('.elementName').each(function() {\n	hackData.push($(this).text());\n});\ncopy(hackData.join('\\n'))"
+	hack = "hackData = []\n$('.elementName').each(function() {\n    hackData.push($(this).text());\n});\ncopy(hackData)"
+	# hack = "hackData = []\n$('.elementName').each(function() {\n    hackData.push($(this).text());\n});\ncopy(hackData.join('\\n'))"
 	
 	if not os.path.isfile( 'littlealchemy_hack.js' ):
 		ask = 'y'

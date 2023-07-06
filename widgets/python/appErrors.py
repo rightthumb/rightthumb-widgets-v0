@@ -97,33 +97,33 @@ _.appInfo[focus()] = {
 						''
 	],
 	'columns': [
-				       {'name': 'file', 'abbreviation': 'f'},
-				       {'name': 'description', 'abbreviation': 'd'},
-				       {'name': 'categories', 'abbreviation': 'cat'},
-				       {'name': 'aliases', 'abbreviation': 'a'},
-				       {'name': 'relatedapps', 'abbreviation': 'ra'},
-				       {'name': 'base_version', 'abbreviation': 'bv'},
-				       {'name': 'app_version', 'abbreviation': 'av'},
-				       {'name': 'prerequisite', 'abbreviation': 'pre'},
-				       {'name': 'examples', 'abbreviation': 'x'},
-				       {'name': 'columns', 'abbreviation': 'c'},
-				       {'name': 'error', 'abbreviation': 'e'},
-				       {'name': 'errors;field', 'abbreviation': 'ef'},
-				       {'name': 'errors;error', 'abbreviation': 'ee'},
-				       {'name': 'errors;affect', 'abbreviation': 'ea'},
+					{'name': 'file', 'abbreviation': 'f'},
+					{'name': 'description', 'abbreviation': 'd'},
+					{'name': 'categories', 'abbreviation': 'cat'},
+					{'name': 'aliases', 'abbreviation': 'a'},
+					{'name': 'relatedapps', 'abbreviation': 'ra'},
+					{'name': 'base_version', 'abbreviation': 'bv'},
+					{'name': 'app_version', 'abbreviation': 'av'},
+					{'name': 'prerequisite', 'abbreviation': 'pre'},
+					{'name': 'examples', 'abbreviation': 'x'},
+					{'name': 'columns', 'abbreviation': 'c'},
+					{'name': 'error', 'abbreviation': 'e'},
+					{'name': 'errors;field', 'abbreviation': 'ef'},
+					{'name': 'errors;error', 'abbreviation': 'ee'},
+					{'name': 'errors;affect', 'abbreviation': 'ea'},
 
-				       {'name': 'file_profile;imports;app', 'abbreviation': 'ia'},
-				       {'name': 'file_profile;imports;examples', 'abbreviation': 'ie'},
-				       {'name': 'file_profile;imports;raw', 'abbreviation': 'ir'},
-				       {'name': 'file_profile;imports;instantiated', 'abbreviation': 'ii'},
-				       {'name': 'file_profile;imports;myapp', 'abbreviation': 'myapp'},
-				       {'name': 'file_profile;imports;myimport', 'abbreviation': 'myimport'},
-				       {'name': 'file_profile;imports;from', 'abbreviation': 'ifrom'},
-				       {'name': 'file_profile;imports;namespace', 'abbreviation': 'ins'},
+					{'name': 'file_profile;imports;app', 'abbreviation': 'ia'},
+					{'name': 'file_profile;imports;examples', 'abbreviation': 'ie'},
+					{'name': 'file_profile;imports;raw', 'abbreviation': 'ir'},
+					{'name': 'file_profile;imports;instantiated', 'abbreviation': 'ii'},
+					{'name': 'file_profile;imports;myapp', 'abbreviation': 'myapp'},
+					{'name': 'file_profile;imports;myimport', 'abbreviation': 'myimport'},
+					{'name': 'file_profile;imports;from', 'abbreviation': 'ifrom'},
+					{'name': 'file_profile;imports;namespace', 'abbreviation': 'ins'},
 	],
 	'aliases': [
-				       'error',
-				       'errors',
+					'error',
+					'errors',
 	]}
 
 
@@ -230,7 +230,7 @@ def searchRegistration():
 def action():
 	load()
 	if _.switches.isActive('Input'):
-	# 	_.setPipeData( _.getText( _.switches.value('Input') ), focus() )
+	#     _.setPipeData( _.getText( _.switches.value('Input') ), focus() )
 		if type( _.appData[__.appReg]['pipe'] ) == bool:
 			_.appData[__.appReg]['pipe'] = []
 			for row in _.switches.value('Input').split( ',' ):
@@ -282,6 +282,6 @@ if __name__ == '__main__':
 #     from
 #     namespace
 
-    
+	
 
 

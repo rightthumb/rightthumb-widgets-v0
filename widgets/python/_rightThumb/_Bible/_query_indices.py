@@ -88,7 +88,7 @@ def query(query):
 			ch = int( rec['path'].split('.')[1] )
 			vs = int( rec['path'].split('.')[2] )
 			# if bk == 41:
-			# 	_.pr( rec )
+			#     _.pr( rec )
 			if not bk in table:
 				table[bk] = {}
 			if not ch in table[bk]:
@@ -99,8 +99,8 @@ def query(query):
 			# _.colorThis( [  eval(  "_B.labels['"+rec['path'].split('.')[0]+"']"  ), rec['path'].split('.')[1]+':'+rec['path'].split('.')[2]  ], 'yellow' )
 			# word = eval(  '_B.Bible'+rec['buildB']  )
 			# for x in query:
-			# 	for y in _.caseUnspecific(word,x):
-			# 		word = word.replace( y, _.colorThis( y, 'yellow', p=0 ) )
+			#     for y in _.caseUnspecific(word,x):
+			#         word = word.replace( y, _.colorThis( y, 'yellow', p=0 ) )
 			# _.pr( word )
 			# _.pr( rec )
 
@@ -160,8 +160,8 @@ def query(query):
 			
 
 			# for x in wow['records']:
-			# 	for y in wow['records'][x]:
-			# 		_.pr( y )
+			#     for y in wow['records'][x]:
+			#         _.pr( y )
 
 
 

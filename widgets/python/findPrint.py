@@ -51,7 +51,7 @@ __.sort_name_trigger_override = [  ['']  ]
 _.appInfo[focus()] = {
 	'file': 'findPrint.py',
 	'liveAppName': __.thisApp( __file__ ),
- 	'description': 'Add line number to all print commands in python, then undo',
+	'description': 'Add line number to all print commands in python, then undo',
 	'categories': [
 						'programming',
 						'tool',
@@ -71,12 +71,12 @@ _.appInfo[focus()] = {
 						''
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
-				       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 
 	}

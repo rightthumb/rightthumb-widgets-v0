@@ -54,7 +54,7 @@ def build():
 		# _.pr( base )
 		# _.pr()
 		# separate multi book and verse
-		#	p Bible -vs jn 1:1-2-2:4-6
+		#    p Bible -vs jn 1:1-2-2:4-6
 		clean=False
 		i=0
 		while not clean and i<50:
@@ -91,7 +91,7 @@ def build():
 					n.append(y)
 			base = ' '.join(n)
 			base = _str.replaceDuplicate(base,' ')
-			base = _str.cleanBE(base,' ')	
+			base = _str.cleanBE(base,' ')    
 
 			for y in base.split(' '):
 				if y.count('-') > 1:

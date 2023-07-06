@@ -26,7 +26,7 @@ _.switches.register('Output', '-o','1')
 _.switches.register('JustVar', '-justvar')
 # _.switches.register('Move', '-move','completed_in-folder_name')
 
-_.appInfo[__name__]=	{
+_.appInfo[__name__]=    {
 	'file': 'movieTitle.py',
 	'description': 'Extract title from path',
 	'prerequisite': [],

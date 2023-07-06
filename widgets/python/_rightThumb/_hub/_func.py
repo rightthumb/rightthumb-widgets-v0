@@ -29,12 +29,12 @@ def find_all(a_str, sub):
 
 
 def find_all_do(a_str, sub):
-    start = 0
-    while True:
-        start = a_str.find(sub, start)
-        if start == -1: return
-        yield start
-        start += len(sub)
+	start = 0
+	while True:
+		start = a_str.find(sub, start)
+		if start == -1: return
+		yield start
+		start += len(sub)
 
 
 def reFormatSize( start ):
@@ -1078,9 +1078,9 @@ def figureOutDate(theDate, theFormat):
 				printBold('Month error','red')
 				sys.exit()
 			if len(ans) == 1:
-				 info['m'] = 0 + ans
+				info['m'] = 0 + ans
 			elif len(ans) == 2:
-				 info['m'] = ans
+				info['m'] = ans
 			else:
 				printBold('Month error','red')
 				sys.exit()

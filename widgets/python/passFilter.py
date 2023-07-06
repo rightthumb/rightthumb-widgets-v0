@@ -55,7 +55,7 @@ __.isRequired_Pipe_or_File = False
 _.appInfo[focus()] = {
 	'file': 'passFilter.py',
 	'liveAppName': __.thisApp( __file__ ),
- 	'description': 'terminal history filter and cleaner ( USED IN x.bat )',
+	'description': 'terminal history filter and cleaner ( USED IN x.bat )',
 	'categories': [
 						'terminal',
 						'history',
@@ -78,11 +78,11 @@ _.appInfo[focus()] = {
 						''
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': 'name', 'abbreviation': 'n' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 
 	}
@@ -164,10 +164,10 @@ def action():
 		_.saveText( theFile , _.switches.values('Save')[0] )
 
 	# if not type( _.appData[__.appReg]['pipe'] ) == bool:
-	# 	_.pipeCleaner(0)
-	# 	# _.printVar( _.appData )
-	# 	for i,row in enumerate( _.appData[__.appReg]['pipe'] ):
-	# 		_.pr( process( row ) )
+	#     _.pipeCleaner(0)
+	#     # _.printVar( _.appData )
+	#     for i,row in enumerate( _.appData[__.appReg]['pipe'] ):
+	#         _.pr( process( row ) )
 
 
 

@@ -908,8 +908,8 @@ function Sizzle( selector, context, results, seed ) {
 /**
  * Create key-value caches of limited size
  * @returns {Function(string, Object)} Returns the Object data after storing it on itself with
- *	property name the (space-suffixed) string and (if the cache is larger than Expr.cacheLength)
- *	deleting the oldest entry
+ *    property name the (space-suffixed) string and (if the cache is larger than Expr.cacheLength)
+ *    deleting the oldest entry
  */
 function createCache() {
 	var keys = [];
@@ -3105,23 +3105,23 @@ function createOptions( options ) {
 /*
  * Create a callback list using the following parameters:
  *
- *	options: an optional list of space-separated options that will change how
- *			the callback list behaves or a more traditional option object
+ *    options: an optional list of space-separated options that will change how
+ *            the callback list behaves or a more traditional option object
  *
  * By default a callback list will act like an event callback list and can be
  * "fired" multiple times.
  *
  * Possible options:
  *
- *	once:			will ensure the callback list can only be fired once (like a Deferred)
+ *    once:            will ensure the callback list can only be fired once (like a Deferred)
  *
- *	memory:			will keep track of previous values and will call any callback added
- *					after the list has been fired right away with the latest "memorized"
- *					values (like a Deferred)
+ *    memory:            will keep track of previous values and will call any callback added
+ *                    after the list has been fired right away with the latest "memorized"
+ *                    values (like a Deferred)
  *
- *	unique:			will ensure a callback can only be added once (no duplicate in the list)
+ *    unique:            will ensure a callback can only be added once (no duplicate in the list)
  *
- *	stopOnFalse:	interrupt callings when a callback returns false
+ *    stopOnFalse:    interrupt callings when a callback returns false
  *
  */
 jQuery.Callbacks = function( options ) {
@@ -8607,21 +8607,21 @@ var
 	rurl = /^([\w.+-]+:)(?:\/\/(?:[^\/?#]*@|)([^\/?#:]*)(?::(\d+)|)|)/,
 
 	/* Prefilters
-	 * 1) They are useful to introduce custom dataTypes (see ajax/jsonp.js for an example)
-	 * 2) These are called:
-	 *    - BEFORE asking for a transport
-	 *    - AFTER param serialization (s.data is a string if s.processData is true)
-	 * 3) key is the dataType
-	 * 4) the catchall symbol "*" can be used
-	 * 5) execution will start with transport dataType and THEN continue down to "*" if needed
-	 */
+	* 1) They are useful to introduce custom dataTypes (see ajax/jsonp.js for an example)
+	* 2) These are called:
+	*    - BEFORE asking for a transport
+	*    - AFTER param serialization (s.data is a string if s.processData is true)
+	* 3) key is the dataType
+	* 4) the catchall symbol "*" can be used
+	* 5) execution will start with transport dataType and THEN continue down to "*" if needed
+	*/
 	prefilters = {},
 
 	/* Transports bindings
-	 * 1) key is the dataType
-	 * 2) the catchall symbol "*" can be used
-	 * 3) selection will start with transport dataType and THEN go to "*" if needed
-	 */
+	* 1) key is the dataType
+	* 2) the catchall symbol "*" can be used
+	* 3) selection will start with transport dataType and THEN go to "*" if needed
+	*/
 	transports = {},
 
 	// Avoid comment-prolog char sequence (#10098); must appease lint and evade compression

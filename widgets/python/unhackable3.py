@@ -35,7 +35,7 @@ _.switches.register('DecryptionTable', '-decryptiontable','DecryptionTable_._000
 _.switches.register('Scramble', '-scramble')
 _.switches.register('Password', '-password')
 
-_.appInfo=	{
+_.appInfo=    {
 	'file': 'unhackable.py',
 	'description': 'Changes the world',
 	'prerequisite': [],
@@ -64,12 +64,12 @@ if _.switches.isActive('Password'):
 # pipeData = ''
 
 # if not sys.stdin.isatty():
-# 	pipeData = sys.stdin.readlines()
-# 	try:
-# 		if pipeData[0][0].isalnum() == False:
-# 			pipeData[0] = pipeData[0][1:]
-# 	except Exception as e:
-# 		pass
+#     pipeData = sys.stdin.readlines()
+#     try:
+#         if pipeData[0][0].isalnum() == False:
+#             pipeData[0] = pipeData[0][1:]
+#     except Exception as e:
+#         pass
 
 
 ########################################################################################
@@ -133,37 +133,37 @@ def scrampleIDs(ids):
 	
 	# i=0
 	# for char in ids:
-	# 	if i == 1:
-	# 		result += ids[36]
-	# 	elif i == 2:
-	# 		result += ids[35]
-	# 	elif i == 8:
-	# 		result += ids[20]
-	# 	elif i == 36:
-	# 		result += ids[1]
-	# 	elif i == 35:
-	# 		result += ids[2]
-	# 	elif i == 20:
-	# 		result += ids[8]
-	# 	elif i == 10:
-	# 		result += ids[15]
-	# 	elif i == 11:
-	# 		result += ids[16]
-	# 	elif i == 12:
-	# 		result += ids[17]
-	# 	elif i == 13:
-	# 		result += ids[18]
-	# 	elif i == 15:
-	# 		result += ids[10]
-	# 	elif i == 16:
-	# 		result += ids[11]
-	# 	elif i == 17:
-	# 		result += ids[12]
-	# 	elif i == 18:
-	# 		result += ids[13]
-	# 	else:
-	# 		result += char
-	# 	i+=1
+	#     if i == 1:
+	#         result += ids[36]
+	#     elif i == 2:
+	#         result += ids[35]
+	#     elif i == 8:
+	#         result += ids[20]
+	#     elif i == 36:
+	#         result += ids[1]
+	#     elif i == 35:
+	#         result += ids[2]
+	#     elif i == 20:
+	#         result += ids[8]
+	#     elif i == 10:
+	#         result += ids[15]
+	#     elif i == 11:
+	#         result += ids[16]
+	#     elif i == 12:
+	#         result += ids[17]
+	#     elif i == 13:
+	#         result += ids[18]
+	#     elif i == 15:
+	#         result += ids[10]
+	#     elif i == 16:
+	#         result += ids[11]
+	#     elif i == 17:
+	#         result += ids[12]
+	#     elif i == 18:
+	#         result += ids[13]
+	#     else:
+	#         result += char
+	#     i+=1
 
 	return ids
 	# return result
@@ -301,7 +301,7 @@ def scramble():
 		i += 1
 	# print(len(bank))
 	# for d in bank:
-	# 	print(d)
+	#     print(d)
 	newBank = _.sort(bank,'sort_field')
 	del bank
 	del data

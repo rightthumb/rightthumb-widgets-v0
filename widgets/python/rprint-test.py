@@ -51,7 +51,7 @@ __.switch_raw = []
 _.appInfo[focus()] = {
 	'file': 'rprint-test.py',
 	'liveAppName': __.thisApp( __file__ ),
- 	'description': 'test rprint',
+	'description': 'test rprint',
 	'categories': [
 						'test',
 						'rprint',
@@ -82,15 +82,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
-				       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-				       # {},
+					# {},
 	],
 }
 
@@ -167,8 +167,8 @@ def action():
 	global data
 
 	# for i,record in enumerate(data):
-	# 	_.pr( '\n'.join( record.keys() ) )
-	# 	sys.exit()
+	#     _.pr( '\n'.join( record.keys() ) )
+	#     sys.exit()
 
 
 	# data = _.tables.rsort( data, 'd.level' )

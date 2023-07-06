@@ -50,7 +50,7 @@ __.switch_raw = []
 _.appInfo[focus()] = {
 	'file': 'expect-gen.py',
 	'liveAppName': __.thisApp( __file__ ),
- 	'description': 'generate expect command to auto login',
+	'description': 'generate expect command to auto login',
 	'categories': [
 						'bash',
 						'expect',
@@ -76,15 +76,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
-				       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-				       # {},
+					# {},
 	],
 }
 

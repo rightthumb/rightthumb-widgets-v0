@@ -35,7 +35,7 @@ _.switches.register('Save', '-save','file.json')
 _.switches.register('DecryptionTable', '-decryptiontable','DecryptionTable_._000000.json')
 _.switches.register('Scramble', '-scramble')
 
-_.appInfo=	{
+_.appInfo=    {
 	'file': 'unhackable.py',
 	'description': 'Changes the world',
 	'prerequisite': [],
@@ -196,7 +196,7 @@ def test():
 def percentage(percent, whole): ##############################################
 	p = (percent / whole) * 100.0
 	x = str(p)
-	y = x.split('.')[0]	
+	y = x.split('.')[0]    
 	z = float(y)
 	# print(x,y,z,p)
 	# a = round(float(z),2) 
@@ -290,7 +290,7 @@ def pData(inData,pDaTest=False):
 	for aD in aData:
 		p = percentage(len(aD),t)
 		x = str(p)
-		y = x.split('.')[0]	
+		y = x.split('.')[0]    
 		z = float(y)
 		resultX.append(p)
 
@@ -620,7 +620,7 @@ def bible():
 	# sys.exit()
 	# print(len(bank))
 	# for d in bank:
-	# 	print(d)
+	#     print(d)
 	newBank = _.sort(bank,'sort_field')
 	del bank
 	del data
@@ -628,11 +628,11 @@ def bible():
 
 	# i = 0
 	# for d in blank:
-	# 	if blank[i]['char'] == '=':
-	# 		blank[i]['ids'] = eq
-	# 	if blank[i]['char'] == '[RETURN]':
-	# 		blank[i]['ids'] = rtn
-	# 	i += 1
+	#     if blank[i]['char'] == '=':
+	#         blank[i]['ids'] = eq
+	#     if blank[i]['char'] == '[RETURN]':
+	#         blank[i]['ids'] = rtn
+	#     i += 1
 	# del eq
 	# del rtn
 	# print(newBank)
@@ -676,7 +676,7 @@ def buildFile():
 	# sys.exit()
 	# print(len(bank))
 	# for d in bank:
-	# 	print(d)
+	#     print(d)
 	newBank = _.sort(bank,'sort_field')
 	del bank
 	del data
@@ -684,11 +684,11 @@ def buildFile():
 
 	# i = 0
 	# for d in blank:
-	# 	if blank[i]['char'] == '=':
-	# 		blank[i]['ids'] = eq
-	# 	if blank[i]['char'] == '[RETURN]':
-	# 		blank[i]['ids'] = rtn
-	# 	i += 1
+	#     if blank[i]['char'] == '=':
+	#         blank[i]['ids'] = eq
+	#     if blank[i]['char'] == '[RETURN]':
+	#         blank[i]['ids'] = rtn
+	#     i += 1
 	# del eq
 	# del rtn
 	# print(newBank)

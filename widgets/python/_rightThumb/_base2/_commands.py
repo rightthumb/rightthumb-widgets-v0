@@ -116,7 +116,7 @@ _.tables.fieldProfileSet('members','email','trigger',_.validateEmail)
 
 	_.tables.register('members',data)
 	_.tables.fieldProfileSet('members','address1,people:first,people:email','trigger',_str.totalStrip6)
-	_.tables.print('members','address1,people:first=s* n,people:email=gmail-stan')	
+	_.tables.print('members','address1,people:first=s* n,people:email=gmail-stan')    
 
 
 

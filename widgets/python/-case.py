@@ -40,17 +40,17 @@ def appSwitches():
 
 ### EXAMPLE: START
 # _.switches.trigger( 'Files', _.myFileLocations, vs=True )
-# 	finds the file in probable locations
-# 	and 
-# 		if  _.autoBackupData = True
-# 		and __.releaseAcquiredData = True
-# 			GET EPOCH FROM: hosts/hostname/logs/apps/execution_receipt-app_name-epoch.json
-# 		you can run apps on usb at a clients office
-# 			when you get home run: p app -loadepoch epoch 
-# 				backed up
-# 					pipe
-# 					files
-# 					tables
+#     finds the file in probable locations
+#     and 
+#         if  _.autoBackupData = True
+#         and __.releaseAcquiredData = True
+#             GET EPOCH FROM: hosts/hostname/logs/apps/execution_receipt-app_name-epoch.json
+#         you can run apps on usb at a clients office
+#             when you get home run: p app -loadepoch epoch 
+#                 backed up
+#                     pipe
+#                     files
+#                     tables
 ### EXAMPLE: END
 _.autoBackupData = __.setting('receipt-log')
 __.releaseAcquiredData = __.setting('receipt-file')
@@ -92,15 +92,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
-				       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-				       # {},
+					# {},
 	],
 }
 
@@ -144,7 +144,7 @@ def registerSwitches( argvProcessForce=False ):
 	_.switches.trigger( 'Duration', _.timeFuture )
 	### EXAMPLE: START
 	# _.default_switch_trigger('Plus', trigger_plus)
-	# _.switches.trigger( 'Files',_.inRelevantFolder )	
+	# _.switches.trigger( 'Files',_.inRelevantFolder )    
 	# _.switches.trigger( 'Watched', _.txt2Date )
 	# _.switches.trigger( 'Input',_.formatColumns )
 	# _.switches.trigger( 'Franchise',_.triggerSpace )
@@ -189,63 +189,63 @@ _.postLoad( __file__ )
 # os.system( '"' + do + '"' )
 # _.setPipeData( os.listdir( os.getcwd() ), focus() )
 # _.showLine( item )
-# 	if os.path.isdir( row ):
-# 	if os.path.isfile( row ):
-#	os.path.abspath(path)
+#     if os.path.isdir( row ):
+#     if os.path.isfile( row ):
+#    os.path.abspath(path)
 # __.appRegPipe    ( pipe data registerd focus(__.appReg) set by _.myFileLocations {if imported} , default is None )
 # for i,row in enumerate(_.t( _.appData[__.appReg]['pipe'] )):
 # for i,row in _.e( _.isData(r=1) ):
 # date = _.friendlyDate( theDate )
 # _.addComma()
-# 													if platform.system() == 'Windows':
+#                                                     if platform.system() == 'Windows':
 ### EXAMPLE: END
 ########################################################################################
 # START
 
 def randomTrueFalse(fix=2):
-    import random
+	import random
 
-    global randomTrueFalseLast
-    global randomTrueFalseCount
-    global randomTrueFalseSame
-    try:
-        randomTrueFalseLast
-    except Exception as e:
-        randomTrueFalseLast = True
-        randomTrueFalseSame = 0
-        randomTrueFalseCount = 0
+	global randomTrueFalseLast
+	global randomTrueFalseCount
+	global randomTrueFalseSame
+	try:
+		randomTrueFalseLast
+	except Exception as e:
+		randomTrueFalseLast = True
+		randomTrueFalseSame = 0
+		randomTrueFalseCount = 0
 
-    ran = random.randint(1,101)
-    result = ran % 2 == 0
-    i = 0
-    while i < fix:
-        i+=1
-        if result == randomTrueFalseLast:
-            ran = random.randint(1,101)
-            result = ran % 2 == 0
+	ran = random.randint(1,101)
+	result = ran % 2 == 0
+	i = 0
+	while i < fix:
+		i+=1
+		if result == randomTrueFalseLast:
+			ran = random.randint(1,101)
+			result = ran % 2 == 0
 
-    if result == randomTrueFalseLast:
-        randomTrueFalseSame += 1
-    randomTrueFalseCount += 1
-    randomTrueFalseLast = result
-    return result
+	if result == randomTrueFalseLast:
+		randomTrueFalseSame += 1
+	randomTrueFalseCount += 1
+	randomTrueFalseLast = result
+	return result
 def randomizeCase(string):
-    import random
+	import random
 
-    result = ''
-    for ch in string:
-        if ch.isalnum():
-            try:
-                int(ch)
-            except Exception as e:
-                ran = random.randint(1,101)
-                test = ran % 2 == 0
-                if randomTrueFalse():
-                    ch = ch.lower()
-                else:
-                    ch = ch.upper()
-        result += ch
-    return result
+	result = ''
+	for ch in string:
+		if ch.isalnum():
+			try:
+				int(ch)
+			except Exception as e:
+				ran = random.randint(1,101)
+				test = ran % 2 == 0
+				if randomTrueFalse():
+					ch = ch.lower()
+				else:
+					ch = ch.upper()
+		result += ch
+	return result
 
 def action():
 	#--> min, architecture {:strict:}

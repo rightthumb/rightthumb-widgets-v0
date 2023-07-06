@@ -72,11 +72,11 @@ _.appInfo[focus()] = {
 						''
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': 'name', 'abbreviation': 'n' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 
 	}
@@ -160,7 +160,7 @@ def extract( data ):
 	for row in data.split('\n'):
 		if 'REG_EXPAND_SZ' in row or 'REG_SZ' in row or 'REG_DWORD' in row:
 			if 'REG_MULTI_SZ' in row:
-				data = row.split( 'REG_MULTI_SZ' )	
+				data = row.split( 'REG_MULTI_SZ' )    
 			if 'REG_EXPAND_SZ' in row:
 				data = row.split( 'REG_EXPAND_SZ' )
 			if 'REG_SZ' in row:

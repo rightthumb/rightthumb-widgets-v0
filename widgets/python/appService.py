@@ -257,7 +257,7 @@ def switchV( switch ):
 def switchA( switch ):
 	global switches
 
-	isPipe = False	
+	isPipe = False    
 	sw = {}
 
 

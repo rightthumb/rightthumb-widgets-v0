@@ -13,7 +13,7 @@
 import sys, os
 
 # for i,arg in enumerate(sys.argv):
-# 	print('file',i,arg)
+#     print('file',i,arg)
 
 from _rightThumb._hub import _construct as __
 from _rightThumb._hub import app
@@ -80,11 +80,11 @@ reg.documentation = {
 						''
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': 'name', 'abbreviation': 'n' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 
 	}
@@ -116,14 +116,14 @@ def formatSize(size):
 	elif size > 1048576 and size < 1073741824:
 		num = round(size / 1048576, 2)
 		result = str(num) + ' MB'
-	elif size > 1073741824 and size < 1099511627776	:
+	elif size > 1073741824 and size < 1099511627776    :
 		num = round(size / 1073741824, 2)
 		result = str(num) + ' GB'
 	else:
 		num = round(size / 1099511627776, 2)
 		result = str(num) + ' TB'
 	# if size < 1:
-	# 	result = ''
+	#     result = ''
 	return result
 
 def unFormatSize(size):
@@ -141,7 +141,7 @@ def unFormatSize(size):
 	factor = ''
 
 	if 'TB' in size:
-		factor = 1099511627776	
+		factor = 1099511627776    
 	elif 'GB' in size:
 		factor = 1073741824
 	elif 'MB' in size:
@@ -209,8 +209,8 @@ app.post_load( __file__ )
 # os.system('"' + do + '"')
 # app.set_pipe_data( os.listdir(os.getcwd()), focus() )
 # app.showLine(item)
-# 	if os.path.isdir(row):
-# 	if os.path.isfile(row):
+#     if os.path.isdir(row):
+#     if os.path.isfile(row):
 # app.rentPipe
 ########################################################################################
 # START
@@ -267,54 +267,54 @@ def getFolder( folder ):
 			if app.showLine( item ) or app.showLine( formatPrint(item) ):
 			# if app.showLine( formatPrint(item) ):
 				# if not app.switch.isActive('Text') and not app.switch.isActive('Binary'):
-				# 	i = i + 1
-				# 	if app.switch.isActive('Path'):
-				# 		files.append( path )
-				# 	elif not app.switch.isActive('Count'):
-				# 		if not recursive:
-				# 			files.append( formatPrint(item,noPrefix=True) )
-				# 		else:
-				# 			files.append( path )
-				# 	else:
-				# 		if not recursive:
-				# 			files.append( formatPrint(item,noPrefix=True) )
-				# 		else:
-				# 			files.append( path )
+				#     i = i + 1
+				#     if app.switch.isActive('Path'):
+				#         files.append( path )
+				#     elif not app.switch.isActive('Count'):
+				#         if not recursive:
+				#             files.append( formatPrint(item,noPrefix=True) )
+				#         else:
+				#             files.append( path )
+				#     else:
+				#         if not recursive:
+				#             files.append( formatPrint(item,noPrefix=True) )
+				#         else:
+				#             files.append( path )
 						
 				# else:
-				# 	if not app.switch.isActive('Binary') and  app.switch.isActive('Text') and _mime.isText(path):
-				# 		i = i + 1
+				#     if not app.switch.isActive('Binary') and  app.switch.isActive('Text') and _mime.isText(path):
+				#         i = i + 1
 
-				# 		if not recursive:
-				# 			files.append( formatPrint(item,noPrefix=True) )
-				# 		else:
-				# 			files.append( path )
-
-						
-				# 	if not app.switch.isActive('Binary') and not app.switch.isActive('Text'):
-				# 		i = i + 1
-
-				# 		if not recursive:
-				# 			files.append( formatPrint(item,noPrefix=True) )
-				# 		else:
-				# 			files.append( path )
-						
-
-				# 	if not app.switch.isActive('Text') and  app.switch.isActive('Binary') and not _mime.isText(path):
-				# 		i = i + 1
-
-				# 		if not recursive:
-				# 			files.append( formatPrint(item,noPrefix=True) )
-				# 		else:
-				# 			files.append( path )
+				#         if not recursive:
+				#             files.append( formatPrint(item,noPrefix=True) )
+				#         else:
+				#             files.append( path )
 
 						
-				# 	if not app.switch.isActive('Text') and  not app.switch.isActive('Binary'):
-				# 		i = i + 1
-				# 		if not recursive:
-				# 			files.append( formatPrint(item,noPrefix=True) )
-				# 		else:
-				# 			files.append( path )
+				#     if not app.switch.isActive('Binary') and not app.switch.isActive('Text'):
+				#         i = i + 1
+
+				#         if not recursive:
+				#             files.append( formatPrint(item,noPrefix=True) )
+				#         else:
+				#             files.append( path )
+						
+
+				#     if not app.switch.isActive('Text') and  app.switch.isActive('Binary') and not _mime.isText(path):
+				#         i = i + 1
+
+				#         if not recursive:
+				#             files.append( formatPrint(item,noPrefix=True) )
+				#         else:
+				#             files.append( path )
+
+						
+				#     if not app.switch.isActive('Text') and  not app.switch.isActive('Binary'):
+				#         i = i + 1
+				#         if not recursive:
+				#             files.append( formatPrint(item,noPrefix=True) )
+				#         else:
+				#             files.append( path )
 
 				pass
 				shouldPrint = False
@@ -545,33 +545,33 @@ def action():
 								files.append( formatPrint(item,noPrefix=True) )
 
 	# if app.switch.isActive('Count') == False and app.switch.isActive('NoFolder') == False:
-	# 	print('\n{}\n{}'.format(i,folder))
+	#     print('\n{}\n{}'.format(i,folder))
 	# if app.switch.isActive('NoFolder'):
-	# 	print('',i)
+	#     print('',i)
 	# if not len(files) == i:
 		
-	# 	app.folderProfileAttribute( folder=folder, info = {
-	# 													'app': 'file',
-	# 													'recursive': app.switch.isActive('Recursive'),
-	# 													'factors': {
-	# 																	'Text': app.switch.isActive('Text'),
-	# 																	'Binary': app.switch.isActive('Binary'),
-	# 																	'Extensions': app.switch.isActive('Extensions'),
-	# 																	'Type': app.switch.values('Extensions'),
+	#     app.folderProfileAttribute( folder=folder, info = {
+	#                                                     'app': 'file',
+	#                                                     'recursive': app.switch.isActive('Recursive'),
+	#                                                     'factors': {
+	#                                                                     'Text': app.switch.isActive('Text'),
+	#                                                                     'Binary': app.switch.isActive('Binary'),
+	#                                                                     'Extensions': app.switch.isActive('Extensions'),
+	#                                                                     'Type': app.switch.values('Extensions'),
 
-	# 																	'PlusOr': app.switch.isActive('PlusOr'),
-	# 																	'PlusClose': app.switch.isActive('PlusClose'),
-	# 																	'Plus': app.switch.isActive('Plus'),
-	# 																	'Minus': app.switch.isActive('Minus'),
+	#                                                                     'PlusOr': app.switch.isActive('PlusOr'),
+	#                                                                     'PlusClose': app.switch.isActive('PlusClose'),
+	#                                                                     'Plus': app.switch.isActive('Plus'),
+	#                                                                     'Minus': app.switch.isActive('Minus'),
 
-	# 																	'PlusVals': app.switch.values('Plus'),
-	# 																	'MinuVals': app.switch.values('Minus'),
-	# 													},
-	# 													'percentage': app.pDiff( len(files), i, use='less' ),
-	# 													'count': len(files),
-	# 													'files': i ,
+	#                                                                     'PlusVals': app.switch.values('Plus'),
+	#                                                                     'MinuVals': app.switch.values('Minus'),
+	#                                                     },
+	#                                                     'percentage': app.pDiff( len(files), i, use='less' ),
+	#                                                     'count': len(files),
+	#                                                     'files': i ,
 
-	# 	} )
+	#     } )
 	if app.switch.isActive('Label'):
 		c = _v.myTemp + _v.slash+'app(file.py)_Count.txt'
 		app.saveText( str( len(files) ), c )
@@ -605,14 +605,14 @@ def action():
 	# load()
 
 	# if not type( reg.data['pipe'] ) == bool:
-	# 	app.pipeCleaner()
-	# 	# app.printVar(app.appData)
-	# 	for i,row in enumerate(reg.data['pipe']):
-	# 		pass
+	#     app.pipeCleaner()
+	#     # app.printVar(app.appData)
+	#     for i,row in enumerate(reg.data['pipe']):
+	#         pass
 
 # def load():
-# 	global data
-# 	data = app.getTable( 'table.json' )
+#     global data
+#     data = app.getTable( 'table.json' )
 	print( app.stack.fn() )
 
 def extensionsDatabank():

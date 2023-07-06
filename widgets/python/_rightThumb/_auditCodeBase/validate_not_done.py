@@ -70,11 +70,11 @@ _.appInfo[focus()] = {
 						''
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': 'name', 'abbreviation': 'n' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 
 	}
@@ -178,7 +178,7 @@ class Validator:
 	def dump(self):
 		self.projectFile
 		with open( objFile()  , 'wb') as objSelf:
-		    pickle.dump(self, objSelf, pickle.HIGHEST_PROTOCOL )
+			pickle.dump(self, objSelf, pickle.HIGHEST_PROTOCOL )
 		_.printBold( 'Saved: ' + objFile(), 'green' )
 
 
@@ -218,7 +218,7 @@ class Validator:
 		self.buildIDCache()
 
 		self.buildRelevantTable( quote=True )
-		self.buildLocationTable()		
+		self.buildLocationTable()        
 		self.omitTickets()
 		self.buildIDCache()
 
@@ -381,7 +381,7 @@ class Validator:
 				
 
 				# if not gIndexes is None and not gIndexes['nestable']:
-				# 	_.printTest( gIndexes, line=436 )
+				#     _.printTest( gIndexes, line=436 )
 				if not gIndexes is None and not gIndexes['nestable']:
 					# _.printTest( gIndexes, line=423 )
 					if i in gIndexes['inner']:
@@ -632,7 +632,7 @@ class Validator:
 
 
 # do this first for everything
-# 								if not self.inIndex( iID=iID ):
+#                                 if not self.inIndex( iID=iID ):
 
 		############################################################################ 
 		# self.logistics[cID][rID]
@@ -640,32 +640,32 @@ class Validator:
 		# self.indexes['group'][gID]
 		############################################################################
 		# if not len(label):
-		# 	return self.indexes
+		#     return self.indexes
 
 		# if special is None:
 
-		# 	for char in self.indexes['char']:
-		# 		if char['label'] == label:
-		# 			return char['index']
+		#     for char in self.indexes['char']:
+		#         if char['label'] == label:
+		#             return char['index']
 
 
 	# def isCarriage( self, label=None, iID=None, charID=None, tag=None ):
 		
 
-	# 	if not label is None:
+	#     if not label is None:
 
-	# 		for char in self.indexes['group']:
-	# 			if char['label'] == label:
-	# 				if 'carriage' in char['tags']:
-	# 					return True
+	#         for char in self.indexes['group']:
+	#             if char['label'] == label:
+	#                 if 'carriage' in char['tags']:
+	#                     return True
 
-	# 	elif not iID is None:
-	# 		for char in self.indexes['group']:
+	#     elif not iID is None:
+	#         for char in self.indexes['group']:
 
-	# 		else:
+	#         else:
 
 
-	# 		else:
+	#         else:
 
 
 
@@ -815,12 +815,12 @@ class Validator:
 			# self.individualIndexes.append( len( self.indexes['char'] ) )
 
 			# charIndexes = {
-			# 				'total': 0,
-			# 				'index': [],
-			# 				'start': [],
-			# 				'end': 1,
-			# 				'line': [],
-			# 				'label': ''
+			#                 'total': 0,
+			#                 'index': [],
+			#                 'start': [],
+			#                 'end': 1,
+			#                 'line': [],
+			#                 'label': ''
 			# }
 
 			# charIndexes['label'] = char
@@ -895,8 +895,8 @@ class Validator:
 
 
 		# for key in self.action:
-		# 	x = self.action[key]['label']
-		# 	_.pr( key, x )
+		#     x = self.action[key]['label']
+		#     _.pr( key, x )
 
 
 		# # self.action[ self.action_queue ]
@@ -1004,14 +1004,14 @@ class Validator:
 		identification['max'] = len( identification['scan'] )-1
 
 		# idTable = {
-		# 				'open': {},
-		# 				'close': {},
-		# 				'list': [],
+		#                 'open': {},
+		#                 'close': {},
+		#                 'list': [],
 		# }
 
 		# idOC = {
-		# 				'open': {},
-		# 				'close': {},
+		#                 'open': {},
+		#                 'close': {},
 
 		# }
 		
@@ -1329,12 +1329,12 @@ class Validator:
 									self.indexes['char'][iiChar]['line'].append( self.getLine(i) )
 
 # {
-# 	'total': 0,
-# 	'index': [],
-# 	'start': [],
-# 	'end': 1,
-# 	'line': [],
-# 	'label': ''
+#     'total': 0,
+#     'index': [],
+#     'start': [],
+#     'end': 1,
+#     'line': [],
+#     'label': ''
 # }
 
 
@@ -1497,14 +1497,14 @@ class Validator:
 		identification['max'] = len( identification['scan'] )-1
 
 		# idTable = {
-		# 				'open': {},
-		# 				'close': {},
-		# 				'list': [],
+		#                 'open': {},
+		#                 'close': {},
+		#                 'list': [],
 		# }
 
 		# idOC = {
-		# 				'open': {},
-		# 				'close': {},
+		#                 'open': {},
+		#                 'close': {},
 
 		# }
 		
@@ -1524,7 +1524,7 @@ class Validator:
 
 
 		# for record in self.logistics['characters']:
-		# 	scanChars.append( record['char'] )
+		#     scanChars.append( record['char'] )
 
 		self.characters_max_length = 0
 
@@ -1592,28 +1592,28 @@ class Validator:
 				self.action_multi['cnt'][x] = action_count_temp[x]
 		
 		# for aID in self.action:
-		# 	o = self.action[aID]['open']['label']
-		# 	c = self.action[aID]['close']['label']
-		# 	if o in self.action_multi['cnt']:
-		# 		for x in self.action_multi['cnt'][o]['chars']['start']:
-		# 			if not x == o:
-		# 				if self.action[aID]['open']['not'] is None:
-		# 					self.action[aID]['open']['not'] = {'start':{},'end':{},'middle':{}}
-		# 				if not len(x) in self.action[aID]['open']['not']:
-		# 					self.action[aID]['open']['not']['start'][len(x)] = {}
-		# 				self.action[aID]['open']['not']['start'][len(x)][x] = {}
+		#     o = self.action[aID]['open']['label']
+		#     c = self.action[aID]['close']['label']
+		#     if o in self.action_multi['cnt']:
+		#         for x in self.action_multi['cnt'][o]['chars']['start']:
+		#             if not x == o:
+		#                 if self.action[aID]['open']['not'] is None:
+		#                     self.action[aID]['open']['not'] = {'start':{},'end':{},'middle':{}}
+		#                 if not len(x) in self.action[aID]['open']['not']:
+		#                     self.action[aID]['open']['not']['start'][len(x)] = {}
+		#                 self.action[aID]['open']['not']['start'][len(x)][x] = {}
 						
-		# 				# _.pr( 'not:', o, x )
+		#                 # _.pr( 'not:', o, x )
 
-		# 	if c in self.action_multi['cnt']:
-		# 		for x in self.action_multi['cnt'][c]['chars']['start']:
-		# 			if not x == c:
-		# 				if self.action[aID]['close']['not'] is None:
-		# 					self.action[aID]['close']['not'] = {'start':{},'end':{},'middle':{}}
-		# 				if not len(x) in self.action[aID]['close']['not']:
-		# 					self.action[aID]['close']['not']['start'][len(x)] = {}
-		# 				self.action[aID]['close']['not']['start'][len(x)][x] = {}
-		# 				# _.pr( 'not:', c, x )
+		#     if c in self.action_multi['cnt']:
+		#         for x in self.action_multi['cnt'][c]['chars']['start']:
+		#             if not x == c:
+		#                 if self.action[aID]['close']['not'] is None:
+		#                     self.action[aID]['close']['not'] = {'start':{},'end':{},'middle':{}}
+		#                 if not len(x) in self.action[aID]['close']['not']:
+		#                     self.action[aID]['close']['not']['start'][len(x)] = {}
+		#                 self.action[aID]['close']['not']['start'][len(x)][x] = {}
+		#                 # _.pr( 'not:', c, x )
 
 		for i,aID in enumerate(self.action):
 			for ix,aIDx in enumerate(self.action):
@@ -1895,7 +1895,7 @@ class Validator:
 						# sys.exit()
 
 				# if not isValid:
-				# 	_.pr(char)
+				#     _.pr(char)
 				if isValid:
 					if self.nestable['close'] == aID or char == self.action[aID]['close']['label']:
 						if self.theNestID[ aID ] > 0:
@@ -1927,16 +1927,16 @@ class Validator:
 						# _.printVarSimple( self.action[aID] )
 						# sys.exit()
 
-		# 	self.action[aID]['close']['not'][len(x)][x] = {}
-		# 	self.table[ str(aID) +'X'+ str( self.theNestID[ aID ] ) ]
-		# 	self.action_index[  o[0]  ][ len(o) ][ o ] = i
-		# 	self.characters_max_length
+		#     self.action[aID]['close']['not'][len(x)][x] = {}
+		#     self.table[ str(aID) +'X'+ str( self.theNestID[ aID ] ) ]
+		#     self.action_index[  o[0]  ][ len(o) ][ o ] = i
+		#     self.characters_max_length
 
 
 
 
-		# 	if not self.asset[i] in self.action_multi['max']:
-		# 		if self.action[aID][theOC]['label'] == self.asset[i]:
+		#     if not self.asset[i] in self.action_multi['max']:
+		#         if self.action[aID][theOC]['label'] == self.asset[i]:
 		self.relevant_OC = ['(', '{','[']
 
 		def d10_open( i, char, thisItem ):
@@ -1979,7 +1979,7 @@ class Validator:
 					# d10_softClose( self.components['last'] )
 					# try:
 					# except Exception as e:
-					# 	pass
+					#     pass
 			
 					# self.components['sub'][ self.components['last']  ] = []
 					# self.components['builder'][ self.components['last'] ] = []
@@ -2090,7 +2090,7 @@ class Validator:
 					if txx == 4 or txx == 3:
 						sample = self.assetSnipet( identification['start'], i-1 )
 						# if sample == '9999':
-						# 	_.pr( sample, self.components['last'] )
+						#     _.pr( sample, self.components['last'] )
 						# _.pr(sample)
 						if sample == 'true' or sample == 'True' or sample == 'false' or sample == 'False' or sample == 'TRUE' or sample == 'FALSE':
 							thisLabel = 'bool'
@@ -2346,30 +2346,30 @@ class Validator:
 
 
 		# for i,char in enumerate(self.asset):
-		# 	if i in self.identity['identity']:
-		# 		pass
-		# 		sv = self.getLabel(  i  )
-		# 		o = i
-		# 		c = self.identity['location']['open'][i]
-		# 		if sv[0] == '{':
-		# 			_.pr( 'sv\t', sv )
-		# 			_.pr( self.assetSnipet( o, c ) )
-		# 			test = self.validateDic( o, c )
-		# 			_.pr( test )
+		#     if i in self.identity['identity']:
+		#         pass
+		#         sv = self.getLabel(  i  )
+		#         o = i
+		#         c = self.identity['location']['open'][i]
+		#         if sv[0] == '{':
+		#             _.pr( 'sv\t', sv )
+		#             _.pr( self.assetSnipet( o, c ) )
+		#             test = self.validateDic( o, c )
+		#             _.pr( test )
 
-		# 			for rec in test:
-		# 				o = rec[0]
-		# 				c = self.identity['location']['open'][o]
-		# 				txt = self.assetSnipet( o, c )
-		# 				_.pr( '\t', txt )
-		# 				for val in rec[1]:
-		# 					o = val
-		# 					if o in self.identity['location']['open']:
-		# 						c = self.identity['location']['open'][o]
-		# 						txt = self.assetSnipet( o, c )
-		# 					else:
-		# 						txt = self.asset[o]
-		# 					_.pr( '\t\t', txt )
+		#             for rec in test:
+		#                 o = rec[0]
+		#                 c = self.identity['location']['open'][o]
+		#                 txt = self.assetSnipet( o, c )
+		#                 _.pr( '\t', txt )
+		#                 for val in rec[1]:
+		#                     o = val
+		#                     if o in self.identity['location']['open']:
+		#                         c = self.identity['location']['open'][o]
+		#                         txt = self.assetSnipet( o, c )
+		#                     else:
+		#                         txt = self.asset[o]
+		#                     _.pr( '\t\t', txt )
 
 	def validateDic( self, o, c ):
 		field=':'
@@ -2480,7 +2480,7 @@ class Validator:
 
 
 		# for key in cleanKeys.keys():
-		# 	_.pr( 'line: 1377', cleanKeys[key] )
+		#     _.pr( 'line: 1377', cleanKeys[key] )
 
 
 
@@ -2494,13 +2494,13 @@ class Validator:
 				]
 
 		# for i,key in enumerate(cleanKeys.keys()):
-		# 	if not cleanKeys[key][0]['label'] in omit:
-		# 		_.pr( cleanKeys[key][0]['label'], cleanKeys[key][1]['label'] )
+		#     if not cleanKeys[key][0]['label'] in omit:
+		#         _.pr( cleanKeys[key][0]['label'], cleanKeys[key][1]['label'] )
 
 
 		# for i,key in enumerate(cleanKeys.keys()):
-		# 	if i == 0:
-		# 		_.pr( cleanKeys[key] )
+		#     if i == 0:
+		#         _.pr( cleanKeys[key] )
 
 		# _.printVar( self.indexes )
 		# sys.exit()
@@ -2607,7 +2607,7 @@ class Validator:
 						inner.append( x )
 						x+=1
 				# else:
-				# 	_.pr( x , bEnd, cleanKeys[key] )
+				#     _.pr( x , bEnd, cleanKeys[key] )
 
 
 				pass
@@ -2650,7 +2650,7 @@ class Validator:
 
 				pass
 				# if self.action[ actionIndex[theChar] ]['close']['label'] is None:
-				# 	_.printVarSimple( cleanKeys[key] )
+				#     _.printVarSimple( cleanKeys[key] )
 					
 
 
@@ -2842,7 +2842,7 @@ class Validator:
 
 	def javascriptNamespace( self ):
 		# for record in self.indexes['group']:
-		# 	_.pr( record['label'] )
+		#     _.pr( record['label'] )
 		# return None
 
 		#############
@@ -2855,8 +2855,8 @@ class Validator:
 
 		
 		# if self.backupLoaded['validaton']:
-		# 	_.pr( 'Validation Loaded' )
-		# 	sys.exit()
+		#     _.pr( 'Validation Loaded' )
+		#     sys.exit()
 
 		# self.multiLanguageValidation()
 
@@ -2869,15 +2869,15 @@ class Validator:
 		# notFound = []
 		# allIndexes = []
 		# for record in self.indexes['char']:
-		# 	for i in record['index']:
-		# 		allIndexes.append( i )
+		#     for i in record['index']:
+		#         allIndexes.append( i )
 
 		# for i in self.relevantPos:
-		# 	if not i in allIndexes:
-		# 		notFound.append( i )
+		#     if not i in allIndexes:
+		#         notFound.append( i )
 		# _.pr( notFound )
 		# for i in notFound:
-		# 	_.pr( self.asset[i] )
+		#     _.pr( self.asset[i] )
 
 
 
@@ -3115,7 +3115,7 @@ class Validator:
 
 
 							loopCount+=1
-							 
+							
 							testID = self.rls[rID]['testID'][aID]
 
 							# _.colorThis( [ self.rls[rID]['description'], testID ], 'Color.yellow' )
@@ -3236,13 +3236,13 @@ class Validator:
 										# data = self.assetSnipetLine( line )
 										# oc = list(filter(lambda data: data['open'] == startOn+i, self.indexes['group'][ self.itemLabel( asset[i], 'group' ) ]['oc']))
 									# try:
-									# 	# oc = list(filter(lambda data: data['open'] == startOn+i, self.indexes['group'][ self.itemLabel( asset[i], 'group' ) ]['oc']))
+									#     # oc = list(filter(lambda data: data['open'] == startOn+i, self.indexes['group'][ self.itemLabel( asset[i], 'group' ) ]['oc']))
 									# except Exception as e:
-									# 	_.pr('\n\n\n')
-									# 	_.pr( "data['open']", data['open'] )
-									# 	_.pr( "self.indexes['group'][ self.itemLabel( asset[i], 'group' ) ]['oc']", self.indexes['group'][ self.itemLabel( asset[i], 'group' ) ]['oc'] )
-									# 	sys.exit()
-									# 	pass
+									#     _.pr('\n\n\n')
+									#     _.pr( "data['open']", data['open'] )
+									#     _.pr( "self.indexes['group'][ self.itemLabel( asset[i], 'group' ) ]['oc']", self.indexes['group'][ self.itemLabel( asset[i], 'group' ) ]['oc'] )
+									#     sys.exit()
+									#     pass
 									self.rls[rID]['data'][aID].append({ 'id': self.rls[rID]['action'][aID]['id'], 'pattern': testID, 'data': oc })
 									# text = self.assetSnipet( 0, startOn+i, self.asset )
 									text = self.assetSnipet( oc[0]['open'], oc[0]['close'], asset )
@@ -3406,8 +3406,8 @@ class Validator:
 			# _.colorThis( 'Error: noIndex', 'red' )
 			# sys.exit()
 			# for record in self.noIndex:
-			# 	if what == record['label']:
-			# 		return record['index']
+			#     if what == record['label']:
+			#         return record['index']
 		# _.printBold( 'Error: itemLabel: ' + str(index) +' '+ str(what), 'red' )
 		return None
 
@@ -3502,14 +3502,14 @@ class Validator:
 
 	def buildIndexes2( self ):
 # *******************************************************************************************************
-# 		solution
+#         solution
 
-# 		self.findStringInAsset()
+#         self.findStringInAsset()
 
 
-# 		do inline comment and quote at the same time 
-# 		just do the if statements in the right order
-# 		collent non-omit ids in process
+#         do inline comment and quote at the same time 
+#         just do the if statements in the right order
+#         collent non-omit ids in process
 # *******************************************************************************************************
 
 
@@ -3601,12 +3601,12 @@ class Validator:
 					scan[multi] = 0
 
 		# for i,char in enumerate(self.asset):
-		# 	for key in table.keys():
-		# 		if i in table[key]:
-		# 			pass
+		#     for key in table.keys():
+		#         if i in table[key]:
+		#             pass
 
 		# for key in table.keys():
-		# 	for 
+		#     for 
 
 		_.pr( 'done' )
 		sys.exit()
@@ -3617,20 +3617,20 @@ class Validator:
 		# sys.exit()
 
 		# for i,record in enumerate(self.indexes['group']):
-		# 	if 'inline comment' in record['tags']:
-		# 		done = False
-		# 		i = 0
-		# 		openID = record['open']['iID']
-		# 		while not done:
-		# 			if not openID is None and not self.indexes['char'][ openID ]['index']:
-		# 				pos = self.asset.find( record['open']['label'] )
-		# 				if not pos == -1:
-		# 					self.indexes['char'][ openID ]['index'].append( pos )
-		# 					self.indexes['char'][ openID ]['line'].append( carriage['line'][i] )
-		# 					x = i
-		# 					while not i == carriage['index'][ carriage['line'][i] ]:
-		# 						self.indexes['group'][i]['index'].append( x )
-		# 						x += 1
+		#     if 'inline comment' in record['tags']:
+		#         done = False
+		#         i = 0
+		#         openID = record['open']['iID']
+		#         while not done:
+		#             if not openID is None and not self.indexes['char'][ openID ]['index']:
+		#                 pos = self.asset.find( record['open']['label'] )
+		#                 if not pos == -1:
+		#                     self.indexes['char'][ openID ]['index'].append( pos )
+		#                     self.indexes['char'][ openID ]['line'].append( carriage['line'][i] )
+		#                     x = i
+		#                     while not i == carriage['index'][ carriage['line'][i] ]:
+		#                         self.indexes['group'][i]['index'].append( x )
+		#                         x += 1
 		indexes = self.indexes
 		for i,record in enumerate(indexes['group']):
 			if 'comment' in record['tags']:
@@ -3684,12 +3684,12 @@ class Validator:
 
 				# group = []
 				# for ia,char in enumerate(self.asset):
-				# 	if group and ia in self.indexes['char'][ closeID ]['end']:
-				# 		group.append( ia )
-				# 		self.indexes['group'][i]['groups'].append( group )
-				# 		group = []
-				# 	if not group and ia in self.indexes['char'][ openID ]['index']:
-				# 		group.append( ia )
+				#     if group and ia in self.indexes['char'][ closeID ]['end']:
+				#         group.append( ia )
+				#         self.indexes['group'][i]['groups'].append( group )
+				#         group = []
+				#     if not group and ia in self.indexes['char'][ openID ]['index']:
+				#         group.append( ia )
 
 
 
@@ -3709,7 +3709,7 @@ class Validator:
 # self.query( label='\n', justIDs=True )
 
 		# order:
-		# 		self.query( 'carriage', justIDs )
+		#         self.query( 'carriage', justIDs )
 
 
 	def inIndex( self, label=None, iID=None, gID=None, rID=None, pID=None, tag=None, oc='open,close', cg='char,group' ):
@@ -4152,7 +4152,7 @@ class Validator:
 							if len(lan['set']):
 								pass
 
-				if isRelevant:	
+				if isRelevant:    
 					self.relevantTable['records'].append({ 'char': record['char'] , 'profiles': profiles })
 					self.relevantTable['char'].append( record['char'] )
 
@@ -4169,7 +4169,7 @@ class Validator:
 								isRelevant = True
 								profiles.append( lan )
 
-				if isRelevant:	
+				if isRelevant:    
 					self.relevantTable['records'].append({ 'char': record['char'] , 'profiles': profiles })
 					self.relevantTable['char'].append( record['char'] )
 
@@ -4187,7 +4187,7 @@ class Validator:
 								isRelevant = True
 								profiles.append( lan )
 
-				if isRelevant:	
+				if isRelevant:    
 					self.relevantTable['records'].append({ 'char': record['char'] , 'profiles': profiles })
 					self.relevantTable['char'].append( record['char'] )
 
@@ -4199,7 +4199,7 @@ class Validator:
 		
 		for record in self.logistics['characters']:
 			if record['char'] == char:
-				return record	
+				return record    
 		return False
 
 	def buildMultilineComments( self ):
@@ -4287,49 +4287,49 @@ class Validator:
 		# assetRows = []
 
 		# for inline in self.inlineComments:
-		# 	for line in self.asset.split('\n'):
-		# 		tmpLine = _str.replaceAll( line, '\t', ' ' )
-		# 		tmpLine = _str.replaceDuplicate( tmpLine, ' ' )
-		# 		tmpLine = _str.cleanBE( tmpLine, ' ' )
-		# 		if len( tmpLine ) and not tmpLine.startswith( inline ):
-		# 			assetRows.append( line.split(inline)[0] )
-		# 	self.asset = '\n'.join( assetRows )
+		#     for line in self.asset.split('\n'):
+		#         tmpLine = _str.replaceAll( line, '\t', ' ' )
+		#         tmpLine = _str.replaceDuplicate( tmpLine, ' ' )
+		#         tmpLine = _str.cleanBE( tmpLine, ' ' )
+		#         if len( tmpLine ) and not tmpLine.startswith( inline ):
+		#             assetRows.append( line.split(inline)[0] )
+		#     self.asset = '\n'.join( assetRows )
 
 
 	def cleanMultilineComments( self ):
 		pass
 		# for group in self.multilineComments:
 			
-		# 	done = False
-		# 	i = 0
-		# 	pos = 0
-		# 	openClose = []
-		# 	payloads = []
-		# 	while not done:
-		# 		o = self.asset.find( group['open'], pos )
-		# 		c = self.asset.find( group['close'], pos )
-		# 		if o == -1 or c == -1:
-		# 			done = True
-		# 		else:
-		# 			openClose.append({ 'openID': o, 'openLen': len(group['open']), 'closeID': c, 'closeLen': len(group['close']),  })
-		# 			pos = c+len(group['close'])
-		# 			theEnd = len(self.asset) - (  pos )
-		# 			payload = self.asset[o:-theEnd]
-		# 			payloads.append( payload )
-		# 	pass
-		# 	for payload in payloads:
-		# 		self.asset = self.asset.replace( payload, '' )
-		# 	self.asset = _str.replaceDuplicate( self.asset , '\n' )
+		#     done = False
+		#     i = 0
+		#     pos = 0
+		#     openClose = []
+		#     payloads = []
+		#     while not done:
+		#         o = self.asset.find( group['open'], pos )
+		#         c = self.asset.find( group['close'], pos )
+		#         if o == -1 or c == -1:
+		#             done = True
+		#         else:
+		#             openClose.append({ 'openID': o, 'openLen': len(group['open']), 'closeID': c, 'closeLen': len(group['close']),  })
+		#             pos = c+len(group['close'])
+		#             theEnd = len(self.asset) - (  pos )
+		#             payload = self.asset[o:-theEnd]
+		#             payloads.append( payload )
+		#     pass
+		#     for payload in payloads:
+		#         self.asset = self.asset.replace( payload, '' )
+		#     self.asset = _str.replaceDuplicate( self.asset , '\n' )
 			# _.pr()
 			# _.pr()
 			# for x in openClose:
-			# 	_.pr(x)
+			#     _.pr(x)
 
 
 	def jsNameSpace_2019( self ):
 
 		# if self.backupLoaded['profile']:
-		# 	return self.profile
+		#     return self.profile
 
 		self.namespaceFunctions = []
 		gi = None
@@ -4354,11 +4354,11 @@ class Validator:
 		self.genOmit()
 
 		# ToDo:
-		# 		scan documentation first
-		# 		docIndex = []
-		# 		docIndex is starting pos of every doc2b
-		# 		create global table of context 
-		# 		load global context table
+		#         scan documentation first
+		#         docIndex = []
+		#         docIndex is starting pos of every doc2b
+		#         create global table of context 
+		#         load global context table
 
 		for i,oc in enumerate(self.indexes['group'][gi]['oc']):
 			oc['line'] = self.getLine( oc['open'] )
@@ -4439,11 +4439,11 @@ class Validator:
 		self.genOmit()
 
 		# ToDo:
-		# 		scan documentation first
-		# 		docIndex = []
-		# 		docIndex is starting pos of every doc2b
-		# 		create global table of context 
-		# 		load global context table
+		#         scan documentation first
+		#         docIndex = []
+		#         docIndex is starting pos of every doc2b
+		#         create global table of context 
+		#         load global context table
 
 		for i,oc in enumerate(self.indexes['group'][gi]['oc']):
 			oc['line'] = self.getLine( oc['open'] )
@@ -4496,32 +4496,32 @@ class Validator:
 
 		# _.pr( top )
 		# sys.exit()
-		# 	code = self.assetSnipet( oc['linePos']+1, oc['open'] )
-		# 	thisIs = None
-		# 	if '=' in code:
-		# 		ns = code.split('=')[0]
-		# 		ns = ns.replace( ' ', '' )
-		# 		ns = ns.replace( '\t', '' )
-		# 		lastNS = ns
-		# 		thisIs = 'var'
-		# 		# _.pr( lastNS )
-		# 	if 'function' in code.lower() and ':' in code.lower() and '(' in code.lower():
-		# 		thisIs = 'function'
-		# 		ns = code.split(':')[0]
-		# 		ns = ns.replace( ' ', '' )
-		# 		ns = ns.replace( '\t', '' )
-		# 		fullNS = lastNS + '.' + ns
-		# 		oc['ns'] = fullNS
-		# 		functions.append( oc )
-		# 		code = code = self.assetSnipetClean( oc['open'], oc['close'] )
-		# 		terms = self.findTerms( code )
-		# 		for t in terms:
-		# 			pass
-		# 			# _.pr( t )
-		# 		oc['documentation'] = []
-		# 		for doci,doc in enumerate(documentation):
-		# 			if doc['open'] > oc['open'] and doc['open'] < oc['close']:
-		# 				oc['documentation'].append( doci )
+		#     code = self.assetSnipet( oc['linePos']+1, oc['open'] )
+		#     thisIs = None
+		#     if '=' in code:
+		#         ns = code.split('=')[0]
+		#         ns = ns.replace( ' ', '' )
+		#         ns = ns.replace( '\t', '' )
+		#         lastNS = ns
+		#         thisIs = 'var'
+		#         # _.pr( lastNS )
+		#     if 'function' in code.lower() and ':' in code.lower() and '(' in code.lower():
+		#         thisIs = 'function'
+		#         ns = code.split(':')[0]
+		#         ns = ns.replace( ' ', '' )
+		#         ns = ns.replace( '\t', '' )
+		#         fullNS = lastNS + '.' + ns
+		#         oc['ns'] = fullNS
+		#         functions.append( oc )
+		#         code = code = self.assetSnipetClean( oc['open'], oc['close'] )
+		#         terms = self.findTerms( code )
+		#         for t in terms:
+		#             pass
+		#             # _.pr( t )
+		#         oc['documentation'] = []
+		#         for doci,doc in enumerate(documentation):
+		#             if doc['open'] > oc['open'] and doc['open'] < oc['close']:
+		#                 oc['documentation'].append( doci )
 
 
 		# self.profile['documentation'] = documentation
@@ -4675,20 +4675,20 @@ class Validator:
 		_.printVar( self.tableAudit )
 		# _.printVar( dataSample )
 		# for one in dataSample.items():
-		# 	_.pr( one.items() )
+		#     _.pr( one.items() )
 		# x = findX( dataSample )
 	def findX(self, key, dictionary):
-	    for k, v in dictionary.iteritems():
-	        if k == key:
-	            yield v
-	        elif isinstance(v, dict):
-	            for result in find(key, v):
-	                yield result
-	        elif isinstance(v, list):
-	            for d in v:
-	                if isinstance(d, dict):
-	                    for result in find(key, d):
-	                        yield result
+		for k, v in dictionary.iteritems():
+			if k == key:
+				yield v
+			elif isinstance(v, dict):
+				for result in find(key, v):
+					yield result
+			elif isinstance(v, list):
+				for d in v:
+					if isinstance(d, dict):
+						for result in find(key, d):
+							yield result
 
 	def findStringInAsset( self, string ):
 		test = 0
@@ -4779,10 +4779,10 @@ def action():
 	# load()
 
 	# if not type( _.appData[__.appReg]['pipe'] ) == bool:
-	# 	_.pipeCleaner()
-	# 	# _.printVar(_.appData)
-	# 	for i,row in enumerate(_.appData[__.appReg]['pipe']):
-	# 		pass
+	#     _.pipeCleaner()
+	#     # _.printVar(_.appData)
+	#     for i,row in enumerate(_.appData[__.appReg]['pipe']):
+	#         pass
 
 __.validator_Project = 'test'
 validator = Validator()
@@ -4792,7 +4792,7 @@ __.objectPath = _v.myTables + _v.slash+'objects\\auditCodeBase_MD5.object'
 # sys.exit()
 
 # for i in self.idCache:
-# 	char = self.asset[i]
+#     char = self.asset[i]
 import _rightThumb._profileVariables as _profile
 # p inFunc -i D:\tech\programs\python\_rightThumb\_auditCodeBase\__init__.py
 # p inFunc -i D:\tech\programs\python\_rightThumb\_auditCodeBase\__init__.py + self.relevantTable
@@ -4818,10 +4818,10 @@ if __name__ == '__main__':
 
 
 
-# test4.js	387 B
-# test3.js	13.75 KB
-# test2.js	16.69 KB
-# test.js	184.65 KB
+# test4.js    387 B
+# test3.js    13.75 KB
+# test2.js    16.69 KB
+# test.js    184.65 KB
 
 # index = _code.imp.validator.createIndex( allFiles, 'javascript' )
 # index = _code.imp.validator.auditTable()
@@ -4883,11 +4883,11 @@ createIndex
 
 
 # LEFT OFF: FIX     8 /* asdf */ regular_expression
-# 		{F4CE5BB3-B637-4D70-90F5-0E222630EFC0}
+#         {F4CE5BB3-B637-4D70-90F5-0E222630EFC0}
 
-# 	self.index_process = 'B'
-# 	buildIndexes_Process_A
-# 	buildIndexes_Process_B
+#     self.index_process = 'B'
+#     buildIndexes_Process_A
+#     buildIndexes_Process_B
 
 # d20(
 

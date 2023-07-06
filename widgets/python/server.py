@@ -42,7 +42,7 @@ _.switches.register('Encrypt', '-encrypt')
 _.switches.register('Auto', '-auto')
 _.switches.register('Secure', '-secure,-unhackable','password')
 
-_.appInfo=	{
+_.appInfo=    {
 	'file': 'server.py',
 	'description': 'Push data to a client',
 	'prerequisite': [],
@@ -69,12 +69,12 @@ if __name__ == '__main__':
 # pipeData = ''
 
 # if not sys.stdin.isatty():
-# 	pipeData = sys.stdin.readlines()
-# 	try:
-# 		if pipeData[0][0].isalnum() == False:
-# 			pipeData[0] = pipeData[0][1:]
-# 	except Exception as e:
-# 		pass
+#     pipeData = sys.stdin.readlines()
+#     try:
+#         if pipeData[0][0].isalnum() == False:
+#             pipeData[0] = pipeData[0][1:]
+#     except Exception as e:
+#         pass
 
 ########################################################################################
 encryptionKey = '{3DDED2AD-AFA6-58A3-3D7C-55D93A9AE84E}'
@@ -156,7 +156,7 @@ def encryptMessage(thePayload):
 	result = base64.b64encode(ciphertext)
 	thePayload = str(result,'iso-8859-1')
 	# except Exception as e:
-	# 	pass
+	#     pass
 
 	return thePayload
 
@@ -337,7 +337,7 @@ def action():
 			thePayload += line
 		os.remove(thisID)
 		# with open(_.switches.value('File'), 'rb') as file:
-		# 	encoded_string = base64.b64encode(file.read())
+		#     encoded_string = base64.b64encode(file.read())
 		# thePayload = str(encoded_string,'utf-8')
 	else:
 		thePayload = 'Test message'

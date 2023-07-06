@@ -16,9 +16,9 @@ import sys, time
 import _rightThumb._construct as __
 appDBA=__.clearFocus(__name__,__file__);__.appReg=appDBA;
 def focus(parentApp='',childApp='',reg=True):
-    global appDBA;f=__.appName(appDBA,parentApp,childApp);
-    if reg:__.appReg=f;
-    return f
+	global appDBA;f=__.appName(appDBA,parentApp,childApp);
+	if reg:__.appReg=f;
+	return f
 import _rightThumb._base3 as _
 fieldSet=_.l.vars(focus(),__name__,__file__,appDBA)
 _.load()
@@ -28,12 +28,12 @@ _str = __.imp('_rightThumb._string')
 ##################################################
 
 def sw():
-    pass
-    ### EXAMPLE: START
-    # _.switches.register( 'Input', '-i' )
-    # _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=True )
-    # _.switches.register( 'Files', '-f,-fi,-file,-files' )
-    ### EXAMPLE: END
+	pass
+	### EXAMPLE: START
+	# _.switches.register( 'Input', '-i' )
+	# _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=True )
+	# _.switches.register( 'Files', '-f,-fi,-file,-files' )
+	### EXAMPLE: END
 
 # __.setting('require-list',['Files,Plus','File,Has']) # todo
 # __.setting('require-list',['Pipe','Files','Plus'])
@@ -47,66 +47,66 @@ __.setting('switch-raw',[])
 
 
 _.appInfo[focus()] = {
-    # 'app': '8facG-jo0Cxk',
-    'file': 'py-class-converter.py',
-    'liveAppName': __.thisApp( __file__ ),
-    'description': 'Auto config classes',
-        # _.ail(1,'subject')+
-        # _.aib('one')+
-    'categories': [
-                        'code',
-                        'py',
-                        'python3',
-                ],
-    'usage': [
-                        # 'epy another',
-                        # 'e nmap',
-                        # '',
-    ],
-    'relatedapps': [
-                        # 'p another -file file.txt',
-                        # '',
-    ],
-    'prerequisite': [
-                        # 'p another -file file.txt',
-                        # '',
-    ],
-    'examples': [
-                        _.hp('p -paste | p py-class-converter'),
-                        _.linePrint(label='simple',p=0),
-                        '',
-    ],
-    'columns': [
-                       # { 'name': 'name', 'abbreviation': 'n' },
-                       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
-    ],
-    'aliases': [
-                       # 'this',
-                       # 'app',
-    ],
-    'notes': [
-                       # {},
-    ],
+	# 'app': '8facG-jo0Cxk',
+	'file': 'py-class-converter.py',
+	'liveAppName': __.thisApp( __file__ ),
+	'description': 'Auto config classes',
+		# _.ail(1,'subject')+
+		# _.aib('one')+
+	'categories': [
+						'code',
+						'py',
+						'python3',
+				],
+	'usage': [
+						# 'epy another',
+						# 'e nmap',
+						# '',
+	],
+	'relatedapps': [
+						# 'p another -file file.txt',
+						# '',
+	],
+	'prerequisite': [
+						# 'p another -file file.txt',
+						# '',
+	],
+	'examples': [
+						_.hp('p -paste | p py-class-converter'),
+						_.linePrint(label='simple',p=0),
+						'',
+	],
+	'columns': [
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+	],
+	'aliases': [
+					# 'this',
+					# 'app',
+	],
+	'notes': [
+					# {},
+	],
 }
 
 _.appData[focus()] = {
-        'start': __.startTime,
-        'uuid': '',
-        'audit': [],
-        'pipe': False,
-        'data': {
-                    'field': {'sent': [], 'received': [] }, # { 'label': '', 'context': [],  }
-                    'table': {'sent': [], 'received': [] },
-        },
-    }
+		'start': __.startTime,
+		'uuid': '',
+		'audit': [],
+		'pipe': False,
+		'data': {
+					'field': {'sent': [], 'received': [] }, # { 'label': '', 'context': [],  }
+					'table': {'sent': [], 'received': [] },
+		},
+	}
 
 
 def triggers():
-    _.switches.trigger( 'Files', _.myFileLocations, vs=True )
-    _.switches.trigger( 'Ago', _.timeAgo )
-    _.switches.trigger( 'Folder', _.myFolderLocations )
-    _.switches.trigger( 'URL', _.urlTrigger )
-    _.switches.trigger( 'Duration', _.timeFuture )
+	_.switches.trigger( 'Files', _.myFileLocations, vs=True )
+	_.switches.trigger( 'Ago', _.timeAgo )
+	_.switches.trigger( 'Folder', _.myFolderLocations )
+	_.switches.trigger( 'URL', _.urlTrigger )
+	_.switches.trigger( 'Duration', _.timeFuture )
 
 _.l.conf('clean-pipe',False)
 _.l.sw.register( triggers, sw )
@@ -115,33 +115,33 @@ _.l.sw.register( triggers, sw )
 ### EXAMPLE: START
 
 
-    #--> make hotkey ad-description soon:  <--<w#
-    #-->    - outer most typed first
-    #-->    - blank pipe
-    #-->    __.setting('hotkey-clip.ad_description-start1',d=False)
-    #--> _________________________________
-    #--> describe selection area two
-    #--> 3 write a note here wrap text
-    #--> two dignissim
-    #--> 1 inceptos
-    #--> _________________________________
-    #--> describe selection area two
-    #-->              |           |
-    #-->              |           | - write a note here
-    #-->              |           |   wrap text
-    #-->              |           |
-    #-->              |           | - dignissim
-    #-->              |
-    #-->              | - inceptos
+	#--> make hotkey ad-description soon:  <--<w#
+	#-->    - outer most typed first
+	#-->    - blank pipe
+	#-->    __.setting('hotkey-clip.ad_description-start1',d=False)
+	#--> _________________________________
+	#--> describe selection area two
+	#--> 3 write a note here wrap text
+	#--> two dignissim
+	#--> 1 inceptos
+	#--> _________________________________
+	#--> describe selection area two
+	#-->              |           |
+	#-->              |           | - write a note here
+	#-->              |           |   wrap text
+	#-->              |           |
+	#-->              |           | - dignissim
+	#-->              |
+	#-->              | - inceptos
 
-    # if _.switches.isActive('Test'): test(); return None;
-    # result=[]; result=[ _.pr(line) for i, line, bi in _.numerate( _.isData(r=0) )]
-    # bk=[];[  bk.append(rec['backup']) for rec in backupLog if path == rec['file']]; bk=bk[-1];
-    #--> a=(1 if True else 0) <--# 
-    #--> m=[[row[i] for row in matrix] for i in range(4)]
-    # requests=__.imp('requests.post')
-    # data=str(requests.post(url,data={}).content,'iso-8859-1')
-    # for k in globals(): print(k, eval(k) )
+	# if _.switches.isActive('Test'): test(); return None;
+	# result=[]; result=[ _.pr(line) for i, line, bi in _.numerate( _.isData(r=0) )]
+	# bk=[];[  bk.append(rec['backup']) for rec in backupLog if path == rec['file']]; bk=bk[-1];
+	#--> a=(1 if True else 0) <--# 
+	#--> m=[[row[i] for row in matrix] for i in range(4)]
+	# requests=__.imp('requests.post')
+	# data=str(requests.post(url,data={}).content,'iso-8859-1')
+	# for k in globals(): print(k, eval(k) )
 
 
 ### EXAMPLE: END
@@ -149,22 +149,22 @@ _.l.sw.register( triggers, sw )
 # START
 
 def action():
-    global c3po
-    load()
-    _.pr( c3po )
+	global c3po
+	load()
+	_.pr( c3po )
 
-    # for i, line, bi in _.numerate(  ):
-    #     _.pr(line)
+	# for i, line, bi in _.numerate(  ):
+	#     _.pr(line)
 
 def load():
-    global c3po
-    c3po = '\n'.join( _.isData(r=0) )
+	global c3po
+	c3po = '\n'.join( _.isData(r=0) )
 
 
 ########################################################################################
 if __name__ == '__main__':
-    action()
-    __.isExit()
+	action()
+	__.isExit()
 
 
 

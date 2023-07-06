@@ -199,7 +199,7 @@ class ThisThread(threading.Thread):
 		self.wasKilled = True
 		thread_id = self.getID()
 		res = ctypes.pythonapi.PyThreadState_SetAsyncExc(thread_id,
-			  ctypes.py_object(SystemExit))
+			ctypes.py_object(SystemExit))
 		if res > 1:
 			ctypes.pythonapi.PyThreadState_SetAsyncExc(thread_id, 0)
 

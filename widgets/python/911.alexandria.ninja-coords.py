@@ -15,9 +15,9 @@ import sys, time
 import _rightThumb._construct as __
 appDBA=__.clearFocus(__name__,__file__);__.appReg=appDBA;
 def focus(parentApp='',childApp='',reg=True):
-    global appDBA;f=__.appName(appDBA,parentApp,childApp);
-    if reg:__.appReg=f;
-    return f
+	global appDBA;f=__.appName(appDBA,parentApp,childApp);
+	if reg:__.appReg=f;
+	return f
 import _rightThumb._base3 as _
 fieldSet=_.l.vars(focus(),__name__,__file__,appDBA)
 _.load()
@@ -26,9 +26,9 @@ _v = __.imp('_rightThumb._vars')
 _str = __.imp('_rightThumb._string')
 ##################################################
 def sw():
-    _.switches.register( 'Files', '-f,-file,-files','file.txt', isData='glob', description='Files', isRequired=True )
-    # _.switches.register( 'Lat', '-lat' )
-    # _.switches.register( 'Lon', '-lon' )
+	_.switches.register( 'Files', '-f,-file,-files','file.txt', isData='glob', description='Files', isRequired=True )
+	# _.switches.register( 'Lat', '-lat' )
+	# _.switches.register( 'Lon', '-lon' )
 
 
 # __.setting('require-list',['Pipe','Files','Plus'])
@@ -43,63 +43,63 @@ __.setting('switch-raw',[])
 
 
 _.appInfo[focus()] = {
-    # 'app': '8facG-jo0Cxk',
-    'file': '911.alexandria.ninja-coords.py',
-    'liveAppName': __.thisApp( __file__ ),
-    'description': 'Changes the world',
-        # _.ail(1,'subject')+
-        # _.aib('one')+
-    'categories': [
-                        'alexandria.ninja',
-                ],
-    'usage': [
-                        # 'epy another',
-                        # 'e nmap',
-                        # '',
-    ],
-    'relatedapps': [
-                        # 'p another -file file.txt',
-                        # '',
-    ],
-    'prerequisite': [
-                        # 'p another -file file.txt',
-                        # '',
-    ],
-    'examples': [
-                        _.hp('p 911.alexandria.ninja-coords -lat -lon'),
-                        '',
-    ],
-    'columns': [
-                       # { 'name': 'name', 'abbreviation': 'n' },
-                       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
-    ],
-    'aliases': [
-                       # 'this',
-                       # 'app',
-    ],
-    'notes': [
-                       # {},
-    ],
+	# 'app': '8facG-jo0Cxk',
+	'file': '911.alexandria.ninja-coords.py',
+	'liveAppName': __.thisApp( __file__ ),
+	'description': 'Changes the world',
+		# _.ail(1,'subject')+
+		# _.aib('one')+
+	'categories': [
+						'alexandria.ninja',
+				],
+	'usage': [
+						# 'epy another',
+						# 'e nmap',
+						# '',
+	],
+	'relatedapps': [
+						# 'p another -file file.txt',
+						# '',
+	],
+	'prerequisite': [
+						# 'p another -file file.txt',
+						# '',
+	],
+	'examples': [
+						_.hp('p 911.alexandria.ninja-coords -lat -lon'),
+						'',
+	],
+	'columns': [
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+	],
+	'aliases': [
+					# 'this',
+					# 'app',
+	],
+	'notes': [
+					# {},
+	],
 }
 
 _.appData[focus()] = {
-        'start': __.startTime,
-        'uuid': '',
-        'audit': [],
-        'pipe': False,
-        'data': {
-                    'field': {'sent': [], 'received': [] }, # { 'label': '', 'context': [],  }
-                    'table': {'sent': [], 'received': [] },
-        },
-    }
+		'start': __.startTime,
+		'uuid': '',
+		'audit': [],
+		'pipe': False,
+		'data': {
+					'field': {'sent': [], 'received': [] }, # { 'label': '', 'context': [],  }
+					'table': {'sent': [], 'received': [] },
+		},
+	}
 
 
 def triggers():
-    _.switches.trigger( 'Files', _.myFileLocations, vs=True )
-    _.switches.trigger( 'Ago', _.timeAgo )
-    _.switches.trigger( 'Folder', _.myFolderLocations )
-    _.switches.trigger( 'URL', _.urlTrigger )
-    _.switches.trigger( 'Duration', _.timeFuture )
+	_.switches.trigger( 'Files', _.myFileLocations, vs=True )
+	_.switches.trigger( 'Ago', _.timeAgo )
+	_.switches.trigger( 'Folder', _.myFolderLocations )
+	_.switches.trigger( 'URL', _.urlTrigger )
+	_.switches.trigger( 'Duration', _.timeFuture )
 
 _.l.conf('clean-pipe',True)
 _.l.sw.register( triggers, sw )
@@ -109,15 +109,15 @@ _.l.sw.register( triggers, sw )
 # START
 
 def action():
-    #--> min, architecture {:strict:}
-    #--> trigger/callback  <w#
-    # if _.switches.isActive('Test'): test(); return None;
-    # body='911\nlat: -lat\nlon: -lon'
-    # body=body.replace('-lat',_.switches.value('Latitude'))
-    # body=body.replace('-lon',_.switches.value('Longitude'))
-    print(_.isData()[0])
-    body=_.getText(_.isData()[0],raw=True)
-    _send.imp.action( to='8136901260',body=body )
+	#--> min, architecture {:strict:}
+	#--> trigger/callback  <w#
+	# if _.switches.isActive('Test'): test(); return None;
+	# body='911\nlat: -lat\nlon: -lon'
+	# body=body.replace('-lat',_.switches.value('Latitude'))
+	# body=body.replace('-lon',_.switches.value('Longitude'))
+	print(_.isData()[0])
+	body=_.getText(_.isData()[0],raw=True)
+	_send.imp.action( to='8136901260',body=body )
 
 # print('--',__.appReg)
 _send = _.regImp( __.appReg, 'vps-srv-7facG-twilio-send' )
@@ -127,8 +127,8 @@ _send = _.regImp( __.appReg, 'vps-srv-7facG-twilio-send' )
 
 ########################################################################################
 if __name__ == '__main__':
-    action()
-    __.isExit()
+	action()
+	__.isExit()
 
 
 

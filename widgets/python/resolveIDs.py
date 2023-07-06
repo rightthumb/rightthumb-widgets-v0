@@ -29,7 +29,7 @@ _.switches.register('Epoch', '-epoch')
 _.switches.register('Replace', '-replace')
 _.switches.register('Short', '-short')
 
-_.appInfo=	{
+_.appInfo=    {
 	'file': 'resolveIDs.py',
 	'description': 'Resolve IDs',
 	'prerequisite': [],
@@ -43,39 +43,39 @@ _.appInfo['examples'].append('p generateIdResolution  OR  a.idGen')
 # _.appInfo['columns'].append({'name': 'name', 'abbreviation': 'n'})
 
 # def formatColumns(columns):
-# 	result = ''
-# 	for c in columns.split(','):
-# 		for col in _.appInfo['columns']:
-# 			for a in col['abbreviation'].split(','):
-# 				if a == c:
-# 					c = col['name']
-# 		result += c + ','
-# 	result = result[:-1]
-# 	return result
+#     result = ''
+#     for c in columns.split(','):
+#         for col in _.appInfo['columns']:
+#             for a in col['abbreviation'].split(','):
+#                 if a == c:
+#                     c = col['name']
+#         result += c + ','
+#     result = result[:-1]
+#     return result
 
 # _.switches.trigger('Column',formatColumns)
 _.switches.process()
 
 # _.tableProfile.append({
-# 	'field': 'timestamp', 
-# 	'script_trigger_external': _.float2Date
-# 	})
+#     'field': 'timestamp', 
+#     'script_trigger_external': _.float2Date
+#     })
 
 # if _.switches.isActive('Snapple') == False:
-# 	file = _.switches.value('File')
-# 	variable = _.getTable(file)
-# 	_.saveTable(xRefList,file)
-# 	line = _str.replaceAll(line,'  ',' ')
-# 	line = _str.cleanFirst(line,' ')
-# 	line = _str.cleanLast(line,' ')
-# 	line = _str.cleanSpecial(line)
-# 	line = _str.totalStrip(line)
-# 	line = _str.removeAll(line)
-# 	line = _str.replaceDuplicate(line,' ')
-# 	if _isSwitchActive('Sort'):
-# 		xRefList = _.sort(xRefList, _.switches.value('Sort'))
-# 	_.tables.register('Auto',_.switch)
-# 	_.tables.print('Auto','name,switch,expected_input_example')
+#     file = _.switches.value('File')
+#     variable = _.getTable(file)
+#     _.saveTable(xRefList,file)
+#     line = _str.replaceAll(line,'  ',' ')
+#     line = _str.cleanFirst(line,' ')
+#     line = _str.cleanLast(line,' ')
+#     line = _str.cleanSpecial(line)
+#     line = _str.totalStrip(line)
+#     line = _str.removeAll(line)
+#     line = _str.replaceDuplicate(line,' ')
+#     if _isSwitchActive('Sort'):
+#         xRefList = _.sort(xRefList, _.switches.value('Sort'))
+#     _.tables.register('Auto',_.switch)
+#     _.tables.print('Auto','name,switch,expected_input_example')
 	# _.saveTable(rows,theFile,tableTemp = True,printThis = True)
 	# theTable = _.getTable(theFile,tableTemp = True,printThis = False)
 

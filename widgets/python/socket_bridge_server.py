@@ -20,25 +20,25 @@ buf = ''
 i = 0
 
 def handler(client, i):
-    global buf
-    print( 'Hello!', client, i )
-    if i == 0:  # client A, who sends data to server
-        while True:
-            req = client.recv(1000)
-            buf = str(req).strip()  # removes end of line 
-            print( 'Received from Client A: %s' % buf )
-    elif i == 1:  # client B, who receives data sent to server by client A
-        while True:
-            if buf != '':
-                client.send(buf)
-                buf = ''
-            time.sleep(0.1)
+	global buf
+	print( 'Hello!', client, i )
+	if i == 0:  # client A, who sends data to server
+		while True:
+			req = client.recv(1000)
+			buf = str(req).strip()  # removes end of line 
+			print( 'Received from Client A: %s' % buf )
+	elif i == 1:  # client B, who receives data sent to server by client A
+		while True:
+			if buf != '':
+				client.send(buf)
+				buf = ''
+			time.sleep(0.1)
 
 while True:  # very simple concurrency: accept new clients and create a Thread for each one
-    client, address = socket.accept()
-    print( "{} connected".format(address) )
-    Thread(target=handler, args=(client, i)).start()
-    i += 1
+	client, address = socket.accept()
+	print( "{} connected".format(address) )
+	Thread(target=handler, args=(client, i)).start()
+	i += 1
 
 # https://stackoverflow.com/questions/53479668/how-to-make-2-clients-connect-each-other-directly-after-having-both-connected-a
 

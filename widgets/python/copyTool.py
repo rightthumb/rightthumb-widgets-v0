@@ -92,23 +92,23 @@ _.appInfo[focus()] = {
 						'a.cp -src test -dst f ta',
 						'',
 						'src shortcuts',
-						'	pp program programs',
-						'	tt tech',
-						'	ta apps techapps',
-						'	dl downloads',
-						'	doc docs documents',
-						'	dd desktop',
-						'	pf programfiles "program files"',
-						'	pfx pf86 pfx86 programfilesx86 programfiles86 "program files x86"',
+						'    pp program programs',
+						'    tt tech',
+						'    ta apps techapps',
+						'    dl downloads',
+						'    doc docs documents',
+						'    dd desktop',
+						'    pf programfiles "program files"',
+						'    pfx pf86 pfx86 programfilesx86 programfiles86 "program files x86"',
 						'',
 						'',
 						'dst shortcuts',
-						'	in tainstallers installers',
-						'	sa tasa standalone',
-						'	ta apps techapps',
-						'	nn note notes',
-						'	test',
-						'	mdt date today',
+						'    in tainstallers installers',
+						'    sa tasa standalone',
+						'    ta apps techapps',
+						'    nn note notes',
+						'    test',
+						'    mdt date today',
 						'',
 						'',
 						[ 'p dir3 -ago 1w --c -c p | a.cp -dst test -m', 'red' ],
@@ -179,11 +179,11 @@ _.appInfo[focus()] = {
 
 
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': 'name', 'abbreviation': 'n' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 
 	}
@@ -298,52 +298,52 @@ def source_destination_Trigger( data ):
 
 
 # def sourceTrigger( data ):
-# 	test = data.lower()
-# 	d = _v.techDrive
-# 	if test == 'p' or test == 'program' or test == 'widgets':
-# 		data = d+':\\tech\\programs'
-# 	elif test == 't' or test == 'tech':
-# 		data = d+':\\tech'
-# 	elif test == 'test':
-# 		data = 'D:\\tech\\hosts\\MSI\\playground\\usbAppsUpdate\\source'
-# 	elif test == 'ta' or test == 'apps' or test == 'techapps':
-# 		data = d+':\\techApps'
-# 	elif test == 'tapy' or test == 'pyexe' or test == 'techappspython':
-# 		data = d+':\\techApps\\Python'
-# 	elif test == 'tapy3' or test == 'pyexe3' or test == 'techappspython3':
-# 		data = d+':\\techApps\\Python\\Python36-32'
-# 	elif test == 'dl' or test == 'downloads':
-# 		data = _v.cmdGetVar( 'userprofile' )+_v.slash+'Downloads'
-# 	elif test == 'doc' or test == 'docs' or test == 'documents':
-# 		data = _v.cmdGetVar( 'userprofile' )+_v.slash+'Documents'
-# 	elif test == 'd' or test == 'desk' or test == 'desktop':
-# 		data = _v.cmdGetVar( 'userprofile' )+_v.slash+'Desktop'
-# 	elif test == 'pf' or test == 'programfiles' or test == 'program files':
-# 		data = 'C\\Program Files'
-# 	elif test == 'pfx' or test == 'pf86' or test == 'pfx86' or test == 'programfilesx86' or test == 'programfiles86' or test == 'program files x86':
-# 		data = 'C:\\Program Files ( x86 )'
+#     test = data.lower()
+#     d = _v.techDrive
+#     if test == 'p' or test == 'program' or test == 'widgets':
+#         data = d+':\\tech\\programs'
+#     elif test == 't' or test == 'tech':
+#         data = d+':\\tech'
+#     elif test == 'test':
+#         data = 'D:\\tech\\hosts\\MSI\\playground\\usbAppsUpdate\\source'
+#     elif test == 'ta' or test == 'apps' or test == 'techapps':
+#         data = d+':\\techApps'
+#     elif test == 'tapy' or test == 'pyexe' or test == 'techappspython':
+#         data = d+':\\techApps\\Python'
+#     elif test == 'tapy3' or test == 'pyexe3' or test == 'techappspython3':
+#         data = d+':\\techApps\\Python\\Python36-32'
+#     elif test == 'dl' or test == 'downloads':
+#         data = _v.cmdGetVar( 'userprofile' )+_v.slash+'Downloads'
+#     elif test == 'doc' or test == 'docs' or test == 'documents':
+#         data = _v.cmdGetVar( 'userprofile' )+_v.slash+'Documents'
+#     elif test == 'd' or test == 'desk' or test == 'desktop':
+#         data = _v.cmdGetVar( 'userprofile' )+_v.slash+'Desktop'
+#     elif test == 'pf' or test == 'programfiles' or test == 'program files':
+#         data = 'C\\Program Files'
+#     elif test == 'pfx' or test == 'pf86' or test == 'pfx86' or test == 'programfilesx86' or test == 'programfiles86' or test == 'program files x86':
+#         data = 'C:\\Program Files ( x86 )'
 
-# 	return data
+#     return data
 
 # def destinationTrigger( data ):
-# 	test = data.lower()
-# 	d = _v.techDrive
-# 	if test == 'n' or test == 'note' or test == 'notes':
-# 		data = _v.myNotes
-# 	elif test == 'ta' or test == 'apps' or test == 'techapps':
-# 		data = d+':\\techApps'
-# 	elif test == 'in' or test == 'tainstallers' or test == 'installers':
-# 		data = d+':\\techApps\\_installers'
-# 	elif test == 'sa' or test == 'tasa' or test == 'standalone':
-# 		data = d+':\\techApps\\_stand_alone'
-# 	if test == 'test':
-# 		data = 'D:\\tech\\hosts\\MSI\\playground\\usbAppsUpdate\\destination'
-# 	if test == 'mdt' or test == 'date' or test == 'today':
-# 		data = _.resolveEpoch( time.time() ).split( ' ' )[0].replace( '-', '.' )
-# 	elif len( data ) == 1:
-# 		data = data + ':'+_v.slash
+#     test = data.lower()
+#     d = _v.techDrive
+#     if test == 'n' or test == 'note' or test == 'notes':
+#         data = _v.myNotes
+#     elif test == 'ta' or test == 'apps' or test == 'techapps':
+#         data = d+':\\techApps'
+#     elif test == 'in' or test == 'tainstallers' or test == 'installers':
+#         data = d+':\\techApps\\_installers'
+#     elif test == 'sa' or test == 'tasa' or test == 'standalone':
+#         data = d+':\\techApps\\_stand_alone'
+#     if test == 'test':
+#         data = 'D:\\tech\\hosts\\MSI\\playground\\usbAppsUpdate\\destination'
+#     if test == 'mdt' or test == 'date' or test == 'today':
+#         data = _.resolveEpoch( time.time() ).split( ' ' )[0].replace( '-', '.' )
+#     elif len( data ) == 1:
+#         data = data + ':'+_v.slash
 
-# 	return data
+#     return data
 
 
 
@@ -718,15 +718,15 @@ def fileCopy( s, d ):
 
 		# _.pr( did, s )
 
-# 		# do = 'xcopy /d/y/c "' + s + '" "' + d + '">NUL'
-# 		do = 'xcopy /d/y/c/i/q "' + s + '" "' + d + '"'
-# 		_.printTest( do, x=0 )
-# 		# do = 'echo test'
-# 		try:
-# 			os.system( '"' + do + '"' )
+#         # do = 'xcopy /d/y/c "' + s + '" "' + d + '">NUL'
+#         do = 'xcopy /d/y/c/i/q "' + s + '" "' + d + '"'
+#         _.printTest( do, x=0 )
+#         # do = 'echo test'
+#         try:
+#             os.system( '"' + do + '"' )
 # # copyfile
-# 		except Exception as e:
-# 			pass
+#         except Exception as e:
+#             pass
 
 def fileCopyX( s, d ):
 	global totals
@@ -850,12 +850,12 @@ def getFolder( s, d, folder ):
 					except Exception as e:
 						pass
 			# try:
-			# 		else:
-			# 			_.pr('error')
+			#         else:
+			#             _.pr('error')
 
 
 			# except Exception as e:
-			# 	pass
+			#     pass
 
 
 

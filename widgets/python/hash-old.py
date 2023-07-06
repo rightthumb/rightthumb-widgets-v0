@@ -60,7 +60,7 @@ __.switch_raw = []
 _.appInfo[focus()] = {
 	'file': 'hash.py',
 	'liveAppName': __.thisApp( __file__ ),
- 	'description': 'manipulate hash file',
+	'description': 'manipulate hash file',
 	'categories': [
 						'index',
 						'hash',
@@ -101,15 +101,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
-				       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-				       # {},
+					# {},
 	],
 }
 
@@ -203,7 +203,7 @@ def action():
 			fileBackup.switch( 'Input', file )
 			fb = fileBackup.action()
 			# if not _.switches.isActive('Clean'):
-			# 	_.pr( fb )
+			#     _.pr( fb )
 			data = _.getTable2( file )
 		if not type(data) == dict:
 			_.cp( 'Error: not dic', 'red' )
@@ -249,7 +249,7 @@ def action():
 
 
 		# if not _.switches.isActive('Clean'):
-		# 	_.pv(data)
+		#     _.pv(data)
 		if _.switches.isActive('Implode'):
 			indentCode = False
 		if _.switches.isActive('Explode'):

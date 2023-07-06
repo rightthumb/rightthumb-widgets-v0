@@ -117,15 +117,15 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-					   # { 'name': 'name', 'abbreviation': 'n' },
-					   # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-					   # 'this',
-					   # 'app',
+					# 'this',
+					# 'app',
 	],
 	'notes': [
-					   # {},
+					# {},
 	],
 }
 
@@ -288,7 +288,7 @@ def resolve_address(address=None):
 	# _.pr( host.packets_received, type(host.packets_received) )
 	
 	# for x in dir(return_code):
-	# 	_.pr(x)
+	#     _.pr(x)
 	# sys.exit()
 
 	# _.pr( host.__dict__['_packets_received'] )
@@ -418,10 +418,10 @@ def processIPs():
 					# sys.exit()
 					__.asyn.register( name=ip, category='resolve', fn=resolve_address, a=ip )
 					# if scan:
-					# 	if not _.switches.isActive('Resolve'):
-					# 		__.asyn.register( name=ip, category='scan', fn=scan_address, a=ip )
-					# 	elif ip in IP_Table:
-					# 		__.asyn.register( name=ip, category='scan', fn=scan_address, a=ip )
+					#     if not _.switches.isActive('Resolve'):
+					#         __.asyn.register( name=ip, category='scan', fn=scan_address, a=ip )
+					#     elif ip in IP_Table:
+					#         __.asyn.register( name=ip, category='scan', fn=scan_address, a=ip )
 
 			except Exception as e:
 				_.cp(  [ 'Error: cidr', network ], 'red'  )
@@ -437,10 +437,10 @@ def processIPs():
 				# resolve_address(ip)
 				__.asyn.register( name=IPs, category='resolve', fn=resolve_address, a=IPs )
 				# if scan:
-				# 	if not _.switches.isActive('Resolve'):
-				# 		__.asyn.register( name=IPs, category='scan', fn=scan_address, a=IPs )
-				# 	elif IPs in IP_Table:
-				# 		__.asyn.register( name=IPs, category='scan', fn=scan_address, a=IPs )
+				#     if not _.switches.isActive('Resolve'):
+				#         __.asyn.register( name=IPs, category='scan', fn=scan_address, a=IPs )
+				#     elif IPs in IP_Table:
+				#         __.asyn.register( name=IPs, category='scan', fn=scan_address, a=IPs )
 			elif '-' in IPs and IPs.count('.') == 3:
 				ips = IPs.split('-')[0]
 				r = IPs.split('-')[1]
@@ -450,10 +450,10 @@ def processIPs():
 					ip = ips.split('.')[0] +'.'+ ips.split('.')[1] +'.'+ ips.split('.')[2] +'.'+ str(x)
 					__.asyn.register( name=ip, category='resolve', fn=resolve_address, a=ip )
 					# if scan:
-					# 	if not _.switches.isActive('Resolve'):
-					# 		__.asyn.register( name=ip, category='scan', fn=scan_address, a=ip )
-					# 	elif ip in IP_Table:
-					# 		__.asyn.register( name=ip, category='scan', fn=scan_address, a=ip )
+					#     if not _.switches.isActive('Resolve'):
+					#         __.asyn.register( name=ip, category='scan', fn=scan_address, a=ip )
+					#     elif ip in IP_Table:
+					#         __.asyn.register( name=ip, category='scan', fn=scan_address, a=ip )
 					# _.pr(ip)
 
 
@@ -582,7 +582,7 @@ def action():
 	# global data
 	
 	# if not _.switches.isActive('Top') and not _.switches.isActive('Categories') and not _.switches.isActive('AllPorts'):
-	# 	_.switches.fieldSet( 'Resolve', 'active', True )
+	#     _.switches.fieldSet( 'Resolve', 'active', True )
 
 	__.asyn.cp( 'resolve', 1 )
 	__.asyn.cp( 'ip', 2 )
@@ -615,9 +615,9 @@ def load():
 
 	mac_vendor_table = _.getTableDB( 'mac-vendors.hash' )
 	# with open( _v.myDatabank+_v.slash+'tables'+_v.slash+'mac-vendors.txt' , mode='rb') as f:
-	# 	for l in ( f.read()).splitlines():
-	# 		prefix, vendor = l.split(b":", 1)
-	# 		mac_vendor_table[prefix.upper()] = vendor
+	#     for l in ( f.read()).splitlines():
+	#         prefix, vendor = l.split(b":", 1)
+	#         mac_vendor_table[prefix.upper()] = vendor
 	# _.saveTableDB( mac_vendor_table, 'mac-vendors.hash' )
 
 	# test = '123456789'
@@ -645,17 +645,17 @@ def report_fix_test():
 
 def check_port_udp(host, port):
 	# https://stackoverflow.com/questions/42867192/python-check-udp-port-open
-    import socket
-    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    s.settimeout(2)
-    try:
-        s.sendto('ping'.encode(), (host, port))
-        s.recvfrom(1024)
-    except socket.timeout:
-        s.close()
-        return 0
-    s.close()
-    return 1
+	import socket
+	s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+	s.settimeout(2)
+	try:
+		s.sendto('ping'.encode(), (host, port))
+		s.recvfrom(1024)
+	except socket.timeout:
+		s.close()
+		return 0
+	s.close()
+	return 1
 
 
 def scan_port( ip, port ):
@@ -676,7 +676,7 @@ def scan_port( ip, port ):
 	# Create a new socket
 	if _.switches.isActive('UDP'):
 		# if check_port_udp(ip,port):
-		# 	THE_IP_DIC( a=ip, p=str(port) )
+		#     THE_IP_DIC( a=ip, p=str(port) )
 		connection = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 	else:
 		connection = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -691,7 +691,7 @@ def scan_port( ip, port ):
 	# _.pr( result, port )
 
 	# for x in dir(result):
-	# 	_.pr(x)
+	#     _.pr(x)
 
 	try:
 		connection.close()
@@ -739,7 +739,7 @@ _async = _.regImp( __.appReg, '_rightThumb._asynchronous' )
 # import pyping
 # import ping
 # for x in dir(ping):
-# 	_.pr(x)
+#     _.pr(x)
 # sys.exit()
 
 import subprocess

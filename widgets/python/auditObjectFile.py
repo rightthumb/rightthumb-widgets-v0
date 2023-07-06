@@ -153,17 +153,17 @@ import pickle
 
 class CustomUnpickler(pickle.Unpickler):
 
-    def find_class(self, module, name):
-        if name == 'Manager':
-            from settings import Manager
-            return Manager
-        return super().find_class(module, name)
+	def find_class(self, module, name):
+		if name == 'Manager':
+			from settings import Manager
+			return Manager
+		return super().find_class(module, name)
 
 
 def loadObject(file):
 	result = None
 	# with open(file, 'rb') as objThis:
-	# 	result = pickle.load(objThis)
+	#     result = pickle.load(objThis)
 	# return result
 	# return mpu.io.read(file)
 	return CustomUnpickler(open(file, 'rb')).load()

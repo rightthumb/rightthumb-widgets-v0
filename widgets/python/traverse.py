@@ -17,11 +17,11 @@ import _rightThumb._construct as __
 appDBA = __.clearFocus( __name__, __file__ )
 __.appReg = appDBA
 def focus( parentApp='', childApp='', reg=True ):
-    global appDBA
-    f = __.appName( appDBA, parentApp, childApp )
-    if reg:
-        __.appReg = f
-    return f
+	global appDBA
+	f = __.appName( appDBA, parentApp, childApp )
+	if reg:
+		__.appReg = f
+	return f
 __.registeredApps.append( focus() )
 import _rightThumb._base3 as _
 _.load()
@@ -31,13 +31,13 @@ import _rightThumb._string as _str
 ##################################################
 
 def appSwitches():
-    pass
-    ### EXAMPLE: START
-    _.switches.register( 'Index', '-index' )
-    _.switches.register( 'Search', '-Search' )
-    _.switches.register( 'Files', '-f,-file,-files','file.txt', description='Files' )
-    _.switches.register( 'Scan-for-Fields', '-field,-fields,-ld,-lds' )
-    ### EXAMPLE: END
+	pass
+	### EXAMPLE: START
+	_.switches.register( 'Index', '-index' )
+	_.switches.register( 'Search', '-Search' )
+	_.switches.register( 'Files', '-f,-file,-files','file.txt', description='Files' )
+	_.switches.register( 'Scan-for-Fields', '-field,-fields,-ld,-lds' )
+	### EXAMPLE: END
 
 ### EXAMPLE: START
 # _.switches.trigger( 'Files', _.myFileLocations, vs=True )
@@ -66,58 +66,58 @@ __.switch_raw = []
 
 
 _.appInfo[focus()] = {
-    'file': 'traverse.py',
-    'liveAppName': __.thisApp( __file__ ),
-    'description': 'Traverse json files',
-    'categories': [
-                        'traverse',
-                        'json',
-                ],
-    'usage': [
-                        # 'epy another',
-                        # 'e nmap',
-                        # '',
-    ],
-    'relatedapps': [
-                        # 'p another -file file.txt',
-                        # '',
-    ],
-    'prerequisite': [
-                        # 'p another -file file.txt',
-                        # '',
-    ],
-    'examples': [
-                        '',
-                        'b dnd.db',
-                        'cd 5e',
-                        '',
-                        _.hp('p traverse -f Ability-Scores.json -index'),
-                        _.hp('p traverse -f Ability-Scores.json -search i.name i.skills.name'),
-                        '',
-    ],
-    'columns': [
-                       # { 'name': 'name', 'abbreviation': 'n' },
-                       # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
-    ],
-    'aliases': [
-                       # 'this',
-                       # 'app',
-    ],
-    'notes': [
-                       # {},
-    ],
+	'file': 'traverse.py',
+	'liveAppName': __.thisApp( __file__ ),
+	'description': 'Traverse json files',
+	'categories': [
+						'traverse',
+						'json',
+				],
+	'usage': [
+						# 'epy another',
+						# 'e nmap',
+						# '',
+	],
+	'relatedapps': [
+						# 'p another -file file.txt',
+						# '',
+	],
+	'prerequisite': [
+						# 'p another -file file.txt',
+						# '',
+	],
+	'examples': [
+						'',
+						'b dnd.db',
+						'cd 5e',
+						'',
+						_.hp('p traverse -f Ability-Scores.json -index'),
+						_.hp('p traverse -f Ability-Scores.json -search i.name i.skills.name'),
+						'',
+	],
+	'columns': [
+					# { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+	],
+	'aliases': [
+					# 'this',
+					# 'app',
+	],
+	'notes': [
+					# {},
+	],
 }
 
 _.appData[focus()] = {
-        'start': __.startTime,
-        'uuid': '',
-        'audit': [],
-        'pipe': False,
-        'data': {
-                    'field': {'sent': [], 'received': [] }, # { 'label': '', 'context': [],  }
-                    'table': {'sent': [], 'received': [] }, 
-        },
-    }
+		'start': __.startTime,
+		'uuid': '',
+		'audit': [],
+		'pipe': False,
+		'data': {
+					'field': {'sent': [], 'received': [] }, # { 'label': '', 'context': [],  }
+					'table': {'sent': [], 'received': [] }, 
+		},
+	}
 ### EXAMPLE: START
 # _.appInfo[focus()]['examples'].append( 'p thisApp -file file.txt' )
 
@@ -126,54 +126,54 @@ _.appData[focus()] = {
 
 
 def registerSwitches( argvProcessForce=False ):
-    global appDBA
-    if not __.appReg == appDBA and appDBA in __.appReg:
+	global appDBA
+	if not __.appReg == appDBA and appDBA in __.appReg:
 
-        if not __name__ == '__main__':
-            _.argvProcess = argvProcessForce
-        else:
-            _.argvProcess = True
+		if not __name__ == '__main__':
+			_.argvProcess = argvProcessForce
+		else:
+			_.argvProcess = True
 
-        _.load()
-        _.appInfo[__.appReg] = _.appInfo[appDBA]
-        _.appData[__.appReg] = _.appData[appDBA]
-    __.constructRegistration( _.appInfo[__.appReg]['file'],__.appReg )
-    appSwitches()
+		_.load()
+		_.appInfo[__.appReg] = _.appInfo[appDBA]
+		_.appData[__.appReg] = _.appData[appDBA]
+	__.constructRegistration( _.appInfo[__.appReg]['file'],__.appReg )
+	appSwitches()
 
-    _.myFileLocation_Print = False
-    _.switches.trigger( 'Files', _.myFileLocations, vs=True )
-    _.switches.trigger( 'Folder', _.myFolderLocations )
-    _.switches.trigger( 'URL', _.urlTrigger )
-    _.switches.trigger( 'Ago', _.timeAgo )
-    _.switches.trigger( 'Duration', _.timeFuture )
-    ### EXAMPLE: START
-    # _.switches.trigger( 'Files',_.inRelevantFolder )  
-    # _.switches.trigger( 'Watched', _.txt2Date )
-    # _.switches.trigger( 'Input',_.formatColumns )
-    # _.switches.trigger( 'Franchise',_.triggerSpace )
-    ### EXAMPLE: END
-    
-    _.defaultScriptTriggers()
-    _.switches.process()
+	_.myFileLocation_Print = False
+	_.switches.trigger( 'Files', _.myFileLocations, vs=True )
+	_.switches.trigger( 'Folder', _.myFolderLocations )
+	_.switches.trigger( 'URL', _.urlTrigger )
+	_.switches.trigger( 'Ago', _.timeAgo )
+	_.switches.trigger( 'Duration', _.timeFuture )
+	### EXAMPLE: START
+	# _.switches.trigger( 'Files',_.inRelevantFolder )  
+	# _.switches.trigger( 'Watched', _.txt2Date )
+	# _.switches.trigger( 'Input',_.formatColumns )
+	# _.switches.trigger( 'Franchise',_.triggerSpace )
+	### EXAMPLE: END
+	
+	_.defaultScriptTriggers()
+	_.switches.process()
 
 
 if not __name__ == '__main__':
-    _.argvProcess = False
+	_.argvProcess = False
 else:
-    _.argvProcess = True
+	_.argvProcess = True
 
 registerSwitches()
 
 
 def fieldSet( switchName, switchField, switchValue, theFocus=False ):
-    if not type( theFocus ) == bool:
-        theFocus = theFocus
-    _.switches.fieldSet( switchName, switchField, switchValue, theFocus )
+	if not type( theFocus ) == bool:
+		theFocus = theFocus
+	_.switches.fieldSet( switchName, switchField, switchValue, theFocus )
 
 
 if __name__ == '__main__':
-    if not sys.stdin.isatty():
-        _.setPipeData( sys.stdin.readlines(), __.appReg, clean=False )
+	if not sys.stdin.isatty():
+		_.setPipeData( sys.stdin.readlines(), __.appReg, clean=False )
 
 
 _.postLoad( __file__ )
@@ -206,71 +206,71 @@ _.postLoad( __file__ )
 # START
 
 def clean(text):
-    while '  ' in text: text=text.replace('  ',' ')
-    while text.startswith(' '): text[1:]
-    while text.endswith(' '): text[:-1]
-    return text
+	while '  ' in text: text=text.replace('  ',' ')
+	while text.startswith(' '): text[1:]
+	while text.endswith(' '): text[:-1]
+	return text
 
 def action():
-    queue=[]
-    if _.switches.isActive('Files'):
-        for file in _.switches.values('Files'): queue.append(_.getTable2( file ))
-    elif _.isData():
-        os=__.imp('os.path.isfile')
-        isDs='\n'.join(_.isData())
-        isDatais='text'
+	queue=[]
+	if _.switches.isActive('Files'):
+		for file in _.switches.values('Files'): queue.append(_.getTable2( file ))
+	elif _.isData():
+		os=__.imp('os.path.isfile')
+		isDs='\n'.join(_.isData())
+		isDatais='text'
 
-        for ch in isDs:
-            if not ch in ' \t\n\r':
-                if ch in '{[':
-                    isDatais='json'
-                    break
-        if isDatais=='json':
-            simplejson=__.imp('simplejson')
-            queue.append(simplejson.loads(isDs))
-        elif isDatais=='text':
-            for path in _.isData():
-                path=clean(path)
-                if path and os.path.isfile(path): queue.append(_.getTable2( path ))
+		for ch in isDs:
+			if not ch in ' \t\n\r':
+				if ch in '{[':
+					isDatais='json'
+					break
+		if isDatais=='json':
+			simplejson=__.imp('simplejson')
+			queue.append(simplejson.loads(isDs))
+		elif isDatais=='text':
+			for path in _.isData():
+				path=clean(path)
+				if path and os.path.isfile(path): queue.append(_.getTable2( path ))
 
 
 
-    for data in queue:
-        if _.switches.isActive('Scan-for-Fields'):
-            lds=_.switches.values('Scan-for-Fields')
-            for field_value in lds: _.pr( field_value, c='cyan' )
-            if len(lds) == 1: lds=lds[0]
-            for value in _.dicf(data,f=lds):
-                if _.showLine(value): _.pr(value)
-            return None
+	for data in queue:
+		if _.switches.isActive('Scan-for-Fields'):
+			lds=_.switches.values('Scan-for-Fields')
+			for field_value in lds: _.pr( field_value, c='cyan' )
+			if len(lds) == 1: lds=lds[0]
+			for value in _.dicf(data,f=lds):
+				if _.showLine(value): _.pr(value)
+			return None
 
-        if _.switches.isActive('Index'):
-            _.switches.fieldSet( 'Long', 'active', True )
-            spent_xXx=[]
-            key_results=[]
-            key_table=[]
-            pass
-            for x in _.dict_generator(data):
-                pass
+		if _.switches.isActive('Index'):
+			_.switches.fieldSet( 'Long', 'active', True )
+			spent_xXx=[]
+			key_results=[]
+			key_table=[]
+			pass
+			for x in _.dict_generator(data):
+				pass
 
-            for k in _.dict_generator_index:
-                key_table.append({ 'path': k, 'cnt': _.dict_generator_index[k] })
-            key_table2 = _.tables.returnSorted( 'data', 'a.cnt', key_table )
-            _.tables.print( 'data', 'cnt,path' )
-            return None
-                
+			for k in _.dict_generator_index:
+				key_table.append({ 'path': k, 'cnt': _.dict_generator_index[k] })
+			key_table2 = _.tables.returnSorted( 'data', 'a.cnt', key_table )
+			_.tables.print( 'data', 'cnt,path' )
+			return None
+				
 
-        if _.switches.isActive('Search'):
-            for x in _.dict_generator(data,fields=_.switches.values('Search')):
-                pass
-        return None
+		if _.switches.isActive('Search'):
+			for x in _.dict_generator(data,fields=_.switches.values('Search')):
+				pass
+		return None
 
 
 
 ########################################################################################
 if __name__ == '__main__':
-    action()
-    __.isExit()
+	action()
+	__.isExit()
 
 
 

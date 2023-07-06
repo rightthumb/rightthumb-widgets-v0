@@ -59,7 +59,7 @@ def ListTypes_trigger(data):
 		data = 'series'
 	if data == 'tv':
 		data = 'tv'
-	return data	   
+	return data       
 
 
 

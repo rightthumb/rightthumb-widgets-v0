@@ -5,32 +5,32 @@
 '''
  def URL
  class ProxyManager
-     def __init__
-     def start_server
-     def start_client
-     def client
-     def server
+	def __init__
+	def start_server
+	def start_client
+	def client
+	def server
  class FrontEnd(object)
-     def __init__
-     def is_cookie_expired
-     def extractDomain
-     def preURL
-     def postURL
-     def url
-     def getCookies
-     def initialize
-     def select
-     def setField
-     def login
-     def loginIndividually
-     def open
-     def jqueryInject
-     def inject
-     def injectReturn
-     def injectFile
-     def close
-     def wait
-     def code
+	def __init__
+	def is_cookie_expired
+	def extractDomain
+	def preURL
+	def postURL
+	def url
+	def getCookies
+	def initialize
+	def select
+	def setField
+	def login
+	def loginIndividually
+	def open
+	def jqueryInject
+	def inject
+	def injectReturn
+	def injectFile
+	def close
+	def wait
+	def code
 '''
 ##################################################
 
@@ -350,11 +350,11 @@ class FrontEnd(object):
 
 
 	# def select( self, selector ):
-	# 	if not '.' in selector and not '#' in selector and not '[' in selector and not '=' in selector:
-	# 		elem = self.browser.find_element_by_name( selector )
-	# 	else:
-	# 		elem = self.browser.find_element_by_css_selector( selector )
-	# 	return elem
+	#     if not '.' in selector and not '#' in selector and not '[' in selector and not '=' in selector:
+	#         elem = self.browser.find_element_by_name( selector )
+	#     else:
+	#         elem = self.browser.find_element_by_css_selector( selector )
+	#     return elem
 	def setField( self, data, selector, enter=False, click=False ):
 		elem = self.select( selector )
 		elem.send_keys( data )

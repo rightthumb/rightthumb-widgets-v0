@@ -99,11 +99,11 @@ _.appInfo[focus()] = {
 						''
 	],
 	'columns': [
-				       # { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': 'name', 'abbreviation': 'n' },
 	],
 	'aliases': [
-				       # 'this',
-				       # 'app',
+					# 'this',
+					# 'app',
 	],
 
 	}
@@ -190,12 +190,12 @@ def action():
 	pause = input( 'pause' )
 
 	# if _.switches.isActive( 'Inject' ):
-	# 	injectThis = _v.myAppsJs + '\\' + _.switches.value( 'Inject' ) + '.js'
-	# 	code = _.getText( injectThis, raw=True )
-	# 	_.pr( code )
-	# 	# _.pr( injectThis )
-	# 	# sys.exit()
-	# 	_browser.imp.project.inject( code )
+	#     injectThis = _v.myAppsJs + '\\' + _.switches.value( 'Inject' ) + '.js'
+	#     code = _.getText( injectThis, raw=True )
+	#     _.pr( code )
+	#     # _.pr( injectThis )
+	#     # sys.exit()
+	#     _browser.imp.project.inject( code )
 
 	payload = _browser.imp.project.injectReturn( 'window.acquirePayload('+ _.switches.value( 'Payload' ) +')' )
 	# payload = _browser.imp.project.injectReturn( 'eval('+ _.switches.value( 'Payload' ) +')' )
@@ -211,8 +211,8 @@ def action():
 
 
 # def load():
-# 	global data
-# 	data = _.getTable( 'table.json' )
+#     global data
+#     data = _.getTable( 'table.json' )
 # data = []
 ########################################################################################
 if __name__ == '__main__':

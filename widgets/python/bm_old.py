@@ -29,16 +29,16 @@ bm = []
 for files in glob.glob( indexFiles ):
 	if os.path.isfile(files) == True:
 		with open(files,  'r', encoding='latin-1') as f:
-		    for line in f:
-		    	pass
-		    	fname = formatName(str(f.name))
-		    	line = line.replace('\n','')
-		    	if os.path.isdir(line) == True:
-		    		valid = True
-		    	else:
-		    		valid = False
-		    	bm.append({'name': fname, 'path': line, 'valid': valid})
-		    f.close()
+			for line in f:
+				pass
+				fname = formatName(str(f.name))
+				line = line.replace('\n','')
+				if os.path.isdir(line) == True:
+					valid = True
+				else:
+					valid = False
+				bm.append({'name': fname, 'path': line, 'valid': valid})
+			f.close()
 val = 0
 notval = 0
 for b in bm:
@@ -48,5 +48,5 @@ for b in bm:
 	else:
 		notval += 1
 
-print('valid: {}     not valid: {}     total: {}'.format(val,notval,val+notval	))
+print('valid: {}     not valid: {}     total: {}'.format(val,notval,val+notval    ))
 

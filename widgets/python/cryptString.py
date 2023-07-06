@@ -82,11 +82,11 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-					   # { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': 'name', 'abbreviation': 'n' },
 	],
 	'aliases': [
-					   # 'this',
-					   # 'app',
+					# 'this',
+					# 'app',
 	],
 
 	}
@@ -273,24 +273,24 @@ def clip_set(data):
 	# clip_set_2(data)
 	# return None
 	# try:
-	# 	clip_set_1(data)
+	#     clip_set_1(data)
 	# except expression as identifier:
-	# 	try:
-	# 		clip_set_2(data)
-	# 	except expression as identifier:
-	# 		try:
-	# 			clip_set_3(data)
-	# 		except expression as identifier:
-	# 			try:
-	# 				clip_set_4(data)
-	# 			except expression as identifier:
-	# 				_.pr( 'python3 -m pip install pyperclip' )
-	# 				_.pr( 'pip3 install pyperclip' )
-	# 				_.pr()
-	# 				_.pr( 'sudo apt install xclip xsel' )
-	# 				_.pr( 'sudo pacman xclip xsel' )
-	# 				_.pr( 'sudo dnf xclip xsel' )
-	# 				_.pr( '' )
+	#     try:
+	#         clip_set_2(data)
+	#     except expression as identifier:
+	#         try:
+	#             clip_set_3(data)
+	#         except expression as identifier:
+	#             try:
+	#                 clip_set_4(data)
+	#             except expression as identifier:
+	#                 _.pr( 'python3 -m pip install pyperclip' )
+	#                 _.pr( 'pip3 install pyperclip' )
+	#                 _.pr()
+	#                 _.pr( 'sudo apt install xclip xsel' )
+	#                 _.pr( 'sudo pacman xclip xsel' )
+	#                 _.pr( 'sudo dnf xclip xsel' )
+	#                 _.pr( '' )
 
 
 def clip_get():
@@ -361,7 +361,7 @@ def clip_get_2():
 
 	# global win32clipboard
 	# if win32clipboard is None:
-	# 	import win32clipboard
+	#     import win32clipboard
 	# # get clipboard data
 	# win32clipboard.OpenClipboard()
 	# data = win32clipboard.GetClipboardData()

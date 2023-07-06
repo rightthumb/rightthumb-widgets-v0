@@ -249,7 +249,7 @@ def read_csv( file ):
 		sys.exit()
 		for row in reader:
 			csv_rows.extend([{title[i]:row[title[i]] for i in range(len(title))}])
-		# 	# _.pr( row )
+		#     # _.pr( row )
 			_.pr( csv_rows )
 			sys.exit()
 		
@@ -261,25 +261,25 @@ def action():
 	fileOne = read_csv( _.switches.value('FileOne') )
 
 	# if _.switches.isActive('Input'):
-	# 	one = _.switches.value('Input').split(',')[0]
-	# 	two = _.switches.value('Input').split(',')[1]
+	#     one = _.switches.value('Input').split(',')[0]
+	#     two = _.switches.value('Input').split(',')[1]
 	# elif _.switches.isActive('FileOne') and _.switches.isActive('FileTwo'):
-	# 	one = _.switches.value('FileOne')
-	# 	two = _.switches.value('FileTwo')
+	#     one = _.switches.value('FileOne')
+	#     two = _.switches.value('FileTwo')
 	# else:
-	# 	_.pr('Error 0')
-	# 	sys.exit()
+	#     _.pr('Error 0')
+	#     sys.exit()
 	# try:
-	# 	# fileOne = _.getText( one )
-	# 	# fileTwo = _.getText( two )
-	# 	fileOne = read_csv( one )
-	# 	fileTwo = read_csv( two )
+	#     # fileOne = _.getText( one )
+	#     # fileTwo = _.getText( two )
+	#     fileOne = read_csv( one )
+	#     fileTwo = read_csv( two )
 	# except Exception as e:
-	# 	_.pr('Error 1')
-	# 	sys.exit()
+	#     _.pr('Error 1')
+	#     sys.exit()
 
 	# for row in fileOne:
-	# 	_.pr( row )
+	#     _.pr( row )
 
 # crossRefCSV
 ########################################################################################

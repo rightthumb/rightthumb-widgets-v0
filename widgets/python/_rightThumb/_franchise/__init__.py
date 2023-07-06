@@ -173,12 +173,12 @@ def lookupMovie( imdbID ):
 
 
 		# if _.switches.isActive('MustInclude'):
-		# 	found = False
-		# 	for testFor in _.switches.values('MustInclude'):
-		# 		if testFor.lower() in movieTitle.lower():
-		# 			found = True
-		# 	if not found:
-		# 		raise Exception('Does not include', _.switches.value('MustInclude'))
+		#     found = False
+		#     for testFor in _.switches.values('MustInclude'):
+		#         if testFor.lower() in movieTitle.lower():
+		#             found = True
+		#     if not found:
+		#         raise Exception('Does not include', _.switches.value('MustInclude'))
 
 				
 		movieYear = tree.cssselect('.nobr')
@@ -205,7 +205,7 @@ def lookupMovie( imdbID ):
 				pass
 		
 		# for ty in movieYear:
-		# 	_.pr(cleanupString(ty.text_content(),False))
+		#     _.pr(cleanupString(ty.text_content(),False))
 		theYearThis = theYear
 		theTitleThis = theTitle
 		img0 = tree.cssselect('img')
@@ -265,7 +265,7 @@ def lookupMovie( imdbID ):
 		if _.switches.isActive('RawPrint'):
 			_.pr( obj2 )
 		# if not type(qID) == bool:
-		# 	_.threads.spent( qID, sys.getsizeof( str(obj) ) )
+		#     _.threads.spent( qID, sys.getsizeof( str(obj) ) )
 	except Exception as e:
 		pass
 		# _.threads.spent( qID, sys.getsizeof( '' ) )
@@ -386,14 +386,14 @@ def buildUrlList( url, label='', buildUrlListLast={}, buildUrlListDuplicate=[] )
 	# __.THE_FRANCHISE_TEST
 
 	# if type(label) == tuple and len(label) > 1:
-	# 	TEST = '_'+label[1].lower()+'_'
+	#     TEST = '_'+label[1].lower()+'_'
 	# if type(label) == str:
-	# 	TEST = '_'+label.lower()+'_'
+	#     TEST = '_'+label.lower()+'_'
 
 	# THIS = 'actor,top,like'
 
 	# for testing in THIS.split(','):
-	# 	if  '_'+testing+'_' in TEST    and    not '_'+testing+'_' in __.THE_FRANCHISE_TEST: return None
+	#     if  '_'+testing+'_' in TEST    and    not '_'+testing+'_' in __.THE_FRANCHISE_TEST: return None
 
 
 
@@ -408,7 +408,7 @@ def buildUrlList( url, label='', buildUrlListLast={}, buildUrlListDuplicate=[] )
 	# print( label )
 
 	# sys.exit()
-	 
+	
 
 	if len(label):
 		if _.switches.isActive('RawPrint'):
@@ -498,8 +498,8 @@ def buildUrlList( url, label='', buildUrlListLast={}, buildUrlListDuplicate=[] )
 						if not thisID in buildUrlListDuplicate:
 							buildUrlListDuplicate.append(thisID)
 							# if 'tt1375666' in thisID:
-							# 	_.pr( 'Error:', url )
-							# 	sys.exit()
+							#     _.pr( 'Error:', url )
+							#     sys.exit()
 							franchiseList.append(thisID)
 						iT += 1
 				except Exception as e:
@@ -563,14 +563,14 @@ def buildUrlList( url, label='', buildUrlListLast={}, buildUrlListDuplicate=[] )
 
 	# try:
 
-	# 				# for xx in buildUrlList( ,  ):
-	# 					# if 'tt1375666' in xx:
-	# 					# 	_.pr( 'Error:', url )
-	# 					# 	sys.exit()
-	# 					# franchiseList.append(xx)
+	#                 # for xx in buildUrlList( ,  ):
+	#                     # if 'tt1375666' in xx:
+	#                     #     _.pr( 'Error:', url )
+	#                     #     sys.exit()
+	#                     # franchiseList.append(xx)
 	# except Exception as e:
-	# 	# _.pr('buildUrlList: for links(a) & .pagination-range')
-	# 	pass
+	#     # _.pr('buildUrlList: for links(a) & .pagination-range')
+	#     pass
 
 	obj = franchiseList
 	if _.switches.isActive('RawPrint'):
@@ -578,13 +578,13 @@ def buildUrlList( url, label='', buildUrlListLast={}, buildUrlListDuplicate=[] )
 	dataDump.append(obj)
 
 	# if not type(obj) == bool:
-	# 	if _.switches.isActive('Dump'):
-	# 		__.projectData[focus()]['folder'][   __.pdID[focus()]['folder']  ]['data'].append( obj )
-	# 	else:
-	# 		dataDump.append(obj)
+	#     if _.switches.isActive('Dump'):
+	#         __.projectData[focus()]['folder'][   __.pdID[focus()]['folder']  ]['data'].append( obj )
+	#     else:
+	#         dataDump.append(obj)
 	
 	# if not type(qID) == bool:
-	# 	_.threads.spent( qID, sys.getsizeof( str(obj) ) )
+	#     _.threads.spent( qID, sys.getsizeof( str(obj) ) )
 
 
 
@@ -796,7 +796,7 @@ def action():
 		
 		
 		# _.pr( 'listExists:', franID )
-		# sys.exit()				# _.pr('startResearch')
+		# sys.exit()                # _.pr('startResearch')
 		# sys.exit()
 
 		# for xx in franID('https://www.google.com/search?q=imdb+'+franchise+'+franchise+movies'):
@@ -932,11 +932,11 @@ def action():
 
 		# _.threads.projectDataMaxLen = 200
 		# if _.switches.isActive('Stats'):
-		# 	_.threads.report = True
-		# 	_.threads.auditPrint = True
+		#     _.threads.report = True
+		#     _.threads.auditPrint = True
 		# else:
-		# 	_.threads.report = False
-		# 	_.threads.auditPrint = False
+		#     _.threads.report = False
+		#     _.threads.auditPrint = False
 
 		for lnk in newList:
 			if _.switches.isActive('RawPrint'):
@@ -956,13 +956,13 @@ def action():
 				if GOOD_LIST(label): __.asyn.register( name='franchiseList', category='franchiseList', fn=buildUrlList, k={ 'url':lnk['link'], 'label':label }, timeout=120 )
 
 			# for xxx in do:
-			# 	# if 'tt1375666' in xxx:
-			# 	# 	_.pr( 'Error:', xxx )
-			# 	# 	sys.exit()
-			# 	franchiseList.append(xxx)
+			#     # if 'tt1375666' in xxx:
+			#     #     _.pr( 'Error:', xxx )
+			#     #     sys.exit()
+			#     franchiseList.append(xxx)
 			# # try:
 			# # except Exception as e:
-			# # 	_.pr('Error: buildUrlList')
+			# #     _.pr('Error: buildUrlList')
 
 			# break
 
@@ -1140,7 +1140,7 @@ def report():
 	_.pr()
 	_.pr()
 
-		###################################################################################################	
+		###################################################################################################    
 
 
 
@@ -1196,24 +1196,24 @@ def inFranchiseID( test ):
 
 
 # def inFranchise( test ):
-# 	for i,franchise in enumerate(__.franchises):
-# 		for alias in franchise['aliases']:
-# 			if alias in test:
-# 				return i
-# 		if ' ' in test:
-# 			cnt = 0
-# 			for part in franchise['parts']:
-# 				for t in test.split( ' ' ):
-# 					if part in t:
-# 						cnt += 1
-# 			if cnt > 1:
-# 				ask = ''
-# 				ask = input( franchise['label']+'? (y): ' )
-# 				if not ask == 'n':
-# 					__.franchises[i]['aliases'].append( ask )
-# 					_.saveTable(__.franchises,__.franchiseFile)
-# 					return i
-# 	return False
+#     for i,franchise in enumerate(__.franchises):
+#         for alias in franchise['aliases']:
+#             if alias in test:
+#                 return i
+#         if ' ' in test:
+#             cnt = 0
+#             for part in franchise['parts']:
+#                 for t in test.split( ' ' ):
+#                     if part in t:
+#                         cnt += 1
+#             if cnt > 1:
+#                 ask = ''
+#                 ask = input( franchise['label']+'? (y): ' )
+#                 if not ask == 'n':
+#                     __.franchises[i]['aliases'].append( ask )
+#                     _.saveTable(__.franchises,__.franchiseFile)
+#                     return i
+#     return False
 
 def aliases( data ):
 	results = []
@@ -1339,7 +1339,7 @@ def GOOD_LIST(label):
 	for testing in THIS.split(','):
 		if  '_'+testing+'_' in TEST      and      not '_'+testing+'_' in __.THE_FRANCHISE_TEST:   GOOD = False
 
-	if _.switches.isActive('ListTestOnly')  or   _.switches.isActive('RawPrint'):		
+	if _.switches.isActive('ListTestOnly')  or   _.switches.isActive('RawPrint'):        
 		if GOOD:
 			_.pr(GOOD, TEST  , c='Background.green')
 		else:

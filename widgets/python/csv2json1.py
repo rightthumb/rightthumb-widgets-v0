@@ -47,7 +47,7 @@ def read_csv(file, json_file, format):
 		title = reader.fieldnames
 		# print( title )
 		# for t in title:
-		# 	print( t )
+		#     print( t )
 		for row in reader:
 			csv_rows.extend([{title[i]:row[title[i]] for i in range(len(title))}])
 		# write_json(csv_rows, json_file, format)
@@ -58,9 +58,9 @@ def write_json(data, json_file, format):
 	with open(json_file, "w") as f:
 		f.write(json.dumps(data, sort_keys=False, indent=4, separators=(',', ': '),encoding="utf-8",ensure_ascii=False))
 		# if format == "pretty":
-		#	 f.write(json.dumps(data, sort_keys=False, indent=4, separators=(',', ': '),encoding="utf-8",ensure_ascii=False))
+		#     f.write(json.dumps(data, sort_keys=False, indent=4, separators=(',', ': '),encoding="utf-8",ensure_ascii=False))
 		# else:
-		#	 f.write(json.dumps(data))
+		#     f.write(json.dumps(data))
 
 if __name__ == "__main__":
 	read_csv(_.switches.value('Input'), _.switches.value('Output'), _.switches.value('Format'))

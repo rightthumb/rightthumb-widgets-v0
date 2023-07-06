@@ -304,7 +304,7 @@ def processFile( filename ):
 		if line.startswith( 'def ' + functionName + '(' ):
 
 			# for newline in replaceText:
-			# 	newFile.append( newline.replace( '\n', '' ) )
+			#     newFile.append( newline.replace( '\n', '' ) )
 			
 			newFile.append( replaceText )
 
@@ -313,14 +313,14 @@ def processFile( filename ):
 			x = i
 			xx = i
 
-			loop = True			
+			loop = True            
 			while loop:
 				xx+=1
 				if xx in noSpace:
 					xx-=1
 					loop = False
 
-			loop = True			
+			loop = True            
 			while loop:
 				if xx in hasText:
 					# _.pr( 'h', file[xx] )

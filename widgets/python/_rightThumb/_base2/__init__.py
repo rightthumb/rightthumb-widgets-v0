@@ -287,23 +287,23 @@ def getSize(fileobject):
 	return size
 
 # def formatSize(size):
-# 	result = ''
-# 	if size == None:
-# 		result = ''
-# 	elif size < 1024:
-# 		result = str(size) + ' B'
-# 	elif size > 1024 and size < 1048576:
-# 		num = round(size / 1024, 2)
-# 		result = str(num) + ' KB'
-# 	elif size > 1048576 and size < 1073741824:
-# 		num = round(size / 1048576, 2)
-# 		result = str(num) + ' MB'
-# 	elif size > 1073741824 and size < 137438953472:
-# 		num = round(size / 1073741824, 2)
-# 		result = str(num) + ' GB'
-# 	# if size < 1:
-# 	# 	result = ''
-# 	return result
+#     result = ''
+#     if size == None:
+#         result = ''
+#     elif size < 1024:
+#         result = str(size) + ' B'
+#     elif size > 1024 and size < 1048576:
+#         num = round(size / 1024, 2)
+#         result = str(num) + ' KB'
+#     elif size > 1048576 and size < 1073741824:
+#         num = round(size / 1048576, 2)
+#         result = str(num) + ' MB'
+#     elif size > 1073741824 and size < 137438953472:
+#         num = round(size / 1073741824, 2)
+#         result = str(num) + ' GB'
+#     # if size < 1:
+#     #     result = ''
+#     return result
 
 def monthByNumber(month):
 	result = ''
@@ -553,7 +553,7 @@ def tempFile(rows,theFile):
 	file0 = _v.stmp + _v.slash + theFile
 	file = open(file0,'w')
 	for r in rows:
-		file.write(r)				 
+		file.write(r)                 
 	file.close()
 
 def stamp2Date(ts):
@@ -773,22 +773,22 @@ def figureOutDate(theDate, theFormat):
 				found = True
 				info['m'] = mNumber
 		if not found:
-			 ans = input('What Month? ')
-			 if len(ans) == 0:
-			 	print('Month error')
-			 	sys.exit()
-			 try:
-			 	int(ans)
-			 except Exception as e:
-			 	print('Month error')
-			 	sys.exit()
-			 if len(ans) == 1:
-				 info['m'] = 0 + ans
-			 elif len(ans) == 2:
-				 info['m'] = ans
-			 else:
-			 	print('Month error')
-			 	sys.exit()
+			ans = input('What Month? ')
+			if len(ans) == 0:
+				print('Month error')
+				sys.exit()
+			try:
+				int(ans)
+			except Exception as e:
+				print('Month error')
+				sys.exit()
+			if len(ans) == 1:
+				info['m'] = 0 + ans
+			elif len(ans) == 2:
+				info['m'] = ans
+			else:
+				print('Month error')
+				sys.exit()
 
 	ifoy = info['y']
 	ifom = info['m']
@@ -917,12 +917,12 @@ def formatPhone2(data):
 	return newData
 
 def updateLine(string):
-    string = str(string)
-    sys.stdout.write("\b" * len(string))
-    sys.stdout.write(" " * len(string))
-    sys.stdout.write("\b" * len(string))
-    sys.stdout.write(string)
-    sys.stdout.flush()
+	string = str(string)
+	sys.stdout.write("\b" * len(string))
+	sys.stdout.write(" " * len(string))
+	sys.stdout.write("\b" * len(string))
+	sys.stdout.write(string)
+	sys.stdout.flush()
 
 def getLastTableSplit(theFile,tableTemp = 'split'):
 	if tableTemp == 'split':
@@ -1133,8 +1133,8 @@ class Switches:
 		# switch = self.switches
 		# result = ''
 		# for row in switch:
-		# 	if row.name == name:
-		# 		result = eval('row.' + column)
+		#     if row.name == name:
+		#         result = eval('row.' + column)
 
 
 
@@ -1330,8 +1330,8 @@ class Switches:
 			if self.switches[i].appReg == __.appReg:
 				switch.append({'name':sw.name ,'switch':sw.switch,'expected_input_example': sw.expected_input_example})
 		# def test(value):
-		# 	value = value + '_V_'
-		# 	return value
+		#     value = value + '_V_'
+		#     return value
 		tables.register('switches',switch)
 		# tables.trigger('switches','switch,name',test,True)
 		tables.print('switches','name,switch,expected_input_example')
@@ -1352,8 +1352,8 @@ class Switches:
 
 				switch.append({'name':sw.name ,'active':active,'value': value})
 		# def test(value):
-		# 	value = value + '_V_'
-		# 	return value
+		#     value = value + '_V_'
+		#     return value
 		tables.register('switches',switch)
 		# tables.trigger('switches','switch,name',test,True)
 		tables.print('switches','name,active,value')
@@ -1364,15 +1364,15 @@ class Switches:
 				ii += 1
 		return ii
 
-# 	def getSelf(self,name):
-# 		result = ''
-# 		for sw in self.switches:
-# 			if sw.name == name:
-# 				result = sw
-# 		return result
+#     def getSelf(self,name):
+#         result = ''
+#         for sw in self.switches:
+#             if sw.name == name:
+#                 result = sw
+#         return result
 # def getSwitchSelf(name):
-# 	global switches
-# 	return switches.getSelf(name)
+#     global switches
+#     return switches.getSelf(name)
 def ci2(string):
 	string = ci(string)
 	string = _str.replaceAll(string,',',' ')
@@ -1418,7 +1418,7 @@ class Table:
 		for tp in self.views:
 			# print()
 			# for x in dir(self.views[i]):
-			# 	print(x)
+			#     print(x)
 
 			if self.views[i].name == name:
 				# print('found')
@@ -1428,13 +1428,13 @@ class Table:
 				# try:
 					
 				# except Exception as e:
-				# 	pass
+				#     pass
 				# print('name:',name)
 				self.print(self.views[i].fields)
 			i += 1
 
 	# def trigger(self,field,script,includes):
-	# 	self.views.append({'name': field, 'script_trigger': script , 'includes': includes })
+	#     self.views.append({'name': field, 'script_trigger': script , 'includes': includes })
 
 
 	def nameLength(self,string,suffix):
@@ -1717,7 +1717,7 @@ class Table:
 			result = self.addSpace2(theLeft) + text + self.addSpace2(theRight)
 			# print(column,theLeft,theRight,'0' + result + '0')
 			# print(totalSpace,theLeft,theRight)
-		# 	result = theLeft + text + theRight
+		#     result = theLeft + text + theRight
 		return result
 
 	def groupLine(self,columnList,columnHeaderLength):
@@ -1905,8 +1905,8 @@ class Table:
 								# if cnt > 0:
 									# rowInclude = True
 										# if switches.isActive('PlusOr') == True:
-										# 	if cnt > 0:
-										# 		rowInclude = True
+										#     if cnt > 0:
+										#         rowInclude = True
 							if len(dataNo) > 0 and rowInclude:
 								# print('ISNOT')
 								rowInclude = True
@@ -1947,7 +1947,7 @@ class Table:
 
 
 
- 		# if not len(groupByList):
+		# if not len(groupByList):
 		self.groupByList = {}
 		try:
 			for gb in switches.value('GroupBy').split(','):
@@ -1974,7 +1974,7 @@ class Table:
 		# print(self.asset)
 		for item in self.asset:
 			# print(item)
-			result = ''	
+			result = ''    
 			for c in column.split(','):
 				try:
 					pass
@@ -2266,53 +2266,53 @@ class Tables:
 		###### How it works:
 		# totalColumnWidth = 0
 		# for m in self.meta['data']:
-		# 	tables.register(m['table'],m['fields'])
-		# 	spaces = tables.getLength(m['table'],'type,field,max,min,average')
-		# 	if spaces > totalColumnWidth:
-		# 		totalColumnWidth = spaces
+		#     tables.register(m['table'],m['fields'])
+		#     spaces = tables.getLength(m['table'],'type,field,max,min,average')
+		#     if spaces > totalColumnWidth:
+		#         totalColumnWidth = spaces
 
 
 		# fieldLengths = 0
 		# for m in self.meta['data']:
-		# 	tables.register(m['table'],m['fields'])
-		# 	data = tables.getFieldLengths(m['table'],'type,field,max,min,average')
-		# 	if not type(fieldLengths) == dict:
-		# 		fieldLengths = data
-		# 	for name in fieldLengths.keys():
-		# 		if data[name] > fieldLengths[name]:
-		# 			fieldLengths[name] = data[name]
+		#     tables.register(m['table'],m['fields'])
+		#     data = tables.getFieldLengths(m['table'],'type,field,max,min,average')
+		#     if not type(fieldLengths) == dict:
+		#         fieldLengths = data
+		#     for name in fieldLengths.keys():
+		#         if data[name] > fieldLengths[name]:
+		#             fieldLengths[name] = data[name]
 
 
 
 
 		# for m in self.meta['data']:
-		# 	genLine(totalColumnWidth,'=')
-		# 	print('Table:\t',m['table'])
-		# 	print('Parent:\t',m['parent'])
-		# 	print('Records:',m['count'])
-		# 	print()
-		# 	tables.register(m['table'],m['fields'])
-		# 	tables.fieldProfileSet(m['table'],'*','alignment','center')
-		# 	tables.print(m['table'],'type,field,max,min,average',fieldLengths)
+		#     genLine(totalColumnWidth,'=')
+		#     print('Table:\t',m['table'])
+		#     print('Parent:\t',m['parent'])
+		#     print('Records:',m['count'])
+		#     print()
+		#     tables.register(m['table'],m['fields'])
+		#     tables.fieldProfileSet(m['table'],'*','alignment','center')
+		#     tables.print(m['table'],'type,field,max,min,average',fieldLengths)
 
-		# 	genLine(totalColumnWidth,'=')
+		#     genLine(totalColumnWidth,'=')
 		# print()
 		# print('Records:',self.meta['records'])
 		# print()
 		# print('Errors:')
 		# for e in self.meta['errors']:
-		# 	print('\t',e)
+		#     print('\t',e)
 
 		return result
 
 ###########################################################################################
 def md5(fname):
-    hash_md5 = hashlib.md5()
-    with open(fname, "rb") as f:
-        for chunk in iter(lambda: f.read(4096), b""):
-            hash_md5.update(chunk)
-    return hash_md5.hexdigest()
-    return hash_md5.hexdigest()
+	hash_md5 = hashlib.md5()
+	with open(fname, "rb") as f:
+		for chunk in iter(lambda: f.read(4096), b""):
+			hash_md5.update(chunk)
+	return hash_md5.hexdigest()
+	return hash_md5.hexdigest()
 
 
 def formatSize(size):
@@ -2331,14 +2331,14 @@ def formatSize(size):
 	elif size > 1048576 and size < 1073741824:
 		num = round(size / 1048576, 2)
 		result = str(num) + ' MB'
-	elif size > 1073741824 and size < 1099511627776	:
+	elif size > 1073741824 and size < 1099511627776    :
 		num = round(size / 1073741824, 2)
 		result = str(num) + ' GB'
 	else:
 		num = round(size / 1099511627776, 2)
 		result = str(num) + ' TB'
 	# if size < 1:
-	# 	result = ''
+	#     result = ''
 	return result
 
 def unFormatSize(size):
@@ -2347,7 +2347,7 @@ def unFormatSize(size):
 	factor = ''
 
 	if 'TB' in size:
-		factor = 1099511627776	
+		factor = 1099511627776    
 	elif 'GB' in size:
 		factor = 1073741824
 	elif 'MB' in size:
@@ -2509,25 +2509,25 @@ class Database:
 				result = self.tables[i].getCount()
 		return result
 # {
-# 	'table': 'table,name',
-# 	'fields': [
-# 		{'names': 'one,two'},
-# 		{'names': 'three', 'table': 'name', 'as': 'threeish'}
-# 	],
-# 	'action': [
-#		{ 'type': 'text', 'names': 'field', 'table': 'your_mom', 'search': '*.txt,desktop'},
-#		{ 'type': 'text', 'names': 'testy', 'and_or': 'or', 'table': 'or_test', 'search': '*.py,*.txt'},
-# 		{ 'type': 'field_type(text)', 'table': 'name', 'names': 'field,names', 'and_or': 'and',  'search': '*.py,tech'},
-# 		{ 'type': 'field_type(number)', 'names': 'field,names', 'search': '1000,2000'},
-# 		{ 'type': 'field_type(number)', 'names': 'field,names', 'search': 'g,1000'},
-# 		{ 'type': 'field_type(number)', 'names': 'field,names', 'search': 'l,1000'},
-# 		{ 'type': 'field_type(number)', 'names': 'field,names', 'search': 'str(ago(2000))'},
-# 		{ 'type': 'field_type(number)', 'names': 'field,names', 'search': 'str(epoch(2018.07))'},
-# 		{ 'type': 'field_type(number)', 'names': 'field,names', 'search': 'str(epoch(2018.07)),str(epoch('2018.10',True))'},
-# 		{ 'type': 'field_type(sort)', 'names': 'field', 'order': 'asc'},
-# 		{ 'type': 'field_type(sort)', 'names': 'field', 'order': 'desc'},
-# 	]
-# }	
+#     'table': 'table,name',
+#     'fields': [
+#         {'names': 'one,two'},
+#         {'names': 'three', 'table': 'name', 'as': 'threeish'}
+#     ],
+#     'action': [
+#        { 'type': 'text', 'names': 'field', 'table': 'your_mom', 'search': '*.txt,desktop'},
+#        { 'type': 'text', 'names': 'testy', 'and_or': 'or', 'table': 'or_test', 'search': '*.py,*.txt'},
+#         { 'type': 'field_type(text)', 'table': 'name', 'names': 'field,names', 'and_or': 'and',  'search': '*.py,tech'},
+#         { 'type': 'field_type(number)', 'names': 'field,names', 'search': '1000,2000'},
+#         { 'type': 'field_type(number)', 'names': 'field,names', 'search': 'g,1000'},
+#         { 'type': 'field_type(number)', 'names': 'field,names', 'search': 'l,1000'},
+#         { 'type': 'field_type(number)', 'names': 'field,names', 'search': 'str(ago(2000))'},
+#         { 'type': 'field_type(number)', 'names': 'field,names', 'search': 'str(epoch(2018.07))'},
+#         { 'type': 'field_type(number)', 'names': 'field,names', 'search': 'str(epoch(2018.07)),str(epoch('2018.10',True))'},
+#         { 'type': 'field_type(sort)', 'names': 'field', 'order': 'asc'},
+#         { 'type': 'field_type(sort)', 'names': 'field', 'order': 'desc'},
+#     ]
+# }    
 
 	def queryBuilder(self,data): # queryBuilder
 		self.data = data
@@ -2790,7 +2790,7 @@ class Database:
 						if not type(average[aKey]['datapoints']) == list:
 							average[aKey] = {'max': 0, 'min': 'first', 'average': 0, 'datapoints': [], 'count': 0}
 
-						# print(type())						
+						# print(type())                        
 					except Exception as e:
 						average[aKey] = {'max': 0, 'min': 'first', 'average': 0, 'datapoints': [], 'count': 0}
 					average[aKey]
@@ -2859,13 +2859,13 @@ class Database:
 
 		# fieldLengths = 0
 		# for m in self.meta['data']:
-		# 	tables.register(m['table'],m['fields'])
-		# 	data = tables.getFieldLengths(m['table'],'type,field,max,min,average')
-		# 	if not type(fieldLengths) == dict:
-		# 		fieldLengths = data
-		# 	for name in fieldLengths.keys():
-		# 		if data[name] > fieldLengths[name]:
-		# 			fieldLengths[name] = data[name]
+		#     tables.register(m['table'],m['fields'])
+		#     data = tables.getFieldLengths(m['table'],'type,field,max,min,average')
+		#     if not type(fieldLengths) == dict:
+		#         fieldLengths = data
+		#     for name in fieldLengths.keys():
+		#         if data[name] > fieldLengths[name]:
+		#             fieldLengths[name] = data[name]
 
 
 
@@ -2897,9 +2897,9 @@ class Database:
 	def findParent(self,table):
 		# parent = 'Error'
 		# for m in self.meta['data']:
-		# 	if m['table'] == table:
-		# 		parent = m['parent']
-		# 		break
+		#     if m['table'] == table:
+		#         parent = m['parent']
+		#         break
 		if self.tableDelim in table:
 			parent = ''
 			mx = len(table.split(self.tableDelim))-1
@@ -3047,41 +3047,41 @@ class ColumnsDB:
 		self.kind = kind
 
 	# def trigger(self,script):
-	# 	self.script_trigger = script
+	#     self.script_trigger = script
 
 	# def changeStatus(self,newStatus):
-	# 	self.active = newStatus
+	#     self.active = newStatus
 
 	# def print(self):
-	# 	childItems = []
-	# 	for ci in self.columns:
-	# 		childItems.append({'name':ci.name})
-	# 	tables.register('childClassItems',childItems)
-	# 	# tables.trigger('switches','switch,name',test,True)
-	# 	tables.print('childClassItems','name')
+	#     childItems = []
+	#     for ci in self.columns:
+	#         childItems.append({'name':ci.name})
+	#     tables.register('childClassItems',childItems)
+	#     # tables.trigger('switches','switch,name',test,True)
+	#     tables.print('childClassItems','name')
 
 
-	# 		childItems.append({'name':ci.name ,'active':active,'value': value})
-	# 	tables.register('childClassItems',childItems)
-	# 	tables.print('childClassItems','name,active,value')
+	#         childItems.append({'name':ci.name ,'active':active,'value': value})
+	#     tables.register('childClassItems',childItems)
+	#     tables.print('childClassItems','name,active,value')
 
 	# def status(self,name,newStatus):
-	# 	for i,ci in enumerate(self.columns):
-	# 		if ci.name == name:
-	# 			self.columns[i].changeStatus(newStatus)
+	#     for i,ci in enumerate(self.columns):
+	#         if ci.name == name:
+	#             self.columns[i].changeStatus(newStatus)
 
 
 ###########################################################################################
 def get_size(obj, seen=None):
-    # https://medium.com/@alexmaisiura/python-how-to-reduce-memory-consumption-by-half-by-adding-just-one-line-of-code-56be6443d524
-    # From https://goshippo.com/blog/measure-real-size-any-python-object/
-    # Recursively finds size of objects
-    size = sys.getsizeof(obj)
-    if seen is None:
-        seen = set()
-    obj_id = id(obj)
-    if obj_id in seen:
-        return 0
+	# https://medium.com/@alexmaisiura/python-how-to-reduce-memory-consumption-by-half-by-adding-just-one-line-of-code-56be6443d524
+	# From https://goshippo.com/blog/measure-real-size-any-python-object/
+	# Recursively finds size of objects
+	size = sys.getsizeof(obj)
+	if seen is None:
+		seen = set()
+	obj_id = id(obj)
+	if obj_id in seen:
+		return 0
 
 
 ###########################################################################################

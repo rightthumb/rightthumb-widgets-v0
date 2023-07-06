@@ -22,7 +22,7 @@ import cssselect
 _.switches.register('File', '-file','file.txt')
 
 
-_.appInfo=	{
+_.appInfo=    {
 	'file': 'processes.py',
 	'description': 'Check if processes are ok',
 	'prerequisite': [],
@@ -33,15 +33,15 @@ _.appInfo['examples'].append('p processes -file file.txt')
 # _.appInfo['columns'].appedn({'name': 'name', 'abbreviation': 'n'})
 
 # def formatColumns(columns):
-# 	result = ''
-# 	for c in columns.split(','):
-# 		for col in _.appInfo['columns']:
-# 			for a in col['abbreviation'].split(','):
-# 				if a == c:
-# 					c = col['name']
-# 		result += c + ','
-# 	result = result[:-1]
-# 	return result
+#     result = ''
+#     for c in columns.split(','):
+#         for col in _.appInfo['columns']:
+#             for a in col['abbreviation'].split(','):
+#                 if a == c:
+#                     c = col['name']
+#         result += c + ','
+#     result = result[:-1]
+#     return result
 
 # _.switches.trigger('Column',formatColumns)
 

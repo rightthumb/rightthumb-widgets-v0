@@ -110,11 +110,11 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-					   # { 'name': 'name', 'abbreviation': 'n' },
+					# { 'name': 'name', 'abbreviation': 'n' },
 	],
 	'aliases': [
-					   # 'this',
-					   # 'app',
+					# 'this',
+					# 'app',
 	],
 
 	}
@@ -296,11 +296,11 @@ def action():
 				scan_profile = scan_audit( record['i'] )
 				sp = scan_profile
 				part_profile = {
-									  'match': str(sp['match'])+'%',
+									'match': str(sp['match'])+'%',
 									'start': sp['start'],
-									  'end': sp['end'],
+									'end': sp['end'],
 									'lines': sp['lines'],
-									  'parent_lines': sp['pLines'],
+									'parent_lines': sp['pLines'],
 				}
 				_.colorThis( [ '\t', _.simpleDic(part_profile)  ], 'yellow' )
 				_.colorThis( [ '\t', record['file'] ], 'cyan' )
@@ -322,11 +322,11 @@ def action():
 			scan_profile = scan_audit( record['i'] )
 			sp = scan_profile
 			part_profile = {
-								  'match': str(sp['match'])+'%',
+								'match': str(sp['match'])+'%',
 								'start': sp['start'],
-								  'end': sp['end'],
+								'end': sp['end'],
 								'lines': sp['lines'],
-								  'parent_lines': sp['pLines'],
+								'parent_lines': sp['pLines'],
 			}
 			_.colorThis( [ '\t', _.simpleDic(part_profile)  ], 'yellow' )
 			_.colorThis( [ '\t', record['file'] ], 'cyan' )
@@ -436,7 +436,7 @@ def load():
 			backup = 0
 			if '+' in filename:
 				try:
-					backup = int( filename.split('+')[1] )				
+					backup = int( filename.split('+')[1] )                
 				except Exception as e:
 					backup = '?'
 			isBackup = True
@@ -454,15 +454,15 @@ def load():
 
 
 		# if filename.lower().endswith( ':scan' ):
-		# 	scan = True
-		# 	is_scan = True
+		#     scan = True
+		#     is_scan = True
 			
-		# 	filelabelX = filename.split(':')
-		# 	filelabelX.reverse()
-		# 	filelabelX.pop(0)
-		# 	filelabelX.reverse()
-		# 	filelabel = ':'.join(filelabelX)
-		# 	filename = ':'.join(filelabelX)
+		#     filelabelX = filename.split(':')
+		#     filelabelX.reverse()
+		#     filelabelX.pop(0)
+		#     filelabelX.reverse()
+		#     filelabel = ':'.join(filelabelX)
+		#     filename = ':'.join(filelabelX)
 
 
 		if scan:
@@ -530,7 +530,7 @@ def load():
 			if not end_p is None and end_p == len(data[ifn-1]['data']):
 				end = len(fileData)-1
 			# if not end_p is None:
-			# 	_.pr( end_p, len(data[ifn-1]['data']) )
+			#     _.pr( end_p, len(data[ifn-1]['data']) )
 			if start is None or end is None:
 				_.colorThis( ['endScanA', endScanA], 'cyan' )
 				if not endScanA == endScanB:
@@ -610,8 +610,8 @@ def load():
 
 		data.append({  'file': filelabel, 'data': fileData, 'partial': partial, 'start': start, 'end': end, 'original': original, 'scan': is_scan, 'i': ifn  })
 		# for deli,record in enumerate(data):
-		# 	if deli <= ifn-2:
-		# 		del data[i]['original']
+		#     if deli <= ifn-2:
+		#         del data[i]['original']
 	pass
 	for i,record in enumerate(data):
 		del data[i]['original']
