@@ -3999,9 +3999,9 @@ def kevinBacon(url):
 	# os.system('cls')
 	def isEven(x):
 		if x & 1:
-		return False
+			return False
 		else:
-		return True
+			return True
 	def done(timeAudit):
 		try:
 			global allPeople
@@ -6356,6 +6356,7 @@ def get_cinema_seasons(imdbID):
 	url = __.links['imdb']['cinema']['fullcredits'].replace(__.ID_HERE,imdbID)
 
 	if theTitle == '':
+		# print(url);sys.exit();
 		page = requests.get(url)
 		tree = html.fromstring(page.content)
 		movieTitle = tree.cssselect('h3')
@@ -6378,69 +6379,73 @@ def get_cinema_seasons(imdbID):
 	newURL = __.links['imdb']['cinema']['season'].replace(__.ID_HERE,imdbID)
 	siteBase = 'https://www.imdb.com'
 	thisURL = newURL.replace('THESEASON','1')
-	page = requests.get(thisURL)
-	tree = html.fromstring(page.content)
-	seasons = tree.cssselect('#bySeason option')
+	# print(thisURL);sys.exit();
 	try:
-		seasonTest0 = seasons[len(seasons)-1].text_content()
-	except: _.e('Nothing Found','No Episode Information Available')
-	seasonTest = cleanupString(seasonTest0)
-	global zeroList
-	zeroList = zeroList.lower()
-	zeroListX = zeroList.split(',')
-	if theTitle.lower() in zeroListX:
-		isZero = True
-	else:
-		isZero = False
-
-	if 'unknown' in seasonTest.lower():
-		unknown = True
-	else:
-		unknown = False
-	episodeList = []
-	seasonList = []
-	episodeListIds = []
-	for i,s in enumerate(seasons):
-		season = str(i+1)
-		if int(season) == len(seasons) and unknown:
-			thisURL = newURL.replace('THESEASON','-1')
+		page = requests.get(thisURL)
+		tree = html.fromstring(page.content)
+		seasons = tree.cssselect('#bySeason option')
+		try:
+			seasonTest0 = seasons[len(seasons)-1].text_content()
+		except: _.e('Nothing Found','No Episode Information Available')
+		seasonTest = cleanupString(seasonTest0)
+		global zeroList
+		zeroList = zeroList.lower()
+		zeroListX = zeroList.split(',')
+		if theTitle.lower() in zeroListX:
+			isZero = True
 		else:
-			thisURL = newURL.replace('THESEASON',season)
+			isZero = False
 
-			page = requests.get(thisURL)
-			tree = html.fromstring(page.content)
-			episodeCode = tree.cssselect('div[itemprop="episodes"]')
+		if 'unknown' in seasonTest.lower():
+			unknown = True
+		else:
+			unknown = False
+		episodeList = []
+		seasonList = []
+		episodeListIds = []
+		for i,s in enumerate(seasons):
+			season = str(i+1)
+			if int(season) == len(seasons) and unknown:
+				thisURL = newURL.replace('THESEASON','-1')
+			else:
+				thisURL = newURL.replace('THESEASON',season)
 
-			episodeSet = []
-			for ii,epiCode in enumerate(episodeCode):
-				shows = epiCode.cssselect('a[itemprop="name"]')
-				show = shows[0]
-				link = show.attrib['href']
-				if not isZero:
-					seasonZero = False
-				if isZero and ii == 0:
-					seasonZero = isSeasonZero(siteBase + link)
-				# if theTitle.lower() == 'doctor who' and isZero and not season in ['1','8']:
-				if seasonZero:
-					episodeN = str(ii)
-				else:
-					episodeN = str(ii+1)
-				# link = link0.split('?')[0] + 'fullcredits?ref_=tt_cl_sm#cast'
-				# episodeN = link.split('ttep_ep')[1]
-				
-				airdate0 = epiCode.cssselect('.airdate')
-				airdate1 = airdate0[0].text_content()
-				airdate2 = cleanupString(airdate1)
-				airdate3 = airdate2.replace('.','')
-				airdate = monthToNumber(airdate3)
-				showId = season + ':' + episodeN
-				showTitle0 = show.text_content()
-				showTitle = cleanupString(showTitle0)
-				
-				episodeListIds.append(showId)
-				episodeList.append({'id': showId, 'title': showTitle, 'url': siteBase + link, 'airdate': airdate})
-				episodeSet.append({'id': showId, 'title': showTitle, 'url': siteBase + link, 'airdate': airdate})
-			seasonList.append({'season': season, 'episodes': episodeSet})
+				page = requests.get(thisURL)
+				tree = html.fromstring(page.content)
+				episodeCode = tree.cssselect('div[itemprop="episodes"]')
+
+				episodeSet = []
+				for ii,epiCode in enumerate(episodeCode):
+					shows = epiCode.cssselect('a[itemprop="name"]')
+					show = shows[0]
+					link = show.attrib['href']
+					if not isZero:
+						seasonZero = False
+					if isZero and ii == 0:
+						seasonZero = isSeasonZero(siteBase + link)
+					# if theTitle.lower() == 'doctor who' and isZero and not season in ['1','8']:
+					if seasonZero:
+						episodeN = str(ii)
+					else:
+						episodeN = str(ii+1)
+					# link = link0.split('?')[0] + 'fullcredits?ref_=tt_cl_sm#cast'
+					# episodeN = link.split('ttep_ep')[1]
+					
+					airdate0 = epiCode.cssselect('.airdate')
+					airdate1 = airdate0[0].text_content()
+					airdate2 = cleanupString(airdate1)
+					airdate3 = airdate2.replace('.','')
+					airdate = monthToNumber(airdate3)
+					showId = season + ':' + episodeN
+					showTitle0 = show.text_content()
+					showTitle = cleanupString(showTitle0)
+					
+					episodeListIds.append(showId)
+					episodeList.append({'id': showId, 'title': showTitle, 'url': siteBase + link, 'airdate': airdate})
+					episodeSet.append({'id': showId, 'title': showTitle, 'url': siteBase + link, 'airdate': airdate})
+				seasonList.append({'season': season, 'episodes': episodeSet})
+	except Exception as e:
+		pass
 	
 	seasonData.append({'id': getIdFromUrl(url), 'year': theYear, 'title': theTitle, 'seasons': seasonList, 'date': str(today)})
 	return seasonData

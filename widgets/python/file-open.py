@@ -294,7 +294,7 @@ def action(path=None):
 					if os.path.isfile(ext):
 						exts=_.getYML(ext)
 						for ex in exts:
-							if path.endswith('.'+ex):
+							if path.lower().endswith('.'+ex):
 								found=True
 								app=exts[ex]
 
