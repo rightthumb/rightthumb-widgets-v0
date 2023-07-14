@@ -51,9 +51,9 @@ __.setting('switch-raw',[])
 
 _.appInfo[focus()] = {
 	# 'app': '8facG-jo0Cxk',
-	'file': 'thisApp.py',
+	'file': 'lists-compare-files.py',
 	'liveAppName': __.thisApp( __file__ ),
-	'description': 'Changes the world',
+	'description': 'Compares as many files as you want with lines in no particular order',
 		# _.ail(1,'subject')+
 		# _.aib('one')+
 	'categories': [
@@ -73,7 +73,13 @@ _.appInfo[focus()] = {
 						# '',
 	],
 	'examples': [
-						_.hp('p thisApp -file file.txt'),
+						_.hp(''),
+						_.hp('cat performers_network2\\subscribed_members_export_fa5ae7fa8d.csv | cp'),
+						_.hp('rem 7'),
+						_.hp('pa | p line --c + @ | cp'),
+						_.hp('pa > performers_network2\\emails.list'),
+						_.hp('p lists-compare-files -f performers_network2\\emails.list personal\\emails.list + perf'),
+						_.hp(''),
 						_.linePrint(label='simple',p=0),
 						'',
 	],
