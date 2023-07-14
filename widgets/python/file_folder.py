@@ -155,6 +155,9 @@ _.postLoad( __file__ )
 ########################################################################################
 # START
 
+import pathlib
+
+
 def action():
 	global copied
 	_copy_this=[]
@@ -194,7 +197,7 @@ def action():
 			totalFile+=1
 			if _.showLine(item):
 				files.append({ 'label':  item  })
-		if os.path.isdir(path):
+		if not os.path.isfile(path):
 			totalFolder+=1
 			if _.showLine(item):
 				folders.append({ 'label':  item  })
@@ -268,7 +271,14 @@ def action():
 			_.pr()
 			_.colorThis( 'Folders:', 'green' )
 			for f in _.tables.returnSorted( 'folders', 'a.label', folders ):
-				if os.path.islink(f['label']):
+				try:
+					x=pathlib.Path(f['label']).resolve()
+					# print(x)
+					islink=False
+				except:
+					islink=True
+
+				if islink or  os.path.islink(f['label']):
 					_.colorThis( [ '\t',f['label'] ], 'yellow' )
 				else:
 					_.colorThis( [ '\t',f['label'] ], 'cyan' )

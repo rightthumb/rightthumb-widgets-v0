@@ -163,7 +163,13 @@ def action():
 				to = os.path.abspath(to)
 				os.unlink(to)
 
-			os.link( fro, to )
+			try:
+				os.link( fro, to )
+			except:
+				try:
+					os.symlink( fro, to )
+				except Exception as e:
+					_.e('unable to create link',e)
 
 
 

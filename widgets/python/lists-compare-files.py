@@ -32,10 +32,10 @@ _str = __.imp('_rightThumb._string')
 def sw():
 	pass
 	#b)--> examples
-	# _.switches.register( 'Input', '-i' )
+	_.switches.register( 'Search', '-search' )
 	# _.switches.register( 'URL', '-u,-url,-urls', 'https://etc.ac/', isData='raw' )
 	#e)--> examples
-	# _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name,data,clean', description='Files', isRequired=False )
+	_.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name', description='Files', isRequired=False )
 
 # __.setting('require-list',['Files,Plus','File,Has']) # todo
 # __.setting('require-list',['Pipe','Files'])
@@ -149,19 +149,44 @@ _.l.sw.register( triggers, sw )
 ########################################################################################
 #n)--> start
 
+def compare_files(file_paths):
+    file_contents = {}
+
+    # Read the content of each file and store it in a dictionary
+    for file_path in file_paths:
+        with open(file_path, 'r') as file:
+            content = file.readlines()
+            file_contents[file_path] = [line.strip() for line in content]
+
+    missing_lines = {}
+
+    # Compare each file's content with every other file
+    for current_file, current_content in file_contents.items():
+        missing_lines[current_file] = []
+
+        for other_file, other_content in file_contents.items():
+            if current_file != other_file:
+                missing = [line for line in other_content if line not in current_content]
+                missing_lines[current_file].extend(missing)
+
+    return missing_lines
+
+
 def action():
-	load(); global c3po;
+	# print(_.pp())
+	missing = compare_files(_.pp())
+	for k in missing:
+		if _.showLine(k):
+			_.pr(k)
+			for l in missing[k]:
+				if _.switches.isActive('Search'):
+					if _.showLine(l,_.switches.values('Search')):
+						_.pr('\t',l)
+				else:
+					_.pr('\t',l)
+			_.pr('',len(missing[k]),c='yellow')
 
-	#n)--> iterate
-	# for subject in _.isData(r=0): _.pr(subject)
-	for subject in _.pp(): _.pr(subject)
 	
-
-def load():
-	global c3po
-	c3po = _.getTable( 'table' )
-	#n)--> print table
-	_.pt(c3po)
 
 
 ##################################################

@@ -6,8 +6,8 @@ call bb back > %tmpf%-back
 SET /p pretty_back=<%tmpf%-back
 echo purple %pretty_back%  >> %tmpf%-print_color-day
 echo.                                >> %tmpf%-print_color-day
-echo darkcyan 1 second                    >> %tmpf%-print_color-day
-echo cyan C:\Users\Scott\.rt\profile\daily\2023\27\07-06\                       >> %tmpf%-print_color-day
+echo darkcyan                     >> %tmpf%-print_color-day
+echo cyan C:\Users\Scott\.rt\profile\daily\2023\28\07-14\                       >> %tmpf%-print_color-day
 echo Background.green linePrint      >> %tmpf%-print_color-day
 call p print_color -f %tmpf%-print_color-day -tab 2
-cd C:\Users\Scott\.rt\profile\daily\2023\27\07-06\
+cd C:\Users\Scott\.rt\profile\daily\2023\28\07-14\

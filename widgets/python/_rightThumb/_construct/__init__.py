@@ -177,9 +177,9 @@ def imp_install(mod):
 		exec('import os')
 	except Exception as e:
 		raise e
-	print()
-	print('__.imp_install('+mod+')')
-	print()
+	# print()
+	# print('__.imp_install('+mod+')')
+	# print()
 	if '.' in mod: mod = mod.split('.')[0]
 
 	dic = {

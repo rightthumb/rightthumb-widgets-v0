@@ -32,10 +32,10 @@ _str = __.imp('_rightThumb._string')
 def sw():
 	pass
 	#b)--> examples
-	# _.switches.register( 'Input', '-i' )
+	_.switches.register( 'Replace', '-r,-replace', '\\x22 \\n' )
 	# _.switches.register( 'URL', '-u,-url,-urls', 'https://etc.ac/', isData='raw' )
 	#e)--> examples
-	# _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name,data,clean', description='Files', isRequired=False )
+	_.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='data', description='Files', isRequired=False )
 
 # __.setting('require-list',['Files,Plus','File,Has']) # todo
 # __.setting('require-list',['Pipe','Files'])
@@ -149,19 +149,21 @@ _.l.sw.register( triggers, sw )
 ########################################################################################
 #n)--> start
 
+def clean(rep):
+	rep=_.ci(rep)
+	if rep == '\\n': rep='\n'
+	return rep
+
 def action():
-	load(); global c3po;
+	replacements = _.switches.values('Replace')
+	content='\n'.join(_.pp())
+	for i in range(0, len(replacements), 2):
+		# Make sure that we have a pair
+		if i+1 < len(replacements):
+			content = content.replace(clean(replacements[i]), clean(replacements[i+1]))
+	_.pr(content)
+	   
 
-	#n)--> iterate
-	# for subject in _.isData(r=0): _.pr(subject)
-	for subject in _.pp(): _.pr(subject)
-	
-
-def load():
-	global c3po
-	c3po = _.getTable( 'table' )
-	#n)--> print table
-	_.pt(c3po)
 
 
 ##################################################

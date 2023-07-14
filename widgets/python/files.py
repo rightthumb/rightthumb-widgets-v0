@@ -727,7 +727,10 @@ def Relative_Path_Persistent():
 		_.saveTable(fig,rpp_fig,p=0)
 
 	if Session_ID in fig and time.time() < fig[Session_ID]:
-		_.switches.fieldSet( 'Toggle-Relative-Path', 'active', True )
+		if _.switches.isActive('Toggle-Relative-Path'):
+			_.switches.fieldSet( 'Toggle-Relative-Path', 'active', False )
+		else:
+			_.switches.fieldSet( 'Toggle-Relative-Path', 'active', True )
 
 def action():
 	Relative_Path_Persistent()
@@ -910,9 +913,17 @@ else:
 inc=_.switches.values('Search-For-Text-Include')
 # the_file=_.getText(path,raw=True)
 ex=_.switches.values('Search-For-Text-Exclude')
-for i,x in enumerate(inc): inc[i]=_.ci(x)
-for i,x in enumerate(ex): ex[i]=_.ci(x)
+for i,x in enumerate(inc):
+	inc[i]=_.ci(x)
+	if not i and _.switches.isActive('Plus-single'):
+		inc[i]=inc[i].replace("'",'"')
+		# break
 
+for i,x in enumerate(ex):
+	ex[i]=_.ci(x)
+	if not i and _.switches.isActive('Minus-single'):
+		ex[i]=ex[i].replace("'",'"')
+		# break
 infile=0
 
 def process3(path):

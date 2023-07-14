@@ -15,6 +15,8 @@ from datetime import date
 MINI_ADS = True
 SHOW_ADS = False
 ##################################################
+__.showLine_quoteFix=True
+##################################################
 
 
 #                  ¯\_(ツ)_/¯
@@ -9503,10 +9505,22 @@ def positiveResultsCode(string,plus='',plusOr=False,end=None,OR=None):
 		plusInput = switches.values('Plus').copy()
 
 
+
+
 	if type( plusInput ) == list:
 		for i,yh in enumerate(plusInput):
 			plusInput[i]= ci(plusInput[i])
 	# -->   #end> this was added 2022-07-20
+
+	if __.showLine_quoteFix and type(plusInput)==list:
+		new=[]
+		for i,x in enumerate(plusInput):
+			if "'" in x:
+				# new.append(x.replace("'",'"'))
+				if not i and switches.isActive('Plus-single'):
+					x=x.replace("'",'"')
+			new.append(x)
+		plusInput=new
 	if not end is None:
 		if type( plusInput ) == str:
 			plusInput += end
@@ -9606,6 +9620,16 @@ def positiveResults(string,plus='',plusOr=False,end=None,OR=None):
 		for i,yh in enumerate(plusInput):
 			plusInput[i]= ci(plusInput[i])
 	# -->   #end> this was added 2022-07-20
+	if __.showLine_quoteFix and type(plusInput)==list:
+		new=[]
+		for i,x in enumerate(plusInput):
+			if "'" in x:
+				# new.append(x.replace("'",'"'))
+				if not i and switches.isActive('Plus-single'):
+					x=x.replace("'",'"')
+			new.append(x)
+		plusInput=new
+	# print(plusInput);sys.exit();
 	if not end is None:
 		if type( plusInput ) == str:
 			plusInput += end
@@ -9679,6 +9703,7 @@ def minusResults(string,minus=''):
 	else:
 		minusInput = switches.values('Minus')
 
+
 	# 23-01-04
 	string=string.strip() #:    //*   #* 
 	if minusInput and '*' in minusInput[0]:
@@ -9711,6 +9736,15 @@ def minusResults(string,minus=''):
 			else:
 				minusInput[i]= ci(minusInput[i])
 	# -->   #end> this was added 2022-07-20
+		if __.showLine_quoteFix and  type(minusInput)==list:
+			new=[]
+			for i,x in enumerate(minusInput):
+				if "'" in x:
+					# new.append(x.replace("'",'"'))
+					if not i and switches.isActive('Minus-single'):
+						x=x.replace("'",'"')
+				new.append(x)
+			minusInput=new
 	if type( minusInput ) == str:
 		if not switches.isActive('StrictCase'):
 			minusInput = minusInput.lower()
@@ -11796,6 +11830,8 @@ class Switches:
 		for i,sw in enumerate(self.switches):
 			if self.switches[i].appReg == __.appReg:
 				if __.switch_skimmer.active and not self.switches[i].default:
+					switch.append({'name':sw.name ,'switch':sw.switch,'expected_input_example': sw.expected_input_example})
+				elif not __.switch_skimmer.active:
 					switch.append({'name':sw.name ,'switch':sw.switch,'expected_input_example': sw.expected_input_example})
 		# def test(value):
 		#   value = value + '_V_'
@@ -13910,13 +13946,14 @@ class Table:
 					if self.groupID_KEY in item and item[self.groupID_KEY].endswith('-B'):
 						cp( [ self.tab['table']+loopPrint(__.table_prefix_padding) + result ], 'BackgroundGrey.blue' )
 					else:
+						if result.strip().startswith('Help  '):print_('')
 						colorizeRow( tableLine+result, prefix=self.tab['table']+loopPrint(__.table_prefix_padding), prefixColor=self.tab_color, haltColorShift=self.isExtraRecord )
 			i += 1
 			if 'expected_input_example' in column and 'switch' in column and  switchDefault == i:
-
+				
 				# if __.switch_skimmer.active: sys.exit()
 				pass
-				print_('')
+				# print_('')
 		# if len(oldData) > 0:
 		#   self.asset = oldData
 		self.asset = self.backup.asset.copy()
@@ -19976,6 +20013,8 @@ def load():
 		# switches.register('Report', '-report', default=True)
 		switches.register('Plus', '+','all unless -or', default=True)
 		switches.register('Minus', '-', default=True)
+		switches.register('Plus-single', '+1', default=True)
+		switches.register('Minus-single', '-1', default=True)
 		switches.register('Plus-Sub', '++','any', default=True)
 		switches.register('PlusOr', '-or', default=True)
 		switches.register('PlusClose', '+close', '90%', default=True)
@@ -22856,5 +22895,6 @@ def zip9(folder_path, zip_path):
 # 'DumpSwitches'
 # __.switch_skimmer.active
 # 11780
+# if switches.isActive('Plus-single'): break
 ########################################################################################
 # EOF

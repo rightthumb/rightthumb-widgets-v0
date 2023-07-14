@@ -153,8 +153,7 @@ def action():
 	load(); global c3po;
 
 	#n)--> iterate
-	# for subject in _.isData(r=0): _.pr(subject)
-	for subject in _.pp(): _.pr(subject)
+	for subject in _.isData(r=0): _.pr(subject)
 	
 
 def load():

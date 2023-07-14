@@ -3332,7 +3332,8 @@ toggler['alt_win_m'] = 'clean-terminal-copy'
 def scheduler_job(rec=None):
 
 	if rec is None:
-		print('scheduler: checking for database changes')
+		_.pr('scheduler: checking for database changes',r=1)
+
 		if os.path.isfile(__.scheduler_db):
 			mod=_.mod(__.scheduler_db)
 			if not __.scheduler_mod == mod:

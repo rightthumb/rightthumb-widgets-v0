@@ -157,7 +157,10 @@ def meta_scan(path,end):
 		file = os.path.abspath(path)
 	except Exception as e:
 		file = path
-	folder = __.path(path,pop=True)
+	if os.path.isfile(path):
+		folder = __.path(path,pop=True)
+	else:
+		folder = __.path(path)
 	if os.path.isdir(path):folder+=os.sep
 	# if os.path.isfile(path): folder = __.path(path,pop=True)
 	# else: folder = __.path(path)
