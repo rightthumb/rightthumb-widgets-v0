@@ -270,7 +270,7 @@ def loader():
         v.host = v.bash['profile']
     elif 'host' in v.bash:
         v.host = v.bash['host']
-    else:
+    elif 'widgets' in v.bash:
         v.host = v.bash['widgets'] +os.sep+'hosts'+os.sep+v.computername2
 
     if 'apps' in v.bash:
