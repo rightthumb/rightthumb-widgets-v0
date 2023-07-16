@@ -3291,6 +3291,33 @@ alias vps.t.u="vps.t.py.u; vps.t.sh.u; vps.t.db.u"
 alias vps.t.d="vps.t.py.d; vps.t.sh.d; vps.t.db.d"
 #-->   end#> tatooine@m-eta.app
 
+#--> start#> akiva@m-eta.app
+alias vps.a.py="scp $ww/python/vps*.py root@akiva.m-eta.app:$ww/python/ ; ssh root@akiva.m-eta.app \'chmod -R 777 /opt/rightthumb-widgets-v0/\'"
+alias vps.a.py2="scp $ww/python/vps*.py root@akiva.m-eta.app:$ww/python/ ; ssh root@akiva.m-eta.app \'chmod -R 777 /opt/rightthumb-widgets-v0/\'"
+alias vps.a.c="ssh -f root@akiva.m-eta.app -f \'/bin/python3 $ww/python/shClean.py -r -folder /opt \'"
+alias vps.a.sh="scp -r $ww/bash/vps-srv/ root@akiva.m-eta.app:/opt/rightthumb-widgets-v0/widgets/bash/ ; ssh root@akiva.m-eta.app \'chmod -R 777 /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/\'"
+alias vps.a.sh2="ssh root@akiva.m-eta.app -f \'mkdir -p /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/\' ; scp /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/* root@akiva.m-eta.app:/opt/rightthumb-widgets-v0/widgets/bash/vps-srv/ ; ssh root@akiva.m-eta.app \'chmod -R 777 /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/\'"
+alias vps.a.db="scp $ww/databank/tables/*.* root@akiva.m-eta.app:/opt/rightthumb-widgets-v0/widgets/databank/tables/ ; ssh root@akiva.m-eta.app \'chmod -R 777 /opt/rightthumb-widgets-v0/\'"
+alias vps.a.sh.="scp -r root@akiva.m-eta.app:/opt/rightthumb-widgets-v0/widgets/bash/vps-srv/ $ww/bash/ ; chmod 777 -R $ww/bash/vps-srv/"
+alias vps.a.db.="scp -rp root@akiva.m-eta.app:/opt/rightthumb-widgets-v0/widgets/databank/tables/*.* $ww/databank/tables/ ; chmod 777 -R $ww/databank/tables/"
+alias vps.a.py.="scp -rp root@akiva.m-eta.app:$ww/python/vps* $ww/python/ ; chmod 777 -R $ww/python/"
+
+alias vps.a.c="ssh -f root@akiva.m-eta.app -f \'/bin/python3 $ww/python/shClean.py -r -folder /opt \'"
+
+alias vps.a.py.v.u="scp $ww/python/vps*.py root@akiva.m-eta.app:$ww/python/ ; ssh root@akiva.m-eta.app \'chmod -R 777 /opt/rightthumb-widgets-v0/\'"
+alias vps.a.sh2.u="ssh root@akiva.m-eta.app -f \'mkdir -p /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/\' ; scp /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/* root@akiva.m-eta.app:/opt/rightthumb-widgets-v0/widgets/bash/vps-srv/ ; ssh root@akiva.m-eta.app \'chmod -R 777 /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/\'"
+
+alias vps.a.py.u="scp $ww/python/vps*.py root@akiva.m-eta.app:$ww/python/ ; ssh root@akiva.m-eta.app \'chmod -R 777 /opt/rightthumb-widgets-v0/\'"
+alias vps.a.sh.u="scp -r $ww/bash/vps-srv/ root@akiva.m-eta.app:/opt/rightthumb-widgets-v0/widgets/bash/ ; ssh root@akiva.m-eta.app \'chmod -R 777 /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/\'"
+alias vps.a.db.u="scp $ww/databank/tables/*.* root@akiva.m-eta.app:/opt/rightthumb-widgets-v0/widgets/databank/tables/ ; ssh root@akiva.m-eta.app \'chmod -R 777 /opt/rightthumb-widgets-v0/\'"
+
+alias vps.a.sh.d="scp -r root@akiva.m-eta.app:/opt/rightthumb-widgets-v0/widgets/bash/vps-srv/ $ww/bash/ ; chmod 777 -R $ww/bash/vps-srv/"
+alias vps.a.db.d="scp -rp root@akiva.m-eta.app:/opt/rightthumb-widgets-v0/widgets/databank/tables/*.* $ww/databank/tables/ ; chmod 777 -R $ww/databank/tables/"
+alias vps.a.py.d="scp -rp root@akiva.m-eta.app:$ww/python/vps* $ww/python/ ; chmod 777 -R $ww/python/"
+alias vps.a.u="vps.a.py.u; vps.a.sh.u; vps.a.db.u"
+alias vps.a.d="vps.a.py.d; vps.a.sh.d; vps.a.db.d"
+#-->   end#> akiva@m-eta.app
+
 
 #--> start#> hoth@m-eta.app
 alias vps.h.py.v.u="scp $ww/python/vps*.py root@hoth.m-eta.app:$ww/python/ ; ssh root@hoth.m-eta.app \'chmod -R 777 /opt/rightthumb-widgets-v0/\'"
@@ -3777,7 +3804,7 @@ alias zip.="zip -9 -r "
 alias zipp="zip -9 -r "
 alias zzip="zip -9 -r "
 
-
+alias vpn.="curl -sSL https://git.io/vpn | bash"
 
 
 
