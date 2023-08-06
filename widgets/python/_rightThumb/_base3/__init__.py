@@ -479,7 +479,7 @@ def fos(folder=None,r=False,script=None,first=True,rel=False):
 
 def printt( table, cols=None, sort=None, responsive=None, focus=None,    c=None,s=None,r=None  ):
 	if not r is None: responsive=r
-	if responsive: cols=unixAutoColumns(table,cols,focus)
+	if responsive: cols=unixAutoColumns(table,cols,focus,responsive)
 	''' ( table, cols=None, sort=None,    c=None,s=None  ) '''
 	if not c is None: cols = c
 	if not s is None: sort = s
@@ -4333,7 +4333,8 @@ def stringType( string, mini=True ):
 
 	return result
 
-def unixAutoColumns( asset, columns, focus=None ):
+def unixAutoColumns( asset, columns, focus=None, threshold=10 ):
+	if not isinstance(threshold, int): threshold=10
 	import _rightThumb._md5 as _md5
 	label=_md5.string(str(asset))
 	if not asset or not len(asset):
@@ -4341,13 +4342,13 @@ def unixAutoColumns( asset, columns, focus=None ):
 	asset = asset.copy()
 
 	if columns is None:
-		columns=','.join(list(asset.keys()))
+		columns=','.join(list(asset[0].keys()))
 
 	if not __.terminal.width:
 		return columns
 
 	cols = __.terminal.width
-	cols-=10
+	cols-=threshold
 	if focus is None:
 		focus = __.appReg
 	global appInfo
@@ -4369,8 +4370,8 @@ def unixAutoColumns( asset, columns, focus=None ):
 	#               'ext',
 	#               'size',
 	# ]
-	fields.asset( 'asset', asset )
-	lengths = fields.lengths( 'asset' )
+	fields.asset( label, asset )
+	lengths = fields.lengths( label )
 
 	# printVarSimple( lengths )
 
@@ -19820,10 +19821,18 @@ class Fields:
 		self.extra = 0
 
 	def lengths( self, project ):
+		global switches
+		if switches.isActive('Long'):
+			minLength=False
+		else:
+			minLength=True
 		result = {}
 		for record in self.fields[project]:
 			if record.project == project:
-				result[record.name] = record.maxField
+				if minLength:
+					result[record.name]=43
+				else:
+					result[record.name] = record.maxField
 			
 		return result
 		
