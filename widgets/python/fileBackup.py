@@ -1328,12 +1328,16 @@ def action(path=None,flag=None,o=None,pre=None):
 				idCheck = idExist(theID, backupLog, path)
 				if not type(idCheck) == bool:
 					if not _.switches.isActive('Silent'):
-						_.colorThis( INDEX[path]['backup'], 'darkcyan' )
+						if path in INDEX:
+							_.colorThis( INDEX[path]['backup'], 'darkcyan' )
 						_.colorThis( 'Backup ID found in older backup', 'yellow' )
 					if _.switches.isActive('isPreOpen'):
 						txtScheduler.append( { 'timestamp': genEpoch(), 'file': __.path(path), 'status': 0, 'app': 'fileBackup', 'group': 0, 'session': __.Session_ID } )
 						_.saveTable( txtScheduler,'fileBackupSchedule.json', p=0 )
-					return INDEX[path]['backup']
+					if path in INDEX:
+						return INDEX[path]['backup']
+					else:
+						return path
 
 				
 
