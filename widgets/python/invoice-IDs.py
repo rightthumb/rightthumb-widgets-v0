@@ -73,14 +73,12 @@ _.appInfo[focus()] = {
 						# '',
 	],
 	'examples': [
-						_.hp('p thisApp -file file.txt'),
+						_.hp('p invoice-IDs'),
+						_.hp('.mc t c {} 20230703'),
 						_.linePrint(label='simple',p=0),
 						'',
 	],
 	'columns': [
-
-		# the order is used in responsiveness
-	
 					# { 'name': 'name', 'abbreviation': 'n' },
 					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
@@ -152,19 +150,26 @@ _.l.sw.register( triggers, sw )
 ########################################################################################
 #n)--> start
 
+import re
+
+def find_5_digit_numbers(text):
+    pattern = r'\b\d{5}\b'  # Regular expression pattern to match 5-digit numbers
+    return re.findall(pattern, text)
+
+
+
 def action():
-	load(); global c3po;
+	items=[]
+	for line in _.pp():
+		item=find_5_digit_numbers(line)
+		if item:
+			for x in item:
+				items.append(x)
+	for x in items:
+		_.pr(x)
 
-	#n)--> iterate
-	# for subject in _.isData(r=0): _.pr(subject)
-	for subject in _.pp(): _.pr(subject)
-	
-
-def load():
-	global c3po
-	c3po = _.getTable( 'table' )
-	#n)--> print table
-	_.pt(c3po)
+	_copy = _.regImp( __.appReg, '-copy' )
+	_copy.imp.copy( '\n'.join(items) )
 
 
 ##################################################

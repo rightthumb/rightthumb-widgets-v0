@@ -477,7 +477,9 @@ def fos(folder=None,r=False,script=None,first=True,rel=False):
 	return fo_fi
 
 
-def printt( table, cols=None, sort=None,    c=None,s=None  ):
+def printt( table, cols=None, sort=None, responsive=None, focus=None,    c=None,s=None,r=None  ):
+	if not r is None: responsive=r
+	if responsive: cols=unixAutoColumns(table,cols,focus)
 	''' ( table, cols=None, sort=None,    c=None,s=None  ) '''
 	if not c is None: cols = c
 	if not s is None: sort = s
@@ -4332,11 +4334,14 @@ def stringType( string, mini=True ):
 	return result
 
 def unixAutoColumns( asset, columns, focus=None ):
-	if not len(asset):
-		return asset
-		# return columns
+	import _rightThumb._md5 as _md5
+	label=_md5.string(str(asset))
+	if not asset or not len(asset):
+		return columns
 	asset = asset.copy()
-	# if __.thisOS == 'Windows':
+
+	if columns is None:
+		columns=','.join(list(asset.keys()))
 
 	if not __.terminal.width:
 		return columns

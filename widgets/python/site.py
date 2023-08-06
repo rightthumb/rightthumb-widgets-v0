@@ -139,11 +139,12 @@ def tail():
 	else:
 		return ' > /dev/null 2>&1'
 
-def urlpr(url):
+def urlpr(url,meta):
 	if url is None: return None
 	if url.endswith('/index.html'): url = url[:-len('index.html')]
 	if url.endswith('/index.htm'): url = url[:-len('index.htm')]
 	if url.endswith('/index.php'): url = url[:-len('index.php')]
+	url=URL_APPS(url,meta)
 	return url
 
 
@@ -196,7 +197,26 @@ def meta_scan(path,end):
 			_.v.fp=url.replace(meta['url']+'/',meta['sftp']['path']+'/')
 			_.v.fp=_.v.fp.replace('//','/').replace('//','/')
 		except: pass
-	return urlpr(url)
+	return urlpr(url,meta)
+APPS = {
+	'notes': {
+		'path': '/home/admin/domains/eyeformeta.com/public_html/apps/md/notes/scott/_docs_/',
+		'remove': 'https://eyeformeta.com/',
+		'add': 'https://eyeformeta.com/apps/Heimdall/?view=1&f=',
+		'slash': '/',
+	}
+}
+def URL_APPS(url,meta):
+	rPath = None
+	if 'sftp' in meta and 'path' in meta['sftp']:
+		rPath = meta['sftp']['path']
+	if rPath is None: return url
+	global APPS
+	for app in APPS:
+		if APPS[app]['path'] in rPath:
+			url=APPS[app]['add']+rPath.replace(APPS[app]['path'],'')+APPS[app]['slash']+url.replace(APPS[app]['remove'],'')
+	return url
+
 
 def process(path,end='',ft=None):
 	if not os.path.exists(path): return None
@@ -267,9 +287,12 @@ def process(path,end='',ft=None):
 			url = file.replace( __.path(folder), meta['url'] ).replace('\\','/')
 			if os.path.isdir(path):
 				url += '/'
-			_.pr(urlpr(url),c='Background.blue')
+			_.pr(urlpr(url,meta),c='Background.blue')
 			if url.endswith('.js'): _.pr( '<script src="'+url+'"></script>' ,c='yellow')
-			if url.endswith('.css'): _.pr( '<link rel="stylesheet" href="'+url+'">' ,c='yellow')
+			elif url.endswith('.css'): _.pr( '<link rel="stylesheet" href="'+url+'">' ,c='yellow')
+			elif url.endswith('.jpg'): _.pr( '<img src="'+url+'"/>' ,c='yellow')
+			elif url.endswith('.png'): _.pr( '<img src="'+url+'"/>' ,c='yellow')
+			elif url.endswith('.gif'): _.pr( '<img src="'+url+'"/>' ,c='yellow')
 			
 
 			try: _.pr(_.v.fp,c='Background.light_blue')

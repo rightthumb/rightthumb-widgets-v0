@@ -3047,8 +3047,7 @@ def action():
 
 		return None
 
-	
-	schedulerRun()
+	if __.schedulerRun: schedulerRun()
 	_.pr( 'EXIT:   Win + esc' )
 	_.pr( line=1,c='gray' )
 	_.pr(  )
@@ -3426,6 +3425,8 @@ def schedulerRun():
 	t = threading.Thread(target=schedulerNoError)
 	threads.append(t)
 	t.start()
+
+__.schedulerRun=True
 if __name__ == '__main__':
 	# schedulerRun()
 	if len(_.switches.all())==0: banner.pr(); banner.gossip();

@@ -3806,7 +3806,12 @@ alias zzip="zip -9 -r "
 
 alias vpn.="curl -sSL https://git.io/vpn | bash"
 
+alias chantil3="ssh scott@192.168.63.129"
+alias chant="ssh scott@192.168.63.129"
+alias ssh.c.s.="ssh-copy-id -i /mnt/c/Users/Scott/.ssh/id_rsa.pub scott@192.168.63.129"
+alias ssh.c.s="ssh-copy-id -i ~/.ssh/id_rsa.pub scott@192.168.63.129"
 
+clear
 
 
 # a3bc42ec51e9
