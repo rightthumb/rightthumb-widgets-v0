@@ -3811,6 +3811,8 @@ alias chant="ssh scott@192.168.63.129"
 alias ssh.c.s.="ssh-copy-id -i /mnt/c/Users/Scott/.ssh/id_rsa.pub scott@192.168.63.129"
 alias ssh.c.s="ssh-copy-id -i ~/.ssh/id_rsa.pub scott@192.168.63.129"
 
+alias 2mp3="$widgets/widgets/bash/2mp3.sh"
+
 clear
 
 
