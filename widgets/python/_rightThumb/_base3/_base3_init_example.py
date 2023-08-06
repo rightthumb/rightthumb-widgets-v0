@@ -78,10 +78,19 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-
-		# the order is used in responsiveness
-	
 					# { 'name': 'name', 'abbreviation': 'n' },
+# columns used for
+# 	- abbreviation in switches
+#		- ex: -column n s
+#			- instead of: -column name size
+#		- ex: -sort n
+#		- ex: -group n
+# 	- sort is used for things like size sort by bytes
+# 	- responsiveness to terminal width
+# 		- order is important
+# 		- most important on top
+		
+		# this is used for personal usage to programmatically generate columns
 					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [

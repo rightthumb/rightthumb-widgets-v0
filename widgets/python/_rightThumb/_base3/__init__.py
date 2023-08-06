@@ -4386,6 +4386,14 @@ def unixAutoColumns( asset, columns, focus=None, threshold=10 ):
 	nextDel = 0
 	done = False
 	newList = []
+	if not len(importance):
+		e(
+			'columns registration missing',
+			[
+				'in _.appInfo[focus()] = {',
+				'order them most important fields on top',
+				'to least on bottom',
+			])
 	while total > cols and not done:
 		total = 3
 		newCols = []
@@ -20499,7 +20507,7 @@ _cryptFile.do( 'action' )
 # alias
 
 
-def err( msg='STOP' , e=None, kill=True):
+def err( msg='STOP' , e=None, note=None, kill=True):
 	
 	cp( linePrint(txt='*',p=0), 'red' )
 	
@@ -20550,7 +20558,15 @@ def err( msg='STOP' , e=None, kill=True):
 			# msgN.append(x)
 		# cp( msgN, 'yellow' )
 	if not e is None:
-		cp( ['  \t\t',e], 'cyan' )
+		add='  \t    '
+		if type(e) == str:
+			cp( [add,e], 'cyan' )
+		else:
+			add+='- '
+			for x in e:
+				cp( [add,x], 'cyan' )
+	# if not note is None:
+		# cp( ['  \t\t\t',note], 'cyan' )
 		
 	# cp( '**********************************************************************', 'red', isError=True )
 	# linePrint()

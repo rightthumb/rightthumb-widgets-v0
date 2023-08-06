@@ -78,12 +78,8 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-
-		# the order is used in responsiveness
-	
 					{ 'name': 'name', 'abbreviation': 'n' },
 					{ 'name': 'id', 'abbreviation': 'i' },
-					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
 					# 'this',
