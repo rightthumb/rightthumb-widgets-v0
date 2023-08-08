@@ -1,15 +1,15 @@
 @echo off 
 
+call p ai %*
 rem shift /1
+rem set "remainingArgs="
+rem :getRemainingArgs
+rem if "%~1" neq "" (
+rem   set ^"remainingArgs=%remainingArgs% %1"
+rem   shift /1
+rem   goto :getRemainingArgs
+rem )
+rem rem echo remainingArgs=%remainingArgs%
 
-set "remainingArgs="
-:getRemainingArgs
-if "%~1" neq "" (
-  set ^"remainingArgs=%remainingArgs% %1"
-  shift /1
-  goto :getRemainingArgs
-)
-rem echo remainingArgs=%remainingArgs%
-
-call p bot -r "%remainingArgs%"
+rem call p bot -r "%remainingArgs%"
  

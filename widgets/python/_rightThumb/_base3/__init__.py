@@ -7346,7 +7346,9 @@ def postLoad( file, epoch=0, theFocus=False ):
 	global switches
 	global appData
 	
-
+	if not sys.stdin.isatty():
+		# pr('setPipeData( sys.stdin.readlines',c='gray')
+		setPipeData( sys.stdin.readlines(), __.appReg, clean=l.conf('clean-pipe' ,d=True) )
 
 	try:
 		__.appInfoScan
@@ -17130,6 +17132,7 @@ ciData = (
 		[';t',          '\t'      ],
 		['↔',           ' '       ],
 		['--',          '-'       ],
+		['[oo]',          '>>'       ],
 		[';bk',         _v.myBackup ],
 		[ '[caret]',    '^'       ]
 
@@ -22907,6 +22910,8 @@ def zip9(folder_path, zip_path):
 				relative_path = os.path.relpath(file_path, folder_path)
 				zipf.write(file_path, arcname=relative_path)
 	return zip_path
+##################################################
+def an(string): import re; return re.sub(r'\W+', '', string);
 ##################################################
 # __.switch_raw
 ##################################################

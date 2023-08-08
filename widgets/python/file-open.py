@@ -36,6 +36,7 @@ def appSwitches():
 	_.switches.register( 'Alias', '-alias','' )
 	_.switches.register( 'Backup', '-b,-backup' )
 	_.switches.register( 'Clean', '--c,-clean' )
+	_.switches.register( 'OpenSingle', '-single', 'joins by space' )
 
 _.autoBackupData = __.autoCreationConfiguration['backup']
 __.releaseAcquiredData = __.autoCreationConfiguration['logs'] 
@@ -189,6 +190,21 @@ def action(path=None):
 			_.switches.fieldSet( 'Files', 'value', a )
 			_.switches.fieldSet( 'Files', 'values', [a] )
 
+	if _.switches.isActive('OpenSingle'):
+		if _.switches.value('OpenSingle').strip():
+			paths=[ ' '.join(_.switches.values('OpenSingle')) ]
+		else:
+			if not sys.stdin.isatty():
+				_.setPipeData( sys.stdin.readlines(), __.appReg, clean=_.l.conf('clean-pipe' ,d=True) )
+			if _.appData[focus()]['pipe']:
+				if type(_.appData[focus()]['pipe'][0]) == str:
+					paths=[ ' '.join(_.appData[focus()]['pipe']) ]
+				else:
+					paths=[ ' '.join(_.appData[focus()]['pipe'][0]) ]
+		# _.pv(_.appData)
+		# print(_.appData[focus()]['pipe'])
+		# print(paths)
+		# sys.exit()
 
 	if _.switches.isActive('Alias') and not _.switches.isActive('Files') and len(_.switches.values('Alias')) ==2:
 		aa=None
@@ -215,7 +231,7 @@ def action(path=None):
 	elif _.isWin and 'code_editor' in _v.fig: app = _v.fig['code_editor']
 	elif not _.isWin and not 'code_editor' in _v.fig: app = 'nano'
 	elif not _.isWin and 'code_editor' in _v.fig: app = _v.fig['code_editor']
-	if _.switches.isActive('App'): app = _.switches.values('App')[0]
+	if _.switches.isActive('App'): app = ' '.join(_.switches.values('App'))
 	if _.switches.isActive('Alias'):
 		_aliases=_.switches.values('Alias')
 		aliases=_.getTable('file-open-aliases.hash')
@@ -304,11 +320,18 @@ def action(path=None):
 							headers=_.getYML(head)
 							for header in headers:
 								if _.IS(path,header): app = headers[header]
+				# print('app',app)
+				# print(_v.fig['code_editor'])
+				# _.pv(_v.fig);
+				# sys.exit();
+				if app == 'C:\\Program': app=_v.fig['code_editor']
+				# print(app);sys.exit();
 				if app == 0:
 					subprocess.Popen([path])
 				else:
 					subprocess.Popen([ app, path])
 			else:
+				if app == 'C:\\Program': app=_v.fig['code_editor']
 				command = f'{app} {path}'
 				os.system(command)
 			if not path in log: log[path] = []
@@ -322,6 +345,7 @@ def action(path=None):
 bki=0
 
 def backup(path,pre=True):
+	if not os.path.isfile(path): return path
 	global bki
 	bki+=1
 	appReg=__.appReg

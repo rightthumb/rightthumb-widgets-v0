@@ -318,8 +318,37 @@ def ai():
 		# temperature=0.5,
 	)
 
-	# Print the response
+	# def process_prompt_chunk(chunk,max_tokens):
+	# 	return openai.Completion.create(
+	# 		engine="text-davinci-003",
+	# 		prompt=chunk,
+	# 		temperature=0.9,
+	# 		top_p=1,
+	# 		frequency_penalty=0.0,
+	# 		presence_penalty=0.6,
+	# 		max_tokens=max_tokens,
+	# 		stop=None,
+	# 	)
 
+	# def process_large_prompt(large_prompt, chunk_size,max_tokens):
+	# 	responses = []
+	# 	for i in range(0, len(large_prompt), chunk_size):
+	# 		chunk = large_prompt[i:i+chunk_size]
+	# 		response = process_prompt_chunk(chunk,max_tokens)
+	# 		responses.append(response)
+	# 	return responses
+
+	# large_prompt = prompt
+	# chunk_size = 2048  # adjust based on your needs and API limitations
+	# responses = process_large_prompt(large_prompt, chunk_size,max_tokens)
+
+
+
+
+
+
+	# Print the response
+	if not 'listen' in interact: interact['listen']=[]
 	interact['listen'].append({'epoch': time.time(), 'prompt': prompt, 'response': response["choices"][0]["text"]})
 	_.saveTable(interact,'ai-bot-interaction.index',p=0)
 	if _.switches.isActive('Print'):
