@@ -17,11 +17,11 @@ ___
 - Other:  PowerShell, etc
 
 ## Hype
-- Generate PHP code
-    + Copy the CREATE TABLE sql, hit alt+win+c to automatically generate the create, read, update, delete of a table in php (crud), then paste the results.
 - I push 10 on my [mouse](https://www.amazon.com/dp/B088B3ZM76) to activate voice commands and say "Sally paste, convert this python to javascript" (ai). I then paste the results.
     + The KeyWise.py app manages keyboard shortcuts. A programmable mouse can activate any of them.
         * View all keyboard shortcuts 'p KeyWise -k'
+- Generate PHP code
+    + Copy the CREATE TABLE sql, hit alt+win+c to automatically generate the create, read, update, delete of a table in php (crud), then paste the results.
 - Tasklist
     + Grouped memory usage subtotals and grand total
         * ' task -report '
