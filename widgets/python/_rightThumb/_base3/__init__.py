@@ -5151,7 +5151,7 @@ def dicf(obj, seen=None, f=None):
 	'Recursively scan for dic fields'
 	global dicf_payload
 	dicf_payload=[]
-	dicf_()
+	# dicf_()
 	return dicf_payload
 
 def dicf_(obj, seen=None, f=None):

@@ -17,6 +17,7 @@ set wwwPage_1=D:\websites\domains\apps.eyeformeta.com\public_html\templates\html
 set wwwPage_2=D:\techApps\Library\WEB\newpage\blank2.htm
 set wwwPage_3=D:\techApps\Library\WEB\newpage\blank3.htm
 set wwwPage_4=D:\techApps\Library\WEB\newpage\blank4.htm
+set wwwPage_js1=D:\websites\domains\apps.eyeformeta.com\public_html\templates\html\js.js
 
 if ["%1"] == ["?"] (
         call :HELP
@@ -35,6 +36,8 @@ if [%1] == [] (
         set wwwPage=%wwwPage_3%
 ) else if [%1] == [4] (
         set wwwPage=%wwwPage_4%
+) else if [%1] == [js] (
+        set wwwPage=%wwwPage_js1%
 )
 
 
