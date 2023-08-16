@@ -164,9 +164,9 @@ def action():
 		item=find_5_digit_numbers(line)
 		if item:
 			for x in item:
-				items.append(x)
-	for x in items:
-		_.pr(x)
+				items.append('t c '+x)
+	# for x in items:
+	# 	_.pr(x)
 
 	_copy = _.regImp( __.appReg, '-copy' )
 	_copy.imp.copy( '\n'.join(items) )

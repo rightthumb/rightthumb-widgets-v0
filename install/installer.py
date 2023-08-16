@@ -14665,6 +14665,8 @@ def action():
             v.bash = vc.HD.getTableSimp( v.config )
         v.bash['python'] = v.bash['ww']+os.sep+'python'
         v.bash['PY'] = sys.executable
+        if v.isWin:
+            v.bash['pip'] = os.path.dirname(sys.executable)+os.sep+'Scripts'+os.sep+'pip.exe'
 
         
         # else:
