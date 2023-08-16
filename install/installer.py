@@ -205,10 +205,26 @@ def loader():
 								'code_editor_pre': '',
 								'code_editor_suff': '',
 	}
+	code_editors=[
+					'C:\\Program Files\\Sublime Text\\sublime_text.exe',
+					'C:\\Program Files (x86)\\Sublime Text\\sublime_text.exe',
+					'C:\\Users\\Scott\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe',
+					'',
+	]
+	v.bash_defaults['widgets'] = 'C:\\.rightthumb-widgets'
 	if v.isWin:
-		v.bash_defaults_no_gui['code_editor']='C:\\Windows\\system32\\notepad.exe'
-		v.bash_defaults['widgets'] = 'C:\\.rightthumb-widgets'
+		for ce in code_editors:
+			if ce and os.path.isfile(ce):
+				v.bash_defaults_no_gui['code_editor']=ce
+				break
 
+	# if v.isWin:
+	#   if os.path.isfile():
+	#       v.bash_defaults_no_gui['code_editor']='C:\\Program Files\\Sublime Text\\sublime_text.exe'
+	#   elif os.path.isfile('C:\\Program Files (x86)\\Sublime Text\\sublime_text.exe'):
+	#       v.bash_defaults_no_gui['code_editor']='C:\\Program Files (x86)\\Sublime Text\\sublime_text.exe'
+	#   else:
+	#       v.bash_defaults_no_gui['code_editor']='C:\\Windows\\system32\\notepad.exe'
 
 	v.bash_defaults = dics([ v.bash_defaults, v.bash_defaults_no_gui ])
 
