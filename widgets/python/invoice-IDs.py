@@ -32,7 +32,7 @@ _str = __.imp('_rightThumb._string')
 def sw():
 	pass
 	#b)--> examples
-	# _.switches.register( 'Input', '-i' )
+	_.switches.register( 'Invoice', '-i,-invoice', isRequired=False )
 	# _.switches.register( 'URL', '-u,-url,-urls', 'https://etc.ac/', isData='raw' )
 	#e)--> examples
 	# _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name,data,clean', description='Files', isRequired=False )
@@ -73,8 +73,8 @@ _.appInfo[focus()] = {
 						# '',
 	],
 	'examples': [
-						_.hp('p invoice-IDs'),
-						_.hp('.mc t c {} 20230703'),
+						_.hp('p invoice-IDs -invoice 20230703'),
+						# _.hp('.mc t c {} 20230703'),
 						_.linePrint(label='simple',p=0),
 						'',
 	],
@@ -159,12 +159,18 @@ def find_5_digit_numbers(text):
 
 
 def action():
+	if _.switches.isActive('Invoice'):
+		invoice=_.switches.value('Invoice')
+	else:
+		_.e('Missing Invoice','p invoice-IDs -invoice 20230816')
 	items=[]
-	for line in _.pp():
+	lines=' '.join(_.pp())
+	splitter=lines.split(' ')
+	for line in splitter:
 		item=find_5_digit_numbers(line)
 		if item:
 			for x in item:
-				items.append('t c '+x)
+				items.append('t c '+x+' '+invoice)
 	# for x in items:
 	# 	_.pr(x)
 

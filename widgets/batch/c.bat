@@ -75,13 +75,13 @@ GOTO:EOF
 
 
 :TIMESTAMP
-    CALL timestamp d noEcho
+    CALL timestamp d noEcho >nul 2>&1
     SET open_timestamp=%now%
-    CALL timestamp dt noEcho
+    CALL timestamp dt noEcho >nul 2>&1
     SET open_timestamp2=%now%
-    CALL timestamp sdel noEcho
+    CALL timestamp sdel noEcho >nul 2>&1
     SET ts=%now%
-    CALL timestamp t noEcho
+    CALL timestamp t noEcho >nul 2>&1
     SET nowTime=%now%
     SET today=%timestamp_start%  - %nowTime%
     if not ["%lab%"] == [""] (
@@ -91,7 +91,7 @@ GOTO:EOF
         title loc-%Session_ID%
         rem title %today%
     )
-    CALL timestamp t2 noEcho
+    CALL timestamp t2 noEcho >nul 2>&1
 GOTO:EOF
 
 
@@ -102,7 +102,7 @@ GOTO:EOF
     SET /a Session_ID=%LastID% + 1
     SET Session_ID_BK=%Session_ID%
     echo %Session_ID% > %myVars%\ID.sys
-    CALL timestamp ats2 noEcho
+    CALL timestamp ats2 noEcho >nul 2>&1
     CALL p files -folder %myVars% -rrr > nul
     SET timestamp_start=%now%
 GOTO:EOF

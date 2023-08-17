@@ -1,109 +1,5 @@
 #!/usr/bin/python3
 
-
-import sys
-import datetime
-import _rightThumb._vars as _v
-from os import sep, environ
-import time
-import platform
-import _rightThumb._date as _date
-def day(theDate):
-	year  = yr(theDate)
-	woy   = _woy(theDate)
-	date  = _date.friendlyDate( theDate )[len('2022-'):].split(' ')[0]
-	today = str(year)+sep+woy+sep+date
-	# print(today)
-	return today
-def epochs(dy=0):
-	dy=int(dy)
-	# https://chat.openai.com/chat
-	if dy==0: return time.time()
-	dt = datetime.datetime.fromtimestamp(time.time())
-	ndt = dt - datetime.timedelta(days=dy)
-	return int(ndt.timestamp())
-
-def _woy(theDate):
-	w=str(datetime.datetime.fromtimestamp( int(theDate) ).isocalendar()[1])
-	if len(w)==1:w='0'+w
-	return w
-def yr(theDate): return str(datetime.datetime.fromtimestamp( int(theDate) ).isocalendar()[0])
-
-if '-print' in sys.argv:
-	dx=_v.rtp+'daily'+sep+day(epochs(0))+sep+'invoice_'
-	if '-date' in sys.argv:
-		dx=dx+_date.dayStrip()
-	print( dx )
-if '-0' in sys.argv:
-
-	
-
-
-
-
-	def wsl(path):
-		subject = path
-		git_path = subject
-		git_path = git_path.replace( _v.slashes['w'], _v.slashes['u'] )
-		git_path = git_path.replace( ':', '' )
-		git_path = _v.slashes['u'] + git_path
-		wsl5 = '/mnt/'+ git_path[1].lower() + git_path[2:]
-		wsl5=wsl5.replace(' ','\\ ')
-		wsl5=wsl5.replace('/mnt//home/scott','/mnt/c/Users/Scott')
-		wsl5=wsl5.replace('/home/scott','/mnt/c/Users/Scott')
-		return wsl5
-	def fdrA(dy=0):
-		dy=int(dy)
-		fo = _v.rtp+'daily'+sep+day(epochs(dy));
-		_v.mkdir(fo)
-		a='alias '+str(dy)+'="cd '+wsl(fo)+'"'
-		# print(a)
-		return a
-
-	
-
-	lines=[
-				'alias woy="cd /mnt/c/Users/Scott/.rt/profile/daily/'+yr(time.time())+'/'+_woy(time.time())+'"',
-				'alias y="cd /mnt/c/Users/Scott/.rt/profile/daily/'+yr(time.time())+'"',
-				'alias yr="cd /mnt/c/Users/Scott/.rt/profile/daily/'+yr(time.time())+'"',
-				'alias year="cd /mnt/c/Users/Scott/.rt/profile/daily/'+yr(time.time())+'"',
-
-				'alias 00="cd /mnt/c/Users/Scott/.rt/profile/daily"',
-				'alias da="cd /mnt/c/Users/Scott/.rt/profile/daily"',
-				'alias daily="cd /mnt/c/Users/Scott/.rt/profile/daily"',
-				'alias day="cd /mnt/c/Users/Scott/.rt/profile/daily"',
-
-				fdrA(0),
-				fdrA(1),
-				fdrA(2),
-				fdrA(3),
-				fdrA(4),
-				fdrA(5),
-				fdrA(6),
-				fdrA(7),
-
-	]
-	if 'win' in platform.system().lower():
-		path=environ['USERPROFILE']+'\\.rt\\profile\\daily\\.seven.sh'
-	else:
-		path='/mnt/c/Users/Scott/.rt/profile/daily/.seven.sh'
-	with open(path, "w") as file:
-		for line in lines: file.write(line + "\n")
-
-	sys.exit()
-import os
-vbm = _v.rtp+'bookmarks'+os.sep
-b0 = vbm+'BM-0.txt'
-today = datetime.date.today()
-day_str = today.strftime('%Y-%m-%d')
-day = datetime.datetime.strptime(day_str, "%Y-%m-%d").date()
-start_of_day = datetime.datetime.combine(day, datetime.time.min)
-epoch_of_day_start = int(start_of_day.timestamp())
-file_modified_time = os.path.getmtime(b0)
-
-# import _rightThumb._base3 as _; print(_.getText(b0,raw=True,clean=2));
-if file_modified_time >= epoch_of_day_start: sys.exit()
-print('b0')
 # ## {R2D2919B742E} ##
 # ###########################################################################
 # What if magic existed?
@@ -136,9 +32,10 @@ _str = __.imp('_rightThumb._string')
 def sw():
 	pass
 	#b)--> examples
-	# _.switches.register( 'Input', '-i' )
+	_.switches.register( 'Clean', '--c' )
+	_.switches.register( 'SaveVideo', '-save', 'file.mp4' )
 	#e)--> examples
-	# _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=False )
+	_.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name', description='Files', isRequired=False )
 
 # __.setting('require-list',['Files,Plus','File,Has']) # todo
 # __.setting('require-list',['Pipe','Files'])
@@ -182,6 +79,18 @@ _.appInfo[focus()] = {
 	],
 	'columns': [
 					# { 'name': 'name', 'abbreviation': 'n' },
+# columns used for
+# 	- abbreviation in switches
+#		- ex: -column n s
+#			- instead of: -column name size
+#		- ex: -sort n
+#		- ex: -group n
+# 	- sort is used for things like size sort by bytes
+# 	- responsiveness to terminal width
+# 		- order is important
+# 		- most important on top
+		
+		# this is used for personal usage to programmatically generate columns
 					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
@@ -252,18 +161,99 @@ _.l.sw.register( triggers, sw )
 ########################################################################################
 #n)--> start
 
-def action():
-	global vbm
-	global b0
-	epoch = time.time()
-	today = _.day(epoch)
-	fo =  _v.rtp+'daily'+os.sep+today
-	_v.mkdir(fo)
-	_.saveText(fo,b0)
-	bm = _.getTable('bookmarks.index')
-	bm['labels'][str(0)]=fo
-	_.saveTable(bm,'bookmarks.index',p=0)
 
+def save_binary_to_file(binary_data, output_file_path):
+    with open(output_file_path, 'wb') as f:
+        f.write(binary_data)
+
+
+
+import base64
+
+def save_base64_as_file(encoded_string, output_file_path):
+    """
+    Decode a base64 encoded string and save it as a file.
+    
+    :param encoded_string: Base64 encoded string.
+    :param output_file_path: Path for the output file.
+    """
+    decoded_bytes = base64.b64decode(encoded_string)
+
+    with open(output_file_path, 'wb') as f:
+        f.write(decoded_bytes)
+
+
+videos=[]
+
+def extract_urls(data, key="url"):
+	global videos
+	urls = []
+
+	if isinstance(data, list):
+		for item in data:
+			urls.extend(extract_urls(item, key))
+
+	elif isinstance(data, dict):
+		
+		# if 'mimeType' in data:
+			# print(data)
+		if _.switches.isActive('SaveVideo'):
+			if 'mimeType' in data and data['mimeType'] == 'video/mp4' and 'text' in data:
+				# print(__.lasturl,data.keys())
+				videos.append({ 'len': len(data['text']), 'text': data['text'], 'url': __.lasturl })
+		else:
+			for k, v in data.items():
+				if k == key:
+					urls.append(v)
+		for k, v in data.items():
+			if k == key:
+				__.lasturl=v
+			urls.extend(extract_urls(v, key))
+
+
+	return urls
+
+def main():
+	global videos
+	spent=[]
+	cnt=0
+	# print(_.pp())
+	for path in _.pp():
+		if __.os.path.isfile(path):
+			_.pr(path,c='green')
+		urls = extract_urls(_.getTable2(path))
+		for url in urls:
+			if not url in spent:
+				spent.append(url)
+				if _.showLine(url):
+					cnt+=1
+					_.cr(url)
+	if cnt and not _.switches.isActive('Clean'): _.pr('',_.addComma(cnt),c='yellow')
+	if videos:
+		video=''
+		vids={}
+		for v in videos:
+			if not v['url'] in vids:
+				vids[ v['url'] ] = base64.b64decode(v['text'])
+			else:
+				vids[ v['url'] ] += base64.b64decode(v['text'])
+				# save_binary_to_file(base64.b64decode(v['text']),_.switches.values('SaveVideo')[0])
+		VIDs=[]
+		for k in vids:
+			VIDs.append({ 'url': k, 'file': vids[k], 'size': len(vids[k]) })
+		VIDs=_.sort(VIDs,'size')
+		file=None
+		for fi in VIDs:
+			# file=fi
+			_.cr(fi['url'])
+			# webbrowser.open(fi['url'], new=2)
+		# save_binary_to_file(file['file'],_.switches.values('SaveVideo')[0])
+
+
+def action():
+	main()
+
+import webbrowser
 
 ##################################################
 #b)--> examples

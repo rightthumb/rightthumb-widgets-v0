@@ -188,7 +188,7 @@ def profile( data, field='text', parents=[], json=False, plus=False ):
 	global research
 	global spent
 	global pipeData
-
+	if data and key == 'url' and _.switches.isActive('URL') and not _.switches.value('URL'): _.pr(data[key])
 	def sliceVar( var, newP ):
 		# _.pr(newP)
 		n = None
@@ -348,7 +348,9 @@ def profile( data, field='text', parents=[], json=False, plus=False ):
 			if key == 'url':
 				research['url'] = data[key]
 				# _.pr( key )
-				if key == 'url' and _.switches.isActive('URL') and _.showLine( data[key], _.switches.value('URL') ):
+				if key == 'url' and _.switches.isActive('URL') and not _.switches.value('URL'):
+					_.pr(data[key])
+				elif key == 'url' and _.switches.isActive('URL') and _.showLine( data[key], _.switches.value('URL') ):
 					# last
 					if _.showLine( data[key] ) and not data[key] in spent:
 						spent.append(data[key])

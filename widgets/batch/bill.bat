@@ -11,6 +11,10 @@ rem ###########################################################################
 rem ## {C3P0D40fAe8B} ##
 
 echo Generating invoice
+set "invoice_client="
+if not [%1] == [] set invoice_client=%1
+if not [%invoice_client%] == [] echo invoice: %invoice_client%
+
 call m back --c
 call b 0 > nul
 call b myTickets > nul
@@ -29,15 +33,24 @@ rem IF NOT EXIST "%myTickets%\~" GOTO END
 
 rem goto:eof
 
-set thisFile=bill_log_format6.php
-if [%1] == [t] set thisFile=bill_log_format5.php
-if [%1] == [top] set thisFile=bill_log_format5.php
-if [%1] == [b] set thisFile=bill_log_format6.php
-if [%1] == [bottom] set thisFile=bill_log_format6.php
+set thisFile=bill_log_format6b.php
+rem if [%1] == [t] set thisFile=bill_log_format5.php
+rem if [%1] == [top] set thisFile=bill_log_format5.php
+rem if [%1] == [b] set thisFile=bill_log_format6b.php
+rem if [%1] == [bottom] set thisFile=bill_log_format6b.php
 
 
-%php% %phpFiles%\%thisFile%
-IF EXIST %csv_export%.csv (start "excel" %excel% %csv_export%.csv)
+rem %php% %phpFiles%\%thisFile%
+rem goto:eof
+
+%php% %phpFiles%\%thisFile% > %tmpf%
+set /p invoice_csv=<%tmpf%
+rem timeout /t 3
+rem echo done waiting
+echo %invoice_csv%
+rem call o "%invoice_csv%"
+rem IF EXIST %invoice_csv% (start "excel" %excel% %invoice_csv%)
+IF EXIST %invoice_csv% (start excel %invoice_csv%  >nul 2>&1)
 rem IF EXIST %myTickets%\bill.tmp.out.csv (start "excel" %excel% %myTickets%\bill.tmp.out.csv)
 rem IF EXIST %myTickets%\bill.tmp.out.csv (start "excel" n %myTickets%\bill.tmp.out.csv)
 IF NOT EXIST %myTickets%\bill.tmp.out.csv echo ERROR

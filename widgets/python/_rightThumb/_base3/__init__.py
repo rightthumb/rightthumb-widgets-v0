@@ -22863,6 +22863,8 @@ lbu=aiLine
 nw=n2w
 prLine=linePrint
 pr=print_
+cr=colorizeRow
+c=colorizeRow
 prt=printt
 pt=printt
 getYAML2=getYML2
@@ -22897,7 +22899,11 @@ def searchColor(row,search,c='green',p=1):
 def pp():
 	if not isData(r=0):
 		_paste = regImp( __.appReg, '-paste' )
-		data=_paste.imp.paste().split('\n')
+		d=_paste.imp.paste().split('\n')
+		data=[]
+		for x in d.split('\n'):
+			x=x.strip()
+			if os.path.isfile(x): data.append(x)
 	else: data=isData()
 	return data
 ##################################################
