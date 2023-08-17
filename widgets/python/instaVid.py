@@ -161,21 +161,44 @@ _.l.sw.register( triggers, sw )
 ########################################################################################
 #n)--> start
 
-
 import os
 import instaloader
 
-def download_instagram_video(post_url):
-    # Ensure 'videos' directory exists
-    if not os.path.exists('videos'):
-        os.makedirs('videos')
+def download_instagram_content(post_url):
+    # Ensure 'instagram' directory exists
+    folder = 'instagram'
+    if not os.path.exists(folder):
+        os.makedirs(folder)
 
     # Create an Instaloader instance with the desired download directory
     L = instaloader.Instaloader(
         download_video_thumbnails=False, 
         download_geotags=False, 
         download_comments=False,
-        dirname_pattern=os.path.join(os.getcwd(), 'videos', '{profile}')
+        dirname_pattern=os.path.join(os.getcwd(), folder, '{profile}')
+    )
+
+    post = instaloader.Post.from_shortcode(L.context, post_url.split("/")[-2])
+
+    if post.typename == 'GraphVideo':
+        L.download_post(post, "")
+    elif post.typename == 'GraphImage':
+        L.download_post(post, "")
+    else:
+        print("The provided URL is neither a video nor an image.")
+
+def download_instagram_video(post_url):
+    # Ensure 'videos' directory exists
+    folder='instagram'
+    if not os.path.exists(folder):
+        os.makedirs(folder)
+
+    # Create an Instaloader instance with the desired download directory
+    L = instaloader.Instaloader(
+        download_video_thumbnails=False, 
+        download_geotags=False, 
+        download_comments=False,
+        dirname_pattern=os.path.join(os.getcwd(), folder, '{profile}')
     )
 
     post = instaloader.Post.from_shortcode(L.context, post_url.split("/")[-2])
@@ -183,17 +206,25 @@ def download_instagram_video(post_url):
     if post.is_video:
         L.download_post(post, "")
     else:
-        print("The provided URL is not a video.")
+        download_instagram_content(post_url)
+        # print("The provided URL is not a video.")
 
 
 
 def action():
-    if _.switches.isActive('URL'):
+    if not _.switches.isActive('URL'):
+        _copy = _.regImp( __.appReg, '-copy' )
+        # _copy.imp.copy(  )
+        _copy.imp.copy('''const videoPostPrefix = 'https://www.instagram.com/p/';
+const urls = [...new Set([...document.querySelectorAll('a[href]')].map(anchor => anchor.href).filter(href => href.startsWith(videoPostPrefix)))];
+copy('p instaVid -url '+urls.join(' '));
+''')
+    else:
         for url in _.switches.values('URL'):
             _.pr(url,c='green')
             url = url
             try:
-                download_instagram_video(url)
+                download_instagram_content(url)
                 _.pr('done',c='green')
             except Exception as e:
                 _.pr('error:',url,e,c='red')

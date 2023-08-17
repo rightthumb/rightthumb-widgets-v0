@@ -211,11 +211,74 @@ class Server(BaseHTTPRequestHandler):
 
 		if shutdown=='yes':
 			result='file not saved'
-			path=str( data[b'path'][0] ,'iso-8859-1')
-			fileBackup.switch( 'isPreOpen', delete=True )
-			# fileBackup.switch( 'isPreOpen' )
-			fileBackup.switch( 'Input', path )
-			if not _.switches.isActive('HTML') and  not _.switches.isActive('View-Webpage'): fileBackup.action()
+			self.respond_OK('''
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,600' rel='stylesheet' type='text/css'>
+	<title>saved</title>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<!-- <META http-equiv="refresh" content="1;URL=/?"> -->
+	<style type="text/css">
+body {
+	background-image: url('https://eyeformeta.com/img/bk/dragon-bk.png');
+	background-repeat: no-repeat;
+	background-attachment: fixed;  
+	background-size: cover;
+	color: #fff;
+	font-family: 'Open Sans', 'Myriad Pro', 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Geneva, Verdana, sans-serif;
+	background-position: center;
+	font-size: 400%;
+}
+
+.boxH
+{
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+/* content of this box will be centered vertically */
+.boxV
+{
+	height: 100%;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+	</style>
+</head>
+
+<body>
+		<div>
+		</div>
+		<div class="boxH">
+			<div class="boxV">
+			<div class="boxM">
+				THE_RESULT
+			</div>
+			</div>
+		</div>
+</body>
+
+</html>
+
+			'''.replace('THE_RESULT',result))
+
+			pass
+			sys.exit()
+			if not 'path' in data: _.e('missing: path',data)
+			# path=str( data[b'path'][0] ,'iso-8859-1')
+			# fileBackup.switch( 'isPreOpen', delete=True )
+			# # fileBackup.switch( 'isPreOpen' )
+			# fileBackup.switch( 'Input', path )
+			# if not _.switches.isActive('HTML') and  not _.switches.isActive('View-Webpage'): fileBackup.action()
 		else:
 
 			global filesOpened

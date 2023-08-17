@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<!-- 
+<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
+ -->
+<html lang="en">
+
+<head>
+	<title>markdown</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<link href='https://eyeformeta.com/apps/showdown/style.css' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Old+Standard+TT:400,400italic,700' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,600' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.2/css/foundation.min.css">
+	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+		<script type="text/javascript" src="https://eyeformeta.com/assets/js/showdown.min.js"></script>
+		<script type="text/javascript">
+
+
+			// showdown.setOption('omitExtraWLInCodeBlocks',true);
+			// showdown.setOption('noHeaderId',true);
+			// showdown.setOption('ghCompatibleHeaderId',true);
+			// showdown.setOption('parseImgDimensions',true);
+			// showdown.setOption('simplifiedAutoLink',true);
+			// showdown.setOption('literalMidWordUnderscores',true);
+			// showdown.setOption('strikethrough',true);
+			// showdown.setOption('tables',true);
+			// showdown.setOption('ghCodeBlocks',true);
+			// showdown.setOption('tasklists',true);
+			// showdown.setOption('smoothLivePreview',true);
+			// showdown.setOption('encodeEmails',true);
+			// showdown.setOption('ellipsis',true);
+			// showdown.setOption('relativePathBaseUrl',true);
+
+			// showdown.setOption('tablesHeaderId',false);
+			// showdown.setOption('disableForced4SpacesIndentedSublists',false);
+			// showdown.setOption('smartIndentationFix',false);
+			// showdown.setOption('rawPrefixHeaderId',false);
+			// showdown.setOption('rawHeaderId',false);
+			// showdown.setOption('literalMidWordAsterisks',false);
+			// showdown.setOption('simpleLineBreaks',false);
+			// showdown.setOption('requireSpaceBeforeHeadingText',false);
+			// showdown.setOption('ghMentions',false);
+			// showdown.setOption('openLinksInNewWindow',false);
+			// showdown.setOption('backslashEscapesHTMLTags',false);
+			// showdown.setOption('emoji',false);
+			// showdown.setOption('underline',false);
+			// showdown.setOption('completeHTMLDocument',false);
+			// showdown.setOption('metadata',false);
+			// showdown.setOption('splitAdjacentBlockquotes',false);
+			// showdown.setOption('headerLevelStart',1);
+			// showdown.setOption('prefixHeaderId','');
+			// showdown.setOption('ghMentionsLink','http://eyeformeta.com/');
+
+			var settings = {
+								"omitExtraWLInCodeBlocks": false,
+								"noHeaderId": false,
+								"prefixHeaderId": false,
+								"rawPrefixHeaderId": false,
+								"ghCompatibleHeaderId": false,
+								"rawHeaderId": false,
+								"headerLevelStart": false,
+								"parseImgDimensions": false,
+								"simplifiedAutoLink": false,
+								"literalMidWordUnderscores": false,
+								"literalMidWordAsterisks": false,
+								"strikethrough": false,
+								"tables": false,
+								"tablesHeaderId": false,
+								"ghCodeBlocks": true,
+								"tasklists": false,
+								"smoothLivePreview": false,
+								"smartIndentationFix": false,
+								"disableForced4SpacesIndentedSublists": false,
+								"simpleLineBreaks": false,
+								"requireSpaceBeforeHeadingText": false,
+								"ghMentions": false,
+								"ghMentionsLink": "https://github.com/{u}",
+								"encodeEmails": true,
+								"openLinksInNewWindow": false,
+								"backslashEscapesHTMLTags": false,
+								"emoji": false,
+								"underline": false,
+								"ellipsis": true,
+								"completeHTMLDocument": false,
+								"metadata": false,
+								"splitAdjacentBlockquotes": false
+							}
+
+			var keys = Object.keys(settings);
+			for (var i = 0; i < keys.length; i++) {
+				showdown.setOption(  keys[i],  settings[keys[i]]  );
+			}
+			showdown.setOption('ghMentionsLink','http://eyeformeta.com/');
+			showdown.setOption('headerLevelStart',3);
+
+			var converter = new showdown.Converter();
+		</script>
+		<style type="text/css">
+
+			html, body, table {
+				height:95%;
+				margin: 0;
+				padding: 0;
+				border: none;
+				text-align: center;
+			}
+
+			table {
+				margin: 0 auto;
+				text-align: left;
+				vertical-align: middle;
+				width: 100%;
+			}
+
+			.scroll {
+				overflow: scroll;
+				height: 100%;
+				width: 100%;
+			}
+			.button {
+				font: bold 11px Arial;
+				text-decoration: none;
+				background-color: #EEEEEE;
+				color: #333333;
+				padding: 2px 6px 2px 6px;
+				border-top: 1px solid #CCCCCC;
+				border-right: 1px solid #333333;
+				border-bottom: 1px solid #333333;
+				border-left: 1px solid #CCCCCC;
+			}
+			.editor {
+				display: none;
+			}
+		</style>
+</head>
+
+<body>
+<!-- 
+	<nav style="text-align: center;">
+		<div id="home">home</div>
+	</nav>
+	<div id='main'>
+		<div id='content' style="text-align: center;">
+			<div id='' class=''></div>
+		</div>
+	</div>
+-->
+<div style="display:inline-block; float:left; padding-left: 20px;" onclick="markdown.form.editor();$(this).css('display','none');$('#div_close').css('display','none');">edit</div>
+<div id="div_close" style="display:inline-block; float:right; padding-right: 20px;" onclick="markdown.form.close();">close</div>
+	<div class="editor" >
+		
+		<div class="button" onclick="$('#preview').html( converter.makeHtml( $('#markdown').val() ) );" style="float:left;">refresh html</div>
+
+		<div class="editor" style="float:right">
+			<input  type="submit" name="save" value="do not save" onclick="markdown.form.close();">
+		</div>
+			<label  style="display:inline;">also save webpage</label>	&nbsp;	&nbsp;<input type="checkbox" id="webpage" name="webpage" value="1">	&nbsp;	&nbsp;
+			<input  type="submit" name="save" value="save" onclick="markdown.form.save();"></div><br/>
+			
+	
+	</div>
+	<table width="100%" border="1" cellspacing="10" cellpadding="10" style="height: 100%;">
+	  <tbody>
+		<tr >
+		  <td  style="width: 40%" class="editor" >
+		  		
+		  			
+		  			<textarea class="scroll" name="file" id="markdown" style="width: 100%; height: 100%;" >MARKDOWN_HERE</textarea>
+		  			
+		  		
+			</td>
+		  <td  style="width: 40%"> <div class="scroll" id="preview"></div> </td>
+		</tr>
+	  </tbody>
+	</table>
+	<form action="http://127.0.0.1:8080/" method="POST" id="markdown_form">
+	<input type="hidden" name="html" id="html" >
+	<input type="hidden" name="file" id="upload" >
+	<input type="hidden" name="path" value="PATH_HERE">
+	<input type="hidden" name="shutdown" value="no">
+	</form>
+	<form action="http://127.0.0.1:8080/" method="POST" id="shutdown">
+	<input type="hidden" name="shutdown" value="yes">
+	</form>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.5/angular.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.5/angular-sanitize.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.5/angular-animate.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.5/angular-route.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.5/angular-cookies.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-pageslide-directive/2.2.0/angular-pageslide-directive.js" integrity="sha256-FW2YsacWIn83+j6c02CWOR8fuY4WyzbmmGwz7VOdEI0=" crossorigin="anonymous"></script>
+  <script src="https://eyeformeta.com/apps/showdown/editor.js"></script>
+
+	<script type="text/javascript">
+
+        markdown = {};
+        markdown.v = {};
+        markdown.form = {
+                record: 0,
+                guid: '',
+                editor: function() {
+					document.querySelectorAll('.editor').forEach(el => { el.classList.remove('editor'); });
+					// markdown.form.editor();
+                }, //==============================================
+                one: function() {
+                    $.post(
+                            'http://127.0.0.1:8080/', {
+                                            'dork': $('#file').val().replace('+','B5B6E23C'),
+                            },
+                            function(data) {
+                            	console.log(data);
+                                // markdown.form.two(data);
+                            }
+                    );
+                    // markdown.form.one();
+                }, //==============================================
+                close: function() {
+                	document.getElementById("shutdown").submit();
+                    // markdown.form.close();
+                }, //==============================================
+                save: function(data) {
+                	// $('#butt').val(   markdown.form.all( $('#file').val(), '+','B5B6E23C' )  );
+                	$('#upload').val(   $('#markdown').val()  );
+                	if ($('#webpage').is(':checked')) {
+                		$('#html').val(   $('#preview').html()  );
+                	}
+
+                	document.getElementById("markdown_form").submit();
+                    // markdown.form.save();
+                }, //==============================================
+                all: function(data,a,b) {
+                    while ( data.indexOf(a) > -1 ) {
+                    	data = data.replace(a,b);
+                    }
+                    return data;
+                    // markdown.form.all();
+                } //==============================================
+        };
+
+	</script>
+
+
+	<script type="text/javascript">
+		$( "#markdown" ).keydown(function() {
+		  $('#preview').html( converter.makeHtml( $('#markdown').val() ) );
+		});
+
+		$('#preview').html( converter.makeHtml( $('#markdown').val() ) );
+	</script>
+
+</body>
+
+</html>
