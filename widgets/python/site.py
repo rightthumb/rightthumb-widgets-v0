@@ -287,6 +287,7 @@ def process(path,end='',ft=None):
 			url = file.replace( __.path(folder), meta['url'] ).replace('\\','/')
 			if os.path.isdir(path):
 				url += '/'
+			_.pr(path,c='cyan')
 			_.pr(urlpr(url,meta),c='Background.blue')
 			if url.endswith('.js'): _.pr( '<script src="'+url+'"></script>' ,c='yellow')
 			elif url.endswith('.css'): _.pr( '<link rel="stylesheet" href="'+url+'">' ,c='yellow')

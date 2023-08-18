@@ -626,7 +626,8 @@ def action():
 		delim=''
 	global THE_PATH
 	global port
-	htm=html.replace( 'MARKDOWN_HERE', delim.join(markdown) ).replace( 'PATH_HERE', THE_PATH ).replace( '8080', str(port) ).replace( '[ ]', '<input type="checkbox" >' ).replace( '[x]', '<input type="checkbox" checked>' ).replace( '[X]', '<input type="checkbox" checked>' )
+	# htm=html.replace( 'MARKDOWN_HERE', delim.join(markdown) ).replace( 'PATH_HERE', THE_PATH ).replace( '8080', str(port) ).replace( '[ ]', '<input type="checkbox" >' ).replace( '[x]', '<input type="checkbox" checked>' ).replace( '[X]', '<input type="checkbox" checked>' )
+	htm=html.replace( 'MARKDOWN_HERE', delim.join(markdown) ).replace( 'PATH_HERE', THE_PATH ).replace( '8080', str(port) )
 	htm = htm.replace('a href','a target="_blank" href')
 	if _.switches.isActive('View-Webpage'):
 		_.saveText( htm, save )

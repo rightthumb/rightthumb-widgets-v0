@@ -3831,6 +3831,8 @@ alias ssh.c.s="ssh-copy-id -i ~/.ssh/id_rsa.pub scott@192.168.63.129"
 alias 2mp3="$widgets/widgets/bash/2mp3.sh"
 alias .ssh="$widgets/widgets/bash/ssh_key.sh"
 alias .ssh.="$widgets/widgets/bash/ssh_key..sh"
+alias text="$p vps-srv-7facG-twilio-send"
+alias rn="$widgets/widgets/bash/rename.sh"
 
 clear
 

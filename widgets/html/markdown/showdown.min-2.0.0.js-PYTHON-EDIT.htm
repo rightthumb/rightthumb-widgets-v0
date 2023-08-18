@@ -151,7 +151,7 @@
 <div id="div_close" style="display:inline-block; float:right; padding-right: 20px;" onclick="markdown.form.close();">close</div>
 	<div class="editor" >
 		
-		<div class="button" onclick="$('#preview').html( converter.makeHtml( $('#markdown').val() ) );" style="float:left;">refresh html</div>
+		<div class="button" onclick="$('#preview').html( converter.makeHtml( $('#markdown').val() ) );markdown.form.checkboxes();" style="float:left;">refresh html</div>
 
 		<div class="editor" style="float:right">
 			<input  type="submit" name="save" value="do not save" onclick="markdown.form.close();">
@@ -194,7 +194,7 @@
   <script src="https://eyeformeta.com/apps/showdown/editor.js"></script>
 
 	<script type="text/javascript">
-
+$(document).ready(function() {});
         markdown = {};
         markdown.v = {};
         markdown.form = {
@@ -203,6 +203,18 @@
                 editor: function() {
 					document.querySelectorAll('.editor').forEach(el => { el.classList.remove('editor'); });
 					// markdown.form.editor();
+                }, //==============================================
+                checkboxes: function() {
+				    var htmlContent = $('#preview').html();
+
+				    // Replace [x] with checked checkbox
+				    htmlContent = htmlContent.replace(/\[x\]/gi, '<input type="checkbox" checked>');
+
+				    // Replace [ ] with unchecked checkbox
+				    htmlContent = htmlContent.replace(/\[ \]/gi, '<input type="checkbox">');
+
+				    $('#preview').html(htmlContent);
+					// markdown.form.checkboxes();
                 }, //==============================================
                 one: function() {
                     $.post(
@@ -245,9 +257,11 @@
 	<script type="text/javascript">
 		$( "#markdown" ).keydown(function() {
 		  $('#preview').html( converter.makeHtml( $('#markdown').val() ) );
+		  markdown.form.checkboxes();
 		});
 
 		$('#preview').html( converter.makeHtml( $('#markdown').val() ) );
+		markdown.form.checkboxes();
 	</script>
 
 </body>
