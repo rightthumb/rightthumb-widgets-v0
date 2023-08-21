@@ -3833,6 +3833,7 @@ alias .ssh="$widgets/widgets/bash/ssh_key.sh"
 alias .ssh.="$widgets/widgets/bash/ssh_key..sh"
 alias text="$p vps-srv-7facG-twilio-send"
 alias rn="$widgets/widgets/bash/rename.sh"
+alias zip.l="$widgets/widgets/bash/listZipFiles.sh"
 
 clear
 

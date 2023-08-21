@@ -11,10 +11,13 @@ rem ###########################################################################
 rem ## {C3P0D40fAe8B} ##
 
 
-IF [%1] == [] (
-    ping google.com -t
-) ELSE (
-    CALL p google -q %*
-)
+rem IF [%1] == [] (
+rem     ping google.com -t
+rem ) ELSE (
+rem     CALL p google -q %*
+rem )
 
- 
+call p bb %1 > %tmpf%
+set /p xyz=<%tmpf%
+cd /d %xyz%
+echo %xyz%
