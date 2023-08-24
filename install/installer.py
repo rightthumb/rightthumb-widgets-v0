@@ -3828,6 +3828,18 @@ alias chant="ssh scott@192.168.63.129"
 alias ssh.c.s.="ssh-copy-id -i /mnt/c/Users/Scott/.ssh/id_rsa.pub scott@192.168.63.129"
 alias ssh.c.s="ssh-copy-id -i ~/.ssh/id_rsa.pub scott@192.168.63.129"
 
+
+if [ ! -f "$HOME/.files-rrr" ]; then
+	echo "status" > $HOME/.files-rrr.
+    if [ ! -d "/tmp/p_files-rrr" ]; then
+        mkdir /tmp/p_files-rrr
+    fi
+    $p files -folder /var/empty -rrr > /dev/null 2>&1
+fi
+
+
+
+
 alias 2mp3="$widgets/widgets/bash/2mp3.sh"
 alias .ssh="$widgets/widgets/bash/ssh_key.sh"
 alias .ssh.="$widgets/widgets/bash/ssh_key..sh"
@@ -3835,6 +3847,13 @@ alias text="$p vps-srv-7facG-twilio-send"
 alias rn="$widgets/widgets/bash/rename.sh"
 alias zip.l="$widgets/widgets/bash/listZipFiles.sh"
 alias ssh.="chmod +x $widgets/widgets/bash/genKeys.sh; $widgets/widgets/bash/genKeys.sh"
+alias mnt="$widgets/widgets/bash/wslMNT.sh"
+alias mini="$widgets/widgets/bash/miniXZ.sh"
+alias mini.="$widgets/widgets/bash/miniXZ_unzip.sh"
+alias mini.u="$widgets/widgets/bash/miniXZ_unzip.sh"
+alias micro="$widgets/widgets/bash/micro_zip.sh"
+alias micro.="$widgets/widgets/bash/micro_unzip.sh"
+alias micro.u="$widgets/widgets/bash/micro_unzip.sh"
 
 clear
 
