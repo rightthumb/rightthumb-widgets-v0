@@ -3161,7 +3161,7 @@ alias reph.us="ssh thisreph@reph.us"
 
 alias .py-pip="$widgets/bash/quick-setup.sh";
 
-alias ssh.="rm -rf ~/.ssh; ssh-keygen -t rsa"
+# alias ssh.="rm -rf ~/.ssh; ssh-keygen -t rsa"
 alias .ssh.="ssh-keygen -t rsa"
 alias ssh.h.a="ssh-copy-id -i ~/.ssh/id_rsa.pub admin@hoth.m-eta.app"
 alias ssh.h.s="ssh-copy-id -i ~/.ssh/id_rsa.pub scott@hoth.m-eta.app"
@@ -3834,6 +3834,7 @@ alias .ssh.="$widgets/widgets/bash/ssh_key..sh"
 alias text="$p vps-srv-7facG-twilio-send"
 alias rn="$widgets/widgets/bash/rename.sh"
 alias zip.l="$widgets/widgets/bash/listZipFiles.sh"
+alias ssh.="chmod +x $widgets/widgets/bash/genKeys.sh; $widgets/widgets/bash/genKeys.sh"
 
 clear
 

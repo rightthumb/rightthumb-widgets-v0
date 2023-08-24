@@ -32,15 +32,15 @@ _str = __.imp('_rightThumb._string')
 def sw():
 	pass
 	#b)--> examples
-	# _.switches.register( 'Input', '-i' )
+	_.switches.register( 'LineNumber', '-l,-ln' )
 	# _.switches.register( 'URL', '-u,-url,-urls', 'https://etc.ac/', isData='raw' )
 	#e)--> examples
-	# _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name,data,clean', description='Files', isRequired=False )
+	_.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='data', description='Files', isRequired=False )
 
 # __.setting('require-list',['Files,Plus','File,Has']) # todo
 # __.setting('require-list',['Pipe','Files'])
-__.setting('receipt-log',True)
-__.setting('receipt-file',True)
+__.setting('receipt-log')
+__.setting('receipt-file')
 __.setting('myFileLocations-skip-validation',False)
 __.setting('require-pipe',False)
 __.setting('require-pipe||file',False)
@@ -123,7 +123,7 @@ def triggers():
 
 def _local_(do): exec(do)
 
-_.l.conf('clean-pipe',True)
+_.l.conf('clean-pipe',False)
 _.l.sw.register( triggers, sw )
 
 ########################################################################################
@@ -162,18 +162,15 @@ _.l.sw.register( triggers, sw )
 #n)--> start
 
 def action():
-	load(); global c3po;
+	ln=0
+	for line in _.pp():
+		ln+=1
+		if _.showLine(line):
+			if _.switches.isActive('LineNumber'):
+				_.pr(_.ct( ln, 'yellow', p=0 ), line)
+			else:
+				_.pr(line)
 
-	#n)--> iterate
-	# for subject in _.isData(r=0): _.pr(subject)
-	for subject in _.pp(): _.pr(subject)
-	
-
-def load():
-	global c3po
-	c3po = _.getTable( 'table' )
-	#n)--> print table
-	_.pt(c3po)
 
 
 ##################################################

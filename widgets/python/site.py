@@ -145,6 +145,7 @@ def urlpr(url,meta):
 	if url.endswith('/index.htm'): url = url[:-len('index.htm')]
 	if url.endswith('/index.php'): url = url[:-len('index.php')]
 	url=URL_APPS(url,meta)
+	url=url.replace('f=/','f=')
 	return url
 
 

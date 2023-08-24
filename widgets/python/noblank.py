@@ -32,15 +32,15 @@ _str = __.imp('_rightThumb._string')
 def sw():
 	pass
 	#b)--> examples
-	# _.switches.register( 'Input', '-i' )
+	_.switches.register( 'Double', '-d' )
 	# _.switches.register( 'URL', '-u,-url,-urls', 'https://etc.ac/', isData='raw' )
 	#e)--> examples
-	# _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name,data,clean', description='Files', isRequired=False )
+	_.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='data', description='Files', isRequired=False )
 
 # __.setting('require-list',['Files,Plus','File,Has']) # todo
 # __.setting('require-list',['Pipe','Files'])
-__.setting('receipt-log',True)
-__.setting('receipt-file',True)
+__.setting('receipt-log')
+__.setting('receipt-file')
 __.setting('myFileLocations-skip-validation',False)
 __.setting('require-pipe',False)
 __.setting('require-pipe||file',False)
@@ -161,19 +161,46 @@ _.l.sw.register( triggers, sw )
 ########################################################################################
 #n)--> start
 
+_copy = _.regImp( __.appReg, '-copy' )
+
+
+def single():
+	lines=[]
+	for line in _.pp():
+		line=line.rstrip()
+		if line.strip():
+			if _.showLine(line):
+				lines.append(line)
+	_copy.imp.copy( '\n'.join(lines) )
+
+def double(subject):
+	last=True
+	lines=[]
+	for line in subject:
+		line=line.rstrip()
+		if line.strip():
+			lines.append(line)
+		elif not last:
+			lines.append(line)
+		if line.strip():
+			last=False
+		else:
+			last=True
+		if _.showLine(line):
+			last=True
+	return lines
+			
+
 def action():
-	load(); global c3po;
-
-	#n)--> iterate
-	# for subject in _.isData(r=0): _.pr(subject)
-	for subject in _.pp(): _.pr(subject)
-	
-
-def load():
-	global c3po
-	c3po = _.getTable( 'table' )
-	#n)--> print table
-	_.pt(c3po)
+	if _.switches.isActive('Double'):
+		subject=_.pp()
+		subject = double(subject)
+		subject.reverse()
+		subject = double(subject)
+		subject.reverse()
+		_copy.imp.copy( '\n'.join(subject) )
+	else:
+		single()
 
 
 ##################################################

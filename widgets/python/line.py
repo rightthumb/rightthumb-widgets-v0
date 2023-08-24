@@ -364,10 +364,10 @@ if _.switches.isActive('Make'):
 	# sys.exit()
 	lines=[]
 	started=False
-	for line in _.isData():
+	for line in _.pp():
 		if line.strip(): started=True
 		if started: lines.append(line.rstrip())
-	_isData='\n'.join(_.isData())
+	_isData='\n'.join(_.pp())
 	isData=lines
 	# isData=_.isData()
 	if '{}' in _isData or '{a}' in _isData or '{0}' in _isData or '{1}' in _isData:
@@ -984,12 +984,13 @@ xRef = []
 xRefBase = []
 xRefList = []
 ############################################################################ ############################################################################
-# (START)
+#start ## Start ### START #### <--(START)
+
 if _.switches.isActive('Unique') == True:
 	resultList = []
 if _.switches.isActive('CrossReferenceReverse') == False:
 	# for theLineNumber,line in enumerate(_.appData[__.appReg]['pipe']):
-	for theLineNumber,line in enumerate( _.isData(r=1) ):
+	for theLineNumber,line in enumerate( _.pp() ):
 		line = str2(line)
 		line = line.replace('\n','')
 		lineOriginal = line

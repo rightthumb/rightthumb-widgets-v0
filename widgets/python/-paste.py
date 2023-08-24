@@ -201,6 +201,7 @@ def formatData( result ):
 
 def clip_get():
 	result = 'error'
+	# result = clip_get_2()
 	result = cleanString(clip_get_2())
 	# try:
 	#     result = clip_get_2()

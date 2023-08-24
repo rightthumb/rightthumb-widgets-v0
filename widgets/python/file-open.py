@@ -31,6 +31,7 @@ import _rightThumb._string as _str
 
 def appSwitches():
 	pass
+	_.switches.register( 'AS', '-as', 'psd, xls' )
 	_.switches.register( 'App', '-app' )
 	_.switches.register( 'Files', '-f,-file,-files','file.txt', description='Files' )
 	_.switches.register( 'Alias', '-alias','' )
@@ -310,9 +311,10 @@ def action(path=None):
 					if os.path.isfile(ext):
 						exts=_.getYML(ext)
 						for ex in exts:
-							if path.lower().endswith('.'+ex):
-								found=True
-								app=exts[ex]
+							if _.switches.isActive('AS'):
+								if _.switches.value('AS') == ex:  found=True;app=exts[ex];
+							else:
+								if path.lower().endswith('.'+ex): found=True;app=exts[ex];
 
 					if not found:
 						head=_v.rt+os.sep+'file-open-headers.yml'

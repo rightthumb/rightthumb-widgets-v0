@@ -32,10 +32,10 @@ _str = __.imp('_rightThumb._string')
 def sw():
 	pass
 	#b)--> examples
-	# _.switches.register( 'Input', '-i' )
+	_.switches.register( 'RecordKey', '-k,-key,-r,-rec,-record', 'Field Script Object' )
 	# _.switches.register( 'URL', '-u,-url,-urls', 'https://etc.ac/', isData='raw' )
 	#e)--> examples
-	# _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name,data,clean', description='Files', isRequired=False )
+	_.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name', description='Files', isRequired=False )
 
 # __.setting('require-list',['Files,Plus','File,Has']) # todo
 # __.setting('require-list',['Pipe','Files'])
@@ -161,19 +161,153 @@ _.l.sw.register( triggers, sw )
 ########################################################################################
 #n)--> start
 
-def action():
-	load(); global c3po;
 
-	#n)--> iterate
-	# for subject in _.isData(r=0): _.pr(subject)
-	for subject in _.pp(): _.pr(subject)
+from bs4 import BeautifulSoup
+
+def extract_attributes_and_text(tag):
+	"""
+	Extract attributes and text content of a tag into a dictionary.
+	"""
+	data = {}
 	
+	# Get attributes
+	for attr, value in tag.attrs.items():
+		data[f"{tag.name}_{attr}"] = value
+		
+	# Get text, if present
+	text_content = tag.get_text(strip=True)
+	if text_content:
+		data[tag.name] = text_content
 
-def load():
-	global c3po
-	c3po = _.getTable( 'table' )
-	#n)--> print table
-	_.pt(c3po)
+	return data
+
+def traverse_xml_for_tag(file_name, tag_name="Field"):
+	with open(file_name, 'r', encoding="utf-8") as file:
+		contents = file.read()
+
+	soup = BeautifulSoup(contents, 'lxml-xml')
+	records = []
+	
+	for tag in soup.find_all(tag_name):
+		record = {}
+
+		# If the tag itself has attributes, capture them
+		record.update(extract_attributes_and_text(tag))
+		
+		# Check for any nested tags and capture their attributes/data
+		for child in tag.find_all(True): # finds all tags within the parent tag
+			record.update(extract_attributes_and_text(child))
+
+		records.append(record)
+		
+	return records
+
+
+
+
+import json
+from bs4 import BeautifulSoup
+
+def xml_to_json(tag):
+	"""Convert a BeautifulSoup tag and its children into a JSON-compatible dictionary."""
+	result = {}
+
+	# Process tag attributes
+	if tag.attrs:
+		result.update(tag.attrs)
+
+	# Recursively process child tags
+	child_json = {}
+	for child in tag.children:
+		if child.name:
+			# Recurse into child
+			child_data = xml_to_json(child)
+			# Handle multiple children with the same name by storing them in a list
+			if child.name in child_json:
+				# Ensure we have a list to add to
+				if not isinstance(child_json[child.name], list):
+					child_json[child.name] = [child_json[child.name]]
+				child_json[child.name].append(child_data)
+			else:
+				child_json[child.name] = child_data
+
+	# Combine text (stripped of whitespace) with child tags
+	text_content = tag.get_text(strip=True)
+	if child_json:
+		if text_content:
+			result["_text"] = text_content
+		result.update(child_json)
+	elif text_content:
+		return text_content
+	else:
+		return result
+
+	return result
+
+def search_and_convert_to_json(filename, tag_name="Field"):
+	with open(filename, 'r', encoding='utf-8') as file:
+		soup = BeautifulSoup(file, 'lxml-xml')
+
+	records = []
+
+	# Find all tags that match the given tag_name
+	for tag in soup.find_all(tag_name):
+		record = xml_to_json(tag)
+		records.append(record)
+
+	return records
+
+
+
+
+
+
+
+def action():
+	flatten=False
+	tag_name = "Field"
+	if _.switches.isActive('RecordKey') and len(_.switches.value('RecordKey')):
+		tag_name = _.switches.values('RecordKey')[0]
+
+	if flatten:
+		records = traverse_xml_for_tag(_.pp()[0], tag_name)
+		for record in records:
+			print(record)
+	else:
+		records = search_and_convert_to_json(_.pp()[0], tag_name)
+		print(json.dumps(records, indent=2))
+	_.saveTable2(records,_.pp()[0].replace('.xml','')+'.json')
+
+
+
+'''
+# filemaker embedded image to file
+import re
+import binascii
+
+def extract_jpeg_from_xml(xml_str, output_filename):
+    # Extract the JPEG hex string using a regular expression
+    jpeg_hex_match = re.search(r'JPEG(.*?)PICT', xml_str, re.DOTALL)
+    
+    if not jpeg_hex_match:
+        raise ValueError("No JPEG data found in the provided XML string.")
+    
+    jpeg_hex_str = jpeg_hex_match.group(1)
+    
+    # Convert hex string to bytes
+    jpeg_bytes = binascii.unhexlify(jpeg_hex_str)
+    
+    # Write the bytes to the specified output file
+    with open(output_filename, 'wb') as f:
+        f.write(jpeg_bytes)
+
+# Example usage
+xml_data = _.getText(_.pp()[0])
+output_filename = "output_image.jpg"
+extract_jpeg_from_xml(xml_data, output_filename)
+
+'''
+
 
 
 ##################################################

@@ -273,6 +273,7 @@ def processFile(path):
 	file = file.replace( chr(10), '\n' )
 	file = file.replace( chr(27), '' )
 	file = file.replace( '\r', '' )
+	file=file.rstrip()
 	file = replace_leading_spaces_with_tab(file)
 	# if _.switches.isActive('Spaces'):
 	#     while '\t' in file: file = file.replace( '\t', '    ' )

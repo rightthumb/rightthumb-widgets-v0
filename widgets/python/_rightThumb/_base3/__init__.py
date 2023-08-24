@@ -4027,7 +4027,7 @@ class dt:
 #     print(vv.isData)
 #     print(data)
 #     return data
-def isData( data=None, focus=None, pipeClean=True, required=False,     r=None, c=None, noclean=None ):
+def isData( data=None, focus=None, pipeClean=False, required=False,     r=None, c=None, noclean=None ):
 	global switches
 	for sw in __.isData_Switches:
 		if not sw == 'Files': return switches.values(sw)
@@ -4038,7 +4038,6 @@ def isData( data=None, focus=None, pipeClean=True, required=False,     r=None, c
 	elif data is None and switches.isActive('Paste-isData'): return getClip().split('\n')
 	
 	
-	if not noclean is None: pipeClean=noclean
 	def _isData_(tst):
 		global myFileLocation_Files
 		# if not tst and pipe_surfing(): tst = pipe_surfing()
@@ -4057,6 +4056,7 @@ def isData( data=None, focus=None, pipeClean=True, required=False,     r=None, c
 			if os.path.isfile(f):
 				dAta.append(f)
 		return dAta
+	if not noclean is None: pipeClean=noclean
 	if not c is None: pipeClean=c;
 	if not r is None: required = r;
 	# pr('here',data,c='gray')
@@ -7335,7 +7335,9 @@ def stringDiff( one, two ):
 
 	return result
 
-
+def remove_carriage_returns():
+	lines = sys.stdin.readlines()
+	return [line.replace('\r', '') for line in lines]
 
 def fromEpoch( epoch ):
 	return datetime.datetime.fromtimestamp(epoch).strftime('%c')
@@ -7347,8 +7349,7 @@ def postLoad( file, epoch=0, theFocus=False ):
 	global appData
 	
 	if not sys.stdin.isatty():
-		# pr('setPipeData( sys.stdin.readlines',c='gray')
-		setPipeData( sys.stdin.readlines(), __.appReg, clean=l.conf('clean-pipe' ,d=True) )
+		setPipeData( sys.stdin.readlines(), __.appReg, clean=l.conf('clean-pipe' ,d=False) )
 
 	try:
 		__.appInfoScan
@@ -7929,18 +7930,18 @@ def setUmlData( data, openUML=True ):
 	if openUML:
 		import webbrowser
 		webbrowser.open( _v.umlHtml, new=2)
-def setPipeData( data, theFocus=False, clean=True ):
-	# pr('setPipeData',c='gray')
-	# pr(data)
-	# pr('setPipeData',c='gray')
+def setPipeData( data, theFocus=False, clean=False ):
+	# if type(data) == str: data=data.replace('\r','')
+	# if type(data) == list: data='\n'.join(data).replace('\r','').split('\n')
 	global appData
 	if type( theFocus ) == bool:
 		theFocus = __.appReg
-	# _.appData[__.appReg]['pipe'] = list(data)
 	if not appData[theFocus]['pipe'] and len(data) > 0:
-		appData[theFocus]['pipe'] = []
 		# if not clean:
-		#   appData[theFocus]['pipe'].append('')
+		# 	setPipeDataRan = True
+		# 	appData[theFocus]['pipe']=data
+		# 	return data
+		appData[theFocus]['pipe'] = []
 		for pd in data:
 			if clean:
 				pd = pd.replace('\n','')
@@ -7948,7 +7949,7 @@ def setPipeData( data, theFocus=False, clean=True ):
 				if not pd == '':
 					appData[theFocus]['pipe'].append(pd)
 			else:
-				appData[theFocus]['pipe'].append(pd)
+				appData[theFocus]['pipe'].append(pd.rstrip())
 		setPipeDataRan = True
 
 
@@ -9449,12 +9450,17 @@ def calculate_monthdelta(date1, date2):
 #     x = Timer(0.0, timeout, ('start',defaultTimeout))
 #     x.start()
 
-
+hasPlus=None
 def showLine( string, plus = '', minus = '',plusOr = False, end=None,isSub=False, OR=None, code=False ):
-	'''( string, plus='', minus='', plusOr=False, end=None, isSub=False, OR=None )'''
+	'''showLine( string, plus = '', minus = '',plusOr = False, end=None,isSub=False, OR=None, code=False )'''
+	global switches
+	global hasPlus
+	if hasPlus is None:
+		hasPlus = switches.isActive('Plus')
+	if not hasPlus:
+		if not string or not string.strip(): return True
 	# print_(plus)
 	# print_(string)
-	global switches
 	# print_(switches.isActive('Plus'))
 	# print_(switches.values('Plus'))
 	# sys.exit()
@@ -21172,7 +21178,6 @@ def l_registerSwitches( trig=None, sw=None ):
 	if l.conf('__name__') == '__main__':
 		# pr('l_registerSwitches: __main__',c='gray')
 		if not sys.stdin.isatty():
-			# pr('setPipeData( sys.stdin.readlines',c='gray')
 			setPipeData( sys.stdin.readlines(), __.appReg, clean=l.conf('clean-pipe' ,d=True) )
 	postLoad( l.conf('__file__') )
 	myFileLocation_Print=l.conf('myFileLocation_Print',d=False)
@@ -22863,6 +22868,7 @@ lbu=aiLine
 nw=n2w
 prLine=linePrint
 pr=print_
+ct=colorThis
 cr=colorizeRow
 c=colorizeRow
 prt=printt
@@ -22896,14 +22902,17 @@ def searchColor(row,search,c='green',p=1):
 	if p: print(row)
 	return row
 ##################################################
-def pp():
+def pp(fi=False):
 	if not isData(r=0):
 		_paste = regImp( __.appReg, '-paste' )
-		d=_paste.imp.paste().split('\n')
-		data=[]
-		for x in d.split('\n'):
-			x=x.strip()
-			if os.path.isfile(x): data.append(x)
+		data=_paste.imp.paste().split('\n')
+
+		if fi:
+			d=data.copy()
+			data=[]
+			for x in d:
+				x=x.strip()
+				if os.path.isfile(x): data.append(x)
 	else: data=isData()
 	return data
 ##################################################
@@ -22937,5 +22946,6 @@ def an(string): import re; return re.sub(r'\W+', '', string);
 # __.switch_skimmer.active
 # 11780
 # if switches.isActive('Plus-single'): break
+# sys.stdin.readlines()
 ########################################################################################
 # EOF

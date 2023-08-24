@@ -39,8 +39,8 @@ def sw():
 
 # __.setting('require-list',['Files,Plus','File,Has']) # todo
 # __.setting('require-list',['Pipe','Files'])
-__.setting('receipt-log',True)
-__.setting('receipt-file',True)
+__.setting('receipt-log')
+__.setting('receipt-file')
 __.setting('myFileLocations-skip-validation',False)
 __.setting('require-pipe',False)
 __.setting('require-pipe||file',False)
@@ -161,20 +161,13 @@ _.l.sw.register( triggers, sw )
 ########################################################################################
 #n)--> start
 
+# import sys
+
 def action():
-	load(); global c3po;
-
-	#n)--> iterate
-	# for subject in _.isData(r=0): _.pr(subject)
-	for subject in _.pp(): _.pr(subject)
-	
-
-def load():
-	global c3po
-	c3po = _.getTable( 'table' )
-	#n)--> print table
-	_.pt(c3po)
-
+	lines = sys.stdin.readlines()
+	print("Number of lines:", len(lines))
+	for index, line in enumerate(lines, start=1):
+		print(f"Line {index}: {repr(line)}")
 
 ##################################################
 #b)--> examples

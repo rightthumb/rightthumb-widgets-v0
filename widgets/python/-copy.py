@@ -46,6 +46,8 @@ def appSwitches():
 	_.switches.register( 'Lines', '-l,-line,-lines' )
 	_.switches.register( 'NoClean', '-noclean' )
 	_.switches.register( 'Add-Return', '-r,-return,-returns' )
+	_.switches.register( 'CleanPipe', '-cl' )
+
 
 _.autoBackupData = __.autoCreationConfiguration['backup']
 __.releaseAcquiredData = __.autoCreationConfiguration['logs']
@@ -107,10 +109,6 @@ _.appData[focus()] = {
 	}
 
 __.hasPipeData = False
-if __name__ == '__main__':
-	if not sys.stdin.isatty():
-		__.hasPipeData = True
-		_.setPipeData( sys.stdin.readlines(), __.appReg, clean=False )
 
 
 def registerSwitches( argvProcessForce=False ):
@@ -157,7 +155,14 @@ def fieldSet( switchName, switchField, switchValue, theFocus=False ):
 
 
 _.postLoad( __file__ )
-
+if __name__ == '__main__':
+	if not sys.stdin.isatty():
+		__.hasPipeData = True
+		_.setPipeData( sys.stdin.readlines(), __.appReg, clean=_.switches.isActive('CleanPipe') )
+		# print(888);sys.exit();
+# appData[theFocus]['pipe']
+if _.switches.isActive('CleanPipe'):
+	_.pipeCleaner(0)
 ########################################################################################
 # START
 
@@ -271,7 +276,7 @@ def clip_set_1(data,end='',clean=False):
 def clip_set( data, end='', p=True, clean=False ):
 	data=str(data)
 	data = _.stripColor(data)
-	
+	# print(data,99);sys.exit();
 	if not _.switches.isActive('NoPrint'):
 		if p:
 			_.pr(data)
@@ -300,10 +305,10 @@ def clip_get(p=False):
 		if not _.switches.isActive('NoPrint'):
 			_.cp( '\tpython3 -m pip install pyperclip', 'yellow' )
 		try:
-			result = clip_get_1()
+			result = cleanString(clip_get_1())
 		except Exception as e:
 			try:
-				result = clip_get_3()
+				result = cleanString(clip_get_3())
 			except Exception as e:
 				if not _.switches.isActive('NoPrint'):
 					if _.isWin:
@@ -383,6 +388,7 @@ win32clipboard = None
 def cleanString(data):
 	data=data.replace('\r','')
 	data=data.rstrip()
+	while '\r' in data:  data=data.replace('\r','')
 	while ' \n' in data:  data=data.replace(' \n','\n')
 	while '\t\n' in data: data=data.replace('\t\n','\n')
 	global dirty

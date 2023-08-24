@@ -11,7 +11,7 @@
 # ## {C3P0D40fAe8B} ##
 site_url=None
 autoCreationConfiguration = {
-							'backup': False,
+							'backup': True,
 							'logs': True,
 							'folders': True,
 							'created': { '_vars': 0 },

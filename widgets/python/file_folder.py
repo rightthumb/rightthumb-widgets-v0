@@ -249,17 +249,21 @@ def action():
 			#         _.colorThis( [ '\t',f['label'] ], 'cyan' )
 
 
-
+			displayed_files=[]
 			for f in files:
 				if not os.path.islink(f['label']):
+					displayed_files.append(f['label'])
 					_.colorThis( [ '\t',f['label'] ], 'cyan' )
 
 
 			for f in files:
 				if os.path.islink(f['label']):
+					displayed_files.append(f['label'])
 					_.colorThis( [ '\t',f['label'] ], 'yellow' )
 
-
+			if len(displayed_files) == 1:
+				_copy = _.regImp( __.appReg, '-copy' )
+				_copy.imp.copy( displayed_files[0], p=0 )
 
 
 

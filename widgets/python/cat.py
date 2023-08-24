@@ -214,7 +214,7 @@ def action():
 	# _.pr(_.isData())
 	# sys.exit()
 	# files = _.switches.values('Files')
-	files = _.isData()
+	files = _.pp()
 	if type(files[0]) == list:
 		files = files[0]
 	for i,filepath in enumerate(files):

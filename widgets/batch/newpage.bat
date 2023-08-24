@@ -12,6 +12,7 @@ rem ## {C3P0D40fAe8B} ##
 
 rem set wwwPage_0=D:\techApps\Library\WEB\newpage\blank0.htm
 rem set wwwPage_1=D:\techApps\Library\WEB\newpage\blank1.htm
+set wwwPage_01=D:\websites\domains\apps.eyeformeta.com\public_html\templates\html\0.1.htm
 set wwwPage_0=D:\websites\domains\apps.eyeformeta.com\public_html\templates\html\0.htm
 set wwwPage_1=D:\websites\domains\apps.eyeformeta.com\public_html\templates\html\1.htm
 set wwwPage_2=D:\techApps\Library\WEB\newpage\blank2.htm
@@ -28,6 +29,8 @@ if ["%1"] == ["?"] (
 
 if [%1] == [] (
         set wwwPage=%wwwPage_0%
+) else if [%1] == [0] (
+        set wwwPage=%wwwPage_01%
 ) else if [%1] == [1] (
         set wwwPage=%wwwPage_1%
 ) else if [%1] == [2] (
