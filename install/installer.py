@@ -3886,6 +3886,8 @@ alias mini.u="$widgets/widgets/bash/miniXZ_unzip.sh"
 alias micro="$widgets/widgets/bash/micro_zip.sh"
 alias micro.="$widgets/widgets/bash/micro_unzip.sh"
 alias micro.u="$widgets/widgets/bash/micro_unzip.sh"
+alias rarDel="$widgets/widgets/bash/rarDel.sh"
+alias mobile="$widgets/widgets/bash/mobile_movie.sh"
 
 clear
 

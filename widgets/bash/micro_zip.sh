@@ -90,6 +90,7 @@ case "$ARCHIVE_NAME" in
 		;;
 	*.rar)
 		install_if_not_exists "rar"
+		# rar a -o- -inul -ep1 "$ARCHIVE_NAME" "$FOLDER"
 		rar a "$ARCHIVE_NAME" "$FOLDER"
 		;;
 	*.xz)
