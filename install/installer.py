@@ -3840,6 +3840,38 @@ fi
 
 
 
+cleanw() {
+    FILE_PATH="$1"
+    ENDPOINT_URL="https://softwaredevelopment.solutions/apps/terminal/clean/"
+
+    BOUNDARY="------------------------$(date +%s)"
+    HEADER="Content-Type: multipart/form-data; boundary=$BOUNDARY"
+
+    TMPFILE=$(mktemp)
+    echo "--$BOUNDARY" > $TMPFILE
+    echo "Content-Disposition: form-data; name=\"file\"; filename=\"$(basename $FILE_PATH)\"" >> $TMPFILE
+    echo "Content-Type: $(file --mime-type -b $FILE_PATH)" >> $TMPFILE
+    echo "" >> $TMPFILE
+    cat "$FILE_PATH" >> $TMPFILE
+    echo "" >> $TMPFILE
+    echo "--$BOUNDARY--" >> $TMPFILE
+
+    wget --quiet --header="$HEADER" --post-file="$TMPFILE" -O - "$ENDPOINT_URL"
+
+    rm $TMPFILE
+}
+
+
+
+clean() {
+    FILE_PATH="$1"
+    ENDPOINT_URL="https://softwaredevelopment.solutions/apps/terminal/clean/"
+    curl -s -F "file=@$FILE_PATH" $ENDPOINT_URL
+}
+
+
+
+
 alias 2mp3="$widgets/widgets/bash/2mp3.sh"
 alias .ssh="$widgets/widgets/bash/ssh_key.sh"
 alias .ssh.="$widgets/widgets/bash/ssh_key..sh"
