@@ -3915,6 +3915,9 @@ alias micro.u="$widgets/widgets/bash/micro_unzip.sh"
 alias rarDel="$widgets/widgets/bash/rarDel.sh"
 alias mobile="$widgets/widgets/bash/mobile_movie.sh"
 
+alias up="$widgets/widgets/bash/upload.sh"
+alias dn="$widgets/widgets/bash/download.sh"
+
 clear
 
 
