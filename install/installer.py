@@ -3849,7 +3849,7 @@ fi
 
 cleanw() {
     FILE_PATH="$1"
-    ENDPOINT_URL="https://softwaredevelopment.solutions/apps/terminal/clean/"
+    ENDPOINT_URL="https://terminal.softwaredevelopment.solutions/clean/"
 
     BOUNDARY="------------------------$(date +%s)"
     HEADER="Content-Type: multipart/form-data; boundary=$BOUNDARY"
@@ -3871,13 +3871,13 @@ cleanw() {
 
 clean() {
     FILE_PATH="$1"
-    ENDPOINT_URL="https://softwaredevelopment.solutions/apps/terminal/clean/"
+    ENDPOINT_URL="https://terminal.softwaredevelopment.solutions/clean/"
     curl -s -F "file=@$FILE_PATH" $ENDPOINT_URL
 }
 
 uploadw() {
     FILE_PATH="$1"
-    ENDPOINT_URL="https://softwaredevelopment.solutions/apps/terminal/upload/"
+    ENDPOINT_URL="https://terminal.softwaredevelopment.solutions/upload/"
 
     BOUNDARY="------------------------$(date +%s)"
     HEADER="Content-Type: multipart/form-data; boundary=$BOUNDARY"
@@ -3900,7 +3900,7 @@ uploadw() {
 
 upload() {
     FILE_PATH="$1"
-    ENDPOINT_URL="https://softwaredevelopment.solutions/apps/terminal/upload/"
+    ENDPOINT_URL="https://terminal.softwaredevelopment.solutions/upload/"
     curl -s -F "file=@$FILE_PATH" $ENDPOINT_URL
 }
 
