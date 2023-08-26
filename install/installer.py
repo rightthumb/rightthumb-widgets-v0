@@ -2704,7 +2704,7 @@ class virtualFiles:
 
 # 82977d555926
 
-exit if scp or similar 4f8c
+# exit if scp or similar 4f8c
 if [ -z "$PS1" ]; then
     return
 fi
@@ -2791,6 +2791,11 @@ alias vps.mongo.="ssh -L 2701:localhost:27017 -C -N -l scott hoth.m-eta.app"
 			return self.file( path, data, { 'status': 'virtual' } )
 		if path == '.bashrc-all':
 			data = """
+# exit if scp or similar 4f8c
+if [ -z "$PS1" ]; then
+    return
+fi
+
 if [ -z "$Session_ID" ]; then
   export Session_ID=$(date +%s)
 fi
@@ -2826,6 +2831,10 @@ unset color_prompt force_color_prompt
 			return self.file( path, data, { 'status': 'virtual' } )
 		if path == '.bashrc.mini':
 			data = """
+# exit if scp or similar 4f8c
+if [ -z "$PS1" ]; then
+    return
+fi
 if [ -z "$Session_ID" ]; then
   export Session_ID=$(date +%s)
 fi
@@ -2940,6 +2949,10 @@ export HISTFILESIZE=100000
 
 		if path == '.bashrc.full':
 			data = """
+# exit if scp or similar 4f8c
+if [ -z "$PS1" ]; then
+    return
+fi
 if [ -z "$Session_ID" ]; then
   export Session_ID=$(date +%s)
 fi
