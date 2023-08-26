@@ -2704,13 +2704,6 @@ class virtualFiles:
 
 # 82977d555926
 
-exit if scp or similar 4f8c
-if [ -z "$PS1" ]; then
-    return
-fi
-
-
-
 if [ -z "$Session_ID" ]; then
   export Session_ID=$(date +%s)
 fi
@@ -15595,6 +15588,5 @@ if __name__ == '__main__':
 # /etc/bash.bashrc
 # unalias v
 
-# exit if scp or similar 4f8c
 # bashrc bof 82977d555926
 # bashrc eof a3bc42ec51e9

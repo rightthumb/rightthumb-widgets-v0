@@ -233,6 +233,8 @@ def get(theLabel=None):
 					_.pr(password)
 				return password
 			_copy.imp.copy( password, p=_.v.p  )
+		if len(password):
+			_.pr('copied:',label,c='green')
 		possibly_wait()
 		return password
 	elif label in aliases:
@@ -245,6 +247,8 @@ def get(theLabel=None):
 					_.pr(password)
 				return password
 			_copy.imp.copy( password, p=_.v.p  )
+		if len(password):
+			_.pr('copied:',label,c='green')
 		possibly_wait()
 		return password
 	else:

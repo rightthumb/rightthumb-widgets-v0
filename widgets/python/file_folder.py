@@ -261,7 +261,7 @@ def action():
 					displayed_files.append(f['label'])
 					_.colorThis( [ '\t',f['label'] ], 'yellow' )
 
-			if len(displayed_files) == 1:
+			if _.isWin and len(displayed_files) == 1:
 				_copy = _.regImp( __.appReg, '-copy' )
 				_copy.imp.copy( displayed_files[0], p=0 )
 
@@ -346,7 +346,8 @@ def action():
 			_.pr()
 		return newItems
 	if _.switches.isActive('Copy'):
-		_copy.imp.copy( '\n'.join(_copy_this), p=0 ); copied=True;
+		if _.isWin:
+			_copy.imp.copy( '\n'.join(_copy_this), p=0 ); copied=True;
 
 	if copied: _.pr(' * copied *',c='r')
 

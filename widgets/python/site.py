@@ -35,10 +35,11 @@ def sw():
 	# _.switches.register( 'Files', '-f,-file,-files','file.txt',  description='glob', isRequired=True )
 	_.switches.register( 'Files', '-f,-file,-files','vps-tf', isData="name", isRequired=False )
 	_.switches.register( 'mkdir', '-mkdir' )
-	_.switches.register( 'Servers', '-v,-srv,-server,-vps', 'b h m t' )
+	_.switches.register( 'Servers', '-srv,-server,-vps', 'b h m t' )
 	_.switches.register( 'Print', '-print' )
 	_.switches.register( 'Status', '-status' )
 	_.switches.register( 'NotWSL', '-notwsl' )
+	_.switches.register( 'Verbos', '-v' )
 	_.switches.register( 'SSH-Remote_Folder', '-remote' )
 	_.switches.register( 'URL', '-url,-edit,--u' )
 
@@ -132,6 +133,8 @@ if type(file_trigger_data) == list:
 # START
 
 def tail():
+	if _.switches.isActive('Verbos'):
+		_.switches.fieldSet( 'Print', 'active', True )
 	if _.switches.isActive('Print'):
 		return ''
 	# return ''
@@ -222,6 +225,11 @@ def URL_APPS(url,meta):
 
 
 def process(path,end='',ft=None):
+	if _.switches.isActive('Verbos'):
+		_.switches.fieldSet( 'Print', 'active', True )
+		verbos = ' -v '
+	else:
+		verbos = ''
 	if not os.path.exists(path): return None
 	global folder
 	global meta
@@ -340,7 +348,7 @@ def process(path,end='',ft=None):
 			#     fi += '/'
 			#     path+=os.sep
 			
-			mkdir=f'{ssh} -f {u}@{s} "/bin/python3 /opt/rightthumb-widgets-v0/widgets/python/mkdir.py -folder {rfo}"'+tail()
+			mkdir=f'{ssh} {verbos} -f {u}@{s} "/bin/python3 /opt/rightthumb-widgets-v0/widgets/python/mkdir.py -folder {rfo}"'+tail()
 
 			if _.switches.isActive('Print'):
 				_.pr(_.password_filter(mkdir))
@@ -370,7 +378,7 @@ def process(path,end='',ft=None):
 			if os.path.isdir(path):
 				do=f'{scp} -r {u}@{s}:{fi} {_path}'+tail()
 			else:
-				do=f'{scp}  {u}@{s}:{fi} {_path}'+tail()
+				do=f'{scp} {u}@{s}:{fi} {_path}'+tail()
 		# if _.switches.isActive('Print'): _.pr(do)
 
 		if _.switches.isActive('Upload-Scp') or _.switches.isActive('Download-Scp'):
@@ -380,6 +388,8 @@ def process(path,end='',ft=None):
 				else:
 					_.pr(_.password_filter(do))
 			try:
+				do = ' '+do
+				do=do.replace(' scp ',' scp '+verbos)
 				os.system( do )
 			except Exception as e:
 				_.e(e)
