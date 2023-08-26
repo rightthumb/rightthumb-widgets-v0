@@ -3500,7 +3500,7 @@ alias color="$widgets/widgets/python/pipe-color.py -color ";
 alias epoch="echo $( date +%s )";
 alias whitelist="/opt/rightthumb-widgets-v0/widgets/bash/whitelist.sh"
 alias wl="/opt/rightthumb-widgets-v0/widgets/bash/whitelist.sh"
-alias ssh...="sudo cp -r ~/.ssh/* /mnt/c/Users/Scott/.ssh"
+alias ssh....="sudo cp -r ~/.ssh/* /mnt/c/Users/Scott/.ssh"
 
 
 
