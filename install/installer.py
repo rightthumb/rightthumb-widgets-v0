@@ -3241,7 +3241,7 @@ alias vps.h.dt="ssh -L 59001:localhost:5901 -C -N -l scott hoth.m-eta.app"
 
 #--> start#> git clone this project
 alias .git="git clone https://github.com/rightthumb/rightthumb-widgets-v0"
-alias .git.="rm -rf rightthumb-widgets-v0 ; git clone https://github.com/rightthumb/rightthumb-widgets-v0 ; cd rightthumb-widgets-v0 ; chmod -R 777 . ; p shClean -folder -r"
+alias .git.="cd /opt ; rm -rf rightthumb-widgets-v0 ; git clone https://github.com/rightthumb/rightthumb-widgets-v0 ; cd rightthumb-widgets-v0 ; chmod -R 777 . ; p shClean -folder -r"
 alias .git.b="rm -rf rightthumb-widgets-v0 ; git clone https://github.com/rightthumb/rightthumb-widgets-v0 ; cd rightthumb-widgets-v0 ; chmod -R 777 . ; p shClean -folder -r ; vps.b.py.; vps.b.sh. ; vps.b.db."
 alias .git.c="rm -rf rightthumb-widgets-v0 ; git clone https://github.com/rightthumb/rightthumb-widgets-v0 ; cd rightthumb-widgets-v0 ; chmod -R 777 . ; p shClean -folder -r ; vps.t.py.; vps.t.sh. ; vps.t.db."
 alias .git.t="rm -rf rightthumb-widgets-v0 ; git clone https://github.com/rightthumb/rightthumb-widgets-v0 ; cd rightthumb-widgets-v0 ; chmod -R 777 . ; p shClean -folder -r ; vps.t.py.; vps.t.sh. ; vps.t.db."
