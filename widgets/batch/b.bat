@@ -14,6 +14,9 @@ rem ## {C3P0D40fAe8B} ##
 if [%1] == [0] call p b0
 call result call p b -a "%1"
 
+rem call result call p bb %1 > %tmpf%  >nul 2>&1
+rem set /p result=<%tmpf%
+
 rem echo 5 %result%
 rem GOTO:EOF
 rem echo %result%
@@ -21,10 +24,10 @@ call:VALIDATE ":" %result%
 if [%valid%] == [yes] (
     rem %result:~0,2%
 
-if not exist %result% call p nsfw -color red -on "folder does not exist, mothafucka" -off "folder does not exist"
+if not exist "%result%" (call p nsfw -color red -on "folder does not exist, mothafucka" -off "folder does not exist")
 rem if not exist %result% call p nsfw -color red Background.red red -on "folder does" "not exist" ", mothafucka" -off "folder does not exist"
-if not exist %result% call p print_color -text ";t%result%" -color cyan
-if not exist %result% goto:eof
+if not exist "%result%" call p print_color -text ";t%result%" -color cyan
+if not exist "%result%" goto:eof
     %py% %widgets%\widgets\python\folder-registration.py
     cd /d "%result%"
     %py% %widgets%\widgets\python\folder-registration.py

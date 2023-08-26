@@ -22670,6 +22670,7 @@ def unzip_files(zip_file, output_file=None):
 	return output_file
 foundZip=[]
 def zZip(path):
+	if '.' in path and path.lower().split('.')[-1] in ['xls','xlsx','doc','docx']: return path
 	# maybe a zip
 	if isZip(path):
 		global foundZip

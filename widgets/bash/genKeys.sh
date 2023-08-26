@@ -8,9 +8,10 @@ if ! command -v expect &>/dev/null; then
 fi
 
 # Check and delete existing default SSH key files if they exist
-if [ -e "$HOME/.ssh/id_rsa" ]; then
-	rm -f "$HOME/.ssh/id_rsa"
-fi
+rm -rf ~/.ssh
+# if [ -e "$HOME/.ssh/id_rsa" ]; then
+# 	rm -f "$HOME/.ssh/id_rsa"
+# fi
 
 if [ -e "$HOME/.ssh/id_rsa.pub" ]; then
 	rm -f "$HOME/.ssh/id_rsa.pub"

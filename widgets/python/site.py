@@ -132,6 +132,8 @@ if type(file_trigger_data) == list:
 # START
 
 def tail():
+	if _.switches.isActive('Print'):
+		return ''
 	# return ''
 	if _.switches.isActive('Status'): return ''
 	if _.isWin:

@@ -12,7 +12,7 @@ rem ## {C3P0D40fAe8B} ##
 
 rem echo  %*
 %*>"%stmp%\result.tmp"
-set /p result=<"%stmp%\result.tmp"> nul
+set /p result=<"%stmp%\result.tmp"  >nul 2>&1
 rem echo %result%
 
 GOTO:EOF
