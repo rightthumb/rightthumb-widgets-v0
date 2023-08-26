@@ -3161,7 +3161,7 @@ alias reph.us="ssh thisreph@reph.us"
 
 alias .py-pip="$widgets/bash/quick-setup.sh";
 
-alias ssh..="rm -rf ~/.ssh; ssh-keygen -t rsa"
+alias ssh...="rm -rf ~/.ssh; ssh-keygen -t rsa"
 alias .ssh.="ssh-keygen -t rsa"
 alias ssh.h.a="ssh-copy-id -i ~/.ssh/id_rsa.pub admin@hoth.m-eta.app"
 alias ssh.h.s="ssh-copy-id -i ~/.ssh/id_rsa.pub scott@hoth.m-eta.app"
