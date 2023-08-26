@@ -80,6 +80,7 @@ _.appInfo[focus()] = {
 						_.hp(''),
 						_.hp('copy:'),
 						_.hp('/opt/rightthumb-widgets-v0/widgets/bash/genKeys.sh >> /opt/genKeys.log'),
+						_.hp('curl -s https://raw.githubusercontent.com/rightthumb/rightthumb-widgets-v0/main/install/installer.py > /opt/rightthumb-widgets-v0/install/installer.py;  echo '' > ~/.bashrc ; python3 /opt/rightthumb-widgets-v0/install/installer.py -rc.d h ; m loading-bookmarks'),
 						_.hp(''),
 						_.linePrint(label='simple',p=0),
 						_.hp('p vps-exec -root'),

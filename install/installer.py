@@ -3161,7 +3161,7 @@ alias reph.us="ssh thisreph@reph.us"
 
 alias .py-pip="$widgets/bash/quick-setup.sh";
 
-# alias ssh.="rm -rf ~/.ssh; ssh-keygen -t rsa"
+alias ssh..="rm -rf ~/.ssh; ssh-keygen -t rsa"
 alias .ssh.="ssh-keygen -t rsa"
 alias ssh.h.a="ssh-copy-id -i ~/.ssh/id_rsa.pub admin@hoth.m-eta.app"
 alias ssh.h.s="ssh-copy-id -i ~/.ssh/id_rsa.pub scott@hoth.m-eta.app"
@@ -3862,14 +3862,40 @@ cleanw() {
 }
 
 
-
 clean() {
     FILE_PATH="$1"
     ENDPOINT_URL="https://softwaredevelopment.solutions/apps/terminal/clean/"
     curl -s -F "file=@$FILE_PATH" $ENDPOINT_URL
 }
 
+uploadw() {
+    FILE_PATH="$1"
+    ENDPOINT_URL="https://softwaredevelopment.solutions/apps/terminal/upload/"
 
+    BOUNDARY="------------------------$(date +%s)"
+    HEADER="Content-Type: multipart/form-data; boundary=$BOUNDARY"
+
+    TMPFILE=$(mktemp)
+    echo "--$BOUNDARY" > $TMPFILE
+    echo "Content-Disposition: form-data; name=\"file\"; filename=\"$(basename $FILE_PATH)\"" >> $TMPFILE
+    echo "Content-Type: $(file --mime-type -b $FILE_PATH)" >> $TMPFILE
+    echo "" >> $TMPFILE
+    cat "$FILE_PATH" >> $TMPFILE
+    echo "" >> $TMPFILE
+    echo "--$BOUNDARY--" >> $TMPFILE
+
+    wget --quiet --header="$HEADER" --post-file="$TMPFILE" -O - "$ENDPOINT_URL"
+
+    rm $TMPFILE
+}
+
+
+
+upload() {
+    FILE_PATH="$1"
+    ENDPOINT_URL="https://softwaredevelopment.solutions/apps/terminal/upload/"
+    curl -s -F "file=@$FILE_PATH" $ENDPOINT_URL
+}
 
 
 alias 2mp3="$widgets/widgets/bash/2mp3.sh"
