@@ -215,8 +215,8 @@ goss('-\t p hash -f file.exe -h md5 sha1 sha224 sha256 sha384 sha512 sha3_224 sh
 if __name__ == '__main__':
 	#b)--> examples
 
-	banner.pr()
-	if len(_.switches.all())==0: banner.gossip()
+	# banner.pr()
+	# if len(_.switches.all())==0: banner.gossip()
 	
 	#e)--> examples
 	action()
