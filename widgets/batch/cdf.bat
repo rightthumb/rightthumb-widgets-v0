@@ -11,15 +11,20 @@ rem ###########################################################################
 rem ## {C3P0D40fAe8B} ##
 
 
+if [%1] == [] (
+	set /p cdf_path=<%tt%\file-open.last
+) else (
+	set cdf_path=%1
+)
 
-
-CALL p popFile -f %1 > %tmpf%
+CALL p popFile -f %cdf_path% > %tmpf%
 
 rem echo 1 "%1"
 SET /p folder=<%tmpf%
 rem echo f "%folder%"
-%folder:~0,1%:
-cd "%folder%"
+cd /d "%folder%"
+rem %folder:~0,1%:
+rem cd "%folder%"
 echo %folder%
 echo.
 

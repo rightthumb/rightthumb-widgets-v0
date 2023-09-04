@@ -206,7 +206,7 @@ def meta_scan(path,end):
 	return urlpr(url,meta)
 APPS = {
 	'notes': {
-		'path': '/home/admin/domains/eyeformeta.com/public_html/apps/md/notes/scott/_docs_/',
+		'path': '/home/rightthumb/public_html/domains/eyeformeta.com/public_html/apps/md/notes/scott/_docs_/',
 		'remove': 'https://eyeformeta.com/',
 		'add': 'https://eyeformeta.com/apps/Heimdall/?view=1&f=',
 		'slash': '/',
@@ -356,6 +356,9 @@ def process(path,end='',ft=None):
 				os.system( mkdir )
 			except Exception as e:
 				_.e(e)
+			_.switches.fieldSet( 'mkdir', 'active', False )
+			action()
+			return None
 
 
 

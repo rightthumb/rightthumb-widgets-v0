@@ -166,7 +166,7 @@ if _.switches.isActive('CleanPipe'):
 ########################################################################################
 # START
 
-
+# _.switches.fieldSet( 'NoPrint', 'active', True )
 
 
 def formatData( result ):
@@ -227,13 +227,16 @@ def clip_set_3(data,end='',clean=False):
 
 	# cmd = ["cat", tmpA, "|",  "xsel", "--clipboard", "--input"  ]
 	# mycmd=subprocess.getoutput( ' '.join(cmd) )
-	from subprocess import Popen, PIPE
-	p = Popen(['xsel','-pi'], stdin=PIPE)
-	p.communicate(input= formatData(data) )
+	try:
+		from subprocess import Popen, PIPE
+		p = Popen(['xsel','-pi'], stdin=PIPE)
+		p.communicate(input= formatData(data) )
 
-	p = Popen(['xsel', '-bi'], stdin=PIPE)
-	p.communicate(input= formatData(data) )
-	# p.communicate(input=data)
+		p = Popen(['xsel', '-bi'], stdin=PIPE)
+		p.communicate(input= formatData(data) )
+		# p.communicate(input=data)
+	except Exception as e:
+		pass
 
 
 	result = None
@@ -360,7 +363,10 @@ def clip_get_3():
 
 	cmd = ["xsel", "--clipboard", "--output", ">", tmpA ]
 	# _.pr( ' '.join(cmd) )
-	p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
+	try:
+		p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
+	except Exception as e:
+		pass
 	if os.path.isfile(tmpA):
 		return _.getText( tmpA, raw=True, clean=2 )
 	return None

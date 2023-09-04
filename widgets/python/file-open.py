@@ -302,6 +302,7 @@ def action(path=None):
 			if not 'aliases' in aliases: aliases['aliases']={}
 			if not 'files' in aliases: aliases['files']={}
 			aliases['aliases']['last']=path
+			_.saveText(path,_v.tt+os.sep+'file-open.last')
 			_.saveTable(aliases,'file-open-aliases.hash',p=0)
 			if _.switches.isActive('Backup'): backup(path)
 			if _.isWin:

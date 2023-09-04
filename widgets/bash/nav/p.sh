@@ -14,30 +14,29 @@
 # SCRIPT_DIR="${SCRIPT_DIR/bash\/nav/bash}"
 # echo $SCRIPT_DIR
 # source  "$SCRIPT_DIR/load-vars.sh"
-# echo $widgets
-# echo $widgets
+# echo /opt/rightthumb-widgets-v0
+# echo /opt/rightthumb-widgets-v0
 
-
-if [ -z ${widgets} ]; then source ~/.bashrc; fi
+# if [ -z ${widgets} ]; then source ~/.bashrc; fi
 # source ~/.bashrc
 subject=$1
 shift
-subject_path=$widgets/widgets/python/$subject.py
-py_file=$widgets/widgets/python/file.py
-py_folder=$widgets/widgets/python/
+subject_path=/opt/rightthumb-widgets-v0/widgets/python/$subject.py
+py_file=/opt/rightthumb-widgets-v0/widgets/python/file.py
+py_folder=/opt/rightthumb-widgets-v0/widgets/python/
+# echo $subject_path
 if [ -f "$subject_path" ]; then
-    $PY $subject_path $@
+	$PY $subject_path $@
 else
-    echo ""
-    echo "did you mean"
+	echo ""
+	echo "did you mean"
 #    echo $subject_path
 #    $PY $py_file -folder $py_folder + $subject -noext -label ";tApps" -prefix ";t" +close "75"
 #    $p py-finder -percentage  + $@
-#/bin/bash $widgets/widgets/bash/py.sh $@
-    $p py-finder -percentage  + $subject
+#/bin/bash /opt/rightthumb-widgets-v0/widgets/bash/py.sh $@
+	$p py-finder -percentage  + $subject
 fi
 
 if [ -f "$h/vars/terminal/$Session_ID.sh" ]; then
-    source "$h/vars/terminal/$Session_ID.sh"
+	source "$h/vars/terminal/$Session_ID.sh"
 fi
-

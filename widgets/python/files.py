@@ -761,8 +761,8 @@ def action():
 				good=True
 				for path in _.isData():
 
-					if not path.lower().startswith(fi0.lower()) and os.path.isfile(path):
-						print(fi0,path,path.lower().startswith(fi0.lower()))
+					# if not path.lower().startswith(fi0.lower()) and os.path.isfile(path):
+						# print(fi0,path,path.lower().startswith(fi0.lower()))
 						good=False; break;
 				if not os.sep in fi0 or fi0 == os.sep:
 					err=1; break;

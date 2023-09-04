@@ -23,7 +23,8 @@ folder_name=$(basename "$folder")
 parent_name=$(basename "$(dirname "$folder")")
 zip_name="${parent_name}-${folder_name}--$(echo -n "$folder" | md5sum | awk '{print substr($1, 1, 5)}')--$(date +%s).zip"
 
-zip -9 -r "$destination_folder/$zip_name" "$folder"
+# zip -9 -r "$destination_folder/$zip_name" "$folder"
+tar cJf "$destination_folder/$zip_name" "$folder"
 
 
 # # tatooine

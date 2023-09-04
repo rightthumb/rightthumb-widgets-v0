@@ -1,9 +1,14 @@
 @echo off
+
+
 if [%1] == [] (
 	call p file-open -backup secure -alias last
 ) else (
 	call p file-open -backup secure -alias %*
+	rem call cdf
 )
+
+
 rem if [%2] == [] (
 rem 	call p file-open -backup -alias %*
 rem ) else if exist %1  (

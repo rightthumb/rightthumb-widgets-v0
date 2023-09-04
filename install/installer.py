@@ -2705,9 +2705,12 @@ class virtualFiles:
 # 82977d555926
 
 # exit if scp or similar 4f8c
-if [ -z "$PS1" ]; then
+if [[ "$FORCE_BASHRC" != "true" ]]; then
+  if [ -z "$PS1" ]; then
     return
+  fi
 fi
+
 
 
 
@@ -2792,8 +2795,10 @@ alias vps.mongo.="ssh -L 2701:localhost:27017 -C -N -l scott hoth.m-eta.app"
 		if path == '.bashrc-all':
 			data = """
 # exit if scp or similar 4f8c
-if [ -z "$PS1" ]; then
+if [[ "$FORCE_BASHRC" != "true" ]]; then
+  if [ -z "$PS1" ]; then
     return
+  fi
 fi
 
 if [ -z "$Session_ID" ]; then
@@ -2832,8 +2837,10 @@ unset color_prompt force_color_prompt
 		if path == '.bashrc.mini':
 			data = """
 # exit if scp or similar 4f8c
-if [ -z "$PS1" ]; then
+if [[ "$FORCE_BASHRC" != "true" ]]; then
+  if [ -z "$PS1" ]; then
     return
+  fi
 fi
 if [ -z "$Session_ID" ]; then
   export Session_ID=$(date +%s)
@@ -2950,8 +2957,10 @@ export HISTFILESIZE=100000
 		if path == '.bashrc.full':
 			data = """
 # exit if scp or similar 4f8c
-if [ -z "$PS1" ]; then
+if [[ "$FORCE_BASHRC" != "true" ]]; then
+  if [ -z "$PS1" ]; then
     return
+  fi
 fi
 if [ -z "$Session_ID" ]; then
   export Session_ID=$(date +%s)
@@ -3851,70 +3860,91 @@ alias ssh.c.s="ssh-copy-id -i ~/.ssh/id_rsa.pub scott@192.168.63.129"
 
 if [ ! -f "$HOME/.files-rrr" ]; then
 	echo "status" > $HOME/.files-rrr.
-    if [ ! -d "/tmp/p_files-rrr" ]; then
-        mkdir /tmp/p_files-rrr
-    fi
-    $p files -folder /var/empty -rrr > /dev/null 2>&1
+	if [ ! -d "/tmp/p_files-rrr" ]; then
+		mkdir /tmp/p_files-rrr
+	fi
+	$p files -folder /var/empty -rrr > /dev/null 2>&1
 fi
 
 
 
 
 cleanw() {
-    FILE_PATH="$1"
-    ENDPOINT_URL="https://terminal.softwaredevelopment.solutions/clean/"
+	FILE_PATH="$1"
+	ENDPOINT_URL="https://terminal.softwaredevelopment.solutions/clean/"
 
-    BOUNDARY="------------------------$(date +%s)"
-    HEADER="Content-Type: multipart/form-data; boundary=$BOUNDARY"
+	BOUNDARY="------------------------$(date +%s)"
+	HEADER="Content-Type: multipart/form-data; boundary=$BOUNDARY"
 
-    TMPFILE=$(mktemp)
-    echo "--$BOUNDARY" > $TMPFILE
-    echo "Content-Disposition: form-data; name=\"file\"; filename=\"$(basename $FILE_PATH)\"" >> $TMPFILE
-    echo "Content-Type: $(file --mime-type -b $FILE_PATH)" >> $TMPFILE
-    echo "" >> $TMPFILE
-    cat "$FILE_PATH" >> $TMPFILE
-    echo "" >> $TMPFILE
-    echo "--$BOUNDARY--" >> $TMPFILE
+	TMPFILE=$(mktemp)
+	echo "--$BOUNDARY" > $TMPFILE
+	echo "Content-Disposition: form-data; name=\"file\"; filename=\"$(basename $FILE_PATH)\"" >> $TMPFILE
+	echo "Content-Type: $(file --mime-type -b $FILE_PATH)" >> $TMPFILE
+	echo "" >> $TMPFILE
+	cat "$FILE_PATH" >> $TMPFILE
+	echo "" >> $TMPFILE
+	echo "--$BOUNDARY--" >> $TMPFILE
 
-    wget --quiet --header="$HEADER" --post-file="$TMPFILE" -O - "$ENDPOINT_URL"
+	wget --quiet --header="$HEADER" --post-file="$TMPFILE" -O - "$ENDPOINT_URL"
 
-    rm $TMPFILE
+	rm $TMPFILE
 }
 
 
 clean() {
-    FILE_PATH="$1"
-    ENDPOINT_URL="https://terminal.softwaredevelopment.solutions/clean/"
-    curl -s -F "file=@$FILE_PATH" $ENDPOINT_URL
+	FILE_PATH="$1"
+	ENDPOINT_URL="https://terminal.softwaredevelopment.solutions/clean/"
+	curl -s -F "file=@$FILE_PATH" $ENDPOINT_URL
 }
 
 uploadw() {
-    FILE_PATH="$1"
-    ENDPOINT_URL="https://terminal.softwaredevelopment.solutions/upload/"
+	FILE_PATH="$1"
+	ENDPOINT_URL="https://terminal.softwaredevelopment.solutions/upload/"
 
-    BOUNDARY="------------------------$(date +%s)"
-    HEADER="Content-Type: multipart/form-data; boundary=$BOUNDARY"
+	BOUNDARY="------------------------$(date +%s)"
+	HEADER="Content-Type: multipart/form-data; boundary=$BOUNDARY"
 
-    TMPFILE=$(mktemp)
-    echo "--$BOUNDARY" > $TMPFILE
-    echo "Content-Disposition: form-data; name=\"file\"; filename=\"$(basename $FILE_PATH)\"" >> $TMPFILE
-    echo "Content-Type: $(file --mime-type -b $FILE_PATH)" >> $TMPFILE
-    echo "" >> $TMPFILE
-    cat "$FILE_PATH" >> $TMPFILE
-    echo "" >> $TMPFILE
-    echo "--$BOUNDARY--" >> $TMPFILE
+	TMPFILE=$(mktemp)
+	echo "--$BOUNDARY" > $TMPFILE
+	echo "Content-Disposition: form-data; name=\"file\"; filename=\"$(basename $FILE_PATH)\"" >> $TMPFILE
+	echo "Content-Type: $(file --mime-type -b $FILE_PATH)" >> $TMPFILE
+	echo "" >> $TMPFILE
+	cat "$FILE_PATH" >> $TMPFILE
+	echo "" >> $TMPFILE
+	echo "--$BOUNDARY--" >> $TMPFILE
 
-    wget --quiet --header="$HEADER" --post-file="$TMPFILE" -O - "$ENDPOINT_URL"
+	wget --quiet --header="$HEADER" --post-file="$TMPFILE" -O - "$ENDPOINT_URL"
 
-    rm $TMPFILE
+	rm $TMPFILE
 }
 
 
 
 upload() {
-    FILE_PATH="$1"
-    ENDPOINT_URL="https://terminal.softwaredevelopment.solutions/upload/"
-    curl -s -F "file=@$FILE_PATH" $ENDPOINT_URL
+	FILE_PATH="$1"
+	ENDPOINT_URL="https://terminal.softwaredevelopment.solutions/upload/"
+	curl -s -F "file=@$FILE_PATH" $ENDPOINT_URL
+}
+
+sds() {
+	if [ -z "$1" ]; then
+		echo "Filename is required."
+		return 1
+	fi
+
+	ext="${1##*.}"
+	filepath="$ext/$1"
+
+	shift
+
+	if [ "$ext" == "py" ]; then
+		curl -s "https://t.sds.sh/code/?f=$filepath" | python3 - "$@"
+	elif [ "$ext" == "sh" ]; then
+		curl -s "https://t.sds.sh/code/?f=$filepath" | bash -s -- "$@"
+	else
+		echo "Unsupported file extension: $ext"
+		return 1
+	fi
 }
 
 
@@ -3939,7 +3969,10 @@ alias up="$widgets/widgets/bash/upload.sh"
 alias dn="$widgets/widgets/bash/download.sh"
 
 alias zipsome="$widgets/widgets/bash/zipsome.sh"
+alias url.="$p site -url "
 
+alias sizeFo="du -sh "
+alias sizeDrive="df -h"
 clear
 
 

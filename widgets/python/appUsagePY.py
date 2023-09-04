@@ -32,17 +32,15 @@ _str = __.imp('_rightThumb._string')
 def sw():
 	pass
 	#b)--> examples
-	_.switches.register( 'Sites', '-site,-sites', 'eyeformeta.com rightthumb.com efm.cx thumb.cx etc.ac softwaredevelopment.solutions' )
-	_.switches.register( 'Remove', '-r,-remove', 'relationshipideas.xyz' )
-	_.switches.register( 'Template', '-t', 'deny access basic' )
-	# _.switches.register( 'URL', '-u,-url,-urls', 'https://efm.cx/', isData='raw' )
+	# _.switches.register( 'Input', '-i' )
+	# _.switches.register( 'URL', '-u,-url,-urls', 'https://etc.ac/', isData='raw' )
 	#e)--> examples
 	# _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name,data,clean', description='Files', isRequired=False )
 
 # __.setting('require-list',['Files,Plus','File,Has']) # todo
 # __.setting('require-list',['Pipe','Files'])
-__.setting('receipt-log')
-__.setting('receipt-file')
+__.setting('receipt-log',True)
+__.setting('receipt-file',True)
 __.setting('myFileLocations-skip-validation',False)
 __.setting('require-pipe',False)
 __.setting('require-pipe||file',False)
@@ -53,7 +51,7 @@ __.setting('switch-raw',[])
 
 _.appInfo[focus()] = {
 	# 'app': '8facG-jo0Cxk',
-	'file': 'htaccess-builder.py',
+	'file': 'thisApp.py',
 	'liveAppName': __.thisApp( __file__ ),
 	'description': 'Changes the world',
 		# _.ail(1,'subject')+
@@ -75,12 +73,24 @@ _.appInfo[focus()] = {
 						# '',
 	],
 	'examples': [
-						_.hp('p htaccess -sites softwaredevelopment.solutions sds.sh eyeformeta.com rightthumb.com biblicalheart.com m-eta.app efm.cx thumb.cx icosahedron.quest luketheawesomeone.com metaframe.work understand.quest vp-servers.com relationshipideas.xyz reph.vip'),
+						_.hp('p thisApp -file file.txt'),
 						_.linePrint(label='simple',p=0),
 						'',
 	],
 	'columns': [
 					# { 'name': 'name', 'abbreviation': 'n' },
+# columns used for
+# 	- abbreviation in switches
+#		- ex: -column n s
+#			- instead of: -column name size
+#		- ex: -sort n
+#		- ex: -group n
+# 	- sort is used for things like size sort by bytes
+# 	- responsiveness to terminal width
+# 		- order is important
+# 		- most important on top
+		
+		# this is used for personal usage to programmatically generate columns
 					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
@@ -150,152 +160,42 @@ _.l.sw.register( triggers, sw )
 #e)--> examples
 ########################################################################################
 #n)--> start
-
-
-from urllib.parse import urlparse
-import tldextract
-
-def extract_domain(url):
-	if not ':' in url: return url
-	parsed_url = urlparse(url)
-	return f"{parsed_url.scheme}://{parsed_url.netloc}"
-
-
-def separate_domain_tld(domain):
-	extracted = tldextract.extract(domain)
-	domain_name = f"{extracted.subdomain}.{extracted.domain}"
-	tld = extracted.suffix
-	if domain_name.startswith('.'): domain_name=domain_name[1:]
-	return domain_name, tld
-
-
-def backup(path):
-	appReg=__.appReg
-	_bk = _.regImp( __.appReg, 'fileBackup' )
-	_bk.switch( 'Silent' )
-	_bk.switch( 'isPreOpen' )
-	_bk.switch( 'Input', path )
-	bkfi = _bk.action()
-	__.appReg=appReg
-
-def cl(text):
-	text=text.strip()
-	while '  ' in text: text.replace('  ',' ')
-	return text
-
+os=__.os
 def action():
-	global templates
-	global alias
-	base=templates['base']
-	sites=[]
-	var={}
-	vv=[]
-	backup('.htaccess')
-	if _.switches.isActive('Template'):
-		if not len(_.switches.value('Template')): _.e('missing template','deny access basic')
-		template = _.switches.values('Template')[0]
-		if template in alias: template=alias[template]
-		if not template in templates:  _.e('invalid template','deny access basic')
-		_.saveText(templates[template],'.htaccess')
-		_.pr(templates[template])
-		return None
-		
-	if os.path.isfile('.htaccess'):
-		ht=_.getText('.htaccess')
-		for line in ht:
-			line=cl(line)
-			if line and line.startswith('SetEnv'): var[line]=0;vv.append(line);
-	# print(vv); sys.exit();
-	if os.path.isfile('.htaccess.site'): sites=_.getText('.htaccess.site',raw=True,clean=2).replace('\r','').strip().split('\n')
-	for site in _.switches.values('Sites'): sites.append(site)
+	# fi=_v.tt+os.sep+'history_index[py-switches].index'
+	# index = _.getTable2(fi)
+	# for py in index:
+	# 	for sw in index[py]:
 
-	remove=[]
-	for site in _.switches.values('Remove'):
-		site=site.lower()
-		try: site=extract_domain(site)
-		except: pass
-		remove.append(site)
-
-	# print(1,sites)
-	items=[]
-	for i,site in enumerate(sites):
-		site=site.lower()
-		sites[i]=sites[i].lower()
-		try: sites[i]=extract_domain(site)
-		except: pass
-		site = sites[i]
-	# print(1,sites)
-	sites=list(set(sites))
-	sit=[]
-	for site in sites:
-		if not site in remove and not ':' in site: sit.append(site)
-	sites=sit
-	# print(1,sites)
-	for i,site in enumerate(sites):
-		domain, tld = separate_domain_tld(site)
-		items.append(domain+'\\'+'.'+tld)
-	# print(1,sites)
-	domains='|'.join(items)
-	htaccess = base.replace('vVv',domains)
-	_.saveText(sites,'.htaccess.site')
-	if os.path.isfile('.htaccess'):
-		_.saveText( _.getText('.htaccess',raw=True) ,'.htaccess-'+_.friendlyDate(_.mod('.htaccess')).split(' ')[0])
-	if type(htaccess)==str: htaccess=htaccess.split('\n')
-
-	for line in htaccess:
-		line=cl(line)
-		if line in var: var[line]=1
-	vv.reverse()
-	for v in vv:
-		if not var[v]:
-			htaccess.insert(0,v)
-
-	for line in htaccess: print(line)
-	_.saveText(htaccess,'.htaccess')
-	backup('.htaccess')
-
-
-
-	
-	# rightthumb\\.com|eyeformeta\\.com
-templates={}
-templates['base']='''
-<IfModule mime_module>
-	AddHandler application/x-httpd-ea-php80 .php .php8 .phtml .srv.js .php.js
-</IfModule>
-#Rewrite everything to https
-RewriteEngine On
-RewriteCond %{HTTPS} !=on
-RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
-
-<IfModule mod_headers.c>
-	SetEnvIf Origin "^http(s)?://(.+\\.)?(vVv)$" origin_is=$0
-	Header always set Access-Control-Allow-Origin %{origin_is}e env=origin_is
-</IfModule>
-'''.strip()
-
-templates['deny']='Deny from all'.strip()
-templates['basic']='''
-# php -- BEGIN cPanel-generated handler, do not edit
-# Set the “ea-php80” package as the default “PHP” programming language.
-<IfModule mime_module>
-	AddHandler application/x-httpd-ea-php80 .php .php8 .phtml .js
-</IfModule>
-# php -- END cPanel-generated handler, do not edit
-'''.strip()
-templates['access']='''
-<IfModule mod_headers.c>
-		Header set Access-Control-Allow-Origin "*"
-		Header set Access-Control-Allow-Methods "GET, POST, OPTIONS"
-		Header set Access-Control-Allow-Headers "DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type"
-</IfModule>
-'''.strip()
-import os
-
-alias = {
-			'allow': 'access',
-			'all': 'access',
-}
+	python={}
+	other={}
+	for path in _.fo(_v.myTickets):
+		if 'tickets'+os.sep+'open' in path or 'tickets'+os.sep+'closed' in path:
+			fi=_.getText(path,raw=True,clean=2)
+			fi=fi.replace('|','\n')
+			
+			lines=fi.split('\n')
+			for line in lines:
+				line=line.strip()
+				line=_str.replaceDuplicate(line,' ')
+				if line.startswith('p '):
+					py=line.split(' ')[1]
+					if not py in python:
+						python[py]=1
+					else:
+						python[py]+=1
+				else:
+					ot=line.split(' ')[0]
+					if not ot in other:
+						other[ot]=1
+					else:
+						other[ot]+=1
+			print(path)
+	usage={
+			'python': python,
+			'other': other,
+	}
+	_.saveTable(usage,'command-usage.index')
 
 ##################################################
 #b)--> examples

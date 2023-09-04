@@ -62,6 +62,7 @@ def appSwitches():
 	_.switches.register('Prefix', '-prefix', 'ADD THIS LATER')
 	_.switches.register('Totals', '-totals','t <-- Just +')
 	_.switches.register('IncludeBackups', '--bk,--backup,--backups')
+	_.switches.register('SQL', '-sql')
 	# _.switches.register('Save-Results', '-save')
 
 	
@@ -444,6 +445,7 @@ def action():
 
 			conn = sqlite3.connect(db)
 			c = conn.cursor()
+			if _.switches.isActive('SQL'): _.pr(sql)
 			c.execute(sql)
 			records = c.fetchall()
 			_.v.totals+=len(records)
@@ -454,7 +456,7 @@ def action():
 			test = conn2.cursor()
 
 
-
+			if _.switches.isActive('SQL'): _.pr(sql)
 			c.execute(sql)
 			all_done = False
 			for f in records:
@@ -671,6 +673,7 @@ def action():
 
 		conn = sqlite3.connect(db)
 		c = conn.cursor()
+		if _.switches.isActive('SQL'): _.pr(sql)
 		c.execute(sql)
 		records = c.fetchall()
 		_.v.totals+=len(records)
@@ -682,7 +685,7 @@ def action():
 		test = conn2.cursor()
 
 
-
+		if _.switches.isActive('SQL'): _.pr(sql)
 		c.execute(sql)
 		duplicates = {}
 
@@ -786,6 +789,7 @@ def action():
 				if run:
 					conn = sqlite3.connect(db)
 					c = conn.cursor()
+					if _.switches.isActive('SQL'): _.pr(sql)
 					c.execute(sql)
 					records = c.fetchall()
 					_.v.totals+=len(records)
@@ -869,6 +873,7 @@ def do(databaseFile):
 		search='AND'.join(searches)
 
 		sql= 'SELECT COUNT(*) AS row_count, SUM(bytes) AS total_bytes FROM files WHERE '+search+';'
+		if _.switches.isActive('SQL'): _.pr(sql)
 		c.execute(sql)
 		records = c.fetchall()
 
@@ -1011,6 +1016,7 @@ def do(databaseFile):
 		_.pr()
 		_.pr(sql)
 		sys.exit()
+	if _.switches.isActive('SQL'): _.pr(sql)
 	c.execute(sql)
 	# c.execute('SELECT * FROM {tn} WHERE {cn} = {st}'.\
 	#         format(tn='files', cn='path', st='s'))
