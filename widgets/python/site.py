@@ -158,7 +158,8 @@ def meta_scan(path,end):
 	global folder
 	global meta
 	if not _.v.quiet:
-		_.pr(path,c='cyan')
+		if not _.switches.isActive('mkdir'):
+			_.pr(path,c='cyan')
 	meta = {}
 	try:
 		file = os.path.abspath(path)
@@ -192,8 +193,9 @@ def meta_scan(path,end):
 	
 	# _.cp(mPath.replace('.folder.meta'+end,''),'yellow')
 	if not _.v.quiet:
-		_.cp(mPath,'yellow')
-		_.pv(meta)
+		if not _.switches.isActive('mkdir'):
+			_.cp(mPath,'yellow')
+			_.pv(meta)
 	url=None
 	if 'url' in meta:
 
@@ -268,7 +270,8 @@ def process(path,end='',ft=None):
 		servers = [ftp['server']]
 	
 	for s in servers:
-		_.pr(s,c='green')
+		if not _.switches.isActive('mkdir'):
+			_.pr(s,c='green')
 		f=ftp['path']
 		u=ftp['user']
 		pw=_vault.imp.s.de( ftp['password'] )
@@ -298,8 +301,9 @@ def process(path,end='',ft=None):
 			url = file.replace( __.path(folder), meta['url'] ).replace('\\','/')
 			if os.path.isdir(path):
 				url += '/'
-			_.pr(path,c='cyan')
-			_.pr(urlpr(url,meta),c='Background.blue')
+			if not _.switches.isActive('mkdir'):
+				_.pr(path,c='cyan')
+				_.pr(urlpr(url,meta),c='Background.blue')
 			if url.endswith('.js'): _.pr( '<script src="'+url+'"></script>' ,c='yellow')
 			elif url.endswith('.css'): _.pr( '<link rel="stylesheet" href="'+url+'">' ,c='yellow')
 			elif url.endswith('.jpg'): _.pr( '<img src="'+url+'"/>' ,c='yellow')
@@ -307,7 +311,9 @@ def process(path,end='',ft=None):
 			elif url.endswith('.gif'): _.pr( '<img src="'+url+'"/>' ,c='yellow')
 			
 
-			try: _.pr(_.v.fp,c='Background.light_blue')
+			try:
+				if not _.switches.isActive('mkdir'):
+					_.pr(_.v.fp,c='Background.light_blue')
 			except: pass
 			
 
