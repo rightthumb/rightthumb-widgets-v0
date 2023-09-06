@@ -164,6 +164,10 @@ def change(md,i,to):
 
 
 
+	md=md.replace('-[','- [')
+	md=md.replace('-[','- [')
+	md=md.replace('+ [','- [')
+	md=md.replace('* [','- [')
 	md=md.replace('-[x]','- [x]')
 	md=md.replace('-[x]','- [x]')
 	md=md.replace('- [x]','- [x]')

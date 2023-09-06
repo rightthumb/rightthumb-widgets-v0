@@ -26,16 +26,17 @@ _.load()
 ##################################################
 _v = __.imp('_rightThumb._vars')
 _str = __.imp('_rightThumb._string')
+os=__.os
 ##################################################
 
 
 def sw():
 	pass
 	#b)--> examples
-	# _.switches.register( 'URL', '-u,-url,-urls', 'https://etc.ac/', isData='raw' )
 	#e)--> examples
 	_.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name', description='Files', isRequired=False )
 	_.switches.register( 'RecordKey', '-k,-key,-r,-rec,-record', 'Field Script Object' )
+	_.switches.register( 'Save', '-save', '..\\json   OR   ..\\json\\fields.json' )
 
 # __.setting('require-list',['Files,Plus','File,Has']) # todo
 # __.setting('require-list',['Pipe','Files'])
@@ -175,7 +176,7 @@ _.l.sw.register( triggers, sw )
 # def extract_attributes_and_text(tag):
 #     data = {}
 #     for attr, value in tag.attrs.items():
-#         data[f"{tag.name}_{attr}"] = value
+#         data[f"{tag.name}_{attr}'] = value
 #     text_content = tag.get_text(strip=True)
 #     if text_content:
 #         data['CONTENT'] = text_content
@@ -233,7 +234,7 @@ _.l.sw.register( triggers, sw )
 # 	text_content = tag.get_text(strip=True)
 # 	if child_json:
 # 		if text_content:
-# 			result["_text"] = text_content
+# 			result['_text'] = text_content
 # 		result.update(child_json)
 # 	elif text_content:
 # 		return text_content
@@ -296,7 +297,7 @@ def xml_to_json(tag):
 	text_content = tag.get_text(strip=True)
 	if child_json:
 		if text_content:
-			result["_text"] = text_content
+			result['_text'] = text_content
 		result.update(child_json)
 	elif text_content:
 		return text_content
@@ -337,8 +338,29 @@ def action():
 if __name__ == "__main__":
 	xml_str=_.getText(_.switches.values('Files')[0],raw=True)
 	# print(xml_str)
-	result = search_and_convert_to_json(xml_str, "Script")
-	print(json.dumps(result, indent=2))
+	search='Script'
+	if _.switches.isActive('RecordKey'):
+		search=_.switches.value('RecordKey')
+	else:
+		if 'field' in _.switches.value('Files').lower(): search='Field'
+		elif 'script' in _.switches.value('Files').lower(): search='Script'
+		elif 'layout' in _.switches.value('Files').lower(): search='Object'
+		else: search='Object'
+	result = search_and_convert_to_json(xml_str, search)
+	print(json.dumps(result, indent=4))
+	if _.switches.isActive('Save'):
+		save=_.switches.value('Save')
+		if os.path.isdir(save):
+			if not save.endswith(os.sep): save+=os.sep
+			fi=_.switches.values('Files')[0]
+			if os.sep in fi:
+				fi=fi.split(os.sep)[-1]
+			if fi.lower().endswith('.xml'):
+				fi=fi[0:len(fi)-4]
+			save+=fi+'.json'
+		save2=__.path(save)
+		_.saveTable2(result,save)
+		_.pr('Saved:',save,c='green')
 
 
 
@@ -352,7 +374,7 @@ if __name__ == "__main__":
 # def extract_attributes_and_text(tag):
 #     data = {}
 #     for attr, value in tag.attrs.items():
-#         data[f"{tag.name}_{attr}"] = value
+#         data[f"{tag.name}_{attr}'] = value
 #     text_content = tag.get_text(strip=True)
 #     if text_content:
 #         data['CONTENT'] = text_content
@@ -399,7 +421,7 @@ if __name__ == "__main__":
 #     text_content = tag.get_text(strip=True)
 #     if child_json:
 #         if text_content:
-#             result["_text"] = text_content
+#             result['_text'] = text_content
 #         result.update(child_json)
 #     elif text_content:
 #         return text_content

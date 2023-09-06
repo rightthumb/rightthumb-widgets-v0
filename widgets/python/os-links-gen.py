@@ -9,8 +9,10 @@ def find_links_recursive(start_dir):
 
             # Check if it's a symbolic link
             if os.path.islink(full_path):
-                source = os.readlink(full_path)  # Find source of symbolic link
-                print(f"ln -s {source} {full_path}")
+                target = os.readlink(full_path)
+                relative_link = os.path.relpath(full_path, start_dir)
+                relative_target = os.path.relpath(target, start_dir)
+                print(f"ln -s {relative_target} {relative_link}")
                 continue  # Skip further checks for symbolic links
             
             # Now check for hard links
@@ -23,9 +25,9 @@ def find_links_recursive(start_dir):
             
             # If we've seen this inode before, it's a hard link
             if inode in inodes_seen:
-                # For hard links, the concept of source is ambiguous
-                # So, not generating an ln command for hard links
-                pass
+                relative_link = os.path.relpath(full_path, start_dir)
+                relative_target = os.path.relpath(inodes_seen[inode], start_dir)
+                print(f"ln {relative_target} {relative_link}")
             else:
                 inodes_seen[inode] = full_path  # Save the inode
 

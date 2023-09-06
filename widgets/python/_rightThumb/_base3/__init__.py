@@ -20940,12 +20940,13 @@ def dict_generator_prefix( cnt, txt='    ' ):
 	return result
 
 
-
+dict_generator_separator='print'
 dict_generator_spent=[]
 dict_generator_index={}
 def dict_generator(indict, pre=None, fields=[] ):
 	global dict_generator_spent
 	global dict_generator_index
+	global dict_generator_separator
 	pre = pre[:] if pre else []
 	if isinstance(indict, dict):
 		for key, value in indict.items():
@@ -20979,8 +20980,11 @@ def dict_generator(indict, pre=None, fields=[] ):
 						if not value in dict_generator_spent:
 							dict_generator_spent.append(value)
 							cp(value,'green')
-							print_()
-							print_()
+							if dict_generator_separator == 'print':
+								print_()
+							else:
+								linePrint()
+							# print_()
 					else:
 						xXx = dict_generator_prefix(f) + value
 						if f ==1:

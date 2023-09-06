@@ -37,6 +37,7 @@ def appSwitches():
 	_.switches.register( 'Search', '-Search' )
 	_.switches.register( 'Files', '-f,-file,-files','file.txt', description='Files' )
 	_.switches.register( 'Scan-for-Fields', '-field,-fields,-ld,-lds' )
+	_.switches.register( 'LineSeparate', '-l,-line' )
 	### EXAMPLE: END
 
 ### EXAMPLE: START
@@ -212,6 +213,7 @@ def clean(text):
 	return text
 
 def action():
+	if _.switches.isActive('LineSeparate'): _.dict_generator_separator='line'
 	queue=[]
 	if _.switches.isActive('Files'):
 		for file in _.switches.values('Files'): queue.append(_.getTable2( file ))

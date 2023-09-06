@@ -210,7 +210,7 @@ APPS = {
 		'remove': 'https://eyeformeta.com/',
 		'add': 'https://eyeformeta.com/apps/Heimdall/?view=1&f=',
 		'slash': '/',
-	}
+	},
 }
 def URL_APPS(url,meta):
 	rPath = None
@@ -357,6 +357,7 @@ def process(path,end='',ft=None):
 			except Exception as e:
 				_.e(e)
 			_.switches.fieldSet( 'mkdir', 'active', False )
+			# for x in dir(_.switches): print(x)
 			action()
 			return None
 
