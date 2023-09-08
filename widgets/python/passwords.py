@@ -122,9 +122,9 @@ def gen():
 	global randomNumber
 	global randomSpecial
 	if _.switches.isActive('Adverbs'):
-		return random.choice(randomAdverbs)+'-'+random.choice(randomVerbs)+'-'+random.choice(randomNouns)+'-'+random.choice(randomAdjectives)+random.choice(randomNumber)+random.choice(randomNumber)+random.choice(randomSpecial)
+		return random.choice(randomAdverbs)+'_'+random.choice(randomVerbs)+'_'+random.choice(randomNouns)+'_'+random.choice(randomAdjectives)+random.choice(randomNumber)+random.choice(randomNumber)+random.choice(randomSpecial)
 	else:
-		return random.choice(randomVerbs)+'-'+random.choice(randomNouns)+'-'+random.choice(randomAdjectives)+random.choice(randomNumber)+random.choice(randomNumber)+random.choice(randomSpecial)
+		return random.choice(randomVerbs)+'_'+random.choice(randomNouns)+'_'+random.choice(randomAdjectives)+random.choice(randomNumber)+random.choice(randomNumber)+random.choice(randomSpecial)
 
 def action():
 	i=1

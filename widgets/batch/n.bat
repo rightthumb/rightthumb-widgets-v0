@@ -4,7 +4,7 @@ IF 1%2 NEQ +1%2 ( set gotoLine=0 ) ELSE ( set gotoLine=%2 )
 if exist %1 (
     CALL:OPEN_FILE %1
 ) else (
-    call :shouldcreate %1
+    call :shouldcreate %*
 )
 goto:eof
 
@@ -13,23 +13,29 @@ goto:eof
 goto:eof
 
 :shouldcreate
-set "create="
-echo File doesn't exist
-set /p "create=-                  Create? "
+if [%2] == [-y] (
+    set create=y
+) else if [%2] == [y] (
+    set create=y
+) else (
+    set "create="
+    echo File doesn't exist
+    set /p "create=-                  Create? "
+)
 if [%create%] == [] (
-    call :altlocations %*
+    call :altlocations %1
     goto:eof
 ) else if [%create%] == [n] (
     goto:eof
 ) else if [%create%] == [y] (
     echo Create chosen
-    CALL:OPEN_FILE %*
+    CALL:OPEN_FILE %1
     goto:eof
 ) else if [%create%] == [x] (
     echo exit
     goto:eof
 ) else if [%create%] == [n] (
-    call :altlocations %*
+    call :altlocations %1
 ) else (
     echo end create
     goto:eof

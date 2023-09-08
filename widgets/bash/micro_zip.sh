@@ -65,94 +65,47 @@ fi
 
 # FOLDER="$1"
 # ARCHIVE_NAME="${2:-$FOLDER.zip}"
-
 case "$ARCHIVE_NAME" in
 	*.zip)
 		install_if_not_exists "zip"
-		zip -9 -r "$ARCHIVE_NAME" "$FOLDER"
+		zip -9 -r -v "$ARCHIVE_NAME" "$FOLDER"
 		;;
 	*.tar)
-		tar -cf "$ARCHIVE_NAME" "$FOLDER"
+		tar -cvf "$ARCHIVE_NAME" "$FOLDER"
 		;;
 	*.tar.gz)
-		tar -czf "$ARCHIVE_NAME" "$FOLDER"
+		tar -czvf "$ARCHIVE_NAME" "$FOLDER"
 		;;
 	*.tar.bz2)
-		tar -cjf "$ARCHIVE_NAME" "$FOLDER"
+		tar -cjvf "$ARCHIVE_NAME" "$FOLDER"
 		;;
 	*.gz)
 		install_if_not_exists "gzip"
-		gzip "$FOLDER"
+		gzip -v "$FOLDER"
 		;;
 	*.bz2)
 		install_if_not_exists "bzip2"
-		bzip2 "$FOLDER"
+		bzip2 -v "$FOLDER"
 		;;
 	*.rar)
 		install_if_not_exists "rar"
-		# rar a -o- -inul -ep1 "$ARCHIVE_NAME" "$FOLDER"
-		rar a "$ARCHIVE_NAME" "$FOLDER"
+		rar a -v "$ARCHIVE_NAME" "$FOLDER"
 		;;
 	*.xz)
 		install_if_not_exists "xz-utils"
-		tar cJf "$ARCHIVE_NAME" "$FOLDER"
+		tar cJvf "$ARCHIVE_NAME" "$FOLDER"
 		;;
 	*.tar.xz)
 		install_if_not_exists "xz-utils"
-		tar cJf "$ARCHIVE_NAME" "$FOLDER"
+		tar cJvf "$ARCHIVE_NAME" "$FOLDER"
 		;;
 	*.7z)
 		install_if_not_exists "p7zip-full"
-		7z a "$ARCHIVE_NAME" "$FOLDER"
+		7z a -bd "$ARCHIVE_NAME" "$FOLDER"
 		;;
 	*.zst)
 		install_if_not_exists "zstd"
-		tar --zstd -cf "$ARCHIVE_NAME" "$FOLDER"
-		;;
-	*.lzma)
-		install_if_not_exists "lzma"
-		tar --lzma -cf "$ARCHIVE_NAME" "$FOLDER"
-		;;
-	*.lz4)
-		install_if_not_exists "liblz4-tool"
-		tar --lz4 -cf "$ARCHIVE_NAME" "$FOLDER"
-		;;
-	*.lzh)
-		install_if_not_exists "lha"
-		lha a "$ARCHIVE_NAME" "$FOLDER"
-		;;
-	*.cab)
-		install_if_not_exists "cabextract"
-		# cab format doesn't have a native Linux compressor tool. You might need external utilities or use Windows.
-		echo "Compression to CAB format is not supported directly. Consider using a different tool or operating system."
-		;;
-	*.ace)
-		# ACE format doesn't have a native Linux compressor tool due to patent restrictions and other reasons.
-		echo "Compression to ACE format is not supported. Consider using a different format."
-		;;
-	*.tar.Z)
-		install_if_not_exists "compress"
-		tar -cZf "$ARCHIVE_NAME" "$FOLDER"
-		;;
-	*.tar.lz)
-		install_if_not_exists "lzip"
-		tar --lzip -cf "$ARCHIVE_NAME" "$FOLDER"
-		;;
-	*.tar.lzma)
-		install_if_not_exists "lzma"
-		tar --lzma -cf "$ARCHIVE_NAME" "$FOLDER"
-		;;
-	*.tar.lzo)
-		install_if_not_exists "lzop"
-		tar --lzo -cf "$ARCHIVE_NAME" "$FOLDER"
-		;;
-	*.tar.lrz)
-		install_if_not_exists "lrzip"
-		lrzip -z -o "$ARCHIVE_NAME" "$FOLDER"
-		;;
-	*.tar.lzop)
-		install_if_not_exists "lzop"
-		tar --lzop -cf "$ARCHIVE_NAME" "$FOLDER"
+		tar --zstd -cvf "$ARCHIVE_NAME" "$FOLDER"
 		;;
 	# ... more formats to be added ...
 	*)
@@ -161,5 +114,6 @@ case "$ARCHIVE_NAME" in
 		exit 1
 		;;
 esac
+
 
 echo "Compressed $FOLDER into $ARCHIVE_NAME!"

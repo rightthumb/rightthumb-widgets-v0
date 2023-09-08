@@ -8461,7 +8461,9 @@ def url2file(path):
 					if url.startswith(u):
 						x=url[len(u):].replace('/',os.sep)
 						# print(x);sys.exit()
+						# print(x);sys.exit();
 						y=p+os.sep+x
+						# if not os.path.isdir(y): print('missing folder')
 						if os.path.isdir(y):
 							test='index.php index.htm index.html'.split(' ')
 							for t in test:

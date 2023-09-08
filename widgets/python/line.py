@@ -721,7 +721,12 @@ def substitute(string):
 	# except Exception as e:
 	#     pass
 	return result
+make_linenumber=-1
 def make(string):
+	global make_linenumber
+	if string.strip():
+		make_linenumber+=1
+
 	if _.switches.isActive('Parse') == True:
 		p = _.ci(_.switches.value('Parse').split(',')[0])
 		i = 0
@@ -747,6 +752,11 @@ def make(string):
 		sub =  _str.replaceAll(sub,";n",'\n')
 		sub =  _str.replaceAll(sub,";t",'\t')
 		sub =  _str.replaceAll(sub,'[semi]',';')
+		sub=sub.replace('~0',str(make_linenumber))
+		sub=sub.replace('0~',str(make_linenumber))
+		sub=sub.replace('1~',str(make_linenumber+1))
+		sub=sub.replace('~1',str(make_linenumber+1))
+		# print(sub);sys.exit();
 		if _.switches.isActive('Quote') == True:
 			new = '"' + string + '"'
 			string =  sub.replace('{}',new)

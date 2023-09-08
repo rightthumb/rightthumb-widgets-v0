@@ -211,7 +211,7 @@ def possibly_wait():
 			_.updateLine( '                  ' )
 
 		_copy.imp.copy( '', p=0  )
-
+__.keychain_copy=True
 def get(theLabel=None):
 	load()
 	global table
@@ -232,10 +232,12 @@ def get(theLabel=None):
 				else:
 					_.pr(password)
 				return password
-			_copy.imp.copy( password, p=_.v.p  )
-		if len(password):
+			if __.keychain_copy and len(password):
+				_copy.imp.copy( password, p=_.v.p  )
+		
+		if __.keychain_copy and len(password):
 			_.pr('copied:',label,c='green')
-		possibly_wait()
+			possibly_wait()
 		return password
 	elif label in aliases:
 		password = _vault.imp.s.de(table[aliases[label]])
