@@ -201,7 +201,7 @@ def action():
 			totalFolder+=1
 			if _.showLine(item):
 				folders.append({ 'label':  item  })
-	# _.pv(folders)
+
 
 	if not _.switches.isActive( 'Compair' ):
 		if _.switches.isActive( 'Clean' ):
@@ -265,7 +265,7 @@ def action():
 				_copy = _.regImp( __.appReg, '-copy' )
 				_copy.imp.copy( displayed_files[0], p=0 )
 
-			# print('here')
+
 
 			_.pr()
 			if totalFile == len(files):
@@ -274,24 +274,18 @@ def action():
 				_.pr('',_.colorThis( [ _.addComma(len(files)) ], 'yellow', p=0 ),'of',_.colorThis( [ _.addComma(totalFile) ], 'yellow', p=0 ))
 			_.pr()
 			_.colorThis( 'Folders:', 'green' )
-			# print(_.tables.returnSorted( 'folders', 'a.label', folders ))
-			# for f in _.tables.returnSorted( 'folders', 'a.label', folders ):
-			folders2=[]
-			for f in folders: folders2.append(f['label'])
-
-			folders2.sort()
-			for f in folders2:
+			for f in _.tables.returnSorted( 'folders', 'a.label', folders ):
 				try:
-					x=pathlib.Path(f).resolve()
+					x=pathlib.Path(f['label']).resolve()
 					# print(x)
 					islink=False
 				except:
 					islink=True
 
-				if islink or  os.path.islink(f):
-					_.colorThis( [ '\t',f ], 'yellow' )
+				if islink or  os.path.islink(f['label']):
+					_.colorThis( [ '\t',f['label'] ], 'yellow' )
 				else:
-					_.colorThis( [ '\t',f ], 'cyan' )
+					_.colorThis( [ '\t',f['label'] ], 'cyan' )
 			_.pr()
 			if totalFolder == len(folders):
 				_.colorThis( [ '',totalFolder ], 'yellow' )

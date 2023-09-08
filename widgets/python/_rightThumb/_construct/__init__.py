@@ -73,7 +73,7 @@ def setting( subject, val='71e9-a678', d=None, default=None ):
 
 releaseAcquiredData = True
 
-table_b_print = False
+table_b_print = True
 
 switch_raw = []
 
