@@ -3975,6 +3975,7 @@ alias sizeFo="du -sh "
 alias sizeDrive="df -h"
 alias vps.y..db="ssh -L 33066:localhost:3306 -C -N -l scott yavin.m-eta.app"
 
+alias textBackup="$widgets/widgets/bash/textBackup.sh"
 
 clear
 

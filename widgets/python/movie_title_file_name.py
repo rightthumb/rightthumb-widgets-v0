@@ -162,38 +162,171 @@ _.l.sw.register( triggers, sw )
 #n)--> start
 
 
-import os
 import subprocess
+import os
+import shutil
 
-def change_mkv_title_to_filename(file_path):
-	if not file_path.lower().endswith('.mkv'):
-		print("The file is not an MKV file.")
+ext = {
+	"FFmpeg": {
+		"Video": [".mp4", ".mkv", ".flv", ".avi", ".mov", ".wmv", ".webm", ".mpeg", ".mpg", ".m4v", ".3gp", ".3g2", ".f4v"],
+		"Audio": [".mp3", ".wav", ".flac", ".aac", ".m4a", ".ogg", ".opus", ".wma"],
+		"Streaming": [".m3u8", ".ts"],
+		"ImageSequences": [".jpg", ".png", ".tiff"]
+	},
+	"ExifTool": {
+		"Images": [".jpg", ".jpeg", ".png", ".gif", ".tif", ".tiff", ".dng", ".cr2", ".nef", ".orf", ".pef", ".raf", ".raw", ".rw2", ".srw", ".heif", ".heic"],
+		"Audio": [".mp3", ".flac", ".aiff", ".ogg", ".opus", ".m4a", ".m4p", ".wav"],
+		"Video": [".mov", ".mp4", ".m4v", ".avi", ".mpeg", ".mpg", ".mkv"],
+		"Documents": [".pdf", ".eps", ".psd"]
+	},
+}
+extensions=[]
+for k in ext:
+	for t in ext[k]:
+		for e in ext[k][t]:
+			if not e in extensions:
+				extensions.append(e)
+# _.pv(extensions)
+# sys.exit()
+
+def determine_tool(path):
+	file_extension = os.path.splitext(path)[1]
+	for tool, categories in ext.items():
+		for category, extensions in categories.items():
+			if file_extension in extensions:
+				return tool
+	return None
+
+def format_for_command_line(text: str) -> str:
+	def escape_char(char):
+		chars_to_escape = set(r'&*()[]{};$|`<>?"\\')
+		if char in chars_to_escape:
+			return r"\{}".format(char)
+		return char
+	text=text.strip()
+	# valid_chars = set(" abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-./")
+	valid_chars = set(r" abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-./\\:()[]{}!@#$%^&*~+`|;=,'")
+	text = ''.join(escape_char(char) for char in text if char in valid_chars)
+	# text = ''.join(char for char in text if char in valid_chars)
+	text = text.replace(" ", r"\ ")
+	return text
+
+def edit_movie_metadata(path, field, new_value):
+	tool = determine_tool(path)
+
+	if not tool:
+		print(f"Unsupported file format for {path}")
 		return
 
+	if tool == "ExifTool":
+		path=format_for_command_line(path)
+		new_value=format_for_command_line(new_value)
+		command = ["exiftool", f"-{field}={new_value}", f'{path}']
+	elif tool == "FFmpeg":
+		_ext_=path.split('.')[-1]
+		# command = ["ffmpeg", "-i", f'"{path}"', "-c", "copy", "-metadata", f'{field}="{new_value}"', f'"{path}_output.{_ext_}"']
+		temp_output = f"{path}_temp.{_ext_}"
+		command = ["ffmpeg", "-i", path, "-c", "copy", "-metadata", f"{field}={new_value}", temp_output]
+	
+
+
+
+	else:
+		print(f"Unsupported tool: {tool}")
+		return
+	_.pr(command,c='yellow')
+	try:
+		subprocess.run(command, check=True)
+		if tool == "FFmpeg":
+			os.unlink(path)
+			shutil.move(f'{path}_temp.{_ext_}',path)
+
+
+		_.pr(f"Successfully set {field} to {new_value} for {path}",c='green')
+	except subprocess.CalledProcessError:
+		_.pr(f"Error setting {field} to {new_value} for {path}",c='red')
+
+# Example Usage:
+# edit_movie_metadata("/path/to/file.mp4", "title", "New Title")
+
+
+
+
+
+namePatternsDic = {}
+def namePatterns(path):
+	if os.sep in path: path=path.split(os.sep)[-1]
+	global namePatternsDic
+	filename = os.path.basename(path)
+	spaced = os.path.splitext(filename)[0].replace('_',' ')
+	for part in spaced.split(' '):
+		if not part in namePatternsDic:
+			namePatternsDic[part] = 0
+		namePatternsDic[part] +=1
+def nameClean(spaced):
+	if os.sep in spaced: spaced=spaced.split(os.sep)[-1]
+	global namePatternsDic
+	global number_of_files
+	if number_of_files == 1: return spaced
+	name_parts=[]
+	for part in spaced.split(' '):
+		if part in namePatternsDic:
+			if namePatternsDic[part] >= number_of_files-3:
+				pass
+			elif not 'DW' == part:
+				name_parts.append(part)
+	return ' '.join(name_parts)
+
+				
+
+def change_title_to_filename(path,field='title'):
+
+
 	# Extract the filename without the extension to set as the new title
-	filename = os.path.basename(file_path)
-	new_title = os.path.splitext(filename)[0]
+	filename = os.path.basename(path)
+	spaced = os.path.splitext(filename)[0].replace('_',' ')
+	new_title = nameClean(spaced)
 
 	try:
-		# Using mkvpropedit to change the title metadata
-		subprocess.run(["mkvpropedit", file_path, f"--set", f"title={new_title}"], check=True)
-		print(f"Successfully changed the title of {file_path} to {new_title}")
+		if path.lower().endswith('.mkv'):
+			subprocess.run(["mkvpropedit", path, f"--set", f"title={new_title}"], check=True)
+			_.pr(f"Successfully changed the title of {path} to {new_title}",c='green')
+		else:
+			edit_movie_metadata(path, field, new_title)
+		# subprocess.run(["mkvpropedit", path, f"--set", f"title={new_title}"], check=True)
 	except subprocess.CalledProcessError:
-		print(f"Failed to change the title of {file_path}")
+		print(f"Failed to change the title of {path}")
 	except FileNotFoundError:
 		print("mkvpropedit not found. Please ensure MKVToolNix is installed.")
 
 
 
-
+number_of_files=0
 def action():
-	if os.path.isfile(_.pp()[0]):
-		files=_.pp()
-	else:
-		files=_.fo()
+	global number_of_files
+	global extensions
+	files=[]
+	try:
+		for path in _.pp():
+			if os.path.isfile(path):
+				files.append(path)
+	except Exception as e:
+		pass
+	if not files:
+		files=_.fo(r=1)
+	# print(files)
+	relevant=[]
 	for path in files:
+		for e in extensions:
+			if path.endswith(e):
+				if not path in relevant:
+					path=path.replace(os.getcwd()+os.sep, '')
+					relevant.append(path)
+	number_of_files=len(relevant)
+	for path in relevant: namePatterns(path)
+	for path in relevant:
 		if os.path.isfile(path):
-			change_mkv_title_to_filename(path)
+			change_title_to_filename(path)
 
 
 ##################################################

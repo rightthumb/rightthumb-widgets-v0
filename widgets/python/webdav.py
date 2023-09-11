@@ -32,6 +32,7 @@ _str = __.imp('_rightThumb._string')
 def sw():
 	pass
 	#b)--> examples
+	_.switches.register( 'Download', '-dl,-download' )
 	_.switches.register( 'Clean', '-i' )
 	# _.switches.register( 'URL', '-u,-url,-urls', 'https://etc.ac/', isData='raw' )
 	#e)--> examples
@@ -139,7 +140,7 @@ _.l.sw.register( triggers, sw )
 
 	#n)--> python globals
 		# globals()['var']
-		# for k in globals(): print(k, eval(k) )
+		# for k in globals(): _.pr(k, eval(k) )
 
 	#n)--> webpage from url
 		# for subject in _.caseUnspecific( line, needle ): line = line.replace( subject, _.colorThis( subject, 'green', p=0 ) )
@@ -153,7 +154,7 @@ _.l.sw.register( triggers, sw )
 		# _bk.switch( 'Input', path ); bkfi = _bk.action();
 	
 	#n)--> inline
-		# for rel in [ subject for subject in _.isData(r=0) if _.showLine(subject) ]: print(rel)
+		# for rel in [ subject for subject in _.isData(r=0) if _.showLine(subject) ]: _.pr(rel)
 
 	#n)--> banner
 		# banner=_.Banner(app); goss=banner.goss;
@@ -181,9 +182,9 @@ class WebDAVClient:
 		current_path = ''
 		for folder in folders:
 			current_path += folder + '/'
-			print(current_path)
+			_.pr(current_path)
 			if not self.create_folder(current_path):  # If it returns False, there was an error
-				print(f"Failed to create {current_path}")
+				_.pr(f"Failed to create {current_path}")
 				return False
 		return True
 
@@ -201,8 +202,8 @@ class WebDAVClient:
 			if response.status_code in [201, 405]:  # 201 means Created, 405 means Already exists
 				return True
 			else:
-				print(f"Failed to create folder. HTTP Status Code: {response.status_code}")
-				print(response.text)
+				_.pr(f"Failed to create folder. HTTP Status Code: {response.status_code}")
+				_.pr(response.text)
 				return False
 
 	def folder_exists(self, remote_folder_path):
@@ -221,7 +222,7 @@ class WebDAVClient:
 		remote_file_path = self.remote
 		if '/' in remote_file_path:
 			remote_folder_path = os.path.dirname(remote_file_path).replace(os.sep,'/')
-			print(len(self.remote.split('/')))
+			_.pr(len(self.remote.split('/')))
 			if len(self.remote.split('/')) > 2:
 				self.create_all_folders(remote_folder_path)
 			else:
@@ -234,11 +235,12 @@ class WebDAVClient:
 			)
 
 			if response.status_code == 201:
-				print(f"File uploaded successfully to {self.host_url}/{remote_file_path}")
+				_.pr('uploaded')
+				# _.pr(f"File uploaded successfully to {self.host_url}/{remote_file_path}")
 				return True
 			else:
-				print(f"Failed to upload file. HTTP Status Code: {response.status_code}")
-				print(response.text)
+				_.pr(f"Failed to upload file. HTTP Status Code: {response.status_code}")
+				_.pr(response.text)
 				return False
 
 	def download(self, path):
@@ -254,11 +256,12 @@ class WebDAVClient:
 		if response.status_code == 200:
 			with open(local_file_path, 'wb') as file:
 				file.write(response.content)
-			print(f"File downloaded successfully to {local_file_path}")
+			_.pr('downloaded')
+			# _.pr(f"File downloaded successfully to {local_file_path}")
 			return True
 		else:
-			print(f"Failed to download file. HTTP Status Code: {response.status_code}")
-			print(response.text)
+			_.pr(f"Failed to download file. HTTP Status Code: {response.status_code}")
+			_.pr(response.text)
 			return False
 
 	def scan(self, path):
@@ -304,11 +307,11 @@ class WebDAVClient:
 		self.host_url = self.meta['webdav']['server'].rstrip('/')
 		self.username = self.meta['webdav']['user']
 		self.password = _vault.imp.s.de(self.meta['webdav']['password'])
-		print(self.host_url)
-		print(self.username)
-		print(self.password)
-		print(self.local)
-		print(self.local)
+		# _.pr(self.host_url)
+		# _.pr(self.username)
+		# _.pr(self.password)
+		# _.pr(self.local)
+		# _.pr(self.local)
 		return self.meta
 
 
@@ -317,7 +320,11 @@ class WebDAVClient:
 
 def action():
 	client = WebDAVClient()
-	client.upload(_.switches.values('Files')[0])
+	for path in _.pp():
+		if _.switches.isActive('Download'):
+			client.download(path)
+		else:
+			client.upload(path)
 	
 	# client = WebDAVClient("https://your-webdav-server.com/dav", "your_username", "your_password")
 	# client.upload("path/to/local/upload/file.txt", "destination/on/webdav/file.txt")
