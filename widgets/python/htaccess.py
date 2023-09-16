@@ -76,6 +76,7 @@ _.appInfo[focus()] = {
 	],
 	'examples': [
 						_.hp('p htaccess -sites softwaredevelopment.solutions sds.sh eyeformeta.com rightthumb.com biblicalheart.com m-eta.app efm.cx thumb.cx icosahedron.quest luketheawesomeone.com metaframe.work understand.quest vp-servers.com relationshipideas.xyz reph.vip'),
+						_.hp('p htaccess -sites a.etc.ac a.sds.sh efm.cx etc.ac fo.etc.ac gatekeeper.thumb.cx git.etc.ac git.rightthumb.com js.etc.ac react.etc.ac s.etc.ac thumb.cx bible.biblicalheart.com biblicalheart.com d100.icosahedron.quest emloisevil.com icosahedron.quest luketheawesomeone.com luke.theprogramming.guru mostardently.relationshipideas.xyz relationshipideas.xyz ronanwins.com scott.theprogramming.guru xan.guru ai.sds.sh ai.softwaredevelopment.solutions apps.ai.softwaredevelopment.solutions a.sds.sh assets.softwaredevelopment.solutions billing.softwaredevelopment.solutions chrome.sds.sh chrome.softwaredevelopment.solutions config.softwaredevelopment.solutions ephemeral.softwaredevelopment.solutions heimdall.softwaredevelopment.solutions h.sds.sh orchards.softwaredevelopment.solutions sds.sh secure.softwaredevelopment.solutions s.sds.sh terminal.softwaredevelopment.solutions t.sds.sh'),
 						_.linePrint(label='simple',p=0),
 						'',
 	],
@@ -288,6 +289,11 @@ templates['access']='''
 		Header set Access-Control-Allow-Origin "*"
 		Header set Access-Control-Allow-Methods "GET, POST, OPTIONS"
 		Header set Access-Control-Allow-Headers "DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type"
+</IfModule>
+'''.strip()
+templates['default']='''
+<IfModule mime_module>
+  AddHandler application/x-httpd-ea-php80 .php .php8 .phtml
 </IfModule>
 '''.strip()
 import os

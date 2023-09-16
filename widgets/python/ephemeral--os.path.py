@@ -39,8 +39,8 @@ def sw():
 
 # __.setting('require-list',['Files,Plus','File,Has']) # todo
 # __.setting('require-list',['Pipe','Files'])
-__.setting('receipt-log')
-__.setting('receipt-file')
+__.setting('receipt-log',True)
+__.setting('receipt-file',True)
 __.setting('myFileLocations-skip-validation',False)
 __.setting('require-pipe',False)
 __.setting('require-pipe||file',False)
@@ -78,8 +78,19 @@ _.appInfo[focus()] = {
 						'',
 	],
 	'columns': [
-					{ 'name': 'name', 'abbreviation': 'n' },
-					{ 'name': 'value', 'abbreviation': 'v' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+# columns used for
+# 	- abbreviation in switches
+#		- ex: -column n s
+#			- instead of: -column name size
+#		- ex: -sort n
+#		- ex: -group n
+# 	- sort is used for things like size sort by bytes
+# 	- responsiveness to terminal width
+# 		- order is important
+# 		- most important on top
+		
+		# this is used for personal usage to programmatically generate columns
 					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
@@ -149,30 +160,11 @@ _.l.sw.register( triggers, sw )
 #e)--> examples
 ########################################################################################
 #n)--> start
-
-_.switches.fieldSet( 'Long', 'active', True )
-
+import os
 def action():
-	variables = []
-	for x in dir(_v):
-		n='_v.'+x
-		y=eval(n)
-		if type(y) == str or type(y) == dict:
-			if type(y) == dict:
-				y=', '.join(list(y.keys()))
-			else:
-				y=y.strip()
-			rec={'name': n, 'value': y}
-			if _.showLine(str(rec)):
-				variables.append(rec)
-	if _.switches.isActive('Sort'):
-		if 'n' in _.switches.value('Sort'):
-			_.pt(variables,s='name')
-		else:
-			_.pt(variables,s='value')
-	else:
-		_.pt(variables,s='value')
-
+	for x in dir(os.path):
+		if _.showLine(x):
+			print(x)
 
 ##################################################
 #b)--> examples

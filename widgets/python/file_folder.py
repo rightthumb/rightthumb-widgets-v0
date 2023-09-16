@@ -155,8 +155,10 @@ _.postLoad( __file__ )
 ########################################################################################
 # START
 
-import pathlib
 
+def has_hard_links(path): return os.stat(path).st_nlink > 1
+
+import pathlib
 
 def action():
 	global copied
@@ -189,7 +191,7 @@ def action():
 	for item in os.listdir(folder):
 		path = folder + _v.slash + item
 		# _.pr( path )
-		if os.path.islink(path):
+		if os.path.islink(path) or has_hard_links(path):
 			if _.showLine(item):
 				links.append({ 'label':  item  })
 				links2.append(path)
@@ -251,13 +253,13 @@ def action():
 
 			displayed_files=[]
 			for f in files:
-				if not os.path.islink(f['label']):
+				if not os.path.islink(f['label']) and not has_hard_links(f['label']):
 					displayed_files.append(f['label'])
 					_.colorThis( [ '\t',f['label'] ], 'cyan' )
 
 
 			for f in files:
-				if os.path.islink(f['label']):
+				if os.path.islink(f['label']) or has_hard_links(f['label']):
 					displayed_files.append(f['label'])
 					_.colorThis( [ '\t',f['label'] ], 'yellow' )
 

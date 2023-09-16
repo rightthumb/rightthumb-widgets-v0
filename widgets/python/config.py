@@ -32,15 +32,15 @@ _str = __.imp('_rightThumb._string')
 def sw():
 	pass
 	#b)--> examples
-	# _.switches.register( 'Input', '-i' )
+	_.switches.register( 'API', '-api' )
 	# _.switches.register( 'URL', '-u,-url,-urls', 'https://etc.ac/', isData='raw' )
 	#e)--> examples
 	# _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name,data,clean', description='Files', isRequired=False )
 
 # __.setting('require-list',['Files,Plus','File,Has']) # todo
 # __.setting('require-list',['Pipe','Files'])
-__.setting('receipt-log')
-__.setting('receipt-file')
+__.setting('receipt-log',True)
+__.setting('receipt-file',True)
 __.setting('myFileLocations-skip-validation',False)
 __.setting('require-pipe',False)
 __.setting('require-pipe||file',False)
@@ -51,7 +51,7 @@ __.setting('switch-raw',[])
 
 _.appInfo[focus()] = {
 	# 'app': '8facG-jo0Cxk',
-	'file': 'thisApp.py',
+	'file': 'config.py',
 	'liveAppName': __.thisApp( __file__ ),
 	'description': 'Changes the world',
 		# _.ail(1,'subject')+
@@ -73,13 +73,25 @@ _.appInfo[focus()] = {
 						# '',
 	],
 	'examples': [
-						_.hp('p thisApp -file file.txt'),
+						_.hp('p config'),
+						_.hp('p config -api 7e7318d7-c921-4488-8b4b-aa392d42ceb0'),
 						_.linePrint(label='simple',p=0),
 						'',
 	],
 	'columns': [
-					{ 'name': 'name', 'abbreviation': 'n' },
-					{ 'name': 'value', 'abbreviation': 'v' },
+					# { 'name': 'name', 'abbreviation': 'n' },
+# columns used for
+# 	- abbreviation in switches
+#		- ex: -column n s
+#			- instead of: -column name size
+#		- ex: -sort n
+#		- ex: -group n
+# 	- sort is used for things like size sort by bytes
+# 	- responsiveness to terminal width
+# 		- order is important
+# 		- most important on top
+		
+		# this is used for personal usage to programmatically generate columns
 					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
@@ -150,28 +162,32 @@ _.l.sw.register( triggers, sw )
 ########################################################################################
 #n)--> start
 
-_.switches.fieldSet( 'Long', 'active', True )
-
+import requests
+import simplejson
+os=__.os
 def action():
-	variables = []
-	for x in dir(_v):
-		n='_v.'+x
-		y=eval(n)
-		if type(y) == str or type(y) == dict:
-			if type(y) == dict:
-				y=', '.join(list(y.keys()))
-			else:
-				y=y.strip()
-			rec={'name': n, 'value': y}
-			if _.showLine(str(rec)):
-				variables.append(rec)
-	if _.switches.isActive('Sort'):
-		if 'n' in _.switches.value('Sort'):
-			_.pt(variables,s='name')
-		else:
-			_.pt(variables,s='value')
+	url='https://config.softwaredevelopment.solutions/?api='
+	if _.switches.isActive('API'):
+		api = _.switches.value('API')
 	else:
-		_.pt(variables,s='value')
+		api = input('API: ')
+	url+=api
+	text = requests.get(url).text
+	_.pr(line=1,c='yellow')
+	if not text.strip():
+		_.pr('bad api')
+		return None
+	_.pr(text)
+	if text.startswith('{') or text.startswith('['):
+		data=simplejson.loads(text)
+	else:
+		data=_.fromYML(text)
+	config=_v.fig
+	for k in data: config[k]=data[k]
+
+	_.saveTable2(config, _v.home +os.sep+'.rt'+os.sep+ '.config.hash')
+	_.pr(line=1,c='yellow')
+	_.pr('saved',c='green')
 
 
 ##################################################

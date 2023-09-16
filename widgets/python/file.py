@@ -361,7 +361,8 @@ def getFolder(folder,r=True):
 
 						if not agoRange:
 							if run == 'default':
-								if record['date_modified_raw'] > _.switches.values('Ago')[0] or record['date_created_raw'] > _.switches.values('Ago')[0]:
+								# sys.exit()
+								if record['date_modified_raw'] > _.switches.values('Ago')[0]:
 									shouldAdd = True
 									# _.pr(path)
 							elif run == 'resent':
@@ -669,10 +670,3 @@ import _rightThumb._dir as _dir
 ########################################################################################
 if __name__ == '__main__':
 	action()
-
-
-
-
-
-
-

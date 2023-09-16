@@ -346,9 +346,11 @@ def _path_( p, ab=True, pop=False, file=False, slash=None, folder=None, fi=None,
 				os=imp('os.path._getfinalpathname')
 				p = os.path._getfinalpathname(p).lstrip(r'\?')
 			except: pass
-	if p_bk[1] == ':' and not p[1] == ':': p = p_bk
-	if type(p) == str and len(p)>1 and p[1] == ':':
-		p = p[0].upper() + p[1:]
+	try:
+		if p_bk[1] == ':' and not p[1] == ':': p = p_bk
+		if type(p) == str and len(p)>1 and p[1] == ':':
+			p = p[0].upper() + p[1:]
+	except: pass
 	if type(p) == str and ( pop or file ):
 
 		if type(pop) == int:

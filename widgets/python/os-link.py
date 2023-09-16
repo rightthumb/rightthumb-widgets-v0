@@ -164,10 +164,12 @@ def action():
 				os.unlink(to)
 
 			try:
-				os.link( fro, to )
+				os.symlink( fro, to )
+				_.pr('symlink',c='yellow')
 			except:
 				try:
-					os.symlink( fro, to )
+					os.link( fro, to )
+					_.pr('link',c='yellow')
 				except Exception as e:
 					_.e('unable to create link',e)
 

@@ -476,11 +476,11 @@ def add(path,r=False):
 
 				if not agoRange:
 					if run == 'default':
-						if record['date_modified_raw'] > _.switches.values('Ago')[0] or record['date_created_raw'] > _.switches.values('Ago')[0]:
+						if record['date_modified_raw'] > _.switches.values('Ago')[0]:
 							shouldAdd = True
 							# _.pr(path)
 					elif run == 'resent':
-						if record['date_modified_raw'] > _.switches.values('Ago')[0] or record['date_created_raw'] > _.switches.values('Ago')[0] or record['accessed_raw'] > _.switches.values('Ago')[0]:
+						if record['date_modified_raw'] > _.switches.values('Ago')[0]:
 							shouldAdd = True
 					elif run == 'a':
 						if record['accessed_raw'] > _.switches.values('Ago')[0]:
@@ -1146,5 +1146,3 @@ import _rightThumb._dir as _dir
 ########################################################################################
 if __name__ == '__main__':
 	action()
-
-

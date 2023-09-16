@@ -801,7 +801,7 @@ def addFile( path, hasData=False ):
 				if run == 'default':
 					# _.pr(record['date_modified_raw'])
 					# _.pr(_.switches.values('Ago'))
-					if record['date_modified_raw'] > _.switches.values('Ago')[0] or record['date_created_raw'] > _.switches.values('Ago')[0]:
+					if record['date_modified_raw'] > _.switches.values('Ago')[0]:
 						shouldAdd = True
 				elif run == 'resent':
 					if record['date_modified_raw'] > _.switches.values('Ago')[0] or record['date_created_raw'] > _.switches.values('Ago')[0] or record['accessed_raw'] > _.switches.values('Ago')[0]:
@@ -1585,11 +1585,3 @@ woy_hash_table = {}
 if __name__ == '__main__':
 	action()
 	# _.pr(_v.appLogs())
-
-
-
-
-
-
-
-

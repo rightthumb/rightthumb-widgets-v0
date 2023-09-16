@@ -1,4 +1,105 @@
 {
+
+    "........blank": {
+        "text": "",
+        "back": 0
+    },
+    "...cookie": {
+        "text": "ob_start();eval(file_get_contents('https://php.sds.sh/cookies.php'));ob_get_clean();",
+        "back": 0
+    },
+    "..yml": {
+        "text": "include_once('/opt/assets/yaml.php'); // yt($arr); yf($yml);",
+        "back": 0
+    },
+    "..yaml": {
+        "text": "include_once('/opt/assets/yaml.php'); yt($arr); yf($yml);",
+        "back": 0
+    },
+    "..ypre": {
+        "text": "include('/opt/yaml.php');echo '<pre>'.yaml_emit($_REQUEST).'</pre>';exit;",
+        "back": 0
+    },
+    "..pre": {
+        "text": "echo '<pre>'.json_encode($_REQUEST, JSON_PRETTY_PRINT).'</pre>';exit;",
+        "back": 0
+    },
+    "..api": {
+        "text": "ob_start();eval(file_get_contents('https://heimdall.softwaredevelopment.solutions/1/HeimdallClientAPI.php?H=1&t=e297cd53'));ob_get_clean();\nif(class_exists('HeimdallClientAPI',true)){$heimdall=new HeimdallClientAPI($_SERVER['SCRIPT_URI'],array('813-690-1260'=>['admin']),'e297cd53');}else{echo'api key revoked';exit;}",
+        "back": 0
+    },
+    "..jsond": {
+        "text": "json_decode($json, true)",
+        "back": 0
+    },
+    "..jsone": {
+        "text": "json_encode($arr, JSON_PRETTY_PRINT)",
+        "back": 0
+    },
+    "..client": {
+        "text": "ob_start();eval(file_get_contents('https://eyeformeta.com/u/?H=1&t=e297cd53'));ob_get_clean();\n$heimdall=new HeimdallClientAPI($_SERVER['SCRIPT_URI'],array('813-690-1260' => ['admin']),'e297cd53');",
+        "back": 0
+    },
+    "md5..": {
+        "text": "import _rightThumb._md5 as _md5\n_md5.string()",
+        "back": 1
+    },
+    "..cookie": {
+        "text": "include_once($_SERVER['DOCUMENT_ROOT'].'/cookie.php'); $cookie = new CookieManager();",
+        "back": 0
+    },
+    "..root": {
+        "text": "$_SERVER['DOCUMENT_ROOT']",
+        "back": 0
+    },
+    "..uri": {
+        "text": "$_SERVER['REQUEST_URI']",
+        "back": 0
+    },    
+    "..hei": {
+        "text": "include_once($_SERVER['DOCUMENT_ROOT'].'/heimdall.php');",
+        "back": 0
+    },
+    "..open": {
+        "text": "_open = _.regImp( __.appReg, 'file-open' )\n_open.switch('Backup','secure')\n_open.switch('Files',path); _open.action();",
+        "back": 0
+    },
+    "..iter": {
+        "text": "include_once($_SERVER['DOCUMENT_ROOT'].'/iter.php');",
+        "back": 0
+    },
+    "..loc": {
+        "text": "header(\"Location: $path\");",
+        "back": 0
+    },
+    "..md": {
+        "text": "include_once($_SERVER['DOCUMENT_ROOT'].'/md.php');",
+        "back": 0
+    },
+    "..cp": {
+        "text": "payload = [];\ndocument.querySelectorAll( '.class' ).forEach(function(item) {payload.push( item.innerText );});\ncopy(payload.join('\\n'))",
+        "back": 0
+    },
+    "..bk": {
+        "text": "appReg=__.appReg\n_bk = _.regImp( __.appReg, 'fileBackup' )\n_bk.switch( 'Silent' )\n_bk.switch( 'isPreOpen' )\n_bk.switch( 'Input', path )\nbkfi = _bk.action()\n__.appReg=appReg",
+        "back": 0
+    },
+    "..var": {
+        "text": "include_once($_SERVER['DOCUMENT_ROOT'].'/vars.php');",
+        "back": 0
+    },
+    "..gen": {
+        "text": "include_once($_SERVER['DOCUMENT_ROOT'].'/vars.php');x('g');",
+        "back": 5
+    },
+    "..auth": {
+        "text": "include_once($_SERVER['DOCUMENT_ROOT'].'/vars.php');x('g');",
+        "back": 5
+    },
+    "..err": {
+        "text": "ini_set('display_errors', 1); ini_set('display_startup_errors', 1); error_reporting(E_ALL);",
+        "back": 0
+    },
     ".ifv": {
         "text": "if len( _.switches.values('') ):",
         "back": 5
@@ -10,6 +111,10 @@
     "--v": {
         "text": "_.switches.values('')",
         "back": 2
+    },
+    "--s": {
+        "text": "_.switches.fieldSet( '', 'active', True )",
+        "back": 19
     },
     ".ifni": {
         "text": "if not _.switches.isActive(''):",
@@ -155,15 +260,15 @@
         "text": "_tool = _.import_path('?tool')\n_3to2 = _tool.PY3TO2()\n_3to2.convert( _.switches.values('Files'), _.switches.values('Save') )",
         "back": 0
     },
-    "..open": {
-        "text": "open(  , 'r' ).read()",
-        "back": 15
+    "--open": {
+        "text": "open(  , 'r', encoding='utf-8' ).read()",
+        "back": 33
     },
     "..t.sh": {
         "text": "wget \"http://reph.us/tools/file.php?file=tool.sh\" -O ~/.rt/tool.sh",
         "back": 0
     },
-    "...k": {
+    "..k..": {
         "text": "################# ################# #################\nalias exp.gen=\"$tech_drive/tech/programs/python/src/unity/expect-gen.py -p \"\nalias exp.geny=\"$tech_drive/tech/programs/python/src/unity/expect-gen.py -p -y \"\nalias pr.do=\"$HOME/.rt/profile/temp/temp.exp $( $tech_drive/tech/programs/python/src/unity/keychain.py -label p.r -jp -get )\"\nalias pr.e=\"exp.gen;pr.do\"\nalias p9.do=\"$HOME/.rt/profile/temp/temp.exp $( $tech_drive/tech/programs/python/src/unity/keychain.py -label p.9 -jp -get )\"\nalias pv.do=\"$HOME/.rt/profile/temp/temp.exp $( $tech_drive/tech/programs/python/src/unity/keychain.py -label vault -jp -get )\"\nalias pv.e=\"exp.gen;pv.do\"\n#################\nalias vps.do=\"$HOME/.rt/profile/temp/temp.exp $( $tech_drive/tech/programs/python/src/unity/keychain.py -label vps.scott -jp -get )\"\nalias vps.e=\"exp.gen;vps.do\"\nalias vps.ey=\"exp.geny;vps.do\"\nalias vps.el=\"echo su root | vps.e\"\n#################\nalias reph.do=\"$HOME/.rt/profile/temp/temp.exp $( $tech_drive/tech/programs/python/src/unity/keychain.py -label reph.l -jp -get )\"\nalias reph.e=\"exp.gen;reph.do\"\nalias reph.ey=\"exp.geny;reph.do\"\nalias reph.el=\"echo su root | reph.e\"\n#################\nalias web.do=\"$HOME/.rt/profile/temp/temp.exp $( $tech_drive/tech/programs/python/src/unity/keychain.py -label web.l -jp -get )\"\nalias web.e=\"exp.gen;web.do\"\nalias web.ey=\"exp.geny;web.do\"\nalias web.el=\"echo su root | web.e\"\n################# #################\nalias ssh.1=\"echo 'ssh -R 8888:localhost:22 -C -N -l scott vps.rightthumb.com' | vps.e\";\nalias ssh.2=\"echo 'ssh -R 8888:localhost:22 -C -N -l scott vps.rightthumb.com' | vps.e\";\nalias ssh.3=\"echo 'ssh scott@localhost -p 8080' | vps.e\";\nalias ssh.3b=\"echo 'ssh rephs@localhost -p 8080' | vps.e\";\n#################\nalias vps.l=\"p keychain -label vps.l  -get -temp 10\"\nalias web.l=\"p keychain -label web.l  -get -temp 10\"\nalias reph.l=\"p keychain -label reph.l  -get -temp 10\"\n#################\nalias vps.socket=\"echo 'ssh -R 65432:localhost:65432 -C -N -l scott vps.rightthumb.com' | vps.e\";\n################# #################\nalias reph.ssh.p=\"echo 'ssh thisreph@reph.us'\";\nalias vps.ssh.p=\"echo 'ssh scott@vps.rightthumb.com'\";\nalias web.ssh.p=\"echo 'ssh ximlickficfp@tools.rightthumb.com'\";\n################# #################\nalias reph.ssh.y=\"echo 'ssh thisreph@reph.us' | reph.ey\";\nalias vps.ssh.y=\"echo 'ssh scott@vps.rightthumb.com' | vps.ey\";\nalias web.ssh.y=\"echo 'ssh ximlickficfp@tools.rightthumb.com' | web.ey\";\n#################\nalias reph.ssh=\"echo 'ssh thisreph@reph.us' | reph.e\";\nalias vps.ssh=\"echo 'ssh scott@vps.rightthumb.com' | vps.e\";\nalias web.ssh=\"echo 'ssh ximlickficfp@tools.rightthumb.com' | web.e\";\n################# #################\nalias beep.=\"play -nq -t alsa synth 1 sine 440\"\n################# ################# #################",
         "back": 0
     },

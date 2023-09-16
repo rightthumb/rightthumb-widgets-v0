@@ -3947,6 +3947,34 @@ sds() {
 	fi
 }
 
+a2mp3() {
+	[ -z "$1" ] && echo "Usage: $0 input.wma" && return 1
+	[ ! -e "$1" ] && echo "Error: File '$1' not found." && return 1
+	input_file="$1"
+	output_file="${input_file%.*}.mp3"
+	ffmpeg -i "$input_file" -c:a libmp3lame -q:a 2 "$output_file" && rm "$input_file"
+}
+
+
+
+domains() {	
+	folders=(
+	  "/home/rightthumb/public_html"
+	  "/home/programmer/public_html"
+	  "/home/softwaredev/public_html"
+	)
+
+	for folder in "${folders[@]}"; do
+	  for domain_folder in "$folder"/*; do
+	    if [ -d "$domain_folder" ] && [[ "$domain_folder" != .* ]] && [[ "$domain_folder" == *.* ]]; then
+	      domain=$(basename "$domain_folder")
+	      echo "$domain"
+	    fi
+	  done
+	done
+}
+
+
 
 alias 2mp3="$widgets/widgets/bash/2mp3.sh"
 alias .ssh="$widgets/widgets/bash/ssh_key.sh"
@@ -3976,6 +4004,95 @@ alias sizeDrive="df -h"
 alias vps.y..db="ssh -L 33066:localhost:3306 -C -N -l scott yavin.m-eta.app"
 
 alias textBackup="$widgets/widgets/bash/textBackup.sh"
+
+
+
+alias .deb="sudo dpkg -i "
+
+alias cdf="source /home/scott/changes/cdf.sh"
+
+function o() {
+    if [ -z "$1" ]; then
+        $p file-open -backup secure -alias last
+    else
+        $p file-open -backup secure -alias "$@"
+    fi
+}
+
+alias sudo1="sudo /opt/rightthumb-widgets-v0/widgets/bash/sudoAdd.sh"
+alias sudo0="sudo /opt/rightthumb-widgets-v0/widgets/bash/sudoRemove.sh"
+
+alias sudo11="sudo1 softwaredev; sudo1 rightthumb; sudo1 programmer"
+alias sudo00="sudo0 softwaredev; sudo0 rightthumb; sudo0 programmer"
+
+alias crontabs='sudo crontab -l -u $USER > "$HOME/_crontab.sh" && sudo -u scott /opt/sublime_text/sublime_text "$HOME/_crontab.sh"'
+alias crontabsave='crontab $HOME/_crontab.sh'
+
+
+
+
+vpsbk() {
+  source_directory="/opt/rightthumb-widgets-v0/widgets"
+  save_directory="/opt/vps-"
+
+  if [ $# -eq 1 ]; then
+    root_directory="$1"
+  fi
+
+  if [ ! -d "$root_directory" ]; then
+    return 1
+  fi
+
+  if [ ! -d "$save_directory" ]; then
+    mkdir -p "$source_directory"
+  fi
+
+
+  find "$source_directory" -type f -name 'vps-*' -exec cp --parents {} "$save_directory" \;
+  echo "Files copied to '$save_directory'"
+}
+
+
+
+vpsre() {
+  source_folder="$1"
+  if [ -z "$source_folder" ]; then
+    source_folder="/opt/vps-"
+  fi
+
+  destination_folder="/opt/rightthumb-widgets-v0/widgets/"
+  cp -r "$source_folder/opt/rightthumb-widgets-v0/widgets/*" "$destination_folder"
+}
+
+
+logfi() {
+  local FILE_PATH="$HOME/.rt/profile/tables/file-open.last"
+  local LOG_PATH="$HOME/public_html/logfi.txt"
+
+  # Check if the file exists
+  if [[ -f $FILE_PATH ]]; then
+      # Get the full path from the file's contents
+      local FULL_PATH=$(head -1 $FILE_PATH)
+
+      # Check if we got a valid path
+      if [[ -z $FULL_PATH ]]; then
+          echo "Error: No valid path found in $FILE_PATH." >> $LOG_PATH
+          exit 1
+      else
+          # Log the date and message, followed by the full path on a new line
+          echo -e "Logged on: $(date)\n$FULL_PATH\n" >> $LOG_PATH
+      fi
+  else
+      echo "Error: $FILE_PATH not found." >> $LOG_PATH
+      exit 1
+  fi
+}
+
+
+
+
+
+
 
 clear
 

@@ -15,13 +15,16 @@
 # source  "$SCRIPT_DIR/load-vars.sh"
 # code_editor=$( cat "/opt/RightThumb/.editor" )
 subject=$1
+if [ "$subject" == "base" ]; then
+    subject="base3"
+fi
 subject_path=$widgets/widgets/python/_rightThumb/_$subject/__init__.py
 p="bash $widgets/widgets/bash/nav/p.sh"
 if [[ ! -e $widgets/widgets/python/_rightThumb/_$subject ]]; then
-    mkdir $widgets/widgets/python/_rightThumb/_$subject
-    echo "directory created"
+	mkdir $widgets/widgets/python/_rightThumb/_$subject
+	echo "directory created"
 elif [[ ! -d $dir ]]; then
-    echo "directory exists"
+	echo "directory exists"
 fi
 $p file-open -f $subject_path -backup
 # if [ "$code_editor_pre" = "" -a "$code_editor_suff" = "" ]; then
@@ -42,5 +45,3 @@ $p file-open -f $subject_path -backup
 #     fi
 # fi
 # $code_editor_pre $code_editor $subject_path $code_editor_suff>/dev/null 2>&1
-
-
