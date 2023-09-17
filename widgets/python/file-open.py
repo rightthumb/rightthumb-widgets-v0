@@ -211,6 +211,7 @@ def action(path=None):
 		aa=None
 		for a in _.switches.values('Alias'):
 			if os.path.isfile(a):
+				a=__.path(a)
 				_.switches.fieldSet( 'Files', 'active', True )
 				_.switches.fieldSet( 'Files', 'value', a )
 				_.switches.fieldSet( 'Files', 'values', [a] )
@@ -230,8 +231,26 @@ def action(path=None):
 
 	if _.isWin and not 'code_editor' in _v.fig: app = 'C:\\Windows\\System32\\notepad.exe'
 	elif _.isWin and 'code_editor' in _v.fig: app = _v.fig['code_editor']
-	elif not _.isWin and not 'code_editor' in _v.fig: app = 'nano'
+	# elif not _.isWin and not 'code_editor' in _v.fig: app = 'nano'
 	elif not _.isWin and 'code_editor' in _v.fig: app = _v.fig['code_editor']
+	if not _.isWin:
+		try:
+			isgui = str(os.environ['isgui'])
+		except:
+			isgui = 'false'
+		if not 'true' in isgui:
+			app='nano'
+		else:
+			if not _.isWin:
+				servers = {
+								'yavin.m-eta.app': 'sudo -u scott /opt/sublime_text/sublime_text',
+				}
+				import socket
+				host=str(socket.gethostname()).strip()
+				if host in servers:
+					app = servers[host]
+				elif os.path.isfile('/opt/sublime_text/sublime_text'):
+					app = '/opt/sublime_text/sublime_text'
 	if _.switches.isActive('App'): app = ' '.join(_.switches.values('App'))
 	if _.switches.isActive('Alias'):
 		_aliases=_.switches.values('Alias')
