@@ -426,7 +426,7 @@ def action():
 	
 	if _.switches.isActive('Print'): _md.switch('View-Webpage'); _md.switch('Files',no); _md.action();
 
-	if not _.isWin:
+	if False and not _.isWin:
 		os.system( 'nano '+ no )
 	else:
 		if _.switches.isActive('Open'): _md.switch('Files',no); _md.action();
