@@ -208,7 +208,13 @@ def action():
 			if line and line.startswith('SetEnv'): var[line]=0;vv.append(line);
 	# print(vv); sys.exit();
 	if os.path.isfile('.htaccess.site'): sites=_.getText('.htaccess.site',raw=True,clean=2).replace('\r','').strip().split('\n')
-	for site in _.switches.values('Sites'): sites.append(site)
+	if _.switches.isActive('Sites'):
+		if not len(_.switches.values('Sites')):
+			sites=_.pp()
+		else:
+			sites=_.switches.values('Sites')
+
+	# for site in _.switches.values('Sites'): sites.append(site)
 
 	remove=[]
 	for site in _.switches.values('Remove'):
@@ -293,7 +299,7 @@ templates['access']='''
 '''.strip()
 templates['default']='''
 <IfModule mime_module>
-  AddHandler application/x-httpd-ea-php80 .php .php8 .phtml
+	AddHandler application/x-httpd-ea-php80 .php .php8 .phtml
 </IfModule>
 '''.strip()
 import os

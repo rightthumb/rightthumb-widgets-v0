@@ -156,7 +156,11 @@ _.postLoad( __file__ )
 # START
 
 
-def has_hard_links(path): return os.stat(path).st_nlink > 1
+def has_hard_links(path):
+	try:
+		return os.stat(path).st_nlink > 1
+	except:
+		return False
 
 import pathlib
 

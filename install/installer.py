@@ -993,6 +993,14 @@ class HD:
 		return lines
 
 	def saveText( self, rows, theFile, errors=True ):
+		if theFile.endswith('/.bashrc'):
+			if type(rows) == list:
+				rows.prepend('#!/bin/bash')
+			elif type(rows) == str:
+				rows='#!/bin/bash\n'+rows
+
+
+
 		theFile=theFile.replace(os.sep+os.sep,os.sep)
 		# print(vc.STR.printable)
 		# v.f.mkdir
@@ -3906,7 +3914,31 @@ g() {
 	echo "isgui=true"
 }
 
+dl.mp4t() {
+    local url="$1"
 
+    # Check if a URL was provided
+    if [ -z "$url" ]; then
+        echo "Usage: dl.mp4t <URL>"
+        return 1
+    fi
+
+    # Download the best video and audio streams with specific extensions
+    youtube-dlc -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]' "$url" &
+}
+
+dl.mp3t() {
+    local url="$1"
+
+    # Check if a URL was provided
+    if [ -z "$url" ]; then
+        echo "Usage: dl.mp3t <URL>"
+        return 1
+    fi
+
+    # Download audio in MP3 format
+    youtube-dlc -x --audio-format mp3 "$url" &
+}
 
 
 clear

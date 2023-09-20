@@ -1,8 +1,8 @@
 #!/bin/bash
 
 if [ $# -ne 1 ]; then
-    echo "Usage: $0 <username>"
-    exit 1
+	echo "Usage: $0 <username>"
+	exit 1
 fi
 
 username="$1"
@@ -23,9 +23,9 @@ folder_path="/home/$username/public_html"
 
 # Check if the folder exists
 if [ -d "$folder_path" ]; then
-    # If the folder exists, run the commands
-    sudo chmod -R 777 "$folder_path"
-    echo "Folder permissions and ownership updated."
+	# If the folder exists, run the commands
+	sudo chmod -R 755 "$folder_path"
+	echo "Folder permissions and ownership updated."
 else
-    echo "Folder not found: $folder_path"
+	echo "Folder not found: $folder_path"
 fi
