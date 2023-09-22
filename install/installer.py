@@ -3940,6 +3940,22 @@ dl.mp3t() {
     youtube-dlc -x --audio-format mp3 "$url" &
 }
 
+hotkeysloop() {
+	local counter=$1
+
+	if [[ -z "$counter" || $counter -le 0 ]]; then
+		return
+	fi
+
+	$p hotkeys
+	sleep 1  # Wait for a second (or any desired time)
+
+	((counter--))
+	hotkeysloop $counter
+}
+
+alias hk.l="hotkeysloop 100"  # Call hotkeysloop 10 times for example
+
 
 clear
 

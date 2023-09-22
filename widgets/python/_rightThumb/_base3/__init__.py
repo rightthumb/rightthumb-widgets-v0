@@ -4029,6 +4029,8 @@ class dt:
 #     return data
 def isData( data=None, focus=None, pipeClean=False, required=False,     r=None, c=None, noclean=None ):
 	global switches
+	global appData
+	if appData[__.appReg]['pipe']: return appData[__.appReg]['pipe']
 	for sw in __.isData_Switches:
 		if not sw == 'Files': return switches.values(sw)
 	if data is None and switches.isActive('Paste-isData-json'):
@@ -4063,7 +4065,6 @@ def isData( data=None, focus=None, pipeClean=False, required=False,     r=None, 
 	if data is None:
 		if pipeClean:
 			pipeCleaner(0)
-		global appData
 		if focus is None:
 			focus = __.appReg
 		data = pipe_surfing()

@@ -141,18 +141,17 @@ _.l.sw.register( triggers, sw )
 ########################################################################################
 #n)--> start
 
+os=__.os
+
 def action():
-	load(); global c3po;
+	aliases=_.getTable('file-open-aliases.hash')
+	aliases=_.getTable('bookmarks.index')
+	aliases=_.getTable('site-locations.list')
+	aliases=_.getTable('secure-crypt-local.meta')
+	aliases=_.getTable('secure-crypt-local.settings')
+	aliases=_.getTable('bookmarks.logs')
+	aliases=_.getTable('fileBackup.json')
 
-	#n)--> iterate
-	for subject in _.isData(r=0): _.pr(subject)
-
-
-def load():
-	global c3po
-	c3po = _.getTable( 'table' )
-	#n)--> print table
-	_.pt(c3po)
 
 
 ##################################################
