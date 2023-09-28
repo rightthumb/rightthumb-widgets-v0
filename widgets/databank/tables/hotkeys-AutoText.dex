@@ -38,7 +38,7 @@
         "back": 0
     },
     "..api": {
-        "text": "ob_start();eval(file_get_contents('https://heimdall.softwaredevelopment.solutions/1/HeimdallClientAPI.php?H=1&t=e297cd53'));ob_get_clean();\nif(class_exists('HeimdallClientAPI',true)){$heimdall=new HeimdallClientAPI($_SERVER['SCRIPT_URI'],array('813-690-1260'=>['admin']),'e297cd53');}else{echo'api key revoked';exit;}",
+        "text": "ob_start();eval(file_get_contents('https://heimdall.softwaredevelopment.solutions/1/HeimdallClientAPI.php?H=1&t='.file_get_contents('https://keys.sds.sh/?id=sds-api')));ob_get_clean();\nif(class_exists('HeimdallClientAPI',true)){$heimdall=new HeimdallClientAPI($_SERVER['SCRIPT_URI'],array('813-690-1260'=>['admin']),file_get_contents('https://keys.sds.sh/?id=sds-api'));}else{echo'api key revoked';exit;}",
         "back": 0
     },
     "..jsond": {
@@ -50,7 +50,7 @@
         "back": 0
     },
     "..client": {
-        "text": "ob_start();eval(file_get_contents('https://eyeformeta.com/u/?H=1&t=e297cd53'));ob_get_clean();\n$heimdall=new HeimdallClientAPI($_SERVER['SCRIPT_URI'],array('813-690-1260' => ['admin']),'e297cd53');",
+        "text": "ob_start();eval(file_get_contents('https://eyeformeta.com/u/?H=1&t='.file_get_contents('https://keys.sds.sh/?id=sds-api')));ob_get_clean();\n$heimdall=new HeimdallClientAPI($_SERVER['SCRIPT_URI'],array('813-690-1260' => ['admin']),file_get_contents('https://keys.sds.sh/?id=sds-api'));",
         "back": 0
     },
     "md5..": {

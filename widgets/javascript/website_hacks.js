@@ -1,3 +1,4 @@
+/* delete all timeouts */ var id = window.setTimeout(function() {}, 0); while (id--) { window.clearTimeout(id); }
 
 $(this).click(function() {});
 $(document).ready(function() {});
@@ -9,17 +10,194 @@ for (var i = 0; i < data.length; i++) {}
 $.each( data, function( key, val ) { });
 Foo.caller.name Foo.caller.arguments
 var keys = Object.keys(record);
-JSON.stringify( data , null, '\t');
-JSON.parse( data );
+if (dic.hasOwnProperty("key1")) {}
+JSON.stringify( data , null, '\t')
+JSON.parse( data )
+
+$a=document.querySelectorAll
+$1=document.querySelector
+
+document.getElementById
+document.getElementsByTagName
+document.getElementsByClassName
+document.getElementsByName
+document.querySelector
+document.querySelectorAll
+parentNode.querySelectorAll
+
+'[class=meta]'     equals
+'[class^=meta]'    starts with
+'[class$=meta]'    ends with
+'[class]'          has attrib
+
 document.querySelector('#content-container')
 document.querySelectorAll('.content-container')[0].remove()
 document.getElementsByClassName('box')[0].getAttribute('rid')
-document.getElementById('box-1').classList.contains('note')
-document.getElementById('box-1').classList.remove('dragging');
-document.getElementsByTagName('body')
 
-$=document.querySelectorAll
+document.getElementById('button').setAttribute('disable','');
+
+document.getElementById('rose').classList;
+document.getElementById('rose').classList.value;
+document.getElementById('rose').classList.add('thorn');
+document.getElementById('rose').classList.remove('thorn');
+document.getElementById('rose').classList.item(0); // petal
+document.getElementById('rose').classList.item(1); // leaf
+document.getElementById('rose').classList.contains('petal'); //true
+document.getElementById('rose').classList.contains('stern'); //false
+
+let button = document.getElementsByTagName('button');
+button[0].addEventListener('click', () => {
+    let rose = document.getElementById('rose').classList;
+    !rose.contains('thorn')? rose.add('thorn'): rose.remove('thorn');
+});
+
+let button = document.getElementsByTagName('button');
+button[0].addEventListener('click', () => {
+    document.getElementById('rose').classList.toggle('thorn');
+});
+
+var allstyles=  document.getElementsByTagName('*');
+for(var a=0; a<allstyles.length; a++) {
+    allstyles[a].removeAttribute("style");
+}
+
+$( document ).ready(function() { });
+document.addEventListener("DOMContentLoaded", function(event) { });
+
+a:link, a:visited, a:hover, a:active { text-decoration: none; }
+//////////////////////////////////////
+// https://unicode.org/emoji/charts/full-emoji-list.html
+hackData = [];
+document.querySelectorAll( '.chars' ).forEach(function(item) {
+    hackData.push( item.innerText );
+});
+copy(hackData.join('\n'))
+//////////////////////////////////////
+let editor;
+window.onLoad = function(){
+	editor = ace.edit('editor') // #editor
+	editor.setTheme('ace/theme/monokai')
+	editor.session.setMode('ace/mode/python')
+	// editor.session.setMode('ace/mode/javascript')
+	// editor.session.setMode('ace/mode/php')
+	// editor.session.setMode('ace/mode/c_cpp')
+}
+//////////////////////////////////////
+define in https://eyeformeta.com/assets/git/online-ide/ui/js/lib/ace.js    or    https://www.youtube.com/watch?v=k49ZR3hRMzA
+//////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////  ////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////
+
+// hack global namespace of every function path
+
+_h_variable=[];
+function iterObj(obj,pth) {
+	if (pth.split('.').length > 10) {return null;}
+	for (var key in obj) {
+		// console.log(key + ': ' + obj[key]);
+		if (obj[key] !== null && typeof obj[key] === "object") {
+		  // Recurse into children
+		  iterObj(obj[key],pth+'.'+key);
+		} else {
+			try {
+				if ( typeof obj[key].name !== 'undefined' ) { _h_variable.push(pth+'.'+obj[key].name) }
+			} catch (err) {}
+			
+		}
+	}
+}
+
+_h_omit=["window", "self", "document", "name", "location", "customElements", "history", "locationbar", "menubar", "personalbar", "scrollbars", "statusbar", "toolbar", "status", "closed", "frames", "length", "top", "opener", "parent", "frameElement", "navigator", "origin", "external", "screen", "innerWidth", "innerHeight", "scrollX", "pageXOffset", "scrollY", "pageYOffset", "visualViewport", "screenX", "screenY", "outerWidth", "outerHeight", "devicePixelRatio", "clientInformation", "screenLeft", "screenTop", "defaultStatus", "defaultstatus", "styleMedia", "onsearch", "isSecureContext", "performance", "onappinstalled", "onbeforeinstallprompt", "crypto", "indexedDB", "webkitStorageInfo", "sessionStorage", "localStorage", "onbeforexrselect", "onabort", "onblur", "oncancel", "oncanplay", "oncanplaythrough", "onchange", "onclick", "onclose", "oncontextlost", "oncontextmenu", "oncontextrestored", "oncuechange", "ondblclick", "ondrag", "ondragend", "ondragenter", "ondragleave", "ondragover", "ondragstart", "ondrop", "ondurationchange", "onemptied", "onended", "onerror", "onfocus", "onformdata", "oninput", "oninvalid", "onkeydown", "onkeypress", "onkeyup", "onload", "onloadeddata", "onloadedmetadata", "onloadstart", "onmousedown", "onmouseenter", "onmouseleave", "onmousemove", "onmouseout", "onmouseover", "onmouseup", "onmousewheel", "onpause", "onplay", "onplaying", "onprogress", "onratechange", "onreset", "onresize", "onscroll", "onsecuritypolicyviolation", "onseeked", "onseeking", "onselect", "onslotchange", "onstalled", "onsubmit", "onsuspend", "ontimeupdate", "ontoggle", "onvolumechange", "onwaiting", "onwebkitanimationend", "onwebkitanimationiteration", "onwebkitanimationstart", "onwebkittransitionend", "onwheel", "onauxclick", "ongotpointercapture", "onlostpointercapture", "onpointerdown", "onpointermove", "onpointerup", "onpointercancel", "onpointerover", "onpointerout", "onpointerenter", "onpointerleave", "onselectstart", "onselectionchange", "onanimationend", "onanimationiteration", "onanimationstart", "ontransitionrun", "ontransitionstart", "ontransitionend", "ontransitioncancel", "onafterprint", "onbeforeprint", "onbeforeunload", "onhashchange", "onlanguagechange", "onmessage", "onmessageerror", "onoffline", "ononline", "onpagehide", "onpageshow", "onpopstate", "onrejectionhandled", "onstorage", "onunhandledrejection", "onunload", "alert", "atob", "blur", "btoa", "cancelAnimationFrame", "cancelIdleCallback", "captureEvents", "clearInterval", "clearTimeout", "close", "confirm", "createImageBitmap", "fetch", "find", "focus", "getComputedStyle", "getSelection", "matchMedia", "moveBy", "moveTo", "open", "postMessage", "print", "prompt", "queueMicrotask", "releaseEvents", "reportError", "requestAnimationFrame", "requestIdleCallback", "resizeBy", "resizeTo", "scroll", "scrollBy", "scrollTo", "setInterval", "setTimeout", "stop", "structuredClone", "webkitCancelAnimationFrame", "webkitRequestAnimationFrame", "chrome", "launchQueue", "onbeforematch", "originAgentCluster", "trustedTypes", "navigation", "speechSynthesis", "onpointerrawupdate", "crossOriginIsolated", "scheduler", "openDatabase", "webkitRequestFileSystem", "webkitResolveLocalFileSystemURL", "caches",  "cookieStore",  "ondevicemotion",  "ondeviceorientation",  "ondeviceorientationabsolute",  "getScreenDetails",  "queryLocalFonts",  "showDirectoryPicker",  "showOpenFilePicker",  "showSaveFilePicker", "cssRules" ]
+_h_base=Object.keys( window );
+for (var i = 0; i < _h_base.length; i++) {
+	if ( _h_omit.indexOf(_h_base[i]) < 0 ) {
+		try {
+			iterObj(eval(_h_base[i]),_h_base[i]);
+		} catch (err) {}
+		
+	}
+}
+copy(_h_variable)
+console.log('done')
+
+//////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////  ////////////////////////////////////////////////////////////////////////////////////
+// --> {:use:} <w#
+eyeformeta.binder( document.getElementById(theID), 'mouseover', function( el ) {
+        // i4meta.app.xy.boxID = el.getAttribute('i4meta');
+        i4meta.app.xy.boxID = boxID;
+        ////console.log(i4meta.app.xy.boxID);
+    }, false);
+// --> {:/:} <w#
 ////////////////////////////////////////////////////////////////////////////////////
+let person = prompt("Please enter your name", "Scott");
+////////////////////////////////////////////////////////////////////////////////////
+copy( document.querySelector('dl').innerText )
+////////////////////////////////////////////////////////////////////////////////////
+function UnCheckAll(){
+	var items=document.querySelectorAll('input[type=checkbox]');
+	for(var i=0; i<items.length; i++){
+		if(items[i].type=='checkbox')
+			items[i].checked=false;
+	}
+}
+UnCheckAll()
+////////////////////////////////////////////////////////////////////////////////////
+function walkDOM(root, func) {
+    var node = root;
+
+    start: while (node) {
+        func(node);
+        if (node.firstChild) {
+            node = node.firstChild;
+            continue start;
+        }
+
+        while (node) {
+            if (node === root) {
+                break start;
+            }
+
+            if (node.nextSibling) {
+                node = node.nextSibling;
+                continue start;
+            }
+
+            node = node.parentNode;
+        }
+    }
+}
+/////////////////////////////////////////////////////////
+function textNodeValuesToArray(node) {
+    var arrayOfText = [];
+    if (typeof node === "string") {
+        // node = document.getElementById(node);
+		// document.querySelectorAll( node ).forEach(function(item) { arrayOfText.push( textNodeValuesToArray(item) );});
+        node = document.querySelectorAll( node )[0];
+    }
+
+
+    function pushText(currentNode) {
+        if (currentNode.nodeType === 3) {
+            arrayOfText.push(currentNode.nodeValue);
+        }
+    }
+
+    walkDOM(node, pushText);
+
+    // try {
+    // 	var arrayOfTextB = [];
+    // 	for (var i = 0; i < arrayOfText.length; i++) {
+    // 		console.log(i,arrayOfText[i])
+    // 		arrayOfTextB = arrayOfTextB.concat(arrayOfText[i]);
+    // 	}
+    // 	arrayOfText=arrayOfTextB;
+    // } catch (err) {}
+
+    return arrayOfText;
+}
+
+console.log(textNodeValuesToArray('#parentfolder'));
 ////////////////////////////////////////////////////////////////////////////////////
 ns0 = undefined;
 ns0 = [];
@@ -39,10 +217,30 @@ window.open('http://rightthumb.com/projects/john/js/jquery.copycss.js', 'new')
 window.open('http://www.pillerbeauty.com/js/jquery-1.11.3.js', 'new')
 window.open('https://code.jquery.com/jquery-1.10.2.js', 'new')
 //////////////////////////////////////
+
+document.querySelectorAll( '[data-e2e-id=client-list-item-name]' ).forEach(function(item) {
+    console.log(item.innerText);
+});
+
+document.querySelectorAll( '[data-e2e-id=client-list-item-name]' )[0].click()
+document.querySelectorAll( '[data-e2e-id=client-view-details-tab]' )[0].click()
+document.querySelectorAll( '.value' ).forEach(function(item) {
+    console.log(item.innerText);
+});
+document.querySelectorAll( '[data-e2e-id=global-header-go-back-action]' )[0].click()
+//////////////////////////////////////
+data-prefix="mysql>"
+//////////////////////////////////////
+$( "[type='checkbox']" ).each(function( index ) {
+	console.log( $(this).prop("checked") );
+});
+//////////////////////////////////////
 hackData = [];
-document.querySelectorAll( '.random_word' ).forEach(function(item) {
+document.querySelectorAll( 'h3' ).forEach(function(item) {
     hackData.push( item.innerText );
 });
+copy(hackData.join('\n'))
+// copy(hackData.join('').replace('\n',','))
 //////////////////////////////////////
 $('#random_words_count').val('3');
 randomWordGenerator();
@@ -766,7 +964,7 @@ copy(hackData)
 
 // copyCSS
 
-hackSelection = 'td';
+hackSelection = '#snippetContent';
 $(hackSelection).copyCSS(hackSelection);
 $(hackSelection + 'div').each(function() {
 	$(this).copyCSS(this);

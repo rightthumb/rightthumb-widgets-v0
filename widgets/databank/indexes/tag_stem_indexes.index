@@ -8,5 +8,6 @@
     "TAGS": "tag",
     "ENTERTAINMENT": "entertain",
     "MOVIES": "movi",
-    "STARWARS": "starwar"
+    "STARWARS": "starwar",
+    "EXTENSION": "extens"
 }
