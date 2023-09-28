@@ -4035,6 +4035,11 @@ ai() {
     curl -s -S --fail -X POST --data-urlencode "$data" "$url"
 }
 
+curlurl() {
+	local url="$1"
+	curl -s "$url"
+}
+
 # a3bc42ec51e9
 
 			"""
