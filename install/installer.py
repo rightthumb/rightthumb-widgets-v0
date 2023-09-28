@@ -4017,6 +4017,24 @@ function nx {
 
 alias cdirs="$widgets/widgets/bash/create_dirs.sh"
 
+ai() {
+    local url="https://ai.sds.sh/?v=1"  # Replace with the actual URL
+    local data=""
+
+    # Check if an argument is provided
+    if [ $# -gt 0 ]; then
+        data="prompt=$@"
+    else
+        # Read data from standard input (pipe)
+        while IFS= read -r line; do
+            data+="prompt=${line}"
+        done
+    fi
+
+    # Send POST request using curl, displaying only the page results in plain text
+    curl -s -S --fail -X POST --data-urlencode "$data" "$url"
+}
+
 # a3bc42ec51e9
 
 			"""
