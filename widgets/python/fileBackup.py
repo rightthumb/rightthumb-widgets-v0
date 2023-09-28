@@ -818,7 +818,7 @@ def action(path=None,flag=None,o=None,pre=None):
 	# now = millTimeStamp()
 
 	# secureFiles
-
+	
 	now = genEpoch()
 	# print(path)
 	if _.switches.isActive('Input') or not path is None:
@@ -853,6 +853,7 @@ def action(path=None,flag=None,o=None,pre=None):
 						txtScheduler.append( { 'timestamp': genEpoch(), 'file': __.path(path), 'status': 0, 'app': 'fileBackup', 'group': 0, 'session': __.Session_ID } )
 						_.saveTable( txtScheduler,'fileBackupSchedule.json', p=0 )
 					return None
+			pathpath=path
 			if path in INDEX and os.path.getmtime(path) == INDEX[path]['timestamp']:
 				if not _.switches.isActive('Silent'):
 					_.pr(path, c='cyan')
@@ -1276,6 +1277,22 @@ def action(path=None,flag=None,o=None,pre=None):
 			modifiedRaw = os.path.getmtime(path)
 			byte = os.stat(path).st_size
 			T42_HB = False
+			if not path in INDEX:
+				if pathpath in INDEX: path=pathpath
+				elif pathpath.lower() in INDEX: path=pathpath.lower()
+				elif __.path(pathpath) in INDEX: path=__.path(pathpath)
+
+			# path=pathpath
+			if not path in INDEX:
+				txtScheduler.append( { 'timestamp': genEpoch(), 'file': __.path(path), 'status': 0, 'app': 'fileBackup', 'group': 0, 'session': __.Session_ID } )
+				_.saveTable( txtScheduler,'fileBackupSchedule.json', p=0 )
+				return None
+			if not os.path.isfile(INDEX[path]['backup']):
+				temp=_v.stmp+os.sep+'backup_default'
+				if not os.path.isfile(temp):
+					_.saveText('{1bf18757-ea88-41fb-b046-2bd2080f1735-c09afdb6-2241-4a49-aa45-da436bbe2abb}',temp)
+				INDEX[path]['backup']=temp
+				
 			if path in INDEX and os.stat(INDEX[path]['backup']).st_size  == byte:
 				T42_HB = True
 				if not byte < _BYTES_:

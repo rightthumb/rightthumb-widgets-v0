@@ -132,6 +132,7 @@ if type(file_trigger_data) == list:
 ########################################################################################
 # START
 
+
 def tail():
 	if _.switches.isActive('Verbos'):
 		_.switches.fieldSet( 'Print', 'active', True )
@@ -589,7 +590,26 @@ def sshpass(pw,cmd): return f"wsl sshpass -p '{pw}' {cmd} "
 
 _vault = _.regImp( __.appReg, '_rightThumb._vault' )
 _.v.quiet = False
-	
+
+
+
+
+
+
+
+# import subprocess
+# result = subprocess.run(['wsl', 'which'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, universal_newlines=True)
+# print(result.stdout)
+# result = subprocess.run(['C:\\path\\to\\wsl.exe', 'which'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, universal_newlines=True)
+# print(result.stdout)
+# sys.exit()
+
+# os.system('wsl');sys.exit();
+# os.system('C:\\Windows\\System32\\wsl.exe');sys.exit();
+
+
+
+
 ########################################################################################
 if __name__ == '__main__':
 	action()
@@ -598,4 +618,5 @@ if __name__ == '__main__':
 
 # URL()
 
+# dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart
 

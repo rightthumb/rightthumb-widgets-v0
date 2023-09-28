@@ -3314,6 +3314,8 @@ alias vps.a.d="vps.a.py.d; vps.a.sh.d; vps.a.db.d"
 
 #--> start#> lothal@m-eta.app
 alias vl="ssh scott@lothal.m-eta.app"
+alias ssh.l.s="ssh-copy-id -i ~/.ssh/id_rsa.pub scott@lothal.m-eta.app"
+alias ssh.l.r="ssh-copy-id -i ~/.ssh/id_rsa.pub root@lothal.m-eta.app"
 alias ssh.l.s.="ssh-copy-id -i /mnt/c/Users/Scott/.ssh/id_rsa.pub scott@lothal.m-eta.app"
 alias ssh.l.r.="ssh-copy-id -i /mnt/c/Users/Scott/.ssh/id_rsa.pub root@lothal.m-eta.app"
 alias vps.l.dt="ssh -L 59001:localhost:5901 -C -N -l scott lothal.m-eta.app"
@@ -3958,6 +3960,60 @@ alias hk.l="hotkeysloop 100"  # Call hotkeysloop 10 times for example
 
 
 clear
+
+notify() {
+    # Define the arguments
+    message=$1
+    title=${2:-"SDS"}  # Set default title as 'SDS'
+    url=$3
+
+    # Check the number of arguments and construct the curl command accordingly
+    if (( $# == 1 )); then
+        # If only 1 argument, it is the message and title defaults to 'SDS', url is not added
+        curl -H "Title: $title" -H "Priority: urgent" -H "Tags: +1" -d "$message" aleen.m-eta.app:52346/sds-notify
+    elif (( $# == 2 )); then
+        # If 2 arguments, the first is the title and the second is the message, url is not added
+        title=$1
+        message=$2
+        curl -H "Title: $title" -H "Priority: urgent" -H "Tags: +1" -d "$message" aleen.m-eta.app:52346/sds-notify
+    elif (( $# == 3 )); then
+        # If 3 arguments, the third is the url
+        curl -H "Title: $title" -H "Click: $url" -H "Priority: urgent" -H "Tags: +1" -d "$message" aleen.m-eta.app:52346/sds-notify
+    else
+        echo "Invalid number of arguments. Expected 1, 2, or 3."
+    fi
+}
+
+notify2() {
+    # Define the arguments
+    message=$1
+    title=${2:-"SDS"}  # Set default title as 'SDS'
+    url=$3
+
+    # Check the number of arguments and construct the curl command accordingly
+    if (( $# == 1 )); then
+        # If only 1 argument, it is the message and title defaults to 'SDS', url is not added
+        curl -H "Title: $title" -H "Priority: urgent" -H "Tags: -1" -d "$message" aleen.m-eta.app:52346/sds-notify
+    elif (( $# == 2 )); then
+        # If 2 arguments, the first is the title and the second is the message, url is not added
+        title=$1
+        message=$2
+        curl -H "Title: $title" -H "Priority: urgent" -H "Tags: -1" -d "$message" aleen.m-eta.app:52346/sds-notify
+    elif (( $# == 3 )); then
+        # If 3 arguments, the third is the url
+        curl -H "Title: $title" -H "Click: $url" -H "Priority: urgent" -H "Tags: -1" -d "$message" aleen.m-eta.app:52346/sds-notify
+    else
+        echo "Invalid number of arguments. Expected 1, 2, or 3."
+    fi
+}
+
+function nx {
+  if "$@"; then
+    notify "Success: $@"
+  else
+    notify2 "Failed: $@"
+  fi
+}
 
 
 # a3bc42ec51e9

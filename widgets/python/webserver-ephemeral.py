@@ -32,7 +32,7 @@ _str = __.imp('_rightThumb._string')
 def sw():
 	pass
 	#b)--> examples
-	# _.switches.register( 'Input', '-i' )
+	_.switches.register( 'SSL', '-ssl' )
 	# _.switches.register( 'URL', '-u,-url,-urls', 'https://etc.ac/', isData='raw' )
 	#e)--> examples
 	# _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name,data,clean', description='Files', isRequired=False )
@@ -169,6 +169,72 @@ import webbrowser
 import simplejson
 
 
+def generate_html_list(recursive=False):
+	# Helper function to generate HTML for a directory
+	def generate_directory_html(path, recursive):
+		html_str = "<ul>\n"
+		
+		for name in os.listdir(path):
+			full_path = os.path.join(path, name)
+			relative_path = os.path.relpath(full_path, current_folder)
+			if os.path.isdir(full_path):
+				if recursive:
+					html_str += f"    <li>{name}{generate_directory_html(full_path, recursive)}</li>\n"
+			else:
+				if os.name == 'nt':
+					relative_path1 = relative_path.split(os.sep)[-1]
+					relative_path2 = relative_path.replace('\\', '\\\\')
+				html_str += f"    <li><a href='#' onclick=\"window.sds.app.process('{relative_path2}')\">{relative_path1}</a></li>\n"
+		
+		html_str += "</ul>"
+		return html_str
+
+	# Get the current working directory
+	current_folder = os.getcwd()
+
+	# Start generating HTML from the current working directory
+	html_str = generate_directory_html(current_folder, recursive)
+
+	return html_str
+
+
+
+def generate_html_list0(recursive=False):
+	# Helper function to list files
+	def list_files(path, recursive):
+		files = []
+		for root, _, filenames in os.walk(path):
+			for filename in filenames:
+				files.append(os.path.join(root, filename))
+			if not recursive:
+				break
+		return files
+	
+	# Get the current working directory
+	current_folder = os.getcwd()
+
+	# List all files
+	files = list_files(current_folder, recursive)
+	
+	# Start the HTML unordered list
+	html_str = "<ul>\n"
+	
+	# Loop through all files and append the list items to the HTML string
+	for file in files:
+		relative_path = os.path.relpath(file, current_folder)
+		relative_path2 = os.path.relpath(file, current_folder)
+		if _.isWin:
+			relative_path2=relative_path2.replace('\\','\\\\')
+		html_str += f"    <li><a href='#' onclick=\"window.sds.app.process('{relative_path2}')\">{relative_path}</a></li>\n"
+	
+	# Close the HTML unordered list tag
+	html_str += "</ul>"
+	
+	return html_str
+
+# Use the function to generate an HTML list and print it
+html_list = generate_html_list(recursive=True)
+
 class Server(BaseHTTPRequestHandler):
 	def _set_headers(self):
 		self.send_response(200)
@@ -177,9 +243,9 @@ class Server(BaseHTTPRequestHandler):
 
 	def load_page(self, path, url, field="config"):
 		content = _.getText(path)
-        data = {field: content}
-        response = requests.post(url, data=data)
-        return response.text
+		data = {field: content}
+		response = requests.post(url, data=data)
+		return response.text
 
 	def do_GET(self):
 		data = self.parse_GET()
@@ -187,18 +253,65 @@ class Server(BaseHTTPRequestHandler):
 
 		content='get'
 		content=simplejson.dumps(data)
-		self.respond_OK( f"""
-		<html>
-		<head>
-			<title>Simple Web Server</title>
-		</head>
-		<body>
-			<h1>Welcome to My Web Server</h1>
-			<div id="content">{content}</div>
-			<a href="./?shutdown=1">shutdown</a>
-		</body>
-		</html>
+
+		self.respond_OK( """
+<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
+<!--
+<!DOCTYPE html>
+-->
+<html lang="en">
+
+<head>
+	<title>ephemeral server</title>
+	<meta charset="utf-8">
+	<!-- <base href="https://www.w3schools.com/" target="_blank"> -->
+	<!-- <META http-equiv="refresh" content="1;URL=/?"> -->
+	<!-- <script src="script.js"></script> -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<!-- <link rel="stylesheet" href="https://s2.webigami.com/systemglobal/w/C166/apps/boilerplate/webigami.css"> -->
+</head>
+
+<body>
+	"""+generate_html_list(1)+"""
+	<script type="text/javascript">
+
+
+		window.sds = typeof window.sds !== 'undefined' ? window.sds : {} ;
+		window.sds.v = typeof window.sds.v !== 'undefined' ? window.sds.v : {} ;
+		window.sds.app = {
+			placeholder: 0,
+			process: function(path) {
+				$.post(
+						'https://local.sds.sh/', {
+							'path': path
+						},
+						function(data) {
+							console.log(data);
+						}
+				);
+				// window.sds.app.process();
+			}, //==============================================
+		};
+	</script>
+</body>
+
+</html>
+
+
 		""" )
+		# self.respond_OK( f"""
+		# <html>
+		# <head>
+		# 	<title>Simple Web Server</title>
+
+		# </head>
+		# <body>
+		# 	<h1>Welcome to My Web Server</h1>
+		# 	<div id="content">{content}</div>
+		# 	<a href="./?shutdown=1">shutdown</a>
+		# </body>
+		# </html>
+		# """ )
 		if 'shutdown' in data: sys.exit()
 
 	def do_POST(self):
@@ -254,9 +367,12 @@ class Server(BaseHTTPRequestHandler):
 def action():
 	try:
 		host = "localhost"
+		host = "pc.local.sds.sh"
 		port = random.randint(8000, 8999)
 		server = HTTPServer((host, port), Server)
-		url = f"http://{host}:{port}/"
+		if _.switches.isActive('SSL'):
+			server.socket = ssl.wrap_socket(server.socket, certfile='C:\\Users\\Scott\\.rt\\profile\\certs\\certificate.pem', keyfile='C:\\Users\\Scott\\.rt\\profile\\certs\\private_key.key', server_side=True)
+		url = f"https://{host}:{port}/"
 		print(url)
 		print(url+'?shutdown=true')
 		webbrowser.open(url, new=2)
@@ -266,7 +382,7 @@ def action():
 			pass
 	except KeyboardInterrupt:
 		print("Server shutting down.")
-
+import ssl
 
 # https://orchards.softwaredevelopment.solutions/ephemeral/
 
@@ -289,3 +405,4 @@ if __name__ == '__main__':
 	action()
 	_.isExit(__file__)
 
+ 

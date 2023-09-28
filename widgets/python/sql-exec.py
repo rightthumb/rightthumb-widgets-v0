@@ -32,15 +32,21 @@ _str = __.imp('_rightThumb._string')
 def sw():
 	pass
 	#b)--> examples
-	# _.switches.register( 'Input', '-i' )
 	# _.switches.register( 'URL', '-u,-url,-urls', 'https://etc.ac/', isData='raw' )
 	#e)--> examples
-	# _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name,data,clean', description='Files', isRequired=False )
+	_.switches.register( 'Host', '-host' )
+	_.switches.register( 'User', '-user' )
+	_.switches.register( 'Password', '-password' )
+	_.switches.register( 'DB', '-db' )
+	_.switches.register( 'Port', '-port' )
+
+	_.switches.register( 'Yes', '-y,-yes' )
+	_.switches.register( 'Files', '-f,-fi,-file,-files','file.sql', isData='data', description='Files', isRequired=False )
 
 # __.setting('require-list',['Files,Plus','File,Has']) # todo
 # __.setting('require-list',['Pipe','Files'])
-__.setting('receipt-log')
-__.setting('receipt-file')
+__.setting('receipt-log',True)
+__.setting('receipt-file',True)
 __.setting('myFileLocations-skip-validation',False)
 __.setting('require-pipe',False)
 __.setting('require-pipe||file',False)
@@ -51,9 +57,9 @@ __.setting('switch-raw',[])
 
 _.appInfo[focus()] = {
 	# 'app': '8facG-jo0Cxk',
-	'file': 'thisApp.py',
+	'file': 'vps-sql-exec.py',
 	'liveAppName': __.thisApp( __file__ ),
-	'description': 'Changes the world',
+	'description': 'Run SQL on the server',
 		# _.ail(1,'subject')+
 		# _.aib('one')+
 	'categories': [
@@ -160,112 +166,76 @@ _.l.sw.register( triggers, sw )
 #e)--> examples
 ########################################################################################
 #n)--> start
-
-
-import os
-from twilio.rest import Client
-import yaml
-
-def fetch_twilio_messages():
-	# Set your environment variables or directly set the values for
-	# TWILIO_ACCOUNT_SID and TWILIO_AUTH_TOKEN
-	account_sid = _keychain.imp.key('twillio-account-sid')
-	auth_token = _keychain.imp.key('twillio-auth-token')
-
-	client = Client(account_sid, auth_token)
-
-	# Retrieve the list of messages
-	messages = client.messages.list()
-
-	return messages
-
-def convert_messages_to_yaml_0(messages):
-	yaml_list = []
-	
-	for msg in messages:
-		yaml_list.append({
-			'sid': msg.sid,
-			'from': msg.from_,
-			'to': msg.to,
-			'body': msg.body,
-			'date_sent': msg.date_sent.strftime('%Y-%m-%d %H:%M:%S'),
-		})
-
-	# Convert to YAML format
-	return yaml.dump(yaml_list, default_flow_style=False)
-
-def convert_messages_to_yaml_1(messages):
-    yaml_list = []
-
-    for msg in messages:
-        # Convert message attributes to dictionary
-        message_dict = {attr: getattr(msg, attr) for attr in dir(msg) if not callable(getattr(msg, attr)) and not attr.startswith("_")}
-        yaml_list.append(message_dict)
-
-    # Convert to YAML format
-    return yaml.dump(yaml_list, default_flow_style=False)
-
-
-def convert_messages_to_yaml_2(messages):
-    yaml_list = []
-
-    for msg in messages:
-        # Convert message attributes to dictionary
-        message_dict = {attr: getattr(msg, attr) for attr in dir(msg) if not callable(getattr(msg, attr)) and not attr.startswith("_")}
-
-        # Extract and format specific fields
-        message_dict['sid'] = msg.sid
-        message_dict['from'] = msg.from_
-        message_dict['to'] = msg.to
-        message_dict['body'] = msg.body
-        message_dict['status'] = msg.status
-        message_dict['date_sent'] = msg.date_sent.strftime('%Y-%m-%d %H:%M:%S')
-        
-        yaml_list.append(message_dict)
-
-    # Convert to YAML format
-    return yaml.dump(yaml_list, default_flow_style=False)
-
-
-def resend_to_undelivered(messages, retried_messages_log="retried_messages.log"):
-    client = Client(_keychain.imp.key('twillio-account-sid'), _keychain.imp.key('twillio-auth-token'))
-
-    # Read the log of retried messages
-    with open(retried_messages_log, "a+") as log:
-        log.seek(0)  # Go to the beginning of the file to read
-        retried_messages = [line.strip() for line in log.readlines()]
-
-        for msg in messages:
-            if msg.status == "undelivered" and msg.sid not in retried_messages:
-                # Resend the original message using the original 'from' number
-                client.messages.create(
-                    to=msg.to,
-                    from_=msg.from_,
-                    body=msg.body
-                )
-
-                # Add the message SID to the log
-                log.write(f"{msg.sid}\n")
-
-if __name__ == "__main__":
-    messages = fetch_twilio_messages()
-    yaml_representation = convert_messages_to_yaml(messages)
-    print(yaml_representation)
-
-    # Resend undelivered messages
-    resend_to_undelivered(messages)
-
-
+import mysql.connector
 
 def action():
-	messages = fetch_twilio_messages()
-	yaml_representation = convert_messages_to_yaml_2(messages)
-	print(yaml_representation)
+
+	# Replace the below database connection parameters as per your MySQL/MariaDB server details
+	if _.switches.isActive('Port'):
+		try:
+			port=int(_.switches.value('Port'))
+		except:
+			port=3306
+		_.pr('Port: ',port,c='yellow')
+	else:
+		port=33066
+	host='localhost'
+	user=_vault.imp.s.de('DOm78CRdaN2TmF46JWMtBip4kHgiwk+x')
+	db=_vault.imp.s.de('DOm78CRdaN2TmF46JWMtBip4kHgiwk+x')
+	password=_vault.imp.s.de('W2GmTR1xyfXB0NZbMkFDfb5mFpKa+ktj6iEHO7G8dw0=')
+	if _.switches.isActive('Host'):     host=_.switches.value('Host')
+	if _.switches.isActive('User'):     user=_.switches.value('User')
+	if _.switches.isActive('Password'): password=_.switches.value('Password')
+	if _.switches.isActive('DB'):       db=_.switches.value('DB`')
+	
+	db_config = {
+		"host": host,
+		"user": user,
+		"password": password,
+		"database": db,
+		"port": port
+	}
+
+	sql_commands = _.pp()
+	if type(sql_commands) == list: '\n'.join(sql_commands)
+
+	_.pr('SQL:\n',sql_commands,'\n')
+	ask=input('Run?: ').lower()
+	if not _.switches.isActive('Yes'):
+		if not 'y' in ask:
+			_.pr('Did not run',c='red')
+			sys.exit()
+
+	connection = None
+
+	try:
+		# Connect to the database
+		connection = mysql.connector.connect(**db_config)
+		cursor = connection.cursor()
+
+		# Execute the SQL commands
+		for command in sql_commands.split(";\n"):
+			if command.strip():
+				cursor.execute(command)
+
+		# Commit the transaction
+		connection.commit()
+
+	except mysql.connector.Error as err:
+		print(f"Error: {err}")
+
+	finally:
+		# Close the database connection
+		if connection and connection.is_connected():
+			cursor.close()
+			connection.close()
+			print("MySQL connection is closed")
+
+_vault = _.regImp( __.appReg, '_rightThumb._vault' )
 
 
-_keychain = _.regImp( __.appReg, 'keychain' )
-_scan = _.regImp( __.appReg, 'record-cleaner' )
 
+# python3 -m pip install mysql-connector-python
 
 
 ##################################################
@@ -287,3 +257,4 @@ if __name__ == '__main__':
 	action()
 	_.isExit(__file__)
 
+ 

@@ -32,15 +32,15 @@ _str = __.imp('_rightThumb._string')
 def sw():
 	pass
 	#b)--> examples
-	# _.switches.register( 'Input', '-i' )
-	# _.switches.register( 'URL', '-u,-url,-urls', 'https://etc.ac/', isData='raw' )
 	#e)--> examples
-	# _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name,data,clean', description='Files', isRequired=False )
+	_.switches.register( 'Overwrite', '-r,-replace,-overwrite', 'https://etc.ac/', isData='raw' )
+	_.switches.register( 'Destination', '-dst' )
+	_.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name', description='Files', isRequired=False )
 
 # __.setting('require-list',['Files,Plus','File,Has']) # todo
 # __.setting('require-list',['Pipe','Files'])
-__.setting('receipt-log')
-__.setting('receipt-file')
+__.setting('receipt-log',True)
+__.setting('receipt-file',True)
 __.setting('myFileLocations-skip-validation',False)
 __.setting('require-pipe',False)
 __.setting('require-pipe||file',False)
@@ -161,110 +161,49 @@ _.l.sw.register( triggers, sw )
 ########################################################################################
 #n)--> start
 
-
+from shutil import copyfile
 import os
-from twilio.rest import Client
-import yaml
-
-def fetch_twilio_messages():
-	# Set your environment variables or directly set the values for
-	# TWILIO_ACCOUNT_SID and TWILIO_AUTH_TOKEN
-	account_sid = _keychain.imp.key('twillio-account-sid')
-	auth_token = _keychain.imp.key('twillio-auth-token')
-
-	client = Client(account_sid, auth_token)
-
-	# Retrieve the list of messages
-	messages = client.messages.list()
-
-	return messages
-
-def convert_messages_to_yaml_0(messages):
-	yaml_list = []
-	
-	for msg in messages:
-		yaml_list.append({
-			'sid': msg.sid,
-			'from': msg.from_,
-			'to': msg.to,
-			'body': msg.body,
-			'date_sent': msg.date_sent.strftime('%Y-%m-%d %H:%M:%S'),
-		})
-
-	# Convert to YAML format
-	return yaml.dump(yaml_list, default_flow_style=False)
-
-def convert_messages_to_yaml_1(messages):
-    yaml_list = []
-
-    for msg in messages:
-        # Convert message attributes to dictionary
-        message_dict = {attr: getattr(msg, attr) for attr in dir(msg) if not callable(getattr(msg, attr)) and not attr.startswith("_")}
-        yaml_list.append(message_dict)
-
-    # Convert to YAML format
-    return yaml.dump(yaml_list, default_flow_style=False)
-
-
-def convert_messages_to_yaml_2(messages):
-    yaml_list = []
-
-    for msg in messages:
-        # Convert message attributes to dictionary
-        message_dict = {attr: getattr(msg, attr) for attr in dir(msg) if not callable(getattr(msg, attr)) and not attr.startswith("_")}
-
-        # Extract and format specific fields
-        message_dict['sid'] = msg.sid
-        message_dict['from'] = msg.from_
-        message_dict['to'] = msg.to
-        message_dict['body'] = msg.body
-        message_dict['status'] = msg.status
-        message_dict['date_sent'] = msg.date_sent.strftime('%Y-%m-%d %H:%M:%S')
-        
-        yaml_list.append(message_dict)
-
-    # Convert to YAML format
-    return yaml.dump(yaml_list, default_flow_style=False)
-
-
-def resend_to_undelivered(messages, retried_messages_log="retried_messages.log"):
-    client = Client(_keychain.imp.key('twillio-account-sid'), _keychain.imp.key('twillio-auth-token'))
-
-    # Read the log of retried messages
-    with open(retried_messages_log, "a+") as log:
-        log.seek(0)  # Go to the beginning of the file to read
-        retried_messages = [line.strip() for line in log.readlines()]
-
-        for msg in messages:
-            if msg.status == "undelivered" and msg.sid not in retried_messages:
-                # Resend the original message using the original 'from' number
-                client.messages.create(
-                    to=msg.to,
-                    from_=msg.from_,
-                    body=msg.body
-                )
-
-                # Add the message SID to the log
-                log.write(f"{msg.sid}\n")
-
-if __name__ == "__main__":
-    messages = fetch_twilio_messages()
-    yaml_representation = convert_messages_to_yaml(messages)
-    print(yaml_representation)
-
-    # Resend undelivered messages
-    resend_to_undelivered(messages)
-
-
-
+def process(path):
+	# print(path)
+	path=path.strip()
+	if not _.showLine(path): return None
+	global dst
+	if not os.path.isfile(path):
+		# _.pr(path,c='red')
+		return None
+	newDest = dst+os.sep
+	if _.isWin:
+		parts=path.replace(':','')
+	else:
+		parts=path
+	newDest += parts
+	newDest=newDest.replace(os.sep+os.sep,os.sep)
+	if os.path.isfile(newDest):
+		# _.pr('exists',c='red')
+		if _.switches.isActive('Overwrite'):
+			# _.pr('Deleted: dst',c='red')
+			os.unlink(newDest)
+		else:
+			# _.pr('Skipped: dst',c='red')
+			return None
+	try:
+		_v.mkdir(newDest,f=1)
+		copyfile(path,newDest)
+		_.pr(path,c='cyan')
+		_.pr(newDest,c='darkcyan')
+	except Exception as e:
+		_.pr('Error:',path)
+	_.pr()
 def action():
-	messages = fetch_twilio_messages()
-	yaml_representation = convert_messages_to_yaml_2(messages)
-	print(yaml_representation)
+	global dst
+	if _.switches.isActive('Destination'):
+		dst = _.switches.values('Destination')[0]
+	else:
+		dst = os.getcwd()
+	for path in _.pp():
+		process(path)
 
 
-_keychain = _.regImp( __.appReg, 'keychain' )
-_scan = _.regImp( __.appReg, 'record-cleaner' )
 
 
 
@@ -287,3 +226,4 @@ if __name__ == '__main__':
 	action()
 	_.isExit(__file__)
 
+ 

@@ -7,7 +7,7 @@ if errorlevel 1 (
 )
 
 REM Install the packages
-pip install -r ..\requirements.txt
+%pip% install -r ..\requirements.txt
 
 if errorlevel 1 (
     echo There was a problem installing the packages. Exiting.

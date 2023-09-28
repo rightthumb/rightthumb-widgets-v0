@@ -9,8 +9,9 @@ rem call uuid -e | p -copy
 rem call uuid -e | p -copy > %tmpf%
 call uuid -e  > %tmpf%
 SET /p uuid=<%tmpf%
-git commit -m "%tmpf%"
+git commit -m "%uuid%"
 rem echo %uuid% >> D:\.rightthumb-widgets\.git\COMMIT_EDITMSG
 rem pause
 git push
 call b back > nul 
+ 

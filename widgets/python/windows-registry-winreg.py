@@ -32,15 +32,15 @@ _str = __.imp('_rightThumb._string')
 def sw():
 	pass
 	#b)--> examples
-	# _.switches.register( 'Input', '-i' )
 	# _.switches.register( 'URL', '-u,-url,-urls', 'https://etc.ac/', isData='raw' )
 	#e)--> examples
 	# _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name,data,clean', description='Files', isRequired=False )
+	_.switches.register( 'Variables', '-v' )
 
 # __.setting('require-list',['Files,Plus','File,Has']) # todo
 # __.setting('require-list',['Pipe','Files'])
-__.setting('receipt-log')
-__.setting('receipt-file')
+__.setting('receipt-log',True)
+__.setting('receipt-file',True)
 __.setting('myFileLocations-skip-validation',False)
 __.setting('require-pipe',False)
 __.setting('require-pipe||file',False)
@@ -162,109 +162,44 @@ _.l.sw.register( triggers, sw )
 #n)--> start
 
 
-import os
-from twilio.rest import Client
-import yaml
+import winreg
 
-def fetch_twilio_messages():
-	# Set your environment variables or directly set the values for
-	# TWILIO_ACCOUNT_SID and TWILIO_AUTH_TOKEN
-	account_sid = _keychain.imp.key('twillio-account-sid')
-	auth_token = _keychain.imp.key('twillio-auth-token')
-
-	client = Client(account_sid, auth_token)
-
-	# Retrieve the list of messages
-	messages = client.messages.list()
-
-	return messages
-
-def convert_messages_to_yaml_0(messages):
-	yaml_list = []
-	
-	for msg in messages:
-		yaml_list.append({
-			'sid': msg.sid,
-			'from': msg.from_,
-			'to': msg.to,
-			'body': msg.body,
-			'date_sent': msg.date_sent.strftime('%Y-%m-%d %H:%M:%S'),
-		})
-
-	# Convert to YAML format
-	return yaml.dump(yaml_list, default_flow_style=False)
-
-def convert_messages_to_yaml_1(messages):
-    yaml_list = []
-
-    for msg in messages:
-        # Convert message attributes to dictionary
-        message_dict = {attr: getattr(msg, attr) for attr in dir(msg) if not callable(getattr(msg, attr)) and not attr.startswith("_")}
-        yaml_list.append(message_dict)
-
-    # Convert to YAML format
-    return yaml.dump(yaml_list, default_flow_style=False)
-
-
-def convert_messages_to_yaml_2(messages):
-    yaml_list = []
-
-    for msg in messages:
-        # Convert message attributes to dictionary
-        message_dict = {attr: getattr(msg, attr) for attr in dir(msg) if not callable(getattr(msg, attr)) and not attr.startswith("_")}
-
-        # Extract and format specific fields
-        message_dict['sid'] = msg.sid
-        message_dict['from'] = msg.from_
-        message_dict['to'] = msg.to
-        message_dict['body'] = msg.body
-        message_dict['status'] = msg.status
-        message_dict['date_sent'] = msg.date_sent.strftime('%Y-%m-%d %H:%M:%S')
-        
-        yaml_list.append(message_dict)
-
-    # Convert to YAML format
-    return yaml.dump(yaml_list, default_flow_style=False)
-
-
-def resend_to_undelivered(messages, retried_messages_log="retried_messages.log"):
-    client = Client(_keychain.imp.key('twillio-account-sid'), _keychain.imp.key('twillio-auth-token'))
-
-    # Read the log of retried messages
-    with open(retried_messages_log, "a+") as log:
-        log.seek(0)  # Go to the beginning of the file to read
-        retried_messages = [line.strip() for line in log.readlines()]
-
-        for msg in messages:
-            if msg.status == "undelivered" and msg.sid not in retried_messages:
-                # Resend the original message using the original 'from' number
-                client.messages.create(
-                    to=msg.to,
-                    from_=msg.from_,
-                    body=msg.body
-                )
-
-                # Add the message SID to the log
-                log.write(f"{msg.sid}\n")
-
-if __name__ == "__main__":
-    messages = fetch_twilio_messages()
-    yaml_representation = convert_messages_to_yaml(messages)
-    print(yaml_representation)
-
-    # Resend undelivered messages
-    resend_to_undelivered(messages)
-
-
+def get_environment_variables(registry_key_path):
+	env_vars = {}
+	try:
+		registry_key = winreg.OpenKey(winreg.HKEY_CURRENT_USER, registry_key_path)
+		i = 0
+		while True:
+			try:
+				name, value, regtype = winreg.EnumValue(registry_key, i)
+				env_vars[name] = value
+				i += 1
+			except OSError:
+				break
+	except FileNotFoundError:
+		pass
+	finally:
+		winreg.CloseKey(registry_key)
+	return env_vars
 
 def action():
-	messages = fetch_twilio_messages()
-	yaml_representation = convert_messages_to_yaml_2(messages)
-	print(yaml_representation)
+	showVars=False
+	if len(_.switches.all())==0:
+		showVars=True
+	if _.switches.isActive('Variables'):
+		showVars=True
+	if showVars:
+		user_env_vars = get_environment_variables('Environment')
+		system_env_vars = get_environment_variables('Volatile Environment')
+		
+		all_env_vars = {**system_env_vars, **user_env_vars}
+		
+		for var, value in all_env_vars.items():
+			print(f'%{var}%: {value}')
 
 
-_keychain = _.regImp( __.appReg, 'keychain' )
-_scan = _.regImp( __.appReg, 'record-cleaner' )
+
+
 
 
 

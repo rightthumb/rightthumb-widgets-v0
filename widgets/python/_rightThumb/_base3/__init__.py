@@ -7583,8 +7583,10 @@ def releaseAcquiredData( appDBA, theFocus, payload=None ):
 			
 		
 
-		saveTable2( info, log )
-
+		
+		try: saveTable2( info, log )
+		except:
+			if raq_err: pr('d8f4',c='red')
 		# print_()
 		# print_()
 		# printVar( info )
@@ -10134,12 +10136,24 @@ def saveTable2( rows, theFile, printThis=False, sort_keys=False, indentCode=True
 		dataDump = simplejson.dumps(rows, sort_keys=False, default=str)
 
 	# dataDump = simplejson.dumps(rows, indent=4, sort_keys=sort_keys, default=str)
-	f = open(theFile,'w')
-	f.write(str(dataDump))
-	f.close()
-	HD.chmod(theFile)
+	_v.mkdir(theFile,f=1)
+	try:
+		f = open(theFile,'w')
+		f.write(str(dataDump))
+		f.close()
+		saved=True
+	except Exception as e:
+		saved=False
+		# print_(e,c='red')
+		# print_(theFile,c='red')
+		# print_(type(rows),rows,c='purple')
+
+	if os.path.isfile(theFile): HD.chmod(theFile)
 	if printThis:
-		print_('Saved: ' + theFile)
+		if saved:
+			print_('Saved: ' + theFile)
+		else:
+			print_('Not Saved: ' + theFile)
 	if me and theFile in vv.opened_file_me: changeM( theFile, vv.opened_file_me[theFile] );
 
 def saveTable3( rows, theFile, printThis=False, me=0 ):

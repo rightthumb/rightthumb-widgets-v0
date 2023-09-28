@@ -267,7 +267,10 @@ def processFile(path):
 	if not os.path.isfile(path):
 		return None
 	if not _.isWin:
-		os.chmod( path, 0o777 )
+		try:
+			os.chmod( path, 0o777 )
+		except Exception as e:
+			pass
 	if not _.switches.isActive('NoPrint'): _.cp( [ 'CLEANED:', path ], 'cyan' )
 	file = _.getText( path, raw=True )
 	file = file.replace( chr(10), '\n' )

@@ -7,7 +7,7 @@ if errorlevel 1 (
 )
 
 REM Install the packages
-pip3 install -r full_requre.txt
+%pip3% install -r full_requre.txt
 
 if errorlevel 1 (
     echo There was a problem installing the packages. Exiting.
