@@ -1638,7 +1638,10 @@ meta=config_hash
 # print(life); sys.exit();
 
 
-
+keychainPath=home +os.sep+'.rt'+os.sep+ '.keychain'
+keychain=''
+if os.path.isfile(keychainPath):
+	keychain=__.getText(keychainPath)
 fn=dot()
 fn.path=dot()
 fn.path.fix=fpath

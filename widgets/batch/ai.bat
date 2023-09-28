@@ -1,6 +1,6 @@
 @echo off
 if [%1] == [] (
-    call p ai-simple
+    call p ai-prompt
 ) else (
-    call p ai-simple -prompt %*
+    call p ai-prompt -prompt %*
 )

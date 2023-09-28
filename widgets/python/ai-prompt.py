@@ -32,7 +32,7 @@ _str = __.imp('_rightThumb._string')
 def sw():
 	pass
 	#b)--> examples
-	_.switches.register( 'API', '-api' )
+	_.switches.register( 'Prompt', '-prompt', isData="raw" )
 	# _.switches.register( 'URL', '-u,-url,-urls', 'https://etc.ac/', isData='raw' )
 	#e)--> examples
 	# _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name,data,clean', description='Files', isRequired=False )
@@ -51,7 +51,7 @@ __.setting('switch-raw',[])
 
 _.appInfo[focus()] = {
 	# 'app': '8facG-jo0Cxk',
-	'file': 'config.py',
+	'file': 'thisApp.py',
 	'liveAppName': __.thisApp( __file__ ),
 	'description': 'Changes the world',
 		# _.ail(1,'subject')+
@@ -73,23 +73,22 @@ _.appInfo[focus()] = {
 						# '',
 	],
 	'examples': [
-						_.hp('p config'),
-						_.hp('p config -api 7e7318d7-c921-4488-8b4b-aa392d42ceb0'),
+						_.hp('p thisApp -file file.txt'),
 						_.linePrint(label='simple',p=0),
 						'',
 	],
 	'columns': [
 					# { 'name': 'name', 'abbreviation': 'n' },
 # columns used for
-# 	- abbreviation in switches
-#		- ex: -column n s
-#			- instead of: -column name size
-#		- ex: -sort n
-#		- ex: -group n
-# 	- sort is used for things like size sort by bytes
-# 	- responsiveness to terminal width
-# 		- order is important
-# 		- most important on top
+#   - abbreviation in switches
+#       - ex: -column n s
+#           - instead of: -column name size
+#       - ex: -sort n
+#       - ex: -group n
+#   - sort is used for things like size sort by bytes
+#   - responsiveness to terminal width
+#       - order is important
+#       - most important on top
 		
 		# this is used for personal usage to programmatically generate columns
 					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
@@ -162,39 +161,28 @@ _.l.sw.register( triggers, sw )
 ########################################################################################
 #n)--> start
 
+
 import requests
-import simplejson
-os=__.os
+
+
 def action():
-	url='https://config.softwaredevelopment.solutions/?api='
-	if _.switches.isActive('API'):
-		api = _.switches.value('API')
-	else:
-		api = input('API: ')
-	url+=api
-	text = requests.get(url).text
-	_.pr(line=1,c='yellow')
-	if not text.strip():
-		_.pr('bad api')
-		return None
-	_.pr(text)
-	if text.startswith('{') or text.startswith('['):
-		data=simplejson.loads(text)
-	else:
-		data=_.fromYML(text)
-	config=_v.fig
-	keychain=''
-	for k in data:
-		config[k]=data[k]
-		if k == 'keychain':
-			keychain=data[k]
+	if not 'keychain' in _v.fig: _.e('No keychain API','Run: p config')
+	keychain = _v.fig['keychain']
+	url = requests.get('https://keys.sds.sh/?api='+keychain+'&id=sds-ai').text
+	# Prepare the data payload
+	data = {"prompt": '\n'.join(_.pp())}
 
-	_.saveTable2(config, _v.home +os.sep+'.rt'+os.sep+ '.config.hash')
-	if keychain:
-		_.saveText(keychain, _v.keychainPath)
+	# Send the POST request
+	response = requests.post(url, data=data)
 
-	_.pr(line=1,c='yellow')
-	_.pr('saved',c='green')
+	# Check if the request was successful
+	if response.status_code == 200:
+		# Print the response text
+		print(response.text)
+	else:
+		print(f"Failed to get a valid response. Status Code: {response.status_code}")
+
+
 
 
 ##################################################
