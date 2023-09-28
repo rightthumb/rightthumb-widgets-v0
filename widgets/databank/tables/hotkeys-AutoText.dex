@@ -4,6 +4,10 @@
         "text": "",
         "back": 0
     },
+    "--keys": {
+        "text": "$keychain = json_decode( file_get_contents('https://keys.sds.sh/?json=1&prefix=1&id=twilio-*') , true);",
+        "back": 0
+    },
     "..token": {
         "text": "$token = $_REQUEST['t'] ?? $_REQUEST['token'] ?? $_REQUEST['api'] ?? $_REQUEST['HTTP_API'] ?? null;\nif (is_null($token)) {exit;} include_once(__DIR__.'/vars.php');\n$key = \"/home/softwaredev/keys/$token\"; if (!file_exists($key)) {exit;}\nif (strpos(file_get_contents($key), 'Heimdall') === false) {exit;}",
         "back": 0
