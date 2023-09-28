@@ -4015,6 +4015,7 @@ function nx {
   fi
 }
 
+alias cdirs="$widgets/widgets/bash/create_dirs.sh"
 
 # a3bc42ec51e9
 
