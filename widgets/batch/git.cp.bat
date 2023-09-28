@@ -12,6 +12,6 @@ SET /p uuid=<%tmpf%
 git commit -m "%uuid%"
 rem echo %uuid% >> D:\.rightthumb-widgets\.git\COMMIT_EDITMSG
 rem pause
-git push
+git push --force
 call b back > nul 
  
