@@ -48,7 +48,7 @@ class Meta_Namespace():
 	def __init__( self ):
 		pass
 dot=Meta_Namespace
-fn=dot()
+fn=Meta_Namespace()
 
 def settings( subjects, d=None, val='71e9-a678' ):
 	results = []
@@ -95,7 +95,7 @@ class dot:
 	def __init__( self ):
 		pass
 
-v = dot()
+v = Meta_Namespace()
 
 LOOP = {}
 
@@ -152,7 +152,7 @@ def dots(path):
 		if i == len(rts)-1:
 			exec('from 1 import 2'.replace('1',npre).replace('2',rts[-1]))
 			f='3=2'.replace('1',npre).replace('2',rts[-1]).replace('3',path)
-		else: f='1=dot()'.replace('1',npath);
+		else: f='1=Meta_Namespace()'.replace('1',npath);
 
 		if not _dots_(npath):
 			exec(f)

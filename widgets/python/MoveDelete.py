@@ -33,6 +33,9 @@ def sw():
 	_.switches.register( 'Source', '-src,-from,-f,-file','file.txt', isRequired=True )
 	_.switches.register( 'Destination', '-dst,-to','file2.txt', isRequired=False )
 	_.switches.register( 'Delete', '-del,-delete', isRequired=False )
+	_.switches.register( 'Backup', '-bk,-backup', isRequired=False )
+	_.switches.register( 'Ghost', '-ghost', isRequired=False )
+
 	# _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=True )
 
 # __.setting('require-list',['Files,Plus','File,Has']) # todo
@@ -272,6 +275,10 @@ def crypt_meta(src,dst):
 		if src in path:
 			fnd=True
 			found['crypt_meta']+=1
+			if _.switches.isActive('Ghost'):
+				backup(path,True)
+			else:
+				backup(path)
 			path=path.replace(src,dst)
 			_.pr(path,c='cyan')
 		if fnd and delete: continue
@@ -294,6 +301,10 @@ def crypt_settings(src,dst):
 		if src in path:
 			fnd=True
 			found['crypt_meta']+=1
+			if _.switches.isActive('Ghost'):
+				backup(path,True)
+			else:
+				backup(path)
 			path=path.replace(src,dst)
 			_.pr(path,c='cyan')
 		if fnd and delete: continue
@@ -334,6 +345,7 @@ def fileBackup(src,dst):
 	global isFoS
 	global isFoD
 	global found
+	_fileBackup = _.getTable('fileBackup.json')
 	found['fileBackup']=0
 	srcS = src[:-1]
 	dstS = dst[:-1]
@@ -350,15 +362,29 @@ def fileBackup(src,dst):
 		_fileBackup[i]['file']=path
 	_.pr(cnt,c='cyan')
 
+def backup(path,decrypt=False):
+	appReg=__.appReg
+	_bk = _.regImp( __.appReg, 'fileBackup' )
+	# _bk.switch( 'Silent' )
+	if decrypt:
+		_bk.switch( 'isPreOpen' )
+	_bk.switch( 'Input', path )
+	bkfi = _bk.action()
+	del _bk
+	__.appReg=appReg
+
 def action():
 	load()
 	global isFoS
 	global isFoD
 	global found
 	global delete
+	global _bk
 	global _MoveDelete
 	if len(_.switches.values('Source')) > 1: _.e('Multiple Sources Detected','Please specify only 1 Source')
 	delete = _.switches.isActive('Delete')
+	if _.switches.isActive('Ghost'):
+		delete = True
 	src = __.path(_.switches.values('Source')[0])
 	if _.switches.isActive('Destination'):
 		dst = _.switches.values('Destination')[0]
@@ -420,6 +446,7 @@ def action():
 		if found[f]: fnd=True
 	if delete: did='delete'
 	else: did='move'
+	if _.switches.isActive('Ghost'): did='ghost'
 	inlogs={}
 	for k in found:
 		if found[k]: inlogs[k]=found[k]
@@ -446,7 +473,7 @@ def action():
 	_.saveTable(_MoveDelete,'MoveDelete.json')
 	_.pv(found)
 
-	if delete:
+	if not _.switches.isActive('Ghost') and _.switches.isActive('Backup') and delete:
 		import _rightThumb._zipper as _zipper
 		_zipper.zip(src,dst)
 		shutil.rmtree(src)
@@ -477,7 +504,6 @@ def load():
 	_bookmarks      = _.getTable('bookmarks.index')
 	_MoveDelete     = _.getTable('MoveDelete.json')
 	_crypt_meta     = _.getTable('secure-crypt-local.meta')
-	_fileBackup     = _.getTable('fileBackup.json')
 	_crypt_settings = _.getTable('secure-crypt-local.settings')
 
 

@@ -114,8 +114,8 @@ goto:eof
         )
     if [%initOpen%] == [y] (
 
-            call p fileBackup -open -i %childExample% -python
-            call p file-open -app %code_editor% -f %childExample%
+            rem call p fileBackup -open -i %childExample% -python
+            call p file-open -app %code_editor% -f %childExample% -backup
             goto:eof
 
         ) else (
@@ -132,8 +132,8 @@ goto:eof
         )
     if [%initOpen%] == [y] (
             if not exist "%importFolder%\" md "%importFolder%\"
-            call p fileBackup -open -i %child% -python
-            call p file-open -app %code_editor% -f %child%
+            rem call p fileBackup -open -i %child% -python
+            call p file-open -app %code_editor% -f %child% -backup
             echo %child%
         ) else (
             goto:eof
@@ -152,8 +152,8 @@ goto:eof
         rem echo %fileName%
         if [%fileName%] == [] goto:eof
 
-        call p fileBackup -open -i "%importFolder%\%fileName%.py" -python
-        call p file-open -app %code_editor% -f "%importFolder%\%fileName%.py"
+        rem call p fileBackup -open -i "%importFolder%\%fileName%.py" -python
+        call p file-open -app %code_editor% -f "%importFolder%\%fileName%.py" -backup
         rem echo %importFolder%\%fileName%.py
 
     goto:eof
@@ -176,23 +176,23 @@ goto:eof
         )
     goto:eof
 :BUILDFILE_FALSE
-    call p fileBackup -open -i "%python%\%fileName%.py" -python
+    rem call p fileBackup -open -i "%python%\%fileName%.py" -python
     type %initExample% > "%python%\%fileName%.py"
-    call p fileBackup -open -i "%python%\%fileName%.py" -python
-    call p file-open -app %code_editor% -f "%python%\%fileName%.py"
+    rem call p fileBackup -open -i "%python%\%fileName%.py" -python
+    call p file-open -app %code_editor% -f "%python%\%fileName%.py" -backup
     rem echo %python%\%fileName%.py
     goto:eof
 :BUILDFILE_TRUE
     echo App already exists
     set /p action=Replace App?: 
     if [%action%] == [y] (
-            call p fileBackup -open -i "%python%\%fileName%.py" -python
+            rem call p fileBackup -open -i "%python%\%fileName%.py" -python
             type %initExample% > "%python%\%fileName%.py"
         ) else (
-            call p fileBackup -open -i "%python%\%fileName%.py" -python
+            rem call p fileBackup -open -i "%python%\%fileName%.py" -python
         )
 
-    call p file-open -app %code_editor% -f "%python%\%fileName%.py"
+    call p file-open -app %code_editor% -f "%python%\%fileName%.py" -backup
     rem echo %python%\%fileName%.py
     goto:eof
 :INIT
@@ -205,23 +205,23 @@ goto:eof
         )
     if [%initOpen%] == [y] (
             if not exist "%importFolder%\" md "%importFolder%\"
-            call p fileBackup -open -i %__init__% -python
+            rem call p fileBackup -open -i %__init__% -python
             if [%isNew%] == [Y] echo %template% %__init__%
             if [%isNew%] == [Y] type %template% > %__init__%
-            call p file-open -app %code_editor% -f %__init__%
+            call p file-open -app %code_editor% -f %__init__% -backup
             rem echo %__init__%
         ) else (
             goto:eof
         )
     goto:eof
 :EXAMPLE
-    call p fileBackup -open -i %initExample% -python
-    call p file-open -app %code_editor% -f %initExample%
+    rem call p fileBackup -open -i %initExample% -python
+    call p file-open -app %code_editor% -f %initExample% -backup
     rem echo %initExample%
     goto:eof
 :SAMPLE
-    call p fileBackup -open -i %childSample% -python
-    call p file-open -app %code_editor% -f %childSample%
+    rem call p fileBackup -open -i %childSample% -python
+    call p file-open -app %code_editor% -f %childSample% -backup
     rem echo %childSample%
     goto:eof
 :CMDP
@@ -230,8 +230,8 @@ goto:eof
             echo.
             type %childCommands%
         ) else (
-            call p fileBackup -open -i %childCommands% -python
-            call p file-open -app %code_editor% -f %childCommands%
+            rem call p fileBackup -open -i %childCommands% -python
+            call p file-open -app %code_editor% -f %childCommands% -backup
             rem echo %childCommands%
         )
     echo.
@@ -240,8 +240,8 @@ goto:eof
     rem echo %childCommands%
     goto:eof
 :CMDE
-    call p fileBackup -open -i %childCommands% -python
-    call p file-open -app %code_editor% -f %childCommands%
+    rem call p fileBackup -open -i %childCommands% -python
+    call p file-open -app %code_editor% -f %childCommands% -backup
     rem echo %childCommands%
     echo.
     echo.

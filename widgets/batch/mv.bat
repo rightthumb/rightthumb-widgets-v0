@@ -14,7 +14,7 @@ rem call p dir -cache %widgets%\widgets\databank\tables\my_5TB_Drive_WD-movies.l
 
  
 if [%2] == [] (
-	call p MoveDelete -src %1 -delete
+	call p MoveDelete -src %1 -delete -backup
 	goto:eof
 )
 call p MoveDelete -src %1 -dst %2

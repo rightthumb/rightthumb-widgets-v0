@@ -146,7 +146,8 @@ def zip_file(file_path, archive_name):
 		# Add the file to the zip file
 		zipf.write(file_path, arcname=os.path.basename(file_path))
 	
-	print(f"File {file_path} has been zipped successfully as {archive_name}")
+	# print(f"File {file_path} has been zipped successfully as {archive_name}")
+	print(f"{archive_name}")
 
 def zip_folder(folder_path, archive_name):
 	# Check if the specified folder exists
@@ -164,7 +165,8 @@ def zip_folder(folder_path, archive_name):
 				# Add file to zip file
 				zipf.write(file_path, arcname=os.path.relpath(file_path, folder_path))
 	
-	print(f"Folder {folder_path} has been zipped successfully as {archive_name}")
+	# print(f"Folder {folder_path} has been zipped successfully as {archive_name}")
+	print(f"{archive_name}")
 
 def zip(path, archive_name):
 	_v.mkdir(archive_name,f=1)
