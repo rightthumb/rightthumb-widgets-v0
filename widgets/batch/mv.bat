@@ -10,6 +10,11 @@ rem    - Scott Taylor Reph, RightThumb.com
 rem ###########################################################################
 rem ## {C3P0D40fAe8B} ##
 
-call p dir -cache %widgets%\widgets\databank\tables\my_5TB_Drive_WD-movies.ls -movietitle -movies -franchise %*
+rem call p dir -cache %widgets%\widgets\databank\tables\my_5TB_Drive_WD-movies.ls -movietitle -movies -franchise %*
 
  
+if [%2] == [] (
+	call p MoveDelete -src %1 -delete
+	goto:eof
+)
+call p MoveDelete -src %1 -dst %2

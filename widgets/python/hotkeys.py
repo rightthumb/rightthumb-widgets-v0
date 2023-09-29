@@ -1,17 +1,5 @@
 #!/usr/bin/python3
-hotkeys='''
-/home/scott/figlet/3-D.figlet
-'''
-hotkeys='''
- **      **            **   **
-/**     /**           /**  /**              **   **
-/**     /**  ******  ******/**  **  *****  //** **   ******
-/********** **////**///**/ /** **  **///**  //***   **////
-/**//////**/**   /**  /**  /****  /*******   /**   //*****
-/**     /**/**   /**  /**  /**/** /**////    **     /////**
-/**     /**//******   //** /**//**//******  **      ******
-//      //  //////     //  //  //  //////  //      //////
-'''
+
 hotkeys='''
 /home/scott/figlet/Caligraphy.figlet
 '''
@@ -99,6 +87,19 @@ _|  _|    _|        _|    _|    _|  _|  _|    _|      _|_|  _|
 _|    _|    _|_|_|    _|_|_|      _|  _|      _|  _|_|_|      _|_|_|
 						_|
 					_|_|
+'''
+hotkeys='''
+/home/scott/figlet/3-D.figlet
+'''
+hotkeys='''
+ **      **            **   **
+/**     /**           /**  /**              **   **
+/**     /**  ******  ******/**  **  *****  //** **   ******
+/********** **////**///**/ /** **  **///**  //***   **////
+/**//////**/**   /**  /**  /****  /*******   /**   //*****
+/**     /**/**   /**  /**  /**/** /**////    **     /////**
+/**     /**//******   //** /**//**//******  **      ******
+//      //  //////     //  //  //  //////  //      //////
 '''
 # ## {R2D2919B742E} ##
 # ###########################################################################
@@ -788,84 +789,184 @@ class HOTKEYS:
 # class Hotkeys:END
 
 def _pad(var): return ' '+str(var)+' '
-
+try:
+	import numpy as np
+	import sounddevice as sd
+except Exception as e:
+	pass
 
 class BEEPS:
-	def __init__( self ):
-		###
-		# Notes Config
-		###
+    def __init__(self):
+        ###
+        # Notes Config
+        ###
 
-		# Set delay tempo
-		self.tempo = 0.15
-		# tempo = 1
+        # Set delay tempo
+        self.tempo = 0.15
 
-		# Setup Notes
-		self.notes = {}
-		self.notes["pause"] = 0
-		self.notes["c"] = 1
-		self.notes["c#"] = 2
-		self.notes["d"] = 3
-		self.notes["d#"] = 4
-		self.notes["e"] = 5
-		self.notes["f"] = 6
-		self.notes["f#"] = 7
-		self.notes["g"] = 8
-		self.notes["g#"] = 9
-		self.notes["a"] = 10
-		self.notes["a#"] = 11
-		self.notes["b"] = 12
+        # Setup Notes
+        self.notes = {
+            "pause": 0,
+            "c": 1,
+            "c#": 2,
+            "d": 3,
+            "d#": 4,
+            "e": 5,
+            "f": 6,
+            "f#": 7,
+            "g": 8,
+            "g#": 9,
+            "a": 10,
+            "a#": 11,
+            "b": 12,
+        }
 
-		# Note Types
-		self.note_types = {}
-		self.note_types["sixteenth"] = 50
-		self.note_types["eigth"] = 100
-		self.note_types["dotted_eigth"] = 150
-		self.note_types["quarter"] = 200
-		self.note_types["half"] = 400
-		self.note_types["whole"] = 800
-		self.note_types["triplet"] = 60
-	def play_note( self, octave, note, note_type ):
-		"""Play a note at a certain octave by calculating the frequency of the sound it would represent on the motherboard's speaker."""
+        # Note Types
+        self.note_types = {
+            "sixteenth": 50,
+            "eighth": 100,
+            "dotted_eighth": 150,
+            "quarter": 200,
+            "half": 400,
+            "whole": 800,
+            "triplet": 60,
+        }
 
-		# Match the note and note type to the dictionaries
-		note = self.notes[note]
-		note_type = self.note_types[note_type]
+    def play_note(self, octave, note, note_type):
+        """Play a note at a certain octave by calculating the frequency of the sound it would represent."""
+        pass
+        # # Match the note and note type to the dictionaries
+        # note = self.notes[note]
+        # note_type = self.note_types[note_type]
 
-		# Chill for a bit if it's a pause
-		if not note:
-			time.sleep(note_type/1000)
-			return
+        # # Chill for a bit if it's a pause
+        # if not note:
+        #     time.sleep(note_type / 1000)
+        #     return
 
-		# Calculate C for the provided octave
-		frequency = 32.7032 * (2**octave)
+        # # Calculate C for the provided octave
+        # frequency = 32.7032 * (2 ** octave)
 
-		# Calculate the frequency of the given note
-		frequency *= 1.059463094**note
+        # # Calculate the frequency of the given note
+        # frequency *= 1.059463094 ** note
 
-		# Beep it up
-		try:
-			winsound.Beep(int(frequency), note_type)
-			# Delay after the beep so it doesn't all run together
-			time.sleep(self.tempo)
-		except Exception as e:
-			frameinfo = getframeinfo(currentframe()); _.pr( _.addComma(frameinfo.lineno),'\t', e,c='red');
-			pass
+        # # Generate sine wave
+        # duration = note_type / 1000  # convert to seconds
+        # sample_rate = 44100
+        # t = np.arange(int(duration * sample_rate))
+        # wave = 0.5 * np.sin(2 * np.pi * frequency * t / sample_rate)
+        # wave = np.int16(wave * 32767)
 
-	def simple_beep(self):
-		_oct = 2
-		self.play_note(_oct, 'g', 'quarter')
+        # # Play the sound
+        # try:
+        #     sd.play(wave, sample_rate)
+        #     sd.wait()
+        #     # Delay after the beep so it doesn't all run together
+        #     time.sleep(self.tempo)
+        # except Exception as e:
+        #     frameinfo = getframeinfo(currentframe())
+        #     print(frameinfo.lineno, '\t', e, 'red')
+        #     pass
 
-	def simple_beep2(self):
-		_oct = 3
-		self.play_note(_oct, 'e', 'quarter')
-	def note(self,n='c',*args):
-		_oct=3
-		nt='half'
-		for a in args:
-			if type(a) == str: nt=a
-			if type(a) == int: _oct=a
-		self.play_note(_oct, n, nt)
+    def simple_beep(self):
+        _oct = 2
+        self.play_note(_oct, 'g', 'quarter')
+
+    def simple_beep2(self):
+        _oct = 3
+        self.play_note(_oct, 'e', 'quarter')
+
+    def note(self, n='c', *args):
+        _oct = 3
+        nt = 'half'
+        for a in args:
+            if type(a) == str:
+                nt = a
+            if type(a) == int:
+                _oct = a
+        self.play_note(_oct, n, nt)
+
+
+
+
+
+
+# class BEEPS:
+# 	def __init__( self ):
+# 		###
+# 		# Notes Config
+# 		###
+
+# 		# Set delay tempo
+# 		self.tempo = 0.15
+# 		# tempo = 1
+
+# 		# Setup Notes
+# 		self.notes = {}
+# 		self.notes["pause"] = 0
+# 		self.notes["c"] = 1
+# 		self.notes["c#"] = 2
+# 		self.notes["d"] = 3
+# 		self.notes["d#"] = 4
+# 		self.notes["e"] = 5
+# 		self.notes["f"] = 6
+# 		self.notes["f#"] = 7
+# 		self.notes["g"] = 8
+# 		self.notes["g#"] = 9
+# 		self.notes["a"] = 10
+# 		self.notes["a#"] = 11
+# 		self.notes["b"] = 12
+
+# 		# Note Types
+# 		self.note_types = {}
+# 		self.note_types["sixteenth"] = 50
+# 		self.note_types["eigth"] = 100
+# 		self.note_types["dotted_eigth"] = 150
+# 		self.note_types["quarter"] = 200
+# 		self.note_types["half"] = 400
+# 		self.note_types["whole"] = 800
+# 		self.note_types["triplet"] = 60
+# 	def play_note( self, octave, note, note_type ):
+# 		"""Play a note at a certain octave by calculating the frequency of the sound it would represent on the motherboard's speaker."""
+
+# 		# Match the note and note type to the dictionaries
+# 		note = self.notes[note]
+# 		note_type = self.note_types[note_type]
+
+# 		# Chill for a bit if it's a pause
+# 		if not note:
+# 			time.sleep(note_type/1000)
+# 			return
+
+# 		# Calculate C for the provided octave
+# 		frequency = 32.7032 * (2**octave)
+
+# 		# Calculate the frequency of the given note
+# 		frequency *= 1.059463094**note
+
+# 		# Beep it up
+# 		try:
+# 			winsound.Beep(int(frequency), note_type)
+# 			# Delay after the beep so it doesn't all run together
+# 			time.sleep(self.tempo)
+# 		except Exception as e:
+# 			frameinfo = getframeinfo(currentframe()); _.pr( _.addComma(frameinfo.lineno),'\t', e,c='red');
+# 			pass
+
+# 	def simple_beep(self):
+# 		_oct = 2
+# 		self.play_note(_oct, 'g', 'quarter')
+
+# 	def simple_beep2(self):
+# 		_oct = 3
+# 		self.play_note(_oct, 'e', 'quarter')
+# 	def note(self,n='c',*args):
+# 		_oct=3
+# 		nt='half'
+# 		for a in args:
+# 			if type(a) == str: nt=a
+# 			if type(a) == int: _oct=a
+# 		self.play_note(_oct, n, nt)
 
 
 class CLIP:
@@ -3331,7 +3432,7 @@ toggler['alt_win_m'] = 'clean-terminal-copy'
 def scheduler_job(rec=None):
 
 	if rec is None:
-		_.pr('scheduler: checking for database changes',r=1)
+		# _.pr('scheduler: checking for database changes',r=1)
 
 		if os.path.isfile(__.scheduler_db):
 			mod=_.mod(__.scheduler_db)

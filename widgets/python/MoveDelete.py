@@ -424,7 +424,17 @@ def action():
 	for k in found:
 		if found[k]: inlogs[k]=found[k]
 	if delete:
-		dst=_v.myBIN+os.sep+'deleted'+os.sep+str(__.startTime)+'.zip'
+		if isFoS: am='fo'
+		else:  am='fi'
+		try:
+			try:
+				item=src.split(os.sep)[-3]+'-'+src.split(os.sep)[-2]+'-'+src.split(os.sep)[-1]
+			except Exception as e:
+				item=src.split(os.sep)[-2]+'-'+src.split(os.sep)[-1]
+		except Exception as e:
+			item=src.split(os.sep)[-1]
+		item+='-'+am
+		dst=_v.myBIN+os.sep+'deleted'+os.sep+str(__.startTime)+'___'+item+'.zip'
 	rec = {
 				'epoch': __.startTime,
 				'type': did,
@@ -434,6 +444,7 @@ def action():
 	}
 	_MoveDelete.append(rec)
 	_.saveTable(_MoveDelete,'MoveDelete.json')
+	_.pv(found)
 
 	if delete:
 		import _rightThumb._zipper as _zipper
