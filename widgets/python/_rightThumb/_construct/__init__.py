@@ -276,6 +276,8 @@ def isExit():
 
 
 def path( p, ab=True, pop=False, file=False, slash=None, folder=None, fi=None, fo=None, fix=True ):
+	os=imp('os.sep')
+	p=p.replace(os.sep+os.sep,os.sep)
 	if isWin or not pop: return _path_( p, ab, pop, file, slash, folder, fi, fo, fix )
 	os=imp('os.path.abspath')
 	p1 = os.path.abspath(p)

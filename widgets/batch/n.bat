@@ -47,14 +47,12 @@ if not [%2] == [] (
     call p file-open -backup -alias %*
 ) else if exist %* (
     CALL:OPEN_FILE %*
+) else if exist %myTables%\%* (
+    CALL:OPEN_FILE %myTables%\%*
 ) else if exist %myTables%\%*.json (
     CALL:OPEN_FILE %myTables%\%*.json
 ) else if exist %myTables%\%*.txt (
     CALL:OPEN_FILE %myTables%\%*.txt
-) else if exist %dbTables%\%*.json (
-    CALL:OPEN_FILE %dbTables%\%*.json
-) else if exist %dbTables%\%* (
-    CALL:OPEN_FILE %dbTables%\%*
 ) else if exist %python%\%*.py (
     CALL:OPEN_FILE %python%\%*.py
 ) else if exist %phpFiles%\%*.php (
@@ -71,14 +69,16 @@ if not [%2] == [] (
     CALL:OPEN_FILE %myPowershell%\%*.ps1
 ) else if exist %myPython%\%*.py (
     CALL:OPEN_FILE %myPython%\%*.py
-) else if exist %myTables%\%* (
-    CALL:OPEN_FILE %myTables%\%*
 ) else if exist %myDatabases%\%* (
     CALL:OPEN_FILE %myDatabases%\%*
 ) else if exist %myWebApp%\%* (
     CALL:OPEN_FILE %myWebApp%\%*
 ) else if exist %USERPROFILE%\Desktop\%* (
     CALL:OPEN_FILE %USERPROFILE%\Desktop\%*
+) else if exist %dbTables%\%*.json (
+    CALL:OPEN_FILE %dbTables%\%*.json
+) else if exist %dbTables%\%* (
+    CALL:OPEN_FILE %dbTables%\%*
 ) else (
     CALL:OPEN_FILE %*
 )

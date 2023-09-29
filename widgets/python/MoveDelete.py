@@ -146,44 +146,48 @@ def aliases(src,dst):
 	db=_aliases['aliases'].copy()
 	for a in db:
 		fnd=False
-		db[a]=db[a].replace(os.sep+os.sep,os.sep)
+		db[a]=__.path(db[a].replace(os.sep+os.sep,os.sep))
 		if not isFoS and src == db[a]:
 			fnd=True
 			found['aliases']+=1
-			if isFoD:
-				fo=folder(db[a])
-				_aliases['aliases'][a]=db[a].replace(fo,dst)
-			else:
-				_aliases['aliases'][a]=dst
+			_aliases['aliases'][a]=dst
+			# if isFoD:
+			# 	fo=folder(db[a])
+			# 	_aliases['aliases'][a]=db[a].replace(fo,dst)
+			# else:
+			# 	_aliases['aliases'][a]=dst
 		elif db[a].startswith(src):
 			fnd=True
 			found['aliases']+=1
-			_aliases['aliases'][a]=db[a].replace(src,dst)
+			_aliases['aliases'][a]=__.path(db[a].replace(src,dst))
 		if fnd:
 			_.pr('aliases:',a,_aliases['aliases'][a],c='cyan')
 			if delete:
 				del _aliases['aliases'][a]
 	db=_aliases['files'].copy()
 	for p in db:
+		op=p
+		p=__.path(p)
 		fnd=False
 		if not isFoS:
 			if p == src:
 				fnd=True
 				found['aliases']+=1
-				if not isFoD:
-					_aliases['files'][p]=src
-				else:
-					fo=folder(p)
-					_aliases['files'][p]=p.replace(fo,dst)
+				_aliases['files'][op]=dst
+				# if not isFoD:
+				# 	_aliases['files'][p]=src
+				# else:
+				# 	fo=folder(p)
+				# 	_aliases['files'][p]=p.replace(fo,dst)
 
 		elif p.startswith(src):
 			fnd=True
 			found['aliases']+=1
-			_aliases['files'][p]=p.replace(src,dst)
+			_aliases['files'][op]=__.path(p.replace(src,dst))
 		if fnd:
-			_.pr(_aliases['files'][p],c='cyan')
+			_.pr(_aliases['files'][op],c='cyan')
 			if delete:
-				del _aliases['files'][p]
+				del _aliases['files'][op]
 
 
 
@@ -206,15 +210,15 @@ def bookmarks(src,dst):
 	# sanitizeFolder
 	for a in db:
 		fnd=False
-		path=_v.resolveFolderIDs(db[a])
+		path=__.path(_v.resolveFolderIDs(db[a]))
 		if path == srcS:
 			fnd=True
 			found['bookmarks']+=1
-			_bookmarks['labels'][a]=_v.sanitizeFolder(dstS)
+			_bookmarks['labels'][a]=__.path(_v.sanitizeFolder(dstS))
 		elif path.startswith(src):
 			fnd=True
 			found['bookmarks']+=1
-			_bookmarks['labels'][a]=_v.sanitizeFolder(path.replace(src,dst))
+			_bookmarks['labels'][a]=__.path(_v.sanitizeFolder(path.replace(src,dst)))
 		if fnd:
 			_.pr(a,_v.resolveFolderIDs(_bookmarks['labels'][a]),c='cyan')
 			if delete: del _bookmarks['labels'][a]
@@ -222,7 +226,7 @@ def bookmarks(src,dst):
 	for path in _bookmarks['paths']:
 		fnd=False
 		opath=path
-		path=_v.resolveFolderIDs(path)
+		path=__.path(_v.resolveFolderIDs(path))
 		if path == srcS:
 			fnd=True
 			found['bookmarks']+=1
@@ -231,7 +235,7 @@ def bookmarks(src,dst):
 			fnd=True
 			found['bookmarks']+=1
 			path=path.replace(src,dst)
-		path=_v.sanitizeFolder(path)
+		path=__.path(_v.sanitizeFolder(path))
 		if fnd:
 			_.pr(path,c='cyan')
 		if fnd and delete: continue
@@ -249,11 +253,12 @@ def sites(src,dst):
 	_.pr('sites',c='yellow')
 	db=_sites.copy()
 	for i,path in enumerate(db):
+		path=__.path(path)
 		fnd=False
 		if path.startswith(src):
 			fnd=True
 			found['sites']+=1
-			_sites[i] = path.replace(src,dst)
+			_sites[i] = __.path(path.replace(src,dst))
 			_.pr(_sites[i],c='cyan')
 		if fnd and delete: del _sites[i]
 
@@ -270,8 +275,9 @@ def crypt_meta(src,dst):
 	# print(_crypt_meta.keys())
 	db={}
 	for path in _crypt_meta:
-		fnd=False
 		opath=path
+		path=__.path(path)
+		fnd=False
 		if src in path:
 			fnd=True
 			found['crypt_meta']+=1
@@ -279,7 +285,7 @@ def crypt_meta(src,dst):
 				backup(path,True)
 			else:
 				backup(path)
-			path=path.replace(src,dst)
+			path=__.path(path.replace(src,dst))
 			_.pr(path,c='cyan')
 		if fnd and delete: continue
 		db[path]=_crypt_meta[opath]
@@ -296,8 +302,9 @@ def crypt_settings(src,dst):
 	# print(_crypt_meta.keys())
 	db={}
 	for path in _crypt_settings:
-		fnd=False
 		opath=path
+		path=__.path(path)
+		fnd=False
 		if src in path:
 			fnd=True
 			found['crypt_meta']+=1
@@ -305,7 +312,7 @@ def crypt_settings(src,dst):
 				backup(path,True)
 			else:
 				backup(path)
-			path=path.replace(src,dst)
+			path=__.path(path.replace(src,dst))
 			_.pr(path,c='cyan')
 		if fnd and delete: continue
 		db[path]=_crypt_settings[opath]
@@ -326,7 +333,7 @@ def book_log(src,dst):
 	cnt=0
 	for bm in _book_log:
 		for i,rec in enumerate(_book_log[bm]):
-			path=_v.resolveFolderIDs(rec['location'])
+			path=__.path(_v.resolveFolderIDs(rec['location']))
 			if path == srcS:
 				cnt+=1
 				path=dst
@@ -337,7 +344,7 @@ def book_log(src,dst):
 				found['book_log']+=1
 				path=path.replace(src,dst)
 				# _.pr(path,c='cyan')
-			_book_log[bm][i]['location']=_v.sanitizeFolder(path)
+			_book_log[bm][i]['location']=__.path(_v.sanitizeFolder(path))
 	_.pr(cnt,c='cyan')
 
 def fileBackup(src,dst):
@@ -353,13 +360,13 @@ def fileBackup(src,dst):
 	_.pr('fileBackup',c='yellow')
 	cnt=0
 	for i,rec in enumerate(_fileBackup):
-		path=rec['file']
+		path=__.path(rec['file'])
 		if path.startswith(src):
 			cnt+=1
 			found['fileBackup']+=1
 			path=path.replace(src,dst)
 			# _.pr(path,c='cyan')
-		_fileBackup[i]['file']=path
+		_fileBackup[i]['file']=__.path(path)
 	_.pr(cnt,c='cyan')
 
 def backup(path,decrypt=False):
@@ -407,12 +414,14 @@ def action():
 			_v.mkdir(dst)
 			dst=__.path(dst)
 			os.rmdir(dst)
-	src=src.replace(os.sep+os.sep,os.sep)
-	dst=dst.replace(os.sep+os.sep,os.sep)
+	src=__.path(src.replace(os.sep+os.sep,os.sep))
+	dst=__.path(dst.replace(os.sep+os.sep,os.sep))
 	if isFoS and os.path.isfile(dst): _.e('Error: dst','if src is folder dst can not be a file')
 	if not isFoD: _v.mkdir(dst)
 	if not delete and src == dst: _.e('unable to move','same location')
+
 	if not delete:
+
 		if not 'y' in input('Move: '+src+'\n  To: '+dst+'\n ?: ').lower(): return None
 	elif delete:
 		if not 'y' in input('Delete: '+src+'?: ').lower(): return None
@@ -455,13 +464,13 @@ def action():
 		else:  am='fi'
 		try:
 			try:
-				item=src.split(os.sep)[-3]+'-'+src.split(os.sep)[-2]+'-'+src.split(os.sep)[-1]
+				item=src.split(os.sep)[-3]+'__'+src.split(os.sep)[-2]+'__'+src.split(os.sep)[-1]
 			except Exception as e:
-				item=src.split(os.sep)[-2]+'-'+src.split(os.sep)[-1]
+				item=src.split(os.sep)[-2]+'__'+src.split(os.sep)[-1]
 		except Exception as e:
 			item=src.split(os.sep)[-1]
 		item+='-'+am
-		dst=_v.myBIN+os.sep+'deleted'+os.sep+str(__.startTime)+'___'+item+'.zip'
+		dst=_v.myBIN+os.sep+'deleted'+os.sep+str(__.startTime)+'-'+item+'.zip'
 	rec = {
 				'epoch': __.startTime,
 				'type': did,
