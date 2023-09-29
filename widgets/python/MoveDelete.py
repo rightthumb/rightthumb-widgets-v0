@@ -135,18 +135,18 @@ def aliases(src,dst):
 	global isFoD
 	global found
 	global delete
-	found['aliases']=False
+	found['aliases']=0
 	if not 'aliases' in _aliases: return None
 	_.pr(line=True,c='purple')
 	_.pr('aliases',c='yellow')
 	# print(_aliases.keys());sys.exit();
-	db=_aliases['aliases']
+	db=_aliases['aliases'].copy()
 	for a in db:
 		fnd=False
 		db[a]=db[a].replace(os.sep+os.sep,os.sep)
 		if not isFoS and src == db[a]:
 			fnd=True
-			found['aliases']=True
+			found['aliases']+=1
 			if isFoD:
 				fo=folder(db[a])
 				_aliases['aliases'][a]=db[a].replace(fo,dst)
@@ -154,19 +154,19 @@ def aliases(src,dst):
 				_aliases['aliases'][a]=dst
 		elif db[a].startswith(src):
 			fnd=True
-			found['aliases']=True
+			found['aliases']+=1
 			_aliases['aliases'][a]=db[a].replace(src,dst)
 		if fnd:
 			_.pr('aliases:',a,_aliases['aliases'][a],c='cyan')
 			if delete:
 				del _aliases['aliases'][a]
-	db=_aliases['files']
+	db=_aliases['files'].copy()
 	for p in db:
 		fnd=False
 		if not isFoS:
 			if p == src:
 				fnd=True
-				found['aliases']=True
+				found['aliases']+=1
 				if not isFoD:
 					_aliases['files'][p]=src
 				else:
@@ -175,7 +175,7 @@ def aliases(src,dst):
 
 		elif p.startswith(src):
 			fnd=True
-			found['aliases']=True
+			found['aliases']+=1
 			_aliases['files'][p]=p.replace(src,dst)
 		if fnd:
 			_.pr(_aliases['files'][p],c='cyan')
@@ -191,13 +191,13 @@ def bookmarks(src,dst):
 	global isFoD
 	global found
 	global delete
-	found['bookmarks']=False
+	found['bookmarks']=0
 	if not isFoS: return False
 	if not 'labels' in _bookmarks: return False
 	# print(_bookmarks.keys());sys.exit();
 	_.pr(line=True,c='purple')
 	_.pr('bookmarks',c='yellow')
-	db=_bookmarks['labels']
+	db=_bookmarks['labels'].copy()
 	srcS = src[:-1]
 	dstS = dst[:-1]
 	# sanitizeFolder
@@ -206,11 +206,11 @@ def bookmarks(src,dst):
 		path=_v.resolveFolderIDs(db[a])
 		if path == srcS:
 			fnd=True
-			found['bookmarks']=True
+			found['bookmarks']+=1
 			_bookmarks['labels'][a]=_v.sanitizeFolder(dstS)
 		elif path.startswith(src):
 			fnd=True
-			found['bookmarks']=True
+			found['bookmarks']+=1
 			_bookmarks['labels'][a]=_v.sanitizeFolder(path.replace(src,dst))
 		if fnd:
 			_.pr(a,_v.resolveFolderIDs(_bookmarks['labels'][a]),c='cyan')
@@ -222,11 +222,11 @@ def bookmarks(src,dst):
 		path=_v.resolveFolderIDs(path)
 		if path == srcS:
 			fnd=True
-			found['bookmarks']=True
+			found['bookmarks']+=1
 			path=srcS
 		elif path.startswith(src):
 			fnd=True
-			found['bookmarks']=True
+			found['bookmarks']+=1
 			path=path.replace(src,dst)
 		path=_v.sanitizeFolder(path)
 		if fnd:
@@ -240,15 +240,16 @@ def sites(src,dst):
 	global isFoS
 	global isFoD
 	global found
-	found['sites']=False
+	found['sites']=0
 	if not isFoS: return False
 	_.pr(line=True,c='purple')
 	_.pr('sites',c='yellow')
-	for i,path in enumerate(_sites):
+	db=_sites.copy()
+	for i,path in enumerate(db):
 		fnd=False
 		if path.startswith(src):
 			fnd=True
-			found['sites']=True
+			found['sites']+=1
 			_sites[i] = path.replace(src,dst)
 			_.pr(_sites[i],c='cyan')
 		if fnd and delete: del _sites[i]
@@ -260,7 +261,7 @@ def crypt_meta(src,dst):
 	global isFoS
 	global isFoD
 	global found
-	found['crypt_meta']=False
+	found['crypt_meta']=0
 	_.pr(line=True,c='purple')
 	_.pr('crypt_meta',c='yellow')
 	# print(_crypt_meta.keys())
@@ -270,7 +271,7 @@ def crypt_meta(src,dst):
 		opath=path
 		if src in path:
 			fnd=True
-			found['crypt_meta']=True
+			found['crypt_meta']+=1
 			path=path.replace(src,dst)
 			_.pr(path,c='cyan')
 		if fnd and delete: continue
@@ -282,7 +283,7 @@ def crypt_settings(src,dst):
 	global isFoS
 	global isFoD
 	global found
-	found['crypt_settings']=False
+	found['crypt_settings']=0
 	_.pr(line=True,c='purple')
 	_.pr('crypt_settings',c='yellow')
 	# print(_crypt_meta.keys())
@@ -292,7 +293,7 @@ def crypt_settings(src,dst):
 		opath=path
 		if src in path:
 			fnd=True
-			found['crypt_meta']=True
+			found['crypt_meta']+=1
 			path=path.replace(src,dst)
 			_.pr(path,c='cyan')
 		if fnd and delete: continue
@@ -305,7 +306,7 @@ def book_log(src,dst):
 	global isFoS
 	global isFoD
 	global found
-	found['book_log']=False
+	found['book_log']=0
 	if not isFoS: return False
 	srcS = src[:-1]
 	dstS = dst[:-1]
@@ -318,11 +319,11 @@ def book_log(src,dst):
 			if path == srcS:
 				cnt+=1
 				path=dst
-				found['book_log']=True
+				found['book_log']+=1
 				# _.pr(path,c='cyan')
 			elif path.startswith(src):
 				cnt+=1
-				found['book_log']=True
+				found['book_log']+=1
 				path=path.replace(src,dst)
 				# _.pr(path,c='cyan')
 			_book_log[bm][i]['location']=_v.sanitizeFolder(path)
@@ -333,7 +334,7 @@ def fileBackup(src,dst):
 	global isFoS
 	global isFoD
 	global found
-	found['fileBackup']=False
+	found['fileBackup']=0
 	srcS = src[:-1]
 	dstS = dst[:-1]
 	_.pr(line=True,c='purple')
@@ -343,7 +344,7 @@ def fileBackup(src,dst):
 		path=rec['file']
 		if path.startswith(src):
 			cnt+=1
-			found['fileBackup']=True
+			found['fileBackup']+=1
 			path=path.replace(src,dst)
 			# _.pr(path,c='cyan')
 		_fileBackup[i]['file']=path
@@ -355,6 +356,7 @@ def action():
 	global isFoD
 	global found
 	global delete
+	global _MoveDelete
 	if len(_.switches.values('Source')) > 1: _.e('Multiple Sources Detected','Please specify only 1 Source')
 	delete = _.switches.isActive('Delete')
 	src = __.path(_.switches.values('Source')[0])
@@ -383,7 +385,7 @@ def action():
 	dst=dst.replace(os.sep+os.sep,os.sep)
 	if isFoS and os.path.isfile(dst): _.e('Error: dst','if src is folder dst can not be a file')
 	if not isFoD: _v.mkdir(dst)
-	if src == dst: _.e('unable to move','same location')
+	if not delete and src == dst: _.e('unable to move','same location')
 	if not delete:
 		if not 'y' in input('Move: '+src+'\n  To: '+dst+'\n ?: ').lower(): return None
 	elif delete:
@@ -410,14 +412,34 @@ def action():
 	if found['sites']: _.saveTable(_sites,'site-locations.list')
 	if found['crypt_meta']: _.saveTable(_crypt_meta,'secure-crypt-local.meta')
 	if found['crypt_settings']: _.saveTable(_crypt_settings,'secure-crypt-local.settings')
-	if found['book_log']: _.saveTable(_book_log,'bookmarks.logs')
-	if found['fileBackup']: _.saveTable(_fileBackup,'fileBackup.json')
+	if not delete:
+		if found['book_log']: _.saveTable(_book_log,'bookmarks.logs')
+		if found['fileBackup']: _.saveTable(_fileBackup,'fileBackup.json')
+	fnd=False
+	for f in found:
+		if found[f]: fnd=True
+	if delete: did='delete'
+	else: did='move'
+	inlogs={}
+	for k in found:
+		if found[k]: inlogs[k]=found[k]
+	if delete:
+		dst=_v.myBIN+os.sep+'deleted'+os.sep+str(__.startTime)+'.zip'
+	rec = {
+				'epoch': __.startTime,
+				'type': did,
+				'source': src,
+				'destination': dst,
+				'inlogs': inlogs,
+	}
+	_MoveDelete.append(rec)
+	_.saveTable(_MoveDelete,'MoveDelete.json')
 
 	if delete:
-		bkFo=_v.myBIN+os.sep+
+		import _rightThumb._zipper as _zipper
+		_zipper.zip(src,dst)
 		shutil.rmtree(src)
 	else:
-		pass
 		shutil.move(src, dst)
 
 
@@ -433,6 +455,7 @@ def load():
 	global _aliases
 	global _book_log
 	global _bookmarks
+	global _MoveDelete
 	global _crypt_meta
 	global _fileBackup
 	global _crypt_settings
@@ -441,6 +464,7 @@ def load():
 	_aliases        = _.getTable('file-open-aliases.hash')
 	_book_log       = _.getTable('bookmarks.logs')
 	_bookmarks      = _.getTable('bookmarks.index')
+	_MoveDelete     = _.getTable('MoveDelete.json')
 	_crypt_meta     = _.getTable('secure-crypt-local.meta')
 	_fileBackup     = _.getTable('fileBackup.json')
 	_crypt_settings = _.getTable('secure-crypt-local.settings')
