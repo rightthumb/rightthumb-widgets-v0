@@ -10807,10 +10807,10 @@ class Switches:
 			if not row.name in omitList:
 				if row.active:
 					shouldAdd = True
-					if type( appReg ) == str:
-						if not appReg == 'all':
-							if not row.appReg == appReg:
-								shouldAdd = False
+					# if type( appReg ) == str:
+						# if not appReg == 'all':
+							# if not row.appReg == appReg:
+								# shouldAdd = False
 
 					if shouldAdd:
 						if not row.values:

@@ -137,57 +137,58 @@ def aliases(src,dst):
 	global isFoS
 	global isFoD
 	global found
+	global change
 	global delete
 	found['aliases']=0
+	change['aliases']=0
 	if not 'aliases' in _aliases: return None
 	_.pr(line=True,c='purple')
 	_.pr('aliases',c='yellow')
 	# print(_aliases.keys());sys.exit();
-	db=_aliases['aliases'].copy()
-	for a in db:
+	db={}
+	for a in _aliases['aliases']:
+		path=_aliases['aliases'][a]
 		fnd=False
-		db[a]=__.path(db[a].replace(os.sep+os.sep,os.sep))
-		if not isFoS and src == db[a]:
+		path=__.path(path.replace(os.sep+os.sep,os.sep))
+		if not isFoS and src == path:
 			fnd=True
 			found['aliases']+=1
-			_aliases['aliases'][a]=dst
-			# if isFoD:
-			# 	fo=folder(db[a])
-			# 	_aliases['aliases'][a]=db[a].replace(fo,dst)
-			# else:
-			# 	_aliases['aliases'][a]=dst
-		elif db[a].startswith(src):
+			path=dst
+		elif path.startswith(src):
 			fnd=True
 			found['aliases']+=1
-			_aliases['aliases'][a]=__.path(db[a].replace(src,dst))
+			path=__.path(path.replace(src,dst))
 		if fnd:
-			_.pr('aliases:',a,_aliases['aliases'][a],c='cyan')
-			if delete:
-				del _aliases['aliases'][a]
-	db=_aliases['files'].copy()
-	for p in db:
-		op=p
-		p=__.path(p)
+			_.pr('aliases:',a,path,c='cyan')
+			if delete: continue
+		elif not os.path.isfile(path):
+			change['aliases']+=1
+			continue
+		db[a]=path
+	_aliases['aliases']=db
+	db={}
+	for path in _aliases['files']:
+		opath=path
+		path=__.path(path)
 		fnd=False
 		if not isFoS:
-			if p == src:
+			if path == src:
 				fnd=True
 				found['aliases']+=1
-				_aliases['files'][op]=dst
-				# if not isFoD:
-				# 	_aliases['files'][p]=src
-				# else:
-				# 	fo=folder(p)
-				# 	_aliases['files'][p]=p.replace(fo,dst)
-
-		elif p.startswith(src):
+				path=dst
+		elif path.startswith(src):
 			fnd=True
 			found['aliases']+=1
-			_aliases['files'][op]=__.path(p.replace(src,dst))
+			path=__.path(path.replace(src,dst))
 		if fnd:
-			_.pr(_aliases['files'][op],c='cyan')
-			if delete:
-				del _aliases['files'][op]
+			_.pr(path,c='cyan')
+			if not delete:
+				db[path]=_aliases['files'][opath]
+		elif os.path.isfile(path):
+			db[path]=_aliases['files'][opath]
+		else:
+			change['aliases']+=1
+	_aliases['files']=db
 
 
 
@@ -197,31 +198,39 @@ def bookmarks(src,dst):
 	global isFoS
 	global isFoD
 	global found
+	global change
 	global delete
 	found['bookmarks']=0
+	change['bookmarks']=0
 	if not isFoS: return False
 	if not 'labels' in _bookmarks: return False
 	# print(_bookmarks.keys());sys.exit();
 	_.pr(line=True,c='purple')
 	_.pr('bookmarks',c='yellow')
-	db=_bookmarks['labels'].copy()
+	db={}
 	srcS = src[:-1]
 	dstS = dst[:-1]
 	# sanitizeFolder
-	for a in db:
+	for a in _bookmarks['labels']:
 		fnd=False
-		path=__.path(_v.resolveFolderIDs(db[a]))
+		path=__.path(_v.resolveFolderIDs(_bookmarks['labels'][a]))
 		if path == srcS:
 			fnd=True
 			found['bookmarks']+=1
-			_bookmarks['labels'][a]=__.path(_v.sanitizeFolder(dstS))
+			path=_v.sanitizeFolder(__.path(dstS))
 		elif path.startswith(src):
 			fnd=True
 			found['bookmarks']+=1
-			_bookmarks['labels'][a]=__.path(_v.sanitizeFolder(path.replace(src,dst)))
+			path=_v.sanitizeFolder(__.path(path.replace(src,dst)))
 		if fnd:
-			_.pr(a,_v.resolveFolderIDs(_bookmarks['labels'][a]),c='cyan')
-			if delete: del _bookmarks['labels'][a]
+			if not delete:
+				db[a]=path
+			_.pr(a,_v.resolveFolderIDs(path),c='cyan')
+		elif os.path.isdir(path):
+			db[a]=path
+		else:
+			change['bookmarks']+=1
+	_bookmarks['labels']=db
 	db={}
 	for path in _bookmarks['paths']:
 		fnd=False
@@ -239,6 +248,9 @@ def bookmarks(src,dst):
 		if fnd:
 			_.pr(path,c='cyan')
 		if fnd and delete: continue
+		elif not os.path.isdir(path):
+			change['bookmarks']+=1
+			continue
 		db[path]=_bookmarks['paths'][opath]
 	_bookmarks['paths']=db
 
@@ -247,20 +259,29 @@ def sites(src,dst):
 	global isFoS
 	global isFoD
 	global found
+	global change
 	found['sites']=0
+	change['sites']=0
 	if not isFoS: return False
 	_.pr(line=True,c='purple')
 	_.pr('sites',c='yellow')
-	db=_sites.copy()
-	for i,path in enumerate(db):
+	db=[]
+	for i,path in enumerate(_sites):
 		path=__.path(path)
 		fnd=False
 		if path.startswith(src):
 			fnd=True
 			found['sites']+=1
-			_sites[i] = __.path(path.replace(src,dst))
+			if not delete:
+				db.append(__.path(path.replace(src,dst)))
 			_.pr(_sites[i],c='cyan')
-		if fnd and delete: del _sites[i]
+		elif os.path.isfile(path):
+			db.append(path)
+		else:
+			change['sites']+=1
+	_sites=db
+
+
 
 
 
@@ -269,7 +290,9 @@ def crypt_meta(src,dst):
 	global isFoS
 	global isFoD
 	global found
+	global change
 	found['crypt_meta']=0
+	change['crypt_meta']=0
 	_.pr(line=True,c='purple')
 	_.pr('crypt_meta',c='yellow')
 	# print(_crypt_meta.keys())
@@ -288,6 +311,9 @@ def crypt_meta(src,dst):
 			path=__.path(path.replace(src,dst))
 			_.pr(path,c='cyan')
 		if fnd and delete: continue
+		elif not os.path.isfile(opath):
+			change['crypt_meta']+=1
+			continue
 		db[path]=_crypt_meta[opath]
 	_crypt_meta=db
 
@@ -296,7 +322,9 @@ def crypt_settings(src,dst):
 	global isFoS
 	global isFoD
 	global found
+	global change
 	found['crypt_settings']=0
+	change['crypt_settings']=0
 	_.pr(line=True,c='purple')
 	_.pr('crypt_settings',c='yellow')
 	# print(_crypt_meta.keys())
@@ -315,6 +343,9 @@ def crypt_settings(src,dst):
 			path=__.path(path.replace(src,dst))
 			_.pr(path,c='cyan')
 		if fnd and delete: continue
+		elif not os.path.isfile(opath):
+			change['crypt_settings']+=1
+			continue
 		db[path]=_crypt_settings[opath]
 	_crypt_settings=db
 
@@ -330,12 +361,10 @@ def book_log(src,dst):
 	dstS = dst[:-1]
 	_.pr(line=True,c='purple')
 	_.pr('book_log',c='yellow')
-	cnt=0
 	for bm in _book_log:
 		for i,rec in enumerate(_book_log[bm]):
 			path=__.path(_v.resolveFolderIDs(rec['location']))
 			if path == srcS:
-				cnt+=1
 				path=dst
 				found['book_log']+=1
 				# _.pr(path,c='cyan')
@@ -345,7 +374,7 @@ def book_log(src,dst):
 				path=path.replace(src,dst)
 				# _.pr(path,c='cyan')
 			_book_log[bm][i]['location']=__.path(_v.sanitizeFolder(path))
-	_.pr(cnt,c='cyan')
+	_.pr(found['book_log'],c='cyan')
 
 def fileBackup(src,dst):
 	global _fileBackup
@@ -358,16 +387,45 @@ def fileBackup(src,dst):
 	dstS = dst[:-1]
 	_.pr(line=True,c='purple')
 	_.pr('fileBackup',c='yellow')
-	cnt=0
 	for i,rec in enumerate(_fileBackup):
 		path=__.path(rec['file'])
 		if path.startswith(src):
-			cnt+=1
 			found['fileBackup']+=1
 			path=path.replace(src,dst)
 			# _.pr(path,c='cyan')
 		_fileBackup[i]['file']=__.path(path)
-	_.pr(cnt,c='cyan')
+	_.pr(found['fileBackup'],c='cyan')
+
+def backup_schedule(src,dst):
+	global _backup_schedule
+	global isFoS
+	global isFoD
+	global found
+	global change
+	found['backup_schedule']=0
+	change['backup_schedule']=0
+	srcS = src[:-1]
+	dstS = dst[:-1]
+	_.pr(line=True,c='purple')
+	_.pr('backup_schedule',c='yellow')
+	db=[]
+	for i,rec in enumerate(_backup_schedule):
+		fnd=False
+		path=__.path(rec['file'])
+		if path.startswith(src):
+			fnd=True
+			found['backup_schedule']+=1
+			path=path.replace(src,dst)
+		if fnd:
+			if not delete:
+				rec['file']=__.path(path)
+				db.append(rec)
+		elif os.path.isfile(path):
+			db.append(rec)
+		else:
+			change['backup_schedule']+=1
+	_backup_schedule=db
+	_.pr(found['backup_schedule'],c='cyan')
 
 def backup(path,decrypt=False):
 	appReg=__.appReg
@@ -385,9 +443,20 @@ def action():
 	global isFoS
 	global isFoD
 	global found
+	global change
 	global delete
 	global _bk
+	global _sites
+	global _aliases
+	global _book_log
+	global _bookmarks
 	global _MoveDelete
+	global _crypt_meta
+	global _fileBackup
+	global _crypt_settings
+	global _backup_schedule
+	found={}
+	change={}
 	if len(_.switches.values('Source')) > 1: _.e('Multiple Sources Detected','Please specify only 1 Source')
 	delete = _.switches.isActive('Delete')
 	if _.switches.isActive('Ghost'):
@@ -430,6 +499,7 @@ def action():
 	sites(src,dst)
 	crypt_meta(src,dst)
 	crypt_settings(src,dst)
+	backup_schedule(src,dst)
 	if not delete:
 		book_log(src,dst)
 		fileBackup(src,dst)
@@ -442,14 +512,18 @@ def action():
 
 
 
-	if found['aliases']: _.saveTable(_aliases,'file-open-aliases.hash')
-	if found['bookmarks']: _.saveTable(_bookmarks,'bookmarks.index')
-	if found['sites']: _.saveTable(_sites,'site-locations.list')
-	if found['crypt_meta']: _.saveTable(_crypt_meta,'secure-crypt-local.meta')
-	if found['crypt_settings']: _.saveTable(_crypt_settings,'secure-crypt-local.settings')
+
+
+
+	if found['sites'] or change['sites']:                        _.saveTable(_sites,'site-locations.list')
+	if found['aliases'] or change['aliases']:                    _.saveTable(_aliases,'file-open-aliases.hash')
+	if found['bookmarks'] or change['bookmarks']:                _.saveTable(_bookmarks,'bookmarks.index')
+	if found['crypt_meta'] or change['crypt_meta']:              _.saveTable(_crypt_meta,'secure-crypt-local.meta')
+	if found['crypt_settings'] or change['crypt_settings']:      _.saveTable(_crypt_settings,'secure-crypt-local.settings')
+	if found['backup_schedule'] or change['backup_schedule']:    _.saveTable(_backup_schedule,'fileBackupSchedule.json')
 	if not delete:
-		if found['book_log']: _.saveTable(_book_log,'bookmarks.logs')
-		if found['fileBackup']: _.saveTable(_fileBackup,'fileBackup.json')
+		if found['book_log']:     _.saveTable(_book_log,'bookmarks.logs')
+		if found['fileBackup']:   _.saveTable(_fileBackup,'fileBackup.json')
 	fnd=False
 	for f in found:
 		if found[f]: fnd=True
@@ -506,6 +580,7 @@ def load():
 	global _crypt_meta
 	global _fileBackup
 	global _crypt_settings
+	global _backup_schedule
 
 	_sites          = _.getTable('site-locations.list')
 	_aliases        = _.getTable('file-open-aliases.hash')
@@ -514,6 +589,7 @@ def load():
 	_MoveDelete     = _.getTable('MoveDelete.json')
 	_crypt_meta     = _.getTable('secure-crypt-local.meta')
 	_crypt_settings = _.getTable('secure-crypt-local.settings')
+	_backup_schedule = _.getTable('fileBackupSchedule.json')
 
 
 

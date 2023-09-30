@@ -373,13 +373,13 @@ def backup(path,pre=True):
 	appReg=__.appReg
 	_bk={}
 	_bk[bki] = _.regImp( __.appReg, 'fileBackup' )
+	_bk[bki].switch( 'Silent' )
 	
 	if pre:
-		_bk[bki].switch( 'Silent' )
 		_bk[bki].switch( 'isPreOpen' )
 		isPreOpen=True
 	else:
-		_bk[bki].switch( 'Silent',delete=True )
+		# _bk[bki].switch( 'Silent',delete=True )
 		_bk[bki].switch( 'isPreOpen', delete=True )
 		isPreOpen=False
 	_bk[bki].switch( 'Input', path )

@@ -54,6 +54,7 @@ def appSwitches():
 	_.switches.register('Session', '-session')
 	_.switches.register('isPreOpen', '-open,-isPreOpen')
 	_.switches.register('Test', '-test')
+	_.switches.register('Force', '-force')
 	# _.switches.register('Session_ID', '-session')
 
 	
@@ -223,7 +224,7 @@ def PRE_BACKUP_PROCESSING( path ):
 			if path.endswith( bf ):
 				thisBaseVX = vx
 			if path.endswith( ex ):
-				if not _.switches.isActive('Silent'):
+				if not isActive('Silent'):
 					_.colorThis( 'PROCESSED: registered python template', 'Background.yellow' )
 				thisExampleVX = vx
 		thisExampleVX_NEW=False
@@ -523,20 +524,20 @@ def postFileCleanup( fileLines, path=None, maxLines=4 ):
 		_.pr()
 		txt = _.colorThis( [ ' Please add a description for the app ' ] , 'yellow', p=0 )
 		txt += _.colorThis( [ filenameDisplay.split('.')[0] ] , 'red', p=0 )
-		if not _.switches.isActive('Silent'):
+		if not isActive('Silent'):
 			_.pr( txt )
 		description = ''
 		description = input( '\n\tDescription: ' )
-		if not _.switches.isActive('Silent'):
+		if not isActive('Silent'):
 			_.pr()
 		file = file.replace( "\t'description': 'Changes the world'," ," \t'description': '"+description+"'," )
 	aTag = "\t\t\t\t\t\t'DEFAULT',\n"
 	if aTag in file:
-		if not _.switches.isActive('Silent'):
+		if not isActive('Silent'):
 			_.pr()
 		txt = _.colorThis( [ ' Please add a hashtags for the app ' ] , 'yellow', p=0 )
 		txt += _.colorThis( [ filenameDisplay.split('.')[0] ] , 'red', p=0 )
-		if not _.switches.isActive('Silent'):
+		if not isActive('Silent'):
 			_.pr( txt )
 		hashtags = '' 
 		hashtags = input( '\n\tHashtags(one,two): ' )
@@ -549,7 +550,7 @@ def postFileCleanup( fileLines, path=None, maxLines=4 ):
 				
 
 			file = file.replace( aTag , ''.join( newTags ) )
-		if not _.switches.isActive('Silent'):
+		if not isActive('Silent'):
 			_.pr()
 	if not isImport:
 		xExample = 'p thisApp -file file.txt'
@@ -581,21 +582,21 @@ def postFileCleanup( fileLines, path=None, maxLines=4 ):
 				if line.lower().startswith( 'p '+fn.lower()+' ' ):
 					if first:
 						first = False
-						if not _.switches.isActive('Silent'):
+						if not isActive('Silent'):
 							_.pr(  )
 							_.pr(  )
 							_.pr( txt )
-					if not _.switches.isActive('Silent'):
+					if not isActive('Silent'):
 						_.colorThis( [ '\n\tAdd example (y): ' ] , 'cyan' )
 					if not 'n' in input( '\n\t\t ?: '+line ):
 						addExample = aExample.replace('\\','\\\\')
 						addExample = addExample.replace( xExample, line )
 						newExample.append( addExample )
-						if not _.switches.isActive('Silent'):
+						if not isActive('Silent'):
 							_.colorThis( [ '\n\t\t\t Added' ] , 'green' )
 							_.pr( addExample )
 					else:
-						if not _.switches.isActive('Silent'):
+						if not isActive('Silent'):
 							_.colorThis( [ '\n\t\t\t NOT Added' ] , 'red' )
 
 			if len(newExample):
@@ -637,7 +638,8 @@ def checkAlpha( data ):
 
 def secureFiles_Decrypt( path, pw ):
 	__.openSecure = True
-	_.cp( 'crypt.de', 'Background.light_blue' )
+	if not isActive('Silent'):
+		_.cp( 'crypt.de', 'Background.light_blue' )
 	_cryptFile.switch( 'Password', delete=True )
 	if len(pw):
 		# _.pr(_blowfish.decrypt( pw, _vault.key() ))
@@ -656,7 +658,8 @@ def secureFiles_Encrypt( path, pw ):
 	if _.isCrypt(path):
 		return None
 	isTest0=False
-	_.cp( 'crypt.en', 'Background.light_blue' )
+	if not isActive('Silent'):
+		_.cp( 'crypt.en', 'Background.light_blue' )
 	_cryptFile.switch( 'Password', delete=True )
 	if len(pw):
 		if isTest0: _.pr('pw0')
@@ -710,7 +713,8 @@ def secureFiles(path):
 			return False
 		global _decrypt_docs
 		if _decrypt_docs is None: _decrypt_docs = _.regImp( __.appReg, 'decrypt-docs' )
-		_.cp( [ 'SECURE FILE' ], 'Background.red' )
+		if not isActive('Silent'):
+			_.cp( [ 'SECURE FILE' ], 'Background.red' )
 		__.setting('fileBackup-secure_file',True)
 		_decrypt_docs.imp.run(path)
 		if __.fileBackup.isPreOpen:
@@ -721,7 +725,8 @@ def secureFiles(path):
 	
 
 	if path in __.v.secure.files:
-		_.cp( [ 'SECURE FILE' ], 'Background.red' )
+		if not isActive('Silent'):
+			_.cp( [ 'SECURE FILE' ], 'Background.red' )
 		__.setting('fileBackup-secure_file',True)
 		_.v.secure=True
 		
@@ -776,7 +781,13 @@ def secureFiles(path):
 	return False
 
 
-
+def isActive(switch):
+	active=False
+	for rec in _.switches.all():
+		if rec['name'] == switch:
+			if rec['active']:
+				active=True
+	return active
 
 
 __.fileBackup=_.dot()
@@ -819,6 +830,7 @@ def action(path=None,flag=None,o=None,pre=None):
 
 	# secureFiles
 	
+
 	now = genEpoch()
 	# print(path)
 	if _.switches.isActive('Input') or not path is None:
@@ -827,14 +839,15 @@ def action(path=None,flag=None,o=None,pre=None):
 		# _.pr( 'path::::', path )
 		if os.path.isfile(path):
 			path = __.path(  path  ) 
-			if not _.switches.isActive('Silent'):
+			if not isActive('Silent'):
 				if _.isCrypt(path): _.pr('encrypted <-- yes ',c='red')
 				# else: _.pr('encrypted <-- no ',c='green')
 			# print(os.stat(path).st_size)
 			if True or _.switches.isActive('Test'):
 				# if not type(idCheck) == bool:
 				# 	_.cp(idCheck,'darkcyan')
-				_.v.secure=False				
+				_.v.secure=False
+				# _.pv(_.switches.all());sys.exit();
 				if secureFiles(path):
 					if not __.secureFilesID is None:
 						theID = __.secureFilesID
@@ -843,19 +856,28 @@ def action(path=None,flag=None,o=None,pre=None):
 					idCheck = idExist(theID, backupLog, path)
 					# _.colorThis( [ 'Secure file' ], 'green' )
 					bk=[];[  bk.append(rec['backup']) for rec in backupLog if path == rec['file']];
-					if not _.switches.isActive('Silent'):
+					if not isActive('Silent'):
 						_.colorThis( path, 'cyan' )
 					if bk:
 						bk=bk[-1]
-						if not _.switches.isActive('Silent'): _.pr( bk, c='darkcyan' )
+						if not isActive('Silent'): _.pr( bk, c='darkcyan' )
 					# _.pr(' -- TRUE -- ')
-					if _.switches.isActive('isPreOpen'):
-						txtScheduler.append( { 'timestamp': genEpoch(), 'file': __.path(path), 'status': 0, 'app': 'fileBackup', 'group': 0, 'session': __.Session_ID } )
-						_.saveTable( txtScheduler,'fileBackupSchedule.json', p=0 )
+					if not _.switches.isActive('isRunOnce'):
+						if _.switches.isActive('isPreOpen'):
+							txtScheduler.append( { 'timestamp': genEpoch(), 'file': __.path(path), 'status': 0, 'app': 'fileBackup', 'group': 0, 'session': __.Session_ID } )
+							_.saveTable( txtScheduler,'fileBackupSchedule.json', p=0 )
+							if not isActive('Silent'):
+								_.colorThis( 'secure open and scheduled', 'yellow' )
+						return None
+				if _.v.secure and not _.switches.isActive('isRunOnce') and not isActive('Force'):
+					txtScheduler.append( { 'timestamp': genEpoch(), 'file': __.path(path), 'status': 0, 'app': 'fileBackup', 'group': 0, 'session': __.Session_ID } )
+					_.saveTable( txtScheduler,'fileBackupSchedule.json', p=0 )
+					if not isActive('Silent'):
+						_.colorThis( 'secure open and scheduled', 'yellow' )
 					return None
 			pathpath=path
 			if path in INDEX and os.path.getmtime(path) == INDEX[path]['timestamp']:
-				if not _.switches.isActive('Silent'):
+				if not isActive('Silent'):
 					_.pr(path, c='cyan')
 					_.pr(INDEX[path]['backup'], c='darkcyan')
 					_.pr('File not modified since last backup',c='yellow')
@@ -864,7 +886,6 @@ def action(path=None,flag=None,o=None,pre=None):
 					_.saveTable( txtScheduler,'fileBackupSchedule.json', p=0 )
 				return INDEX[path]['backup']
 			# _.pr('pre')
-			
 			# _.pr('post')
 			global crypt_docs
 			cryptScan=False
@@ -957,6 +978,7 @@ def action(path=None,flag=None,o=None,pre=None):
 #e)--> backup: 2022-05-07 13:36:14
 
 #b)--> backup: 2022-07-26 22:18:12
+			# return
 			if cryptScan:
 				todo = []
 				global doc_sep
@@ -1213,7 +1235,6 @@ def action(path=None,flag=None,o=None,pre=None):
 					_.saveText(  tehFile, path  )
 
 
-
 		library = _.getTableDB( 'library-path.hash' )
 		if path in library:
 			libFile = library[path]
@@ -1246,10 +1267,10 @@ def action(path=None,flag=None,o=None,pre=None):
 		txtScheduler.append( { 'timestamp': genEpoch(), 'file': __.path(path), 'status': 0, 'app': 'fileBackup', 'group': 0, 'session': __.Session_ID } )
 		_.saveTable( txtScheduler,'fileBackupSchedule.json', p=0 )
 		if __.openSecure:
-			if not _.switches.isActive('Silent'):
+			if not isActive('Silent'):
 				_.colorThis( 'secure open and scheduled', 'yellow' )
 
-		if not _.switches.isActive('Silent'):
+		if not isActive('Silent'):
 			_.colorThis( [  path  ], 'cyan' )
 			
 			# _.pr(path)
@@ -1283,20 +1304,22 @@ def action(path=None,flag=None,o=None,pre=None):
 				elif __.path(pathpath) in INDEX: path=__.path(pathpath)
 
 			# path=pathpath
-			if not path in INDEX:
-				txtScheduler.append( { 'timestamp': genEpoch(), 'file': __.path(path), 'status': 0, 'app': 'fileBackup', 'group': 0, 'session': __.Session_ID } )
-				_.saveTable( txtScheduler,'fileBackupSchedule.json', p=0 )
-				return None
-			if not os.path.isfile(INDEX[path]['backup']):
+			# _.pv(INDEX[list(INDEX.keys())[0]]);sys.exit();
+			# if not _.switches.isActive('isRunOnce'):
+			# if not path in INDEX:
+			# 	txtScheduler.append( { 'timestamp': genEpoch(), 'file': __.path(path), 'status': 0, 'app': 'fileBackup', 'group': 0, 'session': __.Session_ID } )
+			# 	_.saveTable( txtScheduler,'fileBackupSchedule.json', p=0 )
+			# 	return None
+			if path in INDEX and not os.path.isfile(INDEX[path]['backup']):
 				temp=_v.stmp+os.sep+'backup_default'
 				if not os.path.isfile(temp):
 					_.saveText('{1bf18757-ea88-41fb-b046-2bd2080f1735-c09afdb6-2241-4a49-aa45-da436bbe2abb}',temp)
 				INDEX[path]['backup']=temp
-				
-			if path in INDEX and os.stat(INDEX[path]['backup']).st_size  == byte:
+			T42_HB = False
+			if path in INDEX and path in INDEX and os.stat(INDEX[path]['backup']).st_size  == byte:
 				T42_HB = True
 				if not byte < _BYTES_:
-					if not _.switches.isActive('Silent'):
+					if not isActive('Silent'):
 						_.colorThis( INDEX[path]['backup'], 'darkcyan' )
 						_.pr( 'Has Backup *', c='yellow' )
 						# _.pr( 'Has Backup',_.formatSize(byte), c='yellow' )
@@ -1311,9 +1334,8 @@ def action(path=None,flag=None,o=None,pre=None):
 						theID = generateID(path)
 					if not INDEX[path]['id'] == theID:
 						T42_HB = False
-
 			if T42_HB:
-				if not _.switches.isActive('Silent'):
+				if not isActive('Silent'):
 					_.colorThis( INDEX[path]['backup'], 'darkcyan' )
 					_.colorThis( 'Has Backup', 'yellow' )
 				if _.switches.isActive('isPreOpen'):
@@ -1332,7 +1354,7 @@ def action(path=None,flag=None,o=None,pre=None):
 					mime = 'text'
 				else:
 					mime = 'binary'
-					if not _.switches.isActive('Silent'):
+					if not isActive('Silent'):
 						_.colorThis( [  '********************'  ], 'yellow' )
 						_.colorThis( [  '   File is BINARY'  ], 'yellow' )
 						_.colorThis( [  '********************'  ], 'yellow' )
@@ -1344,7 +1366,7 @@ def action(path=None,flag=None,o=None,pre=None):
 					theID = generateID(path)
 				idCheck = idExist(theID, backupLog, path)
 				if not type(idCheck) == bool:
-					if not _.switches.isActive('Silent'):
+					if not isActive('Silent'):
 						if path in INDEX:
 							_.colorThis( INDEX[path]['backup'], 'darkcyan' )
 						_.colorThis( 'Backup ID found in older backup', 'yellow' )
@@ -1371,9 +1393,9 @@ def action(path=None,flag=None,o=None,pre=None):
 			
 
 				if _.switches.isActive('isRunOnce'):
-					log = { 'id': theID, 'timestamp': modifiedRaw, 'file': os.path.abspath(path), 'backup': newname,'mime': mime, 'status': 100, 'name': name, 'log': '' }
+					log = { 'id': theID, 'timestamp': modifiedRaw, 'file': os.path.abspath(path), 'backup': newname,'mime': mime, 'status': 100, 'name': name, 'log': '', 'flag':'' }
 				else:
-					log = { 'id': theID, 'timestamp': modifiedRaw, 'file': os.path.abspath(path), 'backup': newname,'mime': mime, 'status': 1, 'name': name, 'log': '' }
+					log = { 'id': theID, 'timestamp': modifiedRaw, 'file': os.path.abspath(path), 'backup': newname,'mime': mime, 'status': 1, 'name': name, 'log': '', 'flag':'' }
 				log = log_default_fields(log)
 				if _.switches.isActive('Session'):
 					log['session'] = _.switches.value('Session')
@@ -1399,12 +1421,12 @@ def action(path=None,flag=None,o=None,pre=None):
 					# sys.exit()
 				try:
 					result = copyfile(path, newname)
-					for i,row in enumerate(backupLog):
-						try:
-							if not type(backupLog[i]['flag']) == str:
-								backupLog[i]['flag'] = ''
-						except Exception as e:
-							backupLog[i]['flag'] = ''
+					# for i,row in enumerate(backupLog):
+					# 	try:
+					# 		if not type(backupLog[i]['flag']) == str:
+					# 			backupLog[i]['flag'] = ''
+					# 	except Exception as e:
+					# 		backupLog[i]['flag'] = ''
 					# _.pr('logs',c='gray')
 					# _.pr('saving',c='gray')
 					_.saveTable( backupLog, 'fileBackup.json', p=0 )
@@ -1424,7 +1446,7 @@ def action(path=None,flag=None,o=None,pre=None):
 					pass
 					# _.pr(result)
 					INDEX[path]=log
-					if not _.switches.isActive('Silent'):
+					if not isActive('Silent'):
 						_.cp(newname,'darkcyan')
 						_.printBold('Backup Successful', 'green')
 					# _.pr(newname)
