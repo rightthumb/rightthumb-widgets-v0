@@ -223,11 +223,14 @@ def action():
 								break
 						_.pr()
 						_.pr( data )
-						start = data.split( '(' )[1].split( '-' )[0]
-						end = data.split( '-' )[1].split( ')' )[0]
-						_.pr( _.resolveEpochTest(start), _.resolveEpochTest(end) )
-						log.append({ 'id': idx, 'start': _.autoDate(start), 'end': _.autoDate(end) })
-						i+=1
+						try:
+							start = data.split( '(' )[1].split( '-' )[0]
+							end = data.split( '-' )[1].split( ')' )[0]
+							_.pr( _.resolveEpochTest(start), _.resolveEpochTest(end) )
+							log.append({ 'id': idx, 'start': _.autoDate(start), 'end': _.autoDate(end) })
+							i+=1
+						except Exception as e:
+							_.pr(path.split(os.sep)[-1],c='red')
 
 
 

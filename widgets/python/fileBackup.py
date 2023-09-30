@@ -153,7 +153,7 @@ if not sys.stdin.isatty():
 if _.switches.isActive('Session'):
 	__.Session_ID = _.switches.values('Session')
 else:
-	__.Session_ID = os.getenv('Session')
+	__.Session_ID = os.getenv('Session_ID')
 
 
 def log_default_fields(record):

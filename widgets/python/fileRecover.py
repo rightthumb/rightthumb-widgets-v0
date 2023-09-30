@@ -780,7 +780,8 @@ def getTicket( epoch ):
 def load():
 	global epochTickets
 	_bkLog = _.regImp( __.appReg, '_rightThumb._backupLog' )
-	_bkLog.do( _bkLog.imp.autoFileVersion )
+	# _bkLog.do(  )
+	_bkLog.imp.autoFileVersion()
 
 	ticketTimeline = _.regImp( __.appReg, 'ticketTimeline' )
 	ticketTimeline.do( ticketTimeline.imp.action )

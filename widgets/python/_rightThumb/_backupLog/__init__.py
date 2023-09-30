@@ -265,7 +265,7 @@ def autoFileVersion():
 	backupLog = newLog
 	autoBatchIdentify()
 	_.saveTable( backupLog, 'fileBackup.json', printThis=printLogName )
-	_.saveCSV(   backupLog, 'fileBackup.csv',  printThis=printLogName )
+	# _.saveCSV(   backupLog, 'fileBackup.csv',  printThis=printLogName )
 	backupLog_epoch = os.path.getmtime( _v.table('fileBackup.json') )
 	_.saveTable( { 'epoch': backupLog_epoch }, 'fileBackup-versions-epoch.json', printThis=False )
 	_.updateLine( '                                                   ' )

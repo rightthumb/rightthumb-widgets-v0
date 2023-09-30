@@ -218,6 +218,7 @@ rem     echo %lab%>%myTickets%\timer-%Session_ID%.lab
 rem )
 
 call lab-timer
+call p ticketTimeline
 exit
 :RunOnceBackupAsk
 if [%skip_backup%] == [YES] (
