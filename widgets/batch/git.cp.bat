@@ -1,17 +1,12 @@
 @echo off
-
-
-
 call m back --c
-call b w > nul
-rem call p lock-files -w
-rem call uuid -e | p -copy
-rem call uuid -e | p -copy > %tmpf%
-call uuid -e  > %tmpf%
+if [%1] == [] (
+	call b w > nul
+) else (
+	call b %1 > nul
+)
+call uuid -e > %tmpf%
 SET /p uuid=<%tmpf%
-git commit -m "%uuid%"
-rem echo %uuid% >> D:\.rightthumb-widgets\.git\COMMIT_EDITMSG
-rem pause
+git commit -m "%uuid%
 git push --force
-call b back > nul 
- 
+call b back > nul

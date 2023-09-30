@@ -282,6 +282,34 @@ def sites(src,dst):
 	_sites=db
 
 
+def webdav(src,dst):
+	global _webdav
+	global isFoS
+	global isFoD
+	global found
+	global change
+	found['webdav']=0
+	change['webdav']=0
+	if not isFoS: return False
+	_.pr(line=True,c='purple')
+	_.pr('webdav',c='yellow')
+	db=[]
+	for i,path in enumerate(_webdav):
+		path=__.path(path)
+		fnd=False
+		if path.startswith(src):
+			fnd=True
+			found['webdav']+=1
+			if not delete:
+				db.append(__.path(path.replace(src,dst)))
+			_.pr(_webdav[i],c='cyan')
+		elif os.path.isfile(path):
+			db.append(path)
+		else:
+			change['webdav']+=1
+	_webdav=db
+
+
 
 
 
@@ -447,6 +475,7 @@ def action():
 	global delete
 	global _bk
 	global _sites
+	global _webdav
 	global _aliases
 	global _book_log
 	global _bookmarks
@@ -573,6 +602,7 @@ def action():
 
 def load():
 	global _sites
+	global _webdav
 	global _aliases
 	global _book_log
 	global _bookmarks
@@ -582,14 +612,15 @@ def load():
 	global _crypt_settings
 	global _backup_schedule
 
-	_sites          = _.getTable('site-locations.list')
-	_aliases        = _.getTable('file-open-aliases.hash')
-	_book_log       = _.getTable('bookmarks.logs')
-	_bookmarks      = _.getTable('bookmarks.index')
-	_MoveDelete     = _.getTable('MoveDelete.json')
-	_crypt_meta     = _.getTable('secure-crypt-local.meta')
-	_crypt_settings = _.getTable('secure-crypt-local.settings')
-	_backup_schedule = _.getTable('fileBackupSchedule.json')
+	_sites            = _.getTable('site-locations.list')
+	_webdav           = _.getTable('webdav-locations.list')
+	_aliases          = _.getTable('file-open-aliases.hash')
+	_book_log         = _.getTable('bookmarks.logs')
+	_bookmarks        = _.getTable('bookmarks.index')
+	_MoveDelete       = _.getTable('MoveDelete.json')
+	_crypt_meta       = _.getTable('secure-crypt-local.meta')
+	_crypt_settings   = _.getTable('secure-crypt-local.settings')
+	_backup_schedule  = _.getTable('fileBackupSchedule.json')
 
 
 
