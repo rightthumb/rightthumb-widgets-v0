@@ -178,7 +178,7 @@ _.postLoad( __file__ )
 
 
 def action():
-	text = _.ci(' '.join( _.switches.values('Text') )).strip()
+	text = _.ci(' '.join( _.switches.values('Text') )).rstrip()
 	for line in _.pp():
 		if _.showLine(line):
 			item=line.strip()
