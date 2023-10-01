@@ -282,6 +282,62 @@ def sites(src,dst):
 	_sites=db
 
 
+def meta_folders(src,dst):
+	global _meta_folders
+	global isFoS
+	global isFoD
+	global found
+	global change
+	found['meta_folders']=0
+	change['meta_folders']=0
+	if not isFoS: return False
+	_.pr(line=True,c='purple')
+	_.pr('meta_folders',c='yellow')
+	db=[]
+	for i,path in enumerate(_meta_folders):
+		path=__.path(path)
+		fnd=False
+		if path.startswith(src):
+			fnd=True
+			found['meta_folders']+=1
+			if not delete:
+				db.append(__.path(path.replace(src,dst)))
+			_.pr(_meta_folders[i],c='cyan')
+		elif os.path.isfile(path):
+			db.append(path)
+		else:
+			change['meta_folders']+=1
+	_meta_folders=db
+
+
+def relevant_folders(src,dst):
+	global _relevant_folders
+	global isFoS
+	global isFoD
+	global found
+	global change
+	found['relevant_folders']=0
+	change['relevant_folders']=0
+	if not isFoS: return False
+	_.pr(line=True,c='purple')
+	_.pr('relevant_folders',c='yellow')
+	db=[]
+	for i,path in enumerate(_relevant_folders):
+		path=__.path(path)
+		fnd=False
+		if path.startswith(src):
+			fnd=True
+			found['relevant_folders']+=1
+			if not delete:
+				db.append(__.path(path.replace(src,dst)))
+			_.pr(_relevant_folders[i],c='cyan')
+		elif os.path.isfile(path):
+			db.append(path)
+		else:
+			change['relevant_folders']+=1
+	_relevant_folders=db
+
+
 def webdav(src,dst):
 	global _webdav
 	global isFoS
@@ -310,8 +366,64 @@ def webdav(src,dst):
 	_webdav=db
 
 
+def rename_space(src,dst):
+	global _rename_space
+	global isFoS
+	global isFoD
+	global found
+	global change
+	found['rename_space']=0
+	change['rename_space']=0
+	if not isFoS: return False
+	_.pr(line=True,c='purple')
+	_.pr('rename_space',c='yellow')
+	db=[]
+	for i,path in enumerate(_rename_space):
+		path=__.path(path)
+		fnd=False
+		if path.startswith(src):
+			fnd=True
+			found['rename_space']+=1
+			if not delete:
+				db.append(__.path(path.replace(src,dst)))
+			_.pr(_rename_space[i],c='cyan')
+		elif os.path.isfile(path):
+			db.append(path)
+		else:
+			change['rename_space']+=1
+	_rename_space=db
 
 
+def crypt_docs(src,dst):
+	global _crypt_docs
+	global isFoS
+	global isFoD
+	global found
+	global change
+	found['crypt_docs']=0
+	change['crypt_docs']=0
+	if not isFoS: return False
+	_.pr(line=True,c='purple')
+	_.pr('crypt_docs',c='yellow')
+	db=[]
+	for i,path in enumerate(_crypt_docs):
+		path=__.path(path)
+		fnd=False
+		if path.startswith(src):
+			fnd=True
+			found['crypt_docs']+=1
+			if _.switches.isActive('Ghost'):
+				backup(path,True)
+			else:
+				backup(path)
+			if not delete:
+				db.append(__.path(path.replace(src,dst)))
+			_.pr(_crypt_docs[i],c='cyan')
+		elif os.path.isfile(path):
+			db.append(path)
+		else:
+			change['crypt_docs']+=1
+	_crypt_docs=db
 
 def crypt_meta(src,dst):
 	global _crypt_meta
@@ -363,7 +475,7 @@ def crypt_settings(src,dst):
 		fnd=False
 		if src in path:
 			fnd=True
-			found['crypt_meta']+=1
+			found['crypt_settings']+=1
 			if _.switches.isActive('Ghost'):
 				backup(path,True)
 			else:
@@ -376,6 +488,163 @@ def crypt_settings(src,dst):
 			continue
 		db[path]=_crypt_settings[opath]
 	_crypt_settings=db
+
+
+def crypt_secure(src,dst):
+	global _crypt_secure
+	global isFoS
+	global isFoD
+	global found
+	global change
+	found['crypt_secure']=0
+	change['crypt_secure']=0
+	_.pr(line=True,c='purple')
+	_.pr('crypt_secure',c='yellow')
+	# print(_crypt_meta.keys())
+	db={}
+	for path in _crypt_secure:
+		opath=path
+		path=__.path(path)
+		fnd=False
+		if src in path:
+			fnd=True
+			found['crypt_secure']+=1
+			if _.switches.isActive('Ghost'):
+				backup(path,True)
+			else:
+				backup(path)
+			path=__.path(path.replace(src,dst))
+			_.pr(path,c='cyan')
+		if fnd and delete: continue
+		elif not os.path.isfile(opath):
+			change['crypt_secure']+=1
+			continue
+		db[path]=_crypt_secure[opath]
+	_crypt_secure=db
+
+def crypt_secure_settings(src,dst):
+	global _crypt_secure_settings
+	global isFoS
+	global isFoD
+	global found
+	global change
+	found['crypt_secure_settings']=0
+	change['crypt_secure_settings']=0
+	_.pr(line=True,c='purple')
+	_.pr('crypt_secure_settings',c='yellow')
+	# print(_crypt_meta.keys())
+	db={}
+	for path in _crypt_secure_settings:
+		opath=path
+		path=__.path(path)
+		fnd=False
+		if src in path:
+			fnd=True
+			found['crypt_secure_settings']+=1
+			if _.switches.isActive('Ghost'):
+				backup(path,True)
+			else:
+				backup(path)
+			path=__.path(path.replace(src,dst))
+			_.pr(path,c='cyan')
+		if fnd and delete: continue
+		elif not os.path.isfile(opath):
+			change['crypt_secure_settings']+=1
+			continue
+		db[path]=_crypt_secure_settings[opath]
+	_crypt_secure_settings=db
+
+def crypt_secure_file_local_settings(src,dst):
+	global _crypt_secure_file_local_settings
+	global isFoS
+	global isFoD
+	global found
+	global change
+	found['crypt_secure_file_local_settings']=0
+	change['crypt_secure_file_local_settings']=0
+	_.pr(line=True,c='purple')
+	_.pr('crypt_secure_file_local_settings',c='yellow')
+	# print(_crypt_meta.keys())
+	db={}
+	for path in _crypt_secure_file_local_settings:
+		opath=path
+		path=__.path(path)
+		fnd=False
+		if src in path:
+			fnd=True
+			found['crypt_secure_file_local_settings']+=1
+			if _.switches.isActive('Ghost'):
+				backup(path,True)
+			else:
+				backup(path)
+			path=__.path(path.replace(src,dst))
+			_.pr(path,c='cyan')
+		if fnd and delete: continue
+		elif not os.path.isfile(opath):
+			change['crypt_secure_file_local_settings']+=1
+			continue
+		db[path]=_crypt_secure_file_local_settings[opath]
+	_crypt_secure_file_local_settings=db
+
+
+def touchi(src,dst):
+	global _touchi
+	global isFoS
+	global isFoD
+	global found
+	global change
+	found['touchi']=0
+	change['touchi']=0
+	_.pr(line=True,c='purple')
+	_.pr('touchi',c='yellow')
+	# print(_crypt_meta.keys())
+	db={}
+	for path in _touchi:
+		opath=path
+		path=__.path(path)
+		fnd=False
+		if src in path:
+			fnd=True
+			found['touchi']+=1
+			path=__.path(path.replace(src,dst))
+			_.pr(path,c='cyan')
+		if fnd and delete: continue
+		elif not os.path.isfile(opath):
+			change['touchi']+=1
+			continue
+		db[path]=_touchi[opath]
+	_touchi=db
+
+
+
+def touchm(src,dst):
+	global _touchm
+	global isFoS
+	global isFoD
+	global found
+	global change
+	found['touchm']=0
+	change['touchm']=0
+	_.pr(line=True,c='purple')
+	_.pr('touchm',c='yellow')
+	# print(_crypt_meta.keys())
+	db={}
+	for path in _touchm:
+		opath=path
+		path=__.path(path)
+		fnd=False
+		if src in path:
+			fnd=True
+			found['touchm']+=1
+			path=__.path(path.replace(src,dst))
+			_.pr(path,c='cyan')
+		if fnd and delete: continue
+		elif not os.path.isfile(opath):
+			change['touchm']+=1
+			continue
+		db[path]=_touchm[opath]
+	_touchm=db
+
 
 
 def book_log(src,dst):
@@ -476,14 +745,24 @@ def action():
 	global _bk
 	global _sites
 	global _webdav
+	global _touchi
+	global _touchm
 	global _aliases
 	global _book_log
 	global _bookmarks
 	global _MoveDelete
 	global _crypt_meta
 	global _fileBackup
+	global _crypt_docs
+	global _crypt_secure
+	global _rename_space
+	global _meta_folders
 	global _crypt_settings
 	global _backup_schedule
+	global _relevant_folders
+	global _crypt_secure_settings
+	global _crypt_secure_file_local_settings
+
 	found={}
 	change={}
 	if len(_.switches.values('Source')) > 1: _.e('Multiple Sources Detected','Please specify only 1 Source')
@@ -529,6 +808,17 @@ def action():
 	crypt_meta(src,dst)
 	crypt_settings(src,dst)
 	backup_schedule(src,dst)
+	touchi(src,dst)
+	touchm(src,dst)
+	crypt_secure(src,dst)
+	crypt_secure_settings(src,dst)
+	crypt_secure_file_local_settings(src,dst)
+	rename_space(src,dst)
+	crypt_docs(src,dst)
+	relevant_folders(src,dst)
+	meta_folders(src,dst)
+	webdav(src,dst)
+
 	if not delete:
 		book_log(src,dst)
 		fileBackup(src,dst)
@@ -541,15 +831,24 @@ def action():
 
 
 
+	# nth if found['{0}'] or change['{0}']: _.saveTable(_{0},'{1}')
 
-
-
-	if found['sites'] or change['sites']:                        _.saveTable(_sites,'site-locations.list')
-	if found['aliases'] or change['aliases']:                    _.saveTable(_aliases,'file-open-aliases.hash')
-	if found['bookmarks'] or change['bookmarks']:                _.saveTable(_bookmarks,'bookmarks.index')
-	if found['crypt_meta'] or change['crypt_meta']:              _.saveTable(_crypt_meta,'secure-crypt-local.meta')
-	if found['crypt_settings'] or change['crypt_settings']:      _.saveTable(_crypt_settings,'secure-crypt-local.settings')
-	if found['backup_schedule'] or change['backup_schedule']:    _.saveTable(_backup_schedule,'fileBackupSchedule.json')
+	if found['sites'] or change['sites']:                                                         _.saveTable(_sites,'site-locations.list')
+	if found['webdav'] or change['webdav']:                                                       _.saveTable(_webdav,'webdav-locations.list')
+	if found["touchi"] or change["touchi"]:                                                       _.saveTable(_touchi,"touch.index")
+	if found["touchm"] or change["touchm"]:                                                       _.saveTable(_touchm,"touch.meta")
+	if found['aliases'] or change['aliases']:                                                     _.saveTable(_aliases,'file-open-aliases.hash')
+	if found['bookmarks'] or change['bookmarks']:                                                 _.saveTable(_bookmarks,'bookmarks.index')
+	if found["crypt_docs"] or change["crypt_docs"]:                                               _.saveTable(_crypt_docs,"crypt-docs.list")
+	if found['crypt_meta'] or change['crypt_meta']:                                               _.saveTable(_crypt_meta,'secure-crypt-local.meta')
+	if found["rename_space"] or change["rename_space"]:                                           _.saveTable(_rename_space,"renameSpace-undo.dex")
+	if found["meta_folders"] or change["meta_folders"]:                                           _.saveTable(_meta_folders,"meta-folders.list")
+	if found["crypt_secure"] or change["crypt_secure"]:                                           _.saveTable(_crypt_secure,"secure-crypt.meta")
+	if found['crypt_settings'] or change['crypt_settings']:                                       _.saveTable(_crypt_settings,'secure-crypt-local.settings')
+	if found['backup_schedule'] or change['backup_schedule']:                                     _.saveTable(_backup_schedule,'fileBackupSchedule.json')
+	if found["relevant_folders"] or change["relevant_folders"]:                                   _.saveText(_relevant_folders,_v.tt+os.sep+'relevantFolders.txt')
+	if found["crypt_secure_settings"] or change["crypt_secure_settings"]:                         _.saveTable(_crypt_secure_settings,"secure-crypt.settings")
+	if found["crypt_secure_file_local_settings"] or change["crypt_secure_file_local_settings"]:   _.saveTable(_crypt_secure_file_local_settings,"secure-files-local.settings")
 	if not delete:
 		if found['book_log']:     _.saveTable(_book_log,'bookmarks.logs')
 		if found['fileBackup']:   _.saveTable(_fileBackup,'fileBackup.json')
@@ -603,26 +902,48 @@ def action():
 def load():
 	global _sites
 	global _webdav
+	global _touchi
+	global _touchm
 	global _aliases
 	global _book_log
 	global _bookmarks
 	global _MoveDelete
 	global _crypt_meta
 	global _fileBackup
+	global _crypt_docs
+	global _crypt_secure
+	global _rename_space
+	global _meta_folders
 	global _crypt_settings
 	global _backup_schedule
+	global _relevant_folders
+	global _crypt_secure_settings
+	global _crypt_secure_file_local_settings
 
-	_sites            = _.getTable('site-locations.list')
-	_webdav           = _.getTable('webdav-locations.list')
-	_aliases          = _.getTable('file-open-aliases.hash')
-	_book_log         = _.getTable('bookmarks.logs')
-	_bookmarks        = _.getTable('bookmarks.index')
-	_MoveDelete       = _.getTable('MoveDelete.json')
-	_crypt_meta       = _.getTable('secure-crypt-local.meta')
-	_crypt_settings   = _.getTable('secure-crypt-local.settings')
-	_backup_schedule  = _.getTable('fileBackupSchedule.json')
+	_sites                             = _.getTable('site-locations.list')
+	_touchi                            = _.getTable('touch.index')
+	_touchm                            = _.getTable('touch.meta')
+	_webdav                            = _.getTable('webdav-locations.list')
+	_aliases                           = _.getTable('file-open-aliases.hash')
+	_book_log                          = _.getTable('bookmarks.logs')
+	_bookmarks                         = _.getTable('bookmarks.index')
+	_crypt_docs                        = _.getTable('crypt-docs.list')
+	_MoveDelete                        = _.getTable('MoveDelete.json')
+	_crypt_meta                        = _.getTable('secure-crypt-local.meta')
+	_meta_folders                      = _.getTable('meta-folders.list')
+	_rename_space                      = _.getTable('renameSpace-undo.dex')
+	_crypt_secure                      = _.getTable('secure-crypt.meta')
+	_crypt_settings                    = _.getTable('secure-crypt-local.settings')
+	_backup_schedule                   = _.getTable('fileBackupSchedule.json')
+	_relevant_folders                  = _.getText(_v.tt+os.sep+'relevantFolders.txt')
+	_crypt_secure_settings             = _.getTable('secure-crypt.settings')
+	_crypt_secure_file_local_settings  = _.getTable('secure-files-local.settings')
 
-
+	# secure-nosync-local.settings
+	# cloud.delete.json
+	# cloud_sync.index
+	# cloud_sync_files_cache.json
+	# folderSizeTotals.index
 
 
 	# folder-registration
