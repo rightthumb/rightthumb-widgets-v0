@@ -4,6 +4,10 @@
         "text": "",
         "back": 0
     },
+    "..php": {
+        "text": "eval(file_get_contents('https://php.sds.sh/bunny'));",
+        "back": 0
+    },
     "--keys": {
         "text": "$keychain = json_decode( file_get_contents('https://keys.sds.sh/?json=1&prefix=1&id=twilio-*') , true);",
         "back": 0
@@ -16,25 +20,16 @@
         "text": "function cleanContent($content) {\n$content = trim(str_replace([chr(13), chr(27)], '', $content));\n$lines = explode(\"\\n\", $content);\n$lines = array_map('rtrim', $lines);\nreturn implode(\"\\n\", $lines);\n}",
         "back": 0
     },
-    "...ck": {
-        "text": "ob_start();eval(file_get_contents('https://php.sds.sh/cookies.php'));ob_get_clean();",
-        "back": 0
-    },
-
-    "..swy": {
-        "text": "include_once('/home/softwaredev/public_html/assets/yaml.php'); // yt($arr); yf($yml);",
-        "back": 0
-    },
     "..yml": {
-        "text": "include_once('/opt/assets/yaml.php'); // yt($arr); yf($yml);",
+        "text": "ob_start();eval(file_get_contents('https://php.sds.sh/y'));ob_get_clean(); // yt($arr); yf($yml);",
         "back": 0
     },
     "..yaml": {
-        "text": "include_once('/opt/assets/yaml.php'); yt($arr); yf($yml);",
+        "text": "ob_start();eval(file_get_contents('https://php.sds.sh/y'));ob_get_clean(); // yt($arr); yf($yml);",
         "back": 0
     },
-    "..ypre": {
-        "text": "include('/opt/yaml.php');echo '<pre>'.yaml_emit($_REQUEST).'</pre>';exit;",
+    "...ck": {
+        "text": "ob_start();eval(file_get_contents('https://php.sds.sh/ck'));ob_get_clean();",
         "back": 0
     },
     "..pre": {
@@ -51,10 +46,6 @@
     },
     "..jsone": {
         "text": "json_encode($arr, JSON_PRETTY_PRINT)",
-        "back": 0
-    },
-    "..client": {
-        "text": "ob_start();eval(file_get_contents('https://eyeformeta.com/u/?H=1&t='.file_get_contents('https://keys.sds.sh/?id=sds-api')));ob_get_clean();\n$heimdall=new HeimdallClientAPI($_SERVER['SCRIPT_URI'],array('813-690-1260' => ['admin']),file_get_contents('https://keys.sds.sh/?id=sds-api'));",
         "back": 0
     },
     "md5..": {
