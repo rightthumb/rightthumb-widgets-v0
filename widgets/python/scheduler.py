@@ -34,6 +34,7 @@ def sw():
 	#b)--> examples
 	_.switches.register( 'NoBeep', '-nobeep' )
 	_.switches.register( 'List', '-list' )
+	_.switches.register( 'DaysOfWeek', '-dow,-day,-days', 'mon tue wed thu fri sat sun' )
 	_.switches.register( 'Delete', '-del' )
 	_.switches.register( 'Every', '-e,-every', 'day hour min sec OR d h m s' )
 	# _.switches.register( 'At', '-at', '13:30' )
@@ -207,6 +208,8 @@ def scheduler():
 		if _.switches.isActive('At'):
 			if not 'day' in rec: rec['day']=1
 			rec['at']=_.switches.values('At')[0]
+		if _.switches.isActive('DaysOfWeek'):
+			rec['days']=_.switches.values('DaysOfWeek')
 
 		db.append(rec)
 		print()

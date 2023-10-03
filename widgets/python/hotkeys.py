@@ -127,6 +127,7 @@ import _rightThumb._base3 as _
 _.load()
 ##################################################
 banner=_.Banner(hotkeys);
+# print(hotkeys)
 goss=banner.goss
 goss('-\t search hotkeys with the hk command')
 goss('-\t\t hk space')
@@ -796,95 +797,95 @@ except Exception as e:
 	pass
 
 class BEEPS:
-    def __init__(self):
-        ###
-        # Notes Config
-        ###
+	def __init__(self):
+		###
+		# Notes Config
+		###
 
-        # Set delay tempo
-        self.tempo = 0.15
+		# Set delay tempo
+		self.tempo = 0.15
 
-        # Setup Notes
-        self.notes = {
-            "pause": 0,
-            "c": 1,
-            "c#": 2,
-            "d": 3,
-            "d#": 4,
-            "e": 5,
-            "f": 6,
-            "f#": 7,
-            "g": 8,
-            "g#": 9,
-            "a": 10,
-            "a#": 11,
-            "b": 12,
-        }
+		# Setup Notes
+		self.notes = {
+			"pause": 0,
+			"c": 1,
+			"c#": 2,
+			"d": 3,
+			"d#": 4,
+			"e": 5,
+			"f": 6,
+			"f#": 7,
+			"g": 8,
+			"g#": 9,
+			"a": 10,
+			"a#": 11,
+			"b": 12,
+		}
 
-        # Note Types
-        self.note_types = {
-            "sixteenth": 50,
-            "eighth": 100,
-            "dotted_eighth": 150,
-            "quarter": 200,
-            "half": 400,
-            "whole": 800,
-            "triplet": 60,
-        }
+		# Note Types
+		self.note_types = {
+			"sixteenth": 50,
+			"eighth": 100,
+			"dotted_eighth": 150,
+			"quarter": 200,
+			"half": 400,
+			"whole": 800,
+			"triplet": 60,
+		}
 
-    def play_note(self, octave, note, note_type):
-        """Play a note at a certain octave by calculating the frequency of the sound it would represent."""
-        pass
-        # # Match the note and note type to the dictionaries
-        # note = self.notes[note]
-        # note_type = self.note_types[note_type]
+	def play_note(self, octave, note, note_type):
+		"""Play a note at a certain octave by calculating the frequency of the sound it would represent."""
+		pass
+		# # Match the note and note type to the dictionaries
+		# note = self.notes[note]
+		# note_type = self.note_types[note_type]
 
-        # # Chill for a bit if it's a pause
-        # if not note:
-        #     time.sleep(note_type / 1000)
-        #     return
+		# # Chill for a bit if it's a pause
+		# if not note:
+		#     time.sleep(note_type / 1000)
+		#     return
 
-        # # Calculate C for the provided octave
-        # frequency = 32.7032 * (2 ** octave)
+		# # Calculate C for the provided octave
+		# frequency = 32.7032 * (2 ** octave)
 
-        # # Calculate the frequency of the given note
-        # frequency *= 1.059463094 ** note
+		# # Calculate the frequency of the given note
+		# frequency *= 1.059463094 ** note
 
-        # # Generate sine wave
-        # duration = note_type / 1000  # convert to seconds
-        # sample_rate = 44100
-        # t = np.arange(int(duration * sample_rate))
-        # wave = 0.5 * np.sin(2 * np.pi * frequency * t / sample_rate)
-        # wave = np.int16(wave * 32767)
+		# # Generate sine wave
+		# duration = note_type / 1000  # convert to seconds
+		# sample_rate = 44100
+		# t = np.arange(int(duration * sample_rate))
+		# wave = 0.5 * np.sin(2 * np.pi * frequency * t / sample_rate)
+		# wave = np.int16(wave * 32767)
 
-        # # Play the sound
-        # try:
-        #     sd.play(wave, sample_rate)
-        #     sd.wait()
-        #     # Delay after the beep so it doesn't all run together
-        #     time.sleep(self.tempo)
-        # except Exception as e:
-        #     frameinfo = getframeinfo(currentframe())
-        #     print(frameinfo.lineno, '\t', e, 'red')
-        #     pass
+		# # Play the sound
+		# try:
+		#     sd.play(wave, sample_rate)
+		#     sd.wait()
+		#     # Delay after the beep so it doesn't all run together
+		#     time.sleep(self.tempo)
+		# except Exception as e:
+		#     frameinfo = getframeinfo(currentframe())
+		#     print(frameinfo.lineno, '\t', e, 'red')
+		#     pass
 
-    def simple_beep(self):
-        _oct = 2
-        self.play_note(_oct, 'g', 'quarter')
+	def simple_beep(self):
+		_oct = 2
+		self.play_note(_oct, 'g', 'quarter')
 
-    def simple_beep2(self):
-        _oct = 3
-        self.play_note(_oct, 'e', 'quarter')
+	def simple_beep2(self):
+		_oct = 3
+		self.play_note(_oct, 'e', 'quarter')
 
-    def note(self, n='c', *args):
-        _oct = 3
-        nt = 'half'
-        for a in args:
-            if type(a) == str:
-                nt = a
-            if type(a) == int:
-                _oct = a
-        self.play_note(_oct, n, nt)
+	def note(self, n='c', *args):
+		_oct = 3
+		nt = 'half'
+		for a in args:
+			if type(a) == str:
+				nt = a
+			if type(a) == int:
+				_oct = a
+		self.play_note(_oct, n, nt)
 
 
 
@@ -3470,31 +3471,39 @@ def schedulerDB():
 	for rec in _.getTable(__.scheduler_db):
 		print(_.toYML(rec))
 		if rec['status']:
-
-			if 'sec' in rec:
-				schedule.every(int(rec['sec'])).seconds.do(scheduler_job,rec).tag(rec['id'])
-			elif 'min' in rec:
-				schedule.every(int(rec['min'])).minutes.do(scheduler_job,rec).tag(rec['id'])
-			elif 'hour' in rec:
-				schedule.every(int(rec['hour'])).hours.do(scheduler_job,rec).tag(rec['id'])
-			elif 'day' in rec and 'at' in rec:
-				schedule.every(int(rec['days'])).days.at(rec['at']).do(scheduler_job,rec).tag(rec['id'])
-			pass
-			# schedule.every().day.at("12:00").do(job).tag(rec['id'])
-			# schedule.every().day.at("10:30").do(job)
-			# schedule.every().monday.do(job)
-			# schedule.every().wednesday.at("13:15").do(job)
-			# schedule.every(2).days.at("10:30").do(job)
-			# schedule.every().week.do(job)
-			# schedule.every().hour.do(job)
-			# schedule.every(5).seconds.do(job)
-			# schedule.every().minute.do(job)
+			run=True
+			if 'days' in rec:
+				run=False
+			if 'days' in rec and is_today_in_days(rec['days']):
+				run=True
+			if run:
+				if 'sec' in rec:
+					schedule.every(int(rec['sec'])).seconds.do(scheduler_job,rec).tag(rec['id'])
+				elif 'min' in rec:
+					schedule.every(int(rec['min'])).minutes.do(scheduler_job,rec).tag(rec['id'])
+				elif 'hour' in rec:
+					schedule.every(int(rec['hour'])).hours.do(scheduler_job,rec).tag(rec['id'])
+				elif 'day' in rec and 'at' in rec:
+					schedule.every(int(rec['days'])).days.at(rec['at']).do(scheduler_job,rec).tag(rec['id'])
+				pass
+				# schedule.every().day.at("12:00").do(job).tag(rec['id'])
+				# schedule.every().day.at("10:30").do(job)
+				# schedule.every().monday.do(job)
+				# schedule.every().wednesday.at("13:15").do(job)
+				# schedule.every(2).days.at("10:30").do(job)
+				# schedule.every().week.do(job)
+				# schedule.every().hour.do(job)
+				# schedule.every(5).seconds.do(job)
+				# schedule.every().minute.do(job)
 	_.pr('scheduler: creating schedule: end',c='yellow')
 	_.pr(line=1)
+import traceback
 
 def schedulerNoError():
 	try: scheduler()
-	except Exception as e: print('scheduler error',e)
+	except Exception as e:
+		print('scheduler error',e)
+		traceback.print_exc()
 
 def scheduler():
 	print('\nscheduler: started\n')
@@ -3527,10 +3536,20 @@ def schedulerRun():
 	threads.append(t)
 	t.start()
 
+def is_today_in_days(days_list):
+	"""Check if today is in the provided list of days."""
+	return current_day() in days_list
+
+def current_day():
+	import datetime
+	"""Return current day in short form, e.g., 'fri' for Friday."""
+	now = datetime.datetime.now()
+	return now.strftime('%a').lower()
+
 __.schedulerRun=True
 if __name__ == '__main__':
 	# schedulerRun()
-	if len(_.switches.all())==0: banner.pr(); banner.gossip();
+	if len(_.switches.all())==0: banner.pr();
 	action()
 	__.isExit()
 

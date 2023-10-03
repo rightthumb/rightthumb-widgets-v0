@@ -783,7 +783,7 @@ def secureFiles(path):
 
 def isActive(switch):
 	active=False
-	for rec in _.switches.all():
+	for rec in _.switches.all(False):
 		if rec['name'] == switch:
 			if rec['active']:
 				active=True

@@ -35,7 +35,7 @@ def sw():
 	# _.switches.register( 'Input', '-i' )
 	# _.switches.register( 'URL', '-u,-url,-urls', 'https://etc.ac/', isData='raw' )
 	#e)--> examples
-	# _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name,data,clean', description='Files', isRequired=False )
+	_.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name', description='Files', isRequired=False )
 	_.switches.register( 'Alias', '-a', 'wq' )
 	_.switches.register( 'Reverse', '-r' )
 
@@ -163,13 +163,23 @@ _.l.sw.register( triggers, sw )
 ########################################################################################
 #n)--> start
 
+__.v.Alias=None
+__.v.Files=None
+__.v.Reverse=None
+
 def action():
 	if not _.switches.isActive('Alias'): _.e('Missing Alias Name','-a wq')
-	paths=_.pp()
-	if _.switches.isActive('Reverse'):
+	paths=_.isData()
+	if __.v.Files:
+		paths=__.v.Files
+	if _.switches.isActive('Reverse') or __.v.Reverse:
 		paths.reverse()
 	aliases=_.getTable('file-open-aliases.hash')
-	ra=_.switches.values('Alias')[0]
+	if __.v.Alias:
+		ra=__.v.Alias
+	else:
+		ra=_.switches.values('Alias')[0]
+
 	for i,path in enumerate(paths):
 		_.pr(path)
 		path=__.path(path)

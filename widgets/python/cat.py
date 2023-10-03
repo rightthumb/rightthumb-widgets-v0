@@ -201,8 +201,25 @@ def pr(*args):
 			if '(' in x and  _.showLine(x): return x
 		return ''
 	return arg
+_.v.namePrinted=[]
+def printFile(i,filepath):
+	if not filepath in _.v.namePrinted:
+		_.v.namePrinted.append(filepath)
+		if i and not 'noline' in _.switches.value('Clean'):
+			_.pr('_________________________________________')
+		if not _.isCrypt(filepath):
+			if not _.switches.isActive('Clean'):
+				if __.path(filepath).startswith( _v.pp+os.sep+'configs'+os.sep ):
+					_.colorThis( [filepath.replace('-',os.sep)], 'cyan' )
+					_.pr()
+				else:
+					_.colorThis( [filepath], 'cyan' )
+					_.pr()
 
-
+		else:
+			if not _.switches.isActive('Clean'):
+				_.colorThis( ['Encrypted:',filepath], 'red' )
+				_.pr()
 def action():
 	focus()
 	global Function
@@ -228,24 +245,12 @@ def action():
 			_.pr(filepath)
 			_.e(e)
 		if os.path.isfile(filepath):
+
+
 			
 
-			if i and not 'noline' in _.switches.value('Clean'):
-				_.pr('_________________________________________')
-			if not _.isCrypt(filepath):
-				if not _.switches.isActive('Clean'):
-					if __.path(filepath).startswith( _v.pp+os.sep+'configs'+os.sep ):
-						_.colorThis( [filepath.replace('-',os.sep)], 'cyan' )
-						_.pr()
-					else:
-						_.colorThis( [filepath], 'cyan' )
-						_.pr()
-
-			else:
+			if _.isCrypt(filepath):
 				epoch = _dir.info(filepath)['me']
-				if not _.switches.isActive('Clean'):
-					_.colorThis( ['Encrypted:',filepath], 'red' )
-					_.pr()
 				wasCrypt = True
 				_cryptFile.switch( 'Decrypt' )
 				_cryptFile.switch( 'Encrypt', delete=True )
@@ -372,6 +377,7 @@ def action():
 						if not len( simpleClean(row) ):
 							shouldAdd = False
 				if shouldAdd:
+					printFile(i,filepath)
 					vVv.print += 1
 					if row == midID:
 						_.pr( _.genLine( maxLEN, '_', p=0 ) )

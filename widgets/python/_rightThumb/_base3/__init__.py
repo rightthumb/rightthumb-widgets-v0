@@ -10782,7 +10782,7 @@ class Switches:
 		self.dex = {}
 
 
-	def all( self, appReg=None, omit=None, omitDefaults=True,             od=1 ):
+	def all( self, app=True, appReg=None, omit=None, omitDefaults=True,             od=1 ):
 		if not od:
 			omitDefaults = False
 		if omitDefaults:
@@ -10807,10 +10807,11 @@ class Switches:
 			if not row.name in omitList:
 				if row.active:
 					shouldAdd = True
-					# if type( appReg ) == str:
-						# if not appReg == 'all':
-							# if not row.appReg == appReg:
-								# shouldAdd = False
+					if app:
+						if type( appReg ) == str:
+							if not appReg == 'all':
+								if not row.appReg == appReg:
+									shouldAdd = False
 
 					if shouldAdd:
 						if not row.values:

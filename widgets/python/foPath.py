@@ -164,15 +164,18 @@ _.l.sw.register( triggers, sw )
 import os
 paths=[]
 
-
+__.v.Alias=None
+__.v.Plus=None
 def list_directories(start_path):
+	if not __.v.Plus and _.switches.isActive('Plus'):
+		__.v.Plus=' '.join(_.switches.values('Plus'))
 	global paths
 	for root, dirs, files in os.walk(start_path):
 		if root == start_path:
 			for dir_name in dirs:
 				if _.showLine(dir_name):
 					full_path = os.path.join(root, dir_name)
-					if _.showLine(full_path):
+					if _.showLine(full_path,__.v.Plus):
 						paths.append(full_path)
 						print(full_path)
 
@@ -180,10 +183,21 @@ def action():
 	global paths
 	current_folder = os.getcwd()
 	list_directories(current_folder)
-	if _.switches.isActive('ReverseAlias'):
+	if __.v.Plus:
+		_.switches.fieldSet( 'Plus', 'active', True )
+		if type(__.v.Plus) == str:
+			_.switches.fieldSet( 'Plus', 'value', __.v.Plus )
+			_.switches.fieldSet( 'Plus', 'values', [__.v.Plus] )
+		else:
+			_.switches.fieldSet( 'Plus', 'value', ' '.join(__.v.Plus) )
+			_.switches.fieldSet( 'Plus', 'values', __.v.Plus )
+	if _.switches.isActive('ReverseAlias') or __.v.Alias:
 		aliases=_.getTable('bookmarks.index')
 		paths.reverse()
-		ra=_.switches.values('ReverseAlias')[0]
+		if __.v.Alias:
+			ra=__.v.Alias
+		else:
+			ra=_.switches.values('ReverseAlias')[0]
 		bm=_v.bookmarkFormat
 		for i,path in enumerate(paths):
 			if not i:
