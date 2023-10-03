@@ -30,12 +30,13 @@ _str = __.imp('_rightThumb._string')
 
 
 def sw():
-	pass
-	#b)--> examples
-	# _.switches.register( 'Input', '-i' )
-	# _.switches.register( 'URL', '-u,-url,-urls', 'https://etc.ac/', isData='raw' )
-	#e)--> examples
-	# _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name,data,clean', description='Files', isRequired=False )
+	_.switches.register( 'Source', '-src,-from,-f,-file','file.txt', isRequired=True )
+	_.switches.register( 'Destination', '-dst,-to','file2.txt', isRequired=False )
+	_.switches.register( 'Delete', '-del,-delete', isRequired=False )
+	_.switches.register( 'Backup', '-bk,-backup', isRequired=False )
+	_.switches.register( 'Ghost', '-ghost', isRequired=False )
+	_.switches.register( 'Yes', '-y,-yes', isRequired=False )
+
 
 # __.setting('require-list',['Files,Plus','File,Has']) # todo
 # __.setting('require-list',['Pipe','Files'])
@@ -662,46 +663,68 @@ def book_log(src,dst):
 	global isFoS
 	global isFoD
 	global found
+	global change
 	found['book_log']=0
+	change['book_log']=0
 	if not isFoS: return False
 	srcS = src[:-1]
 	dstS = dst[:-1]
 	_.pr(line=True,c='purple')
 	_.pr('book_log',c='yellow')
+	if __.v.Delete: rm={}
 	for bm in _book_log:
 		for i,rec in enumerate(_book_log[bm]):
 			path=__.path(_v.resolveFolderIDs(rec['location']))
 			if path == srcS:
 				path=dst
 				found['book_log']+=1
+				if __.v.Delete:
+					if not bm in rm: rm[bm]=[]
+					rm[bm].append(i)
 				# _.pr(path,c='cyan')
 			elif path.startswith(src):
-				cnt+=1
+				if __.v.Delete:
+					if not bm in rm: rm[bm]=[]
+					rm[bm].append(i)
 				found['book_log']+=1
 				path=path.replace(src,dst)
 				# _.pr(path,c='cyan')
 			_book_log[bm][i]['location']=__.path(_v.sanitizeFolder(path))
 	_.pr(found['book_log'],c='cyan')
-
+	if __.v.Delete:
+		for bm in rm:
+			rm[bm].reverse()
+			for i in rm[bm]:
+				change['book_log']+=1
+				del _book_log[bm][i]
 def fileBackup(src,dst):
 	global _fileBackup
 	global isFoS
 	global isFoD
 	global found
+	global change
 	_fileBackup = _.getTable('fileBackup.json')
 	found['fileBackup']=0
+	change['fileBackup']=0
 	srcS = src[:-1]
 	dstS = dst[:-1]
 	_.pr(line=True,c='purple')
 	_.pr('fileBackup',c='yellow')
+	if __.v.Delete: rm=[]
 	for i,rec in enumerate(_fileBackup):
 		path=__.path(rec['file'])
 		if path.startswith(src):
+			if __.v.Delete: rm.append(i)
 			found['fileBackup']+=1
 			path=path.replace(src,dst)
 			# _.pr(path,c='cyan')
 		_fileBackup[i]['file']=__.path(path)
 	_.pr(found['fileBackup'],c='cyan')
+	if __.v.Delete:
+		rm.reverse()
+		for i in rm:
+			change['fileBackup']+=1
+			del _fileBackup[i]
 
 def backup_schedule(src,dst):
 	global _backup_schedule
@@ -745,6 +768,53 @@ def backup(path,decrypt=False):
 	del _bk
 	__.appReg=appReg
 
+def changeFound():
+	global found
+	global change
+	found['aliases']=0
+	found['bookmarks']=0
+	found['sites']=0
+	found['meta_folders']=0
+	found['relevant_folders']=0
+	found['webdav']=0
+	found['rename_space']=0
+	found['crypt_docs']=0
+	found['crypt_meta']=0
+	found['crypt_settings']=0
+	found['crypt_secure']=0
+	found['crypt_secure_settings']=0
+	found['crypt_secure_file_local_settings']=0
+	found['touchi']=0
+	found['touchm']=0
+	found['book_log']=0
+	found['fileBackup']=0
+	found['backup_schedule']=0
+
+	change['aliases']=0
+	change['bookmarks']=0
+	change['sites']=0
+	change['meta_folders']=0
+	change['relevant_folders']=0
+	change['webdav']=0
+	change['rename_space']=0
+	change['crypt_docs']=0
+	change['crypt_meta']=0
+	change['crypt_settings']=0
+	change['crypt_secure']=0
+	change['crypt_secure_settings']=0
+	change['crypt_secure_file_local_settings']=0
+	change['touchi']=0
+	change['touchm']=0
+	change['book_log']=0
+	change['fileBackup']=0
+	change['backup_schedule']=0
+
+def ifHas(dic):
+	d={}
+	for k in dic:
+		if dic[k]: d[k]=dic[k]
+	return d
+
 def run(s,d=None):
 	global src
 	global dst
@@ -781,12 +851,19 @@ def run(s,d=None):
 	if isFoS and os.path.isfile(dst): _.e('Error: dst','if src is folder dst can not be a file')
 	if not isFoD: _v.mkdir(dst)
 	if not __.v.Delete and src == dst: _.e('unable to move','same location')
+	if not __.v.Yes:
+		if not __.v.Delete:
+			if not 'y' in input('Move: '+src+'\n  To: '+dst+'\n ?: ').lower(): _.e('Move','Exit Activated')
+		elif __.v.Delete:
+			if __.v.Ghost:
+				if _.lis('a all', __.v.Ghostbusters ):        ghost = ' '+'all'
+				elif _.lis('backup bk', __.v.Ghostbusters ):  ghost = ' '+'backup'
+				elif _.lis('l log logs', __.v.Ghostbusters ): ghost = ' '+'logs'
 
-	if not __.v.Delete:
-
-		if not 'y' in input('Move: '+src+'\n  To: '+dst+'\n ?: ').lower(): return None
-	elif __.v.Delete:
-		if not 'y' in input('Delete: '+src+'?: ').lower(): return None
+				if not 'y' in input('Ghost'+ghost+': '+src+'?: ').lower(): _.e('Ghost','Exit Activated')
+			else:
+				if not 'y' in input('Delete: '+src+'?: ').lower(): _.e('Delete','Exit Activated')
+	changeFound()
 	aliases(src,dst)
 	bookmarks(src,dst)
 	sites(src,dst)
@@ -807,6 +884,15 @@ def run(s,d=None):
 	if not __.v.Delete:
 		book_log(src,dst)
 		fileBackup(src,dst)
+	else:
+		if _.lis('a all', __.v.Ghostbusters ):
+			book_log(src,dst)
+			fileBackup(src,dst)
+		elif _.lis('backup bk', __.v.Ghostbusters ):
+			fileBackup(src,dst)
+		elif _.lis('l log logs', __.v.Ghostbusters ):
+			book_log(src,dst)
+
 
 
 
@@ -855,9 +941,8 @@ def save():
 	if found["relevant_folders"] or change["relevant_folders"]:                                   _.saveText(_relevant_folders,_v.tt+os.sep+'relevantFolders.txt')
 	if found["crypt_secure_settings"] or change["crypt_secure_settings"]:                         _.saveTable(_crypt_secure_settings,"secure-crypt.settings")
 	if found["crypt_secure_file_local_settings"] or change["crypt_secure_file_local_settings"]:   _.saveTable(_crypt_secure_file_local_settings,"secure-files-local.settings")
-	if not __.v.Delete:
-		if found['book_log']:     _.saveTable(_book_log,'bookmarks.logs')
-		if found['fileBackup']:   _.saveTable(_fileBackup,'fileBackup.json')
+	if found['book_log'] or change['book_log']:                                                   _.saveTable(_book_log,'bookmarks.logs')
+	if found['fileBackup'] or change['fileBackup']:                                               _.saveTable(_fileBackup,'fileBackup.json')
 	fnd=False
 	for f in found:
 		if found[f]: fnd=True
@@ -888,22 +973,32 @@ def save():
 	}
 	_MoveDelete.append(rec)
 	_.saveTable(_MoveDelete,'MoveDelete.json')
-	_.pv(found)
+	fnd=ifHas(found)
+	cng=ifHas(change)
+	if fnd:
+		_.pr('\nFound:',c='yellow')
+		_.pv(_.dicSort(fnd))
+	if cng:
+		_.pr('\nChange:',c='yellow')
+		_.pv(_.dicSort(cng))
 
-	if not __.v.Ghost and _.switches.isActive('Backup') and __.v.Delete:
-		import _rightThumb._zipper as _zipper
-		_zipper.zip(src,dst)
-		shutil.rmtree(src)
-	else:
+	if not __.v.Ghost and __.v.Backup and __.v.Delete:
+		if not __.v.Ghost:
+			print('Ghost:',__.v.Ghost)
+			import _rightThumb._zipper as _zipper
+			_zipper.zip(src,dst)
+			shutil.rmtree(src)
+	elif not __.v.Delete:
 		shutil.move(src, dst)
 
 
 
-
+__.v.Yes = False
+__.v.Backup = False
 __.v.Force = False
 __.v.Ghost = False
 __.v.Delete = False
-
+__.v.Ghostbusters = ''
 
 
 
@@ -964,23 +1059,29 @@ def load():
 import shutil
 import os
 
-
-##################################################
-#b)--> examples
-# banner=_.Banner(dependencies)
-# goss=banner.goss
-# goss('-\t this app will sherlock tf out of any python app or python module')
-#e)--> examples
-##################################################
+def action():
+	__.v.Yes = _.switches.isActive('Yes')
+	__.v.Backup = _.switches.isActive('Backup')
+	__.v.Ghost = _.switches.isActive('Ghost')
+	__.v.Ghostbusters = str('|'+'|'.join(_.switches.values('Ghost'))+'|').lower().replace(' ','')
+	__.v.Delete = _.switches.isActive('Delete')
+	__.v.Force = False
+	if _.switches.isActive('Destination') and len(_.switches.values('Destination')) > 1 and 'force' in _.switches.values('Destination')[1]:
+		__.v.Force = True
+	load()
+	if len(_.switches.values('Source')) > 1: _.e('Multiple Sources Detected','Please specify only 1 Source')
+	delete = _.switches.isActive('Delete')
+	src = __.path(_.switches.values('Source')[0])
+	if _.switches.isActive('Destination'):
+		dst = _.switches.values('Destination')[0]
+	else:
+		dst = None
+	# print(__.v.Ghost); sys.exit();
+	run(src,dst)
+	save()
 
 ########################################################################################
 if __name__ == '__main__':
-	#b)--> examples
-
-	# banner.pr()
-	# if len(_.switches.all())==0: banner.gossip()
-	
-	#e)--> examples
 	action()
 	_.isExit(__file__)
 

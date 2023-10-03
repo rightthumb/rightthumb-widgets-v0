@@ -19,6 +19,15 @@ if [%2] == [-delete] (
 	GOTO:EOF
 )
 
+if [%2] == [y] (
+	CALL:ENTIRE
+	GOTO:EOF
+)
+
+if [%2] == [-y] (
+	CALL:ENTIRE
+	GOTO:EOF
+)
 SET /p entire= encrypt entire file? 
 if [%entire%] == [y] (
 	CALL:ENTIRE

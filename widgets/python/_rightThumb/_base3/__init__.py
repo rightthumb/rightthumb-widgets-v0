@@ -22948,8 +22948,24 @@ def zip9(folder_path, zip_path):
 				zipf.write(file_path, arcname=relative_path)
 	return zip_path
 ##################################################
-def an(string): import re; return re.sub(r'\W+', '', string);
+
+def an(string): import re; return re.sub(r'\W+', '', string); # removes all non-alphanumeric characters including spaces
+def ansp(string): import re; return re.sub(r' +', ' ', re.sub(r'[^\w\s]', '', string)) # removes all non-alphanumeric characters accept single spaces
 ##################################################
+def sp1(string): import re; return re.sub(' +', ' ', string); # removes double spaces
+def lis(has,string):
+	''' # LIST IN STRING '''
+	if type(has) == str: has = sp1(has).strip().split(' ')
+	return all(item in string for item in has )
+def lisa(has,string):
+	''' # LIST IN STRING HAS ALL'''
+	if type(has) == str: has = sp1(has).strip().split(' ')
+	return all(string.count(item) == has.count(item) for item in set(has))
+
+def dicSort(d): return {k: v for k, v in sorted(d.items(), key=lambda item: item[1], reverse=True)}
+sortDic=dicSort
+##################################################
+
 # __.switch_raw
 ##################################################
 # class regImp:

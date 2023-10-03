@@ -893,7 +893,7 @@ keyboard = mController()
 try: import speech_recognition as sr
 except: pass
 
-hkr = _.regImp( __.appReg, 'KeyWise' )
+hkr = _.regImp( __.appReg, 'hotkeys' )
 hk=hkr.imp
 
 _paste = _.regImp( __.appReg, '-paste' )

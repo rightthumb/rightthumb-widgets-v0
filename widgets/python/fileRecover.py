@@ -784,8 +784,8 @@ def load():
 	_bkLog.imp.autoFileVersion()
 
 	ticketTimeline = _.regImp( __.appReg, 'ticketTimeline' )
-	ticketTimeline.do( ticketTimeline.imp.action )
-
+	# ticketTimeline.do(  )
+	ticketTimeline.imp.action()
 	epochTickets = _.getTable( 'ticketTimeline.json' )
 
 

@@ -30,19 +30,17 @@ _str = __.imp('_rightThumb._string')
 
 
 def sw():
-	_.switches.register( 'Source', '-src,-from,-f,-file','file.txt', isRequired=True )
-	_.switches.register( 'Destination', '-dst,-to','file2.txt', isRequired=False )
-	_.switches.register( 'Delete', '-del,-delete', isRequired=False )
-	_.switches.register( 'Backup', '-bk,-backup', isRequired=False )
-	_.switches.register( 'Ghost', '-ghost', isRequired=False )
-	_.switches.register( 'Yes', '-y,-yes', isRequired=False )
-
-	# _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=True )
+	pass
+	#b)--> examples
+	# _.switches.register( 'Input', '-i' )
+	# _.switches.register( 'URL', '-u,-url,-urls', 'https://etc.ac/', isData='raw' )
+	#e)--> examples
+	# _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name,data,clean', description='Files', isRequired=False )
 
 # __.setting('require-list',['Files,Plus','File,Has']) # todo
 # __.setting('require-list',['Pipe','Files'])
-__.setting('receipt-log')
-__.setting('receipt-file')
+__.setting('receipt-log',True)
+__.setting('receipt-file',True)
 __.setting('myFileLocations-skip-validation',False)
 __.setting('require-pipe',False)
 __.setting('require-pipe||file',False)
@@ -53,15 +51,13 @@ __.setting('switch-raw',[])
 
 _.appInfo[focus()] = {
 	# 'app': '8facG-jo0Cxk',
-	'file': 'MoveDelete.py',
+	'file': 'thisApp.py',
 	'liveAppName': __.thisApp( __file__ ),
-	'description': 'changes the path in the backup log (so auto versions are accurate)',
-		_.ail(1,'including all meta files')+
+	'description': 'Changes the world',
+		# _.ail(1,'subject')+
 		# _.aib('one')+
 	'categories': [
-						'rename',
-						'mv',
-						'move',
+						'DEFAULT',
 				],
 	'usage': [
 						# 'epy another',
@@ -77,15 +73,24 @@ _.appInfo[focus()] = {
 						# '',
 	],
 	'examples': [
-						_.hp('p MoveDelete -src D:\\websites\\domains\\test.file -dst C:\\Users\\Scott\\.rt\\profile\\daily\\2023\\38\\09-23'),
-						_.hp('p MoveDelete -src D:\\websites\\domains\\test.file '),
-						_.hp('p MoveDelete -src D:\\websites\\domains\\secure.md -ghost '),
-						_.hp('p MoveDelete -src D:\\websites\\domains\\secure.md -ghost backup'),
+						_.hp('p thisApp -file file.txt'),
 						_.linePrint(label='simple',p=0),
 						'',
 	],
 	'columns': [
 					# { 'name': 'name', 'abbreviation': 'n' },
+# columns used for
+# 	- abbreviation in switches
+#		- ex: -column n s
+#			- instead of: -column name size
+#		- ex: -sort n
+#		- ex: -group n
+# 	- sort is used for things like size sort by bytes
+# 	- responsiveness to terminal width
+# 		- order is important
+# 		- most important on top
+		
+		# this is used for personal usage to programmatically generate columns
 					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
@@ -116,27 +121,86 @@ def triggers():
 	_.switches.trigger( 'URL', _.urlTrigger )
 	_.switches.trigger( 'Duration', _.timeFuture )
 
+def _local_(do): exec(do)
+
 _.l.conf('clean-pipe',True)
 _.l.sw.register( triggers, sw )
 
 ########################################################################################
+#b)--> examples
+#d)--> code hints to quickly get started
+	#n)--> inline examples
+		# any(ele in 'scott5' for ele in list('0123456789'))
+		# if _.switches.isActive('Test'): test(); return None;
+		# result=[]; result=[ _.pr(line) for i, line, bi in _.numerate( _.isData(r=0) )]
+		# bk=[];[  bk.append(rec['backup']) for rec in backupLog if path == rec['file']]; bk=bk[-1];
+		# a=(1 if True else 0) <--# 
+		#!)--> m=[[row[i] for row in matrix] for i in range(4)]
+
+	#n)--> python globals
+		# globals()['var']
+		# for k in globals(): print(k, eval(k) )
+
+	#n)--> webpage from url
+		# for subject in _.caseUnspecific( line, needle ): line = line.replace( subject, _.colorThis( subject, 'green', p=0 ) )
+
+	#n)--> webpage from url
+		# requests=__.imp('requests.post')
+		#!)--> data=str(requests.post(url,data={}).content,'iso-8859-1')
+
+	#n)--> import and backup example
+		# _bk = _.regImp( __.appReg, 'fileBackup' ); _bk.switch( 'Silent' ); _bk.switch( 'isRunOnce' ); _bk.switch( 'Flag', 'APP' ); _bk.switch( 'DoNotSchedule' )
+		# _bk.switch( 'Input', path ); bkfi = _bk.action();
+	
+	#n)--> inline
+		# for rel in [ subject for subject in _.isData(r=0) if _.showLine(subject) ]: print(rel)
+
+	#n)--> banner
+		# banner=_.Banner(app); goss=banner.goss;
+#e)--> examples
 ########################################################################################
 #n)--> start
 
+from imdbApp import IMDb
+
+def fetch_person_data(name):
+	ia = IMDb()
+	people = ia.search_person(name)
+
+	if not people:
+		print(f"No results found for {name}")
+		return
+
+	# Just pick the first person from the list for simplicity.
+	person = people[0]
+	person = ia.get_person(person.personID)
+	print(person.keys())
+	# for key in person:
+		# print(key)
+	print(f"Name: {person['name']}")
+	if 'birth date' in person:
+		print(f"Birthdate: {person['birth date']}")
+	sys.exit()
+	# List all movies and shows they've been in
+	print("\nMovies and Shows:")
+	
+	# Check if 'filmography' key exists and is non-empty
+	if 'filmography' in person and person['filmography']:
+		# Accessing the filmography
+		for category, films in person['filmography'].items():
+			for film in films:
+				title = film.get('title', 'Unknown Title')
+				year = film.get('year', 'Unknown Year')
+				print(f"{title} ({year}), ID: {film.movieID}")
+	else:
+		print(f"No filmography available for {name}")
+
+if __name__ == "__main__":
+	name = input("Enter the name of the actor/actress: ")
+	fetch_person_data(name)
 
 
-def action():
-	_md = _.regImp( __.appReg, '_rightThumb._MoveDelete' )
-	if _.switches.isActive('Yes'): _md.switch('Yes')
-	if _.switches.isActive('Backup'): _md.switch('Backup')
-	if _.switches.isActive('Delete'): _md.switch('Delete')
-	if _.switches.isActive('Ghost'): _md.switch('Ghost',_.switches.values('Ghost'))
-	if _.switches.isActive('Source'): _md.switch('Source',_.switches.values('Source'))
-	if _.switches.isActive('Destination'): _md.switch('Destination',_.switches.values('Destination'))
-	_md.action()
-
-
-
+def action(): pass
 
 
 ##################################################
@@ -153,10 +217,8 @@ if __name__ == '__main__':
 
 	# banner.pr()
 	# if len(_.switches.all())==0: banner.gossip()
-
+	
 	#e)--> examples
 	action()
 	_.isExit(__file__)
 
-
- 
