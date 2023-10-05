@@ -9,7 +9,8 @@ rem Such a place exists, it is called programming.
 rem    - Scott Taylor Reph, RightThumb.com
 rem ###########################################################################
 rem ## {C3P0D40fAe8B} ##
-
-start "D:\Program Files (x86)\Google\Chrome\Application\chrome.exe" %1
+set GoogleChrome="C:\Program Files\Google\Chrome\Application\chrome.exe"
+rem start %GoogleChrome% %1
+%GoogleChrome% %1
 
  

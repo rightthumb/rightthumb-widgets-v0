@@ -161,29 +161,27 @@ _.l.sw.register( triggers, sw )
 ########################################################################################
 #n)--> start
 
-def action(): pass
 
-def generate_teleport_points(grid_size, max_range=None, center_x=0, center_z=0):
-	if max_range is None:
-		max_range = 599999968 // 2  # Default to half of Minecraft's maximum size
-		
-	y_coordinate = 100  # This sets the height at which you'll teleport. You can change it as needed.
+import re
 
-	# Calculate the number of steps in each direction based on the given range and grid size
-	steps = max_range // grid_size
-
-	# Loop through each point in the grid and print the teleport command
-	for x in range(-steps, steps + 1):
-		for z in range(-steps, steps + 1):
-			print(f"/tp @p {center_x + x * grid_size} {y_coordinate} {center_z + z * grid_size}")
-
-if __name__ == "__main__":
-	grid_size = int(input("Enter the grid size (e.g., 1000 for every 1000 blocks): "))
-	range_input = input("Enter the maximum range in one direction (e.g., 5000 for -5000 to 5000) or leave blank for default: ")
+def extract_uppercase_items(s):
+	# Split the string at each occurrence of "
+	items = re.split(r'\"', s)
 	
-	max_range = int(range_input) if range_input else None
+	# Extract all uppercase items possibly containing underscores
+	uppercase_items = [item for item in items if re.match(r'^[A-Z_]+$', item)]
+	
+	return uppercase_items
 
-	generate_teleport_points(grid_size, max_range)
+
+def action():
+	s = '\n'.join(_.pp()).replace("'",'"').replace('\\"','"')
+	new=[]
+	for x in extract_uppercase_items(s):
+		if len(x) > 1:
+			if not x in new:
+				new.append(x)
+	_.pv(new)
 
 
 

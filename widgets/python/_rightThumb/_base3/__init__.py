@@ -8448,6 +8448,7 @@ def aliases_file_open(file):
 
 def url2file(path):
 	url=path
+	if path.startswith('http:'): path=path.replace('http:','https:')
 	if path.startswith('https:') or path.startswith('http:'):
 		url=url.replace('https://www.','https://')
 		url=url.replace('http://www.','http://')
@@ -9515,19 +9516,73 @@ def closeResults( string ):
 
 
 
+def positive_results_code(string, plus='', plus_or=False, end=None, OR=None):
+	# Preliminary adjustments and setup
+	global switches
+	plus_or = OR if OR is not None else (plus_or or switches.isActive('PlusOr'))
+
+	plus_input = _prepare_plus_input(plus)
+
+	# Handle case sensitivity
+	strict_case = switches.isActive('StrictCase')
+	if not strict_case:
+		string = string.lower()
+		plus_input = [item.lower() for item in plus_input]
+
+	# Add 'end' to 'plusInput' if provided
+	if end is not None:
+		plus_input = [item + end for item in plus_input]
+
+	# Check if 'plusInput' exists in the string
+	count_found = sum(1 for item in plus_input if _is_substring_present(item, string))
+	
+	return count_found == len(plus_input) or (plus_or and count_found > 0)
+
+
+def _prepare_plus_input(plus):
+	"""Prepare the 'plus' input parameter"""
+	global switches
+	if not plus:
+		return switches.values('Plus').copy()
+	elif isinstance(plus, str):
+		return [plus]
+	return plus
+
+
+def _is_substring_present(sub, main_string):
+	"""Check if a substring is present based on various conditions."""
+	if '=' in __.sw.PlusCode:
+		return main_string == sub
+	if '*x' in __.sw.PlusCode:
+		return main_string.endswith(sub)
+	if 'x*' in __.sw.PlusCode:
+		return main_string.startswith(sub)
+
+	no_break_chars = '[]()_01`23456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"' + "'" + sub
+	cleaned_main_string = ''.join(char if char in no_break_chars else ' ' for char in main_string)
+	return f' {sub} ' in cleaned_main_string
+
+
+
+
 
 def positiveResultsCode(string,plus='',plusOr=False,end=None,OR=None):
-
 	# __.sw.PlusCode
 
+	
 	global switches
+	if switches.isActive('PlusCode') and 'n' in switches.value('PlusCode'):
+		return positive_results_code(string,plus,plusOr,end,OR)
 	if plusOr or switches.isActive('PlusOr'):
 		plusOr = True
 	
 	if not OR is None:
 		plusOr=OR
 	if not plus == '':
-		plusInput = plus
+		if type(plus) == str:
+			plusInput = [plus]
+		else:
+			plusInput = plus
 	else:
 		plusInput = switches.values('Plus').copy()
 
@@ -9554,10 +9609,17 @@ def positiveResultsCode(string,plus='',plusOr=False,end=None,OR=None):
 		else:
 			for i,yh in enumerate(plusInput):
 				plusInput[i] += end
-	
+	StrictCase=switches.isActive('StrictCase')
+	if not StrictCase:
+		string=string.lower()
 	pi = []
 	for x in plusInput:
-		pi.append( ci(x) )
+		if not StrictCase:
+			pi.append( ci(x).lower() )
+		else:
+			pi.append( ci(x) )
+
+
 	plusInput = pi
 	del pi
 	if type( plusInput ) == str:
@@ -20067,7 +20129,7 @@ def load():
 		switches.register('Plus-Sub', '++','any', default=True)
 		switches.register('PlusOr', '-or', default=True)
 		switches.register('PlusClose', '+close', '90%', default=True)
-		switches.register('PlusCode', '+code','=  OR  *x  OR  x*  AND/OR color' , default=True)
+		switches.register('PlusCode', '+code','=  OR  *x  OR  x*  AND/OR color AND/OR n/new' , default=True)
 		switches.register('PlusDuplicate', '+dup,+duplicate', '90%', default=True)
 		switches.register('StrictCase', '-case,-strictcase', default=True)
 		switches.register('PrintAutoAbbreviations', '-printa,-aprint', default=True)

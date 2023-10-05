@@ -32,10 +32,10 @@ _str = __.imp('_rightThumb._string')
 def sw():
 	pass
 	#b)--> examples
-	# _.switches.register( 'Input', '-i' )
 	# _.switches.register( 'URL', '-u,-url,-urls', 'https://etc.ac/', isData='raw' )
 	#e)--> examples
 	# _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name,data,clean', description='Files', isRequired=False )
+	_.switches.register( 'Delay', '-delay', '10' )
 
 # __.setting('require-list',['Files,Plus','File,Has']) # todo
 # __.setting('require-list',['Pipe','Files'])
@@ -161,30 +161,22 @@ _.l.sw.register( triggers, sw )
 ########################################################################################
 #n)--> start
 
-def action(): pass
+import pyautogui
+import time
 
-def generate_teleport_points(grid_size, max_range=None, center_x=0, center_z=0):
-	if max_range is None:
-		max_range = 599999968 // 2  # Default to half of Minecraft's maximum size
-		
-	y_coordinate = 100  # This sets the height at which you'll teleport. You can change it as needed.
+def type_after_delay(TypeThis, delay=10):
+    time.sleep(delay)
+    pyautogui.write(TypeThis)
 
-	# Calculate the number of steps in each direction based on the given range and grid size
-	steps = max_range // grid_size
 
-	# Loop through each point in the grid and print the teleport command
-	for x in range(-steps, steps + 1):
-		for z in range(-steps, steps + 1):
-			print(f"/tp @p {center_x + x * grid_size} {y_coordinate} {center_z + z * grid_size}")
 
-if __name__ == "__main__":
-	grid_size = int(input("Enter the grid size (e.g., 1000 for every 1000 blocks): "))
-	range_input = input("Enter the maximum range in one direction (e.g., 5000 for -5000 to 5000) or leave blank for default: ")
-	
-	max_range = int(range_input) if range_input else None
-
-	generate_teleport_points(grid_size, max_range)
-
+def action():
+	TypeThis='\n'.join(_.pp())
+	if _.switches.isActive('Delay'):
+		delay=int(_.switches.value('Delay'))
+	else:
+		delay=10
+	type_after_delay(TypeThis,delay)
 
 
 ##################################################

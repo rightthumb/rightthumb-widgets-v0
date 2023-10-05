@@ -32,6 +32,7 @@ import _rightThumb._string as _str
 def appSwitches():
 	pass
 	### EXAMPLE: START
+	_.switches.register( 'Audit', '-audit' )
 	_.switches.register( 'Text', '-t,-text,-make' )
 	# _.switches.register( 'Files', '-f,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=True )
 	### EXAMPLE: END
@@ -178,16 +179,24 @@ _.postLoad( __file__ )
 
 
 def action():
-	text = _.ci(' '.join( _.switches.values('Text') )).rstrip()
+	text = _.ci(' '.join(_.switches.values('Text'))).rstrip()
 	for line in _.pp():
 		if _.showLine(line):
-			item=line.strip()
-			while '  ' in item: item.replace('  ',' ')
-			for i,n in enumerate(line.split(' ')):
-				n=n.strip()
-				if not i: item=item.replace('{}',n)
-				item=item.replace('{'+str(i)+'}',n)
-			_.pr(item)
+			item = text.strip()
+			line = line.replace('\n', ' ')
+			while '  ' in line:
+				line = line.replace('  ', ' ')  # You were missing an assignment here
+			for i, n in enumerate(line.split(' ')):
+				n = n.replace('\n', ' ')
+				if _.switches.isActive('Audit'):
+					print(i, n)
+				n = n.strip()
+				if not i:
+					item = item.replace('{}', n)
+				item = item.replace('{' + str(i) + '}', n)
+			if not _.switches.isActive('Audit'):
+				_.pr(item)
+
 				
 
 

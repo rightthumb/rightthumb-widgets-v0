@@ -15,5 +15,5 @@ rem ## {C3P0D40fAe8B} ##
 mode 30,2
 color 2f
 call %userprofile%\rr
-echo KeyWise listener
-call p KeyWise
+echo hotkeys listener
+call p hotkeys

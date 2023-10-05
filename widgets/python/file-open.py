@@ -167,6 +167,7 @@ def action(path=None):
 	if _.switches.isActive('Files'):
 		paths=[]
 		for _path_ in _.switches.values('Files'):
+			if _path_.startswith('http:'): _path_ = _path_.replace('http:','https:')
 			if _path_.startswith('http:') or _path_.startswith('https:'):
 				_path_=_.url2file(_path_)
 			paths.append(_path_)
