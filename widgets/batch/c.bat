@@ -164,30 +164,30 @@ GOTO:EOF
             SET m3ID={D644A899-89BB-9748-8339-3FC5F75B8A16}
             SET pubID={C7DA4040-A42C-0372-B54A-8E40F835D3E1}
             SET privID={5B55D9AE-6C90-B44B-2071-5376CBB2AAAE}
-            IF NOT EXIST %widgets%\hosts (md %widgets%\hosts) 
+            IF NOT EXIST %widgets%\hosts (mkdir %widgets%\hosts) 
             IF NOT EXIST %myHome% (
                     md %myHome%
                     echo Building profile on USB
                     xcopy /s/d/y/c %widgets%\%hostDefault%\*.* %myHome%\>nul
                 )
-            IF NOT EXIST %myVars% (md %myVars%) 
-            IF NOT EXIST %myBookmarks% (md %myBookmarks%) 
-            IF NOT EXIST %myTickets% (md %myTickets%) 
-            IF NOT EXIST %myIndexes% (md %myIndexes%) 
-            IF NOT EXIST %myIndexes%\archive (md %myIndexes%\archive) 
-            IF NOT EXIST %myTables% (md %myTables%) 
-            IF NOT EXIST %myDatabases% (md %myDatabases%) 
-            IF NOT EXIST %myInfo% (md %myInfo%) 
-            IF NOT EXIST %myProjects% (md %myProjects%) 
-            IF NOT EXIST %mywidgets% (md %mywidgets%) 
-            IF NOT EXIST %myNotes% (md %myNotes%) 
-            IF NOT EXIST %myWebApp% (md %myWebApp%)
-            IF NOT EXIST %myBatch% (md %myBatch%) 
-            IF NOT EXIST %myPython% (md %myPython%) 
-            IF NOT EXIST %myPowershell% (md %myPowershell%) 
-            IF NOT EXIST %myPhp% (md %myPhp%) 
-            IF NOT EXIST %stmp% (md %stmp%) 
-            IF NOT EXIST %myTxt% (md %myTxt%) 
+            IF NOT EXIST %myVars% (mkdir %myVars%) 
+            IF NOT EXIST %myBookmarks% (mkdir %myBookmarks%) 
+            IF NOT EXIST %myTickets% (mkdir %myTickets%) 
+            IF NOT EXIST %myIndexes% (mkdir %myIndexes%) 
+            IF NOT EXIST %myIndexes%\archive (mkdir %myIndexes%\archive) 
+            IF NOT EXIST %myTables% (mkdir %myTables%) 
+            IF NOT EXIST %myDatabases% (mkdir %myDatabases%) 
+            IF NOT EXIST %myInfo% (mkdir %myInfo%) 
+            IF NOT EXIST %myProjects% (mkdir %myProjects%) 
+            IF NOT EXIST %mywidgets% (mkdir %mywidgets%) 
+            IF NOT EXIST %myNotes% (mkdir %myNotes%) 
+            IF NOT EXIST %myWebApp% (mkdir %myWebApp%)
+            IF NOT EXIST %myBatch% (mkdir %myBatch%) 
+            IF NOT EXIST %myPython% (mkdir %myPython%) 
+            IF NOT EXIST %myPowershell% (mkdir %myPowershell%) 
+            IF NOT EXIST %myPhp% (mkdir %myPhp%) 
+            IF NOT EXIST %stmp% (mkdir %stmp%) 
+            IF NOT EXIST %myTxt% (mkdir %myTxt%) 
             SET batch=%widgets%\widgets\batch
             SET bash=%widgets%\widgets\bash
             SET python=%widgets%\widgets\python
@@ -197,12 +197,12 @@ GOTO:EOF
             SET exeB=%widgets%\widgets\exe
             SET data=%widgets%\widgets\data
             SET myImports=%python%\_rightThumb
-            IF NOT EXIST %widgets% (md %widgets%) 
-            IF NOT EXIST %batch% (md %batch%)
-            IF NOT EXIST %python% (md %python%) 
-            IF NOT EXIST %powershell% (md %powershell%) 
-            IF NOT EXIST %php2% (md %php2%) 
-            IF NOT EXIST %exe% (md %exe%)
+            IF NOT EXIST %widgets% (mkdir %widgets%) 
+            IF NOT EXIST %batch% (mkdir %batch%)
+            IF NOT EXIST %python% (mkdir %python%) 
+            IF NOT EXIST %powershell% (mkdir %powershell%) 
+            IF NOT EXIST %php2% (mkdir %php2%) 
+            IF NOT EXIST %exe% (mkdir %exe%)
             CALL :run_process_exe_folders
 
             ::::::: Command Paths
@@ -287,7 +287,7 @@ GOTO:EOF
             if not exist "%myHome%\config" mkdir "%myHome%\config"
             if not exist %distro% CALL p this_distro > %distro%
             SET /p distro=<%distro%
-            IF NOT EXIST %archive7z% (md %archive7z%) 
+            IF NOT EXIST %archive7z% (mkdir %archive7z%) 
                 net session >nul 2>&1
                 if %errorLevel% == 0 (
                     SET isAdmin=True

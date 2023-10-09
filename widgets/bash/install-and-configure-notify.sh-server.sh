@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# Optional arguments: port and description
+PORT=${1:-8080}
+DESCRIPTION=${2:-"Notify.sh server"}
+
 # Install dependencies
 sudo apt-get update && sudo apt-get install -y python3 python3-pip
 
@@ -9,12 +13,12 @@ pip3 install notify-server
 # Create a systemd service file for notify.sh
 sudo cat << EOF > /etc/systemd/system/notify.service
 [Unit]
-Description=Notify.sh server
+Description=$DESCRIPTION
 After=network.target
 
 [Service]
 Type=simple
-ExecStart=/usr/local/bin/notify-server
+ExecStart=/usr/local/bin/notify-server --port $PORT
 Restart=on-failure
 
 [Install]
