@@ -1,16 +1,31 @@
 #!/bin/bash
 
 # Variables
-URLS_FILE="/home/rightthumb/public_html/domains/eyeformeta.com/public_html/apps/md/notes/scott/_docs_/music/yt_auto/dl.md"
-ERROR_FILE="/home/rightthumb/public_html/domains/eyeformeta.com/public_html/apps/md/notes/scott/_docs_/music/yt_auto/err.md"
 OUTPUT_DIR="/home/rightthumb/phone/YoutTube_mp3"
-SUCCESS_FILE="/home/rightthumb/public_html/domains/eyeformeta.com/public_html/apps/md/notes/scott/_docs_/music/yt_auto/success.md"   # Specify your success log file path
+URLS_FILE="/home/rightthumb/public_html/domains/eyeformeta.com/public_html/apps/md/notes/scott/_docs_/_YouTube/mp3/_queue.md"
+ERROR_FILE="/home/rightthumb/public_html/domains/eyeformeta.com/public_html/apps/md/notes/scott/_docs_/_YouTube/mp3/err.md"
+SUCCESS_FILE="/home/rightthumb/public_html/domains/eyeformeta.com/public_html/apps/md/notes/scott/_docs_/_YouTube/mp3/success.md"
+INITIATION_FILE="/home/rightthumb/public_html/domains/eyeformeta.com/public_html/apps/md/notes/scott/_docs_/_YouTube/mp3/initiation.md"
+LOG_FILE="/home/rightthumb/public_html/domains/eyeformeta.com/public_html/apps/md/notes/scott/_docs_/_YouTube/mp3/run.md"
+CONFIGS_FOLDER=$(dirname "$URLS_FILE")
 TEMP_COPY=$(mktemp)   # Temporary file to keep a backup of URLs for safety
-/usr/local/bin/youtube-dlc
+
+
+if [ ! -e "$URLS_FILE" ]; then
+	echo "$(date): No queue file" >> "$ERROR_FILE"
+	exit 0
+fi
+
+FILE_SIZE=$(stat -c %s "$URLS_FILE")
+
+if [ "$FILE_SIZE" -lt 10 ]; then
+	exit 0
+fi
+
 # Ensure youtube-dlc is installed
 if ! command -v /usr/local/bin/youtube-dlc &> /dev/null; then
 	echo "youtube-dlc is not installed. Please install it first."
-	exit 1
+	exit 0
 fi
 
 # Create output directory if it doesn't exist
@@ -18,7 +33,12 @@ mkdir -p "$OUTPUT_DIR"
 
 # Backup content of URLs file to the safety temporary file and then clear the URLs file
 cp "$URLS_FILE" "$TEMP_COPY"
+cat "$URLS_FILE" >> "$INITIATION_FILE"
+echo "" >>"$INITIATION_FILE"
+echo "$(date)" >>"$INITIATION_FILE"
+cat "$URLS_FILE" >> "$INITIATION_FILE"
 > "$URLS_FILE"
+
 
 # Process each URL from the temporary backup file
 while IFS= read -r line; do
@@ -47,4 +67,6 @@ done < "$TEMP_COPY"
 # Cleanup
 rm "$TEMP_COPY"
 chmod 777 -R "$OUTPUT_DIR"
+chmod 777 -R "$CONFIGS_FOLDER"
+> "$LOG_FILE"
 echo "Processing complete."

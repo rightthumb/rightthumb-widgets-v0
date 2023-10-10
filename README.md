@@ -90,6 +90,13 @@ pip3 install -r require.txt
 
 ## How to install the framework
 ~~~
+Windows:
+    cd /d %USERPROFILE%
+Linux:
+    cd /opt
+
+git clone https://github.com/rightthumb/rightthumb-widgets-v0
+cd rightthumb-widgets-v0
 cd install
 
 python3 installer.py -install

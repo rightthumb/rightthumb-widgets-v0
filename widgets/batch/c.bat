@@ -1,18 +1,18 @@
 @echo off
 chcp 65001 > nul
-rem ## {R2D2919B742E} ##
-rem ###########################################################################
-rem What if magic existed?
-rem What if a place existed where your every thought and dream come to life.
-rem There is only one catch: it has to be written down.
-rem Such a place exists, it is called programming.
-rem    - Scott Taylor Reph, RightThumb.com
-rem ###########################################################################
-rem ## {C3P0D40fAe8B} ##
+REM ## {R2D2919B742E} ##
+REM ###########################################################################
+REM What IF magic existed?
+REM What IF a place existed where your every thought and dream come to life.
+REM There is only one catch: it has to be written down.
+REM Such a place exists, it is called programming.
+REM    - Scott Taylor Reph, RightThumb.com
+REM ###########################################################################
+REM ## {C3P0D40fAe8B} ##
 
 
-call %USERPROFILE%\.rt\profile\vars\config.bat
-call %USERPROFILE%\.rt\profile\vars\personal.bat
+CALL %USERPROFILE%\.rt\profile\vars\config.bat
+CALL %USERPROFILE%\.rt\profile\vars\personal.bat
 GOTO:GET_STRAIT_TO_LOADING
 GOTO:EOF
 
@@ -30,24 +30,24 @@ GOTO:EOF
     SET PYTHON_BASE=3
     DOSKEY /LISTSIZE=999
     SET noClear=FALSE
-    rem if [%1] == [c] SET noClear=TRUE
-    if [%1] == [c] SET noTOP=TRUE
-    if [%1] == [t] SET "noTOP="
-    if [%1] == [tt] SET noTOP=TRUE
-    if [%1] == [top] SET "noTOP="
-    if [%1] == [cc] SET "noTOP="
-    if [%1] == [test] SET noClear=TRUE
+    REM IF [%1] == [c] SET noClear=TRUE
+    IF [%1] == [c] SET noTOP=TRUE
+    IF [%1] == [t] SET "noTOP="
+    IF [%1] == [tt] SET noTOP=TRUE
+    IF [%1] == [top] SET "noTOP="
+    IF [%1] == [cc] SET "noTOP="
+    IF [%1] == [test] SET noClear=TRUE
 
-    rem CALL:CLEAR_SCREEN
+    REM CALL:CLEAR_SCREEN
     IF [%Session_ID%] == [] (
-        echo Loading...
+        ECHO Loading...
     )
-    rem echo ... saving history
+    REM ECHO ... saving history
     IF NOT [%Session_ID%] == [] (
         doskey /history >> "%stmp%\unclaimed_tickets_history\history-%Session_ID%.txt"  2>&1
         CALL:BUILD_TICKET >nul 2>&1
     )
-    rem echo ... history saved
+    REM ECHO ... history saved
 
     IF [%1] == [r] SET api=
 
@@ -57,18 +57,18 @@ GOTO:EOF
         CALL:CLEAR_SCREEN
     )
     CALL :TIMESTAMP >nul 2>&1
-    rem CALL:CLEAR_SCREEN
+    REM CALL:CLEAR_SCREEN
 GOTO:EOF
 
 
 
 :CLEAR_SCREEN
     IF NOT [%noClear%] == [TRUE] (
-        rem prompt - 
+        REM prompt - 
         CLS
-        if [%noTOP%] == [] %py% %widgets%\widgets\python\windows-terminal-header.py
+        IF [%noTOP%] == [] %py% %widgets%\widgets\python\windows-terminal-header.py
         %py% %widgets%\widgets\python\folder-registration.py
-        rem echo %noTOP%
+        REM ECHO %noTOP%
     )
 GOTO:EOF
 
@@ -85,12 +85,12 @@ GOTO:EOF
     SET nowTime=%now%
     SET today=%timestamp_start%  - %nowTime%
     call set "Session_ID_Suffix=%%Session_ID:~-3%%"
-    if not ["%lab%"] == [""] (
-        rem title %lab% - %Session_ID%
+    IF NOT ["%lab%"] == [""] (
+        REM title %lab% - %Session_ID%
         title loc-%Session_ID_Suffix%  lab: %lab%
     ) else (
         title loc-%Session_ID_Suffix%
-        rem title %today%
+        REM title %today%
     )
     CALL timestamp t2 noEcho >nul 2>&1
 GOTO:EOF
@@ -102,7 +102,7 @@ GOTO:EOF
     SET /p LastID=<%myVars%\ID.sys
     SET /a Session_ID=%LastID% + 1
     SET Session_ID_BK=%Session_ID%
-    echo %Session_ID% > %myVars%\ID.sys
+    ECHO %Session_ID% > %myVars%\ID.sys
     CALL timestamp ats2 noEcho >nul 2>&1
     CALL p files -folder %myVars% -rrr > nul
     SET timestamp_start=%now%
@@ -111,7 +111,7 @@ GOTO:EOF
 
 
 :LOAD
-            if not exist "%USERPROFILE%\.rt\profile\vars\instanceID.sys" (
+            IF NOT EXIST "%USERPROFILE%\.rt\profile\vars\instanceID.sys" (
                 p genuuid -strip be > "%USERPROFILE%\.rt\profile\vars\instanceID.sys"
             )
             SET /p quote=<"%USERPROFILE%\.rt\profile\vars\quote.txt"
@@ -119,19 +119,19 @@ GOTO:EOF
             SET Drive=
 
             ::::::: PHP Drive
-            rem if EXIST D:\xampp\php\php.exe (
-            rem     SET php=D:\xampp\php\php.exe
-            rem ) else (
-            rem     SET php=D:\techApps\xampp\php\php.exe
-            rem )
+            REM IF EXIST D:\xampp\php\php.exe (
+            REM     SET php=D:\xampp\php\php.exe
+            REM ) else (
+            REM     SET php=D:\techApps\xampp\php\php.exe
+            REM )
             ::::::: App shortcuts
             ::::::: API Variable Extras
             set "computername2=%computername: =_%"
             SET hostDefault=hosts\{D599DDFE-28B1-4CBD-B300-78DB4BCA7DF5}
 
-            rem SET thisHost=hosts\%computername2%
-            rem SET thisHost=%USERPROFILE%\.rt\profile
-            rem SET myHome=%widgets%\%thisHost%
+            REM SET thisHost=hosts\%computername2%
+            REM SET thisHost=%USERPROFILE%\.rt\profile
+            REM SET myHome=%widgets%\%thisHost%
 
             SET thisHost=%wprofile%
             SET myHome=%thisHost%
@@ -164,12 +164,12 @@ GOTO:EOF
             SET m3ID={D644A899-89BB-9748-8339-3FC5F75B8A16}
             SET pubID={C7DA4040-A42C-0372-B54A-8E40F835D3E1}
             SET privID={5B55D9AE-6C90-B44B-2071-5376CBB2AAAE}
-            IF NOT EXIST %widgets%\hosts (mkdir %widgets%\hosts) 
-            IF NOT EXIST %myHome% (
-                    md %myHome%
-                    echo Building profile on USB
-                    xcopy /s/d/y/c %widgets%\%hostDefault%\*.* %myHome%\>nul
-                )
+            REM IF NOT EXIST %widgets%\hosts (mkdir %widgets%\hosts) 
+            REM IF NOT EXIST %myHome% (
+            REM         md %myHome%
+            REM         ECHO Building profile on USB
+            REM         xcopy /s/d/y/c %widgets%\%hostDefault%\*.* %myHome%\>nul
+            REM     )
             IF NOT EXIST %myVars% (mkdir %myVars%) 
             IF NOT EXIST %myBookmarks% (mkdir %myBookmarks%) 
             IF NOT EXIST %myTickets% (mkdir %myTickets%) 
@@ -209,9 +209,9 @@ GOTO:EOF
             SET javabin=C:\Program Files\Java\jdk-18.0.2
 
             SET appPaths=%batch%;%python%;%myBatch%;%myPython%;%exe_folders%;%USERPROFILE%
-            if exist "%pyf%\Scripts" ( SET appPaths=%appPaths%;%pyf%\Scripts )
+            IF EXIST "%pyf%\Scripts" ( SET appPaths=%appPaths%;%pyf%\Scripts )
             SET pathPython=%USERPROFILE%
-            if exist "%pyf2%\Lib" ( SET SET pathPython=%pyf2%;%pyf2%\Lib;%pyf2%\Lib\site-packages;%pyf2%;%pyf2%\Scripts )
+            IF EXIST "%pyf2%\Lib" ( SET SET pathPython=%pyf2%;%pyf2%\Lib;%pyf2%\Lib\site-packages;%pyf2%;%pyf2%\Scripts )
             CALL %batch%\originalPath.bat
             SET originalPath=%Path%
             SET pathBuilder=%appPaths%;%pathPython%;%originalPath%;%pathPython%;%javabin%
@@ -284,75 +284,83 @@ GOTO:EOF
             SET tiktok=%widgets%\widgets\databank\tables\tikTok.txt
             SET archive7z=%widgets%\widgets\archive_7z_files
             SET distro=%myHome%\config\.distro
-            if not exist "%myHome%\config" mkdir "%myHome%\config"
-            if not exist %distro% CALL p this_distro > %distro%
+            IF NOT EXIST "%myHome%\config" mkdir "%myHome%\config"
+            IF NOT EXIST %distro% CALL p this_distro > %distro%
             SET /p distro=<%distro%
             IF NOT EXIST %archive7z% (mkdir %archive7z%) 
                 net session >nul 2>&1
-                if %errorLevel% == 0 (
+                IF %errorLevel% == 0 (
                     SET isAdmin=True
                 ) else (
                     SET isAdmin=False
                 )
-            if not exist %stmp% mkdir %stmp%
-            if not exist "%stmp%\unclaimed_tickets" mkdir "%stmp%\unclaimed_tickets"
-            if not exist "%stmp%\unclaimed_tickets_history" mkdir "%stmp%\unclaimed_tickets_history"
+            IF NOT EXIST %stmp% mkdir %stmp%
+            IF NOT EXIST "%stmp%\unclaimed_tickets" mkdir "%stmp%\unclaimed_tickets"
+            IF NOT EXIST "%stmp%\unclaimed_tickets_history" mkdir "%stmp%\unclaimed_tickets_history"
             SET dircache=%myTables%\dirCache.json
             SET dircachep=%myTables%\dirCacheP.json
             CALL theUSB
             set qi=%myIndexes%\0A{465C1A34-D22F-184E-F713-F8E5149E212D}
-            echo %code_editor%>"%myVars%\notepad.txt"
+            ECHO %code_editor%>"%myVars%\notepad.txt"
+
+            IF NOT EXIST "%userprofile%\cc.bat" (
+                COPY "%bat%\rr.bat" "%userprofile%\cc.bat"
+                IF ERRORLEVEL 1 (
+                    ECHO "There was an error copying the file."
+                    REM exit /b 1
+                )
+            )
 
             ::::::: API Paths (Asside from PHP)
             SET scriptroot=%batch%
             IF ["%Session_ID%"] == [""] CALL :GENERATE_API_ID
             SET api=loaded
             CALL:CLEAR_SCREEN
-            rem echo.
-            rem cls
+            REM echo.
+            REM cls
             prompt └─ 
-            rem prompt - 
+            REM prompt - 
 GOTO:EOF
 
 
 
 :BUILD_TICKET_HISTORY
     doskey /history >> "%stmp%\unclaimed_tickets_history\history-%Session_ID%.txt"  2>&1
-    rem CALL:BUILD_TICKET >nul 2>&1
+    REM CALL:BUILD_TICKET >nul 2>&1
 GOTO:EOF
 
 
 
 :BUILD_TICKET
-    if ["%project%"] == [""] set name=closed-%Session_ID%.txt
-    if NOT ["%project%"] == [""] set name=open-%Session_ID%.txt
+    IF ["%project%"] == [""] set name=closed-%Session_ID%.txt
+    IF NOT ["%project%"] == [""] set name=open-%Session_ID%.txt
     set file=%stmp%\unclaimed_tickets\%name%
     set fileTempData=%myTickets%\tempFile.txt
     set timestamp=%date:~-4,4%.%date:~-10,2%.%date:~-7,2% @ %time:~0,2%:%time:~3,2%
-    echo ^<div class='box' ^> > "%file%"  2>&1
-    echo ^<div class='item' ^> >> "%file%"  2>&1
-    echo Session: %Session_ID% (%timestamp_start% - %timestamp%) isAdmin:%isAdmin% %project%>> "%file%"  2>&1
-    echo ^</div^> >> "%file%"  2>&1
-    echo ^<br^> >> "%file%"  2>&1
-    echo ^<div class='guid' ^> %instanceID%^</div^>>> ^<br^> >> "%file%"  2>&1
-    echo ^<div class='sid' ^> %machineID%^</div^>>> ^<br^> >> "%file%"  2>&1
-    echo ^<div class='details' ^> >> "%file%"
-    if not ["%lab%"] == [""] echo ^<div class='laboratory' ^> %lab% >> ^</div^> >> "%file%"  2>&1
-    echo ^<br^> >> "%file%"  2>&1
-    echo ^<pre^> >> "%file%"  2>&1
+    ECHO ^<div class='box' ^> > "%file%"  2>&1
+    ECHO ^<div class='item' ^> >> "%file%"  2>&1
+    ECHO Session: %Session_ID% (%timestamp_start% - %timestamp%) isAdmin:%isAdmin% %project%>> "%file%"  2>&1
+    ECHO ^</div^> >> "%file%"  2>&1
+    ECHO ^<br^> >> "%file%"  2>&1
+    ECHO ^<div class='guid' ^> %instanceID%^</div^>>> ^<br^> >> "%file%"  2>&1
+    ECHO ^<div class='sid' ^> %machineID%^</div^>>> ^<br^> >> "%file%"  2>&1
+    ECHO ^<div class='details' ^> >> "%file%"
+    IF NOT ["%lab%"] == [""] ECHO ^<div class='laboratory' ^> %lab% >> ^</div^> >> "%file%"  2>&1
+    ECHO ^<br^> >> "%file%"  2>&1
+    ECHO ^<pre^> >> "%file%"  2>&1
     echo. >> "%stmp%\unclaimed_tickets_history\history-%Session_ID%.txt"
     CALL p singleLine -f "%stmp%\unclaimed_tickets_history\history-%Session_ID%.txt" > "%fileTempData%"  2>&1
     type "%fileTempData%" | p passFilter >> "%file%"  2>&1
     type "%file%" > "%fileTempData%"  2>&1
     del "%fileTempData%"
-    echo ^</pre^> >> "%file%"  2>&1
-    echo ^<br^> ^</div^> ^</div^> ^<br^> >> "%file%"  2>&1
+    ECHO ^</pre^> >> "%file%"  2>&1
+    ECHO ^<br^> ^</div^> ^</div^> ^<br^> >> "%file%"  2>&1
 goto:eof
 
 
 :run_process_exe_folders
     set exe_folders=%exeB%
-    for /f %%f in ('dir /s/b %exeB%') do if exist %%f\*.exe call:process_exe_folders %%f
+    for /f %%f in ('dir /s/b %exeB%') do IF EXIST %%f\*.exe call:process_exe_folders %%f
 goto:eof
 
 

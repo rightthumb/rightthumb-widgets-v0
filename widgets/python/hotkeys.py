@@ -3151,8 +3151,8 @@ def action():
 
 	if __.schedulerRun: schedulerRun()
 	_.pr( 'EXIT:   Win + esc' )
-	_.pr( line=1,c='gray' )
-	_.pr(  )
+	# _.pr( line=1,c='gray' )
+	# _.pr(  )
 	with Listener(on_press=Hotkeys.process_keystroke,on_release=Hotkeys.release_key) as l:
 		l.join()
 
@@ -3465,11 +3465,21 @@ except Exception as e:
 	pass
 
 def schedulerDB():
-	_.pr(line=1)
-	_.pr('scheduler: creating schedule: start',c='yellow')
-	_.pr()
+	# _.pr(line=1,c='gray')
+	# _.pr('scheduler: creating schedule: start',c='gray')
+	_.pr('scheduler:',c='gray')
 	for rec in _.getTable(__.scheduler_db):
-		print(_.toYML(rec))
+		# print(_.toYML(rec))
+		if 'command' in rec:
+			cmd=rec['command']
+			if '\\rp.bat' in rec['command']:
+				cmd=cmd.split('\\rp.bat')[1]
+			cmd=cmd.strip()
+			if 'days' in rec and is_today_in_days(rec['days']):
+				cmd+=', Today: '+', '.join(rec['days'])
+			elif 'days' in rec:
+				cmd+=', '+', '.join(rec['days'])
+			_.pr('\t',cmd,c='gray')
 		if rec['status']:
 			run=True
 			if 'days' in rec:
@@ -3483,8 +3493,8 @@ def schedulerDB():
 					schedule.every(int(rec['min'])).minutes.do(scheduler_job,rec).tag(rec['id'])
 				elif 'hour' in rec:
 					schedule.every(int(rec['hour'])).hours.do(scheduler_job,rec).tag(rec['id'])
-				elif 'day' in rec and 'at' in rec:
-					schedule.every(int(rec['days'])).days.at(rec['at']).do(scheduler_job,rec).tag(rec['id'])
+				elif 'day' in rec and 'at' in rec and _.isNu(rec['day']):
+					schedule.every(int(rec['day'])).days.at(rec['at']).do(scheduler_job,rec).tag(rec['id'])
 				pass
 				# schedule.every().day.at("12:00").do(job).tag(rec['id'])
 				# schedule.every().day.at("10:30").do(job)
@@ -3495,8 +3505,8 @@ def schedulerDB():
 				# schedule.every().hour.do(job)
 				# schedule.every(5).seconds.do(job)
 				# schedule.every().minute.do(job)
-	_.pr('scheduler: creating schedule: end',c='yellow')
-	_.pr(line=1)
+	# _.pr('scheduler: creating schedule: end',c='gray')
+	# _.pr(line=1,c='gray')
 import traceback
 
 def schedulerNoError():
@@ -3506,7 +3516,7 @@ def schedulerNoError():
 		traceback.print_exc()
 
 def scheduler():
-	print('\nscheduler: started\n')
+	# print('\nscheduler: started\n')
 	__.scheduler_mod=0
 	__.scheduler_db=_v.tt+os.sep+'scheduler.json'
 	schedule.every(1).minute.do(scheduler_job)

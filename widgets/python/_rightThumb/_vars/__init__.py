@@ -678,6 +678,7 @@ html_temp = stmp + slash+'_temp.htm'
 # D:\tech\hosts\MSI\temp\_temp.htm
 pips = stmp + slash+'pips.txt'
 tmpbat = stmp + slash+'44E28BDF-8269-EEAE-D1DC-9B05B63E5F93.bat'
+tempFile = stmp + slash+'{c84ebb36-d978-4fdb-a928-1d906f89df25}'
 tmpf = stmp + slash+'{8E3F33E4-86AB-AB1E-6219-801DE111D9AF}'
 tmpf0 = stmp + slash+'{B820137A-79B8-45E3-BCBD-A6CAC50892D0}'
 tmpf1 = stmp + slash+'{C0FA8E56-8426-46BB-9CE8-4A14C51EA261}'
@@ -691,7 +692,6 @@ tmpf8 = stmp + slash+'{4CCA3EBD-4535-42B7-9C75-05EFAACB00E0}'
 tmpf9 = stmp + slash+'{DF1D4EBC-838E-419C-9C58-943C1767391A}'
 contextTemp = stmp + slash+'{21E8D046-A855-EE9B-B772-9EECBD922D87}'
 myTemp = stmp
-tempFile = tmpf
 # indexFolder = indexRoot + slash + computername + slash+'index'+slash
 myBookmarks = myHome + slash+'bookmarks'
 bookmarkFormat = myBookmarks + slash+'BM-ALIASHERE.txt'
@@ -1217,7 +1217,10 @@ def getUserProfile():
 # machineID = _v.getMachineID()
 	os.system("echo %userprofile% >" + tempFile)
 	output = open( tempFile, 'r' ).read()
-	os.remove(tempFile)
+	try:
+		os.remove(tempFile)
+	except Exception as e:
+		pass
 	output = output.replace('\n','')
 	output = output.replace('\r','')
 	output = _str.cleanBE( output, ' ' )
@@ -1243,7 +1246,10 @@ def getMachineID():
 	if __.isWin:
 		os.system("wmic useraccount where (name='administrator' and domain='%computername%') get name,sid | find \"admin\" >" + tempFile)
 		output = open( tempFile, 'r' ).read()
-		os.remove(tempFile)
+		try:
+			os.remove(tempFile)
+		except Exception as e:
+			pass
 		output = _str.replaceAll(output, ' ','')
 		output = _str.totalStrip(output)
 		output = output.replace('administrator','')

@@ -16327,6 +16327,8 @@ def epoch(string,end=False):
 	# result = d
 	return result
 def isNu(string):
+	if type(string) == float or type(string) == int: return True
+	if not type(string) == str: return False
 	result = True
 	for s in string:
 		try:
