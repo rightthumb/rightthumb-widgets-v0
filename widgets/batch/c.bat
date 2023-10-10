@@ -12,7 +12,7 @@ REM ## {C3P0D40fAe8B} ##
 
 
 CALL %USERPROFILE%\.rt\profile\vars\config.bat
-CALL %USERPROFILE%\.rt\profile\vars\personal.bat
+CALL %wprofile%\vars\personal.bat
 GOTO:GET_STRAIT_TO_LOADING
 GOTO:EOF
 
@@ -111,13 +111,13 @@ GOTO:EOF
 
 
 :LOAD
-            IF NOT EXIST "%USERPROFILE%\.rt\profile\vars\instanceID.sys" (
-                p genuuid -strip be > "%USERPROFILE%\.rt\profile\vars\instanceID.sys"
+            IF NOT EXIST "%wprofile%\vars\instanceID.sys" (
+                p genuuid -strip be > "%wprofile%\vars\instanceID.sys"
             )
-            IF NOT EXIST "%USERPROFILE%\.rt\profile\vars\quote.txt" ECHO ^"> "%USERPROFILE%\.rt\profile\vars\quote.txt"
-            IF NOT EXIST "%USERPROFILE%\.rt\profile\vars\percentage.txt" ECHO ^%> "%USERPROFILE%\.rt\profile\vars\percentage.txt"
-            SET /p quote=<"%USERPROFILE%\.rt\profile\vars\quote.txt"
-            SET /p percentage=<"%USERPROFILE%\.rt\profile\vars\percentage.txt"
+            IF NOT EXIST "%wprofile%\vars\quote.txt" ECHO ^"> "%wprofile%\vars\quote.txt"
+            IF NOT EXIST "%wprofile%\vars\percentage.txt" ECHO ^%> "%wprofile%\vars\percentage.txt"
+            SET /p quote=<"%wprofile%\vars\quote.txt"
+            SET /p percentage=<"%wprofile%\vars\percentage.txt"
 
             SET Drive=
 
@@ -133,7 +133,7 @@ GOTO:EOF
             SET hostDefault=hosts\{D599DDFE-28B1-4CBD-B300-78DB4BCA7DF5}
 
             REM SET thisHost=hosts\%computername2%
-            REM SET thisHost=%USERPROFILE%\.rt\profile
+            REM SET thisHost=%wprofile%
             REM SET myHome=%widgets%\%thisHost%
 
             SET thisHost=%wprofile%
@@ -228,8 +228,8 @@ GOTO:EOF
             SET phpFiles=%php2%
 
 
-            SET /p quote=<%USERPROFILE%\.rt\profile\vars\quote.txt
-            SET /p percentage=<%USERPROFILE%\.rt\profile\vars\percentage.txt
+            SET /p quote=<%wprofile%\vars\quote.txt
+            SET /p percentage=<%wprofile%\vars\percentage.txt
 
             SET tmpf.htm=%stmp%\13cf9da8b39d.htm
             SET tmpf=%stmp%\{8E3F33E4-86AB-AB1E-6219-801DE111D9AF}
