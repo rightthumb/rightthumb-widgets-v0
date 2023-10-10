@@ -114,10 +114,10 @@ GOTO:EOF
             IF NOT EXIST "%USERPROFILE%\.rt\profile\vars\instanceID.sys" (
                 p genuuid -strip be > "%USERPROFILE%\.rt\profile\vars\instanceID.sys"
             )
+            IF NOT EXIST "%USERPROFILE%\.rt\profile\vars\quote.txt" ECHO ^"> "%USERPROFILE%\.rt\profile\vars\quote.txt"
+            IF NOT EXIST "%USERPROFILE%\.rt\profile\vars\percentage.txt" ECHO ^%> "%USERPROFILE%\.rt\profile\vars\percentage.txt"
             SET /p quote=<"%USERPROFILE%\.rt\profile\vars\quote.txt"
             SET /p percentage=<"%USERPROFILE%\.rt\profile\vars\percentage.txt"
-            IF NOT EXIST %quote% ECHO ^"> %quote%
-            IF NOT EXIST %percentage% ECHO %%> %percentage%
 
             SET Drive=
 
