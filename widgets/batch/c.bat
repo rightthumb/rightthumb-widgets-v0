@@ -19,11 +19,11 @@ GOTO:EOF
 
 :GET_STRAIT_TO_LOADING
     IF [%1] == [test] @echo on
-    set tool=%widgets%\install\installer.py
-    set tool.sh=%widgets%\widgets\bash\101-auto-setup.sh
-    set help.txt=%widgets%\install\README.TXT
-    set README=%widgets%\install\README.TXT
-    set t=%py% %tool%
+    SET tool=%widgets%\install\installer.py
+    SET tool.sh=%widgets%\widgets\bash\101-auto-setup.sh
+    SET help.txt=%widgets%\install\README.TXT
+    SET README=%widgets%\install\README.TXT
+    SET t=%py% %tool%
 
 
     SET reclaim_tickets=no
@@ -84,13 +84,13 @@ GOTO:EOF
     CALL timestamp t noEcho >nul 2>&1
     SET nowTime=%now%
     SET today=%timestamp_start%  - %nowTime%
-    call set "Session_ID_Suffix=%%Session_ID:~-3%%"
+    call SET "Session_ID_Suffix=%%Session_ID:~-3%%"
     IF NOT ["%lab%"] == [""] (
-        REM title %lab% - %Session_ID%
-        title loc-%Session_ID_Suffix%  lab: %lab%
+        REM TITLE %lab% - %Session_ID%
+        TITLE loc-%Session_ID_Suffix%  lab: %lab%
     ) else (
-        title loc-%Session_ID_Suffix%
-        REM title %today%
+        TITLE loc-%Session_ID_Suffix%
+        REM TITLE %today%
     )
     CALL timestamp t2 noEcho >nul 2>&1
 GOTO:EOF
@@ -116,6 +116,9 @@ GOTO:EOF
             )
             SET /p quote=<"%USERPROFILE%\.rt\profile\vars\quote.txt"
             SET /p percentage=<"%USERPROFILE%\.rt\profile\vars\percentage.txt"
+            IF NOT EXIST %quote% ECHO ^"> %quote%
+            IF NOT EXIST %percentage% ECHO %%> %percentage%
+
             SET Drive=
 
             ::::::: PHP Drive
@@ -126,7 +129,7 @@ GOTO:EOF
             REM )
             ::::::: App shortcuts
             ::::::: API Variable Extras
-            set "computername2=%computername: =_%"
+            SET "computername2=%computername: =_%"
             SET hostDefault=hosts\{D599DDFE-28B1-4CBD-B300-78DB4BCA7DF5}
 
             REM SET thisHost=hosts\%computername2%
@@ -257,7 +260,7 @@ GOTO:EOF
             SET disc=%stmp%\disc.txt
             SET todoo=%stmp%\todo.txt
             SET todo=%myHome%\projects\todo.txt
-            set open=%myHome%\projects\open_projects.txt
+            SET open=%myHome%\projects\open_projects.txt
             SET lastP=%myHome%\projects\project-log.txt
             SET scrap=%myHome%\projects\project-log.txt
             SET documentation=%widgets%\widgets\documentation
@@ -267,7 +270,7 @@ GOTO:EOF
             SET basic_scripts=%documentation%\algorithms.txt
             SET behavior=%myHome%\projects\behavior.txt
             SET DB=%widgets%\hosts\MSI\tables\clients_databases.txt
-            set appAliasLog=%myTables%\app_alias_record.csv
+            SET appAliasLog=%myTables%\app_alias_record.csv
             SET behave=%behavior%
             SET hacks=%hack%
             SET sites=%widgets%\widgets\javascript\my_website_projects.js
@@ -300,7 +303,7 @@ GOTO:EOF
             SET dircache=%myTables%\dirCache.json
             SET dircachep=%myTables%\dirCacheP.json
             CALL theUSB
-            set qi=%myIndexes%\0A{465C1A34-D22F-184E-F713-F8E5149E212D}
+            SET qi=%myIndexes%\0A{465C1A34-D22F-184E-F713-F8E5149E212D}
             ECHO %code_editor%>"%myVars%\notepad.txt"
 
             IF NOT EXIST "%userprofile%\cc.bat" (
@@ -316,7 +319,7 @@ GOTO:EOF
             IF ["%Session_ID%"] == [""] CALL :GENERATE_API_ID
             SET api=loaded
             CALL:CLEAR_SCREEN
-            REM echo.
+            REM ECHO.
             REM cls
             prompt └─ 
             REM prompt - 
@@ -332,11 +335,11 @@ GOTO:EOF
 
 
 :BUILD_TICKET
-    IF ["%project%"] == [""] set name=closed-%Session_ID%.txt
-    IF NOT ["%project%"] == [""] set name=open-%Session_ID%.txt
-    set file=%stmp%\unclaimed_tickets\%name%
-    set fileTempData=%myTickets%\tempFile.txt
-    set timestamp=%date:~-4,4%.%date:~-10,2%.%date:~-7,2% @ %time:~0,2%:%time:~3,2%
+    IF ["%project%"] == [""] SET name=closed-%Session_ID%.txt
+    IF NOT ["%project%"] == [""] SET name=open-%Session_ID%.txt
+    SET file=%stmp%\unclaimed_tickets\%name%
+    SET fileTempData=%myTickets%\tempFile.txt
+    SET timestamp=%date:~-4,4%.%date:~-10,2%.%date:~-7,2% @ %time:~0,2%:%time:~3,2%
     ECHO ^<div class='box' ^> > "%file%"  2>&1
     ECHO ^<div class='item' ^> >> "%file%"  2>&1
     ECHO Session: %Session_ID% (%timestamp_start% - %timestamp%) isAdmin:%isAdmin% %project%>> "%file%"  2>&1
@@ -348,23 +351,23 @@ GOTO:EOF
     IF NOT ["%lab%"] == [""] ECHO ^<div class='laboratory' ^> %lab% >> ^</div^> >> "%file%"  2>&1
     ECHO ^<br^> >> "%file%"  2>&1
     ECHO ^<pre^> >> "%file%"  2>&1
-    echo. >> "%stmp%\unclaimed_tickets_history\history-%Session_ID%.txt"
+    ECHO. >> "%stmp%\unclaimed_tickets_history\history-%Session_ID%.txt"
     CALL p singleLine -f "%stmp%\unclaimed_tickets_history\history-%Session_ID%.txt" > "%fileTempData%"  2>&1
-    type "%fileTempData%" | p passFilter >> "%file%"  2>&1
-    type "%file%" > "%fileTempData%"  2>&1
-    del "%fileTempData%"
+    TYPE "%fileTempData%" | p passFilter >> "%file%"  2>&1
+    TYPE "%file%" > "%fileTempData%"  2>&1
+    DEL "%fileTempData%"
     ECHO ^</pre^> >> "%file%"  2>&1
     ECHO ^<br^> ^</div^> ^</div^> ^<br^> >> "%file%"  2>&1
 goto:eof
 
 
 :run_process_exe_folders
-    set exe_folders=%exeB%
+    SET exe_folders=%exeB%
     for /f %%f in ('dir /s/b %exeB%') do IF EXIST %%f\*.exe call:process_exe_folders %%f
 goto:eof
 
 
 :process_exe_folders
-    set exe_folders=%exe_folders%;%1
+    SET exe_folders=%exe_folders%;%1
 goto:eof
  
