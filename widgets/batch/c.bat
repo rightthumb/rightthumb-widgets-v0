@@ -115,8 +115,6 @@ GOTO:EOF
             IF NOT EXIST "%wprofile%\vars\instanceID.sys" (
                 p genuuid -strip be > "%wprofile%\vars\instanceID.sys"
             )
-            IF NOT EXIST "%wprofile%\vars\quote.txt" ECHO ^"> "%wprofile%\vars\quote.txt"
-            IF NOT EXIST "%wprofile%\vars\percentage.txt" ECHO ^%> "%wprofile%\vars\percentage.txt"
             SET /p quote=<"%wprofile%\vars\quote.txt"
             SET /p percentage=<"%wprofile%\vars\percentage.txt"
 
