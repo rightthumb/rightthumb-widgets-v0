@@ -307,6 +307,7 @@ _.postLoad( __file__ )
 ########################################################################################
 # START
 
+import _rightThumb._beep as _beeper
 
 def extract_urls0(text):
 	url_pattern = re.compile(r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\\(\\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+')
@@ -834,6 +835,9 @@ class BEEPS:
 		}
 
 	def play_note(self, octave, note, note_type):
+		_beeper.play_note(octave, note, "whole")
+		# _beeper.play_note(octave, note, note_type)
+		# _beeper.play_note(3, "c", "half")
 		"""Play a note at a certain octave by calculating the frequency of the sound it would represent."""
 		pass
 		# # Match the note and note type to the dictionaries
@@ -3557,6 +3561,9 @@ def current_day():
 	return now.strftime('%a').lower()
 
 __.schedulerRun=True
+
+
+
 if __name__ == '__main__':
 	# schedulerRun()
 	if len(_.switches.all())==0: banner.pr();
@@ -3573,3 +3580,4 @@ if __name__ == '__main__':
 # cleanComment
 # scrape_paths
 # scrape_windows_file_paths2
+# _beeper
