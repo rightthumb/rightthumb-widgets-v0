@@ -262,6 +262,9 @@ def loader():
 	fig = FIG()
 	hd = HD()
 	fig.home()
+	_vars_fo=v.home +os.sep+ '.rt' +os.sep+ 'profile' +os.sep+ 'vars' +os.sep
+	if not os.path.isfile( _vars_fo+'percentage.txt' ): vc.HD.saveText( '%', _vars_fo+'percentage.txt' )
+	if not os.path.isfile( _vars_fo+'quote.txt' ): vc.HD.saveText( '"', _vars_fo+'quote.txt' )
 	if os.path.isfile( v.config ):
 		v.bash = hd.getTableSimp( v.config )
 	vc.FIG.bash_vars(p=0)
