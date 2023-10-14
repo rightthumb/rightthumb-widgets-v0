@@ -26,12 +26,12 @@ rem Construct curl command accordingly
 if "%~3"=="" (
     if "%~2"=="" (
         rem If only 1 argument, use default title, no URL
-        curl -H "Title: !title!" -H "Priority: urgent" -H "Tags: !works!" -d "!message!" aleen.m-eta.app:52346/sds-notify
+        curl -H "Title: !title!" -H "Priority: urgent" -H "Tags: !works!" -d "!message!" aleen.m-eta.app:9000/sds-notify
     ) else (
         rem If 2 arguments, use specified title and message, no URL
-        curl -H "Title: !title!" -H "Priority: urgent" -H "Tags: !works!" -d "!message!" aleen.m-eta.app:52346/sds-notify
+        curl -H "Title: !title!" -H "Priority: urgent" -H "Tags: !works!" -d "!message!" aleen.m-eta.app:9000/sds-notify
     )
 ) else (
     rem If 3 arguments, use specified title, message, and URL
-    curl -H "Title: !title!" -H "Click: !url!" -H "Priority: urgent" -H "Tags: !works!" -d "!message!" aleen.m-eta.app:52346/sds-notify
+    curl -H "Title: !title!" -H "Click: !url!" -H "Priority: urgent" -H "Tags: !works!" -d "!message!" aleen.m-eta.app:9000/sds-notify
 )

@@ -835,7 +835,7 @@ class BEEPS:
 		}
 
 	def play_note(self, octave, note, note_type):
-		_beeper.play_note(octave, note, "whole")
+		# _beeper.play_note(octave, note, "whole")
 		# _beeper.play_note(octave, note, note_type)
 		# _beeper.play_note(3, "c", "half")
 		"""Play a note at a certain octave by calculating the frequency of the sound it would represent."""
