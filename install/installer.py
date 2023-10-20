@@ -3444,6 +3444,35 @@ load() {
 }
 
 
+####### wsl cron start
+# Define the path to the marker file
+marker_file="$HOME/.cron_started"
+
+function has_file_been_modified_recently() {
+    local file="$1"
+    local hours="${2:-4}"  # Default to 4 hours
+    local file_modification_time
+    file_modification_time=$(stat -c %Y "$file" 2>/dev/null || echo 0)
+    local current_time
+    current_time=$(date +%s)
+    local time_diff
+    time_diff=$((current_time - file_modification_time))
+    
+    # Calculate the threshold time in seconds (N hours ago)
+    local threshold=$((hours * 3600))
+    
+    # Check if the file has been modified in the last N hours
+    [ "$time_diff" -le "$threshold" ]
+}
+
+if ! has_file_been_modified_recently "$marker_file" 5; then
+    if [ -d "/mnt/c/Users/" ]; then
+        sudo service cron start > /dev/null 2>&1 & 
+        touch "$marker_file"
+    fi
+fi
+####### wsl cron end
+
 
 # a3bc42ec51e9
 

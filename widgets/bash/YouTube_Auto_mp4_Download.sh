@@ -2,11 +2,11 @@
 
 # Variables
 OUTPUT_DIR="/home/rightthumb/phone/YoutTube_mp4"
-URLS_FILE="/home/rightthumb/public_html/domains/eyeformeta.com/public_html/apps/md/notes/scott/_docs_/_YouTube/mp4/_queue.md"
-ERROR_FILE="/home/rightthumb/public_html/domains/eyeformeta.com/public_html/apps/md/notes/scott/_docs_/_YouTube/mp4/err.md"
-SUCCESS_FILE="/home/rightthumb/public_html/domains/eyeformeta.com/public_html/apps/md/notes/scott/_docs_/_YouTube/mp4/success.md"
-INITIATION_FILE="/home/rightthumb/public_html/domains/eyeformeta.com/public_html/apps/md/notes/scott/_docs_/_YouTube/mp4/initiation.md"
-LOG_FILE="/home/rightthumb/public_html/domains/eyeformeta.com/public_html/apps/md/notes/scott/_docs_/_YouTube/mp4/run.md"
+URLS_FILE="/home/rightthumb/public_html/domains/eyeformeta.com/public_html/apps/md/notes/scott/_docs_/_YouTube/mp4/queue.md"
+ERROR_FILE="/home/rightthumb/public_html/domains/eyeformeta.com/public_html/apps/md/notes/scott/_docs_/_YouTube/mp4/.App/err.md"
+SUCCESS_FILE="/home/rightthumb/public_html/domains/eyeformeta.com/public_html/apps/md/notes/scott/_docs_/_YouTube/mp4/.App/success.md"
+INITIATION_FILE="/home/rightthumb/public_html/domains/eyeformeta.com/public_html/apps/md/notes/scott/_docs_/_YouTube/mp4/.App/initiation.md"
+LOG_FILE="/home/rightthumb/public_html/domains/eyeformeta.com/public_html/apps/md/notes/scott/_docs_/_YouTube/mp4/.App/run.md"
 CONFIGS_FOLDER=$(dirname "$URLS_FILE")
 TEMP_COPY=$(mktemp)   # Temporary file to keep a backup of URLs for safety
 chmod 777 -R "$CONFIGS_FOLDER"
@@ -59,7 +59,6 @@ while IFS= read -r line; do
 		# If there was an error, save the URL to the error file
 		echo "$url" >> "$ERROR_FILE"
 	fi
-
 
 	# Processed URLs are not added back to the main URLS_FILE, so they are effectively removed
 done < "$TEMP_COPY"

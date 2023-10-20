@@ -21,15 +21,15 @@
         "back": 0
     },
     "..yml": {
-        "text": "ob_start();eval(file_get_contents('https://php.sds.sh/y'));ob_get_clean(); // yt($arr); yf($yml);",
+        "text": "eval(file_get_contents('https://php.sds.sh/y')); // yt($arr); yf($yml);",
         "back": 0
     },
     "..yaml": {
-        "text": "ob_start();eval(file_get_contents('https://php.sds.sh/y'));ob_get_clean(); // yt($arr); yf($yml);",
+        "text": "eval(file_get_contents('https://php.sds.sh/y')); // yt($arr); yf($yml);",
         "back": 0
     },
     "...ck": {
-        "text": "ob_start();eval(file_get_contents('https://php.sds.sh/ck'));ob_get_clean();",
+        "text": "eval(file_get_contents('https://php.sds.sh/ck'));",
         "back": 0
     },
     "..pre": {
@@ -37,7 +37,7 @@
         "back": 0
     },
     "..api": {
-        "text": "ob_start();eval(file_get_contents('https://heimdall.softwaredevelopment.solutions/1/HeimdallClientAPI.php?H=1&t='.file_get_contents('https://keys.sds.sh/?id=sds-api')));ob_get_clean();\nif(class_exists('HeimdallClientAPI',true)){$heimdall=new HeimdallClientAPI($_SERVER['SCRIPT_URI'],array('813-690-1260'=>['admin']),file_get_contents('https://keys.sds.sh/?id=sds-api'));}else{echo'api key revoked';exit;}",
+        "text": "eval(file_get_contents('https://heimdall.softwaredevelopment.solutions/1/HeimdallClientAPI.php?H=1&t='.file_get_contents('https://keys.sds.sh/?id=sds-api')));\nif(class_exists('HeimdallClientAPI',true)){$heimdall=new HeimdallClientAPI($_SERVER['SCRIPT_URI'],array('813-690-1260'=>['admin']),file_get_contents('https://keys.sds.sh/?id=sds-api'));}else{echo'api key revoked';exit;}",
         "back": 0
     },
     "..jsond": {
@@ -53,7 +53,7 @@
         "back": 1
     },
     "..cookie": {
-        "text": "include_once($_SERVER['DOCUMENT_ROOT'].'/cookie.php'); $cookie = new CookieManager();",
+        "text": "eval(file_get_contents('https://php.sds.sh/cookies')); $cookie = new CookieManager();",
         "back": 0
     },
     "..root": {
