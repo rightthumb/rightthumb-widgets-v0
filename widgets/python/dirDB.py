@@ -63,6 +63,7 @@ def appSwitches():
 	_.switches.register('Totals', '-totals','t <-- Just +')
 	_.switches.register('IncludeBackups', '--bk,--backup,--backups')
 	_.switches.register('SQL', '-sql')
+	_.switches.register('ShowAll', '-all,-show,-showall')
 	# _.switches.register('Save-Results', '-save')
 
 	
@@ -532,7 +533,7 @@ def action():
 						if shouldInclude:
 							cnt = 0
 							for di,dupRec in enumerate(duplicates):
-								if not os.path.isfile( dupRec['path'] ):
+								if not _.v.showAll and not os.path.isfile( dupRec['path'] ):
 									shouldInclude = False
 									removeFile( dupRec['path'], c )
 								else:
@@ -546,7 +547,7 @@ def action():
 							_.pr()
 							for di,dupRec in enumerate(duplicates):
 								# _.pr( row['size'] )
-								if os.path.isfile( dupRec['path'] ):
+								if _.v.showAll or os.path.isfile( dupRec['path'] ):
 									if _.switches.isActive('Save'):
 										saveData.append( dupRec['path'] )
 										saveDataSetGroup.append( dupRec['path'] )
@@ -1085,7 +1086,7 @@ def do(databaseFile):
 			includeResult = False
 			if _.showLine(row['path']):
 				includeResult = True
-				if not os.path.isfile( row['path'] ):
+				if not _.v.showAll and not os.path.isfile( row['path'] ):
 					includeResult = False
 					removeFile( row['path'], c )
 			if includeResult:
@@ -1105,7 +1106,7 @@ def do(databaseFile):
 						try: _.pr(line)
 						except: pass
 			else:
-				if _.showLine(row['path']) and os.path.isfile(row['path']):
+				if _.showLine(row['path']) and (_.v.showAll or os.path.isfile(row['path'])):
 					data.append( row )
 					# if not '$Recycle.Bin' in row['path']:
 					totalCount += 1
@@ -1223,7 +1224,7 @@ def  removeFile( path, cursr ):
 	if _.switches.isActive('Clean'):
 		cursr.execute(sql)
 
-
+_.v.showAll=_.switches.isActive('ShowAll')
 ########################################################################################
 if __name__ == '__main__':
 	action()
