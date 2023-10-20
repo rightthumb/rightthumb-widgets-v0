@@ -1229,9 +1229,3 @@ _.v.showAll=_.switches.isActive('ShowAll')
 if __name__ == '__main__':
 	action()
 
-
-
-
-
-
-
