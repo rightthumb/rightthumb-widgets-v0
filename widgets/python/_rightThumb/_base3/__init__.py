@@ -2651,14 +2651,22 @@ def which(file):
 pyperclip = None
 def setClip(data):
 	global pyperclip
-	if pyperclip is None:
-		import pyperclip
-	pyperclip.copy( stripColor(cleanString(data)) )
+	try:
+		if pyperclip is None:
+			import pyperclip
+		pyperclip.copy( stripColor(cleanString(data)) )
+
+	except: pass
+
+
 def getClip():
 	global pyperclip
-	if pyperclip is None:
-		import pyperclip
-	return cleanString( pyperclip.paste() )
+	# try:except: pass
+	try:
+		if pyperclip is None:
+			import pyperclip
+		return cleanString( pyperclip.paste() )
+	except: return ''
 
 def cleanString(data):
 	data = cleanStringA(data)
@@ -4030,118 +4038,121 @@ class dt:
 def isData( data=None, focus=None, pipeClean=False, required=False,     r=None, c=None, noclean=None ):
 	global switches
 	global appData
-	if appData[__.appReg]['pipe']: return appData[__.appReg]['pipe']
-	for sw in __.isData_Switches:
-		if not sw == 'Files': return switches.values(sw)
-	if data is None and switches.isActive('Paste-isData-json'):
-		simplejson=__.imp('simplejson')
-		d=getClip().strip()
-		return simplejson.loads(d)
-	elif data is None and switches.isActive('Paste-isData'): return getClip().split('\n')
-	
-	
-	def _isData_(tst):
-		global myFileLocation_Files
-		# if not tst and pipe_surfing(): tst = pipe_surfing()
-		if not tst: return myFileLocation_Files;
-		# print(tst,myFileLocation_Files)
+	try:
 
-		for name in vv.isData:
-			if len(switches.values(name)):
-				if 'data' in vv.isData[name]: return tst
+		if appData[__.appReg]['pipe']: return appData[__.appReg]['pipe']
+		for sw in __.isData_Switches:
+			if not sw == 'Files': return switches.values(sw)
+		if data is None and switches.isActive('Paste-isData-json'):
+			simplejson=__.imp('simplejson')
+			d=getClip().strip()
+			return simplejson.loads(d)
+		elif data is None and switches.isActive('Paste-isData'): return getClip().split('\n')
+		
+		
+		def _isData_(tst):
+			global myFileLocation_Files
+			# if not tst and pipe_surfing(): tst = pipe_surfing()
+			if not tst: return myFileLocation_Files;
+			# print(tst,myFileLocation_Files)
 
-		if myFileLocation_Files and os.path.isfile(myFileLocation_Files[0]): return myFileLocation_Files
-		return tst
-	def isData_path_list(stuff,dAta=[]):
-		for f in stuff:
-			f = __.path(f)
-			if os.path.isfile(f):
-				dAta.append(f)
-		return dAta
-	if not noclean is None: pipeClean=noclean
-	if not c is None: pipeClean=c;
-	if not r is None: required = r;
-	# pr('here',data,c='gray')
-	if data is None:
-		if pipeClean:
-			pipeCleaner(0)
-		if focus is None:
-			focus = __.appReg
-		data = pipe_surfing()
+			for name in vv.isData:
+				if len(switches.values(name)):
+					if 'data' in vv.isData[name]: return tst
 
-	if type(data) ==list and  len(data)==1 and data[0]=='': data=[]
-	if not data:
-		data=[]
-		# global switches
-		isClean=False
+			if myFileLocation_Files and os.path.isfile(myFileLocation_Files[0]): return myFileLocation_Files
+			return tst
+		def isData_path_list(stuff,dAta=[]):
+			for f in stuff:
+				f = __.path(f)
+				if os.path.isfile(f):
+					dAta.append(f)
+			return dAta
+		if not noclean is None: pipeClean=noclean
+		if not c is None: pipeClean=c;
+		if not r is None: required = r;
+		# pr('here',data,c='gray')
+		if data is None:
+			if pipeClean:
+				pipeCleaner(0)
+			if focus is None:
+				focus = __.appReg
+			data = pipe_surfing()
 
-		for name in vv.isData:
-			if len(switches.values(name)):
-				for isD in vv.isData[name].split(','):
-					if isD == 'clean' and noclean is None:
-						isClean=True
-					elif isD == 'name':
-						for n in switches.values(name):
-							data.append(n)
-					elif isD == 'glob' and 'data' in vv.isData[name]:
-						for n in switches.values(name):
-							for f in isData_path_list( glob.glob( n ) ):
-								for xXx in getText( f, raw=True ).split('\n'):
-									data.append(xXx)
-					elif isD == 'glob':
-						for n in switches.values(name):
-							if type(n) == list:
-								stuff = n
-							if type(n) == str:
-								stuff = glob.glob( n )
-							if not stuff is None:
-								data=isData_path_list(stuff,data)
-					elif isD == 'data':
-						tData=[]
-						for n in switches.values(name):
-							tData.append(getText(n,raw=True))
-						data = '\n'.join(tData)
-
-		if data:
-			if False and not isClean:
-				return _isData_(data)
-			elif type(data)==str:
-				newData=''
-				# data = data.replace('\r','')
-				data = _str.do('sh',data)
-				return _isData_(data.split('\n'))
-			elif type(data)==list:
-				if len(data) and type(data[0]) == list: data = data[0]
-				_data='\n'.join(data)
-				_data=_str.do('sh',_data)
-				data=_data.split('\n')
-				newData=[]
-				for row in data:
-					row = _str.replaceDuplicate( row, ' ' )
-					newData.append(row)
-				return _isData_(newData)
-
-
-
-
-
-
-			
-
-	if r:
-		if type(data) == bool:
-			help()
-			return _isData_(None)
+		if type(data) ==list and  len(data)==1 and data[0]=='': data=[]
 		if not data:
-			help()
-			return _isData_(None)
-	else:
-		if type(data) == bool:
-			return _isData_([])
-		if not data:
-			return _isData_([])
-	
-	return _isData_(data)
+			data=[]
+			# global switches
+			isClean=False
+
+			for name in vv.isData:
+				if len(switches.values(name)):
+					for isD in vv.isData[name].split(','):
+						if isD == 'clean' and noclean is None:
+							isClean=True
+						elif isD == 'name':
+							for n in switches.values(name):
+								data.append(n)
+						elif isD == 'glob' and 'data' in vv.isData[name]:
+							for n in switches.values(name):
+								for f in isData_path_list( glob.glob( n ) ):
+									for xXx in getText( f, raw=True ).split('\n'):
+										data.append(xXx)
+						elif isD == 'glob':
+							for n in switches.values(name):
+								if type(n) == list:
+									stuff = n
+								if type(n) == str:
+									stuff = glob.glob( n )
+								if not stuff is None:
+									data=isData_path_list(stuff,data)
+						elif isD == 'data':
+							tData=[]
+							for n in switches.values(name):
+								tData.append(getText(n,raw=True))
+							data = '\n'.join(tData)
+
+			if data:
+				if False and not isClean:
+					return _isData_(data)
+				elif type(data)==str:
+					newData=''
+					# data = data.replace('\r','')
+					data = _str.do('sh',data)
+					return _isData_(data.split('\n'))
+				elif type(data)==list:
+					if len(data) and type(data[0]) == list: data = data[0]
+					_data='\n'.join(data)
+					_data=_str.do('sh',_data)
+					data=_data.split('\n')
+					newData=[]
+					for row in data:
+						row = _str.replaceDuplicate( row, ' ' )
+						newData.append(row)
+					return _isData_(newData)
+
+
+
+
+
+
+				
+
+		if r:
+			if type(data) == bool:
+				help()
+				return _isData_(None)
+			if not data:
+				help()
+				return _isData_(None)
+		else:
+			if type(data) == bool:
+				return _isData_([])
+			if not data:
+				return _isData_([])
+		
+		return _isData_(data)
+	except: e('Data src missing','possibly: -f')
 
 def payloadCache( data, file=None, theFocus=None ):
 	# _.payloadCache( saveFile, __file__, focus() )
@@ -23308,18 +23319,22 @@ def searchColor(row,search,c='green',p=1):
 	return row
 ##################################################
 def pp(fi=False):
-	if not isData(r=0):
-		_paste = regImp( __.appReg, '-paste' )
-		data=_paste.imp.paste().split('\n')
+	try:
+		if not isData(r=0):
+			try:
+				_paste = regImp( __.appReg, '-paste' )
+				data=_paste.imp.paste().split('\n')
+			except: pass
 
-		if fi:
-			d=data.copy()
-			data=[]
-			for x in d:
-				x=x.strip()
-				if os.path.isfile(x): data.append(x)
-	else: data=isData()
-	return data
+			if fi:
+				d=data.copy()
+				data=[]
+				for x in d:
+					x=x.strip()
+					if os.path.isfile(x): data.append(x)
+		else: data=isData()
+		return data
+	except: isData(r=0)
 ##################################################
 def zip9(folder_path, zip_path):
 	zipfile=__.imp('zipfile')

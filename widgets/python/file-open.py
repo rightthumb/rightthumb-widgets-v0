@@ -349,10 +349,14 @@ def action(path=None):
 				# sys.exit();
 				if app == 'C:\\Program': app=_v.fig['code_editor']
 				# print(app);sys.exit();
-				if app == 0:
-					subprocess.Popen([path])
-				else:
-					subprocess.Popen([ app, path])
+				if not os.path.isfile(app): _.e('Unable to open','app does not exist')
+				try:
+					if app == 0:
+						subprocess.Popen([path])
+					else:
+						subprocess.Popen([ app, path])
+				except:
+					_.e('Unable to open','app issue')
 			else:
 				if app == 'C:\\Program': app=_v.fig['code_editor']
 				command = f'{app} {path}'

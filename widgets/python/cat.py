@@ -449,7 +449,10 @@ Function=_.switches.isActive('Function')
 
 ########################################################################################
 if __name__ == '__main__':
-	action()
+	try:
+		action()
+	except:
+		_.e('Bad Command:','possibly missing: -f')
 	__.isExit()
 
 

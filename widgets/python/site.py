@@ -211,7 +211,7 @@ APPS = {
 	'notes': {
 		'path': '/home/rightthumb/public_html/domains/eyeformeta.com/public_html/apps/md/notes/scott/_docs_/',
 		'remove': 'https://eyeformeta.com/',
-		'add': 'https://eyeformeta.com/apps/Heimdall/?view=1&f=',
+		'add': 'https://eyeformeta.com/apps/Scrolls/?view=1&f=',
 		'slash': '/',
 	},
 }
