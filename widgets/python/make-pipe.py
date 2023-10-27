@@ -257,7 +257,7 @@ def action():
 	cnt=0
 	text = _.ci(' '.join( _.switches.values('Text') ))
 
-	for i,row in enumerate( _.isData(r=1) ):
+	for i,row in enumerate( _.pp() ):
 		if _.showLine(row):
 			line = text.replace( '{{}}', row.replace(' ','_') )
 			line = line.replace( '{}', row )
