@@ -33,3 +33,4 @@ echo All batch files updated.
 rem pause
 
 rem https://sds.sh/block/youtube/curl.zip
+rem curl.
