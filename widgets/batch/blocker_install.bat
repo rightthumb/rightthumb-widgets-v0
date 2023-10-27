@@ -30,4 +30,6 @@ for /L %%i in (0,1,5) do (
 )
 
 echo All batch files updated.
-pause
+rem pause
+
+rem https://sds.sh/block/youtube/curl.zip
