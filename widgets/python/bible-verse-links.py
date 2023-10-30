@@ -230,36 +230,38 @@ books = {
 }
 
 import re
+
 def add_space_before_first_number(s):
     return re.sub(r'(?<!\d)(\d)', r' \1', s, count=1)
 
 def add_plus_before_first_number(s):
     return re.sub(r'(?<!\d)(\d)', r'+\1', s, count=1)
-def linkify_books_and_verses(text):
-	# Flatten the book dictionary to create a regex pattern
-	pattern_list = []
-	for full_name, abbreviations in books.items():
-		pattern_list.append(full_name)
-		pattern_list.extend(abbreviations)
-		
-	# Pattern to capture book name and verses
-	pattern = r'\b(' + '|'.join(re.escape(book) for book in pattern_list) + r')(\s*\d+(:\d+)?([-,\s\d]*)?)?\b'
-	
-	def make_link(matchobj):
-		match_book = matchobj.group(1)
-		match_verse = matchobj.group(2) if matchobj.group(2) else ""
-		for full_name, abbreviations in books.items():
-			if match_book in abbreviations or match_book == full_name:
-				pre=match_verse
-				match_verse=match_verse.strip()
-				if match_verse[-1] == ',': match_verse = match_verse[:-1].strip()
-				add=pre.replace(match_verse,'').replace('+',' ').lstrip()
-				vsT=add_space_before_first_number(match_verse)
-				vsR=add_plus_before_first_number(match_verse)
-				return f'<a href="https://bible.biblicalheart.com/?translation=niv&v={full_name.replace(" ", "+")}{vsR}">{match_book}{vsT}</a>{add}'
-	
-	# Using the re.IGNORECASE flag with re.sub
-	return re.sub(pattern, make_link, text, flags=re.IGNORECASE)
+
+def linkify_books_and_verses(text, books):
+    # Pattern to capture book name and verses with a colon
+    pattern = r'\b(' + '|'.join(re.escape(book) for book in books.keys()) + r')(\s*\d+:\d+(?:[-,\s\d]+)?)\b'
+
+    def make_link(matchobj):
+        match_book = matchobj.group(1)
+        match_verse = matchobj.group(2)
+        for full_name, abbreviations in books.items():
+            if match_book in abbreviations or match_book == full_name:
+                pre = match_verse
+                match_verse = match_verse.strip()
+                try:
+                    if match_verse[-1] == ',':
+                        match_verse = match_verse[:-1].strip()
+                except IndexError:
+                    pass
+                add = pre.replace(match_verse, '').replace('+', ' ').lstrip()
+                vsT = add_space_before_first_number(match_verse)
+                vsR = add_plus_before_first_number(match_verse)
+                return f'<a href="https://bible.biblicalheart.com/?translation=niv&v={full_name.replace(" ", "+")}{vsR}">{match_book}{vsT}</a>{add}'
+
+    # Using the re.IGNORECASE flag with re.sub
+    return re.sub(pattern, make_link, text, flags=re.IGNORECASE)
+
+
 
 # import re
 # def strip_existing_links(text):
@@ -281,10 +283,15 @@ def linkify_books_and_verses(text):
 #     return bible_verse_pattern.sub(make_link, text)
 
 def action():
+	global books
+	# print(_.pp()); exit();
 	text='\n'.join(_.pp()).strip()
-	html=linkify_books_and_verses(text)
+	# print(text);exit();
+	html=linkify_books_and_verses(text,books)
 	if _.switches.isActive('AddBreaks'):
 		html=html.replace('\n','\n<br/>\n')
+	html=html.replace('<>','<p>')
+	html=html.replace('</>','</p>')
 	_copy.imp.copy( html )
 
 _copy = _.regImp( __.appReg, '-copy' )
