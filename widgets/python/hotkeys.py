@@ -840,38 +840,39 @@ class BEEPS:
 		# _beeper.play_note(3, "c", "half")
 		"""Play a note at a certain octave by calculating the frequency of the sound it would represent."""
 		pass
-		# # Match the note and note type to the dictionaries
-		# note = self.notes[note]
-		# note_type = self.note_types[note_type]
+		if _.v.play:
+			# Match the note and note type to the dictionaries
+			note = self.notes[note]
+			note_type = self.note_types[note_type]
 
-		# # Chill for a bit if it's a pause
-		# if not note:
-		#     time.sleep(note_type / 1000)
-		#     return
+			# Chill for a bit if it's a pause
+			if not note:
+			    time.sleep(note_type / 1000)
+			    return
 
-		# # Calculate C for the provided octave
-		# frequency = 32.7032 * (2 ** octave)
+			# Calculate C for the provided octave
+			frequency = 32.7032 * (2 ** octave)
 
-		# # Calculate the frequency of the given note
-		# frequency *= 1.059463094 ** note
+			# Calculate the frequency of the given note
+			frequency *= 1.059463094 ** note
 
-		# # Generate sine wave
-		# duration = note_type / 1000  # convert to seconds
-		# sample_rate = 44100
-		# t = np.arange(int(duration * sample_rate))
-		# wave = 0.5 * np.sin(2 * np.pi * frequency * t / sample_rate)
-		# wave = np.int16(wave * 32767)
+			# Generate sine wave
+			duration = note_type / 1000  # convert to seconds
+			sample_rate = 44100
+			t = np.arange(int(duration * sample_rate))
+			wave = 0.5 * np.sin(2 * np.pi * frequency * t / sample_rate)
+			wave = np.int16(wave * 32767)
 
-		# # Play the sound
-		# try:
-		#     sd.play(wave, sample_rate)
-		#     sd.wait()
-		#     # Delay after the beep so it doesn't all run together
-		#     time.sleep(self.tempo)
-		# except Exception as e:
-		#     frameinfo = getframeinfo(currentframe())
-		#     print(frameinfo.lineno, '\t', e, 'red')
-		#     pass
+			# Play the sound
+			try:
+			    sd.play(wave, sample_rate)
+			    sd.wait()
+			    # Delay after the beep so it doesn't all run together
+			    time.sleep(self.tempo)
+			except Exception as e:
+			    frameinfo = getframeinfo(currentframe())
+			    print(frameinfo.lineno, '\t', e, 'red')
+			    pass
 
 	def simple_beep(self):
 		_oct = 2
@@ -3562,7 +3563,7 @@ def current_day():
 
 __.schedulerRun=True
 
-
+_.v.play = True
 
 if __name__ == '__main__':
 	# schedulerRun()

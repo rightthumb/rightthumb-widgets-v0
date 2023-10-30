@@ -385,6 +385,7 @@ def getFolder(folder,r=True):
 			path = folder + _v.slash + item
 			add(path,r)
 def add(path,r=False):
+	path=path.strip()
 	global i
 	global iS
 	global baseDepth
@@ -771,6 +772,7 @@ def action():
 					break
 			if base_path: _.v.show_full_path = False
 		for path in _.isData():
+			path=path.strip()
 			if os.path.isfile(path):
 				add(path)
 	
@@ -1006,6 +1008,7 @@ def printer(path,ni=0):
 	infile+=1
 
 def process(path):
+	path=path.strip()
 	if not os.path.isfile(path):
 		return path
 	# _.pr(path)
