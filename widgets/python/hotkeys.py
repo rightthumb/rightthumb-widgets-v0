@@ -126,6 +126,8 @@ __.registeredApps.append( focus() )
 import _rightThumb._base3 as _
 _.load()
 ##################################################
+_.v.play = True
+
 banner=_.Banner(hotkeys);
 # print(hotkeys)
 goss=banner.goss
@@ -308,7 +310,7 @@ _.postLoad( __file__ )
 # START
 
 import _rightThumb._beep as _beeper
-
+__.v.beep.timer=False
 def extract_urls0(text):
 	url_pattern = re.compile(r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\\(\\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+')
 	urls = re.findall(url_pattern, text)
@@ -641,7 +643,7 @@ class HOTKEYS:
 					keyboard.press(Key.backspace)
 					keyboard.release(Key.backspace)
 			exec(do)
-			# beepy.simple_beep2()
+			beepy.simple_beep2()
 
 	def process_keystroke( self, key ):
 		global post_do
@@ -835,6 +837,10 @@ class BEEPS:
 		}
 
 	def play_note(self, octave, note, note_type):
+		# winsound.Beep(250, 1000)
+		if _.v.play:
+			_beeper.play_note(octave, note, note_type)
+		return None
 		# _beeper.play_note(octave, note, "whole")
 		# _beeper.play_note(octave, note, note_type)
 		# _beeper.play_note(3, "c", "half")
@@ -847,8 +853,8 @@ class BEEPS:
 
 			# Chill for a bit if it's a pause
 			if not note:
-			    time.sleep(note_type / 1000)
-			    return
+				time.sleep(note_type / 1000)
+				return
 
 			# Calculate C for the provided octave
 			frequency = 32.7032 * (2 ** octave)
@@ -865,14 +871,18 @@ class BEEPS:
 
 			# Play the sound
 			try:
-			    sd.play(wave, sample_rate)
-			    sd.wait()
-			    # Delay after the beep so it doesn't all run together
-			    time.sleep(self.tempo)
-			except Exception as e:
-			    frameinfo = getframeinfo(currentframe())
-			    print(frameinfo.lineno, '\t', e, 'red')
-			    pass
+				_beeper.play_note(octave, note, note_type)
+			except:
+				pass
+			# try:
+			#     sd.play(wave, sample_rate)
+			#     sd.wait()
+			#     # Delay after the beep so it doesn't all run together
+			#     time.sleep(self.tempo)
+			# except Exception as e:
+			#     frameinfo = getframeinfo(currentframe())
+			#     print(frameinfo.lineno, '\t', e, 'red')
+			#     pass
 
 	def simple_beep(self):
 		_oct = 2
@@ -3563,7 +3573,7 @@ def current_day():
 
 __.schedulerRun=True
 
-_.v.play = True
+
 
 if __name__ == '__main__':
 	# schedulerRun()

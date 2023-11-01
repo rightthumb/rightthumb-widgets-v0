@@ -10,6 +10,10 @@
 # ###########################################################################
 # ## {C3P0D40fAe8B} ##
 
+import _rightThumb._construct as __
+__.v.beep=__.Meta_Namespace()
+__.v.beep.timer=None
+__.v.beep.print=False
 #
 # Internal Speaker Beeping Module for Windows
 #
@@ -23,61 +27,113 @@ except Exception as e:
 # Notes Config
 ###
 
+
 # Set delay tempo
 tempo = 0.15
-# tempo = 1
 
 # Setup Notes
-notes = {}
-notes["pause"] = 0
-notes["c"] = 1
-notes["c#"] = 2
-notes["d"] = 3
-notes["d#"] = 4
-notes["e"] = 5
-notes["f"] = 6
-notes["f#"] = 7
-notes["g"] = 8
-notes["g#"] = 9
-notes["a"] = 10
-notes["a#"] = 11
-notes["b"] = 12
+notes = {
+	"pause": 0,
+	"c": 1,
+	"c#": 2,
+	"d": 3,
+	"d#": 4,
+	"e": 5,
+	"f": 6,
+	"f#": 7,
+	"g": 8,
+	"g#": 9,
+	"a": 10,
+	"a#": 11,
+	"b": 12
+}
 
 # Note Types
-note_types = {}
-note_types["sixteenth"] = 50
-note_types["eigth"] = 100
-note_types["dotted_eigth"] = 150
-note_types["quarter"] = 200
-note_types["half"] = 400
-note_types["whole"] = 800
-note_types["triplet"] = 60
+note_types0 = {
+	"sixteenth": 50,
+	"eigth": 100,
+	"dotted_eigth": 150,
+	"quarter": 200,
+	"half": 400,
+	"whole": 800,
+	"triplet": 60
+}
 
-#!# End Notes Config #!#
 
-def play_note(octave, note, note_type):
+
+
+############################# START: note
+# The original shortest duration is for the sixteenth note (50 ms)
+shortest_duration = 50
+min_duration_allowed = 400
+
+# The multiplier to scale all durations proportionally
+multiplier = min_duration_allowed / shortest_duration
+
+note_types1 = {
+    "sixteenth": int(50 * multiplier),
+    "eigth": int(100 * multiplier),
+    "dotted_eigth": int(150 * multiplier),
+    "quarter": int(200 * multiplier),
+    "half": int(400 * multiplier),
+    "whole": int(800 * multiplier),
+    "triplet": int(60 * multiplier)
+}
+############################# END: note
+
+note_types2 = {
+    "sixteenth": 400,     # Adjusted from 50 to 400 ms
+    "eigth": 400,         # Adjusted from 100 to 400 ms, can go higher if needed
+    "dotted_eigth": 600,  # Adjusted from 150 to 600 ms
+    "quarter": 800,       # Adjusted from 200 to 800 ms
+    "half": 1200,         # Adjusted from 400 to 1200 ms
+    "whole": 2400,        # Adjusted from 800 to 2400 ms
+    "triplet": 400        # Adjusted from 60 to 400 ms
+}
+
+__.v.beep.note={
+	'0': note_types0,
+	'1': note_types1,
+	'2': note_types2,
+}
+__.v.beep.type='2'
+note_types=__.v.beep.note[__.v.beep.type]
+def play_note(octave, note, note_type, timeout=True):
+	if not __.v.beep.timer is None: timeout=__.v.beep.timer
 	"""Play a note at a certain octave by calculating the frequency of the sound it would represent on the motherboard's speaker."""
-
+	note_types=__.v.beep.note[__.v.beep.type]
 	# Match the note and note type to the dictionaries
 	note = notes[note]
 	note_type = note_types[note_type]
 
 	# Chill for a bit if it's a pause
-	if not note:
-		time.sleep(note_type/1000)
+	if note == 0:
+		time.sleep(note_type / 1000)
 		return
 
 	# Calculate C for the provided octave
-	frequency = 32.7032 * (2**octave)
+	frequency = 32.7032 * (2 ** octave)
 
 	# Calculate the frequency of the given note
-	frequency *= 1.059463094**note
-
+	frequency *= (1.059463094 ** note)
+	if note_type < 400: note_type=400
+	if __.v.beep.print:
+		print('frequency:',frequency)
+		print('note_type:',note_type)
 	# Beep it up
-	winsound.Beep(int(frequency), note_type)
+	try:
+		winsound.Beep(int(frequency), note_type)
+	except Exception as e:
+		if __.v.beep.print:
+			print('Err:',e)
 
 	# Delay after the beep so it doesn't all run together
-	time.sleep(tempo)
+	if timeout:
+		time.sleep(tempo)
+
+# Example usage:
+play_note(4, "c", "quarter")
+
 
 def beep():
 	oct = 3
