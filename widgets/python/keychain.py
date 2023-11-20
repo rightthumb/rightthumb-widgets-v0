@@ -430,10 +430,3 @@ _vault = _.regImp( __.appReg, '_rightThumb._vault' )
 if __name__ == '__main__':
 	action()
 	_.tables.eof()
-
-
-
-
-
-
-

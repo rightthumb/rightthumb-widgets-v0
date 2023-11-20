@@ -162,18 +162,12 @@ _.l.sw.register( triggers, sw )
 #n)--> start
 
 def action():
-	load(); global c3po;
-
-	#n)--> iterate
-	# for subject in _.isData(r=0): _.pr(subject)
-	for subject in _.myData(): _.pr(subject)
-	
-
-def load():
-	global c3po
-	c3po = _.getTable( 'table' )
-	#n)--> print table
-	_.pt(c3po)
+	lines = _.myData()
+	lines.reverse()
+	for line in lines:
+		if line.strip():
+			_.pr(line,c='green')
+			break
 
 
 ##################################################

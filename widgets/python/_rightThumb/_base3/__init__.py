@@ -23296,6 +23296,7 @@ saveYAML2=saveYML2
 imp=regImp
 ago=timeAgo
 toBytes=to_bytes
+
 ##################################################
 def isTextFi(path, num_chars=20):
 	with open(path, 'rb') as file:
@@ -23335,6 +23336,7 @@ def pp(fi=False):
 		else: data=isData()
 		return data
 	except: isData(r=0)
+myData=pp
 ##################################################
 def zip9(folder_path, zip_path):
 	zipfile=__.imp('zipfile')

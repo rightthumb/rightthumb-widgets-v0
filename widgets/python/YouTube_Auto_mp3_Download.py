@@ -55,6 +55,8 @@ with open(INITIATION_FILE, "a") as initiation_file:
     initiation_file.write(f"{datetime.now()}\n")
     with open(TEMP_COPY, "r") as temp_copy_file:
         initiation_file.write(temp_copy_file.read())
+import shutil
+shutil.copyfile(URLS_FILE, TEMP_COPY)
 
 with open(URLS_FILE, "w"):
     pass
@@ -63,33 +65,37 @@ with open(URLS_FILE, "w"):
 with open(TEMP_COPY, "r") as temp_copy_file:
     for line in temp_copy_file:
         # Trim whitespace
-        url = line.strip()
+        dirty = line.strip()
         
         # Skip blank lines
-        if not url:
+        if not dirty:
             continue
+        for part in dirty.split(' '):
+            u='https://'
+            if u in part:
+                url=u+part.split(u)[1]
 
-        print(f"Processing {url}")
+                print(f"Processing {url}")
 
-        # Use youtube-dlc to download the audio in mp3 format
-        download_cmd = [
-            "youtube-dlc",
-            "-x",
-            "--audio-format",
-            "mp3",
-            "-o",
-            os.path.join(OUTPUT_DIR, "%(title)s.%(ext)s"),
-            url,
-        ]
+                # Use youtube-dlc to download the audio in mp3 format
+                download_cmd = [
+                    "youtube-dlc",
+                    "-x",
+                    "--audio-format",
+                    "mp3",
+                    "-o",
+                    os.path.join(OUTPUT_DIR, "%(title)s.%(ext)s"),
+                    url,
+                ]
 
-        if subprocess.run(download_cmd).returncode == 0:
-            # If the above command was successful, log to the success file
-            with open(SUCCESS_FILE, "a") as success_file:
-                success_file.write(f"{url} - Successfully downloaded\n")
-        else:
-            # If there was an error, save the URL to the error file
-            with open(ERROR_FILE, "a") as error_file:
-                error_file.write(f"{url}\n")
+                if subprocess.run(download_cmd).returncode == 0:
+                    # If the above command was successful, log to the success file
+                    with open(SUCCESS_FILE, "a") as success_file:
+                        success_file.write(f"{url} - Successfully downloaded\n")
+                else:
+                    # If there was an error, save the URL to the error file
+                    with open(ERROR_FILE, "a") as error_file:
+                        error_file.write(f"{url}\n")
 
 # Cleanup
 os.remove(TEMP_COPY)

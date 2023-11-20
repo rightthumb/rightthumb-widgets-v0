@@ -31,6 +31,7 @@ def sw():
 	pass
 	_.switches.register( 'Upload-Scp', '-u,-up,-upload' )
 	_.switches.register( 'Download-Scp', '-d,-dl,-down,-download' )
+	_.switches.register( 'rsync', '-rsync' )
 	_.switches.register( 'Test', '-t,-test' )
 	# _.switches.register( 'Files', '-f,-file,-files','file.txt',  description='glob', isRequired=True )
 	_.switches.register( 'Files', '-f,-file,-files','vps-tf', isData="name", isRequired=False )
@@ -278,6 +279,10 @@ def process(path,end='',ft=None):
 		pw=_vault.imp.s.de( ftp['password'] )
 		_ssh=sshpass(pw,'ssh')
 		_scp=sshpass(pw,'scp')
+		if _.switches.isActive('Verbos'):
+			_rsync=sshpass(pw,'rsync -avvz ')
+		else:
+			_rsync=sshpass(pw,'rsync -az ')
 
 		if _.isWin and not _.switches.isActive('NotWSL'):
 			scp=_scp
@@ -294,6 +299,8 @@ def process(path,end='',ft=None):
 				scp=_scp[len('wsl '):]
 			if _ssh.startswith('wsl '):
 				ssh=_ssh[len('wsl '):]
+			if _rsync.startswith('wsl '):
+				rsync=_rsync[len('wsl '):]
 
 
 
@@ -379,32 +386,48 @@ def process(path,end='',ft=None):
 
 
 
-		if _.switches.isActive('Upload-Scp'):
+		if _.switches.isActive('rsync'):
 			# do=f'{scp} {path}  {u}@{s}:{fi}'
 			if os.path.isdir(file):
-				do=f'{scp} -r {_file}  {u}@{s}:{fi}'+tail()
+				do=f'{rsync} -r {_file}  {u}@{s}:{fi}'+tail()
 			else:
-				do=f'{scp} {_file}  {u}@{s}:{fi}'+tail()
-		if _.switches.isActive('Download-Scp'):
-			if os.path.isdir(path):
-				do=f'{scp} -r {u}@{s}:{fi} {_path}'+tail()
-			else:
-				do=f'{scp} {u}@{s}:{fi} {_path}'+tail()
+				__fo = __.path(_file,pop=1)
+				do=f'{rsync} {__fo}  {u}@{s}:{fi}'+tail()
+		else:
+			if _.switches.isActive('Upload-Scp'):
+				# do=f'{scp} {path}  {u}@{s}:{fi}'
+				if os.path.isdir(file):
+					do=f'{scp} -r {_file}  {u}@{s}:{fi}'+tail()
+				else:
+					do=f'{scp} {_file}  {u}@{s}:{fi}'+tail()
+			if _.switches.isActive('Download-Scp'):
+				if os.path.isdir(path):
+					the_file=_file.split('/')[-1]
+					do=f'{scp} -r {u}@{s}:{fi}{the_file}/* {_file}/  '+tail()
+					# print(do);sys.exit();
+					# do=f'{scp} -r {u}@{s}:{fi} {_path}'+tail()
+				else:
+					do=f'{scp} {u}@{s}:{fi} {_path}'+tail()
 		# if _.switches.isActive('Print'): _.pr(do)
 
-		if _.switches.isActive('Upload-Scp') or _.switches.isActive('Download-Scp'):
+		if _.switches.isActive('Upload-Scp') or _.switches.isActive('Download-Scp') or _.switches.isActive('rsync'):
 			if _.switches.isActive('Print'):
 				if 'p' in _.switches.value('Print'):
 					_.pr(do)
 				else:
 					_.pr(_.password_filter(do))
-			try:
-				do = ' '+do
-				do=do.replace(' scp ',' scp '+verbos)
-				os.system( do )
-			except Exception as e:
-				_.e(e)
-
+			if not _.switches.isActive('rsync'):
+				try:
+					do = ' '+do
+					do=do.replace(' scp ',' scp '+verbos)
+					os.system( do )
+				except Exception as e:
+					_.e(e)
+			elif _.switches.isActive('rsync'):
+				try:
+					os.system( do )
+				except Exception as e:
+					_.e(e)
 
 	
 

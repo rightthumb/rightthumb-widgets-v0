@@ -32,7 +32,12 @@ _str = __.imp('_rightThumb._string')
 def sw():
 	pass
 	#b)--> examples
-	# _.switches.register( 'Input', '-i' )
+	_.switches.register( 'Subject', '-i,-input,-text,-t,-txt,-sub,-subject' )
+	_.switches.register( 'Count', '-c,-count' )
+	_.switches.register( 'More', '-m,-more,-gtr' )
+	_.switches.register( 'Less', '-l,-less,-lss' )
+	_.switches.register( 'Dump', '-d' )
+
 	# _.switches.register( 'URL', '-u,-url,-urls', 'https://etc.ac/', isData='raw' )
 	#e)--> examples
 	# _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name,data,clean', description='Files', isRequired=False )
@@ -161,19 +166,33 @@ _.l.sw.register( triggers, sw )
 ########################################################################################
 #n)--> start
 
+
+
+
+
+
 def action():
-	load(); global c3po;
+	# if not _.switches.isActive('Subject'): _.help()
+	sub=_.switches.value('Subject')
+	do={}
+	if _.switches.isActive('Count'): do['c']=int(_.switches.value('Count'))
+	elif _.switches.isActive('More'): do['m']=int(_.switches.value('More'))
+	elif _.switches.isActive('Less'): do['l']=int(_.switches.value('Less'))
+	elif _.switches.isActive('Dump'): do['d']=1
+	# print(do)
+	# if not do: _.help()
 
-	#n)--> iterate
-	# for subject in _.isData(r=0): _.pr(subject)
-	for subject in _.myData(): _.pr(subject)
-	
+	for line in _.pp():
+		# print(line.count(sub))
+		if not sub in line: continue
+		c=line.count(sub)
+		if 'c' in do and c == do['c']: print(line)
+		elif 'm' in do and c > do['m']: print(line)
+		elif 'l' in do and c < do['l']: print(line)
+		elif 'd' in do and c < do['l']: print(c,line)
 
-def load():
-	global c3po
-	c3po = _.getTable( 'table' )
-	#n)--> print table
-	_.pt(c3po)
+
+
 
 
 ##################################################

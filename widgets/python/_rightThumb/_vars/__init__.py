@@ -1239,8 +1239,13 @@ def machine():
 	return md5(  str(uuid.UUID(int=uuid.getnode()))  ,mini=True)
 
 
+
+# /etc/machine-id
+# uuid.UUID(int=uuid.getnode())
+	
 def getMachineID():
 # machineID = _v.getMachineID()
+	import uuid
 	import _rightThumb._md5 as _md5
 	global tempFile
 	if __.isWin:

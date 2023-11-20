@@ -16,7 +16,7 @@ __.v.beep.timer=None
 __.v.beep.print=False
 #
 # Internal Speaker Beeping Module for Windows
-#
+import threading
 import time
 try:
 	import winsound
@@ -71,24 +71,24 @@ min_duration_allowed = 400
 multiplier = min_duration_allowed / shortest_duration
 
 note_types1 = {
-    "sixteenth": int(50 * multiplier),
-    "eigth": int(100 * multiplier),
-    "dotted_eigth": int(150 * multiplier),
-    "quarter": int(200 * multiplier),
-    "half": int(400 * multiplier),
-    "whole": int(800 * multiplier),
-    "triplet": int(60 * multiplier)
+	"sixteenth": int(50 * multiplier),
+	"eigth": int(100 * multiplier),
+	"dotted_eigth": int(150 * multiplier),
+	"quarter": int(200 * multiplier),
+	"half": int(400 * multiplier),
+	"whole": int(800 * multiplier),
+	"triplet": int(60 * multiplier)
 }
 ############################# END: note
 
 note_types2 = {
-    "sixteenth": 400,     # Adjusted from 50 to 400 ms
-    "eigth": 400,         # Adjusted from 100 to 400 ms, can go higher if needed
-    "dotted_eigth": 600,  # Adjusted from 150 to 600 ms
-    "quarter": 800,       # Adjusted from 200 to 800 ms
-    "half": 1200,         # Adjusted from 400 to 1200 ms
-    "whole": 2400,        # Adjusted from 800 to 2400 ms
-    "triplet": 400        # Adjusted from 60 to 400 ms
+	"sixteenth": 400,     # Adjusted from 50 to 400 ms
+	"eigth": 400,         # Adjusted from 100 to 400 ms, can go higher if needed
+	"dotted_eigth": 600,  # Adjusted from 150 to 600 ms
+	"quarter": 800,       # Adjusted from 200 to 800 ms
+	"half": 1200,         # Adjusted from 400 to 1200 ms
+	"whole": 2400,        # Adjusted from 800 to 2400 ms
+	"triplet": 400        # Adjusted from 60 to 400 ms
 }
 
 __.v.beep.note={
@@ -98,41 +98,58 @@ __.v.beep.note={
 }
 __.v.beep.type='2'
 note_types=__.v.beep.note[__.v.beep.type]
-def play_note(octave, note, note_type, timeout=True):
-	if not __.v.beep.timer is None: timeout=__.v.beep.timer
-	"""Play a note at a certain octave by calculating the frequency of the sound it would represent on the motherboard's speaker."""
-	note_types=__.v.beep.note[__.v.beep.type]
-	# Match the note and note type to the dictionaries
-	note = notes[note]
-	note_type = note_types[note_type]
+def play_note(octave, note, note_type, timeout_duration=None):
 
-	# Chill for a bit if it's a pause
-	if note == 0:
-		time.sleep(note_type / 1000)
-		return
+	def play_note_internal(octave, note, note_type, timeout=False):
+		if not __.v.beep.timer is None: timeout=__.v.beep.timer
+		"""Play a note at a certain octave by calculating the frequency of the sound it would represent on the motherboard's speaker."""
+		note_types=__.v.beep.note[__.v.beep.type]
+		# Match the note and note type to the dictionaries
+		note = notes[note]
+		note_type = note_types[note_type]
 
-	# Calculate C for the provided octave
-	frequency = 32.7032 * (2 ** octave)
+		# Chill for a bit if it's a pause
+		if note == 0:
+			time.sleep(note_type / 1000)
+			return
 
-	# Calculate the frequency of the given note
-	frequency *= (1.059463094 ** note)
-	if note_type < 400: note_type=400
-	if __.v.beep.print:
-		print('frequency:',frequency)
-		print('note_type:',note_type)
-	# Beep it up
-	try:
-		winsound.Beep(int(frequency), note_type)
-	except Exception as e:
+		# Calculate C for the provided octave
+		frequency = 32.7032 * (2 ** octave)
+
+		# Calculate the frequency of the given note
+		frequency *= (1.059463094 ** note)
+		if note_type < 400: note_type=400
 		if __.v.beep.print:
-			print('Err:',e)
+			print('frequency:',frequency)
+			print('note_type:',note_type)
+		# Beep it up
+		try:
+			winsound.Beep(int(frequency), note_type)
+		except Exception as e:
+			if __.v.beep.print:
+				print('Err:',e)
 
-	# Delay after the beep so it doesn't all run together
-	if timeout:
-		time.sleep(tempo)
+		# Delay after the beep so it doesn't all run together
+		if timeout:
+			time.sleep(tempo)
+  # Create a thread to run the play_note_internal function with the necessary arguments
+	note_thread = threading.Thread(target=play_note_internal, args=(octave, note, note_type))
+
+	# Start the thread
+	note_thread.start()
+
+	# If a timeout is specified, wait for the duration of the timeout
+	if timeout_duration is not None:
+		note_thread.join(timeout_duration)
+
+		# # If the thread is still alive after the timeout, it means the function is taking too long
+		# if note_thread.is_alive():
+		# 	# Handle the timeout case, e.g., print a message, stop the note, etc.
+		# 	print("Note playing exceeded the time limit.")
+		# 	# Optionally, you can forcefully stop the thread here, but it's generally not recommended
 
 # Example usage:
-play_note(4, "c", "quarter")
+# play_note(4, "c", "quarter")
 
 
 def beep():
