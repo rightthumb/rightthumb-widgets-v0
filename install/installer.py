@@ -3474,6 +3474,8 @@ fi
 ####### wsl cron end
 
 
+alias ai="$p vps-ai-sds -p"
+
 # a3bc42ec51e9
 
 			"""
