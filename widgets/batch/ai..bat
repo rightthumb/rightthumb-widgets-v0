@@ -1,6 +1,11 @@
-@echo off 
+@echo off
+call p vps-ai-sds -p %*
 
-call p ai %*
+
+
+rem @echo off 
+
+rem call p ai %*
 rem shift /1
 rem set "remainingArgs="
 rem :getRemainingArgs
