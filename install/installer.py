@@ -3153,7 +3153,6 @@ alias bl='python3 $ww/python/blank-file -f '
 alias wget.txt='wget -q -O - '
 alias wgett='wget -q -O - '
 
-alias crontab.='EDITOR=nano /usr/bin/crontab'
 
 alias rr='sudo su root'
 
