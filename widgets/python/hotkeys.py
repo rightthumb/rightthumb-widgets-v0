@@ -1662,6 +1662,75 @@ copy(  hackTool.payload.label  )
 
 
 
+	def Aestiva_List(self):
+		_copy = _.regImp( __.appReg, '-copy' )
+		_paste = _.regImp( __.appReg, '-paste' )
+		data  = _paste.imp.paste()
+		lines=data.split('\n')
+		subject = lines.pop(0).strip()
+		result = []
+		for i,line in enumerate(lines):
+			line=line.strip()
+			if not line:
+				result +='\n'
+			else:
+				result.append(subject+'['+str(i+1)+'] = "'+line+'"')
+		_copy.imp.copy( '\n'.join(result), p=0 )
+
+	def second(self):
+		_copy = _.regImp( __.appReg, '-copy' )
+		_paste = _.regImp( __.appReg, '-paste' )
+		data  = _paste.imp.paste()
+		data = data.replace("'",'')
+		data = data.replace('"','')
+		data = data.replace('`','')
+		data = data.replace(':','=')
+		data = data.replace('$','')
+		data = data.replace('\t',' ')
+		data = cleaner(data,1)
+
+		result = ''
+		for line in data.split('\n'):
+			line=line.strip()
+			if not line:
+				result +='\n'
+			else:
+				if '=' in line:
+					result += line.split('=')[1].strip() + '\n'
+				else:
+					result += line.split(' ')[1] + '\n'
+		result=_str.cleanBE( result, '\n' )
+
+		_copy.imp.copy( result, p=0 )
+
+	def second2(self):
+		_copy = _.regImp( __.appReg, '-copy' )
+		_paste = _.regImp( __.appReg, '-paste' )
+		data  = _paste.imp.paste()
+		data = data.replace("'",'')
+		data = data.replace('"','')
+		data = data.replace('`','')
+		data = data.replace(':','=')
+		data = data.replace('$','')
+		data = data.replace('\t',' ')
+		data = cleaner(data,1)
+
+		result = ''
+		for line in data.split('\n'):
+			line=line.strip()
+			if not line:
+				result +='\n'
+			else:
+				if '=' in line:
+					result += line.split('=')[1].strip() + '\n'
+				else:
+					x=line.split(' ')
+					x.pop(0)
+					result += ' '.join(x) + '\n'
+		result=_str.cleanBE( result, '\n' )
+
+		_copy.imp.copy( result, p=0 )
+
 	def first(self):
 		_copy = _.regImp( __.appReg, '-copy' )
 		_paste = _.regImp( __.appReg, '-paste' )
@@ -3272,6 +3341,9 @@ def load():
 				'dup-spaces': { 'raw': [ 'ctrl.', 'win.', 's' ], 'do': 'Clip.dup_space()' },
 
 				'first-word': { 'raw': [ 'alt.', 'win.', '1' ], 'do': 'Clip.first()' },
+				'second-word': { 'raw': [ 'alt.', 'win.', '2' ], 'do': 'Clip.second()' },
+				'second-word-2': { 'raw': [ 'alt.', 'win.', '3' ], 'do': 'Clip.second2()' },
+				'Aestiva-List': { 'raw': [ 'alt.', 'win.', 'l' ], 'do': 'Clip.Aestiva_List()' },
 				'first-php-var': { 'raw': [ 'alt.', 'win.', '4' ], 'do': 'Clip.php_var()' },
 				# 'builder-one': { 'raw': [ 'alt.', 'win.', 'b' ], 'do': 'Clip.builder()' },
 				'builder-two': { 'raw': [ 'alt.', 'win.', 'y' ], 'do': 'Clip.builder2()' },
@@ -3471,8 +3543,7 @@ def scheduler_job(rec=None):
 		_.saveTable(recs,__.scheduler_db)
 		print('Deleted:',_id,rec['id'])
 
-	if rec['beep']:
-		beepy.note('d',3); beepy.note('c#'); beepy.note('d',3)
+	# if rec['beep']: beepy.note('d',3); beepy.note('c#'); beepy.note('d',3)
 	print('RAN:',_.toYML(rec))
 try:
 	import schedule

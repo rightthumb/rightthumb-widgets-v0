@@ -1,5 +1,9 @@
 @echo off
-call p vps-ai-sds -p %*
+if [%1] == [] (
+	call p vps-ai-sds
+) else (
+	call p vps-ai-sds -p %*
+)
 
 
 rem @echo off

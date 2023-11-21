@@ -34,7 +34,7 @@ def sw():
 	#b)--> examples
 	_.switches.register( 'Sites', '-site,-sites,-d,-domain,-domains', 'eyeformeta.com rightthumb.com efm.cx thumb.cx etc.ac softwaredevelopment.solutions' )
 	_.switches.register( 'Remove', '-r,-remove', 'relationshipideas.xyz' )
-	_.switches.register( 'Template', '-t', 'deny access basic' )
+	_.switches.register( 'Template', '-t', 'deny access basic wordpress' )
 	# _.switches.register( 'URL', '-u,-url,-urls', 'https://efm.cx/', isData='raw' )
 	#e)--> examples
 	# _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name,data,clean', description='Files', isRequired=False )
@@ -197,7 +197,7 @@ def action():
 		template = _.switches.values('Template')[0]
 		if template in alias: template=alias[template]
 		if not template in templates:  _.e('invalid template','deny access basic')
-		_.saveText(templates[template],'.htaccess')
+		_.saveText(templates[template].strip(),'.htaccess')
 		_.pr(templates[template])
 		return None
 		
@@ -266,6 +266,19 @@ def action():
 	
 	# rightthumb\\.com|eyeformeta\\.com
 templates={}
+templates['wordpress']='''
+# BEGIN WordPress
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /
+RewriteRule ^index\\.php$ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /index.php [L]
+</IfModule>
+# END WordPress
+
+'''
 templates['base']='''
 <IfModule mime_module>
 	AddHandler application/x-httpd-ea-php80 .php .php8 .phtml .srv.js .php.js

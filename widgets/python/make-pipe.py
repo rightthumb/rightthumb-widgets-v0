@@ -32,6 +32,8 @@ import _rightThumb._string as _str
 def appSwitches():
 	pass
 	### EXAMPLE: START
+	_.switches.register( 'Zeros', '-z,-zero,-zeros' )
+	_.switches.register( 'Spaces', '-sp,-space,-spaces' )
 	_.switches.register( 'Text', '-t,-text,-make' )
 	# _.switches.register( 'Files', '-f,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=True )
 	### EXAMPLE: END
@@ -265,7 +267,12 @@ def action():
 				line=line.replace('{cow}',have_a_cow())
 			if '{n}' in line:
 				cnt+=1
-				line=line.replace('{n}',_.zeros3(cnt,len(_.isData())))
+				if _.switches.isActive('Zeros'):
+					line=line.replace('{n}',_.zeros3(cnt,len(_.myData())))
+				elif _.switches.isActive('Spaces'):
+					line=line.replace('{n}',_.zeros3(cnt,len(_.myData()),' '))
+				else:
+					line=line.replace('{n}',str(cnt))
 
 			line = line.replace( '{}', row )
 			_.pr(line)

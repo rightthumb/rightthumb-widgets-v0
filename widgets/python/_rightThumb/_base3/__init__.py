@@ -3152,14 +3152,14 @@ def secureDeleteFile(f):
 	return result
 
 
-def zeros3(n,total):
+def zeros3(n,total,z='0'):
 	''' calculating length of output '''
 	c=len(str(total))
 
 	result = ''
 	a = len(str(n))
 	while not len(result)+a == c:
-		result += '0'
+		result += z
 	result += str(n)
 	return result
 
@@ -21744,10 +21744,13 @@ def ad(path=None,label='ad'):
 	return ad
 # ads=ad
 
-def URL(url):
-	requests=dots('requests.get')
-	return requests.get(url).content.decode("utf-8").replace('\\n','\n')
-
+# def URL(url):
+# 	requests=dots('requests.get')
+# 	return requests.get(url).content.decode("utf-8").replace('\\n','\n')
+def URL(url, data={}):
+	import requests
+	response = requests.post(url, data=data)
+	return response.content.decode("utf-8").replace('\\n', '\n')
 
 def getConfig(path):
 	def _cl_(string): return _str.do('be',   _str.do('be',string,'\n')   ,' ');
@@ -23296,7 +23299,8 @@ saveYAML2=saveYML2
 imp=regImp
 ago=timeAgo
 toBytes=to_bytes
-
+yt=toYML
+yf=fromYML
 ##################################################
 def isTextFi(path, num_chars=20):
 	with open(path, 'rb') as file:
