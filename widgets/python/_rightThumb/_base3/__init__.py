@@ -23369,6 +23369,63 @@ def lisa(has,string):
 def dicSort(d): return {k: v for k, v in sorted(d.items(), key=lambda item: item[1], reverse=True)}
 sortDic=dicSort
 ##################################################
+## micro helpers
+def _default_triggers_():
+	global switches
+	switches.trigger( 'Files', myFileLocations, vs=True )
+	switches.trigger( 'Ago', timeAgo )
+	switches.trigger( 'Folder', myFolderLocations )
+	switches.trigger( 'URL', urlTrigger )
+	switches.trigger( 'Duration', timeFuture )
+def _default_settings_():
+	__.setting('receipt-log',True)
+	__.setting('receipt-file',True)
+	__.setting('myFileLocations-skip-validation',False)
+	__.setting('require-pipe',False)
+	__.setting('require-pipe||file',False)
+	__.setting('pre-error',False)
+	__.setting('switch-raw',[])
+def appInfoContinuity(app,info={}):
+	if not 'file' in info: info['file'] = __.thisApp( __file__ )
+	if not 'liveAppName' in info: info['liveAppName'] = __.thisApp( __file__ )
+	if not 'description' in info: info['description'] = 'Changes the world'
+	keys = '''
+categories
+usage
+relatedapps
+prerequisite
+examples
+columns
+aliases
+notes
+	'''
+	keys=keys.strip()
+	keys=keys.split('\n')
+	for k in keys:
+		if not k in info: info[k]=[]
+	return info
+def appDataContinuity(info={}):
+	if not info:
+		info = {
+			'start': __.startTime,
+			'uuid': '',
+			'audit': [],
+			'pipe': False,
+			'data': {
+						'field': {'sent': [], 'received': [] }, # { 'label': '', 'context': [],  }
+						'table': {'sent': [], 'received': [] },
+			},
+		}
+		return info
+	if not 'start' in info: info['start'] = __.startTime
+	if not 'uuid' in info: info['uuid'] = ''
+	if not 'audit' in info: info['audit'] = []
+	if not 'pipe' in info: info['pipe'] = False
+	if not 'data' in info: info['data'] = {
+		'field': {'sent': [], 'received': [] }, # { 'label': '', 'context': [],  }
+		'table': {'sent': [], 'received': [] },
+		}
+##################################################
 
 # __.switch_raw
 ##################################################

@@ -92,6 +92,8 @@ _.appInfo[focus()] = {
 						'p recent -between 2019-02-01 2019-03-01 -backup',
 						'p recent -between 2019-02-01 2019-03-01 -backup + *.txt',
 						'',
+						'p recent -ago 10y + *.py site-packages',
+						'',
 	],
 	'columns': [
 					# { 'name': 'name', 'abbreviation': 'n' },
