@@ -196,13 +196,13 @@ class DBManager:
 		search_terms = []
 		for key, value in query_dict.items():
 			do = 'like'
-			if key == 'is_dir': do = 'like'
-			if key == 'name': do = 'like'
-			if key == 'content': do = 'like'
-			if key == 'path': do = 'like'
 			if not gl or not key in gl: do = '>'
 			elif gl[key] == 'gtr': do = '>'
 			else: do = '<'
+			if key == 'content': do = 'like'
+			if key == 'is_dir': do = 'like'
+			if key == 'name': do = 'like'
+			if key == 'path': do = 'like'
 			search_terms.append(f"{key} {do} ?")
 		search_query += ' AND '.join(search_terms)
 		if _.switches.isActive('Test'):
