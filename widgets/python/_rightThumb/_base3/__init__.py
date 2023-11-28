@@ -4039,7 +4039,6 @@ def isData( data=None, focus=None, pipeClean=False, required=False,     r=None, 
 	global switches
 	global appData
 	try:
-
 		if appData[__.appReg]['pipe']: return appData[__.appReg]['pipe']
 		for sw in __.isData_Switches:
 			if not sw == 'Files': return switches.values(sw)
@@ -4068,16 +4067,19 @@ def isData( data=None, focus=None, pipeClean=False, required=False,     r=None, 
 				if os.path.isfile(f):
 					dAta.append(f)
 			return dAta
+
 		if not noclean is None: pipeClean=noclean
 		if not c is None: pipeClean=c;
 		if not r is None: required = r;
 		# pr('here',data,c='gray')
+		
 		if data is None:
 			if pipeClean:
 				pipeCleaner(0)
 			if focus is None:
 				focus = __.appReg
 			data = pipe_surfing()
+
 
 		if type(data) ==list and  len(data)==1 and data[0]=='': data=[]
 		if not data:
@@ -4096,7 +4098,7 @@ def isData( data=None, focus=None, pipeClean=False, required=False,     r=None, 
 						elif isD == 'glob' and 'data' in vv.isData[name]:
 							for n in switches.values(name):
 								for f in isData_path_list( glob.glob( n ) ):
-									for xXx in getText( f, raw=True ).split('\n'):
+									for xXx in getText2( f ).split('\n'):
 										data.append(xXx)
 						elif isD == 'glob':
 							for n in switches.values(name):
@@ -4109,7 +4111,7 @@ def isData( data=None, focus=None, pipeClean=False, required=False,     r=None, 
 						elif isD == 'data':
 							tData=[]
 							for n in switches.values(name):
-								tData.append(getText(n,raw=True))
+								tData.append(getText2(n))
 							data = '\n'.join(tData)
 
 			if data:
@@ -9551,6 +9553,25 @@ def saveText( rows, theFile, errors=True, me=0, test=None ):
 		# if errors:
 		#   print_( 'Auto correction when saving text' )
 	if me and theFile in vv.opened_file_me: changeM( theFile, vv.opened_file_me[theFile] );
+def getText2(theFile,what='text',t=None,l=None):
+	if not t is None and t: what='text'
+	if not l is None and l: what='list'
+
+	# Extended list of encodings
+	encodings = ['utf-8', 'latin-1', 'ascii', 'iso-8859-1', 'windows-1252', 'utf-16', None]  # None for system default
+	for encoding in encodings:
+		try:
+			with open(theFile, 'r', encoding=encoding) as f:
+				if what.lower().startswith('l'):
+					return f.readlines() # list
+				else:
+					return f.read() # text
+		except Exception as e:
+			pass
+			# print(f"Failed to open the file with {encoding} encoding. Error: {e}")
+	raise Exception(f"Failed to read the file {theFile} with any of the provided encodings.")
+
+
 
 def getText( theFile, raw=False, clean=False,  e=0, c=0 ):
 	if os.path.isfile(theFile): vv.opened_file_me[theFile] = os.path.getmtime( theFile );
@@ -23339,7 +23360,7 @@ def pp(fi=False):
 					if os.path.isfile(x): data.append(x)
 		else: data=isData()
 		return data
-	except: isData(r=0)
+	except: return isData(r=0)
 myData=pp
 ##################################################
 def zip9(folder_path, zip_path):

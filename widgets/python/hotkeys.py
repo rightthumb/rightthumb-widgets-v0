@@ -3293,6 +3293,7 @@ def toggle_chars():
 		print_chars = False
 	else:
 		print_chars = True
+	print('print_chars:',print_chars)
 
 def load():
 	global table
@@ -3350,7 +3351,7 @@ def load():
 				'range-first': { 'raw': [ 'alt.', 'win.', '-' ], 'do': 'Clip.range_first()' },
 				# 'reverse-lines': { 'raw': [ 'alt.', 'shift.', 'r' ], 'do': 'Clip.reverse_lines()' },
 				'reverse-lines': { 'raw': [ 'alt.', 'win.', 'd' ], 'do': 'Clip.combine_make()' },
-				'toggle-chars': { 'raw': [ 'alt.', 'win.', 't', 'c' ], 'do': 'toggle_chars()' },
+				'HK-settings-toggle-print-chars': { 'raw': [ 'alt.', 'win.', 't', 'c' ], 'do': 'toggle_chars()' },
 				'decrypt-lines': { 'raw': [ 'win.', 'c' ], 'do': 'Clip.decrypt_lines()' },
 				'eval-clip': { 'raw': [ 'alt.', 'win.', 'e' ], 'do': 'Clip.dirty_eval()' },
 
@@ -3460,10 +3461,11 @@ _listen = _.regImp( __.appReg, 'listen' )
 _listen.switch('Print')
 
 def _listener_():
-	global threads
-	t = threading.Thread(target=_listen.action)
-	threads.append(t)
-	t.start()
+	schedulerRun()
+	# global threads
+	# t = threading.Thread(target=_listen.action)
+	# threads.append(t)
+	# t.start()
 
 ########################################################################################
 
@@ -3642,7 +3644,7 @@ def current_day():
 	now = datetime.datetime.now()
 	return now.strftime('%a').lower()
 
-__.schedulerRun=True
+__.schedulerRun=False
 
 
 

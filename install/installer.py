@@ -1634,7 +1634,7 @@ pr-|{6FAB5628-94A1-410A-82D1-1D42A2A11750}/.rt/profile/projects"""
 
 		root_bashrc_check = [
 								'/root/.bashrc',
-								'/etc/bash.bashrc',
+								# '/etc/bash.bashrc',
 		]
 
 
