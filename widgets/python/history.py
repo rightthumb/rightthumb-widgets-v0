@@ -37,10 +37,11 @@ def appSwitches():
 	_.switches.register('Count', '-count','2')
 	_.switches.register('Select_I', '-i','0')
 	_.switches.register('DoNotColorize', '-nocolor')
-	_.switches.register('Copy', '-copy', 'inBackup -1')
-	_.switches.register('App-Switches', '-sw','ls.py')
+	_.switches.register('Copy', '+copy', 'inBackup -1')
+	_.switches.register('App-Switches', '-sw','files.py')
+	_.switches.register('Specify-App-Switches', '+sw','_-ago _+ (add _ to switch your searching for)')
 	_.switches.register('Path', '-path')
-
+	_.switches.register('TicketPath', '-tp')
 
 
 _.autoBackupData = __.autoCreationConfiguration['backup']
@@ -298,12 +299,71 @@ def process( path ):
 			# sys.exit()
 def action():
 	if _.switches.isActive('App-Switches') and _.switches.values('App-Switches'):
+		sw = []
+		if _.switches.isActive('Specify-App-Switches'):
+			sw = _.switches.values('Specify-App-Switches')
+			xsw=[]
+			for s in sw:
+				s=s.strip()
+				while '  ' in s: s=s.replace('  ', ' ')
+				if not ' ' in s:
+					xsw.append(s)
+				else:
+					for w in s.split(' '):
+						xsw.append(w)
+			sw=xsw
+			for i,s in enumerate(sw):
+				sw[i]=s.replace('_','')
+
+
 		_sw=_.getTableDB('history_index[py-switches].index')
+		 
+
 		for app in _.switches.values('App-Switches'):
 			app=app.replace('.py','')
 			if app in _sw:
-				for k in _sw[app]:
-					_.pr(k)
+				if not sw:
+					for k in _sw[app]:
+						_.pr(k)
+				elif len(sw) == 1:
+					for k in _sw[app]:
+						if k in sw:
+							for sess in _sw[app][k]:
+								if _.switches.isActive('TicketPath'):
+									o=_v.myTickets+os.sep+'open-'+sess+'.txt'
+									c=_v.myTickets+os.sep+'closed-'+sess+'.txt'
+									if os.path.isfile(o):
+										_.pr('\t',sess,o)
+									elif os.path.isfile(c):
+										_.pr('\t',sess,c)
+									else:
+										_.pr('\t',sess)
+
+								else:
+									_.pr('\t',sess)
+				else:
+					sessions={}
+					for k in _sw[app]:
+						if k in sw:
+							for sess in _sw[app][k]:
+								if not sess in sessions: sessions[sess]=0
+								sessions[sess]+=1
+					for sess in sessions:
+						if sessions[sess] >= len(sw):
+							if _.switches.isActive('TicketPath'):
+								o=_v.myTickets+os.sep+'open-'+sess+'.txt'
+								c=_v.myTickets+os.sep+'closed-'+sess+'.txt'
+								if os.path.isfile(o):
+									_.pr('\t',sess,o)
+								elif os.path.isfile(c):
+									_.pr('\t',sess,c)
+								else:
+									_.pr('\t',sess)
+
+							else:
+								_.pr('\t',sess)
+
+
 		return None
 
 

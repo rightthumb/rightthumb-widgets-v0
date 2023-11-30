@@ -176,8 +176,18 @@ def unFormatSize(size):
 	size = int(float(size))
 	result = round(size * factor,0)
 	return result
+import pathlib
+def isLink(path):
+	try:
+		x=pathlib.Path(path).resolve()
+		islink=False
+	except:
+		islink=True
 
-
+	if islink or  os.path.islink(path):
+		result = True
+	else:
+		result = False
 
 def registerSwitches( argvProcessForce=False ):
 	global appDBA
@@ -350,7 +360,7 @@ def getFolder(folder):
 
 			if os.path.isdir(path):
 				newFolder = folder + _v.slash + item
-				if os.path.isdir(newFolder):
+				if os.path.isdir(newFolder) and not isLink(newFolder):
 					try:
 						getFolder(newFolder)
 					except Exception as e:

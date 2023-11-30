@@ -3475,6 +3475,12 @@ fi
 
 alias ai="$p vps-ai-sds -p"
 
+alias size.fi="$p ls -f "
+alias size.f="du -sh "
+alias size.d="df -h"
+alias sizeFo="du -sh "
+alias sizeDrive="df -h"
+
 # a3bc42ec51e9
 
 			"""

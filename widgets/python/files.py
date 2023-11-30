@@ -43,6 +43,8 @@ def appSwitches():
 		_.switches.register('Recursive', '-r,-recursive')
 	else:
 		_.switches.register('Not-Recursive', '-r')
+	_.switches.register('Force-Full-Path', '-fp,-pf,-forcepath')
+	_.switches.register('Force-Relative-Path', '-rf,-forcerelative')
 	_.switches.register('Count', '-c,-count,--c')
 	_.switches.register('Folders', '-f,-folder,-folders,-fo')
 	_.switches.register('Text', '-t,-text,-txt')
@@ -67,6 +69,8 @@ def appSwitches():
 	_.switches.register('Search-For-Text-Include', '-has,-search')
 	_.switches.register('Search-For-Text-Exclude', '-not')
 	_.switches.register('Search-For-Text-TOP_Of_File', '-top','10')
+	_.switches.register('Not-In-Comments', '-nocomment','html py php js')
+
 
 
 fse=False
@@ -156,6 +160,9 @@ _.appData[focus()] = {
 # _.appInfo[focus()]['examples'].append('p thisApp -file file.txt')
 
 # _.appInfo[focus()]['columns'].append({'name': 'name', 'abbreviation': 'n'})
+
+
+
 
 def getSome(path, num=10, mode='lines'):
 	if mode.lower().startswith('c'): mode = 'characters'
@@ -304,6 +311,28 @@ if __name__ == '__main__':
 ########################################################################################
 # START
 
+def remove_html_comments(string):
+	import re
+	pattern = re.compile(r'<!--.*?-->', re.DOTALL)
+	return pattern.sub('', string)
+
+def remove_python_comments(code):
+	import re
+	code = re.sub(r'#.*', '', code)
+	code = re.sub(r'(\'\'\'(.*?)\'\'\'|\"\"\"(.*?)\"\"\")', '', code, flags=re.DOTALL)
+	return code
+
+def remove_php_comments(code):
+	import re
+	code = re.sub(r'(//.*|#.*)', '', code)
+	code = re.sub(r'/\*.*?\*/', '', code, flags=re.DOTALL)
+	return code
+
+def remove_javascript_comments(code):
+	import re
+	code = re.sub(r'//.*', '', code)
+	code = re.sub(r'/\*.*?\*/', '', code, flags=re.DOTALL)
+	return code
 
 
 def isText(file):
@@ -739,13 +768,19 @@ def action():
 	_.v.no_extension = _.switches.isActive('No-Extension')
 	_.v.do_not_hide__pycache = _.switches.isActive('Disable-Intelligence')
 
-
-	if __.isFiles:
-		_.v.show_full_path = True
-		if _.switches.isActive('Toggle-Relative-Path'):_.v.show_full_path = False
+	if _.switches.isActive('Force-Full-Path') or _.switches.isActive('Force-Relative-Path'):
+		if _.switches.isActive('Force-Full-Path'):
+			_.v.show_full_path = True
+		else:
+			_.v.show_full_path = False
 	else:
-		_.v.show_full_path = False
-		if _.switches.isActive('Toggle-Relative-Path'): _.v.show_full_path = True
+		if __.isFiles:
+			_.v.show_full_path = True
+			if _.switches.isActive('Toggle-Relative-Path'):_.v.show_full_path = False
+		else:
+			_.v.show_full_path = False
+			if _.switches.isActive('Toggle-Relative-Path'): _.v.show_full_path = True
+
 	if _.switches.isActive('Minus'): minusF()
 
 	global base_path
@@ -899,7 +934,23 @@ if _.switches.isActive('Search-For-Text-Include'):
 	scan=True
 else:
 	scan=False
-
+def nocomment(text):
+	text=remove_php_comments(text)
+	text=remove_html_comments(text)
+	text=remove_python_comments(text)
+	text=remove_javascript_comments(text)
+	return text
+def NOTHING(text): return text
+if _.switches.isActive('Not-In-Comments'):
+	if not 'html' in _.switches.value('Not-In-Comments'): remove_html_comments=NOTHING
+	if not 'py' in _.switches.value('Not-In-Comments'): remove_python_comments=NOTHING
+	if not 'php' in _.switches.value('Not-In-Comments'): remove_php_comments=NOTHING
+	if not 'js' in _.switches.value('Not-In-Comments'): remove_javascript_comments=NOTHING
+else:
+	remove_html_comments=NOTHING
+	remove_python_comments=NOTHING
+	remove_php_comments=NOTHING
+	remove_javascript_comments=NOTHING
 if not _.switches.isActive('Search-Print-Line'):
 	pr=0
 elif 'a' in _.switches.value('Search-Print-Line').lower():
@@ -1059,7 +1110,7 @@ def process(path):
 			else: the_file=''
 		else:
 			if _.isTextFi(path):
-				the_file=_.getText(path,raw=True)
+				the_file=nocomment(_.getText(path,raw=True))
 			else: the_file=''
 		if _.showLine(the_file, plus=inc, minus=ex,OR=False,code=True):
 			pass

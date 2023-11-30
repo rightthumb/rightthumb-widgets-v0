@@ -392,8 +392,8 @@ if _.switches.isActive('Make'):
 		_.switches.fieldSet( 'Make', 'values', [m] )
 		_.switches.fieldSet( 'NoCount', 'active', True )
 	if '--make' in sys.argv:
-		_.switches.fieldSet( 'Make', 'value', m.replace("'",'"') )
-		_.switches.fieldSet( 'Make', 'values', [m.replace("'",'"')] )
+		_.switches.fieldSet( 'Make', 'value', m.replace("'",'"').replace('??',"'") )
+		_.switches.fieldSet( 'Make', 'values', [m.replace("'",'"').replace('??',"'")] )
 				
 
 

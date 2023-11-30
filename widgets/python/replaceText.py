@@ -44,6 +44,7 @@ def appSwitches():
 	_.switches.register('Replace', '-replace')
 	_.switches.register('ReplaceFile', '-replacefile')
 	_.switches.register('Test', '-test')
+	_.switches.register('EntireQuotes', '-q,-quotes')
 
 
 	
@@ -229,8 +230,9 @@ def action():
 			_.appData[__.appReg]['pipe'] = []
 			_.appData[__.appReg]['pipe'].append( _.switches.value('Input') )
 		
-		files = _.appData[__.appReg]['pipe']
+		files = _.myData()
 		for filename in files:
+			filename.strip()
 			if os.path.isfile( filename ):
 				processFile(filename)
 	else:
@@ -247,9 +249,11 @@ def getTabs( line ):
 			return pre
 	return pre
 
+EntireQuotes = _.switches.isActive('EntireQuotes')
 def processFile( filename ):
 	global insertText
 	global replaceText
+	global EntireQuotes
 
 	_.pr()
 	_.pr('processing:', filename)
@@ -263,8 +267,19 @@ def processFile( filename ):
 	rows = []
 	for i,line in enumerate(file):
 		line = line.replace( '\n', '' )
-
-		newFile.append( line.replace( replaceText, insertText ) )
+		if not EntireQuotes:
+			newFile.append( line.replace( replaceText, insertText ) )
+		elif EntireQuotes:
+			if not replaceText in line:
+				newFile.append( line )
+			elif replaceText in line:
+				q='"'
+				parts=line.split(q)
+				po=[]
+				for ii,px in enumerate(parts):
+					if replaceText in px: parts[ii]=insertText
+				line=q.join(parts)
+				newFile.append( line )
 
 
 	_.saveText( newFile, filename )

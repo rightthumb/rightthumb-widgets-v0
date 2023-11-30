@@ -358,6 +358,7 @@ def process( path, ticket ):
 		if not row.startswith('<'):
 			if row.startswith('Session:'):
 				days = extractDaysFromSession( row, ticket )
+				if not days: continue
 				for day in days:
 					if not day in index_day:
 						index_day[day] = {}
@@ -438,14 +439,16 @@ def process( path, ticket ):
 							pass
 					
 					if not editPy is None:
-						for day in days:
-							if not editPy in index_day_edit:
-								index_day_edit[ editPy ] = {}
-							if not day in index_day_edit[editPy]:
-								index_day_edit[editPy][day] = {}
-							if not ticket in index_day_edit[editPy][day]:
-								index_day_edit[editPy][day][ticket] = {}
-							
+						try:
+							for day in days:
+								if not editPy in index_day_edit:
+									index_day_edit[ editPy ] = {}
+								if not day in index_day_edit[editPy]:
+									index_day_edit[editPy][day] = {}
+								if not ticket in index_day_edit[editPy][day]:
+									index_day_edit[editPy][day][ticket] = {}
+						except Exception as e:
+							print('Err:',ticket)
 						
 
 					if shouldDex:
