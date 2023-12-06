@@ -94,6 +94,7 @@ _.appInfo[focus()] = {
 }
 _.appInfo[focus()] = _.appInfoContinuity(__.thisApp( __file__ ),_.appInfo[focus()])
 _.appData[focus()] = _.appDataContinuity()
+def appRegDics(): return { 'appInfo': _.appInfo[focus()], 'appData': _.appData[focus()] }
 def triggers():
 	_._default_triggers_()
 	# _.switches.trigger( 'Files', _.myFileLocations, vs=True )

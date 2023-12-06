@@ -291,15 +291,16 @@ def ai():
 		print(prompt)
 		print('_________________')
 	# Apply the API key
-	# openai.api_key = _blowfish.decrypt('+WDUtsrHiXMJ2Rk2Z7QMSyoo+xzLW/BhSw/kTcUwPmZGQBDpZs7LcGpy2hm+rAWQ+ZtzKKLFVO8=', _vault.key() )
+	# openai.api_key = _blowfish.decrypt('+WDUtsrHiXMJ2Rk2Z7QMSyoo+xzLW/BhSw/kTcUwPmZGQBDpZs7Lc1y2hm+rAWQ+ZtzKKLFVO8=', _vault.key() )
 	# openai.api_key = os.environ['OPENAI_API_KEY']
-	openai.api_key = _keychain.imp.key('open-ai-api')
 	
 
 	# Define your prompt
 	# prompt = "Write a short story about a person who finds a treasure."
 
 	# Request a response from the API
+	##################################
+	openai.api_key = _keychain.imp.key('open-ai-api')
 	response = openai.Completion.create(
 		# https://platform.openai.com/docs/models/codex
 		# engine="code-davinci-002",

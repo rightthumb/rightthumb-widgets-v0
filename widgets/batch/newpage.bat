@@ -12,6 +12,9 @@ rem ## {C3P0D40fAe8B} ##
 
 rem set wwwPage_0=D:\techApps\Library\WEB\newpage\blank0.htm
 rem set wwwPage_1=D:\techApps\Library\WEB\newpage\blank1.htm
+set wwwPage_F=D:\websites\domains\apps.eyeformeta.com\public_html\templates\html
+rem set wwwPage_h=D:\websites\domains\apps.eyeformeta.com\public_html\templates\html\headers.htm
+set wwwPage_h=D:\websites\domains\apps.eyeformeta.com\public_html\templates\html\headers.php
 set wwwPage_01=D:\websites\domains\apps.eyeformeta.com\public_html\templates\html\0.1.htm
 set wwwPage_0=D:\websites\domains\apps.eyeformeta.com\public_html\templates\html\0.htm
 set wwwPage_1=D:\websites\domains\apps.eyeformeta.com\public_html\templates\html\1.htm
@@ -25,10 +28,29 @@ if ["%1"] == ["?"] (
         GOTO:EOF
     )
 
+rem o html0 %wwwPage_01%
+rem o html.0 %wwwPage_01%
+rem o html1 %wwwPage_1%
+rem o html.1 %wwwPage_1%
+rem o html2 %wwwPage_2%
+rem o html.2 %wwwPage_2%
+rem o html3 %wwwPage_3%
+rem o html.3 %wwwPage_3%
+rem o html4 %wwwPage_4%
+rem o html.4 %wwwPage_4%
+rem o html.js %wwwPage_js1%
 
 
 if [%1] == [] (
         set wwwPage=%wwwPage_0%
+) else if [%1] == [headers] (
+        set wwwPage=%wwwPage_h%
+) else if [%1] == [header] (
+        set wwwPage=%wwwPage_h%
+) else if [%1] == [head] (
+        set wwwPage=%wwwPage_h%
+) else if [%1] == [h] (
+        set wwwPage=%wwwPage_h%
 ) else if [%1] == [0] (
         set wwwPage=%wwwPage_01%
 ) else if [%1] == [1] (
@@ -41,6 +63,8 @@ if [%1] == [] (
         set wwwPage=%wwwPage_4%
 ) else if [%1] == [js] (
         set wwwPage=%wwwPage_js1%
+) else (
+        set wwwPage=%wwwPage_F%\%1
 )
 
 

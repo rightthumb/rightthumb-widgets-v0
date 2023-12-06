@@ -101,6 +101,7 @@ note_types=__.v.beep.note[__.v.beep.type]
 def play_note(octave, note, note_type, timeout_duration=None):
 
 	def play_note_internal(octave, note, note_type, timeout=False):
+		minLength = 500
 		if not __.v.beep.timer is None: timeout=__.v.beep.timer
 		"""Play a note at a certain octave by calculating the frequency of the sound it would represent on the motherboard's speaker."""
 		note_types=__.v.beep.note[__.v.beep.type]
@@ -118,7 +119,7 @@ def play_note(octave, note, note_type, timeout_duration=None):
 
 		# Calculate the frequency of the given note
 		frequency *= (1.059463094 ** note)
-		if note_type < 400: note_type=400
+		if note_type < minLength: note_type=minLength
 		if __.v.beep.print:
 			print('frequency:',frequency)
 			print('note_type:',note_type)

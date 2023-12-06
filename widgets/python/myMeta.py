@@ -23,10 +23,12 @@ fieldSet=_.l.vars(focus(),__name__,__file__,appDBA);_.load();_v=__.imp('_rightTh
 def sw():
 	pass
 	#b)--> examples
-	# _.switches.register( 'Input', '-i' )
+	_.switches.register( 'Read', '-r,-read' )
+	_.switches.register( 'Write', '-w,-write' )
+	_.switches.register( 'Attribute', '-a,-attr,-attribute' )
 	# _.switches.register( 'URL', '-u,-url,-urls', 'https://etc.ac/', isData='raw' )
 	#e)--> examples
-	# _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name,data,clean', description='Files', isRequired=False )
+	_.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name', description='Files', isRequired=False )
 
 _._default_settings_()
 # __.setting('require-list',['Files,Plus','File,Has']) # todo
@@ -43,12 +45,26 @@ _._default_settings_()
 _.appInfo[focus()] = {
 	# 'app': '8facG-jo0Cxk',
 	'file': 'thisApp.py',
+	'liveAppName': __.thisApp( __file__ ),
 	'description': 'Changes the world',
 		# _.ail(1,'subject')+
 		# _.aib('one')+
 	'categories': [
 						'DEFAULT',
 				],
+	'usage': [
+						# 'epy another',
+						# 'e nmap',
+						# '',
+	],
+	'relatedapps': [
+						# 'p another -file file.txt',
+						# '',
+	],
+	'prerequisite': [
+						# 'p another -file file.txt',
+						# '',
+	],
 	'examples': [
 						_.hp('p thisApp -file file.txt'),
 						_.linePrint(label='simple',p=0),
@@ -56,10 +72,27 @@ _.appInfo[focus()] = {
 	],
 	'columns': [
 					# { 'name': 'name', 'abbreviation': 'n' },
+# columns used for
+# 	- abbreviation in switches
+#		- ex: -column n s
+#			- instead of: -column name size
+#		- ex: -sort n
+#		- ex: -group n
+# 	- sort is used for things like size sort by bytes
+# 	- responsiveness to terminal width
+# 		- order is important
+# 		- most important on top
+		
+		# this is used for personal usage to programmatically generate columns
 					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
-	'aliases': [],
-	'notes': [],
+	'aliases': [
+					# 'this',
+					# 'app',
+	],
+	'notes': [
+					# {},
+	],
 }
 _.appInfo[focus()] = _.appInfoContinuity(__.thisApp( __file__ ),_.appInfo[focus()])
 _.appData[focus()] = _.appDataContinuity()
@@ -109,20 +142,79 @@ _.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw );
 ########################################################################################
 #n)--> start
 
-def action():
-	pass
-	# load(); global c3po;
 
-	#n)--> iterate
-	# for subject in _.isData(r=0): _.pr(subject)
-	# for subject in _.myData(): _.pr(subject)
-	
+# import os
+# import xattr
 
-# def load():
-# 	global c3po
-# 	c3po = _.getTable( 'table' )
-# 	#n)--> print table
-# 	_.pt(c3po)
+# def set_custom_attribute(file_path, attribute_name, attribute_value):
+#     """Sets a custom attribute at the OS level."""
+#     try:
+#         xattr.setxattr(file_path, attribute_name, attribute_value.encode())
+#         return f"Attribute '{attribute_name}' set successfully."
+#     except Exception as e:
+#         return str(e)
+
+# def get_custom_attribute(file_path, attribute_name):
+#     """Gets a custom attribute at the OS level."""
+#     try:
+#         return xattr.getxattr(file_path, attribute_name).decode()
+#     except Exception as e:
+#         return str(e)
+
+# def get_file_info(file_path):
+#     """Gets basic file information."""
+#     try:
+#         stats = os.stat(file_path)
+#         return {
+#             "Size": stats.st_size,
+#             "Last Modified": stats.st_mtime,
+#             "Last Accessed": stats.st_atime,
+#             "Creation Time": stats.st_ctime
+#         }
+#     except Exception as e:
+#         return str(e)
+
+# def action():
+# 	for path in _.myData():
+# 		if _.switches.isActive('Write'):
+# 			_.pr(set_custom_attribute(path, 'SDS'+_.switches.value('Attribute'), ' '.join(_.switches.values('Write'))))
+# 		if _.switches.isActive('Read'):
+# 			_.pr(get_custom_attribute(path, 'SDS'+_.switches.value('Attribute')))
+
+
+
+
+import os
+import win32con
+import win32api
+import win32file
+
+def set_file_attributes(file_path, attributes):
+    """ Set file attributes. """
+    try:
+        win32api.SetFileAttributes(file_path, attributes)
+        return "File attributes set successfully."
+    except Exception as e:
+        return f"Error setting file attributes: {e}"
+
+def get_file_attributes(file_path):
+    """ Get file attributes. """
+    try:
+        return win32api.GetFileAttributes(file_path)
+    except Exception as e:
+        return f"Error getting file attributes: {e}"
+
+# Example usage
+file_path = 'example.txt'
+
+# Set file as hidden and read-only
+print(set_file_attributes(file_path, win32con.FILE_ATTRIBUTE_HIDDEN | win32con.FILE_ATTRIBUTE_READONLY))
+
+# Get file attributes
+print(get_file_attributes(file_path))
+
+
+
 
 
 ##################################################

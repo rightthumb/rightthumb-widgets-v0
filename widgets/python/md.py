@@ -193,7 +193,8 @@ def get_title(data):
 class Server(BaseHTTPRequestHandler):
 	def _set_headers(self):
 		self.send_response(200)
-		self.send_header('Content-type', 'text/html')
+		# self.send_header('Content-type', 'text/html')
+		self.send_header('Content-type', 'text/html; charset=utf-8')
 		self.end_headers()
 
 	def do_GET(self):
@@ -207,7 +208,7 @@ class Server(BaseHTTPRequestHandler):
 		# if not _.switches.isActive('Clean'): _.pr(data)
 		# if not _.switches.isActive('Clean'): _.pr(type(data))
 		# if not _.switches.isActive('Clean'): _.pr(str(data[b'butt'][0]))
-		shutdown=str( data[b'shutdown'][0] ,'iso-8859-1')
+		shutdown=str( data[b'shutdown'][0] ,'utf-8')
 
 		if shutdown=='yes':
 			result='file not saved'
@@ -215,7 +216,7 @@ class Server(BaseHTTPRequestHandler):
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
+<head><meta charset="utf-8">
 	<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,600' rel='stylesheet' type='text/css'>
 	<title>saved</title>
 	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
@@ -274,7 +275,7 @@ body {
 			pass
 			sys.exit()
 			if not 'path' in data: _.e('missing: path',data)
-			# path=str( data[b'path'][0] ,'iso-8859-1')
+			# path=str( data[b'path'][0] ,'utf-8')
 			# fileBackup.switch( 'isPreOpen', delete=True )
 			# # fileBackup.switch( 'isPreOpen' )
 			# fileBackup.switch( 'Input', path )
@@ -301,15 +302,15 @@ body {
 
 
 			result='file saved'
-			file=str( data[b'file'][0] ,'iso-8859-1').replace('\r','')
-			path=str( data[b'path'][0] ,'iso-8859-1')
-			html=str( data[b'html'][0] ,'iso-8859-1')
+			file=str( data[b'file'][0] ,'utf-8').replace('\r','')
+			path=str( data[b'path'][0] ,'utf-8')
+			html=str( data[b'html'][0] ,'utf-8')
 			if len(html) > 4:
 				result='files saved'
 				HTML = '''<!DOCTYPE html>
 <html lang="en">
 
-<head>
+<head><meta charset="utf-8">
 	<title>THE_TITLE</title>
 	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 	<link href='https://eyeformeta.com/apps/showdown/style.css' rel='stylesheet' type='text/css'>
@@ -353,7 +354,7 @@ body {
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
+<head><meta charset="utf-8">
 	<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,600' rel='stylesheet' type='text/css'>
 	<title>saved</title>
 	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
@@ -413,25 +414,78 @@ body {
 
 
 	def parse_POST(self):
-		ctype, pdict = parse_header(self.headers['content-type'])
+		print()
+		print()
+		print('#-------------------------------------------------------------------')
+		print(self.headers['content-type'])
+		print('#-------------------------------------------------------------------')
+		print()
+		print()
+		print()
+		# _.e('die','kill')
+
+		# ctype, pdict = parse_header('Content-Type', 'application/x-www-form-urlencoded; charset=utf-8')
+		# # ctype, pdict = parse_header(self.headers['content-type'])
+		# if ctype == 'multipart/form-data':
+		# 	postvars = parse_multipart(self.rfile, pdict)
+		# elif ctype == 'application/x-www-form-urlencoded; charset=utf-8':
+		# # elif ctype == 'application/x-www-form-urlencoded':
+		# 	length = int(self.headers['content-length'])
+		# 	postvars = parse_qs(
+		# 			self.rfile.read(length), 
+		# 			keep_blank_values=1)
+		# else:
+		# 	postvars = {}
+		# return postvars
+
+
+		ctype, pdict = parse_header('Content-Type', 'application/x-www-form-urlencoded; charset=utf-8')
+		# ctype, pdict = parse_header(self.headers['content-type'])
+
+		postvars = {}
+
 		if ctype == 'multipart/form-data':
 			postvars = parse_multipart(self.rfile, pdict)
-		elif ctype == 'application/x-www-form-urlencoded':
+		elif ctype == 'application/x-www-form-urlencoded; charset=utf-8':
 			length = int(self.headers['content-length'])
-			postvars = parse_qs(
-					self.rfile.read(length), 
-					keep_blank_values=1)
-		else:
-			postvars = {}
-
-	
+			# Read and decode data as UTF-8
+			post_data = self.rfile.read(length).decode('utf-8')
+			postvars = parse_qs(post_data, keep_blank_values=1)
+		
 		return postvars
+	
 
 	def respond_OK(self, msg):
 		self.send_response(200)
-		self.send_header("Content-type", "text/html")
+		self.send_header('Content-type', 'text/html; charset=utf-8')
 		self.end_headers()
 		self.wfile.write(bytes(msg, "utf-8"))
+
+
+# from http.server import BaseHTTPRequestHandler, HTTPServer
+
+# class Server(BaseHTTPRequestHandler):
+#     def do_GET(self):
+#         self.send_response(200)
+#         self.send_header('Content-type', 'text/html; charset=utf-8')
+#         self.end_headers()
+#         # Write your response here, ensuring it's UTF-8 encoded
+#         self.wfile.write("Hello, world!".encode('utf-8'))
+
+# def run(server_class=HTTPServer, handler_class=Server, host='', port=8000):
+#     webServer = server_class((host, port), handler_class)
+#     print(f"Server started http://{host}:{port}")
+
+#     try:
+#         webServer.serve_forever()
+#     except KeyboardInterrupt:
+#         pass
+#     finally:
+#         webServer.server_close()
+#         print("Server stopped.")
+
+# run()
+
 
 def START_WEBSERVER():
 	webServer = HTTPServer((host, port), Server)
@@ -444,8 +498,9 @@ def START_WEBSERVER():
 
 	webServer.server_close()
 	if not _.switches.isActive('Clean'): _.pr("Server stopped.")
-
 # webserver end
+
+
 ########################################################################################  ########################################################################################
 def getFolder(folder):
 	global base

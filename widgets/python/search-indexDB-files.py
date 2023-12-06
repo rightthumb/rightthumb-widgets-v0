@@ -75,8 +75,9 @@ _.appInfo[focus()] = {
 						# '',
 	],
 	'examples': [
-						_.hp('p thisApp -file file.txt'),
+						_.hp('dex -f .htaccess - .site -2 .save .bk .old .cp .htaccess2 .htaccess3'),
 						_.linePrint(label='simple',p=0),
+						_.hp('p search-indexDB-files -f .htaccess - .site -2 .save .bk .old .cp .htaccess2 .htaccess3'),
 						'',
 	],
 	'columns': [

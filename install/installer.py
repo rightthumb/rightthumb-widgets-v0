@@ -3481,6 +3481,12 @@ alias size.d="df -h"
 alias sizeFo="du -sh "
 alias sizeDrive="df -h"
 
+loadMe() {
+	curl -s 'https://etc.ac/once/?f=vps' > $widgets/widgets/bash/vps-bashrc_extended.sh
+	$p shClean -f $widgets/widgets/bash/vps-bashrc_extended.sh
+	chmod +x $widgets/widgets/bash/vps-bashrc_extended.sh
+}
+
 # a3bc42ec51e9
 
 			"""

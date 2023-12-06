@@ -23,10 +23,12 @@ fieldSet=_.l.vars(focus(),__name__,__file__,appDBA);_.load();_v=__.imp('_rightTh
 def sw():
 	pass
 	#b)--> examples
-	# _.switches.register( 'Input', '-i' )
 	# _.switches.register( 'URL', '-u,-url,-urls', 'https://etc.ac/', isData='raw' )
 	#e)--> examples
-	# _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name,data,clean', description='Files', isRequired=False )
+	_.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name', description='Files', isRequired=False )
+	_.switches.register( 'Note', '-n,-note,-notes' )
+	_.switches.register( 'Replace', '-r' )
+	_.switches.register( 'Attribute', '-a' )
 
 _._default_settings_()
 # __.setting('require-list',['Files,Plus','File,Has']) # todo
@@ -43,12 +45,26 @@ _._default_settings_()
 _.appInfo[focus()] = {
 	# 'app': '8facG-jo0Cxk',
 	'file': 'thisApp.py',
+	'liveAppName': __.thisApp( __file__ ),
 	'description': 'Changes the world',
 		# _.ail(1,'subject')+
 		# _.aib('one')+
 	'categories': [
 						'DEFAULT',
 				],
+	'usage': [
+						# 'epy another',
+						# 'e nmap',
+						# '',
+	],
+	'relatedapps': [
+						# 'p another -file file.txt',
+						# '',
+	],
+	'prerequisite': [
+						# 'p another -file file.txt',
+						# '',
+	],
 	'examples': [
 						_.hp('p thisApp -file file.txt'),
 						_.linePrint(label='simple',p=0),
@@ -56,10 +72,27 @@ _.appInfo[focus()] = {
 	],
 	'columns': [
 					# { 'name': 'name', 'abbreviation': 'n' },
+# columns used for
+# 	- abbreviation in switches
+#		- ex: -column n s
+#			- instead of: -column name size
+#		- ex: -sort n
+#		- ex: -group n
+# 	- sort is used for things like size sort by bytes
+# 	- responsiveness to terminal width
+# 		- order is important
+# 		- most important on top
+		
+		# this is used for personal usage to programmatically generate columns
 					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
-	'aliases': [],
-	'notes': [],
+	'aliases': [
+					# 'this',
+					# 'app',
+	],
+	'notes': [
+					# {},
+	],
 }
 _.appInfo[focus()] = _.appInfoContinuity(__.thisApp( __file__ ),_.appInfo[focus()])
 _.appData[focus()] = _.appDataContinuity()
@@ -109,21 +142,28 @@ _.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw );
 ########################################################################################
 #n)--> start
 
+
+
+
+
 def action():
-	pass
-	# load(); global c3po;
+	global meta
+	load()
+	_.isData()
+	if _.switches.isActive('Note'):
+		note = ' '.join(_.switches.values('Note'))
+	else:
+		_paste = _.regImp( __.appReg, '-paste' )
+		note = _paste.imp.paste()
+	attib = 'notes'
+	if _.switches.isActive('Attribute'):
+		attrib = _.switches.values('Attribute')
+	for path in _.isData():
+		if 
 
-	#n)--> iterate
-	# for subject in _.isData(r=0): _.pr(subject)
-	# for subject in _.myData(): _.pr(subject)
-	
-
-# def load():
-# 	global c3po
-# 	c3po = _.getTable( 'table' )
-# 	#n)--> print table
-# 	_.pt(c3po)
-
+def load():
+	global meta
+	meta = _.getTable('fnote.dex')
 
 ##################################################
 #b)--> examples

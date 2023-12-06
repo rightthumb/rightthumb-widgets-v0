@@ -9,8 +9,11 @@ rem Such a place exists, it is called programming.
 rem    - Scott Taylor Reph, RightThumb.com
 rem ###########################################################################
 rem ## {C3P0D40fAe8B} ##
-
+title=Closed
+call c
+title=Closed
 CALL p unclaimed_tickets
+title=Closed
 pause
 exit
 

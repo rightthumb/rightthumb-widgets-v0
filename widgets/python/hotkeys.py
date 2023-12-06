@@ -309,6 +309,15 @@ _.postLoad( __file__ )
 ########################################################################################
 # START
 
+
+def extract_text_from_webpage(text):
+	from bs4 import BeautifulSoup
+	soup = BeautifulSoup(text, 'html.parser')
+	text = '\n'.join(soup.stripped_strings)
+	return text
+
+
+
 import _rightThumb._beep as _beeper
 __.v.beep.timer=False
 def extract_urls0(text):
@@ -1173,6 +1182,13 @@ copy(  hackTool.payload.label  )
 		keyboard.release(Key.f12)
 
 
+	def extract_text_from_html(self):
+		_copy = _.regImp( __.appReg, '-copy' )
+		_copy.imp.dirty=True
+		_paste = _.regImp( __.appReg, '-paste' )
+		_paste.imp.dirty=True
+		data  = extract_text_from_webpage(_paste.imp.paste())
+		_copy.imp.copy( data, p=0 )
 
 
 	def test_py(self):
@@ -3341,6 +3357,7 @@ def load():
 
 				'dup-spaces': { 'raw': [ 'ctrl.', 'win.', 's' ], 'do': 'Clip.dup_space()' },
 
+				'extract-text-from-html': { 'raw': [ 'alt.', 'win.', '9' ], 'do': 'Clip.extract_text_from_html()' },
 				'first-word': { 'raw': [ 'alt.', 'win.', '1' ], 'do': 'Clip.first()' },
 				'second-word': { 'raw': [ 'alt.', 'win.', '2' ], 'do': 'Clip.second()' },
 				'second-word-2': { 'raw': [ 'alt.', 'win.', '3' ], 'do': 'Clip.second2()' },

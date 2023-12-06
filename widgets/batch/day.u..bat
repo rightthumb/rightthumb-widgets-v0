@@ -1,3 +1,3 @@
 @echo off
-set uu=2023
+set uu=ddoc
 uu. %*

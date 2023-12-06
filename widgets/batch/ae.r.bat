@@ -1,2 +1,2 @@
 @echo off
-call p Aestiva-Report-HTML %*
+call p vps-ae-report %*

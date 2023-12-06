@@ -46,7 +46,7 @@ from pathlib import Path
 def appSwitches():
 	_.switches.register('Input', '-i,-f,-file','file.txt')
 	_.switches.register('Result', '-result')
-	_.switches.register('Flag', '-flag')
+	_.switches.register('Flag', '-flag', 'V')
 	_.switches.register('Silent', '-silent,--c')
 	_.switches.register('DoNotSchedule', '-noschedule')
 	_.switches.register('isRunOnce', '-1,-isrunonce,-once,-single,-runonce,-one')
@@ -799,6 +799,12 @@ def action(path=None,flag=None,o=None,pre=None):
 	global _BYTES_
 	global backupLog
 	global txtScheduler
+	if not flag is None:
+		__flag__ = flag
+	elif _.switches.isActive('Flag'):
+		__flag__ = ' '.join(_.switches.values('Flag'))
+	else:
+		__flag__=''
 	# __.fileBackup=_.dot()
 	# print('isPreOpen-o',o)
 	# print('isPreOpen',_.switches.isActive('isPreOpen'))
@@ -1393,9 +1399,9 @@ def action(path=None,flag=None,o=None,pre=None):
 			
 
 				if _.switches.isActive('isRunOnce'):
-					log = { 'id': theID, 'timestamp': modifiedRaw, 'file': os.path.abspath(path), 'backup': newname,'mime': mime, 'status': 100, 'name': name, 'log': '', 'flag':'' }
+					log = { 'id': theID, 'timestamp': modifiedRaw, 'file': os.path.abspath(path), 'backup': newname,'mime': mime, 'status': 100, 'name': name, 'log': '', 'flag':__flag__ }
 				else:
-					log = { 'id': theID, 'timestamp': modifiedRaw, 'file': os.path.abspath(path), 'backup': newname,'mime': mime, 'status': 1, 'name': name, 'log': '', 'flag':'' }
+					log = { 'id': theID, 'timestamp': modifiedRaw, 'file': os.path.abspath(path), 'backup': newname,'mime': mime, 'status': 1, 'name': name, 'log': '', 'flag':__flag__ }
 				log = log_default_fields(log)
 				if _.switches.isActive('Session'):
 					log['session'] = _.switches.value('Session')

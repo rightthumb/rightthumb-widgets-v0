@@ -26,7 +26,7 @@ def sw():
 	# _.switches.register( 'Input', '-i' )
 	# _.switches.register( 'URL', '-u,-url,-urls', 'https://etc.ac/', isData='raw' )
 	#e)--> examples
-	# _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name,data,clean', description='Files', isRequired=False )
+	_.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='data', description='Files', isRequired=False )
 
 _._default_settings_()
 # __.setting('require-list',['Files,Plus','File,Has']) # todo
@@ -43,12 +43,26 @@ _._default_settings_()
 _.appInfo[focus()] = {
 	# 'app': '8facG-jo0Cxk',
 	'file': 'thisApp.py',
+	'liveAppName': __.thisApp( __file__ ),
 	'description': 'Changes the world',
 		# _.ail(1,'subject')+
 		# _.aib('one')+
 	'categories': [
 						'DEFAULT',
 				],
+	'usage': [
+						# 'epy another',
+						# 'e nmap',
+						# '',
+	],
+	'relatedapps': [
+						# 'p another -file file.txt',
+						# '',
+	],
+	'prerequisite': [
+						# 'p another -file file.txt',
+						# '',
+	],
 	'examples': [
 						_.hp('p thisApp -file file.txt'),
 						_.linePrint(label='simple',p=0),
@@ -56,10 +70,27 @@ _.appInfo[focus()] = {
 	],
 	'columns': [
 					# { 'name': 'name', 'abbreviation': 'n' },
+# columns used for
+# 	- abbreviation in switches
+#		- ex: -column n s
+#			- instead of: -column name size
+#		- ex: -sort n
+#		- ex: -group n
+# 	- sort is used for things like size sort by bytes
+# 	- responsiveness to terminal width
+# 		- order is important
+# 		- most important on top
+		
+		# this is used for personal usage to programmatically generate columns
 					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
-	'aliases': [],
-	'notes': [],
+	'aliases': [
+					# 'this',
+					# 'app',
+	],
+	'notes': [
+					# {},
+	],
 }
 _.appInfo[focus()] = _.appInfoContinuity(__.thisApp( __file__ ),_.appInfo[focus()])
 _.appData[focus()] = _.appDataContinuity()
@@ -110,13 +141,26 @@ _.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw );
 #n)--> start
 
 def action():
-	pass
-	# load(); global c3po;
+	lines=[]
+	data=_.myData()
+	if type(data) == str:
+		data=data.split('\n')
+	last=False
+	for line in  data:
+		line=line.strip()
+		line=line.split(';')[0]
+		if line:
+			if line.startswith('['):
+				if last==False:
+					line='\n'+line
+				last=True
+			else:
+				last=False
+			if _.showLine(line):
+				_.pr(line)
 
-	#n)--> iterate
-	# for subject in _.isData(r=0): _.pr(subject)
-	# for subject in _.myData(): _.pr(subject)
-	
+
+
 
 # def load():
 # 	global c3po

@@ -199,6 +199,7 @@ GOTO:EOF
             SET exeB=%widgets%\widgets\exe
             SET data=%widgets%\widgets\data
             SET myImports=%python%\_rightThumb
+            SET filemeta=%exeB%\File_Metadata
             IF NOT EXIST %widgets% (mkdir %widgets%) 
             IF NOT EXIST %batch% (mkdir %batch%)
             IF NOT EXIST %python% (mkdir %python%) 
@@ -210,7 +211,7 @@ GOTO:EOF
             ::::::: Command Paths
             SET javabin=C:\Program Files\Java\jdk-18.0.2
 
-            SET appPaths=%batch%;%python%;%myBatch%;%myPython%;%exe_folders%;%USERPROFILE%
+            SET appPaths=%batch%;%python%;%myBatch%;%myPython%;%exe_folders%;%USERPROFILE%;%filemeta%
             IF EXIST "%pyf%\Scripts" ( SET appPaths=%appPaths%;%pyf%\Scripts )
             SET pathPython=%USERPROFILE%
             IF EXIST "%pyf2%\Lib" ( SET SET pathPython=%pyf2%;%pyf2%\Lib;%pyf2%\Lib\site-packages;%pyf2%;%pyf2%\Scripts )

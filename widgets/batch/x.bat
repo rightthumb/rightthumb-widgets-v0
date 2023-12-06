@@ -10,12 +10,14 @@ rem    - Scott Taylor Reph, RightThumb.com
 rem ###########################################################################
 rem ## {C3P0D40fAe8B} ##
 
+title=Closing
+
 %py% %widgets%\widgets\python\folder-registration.py
 
 call %userprofile%\.rt\profile\vars\config.bat
 rem call %widgets%\widgets\batch\resetVars.bat
 call %widgets%\widgets\batch\c.bat %1 
-            
+title=Closing
 echo.
 echo Reminder run   r.t   once a week.
 echo.
