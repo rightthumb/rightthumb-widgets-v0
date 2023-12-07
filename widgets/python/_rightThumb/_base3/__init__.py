@@ -14769,9 +14769,11 @@ class Tables:
 				i += 1
 
 	def print(self,name,fields,fieldLengths=False, pc=None, printColumns=True, h=None, l=None, p=None ):
+		global switches
+
+
 		if not h is None:
 			printColumns = h
-		global switches
 		if not ',' in fields:
 			pc = False
 
@@ -14791,6 +14793,10 @@ class Tables:
 				if len(self.tables[i].asset) > 0:
 					if not ',' in fields:
 						printColumns = False
+					if switches.isActive('Markdown-Table'):
+						# self.tables[i].set(asset)
+						pr(dict_to_markdown_table(self.tables[i].asset))
+						return True
 					self.tables[i].print(fields,fieldLengths,printColumns=printColumns, l=l, p=p)
 					sI = i
 				else:
@@ -20495,6 +20501,7 @@ def load():
 		switches.register('chmod', '-chmod,-777', default=True)
 		switches.register( 'Paste-isData', '--pa,--paste,-ppa,-ppaste,-ispa,-idpa' , default=True)
 		switches.register( 'Paste-isData-json', '--json,-pjson,-jsonp' , default=True)
+		switches.register( 'Markdown-Table', '--md' , default=True)
 		# switches.register('SkipColumnTriggers', '-skiptriggers', default=True)
 		defaultScriptTriggers_do()
 		
@@ -23393,6 +23400,56 @@ def lisa(has,string):
 
 def dicSort(d): return {k: v for k, v in sorted(d.items(), key=lambda item: item[1], reverse=True)}
 sortDic=dicSort
+##################################################
+def dict_to_markdown_table(dict_list):
+	# print(dict_list); sys.exit();
+	# Check if dict_list is a callable method rather than a list
+	if callable(dict_list):
+		return "Invalid input: expected a list, received a method"
+
+	# Check if the list is empty
+	if not dict_list or not isinstance(dict_list, list) or not all(isinstance(d, dict) for d in dict_list):
+		return "Invalid input: expected a list of dictionaries"
+
+	# Extract headers (keys) from the first dictionary
+	headers = dict_list[0].keys()
+	header_row = '| ' + ' | '.join(headers) + ' |'
+
+	# Create the separator row
+	separator_row = '| ' + ' | '.join(['---'] * len(headers)) + ' |'
+
+	# Create rows for each dictionary in the list
+	rows = [header_row, separator_row]
+	for d in dict_list:
+		row = '| ' + ' | '.join(str(d.get(h, '')) for h in headers) + ' |'
+		rows.append(row)
+
+	# Join all rows into a single string
+	results = '\n'.join(rows)
+	results=results.replace('| --','|---')
+	results=results.replace('-- |','---|')
+	return results
+
+# def dict_to_markdown_table(dict_list):
+# 	if not dict_list:
+# 		return "No data available"
+
+# 	# Extract headers (keys) from the first dictionary
+# 	headers = dict_list[0].keys()
+# 	header_row = '| ' + ' | '.join(headers) + ' |'
+
+# 	# Create the separator row
+# 	separator_row = '| ' + ' | '.join(['---'] * len(headers)) + ' |'
+
+# 	# Create rows for each dictionary in the list
+# 	rows = [header_row, separator_row]
+# 	for d in dict_list:
+# 		row = '| ' + ' | '.join(str(d[h]) for h in headers) + ' |'
+# 		rows.append(row)
+
+# 	# Join all rows into a single string
+# 	return '\n'.join(rows)
+
 ##################################################
 ## micro helpers
 def _default_triggers_():

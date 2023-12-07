@@ -22,7 +22,7 @@ set wwwPage_2=D:\techApps\Library\WEB\newpage\blank2.htm
 set wwwPage_3=D:\techApps\Library\WEB\newpage\blank3.htm
 set wwwPage_4=D:\techApps\Library\WEB\newpage\blank4.htm
 set wwwPage_js1=D:\websites\domains\apps.eyeformeta.com\public_html\templates\html\js.js
-
+set "newpage="
 if ["%1"] == ["?"] (
         call :HELP
         GOTO:EOF
@@ -67,7 +67,7 @@ if [%1] == [] (
         set wwwPage=%wwwPage_F%\%1
 )
 
-
+set "newpage=%wwwPage%"
 
 if not [%2] == [] (
         echo %wwwPage%
