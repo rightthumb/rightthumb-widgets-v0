@@ -46,6 +46,7 @@ def appSwitches():
 	_.switches.register('Dic', '-dic')
 	_.switches.register('Asc', '-asc')
 	_.switches.register('Desc', '-desc')
+	_.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='data', description='Files', isRequired=False )
 	
 
 _.autoBackupData = False
@@ -161,7 +162,7 @@ def action():
 		# _.pr( 'HERE' )
 	newPipe = []
 	dic = []
-	for i,row in enumerate( _.appData[__.appReg]['pipe'] ):
+	for i,row in enumerate( _.myData() ):
 		# _.pr(row)
 		row = row.replace( '\n', '' )
 		row = row.replace( '\r', '' )
