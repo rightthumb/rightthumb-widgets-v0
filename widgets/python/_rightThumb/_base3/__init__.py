@@ -13984,7 +13984,10 @@ class Table:
 					if record[k] is None:
 						self.asset[i][k] = ''
 
-
+		if switches.isActive('Markdown-Table'):
+			pr(dict_to_markdown_table(self.asset))
+			sys.exit()
+			return self.asset
 
 		if self.webtable and switches.isActive('WebTable') and len(switches.value('WebTable')):
 			asset = []
@@ -14793,10 +14796,9 @@ class Tables:
 				if len(self.tables[i].asset) > 0:
 					if not ',' in fields:
 						printColumns = False
-					if switches.isActive('Markdown-Table'):
+					# if switches.isActive('Markdown-Table'):
 						# self.tables[i].set(asset)
-						pr(dict_to_markdown_table(self.tables[i].asset))
-						return True
+						# pr(dict_to_markdown_table(self.tables[i].asset)); return True;
 					self.tables[i].print(fields,fieldLengths,printColumns=printColumns, l=l, p=p)
 					sI = i
 				else:
@@ -23527,6 +23529,7 @@ def appDataContinuity(info={}):
 # __.switch_skimmer.active
 # 11780
 # if switches.isActive('Plus-single'): break
+# dict_to_markdown_table
 # sys.stdin.readlines()
 ########################################################################################
 # EOF

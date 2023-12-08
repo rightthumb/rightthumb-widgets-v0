@@ -9,12 +9,15 @@ rem Such a place exists, it is called programming.
 rem    - Scott Taylor Reph, RightThumb.com
 rem ###########################################################################
 rem ## {C3P0D40fAe8B} ##
-title=Closing
-call c
-title=Closing
-CALL p unclaimed_tickets
-title=Closed
-pause
-exit
+
+rem tasklist | f %1
+
+if [%1] == [-report] (
+	tasklist | p cmd2table -print | p printTable -int mem_usage -s image_name d.mem_usage -g image_name -gt mem_usage --md | tf
+) else (
+	tasklist | p cmd2table -print | p printTable -sort image_name - svchost -s image_name + .exe %*  -aggregate " eot?mem-total=add( int(MEM_USAGE) )); format(eot?mem-total,?size,??kb);" --md | tf
+)
+
+call tf.
 
  
