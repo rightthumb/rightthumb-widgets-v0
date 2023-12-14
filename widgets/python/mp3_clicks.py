@@ -154,8 +154,7 @@ def action():
 	for path in _.myData():
 	    main(path)
 
-
-# https://chat.openai.com/c/64dda8e5-af74-4eb7-ad27-4be38d43d81a
+# https://eyeformeta.com/apps/Scrolls/?view=1&f=TECH/ai/prompts/MP3_clicker.md
 
 
 ##################################################
