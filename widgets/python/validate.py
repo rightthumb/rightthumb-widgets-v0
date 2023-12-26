@@ -311,7 +311,7 @@ _code = _.regImp( __.appReg, '_rightThumb._auditCodeBase' )
 
 ########################################################################################
 if __name__ == '__main__':
-	banner.pr()
+	# banner.pr()
 	# banner.gossip()
 	action()
 

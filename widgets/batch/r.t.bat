@@ -9,6 +9,12 @@ rem Such a place exists, it is called programming.
 rem    - Scott Taylor Reph, RightThumb.com
 rem ###########################################################################
 rem ## {C3P0D40fAe8B} ##
+
+
+title=Closing Queue
+call p lock-wait -wait x -for 10
+
+
 title=Closing
 call c
 title=Closing

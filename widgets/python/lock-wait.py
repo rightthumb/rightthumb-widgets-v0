@@ -23,10 +23,13 @@ fieldSet=_.l.vars(focus(),__name__,__file__,appDBA);_.load();_v=__.imp('_rightTh
 def sw():
 	pass
 	#b)--> examples
-	# _.switches.register( 'Input', '-i' )
+	_.switches.register( 'Lock', '-lock', 'x' )
+	_.switches.register( 'Unlock', '-unlock', 'x' )
+	_.switches.register( 'Wait', '-wait', 'x' )
+	_.switches.register( 'For', '-for', '10' )
 	# _.switches.register( 'URL', '-u,-url,-urls', 'https://etc.ac/', isData='raw' )
 	#e)--> examples
-	_.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name', description='Files', isRequired=False )
+	# _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name,data,clean', description='Files', isRequired=False )
 
 _._default_settings_()
 # __.setting('require-list',['Files,Plus','File,Has']) # todo
@@ -50,7 +53,8 @@ _.appInfo[focus()] = {
 						'DEFAULT',
 				],
 	'examples': [
-						_.hp('p thisApp -file file.txt'),
+						_.hp('p lock-wait -lock x'),
+						_.hp('p lock-wait -wait x'),
 						_.linePrint(label='simple',p=0),
 						'',
 	],
@@ -108,55 +112,39 @@ _.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw );
 #e)--> examples
 ########################################################################################
 #n)--> start
-
-from pydub import AudioSegment
-
-# Configuration Variables
-open_close = 2
-important = 1
-cancel = 3
-
-def load_mp3(filename):
-	return AudioSegment.from_mp3(filename)
-
-def detect_clicks(audio_segment):
-	# Placeholder function: Implement click detection logic
-	# Should return a list of tuples (timestamp in seconds, click_type)
-	return []
-
-def process_clicks(clicks):
-	timestamps = {'open_close': [], 'important': []}
-	open_click = None
-
-	for timestamp, click_type in clicks:
-		if click_type == important:
-			timestamps['important'].append(timestamp)  # timestamp is in seconds
-		elif click_type == open_close:
-			if open_click is None:
-				open_click = timestamp  # open timestamp in seconds
-			else:
-				# Append a tuple with open and close timestamps in seconds
-				timestamps['open_close'].append((open_click, timestamp))
-				open_click = None
-		elif click_type == cancel:
-			open_click = None
-
-	return timestamps
-
-def main(audio_file):
-	audio = load_mp3(audio_file)
-	clicks = detect_clicks(audio)  # Ensure this returns timestamps in seconds
-	timestamps = process_clicks(clicks)
-
-	print("Open-Close Timestamps in seconds:", timestamps['open_close'])
-	print("Important Timestamps in seconds:", timestamps['important'])
+os=__.imp('os.unlink')
+time=__.imp('time.sleep')
 
 def action():
-	for path in _.myData():  # Assuming _.myData() returns a list of file paths
-		main(path)
+	path = _v.myTemp + os.sep + 'lock-wait__'
+	if _.switches.isActive('Unlock'): path+=_.switches.value('Unlock')
+	elif _.switches.isActive('Lock'): path+=_.switches.value('Lock')
+	elif _.switches.isActive('Wait'): path+=_.switches.value('Wait')
+	else: _.e('Missing Switch','-lock x')
+	# print(path)
+
+	if _.switches.isActive('Lock'): _.saveText('lock',path)
+	elif _.switches.isActive('Unlock'):
+		if os.path.isfile(path):
+			# print('exist')
+			os.unlink(path)
+	elif _.switches.isActive('Wait'):
+		waiting = generate_random_integer()
+		if _.switches.isActive('For'):
+			waiting = int(_.switches.value('For'))
+		while os.path.isfile(path):
+			time.sleep(waiting)
 
 
-# https://eyeformeta.com/apps/Scrolls/?view=1&f=TECH/ai/prompts/MP3_clicker.md
+
+def generate_random_numberFloat(start=0.1, end=0.8):
+    import random
+    return random.uniform(start, end)
+		
+
+def generate_random_integer(start=1, end=8):
+    import random
+    return random.randint(start, end)
 
 
 ##################################################

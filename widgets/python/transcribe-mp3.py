@@ -23,9 +23,9 @@ fieldSet=_.l.vars(focus(),__name__,__file__,appDBA);_.load();_v=__.imp('_rightTh
 def sw():
 	pass
 	#b)--> examples
-	# _.switches.register( 'Input', '-i' )
 	# _.switches.register( 'URL', '-u,-url,-urls', 'https://etc.ac/', isData='raw' )
 	#e)--> examples
+	_.switches.register( 'Segments', '-seg,-clips,-cl,-clip', '120 250 300 400', isRequired=False )
 	_.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name', description='Files', isRequired=False )
 
 _._default_settings_()
@@ -109,54 +109,120 @@ _.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw );
 ########################################################################################
 #n)--> start
 
+
+# import os
+# from pydub import AudioSegment
+# from pocketsphinx import AudioFile, Pocketsphinx
+# import subprocess
+# def mp3_to_wav_ffmpeg(mp3_file_path):
+#     wav_file_path = mp3_file_path.replace('.mp3', '.wav')
+#     # Use ffmpeg to convert the file
+#     command = f"ffmpeg -i \"{mp3_file_path}\" -ac 1 -ar 16000 \"{wav_file_path}\""
+#     subprocess.call(command, shell=True)
+#     return wav_file_path
+
+# def mp3_to_wav(mp3_file_path):
+# 	audio = AudioSegment.from_mp3(mp3_file_path)
+# 	wav_file_path = mp3_file_path.replace('.mp3', '.wav')
+# 	audio.export(wav_file_path, format="wav")
+# 	return wav_file_path
+
+# def transcribe_segment(wav_file_path, start_time=None, end_time=None):
+# 	audio = AudioSegment.from_wav(wav_file_path)
+	
+# 	# If start_time and end_time are None, transcribe the whole file
+# 	if start_time is None or end_time is None:
+# 		segment = audio
+# 		segment_file_path = wav_file_path
+# 	else:
+# 		segment = audio[start_time * 1000:end_time * 1000]  # pydub works in milliseconds
+# 		segment_file_path = wav_file_path.replace('.wav', f'_segment_{start_time}_{end_time}.wav')
+# 		segment.export(segment_file_path, format='wav')
+
+# 	config = {
+# 		'verbose': False,
+# 		'audio_file': segment_file_path,
+# 	}
+# 	audio_file = AudioFile(**config)
+# 	for phrase in audio_file:
+# 		print(phrase.segments(detailed=True))  # You can also use phrase.hypothesis() for simple output
+
+# def parse_timestamps(text):
+# 	numbers = [int(num) for num in text.split()]
+# 	return [(numbers[i], numbers[i+1]) for i in range(0, len(numbers) - 1, 2)]
+
+# def action():
+# 	if _.switches.isActive('Segments'):
+# 		segments = parse_timestamps(_.switches.value('Segments'))
+# 	else:
+# 		segments = [None]  # Use a list with a single None element
+
+# 	for path in _.myData():
+# 		wav_file_path = mp3_to_wav_ffmpeg(path)
+
+# 		for segment in segments:
+# 			if segment is None:
+# 				print(f"Transcribing the entire audio file {path}...")
+# 				transcribe_segment(wav_file_path)
+# 			else:
+# 				start_time, end_time = segment
+# 				print(f"Transcribing audio from {start_time} to {end_time} seconds...")
+# 				transcribe_segment(wav_file_path, start_time, end_time)
+
+
+
+
+import os
+import subprocess
 from pydub import AudioSegment
+from pocketsphinx import AudioFile, Pocketsphinx
 
-# Configuration Variables
-open_close = 2
-important = 1
-cancel = 3
+def mp3_to_wav_ffmpeg(mp3_file_path):
+    wav_file_path = mp3_file_path.replace('.mp3', '.wav')
+    # Use ffmpeg to convert the file, suppressing output
+    command = f"ffmpeg -i \"{mp3_file_path}\" -ac 1 -ar 16000 \"{wav_file_path}\""
+    subprocess.call(command, shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    return wav_file_path
 
-def load_mp3(filename):
-	return AudioSegment.from_mp3(filename)
+def transcribe_segment(wav_file_path, start_time=None, end_time=None):
+	audio = AudioSegment.from_wav(wav_file_path)
+	
+	# If start_time and end_time are None, transcribe the whole file
+	if start_time is None or end_time is None:
+		segment = audio
+		segment_file_path = wav_file_path
+	else:
+		segment = audio[start_time * 1000:end_time * 1000]  # pydub works in milliseconds
+		segment_file_path = wav_file_path.replace('.wav', f'_segment_{start_time}_{end_time}.wav')
+		segment.export(segment_file_path, format='wav')
 
-def detect_clicks(audio_segment):
-	# Placeholder function: Implement click detection logic
-	# Should return a list of tuples (timestamp in seconds, click_type)
-	return []
+	config = {
+		'verbose': False,
+		'audio_file': segment_file_path,
+	}
+	audio_file = AudioFile(**config)
+	for phrase in audio_file:
+		print(phrase.hypothesis())  # Output only the transcribed text
 
-def process_clicks(clicks):
-	timestamps = {'open_close': [], 'important': []}
-	open_click = None
-
-	for timestamp, click_type in clicks:
-		if click_type == important:
-			timestamps['important'].append(timestamp)  # timestamp is in seconds
-		elif click_type == open_close:
-			if open_click is None:
-				open_click = timestamp  # open timestamp in seconds
-			else:
-				# Append a tuple with open and close timestamps in seconds
-				timestamps['open_close'].append((open_click, timestamp))
-				open_click = None
-		elif click_type == cancel:
-			open_click = None
-
-	return timestamps
-
-def main(audio_file):
-	audio = load_mp3(audio_file)
-	clicks = detect_clicks(audio)  # Ensure this returns timestamps in seconds
-	timestamps = process_clicks(clicks)
-
-	print("Open-Close Timestamps in seconds:", timestamps['open_close'])
-	print("Important Timestamps in seconds:", timestamps['important'])
+def parse_timestamps(text):
+	numbers = [int(num) for num in text.split()]
+	return [(numbers[i], numbers[i+1]) for i in range(0, len(numbers) - 1, 2)]
 
 def action():
-	for path in _.myData():  # Assuming _.myData() returns a list of file paths
-		main(path)
+	if _.switches.isActive('Segments'):
+		segments = parse_timestamps(_.switches.value('Segments'))
+	else:
+		segments = [None]  # Use a list with a single None element
+
+	for path in _.myData():
+		wav_file_path = mp3_to_wav_ffmpeg(path)
+
+		for segment in segments:
+			transcribe_segment(wav_file_path, *segment if segment else (None, None))
 
 
-# https://eyeformeta.com/apps/Scrolls/?view=1&f=TECH/ai/prompts/MP3_clicker.md
+
+
 
 
 ##################################################

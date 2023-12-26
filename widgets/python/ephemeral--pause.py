@@ -32,7 +32,7 @@ _str = __.imp('_rightThumb._string')
 def sw():
 	pass
 	#b)--> examples
-	# _.switches.register( 'Input', '-i' )
+	_.switches.register( 'Duration', '-d' )
 	# _.switches.register( 'URL', '-u,-url,-urls', 'https://etc.ac/', isData='raw' )
 	#e)--> examples
 	# _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name,data,clean', description='Files', isRequired=False )
@@ -150,7 +150,10 @@ _.l.sw.register( triggers, sw )
 #n)--> start
 
 def action():
-	time.sleep(30)
+	duration = 30
+	if _.switches.isActive('Duration'):
+		duration = int(_.switches.value('Duration'))
+	time.sleep(duration)
 
 ##################################################
 #b)--> examples

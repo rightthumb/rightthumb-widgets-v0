@@ -1,5 +1,7 @@
 @echo off
-
+title=Closing Queue
+call p lock-wait -wait x
+call p lock-wait -lock x
 rem ## {R2D2919B742E} ##
 rem ###########################################################################
 rem What if magic existed?
@@ -221,6 +223,8 @@ rem )
 
 call lab-timer
 call p ticketTimeline
+title=Closed
+call p lock-wait -unlock x
 exit
 :RunOnceBackupAsk
 if [%skip_backup%] == [YES] (

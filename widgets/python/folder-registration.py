@@ -261,9 +261,9 @@ def load():
 	if _.switches.isActive('WSL'):
 		tt='/mnt/c/Users/Scott/.rt/profile/tables'
 	else:
-		tt=_v.tt
+		tt=_v.myLogs
 
-	xFo=tt+os.sep+'fo'+os.sep
+	xFo=tt+os.sep+'folders'+os.sep
 	day = xFo+'daily'+os.sep+_.day(epoch)
 	_v.mkdir(day)
 	_v.mkdir(xFo+'resolve')
