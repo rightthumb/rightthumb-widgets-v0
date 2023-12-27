@@ -10,6 +10,13 @@ rem    - Scott Taylor Reph, RightThumb.com
 rem ###########################################################################
 rem ## {C3P0D40fAe8B} ##
 
+if [%1] == [] (
+    call p newpage
+) else (
+    call p newpage %*
+)
+goto:eof
+
 rem set wwwPage_0=D:\techApps\Library\WEB\newpage\blank0.htm
 rem set wwwPage_1=D:\techApps\Library\WEB\newpage\blank1.htm
 set wwwPage_F=D:\websites\domains\apps.eyeformeta.com\public_html\templates\html
