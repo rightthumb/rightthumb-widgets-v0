@@ -21019,6 +21019,15 @@ def err( msg='STOP' , e=None, note=None, kill=True):
 			add+='- '
 			for x in e:
 				cp( [add,x], 'cyan' )
+	# if not note is None and type(note) == str:
+
+	if not note is None and type(note) == list:
+		for n in note:
+			cp( ['  \t\t   -',n], 'cyan' )
+
+	elif not note is None and type(note) == str:
+		cp( ['  \t\t   -',note], 'cyan' )
+	
 	# if not note is None:
 		# cp( ['  \t\t\t',note], 'cyan' )
 		

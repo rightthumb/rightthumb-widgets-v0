@@ -22,6 +22,7 @@ set wwwPage_2=D:\techApps\Library\WEB\newpage\blank2.htm
 set wwwPage_3=D:\techApps\Library\WEB\newpage\blank3.htm
 set wwwPage_4=D:\techApps\Library\WEB\newpage\blank4.htm
 set wwwPage_js1=D:\websites\domains\apps.eyeformeta.com\public_html\templates\html\js.js
+set wwwPage_template=D:\websites\domains\apps.eyeformeta.com\public_html\templates\html\template.htm
 set "newpage="
 if ["%1"] == ["?"] (
         call :HELP
@@ -43,6 +44,8 @@ rem o html.js %wwwPage_js1%
 
 if [%1] == [] (
         set wwwPage=%wwwPage_0%
+) else if [%1] == [t] (
+        set wwwPage=%wwwPage_template%
 ) else if [%1] == [headers] (
         set wwwPage=%wwwPage_h%
 ) else if [%1] == [header] (

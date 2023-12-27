@@ -3478,11 +3478,11 @@ _listen = _.regImp( __.appReg, 'listen' )
 _listen.switch('Print')
 
 def _listener_():
-	schedulerRun()
-	# global threads
-	# t = threading.Thread(target=_listen.action)
-	# threads.append(t)
-	# t.start()
+	# schedulerRun()
+	global threads
+	t = threading.Thread(target=_listen.action)
+	threads.append(t)
+	t.start()
 
 ########################################################################################
 

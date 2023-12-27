@@ -260,6 +260,22 @@ def action():
 # sys.exit()
 # import hotkeys as hk
 
+def execute():
+	_copy = _.regImp( __.appReg, '-copy' )
+	_paste = _.regImp( __.appReg, '-paste' )
+	paste = _paste.imp.paste()
+	bm = _v.bookmarkFormat.replace('ALIASHERE','exec.l')
+	fo = _v.resolveFolderIDs(_.getText2(bm,'text').strip())
+	os.chdir(fo)
+	from contextlib import redirect_stdout
+	from io import StringIO
+	output_buffer = StringIO()
+	with redirect_stdout(output_buffer):
+		exec(paste)
+	captured_output = output_buffer.getvalue()
+	_copy.imp.copy( captured_output )
+
+
 
 def ai():
 
@@ -780,6 +796,9 @@ def randomize_text():
 
 ##################################################
 _.v.local=[
+				'x',
+				'exec',
+				'execute',
 				'variable',
 				'sally',
 				'auto scrape',
@@ -790,6 +809,9 @@ _.v.local=[
 		]
 
 dic = {
+			'x': 'execute()',
+			'exec': 'execute()',
+			'execute': 'execute()',
 			'variable': 'variable()',
 			'sally': 'ai()',
 			'auto scrape': 'auto_scrape()',
