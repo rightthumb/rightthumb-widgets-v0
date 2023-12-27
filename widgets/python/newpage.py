@@ -22,6 +22,7 @@ fieldSet=_.l.vars(focus(),__name__,__file__,appDBA);_.load();_v=__.imp('_rightTh
 
 def sw():
 	_.switches.register( 'Template', '-t' )
+	_.switches.register( 'Remove-Comments', '-cl,-nc,-no,-comment,-nocomment', 'js htm html' )
 	pass
 	#b)--> examples
 	# _.switches.register( 'URL', '-u,-url,-urls', 'https://etc.ac/', isData='raw' )
@@ -109,6 +110,59 @@ _.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw );
 ########################################################################################
 #n)--> start
 
+
+def remove_html_comments(input_text):
+	import re
+	comment_pattern = r'<!--.*?-->'
+	cleaned_text = re.sub(comment_pattern, '', input_text, flags=re.DOTALL)
+	lines=[]
+	for line in cleaned_text.split('\n'):
+		if line.strip():
+			lines.append(line)
+	return '\n'.join(lines)
+
+def remove_js_comments(input_text):
+	lines=[]
+	for line in input_text.split('\n'):
+		if line.strip():
+			if '//' in line and not '://' in line and not '"//' in line and not '-//' in line:
+				line=line.split('//')[0]
+			if line.strip():
+				lines.append(line)
+	return '\n'.join(lines)
+
+def expand_spaces(input_string):
+	expanded_lines = []
+	for line in input_string.split('\n'):
+		# Count leading spaces
+		leading_spaces = len(line) - len(line.lstrip(' '))
+		# Replace each space with four spaces
+		new_line = ' ' * 4 * leading_spaces + line.lstrip(' ')
+		expanded_lines.append(new_line)
+	return '\n'.join(expanded_lines)
+
+def expand_spaces2(input_string):
+	expanded_lines = []
+	for line in input_string.split('\n'):
+		# Count leading spaces
+		leading_spaces = len(line) - len(line.lstrip(' '))
+		# Replace each space with four spaces
+		new_line = ' ' * 2 * leading_spaces + line.lstrip(' ')
+		expanded_lines.append(new_line)
+	return '\n'.join(expanded_lines)
+
+def expand_spaces_to_tabs(input_string):
+	expanded_lines = []
+	for line in input_string.split('\n'):
+		# Count leading spaces
+		leading_spaces = len(line) - len(line.strip(' '))
+		# Replace each space with a tab
+		new_line = '\t' * leading_spaces + line.strip(' ')
+		expanded_lines.append(new_line)
+	return '\n'.join(expanded_lines)
+
+
+
 def action():
 	url = 'https://apps.eyeformeta.com/templates/html/'
 	if not _.switches.isActive('Template'):
@@ -124,6 +178,19 @@ def action():
 	elif _.switches.value('Template') == '4': url+='blank4.htm'
 	elif _.switches.value('Template') == 'js': url+='js.js'
 	else: url+=_.switches.value('Template')
+	page = requests.get(url).content.decode('utf-8')
+	if _.switches.isActive('Remove-Comments'):
+		rc=_.switches.value('Remove-Comments').strip()
+		if rc:
+			if 'js' in rc:
+				page = remove_js_comments(page)
+			if 'ht' in rc:
+				page = remove_html_comments(page)
+		else:
+			page = remove_html_comments(page)
+	_.pr(page)
+
+import requests
 
 ##################################################
 #b)--> examples

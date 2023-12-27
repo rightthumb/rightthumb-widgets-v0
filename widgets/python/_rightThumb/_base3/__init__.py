@@ -308,6 +308,7 @@ def random_color():
 
 print_ed_group={}
 def print_(*args,p=None,c=None,pad=3,g=None,end=None,pvs=None,pv=None,json=None, dic=None, line=None, rstrip=True, lineMinus=0, lineLen=None, r=None):
+	# if type(args[0]) == str: args[0] = args[0].decode('utf-8')
 	if not r is None: end=r
 	args=list(args)
 	if c == 'r' or c == 'random': c=random_color()
