@@ -13929,7 +13929,7 @@ class Table:
 			self.tab['table'] = p
 
 		if not type(self.asset) == list or len(self.asset) == 0:
-			print_('Null Set')
+			# print_('Null Set')
 			sys.exit()
 
 
@@ -14021,7 +14021,7 @@ class Table:
 		# print_(self.assets)
 		# rows = self.asset
 		if not type(self.asset) == list or len(self.asset) == 0:
-			print_('Null Set')
+			# print_('Null Set')
 			sys.exit()
 		global errors
 		global switchDefault
@@ -14803,7 +14803,8 @@ class Tables:
 					self.tables[i].print(fields,fieldLengths,printColumns=printColumns, l=l, p=p)
 					sI = i
 				else:
-					print_('Null Set')
+					# print_('Null Set')
+					pass
 			i += 1
 		if switches.isActive('FieldTotal'):
 			fieldTotals = {}

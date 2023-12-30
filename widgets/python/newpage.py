@@ -3,7 +3,7 @@ def focus(parentApp='', childApp='', reg=True): global appDBA; f = __.appName(ap
 fieldSet=_.l.vars(focus(),__name__,__file__,appDBA);_.load();_v=__.imp('_rightThumb._vars');
 
 def sw():
-	_.switches.register( 'Template', '-t', '"" js s t -h h 0 1 2 3 4' )
+	_.switches.register( 'Template', '-t', '"" js ns th s t -h h 0 1 2 3 4' )
 	_.switches.register( 'Remove-Comments', '-cl,-nc,-no,-comment,-nocomment', 'js htm html' )
 	pass
 _._default_settings_()
@@ -89,8 +89,18 @@ def expand_spaces_to_tabs(input_string):
 
 def action():
 	url = 'https://apps.eyeformeta.com/templates/html/'
+	win = 'D:\\websites\\domains\\apps.eyeformeta.com\\public_html\\templates\\html\\'
+	wsl = '/mnt/d/websites/domains/apps.eyeformeta.com/public_html/templates/html/'
+	isLocal = False
+	if os.path.isdir(win):
+		isLocal = True
+		url=win
+	elif os.path.isdir(win):
+		isLocal = True
+		url=wsl
 	if not _.switches.isActive('Template'):
 		url+='0.htm'
+	elif _.switches.value('Template') == 'th': url+='theme-manager.md'
 	elif _.switches.value('Template') == 's': url+='template.htm'
 	elif _.switches.value('Template') == 't': url+='template.htm'
 	elif _.switches.value('Template') == '-h': url+='headers.htm'
@@ -103,8 +113,12 @@ def action():
 	elif _.switches.value('Template') == '3': url+='blank3.htm'
 	elif _.switches.value('Template') == '4': url+='blank4.htm'
 	elif _.switches.value('Template') == 'js': url+='js.js'
+	elif _.switches.value('Template') == 'ns': url+='ns.js'
 	else: url+=_.switches.value('Template')
-	page = requests.get(url).content.decode('utf-8')
+	if isLocal:
+		page = _.getText2(url,'text')
+	else:
+		page = requests.get(url).content.decode('utf-8')
 	if _.switches.isActive('Remove-Comments'):
 		rc=_.switches.value('Remove-Comments').strip()
 		if _.switches.isActive('Template') and _.switches.value('Template') == 'js':
@@ -119,6 +133,7 @@ def action():
 				page = remove_html_comments(page)
 	_.pr(page)
 import requests
+import os
 
 if __name__ == '__main__':
 	action(); _.isExit(__file__);

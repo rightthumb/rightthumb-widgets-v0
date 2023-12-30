@@ -5,7 +5,7 @@ def focus(parentApp='', childApp='', reg=True): global appDBA; f = __.appName(ap
 fieldSet=_.l.vars(focus(),__name__,__file__,appDBA);_.load();_v=__.imp('_rightThumb._vars');
 
 def sw():
-	_.switches.register( 'Snippet', '-snip', '@ email strip-an' )
+	_.switches.register( 'Snippet', '-snip', '@ email strip-an prompt' )
 	_.switches.register( 'Bookmark', '-bm', 'exec.l' )
 	_.switches.register( 'Clean', '--c' )
 _._default_settings_()
@@ -42,6 +42,10 @@ def myData():
 	return text
 
 dic = {}
+dic['prompt'] = '''
+Assume the role of a programming specialist and ensure that all code with tabs or spaces is indented consistently using four spaces.
+Be diligent in thoroughly reviewing and understanding all instructions, reading them a minimum of three times.
+'''
 dic['email'] = '''
 text = myData()
 import re

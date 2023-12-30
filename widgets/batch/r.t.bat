@@ -20,7 +20,7 @@ call c
 title=Closing
 CALL p unclaimed_tickets
 title=Closed
-pause
+timeout /t 10 /nobreak
 exit
 
  

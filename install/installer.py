@@ -2780,16 +2780,16 @@ unset color_prompt force_color_prompt
 export START_TIME=$(date +%s.%N)
 
 get_time_difference2() {
-    local end_time=$(date +%s.%N)
-    local elapsed_time=$(awk -v start=$START_TIME -v end=$end_time 'BEGIN { printf "%.9f", end - start }')
-    echo "Time elapsed: $elapsed_time seconds"
+	local end_time=$(date +%s.%N)
+	local elapsed_time=$(awk -v start=$START_TIME -v end=$end_time 'BEGIN { printf "%.9f", end - start }')
+	echo "Time elapsed: $elapsed_time seconds"
 }
 
 get_time_difference() {
-    local current_time=$(date +%s.%N)
-    local elapsed_time=$(awk -v start=$START_TIME -v end=$current_time 'BEGIN { printf "%.9f", end - start }')
-    echo "Time elapsed since last run: $elapsed_time seconds"
-    START_TIME=$current_time # Update START_TIME for the next run
+	local current_time=$(date +%s.%N)
+	local elapsed_time=$(awk -v start=$START_TIME -v end=$current_time 'BEGIN { printf "%.9f", end - start }')
+	echo "Time elapsed since last run: $elapsed_time seconds"
+	START_TIME=$current_time # Update START_TIME for the next run
 }
 
 
@@ -3062,6 +3062,18 @@ loadMe() {
 	$p shClean -f $widgets/widgets/bash/vps-bashrc_extended.sh
 	chmod +x $widgets/widgets/bash/vps-bashrc_extended.sh
 }
+
+alias size.fi="du -h  "
+alias size.f="du -sh "
+alias size.d="df -h"
+alias sizeFo="du -sh "
+alias sizeDrive="df -h"
+alias s.fi="du -h "
+alias s.f="du -sh "
+alias s.fo="du -sh "
+alias s.d="df -h"
+alias s.fo="du -sh "
+
 # get_time_difference
 # a3bc42ec51e9
 

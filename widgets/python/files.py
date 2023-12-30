@@ -68,6 +68,7 @@ def appSwitches():
 
 	_.switches.register('Search-For-Text-Include', '-has,-search')
 	_.switches.register('Search-For-Text-Exclude', '-not')
+	_.switches.register('Search-For-Text-Dump', '--dump')
 	_.switches.register('Search-For-Text-TOP_Of_File', '-top','10')
 	_.switches.register('Not-In-Comments', '-nocomment','html py php js')
 
@@ -964,8 +965,14 @@ elif _.switches.value('Search-For-Text-TOP_Of_File'):
 else:
 	some=10
 inc=_.switches.values('Search-For-Text-Include')
+for i,x in enumerate(inc): inc[i] = _.ci(inc[i])
 # the_file=_.getText(path,raw=True)
 ex=_.switches.values('Search-For-Text-Exclude')
+for i,x in enumerate(ex): ex[i] = _.ci(ex[i])
+if _.switches.isActive('Search-For-Text-Dump'):
+	_.pr('-has',inc)
+	_.pr('-not',ex)
+	sys.exit()
 for i,x in enumerate(inc):
 	inc[i]=_.ci(x)
 	if not i and _.switches.isActive('Plus-single'):
