@@ -3073,6 +3073,7 @@ alias s.f="du -sh "
 alias s.fo="du -sh "
 alias s.d="df -h"
 alias s.fo="du -sh "
+alias s.fl="du -shL "
 
 # get_time_difference
 # a3bc42ec51e9

@@ -11794,7 +11794,24 @@ class Switches:
 					result = True
 		return result
 	def help(self):
-		if self.value('Help') == 'x' or self.value('Help') == 'cls' or self.value('Help') == 'clear':
+		if self.value('Help') == 'x' or self.value('Help') == 'cls' or self.value('Help') == 'clear' or self.value('Help') == 'info':
+
+
+			if self.value('Help') == 'info':
+				info = self.values('Help')
+				info.pop(0)
+				if info[0] == 'help' or info[0] == 'h':
+					pr('Usage:',c='yellow')
+					for li in ['']: pr('\t- '+li,c='cyan')
+					sys.exit()
+					
+
+				import inspect
+
+
+				sys.exit()
+
+
 			if __.isWin:
 				os.system('cls')
 			else:
