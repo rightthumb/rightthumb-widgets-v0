@@ -229,6 +229,15 @@ def load():
 			# print(fo+'notes.md')
 			# print(fo+'notes.md')
 			if not os.path.isfile(fo+'notes.md'):
+				path=fo+'notes.md'
+				faliases=_.getTable('file-open-aliases.hash')
+				if not faliases: faliases={ 'aliases':{}, 'files':{} }
+				faliases['aliases']['0']=path
+				if not path in faliases['files']: faliases['files'][path]=[]
+				faliases['files'][path].append('0')
+
+
+
 				_.pr('branding day',c='red')
 				_v.mkdir(fo)
 				bm = _.getTable('bookmarks.index')

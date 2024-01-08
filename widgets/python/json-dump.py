@@ -35,6 +35,7 @@ def appSwitches():
 	### EXAMPLE: END
 	_.switches.register( 'Files', '-f,-file,-files','file.txt', isPipe='name', description='Files' )
 	_.switches.register( 'Save', '-save' )
+	_.switches.register( 'Print', '-print' )
 
 _.autoBackupData = __.autoCreationConfiguration['backup']
 __.releaseAcquiredData = __.autoCreationConfiguration['logs']
@@ -193,9 +194,18 @@ def action():
 
 	for i,path in enumerate( _.isData(r=1) ):
 		table = _.getTable2( path )
-		_.pr( table )
-		for save in _.switches.values('Save'):
-			_.saveText( str(table), save )
+		if not _.switches.isActive('Save'):
+			if _.switches.isActive('Print'):
+				_.pt( table )
+			else:
+				_.pr( table )
+		if len(_.switches.values('Save')):
+			for save in _.switches.values('Save'):
+				_.saveText( str(table), save )
+		else:
+			_.saveTable2( table, path )
+			_.pr('saved',c='green')
+
 
 
 

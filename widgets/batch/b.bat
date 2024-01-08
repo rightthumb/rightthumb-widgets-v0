@@ -11,8 +11,40 @@ rem ###########################################################################
 rem ## {C3P0D40fAe8B} ##
 
 
+goto :main
+:backup
+set pp=%myBookmarks%\BM-%1.txt
+
+IF NOT EXIST "%pp%" (
+        echo Not Valid
+    ) else (
+        call :action
+    )
+set p=
+set pp=
+GOTO:EOF
+
+:action
+    rem type %pp%
+    SET /p p=<"%pp%"
+    rem echo %p%
+    call set p=%%p:{A8693D4B-8A80-898F-83F0-E806D2F36800}=%widgets%%%
+    call set p=%%p:{6FAB5628-94A1-410A-82D1-1D42A2A11750}=%userprofile%%%
+    call set p=%%p:{C12F266D-71B9-40D2-98B9-424B42D2DBAC}=%thisHost%%%
+    SET b=%p%
+    call p script-helper -replace "'%b%' '/' '\\'" > %tmpf%
+    SET /p b=<%tmpf%
+    cd /d %b%
+    rem IF [%2] == [] echo ^%%b^%% = %b%
+    IF [%2] == [] echo %b%
+GOTO:EOF
+
+
+:main
 if [%1] == [0] call p b0
 call result call p b -a "%1"
+
+
 
 rem call result call p bb %1 > %tmpf%  >nul 2>&1
 rem set /p result=<%tmpf%

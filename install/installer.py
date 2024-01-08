@@ -3075,6 +3075,7 @@ alias s.d="df -h"
 alias s.fo="du -sh "
 alias s.fl="du -shL "
 
+alias lns="readlink -f "
 # get_time_difference
 # a3bc42ec51e9
 

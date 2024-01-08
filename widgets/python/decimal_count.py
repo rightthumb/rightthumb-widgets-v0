@@ -200,14 +200,14 @@ _.postLoad( __file__ )
 
 def action():
 
-	for i,row in enumerate(_.isData(r=1)):
+	for i,row in enumerate(_.myData()):
 		try:
 			float(row)
 			if '.' in row:
 				part = row.split('.')
 				_.pr( len(part[0]), len(part[1]) )
 		except Exception as e:
-			pass
+			print(e)
 
 
 

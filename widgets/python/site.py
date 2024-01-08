@@ -210,7 +210,8 @@ def meta_scan(path,end):
 	return urlpr(url,meta)
 APPS = {
 	'notes': {
-		'path': '/home/rightthumb/public_html/domains/eyeformeta.com/public_html/apps/md/notes/scott/_docs_/',
+		# 'path': '/home/rightthumb/public_html/domains/eyeformeta.com/public_html/apps/Scrolls/_docs_/TECH/ddoc/asdf',
+		'path': 'asdf',
 		'remove': 'https://eyeformeta.com/',
 		'add': 'https://eyeformeta.com/apps/Scrolls/?view=1&f=',
 		'slash': '/',

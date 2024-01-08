@@ -267,6 +267,8 @@ def action():
 	# rightthumb\\.com|eyeformeta\\.com
 templates={}
 templates['wordpress']='''
+
+Options -Indexes
 # BEGIN WordPress
 <IfModule mod_rewrite.c>
 RewriteEngine On
@@ -280,6 +282,8 @@ RewriteRule . /index.php [L]
 
 '''
 templates['base']='''
+
+Options -Indexes
 <IfModule mime_module>
 	AddHandler application/x-httpd-ea-php80 .php .php8 .phtml .srv.js .php.js
 </IfModule>
@@ -296,6 +300,8 @@ RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
 templates['deny']='Deny from all'.strip()
 templates['basic']='''
+
+Options -Indexes
 # php -- BEGIN cPanel-generated handler, do not edit
 # Set the “ea-php80” package as the default “PHP” programming language.
 <IfModule mime_module>
@@ -304,6 +310,8 @@ templates['basic']='''
 # php -- END cPanel-generated handler, do not edit
 '''.strip()
 templates['access']='''
+
+Options -Indexes
 <IfModule mod_headers.c>
 		Header set Access-Control-Allow-Origin "*"
 		Header set Access-Control-Allow-Methods "GET, POST, OPTIONS"
@@ -311,6 +319,8 @@ templates['access']='''
 </IfModule>
 '''.strip()
 templates['default']='''
+
+Options -Indexes
 <IfModule mime_module>
 	AddHandler application/x-httpd-ea-php80 .php .php8 .phtml
 </IfModule>

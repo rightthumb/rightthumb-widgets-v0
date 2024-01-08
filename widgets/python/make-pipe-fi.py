@@ -26,7 +26,7 @@ def sw():
 	# _.switches.register( 'Input', '-i' )
 	# _.switches.register( 'URL', '-u,-url,-urls', 'https://etc.ac/', isData='raw' )
 	#e)--> examples
-	_.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name', description='Files', isRequired=False )
+	_.switches.register( 'File', '-f,-fi,-file,-files','file.txt', description='Files', isRequired=False )
 
 _._default_settings_()
 # __.setting('require-list',['Files,Plus','File,Has']) # todo
@@ -109,38 +109,13 @@ _.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw );
 ########################################################################################
 #n)--> start
 
-
-import json
-import re
-
-def fix_json(file_path):
-	try:
-		# Try to load the JSON file
-		with open(file_path, 'r') as file:
-			data = json.load(file)
-		print("JSON file is valid.")
-	except json.JSONDecodeError as e:
-		print(f"Found JSON error: {e}")
-		# Read the file content
-		with open(file_path, 'r') as file:
-			file_content = file.read()
-
-		# Fix common JSON issues
-		file_content = re.sub(r'([,{\[:])\s*([^,{\[:]+)\s*:', r'\1 "\2":', file_content)  # Add quotes to unquoted keys
-		file_content = re.sub(r',\s*}', '}', file_content)  # Remove trailing commas in objects
-		file_content = re.sub(r',\s*]', ']', file_content)  # Remove trailing commas in arrays
-
-		# Write the corrected content to a new file
-		new_file_path = file_path.rsplit('.', 1)[0] + "_fixed.json"
-		with open(new_file_path, 'w') as new_file:
-			new_file.write(file_content)
-		print(f"Fixed JSON written to {new_file_path}")
-
-
-
+import sys
 def action():
-	for path in _.myData():
-		fix_json(path)
+	text = _.getText2(_.switches.values('File')[0]).strip()
+	# print(text)
+	# sys.exit()
+	for item in _.myData():
+		print(text.replace('{}',item))
 
 
 ##################################################

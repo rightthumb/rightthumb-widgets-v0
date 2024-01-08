@@ -10279,6 +10279,8 @@ def saveLog( logname, rows=[], focus=True, printThis=True ):
 def saveTable( rows, theFile, tableTemp=False, printThis=True, indentCode=True, sort_keys=False, archive=False,                k=0,s=0,tmp=None,here=None,h=None,    p=1, me=0   ):
 	HD.chmod(theFile)
 	simplejson = __.imp('simplejson')
+	try: json = __.imp('json')
+	except: pass
 	if not h is None: here = True;
 	if not here is None: saveTable2( rows, theFile ); return None;
 	if not tmp is None: tableTemp = True;
@@ -10305,11 +10307,21 @@ def saveTable( rows, theFile, tableTemp=False, printThis=True, indentCode=True, 
 
 	if __.print_path:
 		print_(file0)
-	if indentCode:
-		dataDump = simplejson.dumps(rows, indent=4, sort_keys=sort_keys, default=str)
-	else:
-		dataDump = simplejson.dumps(rows, sort_keys=False, default=str)
-	
+	try:
+		if indentCode:
+			dataDump = simplejson.dumps(rows, indent=4, sort_keys=sort_keys, default=str)
+		else:
+			dataDump = simplejson.dumps(rows, sort_keys=False, default=str)
+	except Exception as e:
+		try:
+			if indentCode:
+				dataDump = json.dumps(rows, indent=4, sort_keys=sort_keys, default=str)
+			else:
+				dataDump = json.dumps(rows, sort_keys=False, default=str)
+		except Exception as ee:
+			pr('save json error',c='red')
+			sys.exit()
+			err('Unable to save json file',ee)
 	if archive:
 		import _rightThumb._md5 as _md5
 
@@ -10366,10 +10378,52 @@ def saveTable( rows, theFile, tableTemp=False, printThis=True, indentCode=True, 
 	if me and theFile in vv.opened_file_me: changeM( theFile, vv.opened_file_me[theFile] );
 	return file0
 
+def getTable(theFile, tableTemp=False, isDic=None, isList=None, tmp=None):
+	if os.path.isfile(theFile):
+		vv.opened_file_me[theFile] = os.path.getmtime(theFile)
 
-def getTable( theFile, tableTemp=False,      isDic=None, isList=None,      tmp=None ):
+	simplejson = __.imp('simplejson')
+	try:
+		json = __.imp('json')
+	except ImportError:
+		json = simplejson
+
+	# Determine the file path
+	if not isinstance(tableTemp, bool):
+		if tableTemp == 'split':
+			file0 = _v.myTables + _v.slash + 'tablesets' + _v.slash + theFile
+	elif tableTemp:
+		file0 = _v.stmp + _v.slash + theFile
+	else:
+		file0 = _v.myTables + _v.slash + theFile
+
+	if not os.path.isfile(file0):
+		file0 = theFile
+
+	# Check if the file is empty
+	if os.path.isfile(file0) and os.path.getsize(file0) > 0:
+		try:
+			with open(file0, 'r', encoding='utf-8') as json_file:
+				try:
+					json_data = simplejson.load(json_file)
+				except Exception as e:
+					json_data = json.load(json_file)
+				return json_data
+		except Exception as e:
+			print('Error loading JSON file:', e)
+			sys.exit()
+
+	else:
+		# print(f"File {file0} not found or is empty.")
+		return __.data_default(file=theFile, default=[]).default()
+
+
+
+def getTableOld( theFile, tableTemp=False,      isDic=None, isList=None,      tmp=None ):
 	if os.path.isfile(theFile): vv.opened_file_me[theFile] = os.path.getmtime( theFile );
 	simplejson = __.imp('simplejson')
+	try: json = __.imp('json')
+	except: pass
 	# defaults to myTables
 	if not type( tableTemp ) == bool:
 		if tableTemp == 'split':
@@ -10388,7 +10442,15 @@ def getTable( theFile, tableTemp=False,      isDic=None, isList=None,      tmp=N
 		# print_( 'file0', file0 )
 		# import bigjson
 		with open(file0,'r', encoding="latin-1") as json_file:
-			json_data = simplejson.load(json_file)
+			try:
+				json_data = simplejson.load(json_file)
+			except Exception as ee:
+				try:
+					json_data = json.load(json_file)
+				except Exception as eee:
+					pr('get json error',c='red')
+					sys.exit()
+					err('Unable to load json',eee)
 		return json_data
 		# with open( file0, 'rb' ) as f:
 			# json_data = bigjson.load(f)
@@ -10407,14 +10469,56 @@ def getTable3(theFile):
 		return json_data
 	return __.data_default(file=theFile,default=[]).default()
 
-def getTable2( theFile,     isDic=None, isList=None ):
+
+def getTable2(theFile, isDic=None, isList=None):
+	if os.path.isfile(theFile):
+		vv.opened_file_me[theFile] = os.path.getmtime(theFile)
+
+	simplejson = __.imp('simplejson')
+	try:
+		json = __.imp('json')
+	except ImportError:
+		json = simplejson
+
+	# Adjust for specific file extensions
+	if theFile.lower().endswith('.index') or theFile.lower().endswith('.indexes'):
+		isDic = True
+
+	# Check if the file exists and is not empty
+	if os.path.isfile(theFile) and os.path.getsize(theFile) > 0:
+		try:
+			with open(theFile, 'r', encoding='utf-8') as json_file:
+				try:
+					json_data = simplejson.load(json_file)
+				except Exception as e:
+					json_data = json.load(json_file)
+				return json_data
+		except Exception as e:
+			print('Error loading JSON file:', e)
+			sys.exit()
+	else:
+		# print(f"File {theFile} not found or is empty.")
+		return __.data_default(file=theFile, default=[]).default()
+
+
+
+def getTable2Old( theFile,     isDic=None, isList=None ):
 	if os.path.isfile(theFile): vv.opened_file_me[theFile] = os.path.getmtime( theFile );
 	simplejson = __.imp('simplejson')
+	try: json = __.imp('json')
+	except: pass
 	if theFile.lower().endswith('.index') or theFile.lower().endswith('.indexes'):
 		isDic = True
 	if os.path.isfile(theFile):
 		with open(theFile,'r', encoding="latin-1") as json_file:
-			json_data = simplejson.load(json_file)
+			try:
+				json_data = simplejson.load(json_file)
+			except Exception as e:
+				try:
+					json_data = json.load(json_file)
+				except Exception as e:
+					pr('get2 json error',c='red')
+					sys.exit()
 			# json_data = simplejson.load(json_file, object_pairs_hook=OrderedDict)
 		return json_data
 	else:
@@ -11794,20 +11898,25 @@ class Switches:
 					result = True
 		return result
 	def help(self):
-		if self.value('Help') == 'x' or self.value('Help') == 'cls' or self.value('Help') == 'clear' or self.value('Help') == 'info':
+		if self.value('Help') == 'x' or self.value('Help') == 'cls' or self.value('Help') == 'clear' or 'fn' in self.value('Help'):
 
 
-			if self.value('Help') == 'info':
+			if 'fn' in self.values('Help'):
 				info = self.values('Help')
 				info.pop(0)
-				if info[0] == 'help' or info[0] == 'h':
+				if not info:
 					pr('Usage:',c='yellow')
 					for li in ['']: pr('\t- '+li,c='cyan')
 					sys.exit()
-					
 
 				import inspect
-
+				fn = info[0]
+				info.pop(0)
+				pr('Function:',fn,c='yellow')
+				if not info or (info[0] == 'arg' or info[0] == 'args'):
+					argspec = list(inspect.getfullargspec(eval(fn)))
+					pr('\t',argspec[0])
+					# for spec in argspec: pr('\t-',spec )
 
 				sys.exit()
 

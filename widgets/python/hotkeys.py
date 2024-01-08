@@ -309,6 +309,10 @@ _.postLoad( __file__ )
 ########################################################################################
 # START
 
+def remove_html_comments(html_string,test=1):
+	import re
+	comment_pattern = re.compile(r'<!--.*?-->', re.DOTALL)
+	return re.sub(comment_pattern, '', html_string)
 
 def extract_text_from_webpage(text):
 	from bs4 import BeautifulSoup
@@ -2641,11 +2645,23 @@ function get__THETABLE( $ID_label ){
 		_copy.imp.copy( result, p=0 )
 
 
+
+
+
+
+
+
 	def remove_py_comments_spaces(self):
 		_paste = _.regImp( __.appReg, '-paste' )
 		_copy = _.regImp( __.appReg, '-copy' )
 		text = _paste.imp.paste()
 		# text=_str.replaceDuplicate( text, '\n' )
+		if text.strip().startswith('<'):
+			try:
+				text = remove_html_comments(text)
+			except Exception as e:
+				print(e)
+				pass
 		text=ws_line_cleaner_MF(text)
 		text=text.replace('\r','')
 		global cleanComment_subject
