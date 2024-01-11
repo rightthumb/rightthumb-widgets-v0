@@ -342,7 +342,8 @@ rt=home +os.sep+'.rt'
 
 
 if __.isWin:
-	sublime = '"C:\\Program Files\\Sublime Text 3\\sublime_text.exe"'
+	# sublime = '"C:\\Program Files\\Sublime Text 3\\sublime_text.exe"'
+	sublime = '"C:\\Program Files\\Microsoft VS Code\\Code.exe"'
 elif not __.isWin:
 	if os.path.isfile('/opt/sublime/sublime_text'):
 		sublime = '/opt/sublime/sublime_text'
