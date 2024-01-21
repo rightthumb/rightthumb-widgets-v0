@@ -286,13 +286,19 @@ def clip_set( data, end='', p=True, clean=False ):
 
 	# clip_set_3(data)
 	try:
-		clip_set_2(data,end,clean)
-	except Exception as e:
-		try:
-			clip_set_1(data,end,clean)
-		except Exception as e:
+		if platform.system() == 'Linux':
 			try:
 				clip_set_3(data,end,clean)
+			except:
+				clip_set_2(data,end,clean)
+		else:
+			clip_set_2(data,end,clean)
+	except Exception as e:
+		try:
+			clip_set_2(data,end,clean)
+		except Exception as e:
+			try:
+				clip_set_1(data,end,clean)
 			except Exception as e:
 				if not _.switches.isActive('NoPrint'):
 					if _.isWin:
@@ -303,7 +309,13 @@ def clip_set( data, end='', p=True, clean=False ):
 def clip_get(p=False):
 	result = 'error'
 	try:
-		result = cleanString(clip_get_2())
+		if platform.system() == 'Linux':
+			try:
+				result = cleanString(clip_get_3())
+			except: 
+				result = cleanString(clip_get_2())
+		else:
+			result = cleanString(clip_get_2())
 	except Exception as e:
 		if not _.switches.isActive('NoPrint'):
 			_.cp( '\tpython3 -m pip install pyperclip', 'yellow' )
@@ -390,7 +402,7 @@ def clip_get_2():
 	# return data
 
 win32clipboard = None
-
+import platform
 def cleanString(data):
 	data=data.replace('\r','')
 	data=data.rstrip()

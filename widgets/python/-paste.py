@@ -202,26 +202,24 @@ def formatData( result ):
 def clip_get():
 	result = 'error'
 	# result = clip_get_2()
-	result = cleanString(clip_get_2())
-	# try:
-	#     result = clip_get_2()
-	# except Exception as e:
-	#     _.cp( '\tpython3 -m pip install pyperclip', 'yellow' )
-	#     try:
-	#         result = clip_get_1()
-	#     except Exception as e:
-	#         try:
-	#             result = clip_get_3()
-	#         except Exception as e:
-	#             _.cp( 'Error: clipboard error', 'red' )
-	#             _.cp( '\tpython3 -m pip install pyperclip', 'yellow' )
+	# result = cleanString(clip_get_2())
 
-	if not result:
+	if platform.system() == 'Linux':
+		# print('Linux')
+		try:
+			result = clip_get_3()
+		except Exception as e:
+			try:
+				result = clip_get_2()
+			except: pass
+	else:
+		try:
+			result = clip_get_2()
+		except: pass
+
+	if result == 'error':
 		_.cp( 'Error: clipboard error', 'red' )
 		_.cp( '\tpython3 -m pip install pyperclip', 'yellow' )
-		sys.exit()
-	# _.pr( result )
-	# sys.exit()
 	return result
 
 
@@ -251,11 +249,16 @@ def clip_get_3():
 			_.pr( '\tsudo apt install xclip xsel' )
 			return None
 
-	cmd = ["xsel", "--clipboard", "--output", ">", tmpA ]
+	# cmd = ["xsel", "--clipboard", "--output", ">", tmpA ]
+	# p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
+	cmd = ["xsel", "--clipboard", "--output"]
+	with open(tmpA, 'w') as file: p = subprocess.Popen(cmd, stdout=file)
 	# _.pr( ' '.join(cmd) )
-	p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
 	if os.path.isfile(tmpA):
-		return _.getText( tmpA, raw=True, clean=2 )
+		print(tmpA)
+		text = _.getText( tmpA, raw=True, clean=2 )
+		print(text)
+		return text
 	return None
 	# return _.which('xsel')
 	# return _.which('xclip')
@@ -277,7 +280,7 @@ def clip_get_2():
 	# return data
 
 win32clipboard = None
-
+import platform
 paste=clip_get
 
 def cleaner(data):

@@ -309,6 +309,53 @@ _.postLoad( __file__ )
 ########################################################################################
 # START
 
+def wt_implode(text):
+	# text = text.replace('\n',', ')
+	text = text.replace('\r','')
+	text=_str.replaceDuplicate( text, ' ' )
+	try:
+		if '{ "keys":' in text and '"command":' in text:
+			text = text.replace('[','')
+			text = text.replace(']','')
+			text = text.replace('{ "keys":','\n{ "keys":')
+			text = text.replace(' } }, ',' } }')
+			lines = text.split('\n')
+			lines.sort()
+			lines.reverse()
+			for i,line in enumerate(lines):
+				line=line.strip()
+				if i and line:
+					lines[i] = line+','
+			lines.reverse()
+			text = '['
+			text += '\n,'.join(lines)
+			text += '\n]'
+			text = text.replace('\n,','\n')
+			text = text.replace(', ,',',')
+			text = text.replace(',,',',')
+			text = text.replace('}{ "command":','},\n{ "command":')
+	except Exception as e:
+		_.pr('err',e)
+	return text
+
+def reorder_keys(data):
+	has=False
+	if type(data) == list:
+		ndata = []
+		for item in data:
+			if 'command' in item and 'keys' in item:
+				has=True
+				new = {}
+				new['keys'] = item['keys']
+				new['command'] = item['command']
+				for key in item:
+					if not key in 'keys,command'.split(','): new[key] = item[key]
+				ndata.append(new)
+			else:
+				ndata.append(item)
+	if has: return ndata
+	return data
+
 def remove_html_comments(html_string,test=1):
 	import re
 	comment_pattern = re.compile(r'<!--.*?-->', re.DOTALL)
@@ -2148,12 +2195,14 @@ function get__THETABLE( $ID_label ){
 			except Exception as e:
 				frameinfo = getframeinfo(currentframe()); _.pr( _.addComma(frameinfo.lineno),'\t', e,c='red');
 				data = eval(text.replace('false','False').replace('true','True'))
+			data = reorder_keys(data)
 			result = simplejson.dumps(data, sort_keys=False)
 			result=result.replace('{','{ ').replace('}',' }')
-			_copy.imp.copy( result, p=0 )
+			_copy.imp.copy( wt_implode(result), p=0 )
 			return None
-		text = text.replace('\n',', ')
-		text = text.replace('\r','')
+
+
+
 		# text = text.replace('\n','')
 		# text = text.replace(', ',',')
 		# text = text.replace(',','\n')
