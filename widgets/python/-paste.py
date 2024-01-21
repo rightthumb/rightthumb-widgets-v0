@@ -255,9 +255,9 @@ def clip_get_3():
 	with open(tmpA, 'w') as file: p = subprocess.Popen(cmd, stdout=file)
 	# _.pr( ' '.join(cmd) )
 	if os.path.isfile(tmpA):
-		print(tmpA)
+		# print(tmpA)
 		text = _.getText( tmpA, raw=True, clean=2 )
-		print(text)
+		# print(text)
 		return text
 	return None
 	# return _.which('xsel')
