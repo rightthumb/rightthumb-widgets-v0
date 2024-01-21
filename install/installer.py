@@ -3075,10 +3075,12 @@ alias s.d="df -h"
 alias s.fo="du -sh "
 alias s.fl="du -shL "
 
-alias pa="$p -paste -raw"
-alias pa.="$p -paste -raw"
+alias clip="xsel --clipboard"
+alias pa="xsel --clipboard"
+alias pa.="xsel --clipboard"
+alias pa.="xsel --clipboard"
 alias cp.="$p -copy"
-
+alias aaa="works"
 
 alias lns="readlink -f "
 # get_time_difference
