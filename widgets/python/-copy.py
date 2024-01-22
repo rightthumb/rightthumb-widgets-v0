@@ -219,24 +219,38 @@ def clip_set_3(data,end='',clean=False):
 		_.saveText( cleanString(data)+end, tmpA )
 	else:
 		_.saveText( data+end, tmpA )
-	time.sleep(.2)
+	time.sleep(.3)
+	# print(tmpA)
 	if not os.path.isfile(tmpA):
 		if not _.switches.isActive('NoPrint'):
 			_.pr( 'no file' )
 		return None
 
-	# cmd = ["cat", tmpA, "|",  "xsel", "--clipboard", "--input"  ]
-	# mycmd=subprocess.getoutput( ' '.join(cmd) )
-	try:
-		from subprocess import Popen, PIPE
-		p = Popen(['xsel','-pi'], stdin=PIPE)
-		p.communicate(input= formatData(data) )
+	cmd = ["cat", tmpA, "|",  "xsel", "--clipboard", "--input"  ]
+	mycmd=subprocess.getoutput( ' '.join(cmd) )
+	test = clip_get_3()
+	if not data in test:
 
-		p = Popen(['xsel', '-bi'], stdin=PIPE)
-		p.communicate(input= formatData(data) )
-		# p.communicate(input=data)
-	except Exception as e:
-		pass
+		try:
+			cmd = ["xsel", "--clipboard"]
+
+			with open(tmpA, 'r') as file:
+				p = subprocess.Popen(cmd, stdin=file, stdout=subprocess.PIPE)
+			# cmd = ["xsel", "--clipboard",  "<", tmpA ]
+			# p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
+			return data+end
+		except Exception as e:
+			print(e)
+	# try:
+	# 	from subprocess import Popen, PIPE
+	# 	p = Popen(['xsel','-pi'], stdin=PIPE)
+	# 	p.communicate(input= formatData(data) )
+
+	# 	p = Popen(['xsel', '-bi'], stdin=PIPE)
+	# 	p.communicate(input= formatData(data) )
+	# 	# p.communicate(input=data)
+	# except Exception as e:
+	# 	pass
 
 
 	result = None
@@ -356,9 +370,7 @@ def clip_get_3():
 	import subprocess
 	# _.pr('_.isWin:',_.isWin)
 	if _.isWin:
-		if not _.switches.isActive('NoPrint'):
-			if _.isWin:
-				_.cp( 'Error: clipboard error', 'red' )
+		_.cp( 'Error: clipboard error', 'red' )
 		return None
 
 	tmpA = _v.stmp +_v.slash+ 'cryptString-A.txt'
@@ -369,24 +381,33 @@ def clip_get_3():
 		os.unlink(tmpB)
 	if not _.which('xsel'):
 		if not _.isWin:
-			if not _.switches.isActive('NoPrint'):
-				_.pr( '\tsudo apt install xclip xsel' )
+			_.pr( '\tsudo apt install xclip xsel' )
 			return None
 
-	cmd = ["xsel", "--clipboard", "--output", ">", tmpA ]
-	# _.pr( ' '.join(cmd) )
-	try:
-		p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
-	except Exception as e:
-		pass
-	if os.path.isfile(tmpA):
-		return _.getText( tmpA, raw=True, clean=2 )
-	return None
-	# return _.which('xsel')
-	# return _.which('xclip')
-	# return _.which('python3')
+	cmd = ["xsel", "--clipboard", "--output"]
 
-	# return 'test'
+	with open(tmpA, 'w') as file:
+		p = subprocess.Popen(cmd, stdout=file)
+
+	# cmd = ["xsel", "--clipboard", "--output", ">", tmpA ]
+	# p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
+	time.sleep(.3)
+	# print(p)
+	# cmd = ["xsel", "--clipboard", "--output"]
+	# with open(tmpA, 'w') as file: p = subprocess.Popen(cmd, stdout=file)
+	# _.pr( ' '.join(cmd) )
+	# print(tmpA)
+	if os.path.isfile(tmpA):
+		text = _.getText2( tmpA, 'text' )
+		if text == None: text = 'err'
+		lines = text.split('\n')
+		lines.reverse()
+		if 'No newline at end of selection' in lines[0]: lines.pop(0)
+		lines.reverse()
+		text = '\n'.join(lines)
+		# print(text)
+		return text
+	return 'err'
 
 def clip_get_2():
 	# import pyperclip
@@ -733,6 +754,7 @@ def action():
 	# print('ccc')
 
 	if __.hasPipeData:
+		# print('pipe')
 		# _.pr('|')
 		# _.pr(input())
 		# _.pr('|')

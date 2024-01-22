@@ -249,17 +249,30 @@ def clip_get_3():
 			_.pr( '\tsudo apt install xclip xsel' )
 			return None
 
+	cmd = ["xsel", "--clipboard", "--output"]
+
+	with open(tmpA, 'w') as file:
+		p = subprocess.Popen(cmd, stdout=file)
+
 	# cmd = ["xsel", "--clipboard", "--output", ">", tmpA ]
 	# p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
-	cmd = ["xsel", "--clipboard", "--output"]
-	with open(tmpA, 'w') as file: p = subprocess.Popen(cmd, stdout=file)
+	time.sleep(.3)
+	# print(p)
+	# cmd = ["xsel", "--clipboard", "--output"]
+	# with open(tmpA, 'w') as file: p = subprocess.Popen(cmd, stdout=file)
 	# _.pr( ' '.join(cmd) )
+	# print(tmpA)
 	if os.path.isfile(tmpA):
-		# print(tmpA)
-		text = _.getText( tmpA, raw=True, clean=2 )
+		text = _.getText2( tmpA, 'text' )
+		if text == None: text = 'err'
+		lines = text.split('\n')
+		lines.reverse()
+		if 'No newline at end of selection' in lines[0]: lines.pop(0)
+		lines.reverse()
+		text = '\n'.join(lines)
 		# print(text)
 		return text
-	return None
+	return 'err'
 	# return _.which('xsel')
 	# return _.which('xclip')
 	# return _.which('python3')
