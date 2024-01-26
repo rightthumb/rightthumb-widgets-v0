@@ -1,5 +1,10 @@
 #!/usr/bin/python3
 
+no_escape={
+	'ps.t': 1,
+	'..url': 1,
+}
+
 hotkeys='''
 /home/scott/figlet/Caligraphy.figlet
 '''
@@ -3572,7 +3577,7 @@ __.setting('hotkey-clip.ad_description-start1', False)
 __.setting('hotkey-clip.replace-a', '.eyeformeta.com')
 __.setting('hotkey-clip.replace-b', '.m-eta.app')
 force_clean={}
-no_escape={}
+
 
 import random
 import string

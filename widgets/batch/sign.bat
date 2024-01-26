@@ -1,0 +1,1 @@
+%signtool% sign /f "D:\websites\domains\webigami.softwaredevelopment.solutions\public_html\signature\WebigamiGateway_Win.pfx" /p "ed07d0fe36b948f19947eae5313f384c" /t http://timestamp.digicert.com /fd SHA256 /a %1

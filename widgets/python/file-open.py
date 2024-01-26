@@ -32,6 +32,7 @@ import _rightThumb._string as _str
 def appSwitches():
 	pass
 	_.switches.register( 'AS', '-as', 'psd, xls' )
+	_.switches.register( 'Path', '-path' )
 	_.switches.register( 'App', '-app' )
 	_.switches.register( 'Files', '-f,-file,-files','file.txt', description='Files' )
 	_.switches.register( 'Alias', '-alias','' )
@@ -317,7 +318,8 @@ def action(path=None):
 		for path in paths:
 			path=__.path(path)
 			path=_.zZip(path)
-			_.pr(path,c='yellow')
+			if not _.switches.isActive('Path'):
+				_.pr(path,c='yellow')
 			aliases=_.getTable('file-open-aliases.hash')
 			if not 'aliases' in aliases: aliases['aliases']={}
 			if not 'files' in aliases: aliases['files']={}
@@ -347,6 +349,10 @@ def action(path=None):
 				# print(_v.fig['code_editor'])
 				# _.pv(_v.fig);
 				# sys.exit();
+				if _.switches.isActive('Path'):
+					_copy = _.regImp( __.appReg, '-copy' )
+					_copy.imp.copy( path, p=0 )
+					return path
 				if app == 'C:\\Program': app=_v.fig['code_editor']
 				# print(app);sys.exit();
 				if not os.path.isfile(app): _.e('Unable to open','app does not exist')

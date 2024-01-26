@@ -2807,8 +2807,8 @@ fi
 [ ! -d $HOME/.rt/profile ] && mkdir $HOME/.rt/profile
 [ ! -d $HOME/.rt/profile/temp ] && mkdir $HOME/.rt/profile/temp
 touch $HOME/.rt/profile/temp/temp.exp
-chmod -R 777 $HOME/.rt/
-chmod 777 $HOME/.rt/profile/temp/temp.exp
+# chmod -R 777 $HOME/.rt/
+# chmod 777 $HOME/.rt/profile/temp/temp.exp
 ################# ################# ################# #################
 
 source $HOME/.rt/profile/vars/config.sh
@@ -2839,7 +2839,7 @@ fi
 if [ -z "$Session_ID" ]; then
   export Session_ID=$(date +%s)
 fi
-chmod -R 777 $HOME/.rt/
+# chmod -R 777 $HOME/.rt/
 
 ################# ################# ################# #################
 
@@ -2879,11 +2879,11 @@ if [ ! -e $unixID ]; then
 fi
 
 
-export p="/usr/bin/sh $widgets/widgets/bash/nav/p.sh"
-export bb="/usr/bin/sh $widgets/widgets/bash/nav/bb.sh"
-export b="/usr/bin/sh $widgets/widgets/bash/nav/b.sh"
-export m="/usr/bin/sh $widgets/widgets/bash/nav/m.sh"
-export cdf="/usr/bin/sh $widgets/widgets/bash/cdf.sh"
+export p="sh $widgets/widgets/bash/nav/p.sh"
+export bb="sh $widgets/widgets/bash/nav/bb.sh"
+export b="sh $widgets/widgets/bash/nav/b.sh"
+export m="sh $widgets/widgets/bash/nav/m.sh"
+export cdf="sh $widgets/widgets/bash/cdf.sh"
 export config
 export widgets
 
@@ -3081,8 +3081,11 @@ alias pa.="xsel --clipboard"
 alias pa.="xsel --clipboard"
 alias cp.="$p -copy"
 alias aaa="works"
-
+alias code.="/snap/bin/code"
 alias lns="readlink -f "
+
+alias dmg.="sh $widgets/widgets/bash/dmg.sh"
+
 # get_time_difference
 # a3bc42ec51e9
 
