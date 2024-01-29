@@ -1,123 +1,295 @@
-Set-Variable -Name "widgets" -Value "D:\.rightthumb-widgets" -Visibility Public
-Set-Variable -Name "PY" -Value "D:\techApps\Python\Python36-32\python.exe" -Visibility Public
-Set-Variable -Name "PY2" -Value "D:\techApps\Python\Python27\python.exe" -Visibility Public
-Set-Variable -Name "pip3" -Value "D:\techApps\Python\Python36-32\Scripts\pip.exe" -Visibility Public
-Set-Variable -Name "code_editor" -Value "C:\Windows\SysWOW64\notepad.exe" -Visibility Public
-Set-Variable -Name "php" -Value "D:\php\php.exe" -Visibility Public
-Set-Variable -Name "pip" -Value "D:\techApps\Python\Python36-32\Scripts\pip.exe" -Visibility Public
-Set-Variable -Name "pip2" -Value "D:\techApps\Python\Python27\Scripts\pip.exe" -Visibility Public
-Set-Variable -Name "py2" -Value "D:\techApps\Python\Python27\python.exe" -Visibility Public
-Set-Variable -Name "pyf" -Value "D:\techApps\Python\Python36-32" -Visibility Public
-Set-Variable -Name "tech_drive" -Value "C:\rightthumb-widgets-v0" -Visibility Public
-Set-Variable -Name "wprofile" -Value "C:\Users\Scott\.rt\profile" -Visibility Public
-Set-Variable -Name "w" -Value "D:\.rightthumb-widgets" -Visibility Public
-Set-Variable -Name "ww" -Value "D:\.rightthumb-widgets\widgets" -Visibility Public
-Set-Variable -Name "h" -Value "C:\Users\Scott\.rt\profile" -Visibility Public
-Set-Variable -Name "pr" -Value "C:\Users\Scott\.rt\profile\projects" -Visibility Public
-Set-Variable -Name "tt" -Value "C:\Users\Scott\.rt\profile\tables" -Visibility Public
-Set-Variable -Name "ttt" -Value "C:\rightthumb-widgets-v0\widgets\databank\tables" -Visibility Public
-Set-Variable -Name "p" -Value "D:\.rightthumb-widgets\widgets\batch\p.bat" -Visibility Public
-Set-Variable -Name "rt" -Value "C:\Users\Scott\.rt" -Visibility Public
-Set-Variable -Name "b" -Value "C:\rightthumb-widgets-v0\widgets\bash" -Visibility Public
-Set-Variable -Name "bash" -Value "C:\rightthumb-widgets-v0\widgets\bash" -Visibility Public
-Set-Variable -Name "s" -Value "C:\rightthumb-widgets-v0\widgets\batch" -Visibility Public
-Set-Variable -Name "bat" -Value "C:\rightthumb-widgets-v0\widgets\batch" -Visibility Public
-Set-Variable -Name "js" -Value "C:\rightthumb-widgets-v0\widgets\javascript" -Visibility Public
-Set-Variable -Name "db" -Value "C:\rightthumb-widgets-v0\widgets\databank" -Visibility Public
-Set-Variable -Name "ps" -Value "C:\rightthumb-widgets-v0\widgets\powershell" -Visibility Public
-Set-Variable -Name "proc" -Value "D:\techApps\ProcessMonitor\Procmon64.exe" -Visibility Public
-Set-Variable -Name "ps1" -Value "C:\Users\Scott\Documents\WindowsPowerShell" -Visibility Public
-Set-Variable -Name "wt" -Value "C:\Users\Scott\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json" -Visibility Public
-Set-Variable -Name "python" -Value "D:\.rightthumb-widgets\widgets\python" -Visibility Public
-$widgets="D:\.rightthumb-widgets"
-$PY="D:\techApps\Python\Python36-32\python.exe"
-$PY2="D:\techApps\Python\Python27\python.exe"
-$pip3="D:\techApps\Python\Python36-32\Scripts\pip.exe"
-$code_editor="C:\Windows\SysWOW64\notepad.exe"
-$php="D:\php\php.exe"
-$pip="D:\techApps\Python\Python36-32\Scripts\pip.exe"
-$pip2="D:\techApps\Python\Python27\Scripts\pip.exe"
-$py2="D:\techApps\Python\Python27\python.exe"
-$pyf="D:\techApps\Python\Python36-32"
-$tech_drive="C:\rightthumb-widgets-v0"
-$wprofile="C:\Users\Scott\.rt\profile"
-$w="D:\.rightthumb-widgets"
-$ww="D:\.rightthumb-widgets\widgets"
-$h="C:\Users\Scott\.rt\profile"
-$pr="C:\Users\Scott\.rt\profile\projects"
-$tt="C:\Users\Scott\.rt\profile\tables"
-$ttt="C:\rightthumb-widgets-v0\widgets\databank\tables"
-$p="D:\.rightthumb-widgets\widgets\batch\p.bat"
-$rt="C:\Users\Scott\.rt"
-$b="C:\rightthumb-widgets-v0\widgets\bash"
-$bash="C:\rightthumb-widgets-v0\widgets\bash"
-$s="C:\rightthumb-widgets-v0\widgets\batch"
-$bat="C:\rightthumb-widgets-v0\widgets\batch"
-$js="C:\rightthumb-widgets-v0\widgets\javascript"
-$db="C:\rightthumb-widgets-v0\widgets\databank"
-$ps="C:\rightthumb-widgets-v0\widgets\powershell"
-$proc="D:\techApps\ProcessMonitor\Procmon64.exe"
-$ps1="C:\Users\Scott\Documents\WindowsPowerShell"
-$wt="C:\Users\Scott\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
-$python="D:\.rightthumb-widgets\widgets\python"
-Set-Variable -Name "widgets" -Value $tech_drive
-$widgets=$tech_drive
+ 
+$pathsToSet = @(
+    "D:\.rightthumb-widgets",
+    "D:\.rightthumb-widgets\widgets",
+    "D:\.rightthumb-widgets\widgets\powershell",
+    "D:\techApps\Python\Python36-32",
+    "D:\techApps\Python\Python27",
+    "C:\Users\Scott\.rt\profile"
+)
+
+foreach ($path in $pathsToSet) {
+    if (Test-Path $path) {
+        Set-Variable -Name ([System.IO.Path]::GetFileName($path)) -Value $path -Visibility Public
+    } else {
+        Write-Warning "Path $path does not exist."
+    }
+}
+
+$documentsPath = [System.Environment]::GetFolderPath([System.Environment+SpecialFolder]::MyDocuments)
 
 
-Set-Variable -Name "p" -Value $widgets+"\widgets\python"
-Set-Alias -Name p -Value $HOME"\Documents\WindowsPowerShell\p.ps1"
-Set-Alias -Name d -Value $HOME"\Documents\WindowsPowerShell\d.ps1"
-Set-Alias -Name dd -Value $HOME"\Documents\WindowsPowerShell\dd.ps1"
-Set-Alias -Name b -Value $HOME"\Documents\WindowsPowerShell\b.ps1"
-Set-Alias -Name m -Value $HOME"\Documents\WindowsPowerShell\m.ps1"
-Set-Alias -Name which -Value $HOME"\Documents\WindowsPowerShell\which.ps1"
-Set-Alias -Name epy -Value $HOME"\Documents\WindowsPowerShell\epy.ps1"
-Set-Alias -Name pss -Value $HOME"\Documents\WindowsPowerShell\pss.ps1"
-Set-Alias -Name py -Value "python3"
+$aliasesToSet = @{
+    p = "$documentsPath\WindowsPowerShell\p.ps1"
+    d = "$documentsPath\WindowsPowerShell\d.ps1"
+    dd = "$documentsPath\WindowsPowerShell\dd.ps1"
+    # b = "$documentsPath\WindowsPowerShell\b.ps1"
+    # m = "$documentsPath\WindowsPowerShell\m.ps1"
+    which = "$documentsPath\WindowsPowerShell\which.ps1"
+    epy = "$documentsPath\WindowsPowerShell\epy.ps1"
+    pss = "$documentsPath\WindowsPowerShell\pss.ps1"
+    py = "C:\Users\Scott\AppData\Local\Microsoft\WindowsApps\python3.exe"
 
 
-$p=$widgets+"\widgets\python"
-$addPath = $widgets+"\widgets\python"
-$regexAddPath = [regex]::Escape($addPath)
-$arrPath = $env:Path -split ';' | Where-Object {$_ -notMatch 
-"^$regexAddPath\\?"}
-$env:Path = ($arrPath + $addPath) -join ';'
+    # widgets = "D:\.rightthumb-widgets"
+    # PY2 = "D:\techApps\Python\Python27\python.exe"
+    # pip3 = "C:\Users\Scott\AppData\Local\Microsoft\WindowsApps\pip3.exe"
+    # code_editor = "C:\Program Files\Microsoft VS Code\Code.exe"
+    # php = "D:\xampp\php\php.exe"
+    # pip = "C:\Users\Scott\AppData\Local\Microsoft\WindowsApps\pip3.exe"
+    # pip2 = "D:\techApps\Python\Python27\Scripts\pip.exe"
+    # pyf = "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.1520.0_x64__qbz5n2kfra8p0\Lib"
+    # tech_drive = "D:\.rightthumb-widgets"
+    # wprofile = "C:\Users\Scott\.rt\profile"
+    # w = "D:\.rightthumb-widgets"
+    # ww = "D:\.rightthumb-widgets\widgets"
+    # h = "C:\Users\Scott\.rt\profile"
+    # pr = "C:\Users\Scott\.rt\profile\projects"
+    # tt = "C:\Users\Scott\.rt\profile\tables"
+    # ttt = "D:\.rightthumb-widgets\widgets\databank\tables"
+    # rt = "C:\Users\Scott\.rt"
+    # bash = "D:\.rightthumb-widgets\widgets\bash"
+    # s = "D:\.rightthumb-widgets\widgets\batch"
+    # bat = "D:\.rightthumb-widgets\widgets\batch"
+    # js = "D:\.rightthumb-widgets\widgets\javascript"
+    # db = "D:\.rightthumb-widgets\widgets\databank"
+    # ps = "D:\.rightthumb-widgets\widgets\powershell"
+    # proc = "D:\techApps\ProcessMonitor\Procmon64.exe"
+    # ps1 = "C:\Users\Scott\Documents\WindowsPowerShell"
+    # wt = "C:\Users\Scott\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
+    # npp = "C:\Program Files\Sublime Text\sublime_text.exe"
+
+}
+
+function m {
+    param (
+        [string]$a
+    )
+
+    $pythonPath = "C:\Users\Scott\AppData\Local\Microsoft\WindowsApps\python3.exe"
+    $pyscript = "D:\.rightthumb-widgets\widgets\python\m.py"
+
+    # Build the command to execute
+    $command = "$pythonPath $pyscript -a $a"
+
+    # Execute the command and capture its output
+    $path = Invoke-Expression $command
+    Write-Host $path
+}
+
+function b {
+    param (
+        [string]$a
+    )
+
+    $pythonPath = "C:\Users\Scott\AppData\Local\Microsoft\WindowsApps\python3.exe"
+    $pyscript = "D:\.rightthumb-widgets\widgets\python\b.py"
+
+    # Build the command to execute
+    $command = "$pythonPath $pyscript -a $a"
+
+    # Execute the command and capture its output
+    $path = Invoke-Expression $command
+
+    # Change the current directory to the output directory
+    Set-Location -Path $path -PassThru
+}
+
+# Get-WmiObject Win32_DiskDrive | Select-Object Model, DeviceID | py $p\pwsh-table.py
+# Get-WmiObject Win32_DiskDrive | Select-Object Model, DeviceID | pp pwsh-table
 
 
 
-$widgets="C"
-if (  Test-Path $env:userprofile\.tk421  ) {
-	$widgets=(cat $env:userprofile\.tk421) -join "`n"
+function ppp {
+    [CmdletBinding()]
+    param (
+        [string]$r,
+        [string]$TheArgs,
+
+        [Parameter(ValueFromPipeline=$true)]
+        [Alias("InputObject")]
+        [PSObject]$Data
+
+    )
+    
+    begin {
+        $list = New-Object 'System.Collections.Generic.List[PSObject]'
+        $isTable = $false
+    }
+    
+    process {
+        $list.Add($Data)
+        if ($Data -is [System.Data.DataTable]) {
+            $isTable = $true
+        }
+    }
+    
+    end {
+        $pythonPath = "C:\Users\Scott\AppData\Local\Microsoft\WindowsApps\python3.exe"
+        $pyscript = "D:\.rightthumb-widgets\widgets\python\$r.py"
+    
+        if ((Test-Path $pythonPath -PathType Leaf) -and (Test-Path $pyscript)) {
+            $scriptInput = if ($isTable) { $list | Format-Table -AutoSize | Out-String } else { $list | Out-String }
+    
+            try {
+                # Pipe the script input directly to the Python script
+                $scriptInput | & $pythonPath $pyscript + $TheArgs
+    
+            } catch {
+                Write-Error "Failed to execute Python script: $_"
+            }
+        }
+        else {
+            Write-Error "Python executable or script file not found"
+        }
+    }
+    
 }
 
 
-# if (  Test-Path "D:\Program Files\Sublime Text 3\sublime_text.exe"  ) {
 
-# 	$code_editor="D:\Program Files\Sublime Text 3\sublime_text.exe"
-# 	$np="D:\Program Files\Sublime Text 3\"
-# 	$nf="sublime_text.exe"
+function pp {
+    [CmdletBinding()]
+    param (
+        [string]$r,
 
-# } elseif (  Test-Path $widgets+"\Sublime Text Build 3211\sublime_text.exe"  ) {
+        [Parameter(ValueFromPipeline=$true)]
+        [Alias("InputObject")]
+        [PSObject]$Data
 
-# 	$code_editor=$widgets+"\Sublime Text Build 3211\sublime_text.exe"
-# 	$np=$widgets+"\Sublime Text Build 3211\"
-# 	$nf="sublime_text.exe"
+    )
+    
+    begin {
+        $list = New-Object 'System.Collections.Generic.List[PSObject]'
+        $isTable = $false
+    }
+    
+    process {
+        $list.Add($Data)
+        if ($Data -is [System.Data.DataTable]) {
+            $isTable = $true
+        }
+    }
+    
+    end {
+        $pythonPath = "C:\Users\Scott\AppData\Local\Microsoft\WindowsApps\python3.exe"
+        $pyscript = "D:\.rightthumb-widgets\widgets\python\$r.py"
+    
+        if ((Test-Path $pythonPath -PathType Leaf) -and (Test-Path $pyscript)) {
+            $scriptInput = if ($isTable) { $list | Format-Table -AutoSize | Out-String } else { $list | Out-String }
+    
+            try {
+                # Pipe the script input directly to the Python script
+                $scriptInput | & $pythonPath $pyscript
+    
+            } catch {
+                Write-Error "Failed to execute Python script: $_"
+            }
+        }
+        else {
+            Write-Error "Python executable or script file not found"
+        }
+    }
+    
+}
 
-# } else {
-# 	$code_editor="D:\Windows\system32\notepad.exe"
-# 	$np="D:\Windows\system32\"
-# 	$nf="notepad.exe"
-# }
-# echo $widgets
-# echo $n
-# if (!(Test-Path $env:userprofile\.tk421) -and !(Test-Path $userfile)) {
 
-# echo "Peanut Butter Jelly Time"
-# Chocolatey profile
+
+function p3 {
+    Param (
+        [string]$r,
+        [string[]]$AdditionalArgs
+    )
+    $pythonPath = "C:\Users\Scott\AppData\Local\Microsoft\WindowsApps\python3.exe"
+    if (Test-Path $pythonPath -PathType Leaf) {
+        # Run the Python script using the specified Python executable and script file
+        $pyscript = "D:\.rightthumb-widgets\widgets\python\$r.py"
+        Write-Host $AdditionalArgs
+        & $pythonPath $pyscript $AdditionalArgs
+    }
+    else {
+        Write-Host "Python executable not found at the specified path."
+    }
+}
+
+function p2 {
+    [CmdletBinding()]
+    Param (
+        [string]$scriptFile
+    )
+    
+    $pythonPath = "C:\Users\Scott\AppData\Local\Microsoft\WindowsApps\python3.exe"
+
+    if (Test-Path $pythonPath -PathType Leaf) {
+        if ($PSCmdlet.MyInvocation.ExpectingInput) {
+            # Read input from the pipeline
+            $inputData = $input | Out-String
+
+            # Run the Python script using the specified Python executable and script file
+            $pyscript = "D:\.rightthumb-widgets\widgets\python\$scriptFile.py"
+            $inputData | & $pythonPath $pyscript
+        }
+        else {
+            Write-Host "No data received from the pipeline. Provide input via pipeline to use this function."
+        }
+    }
+    else {
+        Write-Host "Python executable not found at the specified path."
+    }
+}
+
+
+
+
+foreach ($alias in $aliasesToSet.GetEnumerator()) {
+    Set-Alias -Name $alias.Key -Value $alias.Value 
+    Set-Variable $alias.Key -Value $alias.Value  -Visibility Public
+}
+
+
+# Add Path to $env:Path
+$addPath = "D:\.rightthumb-widgets\widgets\python"
+if (Test-Path $addPath -PathType Container) {
+    $env:Path += ";$addPath"
+}
+
+# Chocolatey Profile
 $ChocolateyProfile = "$env:ChocolateyInstall\helpers\chocolateyProfile.psm1"
-if (Test-Path($ChocolateyProfile)) {
-  Import-Module "$ChocolateyProfile"
+if (Test-Path $ChocolateyProfile) {
+    Import-Module "$ChocolateyProfile"
 }
-Set-Variable -Name "n" -Value $n
-echo "echo test | py `$p\app.py"
-echo ""
+$p = "D:\.rightthumb-widgets\widgets\python"
+Write-Output "echo test | py `$p\line.py"
+
+function tb0 {
+    [CmdletBinding()]
+    param (
+        [Parameter(ValueFromPipeline=$true)]
+        [Alias("InputObject")]
+        [PSObject]$Data
+    )
+    
+    process {
+        $Data | Format-Table -AutoSize | Out-String
+    }
+}
+function tb {
+    [CmdletBinding()]
+    param (
+        [Parameter(ValueFromPipeline=$true)]
+        [Alias("InputObject")]
+        [PSObject]$Data
+    )
+    
+    begin {
+        $table = @()
+    }
+    
+    process {
+        $table += $Data
+    }
+    
+    end {
+        $table | Format-Table -AutoSize | Out-String
+    }
+}

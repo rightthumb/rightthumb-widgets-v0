@@ -412,7 +412,7 @@ def action():
 	# _.pr(no,c='cyan')
 
 	# if not os.path.isfile(no): _.saveText('# '+_.isDate(epoch,f='date')+'\n___\n## today\n- one\n\n~~~\n\n~~~\n___\n',no)
-	if not os.path.isfile(no): _.saveText('# '+_.isDate(epoch,f='date')+'\n___\n',no)
+	if not os.path.isfile(no): _.saveText('# '+_.isDate(epoch,f='date')+'\n\n___\n\n## project\n',no)
 
 
 	# _cryptFi = _.getTable('secure-crypt-local.meta')

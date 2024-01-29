@@ -38,11 +38,11 @@ from shutil import copyfile
 ##################################################
 
 def appSwitches():
-	_.switches.register('Input', '-i,-f,-file','file.txt')
-	_.switches.register('Insert', '-insert')
-	_.switches.register('InsertFile', '-insertfile')
-	_.switches.register('Replace', '-replace')
-	_.switches.register('ReplaceFile', '-replacefile')
+	_.switches.register('Input', '-f,-file','file.txt')
+	_.switches.register('Insert', '-i,-insert')
+	_.switches.register('InsertFile', '-if,-insertfile')
+	_.switches.register('Replace', '-r,-replace')
+	_.switches.register('ReplaceFile', '-rf,-replacefile')
 	_.switches.register('Test', '-test')
 	_.switches.register('EntireQuotes', '-q,-quotes')
 

@@ -319,7 +319,7 @@ What if magic existed?
 What if a place existed where your every thought and dream come to life.
 There is only one catch: it has to be written down.
 Such a place exists, it is called programming.
-    - Scott Taylor Reph, RightThumb.com
+    - Scott Taylor Reph, https://softwaredevelopment.solutions
 ~~~
 
 [Software Development Solutions](https://softwaredevelopment.solutions/)

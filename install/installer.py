@@ -3085,6 +3085,13 @@ alias code.="/snap/bin/code"
 alias lns="readlink -f "
 
 alias dmg.="sh $widgets/widgets/bash/dmg.sh"
+alias java.="sh $widgets/widgets/bash/java.sh"
+alias java.dmg="sh $widgets/widgets/bash/java-mac-dmg.sh"
+alias java.pkg="sh $widgets/widgets/bash/java-mac-pkg.sh"
+alias java.exe="sh $widgets/widgets/bash/java-win-exe.sh"
+alias java.msi="sh $widgets/widgets/bash/java-win-msi.sh"
+alias java.deb="sh $widgets/widgets/bash/java-linux-deb.sh"
+alias java.rpm="sh $widgets/widgets/bash/java-linux-rpm.sh"
 
 # get_time_difference
 # a3bc42ec51e9

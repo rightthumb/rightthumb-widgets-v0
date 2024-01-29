@@ -43,6 +43,7 @@ def sw():
 	_.switches.register( 'Verbos', '-v' )
 	_.switches.register( 'SSH-Remote_Folder', '-remote' )
 	_.switches.register( 'URL', '-url,-edit,--u' )
+	_.switches.register( 'Remote-Location', '-rp,-rpath' )
 
 
 
@@ -202,12 +203,63 @@ def meta_scan(path,end):
 	if 'url' in meta:
 
 		url = file.replace( __.path(folder), meta['url'] ).replace('\\','/')
+		# print(url)
 		if os.path.isdir(path) and not url.endswith('/'): url += '/'
 		try:
 			_.v.fp=url.replace(meta['url']+'/',meta['sftp']['path']+'/')
 			_.v.fp=_.v.fp.replace('//','/').replace('//','/')
 		except: pass
 	return urlpr(url,meta)
+
+def meta_scanR(path,end):
+	global folder
+	global meta
+
+	meta = {}
+	try:
+		file = os.path.abspath(path)
+	except Exception as e:
+		file = path
+	if os.path.isfile(path):
+		folder = __.path(path,pop=True)
+	else:
+		folder = __.path(path)
+	if os.path.isdir(path):folder+=os.sep
+	# if os.path.isfile(path): folder = __.path(path,pop=True)
+	# else: folder = __.path(path)
+	i=0
+	while not os.path.isfile( folder+os.sep+'.folder.meta'+end ):
+		# print(os.path.isfile( folder+os.sep+'.folder.meta'+end ),folder+os.sep+'.folder.meta'+end)
+		i+=1
+		if i > 100:
+			_.e('missing folder meta')
+		try:
+			folder = __.path(folder,pop=True)
+		except Exception as e:
+			break
+	mPath = folder+os.sep+'.folder.meta'+end
+	locations=_.getTable('site-locations.list')
+	loc=locations.copy()
+	if not mPath in locations: locations.append(mPath)
+	if not locations == loc: _.saveTable(locations,'site-locations.list')
+
+	if _.getText( mPath, raw=True ).strip().startswith('{'): meta = _.getTable2( mPath )
+	else: meta = _.getYML( mPath )
+	
+	if 'url' in meta:
+
+		url = file.replace( __.path(folder), meta['url'] ).replace('\\','/')
+		# print(url)
+		if os.path.isdir(path) and not url.endswith('/'): url += '/'
+		try:
+			_.v.fp=url.replace(meta['url']+'/',meta['sftp']['path']+'/')
+			_.v.fp=_.v.fp.replace('//','/').replace('//','/')
+		except: pass
+		try:
+			rPath = _.v.fp.replace(meta['url'],meta['sftp']['path'])
+			return rPath
+		except: pass
+	return ''
 APPS = {
 	'notes': {
 		# 'path': '/home/rightthumb/public_html/domains/eyeformeta.com/public_html/apps/Scrolls/_docs_/TECH/ddoc/asdf',
@@ -534,9 +586,17 @@ def URL(urls=None):
 
 
 def action():
+	if _.switches.isActive('Remote-Location'):
+		for path in _.switches.values('Files'):
+			rPath = meta_scanR(path,'')
+			_.pr(rPath,c='green')
+			# print('snap')
+		return None
 	if _.switches.isActive('URL'):
 		URL()
 		return None
+
+
 	global meta
 
 

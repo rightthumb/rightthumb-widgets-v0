@@ -1,26 +1,34 @@
 @echo off
-
 SETLOCAL
 
+REM Compile Java file
 echo Compiling Java files...
 javac %1.java
-if %errorlevel% neq 0 (
+if NOT %ERRORLEVEL% == 0 (
     echo Compilation failed.
-    exit /b %errorlevel%
+    exit /b %ERRORLEVEL%
 )
 
+REM Create JAR file
 echo Creating JAR file...
 jar cvfm %1.jar Manifest.txt %1.class
-if %errorlevel% neq 0 (
+if NOT %ERRORLEVEL% == 0 (
     echo Failed to create JAR file.
-    exit /b %errorlevel%
+    exit /b %ERRORLEVEL%
 )
+
 echo Build Complete. %1.jar is ready.
 
-jpackage --type app-image --input . --name %1 --main-jar %1.jar --main-class %1
-if %errorlevel% neq 0 (
-    echo Failed to create JAR file.
-    exit /b %errorlevel%
+REM Create application image
+echo Creating application image...
+mkdir app
+move %1.jar app\
+jpackage --type app-image --input app --name %1 --main-jar %1.jar --main-class %1 --temp temp-dir
+if NOT %ERRORLEVEL% == 0 (
+    echo Failed to create application image.
+    exit /b %ERRORLEVEL%
 )
+
+echo Application image created successfully.
+
 ENDLOCAL
-pause
