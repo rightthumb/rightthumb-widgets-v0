@@ -22,7 +22,7 @@ settings_table = {
 					'receipt-log': True,
 					'receipt-file': True,
 }
-
+UnixCopy = 'xsel'
 truePath = False
 truePath = True
 
@@ -170,7 +170,13 @@ def imp( subject, imp_table_testing=False ):
 		return imp_run( subject, imp_table_testing )
 	except:
 		imp_install(subject)
-		return imp_run( subject, imp_table_testing )
+		try:
+			return imp_run( subject, imp_table_testing )
+		except:
+			try:
+				imp_run2( subject )
+			except:
+				print('unable to import:',subject)
 
 def imp_install(mod):
 	mod = mod.split('.')[0]
@@ -223,6 +229,14 @@ def imp_install(mod):
 
 
 
+
+def imp_run2( subject ):
+	global imp_table
+	global importlib
+	if importlib is None:
+		import importlib
+	exec( 'import '+subject )
+	imp_table[subject] = eval(subject)
 
 def imp_run( subject, imp_table_testing=False ):
 	# print(subject); sys.exit();

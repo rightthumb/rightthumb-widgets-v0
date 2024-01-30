@@ -248,8 +248,10 @@ def clip_get_3():
 		if not _.isWin:
 			_.pr( '\tsudo apt install xclip xsel' )
 			return None
-
-	cmd = ["xsel", "--clipboard", "--output"]
+	if __.UnixCopy == 'xsel':
+		cmd = ["xsel", "--clipboard", "--output"]
+	else:
+		cmd = ["pbpaste"]
 
 	with open(tmpA, 'w') as file:
 		p = subprocess.Popen(cmd, stdout=file)

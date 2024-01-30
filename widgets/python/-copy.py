@@ -225,8 +225,10 @@ def clip_set_3(data,end='',clean=False):
 		if not _.switches.isActive('NoPrint'):
 			_.pr( 'no file' )
 		return None
-
-	cmd = ["cat", tmpA, "|",  "xsel", "--clipboard", "--input"  ]
+	if __.UnixCopy == 'xsel':
+		cmd = ["cat", tmpA, "|",  "xsel", "--clipboard", "--input"  ]
+	else:
+		cmd = ["cat", tmpA, "|",  "pbcopy"  ]
 	mycmd=subprocess.getoutput( ' '.join(cmd) )
 	test = clip_get_3()
 	if not data in test:
@@ -783,7 +785,7 @@ def action():
 		return None
 	if _.switches.isActive('Get'):
 		data = cleanString( _.getText(_v.myTables+_v.slash+'-copy-transfer.txt',raw=True) )
-		clip_set( data, end )
+		clip_set( data, _.v.end )
 		return None
 	if _.switches.isActive('Nano'):
 		os.system( 'nano "'+  _v.myTables+_v.slash+'-copy-transfer.txt'   +'"' )
