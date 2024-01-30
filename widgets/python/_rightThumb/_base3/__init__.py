@@ -10400,8 +10400,12 @@ def getTable(theFile, tableTemp=False, isDic=None, isList=None, tmp=None):
 	if os.path.isfile(theFile):
 		vv.opened_file_me[theFile] = os.path.getmtime(theFile)
 
-	try: simplejson = __.imp('simplejson')
-	except: import simplejson
+
+	import simplejson
+	try:
+		simplejson
+	except:
+		json = simplejson
 	try:
 		import json
 	except ImportError:
@@ -10495,8 +10499,11 @@ def getTable2(theFile, isDic=None, isList=None):
 	if os.path.isfile(theFile):
 		vv.opened_file_me[theFile] = os.path.getmtime(theFile)
 
-	try: simplejson = __.imp('simplejson')
-	except: import simplejson
+	import simplejson
+	try:
+		simplejson
+	except:
+		json = simplejson
 	try:
 		import json
 	except ImportError:
