@@ -169,7 +169,8 @@ def fometa(path,end=''):
 
 def json_(data,simp=False,s=None):
 	if not s is None: simp=s;
-	simplejson = __.imp('simplejson')
+	try: simplejson = __.imp('simplejson')
+	except: import simplejson
 	if type(data) == str:
 		return simplejson.loads(data)
 	if not simp:
@@ -319,7 +320,9 @@ def print_(*args,p=None,c=None,pad=3,g=None,end=None,pvs=None,pv=None,json=None,
 	else: rint=True;
 
 	if json:
-		simplejson=__.imp('simplejson'); args[0]=simplejson.dumps(args[0], indent=4, sort_keys=False, default=str);
+		try: simplejson = __.imp('simplejson')
+		except: import simplejson
+		args[0]=simplejson.dumps(args[0], indent=4, sort_keys=False, default=str);
 		if rint:
 			print(args[0])
 		return args[0]
@@ -346,7 +349,10 @@ def print_(*args,p=None,c=None,pad=3,g=None,end=None,pvs=None,pv=None,json=None,
 			except: return printVarSimpleFake(args[0])
 
 		if pv: return printVar(args[0])
-		if json: simplejson=__.imp('simplejson'); args[0]=simplejson.dumps(args[0], indent=4, sort_keys=False, default=str);
+		if json:
+			try: simplejson = __.imp('simplejson')
+			except: import simplejson
+			args[0]=simplejson.dumps(args[0], indent=4, sort_keys=False, default=str);
 		if not line is None and line:
 			if not lineLen is None:
 				args=[linePrint(c=c,p=0,minus=lineMinus,length=lineLen)]
@@ -1632,7 +1638,8 @@ def date_diff_dic(one,two=time.time()):
 	# print("\n%d days, %d hours, %d minutes, %d seconds" % dhms_from_seconds(date_diff_in_seconds(two, one)))
 	txt='{ "d": %d, "h": %d, "m": %d,  "s": %d }' % dhms_from_seconds(date_diff_in_seconds(two, one))
 	# dic=dict("{ 'd': %d, 'h': %d, 'm': %d,  's': %d }" % dhms_from_seconds(date_diff_in_seconds(two, one)))
-	simplejson=__.imp('simplejson')
+	try: simplejson = __.imp('simplejson')
+	except: import simplejson
 	dic=simplejson.loads(txt)
 	# print(dic)
 	# print((dic))
@@ -2730,7 +2737,8 @@ def autoComplete( table, prompt='> ' ):
 
 def getCryptTable( theFile, db=False, bank=False, index=False, temp=False, free=False, password=None ):
 	if os.path.isfile(theFile): vv.opened_file_me[theFile] = os.path.getmtime( theFile );
-	simplejson = __.imp('simplejson')
+	try: simplejson = __.imp('simplejson')
+	except: import simplejson
 	global _vault
 	global shutil
 	global _md5
@@ -2805,7 +2813,8 @@ def getCryptTable( theFile, db=False, bank=False, index=False, temp=False, free=
 def saveCryptTable( rows, theFile, db=False, bank=False, index=False, temp=False, free=False, indentCode=True, sort_keys=False, archive=False, p=1, password=None, me=0 ):
 	HD.chmod(theFile)
 
-	simplejson = __.imp('simplejson')
+	try: simplejson = __.imp('simplejson')
+	except: import simplejson
 	global _vault
 	global shutil
 	global _md5
@@ -4044,7 +4053,8 @@ def isData( data=None, focus=None, pipeClean=False, required=False,     r=None, 
 		for sw in __.isData_Switches:
 			if not sw == 'Files': return switches.values(sw)
 		if data is None and switches.isActive('Paste-isData-json'):
-			simplejson=__.imp('simplejson')
+			try: simplejson = __.imp('simplejson')
+			except: import simplejson
 			d=getClip().strip()
 			return simplejson.loads(d)
 		elif data is None and switches.isActive('Paste-isData'): return getClip().split('\n')
@@ -8054,7 +8064,8 @@ def cleanDic( data ):
 	nowDic = json2d( nowJSON_TXT, True )
 
 def d2json( data, sort_keys=False ):
-	simplejson = __.imp('simplejson')
+	try: simplejson = __.imp('simplejson')
+	except: import simplejson
 	# saveTable2( data, _v.json_temp )
 	# txt = getText( _v.json_temp, raw=True )
 
@@ -8065,7 +8076,8 @@ def printVar1( data ):
 
 
 def printVar( data, sort_keys=False, isDic=None ):
-	simplejson = __.imp('simplejson')
+	try: simplejson = __.imp('simplejson')
+	except: import simplejson
 	result = simplejson.dumps(data, indent=4, sort_keys=False, default=str)
 	printVarColor( result )
 	print_(  )
@@ -8165,7 +8177,8 @@ def printVar2( data, sort_keys=False ):
 	
 def printVarSimple( data, sort_keys=False, isDic=None, prefix=None, remove=None, d=None, p=True, r=None ):
 	#n)--> r, stands for just return and not print
-	simplejson = __.imp('simplejson')
+	try: simplejson = __.imp('simplejson')
+	except: import simplejson
 	dump=simplejson.dumps(data, indent=4, sort_keys=sort_keys, default=str)
 	if d:
 		if p:
@@ -9306,7 +9319,10 @@ def genUUID( project='', label='', uniqueTimestamp=False, note=None, r=None, e=N
 		l=list(string)
 		l.reverse()
 		return ''.join(l)
-	uuid = __.imp('uuid')
+	
+	try: uuid = __.imp('uuid')
+	except: import uuid
+
 	string = uuid.uuid4()
 	string = str(string)
 	# return string
@@ -10232,7 +10248,8 @@ def minusResults(string,minus=''):
 	return result
 
 def saveLog( logname, rows=[], focus=True, printThis=True ):
-	simplejson = __.imp('simplejson')
+	try: simplejson = __.imp('simplejson')
+	except: import simplejson
 	global appInfo
 	global appData
 	
@@ -10278,8 +10295,9 @@ def saveLog( logname, rows=[], focus=True, printThis=True ):
 
 def saveTable( rows, theFile, tableTemp=False, printThis=True, indentCode=True, sort_keys=False, archive=False,                k=0,s=0,tmp=None,here=None,h=None,    p=1, me=0   ):
 	HD.chmod(theFile)
-	simplejson = __.imp('simplejson')
-	try: json = __.imp('json')
+	try: simplejson = __.imp('simplejson')
+	except: import simplejson
+	try: import json
 	except: pass
 	if not h is None: here = True;
 	if not here is None: saveTable2( rows, theFile ); return None;
@@ -10382,9 +10400,10 @@ def getTable(theFile, tableTemp=False, isDic=None, isList=None, tmp=None):
 	if os.path.isfile(theFile):
 		vv.opened_file_me[theFile] = os.path.getmtime(theFile)
 
-	simplejson = __.imp('simplejson')
+	try: simplejson = __.imp('simplejson')
+	except: import simplejson
 	try:
-		json = __.imp('json')
+		import json
 	except ImportError:
 		json = simplejson
 
@@ -10421,8 +10440,9 @@ def getTable(theFile, tableTemp=False, isDic=None, isList=None, tmp=None):
 
 def getTableOld( theFile, tableTemp=False,      isDic=None, isList=None,      tmp=None ):
 	if os.path.isfile(theFile): vv.opened_file_me[theFile] = os.path.getmtime( theFile );
-	simplejson = __.imp('simplejson')
-	try: json = __.imp('json')
+	try: simplejson = __.imp('simplejson')
+	except: import simplejson
+	try: import json
 	except: pass
 	# defaults to myTables
 	if not type( tableTemp ) == bool:
@@ -10461,7 +10481,8 @@ def getTableOld( theFile, tableTemp=False,      isDic=None, isList=None,      tm
 
 def getTable3(theFile):
 	if os.path.isfile(theFile): vv.opened_file_me[theFile] = os.path.getmtime( theFile );
-	simplejson = __.imp('simplejson')
+	try: simplejson = __.imp('simplejson')
+	except: import simplejson
 	if os.path.isfile(theFile) == True:
 		with open(theFile,'r') as json_file:
 			json_data = simplejson.load(json_file)
@@ -10474,9 +10495,10 @@ def getTable2(theFile, isDic=None, isList=None):
 	if os.path.isfile(theFile):
 		vv.opened_file_me[theFile] = os.path.getmtime(theFile)
 
-	simplejson = __.imp('simplejson')
+	try: simplejson = __.imp('simplejson')
+	except: import simplejson
 	try:
-		json = __.imp('json')
+		import json
 	except ImportError:
 		json = simplejson
 
@@ -10504,8 +10526,9 @@ def getTable2(theFile, isDic=None, isList=None):
 
 def getTable2Old( theFile,     isDic=None, isList=None ):
 	if os.path.isfile(theFile): vv.opened_file_me[theFile] = os.path.getmtime( theFile );
-	simplejson = __.imp('simplejson')
-	try: json = __.imp('json')
+	try: simplejson = __.imp('simplejson')
+	except: import simplejson
+	try: import json
 	except: pass
 	if theFile.lower().endswith('.index') or theFile.lower().endswith('.indexes'):
 		isDic = True
@@ -10526,7 +10549,8 @@ def getTable2Old( theFile,     isDic=None, isList=None ):
 
 def getTableBIG( theFile,     isDic=None, isList=None ):
 	if os.path.isfile(theFile): vv.opened_file_me[theFile] = os.path.getmtime( theFile );
-	simplejson = __.imp('simplejson')
+	try: simplejson = __.imp('simplejson')
+	except: import simplejson
 	import pandas as pd
 	if theFile.lower().endswith('.index') or theFile.lower().endswith('.indexes'):
 		isDic = True
@@ -10554,7 +10578,8 @@ def getTableBIG( theFile,     isDic=None, isList=None ):
 _tar = None
 def getTableDB( theFile,     isDic=None, isList=None ):
 	if os.path.isfile(theFile): vv.opened_file_me[theFile] = os.path.getmtime( theFile );
-	simplejson = __.imp('simplejson')
+	try: simplejson = __.imp('simplejson')
+	except: import simplejson
 	theFile = _v.dbTables + _v.slash + theFile
 	# print(theFile)
 	if os.path.isfile(theFile):
@@ -10575,7 +10600,8 @@ def getTableDB( theFile,     isDic=None, isList=None ):
 
 def getTableProject( project, theFile,     isDic=None, isList=None, path=False ):
 	if os.path.isfile(theFile): vv.opened_file_me[theFile] = os.path.getmtime( theFile );
-	simplejson = __.imp('simplejson')
+	try: simplejson = __.imp('simplejson')
+	except: import simplejson
 	theFile = _v.projectData(project) + theFile
 	if path:
 		print_(theFile)
@@ -10595,7 +10621,8 @@ def getTableProject( project, theFile,     isDic=None, isList=None, path=False )
 
 def saveTableProject( project, rows=[], theFile='', printThis=False, sort_keys=False, indentCode=True,  p=None, me=0, path=False ):
 	HD.chmod(theFile)
-	simplejson = __.imp('simplejson')
+	try: simplejson = __.imp('simplejson')
+	except: import simplejson
 	# print_('*******************',theFile)
 	theFile = _v.projectData(project) + theFile
 	if __.print_path:
@@ -10619,7 +10646,8 @@ def saveTableProject( project, rows=[], theFile='', printThis=False, sort_keys=F
 
 def saveTableDB( rows, theFile, printThis=False, sort_keys=False, indentCode=True,  p=None, me=0 ):
 	HD.chmod(theFile)
-	simplejson = __.imp('simplejson')
+	try: simplejson = __.imp('simplejson')
+	except: import simplejson
 
 	# print_('*******************',theFile)
 	theFile = _v.dbTables + _v.slash + theFile
@@ -10642,7 +10670,8 @@ def saveTableDB( rows, theFile, printThis=False, sort_keys=False, indentCode=Tru
 
 def saveTable2( rows, theFile, printThis=False, sort_keys=False, indentCode=True, p=None, me=0 ):
 	HD.chmod(theFile)
-	simplejson = __.imp('simplejson')
+	try: simplejson = __.imp('simplejson')
+	except: import simplejson
 	if not p is None:
 		printThis = p
 	# print_('*******************',theFile)
@@ -10678,7 +10707,8 @@ def saveTable2( rows, theFile, printThis=False, sort_keys=False, indentCode=True
 
 def saveTable3( rows, theFile, printThis=False, me=0 ):
 	HD.chmod(theFile)
-	simplejson = __.imp('simplejson')
+	try: simplejson = __.imp('simplejson')
+	except: import simplejson
 	# print_('*******************',theFile)
 	dataDump = simplejson.dumps(rows, sort_keys=False, default=str)
 	f = open(theFile,'w')
@@ -11184,7 +11214,8 @@ def saveTableSplitNew( rows,theFile,tableTemp = True,printThis = True, project=F
 	while os.path.isfile(path) == True:
 		cnt += 1
 		path = file0 + count(cnt) + suffix
-	simplejson = __.imp('simplejson')
+	try: simplejson = __.imp('simplejson')
+	except: import simplejson
 	dataDump = simplejson.dumps(rows, indent=4, sort_keys=True, default=str)
 	f = open(path,'w')
 	f.write(str(dataDump))
@@ -11231,7 +11262,7 @@ def sort(rows, name):
 			except Exception as e:
 				errors.append({'id': 17, 'function': 'sortThis()', 'cnt': 2, 'location': 'rows = sorted(rows, key=itemgetter(sb))', 'vars': [{'name': 'rows', 'value': 'nope to that, to big'}, {'name': 'name', 'value': name}], 'error': e})
 			
-		uuid = __.imp('uuid')
+		import uuid
 		sortBy[item] = str(uuid.uuid4())
 		tempFields.append( sortBy[item] )
 		i = 0
@@ -14675,7 +14706,7 @@ class Table:
 				except Exception as e:
 					errors.append({'id': 17, 'function': 'sortThis()', 'cnt': 2, 'location': 'rows = sorted(rows, key=itemgetter(sb))', 'vars': [{'name': 'rows', 'value': 'nope to that, to big'}, {'name': 'name', 'value': name}], 'error': e})
 				
-			uuid = __.imp('uuid')
+			import uuid
 			sortBy[item] = str(uuid.uuid4())
 			tempFields.append( sortBy[item] )
 			i = 0
@@ -14713,7 +14744,8 @@ class Table:
 
 	def save(self,theFile = '',tableTemp = True,printThis = True, me=0):
 		HD.chmod(theFile)
-		simplejson = __.imp('simplejson')
+		try: simplejson = __.imp('simplejson')
+		except: import simplejson
 		if theFile == '':
 			theFile = str(self.file)
 		self.file = theFile
@@ -14734,7 +14766,8 @@ class Table:
 		if me and theFile in vv.opened_file_me: changeM( theFile, vv.opened_file_me[theFile] );
 	def get(self,theFile = '',tableTemp = True,printThis = False):
 		if os.path.isfile(theFile): vv.opened_file_me[theFile] = os.path.getmtime( theFile );
-		simplejson = __.imp('simplejson')
+		try: simplejson = __.imp('simplejson')
+		except: import simplejson
 		if theFile == '':
 			theFile = self.file
 		self.file = theFile
@@ -16731,7 +16764,7 @@ class Database:
 	#   conn.close()
 
 	def update( self, info ):
-		sqlite3 = __.imp('sqlite3')
+		import sqlite3
 		sql = "update "+info['table']+" set [x] where " + info['update'] + " "
 		u = ''
 		for f in info['record'].keys():
@@ -16760,7 +16793,7 @@ class Database:
 		conn.close()
 
 	def search( self, info ):
-		sqlite3 = __.imp('sqlite3')
+		import sqlite3
 		if not self.initializedDB:
 			print_( 'no data' )
 			sys.exit()
@@ -16807,7 +16840,7 @@ class Database:
 
 
 	def insertRecords( self, table, records=[] ):
-		sqlite3 = __.imp('sqlite3')
+		import sqlite3
 		if len( records ) > 0:
 			self.records = records
 			for i,r in enumerate(self.records):
@@ -16862,7 +16895,7 @@ class Database:
 
 
 	def genInfo( self, process=False ):
-		sqlite3 = __.imp('sqlite3')
+		import sqlite3
 		if os.path.isfile( self.file ) and not self.initializedDB:
 			self.initializedDB = True
 			self.tableInfo = []
@@ -16974,7 +17007,7 @@ class Database:
 		self.fields[ field ] = fType
 
 	def create( self, table=False, fields=False ):
-		sqlite3 = __.imp('sqlite3')
+		import sqlite3
 		if os.path.isfile(self.file):
 			print_( 'Database exists' )
 		else:
@@ -17312,7 +17345,7 @@ class Database2:
 		sql = sql.replace('WHERE;',';')
 		return sql
 	def metaGen(self):
-		sqlite3 = __.imp('sqlite3')
+		import sqlite3
 		import re
 		# import numpy as np
 		meta = []
@@ -17557,7 +17590,7 @@ class Database2:
 		return result
 
 	def executeSQL(self,sql,group=0):
-		sqlite3 = __.imp('sqlite3')
+		import sqlite3
 		conn = sqlite3.connect(self.appDB)
 		c = conn.cursor()
 		c.execute(sql)
@@ -19373,7 +19406,7 @@ class Queue:
 
 	def saveData( self ):
 
-		sqlite3 = __.imp('sqlite3')
+		import sqlite3
 		for focus in __.projectData:
 			try:
 				del __.projectData[focus][0]
@@ -19424,7 +19457,7 @@ class Queue:
 
 
 	def manageData( self ):
-		sqlite3 = __.imp('sqlite3')
+		import sqlite3
 		self.data = {}
 		self.data[0] = 0
 		self.data[1] = 0
@@ -21634,7 +21667,7 @@ def timeblock(epoch=None,hr=None,ish=None, ):
 	return t
 
 def rli(LIST,default=''):
-	random = __.imp('random')
+	import random
 	if len(LIST) == 0:
 		return default
 	if len(LIST) == 1:
@@ -21688,7 +21721,7 @@ def epoch_times():
 # timeCalc
 
 def newid(subject):
-	requests = __.imp('requests')
+	import requests
 	url='https://eyeformeta.com/apps/ids/?subject=live-'+subject
 	page = requests.get(url).content.decode("utf-8").replace('\\n','\n').replace('\n','').replace('\r','').replace(' ','').replace('\t','')
 	return page
@@ -21711,7 +21744,7 @@ def life(subject):
 
 
 def ico():
-	random=__.imp('random')
+	import random
 	ads=fo(_v.life+'apps')
 	ri = random.randrange(len(ads))
 	cho=ads[ri]
@@ -21860,7 +21893,7 @@ def ad(path=None,label='ad'):
 		sub=sub.replace('.txt','').replace('-',' ').replace('_',' ')
 	elif not path:
 		nsfw_=True
-		random=__.imp('random')
+		import random
 		add_ad_fo('apps')
 		add_ad_fo('quotes')
 		
@@ -21929,7 +21962,8 @@ def getConfig(path):
 		if string.startswith('"'): string=string[1:]; string=string[:-1]; return _cl_(string);
 		if string.startswith("'"): string=string[1:]; string=string[:-1]; return _cl_(string);
 		if string.startswith('[') or string.startswith('{'):
-			simplejson = __.imp('simplejson')
+			try: simplejson = __.imp('simplejson')
+			except: import simplejson
 			return simplejson.loads(string)
 		if string.lower() == 'none': return None;
 		if string.lower() == 'null': return None;
@@ -21966,7 +22000,8 @@ def saveConfig(data,path):
 		elif type(string) == str and '\n' in string: return _cl_(str({'d':string})[7:-2]);
 		elif type(string) == int or type(string) == float: return _cl_(str(string));
 		elif type(string) == dict or type(string) == list:
-			simplejson = __.imp('simplejson')
+			try: simplejson = __.imp('simplejson')
+			except: import simplejson
 			return simplejson.dumps(string, sort_keys=False, default=str)
 
 		return _cl_(str(string))
@@ -22399,7 +22434,7 @@ def getYML(path,here=False,h=None,auto=True,a=None,t=False):
 	if here: auto = False
 	if not auto: here=True
 	loaded=False
-	yaml = __.imp('yaml')
+	import yaml
 	os = __.imp('os.path.isfile')
 	if t: path=_v.tt+os.sep+path
 	if os.path.isfile(path):
@@ -22422,7 +22457,7 @@ def getYML(path,here=False,h=None,auto=True,a=None,t=False):
 
 def saveYML(data,path,here=False,h=None):
 	if not h is None: here = h
-	yaml = __.imp('yaml')
+	import yaml
 	os = __.imp('os.sep')
 	y=yaml.dump( data, sort_keys=False )
 	if not here and not os.sep in path:
