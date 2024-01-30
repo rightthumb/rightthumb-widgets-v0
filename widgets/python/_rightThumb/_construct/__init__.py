@@ -468,8 +468,16 @@ def getTable( file ):
 	# os = imp('os')
 	if not get_first_char(file) == '{' and  not get_first_char(file) == '[':
 		return yamlSimp(saveText(file))
-	import simplejson
-	json = simplejson
+	
+	
+	try:
+		import simplejson
+	except:
+		json = simplejson
+	try:
+		import json
+	except ImportError:
+		json = simplejson
 
 	if os.path.isfile(file):
 		with open(file,'r', encoding="latin-1") as json_file:
@@ -480,7 +488,14 @@ def getTable( file ):
 
 def saveTable( data, file, sk=False ):
 	import simplejson
-	json = simplejson
+	try:
+		import simplejson
+	except:
+		json = simplejson
+	try:
+		import json
+	except ImportError:
+		json = simplejson
 	dataDump = json.dumps(data, indent=4, sort_keys=sk)
 
 	f = open(file,'w')
