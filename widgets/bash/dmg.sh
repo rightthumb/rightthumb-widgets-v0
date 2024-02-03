@@ -103,7 +103,7 @@ print_help() {
 while [[ "$#" -gt 0 ]]; do
 	case $1 in
 		-d|--download) download_file "$2" "$3"; shift 3 ;;
-		-u|--upload) upload_file "$2"; shift 2 ;;
+		-u|--upload) upload_file "$2" "$2"; shift 3 ;;
 		-o|--open-dmg) open_dmg "$2"; shift 2 ;;
 		-cd|--create-dmg) create_dmg "$2" "$3"; shift 3 ;;
 		-z|--unzip) unzip_file "$2" "$3"; shift 3 ;;
