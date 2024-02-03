@@ -14,7 +14,15 @@ import os
 import time
 import _rightThumb._construct as __
 import _rightThumb._vars as _v
-import simplejson as json
+try:
+	import simplejson
+	json = simplejson
+except:
+	pass
+try:
+	import json
+except ImportError:
+	print('no json')
 
 __.dictProfile_fields = []
 

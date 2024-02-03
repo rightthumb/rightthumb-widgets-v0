@@ -472,13 +472,13 @@ def getTable( file ):
 	
 	try:
 		import simplejson
-	except:
 		json = simplejson
+	except:
+		pass
 	try:
 		import json
 	except ImportError:
-		json = simplejson
-
+		print('no json')
 	if os.path.isfile(file):
 		with open(file,'r', encoding="latin-1") as json_file:
 			json_data = json.load(json_file)
@@ -487,15 +487,15 @@ def getTable( file ):
 	return json_data
 
 def saveTable( data, file, sk=False ):
-	import simplejson
 	try:
 		import simplejson
-	except:
 		json = simplejson
+	except:
+		pass
 	try:
 		import json
 	except ImportError:
-		json = simplejson
+		print('no json')
 	dataDump = json.dumps(data, indent=4, sort_keys=sk)
 
 	f = open(file,'w')
