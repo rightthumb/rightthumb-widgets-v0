@@ -2,8 +2,8 @@ import requests
 from bs4 import BeautifulSoup
 
 # Define the input and output file paths
-input_file = "/home/rightthumb/public_html/domains/eyeformeta.com/public_html/apps/md/notes/scott/_docs_/_YouTube/mp3/songs.md"
-output_file = "/home/rightthumb/public_html/domains/eyeformeta.com/public_html/apps/md/notes/scott/_docs_/_YouTube/mp3/queue.md"
+input_file = "/home/rightthumb/public_html/domains/eyeformeta.com/public_html/apps/Scrolls/_docs_/_YouTube/mp3/songs.md"
+output_file = "/home/rightthumb/public_html/domains/eyeformeta.com/public_html/apps/Scrolls/_docs_/_YouTube/mp3/queue.md"
 
 # Function to search Google and get the first YouTube video URL
 def search_google(query):

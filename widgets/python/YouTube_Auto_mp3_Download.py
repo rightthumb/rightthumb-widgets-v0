@@ -7,11 +7,11 @@ from datetime import datetime
 
 # Variables
 OUTPUT_DIR = "/home/rightthumb/phone/YoutTube_mp3"
-URLS_FILE = "/home/rightthumb/public_html/domains/eyeformeta.com/public_html/apps/md/notes/scott/_docs_/_YouTube/mp3/queue.md"
-ERROR_FILE = "/home/rightthumb/public_html/domains/eyeformeta.com/public_html/apps/md/notes/scott/_docs_/_YouTube/mp3/.App/err.md"
-SUCCESS_FILE = "/home/rightthumb/public_html/domains/eyeformeta.com/public_html/apps/md/notes/scott/_docs_/_YouTube/mp3/.App/success.md"
-INITIATION_FILE = "/home/rightthumb/public_html/domains/eyeformeta.com/public_html/apps/md/notes/scott/_docs_/_YouTube/mp3/.App/initiation.md"
-LOG_FILE = "/home/rightthumb/public_html/domains/eyeformeta.com/public_html/apps/md/notes/scott/_docs_/_YouTube/mp3/.App/run.md"
+URLS_FILE = "/home/rightthumb/public_html/domains/eyeformeta.com/public_html/apps/Scrolls/_docs_/_YouTube/mp3/queue.md"
+ERROR_FILE = "/home/rightthumb/public_html/domains/eyeformeta.com/public_html/apps/Scrolls/_docs_/_YouTube/mp3/.App/err.md"
+SUCCESS_FILE = "/home/rightthumb/public_html/domains/eyeformeta.com/public_html/apps/Scrolls/_docs_/_YouTube/mp3/.App/success.md"
+INITIATION_FILE = "/home/rightthumb/public_html/domains/eyeformeta.com/public_html/apps/Scrolls/_docs_/_YouTube/mp3/.App/initiation.md"
+LOG_FILE = "/home/rightthumb/public_html/domains/eyeformeta.com/public_html/apps/Scrolls/_docs_/_YouTube/mp3/.App/run.md"
 CONFIGS_FOLDER = os.path.dirname(URLS_FILE)
 
 # Create a named temporary file to keep a backup of URLs for safety

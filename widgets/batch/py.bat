@@ -18,12 +18,13 @@ if [%1] == [] (
 )
 
 :stuff
-if exist %1 (
+if exist "%python%\%1.py" (
     %py% %*
 ) else (
-    rem type D:\.rightthumb-widgets\widgets\python\0-index.list | call p line --c + %* | p pipe-cleaner -ext
-    rem CALL p py-finder  + $@ -percentage
-    CALL p file -prefix -noext --c -folder %widgets%\widgets\python + %*
+    @REM type D:\.rightthumb-widgets\widgets\python\0-index.list  --c + %* | p pipe-cleaner -ext
+    @REM CALL p py-finder  + $@ -percentage
+    @REM CALL p file -prefix -noext --c -folder %widgets%\widgets\python + %*
+    call p cat -f D:\.rightthumb-widgets\widgets\python\0-index.list + %*
 )
 
 rem @echo off
