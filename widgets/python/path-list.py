@@ -3,7 +3,8 @@ def focus(parentApp='', childApp='', reg=True): global appDBA; f = __.appName(ap
 fieldSet=_.l.vars(focus(),__name__,__file__,appDBA);_.load();_v=__.imp('_rightThumb._vars');
 
 def sw():
-	pass
+	_.switches.register('Clean', '--c')
+	_.switches.register('Path', '-path')
 _._default_settings_()
 
 _.appInfo[focus()] = {
@@ -56,9 +57,29 @@ def action():
 		command = "echo $PATH"
 		output = execute_and_return(command)
 		output = output.split(':')
+	spent = []
+	save=[]
 	for line in output:
-		if _.showLine(line):
-			_.pr(line)
+		if os.path.isdir(line):
+			if not line.lower() in spent:
+				if _.showLine(line):
+					if line.endswith(os.sep):
+						line = line[:-1]
+					if not _.switches.isActive('Path'):
+						_.pr(line)
+				spent.append(line.lower())
+				save.append(line)
+	if not _.switches.isActive('Clean') and not _.switches.isActive('Path'):
+		_.pr('\n',len(spent),c='yellow')
+	if _.switches.isActive('Path'):
+		if _.isWin:
+			paths = ';'.join(save)
+			path = 'SET "PATH='+paths+'"'
+		else:
+			paths = ':'.join(save)
+			path = 'export PATH='+paths
+		_.pr(path)
+import os
 
 ########################################################################################
 if __name__ == '__main__':

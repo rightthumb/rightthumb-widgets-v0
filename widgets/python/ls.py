@@ -919,6 +919,7 @@ def action():
 	if _.isData():
 		data=[]
 		for path in _.isData():
+			path=path.strip()
 			if os.path.isfile(path):
 				path=__.path(path)
 				# _.pr(path)
