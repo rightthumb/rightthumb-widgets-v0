@@ -3093,6 +3093,9 @@ alias java.msi="sh $widgets/widgets/bash/java-win-msi.sh"
 alias java.deb="sh $widgets/widgets/bash/java-linux-deb.sh"
 alias java.rpm="sh $widgets/widgets/bash/java-linux-rpm.sh"
 
+export PATH=$PATH:/opt/rightthumb-widgets-v0/widgets/bash
+
+
 # get_time_difference
 # a3bc42ec51e9
 
