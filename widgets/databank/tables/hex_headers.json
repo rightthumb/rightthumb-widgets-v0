@@ -1,9 +1,22 @@
 [
+
+    {
+        "extension": "EXE",
+        "signature": "4D 5A 90 00 03 00 00 00",
+        "description": "C# Compiled Windows",
+        "src": "SoftwareDevelopmentSolutions"
+    },  
+    {
+        "extension": "*",
+        "signature": "7F 45 4C 46",
+        "description": "C++ Compiled Linux",
+        "src": "SoftwareDevelopmentSolutions"
+    },
     {
         "extension": "JEX",
         "signature": "30 30 30 33 39",
         "description": "Joplin    Export / Backup",
-        "src": "rightthumb"
+        "src": "SoftwareDevelopmentSolutions"
     },
     {
         "extension": "*",

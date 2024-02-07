@@ -14,9 +14,10 @@ set path=%path%;D:\websites\domains\signtool\CodeSignTool-v1.3.0-windows
 
 call p code-sign-vars > "%stmp%\sign.bat"
 call "%stmp%\sign.bat"
+call rm "%stmp%\sign.bat" > nul
 if [%2] == [] (
+    @REM %signtool% sign /fd sha256 /tr http://ts.ssl.com /td sha256 /sha1 certificate thumbprint %1
     CodeSignTool sign -credential_id=%sign_credential% -username=%sign_username% -password="%sign_password%" -output_dir_path=signed -input_file_path=%1
 ) else (
     echo CodeSignTool sign -credential_id=%sign_credential% -username=%sign_username% -password="%sign_password%" -output_dir_path=signed -input_file_path=%1
 )
-call rm "%stmp%\sign.bat" > nul

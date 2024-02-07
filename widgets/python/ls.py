@@ -920,6 +920,7 @@ def action():
 		data=[]
 		for path in _.isData():
 			path=path.strip()
+			path=path.replace('"','')
 			if os.path.isfile(path):
 				path=__.path(path)
 				# _.pr(path)
