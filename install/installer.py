@@ -3085,14 +3085,14 @@ alias code.="/snap/bin/code"
 alias lns="readlink -f "
 
 alias dmg.="sh $widgets/widgets/bash/dmg.sh"
-alias java.="sh $widgets/widgets/bash/java.sh"
-alias java.dmg="sh $widgets/widgets/bash/java-mac-dmg.sh"
-alias java.pkg="sh $widgets/widgets/bash/java-mac-pkg.sh"
-alias java.exe="sh $widgets/widgets/bash/java-win-exe.sh"
-alias java.msi="sh $widgets/widgets/bash/java-win-msi.sh"
-alias java.deb="sh $widgets/widgets/bash/java-linux-deb.sh"
-alias java.rpm="sh $widgets/widgets/bash/java-linux-rpm.sh"
-
+# alias java.="sh $widgets/widgets/bash/java.sh"
+# alias java.dmg="sh $widgets/widgets/bash/java-mac-dmg.sh"
+# alias java.pkg="sh $widgets/widgets/bash/java-mac-pkg.sh"
+# alias java.exe="sh $widgets/widgets/bash/java-win-exe.sh"
+# alias java.msi="sh $widgets/widgets/bash/java-win-msi.sh"
+# alias java.deb="sh $widgets/widgets/bash/java-linux-deb.sh"
+# alias java.rpm="sh $widgets/widgets/bash/java-linux-rpm.sh"
+alias whitelist="sh $widgets/widgets/bash/whitelist.sh"
 export PATH=$PATH:/opt/rightthumb-widgets-v0/widgets/bash:/opt/rightthumb-widgets-v0/widgets/python
 
 

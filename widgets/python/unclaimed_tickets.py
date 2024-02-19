@@ -180,10 +180,10 @@ def action():
 							if not 'being used by another process' in line:
 								newFile.append(line)
 						_.saveText( newFile, _v.myTickets +os.sep+ file )
-					# time.sleep(.2)
-				os.unlink(path)
-				if os.path.isfile(path2):
-					os.unlink(path2)
+						# time.sleep(.2)
+						os.unlink(path)
+						if os.path.isfile(path2):
+							os.unlink(path2)
 
 ########################################################################################
 if __name__ == '__main__':

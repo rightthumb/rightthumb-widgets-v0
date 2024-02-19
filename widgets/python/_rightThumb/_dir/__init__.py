@@ -14,7 +14,13 @@ import _rightThumb._vars as _v
 import _rightThumb._md5 as _md5
 import _rightThumb._mimetype as _mime
 import hashlib
-import simplejson as json
+try:
+	import simplejson as json
+except:
+	try:
+		import json
+	except:
+		pass
 import _rightThumb._base3 as _
 __.dir=_.dot()
 __.dir.print=False
