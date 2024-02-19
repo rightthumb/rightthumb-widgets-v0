@@ -3096,6 +3096,30 @@ alias whitelist="sh $widgets/widgets/bash/whitelist.sh"
 export PATH=$PATH:/opt/rightthumb-widgets-v0/widgets/bash:/opt/rightthumb-widgets-v0/widgets/python
 
 
+
+# # pyEnvironment - START
+# file="/opt/rightthumb-widgets-v0/widgets/bash/load_pyEnvironment.sh"
+# folder="$HOME/.pyEnvironment"
+
+# if [ -f "$file" ]; then
+#     source "$file"
+# fi
+
+# if [ -d "$folder" ]; then
+#     :
+# fi
+# # testing
+# # python3 -c "from Crypto.Cipher import Blowfish; print('Blowfish is available')"
+# # instead run: setup-force.sh
+# # pyEnvironment - END
+
+
+
+
+
+
+
+
 # get_time_difference
 # a3bc42ec51e9
 

@@ -196,7 +196,7 @@ def add():
 def possibly_wait():
 	if  _.switches.isActive('Temp'):
 		# _.pr('Temp')
-		loops = 8
+		loops = 15
 		if len( _.switches.value('Temp') ):
 			loops = int( _.switches.value('Temp') )
 

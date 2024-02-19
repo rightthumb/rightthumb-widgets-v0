@@ -23,7 +23,7 @@ is_package_installed() {
 install_with_venv() {
 	package=$1
 	package_name=$(echo $package | cut -d'=' -f1)  # Extract the package name without version
-	venv_path="$HOME/.pyEnvironment/venv_$package_name"  # Use package name for venv directory
+	venv_path="$HOME/.pyEnvironment/venv_$package_name"  # Modified to use package name for venv directory
 
 	ensure_venv_directory
 
@@ -53,10 +53,8 @@ install_with_venv() {
 	deactivate
 }
 
-# Loop through each line in require.txt and install the package
-while IFS= read -r package; do
-	echo "Attempting to install $package..."
-	install_with_venv "$package"
-done < ../require.txt
+# Example usage: attempt to install a package
+# Replace 'your_package_name==version' with the actual package and version
+# install_with_venv "example_package==1.0"
 
-echo "All packages processed."
+# Add logic to read from a requirements file or handle multiple packages as needed.

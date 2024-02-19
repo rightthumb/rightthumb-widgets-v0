@@ -32,6 +32,7 @@ def sw():
 	_.switches.register( 'Python', '-py' )
 	# _.switches.register( 'Execute', '-exec' )
 	_.switches.register( 'Me', '-me' )
+	_.switches.register( 'Clear', '--c,-clear' )
 
 
 
@@ -48,7 +49,7 @@ __.setting('switch-raw',[])
 
 _.appInfo[focus()] = {
 	# 'app': '8facG-jo0Cxk',
-	'file': 'vps-tf.py',
+	'file': 'tf.py',
 	'liveAppName': __.thisApp( __file__ ),
 	'description': 'simple send and receive files',
 		# _.ail(1,'subject')+
@@ -76,19 +77,19 @@ _.appInfo[focus()] = {
 	],
 	'examples': [
 						_.linePrint(label='simple',p=0),
-						_.hp('p -paste | p vps-tf -f py -log'),
+						_.hp('p -paste | p tf -f py -log'),
 						'''___
 				python -m SimpleHTTPServer''',
 						_.linePrint(label='simple',p=0),
 						_.linePrint(label='simple',p=0),
-						_.hp('p -paste | p vps-tf -f import-fix -log'),
+						_.hp('p -paste | p tf -f import-fix -log'),
 						'''___
 				def _read_file(path): # 173 stickytape.__init__
 					return open(path,encoding="utf-8").read()''',
 						_.linePrint(label='simple',p=0),
-						'''cat xfce4_de.sh | p vps-tf
-				curl https://tf.sds.sh/?py=vps-tf.py --output vps-tf.py ; chmod +x vps-tf.py
-				python3 vps-tf.py  | bash''',
+						'''cat xfce4_de.sh | p tf
+				curl https://tf.sds.sh/?py=tf.py --output tf.py ; chmod +x tf.py
+				python3 tf.py  | bash''',
 						_.linePrint(label='simple',p=0),
 	],
 	'columns': [
@@ -134,10 +135,14 @@ import requests
 def action():
 	subject = '0'
 	url = 'https://tf.sds.sh/'
-	token = _v.fig['tf']
+	token = 'eol'
 	data = ''
 	pre = 'tf-'
 
+	if _.switches.isActive('Clear'):
+		response = requests.post(url, data={'token': token, 'subject': pre + subject, 'data': ''})
+		data = response.content.decode(response.encoding or 'utf-8')
+		return None
 	if _.switches.isActive('Log'):
 		pre = 'log-'
 	
@@ -162,7 +167,7 @@ def action():
 
 	if _.switches.isActive('File') and _.switches.value('File'):
 		subject = _.switches.value('File')
-	
+	# print(_.isData()); sys.exit();
 	if _.isData():
 		response = requests.post(url, data={'token': token, 'subject': pre + subject, 'data': '\n'.join(_.isData())})
 		data = response.content.decode(response.encoding or 'utf-8')
