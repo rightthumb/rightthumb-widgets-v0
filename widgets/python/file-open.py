@@ -39,6 +39,7 @@ def appSwitches():
 	_.switches.register( 'Backup', '-b,-backup' )
 	_.switches.register( 'Clean', '--c,-clean' )
 	_.switches.register( 'OpenSingle', '-single', 'joins by space' )
+	_.switches.register( 'ForceSublime', '-sub,-sublime' )
 
 _.autoBackupData = __.autoCreationConfiguration['backup']
 __.releaseAcquiredData = __.autoCreationConfiguration['logs'] 
@@ -354,6 +355,7 @@ def action(path=None):
 					_copy.imp.copy( path, p=0 )
 					return path
 				if app == 'C:\\Program': app=_v.fig['code_editor']
+				if _.switches.isActive('ForceSublime'): app = 'C:\\Program Files\\Sublime Text 3\\sublime_text.exe'
 				# print(app);sys.exit();
 				if not os.path.isfile(app): _.e('Unable to open','app does not exist')
 				try:

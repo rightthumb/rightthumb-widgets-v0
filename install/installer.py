@@ -3115,7 +3115,24 @@ export PATH=$PATH:/opt/rightthumb-widgets-v0/widgets/bash:/opt/rightthumb-widget
 
 
 
+function git_add_modified_files() {
+    if [ -z "$1" ]; then
+        /opt/rightthumb-widgets-v0/widgets/python/files.py  - minecraft.py vps- + *.py *.sh *.bat *.md *.ad *.ps1 -or  --c -ago 10h | p line --c -make "git add {}" | p execute
+    else
+        /opt/rightthumb-widgets-v0/widgets/python/files.py  - minecraft.py vps- + *.py *.sh *.bat *.md *.ad *.ps1 -or --c -ago "$1" | p line --c -make "git add {}" | p execute
+    fi
+}
+generate_and_push() {
+    tmpf=$(mktemp)
+    /opt/rightthumb-widgets-v0/widgets/python/genuuid.py -e > "$tmpf"
+    uuid=$(cat "$tmpf")
+    git commit -m "$uuid"
+    git push --force
+    rm "$tmpf"
+}
 
+alias git.files="git_add_modified_files"
+alias git.cp="generate_and_push"
 
 
 
