@@ -80,10 +80,10 @@ else
 	# Install ZIP
 	sudo apt-get -y install zip &>/dev/null
 
-	# Install sendmail
-	echo "Installing sendmail"
-	echo ''
-	sudo apt-get -y install sendmail &>/dev/null
+	# # Install sendmail
+	# echo "Installing sendmail"
+	# echo ''
+	# sudo apt-get -y install sendmail &>/dev/null
 
 	# sudo systemctl stop sendmail
 	# sudo apt-get purge sendmail sendmail-base sendmail-bin sendmail-cf
