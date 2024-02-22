@@ -1,0 +1,4 @@
+# apt install plocate
+# updatedb
+# locate my.cnf
+cat /root/.my.cnf
