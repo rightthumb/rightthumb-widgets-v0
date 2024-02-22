@@ -1,0 +1,8 @@
+# MySQL connection parameters
+user = postfix_user
+password = postfix_password
+hosts = localhost
+dbname = postfix_database
+
+# Query to retrieve alias mappings
+query = SELECT destination FROM virtual_aliases WHERE source='%s'

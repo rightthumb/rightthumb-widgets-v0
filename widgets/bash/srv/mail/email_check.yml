@@ -1,0 +1,16 @@
+email_configuration:
+  incoming_mail:
+	protocol: IMAP # or POP3, depending on what your server uses
+	server: imap.example.com # Your IMAP server address
+	port: 993 # Common port for IMAP over SSL
+	ssl: true # true for SSL connection, false if not using SSL
+	username: your.email@example.com
+	password: yourpassword
+  outgoing_mail:
+	protocol: SMTP
+	server: smtp.example.com # Your SMTP server address
+	port: 587 # Common port for SMTP with STARTTLS
+	ssl: true # true if using SSL or STARTTLS, false otherwise
+	authentication_required: true # true if your SMTP server requires authentication
+	username: your.email@example.com
+	password: yourpassword
