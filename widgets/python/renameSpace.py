@@ -138,7 +138,9 @@ def action():
 				a=__.path(file)
 				os.rename(file,new)
 				b=__.path(new)
-				undo[b] = a
+				try:
+					undo[b] = a
+				except: pass
 				_.pr( b.replace( __.path(here)+os.sep, '' ) ,c='cyan')
 				_.saveTable(undo,'renameSpace-undo.dex',p=0)
 			# _.pr(file)

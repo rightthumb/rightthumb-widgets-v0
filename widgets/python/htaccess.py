@@ -34,7 +34,7 @@ def sw():
 	#b)--> examples
 	_.switches.register( 'Sites', '-site,-sites,-d,-domain,-domains', 'eyeformeta.com rightthumb.com efm.cx thumb.cx etc.ac softwaredevelopment.solutions' )
 	_.switches.register( 'Remove', '-r,-remove', 'relationshipideas.xyz' )
-	_.switches.register( 'Template', '-t', 'deny access basic wordpress' )
+	_.switches.register( 'Template', '-t', 'allow deny access basic wordpress xsite' )
 	# _.switches.register( 'URL', '-u,-url,-urls', 'https://efm.cx/', isData='raw' )
 	#e)--> examples
 	# _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name,data,clean', description='Files', isRequired=False )
@@ -266,6 +266,13 @@ def action():
 	
 	# rightthumb\\.com|eyeformeta\\.com
 templates={}
+
+templates['xsite']='''
+<IfModule mod_headers.c>
+    Header set Access-Control-Allow-Origin "*"
+</IfModule>
+'''.strip()
+
 templates['wordpress']='''
 
 Options -Indexes
@@ -280,7 +287,7 @@ RewriteRule . /index.php [L]
 </IfModule>
 # END WordPress
 
-'''
+'''.strip()
 templates['base']='''
 
 Options -Indexes
@@ -325,10 +332,14 @@ Options -Indexes
 	AddHandler application/x-httpd-ea-php80 .php .php8 .phtml
 </IfModule>
 '''.strip()
+templates['allow']='''
+Order Allow,Deny
+Allow from all
+'''.strip()
 import os
 
 alias = {
-			'allow': 'access',
+			# 'allow': 'access',
 			'all': 'access',
 }
 

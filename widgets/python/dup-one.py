@@ -4,20 +4,16 @@ fieldSet=_.l.vars(focus(),__name__,__file__,appDBA);_.load();_v=__.imp('_rightTh
 
 def sw():
 	pass
-	_.switches.register( 'Type', '-i,-t,-w,-type,-write' )
 _._default_settings_()
 
 _.appInfo[focus()] = {
-	'file': 'typewriter.py',
-	'description': 'Type / Keypress',
+	'file': 'thisApp.py',
+	'description': 'Changes the world',
 	'categories': [
-						'typing',
-						'type',
-						'keypress',
-						'keydown',
+						'DEFAULT',
 				],
 	'examples': [
-						_.hp('p typewriter -t type this'),
+						_.hp('p thisApp -file file.txt'),
 						_.linePrint(label='simple',p=0),
 						'',
 	],
@@ -38,48 +34,36 @@ _.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw );
 ########################################################################################
 #n)--> start
 
-from pynput.keyboard import Key, KeyCode, Controller
-keyboard = Controller()
+import os
+import hashlib
 
-def type(data):
-	global keyboard
-	for t in data:
-		if t == '\n':
-			keyboard.press(Key.enter)
-			keyboard.release(Key.enter)
-		elif t == '\t':
-			keyboard.press(Key.tab)
-			keyboard.release(Key.tab)
-		elif t == '\r':
-			keyboard.press(Key.esc)
-			keyboard.release(Key.esc)
-		else:
-			keyboard.press(t)
-			keyboard.release(t)
-replace = {
-	'\\n': '\n', 
-	'\\t': '\t', 
-	'\\e': '\r', 
-}
+def get_file_md5(filename):
+	"""Calculate the MD5 hash of a file."""
+	hash_md5 = hashlib.md5()
+	with open(filename, "rb") as f:
+		for chunk in iter(lambda: f.read(4096), b""):
+			hash_md5.update(chunk)
+	return hash_md5.hexdigest()
+
+def find_duplicate_files():
+	"""Find duplicate files in a folder."""
+	files_hash_map = {}
+	duplicates = []
+	spent=[]
+	for path in _.fo():
+		md = get_file_md5(path)
+		if md in spent: duplicates.append(path)
+		spent.append(md)
+	return duplicates
 
 def action():
-	global keyboard
-	global replace
-	keyboard.press(Key.alt)
-	keyboard.press(Key.tab)
-	# time.sleep(.001 )
-	keyboard.release(Key.alt)
-	keyboard.release(Key.tab)
-	time.sleep(.5)
-	text = ' '.join(_.switches.values('Type'))
-	text = text.replace('\r','')
-	for r in replace:
-		text = text.replace(r,replace[r])
-	type(text)
-
-
-import time
-
+	duplicates = find_duplicate_files()
+	if duplicates:
+		for duplicate in duplicates:
+			_.pr(duplicate)
+	else:
+		print("No duplicate files found.")
+import os
 ########################################################################################
 if __name__ == '__main__':
 	action(); _.isExit(__file__);
