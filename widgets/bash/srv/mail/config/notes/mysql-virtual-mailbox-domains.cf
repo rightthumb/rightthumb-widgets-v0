@@ -1,8 +1,0 @@
-# MySQL connection parameters
-user = postfix_user
-password = postfix_password
-hosts = localhost
-dbname = postfix_database
-
-# Query to retrieve virtual mailbox domains
-query = SELECT domain FROM virtual_domains WHERE domain='%s'
