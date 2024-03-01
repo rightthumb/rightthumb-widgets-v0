@@ -159,6 +159,154 @@ _.postLoad( __file__ )
 # START
 ########################################################################################  ########################################################################################
 # webserver start
+shutdownHTML = '''
+<!DOCTYPE html>
+<html lang="en">
+
+<head><meta charset="utf-8">
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,600' rel='stylesheet' type='text/css'>
+	<title>saved</title>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<!-- <META http-equiv="refresh" content="1;URL=/?"> -->
+	<style type="text/css">
+body {
+	background-image: url('https://eyeformeta.com/img/bk/dragon-bk.png');
+	background-repeat: no-repeat;
+	background-attachment: fixed;  
+	background-size: cover;
+	color: #fff;
+	font-family: 'Open Sans', 'Myriad Pro', 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Geneva, Verdana, sans-serif;
+	background-position: center;
+	font-size: 400%;
+}
+
+.boxH
+{
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+/* content of this box will be centered vertically */
+.boxV
+{
+	height: 100%;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+	</style>
+</head>
+
+<body>
+		<div>
+		</div>
+		<div class="boxH">
+			<div class="boxV">
+			<div class="boxM">
+				THE_RESULT
+			</div>
+			</div>
+		</div>
+</body>
+
+</html>
+
+			'''
+savedHTML = '''<!DOCTYPE html>
+<html lang="en">
+
+<head><meta charset="utf-8">
+	<title>THE_TITLE</title>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<link href='https://eyeformeta.com/apps/showdown/style.css' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Old+Standard+TT:400,400italic,700' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,600' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.2/css/foundation.min.css">
+	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+	<!-- <META http-equiv="refresh" content="1;URL=/?"> -->
+	<style type="text/css">
+		#markdown-html {
+			width: 80%;
+			margin-left: auto;
+			margin-right: auto;
+		}
+	</style>
+
+</head>
+
+<body>
+	<div id="markdown-html">CODE_HERE</div>
+</body>
+
+</html>'''
+postHTML = '''
+<!DOCTYPE html>
+<html lang="en">
+
+<head><meta charset="utf-8">
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,600' rel='stylesheet' type='text/css'>
+	<title>saved</title>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<!-- <META http-equiv="refresh" content="1;URL=/?"> -->
+	<style type="text/css">
+body {
+	background-image: url('https://eyeformeta.com/img/bk/dragon-bk.png');
+	background-repeat: no-repeat;
+	background-attachment: fixed;  
+	background-size: cover;
+	color: #fff;
+	font-family: 'Open Sans', 'Myriad Pro', 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Geneva, Verdana, sans-serif;
+	background-position: center;
+	font-size: 400%;
+}
+
+.boxH
+{
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+/* content of this box will be centered vertically */
+.boxV
+{
+	height: 100%;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+	</style>
+</head>
+
+<body>
+		<div>
+		</div>
+		<div class="boxH">
+			<div class="boxV">
+			<div class="boxM">
+				THE_RESULT
+			</div>
+			</div>
+		</div>
+</body>
+
+</html>
+
+			'''
+
+
+
 
 
 import os,sys
@@ -190,6 +338,7 @@ def get_title(data):
 	data = _str.replaceDuplicate(data,' ')
 	return data
 
+
 class Server(BaseHTTPRequestHandler):
 	def _set_headers(self):
 		self.send_response(200)
@@ -198,88 +347,29 @@ class Server(BaseHTTPRequestHandler):
 		self.end_headers()
 
 	def do_GET(self):
-		self.respond_OK(hello_msg)
+		if not _.switches.isActive('Clean'): _.pr("Get",c='darkcyan')
+		self.do_REQUEST()
+		# self.respond_OK(hello_msg)
 
 	def do_POST(self):
-		if not _.switches.isActive('Clean'): _.pr("Post")
+		if not _.switches.isActive('Clean'): _.pr("Post",c='darkcyan')
+		self.do_REQUEST()
 
+	def do_REQUEST(self):
+		global shutdownHTML
+		global savedHTML
+		global postHTML
 		data = self.parse_POST()
 
-		# if not _.switches.isActive('Clean'): _.pr(data)
-		# if not _.switches.isActive('Clean'): _.pr(type(data))
-		# if not _.switches.isActive('Clean'): _.pr(str(data[b'butt'][0]))
-		shutdown=str( data[b'shutdown'][0] ,'utf-8')
+		if 'shutdown' in data: shutdown=data['shutdown']
 
 		if shutdown=='yes':
 			result='file not saved'
-			self.respond_OK('''
-<!DOCTYPE html>
-<html lang="en">
-
-<head><meta charset="utf-8">
-	<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,600' rel='stylesheet' type='text/css'>
-	<title>saved</title>
-	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-	<!-- <META http-equiv="refresh" content="1;URL=/?"> -->
-	<style type="text/css">
-body {
-	background-image: url('https://eyeformeta.com/img/bk/dragon-bk.png');
-	background-repeat: no-repeat;
-	background-attachment: fixed;  
-	background-size: cover;
-	color: #fff;
-	font-family: 'Open Sans', 'Myriad Pro', 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Geneva, Verdana, sans-serif;
-	background-position: center;
-	font-size: 400%;
-}
-
-.boxH
-{
-	width: 100%;
-	height: 100%;
-	position: absolute;
-	top: 0;
-	left: 0;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-}
-
-/* content of this box will be centered vertically */
-.boxV
-{
-	height: 100%;
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-}
-	</style>
-</head>
-
-<body>
-		<div>
-		</div>
-		<div class="boxH">
-			<div class="boxV">
-			<div class="boxM">
-				THE_RESULT
-			</div>
-			</div>
-		</div>
-</body>
-
-</html>
-
-			'''.replace('THE_RESULT',result))
+			self.respond_OK(shutdownHTML.replace('THE_RESULT',result))
 
 			pass
 			sys.exit()
 			if not 'path' in data: _.e('missing: path',data)
-			# path=str( data[b'path'][0] ,'utf-8')
-			# fileBackup.switch( 'isPreOpen', delete=True )
-			# # fileBackup.switch( 'isPreOpen' )
-			# fileBackup.switch( 'Input', path )
-			# if not _.switches.isActive('HTML') and  not _.switches.isActive('View-Webpage'): fileBackup.action()
 		else:
 
 			global filesOpened
@@ -302,158 +392,70 @@ body {
 
 
 			result='file saved'
-			file=str( data[b'file'][0] ,'utf-8').replace('\r','')
-			path=str( data[b'path'][0] ,'utf-8')
-			html=str( data[b'html'][0] ,'utf-8')
+			file=data['file']
+			path=data['path']
+			html=data['html']
+			_.saveText( file, path )
+			_.cp(['saved:',path],'green')
 			if len(html) > 4:
 				result='files saved'
-				HTML = '''<!DOCTYPE html>
-<html lang="en">
-
-<head><meta charset="utf-8">
-	<title>THE_TITLE</title>
-	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-	<link href='https://eyeformeta.com/apps/showdown/style.css' rel='stylesheet' type='text/css'>
-	<link href='http://fonts.googleapis.com/css?family=Old+Standard+TT:400,400italic,700' rel='stylesheet' type='text/css'>
-	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,600' rel='stylesheet' type='text/css'>
-	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.2/css/foundation.min.css">
-	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	<!-- <META http-equiv="refresh" content="1;URL=/?"> -->
-	<style type="text/css">
-		#markdown-html {
-			width: 80%;
-			margin-left: auto;
-			margin-right: auto;
-		}
-	</style>
-
-</head>
-
-<body>
-	<div id="markdown-html">CODE_HERE</div>
-</body>
-
-</html>'''
+				HTML = savedHTML
 
 				HTML = HTML.replace('THE_TITLE',get_title(file))
 				HTML = HTML.replace('CODE_HERE',html)
 				HTML = HTML.replace('a href','a target="_blank" href')
-				webbrowser.open(path[:-2]+'htm', new=2)
 				_.saveText( HTML,path[:-2]+'htm' )
+				_.cp(['saved:',path[:-2]+'htm'],'green')
+				webbrowser.open(path[:-2]+'htm', new=2)
 
 
-			_.saveText( file,path )
-			_.cp(['saved:',path],'green')
 			pass
 			fileBackup.switch( 'isPreOpen', delete=True )
 			# fileBackup.switch( 'isPreOpen' )
 			fileBackup.switch( 'Input', path )
 			if not _.switches.isActive('HTML')  and  not _.switches.isActive('View-Webpage'): fileBackup.action()
 
-		self.respond_OK('''
-<!DOCTYPE html>
-<html lang="en">
-
-<head><meta charset="utf-8">
-	<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,600' rel='stylesheet' type='text/css'>
-	<title>saved</title>
-	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-	<!-- <META http-equiv="refresh" content="1;URL=/?"> -->
-	<style type="text/css">
-body {
-	background-image: url('https://eyeformeta.com/img/bk/dragon-bk.png');
-	background-repeat: no-repeat;
-	background-attachment: fixed;  
-	background-size: cover;
-	color: #fff;
-	font-family: 'Open Sans', 'Myriad Pro', 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Geneva, Verdana, sans-serif;
-	background-position: center;
-	font-size: 400%;
-}
-
-.boxH
-{
-	width: 100%;
-	height: 100%;
-	position: absolute;
-	top: 0;
-	left: 0;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-}
-
-/* content of this box will be centered vertically */
-.boxV
-{
-	height: 100%;
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-}
-	</style>
-</head>
-
-<body>
-		<div>
-		</div>
-		<div class="boxH">
-			<div class="boxV">
-			<div class="boxM">
-				THE_RESULT
-			</div>
-			</div>
-		</div>
-</body>
-
-</html>
-
-			'''.replace('THE_RESULT',result))
+		self.respond_OK(postHTML.replace('THE_RESULT',result))
 
 		sys.exit()
 
 
+	# def parse_POST(self):
+	# 	ctype, pdict = parse_header('application/x-www-form-urlencoded; charset=utf-8')
+	# 	# ctype, pdict = parse_header('Content-Type', 'application/x-www-form-urlencoded; charset=utf-8')
+
+	# 	postvars = {}
+
+	# 	if ctype == 'multipart/form-data':
+	# 		postvars = parse_multipart(self.rfile, pdict)
+	# 	elif ctype == 'application/x-www-form-urlencoded; charset=utf-8':
+	# 		length = int(self.headers['content-length'])
+	# 		# Read and decode data as UTF-8
+	# 		post_data = self.rfile.read(length).decode('utf-8')
+	# 		postvars = parse_qs(post_data, keep_blank_values=1)
+		
+	# 	return postvars
+	
 	def parse_POST(self):
-		print()
-		print()
-		print('#-------------------------------------------------------------------')
-		print(self.headers['content-type'])
-		print('#-------------------------------------------------------------------')
-		print()
-		print()
-		print()
-		# _.e('die','kill')
-
-		# ctype, pdict = parse_header('Content-Type', 'application/x-www-form-urlencoded; charset=utf-8')
-		# # ctype, pdict = parse_header(self.headers['content-type'])
-		# if ctype == 'multipart/form-data':
-		# 	postvars = parse_multipart(self.rfile, pdict)
-		# elif ctype == 'application/x-www-form-urlencoded; charset=utf-8':
-		# # elif ctype == 'application/x-www-form-urlencoded':
-		# 	length = int(self.headers['content-length'])
-		# 	postvars = parse_qs(
-		# 			self.rfile.read(length), 
-		# 			keep_blank_values=1)
-		# else:
-		# 	postvars = {}
-		# return postvars
-
-
-		ctype, pdict = parse_header('Content-Type', 'application/x-www-form-urlencoded; charset=utf-8')
-		# ctype, pdict = parse_header(self.headers['content-type'])
+		content_type = self.headers.get('Content-Type')
+		ctype, pdict = parse_header(content_type)
 
 		postvars = {}
 
 		if ctype == 'multipart/form-data':
+			pdict['boundary'] = bytes(pdict['boundary'], "utf-8")
 			postvars = parse_multipart(self.rfile, pdict)
-		elif ctype == 'application/x-www-form-urlencoded; charset=utf-8':
-			length = int(self.headers['content-length'])
-			# Read and decode data as UTF-8
+		elif ctype == 'application/x-www-form-urlencoded':
+			length = int(self.headers.get('Content-Length', 0))
 			post_data = self.rfile.read(length).decode('utf-8')
 			postvars = parse_qs(post_data, keep_blank_values=1)
-		
+		for key in postvars:
+			if type(postvars[key]) == list:
+				postvars[key]=postvars[key][0]
+				try:
+					postvars[key]=postvars[key].replace('\r','')
+				except: pass
 		return postvars
-	
 
 	def respond_OK(self, msg):
 		self.send_response(200)
@@ -462,34 +464,15 @@ body {
 		self.wfile.write(bytes(msg, "utf-8"))
 
 
-# from http.server import BaseHTTPRequestHandler, HTTPServer
-
-# class Server(BaseHTTPRequestHandler):
-#     def do_GET(self):
-#         self.send_response(200)
-#         self.send_header('Content-type', 'text/html; charset=utf-8')
-#         self.end_headers()
-#         # Write your response here, ensuring it's UTF-8 encoded
-#         self.wfile.write("Hello, world!".encode('utf-8'))
-
-# def run(server_class=HTTPServer, handler_class=Server, host='', port=8000):
-#     webServer = server_class((host, port), handler_class)
-#     print(f"Server started http://{host}:{port}")
-
-#     try:
-#         webServer.serve_forever()
-#     except KeyboardInterrupt:
-#         pass
-#     finally:
-#         webServer.server_close()
-#         print("Server stopped.")
-
-# run()
-
+	# def respond_OK(self, msg):
+	# 	self.send_response(200)
+	# 	self.send_header('Content-type', 'text/html; charset=utf-8')
+	# 	self.end_headers()
+	# 	self.wfile.write(bytes(msg, "utf-8"))
 
 def START_WEBSERVER():
 	webServer = HTTPServer((host, port), Server)
-	if not _.switches.isActive('Clean'): _.pr("Server started http://%s:%s" % (host, port))
+	if not _.switches.isActive('Clean'): _.pr("Server started http://%s:%s" % (host, port),c='yellow')
 
 	try:
 		webServer.serve_forever()
@@ -497,8 +480,7 @@ def START_WEBSERVER():
 		pass
 
 	webServer.server_close()
-	if not _.switches.isActive('Clean'): _.pr("Server stopped.")
-# webserver end
+	if not _.switches.isActive('Clean'): _.pr("Server stopped.",c='red')
 
 
 ########################################################################################  ########################################################################################
@@ -531,7 +513,7 @@ THE_PATH=''
 def openFile(path):
 	global THE_PATH
 	THE_PATH = __.path(path)
-	if not _.switches.isActive('Clean'): _.pr(path)
+	if not _.switches.isActive('Clean'): _.pr(path,c='cyan')
 
 	global filesOpened
 	if not path in filesOpened:
@@ -556,8 +538,8 @@ def process(table):
 			fileBackup.switch( 'Input', path )
 			fileBackup.switch( 'isPreOpen' )
 			if not _.switches.isActive('HTML') and  not _.switches.isActive('View-Webpage'): fb = fileBackup.action()
-			if not _.switches.isActive('Clean'): _.pr(path)
-			if not _.switches.isActive('Clean'): _.pr(fb)
+			if not _.switches.isActive('Clean'): _.pr(path,c='cyan')
+			if not _.switches.isActive('Clean'): _.pr(fb,c='purple')
 
 def build_tables():
 	if not len(v.crypt):
@@ -641,7 +623,7 @@ def action():
 		html = _.getText( _v.w +os.sep+ 'widgets' +os.sep+ 'html' +os.sep+ 'markdown' +os.sep+ 'showdown.min-2.0.0.js-PYTHON.htm', raw=True )
 
 	if _.switches.isActive('HTML') or _.switches.isActive('View-Webpage'):
-		# print(_v.w +os.sep+ 'widgets' +os.sep+ 'html' +os.sep+ 'markdown' +os.sep+ 'showdown.min-2.0.0.js-PYTHON.htm')
+		# _.pr(_v.w +os.sep+ 'widgets' +os.sep+ 'html' +os.sep+ 'markdown' +os.sep+ 'showdown.min-2.0.0.js-PYTHON.htm')
 		html = _.getText( _v.w +os.sep+ 'widgets' +os.sep+ 'html' +os.sep+ 'markdown' +os.sep+ 'showdown.min-2.0.0.js-PYTHON.htm', raw=True )
 
 	save = _v.stmp +os.sep+ 'markdown.htm'
@@ -692,7 +674,7 @@ def action():
 		webbrowser.open(save, new=2)
 		START_WEBSERVER()
 	elif _.switches.isActive('HTML'):
-		print(htm)
+		_.pr(htm)
 
 
 import webbrowser

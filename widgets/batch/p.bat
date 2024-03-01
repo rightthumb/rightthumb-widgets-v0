@@ -10,7 +10,7 @@ rem    - Scott Taylor Reph, RightThumb.com
 rem ###########################################################################
 rem ## {C3P0D40fAe8B} ##
 
-set PY="D:\techApps\Python\Python36-32\python.exe"
+@REM set PY="D:\techApps\Python\Python36-32\python.exe"
 rem set py=python3
 
 if [%1] == [base-e] type %python%\_rightThumb\_base3\_base3_init_example.py > %python%\base-e.py

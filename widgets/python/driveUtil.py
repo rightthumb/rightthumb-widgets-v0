@@ -79,7 +79,8 @@ def run_powershell_and_get_json_drive(drive_letter):
 
 def run_powershell_and_get_json():
 	# PowerShell command as one line
-	ps_command = "Get-WmiObject Win32_DiskDrive | Select-Object * | ConvertTo-Json -Depth 10"
+	ps_command = "Get-WmiObject Win32_DiskDrive | Select-Object * | ConvertTo-Json"
+	# ps_command = "Get-WmiObject Win32_DiskDrive | Select-Object * | ConvertTo-Json -Depth 10"
 
 	# Determine PowerShell executable based on the OS
 	powershell_executable = "powershell" if platform.system().lower() == "windows" else "pwsh"
