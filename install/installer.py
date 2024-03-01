@@ -3134,8 +3134,8 @@ generate_and_push() {
 alias git.files="git_add_modified_files"
 alias git.cp="generate_and_push"
 
-
-
+alias burn="kill -9 $$"
+alias est="date +%Z; sudo timedatectl set-timezone America/New_York; date +%Z"
 
 # get_time_difference
 # a3bc42ec51e9

@@ -44,6 +44,8 @@ def sw():
 	_.switches.register( 'SSH-Remote_Folder', '-remote' )
 	_.switches.register( 'URL', '-url,-edit,--u' )
 	_.switches.register( 'Remote-Location', '-rp,-rpath' )
+	_.switches.register( 'CMD', '-cmd' )
+	# _.switches.register( 'IsFile', '-isfi' )
 
 
 
@@ -473,12 +475,18 @@ def process(path,end='',ft=None):
 				try:
 					do = ' '+do
 					do=do.replace(' scp ',' scp '+verbos)
-					os.system( do )
+					if _.switches.isActive('CMD'):
+						_.pr(do)
+					else:
+						os.system( do )
 				except Exception as e:
 					_.e(e)
 			elif _.switches.isActive('rsync'):
 				try:
-					os.system( do )
+					if _.switches.isActive('CMD'):
+						_.pr(do)
+					else:
+						os.system( do )
 				except Exception as e:
 					_.e(e)
 

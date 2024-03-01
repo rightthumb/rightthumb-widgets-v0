@@ -14,20 +14,9 @@ import os
 import sys
 import time
 ##################################################
-import _rightThumb._construct as __
-appDBA = __.clearFocus( __name__, __file__ )
-__.appReg = appDBA
-def focus( parentApp='', childApp='', reg=True ):
-	global appDBA
-	f = __.appName( appDBA, parentApp, childApp )
-	if reg:
-		__.appReg = f
-	return f
-__.registeredApps.append(focus())
-
-
-import _rightThumb._base3 as _
-_.load()
+import _rightThumb._construct as __;appDBA=__.clearFocus(__name__,__file__);__.appReg=appDBA;import _rightThumb._base3 as _;
+def focus(parentApp='', childApp='', reg=True): global appDBA; f = __.appName(appDBA, parentApp, childApp); return f if reg else f
+fieldSet=_.l.vars(focus(),__name__,__file__,appDBA);_.load();_v=__.imp('_rightThumb._vars');
 ##################################################
 import _rightThumb._vars as _v
 import _rightThumb._string as _str
@@ -38,7 +27,7 @@ import _rightThumb._mimetype as _mime
 	# _filePathPatterns.switch( 'Files', _.switches.value('Files') )
 ##################################################
 
-def appSwitches():
+def sw():
 
 	_.switches.register( 'Files', '-f,-file,-files','file.txt', isPipe='name', description='' )
 	_.switches.register('Folder', '-folder')
@@ -110,7 +99,10 @@ _.appData[focus()] = {
 				'table': {'sent': [], 'received': [] }, 
 	},
 	}
-
+def triggers():
+	_._default_triggers_()
+def _local_(do): exec(do)
+_.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw );
 # _.appInfo[focus()]['examples'].append('p thisApp -file file.txt')
 
 # _.appInfo[focus()]['columns'].append({'name': 'name', 'abbreviation': 'n'})
@@ -183,7 +175,7 @@ def registerSwitches( argvProcessForce=False ):
 		_.appInfo[__.appReg] = _.appInfo[appDBA]
 		_.appData[__.appReg] = _.appData[appDBA]
 	__.constructRegistration(_.appInfo[__.appReg]['file'],__.appReg)
-	appSwitches()
+	sw()
 
 	_.myFileLocation_Print = False
 	# _.switches.trigger('Files',_.myFileLocations)

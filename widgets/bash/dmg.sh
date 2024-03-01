@@ -26,10 +26,17 @@ download_file() {
 }
 
 # Function to upload a file to a server
+upload_file2() {
+	FILE_PATH="$1"
+	SERVER_URL="https://sds.sh/a/up/"
+
+	curl -F "uploaded_file=@${FILE_PATH}" "${SERVER_URL}"
+	echo "Uploading..."
+}
 upload_file() {
 	FILE_PATH="$1"
-	ENDPOINT_URL="$2"
-	echo "Upload completed."
+	ENDPOINT_URL="https://sds.sh/a/up/"
+	echo "Uploading..."
 	curl -s -F "file=@$FILE_PATH" $ENDPOINT_URL
 }
 # Function to mount a .dmg file on macOS
@@ -103,7 +110,7 @@ print_help() {
 while [[ "$#" -gt 0 ]]; do
 	case $1 in
 		-d|--download) download_file "$2" "$3"; shift 3 ;;
-		-u|--upload) upload_file "$2" "$2"; shift 3 ;;
+		-u|--upload) upload_file "$2"; shift 2 ;;
 		-o|--open-dmg) open_dmg "$2"; shift 2 ;;
 		-cd|--create-dmg) create_dmg "$2" "$3"; shift 3 ;;
 		-z|--unzip) unzip_file "$2" "$3"; shift 3 ;;

@@ -4,7 +4,8 @@ fieldSet=_.l.vars(focus(),__name__,__file__,appDBA);_.load();_v=__.imp('_rightTh
 
 def sw():
 	pass
-	_.switches.register( 'Type', '-i,-t,-w,-type,-write' )
+	_.switches.register( 'Type', '-i,-w,-type,-write' )
+	_.switches.register( 'Template', '-t,-tmp,-temp,-template' )
 _._default_settings_()
 
 _.appInfo[focus()] = {
@@ -41,7 +42,7 @@ _.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw );
 from pynput.keyboard import Key, KeyCode, Controller
 keyboard = Controller()
 
-def type(data):
+def typewriter(data):
 	global keyboard
 	for t in data:
 		if t == '\n':
@@ -65,20 +66,94 @@ replace = {
 def action():
 	global keyboard
 	global replace
+	global template
+	global parts
 	keyboard.press(Key.alt)
 	keyboard.press(Key.tab)
 	# time.sleep(.001 )
 	keyboard.release(Key.alt)
 	keyboard.release(Key.tab)
 	time.sleep(.5)
+	if _.switches.isActive('Template'):
+
+		for item in _.switches.values('Template'):
+			if item in template:
+				typewriter(template[item])
+			if item in parts:
+
+				for it in parts[item]:
+					print(type(it))
+					if type(it) == int:
+						time.sleep(it)
+					else:
+						typewriter(it)
+						typewriter('\n')
+			
 	text = ' '.join(_.switches.values('Type'))
 	text = text.replace('\r','')
 	for r in replace:
 		text = text.replace(r,replace[r])
 	type(text)
+_keychain = _.regImp( __.appReg, 'keychain' )
+__.keychain_copy=False
+template = {}
+template['fi']='''
+for path in _.fi():
+	_.pr(path)
+'''.strip()
+
+# \\
+
+template['btn']='''
+@echo off
+call D:\\.rightthumb-widgets\\widgets\\batch\\c-mini.bat
+call p typewriter -t fi
+@REM call p typewriter -type echo test
+'''.strip()
+
+template['mklink']='''
+mklink /D d s
+'''.strip()
+
+template['url']='''
+https://s2.webigami.com/c/htmlos/.52834/postdata/sysint/Qqqjc1b9XWtmsKo-ih91IBVTuG7SF0ljWzxkIwKEG88vTff7sVWYiccSIdspI.html
+'''.strip()
+
+# \\
+
+parts={}
+parts['in.'] = [
+	'curl -s "https://sds.sh/a/repo/?api=09c771b8&fi=vps-bashrc_extended.sh" > /opt/rightthumb-widgets-v0/widgets/bash/vps-bashrc_extended.sh; chmod +x /opt/rightthumb-widgets-v0/widgets/bash/vps-bashrc_extended.sh;',
+]
+parts['.git.'] = [
+	'cd /opt',
+	1,
+	'rm -rf /opt/rightthumb-widgets-v0',
+	1,
+	'git clone https://github.com/rightthumb/rightthumb-widgets-v0',
+	6,
+	'curl -s "https://sds.sh/a/repo/?api=09c771b8&fi=vps-bashrc_extended.sh" > /opt/rightthumb-widgets-v0/widgets/bash/vps-bashrc_extended.sh',
+	2,
+	'chmod -R 777 /opt/rightthumb-widgets-v0',
+	1,
+	'load',
+	3,
+	'vps.y.d',
+	3,
+	_keychain.imp.key('root')
+
+]
+
+parts['vps-bashrc_extended']=[
+	'copy /y D:\\.rightthumb-widgets\\widgets\\bash\\vps-bashrc_extended.sh D:\\websites\\domains\\sds.sh\\public_html\\a\\repo\\_files_\\',
+	1,
+	'u. D:\\websites\\domains\\sds.sh\\public_html\\a\\repo\\_files_\\vps-bashrc_extended.sh'
+]
+
 
 
 import time
+
 
 ########################################################################################
 if __name__ == '__main__':

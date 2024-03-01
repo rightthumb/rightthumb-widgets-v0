@@ -40,6 +40,7 @@ def appSwitches():
 	_.switches.register( 'Clean', '--c,-clean' )
 	_.switches.register( 'OpenSingle', '-single', 'joins by space' )
 	_.switches.register( 'ForceSublime', '-sub,-sublime' )
+	_.switches.register( 'PrintAliasLocation', '-print' )
 
 _.autoBackupData = __.autoCreationConfiguration['backup']
 __.releaseAcquiredData = __.autoCreationConfiguration['logs'] 
@@ -317,6 +318,9 @@ def action(path=None):
 		try: session = os.getenv('Session_ID')
 		except: pass
 		for path in paths:
+			if _.switches.isActive('PrintAliasLocation'):
+				_.pr(path)
+				continue
 			path=__.path(path)
 			path=_.zZip(path)
 			if not _.switches.isActive('Path'):

@@ -35,6 +35,7 @@ def sw():
 	_.switches.register( 'Sites', '-site,-sites,-d,-domain,-domains', 'eyeformeta.com rightthumb.com efm.cx thumb.cx etc.ac softwaredevelopment.solutions' )
 	_.switches.register( 'Remove', '-r,-remove', 'relationshipideas.xyz' )
 	_.switches.register( 'Template', '-t', 'allow deny access basic wordpress xsite' )
+	_.switches.register( 'ListTemplates', '-lt' )
 	# _.switches.register( 'URL', '-u,-url,-urls', 'https://efm.cx/', isData='raw' )
 	#e)--> examples
 	# _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name,data,clean', description='Files', isRequired=False )
@@ -187,6 +188,9 @@ def cl(text):
 def action():
 	global templates
 	global alias
+	if _.switches.isActive('ListTemplates'):
+		for key in templates: _.pr(key)
+		return None
 	base=templates['base']
 	sites=[]
 	var={}
@@ -273,6 +277,30 @@ templates['xsite']='''
 </IfModule>
 '''.strip()
 
+templates['wp']='''
+# BEGIN WordPress
+# The directives (lines) between "BEGIN WordPress" and "END WordPress" are
+# dynamically generated, and should only be modified via WordPress filters.
+# Any changes to the directives between these markers will be overwritten.
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+RewriteBase /
+RewriteRule ^index\.php$ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /index.php [L]
+</IfModule>
+
+# END WordPress
+
+# php -- BEGIN cPanel-generated handler, do not edit
+# Set the “ea-php82” package as the default “PHP” programming language.
+<IfModule mime_module>
+  AddHandler application/x-httpd-ea-php82 .php .php8 .phtml
+</IfModule>
+# php -- END cPanel-generated handler, do not edit
+'''.strip()
 templates['wordpress']='''
 
 Options -Indexes
