@@ -5916,6 +5916,11 @@ def loadProject( project=None ):
 def objFile():
 	return __.objectPath.replace( 'MD5', __.validator_Project )
 
+def printintBold(text,color=0):
+	if not color:
+		_.pr(text)
+	else:
+		_.pr(text,c=color)
 
 def action():
 	pass
