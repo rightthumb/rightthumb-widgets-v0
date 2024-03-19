@@ -3093,6 +3093,11 @@ alias dmg.="sh $widgets/widgets/bash/dmg.sh"
 # alias java.deb="sh $widgets/widgets/bash/java-linux-deb.sh"
 # alias java.rpm="sh $widgets/widgets/bash/java-linux-rpm.sh"
 alias whitelist="sh $widgets/widgets/bash/whitelist.sh"
+alias whitelist.r="sh $widgets/widgets/bash/whitelist-remove.sh"
+alias whitelist.="sh $widgets/widgets/bash/vps-whitelistAuto.sh"
+alias whitelist.a="sh $widgets/widgets/bash/vps-whitelistAuto.sh"
+alias block="sh $widgets/widgets/bash/blocklist.sh"
+alias block.r="sh $widgets/widgets/bash/blocklist-remove.sh"
 export PATH=$PATH:/opt/rightthumb-widgets-v0/widgets/bash:/opt/rightthumb-widgets-v0/widgets/python
 
 
@@ -3136,6 +3141,16 @@ alias git.cp="generate_and_push"
 
 alias burn="kill -9 $$"
 alias est="date +%Z; sudo timedatectl set-timezone America/New_York; date +%Z"
+
+alias zip.="/opt/rightthumb-widgets-v0/widgets/bash/micro_zip.sh"
+alias zip.l="/opt/rightthumb-widgets-v0/widgets/bash/micro_zip_list.sh"
+alias unzip.="/opt/rightthumb-widgets-v0/widgets/bash/micro_unzip.sh"
+alias unzip.="/opt/rightthumb-widgets-v0/widgets/bash/micro_unzip.sh"
+alias fi.cnt="find . -type f | wc -l"
+alias fi.c="find . -type f | wc -l"
+alias fo.cnt="find . -type d | wc -l"
+alias fo.c="find . -type d | wc -l"
+
 
 # get_time_difference
 # a3bc42ec51e9

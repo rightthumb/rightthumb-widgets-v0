@@ -319,7 +319,7 @@ def action(path=None):
 		except: pass
 		for path in paths:
 			if _.switches.isActive('PrintAliasLocation'):
-				_.pr(path)
+				_.pr(path,c='cyan')
 				continue
 			path=__.path(path)
 			path=_.zZip(path)

@@ -4,17 +4,18 @@ fieldSet=_.l.vars(focus(),__name__,__file__,appDBA);_.load();_v=__.imp('_rightTh
 
 def sw():
 	pass
+	_.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='data', description='Files', isRequired=False )
+	_.switches.register( 'Save', '-save', 'app.c' )
 _._default_settings_()
 
 _.appInfo[focus()] = {
-	'file': 'debFoSize.py',
-	'description': 'Get size of all folders in a directory',
+	'file': 'thisApp.py',
+	'description': 'Changes the world',
 	'categories': [
-						'folder',
-						'size',
+						'DEFAULT',
 				],
 	'examples': [
-						_.hp('p debFoSize'),
+						_.hp('p thisApp -file file.txt'),
 						_.linePrint(label='simple',p=0),
 						'',
 	],
@@ -35,41 +36,37 @@ _.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw );
 ########################################################################################
 #n)--> start
 
-def execute_and_return(command):
-    try:
-        result = subprocess.run(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, check=True)
-        return result.stdout
-    except subprocess.CalledProcessError as e:
-        return e.stderr
+def format_code(lines):
+	# Split the input code into lines
+	# lines = code.split('\n')
+	
+	# Process each line
+	formatted_lines = []
+	for i in range(len(lines)):
+		# Strip leading and trailing whitespace
+		stripped_line = lines[i].strip()
+		
+		# Check if the line contains only "{" after being stripped
+		if stripped_line == "{":
+			# Move "{" to the end of the previous line, if there is a previous line
+			if formatted_lines:
+				formatted_lines[-1] += " {"
+				formatted_lines[-1]=formatted_lines[-1].replace('  {',' {')
+		else:
+			# Add the line to the result as is
+			formatted_lines.append(lines[i])
+	
+	# Join the lines back together
+	formatted_code = '\n'.join(formatted_lines)
+	return formatted_code
 
-
-import subprocess
-import os
-folders = []
-def isFo(path):
-	global folders
-	if os.path.isdir(path):
-		folders.append(path)
-
-def process(path):
-	global table
-	base = os.getcwd()+'/'
-	fo = path.replace(base,'')
-	if _.showLine(fo):
-		result = execute_and_return('du -b "'+path+'"')
-		result = result.split(' ')[0]
-		result = result.split('\t')[0]
-		size = _.formatSize(int(result))
-		table.append({'size': size, 'bytes': int(result), 'folder': fo})
-	# _.pr(result,path.replace(base,''),c='cyan')
 def action():
-	global table
-	global folders
-	table=[]
-	_.fo(script=isFo)
-	for path in folders:
-		process(path)
-	_.pt(table,'size,folder',sort='bytes')
+	code = format_code(_.isData())
+	if _.switches.isActive('Save') and _.switches.value('Save'):
+		_.saveText(code,_.switches.value('Save'))
+	else:
+		print(code)
+
 ########################################################################################
 if __name__ == '__main__':
 	action(); _.isExit(__file__);

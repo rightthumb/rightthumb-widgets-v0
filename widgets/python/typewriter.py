@@ -150,7 +150,10 @@ parts['vps-bashrc_extended']=[
 	'u. D:\\websites\\domains\\sds.sh\\public_html\\a\\repo\\_files_\\vps-bashrc_extended.sh'
 ]
 
-
+parts['vps-bashrc_extended.vps']=[
+	'curl -sL "https://sds.sh/a/repo/?api=09c771b8&fi=vps-bashrc_extended.sh" > /opt/rightthumb-widgets-v0/widgets/bash/vps-bashrc_extended.sh; /usr/bin/python3 /opt/rightthumb-widgets-v0/widgets/python/shClean.py -f /opt/rightthumb-widgets-v0/widgets/bash/vps-bashrc_extended.sh; chmod +x /opt/rightthumb-widgets-v0/widgets/bash/vps-bashrc_extended.sh;',
+	1,
+]
 
 import time
 

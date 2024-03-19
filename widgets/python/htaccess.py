@@ -34,7 +34,7 @@ def sw():
 	#b)--> examples
 	_.switches.register( 'Sites', '-site,-sites,-d,-domain,-domains', 'eyeformeta.com rightthumb.com efm.cx thumb.cx etc.ac softwaredevelopment.solutions' )
 	_.switches.register( 'Remove', '-r,-remove', 'relationshipideas.xyz' )
-	_.switches.register( 'Template', '-t', 'allow deny access basic wordpress xsite' )
+	_.switches.register( 'Template', '-t', 'allow deny access basic wordpress xsite api api2' )
 	_.switches.register( 'ListTemplates', '-lt' )
 	# _.switches.register( 'URL', '-u,-url,-urls', 'https://efm.cx/', isData='raw' )
 	#e)--> examples
@@ -364,6 +364,34 @@ templates['allow']='''
 Order Allow,Deny
 Allow from all
 '''.strip()
+templates['api2']='''
+RewriteEngine On
+RewriteCond %{HTTP:Authorization} .
+RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+'''.strip()
+templates['api']='''
+RewriteEngine On
+
+# Pass the Authorization header through to PHP as an environment variable
+RewriteCond %{HTTP:API} ^(.*)
+RewriteRule .* - [E=SDS_API:%1]
+
+# Pass the Ephemeral header through to PHP as an environment variable
+RewriteCond %{HTTP:Ephemeral} ^(.*)
+RewriteRule .* - [E=SDS_EPHEMERAL:%1]
+
+# Pass the Ephemeral header through to PHP as an environment variable
+RewriteCond %{HTTP:URL} ^(.*)
+RewriteRule .* - [E=SDS_URL:%1]
+
+<IfModule mod_headers.c>
+    # CORS Headers
+    Header set Access-Control-Allow-Origin "*"
+    Header set Access-Control-Allow-Methods "GET, POST, OPTIONS"
+    Header set Access-Control-Allow-Headers "DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type"
+</IfModule>
+'''.strip()
+
 import os
 
 alias = {

@@ -88,7 +88,7 @@ GOTO:EOF
     call SET "Session_ID_Suffix=%%Session_ID:~-3%%"
     IF NOT ["%lab%"] == [""] (
         REM TITLE %lab% - %Session_ID%
-        TITLE loc-%Session_ID_Suffix%  lab: %lab%
+        TITLE loc-%Session_ID_Suffix%  :: %lab%
     ) else (
         TITLE loc-%Session_ID_Suffix%
         REM TITLE %today%

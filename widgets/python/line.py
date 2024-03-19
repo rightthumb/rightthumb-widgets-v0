@@ -365,6 +365,8 @@ if _.switches.isActive('Make'):
 	lines=[]
 	started=False
 	for line in _.pp():
+		line=line.replace('[gg]','>>')
+		line=line.replace('[g]','>')
 		if line.strip(): started=True
 		if started: lines.append(line.rstrip())
 	_isData='\n'.join(_.pp())

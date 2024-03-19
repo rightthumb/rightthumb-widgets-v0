@@ -4,17 +4,18 @@ fieldSet=_.l.vars(focus(),__name__,__file__,appDBA);_.load();_v=__.imp('_rightTh
 
 def sw():
 	pass
+	_.switches.register( 'LineNumber', '-ln' )
+	_.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='data', description='Files', isRequired=False )
 _._default_settings_()
 
 _.appInfo[focus()] = {
-	'file': 'debFoSize.py',
-	'description': 'Get size of all folders in a directory',
+	'file': 'thisApp.py',
+	'description': 'Changes the world',
 	'categories': [
-						'folder',
-						'size',
+						'DEFAULT',
 				],
 	'examples': [
-						_.hp('p debFoSize'),
+						_.hp('p thisApp -file file.txt'),
 						_.linePrint(label='simple',p=0),
 						'',
 	],
@@ -35,41 +36,18 @@ _.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw );
 ########################################################################################
 #n)--> start
 
-def execute_and_return(command):
-    try:
-        result = subprocess.run(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, check=True)
-        return result.stdout
-    except subprocess.CalledProcessError as e:
-        return e.stderr
-
-
-import subprocess
-import os
-folders = []
-def isFo(path):
-	global folders
-	if os.path.isdir(path):
-		folders.append(path)
-
-def process(path):
-	global table
-	base = os.getcwd()+'/'
-	fo = path.replace(base,'')
-	if _.showLine(fo):
-		result = execute_and_return('du -b "'+path+'"')
-		result = result.split(' ')[0]
-		result = result.split('\t')[0]
-		size = _.formatSize(int(result))
-		table.append({'size': size, 'bytes': int(result), 'folder': fo})
-	# _.pr(result,path.replace(base,''),c='cyan')
 def action():
-	global table
-	global folders
-	table=[]
-	_.fo(script=isFo)
-	for path in folders:
-		process(path)
-	_.pt(table,'size,folder',sort='bytes')
+	for i,line in enumerate(_.isData()):
+		ii=i+2
+		if line.endswith('{'):
+			if not line.strip().split(' ')[0] in ['if','while','else','for','switch'] and not line.strip().startswith('if('):
+				if _.switches.isActive('LineNumber'):
+					ln = _.color(ii,c='yellow',shouldPrint=False)
+					li = _.color(line,c='cyan',shouldPrint=False)
+					_.pr(ln,li)
+				else:
+					_.pr(line)
+
 ########################################################################################
 if __name__ == '__main__':
 	action(); _.isExit(__file__);

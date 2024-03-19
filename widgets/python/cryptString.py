@@ -412,11 +412,12 @@ def action():
 
 		if password is None:
 			password = _vault.key()
-
+	original=''
+	data=''
 	if  _.switches.isActive('String'):
 		for data in _.switches.values('String'):
 			data = cleanString( data )
-
+			original=data
 			if data.endswith('=') or data.endswith('/U') or _.switches.isActive('Decrypt'):
 				string = _blowfish.decrypt( data, _vault.key() )
 			else:
@@ -424,13 +425,13 @@ def action():
 
 			string = cleanString( string )
 			_.pr( string )
+			return string
 		return None
-
 
 	if  _.switches.isActive('Clipboard'):
 		
 		data = clip_get()
-
+		original=data
 		data = cleanString( data )
 		if _.switches.value('Clipboard').lower().startswith('p'):
 			_.pr( '|'+data+'|' )
@@ -441,7 +442,8 @@ def action():
 			clip = _blowfish.decrypt( data, _vault.key() )
 		else:
 			clip = _blowfish.encrypt( data, _vault.key() )
-
+		# if not clip == original:
+		# print(clip,original);sys.exit();
 		clip = cleanString( clip )
 		if _.switches.value('Clipboard').lower().startswith('p'):
 			_.pr( clip )
@@ -488,10 +490,18 @@ def action():
 
 	elif _.switches.isActive('Decrypt'):
 		# _.pr(1040)
+		if not data and _.isData():
+			data = _.isData()
+			# print(data); sys.exit();
+		if not data:
+
+			data = _.switches.values('Decrypt')[0]
+		# print(data,original);sys.exit();
+		# print(data);sys.exit();
 		if not _.switches.isActive('JustReturn'):
-			_.colorThis( _blowfish.decrypt( _.switches.values('Decrypt')[0], password ), 'green' )
+			_.colorThis( _blowfish.decrypt( data, password ), 'green' )
 		elif _.switches.isActive('JustReturn'):
-			return _blowfish.decrypt( _.switches.values('Decrypt')[0], password )
+			return _blowfish.decrypt( data, password )
 	else:
 		# _.pr(1050)
 		for i,row in enumerate(_.isData(c=False,focus=focus())):
