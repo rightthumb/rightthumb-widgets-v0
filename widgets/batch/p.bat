@@ -290,12 +290,19 @@ if exist %1\%2.py (
     goto:EOF
 
 :run_app
-
+title %1
 %py% "%python%\%1.py" %*
 if exist %myVars%\terminal\%Session_ID%.bat (
     call %myVars%\terminal\%Session_ID%.bat
 )
-    goto:EOF
+IF NOT ["%lab%"] == [""] (
+    REM TITLE %lab% - %Session_ID%
+    TITLE loc-%Session_ID_Suffix%  :: %lab%
+) else (
+    TITLE loc-%Session_ID_Suffix%
+    REM TITLE %today%
+)
+goto:EOF
 
 
 
