@@ -80,6 +80,9 @@ if __name__ == '__main__':
 #n)--> start
 
 def action():
+	bm = _bm.Bookmarks()
+	bm.reverse()
+	return False
 	data = []
 	find = _v.sanitizeFolder( os.getcwd() )
 	dirList = os.listdir( _v.myBookmarks )
@@ -112,6 +115,8 @@ def action():
 		else:
 			for x in data:
 				_.pr( x['alias'] )
+
+import _rightThumb._bookmarks as _bm
 
 ########################################################################################
 if __name__ == '__main__':

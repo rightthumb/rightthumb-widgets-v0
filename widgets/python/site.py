@@ -366,6 +366,7 @@ def process(path,end='',ft=None):
 				url += '/'
 			if not _.switches.isActive('mkdir'):
 				_.pr(path,c='cyan')
+				url=url.replace('=/','=')
 				_.pr(urlpr(url,meta),c='Background.blue')
 			if url.endswith('.js'): _.pr( '<script src="'+url+'"></script>' ,c='yellow')
 			elif url.endswith('.css'): _.pr( '<link rel="stylesheet" href="'+url+'">' ,c='yellow')
@@ -617,6 +618,7 @@ def action():
 		_.v.quiet = True
 		for path in _.switches.values('Files'):
 			url=meta_scan(path,'')
+			url=url.replace('=/','=')
 			if url: _.pr(url,c='Background.blue')
 			if url.endswith('.js'): _.pr( '<script src="'+url+'"></script>' ,c='yellow')
 			return url

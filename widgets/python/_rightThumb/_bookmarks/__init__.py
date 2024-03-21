@@ -179,6 +179,19 @@ class Bookmarks:
 	
 
 
+	def reverse( self, path=None ):
+		if path is None: path = os.getcwd()
+		spath = self.sanitize(path).replace('\\','/')
+		for bm in self.index['labels']:
+			if spath == self.index['labels'][bm]:
+				_.pr( bm )
+		# _.pr(spath)
+		# return None
+		# if spath in self.index['paths']:
+		# 	for bm in self.index['paths'][spath]:
+		# 		_.pr( bm )
+
+
 	def sanitize( self, path=None ):
 		if not path is None: self.folder = _v.sanitizeFolder( path );
 		else: self.folder = _v.sanitizeFolder( self.path );
