@@ -4,6 +4,6 @@ if [%1] == [] (
 	goto:eof
 )
 echo %timestamp_start%
-call p terminal-timer -min %1 > %tmpf%
+call p. terminal-timer -min %1 > %tmpf%
 set /p timestamp_start=<%tmpf%
 echo %timestamp_start%

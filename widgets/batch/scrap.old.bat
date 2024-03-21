@@ -10,7 +10,7 @@ rem    - Scott Taylor Reph, RightThumb.com
 rem ###########################################################################
 rem ## {C3P0D40fAe8B} ##
 
-CALL p fileLine -f %wprofile%\config\.unix_id -line 7 --c > %tmpf%
+CALL p. fileLine -f %wprofile%\config\.unix_id -line 7 --c > %tmpf%
 SET /p unixID7=<%tmpf%
 SET scrap2="%w%\widgets\bash\notes\RT-scrap-%unixID7%.txt"
 if not exist "%w%\widgets\bash" mkdir "%w%\widgets\bash"

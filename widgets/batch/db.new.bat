@@ -24,24 +24,24 @@ GOTO:EOF
 GOTO:EOF
 
 :copy_with_name
-    IF EXIST %1 CALL p print_color -color red -text  "Error: %1, already exists"
+    IF EXIST %1 CALL p. print_color -color red -text  "Error: %1, already exists"
     rem IF EXIST %1 echo 
     IF NOT EXIST %1 (
         echo %1>%tmpf%
         copy  %blank_db_path% %1>nul
-        CALL p print_color -text  "created %1" -color green
-        CALL p paths -f %1
+        CALL p. print_color -text  "created %1" -color green
+        CALL p. paths -f %1
     )
 GOTO:EOF
 
 :copy_without_name
-    IF EXIST blank.db CALL p print_color -color red -text  "Error: blank.db, already exists"
+    IF EXIST blank.db CALL p. print_color -color red -text  "Error: blank.db, already exists"
     rem IF EXIST blank.db echo Error: blank.db, already exists
     IF NOT EXIST blank.db (
         echo blank.db>%tmpf%
         xcopy /d/c %blank_db_path%>nul
-        CALL p print_color -text  "created blank.db" -color green
-        CALL p paths -f blank.db
+        CALL p. print_color -text  "created blank.db" -color green
+        CALL p. paths -f blank.db
     )
 
     

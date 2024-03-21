@@ -1,2 +1,2 @@
 @echo off
-call p cryptstring -en -clip
+call p. cryptstring -en -clip

@@ -21,8 +21,8 @@ if [%1] == [p] goto:appID
 goto:searchAppRegistrationInfo
 goto:eof
 :appID
-call p nID -app
-rem call p ago -f app
+call p. nID -app
+rem call p. ago -f app
 goto:eof
 :searchAppRegistrationInfo
 p searchAppRegistrationInfo %*

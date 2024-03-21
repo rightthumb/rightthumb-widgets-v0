@@ -1,3 +1,3 @@
 @echo off
-call uuid | p -copy
+call uuid | p. -copy
 git commit 

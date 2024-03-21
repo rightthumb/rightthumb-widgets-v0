@@ -16,7 +16,7 @@ IF [%1] == [] call sync
 cls
 echo Initiating drive scan
 echo.
-call p drive -scan
+call p. drive -scan
 set /p USB=USB Drive: 
 
 set usbDrive=%USB:~0,1%

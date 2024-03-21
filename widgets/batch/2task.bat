@@ -11,5 +11,5 @@ rem ###########################################################################
 rem ## {C3P0D40fAe8B} ##
 
 rem tasklist | f %1
- rem p cmd2table -print | p printTable -sort image_name - svchost  + .exe %*  -aggregate " eot?mem-total=add( int(MEM_USAGE) )); format(eot?mem-total,?size,??kb);"
- p cmd2table -print | p printTable -int mem_usage -sort mem_usage - svchost  + .exe %*  -aggregate " eot?mem-total=add( int(MEM_USAGE) )); format(eot?mem-total,?size,??kb);"
+ rem p cmd2table -print | p. printTable -sort image_name - svchost  + .exe %*  -aggregate " eot?mem-total=add( int(MEM_USAGE) )); format(eot?mem-total,?size,??kb);"
+ p cmd2table -print | p. printTable -int mem_usage -sort mem_usage - svchost  + .exe %*  -aggregate " eot?mem-total=add( int(MEM_USAGE) )); format(eot?mem-total,?size,??kb);"

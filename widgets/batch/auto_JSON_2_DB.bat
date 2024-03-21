@@ -13,11 +13,11 @@ rem ## {C3P0D40fAe8B} ##
 CALL %USERPROFILE%\cc.bat
 
 echo conversion issue
-CALL p json2DB -build -app -i %1
+CALL p. json2DB -build -app -i %1
 echo b issue
 CALL b db
 echo dba issue
-CALL p dba -app %1
+CALL p. dba -app %1
 PAUSE
 PAUSE
 

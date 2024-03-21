@@ -1,2 +1,2 @@
 @echo off 
-call p win-port-process-manager
+call p. win-port-process-manager

@@ -1,7 +1,7 @@
 @echo off
 title=Closing Queue
-call p lock-wait -wait x
-call p lock-wait -lock x
+call p. lock-wait -wait x
+call p. lock-wait -lock x
 rem ## {R2D2919B742E} ##
 rem ###########################################################################
 rem What if magic existed?
@@ -23,7 +23,7 @@ title=Closing
 echo.
 echo Reminder run   r.t   once a week.
 echo.
-rem call p fileBackup -f %wprofile%\projects\project-log.txt
+rem call p. fileBackup -f %wprofile%\projects\project-log.txt
 
 SET ORIGINAL_Session_ID=%Session_ID%
 
@@ -31,7 +31,7 @@ IF [%1] == [r] SET reclaim_tickets=yes
 doskey /history >> "%stmp%\unclaimed_tickets_history\history-%Session_ID%.txt"  2>&1
 
 SET BackupRunOnce=N
-CALL p checkForRunOnceBackups
+CALL p. checkForRunOnceBackups
 
 SET runOnceStatus=NO
 SET /p runOnceStatus=<%myVars%\hasRunOnceScheduled
@@ -118,10 +118,10 @@ if not ["%lab%"] == [""] echo ^<div class='laboratory' ^> %lab% >> ^</div^> >> "
 echo ^<br^> >> "%file%"
 echo ^<pre^> >> "%file%"
 
-CALL p singleLine -f "%stmp%\unclaimed_tickets_history\history-%ORIGINAL_Session_ID%.txt" > "%fileTempData%"  2>&1
+CALL p. singleLine -f "%stmp%\unclaimed_tickets_history\history-%ORIGINAL_Session_ID%.txt" > "%fileTempData%"  2>&1
 rem doskey /history > "%fileTempData%"
 
-type "%fileTempData%" | p passFilter >> "%file%"
+type "%fileTempData%" | p. passFilter >> "%file%"
 type "%file%" > "%fileTempData%"
 del "%fileTempData%"
 rem doskey /history >> "%file%"
@@ -151,8 +151,8 @@ rem echo x
 
 
 
-rem call p autoBackup -date "%open_timestamp2%" -include_once
-rem call p autoBackup -ago 1d
+rem call p. autoBackup -date "%open_timestamp2%" -include_once
+rem call p. autoBackup -ago 1d
 
 echo %Session_ID%
 echo %myVars%\ID.sys
@@ -203,28 +203,28 @@ IF [%BackupRunOnce%] == [Y] (
 
     echo BackupRunOnce: STARTED
     call:autoBackup_A
-    call p autoBackup -date "%open_timestamp2%" -include_once
+    call p. autoBackup -date "%open_timestamp2%" -include_once
 ) ELSE (
     echo BackupRunOnce: SKIPPED
     call:autoBackup_B
-    call p autoBackup -date "%open_timestamp2%"
+    call p. autoBackup -date "%open_timestamp2%"
 )
 
-if not [%ORIGINAL_Session_ID%] == [%Session_ID%] ( CALL p ticket_transfer -old %ORIGINAL_Session_ID% -new %Session_ID%)
+if not [%ORIGINAL_Session_ID%] == [%Session_ID%] ( CALL p. ticket_transfer -old %ORIGINAL_Session_ID% -new %Session_ID%)
 
 rem pause
 echo.
 echo.
-IF [%reclaim_tickets%] == [yes] CALL p unclaimed_tickets
+IF [%reclaim_tickets%] == [yes] CALL p. unclaimed_tickets
 rem call:autoBackup_B
 rem if not [%timer%] == [] if not [%lab%] == [] (
 rem     echo %lab%>%myTickets%\timer-%Session_ID%.lab
 rem )
 
 call lab-timer
-call p ticketTimeline
+call p. ticketTimeline
 title=Closed
-call p lock-wait -unlock x
+call p. lock-wait -unlock x
 exit
 :RunOnceBackupAsk
 if [%skip_backup%] == [YES] (
@@ -305,7 +305,7 @@ goto:eof
 if [%skip_backup%] == [YES] (
     echo skip_backup
 ) else (
-    call p autoBackup -date "%open_timestamp2%" -include_once
+    call p. autoBackup -date "%open_timestamp2%" -include_once
 )
 goto:eof
 :autoBackup_B
@@ -313,6 +313,6 @@ if [%skip_backup%] == [YES] (
     echo skip_backup
 ) else (
     echo autoBackup running...
-    call p autoBackup -date "%open_timestamp2%"
+    call p. autoBackup -date "%open_timestamp2%"
 )
 goto:eof

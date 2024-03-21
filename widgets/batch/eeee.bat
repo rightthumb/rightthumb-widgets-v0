@@ -26,7 +26,7 @@ if [%1] == [] (
 
 
 if [%2] == [] (
-        call p fileBackup -open -i %__init__%
+        call p. fileBackup -open -i %__init__%
         start "EDIT" %code_editor% %__init__%
     ) else if [%2] == [-e] (
         start "EDIT" %code_editor% %initExample%
@@ -34,22 +34,22 @@ if [%2] == [] (
         echo.
         set /p file=File Name: 
         if [%file%] == [] goto:eof
-        call p fileBackup -open -i "%pyroot%\%file%.py"
+        call p. fileBackup -open -i "%pyroot%\%file%.py"
         type %initExample% > "%pyroot%\%file%.py"
-        call p fileBackup -open -i %initExample%
+        call p. fileBackup -open -i %initExample%
         start "EDIT" %code_editor% "%pyroot%\%file%.py"
     ) else if [%3] == [] (
-        call p fileBackup -open -i %child%
+        call p. fileBackup -open -i %child%
         start "EDIT" %code_editor% %child%
     ) else if [%3] == [-e] (
-        call p fileBackup -open -i %childExample%
+        call p. fileBackup -open -i %childExample%
         start "EDIT" %code_editor% %childExample%
     ) else if [%3 == [-build] (
         echo.
         set /p file=File Name: 
         if [%file%] == [] goto:eof
-        call p fileBackup -open -i "%pyroot%\%file%.py"
-        call p fileBackup -open -i %childExample%
+        call p. fileBackup -open -i "%pyroot%\%file%.py"
+        call p. fileBackup -open -i %childExample%
         type %childExample% > "%pyroot%\%file%.py"
         start "EDIT" %code_editor% "%pyroot%\%file%.py"
         

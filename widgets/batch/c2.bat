@@ -263,7 +263,7 @@ GOTO:EOF
             SET archive7z=%widgets%\widgets\archive_7z_files
             SET distro="%myHome%\config\.distro"
             if not exist "%myHome%\config" mkdir "%myHome%\config"
-            if not exist %distro% CALL p this_distro > %distro%
+            if not exist %distro% CALL p. this_distro > %distro%
             SET /p distro=<%distro%
             IF NOT EXIST %archive7z% (md %archive7z%) 
                 net session >nul 2>&1
@@ -317,8 +317,8 @@ GOTO:EOF
     echo ^<br^> >> "%file%"  2>&1
     echo ^<pre^> >> "%file%"  2>&1
     echo. >> "%stmp%\unclaimed_tickets_history\history-%Session_ID%.txt"
-    CALL p singleLine -f "%stmp%\unclaimed_tickets_history\history-%Session_ID%.txt" > "%fileTempData%"  2>&1
-    type "%fileTempData%" | p passFilter >> "%file%"  2>&1
+    CALL p. singleLine -f "%stmp%\unclaimed_tickets_history\history-%Session_ID%.txt" > "%fileTempData%"  2>&1
+    type "%fileTempData%" | p. passFilter >> "%file%"  2>&1
     type "%file%" > "%fileTempData%"  2>&1
     del "%fileTempData%"
     echo ^</pre^> >> "%file%"  2>&1

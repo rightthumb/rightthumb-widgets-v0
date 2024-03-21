@@ -10,8 +10,8 @@ rem    - Scott Taylor Reph, RightThumb.com
 rem ###########################################################################
 rem ## {C3P0D40fAe8B} ##
 
-CALL p ls -folder D:\tech\hosts\MSI\tickets -ago 1d -c p  --c -s md.d>%tmpf%
-CALL p typeEach -f %tmpf%
+CALL p. ls -folder D:\tech\hosts\MSI\tickets -ago 1d -c p  --c -s md.d>%tmpf%
+CALL p. typeEach -f %tmpf%
 
 
  

@@ -38,7 +38,7 @@ echo no burn
 GOTO:EOF
 
 
-rem CALL p unix
+rem CALL p. unix
 rem rmdir /s /q %widgets%\widgets\python\burn\windows
 rem rmdir /s /q %widgets%\widgets\python\burn\unix
 rem mkdir %widgets%\widgets\python\burn\windows

@@ -1,7 +1,7 @@
 @echo off
 rem p ephemeral--error 2> %tmpf%-py
 setlocal enabledelayedexpansion
-call p pyErr -ago 2min > %tmpf%
+call p. pyErr -ago 2min > %tmpf%
 SET /p pyErr=<%tmpf%
 if [%pyErr%] == [true] (
     set works=-1

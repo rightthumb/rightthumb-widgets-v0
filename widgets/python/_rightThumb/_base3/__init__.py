@@ -20838,6 +20838,7 @@ def load():
 		switches.register('NoColor', '-nocolor', space=True, default=True)
 		switches.register('LoadEpoch', '-loadepoch', default=True)
 		switches.register('PrintEpoch', '-printepoch', default=True)
+		switches.register('NoTitleChange', '-ntc,-notitlechange', default=True)
 		switches.register('chmod', '-chmod,-777', default=True)
 		switches.register( 'Paste-isData', '--pa,--paste,-ppa,-ppaste,-ispa,-idpa' , default=True)
 		switches.register( 'Paste-isData-json', '--json,-pjson,-jsonp' , default=True)

@@ -8,7 +8,7 @@ echo.
 call grn
 rem echo %timer%
 if [%1] == [] (
-	call p terminal-timer -session
+	call p. terminal-timer -session
 ) else (
-	call p terminal-timer -session -m %1
+	call p. terminal-timer -session -m %1
 )

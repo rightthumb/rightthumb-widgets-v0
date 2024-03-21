@@ -11,7 +11,7 @@ rem ###########################################################################
 rem ## {C3P0D40fAe8B} ##
 
 
-call p files -folder %widgets%\widgets\python + *.py -nocolor | p f3  - # %* 
+call p. files -folder %widgets%\widgets\python + *.py -nocolor | p. f3  - # %* 
 
 
 

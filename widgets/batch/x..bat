@@ -16,7 +16,7 @@ echo.
 echo Reminder run   r.t   once a week.
 echo.
 
-rem call p fileBackup -f %wprofile%\projects\project-log.txt
+rem call p. fileBackup -f %wprofile%\projects\project-log.txt
 
 SET ORIGINAL_Session_ID=%Session_ID%
 
@@ -24,7 +24,7 @@ IF [%1] == [r] SET reclaim_tickets=yes
 doskey /history >> "%stmp%\unclaimed_tickets_history\history-%Session_ID%.txt"  2>&1
 
 SET BackupRunOnce=N
-CALL p checkForRunOnceBackups
+CALL p. checkForRunOnceBackups
 
 SET runOnceStatus=NO
 SET /p runOnceStatus=<%myVars%\hasRunOnceScheduled
@@ -110,10 +110,10 @@ if not ["%lab%"] == [""] echo ^<div class='laboratory' ^> %lab% >> ^</div^> >> "
 echo ^<br^> >> "%file%"
 echo ^<pre^> >> "%file%"
 
-CALL p singleLine -f "%stmp%\unclaimed_tickets_history\history-%ORIGINAL_Session_ID%.txt" > "%fileTempData%"  2>&1
+CALL p. singleLine -f "%stmp%\unclaimed_tickets_history\history-%ORIGINAL_Session_ID%.txt" > "%fileTempData%"  2>&1
 rem doskey /history > "%fileTempData%"
 
-type "%fileTempData%" | p passFilter >> "%file%"
+type "%fileTempData%" | p. passFilter >> "%file%"
 type "%file%" > "%fileTempData%"
 del "%fileTempData%"
 rem doskey /history >> "%file%"
@@ -144,7 +144,7 @@ rem echo x
 
 
 
-rem call p autoBackup -ago 1d
+rem call p. autoBackup -ago 1d
 echo %Session_ID%
 echo %myVars%\ID.sys
 rem pause
@@ -194,19 +194,19 @@ IF [%BackupRunOnce%] == [Y] (
 
     echo BackupRunOnce: STARTED
     call:autoBackup_A
-    rem call p autoBackup -date "%open_timestamp2%" -include_once
+    rem call p. autoBackup -date "%open_timestamp2%" -include_once
 ) ELSE (
     echo BackupRunOnce: SKIPPED
     call:autoBackup_B
-    rem call p autoBackup -date "%open_timestamp2%"
+    rem call p. autoBackup -date "%open_timestamp2%"
 )
 
-if not [%ORIGINAL_Session_ID%] == [%Session_ID%] ( CALL p ticket_transfer -old %ORIGINAL_Session_ID% -new %Session_ID%)
+if not [%ORIGINAL_Session_ID%] == [%Session_ID%] ( CALL p. ticket_transfer -old %ORIGINAL_Session_ID% -new %Session_ID%)
 
 rem pause
 echo.
 echo.
-IF [%reclaim_tickets%] == [yes] CALL p unclaimed_tickets
+IF [%reclaim_tickets%] == [yes] CALL p. unclaimed_tickets
 exit
 :RunOnceBackupAsk
 if [%skip_backup%] == [YES] (
@@ -284,14 +284,14 @@ goto:eof
 rem if [%skip_backup%] == [YES] (
 rem     echo skip_backup
 rem ) else (
-rem     call p autoBackup -date "%open_timestamp2%" -include_once
+rem     call p. autoBackup -date "%open_timestamp2%" -include_once
 rem )
 goto:eof
 :autoBackup_B
 rem if [%skip_backup%] == [YES] (
 rem     echo skip_backup
 rem ) else (
-rem     call p autoBackup -date "%open_timestamp2%"
+rem     call p. autoBackup -date "%open_timestamp2%"
 rem )
 goto:eof
 

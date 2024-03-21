@@ -1,2 +1,2 @@
 @echo off
-call p vps-ae-report %*
+call p. vps-ae-report %*

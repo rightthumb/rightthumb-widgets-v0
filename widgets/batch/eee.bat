@@ -11,6 +11,6 @@ rem ###########################################################################
 rem ## {C3P0D40fAe8B} ##
 
 rem start "EDIT" %code_editor% "%pyroot%\%1.py"
-call ee %* | p episodes
+call ee %* | p. episodes
 
  

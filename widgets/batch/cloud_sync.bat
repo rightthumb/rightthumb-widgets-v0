@@ -10,7 +10,7 @@ rem    - Scott Taylor Reph, RightThumb.com
 rem ###########################################################################
 rem ## {C3P0D40fAe8B} ##
 
-CALL p ls -folder %widgets%\widgets\python + *.py -r -save %stmp%\py.cache
+CALL p. ls -folder %widgets%\widgets\python + *.py -r -save %stmp%\py.cache
 
 
  

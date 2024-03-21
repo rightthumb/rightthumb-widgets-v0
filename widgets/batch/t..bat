@@ -6,5 +6,5 @@ if [%1] == [] (
 ) else (
 	set "ago=%*"
 )
-p file -ago %ago% + open close -or | p cat --c| p line - session "<" --c | p line - closed- open- | p last-line
+p file -ago %ago% + open close -or | p. cat --c| p. line - session "<" --c | p. line - closed- open- | p. last-line
 call b back > nul

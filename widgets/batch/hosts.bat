@@ -18,7 +18,7 @@ type D:\Windows\System32\drivers\etc\hosts
 GOTO END
 
 :EDIT
-call p fileBackup -open -i D:\Windows\System32\drivers\etc\hosts
+call p. fileBackup -open -i D:\Windows\System32\drivers\etc\hosts
 notepad D:\Windows\System32\drivers\etc\hosts
 
 :END

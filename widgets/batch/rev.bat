@@ -1,2 +1,2 @@
 @echo off
-call p reverse-sort
+call p. reverse-sort

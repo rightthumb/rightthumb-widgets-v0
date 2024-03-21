@@ -12,7 +12,7 @@ rem ## {C3P0D40fAe8B} ##
 
 
 title=Closing Queue
-call p lock-wait -wait x -for 10
+call p. lock-wait -wait x -for 10
 
 
 title=Closing

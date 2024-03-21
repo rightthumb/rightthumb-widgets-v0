@@ -111,7 +111,7 @@ GOTO:EOF
     echo %now%,%thisDrive:~0,1%,Indexed>> %thisDMRLog%
     echo          %thisDrive:~0,1%:\ %driveLabel%    indexing
     rem dir /s/b %thisDrive:~0,1%:\*.* > "{tmp}"
-    call p files -c -p %thisDrive:~0,1%:\ > "{tmp}"
+    call p. files -c -p %thisDrive:~0,1%:\ > "{tmp}"
     type "{tmp}" > %mdrIndex%\%thisPrioritySetting%%driveID%
     echo          %thisDrive:~0,1%:\ %driveLabel%    index complete
     echo.

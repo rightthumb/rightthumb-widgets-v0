@@ -1,2 +1,2 @@
 @echo off
-call p files -folder %batch% + *.py -has %*
+call p. files -folder %batch% + *.py -has %*

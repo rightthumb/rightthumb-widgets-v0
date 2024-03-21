@@ -1,2 +1,2 @@
 @echo off
-call p wiggle-mouse %*
+call p. wiggle-mouse %*

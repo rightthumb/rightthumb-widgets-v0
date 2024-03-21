@@ -4,17 +4,17 @@ SET fi=%1
 SET entire=n
 
 if [%2] == [-d] (
-	call p fileBackup -open -f %fi%
-	call p decrypt-docs -delete -f  %fi%
-	call p secureFiles -delete  -en -f  %fi%
+	call p. fileBackup -open -f %fi%
+	call p. decrypt-docs -delete -f  %fi%
+	call p. secureFiles -delete  -en -f  %fi%
 	echo done
 	GOTO:EOF
 )
 
 if [%2] == [-delete] (
-	call p fileBackup -open -f %fi%
-	call p secureFiles -delete  -en -f  %fi%
-	call p decrypt-docs -delete -f  %fi%
+	call p. fileBackup -open -f %fi%
+	call p. secureFiles -delete  -en -f  %fi%
+	call p. decrypt-docs -delete -f  %fi%
 	echo done
 	GOTO:EOF
 )
@@ -40,8 +40,8 @@ GOTO:EOF
 :PARTIAL
 
 echo PARTIAL selected
-call p secureFiles -delete  -en -f  %fi%
-call p decrypt-docs -f  %fi%
+call p. secureFiles -delete  -en -f  %fi%
+call p. decrypt-docs -f  %fi%
 echo partial encryption configured
 
 rem if [%entire%] == [Y] (
@@ -55,8 +55,8 @@ GOTO:EOF
 
 :ENTIRE
 echo ENTIRE selected
-call p decrypt-docs -delete -f  %fi%
-call p secureFiles -en -f  %fi%
+call p. decrypt-docs -delete -f  %fi%
+call p. secureFiles -en -f  %fi%
 echo entire-file encryption configured
 GOTO:EOF
 :ENTIRE2

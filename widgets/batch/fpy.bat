@@ -11,9 +11,9 @@ rem ###########################################################################
 rem ## {C3P0D40fAe8B} ##
 
 
-rem CALL p f -in %widgets%\widgets\python\*.py -jn  - #  + %*
+rem CALL p. f -in %widgets%\widgets\python\*.py -jn  - #  + %*
 
-CALL p files -folder %widgets%\widgets\python\ + *.py | p f -jn  - #  + %*
+CALL p. files -folder %widgets%\widgets\python\ + *.py | p. f -jn  - #  + %*
 
 
 

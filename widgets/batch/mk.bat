@@ -1,4 +1,4 @@
 @echo off
 
-call p line --c -make %*
+call p. line --c -make %*
  

@@ -11,7 +11,7 @@ rem ###########################################################################
 rem ## {C3P0D40fAe8B} ##
 
 
-call p files -folder %day% -nocolor  | p f3  - # %* 
+call p. files -folder %day% -nocolor  | p. f3  - # %* 
 
 
 

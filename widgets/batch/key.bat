@@ -13,10 +13,10 @@ if [%key%] == [aa] set "key=admin@tatooine.m-eta.app"
 if [%key%] == [py] set key=python
 
 if "%~2"=="" (
-    call p keychain -temp -get -label "!key!"
+    call p. keychain -temp -get -label "!key!"
 ) else if "%~2"=="-crypt" (
-    call p keychain -get -label "!key!"
-    call p cryptString -en -clip
+    call p. keychain -get -label "!key!"
+    call p. cryptString -en -clip
 )
 
 endlocal

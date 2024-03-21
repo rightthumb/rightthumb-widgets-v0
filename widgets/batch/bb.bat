@@ -31,7 +31,7 @@ GOTO:EOF
     call set p=%%p:{6FAB5628-94A1-410A-82D1-1D42A2A11750}=%userprofile%%%
     call set p=%%p:{C12F266D-71B9-40D2-98B9-424B42D2DBAC}=%thisHost%%%
     SET b=%p%
-    call p script-helper -replace "'%b%' '/' '\\'" > %tmpf%
+    call p. script-helper -replace "'%b%' '/' '\\'" > %tmpf%
     SET /p b=<%tmpf%
     rem IF [%2] == [] echo ^%%b^%% = %b%
     IF [%2] == [] echo %b%

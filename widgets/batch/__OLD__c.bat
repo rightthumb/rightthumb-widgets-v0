@@ -10,8 +10,8 @@ rem    - Scott Taylor Reph, RightThumb.com
 rem ###########################################################################
 rem ## {C3P0D40fAe8B} ##
 
-:: type c.bat | p line -m "{} " + set =  --c | p line --c - "= " rem ::
-:: type c.bat | p line - \ if ;.;. set rem echo goto call cls ")" prompt -ln
+:: type c.bat | p. line -m "{} " + set =  --c | p. line --c - "= " rem ::
+:: type c.bat | p. line - \ if ;.;. set rem echo goto call cls ")" prompt -ln
 rem 026 :HARDRELOAD
 rem 105 :RELOADVARS
 rem 110 :VARS

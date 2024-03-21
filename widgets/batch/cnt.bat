@@ -1,2 +1,2 @@
 @echo off
-call p instances-count %*
+call p. instances-count %*

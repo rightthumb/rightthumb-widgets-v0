@@ -1,2 +1,2 @@
 @echo off 
-call p infunc -f construct | p line + %* 
+call p. infunc -f construct | p. line + %* 

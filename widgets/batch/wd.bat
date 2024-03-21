@@ -1,2 +1,2 @@
 @echo off
-call p webdav -f %*
+call p. webdav -f %*

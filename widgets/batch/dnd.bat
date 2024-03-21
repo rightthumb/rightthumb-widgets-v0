@@ -12,7 +12,7 @@ rem ## {C3P0D40fAe8B} ##
 
 
 
- CALL p dnd -ss
+ CALL p. dnd -ss
 
 
 GOTO:EOF

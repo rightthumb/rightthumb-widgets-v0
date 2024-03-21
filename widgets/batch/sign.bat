@@ -12,7 +12,7 @@ if not exist signed (
 
 set path=%path%;D:\websites\domains\signtool\CodeSignTool-v1.3.0-windows
 
-call p code-sign-vars > "%stmp%\sign.bat"
+call p. code-sign-vars > "%stmp%\sign.bat"
 call "%stmp%\sign.bat"
 call rm "%stmp%\sign.bat" > nul
 if [%2] == [] (

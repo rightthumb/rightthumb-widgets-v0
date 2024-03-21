@@ -21,10 +21,10 @@ if [%1] == [] (
 if exist "%python%\%1.py" (
     %py% %*
 ) else (
-    @REM type D:\.rightthumb-widgets\widgets\python\0-index.list  --c + %* | p pipe-cleaner -ext
-    @REM CALL p py-finder  + $@ -percentage
-    @REM CALL p file -prefix -noext --c -folder %widgets%\widgets\python + %*
-    call p cat -f D:\.rightthumb-widgets\widgets\python\0-index.list + %*
+    @REM type D:\.rightthumb-widgets\widgets\python\0-index.list  --c + %* | p. pipe-cleaner -ext
+    @REM CALL p. py-finder  + $@ -percentage
+    @REM CALL p. file -prefix -noext --c -folder %widgets%\widgets\python + %*
+    call p. cat -f D:\.rightthumb-widgets\widgets\python\0-index.list + %*
 )
 
 rem @echo off
@@ -35,7 +35,7 @@ rem     set subject=%1
 rem     shift
 rem     %py% %widgets%\widgets\python\%subject%.py %*
 rem ) else (
-rem     CALL p file -noext --c -folder %widgets%\widgets\python + %*
+rem     CALL p. file -noext --c -folder %widgets%\widgets\python + %*
 rem )
 
 

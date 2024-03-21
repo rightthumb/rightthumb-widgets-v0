@@ -1,2 +1,2 @@
 @echo off
-call p infunc -f vars | p line + %*
+call p. infunc -f vars | p. line + %*

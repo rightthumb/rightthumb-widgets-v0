@@ -22,8 +22,8 @@ if "%URL_VAR:~0,6%"=="https:" (
 )
 
 if [%1] == [] (
-	call p site -u -f last
+	call p. site -u -f last
 ) else (
-	call p site -u -f %* 
+	call p. site -u -f %* 
 )
 

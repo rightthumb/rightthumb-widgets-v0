@@ -10,7 +10,7 @@ rem    - Scott Taylor Reph, RightThumb.com
 rem ###########################################################################
 rem ## {C3P0D40fAe8B} ##
 
-call p fileBackup -i "%phpFiles%\%1.php"
+call p. fileBackup -i "%phpFiles%\%1.php"
 start "EDIT" %code_editor% "%phpFiles%\%1.php"
 
 

@@ -1,2 +1,2 @@
 @echo off
-call p pipe-find-files %*
+call p. pipe-find-files %*

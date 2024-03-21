@@ -32,7 +32,7 @@ GOTO:EOF
     call set p=%%p:{6FAB5628-94A1-410A-82D1-1D42A2A11750}=%userprofile%%%
     call set p=%%p:{C12F266D-71B9-40D2-98B9-424B42D2DBAC}=%thisHost%%%
     SET b=%p%
-    call p script-helper -replace "'%b%' '/' '\\'" > %tmpf%
+    call p. script-helper -replace "'%b%' '/' '\\'" > %tmpf%
     SET /p b=<%tmpf%
     cd /d %b%
     rem IF [%2] == [] echo ^%%b^%% = %b%
@@ -41,12 +41,12 @@ GOTO:EOF
 
 
 :main
-if [%1] == [0] call p b0
-call result call p b -a "%1"
+if [%1] == [0] call p. b0
+call result call p. b -a "%1"
 
 
 
-rem call result call p bb %1 > %tmpf%  >nul 2>&1
+rem call result call p. bb %1 > %tmpf%  >nul 2>&1
 rem set /p result=<%tmpf%
 
 rem echo 5 %result%
@@ -56,9 +56,9 @@ call:VALIDATE ":" %result%
 if [%valid%] == [yes] (
     rem %result:~0,2%
 
-if not exist "%result%" (call p nsfw -color red -on "folder does not exist, mothafucka" -off "folder does not exist")
-rem if not exist %result% call p nsfw -color red Background.red red -on "folder does" "not exist" ", mothafucka" -off "folder does not exist"
-if not exist "%result%" call p print_color -text ";t%result%" -color cyan
+if not exist "%result%" (call p. nsfw -color red -on "folder does not exist, mothafucka" -off "folder does not exist")
+rem if not exist %result% call p. nsfw -color red Background.red red -on "folder does" "not exist" ", mothafucka" -off "folder does not exist"
+if not exist "%result%" call p. print_color -text ";t%result%" -color cyan
 if not exist "%result%" goto:eof
     %py% %widgets%\widgets\python\folder-registration.py
     cd /d "%result%"
@@ -91,13 +91,13 @@ echo %var1%
 cd %var1%
 %py% %widgets%\widgets\python\folder-registration.py
 goto:eof
-CALL p b -a %* > "%stmp%\bookmark.tmp"
+CALL p. b -a %* > "%stmp%\bookmark.tmp"
 set /p back=<"%stmp%\bookmark.tmp"
 echo %back%
 cd %back%
 
 goto:eof
-CALL p b -save -a %* 
+CALL p. b -save -a %* 
 set /p back=<"%stmp%\bookmark.tmp"
 set drive_letter=%back:~0,2%
 %drive_letter%

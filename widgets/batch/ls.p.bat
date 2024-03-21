@@ -15,10 +15,10 @@ CALL:DO_A %*
 GOTO:EOF
 
 if [%1] == [] (
-    CALL p ls -m
+    CALL p. ls -m
 )
 if [%1] == [m] (
-    CALL p ls -m
+    CALL p. ls -m
 )
 
 if [%1] == [d] (
@@ -41,7 +41,7 @@ GOTO:EOF
 
 :DO_B
     rem echo 2 Days
-    CALL p ls -s md -g ago --c  -nocolor  -c path -ago 2d
+    CALL p. ls -s md -g ago --c  -nocolor  -c path -ago 2d
 GOTO:EOF
 
 
@@ -75,31 +75,31 @@ GOTO:EOF
 GOTO:EOF
 
 :DO_C_9
-    CALL p ls -s md -g ago --c  -nocolor  -c path %1 %2 %3 %4 %5 %6 %7 %8 %9 %autoGROUP%
+    CALL p. ls -s md -g ago --c  -nocolor  -c path %1 %2 %3 %4 %5 %6 %7 %8 %9 %autoGROUP%
 GOTO:EOF
 :DO_C_8
-    CALL p ls -s md -g ago --c  -nocolor  -c path %1 %2 %3 %4 %5 %6 %7 %8 %autoGROUP%
+    CALL p. ls -s md -g ago --c  -nocolor  -c path %1 %2 %3 %4 %5 %6 %7 %8 %autoGROUP%
 GOTO:EOF
 :DO_C_7
-    CALL p ls -s md -g ago --c  -nocolor  -c path %1 %2 %3 %4 %5 %6 %7 %autoGROUP%
+    CALL p. ls -s md -g ago --c  -nocolor  -c path %1 %2 %3 %4 %5 %6 %7 %autoGROUP%
 GOTO:EOF
 :DO_C_6
-    CALL p ls -s md -g ago --c  -nocolor  -c path %1 %2 %3 %4 %5 %6 %autoGROUP%
+    CALL p. ls -s md -g ago --c  -nocolor  -c path %1 %2 %3 %4 %5 %6 %autoGROUP%
 GOTO:EOF
 :DO_C_5
-    CALL p ls -s md -g ago --c  -nocolor  -c path %1 %2 %3 %4 %5 %autoGROUP%
+    CALL p. ls -s md -g ago --c  -nocolor  -c path %1 %2 %3 %4 %5 %autoGROUP%
 GOTO:EOF
 :DO_C_4
-    CALL p ls -s md -g ago --c  -nocolor  -c path %1 %2 %3 %4  %autoGROUP%
+    CALL p. ls -s md -g ago --c  -nocolor  -c path %1 %2 %3 %4  %autoGROUP%
 GOTO:EOF
 :DO_C_3
-    CALL p ls -s md -g ago --c  -nocolor  -c path %1 %2 %3  %autoGROUP%
+    CALL p. ls -s md -g ago --c  -nocolor  -c path %1 %2 %3  %autoGROUP%
 GOTO:EOF
 :DO_C_2
-    CALL p ls -s md -g ago --c  -nocolor  -c path %1 %2  %autoGROUP%
+    CALL p. ls -s md -g ago --c  -nocolor  -c path %1 %2  %autoGROUP%
 GOTO:EOF
 :DO_C_1
-    CALL p ls -s md -g ago --c  -nocolor  -c path %1 %autoGROUP%
+    CALL p. ls -s md -g ago --c  -nocolor  -c path %1 %autoGROUP%
 GOTO:EOF
 
 

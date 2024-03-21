@@ -10,6 +10,6 @@ rem    - Scott Taylor Reph, RightThumb.com
 rem ###########################################################################
 rem ## {C3P0D40fAe8B} ##
 
-type %1 | p line --c -p ;; 5 | p regScan
+type %1 | p. line --c -p ;; 5 | p. regScan
 
  

@@ -105,7 +105,7 @@ GOTO:EOF
     SET Session_ID_BK=%Session_ID%
     ECHO %Session_ID% > %myVars%\ID.sys
     CALL timestamp ats2 noEcho >nul 2>&1
-    CALL p files -folder %myVars% -rrr > nul
+    CALL p. files -folder %myVars% -rrr > nul
     SET timestamp_start=%now%
 GOTO:EOF
 
@@ -288,7 +288,7 @@ GOTO:EOF
             SET archive7z=%widgets%\widgets\archive_7z_files
             SET distro=%myHome%\config\.distro
             IF NOT EXIST "%myHome%\config" mkdir "%myHome%\config"
-            IF NOT EXIST %distro% CALL p this_distro > %distro%
+            IF NOT EXIST %distro% CALL p. this_distro > %distro%
             SET /p distro=<%distro%
             IF NOT EXIST %archive7z% (mkdir %archive7z%) 
                 net session >nul 2>&1
@@ -352,8 +352,8 @@ GOTO:EOF
     ECHO ^<br^> >> "%file%"  2>&1
     ECHO ^<pre^> >> "%file%"  2>&1
     ECHO. >> "%stmp%\unclaimed_tickets_history\history-%Session_ID%.txt"
-    CALL p singleLine -f "%stmp%\unclaimed_tickets_history\history-%Session_ID%.txt" > "%fileTempData%"  2>&1
-    TYPE "%fileTempData%" | p passFilter >> "%file%"  2>&1
+    CALL p. singleLine -f "%stmp%\unclaimed_tickets_history\history-%Session_ID%.txt" > "%fileTempData%"  2>&1
+    TYPE "%fileTempData%" | p. passFilter >> "%file%"  2>&1
     TYPE "%file%" > "%fileTempData%"  2>&1
     DEL "%fileTempData%"
     ECHO ^</pre^> >> "%file%"  2>&1

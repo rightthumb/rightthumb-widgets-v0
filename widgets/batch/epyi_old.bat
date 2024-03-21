@@ -66,7 +66,7 @@ if [%2] == [] (
             set initOpen=y
         )
         if [%initOpen%] == [y] (
-            call p fileBackup -i %__init__%
+            call p. fileBackup -i %__init__%
             start "EDIT" %code_editor% %__init__%
             echo %__init__%
         ) else (
@@ -86,25 +86,25 @@ if [%2] == [] (
                 echo App already exists
                 set /p action=Replace App?: 
                 if [%action%] == [y] (
-                        call p fileBackup -i "%python%\%fileName%.py"
+                        call p. fileBackup -i "%python%\%fileName%.py"
                         type %initExample% > "%python%\%fileName%.py"
-                        rem call p fileBackup -i "%python%\%fileName%.py"
+                        rem call p. fileBackup -i "%python%\%fileName%.py"
                     ) else (
-                        call p fileBackup -i "%python%\%fileName%.py"
+                        call p. fileBackup -i "%python%\%fileName%.py"
                     )
 
                 start "EDIT" %code_editor% "%python%\%fileName%.py"
                 echo %python%\%fileName%.py
 
             ) else (
-                call p fileBackup -i "%python%\%fileName%.py"
+                call p. fileBackup -i "%python%\%fileName%.py"
                 type %initExample% > "%python%\%fileName%.py"
-                call p fileBackup -i "%python%\%fileName%.py"
+                call p. fileBackup -i "%python%\%fileName%.py"
                 start "EDIT" %code_editor% "%python%\%fileName%.py"
                 echo %python%\%fileName%.py
             )
     ) else if [%2] == [-s] (
-        call p fileBackup -i %childSample%
+        call p. fileBackup -i %childSample%
         start "EDIT" %code_editor% %childSample%
         echo %childSample%
     ) else if ["%2"] == ["-cmd"] (
@@ -113,7 +113,7 @@ if [%2] == [] (
                 echo.
                 type %childCommands%
             ) else (
-                call p fileBackup -i %childCommands%
+                call p. fileBackup -i %childCommands%
                 start "EDIT" %code_editor% %childCommands%
                 echo %childCommands%
             )
@@ -122,7 +122,7 @@ if [%2] == [] (
         echo.
         echo %childCommands%
     ) else if ["%2"] == ["-cmde"] (
-        call p fileBackup -i %childCommands%
+        call p. fileBackup -i %childCommands%
         start "EDIT" %code_editor% %childCommands%
         echo %childCommands%
     
@@ -132,11 +132,11 @@ if [%2] == [] (
         echo.
         echo %childCommands%
     ) else if [%3] == [] (
-        call p fileBackup -i %child%
+        call p. fileBackup -i %child%
         start "EDIT" %code_editor% %child%
         echo %child%
     ) else if [%3] == [-e] (
-        call p fileBackup -i %childExample%
+        call p. fileBackup -i %childExample%
         start "EDIT" %code_editor% %childExample%
         echo %childExample%
     ) else if [%3] == [-build] (
@@ -146,13 +146,13 @@ if [%2] == [] (
 
         if exist "%python%\%fileName%.py" (
                 echo App already exists
-                call p fileBackup -i "%python%\%fileName%.py"
+                call p. fileBackup -i "%python%\%fileName%.py"
                 start "EDIT" %code_editor% "%python%\%fileName%.py"
                 echo %python%\%fileName%.py
             ) else (
-                call p fileBackup -i "%python%\%fileName%.py"
+                call p. fileBackup -i "%python%\%fileName%.py"
                 type %childExample% > "%python%\%fileName%.py"
-                call p fileBackup -i "%python%\%fileName%.py"
+                call p. fileBackup -i "%python%\%fileName%.py"
                 start "EDIT" %code_editor% "%python%\%fileName%.py"
                 echo %python%\%fileName%.py
             )

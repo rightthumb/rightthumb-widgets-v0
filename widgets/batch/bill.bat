@@ -19,7 +19,7 @@ call m back --c
 call b 0 > nul
 call b myTickets > nul
 call t v > ~
-call p b0 -print -date > %myTickets%\folder.txt
+call p. b0 -print -date > %myTickets%\folder.txt
 set /p csv_export=<%tmpf%
 
 rem echo "=if((E2<15),15,E2)"

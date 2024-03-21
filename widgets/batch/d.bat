@@ -91,21 +91,21 @@ GOTO:EOF
 :ACTION1
 cls
 echo.
-call p file_folder
+call p. file_folder
 echo.
 GOTO:EOF
 
 :ACTION2
 cls
 echo.
-call p file_folder + %*
+call p. file_folder + %*
 echo.
 GOTO:EOF
 
 :ACTION3
 cls
 echo.
-call p file_folder %*
+call p. file_folder %*
 echo.
 GOTO:EOF
 

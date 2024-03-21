@@ -1,2 +1,2 @@
 @echo off
-call p -paste | p number | p -copy
+call p. -paste | p. number | p. -copy

@@ -22,7 +22,7 @@ rem GOTO:EOF
 
 IF [%do%] == [True] (
     IF NOT EXIST "%myPython%\%1.py" copy %template% %myPython%\%1.py>nul
-    call p fileBackup -open -i "%myPython%\%1.py"
+    call p. fileBackup -open -i "%myPython%\%1.py"
     start "EDIT" %code_editor% "%myPython%\%1.py"
 )
 

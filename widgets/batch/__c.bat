@@ -100,7 +100,7 @@ IF ["%Session_ID%"] == [""] CALL :GENERATE_API_ID
 SET api=loaded
 CLS
 echo.
-CALL p drive -scan
+CALL p. drive -scan
 prompt - 
 
 GOTO:EOF

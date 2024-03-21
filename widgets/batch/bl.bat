@@ -1,6 +1,6 @@
 @echo off
 
-call p blank-file -f %*
+call p. blank-file -f %*
 
 rem IF EXIST %1 (
 rem     set /p ask=delete file?: 

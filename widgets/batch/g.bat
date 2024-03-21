@@ -17,7 +17,7 @@ rem ) ELSE (
 rem     CALL p google -q %*
 rem )
 
-call p bb %1 > %tmpf%
+call p. bb %1 > %tmpf%
 set /p xyz=<%tmpf%
 cd /d %xyz%
 echo %xyz%

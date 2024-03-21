@@ -11,10 +11,10 @@ rem ###########################################################################
 rem ## {C3P0D40fAe8B} ##
 
 echo Done
-call p done
+call p. done
 goto:eof
 if [%myHome%] == [] call %userprofile%\cc.bat
-if [%1] == [] ( call p done ) else ( call p done -song %1)
+if [%1] == [] ( call p. done ) else ( call p. done -song %1)
 
 goto:eof
 

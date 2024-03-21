@@ -34,27 +34,27 @@ SET run=y
 rem SET /p run= Zip Linux: 
 if [%run%] == [n] goto:eof
 rem p zip -folder D:\tech\linux  -save D:\websites\tools.RightThumb\tools\linux.zip
-start cmd /c %userprofile%\cx.bat call p zip -folder D:\tech\linux -save D:\websites\tools.RightThumb\tools\linux.zip
-call p wait -w 2
+start cmd /c %userprofile%\cx.bat call p. zip -folder D:\tech\linux -save D:\websites\tools.RightThumb\tools\linux.zip
+call p. wait -w 2
 rem move /y D:\tech\linux.zip D:\websites\tools.RightThumb\tools\
 echo moved 
 SET /p run= Zip Linux, upload: 
 if [%run%] == [n] goto:DB
-rem call p genLinux + linux.zip
+rem call p. genLinux + linux.zip
 echo wget https://reph.us/tools/linux.zip
 
 :DB
 SET /p run= Zip databank:
 if [%run%] == [n] goto:eof
 rem p zip -folder %widgets%\widgets\databank -save D:\websites\tools.RightThumb\tools\databank.zip
-start cmd /c %userprofile%\cx.bat call p zip -folder %widgets%\widgets\databank -save D:\websites\tools.RightThumb\tools\databank.zip
+start cmd /c %userprofile%\cx.bat call p. zip -folder %widgets%\widgets\databank -save D:\websites\tools.RightThumb\tools\databank.zip
 rem SET /p run= Zip databank, done: 
-call p wait -w 2
+call p. wait -w 2
 rem move /y %widgets%\widgets\databank.zip D:\websites\tools.RightThumb\tools\
 echo moved 
 SET /p run= uploading databank.zip: 
 if [%run%] == [n] goto:eof
-rem call p genLinux + databank.zip
+rem call p. genLinux + databank.zip
 echo wget https://reph.us/tools/databank.zip
 
 
@@ -75,7 +75,7 @@ rem call:upload
 goto:eof
 
 :upload
-rem CALL p genLinux
+rem CALL p. genLinux
 echo.
 echo.
 echo sudo wget -O - -q "http://reph.us/tools/file.php?file=tool.sh" ^| bash

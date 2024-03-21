@@ -10,7 +10,7 @@ rem    - Scott Taylor Reph, RightThumb.com
 rem ###########################################################################
 rem ## {C3P0D40fAe8B} ##
 
-type "D:\_Scott\S_Documents\Projects\DND\cleric_research.txt" | p simpleLine  %*
+type "D:\_Scott\S_Documents\Projects\DND\cleric_research.txt" | p. simpleLine  %*
 
 rem D:\tech\hosts\MSI\tables\cleric.json
 

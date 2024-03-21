@@ -9,7 +9,7 @@ if exist %1 (
 goto:eof
 
 :OPEN_FILE
-    call p file-open -backup -f %*
+    call p. file-open -backup -f %*
 goto:eof
 
 :shouldcreate
@@ -44,7 +44,7 @@ goto:eof
 :altlocations
 
 if not [%2] == [] (
-    call p file-open -backup -alias %*
+    call p. file-open -backup -alias %*
 ) else if exist %* (
     CALL:OPEN_FILE %*
 ) else if exist %myTables%\%* (

@@ -84,19 +84,19 @@ IF [%1] == [] (
 
 
 
-CALL p unix
+CALL p. unix
 
 CALL b pysw
-rem type %appServer% | p path -valid >> %appServerFiles%
-type %appServer% | p inline -make " p implode -f {}" | p execute
-rem CALL p file --c + *.py | p inline -make " p implode -f {}" | p execute
+rem type %appServer% | p. path -valid >> %appServerFiles%
+type %appServer% | p. inline -make " p implode -f {}" | p. execute
+rem CALL p. file --c + *.py | p. inline -make " p implode -f {}" | p. execute
 
 CALL b pysu
-rem type %appServer% | p path -valid >> %appServerFiles%
-type %appServer% | p inline -make " p implode -f {}" | p execute
-rem CALL p file --c + *.py | p inline -make " p implode -f {}" | p execute
+rem type %appServer% | p. path -valid >> %appServerFiles%
+type %appServer% | p. inline -make " p implode -f {}" | p. execute
+rem CALL p. file --c + *.py | p. inline -make " p implode -f {}" | p. execute
 rem CALL b pyc
-rem CALL p appServer -crypt en 
+rem CALL p. appServer -crypt en 
 
 SET shouldRun=NO
 SET /p shouldRun=Upload? 
@@ -106,7 +106,7 @@ GOTO:END
 :RUN
 echo.
 echo.
-type %appServerFiles% | p appServer -crypt en 
+type %appServerFiles% | p. appServer -crypt en 
 GOTO:END
 :END
 rem SET "appServer="

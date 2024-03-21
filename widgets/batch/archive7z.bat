@@ -11,7 +11,7 @@ rem ###########################################################################
 rem ## {C3P0D40fAe8B} ##
 
 cls
-call p file +  *.7z 
+call p. file +  *.7z 
 SET take_action=n
 echo.
 SET /p take_action= Stop ? 

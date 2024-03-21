@@ -1,2 +1,2 @@
 @echo off
-call p vps-KnoledgeBase -list %*
+call p. vps-KnoledgeBase -list %*

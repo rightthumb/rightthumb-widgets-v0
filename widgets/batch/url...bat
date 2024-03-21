@@ -13,7 +13,7 @@ rem ## {C3P0D40fAe8B} ##
 rem alias u.bat
 
 if [%1] == [] (
-    call p url
+    call p. url
     goto:eof
 )
 

@@ -1,2 +1,2 @@
 @echo off
-call p colors
+call p. colors

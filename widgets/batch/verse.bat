@@ -1,2 +1,2 @@
 @echo off
-call p bible-verse-links %*
+call p. bible-verse-links %*

@@ -13,16 +13,16 @@ rem ## {C3P0D40fAe8B} ##
 
 
 if [%1] == [] (
-    call p newpage
+    call p. newpage
     goto:eof
 )
 
 call runSet isSwitch %*
 
 if [%runSet%] == [true] (
-    call p newpage %*
+    call p. newpage %*
 ) else (
-    call p newpage -t %*
+    call p. newpage -t %*
 )
 goto:eof
 

@@ -19,7 +19,7 @@ GOTO:EOF
 :ACTION1
 cls
 echo.
-call p touch ?
+call p. touch ?
 echo.
 GOTO:EOF
 :ACTION2
@@ -35,14 +35,14 @@ GOTO:EOF
 :ACTION3
 cls
 echo.
-call p touch -f %1 -mod now
+call p. touch -f %1 -mod now
 echo.
 GOTO:EOF
 
 :ACTION4
 cls
 echo.
-call p touch %*
+call p. touch %*
 echo.
 GOTO:EOF
 

@@ -16,7 +16,7 @@ IF 1%2 NEQ +1%2 ( set gotoLine=0 ) ELSE ( set gotoLine=%2 )
 
 if exist %1 (
 
-    rem call p fileBackup -open -f %*
+    rem call p. fileBackup -open -f %*
 
     rem taskkill /im sublime_text.exe /f
     CALL:OPEN_FILE %1
@@ -28,7 +28,7 @@ if exist %1 (
 goto:eof
 
 :OPEN_FILE
-    call p file-open -app %code_editor% -f %*
+    call p. file-open -app %code_editor% -f %*
     rem start "EDIT" %code_editor% "%*"
 goto:eof
 
@@ -46,7 +46,7 @@ set "create="
     ) else if [%create%] == [y] (
 
     echo Create chosen
-    rem call p fileBackup -open -f %*
+    rem call p. fileBackup -open -f %*
     rem taskkill /im sublime_text.exe /f
     CALL:OPEN_FILE %*
     rem echo %*
@@ -81,7 +81,7 @@ rem goto:eof
 
 if exist %* (
 
-    rem call p fileBackup -open -f %*
+    rem call p. fileBackup -open -f %*
     rem taskkill /im sublime_text.exe /f
     CALL:OPEN_FILE %*
     rem echo %*
@@ -93,7 +93,7 @@ if exist %* (
 
 ) else if exist %myTables%\%*.json (
 
-    rem call p fileBackup -open -f %myTables%\%*.json
+    rem call p. fileBackup -open -f %myTables%\%*.json
     rem taskkill /im sublime_text.exe /f
     CALL:OPEN_FILE %myTables%\%*.json
     rem echo %myTables%\%*.json
@@ -101,7 +101,7 @@ if exist %* (
 
 ) else if exist %myTables%\%*.txt (
 
-    rem call p fileBackup -open -f %myTables%\%*.txt
+    rem call p. fileBackup -open -f %myTables%\%*.txt
     rem taskkill /im sublime_text.exe /f
     CALL:OPEN_FILE %myTables%\%*.txt
     rem echo %myTables%\%*.json
@@ -111,73 +111,73 @@ if exist %* (
 
 ) else if exist %dbTables%\%*.json (
 
-    rem call p fileBackup -open -f %dbTables%\%*.json
+    rem call p. fileBackup -open -f %dbTables%\%*.json
     CALL:OPEN_FILE %dbTables%\%*.json
 
 ) else if exist %dbTables%\%* (
 
-    rem call p fileBackup -open -f %dbTables%\%*
+    rem call p. fileBackup -open -f %dbTables%\%*
     CALL:OPEN_FILE %dbTables%\%*
 
 ) else if exist %python%\%*.py (
 
-    rem call p fileBackup -open -f %python%\%*.py
+    rem call p. fileBackup -open -f %python%\%*.py
     rem taskkill /im sublime_text.exe /f
     CALL:OPEN_FILE %python%\%*.py
     rem echo %python%\%*.py
 
 ) else if exist %phpFiles%\%*.php (
 
-    rem call p fileBackup -open -f %phpFiles%\%*.php
+    rem call p. fileBackup -open -f %phpFiles%\%*.php
     rem taskkill /im sublime_text.exe /f
     CALL:OPEN_FILE %phpFiles%\%*.php
     rem echo %phpFiles%\%*.php
 
 ) else if exist %scriptroot%\%*.bat (
 
-    rem call p fileBackup -open -f %scriptroot%\%*.bat
+    rem call p. fileBackup -open -f %scriptroot%\%*.bat
     rem taskkill /im sublime_text.exe /f
     CALL:OPEN_FILE %scriptroot%\%*.bat
     rem echo %scriptroot%\%*.bat
 
 ) else if exist %powershell%\%*.ps1 (
 
-    rem call p fileBackup -open -f %powershell%\%*.ps1
+    rem call p. fileBackup -open -f %powershell%\%*.ps1
     rem taskkill /im sublime_text.exe /f
     CALL:OPEN_FILE %powershell%\%*.ps1
     rem echo %powershell%\%*.ps1
 
 ) else if exist D:\_Scott\S_Documents\Projects\self\Powershell\%*.ps1 (
 
-    rem call p fileBackup -open -f D:\_Scott\S_Documents\Projects\self\Powershell\%*.ps1
+    rem call p. fileBackup -open -f D:\_Scott\S_Documents\Projects\self\Powershell\%*.ps1
     rem taskkill /im sublime_text.exe /f
     CALL:OPEN_FILE D:\_Scott\S_Documents\Projects\self\Powershell\%*.ps1
     rem echo D:\_Scott\S_Documents\Projects\self\Powershell\%*.ps1
 
 ) else if exist %myPhp%\%*.php (
 
-    rem call p fileBackup -open -f %myPhp%\%*.php
+    rem call p. fileBackup -open -f %myPhp%\%*.php
     rem taskkill /im sublime_text.exe /f
     CALL:OPEN_FILE %myPhp%\%*.php
     rem echo %myPhp%\%*.php
 
 ) else if exist %myPowershell%\%*.ps1 (
 
-    rem call p fileBackup -open -f %myPowershell%\%*.ps1
+    rem call p. fileBackup -open -f %myPowershell%\%*.ps1
     rem taskkill /im sublime_text.exe /f
     CALL:OPEN_FILE %myPowershell%\%*.ps1
     rem echo %myPowershell%\%*.ps1
 
 ) else if exist %myPython%\%*.py (
 
-    rem call p fileBackup -open -f %myPython%\%*.py
+    rem call p. fileBackup -open -f %myPython%\%*.py
     rem taskkill /im sublime_text.exe /f
     CALL:OPEN_FILE %myPython%\%*.py
     rem echo %myPython%\%*.py
 
 ) else if exist %myTables%\%* (
 
-    rem call p fileBackup -open -f %myTables%\%*
+    rem call p. fileBackup -open -f %myTables%\%*
     rem taskkill /im sublime_text.exe /f
     CALL:OPEN_FILE %myTables%\%*
     rem echo %myTables%\%*
@@ -188,28 +188,28 @@ if exist %* (
 
 ) else if exist %myDatabases%\%* (
 
-    rem call p fileBackup -open -f %myDatabases%\%*
+    rem call p. fileBackup -open -f %myDatabases%\%*
     rem taskkill /im sublime_text.exe /f
     CALL:OPEN_FILE %myDatabases%\%*
     rem echo %myDatabases%\%*
 
 ) else if exist %myWebApp%\%* (
 
-    rem call p fileBackup -open -f %myWebApp%\%*
+    rem call p. fileBackup -open -f %myWebApp%\%*
     rem taskkill /im sublime_text.exe /f
     CALL:OPEN_FILE %myWebApp%\%*
     rem echo %myWebApp%\%*
 
 ) else if exist %USERPROFILE%\Desktop\%* (
 
-    rem call p fileBackup -open -f %USERPROFILE%\Desktop\%*
+    rem call p. fileBackup -open -f %USERPROFILE%\Desktop\%*
     rem taskkill /im sublime_text.exe /f
     CALL:OPEN_FILE %USERPROFILE%\Desktop\%*
     rem echo %USERPROFILE%\Desktop\%*
 
 ) else (
 
-    rem call p fileBackup -open -f %*
+    rem call p. fileBackup -open -f %*
     rem taskkill /im sublime_text.exe /f
     CALL:OPEN_FILE %*
     rem echo %*

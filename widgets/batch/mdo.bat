@@ -1,2 +1,2 @@
 @echo off
-call p md -f %*
+call p. md -f %*

@@ -1,2 +1,2 @@
 @echo off
-call p passwords %*
+call p. passwords %*

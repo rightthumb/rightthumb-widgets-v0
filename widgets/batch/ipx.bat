@@ -1,3 +1,3 @@
 @echo off
-call p ipx
+call p. ipx
  

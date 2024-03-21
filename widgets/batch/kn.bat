@@ -1,2 +1,2 @@
 @echo off
-call p vps-KnoledgeBase -search %*
+call p. vps-KnoledgeBase -search %*

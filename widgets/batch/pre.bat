@@ -1,6 +1,6 @@
 @echo off
 if [%1] == [] (
-	call pa | call p auto-remove-prefix
+	call pa | call p. auto-remove-prefix
 ) else (
-	call p auto-remove-prefix %*
+	call p. auto-remove-prefix %*
 )

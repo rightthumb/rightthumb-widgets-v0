@@ -1,2 +1,2 @@
 @echo off
-call p -file -r --c %*
+call p. -file -r --c %*

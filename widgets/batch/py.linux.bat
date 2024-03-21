@@ -10,7 +10,7 @@ rem    - Scott Taylor Reph, RightThumb.com
 rem ###########################################################################
 rem ## {C3P0D40fAe8B} ##
 
-call p f -in %widgets%\widgets\bash\history\*.* + "p *" | p line -p ";sp" 1 | sort | p countEach
+call p. f -in %widgets%\widgets\bash\history\*.* + "p *" | p. line -p ";sp" 1 | sort | p. countEach
 
 
  

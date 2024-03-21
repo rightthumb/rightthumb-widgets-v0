@@ -1,2 +1,2 @@
 @echo off
-call p folderSizeTotals %*
+call p. folderSizeTotals %*

@@ -1,2 +1,2 @@
 @echo off
-call p active-window
+call p. active-window

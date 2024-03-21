@@ -13,7 +13,7 @@ rem ## {C3P0D40fAe8B} ##
 rem @echo off & setlocal
 @echo off 
 
-CALL p singleLineJSON -file %1
+CALL p. singleLineJSON -file %1
 
 set /p JSON=<%1
 echo %JSON%

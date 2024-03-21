@@ -17,7 +17,7 @@ if [%1] == [] (
 	set cdf_path=%1
 )
 
-CALL p popFile -f %cdf_path% > %tmpf%
+CALL p. popFile -f %cdf_path% > %tmpf%
 
 rem echo 1 "%1"
 SET /p folder=<%tmpf%

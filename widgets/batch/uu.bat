@@ -12,9 +12,9 @@ rem ## {C3P0D40fAe8B} ##
 
 if [%1] == [] (
 	rem this was u
-	CALL p genuuid -e -strip be %*
+	CALL p. genuuid -e -strip be %*
 ) else (
-	CALL p genuuid -short -e %*
+	CALL p. genuuid -short -e %*
 )
 
 

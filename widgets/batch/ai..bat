@@ -1,11 +1,11 @@
 @echo off
-call p vps-ai-sds -p %*
+call p. vps-ai-sds -p %*
 
 
 
 rem @echo off 
 
-rem call p ai %*
+rem call p. ai %*
 rem shift /1
 rem set "remainingArgs="
 rem :getRemainingArgs
@@ -16,5 +16,5 @@ rem   goto :getRemainingArgs
 rem )
 rem rem echo remainingArgs=%remainingArgs%
 
-rem call p bot -r "%remainingArgs%"
+rem call p. bot -r "%remainingArgs%"
  

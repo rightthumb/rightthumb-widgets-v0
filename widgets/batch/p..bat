@@ -10,18 +10,29 @@ rem    - Scott Taylor Reph, RightThumb.com
 rem ###########################################################################
 rem ## {C3P0D40fAe8B} ##
 
+@REM set PY="D:\techApps\Python\Python36-32\python.exe"
+rem set py=python3
 
-xcopy      /s/d/y/c      %python%\_rightThumb\*.py      %myPrograms%\python\_rightThumb\      >nul
+if [%1] == [base-e] type %python%\_rightThumb\_base3\_base3_init_example.py > %python%\base-e.py
+if [%1] == [] goto:EOF
 
-if not exist "%myPython%\%1.py" (
+:START_HERE
+
+if [%1] == [b?] (
+    SHIFT
+    CALL :START_HERE hasAlias %*
+    goto:EOF
+)
+
+
+if not exist "%python%\%1.py" (
     set originalOne=%1
     set searched=0
     GOTO :APP_SEARCH
 )
 
 :START_WORKING
-call u >nul
-if [%1] == [] goto:EOF
+rem echo %*
 set changeDIR=false
 set switchUsed=false
 set switchAutoLegacy=false
@@ -29,6 +40,7 @@ set switch=
 set clean=false
 rem set py2=D:\Python27\python.exe
 set two=%2
+
 call :DeQuote two
 if [%two:~0,1%] == [/] (
         set switchUsed=true
@@ -71,30 +83,40 @@ if [%switch%] == [2] (
 
 goto:EOF
 :APP_SEARCH
-    set /a searched=%searched%+1
-    if [%searched%] == [1] set plusClose=90
-    rem echo %plusClose%
-    if [%searched%] == [2] set plusClose=80
-    rem echo %plusClose%
-    if [%searched%] == [3] set plusClose=70
-    rem echo %plusClose%
-    echo.>"%stmp%\app(file.py)_output.txt"
-    echo Error: Does not exist>>"%stmp%\app(file.py)_output.txt"
-    echo.>>"%stmp%\app(file.py)_output.txt"
-    echo Try:>>"%stmp%\app(file.py)_output.txt"
-    rem echo %searched% %plusClose%
-    call p. file -folder %myPython% -noext -label ;tApps -prefix ;t +close %plusClose% + %1>>"%stmp%\app(file.py)_output.txt"
-    GOTO :POST_ERROR_COUNT_CHECK
+
+    echo.
+    echo did you mean
+
+
+    call p. py-finder -percentage + %1
+
+    rem set /a searched=%searched%+1
+    rem if [%searched%] == [1] set plusClose=90
+    rem if [%searched%] == [2] set plusClose=80
+    rem if [%searched%] == [3] set plusClose=70
+    rem if [%searched%] == [4] set plusClose=50
+
+    rem echo pattern: %plusClose%^%%
+    rem echo.>"%stmp%\app(file.py)_output.txt"
+    rem echo Error: Does not exist>>"%stmp%\app(file.py)_output.txt"
+    rem echo.>>"%stmp%\app(file.py)_output.txt"
+    rem echo Try:>>"%stmp%\app(file.py)_output.txt"
+    rem rem echo %searched% %plusClose%
+    rem call p. file -folder %python% -noext -label ;tApps -prefix ;t +close %plusClose% + %1>>"%stmp%\app(file.py)_output.txt"
+    rem GOTO:EOF
+    rem echo call p. file -folder %python% -noext -label ;tApps -prefix ;t +close %plusClose% + %1>>"%stmp%\app(file.py)_output.txt"
+    rem type "%stmp%\app(file.py)_output.txt"
+    rem GOTO :POST_ERROR_COUNT_CHECK
 goto:EOF
 
 :POST_ERROR_COUNT_CHECK
-SET /p apps_found=<"%stmp%\app(file.py)_Count.txt"
+SET /p apps_found=<"%stmp%\app(file.py)_Count.txt"> nul
 set /a apps_found=%apps_found%+1
 set /a apps_found=%apps_found%-1
 rem echo %apps_found%
 if [%apps_found%] == [1] goto :POST_ERROR_HAS_SINGLE
 rem GOTO:EOF 
-if [%apps_found%] == [0] if %searched% LSS 3 goto :APP_SEARCH
+if [%apps_found%] == [0] if %searched% LSS 4 goto :APP_SEARCH
 if [%apps_found%] == [0] if [%searched%] == [3] type "%stmp%\app(file.py)_output.txt"
 if %apps_found% GTR 0 GOTO :POST_ERROR
 goto:EOF
@@ -110,7 +132,8 @@ if exist "%stmp%\app(file.py).txt" (
 
 goto:EOF
 :POST_ERROR_HAS_SINGLE
-SET /p the_new_app=<"%stmp%\app(file.py).txt"
+echo HERE, "%stmp%\app(file.py).txt"
+SET /p the_new_app=<"%stmp%\app(file.py).txt"> nul
 set argLoop=0
 set argsNew=%the_new_app%
 
@@ -130,16 +153,18 @@ if [%shouldRun%] == [yes] call :DOCUMENT_AND_START %argsNew%
 
 GOTO:EOF
 call :START_WORKING %argsNew%
+
+
+goto:EOF
 :DOCUMENT_AND_START
 if not exist "%appAliasLog%" (
     echo "timestamp","session","alias","original","folder">>%appAliasLog%
 )
 
-call timestamp sdel noEcho
-echo "%now%","%Session_ID%","%originalOne%","%1","%myPython%">>%appAliasLog%
-call :START_WORKING %*
-goto:EOF
 
+call timestamp sdel noEcho
+echo "%now%","%Session_ID%","%originalOne%","%1","%python%">>%appAliasLog%
+call :START_WORKING %*
 goto:EOF
 :BULD_ARGUMENTS
 SHIFT
@@ -148,8 +173,9 @@ if not [%2] == [] goto :BULD_ARGUMENTS
 goto:POST_BULD_ARGUMENTS
 :TOFOLDER
 set changeDIR=true
-call m back
-call b mypy
+echo ran
+call m back --c
+call b py
 goto:EOF
 :TOBACK
 if [%changeDIR%] == [true] call b back
@@ -162,7 +188,7 @@ if not [%clean%] == [true] (
     echo _____________
     echo.
 )
-%py2% "%myPython%\%1.py" %*
+%py2% "%python%\%1.py" %*
 if not [%clean%] == [true] (
     echo.
     echo _____________
@@ -179,7 +205,9 @@ if [%clean%] == [true] (
     echo _____________
     echo.
 )
-%py% "%myPython%\%1.py" %*
+call :find_app %*
+rem %py% "%python%\%1.py" %*
+
 if [%clean%] == [true] (
     echo.
     echo ____________
@@ -190,7 +218,7 @@ goto:EOF
 
 :fix
 call :TOFOLDER
-call pyVer %1.py
+call pyVer %1
 set switchUsed=true
 goto:EOF
 
@@ -200,14 +228,14 @@ goto:EOF
 
 :labelLegacy
 call :TOFOLDER
-%py% "%python%\labelFile.py" "%myPython%\%1.py" "#835B0032-Legacy"
+%py% "%python%\labelFile.py" "%python%\%1.py" "#835B0032-Legacy"
 set switchAutoLegacy=true
 set switchUsed=true
 set switch=2
 goto:EOF
 
 :checkLegacy
-find /c "#835B0032" "%myPython%\%1.py" > nul
+find /c "#835B0032" "%python%\%1.py" > nul
 if not %errorlevel% equ 1 (
         set switchAutoLegacy=true
         set switch=2
@@ -216,7 +244,7 @@ goto:EOF
 
 :recoverLegacy
 call :TOFOLDER
-set fileName=%myPython%\%1.py
+set fileName=%python%\%1.py
 if exist "%fileName%" (
         if exist "%fileName%.bak" (
                 del /q "%fileName%"
@@ -231,6 +259,44 @@ set switchUsed=true
 set switch=2
 call :labelLegacy %1
 goto:EOF
+rem #A1695618-Converted
+
+
+
+    :find_app
+
+if exist %python%\%1.py (
+    call:run_app %*
+) else (
+    call:find_app_search
+)
+
+    goto:EOF
+
+
+    :find_app_search
+
+for /f %%f in ('dir /b %python%') do call :find_app_process %%f %*
+
+    goto:EOF
+
+    :find_app_process
+
+if exist %1\%2.py (
+    shift
+    call :run_app %*
+)
+
+    goto:EOF
+
+:run_app
+%py% "%python%\%1.py" %*
+if exist %myVars%\terminal\%Session_ID%.bat (
+    call %myVars%\terminal\%Session_ID%.bat
+)
+goto:EOF
+
+
 
 
  

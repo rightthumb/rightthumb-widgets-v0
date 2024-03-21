@@ -1,2 +1,2 @@
 @echo off
-call p execute
+call p. execute

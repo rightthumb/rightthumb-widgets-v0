@@ -83,7 +83,7 @@ goto:EOF
     echo.>>"%stmp%\app(file.py)_output.txt"
     echo Try:>>"%stmp%\app(file.py)_output.txt"
     rem echo %searched% %plusClose%
-    call p file -folder %myPython% -noext -label ;tApps -prefix ;t +close %plusClose% + %1>>"%stmp%\app(file.py)_output.txt"
+    call p. file -folder %myPython% -noext -label ;tApps -prefix ;t +close %plusClose% + %1>>"%stmp%\app(file.py)_output.txt"
     GOTO :POST_ERROR_COUNT_CHECK
 goto:EOF
 

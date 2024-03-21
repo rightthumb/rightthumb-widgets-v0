@@ -10,6 +10,6 @@ rem    - Scott Taylor Reph, RightThumb.com
 rem ###########################################################################
 rem ## {C3P0D40fAe8B} ##
 
-call p file --c + %* | p -copy -print
+call p. file --c + %* | p. -copy -print
 
  

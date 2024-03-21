@@ -10,6 +10,6 @@ rem    - Scott Taylor Reph, RightThumb.com
 rem ###########################################################################
 rem ## {C3P0D40fAe8B} ##
 
-call p speak -say %* 2>&1
+call p. speak -say %* 2>&1
 
  

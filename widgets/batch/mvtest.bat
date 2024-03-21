@@ -8,10 +8,10 @@ call m 99
 call crypt test.txt -y
 call o sample1 test.txt
 cd ..
-call p pyTimer -start
+call p. pyTimer -start
 call mv sample1 sample2 -y 2> %tmpf%-py
 call ghost sample2 -y 2> %tmpf%-py
-call p pyTimer -end > %tmpf%
+call p. pyTimer -end > %tmpf%
 SET /p pyTimer=<%tmpf%
 rmdir /s/q sample2
 call notify "mvtest %pyTimer%"

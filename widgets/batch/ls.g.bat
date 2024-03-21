@@ -10,6 +10,6 @@ rem    - Scott Taylor Reph, RightThumb.com
 rem ###########################################################################
 rem ## {C3P0D40fAe8B} ##
 
-call p ls -c g s n -s g -g g %*
+call p. ls -c g s n -s g -g g %*
 
  

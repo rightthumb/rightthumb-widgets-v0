@@ -57,7 +57,7 @@ goto:eof
     rem echo p dir -ago %ago% %mc% - *.pyc -datepath %mc%
     rem goto:eof
 
-    type %tmpf% | CALL p dir -ago %ago% %mc% - *.pyc -datepath %mc%
+    type %tmpf% | CALL p. dir -ago %ago% %mc% - *.pyc -datepath %mc%
 
     goto:eof
 

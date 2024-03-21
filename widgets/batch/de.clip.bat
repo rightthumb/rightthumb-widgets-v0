@@ -1,2 +1,2 @@
 @echo off
-call p cryptString -de -clip
+call p. cryptString -de -clip

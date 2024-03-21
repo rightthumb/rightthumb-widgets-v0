@@ -1,3 +1,3 @@
 @echo off
 
-call p blank-file -f %*
+call p. blank-file -f %*

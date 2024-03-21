@@ -11,7 +11,7 @@ rem ###########################################################################
 rem ## {C3P0D40fAe8B} ##
 
 
-call p files -folder %widgets%\widgets\python -ext .py  %* 
+call p. files -folder %widgets%\widgets\python -ext .py  %* 
 
 
 

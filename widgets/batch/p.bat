@@ -88,7 +88,7 @@ goto:EOF
     echo did you mean
 
 
-    call p py-finder -percentage + %1
+    call p. py-finder -percentage + %1
 
     rem set /a searched=%searched%+1
     rem if [%searched%] == [1] set plusClose=90
@@ -102,9 +102,9 @@ goto:EOF
     rem echo.>>"%stmp%\app(file.py)_output.txt"
     rem echo Try:>>"%stmp%\app(file.py)_output.txt"
     rem rem echo %searched% %plusClose%
-    rem call p file -folder %python% -noext -label ;tApps -prefix ;t +close %plusClose% + %1>>"%stmp%\app(file.py)_output.txt"
+    rem call p. file -folder %python% -noext -label ;tApps -prefix ;t +close %plusClose% + %1>>"%stmp%\app(file.py)_output.txt"
     rem GOTO:EOF
-    rem echo call p file -folder %python% -noext -label ;tApps -prefix ;t +close %plusClose% + %1>>"%stmp%\app(file.py)_output.txt"
+    rem echo call p. file -folder %python% -noext -label ;tApps -prefix ;t +close %plusClose% + %1>>"%stmp%\app(file.py)_output.txt"
     rem type "%stmp%\app(file.py)_output.txt"
     rem GOTO :POST_ERROR_COUNT_CHECK
 goto:EOF
@@ -290,17 +290,19 @@ if exist %1\%2.py (
     goto:EOF
 
 :run_app
-title %1
+IF NOT ["%lab%"] == [""] (
+    TITLE loc-%Session_ID_Suffix%  :: %lab% : %1
+) else (
+    TITLE loc-%Session_ID_Suffix% %1
+)
 %py% "%python%\%1.py" %*
 if exist %myVars%\terminal\%Session_ID%.bat (
     call %myVars%\terminal\%Session_ID%.bat
 )
 IF NOT ["%lab%"] == [""] (
-    REM TITLE %lab% - %Session_ID%
     TITLE loc-%Session_ID_Suffix%  :: %lab%
 ) else (
     TITLE loc-%Session_ID_Suffix%
-    REM TITLE %today%
 )
 goto:EOF
 

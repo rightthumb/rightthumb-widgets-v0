@@ -10,6 +10,6 @@ rem    - Scott Taylor Reph, RightThumb.com
 rem ###########################################################################
 rem ## {C3P0D40fAe8B} ##
 
-call p keychain -get -temp 8 -label vps.k
+call p. keychain -get -temp 8 -label vps.k
 
  
