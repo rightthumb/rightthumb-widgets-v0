@@ -1,5 +1,8 @@
 @echo off
 
+%py% "%python%\%1.py" %*
+GOTO:EOF
+
 rem ## {R2D2919B742E} ##
 rem ###########################################################################
 rem What if magic existed?
