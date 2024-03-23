@@ -2706,7 +2706,7 @@ class virtualFiles:
 		if path == '.bashrc-auto':
 			data = """
 
-echo 000-001
+# echo 000-001
 
 ## .bashrc-auto
 # 82977d555926
@@ -2718,7 +2718,7 @@ if [[ "$FORCE_BASHRC" != "true" ]]; then
 fi
 
 
-echo 000-002
+# echo 000-002
 
 if [ -z "$Session_ID" ]; then
   export Session_ID=$(date +%s)
@@ -2727,13 +2727,13 @@ fi
 ################# #################
 alias beep.="play -nq -t alsa synth 1 sine 440"
 ################# ################# #################
-echo 000-003
+# echo 000-003
 clear
 		"""
 			return self.file( path, data, { 'status': 'virtual' } )
 		if path == '.bashrc-all':
 			data = """
-echo 000-004
+# echo 000-004
 ## .bashrc-all
 # exit if scp or similar 4f8c
 if [[ "$FORCE_BASHRC" != "true" ]]; then
@@ -2741,7 +2741,7 @@ if [[ "$FORCE_BASHRC" != "true" ]]; then
 	return
   fi
 fi
-echo 000-005
+# echo 000-005
 if [ -z "$Session_ID" ]; then
   export Session_ID=$(date +%s)
 fi
@@ -2757,7 +2757,7 @@ fi
 
 EMOJIS=(THE_EMOJIS_GO_HERE)
 prompt_symbol=${EMOJIS[$RANDOM % ${#EMOJIS[@]}]};
-echo 000-006
+# echo 000-006
 
 if [ "$color_prompt" = yes ]; then
 	prompt_color='\\[\033[;32m\\]'
@@ -2777,7 +2777,7 @@ clear
 			return self.file( path, data, { 'status': 'virtual' } )
 		if path == '.bashrc.mini':
 			data = """
-echo 000-026
+# echo 000-026
 ## .bashrc.mini
 
 
@@ -2796,7 +2796,7 @@ get_time_difference() {
 	START_TIME=$current_time # Update START_TIME for the next run
 }
 
-echo 000-007
+# echo 000-007
 # exit if scp or similar 4f8c
 if [[ "$FORCE_BASHRC" != "true" ]]; then
   if [ -z "$PS1" ]; then
@@ -2806,7 +2806,7 @@ fi
 if [ -z "$Session_ID" ]; then
   export Session_ID=$(date +%s)
 fi
-echo 000-027
+# echo 000-027
 ################# ################# ################# #################
 [ ! -d $HOME/.rt ] && mkdir $HOME/.rt
 [ ! -d $HOME/.rt/profile ] && mkdir $HOME/.rt/profile
@@ -2815,7 +2815,7 @@ touch $HOME/.rt/profile/temp/temp.exp
 # chmod -R 777 $HOME/.rt/
 # chmod 777 $HOME/.rt/profile/temp/temp.exp
 ################# ################# ################# #################
-echo 000-008
+# echo 000-008
 source $HOME/.rt/profile/vars/config.sh
 touch $HOME/.rt/profile/vars/personal.sh
 if [ -f "$HOME/.rt/profile/vars/personal.sh" ]; then
@@ -2829,14 +2829,14 @@ source /opt/rightthumb-widgets-v0/widgets/bash/rc/mini.sh
 export HISTSIZE=100000
 export HISTFILESIZE=100000
 # get_time_difference
-echo 000-028
+# echo 000-028
 clear
 			"""
 			return self.file( path, data, { 'status': 'virtual' } )
 
 		if path == '.bashrc.full':
 			data = """
-echo 000-019
+# echo 000-019
 ## .bashrc.full
 # exit if scp or similar 4f8c
 if [[ "$FORCE_BASHRC" != "true" ]]; then
@@ -2848,15 +2848,15 @@ if [ -z "$Session_ID" ]; then
   export Session_ID=$(date +%s)
 fi
 # chmod -R 777 $HOME/.rt/
-echo 000-009
+# echo 000-009
 ################# ################# ################# #################
 
 source $HOME/.rt/profile/vars/config.sh
 source $HOME/.rt/profile/vars/personal.sh
 
-echo 000-010
+# echo 000-010
 
-echo 000-020
+# echo 000-020
 
 # get_time_difference
 config="$wprofile/config"
@@ -2896,7 +2896,7 @@ export config
 export widgets
 
 
-echo 000-021
+# echo 000-021
 
 
 
@@ -2919,10 +2919,10 @@ alias rms='python3 $ww/python/secure-delete-file.py -f '
 export HISTSIZE=100000
 export HISTFILESIZE=100000
 
-echo 000-022
+# echo 000-022
 # if [ -z ${TERM} ]; then TERM=dumb; fi
 
-echo 000-011
+# echo 000-011
 
 alias myip='curl ifconfig.co/'
  
@@ -2960,7 +2960,7 @@ if test -f "$personal_file_print"; then
 	$p print_color -line -color Background.green
 	echo ''
 fi
-echo 000-023
+# echo 000-023
 once_file_print=$HOME/.bashrc.once.print
 if test -f "$once_file_print"; then
 	echo ''
@@ -2975,7 +2975,7 @@ source $HOME/bashrc.sh
 fi
 
 # get_time_difference
-echo 000-012
+# echo 000-012
 
 # if [ ! -f "$HOME/.files-rrr" ]; then
 # 	echo "status" > $HOME/.files-rrr.
@@ -2985,7 +2985,7 @@ echo 000-012
 # 	$p files -folder /var/empty -rrr > /dev/null 2>&1
 # fi
 
-echo 000-024
+# echo 000-024
 
 
 alias .deb="sudo dpkg -i "
@@ -3004,7 +3004,7 @@ g() {
 	export isgui=true
 	echo "isgui=true"
 }
-echo 000-013
+# echo 000-013
 dl.mp4t() {
 	local url="$1"
 
@@ -3017,7 +3017,7 @@ dl.mp4t() {
 	# Download the best video and audio streams with specific extensions
 	youtube-dlc -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]' "$url" &
 }
-echo 000-025
+# echo 000-025
 dl.mp3t() {
 	local url="$1"
 
@@ -3033,7 +3033,7 @@ dl.mp3t() {
 load() {
 	source "/opt/rightthumb-widgets-v0/widgets/bash/vps-bashrc_extended.sh" &> /dev/null
 }
-echo 000-014
+# echo 000-014
 
 ####### wsl cron start
 # Define the path to the marker file
@@ -3071,7 +3071,7 @@ loadMe() {
 	$p shClean -f $widgets/widgets/bash/vps-bashrc_extended.sh
 	chmod +x $widgets/widgets/bash/vps-bashrc_extended.sh
 }
-echo 000-015
+# echo 000-015
 alias size.fi="du -h  "
 alias size.f="du -sh "
 alias size.d="df -h"
@@ -3109,7 +3109,7 @@ alias block="sh $widgets/widgets/bash/blocklist.sh"
 alias block.r="sh $widgets/widgets/bash/blocklist-remove.sh"
 export PATH=$PATH:/opt/rightthumb-widgets-v0/widgets/bash:/opt/rightthumb-widgets-v0/widgets/python
 
-echo 000-016
+# echo 000-016
 
 # # pyEnvironment - START
 # file="/opt/rightthumb-widgets-v0/widgets/bash/load_pyEnvironment.sh"
@@ -3144,7 +3144,7 @@ generate_and_push() {
     git push --force
     rm "$tmpf"
 }
-echo 000-017
+# echo 000-017
 alias git.files="git_add_modified_files"
 alias git.cp="generate_and_push"
 
@@ -3161,7 +3161,11 @@ alias fo.cnt="find . -type d | wc -l"
 alias fo.c="find . -type d | wc -l"
 alias imgText="/opt/rightthumb-widgets-v0/widgets/bash/tesseract_image.sh"
 alias it="/opt/rightthumb-widgets-v0/widgets/bash/tesseract_image.sh"
-echo 000-018
+alias movieTablet="/opt/rightthumb-widgets-v0/widgets/bash/movie_tablet.sh"
+alias moviePhone="/opt/rightthumb-widgets-v0/widgets/bash/movie_phone.sh"
+alias batuu.="/opt/rightthumb-widgets-v0/widgets/bash/srv/webdav/vps-auto_login.sh"
+
+# echo 000-018
 
 clear
 # get_time_difference
