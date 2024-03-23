@@ -7,6 +7,9 @@
 #	servers					#
 #################################################
 
+# main yourdomain.com force
+# subdomain sub.yourdomain.com
+# subdomain sub.yourdomain.com force
 domainType=$1
 domain=$2
 forceSSL=$3
