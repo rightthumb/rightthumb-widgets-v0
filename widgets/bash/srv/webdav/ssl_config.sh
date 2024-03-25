@@ -1,5 +1,8 @@
 #!/bin/bash
 
+sudo certbot --apache -d $(cat /etc/hostname)
+exit
+
 # Check if script is run as root
 if [ "$(id -u)" -ne 0 ]; then
     echo "This script must be run as root" 

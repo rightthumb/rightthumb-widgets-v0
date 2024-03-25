@@ -1,3 +1,5 @@
+@echo off
+cls
 :RESTART
 
 rem ## {R2D2919B742E} ##
