@@ -87,11 +87,9 @@ GOTO:EOF
     SET today=%timestamp_start%  - %nowTime%
     call SET "Session_ID_Suffix=%%Session_ID:~-3%%"
     IF NOT ["%lab%"] == [""] (
-        REM TITLE %lab% - %Session_ID%
         TITLE loc-%Session_ID_Suffix% :: %lab%
     ) else (
         TITLE loc-%Session_ID_Suffix%
-        REM TITLE %today%
     )
     CALL timestamp t2 noEcho >nul 2>&1
 GOTO:EOF
