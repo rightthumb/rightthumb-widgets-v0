@@ -2,6 +2,13 @@
 
 ___
 
+## folders
+
+- `/var/named`
+- `/etc/bind/zones/`
+
+___
+
 ## /etc/bind/named.conf.local
 
 ~~~conf

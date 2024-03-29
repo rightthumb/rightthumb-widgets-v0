@@ -291,7 +291,7 @@ if exist %1\%2.py (
 
 :run_app
 IF NOT ["%lab%"] == [""] (
-    TITLE loc-%Session_ID_Suffix%  :: %lab% : %1
+    TITLE loc-%Session_ID_Suffix% :: %lab% : %1
 ) else (
     TITLE loc-%Session_ID_Suffix% %1
 )

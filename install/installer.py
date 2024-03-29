@@ -2777,6 +2777,7 @@ clear
 			return self.file( path, data, { 'status': 'virtual' } )
 		if path == '.bashrc.mini':
 			data = """
+# bash -x
 # echo 000-026
 ## .bashrc.mini
 
@@ -3164,6 +3165,7 @@ alias it="/opt/rightthumb-widgets-v0/widgets/bash/tesseract_image.sh"
 alias movieTablet="/opt/rightthumb-widgets-v0/widgets/bash/movie_tablet.sh"
 alias moviePhone="/opt/rightthumb-widgets-v0/widgets/bash/movie_phone.sh"
 alias batuu.="/opt/rightthumb-widgets-v0/widgets/bash/srv/webdav/vps-auto_login.sh"
+alias batuu.u="/opt/rightthumb-widgets-v0/widgets/bash/srv/webdav/vps-batuu_upload.sh"
 
 # echo 000-018
 

@@ -9,6 +9,8 @@ def sw():
 	_.switches.register( 'Cleanup', '-cleanup' )
 	_.switches.register( 'Search', '-search' )
 	_.switches.register( 'Dumping', '-dmp' )
+	_.switches.register( 'Plus-Line', '++' )
+	_.switches.register( 'Minus-Line', '--' )
 _._default_settings_()
 
 _.appInfo[focus()] = {
@@ -21,6 +23,8 @@ _.appInfo[focus()] = {
 				],
 	'examples': [
 						_.hp('p gpt-export -f conversations.json'),
+						_.hp('p gpt-export -f conversations.json -search + SaaS'),
+						_.hp(' p gpt-export -f conversations.json -search + .profile .bashrc'),
 						_.linePrint(label='simple',p=0),
 						'',
 	],
@@ -106,17 +110,31 @@ def process(path):
 			for mID in mapping:
 				mapping[mID]['mID'] = mID
 				records.append(mapping[mID])
-			
+				# print(type()); sys.exit();
 			
 			for mID in mapping:
 				try:
 					if 'message' in mapping[mID] and 'content' in mapping[mID]['message'] and 'parts' in mapping[mID]['message']['content']:
-						for line in mapping[mID]['message']['content']['parts']:
-							if _.showLine(line):
-								if not id in spent:
-									spent.append(id)
-									_.pr(id,title)
-								continue
+						search = '\n'.join(mapping[mID]['message']['content']['parts'])
+						if _.showLine(search):
+							if not id in spent:
+								spent.append(id)
+								_.pr(id,title,c='yellow')
+								# continue
+								if _.switches.isActive('Plus-Line'):
+									for line in mapping[mID]['message']['content']['parts']:
+
+										if '\n' in line:
+											lines = line.split('\n')
+										else:
+											lines = [line]
+										for li in lines:
+											if _.showLine(li,_.switches.values('Plus-Line'),_.switches.values('Minus-Line')):
+												_.pr('\t',li,c='cyan')
+											# if not id in spent:
+												# spent.append(id)
+												# _.pr(id,title)
+									# continue
 
 				except: pass
 	elif _.switches.isActive('Dumping'):
@@ -134,7 +152,7 @@ def process(path):
 			
 
 
-
+import sys
 
 def action():
 	for path in _.switches.values('Files'):
