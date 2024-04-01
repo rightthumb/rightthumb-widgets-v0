@@ -7,3 +7,4 @@ IF NOT ["%lab%"] == [""] (
 ) else (
     TITLE loc-%Session_ID_Suffix%
 )
+call refresh

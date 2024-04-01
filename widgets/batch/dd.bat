@@ -11,8 +11,11 @@ rem ###########################################################################
 rem ## {C3P0D40fAe8B} ##
 
 rem dir /s/b
-
-call p. mkdir -file %d%%1
-call n %d%%1
+if [%1] == [] (
+    p. file_folder -nocopy
+) else (
+    call p. mkdir -file %d%%1
+    call n %d%%1
+)
 
  
