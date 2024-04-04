@@ -11,6 +11,7 @@ shared_directory="$1"
 # Install Samba
 sudo apt update
 sudo apt install -y samba
+sudo apt install -y samba-common-bin
 
 # Configure Samba
 sudo cp /etc/samba/smb.conf /etc/samba/smb.conf.backup   # Backup the original smb.conf
