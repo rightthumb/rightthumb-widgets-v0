@@ -3166,7 +3166,7 @@ alias movieTablet="/opt/rightthumb-widgets-v0/widgets/bash/movie_tablet.sh"
 alias moviePhone="/opt/rightthumb-widgets-v0/widgets/bash/movie_phone.sh"
 alias batuu.="/opt/rightthumb-widgets-v0/widgets/bash/srv/webdav/vps-auto_login.sh"
 alias batuu.u="/opt/rightthumb-widgets-v0/widgets/bash/srv/webdav/vps-batuu_upload.sh"
-
+alias pip3.="pip3 install --upgrade --no-cache-dir --break-system-packages"
 # echo 000-018
 
 clear
