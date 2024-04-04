@@ -5,7 +5,7 @@ import websockets
 import mss
 import base64
 import pyautogui
-
+os.environ['DISPLAY'] = ':0'
 async def handler(websocket):
 	while True:
 		try:
