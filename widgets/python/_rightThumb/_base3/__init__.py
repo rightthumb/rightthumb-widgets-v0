@@ -59,6 +59,15 @@ __.showLine_quoteFix=True
 #   import sqlite3
 # except Exception as e:
 #   pass
+
+def call(python_file):
+    from os import sep
+    path = _v.py+sep+python_file
+    import importlib
+    module = importlib.import_module(path)
+    globals().update({name: getattr(module, name) for name in dir(module) if not name.startswith('_')})
+
+
 def build_documentation_tables(string):
     snip_table = {}
     doc_lines = []

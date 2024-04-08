@@ -12,20 +12,11 @@
 
 
 ##################################################
-import sys, time
+# import sys, time
 ##################################################
-import _rightThumb._construct as __
-appDBA=__.clearFocus(__name__,__file__);__.appReg=appDBA;
-def focus(parentApp='',childApp='',reg=True):
-	global appDBA;f=__.appName(appDBA,parentApp,childApp);
-	if reg:__.appReg=f;
-	return f
-import _rightThumb._base3 as _
-fieldSet=_.l.vars(focus(),__name__,__file__,appDBA)
-_.load()
-##################################################
-_v = __.imp('_rightThumb._vars')
-_str = __.imp('_rightThumb._string')
+import _rightThumb._construct as __;appDBA=__.clearFocus(__name__,__file__);__.appReg=appDBA;import _rightThumb._base3 as _;
+def focus(parentApp='', childApp='', reg=True): global appDBA; f = __.appName(appDBA, parentApp, childApp); return f if reg else f
+fieldSet=_.l.vars(focus(),__name__,__file__,appDBA);_.load();_v=__.imp('_rightThumb._vars');
 ##################################################
 
 
@@ -35,85 +26,53 @@ def sw():
 	# _.switches.register( 'Input', '-i' )
 	# _.switches.register( 'URL', '-u,-url,-urls', 'https://etc.ac/', isData='raw' )
 	#e)--> examples
-	# _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name,data,clean', description='Files', isRequired=False )
+	_.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='data', description='Files', isRequired=False )
 
+_._default_settings_()
 # __.setting('require-list',['Files,Plus','File,Has']) # todo
 # __.setting('require-list',['Pipe','Files'])
-__.setting('receipt-log')
-__.setting('receipt-file')
-__.setting('myFileLocations-skip-validation',False)
-__.setting('require-pipe',False)
-__.setting('require-pipe||file',False)
-__.setting('pre-error',False)
-__.setting('switch-raw',[])
-
+# __.setting('receipt-log',True)
+# __.setting('receipt-file',True)
+# __.setting('myFileLocations-skip-validation',False)
+# __.setting('require-pipe',False)
+# __.setting('require-pipe||file',False)
+# __.setting('pre-error',False)
+# __.setting('switch-raw',[])
 
 
 _.appInfo[focus()] = {
 	# 'app': '8facG-jo0Cxk',
 	'file': 'thisApp.py',
-	'liveAppName': __.thisApp( __file__ ),
 	'description': 'Changes the world',
 		# _.ail(1,'subject')+
 		# _.aib('one')+
 	'categories': [
 						'DEFAULT',
 				],
-	'usage': [
-						# 'epy another',
-						# 'e nmap',
-						# '',
-	],
-	'relatedapps': [
-						# 'p another -file file.txt',
-						# '',
-	],
-	'prerequisite': [
-						# 'p another -file file.txt',
-						# '',
-	],
 	'examples': [
 						_.hp('p thisApp -file file.txt'),
 						_.linePrint(label='simple',p=0),
 						'',
 	],
 	'columns': [
-					{ 'name': 'name', 'abbreviation': 'n' },
-					{ 'name': 'value', 'abbreviation': 'v' },
+					# { 'name': 'name', 'abbreviation': 'n' },
 					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
-	'aliases': [
-					# 'this',
-					# 'app',
-	],
-	'notes': [
-					# {},
-	],
+	'aliases': [],
+	'notes': [],
 }
-
-_.appData[focus()] = {
-		'start': __.startTime,
-		'uuid': '',
-		'audit': [],
-		'pipe': False,
-		'data': {
-					'field': {'sent': [], 'received': [] }, # { 'label': '', 'context': [],  }
-					'table': {'sent': [], 'received': [] },
-		},
-	}
-
-
+_.appInfo[focus()] = _.appInfoContinuity(__.thisApp( __file__ ),_.appInfo[focus()])
+_.appData[focus()] = _.appDataContinuity()
+def appRegDics(): return { 'appInfo': _.appInfo[focus()], 'appData': _.appData[focus()] }
 def triggers():
-	_.switches.trigger( 'Files', _.myFileLocations, vs=True )
-	_.switches.trigger( 'Ago', _.timeAgo )
-	_.switches.trigger( 'Folder', _.myFolderLocations )
-	_.switches.trigger( 'URL', _.urlTrigger )
-	_.switches.trigger( 'Duration', _.timeFuture )
-
+	_._default_triggers_()
+	# _.switches.trigger( 'Files', _.myFileLocations, vs=True )
+	# _.switches.trigger( 'Ago', _.timeAgo )
+	# _.switches.trigger( 'Folder', _.myFolderLocations )
+	# _.switches.trigger( 'URL', _.urlTrigger )
+	# _.switches.trigger( 'Duration', _.timeFuture )
 def _local_(do): exec(do)
-
-_.l.conf('clean-pipe',True)
-_.l.sw.register( triggers, sw )
+_.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw );
 
 ########################################################################################
 #b)--> examples
@@ -150,34 +109,21 @@ _.l.sw.register( triggers, sw )
 ########################################################################################
 #n)--> start
 
-_.switches.fieldSet( 'Long', 'active', True )
-
 def action():
-	variables = []
-	for x in dir(_v):
-		n='_v.'+x
-		y=eval(n)
-		if type(y) == str or type(y) == dict:
-			if type(y) == dict:
-				y=', '.join(list(y.keys()))
-			else:
-				y=y.strip()
-			rec={'name': n, 'value': y}
-			if _.showLine(str(rec)):
-				variables.append(rec)
-	if _.switches.isActive('Sort'):
-		if 'n' in _.switches.value('Sort'):
-			printThis = []
-			# for variables
-			for vars in variables:
-				if _.showLine(str(vars)):
-					printThis.append(vars)
-				# printThis.append(vars['name'])
-			_.pt(printThis,s='name')
-		else:
-			_.pt(variables,s='value')
-	else:
-		_.pt(variables,s='value')
+	for line in _.pp():
+		_.pr(_.addComma(line))
+	# load(); global c3po;
+
+	#n)--> iterate
+	# for subject in _.isData(r=0): _.pr(subject)
+	# for subject in _.myData(): _.pr(subject)
+	
+
+# def load():
+# 	global c3po
+# 	c3po = _.getTable( 'table' )
+# 	#n)--> print table
+# 	_.pt(c3po)
 
 
 ##################################################
@@ -196,6 +142,5 @@ if __name__ == '__main__':
 	# if len(_.switches.all())==0: banner.gossip()
 	
 	#e)--> examples
-	action()
-	_.isExit(__file__)
+	action(); _.isExit(__file__);
 

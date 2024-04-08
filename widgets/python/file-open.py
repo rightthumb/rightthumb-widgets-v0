@@ -35,12 +35,13 @@ def appSwitches():
 	_.switches.register( 'Path', '-path' )
 	_.switches.register( 'App', '-app' )
 	_.switches.register( 'Files', '-f,-file,-files','file.txt', description='Files' )
-	_.switches.register( 'Alias', '-alias','' )
+	_.switches.register( 'Alias', '-a,-alias','' )
 	_.switches.register( 'Backup', '-b,-backup' )
 	_.switches.register( 'Clean', '--c,-clean' )
 	_.switches.register( 'OpenSingle', '-single', 'joins by space' )
 	_.switches.register( 'ForceSublime', '-sub,-sublime' )
 	_.switches.register( 'PrintAliasLocation', '-print' )
+	_.switches.register( 'PrintAliases', '-pa,-ap,-printaliases' )
 
 _.autoBackupData = __.autoCreationConfiguration['backup']
 __.releaseAcquiredData = __.autoCreationConfiguration['logs'] 
@@ -318,9 +319,33 @@ def action(path=None):
 		try: session = os.getenv('Session_ID')
 		except: pass
 		for path in paths:
-			if _.switches.isActive('PrintAliasLocation'):
-				_.pr(path,c='cyan')
-				continue
+			if _.switches.isActive('PrintAliases'):
+				try:
+					aliases
+				except:
+					aliases=_.getTable('file-open-aliases.hash')
+				if _.switches.isActive('Clean'):
+					for alias in aliases['files'][__.path(path)]:
+						_.pr(alias,c='cyan')
+					pass
+				elif not _.switches.isActive('Clean'):
+					_.pr()
+					_.pr(__.path(path),c='darkcyan')
+					_.pr()
+					ai=0
+					for alias in aliases['files'][__.path(path)]:
+						ai+=1
+						_.pr('\t',alias,c='cyan')
+					_.pr('\n',_.addComma(ai),c='yellow')
+				return None
+
+
+				# try:
+				# except: pass
+				if not 'aliases' in aliases: aliases['aliases']={}
+				if not 'files' in aliases: aliases['files']={}
+				aliases['aliases']['last']=path
+
 			path=__.path(path)
 			path=_.zZip(path)
 			if not _.switches.isActive('Path'):
@@ -329,7 +354,10 @@ def action(path=None):
 			if not 'aliases' in aliases: aliases['aliases']={}
 			if not 'files' in aliases: aliases['files']={}
 			aliases['aliases']['last']=path
+
 			_.saveText(path,_v.tt+os.sep+'file-open.last')
+			if _.switches.isActive('PrintAliasLocation'): return None
+				
 			_.saveTable(aliases,'file-open-aliases.hash',p=0)
 			if _.switches.isActive('Backup'): backup(path)
 			if _.isWin:
