@@ -275,7 +275,7 @@ def unFormatSize(size):
 	size = size.replace('G','')
 	size = float(size)
 	result = round(size * factor,0)
-	return result
+	return int(result)
 
 def timeAgo():
 	do = _.switches.value('Ago')
@@ -446,7 +446,7 @@ def action():
 
 			conn = sqlite3.connect(db)
 			c = conn.cursor()
-			if _.switches.isActive('SQL'): _.pr(sql)
+			if _.switches.isActive('SQL'): _.pr(sql); sys.exit();
 			c.execute(sql)
 			records = c.fetchall()
 			_.v.totals+=len(records)
@@ -457,7 +457,7 @@ def action():
 			test = conn2.cursor()
 
 
-			if _.switches.isActive('SQL'): _.pr(sql)
+			if _.switches.isActive('SQL'): _.pr(sql); sys.exit();
 			c.execute(sql)
 			all_done = False
 			for f in records:
@@ -674,7 +674,7 @@ def action():
 
 		conn = sqlite3.connect(db)
 		c = conn.cursor()
-		if _.switches.isActive('SQL'): _.pr(sql)
+		if _.switches.isActive('SQL'): _.pr(sql); sys.exit();
 		c.execute(sql)
 		records = c.fetchall()
 		_.v.totals+=len(records)
@@ -686,7 +686,7 @@ def action():
 		test = conn2.cursor()
 
 
-		if _.switches.isActive('SQL'): _.pr(sql)
+		if _.switches.isActive('SQL'): _.pr(sql); sys.exit();
 		c.execute(sql)
 		duplicates = {}
 
@@ -790,7 +790,7 @@ def action():
 				if run:
 					conn = sqlite3.connect(db)
 					c = conn.cursor()
-					if _.switches.isActive('SQL'): _.pr(sql)
+					if _.switches.isActive('SQL'): _.pr(sql); sys.exit();
 					c.execute(sql)
 					records = c.fetchall()
 					_.v.totals+=len(records)
@@ -874,7 +874,7 @@ def do(databaseFile):
 		search='AND'.join(searches)
 
 		sql= 'SELECT COUNT(*) AS row_count, SUM(bytes) AS total_bytes FROM files WHERE '+search+';'
-		if _.switches.isActive('SQL'): _.pr(sql)
+		if _.switches.isActive('SQL'): _.pr(sql); sys.exit();
 		c.execute(sql)
 		records = c.fetchall()
 
@@ -1017,7 +1017,7 @@ def do(databaseFile):
 		_.pr()
 		_.pr(sql)
 		sys.exit()
-	if _.switches.isActive('SQL'): _.pr(sql)
+	if _.switches.isActive('SQL'): _.pr(sql); sys.exit();
 	c.execute(sql)
 	# c.execute('SELECT * FROM {tn} WHERE {cn} = {st}'.\
 	#         format(tn='files', cn='path', st='s'))

@@ -415,12 +415,14 @@ def getFolder(folder,r=True):
 			path = folder + _v.slash + item
 			add(path,r)
 def add(path,r=False):
-	path=path.strip()
 	global i
 	global iS
 	global baseDepth
 	global base_path
 	path = path.replace(_v.slash+_v.slash,_v.slash)
+	path = path.replace('",','')
+	path = path.replace('"','')
+	path=path.strip()
 	if os.path.isfile(path):
 		path = __.path(path)
 		pathX=path.replace(base_path,'')
@@ -808,6 +810,9 @@ def action():
 					break
 			if base_path: _.v.show_full_path = False
 		for path in _.isData():
+			path = path.replace(_v.slash+_v.slash,_v.slash)
+			path = path.replace('",','')
+			path = path.replace('"','')
 			path=path.strip()
 			if os.path.isfile(path):
 				add(path)

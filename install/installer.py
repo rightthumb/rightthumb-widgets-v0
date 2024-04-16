@@ -3168,6 +3168,9 @@ alias batuu.="/opt/rightthumb-widgets-v0/widgets/bash/srv/webdav/vps-auto_login.
 alias batuu.u="/opt/rightthumb-widgets-v0/widgets/bash/srv/webdav/vps-batuu_upload.sh"
 alias pip3.="pip3 install --upgrade --no-cache-dir --break-system-packages"
 alias flushdns="sudo systemctl restart systemd-resolved"
+
+alias set.="(set -o posix; set)"
+
 # echo 000-018
 
 clear

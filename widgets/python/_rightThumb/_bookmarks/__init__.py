@@ -181,11 +181,25 @@ class Bookmarks:
 
 	def reverse( self, path=None ):
 		if path is None: path = os.getcwd()
+		# if path in self.index['labels']:
+			# for bm in self.index['labels'][path]: _.pr( bm )
 		for bm in self.index['labels']:
 			if path == self.index['labels'][bm]:
 				_.pr( bm )
+				# _.pr( self.index['labels'][path] )
+			if path == self.index['labels'][bm]:
+				_.pr( bm )
 		spath = self.sanitize(path).replace('\\','/')
+		if spath in self.index['labels']:
+			for bm in self.index['labels'][spath]: _.pr( bm )
+		# spath = spath.replace('\\','/')
+		spath2 = spath.replace('/','\\')
+		# print( spath )
+		# if spath in self.index['labels']:
+			# for bm in self.index['labels'][spath]: _.pr( bm )
 		for bm in self.index['labels']:
+			if spath2 == self.index['labels'][bm]:
+				_.pr( bm )
 			if spath == self.index['labels'][bm]:
 				_.pr( bm )
 		# _.pr(spath)

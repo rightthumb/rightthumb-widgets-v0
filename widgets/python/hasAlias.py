@@ -80,8 +80,11 @@ if __name__ == '__main__':
 #n)--> start
 
 def action():
+	_.pr()
 	bm = _bm.Bookmarks()
 	bm.reverse()
+	_.pr()
+	_.pr()
 	return False
 	data = []
 	find = _v.sanitizeFolder( os.getcwd() )

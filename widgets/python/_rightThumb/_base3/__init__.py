@@ -23920,6 +23920,64 @@ def appDataContinuity(info={}):
         'field': {'sent': [], 'received': [] }, # { 'label': '', 'context': [],  }
         'table': {'sent': [], 'received': [] },
         }
+def injectLines(data, lines, start, end):
+    # Convert inputs to lists of lines if they're strings
+    if isinstance(data, str):
+        data = data.replace('\r', '').split('\n')
+    if isinstance(lines, str):
+        lines = lines.replace('\r', '').split('\n')
+
+    # Initialize variables
+    modified_data = []
+    in_range = False
+
+    # Iterate through each line of the original data
+    for line in data:
+        # Check for the start marker
+        if start in line:
+            in_range = True
+            modified_data.append(line)
+            continue  # Move to the next iteration to avoid appending the start line twice
+        
+        # Check for the end marker
+        if end in line and in_range:
+            # Append the lines to be injected
+            modified_data.extend(lines)
+            in_range = False
+
+        # Append current line if not in the range to skip
+        if not in_range or line == end:
+            modified_data.append(line)
+
+    # Return the modified data as a single string
+    return '\n'.join(modified_data)
+
+def injectLinesTest():
+    data = '''
+aaa
+bbb
+ccc
+123
+xxx
+yyy
+zzz
+456
+ddd
+eee
+fff
+'''
+
+    lines = '''
+this
+is
+a
+test
+'''
+    print(injectLines(data, lines, '123', '456'))
+
+
+
+
 ##################################################
 
 # __.switch_raw
