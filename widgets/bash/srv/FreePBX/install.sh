@@ -303,7 +303,7 @@ setCurrentStep "Setting up repositories"
 setup_repositories
 
 setCurrentStep "Updating repository"
-apt update >> $log 2>&1
+# apt update >> $log 2>&1
 
 # log the apt-cache policy
 apt-cache policy  >> $log 2>&1
