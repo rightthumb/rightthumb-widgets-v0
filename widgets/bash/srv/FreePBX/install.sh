@@ -21,6 +21,7 @@
 #####################################################################################
 #                                               FreePBX 17                          #
 #####################################################################################
+sudo apt update -y ;  sudo apt upgrade -y
 export PATH=$PATH:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 set -e
 SCRIPTVER="1.1"
