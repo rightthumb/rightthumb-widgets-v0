@@ -180,18 +180,27 @@ class Bookmarks:
 
 
 	def reverse( self, path=None ):
+		spent = []
 		if path is None: path = os.getcwd()
 		# if path in self.index['labels']:
 			# for bm in self.index['labels'][path]: _.pr( bm )
 		for bm in self.index['labels']:
 			if path == self.index['labels'][bm]:
-				_.pr( bm )
+				if bm not in spent:
+					_.pr( bm )
+					spent.append( bm )
+
 				# _.pr( self.index['labels'][path] )
 			if path == self.index['labels'][bm]:
-				_.pr( bm )
+				if bm not in spent:
+					_.pr( bm )
+					spent.append( bm )
 		spath = self.sanitize(path).replace('\\','/')
 		if spath in self.index['labels']:
-			for bm in self.index['labels'][spath]: _.pr( bm )
+			for bm in self.index['labels'][spath]:
+				if bm not in spent:
+					_.pr( bm )
+					spent.append( bm )
 		# spath = spath.replace('\\','/')
 		spath2 = spath.replace('/','\\')
 		# print( spath )
@@ -199,9 +208,13 @@ class Bookmarks:
 			# for bm in self.index['labels'][spath]: _.pr( bm )
 		for bm in self.index['labels']:
 			if spath2 == self.index['labels'][bm]:
-				_.pr( bm )
+				if bm not in spent:
+					_.pr( bm )
+					spent.append( bm )
 			if spath == self.index['labels'][bm]:
-				_.pr( bm )
+				if bm not in spent:
+					_.pr( bm )
+					spent.append( bm )
 		# _.pr(spath)
 		# return None
 		# if spath in self.index['paths']:

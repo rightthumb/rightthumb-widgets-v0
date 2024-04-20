@@ -322,7 +322,7 @@ programs=widgets
 pp  = techFolder + slash+'widgets'
 w   = techFolder 
 ww  = techFolder +slash+ 'widgets'
-ads = ww +slash+ 'ads'
+
 appProfiles = widgets+os.sep+'widgets'+ slash+'python'+slash+'profiles'
 compiled = widgets+os.sep+'widgets'+ slash+'compiled'
 documentation = widgets+os.sep+'widgets'+ slash+'documentation'
@@ -336,6 +336,8 @@ log_config_html = techFolder + slash+'widgets'+slash+'html'+slash+'projects'+sla
 dance = images + 'dance.gif'
 gears = images + 'gears.gif'
 life=home +os.sep+'.rt'+os.sep+'profile'+os.sep+'life'+os.sep
+# ads = ww +slash+ 'ads'
+ads = life + 'ads' + slash
 rtp=home +os.sep+'.rt'+os.sep+'profile'+os.sep
 rt=home +os.sep+'.rt'
 

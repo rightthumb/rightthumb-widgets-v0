@@ -4,3 +4,4 @@ call n D:\websites\domains\softwaredevelopment.solutions\public_html\resources\a
 call n D:\websites\domains\softwaredevelopment.solutions\public_html\resources\apps\OdinKey\1\%1
 call n D:\websites\domains\softwaredevelopment.solutions\public_html\resources\apps\Arcanum\1\%1
 call n D:\websites\domains\softwaredevelopment.solutions\public_html\resources\apps\CodexScripta\1\%1
+call n D:\websites\domains\softwaredevelopment.solutions\public_html\resources\apps\GlyphBox\1\%1

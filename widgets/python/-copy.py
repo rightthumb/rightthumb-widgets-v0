@@ -585,6 +585,12 @@ Array.prototype.slice.call(
 		_the_i_++; tag.src = 'https://www.fillmurray.com/500/'+_the_i_;
 });
 '''
+		subject['hacks']['img']='''
+Array.prototype.slice.call(
+	document.querySelectorAll('img')).map(function(tag){
+		tag.src = 'https://img.sds.sh/'+tag.getAttribute('width')+'/'+tag.getAttribute('height')+'/';
+});
+'''
 		subject['hacks']['murray']='''
 Array.prototype.slice.call(
 	document.querySelectorAll('img')).map(function(tag){

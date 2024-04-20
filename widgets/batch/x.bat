@@ -1,4 +1,5 @@
 @echo off
+
 title=Closing Queue
 call p. lock-wait -wait x
 call p. lock-wait -lock x
@@ -24,9 +25,22 @@ echo.
 echo Reminder run   r.t   once a week.
 echo.
 rem call p. fileBackup -f %wprofile%\projects\project-log.txt
+goto:skipper
 
+:del_session
+if exist "%stmp%\unclaimed_tickets_history\history-%Session_ID%.txt" (
+    call rm "%stmp%\unclaimed_tickets_history\history-%Session_ID%.txt"
+)
+goto:eof
+
+:skipper
 SET ORIGINAL_Session_ID=%Session_ID%
-
+if [%burn_this%] == [yes] (
+    title Closed
+    call:del_session
+    call p. lock-wait -unlock x
+    exit
+)
 IF [%1] == [r] SET reclaim_tickets=yes
 doskey /history >> "%stmp%\unclaimed_tickets_history\history-%Session_ID%.txt"  2>&1
 

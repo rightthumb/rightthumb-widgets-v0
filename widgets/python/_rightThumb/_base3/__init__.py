@@ -13,7 +13,7 @@ from datetime import datetime as dt, timedelta
 from datetime import date
 ##################################################
 MINI_ADS = True
-SHOW_ADS = False
+SHOW_ADS = True
 ##################################################
 __.showLine_quoteFix=True
 ##################################################
@@ -433,15 +433,18 @@ def print_(*args,p=None,c=None,pad=3,g=None,end=None,pvs=None,pv=None,json=None,
         elif p: rint=True;
         elif not p: rint=False;
         else: rint=True;
+        _line__ = ''
         if rint:
             if not end is None:
                 if not lineLen is None:
-                    print( linePrint(txt=' ',p=0,minus=lineMinus) , end=end ); print( prn, end=end );
+                    _line__ = linePrint(txt=' ',p=0,minus=lineMinus)
+                    print( _line__ , end=end ); print( prn, end=end );
                 else:
-                    print( linePrint(txt=' ',p=0,minus=lineMinus,length=lineLen) , end=end ); print( prn, end=end );
+                    _line__ = linePrint(txt=' ',p=0,minus=lineMinus,length=lineLen)
+                    print( _line__, end=end ); print( prn, end=end );
             # if not end is None: print( '                                                                                        ' , end=end ); print( prn, end=end );
             else: print( prn );
-        print_ed.append(prn)
+        print_ed.append({'prn':prn, 'line': _line__ })
         return prn
     except Exception as e:
         return ''
@@ -7453,6 +7456,9 @@ def fromEpoch( epoch ):
     return datetime.datetime.fromtimestamp(epoch).strftime('%c')
 
 def postLoad( file, epoch=0, theFocus=False ):
+    try:
+        if os.environ['burn_this'] == 'yes': return None;
+    except: pass
     __.postLoadFile = file
     global autoLoadData
     global switches
@@ -7597,9 +7603,11 @@ def postLoad( file, epoch=0, theFocus=False ):
     else:
         releaseAcquiredData( appDBA, theFocus )
 
+# print(os.environ['burn_this']); sys.exit();
 
 raq_err=True
 def releaseAcquiredData( appDBA, theFocus, payload=None ):
+
     global raq_err
     l_registerSwitches_vars()
     if appDBA == '__init__':
@@ -20836,6 +20844,7 @@ def load():
     global switches_loaded
     switches_loaded += 1
     if switches_loaded > 1:
+        if not __.setting('default-switches'): return None
     # if True
         global switches
         global switchDefault
@@ -22080,7 +22089,7 @@ def dots(path):
             if i == len(rts)-1: return eval(rts[0]);
 nsfw_=False
 def ad(path=None,label='ad'):
-    if not os.path.isdir(_v.ads+os.sep+'apps'): return None
+    if not os.path.isdir(_v.ads): return None
     global SHOW_ADS
     if not SHOW_ADS: return None
     global MINI_ADS
@@ -22089,7 +22098,7 @@ def ad(path=None,label='ad'):
     
     def add_ad_fo(ad_fo):
         global ads
-        for a2 in fo(_v.ads+os.sep+ad_fo): ads.append(a2);
+        for a2 in fo(_v.ads+ad_fo): ads.append(a2);
 
     # print(_v.life+'apps')
     # sys.exit()
@@ -23880,6 +23889,7 @@ def _default_settings_():
     __.setting('require-pipe||file',False)
     __.setting('pre-error',False)
     __.setting('switch-raw',[])
+    __.setting('default-switches',True)
 def appInfoContinuity(app,info={}):
     if not 'file' in info: info['file'] = __.thisApp( __file__ )
     if not 'liveAppName' in info: info['liveAppName'] = __.thisApp( __file__ )

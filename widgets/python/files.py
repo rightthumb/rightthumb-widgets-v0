@@ -65,7 +65,6 @@ def appSwitches():
 	_.switches.register('No-Extension', '-noext')
 	_.switches.register('Symlink-Path-Integrity', '-si,-spi,-sym,-symlink')
 	_.switches.register('Relative-Path-Persistent', '-rrr')
-
 	_.switches.register('Search-For-Text-Include', '-has,-search')
 	_.switches.register('Search-For-Text-Exclude', '-not')
 	_.switches.register('Search-For-Text-Dump', '--dump')
@@ -1130,6 +1129,7 @@ def process(path):
 			return path
 
 		for line in the_file.split('\n'):
+			# if _.showLine(line, plus=inc, minus=ex,OR=False,code=True): _.pr(line)
 			# for line in f:
 			i+=1
 			
