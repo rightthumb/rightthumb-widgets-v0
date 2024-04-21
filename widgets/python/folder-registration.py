@@ -35,6 +35,7 @@ def sw():
 	_.switches.register( 'Relevent', '-r' )
 	_.switches.register( 'WSL', '-wsl' )
 	_.switches.register( 'Ago', '-ago', '1m' )
+	_.switches.register( 'Folder', '-f,-fo,-folder', '1m' )
 	#e)--> examples
 	# _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=False )
 
@@ -225,8 +226,10 @@ def register():
 	lastFi = day+session+os.sep+'id'
 	if os.path.isfile(lastFi): last=_.getText(lastFi,raw=True,clean=2)
 
-
-	fo = _v.sanitizeFolder(os.getcwd())
+	if _.switches.isActive('Folder'):
+		fo = _v.sanitizeFolder(_.switches.values('Folder')[0])
+	else:
+		fo = _v.sanitizeFolder(os.getcwd())
 	sha = _md5.string(fo,'sha1')
 
 	sess = day+session+'.csv'

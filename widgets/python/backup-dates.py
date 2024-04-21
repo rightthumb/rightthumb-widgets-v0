@@ -3,7 +3,8 @@ def focus(parentApp='', childApp='', reg=True): global appDBA; f = __.appName(ap
 fieldSet=_.l.vars(focus(),__name__,__file__,appDBA);_.load();_v=__.imp('_rightThumb._vars');
 
 def sw():
-	_.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name', description='Files', isRequired=True )
+	pass
+	_.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name', description='Files', isRequired=False )
 _._default_settings_()
 
 _.appInfo[focus()] = {
@@ -35,16 +36,31 @@ _.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw );
 #n)--> start
 
 def action():
-	if not _.switches.isActive('Files'): _.e('No File Specified','-f recover.json')
-	db = _.getTable('fileBackup.json')
-	recover = _.getTable2(_.switches.values('Files')[0])
-	index = {}
-	for rec in db: index[rec['backup']] = 1
-	for rec in recover:
-		add = True
-		if rec['backup'] in index: add = False
-		if add: db.append(rec)
-	_.saveTable(db,'fileBackup.json')
+	if _.switches.isActive('Files'):
+		cnt=0
+		for path in _.switches.values('Files'):
+			path = __.path(path)
+			new = float('inf')
+			old = float('-inf')
+			newest = None
+			oldest = None
+			db = _.getTable('fileBackup.json')
+			for rec in db:
+				if rec['file'] != path:
+					continue
+				cnt += 1
+				if rec['timestamp'] < new:
+					new = rec['timestamp']
+					oldest = rec
+				if rec['timestamp'] > old:
+					old = rec['timestamp']
+					newest = rec
+			_.pr()
+			_.pr(' Last:', _.friendlyDate(newest['timestamp']),newest['backup'] ,c='cyan')
+			_.pr('First:', _.friendlyDate(oldest['timestamp']),oldest['backup'],c='darkcyan')
+			_.pr()
+			_.pr('',_.addComma(cnt),'backups',c='yellow')
+			_.pr()
 
 
 ########################################################################################

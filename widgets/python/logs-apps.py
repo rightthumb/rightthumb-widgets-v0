@@ -3,7 +3,8 @@ def focus(parentApp='', childApp='', reg=True): global appDBA; f = __.appName(ap
 fieldSet=_.l.vars(focus(),__name__,__file__,appDBA);_.load();_v=__.imp('_rightThumb._vars');
 
 def sw():
-	_.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name', description='Files', isRequired=True )
+	_.switches.register( 'Count', '-cnt', '20' )
+	_.switches.register( 'Threshold', '-t,-th,-thresh,-threshold', '20' )
 _._default_settings_()
 
 _.appInfo[focus()] = {
@@ -34,19 +35,39 @@ _.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw );
 ########################################################################################
 #n)--> start
 
+import os
+
 def action():
-	if not _.switches.isActive('Files'): _.e('No File Specified','-f recover.json')
-	db = _.getTable('fileBackup.json')
-	recover = _.getTable2(_.switches.values('Files')[0])
-	index = {}
-	for rec in db: index[rec['backup']] = 1
-	for rec in recover:
-		add = True
-		if rec['backup'] in index: add = False
-		if add: db.append(rec)
-	_.saveTable(db,'fileBackup.json')
-
-
+	apps = {}
+	for path in _.isData():
+		path = path.strip()
+		if not os.path.isfile(path): continue
+		path = __.path(path)
+		if not 'execution_receipt-' in path: continue
+		part = path.split('execution_receipt-')[1]
+		part = part.replace('-2','-1')
+		app = part.split('-1')[0]
+		if not app in apps:
+			apps[app] = 0
+		apps[app] += 1
+	apps = sorted(apps.items(), key=lambda item: item[1], reverse=True)
+	if apps:
+		# first_item = apps[0]
+		# last_item = apps[-1]
+		# print("First item:", first_item)
+		# print("Last item:", last_item)
+		# print("Total:", len(apps))
+		cnt = 0
+		thresh = 0
+		if _.switches.isActive('Count'): cnt = int(_.switches.value('Count'))
+		if _.switches.isActive('Threshold'): thresh = int(_.switches.value('Threshold'))
+		relevant = []
+		for i, item in enumerate(apps):
+			if not cnt == 0 and i > 20: break
+			if not thresh == 0 and item[1] < thresh: break
+			print(i, item)
+			relevant.append(item[0])
+		
 ########################################################################################
 if __name__ == '__main__':
 	action(); _.isExit(__file__);

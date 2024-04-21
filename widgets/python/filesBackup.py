@@ -5,7 +5,7 @@ fieldSet=_.l.vars(focus(),__name__,__file__,appDBA);_.load();_v=__.imp('_rightTh
 def sw():
 	pass
 	_.switches.register( 'Force', '-force', isRequired=False )
-	_.switches.register( 'BypassScheduler', '-bs', isRequired=False )
+	# _.switches.register( 'BypassScheduler', '-bs', isRequired=False )
 	_.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name', description='Files', isRequired=False )
 _._default_settings_(); __.setting('require-list',['Pipe','Files']);
 _.appInfo[focus()] = {
@@ -42,8 +42,8 @@ def action():
 	_bk.switch( 'Silent' )
 	if _.switches.isActive('Force'):
 		_bk.switch( 'Force' )
-	if _.switches.isActive('BypassScheduler'):
-		_bk.switch( 'BypassScheduler' )
+	# if _.switches.isActive('BypassScheduler'):
+	_bk.switch( 'BypassScheduler' )
 	# myFileLocation_Files = _.isData()
 	for path in _.isData():
 		if _.showLine(path):

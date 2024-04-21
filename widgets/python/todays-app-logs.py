@@ -3,7 +3,7 @@ def focus(parentApp='', childApp='', reg=True): global appDBA; f = __.appName(ap
 fieldSet=_.l.vars(focus(),__name__,__file__,appDBA);_.load();_v=__.imp('_rightThumb._vars');
 
 def sw():
-	_.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name', description='Files', isRequired=True )
+	pass
 _._default_settings_()
 
 _.appInfo[focus()] = {
@@ -34,18 +34,9 @@ _.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw );
 ########################################################################################
 #n)--> start
 
+import time
 def action():
-	if not _.switches.isActive('Files'): _.e('No File Specified','-f recover.json')
-	db = _.getTable('fileBackup.json')
-	recover = _.getTable2(_.switches.values('Files')[0])
-	index = {}
-	for rec in db: index[rec['backup']] = 1
-	for rec in recover:
-		add = True
-		if rec['backup'] in index: add = False
-		if add: db.append(rec)
-	_.saveTable(db,'fileBackup.json')
-
+	_.pr(_v.appLogs()+_v.slash+_.day(time.time()))
 
 ########################################################################################
 if __name__ == '__main__':

@@ -45,6 +45,7 @@ def appSwitches():
 	_.switches.register( 'NotCleanForce', '-pr,-print,--nc,---c,-c-', 'noline' )
 	_.switches.register( 'Count', '-cnt,-count' )
 	_.switches.register( 'Function', '-fn' )
+	_.switches.register( 'JustPath', '-jp,-justpath' )
 
 
 
@@ -206,20 +207,30 @@ def printFile(i,filepath):
 	if not filepath in _.v.namePrinted:
 		_.v.namePrinted.append(filepath)
 		if i and not 'noline' in _.switches.value('Clean'):
-			_.pr('_________________________________________')
+			if not _.switches.isActive('JustPath'):
+				_.pr('_________________________________________')
 		if not _.isCrypt(filepath):
 			if not _.switches.isActive('Clean'):
 				if __.path(filepath).startswith( _v.pp+os.sep+'configs'+os.sep ):
-					_.colorThis( [filepath.replace('-',os.sep)], 'cyan' )
-					_.pr()
+					if _.switches.isActive('JustPath'):
+						_.pr( __.path(filepath), c='cyan' )
+					else:
+						_.colorThis( [filepath.replace('-',os.sep)], 'cyan' )
+						_.pr()
 				else:
-					_.colorThis( [filepath], 'cyan' )
-					_.pr()
+					if _.switches.isActive('JustPath'):
+						_.pr( __.path(filepath), c='cyan' )
+					else:
+						_.colorThis( [filepath], 'cyan' )
+						_.pr()
 
 		else:
 			if not _.switches.isActive('Clean'):
-				_.colorThis( ['Encrypted:',filepath], 'red' )
-				_.pr()
+				if _.switches.isActive('JustPath'):
+					_.pr( __.path(filepath), c='cyan' )
+				else:
+					_.colorThis( ['Encrypted:',filepath], 'red' )
+					_.pr()
 def action():
 	focus()
 	global Function
@@ -379,6 +390,7 @@ def action():
 				if shouldAdd:
 					printFile(i,filepath)
 					vVv.print += 1
+					if _.switches.isActive('JustPath'): continue
 					if row == midID:
 						_.pr( _.genLine( maxLEN, '_', p=0 ) )
 					else:
@@ -418,7 +430,7 @@ def action():
 				if vVv.total == vVv.print:
 					_.cp( [ '', _.addComma(vVv.total) ], 'yellow' )
 				else:
-					_.cp( [ '', _.addComma(vVv.print), 'of', _.addComma(vVv.total) ], 'yellow' )
+					_.cp( [ '', _.addComma(vVv.print), 'of', _.addComma(vVv.total), 'lines' ], 'yellow' )
 	_.cleanUnzip()
 
 

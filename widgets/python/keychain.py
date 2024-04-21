@@ -33,13 +33,13 @@ import _rightThumb._string as _str
 ##################################################
 
 def appSwitches():
-	_.switches.register( 'Label', '-label,-lable', 'cloud-ssh-pass' )
+	_.switches.register( 'Label', '-l,-label,-lable', 'cloud-ssh-pass' )
 	_.switches.register( 'Password', '-password' )
 	_.switches.register( 'Clipboard', '-clip' )
 	_.switches.register( 'ChangePassword', '-change' )
-	_.switches.register( 'Add', '-add' )
-	_.switches.register( 'Get', '-get' )
-	_.switches.register( 'Print', '-print' )
+	_.switches.register( 'Add', '-a,-add' )
+	_.switches.register( 'Get', '-g,-get' )
+	_.switches.register( 'Print', '-p,-print' )
 	_.switches.register( 'Alias', '-alias' )
 	# _.switches.register( 'AddAlias', '-addalias' )
 	_.switches.register( 'Temp', '-temp', '8' )
@@ -236,7 +236,8 @@ def get(theLabel=None):
 				_copy.imp.copy( password, p=_.v.p  )
 		
 		if __.keychain_copy and len(password):
-			_.pr('copied:',label,c='green')
+			if not _.switches.isActive('Print'):
+				_.pr('copied:',label,c='green')
 			possibly_wait()
 		return password
 	elif label in aliases:
@@ -250,7 +251,8 @@ def get(theLabel=None):
 				return password
 			_copy.imp.copy( password, p=_.v.p  )
 		if len(password):
-			_.pr('copied:',label,c='green')
+			if not _.switches.isActive('Print'):
+				_.pr('copied:',label,c='green')
 		possibly_wait()
 		return password
 	else:

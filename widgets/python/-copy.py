@@ -467,6 +467,20 @@ win32clipboard = None
 def subject():
 		
 		subject = {}
+		subject['py'] = {}
+		subject['py']['micro'] = '''#!/usr/bin/python3
+import os, sys
+if sys.platform[0] == 'w': _rt = os.getenv('USERPROFILE') + os.sep + '.rt' + os.sep
+else: _rt = os.getenv('HOME') + os.sep + '.rt' + os.sep
+app = _rt + 'micro.py'
+try:
+    with open(app, 'r') as file: exec(file.read())
+except FileNotFoundError:
+    print(f"{app} not found")
+except Exception as e:
+    print(f"An error occurred while executing {app}: {str(e)}")
+'''
+		
 		subject['b'] = {}
 		subject['base'] = {}
 		subject['base']['micro'] = '''

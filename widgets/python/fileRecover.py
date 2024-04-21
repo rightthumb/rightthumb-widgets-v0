@@ -400,7 +400,8 @@ def ask(data, doneselection=False, backupfile='', originalfile=''):
 
 	if selection == 'r':
 		if len(backupfile) > 0 and len(originalfile) > 0:
-			copyfile(backupfile, originalfile)
+			# copyfile(backupfile, originalfile)
+			_.decompress2(backupfile, originalfile)
 			_.pr()
 			_.pr('Reverted to original')
 			_.pr()
@@ -523,7 +524,8 @@ def ask(data, doneselection=False, backupfile='', originalfile=''):
 				else:
 					_.saveTable(backupLogX,'fileBackup.json',printThis=True)
 					# _.pr( 'HERE', 1 )
-					cpResult = copyfile(data[int(selection)]['file'],newname)
+					# cpResult = copyfile(data[int(selection)]['file'],newname)
+					cpResult = _.decompress2(data[int(selection)]['file'],newname)
 					origalFile = newname
 			if _.isWin:
 				try:
@@ -533,7 +535,8 @@ def ask(data, doneselection=False, backupfile='', originalfile=''):
 				except Exception as e:
 					_.pr([   _v.sublime.replace('"','')   ,   data[int(selection)]['file'].replace('"','')  ])
 					_.pr('unable to open')
-			cpResult = copyfile(data[int(selection)]['backup'], data[int(selection)]['file'])
+			# cpResult = copyfile(data[int(selection)]['backup'], data[int(selection)]['file'])
+			cpResult = _.decompress2(data[int(selection)]['backup'], data[int(selection)]['file'])
 			_.pr()
 			_.pr('\tRecovered')
 			_.pr()

@@ -3,7 +3,7 @@ def focus(parentApp='', childApp='', reg=True): global appDBA; f = __.appName(ap
 fieldSet=_.l.vars(focus(),__name__,__file__,appDBA);_.load();_v=__.imp('_rightThumb._vars');
 
 def sw():
-	_.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name', description='Files', isRequired=True )
+	_.switches.register( 'RemoveFolder', '-fo' )
 _._default_settings_()
 
 _.appInfo[focus()] = {
@@ -33,20 +33,18 @@ def _local_(do): exec(do)
 _.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw );
 ########################################################################################
 #n)--> start
-
+from os import sep
 def action():
-	if not _.switches.isActive('Files'): _.e('No File Specified','-f recover.json')
-	db = _.getTable('fileBackup.json')
-	recover = _.getTable2(_.switches.values('Files')[0])
-	index = {}
-	for rec in db: index[rec['backup']] = 1
-	for rec in recover:
-		add = True
-		if rec['backup'] in index: add = False
-		if add: db.append(rec)
-	_.saveTable(db,'fileBackup.json')
-
-
+	if _.switches.isActive('RemoveFolder'):
+		folder = _.switches.value('RemoveFolder')
+		if not folder.endswith(sep): folder += sep
+		db = _.getTable('fileBackupSchedule.json')
+		db2 = []
+		for record in db:
+			if not record['file'].startswith(folder):
+				db2.append(record)
+		_.saveTable(db2,'fileBackupSchedule.json')
+		# _.colorThis( 'Removed', 'yellow' )
 ########################################################################################
 if __name__ == '__main__':
 	action(); _.isExit(__file__);

@@ -1261,7 +1261,10 @@ def action(path=None,flag=None,o=None,pre=None):
 				copyThis=True
 				if _.v.secure and not _.isCrypt(path):copyThis=False
 				if copyThis:
-					copyfile( path,  libFile)
+					if os.stat(path).st_size > 5242880: # 5mb
+						_.compress2( path,  libFile)
+					else:
+						copyfile( path,  libFile)
 				else:
 					_.pr('not encrypted',c='red')
 					if _.switches.isActive('isPreOpen'):
@@ -1371,7 +1374,7 @@ def action(path=None,flag=None,o=None,pre=None):
 						_.colorThis( [  '********************'  ], 'yellow' )
 						_.colorThis( [  '   File is BINARY'  ], 'yellow' )
 						_.colorThis( [  '********************'  ], 'yellow' )
-					newname = _v.myBIN + os.sep + str(now) + '-' + modified +  '-' + name
+					newname = _v.myBIN + os.sep + str(now) + '-' + modified +  '-'+ _md5.string(path,'sha1') +'-'+ name
 
 				if not __.secureFilesID is None:
 					theID = __.secureFilesID
@@ -1433,7 +1436,10 @@ def action(path=None,flag=None,o=None,pre=None):
 					return path
 					# sys.exit()
 				try:
-					result = copyfile(path, newname)
+					if os.stat(path).st_size > 5242880: # 5mb
+						result = _.compress2( path,  libFile)
+					else:
+						result = copyfile(path, newname)
 					# for i,row in enumerate(backupLog):
 					# 	try:
 					# 		if not type(backupLog[i]['flag']) == str:

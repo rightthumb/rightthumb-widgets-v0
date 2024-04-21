@@ -26,13 +26,13 @@ _v = __.imp('_rightThumb._vars')
 _str = __.imp('_rightThumb._string')
 ##################################################
 def sw():
+	_.switches.register( 'URL', '-url', isRequired=True )
 	_.switches.register( 'File', '-f,-file' )
 	_.switches.register( 'Subject', '-s,-subject' )
 	_.switches.register( 'Log', '-log' )
 	_.switches.register( 'Python', '-py' )
 	# _.switches.register( 'Execute', '-exec' )
 	_.switches.register( 'Me', '-me' )
-	_.switches.register( 'Clear', '--c,-clear' )
 
 
 
@@ -49,7 +49,7 @@ __.setting('switch-raw',[])
 
 _.appInfo[focus()] = {
 	# 'app': '8facG-jo0Cxk',
-	'file': 'tf.py',
+	'file': 'vps-tfm.py',
 	'liveAppName': __.thisApp( __file__ ),
 	'description': 'simple send and receive files',
 		# _.ail(1,'subject')+
@@ -77,19 +77,18 @@ _.appInfo[focus()] = {
 	],
 	'examples': [
 						_.linePrint(label='simple',p=0),
-						_.hp('p -paste | p tf -f py -log'),
+						_.hp('p -paste | p vps-tfm -f py -log'),
 						'''___
 				python -m SimpleHTTPServer''',
 						_.linePrint(label='simple',p=0),
 						_.linePrint(label='simple',p=0),
-						_.hp('p -paste | p tf -f import-fix -log'),
+						_.hp('p -paste | p vps-tfm -f import-fix -log'),
 						'''___
 				def _read_file(path): # 173 stickytape.__init__
 					return open(path,encoding="utf-8").read()''',
 						_.linePrint(label='simple',p=0),
-						'''cat xfce4_de.sh | p tf
-				curl https://tf.sds.sh/?py=tf.py --output tf.py ; chmod +x tf.py
-				python3 tf.py  | bash''',
+						'''cat xfce4_de.sh | p vps-tfm
+				p vps-tfm  | bash''',
 						_.linePrint(label='simple',p=0),
 	],
 	'columns': [
@@ -134,15 +133,10 @@ import requests
 
 def action():
 	subject = '0'
-	url = _v.fig['tf-url']
-	token = 'eol'
+	url = _.switches.values('URL')[0]
 	data = ''
-	pre = ''
+	pre = 'tfm-'
 
-	if _.switches.isActive('Clear'):
-		response = requests.post(url, data={'token': token, 'subject': pre + subject, 'data': ''})
-		data = response.content.decode(response.encoding or 'utf-8')
-		return None
 	if _.switches.isActive('Log'):
 		pre = 'log-'
 	
@@ -160,19 +154,19 @@ def action():
 	
 	if _.switches.isActive('Subject') and _.switches.value('Subject'):
 		subject = _.switches.value('Subject')
-		response = requests.post(url, data={'token': token, 'subject': pre + subject})
+		response = requests.post(url, data={'subject': pre + subject})
 		data = response.content.decode(response.encoding or 'utf-8')
 		_.pr(data)
 		return data
 
 	if _.switches.isActive('File') and _.switches.value('File'):
 		subject = _.switches.value('File')
-	# print(_.isData()); sys.exit();
+	
 	if _.isData():
-		response = requests.post(url, data={'token': token, 'subject': pre + subject, 'data': '\n'.join(_.isData())})
+		response = requests.post(url, data={'subject': pre + subject, 'data': '\n'.join(_.isData())})
 		data = response.content.decode(response.encoding or 'utf-8')
 	else:
-		response = requests.post(url, data={'token': token, 'subject': pre + subject})
+		response = requests.post(url, data={'subject': pre + subject})
 		data = response.content.decode(response.encoding or 'utf-8')
 
 	data = data.replace(chr(10), '\n')
