@@ -55,6 +55,7 @@ def appSwitches():
 	_.switches.register('isPreOpen', '-open,-isPreOpen')
 	_.switches.register('Test', '-test')
 	_.switches.register('Force', '-force')
+	_.switches.register('BypassScheduler', '-bs')
 	# _.switches.register('Session_ID', '-session')
 
 	
@@ -795,6 +796,11 @@ __.fileBackup.isPreOpen = _.switches.isActive('isPreOpen')
 # __.fileBackup.isPreOpen
 # __.fileBackup.isPreOpen
 def action(path=None,flag=None,o=None,pre=None):
+	# if _.switches.isActive('Files'):
+	# 	_.switches.fieldSet( 'Input', 'active', True )
+	# 	_.switches.fieldSet( 'Input', 'value', _.switches.value('Files') )
+	# 	_.switches.fieldSet( 'Input', 'values', _.switches.values('Files') )
+		
 	global INDEX
 	global _BYTES_
 	global backupLog
@@ -819,6 +825,7 @@ def action(path=None,flag=None,o=None,pre=None):
 	# print('isPreOpen3',__.fileBackup.isPreOpen)
 	# print('isPreOpen',__.fileBackup.isPreOpen); sys.exit();
 	if not path is None:
+		if not os.path.isfile(path): return False
 		path = __.path(  os.path.abspath(path)  )
 		_.switches.fieldSet( 'Silent', 'active', True )
 		_.switches.fieldSet( 'isRunOnce', 'active', True )
@@ -871,13 +878,13 @@ def action(path=None,flag=None,o=None,pre=None):
 					if not _.switches.isActive('isRunOnce'):
 						if _.switches.isActive('isPreOpen'):
 							txtScheduler.append( { 'timestamp': genEpoch(), 'file': __.path(path), 'status': 0, 'app': 'fileBackup', 'group': 0, 'session': __.Session_ID } )
-							_.saveTable( txtScheduler,'fileBackupSchedule.json', p=0 )
+							if not _.switches.isActive('BypassScheduler'): _.saveTable( txtScheduler,'fileBackupSchedule.json', p=0 )
 							if not isActive('Silent'):
 								_.colorThis( 'secure open and scheduled', 'yellow' )
 						return None
 				if _.v.secure and not _.switches.isActive('isRunOnce') and not isActive('Force'):
 					txtScheduler.append( { 'timestamp': genEpoch(), 'file': __.path(path), 'status': 0, 'app': 'fileBackup', 'group': 0, 'session': __.Session_ID } )
-					_.saveTable( txtScheduler,'fileBackupSchedule.json', p=0 )
+					if not _.switches.isActive('BypassScheduler'): _.saveTable( txtScheduler,'fileBackupSchedule.json', p=0 )
 					if not isActive('Silent'):
 						_.colorThis( 'secure open and scheduled', 'yellow' )
 					return None
@@ -889,7 +896,7 @@ def action(path=None,flag=None,o=None,pre=None):
 					_.pr('File not modified since last backup',c='yellow')
 				if _.switches.isActive('isPreOpen'):
 					txtScheduler.append( { 'timestamp': genEpoch(), 'file': __.path(path), 'status': 0, 'app': 'fileBackup', 'group': 0, 'session': __.Session_ID } )
-					_.saveTable( txtScheduler,'fileBackupSchedule.json', p=0 )
+					if not _.switches.isActive('BypassScheduler'): _.saveTable( txtScheduler,'fileBackupSchedule.json', p=0 )
 				return INDEX[path]['backup']
 			# _.pr('pre')
 			# _.pr('post')
@@ -1259,7 +1266,7 @@ def action(path=None,flag=None,o=None,pre=None):
 					_.pr('not encrypted',c='red')
 					if _.switches.isActive('isPreOpen'):
 						txtScheduler.append( { 'timestamp': genEpoch(), 'file': __.path(path), 'status': 0, 'app': 'fileBackup', 'group': 0, 'session': __.Session_ID } )
-						_.saveTable( txtScheduler,'fileBackupSchedule.json', p=0 )
+						if not _.switches.isActive('BypassScheduler'): _.saveTable( txtScheduler,'fileBackupSchedule.json', p=0 )
 					return path
 					# sys.exit()
 
@@ -1271,7 +1278,7 @@ def action(path=None,flag=None,o=None,pre=None):
 
 		
 		txtScheduler.append( { 'timestamp': genEpoch(), 'file': __.path(path), 'status': 0, 'app': 'fileBackup', 'group': 0, 'session': __.Session_ID } )
-		_.saveTable( txtScheduler,'fileBackupSchedule.json', p=0 )
+		if not _.switches.isActive('BypassScheduler'): _.saveTable( txtScheduler,'fileBackupSchedule.json', p=0 )
 		if __.openSecure:
 			if not isActive('Silent'):
 				_.colorThis( 'secure open and scheduled', 'yellow' )
@@ -1314,7 +1321,7 @@ def action(path=None,flag=None,o=None,pre=None):
 			# if not _.switches.isActive('isRunOnce'):
 			# if not path in INDEX:
 			# 	txtScheduler.append( { 'timestamp': genEpoch(), 'file': __.path(path), 'status': 0, 'app': 'fileBackup', 'group': 0, 'session': __.Session_ID } )
-			# 	_.saveTable( txtScheduler,'fileBackupSchedule.json', p=0 )
+			# 	if not _.switches.isActive('BypassScheduler'): _.saveTable( txtScheduler,'fileBackupSchedule.json', p=0 )
 			# 	return None
 			if path in INDEX and not os.path.isfile(INDEX[path]['backup']):
 				temp=_v.stmp+os.sep+'backup_default'
@@ -1331,7 +1338,7 @@ def action(path=None,flag=None,o=None,pre=None):
 						# _.pr( 'Has Backup',_.formatSize(byte), c='yellow' )
 					if _.switches.isActive('isPreOpen'):
 						txtScheduler.append( { 'timestamp': genEpoch(), 'file': __.path(path), 'status': 0, 'app': 'fileBackup', 'group': 0, 'session': __.Session_ID } )
-						_.saveTable( txtScheduler,'fileBackupSchedule.json', p=0 )
+						if not _.switches.isActive('BypassScheduler'): _.saveTable( txtScheduler,'fileBackupSchedule.json', p=0 )
 					return INDEX[path]['backup']					
 				else:
 					if not __.secureFilesID is None:
@@ -1346,7 +1353,7 @@ def action(path=None,flag=None,o=None,pre=None):
 					_.colorThis( 'Has Backup', 'yellow' )
 				if _.switches.isActive('isPreOpen'):
 					txtScheduler.append( { 'timestamp': genEpoch(), 'file': __.path(path), 'status': 0, 'app': 'fileBackup', 'group': 0, 'session': __.Session_ID } )
-					_.saveTable( txtScheduler,'fileBackupSchedule.json', p=0 )
+					if not _.switches.isActive('BypassScheduler'): _.saveTable( txtScheduler,'fileBackupSchedule.json', p=0 )
 				return INDEX[path]['backup']
 				# if _.switches.isActive('Flag'):
 				# 	thisFlag = _.switches.value('Flag')
@@ -1378,7 +1385,7 @@ def action(path=None,flag=None,o=None,pre=None):
 						_.colorThis( 'Backup ID found in older backup', 'yellow' )
 					if _.switches.isActive('isPreOpen'):
 						txtScheduler.append( { 'timestamp': genEpoch(), 'file': __.path(path), 'status': 0, 'app': 'fileBackup', 'group': 0, 'session': __.Session_ID } )
-						_.saveTable( txtScheduler,'fileBackupSchedule.json', p=0 )
+						if not _.switches.isActive('BypassScheduler'): _.saveTable( txtScheduler,'fileBackupSchedule.json', p=0 )
 					if path in INDEX:
 						return INDEX[path]['backup']
 					else:
@@ -1422,7 +1429,7 @@ def action(path=None,flag=None,o=None,pre=None):
 
 					txtScheduler = _.getTable( 'fileBackupSchedule.json' )
 					txtScheduler.append( { 'timestamp': genEpoch(), 'file': __.path(path), 'status': 0, 'app': 'fileBackup', 'group': 0, 'session': __.Session_ID } )
-					_.saveTable( txtScheduler,'fileBackupSchedule.json', p=0 )
+					if not _.switches.isActive('BypassScheduler'): _.saveTable( txtScheduler,'fileBackupSchedule.json', p=0 )
 					return path
 					# sys.exit()
 				try:

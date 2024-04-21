@@ -3731,7 +3731,7 @@ def current_day():
 	now = datetime.datetime.now()
 	return now.strftime('%a').lower()
 
-__.schedulerRun=False
+__.schedulerRun=True
 
 
 

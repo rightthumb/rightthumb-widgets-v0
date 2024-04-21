@@ -40,6 +40,8 @@ def sw():
 	# _.switches.register( 'At', '-at', '13:30' )
 	_.switches.register( 'Python', '-py', 'autoBackup' )
 	_.switches.register( 'Arguments', '-args' '-ago 1d  (USE THIS SWITCH LAST)' )
+	# _.switches.register('Help', '?,??,/?,/??,-?,-??,--??,/h,/help,-help,--help', '(?? Print Table Help Without Global Switches) copy  OR ids  OR  12  OR  ?? x ')
+
 	# _.switches.register( 'URL', '-u,-url,-urls', 'https://etc.ac/', isData='raw' )
 	#e)--> examples
 	# _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name,data,clean', description='Files', isRequired=False )
@@ -53,7 +55,7 @@ __.setting('require-pipe',False)
 __.setting('require-pipe||file',False)
 __.setting('pre-error',False)
 __.setting('switch-raw',[])
-
+# __.setting('default-switches',False)
 
 
 _.appInfo[focus()] = {
@@ -214,7 +216,7 @@ def scheduler():
 		db.append(rec)
 		print()
 		_.saveTable(db,'scheduler.json')
-		pass
+		sys.exit()
 
 
 

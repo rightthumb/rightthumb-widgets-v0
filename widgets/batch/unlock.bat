@@ -1,2 +1,2 @@
 @echo off
-call p. lock-files -unlock x
+call p. lock-files -unlock 

@@ -60,6 +60,49 @@ __.showLine_quoteFix=True
 # except Exception as e:
 #   pass
 
+
+
+
+def process_pipe_data(data):
+    import datetime
+    import uuid
+    import json
+    original_type = type(data)
+
+    if type(data) in (list, tuple, set):
+        data = '\n'.join(data)
+    elif type(data) == str:
+        pass
+    else:
+        return data
+    # Check if the data is likely text or binary
+    # Consider it text if more than 95% of characters are printable
+    is_text = sum(c.isprintable() or c.isspace() for c in data) / len(data) > 0.95
+    
+    if is_text:
+        thresh = 5
+        # Remove non-printable characters if it's text from the threshold
+        if len(data) > thresh:
+            data = ''.join(c if c.isprintable() or c.isspace() else '' for c in data[:thresh]) + data[thresh:]
+        else:
+            data = ''.join(c if c.isprintable() or c.isspace() else '' for c in data)
+
+    
+    # Convert cleaned data back to original type if possible
+    if original_type is list:
+        return data.split('\n')
+        return data.encode('utf-8')
+    elif original_type in (list, tuple, set):
+        return original_type(data.split('\n'))
+    elif original_type is dict:
+        return json.loads(data)
+    return data
+
+
+
+
+
+
 def call(python_file):
     from os import sep
     path = _v.py+sep+python_file
@@ -8051,6 +8094,7 @@ def setUmlData( data, openUML=True ):
         import webbrowser
         webbrowser.open( _v.umlHtml, new=2)
 def setPipeData( data, theFocus=False, clean=False ):
+    # data = process_pipe_data( data )
     # if type(data) == str: data=data.replace('\r','')
     # if type(data) == list: data='\n'.join(data).replace('\r','').split('\n')
     global appData
@@ -12504,7 +12548,9 @@ class Switches:
 
         # if self.isActive(''):
 
-
+        if not __.appReg in self.isRequired:
+            for key in self.isRequired:
+                __.appReg = key
         if len( self.isRequired[__.appReg] ):
             allSatisfied = True
             

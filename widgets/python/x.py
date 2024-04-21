@@ -3,10 +3,9 @@ def focus(parentApp='', childApp='', reg=True): global appDBA; f = __.appName(ap
 fieldSet=_.l.vars(focus(),__name__,__file__,appDBA);_.load();_v=__.imp('_rightThumb._vars');
 
 def sw():
-	_.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name', description='Files', isRequired=False )
+	_.switches.register( 'Files', '-f','file.txt', isData='name', description='Files', isRequired=False )
 	_.switches.register( 'Args', '-a,-arg,-args', isRequired=False )
-_._default_settings_()
-__.setting('default-switches',False)
+_._default_settings_(); __.setting('default-switches',False);
 _.appInfo[focus()] = {
 	'file': 'thisApp.py',
 	'description': 'Changes the world',

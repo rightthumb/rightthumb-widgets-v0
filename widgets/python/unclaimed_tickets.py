@@ -156,6 +156,7 @@ def action():
 	a = _v.stmp +os.sep+ 'unclaimed_tickets'
 	b = _v.stmp +os.sep+ 'unclaimed_tickets_history'
 	# _.pr(folder)
+	
 	for i,folder in enumerate([a,b]):
 		for file in os.listdir(folder):
 			# _.pr(file)
@@ -168,23 +169,40 @@ def action():
 					pre = 'open'
 					alt = file.replace('open','closed')
 				path = folder +os.sep+ file
+
 				# _.pr(file)
 				session = file.replace(pre+'-','').replace('.txt','')
 				path2 = folder+_v.slash+'history-'+session+'.txt'
 				if os.path.isfile(path):
 					# _.pr(path)
-					if not os.path.isfile(  _v.myTickets +os.sep+ file  ) and not os.path.isfile(  _v.myTickets +os.sep+ alt  ):
+					myTicket = _v.myTickets +os.sep+ file
+					if not os.path.isfile(myTicket) and not os.path.isfile(_v.myTickets + os.sep + alt):
 						_.colorThis( [ 'reclaiming ticket for session: ', session ], 'cyan' )
 						newFile = []
 						for line in _.getText( path, raw=True ).split('\n'):
 							if not 'being used by another process' in line:
 								newFile.append(line)
-						_.saveText( newFile, _v.myTickets +os.sep+ file )
+						_.saveText( newFile, myTicket )
+						try:
+							_bk
+						except:
+							_bk = _.regImp( __.appReg, 'fileBackup' )
+							_bk.switch( 'Silent' )
+							_bk.switch( 'BypassScheduler' )
+						# for x in dir(_bk): print(x)
+						# sys.exit()
+						# _bk[path].switch( 'Input', path )
+						# _bk[path].switch( 'Output', path2 )
+						if os.path.isfile(myTicket):
+							bkfi = _bk.action(myTicket)
+						# _.pr(bkfi)
 						# time.sleep(.2)
 						os.unlink(path)
 						if os.path.isfile(path2):
 							os.unlink(path2)
-
+# _bk = _.regImp( __.appReg, 'fileBackup' )
+# _bk.switch( 'Silent' )
+# _bk.switch( 'BypassScheduler' )
 ########################################################################################
 if __name__ == '__main__':
 	action()
