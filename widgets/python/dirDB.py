@@ -63,7 +63,8 @@ def appSwitches():
 	_.switches.register('Totals', '-totals','t <-- Just +')
 	_.switches.register('IncludeBackups', '--bk,--backup,--backups')
 	_.switches.register('SQL', '-sql')
-	_.switches.register('ShowAll', '-all,-show,-showall')
+	_.switches.register('ShowRealCount', '-rc,-realcount')
+	_.switches.register('ShowSome', '-all,-show,-showall')
 	# _.switches.register('Save-Results', '-save')
 
 	
@@ -446,10 +447,11 @@ def action():
 
 			conn = sqlite3.connect(db)
 			c = conn.cursor()
-			if _.switches.isActive('SQL'): _.pr(sql); sys.exit();
+			if _.switches.isActive('SQL'): _.pr(sql); _.pr('\nd114'); sys.exit();
 			c.execute(sql)
 			records = c.fetchall()
 			_.v.totals+=len(records)
+			if _.switches.isActive('ShowRealCount') or _.switches.isActive('Test') or _.switches.isActive('SQL'): _.pr('Found:',_.addComma(_.v.totals))
 			if _.switches.isActive('Totals'):
 				_.pr(_.addComma(len(records)),c='cyan')
 
@@ -457,7 +459,7 @@ def action():
 			test = conn2.cursor()
 
 
-			if _.switches.isActive('SQL'): _.pr(sql); sys.exit();
+			if _.switches.isActive('SQL'): _.pr(sql); _.pr('\n4f0e'); sys.exit();
 			c.execute(sql)
 			all_done = False
 			for f in records:
@@ -493,6 +495,7 @@ def action():
 					pass
 				else:
 					_.v.totals+=len(test.fetchall())
+					if _.switches.isActive('ShowRealCount') or _.switches.isActive('Test') or _.switches.isActive('SQL'): _.pr('Found:',_.addComma(_.v.totals))
 					for rec in test.fetchall():
 						record = {}
 						for ii,nn in enumerate(names):
@@ -674,10 +677,11 @@ def action():
 
 		conn = sqlite3.connect(db)
 		c = conn.cursor()
-		if _.switches.isActive('SQL'): _.pr(sql); sys.exit();
+		if _.switches.isActive('SQL'): _.pr(sql); _.pr('\nb2d0'); sys.exit();
 		c.execute(sql)
 		records = c.fetchall()
 		_.v.totals+=len(records)
+		if _.switches.isActive('ShowRealCount') or _.switches.isActive('Test') or _.switches.isActive('SQL'): _.pr('Found:',_.addComma(_.v.totals))
 		if _.switches.isActive('Totals'):
 			_.pr(_.addComma(len(records)),c='cyan')
 			sys.exit()
@@ -686,7 +690,7 @@ def action():
 		test = conn2.cursor()
 
 
-		if _.switches.isActive('SQL'): _.pr(sql); sys.exit();
+		if _.switches.isActive('SQL'): _.pr(sql); _.pr('\n115e'); sys.exit();
 		c.execute(sql)
 		duplicates = {}
 
@@ -790,10 +794,11 @@ def action():
 				if run:
 					conn = sqlite3.connect(db)
 					c = conn.cursor()
-					if _.switches.isActive('SQL'): _.pr(sql); sys.exit();
+					if _.switches.isActive('SQL'): _.pr(sql); _.pr('\n7160'); sys.exit();
 					c.execute(sql)
 					records = c.fetchall()
 					_.v.totals+=len(records)
+					if _.switches.isActive('ShowRealCount') or _.switches.isActive('Test') or _.switches.isActive('SQL'): _.pr('Found:',_.addComma(_.v.totals))
 					if _.switches.isActive('Totals'):
 						_.pr(_.addComma(len(records)),c='cyan')
 						sys.exit()
@@ -841,18 +846,19 @@ def action():
 			_.pr('\n Saved:',saveAs,c='cyan')
 			
 	if not _.switches.isActive('Totals'):
-		if not _.switches.isActive('NoCount'):
+		if not _.switches.isActive('NoCount') and not _.switches.isActive('SQL') and not _.switches.isActive('Test'):
 			_.pr()
 			_.pr('Total:')
 			_.pr('\tFiles:\t', _.addComma(totalCount) )
 			_.pr('\tSize:\t', formatSize(totalSize)  )
 	elif _.switches.isActive('Totals'):
-		if not _.switches.isActive('NoCount'):
+		if not _.switches.isActive('NoCount') and not _.switches.isActive('SQL') and not _.switches.isActive('Test'):
 			_.pr('Total:',_.addComma(_.v.totals),c='cyan')
 theData=[]
 __.dirDB_Totals_bytes=0
 __.dirDB_Totals_file=0
 def do(databaseFile):
+	databaseFile = __.path(databaseFile)
 	global theData
 	# _.pr(databaseFile)
 	global totalSize
@@ -874,7 +880,7 @@ def do(databaseFile):
 		search='AND'.join(searches)
 
 		sql= 'SELECT COUNT(*) AS row_count, SUM(bytes) AS total_bytes FROM files WHERE '+search+';'
-		if _.switches.isActive('SQL'): _.pr(sql); sys.exit();
+		if _.switches.isActive('SQL'): _.pr(sql); _.pr('\n4231'); sys.exit();
 		c.execute(sql)
 		records = c.fetchall()
 
@@ -1017,12 +1023,13 @@ def do(databaseFile):
 		_.pr()
 		_.pr(sql)
 		sys.exit()
-	if _.switches.isActive('SQL'): _.pr(sql); sys.exit();
+	if _.switches.isActive('SQL'): _.pr(sql); _.pr('\ne020'); sys.exit();
 	c.execute(sql)
 	# c.execute('SELECT * FROM {tn} WHERE {cn} = {st}'.\
 	#         format(tn='files', cn='path', st='s'))
 	all_rows = c.fetchall()
 	_.v.totals+=len(all_rows)
+	if _.switches.isActive('ShowRealCount') or _.switches.isActive('Test') or _.switches.isActive('SQL'): _.pr('Found:',_.addComma(_.v.totals))
 	if _.switches.isActive('Totals'):
 		_.pr(_.addComma(len(all_rows)),c='cyan')
 		sys.exit()
@@ -1058,11 +1065,12 @@ def do(databaseFile):
 	if not isSave:
 		for f in all_rows:
 			# _.pr(_.switches.value('Column'))
-
+			# _.pr(names)
 			row = {}
 			for i,n in enumerate(names):
 				row[n] = f[i]
 			# _.pr(row['path'])
+			# data.append( row )
 			if _.switches.isActive('Column'):
 				line = ''
 				col = _.switches.value('Column')
@@ -1224,7 +1232,7 @@ def  removeFile( path, cursr ):
 	if _.switches.isActive('Clean'):
 		cursr.execute(sql)
 
-_.v.showAll=_.switches.isActive('ShowAll')
+_.v.showAll = not _.switches.isActive('ShowSome')
 ########################################################################################
 if __name__ == '__main__':
 	action()

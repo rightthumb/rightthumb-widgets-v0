@@ -56,6 +56,7 @@ def appSwitches():
 	_.switches.register('Test', '-test')
 	_.switches.register('Force', '-force')
 	_.switches.register('BypassScheduler', '-bs')
+	_.switches.register('BackupRecoverScan', '-bkscan')	
 	# _.switches.register('Session_ID', '-session')
 
 	
@@ -179,7 +180,9 @@ def generateID(path):
 	abPath = os.path.abspath(path)
 	md5 = _md5.md5File(abPath)
 	# _.pr(md5)
-	return _md5.md52GUID(md5,True)
+	id = _md5.md52GUID(md5,True)
+	bkRecoverListen(id,abPath)
+	return id 
 
 def idExist(theID, data, path):
 	found = False
@@ -796,6 +799,9 @@ __.fileBackup.isPreOpen = _.switches.isActive('isPreOpen')
 # __.fileBackup.isPreOpen
 # __.fileBackup.isPreOpen
 def action(path=None,flag=None,o=None,pre=None):
+	if _.switches.isActive('BackupRecoverScan'):
+		bkRecoverScan()
+		sys.exit()
 	# if _.switches.isActive('Files'):
 	# 	_.switches.fieldSet( 'Input', 'active', True )
 	# 	_.switches.fieldSet( 'Input', 'value', _.switches.value('Files') )
@@ -1556,6 +1562,76 @@ for rec in backupLog:
 focus()
 _decrypt_docs = None
 doc_sep = '\n__________________________________________________________________________________\n'
+########################################################################################
+def build2m():
+	import _rightThumb._md5 as _md5
+	b2m = _.getTable('build2m.dex')
+	if b2m: return b2m
+	fi2m =_.getText2( 'C:\\Users\\Scott\\.rt\\profile\\backup\\txt\\2m','list' )
+	bm2 = {}
+	for i in fi2m:
+		i = i.strip()
+		_.pr( i )
+		if not os.path.isfile( i ): continue
+		if _.IS( i, 'gzip' ):
+			gzip=True
+			_.decompress( i )
+		else:
+			gzip=False
+		md5 = _md5.md5File( i )
+		id = _md5.md52GUID(md5,True)
+		if gzip: _.compress( i )
+		bm2[id] = {
+			'id': id,
+			'file': None,
+			'backup': i,
+			'md5': md5,
+		}
+	_.saveTable(bm2,'build2m.dex')
+	return bm2
+b2m =None
+def bkRecoverListen(id,path):
+	global b2m
+	changed = False
+	if b2m is None: b2m = build2m()
+	if id in b2m:
+		if b2m[id]['file'] is None:
+			changed = True
+		b2m[id]['file'] = path
+	if changed:
+		_.saveTable(b2m,'build2m.dex')
+
+def bkRecoverScan():
+	changed = False
+	b2m = build2m()
+	dex = {}
+	for id in b2m:
+		dex[b2m[id]['backup']] = b2m[id]['id']
+	disregard = []
+	print('build2m')
+	backupLog = _.getTable('fileBackup.json')
+	print('backupLog')
+	for rec in backupLog:
+		if rec['backup'] in dex:
+			changed = True
+			disregard.append(dex[rec['backup']])
+		print(rec['file'])
+		if rec['id'] in b2m:
+			r = b2m[rec['id']]
+			if r['file'] is None:
+				changed = True
+			b2m[rec['id']]['file'] = rec['file']
+	if changed:
+		if disregard:
+			ind = {}
+			for id in b2m:
+				if not id in disregard:
+					ind[id] = b2m[id]
+			b2m = ind				
+		_.saveTable(b2m,'build2m.dex')
+
+
+########################################################################################
 
 # flag validator
 # _bkLog.imp.validateFlag
