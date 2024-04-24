@@ -282,7 +282,7 @@ class WebDAVClient:
 		while not os.path.isfile( folder+os.sep+self.webdavMeta ):
 			i+=1
 			if i > 100:
-				_.e('missing folder meta')
+				_.e('missing folder meta,9ba3')
 			try:
 				folder = __.path(folder,pop=True)
 			except Exception as e:

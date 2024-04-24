@@ -12,7 +12,7 @@
 
 
 ##################################################
-import sys, time
+import os, sys, time
 ##################################################
 import _rightThumb._construct as __
 appDBA=__.clearFocus(__name__,__file__);__.appReg=appDBA;
@@ -200,22 +200,45 @@ def get_content(filename):
 #             c.execute("INSERT INTO files VALUES (?,?,?,?,?,?)", (filename, abs_path, size, created, is_dir, content))
 def index_files(c, directory, recursion=False):
 	for filename in os.listdir(directory):
-		abs_path = os.path.join(directory, filename)
+		try:
+			abs_path = os.path.join(directory, filename)
 
-		if os.path.isdir(abs_path) and recursion:
-			index_files(c, abs_path, recursion)  # Corrected the arguments here
-		else:
-			size = os.path.getsize(abs_path)
-			created = os.path.getctime(abs_path)
-			modified = os.path.getmtime(abs_path)
-			is_dir = 1 if os.path.isdir(abs_path) else 0
-			content = get_content(abs_path) if is_text(abs_path) else ""
+			if os.path.isdir(abs_path) and recursion:
+				index_files(c, abs_path, recursion)  # Corrected the arguments here
+			else:
+				try:
+					size = os.path.getsize(abs_path)
+					created = os.path.getctime(abs_path)
+					modified = os.path.getmtime(abs_path)
+					is_dir = 1 if os.path.isdir(abs_path) else 0
+					content = get_content(abs_path) if is_text(abs_path) else ""
 
-			# Insert a row of data
-			c.execute("INSERT INTO files VALUES (?,?,?,?,?,?,?)", (filename, abs_path, size, created, modified, is_dir, content))
+					# Insert a row of data
+					c.execute("INSERT INTO files VALUES (?,?,?,?,?,?,?)", (filename, abs_path, size, created, modified, is_dir, content))
+				except: pass
+		except: pass
 
-
-
+def numb(num):
+	num = int(num)
+	if num < 10:
+		return '0'+str(num)
+	else:
+		return str(num)
+def dbRename(db):
+	db = __.path(db)
+	fo = __.path(db,fo=True)+os.sep
+	fi = __.path(db,fi=True)
+	if os.path.isfile(db):
+		import shutil
+		modified = _.friendlyDate( _.autoDate( _.mod(db) ) ).split(' ')[0].replace('-','.')
+		# print(modified); sys.exit();
+		to = fo+modified+'-'+fi
+		i=1
+		while os.path.isfile(to):
+			i+=1
+			to = fo+modified+'-'+numb(i)+'-'+fi
+			
+		shutil.move(db,to)
 
 def action():
 
@@ -223,7 +246,7 @@ def action():
 		db = _.switches.value('Database')
 	else:
 		db = 'index.db'
-
+	dbRename(db)
 	# connect to the sqlite database
 	conn = sqlite3.connect(db)
 	c = conn.cursor()

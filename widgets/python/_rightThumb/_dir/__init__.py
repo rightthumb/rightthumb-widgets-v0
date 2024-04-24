@@ -247,7 +247,7 @@ def _header_(path):
 				theHeader = theHeader[0:header*3]
 		return theHeader
 
-def individual(path,subject):
+def individual(path,subject,forceDic=False):
 	path=__.path(path)
 	dic={}
 	if ' path ' in ' '+subject+' ': dic['path'] =  __.path(path);
@@ -303,9 +303,13 @@ def individual(path,subject):
 	if ' head ' in ' '+subject+' ': dic['head'] =  _header_(path);
 	if ' group ' in ' '+subject+' ': dic['group'] =  size_group(os.stat(path).st_size);
 	if ' sg ' in ' '+subject+' ': dic['group'] =  size_group(os.stat(path).st_size);
+	if ' sha1 ' in ' '+subject+' ': dic['sha1'] =  _md5.string(path,'sha1');
+	if ' sha256 ' in ' '+subject+' ': dic['sha256'] =  _md5.string(path,'sha256');
+	if ' sha512 ' in ' '+subject+' ': dic['sha512'] =  _md5.string(path,'sha512');
 	if not dic: return info(path);
 	k=list(dic.keys())
-	if len(k) == 1: return dic[k[0]];
+	if not forceDic:
+		if len(k) == 1: return dic[k[0]];
 	return dic
 
 def fileInfoAction( path, sql=False, md5=False, exif=0, getAttrib=None, getMime=None, db_connection=None, db_cursor=None, count=None, insert=None, last=False, sdate=None, meta=True, subject=None, sha256=False, _lines=False ):

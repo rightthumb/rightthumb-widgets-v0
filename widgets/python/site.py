@@ -160,6 +160,8 @@ def urlpr(url,meta):
 
 
 def meta_scan(path,end):
+	# path = __.path(path)
+	# print(path,end)
 	global folder
 	global meta
 	if not _.v.quiet:
@@ -182,7 +184,7 @@ def meta_scan(path,end):
 		# print(os.path.isfile( folder+os.sep+'.folder.meta'+end ),folder+os.sep+'.folder.meta'+end)
 		i+=1
 		if i > 100:
-			_.e('missing folder meta')
+			_.e('missing folder meta,aec7')
 		try:
 			folder = __.path(folder,pop=True)
 		except Exception as e:
@@ -234,7 +236,7 @@ def meta_scanR(path,end):
 		# print(os.path.isfile( folder+os.sep+'.folder.meta'+end ),folder+os.sep+'.folder.meta'+end)
 		i+=1
 		if i > 100:
-			_.e('missing folder meta')
+			_.e('missing folder meta,a71d')
 		try:
 			folder = __.path(folder,pop=True)
 		except Exception as e:

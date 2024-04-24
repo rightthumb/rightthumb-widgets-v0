@@ -6,6 +6,7 @@ def sw():
 	_.switches.register( 'Status', '-is','', isRequired=False )
 	_.switches.register( 'Encrypt', '-en','', isRequired=False )
 	_.switches.register( 'Decrypt', '-de','', isRequired=False )
+	_.switches.register( 'LocalFunctions', '-lf','', isRequired=False )
 	_.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name', description='Files', isRequired=False )
 _._default_settings_()
 
@@ -38,7 +39,41 @@ _.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw );
 ########################################################################################
 #n)--> start
 
-import os
+def decompress(path):
+	import os, shutil, gzip
+	decompressed_file_path = path
+	compressed_file_path = path+'.gz'
+	shutil.move(path, compressed_file_path)
+	with gzip.open(compressed_file_path, 'rb') as compressed_file:
+		with open(decompressed_file_path, 'wb') as decompressed_file:
+			shutil.copyfileobj(compressed_file, decompressed_file)
+	print(f"File decompressed and saved to {decompressed_file_path}")
+
+def compress(path):
+	import os, shutil, gzip
+	if _.IS(path,'gzip'): return False
+	path = __.path(path)
+	compressed_file_path = path
+	original_file_path = path+'_temp'
+	os.rename(path, original_file_path)
+	with open(original_file_path, 'rb') as original_file:
+		with gzip.open(compressed_file_path, 'wb') as compressed_file:
+			shutil.copyfileobj(original_file, compressed_file)
+	print(f"File compressed and saved to {compressed_file_path}")
+	os.unlink(original_file_path)
+
+def decompress(path):
+	import os, shutil, gzip
+	if not _.IS(path,'gzip'): return False
+	path = __.path(path)
+	decompressed_file_path = path
+	compressed_file_path = path+'_temp'
+	os.rename(path, compressed_file_path)
+	with gzip.open(compressed_file_path, 'rb') as compressed_file:
+		with open(decompressed_file_path, 'wb') as decompressed_file:
+			shutil.copyfileobj(compressed_file, decompressed_file)
+	print(f"File decompressed and saved to {decompressed_file_path}")
+	os.unlink(compressed_file_path)
 
 
 
@@ -66,12 +101,19 @@ def action():
 		for path in _.isData():
 			path = path.strip()
 			if not os.path.isfile(path): continue
-			_.compress(path)
+			if _.switches.isActive('LocalFunctions'):
+				compress(path)
+			else:
+				_.compress(path)
 	elif _.switches.isActive('Decrypt'):
 		for path in _.isData():
 			path = path.strip()
 			if not os.path.isfile(path): continue
-			_.decompress(path)
+			# _.decompress(path)
+			if _.switches.isActive('LocalFunctions'):
+				decompress(path)
+			else:
+				_.decompress(path)
 	else:
 		_.e('action not specified','-en or -de')
 

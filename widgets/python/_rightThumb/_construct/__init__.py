@@ -26,7 +26,17 @@ settings_table = {
 UnixCopy = 'xsel'
 truePath = False
 truePath = True
-
+isHeaders = {
+	# IS(path, 'gz')
+	'gzip': '1F 8B 08 08',
+	'docx': [
+		'50 4B 03 04',
+		'50 4B 05 06',
+	],
+	'isCrypt': '41 45 53 02 00 00 1B',
+	'gz': '1F 8B 08 08',
+	'bz2': '42 5A 68',
+}
 import time,signal,sys,platform
 tz = str(time.strftime("%z")).replace(':','')
 signal.signal(signal.SIGINT, lambda x, y: sys.exit(0))
@@ -243,6 +253,7 @@ def imp_run( subject, imp_table_testing=False ):
 	# print(subject); sys.exit();
 	if '.' in subject and not '_rightThumb' in subject: return dots(subject);
 	global imp_table
+	# if subject in imp_table: return imp_table[subject]
 	global importlib
 	if importlib is None:
 		import importlib
@@ -283,36 +294,74 @@ def onExit(script,subject=None):
 	if subject is None:
 		subject = uuid()
 	on_exit_subjects[subject] = script
-
+decompress_log = []
 def isExit():
 	global on_exit_subjects
+	global decompress_log
+	for path in decompress_log:
+		compress(path)
+
 	for subject in on_exit_subjects:
 		on_exit_subjects[subject]()
 	sys.exit()
 
-
-def path( p, ab=True, pop=False, file=False, slash=None, folder=None, fi=None, fo=None, fix=True ):
+def compress(path):
+	os=imp('os.rename')
+	os=imp('os.unlink')
+	import gzip
+	import shutil
+	if IS(path,'gzip'): return False
+	path = path(path)
+	compressed_file_path = path
+	original_file_path = path+'_temp'
+	os.rename(path, original_file_path)
+	with open(original_file_path, 'rb') as original_file:
+		with gzip.open(compressed_file_path, 'wb') as compressed_file:
+			shutil.copyfileobj(original_file, compressed_file)
+	print(f"File compressed and saved to {compressed_file_path}")
+	os.unlink(original_file_path)
+def IS(path,check=1):
+	path = path.strip()
+	if not os.path.isfile(path): return False
+	path = path2(path)
+	global isHeaders
+	if check in isHeaders.keys():
+		check = isHeaders[check]
+	header=" ".join(['{:02X}'.format(byte) for byte in     open( path, 'rb' ).read(32)    ])
+	if check == 1: return header
+	if type(check) == str:
+		if header.startswith(check): return True
+	elif type(check) == list:
+		for c in check:
+			if header.startswith(c): return True
+	
+	return False
+def path( p, ab=True, pop=False, file=False, slash=None, folder=None, fi=None, fo=None, fix=True, ln=None ):
+	os=imp('os.path.isfile')
+	if not os.path.isfile(p) and not os.path.isdir(p): p = p.strip()
+	if not os.path.isfile(p) and not os.path.isdir(p): return p
 	os=imp('os.sep')
 	p=p.replace(os.sep+os.sep,os.sep)
-	if isWin or not pop: return _path_( p, ab, pop, file, slash, folder, fi, fo, fix )
+	if isWin or not pop: return _path_( p, ab, pop, file, slash, folder, fi, fo, fix, ln )
 	os=imp('os.path.abspath')
 	p1 = os.path.abspath(p)
 	try: p1 = os.path.abspath(p)
 	except: pass
-	p2 = _path_( p, ab, pop, file, slash, folder, fi, fo, fix )
+	p2 = _path_( p, ab, pop, file, slash, folder, fi, fo, fix, ln )
 	if p1 == p2:
 		parts = p1.split(os.sep)
 		parts.pop(-1)
 		return os.sep.join(parts)
 	return p1
-def _path_( p, ab=True, pop=False, file=False, slash=None, folder=None, fi=None, fo=None, fix=True ):
+path2=path
+def _path_( p, ab=True, pop=False, file=False, slash=None, folder=None, fi=None, fo=None, fix=True, ln=None ):
 	
 	p_bk=p
 	# fix used in fileBackup.py
 
-	if not fo is None: pop=True;
-	if not folder is None: pop=True;
-	if not fi is None: file=True;
+	if not fo is None: folder=fo;
+	if not folder is None: pop=folder;
+	if not fi is None: file=fi;
 
 
 	# os = vc.FIG.imp('os')
@@ -357,7 +406,7 @@ def _path_( p, ab=True, pop=False, file=False, slash=None, folder=None, fi=None,
 				p = os.path.abspath(p)
 			except Exception as e:
 				pass
-	if isWin:
+	if isWin or (not ln is None and ln):
 		global truePath
 		if truePath:
 			try:

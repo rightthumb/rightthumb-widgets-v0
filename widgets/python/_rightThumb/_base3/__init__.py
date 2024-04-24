@@ -24117,7 +24117,53 @@ def decompress(path):
 			shutil.copyfileobj(compressed_file, decompressed_file)
 	print(f"File decompressed and saved to {decompressed_file_path}")
 	os.unlink(compressed_file_path)
-
+def BYTES(path): os.stat(  path  ).st_size
+MOD=mod
+def fileMeta(path,include='',individual=False):
+	# print(path)
+	# print(include)
+	path = __.path(path)
+	meta = {}
+	if 'md5' == include and not 'md5' in meta:
+		import _rightThumb._md5 as _md5
+		meta['md5'] = _md5.md5File(path)
+		if individual: return meta['md5']
+		return meta
+	if 'sha1' == include and not 'sha1' in meta:
+		import _rightThumb._md5 as _md5
+		meta['sha1'] = _md5.string(path,'sha1')
+		if individual: return meta['sha1']
+		return meta
+	if 'sha256' == include and not 'sha256' in meta:
+		import _rightThumb._md5 as _md5
+		meta['sha256'] = _md5.string(path,'sha256')
+		if individual: return meta['sha256']
+		return meta
+	if 'sha512' == include and not 'sha512' in meta:
+		import _rightThumb._md5 as _md5
+		meta['sha512'] =_md5.string(path,'sha512')
+		if individual: return meta['sha512']
+		return meta
+	if not include:
+	# if True:
+		meta['path']     = path
+		meta['file']     = __.path(path,file=True)
+		meta['folder']   = path[:-len(meta['file'])-1]
+		meta['bytes']    = os.stat(path).st_size
+		meta['size']     = formatSize(meta['bytes'])
+		meta['modified'] = os.path.getmtime(path)
+		meta['created']  = os.path.getctime(path)
+		meta['accessed'] = os.path.getatime(path)
+		meta['me'] = meta['modified']
+		meta['ce'] = meta['created']
+		meta['ae'] = meta['accessed']
+	else:
+		import _rightThumb._dir as _dir
+		meta = _dir.individual(path,include,True)
+	if individual:
+		if len(meta.keys()) == 1:
+			return meta[ list(meta.keys())[0] ]
+	return meta
 ##################################################
 
 # __.switch_raw

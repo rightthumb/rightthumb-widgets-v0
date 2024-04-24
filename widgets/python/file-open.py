@@ -390,6 +390,11 @@ def action(path=None):
 				if _.switches.isActive('ForceSublime'): app = 'C:\\Program Files\\Sublime Text 3\\sublime_text.exe'
 				# print(app);sys.exit();
 				if not os.path.isfile(app): _.e('Unable to open','app does not exist')
+				if _.IS(path,'gzip'):
+					gzip=True
+					_.decompress(path)
+				else:
+					gzip=False
 				try:
 					if app == 0:
 						subprocess.Popen([path])
@@ -397,6 +402,8 @@ def action(path=None):
 						subprocess.Popen([ app, path])
 				except:
 					_.e('Unable to open','app issue')
+				if gzip:
+					_.compress(path)
 			else:
 				if app == 'C:\\Program': app=_v.fig['code_editor']
 				command = f'{app} {path}'

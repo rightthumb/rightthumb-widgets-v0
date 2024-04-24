@@ -11,6 +11,8 @@ rem ###########################################################################
 rem ## {C3P0D40fAe8B} ##
 
 SET lab=%*
-CALL c
-
- 
+IF NOT ["%lab%"] == [""] (
+    TITLE loc-%Session_ID_Suffix% :: %lab%
+) else (
+    TITLE loc-%Session_ID_Suffix%
+)

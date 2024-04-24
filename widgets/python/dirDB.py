@@ -64,7 +64,9 @@ def appSwitches():
 	_.switches.register('IncludeBackups', '--bk,--backup,--backups')
 	_.switches.register('SQL', '-sql')
 	_.switches.register('ShowRealCount', '-rc,-realcount')
-	_.switches.register('ShowSome', '-all,-show,-showall')
+	# _.switches.register('ShowSome', '-all,-show,-showall')
+	_.switches.register('ShowSome', '-some,-showsome')
+	_.switches.register('SolidStateDrives', '-solid')
 	# _.switches.register('Save-Results', '-save')
 
 	
@@ -1165,10 +1167,13 @@ def action3():
 
 
 if not _.switches.isActive('Database'):
-	if os.path.isfile(_v.myIndexes + _v.slash + 'D_Drive.db'):
-		dbs = _v.myIndexes + _v.slash + 'C_Drive.db,' + _v.myIndexes + _v.slash + 'D_Drive.db'
+	if _.switches.isActive('SolidStateDrives'):
+		dbs = _v.myIndexes + _v.slash + 'solid-SanDisk.db,' + _v.myIndexes + _v.slash + 'solid-Crucial.db'
 	else:
-		dbs = _v.myIndexes + _v.slash + 'C_Drive.db'
+		if os.path.isfile(_v.myIndexes + _v.slash + 'D_Drive.db'):
+			dbs = _v.myIndexes + _v.slash + 'C_Drive.db,' + _v.myIndexes + _v.slash + 'D_Drive.db'
+		else:
+			dbs = _v.myIndexes + _v.slash + 'C_Drive.db'
 	# _.pr(dbs)
 	_.switches.fieldSet('Database','active',True)
 	_.switches.fieldSet('Database','value',dbs)
