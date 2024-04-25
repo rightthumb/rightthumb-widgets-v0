@@ -38,6 +38,7 @@ def sw():
 	_.switches.register( 'Ago', '-ago', '1w' )
 	_.switches.register( 'GreaterLess-Ago', '-gl', 'gtr, lss' )
 	_.switches.register( 'Test', '-test' )
+	_.switches.register( 'Data', '-data,-contents' )
 
 # __.setting('require-list',['Files,Plus','File,Has']) # todo
 # __.setting('require-list',['Pipe','Files'])
@@ -236,16 +237,31 @@ class DBManager:
 	def search_by_content(self, content):
 		return self.search_func({'content': content})
 
+	def data(self, path):
+		sql = 'select content from files where path = "'+path+'"'
+		self.cursor.execute(sql)
+		result = self.cursor.fetchall()
+		try:
+			return result[0][0]
+		except: return 'no data'
+import os
+def action(filePath=None):
 
-
-
-def action():
 	# _.e('incomplete','not finished')
 	if _.switches.isActive('Database'):
 		db = _.switches.values('Database')
 	else:
 		db = 'index.db'
 	query = DBManager(db)
+	if not filePath is None or _.switches.isActive('Data') and os.path.isfile(_.switches.value('File')):
+		if not filePath is None:
+			_.pr('\n')
+			_.pr(filePath,c='cyan')
+			contents = query.data(filePath); _.pr(contents);
+		else:
+			for path in _.switches.values('File'):
+				contents = query.data(path); _.pr(contents);
+		return contents
 	# db.create_table()
 	# print(db.search_by_name('file1.txt'))
 	data = {}
@@ -283,7 +299,10 @@ def action():
 		i+=1
 		for p in path:
 			if _.showLine(p):
-				_.pr(p,c='cyan')
+				if _.switches.isActive('Data'):
+					action(p)
+				else:
+					_.pr(p,c='cyan')
 	# print(search)
 	_.pr()
 	_.pr('',_.addComma(i),c='green')
