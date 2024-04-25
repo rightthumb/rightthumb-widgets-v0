@@ -38,7 +38,7 @@ def sw():
 	_.switches.register( 'Ago', '-ago', '1w' )
 	_.switches.register( 'GreaterLess-Ago', '-gl', 'gtr, lss' )
 	_.switches.register( 'Test', '-test' )
-	_.switches.register( 'Data', '-data,-contents' )
+	_.switches.register( 'Data', '-d,-data,-cc,-contents,-x' )
 
 # __.setting('require-list',['Files,Plus','File,Has']) # todo
 # __.setting('require-list',['Pipe','Files'])
@@ -249,7 +249,7 @@ def action(filePath=None):
 
 	# _.e('incomplete','not finished')
 	if _.switches.isActive('Database'):
-		db = _.switches.values('Database')
+		db = _.switches.value('Database')
 	else:
 		db = 'index.db'
 	query = DBManager(db)

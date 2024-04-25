@@ -162,6 +162,8 @@ def fometa(path,end=''):
 		mPath = folder+os.sep+'.folder.meta'+end
 		if getText( mPath, raw=True ).strip().startswith('{'): meta = getTable2( mPath )
 		else: meta = getYML( mPath )
+		if not meta: e('invalid meta',mPath)
+		# pv(meta)
 		meta['folder']=folder
 		return meta
 	return {}
@@ -23231,6 +23233,7 @@ def columnAbbreviations(data,appReg=None):
 ##################################################
 # path=_.zZip(path);   _.cleanUnzip()
 def IS(path,check=1):
+	if not os.path.isfile(path): return False
 	header=" ".join(['{:02X}'.format(byte) for byte in     open( path, 'rb' ).read(32)    ])
 	if check == 1: return header
 	if header.startswith(check): return True
