@@ -13,7 +13,7 @@ from datetime import datetime as dt, timedelta
 from datetime import date
 ##################################################
 MINI_ADS = True
-SHOW_ADS = True
+SHOW_ADS = False
 ##################################################
 __.showLine_quoteFix=True
 ##################################################
@@ -60,85 +60,6 @@ __.showLine_quoteFix=True
 # except Exception as e:
 #   pass
 
-
-
-
-def process_pipe_data(data):
-	import datetime
-	import uuid
-	import json
-	original_type = type(data)
-
-	if type(data) in (list, tuple, set):
-		data = '\n'.join(data)
-	elif type(data) == str:
-		pass
-	else:
-		return data
-	# Check if the data is likely text or binary
-	# Consider it text if more than 95% of characters are printable
-	is_text = sum(c.isprintable() or c.isspace() for c in data) / len(data) > 0.95
-	
-	if is_text:
-		thresh = 5
-		# Remove non-printable characters if it's text from the threshold
-		if len(data) > thresh:
-			data = ''.join(c if c.isprintable() or c.isspace() else '' for c in data[:thresh]) + data[thresh:]
-		else:
-			data = ''.join(c if c.isprintable() or c.isspace() else '' for c in data)
-
-	
-	# Convert cleaned data back to original type if possible
-	if original_type is list:
-		return data.split('\n')
-		return data.encode('utf-8')
-	elif original_type in (list, tuple, set):
-		return original_type(data.split('\n'))
-	elif original_type is dict:
-		return json.loads(data)
-	return data
-
-
-
-
-
-
-def call(python_file):
-	from os import sep
-	path = _v.py+sep+python_file
-	import importlib
-	module = importlib.import_module(path)
-	globals().update({name: getattr(module, name) for name in dir(module) if not name.startswith('_')})
-
-
-def build_documentation_tables(string):
-	snip_table = {}
-	doc_lines = []
-	_code = regImp( __.appReg, '_rightThumb._auditCodeBase' )
-	for i, chr in enumerate(string):
-		if i in  _code.imp.validator.identity['identity']:
-			o = i
-			c = _code.imp.validator.identity['location']['open'][o]
-			
-			# Assuming the need to capture snippets based on certain characters
-			if chr == '(' or chr == '[':
-				snip = string[o:c]
-				doc_lines.append(snip)
-				
-				# Removing the first occurrence of snip from string
-				string = string.replace(snip, '', 1)
-				
-				snip_table[o] = {
-					'open': o,
-					'close': c,
-					'o': o,
-					'c': c, 
-					'chr': chr,
-					'string': string,
-					'snip': snip
-				}
-	
-	return snip_table, doc_lines
 '''
 __.imp('simplejson').loads(var)
 simplejson = __.imp('simplejson')
@@ -248,15 +169,8 @@ def fometa(path,end=''):
 
 def json_(data,simp=False,s=None):
 	if not s is None: simp=s;
-	try:
-		import simplejson
-		json = simplejson
-	except:
-		pass
-	try:
-		import json
-	except ImportError:
-		json = simplejson
+	try: simplejson = __.imp('simplejson')
+	except: import simplejson
 	if type(data) == str:
 		return simplejson.loads(data)
 	if not simp:
@@ -406,15 +320,8 @@ def print_(*args,p=None,c=None,pad=3,g=None,end=None,pvs=None,pv=None,json=None,
 	else: rint=True;
 
 	if json:
-		try:
-			import simplejson
-			json = simplejson
-		except:
-			pass
-		try:
-			import json
-		except ImportError:
-			json = simplejson
+		try: simplejson = __.imp('simplejson')
+		except: import simplejson
 		args[0]=simplejson.dumps(args[0], indent=4, sort_keys=False, default=str);
 		if rint:
 			print(args[0])
@@ -443,15 +350,8 @@ def print_(*args,p=None,c=None,pad=3,g=None,end=None,pvs=None,pv=None,json=None,
 
 		if pv: return printVar(args[0])
 		if json:
-			try:
-				import simplejson
-				json = simplejson
-			except:
-				pass
-			try:
-				import json
-			except ImportError:
-				json = simplejson
+			try: simplejson = __.imp('simplejson')
+			except: import simplejson
 			args[0]=simplejson.dumps(args[0], indent=4, sort_keys=False, default=str);
 		if not line is None and line:
 			if not lineLen is None:
@@ -476,18 +376,15 @@ def print_(*args,p=None,c=None,pad=3,g=None,end=None,pvs=None,pv=None,json=None,
 		elif p: rint=True;
 		elif not p: rint=False;
 		else: rint=True;
-		_line__ = ''
 		if rint:
 			if not end is None:
 				if not lineLen is None:
-					_line__ = linePrint(txt=' ',p=0,minus=lineMinus)
-					print( _line__ , end=end ); print( prn, end=end );
+					print( linePrint(txt=' ',p=0,minus=lineMinus) , end=end ); print( prn, end=end );
 				else:
-					_line__ = linePrint(txt=' ',p=0,minus=lineMinus,length=lineLen)
-					print( _line__, end=end ); print( prn, end=end );
+					print( linePrint(txt=' ',p=0,minus=lineMinus,length=lineLen) , end=end ); print( prn, end=end );
 			# if not end is None: print( '                                                                                        ' , end=end ); print( prn, end=end );
 			else: print( prn );
-		print_ed.append({'prn':prn, 'line': _line__ })
+		print_ed.append(prn)
 		return prn
 	except Exception as e:
 		return ''
@@ -1741,15 +1638,8 @@ def date_diff_dic(one,two=time.time()):
 	# print("\n%d days, %d hours, %d minutes, %d seconds" % dhms_from_seconds(date_diff_in_seconds(two, one)))
 	txt='{ "d": %d, "h": %d, "m": %d,  "s": %d }' % dhms_from_seconds(date_diff_in_seconds(two, one))
 	# dic=dict("{ 'd': %d, 'h': %d, 'm': %d,  's': %d }" % dhms_from_seconds(date_diff_in_seconds(two, one)))
-	try:
-		import simplejson
-		json = simplejson
-	except:
-		pass
-	try:
-		import json
-	except ImportError:
-		json = simplejson
+	try: simplejson = __.imp('simplejson')
+	except: import simplejson
 	dic=simplejson.loads(txt)
 	# print(dic)
 	# print((dic))
@@ -2847,15 +2737,8 @@ def autoComplete( table, prompt='> ' ):
 
 def getCryptTable( theFile, db=False, bank=False, index=False, temp=False, free=False, password=None ):
 	if os.path.isfile(theFile): vv.opened_file_me[theFile] = os.path.getmtime( theFile );
-	try:
-		import simplejson
-		json = simplejson
-	except:
-		pass
-	try:
-		import json
-	except ImportError:
-		json = simplejson
+	try: simplejson = __.imp('simplejson')
+	except: import simplejson
 	global _vault
 	global shutil
 	global _md5
@@ -2930,15 +2813,8 @@ def getCryptTable( theFile, db=False, bank=False, index=False, temp=False, free=
 def saveCryptTable( rows, theFile, db=False, bank=False, index=False, temp=False, free=False, indentCode=True, sort_keys=False, archive=False, p=1, password=None, me=0 ):
 	HD.chmod(theFile)
 
-	try:
-		import simplejson
-		json = simplejson
-	except:
-		pass
-	try:
-		import json
-	except ImportError:
-		json = simplejson
+	try: simplejson = __.imp('simplejson')
+	except: import simplejson
 	global _vault
 	global shutil
 	global _md5
@@ -4177,15 +4053,8 @@ def isData( data=None, focus=None, pipeClean=False, required=False,     r=None, 
 		for sw in __.isData_Switches:
 			if not sw == 'Files': return switches.values(sw)
 		if data is None and switches.isActive('Paste-isData-json'):
-			try:
-				import simplejson
-				json = simplejson
-			except:
-				pass
-			try:
-				import json
-			except ImportError:
-				json = simplejson
+			try: simplejson = __.imp('simplejson')
+			except: import simplejson
 			d=getClip().strip()
 			return simplejson.loads(d)
 		elif data is None and switches.isActive('Paste-isData'): return getClip().split('\n')
@@ -7499,9 +7368,6 @@ def fromEpoch( epoch ):
 	return datetime.datetime.fromtimestamp(epoch).strftime('%c')
 
 def postLoad( file, epoch=0, theFocus=False ):
-	try:
-		if os.environ['burn_this'] == 'yes': return None;
-	except: pass
 	__.postLoadFile = file
 	global autoLoadData
 	global switches
@@ -7646,11 +7512,9 @@ def postLoad( file, epoch=0, theFocus=False ):
 	else:
 		releaseAcquiredData( appDBA, theFocus )
 
-# print(os.environ['burn_this']); sys.exit();
 
 raq_err=True
 def releaseAcquiredData( appDBA, theFocus, payload=None ):
-
 	global raq_err
 	l_registerSwitches_vars()
 	if appDBA == '__init__':
@@ -8094,7 +7958,6 @@ def setUmlData( data, openUML=True ):
 		import webbrowser
 		webbrowser.open( _v.umlHtml, new=2)
 def setPipeData( data, theFocus=False, clean=False ):
-	# data = process_pipe_data( data )
 	# if type(data) == str: data=data.replace('\r','')
 	# if type(data) == list: data='\n'.join(data).replace('\r','').split('\n')
 	global appData
@@ -8201,15 +8064,8 @@ def cleanDic( data ):
 	nowDic = json2d( nowJSON_TXT, True )
 
 def d2json( data, sort_keys=False ):
-	try:
-		import simplejson
-		json = simplejson
-	except:
-		pass
-	try:
-		import json
-	except ImportError:
-		json = simplejson
+	try: simplejson = __.imp('simplejson')
+	except: import simplejson
 	# saveTable2( data, _v.json_temp )
 	# txt = getText( _v.json_temp, raw=True )
 
@@ -8220,15 +8076,8 @@ def printVar1( data ):
 
 
 def printVar( data, sort_keys=False, isDic=None ):
-	try:
-		import simplejson
-		json = simplejson
-	except:
-		pass
-	try:
-		import json
-	except ImportError:
-		json = simplejson
+	try: simplejson = __.imp('simplejson')
+	except: import simplejson
 	result = simplejson.dumps(data, indent=4, sort_keys=False, default=str)
 	printVarColor( result )
 	print_(  )
@@ -8328,15 +8177,8 @@ def printVar2( data, sort_keys=False ):
 	
 def printVarSimple( data, sort_keys=False, isDic=None, prefix=None, remove=None, d=None, p=True, r=None ):
 	#n)--> r, stands for just return and not print
-	try:
-		import simplejson
-		json = simplejson
-	except:
-		pass
-	try:
-		import json
-	except ImportError:
-		json = simplejson
+	try: simplejson = __.imp('simplejson')
+	except: import simplejson
 	dump=simplejson.dumps(data, indent=4, sort_keys=sort_keys, default=str)
 	if d:
 		if p:
@@ -9986,12 +9828,6 @@ def calculate_monthdelta(date1, date2):
 
 hasPlus=None
 def showLine( string, plus = '', minus = '',plusOr = False, end=None,isSub=False, OR=None, code=False ):
-	
-	# <2024-04-02>
-	string = str(string)
-	# </2024-04-02>
-	
-
 	'''showLine( string, plus = '', minus = '',plusOr = False, end=None,isSub=False, OR=None, code=False )'''
 	global switches
 	global hasPlus
@@ -10412,15 +10248,8 @@ def minusResults(string,minus=''):
 	return result
 
 def saveLog( logname, rows=[], focus=True, printThis=True ):
-	try:
-		import simplejson
-		json = simplejson
-	except:
-		pass
-	try:
-		import json
-	except ImportError:
-		json = simplejson
+	try: simplejson = __.imp('simplejson')
+	except: import simplejson
 	global appInfo
 	global appData
 	
@@ -10466,15 +10295,10 @@ def saveLog( logname, rows=[], focus=True, printThis=True ):
 
 def saveTable( rows, theFile, tableTemp=False, printThis=True, indentCode=True, sort_keys=False, archive=False,                k=0,s=0,tmp=None,here=None,h=None,    p=1, me=0   ):
 	HD.chmod(theFile)
-	try:
-		import simplejson
-		json = simplejson
-	except:
-		pass
-	try:
-		import json
-	except ImportError:
-		json = simplejson
+	try: simplejson = __.imp('simplejson')
+	except: import simplejson
+	try: import json
+	except: pass
 	if not h is None: here = True;
 	if not here is None: saveTable2( rows, theFile ); return None;
 	if not tmp is None: tableTemp = True;
@@ -10576,12 +10400,8 @@ def getTable(theFile, tableTemp=False, isDic=None, isList=None, tmp=None):
 	if os.path.isfile(theFile):
 		vv.opened_file_me[theFile] = os.path.getmtime(theFile)
 
-
-	try:
-		import simplejson
-		json = simplejson
-	except:
-		pass
+	try: simplejson = __.imp('simplejson')
+	except: import simplejson
 	try:
 		import json
 	except ImportError:
@@ -10620,15 +10440,10 @@ def getTable(theFile, tableTemp=False, isDic=None, isList=None, tmp=None):
 
 def getTableOld( theFile, tableTemp=False,      isDic=None, isList=None,      tmp=None ):
 	if os.path.isfile(theFile): vv.opened_file_me[theFile] = os.path.getmtime( theFile );
-	try:
-		import simplejson
-		json = simplejson
-	except:
-		pass
-	try:
-		import json
-	except ImportError:
-		json = simplejson
+	try: simplejson = __.imp('simplejson')
+	except: import simplejson
+	try: import json
+	except: pass
 	# defaults to myTables
 	if not type( tableTemp ) == bool:
 		if tableTemp == 'split':
@@ -10666,15 +10481,8 @@ def getTableOld( theFile, tableTemp=False,      isDic=None, isList=None,      tm
 
 def getTable3(theFile):
 	if os.path.isfile(theFile): vv.opened_file_me[theFile] = os.path.getmtime( theFile );
-	try:
-		import simplejson
-		json = simplejson
-	except:
-		pass
-	try:
-		import json
-	except ImportError:
-		json = simplejson
+	try: simplejson = __.imp('simplejson')
+	except: import simplejson
 	if os.path.isfile(theFile) == True:
 		with open(theFile,'r') as json_file:
 			json_data = simplejson.load(json_file)
@@ -10687,11 +10495,8 @@ def getTable2(theFile, isDic=None, isList=None):
 	if os.path.isfile(theFile):
 		vv.opened_file_me[theFile] = os.path.getmtime(theFile)
 
-	try:
-		import simplejson
-		json = simplejson
-	except:
-		pass
+	try: simplejson = __.imp('simplejson')
+	except: import simplejson
 	try:
 		import json
 	except ImportError:
@@ -10711,7 +10516,7 @@ def getTable2(theFile, isDic=None, isList=None):
 					json_data = json.load(json_file)
 				return json_data
 		except Exception as e:
-			# print('Error loading JSON file:', e)
+			print('Error loading JSON file:', e)
 			sys.exit()
 	else:
 		# print(f"File {theFile} not found or is empty.")
@@ -10721,15 +10526,10 @@ def getTable2(theFile, isDic=None, isList=None):
 
 def getTable2Old( theFile,     isDic=None, isList=None ):
 	if os.path.isfile(theFile): vv.opened_file_me[theFile] = os.path.getmtime( theFile );
-	try:
-		import simplejson
-		json = simplejson
-	except:
-		pass
-	try:
-		import json
-	except ImportError:
-		json = simplejson
+	try: simplejson = __.imp('simplejson')
+	except: import simplejson
+	try: import json
+	except: pass
 	if theFile.lower().endswith('.index') or theFile.lower().endswith('.indexes'):
 		isDic = True
 	if os.path.isfile(theFile):
@@ -10749,15 +10549,8 @@ def getTable2Old( theFile,     isDic=None, isList=None ):
 
 def getTableBIG( theFile,     isDic=None, isList=None ):
 	if os.path.isfile(theFile): vv.opened_file_me[theFile] = os.path.getmtime( theFile );
-	try:
-		import simplejson
-		json = simplejson
-	except:
-		pass
-	try:
-		import json
-	except ImportError:
-		json = simplejson
+	try: simplejson = __.imp('simplejson')
+	except: import simplejson
 	import pandas as pd
 	if theFile.lower().endswith('.index') or theFile.lower().endswith('.indexes'):
 		isDic = True
@@ -10785,15 +10578,8 @@ def getTableBIG( theFile,     isDic=None, isList=None ):
 _tar = None
 def getTableDB( theFile,     isDic=None, isList=None ):
 	if os.path.isfile(theFile): vv.opened_file_me[theFile] = os.path.getmtime( theFile );
-	try:
-		import simplejson
-		json = simplejson
-	except:
-		pass
-	try:
-		import json
-	except ImportError:
-		json = simplejson
+	try: simplejson = __.imp('simplejson')
+	except: import simplejson
 	theFile = _v.dbTables + _v.slash + theFile
 	# print(theFile)
 	if os.path.isfile(theFile):
@@ -10814,15 +10600,8 @@ def getTableDB( theFile,     isDic=None, isList=None ):
 
 def getTableProject( project, theFile,     isDic=None, isList=None, path=False ):
 	if os.path.isfile(theFile): vv.opened_file_me[theFile] = os.path.getmtime( theFile );
-	try:
-		import simplejson
-		json = simplejson
-	except:
-		pass
-	try:
-		import json
-	except ImportError:
-		json = simplejson
+	try: simplejson = __.imp('simplejson')
+	except: import simplejson
 	theFile = _v.projectData(project) + theFile
 	if path:
 		print_(theFile)
@@ -10842,15 +10621,8 @@ def getTableProject( project, theFile,     isDic=None, isList=None, path=False )
 
 def saveTableProject( project, rows=[], theFile='', printThis=False, sort_keys=False, indentCode=True,  p=None, me=0, path=False ):
 	HD.chmod(theFile)
-	try:
-		import simplejson
-		json = simplejson
-	except:
-		pass
-	try:
-		import json
-	except ImportError:
-		json = simplejson
+	try: simplejson = __.imp('simplejson')
+	except: import simplejson
 	# print_('*******************',theFile)
 	theFile = _v.projectData(project) + theFile
 	if __.print_path:
@@ -10874,15 +10646,8 @@ def saveTableProject( project, rows=[], theFile='', printThis=False, sort_keys=F
 
 def saveTableDB( rows, theFile, printThis=False, sort_keys=False, indentCode=True,  p=None, me=0 ):
 	HD.chmod(theFile)
-	try:
-		import simplejson
-		json = simplejson
-	except:
-		pass
-	try:
-		import json
-	except ImportError:
-		json = simplejson
+	try: simplejson = __.imp('simplejson')
+	except: import simplejson
 
 	# print_('*******************',theFile)
 	theFile = _v.dbTables + _v.slash + theFile
@@ -10905,15 +10670,8 @@ def saveTableDB( rows, theFile, printThis=False, sort_keys=False, indentCode=Tru
 
 def saveTable2( rows, theFile, printThis=False, sort_keys=False, indentCode=True, p=None, me=0 ):
 	HD.chmod(theFile)
-	try:
-		import simplejson
-		json = simplejson
-	except:
-		pass
-	try:
-		import json
-	except ImportError:
-		json = simplejson
+	try: simplejson = __.imp('simplejson')
+	except: import simplejson
 	if not p is None:
 		printThis = p
 	# print_('*******************',theFile)
@@ -10949,15 +10707,8 @@ def saveTable2( rows, theFile, printThis=False, sort_keys=False, indentCode=True
 
 def saveTable3( rows, theFile, printThis=False, me=0 ):
 	HD.chmod(theFile)
-	try:
-		import simplejson
-		json = simplejson
-	except:
-		pass
-	try:
-		import json
-	except ImportError:
-		json = simplejson
+	try: simplejson = __.imp('simplejson')
+	except: import simplejson
 	# print_('*******************',theFile)
 	dataDump = simplejson.dumps(rows, sort_keys=False, default=str)
 	f = open(theFile,'w')
@@ -11463,15 +11214,8 @@ def saveTableSplitNew( rows,theFile,tableTemp = True,printThis = True, project=F
 	while os.path.isfile(path) == True:
 		cnt += 1
 		path = file0 + count(cnt) + suffix
-	try:
-		import simplejson
-		json = simplejson
-	except:
-		pass
-	try:
-		import json
-	except ImportError:
-		json = simplejson
+	try: simplejson = __.imp('simplejson')
+	except: import simplejson
 	dataDump = simplejson.dumps(rows, indent=4, sort_keys=True, default=str)
 	f = open(path,'w')
 	f.write(str(dataDump))
@@ -12548,9 +12292,7 @@ class Switches:
 
 		# if self.isActive(''):
 
-		if not __.appReg in self.isRequired:
-			for key in self.isRequired:
-				__.appReg = key
+
 		if len( self.isRequired[__.appReg] ):
 			allSatisfied = True
 			
@@ -14725,10 +14467,7 @@ class Table:
 		for item in self.asset:
 			# print_(item)
 			result = ''
-			# global switches
 			for c in column.split(','):
-				if switches.isActive('TablePlus'):
-					if not  _.showLine(str(item),_.switches.values('TablePlus'),_.switches.values('TableMinus')): continue
 				try:
 					pass
 					# result += self.showColumn(c,i,columnHeaderLength) + self.columnTab
@@ -15005,15 +14744,8 @@ class Table:
 
 	def save(self,theFile = '',tableTemp = True,printThis = True, me=0):
 		HD.chmod(theFile)
-		try:
-			import simplejson
-			json = simplejson
-		except:
-			pass
-		try:
-			import json
-		except ImportError:
-			json = simplejson
+		try: simplejson = __.imp('simplejson')
+		except: import simplejson
 		if theFile == '':
 			theFile = str(self.file)
 		self.file = theFile
@@ -15034,15 +14766,8 @@ class Table:
 		if me and theFile in vv.opened_file_me: changeM( theFile, vv.opened_file_me[theFile] );
 	def get(self,theFile = '',tableTemp = True,printThis = False):
 		if os.path.isfile(theFile): vv.opened_file_me[theFile] = os.path.getmtime( theFile );
-		try:
-			import simplejson
-			json = simplejson
-		except:
-			pass
-		try:
-			import json
-		except ImportError:
-			json = simplejson
+		try: simplejson = __.imp('simplejson')
+		except: import simplejson
 		if theFile == '':
 			theFile = self.file
 		self.file = theFile
@@ -17987,7 +17712,6 @@ ciData = (
 		[ ';sq',        "'"       ],
 		[ 'null00',     '"",'     ],
 		[ '"\'", "\'"', "','"      ],
-		[ '[gg]',       '>>'       ],
 		[ '[star]',     '*'       ],
 		[ '[a]',        '*'       ],
 		[ '[s]',        '$'       ],
@@ -18363,10 +18087,7 @@ def autoAbbreviations():
 			printAutoAbbreviations_scheduled = True
 			data = []
 			groups = {}
-			try:
-				myFileLocation_File_Data = getTable2( myFileLocation_File )
-			except:
-				return None
+			myFileLocation_File_Data = getTable2( myFileLocation_File )
 			if type( myFileLocation_File_Data ) == dict:
 				myFileLocation_File_Data = [myFileLocation_File_Data]
 			for i,key in enumerate( myFileLocation_File_Data[0].keys()):
@@ -20893,7 +20614,6 @@ def load():
 	global switches_loaded
 	switches_loaded += 1
 	if switches_loaded > 1:
-		if not __.setting('default-switches'): return None
 	# if True
 		global switches
 		global switchDefault
@@ -20903,11 +20623,9 @@ def load():
 		# switches.trigger('Column',formatColumns)
 
 		switchDefault = switches.length()
-		switches.register('Help', '?,??,/?,/??,-?,-??,--??,/h,/help,-help,--help', '(?? Print Table Help Without Global Switches) copy  OR ids  OR  12  OR  ?? x ', default=True)
+		switches.register('Help', '?,??,/?,/??,-?,-??,--??,/h,/help,-help,--help', 'copy  OR ids  OR  12  OR  ?? x', default=True)
 		switches.register('Column', '-c,-column', 'size, name', default=True)
 		switches.register('Sort','-s,-sort', 'a.type, d.ext', default=True)
-		switches.register('TablePlus','t+,+t,-ts+,-st+,-tablesearch', 'Search_Sting', default=True)
-		switches.register('TableMinus','t-,-t,-ts-,st-,-tableminus', 'Search_Sting', default=True)
 		switches.register('Debug', '-debug', default=True)
 		switches.register('DumpSwitches', '-dump', 'all', default=True)
 		switches.register('Errors', '-Error,-Errors', '8,11 OR hide:8,11', default=True)
@@ -20938,12 +20656,11 @@ def load():
 		switches.register('PlusClose', '+close', '90%', default=True)
 		switches.register('PlusCode', '+code','=  OR  *x  OR  x*  AND/OR color AND/OR n/new' , default=True)
 		switches.register('PlusDuplicate', '+dup,+duplicate', '90%', default=True)
-		switches.register('StrictCase', '-case,-strictcase,-strict', default=True)
+		switches.register('StrictCase', '-case,-strictcase', default=True)
 		switches.register('PrintAutoAbbreviations', '-printa,-aprint', default=True)
 		switches.register('NoColor', '-nocolor', space=True, default=True)
 		switches.register('LoadEpoch', '-loadepoch', default=True)
 		switches.register('PrintEpoch', '-printepoch', default=True)
-		switches.register('NoTitleChange', '-ntc,-notitlechange', default=True)
 		switches.register('chmod', '-chmod,-777', default=True)
 		switches.register( 'Paste-isData', '--pa,--paste,-ppa,-ppaste,-ispa,-idpa' , default=True)
 		switches.register( 'Paste-isData-json', '--json,-pjson,-jsonp' , default=True)
@@ -22138,7 +21855,7 @@ def dots(path):
 			if i == len(rts)-1: return eval(rts[0]);
 nsfw_=False
 def ad(path=None,label='ad'):
-	if not os.path.isdir(_v.ads): return None
+	if not os.path.isdir(_v.ads+os.sep+'apps'): return None
 	global SHOW_ADS
 	if not SHOW_ADS: return None
 	global MINI_ADS
@@ -22147,7 +21864,7 @@ def ad(path=None,label='ad'):
 	
 	def add_ad_fo(ad_fo):
 		global ads
-		for a2 in fo(_v.ads+ad_fo): ads.append(a2);
+		for a2 in fo(_v.ads+os.sep+ad_fo): ads.append(a2);
 
 	# print(_v.life+'apps')
 	# sys.exit()
@@ -22245,15 +21962,8 @@ def getConfig(path):
 		if string.startswith('"'): string=string[1:]; string=string[:-1]; return _cl_(string);
 		if string.startswith("'"): string=string[1:]; string=string[:-1]; return _cl_(string);
 		if string.startswith('[') or string.startswith('{'):
-			try:
-				import simplejson
-				json = simplejson
-			except:
-				pass
-			try:
-				import json
-			except ImportError:
-				json = simplejson
+			try: simplejson = __.imp('simplejson')
+			except: import simplejson
 			return simplejson.loads(string)
 		if string.lower() == 'none': return None;
 		if string.lower() == 'null': return None;
@@ -22290,15 +22000,8 @@ def saveConfig(data,path):
 		elif type(string) == str and '\n' in string: return _cl_(str({'d':string})[7:-2]);
 		elif type(string) == int or type(string) == float: return _cl_(str(string));
 		elif type(string) == dict or type(string) == list:
-			try:
-				import simplejson
-				json = simplejson
-			except:
-				pass
-			try:
-				import json
-			except ImportError:
-				json = simplejson
+			try: simplejson = __.imp('simplejson')
+			except: import simplejson
 			return simplejson.dumps(string, sort_keys=False, default=str)
 
 		return _cl_(str(string))
@@ -23527,19 +23230,10 @@ def columnAbbreviations(data,appReg=None):
 				appInfo[appReg]['columns'].append({'name': k, 'abbreviation': ','.join(abbr[k])})
 ##################################################
 # path=_.zZip(path);   _.cleanUnzip()
-
 def IS(path,check=1):
-	global isHeaders
-	if check in isHeaders.keys():
-		check = isHeaders[check]
 	header=" ".join(['{:02X}'.format(byte) for byte in     open( path, 'rb' ).read(32)    ])
 	if check == 1: return header
-	if type(check) == str:
-		if header.startswith(check): return True
-	elif type(check) == list:
-		for c in check:
-			if header.startswith(c): return True
-	
+	if header.startswith(check): return True
 	return False
 
 
@@ -23947,7 +23641,6 @@ def _default_settings_():
 	__.setting('require-pipe||file',False)
 	__.setting('pre-error',False)
 	__.setting('switch-raw',[])
-	__.setting('default-switches',True)
 def appInfoContinuity(app,info={}):
 	if not 'file' in info: info['file'] = __.thisApp( __file__ )
 	if not 'liveAppName' in info: info['liveAppName'] = __.thisApp( __file__ )
@@ -23988,182 +23681,6 @@ def appDataContinuity(info={}):
 		'field': {'sent': [], 'received': [] }, # { 'label': '', 'context': [],  }
 		'table': {'sent': [], 'received': [] },
 		}
-def injectLines(data, lines, start, end):
-	# Convert inputs to lists of lines if they're strings
-	if isinstance(data, str):
-		data = data.replace('\r', '').split('\n')
-	if isinstance(lines, str):
-		lines = lines.replace('\r', '').split('\n')
-
-	# Initialize variables
-	modified_data = []
-	in_range = False
-
-	# Iterate through each line of the original data
-	for line in data:
-		# Check for the start marker
-		if start in line:
-			in_range = True
-			modified_data.append(line)
-			continue  # Move to the next iteration to avoid appending the start line twice
-		
-		# Check for the end marker
-		if end in line and in_range:
-			# Append the lines to be injected
-			modified_data.extend(lines)
-			in_range = False
-
-		# Append current line if not in the range to skip
-		if not in_range or line == end:
-			modified_data.append(line)
-
-	# Return the modified data as a single string
-	return '\n'.join(modified_data)
-
-def injectLinesTest():
-	data = '''
-aaa
-bbb
-ccc
-123
-xxx
-yyy
-zzz
-456
-ddd
-eee
-fff
-'''
-
-	lines = '''
-this
-is
-a
-test
-'''
-	print(injectLines(data, lines, '123', '456'))
-
-
-
-
-##################################################
-isHeaders = {
-	# IS(path, 'gz')
-	'gzip': '1F 8B 08 08',
-	'docx': [
-		'50 4B 03 04',
-		'50 4B 05 06',
-	],
-	'isCrypt': '41 45 53 02 00 00 1B',
-	'gz': '1F 8B 08 08',
-	'bz2': '42 5A 68',
-}
-##################################################
-
-
-
-def compress2(original_file_path, compressed_file_path):
-	import gzip
-	import shutil
-	try:
-		if IS(original_file_path,'gzip'):
-			shutil.copyfile(original_file_path, compressed_file_path)
-			return 'Skipped'
-		with open(original_file_path, 'rb') as original_file:
-			with gzip.open(compressed_file_path, 'wb') as compressed_file:
-				shutil.copyfileobj(original_file, compressed_file)
-		return 'Compressed'
-	except:
-		return 'Error'
-
-def decompress2(compressed_file_path, decompressed_file_path):
-	import gzip
-	import shutil
-	try:
-		if not IS(compressed_file_path,'gzip'):
-			shutil.copyfile(compressed_file_path, decompressed_file_path)
-			return 'Skipped'
-		with gzip.open(compressed_file_path, 'rb') as compressed_file:
-			with open(decompressed_file_path, 'wb') as decompressed_file:
-				shutil.copyfileobj(compressed_file, decompressed_file)
-		return 'Decompressed'
-	except:
-		return 'Error'
-
-def compress(path):
-	import gzip
-	import shutil
-	if IS(path,'gzip'): return False
-	path = __.path(path)
-	compressed_file_path = path
-	original_file_path = path+'_temp'
-	os.rename(path, original_file_path)
-	with open(original_file_path, 'rb') as original_file:
-		with gzip.open(compressed_file_path, 'wb') as compressed_file:
-			shutil.copyfileobj(original_file, compressed_file)
-	print(f"File compressed and saved to {compressed_file_path}")
-	os.unlink(original_file_path)
-
-def decompress(path):
-	import gzip
-	import shutil
-	if not IS(path,'gzip'): return False
-	path = __.path(path)
-	decompressed_file_path = path
-	compressed_file_path = path+'_temp'
-	os.rename(path, compressed_file_path)
-	with gzip.open(compressed_file_path, 'rb') as compressed_file:
-		with open(decompressed_file_path, 'wb') as decompressed_file:
-			shutil.copyfileobj(compressed_file, decompressed_file)
-	print(f"File decompressed and saved to {decompressed_file_path}")
-	os.unlink(compressed_file_path)
-def BYTES(path): os.stat(  path  ).st_size
-MOD=mod
-def fileMeta(path,include='',individual=False):
-	# print(path)
-	# print(include)
-	path = __.path(path)
-	meta = {}
-	if 'md5' == include and not 'md5' in meta:
-		import _rightThumb._md5 as _md5
-		meta['md5'] = _md5.md5File(path)
-		if individual: return meta['md5']
-		return meta
-	if 'sha1' == include and not 'sha1' in meta:
-		import _rightThumb._md5 as _md5
-		meta['sha1'] = _md5.string(path,'sha1')
-		if individual: return meta['sha1']
-		return meta
-	if 'sha256' == include and not 'sha256' in meta:
-		import _rightThumb._md5 as _md5
-		meta['sha256'] = _md5.string(path,'sha256')
-		if individual: return meta['sha256']
-		return meta
-	if 'sha512' == include and not 'sha512' in meta:
-		import _rightThumb._md5 as _md5
-		meta['sha512'] =_md5.string(path,'sha512')
-		if individual: return meta['sha512']
-		return meta
-	if not include:
-	# if True:
-		meta['path']     = path
-		meta['file']     = __.path(path,file=True)
-		meta['folder']   = path[:-len(meta['file'])-1]
-		meta['bytes']    = os.stat(path).st_size
-		meta['size']     = formatSize(meta['bytes'])
-		meta['modified'] = os.path.getmtime(path)
-		meta['created']  = os.path.getctime(path)
-		meta['accessed'] = os.path.getatime(path)
-		meta['me'] = meta['modified']
-		meta['ce'] = meta['created']
-		meta['ae'] = meta['accessed']
-	else:
-		import _rightThumb._dir as _dir
-		meta = _dir.individual(path,include,True)
-	if individual:
-		if len(meta.keys()) == 1:
-			return meta[ list(meta.keys())[0] ]
-	return meta
 ##################################################
 
 # __.switch_raw

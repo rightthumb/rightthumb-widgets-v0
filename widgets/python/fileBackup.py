@@ -181,7 +181,7 @@ def generateID(path):
 	md5 = _md5.md5File(abPath)
 	# _.pr(md5)
 	id = _md5.md52GUID(md5,True)
-	bkRecoverListen(id,abPath)
+	# bkRecoverListen(id,abPath)
 	return id 
 
 def idExist(theID, data, path):
@@ -799,16 +799,16 @@ __.fileBackup.isPreOpen = _.switches.isActive('isPreOpen')
 # __.fileBackup.isPreOpen
 # __.fileBackup.isPreOpen
 def action(path=None,flag=None,o=None,pre=None):
-	if _.switches.isActive('BackupRecoverScan') and '1' in _.switches.values('BackupRecoverScan'):
-		bkRecoverScan(); sys.exit();
-	if _.switches.isActive('BackupRecoverScan') and '2' in _.switches.values('BackupRecoverScan'):
-		bkRecoverScan2(); sys.exit();
-	if _.switches.isActive('BackupRecoverScan') and '3' in _.switches.values('BackupRecoverScan'):
-		bkRecoverScan3(); sys.exit();
-	if _.switches.isActive('BackupRecoverScan') and '4' in _.switches.values('BackupRecoverScan'):
-		bkRecoverScan4(); sys.exit();
-	if _.switches.isActive('BackupRecoverScan') and '5' in _.switches.values('BackupRecoverScan'):
-		bkRecoverScan5(); sys.exit();
+	# if _.switches.isActive('BackupRecoverScan') and '1' in _.switches.values('BackupRecoverScan'):
+	# 	bkRecoverScan(); sys.exit();
+	# if _.switches.isActive('BackupRecoverScan') and '2' in _.switches.values('BackupRecoverScan'):
+	# 	bkRecoverScan2(); sys.exit();
+	# if _.switches.isActive('BackupRecoverScan') and '3' in _.switches.values('BackupRecoverScan'):
+	# 	bkRecoverScan3(); sys.exit();
+	# if _.switches.isActive('BackupRecoverScan') and '4' in _.switches.values('BackupRecoverScan'):
+	# 	bkRecoverScan4(); sys.exit();
+	# if _.switches.isActive('BackupRecoverScan') and '5' in _.switches.values('BackupRecoverScan'):
+	# 	bkRecoverScan5(); sys.exit();
 	# if _.switches.isActive('Files'):
 	# 	_.switches.fieldSet( 'Input', 'active', True )
 	# 	_.switches.fieldSet( 'Input', 'value', _.switches.value('Files') )
@@ -1572,238 +1572,238 @@ focus()
 _decrypt_docs = None
 doc_sep = '\n__________________________________________________________________________________\n'
 ########################################################################################
-def build2m():
-	import _rightThumb._md5 as _md5
-	b2m = _.getTable('build2m.dex')
-	if b2m: return b2m
-	fi2m =_.getText2( 'C:\\Users\\Scott\\.rt\\profile\\backup\\txt\\2m','list' )
-	bm2 = {}
-	for i in fi2m:
-		i = i.strip()
-		_.pr( i )
-		if not os.path.isfile( i ): continue
-		if _.IS( i, 'gzip' ):
-			gzip=True
-			_.decompress( i )
-		else:
-			gzip=False
-		md5 = _md5.md5File( i )
-		id = _md5.md52GUID(md5,True)
-		if gzip: _.compress( i )
-		bm2[id] = {
-			'id': id,
-			'file': None,
-			'backup': i,
-			'md5': md5,
-		}
-	_.saveTable(bm2,'build2m.dex')
-	return bm2
-b2m =None
-def bkRecoverListen(id,path):
-	global b2m
-	changed = False
-	if b2m is None: b2m = build2m()
-	if id in b2m:
-		if b2m[id]['file'] is None:
-			changed = True
-		b2m[id]['file'] = path
-	if changed:
-		_.saveTable(b2m,'build2m.dex')
+# def build2m():
+# 	import _rightThumb._md5 as _md5
+# 	b2m = _.getTable('build2m.dex')
+# 	if b2m: return b2m
+# 	fi2m =_.getText2( 'C:\\Users\\Scott\\.rt\\profile\\backup\\txt\\2m','list' )
+# 	bm2 = {}
+# 	for i in fi2m:
+# 		i = i.strip()
+# 		_.pr( i )
+# 		if not os.path.isfile( i ): continue
+# 		if _.IS( i, 'gzip' ):
+# 			gzip=True
+# 			_.decompress( i )
+# 		else:
+# 			gzip=False
+# 		md5 = _md5.md5File( i )
+# 		id = _md5.md52GUID(md5,True)
+# 		if gzip: _.compress( i )
+# 		bm2[id] = {
+# 			'id': id,
+# 			'file': None,
+# 			'backup': i,
+# 			'md5': md5,
+# 		}
+# 	_.saveTable(bm2,'build2m.dex')
+# 	return bm2
+# b2m =None
+# def bkRecoverListen(id,path):
+# 	global b2m
+# 	changed = False
+# 	if b2m is None: b2m = build2m()
+# 	if id in b2m:
+# 		if b2m[id]['file'] is None:
+# 			changed = True
+# 		b2m[id]['file'] = path
+# 	if changed:
+# 		_.saveTable(b2m,'build2m.dex')
 
-def bkRecoverScan():
-	changed = False
-	b2m = build2m()
-	dex = {}
-	for id in b2m:
-		dex[b2m[id]['backup']] = b2m[id]['id']
-	disregard = []
-	print('build2m')
-	backupLog = _.getTable('fileBackup.json')
-	print('backupLog')
-	for rec in backupLog:
-		if rec['backup'] in dex:
-			changed = True
-			disregard.append(dex[rec['backup']])
-		print(rec['file'])
-		if rec['id'] in b2m:
-			r = b2m[rec['id']]
-			if r['file'] is None:
-				changed = True
-			b2m[rec['id']]['file'] = rec['file']
-	if changed:
-		if disregard:
-			ind = {}
-			for id in b2m:
-				if not id in disregard:
-					ind[id] = b2m[id]
-			b2m = ind				
-		_.saveTable(b2m,'build2m.dex')
+# def bkRecoverScan():
+# 	changed = False
+# 	b2m = build2m()
+# 	dex = {}
+# 	for id in b2m:
+# 		dex[b2m[id]['backup']] = b2m[id]['id']
+# 	disregard = []
+# 	print('build2m')
+# 	backupLog = _.getTable('fileBackup.json')
+# 	print('backupLog')
+# 	for rec in backupLog:
+# 		if rec['backup'] in dex:
+# 			changed = True
+# 			disregard.append(dex[rec['backup']])
+# 		print(rec['file'])
+# 		if rec['id'] in b2m:
+# 			r = b2m[rec['id']]
+# 			if r['file'] is None:
+# 				changed = True
+# 			b2m[rec['id']]['file'] = rec['file']
+# 	if changed:
+# 		if disregard:
+# 			ind = {}
+# 			for id in b2m:
+# 				if not id in disregard:
+# 					ind[id] = b2m[id]
+# 			b2m = ind				
+# 		_.saveTable(b2m,'build2m.dex')
 
-def bkRecoverScan2():
-	scheduleLog = _.getTable('2024.04.20-fileBackupSchedule.json')
-	b2m = build2m()
-	dex = {}
-	for id in b2m: dex[extract_filename(__.path(b2m[id]['backup'],file=True))] = b2m[id]['id']
-	for rec in scheduleLog:
-		fi = __.path(rec['file'],file=True)
-		if fi in dex:
-			md5 = _md5.md5File( rec['file'] )
-			id = _md5.md52GUID(md5,True)
-			if md5 != dex[fi]:
-				if b2m[dex[fi]]['file'] is None:
-					bkRecoverListen(id,rec['file'])
-			file = b2m[dex[fi]]['backup']
-			if is_probable_modified_version(rec['file'],file):
-				if b2m[dex[fi]]['file'] is None:
-					b2m[dex[fi]]['file'] = rec['file']
-					_.saveTable(b2m,'build2m.dex')
+# def bkRecoverScan2():
+# 	scheduleLog = _.getTable('2024.04.20-fileBackupSchedule.json')
+# 	b2m = build2m()
+# 	dex = {}
+# 	for id in b2m: dex[extract_filename(__.path(b2m[id]['backup'],file=True))] = b2m[id]['id']
+# 	for rec in scheduleLog:
+# 		fi = __.path(rec['file'],file=True)
+# 		if fi in dex:
+# 			md5 = _md5.md5File( rec['file'] )
+# 			id = _md5.md52GUID(md5,True)
+# 			if md5 != dex[fi]:
+# 				if b2m[dex[fi]]['file'] is None:
+# 					bkRecoverListen(id,rec['file'])
+# 			file = b2m[dex[fi]]['backup']
+# 			if is_probable_modified_version(rec['file'],file):
+# 				if b2m[dex[fi]]['file'] is None:
+# 					b2m[dex[fi]]['file'] = rec['file']
+# 					_.saveTable(b2m,'build2m.dex')
 
-def extract_filename(backup_filename):
-	import re
-	match = re.search(r'\d{10}\.\d{7}-\d{4}_\d{2}_\d{2}-\d{2}_\d{2}_\d{2}-(.+)$', backup_filename)
-	if match:
-		return match.group(1)
-	return None
+# def extract_filename(backup_filename):
+# 	import re
+# 	match = re.search(r'\d{10}\.\d{7}-\d{4}_\d{2}_\d{2}-\d{2}_\d{2}_\d{2}-(.+)$', backup_filename)
+# 	if match:
+# 		return match.group(1)
+# 	return None
 
-def is_probable_modified_version(file_path, backup_path):
+# def is_probable_modified_version(file_path, backup_path):
 
 
-	try:
-		# Read and tokenize both files
-		with open(file_path, 'r', encoding='utf-8') as file:
-			file_words = file.read().split()
-			file_length = len(file_words)
+# 	try:
+# 		# Read and tokenize both files
+# 		with open(file_path, 'r', encoding='utf-8') as file:
+# 			file_words = file.read().split()
+# 			file_length = len(file_words)
 
-		with open(backup_path, 'r', encoding='utf-8') as backup:
-			backup_words = backup.read().split()
-			backup_length = len(backup_words)
+# 		with open(backup_path, 'r', encoding='utf-8') as backup:
+# 			backup_words = backup.read().split()
+# 			backup_length = len(backup_words)
 
-		# Compute the intersection and length percentage
-		common_words = set(file_words).intersection(set(backup_words))
-		word_match_percentage = (len(common_words) / len(set(backup_words))) * 100
-		length_match_percentage = (min(file_length, backup_length) / max(file_length, backup_length)) * 100
+# 		# Compute the intersection and length percentage
+# 		common_words = set(file_words).intersection(set(backup_words))
+# 		word_match_percentage = (len(common_words) / len(set(backup_words))) * 100
+# 		length_match_percentage = (min(file_length, backup_length) / max(file_length, backup_length)) * 100
 
-		# Determine if the file is a probable modified version
-		if word_match_percentage >= 80 and length_match_percentage >= 90:
-			print(f"Word Match: {word_match_percentage:.2f}%, Length Match: {length_match_percentage:.2f}%")
-			return True
-		else:
-			print(f"Word Match: {word_match_percentage:.2f}%, Length Match: {length_match_percentage:.2f}%")
-			return False
-	except Exception as e:
-		print(f"An error occurred: {e}")
-		return False
+# 		# Determine if the file is a probable modified version
+# 		if word_match_percentage >= 80 and length_match_percentage >= 90:
+# 			print(f"Word Match: {word_match_percentage:.2f}%, Length Match: {length_match_percentage:.2f}%")
+# 			return True
+# 		else:
+# 			print(f"Word Match: {word_match_percentage:.2f}%, Length Match: {length_match_percentage:.2f}%")
+# 			return False
+# 	except Exception as e:
+# 		print(f"An error occurred: {e}")
+# 		return False
 
-def bkRecoverScan3():
-	# print('bkRecoverScan3'); sys.exit();
-	b2m = build2m()
-	dex = {}
-	changed = False
-	for id in b2m:
-		dex[extract_filename(__.path(b2m[id]['backup'],file=True))] = b2m[id]
-		epoch, date_str = extract_date_from_filename(b2m[id]['backup'])
-		dex[extract_filename(__.path(b2m[id]['backup'],file=True))]['timestamp'] = epoch
-		dex[extract_filename(__.path(b2m[id]['backup'],file=True))]['date'] = date_str
-		dex[extract_filename(__.path(b2m[id]['backup'],file=True))]['mod'] = _.mod(b2m[id]['backup'])
-		dex[extract_filename(__.path(b2m[id]['backup'],file=True))]['bytes'] = _.BYTES(b2m[id]['backup'])
-		if not 'date' in b2m[id]: changed = True
-		b2m[id]['backedUp'] = float(__.path(b2m[id]['backup'],file=True).strip('-')[0])
-		b2m[id]['timestamp'] = epoch
-		b2m[id]['date'] = date_str
-		b2m[id]['mod'] = _.mod(b2m[id]['backup'])
-		b2m[id]['bytes'] = _.BYTES(b2m[id]['backup'])
-	if changed:
-		_.saveTable(b2m,'build2m.dex')
-	mod = _.getText2('C:\\Users\\Scott\\.rt\\profile\\backup\\txt\\mod','text')
-	mod = mod.strip()
-	files = mod.split('\n')
-	for path in files:
-		if not os.path.isfile(path): continue
-		path = path.strip()
-		Lfi = __.path(path,file=True)
-		if Lfi in dex:
-			if dex[Lfi]['file'] is None:
-				Lmod = _.mod(path)
-				Ldate = format_date_from_epoch(_.mod(path))
-				Lbytes = _.BYTES(path)
-				if Lbytes > 30 and Lbytes == dex[Lfi]['bytes']:
-					b2m[dex[Lfi]['id']]['file'] = path
-					_.saveTable(b2m,'build2m.dex')
-					continue
-				if Ldate == dex[Lfi]['date']:
-					b2m[dex[Lfi]['id']]['file'] = path
-					_.saveTable(b2m,'build2m.dex')
-					continue
-def bkRecoverScan4():
-	b2m = build2m()
-	found = {
-		'valid': 0,
-		'None': 0,
-	}
-	for id in b2m:
-		if b2m[id]['file'] is None:
-			found['None'] += 1
-		else:
-			found['valid'] += 1
-	_.pv(found)
-	_.pr()
-	_.pr('',_.percentageDiffIntAuto(found['valid'],found['None']),'%',c='yellow')
-def bkRecoverScan5():
-	b2m = build2m()
-	backupLog = _.getTable('fileBackup.json')
-	dex = {}
-	for rec in backupLog:
-		dex[rec['backup']] = rec
-	changed = False
-	for id in b2m:
-		if not b2m[id]['file'] is None and not b2m[id]['backup'] in dex:
-			changed = True
-			rec = backupRecoverFields(b2m[id])
-			backupLog.append(rec)
-	if changed:
-		_.saveTable(backupLog,'fileBackup.json')
-def extract_date_from_filename(backup_filename):
-	import re
-	import time
-	from datetime import datetime
-	# Extract the date and time part using regex
-	match = re.search(r'-([0-9]{4}_[0-9]{2}_[0-9]{2}-[0-9]{2}_[0-9]{2}_[0-9]{2})-', backup_filename)
-	if match:
-		date_str = match.group(1)
-		# Convert the date string to a datetime object
-		date_time_obj = datetime.strptime(date_str, '%Y_%m_%d-%H_%M_%S')
-		# Convert datetime object to epoch (float)
-		epoch = date_time_obj.timestamp()
-		return epoch, date_str
-	return None, None
+# def bkRecoverScan3():
+# 	# print('bkRecoverScan3'); sys.exit();
+# 	b2m = build2m()
+# 	dex = {}
+# 	changed = False
+# 	for id in b2m:
+# 		dex[extract_filename(__.path(b2m[id]['backup'],file=True))] = b2m[id]
+# 		epoch, date_str = extract_date_from_filename(b2m[id]['backup'])
+# 		dex[extract_filename(__.path(b2m[id]['backup'],file=True))]['timestamp'] = epoch
+# 		dex[extract_filename(__.path(b2m[id]['backup'],file=True))]['date'] = date_str
+# 		dex[extract_filename(__.path(b2m[id]['backup'],file=True))]['mod'] = _.mod(b2m[id]['backup'])
+# 		dex[extract_filename(__.path(b2m[id]['backup'],file=True))]['bytes'] = _.BYTES(b2m[id]['backup'])
+# 		if not 'date' in b2m[id]: changed = True
+# 		b2m[id]['backedUp'] = float(__.path(b2m[id]['backup'],file=True).strip('-')[0])
+# 		b2m[id]['timestamp'] = epoch
+# 		b2m[id]['date'] = date_str
+# 		b2m[id]['mod'] = _.mod(b2m[id]['backup'])
+# 		b2m[id]['bytes'] = _.BYTES(b2m[id]['backup'])
+# 	if changed:
+# 		_.saveTable(b2m,'build2m.dex')
+# 	mod = _.getText2('C:\\Users\\Scott\\.rt\\profile\\backup\\txt\\mod','text')
+# 	mod = mod.strip()
+# 	files = mod.split('\n')
+# 	for path in files:
+# 		if not os.path.isfile(path): continue
+# 		path = path.strip()
+# 		Lfi = __.path(path,file=True)
+# 		if Lfi in dex:
+# 			if dex[Lfi]['file'] is None:
+# 				Lmod = _.mod(path)
+# 				Ldate = format_date_from_epoch(_.mod(path))
+# 				Lbytes = _.BYTES(path)
+# 				if Lbytes > 30 and Lbytes == dex[Lfi]['bytes']:
+# 					b2m[dex[Lfi]['id']]['file'] = path
+# 					_.saveTable(b2m,'build2m.dex')
+# 					continue
+# 				if Ldate == dex[Lfi]['date']:
+# 					b2m[dex[Lfi]['id']]['file'] = path
+# 					_.saveTable(b2m,'build2m.dex')
+# 					continue
+# def bkRecoverScan4():
+# 	b2m = build2m()
+# 	found = {
+# 		'valid': 0,
+# 		'None': 0,
+# 	}
+# 	for id in b2m:
+# 		if b2m[id]['file'] is None:
+# 			found['None'] += 1
+# 		else:
+# 			found['valid'] += 1
+# 	_.pv(found)
+# 	_.pr()
+# 	_.pr('',_.percentageDiffIntAuto(found['valid'],found['None']),'%',c='yellow')
+# def bkRecoverScan5():
+# 	b2m = build2m()
+# 	backupLog = _.getTable('fileBackup.json')
+# 	dex = {}
+# 	for rec in backupLog:
+# 		dex[rec['backup']] = rec
+# 	changed = False
+# 	for id in b2m:
+# 		if not b2m[id]['file'] is None and not b2m[id]['backup'] in dex:
+# 			changed = True
+# 			rec = backupRecoverFields(b2m[id])
+# 			backupLog.append(rec)
+# 	if changed:
+# 		_.saveTable(backupLog,'fileBackup.json')
+# def extract_date_from_filename(backup_filename):
+# 	import re
+# 	import time
+# 	from datetime import datetime
+# 	# Extract the date and time part using regex
+# 	match = re.search(r'-([0-9]{4}_[0-9]{2}_[0-9]{2}-[0-9]{2}_[0-9]{2}_[0-9]{2})-', backup_filename)
+# 	if match:
+# 		date_str = match.group(1)
+# 		# Convert the date string to a datetime object
+# 		date_time_obj = datetime.strptime(date_str, '%Y_%m_%d-%H_%M_%S')
+# 		# Convert datetime object to epoch (float)
+# 		epoch = date_time_obj.timestamp()
+# 		return epoch, date_str
+# 	return None, None
 
-def format_date_from_epoch(epoch):
-	import time
-	from datetime import datetime
-	# Convert epoch to datetime object
-	date_time_obj = datetime.fromtimestamp(epoch)
-	# Format the datetime object to match the filename style
-	formatted_date = date_time_obj.strftime('%Y_%m_%d-%H_%M_%S')
-	return formatted_date
+# def format_date_from_epoch(epoch):
+# 	import time
+# 	from datetime import datetime
+# 	# Convert epoch to datetime object
+# 	date_time_obj = datetime.fromtimestamp(epoch)
+# 	# Format the datetime object to match the filename style
+# 	formatted_date = date_time_obj.strftime('%Y_%m_%d-%H_%M_%S')
+# 	return formatted_date
 
-def backupRecoverFields(rec):
-	return {
-        "id": rec['id'],
-        "timestamp": rec['timestamp'],
-        "file": rec['file'],
-        "backup": rec['backup'],
-        "recovered": True,
-        "mime": "text",
-        "status": 100,
-        "session": "",
-        "version": "0.0.0.1",
-        "v": 0,
-        "v1": 0,
-        "v2": 0,
-        "v3": 1,
-        "name": rec['file'].split(os.sep)[-1],
-        "flag": "log recovery"
-    }
+# def backupRecoverFields(rec):
+# 	return {
+#         "id": rec['id'],
+#         "timestamp": rec['timestamp'],
+#         "file": rec['file'],
+#         "backup": rec['backup'],
+#         "recovered": True,
+#         "mime": "text",
+#         "status": 100,
+#         "session": "",
+#         "version": "0.0.0.1",
+#         "v": 0,
+#         "v1": 0,
+#         "v2": 0,
+#         "v3": 1,
+#         "name": rec['file'].split(os.sep)[-1],
+#         "flag": "log recovery"
+#     }
 
 ########################################################################################
 
