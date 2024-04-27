@@ -198,9 +198,10 @@ def get_content(filename):
 
 #             # Insert a row of data
 #             c.execute("INSERT INTO files VALUES (?,?,?,?,?,?)", (filename, abs_path, size, created, is_dir, content))
+cnt = 0
 def index_files(c, directory, recursion=False):
+	global cnt
 	global conn
-	cnt = 0
 	for filename in os.listdir(directory):
 		try:
 			abs_path = os.path.join(directory, filename)
@@ -217,7 +218,7 @@ def index_files(c, directory, recursion=False):
 					cnt += 1
 					# Insert a row of data
 					c.execute("INSERT INTO files VALUES (?,?,?,?,?,?,?)", (filename, abs_path, size, created, modified, is_dir, content))
-					if cnt % 1000 == 0:
+					if cnt % 100 == 0:
 						conn.commit()
 						_.pr( cnt, r=1 )
 				except: pass

@@ -4,8 +4,8 @@ fieldSet=_.l.vars(focus(),__name__,__file__,appDBA);_.load();_v=__.imp('_rightTh
 import os
 def sw():
 	_.switches.register( 'Status', '-is','', isRequired=False )
-	_.switches.register( 'Compress', '-co,-en','', isRequired=False )
-	_.switches.register( 'Decompress', '-de','', isRequired=False )
+	_.switches.register( 'Compress', '-co,-do,-en','', isRequired=False )
+	_.switches.register( 'Decompress', '-de,-un','', isRequired=False )
 	_.switches.register( 'Compression', '--c','gzip zip bz2', isRequired=False )
 	_.switches.register( 'LocalFunctions', '-lf','', isRequired=False )
 	_.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name', description='Files', isRequired=False )
