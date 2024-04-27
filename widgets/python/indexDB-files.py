@@ -199,6 +199,8 @@ def get_content(filename):
 #             # Insert a row of data
 #             c.execute("INSERT INTO files VALUES (?,?,?,?,?,?)", (filename, abs_path, size, created, is_dir, content))
 def index_files(c, directory, recursion=False):
+	global conn
+	cnt = 0
 	for filename in os.listdir(directory):
 		try:
 			abs_path = os.path.join(directory, filename)
@@ -212,9 +214,12 @@ def index_files(c, directory, recursion=False):
 					modified = os.path.getmtime(abs_path)
 					is_dir = 1 if os.path.isdir(abs_path) else 0
 					content = get_content(abs_path) if is_text(abs_path) else ""
-
+					cnt += 1
 					# Insert a row of data
 					c.execute("INSERT INTO files VALUES (?,?,?,?,?,?,?)", (filename, abs_path, size, created, modified, is_dir, content))
+					if cnt % 1000 == 0:
+						conn.commit()
+						_.pr( cnt, r=1 )
 				except: pass
 		except: pass
 
@@ -241,7 +246,7 @@ def dbRename(db):
 		shutil.move(db,to)
 
 def action():
-
+	global conn
 	if _.switches.isActive('Database'):
 		db = _.switches.value('Database')
 	else:

@@ -3168,10 +3168,48 @@ alias batuu.="/opt/rightthumb-widgets-v0/widgets/bash/srv/webdav/vps-auto_login.
 alias batuu.u="/opt/rightthumb-widgets-v0/widgets/bash/srv/webdav/vps-batuu_upload.sh"
 alias pip3.="pip3 install --upgrade --no-cache-dir --break-system-packages"
 alias flushdns="sudo systemctl restart systemd-resolved"
-
 alias set.="(set -o posix; set)"
-
 # echo 000-018
+
+
+#####################################################################
+
+# TMUX Session Management
+alias tmux.l="tmux list-sessions"
+alias tmux.k="tmux kill-session -t"
+alias tmux.k.a="tmux list-sessions | grep -v attached | cut -d: -f1 | xargs -I {} tmux kill-session -t {}"
+alias tmux.k.all="tmux list-sessions | grep -v attached | cut -d: -f1 | xargs -I {} tmux kill-session -t {}"
+alias tmux.a="tmux attach-session -t"
+alias tmux.d="tmux detach"
+alias tmux.s="tmux new-session -s"
+
+# TMUX Window and Pane Management
+alias tmux.s.h="tmux split-window -h"    # Split the current pane horizontally.
+alias tmux.s.v="tmux split-window -v"    # Split the current pane vertically.
+alias tmux.s.p="tmux select-pane -t"     # Select a specific pane.
+alias tmux.s.w="tmux select-window -t"   # Select a specific window.
+alias tmux.s.l="tmux select-layout"      # Select a predefined layout for the current window.
+
+# TMUX Interaction
+alias tmux.s.k="tmux send-keys -t"       # Send keys to a specific pane, simulating keyboard input.
+	# tmux send-keys -t mysession:0.1 'ls -l' C-m
+	    # C-m is the Enter key.
+
+###################################
+
+alias tmux.t.4="/opt/rightthumb-widgets-v0/widgets/bash/tmux/templates/4_Square.sh"
+alias tmux.t.q="/opt/rightthumb-widgets-v0/widgets/bash/tmux/templates/Quadrants.sh"
+alias tmux.t.s="/opt/rightthumb-widgets-v0/widgets/bash/tmux/templates/Single.sh"
+alias tmux.t.1="/opt/rightthumb-widgets-v0/widgets/bash/tmux/templates/Single.sh"
+alias tmux.t.h="/opt/rightthumb-widgets-v0/widgets/bash/tmux/templates/Horizontal_Stripes.sh"
+alias tmux.t.13="/opt/rightthumb-widgets-v0/widgets/bash/tmux/templates/One_Three.sh"
+alias tmux.t.top="/opt/rightthumb-widgets-v0/widgets/bash/tmux/templates/Top_Large_Pane_with_Three_Columns_Below.sh"
+alias tmux.t.t="/opt/rightthumb-widgets-v0/widgets/bash/tmux/templates/Top_Large_Pane_with_Three_Columns_Below.sh"
+
+#####################################################################
+
+
+
 
 clear
 # get_time_difference

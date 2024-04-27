@@ -1242,3 +1242,4 @@ _.v.showAll = not _.switches.isActive('ShowSome')
 if __name__ == '__main__':
 	action()
 
+# SELECT SUM(bytes) AS total_bytes FROM files WHERE path LIKE '%backup\txt%';

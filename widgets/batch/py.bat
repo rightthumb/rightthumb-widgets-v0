@@ -19,7 +19,7 @@ if [%1] == [] (
 
 :stuff
 if exist "%python%\%1.py" (
-    %py% %*
+    %py% "%python%\%1.py"
 ) else (
     @REM type D:\.rightthumb-widgets\widgets\python\0-index.list  --c + %* | p. pipe-cleaner -ext
     @REM CALL p. py-finder  + $@ -percentage

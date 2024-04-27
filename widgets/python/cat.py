@@ -213,12 +213,14 @@ def printFile(i,filepath):
 			if not _.switches.isActive('Clean'):
 				if __.path(filepath).startswith( _v.pp+os.sep+'configs'+os.sep ):
 					if _.switches.isActive('JustPath'):
+						__.fileCount+=1
 						_.pr( __.path(filepath), c='cyan' )
 					else:
 						_.colorThis( [filepath.replace('-',os.sep)], 'cyan' )
 						_.pr()
 				else:
 					if _.switches.isActive('JustPath'):
+						__.fileCount+=1
 						_.pr( __.path(filepath), c='cyan' )
 					else:
 						_.colorThis( [filepath], 'cyan' )
@@ -227,10 +229,13 @@ def printFile(i,filepath):
 		else:
 			if not _.switches.isActive('Clean'):
 				if _.switches.isActive('JustPath'):
+					__.fileCount+=1
 					_.pr( __.path(filepath), c='cyan' )
 				else:
 					_.colorThis( ['Encrypted:',filepath], 'red' )
 					_.pr()
+__.fileCount = 0
+__.fileTotal = 0
 def action():
 	focus()
 	global Function
@@ -246,6 +251,7 @@ def action():
 	if type(files[0]) == list:
 		files = files[0]
 	for i,filepath in enumerate(files):
+		__.fileTotal+=1
 		filepath=_.zZip(filepath)
 		maxLEN = 5
 		midID = 'FCA4D034-357B-444E-B193-328E8E6EA011'
@@ -430,7 +436,10 @@ def action():
 				if vVv.total == vVv.print:
 					_.cp( [ '', _.addComma(vVv.total) ], 'yellow' )
 				else:
-					_.cp( [ '', _.addComma(vVv.print), 'of', _.addComma(vVv.total), 'lines' ], 'yellow' )
+					if _.switches.isActive('JustPath'):
+						_.cp( [ '','Criteria', _.addComma(__.fileCount), 'of', _.addComma(__.fileTotal), 'files' ], 'yellow' )
+					else:
+						_.cp( [ '', _.addComma(vVv.print), 'of', _.addComma(vVv.total), 'lines' ], 'yellow' )
 	_.cleanUnzip()
 
 

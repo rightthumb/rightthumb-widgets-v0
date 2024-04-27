@@ -13,7 +13,7 @@ from datetime import datetime as dt, timedelta
 from datetime import date
 ##################################################
 MINI_ADS = True
-SHOW_ADS = False
+SHOW_ADS = True
 ##################################################
 __.showLine_quoteFix=True
 ##################################################
@@ -60,6 +60,85 @@ __.showLine_quoteFix=True
 # except Exception as e:
 #   pass
 
+
+
+
+def process_pipe_data(data):
+	import datetime
+	import uuid
+	import json
+	original_type = type(data)
+
+	if type(data) in (list, tuple, set):
+		data = '\n'.join(data)
+	elif type(data) == str:
+		pass
+	else:
+		return data
+	# Check if the data is likely text or binary
+	# Consider it text if more than 95% of characters are printable
+	is_text = sum(c.isprintable() or c.isspace() for c in data) / len(data) > 0.95
+
+	if is_text:
+		thresh = 5
+		# Remove non-printable characters if it's text from the threshold
+		if len(data) > thresh:
+			data = ''.join(c if c.isprintable() or c.isspace() else '' for c in data[:thresh]) + data[thresh:]
+		else:
+			data = ''.join(c if c.isprintable() or c.isspace() else '' for c in data)
+
+
+	# Convert cleaned data back to original type if possible
+	if original_type is list:
+		return data.split('\n')
+		return data.encode('utf-8')
+	elif original_type in (list, tuple, set):
+		return original_type(data.split('\n'))
+	elif original_type is dict:
+		return json.loads(data)
+	return data
+
+
+
+
+
+
+def call(python_file):
+	from os import sep
+	path = _v.py+sep+python_file
+	import importlib
+	module = importlib.import_module(path)
+	globals().update({name: getattr(module, name) for name in dir(module) if not name.startswith('_')})
+
+
+def build_documentation_tables(string):
+	snip_table = {}
+	doc_lines = []
+	_code = regImp( __.appReg, '_rightThumb._auditCodeBase' )
+	for i, chr in enumerate(string):
+		if i in  _code.imp.validator.identity['identity']:
+			o = i
+			c = _code.imp.validator.identity['location']['open'][o]
+
+			# Assuming the need to capture snippets based on certain characters
+			if chr == '(' or chr == '[':
+				snip = string[o:c]
+				doc_lines.append(snip)
+
+				# Removing the first occurrence of snip from string
+				string = string.replace(snip, '', 1)
+
+				snip_table[o] = {
+					'open': o,
+					'close': c,
+					'o': o,
+					'c': c,
+					'chr': chr,
+					'string': string,
+					'snip': snip
+				}
+
+	return snip_table, doc_lines
 '''
 __.imp('simplejson').loads(var)
 simplejson = __.imp('simplejson')
@@ -162,8 +241,6 @@ def fometa(path,end=''):
 		mPath = folder+os.sep+'.folder.meta'+end
 		if getText( mPath, raw=True ).strip().startswith('{'): meta = getTable2( mPath )
 		else: meta = getYML( mPath )
-		if not meta: e('invalid meta',mPath)
-		# pv(meta)
 		meta['folder']=folder
 		return meta
 	return {}
@@ -171,8 +248,15 @@ def fometa(path,end=''):
 
 def json_(data,simp=False,s=None):
 	if not s is None: simp=s;
-	try: simplejson = __.imp('simplejson')
-	except: import simplejson
+	try:
+		import simplejson
+		json = simplejson
+	except:
+		pass
+	try:
+		import json
+	except ImportError:
+		json = simplejson
 	if type(data) == str:
 		return simplejson.loads(data)
 	if not simp:
@@ -196,7 +280,7 @@ def print_pr(text):
 		else:
 			replace=True
 
-		
+
 		if replace:
 			line=line.replace('print(','_.pr(')
 		line=line.replace('def _.pr(', 'def print(')
@@ -322,8 +406,15 @@ def print_(*args,p=None,c=None,pad=3,g=None,end=None,pvs=None,pv=None,json=None,
 	else: rint=True;
 
 	if json:
-		try: simplejson = __.imp('simplejson')
-		except: import simplejson
+		try:
+			import simplejson
+			json = simplejson
+		except:
+			pass
+		try:
+			import json
+		except ImportError:
+			json = simplejson
 		args[0]=simplejson.dumps(args[0], indent=4, sort_keys=False, default=str);
 		if rint:
 			print(args[0])
@@ -340,11 +431,11 @@ def print_(*args,p=None,c=None,pad=3,g=None,end=None,pvs=None,pv=None,json=None,
 		else:
 			if not end is None and not end == '\r':   end=None
 		if pvs and not p: return printVarColor_OLD(args[0])
-		
+
 		if pvs:
 			if type(args[0]) == str:
 				return printVarSimpleFake(args[0])
-				
+
 			try:
 				if type(args[0]) == dict or type(args[0]) == list: return printVarSimple(args[0])
 
@@ -352,8 +443,15 @@ def print_(*args,p=None,c=None,pad=3,g=None,end=None,pvs=None,pv=None,json=None,
 
 		if pv: return printVar(args[0])
 		if json:
-			try: simplejson = __.imp('simplejson')
-			except: import simplejson
+			try:
+				import simplejson
+				json = simplejson
+			except:
+				pass
+			try:
+				import json
+			except ImportError:
+				json = simplejson
 			args[0]=simplejson.dumps(args[0], indent=4, sort_keys=False, default=str);
 		if not line is None and line:
 			if not lineLen is None:
@@ -378,15 +476,18 @@ def print_(*args,p=None,c=None,pad=3,g=None,end=None,pvs=None,pv=None,json=None,
 		elif p: rint=True;
 		elif not p: rint=False;
 		else: rint=True;
+		_line__ = ''
 		if rint:
 			if not end is None:
 				if not lineLen is None:
-					print( linePrint(txt=' ',p=0,minus=lineMinus) , end=end ); print( prn, end=end );
+					_line__ = linePrint(txt=' ',p=0,minus=lineMinus)
+					print( _line__ , end=end ); print( prn, end=end );
 				else:
-					print( linePrint(txt=' ',p=0,minus=lineMinus,length=lineLen) , end=end ); print( prn, end=end );
+					_line__ = linePrint(txt=' ',p=0,minus=lineMinus,length=lineLen)
+					print( _line__, end=end ); print( prn, end=end );
 			# if not end is None: print( '                                                                                        ' , end=end ); print( prn, end=end );
 			else: print( prn );
-		print_ed.append(prn)
+		print_ed.append({'prn':prn, 'line': _line__ })
 		return prn
 	except Exception as e:
 		return ''
@@ -394,7 +495,7 @@ def print_(*args,p=None,c=None,pad=3,g=None,end=None,pvs=None,pv=None,json=None,
 fo_fi2=[]
 def fo2( folder=None, r=False, script=None, trigger=None, test=None, first=True ):
 	'''
-	#n)--> fo 
+	#n)--> fo
 
 	#n)--> trigger: fo_fi2.append(trigger(path))
 	#n)-->    test: if test(path): _add_
@@ -412,14 +513,14 @@ def fo2( folder=None, r=False, script=None, trigger=None, test=None, first=True 
 	if first: fo_fi2=[];
 	if not os.path.isdir(folder) and not os.path.isfile(folder): return fo_fi2;
 	if not os.path.isdir(folder) and os.path.isfile(folder): folder = __.path(folder,pop=True)
-	
+
 	try: files=os.listdir(folder)
 	except Exception as ee: return fo_fi2
 	for item in files:
 		path=folder+os.sep+item; path=__.path(path);
 
 		if not test is None and test(path): _fo_fi_add(path,trigger,script)
-			
+
 		if os.path.isfile(path) or os.path.isdir(path):
 			if test is None: _fo_fi_add(path,trigger,script)
 			if r and os.path.isdir(path): fo2(path,r,script,trigger,test,first=False);
@@ -669,7 +770,7 @@ def tab(val,n=None, t='    ', cnt=False, add=None,  s=False):
 
 	if cnt:
 		p=shortest(lines)
-		
+
 
 
 
@@ -772,7 +873,7 @@ def over(txt,note='',r=None,l=None):
 				s+=ch
 			else:
 				s+=note[i]
-			
+
 			if not ch in '{-}':
 				i+=1
 		ss=s
@@ -807,7 +908,7 @@ def ddelim( txt=None, what='szYZhw', d=None, indices=None, f=1, r=-1 ):
 		sys.exit()
 
 	specified=1
-	
+
 	if d is None:
 		specified=0
 		# d='-'
@@ -821,7 +922,7 @@ def ddelim( txt=None, what='szYZhw', d=None, indices=None, f=1, r=-1 ):
 	if p:
 		cp(['~',what,len(txt)],'cyan')
 		cp( [specified,txt,what,d], 'white' )
-	
+
 	if specified:
 		pass
 	elif what in '{} [] () <>'.split(' '):
@@ -968,7 +1069,7 @@ def get_supporting_line(data,i,b=';',rev={}):
 							ii=len(data)
 				# print_(ii,c,y)
 				# sys.exit()
-		
+
 	return pre+data[i:ii]
 
 def idlen(_len):
@@ -1037,7 +1138,7 @@ def ephemeral_strip(data,comment='#',script=None):
 	return data
 
 def qindex( data, comment='#' ):
-	''' find ids of all quotes including triplet avoiding comments 
+	''' find ids of all quotes including triplet avoiding comments
 
 	def print_all_quotes():
 		data = '\n'.join(_.isData())
@@ -1083,9 +1184,9 @@ def vindex(  code, i=0, esc='\\', n='', v=True,r=False,both=True, sort=True, isA
 	if type(code)==list:
 		code=''.join(code)
 	at=i
-		
+
 	table={}
-	
+
 	table['brackets'] = {}
 	table['brackets']['i']=0
 	table['brackets']['open'] = {}
@@ -1314,7 +1415,7 @@ def find_all_do(a_str, sub):
 		start += len(sub)
 
 # def substring_range( text, o, c ):
-	
+
 
 ######################################################
 
@@ -1339,7 +1440,7 @@ def bAlias(subject):
 			global _bm
 			if _bm is None:
 				import _rightThumb._bookmarks as _bm
-			
+
 			made={}
 			if 'wprofile' in _v.config_hash:
 				made['h'] = 1
@@ -1606,7 +1707,7 @@ pandas = None
 _sd = None
 
 def date_diff_dic(one,two=time.time()):
-	
+
 	def date_diff_in_seconds(dt2, dt1):
 		timedelta = dt2 - dt1
 		return timedelta.days * 24 * 3600 + timedelta.seconds
@@ -1640,8 +1741,15 @@ def date_diff_dic(one,two=time.time()):
 	# print("\n%d days, %d hours, %d minutes, %d seconds" % dhms_from_seconds(date_diff_in_seconds(two, one)))
 	txt='{ "d": %d, "h": %d, "m": %d,  "s": %d }' % dhms_from_seconds(date_diff_in_seconds(two, one))
 	# dic=dict("{ 'd': %d, 'h': %d, 'm': %d,  's': %d }" % dhms_from_seconds(date_diff_in_seconds(two, one)))
-	try: simplejson = __.imp('simplejson')
-	except: import simplejson
+	try:
+		import simplejson
+		json = simplejson
+	except:
+		pass
+	try:
+		import json
+	except ImportError:
+		json = simplejson
 	dic=simplejson.loads(txt)
 	# print(dic)
 	# print((dic))
@@ -1838,7 +1946,7 @@ def isDate( theDate=None, record={}, tz=None, q=True, f=None,w=None,what=None ):
 		global _tz
 		if _tz is None:
 			import _rightThumb._tz as _tz
-		
+
 		if not type(hasTZ) == bool:
 			if not hasTZ == local_tz:
 				epoch = _tz.convert( epoch, hasTZ, local_tz )
@@ -1862,7 +1970,7 @@ def isDate( theDate=None, record={}, tz=None, q=True, f=None,w=None,what=None ):
 						hasTZ = theDate[-5:].replace(':','')
 				local_tz = hasTZ
 
-	
+
 
 	if not epoch:
 		return record
@@ -1871,7 +1979,7 @@ def isDate( theDate=None, record={}, tz=None, q=True, f=None,w=None,what=None ):
 	if pandas is None:
 		if q:
 			try:
-				#  pandas  takes .5 seconds to load 
+				#  pandas  takes .5 seconds to load
 				import pandas
 			except Exception as e:
 				pass
@@ -2110,7 +2218,7 @@ def aggregate_trigger():
 		return None
 	script = ' '.join( switches.values('Aggregate') )
 	__.aggregate.obj.code( script, isSwitch=True )
-	
+
 
 
 
@@ -2191,7 +2299,7 @@ class AGGREGATE:
 					indexes.functions[rec['txt']].append(rec)
 				else:
 					indexes.functions['other'].append(rec)
-				
+
 			elif rec['status'] and 'variable' in rec['l']:
 				if not '?' in rec['txt'] or ( '?' in rec['txt'] and not rec['txt'].lower().split('?')[0]+'?' in __.aggregate.prefixes):
 					indexes.table.append( rec )
@@ -2218,7 +2326,7 @@ class AGGREGATE:
 					indexes.otherVar.append( rec )
 			else:
 				indexes.other.append( rec )
-		
+
 		tmp_records = []
 		for fXn in __.aggregate.fn.order:
 			for rec in indexes.functions[ fXn ]:
@@ -2229,7 +2337,7 @@ class AGGREGATE:
 
 		for rec in indexes.table:
 			tmp_records.append(rec)
-		
+
 		for rec in indexes.otherVarQ:
 			tmp_records.append(rec)
 
@@ -2288,8 +2396,8 @@ class AGGREGATE:
 			self.index[rec['i']] = rec
 
 			if rec['status'] and 'function' in rec['l']:
-				self.functions.index[rec['i']] = rec 
-				
+				self.functions.index[rec['i']] = rec
+
 			elif rec['status'] and 'variable' in rec['l']:
 				if not '?' in rec['txt'] or ( '?' in rec['txt'] and not rec['txt'].lower().split('?')[0]+'?' in __.aggregate.prefixes):
 					self.columns.table[rec['i']] = rec
@@ -2341,7 +2449,7 @@ class AGGREGATE:
 			addSwitch = s
 		if label is None:
 			addAll = True
-		
+
 		records = []
 		toProcess = []
 		if addAll:
@@ -2391,7 +2499,7 @@ class AGGREGATE:
 					indexes.functions[rec['txt']].append(rec)
 				else:
 					indexes.functions['other'].append(rec)
-				
+
 			elif rec['status'] and 'variable' in rec['l']:
 				if not '?' in rec['txt'] or ( '?' in rec['txt'] and not rec['txt'].lower().split('?')[0]+'?' in __.aggregate.prefixes):
 					indexes.table.append( rec )
@@ -2418,7 +2526,7 @@ class AGGREGATE:
 					indexes.otherVar.append( rec )
 			else:
 				indexes.other.append( rec )
-		
+
 		tmp_records = []
 
 		for fXn in __.aggregate.fn.order:
@@ -2430,7 +2538,7 @@ class AGGREGATE:
 
 		for rec in indexes.table:
 			tmp_records.append(rec)
-		
+
 		for rec in indexes.otherVarQ:
 			tmp_records.append(rec)
 
@@ -2452,7 +2560,7 @@ class AGGREGATE:
 		combine_records = []
 		for rec in tmp_records:
 			combine_records.append(rec)
-		
+
 		# print_()
 		# # print_( combine_records )
 		# print_()
@@ -2465,7 +2573,7 @@ class AGGREGATE:
 		# print_( 'self.lasting:', self.lasting )
 		# sys.exit()
 		self.cache.records[self.last] = combine_records
-		
+
 		return combine_records
 
 
@@ -2524,7 +2632,7 @@ class AGGREGATE:
 					last2 = res
 					cmds[last][res] = {}
 
-			
+
 			for f in fields:
 				if not f in formating:
 					formating[f] = {}
@@ -2547,9 +2655,9 @@ class AGGREGATE:
 		formating = self.formatGen( label=label, addSwitch=addSwitch, addAll=addAll, s=s )
 		if not type(fields) is list:
 			fields = [fields]
-		
+
 		try:
-			
+
 
 
 
@@ -2568,12 +2676,12 @@ class AGGREGATE:
 						if formating[f]['?size']:
 							fm = list(formating[f]['?size'].keys())[0]
 							return reFormatSize( str(data)+fm )
-						
+
 						# print_( formatSize( int(data) ) )
 						return formatSize( int(data) )
 					if '?bytes' in formating[f]:
 						return unFormatSize( data )
-		
+
 					if '?comma' in formating[f]:
 						return addComma( data )
 
@@ -2581,9 +2689,9 @@ class AGGREGATE:
 
 		except Exception as e:
 			return data
-					
 
-		
+
+
 
 		return data
 
@@ -2739,8 +2847,15 @@ def autoComplete( table, prompt='> ' ):
 
 def getCryptTable( theFile, db=False, bank=False, index=False, temp=False, free=False, password=None ):
 	if os.path.isfile(theFile): vv.opened_file_me[theFile] = os.path.getmtime( theFile );
-	try: simplejson = __.imp('simplejson')
-	except: import simplejson
+	try:
+		import simplejson
+		json = simplejson
+	except:
+		pass
+	try:
+		import json
+	except ImportError:
+		json = simplejson
 	global _vault
 	global shutil
 	global _md5
@@ -2795,10 +2910,10 @@ def getCryptTable( theFile, db=False, bank=False, index=False, temp=False, free=
 		# import bigjson
 		with open(the_temp_file,'r', encoding="latin-1") as json_file:
 			json_data = simplejson.load(json_file)
-		
+
 		shutil.copyfile( file0, the_temp_file )
 		os.unlink(the_temp_file)
-		
+
 		return json_data
 
 
@@ -2815,8 +2930,15 @@ def getCryptTable( theFile, db=False, bank=False, index=False, temp=False, free=
 def saveCryptTable( rows, theFile, db=False, bank=False, index=False, temp=False, free=False, indentCode=True, sort_keys=False, archive=False, p=1, password=None, me=0 ):
 	HD.chmod(theFile)
 
-	try: simplejson = __.imp('simplejson')
-	except: import simplejson
+	try:
+		import simplejson
+		json = simplejson
+	except:
+		pass
+	try:
+		import json
+	except ImportError:
+		json = simplejson
 	global _vault
 	global shutil
 	global _md5
@@ -2863,7 +2985,7 @@ def saveCryptTable( rows, theFile, db=False, bank=False, index=False, temp=False
 		dataDump = simplejson.dumps(rows, indent=4, sort_keys=sort_keys, default=str)
 	else:
 		dataDump = simplejson.dumps(rows, sort_keys=False, default=str)
-	
+
 	if archive:
 		import _rightThumb._md5 as _md5
 
@@ -2881,7 +3003,7 @@ def saveCryptTable( rows, theFile, db=False, bank=False, index=False, temp=False
 			lastMD5 = _md5.md5File( file0 )
 
 			backupFile = _v.stmp + _v.slash+'__archive_temp__' + theFileLabel + '__' + genUUID() + '.json'
-			
+
 
 
 
@@ -2896,7 +3018,7 @@ def saveCryptTable( rows, theFile, db=False, bank=False, index=False, temp=False
 	with open( the_temp_file, 'rb' ) as fIn:
 		with open( file0 , 'wb' ) as fOut:
 			pyAesCrypt.encryptStream(fIn, fOut, password, bufferSize)
-	
+
 	shutil.copyfile( file0, the_temp_file )
 	os.unlink(the_temp_file)
 
@@ -2914,7 +3036,7 @@ def saveCryptTable( rows, theFile, db=False, bank=False, index=False, temp=False
 		if not shouldDocument:
 			if os.path.isfile( backupFile ):
 				os.remove( backupFile )
-		
+
 		if shouldDocument:
 			md5Table = getTable( 'table_archive_log.json' )
 			found = False
@@ -3128,7 +3250,7 @@ def isCrypt(path):
 			return False
 
 def isGz(path):
-	if IS(path,'1F 8B 08 08'): return True  
+	if IS(path,'1F 8B 08 08'): return True
 	else: return False
 
 def isBz2(path):
@@ -3384,7 +3506,7 @@ def get_change(current, previous):
 		p = previous
 	else:
 		p = current
-		c = previous     
+		c = previous
 
 	try:
 		return (abs(c - p) / p) * 100.0
@@ -3547,7 +3669,7 @@ def modify_timestamp( stamp ):
 	parts = d.split(' ')
 	day = parts[0]
 	tip = parts[1].split(':')
-	
+
 	if int(tip[0]) > 12:
 		tip[0] = int(tip[0]) - 12
 		ap = 'PM'
@@ -3558,7 +3680,7 @@ def modify_timestamp( stamp ):
 	else:
 		f = day + ' ' + str(tip[0])+':'+str(tip[1])+':'+str(tip[2])+ ' '+ ap
 	return f
-	
+
 def changeC_END():
 	PowerShell_bashrc_name_break_fix()
 def changeC_START():
@@ -3599,7 +3721,7 @@ def getDOWromEpoch(theDate):
 
 def dow(theDate):
 	return dowConvert(getDOWromEpoch(theDate))
-	
+
 def dowConvert(dow):
 	result = ''
 	if dow == 1:
@@ -3682,7 +3804,7 @@ def dicString( var, path ):
 	return var + "['" + "']['".join( path.split('.') )+"']"
 
 # def file_language(file):
-	
+
 
 # import inspect
 # x = inspect.getargspec(SSHTunnelForwarder)
@@ -3826,7 +3948,7 @@ def color( strings='', c='?', b=None, shouldPrint=True, attr=None,       p=None 
 			result = str(result,'iso-8859-1')
 
 	return result
-	
+
 
 def factor( data, f=None, threshold=51, count=1 ):
 	records = flattenInt(data,r=1,end='cnt')
@@ -3848,8 +3970,8 @@ def factor( data, f=None, threshold=51, count=1 ):
 							# 'records': records[x],
 
 			}
-		
-		
+
+
 		single[x]['last'] = percentageDiffAuto( records[x][0]['value'], records[x][  len(records[x])-1  ]['value'], isFloat=True, rnd=2 )
 		# print_( "single[x]['last']", single[x]['last'] )
 		# sys.exit()
@@ -3878,7 +4000,7 @@ def factor( data, f=None, threshold=51, count=1 ):
 					single[x]['diff_fl'] = percentageDiffAuto( single[x]['first'], records[x][i]['value'], isFloat=True, rnd=2 )
 					# print_( "single[x]['first']", single[x]['first'] )
 					# print_( "single[x]['diff_fl']", single[x]['diff_fl'] )
-				
+
 				last = records[x][i]['value']
 			# lastD = drop
 			# print_(y)
@@ -3966,7 +4088,7 @@ class dt:
 		result = str( dateAdd( self.date, '-', duration ) )
 		self.load( result+'@'+self.time )
 		return self
-	
+
 	def subtract( self, duration, months=False, years=False ):
 		if months:
 			return self.subtractMonths(duration)
@@ -4055,13 +4177,20 @@ def isData( data=None, focus=None, pipeClean=False, required=False,     r=None, 
 		for sw in __.isData_Switches:
 			if not sw == 'Files': return switches.values(sw)
 		if data is None and switches.isActive('Paste-isData-json'):
-			try: simplejson = __.imp('simplejson')
-			except: import simplejson
+			try:
+				import simplejson
+				json = simplejson
+			except:
+				pass
+			try:
+				import json
+			except ImportError:
+				json = simplejson
 			d=getClip().strip()
 			return simplejson.loads(d)
 		elif data is None and switches.isActive('Paste-isData'): return getClip().split('\n')
-		
-		
+
+
 		def _isData_(tst):
 			global myFileLocation_Files
 			# if not tst and pipe_surfing(): tst = pipe_surfing()
@@ -4085,7 +4214,7 @@ def isData( data=None, focus=None, pipeClean=False, required=False,     r=None, 
 		if not c is None: pipeClean=c;
 		if not r is None: required = r;
 		# pr('here',data,c='gray')
-		
+
 		if data is None:
 			if pipeClean:
 				pipeCleaner(0)
@@ -4151,7 +4280,7 @@ def isData( data=None, focus=None, pipeClean=False, required=False,     r=None, 
 
 
 
-				
+
 
 		if r:
 			if type(data) == bool:
@@ -4165,13 +4294,13 @@ def isData( data=None, focus=None, pipeClean=False, required=False,     r=None, 
 				return _isData_([])
 			if not data:
 				return _isData_([])
-		
+
 		return _isData_(data)
 	except: e('Data src missing','possibly: -f')
 
 def payloadCache( data, file=None, theFocus=None ):
 	# _.payloadCache( saveFile, __file__, focus() )
-	
+
 	if theFocus is None:
 		theFocus = __.appReg
 	if file is None:
@@ -4203,7 +4332,7 @@ def prep4JSON(d, to_delete=None):
 					autoFindKeys_temp.append( k )
 				elif 'method' in str(t):
 					autoFindKeys_temp.append( k )
-				
+
 			for k, v in d.items():
 				autoFindKeys(v)
 		elif isinstance(d, list):
@@ -4242,7 +4371,7 @@ def delete_keys_from_dict(d, to_delete=None):
 					autoFindKeys_temp.append( k )
 				elif 'method' in str(t):
 					autoFindKeys_temp.append( k )
-				
+
 			for k, v in d.items():
 				autoFindKeys(v)
 		elif isinstance(d, list):
@@ -4301,7 +4430,7 @@ def fileFolder( path, slash = _v.slash, py=False ):
 	file = p.pop()
 	if py and ( file == '__init__.py' or file == '__init__.pyc' ):
 		file = p.pop()
-		
+
 	return { 'file': file, 'folder': slash.join(p) }
 
 
@@ -4351,7 +4480,7 @@ def stringType( string, mini=True ):
 			result[number][count] += 1
 		else:
 			result[special][count] += 1
-	
+
 	result[upper][percentage] = percentageDiffIntAuto( result[upper][count], result[total] )
 	result[lower][percentage] = percentageDiffIntAuto( result[lower][count], result[total] )
 	result[number][percentage] = percentageDiffIntAuto( result[number][count], result[total] )
@@ -4565,7 +4694,7 @@ def getDriveID( drive, fail_isLetter=False ):
 	# print_(drive)
 
 	def getDriveID_clean( driveID ):
-		
+
 		driveID = driveID.replace(' ','')
 		driveID = driveID.replace('\n','')
 		driveID = driveID.replace('\r','')
@@ -4642,7 +4771,7 @@ def folderProfileAttribute( folder, info ):
 				os.unlink(saveTo)
 			folderProfileAttribute( folder, info )
 			return None
-			
+
 
 		if record[what] == {}:
 			record[what][app] = {}
@@ -4653,7 +4782,7 @@ def folderProfileAttribute( folder, info ):
 			record[what][app] = {}
 			record[what][app][epoch] = info
 			saveTable2( record, saveTo )
-			
+
 		else:
 			for key in list( record[what][app].keys() ):
 				same = False
@@ -4661,7 +4790,7 @@ def folderProfileAttribute( folder, info ):
 				for fKey in list( info.keys() ):
 					if not fKey == 'factors':
 						if fKey in record[what][app][key] and info[fKey]  ==  record[what][app][key][fKey]:
-							
+
 							same = True
 						else:
 							# print_( 'failed', fKey )
@@ -4702,7 +4831,7 @@ def folderProfileAttribute( folder, info ):
 """
 {
 	'factors': {
-					
+
 					'Text': False,
 					'Binary': False,
 					'Extensions': False,
@@ -4713,7 +4842,7 @@ def folderProfileAttribute( folder, info ):
 					'PlusClose': False,
 					'Plus': False,
 					'Minus': False,
-					
+
 					'Pluses': [],
 					'Minuses': [],
 	},
@@ -4772,7 +4901,7 @@ def pDiff( one, two, use=None,r=None ):
 	if not use is None:
 		use = use.lower()
 	if not r is None:
-		
+
 		a = percentageDiffInt(one,two,rnd=r,isFloat=True)
 		b = percentageDiffInt(two, one,rnd=r,isFloat=True)
 	else:
@@ -4801,7 +4930,7 @@ def pDiff2( one, two, use=None,r=None ):
 	if not use is None:
 		use = use.lower()
 	if not r is None:
-		
+
 		a = percentageDiff(one,two,rnd=r,isFloat=True)
 		b = percentageDiff(two, one,rnd=r,isFloat=True)
 	else:
@@ -4825,14 +4954,14 @@ def pDiff2( one, two, use=None,r=None ):
 	elif '3' in use or 's' in use or 'b' in use or 'two' in use:
 		return b
 
-	
+
 def clean_dic( dic, omit ):
 	global traverse_dic_research
 	if not type(omit) == list:
 		omit = [omit]
 	traverse_dic_research['key_has'] = []
 	traverse_dic( dic, config={ 'key_has': omit } )
-	
+
 	print_( 'key_has len:', len(traverse_dic_research['key_has']) )
 	for x in traverse_dic_research['key_has']:
 		print_(x)
@@ -4856,7 +4985,7 @@ def traverse_dic( data=None, config={} ):
 		# data = dict((name, getattr(data, name)) for name in dir(data) if not name.startswith('__'))
 	# del traverse_dic_research
 	traverse_dic_research = {  'return': None, 'index': {}, 'fields': [], 'spent': [], 'type': {}  }
-	
+
 	if 'inDic' in config:
 		traverse_dic_research['inDic'] = []
 
@@ -4896,7 +5025,7 @@ def traverse_obj( data=None, config={}, parents=[], parentsI=[],  ):
 
 
 
-			
+
 			traverse_obj( row, config, np, npi )
 	elif type(data) == dict:
 		for key in data.keys():
@@ -4921,7 +5050,7 @@ def traverse_obj( data=None, config={}, parents=[], parentsI=[],  ):
 					traverse_dic_research['type'][typeX][TeMP] = {}
 			np = parents + [key]
 			npi = parentsI + [key]
-			
+
 
 
 			if 'inDicI' in config.keys() and  type(data[key]) == str and config['inDicI'] in data[key].lower():
@@ -4934,7 +5063,7 @@ def traverse_obj( data=None, config={}, parents=[], parentsI=[],  ):
 
 
 			if 'inDic' in config.keys() and  type(data[key]) == str and config['inDic'] in data[key].lower():
-				
+
 				if not str(np) in traverse_dic_research['inDic_spent']:
 					traverse_dic_research['inDic_spent'].append(str(np))
 					traverse_dic_research['inDic'].append( parents + [key] )
@@ -4948,7 +5077,7 @@ def traverse_obj( data=None, config={}, parents=[], parentsI=[],  ):
 				for parent in config['returnFields'][key]:
 					if parent == np:
 						traverse_dic_research['returnFields'].append({  'data':  data[key], 'parents': np, 'parentsI': npi,  })
-				
+
 
 			if 'find_field' in config.keys() and  config['find_field'] == key:
 				traverse_dic_research['return'] = data[key]
@@ -4965,13 +5094,13 @@ def traverse_obj( data=None, config={}, parents=[], parentsI=[],  ):
 					if not 'find_path' in traverse_dic_research:
 						traverse_dic_research['find_path'] = []
 					traverse_dic_research['find_path'].append( data[key] )
-				
+
 
 			if 'find_parents' in config.keys() and  config['find_parents'] == key:
 				traverse_dic_research[ config['requests'] ] = np
 				return np
 				break
-			
+
 			if 'key_has' in config.keys():
 				found = False
 				if not type(config['key_has']) == list:
@@ -4996,7 +5125,7 @@ def traverse_obj( data=None, config={}, parents=[], parentsI=[],  ):
 
 
 
-		
+
 			traverse_obj( data[key], config, np, npi )
 	# pass
 
@@ -5057,7 +5186,7 @@ def justTime(theDate):
 	clock_parts.pop(2)
 	clock = ':'.join(clock_parts)
 	return clock+am_pm
-	
+
 
 
 def wrapText( data, length=150, pre_space='    ', scan=[], bold='yellow', s=' ', p=True ):
@@ -5161,7 +5290,7 @@ def lastBackup( file, backup=0 ):
 
 def textClean( txt ):
 	clean = 2
-	
+
 	if clean:
 		txt = _str.replaceDuplicate( txt, '\n' )
 		txt = _str.cleanBE( txt, '\n' )
@@ -5190,7 +5319,7 @@ def dicf_(obj, seen=None, f=None):
 	# return 0
 	if obj is None:
 		return 0
-	
+
 	# function source documentation:
 	#   searched for: python how much memory usage of list of dict
 	#   https://goshippo.com/blog/measure-real-size-any-python-object/
@@ -5232,7 +5361,7 @@ def get_size(obj, seen=None):
 	# return 0
 	if obj is None:
 		return 0
-	
+
 	# function source documentation:
 	#   searched for: python how much memory usage of list of dict
 	#   https://goshippo.com/blog/measure-real-size-any-python-object/
@@ -5283,7 +5412,7 @@ class CacheManager:
 	def save( self, data, config ):
 		return data
 
-	# def 
+	# def
 
 
 
@@ -5422,7 +5551,7 @@ def extTrigger__File_TYPE__( data ):
 	pass
 	# archive
 	# office
-	
+
 
 
 def urlTrigger(url):
@@ -5442,10 +5571,10 @@ def myFolderLocations( data ):
 
 	if os.path.isdir(data):
 		return os.path.abspath(data)
-	
+
 
 	global bmIndex
-	
+
 	if not len(bmIndex):
 		bmIndex = getTable( 'bookmarks.index' )
 
@@ -5536,7 +5665,7 @@ def caseUnspecific( data, subject, isPlus=False, minus=None, code=False ):
 					return [{ 'data': data[:len(subject)], 'pos': 'first' }]
 				return []
 		subject = ci(subject)
-			
+
 
 	while data.lower().find( subject ) > -1:
 		scanning = data.lower().find( subject )
@@ -5584,7 +5713,7 @@ def caseISspecific( data, subject, isPlus=False, minus=None ):
 					return [{ 'data': data[:len(subject)], 'pos': 'first' }]
 				return []
 		subject = ci(subject)
-			
+
 
 	while data.find( subject ) > -1:
 		scanning = data.find( subject )
@@ -5674,7 +5803,7 @@ def LoadingDone(done=None):
 	if not done is None:
 		__.loadingVar['done'] = done
 	__.loadingVar['hasLoaded'] = True
-	
+
 	global threads
 	while not __.loadingVar['hasCleared']:
 		time.sleep( .2 )
@@ -5693,7 +5822,7 @@ def loadingAnimation(loading='Searching',done='Found' ):
 		__.loadingVar['isRunning'] = True
 		global threads
 		theID = 'loadingAnimation_'+loading+'_' + genUUID()
-		threads.add( theID ) # kwargs 
+		threads.add( theID ) # kwargs
 		threads.maxThreadsSafe = 225
 		threads.autoLoadedAfter = .1
 		threads.scheduleLoop = .01
@@ -5705,7 +5834,7 @@ def loadingAnimation(loading='Searching',done='Found' ):
 
 
 def loadingGif(loading, qID=False):
-	
+
 	gif = [
 			'       *',
 			'      **',
@@ -5740,9 +5869,9 @@ def loadingGif(loading, qID=False):
 		threads.spent( qID, sys.getsizeof( 'obj') )
 	__.loadingVar['hasCleared'] = True
 
-		
+
 def loadingGifX(loading):
-	
+
 	gif = [
 			'       *',
 			'      **',
@@ -5821,7 +5950,7 @@ def ipsumParagraph( count=1, shouldPrint=False, returnList=False, lorem=True ):
 	if lorem:
 		result[0] = 'Lorem ipsum ' + result[0][0].lower() + result[0][1:]
 
-	
+
 
 	if shouldPrint:
 		data = '\n\n'.join( result )
@@ -5837,7 +5966,7 @@ def ipsumParagraph( count=1, shouldPrint=False, returnList=False, lorem=True ):
 def saveCSV(data, filename):
 	"""
 	Save a list of dictionaries as a CSV file.
-	
+
 	Arguments:
 		data: A list of dictionaries containing the data to be saved.
 		filename: The name of the file to be saved.
@@ -5941,7 +6070,7 @@ def csv( file, save=False, json_file='',printThis=True ):
 			if printThis:
 				printBold( json_file, 'green' )
 		fixField = False
-		
+
 		# if False:
 		if True:
 			try:
@@ -5994,7 +6123,7 @@ def csvText( data ):
 		if not isAlpha:
 			subject = '"'+str( [field] )[2:-2]+'"'
 		line.append( subject )
-		
+
 	records.append( ','.join(line) )
 
 	for record in data:
@@ -6131,7 +6260,7 @@ def saveData( rows, theFile, printThis=True ):
 	location = theFile
 	if os.path.isfile( theFile ):
 		found = True
-	
+
 	if not os.path.isfile( theFile ):
 		found = False
 		if not _v.slash in theFile:
@@ -6206,7 +6335,7 @@ def getData( theFile, exitOnError=False ):
 	location = theFile
 	if os.path.isfile( theFile ):
 		found = True
-	
+
 	if not os.path.isfile( theFile ):
 		found = False
 		if not _v.slash in theFile:
@@ -6299,7 +6428,7 @@ class BackgroundGrey:
 	cyan = '\033[0;36;47m'
 	gray = '\033[0;37;40m'
 	end = '\033[0m'
-	
+
 class BackgroundGreyBold:
 	black = '\033[1;30;47m'
 	red = '\033[1;31;47m'
@@ -6310,7 +6439,7 @@ class BackgroundGreyBold:
 	cyan = '\033[1;36;47m'
 	gray = '\033[1;37;40m'
 	end = '\033[0m'
-	
+
 
 
 row_colors = []
@@ -6348,7 +6477,7 @@ colorHelp_colorList = [
 	"Color.yellow",
 	"Color.red",
 	"Color.bold",
-	
+
 	"",
 
 	"Background.red",
@@ -6393,7 +6522,7 @@ def colorHelp( ipsum=False ):
 				result = result.replace( 'THE_TEXT', ipsumSentence() )
 			else:
 				result = result.replace( 'THE_TEXT', sample )
-			
+
 			print_( result )
 	sys.exit()
 
@@ -6455,7 +6584,7 @@ def colorizeRow( row, tableID=False, prefix='', prefixColor='', haltColorShift=F
 			parts=[]
 			for part in row.split(__.tableLine):
 				parts.append( colorizeRow_last + part + Background.end )
-				
+
 			line += sep.join(parts) + sep
 			print_(line)
 
@@ -6474,7 +6603,7 @@ def generateColorIndex():
 		for cc in colorClasses.split(' '):
 			for x in dir(  eval(  '_.'+cc  )  ):
 				if not x.startswith('_'):
-					
+
 					subject = x
 					subject = subject.lower()
 					if not subject in list_of_colors:
@@ -6568,7 +6697,7 @@ def colorThis( strings='', color='red', notBold=False, shouldPrint=True, ipsum=F
 
 # ColorBold Color Background BackgroundGrey BackgroundGreyBold
 
-	
+
 	# color_index = generateColorIndex()
 	# colorProfileTmp = []
 	# index = {
@@ -6612,7 +6741,7 @@ def colorThis( strings='', color='red', notBold=False, shouldPrint=True, ipsum=F
 	#                 if 'i' in record.keys():
 	#                     index['i'].append( record['i'] )
 	#                     index['data'][i] = record
-					
+
 	#                 if 'field' in record.keys():
 	#                     if ',' in record['field']:
 	#                         for ef in record['field'].split(','):
@@ -6622,7 +6751,7 @@ def colorThis( strings='', color='red', notBold=False, shouldPrint=True, ipsum=F
 	#                         index['keys'].append( record['field'] )
 	#                         index['data'][record['field']] = record
 	#                 colorProfileTmp.append( record )
-					
+
 	#             if type(record) == list:
 	#                 if len(record) == 2:
 	#                     newRecord = { 'id': i }
@@ -6648,7 +6777,7 @@ def colorThis( strings='', color='red', notBold=False, shouldPrint=True, ipsum=F
 	#                         if 'i' in newRecord.keys():
 	#                             index['i'].append( newRecord['i'] )
 	#                             index['data'][i] = newRecord
-							
+
 	#                         if 'field' in newRecord.keys():
 	#                             if ',' in newRecord['field']:
 	#                                 for ef in newRecord['field'].split(','):
@@ -6676,7 +6805,7 @@ def colorThis( strings='', color='red', notBold=False, shouldPrint=True, ipsum=F
 
 	#         if 'i' in record.keys():
 	#             index['i'].append( record['i'] )
-			
+
 	#         if 'field' in record.keys():
 	#             index['keys'].append( record['field'] )
 	#         colorProfile = [record]
@@ -6716,7 +6845,7 @@ def colorThis( strings='', color='red', notBold=False, shouldPrint=True, ipsum=F
 		colorHelp( ipsum )
 
 
-	pass 
+	pass
 	aaPre=''
 	ws=ws_sep(string)
 	aaPre=ws[0]
@@ -6791,7 +6920,7 @@ def colorThis( strings='', color='red', notBold=False, shouldPrint=True, ipsum=F
 			found = True
 
 	result = aaPre+result
-	
+
 	if not found:
 		printBold( 'Error: _.colorThis: color not found ' + str(color), 'red' )
 		print_()
@@ -6900,12 +7029,12 @@ def printColor( string, color='red' ):
 #     return result
 
 def printBold( string, color='white', prefix='' ):
-	
+
 	if '\n' in string:
 		string = string.replace( '\n', '\n'+prefix )
 	else:
 		string = prefix + string
-	
+
 	global switches
 	if switches.isActive( 'NoColor' ):
 		print_( string.replace('‽','') )
@@ -6959,25 +7088,25 @@ def inlineBold( string, color='white' ):
 	global switches
 	if switches.isActive( 'NoColor' ):
 		return string.replace('‽','')
-	
+
 	string = str(string)
 	color = color.lower()
 	if not type(string) == str:
 		string = str(string)
 	if color == 'white':
-		return ColorBold.white + string + ColorBold.end 
+		return ColorBold.white + string + ColorBold.end
 	elif color == 'red':
-		return ColorBold.red + string + ColorBold.end 
+		return ColorBold.red + string + ColorBold.end
 	elif color == 'gray' or color == 'grey':
-		return ColorBold.gray + string + ColorBold.end 
+		return ColorBold.gray + string + ColorBold.end
 	elif color == 'green':
-		return ColorBold.green + string + ColorBold.end 
+		return ColorBold.green + string + ColorBold.end
 	elif color == 'yellow':
-		return ColorBold.yellow + string + ColorBold.end 
+		return ColorBold.yellow + string + ColorBold.end
 	elif color == 'blue':
-		return ColorBold.blue + string + ColorBold.end 
+		return ColorBold.blue + string + ColorBold.end
 	elif color == 'magenta':
-		return ColorBold.magenta + string + ColorBold.end 
+		return ColorBold.magenta + string + ColorBold.end
 	elif color == 'cyan':
 		return ColorBold.cyan + string + ColorBold.end
 	elif color == 'underline':
@@ -7255,7 +7384,7 @@ def testPatterns22( one, two, simple=True ):
 def generatePatterns( string, patternLength=2 ):
 
 	def genP( by ):
-		
+
 		offset = 0
 		dataset = []
 		for offset in range(0,by):
@@ -7264,7 +7393,7 @@ def generatePatterns( string, patternLength=2 ):
 			for i,char in enumerate(string):
 				if i >= offset:
 					ix = ( i + offset )
-					
+
 				if not type(ix) == bool:
 					# dataset.append( char )
 					dataset.append( i )
@@ -7351,7 +7480,7 @@ def stringDiff( one, two ):
 	resultX.append(percentageDiffInt( theTotal_one, theTotal_two ))
 	resultX.append( testPatterns( one, two ) )
 	result = max(resultX)
-	
+
 	# resultY = []
 	# resultY.append(min(resultX))
 	# resultY.append(patternMatch( one, two ))
@@ -7370,11 +7499,14 @@ def fromEpoch( epoch ):
 	return datetime.datetime.fromtimestamp(epoch).strftime('%c')
 
 def postLoad( file, epoch=0, theFocus=False ):
+	try:
+		if os.environ['burn_this'] == 'yes': return None;
+	except: pass
 	__.postLoadFile = file
 	global autoLoadData
 	global switches
 	global appData
-	
+
 	if not sys.stdin.isatty():
 		setPipeData( sys.stdin.readlines(), __.appReg, clean=l.conf('clean-pipe' ,d=False) )
 
@@ -7409,7 +7541,7 @@ def postLoad( file, epoch=0, theFocus=False ):
 			hasFile = False
 		else:
 			hasFile = True
-		
+
 		# if __.isRequired_Pipe_or_File and not hasFile and not hasPipeData:
 		#     if __.pre_error:
 		#         print_(  )
@@ -7447,7 +7579,7 @@ def postLoad( file, epoch=0, theFocus=False ):
 								fnd = True
 					if not fnd:
 						metCriteria = False
-				
+
 				if not metCriteria:
 					help()
 		if metCriteria:
@@ -7459,7 +7591,7 @@ def postLoad( file, epoch=0, theFocus=False ):
 							fnd = True
 				if not fnd:
 					metCriteria = False
-			
+
 			if not metCriteria:
 				help()
 
@@ -7514,9 +7646,11 @@ def postLoad( file, epoch=0, theFocus=False ):
 	else:
 		releaseAcquiredData( appDBA, theFocus )
 
+# print(os.environ['burn_this']); sys.exit();
 
 raq_err=True
 def releaseAcquiredData( appDBA, theFocus, payload=None ):
+
 	global raq_err
 	l_registerSwitches_vars()
 	if appDBA == '__init__':
@@ -7540,7 +7674,7 @@ def releaseAcquiredData( appDBA, theFocus, payload=None ):
 		rebuiltCommandEpoch = rebuiltCommandRaw[0] + ' -loadEpoch ' + str( __.startTime ) + ' ' + rebuiltCommandRaw[1]
 	else:
 		rebuiltCommand = rebuiltCommandRaw[0]
-		rebuiltCommandEpoch = rebuiltCommandRaw[0] + ' -loadEpoch ' + str( __.startTime ) 
+		rebuiltCommandEpoch = rebuiltCommandRaw[0] + ' -loadEpoch ' + str( __.startTime )
 	# print_( log )
 	# print_( rebuiltCommandRaw )
 
@@ -7561,7 +7695,7 @@ def releaseAcquiredData( appDBA, theFocus, payload=None ):
 				'errors': [],
 				'printed': print_ed,
 	}
-	# pv(info); sys.exit(); 
+	# pv(info); sys.exit();
 	if not payload is None:
 		info['payload'] = payload
 
@@ -7594,7 +7728,7 @@ def releaseAcquiredData( appDBA, theFocus, payload=None ):
 							else:
 								info['errors'].append({ 'error': fileError, 'file': _v.myAppLogs + _v.slash + thisName })
 								saveText( fileError, _v.myAppLogs + _v.slash + thisName )
-								
+
 
 						except Exception as e:
 							info['errors'].append({ 'error': fileError, 'file': _v.myAppLogs + _v.slash + thisName })
@@ -7606,10 +7740,10 @@ def releaseAcquiredData( appDBA, theFocus, payload=None ):
 			saveText( appData[theFocus]['pipe'], _v.myAppLogs + _v.slash + thisName )
 			# print_(info)
 			info['files'].append( thisName )
-			
-		
 
-		
+
+
+
 		try: saveTable2( info, log )
 		except:
 			if raq_err: pr('d8f4',c='red')
@@ -7617,7 +7751,7 @@ def releaseAcquiredData( appDBA, theFocus, payload=None ):
 		# print_()
 		# printVar( info )
 
-	# 
+	#
 # _.theCommand( __file__ )
 # file0 = _v.myTables + _v.slash+'applogs'+_v.slash + log
 
@@ -7714,7 +7848,7 @@ def reclaimAcquiredData( appDBA, epoch, theFocus=False ):
 def theCommand( file='', theFocus=False, printThis=True, justSwitches=False, separate=False ):
 	global switches
 	# _.theCommand( __file__, theFocus=False, printThis=True, justSwitches=False  )
-	
+
 	if not type( theFocus ) == bool:
 		appReg = theFocus
 	else:
@@ -7798,7 +7932,7 @@ def inRelevantFolderSearch( file ):
 	if not len( relevantFolders ):
 		rf = getText( _v.relevant_folders, raw=True, clean=2 )
 		relevantFolders = rf.split('\n')
-	# 
+	#
 
 	for folder in relevantFolders:
 		f = folder +_v.slash+ file
@@ -7857,7 +7991,7 @@ def addComma( data ):
 		test+=1
 	except Exception as e:
 		pass
-	
+
 	if not test:
 		return data
 
@@ -7960,6 +8094,7 @@ def setUmlData( data, openUML=True ):
 		import webbrowser
 		webbrowser.open( _v.umlHtml, new=2)
 def setPipeData( data, theFocus=False, clean=False ):
+	# data = process_pipe_data( data )
 	# if type(data) == str: data=data.replace('\r','')
 	# if type(data) == list: data='\n'.join(data).replace('\r','').split('\n')
 	global appData
@@ -8066,8 +8201,15 @@ def cleanDic( data ):
 	nowDic = json2d( nowJSON_TXT, True )
 
 def d2json( data, sort_keys=False ):
-	try: simplejson = __.imp('simplejson')
-	except: import simplejson
+	try:
+		import simplejson
+		json = simplejson
+	except:
+		pass
+	try:
+		import json
+	except ImportError:
+		json = simplejson
 	# saveTable2( data, _v.json_temp )
 	# txt = getText( _v.json_temp, raw=True )
 
@@ -8078,8 +8220,15 @@ def printVar1( data ):
 
 
 def printVar( data, sort_keys=False, isDic=None ):
-	try: simplejson = __.imp('simplejson')
-	except: import simplejson
+	try:
+		import simplejson
+		json = simplejson
+	except:
+		pass
+	try:
+		import json
+	except ImportError:
+		json = simplejson
 	result = simplejson.dumps(data, indent=4, sort_keys=False, default=str)
 	printVarColor( result )
 	print_(  )
@@ -8150,7 +8299,7 @@ def printTest( data, color='white', line=None, isPrint=1, shouldExit=1, validate
 		profile = _profile.records.audit( 'printTest_profile', data )
 		data = profile
 		isCode = True
-	
+
 
 
 	if isCode:
@@ -8176,16 +8325,23 @@ def printTest( data, color='white', line=None, isPrint=1, shouldExit=1, validate
 
 def printVar2( data, sort_keys=False ):
 	printVarOld( data, sort_keys )
-	
+
 def printVarSimple( data, sort_keys=False, isDic=None, prefix=None, remove=None, d=None, p=True, r=None ):
 	#n)--> r, stands for just return and not print
-	try: simplejson = __.imp('simplejson')
-	except: import simplejson
+	try:
+		import simplejson
+		json = simplejson
+	except:
+		pass
+	try:
+		import json
+	except ImportError:
+		json = simplejson
 	dump=simplejson.dumps(data, indent=4, sort_keys=sort_keys, default=str)
 	if d:
 		if p:
 			print_(dump)
-		return dump 
+		return dump
 	data = json_clean(data)
 	if not isDic is None and isDic and type(data) == str:
 		# saveText( data, _v.myTemp + _v.slash+'printVarSimple.json' )
@@ -8222,7 +8378,7 @@ def printVarSimpleFake2( data ):
 	def colorize_quotes(s, quote_color='darkcyan', content_color='cyan'):
 		# s = re.sub(r'\\033\[\d*\\033\[\d*m', 'm', s)
 		# Strip out the broken color codes
-		s = re.sub(r'\033\[\d+m', '', s) 
+		s = re.sub(r'\033\[\d+m', '', s)
 
 		# Colorize the function name
 		s = re.sub(r'\b(TABLE_PUT)\b', Color.cyan + r'\1' + Color.end, s)
@@ -8234,14 +8390,14 @@ def printVarSimpleFake2( data ):
 	def colorize_quotes2(s, quote_color='darkcyan', content_color='cyan'):
 		# Pattern to match content inside single or double quotes
 		pattern = r"(['\"])(.*?)(?<!\\033)\1"
-		
+
 		# Calculating offsets due to insertion of color codes
 		offset = 0
-		
+
 		for match in re.finditer(pattern, s):
 			start_quote = match.start(1) + offset
 			end_quote = start_quote + len(match.group(1))
-			
+
 			start_content = match.start(2) + offset
 			end_content = start_content + len(match.group(2))
 
@@ -8266,12 +8422,12 @@ def printVarSimpleFake2( data ):
 	# def colorize_quotes(s, quote_color='darkcyan', content_color='cyan'):
 	# 	# Pattern to match content inside single or double quotes
 	# 	pattern = r"(['\"])(.*?)\1"
-		
+
 	# 	offset = 0
 	# 	for match in re.finditer(pattern, s):
 	# 		start_quote = match.start(1) + offset
 	# 		end_quote = start_quote + len(match.group(1))
-			
+
 	# 		start_content = match.start(2) + offset
 	# 		end_content = start_content + len(match.group(2))
 
@@ -8292,7 +8448,7 @@ def printVarSimpleFake2( data ):
 	def find_all_function_names(s):
 		pattern = r'\b[A-Za-z]\w*(?=\()'
 		matches = [m for m in re.finditer(pattern, s)]
-		
+
 		indices = []
 		for match in matches:
 			start = match.start()
@@ -8388,11 +8544,11 @@ def printVarSimpleFake2( data ):
 	#               output.append(eval('Color.' + color) + result[i] + Color.end)
 	#               colorized = True
 	#               break
-			
+
 	#       # If not colorized, just append the original character
 	#       if not colorized:
 	#           output.append(result[i])
-			
+
 	#       i += 1
 
 	#   return ''.join(output)
@@ -8404,7 +8560,7 @@ def printVarSimpleFake2( data ):
 				color_code_end = result.find('m', i)
 				i = color_code_end + 1
 				continue
-			
+
 			matched = False
 			for word, color in dic.items():
 				# If the word is a variable name, ensure that it stands alone by using word boundaries (\b).
@@ -8417,7 +8573,7 @@ def printVarSimpleFake2( data ):
 					i += len(colored_text)
 					matched = True
 					break
-			
+
 			if not matched:
 				i += 1
 
@@ -8479,7 +8635,7 @@ def printVarSimpleFake2( data ):
 	result = colorize_indices(result, find_arguments(result), 'darkcyan')
 	result = colorize_chars(result,dic)
 	# del colorama
-	
+
 	result = colorize_quotes(result)
 	result = find_argument_usage(result,'darkcyan')
 	dic = {
@@ -8514,7 +8670,7 @@ def printVarSimpleFake2( data ):
 	# print(variables)
 	# print(arguments)
 	result = colorize_words(result,dic)
-	# print(show_ansi_codes(result));sys.exit(); 
+	# print(show_ansi_codes(result));sys.exit();
 	# print_( re.sub(r'\\033\[0\\033\[36mm', 'm', result) )
 	# print_( re.sub(r'\033\[\d+m', '', result) )
 	print_( result )
@@ -8561,7 +8717,7 @@ def printVarColor( data ):
 	# printVarSimple(validator.identity)
 	# index = validator.createIndex( data, 'javascript', simple=False, B=True )
 	validator.colorPrint()
-	
+
 def printVarSimpleSTR(data):
 	print_( printVarColor_OLD( data ) )
 
@@ -8669,12 +8825,12 @@ def printVarColorChar( data ):
 	color = 'green'
 	if data == what:
 		return data.replace( what, inlineBold( what, color ) )
-	
+
 	what = '}'
 	color = 'green'
 	if data == what:
 		return data.replace( what, inlineBold( what, color ) )
-	
+
 	what = '['
 	color = 'YELLOW'
 	if data == what:
@@ -8725,7 +8881,7 @@ def json2d( data, formatOnline=False ):
 	dic = getTable2( _v.json_temp )
 	if formatOnline:
 		copyVar( dic )
-		
+
 		import webbrowser
 		webbrowser.open('https://beautifier.io/', new=2)
 	return dic
@@ -8917,7 +9073,7 @@ def myFileLocations( file, silent=False, currentBaseVersion=3 ):
 	#   for f in file.split(','):
 	#       nFiles.append( myFileLocations2( f, silent, currentBaseVersion ) )
 	#   file = ','.join( nFiles )
-		
+
 	# else:
 	#   myFileLocation_File = myFileLocations2( file, silent, currentBaseVersion )
 
@@ -9050,7 +9206,7 @@ def myFileLocations2( file, silent=False, currentBaseVersion=3 ):
 		"os.environ['HOME'] + _v.slash+'Desktop'+_v.slash + '*THEFILENAME*'",
 		"os.environ['HOME'] + _v.slash+'Documents'+_v.slash + '*THEFILENAME*'",
 		"os.environ['HOME'] + _v.slash+'Downloads'+_v.slash + '*THEFILENAME*'",
-		
+
 		"_v.myTXT + _v.slash+''+_v.slash + '*THEFILENAME*'",
 		"_v.myTXT + _v.slash+''+_v.slash + '*THEFILENAME*'",
 		"_v.myApps + _v.slash+'exe'+_v.slash + '*THEFILENAME*'",
@@ -9073,7 +9229,7 @@ def myFileLocations2( file, silent=False, currentBaseVersion=3 ):
 				# print_(os.path.isfile( theTest ),theTest)
 				if os.path.isfile( theTest ):
 					if silentSetTo:
-						
+
 						print_()
 						print_( 'File not here but in:', theTest )
 						print_()
@@ -9083,7 +9239,7 @@ def myFileLocations2( file, silent=False, currentBaseVersion=3 ):
 
 			except Exception as e:
 				pass
-	
+
 	if not os.path.isfile( _v.relevant_folders ) and __.isWin:
 		print_( 'generateRelevantFolders' )
 		import generateRelevantFolders
@@ -9182,7 +9338,7 @@ def fileDate( theDate ):
 	return friendly
 
 def dateAdd2( theDate, addDays, delim='-' ):
-	
+
 	theDate = str( theDate )
 
 	if not delim in theDate:
@@ -9321,7 +9477,7 @@ def genUUID( project='', label='', uniqueTimestamp=False, note=None, r=None, e=N
 		l=list(string)
 		l.reverse()
 		return ''.join(l)
-	
+
 	try: uuid = __.imp('uuid')
 	except: import uuid
 
@@ -9366,7 +9522,7 @@ def genUUID( project='', label='', uniqueTimestamp=False, note=None, r=None, e=N
 
 			if not label == '':
 				rec['label'] = label
-				
+
 			uuidLog = getTable('uuid_log.json')
 			uuidLog.append(rec)
 			saveTable(uuidLog,'uuid_log.json',printThis=False)
@@ -9390,7 +9546,7 @@ def genUUID( project='', label='', uniqueTimestamp=False, note=None, r=None, e=N
 				appData[focus]['uuid']['app'] = appInfo[focus]['file']
 
 			if not type(appData[focus]['uuid']) == str:
-				
+
 				appData[focus]['uuid']['uuid'] = string
 				appData[focus]['uuid']['timestamp'] = timestamp
 				appData[focus]['uuid']['project'] = ''
@@ -9404,7 +9560,7 @@ def genUUID( project='', label='', uniqueTimestamp=False, note=None, r=None, e=N
 
 				if not label == '':
 					appData[focus]['uuid']['label'] = label
-					
+
 				uuidLog = getTable('uuid_log.json')
 				uuidLog.append(appData[focus]['uuid'])
 				saveTable(uuidLog,'uuid_log.json',printThis=False)
@@ -9522,8 +9678,8 @@ def saveText( rows, theFile, errors=True, me=0, test=None ):
 				else:
 					f.write(str(row) + '\n')
 		f.close()
-		
-			
+
+
 	except Exception as e:
 		if type(rows) == list:
 			result = ''
@@ -9550,7 +9706,7 @@ def saveText( rows, theFile, errors=True, me=0, test=None ):
 				for x in rows:
 					if x in _str.printable:
 						new_text+=x
-				
+
 
 				# --> start#> encoding fix
 				# -->  date#>  2022-07-21
@@ -9565,7 +9721,7 @@ def saveText( rows, theFile, errors=True, me=0, test=None ):
 							open(theFile, 'w', encoding=i_enc).write(new_text)
 						except Exception as e: pass
 				# -->   end#> encoding fix
-				
+
 				if __.fn.saveText:
 					print_(4444444)
 		HD.chmod(theFile)
@@ -9662,7 +9818,7 @@ def getText( theFile, raw=False, clean=False,  e=0, c=0 ):
 		for i,row in enumerate(lines):
 			# row = row.replace('\n','')
 			row = row.replace('\r','')
-			
+
 			if not c > 1:
 				newLines.append(row)
 			else:
@@ -9675,7 +9831,7 @@ def getText( theFile, raw=False, clean=False,  e=0, c=0 ):
 					newLines.append(row)
 
 
-			
+
 
 
 		return newLines
@@ -9767,7 +9923,7 @@ def weeks_between(start_date, end_date):
 def months_between(start_date, end_date):
 	# start_date = int(start_date)
 	# end_date = int(end_date)
-	# st = str(formatDateYear(start_date)) + '-' + str(formatDateMonth(start_date)) + '-' +  str(formatDateDay(start_date)) 
+	# st = str(formatDateYear(start_date)) + '-' + str(formatDateMonth(start_date)) + '-' +  str(formatDateDay(start_date))
 	# en = str(formatDateYear(end_date)) + '-' + str(formatDateMonth(end_date)) + '-' +  str(formatDateDay(end_date))
 	start = datetime.date(int(formatDateYear(start_date)), int(formatDateMonth(start_date)), int(formatDateDay(start_date)) )
 	end = datetime.date(int(formatDateYear(end_date)), int(formatDateMonth(end_date)), int(formatDateDay(end_date)) )
@@ -9830,6 +9986,12 @@ def calculate_monthdelta(date1, date2):
 
 hasPlus=None
 def showLine( string, plus = '', minus = '',plusOr = False, end=None,isSub=False, OR=None, code=False ):
+
+	# <2024-04-02>
+	string = str(string)
+	# </2024-04-02>
+
+
 	'''showLine( string, plus = '', minus = '',plusOr = False, end=None,isSub=False, OR=None, code=False )'''
 	global switches
 	global hasPlus
@@ -9871,7 +10033,7 @@ def showLine( string, plus = '', minus = '',plusOr = False, end=None,isSub=False
 def closeResults( string ):
 	global switches
 	global plusClose
-	
+
 	if len( switches.value('PlusClose') ):
 		try:
 			plusClose = float( switches.value('PlusClose') )
@@ -9907,7 +10069,7 @@ def positive_results_code(string, plus='', plus_or=False, end=None, OR=None):
 
 	# Check if 'plusInput' exists in the string
 	count_found = sum(1 for item in plus_input if _is_substring_present(item, string))
-	
+
 	return count_found == len(plus_input) or (plus_or and count_found > 0)
 
 
@@ -9941,13 +10103,13 @@ def _is_substring_present(sub, main_string):
 def positiveResultsCode(string,plus='',plusOr=False,end=None,OR=None):
 	# __.sw.PlusCode
 
-	
+
 	global switches
 	if switches.isActive('PlusCode') and 'n' in switches.value('PlusCode'):
 		return positive_results_code(string,plus,plusOr,end,OR)
 	if plusOr or switches.isActive('PlusOr'):
 		plusOr = True
-	
+
 	if not OR is None:
 		plusOr=OR
 	if not plus == '':
@@ -10069,7 +10231,7 @@ def positiveResults(string,plus='',plusOr=False,end=None,OR=None):
 	# print('here')
 	if plusOr or switches.isActive('PlusOr'):
 		plusOr = True
-	
+
 	if not OR is None:
 		plusOr=OR
 	if not plus == '':
@@ -10097,7 +10259,7 @@ def positiveResults(string,plus='',plusOr=False,end=None,OR=None):
 		else:
 			for i,yh in enumerate(plusInput):
 				plusInput[i] += end
-	
+
 	pi = []
 	for x in plusInput:
 		pi.append( ci(x) )
@@ -10123,7 +10285,7 @@ def positiveResults(string,plus='',plusOr=False,end=None,OR=None):
 		if not switches.isActive('StrictCase'):
 			s = s.lower()
 		# print(':s:',s)
-		
+
 		if len(s) > 1 and s[0] == '!':
 			s=s[1:]
 			if string == s:
@@ -10166,7 +10328,7 @@ def minusResults(string,minus=''):
 
 
 	# 23-01-04
-	string=string.strip() #:    //*   #* 
+	string=string.strip() #:    //*   #*
 	if minusInput and '*' in minusInput[0]:
 		mi = minusInput[0].replace('*','')
 		if minusInput[0].endswith('*'):
@@ -10250,17 +10412,24 @@ def minusResults(string,minus=''):
 	return result
 
 def saveLog( logname, rows=[], focus=True, printThis=True ):
-	try: simplejson = __.imp('simplejson')
-	except: import simplejson
+	try:
+		import simplejson
+		json = simplejson
+	except:
+		pass
+	try:
+		import json
+	except ImportError:
+		json = simplejson
 	global appInfo
 	global appData
-	
+
 	indentCode = True
 	log = 'app_audit_log_TIMESTAMP__FILENAME__LOGNAME__INSTANCE.json'
 
 	if type(focus) == bool:
 		focus = __.appReg
-		
+
 	if not len(rows) and logname == 'threads':
 		global threads
 		rows = threads.log()
@@ -10277,11 +10446,11 @@ def saveLog( logname, rows=[], focus=True, printThis=True ):
 			log = log.replace('__INSTANCE','')
 	except Exception as e:
 		log = log.replace('__INSTANCE','')
-	
+
 	log = log.replace('TIMESTAMP',str(appData[focus]['start']))
 	log = log.replace('FILENAME',appInfo[focus]['file'])
 	log = log.replace('LOGNAME',logname)
-	
+
 	file0 = _v.myTables + _v.slash+'applogs'+_v.slash + log
 
 	if indentCode:
@@ -10297,18 +10466,23 @@ def saveLog( logname, rows=[], focus=True, printThis=True ):
 
 def saveTable( rows, theFile, tableTemp=False, printThis=True, indentCode=True, sort_keys=False, archive=False,                k=0,s=0,tmp=None,here=None,h=None,    p=1, me=0   ):
 	HD.chmod(theFile)
-	try: simplejson = __.imp('simplejson')
-	except: import simplejson
-	try: import json
-	except: pass
+	try:
+		import simplejson
+		json = simplejson
+	except:
+		pass
+	try:
+		import json
+	except ImportError:
+		json = simplejson
 	if not h is None: here = True;
 	if not here is None: saveTable2( rows, theFile ); return None;
 	if not tmp is None: tableTemp = True;
 	if k or s: sort_keys = True;
 	if not p: printThis = False;
-		
 
-	
+
+
 
 
 	# defaults to myTables
@@ -10359,7 +10533,7 @@ def saveTable( rows, theFile, tableTemp=False, printThis=True, indentCode=True, 
 			lastMD5 = _md5.md5File( file0 )
 
 			backupFile = _v.stmp + _v.slash+'__archive_temp__' + theFileLabel + '__' + genUUID() + '.json'
-			
+
 
 	f = open(file0,'w')
 	f.write(str(dataDump))
@@ -10380,7 +10554,7 @@ def saveTable( rows, theFile, tableTemp=False, printThis=True, indentCode=True, 
 		if not shouldDocument:
 			if os.path.isfile( backupFile ):
 				os.remove( backupFile )
-		
+
 		if shouldDocument:
 			md5Table = getTable( 'table_archive_log.json' )
 			found = False
@@ -10402,8 +10576,12 @@ def getTable(theFile, tableTemp=False, isDic=None, isList=None, tmp=None):
 	if os.path.isfile(theFile):
 		vv.opened_file_me[theFile] = os.path.getmtime(theFile)
 
-	try: simplejson = __.imp('simplejson')
-	except: import simplejson
+
+	try:
+		import simplejson
+		json = simplejson
+	except:
+		pass
 	try:
 		import json
 	except ImportError:
@@ -10442,10 +10620,15 @@ def getTable(theFile, tableTemp=False, isDic=None, isList=None, tmp=None):
 
 def getTableOld( theFile, tableTemp=False,      isDic=None, isList=None,      tmp=None ):
 	if os.path.isfile(theFile): vv.opened_file_me[theFile] = os.path.getmtime( theFile );
-	try: simplejson = __.imp('simplejson')
-	except: import simplejson
-	try: import json
-	except: pass
+	try:
+		import simplejson
+		json = simplejson
+	except:
+		pass
+	try:
+		import json
+	except ImportError:
+		json = simplejson
 	# defaults to myTables
 	if not type( tableTemp ) == bool:
 		if tableTemp == 'split':
@@ -10483,8 +10666,15 @@ def getTableOld( theFile, tableTemp=False,      isDic=None, isList=None,      tm
 
 def getTable3(theFile):
 	if os.path.isfile(theFile): vv.opened_file_me[theFile] = os.path.getmtime( theFile );
-	try: simplejson = __.imp('simplejson')
-	except: import simplejson
+	try:
+		import simplejson
+		json = simplejson
+	except:
+		pass
+	try:
+		import json
+	except ImportError:
+		json = simplejson
 	if os.path.isfile(theFile) == True:
 		with open(theFile,'r') as json_file:
 			json_data = simplejson.load(json_file)
@@ -10497,8 +10687,11 @@ def getTable2(theFile, isDic=None, isList=None):
 	if os.path.isfile(theFile):
 		vv.opened_file_me[theFile] = os.path.getmtime(theFile)
 
-	try: simplejson = __.imp('simplejson')
-	except: import simplejson
+	try:
+		import simplejson
+		json = simplejson
+	except:
+		pass
 	try:
 		import json
 	except ImportError:
@@ -10518,7 +10711,7 @@ def getTable2(theFile, isDic=None, isList=None):
 					json_data = json.load(json_file)
 				return json_data
 		except Exception as e:
-			print('Error loading JSON file:', e)
+			# print('Error loading JSON file:', e)
 			sys.exit()
 	else:
 		# print(f"File {theFile} not found or is empty.")
@@ -10528,10 +10721,15 @@ def getTable2(theFile, isDic=None, isList=None):
 
 def getTable2Old( theFile,     isDic=None, isList=None ):
 	if os.path.isfile(theFile): vv.opened_file_me[theFile] = os.path.getmtime( theFile );
-	try: simplejson = __.imp('simplejson')
-	except: import simplejson
-	try: import json
-	except: pass
+	try:
+		import simplejson
+		json = simplejson
+	except:
+		pass
+	try:
+		import json
+	except ImportError:
+		json = simplejson
 	if theFile.lower().endswith('.index') or theFile.lower().endswith('.indexes'):
 		isDic = True
 	if os.path.isfile(theFile):
@@ -10551,8 +10749,15 @@ def getTable2Old( theFile,     isDic=None, isList=None ):
 
 def getTableBIG( theFile,     isDic=None, isList=None ):
 	if os.path.isfile(theFile): vv.opened_file_me[theFile] = os.path.getmtime( theFile );
-	try: simplejson = __.imp('simplejson')
-	except: import simplejson
+	try:
+		import simplejson
+		json = simplejson
+	except:
+		pass
+	try:
+		import json
+	except ImportError:
+		json = simplejson
 	import pandas as pd
 	if theFile.lower().endswith('.index') or theFile.lower().endswith('.indexes'):
 		isDic = True
@@ -10580,8 +10785,15 @@ def getTableBIG( theFile,     isDic=None, isList=None ):
 _tar = None
 def getTableDB( theFile,     isDic=None, isList=None ):
 	if os.path.isfile(theFile): vv.opened_file_me[theFile] = os.path.getmtime( theFile );
-	try: simplejson = __.imp('simplejson')
-	except: import simplejson
+	try:
+		import simplejson
+		json = simplejson
+	except:
+		pass
+	try:
+		import json
+	except ImportError:
+		json = simplejson
 	theFile = _v.dbTables + _v.slash + theFile
 	# print(theFile)
 	if os.path.isfile(theFile):
@@ -10602,8 +10814,15 @@ def getTableDB( theFile,     isDic=None, isList=None ):
 
 def getTableProject( project, theFile,     isDic=None, isList=None, path=False ):
 	if os.path.isfile(theFile): vv.opened_file_me[theFile] = os.path.getmtime( theFile );
-	try: simplejson = __.imp('simplejson')
-	except: import simplejson
+	try:
+		import simplejson
+		json = simplejson
+	except:
+		pass
+	try:
+		import json
+	except ImportError:
+		json = simplejson
 	theFile = _v.projectData(project) + theFile
 	if path:
 		print_(theFile)
@@ -10623,8 +10842,15 @@ def getTableProject( project, theFile,     isDic=None, isList=None, path=False )
 
 def saveTableProject( project, rows=[], theFile='', printThis=False, sort_keys=False, indentCode=True,  p=None, me=0, path=False ):
 	HD.chmod(theFile)
-	try: simplejson = __.imp('simplejson')
-	except: import simplejson
+	try:
+		import simplejson
+		json = simplejson
+	except:
+		pass
+	try:
+		import json
+	except ImportError:
+		json = simplejson
 	# print_('*******************',theFile)
 	theFile = _v.projectData(project) + theFile
 	if __.print_path:
@@ -10648,8 +10874,15 @@ def saveTableProject( project, rows=[], theFile='', printThis=False, sort_keys=F
 
 def saveTableDB( rows, theFile, printThis=False, sort_keys=False, indentCode=True,  p=None, me=0 ):
 	HD.chmod(theFile)
-	try: simplejson = __.imp('simplejson')
-	except: import simplejson
+	try:
+		import simplejson
+		json = simplejson
+	except:
+		pass
+	try:
+		import json
+	except ImportError:
+		json = simplejson
 
 	# print_('*******************',theFile)
 	theFile = _v.dbTables + _v.slash + theFile
@@ -10672,8 +10905,15 @@ def saveTableDB( rows, theFile, printThis=False, sort_keys=False, indentCode=Tru
 
 def saveTable2( rows, theFile, printThis=False, sort_keys=False, indentCode=True, p=None, me=0 ):
 	HD.chmod(theFile)
-	try: simplejson = __.imp('simplejson')
-	except: import simplejson
+	try:
+		import simplejson
+		json = simplejson
+	except:
+		pass
+	try:
+		import json
+	except ImportError:
+		json = simplejson
 	if not p is None:
 		printThis = p
 	# print_('*******************',theFile)
@@ -10709,8 +10949,15 @@ def saveTable2( rows, theFile, printThis=False, sort_keys=False, indentCode=True
 
 def saveTable3( rows, theFile, printThis=False, me=0 ):
 	HD.chmod(theFile)
-	try: simplejson = __.imp('simplejson')
-	except: import simplejson
+	try:
+		import simplejson
+		json = simplejson
+	except:
+		pass
+	try:
+		import json
+	except ImportError:
+		json = simplejson
 	# print_('*******************',theFile)
 	dataDump = simplejson.dumps(rows, sort_keys=False, default=str)
 	f = open(theFile,'w')
@@ -10820,7 +11067,7 @@ def dateDiff( theDate0, theDate1, delim='-' ):
 
 	diff = date1 - date0
 	return (int(diff.days))
-	
+
 def dateDiffX( theDate0, theDate1, delim='-' ):
 	theDate0 = str(theDate0)
 	theDate1 = str(theDate1)
@@ -10865,7 +11112,7 @@ def listAverage(theList):
 		result =  total / len(theList)
 	except Exception as e:
 		result = 0
-	return result 
+	return result
 def date2epoch(theDate,delim='-'):
 	theDate = str(theDate)
 	if len( theDate ) == 0:
@@ -10924,10 +11171,10 @@ def figureOutDate(theDate, theFormat):
 	theDate = _str.replaceDuplicate(theDate,' ')
 	theDate = _str.cleanBE(theDate,' ')
 
-	
+
 	n = '0123456789'
 	a = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
-	
+
 	autoDelim = ''
 	for d in theDate:
 		if d in n:
@@ -11111,7 +11358,7 @@ def updateLine( string, clear=True, color=None, sleep=None ):
 	return print_(string,c=color,end='\r')
 
 
-	
+
 	global updateLine_disable
 	if updateLine_disable:
 		clear = False
@@ -11216,8 +11463,15 @@ def saveTableSplitNew( rows,theFile,tableTemp = True,printThis = True, project=F
 	while os.path.isfile(path) == True:
 		cnt += 1
 		path = file0 + count(cnt) + suffix
-	try: simplejson = __.imp('simplejson')
-	except: import simplejson
+	try:
+		import simplejson
+		json = simplejson
+	except:
+		pass
+	try:
+		import json
+	except ImportError:
+		json = simplejson
 	dataDump = simplejson.dumps(rows, indent=4, sort_keys=True, default=str)
 	f = open(path,'w')
 	f.write(str(dataDump))
@@ -11263,7 +11517,7 @@ def sort(rows, name):
 				rows = sorted(rows, key=itemgetter(item))
 			except Exception as e:
 				errors.append({'id': 17, 'function': 'sortThis()', 'cnt': 2, 'location': 'rows = sorted(rows, key=itemgetter(sb))', 'vars': [{'name': 'rows', 'value': 'nope to that, to big'}, {'name': 'name', 'value': name}], 'error': e})
-			
+
 		import uuid
 		sortBy[item] = str(uuid.uuid4())
 		tempFields.append( sortBy[item] )
@@ -11311,7 +11565,7 @@ class Switch:
 		self.vs = False
 		self.script_trigger_alt = None
 		self.script=blank_script_trigger
-		
+
 	def trigger(self,script,vs=False,alt=None):
 		if not alt is None:
 			self.script_trigger_alt = alt
@@ -11435,8 +11689,8 @@ class Switches:
 			else: records['dump2'][switch.appReg]['off'][switch.name] = switch.values
 			#e)--> dump2
 
-			
-			
+
+
 			#b)--> duplicate fix
 			##### #timestamp)--> 2022-07-26T17:09:11-0400
 			shouldAdd = True
@@ -11444,7 +11698,7 @@ class Switches:
 				if not i == ii and rec.name == switch.name and rec.values: shouldAdd = False
 			if shouldAdd:
 			#e)--> duplicate fix
-			
+
 				if self.switches[i].appReg == appReg:
 					records['list'].append({ 'name': switch.name, 'values': switch.values })
 
@@ -11456,12 +11710,12 @@ class Switches:
 					records['dump'] = dict((name, getattr(switch, name)) for name in dir(switch) if not name.startswith('__'))
 					records['dic_on-off-v']['values'][switch.name] = switch.values
 
-					
+
 					if switch.active:
 						records['dic_on-off-v']['on'].append( switch.name )
 					else:
 						records['dic_on-off-v']['off'].append( switch.name )
-		
+
 		#b)--> relevant
 		records['relevant']={}
 		for on in records['dic_on-off-v']['on']:
@@ -11501,7 +11755,7 @@ class Switches:
 										self.switches[i].documentation['related'].append( record )
 										if not name in self.hasRequired:
 											self.hasRequired.append( name )
-								
+
 
 						except Exception as e:
 							pass
@@ -11574,12 +11828,12 @@ class Switches:
 				self.isRequired[__.appReg] = []
 		except Exception as e:
 			self.isRequired[__.appReg] = []
-		
-		
+
+
 
 		switch = switch.replace( ' ', '' )
 
-		
+
 		if not isPipe is None:
 			__.isData_Switches[name]=isPipe
 			if type(isPipe) == bool and isPipe:
@@ -11643,7 +11897,7 @@ class Switches:
 					for x in value:
 						values.append( self.scriptTrigger( name, x, theFocus  ) )
 
-				elif self.fieldExists( name, 'script_trigger', theFocus ) == True:    
+				elif self.fieldExists( name, 'script_trigger', theFocus ) == True:
 					for x in value:
 						script = '{}(\'{}\',\'{}\')'.format(self.fieldGet(name,'script_trigger'),name,x)# script_trigger_external
 						values.append( eval(script) )
@@ -11690,7 +11944,7 @@ class Switches:
 						#   exec('self.switches[i].' + column + '=str(\'' + value + '\')')
 						# except Exception as e:
 						#   exec('self.switches[i].' + column + '=\'' + value + '\'')
-			
+
 		return ''
 
 
@@ -11746,7 +12000,7 @@ class Switches:
 							found = True
 
 				result = found
-						
+
 				# print_( 'here', name, found )
 				# sys.exit()
 
@@ -11816,10 +12070,10 @@ class Switches:
 			if self.switches[i].appReg == __.appReg:
 				if name == self.switches[i].name:
 					self.switches[i].trigger(script,vs,alt)
-	
+
 	def simpleTrigger( self, name, value ):
 		return self.switches[self.dex[__.appReg][name]].script(value)
-					
+
 
 	def value2(self,name):
 		# return ','.join( self.value3(name) )
@@ -11996,7 +12250,7 @@ class Switches:
 			configured = True
 		except Exception as e:
 			configured = False
-			
+
 		try:
 			# print_( inlineBold('Categories:    '), ', '.join( appInfo[__.appReg]['categories'] ) + '\n')
 			print_( inlineBold('Tags:          '), '(',', '.join( appInfo[__.appReg]['categories'] ), ')' + '\n')
@@ -12123,7 +12377,7 @@ class Switches:
 		if __.isRequired_Pipe:
 			hasRequirements = True
 			colorThis(  [  '  !! Required Pipe data' ]  , 'red' )
-		
+
 		if __.isRequired_Pipe_or_File:
 			hasRequirements = True
 			colorThis(  [  '  !! Required Pipe data or Files switch' ]  , 'red' )
@@ -12192,7 +12446,7 @@ class Switches:
 
 
 
-			
+
 	def process( self, helpx=False ):
 		load()
 		global customHelp
@@ -12294,10 +12548,12 @@ class Switches:
 
 		# if self.isActive(''):
 
-
+		if not __.appReg in self.isRequired:
+			for key in self.isRequired:
+				__.appReg = key
 		if len( self.isRequired[__.appReg] ):
 			allSatisfied = True
-			
+
 			for req in self.isRequired[__.appReg]:
 				satisfied = False
 				for i in isActiveRequireList:
@@ -12341,7 +12597,7 @@ class Switches:
 			# self.print()
 			self.printStatus()
 			sys.exit()
-		
+
 		if printAutoAbbreviations_scheduled:
 			printAutoAbbreviations()
 
@@ -12420,14 +12676,14 @@ class Switches:
 			for childScript in self.postScripts:
 				if 'function' in str(type(childScript)):
 					childScript()
-		
-		
+
+
 	def searchIndex( self, name, appReg ):
 		if type(appReg) == bool or appReg is None:
 			appReg = __.appReg
 		try:
 			result = self.index[ appReg ][ name ]
-			
+
 			# result = self.index[ name +'._.'+ appReg ]
 		except Exception as e:
 			try:
@@ -12602,7 +12858,7 @@ class Table:
 	def __init__( self, name, asset=[], group_space=True, tab='', webtable=None ):
 		global switches
 		global _dir
-		
+
 		self.GroupTotals={}
 		self.webtable = webtable
 		self.group_space = group_space
@@ -12678,7 +12934,7 @@ class Table:
 				switches.fieldSet('Sort','value',str(self.views[i].sort))
 				# print_(switches.value('Sort'))
 				# try:
-					
+
 				# except Exception as e:
 				#   pass
 				# print_('name:',name)
@@ -12753,7 +13009,7 @@ class Table:
 		# did not work
 
 		size = len(name) + spacer
-		
+
 		# print_(name,00)
 		# rows[0][name]
 		for i,rec in enumerate(self.asset):
@@ -12785,7 +13041,7 @@ class Table:
 					for sc in shortenColumn.split(','):
 						if sc == name:
 							shorten = True
-			
+
 			if name in item:
 				thisData = item[name]
 			elif name.split('.')[0] in item:
@@ -12802,7 +13058,7 @@ class Table:
 					# print_('asdf')
 					# sys.exit()
 					try:
-						
+
 						text = self.nameLengthFix(  str(self.scriptTriggerField(name,thisData)) ,switches.value('Length'),'')
 					except Exception as e:
 						text = self.nameLengthFix(str(thisData),switches.value('Length'),'')
@@ -12815,8 +13071,8 @@ class Table:
 						text = self.scriptTriggerField(name,thisData)
 					except Exception as e:
 						text = thisData
-							
-			
+
+
 			itemSize = len(str(text)) + spacer
 			if itemSize > size:
 				size = itemSize
@@ -13003,7 +13259,7 @@ class Table:
 							pass
 							if self.group_space:
 								print_('')
-						
+
 
 						if not self.isExtraRecord:
 							groupByList[gb] = text
@@ -13015,13 +13271,13 @@ class Table:
 						#   print_(text)
 					else:
 						pass
-						
+
 						if len(self.isExtraRecord_000x):
 							self.isExtraRecord_0001[ self.isExtraRecord_000x.split('-')[0] ] = 1
 						text = ''
 						if not column in self.Groups: self.Groups[column]={'lines':[]}
 						self.Groups[column]['lines'].append(i)
-						
+
 		alignment = self.fieldProfileGet(column,'alignment')
 		# print_(alignment)
 		# if alignment == 'left':
@@ -13108,7 +13364,7 @@ class Table:
 				result += self.addSpace(c,tabFix) + c.replace('_',' ').upper() + self.columnTab
 			# else:
 				# result += c.replace('_',' ').upper() + self.addSpace(c,tabFix) + self.columnTab
-		
+
 		if switches.isActive('YesTableLines'):
 			result += '|'
 			if len(switches.value('YesTableLines')):
@@ -13222,7 +13478,7 @@ class Table:
 				if type(wrapBy) == int:
 					for isp, itx in enumerate(spaces):
 						fieldsToShorten.append( itx['c'] )
-						
+
 						if isp+1 == wrapBy:
 							break
 
@@ -13230,7 +13486,7 @@ class Table:
 				# print_(wrapBy)
 				# sys.exit()
 
-					
+
 
 
 		# print_(fieldsToShorten)
@@ -13241,7 +13497,7 @@ class Table:
 		for c in self.spaces:
 			total += self.spaces[c]
 			total += len(self.columnTab)
-		
+
 		tempSpaces = self.spaces.copy()
 		for c in tempSpaces:
 			if tempSpaces[c] > maxLen:
@@ -13263,7 +13519,7 @@ class Table:
 			for c in tempSpaces:
 				total += tempSpaces[c]
 				total += len(self.columnTab)
-		
+
 
 
 		# percentageDiffIntAuto
@@ -13274,7 +13530,7 @@ class Table:
 		#   print_(x)
 
 		wrapTableKey = self.wrapTableKey
-		
+
 		counter = 0
 		global fields
 		fields.register( wrapTableKey+'-b', 'val', 4, m=4 )
@@ -13282,25 +13538,25 @@ class Table:
 		test = fields.padZeros( wrapTableKey, 'val', 5 )
 		test = fields.padZeros( wrapTableKey+'-b', 'val', 5 )
 		letters = {}
-		
+
 
 		# print_(letterSet)
 		# sys.exit()
 		def letterBoost( i ):
 			if not str(i) in letters:
 				letters[str(i)] = 'a'
-		
+
 
 		recordsToAdd = []
 		for i,record in enumerate(self.asset):
 			letters[ str(i) ] = 'a'
 			recordKey = 1
-			
+
 
 			this_key = fields.padZeros( wrapTableKey, 'val', i+1 )
 			this_key_B = fields.padZeros( wrapTableKey+'-b', 'val', recordKey )
 
-			
+
 			self.asset[i][wrapTableKey+'-sort'] = this_key+'-'+this_key_B
 			rec = {}
 			rec_last = {}
@@ -13315,7 +13571,7 @@ class Table:
 					#   rec[cs] = {}
 					# if not c in rec[cs]:
 					#   rec[cs][c] = ''
-					
+
 					rec_parts = autoWrapText( str(record[c]), length=tempSpaces[c] )
 
 					# print_('_________________________________________')
@@ -13338,9 +13594,9 @@ class Table:
 								rec_last[cs] = {}
 							# if not c in rec[cs]:
 								# rec[cs][c] = ''
-							
+
 							# if c in rec_last[cs]:
-							#   if 
+							#   if
 							rec[cs][c] = rp
 					rp = ''
 
@@ -13421,7 +13677,7 @@ class Table:
 		#   print_(x)
 		#   print_()
 		# sys.exit()
-		
+
 		self.print(
 					column=self.print_backup['column'],
 					fieldLengths=self.print_backup['fieldLengths'],
@@ -13435,7 +13691,7 @@ class Table:
 
 	def aggregateRecord( self, i ):
 		# print_()
-		
+
 		for c in self.aggregates.columns:
 			if not c in self.asset[i]:
 				self.asset[i][c] = ''
@@ -13509,14 +13765,14 @@ class Table:
 						try:
 							self.aggregates.group_storage[lbl] += data['data']
 						except Exception as e: cp('Error: group add variable', 'red');
-					
+
 					# if not done:
 					#   self.aggregates.group_storage[lbl] = data['data']
 
 				pass
 
 
-				
+
 				pass
 
 				if i in self.aggregates.groups[fld]['e']:
@@ -13527,11 +13783,11 @@ class Table:
 							if not str(i) in self.aggregates.agroupsADD:
 								self.aggregates.agroupsADD[ str(i) ] = {}
 							self.aggregates.agroupsADD[ str(i) ][lbl] = self.aggregates.group_storage[lbl]
-						else:           
+						else:
 							self.asset[i][lbl] = addComma( self.aggregates.group_storage[lbl] )
 					if not __.aggregate.group_prefixes[  seg['txt'].lower().split('?')[0]+'?'  ] == 2:
 						self.aggregates.group_storage[lbl] = 0
-			
+
 
 
 		# if self.aggregates.groups:
@@ -13546,7 +13802,7 @@ class Table:
 		if True:
 			seg = self.aggregates.index[ss]
 			# print_(seg)
-			
+
 			# self.aggregate_backtrack = { 'i': i, 's': s, 'seg': seg }
 
 
@@ -13587,11 +13843,11 @@ class Table:
 							__.aggregate.eof.storage[seg['txt']][alpha] = {}
 							__.aggregate.eof.storage[seg['txt']][alpha]['data'] = 0
 							__.aggregate.eof.storage[seg['txt']][alpha]['settings'] = {}
-					
-					
+
+
 					# print_(isOF, seg['txt'])
 
-				
+
 					child = self.aggregates.index[ str(seg['val']) ]
 					do = None
 					if 'function' in child['l']:
@@ -13613,10 +13869,10 @@ class Table:
 								self.aggregates.storage[seg['txt']][alpha]['data'] += data['data']
 							except Exception as e: cp('Error: add variable', 'red');
 
-						
+
 						if not done:
 							self.aggregates.storage[seg['txt']][alpha]['data'] = data['data']
-							
+
 					elif seg['txt'].startswith('eof?'):
 						done = False
 						if do == 'max':
@@ -13631,15 +13887,15 @@ class Table:
 							try:
 								__.aggregate.eof.storage[seg['txt']][alpha]['data'] += data['data']
 							except Exception as e: cp('Error: add variable', 'red');
-						
+
 						if not done:
 							__.aggregate.eof.storage[seg['txt']][alpha]['data'] = data['data']
-				
+
 				else:
 					# print_( i, seg['txt'], data['data'] )
 					self.asset[i][seg['txt']] = data['data']
 
-					
+
 
 					return data
 				return { 'data': '' }
@@ -13685,7 +13941,7 @@ class Table:
 							for cn in str(v['data']):
 								if cn in '0123456789.':
 									nX.append(cn)
-					
+
 					try:
 						result = float(''.join(nX))
 					except Exception as e:
@@ -13723,7 +13979,7 @@ class Table:
 				if seg['txt'] == 'max':
 					result = []; v = {};
 					for s in seg['args']:
-						f = self.aggregate_record_process( i, s ); v = self.aggregateItemValue( v, f ); 
+						f = self.aggregate_record_process( i, s ); v = self.aggregateItemValue( v, f );
 					for d in v['data']:
 						if '?date' in v['params']:
 							try:
@@ -13744,7 +14000,7 @@ class Table:
 				if seg['txt'] == 'config':
 					result = []; v = {};
 					for s in seg['args']:
-						f = self.aggregate_record_process( i, s ); v = self.aggregateItemValue( v, f ); 
+						f = self.aggregate_record_process( i, s ); v = self.aggregateItemValue( v, f );
 					for par in v['params']:
 						result.append(par)
 					suffix = ''
@@ -13762,7 +14018,7 @@ class Table:
 				if seg['txt'] == 'format':
 					result = []; v = {};
 					for s in seg['args']:
-						f = self.aggregate_record_process( i, s ); v = self.aggregateItemValue( v, f ); 
+						f = self.aggregate_record_process( i, s ); v = self.aggregateItemValue( v, f );
 					for par in v['params']:
 						result.append(par)
 					suffix = ''
@@ -13792,7 +14048,7 @@ class Table:
 							try:
 								result = autoDate( v['data'] )
 							except Exception as e: pass;
-					
+
 					if not result is None:
 						try:
 							global _dir
@@ -13807,9 +14063,9 @@ class Table:
 						# self.asset[i]['dow'] = _dir.getDOWromEpochText( result )
 						# self.asset[i]['ago'] = _dir.dateDiffText( result )
 						self.asset[i] = isDate( result, self.asset[i] )
-						
+
 						# month year woy dow ago
-						
+
 
 						month = _dir.getMonthFromEpoch
 						# year = _dir.getYearFromEpoch
@@ -13877,7 +14133,7 @@ class Table:
 									"header": "",
 									"error": 0
 								}
-					
+
 					for k in info:
 						if not k in self.asset[i]:
 							self.asset[i][k] = info[k]
@@ -13895,17 +14151,17 @@ class Table:
 	def aggregateBuild( self ):
 		if self.aggregate_processed:
 			return None
-		
+
 		self.aggregate_processed = True
 
 
 		a = ' '.join( switches.values('Aggregate') )
 		# print_( a )
 
-		
+
 		self.aggregates = dot()
 
-		
+
 		self.aggregates.storage = {}
 		self.aggregates.group_storage = {}
 		# self.aggregates.segments = __.code.process( a, addString=[['alphaParam','?']] )
@@ -13935,7 +14191,7 @@ class Table:
 				elif '?' in rec['txt'] and rec['txt'].lower().split('?')[0]+'?' in __.aggregate.group_prefixes:
 				# elif 'g?' in rec['txt']:
 					self.aggregates.agroups[ rec['i'] ] = rec
-					
+
 					try:
 						gc = rec['txt'].split('?')[2]
 
@@ -13993,7 +14249,7 @@ class Table:
 
 
 	def aggregateGroup( self ):
-		# NOTE: reprocess after aggregates added        
+		# NOTE: reprocess after aggregates added
 		for ix in self.aggregates.agroups:
 			seg = self.aggregates.agroups[ix]
 			q = seg['txt'].split('?')
@@ -14034,7 +14290,7 @@ class Table:
 			self.aggregateRecordGroups( i )
 
 		if self.aggregates.agroupsADD:
-			
+
 
 			fields.register( self.groupID_KEY, 'val', 7, m=6 )
 			test = fields.padZeros( self.groupID_KEY, 'val', 5 )
@@ -14100,11 +14356,11 @@ class Table:
 					column = switches.value('Column')
 					if column == '*' and self.asset:
 						column = ','.join( list( self.asset[0].keys() ) )
-			
+
 				if switches.isActive('Sort'):
 					self.asset = self.sort()
 				elif switches.isActive('GroupBy'):
-					
+
 					switches.fieldSet('Sort','active',True)
 					switches.fieldSet('Sort','value',switches.value('GroupBy'))
 					self.asset = self.sort()
@@ -14222,7 +14478,7 @@ class Table:
 						depth[dpID]['children'].append(c.split(':')[1])
 					else:
 						depth.append({'parent': c.split(':')[0],'children': [c.split(':')[1]]})
-			
+
 			i = 0
 			for data in self.asset:
 				r = {}
@@ -14469,7 +14725,10 @@ class Table:
 		for item in self.asset:
 			# print_(item)
 			result = ''
+			# global switches
 			for c in column.split(','):
+				if switches.isActive('TablePlus'):
+					if not  _.showLine(str(item),_.switches.values('TablePlus'),_.switches.values('TableMinus')): continue
 				try:
 					pass
 					# result += self.showColumn(c,i,columnHeaderLength) + self.columnTab
@@ -14477,8 +14736,8 @@ class Table:
 					pass
 				# print_(result)
 				self.isExtraRecord = False
-				
-				
+
+
 				# if self.wrapTableKey+'-sort' in item:
 					# print_(  item[self.wrapTableKey+'-sort']  )
 					# print_(    )
@@ -14501,7 +14760,7 @@ class Table:
 					print_(12)
 					os._exit(0)
 			# print_(_str.totalStrip5(result)) #TESTING
-			
+
 			maxSize = len(result)+self.prefixSize()
 			if maxSize > __.terminal.width and not switches.isActive('NoWrapTable'):
 				ToDo = " result = ''   "
@@ -14547,7 +14806,7 @@ class Table:
 								if _g_ in ass and ass[_g_] == _sub_:
 									for gc in self.GroupTotals:
 										total[gc]+=ass[gc]
-										
+
 							if c in self.GroupTotals:
 								# _result_+=addField( addComma(self.GroupTotals[c]) ,c)
 								_result_+=addField( addComma(total[c]) ,c)
@@ -14568,7 +14827,7 @@ class Table:
 						colorizeRow( tableLine+result, prefix=self.tab['table']+loopPrint(__.table_prefix_padding), prefixColor=self.tab_color, haltColorShift=self.isExtraRecord )
 			i += 1
 			if 'expected_input_example' in column and 'switch' in column and  switchDefault == i:
-				
+
 				# if __.switch_skimmer.active: sys.exit()
 				pass
 				# print_('')
@@ -14590,7 +14849,7 @@ class Table:
 
 					if '?date' in __.aggregate.storage[k][y]['settings']:
 						__.aggregate.storage[k][y]['data'] = friendlyDate( __.aggregate.storage[k][y]['data'] )
-					theKey = f 
+					theKey = f
 					special = {}
 
 					kk = k
@@ -14619,7 +14878,7 @@ class Table:
 					if var in __.aggregate.config and kk in __.aggregate.config[var]:
 						for spK in __.aggregate.config[var][kk]:
 							special[spK] = __.aggregate.config[var][kk][spK]
-						
+
 
 					if '?fl' in special:
 						theKey = f + ' '+ y
@@ -14645,17 +14904,17 @@ class Table:
 			footer_txt.append( __.aggregate.prefix )
 
 			for k in footer:
-				footer_txt.append( k+':' ) 
-				footer_txt.append( footer[k] ) 
+				footer_txt.append( k+':' )
+				footer_txt.append( footer[k] )
 				footer_txt.append( '  ' )
-			cp( footer_txt, 'cyan' ) 
+			cp( footer_txt, 'cyan' )
 			# print_( __.aggregate.config )
 			print_()
 					# print_( f, y, __.aggregate.storage[k][y]['data'] )
 			# print_( k )
 			# sys.exit()
 
-	def sort(self,fields=''):# sortThis  
+	def sort(self,fields=''):# sortThis
 		rows = self.asset
 
 		if not len(self.asset):
@@ -14663,7 +14922,7 @@ class Table:
 
 		if self.wrapTableKey+'-sort' in self.asset[0]:
 			return rows
-		
+
 
 		global errors
 		global switches
@@ -14707,7 +14966,7 @@ class Table:
 					self.asset = sorted(self.asset, key=itemgetter(self.findColumName(item)))
 				except Exception as e:
 					errors.append({'id': 17, 'function': 'sortThis()', 'cnt': 2, 'location': 'rows = sorted(rows, key=itemgetter(sb))', 'vars': [{'name': 'rows', 'value': 'nope to that, to big'}, {'name': 'name', 'value': name}], 'error': e})
-				
+
 			import uuid
 			sortBy[item] = str(uuid.uuid4())
 			tempFields.append( sortBy[item] )
@@ -14746,8 +15005,15 @@ class Table:
 
 	def save(self,theFile = '',tableTemp = True,printThis = True, me=0):
 		HD.chmod(theFile)
-		try: simplejson = __.imp('simplejson')
-		except: import simplejson
+		try:
+			import simplejson
+			json = simplejson
+		except:
+			pass
+		try:
+			import json
+		except ImportError:
+			json = simplejson
 		if theFile == '':
 			theFile = str(self.file)
 		self.file = theFile
@@ -14768,8 +15034,15 @@ class Table:
 		if me and theFile in vv.opened_file_me: changeM( theFile, vv.opened_file_me[theFile] );
 	def get(self,theFile = '',tableTemp = True,printThis = False):
 		if os.path.isfile(theFile): vv.opened_file_me[theFile] = os.path.getmtime( theFile );
-		try: simplejson = __.imp('simplejson')
-		except: import simplejson
+		try:
+			import simplejson
+			json = simplejson
+		except:
+			pass
+		try:
+			import json
+		except ImportError:
+			json = simplejson
 		if theFile == '':
 			theFile = self.file
 		self.file = theFile
@@ -14831,14 +15104,14 @@ class Tables:
 			return None
 		if name is None:
 			name = self.tables[ len(self.tables)-1 ].name
-		
+
 		self.tables[ self.index[name] ].aggregate( code )
 
 
 	def rprint( self, asset, columns=None, name=None, n=None, sc=True, printColumns=True, h=None, l=None, p=None ):
 		if columns is None:
 			columns = ','.join(list(asset[0].keys()))
-		
+
 
 		if not h is None:
 			printColumns = h
@@ -15072,7 +15345,7 @@ class Tables:
 			if t.name == table:
 				self.tables[i].tableProfileDefaultSupersedes = value
 			i += 1
-		
+
 	def getLength(self,name,fields):
 		i = 0
 		for t in self.tables:
@@ -15199,7 +15472,7 @@ class Tables:
 					if var in __.aggregate.config and kk in __.aggregate.config[var]:
 						for spK in __.aggregate.config[var][kk]:
 							special[spK] = __.aggregate.config[var][kk][spK]
-						
+
 
 					if '?first' in special:
 						theKey = f
@@ -15228,10 +15501,10 @@ class Tables:
 			footer_txt.append( __.aggregate.prefix )
 
 			for k in footer:
-				footer_txt.append( k+':' ) 
-				footer_txt.append( footer[k] ) 
+				footer_txt.append( k+':' )
+				footer_txt.append( footer[k] )
 				footer_txt.append( '  ' )
-			cp( footer_txt, 'cyan' ) 
+			cp( footer_txt, 'cyan' )
 			# print_( __.aggregate.config )
 			print_()
 					# print_( f, y, __.aggregate.storage[k][y]['data'] )
@@ -15288,7 +15561,7 @@ def formatSize(size,what=None):
 		else:
 			num = round(size / 1208925819614629174706176, 2)
 			result = str(num) + ' YB'
-	
+
 	elif not what is None:
 		what=what.upper()
 		if size == None:
@@ -15377,7 +15650,7 @@ def formatSize(size,what=None):
 					else:
 						break
 				pass
-				num=round(num,roun)         
+				num=round(num,roun)
 			result = str(num) + ' EB'
 		elif what == 'ZB':
 			num = size/1180591620717411303424
@@ -15763,7 +16036,7 @@ def timeAgo_past(do='', startDate=None):
 			units = units.replace( 'm', '' )
 			units = int( units )
 			remove = units * each
-			return startDate - remove  
+			return startDate - remove
 	if 'mm' in do or 'min' in do:
 		each = 60
 		units = do
@@ -15771,7 +16044,7 @@ def timeAgo_past(do='', startDate=None):
 		units = units.replace( 'm', '' )
 		units = int( units )
 		remove = units * each
-		return startDate - remove  
+		return startDate - remove
 
 	if 'h' in do:
 		each = 3600
@@ -15779,7 +16052,7 @@ def timeAgo_past(do='', startDate=None):
 		units = units.replace( 'h', '' )
 		units = int( units )
 		remove = units * each
-		return startDate - remove  
+		return startDate - remove
 
 
 	fnd = 'ymwd'
@@ -15870,7 +16143,7 @@ def timeAgo_do( do, epoch):
 	dic={}
 	if not do:
 		return do
-	
+
 	add=False
 	builder=''
 	i=-1
@@ -15965,7 +16238,7 @@ def timeFuture(do='', startDate=None):
 		units = units.replace( 'm', '' )
 		units = int( units )
 		remove = units * each
-		return startDate + remove  
+		return startDate + remove
 	if isTime:
 		if 'm' in do:
 			each = 60
@@ -15973,7 +16246,7 @@ def timeFuture(do='', startDate=None):
 			units = units.replace( 'm', '' )
 			units = int( units )
 			remove = units * each
-			return startDate + remove  
+			return startDate + remove
 
 	if 'h' in do:
 		each = 3600
@@ -15981,7 +16254,7 @@ def timeFuture(do='', startDate=None):
 		units = units.replace( 'h', '' )
 		units = int( units )
 		remove = units * each
-		return startDate + remove  
+		return startDate + remove
 	if 's' in do:
 		units = do
 		units = units.replace( 's', '' )
@@ -16195,7 +16468,7 @@ def dateDiffDic( one, two ):
 	#           cnt['m'] += 1
 
 	#       if twoB[1] == 13:
-				
+
 	#           twoB[1] = 1
 	#           twoB[0] += 1
 	cnt['y'] = int(str( cnt['m']/12 ).split('.')[0])
@@ -16249,7 +16522,7 @@ def dateDiffDic( one, two ):
 #               if twoB[1] == 0:
 #                   twoB[1] = 12
 #                   twoB[0] -= 1
-	
+
 #   # md = days_in_month( twoB[1], twoB[0] )
 #   # if twoB[2] > md:
 #   #   dif = twoB[2] - md
@@ -16281,7 +16554,7 @@ def woy_from_year_week( y, w ):
 	return str(round(w * 0.01,2) + y)
 
 def woy2dates( woy ):
-	s = woy2date( woy ) 
+	s = woy2date( woy )
 	e = days_math( s, 7, '+' )-1
 	return [s, e]
 
@@ -16307,7 +16580,7 @@ def dateDiffText( theDate, epoch=None ):
 		epoch = time.time()
 	# woy = getWOY( theDate )
 	days = abs(daysDiff( theDate, epoch ))
-	
+
 	if theDate < epoch:
 		end = '<'
 	else:
@@ -16370,7 +16643,7 @@ def getWOY( theDate ):
 	weekAndYear = round(woy * 0.01,2) + year
 	weekAndYear = str(weekAndYear)
 	if len(weekAndYear) == 6:
-		weekAndYear += '0' 
+		weekAndYear += '0'
 	return weekAndYear
 
 def getYearFromEpoch(theDate):
@@ -16435,7 +16708,7 @@ def yearMath( thisDate, years, do='+' ):
 		elif do == '-':
 			parts[0] -= 1
 		i+=1
-				
+
 
 	return autoDate(  str(parts[0])+'-'+parts[1]+'-'+parts[2] +' '+ theDateParts[1] )
 
@@ -16580,7 +16853,7 @@ class Databases:
 # FOREIGN KEY (project_id) REFERENCES projects (id)
 
 	def __init__( self ):
-		
+
 		self.databases = []
 
 
@@ -16614,7 +16887,7 @@ class Databases:
 		for i,d in enumerate(self.databases):
 			if self.databases[i].name == name:
 				return self.databases[i].insertRecords( table=table, records=records )
-							
+
 	def trigger( self, name, table, field, trigger ):
 		for i,d in enumerate(self.databases):
 			if self.databases[i].name == name:
@@ -16622,7 +16895,7 @@ class Databases:
 
 
 class Database:
-	
+
 	def __init__( self, name=False, file=False, table=False, records=False, fields=False, delete=False, description=False, project=False, auto=False, printFileActivity=False ):
 		self.initialized = []
 		self.initializedDB = False
@@ -16641,7 +16914,7 @@ class Database:
 
 		self.table = table
 		self.records = records
-		
+
 		self.fieldsManual = fields
 		self.fields = {}
 
@@ -16667,7 +16940,7 @@ class Database:
 			if not type( table ) == bool:
 				if not type( self.records ) == bool:
 					self.insertRecords( table )
-					
+
 
 
 	def generateStructure( self, table ):
@@ -16681,7 +16954,7 @@ class Database:
 
 				self.genInfo( process=True )
 
-			
+
 
 	def addTrigger( self, table, field, trigger ):
 		for i,r in enumerate(self.tables):
@@ -16930,8 +17203,8 @@ class Database:
 					else:
 						fields.append({ 'name': fieldsX[1], 'type': fieldsX[2],  })
 
-					
-				
+
+
 				self.tableInfo.append({ 'name': table, 'fields': fields })
 
 			conn.close()
@@ -16951,7 +17224,7 @@ class Database:
 							found = True
 				if not found:
 					dataOK = False
-			
+
 		for table in self.tableInfo:
 			self.tables.append( DatabaseTables( table['name'], table['fields'] ) )
 			self.updateManualFieldInfo()
@@ -17040,7 +17313,7 @@ class Database:
 
 class DatabaseTables:
 	def __init__( self, table=False, fields=False ):
-		
+
 		self.fields = []
 
 		self.table = table
@@ -17156,7 +17429,7 @@ class Database2:
 #       { 'type': 'field_type(sort)', 'names': 'field', 'order': 'asc'},
 #       { 'type': 'field_type(sort)', 'names': 'field', 'order': 'desc'},
 #   ]
-# } 
+# }
 
 	def queryBuilder(self,data): # queryBuilder
 		self.data = data
@@ -17190,7 +17463,7 @@ class Database2:
 			for iJ,tJ in enumerate(tbls):
 				if iJ > 0:
 					sql += ' JOIN ' + tJ + ' ON ' + tJ + '.id_parent = ' + tbls[0] + '.id_uuid '
-				
+
 			sql += ' WHERE '
 		else:
 			sql = 'SELECT '
@@ -17395,12 +17668,12 @@ class Database2:
 					# print_(field['field'],row[fi])
 					aKey = str(m['table']) + '-' + str(number2Words(field['field']))
 					# print_(aKey)
-					
+
 					try:
 						if not type(average[aKey]['datapoints']) == list:
 							average[aKey] = {'max': 0, 'min': 'first', 'average': 0, 'datapoints': [], 'count': 0}
 
-						# print_(type())                     
+						# print_(type())
 					except Exception as e:
 						average[aKey] = {'max': 0, 'min': 'first', 'average': 0, 'datapoints': [], 'count': 0}
 					average[aKey]
@@ -17714,6 +17987,7 @@ ciData = (
 		[ ';sq',        "'"       ],
 		[ 'null00',     '"",'     ],
 		[ '"\'", "\'"', "','"      ],
+		[ '[gg]',       '>>'       ],
 		[ '[star]',     '*'       ],
 		[ '[a]',        '*'       ],
 		[ '[s]',        '$'       ],
@@ -17747,7 +18021,7 @@ ciData = (
 		['[oo]',          '>>'       ],
 		[';bk',         _v.myBackup ],
 		[ '[caret]',    '^'       ],
-		
+
 
  )
 ci_spent=[]
@@ -18085,11 +18359,14 @@ def autoAbbreviations():
 	global myFileLocation_File
 	if not type( myFileLocation_File ) == bool:
 		if not len( appInfo[__.appReg]['columns'] ) and myFileLocation_File.lower().endswith('.json'):
-			
+
 			printAutoAbbreviations_scheduled = True
 			data = []
 			groups = {}
-			myFileLocation_File_Data = getTable2( myFileLocation_File )
+			try:
+				myFileLocation_File_Data = getTable2( myFileLocation_File )
+			except:
+				return None
 			if type( myFileLocation_File_Data ) == dict:
 				myFileLocation_File_Data = [myFileLocation_File_Data]
 			for i,key in enumerate( myFileLocation_File_Data[0].keys()):
@@ -18123,7 +18400,7 @@ def autoAbbreviations():
 
 				for k in record.keys():
 					groups[ k ][ record[k] ]['ids'].append( i )
-				
+
 				data.append( record )
 
 
@@ -18139,7 +18416,7 @@ def autoAbbreviations():
 						if not i == 0:
 							flagged.append({ 'first': k, 'id': idx, 'assigned': False })
 
-			
+
 			if flag:
 				flagsResolved = 0
 				for k in groups['firstofword'].keys():
@@ -18170,7 +18447,7 @@ def autoAbbreviations():
 									if flagged[i]['id'] == x:
 										flagsResolved += 1
 										flagged[i]['assigned'] = True
-										approvedAbbreviations.append({ 'key': data[x]['key'], 'abbreviations': k })         
+										approvedAbbreviations.append({ 'key': data[x]['key'], 'abbreviations': k })
 
 				if not flagsResolved == len(flagged):
 					for i,f in enumerate(flagged):
@@ -18216,8 +18493,8 @@ def printAutoAbbreviations():
 
 
 class ThisThread( threading.Thread ):
-	
-	
+
+
 	def __init__( self, name, fn=None, a=None, t=None, k=None, timeout=120, start=True, qID=None ):
 		threading.Thread.__init__(self)
 		self.qID = qID
@@ -18300,7 +18577,7 @@ class ThisThread( threading.Thread ):
 		for id, thread in threading._active.items():
 			if thread is self:
 				return id
- 
+
 	def kill( self ):
 		# print_( 'kill started' )
 		self.wasKilled = True
@@ -18315,7 +18592,7 @@ class ThisThread( threading.Thread ):
 		#   ctypes.pythonapi.PyThreadState_SetAsyncExc(thread_id, 0)
 		# print_( 'kill complete' )
 		# raise Exception('My error!')
-		
+
 
 
 
@@ -18332,7 +18609,7 @@ class Threads:
 			name = __.uuid()
 		# Threads.openCnt += 1
 		self.active = False
-		
+
 		self.created = time.time()
 		if focus is None:
 			focus = __.appReg
@@ -18360,7 +18637,7 @@ class Threads:
 		# self.triggerArg = False
 		self.executed = False
 		self.triggerError = False
-		
+
 		self.thisThread = None
 
 		__.threadActivity[self.qID] = {}
@@ -18371,10 +18648,10 @@ class Threads:
 		# try:
 		#   self.instance = appInfo[focus]['instance']
 		# except Exception as e:
-			
 
 
-		self.log = { 
+
+		self.log = {
 						'id':       self.qID,
 						'parent':   self.pID,
 						'app':      self.app,
@@ -18424,7 +18701,7 @@ class Threads:
 		#     pass
 		return self.log
 
-		
+
 
 	def open( self ):
 		# print_('open 0')
@@ -18524,7 +18801,7 @@ class Threads:
 				printBold('close trigger error '+str(self.focus)+' '+ str(self.name) +' '+ str(self.func)+' '+ str(triggerName), 'red')
 				self.triggerError = True
 
-		
+
 
 		# Threads.closedCnt += 1
 		# print_('Closed:',self.qID,'\tTotal Closed:',Threads.newCounter,'\tScheduler:',__.queueCountScheduleAudit,__.queueCountSchedule,'\tTimers:',__.queueCountTimer)
@@ -18553,7 +18830,7 @@ class Queue:
 		self.completionTime = 0
 		self.lastActivity = 0
 		self.lastActivityEach = {}
-		
+
 		# self.qID_index = {}
 
 		self.records = {}
@@ -18654,12 +18931,12 @@ class Queue:
 
 
 
-# func=False, arg=False, kwargs=False, focus=False , addID=True , 
+# func=False, arg=False, kwargs=False, focus=False , addID=True ,
 # loaded=False,
 # , pID=False
 
 
-	
+
 	def register( self, name, trigger=None, triggerArg=False, triggerKwargs=False,  timeout=False, database=False, focus=None,      completed=None, onComplete=None,      oc=None, c=None, a=None, k=None, t=None, d=None  ):
 		if not completed is None:
 			trigger = completed
@@ -19061,7 +19338,7 @@ class Queue:
 				# str((self.completionTime/1000)%60)
 				print_()
 				print_('timeouts:',self.timeoutCount())
-				# print_("Average of the list =", round(average, 2)) 
+				# print_("Average of the list =", round(average, 2))
 				print_()
 				print_('__________________________________________')
 			elif self.statusTotal > 0:
@@ -19165,7 +19442,7 @@ class Queue:
 			# Timer( self.scheduleLoop, threadSchedule ).start()
 		else:
 
-			i = 0 
+			i = 0
 			while self.opened < self.maxThreads-10 and i < self.notstarted:
 				# time.sleep(.02)
 				# print_( 'open:', self.opened, 'max:', self.maxThreads )
@@ -19246,7 +19523,7 @@ class Queue:
 		if self.loadedBy > 0:
 			if self.loadedBy > self.lastActivity:
 				shouldRun = False
-		
+
 		if shouldRun:
 			for f in self.records.keys():
 				for n in self.records[f]['names'].keys():
@@ -19302,7 +19579,7 @@ class Queue:
 			# if self.loadedBy > 0:
 			#     if self.loadedBy > self.lastActivityEach[focus][name]:
 			#         shouldRun = False
-			
+
 			if shouldRun:
 
 				if not self.records[f]['names'][n]['loaded']:
@@ -19421,7 +19698,7 @@ class Queue:
 						__.datadumps += 1
 						if type(self.records[focus]['names'][name]['database']) == bool or self.records[focus]['names'][name]['database'] is None:
 							if len(__.projectData[focus][name][pdID]['data']) > 0:
-								
+
 								saveTableSplitNew( __.projectData[focus][name][pdID]['data'], logName, project=True )
 								print_( 'check0:', focus, name, pdID )
 								if not 'folder' in name:
@@ -19505,7 +19782,7 @@ class Queue:
 										sys.exit()
 									__.projectData[focus][name][pdID]['saveInitiated'] = False
 									threadTimer( .5, enableThreadDataSwap )
-							
+
 								else:
 									print_()
 									print_('Data saved to:',self.records[focus]['names'][name]['database'])
@@ -19525,7 +19802,7 @@ class Queue:
 										saveTableSplitNew( errors, logName+'__ERRORS__', project=True )
 									# except Exception as e:
 									#   saveTableSplitNew( __.projectData[focus][name][__.projectData[focus][name][pdID]['saveInitiated']['pdID']]['data'], __.projectData[focus][name][pdID]['saveInitiated']['logname'], project=True )
-									
+
 
 
 									# __.projectData[focus][name][  __.projectData[focus][name][pdID]['saveInitiated']['pdID']  ]['data'] = []
@@ -19557,14 +19834,14 @@ class Queue:
 							# print_()
 
 							if len(__.projectData[focus][name][pdID]['data']) >= self.projectDataMaxLen:
-								
+
 								if __.pdID[focus][name] == 0:
 									__.pdID[focus][name] = 1
 									print_( 'NOW: 1' )
 								else:
 									__.pdID[focus][name] = 0
 									print_( 'NOW: 0' )
-								
+
 								logname = 'auto_' + self.records[focus]['app'] + '_' + str(self.created)
 								__.saveInitiated = True
 
@@ -19584,7 +19861,7 @@ class Queue:
 
 			# self.timeout = False
 			# self.timeoutAsk = False
-			
+
 
 
 	def listen( self, qID, trigger=False, triggerArg=False, kwargs=False, data=False  ):
@@ -19637,7 +19914,7 @@ class Queue:
 					except Exception as e:
 						args[0]['args']['data'] = data
 
-					
+
 					# print_(args)
 					threadTimer( .0001, threadKwargs, args )
 				elif not type(data) == bool and not type(triggerArg) == bool and not kwargs:
@@ -19673,7 +19950,7 @@ class Queue:
 					cnt += 1
 		return cnt
 
-				
+
 
 	def kill( self, qID ):
 
@@ -19684,7 +19961,7 @@ class Queue:
 			if self.records[ self.table['focus'][qID] ]['threads'][i].qID == qID:
 				focus = self.table['focus'][qID]
 				name = self.records[self.table['focus'][qID]]['threads'][i].name
-		
+
 				self.spent( qID, 0 )
 				self.records[focus]['threads'][i].hasTimedOut = 1
 				self.records[focus]['threads'][i].thisThread.kill()
@@ -19754,9 +20031,9 @@ class Queue:
 		#                         if diff > self.records[focus]['names'][name]['timeout']:
 		#                             self.records[focus]['threads'][i].timeout = True
 		#                             __.threadQueue[  self.records[focus]['threads'][i].qID  ]._stop()
-							
 
-		
+
+
 	def audit( self ):
 		if not type(self.listeningFor) == bool:
 			self.listener()
@@ -19779,7 +20056,7 @@ class Queue:
 						for focus in self.records.keys():
 							for name in self.records[focus]['names'].keys():
 								self.loaded( name=name, focus=focus )
-						
+
 						self.numberClosed()
 
 
@@ -19874,7 +20151,7 @@ class Queue:
 								shouldAct = True
 
 							if shouldAct:
-								
+
 								if self.records[f]['names'][n]['failure'] >= self.auditMaxFailuresBeforeAction:
 									lastMax = self.records[f]['names'][n]['maxThreads']
 									if self.records[f]['names'][n]['changes'] >= self.auditPercentDrasticThreshold:
@@ -19906,7 +20183,7 @@ class Queue:
 #                       if not self.records[f]['names'][n]['loaded']:
 #                           self.records[f]['names'][n]['maxThreads'] = True
 
-#                           self.records[f]['names'][n]['maxThreads'] = 
+#                           self.records[f]['names'][n]['maxThreads'] =
 
 
 #       self.auditPercentReduceByOverMax = 15       self.maxThreads = 1000
@@ -19951,7 +20228,7 @@ class Queue:
 			for i,t in enumerate(self.records[f]['threads']):
 				for n in self.records[f]['names'].keys():
 					if not self.records[f]['threads'][i].name == n:
-						self.records[f]['names'][n]['closed'] = 0 
+						self.records[f]['names'][n]['closed'] = 0
 
 
 		info = {}
@@ -19976,7 +20253,7 @@ class Queue:
 							if self.isEverythingLoadedEach( name=n, focus=f ) and self.isEverythingClosedEach( name=n, focus=f ):
 								self.spendFocus( n, f, 3 )
 								# if not type( self.records[f]['names'][n]['trigger'] ) == bool:
-								
+
 
 		self.totalClosed = totalClosed
 
@@ -19986,7 +20263,7 @@ class Queue:
 		topruntime = []
 		bottomruntime = []
 		bottomruntimeFresh = []
-		
+
 		length = len(self.records[focus]['threads'])
 		sampleSize = percentageInt( self.auditPercentSample, length )
 		bottom = length - sampleSize
@@ -20015,7 +20292,7 @@ class Queue:
 	def getRuntimeMemoryFocusTopBottom( self, focus ):
 		topruntime = []
 		bottomruntime = []
-		
+
 		length = len(self.records[focus]['threads'])
 		sampleSize = percentageInt( self.auditPercentSample, length )
 		bottom = length - sampleSize
@@ -20040,7 +20317,7 @@ def enableThreadDataSwap():
 	# print_( __.processing )
 	print_( 'post process size:', len(__.projectData[ __.processing[0] ][ __.processing[1] ][   __.processing[2]   ]['data']) )
 	__.saveInitiated = False
-	
+
 	# __.projectData[focus][name][0]['data'] = []
 	print_( 'key test0:', __.projectData[ __.processing[0] ].keys() )
 	# __.projectData[ __.processing[0] ][ __.processing[1] ][   __.processing[2]   ]['data'] = []
@@ -20270,11 +20547,11 @@ def loadingGraphic():
 	global theLoadingGraphic
 
 	class ImageLabel(tk.Label):
-		
+
 		#A Label that displays images, and plays them if they are gifs
 
 		#:im: A PIL Image instance or a string filename
-		
+
 		def load(self, im):
 			if isinstance(im, str):
 				im = Image.open(im)
@@ -20457,9 +20734,9 @@ class Fields:
 					result[record.name]=43
 				else:
 					result[record.name] = record.maxField
-			
+
 		return result
-		
+
 
 	def register( self, project='', names='', value='', appReg=False, script=False, maxField=None,        p=None, n=None, v=None, m=None, isRegisterDic=False ):
 
@@ -20480,7 +20757,7 @@ class Fields:
 
 		if not maxField is None:
 			maxField = maxField
-			
+
 		if not m is None:
 			maxField = m
 
@@ -20508,7 +20785,7 @@ class Fields:
 	def registerValue( self, project, name, value, appReg=False ):
 		if type(appReg) == bool:
 			appReg = __.appReg
-		
+
 		result = False
 		for i,s in enumerate(self.fields[project]):
 			if self.fields[project][i].appReg == appReg and project == self.fields[project][i].project and name == self.fields[project][i].name:
@@ -20616,6 +20893,7 @@ def load():
 	global switches_loaded
 	switches_loaded += 1
 	if switches_loaded > 1:
+		if not __.setting('default-switches'): return None
 	# if True
 		global switches
 		global switchDefault
@@ -20625,9 +20903,11 @@ def load():
 		# switches.trigger('Column',formatColumns)
 
 		switchDefault = switches.length()
-		switches.register('Help', '?,??,/?,/??,-?,-??,--??,/h,/help,-help,--help', 'copy  OR ids  OR  12  OR  ?? x', default=True)
+		switches.register('Help', '?,??,/?,/??,-?,-??,--??,/h,/help,-help,--help', '(?? Print Table Help Without Global Switches) copy  OR ids  OR  12  OR  ?? x ', default=True)
 		switches.register('Column', '-c,-column', 'size, name', default=True)
 		switches.register('Sort','-s,-sort', 'a.type, d.ext', default=True)
+		switches.register('TablePlus','t+,+t,-ts+,-st+,-tablesearch', 'Search_Sting', default=True)
+		switches.register('TableMinus','t-,-t,-ts-,st-,-tableminus', 'Search_Sting', default=True)
 		switches.register('Debug', '-debug', default=True)
 		switches.register('DumpSwitches', '-dump', 'all', default=True)
 		switches.register('Errors', '-Error,-Errors', '8,11 OR hide:8,11', default=True)
@@ -20658,18 +20938,19 @@ def load():
 		switches.register('PlusClose', '+close', '90%', default=True)
 		switches.register('PlusCode', '+code','=  OR  *x  OR  x*  AND/OR color AND/OR n/new' , default=True)
 		switches.register('PlusDuplicate', '+dup,+duplicate', '90%', default=True)
-		switches.register('StrictCase', '-case,-strictcase', default=True)
+		switches.register('StrictCase', '-case,-strictcase,-strict', default=True)
 		switches.register('PrintAutoAbbreviations', '-printa,-aprint', default=True)
 		switches.register('NoColor', '-nocolor', space=True, default=True)
 		switches.register('LoadEpoch', '-loadepoch', default=True)
 		switches.register('PrintEpoch', '-printepoch', default=True)
+		switches.register('NoTitleChange', '-ntc,-notitlechange', default=True)
 		switches.register('chmod', '-chmod,-777', default=True)
 		switches.register( 'Paste-isData', '--pa,--paste,-ppa,-ppaste,-ispa,-idpa' , default=True)
 		switches.register( 'Paste-isData-json', '--json,-pjson,-jsonp' , default=True)
 		switches.register( 'Markdown-Table', '--md' , default=True)
 		# switches.register('SkipColumnTriggers', '-skiptriggers', default=True)
 		defaultScriptTriggers_do()
-		
+
 import importlib
 
 regImps = {}
@@ -20722,7 +21003,7 @@ class regImp:
 		self.focus = self.imp.focus( parentApp=focus )
 		# print('self.focus:',self.focus)
 		self.focusPop = focus
-		
+
 		self.saveLog = True
 
 		try:
@@ -20782,7 +21063,7 @@ class regImp:
 
 		try:
 			appData[self.focus]['data']['table']['received']
-			
+
 			profile = _profile.records.audit( 'pipe', data, appReg=[appReg,self.focus] )
 			appData[appReg]['data']['table']['sent'].append( profile )
 			appData[self.focus]['data']['table']['received'].append( profile )
@@ -20862,7 +21143,7 @@ class regImp:
 			result = self.imp.action(**kwargs)
 		else:
 			result = self.imp.action()
-		
+
 		if focusPop:
 			__.appReg = self.focusPop
 
@@ -20915,7 +21196,7 @@ class regImp:
 		# else:
 		#   result = theFunction(arg)
 
-		
+
 
 		if focusPop:
 			__.appReg = self.focusPop
@@ -21034,7 +21315,7 @@ def autoKwargsGetArgsFromApp(app):
 	# types of timestamps:
 	#                       1522705321.1137724      file create, modification
 	#                       1517338060740           int(round(time.time() * 1000))
-	
+
 
 
 # _.regImps( focus(), 'app' )
@@ -21050,7 +21331,7 @@ def autoKwargsGetArgsFromApp(app):
 # class regImp:
 
 
-# 2B-C3P0-AF i: {id} 
+# 2B-C3P0-AF i: {id}
 # 2B-R2D2-AF
 # r: {relatedid}
 
@@ -21061,7 +21342,7 @@ def autoKwargsGetArgsFromApp(app):
 
 leap_years_table = None
 ###############################################
- 
+
 
 
 
@@ -21088,7 +21369,7 @@ leap_years_table = None
 
 To Do: * aggregate *
 	p ls -g folder ext -aggregate sum{bytes} -c folder ext bytes
-		self.group_structure[ folder ][ ext ] 
+		self.group_structure[ folder ][ ext ]
 		sum( self.group_structure[ folder ][ ext ][ ' - aggregates (A359) - ' ][ bytes ] )
 
 """
@@ -21125,9 +21406,9 @@ _cryptFile.do( 'action' )
 
 
 def err( msg='STOP' , e=None, note=None, kill=True):
-	
+
 	cp( linePrint(txt='*',p=0), 'red' )
-	
+
 	cp( '  Error', 'red' )
 	if type(msg) == str:
 		cp( [ '  \t', msg ], 'yellow' )
@@ -21190,10 +21471,10 @@ def err( msg='STOP' , e=None, note=None, kill=True):
 
 	elif not note is None and type(note) == str:
 		cp( ['  \t\t   -',note], 'cyan' )
-	
+
 	# if not note is None:
 		# cp( ['  \t\t\t',note], 'cyan' )
-		
+
 	# cp( '**********************************************************************', 'red', isError=True )
 	# linePrint()
 	cp( linePrint(txt='*',p=0), 'red' )
@@ -21222,7 +21503,7 @@ def historyPrint( code, pre='' ):
 	if switches.isActive('DoNotColorize'):
 		return code
 	result = ''
-	
+
 	colors = {
 				'cmd': 'purple',
 				'py': 'yellow',
@@ -21232,7 +21513,7 @@ def historyPrint( code, pre='' ):
 				'quote': 'darkcyan',
 	}
 
-		
+
 	lastP=False
 	lastSwitch=False
 	lastCMD=False
@@ -21303,9 +21584,9 @@ class ONLINE:
 	def __init__( self ):
 		self.onStatus=0
 		self.ip='0.0.0.0'
- 
-		
- 
+
+
+
 
 	def page( self, url ):
 		# requests = vc.FIG.imp('requests')
@@ -21326,9 +21607,9 @@ class ONLINE:
 
 
 	def status( self ):
- 
+
 		# loader()
- 
+
 		# requests = vc.FIG.imp('requests')
 		requests = __.imp('requests')
 		if requests is None:
@@ -21362,7 +21643,7 @@ class ONLINE:
 		if not os.path.isdir(_v.home +os.sep+ '.rt'):
 			os.mkdir(_v.home +os.sep+ '.rt')
 
-		
+
 
 		if self.status():
 			cp( ['status:', self.onStatus], 'green' )
@@ -21393,7 +21674,7 @@ class ONLINE:
 					if os.path.isfile(rec['path']):
 						shouldProcess = True
 				if shouldProcess:
-					
+
 					if os.path.isfile(p):
 						os.unlink(p)
 					if not os.path.isfile( p ):
@@ -21631,7 +21912,7 @@ def dict_generator(indict, pre=None, fields=[] ):
 				for d in dict_generator(v, pre + ['i'],fields):
 					yield d
 
-		# yield pre 
+		# yield pre
 
 # index = {}
 # for x in _.dict_generator(dic):
@@ -21727,7 +22008,7 @@ def newid(subject):
 	url='https://eyeformeta.com/apps/ids/?subject=live-'+subject
 	page = requests.get(url).content.decode("utf-8").replace('\\n','\n').replace('\n','').replace('\r','').replace(' ','').replace('\t','')
 	return page
-	
+
 
 _fileBackup=None
 def bk(path,flag=None):
@@ -21760,7 +22041,7 @@ def l_fieldSet( switchName, switchField, switchValue, theFocus=False ):
 	switches.fieldSet( switchName, switchField, switchValue, theFocus )
 def l_registerSwitches_vars():
 	autoBackupData = __.setting('receipt-log')
-	__.releaseAcquiredData = __.setting('receipt-file') 
+	__.releaseAcquiredData = __.setting('receipt-file')
 	__.myFileLocations_SKIP_VALIDATION = __.setting('myFileLocations-skip-validation')
 	__.isRequired_Pipe = __.setting('require-pipe')
 	__.isRequired_Pipe_or_File = __.setting('require-pipe||file')
@@ -21792,7 +22073,7 @@ def l_registerSwitches( trig=None, sw=None ):
 	__.constructRegistration( appInfo[__.appReg]['file'],__.appReg )
 	if not sw is None: sw();
 	if not trig is None: trig();
-	
+
 	defaultScriptTriggers()
 	switches.process()
 	# pr('l_registerSwitches',c='gray')
@@ -21857,16 +22138,16 @@ def dots(path):
 			if i == len(rts)-1: return eval(rts[0]);
 nsfw_=False
 def ad(path=None,label='ad'):
-	if not os.path.isdir(_v.ads+os.sep+'apps'): return None
+	if not os.path.isdir(_v.ads): return None
 	global SHOW_ADS
 	if not SHOW_ADS: return None
 	global MINI_ADS
 	global ads
 	ads = []
-	
+
 	def add_ad_fo(ad_fo):
 		global ads
-		for a2 in fo(_v.ads+os.sep+ad_fo): ads.append(a2);
+		for a2 in fo(_v.ads+ad_fo): ads.append(a2);
 
 	# print(_v.life+'apps')
 	# sys.exit()
@@ -21888,7 +22169,7 @@ def ad(path=None,label='ad'):
 			if nsfw: saveText('1',_v.rtp+'vars'+os.sep+'nsfw')
 			else:    saveText('0',_v.rtp+'vars'+os.sep+'nsfw')
 
-	
+
 	if path:
 		cho=__.path(path)
 		sub=__.path(cho,file=True)
@@ -21898,12 +22179,12 @@ def ad(path=None,label='ad'):
 		import random
 		add_ad_fo('apps')
 		add_ad_fo('quotes')
-		
+
 
 		if nsfw:
 			add_ad_fo('nsfw')
-			
-		
+
+
 		ri = random.randrange(len(ads))
 		cho=ads[ri]
 		sub=__.path(cho,file=True)
@@ -21964,8 +22245,15 @@ def getConfig(path):
 		if string.startswith('"'): string=string[1:]; string=string[:-1]; return _cl_(string);
 		if string.startswith("'"): string=string[1:]; string=string[:-1]; return _cl_(string);
 		if string.startswith('[') or string.startswith('{'):
-			try: simplejson = __.imp('simplejson')
-			except: import simplejson
+			try:
+				import simplejson
+				json = simplejson
+			except:
+				pass
+			try:
+				import json
+			except ImportError:
+				json = simplejson
 			return simplejson.loads(string)
 		if string.lower() == 'none': return None;
 		if string.lower() == 'null': return None;
@@ -22002,8 +22290,15 @@ def saveConfig(data,path):
 		elif type(string) == str and '\n' in string: return _cl_(str({'d':string})[7:-2]);
 		elif type(string) == int or type(string) == float: return _cl_(str(string));
 		elif type(string) == dict or type(string) == list:
-			try: simplejson = __.imp('simplejson')
-			except: import simplejson
+			try:
+				import simplejson
+				json = simplejson
+			except:
+				pass
+			try:
+				import json
+			except ImportError:
+				json = simplejson
 			return simplejson.dumps(string, sort_keys=False, default=str)
 
 		return _cl_(str(string))
@@ -22063,10 +22358,10 @@ def waiting(sec,p=True,txt=''):
 		txt=' | '.join(txt)
 	if txt: txt='| '+txt
 	if not type(sec) == int: e('waiting expected int')
-	
+
 	if not p: time.sleep(sec)
 	else:
-		
+
 		while not sec==0:
 			pr( 'waiting:', sec, txt, end=1 )
 			time.sleep(1)
@@ -22261,7 +22556,7 @@ class Banner:
 			# sides = sides/2
 			# sides = abs(int(sides))
 			sp=_str.sp(sides)
-			
+
 			# print('sides',sides)
 			brand = _str.es(self.banner,m=sp,be='|')
 			pr(line=1,c='green'); pr(line=1,c='green');
@@ -22329,7 +22624,7 @@ def isExit(_file_):
 							if ce in _source:
 								saveText(_source,path)
 								pr('added testing date to app documentation',c='green')
-					
+
 
 				else: just_print(1)
 
@@ -22344,14 +22639,14 @@ def pipe_surfing(data=None):
 			return appData[app]['pipe']
 	return False
 
-	
+
 def fak(*args, **kwargs):
-	''' 
+	'''
 		code generator
 			eval function args kwargs
 
 				value = eval('function'+_.fak(args,kwargs))
-		
+
 					(  args[0], args[1], args[2]  ,  fi=kwargs['fi'],foo=kwargs['foo']  )
 
 	'''
@@ -22394,7 +22689,7 @@ def osvar(var=None,val=None):
 		os.environ[var]=val
 		return True
 	except: return False
-		
+
 
 	# printenv
 	# os.environ['USERPROFILE']
@@ -22506,7 +22801,7 @@ def inject( snippet='', data='', header='', b='9a26c2d7f6b0', e='71564a5f3d65', 
 # stuff = _.inject('77',stuff); print(stuff);
 
 
-# def sort(self,fields=''):# sortThis 
+# def sort(self,fields=''):# sortThis
 # switches.trigger(
 # formatColumnsSort
 
@@ -22696,7 +22991,7 @@ def _thread_(*args, **kwargs):
 #       d['%off']=d['%0']+d['offset']
 
 
-#       # ↓ THERE ARE 2 WAYS OF DOING THIS ↓ 
+#       # ↓ THERE ARE 2 WAYS OF DOING THIS ↓
 
 #       # ↓ by charecter ↓
 #       # _seq1=sequential(string1,string2)
@@ -22705,7 +23000,7 @@ def _thread_(*args, **kwargs):
 #       # ↓ by pattern ↓
 #       _seq1=sequential(d['s1'],d['s2'])
 #       _seq2=sequential(d['s2'],d['s1'])
-		
+
 #       # ↑ THERE ARE 2 WAYS OF DOING THIS ↑
 
 #       _seqL=[_seq1,_seq2]
@@ -22859,7 +23154,7 @@ def pattern_probability(string1,string2,w=False):
 
 
 
-		# ↓ THERE ARE 2 WAYS OF DOING THIS ↓ 
+		# ↓ THERE ARE 2 WAYS OF DOING THIS ↓
 
 		# ↓ by charecter ↓
 		# _seq1=sequential(string1,string2)
@@ -22868,7 +23163,7 @@ def pattern_probability(string1,string2,w=False):
 		# ↓ by pattern ↓
 		_seq1=sequential(d['s1'],d['s2'])
 		_seq2=sequential(d['s2'],d['s1'])
-		
+
 		# ↑ THERE ARE 2 WAYS OF DOING THIS ↑
 
 		_seqL=[_seq1,_seq2]
@@ -22910,7 +23205,7 @@ def pattern_probability_list_best(_str,_list,clean=None,omit=[],i=0):
 	# a.playlist playlist.txt Metallica
 	#   type %1 | call p youtubeSearch -official -song -band %2 | p youtube
 	#   type %1 | p prefix-file-number-by-patterns -f *.mp3 -omit %2
-	
+
 	_i_=i
 	_str_=_str
 	_str=_str.replace('’',"'")
@@ -23032,7 +23327,7 @@ def replace_line_in_file(file_path, search_string, replace_string):
 	# https://chat.openai.com/chat
 	with open(file_path, 'r') as file:
 		lines = file.readlines()
-	
+
 	with open(file_path, 'w') as file:
 		for line in lines:
 			if search_string in line:
@@ -23043,7 +23338,7 @@ def replace_lines_in_file(file_path, lst):
 	# https://chat.openai.com/chat
 	with open(file_path, 'r') as file:
 		lines = file.readlines()
-	
+
 	with open(file_path, 'w') as file:
 		for line in lines:
 			for item in lst:
@@ -23232,25 +23527,34 @@ def columnAbbreviations(data,appReg=None):
 				appInfo[appReg]['columns'].append({'name': k, 'abbreviation': ','.join(abbr[k])})
 ##################################################
 # path=_.zZip(path);   _.cleanUnzip()
+
 def IS(path,check=1):
 	if not os.path.isfile(path): return False
+	global isHeaders
+	if check in isHeaders.keys():
+		check = isHeaders[check]
 	header=" ".join(['{:02X}'.format(byte) for byte in     open( path, 'rb' ).read(32)    ])
 	if check == 1: return header
-	if header.startswith(check): return True
+	if type(check) == str:
+		if header.startswith(check): return True
+	elif type(check) == list:
+		for c in check:
+			if header.startswith(c): return True
+
 	return False
 
 
 def isZip(path):
 	if not os.path.isfile(path): return False
 	if path.endswith('.docx'): return False
-	if IS(path,'50 4B 03 04'): return True 
-	if IS(path,'50 4B 05 06'): return True 
+	if IS(path,'50 4B 03 04'): return True
+	if IS(path,'50 4B 05 06'): return True
 	else: return False
 
 def ZIP( a, b=None, d=None, p=1 ):
 	if isZip(a): unzip_file(a,b)
 	else: return zip_file(a,b,d,p)
-	
+
 def zip_file(input_file, output_zip=None, d=None, p=1):
 	import zipfile
 	if output_zip is None or not output_zip: output_zip = input_file+'.zip'
@@ -23280,7 +23584,7 @@ def unzip_file(zip_file, output_file=None):
 			return unzip_files(zip_file, output_file=output_file)
 
 	return extracted_file_path
-			
+
 
 
 def unzip_files(zip_file, output_file=None):
@@ -23403,20 +23707,20 @@ def query(db_path, query, params=()):
 	import sqlite3
 	# Connect to the SQLite database
 	conn = sqlite3.connect(db_path)
-	
+
 	# Create a cursor object to execute queries
 	cursor = conn.cursor()
-	
+
 	# Execute the query
 	cursor.execute(query, params)
-	
+
 	# Fetch all the results
 	results = cursor.fetchall()
-	
+
 	# Close the cursor and connection
 	cursor.close()
 	conn.close()
-	
+
 	return results
 
 # conn = sqlite3.connect("example.db")
@@ -23513,7 +23817,7 @@ yf=fromYML
 ##################################################
 def isTextFi(path, num_chars=20):
 	with open(path, 'rb') as file:
-		content = file.read(num_chars)        
+		content = file.read(num_chars)
 		try:
 			content.decode('utf-8')
 			return True
@@ -23521,7 +23825,7 @@ def isTextFi(path, num_chars=20):
 			return False
 def isTextFiGet(path, num_chars=20):
 	with open(path, 'rb') as file:
-		content = file.read(num_chars)        
+		content = file.read(num_chars)
 		try:
 			return content.decode('utf-8')
 		except UnicodeDecodeError:
@@ -23644,6 +23948,7 @@ def _default_settings_():
 	__.setting('require-pipe||file',False)
 	__.setting('pre-error',False)
 	__.setting('switch-raw',[])
+	__.setting('default-switches',True)
 def appInfoContinuity(app,info={}):
 	if not 'file' in info: info['file'] = __.thisApp( __file__ )
 	if not 'liveAppName' in info: info['liveAppName'] = __.thisApp( __file__ )
@@ -23684,6 +23989,182 @@ def appDataContinuity(info={}):
 		'field': {'sent': [], 'received': [] }, # { 'label': '', 'context': [],  }
 		'table': {'sent': [], 'received': [] },
 		}
+def injectLines(data, lines, start, end):
+	# Convert inputs to lists of lines if they're strings
+	if isinstance(data, str):
+		data = data.replace('\r', '').split('\n')
+	if isinstance(lines, str):
+		lines = lines.replace('\r', '').split('\n')
+
+	# Initialize variables
+	modified_data = []
+	in_range = False
+
+	# Iterate through each line of the original data
+	for line in data:
+		# Check for the start marker
+		if start in line:
+			in_range = True
+			modified_data.append(line)
+			continue  # Move to the next iteration to avoid appending the start line twice
+
+		# Check for the end marker
+		if end in line and in_range:
+			# Append the lines to be injected
+			modified_data.extend(lines)
+			in_range = False
+
+		# Append current line if not in the range to skip
+		if not in_range or line == end:
+			modified_data.append(line)
+
+	# Return the modified data as a single string
+	return '\n'.join(modified_data)
+
+def injectLinesTest():
+	data = '''
+aaa
+bbb
+ccc
+123
+xxx
+yyy
+zzz
+456
+ddd
+eee
+fff
+'''
+
+	lines = '''
+this
+is
+a
+test
+'''
+	print(injectLines(data, lines, '123', '456'))
+
+
+
+
+##################################################
+isHeaders = {
+	# IS(path, 'gz')
+	'gzip': '1F 8B 08 08',
+	'docx': [
+		'50 4B 03 04',
+		'50 4B 05 06',
+	],
+	'isCrypt': '41 45 53 02 00 00 1B',
+	'gz': '1F 8B 08 08',
+	'bz2': '42 5A 68',
+}
+##################################################
+
+
+
+def compress2(original_file_path, compressed_file_path):
+	import gzip
+	import shutil
+	try:
+		if IS(original_file_path,'gzip'):
+			shutil.copyfile(original_file_path, compressed_file_path)
+			return 'Skipped'
+		with open(original_file_path, 'rb') as original_file:
+			with gzip.open(compressed_file_path, 'wb') as compressed_file:
+				shutil.copyfileobj(original_file, compressed_file)
+		print(f"Compressed gzip {original_file_path}")
+	except:
+		return 'Error'
+
+def decompress2(compressed_file_path, decompressed_file_path):
+	import gzip
+	import shutil
+	try:
+		if not IS(compressed_file_path,'gzip'):
+			shutil.copyfile(compressed_file_path, decompressed_file_path)
+			return 'Skipped'
+		with gzip.open(compressed_file_path, 'rb') as compressed_file:
+			with open(decompressed_file_path, 'wb') as decompressed_file:
+				shutil.copyfileobj(compressed_file, decompressed_file)
+		print(f"Decompressed gzip {decompressed_file_path}")
+	except:
+		return 'Error'
+
+def compress(path):
+	import gzip
+	import shutil
+	if IS(path,'gzip'): return False
+	path = __.path(path)
+	compressed_file_path = path
+	original_file_path = path+'_temp'
+	os.rename(path, original_file_path)
+	with open(original_file_path, 'rb') as original_file:
+		with gzip.open(compressed_file_path, 'wb') as compressed_file:
+			shutil.copyfileobj(original_file, compressed_file)
+	print(f"Compressed gzip {compressed_file_path}")
+	os.unlink(original_file_path)
+
+def decompress(path):
+	import gzip
+	import shutil
+	if not IS(path,'gzip'): return False
+	path = __.path(path)
+	decompressed_file_path = path
+	compressed_file_path = path+'_temp'
+	os.rename(path, compressed_file_path)
+	with gzip.open(compressed_file_path, 'rb') as compressed_file:
+		with open(decompressed_file_path, 'wb') as decompressed_file:
+			shutil.copyfileobj(compressed_file, decompressed_file)
+	print(f"Decompressed gzip {decompressed_file_path}")
+	os.unlink(compressed_file_path)
+def BYTES(path): os.stat(  path  ).st_size
+MOD=mod
+def fileMeta(path,include='',individual=False):
+	# print(path)
+	# print(include)
+	path = __.path(path)
+	meta = {}
+	if 'md5' == include and not 'md5' in meta:
+		import _rightThumb._md5 as _md5
+		meta['md5'] = _md5.md5File(path)
+		if individual: return meta['md5']
+		return meta
+	if 'sha1' == include and not 'sha1' in meta:
+		import _rightThumb._md5 as _md5
+		meta['sha1'] = _md5.string(path,'sha1')
+		if individual: return meta['sha1']
+		return meta
+	if 'sha256' == include and not 'sha256' in meta:
+		import _rightThumb._md5 as _md5
+		meta['sha256'] = _md5.string(path,'sha256')
+		if individual: return meta['sha256']
+		return meta
+	if 'sha512' == include and not 'sha512' in meta:
+		import _rightThumb._md5 as _md5
+		meta['sha512'] =_md5.string(path,'sha512')
+		if individual: return meta['sha512']
+		return meta
+	if not include:
+	# if True:
+		meta['path']     = path
+		meta['file']     = __.path(path,file=True)
+		meta['folder']   = path[:-len(meta['file'])-1]
+		meta['bytes']    = os.stat(path).st_size
+		meta['size']     = formatSize(meta['bytes'])
+		meta['modified'] = os.path.getmtime(path)
+		meta['created']  = os.path.getctime(path)
+		meta['accessed'] = os.path.getatime(path)
+		meta['me'] = meta['modified']
+		meta['ce'] = meta['created']
+		meta['ae'] = meta['accessed']
+	else:
+		import _rightThumb._dir as _dir
+		meta = _dir.individual(path,include,True)
+	if individual:
+		if len(meta.keys()) == 1:
+			return meta[ list(meta.keys())[0] ]
+	return meta
 ##################################################
 
 # __.switch_raw
