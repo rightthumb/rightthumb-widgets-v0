@@ -54,6 +54,7 @@ def appSwitches():
 	_.switches.register('Print', '-print')
 	_.switches.register('Commit-Per', '-commit','46,285')
 	_.switches.register('Header', '-h,-header', '5 OR all')
+	_.switches.register('Data', '-data', '')
 	
 
 
@@ -176,18 +177,8 @@ def unFormatSize(size):
 	size = int(float(size))
 	result = round(size * factor,0)
 	return result
-import pathlib
-def isLink(path):
-	try:
-		x=pathlib.Path(path).resolve()
-		islink=False
-	except:
-		islink=True
 
-	if islink or  os.path.islink(path):
-		result = True
-	else:
-		result = False
+
 
 def registerSwitches( argvProcessForce=False ):
 	global appDBA
@@ -241,6 +232,24 @@ if __name__ == '__main__':
 ########################################################################################
 # START
 
+########################################################################################
+def is_text(filename):
+	try:
+		with open(filename, 'tr') as check_file:
+			check_file.read()
+		return True
+	except:
+		return False
+
+# function to get file content
+def get_content(filename):
+	try:
+		with open(filename, 'r') as read_file:
+			return read_file.read()
+	except:
+		return ""
+
+########################################################################################
 
 
 def isText(file):
@@ -253,11 +262,7 @@ def whatIsIt(file):
 		result = 'Binary'
 	return result
 
-display_cnt=0
-index_total=0
 def getFolder(folder):
-	global display_cnt
-	global index_total
 	global i
 	global iS
 	if _.switches.isActive('Print'):
@@ -270,12 +275,7 @@ def getFolder(folder):
 	if takeAction:
 		if os.path.isdir(folder):
 			dirList = os.listdir(folder)
-		for item in en(dirList):
-			index_total+=1
-			display_cnt+=1
-			if display_cnt == 100:
-				display_cnt = 0
-				_.pr('\tDone:',_.addComma(index_total),c='cyan',r=1)
+		for item in dirList:
 			path = folder + _v.slash + item
 			path = path.replace(_v.slash+_v.slash,_v.slash)
 			if os.path.isfile(path):
@@ -359,8 +359,9 @@ def getFolder(folder):
 						global mimetype
 						global conn
 						global cursor
-
-						sql = _dir.fileInfo( path, sql=True, md5=checkMD5, db_connection=conn, db_cursor=cursor, count=i, mime=mimetype )
+						global fileContents
+						
+						sql = _dir.fileInfo( path, sql=True, md5=checkMD5, db_connection=conn, db_cursor=cursor, count=i, mime=mimetype, data=fileContents )
 						# saveRecord(sql)
 						# if not _.switches.isActive('Plus'):
 						#     _.colorThis( path, 'cyan' )
@@ -369,7 +370,7 @@ def getFolder(folder):
 
 			if os.path.isdir(path):
 				newFolder = folder + _v.slash + item
-				if os.path.isdir(newFolder) and not isLink(newFolder):
+				if os.path.isdir(newFolder):
 					try:
 						getFolder(newFolder)
 					except Exception as e:
@@ -380,15 +381,11 @@ def getFolder(folder):
 
 
 def action():
+	global fileContents
 	global conn
 	global cursor
-
+	fileContents = _.switches.isActive('Data')
 	epoch = time.time()
-	_.pr('Started:',epoch)
-	_.pr()
-	_.pr('Check:')
-	_.pr('\tp date-age -date',epoch)')
-	_.pr()
 
 	if _.switches.isActive('Database'):
 		databaseFile = _.switches.values('Database')[0]
@@ -408,10 +405,8 @@ def action():
 		_nd.do( 'action' )
 		_.pr( '___________________________________________' )
 
-		import shutil
-		try:
-			# os.unlink(databaseFile)
-			shutil.move( databaseFile, _.friendlyDate(_.mod(databaseFile)).split(' ')[0]+'_'+databaseFile )
+
+		try: os.unlink(databaseFile)
 		except: pass
 	# sys.exit()
 	# _.pr( databaseFile )

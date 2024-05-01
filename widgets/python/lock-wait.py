@@ -112,11 +112,14 @@ _.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw );
 #e)--> examples
 ########################################################################################
 #n)--> start
+os=__.imp('os.environ')
 os=__.imp('os.unlink')
 time=__.imp('time.sleep')
 
 def action():
+	global active
 	path = _v.myTemp + os.sep + 'lock-wait__'
+	active = _v.myTemp + os.sep + 'lock-wait__active__'
 	if _.switches.isActive('Unlock'): path+=_.switches.value('Unlock')
 	elif _.switches.isActive('Lock'): path+=_.switches.value('Lock')
 	elif _.switches.isActive('Wait'): path+=_.switches.value('Wait')
@@ -134,17 +137,34 @@ def action():
 			waiting = int(_.switches.value('For'))
 		while os.path.isfile(path):
 			time.sleep(waiting)
+			if not os.path.isfile(path):
+				last = _.csv(active)
+				last.reverse()
+				try:
+					diff = time.time() - float(last[0]['epoch'])
+					if diff < 3:
+						time.sleep(generate_random_integer(1,4))	
+				except Exception as ee:
+					_.pr(ee,c='red')
+		append_to_file(os.environ['Session_ID']+','+str(time.time()))
 
 
+def append_to_file(text):
+	global active
+	file_path = active 
+	if not os.path.isfile(file_path):
+		with open(file_path, 'a') as file: file.write('session,epoch' + '\n')
+		
+	with open(file_path, 'a') as file: file.write(text + '\n')
 
 def generate_random_numberFloat(start=0.1, end=0.8):
-    import random
-    return random.uniform(start, end)
+	import random
+	return random.uniform(start, end)
 		
 
 def generate_random_integer(start=1, end=8):
-    import random
-    return random.randint(start, end)
+	import random
+	return random.randint(start, end)
 
 
 ##################################################

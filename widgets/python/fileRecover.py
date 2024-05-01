@@ -56,6 +56,7 @@ def appSwitches():
 	_.switches.register('Audit', '-audit')
 	_.switches.register('FindGroup', '-fg,-fgroup,-findgroup')
 	_.switches.register('DontResolveIDs', '-nores')
+	# _.switches.register('BackupFiles', '-bk')
 	
 
 
@@ -691,6 +692,7 @@ def action():
 				if _.switches.isActive('JustFiles'):
 					for bkf in justFile:
 						_.pr(bkf)
+					_.isExit(__file__)
 				if _.switches.isActive('Audit'):
 					justFile.append( original )
 					# global appDBA
