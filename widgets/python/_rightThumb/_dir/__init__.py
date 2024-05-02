@@ -212,7 +212,7 @@ def info( path, sql=False, md5=False, exif=0,   attrib=None, mime=None, db_conne
 		del mrec['date_accessed']
 	return mrec
 
-def fileInfo( path, sql=False, md5=False, exif=0,   attrib=None, mime=None, db_connection=None, db_cursor=None, count=None, insert=None, last=False, sdate=None, meta=True, err=False, subject=None, sha256=False, _lines=False, data=False ):
+def fileInfo( path, sql=False, md5=False, exif=0,   attrib=None, mime=None, db_connection=None, db_cursor=None, count=None, insert=None, last=False, sdate=None, meta=True, err=False, subject=None, sha256=False, _lines=False ):
 	global processed_count
 	global total_records
 	processed_count += 1
@@ -226,10 +226,10 @@ def fileInfo( path, sql=False, md5=False, exif=0,   attrib=None, mime=None, db_c
 			db_cursor = cursor
 			count = processed_count
 	if err:
-		return fileInfoAction( path, sql, md5, exif, attrib, mime, db_connection, db_cursor, count, insert, last, sdate, meta, subject, sha256, _lines, data )
+		return fileInfoAction( path, sql, md5, exif, attrib, mime, db_connection, db_cursor, count, insert, last, sdate, meta, subject, sha256, _lines )
 	else:
 		try:
-			return fileInfoAction( path, sql, md5, exif, attrib, mime, db_connection, db_cursor, count, insert, last, sdate, meta, subject, sha256, _lines, data )
+			return fileInfoAction( path, sql, md5, exif, attrib, mime, db_connection, db_cursor, count, insert, last, sdate, meta, subject, sha256, _lines )
 		except Exception as e:
 			return False
 
@@ -312,7 +312,7 @@ def individual(path,subject,forceDic=False):
 		if len(k) == 1: return dic[k[0]];
 	return dic
 
-def fileInfoAction( path, sql=False, md5=False, exif=0, getAttrib=None, getMime=None, db_connection=None, db_cursor=None, count=None, insert=None, last=False, sdate=None, meta=True, subject=None, sha256=False, _lines=False, data=False ):
+def fileInfoAction( path, sql=False, md5=False, exif=0, getAttrib=None, getMime=None, db_connection=None, db_cursor=None, count=None, insert=None, last=False, sdate=None, meta=True, subject=None, sha256=False, _lines=False ):
 	global touch_meta
 	global dateCalcByModified
 	global timeAudit
@@ -481,8 +481,7 @@ def fileInfoAction( path, sql=False, md5=False, exif=0, getAttrib=None, getMime=
 				'lines': __lines,
 		}
 
-		if data:
-			obj['content'] = get_content(aPath) if is_text(aPath) else ""
+
 		_cwd=os.getcwd()
 		if _cwd+os.sep in path2:
 			obj['relative'] = path2[ len(_cwd)+1: ]
@@ -960,22 +959,3 @@ accessed_raw to date_accessed_raw
 ____
 """
 # __.dir.print
-
-########################################################################################
-def is_text(filename):
-	try:
-		with open(filename, 'tr') as check_file:
-			check_file.read()
-		return True
-	except:
-		return False
-
-# function to get file content
-def get_content(filename):
-	try:
-		with open(filename, 'r') as read_file:
-			return read_file.read()
-	except:
-		return ""
-
-########################################################################################

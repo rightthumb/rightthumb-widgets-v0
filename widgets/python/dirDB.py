@@ -67,6 +67,9 @@ def appSwitches():
 	# _.switches.register('ShowSome', '-all,-show,-showall')
 	_.switches.register('ShowSome', '-some,-showsome')
 	_.switches.register('SolidStateDrives', '-solid')
+	_.switches.register('Data', '-data')
+	_.switches.register('Has', '-has')
+	_.switches.register('Not', '-not')
 	# _.switches.register('Save-Results', '-save')
 
 	
@@ -333,7 +336,7 @@ def epoch(string,end=False):
 	else:
 		day = d[2]
 	# _.pr(d)
-	# sys.exit()
+	# _.isExit(__file__)
 	if end:
 		y = int(d[0])
 		m = int(d[1])
@@ -376,6 +379,32 @@ _.v.totals=0
 
 def action():
 	global theData
+
+	for db in _.switches.values('Database'):
+		print(db)
+		if _.switches.isActive('Has'):
+			conn = sqlite3.connect(db)
+			c = conn.cursor()
+			sql = 'select * from files where content = "'+_.switches.value('Data').replace(',','%')+'"'
+			if _.switches.isActive('SQL'): _.pr(sql); _.pr('\nd114'); _.isExit(__file__);
+			c.execute(sql)
+			records = c.fetchall()
+			print(records[0][0])
+			_.isExit(__file__)
+		if _.switches.isActive('Data'):
+			print('data')
+			conn = sqlite3.connect(db)
+			c = conn.cursor()
+			sql = 'select content from files where path like "'+_.switches.value('Plus')+'"'
+			if _.switches.isActive('SQL'): _.pr(sql); _.pr('\nd114'); _.isExit(__file__);
+			c.execute(sql)
+			records = c.fetchall()
+			print(records[0][0])
+			_.isExit(__file__)
+
+
+
+	
 
 	if not _.switches.isActive('IncludeBackups'):
 		if not _.switches.isActive('Minus'):
@@ -449,7 +478,7 @@ def action():
 
 			conn = sqlite3.connect(db)
 			c = conn.cursor()
-			if _.switches.isActive('SQL'): _.pr(sql); _.pr('\nd114'); sys.exit();
+			if _.switches.isActive('SQL'): _.pr(sql); _.pr('\nd114'); _.isExit(__file__);
 			c.execute(sql)
 			records = c.fetchall()
 			_.v.totals+=len(records)
@@ -461,7 +490,7 @@ def action():
 			test = conn2.cursor()
 
 
-			if _.switches.isActive('SQL'): _.pr(sql); _.pr('\n4f0e'); sys.exit();
+			if _.switches.isActive('SQL'): _.pr(sql); _.pr('\n4f0e'); _.isExit(__file__);
 			c.execute(sql)
 			all_done = False
 			for f in records:
@@ -597,7 +626,7 @@ def action():
 				_.saveText( saveDataSet, _.switches.values('Save')[0].split('.')[0]+'-set.'+_.switches.values('Save')[0].split('.')[1] )
 			_.colorThis( [  'Total',  formatSize(totalSave) ], 'red' )
 			pass
-		sys.exit()
+		_.isExit(__file__)
 
 
 	elif _.switches.isActive('Duplicates') and len(_.switches.value('Duplicates')):
@@ -679,20 +708,20 @@ def action():
 
 		conn = sqlite3.connect(db)
 		c = conn.cursor()
-		if _.switches.isActive('SQL'): _.pr(sql); _.pr('\nb2d0'); sys.exit();
+		if _.switches.isActive('SQL'): _.pr(sql); _.pr('\nb2d0'); _.isExit(__file__);
 		c.execute(sql)
 		records = c.fetchall()
 		_.v.totals+=len(records)
 		if _.switches.isActive('ShowRealCount') or _.switches.isActive('Test') or _.switches.isActive('SQL'): _.pr('Found:',_.addComma(_.v.totals))
 		if _.switches.isActive('Totals'):
 			_.pr(_.addComma(len(records)),c='cyan')
-			sys.exit()
+			_.isExit(__file__)
 
 		conn2 = sqlite3.connect(db)
 		test = conn2.cursor()
 
 
-		if _.switches.isActive('SQL'): _.pr(sql); _.pr('\n115e'); sys.exit();
+		if _.switches.isActive('SQL'): _.pr(sql); _.pr('\n115e'); _.isExit(__file__);
 		c.execute(sql)
 		duplicates = {}
 
@@ -754,7 +783,7 @@ def action():
 			saveData.append( 'Total: ' + formatSize(totalSave) )
 			_.saveText( saveData, _.switches.values('Save')[0] )
 		_.colorThis( [  'Total',  formatSize(totalSave) ], 'red' )
-		sys.exit()
+		_.isExit(__file__)
 
 
 
@@ -785,25 +814,25 @@ def action():
 		# _.pr(  )
 		# _.pr( dbs )
 		# dbs = 'D:\\tech\\hosts\\MSI\\indexes\\D_Drive.db'
-		# sys.exit()
+		# _.isExit(__file__)
 		sql = "SELECT ext FROM files GROUP BY ext"
 		data = []
 		for i,db in enumerate(dbs):
 			if i in IDs:
 				# _.pr( db )
-				# sys.exit()
+				# _.isExit(__file__)
 				run = True
 				if run:
 					conn = sqlite3.connect(db)
 					c = conn.cursor()
-					if _.switches.isActive('SQL'): _.pr(sql); _.pr('\n7160'); sys.exit();
+					if _.switches.isActive('SQL'): _.pr(sql); _.pr('\n7160'); _.isExit(__file__);
 					c.execute(sql)
 					records = c.fetchall()
 					_.v.totals+=len(records)
 					if _.switches.isActive('ShowRealCount') or _.switches.isActive('Test') or _.switches.isActive('SQL'): _.pr('Found:',_.addComma(_.v.totals))
 					if _.switches.isActive('Totals'):
 						_.pr(_.addComma(len(records)),c='cyan')
-						sys.exit()
+						_.isExit(__file__)
 					# names = action2(databaseFile)
 					for record in records:
 						shouldAdd = True
@@ -824,7 +853,7 @@ def action():
 			dataX.append({ 'row': row })
 		for row in _.tables.returnSorted( 'data', 'a.row', dataX ):
 			_.pr( row['row'].lower() )
-		sys.exit()
+		_.isExit(__file__)
 
 	elif _.switches.isActive('Database'):
 		if len(_.switches.value('Database')) > 1:
@@ -882,14 +911,14 @@ def do(databaseFile):
 		search='AND'.join(searches)
 
 		sql= 'SELECT COUNT(*) AS row_count, SUM(bytes) AS total_bytes FROM files WHERE '+search+';'
-		if _.switches.isActive('SQL'): _.pr(sql); _.pr('\n4231'); sys.exit();
+		if _.switches.isActive('SQL'): _.pr(sql); _.pr('\n4231'); _.isExit(__file__);
 		c.execute(sql)
 		records = c.fetchall()
 
 
 		__.dirDB_Totals_file+=records[0][0]
 		__.dirDB_Totals_bytes+=records[0][1]
-		# print(sql); sys.exit();
+		# print(sql); _.isExit(__file__);
 		return None
 	
 	if _.switches.isActive('Plus') and not _.switches.isActive('Folder'):
@@ -929,7 +958,7 @@ def do(databaseFile):
 		s = _.switches.value('Size')
 		sA = s.split(',')
 		# _.pr( unFormatSize(sA[1]) )
-		# sys.exit()
+		# _.isExit(__file__)
 		if sA[0].lower() == 'g':
 			sql = "SELECT * FROM files WHERE bytes > " + str(unFormatSize(sA[1])) + " ORDER BY bytes"
 		elif sA[0].lower() == 'l':
@@ -942,7 +971,7 @@ def do(databaseFile):
 			_.pr('\tExpected:')
 			_.pr('\t\tp dirdb -db D_Drive.db -size g 2gb')
 			_.pr('\t\tp dirdb -db D_Drive.db -size b 1gb 3gb')
-			sys.exit()
+			_.isExit(__file__)
 	elif not  _.switches.isActive('Folder'):
 		thisRan.append(10300)
 		sql = "SELECT * FROM files WHERE bytes > 100000000 ORDER BY bytes"
@@ -972,11 +1001,11 @@ def do(databaseFile):
 				sql = "SELECT * FROM files WHERE date_modified_raw > " + str(epoch(sD[1])) + " ORDER BY bytes"
 			else:
 				_.pr('before after between')
-				sys.exit()
+				_.isExit(__file__)
 	if _.switches.isActive('Ago'):
 
 		# _.pr(timeAgo())
-		# sys.exit()
+		# _.isExit(__file__)
 		if not len( _.switches.values('Ago') ) > 1:
 			sql = "SELECT * FROM files WHERE date_modified_raw > " + str(_.switches.values('Ago')[0]) + " ORDER BY bytes"
 		else:
@@ -1001,7 +1030,7 @@ def do(databaseFile):
 
 		# d = epoch()
 		# _.pr(d)
-		# sys.exit()
+		# _.isExit(__file__)
 
 	# sql = "SELECT bytes,path FROM files WHERE bytes > 100000000"
 	# if  _.switches.isActive('Folder'):
@@ -1018,14 +1047,14 @@ def do(databaseFile):
 
 	# _.pr( 'here2' )
 	# _.pr( sql )
-	# sys.exit()
+	# _.isExit(__file__)
 	if _.switches.isActive('Test'):
 		_.pr()
 		_.pr( 'thisRan:', thisRan )
 		_.pr()
 		_.pr(sql)
-		sys.exit()
-	if _.switches.isActive('SQL'): _.pr(sql); _.pr('\ne020'); sys.exit();
+		_.isExit(__file__)
+	if _.switches.isActive('SQL'): _.pr(sql); _.pr('\ne020'); _.isExit(__file__);
 	c.execute(sql)
 	# c.execute('SELECT * FROM {tn} WHERE {cn} = {st}'.\
 	#         format(tn='files', cn='path', st='s'))
@@ -1034,7 +1063,7 @@ def do(databaseFile):
 	if _.switches.isActive('ShowRealCount') or _.switches.isActive('Test') or _.switches.isActive('SQL'): _.pr('Found:',_.addComma(_.v.totals))
 	if _.switches.isActive('Totals'):
 		_.pr(_.addComma(len(all_rows)),c='cyan')
-		sys.exit()
+		_.isExit(__file__)
 	# _.pr('1):', all_rows)
 	names = action2(databaseFile)
 
@@ -1049,7 +1078,7 @@ def do(databaseFile):
 			netReplaceI = nrXi
 
 	# for i,n in enumerate(names): _.pr(i,n)
-	# sys.exit()
+	# _.isExit(__file__)
 	# print(all_rows)
 	if isSave:
 		# s=time.time()
@@ -1058,7 +1087,7 @@ def do(databaseFile):
 		theData = theData + paths
 		# print(2,len(new),time.time()-s)
 	# print(5,new)
-	# sys.exit()
+	# _.isExit(__file__)
 
 
 	data = []
@@ -1150,7 +1179,7 @@ def action2(databaseFile):
 
 	# for n in names:
 	#     _.pr(n)
-	# sys.exit()
+	# _.isExit(__file__)
 	return names
 
 

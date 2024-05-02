@@ -288,7 +288,7 @@ def helpMenu():
 
 
 def ask(data, doneselection=False, backupfile='', originalfile=''):
-	global origalFile
+	global originalFile
 	global hasSearched
 
 
@@ -402,7 +402,9 @@ def ask(data, doneselection=False, backupfile='', originalfile=''):
 	if selection == 'r':
 		if len(backupfile) > 0 and len(originalfile) > 0:
 			# copyfile(backupfile, originalfile)
-			_.decompress2(backupfile, originalfile)
+			# _.decompress2(backupfile, originalfile)
+			copyfile(_v.stmp+os.sep+'fileRecover.cache', originalfile)
+			_.pr('Reverted to original, for real')
 			_.pr()
 			_.pr('Reverted to original')
 			_.pr()
@@ -516,18 +518,19 @@ def ask(data, doneselection=False, backupfile='', originalfile=''):
 			# _.pr(os.path.isfile(data[int(selection)]['backup']),data[int(selection)]['backup'])
 			# _.pr(os.path.isfile(data[int(selection)]['file']),data[int(selection)]['file'])
 			# sys.exit()
-			if not type(origalFile) == str:
+			if not type(originalFile) == str:
 				logCheck = _.tables.returnSorted( 'backupLog', 'd.timestamp', _.getTable('fileBackup.json') )
 				if bkID == logCheck[0]['id']:
 					# _.pr()
 					# _.pr('First in log')
-					origalFile = logCheck[0]['backup']
+					originalFile = logCheck[0]['backup']
+
 				else:
 					_.saveTable(backupLogX,'fileBackup.json',printThis=True)
 					# _.pr( 'HERE', 1 )
 					# cpResult = copyfile(data[int(selection)]['file'],newname)
 					cpResult = _.decompress2(data[int(selection)]['file'],newname)
-					origalFile = newname
+					originalFile = newname
 			if _.isWin:
 				try:
 					# sp.Popen([   _v.sublime.replace('"','')   ,   data[int(selection)]['file'].replace('"','')  ])
@@ -538,6 +541,7 @@ def ask(data, doneselection=False, backupfile='', originalfile=''):
 					_.pr('unable to open')
 			# cpResult = copyfile(data[int(selection)]['backup'], data[int(selection)]['file'])
 			cpResult = _.decompress2(data[int(selection)]['backup'], data[int(selection)]['file'])
+			# copyfile(_v.stmp+os.sep+'fileRecover.cache', data[int(selection)]['file'])
 			_.pr()
 			_.pr('\tRecovered')
 			_.pr()
@@ -597,13 +601,13 @@ def action():
 		
 
 
-	global origalFile
+	global originalFile
 	global originalData
 
 
 	hasSearched = False
 	originalData = []
-	origalFile = False
+	originalFile = False
 	
 
 	now = time.time()
@@ -612,6 +616,9 @@ def action():
 	else:
 		_.switches.fieldSet('ShowLast','active',True)
 		_.switches.fieldSet('ShowLast','value','40')
+	if _.switches.isActive('Input'):
+		global originalFileContents
+		copyfile(_.switches.value('Input'), _v.stmp+os.sep+'fileRecover.cache')
 	if _.switches.isActive('Input') or _.switches.isActive('ShowLast'):
 		path = _.switches.value('Input')
 		
@@ -750,6 +757,7 @@ def action():
 
 					originalData = data
 
+
 					# _.pr(type(_.appData[__.appReg]['pipe']))
 					if type(_.appData[__.appReg]['pipe']) == str:
 						ask(data)
@@ -798,7 +806,7 @@ import _rightThumb._dir as _dir
 
 hasSearched = False
 originalData = []
-origalFile = False
+originalFile = False
 
 
 # sp.Popen

@@ -54,7 +54,7 @@ def appSwitches():
 	_.switches.register('Print', '-print')
 	_.switches.register('Commit-Per', '-commit','46,285')
 	_.switches.register('Header', '-h,-header', '5 OR all')
-	_.switches.register('Data', '-data', '')
+	# _.switches.register('Data', '-data', '')
 	
 
 
@@ -361,7 +361,8 @@ def getFolder(folder):
 						global cursor
 						global fileContents
 						
-						sql = _dir.fileInfo( path, sql=True, md5=checkMD5, db_connection=conn, db_cursor=cursor, count=i, mime=mimetype, data=fileContents )
+						sql = _dir.fileInfo( path, sql=True, md5=checkMD5, db_connection=conn, db_cursor=cursor, count=i, mime=mimetype )
+						# sql = _dir.fileInfo( path, sql=True, md5=checkMD5, db_connection=conn, db_cursor=cursor, count=i, mime=mimetype, data=fileContents )
 						# saveRecord(sql)
 						# if not _.switches.isActive('Plus'):
 						#     _.colorThis( path, 'cyan' )

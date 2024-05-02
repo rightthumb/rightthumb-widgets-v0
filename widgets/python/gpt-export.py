@@ -102,7 +102,9 @@ def process(path):
 			if _.showLine(title):
 				if not id in spent:
 					spent.append(id)
-					_.pr(id,title)
+					titleColor = _.prWC2(title,_.switches.values('Plus'),'darkcyan','cyan')
+					_.pr(_.pr(id,c='cyan',p=0),titleColor)
+					# _.pr(id,title,c='cyan')
 				continue
 			mapping = rec['mapping']
 			# mapping.reverse()

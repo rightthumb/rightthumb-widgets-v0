@@ -3209,7 +3209,9 @@ alias tmux.t.t="/opt/rightthumb-widgets-v0/widgets/bash/tmux/templates/Top_Large
 #####################################################################
 
 
-
+alias drive.s="find / -type f -size"
+alias drive.s.10g="find / -type f -size +10737418240"
+alias drive.s.1g="find / -type f -size +1073741824"
 
 clear
 # get_time_difference

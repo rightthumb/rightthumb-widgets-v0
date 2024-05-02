@@ -5,18 +5,19 @@ fieldSet=_.l.vars(focus(),__name__,__file__,appDBA);_.load();_v=__.imp('_rightTh
 def sw():
 	pass
 	_.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name', description='Files', isRequired=False )
-	_.switches.register( 'Meta', '-m,-meta','me ce md5 sha1', isRequired=False )
-	_.switches.register( 'Individual', '-i', isRequired=False )
 _._default_settings_()
 
 _.appInfo[focus()] = {
-	'file': 'thisApp.py',
-	'description': 'Changes the world',
+	'file': 'file-diff.py',
+	'description': 'File differences, PIPE only for now',
 	'categories': [
-						'DEFAULT',
+						'file',
+						'text',
+						'diff',
+						'differences',
 				],
 	'examples': [
-						_.hp('p thisApp -file file.txt'),
+						_.hp('p file + one two -or --c | p file-diff '),
 						_.linePrint(label='simple',p=0),
 						'',
 	],
@@ -37,44 +38,60 @@ _.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw );
 ########################################################################################
 #n)--> start
 
+
+def compare():
+	global index
+	matches = []
+	missing = []
+	paths = []
+	index2 = {}
+	for path in index:
+		if not path in index2: index2[path] = {}
+		for line in index[path]:
+			index2[path][line.strip()] = 1
+	for path in index:
+		paths.append(path)
+		for line in index[path]:
+			# print(line)
+			for pth in index:
+				if pth == path: continue
+				if line.strip() in index2[pth]:
+					matches.append(line)
+				else:
+					missing.append(line)
+				# print(line)
+	_.pr('Missing',c='yellow')
+	for line in missing:
+		_.pr('\t',line)
+	paths.reverse()
+	matches = []
+	missing = []
+	paths = []
+	for path in paths:
+		paths.append(path)
+		for line in index[path]:
+			for pth in index:
+				if pth == path: continue
+				if line in index[pth]:
+					matches.append(line)
+				else:
+					missing.append(line)
+	_.pr('Added',c='yellow')
+	for line in missing:
+		_.pr('\t',line)
+
+			# print(index[path][line],line)
+		# _.isExit(__file__)
 def action():
+	global index
+	index = {}
 	for path in _.isData():
-		path = __.path(path)
-		file = __.path(path,fi=True)
-		# fileMeta = __.path(path,fo=True)+os.sep+'.file.meta'
-		fileMeta = '.file.meta'
-		# print(path); sys.exit();
-		individual = _.switches.isActive('Individual')
-		if _.switches.isActive('Meta'):
-			record = _.fileMeta(path,'me '+_.switches.value('Meta').replace(',',' ').strip(),individual)
-		else:
-			record = _.fileMeta(path,'',individual)
-		if os.path.isfile(_v.myTables + os.sep + fileMeta):
-			meta = _.getYML(fileMeta)
-		else:
-			meta = {}
-		if type(record) == dict:
-			if path in meta:
-				for k in record:
-					meta[path][k] = record[k]
-			else:
-				meta[path] = record
-			_.saveYML(meta,fileMeta)
-			# _.pr('record',c='yellow')
-			_.pv(record)
-			# _.pr()
-			# _.pr('.file.meta',c='yellow')
-			# _.pv(meta)
-		else:
-			_.pr(record,c='cyan')
-			key = _.switches.value('Meta').strip()
-			record = {key: record}
-			if path in meta:
-				for k in record:
-					meta[path][k] = record[k]
-			else:
-				meta[path] = record
-import sys, os
+		# print(path)
+		index[path] = {}
+		for i,line in enumerate(_.getText2(path,'list')):
+			line = line.rstrip()
+			index[path][line] = i
+	compare()
 ########################################################################################
 if __name__ == '__main__':
 	action(); _.isExit(__file__);

@@ -24166,6 +24166,45 @@ def fileMeta(path,include='',individual=False):
 			return meta[ list(meta.keys())[0] ]
 	return meta
 ##################################################
+def prWC(text,colorize,color='green'):
+	# wc = word color
+	if type(colorize) == str:
+		for subject in caseUnspecificCode( text, colorize ):
+			text = text.replace( subject, colorThis( subject, color, p=0 ) )
+	else:
+		for clr in colorize:
+			for subject in caseUnspecificCode( text, clr ):
+				text = text.replace( subject, colorThis( subject, color, p=0 ) )
+	return text
+def prWC2(text, colorize, color='green', color2='cyan'):
+	# Function to colorize parts of the text based on the keywords in colorize
+	if type(colorize) == str:
+		new = []
+		subjects = caseUnspecificCode(text, colorize)
+		last_end = 0
+		for subject in subjects:
+			start = text.find(subject, last_end)
+			new.append(colorThis(text[last_end:start], color2, p=0))
+			new.append(colorThis(subject, color, p=0))
+			last_end = start + len(subject)
+		new.append(colorThis(text[last_end:], color2, p=0))
+		text = ''.join(new)
+	else:
+		import re
+		subjects = []
+		for clr in colorize:
+			subjects.extend(caseUnspecificCode(text, clr))
+		subjects = list(set(subjects))  # Remove duplicates
+		pattern = "|".join(map(re.escape, subjects))
+		parts = []
+		last_end = 0
+		for match in re.finditer(pattern, text):
+			parts.append(colorThis(text[last_end:match.start()], color2, p=0))
+			parts.append(colorThis(match.group(0), color, p=0))
+			last_end = match.end()
+		parts.append(colorThis(text[last_end:], color2, p=0))
+		text = ''.join(parts)
+	return text
 
 # __.switch_raw
 ##################################################

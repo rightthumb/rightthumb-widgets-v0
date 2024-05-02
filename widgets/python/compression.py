@@ -204,24 +204,24 @@ def BYTES(path): os.stat(  path  ).st_size
 
 
 
+import os
+
 def action():
 	if _.switches.isActive('Files'):
-		path = _.switches.values('Files')[0]
-		paths = [path]
+		paths = _.switches.values('Files')
 	else:
 		paths = _.isData()
 	for path in paths:
-		# print(path); continue
-		if  _.switches.isActive('Decompress'):
+		if _.switches.isActive('Decompress'):
 			if not _.switches.isActive('Compression'):
 				try:
 					if _.switches.isActive('DestinationFile'):
 						if _.IS(path,'42 5A 68 39 31'):
-							decompress_bz2(path,_.switches.values('DestinationFile')[0])
+							decompress_bz2(path, _.switches.values('DestinationFile')[0])
 						elif _.IS(path,'50 4B 03 04 14'):
-							decompress_zip(path,_.switches.values('DestinationFile')[0])
+							decompress_zip(path, _.switches.values('DestinationFile')[0])
 						elif _.IS(path,'gzip'):
-							decompress2(path,_.switches.values('DestinationFile')[0])
+							decompress2(path, _.switches.values('DestinationFile')[0])
 						# return None
 					elif not _.switches.isActive('DestinationFile'):
 						# path = __.path(path)
@@ -230,7 +230,7 @@ def action():
 						if _.IS(path,'42 5A 68 39 31'):
 							ran = True
 							os.rename(path, path2)
-							decompress_bz2(path2,path)
+							decompress_bz2(path2, path)
 						elif _.IS(path,'50 4B 03 04 14'):
 							# ran = True
 							# os.rename(path, path2)
@@ -238,17 +238,15 @@ def action():
 						elif _.IS(path,'gzip'):
 							ran = True
 							os.rename(path, path2)
-							decompress2(path2,path)
+							decompress2(path2, path)
 						if ran:
 							os.unlink(path2)
 						# return None
 				except:
-					# print(path,os.path.isfile(path))
-					# print(path+'_temp',os.path.isfile(path+'_temp'))
 					if not os.path.isfile(path) and os.path.isfile(path+'_temp'):
 						print('renaming')
 						os.rename(path+'_temp', path)
-					_.pr('Error decompressing',path)
+					_.pr('Error decompressing', path)
 		if _.switches.isActive('Compression'):
 			compression = _.switches.value('Compression')
 		else:
@@ -257,17 +255,16 @@ def action():
 			pass
 		elif compression == 'bz2':
 			if _.switches.isActive('DestinationFile'):
-				
 				dest = _.switches.values('DestinationFile')[0]
 				if _.switches.isActive('Compress'):
-					compress_bz2(path,dest)
+					compress_bz2(path, dest)
 				elif _.switches.isActive('Decompress'):
-					decompress_bz2(path,dest)
+					decompress_bz2(path, dest)
 				else:
-					if _.IS(path,'42 5A 68 39 31'):
-						decompress_bz2(path,dest)
+					if _.IS(path, '42 5A 68 39 31'):
+						decompress_bz2(path, dest)
 					else:
-						compress_bz2(path,dest)
+						compress_bz2(path, dest)
 				# return None
 			elif not _.switches.isActive('DestinationFile'):
 				import shutil
@@ -275,29 +272,28 @@ def action():
 				path2 = path+'_temp'
 				os.rename(path, path2)
 				if _.switches.isActive('Compress'):
-					compress_bz2(path2,path)
+					compress_bz2(path2, path)
 				elif _.switches.isActive('Decompress'):
-					decompress_bz2(path2,path)
+					decompress_bz2(path2, path)
 				else:
-					if _.IS(path,'42 5A 68 39 31'):
-						decompress_bz2(path2,path)
+					if _.IS(path, '42 5A 68 39 31'):
+						decompress_bz2(path2, path)
 					else:
-						compress_bz2(path2,path)
+						compress_bz2(path2, path)
 				os.unlink(path2)
 				# return None
 		elif compression == 'zip':
 			if _.switches.isActive('DestinationFile'):
-				
 				dest = _.switches.values('DestinationFile')[0]
 				if _.switches.isActive('Compress'):
-					compress_zip(path,dest)
+					compress_zip(path, dest)
 				elif _.switches.isActive('Decompress'):
-					decompress_zip(path,dest)
+					decompress_zip(path, dest)
 				else:
-					if _.IS(path,'50 4B 03 04 14'):
-						decompress_zip(path,dest)
+					if _.IS(path, '50 4B 03 04 14'):
+						decompress_zip(path, dest)
 					else:
-						compress_zip(path,dest)
+						compress_zip(path, dest)
 				# return None
 			elif not _.switches.isActive('DestinationFile'):
 				import shutil
@@ -305,14 +301,14 @@ def action():
 				path2 = path+'_temp'
 				os.rename(path, path2)
 				if _.switches.isActive('Compress'):
-					compress_zip(path2,path)
+					compress_zip(path2, path)
 				elif _.switches.isActive('Decompress'):
-					decompress_zip(path2,path)
+					decompress_zip(path2, path)
 				else:
-					if _.IS(path,'50 4B 03 04 14'):
-						decompress_zip(path2,path)
+					if _.IS(path, '50 4B 03 04 14'):
+						decompress_zip(path2, path)
 					else:
-						compress_zip(path2,path)
+						compress_zip(path2, path)
 				os.unlink(path2)
 				# return None
 		elif compression == 'gzip':
@@ -320,25 +316,25 @@ def action():
 				dest = _.switches.values('DestinationFile')[0]
 				if _.switches.isActive('Compress'):
 					if _.switches.isActive('LocalFunctions'):
-						compress2(path,dest)
+						compress2(path, dest)
 					else:
-						_.compress2(path,dest)
+						_.compress2(path, dest)
 				elif _.switches.isActive('Decompress'):
 					if _.switches.isActive('LocalFunctions'):
-						decompress2(path,dest)
+						decompress2(path, dest)
 					else:
-						_.decompress2(path,dest)
+						_.decompress2(path, dest)
 				else:
-					if _.IS(path,'gzip'):
+					if _.IS(path, 'gzip'):
 						if _.switches.isActive('LocalFunctions'):
-							decompress2(path,dest)
+							decompress2(path, dest)
 						else:
-							_.decompress2(path,dest)
+							_.decompress2(path, dest)
 					else:
 						if _.switches.isActive('LocalFunctions'):
-							compress2(path,dest)
+							compress2(path, dest)
 						else:
-							_.compress2(path,dest)
+							_.compress2(path, dest)
 
 				# return None
 
@@ -351,18 +347,18 @@ def action():
 					path = path.strip()
 					if not os.path.isfile(path): continue
 					if multi:
-						_.pr(path,c='cyan')
-					if _.IS(path,'gzip'):
-						_.pr('is gzip compressed:',path,c='green')
-					elif _.IS(path,'50 4B 03 04 14'):
-						_.pr('is zip compressed:',path,c='green')
-					elif _.IS(path,'42 5A 68 39 31'):
-						_.pr('is bz2 compressed:',path,c='green')
+						_.pr(path, c='cyan')
+					if _.IS(path, 'gzip'):
+						_.pr('is gzip compressed:', path, c='green')
+					elif _.IS(path, '50 4B 03 04 14'):
+						_.pr('is zip compressed:', path, c='green')
+					elif _.IS(path, '42 5A 68 39 31'):
+						_.pr('is bz2 compressed:', path, c='green')
 					else:
 						_.pr()
-						_.pr('Notice: --> not one of the compression formats that this app uses',c='yellow')
-						_header = _.regImp( __.appReg, 'fileHeader' )
-						_header.switch('Files',path)
+						_.pr('Notice: --> not one of the compression formats that this app uses', c='yellow')
+						_header = _.regImp(__.appReg, 'fileHeader')
+						_header.switch('Files', path)
 						_header.action()
 						_.pr()
 				# return None
@@ -370,10 +366,10 @@ def action():
 				for path in _.isData():
 					path = path.strip()
 					if not os.path.isfile(path): continue
-					if _.IS(path,'gzip'):
+					if _.IS(path, 'gzip'):
 						_.decompress(path)
 					else:
-						_.compress(path)	
+						_.compress(path)
 
 			elif _.switches.isActive('Compress'):
 				for path in _.isData():
@@ -393,7 +389,8 @@ def action():
 					else:
 						_.decompress(path)
 			else:
-				_.e('action not specified','-en or -de')
+				_.e('action not specified', '-en or -de')
+
 
 ########################################################################################
 if __name__ == '__main__':

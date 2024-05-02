@@ -413,12 +413,15 @@ def getFolder(folder,r=True):
 			record = None
 			path = folder + _v.slash + item
 			add(path,r)
+isClean = _.switches.isActive('Count')
 def add(path,r=False):
 	global i
 	global iS
 	global baseDepth
 	global base_path
-	_.pr(' ',r=1)
+	global isClean
+	if not isClean:
+		_.pr(' ',r=1)
 	path = path.replace(_v.slash+_v.slash,_v.slash)
 	path = path.replace('",','')
 	path = path.replace('"','')
