@@ -8998,7 +8998,10 @@ def myFileLocations( file, silent=False, currentBaseVersion=3 ):
 				files = [file]
 			for path in files:
 				path = __.path(path)
-				recs[path] = {'epoch': time.time(), 'session': os.environ['Session_ID']}
+				try:
+					recs[path] = {'epoch': time.time(), 'session': os.environ['Session_ID']}
+				except:
+					recs[path] = {'epoch': time.time(), 'session': time.time()}
 			saveTable(recs,'myFileLocations.index',printThis=False)
 
 	file=url2file(file)
