@@ -226,6 +226,26 @@ def action():
 	#     _.pr( 'BackupRunOnce: Active' )
 	#     pause=input('pause')
 
+	myFileLocations = _.getTable('myFileLocations.index')
+	myFileLocationsFiles = []
+	if _.switches.isActive('Ago'):
+		for path in myFileLocations:
+			if myFileLocations[path]['epoch'] > maxEpoch:
+				myFileLocationsFiles.append(path)
+	elif not _.switches.isActive('Ago'):
+		for path in myFileLocations:
+			if myFileLocations[path]['epoch'] > _.timeAgo('1d'):
+				myFileLocationsFiles.append(path)
+	_.pr(line=1)
+	for path in myFileLocationsFiles:
+		rec = myFileLocations[path]
+		fileBackup=_fileBackup()
+		if rec['session']:
+			fileBackup.switch( 'Session', rec['session'] )
+		fileBackup.switch( 'Input', path )
+		fileBackup.do(     'action' )
+	_.pr(line=1)
+
 	for ii,log in enumerate(schedulerLog):
 		if not 'status' in log:log['status'] = status['default'];
 		if log['status'] == status['default'] or log['status'] == status['defaultSpent']:

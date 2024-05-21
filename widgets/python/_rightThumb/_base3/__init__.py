@@ -8984,6 +8984,23 @@ def url2file(path):
 
 isFirst=True
 def myFileLocations( file, silent=False, currentBaseVersion=3 ):
+	if True:
+		valid = True
+		for test in [
+			'unclaimed_tickets_history',
+		]:
+			if test in file:
+				valid = False
+		if valid:
+			recs = getTable('myFileLocations.index')
+			if not recs: recs = {}
+			if type(file) == str:
+				files = [file]
+			for path in files:
+				path = __.path(path)
+				recs[path] = {'epoch': time.time(), 'session': os.environ['Session_ID']}
+			saveTable(recs,'myFileLocations.index',printThis=False)
+
 	file=url2file(file)
 	file = aliases_file_open(file)
 	if isWin and type(file) == str and '/' in file: file=file.replace('/',os.sep)

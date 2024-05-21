@@ -36,7 +36,13 @@ def appSwitches():
 	# _.switches.register( 'Path-Cleaner', '-path' )
 	_.switches.register( 'Files', '-f,-file,-files','file.txt', isData='name', description='Files' )
 	_.switches.register( 'Single-File', '-singlefile' )
-	pass
+
+	_.switches.register('JQ-Filter', '-jq-filter')
+	_.switches.register('JQ-Map', '-jq-map')
+	_.switches.register('JQ-Reduce', '-jq-reduce')
+	_.switches.register('JQ-Select', '-jq-select')
+	_.switches.register('JQ-Keys', '-jq-keys')
+	_.switches.register('JQ-Values', '-jq-values')
 
 _.autoBackupData = __.setting('receipt-log')
 __.releaseAcquiredData = __.setting('receipt-file')
@@ -82,6 +88,11 @@ _.appInfo[focus()] = {
 						_.hp('.bat'),
 						_.hp('    call p script-helper -replace "\'%b%\' \'/\' \'\\\\\'" > %tmpf%'),
 						_.hp('    SET /p b=<%tmpf%'),
+						_.hp(''),
+						_.hp('p script-helper -jq-reduce -f filename.json'),
+						_.hp('p script-helper -jq-select -f filename.json'),
+						_.hp('p script-helper -jq-keys -f filename.json'),
+						_.hp('p script-helper -jq-values -f filename.json'),
 						_.hp(''),
 	],
 	'columns': [
@@ -160,9 +171,161 @@ _.postLoad( __file__ )
 ########################################################################################
 # START
 
+import json
+import simplejson
 
+def jq_filter(json_obj, key):
+	"""
+	Filter JSON objects by a specific key.
+	
+	Parameters:
+	json_obj (list/dict): The JSON data.
+	key (str): The key to filter by.
+	
+	Returns:
+	list: A list of values corresponding to the given key.
+	"""
+	if isinstance(json_obj, dict):
+		return [json_obj.get(key)]
+	elif isinstance(json_obj, list):
+		return [item.get(key) for item in json_obj if key in item]
+	return []
+
+def jq_map(json_obj, func):
+	"""
+	Apply a function to each item in the JSON array.
+	
+	Parameters:
+	json_obj (list): The JSON array.
+	func (function): A function to apply to each item.
+	
+	Returns:
+	list: A list of results after applying the function.
+	"""
+	if isinstance(json_obj, list):
+		return [func(item) for item in json_obj]
+	return []
+
+def jq_reduce(json_obj, func, initial):
+	"""
+	Reduce a JSON array to a single value using a function.
+	
+	Parameters:
+	json_obj (list): The JSON array.
+	func (function): A function to apply for reduction.
+	initial: The initial value for reduction.
+	
+	Returns:
+	The result of reduction.
+	"""
+	if isinstance(json_obj, list):
+		from functools import reduce
+		return reduce(func, json_obj, initial)
+	return initial
+
+def jq_select(json_obj, condition):
+	"""
+	Select items from a JSON array that match a condition.
+	
+	Parameters:
+	json_obj (list): The JSON array.
+	condition (function): A function that returns True for items to select.
+	
+	Returns:
+	list: A list of items that match the condition.
+	"""
+	if isinstance(json_obj, list):
+		return [item for item in json_obj if condition(item)]
+	return []
+
+def jq_keys(json_obj):
+	"""
+	Get all keys in a JSON object.
+	
+	Parameters:
+	json_obj (dict): The JSON object.
+	
+	Returns:
+	list: A list of keys in the JSON object.
+	"""
+	if isinstance(json_obj, dict):
+		return list(json_obj.keys())
+	elif isinstance(json_obj, list):
+		return [list(item.keys()) for item in json_obj if isinstance(item, dict)]
+	return []
+
+def jq_values(json_obj):
+	"""
+	Get all values in a JSON object.
+	
+	Parameters:
+	json_obj (dict): The JSON object.
+	
+	Returns:
+	list: A list of values in the JSON object.
+	"""
+	if isinstance(json_obj, dict):
+		return list(json_obj.values())
+	elif isinstance(json_obj, list):
+		return [list(item.values()) for item in json_obj if isinstance(item, dict)]
+	return []
+
+def load_json_file(filename):
+	with open(filename, 'r') as file:
+		return simplejson.load(file)
 
 def action():
+	if _.switches.isActive('JQ-Filter'):
+		files = _.switches.values('Files')
+		for file in files:
+			json_data = load_json_file(file)
+			key = _.switches.value('JQ-Filter')
+			result = jq_filter(json_data, key)
+			_.pr(simplejson.dumps(result, indent=4))
+			return
+
+	if _.switches.isActive('JQ-Map'):
+		files = _.switches.values('Files')
+		for file in files:
+			json_data = load_json_file(file)
+			result = jq_map(json_data, lambda x: x.get('age'))
+			_.pr(simplejson.dumps(result, indent=4))
+			return
+
+	if _.switches.isActive('JQ-Reduce'):
+		files = _.switches.values('Files')
+		for file in files:
+			json_data = load_json_file(file)
+			result = jq_reduce(json_data, lambda acc, x: acc + x.get('status', 0), 0)
+			_.pr(result)
+			return
+
+	if _.switches.isActive('JQ-Select'):
+		files = _.switches.values('Files')
+		for file in files:
+			json_data = load_json_file(file)
+			result = jq_select(json_data, lambda x: x.get('status', 0) == 2)
+			_.pr(simplejson.dumps(result, indent=4))
+			return
+
+	if _.switches.isActive('JQ-Keys'):
+		files = _.switches.values('Files')
+		for file in files:
+			json_data = load_json_file(file)
+			result = jq_keys(json_data)
+			_.pr(simplejson.dumps(result, indent=4))
+			return
+
+	if _.switches.isActive('JQ-Values'):
+		files = _.switches.values('Files')
+		for file in files:
+			json_data = load_json_file(file)
+			result = jq_values(json_data)
+			_.pr(simplejson.dumps(result, indent=4))
+			return
+
+
+
 
 	if _.switches.isActive('Files') or _.isData():
 

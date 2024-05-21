@@ -798,6 +798,18 @@ __.fileBackup=_.dot()
 __.fileBackup.isPreOpen = _.switches.isActive('isPreOpen')
 # __.fileBackup.isPreOpen
 # __.fileBackup.isPreOpen
+
+def myFileLocationsRegister(path):
+	if True:
+		recs = _.getTable('myFileLocations.index')
+		if not recs: recs = {}
+		if type(path) == str:
+			files = [path]
+		for path in files:
+			path = __.path(path)
+			recs[path] = {'epoch': time.time(), 'session': os.environ['Session_ID']}
+		_.saveTable(recs,'myFileLocations.index',printThis=False)
+
 def action(path=None,flag=None,o=None,pre=None):
 	if _.switches.isActive('BackupRecoverScan') and '1' in _.switches.values('BackupRecoverScan'):
 		bkRecoverScan(); sys.exit();
@@ -840,6 +852,7 @@ def action(path=None,flag=None,o=None,pre=None):
 	if not path is None:
 		if not os.path.isfile(path): return False
 		path = __.path(  os.path.abspath(path)  )
+		myFileLocationsRegister(path)
 		_.switches.fieldSet( 'Silent', 'active', True )
 		_.switches.fieldSet( 'isRunOnce', 'active', True )
 		_.switches.fieldSet( 'DoNotSchedule', 'active', True )
@@ -847,6 +860,8 @@ def action(path=None,flag=None,o=None,pre=None):
 			_.switches.fieldSet( 'Flag', 'active', True )
 			_.switches.fieldSet( 'Flag', 'value', flag )
 			_.switches.fieldSet( 'Flag', 'values', [flag] )
+
+
 
 	__.openSecure = False
 	__.secureFilesID = None
@@ -864,7 +879,8 @@ def action(path=None,flag=None,o=None,pre=None):
 			path = _.switches.value('Input')
 		# _.pr( 'path::::', path )
 		if os.path.isfile(path):
-			path = __.path(  path  ) 
+			path = __.path(  path  )
+			myFileLocationsRegister(path)
 			if not isActive('Silent'):
 				if _.isCrypt(path): _.pr('encrypted <-- yes ',c='red')
 				# else: _.pr('encrypted <-- no ',c='green')
