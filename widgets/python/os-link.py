@@ -155,6 +155,14 @@ _.postLoad( __file__ )
 
 def action():
 
+	import ctypes
+
+	if os.name == 'nt' and not ctypes.windll.shell32.IsUserAnAdmin():
+		print("This app requires administrative privileges. Exiting.")
+		sys.exit()
+
+
+
 	for i,fro in enumerate( _.switches.values('From') ):
 		if os.path.isfile(fro):
 			fro = os.path.abspath(fro)

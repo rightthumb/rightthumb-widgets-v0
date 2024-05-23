@@ -53,6 +53,7 @@ def appSwitches():
 	_.switches.register('Ago', '-ago')
 	_.switches.register('Date', '-date')
 	_.switches.register('BackupRunOnce', '-include_once')
+	_.switches.register('fileBackup-Log', '-fileBackupLog')
 	
 
 
@@ -406,7 +407,7 @@ def action():
 				schedulerLog[ii]['status'] = status['defaultSpent']
 
 	_.saveTable( schedulerLog, 'fileBackupSchedule.json', p=0 )
-
+	if not _.switches.isActive('fileBackup-Log'): return None
 	for log in backupLog:
 		if not log['file'] in __.spent:
 			__.spent.append(log['file'])

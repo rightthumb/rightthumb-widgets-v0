@@ -12,7 +12,7 @@ from operator import itemgetter
 from datetime import datetime as dt, timedelta
 from datetime import date
 ##################################################
-MINI_ADS = True
+MINI_ADS = False
 SHOW_ADS = True
 ##################################################
 __.showLine_quoteFix=True
@@ -10123,7 +10123,7 @@ def _is_substring_present(sub, main_string):
 def positiveResultsCode(string,plus='',plusOr=False,end=None,OR=None):
 	# __.sw.PlusCode
 
-
+	string = string.replace("'",' ').replace('"',' ')
 	global switches
 	if switches.isActive('PlusCode') and 'n' in switches.value('PlusCode'):
 		return positive_results_code(string,plus,plusOr,end,OR)

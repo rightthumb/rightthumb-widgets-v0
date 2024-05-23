@@ -310,7 +310,10 @@ def action(path=None):
 	__.appReg=appReg
 	if not _.switches.isActive('Clean'):
 		# print(paths)
-		_.ad()
+		if _.switches.isActive('Files') or _.switches.isActive('Alias'):
+			# if not _.switches.isActive('PrintAliases') and not _.switches.isActive('PrintAliasLocation'):
+			if not _.switches.isActive('PrintAliases'):
+				_.ad()
 	if paths:
 		logFi = _v.tt+os.sep+'file-open'+os.sep+_.friendlyDate(time.time()).split(' ')[0]+'.hash'
 		_v.mkdir(logFi,f=1)

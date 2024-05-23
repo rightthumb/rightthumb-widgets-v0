@@ -1,3 +1,3 @@
 @echo off
 
-call p file-open -ap -f %*
+call p file-open -ap -a %*
