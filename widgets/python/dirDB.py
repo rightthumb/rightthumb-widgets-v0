@@ -381,7 +381,7 @@ def action():
 	global theData
 
 	for db in _.switches.values('Database'):
-		print(db)
+		# print(db)
 		if _.switches.isActive('Has'):
 			conn = sqlite3.connect(db)
 			c = conn.cursor()
