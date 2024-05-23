@@ -1588,32 +1588,34 @@ doc_sep = '\n___________________________________________________________________
 ########################################################################################
 def build2m():
 	import _rightThumb._md5 as _md5
-	b2m = _.getTable('build2m.dex')
-	if b2m: return b2m
-	fi2m =_.getText2( 'C:\\Users\\Scott\\.rt\\profile\\backup\\txt\\2m','list' )
-	bm2 = {}
-	for i in fi2m:
-		i = i.strip()
-		_.pr( i )
-		if not os.path.isfile( i ): continue
-		if _.IS( i, 'gzip' ):
-			gzip=True
-			_.decompress( i )
-		else:
-			gzip=False
-		md5 = _md5.md5File( i )
-		id = _md5.md52GUID(md5,True)
-		if gzip: _.compress( i )
-		bm2[id] = {
-			'id': id,
-			'file': None,
-			'backup': i,
-			'md5': md5,
-		}
-	_.saveTable(bm2,'build2m.dex')
-	return bm2
-b2m =None
+	if False:
+		b2m = _.getTable('build2m.dex')
+		if b2m: return b2m
+		fi2m =_.getText2( 'C:\\Users\\Scott\\.rt\\profile\\backup\\txt\\2m','list' )
+		bm2 = {}
+		for i in fi2m:
+			i = i.strip()
+			_.pr( i )
+			if not os.path.isfile( i ): continue
+			if _.IS( i, 'gzip' ):
+				gzip=True
+				_.decompress( i )
+			else:
+				gzip=False
+			md5 = _md5.md5File( i )
+			id = _md5.md52GUID(md5,True)
+			if gzip: _.compress( i )
+			bm2[id] = {
+				'id': id,
+				'file': None,
+				'backup': i,
+				'md5': md5,
+			}
+		_.saveTable(bm2,'build2m.dex')
+		return bm2
+	b2m =None
 def bkRecoverListen(id,path):
+	return None
 	global b2m
 	changed = False
 	if b2m is None: b2m = build2m()
