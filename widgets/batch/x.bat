@@ -219,10 +219,12 @@ IF [%BackupRunOnce%] == [Y] (
     echo BackupRunOnce: STARTED
     call:autoBackup_A
     call p. autoBackup -date "%open_timestamp2%" -include_once
+    call:clearBackupFiles
 ) ELSE (
     echo BackupRunOnce: SKIPPED
     call:autoBackup_B
     call p. autoBackup -date "%open_timestamp2%"
+    call:clearBackupFiles
 )
 
 if not [%ORIGINAL_Session_ID%] == [%Session_ID%] ( CALL p. ticket_transfer -old %ORIGINAL_Session_ID% -new %Session_ID%)
@@ -321,6 +323,7 @@ if [%skip_backup%] == [YES] (
     echo skip_backup
 ) else (
     call p. autoBackup -date "%open_timestamp2%" -include_once
+    call:clearBackupFiles
 )
 goto:eof
 :autoBackup_B
@@ -329,5 +332,12 @@ if [%skip_backup%] == [YES] (
 ) else (
     echo autoBackup running...
     call p. autoBackup -date "%open_timestamp2%"
+    call:clearBackupFiles
 )
+goto:eof
+:clearBackupFiles
+    call ndp %myTables%\fileBackupSchedule.json
+    call ndp %myTables%\myFileLocations.index
+    echo {} > %myTables%\myFileLocations.index
+    echo [] > %myTables%\fileBackupSchedule.json
 goto:eof
