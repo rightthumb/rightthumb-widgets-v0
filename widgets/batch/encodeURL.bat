@@ -10,4 +10,7 @@ rem    - Scott Taylor Reph, RightThumb.com
 rem ###########################################################################
 rem ## {C3P0D40fAe8B} ##
 
-call inline.bat %*
+set url=%1
+set thisFile=encodeURL.php
+%php% %phpFiles%\%thisFile%
+echo.

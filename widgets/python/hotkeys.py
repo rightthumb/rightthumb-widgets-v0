@@ -470,7 +470,9 @@ def extract_urls(html_string, base_url=None):
 def scrape_linux_file_paths(text):
 	for url in scrape_urls(text):
 		text=text.replace(url,'')
-	linux_path_pattern = r'(?<!https?:)\/(?:[^\/\0\s]+\/)*[^\/\0\s]*'
+	# linux_path_pattern = r'(?<!https?:)\/(?:[^\/\0\s]+\/)*[^\/\0\s]*'
+	# linux_path_pattern = r'(?<!https?:)[~\/](?:[^\/\0\s]+\/)*[^\/\0\s]*'
+	linux_path_pattern = r'(?<!https?:)(?:~\/|\/)(?:[^\/\0\s]+\/)*[^\/\0\s]*'
 	linux_paths = regex.findall(linux_path_pattern, text)
 	return set(linux_paths)
 

@@ -213,7 +213,11 @@ def meta_scan(path,end):
 			_.v.fp=url.replace(meta['url']+'/',meta['sftp']['path']+'/')
 			_.v.fp=_.v.fp.replace('//','/').replace('//','/')
 		except: pass
-	return urlpr(url,meta)
+	theUrl = urlpr(url,meta)
+	if os.path.isdir(path):
+		theUrl = theUrl.replace('?loader&url=%3Fview%3D1%26f%3D','?fo=').rstrip('/')
+		theUrl = theUrl.replace('?view=1&f=','?fo=').rstrip('/')
+	return theUrl
 
 def meta_scanR(path,end):
 	global folder
@@ -369,7 +373,13 @@ def process(path,end='',ft=None):
 			if not _.switches.isActive('mkdir'):
 				_.pr(path,c='cyan')
 				url=url.replace('=/','=')
-				_.pr(urlpr(url,meta),c='Background.blue')
+				theUrl = urlpr(url,meta)
+				if os.path.isdir(path):
+					theUrl = theUrl.replace('?loader&url=%3Fview%3D1%26f%3D','?fo=').rstrip('/')
+					theUrl = theUrl.replace('?view=1&f=','?fo=').rstrip('/')
+					_.pr(theUrl,c='Background.blue')
+				else:
+					_.pr(theUrl,c='Background.blue')
 			if url.endswith('.js'): _.pr( '<script src="'+url+'"></script>' ,c='yellow')
 			elif url.endswith('.css'): _.pr( '<link rel="stylesheet" href="'+url+'">' ,c='yellow')
 			elif url.endswith('.jpg'): _.pr( '<img src="'+url+'"/>' ,c='yellow')

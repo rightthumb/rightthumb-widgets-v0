@@ -2869,18 +2869,16 @@ if [ ! -e $config ]; then
 	echo "0 no config"
 	mkdir $config;
 else
-
-	unixID1=$( sed -n '1p' < $unixID )
-	unixID2=$( sed -n '2p' < $unixID )
-	unixID3=$( sed -n '3p' < $unixID )
-	unixID4=$( sed -n '4p' < $unixID )
-	unixID5=$( sed -n '5p' < $unixID )
-	unixID6=$( sed -n '6p' < $unixID )
-	unixID7=$( sed -n '7p' < $unixID )
-	unixID8=$( sed -n '8p' < $unixID )
-	unixID9=$( sed -n '9p' < $unixID )
-	unixID10=$( sed -n '10p' < $unixID )
-
+	unixID1=$(md5sum <<< "$(sed -n '1p' < $unixID)$(cat /etc/machine-id)" | awk '{print $1}')
+	unixID2=$(md5sum <<< "$(sed -n '2p' < $unixID)$(cat /etc/machine-id)" | awk '{print $1}')
+	unixID3=$(md5sum <<< "$(sed -n '3p' < $unixID)$(cat /etc/machine-id)" | awk '{print $1}')
+	unixID4=$(md5sum <<< "$(sed -n '4p' < $unixID)$(cat /etc/machine-id)" | awk '{print $1}')
+	unixID5=$(md5sum <<< "$(sed -n '5p' < $unixID)$(cat /etc/machine-id)" | awk '{print $1}')
+	unixID6=$(md5sum <<< "$(sed -n '6p' < $unixID)$(cat /etc/machine-id)" | awk '{print $1}')
+	unixID7=$(md5sum <<< "$(sed -n '7p' < $unixID)$(cat /etc/machine-id)" | awk '{print $1}')
+	unixID8=$(md5sum <<< "$(sed -n '8p' < $unixID)$(cat /etc/machine-id)" | awk '{print $1}')
+	unixID9=$(md5sum <<< "$(sed -n '9p' < $unixID)$(cat /etc/machine-id)" | awk '{print $1}')
+	unixID10=$(md5sum <<< "$(sed -n '10p' < $unixID)$(cat /etc/machine-id)" | awk '{print $1}')
 fi
 # get_time_difference
 if [ ! -e $unixID ]; then
@@ -3033,6 +3031,9 @@ dl.mp3t() {
 }
 load() {
 	source "/opt/rightthumb-widgets-v0/widgets/bash/vps-bashrc_extended.sh" &> /dev/null
+}
+loada() {
+	source "/opt/rightthumb-widgets-v0/widgets/bash/vps-bashrc_aliases.sh" &> /dev/null
 }
 # echo 000-014
 

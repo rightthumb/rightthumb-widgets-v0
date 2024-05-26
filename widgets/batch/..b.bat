@@ -1,4 +1,10 @@
 @echo off
+
+echo.
+echo Are you sure you want to run this batch file?
+echo.
+pause
+
 cd /d "%w%" && call m call m w
 cd /d "%archive7z%" && call m archive7z
 cd /d "%b%" && call m b
