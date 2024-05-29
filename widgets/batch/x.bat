@@ -336,8 +336,10 @@ if [%skip_backup%] == [YES] (
 )
 goto:eof
 :clearBackupFiles
-    call ndp %myTables%\fileBackupSchedule.json
-    call ndp %myTables%\myFileLocations.index
+    move %myTables%\fileBackupSchedule.json  %myTables%\log_backup\fileBackupSchedule.json 
+    move %myTables%\myFileLocations.json  %myTables%\log_backup\myFileLocations.json 
+    call ndp %myTables%\log_backup\fileBackupSchedule.json
+    call ndp %myTables%\log_backup\myFileLocations.index
     echo {} > %myTables%\myFileLocations.index
     echo [] > %myTables%\fileBackupSchedule.json
 goto:eof
