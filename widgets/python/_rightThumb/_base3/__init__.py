@@ -20986,6 +20986,7 @@ regImps = {}
 class regImp:
 
 	def __init__( self, focus=None, app=None, argvProcessForce=False, dirty=False, a=None, i=None ):
+		if focus == 0: focus = None
 		# if app == 'file-open': self.switch('Clean')
 		DEFAULTS = {
 						'file-open': {'Clean': 1},
