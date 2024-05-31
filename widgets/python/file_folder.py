@@ -41,8 +41,8 @@ def appSwitches():
 	_.switches.register( 'Compair', '-compair' )
 	_.switches.register( 'Folder', '-f,-folder' )
 	_.switches.register( 'Links', '-l,-link,-links' )
-	_.switches.register( 'Copy', '-copy,-cp' )
-	_.switches.register( 'NoCopy', '-nocopy' )
+	_.switches.register( 'CopyText', '-copy,-cp' )
+	# _.switches.register( 'NoCopy', '-nocopy' )
 	
 
 
@@ -269,7 +269,8 @@ def action():
 					_.colorThis( [ '\t',f['label'] ], 'yellow' )
 
 			if _.isWin and len(displayed_files) == 1:
-				if not _.switches.isActive('NoCopy'):
+				# if not _.switches.isActive('NoCopy'):
+				if _.switches.isActive('CopyText'):
 					_copy = _.regImp( __.appReg, '-copy' )
 					_copy.imp.copy( displayed_files[0], p=0 )
 
@@ -355,7 +356,8 @@ def action():
 		return newItems
 	if _.switches.isActive('Copy'):
 		if _.isWin:
-			if not _.switches.isActive('NoCopy'):
+			# if not _.switches.isActive('NoCopy'):
+			if _.switches.isActive('CopyText'):
 				_copy.imp.copy( '\n'.join(_copy_this), p=0 ); copied=True;
 
 	if copied: _.pr(' * copied *',c='r')

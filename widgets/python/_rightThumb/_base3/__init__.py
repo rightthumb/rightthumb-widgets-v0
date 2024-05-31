@@ -9598,7 +9598,13 @@ def miniUUID(epoch=None):
 		return UUID_Epoch(result)
 
 
-def UUID_Epoch(vVv,dec=2,epoch=None):
+def UUID_Epoch2(vVv=None,dec=2,epoch=None):
+	myuuid = UUID_Epoch(vVv,dec,epoch)
+	return myuuid[1:-1]
+def UUID_Epoch(vVv=None,dec=2,epoch=None):
+
+	if vVv is None:
+		vVv = genUUID()
 
 	if '{' in vVv:
 		hasBr=True
