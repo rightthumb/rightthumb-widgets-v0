@@ -3222,6 +3222,10 @@ alias drive.s.1g="find / -type f -size +1073741824"
 
 alias pin="source $widgets/widgets/bash/pin.sh"
 
+if [ -f "${stmp}/pin_ask" ]; then
+	source $widgets/widgets/bash/pin.sh
+fi
+
 clear
 # get_time_difference
 # a3bc42ec51e9
