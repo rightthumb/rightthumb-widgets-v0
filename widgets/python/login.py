@@ -50,11 +50,12 @@ __.switch_raw = []
 
 
 _.appInfo[focus()] = {
-	'file': 'thisApp.py',
+	'file': 'login.py',
 	'liveAppName': __.thisApp( __file__ ),
-	'description': 'Changes the world',
+	'description': 'Login to the vault',
 	'categories': [
-						'DEFAULT',
+						'login',
+						'vault',
 				],
 	'usage': [
 						# 'epy another',
@@ -70,7 +71,7 @@ _.appInfo[focus()] = {
 						# '',
 	],
 	'examples': [
-						_.hp('p thisApp -file file.txt'),
+						_.hp('p login'),
 						'',
 	],
 	'columns': [
@@ -185,8 +186,8 @@ _.postLoad( __file__ )
 
 
 
-def process():
-	file = _v.myConfig  +_v.slash+  '.vault'
+def process(file):
+	if not os.path.isfile( file ): return None
 	zeros = ''
 	for x in range(500):
 		zeros += '0'
@@ -195,11 +196,13 @@ def process():
 	os.unlink( file )
 
 def action():
-	process()
+	process(_v.myConfig  +_v.slash+  '.vault')
+	process(_v.vaultPath())
 	time.sleep(.2)
 	_vault.key(__.uuid()+__.uuid()+__.uuid())
 	time.sleep(.2)
-	process()
+	process(_v.myConfig  +_v.slash+  '.vault')
+	process(_v.vaultPath())
 	time.sleep(.2)
 	_vault.key()
 

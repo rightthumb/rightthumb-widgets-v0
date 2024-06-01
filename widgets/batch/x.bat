@@ -1,5 +1,5 @@
 @echo off
-
+call pin
 title=Closing Queue
 call p. lock-wait -wait x
 call p. lock-wait -lock x

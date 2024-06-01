@@ -321,6 +321,10 @@ GOTO:EOF
             REM cls
             prompt └─ 
             REM prompt - 
+            if exist "%stmp%/pin_ask" (
+                call pin
+                call c
+            )
 GOTO:EOF
 
 

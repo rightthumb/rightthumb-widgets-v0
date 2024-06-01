@@ -166,7 +166,7 @@ def cleanStringA(data):
 	return data
 
 def login( label, appReg=None ):
-	global auto
+	auto = _v.vaultPath()
 	if appReg is None:
 		appReg = __.appReg
 	location = appReg+'.'+label
@@ -183,7 +183,7 @@ def login( label, appReg=None ):
 
 		_.saveText( _blowfish.encrypt(password), auto )
 	gateKey = _blowfish.decrypt( _.getText(auto,raw=True,clean=2) )
-	vault = _.getTableDB( 'vault.index' )
+	vault = _.getTable( 'vault.index' )
 	
 	if location in vault:
 		password = _blowfish.decrypt( vault[location], gateKey )
@@ -192,12 +192,12 @@ def login( label, appReg=None ):
 			_.colorThis( label, 'yellow' )
 		password = getpass.getpass()
 		vault[location] = _blowfish.encrypt( password, gateKey )
-		_.saveTableDB( vault, 'vault.index' )
+		_.saveTable( vault, 'vault.index' )
 
 	return password
 
 def key(password=None):
-	global auto
+	auto = _v.vaultPath()
 	if not os.path.isfile(auto):
 		vaultPass = True
 		if password is None:
@@ -318,7 +318,8 @@ f.t = secureFiles_crypt_toggle
 
 
 
-auto = _v.vault_path
+# auto = _v.vault_path
+
 # _vault = _.regImp( __.appReg, '_rightThumb._vault' )
 # _vault.imp.login(app)
 # _vault.imp.key()

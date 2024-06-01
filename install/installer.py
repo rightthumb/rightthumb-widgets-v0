@@ -3220,6 +3220,8 @@ alias drive.s="find / -type f -size"
 alias drive.s.10g="find / -type f -size +10737418240"
 alias drive.s.1g="find / -type f -size +1073741824"
 
+alias pin="source $widgets/widgets/bash/pin.sh"
+
 clear
 # get_time_difference
 # a3bc42ec51e9

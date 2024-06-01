@@ -377,6 +377,55 @@ myConfig = myHome + slash+'config'
 unixID_path = myConfig + slash + '.unix_id'
 vault_path = myConfig + slash + '.vault'
 
+def vaultPath():
+	global myConfig
+	try:
+		pin = os.getenv('vault_pin')
+	except:
+		pin = vaultPinLogin()
+	if pin is None:
+		pin = vaultPinLogin()
+
+	vault_path = myConfig + os.sep + '.vault.'+pin
+	return vault_path
+def vaultPinLogin():
+	try: import subprocess
+	except: pass
+	pin = md5(input('PIN: '))
+	os.environ['vault_pin'] = pin
+	
+	if platform.system() == "Windows":
+		script_path = "set_pin.bat"
+		with open(script_path, 'w') as script_file:
+			script_file.write(f'@echo off\n')
+			script_file.write(f'set vault_pin={pin}\n')
+		
+		# Execute the script
+		subprocess.run(script_path, shell=True)
+		
+		# Securely delete the script
+		with open(script_path, 'r+b') as script_file:
+			script_file.write(b'\x00' * os.path.getsize(script_path))
+		os.remove(script_path)
+	
+	else:  # Linux or macOS
+		script_path = "set_pin.sh"
+		with open(script_path, 'w') as script_file:
+			script_file.write(f'#!/bin/bash\n')
+			script_file.write(f'export vault_pin="{pin}"\n')
+		
+		# Make the script executable
+		subprocess.run(['chmod', '+x', script_path])
+		
+		# Execute the script
+		subprocess.run(['bash', '-c', f'source ./{script_path}'])
+		
+		# Securely delete the script
+		with open(script_path, 'r+b') as script_file:
+			script_file.write(b'\x00' * os.path.getsize(script_path))
+		os.remove(script_path)
+
+	return pin
 
 
 configFile( '.ip.hash', myConfig + slash + '.ip.hash' )
@@ -682,6 +731,8 @@ html_temp = stmp + slash+'_temp.htm'
 pips = stmp + slash+'pips.txt'
 tmpbat = stmp + slash+'44E28BDF-8269-EEAE-D1DC-9B05B63E5F93.bat'
 tempFile = stmp + slash+'{c84ebb36-d978-4fdb-a928-1d906f89df25}'
+pinTemp = stmp + slash+'pin'
+# if os.path.isfile( pinTemp ): os.unlink( pinTemp )
 tmpf = stmp + slash+'{8E3F33E4-86AB-AB1E-6219-801DE111D9AF}'
 tmpf0 = stmp + slash+'{B820137A-79B8-45E3-BCBD-A6CAC50892D0}'
 tmpf1 = stmp + slash+'{C0FA8E56-8426-46BB-9CE8-4A14C51EA261}'
