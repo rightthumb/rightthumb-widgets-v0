@@ -389,9 +389,10 @@ def vaultPath():
 	vault_path = myConfig + os.sep + '.vault.'+pin
 	return vault_path
 def vaultPinLogin():
+	import getpass
 	try: import subprocess
 	except: pass
-	pin = md5(input('PIN: '))
+	pin = md5(getpass.getpass('PIN: '))
 	os.environ['vault_pin'] = pin
 	
 	if platform.system() == "Windows":
