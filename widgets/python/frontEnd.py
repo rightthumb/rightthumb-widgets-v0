@@ -188,7 +188,7 @@ if __name__ == '__main__':
 ########################################################################################
 # START
 
-_browser = _.regImp( __.appReg, '_rightThumb._toolsScrapeFrontEnd' )
+_browser = _.regImp( __.appReg, '_rightThumb._toolsScrapeFrontEnd2' )
 import _rightThumb._encryptString as _blowfish
 
 
