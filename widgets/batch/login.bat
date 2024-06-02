@@ -11,7 +11,7 @@ if [%vault_pin%] == [] (
     call rm "%stmp%/pin" --c
     echo pin set
 ) else (
-    echo pin already set
+    echo pin is set
 )
 goto :eof
 :noask

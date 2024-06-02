@@ -392,7 +392,9 @@ def vaultPinLogin():
 	import getpass
 	try: import subprocess
 	except: pass
-	pin = md5(getpass.getpass('PIN: '))
+	rawPin = getpass.getpass('PIN: ')
+	# print(rawPin)
+	pin = md5(rawPin)
 	os.environ['vault_pin'] = pin
 	
 	if platform.system() == "Windows":
