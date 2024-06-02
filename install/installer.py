@@ -3030,7 +3030,8 @@ dl.mp3t() {
 	youtube-dlc -x --audio-format mp3 "$url" &
 }
 load() {
-	source "/opt/rightthumb-widgets-v0/widgets/bash/vps-bashrc_extended.sh" &> /dev/null
+	source "/opt/rightthumb-widgets-v0/widgets/bash/vps-bashrc_extended.sh"
+	# source "/opt/rightthumb-widgets-v0/widgets/bash/vps-bashrc_extended.sh" &> /dev/null
 }
 loada() {
 	source "/opt/rightthumb-widgets-v0/widgets/bash/vps-bashrc_aliases.sh" &> /dev/null

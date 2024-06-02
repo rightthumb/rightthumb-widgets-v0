@@ -22,6 +22,11 @@ class HouseStockWatcherScraper:
             'vpn5.server.com',
             'vpn6.server.com',
         ]
+        self.no_multithreading_vps = {
+            'vpn1.server.com': True,
+            'vpn2.server.com': True
+        }
+        self.statuses = []
         self.current_vpn = 0
         self.initialize_browser()
         self.log_file = 'scrape_log.txt'
@@ -37,7 +42,7 @@ class HouseStockWatcherScraper:
 
     def open_url(self, url):
         self.browser.get(url)
-        WebDriverWait(self.browser, 10).until(EC.presence_of_element_located((By.LINK_TEXT, 'View Summary')))
+        WebDriverWait(self.browser, 15).until(EC.presence_of_element_located((By.LINK_TEXT, 'View Summary')))
 
     def select_elements(self, selector):
         return self.browser.find_elements(By.CSS_SELECTOR, selector)
@@ -45,7 +50,7 @@ class HouseStockWatcherScraper:
     def connect_to_vpn(self):
         vpn_server = self.vpn_servers[self.current_vpn]
         subprocess.run(['sudo', 'openvpn', '--config', f'{vpn_server}.ovpn'])
-        time.sleep(10)  # Wait for VPN connection to establish
+        time.sleep(15)  # Wait for VPN connection to establish
 
     def disconnect_vpn(self):
         subprocess.run(['sudo', 'killall', 'openvpn'])
@@ -59,45 +64,31 @@ class HouseStockWatcherScraper:
     def click_view_summary(self):
         self.open_url('https://housestockwatcher.com/summary_by_rep')
         view_summary_links = self.select_elements('a[href*="/summary_by_rep"]')
-        threads = []
 
         for link in view_summary_links:
             href = link.get_attribute('href')
-            thread = threading.Thread(target=self.scrape_summary_data_thread, args=(href,))
-            threads.append(thread)
-            thread.start()
+            self.scrape_summary_data(href)
             time.sleep(1)  # Slight delay to prevent overwhelming the server
 
-        for thread in threads:
-            thread.join()
-
-    def scrape_summary_data_thread(self, url):
-        thread_browser = self.create_new_browser_instance()
-        self.scrape_summary_data(thread_browser, url)
-        thread_browser.quit()
-
-    def create_new_browser_instance(self):
-        chrome_options = Options()
-        chrome_options.add_argument("--headless")
-        chrome_options.add_argument("--no-sandbox")
-        chrome_options.add_argument("--disable-dev-shm-usage")
-        service = Service(ChromeDriverManager().install())
-        return webdriver.Chrome(service=service, options=chrome_options)
-
-    def scrape_summary_data(self, browser, url):
+    def scrape_summary_data(self, url):
         print('scrape_summary_data', url)
-        browser.get(url)
+        time.sleep(3)  # Pause to minimize firewall blocking
+        self.browser.get(url)
         time.sleep(2)  # Pause before scraping
         try:
-            WebDriverWait(browser, 10).until(
+            WebDriverWait(self.browser, 15).until(
                 EC.presence_of_element_located((By.CSS_SELECTOR, '.table.table-hover tbody tr'))
             )
         except:
             self.log_status(f"Timeout when loading {url}")
+            self.statuses.append('fail')
+            if self.statuses[-5:] == ['fail'] * 5:
+                self.switch_vpn()
+                self.scrape_summary_data(url)
             return
 
         trades = []
-        rows = browser.find_elements(By.CSS_SELECTOR, '.table.table-hover tbody tr')
+        rows = self.browser.find_elements(By.CSS_SELECTOR, '.table.table-hover tbody tr')
 
         for row in rows:
             trade = {
@@ -115,6 +106,7 @@ class HouseStockWatcherScraper:
 
         self.scraped_data.extend(trades)
         self.save_to_json(trades)
+        self.statuses.append('success')
 
     def save_to_json(self, data):
         with open('trades.json', 'w') as f:
@@ -141,5 +133,5 @@ def main():
             time.sleep(5)  # Wait before retrying
     scraper.close_browser()
 
-if __name__ == '__main__':
+if __name__:
     main()
