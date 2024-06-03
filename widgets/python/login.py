@@ -196,8 +196,9 @@ def process(file):
 	os.unlink( file )
 
 def action():
+	import os
 	for path in _.fo(_v.myConfig):
-		if 'config\.vault' in path:
+		if 'config'+os.sep+'.vault' in path:
 			# print(path)
 			process(path)
 	
