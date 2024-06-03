@@ -197,7 +197,7 @@ def process(file):
 
 def action():
 	for path in _.fo(_v.myConfig):
-		if 'config\.vault.' in path:
+		if 'config\.vault' in path:
 			# print(path)
 			process(path)
 	
