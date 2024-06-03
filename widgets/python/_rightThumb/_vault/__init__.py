@@ -197,8 +197,9 @@ def login( label, appReg=None ):
 	return password
 
 def key(password=None):
+	auto = _v.vaultPath()
 	if os.path.isfile(auto):
-		auto = _v.vaultPath()
+		pass
 	else:
 		auto = _v.vaultPath(1)
 		vaultPass = True
