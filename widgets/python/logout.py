@@ -36,6 +36,7 @@ import _rightThumb._string as _str
 
 def appSwitches():
 	_.switches.register( 'Clear', '-clear' )
+	_.switches.register( 'SkipDecrypt', '-skip' )
 
 
 _.autoBackupData = __.autoCreationConfiguration['backup']
@@ -152,8 +153,7 @@ _.postLoad( __file__ )
 # START
 
 
-def process():
-	file = _v.myConfig  +_v.slash+  '.vault'
+def process(file):
 	zeros = ''
 	for x in range(500):
 		zeros += '0'
@@ -161,14 +161,27 @@ def process():
 	time.sleep( .5 )
 	os.unlink( file )
 
+
 def action():
-	_lock.action()
-	process()
+	# for path in _.fo(_v.myConfig):
+	# 	if 'config\.vault.' in path:
+	# 		print(path)
+	# sys.exit()
+	if not _.switches.isActive('SkipDecrypt'):
+		_lock.action()
+	# print(_v.myConfig)
+	for path in _.fo(_v.myConfig):
+		if 'config\.vault.' in path:
+			# print(path)
+			process(path)
+	sys.exit()
+	# process(_v.vaultPath())
 	time.sleep(.2)
 	_vault.key(__.uuid()+__.uuid()+__.uuid())
 	time.sleep(.2)
-	if _.switches.isActive('Clear'):
-		process()
+
+	# if _.switches.isActive('Clear'):
+	# 	process()
 
 import _rightThumb._vault as _vault
 _lock = _.regImp( __.appReg, 'lock-files' )

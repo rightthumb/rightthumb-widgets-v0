@@ -376,9 +376,11 @@ myLogs = myHome + slash+'logs'
 myConfig = myHome + slash+'config'
 unixID_path = myConfig + slash + '.unix_id'
 vault_path = myConfig + slash + '.vault'
-
-def vaultPath():
+myDecrypt = myConfig+os.sep+'decrypt.key'
+def vaultPath(forceLogin=False):
 	global myConfig
+	if forceLogin:
+		pin = vaultPinLogin()
 	try:
 		pin = os.getenv('vault_pin')
 	except:

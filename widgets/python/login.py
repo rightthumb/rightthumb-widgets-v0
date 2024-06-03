@@ -196,14 +196,13 @@ def process(file):
 	os.unlink( file )
 
 def action():
-	process(_v.myConfig  +_v.slash+  '.vault')
-	process(_v.vaultPath())
-	time.sleep(.2)
-	_vault.key(__.uuid()+__.uuid()+__.uuid())
-	time.sleep(.2)
-	process(_v.myConfig  +_v.slash+  '.vault')
-	process(_v.vaultPath())
-	time.sleep(.2)
+	for path in _.fo(_v.myConfig):
+		if 'config\.vault.' in path:
+			# print(path)
+			process(path)
+	
+
+	# _v.vaultPath(1)
 	_vault.key()
 
 import _rightThumb._vault as _vault

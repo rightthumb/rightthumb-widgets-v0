@@ -199,11 +199,14 @@ def action():
 
 				if  _.switches.isActive('Password',appDBA):
 					password = _.switches.values('Password',appDBA)[0]
+					passwordIs = False
 				else:
 					password = _vault.key()
+					passwordIs = True
 
 				if  _.switches.isActive('Vault',appDBA):
 					password = _vault.key()
+					passwordIs = True
 
 
 
@@ -265,7 +268,10 @@ def action():
 						output = output+'-'+_.genUUID()+'.de'
 
 
-
+					if passwordIs:
+						if not _blowfish.myDecrypt():
+							_.pr('Bad Password')
+							sys.exit()
 					with open( filepath, 'rb' ) as fIn:
 						with open( output , 'wb' ) as fOut:
 							pyAesCrypt.encryptStream(fIn, fOut, password, bufferSize)
@@ -357,7 +363,7 @@ encrypted_file_ext = '.crypt'
 # _del.switch('Files', output); _del.action();
 
 import _rightThumb._vault as _vault
-import _rightThumb._encryptString as _blowfish
+# import _rightThumb._encryptString as _blowfish
 try:
 	import pyAesCrypt
 except Exception as e:

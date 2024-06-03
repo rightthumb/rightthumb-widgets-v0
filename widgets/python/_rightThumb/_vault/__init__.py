@@ -199,6 +199,7 @@ def login( label, appReg=None ):
 def key(password=None):
 	auto = _v.vaultPath()
 	if not os.path.isfile(auto):
+		auto = _v.vaultPath(1)
 		vaultPass = True
 		if password is None:
 			_.pr()
@@ -207,6 +208,7 @@ def key(password=None):
 			_.pr()
 
 		_.saveText( _blowfish.encrypt(password), auto )
+		_blowfish.myEn('1998',password)
 	gateKey = _blowfish.decrypt( _.getText(auto,raw=True,clean=2) )
 	return gateKey
 

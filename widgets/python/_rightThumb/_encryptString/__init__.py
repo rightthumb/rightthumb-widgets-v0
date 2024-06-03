@@ -110,6 +110,79 @@ def decryptClean( data, password=False ):
 	# return result
 	# return _str.cleanBE( result, ' ' )
 	return _str.do('e',result,' ')
+
+def myDecrypt():
+	password   = decrypt(open(_v.vaultPath(), 'r').read())
+	# print(password)
+	if myDe(password).strip() == '1998':
+		return True
+	else:
+		return False
+
+
+
+# Function to encrypt a string
+def myPad(key, block_size):
+	# Pad the key to make sure it is at least the minimum size and at most 56 bytes
+	if len(key) < block_size:
+		key += b'0' * (block_size - len(key))
+	elif len(key) > 56:
+		key = key[:56]
+	return key
+
+def myEn(plaintext, password):
+	password = password.strip()
+	from Crypto.Cipher import Blowfish
+	from Crypto.Util.Padding import pad
+	import base64
+
+	# Pad the key to ensure it is at least 4 bytes long and at most 56 bytes
+	key = myPad(password.encode(), 4)
+	
+	cipher = Blowfish.new(key, Blowfish.MODE_CBC)
+	iv = cipher.iv
+	padded_text = pad(plaintext.encode(), Blowfish.block_size)
+	encrypted = cipher.encrypt(padded_text)
+	# Combine IV with the encrypted text and encode in base64
+	encrypted_text = base64.b64encode(iv + encrypted).decode('utf-8')
+	
+	with open(_v.myDecrypt, 'w') as file:
+		file.write(encrypted_text)
+	
+	return encrypted_text
+
+# Function to decrypt a string
+def myDe(password):
+	password = password.strip()
+	from Crypto.Cipher import Blowfish
+	from Crypto.Util.Padding import unpad
+	import base64
+
+	encrypted_text = open(_v.myDecrypt, 'r').read()
+
+	try:
+		encrypted_data = base64.b64decode(encrypted_text)
+		iv = encrypted_data[:Blowfish.block_size]
+		encrypted_message = encrypted_data[Blowfish.block_size:]
+
+		# Pad the key to ensure it is at least 4 bytes long and at most 56 bytes
+		key = myPad(password.encode(), 4)
+
+		# print(f"IV: {iv}")
+		# print(f"Encrypted message: {encrypted_message}")
+		# print(f"Key: {key}")
+		
+		cipher = Blowfish.new(key, Blowfish.MODE_CBC, iv)
+		decrypted_padded = cipher.decrypt(encrypted_message)
+		decrypted = unpad(decrypted_padded, Blowfish.block_size).decode('utf-8')
+		# print("Decryption successful")
+		# print(decrypted)
+		return decrypted
+	except (ValueError, KeyError) as e:
+		print(f'Decryption error: {e}')
+		return "Decryption failed. Incorrect padding or invalid key."
+
+
 def decrypt( data, password=False ):
 	crypt_obj = Blowfish.new(newKey(password), Blowfish.MODE_ECB)
 	decoded = base64.b64decode(data)
