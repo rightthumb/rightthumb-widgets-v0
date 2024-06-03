@@ -1323,8 +1323,12 @@ def getMachineID():
 		guid = _md5.md52GUID(md5,True)
 		return guid
 	else:
-		global unixID
-		return unixID
+		machine_id_1 = str(uuid.uuid1())
+		mac_address = str(uuid.getnode())
+		with open('/etc/machine-id', 'r') as file:
+			machine_id_2 = str(file.read().strip())
+		# global unixID
+		return _md5.md52GUID(_md5.md5(machine_id_1+mac_address+machine_id_2),True)
 		
 def getDriveID(driveLetter):
 	global slash
