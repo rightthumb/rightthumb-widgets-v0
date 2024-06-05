@@ -3133,19 +3133,19 @@ export PATH=$PATH:/opt/rightthumb-widgets-v0/widgets/bash:/opt/rightthumb-widget
 
 
 function git_add_modified_files() {
-    if [ -z "$1" ]; then
-        /opt/rightthumb-widgets-v0/widgets/python/files.py  - minecraft.py vps- + *.py *.sh *.bat *.md *.ad *.ps1 -or  --c -ago 10h | p line --c -make "git add {}" | p execute
-    else
-        /opt/rightthumb-widgets-v0/widgets/python/files.py  - minecraft.py vps- + *.py *.sh *.bat *.md *.ad *.ps1 -or --c -ago "$1" | p line --c -make "git add {}" | p execute
-    fi
+	if [ -z "$1" ]; then
+		/opt/rightthumb-widgets-v0/widgets/python/files.py  - minecraft.py vps- + *.py *.sh *.bat *.md *.ad *.ps1 -or  --c -ago 10h | p line --c -make "git add {}" | p execute
+	else
+		/opt/rightthumb-widgets-v0/widgets/python/files.py  - minecraft.py vps- + *.py *.sh *.bat *.md *.ad *.ps1 -or --c -ago "$1" | p line --c -make "git add {}" | p execute
+	fi
 }
 generate_and_push() {
-    tmpf=$(mktemp)
-    /opt/rightthumb-widgets-v0/widgets/python/genuuid.py -e > "$tmpf"
-    uuid=$(cat "$tmpf")
-    git commit -m "$uuid"
-    git push --force
-    rm "$tmpf"
+	tmpf=$(mktemp)
+	/opt/rightthumb-widgets-v0/widgets/python/genuuid.py -e > "$tmpf"
+	uuid=$(cat "$tmpf")
+	git commit -m "$uuid"
+	git push --force
+	rm "$tmpf"
 }
 # echo 000-017
 alias git.files="git_add_modified_files"
@@ -3222,6 +3222,7 @@ alias drive.s.10g="find / -type f -size +10737418240"
 alias drive.s.1g="find / -type f -size +1073741824"
 
 alias pin="source $widgets/widgets/bash/pin.sh"
+alias apt.="source $widgets/widgets/bash/apt_install.sh"
 
 if [ -f "${stmp}/pin_ask" ]; then
 	source $widgets/widgets/bash/pin.sh
@@ -5873,7 +5874,8 @@ class STR:
  
  
  
-		pattern = re.compile('([^\s\w]|_)+')
+		# pattern = re.compile('([^\s\w]|_)+')
+		pattern = re.compile(r'([^\s\w]|_)+')
 		string = pattern.sub('', string)
 		string = self.replaceDuplicate(string,' ')
 		string = self.cleanFirst(string,' ')
@@ -8867,7 +8869,7 @@ def setPipeData( data, clean=True ):
 
 
 '''
-cat D:\tech\hosts\VULCAN\programs\python\validate-tool.py + _. - __. 
+cat D:\\tech\\hosts\\VULCAN\\programs\\python\\	validate-tool.py + _. - __. 
 '''
 
 os.sep = os.sep
