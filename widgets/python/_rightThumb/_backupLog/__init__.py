@@ -177,9 +177,22 @@ def epochSec( x, y ):
 		b = x
 	return a - b
 
+TheBackupFile = _v.table('fileBackup.json')
+
+def setBackupFile(file=None):
+	global TheBackupFile
+	if not file is None:
+		TheBackupFile = file
+	return TheBackupFile
+def loadBackupFile():
+	global TheBackupFile
+	global backupLog
+	backupLog = _.getTable2(TheBackupFile)
+	return backupLog
 def addFlagIfHasBackup( backup ):
 	global backupLog
-	backupLog = _.getTable('fileBackup.json')
+	global TheBackupFile
+	backupLog = loadBackupFile()
 
 	for  i,log in enumerate(backupLog):
 		backupLog[i]['file'] == __.path(backupLog[i]['file'])
@@ -197,13 +210,13 @@ def addFlagIfHasBackup( backup ):
 			backupLog[i]['flag'] = backupLog[i]['flag'].strip()
 			backupLog[i]['flag'] = _str.cleanBE( backupLog[i]['flag'], ',' )
 			
-	_.saveTable( backupLog, 'fileBackup.json', printThis=False )
+	_.saveTable2( backupLog, TheBackupFile, printThis=False )
 
 
 def autoFileVersion():
-
+	global TheBackupFile
 	if True:
-		backupLog_epoch = os.path.getmtime( _v.table('fileBackup.json') )
+		backupLog_epoch = os.path.getmtime( TheBackupFile )
 		# _.pr( backupLog_epoch )
 		if os.path.isfile( _v.table('fileBackup-versions-epoch.json') ):
 			lastEpoch = _.getTable( 'fileBackup-versions-epoch.json' )['epoch']
@@ -223,9 +236,8 @@ def autoFileVersion():
 
 	ticket_transfer = _.getTable( 'ticket_transfer.index' )
 
-	backupLog = _.tables.returnSorted( 'fileBackup.log', 'a.timestamp', _.getTable('fileBackup.json') )
+	backupLog = _.tables.returnSorted( TheBackupFile, 'a.timestamp', loadBackupFile() )
 	preClean = len(backupLog)
-	# backupLog = _.getTable('fileBackup.json')
 	newLog = []
 	for i,d in enumerate(backupLog):
 		if os.path.isfile(d['backup']):
@@ -264,9 +276,9 @@ def autoFileVersion():
 			# newLog[i]['version'] = str(newLog[i]['v']) + '.' + str(newLog[i]['v1']) + '.' + str(newLog[i]['v2']) + '.' + str(newLog[i]['v3'])
 	backupLog = newLog
 	autoBatchIdentify()
-	_.saveTable( backupLog, 'fileBackup.json', printThis=printLogName )
+	_.saveTable2( backupLog, TheBackupFile, printThis=printLogName )
 	# _.saveCSV(   backupLog, 'fileBackup.csv',  printThis=printLogName )
-	backupLog_epoch = os.path.getmtime( _v.table('fileBackup.json') )
+	backupLog_epoch = os.path.getmtime( TheBackupFile )
 	_.saveTable( { 'epoch': backupLog_epoch }, 'fileBackup-versions-epoch.json', printThis=False )
 	_.updateLine( '                                                   ' )
 	_.pr()

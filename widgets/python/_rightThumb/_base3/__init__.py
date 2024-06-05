@@ -7665,8 +7665,9 @@ def releaseAcquiredData( appDBA, theFocus, payload=None ):
 	global myFileLocation_Files
 	global switches
 	global print_ed
-
-
+	try:
+		if os.environ['burn_this'] == 'yes': return None;
+	except: pass
 	log = _v.appLogs()+_v.slash+day(time.time())+'execution_receipt-' + appDBA + '-' + str( __.startTime ) + '.json'
 	rebuiltCommandRaw = theCommand( appDBA, printThis=False, separate=True )
 	if len( rebuiltCommandRaw[1] ):

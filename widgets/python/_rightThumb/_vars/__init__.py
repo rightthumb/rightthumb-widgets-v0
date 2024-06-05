@@ -1580,6 +1580,18 @@ if not '/bash/' in __file__:
 	except Exception as e:
 		pass
 		# _.pr( 'Error: IP' )
+
+def computer_name():
+	try:
+		import socket
+	except: pass
+	if platform.system() == "Windows":
+		computer_name = socket.gethostname()
+	elif platform.system() == "Linux":
+		computer_name = socket.gethostname()
+	else:
+		raise OSError("Unsupported operating system")
+	return computer_name
 def table(t):
 	global myTables
 	global slash

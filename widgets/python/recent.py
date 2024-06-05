@@ -37,7 +37,7 @@ def appSwitches():
 	_.switches.register( 'Ago', '-ago' )
 	_.switches.register( 'Dates', '-date,-dates,-between' )
 	_.switches.register( 'Clean', '--c' )
-	_.switches.register( 'BackupFile', '-backup' )
+	_.switches.register( 'BackupFile', '-f,-backup' )
 
 
 
@@ -173,12 +173,26 @@ _.postLoad( __file__ )
 ########################################################################################
 # START
 
+
+def get_computer_name():
+	import platform
+	import socket
+	if platform.system() == "Windows":
+		computer_name = socket.gethostname()
+	elif platform.system() == "Linux":
+		computer_name = socket.gethostname()
+	else:
+		raise OSError("Unsupported operating system")
+	return computer_name
+
 def fileBackup_archive():
-	parts = _v.myHome.split(_v.slash)
+	parts = _v.myHome.split(os.sep)
 	parts.reverse()
 	parts.pop(0)
 	parts.reverse()
-	return _v.slash.join( parts ) +_v.slash+ 'MSI' +_v.slash+ 'tables' +_v.slash+ 'fileBackup.json'
+	pcFolder = os.sep.join( parts ) +os.sep+ get_computer_name() +os.sep+ 'tables'
+	os.makedirs(pcFolder, exist_ok=True)
+	return pcFolder + os.sep + 'fileBackup.json'
 
 
 def clean_index(index):
@@ -197,8 +211,7 @@ def sorted_keys( index ):
 
 def action():
 
-	if _.switches.isActive('BackupFile'):
-		load()
+	# if _.switches.isActive('BackupFile'): load()
 
 
 	dexy = {}
@@ -239,7 +252,10 @@ def action():
 
 	# _.pr( fileBackup_archive(), os.path.isfile(fileBackup_archive()) )
 	# sys.exit()
-	backupLog = _.getTable('fileBackup.json')
+	if _.switches.isActive('BackupFile'):
+		backupLog = _.getTable2(_.switches.values('BackupFile'))
+	else:
+		backupLog = _.getTable('fileBackup.json')
 
 	# if os.path.isfile(fileBackup_archive()):
 	#     backupLog = backupLog + _.getTable2( fileBackup_archive() )
@@ -387,6 +403,8 @@ def action():
 
 def load():
 	_bkLog = _.regImp( __.appReg, '_rightThumb._backupLog' )
+	if _.switches.isActive('BackupFile'):
+		_bkLog.imp.setBackupFile( _.switches.value('BackupFile') )
 	_bkLog.do( _bkLog.imp.autoFileVersion )
 
 
@@ -399,6 +417,7 @@ import _rightThumb._dir as _dir
 ########################################################################################
 if __name__ == '__main__':
 	action()
+	_.isExit(__file__)
 
 
 

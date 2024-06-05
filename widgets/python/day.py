@@ -385,7 +385,6 @@ def new_file_defaults(fi):
 		
 
 
-
 def action():
 	# _.pr( _v.fig, dic=1 ); return None;
 	print('Loading...')
