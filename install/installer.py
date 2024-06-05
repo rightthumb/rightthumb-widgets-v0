@@ -3223,6 +3223,7 @@ alias drive.s.1g="find / -type f -size +1073741824"
 
 alias pin="source $widgets/widgets/bash/pin.sh"
 alias apt.="source $widgets/widgets/bash/apt_install.sh"
+alias pip.="source $widgets/widgets/bash/pip_install.sh"
 
 if [ -f "${stmp}/pin_ask" ]; then
 	source $widgets/widgets/bash/pin.sh
@@ -8869,7 +8870,7 @@ def setPipeData( data, clean=True ):
 
 
 '''
-cat D:\\tech\\hosts\\VULCAN\\programs\\python\\	validate-tool.py + _. - __. 
+cat D:\\tech\\hosts\\VULCAN\\programs\\python\\validate-tool.py + _. - __. 
 '''
 
 os.sep = os.sep
