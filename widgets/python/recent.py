@@ -38,6 +38,7 @@ def appSwitches():
 	_.switches.register( 'Dates', '-date,-dates,-between' )
 	_.switches.register( 'Clean', '--c' )
 	_.switches.register( 'BackupFile', '-f,-backup' )
+	_.switches.register( 'ShowBackups', '-show' )
 
 
 
@@ -210,8 +211,7 @@ def sorted_keys( index ):
 
 
 def action():
-
-	# if _.switches.isActive('BackupFile'): load()
+	if _.switches.isActive('ShowBackups'): load()
 
 
 	dexy = {}
@@ -253,7 +253,7 @@ def action():
 	# _.pr( fileBackup_archive(), os.path.isfile(fileBackup_archive()) )
 	# sys.exit()
 	if _.switches.isActive('BackupFile'):
-		backupLog = _.getTable2(_.switches.values('BackupFile'))
+		backupLog = _.getTable2(_.switches.value('BackupFile'))
 	else:
 		backupLog = _.getTable('fileBackup.json')
 
@@ -290,6 +290,9 @@ def action():
 			if t > ago:
 				should_include = True
 		if should_include:
+			if 'profile\\backup\\txt' in record['file'].lower() or 'profile'+os.sep+'backup'+os.sep+'txt' in record['file'].lower(): should_include = False
+			if 'profile\\backup\\bin' in record['file'].lower() or 'profile'+os.sep+'backup'+os.sep+'bin' in record['file'].lower(): should_include = False
+		if should_include:
 			woy = str(_dir.getYearFromEpoch( float(t) )) +'.'+ _.fields.padZeros( 'woy', 'val', int(_dir.getWOYFromEpoch(  float(t)  )) )
 			
 			day = _.friendlyDate(t).split(' ')[0]
@@ -318,7 +321,7 @@ def action():
 	# _.printVarSimple( index )
 	# _.printVarSimple( dexy )
 	# sys.exit()
-
+	backupSpent = []
 	cnt = 0
 	for woy in sorted_keys(index):
 		cntA = 0
@@ -355,7 +358,6 @@ def action():
 					if not _.switches.isActive('Clean'):
 						_.pr( _.colorThis( [ '\t', day ], 'white', p=0 ) ,'   ', _.colorThis( _.addComma( cntB ), 'yellow', p=0 ) )
 					# _.colorThis(  [ '\t', day ], 'white'  )
-
 					for file in sorted_keys(index[woy][day]):
 						if _.showLine( file ):
 							if not _.switches.isActive('Clean'):
@@ -363,14 +365,21 @@ def action():
 								cnt+=1
 								if _.switches.isActive('BackupFile'):
 									idex = index[woy][day][file]
-									_.colorThis(  [ '\t\t\t', idex['version'], idex['backup'] ], 'darkcyan'  )
 									xXx = sorted_keys(dexy[ file.lower() ])
+									if _.switches.isActive('ShowBackups'):
+										if not idex['backup'] in backupSpent:
+											backupSpent.append(idex['backup'])
+											_.colorThis(  [ '\t\t\t', idex['version'], idex['backup'] ], 'darkcyan'  )
+											# _.colorThis(  [ '\t\t\t', len(xXx) ], 'gray'  )
 									# _.pr(xXx[len(xXx)-1])
 									# _.pr(dexy[ file.lower() ][ xXx[len(xXx)-1] ])
 									# _.colorThis(  [ '\t\t\t\t', dexy[ file.lower() ][ xXx[0] ] ], 'purple'  )
 									dex = dexy[ file.lower() ][ xXx[len(xXx)-1] ]
-									_.colorThis(  [ '\t\t\t', dex['version'],dex['backup'] ], 'purple'  )
-									_.colorThis(  [ '\t\t\t', len(xXx) ], 'gray'  )
+									if _.switches.isActive('ShowBackups'):
+										if not dex['backup'] in backupSpent:
+											backupSpent.append(dex['backup'])
+											_.colorThis(  [ '\t\t\t', dex['version'],dex['backup'] ], 'purple'  )
+											_.colorThis(  [ '\t\t\t', len(xXx) ], 'gray'  )
 							else:
 								if not file in spent:
 									spent.append(file)
@@ -378,14 +387,20 @@ def action():
 									cnt+=1
 									if _.switches.isActive('BackupFile'):
 										idex = index[woy][day][file]
-										_.colorThis(  [ '\t\t\t', idex['version'], idex['backup'] ], 'darkcyan'  )
+										if _.switches.isActive('ShowBackups'):
+											if not idex['backup'] in backupSpent:
+												backupSpent.append(idex['backup'])
+												_.colorThis(  [ '\t\t\t', idex['version'], idex['backup'] ], 'darkcyan'  )
 										xXx = sorted_keys(dexy[ file.lower() ])
 										# _.pr(xXx[len(xXx)-1])
 										# _.pr(dexy[ file.lower() ][ xXx[len(xXx)-1] ])
 										# _.colorThis(  [ '\t\t\t\t', dexy[ file.lower() ][ xXx[0] ] ], 'purple'  )
 										dex = dexy[ file.lower() ][ xXx[len(xXx)-1] ]
-										_.colorThis(  [ '\t\t\t', dex['version'],dex['backup'] ], 'purple'  )
-										_.colorThis(  [ '\t\t\t', len(xXx) ], 'gray'  )
+										if _.switches.isActive('ShowBackups'):
+											if not dex['backup'] in backupSpent:
+												backupSpent.append(dex['backup'])
+												_.colorThis(  [ '\t\t\t', dex['version'],dex['backup'] ], 'purple'  )
+												_.colorThis(  [ '\t\t\t', len(xXx) ], 'gray'  )
 
 	if not _.switches.isActive('Clean'):
 		if _.switches.isActive('Ago'):
