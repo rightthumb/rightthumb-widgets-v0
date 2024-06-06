@@ -172,6 +172,7 @@ def appSwitches():
 	_.switches.register( 'Add-Text-Note', '-note' )
 	_.switches.register( 'Key-Subject', '-k,-key,-keys,?k,?keys,-subject,-sub' )
 	_.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='data', description='Files', isRequired=False )
+	_.switches.register( 'Password', '-password' )
 
 #   finds the file in probable locations
 #   and
@@ -3471,6 +3472,11 @@ def load():
 				
 
 
+				'ctrl_a': { 'raw': [   'ctrl.',   'q'   ], 'do': 'ctrl_a()' },
+
+
+
+
 				# 'cmd-procmon': { 'raw': [   'ctrl.,2',    'p','r','o','c'   ], 'do': 'cmd__procmon()' },
 
 				'test': { 'raw': [ 'win.',  'alt.', 't' ], 'do': '_test_()' },
@@ -3542,6 +3548,36 @@ def load():
 	Loader.flip_table_test()
 	# _.pv(table)
 
+########################################################################################
+def ctrl_a():
+	global keyboard
+	# Press Ctrl+A
+	keyboard.press(Key.esc)
+	keyboard.release(Key.esc)
+	time.sleep(.8)	
+	keyboard.press(Key.esc)
+	keyboard.release(Key.esc)
+
+	time.sleep(.8)
+	keyboard.press(Key.esc)
+	keyboard.release(Key.esc)
+	keyboard.press(Key.ctrl_l)
+	keyboard.press('a')
+	keyboard.release('a')
+	keyboard.release(Key.ctrl_l)
+
+	# Pause for 123 milliseconds
+	time.sleep(1.5)
+
+	numbers = _.switches.value('Password')
+	# Type the provided numbers
+	for number in numbers:
+		keyboard.press(number)
+		keyboard.release(number)
+
+	# Press Enter
+	keyboard.press(Key.enter)
+	keyboard.release(Key.enter)
 ########################################################################################
 
 import threading
@@ -3740,6 +3776,7 @@ __.schedulerRun=True
 if __name__ == '__main__':
 	# schedulerRun()
 	if len(_.switches.all())==0: banner.pr();
+	if len(_.switches.all())==1 and _.switches.isActive('Password'): banner.pr();
 	action()
 	__.isExit()
 
