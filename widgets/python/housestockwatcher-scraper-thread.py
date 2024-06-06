@@ -15,12 +15,13 @@ import subprocess
 class HouseStockWatcherScraper:
     def __init__(self):
         self.vpn_servers = [
-            'vpn1.server.com',
-            'vpn2.server.com',
-            'vpn3.server.com',
-            'vpn4.server.com',
-            'vpn5.server.com',
-            'vpn6.server.com',
+            'aleen.sds.sh.ovpn',
+            'batuu.sds.sh.ovpn',
+            'lothal.sds.sh.ovpn',
+            'raada.sds.sh.ovpn',
+            'remote.sds.sh.ovpn',
+            'rodia.sds.sh.ovpn',
+            'vpn.sds.sh.ovpn',
         ]
         self.no_multithreading_vps = {
             'vpn1.server.com': True,

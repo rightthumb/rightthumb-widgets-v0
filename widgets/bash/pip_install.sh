@@ -18,16 +18,16 @@ install_package() {
 		echo "Installation of $package successful using pip on $hostname."
 		curl -X POST -d "hostname=$hostname&pip=$package" https://sds.sh/pip/
 	else
-		echo "pip installation failed for $package. Trying sudo apt install -y python3-$package..."
-		sudo apt-get update -y
-		if sudo apt-get install -y "python3-$package"; then
-			echo "Installation of $package successful using apt on $hostname."
-			curl -X POST -d "hostname=$hostname&apt=python3-$package" https://sds.sh/apt/
+		echo "pip installation failed for $package. Trying pip3 install --upgrade --no-cache-dir --break-system-packages..."
+		if python3 -m pip install --upgrade --no-cache-dir --break-system-packages "$package"; then
+			echo "Installation of $package successful using pip3 install --upgrade --no-cache-dir --break-system-packages on $hostname."
+			curl -X POST -d "hostname=$hostname&pip_upgrade=$package" https://sds.sh/pip/
 		else
-			echo "Failed to install $package using apt on $hostname. Trying pip3 install --upgrade --no-cache-dir --break-system-packages..."
-			if python3 -m pip install --upgrade --no-cache-dir --break-system-packages "$package"; then
-				echo "Installation of $package successful using pip3 install --upgrade --no-cache-dir --break-system-packages on $hostname."
-				curl -X POST -d "hostname=$hostname&pip_upgrade=$package" https://sds.sh/pip/
+			echo "Both pip installations failed for $package. Trying sudo apt install -y python3-$package..."
+			sudo apt-get update -y
+			if sudo apt-get install -y "python3-$package"; then
+				echo "Installation of $package successful using apt on $hostname."
+				curl -X POST -d "hostname=$hostname&apt=python3-$package" https://sds.sh/apt/
 			else
 				echo "Failed to install $package using all methods on $hostname."
 			fi

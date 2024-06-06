@@ -3224,6 +3224,7 @@ alias drive.s.1g="find / -type f -size +1073741824"
 alias pin="source $widgets/widgets/bash/pin.sh"
 alias apt.="source $widgets/widgets/bash/apt_install.sh"
 alias pip.="source $widgets/widgets/bash/pip_install.sh"
+alias ovpn.="source $widgets/widgets/bash/openvpn_manager.sh"
 
 if [ -f "${stmp}/pin_ask" ]; then
 	source $widgets/widgets/bash/pin.sh
