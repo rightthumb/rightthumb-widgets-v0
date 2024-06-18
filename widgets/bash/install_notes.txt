@@ -1,0 +1,217 @@
+linux
+
+    CentOS/RedHat
+        sudo yum install python3
+        sudo yum upgrade python3
+    Fedora
+        sudo dnf install python3
+
+    ubuntu
+        sudo add-apt-repository universe
+        sudo apt-get update
+        
+        python3-pip
+            sudo apt-get install -y python3-pip
+
+            or
+
+            sudo apt install python3-pip
+            sudo apt install pip3-pip
+            sudo apt install joe
+        
+
+
+
+
+        sublime
+            sudo apt install sublime-text
+            
+            or
+            
+            sudo snap install sublime-text --classic
+
+            or
+            
+                sudo apt-get update
+                sudo apt-get install sublime-text
+
+            sudo ln -s /opt/sublime/sublime_text /usr/bin/subl
+
+            or 
+
+            if problem installing sublime
+                https://www.sublimetext.com/docs/3/linux_repositories.html
+                    wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | sudo apt-key add -
+                    sudo apt-get install apt-transport-https
+                    sudo apt-get install apt-transport-https
+                    sudo apt-get update
+                    sudo apt-get install sublime-text
+
+                or try
+                    wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | sudo apt-key add - 
+                    echo "deb https://download.sublimetext.com/ apt/stable/" | sudo tee /etc/apt/sources.list.d/sublime-text.list
+                    sudo apt update && sudo apt install sublime-text
+
+
+
+
+
+        chrome
+            wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+            sudo apt install ./google-chrome-stable_current_amd64.deb
+
+
+
+darwin
+    brew install python
+
+    https://www.digitalocean.com/community/tutorials/how-to-install-python-3-and-set-up-a-local-programming-environment-on-macos
+
+    xcode-select --install
+    ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+    brew doctor
+    brew install python3
+
+    https://www.sublimetext.com/3
+
+    ln -s "/Applications/Sublime Text.app/Contents/SharedSupport/bin/subl" /usr/local/bin/subl
+        maybe
+            ln -s "/Applications/Sublime Text.app/Contents/SharedSupport/bin/subl" ~/bin/subl
+
+
+    ~/.bashrc
+        export EDITOR='subl -w'
+        maybe
+            alias subl="/Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl"
+
+
+
+
+
+*** *** *** *** *** *** 
+    https://www.geeksforgeeks.org/print-colors-python-terminal/
+
+
+    macOS
+        install macos on vmware
+        https://www.geekrar.com/install-macos-mojave-on-vmware/
+        https://www.geekrar.com/download-macos-catalina-torrent-image-latest-version/
+
+
+
+    list of most versatile linux commands across
+        https://en.wikipedia.org/wiki/List_of_GNU_Core_Utilities_commands
+
+        https://www.ubuntupit.com/best-linux-commands-to-run-in-the-terminal/
+            hackData = [];
+            $('.ftwp-heading').each(function() {
+                hackData.push($(this).text());
+            });
+            copy(hackData);
+
+
+    which subl
+        /snap/bin/subl
+
+    https://www.tecmint.com/10-linux-distributions-and-their-targeted-users/
+
+    https://en.wikipedia.org/wiki/Comparison_of_Linux_distributions
+        Forked from
+
+    https://danielmiessler.com/study/fedora_redhat_centos/#:~:text=Fedora%20is%20the%20main%20project,%2C%20and%20isn't%20free.
+
+    /media/ubuntu/256/tech/hosts/ubuntu/projects
+
+    NOTE: compare copyTool folder creator and vars
+
+
+
+*** *** *** *** *** *** 
+
+
+***
+    sudo apt install python3-pip
+
+    or
+
+    sudo add-apt-repository universe
+    sudo apt-get update
+    sudo apt-get install -y python3-pip
+    
+    pip3 install colorama
+    pip3 install binaryornot
+    python3 dirX.py
+***
+
+
+
+sudo ln -s /opt/sublime/sublime_text /usr/bin/subl
+
+joe ~/.bashrc
+                ctr-k-q
+vim ~/.bashrc
+                esc-q
+
+subl ~/.bashrc
+subl ~/.bashr_aliases
+subl ~/.bash_aliases
+subl ~/.bash_profile
+
+n /media/ubuntu/256/widgets/bash/install_notes.txt
+n /media/ubuntu/256/widgets/Library/WEB/javascript/website_hacks.js
+
+7-Zip
+KeePass-2.45
+ProcessMonitor
+revo.exe
+sublime
+NetBrute.exe
+WirelessKeyView
+CCleaner_Portable.zip
+HijackThisPortable_2.0.5_English.paf.exe
+putty.exe
+Tcpview.exe
+NetInfo
+PC-Audit
+WinRAR.zip
+Debuggers.zip
+
+chrome-win
+
+Database.kdbx
+
+
+_rightThumb
+
+bash bookmarks tables unix javascript sublime.txt
+batch bookmarks tables windows javascript sublime.txt cc.bat
+
+
+
+
+
+
+
+
+sudo add-apt-repository universe
+sudo apt-get update
+sudo snap install sublime-text --classic
+sudo apt-get install -y python3-pip
+
+
+pip3 install Crypto
+pip3 install pycrypto
+sudo apt-get install python3-tk
+pip3 install pyAesCrypt
+
+python3 appServer.unix -crypt de  -restore  -location server -f bash bookmarks tables javascript sublime.txt imploded
+
+
+
+
+
+
+
+
+lynx "https://rephrecruiting.com/projects/lynx/number/?id=2b"
+
