@@ -451,6 +451,9 @@ def changePin():
 	# with open(pin_path, 'w') as pin_file: pin_file.write(f'{enPin}')
 	return True
 def vaultPinLogin():
+	oldPath = os.getcwd()
+	global home
+	os.chdir(home)
 	import getpass
 	try: import subprocess
 	except: pass
@@ -496,7 +499,7 @@ def vaultPinLogin():
 		with open(script_path, 'r+b') as script_file:
 			script_file.write(b'\x00' * os.path.getsize(script_path))
 		os.remove(script_path)
-
+	os.chdir(oldPath)
 	return pin
 
 
