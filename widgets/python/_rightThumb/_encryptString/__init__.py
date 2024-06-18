@@ -130,7 +130,7 @@ def decryptClean( data, password=False ):
 	return _str.do('e',result,' ')
 
 def myDecrypt():
-	password   = decrypt(open(_v.vaultPath(), 'r').read())
+	password   = decrypt(open(_v.vaultPath(), 'r').read(),456)
 	# print(password)
 	if myDe(password).strip() == '1998':
 		return True
@@ -166,32 +166,14 @@ def myEn(plaintext, password):
 	
 	with open(_v.myDecrypt, 'w') as file:
 		file.write(encrypted_text)
-	
+	# print(myDe(password))
 	return encrypted_text
 
-def myEn2(plaintext, password):
-	password = password.strip()
-	from Crypto.Cipher import Blowfish
-	from Crypto.Util.Padding import pad
-	import base64
 
-	# Pad the key to ensure it is at least 4 bytes long and at most 56 bytes
-	key = myPad(password.encode(), 4)
-	
-	cipher = Blowfish.new(key, Blowfish.MODE_CBC)
-	iv = cipher.iv
-	padded_text = pad(plaintext.encode(), Blowfish.block_size)
-	encrypted = cipher.encrypt(padded_text)
-	# Combine IV with the encrypted text and encode in base64
-	encrypted_text = base64.b64encode(iv + encrypted).decode('utf-8')
-	
-	# with open(_v.myDecrypt, 'w') as file:
-		# file.write(encrypted_text)
-	
-	return encrypted_text
 
 # Function to decrypt a string
 def myDe(password):
+	# print(password)
 	password = password.strip()
 	from Crypto.Cipher import Blowfish
 	from Crypto.Util.Padding import unpad
@@ -220,6 +202,27 @@ def myDe(password):
 	except (ValueError, KeyError) as e:
 		print(f'Decryption error: {e}')
 		return "Decryption failed. Incorrect padding or invalid key."
+
+def myEn2(plaintext, password):
+	password = password.strip()
+	from Crypto.Cipher import Blowfish
+	from Crypto.Util.Padding import pad
+	import base64
+
+	# Pad the key to ensure it is at least 4 bytes long and at most 56 bytes
+	key = myPad(password.encode(), 4)
+	
+	cipher = Blowfish.new(key, Blowfish.MODE_CBC)
+	iv = cipher.iv
+	padded_text = pad(plaintext.encode(), Blowfish.block_size)
+	encrypted = cipher.encrypt(padded_text)
+	# Combine IV with the encrypted text and encode in base64
+	encrypted_text = base64.b64encode(iv + encrypted).decode('utf-8')
+	
+	# with open(_v.myDecrypt, 'w') as file:
+		# file.write(encrypted_text)
+	
+	return encrypted_text
 
 def myDe2(text,password):
 	password = password.strip()

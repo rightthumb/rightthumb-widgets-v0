@@ -209,8 +209,8 @@ def key(password=None):
 			password = getpass.getpass()
 			_.pr()
 
-		_.saveText( _blowfish.encrypt(password,456), auto )
-		_blowfish.myEn('1998',password)
+			_.saveText( _blowfish.encrypt(password,456), auto )
+			_blowfish.myEn('1998',password)
 	enPass = open(auto, 'r').read()
 	gateKey = _blowfish.decrypt( enPass,456)
 	return gateKey
