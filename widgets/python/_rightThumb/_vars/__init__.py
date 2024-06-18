@@ -402,7 +402,7 @@ def vaultPinLogin():
 
 	global pin_path
 	import _rightThumb._encryptString as _blowfish
-	enPin = _blowfish.myEn(rawPin,getMachineID())
+	enPin = _blowfish.myEn2(rawPin,getMachineID())
 	with open(pin_path, 'w') as pin_file: pin_file.write(f'{enPin}')
 
 	pin = md5(rawPin)
