@@ -403,18 +403,18 @@ def saveText(data,filename):
 import os
 
 def delete_files_with_prefix(folder, starts_with):
-    try:
-        # List all files in the specified folder
-        for filename in os.listdir(folder):
-            # Construct full file path
-            file_path = os.path.join(folder, filename)
-            # Check if it's a file and starts with the specified prefix
-            if os.path.isfile(file_path) and filename.startswith(starts_with):
-                # Delete the file
-                os.remove(file_path)
-                # print(f"Deleted: {file_path}")
-    except Exception as e:
-        print(f"An error occurred: {e}")
+	try:
+		# List all files in the specified folder
+		for filename in os.listdir(folder):
+			# Construct full file path
+			file_path = os.path.join(folder, filename)
+			# Check if it's a file and starts with the specified prefix
+			if os.path.isfile(file_path) and filename.startswith(starts_with):
+				# Delete the file
+				os.remove(file_path)
+				# print(f"Deleted: {file_path}")
+	except Exception as e:
+		print(f"An error occurred: {e}")
 
 
 def changePin():
@@ -1367,6 +1367,37 @@ def machine():
 	import uuid
 	return md5(  str(uuid.UUID(int=uuid.getnode()))  ,mini=True)
 
+import os
+import tempfile
+
+def delFi(file_path):
+	with open(file_path, 'r+b') as f:
+		length = os.path.getsize(file_path)
+		f.write(b'\x00' * length)
+	os.remove(file_path)
+
+def get_administrator_sid():
+	import tempfile
+	with tempfile.NamedTemporaryFile(delete=False, mode='w+', suffix='.txt') as temp_file:
+		temp_file_name = temp_file.name
+
+	try:
+		os.system(f'wmic useraccount where "name=\'administrator\' and domain=\'%computername%\'" get name,sid | find "admin" > {temp_file_name}')
+		
+		with open(temp_file_name, 'r') as temp_file:
+			output = temp_file.read()
+
+		for line in output.splitlines():
+			if line.strip():
+				parts = line.split()
+				if len(parts) >= 2:
+					sid = parts[-1]
+					return sid
+	finally:
+		delFi(temp_file_name)
+
+	return None
+
 
 
 # /etc/machine-id
@@ -1385,21 +1416,14 @@ def getMachineID(x=False):
 	import _rightThumb._md5 as _md5
 # machineID = _v.getMachineID()
 	import uuid
+	myNode = str(uuid.UUID(int=uuid.getnode()))
 	import _rightThumb._md5 as _md5
 	global tempFile
 	if __.isWin:
-		os.system("wmic useraccount where (name='administrator' and domain='%computername%') get name,sid | find \"admin\" >" + tempFile)
-		output = open( tempFile, 'r' ).read()
-		try:
-			os.remove(tempFile)
-		except Exception as e:
-			pass
-		output = _str.replaceAll(output, ' ','')
-		output = _str.totalStrip(output)
-		output = output.replace('administrator','')
+		sid = get_administrator_sid()
 		# _.pr('getMachineID',output)
 		# sys.exit()
-		md5 = _md5.md5(output)
+		md5 = _md5.md5(sid+myNode)
 		if x:
 			guid = _md5.md52GUID(md5+getPIN(),True)
 		else:
@@ -1412,9 +1436,9 @@ def getMachineID(x=False):
 			machine_id_2 = str(file.read().strip())
 		# global unixID
 		if x:
-			return _md5.md52GUID(_md5.md5(mac_address+machine_id_2+getPIN()),True)
+			return _md5.md52GUID(_md5.md5(myNode+mac_address+machine_id_2+getPIN()),True)
 		else:
-			return _md5.md52GUID(_md5.md5(mac_address+machine_id_2),True)
+			return _md5.md52GUID(_md5.md5(myNode+mac_address+machine_id_2),True)
 		
 def getDriveID(driveLetter):
 	global slash
@@ -1493,7 +1517,7 @@ def myCrypto( data=False, encrypt=True, decrypt=False ):
 	global cryptoKeyPad
 	import _rightThumb._encryptString as _blowfish
 	if type( data ) == bool:
-		data = cryptoKeyPad
+		data = cryptoKeyPad+getMachineID()
 	if decrypt or not encrypt:
 		return _blowfish.decrypt( data, password=True )
 	else:
