@@ -391,14 +391,71 @@ def vaultPath(forceLogin=False):
 
 	vault_path = myConfig + os.sep + '.vault.'+pin
 	return vault_path
+def pinPath(rawPin):
+	global myConfig
+	vault_path = myConfig + os.sep + '.vault.'+md5(rawPin)
+	return vault_path
+def saveText(data,filename):
+	if type(data) == list:  data = '\n'.join(data)
+	with open(filename, 'w') as pin_file: pin_file.write(f'{data}')
+
+
+import os
+
+def delete_files_with_prefix(folder, starts_with):
+    try:
+        # List all files in the specified folder
+        for filename in os.listdir(folder):
+            # Construct full file path
+            file_path = os.path.join(folder, filename)
+            # Check if it's a file and starts with the specified prefix
+            if os.path.isfile(file_path) and filename.startswith(starts_with):
+                # Delete the file
+                os.remove(file_path)
+                # print(f"Deleted: {file_path}")
+    except Exception as e:
+        print(f"An error occurred: {e}")
+
+
+def changePin():
+	global pin_path
+	if not os.path.isfile(pin_path):
+		print('No PIN set.')
+		return False
+	import getpass
+	import _rightThumb._encryptString as _blowfish
+	if os.path.isfile(pin_path):
+		
+		rawPin = 'lONgiNGlY_keEp_ENd_EnChANTiNg19$'
+		attempt = 0
+		while not os.path.isfile(pinPath(rawPin)):
+			attempt += 1
+			if attempt > 3:
+				print('Too many tries.')
+				return False
+			rawPin = getpass.getpass('Old PIN: ')
+		vault_path = pinPath(rawPin)
+		import _rightThumb._vault as _vault
+		import _rightThumb._base3 as _
+		password = _vault.key().strip()
+		rawPin = getpass.getpass('New PIN: ')
+		vault_path = pinPath(rawPin)
+		enPin = _blowfish.myEn2(rawPin,getMachineID())
+		saveText(enPin,pin_path)
+		global myConfig
+		enPW = _blowfish.encrypt(password,456)
+		delete_files_with_prefix(myConfig,'.vault')
+		_.saveText(enPW,vault_path)
+		# with open(vault_path, 'w') as pin_file: pin_file.write(f'{enPin}')
+
+	# with open(pin_path, 'w') as pin_file: pin_file.write(f'{enPin}')
+	return True
 def vaultPinLogin():
 	import getpass
 	try: import subprocess
 	except: pass
 	rawPin = getpass.getpass('PIN: ')
 	# print(rawPin)
-
-
 
 	global pin_path
 	import _rightThumb._encryptString as _blowfish
