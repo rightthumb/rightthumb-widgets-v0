@@ -376,6 +376,7 @@ myLogs = myHome + slash+'logs'
 myConfig = myHome + slash+'config'
 unixID_path = myConfig + slash + '.unix_id'
 vault_path = myConfig + slash + '.vault'
+pin_path = myConfig + slash + '.pin'
 myDecrypt = myConfig+os.sep+'decrypt.key'
 def vaultPath(forceLogin=False):
 	global myConfig
@@ -396,7 +397,16 @@ def vaultPinLogin():
 	except: pass
 	rawPin = getpass.getpass('PIN: ')
 	# print(rawPin)
+
+
+
+	global pin_path
+	import _rightThumb._encryptString as _blowfish
+	enPin = _blowfish.myEn(rawPin,getMachineID())
+	with open(pin_path, 'w') as pin_file: pin_file.write(f'{enPin}')
+
 	pin = md5(rawPin)
+
 	os.environ['vault_pin'] = pin
 	
 	if platform.system() == "Windows":
@@ -1302,7 +1312,17 @@ def machine():
 # /etc/machine-id
 # uuid.UUID(int=uuid.getnode())
 	
-def getMachineID():
+def getPIN():
+	global pin_path
+	import _rightThumb._encryptString as _blowfish
+	pin = _blowfish.myDe2(open(pin_path, 'r').read(),getMachineID())
+	# print(pin)
+	return pin
+def getMachineID2():
+	mID = getMachineID(True)
+	return mID
+def getMachineID(x=False):
+	import _rightThumb._md5 as _md5
 # machineID = _v.getMachineID()
 	import uuid
 	import _rightThumb._md5 as _md5
@@ -1320,7 +1340,10 @@ def getMachineID():
 		# _.pr('getMachineID',output)
 		# sys.exit()
 		md5 = _md5.md5(output)
-		guid = _md5.md52GUID(md5,True)
+		if x:
+			guid = _md5.md52GUID(md5+getPIN(),True)
+		else:
+			guid = _md5.md52GUID(md5,True)
 		return guid
 	else:
 		# machine_id_1 = str(uuid.uuid1())
@@ -1328,7 +1351,10 @@ def getMachineID():
 		with open('/etc/machine-id', 'r') as file:
 			machine_id_2 = str(file.read().strip())
 		# global unixID
-		return _md5.md52GUID(_md5.md5(mac_address+machine_id_2),True)
+		if x:
+			return _md5.md52GUID(_md5.md5(mac_address+machine_id_2+getPIN()),True)
+		else:
+			return _md5.md52GUID(_md5.md5(mac_address+machine_id_2),True)
 		
 def getDriveID(driveLetter):
 	global slash

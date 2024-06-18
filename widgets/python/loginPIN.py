@@ -7,13 +7,14 @@ def sw():
 _._default_settings_()
 
 _.appInfo[focus()] = {
-	'file': 'thisApp.py',
-	'description': 'Changes the world',
+	'file': 'loginPIN.py',
+	'description': 'Login PIN',
 	'categories': [
-						'DEFAULT',
+						'login',
+						'pin',
 				],
 	'examples': [
-						_.hp('p thisApp -file file.txt'),
+						_.hp('p loginPIN'),
 						_.linePrint(label='simple',p=0),
 						'',
 	],

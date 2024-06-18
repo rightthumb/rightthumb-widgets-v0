@@ -77,9 +77,11 @@ def newKey( password ):
 	# min 150
 
 	if not type(password) == bool:
-		result = _v.cryptoKeyPad + str(password)
+		result = _v.cryptoKeyPad + _v.scrampleIDs(_v.getMachineID2())
 	else:
-		if password:
+		if password == 1:
+			result = _v.cryptoKeyPad + _v.scrampleIDs(_v.getMachineID2())
+		elif password:
 			# 187 chars
 			result = _v.cryptoKeyPad + _v.scrampleIDs(_v.getMachineID())
 		else:
@@ -150,7 +152,35 @@ def myEn(plaintext, password):
 		file.write(encrypted_text)
 	
 	return encrypted_text
+def myDe2(text,password):
+	password = password.strip()
+	from Crypto.Cipher import Blowfish
+	from Crypto.Util.Padding import unpad
+	import base64
 
+	encrypted_text = text
+
+	try:
+		encrypted_data = base64.b64decode(encrypted_text)
+		iv = encrypted_data[:Blowfish.block_size]
+		encrypted_message = encrypted_data[Blowfish.block_size:]
+
+		# Pad the key to ensure it is at least 4 bytes long and at most 56 bytes
+		key = myPad(password.encode(), 4)
+
+		# print(f"IV: {iv}")
+		# print(f"Encrypted message: {encrypted_message}")
+		# print(f"Key: {key}")
+		
+		cipher = Blowfish.new(key, Blowfish.MODE_CBC, iv)
+		decrypted_padded = cipher.decrypt(encrypted_message)
+		decrypted = unpad(decrypted_padded, Blowfish.block_size).decode('utf-8')
+		# print("Decryption successful")
+		# print(decrypted)
+		return decrypted
+	except (ValueError, KeyError) as e:
+		print(f'Decryption error: {e}')
+		return "Decryption failed. Incorrect padding or invalid key."
 # Function to decrypt a string
 def myDe(password):
 	password = password.strip()
