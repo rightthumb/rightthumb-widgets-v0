@@ -36,6 +36,7 @@ _.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw );
 
 def action():
 	_v.changePin()
+	# _v.deTest()
 
 ########################################################################################
 if __name__ == '__main__':

@@ -261,7 +261,6 @@ def decrypt( data, password=False ):
 	return result
 	return _str.do('e',result,' ')
 
-
 def encrypt( data, password=False ):
 	data=str(data)
 	crypt_obj = Blowfish.new(newKey(password), Blowfish.MODE_ECB)
@@ -287,6 +286,40 @@ def encrypt( data, password=False ):
 
 	return thePayload
 
+
+
+
+def decrypt2( data, password=False ):
+	crypt_obj = Blowfish.new(password, Blowfish.MODE_ECB)
+	decoded = base64.b64decode(data)
+	decrypt = crypt_obj.decrypt(decoded)
+	result = str(decrypt,'iso-8859-1')
+	return result
+
+def encrypt2( data, password=False ):
+	data=str(data)
+	crypt_obj = Blowfish.new(password, Blowfish.MODE_ECB)
+	try:
+		ciphertext = crypt_obj.encrypt(pad_string(data).encode('utf-8'))
+	except Exception as e:
+		works = False
+		space = ' '
+		i = 0
+		while works == False:
+			try:
+				ciphertext = crypt_obj.encrypt(str(pad_string(data) + space).encode('utf-8'))
+				works = True
+			except Exception as e:
+				pass
+			space += ' '
+			if i == 10:
+				works = True
+			i += 1
+
+	result = base64.b64encode(ciphertext)
+	thePayload = str(result,'iso-8859-1')
+
+	return thePayload
 
 
 

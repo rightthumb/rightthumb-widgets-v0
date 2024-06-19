@@ -402,22 +402,107 @@ def saveText(data,filename):
 
 import os
 
-def delete_files_with_prefix(folder, starts_with):
+def find_files_with_prefix(folder, starts_with):
 	try:
-		# List all files in the specified folder
 		for filename in os.listdir(folder):
-			# Construct full file path
 			file_path = os.path.join(folder, filename)
-			# Check if it's a file and starts with the specified prefix
 			if os.path.isfile(file_path) and filename.startswith(starts_with):
-				# Delete the file
-				os.remove(file_path)
-				# print(f"Deleted: {file_path}")
+				return file_path
 	except Exception as e:
 		print(f"An error occurred: {e}")
 
+def delete_files_with_prefix(folder, starts_with):
+	try:
+		for filename in os.listdir(folder):
+			file_path = os.path.join(folder, filename)
+			if os.path.isfile(file_path) and filename.startswith(starts_with):
+				os.remove(file_path)
+	except Exception as e:
+		print(f"An error occurred: {e}")
+
+def deTest0():
+	global cryptoKeyPad
+	global myConfig
+	import _rightThumb._md5 as _md5
+	result = cryptoKeyPad + scrampleIDs(getMachineID2())
+	pw = _md5.md5( result ).encode('utf-8')
+	import _rightThumb._encryptString as _blowfish
+	p = find_files_with_prefix(myConfig,'.vault')
+	file_contents = open(p, 'r').read()
+	PW = _blowfish.decrypt2(file_contents,pw)
+	print(PW)
+
+def deTest1():
+	global cryptoKeyPad
+	global myConfig
+	password = cryptoKeyPad + scrampleIDs(getMachineID2())
+	vp = find_files_with_prefix(myConfig,'.vault')
+	data = getEn(vp,password,True)
+	print(data)
+
+
+def deTest():
+	global myConfig
+	password = '1234'
+	fi = myConfig + os.sep + '.test'
+	saveEn( 'data', fi, password, True )
+	data = getEn( fi, password, True )
+	print(data)
+
+def getEn( filename, password, MD5 = False ):
+	import _rightThumb._encryptString as _blowfish
+	if MD5:
+		password = md5( password )
+	if isinstance(password, str):
+		password = password.encode('utf-8')
+	enData = open(filename, 'r').read()
+	deData = _blowfish.decrypt2(enData,password)
+	return deData.rstrip()
+
+def saveEn( data, filename, password, MD5 = False ):
+	import _rightThumb._encryptString as _blowfish
+	if MD5:
+		password = md5( password )
+	if isinstance(password, str):
+		password = password.encode('utf-8')
+	enData = _blowfish.encrypt2(data,password)
+	with open(filename, 'w') as en_file: en_file.write(f'{enData}')
+
+
 
 def changePin():
+	global pin_path
+	if not os.path.isfile(pin_path):
+		print('No PIN set.')
+		return False
+	import getpass
+	if os.path.isfile(pin_path):
+		rawPin = 'lONgiNGlY_keEp_ENd_EnChANTiNg19$'
+		attempt = 0
+		while not os.path.isfile(pinPath(rawPin)):
+			attempt += 1
+			if attempt > 3:
+				print('Too many tries.')
+				return False
+			rawPin = getpass.getpass('Old PIN: ')
+		vault_path = pinPath(rawPin)
+		pwpw = cryptoKeyPad + scrampleIDs(getMachineID2())
+		thePW = getEn( vault_path, pwpw, True )
+		# delete_files_with_prefix(myConfig,'.vault')
+		delFi(vault_path)
+
+		rawPin = getpass.getpass('New PIN: ')
+		vault_path = pinPath(rawPin)
+		pwpw = cryptoKeyPad + scrampleIDs(getMachineID2())
+		saveEn( rawPin, pin_path, getMachineID(), True )
+		saveEn( thePW, vault_path, pwpw, True )
+
+
+	return True
+
+
+
+def changePin0():
 	global pin_path
 	if not os.path.isfile(pin_path):
 		print('No PIN set.')
