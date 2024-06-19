@@ -23,6 +23,10 @@ __.showLine_quoteFix=True
 
 
 ##################################################
+
+# releaseAcquiredData
+
+##################################################
 # sudo apt install libpython2.7-stdlib
 # import json
 # 1674156772
@@ -2772,7 +2776,7 @@ def setClip(data):
 	try:
 		if pyperclip is None:
 			import pyperclip
-		pyperclip.copy( stripColor(cleanString(data)) )
+		pyperclip.copy( cleanString(stripColor(cleanString(data))) )
 
 	except: pass
 
@@ -11577,7 +11581,7 @@ def blank_script_trigger(data):
 
 class Switch:
 
-	def __init__(self, name, switch, expected_input_example, description, space, default):
+	def __init__(self, name, switch, example_or_notes, description, space, default):
 		self.appReg = __.appReg
 		self.name = name
 		self.switch = switch
@@ -11586,7 +11590,7 @@ class Switch:
 		self.active = False
 		self.value = None
 		self.values = []
-		self.expected_input_example = expected_input_example
+		self.example_or_notes = example_or_notes
 		self.documentation = { 'description': description, 'examples': [], 'required': [], 'related': [] }
 		self.space = space
 		self.vs = False
@@ -11834,7 +11838,7 @@ class Switches:
 		tables.register('data',data)
 		tables.print('data','appreg,name,value')
 
-	def register(self, name, switch, expected_input_example = None, isRequired=False, isPipe=None, isData=None, description='', space=False, default=False):
+	def register(self, name, switch, example_or_notes = None, isRequired=False, isPipe=None, isData=None, description='', space=False, default=False):
 
 		if not isPipe is None:
 			__.trigger_isPipe = isPipe
@@ -11848,7 +11852,7 @@ class Switches:
 			self.dex[__.appReg]={}
 		self.dex[__.appReg][name]=i
 
-		self.switches.append(Switch(name, switch, expected_input_example, description, space, default))
+		self.switches.append(Switch(name, switch, example_or_notes, description, space, default))
 
 		try:
 			if not type(self.isRequired[__.appReg]) == list:
@@ -12728,15 +12732,15 @@ class Switches:
 		for i,sw in enumerate(self.switches):
 			if self.switches[i].appReg == __.appReg:
 				if __.switch_skimmer.active and not self.switches[i].default:
-					switch.append({'name':sw.name ,'switch':sw.switch,'expected_input_example': sw.expected_input_example})
+					switch.append({'name':sw.name ,'switch':sw.switch,'example_or_notes': sw.example_or_notes})
 				elif not __.switch_skimmer.active:
-					switch.append({'name':sw.name ,'switch':sw.switch,'expected_input_example': sw.expected_input_example})
+					switch.append({'name':sw.name ,'switch':sw.switch,'example_or_notes': sw.example_or_notes})
 		# def test(value):
 		#   value = value + '_V_'
 		#   return value
 		tables.register('switches',switch)
 		# tables.trigger('switches','switch,name',test,True)
-		tables.print('switches','name,switch,expected_input_example')
+		tables.print('switches','name,switch,example_or_notes')
 	def printStatus(self):
 		switch = []
 		global tables
@@ -14853,7 +14857,7 @@ class Table:
 						if result.strip().startswith('Help  '):print_('')
 						colorizeRow( tableLine+result, prefix=self.tab['table']+loopPrint(__.table_prefix_padding), prefixColor=self.tab_color, haltColorShift=self.isExtraRecord )
 			i += 1
-			if 'expected_input_example' in column and 'switch' in column and  switchDefault == i:
+			if 'example_or_notes' in column and 'switch' in column and  switchDefault == i:
 
 				# if __.switch_skimmer.active: sys.exit()
 				pass
@@ -21524,9 +21528,9 @@ def historyPrint( code, pre='' ):
 	i=0
 	while not i >= 4:
 		i+=1
-		code = _str.cleanBE(code, '\n')
-		code = _str.cleanBE(code, ' ')
-		code = _str.cleanBE(code, '\t')
+		# code = _str.cleanBE(code, '\n')
+		# code = _str.cleanBE(code, ' ')
+		# code = _str.cleanBE(code, '\t')
 
 	if switches.isActive('DoNotColorize'):
 		return code
@@ -21547,9 +21551,23 @@ def historyPrint( code, pre='' ):
 	lastCMD=False
 	lastPipe=False
 	for i,x in enumerate(code.split(' ')):
-		if x.lower() == 'p' or x.lower() == '%py%' or x.lower() == 'pp' or x.lower() == 'python' or x.lower() == 'python.exe' or x.lower().endswith('python.exe'):
+		if ( x.startswith('=') and len(x) > 1 ) or x.startswith('`') or x.startswith('||') or x.lower() == 'p' or x.lower() == 'p' or x.lower() == '%py%' or x.lower() == 'pp' or x.lower() == 'python' or x.lower() == 'python.exe' or x.lower().endswith('python.exe'):
 			lastP = True
-			result += colorThis( x, colors['cmd'], p=0 )
+			
+			if x.startswith('`') and x.endswith('`'):
+				x = x.replace('`','')
+				result += '`'+colorThis( x, colors['cmd'], p=0 )+'`'
+			elif x.startswith('`'):
+				x = x.replace('`','')
+				result += '`'+colorThis( x, colors['cmd'], p=0 )
+			elif x.startswith('||'):
+				x = x.replace('||','')
+				result += colorThis( x, colors['cmd'], p=0 )
+			elif x.startswith('='):
+				x = x.replace('=','')
+				result += colorThis( x, colors['cmd'], p=0 )
+			else:
+				result += colorThis( x, colors['cmd'], p=0 )
 			lastSwitch = False
 			lastPipe = False
 		elif i == 0 or lastPipe:

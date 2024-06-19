@@ -30,8 +30,12 @@ _str = __.imp('_rightThumb._string')
 
 def sw():
 	pass
-	_.switches.register( 'Adverbs', '-a,-adverbs' )
-	_.switches.register( 'Random-Case', '-r,-random' )
+	_.switches.register( 'Adverbs', '-a,-adverbs', 'Use if not using -Password or -build' )
+	_.switches.register( 'Random-Case', '-r,-random', 'Use with any switch combination' )
+	_.switches.register( 'Password', '-password', 'randomize case and adds nums+special and  unless -build is used' )
+	_.switches.register( 'Password-Build', '-build', 'ex. "-build n myWords v adj adv dsp" ≈ aj av ' )
+	_.switches.register( 'Password-Build-Loop', '-loop', 'ex. "-password Love -build pw adv -loop 5 ' )
+
 # __.setting('require-list',['Files,Plus','File,Has']) # todo
 # __.setting('require-list',['Pipe','Files'])
 __.setting('receipt-log')
@@ -44,13 +48,13 @@ __.setting('switch-raw',[])
 
 _.appInfo[focus()] = {
 	# 'app': '8facG-jo0Cxk',
-	'file': 'gen-password.py',
+	'file': 'passwords.py',
 	'liveAppName': __.thisApp( __file__ ),
-	'description': 'Changes the world',
+	'description': 'Password Generator',
 		# _.ail(1,'subject')+
 		# _.aib('one')+
 	'categories': [
-						'DEFAULT',
+						'passwords',
 				],
 	'usage': [
 						# 'epy another',
@@ -66,7 +70,32 @@ _.appInfo[focus()] = {
 						# '',
 	],
 	'examples': [
-						_.hp('p gen-password -file file.txt'),
+						_.linePrint(label='simple',p=0),
+						_.pr('Basic:',c='Background.blue',p=0),
+						'',
+						_.hp('    p passwords -a -r'),
+						'',
+						_.hp('    p passwords -build adv v n adj dsp -loop 20 -r'),
+						_.hp('    p passwords -build n n n n n dsp -loop 20 -r'),
+						_.hp('    p passwords -build dsp dsp dsp dsp dsp dsp -loop 20 -r'),
+						_.linePrint(label='simple',p=0),
+						_.pr('How to build a password:',c='Background.blue',p=0),
+						_.hp('    p passwords -password love -build pw adv -loop 10'),
+						_.hp('    p passwords -password love_mortally -build pw v n -loop 10'),
+						_.hp('    p passwords -password love_mortally_grow_voyage -build pw dsp -r -loop 10 -r'),
+						_.linePrint(label='simple',p=0),
+						_.pr('Notes:',c='Background.blue',p=0),
+						_.hp('    you can add a password in -build n mySecret v dsp'),
+						_.hp('    if you use -password mySecret'),
+						_.hp('      it is not added to any log an app may make'),
+						_.hp('        or you can set a terminal var `burn_this` before you run'),
+						_.hp('      it is stripped out the the terminal history'),
+						_.hp('        it is auto in windows when you close with `x`'),
+						_.hp('        or with `p passFilter -f ~/.bash_history`'),
+						_.linePrint(label='simple',p=0),
+						_.pr('Copy an example:',c='Background.blue',p=0),
+						_.hp('    p passwords  ?? i'),
+
 						_.linePrint(label='simple',p=0),
 						'',
 	],
@@ -115,6 +144,11 @@ randomSpecial = list('!@#$%&+-')
 
 import random
 
+def tail():
+	global randomNumber
+	global randomSpecial
+	return random.choice(randomNumber)+random.choice(randomNumber)+random.choice(randomSpecial)
+
 def gen():
 	global randomVerbs
 	global randomNouns
@@ -127,6 +161,64 @@ def gen():
 		return random.choice(randomVerbs)+'_'+random.choice(randomNouns)+'_'+random.choice(randomAdjectives)+random.choice(randomNumber)+random.choice(randomNumber)+random.choice(randomSpecial)
 
 def action():
+	pw=''
+	if _.switches.isActive('Password'):
+		try: pw = _.switches.values('Password')[0]
+		except: pass
+	if _.switches.isActive('Password') and not _.switches.isActive('Password-Build'):
+		_.pr(_.randomizeCase(pw+tail()),c='green')
+		return True
+	elif _.switches.isActive('Password-Build'):
+		global randomVerbs
+		global randomNouns
+		global randomAdjectives
+		global randomNumber
+		global randomSpecial
+		loop = 1
+		fix = {
+			'aj':'adj',
+			'av':'adv',
+			'num':'d',
+		}
+		if _.switches.isActive('Password-Build-Loop'):
+			loop = int(_.switches.value('Password-Build-Loop'))
+		for i in range(loop):
+			result = []
+			for vVv in _.switches.values('Password-Build'):
+				o = vVv
+				vVv = vVv.lower().strip()
+				if vVv in fix:
+					vVv = fix[vVv]
+				
+				if vVv == 'pw':
+					if pw:
+						result.append(pw)
+				elif vVv == 'v':
+					result.append(random.choice(randomVerbs))
+				elif vVv == 'n':
+					result.append(random.choice(randomNouns))
+				elif vVv == 'adj':
+					result.append(random.choice(randomAdjectives))
+				elif vVv == 'adv':
+					result.append(random.choice(randomAdverbs))
+				elif vVv == 'd':
+					result.append(random.choice(randomNumber))
+				elif vVv == 'sp':
+					result.append(random.choice(randomSpecial))
+				elif vVv == 'dsp':
+					result.append(random.choice(randomNumber)+random.choice(randomNumber)+random.choice(randomSpecial))
+				else:
+					result.append(o)
+
+
+			built = '_'.join(result)
+			if _.switches.isActive('Random-Case'):
+				_.pr(_.randomizeCase(built),c='green')
+			else:
+				_.pr(built,c='cyan')
+		return True
+
+
 	i=1
 	while not i == 20:
 		i+=1
