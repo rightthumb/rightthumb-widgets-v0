@@ -3,6 +3,8 @@ call pin
 title=Closing Queue
 call p. lock-wait -wait x
 call p. lock-wait -lock x
+call p. lock-files -timer
+
 rem ## {R2D2919B742E} ##
 rem ###########################################################################
 rem What if magic existed?

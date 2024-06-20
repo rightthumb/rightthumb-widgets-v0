@@ -34,6 +34,7 @@ def appSwitches():
 	_.switches.register( 'Unlock', '-unlock' )
 	_.switches.register( 'View', '-view' )
 	_.switches.register( 'All', '-all' )
+	_.switches.register( 'Timer', '-timer' )
 
 _.autoBackupData = __.setting('receipt-log')
 __.releaseAcquiredData = __.setting('receipt-file')
@@ -149,6 +150,14 @@ _.postLoad( __file__ )
 ########################################################################################
 # START
 
+
+
+def page_line():
+    columns = os.get_terminal_size().columns
+    num_underscores = max(0, columns - 5)
+    return '_' * num_underscores
+
+
 def process(table):
 	for i,path in enumerate( table ):
 		run = True
@@ -209,8 +218,56 @@ def action():
 		if _.switches.isActive('All'):
 			for path in errors: _.pr(path,c='red')
 	else:
-		process(  _.getTable('crypt-docs.list')  )
-		process(  _.getTable('secure-crypt-local.meta')  )
+		timer = _v.stmp + os.sep + 'lock-files.timer'
+		# print(timer); sys.exit();
+		shouldRun = False
+		if not _.switches.isActive('Timer'):
+			shouldRun = True
+		elif _.switches.isActive('Timer'):
+			if not os.path.isfile(timer):
+				shouldRun = True
+			else:
+				THREE_DAYS_IN_SECONDS = 3 * 24 * 60 * 60
+				timeData = float(_.getText2( timer, 'text' ).strip())
+				time_diff  = time.time() - timeData
+				if time_diff  > THREE_DAYS_IN_SECONDS:
+					shouldRun = True
+				else:
+					shouldRun = False
+					time_remaining = THREE_DAYS_IN_SECONDS - time_diff
+					days_remaining = int(time_remaining // (24 * 60 * 60))
+					hours_remaining = int((time_remaining % (24 * 60 * 60)) // 3600)
+					minutes_remaining = int((time_remaining % 3600) // 60)
+					seconds_remaining = int(time_remaining % 60)
+
+					# _.pr(f"\tlock-files timer: {days_remaining} days, "
+					# 	f"{hours_remaining} hours, {minutes_remaining} minutes, "
+					# 	f"{seconds_remaining} seconds.",c='Background.purple')
+
+					_.pr(f"\tlock-files timer: {days_remaining} days, "
+						f"{hours_remaining} hours",c='Background.purple')
+
+		if shouldRun:
+			_.pr(page_line(),c='Background.red')
+			_.pr(page_line(),c='Background.red')
+			_.pr()
+			_.pr()
+			_.pr('Locking Secure Files',c='Background.green')
+			_.pr()
+			_.pr()
+			if _.switches.isActive('Timer'): time.sleep(2)
+			_.saveText( str(time.time()), timer )
+			process(  _.getTable('crypt-docs.list')  )
+			process(  _.getTable('secure-crypt-local.meta')  )
+			_.pr()
+			_.pr()
+			_.pr('Secure Files Locked',c='Background.green')
+			_.pr()
+			_.pr()
+			_.pr(page_line(),c='Background.red')
+			_.pr(page_line(),c='Background.red')
+			if _.switches.isActive('Timer'): time.sleep(2)
+
 
 
 
