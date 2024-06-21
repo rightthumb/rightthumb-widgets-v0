@@ -3221,6 +3221,9 @@ alias drive.s="find / -type f -size"
 alias drive.s.10g="find / -type f -size +10737418240"
 alias drive.s.1g="find / -type f -size +1073741824"
 
+_title() {
+    echo -ne "\033]0;$1\007"
+}
 
 alias ovpn.="source $widgets/widgets/bash/openvpn_manager.sh"
 
