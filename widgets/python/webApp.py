@@ -134,6 +134,19 @@ templates['gpt4_split']='''
 $sds->mod('gpt4_split');
 echo gpt4_split($_REQUEST['prompt']);
 '''.strip()
+templates['php-vars']='''
+<?php
+header('Content-Type: application/json');
+$arr =[];
+$arr['SERVER'] = $_SERVER;
+$arr['COOKIE'] = $_COOKIE;
+$arr['FILES'] = $_FILES;
+$arr['ENV'] = $_ENV;
+$arr['GET'] = $_GET;
+$arr['POST'] = $_POST;
+
+echo json_encode($arr, JSON_PRETTY_PRINT);
+'''.strip()
 alias = {
 			'base': 'manager',
 			'm': 'manager',
@@ -154,6 +167,7 @@ alias = {
 			'ka': 'KeyAuth',
 			'yml': 'yaml',
 			'jkeys': 'JSONkeys',
+			'server': 'php-vars',
 
 }
 
