@@ -21,6 +21,12 @@ add_ovpn_file() {
 	echo "Configuration file added."
 }
 
+# Function to list OpenVPN configuration files
+list_vpn_files() {
+	echo "Available VPN configurations:"
+	ls /etc/openvpn/*.ovpn | xargs -n 1 basename | sed 's/.ovpn//'
+}
+
 # Function to connect to an OpenVPN configuration
 connect_vpn() {
 	local vpn_name="$2"
@@ -48,6 +54,7 @@ show_help() {
 	echo "  -c,  --connect <vpn_config_name>    Connect to an OpenVPN configuration"
 	echo "  -d,  --disconnect                   Disconnect OpenVPN"
 	echo "  -og, --open-gui                     Open OpenVPN GUI"
+	echo "  -l,  --list                         List available VPN configurations"
 	echo "  -h,  --help                         Show this help message"
 }
 
@@ -70,6 +77,9 @@ case "$1" in
 		;;
 	-og|--open-gui)
 		open_gui
+		;;
+	-l|--list)
+		list_vpn_files
 		;;
 	-h|--help|*)
 		show_help
