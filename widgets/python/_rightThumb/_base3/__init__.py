@@ -13,7 +13,17 @@ from datetime import datetime as dt, timedelta
 from datetime import date
 ##################################################
 MINI_ADS = False
-SHOW_ADS = True
+SHOW_ADS = False
+ADS_CONFIG = False
+if ADS_CONFIG:
+	adFigFi = _v.myConfig+os.sep+'ads.yml'
+	if os.path.isfile(adFigFi):
+		adFig = __.getTable(adFigFi,True)
+		# print(adFig)
+		if 'show' in adFig: SHOW_ADS = adFig['show']
+		if 'mini' in adFig: MINI_ADS = adFig['mini']
+
+		
 ##################################################
 __.showLine_quoteFix=True
 ##################################################

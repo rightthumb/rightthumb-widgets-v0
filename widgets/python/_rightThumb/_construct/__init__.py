@@ -514,9 +514,11 @@ def mkdir(path,isFile=False,pop=False):
 		os.makedirs(absolute_path)
 	return absolute_path
 
-def getTable( file ):
+def getTable( file, simple=False ):
 	# os = imp('os')
 	if not get_first_char(file) == '{' and  not get_first_char(file) == '[':
+		if simple:
+			return yamlSimp(file)
 		return yamlSimp(saveText(file))
 	
 	
