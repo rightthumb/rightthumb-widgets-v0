@@ -3220,6 +3220,7 @@ export B="$widgets/widgets/bash"
 alias drive.s="find / -type f -size"
 alias drive.s.10g="find / -type f -size +10737418240"
 alias drive.s.1g="find / -type f -size +1073741824"
+alias ovpn="/home/programmer/resources/git/widgets/bash/openvpn_manager.sh"
 
 _title() {
     echo -ne "\033]0;$1\007"
