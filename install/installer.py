@@ -3227,7 +3227,7 @@ _title() {
 
 alias ovpn="source $widgets/widgets/bash/openvpn_manager.sh"
 alias ovpn.="source $widgets/widgets/bash/openvpn_manager.sh"
-alias ...ssh="ssh-keygen -t rsa -b 4096"
+alias ...ssh="rm -rf $HOME/.ssh/*; ssh-keygen -t rsa -b 4096"
 
 if [ -f "${stmp}/pin_ask" ]; then
 	source $widgets/widgets/bash/pin.sh
