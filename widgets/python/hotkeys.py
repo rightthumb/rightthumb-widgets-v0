@@ -1053,9 +1053,128 @@ class BEEPS:
 # 		self.play_note(_oct, n, nt)
 
 
+def _bk():
+	global keyboard
+	keyboard.press(Key.backspace)
+	keyboard.release(Key.backspace)
+
 class CLIP:
 
 	# def browser_f12(self,code):
+	
+	# load_clip_3
+	def save_clip_0(self):
+		secure = '606ac65c-1d34-4b0c-beb4-83905e1f0f39-0763c027-3db7-45c9-b7fa-d550c18ec091--606ac65c-1d34-4b0c-beb4-83905e1f0f39-0763c027-3db7-45c9-b7fa-d550c18ec091--606ac65c-1d34-4b0c-beb4-83905e1f0f39-0763c027-3db7-45c9-b7fa-d550c18ec091--606ac65c-1d34-4b0c-beb4-83905e1f0f39-0763c027-3db7-45c9-b7fa-d550c18ec091'
+		for n in [1, 2, 3, 4, 5, 6, 7, 8, 9]: n = str(n); _.saveText(secure,_v.stmp+os.sep+'hotkeys-save_clip_'+n);
+		secure = ''
+		for n in [1, 2, 3, 4, 5, 6, 7, 8, 9]: n = str(n); _.saveText(secure,_v.stmp+os.sep+'hotkeys-save_clip_'+n);
+	def save_clip_1(self): _.pr('To toggle paste: clip-auto'); fi = _v.stmp+os.sep+'hotkeys-save_clip_1'; _paste = _.regImp( __.appReg, '-paste' ); _paste.imp.dirty=True; _.saveText(_paste.imp.paste(),fi)
+	def save_clip_2(self): _.pr('To toggle paste: clip-auto'); fi = _v.stmp+os.sep+'hotkeys-save_clip_2'; _paste = _.regImp( __.appReg, '-paste' ); _paste.imp.dirty=True; _.saveText(_paste.imp.paste(),fi)
+	def save_clip_3(self): _.pr('To toggle paste: clip-auto'); fi = _v.stmp+os.sep+'hotkeys-save_clip_3'; _paste = _.regImp( __.appReg, '-paste' ); _paste.imp.dirty=True; _.saveText(_paste.imp.paste(),fi)
+	def save_clip_6(self): _.pr('To toggle paste: clip-auto'); fi = _v.stmp+os.sep+'hotkeys-save_clip_6'; _paste = _.regImp( __.appReg, '-paste' ); _paste.imp.dirty=True; _.saveText(_paste.imp.paste(),fi)
+	def save_clip_7(self): _.pr('To toggle paste: clip-auto'); fi = _v.stmp+os.sep+'hotkeys-save_clip_7'; _paste = _.regImp( __.appReg, '-paste' ); _paste.imp.dirty=True; _.saveText(_paste.imp.paste(),fi)
+	def save_clip_8(self): _.pr('To toggle paste: clip-auto'); fi = _v.stmp+os.sep+'hotkeys-save_clip_8'; _paste = _.regImp( __.appReg, '-paste' ); _paste.imp.dirty=True; _.saveText(_paste.imp.paste(),fi)
+	def save_clip_9(self): _.pr('To toggle paste: clip-auto'); fi = _v.stmp+os.sep+'hotkeys-save_clip_9'; _paste = _.regImp( __.appReg, '-paste' ); _paste.imp.dirty=True; _.saveText(_paste.imp.paste(),fi)
+	def load_clip_0(self):
+		_bk();_bk();
+		secure = '606ac65c-1d34-4b0c-beb4-83905e1f0f39-0763c027-3db7-45c9-b7fa-d550c18ec091--606ac65c-1d34-4b0c-beb4-83905e1f0f39-0763c027-3db7-45c9-b7fa-d550c18ec091--606ac65c-1d34-4b0c-beb4-83905e1f0f39-0763c027-3db7-45c9-b7fa-d550c18ec091--606ac65c-1d34-4b0c-beb4-83905e1f0f39-0763c027-3db7-45c9-b7fa-d550c18ec091'
+		for n in [1, 2, 3, 4, 5, 6, 7, 8, 9]: n = str(n); _.saveText(secure,_v.stmp+os.sep+'hotkeys-save_clip_');
+		secure = ''
+		for n in [1, 2, 3, 4, 5, 6, 7, 8, 9]: n = str(n); _.saveText(secure,_v.stmp+os.sep+'hotkeys-save_clip_'+n);
+	def load_clip_1(self):
+		_bk();_bk(); fi = _v.stmp+os.sep+'hotkeys-save_clip_1';
+		if os.path.isfile(fi):
+			data = _.getText(fi,raw=True)
+		else:
+			data = ''
+		_copy = _.regImp( __.appReg, '-copy' ); _copy.imp.dirty=True; _copy.imp.copy(data);
+		_.pr('To toggle paste: clip-auto')
+		if os.path.isfile(auto):
+			with keyboard.pressed(Key.ctrl): keyboard.press('v'); keyboard.release('v')
+	def load_clip_2(self):
+		_bk();_bk(); fi = _v.stmp+os.sep+'hotkeys-save_clip_2';
+		if os.path.isfile(fi):
+			data = _.getText(fi,raw=True)
+		else:
+			data = ''
+		_copy = _.regImp( __.appReg, '-copy' ); _copy.imp.dirty=True; _copy.imp.copy(data);
+		_.pr('To toggle paste: clip-auto')
+		if os.path.isfile(auto):
+			with keyboard.pressed(Key.ctrl): keyboard.press('v'); keyboard.release('v')
+	def load_clip_3(self):
+		_bk();_bk(); fi = _v.stmp+os.sep+'hotkeys-save_clip_3';
+		if os.path.isfile(fi):
+			data = _.getText(fi,raw=True)
+		else:
+			data = ''
+		_copy = _.regImp( __.appReg, '-copy' ); _copy.imp.dirty=True; _copy.imp.copy(data);
+		_.pr('To toggle paste: clip-auto')
+		if os.path.isfile(auto):
+			with keyboard.pressed(Key.ctrl): keyboard.press('v'); keyboard.release('v')
+	def load_clip_4(self):
+		_bk();_bk(); fi = _v.stmp+os.sep+'hotkeys-save_clip_4';
+		if os.path.isfile(fi):
+			data = _.getText(fi,raw=True)
+		else:
+			data = ''
+		_copy = _.regImp( __.appReg, '-copy' ); _copy.imp.dirty=True; _copy.imp.copy(data);
+		_.pr('To toggle paste: clip-auto')
+		if os.path.isfile(auto):
+			with keyboard.pressed(Key.ctrl): keyboard.press('v'); keyboard.release('v')
+	def load_clip_5(self):
+		_bk();_bk(); fi = _v.stmp+os.sep+'hotkeys-save_clip_5';
+		if os.path.isfile(fi):
+			data = _.getText(fi,raw=True)
+		else:
+			data = ''
+		_copy = _.regImp( __.appReg, '-copy' ); _copy.imp.dirty=True; _copy.imp.copy(data);
+		_.pr('To toggle paste: clip-auto')
+		if os.path.isfile(auto):
+			with keyboard.pressed(Key.ctrl): keyboard.press('v'); keyboard.release('v')
+	def load_clip_6(self):
+		_bk();_bk(); fi = _v.stmp+os.sep+'hotkeys-save_clip_6';
+		if os.path.isfile(fi):
+			data = _.getText(fi,raw=True)
+		else:
+			data = ''
+		_copy = _.regImp( __.appReg, '-copy' ); _copy.imp.dirty=True; _copy.imp.copy(data);
+		_.pr('To toggle paste: clip-auto')
+		if os.path.isfile(auto):
+			with keyboard.pressed(Key.ctrl): keyboard.press('v'); keyboard.release('v')
+	def load_clip_7(self):
+		_bk();_bk(); fi = _v.stmp+os.sep+'hotkeys-save_clip_7';
+		if os.path.isfile(fi):
+			data = _.getText(fi,raw=True)
+		else:
+			data = ''
+		_copy = _.regImp( __.appReg, '-copy' ); _copy.imp.dirty=True; _copy.imp.copy(data);
+		_.pr('To toggle paste: clip-auto')
+		if os.path.isfile(auto):
+			with keyboard.pressed(Key.ctrl): keyboard.press('v'); keyboard.release('v')
+	def load_clip_8(self):
+		_bk();_bk(); fi = _v.stmp+os.sep+'hotkeys-save_clip_8';
+		auto = _v.stmp+os.sep+'hotkeys-save_clip-auto';
+		if os.path.isfile(fi):
+			data = _.getText(fi,raw=True)
+		else:
+			data = ''
+		_copy = _.regImp( __.appReg, '-copy' ); _copy.imp.dirty=True; _copy.imp.copy(data);
+		_.pr('To toggle paste: clip-auto')
+		if os.path.isfile(auto):
+			with keyboard.pressed(Key.ctrl): keyboard.press('v'); keyboard.release('v')
+
+	def load_clip_9(self):
+		_bk();_bk(); fi = _v.stmp+os.sep+'hotkeys-save_clip_9';
+		auto = _v.stmp+os.sep+'hotkeys-save_clip-auto';
+		if os.path.isfile(fi):
+			data = _.getText(fi,raw=True)
+		else:
+			data = ''
+		_copy = _.regImp( __.appReg, '-copy' ); _copy.imp.dirty=True; _copy.imp.copy(data);
+		_.pr('To toggle paste: clip-auto')
+		if os.path.isfile(auto):
+			with keyboard.pressed(Key.ctrl): keyboard.press('v'); keyboard.release('v')
+
 
 	def browser_f12_gen_md_link(self):
 		global keyboard
@@ -3394,6 +3513,28 @@ def load():
 	log = []
 	table = {
 				'EXIT': { 'raw': [ 'esc.','win.' ], 'do': '__.scheduler_restart=False;__.scheduler_exit=True;sys.exit();' },
+				'save_clip_0': { 'raw': [ 'space.','ctrl.', '0' ], 'do': 'Clip.save_clip_0()' },
+				'save_clip_1': { 'raw': [ 'space.','ctrl.', '1' ], 'do': 'Clip.save_clip_1()' },
+				'save_clip_2': { 'raw': [ 'space.','ctrl.', '2' ], 'do': 'Clip.save_clip_2()' },
+				'save_clip_3': { 'raw': [ 'space.','ctrl.', '3' ], 'do': 'Clip.save_clip_3()' },
+				'save_clip_4': { 'raw': [ 'space.','ctrl.', '4' ], 'do': 'Clip.save_clip_4()' },
+				'save_clip_5': { 'raw': [ 'space.','ctrl.', '5' ], 'do': 'Clip.save_clip_5()' },
+				'save_clip_6': { 'raw': [ 'space.','ctrl.', '6' ], 'do': 'Clip.save_clip_6()' },
+				'save_clip_7': { 'raw': [ 'space.','ctrl.', '7' ], 'do': 'Clip.save_clip_7()' },
+				'save_clip_8': { 'raw': [ 'space.','ctrl.', '8' ], 'do': 'Clip.save_clip_8()' },
+				'save_clip_9': { 'raw': [ 'space.','ctrl.', '9' ], 'do': 'Clip.save_clip_9()' },
+
+				'load_clip_0': { 'raw': [ 'win.','space.', '0' ], 'do': 'Clip.load_clip_0()' },
+				'load_clip_1': { 'raw': [ 'win.','space.', '1' ], 'do': 'Clip.load_clip_1()' },
+				'load_clip_2': { 'raw': [ 'win.','space.', '2' ], 'do': 'Clip.load_clip_2()' },
+				'load_clip_3': { 'raw': [ 'win.','space.', '3' ], 'do': 'Clip.load_clip_3()' },
+				'load_clip_4': { 'raw': [ 'win.','space.', '3' ], 'do': 'Clip.load_clip_4()' },
+				'load_clip_5': { 'raw': [ 'win.','space.', '4' ], 'do': 'Clip.load_clip_5()' },
+				'load_clip_6': { 'raw': [ 'win.','space.', '5' ], 'do': 'Clip.load_clip_6()' },
+				'load_clip_7': { 'raw': [ 'win.','space.', '7' ], 'do': 'Clip.load_clip_7()' },
+				'load_clip_8': { 'raw': [ 'win.','space.', '8' ], 'do': 'Clip.load_clip_8()' },
+				'load_clip_9': { 'raw': [ 'win.','space.', '9' ], 'do': 'Clip.load_clip_9()' },
+
 				'tester': { 'raw': [ 'ctrl.,3', 'test' ], 'do': '_.pr("works!!")' },
 				'win-path': { 'raw': [ 'ctrl.,2', 'win' ], 'do': 'Clip.win_path()' },
 				'mom': { 'raw': [ 'ctrl.,2', 'mom' ], 'do': 'Typing.ty("your_mother()",back=1)' },

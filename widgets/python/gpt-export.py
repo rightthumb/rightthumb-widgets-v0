@@ -5,6 +5,7 @@ fieldSet=_.l.vars(focus(),__name__,__file__,appDBA);_.load();_v=__.imp('_rightTh
 def sw():
 	_.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name,data,clean', description='Files', isRequired=False )
 	_.switches.register( 'ID', '-id' )
+	_.switches.register( 'URL', '-url' )
 	_.switches.register( 'Keys', '-k,-keys' )
 	_.switches.register( 'Cleanup', '-cleanup' )
 	_.switches.register( 'Search', '-search' )
@@ -99,11 +100,14 @@ def process(path):
 			include = False
 			title = rec['title']
 			id = rec['conversation_id']
+			DT = rec['create_time']
+			url = 'https://chatgpt.com/c/'+id
+			if not _.switches.isActive('URL'): url = ''
 			if _.showLine(title):
 				if not id in spent:
 					spent.append(id)
 					titleColor = _.prWC2(title,_.switches.values('Plus'),'darkcyan','cyan')
-					_.pr(_.pr(id,c='cyan',p=0),titleColor)
+					_.pr(_.pr(_.friendlyDate(DT).split(' ')[0],c='yellow',p=0),_.pr(id,c='cyan',p=0),url,titleColor)
 					# _.pr(id,title,c='cyan')
 				continue
 			mapping = rec['mapping']
@@ -121,7 +125,8 @@ def process(path):
 						if _.showLine(search):
 							if not id in spent:
 								spent.append(id)
-								_.pr(id,title,c='yellow')
+								
+								_.pr(_.friendlyDate(DT).split(' ')[0],id,url,title,c='yellow')
 								# continue
 								if _.switches.isActive('Plus-Line'):
 									for line in mapping[mID]['message']['content']['parts']:
