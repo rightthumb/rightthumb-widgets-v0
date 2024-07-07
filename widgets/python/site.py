@@ -43,6 +43,7 @@ def sw():
 	_.switches.register( 'Verbos', '-v' )
 	_.switches.register( 'SSH-Remote_Folder', '-remote' )
 	_.switches.register( 'URL', '-url,-edit,--u' )
+	_.switches.register( 'Print-Remote-Location', '-where' )
 	_.switches.register( 'Remote-Location', '-rp,-rpath' )
 	_.switches.register( 'CMD', '-cmd' )
 	# _.switches.register( 'IsFile', '-isfi' )
@@ -158,6 +159,62 @@ def urlpr(url,meta):
 	url=url.replace('f=/','f=')
 	return url
 
+
+def meta_scan2(path='',end=''):
+	if not path: path = __.path(os.getcwd())
+	# path = __.path(path)
+	# print(path,end)
+	global folder
+	global meta
+	# if not _.v.quiet:
+	# 	if not _.switches.isActive('mkdir'):
+	# 		_.pr(path,c='cyan')
+	meta = {}
+	try:
+		file = os.path.abspath(path)
+	except Exception as e:
+		file = path
+	if os.path.isfile(path):
+		folder = __.path(path,pop=True)
+	else:
+		folder = __.path(path)
+	if os.path.isdir(path):folder+=os.sep
+	# if os.path.isfile(path): folder = __.path(path,pop=True)
+	# else: folder = __.path(path)
+	i=0
+	while not os.path.isfile( folder+os.sep+'.folder.meta'+end ):
+		# print(os.path.isfile( folder+os.sep+'.folder.meta'+end ),folder+os.sep+'.folder.meta'+end)
+		i+=1
+		if i > 100:
+			_.e('missing folder meta,aec7')
+		try:
+			folder = __.path(folder,pop=True)
+		except Exception as e:
+			break
+	mPath = folder+os.sep+'.folder.meta'+end
+	locations=_.getTable('site-locations.list')
+	loc=locations.copy()
+	if not mPath in locations: locations.append(mPath)
+	if not locations == loc: _.saveTable(locations,'site-locations.list')
+
+	if _.getText( mPath, raw=True ).strip().startswith('{'): meta = _.getTable2( mPath )
+	else: meta = _.getYML( mPath )
+	
+	# _.cp(mPath.replace('.folder.meta'+end,''),'yellow')
+	# if not _.v.quiet:
+	# 	if not _.switches.isActive('mkdir'):
+	# 		_.cp(mPath,'yellow')
+	# 		_.pv(meta)
+	if 'sftp' in meta:
+		rpath = meta['sftp']['path'].rstrip('/')
+		fpath = file.replace( __.path(folder), rpath ).replace('\\','/')
+		if os.path.isdir(path) and not fpath.endswith('/'): fpath += '/'
+		try:
+			_.v.fp=fpath.replace(rpath+'/',meta['sftp']['path']+'/')
+			_.v.fp=_.v.fp.replace('//','/').replace('//','/')
+		except: pass
+
+	return _.v.fp
 
 def meta_scan(path,end):
 	# path = __.path(path)
@@ -559,6 +616,16 @@ def remoteFolder():
 		sys.exit()
 
 
+
+def print_remote_location(urls=None):
+	if not _.switches.isActive('Files'):
+		_.pr(meta_scan2())
+	else:
+		for path in _.switches.values('Files'):
+			_.pr(meta_scan2(path,''))
+
+
+
 def URL(urls=None):
 
 	spent=[]
@@ -617,7 +684,9 @@ def action():
 		URL()
 		return None
 
-
+	if _.switches.isActive('Print-Remote-Location'):
+		print_remote_location()
+		return None
 	global meta
 
 

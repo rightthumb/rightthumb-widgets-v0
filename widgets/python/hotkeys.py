@@ -1064,7 +1064,7 @@ class CLIP:
 	
 	# load_clip_3
 	def save_clip_0(self):
-		secure = '606ac65c-1d34-4b0c-beb4-83905e1f0f39-0763c027-3db7-45c9-b7fa-d550c18ec091--606ac65c-1d34-4b0c-beb4-83905e1f0f39-0763c027-3db7-45c9-b7fa-d550c18ec091--606ac65c-1d34-4b0c-beb4-83905e1f0f39-0763c027-3db7-45c9-b7fa-d550c18ec091--606ac65c-1d34-4b0c-beb4-83905e1f0f39-0763c027-3db7-45c9-b7fa-d550c18ec091'
+		secure = _.getText(_v.stmp+os.sep+'ipsum.txt',raw=True,strip=2)
 		for n in [1, 2, 3, 4, 5, 6, 7, 8, 9]: n = str(n); _.saveText(secure,_v.stmp+os.sep+'hotkeys-save_clip_'+n);
 		secure = ''
 		for n in [1, 2, 3, 4, 5, 6, 7, 8, 9]: n = str(n); _.saveText(secure,_v.stmp+os.sep+'hotkeys-save_clip_'+n);
@@ -1076,12 +1076,13 @@ class CLIP:
 	def save_clip_8(self): _.pr('To toggle paste: clip-auto'); fi = _v.stmp+os.sep+'hotkeys-save_clip_8'; _paste = _.regImp( __.appReg, '-paste' ); _paste.imp.dirty=True; _.saveText(_paste.imp.paste(),fi)
 	def save_clip_9(self): _.pr('To toggle paste: clip-auto'); fi = _v.stmp+os.sep+'hotkeys-save_clip_9'; _paste = _.regImp( __.appReg, '-paste' ); _paste.imp.dirty=True; _.saveText(_paste.imp.paste(),fi)
 	def load_clip_0(self):
+		secure = _.getText(_v.stmp+os.sep+'ipsum.txt',raw=True,strip=2)
 		_bk();_bk();
-		secure = '606ac65c-1d34-4b0c-beb4-83905e1f0f39-0763c027-3db7-45c9-b7fa-d550c18ec091--606ac65c-1d34-4b0c-beb4-83905e1f0f39-0763c027-3db7-45c9-b7fa-d550c18ec091--606ac65c-1d34-4b0c-beb4-83905e1f0f39-0763c027-3db7-45c9-b7fa-d550c18ec091--606ac65c-1d34-4b0c-beb4-83905e1f0f39-0763c027-3db7-45c9-b7fa-d550c18ec091'
 		for n in [1, 2, 3, 4, 5, 6, 7, 8, 9]: n = str(n); _.saveText(secure,_v.stmp+os.sep+'hotkeys-save_clip_');
 		secure = ''
 		for n in [1, 2, 3, 4, 5, 6, 7, 8, 9]: n = str(n); _.saveText(secure,_v.stmp+os.sep+'hotkeys-save_clip_'+n);
 	def load_clip_1(self):
+		auto = _v.stmp+os.sep+'hotkeys-save_clip-auto';
 		_bk();_bk(); fi = _v.stmp+os.sep+'hotkeys-save_clip_1';
 		if os.path.isfile(fi):
 			data = _.getText(fi,raw=True)
@@ -1092,6 +1093,7 @@ class CLIP:
 		if os.path.isfile(auto):
 			with keyboard.pressed(Key.ctrl): keyboard.press('v'); keyboard.release('v')
 	def load_clip_2(self):
+		auto = _v.stmp+os.sep+'hotkeys-save_clip-auto';
 		_bk();_bk(); fi = _v.stmp+os.sep+'hotkeys-save_clip_2';
 		if os.path.isfile(fi):
 			data = _.getText(fi,raw=True)
@@ -1102,6 +1104,7 @@ class CLIP:
 		if os.path.isfile(auto):
 			with keyboard.pressed(Key.ctrl): keyboard.press('v'); keyboard.release('v')
 	def load_clip_3(self):
+		auto = _v.stmp+os.sep+'hotkeys-save_clip-auto';
 		_bk();_bk(); fi = _v.stmp+os.sep+'hotkeys-save_clip_3';
 		if os.path.isfile(fi):
 			data = _.getText(fi,raw=True)
@@ -1112,6 +1115,7 @@ class CLIP:
 		if os.path.isfile(auto):
 			with keyboard.pressed(Key.ctrl): keyboard.press('v'); keyboard.release('v')
 	def load_clip_4(self):
+		auto = _v.stmp+os.sep+'hotkeys-save_clip-auto';
 		_bk();_bk(); fi = _v.stmp+os.sep+'hotkeys-save_clip_4';
 		if os.path.isfile(fi):
 			data = _.getText(fi,raw=True)
@@ -1122,6 +1126,7 @@ class CLIP:
 		if os.path.isfile(auto):
 			with keyboard.pressed(Key.ctrl): keyboard.press('v'); keyboard.release('v')
 	def load_clip_5(self):
+		auto = _v.stmp+os.sep+'hotkeys-save_clip-auto';
 		_bk();_bk(); fi = _v.stmp+os.sep+'hotkeys-save_clip_5';
 		if os.path.isfile(fi):
 			data = _.getText(fi,raw=True)
@@ -1132,6 +1137,7 @@ class CLIP:
 		if os.path.isfile(auto):
 			with keyboard.pressed(Key.ctrl): keyboard.press('v'); keyboard.release('v')
 	def load_clip_6(self):
+		auto = _v.stmp+os.sep+'hotkeys-save_clip-auto';
 		_bk();_bk(); fi = _v.stmp+os.sep+'hotkeys-save_clip_6';
 		if os.path.isfile(fi):
 			data = _.getText(fi,raw=True)
@@ -1143,6 +1149,7 @@ class CLIP:
 			with keyboard.pressed(Key.ctrl): keyboard.press('v'); keyboard.release('v')
 	def load_clip_7(self):
 		_bk();_bk(); fi = _v.stmp+os.sep+'hotkeys-save_clip_7';
+		auto = _v.stmp+os.sep+'hotkeys-save_clip-auto';
 		if os.path.isfile(fi):
 			data = _.getText(fi,raw=True)
 		else:
