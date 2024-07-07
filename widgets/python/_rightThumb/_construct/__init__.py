@@ -343,9 +343,11 @@ def path( p, ab=True, pop=False, file=False, slash=None, folder=None, fi=None, f
 	os=imp('os.sep')
 	p=p.replace(os.sep+os.sep,os.sep)
 	if isWin or not pop: return _path_( p, ab, pop, file, slash, folder, fi, fo, fix, ln )
-	os=imp('os.path.abspath')
-	p1 = os.path.abspath(p)
-	try: p1 = os.path.abspath(p)
+	# os=imp('os.path.abspath')
+	# try: p1 = os.path.abspath(p)
+	# except: pass
+	os=imp('os.path.realpath')
+	try: p1 = os.path.realpath(p)
 	except: pass
 	p2 = _path_( p, ab, pop, file, slash, folder, fi, fo, fix, ln )
 	if p1 == p2:

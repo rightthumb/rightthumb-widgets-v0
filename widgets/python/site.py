@@ -205,6 +205,7 @@ def meta_scan2(path='',end=''):
 	# 	if not _.switches.isActive('mkdir'):
 	# 		_.cp(mPath,'yellow')
 	# 		_.pv(meta)
+	_.v.fp='\nsftp:\n\tpath:\n\n not in .folder.meta'
 	if 'sftp' in meta:
 		rpath = meta['sftp']['path'].rstrip('/')
 		fpath = file.replace( __.path(folder), rpath ).replace('\\','/')
