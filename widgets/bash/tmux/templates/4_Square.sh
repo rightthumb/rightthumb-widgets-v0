@@ -10,13 +10,13 @@ SESSION_NAME="${1:-4-square}"
 tmux new-session -d -s "$SESSION_NAME"
 
 # Split the window into two horizontal panes
-tmux split-window -h
+tmux split-window -h -t "$SESSION_NAME"
 
 # Split each pane vertically to create a total of four panes
-tmux select-pane -t 0
-tmux split-window -v
-tmux select-pane -t 2
-tmux split-window -v
+tmux select-pane -t "$SESSION_NAME":0.0
+tmux split-window -v -t "$SESSION_NAME"
+tmux select-pane -t "$SESSION_NAME":0.2
+tmux split-window -v -t "$SESSION_NAME"
 
 # Attach to the session
 tmux attach-session -t "$SESSION_NAME"

@@ -3115,7 +3115,7 @@ export PATH=$PATH:/opt/rightthumb-widgets-v0/widgets/bash:/opt/rightthumb-widget
 # echo 000-016
 
 # # pyEnvironment - START
-# file="$widgets/bash/load_pyEnvironment.sh"
+# file="$widgets/widgets/bash/load_pyEnvironment.sh"
 # folder="$HOME/.pyEnvironment"
 
 # if [ -f "$file" ]; then
@@ -3154,22 +3154,22 @@ alias git.cp="generate_and_push"
 alias burn="kill -9 $$"
 alias est="date +%Z; sudo timedatectl set-timezone America/New_York; date +%Z"
 
-alias zip.="$widgets/bash/micro_zip.sh"
-alias zip.l="$widgets/bash/micro_zip_list.sh"
-alias unzip.="$widgets/bash/micro_unzip.sh"
-alias unzip.="$widgets/bash/micro_unzip.sh"
+alias zip.="$widgets/widgets/bash/micro_zip.sh"
+alias zip.l="$widgets/widgets/bash/micro_zip_list.sh"
+alias unzip.="$widgets/widgets/bash/micro_unzip.sh"
+alias unzip.="$widgets/widgets/bash/micro_unzip.sh"
 alias fi.cnt="find . -type f | wc -l"
 alias fi.c="find . -type f | wc -l"
 alias fo.cnt="find . -type d | wc -l"
 alias fo.c="find . -type d | wc -l"
-alias imgText="$widgets/bash/tesseract_image.sh"
-alias imgt="$widgets/bash/tesseract_image.sh"
-alias imgtxt="$widgets/bash/tesseract_image.sh"
-alias it="$widgets/bash/tesseract_image.sh"
-alias movieTablet="$widgets/bash/movie_tablet.sh"
-alias moviePhone="$widgets/bash/movie_phone.sh"
-alias batuu.="$widgets/bash/srv/webdav/vps-auto_login.sh"
-alias batuu.u="$widgets/bash/srv/webdav/vps-batuu_upload.sh"
+alias imgText="$widgets/widgets/bash/tesseract_image.sh"
+alias imgt="$widgets/widgets/bash/tesseract_image.sh"
+alias imgtxt="$widgets/widgets/bash/tesseract_image.sh"
+alias it="$widgets/widgets/bash/tesseract_image.sh"
+alias movieTablet="$widgets/widgets/bash/movie_tablet.sh"
+alias moviePhone="$widgets/widgets/bash/movie_phone.sh"
+alias batuu.="$widgets/widgets/bash/srv/webdav/vps-auto_login.sh"
+alias batuu.u="$widgets/widgets/bash/srv/webdav/vps-batuu_upload.sh"
 alias pip3.="pip3 install --upgrade --no-cache-dir --break-system-packages"
 alias flushdns="sudo systemctl restart systemd-resolved"
 alias set.="(set -o posix; set)"
@@ -3200,15 +3200,14 @@ alias tmux.s.k="tmux send-keys -t"       # Send keys to a specific pane, simulat
 	    # C-m is the Enter key.
 
 ###################################
-
-alias tmux.t.4="$widgets/bash/tmux/templates/4_Square.sh"
-alias tmux.t.q="$widgets/bash/tmux/templates/Quadrants.sh"
-alias tmux.t.s="$widgets/bash/tmux/templates/Single.sh"
-alias tmux.t.1="$widgets/bash/tmux/templates/Single.sh"
-alias tmux.t.h="$widgets/bash/tmux/templates/Horizontal_Stripes.sh"
-alias tmux.t.13="$widgets/bash/tmux/templates/One_Three.sh"
-alias tmux.t.top="$widgets/bash/tmux/templates/Top_Large_Pane_with_Three_Columns_Below.sh"
-alias tmux.t.t="$widgets/bash/tmux/templates/Top_Large_Pane_with_Three_Columns_Below.sh"
+alias tmux.t.4="source $widgets/widgets/bash/tmux/templates/4_Square.sh"
+alias tmux.t.q="source $widgets/widgets/bash/tmux/templates/Quadrants.sh"
+alias tmux.t.s="source $widgets/widgets/bash/tmux/templates/Single.sh"
+alias tmux.t.1="source $widgets/widgets/bash/tmux/templates/Single.sh"
+alias tmux.t.h="source $widgets/widgets/bash/tmux/templates/Horizontal_Stripes.sh"
+alias tmux.t.13="source $widgets/widgets/bash/tmux/templates/One_Three.sh"
+alias tmux.t.top="source $widgets/widgets/bash/tmux/templates/Top_Large_Pane_with_Three_Columns_Below.sh"
+alias tmux.t.t="source $widgets/widgets/bash/tmux/templates/Top_Large_Pane_with_Three_Columns_Below.sh"
 
 #####################################################################
 
