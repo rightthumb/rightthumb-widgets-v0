@@ -382,6 +382,26 @@ def getFolder(folder):
 
 
 def action():
+	if _.switches.isActive('Path') == False:
+		folder = os.getcwd()
+	else:
+		folder = _.switches.values('Path')[0]
+	if not _.switches.isActive('Database'):
+		idFi = folder + os.sep + 'drive.id.sys'
+		if os.path.isfile( idFi ):
+			ID = _.getText(idFi,raw=True).strip()
+			db = _.getTable('indexTable_drives-{8A92E16E-EA69-35DF-699C-907ED1D1376D}.json')
+			for rec in db:
+				if rec['id'] == ID:
+					name = rec['name'].replace(' ','_')+'.db'
+		else:
+			name = input( 'Database Name: ' )
+			name = name.replace(' ','_')+'.db'
+		fo=_v.rt+os.sep+'indexes'+os.sep+name
+		_.switches.fieldSet( 'Database', 'active', True )
+		_.switches.fieldSet( 'Database', 'value', fo )
+		_.switches.fieldSet( 'Database', 'values', [ fo ] )
+
 	global fileContents
 	global conn
 	global cursor
@@ -423,10 +443,7 @@ def action():
 	global i
 	global iS
 	# load()
-	if _.switches.isActive('Path') == False:
-		folder = os.getcwd()
-	else:
-		folder = _.switches.values('Path')[0]
+
 	
 	# _.pr( folder )
 	# sys.exit()

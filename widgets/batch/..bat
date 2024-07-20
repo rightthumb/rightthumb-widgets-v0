@@ -1,2 +1,1 @@
-@echo off
-call p. site -f %*
+no file
