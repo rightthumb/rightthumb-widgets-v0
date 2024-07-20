@@ -287,12 +287,24 @@ def action():
 		if '*' in path:
 			for f in glob.glob( path ):
 				f = __.path(f)
+				if not os.path.isfile(f) and os.path.isfile(__.wsl(f)):
+					f=__.wsl(f)
+				if not os.path.isfile(f):
+					continue
 				processFile(f)
 
 		elif not '*' in path:
-			if os.path.isfile(path):
-				path=__.path(path)
-				processFile(path)
+			f = path
+			# path=__.path(path)
+			f = __.path(f)
+			w = __.wsl(f)
+			print(w)
+			if not os.path.isfile(f) and os.path.isfile(__.wsl(f)):
+				f=__.wsl(f)
+			if not os.path.isfile(f):
+				continue
+			processFile(f)
+				# processFile(path)
 
 
 	if _.switches.isActive( 'Folder' ):

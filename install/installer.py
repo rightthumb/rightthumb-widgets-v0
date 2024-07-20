@@ -3232,6 +3232,7 @@ if [ -f "${stmp}/pin_ask" ]; then
 	source $widgets/widgets/bash/pin.sh
 fi
 
+alias o="source $widgets/widgets/bash/nav/o.sh"
 
 
 # tmux session management

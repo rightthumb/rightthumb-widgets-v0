@@ -631,7 +631,17 @@ def thisApp( file ):
 	return x
 
 
-
+def wsl(fi):
+	subject = fi
+	git_path = subject
+	while '\\' in git_path:
+		git_path = git_path.replace( '\\', '/' )
+	print(git_path)
+	git_path = git_path.replace( ':', '' )
+	git_path = '/' + git_path
+	wsl5 = '/mnt/'+ git_path[1].lower() + git_path[2:]
+	wsl5=wsl5.replace(' ','\\ ')
+	return wsl5
 
 
 # delimReg = '_'
