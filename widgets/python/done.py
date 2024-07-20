@@ -52,7 +52,11 @@ _.switches.process()
 def action():
 
 
-
+	if not 'ta' in _v.fig:
+		return False
+	else:
+		_v.fig['mp3'] = _v.fig['ta']+'mp3\\'
+	
 
 	songs = []
 	# songs.append("tapeatalk_records"+_v.slash+"Time lord treachery.mp3")
@@ -97,7 +101,7 @@ def action():
 
 	if not _.switches.isActive('Songs') and not _.switches.isActive('Song'):
 		play = True
-		song =  songs[18]
+		song =  _v.fig['mp3']+songs[18]
 
 	if _.switches.isActive('Songs'):
 		i = 0
@@ -107,14 +111,14 @@ def action():
 
 	if _.switches.isActive('Song'):
 		play = True
-		song =  songs[int(_.switches.value('Song'))]
+		song =  _v.fig['mp3']+songs[int(_.switches.value('Song'))]
 
 
 
 	if play:
 		theSong = mFolder + _v.slash + song
 		
-		theSong = "D:\\drive-archive\\256-btn\\techApps\\MP3\\Metalica\\Fuel - Metallica [HD] [1080p].mp3"
+		theSong = "D:\\techApps\\MP3\\Metalica\\Fuel - Metallica [HD] [1080p].mp3"
 
 		mplayerQ = '"' + mplayer + '"'
 		theSongQ = '"' + theSong + '"'

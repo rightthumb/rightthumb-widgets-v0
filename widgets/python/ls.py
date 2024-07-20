@@ -39,7 +39,7 @@ def appSwitches():
 	_.switches.register('Database', '-db,-database')
 	_.switches.register('Recursive', '-r,-recursive')
 	_.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isPipe='glob', description='Files' )
-	_.switches.register('Folder', '-folder')
+	_.switches.register('Folder', '-fo,-folder')
 
 	_.switches.register('Count', '-c,-count,--c')
 	# _.switches.register('Path', '-p,-path,-folder')

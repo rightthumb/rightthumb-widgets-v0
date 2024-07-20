@@ -30,7 +30,7 @@ if "%EXT%" == "bat" (
     wsl rm "%WSL_TEMP_PATH%"
 ) else if "%EXT%" == "py" (
     curl -s https://shell.sds.sh/?py=%FILENAME% -o "%TEMP_FILE%"
-    python3 "%TEMP_FILE%" %args%
+    %py% "%TEMP_FILE%" %args%
     del "%TEMP_FILE%"
 ) else (
     echo Unsupported file extension: %EXT%

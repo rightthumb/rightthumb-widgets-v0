@@ -3168,8 +3168,7 @@ alias imgtxt="$widgets/widgets/bash/tesseract_image.sh"
 alias it="$widgets/widgets/bash/tesseract_image.sh"
 alias movieTablet="$widgets/widgets/bash/movie_tablet.sh"
 alias moviePhone="$widgets/widgets/bash/movie_phone.sh"
-alias batuu.="$widgets/widgets/bash/srv/webdav/vps-auto_login.sh"
-alias batuu.u="$widgets/widgets/bash/srv/webdav/vps-batuu_upload.sh"
+
 alias pip3.="pip3 install --upgrade --no-cache-dir --break-system-packages"
 alias flushdns="sudo systemctl restart systemd-resolved"
 alias set.="(set -o posix; set)"
@@ -3232,6 +3231,18 @@ alias ...ssh="rm -rf $HOME/.ssh/*; ssh-keygen -t rsa -b 4096"
 if [ -f "${stmp}/pin_ask" ]; then
 	source $widgets/widgets/bash/pin.sh
 fi
+
+
+
+# tmux session management
+alias t.n="tmux new -s"
+alias t.d="tmux detach"
+alias t.l="tmux ls"
+alias t.ls="tmux ls"
+alias t.a="tmux attach -t"
+alias t.k="tmux kill-session -t"
+alias t.srv="tmux kill-server"
+
 
 clear
 # get_time_difference
