@@ -729,6 +729,8 @@ def extensionsDatabank():
 	# print(extensionList); sys.exit();
 
 def Relative_Path_Persistent():
+	if 'noFig' in _.switches.values('Relative-Path-Persistent'):
+		return None
 	def rpp_notify(say,m=False):
 		c='yellow'
 		_.pr()
