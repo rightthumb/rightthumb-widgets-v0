@@ -64,7 +64,7 @@ def save_file_list(file_list, output_file):
 
 def action():
     parser = argparse.ArgumentParser(description="Recursively traverse folders and count files.")
-    parser.add_argument("-o", "--output", help="Output file to save the list.")
+    parser.add_argument("-o", "--output", help="Output file to save the list.", default=None)
     args = parser.parse_args()
 
     base_path = os.getcwd()
@@ -74,9 +74,6 @@ def action():
         save_file_list(file_list, args.output)
     else:
         print_file_list(file_list)
-
-
-
 ########################################################################################
 if __name__ == '__main__':
 	action(); _.isExit(__file__);

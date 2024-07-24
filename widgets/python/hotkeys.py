@@ -3621,7 +3621,7 @@ def load():
 
 
 				'ctrl_a': { 'raw': [   'win.',  'q'   ], 'do': 'ctrl_a()' },
-				'ctrl_a': { 'raw': [   'win.',  'p'   ], 'do': 'ctrl_p()' },
+				'ctrl_p': { 'raw': [   'win.',  'p'   ], 'do': 'ctrl_p()' },
 
 
 

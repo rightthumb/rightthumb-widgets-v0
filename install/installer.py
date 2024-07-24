@@ -3233,6 +3233,7 @@ if [ -f "${stmp}/pin_ask" ]; then
 fi
 
 alias o="source $widgets/widgets/bash/nav/o.sh"
+alias fileCount="python3 $widgets/widgets/python/fileCount.py"
 
 
 # tmux session management
