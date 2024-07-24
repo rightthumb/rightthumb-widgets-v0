@@ -3621,6 +3621,7 @@ def load():
 
 
 				'ctrl_a': { 'raw': [   'win.',  'q'   ], 'do': 'ctrl_a()' },
+				'ctrl_a': { 'raw': [   'win.',  'p'   ], 'do': 'ctrl_p()' },
 
 
 
@@ -3726,6 +3727,37 @@ def ctrl_a():
 	# Press Enter
 	keyboard.press(Key.enter)
 	keyboard.release(Key.enter)
+
+def ctrl_p():
+	global keyboard
+	# Press Ctrl+A
+	keyboard.press(Key.esc)
+	keyboard.release(Key.esc)
+	time.sleep(.8)	
+	keyboard.press(Key.esc)
+	keyboard.release(Key.esc)
+
+	time.sleep(.8)
+	keyboard.press(Key.esc)
+	keyboard.release(Key.esc)
+	keyboard.press(Key.ctrl_l)
+	keyboard.press('p')
+	keyboard.release('p')
+	keyboard.release(Key.ctrl_l)
+
+	# Pause for 123 milliseconds
+	time.sleep(1.5)
+
+	numbers = _.switches.value('Password')
+	# Type the provided numbers
+	for number in numbers:
+		keyboard.press(number)
+		keyboard.release(number)
+
+	# Press Enter
+	keyboard.press(Key.enter)
+	keyboard.release(Key.enter)
+
 ########################################################################################
 
 import threading

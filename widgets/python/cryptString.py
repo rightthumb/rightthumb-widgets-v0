@@ -395,23 +395,27 @@ def action():
 
 	# _.pr(1010,_.switches.isActive('Encrypt'))
 	password = None
+
+
+	password = None
+
+	if  _.switches.isActive('Vault'):
+		password = _vault.key()
+
+
+	if  _.switches.isActive('Machine'):
+		password = _blowfish.p()
+
+
 	if  _.switches.isActive('Password'):
 		if len(  _.switches.value('Password')  ):
 			password = _.switches.values('Password')[0]
-		else:
-			password = None
-	else:
-		password = None
 
-		if  _.switches.isActive('Vault'):
-			password = _vault.key()
-
-
-		if  _.switches.isActive('Machine'):
-			password = _blowfish.p()
-
-		if password is None:
-			password = _vault.key()
+			
+	if password is None:
+		password = _vault.key()
+	# print(password)
+	# sys.exit()
 	original=''
 	data=''
 	if  _.switches.isActive('String'):
@@ -419,9 +423,9 @@ def action():
 			data = cleanString( data )
 			original=data
 			if data.endswith('=') or data.endswith('/U') or _.switches.isActive('Decrypt'):
-				string = _blowfish.decrypt( data, _vault.key() )
+				string = _blowfish.decrypt( data, password )
 			else:
-				string = _blowfish.encrypt( data, _vault.key() )
+				string = _blowfish.encrypt( data, password )
 
 			string = cleanString( string )
 			_.pr( string )
@@ -439,9 +443,9 @@ def action():
 
 
 		if data.endswith('=') or data.endswith('/U') or _.switches.isActive('Decrypt'):
-			clip = _blowfish.decrypt( data, _vault.key() )
+			clip = _blowfish.decrypt( data, password )
 		else:
-			clip = _blowfish.encrypt( data, _vault.key() )
+			clip = _blowfish.encrypt( data, password )
 		# if not clip == original:
 		# print(clip,original);sys.exit();
 		clip = cleanString( clip )
@@ -484,9 +488,9 @@ def action():
 	if _.switches.isActive('Encrypt'):
 		# _.pr(1030,_.switches.isActive('Encrypt'))
 		if not _.switches.isActive('JustReturn'):
-			_.colorThis( _blowfish.encrypt( ' '.join( _.switches.values('Encrypt') ), password ), 'green' )
+			_.colorThis( _blowfish.encrypt( ' '.join( _.switches.values('String') ), password ), 'green' )
 		elif _.switches.isActive('JustReturn'):
-			return _blowfish.encrypt( ' '.join( _.switches.values('Encrypt') ), password )
+			return _blowfish.encrypt( ' '.join( _.switches.values('String') ), password )
 
 	elif _.switches.isActive('Decrypt'):
 		# _.pr(1040)
@@ -542,7 +546,7 @@ def action():
 							good = False
 					# _.pr('good:',good,x)
 					if not good:
-						row = _blowfish.decrypt( row, _vault.key() )
+						row = _blowfish.decrypt( row, password )
 					else:
 						row = de_row
 
