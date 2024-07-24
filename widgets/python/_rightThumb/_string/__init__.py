@@ -87,6 +87,13 @@ visibleChar = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!"#
 notFilenameSafe = '/\\?%*:|"<>'
 
 
+
+def randomStr(s):
+	import random
+	char_list = list(s)
+	random.shuffle(char_list)
+	return ''.join(char_list)
+
 def printClean(text):
 	global printable
 	text = str(text)
