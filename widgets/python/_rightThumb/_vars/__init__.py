@@ -542,10 +542,17 @@ def vaultPinLogin():
 	import getpass
 	try: import subprocess
 	except: pass
-	rawPin = getpass.getpass('PIN: ')
+	try:
+		rawPin = getpass.getpass('PIN: ')
+		return rawPin
+	except KeyboardInterrupt:
+		print("\nCtrl+C detected. Exiting...")
+		rawPin = 'error'
+		# sys.exit(0)
 	# print(rawPin)
 
 	global pin_path
+	if rawPin == 'error': sys.exit()
 	import _rightThumb._encryptString as _blowfish
 	enPin = _blowfish.myEn2(rawPin,getMachineID())
 	with open(pin_path, 'w') as pin_file: pin_file.write(f'{enPin}')

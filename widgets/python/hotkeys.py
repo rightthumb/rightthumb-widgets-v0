@@ -3622,8 +3622,9 @@ def load():
 
 				'ctrl_a': { 'raw': [   'win.',  'q'   ], 'do': 'ctrl_a()' },
 				'ctrl_p': { 'raw': [   'win.',  'p'   ], 'do': 'ctrl_p()' },
-				'ctrl_w': { 'raw': [   'alt.',  'w'   ], 'do': 'ctrl_w()' },
-
+				# 'ctrl_w': { 'raw': [   'alt.',  'w'   ], 'do': 'ctrl_w()' },
+				# 'win_tab': { 'raw': [   'alt.',  'c'   ], 'do': 'win_tab()' },
+				# 'alt_esc': { 'raw': [   'alt.',  'e'   ], 'do': 'alt_esc()' },
 
 
 
@@ -3731,16 +3732,22 @@ def ctrl_a():
 
 def ctrl_w():
 	global keyboard
-	
-
-	time.sleep(.8)
 	keyboard.press(Key.ctrl_l)
 	keyboard.press('w')
 	keyboard.release('w')
 	keyboard.release(Key.ctrl_l)
 
-	# Pause for 123 milliseconds
-	time.sleep(1.5)
+def win_tab():
+    keyboard.press(Key.cmd)
+    keyboard.press(Key.tab)
+    keyboard.release(Key.tab)
+    keyboard.release(Key.cmd)
+
+def alt_esc():
+    keyboard.press(Key.alt)
+    keyboard.press(Key.esc)
+    keyboard.release(Key.esc)
+    keyboard.release(Key.alt)
 
 def ctrl_p():
 	global keyboard
