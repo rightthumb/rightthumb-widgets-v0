@@ -1,8 +1,4 @@
 @echo off
-
-rem Define the handler for Ctrl+C (SIGINT)
-set "CtrlCHandler=exit"
-
 set asked=0
 if "%1" == "-ask" (
     echo ask>"%stmp%/pin_ask"
@@ -32,13 +28,8 @@ if %asked% gtr 3 (
     echo too many attempts
     exit
 )
-call p. loginPIN
+call p loginPIN
 set /p vault_pin=<"%stmp%/pin"
-if "%vault_pin%" == "" (
-    echo no pin entered
-    doskey /history >> "%stmp%\unclaimed_tickets_history\history-%Session_ID%.txt"  2>&1
-    exit
-)
 call rm "%stmp%/pin" --c
 if not exist "%rt%\profile\config\.vault.%vault_pin%" (
     call :ask
