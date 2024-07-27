@@ -3236,6 +3236,8 @@ alias o="source $widgets/widgets/bash/nav/o.sh"
 alias fileCount="python3 $widgets/widgets/python/fileCount.py"
 alias fC="python3 $widgets/widgets/python/fileCount.py"
 
+alias iso="source $widgets/widgets/bash/iso_img_bin_nrg_mdf__info.sh"
+alias pst="source $widgets/widgets/bash/pst.sh"
 
 # tmux session management
 alias t.n="tmux new -s"

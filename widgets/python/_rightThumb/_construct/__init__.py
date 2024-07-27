@@ -9,6 +9,8 @@
 #    - Scott Taylor Reph, RightThumb.com
 # ###########################################################################
 # ## {C3P0D40fAe8B} ##
+
+preSwitches = []
 site_url=None
 autoCreationConfiguration = {
 							'backup': True,
@@ -339,7 +341,15 @@ def IS(path,check=1):
 def path( p, ab=True, pop=False, file=False, slash=None, folder=None, fi=None, fo=None, fix=True, ln=None ):
 	os=imp('os.path.isfile')
 	if not os.path.isfile(p) and not os.path.isdir(p): p = p.strip()
-	if not os.path.isfile(p) and not os.path.isdir(p): return p
+	if not os.path.isfile(p) and not os.path.isdir(p):
+		if pop or folder:
+			parts = p.split(os.sep)
+			parts.pop(-1)
+			p = os.sep.join(parts)
+		if file:
+			parts = p.split(os.sep)
+			p = parts.pop(-1)
+		return p
 	os=imp('os.sep')
 	p=p.replace(os.sep+os.sep,os.sep)
 	if isWin or not pop: return _path_( p, ab, pop, file, slash, folder, fi, fo, fix, ln )

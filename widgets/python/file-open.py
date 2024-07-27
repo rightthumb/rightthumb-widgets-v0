@@ -42,6 +42,7 @@ def appSwitches():
 	_.switches.register( 'ForceSublime', '-sub,-sublime' )
 	_.switches.register( 'PrintAliasLocation', '-print' )
 	_.switches.register( 'PrintAliases', '-pa,-ap,-printaliases' )
+	_.switches.register( 'HostedTemp', '-tmp,-temp', 'html, php' )
 
 _.autoBackupData = __.autoCreationConfiguration['backup']
 __.releaseAcquiredData = __.autoCreationConfiguration['logs'] 
@@ -166,6 +167,41 @@ import subprocess
 # focus()
 
 def action(path=None):
+	if _.switches.isActive('HostedTemp'):
+		if not 'HostedTemp' in _v.fig:
+			_.pr()
+			_.pr()
+			_.pr()
+			_.pr('HostedTemp not found in settings',c='red')
+			_.pr()
+			_.pr('\tEdit this file:',_v.figpath,c='yellow')
+			_.pr()
+			_.pr('\tAdd this line:',c='green')
+			_.pr()
+			_.pr()
+			_.pr('"HostedTemp": "{folder path to temp folder in a website project)}",',c='cyan')
+			_.pr()
+			_.pr()
+			
+			return None
+
+		fo = _v.fig['HostedTemp']
+		ext = None
+		if not fo.endswith(os.sep): fo += os.sep
+		if _.switches.value('HostedTemp'):
+			ext =_.switches.values('HostedTemp')[0].strip().lower()
+		if not ext: ext = '.htm'
+		if not '.' in ext: ext = '.'+ext
+		if _.switches.value('HostedTemp'):
+			HT = _.switches.values('HostedTemp')
+			HT[0]=ext.replace('.','')
+			_.switches.fieldSet( 'HostedTemp', 'value', ','.join(HT) )
+			_.switches.fieldSet( 'HostedTemp', 'values', HT )
+		fi = fo + str(int(time.time())) + ext
+		open(fi, 'w').close()
+		_.switches.fieldSet( 'Files', 'active', True )
+		_.switches.fieldSet( 'Files', 'value', fi )
+		_.switches.fieldSet( 'Files', 'values', [fi] )
 
 
 	if _.switches.isActive('Files'):
@@ -174,6 +210,26 @@ def action(path=None):
 			if _path_.startswith('http:'): _path_ = _path_.replace('http:','https:')
 			if _path_.startswith('http:') or _path_.startswith('https:'):
 				_path_=_.url2file(_path_)
+			if not os.path.isfile(_path_):
+				_err = False
+				if os.sep in _path_:
+					try:
+						_fo = __.path(_path_,pop=True)
+					except:
+						_err = True
+						_.pr( 'Unable pop path to get folder: '+_path_ )
+					if not os.path.isdir(_fo):
+						try:
+							os.makedirs(_fo)
+						except:
+							_err = True
+							_.pr( 'Unable to create file: '+_fo )
+				if not _err:
+					try:
+						if not _err:
+							open(_path_, 'w').close()
+					except:
+						_.pr( 'Unable to create file: '+_path_ )
 			paths.append(_path_)
 		_.switches.fieldSet( 'Files', 'value', ','.join(paths) )
 		_.switches.fieldSet( 'Files', 'values', paths )
@@ -357,6 +413,26 @@ def action(path=None):
 			if not 'aliases' in aliases: aliases['aliases']={}
 			if not 'files' in aliases: aliases['files']={}
 			aliases['aliases']['last']=path
+			if _.switches.isActive('HostedTemp'):
+				HT = _.switches.values('HostedTemp')
+				if len(HT) > 0:
+					_ext_ = HT[0]
+				else:
+					_ext_ = 'htm' 
+				aliases['aliases']['tmp']=path
+				if len(HT) > 1:
+					customAlias = 'ht.'+HT[1]
+					aliases['aliases'][customAlias]=path
+					_.pr('Alias:',customAlias)
+				aliases['aliases']['ht.']=path
+				_.pr('Alias:','ht.')
+				i=1
+				while 'ht.'+str(i) in aliases['aliases']: i+=1
+				aliases['aliases']['ht.'+str(i)]=path
+				_.pr('Alias:','ht.'+str(i))
+
+				aliases['aliases']['ht.'+_ext_]=path
+				_.pr('Alias:','ht.'+_ext_)
 
 			_.saveText(path,_v.tt+os.sep+'file-open.last')
 			if _.switches.isActive('PrintAliasLocation'): return None

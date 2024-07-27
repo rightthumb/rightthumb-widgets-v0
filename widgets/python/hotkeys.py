@@ -3622,6 +3622,7 @@ def load():
 
 				'ctrl_a': { 'raw': [   'win.',  'q'   ], 'do': 'ctrl_a()' },
 				'ctrl_p': { 'raw': [   'win.',  'p'   ], 'do': 'ctrl_p()' },
+				'ctrl_w': { 'raw': [   'alt.',  'w'   ], 'do': 'ctrl_w()' },
 
 
 
@@ -3727,6 +3728,19 @@ def ctrl_a():
 	# Press Enter
 	keyboard.press(Key.enter)
 	keyboard.release(Key.enter)
+
+def ctrl_w():
+	global keyboard
+	
+
+	time.sleep(.8)
+	keyboard.press(Key.ctrl_l)
+	keyboard.press('w')
+	keyboard.release('w')
+	keyboard.release(Key.ctrl_l)
+
+	# Pause for 123 milliseconds
+	time.sleep(1.5)
 
 def ctrl_p():
 	global keyboard

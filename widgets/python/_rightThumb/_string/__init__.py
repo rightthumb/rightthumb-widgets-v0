@@ -909,13 +909,13 @@ def characterClean(string):
 	return string
 
 def basic(string):
-	pattern = re.compile('([^\s\w]|_)+')
-	string = pattern.sub('', string)
-	string = replaceDuplicate(string,' ')
-	string = cleanFirst(string,' ')
-	string = cleanLast(string,' ')
+    pattern = re.compile(r'([^\s\w]|_)+')
+    string = pattern.sub('', string)
+    string = replaceDuplicate(string, ' ')
+    string = cleanFirst(string, ' ')
+    string = cleanLast(string, ' ')
 
-	return string
+    return string
 
 def charFix( string ):
 	global slash
