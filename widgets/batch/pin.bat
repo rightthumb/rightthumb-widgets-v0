@@ -36,7 +36,8 @@ call p. loginPIN
 set /p vault_pin=<"%stmp%/pin"
 if "%vault_pin%" == "" (
     echo no pin entered
-    call x
+    doskey /history >> "%stmp%\unclaimed_tickets_history\history-%Session_ID%.txt"  2>&1
+    exit
 )
 call rm "%stmp%/pin" --c
 if not exist "%rt%\profile\config\.vault.%vault_pin%" (
