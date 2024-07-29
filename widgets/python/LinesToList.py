@@ -3,8 +3,8 @@ def focus(parentApp='', childApp='', reg=True): global appDBA; f = __.appName(ap
 fieldSet=_.l.vars(focus(),__name__,__file__,appDBA);_.load();_v=__.imp('_rightThumb._vars');
 
 def sw():
-	pass
-	_.switches.register( 'Input', '-i' )
+	_.switches.register( 'Indent', '-i,-indent', '' )
+	_.switches.register( 'Copy', '--,-cp,-copy', '' )
 _._default_settings_()
 
 _.appInfo[focus()] = {
@@ -36,17 +36,26 @@ _.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw );
 #n)--> start
 
 def action():
-	# import os
-	# _.pv(os.environ)
-	# _.isExit(__file__)
-	if _.switches.isActive('Input'):
-		
-		data = ' '.join( _.switches.values('Input') )
-		_.pr()
-		_.pr(data,c='cyan')
-		_.pr()
-		_.pr()
-		_.pr(str(_.switches.values('Input')),c='darkcyan')
+	lines = _.isData()
+	output = []
+	for line in lines:
+		line = line.strip()
+		# line = line.replace('\n','')
+		# line = line.replace('\r','')
+		# line = line.replace('\t','')
+		if line != '':
+			output.append(line)
+	if _.switches.isActive('Indent'):
+		json=simplejson.dumps(output, indent=4, default=str)
+	else:
+		json=simplejson.dumps(output, default=str)
+	print(output)
+	# _.pr(output)
+	if _.switches.isActive('Copy'):
+		_copy = _.regImp( __.appReg, '-copy' )
+		_copy.imp.copy( output, p=False  )
+import simplejson
+
 ########################################################################################
 if __name__ == '__main__':
 	action(); _.isExit(__file__);

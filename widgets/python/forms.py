@@ -4,7 +4,8 @@ fieldSet=_.l.vars(focus(),__name__,__file__,appDBA);_.load();_v=__.imp('_rightTh
 
 def sw():
 	pass
-	_.switches.register( 'Input', '-i' )
+	_.switches.register( 'FormID', '-id', '1' )
+	# _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name', description='Files', isRequired=False )
 _._default_settings_()
 
 _.appInfo[focus()] = {
@@ -35,18 +36,50 @@ _.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw );
 ########################################################################################
 #n)--> start
 
+# from _rightThumb._forms import genForm
+from _rightThumb._forms._forms_example import example_forms1, example_forms2, checkboxes
+
+showFields = False
+if showFields:
+	spent = []
+	for rec in example_forms:
+		for k in rec:
+			if not k == 'Config':
+				for field in rec[k]:
+					if not field['type'] in spent:
+						spent.append(field['type'])
+						print(field['type'])
+	_.isExit(__file__)
+
+
+import random
+
 def action():
-	# import os
-	# _.pv(os.environ)
-	# _.isExit(__file__)
-	if _.switches.isActive('Input'):
-		
-		data = ' '.join( _.switches.values('Input') )
-		_.pr()
-		_.pr(data,c='cyan')
-		_.pr()
-		_.pr()
-		_.pr(str(_.switches.values('Input')),c='darkcyan')
+	form = {
+		'Login': [
+			{"label": "Login", "type": "text", "value": ""},
+			{"label": "Password", "type": "password", "value": ""},
+		],
+		# 'Test': [
+		# 	{"label": "Hello", "type": "text", "value": ""},
+		# 	{"label": "Tags", "type": "checkbox", "options": ["frontend", "backend", "terminal", "api", "database", "development", "production"], "values": ["frontend", "development"]},
+		# ]
+	}
+	results = _.Form(form)
+	_.pv(results)
+
+	# cnt = len(example_forms)
+	# # _.pr(cng)
+	# form = random.choice(example_forms)
+	# _.pv(form)
+	# results = _.Form(form)
+	# _.pv(results)
+	
+	# _.pv(checkboxes)
+	# results = _.Form(checkboxes)
+	# _.pv(results)
+
+
 ########################################################################################
 if __name__ == '__main__':
 	action(); _.isExit(__file__);

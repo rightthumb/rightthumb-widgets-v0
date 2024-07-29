@@ -46,6 +46,7 @@ def appSwitches():
 	_.switches.register( 'Count', '-cnt,-count' )
 	_.switches.register( 'Function', '-fn' )
 	_.switches.register( 'JustPath', '-jp,-justpath' )
+	_.switches.register( 'Json', '-json' )
 
 
 
@@ -237,6 +238,8 @@ def printFile(i,filepath):
 __.fileCount = 0
 __.fileTotal = 0
 def action():
+	if _.switches.isActive('Json'):
+		_.prStatus = False
 	focus()
 	global Function
 	Count = []
@@ -250,7 +253,11 @@ def action():
 	files = _.pp()
 	if type(files[0]) == list:
 		files = files[0]
+	
+	global output
+
 	for i,filepath in enumerate(files):
+		output[filepath] = []
 		__.fileTotal+=1
 		filepath=_.zZip(filepath)
 		maxLEN = 5
@@ -347,6 +354,7 @@ def action():
 
 
 			for i, row in enumerate(theFile):
+				ogRow = row
 				vVv.total += 1
 				shouldAdd = _.showLine(row)
 				if shouldAdd:
@@ -394,6 +402,8 @@ def action():
 						if not len( simpleClean(row) ):
 							shouldAdd = False
 				if shouldAdd:
+					output[filepath].append(ogRow)
+					# if _.switches.isActive('Json'): continue
 					printFile(i,filepath)
 					vVv.print += 1
 					if _.switches.isActive('JustPath'): continue
@@ -443,6 +453,7 @@ def action():
 	_.cleanUnzip()
 
 
+
 def simpleClean(data):
 	i = 0
 	while i < 10:
@@ -453,6 +464,7 @@ def simpleClean(data):
 		data = _str.cleanBE(data,'\r')
 	return data
 focus()
+output = {}
 vVv = _.dot()
 vVv.total = 0
 vVv.print = 0
@@ -472,6 +484,10 @@ Function=_.switches.isActive('Function')
 if __name__ == '__main__':
 	try:
 		action()
+		# print(output)
+		if _.switches.isActive('Json'):
+			_.prStatus = True
+			_.pv(output)
 	except:
 		_.e('Bad Command:','possibly missing: -f')
 	__.isExit()

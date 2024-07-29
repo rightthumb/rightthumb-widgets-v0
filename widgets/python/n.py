@@ -1,184 +1,63 @@
-#!/usr/bin/python3
-
-# ## {R2D2919B742E} ##
-# ###########################################################################
-# What if magic existed?
-# What if a place existed where your every thought and dream come to life.
-# There is only one catch: it has to be written down.
-# Such a place exists, it is called programming.
-#    - Scott Taylor Reph, RightThumb.com
-# ###########################################################################
-# ## {C3P0D40fAe8B} ##
-
-
-##################################################
-import sys, time
-##################################################
-import _rightThumb._construct as __
-appDBA=__.clearFocus(__name__,__file__);__.appReg=appDBA;
-def focus(parentApp='',childApp='',reg=True):
-	global appDBA;f=__.appName(appDBA,parentApp,childApp);
-	if reg:__.appReg=f;
-	return f
-import _rightThumb._base3 as _
-fieldSet=_.l.vars(focus(),__name__,__file__,appDBA)
-_.load()
-##################################################
-_v = __.imp('_rightThumb._vars')
-_str = __.imp('_rightThumb._string')
-##################################################
-
+import _rightThumb._construct as __;appDBA=__.clearFocus(__name__,__file__);__.appReg=appDBA;import _rightThumb._base3 as _;
+def focus(parentApp='', childApp='', reg=True): global appDBA; f = __.appName(appDBA, parentApp, childApp); return f if reg else f
+fieldSet=_.l.vars(focus(),__name__,__file__,appDBA);_.load();_v=__.imp('_rightThumb._vars');
 
 def sw():
 	pass
-	#b)--> examples
-	# _.switches.register( 'Input', '-i' )
-	# _.switches.register( 'URL', '-u,-url,-urls', 'https://etc.ac/', isData='raw' )
-	#e)--> examples
-	# _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name,data,clean', description='Files', isRequired=False )
-
-# __.setting('require-list',['Files,Plus','File,Has']) # todo
-# __.setting('require-list',['Pipe','Files'])
-__.setting('receipt-log')
-__.setting('receipt-file')
-__.setting('myFileLocations-skip-validation',False)
-__.setting('require-pipe',False)
-__.setting('require-pipe||file',False)
-__.setting('pre-error',False)
-__.setting('switch-raw',[])
-
-
+	_.switches.register( 'Project', '-p,-pro,-project', 'Site/Toolbox.Menu' )
+	_.switches.register( 'Documentation', '-d,-doc,-documentation', 'Public/Instructions' )
+	_.switches.register( 'Note', '-n,-note', 'Snippets of this file to search for in file' )
+	_.switches.register( 'EncryptNote', '-e,-en,-encrypt', '' )
+	_.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name', description='Files', isRequired=False )
+	_.switches.register( 'Folders', '-fo,-folder,-folders','Subscriptions Products' )
+	_.switches.register( 'URLS', '-u,-url,-urls', 's snip' )
+	_.switches.register( 'Notifications', '-notify', 'on, off' )
+	_.switches.register( 'DisplayAliasesTables', '-t,table,-tables', 'Documentation Note' )
+	_.switches.register( 'Settings', '-settings', '[]' )
+_._default_settings_()
 
 _.appInfo[focus()] = {
-	# 'app': '8facG-jo0Cxk',
-	'file': 'thisApp.py',
-	'liveAppName': __.thisApp( __file__ ),
-	'description': 'Changes the world',
-		# _.ail(1,'subject')+
-		# _.aib('one')+
+	'file': 'n.py',
+	'description': 'Notes that may me associated with files',
 	'categories': [
-						'DEFAULT',
+						'notes',
 				],
-	'usage': [
-						# 'epy another',
-						# 'e nmap',
-						# '',
-	],
-	'relatedapps': [
-						# 'p another -file file.txt',
-						# '',
-	],
-	'prerequisite': [
-						# 'p another -file file.txt',
-						# '',
-	],
 	'examples': [
-						_.hp('p thisApp -file file.txt'),
+						_.hp('p n -project tb -file tb.home -note tb.home.scrap=Scrap Pad of text snippets to search for in file and find any relevant areas in the file'),
+						_.hp('p n -project -n tb.home.scrap'),
+						_.hp('p n -project tb=Site/Toolbox.Menu -documentation tb.pi=Public/Instructions -file tb.prod=products.php -note tb.prod.pi.h.p=How to Purchase.md'),
+						_.hp('p n -encrypt -n gmail.pw=Gmail Username and Password -url "https://mail.google.com/mail/u/0/#inbox"'),
+						_.hp('p n -p tb=Site/Toolbox.Menu -d tb.pi=Public/Instructions -file tb.prod=products.php -n tb.prod.pi.h.p=How to Purchase'),
+						_.hp('p n -p tb -d tb.pi -file tb.prod -n tb.prod.pi.h.p=How to Purchase '),
+						_.hp('p n -n tb.prod.pi.h.p'),
+						_.hp('p n -project tb=Site/Toolbox.Menu -documentation tb.iib=Internal/Products -folders tb.sp=Subscriptions Products -note tb.ppp.prod.w=Product IDs To Watch -notify on'),
+						_.hp('p n -project sg=Site/Global -documentation sg.bp.p=Billing/Processing/Paypal -note Paypal.basics=Payment Processing Paypal Basics'),
+						_.hp('p n -p tb -d tb.iib -fo tb.sp -n Paypal.basics=Payment Processing Paypal Basics'),
+						_.hp('p n -n Paypal.basics'),
 						_.linePrint(label='simple',p=0),
 						'',
 	],
 	'columns': [
-					# { 'name': 'name', 'abbreviation': 'n' },
-					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
-	'aliases': [
-					# 'this',
-					# 'app',
-	],
-	'notes': [
-					# {},
-	],
+	'aliases': [],
+	'notes': [],
 }
 
-_.appData[focus()] = {
-		'start': __.startTime,
-		'uuid': '',
-		'audit': [],
-		'pipe': False,
-		'data': {
-					'field': {'sent': [], 'received': [] }, # { 'label': '', 'context': [],  }
-					'table': {'sent': [], 'received': [] },
-		},
-	}
-
+_.appInfo[focus()] = _.appInfoContinuity(__.thisApp( __file__ ),_.appInfo[focus()])
+_.appData[focus()] = _.appDataContinuity()
+def appRegDics(): return { 'appInfo': _.appInfo[focus()], 'appData': _.appData[focus()] }
 
 def triggers():
-	_.switches.trigger( 'Files', _.myFileLocations, vs=True )
-	_.switches.trigger( 'Ago', _.timeAgo )
-	_.switches.trigger( 'Folder', _.myFolderLocations )
-	_.switches.trigger( 'URL', _.urlTrigger )
-	_.switches.trigger( 'Duration', _.timeFuture )
-
+	_._default_triggers_()
 def _local_(do): exec(do)
-
-_.l.conf('clean-pipe',True)
-_.l.sw.register( triggers, sw )
-
-########################################################################################
-#b)--> examples
-#d)--> code hints to quickly get started
-	#n)--> inline examples
-		# any(ele in 'scott5' for ele in list('0123456789'))
-		# if _.switches.isActive('Test'): test(); return None;
-		# result=[]; result=[ _.pr(line) for i, line, bi in _.numerate( _.isData(r=0) )]
-		# bk=[];[  bk.append(rec['backup']) for rec in backupLog if path == rec['file']]; bk=bk[-1];
-		# a=(1 if True else 0) <--# 
-		#!)--> m=[[row[i] for row in matrix] for i in range(4)]
-
-	#n)--> python globals
-		# globals()['var']
-		# for k in globals(): print(k, eval(k) )
-
-	#n)--> webpage from url
-		# for subject in _.caseUnspecific( line, needle ): line = line.replace( subject, _.colorThis( subject, 'green', p=0 ) )
-
-	#n)--> webpage from url
-		# requests=__.imp('requests.post')
-		#!)--> data=str(requests.post(url,data={}).content,'iso-8859-1')
-
-	#n)--> import and backup example
-		# _bk = _.regImp( __.appReg, 'fileBackup' ); _bk.switch( 'Silent' ); _bk.switch( 'isRunOnce' ); _bk.switch( 'Flag', 'APP' ); _bk.switch( 'DoNotSchedule' )
-		# _bk.switch( 'Input', path ); bkfi = _bk.action();
-	
-	#n)--> inline
-		# for rel in [ subject for subject in _.isData(r=0) if _.showLine(subject) ]: print(rel)
-
-	#n)--> banner
-		# banner=_.Banner(app); goss=banner.goss;
-#e)--> examples
+_.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw );
 ########################################################################################
 #n)--> start
 
 def action():
-	load(); global c3po;
-
-	#n)--> iterate
-	for subject in _.isData(r=0): _.pr(subject)
-	
-
-def load():
-	global c3po
-	c3po = _.getTable( 'table' )
-	#n)--> print table
-	_.pt(c3po)
-
-
-##################################################
-#b)--> examples
-# banner=_.Banner(dependencies)
-# goss=banner.goss
-# goss('-\t this app will sherlock tf out of any python app or python module')
-#e)--> examples
-##################################################
+	_open = _.regImp( __.appReg, 'file-open' )
+	_open.switch('Backup')
 
 ########################################################################################
 if __name__ == '__main__':
-	#b)--> examples
-
-	# banner.pr()
-	# if len(_.switches.all())==0: banner.gossip()
-	
-	#e)--> examples
-	action()
-	_.isExit(__file__)
-
+	action(); _.isExit(__file__);

@@ -10,6 +10,62 @@
 # ###########################################################################
 # ## {C3P0D40fAe8B} ##
 
+def Form(form):
+	from _rightThumb._forms import genForm
+	results = genForm(form)
+	return results
+
+startTraceRecords = []
+def startTrace(search='widgets'):
+	global startTraceRecordsSearch
+	startTraceRecordsSearch = search
+
+	import sys
+	def trace_calls(frame, event, arg):
+		if event == 'call':
+			global startTraceRecordsSearch
+			global startTraceRecords
+			code = frame.f_code
+			func_name = code.co_name
+			func_line_no = frame.f_lineno
+			filename = code.co_filename
+			if not startTraceRecordsSearch:
+				startTraceRecords.append({'function':func_name,'line':func_line_no,'file':filename})
+			elif type(startTraceRecordsSearch) == str and startTraceRecordsSearch.strip() and startTraceRecordsSearch in func_name:
+				startTraceRecords.append({'function':func_name,'line':func_line_no,'file':filename})
+
+				# print(f'Calling function: {func_name} in {filename}:{func_line_no}')
+		return trace_calls
+
+	sys.settrace(trace_calls)
+
+def endTrace(functions=None,a=False):
+	sys.settrace(None)
+	table = {}
+	for record in startTraceRecords:
+		shouldPrint = True
+		if functions is not None:
+			shouldPrint = False
+			for file in functions:
+				if record['file'].endswith(file):
+					for function in functions[file]:
+						if record['function'] == function:
+							shouldPrint = True
+		if shouldPrint:
+			if a:
+				print(f'{record["function"]} in {record["file"]}:{record["line"]}')
+			else:
+				if not record['file'] in table:
+					table[record['file']] = {}
+				if not record['function'] in table[record['file']]:
+					table[record['file']][record['function']] = 0
+				if table[record['file']][record['function']] == 0:
+					print(f'{record["function"]} in {record["file"]}:{record["line"]}')
+				
+
+
+
+
 preSwitches = []
 site_url=None
 autoCreationConfiguration = {

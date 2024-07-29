@@ -409,6 +409,8 @@ def random_color():
 
 print_ed_group={}
 def print_(*args,p=None,c=None,pad=3,g=None,end=None,pvs=None,pv=None,json=None, dic=None, line=None, rstrip=True, lineMinus=0, lineLen=None, r=None):
+	global prStatus
+	if not prStatus: return args
 	# if type(args[0]) == str: args[0] = args[0].decode('utf-8')
 	if not r is None: end=r
 	args=list(args)
@@ -8109,6 +8111,7 @@ def setUmlData( data, openUML=True ):
 		import webbrowser
 		webbrowser.open( _v.umlHtml, new=2)
 def setPipeData( data, theFocus=False, clean=False ):
+
 	# data = process_pipe_data( data )
 	# if type(data) == str: data=data.replace('\r','')
 	# if type(data) == list: data='\n'.join(data).replace('\r','').split('\n')
@@ -8134,6 +8137,7 @@ def setPipeData( data, theFocus=False, clean=False ):
 
 
 def pipeCleaner(clean=0):
+	if 'clean-pipe' in l.v.cnf.data and not l.conf('clean-pipe'): return
 	def pipeCleanerDeep(p):
 		while p.startswith(' '):
 			p = p[1:]
@@ -8341,7 +8345,7 @@ def printTest( data, color='white', line=None, isPrint=1, shouldExit=1, validate
 def printVar2( data, sort_keys=False ):
 	printVarOld( data, sort_keys )
 
-def printVarSimple( data, sort_keys=False, isDic=None, prefix=None, remove=None, d=None, p=True, r=None ):
+def printVarSimple( data, sort_keys=False, isDic=None, prefix=None, remove=None, d=None, p=True, r=None, min=False ):
 	#n)--> r, stands for just return and not print
 	try:
 		import simplejson
@@ -8352,7 +8356,12 @@ def printVarSimple( data, sort_keys=False, isDic=None, prefix=None, remove=None,
 		import json
 	except ImportError:
 		json = simplejson
-	dump=simplejson.dumps(data, indent=4, sort_keys=sort_keys, default=str)
+	if min:
+		dump=simplejson.dumps(data, sort_keys=sort_keys, default=str)
+		print(dump)
+		return dump
+	else:
+		dump=simplejson.dumps(data, indent=4, sort_keys=sort_keys, default=str)
 	if d:
 		if p:
 			print_(dump)
@@ -23856,6 +23865,7 @@ lbu=aiLine
 nw=n2w
 prLine=linePrint
 pr=print_
+prStatus = True
 ct=colorThis
 cr=colorizeRow
 c=colorizeRow
@@ -24261,6 +24271,12 @@ def prWC2(text, colorize, color='green', color2='cyan'):
 		parts.append(colorThis(text[last_end:], color2, p=0))
 		text = ''.join(parts)
 	return text
+##################################################
+def Form(form):
+	from _rightThumb._forms import genForm
+	results = genForm(form)
+	return results
+##################################################
 
 # __.switch_raw
 ##################################################

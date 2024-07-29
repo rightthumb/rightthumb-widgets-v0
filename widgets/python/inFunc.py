@@ -43,6 +43,8 @@ def appSwitches():
 	_.switches.register('Log', '-log')
 	_.switches.register('Audit', '-audit')
 	_.switches.register('JustReturn', '-return')
+	_.switches.register('NoResults', '-no')
+	_.switches.register('Clean', '--c')
 	
 
 
@@ -72,6 +74,8 @@ _.appData[focus()] = {
 
 _.appInfo[focus()]['relatedapps'].append('p fileRecover -i blank22 -audit')
 
+_.appInfo[focus()]['examples'].append('p inFunc -f base --c -no + "][\'pipe\']"  | p LinesToList')
+_.appInfo[focus()]['examples'].append('p inFunc -f inFunc.py + for table --c -no | p LinesToList')
 _.appInfo[focus()]['examples'].append('p inFunc -i base')
 _.appInfo[focus()]['examples'].append('')
 _.appInfo[focus()]['examples'].append('p infunc -i dir.py + print - # "()" "\n" "\t"')
@@ -382,6 +386,7 @@ def action():
 		
 		if doSearch and len(found) > 0:
 			for dat in data:
+				what=''
 				# _.pr( dat )
 				table['dat'][dat['start']] = dat
 				lastPrint = ''
@@ -409,6 +414,7 @@ def action():
 									table['parents'][dat['start']] = parent
 							lastPrint = s
 				for i,row in enumerate(found):
+					what='parent'
 					maxSpace = 0
 					if not classDef[i] == 'class':
 						if dat['start'] <= row and dat['end'] >= row:
@@ -421,6 +427,7 @@ def action():
 							printLine = line.replace(spc['txt'],'')
 							for search in _.switches.values('Plus'):
 								printLine = printLine.replace( search, _.inlineBold( search, 'green' ) )
+								what='line'
 
 							if not classDef == 'class':
 								rowX = str(row)
@@ -435,7 +442,7 @@ def action():
 									printLine = printLine.replace( search, _.inlineBold( search, 'green' ) )
 								if not _.switches.isActive('JustReturn'):
 									# _.pr( addSpace(maxSpace+1), _.inlineBold( str(int(rowX)+1) ), printLine )
-									table['lines'][int(rowX)+1] = { 'parent': dat, 'space': addSpace(maxSpace+1), 'line': int(rowX)+1, 'text': printLine }
+									table['lines'][int(rowX)+1] = { 'parent': dat, 'space': addSpace(maxSpace+1), 'line': int(rowX)+1, 'text': printLine, 'what': what }
 							# _.pr()
 		elif not doSearch:
 			md5Data = []
@@ -531,21 +538,38 @@ def action():
 				else:
 					xXx['functions'] += 1
 					xXx['all'] += 1
-					_.pr(recP['space'], _.inlineBold(recP['type'],'yellow') ,recP['label'])
+					if _.switches.isActive('NoResults') and _.switches.isActive('Clean'):
+						if recP['type'] == 'def':
+							# _.pr(recP['space']+recP['label'])
+							_.pr(recP['label'])
+					else:
+						_.pr(recP['space'], _.inlineBold(recP['type'],'yellow') ,recP['label'])
 				if lnp in table['children']:
 					ch = list(table['children'][lnp].keys())
 					for lnc in ch:
 						recC = table['lines'][lnc]
 						# _.pr( addSpace(maxSpace+1), _.inlineBold( str(int(rowX)+1) ), printLine )
-						_.pr(recC['space'], _.inlineBold(recC['line']) ,recC['text'])
-						# _.pr(lnc)
 
-					# _.pr( ch )
-		_.pr()
-		# _.pr(xXx)
-		_.printDicFields(xXx)
-		_.pr()
-		_.cp( _.switches.values('Files')[0], 'cyan' )
+						PrintAudit = False
+
+						if _.switches.isActive('NoResults'):
+							if recC['what'] == 'parent':
+								if not _.switches.isActive('Clean'):
+									if PrintAudit: _.pr('3333')
+									_.pr(recC['space'], _.inlineBold(recC['line']) ,recC['text'])
+								else:
+									if PrintAudit: _.pr('2222')
+									_.pr(recC['name'])
+						else:
+							if PrintAudit: _.pr('1111')
+							_.pr(recC['space'], _.inlineBold(recC['line']) ,recC['text'])
+
+		if not _.switches.isActive('Clean'):
+			_.pr()
+			# _.pr(xXx)
+			_.printDicFields(xXx)
+			_.pr()
+			_.cp( _.switches.values('Files')[0], 'cyan' )
 		return data
 	pass
 

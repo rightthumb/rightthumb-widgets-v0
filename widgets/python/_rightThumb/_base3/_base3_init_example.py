@@ -26,7 +26,7 @@ def sw():
 	# _.switches.register( 'Input', '-i' )
 	# _.switches.register( 'URL', '-u,-url,-urls', 'https://etc.ac/', isData='raw' )
 	#e)--> examples
-	# _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name,data,clean', description='Files', isRequired=False )
+	# _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=False )
 
 _._default_settings_()
 # __.setting('require-list',['Files,Plus','File,Has']) # todo

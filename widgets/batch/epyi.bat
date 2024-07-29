@@ -37,7 +37,7 @@ if [%1] == [?] (
 if [%1] == [] (
         goto:eof
     )
-
+@REM echo %*
 if [%2] == [] (
         CALL :INIT %*
         goto:eof
@@ -59,6 +59,7 @@ if [%2] == [] (
     
     ) else if [%2] == [-childe] (
         set rtAppX=%3
+        @REM echo %rtAppX%
         set childExample="%importFolder%\_%rtAppX%_example.py"
         CALL :INIT_CHILD_EXAMPLE %*
         goto:eof

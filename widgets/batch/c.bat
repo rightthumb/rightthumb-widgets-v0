@@ -14,7 +14,12 @@ REM ## {C3P0D40fAe8B} ##
 CALL %USERPROFILE%\.rt\profile\vars\config.bat
 if [%wprofile%] == [] SET wprofile=%USERPROFILE%\.rt\profile
 CALL %wprofile%\vars\personal.bat
-GOTO:GET_STRAIT_TO_LOADING
+CALL:GET_STRAIT_TO_LOADING
+
+:: Tail of script
+
+@REM CALL p. terminal-session-registration -session %Session_ID%
+
 GOTO:EOF
 
 

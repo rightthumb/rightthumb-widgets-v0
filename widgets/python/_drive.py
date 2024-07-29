@@ -67,7 +67,7 @@ def get_drive_info():
 		"capacity": capacity,
 		"used": used,
 		"free": free,
-		"drive_letter_or_mount_info": drive,
+		"mount": drive,
 		"epoch": epoch_time,
 		"pc": pc_name
 	}
@@ -77,7 +77,9 @@ if __name__ == "__main__":
 	drive_info = get_drive_info()
 	form_structure = {
 		"Config": {
-			# "html": True,
+			"html": True,
+			"title": "Drive Registration",
+			"description": "Register a Drive",
 			"column": {"width": 2},
 			"font": {"type": "Arial", "size": 12},
 			"color": {"text": "black", "bg": "white"},
@@ -89,17 +91,17 @@ if __name__ == "__main__":
 			{"label": "Capacity", "type": "text", "value": drive_info.get("capacity", "")},
 			{"label": "Used", "type": "text", "value": drive_info.get("used", "")},
 			{"label": "Free", "type": "text", "value": drive_info.get("free", "")},
-			{"label": "Drive Letter or Mount Info", "type": "text", "value": drive_info.get("drive_letter_or_mount_info", "")},
+			{"label": "Mount", "type": "text", "value": drive_info.get("mount", "")},
 			{"label": "Epoch", "type": "text", "value": drive_info.get("epoch", "")},
 			{"label": "PC", "type": "text", "value": drive_info.get("pc", "")}
 		],
 		"User Input": [
-			{"label": "Label", "type": "text", "value": ""},
-			{"label": "Priority", "type": "text", "value": "", "config": {"width": 20}},
-			{"label": "Owner", "type": "text", "value": ""},
-			{"label": "Notes", "type": "text_area", "value": "", "config": {"width": 60}},
-			{"label": "Descriptors", "type": "text_area", "value": ""},
-			{"label": "Drive Type", "type": "radio", "options": ["internal", "external", "thumb", "button", "network"], "value": ""}
+			{"label": "Label", "type": "text", "value": "", "validation": {"required": True}},
+			{"label": "Priority", "type": "text", "value": "", "config": {"width": 20}, "validation": {"required": True}},
+			{"label": "Owner", "type": "text", "value": "", "validation": {"required": True}},
+			{"label": "Notes", "type": "text_area", "value": "", "config": {"width": 60}, "validation": {"required": True}},
+			{"label": "Descriptors", "type": "text_area", "value": "", "validation": {"required": True}},
+			{"label": "Drive Type", "type": "radio", "options": ["internal", "external", "thumb", "button", "network"], "value": "", "validation": {"required": True}},
 		]
 	}
 	record = genForm(form_structure)

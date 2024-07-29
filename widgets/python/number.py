@@ -15,6 +15,7 @@
 import sys, time
 ##################################################
 import _rightThumb._construct as __
+__.startTrace()
 appDBA=__.clearFocus(__name__,__file__);__.appReg=appDBA;
 def focus(parentApp='',childApp='',reg=True):
 	global appDBA;f=__.appName(appDBA,parentApp,childApp);
@@ -36,7 +37,7 @@ def sw():
 	_.switches.register( 'Prefix', '-p,-pre,-prefix', 'can replace numbers or prefix' )
 	# _.switches.register( 'URL', '-u,-url,-urls', 'https://efm.cx/', isData='raw' )
 	#e)--> examples
-	# _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=False )
+	_.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='data', description='Files', isRequired=False )
 
 # __.setting('require-list',['Files,Plus','File,Has']) # todo
 # __.setting('require-list',['Pipe','Files'])
@@ -113,7 +114,7 @@ def triggers():
 
 def _local_(do): exec(do)
 
-_.l.conf('clean-pipe',True)
+_.l.conf('clean-pipe',False)
 _.l.sw.register( triggers, sw )
 
 ########################################################################################
@@ -151,7 +152,12 @@ _.l.sw.register( triggers, sw )
 ########################################################################################
 #n)--> start
 
+import re
+
 def cleaner(line):
+	if not re.match(r'^\d', line) and not line.startswith('-'):
+	# if line.startswith('#'):
+		return line
 	global pre
 	for p in pre:
 		if line.startswith(p):
@@ -193,7 +199,15 @@ def hasPrefix(lines):
 		while '    ' in space: space=space.replace('    ','\t')
 	return lines
 
-def printer(i,line):
+def printer(i,thisLine):
+	# print(thisLine); return
+	if not thisLine.strip():
+		_.pr()
+		return
+	line = cleaner(thisLine)
+	if not re.match(r'^[A-Za-z]', line):
+		_.pr(line)
+		return
 	global space
 	n=nu(i+1)
 	if _.switches.isActive('Prefix'): n = _.ci(_.switches.value('Prefix'))
@@ -204,10 +218,23 @@ def printer(i,line):
 		else: _.pr(space+n,line)
 
 def action():
-	lines=hasPrefix(_.isData(r=0))
-	for i, line in enumerate(lines):
-		line=line.strip();
-		if line: printer(i,cleaner(line))
+	for i, line in enumerate(_.isData(r=0)):
+		print(line)
+		continue
+		line=line.strip()
+		item=hasPrefix([line])
+		# print(item)
+		if item:
+			if line: printer(i,cleaner(line))
+		else:
+			_.pr(line)
+
+
+	# lines=hasPrefix(_.isData(r=0))
+	# for i, line in enumerate(lines):
+	# 	print(line)
+	# 	line=line.strip()
+	# 	if line: printer(i,line)
 
 
 ##################################################
@@ -227,5 +254,6 @@ if __name__ == '__main__':
 	
 	#e)--> examples
 	action()
+	__.endTrace()
 	_.isExit(__file__)
 
