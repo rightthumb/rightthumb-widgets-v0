@@ -3,27 +3,17 @@ def focus(parentApp='', childApp='', reg=True): global appDBA; f = __.appName(ap
 fieldSet=_.l.vars(focus(),__name__,__file__,appDBA);_.load();_v=__.imp('_rightThumb._vars');
 
 def sw():
-	_.switches.register( 'NotSingle', '-ns' )
+	pass
 _._default_settings_()
 
 _.appInfo[focus()] = {
-	'file': 'dot-skim.py',
-	'description': 'skim my 100+ domain trees and many domains',
+	'file': 'thisApp.py',
+	'description': 'Changes the world',
 	'categories': [
-						'domain tree skimmer',
-						'tld-skimmer',
-						'tld',
-						'.',
-						'dot',
-						'single dot',
+						'DEFAULT',
 				],
 	'examples': [
-						_.hp('cat domains.txt | p dot-skim'),
-						_.hp('cat domains.txt | p dot-skim -ns'),
-						_.hp(''),
-						_.hp('load'),
-						_.hp('domains | p dot-skim'),
-						_.hp('domains | p dot-skim -ns'),
+						_.hp('p thisApp -file file.txt'),
 						_.linePrint(label='simple',p=0),
 						'',
 	],
@@ -41,22 +31,26 @@ def triggers():
 	_._default_triggers_()
 def _local_(do): exec(do)
 _.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw );
-_copy = _.regImp( __.appReg, '-copy' )
+########################################################################################
+#n)--> start
+
+import re
+def is_domain_or_subdomain(text):
+    pattern = r'^(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}$'
+    if re.match(pattern, text):
+        return True
+    return False
 
 def action():
-	results = []
-	if not _.switches.isActive('NotSingle'):
-		for line in _.myData():
-			if '.' in line and line.count('.') == 1:
-				results.append(line)
-	elif _.switches.isActive('NotSingle'):
-		for line in _.myData():
-			if '.' in line and line.count('.') > 1:
-				results.append(line)
-	if _.isGui():
-		_copy.imp.copy( '\n'.join(results) )
-	else:
-		_.pr( '\n'.join(results) )
-	
+	for line in _.isData():
+		line = line.strip()
+		if _.showLine(line):
+			if not line:
+				_.pr()
+				continue
+			if is_domain_or_subdomain(line):
+				_.pr(line)
+
+########################################################################################
 if __name__ == '__main__':
 	action(); _.isExit(__file__);

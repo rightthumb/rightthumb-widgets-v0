@@ -24277,6 +24277,16 @@ def Form(form):
 	results = genForm(form)
 	return results
 ##################################################
+def isGui():
+	import platform
+	if platform.system() == "Windows":
+		return True
+	else:
+		display_var = os.getenv('DISPLAY')
+		if display_var:
+			return True
+	return False
+##################################################
 
 # __.switch_raw
 ##################################################

@@ -66,23 +66,29 @@ def action():
 		url = url.rstrip(',')
 		url = url.rstrip(';')
 		url = url.rstrip(':')
+		
 		url = url.replace('\\','')
 		url = url.replace('"','')
 		url = url.replace(')','')
 		url = url.replace(']','')
-		url = url.strip()
 		url = extract_relevant(url,'.replace(')
 		url = extract_relevant(url,'.decode(')
 		url = extract_relevant(url,'+urllib.')
 		url = extract_relevant(url,'+tag.get')
 		url = extract_relevant(url,'+_.switches.')
 		url = extract_relevant(url,'+sub.')
+		url = url.replace('https://','\nhttps://')
+		url = url.replace('http://','\nhttp://')
+		url = url.strip()
 		# url = extract_relevant(url,'')
 		if 'head>' in url:
 			continue
-		if len(url) > len('https://'):
-			if _.showLine(url):
-				_.pr(url)
+		for u in url.split('\n'):
+			u = u.rstrip('//www.,')
+			if len(u) > len('https://'):
+				if _.showLine(u):
+					_.pr(u)
+
 
 
 ########################################################################################

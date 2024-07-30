@@ -10,11 +10,22 @@
 # ###########################################################################
 # ## {C3P0D40fAe8B} ##
 
+##################################################
+def isGui():
+	import platform
+	if platform.system() == "Windows":
+		return True
+	else:
+		display_var = os.getenv('DISPLAY')
+		if display_var:
+			return True
+	return False
+##################################################
 def Form(form):
 	from _rightThumb._forms import genForm
 	results = genForm(form)
 	return results
-
+#################################################
 startTraceRecords = []
 def startTrace(search='widgets'):
 	global startTraceRecordsSearch
@@ -61,7 +72,7 @@ def endTrace(functions=None,a=False):
 					table[record['file']][record['function']] = 0
 				if table[record['file']][record['function']] == 0:
 					print(f'{record["function"]} in {record["file"]}:{record["line"]}')
-				
+#################################################
 
 
 
