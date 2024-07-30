@@ -14,11 +14,11 @@
 # SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 # source  "$SCRIPT_DIR/load-vars.sh"
 if ! which python3 > /dev/null; then
-    echo -e "python3 not found! Install? (y/n) \c"
-    read
-    if "$REPLY" = "y"; then
-        apt-get install python3
-    fi
+	echo -e "python3 not found! Install? (y/n) \c"
+	read
+	if "$REPLY" = "y"; then
+		apt-get install python3
+	fi
 fi
 # apt-get install python3
 [ ! -d $widgets ] && mkdir $widgets
@@ -43,16 +43,14 @@ cp -rf ../php $subject_path/
 cp -rf ../remote $subject_path/
 cp -rf ../vbs $subject_path/
 cp -rf ../powershell $subject_path/
-            
-            
-            
-            
-            
-            
-            
+			
+			
+			
+			
+			
+			
+			
 # ./aliasGen.sh >> $HOME/.bashrc
 echo "./auto_setup.sh --DEFAULT"
 echo "./auto_setup.sh --FORCE"
 echo "./auto_setup.sh --SUDO"
-
-

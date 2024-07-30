@@ -10,8 +10,8 @@ fi
 scp -rp root@$1.m-eta.app:$ww/python/vps* $ww/python/
 chmod 777 -R $ww/python/
 
-scp -r root@$1.m-eta.app:/opt/rightthumb-widgets-v0/widgets/bash/vps-srv/ $ww/bash/
+scp -r root@$1.m-eta.app:$ww/widgets/bash/vps-srv/ $ww/bash/
 chmod 777 -R $ww/bash/vps-srv/
 
-scp -rp root@$1.m-eta.app:/opt/rightthumb-widgets-v0/widgets/databank/tables/*.* $ww/databank/tables/
+scp -rp root@$1.m-eta.app:$ww/widgets/databank/tables/*.* $ww/databank/tables/
 chmod 777 -R $ww/databank/tables/

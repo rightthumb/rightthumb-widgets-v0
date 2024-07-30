@@ -16,7 +16,7 @@
 # code_editor=$( cat "/opt/RightThumb/.editor" )
 subject=$1
 if [ "$subject" == "base" ]; then
-    subject="base3"
+	subject="base3"
 fi
 subject_path=$widgets/widgets/python/_rightThumb/_$subject/__init__.py
 p="bash $widgets/widgets/bash/nav/p.sh"

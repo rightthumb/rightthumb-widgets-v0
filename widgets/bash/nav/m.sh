@@ -15,5 +15,3 @@
 # # source  "$SCRIPT_DIR/load-vars.sh"
 # echo $PY $widgets/widgets/python/m.py -alias $1
 $PY $widgets/widgets/python/m.py -alias $*
-
-

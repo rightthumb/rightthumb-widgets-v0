@@ -6,7 +6,7 @@ for folder in */; do
 	foldername="${folder%/}"
 	
 	# Run micro_zip.sh on the folder
-	/opt/rightthumb-widgets-v0/widgets/bash/micro_zip.sh "${foldername}.rar" "${foldername}"
+	$ww/widgets/bash/micro_zip.sh "${foldername}.rar" "${foldername}"
 
 	# If the above command succeeds, remove the directory
 	if [ $? -eq 0 ]; then

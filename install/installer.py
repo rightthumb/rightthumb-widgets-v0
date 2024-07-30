@@ -2930,12 +2930,7 @@ alias myip='curl ifconfig.co/'
 
 
 
-if test -f "$HOME/.bashrc-"; then
-	source "$HOME/.bashrc-";
-fi
-if test -f "$HOME/.bashrc."; then
-	source "$HOME/.bashrc.";
-fi
+
 
 once_file=$HOME/.bashrc.once
 once_file2=$HOME/.bashrc.once.log
@@ -3247,7 +3242,18 @@ alias t.ls="tmux ls"
 alias t.a="tmux attach -t"
 alias t.k="tmux kill-session -t"
 alias t.srv="tmux kill-server"
+alias p="$p"
 
+
+if test -f "$HOME/.bashrc-"; then
+	source "$HOME/.bashrc-";
+fi
+if test -f "$HOME/.bashrc."; then
+	source "$HOME/.bashrc.";
+fi
+
+alias d='/opt/rightthumb-widgets-v0/widgets/bash/nav/d.sh'
+alias rr="sudo su root"
 
 clear
 # get_time_difference

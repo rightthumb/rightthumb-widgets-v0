@@ -2,10 +2,10 @@
 
 # Check if argument was provided
 if [ -z "$1" ]; then
-    # Read content of file into cdf_path
-    read -r cdf_path < "$tt/file-open.last"
+	# Read content of file into cdf_path
+	read -r cdf_path < "$tt/file-open.last"
 else
-    cdf_path="$1"
+	cdf_path="$1"
 fi
 
 # Run command and redirect output to tmpf

@@ -15,5 +15,3 @@
 # source  "$SCRIPT_DIR/load-vars.sh"
 $PY $widgets/widgets/python/files.py $@
 echo "test"
-
-

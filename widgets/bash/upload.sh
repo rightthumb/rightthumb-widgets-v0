@@ -8,10 +8,10 @@ fi
 
 # Upload operations
 scp $ww/python/vps*.py root@$1.m-eta.app:$ww/python/ 
-ssh root@$1.m-eta.app 'chmod -R 777 /opt/rightthumb-widgets-v0/'
+ssh root@$1.m-eta.app 'chmod -R 777 $ww/'
 
-scp -r $ww/bash/vps-srv/ root@$1.m-eta.app:/opt/rightthumb-widgets-v0/widgets/bash/ 
-ssh root@$1.m-eta.app 'chmod -R 777 /opt/rightthumb-widgets-v0/widgets/bash/vps-srv/'
+scp -r $ww/bash/vps-srv/ root@$1.m-eta.app:$ww/widgets/bash/ 
+ssh root@$1.m-eta.app 'chmod -R 777 $ww/widgets/bash/vps-srv/'
 
-scp $ww/databank/tables/*.* root@$1.m-eta.app:/opt/rightthumb-widgets-v0/widgets/databank/tables/ 
-ssh root@$1.m-eta.app 'chmod -R 777 /opt/rightthumb-widgets-v0/'
+scp $ww/databank/tables/*.* root@$1.m-eta.app:$ww/widgets/databank/tables/ 
+ssh root@$1.m-eta.app 'chmod -R 777 $ww/'

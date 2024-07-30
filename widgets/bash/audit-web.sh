@@ -5,18 +5,18 @@ app_["ffmpeg"]="ffmpeg, piller"
 app_["curl"]="curl, admin"
 for key in ${!app_[@]}; do
 if which ${key} >/dev/null; then
-    echo "YES - app - ${app_[$key]}"
+	echo "YES - app - ${app_[$key]}"
 else
-    echo "NO  - app - ${app_[$key]}"
+	echo "NO  - app - ${app_[$key]}"
 fi
 done
 declare -A fi_
-fi_["/opt/rightthumb-widgets-v0/widgets/python/vps-hoth-7facG-file-links.py"]="VPS"
+fi_["$ww/widgets/python/vps-hoth-7facG-file-links.py"]="VPS"
 for key in ${!fi_[@]}; do
 if [ -f "${key}" ]; then
-    echo "YES - .py - ${fi_[$key]}"
+	echo "YES - .py - ${fi_[$key]}"
 else
-    echo "NO  - .py - ${fi_[$key]}"
+	echo "NO  - .py - ${fi_[$key]}"
 fi
 done
 }
@@ -41,25 +41,24 @@ site_y_=()
 site_n_=()
 for key in ${!fo_[@]}; do
 if [ -d "${key}" ]; then
-    site_y_[${#site_y_[@]}]=${fo_[$key]}
+	site_y_[${#site_y_[@]}]=${fo_[$key]}
 
-    # echo "YES - site - ${fo_[$key]}"
+	# echo "YES - site - ${fo_[$key]}"
 else
-    site_n_[${#site_y_[@]}]=${fo_[$key]}
-    # echo "NO  - site - ${fo_[$key]}"
+	site_n_[${#site_y_[@]}]=${fo_[$key]}
+	# echo "NO  - site - ${fo_[$key]}"
 fi
 done
 for val in "${site_y_[@]}"
 do
 if curl -s --head  --request GET https://${val} | grep "200" > /dev/null; then 
-    echo "HAS - UP - site - ${val}"
+	echo "HAS - UP - site - ${val}"
 else
-    echo "HAS - DN - site - ${val}"
+	echo "HAS - DN - site - ${val}"
 fi
 done
 for val in "${site_n_[@]}"
 do
-     echo "NO  - site - ${val}"
+	echo "NO  - site - ${val}"
 done
 auditSRV
-

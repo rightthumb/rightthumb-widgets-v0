@@ -68,15 +68,15 @@ echo "The archive has been successfully created at '$target_dir/$archive_name'"
 
 # # tatooine
 # # Weekly backup (runs every Sunday at 00:00)
-# 0 0 * * 0 /opt/rightthumb-widgets-v0/widgets/bash/foBackup.sh /home/admin/domains/eyeformeta.com/public_html/apps/md /opt/backups/folders/md/
-# 0 0 * * 0 /opt/rightthumb-widgets-v0/widgets/bash/foBackup.sh /home/admin/domains/eyeformeta.com/private_html/apps/clients/7i0ZA/gps /opt/backups/folders/gps/
+# 0 0 * * 0 $ww/widgets/bash/foBackup.sh /home/admin/domains/eyeformeta.com/public_html/apps/md /opt/backups/folders/md/
+# 0 0 * * 0 $ww/widgets/bash/foBackup.sh /home/admin/domains/eyeformeta.com/private_html/apps/clients/7i0ZA/gps /opt/backups/folders/gps/
 # # Monthly backup (runs on the 1st day of every month at 01:00)
-# 0 1 1 * * /opt/rightthumb-widgets-v0/widgets/bash/foBackup.sh /home/admin/domains/eyeformeta.com/public_html/ /opt/backups/folders/websites/eyeformeta.com/
+# 0 1 1 * * $ww/widgets/bash/foBackup.sh /home/admin/domains/eyeformeta.com/public_html/ /opt/backups/folders/websites/eyeformeta.com/
 # # Quarterly backup (runs on the 1st day of January, April, July, and October at 02:00)
-# 0 2 1 1,4,7,10 * /opt/rightthumb-widgets-v0/widgets/bash/foBackup.sh /home/admin/domains/ /opt/backups/folders/websites/all/
+# 0 2 1 1,4,7,10 * $ww/widgets/bash/foBackup.sh /home/admin/domains/ /opt/backups/folders/websites/all/
 
 # # yavin
 # # Weekly backup (runs every Sunday at 00:00)
 
 # # Monthly backup (runs on the 1st day of every month at 01:00)
-# 0 1 1 * * /opt/rightthumb-widgets-v0/widgets/bash/foBackup.sh /home/rightthumb/public_html /opt/backups/folders/websites/rightthumb.com/
+# 0 1 1 * * $ww/widgets/bash/foBackup.sh /home/rightthumb/public_html /opt/backups/folders/websites/rightthumb.com/

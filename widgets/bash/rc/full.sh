@@ -171,7 +171,7 @@ alias f='python3 $ww/python/-file.py'
 
 
 echo '' > $stmp/.gp
-alias .gp=" pwd > $stmp/.gp ; cd /opt/rightthumb-widgets-v0 ; git reset --hard ; git pull ; sudo chmod 777 -R . ; python3 /opt/rightthumb-widgets-v0/install/installer.py -rc.d h  ; cd $( cat $stmp/.gp )"
+alias .gp=" pwd > $stmp/.gp ; cd $ww ; git reset --hard ; git pull ; sudo chmod 777 -R . ; python3 $ww/install/installer.py -rc.d h  ; cd $( cat $stmp/.gp )"
 
 
 

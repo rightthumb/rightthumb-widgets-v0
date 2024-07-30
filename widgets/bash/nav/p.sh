@@ -14,16 +14,16 @@
 # SCRIPT_DIR="${SCRIPT_DIR/bash\/nav/bash}"
 # echo $SCRIPT_DIR
 # source  "$SCRIPT_DIR/load-vars.sh"
-# echo /opt/rightthumb-widgets-v0
-# echo /opt/rightthumb-widgets-v0
+# echo $ww
+# echo $ww
 
 # if [ -z ${widgets} ]; then source ~/.bashrc; fi
 # source ~/.bashrc
 subject=$1
 shift
-subject_path=/opt/rightthumb-widgets-v0/widgets/python/$subject.py
-py_file=/opt/rightthumb-widgets-v0/widgets/python/file.py
-py_folder=/opt/rightthumb-widgets-v0/widgets/python/
+subject_path=$ww/python/$subject.py
+py_file=$ww/python/file.py
+py_folder=$ww/python/
 # echo $subject_path
 if [ -f "$subject_path" ]; then
 	$PY $subject_path $@
@@ -33,7 +33,7 @@ else
 #    echo $subject_path
 #    $PY $py_file -folder $py_folder + $subject -noext -label ";tApps" -prefix ";t" +close "75"
 #    $p py-finder -percentage  + $@
-#/bin/bash /opt/rightthumb-widgets-v0/widgets/bash/py.sh $@
+#/bin/bash $ww/bash/py.sh $@
 	$p py-finder -percentage  + $subject
 fi
 

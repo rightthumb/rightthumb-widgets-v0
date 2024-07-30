@@ -36,5 +36,3 @@ $p file-open -f $subject_path -backup
 #     fi
 # fi
 # $code_editor_pre $code_editor $subject_path $code_editor_suff>/dev/null 2>&1
-
-

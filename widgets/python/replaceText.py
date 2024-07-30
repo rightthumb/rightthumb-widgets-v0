@@ -178,6 +178,7 @@ fileBackup.switch( 'DoNotSchedule' )
 insertText = ''
 replaceText = ''
 def action():
+	# _.pv(_.switches.all() ); _.isExit(__file__)
 	if _.switches.isActive('Test'):
 		_.pr( _.switches.values('Replace')[0] )
 		sys.exit()

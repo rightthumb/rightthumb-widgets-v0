@@ -17,5 +17,3 @@ subject=$1
 shift
 bash $widgets/widgets/bash/$subject.sh $@
 # exec bash
-
-

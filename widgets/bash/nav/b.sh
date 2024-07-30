@@ -21,5 +21,3 @@ $SHELL
 # pushd $bookmarked_folder
 # pushd $bookmarked_folder > /dev/null
 # export PWD=$bookmarked_folder
-
-

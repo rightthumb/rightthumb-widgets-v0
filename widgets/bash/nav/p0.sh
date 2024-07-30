@@ -14,5 +14,3 @@
 # SCRIPT_DIR="${SCRIPT_DIR/bash\/nav/bash}"
 # source  "$SCRIPT_DIR/load-vars.sh"
 $PY $widgets/widgets/python/$1.py
-
-

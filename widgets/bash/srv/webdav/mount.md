@@ -9,4 +9,4 @@ sudo mount -t davfs https://server.com/webdav/ /mnt/webdav
 ~~~sh
 sudo umount /mnt/batuu
 ~~~
-/opt/rightthumb-widgets-v0/widgets/bash/srv/webdav/vps-auto_login.sh
+$ww/widgets/bash/srv/webdav/vps-auto_login.sh
