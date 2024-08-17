@@ -4,7 +4,7 @@ ip=$1;
 
 if which csf >/dev/null; then
   csf -a $ip;
-  echo "csf -a $ip"
+  echo "  -a $ip"
   ufw reload
 fi
 

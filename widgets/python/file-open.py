@@ -374,6 +374,7 @@ def action(path=None):
 		logFi = _v.tt+os.sep+'file-open'+os.sep+_.friendlyDate(time.time()).split(' ')[0]+'.hash'
 		_v.mkdir(logFi,f=1)
 		log = _.getTable2(logFi)
+		# print(logFi)
 		session = str(__.startTime2)
 		try: session = os.getenv('Session_ID')
 		except: pass

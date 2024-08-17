@@ -4,7 +4,9 @@ fieldSet=_.l.vars(focus(),__name__,__file__,appDBA);_.load();_v=__.imp('_rightTh
 
 def sw():
 	pass
-	_.switches.register( 'FormID', '-id', '1' )
+	# _.switches.register( 'FormID', '-id', '1' )
+	_.switches.register( 'Form', '-f,-form', 'code' )
+	_.switches.register( 'ShowFields', '-fld,-field,-fields' )
 	# _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name', description='Files', isRequired=False )
 _._default_settings_()
 
@@ -39,10 +41,10 @@ _.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw );
 # from _rightThumb._forms import genForm
 from _rightThumb._forms._forms_example import example_forms1, example_forms2, checkboxes
 
-showFields = False
+showFields = _.switches.isActive('ShowFields')
 if showFields:
 	spent = []
-	for rec in example_forms:
+	for rec in example_forms1:
 		for k in rec:
 			if not k == 'Config':
 				for field in rec[k]:
@@ -54,18 +56,41 @@ if showFields:
 
 import random
 
+forms = {}
+forms['login'] = {
+	'Config': {
+		# "html": True,
+		"terminal": True,
+		"post": "https://cli.sds.sh/forms/test.php",
+		# "table": 'forms-test.json',
+		# "save": 'forms-test.json',
+	},
+	'Login': [
+		{"label": "Login", "type": "text", "value": ""},
+		{"label": "Password", "type": "password", "value": "", "md5": True},
+	],
+}
+
+forms['code'] = {
+	'Config': {
+		# "html": True,
+		# "terminal": True,
+		"post": "https://cli.sds.sh/forms/",
+		"table": 'Code_Snippet_Documentation',
+		# "save": 'forms-test.json',
+	},
+	'Code Snippet Documentation': [
+		{"label": "Subject", "type": "text", "value": ""},
+		{"label": "Language", "type": "text", "value": ""},
+		{"label": "Code", "type": "text_area", "value": ""},
+		{"label": "Tags", "type": "text_area", "value": ""},
+	],
+}
+
 def action():
-	form = {
-		'Login': [
-			{"label": "Login", "type": "text", "value": ""},
-			{"label": "Password", "type": "password", "value": ""},
-		],
-		# 'Test': [
-		# 	{"label": "Hello", "type": "text", "value": ""},
-		# 	{"label": "Tags", "type": "checkbox", "options": ["frontend", "backend", "terminal", "api", "database", "development", "production"], "values": ["frontend", "development"]},
-		# ]
-	}
-	results = _.Form(form)
+	global forms
+	results = _.Form(forms[_.switches.value('Form')])
+	# results = _.Form(checkboxes)
 	_.pv(results)
 
 	# cnt = len(example_forms)

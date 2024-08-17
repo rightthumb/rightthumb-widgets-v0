@@ -240,7 +240,7 @@ def action():
 	aw.last.startg=0
 	isStop=False
 
-
+	
 	while __.v.active:
 		aw.aw=str(get_active_window()).replace('(LICENSE UPGRADE REQUIRED)','')
 		aw.aw=clean(aw.aw)

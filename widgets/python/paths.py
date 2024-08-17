@@ -39,6 +39,7 @@ def appSwitches():
 	_.switches.register( 'Folders', '-folder,-folders' )
 	_.switches.register( 'Validate', '-v,-validate' )
 	_.switches.register( 'WSL', '-wsl' )
+	_.switches.register( 'Multiple', '-m,,-multi,-multiple' )
 
 
 # _.autoBackupData = __.autoCreationConfiguration['backup']
@@ -195,10 +196,15 @@ def action():
 			subjects = _.appData[__.appReg]['pipe']
 		
 		elif _.switches.isActive( 'Files' ):
-			subjects = _.switches.values( 'Files' )
-
+			if _.switches.isActive('Multiple'):
+				subjects = _.switches.values('Files')
+			else:
+				subjects = [' '.join(_.switches.values('Files'))]	
 		elif _.switches.isActive( 'Folders' ):
-			subjects = _.switches.values( 'Folders' )
+			if _.switches.isActive('Multiple'):
+				subjects = _.switches.values('Folders')
+			else:
+				subjects = [' '.join(_.switches.values('Folders'))]	
 
 		else:
 			subjects = [os.getcwd()]
@@ -208,7 +214,7 @@ def action():
 		# _site.switch('Files',subjects)
 		# _site.action()
 		for subject in subjects:
-
+			_.pr(line=1,c='yellow')
 
 			try:
 				subject = __.path(subject)

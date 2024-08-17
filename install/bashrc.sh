@@ -189,25 +189,25 @@ unixID="$config/.unix_id"
 
 
 if [ ! -e $config ]; then
-        echo "0 no config"
-        mkdir $config;
+		echo "0 no config"
+		mkdir $config;
 else
 
-        unixID1=$( sed -n '1p' < $unixID )
-        unixID2=$( sed -n '2p' < $unixID )
-        unixID3=$( sed -n '3p' < $unixID )
-        unixID4=$( sed -n '4p' < $unixID )
-        unixID5=$( sed -n '5p' < $unixID )
-        unixID6=$( sed -n '6p' < $unixID )
-        unixID7=$( sed -n '7p' < $unixID )
-        unixID8=$( sed -n '8p' < $unixID )
-        unixID9=$( sed -n '9p' < $unixID )
-        unixID10=$( sed -n '10p' < $unixID )
+		unixID1=$( sed -n '1p' < $unixID )
+		unixID2=$( sed -n '2p' < $unixID )
+		unixID3=$( sed -n '3p' < $unixID )
+		unixID4=$( sed -n '4p' < $unixID )
+		unixID5=$( sed -n '5p' < $unixID )
+		unixID6=$( sed -n '6p' < $unixID )
+		unixID7=$( sed -n '7p' < $unixID )
+		unixID8=$( sed -n '8p' < $unixID )
+		unixID9=$( sed -n '9p' < $unixID )
+		unixID10=$( sed -n '10p' < $unixID )
 
 fi
 
 if [ ! -e $unixID ]; then
-        touch $unixID
+		touch $unixID
 fi
 
 alias vnc.toggle="$widgets/widgets/bash/nav/p.sh toggle_comment -f /etc/vnc.conf -label vnc"
@@ -300,11 +300,11 @@ alias watch.vnc="$widgets/widgets/bash/vnc_watch.sh> /dev/null 2>&1 & "
 force_color_prompt=yes
 
 if [ -n "$force_color_prompt" ]; then
-        if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
-        color_prompt=yes
-        else
-        color_prompt=
-        fi
+		if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
+		color_prompt=yes
+		else
+		color_prompt=
+		fi
 fi
 
 EMOJIS=(🧻 🧪 💀 🦆 🦉 🥓 🦄 🦀 🖕 🍣 🍤 🍥 🍡 🥃 🥞 🐕 👾 🐉 🐓 🐋 🐌 🐢 👽 👿 🥑 🐡 🐗 💐 🏹 🎨 🐔 🐛 🎯 🌯 📷 🛶 🥕 🍒 🍸 🍳 🐲 🎣 🐟 🦅 👀 🐸 🤞 💪 💾 👻 🐊 🍔 🌭 🍀 🕓 🦊 🍟 🥝 🖕 🐒 🥞 🐼 📎 🐧 💩 🍕 🍍 🦏 🍗 🌈 🐳 🦑 🚀 🙈 🙊 🙉 🌮 🥒 🐅 🐯 🍉 🚽 🍅 👅 🎩 🍷)
@@ -312,16 +312,16 @@ prompt_symbol=${EMOJIS[$RANDOM % ${#EMOJIS[@]}]};
 
 
 if [ "$color_prompt" = yes ]; then
-        prompt_color='\[\]'
-        info_color='\[\]'
-        if [ "$EUID" -eq 0 ]; then # Change prompt colors for root user
-        prompt_color='\[\]'
-        info_color='\[\]'
-        fi
-        PS1=$prompt_color'┌──${debian_chroot:+($debian_chroot)──}('$info_color'\u${prompt_symbol}\h'$prompt_color')-[\[\]\w'$prompt_color'].3.def
+		prompt_color='\[\]'
+		info_color='\[\]'
+		if [ "$EUID" -eq 0 ]; then # Change prompt colors for root user
+		prompt_color='\[\]'
+		info_color='\[\]'
+		fi
+		PS1=$prompt_color'┌──${debian_chroot:+($debian_chroot)──}('$info_color'\u${prompt_symbol}\h'$prompt_color')-[\[\]\w'$prompt_color'].3.def
 '$prompt_color'└─'$info_color'\$\[\] '
 else
-        PS1='┌── (\u${prompt_symbol}\h)──[\w].3.def\n└─── $ '
+		PS1='┌── (\u${prompt_symbol}\h)──[\w].3.def\n└─── $ '
 fi
 unset color_prompt force_color_prompt
 

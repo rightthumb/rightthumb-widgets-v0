@@ -47,6 +47,7 @@ def appSwitches():
 	_.switches.register( 'Function', '-fn' )
 	_.switches.register( 'JustPath', '-jp,-justpath' )
 	_.switches.register( 'Json', '-json' )
+	_.switches.register( 'Snippet', '-snip,-snippet', 'split search (i) exclude | ex: ~~~ version, ~~~ searchThis 1 omitThis, ~~~ searchThis * omitThis' )
 
 
 
@@ -256,6 +257,8 @@ def action():
 	
 	global output
 
+
+
 	for i,filepath in enumerate(files):
 		output[filepath] = []
 		__.fileTotal+=1
@@ -293,6 +296,36 @@ def action():
 			newFile = []
 			theFile = _.getText(filepath,raw=True).split('\n')
 			
+			if _.switches.isActive('Snippet'):
+				rawFig = _.switches.values('Snippet')
+				sFig = {
+					'split': rawFig[0] if len(rawFig) > 0 else '~~~',
+					'search': rawFig[1] if len(rawFig) > 1 else False,
+					'i': rawFig[2] if len(rawFig) > 2 else 1,
+					'omit': rawFig[3] if len(rawFig) > 3 else False
+				}
+				sFig['i'] = int(sFig['i'])
+				sFig['split']
+				sFig['search']
+				sFig['i']
+				sFig['omit']
+				content = '\n'.join(theFile)
+				parts = content.split(sFig['split'])
+				newFile = []
+				
+				for i,part in enumerate(parts):
+					if i % 2 == 0:
+						if not sFig['search']:
+							newFile.append(part)
+						elif sFig['omit']:
+							if _.showLine( part, sFig['search'], sFig['omit'] ):
+								newFile.append(part)
+
+						elif _.showLine( part ):
+							newFile.append(part)
+				theFile = newFile
+				print(theFile)
+
 			for i, line in enumerate(theFile): theFile[i]=cleaner(line)
 
 			lX = 10
