@@ -31,6 +31,7 @@ def sw():
 	pass
 	### EXAMPLE: START
 	_.switches.register( 'Start-Epoch', '-start,-epoch' )
+	_.switches.register( 'Wait-For', '-wait', '120' )
 	_.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name', description='Files', isRequired=True )
 	# _.switches.register( 'Files', '-f,-fi,-file,-files' )
 	### EXAMPLE: END
@@ -163,8 +164,13 @@ def action():
 		start=time.time()
 	_.pr('epoch:',start,c='darkcyan')
 	_.pr('start:',_.isDate( start, f='fdatea' ),c='cyan')
+
+	if _.switches.isActive('Wait-For'):
+		waitFor = int(_.switches.value('Wait-For'))
+	else:
+		waitFor = 120
 	while True:
-		_.waiting(120,txt=[ _dir.info(path,f='size'), _dir.info(path,f='bytes'), _._2dates(time.time(),start) ])
+		_.waiting(waitFor,txt=[ _dir.info(path,f='size'), _dir.info(path,f='bytes'), _._2dates(time.time(),start) ])
 		for path in _.isData(r=0):
 			by = b(path)
 			if by == index[path]:

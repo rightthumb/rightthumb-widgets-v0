@@ -807,7 +807,11 @@ def myFileLocationsRegister(path):
 			files = [path]
 		for path in files:
 			path = __.path(path)
-			recs[path] = {'epoch': time.time(), 'session': os.environ['Session_ID']}
+			if 'Session_ID' in os.environ:
+				Session_ID = os.environ['Session_ID']
+			else:
+				Session_ID = 'cron'
+			recs[path] = {'epoch': time.time(), 'session': Session_ID}
 		_.saveTable(recs,'myFileLocations.index',printThis=False)
 
 def action(path=None,flag=None,o=None,pre=None):

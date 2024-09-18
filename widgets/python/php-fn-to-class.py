@@ -89,7 +89,7 @@ def process(path):
 	fi2=fi
 	_code.imp.validator.register( fi, 'javascript' )
 	_code.imp.validator.createIndex( fi, 'javascript', skipLoad=True, simple=False )
-	status = __.setting('validaton-status')
+	status = __.setting('validation-status')
 	names = []
 	function = []
 	globalVars = []
@@ -256,5 +256,7 @@ def action():
 import sys
 _code = _.regImp( __.appReg, '_rightThumb._auditCodeBase' )
 ########################################################################################
+if __name__ == '__main__':
+	action(); _.isExit(__file__);#################################
 if __name__ == '__main__':
 	action(); _.isExit(__file__);

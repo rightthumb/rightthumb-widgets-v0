@@ -1732,7 +1732,11 @@ copy(  hackTool.payload.label  )
 	def dirty_eval(self):
 		_copy = _.regImp( __.appReg, '-copy' )
 		_paste = _.regImp( __.appReg, '-paste' )
-		data  = eval( _paste.imp.paste() )
+		try:
+			data  = eval( _paste.imp.paste() )
+		except Exception as e:
+			_.pr(e)
+
 		_copy.imp.copy(  str(data)  , p=0 )
 
 	def builder(self):
@@ -2308,43 +2312,49 @@ function get__THETABLE( $ID_label ){
 
 
 	def implode(self):
-		_paste = _.regImp( __.appReg, '-paste' )
-		_copy = _.regImp( __.appReg, '-copy' )
-		text = _paste.imp.paste()
-		text=_str.replaceDuplicate( text, '\n' )
-		text=_str.cleanBE( text, '\n' )
-		text=_str.cleanBE( text, '\t' )
-		text=_str.cleanBE( text, ' ' )
-		text = text.replace('\r','')
+		try:
+			_paste = _.regImp( __.appReg, '-paste' )
+			_copy = _.regImp( __.appReg, '-copy' )
+			text = _paste.imp.paste()
+			text=_str.replaceDuplicate( text, '\n' )
+			text=_str.cleanBE( text, '\n' )
+			text=_str.cleanBE( text, '\t' )
+			text=_str.cleanBE( text, ' ' )
+			text = text.replace('\r','')
 
-		text=_str.cleanBE( text, '\n' )
-		text=_str.cleanBE( text, '\t' )
-		text=_str.cleanBE( text, ' ' )
-		text=_str.cleanBE( text, '\n' )
-		text=_str.cleanBE( text, '\t' )
-		text=_str.cleanBE( text, ' ' )
-		if text.startswith('{') or text.startswith('['):
-			try:
-				data = simplejson.loads(text)
-			except Exception as e:
-				frameinfo = getframeinfo(currentframe()); _.pr( _.addComma(frameinfo.lineno),'\t', e,c='red');
-				data = eval(text.replace('false','False').replace('true','True'))
-			data = reorder_keys(data)
-			result = simplejson.dumps(data, sort_keys=False)
-			result=result.replace('{','{ ').replace('}',' }')
-			_copy.imp.copy( wt_implode(result), p=0 )
-			return None
+			text=_str.cleanBE( text, '\n' )
+			text=_str.cleanBE( text, '\t' )
+			text=_str.cleanBE( text, ' ' )
+			text=_str.cleanBE( text, '\n' )
+			text=_str.cleanBE( text, '\t' )
+			text=_str.cleanBE( text, ' ' )
+			if text.startswith('{') or text.startswith('['):
+				try:
+					data = simplejson.loads(text)
+				except Exception as e:
+					frameinfo = getframeinfo(currentframe()); _.pr( _.addComma(frameinfo.lineno),'\t', e,c='red');
+					try:
+						data = eval(text.replace('false','False').replace('true','True'))
+					except Exception as e:
+						_.pr(e)
+				data = reorder_keys(data)
+				result = simplejson.dumps(data, sort_keys=False)
+				result=result.replace('{','{ ').replace('}',' }')
+				_copy.imp.copy( wt_implode(result), p=0 )
+				return None
 
 
 
-		# text = text.replace('\n','')
-		# text = text.replace(', ',',')
-		# text = text.replace(',','\n')
+			# text = text.replace('\n','')
+			# text = text.replace(', ',',')
+			# text = text.replace(',','\n')
 
-		_copy.imp.copy( text, p=0 )
+			_copy.imp.copy( text, p=0 )
 
-		text=_str.replaceDuplicate( text, ' ' )
-		_copy.imp.copy( text, p=0 )
+			text=_str.replaceDuplicate( text, ' ' )
+			_copy.imp.copy( text, p=0 )
+		except Exception as e:
+			_.pr(e)
 
 
 
@@ -2370,7 +2380,10 @@ function get__THETABLE( $ID_label ){
 				data = simplejson.loads(text)
 			except Exception as e:
 				frameinfo = getframeinfo(currentframe()); _.pr( _.addComma(frameinfo.lineno),'\t', e,c='red');
-				data = eval(text.replace('false','False').replace('true','True'))
+				try:
+					data = eval(text.replace('false','False').replace('true','True'))
+				except Exception as e:
+					_.pr(e)
 			result = simplejson.dumps(data, sort_keys=False)
 			result=result.replace('{','{ ').replace('}',' }')
 			_copy.imp.copy( result, p=0 )
@@ -2413,7 +2426,10 @@ function get__THETABLE( $ID_label ){
 				data = simplejson.loads(text)
 			except Exception as e:
 				frameinfo = getframeinfo(currentframe()); _.pr( _.addComma(frameinfo.lineno),'\t', e,c='red');
-				data = eval(text.replace('false','False').replace('true','True'))
+				try:
+					data = eval(text.replace('false','False').replace('true','True'))
+				except Exception as e:
+					_.pr(e)
 			result = '[\n\t'
 			records = []
 			for record in data:
@@ -2448,7 +2464,10 @@ function get__THETABLE( $ID_label ){
 				data = simplejson.loads(text)
 			except Exception as e:
 				frameinfo = getframeinfo(currentframe()); _.pr( _.addComma(frameinfo.lineno),'\t', e,c='red');
-				data = eval(text.replace('false','False').replace('true','True'))
+				try:
+					data = eval(text.replace('false','False').replace('true','True'))
+				except Exception as e:
+					_.pr(e)
 			records = []
 			for rec in data:
 				records.append(rec.replace('\r','').replace('\n',''))
@@ -3092,41 +3111,47 @@ function get__THETABLE( $ID_label ){
 
 
 	def explode(self):
-		_paste = _.regImp( __.appReg, '-paste' )
-		_copy = _.regImp( __.appReg, '-copy' )
-		text = _paste.imp.paste()
-		text=_str.replaceDuplicate( text, ' ' )
-		text=_str.cleanBE( text, '\n' )
-		text=_str.cleanBE( text, '\t' )
-		text=_str.cleanBE( text, ' ' )
-		text=_str.cleanBE( text, '\n' )
-		text=_str.cleanBE( text, '\t' )
-		text=_str.cleanBE( text, ' ' )
-		text = text.replace('\r','')
-		text = text.replace('\n','')
-		keepcomma=False
+		try:
+			_paste = _.regImp( __.appReg, '-paste' )
+			_copy = _.regImp( __.appReg, '-copy' )
+			text = _paste.imp.paste()
+			text=_str.replaceDuplicate( text, ' ' )
+			text=_str.cleanBE( text, '\n' )
+			text=_str.cleanBE( text, '\t' )
+			text=_str.cleanBE( text, ' ' )
+			text=_str.cleanBE( text, '\n' )
+			text=_str.cleanBE( text, '\t' )
+			text=_str.cleanBE( text, ' ' )
+			text = text.replace('\r','')
+			text = text.replace('\n','')
+			keepcomma=False
 
-		if text.count(';') > text.count(','): text=text.replace(';',',')
+			if text.count(';') > text.count(','): text=text.replace(';',',')
 
-		if text.startswith(',,'):
-			text=text[2:]
-			keepcomma=True
-		if text.startswith('{') or text.startswith('['):
-			try:
-				data = simplejson.loads(text)
-			except Exception as e:
-				frameinfo = getframeinfo(currentframe()); _.pr( _.addComma(frameinfo.lineno),'\t', e,c='red');
-				data = eval(text)
-			result = simplejson.dumps(data, indent=4, sort_keys=False)
-			_copy.imp.copy( result, p=0 )
-			return None
-		text = text.replace(', ',',')
-		if keepcomma:
-			text = text.replace(',',',\n')
-		else:
-			text = text.replace('\t',',')
-			text = text.replace(',','\n')
-		_copy.imp.copy( text, p=0 )
+			if text.startswith(',,'):
+				text=text[2:]
+				keepcomma=True
+			if text.startswith('{') or text.startswith('['):
+				try:
+					data = simplejson.loads(text)
+				except Exception as e:
+					frameinfo = getframeinfo(currentframe()); _.pr( _.addComma(frameinfo.lineno),'\t', e,c='red');
+				try:
+					data = eval(text)
+				except Exception as e:
+					_.pr(e)
+				result = simplejson.dumps(data, indent=4, sort_keys=False)
+				_copy.imp.copy( result, p=0 )
+				return None
+			text = text.replace(', ',',')
+			if keepcomma:
+				text = text.replace(',',',\n')
+			else:
+				text = text.replace('\t',',')
+				text = text.replace(',','\n')
+			_copy.imp.copy( text, p=0 )
+		except Exception as e:
+			_.pr(e)
 
 	def clean_terminal_copy(self):
 		import pyperclip
@@ -3161,7 +3186,10 @@ function get__THETABLE( $ID_label ){
 		for x in text:
 			if x in '0123456789/*-+()':
 				string +=x
-		result = eval(string)
+		try:
+			result = eval(string)
+		except Exception as e:
+			_.pr(e)
 		# result = sum(map(int, re.findall(r'[+-]?\d+', string)))
 		_copy.imp.copy( str(_.addComma( result )), p=0 )
 

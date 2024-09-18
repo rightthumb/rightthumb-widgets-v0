@@ -33,6 +33,7 @@ def sw():
 	_.switches.register('Folder', '-folder')
 	_.switches.register('Recursive', '-r,-recursive')
 	_.switches.register('Editor', '-editor')
+	_.switches.register('Scan', '-scan', 'r fix')
 	_.switches.register('NoPrint', '--c')
 	# _.switches.register('Spaces', '-spaces')
 	# _.switches.register('Path', '-p')
@@ -60,7 +61,7 @@ _.autoBackupData = True
 
 
 _.appInfo[focus()] = {
-	'file': 'file.py',
+	'file': 'shClean.py',
 	'liveAppName': __.thisApp( __file__ ),
 	'description': 'Displays file in folder',
 	'categories': [
@@ -233,7 +234,8 @@ def getFolder(folder):
 		path = path.replace(os.sep+os.sep,os.sep)
 		if os.path.isfile(path):
 			if path.endswith('.sh') or path.endswith('.py') or path.endswith('.bat'):
-				processFile(path)
+				if _.showLine(path):
+					processFile(path)
 
 		if os.path.isdir(path):
 			if _.switches.isActive( 'Recursive' ):
@@ -279,32 +281,60 @@ def processFile(path):
 
 	_.saveText( file, path )
 
-
+def fileCheck(file):
+	data = _.getText(file,raw=True)
+	# if chr(10) in data or chr(27) in data:
+	if chr(27) in data:
+		return True
+	return False
 
 def action():
+	if _.switches.isActive('Scan'):
+		if 'r' in _.switches.value('Scan'):
+			r = True
+		else:
+			r = False
+		if 'f' in _.switches.value('Scan'):
+			f = True
+		else:
+			f = False
+		for file in _.fo(r=r):
+			if file.endswith('.sh') or file.endswith('.py') or file.endswith('.bat'):
+				if fileCheck(file):
+					if _.showLine(file):
+						if f:
+							if not os.path.isfile(file) and os.path.isfile(__.wsl(file)):
+								file=__.wsl(file)
+							if not os.path.isfile(file):
+								continue
+							processFile(file)
+						# _.pr(file)
 
+		return None
 	for path in _.switches.values('Files'):
 		if '*' in path:
 			for f in glob.glob( path ):
+				if _.showLine(f):
+					f = __.path(f)
+					if not os.path.isfile(f) and os.path.isfile(__.wsl(f)):
+						f=__.wsl(f)
+					if not os.path.isfile(f):
+						continue
+					processFile(f)
+
+		elif not '*' in path:
+			f = path
+			# path=__.path(path)
+			if _.showLine(f):
 				f = __.path(f)
+				w = __.wsl(f)
+				print(w)
 				if not os.path.isfile(f) and os.path.isfile(__.wsl(f)):
 					f=__.wsl(f)
 				if not os.path.isfile(f):
 					continue
 				processFile(f)
-
-		elif not '*' in path:
-			f = path
-			# path=__.path(path)
-			f = __.path(f)
-			w = __.wsl(f)
-			print(w)
-			if not os.path.isfile(f) and os.path.isfile(__.wsl(f)):
-				f=__.wsl(f)
-			if not os.path.isfile(f):
-				continue
-			processFile(f)
-				# processFile(path)
+					# processFile(path)
 
 
 	if _.switches.isActive( 'Folder' ):
@@ -320,7 +350,8 @@ def action():
 	else:
 		_.pipeCleaner(0)
 		for i,row in enumerate(_.isData(r=1)):
-			processFile(row)
+			if _.showLine(row):
+				processFile(row)
 
 
 import glob

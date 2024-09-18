@@ -11,13 +11,14 @@ def sw():
 _._default_settings_()
 
 _.appInfo[focus()] = {
-	'file': 'thisApp.py',
-	'description': 'Changes the world',
+	'file': 'forms.py',
+	'description': 'Terminal, tkinter, or html (temporary server) forms',
 	'categories': [
 						'DEFAULT',
 				],
 	'examples': [
-						_.hp('p thisApp -file file.txt'),
+						_.hp('p forms -f login'),
+						_.hp('p forms -f login -fld'),
 						_.linePrint(label='simple',p=0),
 						'',
 	],

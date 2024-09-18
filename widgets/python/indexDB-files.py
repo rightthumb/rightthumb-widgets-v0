@@ -1,21 +1,7 @@
-#!/usr/bin/python3
-
-# ## {R2D2919B742E} ##
-# ###########################################################################
-# What if magic existed?
-# What if a place existed where your every thought and dream come to life.
-# There is only one catch: it has to be written down.
-# Such a place exists, it is called programming.
-#    - Scott Taylor Reph, RightThumb.com
-# ###########################################################################
-# ## {C3P0D40fAe8B} ##
-
-
-##################################################
 import os, sys, time
-##################################################
 import _rightThumb._construct as __
 appDBA=__.clearFocus(__name__,__file__);__.appReg=appDBA;
+
 def focus(parentApp='',childApp='',reg=True):
 	global appDBA;f=__.appName(appDBA,parentApp,childApp);
 	if reg:__.appReg=f;
@@ -23,22 +9,16 @@ def focus(parentApp='',childApp='',reg=True):
 import _rightThumb._base3 as _
 fieldSet=_.l.vars(focus(),__name__,__file__,appDBA)
 _.load()
-##################################################
 _v = __.imp('_rightThumb._vars')
 _str = __.imp('_rightThumb._string')
-##################################################
-
 
 def sw():
 	_.switches.register( 'Database', '-db', 'index.db' )
+	_.switches.register( 'PrintMemory', '-printMem' )
+	_.switches.register( 'Commit', '-commit', '1000' )
+	_.switches.register( 'MemoryBufferMB', '-mem', '10' )
+	_.switches.register( 'Test', '-test' )
 	pass
-	#b)--> examples
-	# _.switches.register( 'URL', '-u,-url,-urls', 'https://etc.ac/', isData='raw' )
-	#e)--> examples
-	# _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name,data,clean', description='Files', isRequired=False )
-
-# __.setting('require-list',['Files,Plus','File,Has']) # todo
-# __.setting('require-list',['Pipe','Files'])
 __.setting('receipt-log',True)
 __.setting('receipt-file',True)
 __.setting('myFileLocations-skip-validation',False)
@@ -47,58 +27,36 @@ __.setting('require-pipe||file',False)
 __.setting('pre-error',False)
 __.setting('switch-raw',[])
 
-
-
 _.appInfo[focus()] = {
-	# 'app': '8facG-jo0Cxk',
-	'file': 'thisApp.py',
+	'file': 'indexDB-files.py',
 	'liveAppName': __.thisApp( __file__ ),
-	'description': 'Changes the world',
-		# _.ail(1,'subject')+
-		# _.aib('one')+
+	'description': 'Index files and there contents',
 	'categories': [
-						'DEFAULT',
+						'index',
+						'contents',
+						'websites',
+						'database',
+						'sqlite',
+						'index.db',
 				],
 	'usage': [
-						# 'epy another',
-						# 'e nmap',
-						# '',
 	],
 	'relatedapps': [
-						# 'p another -file file.txt',
-						# '',
 	],
 	'prerequisite': [
-						# 'p another -file file.txt',
-						# '',
 	],
 	'examples': [
-						_.hp('p thisApp -file file.txt'),
+						_.hp('p indexDB-files'),
+						_.hp('p indexDB-files -db /opt/home_index.db'),
 						_.linePrint(label='simple',p=0),
+						_.hp('pip3 install python-magic'),
 						'',
 	],
 	'columns': [
-					# { 'name': 'name', 'abbreviation': 'n' },
-# columns used for
-# 	- abbreviation in switches
-#		- ex: -column n s
-#			- instead of: -column name size
-#		- ex: -sort n
-#		- ex: -group n
-# 	- sort is used for things like size sort by bytes
-# 	- responsiveness to terminal width
-# 		- order is important
-# 		- most important on top
-		
-		# this is used for personal usage to programmatically generate columns
-					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [
-					# 'this',
-					# 'app',
 	],
 	'notes': [
-					# {},
 	],
 }
 
@@ -113,116 +71,254 @@ _.appData[focus()] = {
 		},
 	}
 
-
 def triggers():
 	_.switches.trigger( 'Files', _.myFileLocations, vs=True )
 	_.switches.trigger( 'Ago', _.timeAgo )
 	_.switches.trigger( 'Folder', _.myFolderLocations )
 	_.switches.trigger( 'URL', _.urlTrigger )
 	_.switches.trigger( 'Duration', _.timeFuture )
-
 def _local_(do): exec(do)
-
 _.l.conf('clean-pipe',True)
 _.l.sw.register( triggers, sw )
-
-########################################################################################
-#b)--> examples
-#d)--> code hints to quickly get started
-	#n)--> inline examples
-		# any(ele in 'scott5' for ele in list('0123456789'))
-		# if _.switches.isActive('Test'): test(); return None;
-		# result=[]; result=[ _.pr(line) for i, line, bi in _.numerate( _.isData(r=0) )]
-		# bk=[];[  bk.append(rec['backup']) for rec in backupLog if path == rec['file']]; bk=bk[-1];
-		# a=(1 if True else 0) <--# 
-		#!)--> m=[[row[i] for row in matrix] for i in range(4)]
-
-	#n)--> python globals
-		# globals()['var']
-		# for k in globals(): print(k, eval(k) )
-
-	#n)--> webpage from url
-		# for subject in _.caseUnspecific( line, needle ): line = line.replace( subject, _.colorThis( subject, 'green', p=0 ) )
-
-	#n)--> webpage from url
-		# requests=__.imp('requests.post')
-		#!)--> data=str(requests.post(url,data={}).content,'iso-8859-1')
-
-	#n)--> import and backup example
-		# _bk = _.regImp( __.appReg, 'fileBackup' ); _bk.switch( 'Silent' ); _bk.switch( 'isRunOnce' ); _bk.switch( 'Flag', 'APP' ); _bk.switch( 'DoNotSchedule' )
-		# _bk.switch( 'Input', path ); bkfi = _bk.action();
-	
-	#n)--> inline
-		# for rel in [ subject for subject in _.isData(r=0) if _.showLine(subject) ]: print(rel)
-
-	#n)--> banner
-		# banner=_.Banner(app); goss=banner.goss;
-#e)--> examples
 ########################################################################################
 #n)--> start
 
 import sqlite3
 import os
 
-
-
-# function to check if file is text file
 def is_text(filename):
 	try:
-		with open(filename, 'tr') as check_file:
-			check_file.read()
-		return True
+		with open(filename, 'rb') as check_file:
+			# Read a small chunk to check if it's text
+			chunk = check_file.read(1024)
+			if b'\0' in chunk:
+				return False
+			# Check for non-printable characters
+			if any(b < 32 or b > 126 for b in chunk):
+				return False
+			return True
 	except:
 		return False
 
-# function to get file content
+
 def get_content(filename):
+	global report
 	try:
 		with open(filename, 'r') as read_file:
-			return read_file.read()
+			content = read_file.read()
+			report['indexed'] += 1
+			report['size'] += len(content)
+			return content
 	except:
 		return ""
-
-# function to index files
-# def index_files(c,directory, recursion = False):
-#     for filename in os.listdir(directory):
-#         abs_path = os.path.join(directory, filename)
-
-#         if os.path.isdir(abs_path) and recursion:
-#             index_files(abs_path, recursion)
-#         else:
-#             size = os.path.getsize(abs_path)
-#             created = os.path.getctime(abs_path)
-#             is_dir = 1 if os.path.isdir(abs_path) else 0
-#             content = get_content(abs_path) if is_text(abs_path) else ""
-
-#             # Insert a row of data
-#             c.execute("INSERT INTO files VALUES (?,?,?,?,?,?)", (filename, abs_path, size, created, is_dir, content))
 cnt = 0
-def index_files(c, directory, recursion=False):
+
+
+
+import platform
+import psutil
+def get_memory_available():
+	if platform.system() == 'Linux':
+		mem = psutil.virtual_memory()
+		return mem.available
+	else:
+		return None
+def calculate_max_size(buffer_mb=10):
+	if not platform.system() == 'Linux': return None
+	available_memory = get_memory_available()
+	if available_memory is not None:
+		# Convert buffer from MB to bytes
+		buffer_bytes = buffer_mb * 1024 * 1024
+		max_size = available_memory - buffer_bytes
+		return max_size
+	return None
+
+
+def is_text_file(file_path):
+	try:
+		with open(file_path, 'rb') as file:
+			chunk = file.read(1024)
+			return all(byte < 128 or byte in (9, 10, 13) for byte in chunk)
+	except Exception:
+		return False
+
+
+
+report = {
+	'files': 0,
+	'indexed': 0,
+	'size': 0,
+}
+
+skipReport = {
+	'0': 0,
+	'1': 0,
+	'2': 0,
+	'3': 0,
+}
+
+if _.switches.isActive('Commit'):
+	CommitEvery = int(_.switches.value('Commit'))
+else:
+	CommitEvery = 1000
+if _.switches.isActive('MemoryBufferMB'):
+	MemoryBufferMB = int(_.switches.value('MemoryBufferMB'))
+else:
+	MemoryBufferMB = 10
+
+omit_extensions = [
+    '.log',     # Log files
+    '.gz',      # Compressed log or backup files
+    '.sql',     # SQL dump files
+    '.tar',     # Archive files
+    '.zip',     # Compressed archive files
+    '.bak',     # Backup files
+    '.old',     # Old configuration or log files
+    '.eml',     # Email message files
+    '.msg',     # Email message files
+    '.txt',     # Text files that can be large
+    '.csv',     # CSV files that may contain large datasets
+    '.conf',    # Configuration files
+    '.out',     # Output log files
+    '.err',     # Error log files
+    '.pid',     # Process ID files, typically text-based
+    '.swp',     # Swap files, usually created by editors like vim
+    '.cache',   # Cache files
+    '.dmp',     # Dump files
+    '.tmp',     # Temporary files
+    '.rbi',      # Ruby interface files (as seen in your logs)
+	'.cfg',
+	'.dat',
+	'.lock',
+	'.rar',
+	'.7z', '.bin', '.iso', '.exe', '.dll', '.db'
+]
+
+def get_extension(abs_path):
+    _, ext = os.path.splitext(abs_path)
+    return ext
+
+testStuff = {
+	'cnt': 0,
+	'size': 0
+}
+def index_files(c, directory, recursion=False, max_size=None):
 	global cnt
 	global conn
+	global report
+	global skipReport
+	global CommitEvery
+	global MemoryBufferMB
+	global omit_extensions
+	global testStuff
+
+	commitOn = 1000
+
 	for filename in os.listdir(directory):
+		max_size = calculate_max_size(MemoryBufferMB)
 		try:
 			abs_path = os.path.join(directory, filename)
 
+			if _.switches.isActive('Test'):
+
+				if os.path.isdir(abs_path) and recursion:
+					index_files(c, abs_path, recursion, max_size)
+				else:
+					testStuff['cnt'] += 1
+					try:
+						size = os.path.getsize(abs_path)
+						testStuff['size'] += size
+						fSize = _.formatSize(size)
+						_.pr(fSize,c='cyan')
+					except Exception as e:
+						_.pr('Error:',e,c='red')
+						_.pr(abs_path,c='yellow')
+						_.isExit(__file__)
+				continue
+				
+
+
+
+			# ext = get_extension(abs_path).lower()
+			ext = '.'+abs_path.split('.')[-1]
+			# if ext: print(ext); _.isExit(__file__)
+			if ext in omit_extensions:
+				continue
+			# print(abs_path)
 			if os.path.isdir(abs_path) and recursion:
-				index_files(c, abs_path, recursion)  # Corrected the arguments here
+				index_files(c, abs_path, recursion, max_size)  # Pass the max_size parameter to subdirectories
 			else:
+				sizeSkipped = False
 				try:
 					size = os.path.getsize(abs_path)
+					if max_size is not None and size > max_size:
+						sizeSkipped = True
+						_.pr(abs_path,c='red')
+						skipReport['1'] += 1
+						continue
+				except:
+					skipReport['1'] += 1
+					_.pr(abs_path,c='purple')
+					continue
+
+				try:
 					created = os.path.getctime(abs_path)
 					modified = os.path.getmtime(abs_path)
 					is_dir = 1 if os.path.isdir(abs_path) else 0
-					content = get_content(abs_path) if is_text(abs_path) else ""
+					rawMime = file_mime(abs_path)
+					isText = is_text_file(abs_path)
+					
+					content = ""
+					if sizeSkipped:
+						skipped = 1
+						skipReport['1'] += 1
+					else:
+						if not os.path.isfile(abs_path):
+							skipped = 3
+							skipReport['3'] += 1
+						else:
+							if not isText:
+								skipped = 2
+								skipReport['2'] += 1
+							else:
+								skipped = 0
+								skipReport['0'] += 1
+								content = get_content(abs_path)
 					cnt += 1
-					# Insert a row of data
-					c.execute("INSERT INTO files VALUES (?,?,?,?,?,?,?)", (filename, abs_path, size, created, modified, is_dir, content))
-					if cnt % 100 == 0:
+					c.execute("INSERT INTO files VALUES (?,?,?,?,?,?,?,?,?)", (filename, abs_path, size, created, modified, is_dir, content, rawMime, skipped))
+					report['files'] += 1
+					if cnt % commitOn == 0:
 						conn.commit()
-						_.pr( cnt, r=1 )
-				except: pass
-		except: pass
+						_.pr(cnt, r=1)
+				except Exception as e:
+					print(f"Error processing {abs_path}: {e}")
+		except Exception as e:
+			print(f"Error accessing {abs_path}: {e}")
+
+
+
+# def index_files(c, directory, recursion=False):
+# 	global cnt
+# 	global conn
+# 	for filename in os.listdir(directory):
+# 		try:
+# 			abs_path = os.path.join(directory, filename)
+# 			if os.path.isdir(abs_path) and recursion:
+# 				index_files(c, abs_path, recursion)  # Corrected the arguments here
+# 			else:
+# 				try:
+# 					size = os.path.getsize(abs_path)
+# 					created = os.path.getctime(abs_path)
+# 					modified = os.path.getmtime(abs_path)
+# 					is_dir = 1 if os.path.isdir(abs_path) else 0
+# 					content = get_content(abs_path) if is_text(abs_path) else ""
+# 					cnt += 1
+# 					c.execute("INSERT INTO files VALUES (?,?,?,?,?,?,?)", (filename, abs_path, size, created, modified, is_dir, content))
+# 					if cnt % 100 == 0:
+# 						conn.commit()
+# 						_.pr( cnt, r=1 )
+# 				except: pass
+# 		except: pass
 
 def numb(num):
 	num = int(num)
@@ -230,6 +326,7 @@ def numb(num):
 		return '0'+str(num)
 	else:
 		return str(num)
+
 def dbRename(db):
 	db = __.path(db)
 	fo = __.path(db,fo=True)+os.sep
@@ -237,55 +334,80 @@ def dbRename(db):
 	if os.path.isfile(db):
 		import shutil
 		modified = _.friendlyDate( _.autoDate( _.mod(db) ) ).split(' ')[0].replace('-','.')
-		# print(modified); sys.exit();
 		to = fo+modified+'-'+fi
 		i=1
 		while os.path.isfile(to):
 			i+=1
 			to = fo+modified+'-'+numb(i)+'-'+fi
-			
 		shutil.move(db,to)
+try:
+	import magic
+except: pass
+def file_mime(file_path):
+	try:
+		mime = magic.Magic()
+		try:
+			mime_type = mime.from_file(file_path)
+			return mime_type.split()[0]
+		except:
+			return 'error'
+	except:
+		return 'unavailable'
 
 def action():
+	if _.switches.isActive('Test'):
+		global testStuff
+		index_files(1,os.getcwd(), True)
+		testStuff['cnt'] = _.addComma(testStuff['cnt'])
+		testStuff['size'] = _.formatSize(testStuff['size'])
+		_.pr()
+		_.pr('testStuff')
+		_.printDicFields(testStuff)
+		return False
+
+	global report
+	global skipReport
+	if _.switches.isActive('PrintMemory'):
+		max_size = get_memory_available()
+		if not max_size is None:
+			_.pr(max_size)
+			_.pr( _.formatSize(max_size) )
+		else:
+			_.pr('No memory information available')
+		_.isExit(__file__)
 	global conn
 	if _.switches.isActive('Database'):
 		db = _.switches.value('Database')
 	else:
 		db = 'index.db'
 	dbRename(db)
-	# connect to the sqlite database
 	conn = sqlite3.connect(db)
 	c = conn.cursor()
-
-	# Create table
 	c.execute('''CREATE TABLE files
-				 (name text, path text, size real, created real, modified real, is_dir integer, content text)''')
-	# apply the index_files function to the current directory
+				 (name text, path text, size real, created real, modified real, is_dir integer, content text, mime text, skipped integer)''')
 	index_files(c,os.getcwd(), True)
-
-	# Save (commit) the changes
 	conn.commit()
-
-	# We can also close the connection if we are done with it.
-	# Just be sure any changes have been committed or they will be lost.
 	conn.close()
-
-##################################################
-#b)--> examples
-# banner=_.Banner(dependencies)
-# goss=banner.goss
-# goss('-\t this app will sherlock tf out of any python app or python module')
-#e)--> examples
-##################################################
+	# _.pr()
+	# _.pr('Raw Report')
+	# _.printDicFields(report)
+	# _.pr('Raw Skip')
+	# _.printDicFields(skipReport)
+	for k in report: report[k] = _.addComma(report[k])
+	for k in skipReport: skipReport[k] = _.addComma(skipReport[k])
+	_.pr()
+	_.pr('Report')
+	_.printDicFields(report)
+	_.pr('Cache')
+	SkipReportFinal = {
+		'Cached': skipReport['0'],
+		'Skip, Size': skipReport['1'],
+		'Skip, Binary': skipReport['2'],
+		'Skip, Not a file': skipReport['3'],
+	}
+	_.printDicFields(SkipReportFinal)
 
 ########################################################################################
 if __name__ == '__main__':
-	#b)--> examples
-
-	# banner.pr()
-	# if len(_.switches.all())==0: banner.gossip()
-	
-	#e)--> examples
 	action()
 	_.isExit(__file__)
-

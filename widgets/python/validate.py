@@ -212,7 +212,7 @@ def process(fi):
 	
 
 	_code.imp.validator.createIndex( data, 'javascript', skipLoad=True, simple=False, A=A, B=B, C=C )
-	status = __.setting('validaton-status')
+	status = __.setting('validation-status')
 	# NameSpace
 	
 	# _.printVarSimple( _code.imp.validator.identity )

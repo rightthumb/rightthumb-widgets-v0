@@ -14,9 +14,9 @@ if [%1] == [] (
     call p. cat
 ) else if [%1] == [-f] (
     shift
-    call p. cat --c -f %*
+    call p. cat --c -f %* | call cp
 ) else (
-    call p. cat --c -f %*
+    call p. cat --c -f %* | call cp
 )
 
 rem related to cat 

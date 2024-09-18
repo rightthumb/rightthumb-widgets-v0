@@ -7995,6 +7995,35 @@ def popDelim( data, delim, pop=1 ):
 		i+=1
 	return delim.join( dataX )
 
+def addComma2(data):
+	try:
+		# Convert the data to a float
+		data = float(data)
+	except ValueError:
+		# If conversion fails, return the original data
+		return data
+	
+	# Check if there's a decimal part
+	if '.' in str(data):
+		# Round to 2 decimal places if there are decimals
+		data = round(data, 2)
+	
+	# Convert the number to string and split into integer and decimal parts
+	integer_part, *decimal_part = str(data).split('.')
+	
+	# Reverse the integer part and insert commas every three digits
+	reversed_integer = integer_part[::-1]
+	grouped_reversed_integer = ','.join(reversed_integer[i:i + 3] for i in range(0, len(reversed_integer), 3))
+	
+	# Reverse it back to the original order
+	formatted_integer = grouped_reversed_integer[::-1]
+	
+	# Join the integer part with the decimal part if it exists
+	if decimal_part:
+		return f"{formatted_integer}.{decimal_part[0]}"
+	else:
+		return formatted_integer
+
 
 def addComma( data ):
 	test = 0
@@ -10035,7 +10064,7 @@ def calculate_monthdelta(date1, date2):
 #     x.start()
 
 hasPlus=None
-def showLine( string, plus = '', minus = '',plusOr = False, end=None,isSub=False, OR=None, code=False ):
+def showLine( string, plus = '', minus = '',plusOr = False, end=None,isSub=False, OR=None, code=False, itIs=False ):
 
 	# <2024-04-02>
 	string = str(string)
@@ -10077,7 +10106,7 @@ def showLine( string, plus = '', minus = '',plusOr = False, end=None,isSub=False
 		else:
 			result = True
 	if result == True and  (switches.isActive('Minus') or not minus == ''):
-		result = minusResults(string,minus)
+		result = minusResults(string,minus,itIs)
 	# print_(result)
 	return result
 def closeResults( string ):
@@ -10366,17 +10395,28 @@ def positiveResults(string,plus='',plusOr=False,end=None,OR=None):
 	#     print_(string,plus)
 	return result
 
-def minusResults(string,minus=''):
-	global switches
-	if not switches.isActive('StrictCase'):
-		string = string.lower()
+def minusResults(string,minus='',itIs=False):
 	result = True
-	if not minus == '':
+
+	global switches
+	if type(minus) == list:
 		minusInput = minus
+		# print('minus'); sys.exit()
 	else:
-		minusInput = switches.values('Minus')
+		if not switches.isActive('StrictCase'):
+			string = string.lower()
+		result = True
+		if not minus == '':
+			minusInput = minus
+		else:
+			minusInput = switches.values('Minus')
 
-
+	if itIs:
+		for i,row in enumerate(minusInput):
+			if not switches.isActive('StrictCase'):
+				minusInput[i] = minusInput[i].lower()
+			if string == minusInput[i]:
+				return False
 	# 23-01-04
 	string=string.strip() #:    //*   #*
 	if minusInput and '*' in minusInput[0]:
@@ -23865,6 +23905,7 @@ lbu=aiLine
 nw=n2w
 prLine=linePrint
 pr=print_
+prDic=printDicFields
 prStatus = True
 ct=colorThis
 cr=colorizeRow
@@ -24286,6 +24327,11 @@ def isGui():
 		if display_var:
 			return True
 	return False
+##################################################
+def ptr(data, theColumns, id=None):
+	if id is None:
+		id = genUUID()
+	tables.print( id, unixAutoColumns( data, theColumns, __.appReg ) )
 ##################################################
 
 # __.switch_raw

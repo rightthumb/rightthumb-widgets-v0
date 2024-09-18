@@ -34,7 +34,7 @@ import _rightThumb._md5 as _md5
 ##################################################
 import pickle
 ##################################################
-__.setting('validaton-status',True)
+__.setting('validation-status',True)
 ##################################################
 
 def appSwitches():
@@ -248,7 +248,7 @@ class Validator:
 
 		self.isSimple = simple
 		self.logistics = _.getTableDB( 'auditCodeBase.index' )
-		self.backupLoaded = { 'attempted': False, 'indexes': False, 'validaton': False, 'profile': False }
+		self.backupLoaded = { 'attempted': False, 'indexes': False, 'validation': False, 'profile': False }
 
 
 
@@ -264,7 +264,7 @@ class Validator:
 		self.flat = {}
 		self.omitIndex  = []
 		self.indexes = { 'char': [], 'group': [], }
-		self.validaton = {}
+		self.validation = {}
 		self.profile = {}
 
 		self.MD5 = _md5.md5( self.asset )
@@ -305,7 +305,7 @@ class Validator:
 
 	def filePath( self ):
 		print( self.projectFile.replace( 'PROJECT', 'indexes' ) )
-		print( self.projectFile.replace( 'PROJECT', 'validaton' ) )
+		print( self.projectFile.replace( 'PROJECT', 'validation' ) )
 
 	def lookupChars( self ):
 
@@ -932,11 +932,11 @@ class Validator:
 	def loadProject( self ):
 
 		self.backupLoaded['attempted'] = True
-		self.backupLoaded['validaton']
+		self.backupLoaded['validation']
 
 		if not self.skipLoad:
 			projectFile_indexes = _.getTable( self.projectFile.replace( 'PROJECT', 'indexes' ), 1 )
-			projectFile_validaton = _.getTable( self.projectFile.replace( 'PROJECT', 'validaton' ), 1 )
+			projectFile_validation = _.getTable( self.projectFile.replace( 'PROJECT', 'validation' ), 1 )
 			projectFile_profile = _.getTable( self.projectFile.replace( 'PROJECT', 'profile' ), 1 )
 			self.identity = _.getTable( self.projectFile.replace( 'PROJECT', 'identity' ), 1 )
 
@@ -949,11 +949,11 @@ class Validator:
 				self.backupLoaded['indexes'] = True
 				self.indexes = projectFile_indexes
 
-			if not len(projectFile_validaton):
-				self.backupLoaded['validaton'] = False
+			if not len(projectFile_validation):
+				self.backupLoaded['validation'] = False
 			else:
-				self.backupLoaded['validaton'] = True
-				self.validaton = projectFile_validaton
+				self.backupLoaded['validation'] = True
+				self.validation = projectFile_validation
 
 			if not len(projectFile_profile):
 				self.backupLoaded['profile'] = False
@@ -2357,7 +2357,7 @@ class Validator:
 				errors.append( yyy )
 		
 		if errors:
-			__.setting('validaton-status',False)
+			__.setting('validation-status',False)
 			# print('self._err_',self._err_)
 			if self._err_:
 				print()
@@ -2371,7 +2371,7 @@ class Validator:
 				print()
 				print()
 				print()
-			__.setting('validaton-status',False)
+			__.setting('validation-status',False)
 			return None
 			sys.exit()
 
@@ -3886,7 +3886,7 @@ class Validator:
 
 
 	def multiLanguageValidation( self ):
-		if self.backupLoaded['validaton']:
+		if self.backupLoaded['validation']:
 			print( 'Validation Loaded' )
 			sys.exit()
 
@@ -3987,7 +3987,7 @@ class Validator:
 		# return None
 
 		#############
-		# validaton = self.runRules( self.asset, 'scan', shouldLoop=True )
+		# validation = self.runRules( self.asset, 'scan', shouldLoop=True )
 		# return None
 		#############
 
@@ -3995,7 +3995,7 @@ class Validator:
 
 
 		
-		# if self.backupLoaded['validaton']:
+		# if self.backupLoaded['validation']:
 		#   print( 'Validation Loaded' )
 		#   sys.exit()
 
@@ -4089,7 +4089,7 @@ class Validator:
 		for i,ns in enumerate(namespaceRecords):
 			if not i:
 				
-				validaton = self.runRules( {'open': ns['open']+1, "close": ns['close']-1}, 'validate namespace' )
+				validation = self.runRules( {'open': ns['open']+1, "close": ns['close']-1}, 'validate namespace' )
 				print( text )
 
 				
