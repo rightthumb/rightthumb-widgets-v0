@@ -106,6 +106,8 @@ _.appData[focus()] = {
 	}
 
 
+_.appInfo[focus()]['examples'].append('p dirDB -db %ddoc% %daily%')
+_.appInfo[focus()]['examples'].append('')
 _.appInfo[focus()]['examples'].append('p dirDB -database defaultDir.db')
 _.appInfo[focus()]['examples'].append('')
 _.appInfo[focus()]['examples'].append('p dirDB -db %i%\\C_Drive.db -c name')

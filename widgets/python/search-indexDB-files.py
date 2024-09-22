@@ -39,6 +39,8 @@ def sw():
 	_.switches.register( 'GreaterLess-Ago', '-gl', 'gtr, lss' )
 	_.switches.register( 'Test', '-test' )
 	_.switches.register( 'Data', '-d,-data,-cc,-contents,-x' )
+	_.switches.register( 'Print', '-print' )
+	_.switches.register( 'PrintContentsSearch', '-search' )
 
 # __.setting('require-list',['Files,Plus','File,Has']) # todo
 # __.setting('require-list',['Pipe','Files'])
@@ -54,28 +56,40 @@ __.setting('switch-raw',[])
 
 _.appInfo[focus()] = {
 	# 'app': '8facG-jo0Cxk',
-	'file': 'thisApp.py',
+	'file': 'search-indexDB-files.py',
 	'liveAppName': __.thisApp( __file__ ),
-	'description': 'Changes the world',
+	'description': 'Query file contents in db created with indexDB-files',
 		# _.ail(1,'subject')+
 		# _.aib('one')+
 	'categories': [
-						'DEFAULT',
+						'sql',
+						'db',
+						'database',
+						'query',
+						'file contents',
 				],
 	'usage': [
 						# 'epy another',
 						# 'e nmap',
-						# '',
+						'dex',
 	],
 	'relatedapps': [
 						# 'p another -file file.txt',
-						# '',
+						'indexDB-files',
+						'dex',
+						'dex.',
 	],
 	'prerequisite': [
 						# 'p another -file file.txt',
-						# '',
+						'Database must be created with:',
+						'\tindexDB-files',
+						'\t\tAlias: dex.',
 	],
 	'examples': [
+						_.hp('dex -db daily -has Piller + *.md 2024 -print -search email'),
+						_.hp(''),
+						_.hp('p search-indexDB-files -db daily -has Piller + *.md 2024 -print -search email'),
+						_.hp(''),
 						_.hp('dex -f .htaccess - .site -2 .save .bk .old .cp .htaccess2 .htaccess3'),
 						_.linePrint(label='simple',p=0),
 						_.hp('p search-indexDB-files -f .htaccess - .site -2 .save .bk .old .cp .htaccess2 .htaccess3'),
@@ -212,9 +226,13 @@ class DBManager:
 			print(complete_query)
 			sys.exit()
 		else:
-			self.cursor.execute(search_query, tuple(query_dict.values()))
-			result = self.cursor.fetchall()
-			return result
+			try:
+				self.cursor.execute(search_query, tuple(query_dict.values()))
+				result = self.cursor.fetchall()
+				return result
+			except Exception as e:
+				_.pr(e,c='red')
+				_.isExit(__file__)
 
 	def search_by_name(self, name):
 		return self.search_func({'name': name})
@@ -245,11 +263,21 @@ class DBManager:
 			return result[0][0]
 		except: return 'no data'
 import os
-def action(filePath=None):
 
+def aliases(db):
+	aliases=_.getTable('file-open-aliases.hash')
+	if not 'aliases' in aliases: aliases['aliases']={}
+	if not 'files' in aliases: aliases['files']={}
+	if db in aliases['aliases']:
+		db = aliases['aliases'][db]
+	return db
+
+def action(filePath=None):
+	# if not _.showLine(filePath):return None
 	# _.e('incomplete','not finished')
 	if _.switches.isActive('Database'):
 		db = _.switches.value('Database')
+		db = aliases(db)
 	else:
 		db = 'index.db'
 	query = DBManager(db)
@@ -257,9 +285,11 @@ def action(filePath=None):
 		if not filePath is None:
 			_.pr('\n')
 			_.pr(filePath,c='cyan')
+			# if not _.showLine(filePath):return None
 			contents = query.data(filePath); _.pr(contents);
 		else:
 			for path in _.switches.values('File'):
+				# if not _.showLine(path):return None
 				contents = query.data(path); _.pr(contents);
 		return contents
 	# db.create_table()
@@ -302,10 +332,37 @@ def action(filePath=None):
 				if _.switches.isActive('Data'):
 					action(p)
 				else:
-					_.pr(p,c='cyan')
+					if _.switches.isActive('Print'):
+						searchAndPrint(p)
+					else:
+						_.pr(p,c='cyan')
 	# print(search)
 	_.pr()
 	_.pr('',_.addComma(i),c='green')
+
+def searchAndPrint(path):
+	if not _.switches.isActive('Print'):
+		return False
+	if not _.switches.isActive('PrintContentsSearch') and _.switches.isActive('Has'):
+		_.switches.fieldSet('PrintContentsSearch','active',True)
+		_.switches.fieldSet('PrintContentsSearch','value',','.join(_.switches.values('Has')))
+		_.switches.fieldSet('PrintContentsSearch','values',_.switches.values('Has'))
+	if not os.path.isfile(path): return False
+	contents = _.getText(path,raw=True).replace('\r','')
+	if not _.showLine(contents,_.switches.values('PrintContentsSearch'),_.switches.values('Minus')): return False
+	_.pr()
+	_.pr(path,c='cyan')
+	for line in contents.split('\n'):
+		line = line.strip()
+		if not _.showLine(line,_.switches.values('PrintContentsSearch'),_.switches.values('Minus')): continue
+		if _.switches.isActive('PrintContentsSearch'):
+			for plusSearchX in _.switches.values('PrintContentsSearch'):
+				plusSearchX = _.ci( plusSearchX )
+				for subject in _.caseUnspecificCode( line, plusSearchX ):
+					line = line.replace( subject, _.colorThis( subject, 'green', p=0 ) )
+			if line:
+				print('\t',line)
+	return True
 
 ##################################################
 #b)--> examples

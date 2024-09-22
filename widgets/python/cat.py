@@ -89,6 +89,10 @@ _.appInfo[focus()] = {
 						# '',
 	],
 	'examples': [
+						'p cat -f validator.js + ( {  - "if " // "while " "for " " catch " this. function',
+						'',
+						'p cat -f validator.js + ( {  - "if " // "while " "for " " catch " this. function "var " --c | p line -p ( 0 | p countEach',
+						'',
 						'p cat -f example.txt',
 						'',
 						'p cat -f example.txt 2.txt --c noline',

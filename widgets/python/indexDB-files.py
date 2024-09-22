@@ -40,8 +40,12 @@ _.appInfo[focus()] = {
 						'index.db',
 				],
 	'usage': [
+						'dex.',
 	],
 	'relatedapps': [
+						'dex.',
+						'dex',
+						'search-indexDB-files',
 	],
 	'prerequisite': [
 	],
@@ -215,6 +219,7 @@ def index_files(c, directory, recursion=False, max_size=None):
 	commitOn = 1000
 
 	for filename in os.listdir(directory):
+		if not _.showLine(filename): continue
 		max_size = calculate_max_size(MemoryBufferMB)
 		try:
 			abs_path = os.path.join(directory, filename)

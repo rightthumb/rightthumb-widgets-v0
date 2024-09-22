@@ -42,7 +42,8 @@ def appSwitches():
 	_.switches.register( 'ForceSublime', '-sub,-sublime' )
 	_.switches.register( 'PrintAliasLocation', '-print' )
 	_.switches.register( 'PrintAliases', '-pa,-ap,-printaliases' )
-	_.switches.register( 'HostedTemp', '-tmp,-temp', 'html, php' )
+	_.switches.register( 'HostedTemp', '-tmp,-temp', 'ext name |alias> o.t' )
+	_.switches.register( 'DoNotOpen', '-n,-no,-nope', 'used to create aliases but not open' )
 
 _.autoBackupData = __.autoCreationConfiguration['backup']
 __.releaseAcquiredData = __.autoCreationConfiguration['logs'] 
@@ -439,7 +440,10 @@ def action(path=None):
 			if _.switches.isActive('PrintAliasLocation'): return None
 				
 			_.saveTable(aliases,'file-open-aliases.hash',p=0)
+			if _.switches.isActive('DoNotOpen') and (  not 'bk' in _.switches.value('DoNotOpen') and not 'backup' in _.switches.value('DoNotOpen')   ):
+				return None
 			if _.switches.isActive('Backup'): backup(path)
+			if _.switches.isActive('DoNotOpen'): return None
 			if _.isWin:
 				if os.path.isfile(path):
 					found=False
@@ -524,7 +528,7 @@ if __name__ == '__main__':
 	action()
 	__.isExit()
 
-
+# D:\websites\domains\sds.sh\public_html\tmp\1722636323ht.load2_js_body.js     ht.load2B     1
 
 
 
