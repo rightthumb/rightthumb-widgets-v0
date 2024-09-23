@@ -3,7 +3,7 @@ def focus(parentApp='', childApp='', reg=True): global appDBA; f = __.appName(ap
 fieldSet=_.l.vars(focus(),__name__,__file__,appDBA);_.load();_v=__.imp('_rightThumb._vars');
 
 def sw():
-	pass
+	_.switches.register( 'SearchFields', '-f,-field,-fields', 'p a d c = path alias date count(greater than)' )
 _._default_settings_()
 
 _.appInfo[focus()] = {
@@ -53,8 +53,20 @@ def action():
 	for fi in aliases['files']:
 		try:
 			mod = _.mod(fi)
-			if _.showLine(fi):
-				table.append({'file': fi, 'epoch': mod, 'date': _.friendlyDate(mod).split(' ')[0], 'aliases': ' '.join(aliases['files'][fi]), 'count': len(aliases['files'][fi])})
+			rec = {'file': fi, 'epoch': mod, 'date': _.friendlyDate(mod).split(' ')[0], 'aliases': ' '.join(aliases['files'][fi]), 'count': len(aliases['files'][fi])}
+			shouldAdd = True
+
+			
+			if not _.switches.isActive('SearchFields'):
+				if shouldAdd: shouldAdd = _.showLine(str(fi))
+			else:
+				if 'p' in _.switches.value('SearchFields') and shouldAdd: shouldAdd = _.showLine(rec['file'])
+				if 'a' in _.switches.value('SearchFields') and shouldAdd: shouldAdd = _.showLine(rec['aliases'])
+				if 'd' in _.switches.value('SearchFields') and shouldAdd: shouldAdd = _.showLine(rec['date'])
+				if 'c' in _.switches.value('SearchFields') and shouldAdd and rec['count'] > int(_.switches.value('SearchFields')): shouldAdd = True
+
+			if shouldAdd:
+				table.append(rec)
 		except: pass
 		# print(list(table[0].keys())); _.isExit(__file__)
 		# print(fi)

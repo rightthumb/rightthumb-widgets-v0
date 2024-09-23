@@ -3255,6 +3255,13 @@ fi
 alias d='/opt/rightthumb-widgets-v0/widgets/bash/nav/d.sh'
 alias rr="sudo su root"
 
+if [ ! -d "$h/widgets/python" ]; then
+	mkdir "$h/widgets/python"
+fi
+
+export mp="sh $widgets/widgets/bash/nav/mp.sh"
+alias mp="$mp"
+
 clear
 # get_time_difference
 # a3bc42ec51e9
