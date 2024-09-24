@@ -3262,6 +3262,8 @@ fi
 export mp="sh $widgets/widgets/bash/nav/mp.sh"
 alias mp="$mp"
 
+alias dt="ssh -L 59001:localhost:5901 -C -N -l scott"
+
 clear
 # get_time_difference
 # a3bc42ec51e9

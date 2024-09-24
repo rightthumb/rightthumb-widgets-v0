@@ -50,8 +50,7 @@ echo "To Kill VNC Server just run vncserver-stop"
 echo " "
 echo " "
 echo " "
-echo "export DISPLAY=":1"" >> /etc/profile
+sudo echo 'export DISPLAY=":1"' | sudo tee -a /etc/profile
+
 source /etc/profile
 vncserver-start
-
-
