@@ -212,7 +212,8 @@ def possibly_wait():
 
 		_copy.imp.copy( '', p=0  )
 __.keychain_copy=True
-def get(theLabel=None):
+def get(theLabel=None,cp=True):
+	__.keychain_copy=cp
 	load()
 	global table
 	global label

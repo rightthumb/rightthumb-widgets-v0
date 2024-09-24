@@ -1,45 +1,22 @@
-#!/usr/bin/python3
-
-# ## {R2D2919B742E} ##
-# ###########################################################################
-# What if magic existed?
-# What if a place existed where your every thought and dream come to life.
-# There is only one catch: it has to be written down.
-# Such a place exists, it is called programming.
-#    - Scott Taylor Reph, RightThumb.com
-# ###########################################################################
-# ## {C3P0D40fAe8B} ##
-
-
-##################################################
 import sys, time
-##################################################
 import _rightThumb._construct as __
 appDBA=__.clearFocus(__name__,__file__);__.appReg=appDBA;
+
 def focus(parentApp='',childApp='',reg=True):
-	global appDBA;f=__.appName(appDBA,parentApp,childApp);
-	if reg:__.appReg=f;
-	return f
+    global appDBA;f=__.appName(appDBA,parentApp,childApp);
+    if reg:__.appReg=f;
+    return f
 import _rightThumb._base3 as _
 fieldSet=_.l.vars(focus(),__name__,__file__,appDBA)
 _.load()
-##################################################
 _v = __.imp('_rightThumb._vars')
 _str = __.imp('_rightThumb._string')
-##################################################
-
 
 def sw():
-	pass
-	#b)--> examples
-	_.switches.register( 'Prompt', '-prompt' )
-	_.switches.register( 'JustPrompt', '-j,-jp' )
-	# _.switches.register( 'URL', '-u,-url,-urls', 'https://etc.ac/', isData='raw' )
-	#e)--> examples
-	_.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='data', description='Files', isRequired=False )
-
-# __.setting('require-list',['Files,Plus','File,Has']) # todo
-# __.setting('require-list',['Pipe','Files'])
+    pass
+    _.switches.register( 'Prompt', '-prompt' )
+    _.switches.register( 'JustPrompt', '-j,-jp' )
+    _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='data', description='Files', isRequired=False )
 __.setting('receipt-log')
 __.setting('receipt-file')
 __.setting('myFileLocations-skip-validation',False)
@@ -48,202 +25,130 @@ __.setting('require-pipe||file',False)
 __.setting('pre-error',False)
 __.setting('switch-raw',[])
 
-
-
 _.appInfo[focus()] = {
-	# 'app': '8facG-jo0Cxk',
-	'file': 'thisApp.py',
-	'liveAppName': __.thisApp( __file__ ),
-	'description': 'Changes the world',
-		# _.ail(1,'subject')+
-		# _.aib('one')+
-	'categories': [
-						'DEFAULT',
-				],
-	'usage': [
-						# 'epy another',
-						# 'e nmap',
-						# '',
-	],
-	'relatedapps': [
-						# 'p another -file file.txt',
-						# '',
-	],
-	'prerequisite': [
-						# 'p another -file file.txt',
-						# '',
-	],
-	'examples': [
-						_.hp('p thisApp -file file.txt'),
-						_.linePrint(label='simple',p=0),
-						'',
-	],
-	'columns': [
-					# { 'name': 'name', 'abbreviation': 'n' },
-# columns used for
-# 	- abbreviation in switches
-#		- ex: -column n s
-#			- instead of: -column name size
-#		- ex: -sort n
-#		- ex: -group n
-# 	- sort is used for things like size sort by bytes
-# 	- responsiveness to terminal width
-# 		- order is important
-# 		- most important on top
-		
-		# this is used for personal usage to programmatically generate columns
-					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
-	],
-	'aliases': [
-					# 'this',
-					# 'app',
-	],
-	'notes': [
-					# {},
-	],
+    'file': 'thisApp.py',
+    'liveAppName': __.thisApp( __file__ ),
+    'description': 'Changes the world',
+    'categories': [
+                        'DEFAULT',
+                ],
+    'usage': [
+    ],
+    'relatedapps': [
+    ],
+    'prerequisite': [
+    ],
+    'examples': [
+                        _.hp('p thisApp -file file.txt'),
+                        _.linePrint(label='simple',p=0),
+                        '',
+    ],
+    'columns': [
+    ],
+    'aliases': [
+    ],
+    'notes': [
+    ],
 }
 
 _.appData[focus()] = {
-		'start': __.startTime,
-		'uuid': '',
-		'audit': [],
-		'pipe': False,
-		'data': {
-					'field': {'sent': [], 'received': [] }, # { 'label': '', 'context': [],  }
-					'table': {'sent': [], 'received': [] },
-		},
-	}
-
+        'start': __.startTime,
+        'uuid': '',
+        'audit': [],
+        'pipe': False,
+        'data': {
+                    'field': {'sent': [], 'received': [] }, # { 'label': '', 'context': [],  }
+                    'table': {'sent': [], 'received': [] },
+        },
+    }
 
 def triggers():
-	_.switches.trigger( 'Files', _.myFileLocations, vs=True )
-	_.switches.trigger( 'Ago', _.timeAgo )
-	_.switches.trigger( 'Folder', _.myFolderLocations )
-	_.switches.trigger( 'URL', _.urlTrigger )
-	_.switches.trigger( 'Duration', _.timeFuture )
-
+    _.switches.trigger( 'Files', _.myFileLocations, vs=True )
+    _.switches.trigger( 'Ago', _.timeAgo )
+    _.switches.trigger( 'Folder', _.myFolderLocations )
+    _.switches.trigger( 'URL', _.urlTrigger )
+    _.switches.trigger( 'Duration', _.timeFuture )
 def _local_(do): exec(do)
-
 _.l.conf('clean-pipe',True)
 _.l.sw.register( triggers, sw )
-
-########################################################################################
-#b)--> examples
-#d)--> code hints to quickly get started
-	#n)--> inline examples
-		# any(ele in 'scott5' for ele in list('0123456789'))
-		# if _.switches.isActive('Test'): test(); return None;
-		# result=[]; result=[ _.pr(line) for i, line, bi in _.numerate( _.isData(r=0) )]
-		# bk=[];[  bk.append(rec['backup']) for rec in backupLog if path == rec['file']]; bk=bk[-1];
-		# a=(1 if True else 0) <--# 
-		#!)--> m=[[row[i] for row in matrix] for i in range(4)]
-
-	#n)--> python globals
-		# globals()['var']
-		# for k in globals(): print(k, eval(k) )
-
-	#n)--> webpage from url
-		# for subject in _.caseUnspecific( line, needle ): line = line.replace( subject, _.colorThis( subject, 'green', p=0 ) )
-
-	#n)--> webpage from url
-		# requests=__.imp('requests.post')
-		#!)--> data=str(requests.post(url,data={}).content,'iso-8859-1')
-
-	#n)--> import and backup example
-		# _bk = _.regImp( __.appReg, 'fileBackup' ); _bk.switch( 'Silent' ); _bk.switch( 'isRunOnce' ); _bk.switch( 'Flag', 'APP' ); _bk.switch( 'DoNotSchedule' )
-		# _bk.switch( 'Input', path ); bkfi = _bk.action();
-	
-	#n)--> inline
-		# for rel in [ subject for subject in _.isData(r=0) if _.showLine(subject) ]: print(rel)
-
-	#n)--> banner
-		# banner=_.Banner(app); goss=banner.goss;
-#e)--> examples
 ########################################################################################
 #n)--> start
-interact=_.getTable('ai-bot-interaction.index')
+
+import subprocess
+
+interact = _.getTable('ai-bot-interaction.index')
 if not 'success' in interact: interact = {'success':[],'failure':[],'chat':[]}
-if not 'ai' in interact: interact['ai']=[]
-_keychain = _.regImp( __.appReg, 'keychain' )
+if not 'ai' in interact: interact['ai'] = []
+_keychain = _.regImp(__.appReg, 'keychain')
 import openai
+import time
+
+def install_missing_packages(package_name):
+    try:
+        subprocess.check_call([sys.executable, "-m", "pip", "install", package_name])
+    except subprocess.CalledProcessError as e:
+        print(f"Failed to install {package_name}. Error: {str(e)}")
+
 def ai(prompt):
-	max_tokens=1024*2
-	openai.api_key = _keychain.imp.key('open-ai-api')
-
-	response = openai.Completion.create(
-		# https://platform.openai.com/docs/models/codex
-		# engine="code-davinci-002",
-		# engine="text-davinci-002",
-		engine="text-davinci-003",
-		prompt=prompt,
-		temperature=0.9,
-		top_p=1,
-		frequency_penalty=0.0,
-		presence_penalty=0.6,
-		# max_tokens=150,
-		# stop=[" Human:", " AI:"],
-		max_tokens=max_tokens,
-		# n=1,
-		stop=None,
-		# temperature=0.5,
-	)
-	_copy = _.regImp( __.appReg, '-copy' )
-	_copy.imp.copy( response["choices"][0]["text"] )
-	
-	global  interact
-	interact['ai'].append({'epoch': time.time(), 'prompt': prompt, 'response': response["choices"][0]["text"]})
-	_.saveTable(interact,'ai-bot-interaction.index',p=0)
-	# def process_prompt_chunk(chunk,max_tokens):
-	# 	return openai.Completion.create(
-	# 		engine="text-davinci-003",
-	# 		prompt=chunk,
-	# 		temperature=0.9,
-	# 		top_p=1,
-	# 		frequency_penalty=0.0,
-	# 		presence_penalty=0.6,
-	# 		max_tokens=max_tokens,
-	# 		stop=None,
-	# 	)
-
-	# def process_large_prompt(large_prompt, chunk_size,max_tokens):
-	# 	responses = []
-	# 	for i in range(0, len(large_prompt), chunk_size):
-	# 		chunk = large_prompt[i:i+chunk_size]
-	# 		response = process_prompt_chunk(chunk,max_tokens)
-	# 		responses.append(response)
-	# 	return responses
-
-	# chunk_size = 2048
-	# responses = process_large_prompt(prompt, chunk_size,max_tokens)
+    max_tokens = 1024 * 2
+    try:
+        openai.api_key = _keychain.imp.key('open-ai-api',0)
+        response = openai.ChatCompletion.create(
+            model="gpt-4",  # Replaced with the newer model
+            messages=[
+                {"role": "system", "content": "You are a helpful assistant."},
+                {"role": "user", "content": prompt}
+            ],
+            temperature=0.9,
+            top_p=1,
+            frequency_penalty=0.0,
+            presence_penalty=0.6,
+            max_tokens=max_tokens,
+            stop=None,
+        )
+        # _copy = _.regImp(__.appReg, '-copy')
+        # _copy.imp.copy(response["choices"][0]["message"]["content"])
+        _.pr(response["choices"][0]["message"]["content"])
+        global interact
+        interact['ai'].append({'epoch': time.time(), 'prompt': prompt, 'response': response["choices"][0]["message"]["content"]})
+        _.saveTable(interact, 'ai-bot-interaction.index', p=0)
+    except openai.error.OpenAIError as e:
+        print(f"OpenAI API error occurred: {str(e)}")
+        interact['failure'].append({'epoch': time.time(), 'prompt': prompt, 'error': str(e)})
+        _.saveTable(interact, 'ai-bot-interaction.index', p=0)
+        print("Attempting to update OpenAI package...")
+        try:
+            install_missing_packages('openai')
+            print("Update complete. Try again.")
+        except Exception as install_error:
+            print(f"Failed to update or install OpenAI package. Error: {str(install_error)}")
 
 def action():
-	prompt=''
-	if _.switches.isActive('Prompt'):
-		Prompt=' '.join(_.switches.values('Prompt'))
-		Prompt=Prompt.strip()
-		if not Prompt.endswith(':'): Prompt+=':'
-		Prompt+='\n'
-		prompt+=Prompt
-	if not _.switches.isActive('JustPrompt'):
-		prompt+='\n'.join(_.pp())
-	ai(prompt)
+    prompt = ''
+    if _.switches.isActive('Prompt'):
+        Prompt = ' '.join(_.switches.values('Prompt'))
+        Prompt = Prompt.strip()
+        if not Prompt.endswith(':'): Prompt += ':'
+        Prompt += '\n'
+        prompt += Prompt
+    if not _.switches.isActive('JustPrompt'):
+        prompt += '\n'.join(_.pp())
+    
+    # Wrap ai execution in try-catch to handle errors and attempt installation if needed
+    try:
+        ai(prompt)
+    except Exception as e:
+        print(f"An unexpected error occurred: {str(e)}")
+        print("Attempting to install any missing packages...")
+        try:
+            install_missing_packages('openai')
+            print("Retrying after package installation...")
+            ai(prompt)
+        except Exception as install_error:
+            print(f"Failed to install required packages. Error: {str(install_error)}")
 
-##################################################
-#b)--> examples
-# banner=_.Banner(dependencies)
-# goss=banner.goss
-# goss('-\t this app will sherlock tf out of any python app or python module')
-#e)--> examples
-##################################################
 
 ########################################################################################
 if __name__ == '__main__':
-	#b)--> examples
-
-	# banner.pr()
-	# if len(_.switches.all())==0: banner.gossip()
-	
-	#e)--> examples
-	action()
-	_.isExit(__file__)
-
+    action()
+    _.isExit(__file__)

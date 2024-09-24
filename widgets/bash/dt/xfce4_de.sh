@@ -15,20 +15,21 @@ sudo apt-mark hold udisks2
 [ ! -f /root/.parrot ] && sudo apt-get update || echo "Parrot detected, not updating apt cache since that will break the whole distro"
 sudo apt-get install keyboard-configuration -y
 sudo apt-get install sudo sudo wget -y
+sudo apt-get install sudo sudo curl -y
 sudo apt-get install xfce4 xfce4-terminal tigervnc-standalone-server -y
 sudo apt-get install xfe -y
 sudo apt-get clean
 #Setup the necessary files
 mkdir ~/.vnc
-sudo wget https://eyeformeta.com/install/vnc/xstartup -P ~/.vnc/
-sudo wget https://eyeformeta.com/install/vnc/vncserver-start -P /usr/local/bin/
-sudo wget https://eyeformeta.com/install/vnc/vncserver-stop -P /usr/local/bin/
+sudo wget https://raw.githubusercontent.com/rightthumb/rightthumb-widgets-v0/main/widgets/bash/dt/files/xstartup.sh -P ~/.vnc/
+sudo wget https://raw.githubusercontent.com/rightthumb/rightthumb-widgets-v0/main/widgets/bash/dt/files/vncserver-start.sh -P /usr/local/bin/
+sudo wget https://raw.githubusercontent.com/rightthumb/rightthumb-widgets-v0/main/widgets/bash/dt/files/vncserver-stop.sh -P /usr/local/bin/
 sudo chmod +x ~/.vnc/xstartup
 sudo chmod +x /usr/local/bin/vncserver-start
 sudo chmod +x /usr/local/bin/vncserver-stop
 echo " "
 echo "Running browser patch"
-sudo wget https://eyeformeta.com/install/vnc/ubchromiumfix.sh && sudo chmod +x ubchromiumfix.sh
+sudo wget https://raw.githubusercontent.com/rightthumb/rightthumb-widgets-v0/main/widgets/bash/dt/files/ubchromiumfix.sh && sudo chmod +x ubchromiumfix.sh
 sudo ./ubchromiumfix.sh && rm -rf ubchromiumfix.sh
 echo "You can now start vncserver by running vncserver-start"
 echo " "

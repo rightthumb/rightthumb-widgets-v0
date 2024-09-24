@@ -170,7 +170,9 @@ def action():
 	if _.switches.isActive('API'):
 		api = _.switches.value('API')
 	else:
-		api = input('API: ')
+		import getpass
+		api = getpass.getpass('API: ')
+		# api = input('API: ')
 	url+=api
 	text = requests.get(url).text
 	_.pr(line=1,c='yellow')

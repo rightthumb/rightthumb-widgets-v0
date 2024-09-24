@@ -3170,39 +3170,41 @@ alias set.="(set -o posix; set)"
 # echo 000-018
 
 
+# pa | p line + alias --c | p line -p = 0 --c | p line -p " " 1
 #####################################################################
-
 # TMUX Session Management
-alias tmux.l="tmux list-sessions"
-alias tmux.k="tmux kill-session -t"
-alias tmux.k.a="tmux list-sessions | grep -v attached | cut -d: -f1 | xargs -I {} tmux kill-session -t {}"
-alias tmux.k.all="tmux list-sessions | grep -v attached | cut -d: -f1 | xargs -I {} tmux kill-session -t {}"
-alias tmux.a="tmux attach-session -t"
-alias tmux.d="tmux detach"
-alias tmux.s="tmux new-session -s"
+alias tn="tmux new-session -s"     # Create a new TMUX session
+alias td="tmux detach"             # Detach from the current session
+alias tl="tmux list-sessions"      # List all TMUX sessions
+alias tls="tmux ls"                # Same as tl, optional to keep both
+alias ta="tmux attach-session -t"  # Attach to an existing session
+alias tk="tmux kill-session -t"    # Kill a specific TMUX session
+alias tsrv="tmux kill-server"      # Kill the TMUX server
+alias tkill="tmux list-sessions | grep -v attached | cut -d: -f1 | xargs -I {} tmux kill-session -t {}"  # Kill all unattached sessions
 
 # TMUX Window and Pane Management
-alias tmux.s.h="tmux split-window -h"    # Split the current pane horizontally.
-alias tmux.s.v="tmux split-window -v"    # Split the current pane vertically.
-alias tmux.s.p="tmux select-pane -t"     # Select a specific pane.
-alias tmux.s.w="tmux select-window -t"   # Select a specific window.
-alias tmux.s.l="tmux select-layout"      # Select a predefined layout for the current window.
+alias tsh="tmux split-window -h"   # Split the current pane horizontally
+alias tsv="tmux split-window -v"   # Split the current pane vertically
+alias tsp="tmux select-pane -t"    # Select a specific pane
+alias tsw="tmux select-window -t"  # Select a specific window
+alias tsl="tmux select-layout"     # Select a predefined layout for the current window
 
 # TMUX Interaction
-alias tmux.s.k="tmux send-keys -t"       # Send keys to a specific pane, simulating keyboard input.
-	# tmux send-keys -t mysession:0.1 'ls -l' C-m
-	    # C-m is the Enter key.
-
-###################################
-alias tmux.t.4="source $widgets/widgets/bash/tmux/templates/4_Square.sh"
-alias tmux.t.q="source $widgets/widgets/bash/tmux/templates/Quadrants.sh"
-alias tmux.t.s="source $widgets/widgets/bash/tmux/templates/Single.sh"
-alias tmux.t.1="source $widgets/widgets/bash/tmux/templates/Single.sh"
-alias tmux.t.h="source $widgets/widgets/bash/tmux/templates/Horizontal_Stripes.sh"
-alias tmux.t.13="source $widgets/widgets/bash/tmux/templates/One_Three.sh"
-alias tmux.t.top="source $widgets/widgets/bash/tmux/templates/Top_Large_Pane_with_Three_Columns_Below.sh"
-alias tmux.t.t="source $widgets/widgets/bash/tmux/templates/Top_Large_Pane_with_Three_Columns_Below.sh"
-
+alias tsk="tmux send-keys -t"      # Send keys to a specific pane, simulating keyboard input
+  # Example usage: tmux send-keys -t mysession:0.1 'ls -l' C-m
+  # C-m is the Enter key.
+  # https://sds.sh/tmux-send_key-examples
+    
+# TMUX Template Management
+alias tt4="source $widgets/widgets/bash/tmux/templates/4_Square.sh"
+alias ttq="source $widgets/widgets/bash/tmux/templates/Quadrants.sh"
+alias tts="source $widgets/widgets/bash/tmux/templates/Single.sh"
+alias tt1="source $widgets/widgets/bash/tmux/templates/Single.sh"
+alias tth="source $widgets/widgets/bash/tmux/templates/Horizontal_Stripes.sh"
+alias tt13="source $widgets/widgets/bash/tmux/templates/One_Three.sh"
+alias tttop="source $widgets/widgets/bash/tmux/templates/Top_Large_Pane_with_Three_Columns_Below.sh"
+alias ttt="source $widgets/widgets/bash/tmux/templates/Top_Large_Pane_with_Three_Columns_Below.sh"
+#####################################################################
 #####################################################################
 
 
@@ -3234,14 +3236,7 @@ alias fC="python3 $widgets/widgets/python/fileCount.py"
 alias iso="source $widgets/widgets/bash/iso_img_bin_nrg_mdf__info.sh"
 alias pst="source $widgets/widgets/bash/pst.sh"
 
-# tmux session management
-alias t.n="tmux new -s"
-alias t.d="tmux detach"
-alias t.l="tmux ls"
-alias t.ls="tmux ls"
-alias t.a="tmux attach -t"
-alias t.k="tmux kill-session -t"
-alias t.srv="tmux kill-server"
+
 alias p="$p"
 
 
@@ -3263,6 +3258,9 @@ export mp="sh $widgets/widgets/bash/nav/mp.sh"
 alias mp="$mp"
 
 alias dt="ssh -L 59001:localhost:5901 -C -N -l scott"
+
+alias ai="$p ai -prompt"
+alias ai.t="$p ai -prompt what is the tmux shortcut for"
 
 clear
 # get_time_difference
