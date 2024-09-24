@@ -85,16 +85,33 @@ import time
 
 def install_missing_packages(package_name):
     try:
+        subprocess.check_call(['pip', 'install', 'openai'])
+    except:
+        try:
+            subprocess.check_call([sys.executable, "-m", "pip", "install", package_name])
+        except subprocess.CalledProcessError as e:
+            _.pr(f"Failed to install {package_name}. Error: {str(e)}",c='red')
+
+# _v.fig['openai']
+
+import openai
+import time
+import subprocess
+import sys
+
+def install_missing_packages(package_name):
+    try:
         subprocess.check_call([sys.executable, "-m", "pip", "install", package_name])
     except subprocess.CalledProcessError as e:
-        print(f"Failed to install {package_name}. Error: {str(e)}")
+        _.pr(f"Failed to install {package_name}. Error: {str(e)}", c='red')
 
 def ai(prompt):
     max_tokens = 1024 * 2
     try:
-        openai.api_key = _keychain.imp.key('open-ai-api',0)
+        openai.api_key = _v.fig['openai']
+        
         response = openai.ChatCompletion.create(
-            model="gpt-4",  # Replaced with the newer model
+            model="gpt-4",
             messages=[
                 {"role": "system", "content": "You are a helpful assistant."},
                 {"role": "user", "content": prompt}
@@ -106,22 +123,37 @@ def ai(prompt):
             max_tokens=max_tokens,
             stop=None,
         )
-        # _copy = _.regImp(__.appReg, '-copy')
-        # _copy.imp.copy(response["choices"][0]["message"]["content"])
+
         _.pr(response["choices"][0]["message"]["content"])
         global interact
         interact['ai'].append({'epoch': time.time(), 'prompt': prompt, 'response': response["choices"][0]["message"]["content"]})
         _.saveTable(interact, 'ai-bot-interaction.index', p=0)
-    except openai.error.OpenAIError as e:
-        print(f"OpenAI API error occurred: {str(e)}")
+
+    except AttributeError as e:
+        _.pr(f"An unexpected error occurred: {str(e)}", c='red')
+        _.pr("Attempting to install any missing packages...", c='yellow')
+        
+        # If the error is related to the 'distro' module, attempt to install it
+        if 'distro' in str(e):
+            install_missing_packages('distro')
+        
+        try:
+            # Retry after attempting to fix missing package issue
+            ai(prompt)
+        except Exception as retry_error:
+            _.pr(f"Failed to retry after installing packages: {str(retry_error)}", c='red')
+
+    except openai.OpenAIError as e:
+        _.pr(f"OpenAI API error occurred: {str(e)}", c='red')
         interact['failure'].append({'epoch': time.time(), 'prompt': prompt, 'error': str(e)})
         _.saveTable(interact, 'ai-bot-interaction.index', p=0)
-        print("Attempting to update OpenAI package...")
-        try:
-            install_missing_packages('openai')
-            print("Update complete. Try again.")
-        except Exception as install_error:
-            print(f"Failed to update or install OpenAI package. Error: {str(install_error)}")
+
+    except Exception as e:
+        _.pr(f"An unexpected error occurred: {str(e)}", c='red')
+        interact['failure'].append({'epoch': time.time(), 'prompt': prompt, 'error': str(e)})
+        _.saveTable(interact, 'ai-bot-interaction.index', p=0)
+
+
 
 def action():
     prompt = ''
@@ -135,17 +167,19 @@ def action():
         prompt += '\n'.join(_.pp())
     
     # Wrap ai execution in try-catch to handle errors and attempt installation if needed
-    try:
-        ai(prompt)
-    except Exception as e:
-        print(f"An unexpected error occurred: {str(e)}")
-        print("Attempting to install any missing packages...")
-        try:
-            install_missing_packages('openai')
-            print("Retrying after package installation...")
-            ai(prompt)
-        except Exception as install_error:
-            print(f"Failed to install required packages. Error: {str(install_error)}")
+    ai(prompt)
+    # try:
+    #     ai(prompt)
+    # except Exception as e:
+    #     _.pr(f"An unexpected error occurred: {str(e)}",c='red')
+    #     _.pr("Attempting to install any missing packages...",c='yellow')
+    #     try:
+    #         install_missing_packages('openai')
+    #         _.pr("Retrying after package installation...",c='yellow')
+    #         ai(prompt)
+    #     except Exception as install_error:
+    #         _.pr(f"Failed to install required packages. Error: {str(install_error)}",c='red')
+
 
 
 ########################################################################################
