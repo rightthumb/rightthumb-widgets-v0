@@ -7,7 +7,7 @@ SET /p pretty_back=<%tmpf%-back
 echo purple %pretty_back%  >> %tmpf%-print_color-day
 echo.                                >> %tmpf%-print_color-day
 echo darkcyan                     >> %tmpf%-print_color-day
-echo cyan C:\Users\Scott\.rt\profile\daily\2024\38\09-21\                       >> %tmpf%-print_color-day
+echo cyan C:\Users\Scott\.rt\profile\daily\2024\39\09-24\                       >> %tmpf%-print_color-day
 echo Background.green linePrint      >> %tmpf%-print_color-day
 call p print_color -f %tmpf%-print_color-day -tab 2
-cd C:\Users\Scott\.rt\profile\daily\2024\38\09-21\
+cd C:\Users\Scott\.rt\profile\daily\2024\39\09-24\

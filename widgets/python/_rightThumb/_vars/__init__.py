@@ -473,7 +473,12 @@ def saveEn( data, filename, password, MD5 = False ):
 def changePin():
 	global pin_path
 	if not os.path.isfile(pin_path):
-		print('No PIN set.')
+		import getpass
+		rawPin = getpass.getpass('New PIN: ')
+		vault_path = pinPath(rawPin)
+		pwpw = cryptoKeyPad + scrampleIDs(getMachineID2())
+		saveEn( rawPin, pin_path, getMachineID(), True )
+		saveEn( thePW, vault_path, pwpw, True )
 		return False
 	import getpass
 	if os.path.isfile(pin_path):
@@ -1857,6 +1862,9 @@ def config( subject='?' ):
 		return config_default
 	if subject in cData:
 		return cData[subject]
+	global fig
+	if subject in fig:
+		return fig[subject]
 	return None
 
 

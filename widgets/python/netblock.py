@@ -196,7 +196,7 @@ def action():
 			if not validate_ip(IP): IP = resolve_domain(IP)
 			if not validate_ip(IP): _.e('Invalid IP',IP)
 			try:
-				if not _v.config('whoisxmlapi'):
+				if not _v.config('WhoisXML'):
 					_.e('Missing API key','https://ip-netblocks.whoisxmlapi.com/api/documentation/making-requests')
 			except Exception as e:
 				_.e('Missing API key','https://ip-netblocks.whoisxmlapi.com/api/documentation/making-requests')

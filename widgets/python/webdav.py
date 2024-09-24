@@ -12,7 +12,7 @@
 
 
 ##################################################
-import sys, time
+import sys, time, os
 ##################################################
 import _rightThumb._construct as __
 appDBA=__.clearFocus(__name__,__file__);__.appReg=appDBA;
@@ -316,11 +316,19 @@ class WebDAVClient:
 
 
 
-
+def aliases(fi):
+	aliases=_.getTable('file-open-aliases.hash')
+	if not 'aliases' in aliases: aliases['aliases']={}
+	if not 'files' in aliases: aliases['files']={}
+	if fi in aliases['aliases']:
+		fi = aliases['aliases'][fi]
+	return fi
 
 def action():
 	client = WebDAVClient()
 	for path in _.pp():
+		if not os.path.isfile(path):
+			path = aliases(path)
 		if _.switches.isActive('Download'):
 			client.download(path)
 		else:
