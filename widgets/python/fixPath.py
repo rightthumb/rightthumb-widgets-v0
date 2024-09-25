@@ -3,7 +3,7 @@ def focus(parentApp='', childApp='', reg=True): global appDBA; f = __.appName(ap
 fieldSet=_.l.vars(focus(),__name__,__file__,appDBA);_.load();_v=__.imp('_rightThumb._vars');
 
 def sw():
-	pass
+	_.switches.register( 'Test', '-t,-test' )
 _._default_settings_()
 
 _.appInfo[focus()] = {
@@ -44,11 +44,15 @@ def action():
 	Other = []
 	spent = []
 	for path in paths:
+		if _.switches.isActive('Test'):
+			print(path)
+			continue
 		lPath = path.lower()
-		path = __.path(path)
+		# path = __.path(path)
 		if lPath in spent: continue
 		spent.append(lPath)
-		if not os.path.isdir(path): continue
+		# if not os.path.isdir(path): continue
+		if False: pass
 		elif 'c:\\windows' in lPath: Windows.append(path)
 		elif 'c:\\program files' in lPath: ProgramFiles.append(path)
 		elif 'rightthumb' in lPath: RightThumb.append(path)
@@ -66,14 +70,10 @@ def action():
 	# 	print(path['path'])
 	# _.isExit(__file__)
 	# 	# Paths.append(path)
-	for path in Windows:
-		Paths.append(path)
-	for path in ProgramFiles:
-		Paths.append(path)
-	for path in Users:
-		Paths.append(path)
-	for path in Other:
-		Paths.append(path)
+	for path in ProgramFiles: Paths.append(path)
+	for path in Windows: Paths.append(path)
+	for path in Users: Paths.append(path)
+	for path in Other:Paths.append(path)
 	newPath = ';'.join(Paths)
 	print('SET PATH='+newPath)
 
