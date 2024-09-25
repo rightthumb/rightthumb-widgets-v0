@@ -188,14 +188,8 @@ def action():
             _.pr('pip install openai==0.28', c='yellow')
 
 
-# - aleen.sds.sh
-# - lothal.sds.sh
-# - batuu.sds.sh
-# - vpn.sds.sh
-# - raada.sds.sh
-
+########################################################################################
 # pip install openai==0.28
-
 ########################################################################################
 if __name__ == '__main__':
     action()
