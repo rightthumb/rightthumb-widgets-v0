@@ -1,5 +1,8 @@
 @echo off
-call pin
+if [%1] == [lock] call p. lock-files
+if [%1] == [l] call p. lock-files
+if [%1] == [] call pin
+
 title=Closing Queue
 call p. lock-wait -wait x
 call p. lock-wait -lock x

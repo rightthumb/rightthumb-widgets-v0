@@ -42,6 +42,8 @@ GOTO:EOF
 echo PARTIAL selected
 call p. secureFiles -delete  -en -f  %fi%
 call p. decrypt-docs -f  %fi%
+@REM call p. fileBackup -silent -flag lock -runonce -noschedule -f %fi%
+call p. fileBackup  -flag lock -runonce -noschedule -f %fi%
 echo partial encryption configured
 
 rem if [%entire%] == [Y] (
@@ -57,6 +59,8 @@ GOTO:EOF
 echo ENTIRE selected
 call p. decrypt-docs -delete -f  %fi%
 call p. secureFiles -en -f  %fi%
+@REM call p. fileBackup -silent -flag lock -runonce -noschedule -f %fi%
+call p. fileBackup  -flag lock -runonce -noschedule -f %fi%
 echo entire-file encryption configured
 GOTO:EOF
 :ENTIRE2
