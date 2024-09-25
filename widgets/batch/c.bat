@@ -220,11 +220,12 @@ GOTO:EOF
             IF EXIST "%pyf2%\Lib" ( SET SET pathPython=%pyf2%;%pyf2%\Lib;%pyf2%\Lib\site-packages;%pyf2%;%pyf2%\Scripts )
             CALL %batch%\originalPath.bat
             SET originalPath=%Path%
-            SET pathBuilder=%appPaths%;%pathPython%;%originalPath%;%pathPython%;%javabin%
+            SET pathBuilder=%appPaths%;%pathPython%;%pathPython%;%originalPath%;%javabin%
             IF EXIST "D:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\bin\Hostx64\x64" (
                 SET "pathBuilder=%pathBuilder%;D:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\bin\Hostx64\x64"
             )
             SET path=%pathBuilder%
+            
             SET pathBuilder=
             SET pathPython=
 
@@ -330,6 +331,7 @@ GOTO:EOF
                 call pin
                 call c
             )
+            @REM CALL fixPath
 GOTO:EOF
 
 

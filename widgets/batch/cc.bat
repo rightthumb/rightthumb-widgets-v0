@@ -1,46 +1,36 @@
-@echo off
+@REM @echo off
 
-rem ## {R2D2919B742E} ##
-rem ###########################################################################
-rem What if magic existed?
-rem What if a place existed where your every thought and dream come to life.
-rem There is only one catch: it has to be written down.
-rem Such a place exists, it is called programming.
-rem    - Scott Taylor Reph, RightThumb.com
-rem ###########################################################################
-rem ## {C3P0D40fAe8B} ##
+IF NOT [%Session_ID%] == [] (
+doskey /history >> "%stmp%\unclaimed_tickets_history\history-%Session_ID%.txt"  2>&1
+CALL:BUILD_TICKET >nul 2>&1
+)
 
-
-CALL:RUN >nul 2>&1
 cls
-GOTO:EOF
-:RUN
-set /p Drive=<%userprofile%\.tk421
-set widgets=%Drive:~0,1%
-set Drive=
-rem echo %widgets%
-echo Loading...
 
-
-IF EXIST "%widgets%\" (CALL:START)
-IF NOT EXIST "%widgets%\" (CALL:ERROR) 
-GOTO:EOF
-:ERROR
-prompt - 
-cls
-IF [] == [y] GOTO:EOF
-echo USB Drive Failure
-set errorDisplayOnce=y
-GOTO:EOF
-:START
-
-rem disable
-call %widgets%\widgets\batch\resetVars.bat
-
-SET /p Drive=<%userprofile%\.tk421
-SET widgets=%Drive:~0,1%
-call %widgets%\widgets\batch\c.bat %1 
 GOTO:EOF
 
-
- 
+:BUILD_TICKET
+    IF ["%project%"] == [""] SET name=closed-%Session_ID%.txt
+    IF NOT ["%project%"] == [""] SET name=open-%Session_ID%.txt
+    SET file=%stmp%\unclaimed_tickets\%name%
+    SET fileTempData=%myTickets%\tempFile.txt
+    SET timestamp=%date:~-4,4%.%date:~-10,2%.%date:~-7,2% @ %time:~0,2%:%time:~3,2%
+    ECHO ^<div class='box' ^> > "%file%"  2>&1
+    ECHO ^<div class='item' ^> >> "%file%"  2>&1
+    ECHO Session: %Session_ID% (%timestamp_start% - %timestamp%) isAdmin:%isAdmin% %project%>> "%file%"  2>&1
+    ECHO ^</div^> >> "%file%"  2>&1
+    ECHO ^<br^> >> "%file%"  2>&1
+    ECHO ^<div class='guid' ^> %instanceID%^</div^>>> ^<br^> >> "%file%"  2>&1
+    ECHO ^<div class='sid' ^> %machineID%^</div^>>> ^<br^> >> "%file%"  2>&1
+    ECHO ^<div class='details' ^> >> "%file%"
+    IF NOT ["%lab%"] == [""] ECHO ^<div class='laboratory' ^> %lab% >> ^</div^> >> "%file%"  2>&1
+    ECHO ^<br^> >> "%file%"  2>&1
+    ECHO ^<pre^> >> "%file%"  2>&1
+    ECHO. >> "%stmp%\unclaimed_tickets_history\history-%Session_ID%.txt"
+    CALL p. singleLine -f "%stmp%\unclaimed_tickets_history\history-%Session_ID%.txt" > "%fileTempData%"  2>&1
+    TYPE "%fileTempData%" | p. passFilter >> "%file%"  2>&1
+    TYPE "%file%" > "%fileTempData%"  2>&1
+    DEL "%fileTempData%"
+    ECHO ^</pre^> >> "%file%"  2>&1
+    ECHO ^<br^> ^</div^> ^</div^> ^<br^> >> "%file%"  2>&1
+goto:eof

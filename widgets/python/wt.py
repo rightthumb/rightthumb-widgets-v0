@@ -224,6 +224,17 @@ def implode(text):
 		result=result.replace('{','{ ').replace('}',' }')
 		return wt_implode(result)
 
+def colorize(lines):
+	newLines = []
+	for line in lines:
+		if _.showLine(line):
+			for plusSearchX in _.switches.values('Plus'):
+				plusSearchX = _.ci( plusSearchX )
+				for subject in _.caseUnspecificCode( line, plusSearchX ):
+					line = line.replace( subject, _.colorThis( subject, 'green', p=0 ) )
+			newLines.append(line)
+	return newLines
+
 def action():
 	load()
 	global c3po
@@ -232,19 +243,22 @@ def action():
 	if _.switches.isActive('FormatActions'):
 		r2d2 = implode(r2d2)
 		lines = r2d2.split('\n')
-		newLines = []
+		
 		if not _.switches.isActive('Plus'):
 			_.printVarSimpleFake( r2d2 )
 		else:
+			json = simplejson.loads(r2d2)
+			recs = []
+			for rec in json:
+				if _.showLine(str(rec)):
+					recs.append( simplejson.dumps(rec) )		
+			
+			lines = colorize(recs)
 			for line in lines:
-				if _.showLine(line):
-					newLines.append(line)
-					for plusSearchX in _.switches.values('Plus'):
-						plusSearchX = _.ci( plusSearchX )
-						for subject in _.caseUnspecificCode( line, plusSearchX ):
-							line = line.replace( subject, _.colorThis( subject, 'green', p=0 ) )
+				print(line)
+
+
 				
-					print(line)
 		return r2d2
 
 	#--> min, architecture {:strict:}

@@ -95,6 +95,9 @@ _.appInfo[focus()] = {
 						'',
 						'p recent -ago 10y + *.py site-packages',
 						'',
+						'p recent | p files --c | p ls -s md -c n - .txt ',
+						'p recent | p files --c | p ls -c ext | p countEach',
+						'',
 	],
 	'columns': [
 					# { 'name': 'name', 'abbreviation': 'n' },

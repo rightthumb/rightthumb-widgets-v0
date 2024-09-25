@@ -3262,7 +3262,8 @@ alias dt="ssh -L 59001:localhost:5901 -C -N -l scott"
 alias ai="$p ai -prompt"
 alias ai.t="$p ai -prompt what is the tmux shortcut for"
 
-alias tmux.="curl -s https://sds.sh/tmux-aliases | $p line +"
+alias tmux.="curl -s https://sds.sh/tmux-aliases | $p line --c +"
+alias tmux..="curl -s https://sds.sh/tmux-aliases | $p line --c "
 
 clear
 # get_time_difference
