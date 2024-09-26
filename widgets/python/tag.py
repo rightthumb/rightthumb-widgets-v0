@@ -11,11 +11,14 @@ def sw():
 	_.switches.register( 'Tags', '-t,-tag,-tags', 'tag1 tag2 tag3' )
 	_.switches.register( 'Note', '-n,-note', 'hello world', isData='raw' )
 	_.switches.register( 'Subject', '-sub,-subject', 'function fnName | _ this all goes under general' )
-	_.switches.register( 'RelatedFiles', '-rel,-related', 'subject.txt related1.txt r2.txt r3.txt' )
+	_.switches.register( 'RelatedFiles', '-r,-rel,-related', 'subject.txt related1.txt r2.txt r3.txt' )
 
-	_.switches.register( 'Rename', '-r,-rename', 'file1.txt file2.txt | tag1 tag2 | folder1 folder2' ) # renames file or folder or tag 
+	_.switches.register( 'Rename', '-rename', 'file1.txt file2.txt | tag1 tag2 | folder1 folder2' ) # renames file or folder or tag 
 	_.switches.register( 'Delete', '-del,-delete' ) # dumps files or folders data with numbers and can choose multiple
 	_.switches.register( 'Recover', '-recover' ) # dumps transactions with numbers and can choose multiple
+
+	_.switches.register( 'Dump', '-d,-dump' )
+	_.switches.register( 'InitializeDatabase', '-i,-initialize' )
 
 	_.switches.register( 'Dump', '-d,-dump' )
 _._default_settings_()
@@ -322,7 +325,7 @@ def add_tag(path, tag, item_type='file'):
 	key = item_type+'s'
 	if not path in structure[key]: structure[key][path] = {'tags': [], 'notes': [],'related':[]}
 	if not tag in structure[key][path]['tags']: structure[key][path]['tags'].append(tag)
-	if not 'tag' in structure['tags']: structure['tags'][tag] = []
+	if not tag in structure['tags']: structure['tags'][tag] = []
 	structure['tags'][tag].append(path)
 	log_transaction('add_tag', path)
 	_.pr(f"Tag '{tag}' added to {item_type}: {path}",c='green')
@@ -428,26 +431,42 @@ def action():
 
 	if _.switches.isActive('Files') and not _.switches.isActive('RelatedFiles'):
 		fiFo = 'file'
-		file_paths = _.switches.values('Files')
+		if not len(_.switches.values('Files')):
+			file_paths = _.isData()
+		else:
+			file_paths = _.switches.values('Files')
+		
 		for path in file_paths:
 			path = __.path(path)
-			create_file(path)
-			subF.append(path)
+			create_file(os.path.abspath(path))
+			subF.append(os.path.abspath(path))
 	
 	if _.switches.isActive('Folders'):
 		fiFo = 'folder'
 		folder_paths = _.switches.values('Folders')
 		for path in folder_paths:
 			path = __.path(path)
-			create_folder(path)
-			subF.append(path)
+			create_folder(os.path.abspath(path))
+			subF.append(os.path.abspath(path))
 
 	if _.switches.isActive('Tags'):
 		do = 'tag'
 		tags = _.switches.values('Tags')
 		for tag in tags:
-			# Assuming you have a path set somewhere
-			for sub in subF: add_tag(sub, tag, fiFo)
+			if _.switches.isActive('Files'):
+				if not len(_.switches.values('Files')):
+					file_paths = _.isData()
+				else:
+					file_paths = _.switches.values('Files')
+				for path in file_paths: add_tag(os.path.abspath(path), tag, fiFo)
+			elif _.switches.isActive('Folders'):
+				if not len(_.switches.values('Folders')):
+					file_paths = _.isData()
+				else:
+					file_paths = _.switches.values('Folders')
+				for path in file_paths: add_tag(os.path.abspath(path), tag, fiFo)
+			else:
+				for sub in subF: add_tag(os.path.abspath(path), tag, fiFo)
 
 	if _.switches.isActive('Note'):
 		do = 'note'
@@ -455,7 +474,7 @@ def action():
 			note = ' '.join( _.switches.values('Note') )
 		else:
 			note = ' '.join( _.isData() )
-		for sub in subF: add_note(sub, note)
+		for sub in subF: add_note(os.path.abspath(path), note)
 
 	if _.switches.isActive('Rename'):
 		old_path, new_path = _.switches.values('Rename')
@@ -464,7 +483,7 @@ def action():
 	if _.switches.isActive('Delete'):
 		file_paths = _.switches.values('Delete')
 		for path in file_paths:
-			delete_item(path)
+			delete_item(os.path.abspath(path))
 	
 	if _.switches.isActive('Recover'):
 		recover_transaction()
@@ -476,23 +495,47 @@ def action():
 
 
 
+
 def load():
-	global structure
-	structure = _.getTable('tag.json')
-	# Check if the structure exists, initialize if not
-	# if not 'files' in structure:
-	#     structure['folders'] = {}
-	#     structure['files'] = {}
-	#     structure['tags'] = {}
-	#     structure['transactions'] = []
-	if not structure:
-		structure= {}
-		structure['folders'] = {}
-		structure['folders'] = {}
-		structure['files'] = {}
-		structure['related'] = {}
-		structure['transactions'] = []
-	_.pr("Structure loaded or initialized.",c='darkcyan')
+    global structure
+    structure = _.getTable('tag.json')
+
+    # Check if structure is not loaded or is empty
+    if not structure or _.switches.isActive('InitializeDatabase'):
+        # Initialize structure with necessary keys if it's not loaded or if we're initializing
+        structure = {
+            'folders': {},
+            'files': {},
+            'related': {},
+            'tags': {},
+            'transactions': []
+        }
+    _.pr("Structure loaded or initialized.", c='darkcyan')
+
+
+
+
+# def load():
+# 	global structure
+# 	structure = _.getTable('tag.json')
+# 	# Check if the structure exists, initialize if not
+# 	# if not 'files' in structure:
+# 	#     structure['folders'] = {}
+# 	#     structure['files'] = {}
+# 	#     structure['tags'] = {}
+# 	#     structure['transactions'] = []
+# 	if _.switches.isActive('InitializeDatabase'):
+# 		structure = {}
+
+# 	if structure:
+# 		structure= {}
+# 		structure['folders'] = {}
+# 		structure['folders'] = {}
+# 		structure['files'] = {}
+# 		structure['related'] = {}
+# 		structure['tags'] = {}
+# 		structure['transactions'] = []
+# 	_.pr("Structure loaded or initialized.",c='darkcyan')
 
 
 
