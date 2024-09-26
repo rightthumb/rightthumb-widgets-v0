@@ -84,7 +84,7 @@ _.appData[focus()] = {
 
 
 _.appInfo[focus()]['relatedapps'].append('# Used to encrypt registered crypt files')
-_.appInfo[focus()]['relatedapps'].append('\t p fileBackup -silent -flag lock -runonce -noschedule -f file.txt')
+_.appInfo[focus()]['relatedapps'].append('\t p fileBackup -flag lock -runonce -noschedule -f file.txt')
 _.appInfo[focus()]['relatedapps'].append('p fileRecover')
 _.appInfo[focus()]['relatedapps'].append('p fileBackupLogFix')
 

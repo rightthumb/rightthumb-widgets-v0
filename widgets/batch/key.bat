@@ -2,18 +2,16 @@
 setlocal enabledelayedexpansion
 
 set key=%1
-if [%key%] == [r] set "key=rightthumb@yavin.m-eta.app"
-if [%key%] == [rt] set "key=rightthumb@yavin.m-eta.app"
-if [%key%] == [s] set "key=softwaredev@yavin.m-eta.app"
-if [%key%] == [sw] set "key=softwaredev@yavin.m-eta.app"
-if [%key%] == [p] set "key=programmer@yavin.m-eta.app"
-if [%key%] == [pg] set "key=programmer@yavin.m-eta.app"
-if [%key%] == [a] set "key=admin@tatooine.m-eta.app"
-if [%key%] == [aa] set "key=admin@tatooine.m-eta.app"
+if [%key%] == [r] set "key=rightthumb@sullust.sds.sh"
+if [%key%] == [rt] set "key=rightthumb@sullust.sds.sh"
+if [%key%] == [s] set "key=softwaredev@sullust.sds.sh"
+if [%key%] == [sw] set "key=softwaredev@sullust.sds.sh"
+if [%key%] == [p] set "key=programmer@sullust.sds.sh"
+if [%key%] == [pg] set "key=programmer@sullust.sds.sh"
 if [%key%] == [py] set key=python
 
 if "%~2"=="" (
-    call p. keychain -temp -get -label "!key!"
+    call p. keychain -temp 45 -get -label "!key!"
 ) else if "%~2"=="-crypt" (
     call p. keychain -get -label "!key!"
     call p. cryptString -en -clip

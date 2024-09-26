@@ -10,7 +10,6 @@ rem    - Scott Taylor Reph, RightThumb.com
 rem ###########################################################################
 rem ## {C3P0D40fAe8B} ##
 
-
 goto :main
 :backup
 set pp=%myBookmarks%\BM-%1.txt
@@ -61,9 +60,13 @@ rem if not exist %result% call p. nsfw -color red Background.red red -on "folder
 if not exist "%result%" call p. print_color -text ";t%result%" -color cyan
 if not exist "%result%" goto:eof
     %py% %widgets%\widgets\python\folder-registration.py
+    SET endpointF = %b%
+    CALL:LogBookmark %1 "%result%"
     cd /d "%result%"
     %py% %widgets%\widgets\python\folder-registration.py
     cd
+    echo.
+    echo View History: bh
 ) else (
     p error -err Bookmark does not exist
 )
@@ -159,7 +162,24 @@ set v=%back%
 echo v= %v%
 GOTO END
 
+:LogBookmark
+set "base=%myTables%\BookmarksBySession"
+if not exist "%base%" mkdir "%base%"
 
+for /f "tokens=2-4 delims=/ " %%a in ("%date%") do (
+    set "month=%%a"
+    set "day=%%b"
+    set "year=%%c"
+)
+if not exist "%base%\%Session_ID%.log" echo  >> "%base%\%Session_ID%.log"
+set theFile=%2
+CALL:DeQuote theFile
+echo %year%-%month%-%day%     %1     %theFile% >> "%base%\%Session_ID%.log"
+goto:eof
+
+:DeQuote
+    for /f "delims=" %%A in ('echo %%%1%%') do set %1=%%~A
+goto :eof
 
 :END
 goto:eof

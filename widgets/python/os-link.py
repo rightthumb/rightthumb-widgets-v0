@@ -158,13 +158,14 @@ def action():
 	import ctypes
 
 	if os.name == 'nt' and not ctypes.windll.shell32.IsUserAnAdmin():
-		print("This app requires administrative privileges. Exiting.")
+		_.pr("This app requires administrative privileges. Exiting.",c='red')
 		sys.exit()
 
 
 
 	for i,fro in enumerate( _.switches.values('From') ):
 		if os.path.isfile(fro):
+			# fro = os.path.abspath(fro)
 			fro = os.path.abspath(fro)
 		for to in _.switches.values('To'):
 			if os.path.isfile(to):
@@ -172,11 +173,11 @@ def action():
 				os.unlink(to)
 
 			try:
-				os.symlink( fro, to )
+				os.symlink( __.path(fro), to )
 				_.pr('symlink',c='yellow')
 			except:
 				try:
-					os.link( fro, to )
+					os.link( __.path(fro), to )
 					_.pr('link',c='yellow')
 				except Exception as e:
 					_.e('unable to create link',e)
