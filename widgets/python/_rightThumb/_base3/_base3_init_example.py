@@ -19,7 +19,7 @@ def focus(parentApp='', childApp='', reg=True): global appDBA; f = __.appName(ap
 fieldSet=_.l.vars(focus(),__name__,__file__,appDBA);_.load();_v=__.imp('_rightThumb._vars');
 ##################################################
 
-
+# app_navigator: switches
 def sw():
 	pass
 	#b)--> examples
@@ -133,7 +133,7 @@ def action():
 #e)--> examples
 ##################################################
 ########################################################################################
-# pip install xXx
+# import requests # pip install requests
 ########################################################################################
 if __name__ == '__main__':
 	#b)--> examples

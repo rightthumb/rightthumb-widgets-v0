@@ -2,6 +2,7 @@ import _rightThumb._construct as __;appDBA=__.clearFocus(__name__,__file__);__.a
 def focus(parentApp='', childApp='', reg=True): global appDBA; f = __.appName(appDBA, parentApp, childApp); return f if reg else f
 fieldSet=_.l.vars(focus(),__name__,__file__,appDBA);_.load();_v=__.imp('_rightThumb._vars');
 
+# app_navigator: switches
 def sw():
 	_.switches.register( 'Search', '-ss,-search' )
 
@@ -12,6 +13,7 @@ def sw():
 	_.switches.register( 'Note', '-n,-note', 'hello world', isData='raw' )
 	_.switches.register( 'Subject', '-sub,-subject', 'function fnName | _ this all goes under general' )
 	_.switches.register( 'RelatedFiles', '-r,-rel,-related', 'subject.txt related1.txt r2.txt r3.txt' )
+	_.switches.register( 'Trigger', '-tr,-trigger', 'expires 1w' )
 
 	_.switches.register( 'Rename', '-rename', 'file1.txt file2.txt | tag1 tag2 | folder1 folder2' ) # renames file or folder or tag 
 	_.switches.register( 'Delete', '-del,-delete' ) # dumps files or folders data with numbers and can choose multiple
@@ -20,7 +22,6 @@ def sw():
 	_.switches.register( 'Dump', '-d,-dump' )
 	_.switches.register( 'InitializeDatabase', '-i,-initialize' )
 
-	_.switches.register( 'Dump', '-d,-dump' )
 _._default_settings_()
 
 _.appInfo[focus()] = {
@@ -165,30 +166,7 @@ def load_structure():
 
 
 
-
-
-def related_files():
-	global structure
-	if len(_.switches.values('Files')) == 1:
-		subject = _.switches.values('Files')[0]
-		files = _.isData()
-		if subject in files: files.remove(subject)
-		subject = os.path.abspath(subject)
-		_.pr(f"Subject: {subject}",c='green')
-		for i,file in enumerate(files):
-			files[i] = os.path.abspath(file)
-			_.pr(f"Related file added: {files[i]}",c='green')
-	else:
-		files = _.switches.values('Files')
-		for i,file in enumerate(files): files[i] = os.path.abspath(file)
-		subject = files.pop(0)
-	if not subject in structure['related']: structure['related'][subject] = []
-	for file in files:
-		if not file in structure['related'][subject]:
-			structure['related'][subject].append(file)
-	if subject not in structure['files']: structure['files'][subject] = {'tags': [], 'notes': [],'related':[]}
-	structure['files'][subject]['related'].append({'subject':  ' '.join(_.switches.values('Subject'))  ,'file':files})
-	_.pr(f"Related file added: {file}",c='green')
+# app_navigator: create
 
 def create_folder(path):
 	if path not in structure['folders']:
@@ -319,18 +297,20 @@ def recover_transaction():
 
 
 
-
+# app_navigator: process
 
 def add_tag(path, tag, item_type='file'):
+	global structure
 	key = item_type+'s'
 	if not path in structure[key]: structure[key][path] = {'tags': [], 'notes': [],'related':[]}
 	if not tag in structure[key][path]['tags']: structure[key][path]['tags'].append(tag)
-	if not tag in structure['tags']: structure['tags'][tag] = []
-	structure['tags'][tag].append(path)
+	if not tag in structure['tags'][key]: structure['tags'][key][tag] = []
+	structure['tags'][key][tag].append(path)
 	log_transaction('add_tag', path)
 	_.pr(f"Tag '{tag}' added to {item_type}: {path}",c='green')
 
 def remove_tag(path, tag, item_type='file'):
+	global structure
 	if item_type == 'file' and path in structure['files'] and tag in structure['files'][path]['tags']:
 		structure['files'][path]['tags'].remove(tag)
 	elif item_type == 'folder' and path in structure['folders'] and tag in structure['folders'][path]['tags']:
@@ -342,11 +322,81 @@ def remove_tag(path, tag, item_type='file'):
 	log_transaction('remove_tag', path)
 	_.pr(f"Tag '{tag}' removed from {item_type}: {path}",c='green')
 
+def related_files():
+	global structure
+	if len(_.switches.values('Files')) == 1:
+		subject = _.switches.values('Files')[0]
+		files = _.isData()
+		if subject in files: files.remove(subject)
+		subject = os.path.abspath(subject)
+		_.pr(f"Subject: {subject}",c='green')
+		for i,file in enumerate(files):
+			files[i] = os.path.abspath(file)
+			_.pr(f"Related file added: {files[i]}",c='green')
+	else:
+		files = _.switches.values('Files')
+		for i,file in enumerate(files): files[i] = os.path.abspath(file)
+		subject = files.pop(0)
+	if not subject in structure['related']: structure['related'][subject] = []
+	for file in files:
+		if not file in structure['related'][subject]:
+			structure['related'][subject].append(file)
+	if subject not in structure['files']: structure['files'][subject] = {'tags': [], 'notes': [],'related':[]}
+	structure['files'][subject]['related'].append({'subject':  ' '.join(_.switches.values('Subject'))  ,'file':files})
+	_.pr(f"Related file added: {file}",c='green')
+	log_transaction('related_files', subject)
 
 
 
+def add_trigger(path, item_type='file'):
+	global structure
+	key = item_type+'s'
 
+	if os.path.isfile(path):
+		key = 'files'
+	elif os.path.isdir(path):
+		key = 'folders'
+	else:
+		_.pr('Invalid path',c='red')
+		return
 
+	config = _.switches.values('Trigger')
+	subject = config.pop(0)
+	# config = ' '.join( config )
+	# print('config',config)
+	continuity = {
+		'expir':'expires',
+		'save':'onSave',
+	}
+
+	for k in continuity:
+		if k in subject:
+			subject = continuity[k]
+	if not path in structure['triggers'][key]: structure['triggers'][key][path] = {}
+	deleted = False
+	notDeleted = False
+	if config[0] == '_': deleted = True
+	if subject in structure['triggers'][key][path]:
+		if config[0] == '_':
+			del structure['triggers'][key][path][subject]
+			_.pr(f"Trigger deleted: {path}",c='red')
+		else:
+			_.pr(f"Trigger updated: {path}",c='yellow')
+	else:
+		if not deleted:
+			_.pr(f"Trigger added: {path}",c='green')
+		else:
+			notDeleted = True
+			_.pr(f"Trigger did not exist: {path}",c='red')
+	if not deleted:
+		structure['triggers'][key][path][subject] = config
+		log_transaction('add_trigger', path)
+	else:
+		if path in structure['triggers'][key]:
+			if not structure['triggers'][key][path]: del structure['triggers'][key][path]
+		if not notDeleted:
+			log_transaction('remove_trigger', path)
+	
 
 
 
@@ -418,6 +468,9 @@ def action():
 	subF = []
 	fiFo = ''
 	do = ''
+
+
+	# app_navigator: routing
 	if _.switches.isActive('Recover'):
 		recover_transaction()
 		return
@@ -448,6 +501,24 @@ def action():
 			path = __.path(path)
 			create_folder(os.path.abspath(path))
 			subF.append(os.path.abspath(path))
+
+	if _.switches.isActive('Trigger'):
+		do = 'trigger'
+		tags = _.switches.values('Tags')
+		if _.switches.isActive('Files'):
+			if not len(_.switches.values('Files')):
+				file_paths = _.isData()
+			else:
+				file_paths = _.switches.values('Files')
+			for path in file_paths: add_trigger(os.path.abspath(path), fiFo)
+		elif _.switches.isActive('Folders'):
+			if not len(_.switches.values('Folders')):
+				file_paths = _.isData()
+			else:
+				file_paths = _.switches.values('Folders')
+			for path in file_paths: add_trigger(os.path.abspath(path), fiFo)
+		else:
+			for sub in subF: add_trigger(os.path.abspath(path), fiFo)
 
 	if _.switches.isActive('Tags'):
 		do = 'tag'
@@ -495,7 +566,7 @@ def action():
 
 
 
-
+# app_navigator: load
 def load():
     global structure
     structure = _.getTable('tag.json')
@@ -507,7 +578,8 @@ def load():
             'folders': {},
             'files': {},
             'related': {},
-            'tags': {},
+            'tags': {'files': {}, 'folders': {}},
+            'triggers': {'files': {}, 'folders': {}},
             'transactions': []
         }
     _.pr("Structure loaded or initialized.", c='darkcyan')

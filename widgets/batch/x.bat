@@ -1,4 +1,5 @@
 @echo off
+call p. on -delete -session %Session_ID%
 if [%1] == [lock] call p. lock-files
 if [%1] == [l] call p. lock-files
 if [%1] == [] call pin

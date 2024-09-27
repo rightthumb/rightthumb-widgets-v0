@@ -108,7 +108,10 @@ isHeaders = {
 }
 import time,signal,sys,platform
 tz = str(time.strftime("%z")).replace(':','')
-signal.signal(signal.SIGINT, lambda x, y: sys.exit(0))
+try:
+	signal.signal(signal.SIGINT, lambda x, y: sys.exit(0))
+except:
+	sys.exit(0)
 
 banner=None
 def _local_(do): print('not registered')

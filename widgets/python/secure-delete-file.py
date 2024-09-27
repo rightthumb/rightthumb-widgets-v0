@@ -147,11 +147,18 @@ _.postLoad( __file__ )
 ########################################################################################
 # START
 
-
+def aliases(fi):
+    aliases=_.getTable('file-open-aliases.hash')
+    if not 'aliases' in aliases: aliases['aliases']={}
+    if not 'files' in aliases: aliases['files']={}
+    if fi in aliases['aliases']:
+        fi = aliases['aliases'][fi]
+    return fi
 
 def action():
 	# for path in _.switches.values('Files'):
 	for path in _.isData(r=1):
+		path = aliases(path)
 		if os.path.isfile(path):
 			try:
 				file_data = _.getText(path,raw=True)

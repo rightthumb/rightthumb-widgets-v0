@@ -378,6 +378,7 @@ unixID_path = myConfig + slash + '.unix_id'
 vault_path = myConfig + slash + '.vault'
 pin_path = myConfig + slash + '.pin'
 myDecrypt = myConfig+os.sep+'decrypt.key'
+# if not os.path.isfile(myConfig+os.sep+'.machine'): saveText(getMachineID(),myConfig+os.sep+'.machine')
 def vaultPath(forceLogin=False):
 	global myConfig
 	if forceLogin:
@@ -922,6 +923,7 @@ safeChar = printable
 cryptoKeyPad = '{D0A25D57-37B9-4DCA-A290-F7F5D2B4E869-ED89EEC8-FC42-4E36-B57A-BD2756F58071-1358EA50-2BED-4533-99C7-4D90BB450D7F-40A9A7E8-6AF5-4C32-9062-F975CDF12209}'
 myLogs = myHome + slash+'logs'
 myAppLogs = myHome + slash+'logs'+slash+'apps'
+machineID = myConfig+os.sep+'.machine'
 
 def tv(var=None,val='a80cc434'):
 	global terminal_variables
@@ -1955,3 +1957,7 @@ else:
 # chromedriver = 'D:\\.rightthumb-widgets\\widgets\\exe\\ChromeDriver\\109.0.5414.25\\chromedriver.exe'
 chromedriver = 'D:\\techApps\\chrome-win\\chrome.exe'
 chromePortable = 'D:\\techApps\\chrome-win\\chrome.exe'
+
+# if not os.path.isfile(myConfig+os.sep+'.machine'):
+	# with open(myConfig+os.sep+'.machine', 'w') as machineID: machineID.write(f'{getMachineID()}')
+if not os.path.isfile(myConfig+os.sep+'.machine'): saveText(getMachineID(),machineID)
