@@ -501,6 +501,12 @@ spentPrint = {}
  
 
 def action():
+
+    tagReg = _.regImp( __.appReg, 'tag' )
+    tagReg.switch('Trigger','kill,all')
+    tagReg.switch('Files',_v.tt+os.sep+'tag.json')
+    tagReg.action()
+
     if _.switches.isActive('Test') and not len(_.switches.values('Test')): pr('\n\nTest:','thresh', 'url', 'dump\n\n',c='green')
     if _.switches.isActive('Session') and _.switches.isActive('Folder'):
         if not len(_.switches.values('Folder')):
@@ -546,7 +552,8 @@ def load():
     global tag
     global loadCount
     if loadCount % 3 == 0 or not tag:
-        tag = _.getTable('tag.json')
+        # tag = _.getTable('tag.json')
+        tag = _.getTable2(_v.tt+os.sep+'tag.json')
         if not tag:
             # Initialize tag
             tag = {

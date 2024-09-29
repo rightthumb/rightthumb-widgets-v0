@@ -21397,7 +21397,7 @@ class regImp:
 		#   theID = threads.add( 'execute', theFunc, [ arg, self.focus ], trigger=saveThreadsLog, loaded=True )
 
 		return theID
-
+impReg=regImp
 ##############################
 # _regImpEXAMPLE = _.regImp( focus(), '_rightThumb._auditCodeBase' )
 
