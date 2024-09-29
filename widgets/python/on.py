@@ -5,7 +5,7 @@ fieldSet=_.l.vars(focus(),__name__,__file__,appDBA);_.load();_v=__.imp('_rightTh
 def sw():
     pass
     _.switches.register( 'Session', '-ss,-se,-sess,-session' )
-    _.switches.register( 'Folder', '-f-,-folder' )
+    _.switches.register( 'Folder', '-f,-folder' )
     _.switches.register( 'Stop', '-stop' )
     _.switches.register( 'Delete', '-del,-delete,-stop,-kill' )
     _.switches.register( 'RemoveIdleFlag', '-notIdle' )
@@ -47,13 +47,13 @@ thread = {}
 folders = {}
 sleepFor = {}
 isOmit = {}
+my_observer = {}
 sessionsStopped = []
 
 def monitor(folder, session):
-    global tag
+    global statuses, stop_event, thread, sessionsStopped, tag
+    global my_observer
 
-    global statuses, stop_event, thread, my_observer, sessionsStopped
-    
     # Initialize statuses if needed
     if 'statuses' not in globals() or not statuses:
         statuses = {}
@@ -64,14 +64,84 @@ def monitor(folder, session):
     ignore_directories = False
     case_sensitive = True
 
+
+
+    # tag['triggers']['fileFolders'] and not folder in tag['triggers']['files']
+    
+
+    triggerList = []
+
+    try:
+        pass
+        tag['triggers']['folders'][folder]['expires']
+        import _Triggers
+        pr(line=1,c='cyan')
+        pr('start expires',c='yellow')
+        for path in _.fo(folder,r=0):
+            if _Triggers.expires(path,tag['triggers']['folders'][folder]['expires']):
+                pr('Expired:',path,c='red')
+            else:
+                pr('Not Expired:',path,c='green')
+        pr('end expires',c='yellow')
+        pr(line=1,c='cyan')
+    except:
+        pass
+
+    triggerList.append(f'''
+        try:
+            tag['triggers']['files'][__.path(event.src_path)]['expires']
+            run = True
+        except:
+            run = False
+
+        if run:
+            # print(event.src_path)
+            # print('tag:::',tag['triggers']['files'][__.path(event.src_path)])
+            print(_Triggers.expires(event.src_path,tag['triggers']['files'][__.path(event.src_path)]['expires']))
+''')
+    triggerList.append(f'''
+        global my_observer
+        global statuses
+        global stop_event
+        if __.path(event.src_path) in tag['triggers']['files']:
+        #try:
+            print('kill',event.src_path)
+            tag['triggers']['files'][__.path(event.src_path)]['kill']
+            __.KeyboardInterrupt = 1
+            for sess in my_observer:
+                my_observer[sess].stop()
+                my_observer[sess].join()
+                unregister(sess,'trigger')
+                statuses[sess] = False
+                stop_event[sess].set()
+
+                if thread[sess] is not threading.current_thread(): thread[sess].join()
+                sessionsStopped.append(sess)
+            import sys
+            sys.exit()
+            print('killed',event.src_path)
+        #except Exception as e:
+        #    print('no kill',e,event.src_path)
+''')
+    
+
+
     # Dynamically create the event handler using exec
+    includeTriggers = '\n\n'.join(triggerList)
     isOpen = '{'
     isClose = '}'
     fn = f'''
 def t{session}(event):
-    global statuses
-    _.pr(__.longSpace,r=1)
-    _.pr(f"modified, {isOpen}event.src_path{isClose} has been modified", c='purple')
+    try:
+        global tag
+        global statuses
+        import _Triggers
+{includeTriggers}
+        pr(__.longSpace,r=1)
+        pr(f"modified, {isOpen}event.src_path{isClose} has been modified", c='purple')
+    except Exception as e:
+        # print(e)
+        print('Killed_101')
     '''
     exec(fn, globals())
     # Define the pattern matching event handler dynamically using exec
@@ -83,10 +153,10 @@ statuses["{session}"] = True
     ''', globals())
 
     # Set up the observer
-    go_recursively = True
-    my_observer = Observer()
-    my_observer.schedule(my_event_handler, folder, recursive=go_recursively)
-    my_observer.start()
+    go_recursively = False
+    my_observer[session] = Observer()
+    my_observer[session].schedule(my_event_handler, folder, recursive=go_recursively)
+    my_observer[session].start()
 
     # Logic for monitoring session status dynamically with exec
     code = f'''
@@ -98,7 +168,7 @@ try:
         def whileLoopTest(err):
             ep = endpoint('Get', "{session}")
             if not ep.strip() == 'Active':
-                _.pr('Session {session} has closed', c='Background.green')
+                pr('Session {session} has closed', c='Background.green')
                 if "{session}" in statuses:
                     statuses["{session}"] = False
                 return False
@@ -111,7 +181,7 @@ try:
             while statuses["{session}"]:
                 cnt += 1
                 if _.switches.isActive('Test') and ('dump' in _.switches.value('Test') or False):
-                    _.pr('monitor loop', cnt, c='Background.blue')
+                    pr('monitor loop', cnt, c='Background.blue')
                 time.sleep(sleepFor["{session}"])
                 if not whileLoopTest(err):
                     err += 1
@@ -120,18 +190,18 @@ try:
 
             if err < 3:
                 if _.switches.isActive('Test') and ('dump' in _.switches.value('Test') or False):
-                    _.pr('err', err, c='Background.light_blue')
+                    pr('err', err, c='Background.light_blue')
                 whileLoop(err)
 
         except KeyError as e:
             __.monitorError = 'KeyError'
-            _.pr(f"KeyError: {isOpen}str(e){isClose}", c='red')
+            pr(f"KeyError: {isOpen}str(e){isClose}", c='red')
             raise ValueError("KeyError")
 
         except KeyboardInterrupt:
             # whileLoop(err)
             __.monitorError = 'KeyboardInterrupt'
-            _.pr("Session {session} has stopped by keyboard", c='red')
+            pr("Session {session} has stopped by keyboard", c='red')
             __.KeyboardInterrupt = True
             raise ValueError("KeyboardInterrupt")
 
@@ -143,10 +213,10 @@ try:
                 __.monitorError = 'finally'
                 raise ValueError("finally")
                 if _.switches.isActive('Test') and ('dump' in _.switches.value('Test') or False):
-                    _.pr("Session {session} has stopped by finally", c='red')
+                    pr("Session {session} has stopped by finally", c='red')
                 
                 if _.switches.isActive('Test') and ('dump' in _.switches.value('Test') or False):
-                    _.pr("Observer stopped")
+                    pr("Observer stopped")
                 time.sleep(2)
 
     if statuses["{session}"]:
@@ -154,7 +224,7 @@ try:
 except Exception as e:
     if __.KeyboardInterrupt: raise ValueError("KeyboardInterrupt")
     '''
-    __.KeyboardInterrupt = False
+    
     __.monitorError = ''
     cnt2 = 0
     total = 0
@@ -166,7 +236,7 @@ except Exception as e:
         try:
             exec(code, globals())
         except KeyboardInterrupt:
-            _.pr("Caught KeyboardInterrupt. Exiting gracefully...",c='red')
+            pr("Caught KeyboardInterrupt. Exiting gracefully...",c='red')
             __.KeyboardInterrupt = True
 
         except Exception as e:
@@ -183,20 +253,19 @@ except Exception as e:
 
 
 
-    my_observer.stop()
-    my_observer.join()
-    unregister(session)
+    my_observer[session].stop()
+    my_observer[session].join()
+    unregister(session,'monitor')
     statuses[session] = False
     stop_event[session].set()
 
-    if thread[session] is not threading.current_thread():
-        thread[session].join()
-
+    if thread[session] is not threading.current_thread(): thread[session].join()
     sessionsStopped.append(session)
-    _.pr(__.longSpace,r=1)
-    _.pr(f"Session stopped by URL {session} {folder}", c='red')
 
+    pr(__.longSpace,r=1)
+    pr(f"Session stopped by URL {session} {folder}", c='red')
 
+__.KeyboardInterrupt = False
 
 
 def endpoint(theAction='Get', session='None', folder=None, json=False):
@@ -226,15 +295,15 @@ def endpoint(theAction='Get', session='None', folder=None, json=False):
     except:
         pass
 
-    _.pr('endpoint error', c='red')
+    pr('endpoint error', c='red')
     return 'Nope'
 
 
 # requests.get(url).text
 # response = requests.get(url).json()
-def unregister(session):
+def unregister(session,where):
     if _.switches.isActive('Test') and ( 'dump' in  _.switches.value('Test') or False):
-        _.pr('unregister', session, c='yellow')
+        pr('unregister', session, where, c='yellow')
     global statuses
     global folders
     if session in statuses:
@@ -257,8 +326,9 @@ lS = {
     'threshSame': 3,
 }
 
+
 def loadSessions():
-    _.pr('Checking',c='green',r=1)
+    pr('Checking',c='green',r=1)
     global lS
     global statuses
     global folders
@@ -281,7 +351,7 @@ def loadSessions():
         tmp.append(rec)
     dump = tmp
     # if not len(dump):
-    _.pr('Waiting',c='green',r=1)
+    pr('Waiting',c='green',r=1)
     if lS['len'] == len(dump):
         lS['same'] += 1
     else:
@@ -292,39 +362,39 @@ def loadSessions():
         same = True
         if _.switches.isActive('Test') and ( 'dump' in  _.switches.value('Test') or 'thresh' in  _.switches.value('Test')):
             if lS['same'] % lS['threshSame'] == 0:
-                _.pr('same:', lS['same'],c='Background.purple')
+                pr('same:', lS['same'],c='Background.purple')
 
     if len(dump) and same:
         if lS['while'] > 2 and  _.switches.isActive('Test') and ( 'dump' in  _.switches.value('Test') or 'thresh' in  _.switches.value('Test')):
-            _.pr()
-            _.pr('iter:', lS['iter'])
-            _.pr('while:', lS['while'])
-            _.pr('groups:', lS['groups'])
-            _.pr()
+            pr()
+            pr('iter:', lS['iter'])
+            pr('while:', lS['while'])
+            pr('groups:', lS['groups'])
+            pr()
         lS['while'] = 2
     if not len(dump):
         lS['empty'] += 1
         if _.switches.isActive('Test') and ( 'dump' in  _.switches.value('Test') or 'thresh' in  _.switches.value('Test')):
-            _.pr('empty:', lS['empty'] % lS['thresh'],c='cyan')
+            pr('empty:', lS['empty'] % lS['thresh'],c='cyan')
     if lS['empty'] % lS['thresh'] == 0:
         lS['while'] += 1
         if lS['while'] > lS['max']:
             lS['while'] = lS['max']
             lS['groups'] += 1
             if _.switches.isActive('Test') and ( 'dump' in  _.switches.value('Test') or 'thresh' in  _.switches.value('Test')):
-                _.pr('groups:', lS['groups'] % lS['thresh'],c='yellow')
+                pr('groups:', lS['groups'] % lS['thresh'],c='yellow')
             if lS['groups'] % lS['thresh'] == 0:
                 lS['while'] = lS['reset']
                 if _.switches.isActive('Test') and ( 'dump' in  _.switches.value('Test') or 'thresh' in  _.switches.value('Test')):
-                    _.pr()
-                    _.pr('iter:', lS['iter'])
-                    _.pr('while:', lS['while'])
-                    _.pr('groups:', lS['groups'])
-                    _.pr()
+                    pr()
+                    pr('iter:', lS['iter'])
+                    pr('while:', lS['while'])
+                    pr('groups:', lS['groups'])
+                    pr()
             
         else:
             if _.switches.isActive('Test') and ( 'dump' in  _.switches.value('Test') or 'thresh' in  _.switches.value('Test')):
-                _.pr('while:', lS['while'])
+                pr('while:', lS['while'])
 
     records = {}
     sessionsToAdd = []
@@ -349,17 +419,20 @@ def loadSessions():
         if shouldAdd:
             sessionsToAdd.append(session)
             records[session] = rec
-
+    # print('sessionsToAdd:',sessionsToAdd)
     if not len(sessionsToAdd):
         shouldWait = False
     else:
         shouldWait = True
     if not shouldWait: return
-    _.pr(__.longSpace,r=1)
+    pr(__.longSpace,r=1)
     spent = []
     start = int(time.time())
     i = 0
-    while shouldWait:
+    sessionsToAddCnt = 0
+    sessionsAdded = []
+    while shouldWait or sessionsToAddCnt > 10:
+        sessionsToAddCnt += 1
         i += 1
         sessionsToAdd = list(set(sessionsToAdd))
         cnt = 0
@@ -367,22 +440,26 @@ def loadSessions():
         for session in sessionsToAdd:
             if session in sessionsStopped: cnt += 1
             if not session in spent:
-                unregister(session)
+                # unregister(session,'loadSessions')
                 spent.append(session)
                 diff = int(time.time()) - start
                 if _.switches.isActive('Test') and ( 'dump' in  _.switches.value('Test') or False):
-                    _.pr(i,session,diff,'\t',records[session]['folder'], c='cyan')
-        if cnt == len(sessionsToAdd):
-            shouldWait = False
-
+                    pr('here-101',i,session,diff,'\t',records[session]['folder'], c='cyan')
+            sessionsAdded.append(session)
+        # pr('sessionsToAdd:',sessionsToAddCnt, sessionsToAdd,c='darkcyan')
+        if len(sessionsAdded) == len(sessionsToAdd): shouldWait = False
+        if cnt == len(sessionsToAdd): shouldWait = False
+    # print('records:',records)
     for session in records:
         # print(tag['triggers']['fileFolders'])
         if not folder in tag['triggers']['fileFolders'] and not folder in tag['triggers']['folders']:
             if not folder in isOmit: isOmit[folder] = 0
-            isOmit[folder] += 1
-            if isOmit[folder] > 3:
+            if isOmit[folder] > 5:
                 isOmit[folder] = 0
-            _.pr(f"Folder not found in trigger tag: {folder}",c='red')
+                pr(f"Folder not found in trigger tag: {folder}",c='red')
+            isOmit[folder] += 1
+            if _.switches.isActive('Test') and ( 'dump' in  _.switches.value('Test') or False):
+                pr(f"Folder not found in trigger tag: {folder}",c='red')
             continue
         folder = records[session]['folder']
         if not records[session]['folder']: continue
@@ -397,16 +474,25 @@ def loadSessions():
         if session in spentPrint and folder in spentPrint[session]:
             pass
         else:
-            _.pr(session,folder, c='yellow')
+            pr(session,folder, c='yellow')
             if session not in spentPrint: spentPrint[session] = []
             spentPrint[session].append(folder)
 
-
+    # loadSessions
     
 
     # _.pv(dump)
     # _.isExit(__file__)
-            
+
+def pr(*args,c='Color.bold',r=0):
+    args = list(args)
+    if len(args) > 0 and args[0] == __.longSpace:
+        # _.pr(__.longSpace,r=1)
+        return
+
+    _.pr(__.longSpace,r=1)
+    _.pr(args,c=c,r=r)
+
 
 spentPrint = {} 
 
@@ -415,7 +501,7 @@ spentPrint = {}
  
 
 def action():
-    if _.switches.isActive('Test') and not len(_.switches.values('Test')): _.pr('\n\nTest:','thresh', 'url', 'dump\n\n',c='green')
+    if _.switches.isActive('Test') and not len(_.switches.values('Test')): pr('\n\nTest:','thresh', 'url', 'dump\n\n',c='green')
     if _.switches.isActive('Session') and _.switches.isActive('Folder'):
         if not len(_.switches.values('Folder')):
             folder = os.getcwd()
@@ -431,28 +517,47 @@ def action():
         return
     global lS
 
-    __.KeyboardInterrupt = False
+    _.pr(line=1,c='yellow')
     try:
         while not __.KeyboardInterrupt:
-            loadSessions()
+            try:
+                loadSessions()
+            except:
+                time.sleep(5)
+                import sys
+                sys.exit()    
             time.sleep(lS['while'])
     except KeyboardInterrupt:
-        _.pr("Caught KeyboardInterrupt. Exiting gracefully...",c='red')
+        pr("Caught KeyboardInterrupt. Exiting gracefully...",c='red')
         __.KeyboardInterrupt = True
 
     except Exception as e:
-        _.pr(f"action error {e}",c='red')
+        pr(f"action error {e}",c='red')
+        if 'dictionary changed size during iteration' in str(e):
+            __.KeyboardInterrupt = 1
+            _.isExit(__file__)
 
 
 __.longSpace = '                                                                                               '
 
 loadCount = 0
+tag = False
 def load():
     global tag
     global loadCount
-    if loadCount % 15 == 0:
+    if loadCount % 3 == 0 or not tag:
         tag = _.getTable('tag.json')
-        _.pr("Tag loaded.", c='darkcyan',r=1)
+        if not tag:
+            # Initialize tag
+            tag = {
+                'folders': {},
+                'files': {},
+                'related': {},
+                'tags': {'files': {}, 'folders': {}},
+                'triggers': {'files': {}, 'folders': {}, 'fileFolders': {}},
+                'transactions': []
+            }
+        pr("Tag loaded.", c='darkcyan',r=1)
     loadCount += 1
 
 ########################################################################################

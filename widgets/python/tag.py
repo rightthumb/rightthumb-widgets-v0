@@ -169,6 +169,7 @@ def load_structure():
 # app_navigator: create
 
 def create_folder(path):
+    if not os.path.isdir(path): return
     if path not in structure['folders']:
         structure['folders'][path] = {'tags': [], 'notes': [],'related':[]}
         log_transaction('create_folder', {'path': path})
@@ -177,6 +178,7 @@ def create_folder(path):
         _.pr(f"Folder already exists: {path}",c='green')
 
 def create_file(path):
+    if not os.path.isfile(path): return
     if path not in structure['files']:
         structure['files'][path] = {'tags': [], 'notes': [],'related':[]}
         log_transaction('create_file', {'path': path})
@@ -351,6 +353,8 @@ def related_files():
 def add_trigger(path, item_type='file'):
     global structure
     global trigger
+    test = 0
+    # test += 1; print('trigger',test)
     key = item_type+'s'
     key2 = item_type+'s'
 
@@ -378,7 +382,9 @@ def add_trigger(path, item_type='file'):
     deleted = False
     wasDeleted = False
     deleted = _.switches.isActive('Delete')
+    # test += 1; print('trigger',test)
     if _.switches.isActive('Delete'):
+        # print('delete')
         try:
             del structure['triggers'][key][path][subject]
             pp = path.split(os.sep)
@@ -396,46 +402,45 @@ def add_trigger(path, item_type='file'):
                 if not structure['triggers']['fileFolders'][folder]:
                     del structure['triggers']['fileFolders'][folder]
             log_transaction('remove_trigger', path)
-            return
         except Exception as e:
+            pass
             # _.pr(f"Trigger did not exist: {path} : {e}",c='red')
-            return
+        return
 
-
-    if not _.switches.values('Delete'):
-        if config[0] == '_': deleted = True
-        if not path in structure['triggers'][key]: structure['triggers'][key][path] = {}
-        structure['triggers'][key][path][subject] = {}
-        if subject in structure['triggers'][key][path]:
-            if config[0] == '_':
-                del structure['triggers'][key][path][subject]
-                _.pr(f"Trigger deleted: {path}",c='red')
-            else:
-                _.pr(f"Trigger updated: {path}",c='yellow')
+    # test += 1; print('trigger',test)
+    if config[0] == '_': deleted = True
+    if not path in structure['triggers'][key]: structure['triggers'][key][path] = {}
+    structure['triggers'][key][path][subject] = {}
+    if subject in structure['triggers'][key][path]:
+        if config[0] == '_':
+            del structure['triggers'][key][path][subject]
+            _.pr(f"Trigger deleted: {path}",c='red')
         else:
-            if not deleted:
-                _.pr(f"Trigger added: {path}",c='green')
-            else:
-                wasDeleted = True
-                _.pr(f"Trigger did not exist: {path}",c='red')
+            _.pr(f"Trigger updated: {path}",c='yellow')
+    else:
         if not deleted:
-            structure['triggers'][key][path][subject] = config
-            log_transaction('add_trigger', path)
+            _.pr(f"Trigger added: {path}",c='green')
         else:
-            if path in structure['triggers'][key]:
-                if not structure['triggers'][key][path]: del structure['triggers'][key][path]
-            if not wasDeleted:
-                log_transaction('remove_trigger', path)
+            wasDeleted = True
+            _.pr(f"Trigger did not exist: {path}",c='red')
+    if not deleted:
+        structure['triggers'][key][path][subject] = config
+        log_transaction('add_trigger', path)
+    else:
+        if path in structure['triggers'][key]:
+            if not structure['triggers'][key][path]: del structure['triggers'][key][path]
+        if not wasDeleted:
+            log_transaction('remove_trigger', path)
 
-        if key == 'files':
-            key = 'fileFolders'
-            path2 = path
-            wasDeleted = False
+    if key == 'files':
+        key = 'fileFolders'
+        path2 = path
+        wasDeleted = False
 
-            path = os.path.dirname(path2)
-            if not path in structure['triggers'][key]: structure['triggers'][key][path] = {}
-            structure['triggers'][key][path][path2] = structure['triggers']['files'][path2]
-            log_transaction('add_trigger', path)
+        path = os.path.dirname(path2)
+        if not path in structure['triggers'][key]: structure['triggers'][key][path] = {}
+        structure['triggers'][key][path][path2] = structure['triggers']['files'][path2]
+        log_transaction('add_trigger', path)
 
 
 

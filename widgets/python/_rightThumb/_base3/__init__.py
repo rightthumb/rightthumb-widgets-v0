@@ -409,6 +409,7 @@ def random_color():
 
 print_ed_group={}
 def print_(*args,p=None,c=None,pad=3,g=None,end=None,pvs=None,pv=None,json=None, dic=None, line=None, rstrip=True, lineMinus=0, lineLen=None, r=None):
+	if type(args) == tuple: args = list(args)
 	global prStatus
 	if not prStatus: return args
 	# if type(args[0]) == str: args[0] = args[0].decode('utf-8')
@@ -16121,7 +16122,7 @@ def timeAgo22( do='', startDate=None,epoch=None, d=None ):
 		ts = autoDate( do )
 	else:
 		# ts = timeAgo_do( do, startDate)
-		if not do.startswith('+'):
+		if not do.startswith('-') or not do.startswith('+'):
 			ts = timeAgo_past(do,startDate)
 		elif do.startswith('+'):
 			ts = timeFuture(do,startDate)

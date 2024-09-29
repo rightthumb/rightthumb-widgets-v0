@@ -3265,6 +3265,13 @@ alias ai.t="$p ai -prompt what is the tmux shortcut for"
 alias tmux.="curl -s https://sds.sh/tmux-aliases | $p line --c +"
 alias tmux..="curl -s https://sds.sh/tmux-aliases | $p line --c "
 
+
+
+alias on.run='while true; do $p on; sleep 1; done'
+
+
+
+
 clear
 # get_time_difference
 # a3bc42ec51e9
