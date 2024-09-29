@@ -462,22 +462,23 @@ def loadSessions():
             if _.switches.isActive('Test') and ( 'dump' in  _.switches.value('Test') or False):
                 pr(f"Folder not found in trigger tag: {folder}",c='red')
             continue
-        folder = records[session]['folder']
-        if not records[session]['folder']: continue
-        statuses[session] = True
-        sleepFor[session] = 1
-        folders[session] = folder
-        
-        stop_event[session] = threading.Event()
-        thread[session] = threading.Thread(target=monitor, args=(folder, session))
-        thread[session].start()
-        global spentPrint
-        if session in spentPrint and folder in spentPrint[session]:
-            pass
-        else:
-            pr(session,folder, c='yellow')
-            if session not in spentPrint: spentPrint[session] = []
-            spentPrint[session].append(folder)
+        if os.path.isdir(folder):
+            folder = records[session]['folder']
+            if not records[session]['folder']: continue
+            statuses[session] = True
+            sleepFor[session] = 1
+            folders[session] = folder
+            
+            stop_event[session] = threading.Event()
+            thread[session] = threading.Thread(target=monitor, args=(folder, session))
+            thread[session].start()
+            global spentPrint
+            if session in spentPrint and folder in spentPrint[session]:
+                pass
+            else:
+                pr(session,folder, c='yellow')
+                if session not in spentPrint: spentPrint[session] = []
+                spentPrint[session].append(folder)
 
     # loadSessions
     
