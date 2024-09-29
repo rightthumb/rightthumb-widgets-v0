@@ -403,23 +403,24 @@ def loadSessions():
     for rec in dump:
         session = rec['session']
         folder = rec['folder']
-        shouldAdd = False
-        if session in statuses:
-            err = False
-            if not session in folders:
-                err = True
-            if folder is None or err or not folders[session] == folder or rec['status'] == 'Active':
-                statuses[session] = False
-                sleepFor[session] = .005
-                sessionsToStop.append(session)
-                if not session in folders or folders[session] == folder:
-                    shouldAdd = True
-        elif session not in statuses:
-            shouldAdd = True
-        if session in statuses: shouldAdd = False
-        if shouldAdd:
-            sessionsToAdd.append(session)
-            records[session] = rec
+        if os.path.isdir(folder):
+            shouldAdd = False
+            if session in statuses:
+                err = False
+                if not session in folders:
+                    err = True
+                if folder is None or err or not folders[session] == folder or rec['status'] == 'Active':
+                    statuses[session] = False
+                    sleepFor[session] = .005
+                    sessionsToStop.append(session)
+                    if not session in folders or folders[session] == folder:
+                        shouldAdd = True
+            elif session not in statuses:
+                shouldAdd = True
+            if session in statuses: shouldAdd = False
+            if shouldAdd:
+                sessionsToAdd.append(session)
+                records[session] = rec
     # print('sessionsToAdd:',sessionsToAdd)
     if not len(sessionsToAdd):
         shouldWait = False
@@ -462,23 +463,22 @@ def loadSessions():
             if _.switches.isActive('Test') and ( 'dump' in  _.switches.value('Test') or False):
                 pr(f"Folder not found in trigger tag: {folder}",c='red')
             continue
-        if os.path.isdir(folder):
-            folder = records[session]['folder']
-            if not records[session]['folder']: continue
-            statuses[session] = True
-            sleepFor[session] = 1
-            folders[session] = folder
-            
-            stop_event[session] = threading.Event()
-            thread[session] = threading.Thread(target=monitor, args=(folder, session))
-            thread[session].start()
-            global spentPrint
-            if session in spentPrint and folder in spentPrint[session]:
-                pass
-            else:
-                pr(session,folder, c='yellow')
-                if session not in spentPrint: spentPrint[session] = []
-                spentPrint[session].append(folder)
+        folder = records[session]['folder']
+        if not records[session]['folder']: continue
+        statuses[session] = True
+        sleepFor[session] = 1
+        folders[session] = folder
+        
+        stop_event[session] = threading.Event()
+        thread[session] = threading.Thread(target=monitor, args=(folder, session))
+        thread[session].start()
+        global spentPrint
+        if session in spentPrint and folder in spentPrint[session]:
+            pass
+        else:
+            pr(session,folder, c='yellow')
+            if session not in spentPrint: spentPrint[session] = []
+            spentPrint[session].append(folder)
 
     # loadSessions
     
