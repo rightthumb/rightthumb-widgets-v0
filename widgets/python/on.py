@@ -166,11 +166,10 @@ statuses["{session}"] = True
 
     global my_event_handler
     my_event_handler = PatternMatchingEventHandler(
-        *,
-        patterns: list[str] | None = None,
-        ignore_patterns: list[str] | None = None,
-        ignore_directories: bool = False,
-        case_sensitive: bool = False
+        patterns=patterns_value, 
+        ignore_patterns=ignore_patterns_value, 
+        ignore_directories=ignore_directories, 
+        case_sensitive=case_sensitive
     )
 
     my_event_handler.on_modified = t
