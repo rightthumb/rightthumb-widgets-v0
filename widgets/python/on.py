@@ -143,14 +143,15 @@ def t{session}(event):
         # print(e)
         print('Killed_101')
     '''
-    exec(fn)
+    exec(fn, globals())
     # Define the pattern matching event handler dynamically using exec
     exec(f'''
 global my_event_handler
-my_event_handler = PatternMatchingEventHandler({patterns}, {ignore_patterns}, {ignore_directories}, {case_sensitive})
+my_event_handler = PatternMatchingEventHandler({patterns!r}, {ignore_patterns!r}, {ignore_directories}, {case_sensitive})
 my_event_handler.on_modified = t{session}
 statuses["{session}"] = True
-    ''')
+''', globals())
+
 
     # Set up the observer
     go_recursively = False
@@ -234,7 +235,7 @@ except Exception as e:
         if __.KeyboardInterrupt:
             break
         try:
-            exec(code)
+            exec(code, globals())
         except KeyboardInterrupt:
             pr("Caught KeyboardInterrupt. Exiting gracefully...",c='red')
             __.KeyboardInterrupt = True
