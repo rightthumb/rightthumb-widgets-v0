@@ -131,7 +131,8 @@ def monitor(folder, session):
     isOpen = '{'
     isClose = '}'
     fn = f'''
-def t{session}(event):
+#def t{session}(event):
+def t(event):
     try:
         global tag
         global statuses
@@ -146,21 +147,27 @@ def t{session}(event):
     exec(fn, globals())
     # Define the pattern matching event handler dynamically using exec
 
-
-
     
+
+
     # Ensure that patterns and ignore_patterns are valid
     patterns_value = f"'{patterns}'" if patterns else "None"
     ignore_patterns_value = f"'{ignore_patterns}'" if ignore_patterns else "None"
 
     # Safely generate the event handler code
+    """
     exec(f'''
 global my_event_handler
 my_event_handler = PatternMatchingEventHandler({patterns_value}, {ignore_patterns_value}, {ignore_directories}, {case_sensitive})
 my_event_handler.on_modified = t{session}
 statuses["{session}"] = True
 ''', globals())
+    """
 
+    global my_event_handler
+    my_event_handler = PatternMatchingEventHandler(patterns_value, ignore_patterns_value, ignore_directories, case_sensitive)
+    my_event_handler.on_modified = t
+    statuses[session] = True
 
 
     # Set up the observer
