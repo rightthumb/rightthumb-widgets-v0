@@ -11640,11 +11640,12 @@ def blank_script_trigger(data):
 
 class Switch:
 
-	def __init__(self, name, switch, example_or_notes, description, space, default):
+	def __init__(self, name, switch, example_or_notes, description, space, default, group):
 		self.appReg = __.appReg
 		self.name = name
 		self.switch = switch
 		self.default = default
+		self.group = group
 		self.pos = 0
 		self.active = False
 		self.value = None
@@ -11897,7 +11898,7 @@ class Switches:
 		tables.register('data',data)
 		tables.print('data','appreg,name,value')
 
-	def register(self, name, switch, example_or_notes = None, isRequired=False, isPipe=None, isData=None, description='', space=False, default=False):
+	def register(self, name, switch, example_or_notes = None, isRequired=False, isPipe=None, isData=None, description='', space=False, default=False, group=None):
 
 		if not isPipe is None:
 			__.trigger_isPipe = isPipe
@@ -11911,7 +11912,7 @@ class Switches:
 			self.dex[__.appReg]={}
 		self.dex[__.appReg][name]=i
 
-		self.switches.append(Switch(name, switch, example_or_notes, description, space, default))
+		self.switches.append(Switch(name, switch, example_or_notes, description, space, default, group))
 
 		try:
 			if not type(self.isRequired[__.appReg]) == list:
@@ -12482,7 +12483,7 @@ class Switches:
 			hasRequirements = True
 			colorThis(  [  '  !! Required ' + ' or '.join(__.isRequired_or_List)  ]  , 'red' )
 
-
+		lastGroup = 0
 		for switch in self.switches:
 			# print_( dir(switch) )
 			# print_( switch.__dict__ )
@@ -12490,6 +12491,7 @@ class Switches:
 				print_()
 				print_()
 				print_( colorThis( '  !! If using switch:' , 'bold', p=0 ), colorThis( switch.name , 'yellow', p=0 ), colorThis( 'the following is required:' , 'bold', p=0 ) )
+
 				for x in switch.documentation['required']:
 					hasRequirements = True
 					colorThis(  [ '\t', x  ]  , 'red' )
@@ -12788,12 +12790,86 @@ class Switches:
 	def print(self):
 		switch = []
 		global tables
+		lastGroup = 0
+		swLen = {
+			'n':0,
+			's':0,
+			'e':0,
+		}
+		sgLe = {}
+		lastGroup = 0
+		sgLm = 0
+		for i,sw in enumerate(self.switches):
+			n = len(sw.name)
+			s = len(sw.switch)
+			try:
+				e = len(sw.example_or_notes)
+			except: e=0
+			if n > swLen['n']: swLen['n'] = n
+			if s > swLen['s']: swLen['s'] = s
+			if e > swLen['e']: swLen['e'] = e
+			try:
+				sw.group[0]
+				valid = True
+			except Exception as e:
+				valid = False
+			if valid:
+				if not lastGroup == sw.group[0]:
+					if sgLm > len(sw.group[1]): sgLm = len(sw.group[1])
+					sgLe[sw.group[0]] = len(sw.group[1])
+				lastGroup = sw.group[0]
+
+		if sgLm > swLen['e']: swLen['e'] = sgLm
+		
+		
+		sgSe = {}
+		import math
+		for i,L in enumerate(sgLe):
+			l = swLen['e'] - sgLe[L]
+			sp = math.floor(l / 4)
+			sgSe[L] = ''
+			for i in range( sp+1 ): sgSe[L] += ' '
+
+		spaces = {
+			'n':'',
+			's':'',
+		}
+		sg = len('Switch Group: 1')
+		if sg > swLen['n']: swLen['n'] = sg
+		# for k in swLen:
+		if not swLen['n'] == sg:
+			for i in range( math.floor(swLen['n'] / 4) ): spaces['n'] += ' '
+		
+		for i in range( math.floor(swLen['s'] / 2) ): spaces['s'] += '-'
+		# for i in range( swLen['s']-1 ): spaces['s'] += '-'
+		spaces['s'] = '  <'+spaces['s']+'>'
+		# pv(sgSe)
+
 		for i,sw in enumerate(self.switches):
 			if self.switches[i].appReg == __.appReg:
+				try:
+					sw.group[0]
+					valid = True
+				except Exception as e:
+					valid = False
+					# print(e)
+
+				if valid:
+					if not lastGroup == sw.group[0]:
+						# switch.append({'name':'' ,'switch':'','example_or_notes': '>>'})
+						# switch.append({'Switch Group: '+str(sw.group[0]): 'switch', 'example_or_notes': '    --> '+sw.group[1]+' <--'})
+						switch.append({'name':spaces['n']+'Switch Group: '+str(sw.group[0]) ,'switch':spaces['s'],'example_or_notes': sgSe[sw.group[0]]+'--> '+sw.group[1]+' <--'})
+						# switch.append({'name':'' ,'switch':'','example_or_notes': '>>'})
+				
 				if __.switch_skimmer.active and not self.switches[i].default:
 					switch.append({'name':sw.name ,'switch':sw.switch,'example_or_notes': sw.example_or_notes})
 				elif not __.switch_skimmer.active:
 					switch.append({'name':sw.name ,'switch':sw.switch,'example_or_notes': sw.example_or_notes})
+				try:
+					lastGroup = sw.group[0]
+				except: pass
+
+
 		# def test(value):
 		#   value = value + '_V_'
 		#   return value

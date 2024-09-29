@@ -543,7 +543,7 @@ def action():
 							# _.pr(recP['space']+recP['label'])
 							_.pr(recP['label'])
 					else:
-						_.pr(recP['space'], _.inlineBold(recP['type'],'yellow') ,recP['label'])
+						_.pr(recP['space'], _.inlineBold(recP['type'],'yellow') ,_.pr(recP['label'],c='cyan',p=0))
 				if lnp in table['children']:
 					ch = list(table['children'][lnp].keys())
 					for lnc in ch:

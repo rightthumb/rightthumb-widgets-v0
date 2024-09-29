@@ -8,6 +8,7 @@ def sw():
     _.switches.register( 'Folder', '-f-,-folder' )
     _.switches.register( 'Stop', '-stop' )
     _.switches.register( 'Delete', '-del,-delete,-stop,-kill' )
+    _.switches.register( 'RemoveIdleFlag', '-notIdle' )
     _.switches.register( 'Test', '-test' )
 _._default_settings_()
 
@@ -45,9 +46,12 @@ stop_event = {}
 thread = {}
 folders = {}
 sleepFor = {}
+isOmit = {}
 sessionsStopped = []
 
 def monitor(folder, session):
+    global tag
+
     global statuses, stop_event, thread, my_observer, sessionsStopped
     
     # Initialize statuses if needed
@@ -259,6 +263,8 @@ def loadSessions():
     global statuses
     global folders
     global stop_event, thread, sleepFor, sessionsStopped
+    global tag
+    load()
     dump = endpoint('Dump', json=True)
     test = False
     if _.switches.isActive('Test') and ( 'dump' in  _.switches.value('Test') or 'url' in  _.switches.value('Test')):
@@ -368,7 +374,16 @@ def loadSessions():
                     _.pr(i,session,diff,'\t',records[session]['folder'], c='cyan')
         if cnt == len(sessionsToAdd):
             shouldWait = False
+
     for session in records:
+        # print(tag['triggers']['fileFolders'])
+        if not folder in tag['triggers']['fileFolders'] and not folder in tag['triggers']['folders']:
+            if not folder in isOmit: isOmit[folder] = 0
+            isOmit[folder] += 1
+            if isOmit[folder] > 3:
+                isOmit[folder] = 0
+            _.pr(f"Folder not found in trigger tag: {folder}",c='red')
+            continue
         folder = records[session]['folder']
         if not records[session]['folder']: continue
         statuses[session] = True
@@ -430,6 +445,16 @@ def action():
 
 
 __.longSpace = '                                                                                               '
+
+loadCount = 0
+def load():
+    global tag
+    global loadCount
+    if loadCount % 15 == 0:
+        tag = _.getTable('tag.json')
+        _.pr("Tag loaded.", c='darkcyan',r=1)
+    loadCount += 1
+
 ########################################################################################
 # To Do:
 # - Connect to trigger db
@@ -447,6 +472,7 @@ __.longSpace = '                                                                
 # - cdf
 # - oo
 # - on usage of above register folder, del .on-idle keep .on-recursion
+
 ########################################################################################
 
 import os
