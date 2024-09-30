@@ -147,7 +147,8 @@ structure = {}
 
 def save_structure():
     _.saveTable(structure,'tag.json',p=0)
-    _.pr('Structure saved.',c='darkcyan')
+    if not _.switches.isActive('Clean'):
+        _.pr('Structure saved.',c='darkcyan')
     # Save structure to a file (for persistent state)
     # with open('structure.json', 'w') as f:
     # 	json.dump(structure, f)
@@ -184,9 +185,11 @@ def create_file(path):
     if path not in structure['files']:
         structure['files'][path] = {'tags': [], 'notes': [],'related':[]}
         log_transaction('create_file', {'path': path})
-        _.pr(f"File created: {path}",c='green')
+        if not _.switches.isActive('Clean'):
+            _.pr(f"File created: {path}",c='green')
     else:
-        _.pr(f"File already exists: {path}",c='green')
+        if not _.switches.isActive('Clean'):
+            _.pr(f"File already exists: {path}",c='green')
 
 def rename_item(old_path, new_path, item_type='file'):
     key = item_type + 's'
@@ -418,10 +421,12 @@ def add_trigger(path, item_type='file'):
             del structure['triggers'][key][path][subject]
             _.pr(f"Trigger deleted: {path}",c='red')
         else:
-            _.pr(f"Trigger updated: {path}",c='yellow')
+            if not _.switches.isActive('Clean'):
+                _.pr(f"Trigger updated: {path}",c='yellow')
     else:
         if not deleted:
-            _.pr(f"Trigger added: {path}",c='green')
+            if not _.switches.isActive('Clean'):
+                _.pr(f"Trigger added: {path}",c='green')
         else:
             wasDeleted = True
             _.pr(f"Trigger did not exist: {path}",c='red')
@@ -638,7 +643,8 @@ def load():
             'triggers': {'files': {}, 'folders': {}, 'fileFolders': {}},
             'transactions': []
         }
-    _.pr("Structure loaded or initialized.", c='darkcyan')
+    if not _.switches.isActive('Clean'):
+        _.pr("Structure loaded or initialized.", c='darkcyan')
 
 
 
