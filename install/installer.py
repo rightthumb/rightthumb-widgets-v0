@@ -3268,7 +3268,8 @@ alias tmux..="curl -s https://sds.sh/tmux-aliases | $p line --c "
 
 
 alias on.run='while true; do $p on; sleep 1; done'
-
+alias on.fi="$p/widgets/bash/on.fi.sh"
+alias on.fo="$p/widgets/bash/on.fo.sh"
 
 
 
