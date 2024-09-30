@@ -3265,7 +3265,7 @@ alias ai.t="$p ai -prompt what is the tmux shortcut for"
 alias tmux.="curl -s https://sds.sh/tmux-aliases | $p line --c +"
 alias tmux..="curl -s https://sds.sh/tmux-aliases | $p line --c "
 
-
+alias ..b='cd /opt ; cd rightthumb-widgets-v0 ; m w ; cd install/ ; m in ; cd .. ; cd widgets/ ; m ww ; cd python/ ; m py ; cd .. ; cd bash/ ; m b ; m bash ; cd .. ; cd databank/ ; m db ; cd tables/ ; m ttt ; cd ; cd .rt ; m rt ; cd profile/ ; m h ; cd tables/ ; m tt ; cd .. ; cd config/ ; m config ; m c ; cd .. ; cd projects/ ; m pr ; cd'
 
 alias on.run='while true; do $p on; sleep 1; done'
 alias on.fi="/opt/rightthumb-widgets-v0/widgets/bash/on.fi.sh"
