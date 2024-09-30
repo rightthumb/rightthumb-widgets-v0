@@ -166,11 +166,11 @@ statuses["{session}"] = True
 
     global my_event_handler
     my_event_handler = PatternMatchingEventHandler(
-    patterns=patterns_value, 
-    ignore_patterns=ignore_patterns_value, 
-    ignore_directories=ignore_directories, 
-    case_sensitive=case_sensitive
-)
+        patterns=patterns_value, 
+        ignore_patterns=ignore_patterns_value, 
+        ignore_directories=ignore_directories, 
+        case_sensitive=case_sensitive
+    )
 
     my_event_handler.on_modified = t
     statuses[session] = True
@@ -526,11 +526,18 @@ spentPrint = {}
  
 
 def action():
-
+    # print(__.appReg)
+    appReg = __.appReg
     tagReg = _.regImp( __.appReg, 'tag' )
-    tagReg.switch('Trigger','kill,all')
-    tagReg.switch('Files',_v.tt+os.sep+'tag.json')
-    tagReg.action()
+    tagReg.imp.action({
+        'Clean': False,
+        'Trigger': 'kill,all',
+        'Files': _v.tt+os.sep+'tag.json',
+    })
+    __.appReg=appReg
+    # tagReg.switch('Trigger','kill,all')
+    # tagReg.switch('Files',_v.tt+os.sep+'tag.json')
+    # tagReg.action()
 
     if _.switches.isActive('Test') and not len(_.switches.values('Test')): pr('\n\nTest:','thresh', 'url', 'dump\n\n',c='green')
     if _.switches.isActive('Session') and _.switches.isActive('Folder'):

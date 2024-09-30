@@ -11703,6 +11703,7 @@ class Switches:
 
 		result = []
 		for i,row in enumerate(self.switches):
+			# pv(row)
 			if not row.name in omitList:
 				if row.active:
 					shouldAdd = True
@@ -11951,6 +11952,25 @@ class Switches:
 
 
 
+	def fieldSet2( self, name, column, value, theFocus=False, runTrigger=True ):
+		for i,row in enumerate(self.switches):
+			if self.switches[i].appReg == theFocus:
+				if row.name == name:
+					if column == 'active':
+						if value == True:
+							self.switches[i].active = True
+						else:
+							self.switches[i].active = False
+					elif column == 'value':
+						if value == True:
+							self.switches[i].value = True
+						elif value == False:
+							self.switches[i].value = False
+						else:
+							self.switches[i].value = value
+					elif column == 'values':
+						self.switches[i].values = values
+						self.switches[i].value = ','.join(valuesV)
 	def fieldSet( self, name, column, value, theFocus=False, runTrigger=True ):
 		if name == 'Sort':
 			if column == 'value':
@@ -12129,9 +12149,9 @@ class Switches:
 		return result
 
 	def isActive2( self, name, theFocus=False ):
-			for i,row in enumerate(self.switches):
-				if self.switches[i].name == name and self.switches[i].active: return True
-			return False
+		for i,row in enumerate(self.switches):
+			if self.switches[i].name == name and self.switches[i].active: return True
+		return False
 
 
 	def isActive( self, name, theFocus=False ):# isSwitchActive
@@ -12150,12 +12170,28 @@ class Switches:
 			result = ''
 		return result
 
+	def values2( self, name, theFocus=False ):# getSwitchValue
+		for i,row in enumerate(self.switches):
+			if self.switches[i].name == name and self.switches[i].active:
+				return self.fieldGet( name, 'values', theFocus )
+		return []
+
+	def value2( self, name, theFocus=False ):# getSwitchValue
+		for i,row in enumerate(self.switches):
+			if self.switches[i].name == name and self.switches[i].active:
+				return self.fieldGet( name, 'value', theFocus )
+		return ''
+
+	def isActive2( self, name, theFocus=False ):
+			for i,row in enumerate(self.switches):
+				if self.switches[i].name == name and self.switches[i].active: return True
+			return False
+
 	def values( self, name, theFocus=False ):# getSwitchValue
 		result = self.fieldGet( name, 'values', theFocus )
 		if result is None:
 			result = []
 		return result
-
 
 	def trigger( self, name, script, vs=False, alt=None ):
 		for i,s in enumerate(self.switches):

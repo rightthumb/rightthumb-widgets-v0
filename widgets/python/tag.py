@@ -21,6 +21,8 @@ def sw():
 
     _.switches.register( 'Dump', '-d,-dump', group=[5,'Utilities'] )
     _.switches.register( 'InitializeDatabase', '-i,-initialize', group=[5] )
+    _.switches.register( 'Clean', '--c', group=[5] )
+
 
 _._default_settings_()
 
@@ -506,9 +508,17 @@ def remove_note(path, note, item_type='file'):
 
 
 
-def action():
-    # for x in _.switches.values('Subject'): print(x)
-    # _.isExit(__file__)
+def action(switches=None):
+    if not switches is None:
+        appReg=__.appReg
+        __.appReg=focus()
+        for switch in switches:
+            _.switches.fieldSet(switch,'active',True)
+            if switches[switch]:
+                _.switches.fieldSet(switch,'value',switches[switch])
+                _.switches.fieldSet(switch,'values',switches[switch].split(','))
+
+
     load()
     subF = []
     fiFo = ''
