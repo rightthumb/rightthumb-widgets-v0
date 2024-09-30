@@ -3270,6 +3270,7 @@ alias ..b='cd /opt ; cd rightthumb-widgets-v0 ; m w ; cd install/ ; m in ; cd ..
 alias on.run='while true; do $p on; sleep 1; done'
 alias on.fi="/opt/rightthumb-widgets-v0/widgets/bash/on.fi.sh"
 alias on.fo="/opt/rightthumb-widgets-v0/widgets/bash/on.fo.sh"
+alias on="/opt/rightthumb-widgets-v0/widgets/bash/on.sh"
 
 
 
