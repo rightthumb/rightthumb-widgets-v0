@@ -111,6 +111,8 @@ _.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw );
 
 def action():
 	pass
+	for line in _.isData():
+		_.pr(line.lower())
 	# load(); global c3po;
 
 	#n)--> iterate

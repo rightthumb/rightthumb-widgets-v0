@@ -56,6 +56,7 @@ def appSwitches():
 	_.switches.register('Widget-V0', '-w,-v0')
 	_.switches.register('Ago-Create-Date', '-cd')
 	_.switches.register('NoExtension', '-noext')
+	_.switches.trigger( 'Folders', _.myFolderLocations )
 
 
 

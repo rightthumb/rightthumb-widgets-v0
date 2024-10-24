@@ -1,5 +1,5 @@
 @echo off
-
+cls
 setlocal
 
 if [] == [%1] (

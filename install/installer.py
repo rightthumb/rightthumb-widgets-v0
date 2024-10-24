@@ -3272,6 +3272,8 @@ alias on.fi="/opt/rightthumb-widgets-v0/widgets/bash/on.fi.sh"
 alias on.fo="/opt/rightthumb-widgets-v0/widgets/bash/on.fo.sh"
 alias on="/opt/rightthumb-widgets-v0/widgets/bash/on.sh"
 
+export Session_ID_Suffix=${Session_ID:4:5}
+
 
 
 clear

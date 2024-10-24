@@ -5579,6 +5579,11 @@ def urlTrigger(url):
 	return url
 
 def myFolderLocations( data ):
+	if type(data) == list:
+		for i,d in enumerate(data):
+			data[i] = myFolderLocations(d)
+		return data
+	return aliasesFo(data)
 	return data
 	# print_(data)
 	if type(data) == list:
@@ -5642,7 +5647,7 @@ def plusColor( row, color='green' ):
 
 def caseUnspecificCode( data, subject, isPlus=False, minus=None ):
 	global switches
-
+	subject = subject.replace('*','')
 	if __.sw.PlusCode or switches.isActive('StrictCase'):   return caseISspecific(data, subject, isPlus, minus)
 	else:                return caseUnspecific(data, subject, isPlus, minus)
 
@@ -10069,6 +10074,7 @@ def showLine( string, plus = '', minus = '',plusOr = False, end=None,isSub=False
 
 	# <2024-04-02>
 	string = str(string)
+	string = string.strip()
 	# </2024-04-02>
 
 
@@ -18535,6 +18541,24 @@ def default_switch_trigger(name,script):
 	global default_switch_trigger_index
 	default_switch_trigger_index[name]=script
 
+def aliasesFo(fo):
+	if os.path.isdir(fo): return fo
+	import _rightThumb._bookmarks as _bm # type: ignore
+	try:
+		return _bm.Bookmarks( fo ).get()
+	except: pass
+
+	return fo
+
+def aliasesFi(fi):
+	if os.path.isfile(fi): return fi
+	aliases=getTable('file-open-aliases.hash')
+	if not 'aliases' in aliases: aliases['aliases']={}
+	if not 'files' in aliases: aliases['files']={}
+	if fi in aliases['aliases']:
+		fi = aliases['aliases'][fi]
+	return fi
+
 def defaultScriptTriggers_do():
 	global defaultScriptTriggers_run
 	global default_switch_trigger_index
@@ -24158,6 +24182,7 @@ def _default_triggers_():
 	switches.trigger( 'Files', myFileLocations, vs=True )
 	switches.trigger( 'Ago', timeAgo )
 	switches.trigger( 'Folder', myFolderLocations )
+	switches.trigger( 'Folders', myFolderLocations )
 	switches.trigger( 'URL', urlTrigger )
 	switches.trigger( 'Duration', timeFuture )
 def _default_settings_():

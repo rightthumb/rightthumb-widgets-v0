@@ -3,9 +3,6 @@ def focus(parentApp='', childApp='', reg=True): global appDBA; f = __.appName(ap
 fieldSet=_.l.vars(focus(),__name__,__file__,appDBA);_.load();_v=__.imp('_rightThumb._vars');
 
 def sw():
-	_.switches.register( 'ToUpper', '-u,-upper')
-	_.switches.register( 'NewLine', '-n,-l,-nl,-newline,-line,-new' )
-	_.switches.register( 'KB', '-kb' )
 	pass
 _._default_settings_()
 
@@ -32,55 +29,27 @@ def appRegDics(): return { 'appInfo': _.appInfo[focus()], 'appData': _.appData[f
 
 def triggers():
 	_._default_triggers_()
+	_.switches.trigger( 'Files', _.myFileLocations, vs=True )
+	_.switches.trigger( 'Folder', _.myFolderLocations )
 def _local_(do): exec(do)
 _.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw );
 ########################################################################################
 #n)--> start
-
-def kb(item):
-	index = _.getTable('kb.index')
-	if item in index:
-		return index[item]
-	return False
-
-
-
-
-
-def process(data):
-	if type(data) == str:
-		data = data.split('\n')
-	spent = []
-	table = []
-	for line in data:
-		if not line.strip():
-			continue
-		if not line in spent:
-			spent.append(line)
-			if _.switches.isActive('KB'):
-				result =  kb(line.strip())
-				if result:
-					table.append( result )
-			else:
-				table.append(line)
-	return table
+os = __.imp('os.path.isfile')
+def process(path):
+	global index
+	file = _.getText(path,raw=True,clean=2).split('\n')
+	fi = path.split(os.sep)[-1]
+	
+	for line in file:
+		if line.startswith(fi+'('):
+			index[fi] = 'KB: '+ fi+': '+ line
+index = {}
 def action():
-	if _.switches.isActive('ToUpper'):
-		if _.switches.isActive('NewLine'):
-			result = '\n'.join(_.isData()).upper().replace(' ','\n').replace('\n\n','\n').replace(' ','')
-			
-			items = process(result)
-			_.pr( '\n'.join(items) )
-		else:
-			_.pr( '\n'.join(_.isData()).upper() )
-	else:
-		for line in _.isData():
-			good = True
-			for c in line:
-				if not c in ' ABCDEFGHIJKLMNOPQRSTUVWXYZ':
-					good = False
-			if good:
-				_.pr(line)
+	global index
+	for path in _.fo():
+		process(path)
+	_.pv(index)
 
 ########################################################################################
 if __name__ == '__main__':

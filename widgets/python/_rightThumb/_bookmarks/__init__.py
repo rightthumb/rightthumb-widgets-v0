@@ -45,7 +45,7 @@ __.pre_error = False
 # __.isRequired_or_List = ['Pipe','Files','Plus']
 
 _.appInfo[focus()] = {
-	'file': 'bookmarks.py',
+	'file': '_rightThumb._bookmarks',
 	'liveAppName': __.thisApp( __file__ ),
 	'description': 'manage bookmarks',
 	'categories': [
@@ -55,8 +55,9 @@ _.appInfo[focus()] = {
 						'system',
 				],
 	'usage': [
-						# 'epy another',
-						# 'e nmap',
+						'import _rightThumb._bookmarks as _bm',
+						'path = _bm.Bookmarks( _.switches.value(\'Alias\') ).get()',
+						'',
 						# '',
 	],
 	'relatedapps': [

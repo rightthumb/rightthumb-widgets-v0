@@ -70,8 +70,9 @@ def appSwitches():
 	_.switches.register('Search-For-Text-Dump', '--dump')
 	_.switches.register('Search-For-Text-TOP_Of_File', '-top','10')
 	_.switches.register('Not-In-Comments', '-nocomment','html py php js')
+	_.switches.register('Reverse', '-rev,-reverse')
 
-
+	_.switches.trigger( 'Folders', _.myFolderLocations )
 
 fse=False
 def fs(data):
@@ -403,12 +404,14 @@ def getFolder(folder,r=True):
 			return None
 	try:
 		dirList = os.listdir(folder)
+		# if _.switches.isActive('Reverse'): dirList.reverse()
 		takeAction = True
 	except Exception as e:
 		takeAction = False
 	if takeAction:
 		if os.path.isdir(folder):
 			dirList = os.listdir(folder)
+			if _.switches.isActive('Reverse'): dirList.reverse()
 		for item in dirList:
 			record = None
 			path = folder + _v.slash + item

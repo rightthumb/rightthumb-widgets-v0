@@ -5,7 +5,6 @@ import os,sys,time,importlib,simplejson
 if sys.platform[0] == 'w': figpath=os.getenv('USERPROFILE') +os.sep+'.rt'+os.sep+ '.config.hash'
 else: figpath=os.getenv('HOME') +os.sep+'.rt'+os.sep+ '.config.hash'
 
-
 def yamlSimp(yaml_string):
     table = {}
     lines = yaml_string.split('\\n')
@@ -49,6 +48,24 @@ _.load()
 import _rightThumb._base4 as ___
 import _rightThumb._string as _str
 import _rightThumb._dir as _dir
+
+try:
+    switches()
+except: pass
+
+_._default_settings_()
+
+def triggers():
+	_._default_triggers_()
+	_.switches.trigger( 'Files', _.myFileLocations, vs=True )
+	# _.switches.trigger( 'Ago', _.timeAgo )
+	_.switches.trigger( 'Folder', _.myFolderLocations )
+	# _.switches.trigger( 'URL', _.urlTrigger )
+	# _.switches.trigger( 'Duration', _.timeFuture )
+def _local_(do): exec(do)
+
+_.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw );
+
 
 _.appInfo[__.appReg] = {"file": "testing123.py", "liveAppName": "testing123", "description": "Changes the world", "categories": [""], "usage": [], "relatedapps": [], "prerequisite": [], "examples": [""], "columns": [], "aliases": [], "notes": []}
 _.appData[__.appReg] = {"start": __.startTime, "uuid": "", "audit": [], "pipe": False, "data": {"field": {"sent": [], "received": []}, "table": {"sent": [], "received": []}}}
