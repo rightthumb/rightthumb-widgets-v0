@@ -3,7 +3,7 @@
 # If an argument is provided, it names the session accordingly.
 # If no argument is provided, it names the session "SingleWindow".
 
-SESSION_NAME="${1:-SingleWindow}"
+SESSION_NAME="${1:-ts}"
 
 # Start a new tmux session with the specified or default name
 tmux new-session -d -s "$SESSION_NAME"

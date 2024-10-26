@@ -1,2 +1,2 @@
 @echo off
-call p. ai -prompt %*
+call p. ai -tm 1000 -prompt %*

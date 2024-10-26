@@ -4,7 +4,7 @@
 # If no argument is provided, it names the session "4-square".
 
 # Check if an argument is provided for the session name, else use "4-square"
-SESSION_NAME="${1:-4-square}"
+SESSION_NAME="${1:-t4}"
 
 # Start a new tmux session with the specified or default name
 tmux new-session -d -s "$SESSION_NAME"

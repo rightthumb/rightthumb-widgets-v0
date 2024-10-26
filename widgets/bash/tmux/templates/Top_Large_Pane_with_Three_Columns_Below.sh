@@ -2,7 +2,7 @@
 # This script creates a tmux session with a large top pane and three smaller columns beneath.
 # Default session name is "TopLargeThreeCols" unless specified.
 
-SESSION_NAME="${1:-TopLargeThreeCols}"
+SESSION_NAME="${1:-t3}"
 
 tmux new-session -d -s "$SESSION_NAME"
 tmux split-window -v -p 66

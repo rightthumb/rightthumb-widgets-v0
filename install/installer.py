@@ -3196,14 +3196,14 @@ alias tsk="tmux send-keys -t"      # Send keys to a specific pane, simulating ke
   # https://sds.sh/tmux-send_key-examples
     
 # TMUX Template Management
-alias tt4="source $widgets/widgets/bash/tmux/templates/4_Square.sh"
-alias ttq="source $widgets/widgets/bash/tmux/templates/Quadrants.sh"
-alias tts="source $widgets/widgets/bash/tmux/templates/Single.sh"
-alias tt1="source $widgets/widgets/bash/tmux/templates/Single.sh"
-alias tth="source $widgets/widgets/bash/tmux/templates/Horizontal_Stripes.sh"
-alias tt13="source $widgets/widgets/bash/tmux/templates/One_Three.sh"
-alias tttop="source $widgets/widgets/bash/tmux/templates/Top_Large_Pane_with_Three_Columns_Below.sh"
-alias ttt="source $widgets/widgets/bash/tmux/templates/Top_Large_Pane_with_Three_Columns_Below.sh"
+alias t4="source $widgets/widgets/bash/tmux/templates/4_Square.sh"
+alias tq="source $widgets/widgets/bash/tmux/templates/Quadrants.sh"
+alias ts="source $widgets/widgets/bash/tmux/templates/Single.sh"
+alias t1="source $widgets/widgets/bash/tmux/templates/Single.sh"
+alias th="source $widgets/widgets/bash/tmux/templates/Horizontal_Stripes.sh"
+alias t13="source $widgets/widgets/bash/tmux/templates/One_Three.sh"
+alias ttop="source $widgets/widgets/bash/tmux/templates/Top_Large_Pane_with_Three_Columns_Below.sh"
+alias tt="source $widgets/widgets/bash/tmux/templates/Top_Large_Pane_with_Three_Columns_Below.sh"
 #####################################################################
 #####################################################################
 
@@ -3259,6 +3259,13 @@ alias mp="$mp"
 
 alias dt="ssh -L 59001:localhost:5901 -C -N -l scott"
 
+dtdt() {
+    ssh -L 59001:localhost:5901 -C -N -l scott "$1" &
+}
+
+alias dt.="dtdt"
+alias dt.k="kill -9 $(lsof -ti :59001)"
+alias k="kill -9"
 alias ai="$p ai -prompt"
 alias ai.t="$p ai -prompt what is the tmux shortcut for"
 

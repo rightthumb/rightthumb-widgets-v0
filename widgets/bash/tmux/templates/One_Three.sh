@@ -2,7 +2,7 @@
 # This script creates a tmux session with one large pane on the left and three smaller stacked panes on the right.
 # Default session name is "MainThreeStack" unless specified.
 
-SESSION_NAME="${1:-MainThreeStack}"
+SESSION_NAME="${1:-t3}"
 
 tmux new-session -d -s "$SESSION_NAME"
 tmux split-window -h -p 70

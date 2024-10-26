@@ -17,6 +17,7 @@ def sw():
     _.switches.register( 'Prompt', '-prompt' )
     _.switches.register( 'Model', '-m,-model','3 4 4k | gpt-3.5-turbo gpt-4 gpt-4-32k' )
     _.switches.register( 'Tokens', '-t,-tokens', 's m l | small medium large' )
+    _.switches.register( 'TokensMinus', '-tm,-minus', '1000' )
     _.switches.register( 'Query', '-q,-query', 'To add a line to answer based on __.isData()' )
     _.switches.register( 'JustPrompt', '-j,-jp', 'depreciated' )
     _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='data', description='Files', isRequired=False )
@@ -117,7 +118,8 @@ def ai(prompt, model='gpt-4'):
 
     # Default to 2,048 tokens for any unknown models
     max_tokens = model_token_limits.get(model, 2_048)
-
+    if _.switches.isActive('TokensMinus'):
+        max_tokens -= int(_.switches.value('TokensMinus'))
     # Adjust max_tokens based on 'small', 'medium', 'large' switches
     if _.switches.isActive('Tokens'):
         if 's' in _.switches.value('Tokens'):
@@ -179,7 +181,8 @@ def action():
 
     try:
         ai(prompt)
-    except:
+    except Exception as e:
+        _.pr(e, c='red')
         import platform
         _.pr('An unexpected error occurred', c='red')
         if platform.system() == 'Windows':

@@ -12366,9 +12366,15 @@ class Switches:
 		print_()
 		filename = colorThis(  [ 'Program:  \t' ], 'bold', p=0  )
 		try:
-			filename += colorThis(  [ appInfo[__.appReg]['liveAppName'] ], 'yellow', p=0  )
-		except Exception as e:
-			filename += colorThis(  [ appInfo[__.appReg]['file'].replace('.py','') ], 'yellow', p=0  )
+			if not appInfo[__.appReg]['file'] == 'thisApp.py' and appInfo[__.appReg]['liveAppName'] == '__init__':
+				filename += colorThis(  [ appInfo[__.appReg]['file'].replace('.py','') ], 'yellow', p=0  )
+			else:
+				try:
+					filename += colorThis(  [ appInfo[__.appReg]['liveAppName'] ], 'yellow', p=0  )
+				except Exception as e:
+					filename += colorThis(  [ appInfo[__.appReg]['file'].replace('.py','') ], 'yellow', p=0  )
+		except: pass
+
 		print_()
 		print_( filename )
 		print_()

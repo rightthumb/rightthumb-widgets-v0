@@ -36,11 +36,48 @@ def getTable( file ):
 
 fig=getTable(figpath)
 sys.path.append( fig['w']+'/widgets/python'.replace('/',os.sep) )
+
+
+
+
 import _rightThumb._construct as __
+
+
+
+try:
+    name__ = __name__
+except:
+    name__ = '__main__'
+
+try:
+    file__ = __file__
+except:
+    if os.path.isfile('/opt/rightthumb-widgets-v0/widgets/python/micro.py'):
+        file__ = '/opt/rightthumb-widgets-v0/widgets/python/micro.py'
+    elif os.path.isfile('D:\\.rightthumb-widgets\\widgets\\python\\blank-micro.py'):
+        file__ = 'D:\\.rightthumb-widgets\\widgets\\python\\blank-micro.py'
+    elif os.path.isfile(figpath+os.sep+'rightthumb-widgets-v0' +os.sep+ 'widgets' +os.sep+ 'python' +os.sep+ 'micro.py'):
+        file__ = figpath+os.sep+'rightthumb-widgets-v0' +os.sep+ 'widgets' +os.sep+ 'python' +os.sep+ 'micro.py'
+    else:
+        file__ = '/opt/rightthumb-widgets-v0/widgets/python/micro.py'
+
+
+__.appReg = __.clearFocus( name__, file__ )
+
+
+appDBA = __.appReg
+import _rightThumb._base3 as _
+
+def focus(parentApp='', childApp='', reg=True): global appDBA; f = __.appName(appDBA, parentApp, childApp); return f if reg else f
+
+
+fieldSet=_.l.vars(focus(),name__,file__,appDBA)
+
+
+_.load()
+_v=__.imp('_rightThumb._vars')
+
 import _rightThumb._vars as _v
-__.appReg = __.clearFocus( '__main__', 'D:\\.rightthumb-widgets\\widgets\\python\\blank-micro.py' )
-f = __.appName( __.appReg, '', '' )
-__.registeredApps.append( __.appReg )
 import _rightThumb._matrix as _matrix
 import _rightThumb._base3 as _
 _.raq_err=False
@@ -49,23 +86,56 @@ import _rightThumb._base4 as ___
 import _rightThumb._string as _str
 import _rightThumb._dir as _dir
 
+_.appInfo[focus()] = {
+    # 'app': '8facG-jo0Cxk',
+    'file': 'thisApp.py',
+    'description': 'Changes the world',
+        # _.ail(1,'subject')+
+        # _.aib('one')+
+    'categories': [
+                        'DEFAULT',
+                ],
+    'examples': [
+                        _.hp('p thisApp -file file.txt'),
+                        _.linePrint(label='simple',p=0),
+                        '',
+    ],
+    'columns': [
+                    # { 'name': 'name', 'abbreviation': 'n' },
+                    # { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
+    ],
+    'aliases': [],
+    'notes': [],
+}
+_.appInfo[focus()] = _.appInfoContinuity(__.thisApp( file__ ),_.appInfo[focus()])
+_.appData[focus()] = _.appDataContinuity()
+def appRegDics(): return { 'appInfo': _.appInfo[focus()], 'appData': _.appData[focus()] }
+
+__.appReg = __.clearFocus( name__,file__ )
+
+f = __.appName( __.appReg, '', '' )
+__.registeredApps.append( __.appReg )
+
+
 try:
-    switches()
-except: pass
+    switches
+except:
+    def switches(): pass
 
 _._default_settings_()
 
 def triggers():
-	_._default_triggers_()
-	_.switches.trigger( 'Files', _.myFileLocations, vs=True )
-	# _.switches.trigger( 'Ago', _.timeAgo )
-	_.switches.trigger( 'Folder', _.myFolderLocations )
-	# _.switches.trigger( 'URL', _.urlTrigger )
-	# _.switches.trigger( 'Duration', _.timeFuture )
+    _._default_triggers_()
+    _.switches.trigger( 'Files', _.myFileLocations, vs=True )
+    _.switches.trigger( 'Ago', _.timeAgo )
+    _.switches.trigger( 'Folder', _.myFolderLocations )
+    _.switches.trigger( 'Folders', _.myFolderLocations )
+    _.switches.trigger( 'URL', _.urlTrigger )
+    _.switches.trigger( 'Duration', _.timeFuture )
 def _local_(do): exec(do)
 
-_.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw );
-
+_.l.conf('appDBA',__.appReg);
+_.l.conf('clean-pipe',True); _.l_registerSwitches( triggers, switches );
 
 _.appInfo[__.appReg] = {"file": "testing123.py", "liveAppName": "testing123", "description": "Changes the world", "categories": [""], "usage": [], "relatedapps": [], "prerequisite": [], "examples": [""], "columns": [], "aliases": [], "notes": []}
 _.appData[__.appReg] = {"start": __.startTime, "uuid": "", "audit": [], "pipe": False, "data": {"field": {"sent": [], "received": []}, "table": {"sent": [], "received": []}}}

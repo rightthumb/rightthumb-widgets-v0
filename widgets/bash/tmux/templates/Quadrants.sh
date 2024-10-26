@@ -2,7 +2,7 @@
 # This script creates a tmux session with four evenly divided panes.
 # Default session name is "Quadrants" unless specified.
 
-SESSION_NAME="${1:-Quadrants}"
+SESSION_NAME="${1:-tq}"
 
 tmux new-session -d -s "$SESSION_NAME"
 tmux split-window -h
