@@ -1,5 +1,5 @@
 #!/bin/bash
-
+echo "update"; sudo apt-get update -y; echo "upgrade"; sudo apt-get upgrade -y;
 # ## {R2D2919B742E} ##
 # ###########################################################################
 # What if magic existed?
