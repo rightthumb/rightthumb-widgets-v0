@@ -305,6 +305,16 @@ def folderReportNew():
 
 def action():
 	load()
+	_v.slash
+	data = '\n'.join( _.appData[__.appReg]['pipe'] )
+	f = data.count('\\')
+	b = data.count('/')
+	if f > b:
+		_v.slash = '\\'
+	else:
+		_v.slash = '/'
+
+	# _.pr( _v.slash ); _.isExit(__file__)
 	# _.pr( _.appData[__.appReg]['pipe'] )
 	if not type( _.appData[__.appReg]['pipe'] ) == bool:
 		if not _.setPipeDataRan:

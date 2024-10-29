@@ -9656,6 +9656,12 @@ def miniUUID(epoch=None):
 	else:
 		return UUID_Epoch(result)
 
+def tinyUUID(length=8):
+	import random
+	import string
+	characters = string.ascii_lowercase + string.digits
+	return ''.join(random.choice(characters) for _ in range(length))
+
 
 def UUID_Epoch2(vVv=None,dec=2,epoch=None):
 	myuuid = UUID_Epoch(vVv,dec,epoch)

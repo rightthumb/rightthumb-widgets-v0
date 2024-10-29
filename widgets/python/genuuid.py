@@ -36,7 +36,8 @@ import _rightThumb._string as _str
 def appSwitches():
 	pass
 	_.switches.register( 'Long', '-long' )
-	_.switches.register( 'Shorter', '-t,-short,-mini,-small,-tiny' )
+	_.switches.register( 'Shorter', '-t,-short,-mini,-small' )
+	_.switches.register( 'Tiny', '-tiny' )
 	_.switches.register( 'Strip', '-cl,-clean,-st,-strip', 'be' )
 	_.switches.register( 'Count', '-cnt,-count' )
 	_.switches.register( 'PrintCharLength', '-print,-printlen,-lenprint,-len' )
@@ -190,8 +191,11 @@ def action(first=True):
 		return ids
 
 	focus()
+
 	if not _.switches.isActive('Long') and not _.switches.isActive('Shorter'):
 		genid = _.genUUID()
+	if _.switches.isActive('Tiny'):
+		genid = _.tinyUUID()
 	if _.switches.isActive('Shorter'):
 		genid = _.miniUUID()
 	elif _.switches.isActive('Long'):

@@ -3281,7 +3281,15 @@ alias on="/opt/rightthumb-widgets-v0/widgets/bash/on.sh"
 
 export Session_ID_Suffix=${Session_ID:4:5}
 
+alias sync.="/opt/rightthumb-widgets-v0/widgets/bash/srv/sync.sh"
 
+sshssh() {
+    local who=${2:-scott}
+	ssh-copy-id -i ~/.ssh/id_rsa.pub "$who@$1.sds.sh"
+}
+
+alias bb.="bleachbit --clean system.cache"
+alias bleachbit.="bleachbit --clean system.cache"
 
 clear
 # get_time_difference
