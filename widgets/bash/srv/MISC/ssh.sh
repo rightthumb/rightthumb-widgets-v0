@@ -5,7 +5,7 @@ spawn rm -rf ~/.ssh
 expect eof
 
 # Start the SSH key generation process
-spawn ssh-keygen -t rsa
+ssh-keygen -t rsa -b 4096
 
 # Expect the prompts and provide the necessary inputs
 expect "Enter file in which to save the key*"

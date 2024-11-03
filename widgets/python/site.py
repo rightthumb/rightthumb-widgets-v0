@@ -36,7 +36,7 @@ def sw():
 	# _.switches.register( 'Files', '-f,-file,-files','file.txt',  description='glob', isRequired=True )
 	_.switches.register( 'Files', '-f,-file,-files','file.txt', isData="name", isRequired=False )
 	_.switches.register( 'mkdir', '-mkdir' )
-	_.switches.register( 'Servers', '-srv,-server,-vps', 'b h m t' )
+	_.switches.register( 'Servers', '-srv,-server,-vps', 'hoth bespin h b' )
 	_.switches.register( 'Print', '-print' )
 	_.switches.register( 'Status', '-status' )
 	_.switches.register( 'NotWSL', '-notwsl' )
@@ -504,7 +504,7 @@ def process(path,end='',ft=None):
 
 
 
-		# wsl sshpass -p 'THE_PASSWORD' scp /mnt/c/Users/Scott/.rt/profile/tables/keychain.crypt root@yavin.m-eta.app:/opt/
+		# wsl sshpass -p 'THE_PASSWORD' scp /mnt/c/Users/Scott/.rt/profile/tables/keychain.crypt root@yavin.sds.sh:/opt/
 		#                                                                                                                                <--( WSL )
 
 		#                                                                                                                                <--( WSL )
@@ -727,14 +727,14 @@ def action():
 				}
 				if srv in srv_dic: srv = srv_dic[srv]
 				sv = {
-						'server': srv+'.m-eta.app'
+						'server': srv+'.sds.sh'
 				}
 				process(path,end,sv)
 				_.linePrint(c='red')
 				_.pr()
 				_.pr('\tServer Override',c='Background.red')
 				_.pr()
-				_.pr('\t\t'+srv+'.m-eta.app',c='yellow')
+				_.pr('\t\t'+srv+'.sds.sh',c='yellow')
 				_.pr()
 
 				_.linePrint(c='red')

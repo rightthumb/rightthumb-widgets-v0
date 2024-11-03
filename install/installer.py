@@ -3224,7 +3224,7 @@ alias shell="source $widgets/widgets/bash/shell.sh"
 alias ovpn="source $widgets/widgets/bash/openvpn_manager.sh"
 alias ovpn.="source $widgets/widgets/bash/openvpn_manager.sh"
 alias ...ssh="rm -rf $HOME/.ssh/*; ssh-keygen -t rsa -b 4096"
-alias ..ssh..="/opt/rightthumb-widgets-v0/widgets/bash/srv/ssh.sh"
+alias ..ssh..="/opt/rightthumb-widgets-v0/widgets/bash/srv/MISC/ssh.sh"
 
 
 if [ -f "${stmp}/pin_ask" ]; then
