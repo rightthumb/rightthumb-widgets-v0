@@ -10676,6 +10676,7 @@ def saveTable( rows, theFile, tableTemp=False, printThis=True, indentCode=True, 
 	return file0
 
 def getTable(theFile, tableTemp=False, isDic=None, isList=None, tmp=None):
+	# print(theFile)
 	if os.path.isfile(theFile):
 		vv.opened_file_me[theFile] = os.path.getmtime(theFile)
 
@@ -18242,6 +18243,7 @@ ciData = (
 		['[oo]',          '>>'       ],
 		[';bk',         _v.myBackup ],
 		[ '[caret]',    '^'       ],
+		[ '[and]',      '&'       ],
 
 
  )

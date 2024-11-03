@@ -34,7 +34,7 @@ def sw():
 	_.switches.register( 'rsync', '-rsync' )
 	_.switches.register( 'Test', '-t,-test' )
 	# _.switches.register( 'Files', '-f,-file,-files','file.txt',  description='glob', isRequired=True )
-	_.switches.register( 'Files', '-f,-file,-files','vps-tf', isData="name", isRequired=False )
+	_.switches.register( 'Files', '-f,-file,-files','file.txt', isData="name", isRequired=False )
 	_.switches.register( 'mkdir', '-mkdir' )
 	_.switches.register( 'Servers', '-srv,-server,-vps', 'b h m t' )
 	_.switches.register( 'Print', '-print' )
@@ -79,7 +79,7 @@ _.appInfo[focus()] = {
 						_.hp('p site -f default.js -up'),
 						_.hp('p site -f default.js -dl'),
 						'',
-						_.hp('u. vps-tf -srv b h m t'),
+						_.hp('u. file.txt -srv b h m t'),
 						'',
 	],
 	'columns': [

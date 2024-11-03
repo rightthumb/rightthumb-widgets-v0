@@ -272,6 +272,28 @@ def action():
 templates={}
 
 templates['xsite']='''
+# Enable CORS headers
+<IfModule mod_headers.c>
+    Header Set Access-Control-Allow-Origin "*"
+    Header Set Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS"
+    Header Set Access-Control-Allow-Headers "Content-Type, Authorization, X-Requested-With, XMLHttpRequest"
+    Header Set Access-Control-Allow-Credentials "true"
+</IfModule>
+
+# Handle preflight requests
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteCond %{REQUEST_METHOD} OPTIONS
+    RewriteRule ^(.*)$ $1 [R=200,L]
+</IfModule>
+
+# Set CORS headers for specific files if needed (optional)
+<FilesMatch "\.(js|css|png|jpg|jpeg|gif|svg|woff|woff2|ttf|eot)$">
+    Header Set Access-Control-Allow-Origin "*"
+</FilesMatch>
+'''.strip()
+
+templates['xsite1']='''
 <IfModule mod_headers.c>
     Header set Access-Control-Allow-Origin "*"
 </IfModule>
