@@ -40,7 +40,7 @@ def sw():
 	_.switches.register( 'Print', '-print' )
 	_.switches.register( 'Status', '-status' )
 	_.switches.register( 'NotWSL', '-notwsl' )
-	_.switches.register( 'Verbos', '-v' )
+	_.switches.register( 'Verbose', '-v' )
 	_.switches.register( 'SSH-Remote_Folder', '-remote' )
 	_.switches.register( 'URL', '-url,-edit,--u' )
 	_.switches.register( 'Print-Remote-Location', '-where' )
@@ -139,7 +139,7 @@ if type(file_trigger_data) == list:
 
 
 def tail():
-	if _.switches.isActive('Verbos'):
+	if _.switches.isActive('Verbose'):
 		_.switches.fieldSet( 'Print', 'active', True )
 	if _.switches.isActive('Print'):
 		return ''
@@ -348,7 +348,7 @@ def URL_APPS(url,meta):
 
 
 def process(path,end='',ft=None):
-	if _.switches.isActive('Verbos'):
+	if _.switches.isActive('Verbose'):
 		_.switches.fieldSet( 'Print', 'active', True )
 		verbos = ' -v '
 	else:
@@ -398,7 +398,7 @@ def process(path,end='',ft=None):
 		pw=_vault.imp.s.de( ftp['password'] )
 		_ssh=sshpass(pw,'ssh')
 		_scp=sshpass(pw,'scp')
-		if _.switches.isActive('Verbos'):
+		if _.switches.isActive('Verbose'):
 			_rsync=sshpass(pw,'rsync -avvz ')
 		else:
 			_rsync=sshpass(pw,'rsync -az ')
@@ -719,12 +719,7 @@ def action():
 			process(path,end)
 		else:
 			for srv in _.switches.values('Servers'):
-				srv_dic = {
-								'h': 'hoth',
-								't': 'tatooine',
-								'b': 'bespin',
-								'm': 'mortis',
-				}
+				srv_dic = {}
 				if srv in srv_dic: srv = srv_dic[srv]
 				sv = {
 						'server': srv+'.sds.sh'
