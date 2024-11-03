@@ -368,6 +368,7 @@ dataFolder = techFolder + slash+'data'
 myIndexes = myHome + slash+'indexes'
 quickIndex = myIndexes + slash+'0A{465C1A34-D22F-184E-F713-F8E5149E212D}'
 myTables = myHome + slash+'tables'
+mdFig = myHome + slash+'mdFig'
 duckDuckGo = myTables + slash+'DuckDuckGo'
 relevant_folders = myTables + slash+'relevantFolders.txt'
 myWebApp = myHome + slash+'/widgets/servers/web/crud'
@@ -1101,6 +1102,7 @@ def dir_structure():
 	global myHome
 	global py
 	global terminal
+	global mdFig
 	dir_check_create( py )
 	home_created = dir_check_create( myHome )
 	dir_check_create( myIndexes )
@@ -1125,6 +1127,7 @@ def dir_structure():
 	dir_check_create( myTXT )
 	dir_check_create( myBIN )
 	dir_check_create( profileTMP )
+	dir_check_create( mdFig )
 	
 	dir_check_create( duckDuckGo )
 	dir_check_create( library )

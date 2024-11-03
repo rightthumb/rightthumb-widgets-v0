@@ -24485,6 +24485,44 @@ def ptr(data, theColumns, id=None):
 		id = genUUID()
 	tables.print( id, unixAutoColumns( data, theColumns, __.appReg ) )
 ##################################################
+def mdFig(md='', title='###', wrap=True, file=None, t=None, w=None, f=None):
+	if not t is None: title=t
+	if not w is None: wrap=w
+	if not f is None: file=f
+	if not file is None:
+		if os.path.isfile(file):
+			md = open(file, 'r').read()
+		elif os.path.isfile(_v.mdFig+os.sep+file):
+			md = open(_v.mdFig+os.sep+file, 'r').read()
+		elif os.path.isfile(_v.ttt+os.sep+file):
+			md = open(_v.ttt+os.sep+file, 'r').read()
+	if type(md) == str: md = md.split('\n')
+	isOpen=False
+	current = []
+	fig = {}
+	code = {}
+	defaultSection = '5e85ba2c-4476-4910-81ab-917152328c05'
+	section = defaultSection
+	for line in md:
+		lineRaw=line
+		line=line.strip()
+		if line.startswith('```') and not line.startswith('````'):
+			line = line.replace('```','~~~')
+		if line.startswith(title): section = line.split(title+' ')[1]
+		if isOpen and line.startswith('~~~'):
+			if wrap:
+				code[section] = '\n'+'\n'.join(current)+'\n'
+			else:
+				code[section] = '\n'.join(current)
+			isOpen = False
+			current = []
+		elif not isOpen and line.startswith('~~~'):
+			isOpen = True
+		elif isOpen:
+			current.append(lineRaw)
+	if defaultSection in code: del code[defaultSection]
+	return code
+##################################################
 
 # __.switch_raw
 ##################################################

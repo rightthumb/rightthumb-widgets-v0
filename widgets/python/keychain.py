@@ -89,6 +89,8 @@ _.appInfo[focus()] = {
 						'p keychain -label rightthumb@yavin.m-eta.app   -add   -alias rt',
 						'p keychain -get -label rt',
 						'',
+						'p keychain -label theName   -add    -clip',
+						'p keychain -label theName   -add   -alias  tn',
 	],
 	'columns': [
 					# { 'name': 'name', 'abbreviation': 'n' },
