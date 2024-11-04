@@ -198,6 +198,10 @@ def action(path=None):
 			HT[0]=ext.replace('.','')
 			_.switches.fieldSet( 'HostedTemp', 'value', ','.join(HT) )
 			_.switches.fieldSet( 'HostedTemp', 'values', HT )
+		if not ext.startswith('.') and len(ext) < 5 and not '.' in ext:
+			ext = '.'+ext 
+		elif not ext.startswith('.'):
+			ext = '_'+ext
 		fi = fo + str(int(time.time())) + ext
 		open(fi, 'w').close()
 		_.switches.fieldSet( 'Files', 'active', True )

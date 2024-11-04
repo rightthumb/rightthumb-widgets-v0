@@ -24503,6 +24503,9 @@ def mdFig(md='', title='###', wrap=True, file=None, t=None, w=None, f=None):
 	code = {}
 	defaultSection = '5e85ba2c-4476-4910-81ab-917152328c05'
 	section = defaultSection
+	mdFile = '\n'.join(md).replace('\r','')
+	if not '\n### ' in mdFile and '\n## ' in mdFile:
+		title = '##'
 	for line in md:
 		lineRaw=line
 		line=line.strip()

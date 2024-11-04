@@ -4,22 +4,17 @@ fieldSet=_.l.vars(focus(),__name__,__file__,appDBA);_.load();_v=__.imp('_rightTh
 
 def sw():
 	pass
-	_.switches.register( 'Label', '-l,-label,-t,-title,-fld,-field', '##' )
-	_.switches.register( 'Wrap', '-w,-wrap' )
-	_.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name', description='Files', isRequired=False )
-	_.switches.register( 'Key', '-key', 'dictKeyName' )
+	_.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='data', description='Files', isRequired=False )
 _._default_settings_()
 
 _.appInfo[focus()] = {
-	'file': 'mdFig.py',
-	'description': 'Markdown Config File ### key ~~~ value',
+	'file': 'thisApp.py',
+	'description': 'Changes the world',
 	'categories': [
 						'DEFAULT',
 				],
 	'examples': [
-						_.hp('p mdFig -f  mdFig_Test_File.md -label ##'),
-						_.hp('p mdFig -f  mdFig_Test_File.md -label ## -key one'),
-						_.hp(''),
+						_.hp('p thisApp -file file.txt'),
 						_.linePrint(label='simple',p=0),
 						'',
 	],
@@ -43,24 +38,14 @@ _.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw );
 #n)--> start
 
 def action():
-	wrap = _.switches.isActive('Wrap')
-	if _.switches.isActive('Label'):
-		label = _.switches.value('Label')
-	else:
-		label = '###'
-	file = _.isData()[0]
-	try:
-		fig = _.mdFig( '', label, wrap, file = file )
-	except:
-		_.e('Error: mdFig','-f configFile.md')
-	if _.switches.isActive('Key'):
-		for key in _.switches.values('Key'):
-			try:
-				_.pr( fig[key] )
-			except:
-				_.e('Error: bad key or file',['remove -key from command','or','double check the file'])
-	else:
-		_.pv(fig)
+	data = '\n'.join(_.isData(r=0))
+	parts = data.split('##################################################')
+	for part in parts:
+		if '_profileVariables' in part:
+			_copy.imp.copy( part )
+			break
+	
+_copy = _.regImp( __.appReg, '-copy' )
 
 ########################################################################################
 if __name__ == '__main__':

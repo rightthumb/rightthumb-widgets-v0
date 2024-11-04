@@ -9,7 +9,6 @@ if [[ "$EUID" -ne 0 ]]; then
 fi
 
 
-
 echo "Starting cleanup of temporary and cache directories..."
 
 # Define directories to clean

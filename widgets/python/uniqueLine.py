@@ -3,23 +3,20 @@ def focus(parentApp='', childApp='', reg=True): global appDBA; f = __.appName(ap
 fieldSet=_.l.vars(focus(),__name__,__file__,appDBA);_.load();_v=__.imp('_rightThumb._vars');
 
 def sw():
-	pass
-	_.switches.register( 'Label', '-l,-label,-t,-title,-fld,-field', '##' )
-	_.switches.register( 'Wrap', '-w,-wrap' )
-	_.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name', description='Files', isRequired=False )
-	_.switches.register( 'Key', '-key', 'dictKeyName' )
+	_.switches.register( 'CodeSnippets', '-snip,-snippets' )
 _._default_settings_()
 
 _.appInfo[focus()] = {
-	'file': 'mdFig.py',
-	'description': 'Markdown Config File ### key ~~~ value',
+	'file': 'uniqueLine.py',
+	'description': 'Prints unique lines',
 	'categories': [
-						'DEFAULT',
+						'examples',
+						'python',
+						'unique',
+						'line',
 				],
 	'examples': [
-						_.hp('p mdFig -f  mdFig_Test_File.md -label ##'),
-						_.hp('p mdFig -f  mdFig_Test_File.md -label ## -key one'),
-						_.hp(''),
+						_.hp('cat  examples.py | p uniqueLine'),
 						_.linePrint(label='simple',p=0),
 						'',
 	],
@@ -43,24 +40,21 @@ _.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw );
 #n)--> start
 
 def action():
-	wrap = _.switches.isActive('Wrap')
-	if _.switches.isActive('Label'):
-		label = _.switches.value('Label')
-	else:
-		label = '###'
-	file = _.isData()[0]
-	try:
-		fig = _.mdFig( '', label, wrap, file = file )
-	except:
-		_.e('Error: mdFig','-f configFile.md')
-	if _.switches.isActive('Key'):
-		for key in _.switches.values('Key'):
-			try:
-				_.pr( fig[key] )
-			except:
-				_.e('Error: bad key or file',['remove -key from command','or','double check the file'])
-	else:
-		_.pv(fig)
+	spent = []
+	for line in _.isData(r=0):
+		cl = line.replace('#','').strip()
+		if not cl in spent:
+			spent.append(cl)
+			if _.switches.isActive('CodeSnippets'):
+				if  ')-->' in cl:
+					_.pr(line)
+				elif not '=' in cl:
+					_.pr('  ',cl)
+				else:
+					_.pr(cl)
+
+			else:
+				_.pr(line)
 
 ########################################################################################
 if __name__ == '__main__':
