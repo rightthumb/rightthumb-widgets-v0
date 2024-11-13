@@ -1,1 +1,0 @@
-Get-Process | Select-Object -ExpandProperty Path  > D:\Users\Scott\pss.txt
