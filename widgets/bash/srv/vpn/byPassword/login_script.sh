@@ -10,7 +10,9 @@ CORRECT_CREDS=$(grep -E "^$USER_NAME $PASS_WORD$" $PSW_FILE)
 echo "Username: $USER_NAME, Password: $PASS_WORD" > /opt/_ovpn_test  # For debugging
 
 if [ -n "$CORRECT_CREDS" ]; then
-    exit 0  # Authentication success
+	exit 0  # Authentication success
 else
-    exit 1  # Authentication failure
+	exit 1  # Authentication failure
 fi
+
+# echo $?
