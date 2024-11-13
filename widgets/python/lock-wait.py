@@ -162,7 +162,7 @@ def generate_random_numberFloat(start=0.1, end=0.8):
 	return random.uniform(start, end)
 		
 
-def generate_random_integer(start=1, end=8):
+def generate_random_integer(start=3, end=20):
 	import random
 	return random.randint(start, end)
 
