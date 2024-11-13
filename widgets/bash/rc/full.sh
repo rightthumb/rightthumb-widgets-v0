@@ -12,7 +12,7 @@ alias s.pp="sudo $widgets/widgets/bash/nav/pp.sh"
 alias p.sudo="sudo $widgets/widgets/bash/nav/p.sh"
 alias pp.sudo="sudo $widgets/widgets/bash/nav/pp.sh"
 # alias p="$widgets/widgets/bash/nav/p.sh"
-p() {
+function p() {
 	source "$widgets/widgets/bash/nav/p.sh"
 }
 
