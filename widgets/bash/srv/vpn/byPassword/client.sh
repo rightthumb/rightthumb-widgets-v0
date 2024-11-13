@@ -2,8 +2,8 @@
 
 # Check if a client name is provided
 if [ -z "$1" ]; then
-    echo "Usage: $0 <client-name>"
-    exit 1
+	echo "Usage: $0 <client-name>"
+	exit 1
 fi
 
 CLIENT_NAME=$1
@@ -23,8 +23,8 @@ source vars
 
 # Generate the client certificate and key if they do not exist
 if [[ ! -f "pki/issued/${CLIENT_NAME}.crt" || ! -f "pki/private/${CLIENT_NAME}.key" ]]; then
-    ./easyrsa gen-req $CLIENT_NAME nopass
-    ./easyrsa sign-req client $CLIENT_NAME
+	./easyrsa gen-req $CLIENT_NAME nopass
+	./easyrsa sign-req client $CLIENT_NAME
 fi
 
 # Copy the client certificate and key to the client's unique directory
