@@ -21421,7 +21421,9 @@ class regImp:
 
 		__.appReg = self.focus
 
-		if type( func ) == str:
+		if 'function' in str(type( func )):
+			return func()
+		elif type( func ) == str:
 			theFunction = eval( 'self.imp.' + func )
 		else:
 			theFunction = func

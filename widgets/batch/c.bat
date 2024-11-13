@@ -10,6 +10,11 @@ REM    - Scott Taylor Reph, RightThumb.com
 REM ###########################################################################
 REM ## {C3P0D40fAe8B} ##
 
+IF [%1] == [] (
+    SET MainArg = None
+) else (
+    SET MainArg = %1
+)
 
 CALL %USERPROFILE%\.rt\profile\vars\config.bat
 if [%wprofile%] == [] SET wprofile=%USERPROFILE%\.rt\profile
@@ -59,6 +64,7 @@ GOTO:EOF
 
     IF NOT ["%api%"] == ["loaded"] (
         CALL :LOAD
+        @REM SET > %wprofile%\config\._Var_Cache_.bat
     ) else (
         CALL:CLEAR_SCREEN
     )
@@ -328,12 +334,17 @@ GOTO:EOF
             prompt └─ 
             REM prompt - 
             if exist "%stmp%\pin_ask" (
-                call pin
-                call c
+                CALL:SET_PIN
             )
             @REM CALL fixPath
 GOTO:EOF
 
+:SET_PIN
+IF [%MainArg%] == [None] (
+    call pin
+    call c
+)
+GOTO:EOF
 
 
 :BUILD_TICKET_HISTORY

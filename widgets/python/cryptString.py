@@ -423,7 +423,11 @@ def action():
 			data = cleanString( data )
 			original=data
 			if data.endswith('=') or data.endswith('/U') or _.switches.isActive('Decrypt'):
-				string = _blowfish.decrypt( data, password )
+				try:
+					string = _blowfish.decrypt( data, password )
+				except:
+					_.pr('Decryption Error',c='red')
+					_.isExit(__file__)
 			else:
 				string = _blowfish.encrypt( data, password )
 
@@ -443,7 +447,11 @@ def action():
 
 
 		if data.endswith('=') or data.endswith('/U') or _.switches.isActive('Decrypt'):
-			clip = _blowfish.decrypt( data, password )
+			try:
+				clip = _blowfish.decrypt( data, password )
+			except:
+				_.pr('Decryption Error',c='red')
+				_.isExit(__file__)
 		else:
 			clip = _blowfish.encrypt( data, password )
 		# if not clip == original:
@@ -503,9 +511,15 @@ def action():
 		# print(data,original);sys.exit();
 		# print(data);sys.exit();
 		if not _.switches.isActive('JustReturn'):
-			_.colorThis( _blowfish.decrypt( data, password ), 'green' )
+			try:
+				_.colorThis( _blowfish.decrypt( data, password ), 'green' )
+			except:
+				_.colorThis( 'Decryption Error', c='red' )
 		elif _.switches.isActive('JustReturn'):
-			return _blowfish.decrypt( data, password )
+			try:
+				return _blowfish.decrypt( data, password )
+			except:
+				return 'Decryption Error'
 	else:
 		# _.pr(1050)
 		for i,row in enumerate(_.isData(c=False,focus=focus())):
@@ -514,7 +528,8 @@ def action():
 				try:
 					de_row = _blowfish.decrypt( row, password )
 				except Exception as e:
-					pass
+					_.pr('Decryption Error',c='red')
+					_.isExit(__file__)
 				if  not _.switches.isActive('Password'):
 					row = de_row
 				elif  _.switches.isActive('Password'):
@@ -532,7 +547,8 @@ def action():
 									try:
 										de_row = _blowfish.decrypt( row, pw )
 									except Exception as e:
-										pass
+										_.pr('Decryption Error',c='red')
+										_.isExit(__file__)
 								else:
 									row = de_row
 
@@ -546,7 +562,11 @@ def action():
 							good = False
 					# _.pr('good:',good,x)
 					if not good:
-						row = _blowfish.decrypt( row, password )
+						try:
+							row = _blowfish.decrypt( row, password )
+						except:
+							_.pr('Decryption Error',c='red')
+							_.isExit(__file__)
 					else:
 						row = de_row
 

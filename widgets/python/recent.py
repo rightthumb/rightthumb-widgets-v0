@@ -214,6 +214,12 @@ def sorted_keys( index ):
 
 
 def action():
+
+	if _.switches.isActive('BackupFile') and not len(_.switches.values('BackupFile')):
+		fB = _v.tt+__.os.sep+'fileBackup.json'
+		_.switches.fieldSet( 'BackupFile', 'value', fB )
+		_.switches.fieldSet( 'BackupFile', 'values', [fB] )
+
 	if _.switches.isActive('ShowBackups'): load()
 
 
@@ -423,7 +429,12 @@ def load():
 	_bkLog = _.regImp( __.appReg, '_rightThumb._backupLog' )
 	if _.switches.isActive('BackupFile'):
 		_bkLog.imp.setBackupFile( _.switches.value('BackupFile') )
+	# print(_bkLog.imp.autoFileVersion)
+	_bkLog.do( _bkLog.imp.loadBackupFile )
 	_bkLog.do( _bkLog.imp.autoFileVersion )
+	# test = _bkLog.imp.backupLog
+	# print(test)
+	# _.isExit(__file__)
 
 
 
