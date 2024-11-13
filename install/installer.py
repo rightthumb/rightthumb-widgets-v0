@@ -3292,7 +3292,8 @@ sshssh() {
 
 alias bb.="bleachbit --clean system.cache"
 alias bleachbit.="bleachbit --clean system.cache"
-
+alias ssh...='rm -rf ~/.ssh; ssh-keygen -t rsa'
+alias x.="exit"
 clear
 # get_time_difference
 # a3bc42ec51e9

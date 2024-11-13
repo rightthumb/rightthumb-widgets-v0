@@ -3,6 +3,14 @@
 # Update package list and upgrade packages
 sudo apt update && sudo apt upgrade -y
 
+# Misc
+sudo apt install -y webp
+# sudo apt install -y vVv
+# sudo apt install -y vVv
+# sudo apt install -y vVv
+# sudo apt install -y vVv
+
+
 # Install essential packages
 sudo apt install -y python3 python3-pip wget curl git imagemagick tesseract-ocr ffmpeg fonts-noto-color-emoji fonts-emojione
 

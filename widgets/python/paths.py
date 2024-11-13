@@ -40,6 +40,7 @@ def appSwitches():
 	_.switches.register( 'Validate', '-v,-validate' )
 	_.switches.register( 'WSL', '-wsl' )
 	_.switches.register( 'Multiple', '-m,,-multi,-multiple' )
+	_.switches.register( 'DoubleSlash', '-d,-b,-dd,-double,-doubleslash' )
 
 
 # _.autoBackupData = __.autoCreationConfiguration['backup']
@@ -165,9 +166,19 @@ _.postLoad( __file__ )
 ########################################################################################
 # START
 
-def wsl(path):
+def wsl(path,just=False):
 	subject = path
-	if not _.switches.isActive('WSL'): _pr( subject.replace( '\\', '\\\\' ) )
+	if not just:
+		if not _.switches.isActive('WSL'):
+			subby = subject.replace( '\\', '\\\\' )
+			if _.switches.isActive('DoubleSlash'):
+				_copy = _.regImp( __.appReg, '-copy' )
+				try:
+					_copy.imp.copy( subby )
+				except:
+					_pr( subby )
+			else:
+				_pr( subby )
 	git_path = subject
 	git_path = git_path.replace( _v.slashes['w'], _v.slashes['u'] )
 	git_path = git_path.replace( ':', '' )
@@ -186,7 +197,7 @@ def _pr(*args,**kwargs):
 import platform
 
 def action():
-
+	
 
 
 	if not _.switches.isActive('Validate'):
@@ -215,7 +226,14 @@ def action():
 		# _site.action()
 		for subject in subjects:
 			_.pr(line=1,c='yellow')
-
+			if _.switches.isActive('WSL'):
+				wslPath = wsl(subject,True)
+				_copy = _.regImp( __.appReg, '-copy' )
+				try:
+					_copy.imp.copy( wslPath )
+				except:
+					_pr( wslPath )
+				return None
 			try:
 				subject = __.path(subject)
 				subby = subject.replace(os.getcwd(),'')
@@ -226,10 +244,13 @@ def action():
 						subby = '.'+subby
 					if not _.switches.isActive('WSL'): _pr(subby)
 				if not _.switches.isActive('WSL'):
-					_copy = _.regImp( __.appReg, '-copy' )
-					try:
-						_copy.imp.copy( subject )
-					except:
+					if not _.switches.isActive('DoubleSlash'):
+						_copy = _.regImp( __.appReg, '-copy' )
+						try:
+							_copy.imp.copy( subject )
+						except:
+							_pr( subject )
+					else:
 						_pr( subject )
 				if subject.startswith('/mnt/'):
 					sub = subject[5:]
