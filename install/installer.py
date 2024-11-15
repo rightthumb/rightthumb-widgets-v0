@@ -3060,15 +3060,12 @@ if ! has_file_been_modified_recently "$marker_file" 5; then
 		touch "$marker_file"
 	fi
 fi
+alias cron.="sudo service cron start"
 ####### wsl cron end
 
 source /opt/rightthumb-widgets-v0/widgets/bash/rc/full.sh
 
-loadMe() {
-	curl -s 'https://etc.ac/once/?f=vps' > $widgets/widgets/bash/vps-bashrc_extended.sh
-	$p shClean -f $widgets/widgets/bash/vps-bashrc_extended.sh
-	chmod +x $widgets/widgets/bash/vps-bashrc_extended.sh
-}
+
 # echo 000-015
 alias size.fi="du -h  "
 alias size.f="du -sh "
@@ -3265,6 +3262,32 @@ dtdt() {
     ssh -L 59001:localhost:5901 -C -N -l scott "$1" &
 }
 
+mp4() {
+	local url="$1"
+
+	# Check if a URL was provided
+	if [ -z "$url" ]; then
+		echo "Usage: dl.mp4t <URL>"
+		return 1
+	fi
+
+	# Download the best video and audio streams with specific extensions
+	youtube-dlc -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]' "$url" &
+}
+
+mp3() {
+	local url="$1"
+
+	# Check if a URL was provided
+	if [ -z "$url" ]; then
+		echo "Usage: dl.mp3t <URL>"
+		return 1
+	fi
+
+	# Download audio in MP3 format
+	youtube-dlc -x --audio-format mp3 "$url" &
+}
+
 alias dt.="dtdt"
 alias dt.k="kill -9 $(lsof -ti :59001)"
 alias k="kill -9"
@@ -3294,6 +3317,123 @@ alias bb.="bleachbit --clean system.cache"
 alias bleachbit.="bleachbit --clean system.cache"
 alias ssh...='rm -rf ~/.ssh; ssh-keygen -t rsa'
 alias x.="exit"
+
+
+
+
+#####################################################################
+mp4() {
+	local url="$1"
+
+	# Check if a URL was provided
+	if [ -z "$url" ]; then
+		echo "Usage: dl.mp4t <URL>"
+		return 1
+	fi
+
+	# Download the best video and audio streams with specific extensions
+	youtube-dlc -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]' "$url" &
+}
+
+mp3() {
+	local url="$1"
+
+	# Check if a URL was provided
+	if [ -z "$url" ]; then
+		echo "Usage: dl.mp3t <URL>"
+		return 1
+	fi
+
+	# Download audio in MP3 format
+	youtube-dlc -x --audio-format mp3 "$url" &
+}
+#####################################################################
+run_bash_url() {
+    if [ "$#" -lt 1 ]; then
+        echo "Usage: bash.. <URL> [arg1 arg2 ...]"
+        return 1
+    fi
+    first_arg="$1"
+    shift
+    curl -s -L -k "$first_arg" | bash -s -- "$@"
+}
+alias bash..="run_bash_url"
+
+run_python_url() {
+    if [ "$#" -lt 1 ]; then
+        echo "Usage: py.. <URL> [arg1 arg2 ...]"
+        return 1
+    fi
+    first_arg="$1"
+    shift
+    curl -s -L -k "$first_arg" | python3 - "$@"
+}
+alias py..="run_python_url"
+
+
+
+run_python_url_sds() {
+    if [ "$#" -lt 1 ]; then
+        echo "Usage: py. <alias> [arg1 arg2 ...]"
+        return 1
+    fi
+    first_arg="$1"
+    shift
+    curl -s -L -k "https://u.sds.sh/$first_arg" | python3 - "$@"
+}
+alias py.="run_python_url_sds"
+
+run_bash_url_sds() {
+    if [ "$#" -lt 1 ]; then
+        echo "Usage: bash. <alias> [arg1 arg2 ...]"
+        return 1
+    fi
+    first_arg="$1"
+    shift
+    curl -s -L -k "https://u.sds.sh/$first_arg" | bash -s -- "$@"
+}
+alias bash.="run_bash_url_sds"
+
+
+
+run_python_url_shell_sds() {
+    if [ "$#" -lt 1 ]; then
+        echo "Usage: py.. <alias> [arg1 arg2 ...]"
+        return 1
+    fi
+    first_arg="$1"
+    shift
+    curl -s -L -k "https://shell.sds.sh/?f=py/$first_arg" | python3 - "$@"
+}
+alias py.sds="run_python_url_shell_sds"
+
+run_bash_url_shell_sds() {
+    if [ "$#" -lt 1 ]; then
+        echo "Usage: bash.. <alias> [arg1 arg2 ...]"
+        return 1
+    fi
+    first_arg="$1"
+    shift
+    curl -s -L -k "https://shell.sds.sh/?f=sh/$first_arg" | bash -s -- "$@"
+}
+alias bash.sds="run_bash_url_shell_sds"
+#####################################################################
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+alias rc.="curl -s -o $HOME/.bashrc_sds -L -k https://u.sds.sh/bashrc; chmod +x $HOME/.bashrc_sds; source $HOME/.bashrc_sds"
+
 clear
 # get_time_difference
 # a3bc42ec51e9

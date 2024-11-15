@@ -57,6 +57,7 @@ def appSwitches():
 	_.switches.register('Force', '-force')
 	_.switches.register('BypassScheduler', '-bs')
 	_.switches.register('BackupRecoverScan', '-bkscan','1,2,3,4,5')	
+	_.switches.register('EncryptBackup', '-en,-encrypt')
 	# _.switches.register('Session_ID', '-session')
 
 	
@@ -643,7 +644,8 @@ def checkAlpha( data ):
 	return { 'has': found, 'int': without }
 
 
-def secureFiles_Decrypt( path, pw ):
+def secureFiles_Decrypt( path, pw=None ):
+	if pw is None: pw = _vault.key()
 	__.openSecure = True
 	if not isActive('Silent'):
 		_.cp( 'crypt.de', 'Background.light_blue' )
@@ -660,7 +662,8 @@ def secureFiles_Decrypt( path, pw ):
 	while epoch == _dir.info(path)['me']:
 		time.sleep(.2)
 
-def secureFiles_Encrypt( path, pw ):
+def secureFiles_Encrypt( path, pw=None ):
+	# if pw is None: pw = _vault.key()
 	__.openSecure = False
 	if _.isCrypt(path):
 		return None
@@ -1301,6 +1304,10 @@ def action(path=None,flag=None,o=None,pre=None):
 						_.compress2( path,  libFile)
 					else:
 						copyfile( path,  libFile)
+						# if _.switches.isActive('EncryptBackup') or isActive('EncryptBackup'):
+						# 	_.encrypt( libFile )
+						# 	if not isActive('Silent'):
+						# 		_.pr('backup encrypted',c='Background.purple')
 				else:
 					_.pr('not encrypted',c='red')
 					if _.switches.isActive('isPreOpen'):
@@ -1476,6 +1483,10 @@ def action(path=None,flag=None,o=None,pre=None):
 						result = _.compress2( path,  libFile)
 					else:
 						result = copyfile(path, newname)
+						if _.switches.isActive('EncryptBackup') or isActive('EncryptBackup'):
+							_.encrypt( newname )
+							if not isActive('Silent'):
+								_.pr('backup encrypted',c='Background.purple')
 					# for i,row in enumerate(backupLog):
 					# 	try:
 					# 		if not type(backupLog[i]['flag']) == str:

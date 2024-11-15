@@ -23888,6 +23888,12 @@ def toTMP(path):
 
 # path=_.zZip(path);   _.cleanUnzip()
 ##################################################
+def encrypt(path,ext=True): enFi(path,ext=True)
+def decrypt(path,ext=True): deFi(path,ext=True)
+
+
+
+##################################################
 def enFi(path,ext=True):
 	# print('enFi',isCrypt(path))
 	if os.path.isfile(path) and not isCrypt(path):

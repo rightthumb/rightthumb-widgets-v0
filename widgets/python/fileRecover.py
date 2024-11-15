@@ -404,6 +404,7 @@ def ask(data, doneselection=False, backupfile='', originalfile=''):
 			# copyfile(backupfile, originalfile)
 			# _.decompress2(backupfile, originalfile)
 			copyfile(_v.stmp+os.sep+'fileRecover.cache', originalfile)
+			_.decrypt( originalfile)
 			_.pr('Reverted to original, for real')
 			_.pr()
 			_.pr('Reverted to original')
@@ -619,6 +620,7 @@ def action():
 	if _.switches.isActive('Input'):
 		global originalFileContents
 		copyfile(_.switches.value('Input'), _v.stmp+os.sep+'fileRecover.cache')
+		_.decrypt( _v.stmp+os.sep+'fileRecover.cache')
 	if _.switches.isActive('Input') or _.switches.isActive('ShowLast'):
 		path = _.switches.value('Input')
 		

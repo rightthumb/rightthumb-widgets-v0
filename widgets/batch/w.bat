@@ -1,4 +1,8 @@
 @echo off
+CALL a.BTN--wt--ctrlw-toggle
+goto:eof
+
+
 setlocal
 set folder=D:\.rightthumb-widgets
 set single=%folder%\.folder.meta.single
