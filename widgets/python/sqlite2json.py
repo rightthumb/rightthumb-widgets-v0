@@ -26,7 +26,7 @@ def sw():
 	# _.switches.register( 'Input', '-i' )
 	# _.switches.register( 'URL', '-u,-url,-urls', 'https://etc.ac/', isData='raw' )
 	#e)--> examples
-	_.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=False )
+	_.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name', description='Files', isRequired=False )
 
 _._default_settings_()
 # __.setting('require-list',['Files,Plus','File,Has']) # todo
@@ -111,20 +111,81 @@ _.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw );
 ########################################################################################
 #n)--> start
 
+
+
+
+
+
+import sqlite3
+import json
+import sys
+
+def export_to_json(db_name):
+	# Connect to the SQLite database
+	conn = sqlite3.connect(db_name)
+	cursor = conn.cursor()
+
+	# Header information for JSON export
+	export_data = [
+		{
+			"type": "header",
+			"version": "5.2.1",
+			"comment": "Export to JSON from sqlite2json.py in https://github.com/rightthumb/rightthumb-widgets-v0"
+		},
+		{
+			"type": "database",
+			"name": db_name.split('.')[0]
+		}
+	]
+
+	# Get all table names in the database
+	cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%';")
+	tables = cursor.fetchall()
+
+	# Iterate over each table
+	for table_name_tuple in tables:
+		table_name = table_name_tuple[0]
+		cursor.execute(f"PRAGMA table_info({table_name});")
+		columns = [info[1] for info in cursor.fetchall()]  # Get column names
+
+		# Fetch all rows from the current table
+		cursor.execute(f"SELECT * FROM {table_name}")
+		rows = cursor.fetchall()
+
+		# Prepare table data in the required JSON format
+		table_data = {
+			"type": "table",
+			"name": table_name,
+			"database": db_name.split('.')[0],
+			"data": []
+		}
+
+		# Append rows as dictionaries to the table's data list
+		for row in rows:
+			row_data = {columns[i]: str(row[i]) if row[i] is not None else "" for i in range(len(columns))}
+			table_data["data"].append(row_data)
+
+		# Add the table structure to the main export data
+		export_data.append(table_data)
+
+	# Close the connection to the database
+	conn.close()
+
+	# Convert export data to JSON and save to a file
+	output_file = f"{db_name.split('.')[0]}_export.json"
+	with open(output_file, "w") as json_file:
+		json.dump(export_data, json_file, indent=4)
+
+	print(f"Database exported to {output_file}")
+
+
+
+
+
+
 def action():
-	pass
-	# load(); global c3po;
-
-	#n)--> iterate
-	# for subject in _.isData(r=0): _.pr(subject)
-	# for subject in _.myData(): _.pr(subject)
-	
-
-# def load():
-# 	global c3po
-# 	c3po = _.getTable( 'table' )
-# 	#n)--> print table
-# 	_.pt(c3po)
+	for path in _.switches.values('Files'):
+		export_to_json(path)
 
 
 ##################################################

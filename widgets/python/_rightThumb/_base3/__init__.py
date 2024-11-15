@@ -10692,6 +10692,7 @@ def getTable(theFile, tableTemp=False, isDic=None, isList=None, tmp=None):
 		json = simplejson
 
 	# Determine the file path
+	file0 = _v.myTables + _v.slash + theFile
 	if not isinstance(tableTemp, bool):
 		if tableTemp == 'split':
 			file0 = _v.myTables + _v.slash + 'tablesets' + _v.slash + theFile
@@ -24527,6 +24528,261 @@ def mdFig(md='', title='###', wrap=True, file=None, t=None, w=None, f=None):
 			current.append(lineRaw)
 	if defaultSection in code: del code[defaultSection]
 	return code
+##################################################
+# def simpleIndex(text):
+#     open_close_pairs = {
+#         '{': '}', '[': ']', '(': ')', '<': '>', '"': '"', "'": "'"
+#     }
+#     stack = []  # Stack to keep track of open positions
+#     index = {}  # Dictionary to store open-close pairs
+#     in_quote = None  # Tracks if we're inside a quote
+#     escape_next = False  # Flags the next character as escaped
+
+#     for i, char in enumerate(text):
+#         # If the character is escaped, skip processing this loop iteration
+#         if escape_next:
+#             escape_next = False
+#             continue
+
+#         # Check if we're entering an escape sequence
+#         if char == '\\' and not escape_next:
+#             escape_next = True
+#             continue
+
+#         # Manage quoted text
+#         if in_quote:
+#             if char == in_quote:  # End of quoted section
+#                 start_index = stack.pop()
+#                 index[start_index] = i
+#                 in_quote = None
+#             continue
+
+#         # If char starts a quote and we're not already inside one
+#         if char in {'"', "'"} and not in_quote:
+#             in_quote = char
+#             stack.append(i)
+#             continue
+
+#         # Handle open brackets if not inside a quote
+#         if char in open_close_pairs and not in_quote:
+#             stack.append(i)
+
+#         # Handle close brackets if not inside a quote
+#         elif char in open_close_pairs.values() and not in_quote:
+#             if stack:
+#                 start_index = stack.pop()
+#                 open_char = text[start_index]
+#                 if open_char in open_close_pairs and open_close_pairs[open_char] == char:
+#                     index[start_index] = i
+
+#     return index
+
+
+
+
+# class deX:
+
+# 	def __init__( self, data ):
+# 		self.o(data)
+# 		self.c(data)
+# 	def o(self, text): # simpleIndex open close
+# 		open_close_pairs = {'{': '}', '[': ']', '(': ')', '<': '>', '"': '"', "'": "'", '`': '`'}
+# 		stack = []  # Stack to keep track of open positions
+# 		index = {}  # Dictionary to store open-close pairs
+# 		in_quote = None  # Tracks if we're inside a quote
+# 		escape_next = False  # Flags the next character as escaped
+
+# 		# This loop will handle each character and identify quotes, escaped characters, and bracket pairs
+# 		for i, char in enumerate(text):
+# 			# If the character is escaped, skip processing this loop iteration
+# 			if escape_next:
+# 				escape_next = False
+# 				continue
+
+# 			# Check if we're entering an escape sequence
+# 			if char == '\\' and not escape_next:
+# 				escape_next = True
+# 				continue
+
+# 			# If we're inside a quote, handle closing it
+# 			if in_quote:
+# 				if char == in_quote:  # End of quoted section
+# 					start_index = stack.pop()
+# 					index[start_index] = i
+# 					in_quote = None
+# 				continue
+
+# 			# Handle the start of a quoted section
+# 			if char in {'"', "'"} and not in_quote:
+# 				in_quote = char
+# 				stack.append(i)
+# 				continue
+
+# 			# Handle open brackets if not inside a quote
+# 			if char in open_close_pairs and not in_quote:
+# 				stack.append((i, char))
+
+# 			# Handle close brackets if not inside a quote
+# 			elif char in open_close_pairs.values() and not in_quote:
+# 				if stack:
+# 					start_index, open_char = stack.pop()
+# 					if open_close_pairs[open_char] == char:
+# 						index[start_index] = i  # Record the open-close pair
+# 		self.oi = index
+# 		return self.oi
+
+# 	def p(self, text, phrases): # phraseIndex
+# 		import re
+# 		# Initialize dictionaries for index and definitions
+# 		index = {}
+# 		definition = {}
+# 		phDex = {}
+# 		# Loop through each phrase and search for occurrences in text
+# 		for phrase in phrases:
+# 			if not phrase in reverse:
+# 				phDex[phrase] = []
+# 			matches = [match.start() for match in re.finditer(re.escape(phrase), text)]
+# 			for start in matches:
+# 				end = start + len(phrase)
+# 				index[start] = end
+# 				definition[start] = phrase
+# 				phDex[phrase].append(start)
+		
+# 		# Return a multidimensional dictionary
+# 		self.pi = {
+# 			"index": index,
+# 			"def": definition,
+# 			"ph": phDex
+# 		}
+# 		return self.pi
+
+# 	def c(self, text): # index_newlines / carriage return
+# 		"""
+# 		Indexes all newline characters in the text.
+# 		Returns a list of character indices where each newline is found.
+# 		"""
+# 		self.ci = [index for index, char in enumerate(text) if char == '\n']
+# 		return self.ci
+
+# 	def l(self, index): # find_line
+# 		"""
+# 		Given a character index and a list of newline indices, 
+# 		returns the line number (1-based) for the character index.
+# 		"""
+# 		# Find the line by counting how many newlines are before the given index
+# 		line = 1
+# 		for newline_index in self.ci:
+# 			if index < newline_index:
+# 				break
+# 			line += 1
+# 		return line
+
+
+
+
+
+class deX:
+
+	# def __init__( self ): pass
+
+	def o(text): # simpleIndex open close
+		open_close_pairs = {'{': '}', '[': ']', '(': ')', '<': '>', '"': '"', "'": "'", '`': '`'}
+		stack = []  # Stack to keep track of open positions
+		index = {}  # Dictionary to store open-close pairs
+		in_quote = None  # Tracks if we're inside a quote
+		escape_next = False  # Flags the next character as escaped
+
+		# This loop will handle each character and identify quotes, escaped characters, and bracket pairs
+		for i, char in enumerate(text):
+			# If the character is escaped, skip processing this loop iteration
+			if escape_next:
+				escape_next = False
+				continue
+
+			# Check if we're entering an escape sequence
+			if char == '\\' and not escape_next:
+				escape_next = True
+				continue
+
+			# If we're inside a quote, handle closing it
+			if in_quote:
+				if char == in_quote:  # End of quoted section
+					start_index = stack.pop()
+					index[start_index] = i
+					in_quote = None
+				continue
+
+			# Handle the start of a quoted section
+			if char in {'"', "'"} and not in_quote:
+				in_quote = char
+				stack.append(i)
+				continue
+
+			# Handle open brackets if not inside a quote
+			if char in open_close_pairs and not in_quote:
+				stack.append((i, char))
+
+			# Handle close brackets if not inside a quote
+			elif char in open_close_pairs.values() and not in_quote:
+				if stack:
+					start_index, open_char = stack.pop()
+					if open_close_pairs[open_char] == char:
+						index[start_index] = i  # Record the open-close pair
+
+		return index
+
+	def p(text, phrases): # phraseIndex
+		import re
+		# Initialize dictionaries for index and definitions
+		index = {}
+		definition = {}
+		phDex = {}
+		# Loop through each phrase and search for occurrences in text
+		for phrase in phrases:
+			if not phrase in phDex:
+				phDex[phrase] = []
+			matches = [match.start() for match in re.finditer(re.escape(phrase), text)]
+			for start in matches:
+				end = start + len(phrase)
+				index[start] = end
+				definition[start] = phrase
+				phDex[phrase].append(start)
+		
+		# Return a multidimensional dictionary
+		result = {
+			"index": index,
+			"def": definition,
+			"ph": phDex
+		}
+		return result
+
+	def c(text): # index_newlines / carriage return
+		"""
+		Indexes all newline characters in the text.
+		Returns a list of character indices where each newline is found.
+		"""
+		return [index for index, char in enumerate(text) if char == '\n']
+
+	def l(index, newline_indices): # find_line
+		"""
+		Given a character index and a list of newline indices, 
+		returns the line number (1-based) for the character index.
+		"""
+		# Find the line by counting how many newlines are before the given index
+		line = 1
+		for newline_index in newline_indices:
+			if index < newline_index:
+				break
+			line += 1
+		return line
+oIndex = deX.o
+simpleIndex = deX.o
+pIndex = deX.p
+phraseIndex = deX.p
+cIndex = deX.c
+carriageIndex = deX.c
+cLine = deX.l
+find_line = deX.l
 ##################################################
 
 # __.switch_raw

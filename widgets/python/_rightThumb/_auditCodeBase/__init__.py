@@ -4946,8 +4946,9 @@ class Validator:
 						return True
 		return False
 	def buildIndexStructure( self, comment=False, quote=False ):
-
-
+		if not self.logistics:
+			self.logistics = _.getTableDB( 'auditCodeBase.index' )
+		# _.pv(self.logistics)
 		for rID,record in enumerate(self.logistics['characters']):
 			for pID,profile in enumerate(record['profiles']):
 				if profile['language'] == self.language or profile['language'] == 'global':

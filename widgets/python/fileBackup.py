@@ -313,6 +313,7 @@ def PRE_BACKUP_PROCESSING( path ):
 
 				_this_app_ = __.path(path,file=True)
 				xFiles=xFiles.replace('thisApp.py',_this_app_)
+				if 'Changes the world' in xFiles: xFiles=xFiles.replace('Changes the world',input('Description: '))
 				xFiles=xFiles.replace('thisApp ',_this_app_.replace('.py','')+' ')
 				if "'created': None," in xFiles:
 					# xFiles = xFiles.replace( "'created': '0000-00-00',", "'created': '0000-00-00',".replace('0000-00-00',_.isDate(os.path.getctime(path),f='date')) )
@@ -1340,7 +1341,7 @@ def action(path=None,flag=None,o=None,pre=None):
 				_.colorThis( [  'Scheduled'  ], 'purple' )
 				
 		else:
-			# if _.switches.isActive('PythonDocumentation'): PRE_BACKUP_PROCESSING( path )
+			if _.switches.isActive('PythonDocumentation'): PRE_BACKUP_PROCESSING( path )
 
 			# idCheck = idExist(theID, backupLog, path)
 			# if not type(idCheck) == bool:

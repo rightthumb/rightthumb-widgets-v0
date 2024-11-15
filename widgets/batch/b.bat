@@ -10,6 +10,16 @@ rem    - Scott Taylor Reph, RightThumb.com
 rem ###########################################################################
 rem ## {C3P0D40fAe8B} ##
 
+
+
+
+
+SET "bh_brand=false"
+
+
+
+
+
 goto :main
 :backup
 set pp=%myBookmarks%\BM-%1.txt
@@ -65,8 +75,10 @@ if not exist "%result%" goto:eof
     cd /d "%result%"
     %py% %widgets%\widgets\python\folder-registration.py
     cd
-    echo.
-    echo View History: bh
+    if [%bh_brand%] == [true] (
+        echo.
+        echo View History: bh
+    )
 ) else (
     p error -err Bookmark does not exist
 )

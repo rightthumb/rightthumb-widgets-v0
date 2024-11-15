@@ -3,18 +3,17 @@ def focus(parentApp='', childApp='', reg=True): global appDBA; f = __.appName(ap
 fieldSet=_.l.vars(focus(),__name__,__file__,appDBA);_.load();_v=__.imp('_rightThumb._vars');
 
 def sw():
-	_.switches.register( 'URL', '-u,-url,-urls', isData='data', description='URL', isRequired=False )
-	_.switches.register( 'ShowFoundUrls', '--c,--urls' )
+	_.switches.register( 'Clean', '--c' )
 _._default_settings_()
 
 _.appInfo[focus()] = {
-	'file': 'thisApp.py',
-	'description': 'Changes the world',
+	'file': 'totalInt.py',
+	'description': 'Calculate total int from pipe data',
 	'categories': [
 						'DEFAULT',
 				],
 	'examples': [
-						_.hp('p thisApp -file file.txt'),
+						_.hp('p dirDB -db C_Drive.db + C:\vmware\ | p ls -c bytes | p totalInt'),
 						_.linePrint(label='simple',p=0),
 						'',
 	],
@@ -37,42 +36,35 @@ _.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw );
 ########################################################################################
 #n)--> start
 
+
+import re
+
+def clean_and_convert(number_str):
+	# Remove all characters except digits and decimal points
+	cleaned_str = re.sub(r'[^0-9.]', '', number_str)
+	
+	# Convert to float if there's a decimal, otherwise to int
+	if '.' in cleaned_str:
+		return float(cleaned_str)
+	elif cleaned_str.isdigit():  # Ensure the result is a number
+		return int(cleaned_str)
+	else:
+		raise ValueError("No valid numeric value found.")
+
+
+
 def action():
-	import requests
-	urls = 0
-	found = 0
-	spent = []
-	for url in _.isData():
-		printed = False
-		if not url.strip(): continue
-		if not '://' in url.strip(): continue
-		if not _.switches.isActive('ShowFoundUrls'):
-			_.pr(url,c='cyan')
-		page = requests.get(url).text
-		
-		# print(page)
-		for line in page.split('\n'):
-			# for plus in _.switches.values('Plus'):
-			# 	if plus.lower() in line.lower():
-			# 		_.pr(line)
-			if _.showLine(line):
-				for plusSearchX in _.switches.values('Plus'):
-					plusSearchX = _.ci( plusSearchX )
-					for subject in _.caseUnspecificCode( line, plusSearchX ):
-						line = line.replace( subject, _.colorThis( subject, 'green', p=0 ) )
-				if not _.switches.isActive('ShowFoundUrls'):
-					print( line )
-				else:
-					if not printed:
-						_.pr(url,c='cyan')
-						printed = True
-				found += 1
-				if not url in spent:
-					spent.append(url)
-					urls += 1
-	_.pr()
-	_.pr(' found:',found, c='yellow')
-	_.pr('  urls:',urls, c='yellow')
+	total = 0
+	for line in _.isData(r=0):
+		try:
+			total += clean_and_convert(line)
+		except ValueError:
+			pass
+	if _.switches.isActive('Clean'):
+		_.pr(total)
+	else:
+		_.pr(_.addComma(total))
+
 ########################################################################################
 if __name__ == '__main__':
 	action(); _.isExit(__file__);

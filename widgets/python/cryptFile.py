@@ -353,7 +353,13 @@ def action():
 						os.remove(filepath)
 			filepath = original
 			if not _.switches.isActive('Clean'):
-				_.pr( 'isCrypt', _.isCrypt(filepath) )
+				try:
+					_.pr( 'isCrypt', _.isCrypt(filepath) )
+				except:
+					try:
+						_.pr( 'isCrypt', _.isCrypt(output) )
+					except: pass
+
 
 
 encrypted_file_ext = '.crypt'

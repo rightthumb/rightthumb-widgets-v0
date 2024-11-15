@@ -3,7 +3,7 @@ def focus(parentApp='', childApp='', reg=True): global appDBA; f = __.appName(ap
 fieldSet=_.l.vars(focus(),__name__,__file__,appDBA);_.load();_v=__.imp('_rightThumb._vars');
 
 def sw():
-	_.switches.register( 'Template', '-t', '"" js ns th s t -h h 0 1 2 3 4' )
+	_.switches.register( 'Template', '-t', '"" js ns th s t -h h 0 1 2 3 4 0b' )
 	_.switches.register( 'Remove-Comments', '-cl,-nc,-no,-comment,-nocomment', 'js htm html' )
 	pass
 _._default_settings_()
@@ -108,6 +108,11 @@ def action():
 	elif _.switches.value('Template') == 'head': url+='headers'
 	elif _.switches.value('Template') == 'h': url+='headers'
 	elif _.switches.value('Template') == '0': url+='0.1.htm'
+	elif _.switches.value('Template') == '0.1': url+='0.1.htm'
+	elif _.switches.value('Template') == '01': url+='0.1.htm'
+	elif _.switches.value('Template') == '0b': url+='0.2.htm'
+	elif _.switches.value('Template') == '0.2': url+='0.2.htm'
+	elif _.switches.value('Template') == '02': url+='0.2.htm'
 	elif _.switches.value('Template') == '1': url+='1.htm'
 	elif _.switches.value('Template') == '2': url+='blank2.htm'
 	elif _.switches.value('Template') == '3': url+='blank3.htm'

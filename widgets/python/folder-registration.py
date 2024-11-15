@@ -32,7 +32,7 @@ _str = __.imp('_rightThumb._string')
 def sw():
 	pass
 	#b)--> examples
-	_.switches.register( 'Relevent', '-r' )
+	_.switches.register( 'relevant', '-r' )
 	_.switches.register( 'WSL', '-wsl' )
 	_.switches.register( 'Ago', '-ago', '1m' )
 	_.switches.register( 'Folder', '-f,-fo,-folder', '1m' )
@@ -157,12 +157,12 @@ def action():
 		register()
 		return None
 
-	if _.switches.isActive('Relevent'):
-		relevent()
+	if _.switches.isActive('relevant'):
+		relevant()
 		return None
 
 
-def relevent():
+def relevant():
 	load()
 	global epoch
 	global day
@@ -178,8 +178,8 @@ def relevent():
 
 
 
-	_relevent=xFo+'relevent'
-	relevent=[]
+	_relevant=xFo+'relevant'
+	relevant=[]
 	import _rightThumb._dir as _dir
 	records=[]
 	for path in _.fo(xFo+'log'):
@@ -201,15 +201,15 @@ def relevent():
 			fi=p.pop(-1)
 			f0=xFo+'resolve'+os.sep+fi
 			f1=_v.resolveFolderIDs(_.getText(f0,raw=True,clean=2))
-			relevent.append(f1)
+			relevant.append(f1)
 			# print(fi,rec['lines'],f1)
 			# print (path)
 			# print(fi)
 			# print(f0)
 			# _.pv(rec)
 			# sys.exit()
-	_.saveText(relevent,_relevent)
-	_.pr(_relevent,c='cyan')
+	_.saveText(relevant,_relevant)
+	_.pr(_relevant,c='cyan')
 
 
 def register():
