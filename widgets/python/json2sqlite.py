@@ -15,13 +15,18 @@ _.appInfo[focus()] = {
 						'DEFAULT',
 				],
 	'examples': [
-						_.hp('p json2sqlite -file file.txt'),
+						_.hp('p sql -f tpn_wp.sql -json > tpn_wp.sql.json'),
+						_.hp('p json2sqlite -f tpn_wp.sql.json | sqlite3 tpn_wp.db'),
+                        _.hp(''),
+                        _.hp('p sqlite2json -f tpn_wp.db'),
+                        _.hp('p json2sqlite -f tpn_wp_export.json | sqlite3 tpn_wp_clone.db'),
 						_.linePrint(label='simple',p=0),
 						'',
 	],
 	'columns': [
 	],
 	'aliases': [],
+    'relatedapps': ['json2sqlite','sqlite2json','sql'],
 	'notes': [],
 }
 

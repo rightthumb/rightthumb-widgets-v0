@@ -1341,7 +1341,7 @@ def action(path=None,flag=None,o=None,pre=None):
 				_.colorThis( [  'Scheduled'  ], 'purple' )
 				
 		else:
-			if _.switches.isActive('PythonDocumentation'): PRE_BACKUP_PROCESSING( path )
+			# if _.switches.isActive('PythonDocumentation'): PRE_BACKUP_PROCESSING( path )
 
 			# idCheck = idExist(theID, backupLog, path)
 			# if not type(idCheck) == bool:

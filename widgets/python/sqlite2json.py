@@ -42,7 +42,7 @@ _._default_settings_()
 
 _.appInfo[focus()] = {
 	# 'app': '8facG-jo0Cxk',
-	'file': 'thisApp.py',
+	'file': 'sqlite2json.py',
 	'description': 'Changes the world',
 		# _.ail(1,'subject')+
 		# _.aib('one')+
@@ -50,7 +50,7 @@ _.appInfo[focus()] = {
 						'DEFAULT',
 				],
 	'examples': [
-						_.hp('p thisApp -file file.txt'),
+						_.hp('p sqlite2json -f tpn_wp.db'),
 						_.linePrint(label='simple',p=0),
 						'',
 	],
@@ -59,7 +59,7 @@ _.appInfo[focus()] = {
 					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
 	],
 	'aliases': [],
-	'relatedapps': [],
+	'relatedapps': ['json2sqlite','sqlite2json','sql'],
 	'prerequisite': [],
 	'notes': [],
 }

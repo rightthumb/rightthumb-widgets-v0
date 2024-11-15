@@ -47,7 +47,7 @@ _.appInfo[focus()] = {
     'columns': [
     ],
     'aliases': [],
-	'relatedapps': [],
+	'relatedapps': ['json2sqlite','sqlite2json','sql'],
 	'prerequisite': [],
     'notes': [],
 }
