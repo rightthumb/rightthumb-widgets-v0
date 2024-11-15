@@ -2,7 +2,7 @@
 
 ___
 
-## Over 2,000 Apps
+## Almost 3,000 Apps
 
 ___
 
