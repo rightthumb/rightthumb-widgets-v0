@@ -2216,14 +2216,8 @@ class RawTableLength:
 #       table.append(txt[x])
 #   return enumerate(table)
 
-def code( script, addString=None ):
-	global _code
-	try:
-		__.code
-	except Exception as e:
-		_code = regImp( __.appReg, '_rightThumb._auditCodeBase' )
 
-	return __.code.process( script, addString=addString )
+
 
 aggregate_trigger_ran = False
 def aggregate_trigger():
@@ -24535,6 +24529,27 @@ def mdFig(md='', title='###', wrap=True, file=None, t=None, w=None, f=None):
 	if defaultSection in code: del code[defaultSection]
 	return code
 ##################################################
+def code( script, addString=None ):
+	global _code
+	try:
+		__.code
+	except Exception as e:
+		_code = regImp( __.appReg, '_rightThumb._auditCodeBase' )
+
+	return __.code.process( script, addString=addString )
+
+def codex(data):
+	dirty = code( data )
+	index = {}
+	for rec in dirty:
+		index[rec['o']] = rec['c']
+	return {
+		'index': index,
+		'records': dirty
+	}
+
+def acb(data): return codex( data )['index']
+##################################################
 # def simpleIndex(text):
 #     open_close_pairs = {
 #         '{': '}', '[': ']', '(': ')', '<': '>', '"': '"', "'": "'"
@@ -24781,6 +24796,8 @@ class deX:
 				break
 			line += 1
 		return line
+	def i(data): # auditCodeBase but indexed
+		return codex( data )['index']
 oIndex = deX.o
 simpleIndex = deX.o
 pIndex = deX.p

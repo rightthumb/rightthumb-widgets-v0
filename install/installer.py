@@ -3349,74 +3349,84 @@ mp3() {
 }
 #####################################################################
 run_bash_url() {
-    if [ "$#" -lt 1 ]; then
-        echo "Usage: bash.. <URL> [arg1 arg2 ...]"
-        return 1
-    fi
-    first_arg="$1"
-    shift
-    curl -s -L -k "$first_arg" | bash -s -- "$@"
+	if [ "$#" -lt 1 ]; then
+		echo "Usage: bash.. <URL> [arg1 arg2 ...]"
+		return 1
+	fi
+	first_arg="$1"
+	shift
+	curl -s -L -k "$first_arg" | bash -s -- "$@"
 }
+alias b..="run_bash_url"
 alias bash..="run_bash_url"
 
 run_python_url() {
-    if [ "$#" -lt 1 ]; then
-        echo "Usage: py.. <URL> [arg1 arg2 ...]"
-        return 1
-    fi
-    first_arg="$1"
-    shift
-    curl -s -L -k "$first_arg" | python3 - "$@"
+	if [ "$#" -lt 1 ]; then
+		echo "Usage: py.. <URL> [arg1 arg2 ...]"
+		return 1
+	fi
+	first_arg="$1"
+	shift
+	curl -s -L -k "$first_arg" | python3 - "$@"
 }
 alias py..="run_python_url"
+alias p..="run_python_url"
 
 
 
 run_python_url_sds() {
-    if [ "$#" -lt 1 ]; then
-        echo "Usage: py. <alias> [arg1 arg2 ...]"
-        return 1
-    fi
-    first_arg="$1"
-    shift
-    curl -s -L -k "https://u.sds.sh/$first_arg" | python3 - "$@"
+	if [ "$#" -lt 1 ]; then
+		echo "Usage: py. <alias> [arg1 arg2 ...]"
+		return 1
+	fi
+	first_arg="$1"
+	shift
+	curl -s -L -k "https://u.sds.sh/$first_arg" | python3 - "$@"
 }
 alias py.="run_python_url_sds"
+alias p.="run_python_url_sds"
 
 run_bash_url_sds() {
-    if [ "$#" -lt 1 ]; then
-        echo "Usage: bash. <alias> [arg1 arg2 ...]"
-        return 1
-    fi
-    first_arg="$1"
-    shift
-    curl -s -L -k "https://u.sds.sh/$first_arg" | bash -s -- "$@"
+	if [ "$#" -lt 1 ]; then
+		echo "Usage: bash. <alias> [arg1 arg2 ...]"
+		return 1
+	fi
+	first_arg="$1"
+	shift
+	curl -s -L -k "https://u.sds.sh/$first_arg" | bash -s -- "$@"
 }
 alias bash.="run_bash_url_sds"
+alias b.="run_bash_url_sds"
 
 
 
 run_python_url_shell_sds() {
-    if [ "$#" -lt 1 ]; then
-        echo "Usage: py.. <alias> [arg1 arg2 ...]"
-        return 1
-    fi
-    first_arg="$1"
-    shift
-    curl -s -L -k "https://shell.sds.sh/?f=py/$first_arg" | python3 - "$@"
+	if [ "$#" -lt 1 ]; then
+		echo "Usage: py.. <alias> [arg1 arg2 ...]"
+		return 1
+	fi
+	first_arg="$1"
+	shift
+	curl -s -L -k "https://shell.sds.sh/?f=py/$first_arg" | python3 - "$@"
 }
 alias py.sds="run_python_url_shell_sds"
+alias p.sds="run_python_url_shell_sds"
+alias py.s="run_python_url_shell_sds"
+alias p.s="run_python_url_shell_sds"
 
 run_bash_url_shell_sds() {
-    if [ "$#" -lt 1 ]; then
-        echo "Usage: bash.. <alias> [arg1 arg2 ...]"
-        return 1
-    fi
-    first_arg="$1"
-    shift
-    curl -s -L -k "https://shell.sds.sh/?f=sh/$first_arg" | bash -s -- "$@"
+	if [ "$#" -lt 1 ]; then
+		echo "Usage: bash.. <alias> [arg1 arg2 ...]"
+		return 1
+	fi
+	first_arg="$1"
+	shift
+	curl -s -L -k "https://shell.sds.sh/?f=sh/$first_arg" | bash -s -- "$@"
 }
 alias bash.sds="run_bash_url_shell_sds"
+alias b.sds="run_bash_url_shell_sds"
+alias bash.s="run_bash_url_shell_sds"
+alias b.s="run_bash_url_shell_sds"
 #####################################################################
 
 

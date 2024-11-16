@@ -271,6 +271,13 @@ def action():
 	# rightthumb\\.com|eyeformeta\\.com
 templates={}
 
+templates['public']='''
+<IfModule mod_headers.c>
+    Header Set Access-Control-Allow-Origin "*"
+    Header Set Access-Control-Allow-Methods "GET, POST, OPTIONS"
+    Header Set Access-Control-Allow-Headers "Content-Type, Authorization, X-Requested-With, XMLHttpRequest"
+</IfModule>
+'''
 templates['xsite']='''
 # Enable CORS headers
 <IfModule mod_headers.c>
