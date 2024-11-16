@@ -5,6 +5,8 @@ echo Are you sure you want to run this batch file?
 echo.
 pause
 
+call m back >nul 2>&1
+
 cd /d "%w%" && call m call m w
 cd /d "%archive7z%" && call m archive7z
 cd /d "%b%" && call m b
@@ -94,3 +96,13 @@ cd /d "%rt%" && call m .rt
 cd /d "%myTickets%" && call m tt
 cd /d "%myTxt%" && call m txt
 cd /d "%myVars%" && call m vars
+cd /d "%fileLocks%" && call m fl
+cd /d "%fileLocks%" && call m fileLocks
+cd /d "%fileLocks%" && call m FileLocker
+cd /d "%fileLocks%" && call m filelocker
+cd /d "%fileLocks%" && call m fileLocks
+cd /d "%fileLocks%" && call m filelocks
+cd /d "%fileLocks%" && call m fileLock
+cd /d "%fileLocks%" && call m filelock
+call g back >nul 2>&1
+

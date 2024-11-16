@@ -196,6 +196,7 @@ def sql2dict(data):
 		# print(data[o])
 		o += 1
 		while True:
+			
 			if o > len(data): _.e('out of range')
 			if data[o] == '`': break
 			elif o in dex.i and data[o:dex.i[o]+1].strip().upper() == 'INTO':pass
@@ -217,6 +218,7 @@ def sql2dict(data):
 		fields = data[o:c].strip('()').strip()
 		o +=1
 		while not o == end:
+			
 			if not o in dex.i: o += 1; continue
 			c = dex.i[o]+1
 			field = data[o:c].strip('`').strip()
@@ -235,7 +237,9 @@ def sql2dict(data):
 			record = {}
 			fields = []
 			while not o == end:
-				while not o in dex.i: o += 1
+				while not o in dex.i and not o > len(data): o += 1
+				if o > len(data):
+					break
 				c = dex.i[o]+1
 				if not data[o] == '`':
 					me = data[o:c].strip()
@@ -274,13 +278,55 @@ def sql2dict(data):
 
 
 
+def sql2dict2(data):
+	import re
+	tables = {}
+
+	# Regex pattern to match INSERT INTO statements
+	insert_pattern = re.compile(
+		r"INSERT INTO\s+`?(\w+)`?\s*\((.*?)\)\s*VALUES\s*(.+?);",
+		re.IGNORECASE | re.DOTALL
+	)
+
+	# Find all matches for the INSERT INTO statements
+	matches = insert_pattern.findall(data)
+	for table_name, fields, values in matches:
+		fields = [f.strip("` ") for f in fields.split(",")]
+
+		# Ensure the table structure is initialized in the dictionary
+		if table_name not in tables:
+			tables[table_name] = {"fields": fields, "records": []}
+
+		# Combine multi-line values into a single line
+		values = re.sub(r"\s*\n\s*", " ", values)
+
+		# Parse records in the VALUES section
+		value_sets = re.findall(r"\((.*?)\)", values)
+		for value_set in value_sets:
+			# Split values, handle quoted strings, and handle NULL
+			raw_values = re.split(r",(?=(?:[^']*'[^']*')*[^']*$)", value_set)
+			parsed_values = [
+				# Strip quotes, preserve backslashes without adding extra escaping
+				re.sub(r"\\\\", r"\\", v.strip(" '\"")) if v.strip(" '\"").upper() != "NULL" else None
+				for v in raw_values
+			]
+
+			# Map values to their corresponding fields
+			record = dict(zip(fields, parsed_values))
+			tables[table_name]["records"].append(record)
+
+	return tables
+
+
+
+
 
 
 
 database = 'Converted_Database'
 def action():
 	if _.switches.isActive('Files'):
-		data =  open(_.switches.value('Files')).read()
+		data = open(_.switches.value('Files'), encoding='utf-8').read()
 	else:
 		data = '\n'.join(_.isData(r=0))
 	if len(_.FilesFiles):
@@ -294,10 +340,16 @@ def action():
 			c = index[o]+1
 			_.pr( data[o:c] )
 		return None
-	result = sql2dict(data)
+	auditMethod = False
+	try:
+		result = sql2dict(data)
+		if auditMethod: print(1); _.isExit(__file__)
+	except:
+		result = sql2dict2(data)
+		if auditMethod: print(2); _.isExit(__file__)
 
+	_.pv(result); _.isExit(__file__)
 	# result = sql(data)
-	# _.pv(result)
 	if _.switches.isActive('JSON'):
 		_.pv(jsonExport(result))
 		return None

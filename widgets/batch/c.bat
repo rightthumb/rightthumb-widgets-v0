@@ -19,6 +19,8 @@ IF [%1] == [simple] (
 CALL %USERPROFILE%\.rt\profile\vars\config.bat
 if [%wprofile%] == [] SET wprofile=%USERPROFILE%\.rt\profile
 CALL %wprofile%\vars\personal.bat
+SET fileLocks=%wprofile%\fileLocks
+if not exist "%fileLocks%" mkdir "%fileLocks%"
 CALL:GET_STRAIT_TO_LOADING
 
 :: Tail of script
