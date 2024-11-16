@@ -336,6 +336,7 @@ log_config_html = techFolder + slash+'widgets'+slash+'html'+slash+'projects'+sla
 dance = images + 'dance.gif'
 gears = images + 'gears.gif'
 life=home +os.sep+'.rt'+os.sep+'profile'+os.sep+'life'+os.sep
+fileLocks=home +os.sep+'.rt'+os.sep+'profile'+os.sep+'fileLocks'+os.sep
 # ads = ww +slash+ 'ads'
 ads = life + 'ads' + slash
 rtp=home +os.sep+'.rt'+os.sep+'profile'+os.sep

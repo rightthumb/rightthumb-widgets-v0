@@ -4,12 +4,12 @@ fieldSet=_.l.vars(focus(),__name__,__file__,appDBA);_.load();_v=__.imp('_rightTh
 
 def sw():
 	pass
-	_.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='data', description='Files', isRequired=False )
+	_.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name', description='Files', isRequired=False )
 	_.switches.register( 'ShowSearchResults', '-r,-results,-ss,-ssr,-print' )
 	_.switches.register( 'DebugDump', '-d,-debug,-dump' )
 	_.switches.register( 'Minimal', '--c,-m,-min,-minimal', 'default' )
 	_.switches.register( 'IndexDump', '-index', 'pre' )
-	_.switches.register( 'JSON', '-json' )
+	_.switches.register( 'JSON', '-json,-x,-export', 'output is mysql json format' )
 
 
 _._default_settings_()
@@ -65,7 +65,7 @@ _.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw );
 ########################################################################################
 #n)--> start
 
-def sql(data):
+def sqlDirty_not_used(data):
 	import re
 	active = False
 	table = ''
@@ -154,7 +154,7 @@ def jsonExport(data):
 		{
 			"type": "header",
 			"version": "5.2.1",
-			"comment": "Export to JSON plugin for PHPMyAdmin"
+			"comment": "Export as JSON formatted as mysql json export"
 		},
 		{
 			"type": "database",
@@ -279,7 +279,10 @@ def sql2dict(data):
 
 database = 'Converted_Database'
 def action():
-	data = '\n'.join(_.isData(r=0))
+	if _.switches.isActive('Files'):
+		data =  open(_.switches.value('Files')).read()
+	else:
+		data = '\n'.join(_.isData(r=0))
 	if len(_.FilesFiles):
 		global database
 		database = _.FilesFiles[0].replace('.sql','').replace('.SQL','')

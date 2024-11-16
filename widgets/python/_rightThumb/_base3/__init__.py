@@ -10604,6 +10604,10 @@ def saveTable( rows, theFile, tableTemp=False, printThis=True, indentCode=True, 
 			file0 = _v.stmp + _v.slash + theFile
 			px = file0
 
+	FileLocker.check(file0)
+	FileLocker.lock(file0)
+	
+
 	if __.print_path:
 		print_(file0)
 	try:
@@ -10675,6 +10679,7 @@ def saveTable( rows, theFile, tableTemp=False, printThis=True, indentCode=True, 
 	if printThis:
 		printBold('Saved: ' + px, 'blue')
 	if me and theFile in vv.opened_file_me: changeM( theFile, vv.opened_file_me[theFile] );
+	FileLocker.unlock(file0)
 	return file0
 
 def getTable(theFile, tableTemp=False, isDic=None, isList=None, tmp=None):
@@ -24931,5 +24936,69 @@ find_line = deX.l
 # if switches.isActive('Plus-single'): break
 # dict_to_markdown_table
 # sys.stdin.readlines()
+########################################################################################
+import os
+import re
+import time
+
+class FileLocker:
+    @staticmethod
+    def lockName(path):
+        """Strip non-filename safe characters."""
+        return re.sub(r'[^\w\-_\. ]', '_', path)
+
+    @staticmethod
+    def lockPath(path):
+        """Get the lock file path, ensuring the directory exists."""
+        folder_path = _v.fileLocks  # Assumes `_v.fileLocks` is defined in your framework
+        if not os.path.exists(folder_path):
+            os.makedirs(folder_path)
+        return os.path.join(folder_path, FileLocker.lockName(path))
+
+    @staticmethod
+    def lock(path):
+        """Rename the file to create a lock."""
+        lock_path = FileLocker.lockPath(path)
+        lock_file = lock_path + ".lock"
+        start_time = time.time()
+        while True:
+            try:
+                # Try renaming the file to acquire the lock
+                os.rename(lock_path, lock_file)
+                return  # Lock acquired
+            except FileNotFoundError:
+                # If the original file doesn't exist, create a dummy lock
+                with open(lock_file, "w") as f:
+                    f.write("")  # Create an empty lock file
+                return
+            except OSError:
+                # Another process holds the lock; wait and retry
+                if time.time() - start_time > 10:  # Optional timeout of 10 seconds
+                    raise TimeoutError("Timeout waiting for lock")
+                time.sleep(0.1)  # Retry after a short delay
+
+    @staticmethod
+    def unlock(path):
+        """Rename the lock file back to its original name."""
+        lock_path = FileLocker.lockPath(path)
+        lock_file = lock_path + ".lock"
+        try:
+            os.rename(lock_file, lock_path)  # Release the lock
+        except FileNotFoundError:
+            pass  # Lock already released or doesn't exist
+
+    @staticmethod
+    def check(path):
+        """Wait until the lock file does not exist."""
+        lock_path = FileLocker.lockPath(path)
+        lock_file = lock_path + ".lock"
+        while os.path.exists(lock_file):
+            time.sleep(0.1)
+
+
+# FileLocker.check(path)
+# FileLocker.lock(path)
+# FileLocker.unlock(path)
+
 ########################################################################################
 # EOF
