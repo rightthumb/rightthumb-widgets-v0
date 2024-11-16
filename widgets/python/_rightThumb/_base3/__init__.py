@@ -4180,7 +4180,11 @@ class dt:
 #     print(vv.isData)
 #     print(data)
 #     return data
+FilesFiles = []
 def isData( data=None, focus=None, pipeClean=False, required=False,     r=None, c=None, noclean=None ):
+	global FilesFiles
+	FilesFiles = myFileLocation_Files
+	__.FilesFiles = myFileLocation_Files
 	global switches
 	global appData
 	try:
@@ -4239,7 +4243,7 @@ def isData( data=None, focus=None, pipeClean=False, required=False,     r=None, 
 			data=[]
 			# global switches
 			isClean=False
-
+			
 			for name in vv.isData:
 				if len(switches.values(name)):
 					for isD in vv.isData[name].split(','):
@@ -4251,6 +4255,7 @@ def isData( data=None, focus=None, pipeClean=False, required=False,     r=None, 
 						elif isD == 'glob' and 'data' in vv.isData[name]:
 							for n in switches.values(name):
 								for f in isData_path_list( glob.glob( n ) ):
+									__.FilesFiles.append(f)
 									for xXx in getText2( f ).split('\n'):
 										data.append(xXx)
 						elif isD == 'glob':
@@ -4264,6 +4269,7 @@ def isData( data=None, focus=None, pipeClean=False, required=False,     r=None, 
 						elif isD == 'data':
 							tData=[]
 							for n in switches.values(name):
+								__.FilesFiles.append(n)
 								tData.append(getText2(n))
 							data = '\n'.join(tData)
 
@@ -8203,7 +8209,9 @@ def pipeCleaner(clean=0):
 	global appData
 	try:
 		if not appData[__.appReg]['pipe'][0][0] in _str.safeChar:
-			appData[__.appReg]['pipe'][0] = appData[__.appReg]['pipe'][0][1:]
+			if len(appData[__.appReg]['pipe'][0]):
+				if not appData[__.appReg]['pipe'][0][0] in _str.safe:
+					appData[__.appReg]['pipe'][0] = appData[__.appReg]['pipe'][0][1:]
 	except Exception as e:
 		pass
 	try:
@@ -24549,6 +24557,100 @@ def codex(data):
 	}
 
 def acb(data): return codex( data )['index']
+import re
+
+def codex2(text, phrases=None, language=None):
+    """
+    Finds open-close pairs for various delimiters and custom phrases in a string.
+    
+    Args:
+        text (str): The text to analyze.
+        phrases (list): A list of phrases to find and pair.
+        language (str): The language or context (e.g., "SQL", "HTML", "Python").
+                        Defaults to common programming and markup languages.
+        
+    Returns:
+        dict: A dictionary mapping open index positions to close index positions.
+    """
+    # Define open-close pairs for common programming and markup languages
+    common_pairs = {
+        '}': '{', ')': '(', ']': '[', '>': '<',
+        '"': '"', "'": "'", '`': '`', '|': '|', '‖': '‖',
+        '⌋': '⌊', '⌉': '⌈',
+    }
+
+    # Multicharacter open-close pairs
+    common_multi_pairs = {
+        '"""': '"""', "'''": "'''", '{{': '}}', '${': '}',
+    }
+
+    # Language-specific extensions
+    language_pairs = {}
+    if language == "HTML" or language == "XML":
+        language_pairs = {
+            '</': '<',  # For HTML/XML tags
+        }
+    elif language == "SQL":
+        language_pairs = {
+            'BEGIN': 'END',  # SQL blocks
+        }
+    elif language == "Python":
+        language_pairs = {}  # No additional pairs for Python
+    
+    # Merge language-specific pairs into common pairs
+    pairs = {**common_pairs, **language_pairs}
+    multi_pairs = {**common_multi_pairs}
+    
+    # Initialize stack and result
+    stack = []
+    result = {}
+    
+    # Add custom phrases to be searched
+    if phrases:
+        phrase_locs = {}
+        for phrase in phrases:
+            for match in re.finditer(re.escape(phrase), text):
+                start = match.start()
+                phrase_locs[start] = start + len(phrase)  # Store phrase ends
+        result.update(phrase_locs)
+
+    # Scan through the text
+    i = 0
+    while i < len(text):
+        # Check for multicharacter open-close pairs
+        for open_token, close_token in multi_pairs.items():
+            if text.startswith(open_token, i):
+                stack.append((open_token, i))
+                i += len(open_token) - 1  # Skip the token length
+                break
+            if text.startswith(close_token, i):
+                if stack and stack[-1][0] == open_token:
+                    _, start_idx = stack.pop()
+                    result[start_idx] = i + len(close_token) - 1
+                else:
+                    raise ValueError(f"Unmatched closing token '{close_token}' at index {i}")
+                i += len(close_token) - 1
+                break
+
+        # Check for single-character open-close pairs
+        char = text[i]
+        if char in pairs.values():  # Opening character
+            stack.append((char, i))
+        elif char in pairs.keys():  # Closing character
+            if stack and stack[-1][0] == pairs[char]:  # Matches the last opening
+                _, start_idx = stack.pop()
+                result[start_idx] = i
+            else:
+                raise ValueError(f"Unmatched closing character '{char}' at index {i}")
+        i += 1
+
+    # Error if unmatched open tokens remain
+    if stack:
+        unmatched = [f"{char} at index {idx}" for char, idx in stack]
+        raise ValueError(f"Unmatched opening characters: {', '.join(unmatched)}")
+
+    return result
+
 ##################################################
 # def simpleIndex(text):
 #     open_close_pairs = {
@@ -24798,6 +24900,7 @@ class deX:
 		return line
 	def i(data): # auditCodeBase but indexed
 		return codex( data )['index']
+	def x(data,phrases,language): codex2(data,phrases,language)
 oIndex = deX.o
 simpleIndex = deX.o
 pIndex = deX.p

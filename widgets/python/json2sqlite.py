@@ -4,9 +4,12 @@ fieldSet=_.l.vars(focus(),__name__,__file__,appDBA);_.load();_v=__.imp('_rightTh
 
 def sw():
 	pass
-	_.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name', description='Files', isRequired=True )
+	_.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='data', description='Files', isRequired=False )
 	_.switches.register( 'DB', '-db', isRequired=True )
+	_.switches.register( 'JSON', '-json', isRequired=False )
 _._default_settings_()
+
+__.setting('require-list',['Pipe','Files'])
 
 _.appInfo[focus()] = {
 	'file': 'json2sqlite.py',
@@ -69,8 +72,11 @@ def json_to_sqlite(json_data, output_sqlite_file):
     conn.close()
 
 def action():
-    with open(_.switches.value('Files'), "r") as f:
-        json_data = json.load(f)
+    try:
+        json_data = json.loads('\n'.join(_.isData(r=1)))
+    except:
+        json_data = json.loads('[\n'+'\n'.join(_.isData(r=1)))
+         
     json_to_sqlite(json_data, _.switches.value('DB'))
 
 ########################################################################################

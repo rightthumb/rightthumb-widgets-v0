@@ -65,194 +65,8 @@ _.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw );
 ########################################################################################
 #n)--> start
 
-
-
-
-
-# def sql(data):
-#     dex = __.Meta_Namespace()
-#     dex.p = _.deX.p(data, ['INSERT INTO', 'VALUES', 'CREATE TABLE'])
-#     dex.o = _.deX.o(data)
-#     dex.c = _.deX.c(data)
-#     dex.ii = []
-#     dex.ol = {}
-#     # for o in dex.o: dex.ol[ _.deX.l(o,dex.c) ].append(o)
-#     # for o in dex.p['index']: dex.ol[ _.deX.l(o,dex.c) ].append(o)
-#     v = __.Meta_Namespace()
-#     v.table = ''
-#     v.tables = {}
-#     v.isRec = False
-#     i = 0
-#     while i < len(data):
-#         if i -1 in dex.c and not i in dex.p['ph']['INSERT INTO'] and not i in dex.o:
-#             for ii in dex.p['ph']['INSERT INTO']:
-#                 if not ii in dex.ii:
-#                     i = ii
-#                     dex.ii.append(ii)
-#                     break
-#         if i in dex.p['ph']['INSERT INTO']:
-#             i = dex.p['index'][i]
-#             char = data[i]
-#             while not char.strip():
-#                 i += 1
-#                 char = data[i]
-#             if i in dex.o:
-#                 # modify here if table name does not have any sort of quotes
-#                 c = dex.o[i]
-#                 snip = data[i:c]
-#                 snip = snip.strip(data[i])
-#                 v.table = snip.strip()
-#                 print('v.table',v.table)
-#                 if not v.table in v.tables:
-#                     v.tables[v.table] = {}
-#                     v.tables[v.table]['fields'] = []
-#                     v.tables[v.table]['records'] = []
-#             while not char.strip(): i += 1; char = data[i]
-#             if char == '(' and i in dex.o:
-#                 c = dex.o[i]
-#                 i = c
-#                 snip = data[i:c]
-#                 snip = snip.strip('(')
-#                 snip = snip.strip(';')
-#                 fields = snip.strip(')')
-#                 fo = _.deX.o(fields)
-#                 f = 0
-#                 char = fields[f]
-#                 while f < len(fields):
-#                     while not char.strip(): f += 1; char = fields[f]
-#                     if not f in fo:
-#                         # if fields do not have quotes modify here and do by commas instead of quote jumping
-#                         f += 1
-#                     else:
-#                         char = fields[f]
-#                         v.tables[v.table]['fields'].append(fields[f:fo[f]].strip(char))
-#                 v.isRec = True
-			
-#                 while v.isRec:
-#                     char = data[i]
-#                     if char == ';':
-#                         v.isRec = False
-#                         for ii in dex.p['ph']['INSERT INTO']:
-#                             if not ii in dex.ii:
-#                                 i = ii
-#                                 dex.ii.append(ii)
-#                                 break
-#                         break
-#                     while not char.strip(): i += 1; char = data[i]
-
-#                     if char == '(' and i in dex.o:
-#                         c = dex.o[i]
-#                         snip = data[i:c]
-#                         i = c
-#                         rec = snip.strip('(')
-#                         ro = _.deX.o(rec)
-#                         r = 0
-#                         char = rec[r]
-#                         snip = ''
-#                         fields = []
-#                         while r < len(rec):
-#                             char = rec[r]
-#                             while not char.strip(): r += 1; char = rec[r]
-#                             if char == ',':
-#                                 fields.append(snip.strip())
-#                                 snip = ''
-#                                 r += 1
-#                             elif r in ro:
-#                                 c = ro[r]
-#                                 snip = rec[r:c].strip(rec[r])
-#                                 fields.append(snip.strip())
-#                                 r = c
-#                             else:
-#                                 snip += char
-#                                 r += 1
-#                         pass
-#                         record = {}
-#                         for fi, fld in enumerate(fields):
-#                             record[v.tables[v.table]['fields'][fi]] = fld
-#                         v.tables[v.table]['records'].append(record)
-#                     else:
-#                         i += 1
-#         i += 1
-#     return v.tables
-
-
-
-# def sql(data):
-#     active = False
-#     table = ''
-#     tables = {}
-
-#     for line in data.split('\n'):
-#         line = line.strip()
-#         dex = _.deX.o(line)  # Open-close index for the current line
-
-#         # Detect start of INSERT INTO statement
-#         if line.startswith('INSERT INTO'):
-#             active = True
-#             first = True
-
-#             # Extract table name and fields
-#             for start in dex:
-#                 if line[start] == '`':  # Detect backticks around table name and fields
-#                     end = dex[start]
-#                     relevant = line[start + 1:end]  # Strip enclosing backticks
-#                     if first:
-#                         table = relevant
-#                         if table not in tables:
-#                             tables[table] = {'fields': [], 'records': []}
-#                         first = False
-#                     else:
-#                         tables[table]['fields'].append(relevant)
-
-#         elif active:
-#             # Detect end of record section with semicolon
-#             if line.endswith(';'):
-#                 active = False  # Deactivate parsing when we reach the end
-
-#             # Extract record values using open-close indexing
-#             close = dex.get(0)
-#             if close is None:
-#                 continue  # Skip if no open-close found
-
-#             rec = line[1:close].strip('()')  # Record inside parentheses
-#             rDex = _.deX.o(rec)
-#             fields = []
-#             i = 0
-#             snip = ''
-
-#             while i < len(rec):
-#                 char = rec[i]
-#                 if char == ',':
-#                     fields.append(snip.strip())
-#                     snip = ''
-#                 elif i in rDex:  # Handle values inside quotes
-#                     c = rDex[i]
-#                     snip = rec[i + 1:c].strip()  # Extract content between quotes
-#                     fields.append(snip)
-#                     i = c  # Jump to close position
-#                 else:
-#                     snip += char
-#                 i += 1
-
-#             if snip:
-#                 fields.append(snip.strip())  # Append last field if exists
-
-#             # Map fields to values for each record
-#             record = {}
-#             for fi, fld in enumerate(fields):
-#                 if fi < len(tables[table]['fields']):
-#                     record[tables[table]['fields'][fi]] = fld
-#             tables[table]['records'].append(record)
-
-#     return tables
-
-
-
-
-
-import re
-
 def sql(data):
+	import re
 	active = False
 	table = ''
 	tables = {}
@@ -331,6 +145,7 @@ def sql(data):
 
 
 def jsonExport(data):
+	global database
 	# Ensure the input is a dictionary
 	if not isinstance(data, dict):
 		raise TypeError("Input data should be a dictionary.")
@@ -343,7 +158,7 @@ def jsonExport(data):
 		},
 		{
 			"type": "database",
-			"name": "tpn_wp"
+			"name": database
 		}
 	]
 	
@@ -351,7 +166,7 @@ def jsonExport(data):
 		table_entry = {
 			"type": "table",
 			"name": table_name,
-			"database": "tpn_wp",
+			"database": database,
 			"data": []
 		}
 		
@@ -366,7 +181,7 @@ def jsonExport(data):
 
 
 
-def sqlNew(data):
+def sql2dict(data):
 	dex = __.Meta_Namespace()
 	dex.p = _.deX.p(data.upper(), ['INSERT INTO', 'VALUES', 'CREATE TABLE'])
 	dex.o = _.deX.o(data)
@@ -379,7 +194,16 @@ def sqlNew(data):
 	for o in dex.p['ph']['INSERT INTO']:
 		# while not o in dex.i and not data[o] == '`': o += 1
 		# print(data[o])
-		while not data[o] == '`': o += 1
+		o += 1
+		while True:
+			if o > len(data): _.e('out of range')
+			if data[o] == '`': break
+			elif o in dex.i and data[o:dex.i[o]+1].strip().upper() == 'INTO':pass
+			elif o in dex.i and data[o:dex.i[o]+1] == '(': o += 1
+			elif data[o] in 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ' and o in dex.i: break
+
+			
+			o += 1
 		c = dex.i[o]+1
 		table = data[o:c].strip('`').strip()
 		if not table in tables:
@@ -453,85 +277,13 @@ def sqlNew(data):
 
 
 
-def sqlNew2(data):
-    dex = __.Meta_Namespace()
-    dex.p = _.deX.p(data.upper(), ['INSERT INTO', 'VALUES', 'CREATE TABLE'])
-    dex.o = _.deX.o(data)
-    dex.c = _.deX.c(data)
-    dex.i = _.deX.i(data)
-    dex.ii = []
-    dex.ol = {}
-    tables = {}
-
-    for o in dex.p['ph']['INSERT INTO']:
-        while not (data[o].isalnum() or data[o] == '_'):  # Adjust for unquoted table names
-            o += 1
-        c = dex.i[o] + 1
-        table = data[o:c].strip('`').strip()
-        if not table in tables:
-            tables[table] = {'fields': [], 'records': []}
-        o = c
-        
-        # Find the field list between parentheses in CREATE TABLE and INSERT INTO statements
-        while data[o] != '(':
-            o += 1
-        c = dex.i[o] + 1
-        fields = data[o:c].strip('()').strip().split(',')
-        fields = [field.strip('`').strip() for field in fields]  # Adjust for unquoted fields
-        tables[table]['fields'].extend(fields)
-        o = c
-        
-        # Now parse the VALUES clause
-        while 'VALUES' not in data[o:o+6].upper():
-            o += 1
-        o += 6  # Skip the "VALUES" keyword
-        while data[o] != '(':
-            o += 1
-        end = len(data)
-        while o < end:
-            if data[o] == '(':
-                c = data.find(')', o)
-                if c == -1:
-                    break
-                record_data = data[o+1:c].split(',')
-                record = {}
-                for i, field in enumerate(record_data):
-                    field = field.strip().strip("'").strip('"')
-                    if field.upper() == 'NULL':
-                        field = None
-                    elif field.isdigit():
-                        field = int(field)
-                    else:
-                        try:
-                            field = float(field)
-                        except ValueError:
-                            pass
-                    # Check if the field index exists to avoid out of range error
-                    if i < len(tables[table]['fields']):
-                        record[tables[table]['fields'][i]] = field
-                    else:
-                        print(f"Warning: Field index {i} out of range for table {table}.")
-                tables[table]['records'].append(record)
-                o = c
-            o += 1
-
-    return tables
-
-
-
-
-
-
-
-
-
-
-def action2():
-	data = '\n'.join(_.isData(r=0))
-	result = sqlNew(data)
-	_.pv(result)
+database = 'Converted_Database'
 def action():
 	data = '\n'.join(_.isData(r=0))
+	if len(_.FilesFiles):
+		global database
+		database = _.FilesFiles[0].replace('.sql','').replace('.SQL','')
+	# print(_.FilesFiles); _.isExit(__file__)
 	if _.switches.isActive('IndexDump') and 'pre' in _.switches.value('IndexDump'):
 		index = _.simpleIndex(data)
 		_.pv(index)
@@ -539,10 +291,7 @@ def action():
 			c = index[o]+1
 			_.pr( data[o:c] )
 		return None
-	try:
-		result = sqlNew2(data)
-	except:
-		result = sqlNew(data)
+	result = sql2dict(data)
 
 	# result = sql(data)
 	# _.pv(result)
