@@ -449,6 +449,83 @@ def sqlNew(data):
 
 
 
+
+
+
+
+def sqlNew2(data):
+    dex = __.Meta_Namespace()
+    dex.p = _.deX.p(data.upper(), ['INSERT INTO', 'VALUES', 'CREATE TABLE'])
+    dex.o = _.deX.o(data)
+    dex.c = _.deX.c(data)
+    dex.i = _.deX.i(data)
+    dex.ii = []
+    dex.ol = {}
+    tables = {}
+
+    for o in dex.p['ph']['INSERT INTO']:
+        while not (data[o].isalnum() or data[o] == '_'):  # Adjust for unquoted table names
+            o += 1
+        c = dex.i[o] + 1
+        table = data[o:c].strip('`').strip()
+        if not table in tables:
+            tables[table] = {'fields': [], 'records': []}
+        o = c
+        
+        # Find the field list between parentheses in CREATE TABLE and INSERT INTO statements
+        while data[o] != '(':
+            o += 1
+        c = dex.i[o] + 1
+        fields = data[o:c].strip('()').strip().split(',')
+        fields = [field.strip('`').strip() for field in fields]  # Adjust for unquoted fields
+        tables[table]['fields'].extend(fields)
+        o = c
+        
+        # Now parse the VALUES clause
+        while 'VALUES' not in data[o:o+6].upper():
+            o += 1
+        o += 6  # Skip the "VALUES" keyword
+        while data[o] != '(':
+            o += 1
+        end = len(data)
+        while o < end:
+            if data[o] == '(':
+                c = data.find(')', o)
+                if c == -1:
+                    break
+                record_data = data[o+1:c].split(',')
+                record = {}
+                for i, field in enumerate(record_data):
+                    field = field.strip().strip("'").strip('"')
+                    if field.upper() == 'NULL':
+                        field = None
+                    elif field.isdigit():
+                        field = int(field)
+                    else:
+                        try:
+                            field = float(field)
+                        except ValueError:
+                            pass
+                    # Check if the field index exists to avoid out of range error
+                    if i < len(tables[table]['fields']):
+                        record[tables[table]['fields'][i]] = field
+                    else:
+                        print(f"Warning: Field index {i} out of range for table {table}.")
+                tables[table]['records'].append(record)
+                o = c
+            o += 1
+
+    return tables
+
+
+
+
+
+
+
+
+
+
 def action2():
 	data = '\n'.join(_.isData(r=0))
 	result = sqlNew(data)
@@ -462,7 +539,11 @@ def action():
 			c = index[o]+1
 			_.pr( data[o:c] )
 		return None
-	result = sqlNew(data)
+	try:
+		result = sqlNew2(data)
+	except:
+		result = sqlNew(data)
+
 	# result = sql(data)
 	# _.pv(result)
 	if _.switches.isActive('JSON'):
