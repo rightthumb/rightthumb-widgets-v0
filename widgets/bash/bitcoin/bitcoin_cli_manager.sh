@@ -39,26 +39,31 @@ function print_menu() {
 	echo "============================================================="
 }
 
+# Base command for bitcoin-cli with credentials
+function bitcoin_cli() {
+	/snap/bin/bitcoin-core.cli -rpcuser="$RPC_USER" -rpcpassword="$RPC_PASSWORD" "$@"
+}
+
 # Function to get blockchain info
 function get_blockchain_info() {
-	bitcoin-cli -rpcuser="$RPC_USER" -rpcpassword="$RPC_PASSWORD" getblockchaininfo
+	bitcoin_cli getblockchaininfo
 }
 
 # Function to get network info
 function get_network_info() {
-	bitcoin-cli -rpcuser="$RPC_USER" -rpcpassword="$RPC_PASSWORD" getnetworkinfo
+	bitcoin_cli getnetworkinfo
 }
 
 # Function to list wallets
 function list_wallets() {
-	bitcoin-cli -rpcuser="$RPC_USER" -rpcpassword="$RPC_PASSWORD" listwallets
+	bitcoin_cli listwallets
 }
 
 # Function to create a new wallet
 function create_wallet() {
 	echo "Enter the name for the new wallet:"
 	read -r WALLET_NAME
-	bitcoin-cli -rpcuser="$RPC_USER" -rpcpassword="$RPC_PASSWORD" createwallet "$WALLET_NAME"
+	bitcoin_cli createwallet "$WALLET_NAME"
 	echo "Wallet '$WALLET_NAME' created successfully!"
 }
 
@@ -67,9 +72,9 @@ function generate_address() {
 	echo "Enter the wallet name (or leave blank for default):"
 	read -r WALLET_NAME
 	if [ -z "$WALLET_NAME" ]; then
-		bitcoin-cli -rpcuser="$RPC_USER" -rpcpassword="$RPC_PASSWORD" getnewaddress
+		bitcoin_cli getnewaddress
 	else
-		bitcoin-cli -rpcuser="$RPC_USER" -rpcpassword="$RPC_PASSWORD" -rpcwallet="$WALLET_NAME" getnewaddress
+		bitcoin_cli -rpcwallet="$WALLET_NAME" getnewaddress
 	fi
 }
 
@@ -82,9 +87,9 @@ function send_bitcoin() {
 	echo "Enter the wallet name (or leave blank for default):"
 	read -r WALLET_NAME
 	if [ -z "$WALLET_NAME" ]; then
-		bitcoin-cli -rpcuser="$RPC_USER" -rpcpassword="$RPC_PASSWORD" sendtoaddress "$RECIPIENT" "$AMOUNT"
+		bitcoin_cli sendtoaddress "$RECIPIENT" "$AMOUNT"
 	else
-		bitcoin-cli -rpcuser="$RPC_USER" -rpcpassword="$RPC_PASSWORD" -rpcwallet="$WALLET_NAME" sendtoaddress "$RECIPIENT" "$AMOUNT"
+		bitcoin_cli -rpcwallet="$WALLET_NAME" sendtoaddress "$RECIPIENT" "$AMOUNT"
 	fi
 	echo "Sent $AMOUNT BTC to $RECIPIENT."
 }
@@ -94,9 +99,9 @@ function list_transactions() {
 	echo "Enter the wallet name (or leave blank for default):"
 	read -r WALLET_NAME
 	if [ -z "$WALLET_NAME" ]; then
-		bitcoin-cli -rpcuser="$RPC_USER" -rpcpassword="$RPC_PASSWORD" listtransactions
+		bitcoin_cli listtransactions
 	else
-		bitcoin-cli -rpcuser="$RPC_USER" -rpcpassword="$RPC_PASSWORD" -rpcwallet="$WALLET_NAME" listtransactions
+		bitcoin_cli -rpcwallet="$WALLET_NAME" listtransactions
 	fi
 }
 
@@ -105,9 +110,9 @@ function check_balance() {
 	echo "Enter the wallet name (or leave blank for default):"
 	read -r WALLET_NAME
 	if [ -z "$WALLET_NAME" ]; then
-		bitcoin-cli -rpcuser="$RPC_USER" -rpcpassword="$RPC_PASSWORD" getbalance
+		bitcoin_cli getbalance
 	else
-		bitcoin-cli -rpcuser="$RPC_USER" -rpcpassword="$RPC_PASSWORD" -rpcwallet="$WALLET_NAME" getbalance
+		bitcoin_cli -rpcwallet="$WALLET_NAME" getbalance
 	fi
 }
 
