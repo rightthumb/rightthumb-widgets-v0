@@ -2332,7 +2332,8 @@ function get__THETABLE( $ID_label ){
 				try:
 					data = simplejson.loads(text)
 				except Exception as e:
-					frameinfo = getframeinfo(currentframe()); _.pr( _.addComma(frameinfo.lineno),'\t', e,c='red');
+					pass
+					# frameinfo = getframeinfo(currentframe()); _.pr( _.addComma(frameinfo.lineno),'\t', e,c='red');
 					try:
 						data = eval(text.replace('false','False').replace('true','True'))
 					except Exception as e:
@@ -3135,7 +3136,8 @@ function get__THETABLE( $ID_label ){
 				try:
 					data = simplejson.loads(text)
 				except Exception as e:
-					frameinfo = getframeinfo(currentframe()); _.pr( _.addComma(frameinfo.lineno),'\t', e,c='red');
+					pass
+					# frameinfo = getframeinfo(currentframe()); _.pr( _.addComma(frameinfo.lineno),'\t', e,c='red');
 				try:
 					data = eval(text)
 				except Exception as e:

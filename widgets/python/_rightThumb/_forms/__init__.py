@@ -765,7 +765,7 @@ def genForm(form_structure):
 			_ns.errors=[]
 			return genForm(_ns.formReg)
 		
-__.FormPrint = True
+__.FormPrint = False
 SmartTables = genForm
 SmartTable = genForm
 UI = genForm

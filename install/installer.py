@@ -3429,7 +3429,8 @@ alias bash.s="run_bash_url_shell_sds"
 alias b.s="run_bash_url_shell_sds"
 #####################################################################
 
-
+alias fi.en="p cryptFile -vault -r -en -f "
+alias fi.de="p cryptFile -vault -r -de -f "
 
 
 
