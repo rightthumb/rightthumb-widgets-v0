@@ -43,7 +43,7 @@ _.appInfo['examples'].append('p drive -index cloud')
 _.appInfo['examples'].append('')
 _.appInfo['examples'].append('')
 _.appInfo['examples'].append('found an id, here is how to research it...')
-_.appInfo['examples'].append('\tp dirdb + indexTable_drives - backup --c | p f3 + CDE18F2D7BEF -jn')
+_.appInfo['examples'].append('\tp dirDB + indexTable_drives - backup --c | p f3 + CDE18F2D7BEF -jn')
 _.appInfo['examples'].append('')
 
 _.appInfo['columns'].append({'name': 'name', 'abbreviation': 'n'})

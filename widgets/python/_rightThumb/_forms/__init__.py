@@ -250,7 +250,7 @@ class UniversalInterfaceCreator:
 		for k in self.form_data:
 			if k in self.index:
 				field = self.index[k]
-				if 'md5' in field:
+				if 'md5' in field and field['md5']:
 					self.form_data[k] = md5_hash(self.form_data[k])
 
 	def detect_gui(self):
@@ -298,10 +298,12 @@ class UniversalInterfaceCreator:
 					row += 4
 				self.create_tkinter_field(field, row)
 				row += 1
-		ttk.Button(self.root, text="Submit", command=self.submit_tkinter_form).grid(row=row+len(fields), column=0, columnspan=2, pady=20)
-		ttk.Button(self.root, text="Cancel", command=self.exit_tkinter).grid(row=row+len(fields), column=1, columnspan=2, pady=20)
-		self.root.mainloop()
+		# ttk.Button(self.root, text="Submit", command=self.submit_tkinter_form).grid(row=row+len(fields), column=0, columnspan=2, pady=20)
+		# ttk.Button(self.root, text="Cancel", command=self.exit_tkinter).grid(row=row+len(fields), column=1, columnspan=2, pady=20)
+		ttk.Button(self.root, text="Submit", command=self.submit_tkinter_form).grid(row=row+len(fields), column=0, pady=20, padx=10, sticky=tk.W)
+		ttk.Button(self.root, text="Cancel", command=self.exit_tkinter).grid(row=row+len(fields), column=1, pady=20, padx=10, sticky=tk.E)
 
+		self.root.mainloop()
 	def create_tkinter_field(self, field, row):
 		label = field.get("label")
 		field_type = field.get("type")
@@ -311,20 +313,22 @@ class UniversalInterfaceCreator:
 		col_span = field.get("col_span", 2)
 		field_config = field.get("config", {})
 		validation = field.get("validation", {})
+		disabled = field.get("disabled", False) #  <--- To disable a field    <--- To disable a field    <--- To disable a field
 		width = field_config.get("width", self.config.get("field", {}).get("width", 20))
 		var = None
 		style_name = self.apply_style(None, field_config)
+
 		if field_type == "text":
 			var = tk.StringVar(value=value)
 			label_widget = ttk.Label(self.root, text=label, style=style_name)
 			label_widget.grid(row=row, column=0, sticky=tk.E)
-			entry_widget = ttk.Entry(self.root, textvariable=var, width=width)
+			entry_widget = ttk.Entry(self.root, textvariable=var, width=width, state='disabled' if disabled else 'normal')
 			entry_widget.grid(row=row, column=1, columnspan=col_span, pady=5, padx=10)
 		elif field_type == "password":
 			var = tk.StringVar(value=value)
 			label_widget = ttk.Label(self.root, text=label, style=style_name)
 			label_widget.grid(row=row, column=0, sticky=tk.E)
-			entry_widget = ttk.Entry(self.root, textvariable=var, show='*', width=width)
+			entry_widget = ttk.Entry(self.root, textvariable=var, show='*', width=width, state='disabled' if disabled else 'normal')
 			entry_widget.grid(row=row, column=1, columnspan=col_span, pady=5, padx=10)
 		elif field_type == "text_area":
 			var = tk.Text(self.root, height=5, width=width, wrap="word", font=("Arial", 12))
@@ -332,19 +336,21 @@ class UniversalInterfaceCreator:
 			label_widget.grid(row=row, column=0, sticky=tk.NE)
 			var.grid(row=row, column=1, columnspan=col_span, pady=5, padx=10)
 			var.insert("1.0", value)
+			if disabled:
+				var.config(state='disabled')
 		elif field_type == "radio":
 			var = tk.StringVar(value=value)
 			label_widget = ttk.Label(self.root, text=label, style=style_name)
 			label_widget.grid(row=row, column=0, sticky=tk.E)
 			for option in options:
-				rb_widget = ttk.Radiobutton(self.root, text=option, variable=var, value=option)
+				rb_widget = ttk.Radiobutton(self.root, text=option, variable=var, value=option, state='disabled' if disabled else 'normal')
 				rb_widget.grid(row=row, column=1, sticky=tk.W)
 				row += 1
 		elif field_type == "dropdown":
 			var = tk.StringVar(value=value)
 			label_widget = ttk.Label(self.root, text=label, style=style_name)
 			label_widget.grid(row=row, column=0, sticky=tk.E)
-			combobox_widget = ttk.Combobox(self.root, textvariable=var, values=options, width=width)
+			combobox_widget = ttk.Combobox(self.root, textvariable=var, values=options, width=width, state='disabled' if disabled else 'normal')
 			combobox_widget.grid(row=row, column=1, columnspan=col_span, pady=5, padx=10)
 		elif field_type == "checkbox":
 			checkbox_frame = ttk.LabelFrame(self.root, text=label, style=style_name)
@@ -354,13 +360,13 @@ class UniversalInterfaceCreator:
 			for option in options:
 				option_var = tk.BooleanVar(value=option in value)
 				var[option] = option_var
-				cb_widget = ttk.Checkbutton(checkbox_frame, text=option, variable=option_var)
+				cb_widget = ttk.Checkbutton(checkbox_frame, text=option, variable=option_var, state='disabled' if disabled else 'normal')
 				cb_widget.grid(row=checkbox_row, column=0, sticky=tk.W, padx=5, pady=2)
 				checkbox_row += 1
 			self.form_data[label] = var
 			row += 1  # Increment the main row counter after the LabelFrame
-			self.form_data[label] = var
 		self.form_data[label] = var
+
 
 	def Field(self, label):
 		if label in self.index:
@@ -389,9 +395,10 @@ class UniversalInterfaceCreator:
 		for section, fields in self.form_structure.items():
 			if section == "Config":
 				continue
-			_.pr(line=1,c='green')
-			_.pr(f"\n :: {section}",c='yellow')
-			_.pr()
+			if __.FormPrint:
+				_.pr(line=1,c='green')
+				_.pr(f"\n :: {section}",c='yellow')
+				_.pr()
 			for field in fields:
 				self.create_terminal_field(field)
 
@@ -618,6 +625,7 @@ def postURL(url, form_data=None, headers=None, browser_agent=None):
 		headers = {}
 	if browser_agent:
 		headers['User-Agent'] = browser_agent
+	# print(form_data)
 	response = requests.post(url, data=form_data, headers=headers)
 	try:
 		return response.json()
@@ -625,8 +633,9 @@ def postURL(url, form_data=None, headers=None, browser_agent=None):
 		return response.text
 
 def submit(record,form_structure):
-	print('record',record)
-	print('form_structure',form_structure)
+	if __.FormPrint:
+		print('record',record)
+		print('form_structure',form_structure)
 	if 'post' in form_structure['Config']:
 		url = form_structure['Config']['post']
 		form = {}
@@ -638,21 +647,25 @@ def submit(record,form_structure):
 		package['package'] = json.dumps(form)
 		
 		results = postURL(form_structure['Config']['post'],package)
-		_.pr(results)
-		_.pr('Sent to Server',c='green')
-		_.pr(line=1,c='green')
-		_.pr('Server Response:',c='yellow')
-		if type(results) == str:
-			_.pr(results,c='green')
-		else:
-			_.pv(results)
-		_.pr(line=1,c='green')
+		return results
+		if __.FormPrint:
+			_.pr(results)
+			_.pr('Sent to Server',c='green')
+			_.pr(line=1,c='green')
+			_.pr('Server Response:',c='yellow')
+			if type(results) == str:
+				_.pr(results,c='green')
+			else:
+				_.pv(results)
+			_.pr(line=1,c='green')
 	if 'save' in form_structure['Config']:
 		_.saveTable2(record,form_structure['Config']['save'])
-		_.pr('Saved to Current Folder',c='green')
-		_.pr('Saved:',form_structure['Config']['save'],c='blue')
+		if __.FormPrint:
+			_.pr('Saved to Current Folder',c='green')
+			_.pr('Saved:',form_structure['Config']['save'],c='blue')
 	if 'table' in form_structure['Config']:
-		_.pr('Saved to Tables Folder',c='green')
+		if __.FormPrint:
+			_.pr('Saved to Tables Folder',c='green')
 		_.saveTable(record,form_structure['Config']['table'])
 
 def md5_hash(string):
@@ -737,8 +750,9 @@ def genForm(form_structure):
 		if not _ns.errors:
 			try: json.dumps(record, indent=4)
 			except: _.e('Form exited'); sys.exit()
-			submit(record,form)
-			return record
+			# return record
+			# print(record)
+			return submit(record,form)
 		if _ns.errors:
 			_.pr('Validation Errors:',c='red')
 			if not 'html' in _ns.formReg['Config']:
@@ -751,7 +765,7 @@ def genForm(form_structure):
 			_ns.errors=[]
 			return genForm(_ns.formReg)
 		
-
+__.FormPrint = True
 SmartTables = genForm
 SmartTable = genForm
 UI = genForm

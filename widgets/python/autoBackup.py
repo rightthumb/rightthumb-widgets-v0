@@ -407,7 +407,7 @@ def action():
 
 				schedulerLog[ii]['status'] = status['defaultSpent']
 
-	_.saveTable( schedulerLog, 'fileBackupSchedule.json', p=0 )
+	_.saveTable( schedulerLog, 'fileBackupSchedule.json', p=0, lock=True )
 	if not _.switches.isActive('fileBackup-Log'): return None
 	for log in backupLog:
 		if not log['file'] in __.spent:

@@ -6,10 +6,12 @@ def sw():
 	pass
 	_.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name', description='Files', isRequired=False )
 	_.switches.register( 'ShowSearchResults', '-r,-results,-ss,-ssr,-print' )
-	_.switches.register( 'DebugDump', '-d,-debug,-dump' )
+	_.switches.register( 'DebugDump', '-d,-debug,-dump', 'record: default is stats and search results' )
 	_.switches.register( 'Minimal', '--c,-m,-min,-minimal', 'default' )
 	_.switches.register( 'IndexDump', '-index', 'pre' )
 	_.switches.register( 'JSON', '-json,-x,-export', 'output is mysql json format' )
+	_.switches.register( 'Regex', '-regex', 'use Regex to parse sql' )
+	_.switches.register( 'Cache', '-cache', 'cache.json: use this on large files when doing research' )
 
 
 _._default_settings_()
@@ -180,6 +182,124 @@ def jsonExport(data):
 	return mysql_dump
 
 
+def sql2dict_partial_fix_not_used(data):
+	dex = __.Meta_Namespace()
+	dex.p = _.deX.p(data.upper(), ['INSERT INTO', 'VALUES', 'CREATE TABLE'])
+	dex.o = _.deX.o(data)
+	dex.c = _.deX.c(data)
+	dex.i = _.deX.i(data)
+	# for o in dex.i:
+	# 	c = dex.i[o]+1
+	# 	snip = data[o:c]
+	# 	print(snip)
+	# _.isExit(__file__)
+	dex.ii = []
+	dex.ol = {}
+	# print(dex.p['ph']['INSERT INTO']); return None
+	tables = {}
+	for o in dex.p['ph']['INSERT INTO']:
+		# while not o in dex.i and not data[o] == '`': o += 1
+		# print(data[o])
+		o += 1
+		while True:
+			
+			if o > len(data): _.e('out of range')
+			if data[o] == '`': break
+			elif o in dex.i and data[o:dex.i[o]+1].strip().upper() == 'INTO':pass
+			elif o in dex.i and data[o:dex.i[o]+1] == '(': o += 1
+			elif data[o] in 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ' and o in dex.i: break
+
+			
+			o += 1
+		c = dex.i[o]+1
+		table = data[o:c].strip('`').strip()
+		if not table in tables:
+			tables[table] = {}
+			tables[table]['fields'] = []
+			tables[table]['records'] = []
+		o = c
+		while not data[o] == '(': o += 1
+		c = dex.i[o]+1
+		end = dex.i[o]+1
+		fields = data[o:c].strip('()').strip()
+		o +=1
+		while not o == end:
+			
+			if not o in dex.i: o += 1; continue
+			c = dex.i[o]+1
+			field = data[o:c].strip('`').strip()
+			# print(field)
+			tables[table]['fields'].append(field)
+			o = c
+		# newRecord = True
+		while not data[o] == '(': o += 1
+		while not o >= len(data) and not data[o] == ';':
+			if not o in dex.i: o += 1; continue
+			# print(o,data[o])
+			c = dex.i[o]+1
+			# while not data[c] == ')': c += 1
+			
+			start = o
+			end = c
+			rec = data[o:c]
+			# .strip('()').strip()
+			# print(rec)
+			o += 1
+			record = {}
+			fields = []
+			while not o == end:
+				while not o in dex.i and not o > len(data): o += 1
+				if o > len(data):
+					break
+				c = dex.i[o]+1
+				if not data[o] == '`':
+					me = data[o:c].strip()
+					valid = False
+					if '.' in me:
+						if me[0] in '0123456789':
+							try:
+								field = float(me)
+								valid = True
+							except: pass
+					if not valid:
+						if me[0] in '0123456789':
+							try:
+								field = int(me)
+							except:
+								field = me.strip("'").strip('"').strip()
+								if field == 'NULL': field = None
+				else:
+					field = data[o:c].strip('`').strip("'").strip('"').strip()
+				if len(fields) == len(tables[table]['fields']):
+					o-= len(field)+1
+					# _.pr(data[o],c='cyan')
+					# _.pr(field,c='yellow')
+					if field in data:
+						o = data.index(field)
+					break
+				fields.append(field)
+				o = c
+				o += 1
+			# _.pv(tables)
+			# _.pv(record)
+			for i,f in enumerate(fields):
+				# print(i,o,len(data),f)
+				record[tables[table]['fields'][i]] = f
+			if type(record) == dict:
+				tables[table]['records'].append(record)
+			o = c
+			o += 1
+			if o > len(data):
+				# _.pr(data[start:end],c='red')
+				o = dex.i[start]+1
+				break
+
+			# tables[table]['records'].append(rec)
+		# c = dex.i[o]+1
+
+		# _.pv(tables)
+	return tables
+
 
 def sql2dict(data):
 	dex = __.Meta_Namespace()
@@ -268,17 +388,12 @@ def sql2dict(data):
 			o = c
 			o += 1
 
-			# tables[table]['records'].append(rec)
-		# c = dex.i[o]+1
-
-		# _.pv(tables)
 	return tables
 		
 
 
 
-
-def sql2dict2(data):
+def sql2dictRegex(data):
 	import re
 	tables = {}
 
@@ -340,16 +455,24 @@ def action():
 			c = index[o]+1
 			_.pr( data[o:c] )
 		return None
-	auditMethod = False
-	try:
-		result = sql2dict(data)
-		if auditMethod: print(1); _.isExit(__file__)
-	except:
-		result = sql2dict2(data)
-		if auditMethod: print(2); _.isExit(__file__)
-
-	_.pv(result); _.isExit(__file__)
+	shouldProcess = True
+	if _.switches.isActive('Cache'):
+		if __.os.path.isfile(_.switches.values('Cache')[0]):
+			shouldProcess = False
+			result = _.getTable2(_.switches.values('Cache')[0])
+	if shouldProcess:
+		if _.switches.isActive('Regex'):
+			result = sql2dictRegex(data)
+		else:
+			try:
+				result = sql2dict(data)
+			except:
+				result = sql2dictRegex(data)
+		if _.switches.isActive('Cache'):
+			_.saveTable2(result,_.switches.values('Cache')[0])
+	# _.pv(result)
 	# result = sql(data)
+	# _.pv(result)
 	if _.switches.isActive('JSON'):
 		_.pv(jsonExport(result))
 		return None
@@ -365,7 +488,8 @@ def action():
 		'search_hits': {},
 		'total': 0,
 	}
-
+	global RelevantRecords
+	RelevantRecords = {}
 	for table_name, table in result.items():
 		for record in table['records']:
 			for f in record:
@@ -399,6 +523,10 @@ def action():
 							plusSearchX = _.ci( plusSearchX )
 							for subject in _.caseUnspecificCode( value, plusSearchX ):
 								value = value.replace( subject, _.colorThis( subject, 'green', p=0 ) )
+								if not table_name in RelevantRecords:
+									RelevantRecords[table_name] = {}
+								if not record_id in RelevantRecords[table_name]:
+									RelevantRecords[table_name][record_id] = record
 						datamine['search_hits'][table_name][record_id][field] = value
 
 
@@ -418,22 +546,25 @@ def action():
 
   
 	if _.switches.isActive('DebugDump'):
-		# Print outputs for debugging and verification
-		color = 'Background.green'
-		_.pr(line=1, c='green')
-		_.pr('Count of Results in a Field by Table',c=color)
-		_.pv(datamine['field_counts'])
-		_.pr(line=1, c='green')
-		_.pr('ID Priority and Fields by Table',c=color)
-		_.pv(datamine['id_fields'])
-		_.pr(line=1, c='green')
-		_.pr('Field Priority and IDs by Table',c=color)
-		_.pv(datamine['field_ids'])
-		_.pr(line=1, c='green')
-		_.pr('Search Results by Table ID and Field',c=color)
-		# _.pv(datamine['search_hits'])
-		searchResults(datamine)
-		_.pr(line=1, c='green')
+		if 'r' in _.switches.value('DebugDump'):
+			_.pv(RelevantRecords)
+		else:
+			# Print outputs for debugging and verification
+			color = 'Background.green'
+			_.pr(line=1, c='green')
+			_.pr('Count of Results in a Field by Table',c=color)
+			_.pv(datamine['field_counts'])
+			_.pr(line=1, c='green')
+			_.pr('ID Priority and Fields by Table',c=color)
+			_.pv(datamine['id_fields'])
+			_.pr(line=1, c='green')
+			_.pr('Field Priority and IDs by Table',c=color)
+			_.pv(datamine['field_ids'])
+			_.pr(line=1, c='green')
+			_.pr('Search Results by Table ID and Field',c=color)
+			# _.pv(datamine['search_hits'])
+			searchResults(datamine)
+			_.pr(line=1, c='green')
 
 	# import simplejson
 	# print( simplejson.dumps(datamine['search_hits'], indent=4) )

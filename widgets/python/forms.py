@@ -5,7 +5,7 @@ fieldSet=_.l.vars(focus(),__name__,__file__,appDBA);_.load();_v=__.imp('_rightTh
 def sw():
 	pass
 	# _.switches.register( 'FormID', '-id', '1' )
-	_.switches.register( 'Form', '-f,-form', 'code' )
+	_.switches.register( 'Form', '-f,-form', 'login code' )
 	_.switches.register( 'ShowFields', '-fld,-field,-fields' )
 	# _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name', description='Files', isRequired=False )
 _._default_settings_()
@@ -62,7 +62,7 @@ forms['login'] = {
 	'Config': {
 		# "html": True,
 		"terminal": True,
-		"post": "https://cli.sds.sh/forms/test.php",
+		"post": "https://cli.sds.sh/forms/login/",
 		# "table": 'forms-test.json',
 		# "save": 'forms-test.json',
 	},
@@ -91,8 +91,21 @@ forms['code'] = {
 def action():
 	global forms
 	results = _.Form(forms[_.switches.value('Form')])
+	
+	if not _.switches.value('Form') == 'login':
+		_.pv(results)
+	else:
+		# _.pr('results:',results)
+		
+		__.secureModule = 'This is default data because: Access Denied: scott 123'
+		if not results == 0 and not results == '0':
+			exec(results)
+			color = 'green'
+		else:
+			color = 'red'
+		_.pr(__.secureModule,c=color)
+	# _.pv(checkboxes)
 	# results = _.Form(checkboxes)
-	_.pv(results)
 
 	# cnt = len(example_forms)
 	# # _.pr(cng)

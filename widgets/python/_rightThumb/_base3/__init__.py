@@ -9729,7 +9729,10 @@ def UUID_Epoch(vVv=None,dec=2,epoch=None):
 
 
 __.fn.saveText = False
-def saveText( rows, theFile, errors=True, me=0, test=None ):
+def saveText( rows, theFile, errors=True, me=0, test=None, lock=False ):
+	if lock:
+		FileLocker.check(theFile)
+		FileLocker.lock(theFile)
 	# print_(rows)
 	ty9=type(rows)
 	if not test is None:
@@ -9820,7 +9823,9 @@ def saveText( rows, theFile, errors=True, me=0, test=None ):
 		HD.chmod(theFile)
 		# if errors:
 		#   print_( 'Auto correction when saving text' )
-	if me and theFile in vv.opened_file_me: changeM( theFile, vv.opened_file_me[theFile] );
+	if me and theFile in vv.opened_file_me: changeM( theFile, vv.opened_file_me[theFile] )
+	if lock:
+		FileLocker.unlock(theFile)
 def getText2(theFile,what='text',t=None,l=None):
 	if not t is None and t: what='text'
 	if not l is None and l: what='list'
@@ -10569,7 +10574,7 @@ def saveLog( logname, rows=[], focus=True, printThis=True ):
 	if printThis:
 		print_('Saved: ' + file0)
 
-def saveTable( rows, theFile, tableTemp=False, printThis=True, indentCode=True, sort_keys=False, archive=False,                k=0,s=0,tmp=None,here=None,h=None,    p=1, me=0   ):
+def saveTable( rows, theFile, tableTemp=False, printThis=True, indentCode=True, sort_keys=False, archive=False,                k=0,s=0,tmp=None,here=None,h=None,    p=1, me=0, lock=False   ):
 	HD.chmod(theFile)
 	try:
 		import simplejson
@@ -10603,9 +10608,9 @@ def saveTable( rows, theFile, tableTemp=False, printThis=True, indentCode=True, 
 		else:
 			file0 = _v.stmp + _v.slash + theFile
 			px = file0
-
-	FileLocker.check(file0)
-	FileLocker.lock(file0)
+	if lock:
+		FileLocker.check(file0)
+		FileLocker.lock(file0)
 	
 
 	if __.print_path:
@@ -10679,7 +10684,8 @@ def saveTable( rows, theFile, tableTemp=False, printThis=True, indentCode=True, 
 	if printThis:
 		printBold('Saved: ' + px, 'blue')
 	if me and theFile in vv.opened_file_me: changeM( theFile, vv.opened_file_me[theFile] );
-	FileLocker.unlock(file0)
+	if lock:
+		FileLocker.unlock(file0)
 	return file0
 
 def getTable(theFile, tableTemp=False, isDic=None, isList=None, tmp=None):
@@ -24481,7 +24487,8 @@ def prWC2(text, colorize, color='green', color2='cyan'):
 		text = ''.join(parts)
 	return text
 ##################################################
-def Form(form):
+def Form(form,p=False):
+	__.FormPrint = p
 	from _rightThumb._forms import genForm
 	results = genForm(form)
 	return results
@@ -24565,96 +24572,96 @@ def acb(data): return codex( data )['index']
 import re
 
 def codex2(text, phrases=None, language=None):
-    """
-    Finds open-close pairs for various delimiters and custom phrases in a string.
-    
-    Args:
-        text (str): The text to analyze.
-        phrases (list): A list of phrases to find and pair.
-        language (str): The language or context (e.g., "SQL", "HTML", "Python").
-                        Defaults to common programming and markup languages.
-        
-    Returns:
-        dict: A dictionary mapping open index positions to close index positions.
-    """
-    # Define open-close pairs for common programming and markup languages
-    common_pairs = {
-        '}': '{', ')': '(', ']': '[', '>': '<',
-        '"': '"', "'": "'", '`': '`', '|': '|', '‖': '‖',
-        '⌋': '⌊', '⌉': '⌈',
-    }
+	"""
+	Finds open-close pairs for various delimiters and custom phrases in a string.
+	
+	Args:
+		text (str): The text to analyze.
+		phrases (list): A list of phrases to find and pair.
+		language (str): The language or context (e.g., "SQL", "HTML", "Python").
+						Defaults to common programming and markup languages.
+		
+	Returns:
+		dict: A dictionary mapping open index positions to close index positions.
+	"""
+	# Define open-close pairs for common programming and markup languages
+	common_pairs = {
+		'}': '{', ')': '(', ']': '[', '>': '<',
+		'"': '"', "'": "'", '`': '`', '|': '|', '‖': '‖',
+		'⌋': '⌊', '⌉': '⌈',
+	}
 
-    # Multicharacter open-close pairs
-    common_multi_pairs = {
-        '"""': '"""', "'''": "'''", '{{': '}}', '${': '}',
-    }
+	# Multicharacter open-close pairs
+	common_multi_pairs = {
+		'"""': '"""', "'''": "'''", '{{': '}}', '${': '}',
+	}
 
-    # Language-specific extensions
-    language_pairs = {}
-    if language == "HTML" or language == "XML":
-        language_pairs = {
-            '</': '<',  # For HTML/XML tags
-        }
-    elif language == "SQL":
-        language_pairs = {
-            'BEGIN': 'END',  # SQL blocks
-        }
-    elif language == "Python":
-        language_pairs = {}  # No additional pairs for Python
-    
-    # Merge language-specific pairs into common pairs
-    pairs = {**common_pairs, **language_pairs}
-    multi_pairs = {**common_multi_pairs}
-    
-    # Initialize stack and result
-    stack = []
-    result = {}
-    
-    # Add custom phrases to be searched
-    if phrases:
-        phrase_locs = {}
-        for phrase in phrases:
-            for match in re.finditer(re.escape(phrase), text):
-                start = match.start()
-                phrase_locs[start] = start + len(phrase)  # Store phrase ends
-        result.update(phrase_locs)
+	# Language-specific extensions
+	language_pairs = {}
+	if language == "HTML" or language == "XML":
+		language_pairs = {
+			'</': '<',  # For HTML/XML tags
+		}
+	elif language == "SQL":
+		language_pairs = {
+			'BEGIN': 'END',  # SQL blocks
+		}
+	elif language == "Python":
+		language_pairs = {}  # No additional pairs for Python
+	
+	# Merge language-specific pairs into common pairs
+	pairs = {**common_pairs, **language_pairs}
+	multi_pairs = {**common_multi_pairs}
+	
+	# Initialize stack and result
+	stack = []
+	result = {}
+	
+	# Add custom phrases to be searched
+	if phrases:
+		phrase_locs = {}
+		for phrase in phrases:
+			for match in re.finditer(re.escape(phrase), text):
+				start = match.start()
+				phrase_locs[start] = start + len(phrase)  # Store phrase ends
+		result.update(phrase_locs)
 
-    # Scan through the text
-    i = 0
-    while i < len(text):
-        # Check for multicharacter open-close pairs
-        for open_token, close_token in multi_pairs.items():
-            if text.startswith(open_token, i):
-                stack.append((open_token, i))
-                i += len(open_token) - 1  # Skip the token length
-                break
-            if text.startswith(close_token, i):
-                if stack and stack[-1][0] == open_token:
-                    _, start_idx = stack.pop()
-                    result[start_idx] = i + len(close_token) - 1
-                else:
-                    raise ValueError(f"Unmatched closing token '{close_token}' at index {i}")
-                i += len(close_token) - 1
-                break
+	# Scan through the text
+	i = 0
+	while i < len(text):
+		# Check for multicharacter open-close pairs
+		for open_token, close_token in multi_pairs.items():
+			if text.startswith(open_token, i):
+				stack.append((open_token, i))
+				i += len(open_token) - 1  # Skip the token length
+				break
+			if text.startswith(close_token, i):
+				if stack and stack[-1][0] == open_token:
+					_, start_idx = stack.pop()
+					result[start_idx] = i + len(close_token) - 1
+				else:
+					raise ValueError(f"Unmatched closing token '{close_token}' at index {i}")
+				i += len(close_token) - 1
+				break
 
-        # Check for single-character open-close pairs
-        char = text[i]
-        if char in pairs.values():  # Opening character
-            stack.append((char, i))
-        elif char in pairs.keys():  # Closing character
-            if stack and stack[-1][0] == pairs[char]:  # Matches the last opening
-                _, start_idx = stack.pop()
-                result[start_idx] = i
-            else:
-                raise ValueError(f"Unmatched closing character '{char}' at index {i}")
-        i += 1
+		# Check for single-character open-close pairs
+		char = text[i]
+		if char in pairs.values():  # Opening character
+			stack.append((char, i))
+		elif char in pairs.keys():  # Closing character
+			if stack and stack[-1][0] == pairs[char]:  # Matches the last opening
+				_, start_idx = stack.pop()
+				result[start_idx] = i
+			else:
+				raise ValueError(f"Unmatched closing character '{char}' at index {i}")
+		i += 1
 
-    # Error if unmatched open tokens remain
-    if stack:
-        unmatched = [f"{char} at index {idx}" for char, idx in stack]
-        raise ValueError(f"Unmatched opening characters: {', '.join(unmatched)}")
+	# Error if unmatched open tokens remain
+	if stack:
+		unmatched = [f"{char} at index {idx}" for char, idx in stack]
+		raise ValueError(f"Unmatched opening characters: {', '.join(unmatched)}")
 
-    return result
+	return result
 
 ##################################################
 # def simpleIndex(text):
@@ -24916,6 +24923,61 @@ cLine = deX.l
 find_line = deX.l
 ##################################################
 
+def formatSizeUp(size_in_bytes):
+    size = formatSizeUpMath(size_in_bytes)
+    value, unit = size.split(' ')
+    value = int(value)
+    
+    # If the value is a single digit, do nothing
+    if len(str(value)) == 1:
+        return size
+    
+    # Determine the nearest higher rounded value
+    str_value = str(value)
+    leading_digit = int(str_value[0])  # First digit
+    power_of_ten = len(str_value) - 1  # Position of the first digit
+    rounded_value = (leading_digit + 1) * (10 ** power_of_ten)  # Round up to next significant number
+
+    # Calculate the increment needed to round up
+    increment = (rounded_value - value) * increments[unit]
+    size_in_bytes += increment
+
+    # Return the updated size
+    return formatSizeUpMath(size_in_bytes)
+
+def formatSizeUpMath(size_in_bytes):
+    import math
+    units = [
+        (1 << 60, "EB"),  # Exabyte
+        (1 << 50, "PB"),  # Petabyte
+        (1 << 40, "TB"),  # Terabyte
+        (1 << 30, "GB"),  # Gigabyte
+        (1 << 20, "MB"),  # Megabyte
+        (1 << 10, "KB"),  # Kilobyte
+        (1, "B")          # Byte
+    ]
+    
+    for factor, suffix in units:
+        if size_in_bytes >= factor:
+            value = math.ceil(size_in_bytes / factor)
+            return f"{value} {suffix}"
+    
+    return "0 B"
+
+# Define increments for each unit
+increments = {
+    "B": 1,
+    "KB": 1 << 10,  # 1024 bytes
+    "MB": 1 << 20,  # 1024^2 bytes
+    "GB": 1 << 30,  # 1024^3 bytes
+    "TB": 1 << 40,  # 1024^4 bytes
+    "PB": 1 << 50,  # 1024^5 bytes
+    "EB": 1 << 60   # 1024^6 bytes
+}
+
+
+##################################################
+
 # __.switch_raw
 ##################################################
 # class regImp:
@@ -24942,58 +25004,58 @@ import re
 import time
 
 class FileLocker:
-    @staticmethod
-    def lockName(path):
-        """Strip non-filename safe characters."""
-        return re.sub(r'[^\w\-_\. ]', '_', path)
+	@staticmethod
+	def lockName(path):
+		"""Strip non-filename safe characters."""
+		return re.sub(r'[^\w\-_\. ]', '_', path)
 
-    @staticmethod
-    def lockPath(path):
-        """Get the lock file path, ensuring the directory exists."""
-        folder_path = _v.fileLocks  # Assumes `_v.fileLocks` is defined in your framework
-        if not os.path.exists(folder_path):
-            os.makedirs(folder_path)
-        return os.path.join(folder_path, FileLocker.lockName(path))
+	@staticmethod
+	def lockPath(path):
+		"""Get the lock file path, ensuring the directory exists."""
+		folder_path = _v.fileLocks  # Assumes `_v.fileLocks` is defined in your framework
+		if not os.path.exists(folder_path):
+			os.makedirs(folder_path)
+		return os.path.join(folder_path, FileLocker.lockName(path))
 
-    @staticmethod
-    def lock(path):
-        """Rename the file to create a lock."""
-        lock_path = FileLocker.lockPath(path)
-        lock_file = lock_path + ".lock"
-        start_time = time.time()
-        while True:
-            try:
-                # Try renaming the file to acquire the lock
-                os.rename(lock_path, lock_file)
-                return  # Lock acquired
-            except FileNotFoundError:
-                # If the original file doesn't exist, create a dummy lock
-                with open(lock_file, "w") as f:
-                    f.write("")  # Create an empty lock file
-                return
-            except OSError:
-                # Another process holds the lock; wait and retry
-                if time.time() - start_time > 10:  # Optional timeout of 10 seconds
-                    raise TimeoutError("Timeout waiting for lock")
-                time.sleep(0.1)  # Retry after a short delay
+	@staticmethod
+	def lock(path):
+		"""Rename the file to create a lock."""
+		lock_path = FileLocker.lockPath(path)
+		lock_file = lock_path + ".lock"
+		start_time = time.time()
+		while True:
+			try:
+				# Try renaming the file to acquire the lock
+				os.rename(lock_path, lock_file)
+				return  # Lock acquired
+			except FileNotFoundError:
+				# If the original file doesn't exist, create a dummy lock
+				with open(lock_file, "w") as f:
+					f.write("")  # Create an empty lock file
+				return
+			except OSError:
+				# Another process holds the lock; wait and retry
+				if time.time() - start_time > 10:  # Optional timeout of 10 seconds
+					raise TimeoutError("Timeout waiting for lock")
+				time.sleep(0.1)  # Retry after a short delay
 
-    @staticmethod
-    def unlock(path):
-        """Rename the lock file back to its original name."""
-        lock_path = FileLocker.lockPath(path)
-        lock_file = lock_path + ".lock"
-        try:
-            os.rename(lock_file, lock_path)  # Release the lock
-        except FileNotFoundError:
-            pass  # Lock already released or doesn't exist
+	@staticmethod
+	def unlock(path):
+		"""Rename the lock file back to its original name."""
+		lock_path = FileLocker.lockPath(path)
+		lock_file = lock_path + ".lock"
+		try:
+			os.rename(lock_file, lock_path)  # Release the lock
+		except FileNotFoundError:
+			pass  # Lock already released or doesn't exist
 
-    @staticmethod
-    def check(path):
-        """Wait until the lock file does not exist."""
-        lock_path = FileLocker.lockPath(path)
-        lock_file = lock_path + ".lock"
-        while os.path.exists(lock_file):
-            time.sleep(0.1)
+	@staticmethod
+	def check(path):
+		"""Wait until the lock file does not exist."""
+		lock_path = FileLocker.lockPath(path)
+		lock_file = lock_path + ".lock"
+		while os.path.exists(lock_file):
+			time.sleep(0.1)
 
 
 # FileLocker.check(path)

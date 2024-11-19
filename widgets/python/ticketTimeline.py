@@ -236,7 +236,7 @@ def action():
 
 			# if i > 10:
 			#     sys.exit()
-	_.saveTable( log, 'ticketTimeline.json', printThis=False )
+	_.saveTable( log, 'ticketTimeline.json', printThis=False, lock=True )
 
 
 
@@ -310,7 +310,7 @@ def tickets_of_the_day():
 
 			# if i > 10:
 			#     sys.exit()
-	_.saveTable( log, 'ticketTimeline_Day.json', printThis=False )
+	_.saveTable( log, 'ticketTimeline_Day.json', printThis=False, lock=True )
 
 
 

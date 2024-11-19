@@ -1,3 +1,5 @@
+# from _rightThumb._forms._forms_example import example_forms1, example_forms2, checkboxes
+# results = _.Form(form)
 example_forms1 = [
 	{
 		"Config": {

@@ -4,9 +4,10 @@ fieldSet=_.l.vars(focus(),__name__,__file__,appDBA);_.load();_v=__.imp('_rightTh
 
 def sw():
 	pass
-	_.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='data', description='Files', isRequired=False )
+	_.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name', description='Files', isRequired=False )
 	_.switches.register( 'DB', '-db', isRequired=True )
 	_.switches.register( 'JSON', '-json', isRequired=False )
+	_.switches.register( 'LS', '-ls', isRequired=False )
 _._default_settings_()
 
 __.setting('require-list',['Pipe','Files'])
@@ -50,7 +51,7 @@ _.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw )
 import json
 import sqlite3
 
-def json_to_sqlite1(json_data, output_sqlite_file):
+def json_to_sqlite(json_data, output_sqlite_file):
     conn = sqlite3.connect(output_sqlite_file)
     cursor = conn.cursor()
     for item in json_data:
@@ -62,59 +63,80 @@ def json_to_sqlite1(json_data, output_sqlite_file):
                 if not columns:
                     columns = row.keys()
                 data_rows.append(tuple(row.values()))
+            # print(columns)
             if columns:
                 columns_sql = ", ".join([f"{col} TEXT" for col in columns])
                 cursor.execute(f"CREATE TABLE IF NOT EXISTS {table_name} ({columns_sql})")
-                if data_rows:
-                    placeholders = ", ".join(["?"] * len(columns))
-                    cursor.executemany(f"INSERT INTO {table_name} VALUES ({placeholders})", data_rows)
-    conn.commit()
-    conn.close()
-
-def json_to_sqlite2(json_data, output_sqlite_file):
-    conn = sqlite3.connect(output_sqlite_file)
-    cursor = conn.cursor()
-
-    for item in json_data:
-        if item["type"] == "table":
-            table_name = item["name"]
-            columns = []
-            data_rows = []
-
-            for row in item.get("data", []):
-                # Ensure the columns are initialized only once
-                if not columns:
-                    columns = list(row.keys())
-                # Align row values to match the column order
-                aligned_row = tuple(row.get(col, None) for col in columns)
-                data_rows.append(aligned_row)
-
-            if columns:
-                # Create table if it doesn't exist
-                columns_sql = ", ".join([f"{col} TEXT" for col in columns])
-                cursor.execute(f"CREATE TABLE IF NOT EXISTS {table_name} ({columns_sql})")
-
                 if data_rows:
                     placeholders = ", ".join(["?"] * len(columns))
                     try:
                         cursor.executemany(f"INSERT INTO {table_name} VALUES ({placeholders})", data_rows)
-                    except sqlite3.ProgrammingError as e:
-                        print(f"Error inserting into table {table_name}: {e}")
-                        print(f"Columns: {columns}")
-                        print(f"Data Rows: {data_rows}")
-                        raise
+                    except Exception as e:
+                        _.pr(e,c='red')
+                        # print(f"INSERT INTO {table_name} VALUES ({placeholders})")
+                        
+                    
 
     conn.commit()
     conn.close()
+
 def action():
-    try:
-        json_data = json.loads('\n'.join(_.isData(r=1)))
-    except:
-        json_data = json.loads('[\n'+'\n'.join(_.isData(r=1)))
-    # try:
-    #     json_to_sqlite1(json_data, _.switches.value('DB'))
-    # except:
-    json_to_sqlite2(json_data, _.switches.value('DB'))
+    if _.switches.isActive('Files'):
+         json_data = _.getTable2(_.switches.values('Files')[0])
+    else:
+        try:
+            json_data = json.loads('\n'.join(_.isData(r=1)))
+        except:
+            json_data = json.loads('[\n'+'\n'.join(_.isData(r=1)))
+    if _.switches.isActive('LS'):
+        lsData = []
+        for rec in json_data['data']:
+            del rec['stat']
+            del rec['group']
+            del rec['type']
+            del rec['name_']
+            del rec['typesort']
+            del rec['friendly_week']
+            del rec['friendly_month']
+            del rec['md5']
+            del rec['sha256']
+            del rec['header']
+            del rec['error']
+            del rec['date_created_raw']
+            del rec['date_modified_raw']
+            del rec['date_created']
+            del rec['date_modified']
+            del rec['accessed_raw']
+            del rec['date_accessed']
+            del rec['week_of_year']
+            del rec['week_of_year_']
+            del rec['day_of_the_week']
+            del rec['month']
+            del rec['ago']
+            del rec['meta']
+            if len(list(rec.keys())) == 10:
+                lsData.append(rec)
+        data = [
+            {
+                "type": "header",
+                "version": "5.2.1",
+                "comment": "Export as JSON formatted as mysql json export"
+            },
+            {
+                "type": "database",
+                "name": "FilesDatabase"
+            },
+            {
+                "type": "table",
+                "name": "files",
+                "database": "FilesDatabase",
+                "data": lsData
+            }
+        ]
+        _.saveTable2(data,'ls.json')
+        json_to_sqlite(data, _.switches.value('DB'))
+    else:
+        json_to_sqlite(json_data, _.switches.value('DB'))
 
 ########################################################################################
 if __name__ == '__main__':

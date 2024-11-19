@@ -126,7 +126,7 @@ def action():
 	else: _.e('Missing Switch','-lock x')
 	# print(path)
 
-	if _.switches.isActive('Lock'): _.saveText('lock',path)
+	if _.switches.isActive('Lock'): _.saveText('lock',path, lock=True)
 	elif _.switches.isActive('Unlock'):
 		if os.path.isfile(path):
 			# print('exist')
