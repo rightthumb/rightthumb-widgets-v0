@@ -211,7 +211,7 @@ def ask( letter, instance, driveID=False ):
 			{'label': 'owner', 'type': 'text', 'value': ''},
 			{'label': 'pc', 'type': 'text', 'value': socket.gethostname()},
 			{'label': 'priority', 'type': 'text', 'value': '4'},
-			{'label': 'date', 'disabled': True, 'type': 'text', 'value': _.friendlyDate(instance['timestamp'])},
+			{'label': 'date', 'disabled': True, 'type': 'text', 'value': _.friendlyDate(instance['timestamp']).split(' ')[0]},
 			{'label': 'epoch', 'disabled': True, 'type': 'text', 'value': str(instance['timestamp'])},
 			
 			{'label': 'sizeF', 'type': 'text', 'value': _.formatSizeUp(space['total'])},

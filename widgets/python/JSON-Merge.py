@@ -8,6 +8,7 @@ def sw():
 	_.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name', description='Files', isRequired=False )
 	_.switches.register( 'Save', '-save' )
 	_.switches.register( 'Epoch', '-e,-epoch,-ts,-timestamp' )
+	_.switches.register( 'DictNotList', '-dict' )
 _._default_settings_()
 
 _.appInfo[focus()] = {
@@ -53,28 +54,48 @@ def action():
 		epoch = False
 	payload = []
 	records = {}
-	if not epoch:
-		for path in _.isData(r=1):
-			db = _.getTable2(path)
-			for x in db:
-				if not any(y[key] == x[key] for y in payload):
-					payload.append(x)
-	elif epoch:
-		for path in _.isData(r=1):
-			db = _.getTable2(path)
-			for x in db:
-				if not x[key] in records: records[x[epoch]] = { 'epoch': 0, 'record': None }
-				if records[x[epoch]]['epoch'] < x[epoch]:
-					records[x[epoch]]['epoch'] = x[epoch]
-					records[x[epoch]]['record'] = x
-		for z in records:
-			payload.append(records[z]['record'])
-		payload.append(x)
+	latest = {}
+	if not _.switches.isActive('DictNotList'):
+		test = _.getTable2(_.isData(r=1)[0])
+		if not type(test) == list:
+			_.switches.fieldSet('DictNotList',True)
+	if not _.switches.isActive('DictNotList'):
+		if not epoch:
+			for path in _.isData(r=1):
+				db = _.getTable2(path)
+				for x in db:
+					if not any(y[key] == x[key] for y in payload):
+						payload.append(x)
+		elif epoch:
+			for path in _.isData(r=1):
+				db = _.getTable2(path)
+				for x in db:
+					if not x[key] in records: records[x[key]] = { 'epoch': 0, 'record': None }
+					if records[x[key]]['epoch'] < x[epoch]:
+						records[x[key]]['epoch'] = x[epoch]
+						records[x[key]]['record'] = x
+			for z in records:
+				payload.append(records[z]['record'])
+	if _.switches.isActive('DictNotList'):
+		payload = {}
+		if not epoch:
+			for path in _.isData(r=1):
+				db = _.getTable2(path)
+				for x in db: payload[x] = db[x]
+		elif epoch:
+			for path in _.isData(r=1):
+				db = _.getTable2(path)
+				for x in db:
+					if not x[key] in records: records[x] = { 'epoch': 0, 'record': None }
+					if records[x]['epoch'] < db[x][epoch]:
+						records[x]['epoch'] = db[x][epoch]
+						records[x]['record'] = db[x]
+			for z in records:
+				payload[z] = records[z]['record']
 	if _.switches.isActive('Save'):
 		_.saveTable2(payload, _.switches.values('Save')[0])
 	else:
 		_.pv(payload)
-
 ########################################################################################
 if __name__ == '__main__':
 	action(); _.isExit(__file__);
