@@ -33,7 +33,9 @@ nano "$CONF_FILE"
 # Restart the Bitcoin daemon
 echo "Restarting Bitcoin Core daemon to apply changes..."
 pkill -f bitcoind 2>/dev/null || true  # Stop the daemon if running
-/snap/bin/bitcoin-core.daemon &       # Restart the daemon
+echo "Restart the daemon: /snap/bin/bitcoin-core.daemon"
+echo "Restart the daemon: /snap/bin/bitcoin-core.daemon"
+echo "Restart the daemon: /snap/bin/bitcoin-core.daemon"
 
 # Wait for the daemon to initialize
 echo "Waiting for Bitcoin Core daemon to start..."
