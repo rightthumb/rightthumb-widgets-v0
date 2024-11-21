@@ -7,6 +7,7 @@ if [ -z "$1" ]; then
 fi
 
 ADDRESS=$1
+WALLET_PASSWORD=""  # Placeholder for wallet password or private key
 
 # Function to securely prompt for the wallet password or private key
 function prompt_password() {
@@ -19,7 +20,7 @@ function prompt_password() {
 # Functions for Bitcoin operations
 function check_balance() {
     echo "Checking balance for address: $ADDRESS"
-    bitcoin-cli -rpcwallet=$WALLET_PASSWORD getreceivedbyaddress "$ADDRESS"
+    bitcoin-cli getreceivedbyaddress "$ADDRESS"
 }
 
 function send_bitcoin() {
@@ -27,19 +28,19 @@ function send_bitcoin() {
     read -p "Enter recipient address: " RECIPIENT
     read -p "Enter amount to send: " AMOUNT
     echo "Sending $AMOUNT BTC from $ADDRESS to $RECIPIENT..."
-    bitcoin-cli -rpcwallet=$WALLET_PASSWORD sendfrom "$ADDRESS" "$RECIPIENT" "$AMOUNT"
+    bitcoin-cli sendtoaddress "$RECIPIENT" "$AMOUNT"
 }
 
 function generate_address() {
     prompt_password
     echo "Generating new address..."
-    bitcoin-cli -rpcwallet=$WALLET_PASSWORD getnewaddress
+    bitcoin-cli getnewaddress
 }
 
 function list_transactions() {
     prompt_password
     echo "Listing transactions for wallet..."
-    bitcoin-cli -rpcwallet=$WALLET_PASSWORD listtransactions
+    bitcoin-cli listtransactions
 }
 
 # Menu

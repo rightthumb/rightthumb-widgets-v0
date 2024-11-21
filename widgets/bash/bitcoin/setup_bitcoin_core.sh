@@ -54,6 +54,7 @@ rpcpassword=$RPC_PASSWORD
 rpcallowip=127.0.0.1
 rpcport=8332
 disablewallet=0
+prune=550
 EOF
 	echo "Configuration file created at $BITCOIN_CONF_FILE."
 	echo "Your RPC credentials are:"
