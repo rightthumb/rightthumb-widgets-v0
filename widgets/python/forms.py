@@ -88,12 +88,30 @@ forms['code'] = {
 	],
 }
 
+forms['paths'] = {
+	'Config': {
+		# "html": True,
+		"terminal": True,
+		"post": "https://cli.sds.sh/forms/",
+		"table": 'Paths_Documentation',
+		# "save": 'forms-test.json',
+	},
+	'Paths': [
+		{'label': 'PathType', 'type': 'radio', 'options': ['windows_folder', 'linux_folder', 'windows_file', 'linux_file', 'url', 'ftp','other'], 'value': ''},
+		{"label": "Path", "type": "text", "value": ""},
+		{"label": "Note", "type": "text", "value": ""},
+	],
+}
+
 def action():
 	global forms
 	results = _.Form(forms[_.switches.value('Form')])
 	
 	if not _.switches.value('Form') == 'login':
-		_.pv(results)
+		if type(results) == str:
+			_.pr(results)
+		else:
+			_.pv(results)
 	else:
 		# _.pr('results:',results)
 		
@@ -103,6 +121,7 @@ def action():
 			color = 'green'
 		else:
 			color = 'red'
+
 		_.pr(__.secureModule,c=color)
 	# _.pv(checkboxes)
 	# results = _.Form(checkboxes)

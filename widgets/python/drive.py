@@ -185,8 +185,30 @@ def get_drive_space(path):
 		"used": used,
 		"free": free
 	}
-
+def get_drive_info(drive_letter):
+    import win32com.client
+    drive_letter = drive_letter.rstrip("\\")  # Remove trailing backslash if present
+    wmi = win32com.client.GetObject("winmgmts:")
+    
+    # Iterate over logical disks to find the matching drive letter
+    for logical_disk in wmi.InstancesOf("Win32_LogicalDisk"):
+        if logical_disk.DeviceID == drive_letter:
+            # Find the associated partition
+            for partition in logical_disk.Associators_("Win32_LogicalDiskToPartition"):
+                # Find the physical disk associated with the partition
+                for disk in partition.Associators_("Win32_DiskDriveToDiskPartition"):
+                    return {
+                        "drive": drive_letter,
+                        "model": disk.Model,
+                        "serial": disk.SerialNumber
+                    }
+    return {
+                "drive": '?',
+                "model": '?',
+                "serial": '?'
+            }
 def ask( letter, instance, driveID=False ):
+	ms = get_drive_info(letter)
 	if not driveID:
 		driveID = genGUID()
 	global drive_database
@@ -205,6 +227,8 @@ def ask( letter, instance, driveID=False ):
 		'Code Snippet Documentation': [
 			{'label': 'id', 'disabled': True, 'type': 'text', 'value': driveID},
 			{'label': 'drive', 'type': 'text', 'value': letter},
+			{'label': 'model', 'disabled': True, 'type': 'text', 'value': ms['model']},
+			{'label': 'serial', 'disabled': True, 'type': 'text', 'value': ms['serial']},
 			{'label': 'machineID', 'disabled': True, 'type': 'text', 'value': machineID},
 			{'label': 'name', 'type': 'text', 'value': ''},
 			{'label': 'description', 'type': 'text', 'value': ''},
@@ -225,7 +249,15 @@ def ask( letter, instance, driveID=False ):
 			{'label': 'type', 'type': 'radio', 'options': ['internal', 'external', 'button', 'thumb'], 'value': 'thumb'},
 		],
 	}
-	return _.Form(form)
+	record = _.Form(form)
+	_.pr(line=1,c='green')
+	_.pv(record)
+	_.pr(line=1,c='green')
+	global drive_database
+	global file_drives
+	drive_database[record['id']] = record
+	_.saveTable(drive_database, file_drives)
+	return record
 def scanDrives():
 	# print(genGUID())
 	global drive_database
@@ -304,6 +336,7 @@ def action():
 		return False
 	global drive_database
 	global machineID
+	global file_drives
 
 	# Initialize variables
 	drive_database = {}  # Initialize as empty dictionary
@@ -364,8 +397,8 @@ def action():
 	instance = scanDrives()
 	logSave(instance, file_driveLog)
 	if not length == len(drive_database):
-		_.pr()
-		_.saveTable(drive_database, file_drives)
+		# _.pr()
+		# _.saveTable(drive_database, file_drives)
 		_.pr()
 
 		drive_records = []

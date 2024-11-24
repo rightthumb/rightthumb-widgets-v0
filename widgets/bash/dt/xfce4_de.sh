@@ -21,9 +21,9 @@ sudo apt-get install xfe -y
 sudo apt-get clean
 #Setup the necessary files
 mkdir ~/.vnc
-sudo wget https://raw.githubusercontent.com/rightthumb/rightthumb-widgets-v0/main/widgets/bash/dt/files/xstartup.sh -P ~/.vnc/
-sudo wget https://raw.githubusercontent.com/rightthumb/rightthumb-widgets-v0/main/widgets/bash/dt/files/vncserver-start.sh -P /usr/local/bin/
-sudo wget https://raw.githubusercontent.com/rightthumb/rightthumb-widgets-v0/main/widgets/bash/dt/files/vncserver-stop.sh -P /usr/local/bin/
+sudo curl -s  https://raw.githubusercontent.com/rightthumb/rightthumb-widgets-v0/main/widgets/bash/dt/files/xstartup.sh -o ~/.vnc/xstartup
+sudo curl -s  https://raw.githubusercontent.com/rightthumb/rightthumb-widgets-v0/main/widgets/bash/dt/files/vncserver-start.sh -o /usr/local/bin/vncserver-start
+sudo curl -s  https://raw.githubusercontent.com/rightthumb/rightthumb-widgets-v0/main/widgets/bash/dt/files/vncserver-stop.sh -o /usr/local/bin/vncserver-stop
 sudo chmod +x ~/.vnc/xstartup
 sudo chmod +x /usr/local/bin/vncserver-start
 sudo chmod +x /usr/local/bin/vncserver-stop

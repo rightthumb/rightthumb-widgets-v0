@@ -41,7 +41,7 @@ def appSwitches():
 	_.switches.register( 'OpenSingle', '-single', 'joins by space' )
 	_.switches.register( 'ForceSublime', '-sub,-sublime' )
 	_.switches.register( 'PrintAliasLocation', '-print' )
-	_.switches.register( 'PrintAliases', '-pa,-ap,-printaliases' )
+	_.switches.register( 'PrintAliases', '-pa,-ap,-printaliases', 'path' )
 	_.switches.register( 'HostedTemp', '-tmp,-temp', 'ext name |alias> o.t' )
 	_.switches.register( 'DoNotOpen', '-n,-no,-nope', 'used to create aliases but not open' )
 
@@ -394,6 +394,9 @@ def action(path=None):
 						_.pr(alias,c='cyan')
 					pass
 				elif not _.switches.isActive('Clean'):
+					if _.switches.value('PrintAliases') == 'path':
+						_.pr(__.path(path),c='darkcyan')
+						return __.path(path)
 					_.pr()
 					_.pr(__.path(path),c='darkcyan')
 					_.pr()

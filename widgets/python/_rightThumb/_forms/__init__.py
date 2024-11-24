@@ -250,7 +250,7 @@ class UniversalInterfaceCreator:
 		for k in self.form_data:
 			if k in self.index:
 				field = self.index[k]
-				if 'md5' in field and field['md5']:
+				if 'md5' in field:
 					self.form_data[k] = md5_hash(self.form_data[k])
 
 	def detect_gui(self):
@@ -625,7 +625,6 @@ def postURL(url, form_data=None, headers=None, browser_agent=None):
 		headers = {}
 	if browser_agent:
 		headers['User-Agent'] = browser_agent
-	# print(form_data)
 	response = requests.post(url, data=form_data, headers=headers)
 	try:
 		return response.json()
@@ -750,9 +749,8 @@ def genForm(form_structure):
 		if not _ns.errors:
 			try: json.dumps(record, indent=4)
 			except: _.e('Form exited'); sys.exit()
-			# return record
-			# print(record)
-			return submit(record,form)
+			submit(record,form)
+			return record
 		if _ns.errors:
 			_.pr('Validation Errors:',c='red')
 			if not 'html' in _ns.formReg['Config']:

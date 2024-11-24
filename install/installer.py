@@ -3088,20 +3088,20 @@ alias aaa="works"
 alias code.="/snap/bin/code"
 alias lns="readlink -f "
 
-alias dmg.="sh $widgets/widgets/bash/dmg.sh"
-# alias java.="sh $widgets/widgets/bash/java.sh"
-# alias java.dmg="sh $widgets/widgets/bash/java-mac-dmg.sh"
-# alias java.pkg="sh $widgets/widgets/bash/java-mac-pkg.sh"
-# alias java.exe="sh $widgets/widgets/bash/java-win-exe.sh"
-# alias java.msi="sh $widgets/widgets/bash/java-win-msi.sh"
-# alias java.deb="sh $widgets/widgets/bash/java-linux-deb.sh"
-# alias java.rpm="sh $widgets/widgets/bash/java-linux-rpm.sh"
-alias whitelist="sh $widgets/widgets/bash/whitelist.sh"
-alias whitelist.r="sh $widgets/widgets/bash/whitelist-remove.sh"
-alias whitelist.="sh $widgets/widgets/bash/vps-whitelistAuto.sh"
-alias whitelist.a="sh $widgets/widgets/bash/vps-whitelistAuto.sh"
-alias block="sh $widgets/widgets/bash/blocklist.sh"
-alias block.r="sh $widgets/widgets/bash/blocklist-remove.sh"
+alias dmg.="bash $widgets/widgets/bash/dmg.sh"
+# alias java.="bash $widgets/widgets/bash/java.sh"
+# alias java.dmg="bash $widgets/widgets/bash/java-mac-dmg.sh"
+# alias java.pkg="bash $widgets/widgets/bash/java-mac-pkg.sh"
+# alias java.exe="bash $widgets/widgets/bash/java-win-exe.sh"
+# alias java.msi="bash $widgets/widgets/bash/java-win-msi.sh"
+# alias java.deb="bash $widgets/widgets/bash/java-linux-deb.sh"
+# alias java.rpm="bash $widgets/widgets/bash/java-linux-rpm.sh"
+alias whitelist="bash $widgets/widgets/bash/whitelist.sh"
+alias whitelist.r="bash $widgets/widgets/bash/whitelist-remove.sh"
+alias whitelist.="bash $widgets/widgets/bash/vps-whitelistAuto.sh"
+alias whitelist.a="bash $widgets/widgets/bash/vps-whitelistAuto.sh"
+alias block="bash $widgets/widgets/bash/blocklist.sh"
+alias block.r="bash $widgets/widgets/bash/blocklist-remove.sh"
 export PATH=$PATH:/opt/rightthumb-widgets-v0/widgets/bash:/opt/rightthumb-widgets-v0/widgets/python
 
 # echo 000-016
@@ -3253,7 +3253,7 @@ if [ ! -d "$h/widgets/python" ]; then
 	mkdir "$h/widgets/python"
 fi
 
-export mp="sh $widgets/widgets/bash/nav/mp.sh"
+export mp="bash $widgets/widgets/bash/nav/mp.sh"
 alias mp="$mp"
 
 alias dt="ssh -L 59001:localhost:5901 -C -N -l scott"
