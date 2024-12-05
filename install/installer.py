@@ -2710,11 +2710,21 @@ class virtualFiles:
 
 ## .bashrc-auto
 # 82977d555926
+export env_='false'
+
 # exit if scp or similar 4f8c
 if [[ "$FORCE_BASHRC" != "true" ]]; then
   if [ -z "$PS1" ]; then
 	return
   fi
+fi
+
+
+if test -f "$HOME/.bashrc-"; then
+	source "$HOME/.bashrc-";
+fi
+if test -f "$HOME/.bashrc."; then
+	source "$HOME/.bashrc.";
 fi
 
 
@@ -3239,12 +3249,7 @@ alias pst="source $widgets/widgets/bash/pst.sh"
 alias p="$p"
 
 
-if test -f "$HOME/.bashrc-"; then
-	source "$HOME/.bashrc-";
-fi
-if test -f "$HOME/.bashrc."; then
-	source "$HOME/.bashrc.";
-fi
+
 
 alias d='/opt/rightthumb-widgets-v0/widgets/bash/nav/d.sh'
 alias rr="sudo su root"
