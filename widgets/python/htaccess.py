@@ -36,6 +36,7 @@ def sw():
 	_.switches.register( 'Remove', '-r,-remove', 'relationshipideas.xyz' )
 	_.switches.register( 'Template', '-t', 'allow deny access basic wordpress xsite api api2' )
 	_.switches.register( 'ListTemplates', '-lt' )
+	
 	# _.switches.register( 'URL', '-u,-url,-urls', 'https://efm.cx/', isData='raw' )
 	#e)--> examples
 	# _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name,data,clean', description='Files', isRequired=False )
@@ -68,7 +69,7 @@ _.appInfo[focus()] = {
 						# '',
 	],
 	'relatedapps': [
-						# 'p another -file file.txt',
+						'p htpasswd -add -u sam',
 						# '',
 	],
 	'prerequisite': [

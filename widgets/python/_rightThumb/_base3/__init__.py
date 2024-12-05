@@ -604,7 +604,7 @@ def fos(folder=None,r=False,script=None,first=True,rel=False):
 	return fo_fi
 
 
-def printt( table, cols=None, sort=None, responsive=None, focus=None,    c=None,s=None,r=None  ):
+def printt( table, cols=None, sort=None, responsive=None, focus=None,    c=None,s=None,r=None, name='default', fn=None, long=False  ):
 	if not r is None: responsive=r
 	if responsive: cols=unixAutoColumns(table,cols,focus,responsive)
 	''' ( table, cols=None, sort=None,    c=None,s=None  ) '''
@@ -613,13 +613,18 @@ def printt( table, cols=None, sort=None, responsive=None, focus=None,    c=None,
 	if not table: return None;
 	global switches
 	global tables
+	if long:
+		switches.fieldSet('Long','active',True)
 	if not sort is None:
 		switches.fieldSet( 'Sort', 'active', True )
 		switches.fieldSet( 'Sort', 'value', sort )
 		switches.fieldSet( 'Sort', 'values', sort.split(',') )
-	tables.register( 'ea3dfa23ae6d', table )
+	tables.register( name, table )
+	if not fn is None and 'function' in str(type(fn)):
+		# _.tables.fieldProfileSet('default','attached','alignment','right')
+		fn()
 	if cols is None: cols=','.join(list(table[0].keys()));
-	tables.print( 'ea3dfa23ae6d', cols )
+	tables.print( name, cols )
 
 def pa(fi=None,fo=None,dot='',mkdir=True):
 	if os.path.isdir(fi): fi=None; fo=fi;
@@ -24931,19 +24936,37 @@ def formatSizeUp(size_in_bytes):
     # If the value is a single digit, do nothing
     if len(str(value)) == 1:
         return size
+
+    # Determine target size based on real-world drive sizes
+    target_value = next_real_world_drive_size(value, unit)
+    while value < target_value:
+        increment = increments[unit]  # Increment by the appropriate unit
+        size_in_bytes += increment
+        size = formatSizeUpMath(size_in_bytes)
+        value, unit = size.split(' ')
+        value = int(value)
     
-    # Determine the nearest higher rounded value
-    str_value = str(value)
-    leading_digit = int(str_value[0])  # First digit
-    power_of_ten = len(str_value) - 1  # Position of the first digit
-    rounded_value = (leading_digit + 1) * (10 ** power_of_ten)  # Round up to next significant number
+    return size
 
-    # Calculate the increment needed to round up
-    increment = (rounded_value - value) * increments[unit]
-    size_in_bytes += increment
+def next_real_world_drive_size(value, unit):
+    """Get the next real-world drive size based on the unit."""
+    if unit == "GB":
+        # Common USB and SSD sizes in GB
+        common_sizes = [8, 16, 32, 64, 128, 256, 512, 750, 1000]  # 750 GB for transitional HDDs
+        for size in common_sizes:
+            if value <= size:
+                return size
+        return value + 250  # Default increment if above known sizes
 
-    # Return the updated size
-    return formatSizeUpMath(size_in_bytes)
+    elif unit == "TB":
+        # Common HDD sizes in TB
+        common_sizes = [1, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20]
+        for size in common_sizes:
+            if value <= size:
+                return size
+        return value + 2  # Default increment for larger drives
+
+    return value  # If no match, return the value as is
 
 def formatSizeUpMath(size_in_bytes):
     import math
@@ -24974,6 +24997,9 @@ increments = {
     "PB": 1 << 50,  # 1024^5 bytes
     "EB": 1 << 60   # 1024^6 bytes
 }
+
+
+
 
 
 ##################################################

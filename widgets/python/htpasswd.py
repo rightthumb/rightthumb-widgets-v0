@@ -13,15 +13,26 @@ def sw():
 _._default_settings_()
 
 _.appInfo[focus()] = {
-	'file': 'thisApp.py',
-	'description': 'Changes the world',
+	'file': 'htpasswd.py',
+	'description': 'Add a password to website',
 	'categories': [
-						'DEFAULT',
+						'password',
 				],
 	'examples': [
-						_.hp('p thisApp -file file.txt'),
+						_.hp('p htpasswd -list'),
+						_.hp(''),
+						_.hp('p htpasswd -add -u sam'),
+						_.hp('p htpasswd -change -u sam'),
+						_.hp('p htpasswd -remove -u sam'),
+						_.hp(''),
+						_.hp('p htpasswd -delete'),
+						_.hp(''),
 						_.linePrint(label='simple',p=0),
 						'',
+	],
+	'relatedapps': [
+						'p htaccess -t deny',
+						# '',
 	],
 	'columns': [
 	],
@@ -42,8 +53,13 @@ _.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw )
 ########################################################################################
 #n)--> start
 
+
+
+
+
 import bcrypt
 import os
+
 class HtpasswdManager:
 
 	def __init__(self, htpasswd_path=".htpasswd", htaccess_path=".htaccess"):
@@ -56,13 +72,13 @@ class HtpasswdManager:
 		entry = f"{username}:{hashed_pw.decode()}\n"
 		with open(self.htpasswd_path, "a") as htpasswd_file:
 			htpasswd_file.write(entry)
-		print(f"Added {username} to {self.htpasswd_path}")
+		_.pr(f"Added {username} to {self.htpasswd_path}", c='green')
 		self._ensure_htaccess_configured()
 
 	def change_password(self, username, new_password):
 		"""Changes the password for an existing user in the .htpasswd file."""
 		if not os.path.exists(self.htpasswd_path):
-			print(".htpasswd file not found.")
+			_.pr(".htpasswd file not found.", c='red')
 			return
 		updated = False
 		with open(self.htpasswd_path, "r") as htpasswd_file:
@@ -76,14 +92,14 @@ class HtpasswdManager:
 				else:
 					htpasswd_file.write(line)
 		if updated:
-			print(f"Password for {username} updated in {self.htpasswd_path}")
+			_.pr(f"Password for {username} updated in {self.htpasswd_path}", c='cyan')
 		else:
-			print(f"User {username} not found in {self.htpasswd_path}")
+			_.pr(f"User {username} not found in {self.htpasswd_path}", c='yellow')
 
 	def remove_user(self, username):
 		"""Removes a user from the .htpasswd file."""
 		if not os.path.exists(self.htpasswd_path):
-			print(".htpasswd file not found.")
+			_.pr(".htpasswd file not found.", c='red')
 			return
 		with open(self.htpasswd_path, "r") as htpasswd_file:
 			lines = htpasswd_file.readlines()
@@ -91,7 +107,7 @@ class HtpasswdManager:
 			for line in lines:
 				if not line.startswith(f"{username}:"):
 					htpasswd_file.write(line)
-		print(f"Removed {username} from {self.htpasswd_path}")
+		_.pr(f"Removed {username} from {self.htpasswd_path}", c='green')
 		if os.stat(self.htpasswd_path).st_size == 0:
 			self._remove_htaccess_config()
 
@@ -99,41 +115,55 @@ class HtpasswdManager:
 		"""Deletes the .htpasswd file and removes configuration from .htaccess if needed."""
 		if os.path.exists(self.htpasswd_path):
 			os.remove(self.htpasswd_path)
-			print(f"Deleted {self.htpasswd_path}")
+			_.pr(f"Deleted {self.htpasswd_path}", c='blue')
 			self._remove_htaccess_config()
 		else:
-			print(".htpasswd file does not exist.")
+			_.pr(".htpasswd file does not exist.", c='red')
 
 	def list_users(self):
 		"""Lists all users in the .htpasswd file."""
 		if not os.path.exists(self.htpasswd_path):
-			print(".htpasswd file not found.")
+			_.pr(".htpasswd file not found.", c='red')
 			return
 		with open(self.htpasswd_path, "r") as htpasswd_file:
 			lines = htpasswd_file.readlines()
 			users = [line.split(':')[0] for line in lines]
 			if users:
-				print("Users in .htpasswd:")
+				_.pr()
+				# _.pr("Users in .htpasswd:", c='darkcyan')
+				_.pr("Users:", c='darkcyan')
+				_.pr()
 				for user in users:
-					print(user)
+					_.pr(' -',user, c='cyan')
 			else:
-				print("No users found in .htpasswd.")
+				_.pr("No users found in .htpasswd.", c='yellow')
 
 	def _ensure_htaccess_configured(self):
 		"""Ensures the .htaccess file is configured for basic authentication."""
 		auth_directives = (
 			"AuthType Basic\n"
-			"AuthName \"Restricted Area\"\n"
+			f"AuthName \"Restricted Area\"\n"
 			f"AuthUserFile {os.path.abspath(self.htpasswd_path)}\n"
 			"Require valid-user\n"
 		)
+
+		formatted_directives = "\n".join([line.strip() for line in auth_directives.splitlines()])
+
 		if os.path.exists(self.htaccess_path):
 			with open(self.htaccess_path, "r") as file:
-				if auth_directives in file.read():
-					return
-		with open(self.htaccess_path, "a") as htaccess_file:
-			htaccess_file.write(auth_directives)
-		print(f"Updated {self.htaccess_path} with authentication directives.")
+				htaccess_content = file.read()
+
+			if formatted_directives in htaccess_content:
+				_.pr(f"Authentication directives are already present in {self.htaccess_path}.", c='green')
+				return
+
+			with open(self.htaccess_path, "a") as htaccess_file:
+				htaccess_file.write("\n" + formatted_directives)
+				_.pr(f"Updated {self.htaccess_path} with authentication directives.", c='blue')
+		else:
+			with open(self.htaccess_path, "w") as htaccess_file:
+				htaccess_file.write(formatted_directives)
+				_.pr(f"Created new {self.htaccess_path} with authentication directives.", c='green')
 
 	def _remove_htaccess_config(self):
 		"""Removes the authentication directives from .htaccess if present."""
@@ -158,7 +188,8 @@ class HtpasswdManager:
 					continue
 				if not skip_lines:
 					file.write(line)
-		print(f"Removed authentication directives from {self.htaccess_path}")
+		_.pr(f"Removed authentication directives from {self.htaccess_path}", c='yellow')
+
 
 def action():
 	manager = HtpasswdManager()
@@ -182,6 +213,7 @@ def action():
 	else:
 		_.e('Switch missing in command','p hspasswd ??')
 		print("Invalid action.")
+
 ########################################################################################
 if __name__ == '__main__':
 	action(); _.isExit(__file__);

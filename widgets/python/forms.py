@@ -60,46 +60,52 @@ import random
 forms = {}
 forms['login'] = {
 	'Config': {
-		# "html": True,
-		"terminal": True,
-		"post": "https://cli.sds.sh/forms/login/",
-		# "table": 'forms-test.json',
-		# "save": 'forms-test.json',
+		# 'html': True,
+		'terminal': True,
+		'post': 'https://cli.sds.sh/forms/login/',
+		# 'table': 'forms-test.json',
+		# 'save': 'forms-test.json',
 	},
 	'Login': [
-		{"label": "Login", "type": "text", "value": ""},
-		{"label": "Password", "type": "password", "value": "", "md5": True},
+		{'label': 'Login', 'type': 'text', 'value': ''},
+		{'label': 'Password', 'type': 'password', 'value': '', 'md5': True},
 	],
 }
 
 forms['code'] = {
 	'Config': {
-		# "html": True,
-		# "terminal": True,
-		"post": "https://cli.sds.sh/forms/",
-		"table": 'Code_Snippet_Documentation',
-		# "save": 'forms-test.json',
+		# 'html': True,
+		# 'terminal': True,
+		'post': 'https://cli.sds.sh/forms/',
+		'table': 'Code_Snippet_Documentation',
+		# 'save': 'forms-test.json',
 	},
 	'Code Snippet Documentation': [
-		{"label": "Subject", "type": "text", "value": ""},
-		{"label": "Language", "type": "text", "value": ""},
-		{"label": "Code", "type": "text_area", "value": ""},
-		{"label": "Tags", "type": "text_area", "value": ""},
+		{'label': 'Subject', 'type': 'text', 'value': ''},
+		{'label': 'Language', 'type': 'text', 'value': ''},
+		{'label': 'Code', 'type': 'text_area', 'value': ''},
+		{'label': 'Tags', 'type': 'text_area', 'value': ''},
 	],
 }
 
 forms['paths'] = {
 	'Config': {
-		# "html": True,
-		"terminal": True,
-		"post": "https://cli.sds.sh/forms/",
-		"table": 'Paths_Documentation',
-		# "save": 'forms-test.json',
+		# 'html': True,
+		'terminal': True,
+
+		# 'post': 'https://cli.sds.sh/forms/',
+		# 'table': 'Paths_Documentation',
+		
+		# 'print': True,
+		'sqlite': 'Paths_Documentation',
+
+		
+		# 'save': 'forms-test.json',
 	},
 	'Paths': [
 		{'label': 'PathType', 'type': 'radio', 'options': ['windows_folder', 'linux_folder', 'windows_file', 'linux_file', 'url', 'ftp','other'], 'value': ''},
-		{"label": "Path", "type": "text", "value": ""},
-		{"label": "Note", "type": "text", "value": ""},
+		{'label': 'Path', 'type': 'text', 'value': ''},
+		{'label': 'Note', 'type': 'text', 'value': ''},
 	],
 }
 

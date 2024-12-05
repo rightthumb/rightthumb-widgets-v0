@@ -562,6 +562,206 @@ class UniversalInterfaceCreator:
 			pass
 		httpd.server_close()
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+import os
+import sqlite3
+import json
+
+
+class SmartTablesSQLite:
+	def __init__(self, db_name, auto_close=True):
+		# Database file path
+		folder = _v.tt + os.sep + 'db' + os.sep
+		self.db_path = folder + db_name + '.db'
+		# self.db_path = os.path.join('./db', f'{db_name}.db')
+		self.connection = None
+		self.auto_close = auto_close
+		self.ensure_db_directory(folder)
+
+	def ensure_db_directory(self,folder):
+		"""Ensure the `./db` directory exists and add a `.htaccess` file for security."""
+		if not os.path.exists(folder):
+			os.makedirs(folder, mode=0o755, exist_ok=True)
+			# with open('./db/.htaccess', 'w') as f:
+				# f.write("Deny from all")
+
+	def open(self):
+		"""Open the SQLite database connection."""
+		if self.connection is None:
+			self.connection = sqlite3.connect(self.db_path)
+			self.connection.row_factory = sqlite3.Row
+
+	def close(self):
+		"""Close the SQLite database connection if auto_close is enabled."""
+		if self.auto_close and self.connection:
+			self.connection.close()
+			self.connection = None
+
+	def table_exists(self, table_name):
+		"""Check if a table exists in the database."""
+		self.open()
+		cursor = self.connection.cursor()
+		cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name=?", (table_name,))
+		return cursor.fetchone() is not None
+
+	def table_create(self, table_name, columns):
+		"""Create a new table in the database."""
+		self.open()
+		column_definitions = "id INTEGER PRIMARY KEY AUTOINCREMENT"
+		for column, col_type in columns.items():
+			column_definitions += f", {column} {col_type}"
+
+		sql = f"CREATE TABLE IF NOT EXISTS {table_name} ({column_definitions})"
+		self.connection.execute(sql)
+		self.connection.commit()
+
+	def table_add_field(self, table_name, field, col_type):
+		"""Add a new column to an existing table."""
+		self.open()
+		sql = f"ALTER TABLE {table_name} ADD COLUMN {field} {col_type}"
+		self.connection.execute(sql)
+		self.connection.commit()
+
+	def get_existing_columns(self, table_name):
+		"""Get a list of columns in the specified table."""
+		self.open()
+		cursor = self.connection.execute(f"PRAGMA table_info({table_name})")
+		return [row["name"] for row in cursor.fetchall()]
+
+	def get_sqlite_type(self, value):
+		"""Infer SQLite column type from the given value."""
+		if isinstance(value, int):
+			return 'INTEGER'
+		elif isinstance(value, float):
+			return 'REAL'
+		elif isinstance(value, bool):
+			return 'INTEGER'
+		else:
+			return 'TEXT'
+
+	def ensure_table_structure(self, table_name, data):
+		"""Ensure the table structure matches the data fields."""
+		existing_columns = self.get_existing_columns(table_name)
+		for key, value in data.items():
+			if key not in existing_columns:
+				col_type = self.get_sqlite_type(value)
+				self.table_add_field(table_name, key, col_type)
+
+	def record_add(self, table_name, data):
+		"""Add a record to the specified table."""
+		self.open()
+		if not self.table_exists(table_name):
+			columns = {key: self.get_sqlite_type(value) for key, value in data.items()}
+			self.table_create(table_name, columns)
+		else:
+			self.ensure_table_structure(table_name, data)
+
+		fields = ", ".join(data.keys())
+		placeholders = ", ".join(f":{key}" for key in data.keys())
+		sql = f"INSERT INTO {table_name} ({fields}) VALUES ({placeholders})"
+		cursor = self.connection.execute(sql, data)
+		self.connection.commit()
+		return cursor.lastrowid
+
+
+class DataManager:
+	def __init__(self, input_data):
+		if isinstance(input_data, str):
+			try:
+				self.data = json.loads(input_data)
+			except json.JSONDecodeError as e:
+				raise ValueError(f"Invalid JSON input: {e}")
+		elif isinstance(input_data, dict):
+			self.data = input_data
+		else:
+			raise TypeError("Input must be a JSON string or a dictionary")
+
+	def parse_structure(self, structure):
+		"""Parse the structure definition to extract columns and their types."""
+		columns = {}
+		if "Paths" in structure:
+			for path in structure["Paths"]:
+				if "label" in path and "type" in path:
+					col_type = 'TEXT' if path["type"] == 'text' else 'VARCHAR(255)'
+					columns[path["label"]] = col_type
+		return columns
+
+	def process(self, db_name):
+		"""Process the input data and interact with SQLite."""
+		package = self.data.get("package", {})
+		action = package.get("action")
+		structure = package.get("structure", {})
+		record = package.get("record", {})
+
+		table = structure.get("Config", {}).get("sqlite")
+		if not table:
+			return {"error": "Invalid configuration: Missing 'sqlite' key in Config"}
+
+		if table != db_name:
+			return {"error": f"Database name mismatch: expected '{db_name}', got '{table}'"}
+
+		db_manager = SmartTablesSQLite(table)
+		db_manager.open()
+
+		if action == 'add' and table and record:
+			# Extract columns from structure
+			columns = self.parse_structure(structure)
+			db_manager.table_create(table, columns)
+			result_id = db_manager.record_add(table, record)
+			db_manager.close()
+			return {"success": True, "last_insert_id": result_id}
+		else:
+			db_manager.close()
+			return {"error": "Invalid input"}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 def validate_field(fld,value):
 	updateFields(fld,value)
 	label = fld['label']
@@ -632,18 +832,23 @@ def postURL(url, form_data=None, headers=None, browser_agent=None):
 		return response.text
 
 def submit(record,form_structure):
+	def buildForm(record,form_structure,json=False):
+		form = {}
+		form['action'] = 'add'
+		form['structure'] = form_structure
+		form['record'] = record
+		package = {}
+		if json:
+			package['package'] = json.dumps(form)
+		else:
+			package['package'] = form
+		return package
 	if __.FormPrint:
 		print('record',record)
 		print('form_structure',form_structure)
 	if 'post' in form_structure['Config']:
 		url = form_structure['Config']['post']
-		form = {}
-		form['action'] = 'add'
-		form['structure'] = form_structure
-		form['record'] = record
-
-		package = {}
-		package['package'] = json.dumps(form)
+		package = buildForm(record,form_structure,True)
 		
 		results = postURL(form_structure['Config']['post'],package)
 		return results
@@ -657,6 +862,18 @@ def submit(record,form_structure):
 			else:
 				_.pv(results)
 			_.pr(line=1,c='green')
+	if 'sqlite' in form_structure['Config']:
+		package = buildForm(record,form_structure)
+		_.pv(package)
+		manager = DataManager(package)
+		result = manager.process(form_structure['Config']['sqlite'])
+		# result = manager.process(form_structure)
+		return result
+		# print(json.dumps(result, indent=4))
+	if 'print' in form_structure['Config']:
+		package = buildForm(record,form_structure)
+		_.pv(package)
+		# 123456789
 	if 'save' in form_structure['Config']:
 		_.saveTable2(record,form_structure['Config']['save'])
 		if __.FormPrint:
@@ -681,7 +898,7 @@ def field_value(form_data,index):
 	return form_data
 
 def get_chars(s: str, num_chars: int = 2) -> str:
-    return s[:num_chars]+'...  <--(Redacted)'
+	return s[:num_chars]+'...  <--(Redacted)'
 
 def getRecord(form):
 	_form = {}
@@ -724,6 +941,7 @@ def blankField(key,value):
 
 def genForm(form_structure):
 	if type(form_structure) == str:
+		print(type(form_structure),form_structure)
 		form_structure = json.loads(form_structure)
 	if type(form_structure) == list:
 		config = {}
@@ -749,7 +967,8 @@ def genForm(form_structure):
 		if not _ns.errors:
 			try: json.dumps(record, indent=4)
 			except: _.e('Form exited'); sys.exit()
-			submit(record,form)
+			output = submit(record,form)
+			if output: return output
 			return record
 		if _ns.errors:
 			_.pr('Validation Errors:',c='red')

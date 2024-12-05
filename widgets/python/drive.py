@@ -46,6 +46,8 @@ def appSwitches():
 	_.switches.register('JustID', '-justID')
 	_.switches.register('formatSizeUp', '-sizeUp')
 	_.switches.register('formatSize', '-size')
+	_.switches.register('unformatSize', '-usize')
+	_.switches.register('Bits2Bytes', '-bbsize')
 _.autoBackupData = False
 __.isRequired_Pipe = False
 __.isRequired_Pipe_or_File = False
@@ -186,27 +188,32 @@ def get_drive_space(path):
 		"free": free
 	}
 def get_drive_info(drive_letter):
-    import win32com.client
-    drive_letter = drive_letter.rstrip("\\")  # Remove trailing backslash if present
-    wmi = win32com.client.GetObject("winmgmts:")
-    
-    # Iterate over logical disks to find the matching drive letter
-    for logical_disk in wmi.InstancesOf("Win32_LogicalDisk"):
-        if logical_disk.DeviceID == drive_letter:
-            # Find the associated partition
-            for partition in logical_disk.Associators_("Win32_LogicalDiskToPartition"):
-                # Find the physical disk associated with the partition
-                for disk in partition.Associators_("Win32_DiskDriveToDiskPartition"):
-                    return {
-                        "drive": drive_letter,
-                        "model": disk.Model,
-                        "serial": disk.SerialNumber
-                    }
-    return {
-                "drive": '?',
-                "model": '?',
-                "serial": '?'
-            }
+	import win32com.client
+	drive_letter = drive_letter.rstrip("\\")  # Remove trailing backslash if present
+	wmi = win32com.client.GetObject("winmgmts:")
+	
+	# Iterate over logical disks to find the matching drive letter
+	for logical_disk in wmi.InstancesOf("Win32_LogicalDisk"):
+		if logical_disk.DeviceID == drive_letter:
+			# Find the associated partition
+			for partition in logical_disk.Associators_("Win32_LogicalDiskToPartition"):
+				# Find the physical disk associated with the partition
+				for disk in partition.Associators_("Win32_DiskDriveToDiskPartition"):
+					serial = disk.SerialNumber
+					while serial.startswith('0') or serial.startswith('_'):
+						serial = serial[1:]
+					if serial.endswith('.'):
+						serial = serial[:-1]
+					return {
+						"drive": drive_letter.strip(),
+						"model": disk.Model.strip(),
+						"serial": serial.strip()
+					}
+	return {
+				"drive": '?',
+				"model": '?',
+				"serial": '?'
+			}
 def ask( letter, instance, driveID=False ):
 	ms = get_drive_info(letter)
 	if not driveID:
@@ -215,6 +222,22 @@ def ask( letter, instance, driveID=False ):
 	global drive_records
 	global machineID
 	space = get_drive_space(letter)
+	global recover
+	rec = {}
+	if recover and driveID and driveID in recover:
+		rec['name'] = recover[driveID]['name']
+		rec['description'] = recover[driveID]['description']
+		rec['owner'] = recover[driveID]['owner']
+		rec['priority'] = recover[driveID]['priority']
+		rec['type'] = recover[driveID]['type']
+		rec['sizeF'] = recover[driveID]['sizeF']
+	else:
+		rec['name'] = ''
+		rec['description'] = ''
+		rec['owner'] = 'Scott'
+		rec['priority'] = '4'
+		rec['type'] = 'thumb'
+		rec['sizeF'] = _.formatSizeUp(space['total'])
 	form = {
 		'Config': {
 			# 'html': True,
@@ -222,7 +245,7 @@ def ask( letter, instance, driveID=False ):
 			# 'post': 'https://cli.sds.sh/forms/',
 			# 'table': 'Code_Snippet_Documentation',
 			# 'save': 'forms-test.json',
-			"field": {"width": 40}
+			"field": {"width": 45}
 		},
 		'Code Snippet Documentation': [
 			{'label': 'id', 'disabled': True, 'type': 'text', 'value': driveID},
@@ -230,15 +253,15 @@ def ask( letter, instance, driveID=False ):
 			{'label': 'model', 'disabled': True, 'type': 'text', 'value': ms['model']},
 			{'label': 'serial', 'disabled': True, 'type': 'text', 'value': ms['serial']},
 			{'label': 'machineID', 'disabled': True, 'type': 'text', 'value': machineID},
-			{'label': 'name', 'type': 'text', 'value': ''},
-			{'label': 'description', 'type': 'text', 'value': ''},
-			{'label': 'owner', 'type': 'text', 'value': ''},
+			{'label': 'name', 'type': 'text', 'value': rec['name']},
+			{'label': 'description', 'type': 'text', 'value': rec['description']},
+			{'label': 'owner', 'type': 'text', 'value': rec['owner']},
 			{'label': 'pc', 'type': 'text', 'value': socket.gethostname()},
-			{'label': 'priority', 'type': 'text', 'value': '4'},
+			{'label': 'priority', 'type': 'text', 'value': rec['priority']},
 			{'label': 'date', 'disabled': True, 'type': 'text', 'value': _.friendlyDate(instance['timestamp']).split(' ')[0]},
 			{'label': 'epoch', 'disabled': True, 'type': 'text', 'value': str(instance['timestamp'])},
 			
-			{'label': 'sizeF', 'type': 'text', 'value': _.formatSizeUp(space['total'])},
+			{'label': 'sizeF', 'type': 'text', 'value': rec['sizeF'] },
 			{'label': 'usedF', 'disabled': True, 'type': 'text', 'value': _.formatSize(space['used'])},
 			{'label': 'freeF', 'disabled': True, 'type': 'text', 'value': _.formatSize(space['free'])},
 			
@@ -246,7 +269,7 @@ def ask( letter, instance, driveID=False ):
 			{'label': 'usedB', 'disabled': True, 'type': 'text', 'value': str(space['used'])},
 			{'label': 'freeB', 'disabled': True, 'type': 'text', 'value': str(space['free'])},
 
-			{'label': 'type', 'type': 'radio', 'options': ['internal', 'external', 'button', 'thumb'], 'value': 'thumb'},
+			{'label': 'type', 'type': 'radio', 'options': ['internal', 'external', 'button', 'thumb'], 'value': rec['type']},
 		],
 	}
 	record = _.Form(form)
@@ -262,6 +285,7 @@ def scanDrives():
 	# print(genGUID())
 	global drive_database
 	global machineID
+	driveID = False
 	instance = {'instance': genGUID(), 'timestamp': int(time.time()),'machineID': machineID, 'drives': []}
 	record = False
 	for l in 'A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z'.split(','):
@@ -273,18 +297,21 @@ def scanDrives():
 				driveID = getID(letter)
 				# print(drive_database,driveID)
 				if not driveID in drive_database:
+					printDrives()
 					record = ask( letter, instance, driveID )
 					drive_database[driveID] = record
 				else:
 					record = drive_database[driveID]
 					drive_database[driveID] = record
 			else:
+				printDrives()
 				record = ask( letter, instance )
 				drive_database[driveID] = record
 				file = open(idFile,'w') 
 				file.write(driveID)
 				file.close()
-				
+		global ActiveDrives
+		ActiveDrives.append(driveID)
 		if record:
 			instance['drives'].append(record)
 
@@ -323,8 +350,36 @@ import socket
 import uuid
 import time
 import shutil
-
+printDrives_printed = False
+def printDrives():
+	global drive_database
+	global printDrives_printed
+	if not printDrives_printed:
+		printDrives_printed = True
+		drive_records = []
+		for id in drive_database:
+			rec = drive_database[id]
+			drive_records.append(rec)
+		_.pt(drive_records, 'drive,name,pc,priority,type,id',long=1)
 def action():
+	global ActiveDrives
+	global printDrives_printed
+	ActiveDrives = []
+	if _.switches.isActive('Bits2Bytes'):
+		original = ' '.join(_.switches.values('Bits2Bytes')).upper()
+		fixed = original.strip('ps')
+		fixed = original.strip('s')
+		if original.lower().endswith('ps'):
+			end = 'ps'
+		elif original.lower().endswith('s'):
+			end = 's'
+		else:
+			end = ''
+		_.pr(  _.formatSize(int(_.unFormatSize(fixed))/8)+end )
+		return False
+	if _.switches.isActive('unformatSize'):
+		_.pr(_.unFormatSize(  ' '.join(_.switches.values('unformatSize'))  ))
+		return False
 	if _.switches.isActive('formatSizeUp'):
 		_.pr(_.formatSizeUp(int(_.switches.value('formatSizeUp'))))
 		return False
@@ -337,14 +392,16 @@ def action():
 	global drive_database
 	global machineID
 	global file_drives
+	global recover
 
 	# Initialize variables
 	drive_database = {}  # Initialize as empty dictionary
 	machineID = _v.getMachineID()
+	fdr = '_indexTable_drives-1.3-' + machineID + '.index'
 	file_drives = 'indexTable_drives-1.3-' + machineID + '.index'
 	file_driveLog = 'indexTable_logs-1.3-' + machineID + '.json'
 	drive_database = _.getTable(file_drives) or {}
-	
+	recover = _.getTable(fdr) or {}
 	if _.switches.isActive('RegisterIDs'):
 		def isDict(idIndex,data):
 			for idr in data:
@@ -387,25 +444,28 @@ def action():
 
 	# Get drive records or initialize as empty list
 	
+	# _.switches.fieldSet('Long','active',True)
 	length = len(drive_database)
-	drive_records = []
-	for id in drive_database:
-		drive_records.append(drive_database[id])
-	_.switches.fieldSet('Long','active',True)
-	_.pt(drive_records, 'drive,name,pc,priority,type,id')
+
 	
 	instance = scanDrives()
 	logSave(instance, file_driveLog)
-	if not length == len(drive_database):
+	if not length == len(drive_database) or printDrives_printed == False:
 		# _.pr()
 		# _.saveTable(drive_database, file_drives)
 		_.pr()
 
 		drive_records = []
 		for id in drive_database:
-			drive_records.append(drive_database[id])
-		_.switches.fieldSet('Long','active',True)
-		_.pt(drive_records, 'drive,name,pc,priority,type,id')
+			rec = drive_database[id]
+			if id in ActiveDrives:
+				rec['attached'] = 'Yes'
+			else:
+				rec['attached'] = ''
+			drive_records.append(rec)
+
+		def fp(): _.tables.fieldProfileSet('default','attached','alignment','right')
+		_.pt(drive_records, 'attached,drive,name,pc,priority,type,id',fn=fp,long=1)
 
 
 
