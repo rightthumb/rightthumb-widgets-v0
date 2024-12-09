@@ -72,7 +72,7 @@ def action():
 			site = os.getcwd().split(os.sep)[-2]
 		_.pr(site)
 		# sys.exit()
-		_.URL('https://sds.sh/a/wp/fn/?r=1&site='+site)
+		_.URL('https://sds.sh/a/wp/fn/?register=1&site='+site)
 		for fo in _.fos('wp-content/themes'):
 			fn = fo+os.sep+'functions.php'
 			# _.pr(fn)
