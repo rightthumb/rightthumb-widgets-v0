@@ -12,7 +12,7 @@ def sw():
 	_.switches.register( 'Password', '-password' )
 	_.switches.register( 'EncodeForURL', '-web,-url,-urlencode' )
 	_.switches.register( 'EncodeStringForURL', '-str,-string', "{test:123,key:string} reformats as json if contains {" )
-	_.switches.register( 'CurlReverse', '-curl', 'wsl both' )
+	_.switches.register( 'CurlReverse', '-curl', 'wsl just url' )
 
 _._default_settings_()
 
@@ -31,13 +31,16 @@ _.appInfo[focus()] = {
 	'description': [
 		'Security Key Generator with Soft or Hard Coded Expiration',
 		'Used to generate codes that expire.',
-		'Created or checked in this app or by cli.sds.sh/ephemeral/',
+		'Created or Checked in this app or by https://cli.sds.sh/ephemeral/',
+		'',
 		'The encryption methods were added as bonus feature but not main purpose or app',
 		
 	],
 	'categories': [
-						'ephemeral',
-						'security',
+						_.pr('security',c='Background.green',p=0),
+						'keys',
+						_.pr('online integration',c='Background.red',p=0),
+						'cli.sds.sh',
 				],
 	'examples': [
 
@@ -67,7 +70,7 @@ _.appInfo[focus()] = {
 						_.hp('p ephemeral -check U2FsdGVkX1/aDBdtxFXct0oXXJ9dUslxt8qSjBeYokA= 2d'),
 						_.hp('p ephemeral -check U2FsdGVkX1/aDBdtxFXct0oXXJ9dUslxt8qSjBeYokA= 10y'),
 						_.hp(''),
-						_.pr('https://cli.sds.sh/ephemeral/?gen=1&password=123',c='yellow'),
+						_.pr('https://cli.sds.sh/ephemeral/?gen=1&password=123',c='yellow',p=0),
 						_.hp('p ephemeral -check U2FsdGVkX1/TiMjKIJmY4xvWqpjyuYfFe9O4YAjJhE0= 2y -password 123'),
 						_.hp(''),
 						_.linePrint(label='simple',p=0),
@@ -105,17 +108,21 @@ _.appInfo[focus()] = {
 						_.linePrint(label='simple',p=0),
 						_.hp(''),
 						_.pr('\tAdd -curl or -curl wsl',c='Background.light_blue',p=0),
+						_.pr('\t-curl url: shows url and not the curl command',c='Background.light_blue',p=0),
+						_.pr('\t-curl just: shows just the curl command not the results of the command',c='Background.light_blue',p=0),
+						_.hp(''),
+
 						_.hp('p ephemeral -keyGen 2d -password 123 -curl'),
 						_.hp('p ephemeral -encrypt test -curl -password this is the password'),
 						_.hp('p ephemeral -encrypt test -curl wsl -password this is the password'),
 						_.hp(''),
 						_.pr('\tTest in Linux by adding to the end | bash',c='Background.light_blue',p=0),
-						_.hp('p ephemeral -encrypt test -curl -password this is the password | bash'),
+						_.hp('p ephemeral -encrypt test -curl just  -password this is the password | bash'),
 						_.pr('\tTest in Windows by adding to the end | cmd',c='Background.light_blue',p=0),
-						_.hp('p ephemeral -encrypt test -curl -password this is the password | cmd'),
-						_.hp('p ephemeral -encrypt test -curl wsl -password this is the password | cmd'),
+						_.hp('p ephemeral -encrypt test -curl just -password this is the password | cmd'),
+						_.hp('p ephemeral -encrypt test -curl just wsl -password this is the password | cmd'),
 						_.hp(''),
-						_.pr('\t-curl works with: Gen Encrypt Decrypt KeyGen',c='Background.light_blue',p=0),
+						_.pr('\t-curl works with: Gen Encrypt Decrypt KeyGen',c='Background.red',p=0),
 						_.hp(''),
 						_.linePrint(label='simple',p=0),
 						'',
@@ -439,16 +446,34 @@ def action():
 		if '{' in string: string = fixJSON(string)
 		print(string)
 		result = encodeURL(string)
+	end = False
 	if _.switches.isActive('CurlReverse') and not curl is None:
-		if 'wsl' in _.switches.value('CurlReverse'):
-			print('wsl ' +curl)
+		if 'url' in _.switches.value('CurlReverse'):
+			curl = curl.replace('curl -s','').replace('"','').strip()
+			CURL = curl
 		else:
-			print(curl)
-		if not 'both' in _.switches.value('CurlReverse'):
+			if 'wsl' in _.switches.value('CurlReverse'):
+				CURL = 'wsl ' +curl
+			else:
+				CURL = curl
+		if 'just' in _.switches.value('CurlReverse'):
+			if not 'url' in _.switches.value('CurlReverse'):
+				print( _.hp(CURL) )
+			else:
+				_.pr(CURL,c='yellow')
 			return None
+		else:
+			_.pr()
+			end = CURL
 	if _.switches.isActive('EncodeForURL') and not _.switches.isActive('EncodeStringForURL'):
 		result = encodeURL(result)
-	print(result)
+
+	_.pr(result,c='green')
+
+	if end:
+		_.pr()
+		_.pr(end,c='yellow')
+		_.pr()
 
 ########################################################################################
 if __name__ == '__main__':
