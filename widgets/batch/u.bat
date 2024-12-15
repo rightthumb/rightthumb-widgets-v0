@@ -17,7 +17,7 @@ rem ## {C3P0D40fAe8B} ##
 set "URL_VAR=%1"
 
 if "%URL_VAR:~0,6%"=="https:" (
-	call url %*
+	call url. %*
 	goto:eof
 )
 

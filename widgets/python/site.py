@@ -217,7 +217,7 @@ def meta_scan2(path='',end=''):
 
 	return _.v.fp
 
-def meta_scan(path,end):
+def meta_scan(path,end=''):
 	# path = __.path(path)
 	# print(path,end)
 	global folder

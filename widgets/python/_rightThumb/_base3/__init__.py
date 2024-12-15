@@ -10834,7 +10834,7 @@ def getTable2(theFile, isDic=None, isList=None):
 					json_data = json.load(json_file)
 				return json_data
 		except Exception as e:
-			# print('Error loading JSON file:', e)
+			print('Error loading JSON file:', e)
 			sys.exit()
 	else:
 		# print(f"File {theFile} not found or is empty.")
@@ -23089,6 +23089,8 @@ def percentageAdd(n,p): return n*(1+(p/100))
 # _.percentageMinus(75000,25)
 # _.percentageAdd(56250,25)
 
+def pipepipe():
+	return [line.strip() for line in sys.stdin]
 def isData2():
 	os=__.imp('os.path.isfile')
 	d=isData(r=0)
@@ -24513,7 +24515,215 @@ def ptr(data, theColumns, id=None):
 		id = genUUID()
 	tables.print( id, unixAutoColumns( data, theColumns, __.appReg ) )
 ##################################################
-def mdFig(md='', title='###', wrap=True, file=None, t=None, w=None, f=None):
+
+
+# if not dic and not autoDic: return mdFigSimp(md=md, title=title, wrap=wrap, file=file, t=t, w=w, f=f)
+
+
+
+
+def mdFig(md='', title='###', wrap=True, file=None, t=None, w=None, f=None, dic=False, autoDic=True, context=False):
+	if not t is None:
+		title = t
+	title = title.strip() + ' '
+	if not w is None:
+		wrap = w
+	if not f is None:
+		file = f
+
+	if isinstance(md, str):
+		md = md.split('\n')
+
+	comments = {
+		"multi": [
+			{"lan": "html", "code": "<!--{contents}-->",},
+			{"lan": "js", "code": "/*{contents}*/"},
+			{"lan": "php", "code": "/*{contents}*/"},
+			{"lan": "py", "code": '"""{contents}"""'},
+			{"lan": "py", "code": "'''{contents}'''"},
+			{"lan": "java", "code": "/*{contents}*/"},
+			{"lan": "c", "code": "/*{contents}*/"},
+			{"lan": "ruby", "code": "=begin\n{contents}\n=end"},
+			{"lan": "sql", "code": "/*{contents}*/"},
+			{"lan": "swift", "code": "/*{contents}*/"},
+		],
+		"single": [
+			{"lan": "js", "code": "//"},
+			{"lan": "php", "code": "//"},
+			{"lan": "py", "code": "#"},
+			{"lan": "java", "code": "//"},
+			{"lan": "c", "code": "//"},
+			{"lan": "ruby", "code": "#"},
+			{"lan": "swift", "code": "//"},
+		]
+	}
+
+	code = {}
+	current_section = None
+	current_snippet = []
+	is_snippet = False
+	snippet_language = None
+
+	def initialize_comment_settings(line_containing_language):
+		commentSettings = {}
+		commentSettings['hasMulti'] = False
+		commentSettings['hasSingle'] = False
+		commentSettings['lan'] = line_containing_language.split('~~~')[-1].lower()
+		for rec in comments['multi']:
+			if rec['lan'] == commentSettings['lan']:
+				commentSettings['hasMulti'] = True
+				commentSettings['multiOpen'] = rec['code'].split('{contents}')[0]
+				commentSettings['multiClose'] = rec['code'].split('{contents}')[1]
+		for rec in comments['single']:
+			if rec['lan'] == commentSettings['lan']:
+				commentSettings['hasSingle'] = True
+				commentSettings['single'] = rec['code']
+		return commentSettings
+
+	def parse_iter_markers(lines):
+		"""Extract and replace iter markers dynamically."""
+		result_lines = []
+		iter_items = []
+		current_iter_code = []
+		subject = None
+		inside_iter = False
+
+		for line in lines:
+			stripped = line.strip()
+			if "iter:Start:" in stripped:
+				inside_iter = True
+				subject = stripped.split(":")[-1].strip(" -->")
+				iter_marker = f"<!-- iter:{subject}:{len(iter_items) + 1}  -->"
+				result_lines.append(iter_marker)
+			elif "iter:End:" in stripped and inside_iter:
+				inside_iter = False
+				iter_items.append({
+					"Subject": subject,
+					"Replace": iter_marker,
+					"Code": '\n'.join(current_iter_code).strip()
+				})
+				current_iter_code = []
+			elif inside_iter:
+				current_iter_code.append(line)
+			else:
+				result_lines.append(line)
+
+		return result_lines, iter_items
+
+
+	def remove_comments_and_parse_metadata(snippet_value, comment_settings):
+		"""Remove comments and parse metadata based on the comment settings."""
+		import yaml
+		snippet_metadata = {}
+		lines = snippet_value.split('\n')
+		language = comment_settings['lan']
+
+		# Handle multi-line comments
+		if comment_settings['hasMulti']:
+			if lines[0].strip().startswith(comment_settings['multiOpen']):
+				yaml_lines = []
+				for line in lines[1:]:  # Start after the opening tag
+					if line.strip().startswith(comment_settings['multiClose']):
+						break
+					yaml_lines.append(line.strip())
+				yaml_content = '\n'.join(yaml_lines).strip()
+				
+				# Parse the metadata from YAML-like structure
+				try:
+					parsed_metadata = yaml.safe_load(yaml_content)
+					if isinstance(parsed_metadata, dict):
+						# Preserve the original keys without modification
+						snippet_metadata = parsed_metadata
+				except yaml.YAMLError:
+					snippet_metadata = {}
+				
+				# Remove the metadata lines from snippet_value
+				snippet_value = '\n'.join(lines[len(yaml_lines) + 2:]).strip()  # Skip opening/closing tags
+
+		# Handle single-line comments
+		elif comment_settings['hasSingle']:
+			single_line_comment = comment_settings['single']
+			yaml_lines = []
+			remaining_lines = []
+			for line in lines:
+				if line.strip().startswith(single_line_comment):
+					yaml_lines.append(line[len(single_line_comment):].strip())
+				else:
+					remaining_lines.append(line)
+			try:
+				parsed_metadata = yaml.safe_load('\n'.join(yaml_lines))
+				if isinstance(parsed_metadata, dict):
+					snippet_metadata = parsed_metadata
+			except yaml.YAMLError:
+				snippet_metadata = {}
+			snippet_value = '\n'.join(remaining_lines).strip()
+
+		return snippet_value, snippet_metadata
+
+
+
+
+	for line in md:
+		stripped_line = line.strip()
+
+		# Detect sections
+		if stripped_line.startswith(title):
+			current_section = stripped_line[len(title):].strip()
+			continue
+
+		# Start or end a code snippet
+		if stripped_line.startswith('~~~'):
+			if is_snippet:
+				# End of the snippet
+				if current_section:
+					snippet_key = current_section
+					snippet_value = '\n'.join(current_snippet)
+
+					# Initialize comment settings
+					comment_settings = initialize_comment_settings(snippet_language)
+
+					# Remove comments and parse metadata if context=True
+					snippet_metadata = {}
+					if context:
+						snippet_value, snippet_metadata = remove_comments_and_parse_metadata(snippet_value, comment_settings)
+
+					# Process iter markers
+					result_lines, iter_items = parse_iter_markers(snippet_value.split('\n'))
+
+					if dic or autoDic:
+						# Store as dict with metadata
+						code[snippet_key] = {
+							"original": snippet_value,
+							"code": '\n'.join(result_lines).strip(),
+							"iter": iter_items,
+						}
+						if context or dic:
+							code[snippet_key]["metadata"] = snippet_metadata
+					else:
+						# Store unmodified snippet as string
+						code[snippet_key] = snippet_value
+
+				# Reset snippet tracking
+				current_snippet = []
+				is_snippet = False
+				snippet_language = None
+			else:
+				# Start of the snippet
+				is_snippet = True
+				snippet_language = stripped_line[3:].lower() if len(stripped_line) > 3 else None
+		elif is_snippet:
+			# Accumulate snippet lines
+			current_snippet.append(line)
+
+	# Return the full dictionary of snippets
+	return code
+
+
+
+
+
+
+def mdFigSimp(md='', title='###', wrap=True, file=None, t=None, w=None, f=None):
 	if not t is None: title=t
 	if not w is None: wrap=w
 	if not f is None: file=f
@@ -24929,73 +25139,73 @@ find_line = deX.l
 ##################################################
 
 def formatSizeUp(size_in_bytes):
-    size = formatSizeUpMath(size_in_bytes)
-    value, unit = size.split(' ')
-    value = int(value)
-    
-    # If the value is a single digit, do nothing
-    if len(str(value)) == 1:
-        return size
+	size = formatSizeUpMath(size_in_bytes)
+	value, unit = size.split(' ')
+	value = int(value)
+	
+	# If the value is a single digit, do nothing
+	if len(str(value)) == 1:
+		return size
 
-    # Determine target size based on real-world drive sizes
-    target_value = next_real_world_drive_size(value, unit)
-    while value < target_value:
-        increment = increments[unit]  # Increment by the appropriate unit
-        size_in_bytes += increment
-        size = formatSizeUpMath(size_in_bytes)
-        value, unit = size.split(' ')
-        value = int(value)
-    
-    return size
+	# Determine target size based on real-world drive sizes
+	target_value = next_real_world_drive_size(value, unit)
+	while value < target_value:
+		increment = increments[unit]  # Increment by the appropriate unit
+		size_in_bytes += increment
+		size = formatSizeUpMath(size_in_bytes)
+		value, unit = size.split(' ')
+		value = int(value)
+	
+	return size
 
 def next_real_world_drive_size(value, unit):
-    """Get the next real-world drive size based on the unit."""
-    if unit == "GB":
-        # Common USB and SSD sizes in GB
-        common_sizes = [8, 16, 32, 64, 128, 256, 512, 750, 1000]  # 750 GB for transitional HDDs
-        for size in common_sizes:
-            if value <= size:
-                return size
-        return value + 250  # Default increment if above known sizes
+	"""Get the next real-world drive size based on the unit."""
+	if unit == "GB":
+		# Common USB and SSD sizes in GB
+		common_sizes = [8, 16, 32, 64, 128, 256, 512, 750, 1000]  # 750 GB for transitional HDDs
+		for size in common_sizes:
+			if value <= size:
+				return size
+		return value + 250  # Default increment if above known sizes
 
-    elif unit == "TB":
-        # Common HDD sizes in TB
-        common_sizes = [1, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20]
-        for size in common_sizes:
-            if value <= size:
-                return size
-        return value + 2  # Default increment for larger drives
+	elif unit == "TB":
+		# Common HDD sizes in TB
+		common_sizes = [1, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20]
+		for size in common_sizes:
+			if value <= size:
+				return size
+		return value + 2  # Default increment for larger drives
 
-    return value  # If no match, return the value as is
+	return value  # If no match, return the value as is
 
 def formatSizeUpMath(size_in_bytes):
-    import math
-    units = [
-        (1 << 60, "EB"),  # Exabyte
-        (1 << 50, "PB"),  # Petabyte
-        (1 << 40, "TB"),  # Terabyte
-        (1 << 30, "GB"),  # Gigabyte
-        (1 << 20, "MB"),  # Megabyte
-        (1 << 10, "KB"),  # Kilobyte
-        (1, "B")          # Byte
-    ]
-    
-    for factor, suffix in units:
-        if size_in_bytes >= factor:
-            value = math.ceil(size_in_bytes / factor)
-            return f"{value} {suffix}"
-    
-    return "0 B"
+	import math
+	units = [
+		(1 << 60, "EB"),  # Exabyte
+		(1 << 50, "PB"),  # Petabyte
+		(1 << 40, "TB"),  # Terabyte
+		(1 << 30, "GB"),  # Gigabyte
+		(1 << 20, "MB"),  # Megabyte
+		(1 << 10, "KB"),  # Kilobyte
+		(1, "B")          # Byte
+	]
+	
+	for factor, suffix in units:
+		if size_in_bytes >= factor:
+			value = math.ceil(size_in_bytes / factor)
+			return f"{value} {suffix}"
+	
+	return "0 B"
 
 # Define increments for each unit
 increments = {
-    "B": 1,
-    "KB": 1 << 10,  # 1024 bytes
-    "MB": 1 << 20,  # 1024^2 bytes
-    "GB": 1 << 30,  # 1024^3 bytes
-    "TB": 1 << 40,  # 1024^4 bytes
-    "PB": 1 << 50,  # 1024^5 bytes
-    "EB": 1 << 60   # 1024^6 bytes
+	"B": 1,
+	"KB": 1 << 10,  # 1024 bytes
+	"MB": 1 << 20,  # 1024^2 bytes
+	"GB": 1 << 30,  # 1024^3 bytes
+	"TB": 1 << 40,  # 1024^4 bytes
+	"PB": 1 << 50,  # 1024^5 bytes
+	"EB": 1 << 60   # 1024^6 bytes
 }
 
 
@@ -25016,6 +25226,30 @@ increments = {
 # globals()['var']
 ##################################################
 # alt+29 ↔ is space
+##################################################
+
+def rImp(app):
+	import importlib.util
+	module_name = app
+	file_path = os.path.join(_v.py, app + ".py")
+
+	# Load the module spec
+	spec = importlib.util.spec_from_file_location(module_name, file_path)
+	if spec is None:
+		raise ImportError(f"Cannot find module at path: {file_path}")
+
+	# Create the module
+	module = importlib.util.module_from_spec(spec)
+
+	# Add it to sys.modules
+	sys.modules[module_name] = module
+
+	# Execute the module
+	spec.loader.exec_module(module)
+
+	return module
+
+
 ##################################################
 # self.value('Help')
 # 'DumpSwitches'

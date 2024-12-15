@@ -10,6 +10,11 @@ rem    - Scott Taylor Reph, RightThumb.com
 rem ###########################################################################
 rem ## {C3P0D40fAe8B} ##
 
+call p. open-url -url %*
+
+goto:eof
+
+
 rem alias u.bat
 
 if [%1] == [] (
