@@ -157,6 +157,14 @@ _.postLoad( __file__ )
 # START
 
 
+def isLink(path):
+	if os.path.islink(path): return True
+	try: return os.stat(path).st_nlink > 1
+	except: return False
+
+
+
+
 def has_hard_links(path):
 	try:
 		return os.stat(path).st_nlink > 1

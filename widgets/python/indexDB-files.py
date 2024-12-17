@@ -90,6 +90,17 @@ _.l.sw.register( triggers, sw )
 import sqlite3
 import os
 
+def is_binary_file(file_path):
+    try:
+        with open(file_path, 'rb') as file:
+            chunk = file.read(1024)
+            if b'\0' in chunk:  # Null byte indicates binary
+                return True
+            return False
+    except:
+        return True  # Assume binary if the file cannot be read
+
+
 def is_text(filename):
 	try:
 		with open(filename, 'rb') as check_file:
@@ -170,33 +181,69 @@ if _.switches.isActive('MemoryBufferMB'):
 else:
 	MemoryBufferMB = 10
 
+# omit_extensions = [
+#     '.log',     # Log files
+#     '.gz',      # Compressed log or backup files
+#     '.sql',     # SQL dump files
+#     '.tar',     # Archive files
+#     '.zip',     # Compressed archive files
+#     '.bak',     # Backup files
+#     '.old',     # Old configuration or log files
+#     '.eml',     # Email message files
+#     '.msg',     # Email message files
+#     '.txt',     # Text files that can be large
+#     '.csv',     # CSV files that may contain large datasets
+#     '.conf',    # Configuration files
+#     '.out',     # Output log files
+#     '.err',     # Error log files
+#     '.pid',     # Process ID files, typically text-based
+#     '.swp',     # Swap files, usually created by editors like vim
+#     '.cache',   # Cache files
+#     '.dmp',     # Dump files
+#     '.tmp',     # Temporary files
+#     '.rbi',      # Ruby interface files (as seen in your logs)
+# 	'.cfg',
+# 	'.dat',
+# 	'.lock',
+# 	'.rar',
+# 	'.7z', '.bin', '.iso', '.exe', '.dll', '.db'
+# ]
+
 omit_extensions = [
-    '.log',     # Log files
-    '.gz',      # Compressed log or backup files
-    '.sql',     # SQL dump files
-    '.tar',     # Archive files
-    '.zip',     # Compressed archive files
-    '.bak',     # Backup files
-    '.old',     # Old configuration or log files
-    '.eml',     # Email message files
-    '.msg',     # Email message files
-    '.txt',     # Text files that can be large
-    '.csv',     # CSV files that may contain large datasets
-    '.conf',    # Configuration files
-    '.out',     # Output log files
-    '.err',     # Error log files
-    '.pid',     # Process ID files, typically text-based
-    '.swp',     # Swap files, usually created by editors like vim
-    '.cache',   # Cache files
-    '.dmp',     # Dump files
-    '.tmp',     # Temporary files
-    '.rbi',      # Ruby interface files (as seen in your logs)
-	'.cfg',
-	'.dat',
-	'.lock',
-	'.rar',
-	'.7z', '.bin', '.iso', '.exe', '.dll', '.db'
+    # Logs and temporary files
+    '.log', '.out', '.err', '.tmp', '.swp', '.pid', '.cache', '.dmp', '.bak', '.old', '.lock',
+
+    # Compressed and archive files
+    '.gz', '.tar', '.zip', '.rar', '.7z', '.bz2', '.xz', '.tgz', '.iso',
+
+    # Binary executables and libraries
+    '.bin', '.exe', '.dll', '.so', '.o', '.class', '.jar',
+
+    # Disk and backup files
+    '.img', '.vmdk', '.qcow2', '.vdi', '.bak', '.backup', '.ghost', '.dmg', '.bk',
+
+    # Database and data dumps
+    '.sql', '.db', '.sqlite', '.dbf', '.mdb', '.dat', '.sav',
+
+    # Media files (images, videos, audio)
+    '.jpg', '.jpeg', '.png', '.gif', '.bmp', '.tiff', '.svg',
+    '.mp4', '.mkv', '.avi', '.mov', '.wmv', '.flv', '.mpg', '.mpeg',
+    '.mp3', '.wav', '.flac', '.aac', '.ogg',
+
+    # Configuration and markup files
+    '.conf', '.cfg', '.ini', '.plist', '.json', '.xml', '.yaml', '.yml',
+
+    # Email and messaging files
+    '.eml', '.msg', '.mbox', '.pst', '.ost',
+
+    # Large text or dataset files
+    '.txt', '.csv', '.tsv', '.xlsx', '.xls', '.ods',
+
+    # Code artifacts and metadata
+    '.class', '.rbi', '.pyc', '.pyo', '.log',
 ]
+
+
 
 def get_extension(abs_path):
     _, ext = os.path.splitext(abs_path)
@@ -223,6 +270,10 @@ def index_files(c, directory, recursion=False, max_size=None):
 		max_size = calculate_max_size(MemoryBufferMB)
 		try:
 			abs_path = os.path.join(directory, filename)
+		except:
+			continue
+		
+		try:
 
 			if _.switches.isActive('Test'):
 
@@ -253,6 +304,7 @@ def index_files(c, directory, recursion=False, max_size=None):
 			if os.path.isdir(abs_path) and recursion:
 				index_files(c, abs_path, recursion, max_size)  # Pass the max_size parameter to subdirectories
 			else:
+				if is_binary_file(abs_path): continue
 				sizeSkipped = False
 				try:
 					size = os.path.getsize(abs_path)

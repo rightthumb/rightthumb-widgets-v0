@@ -21768,7 +21768,7 @@ def historyPrint( code, pre='' ):
 	result = ''
 
 	colors = {
-				'cmd': 'purple',
+				'cmd': 'blue',
 				'py': 'yellow',
 				'pipe': 'red',
 				'switches': 'green',
