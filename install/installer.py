@@ -3458,7 +3458,11 @@ cry() {
 
 
 
-
+alias php='/usr/local/bin/php'
+alias wp="php /usr/local/bin/wp.phar"
+alias dex="p search-indexDB-files -db"
+alias dex.="p indexDB-files"
+alias sqlite="sqlite3"
 
 
 

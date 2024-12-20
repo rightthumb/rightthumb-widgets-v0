@@ -890,29 +890,30 @@ def action():
 															'diff': _.pDiff( iS, i, use='less' ) ,
 			} )
 		"""
-		if not iS == i:
-			_.folderProfileAttribute( folder=folder, info = {
-															'app': 'files',
-															'recursive': r,
-															'factors': {
-																			'Text': _.switches.isActive('Text'),
-																			'Binary': _.switches.isActive('Binary'),
-																			'Extensions': _.switches.isActive('Extensions'),
-																			'Type': _.switches.values('Extensions'),
+		# if not iS == i:
 
-																			'PlusOr': _.switches.isActive('PlusOr'),
-																			'PlusClose': _.switches.isActive('PlusClose'),
-																			'Plus': _.switches.isActive('Plus'),
-																			'Minus': _.switches.isActive('Minus'),
+		# 	_.folderProfileAttribute( folder=folder, info = {
+		# 													'app': 'files',
+		# 													'recursive': r,
+		# 													'factors': {
+		# 																	'Text': _.switches.isActive('Text'),
+		# 																	'Binary': _.switches.isActive('Binary'),
+		# 																	'Extensions': _.switches.isActive('Extensions'),
+		# 																	'Type': _.switches.values('Extensions'),
+
+		# 																	'PlusOr': _.switches.isActive('PlusOr'),
+		# 																	'PlusClose': _.switches.isActive('PlusClose'),
+		# 																	'Plus': _.switches.isActive('Plus'),
+		# 																	'Minus': _.switches.isActive('Minus'),
 																			
-																			'PlusVals': _.switches.values('Plus'),
-																			'MinusVals': _.switches.values('Minus'),
-															},
-															'percentage': _.pDiff( iS, i, use='less' ),
-															'count': iS,
-															'files': i,
+		# 																	'PlusVals': _.switches.values('Plus'),
+		# 																	'MinusVals': _.switches.values('Minus'),
+		# 													},
+		# 													'percentage': _.pDiff( iS, i, use='less' ),
+		# 													'count': iS,
+		# 													'files': i,
 
-			} )
+		# 	} )
 
 	if _.switches.isActive('Count') == False:
 		if not scan:

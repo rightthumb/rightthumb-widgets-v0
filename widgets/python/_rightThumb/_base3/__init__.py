@@ -4791,14 +4791,17 @@ def folderProfileAttribute( folder, info ):
 		except Exception as e:
 			if os.path.isfile(saveTo):
 				os.unlink(saveTo)
-			folderProfileAttribute( folder, info )
+			try:
+				folderProfileAttribute( folder, info )
+			except: pass
 			return None
 
-
-		if record[what] == {}:
-			record[what][app] = {}
-			record[what][app][epoch] = info
-			saveTable2( record, saveTo )
+		try:
+			if record[what] == {}:
+				record[what][app] = {}
+				record[what][app][epoch] = info
+				saveTable2( record, saveTo )
+		except: pass
 
 		if not app in record[what].keys():
 			record[what][app] = {}
@@ -25251,6 +25254,13 @@ def rImp(app):
 
 
 ##################################################
+
+def isLink(path):
+	if os.path.islink(path): return True
+	try: return os.stat(path).st_nlink > 1
+	except: return False
+
+##################################################
 # self.value('Help')
 # 'DumpSwitches'
 # __.switch_skimmer.active
@@ -25321,6 +25331,7 @@ class FileLocker:
 # FileLocker.check(path)
 # FileLocker.lock(path)
 # FileLocker.unlock(path)
+# folderProfileAttribute <-- errors
 
 ########################################################################################
 # EOF

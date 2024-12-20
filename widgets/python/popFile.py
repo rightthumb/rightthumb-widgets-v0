@@ -38,7 +38,8 @@ def appSwitches():
 	### EXAMPLE: START
 	# _.switches.register( 'Input', '-i' )
 	# _.switches.register( 'Files', '-f,-file,-files','file.txt', isPipe=True, isRequired=True, description='Files' )
-	_.switches.register( 'File', '-f,-file,-files','file.txt', description='Files' )
+	# _.switches.register( 'File', '-f,-file,-files','file.txt', description='Files' )
+	_.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='data', description='Files', isRequired=False )
 	### EXAMPLE: END
 
 
@@ -194,8 +195,8 @@ def httpCheck(path):
 def action():
 	# files=_.isData()
 	# if _.switches.isActive('Files'):
-	files=_.switches.values('File')
-	for i,path in enumerate(files):
+	# files=_.switches.values('File')
+	for i,path in enumerate(_.isData(r=1)):
 		# print(path);sys.exit()
 		path=httpCheck(path)
 		_.pr( __.path(path,pop=True) )

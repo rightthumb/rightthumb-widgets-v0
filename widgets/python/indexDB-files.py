@@ -128,7 +128,10 @@ def get_content(filename):
 		return ""
 cnt = 0
 
-
+def isLink(path):
+	if os.path.islink(path): return True
+	try: return os.stat(path).st_nlink > 1
+	except: return False
 
 import platform
 import psutil
@@ -304,6 +307,7 @@ def index_files(c, directory, recursion=False, max_size=None):
 			if os.path.isdir(abs_path) and recursion:
 				index_files(c, abs_path, recursion, max_size)  # Pass the max_size parameter to subdirectories
 			else:
+				if isLink(abs_path): continue
 				if is_binary_file(abs_path): continue
 				sizeSkipped = False
 				try:
