@@ -5,10 +5,12 @@ fieldSet=_.l.vars(focus(),__name__,__file__,appDBA);_.load();_v=__.imp('_rightTh
 def sw():
 	pass
 	_.switches.register( 'Add', '-a,-add', 'Do this thing' )
-	_.switches.register( 'Delete', '-d,-del,-delete', '' )
-	_.switches.register( 'Day', '-day', '15: day of month' )
-	_.switches.register( 'Order', '-o,-order' )
 	_.switches.register( 'Prepend', '-p,-prepend' )
+	_.switches.register( 'Delete', '-d,-del,-delete', '' )
+	_.switches.register( 'Day', '-day', '15: '+_.pr0('day of month') )
+	_.switches.register( 'Order', '-o,-order' )
+	_.switches.register( 'ChangeAt', '-at', '15'+_.pr0('day of month') )
+	_.switches.register( 'ChangeToDo', '-u,-update,-change' )
 _._default_settings_()
 
 _.appInfo[focus()] = {
@@ -57,7 +59,10 @@ def action():
 		data = {'data': todo}
 		result = _.URL(f'https://r.etc.ac/routine.php?api={_v.fig["todo"]}&todo=true',{'data':json.dumps(data)})
 		_.pr()
-		_.pr('\t',result)
+		if 'success' in result:
+			_.pr(' ','Success',c='green')
+		else:
+			_.pr(' ','Error',c='red')
 	def listTodo(todo):
 		for i,item in enumerate(todo):
 			name = item['todo']
@@ -90,7 +95,56 @@ def action():
 		select = input('Select: ')
 		if select == 'x':
 			return False
-		todo.pop(int(select))
+		IDs = []
+		for i in select.replace('  ',' ').replace('  ',' ').replace('  ',' ').split(' '):
+			IDs.append(int(i))
+		IDs.sort()
+		IDs.reverse()
+		for i in IDs:
+			todo.pop(i)
+		listTodo(todo)
+		send(todo)
+	elif _.switches.isActive('ChangeAt'):
+		listTodo(todo)
+		select = input('Select: ')
+		if select == 'x':
+			return False
+		if _.switches.isActive('Day'):
+			newAt = _.switches.value('Day')
+		elif not len(_.switches.value('ChangeAt')):
+			newAt = input('New at: ')
+		else:
+			newAt = _.switches.value('ChangeAt')
+		todo[int(select)]['at'] = newAt
+		listTodo(todo)
+		send(todo)
+	elif _.switches.isActive('ChangeToDo'):
+		listTodo(todo)
+		select = input('Select: ')
+		if select == 'x':
+			return False
+		newToDo = ''
+		while not len(newToDo):
+			if _.switches.isActive('Day'):
+				newAt = _.switches.value('Day')
+			elif _.switches.isActive('ChangeAt'):
+				newAt = _.switches.value('ChangeAt')
+			else:
+				newAt = input('(optional) New at: ').strip()
+				if not len(newAt):
+					newAt = todo[int(select)]['at']
+				else:
+					newAt = newAt
+			if _.switches.isActive('Add'):
+				newToDo = ' '.join(_.switches.values('Add'))
+			elif not len(_.switches.value('ChangeToDo')):
+				newToDo = input('Updated ToDo: ').strip()
+			else:
+				newToDo = ' '.join(_.switches.values('ChangeToDo'))
+
+		todo[int(select)]['todo'] = newToDo
+		todo[int(select)]['at'] = newAt
+		listTodo(todo)
 		send(todo)
 	elif _.switches.isActive('Order'):
 		listTodo(todo)
