@@ -15,6 +15,7 @@ def sw():
 	_.switches.register( 'ChangeAt', '-at', '15: '+_.pr0('day of month') )
 	_.switches.register( 'ChangeToDo', '-u,-update,-change' )
 	_.switches.register( 'Recover', '-r,-recover' )
+	_.switches.register( 'RecoverJust', '-just', 'global or current' )
 _._default_settings_()
 
 _.appInfo[focus()] = {
@@ -74,13 +75,27 @@ _.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw );
 from shutil import copyfile
 def action():
 	if _.switches.isActive('Recover'):
+		just = ''
 		import simplejson as json
 		if len(_.switches.value('Recover')):
 			data = _.getTable2(_.switches.value('Recover'))
 		else:
 			data = _.getTable('todo'+__.os.sep+'todo.json')
+		if _.switches.isActive('Table'):
+			newData = {}
+			for table in _.switches.values('Table'):
+					newData[table] = data[table]
+			data = newData
+			
+			if _.switches.isActive('RecoverJust'):
+				if 'g' in _.switches.value('RecoverJust').lower():
+					just = '&just=g'
+				elif 'c' in _.switches.value('RecoverJust').lower():
+					just = '&just=c'
+				else:
+					just = ''
 		data = {'data': data}
-		result = _.URL(f'{_v.fig["todoURL"]}?api={_v.fig["todo"]}&recover=1',{'data':json.dumps(data)})
+		result = _.URL(f'{_v.fig["todoURL"]}?api={_v.fig["todo"]}&recover=1{just}',{'data':json.dumps(data)})
 		_.pr()
 		if 'success' in result:
 			_.pr(' ','Success',c='green')

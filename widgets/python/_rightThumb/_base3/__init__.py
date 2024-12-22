@@ -25589,7 +25589,7 @@ def create_backup_filename(original_file,folder=None,mkdir=True,label=None):
 	inner = '__bk__'
 	if not label is None:
 		label = label.replace(' ','.')
-		inner += f'__bk-{label}__'
+		inner = f'__bk-{label}__'
 	# Create the backup file name
 	backup_file_name = f"{file_name}{inner}{current_date}_{epoch_time}{extension}"
 	
