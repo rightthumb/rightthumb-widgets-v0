@@ -14,13 +14,33 @@ def sw():
 _._default_settings_()
 
 _.appInfo[focus()] = {
-	'file': 'vps-todo.py',
-	'description': 'Changes the world',
+	'file': 'todo.py',
+	'description': 'ToDo list manager',
 	'categories': [
-						'DEFAULT',
+						'todo',
 				],
 	'examples': [
-						_.hp('p thisApp -file file.txt'),
+						_.hp('p todo -add Buy Groceries'),
+						_.hp('p todo -add Cancel Trial Subscription -day 15 -prepend'),
+						_.hp('\t-prepend will add to TOP of the list'),
+						_.hp(''),
+						_.hp('p todo -delete'),
+						_.hp('\t1 3 5'),
+						_.hp('\tSelect one or multiple items to delete'),
+						_.hp(''),
+						_.hp('p todo -change Buy Groceries dont forget milk'),
+						_.hp('\t7'),
+						_.hp('\tSelect one item and it will be changed'),
+						_.hp(''),
+						_.hp('p todo -order'),
+						_.hp('\t1 3 5'),
+						_.hp('\tSelect one or multiple. Selected items at top. In that order'),
+						_.hp('\t\tUnselected items will be at the below selected in the order they were in'),
+						_.hp(''),
+						_.hp('p todo -at 15'),
+						_.hp('\t3'),
+						_.hp('\tSelect one item and change the day of month'),
+						_.hp(''),
 						_.linePrint(label='simple',p=0),
 						'',
 	],
@@ -92,7 +112,8 @@ def action():
 
 	elif _.switches.isActive('Delete'):
 		listTodo(todo)
-		select = input('Select: ')
+		_.pr('\tx to exit',c='yellow')
+		select = input('Select: ').strip()
 		if select == 'x':
 			return False
 		IDs = []
@@ -106,13 +127,14 @@ def action():
 		send(todo)
 	elif _.switches.isActive('ChangeAt'):
 		listTodo(todo)
-		select = input('Select: ')
+		_.pr('\tx to exit',c='yellow')
+		select = input('Select: ').strip()
 		if select == 'x':
 			return False
 		if _.switches.isActive('Day'):
 			newAt = _.switches.value('Day')
 		elif not len(_.switches.value('ChangeAt')):
-			newAt = input('New at: ')
+			newAt = input('New at: ').strip()
 		else:
 			newAt = _.switches.value('ChangeAt')
 		todo[int(select)]['at'] = newAt
@@ -120,7 +142,8 @@ def action():
 		send(todo)
 	elif _.switches.isActive('ChangeToDo'):
 		listTodo(todo)
-		select = input('Select: ')
+		_.pr('\tx to exit',c='yellow')
+		select = input('Select: ').strip()
 		if select == 'x':
 			return False
 		newToDo = ''
@@ -131,6 +154,7 @@ def action():
 				newAt = _.switches.value('ChangeAt')
 			else:
 				newAt = input('(optional) New at: ').strip()
+				if newAt == 'x': return False
 				if not len(newAt):
 					newAt = todo[int(select)]['at']
 				else:
@@ -141,6 +165,7 @@ def action():
 				newToDo = input('Updated ToDo: ').strip()
 			else:
 				newToDo = ' '.join(_.switches.values('ChangeToDo'))
+		if newToDo == 'x': return False
 
 		todo[int(select)]['todo'] = newToDo
 		todo[int(select)]['at'] = newAt
@@ -148,7 +173,8 @@ def action():
 		send(todo)
 	elif _.switches.isActive('Order'):
 		listTodo(todo)
-		select = input('Select: ')
+		_.pr('\tx to exit',c='yellow')
+		select = input('Select: ').strip()
 		if select == 'x':
 			return False
 		newOrder = []
