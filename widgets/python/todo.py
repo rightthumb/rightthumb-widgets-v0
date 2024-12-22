@@ -4,13 +4,17 @@ fieldSet=_.l.vars(focus(),__name__,__file__,appDBA);_.load();_v=__.imp('_rightTh
 
 def sw():
 	pass
-	_.switches.register( 'Add', '-a,-add', 'Do this thing' )
+	_.switches.register( 'Table', '-table', 'daily, weekly, monthly, todo' )
+	_.switches.register( 'SaveToTemplate', '-t,-template', '' )
+	_.switches.register( 'Add', '-a,-add', 'Cancel Trial Subscription' )
+
 	_.switches.register( 'Prepend', '-p,-prepend' )
 	_.switches.register( 'Delete', '-d,-del,-delete', '' )
 	_.switches.register( 'Day', '-day', '15: '+_.pr0('day of month') )
 	_.switches.register( 'Order', '-o,-order' )
 	_.switches.register( 'ChangeAt', '-at', '15: '+_.pr0('day of month') )
 	_.switches.register( 'ChangeToDo', '-u,-update,-change' )
+	_.switches.register( 'Recover', '-r,-recover' )
 _._default_settings_()
 
 _.appInfo[focus()] = {
@@ -67,22 +71,52 @@ _.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw );
 ########################################################################################
 #n)--> start
 
+from shutil import copyfile
 def action():
-	import simplejson as json
-	if not 'todo' in _v.fig: _.e('No todo configured')
-	if not 'todoURL' in _v.fig: _.e('No todo configured')
-	todo = _.URL(f'{_v.fig["todoURL"]}?api={_v.fig["todo"]}')
-	todo = json.loads(todo)
-	todo = todo['todo']
-
-	def send(todo):
-		data = {'data': todo}
-		result = _.URL(f'{_v.fig["todoURL"]}?api={_v.fig["todo"]}&todo=true',{'data':json.dumps(data)})
+	if _.switches.isActive('Recover'):
+		import simplejson as json
+		if len(_.switches.value('Recover')):
+			data = _.getTable2(_.switches.value('Recover'))
+		else:
+			data = _.getTable('todo'+__.os.sep+'todo.json')
+		data = {'data': data}
+		result = _.URL(f'{_v.fig["todoURL"]}?api={_v.fig["todo"]}&recover=1',{'data':json.dumps(data)})
 		_.pr()
 		if 'success' in result:
 			_.pr(' ','Success',c='green')
 		else:
 			_.pr(' ','Error',c='red')
+			_.pr(result)
+		return
+
+	table = 'todo'
+	if _.switches.isActive('Table'):
+		table = _.switches.value('Table')
+	import simplejson as json
+	if not 'todo' in _v.fig: _.e('No todo configured')
+	if not 'todoURL' in _v.fig: _.e('No todo configured')
+	todo = _.URL(f'{_v.fig["todoURL"]}?api={_v.fig["todo"]}')
+	todo = json.loads(todo)
+	# bk = _.backupName('todo.json')
+	_.saveTable(todo,'todo'+__.os.sep+'todo.json')
+	bk = _v.tt + __.os.sep + 'todo'+ __.os.sep +'todo.json'
+	nBK = _.backupName(bk)
+	copyfile(bk, nBK)
+	# _.pv(todo)
+	todo = todo[table]
+
+	def send(todo):
+		templateGet = ''
+		if _.switches.isActive('SaveToTemplate'):
+			templateGet = '&template=true'
+		data = {'data': todo}
+		result = _.URL(f'{_v.fig["todoURL"]}?api={_v.fig["todo"]}&save=1&{table}=true{templateGet}',{'data':json.dumps(data)})
+		_.pr()
+		if 'success' in result:
+			_.pr(' ','Success',c='green')
+		else:
+			_.pr(' ','Error',c='red')
+			_.pr(result)
 	def listTodo(todo):
 		for i,item in enumerate(todo):
 			name = item['todo']
@@ -97,10 +131,12 @@ def action():
 		doAt = '-'
 		if _.switches.isActive('Day'):
 			doAt = _.switches.value('Day')
+		elif _.switches.isActive('ChangeAt'):
+			doAt = _.switches.value('ChangeAt')
 		rec = {
 			"at": doAt,
 			"todo": name,
-			"type": "todo",
+			"type": table,
 			"status": False
 		}
 		if _.switches.isActive('Prepend'):

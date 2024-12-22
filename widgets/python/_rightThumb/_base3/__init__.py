@@ -25547,7 +25547,7 @@ def rImp(app):
 
 
 
-def create_backup_filename(original_file,folder=None,mkdir=True):
+def create_backup_filename(original_file,folder=None,mkdir=True,label=None):
 	"""
 	Creates a backup filename by appending the current date and epoch time.
 
@@ -25581,10 +25581,17 @@ def create_backup_filename(original_file,folder=None,mkdir=True):
 
 	# Get current date and epoch time
 	current_date = datetime.now().strftime("%Y-%m-%d")
-	epoch_time = int(os.path.getmtime(original_file))
-
+	try:
+		epoch_time = int(os.path.getmtime(original_file))
+	except:
+		import time
+		epoch_time = int(time.time())
+	inner = '__bk__'
+	if not label is None:
+		label = label.replace(' ','.')
+		inner += f'__bk-{label}__'
 	# Create the backup file name
-	backup_file_name = f"{file_name}__bk__{current_date}_{epoch_time}{extension}"
+	backup_file_name = f"{file_name}{inner}{current_date}_{epoch_time}{extension}"
 	
 	# Return the full path if a directory is provided
 	if dir_name:

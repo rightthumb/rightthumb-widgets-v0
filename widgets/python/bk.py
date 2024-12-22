@@ -6,6 +6,7 @@ def sw():
 	pass
 	_.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name', description='Files', isRequired=False )
 	_.switches.register( 'Folder', '-fo,-folder','folderName' )
+	_.switches.register( 'Label', '-l,-label','preChangeLabel' )
 _._default_settings_()
 __.setting('omit-switch-triggers',['Folder','Folders'])
 __.setting('omit-functions',['myFolderLocations','aliasesFo'])
@@ -54,7 +55,10 @@ def action():
 	from shutil import copyfile
 	for path in _.isData(r=0):
 		if not os.path.isfile(path): continue
-		backup = _.backupName(path,folder=folder,mkdir=True)
+		if _.switches.isActive('Label'):
+			backup = _.backupName(path,folder=folder,mkdir=True,label=' '.join(_.switches.values('Label')))
+		else:
+			backup = _.backupName(path,folder=folder,mkdir=True)
 		copyfile(path, backup)
 		_.pr()
 		_.pr(line=1,c='yellow')

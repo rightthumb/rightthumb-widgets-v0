@@ -37,23 +37,26 @@ _.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw );
 
 import os
 def delete_empty_folders(directory):
-    """
-    Recursively deletes empty folders starting from the specified directory.
-    """
-    for root, dirs, files in os.walk(directory, topdown=False):  # Traverse the tree from bottom up
-        for dir in dirs:
-            dir_path = os.path.join(root, dir)
-            # If the directory is empty, remove it
-            if not os.listdir(dir_path):
-                os.rmdir(dir_path)
-                print(f"Deleted empty folder: {dir_path}")
+	"""
+	Recursively deletes empty folders starting from the specified directory.
+	"""
+	for root, dirs, files in os.walk(directory, topdown=False):  # Traverse the tree from bottom up
+		for dir in dirs:
+			dir_path = os.path.join(root, dir)
+			# If the directory is empty, remove it
+			if not os.listdir(dir_path):
+				try:
+					os.rmdir(dir_path)
+					print(f"Deleted empty folder: {dir_path}")
+				except:
+					print(f"Unable to delete folder: {dir_path}")
 
 def action():
-    if _.switches.isActive('Folder'):
-        folder = _.switches.values('Folder')[0]
-    else:
-        folder = os.getcwd()
-    delete_empty_folders(folder)
+	if _.switches.isActive('Folder'):
+		folder = _.switches.values('Folder')[0]
+	else:
+		folder = os.getcwd()
+	delete_empty_folders(folder)
 
 ########################################################################################
 if __name__ == '__main__':
