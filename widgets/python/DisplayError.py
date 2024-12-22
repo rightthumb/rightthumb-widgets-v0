@@ -23,16 +23,18 @@ fieldSet=_.l.vars(focus(),__name__,__file__,appDBA);_.load();_v=__.imp('_rightTh
 def sw():
 	pass
 	#b)--> examples
-	# tabGroup = 0
-	# tabGroup += 1
-	# _.switches.register( 'Input', '-i', group=[tabGroup,'Group Name'] )
-	# _.switches.register( 'URL', '-u,-url,-urls', 'https://etc.ac/', isData='raw' )
-	#e)--> examples
-	# _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=False )
-	_.switches.register( 'Text', '-t,-txt,-make', 'rename {} {i}.txt' )
-	_.switches.register( 'Execute', '-e,-exe,-execute' )
+	_.switches.register( 'Title/One', '-1,-one,-t,-title' )
+	_.switches.register( 'Message/Two', '-2,-two,-m,-message' )
+	_.switches.register( 'Bullets/Three', '-3,-three,-b,-bullet,-bullets' )
+	_.switches.register( 'AddDashToBullets', '--,-dash' )
+		##  -->    p SwitchGroupsExamples   <--
+	# #e)--> examples
+	_.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=False )
 
 _._default_settings_()
+# __.setting('omit-switch-triggers',['Ago'])
+# __.setting('omit-functions',['myFolderLocations','aliasesFo'])
+# if not 'Ago' in __.setting('omit-switch-triggers',d=[]): pass
 # __.setting('require-list',['Files,Plus','File,Has']) # todo
 # __.setting('require-list',['Pipe','Files'])
 # __.setting('receipt-log',True)
@@ -46,15 +48,21 @@ _._default_settings_()
 
 _.appInfo[focus()] = {
 	# 'app': '8facG-jo0Cxk',
-	'file': 'thisApp.py',
-	'description': 'Changes the world',
+	'file': 'DisplayError.py',
+	'description': 'Used in shell scripts, batch files, etc to display an error message',
 		# _.ail(1,'subject')+
 		# _.aib('one')+
 	'categories': [
-						'DEFAULT',
+						'Script Helper',
+						'Batch Files',
+						'Shell Scripts',
+						'.sh',
+						'.bat',
 				],
 	'examples': [
-						_.hp('p thisApp -file file.txt'),
+						_.hp('p DisplayError -1 Missing Required Files Switch'),
+						_.hp('p DisplayError -1 Missing Required Files Switch -2 "ex: -file file.txt"'),
+						_.hp('p DisplayError -1 Missing Required Switch -2 Files is required, -3 "ex: -file file.txt"'),
 						_.linePrint(label='simple',p=0),
 						'',
 	],
@@ -117,29 +125,25 @@ _.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw );
 ########################################################################################
 #n)--> start
 
-def pre(i,cnt):
-	ii = str(i+1)
-
-	zeros = ''
-	while not len(zeros)+len(ii) == cnt:
-		zeros+='0'
-	return zeros+ii
-
 def action():
-	if _.switches.isActive('Execute'):
-		import subprocess
-	text  = ' '.join(_.switches.values('Text'))
-	cnt = len(str(len(_.isData(r=1))))
-	for i,row in enumerate( _.isData(r=1) ):
-		line = text.replace( '{}',row ).replace( '{i}',pre(i,cnt) ).replace("''",'"')
-		if _.showLine(line):
-			_.pr( line )
-			if _.switches.isActive('Execute'):
-				result = subprocess.run(line, shell=True, capture_output=True, text=True)
-				_.pr(result.stdout)
+	if not _.switches.isActive('Title/One'):
+		_.pr( 'Error: Title/One is required',c='red' )
+		return None
+		
+	if not _.switches.isActive('Message/Two'):
+		_.e( ' '.join(_.switches.values('Title/One')) )
+		return None
+	if not _.switches.isActive('Bullets/Three'):
+		_.e( ' '.join(_.switches.values('Title/One')),   ' '.join(_.switches.values('Message/Two')) )
+		return None
+	else:
+		dash = _.switches.isActive('AddDashToBullets')
+		_.e( ' '.join(_.switches.values('Title/One')),   ' '.join(_.switches.values('Message/Two')), _.switches.values('Bullets/Three'), dash=dash )
 
-
-
+	_.e(   '\n'.join(_.switches.values('Title/One')),      )
+	_.switches.register( 'Title/One', '-1,-one,-sub,-subject' )
+	_.switches.register( 'Message/Two', '-2,-two,-m,-message' )
+	_.switches.register( 'Bullets/Three', '-3,-three,-b,-bullets' )
 
 ##################################################
 #b)--> examples

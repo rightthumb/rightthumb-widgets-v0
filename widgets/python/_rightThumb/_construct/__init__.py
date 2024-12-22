@@ -11,6 +11,22 @@
 # ## {C3P0D40fAe8B} ##
 
 ##################################################
+class Meta_Namespace():
+	def __init__( self ):
+		pass
+dot=Meta_Namespace
+fn=Meta_Namespace()
+##################################################
+
+# App Help Menu Switch Grouping
+SwitchGroup_Help = Meta_Namespace()
+SwitchGroup_Help.Delim = ''
+SwitchGroup_Help.Group = '|'
+SwitchGroup_Help.SubGroup = ':' # if this len 1: SwitchGroupDepth +=1
+SwitchGroup_Help.NoGroup = '-'
+# HasSwitchSubGroup search for in framework
+
+##################################################
 def isGui():
 	import platform
 	if platform.system() == "Windows":
@@ -128,11 +144,7 @@ def name(path):
 	if app == '__init__': app=root+'.'+fo
 	return app
 
-class Meta_Namespace():
-	def __init__( self ):
-		pass
-dot=Meta_Namespace
-fn=Meta_Namespace()
+
 
 def settings( subjects, d=None, val='71e9-a678' ):
 	results = []

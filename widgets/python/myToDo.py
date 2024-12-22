@@ -9,10 +9,8 @@
 #    - Scott Taylor Reph, RightThumb.com
 # ###########################################################################
 # ## {C3P0D40fAe8B} ##
-
-import os
-import sys
-import time
+##################################################
+import os, sys, time
 ##################################################
 import _rightThumb._construct as __
 appDBA = __.clearFocus( __name__, __file__ )
@@ -29,34 +27,35 @@ _.load()
 ##################################################
 import _rightThumb._vars as _v
 import _rightThumb._string as _str
-
 ##################################################
 
-
 def appSwitches():
-	pass
-	### EXAMPLE: START
-	# _.switches.register( 'Input', '-i' )
-	# _.switches.register( 'Files', '-f,-file,-files','file.txt', isPipe=True, isRequired=True, description='Files' )
-	_.switches.register( 'File', '-f,-file,-files','file.txt', description='Files' )
-	### EXAMPLE: END
+	_.switches.register( 'todo', '-todo' )
+	_.switches.register( 'Clip', '-clip' )
+	_.switches.register( 'Add-todo', '-a,-add' )
+	_.switches.register( 'Remove-todo', '-r,-rm' )
+	pass 
 
-
-_.autoBackupData = False
+_.autoBackupData = __.autoCreationConfiguration['backup']
+__.releaseAcquiredData = __.autoCreationConfiguration['logs'] 
+__.myFileLocations_SKIP_VALIDATION = False
 __.isRequired_Pipe = False
-__.isRequired_Pipe_or_File = True
+__.isRequired_Pipe_or_File = False
+__.pre_error = False
+__.switch_raw = []
+# __.switch_raw = [ 'Delim' ]
 # __.isRequired_or_List = ['Pipe','Files','Plus']
+# __.setting( 'app-switches-raw', [ 'Delim' ] )
+
 
 _.appInfo[focus()] = {
-	'file': 'popFile.py',
+	'file': 'todo.py',
 	'liveAppName': __.thisApp( __file__ ),
-	'description': 'folder of selected file',
+	'description': 'todo lists from scrap',
 	'categories': [
-						'folder',
-						'file',
-						'tool',
-						'nav',
-						'navigate',
+						'scrap',
+						'todo',
+						'list',
 				],
 	'usage': [
 						# 'epy another',
@@ -65,16 +64,14 @@ _.appInfo[focus()] = {
 	],
 	'relatedapps': [
 						# 'p another -file file.txt',
-						'p cdf',
-						'',
+						# '',
 	],
 	'prerequisite': [
 						# 'p another -file file.txt',
 						# '',
 	],
 	'examples': [
-						'p popFile -f "C:\\Program Files\\Adobe\\Adobe Photoshop 2020\\Photoshop.exe"',
-						'p cdf -f "C:\\Program Files\\Adobe\\Adobe Photoshop 2020\\Photoshop.exe"',
+						_.hp('p thisApp -file file.txt'),
 						'',
 	],
 	'columns': [
@@ -119,17 +116,11 @@ def registerSwitches( argvProcessForce=False ):
 	appSwitches()
 
 	_.myFileLocation_Print = False
-	__.myFileLocations_SKIP_VALIDATION = False
-	_.switches.trigger( 'Files', _.myFileLocations )
+	_.switches.trigger( 'Files', _.myFileLocations, vs=True )
 	_.switches.trigger( 'Folder', _.myFolderLocations )
 	_.switches.trigger( 'URL', _.urlTrigger )
-	### EXAMPLE: START
-	# _.switches.trigger( 'Files',_.inRelevantFolder )
-	
-	# _.switches.trigger( 'Watched', _.txt2Date )
-	# _.switches.trigger( 'Input',_.formatColumns )
-	# _.switches.trigger( 'Franchise',_.triggerSpace )
-	### EXAMPLE: END
+	_.switches.trigger( 'Ago', _.timeAgo )
+	_.switches.trigger( 'Duration', _.timeFuture )
 	
 	_.defaultScriptTriggers()
 	_.switches.process()
@@ -157,56 +148,80 @@ if __name__ == '__main__':
 _.postLoad( __file__ )
 
 ########################################################################################
-#   if os.path.isdir( row ):
-#   if os.path.isfile( row ):
-#   os.path.abspath(path)
-########################################################################################
 # START
 
-def httpCheck(path):
-	if path.startswith('https:') or path.startswith('http:'):
-		url=path
-		url=url.replace('https://www.','https://')
-		if '?' in url: url=url.split('?')[0]
-		sites=_.getTable('site-locations.list')
-		for mPath in sites:
-			if os.path.isfile(mPath):
-				p = __.path(mPath,pop=True)
-				if _.getText( mPath, raw=True ).strip().startswith('{'): meta = _.getTable2( mPath )
-				else: meta = _.getYML( mPath )
-				if 'url' in meta:
-					u = meta['url'].replace('https://www.','https://')
-					if url.startswith(u):
-						x=url[len(u):].replace('/',os.sep)
-						y=p+os.sep+x
-						if os.path.isdir(y):
-							test='index.php index.htm index.html'.split(' ')
-							for t in test:
-								yt=str(y+os.sep+t).replace(os.sep+os.sep,os.sep)
-								if os.path.isfile(yt):
-									y=yt
-						y=y.replace(os.sep+os.sep,os.sep)
-						if os.path.isfile(y):
-							path=y
-	return path
 
 
 def action():
-	# files=_.isData()
-	# if _.switches.isActive('Files'):
-	files=_.switches.values('File')
-	for i,path in enumerate(files):
-		# print(path);sys.exit()
-		path=httpCheck(path)
-		_.pr( __.path(path,pop=True) )
 
+	if _.switches.isActive('Clip'):
+		_paste = _.regImp( __.appReg, '-paste' )
+		_copy = _.regImp( __.appReg, '-copy' )
+		data = _paste.imp.paste()
+		data = data.replace( 'ToDo', 'todo' )
+		data = data.replace( 'TODO', 'todo' )
+		new=[]
+		do=''
+		if _.switches.isActive('Add-todo'):
+			do='add'
+		if _.switches.isActive('Remove-todo'):
+			do='remove'
+
+		if not do:
+			if 'todo:' in data:
+				do='remove'
+			else:
+				do='add'
+
+		if do == 'add':
+			for line in data.split('\n'):
+				test = _str.cleanBE(line,'\t')
+				test = _str.cleanBE(line,' ')
+				test = _str.replaceDuplicate(test,' ')
+				test = test.replace('\r','')
+				if test:
+					if not line.startswith('todo:'):
+						line = 'todo: '+line
+				new.append(line)
+		if do == 'remove':
+			for line in data.split('\n'):
+				if line.startswith('todo: '):
+					line = line.split('todo: ')[1]
+				if line.startswith('todo:x '):
+					line = line.split('todo:')[1]
+				if line.startswith('todo:'):
+					line = line.split('todo:')[1]
+				new.append(line)
+		data='\n'.join(new)
+		data=data.replace('todo: x ', 'todo:x ')
+		_copy.imp.copy( data )
+		return None
+	pass
+	if _.switches.isActive('todo'):
+		path=_v.myHome  +os.sep+  'projects'  +os.sep+  'project-log.txt'
+		last=-1
+		for i,line in enumerate(_.getText(path,raw=True).split('\n')):
+			if line.lower().startswith('todo:'):
+				# _.pr(i,i-last)
+				# _.pr(last-i)
+				if i-last > 10:
+					_.pr()
+					_.cp( _.linePrint(txt='_',p=0), 'yellow' )
+					_.pr(i+1)
+					_.pr()
+				else:
+					ix=1
+					while not ix==i-last:
+						_.pr()
+						ix+=1
+				_.pr(line)
+				last=i
 
 
 ########################################################################################
 if __name__ == '__main__':
 	action()
-
-
+	__.isExit()
 
 
 

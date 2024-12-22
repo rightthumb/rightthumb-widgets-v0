@@ -9,13 +9,18 @@ def sw():
 _._default_settings_()
 
 _.appInfo[focus()] = {
-	'file': 'thisApp.py',
-	'description': 'Changes the world',
+	'file': 'colorize.py',
+	'description': 'Used in shell scripts, batch files, etc. to colorize text',
 	'categories': [
-						'DEFAULT',
+						'colorize',
+						'Script Helper',
+						'Batch Files',
+						'Shell Scripts',
+						'Utility',
 				],
 	'examples': [
-						_.hp('p thisApp -file file.txt'),
+						_.hp('p colorize -text "Error: Invalid Input" "Example: script valid/folder" -color red yellow'),
+						_.pr('   Error: Invalid Input',c='red',p=0)+' '+_.pr('Example: script.sh valid/folder',c='yellow',p=0),
 						_.linePrint(label='simple',p=0),
 						'',
 	],

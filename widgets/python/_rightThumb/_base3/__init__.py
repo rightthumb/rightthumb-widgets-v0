@@ -1,6 +1,8 @@
 #!/usr/bin/python3
 ########################################################################################
 # alt+29 ↔ is space
+# helpColorScheme
+
 ##################################################
 import _rightThumb._construct as __
 import _rightThumb._vars as _v
@@ -36,6 +38,11 @@ __.showLine_quoteFix=True
 
 # releaseAcquiredData
 
+##################################################
+class Meta_Namespace():
+	def __init__( self ): pass
+dot=Meta_Namespace
+helpColorScheme = dot()
 ##################################################
 # sudo apt install libpython2.7-stdlib
 # import json
@@ -1515,10 +1522,7 @@ def reFormatSize( start ):
 
 ######################################################
 
-class Meta_Namespace():
-	def __init__( self ):
-		pass
-dot=Meta_Namespace
+
 __.tableLine = '‽'
 __.tableLine = '\t'
 v = dot()
@@ -4421,9 +4425,9 @@ def delete_keys_from_dict(d, to_delete=None):
 	return d
 
 
-def help():
+def help(justAppNotFullHelp=True):
 	global switches
-	switches.help()
+	switches.help(justAppNotFullHelp)
 
 def internet_domains(text):
 	global domainIndex
@@ -5587,6 +5591,8 @@ def urlTrigger(url):
 	return url
 
 def myFolderLocations( data ):
+	if 'myFolderLocations' in __.setting('omit-functions', d=[]):
+		return data
 	if type(data) == list:
 		for i,d in enumerate(data):
 			data[i] = myFolderLocations(d)
@@ -6619,7 +6625,39 @@ def colorizeRow( row, tableID=False, prefix='', prefixColor='', haltColorShift=F
 			print_(line)
 
 
+def colorizeRowLength( row, tableID=False, prefix='', prefixColor='', haltColorShift=False, pipe_break=True ):
+	global colorizeRow_last
+	if len(prefix) and len(prefixColor):
+		prefix = colorThis( prefix, prefixColor, p=0 )
+	global switches
+	if switches.isActive( 'NoColor' ):
+		return len(row.replace('‽',''))
+		return False
 
+	if type(tableID) == bool:
+		tableID = __.color_palette
+	if not type(row) == str:
+		row = str(row)
+	if type(tableID) == bool:
+		return len(row)
+	else:
+		if _str.hasVisible(row):
+			up =True
+		else:
+			up =False
+		# print_( 'tableID:', tableID, colorID( tableID ) )
+		# print_( str(len(row))+colorID( tableID, up ) + row + Background.end )
+		if not pipe_break or not __.tableLine in row:
+			print_( prefix + colorizeRow_last + row )
+		else:
+			sep = ' '
+			line = prefix + sep
+			parts=[]
+			for part in row.split(__.tableLine):
+				parts.append( colorizeRow_last + part + Background.end )
+
+			line += sep.join(parts) + sep
+			return len(line)
 
 app_full_color_index = None
 def generateColorIndex():
@@ -11935,7 +11973,9 @@ class Switches:
 		tables.register('data',data)
 		tables.print('data','appreg,name,value')
 
-	def register(self, name, switch, example_or_notes = None, isRequired=False, isPipe=None, isData=None, description='', space=False, default=False, group=None):
+	def register(self, name, switch, example_or_notes = None, isRequired=False, isPipe=None, isData=None, description='', space=False, default=False, group=None, g=None):
+		if not g is None:
+			group = g
 
 		if not isPipe is None:
 			__.trigger_isPipe = isPipe
@@ -12347,7 +12387,28 @@ class Switches:
 				if sw.name == name:
 					result = True
 		return result
-	def help(self):
+	def help(self,justAppNotFullHelp=False):
+		
+		# Help Menu Color Scheme
+		## Unused colors commented for navigation
+		helpColorScheme.labels = 'ColorBold.white'
+		helpColorScheme.tableSwitchGroupsLine = 'blue'
+		helpColorScheme.file = 'Background.light_blue'
+		helpColorScheme.description = 'Background.green'
+		helpColorScheme.tags = 'green'
+		helpColorScheme.prerequisite = 'ColorBold.blue'
+		helpColorScheme.relatedapps = 'ColorBold.blue'
+		helpColorScheme.examples = '' # handled differently
+		helpColorScheme.ask_example_id = 'yellow'
+		helpColorScheme.abbreviations = '' # is colorizeRow
+		helpColorScheme.line = 'yellow'
+		helpColorScheme.requiredLabel = 'red'
+		helpColorScheme.required = 'Background.red'
+		helpColorScheme.switchRequredLabel = 'ColorBold.white'
+		helpColorScheme.switchRequred = 'yellow'
+		helpColorScheme.noRequirements = 'green' # cyan
+		helpColorScheme.notes = '' # handled differently
+		self.justAppNotFullHelp = justAppNotFullHelp
 		if self.value('Help') == 'x' or self.value('Help') == 'cls' or self.value('Help') == 'clear' or 'fn' in self.value('Help'):
 
 
@@ -12393,15 +12454,20 @@ class Switches:
 		# os.system('cls')
 		print_()
 		print_()
-		filename = colorThis(  [ 'Program:  \t' ], 'bold', p=0  )
+
+		filename = colorThis(  [ 'Program:  \t' ], helpColorScheme.labels, p=0  )
 		try:
 			if not appInfo[__.appReg]['file'] == 'thisApp.py' and appInfo[__.appReg]['liveAppName'] == '__init__':
-				filename += colorThis(  [ appInfo[__.appReg]['file'].replace('.py','') ], 'yellow', p=0  )
+				filename += colorThis(  [ appInfo[__.appReg]['file'].replace('.py','') ], helpColorScheme.file, p=0  )
+				sys.exit()
 			else:
 				try:
-					filename += colorThis(  [ appInfo[__.appReg]['liveAppName'] ], 'yellow', p=0  )
+					if not appInfo[__.appReg]['file'] == 'thisApp.py' and not appInfo[__.appReg]['liveAppName'] == '__init__':
+						filename += colorThis(  [ appInfo[__.appReg]['liveAppName'] ], helpColorScheme.file, p=0  )
+					else:
+						filename += colorThis(  [ appInfo[__.appReg]['file'].replace('.py','') ], helpColorScheme.file, p=0  )
 				except Exception as e:
-					filename += colorThis(  [ appInfo[__.appReg]['file'].replace('.py','') ], 'yellow', p=0  )
+					filename += colorThis(  [ appInfo[__.appReg]['file'].replace('.py','') ], helpColorScheme.file, p=0  )
 		except: pass
 
 		print_()
@@ -12410,19 +12476,20 @@ class Switches:
 
 		try:
 			if type( appInfo[__.appReg]['description'] ) == list:
-				print_( inlineBold('Description:   '))
+				print_( pr('Description:   ',c=helpColorScheme.labels,p=0))
 				for x in appInfo[__.appReg]['description']:
-					print_( '                 - ', x )
+					print_( '                 - ', pr(x,c=helpColorScheme.description,p=0) )
 				print_()
 			else:
-				print_( inlineBold('Description:   '), appInfo[__.appReg]['description'] + '\n')
+				print_( inlineBold('Description:   '), pr(appInfo[__.appReg]['description'],c=helpColorScheme.description,p=0) + '\n')
 			configured = True
 		except Exception as e:
 			configured = False
 
 		try:
 			# print_( inlineBold('Categories:    '), ', '.join( appInfo[__.appReg]['categories'] ) + '\n')
-			print_( inlineBold('Tags:          '), '(',', '.join( appInfo[__.appReg]['categories'] ), ')' + '\n')
+			print_( inlineBold('Tags:          '), '(',    pr(', '.join( appInfo[__.appReg]['categories'] ),c=helpColorScheme.tags,p=0)   , ')' + '\n')
+			# print_( inlineBold('Tags:          '), '(',    ', '.join( appInfo[__.appReg]['categories'] )   , ')' + '\n')
 			# print_( inlineBold('          Tags:'), ', '.join( appInfo[__.appReg]['categories'] ) + '\n')
 			pass
 		except Exception as e:
@@ -12430,31 +12497,36 @@ class Switches:
 
 		try:
 			if len(appInfo[__.appReg]['prerequisite']) > 0:
-				printBold('Prerequisite:')
+				pr('Prerequisite:',c=helpColorScheme.labels)
 				for docItem in appInfo[__.appReg]['prerequisite']:
 					if type(docItem) == list:
-						colorThis( '\t\t'+docItem[0], docItem[1]  )
+						# colorThis( '\t\t'+docItem[0], docItem[1]  )
+						pr('\t\t'+docItem[0],c=helpColorScheme.prerequisite)
 					else:
-						colorizeRow( '\t\t'+ docItem , 2)
+						pr('\t\t'+docItem,c=helpColorScheme.prerequisite)
+						# colorizeRow( '\t\t'+ docItem , 2)
 					# colorizeRow('\t' + prereq,2)
 				print_('\n')
 		except Exception as e:
 			pass
 		try:
 			if len(appInfo[__.appReg]['relatedapps']) > 0:
-				printBold('Related Apps:')
+				# printBold('Related Apps:')
+				pr('Related Apps:',c=helpColorScheme.labels)
+				
 				for docItem in appInfo[__.appReg]['relatedapps']:
 					if type(docItem) == list:
-						colorThis( '\t\t'+docItem[0], docItem[1]  )
+						pr('\t\t'+docItem[0],c=helpColorScheme.relatedapps)
 					else:
-						colorizeRow( '\t\t'+ docItem , 2)
+						pr('\t\t'+docItem,c=helpColorScheme.relatedapps)
 				print_('\n')
 		except Exception as e:
 			pass
 		if configured:
 			quit_early = False
 			if len(appInfo[__.appReg]['examples']) > 0:
-				printBold('Examples:')
+				# printBold('Examples:')
+				pr('Examples:',c=helpColorScheme.labels)
 				IDs = {}
 				ei = 1
 				for docItem in appInfo[__.appReg]['examples']:
@@ -12476,7 +12548,8 @@ class Switches:
 								quit_early= True
 							if len(prei):
 								IDs[prei] = docItem[0]
-							colorThis( '\t'+prei+'\t'+docItem[0], docItem[1]  )
+							# colorThis( '\t'+prei+'\t'+docItem[0], docItem[1]  )
+							pr('\t'+prei+'\t'+docItem[0],c=helpColorScheme.examples)
 						else:
 							if not len(docItem):
 								prei = ''
@@ -12489,11 +12562,12 @@ class Switches:
 								setClip(docItem)
 								quit_early = True
 							colorizeRow( '\t'+prei+'\t'+ docItem , 2)
+							# pr('\t'+prei+'\t'+ docItem ,c=helpColorScheme.examples)
 			if 'id' in self.value('Help') or 'c' in self.value('Help') or 'ask' in self.value('Help') or 'i' in self.value('Help'):
 				askID = input( '?> : ' )
 				if askID in IDs:
 					setClip(IDs[askID])
-					cp(  [ '\n\nCopied:\n\t', IDs[askID], '\n\n' ], 'green'  )
+					cp(  [ '\n\nCopied:\n\t', IDs[askID], '\n\n' ], helpColorScheme.ask_example_id  )
 			if quit_early:
 				sys.exit()
 					# colorizeRow('\t' + ex,2)
@@ -12512,6 +12586,7 @@ class Switches:
 							result += col['name'] + '(' + col['abbreviation'] + '), '
 					result = result[:-2]
 					colorizeRow('\t' + result + '\n',2)
+					# helpColorScheme.abbreviations
 
 				if __.columnAbbreviations == 1:
 					for col in appInfo[__.appReg]['columns']:
@@ -12519,6 +12594,7 @@ class Switches:
 							abbreviation =  fields.value( 'columns', 'abbreviation', col['abbreviation'] )
 							name =          fields.value( 'columns', 'name', col['name'] )
 							colorizeRow( '\t' + abbreviation + '\t' + name )
+							# helpColorScheme.abbreviations
 						# print_( '\t', col['abbreviation'], '\t', col['name']  )
 
 				if len( appInfo[__.appReg]['columns'] ):
@@ -12529,9 +12605,10 @@ class Switches:
 		print_()
 		print_()
 		# def linePrint(  label=None, text=None, txt='_', mn=50, add=5, p=2, c='', half=False, h=None )
-		linePrint(txt='+',c='yellow',x=.5)
+		linePrint(txt='+',c=helpColorScheme.line,x=.5)
 		# colorThis('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++','yellow')
-		printBold( 'Requirements:' )
+		# printBold( 'Requirements:' )
+		pr('Requirements:',c=helpColorScheme.labels)
 		print_()
 		hasRequirements = False
 		# if __.isRequired_Pipe_or_File:
@@ -12545,21 +12622,24 @@ class Switches:
 
 		if __.isRequired_Pipe:
 			hasRequirements = True
-			colorThis(  [  '  !! Required Pipe data' ]  , 'red' )
+			colorThis(  [  '  !! Required Pipe data' ]  , helpColorScheme.requiredLabel )
 
 		if __.isRequired_Pipe_or_File:
 			hasRequirements = True
-			colorThis(  [  '  !! Required Pipe data or Files switch' ]  , 'red' )
+			colorThis(  [  '  !! Required Pipe data or Files switch' ]  , helpColorScheme.requiredLabel )
 
 		if len(self.isRequired[__.appReg]):
 			hasRequirements = True
-			colorThis(  [  '  !! Required ' + ' and '.join(self.isRequired[__.appReg])  ]  , 'red' )
+			colorThis(  [  '  !! Required ' + ' and '.join(self.isRequired[__.appReg])  ]  , helpColorScheme.requiredLabel )
 
 
 		if not __.isRequired_or_List is None:
 			# for x in __.isRequired_or_List:
 			hasRequirements = True
-			colorThis(  [  '  !! Required ' + ' or '.join(__.isRequired_or_List)  ]  , 'red' )
+			isRequired_or_List1 = pr('  !! Required   ',c=helpColorScheme.requiredLabel,p=0)
+			isRequired_or_List2 = pr(' or '.join(__.isRequired_or_List),c=helpColorScheme.required,p=0)
+			print_(isRequired_or_List1 +':   '+ isRequired_or_List2)
+			# colorThis(  [  '  !! Required ' + ' or '.join(__.isRequired_or_List)  ]  , 'red' )
 
 		lastGroup = 0
 		for switch in self.switches:
@@ -12568,7 +12648,7 @@ class Switches:
 			if len(switch.documentation['required']) :
 				print_()
 				print_()
-				print_( colorThis( '  !! If using switch:' , 'bold', p=0 ), colorThis( switch.name , 'yellow', p=0 ), colorThis( 'the following is required:' , 'bold', p=0 ) )
+				print_( colorThis( '  !! If using switch:' , helpColorScheme.switchRequredLabel, p=0 ), colorThis( switch.name , helpColorScheme.switchRequred, p=0 ), colorThis( 'the following is required:' , helpColorScheme.switchRequredLabel, p=0 ) )
 
 				for x in switch.documentation['required']:
 					hasRequirements = True
@@ -12578,7 +12658,7 @@ class Switches:
 			if len(switch.documentation['related']) :
 				print_()
 				print_()
-				print_( colorThis( '  If using switch:' , 'bold', p=0 ), colorThis( switch.name , 'yellow', p=0 ), colorThis( 'the following is related:' , 'bold', p=0 ) )
+				print_( colorThis( '  If using switch:' , helpColorScheme.switchRequredLabel, p=0 ), colorThis( switch.name , helpColorScheme.switchRequred, p=0 ), colorThis( 'the following is related:' , helpColorScheme.switchRequredLabel, p=0 ) )
 				for x in switch.documentation['related']:
 					hasRequirements = True
 					colorThis(  [ '\t', x  ]  , 'yellow' )
@@ -12589,9 +12669,9 @@ class Switches:
 				# printVar( dict(switch.__dict__) )
 			# sys.exit()
 		if not hasRequirements:
-			colorThis( [ '\t', 'No requirements' ], 'green' )
+			colorThis( [ '\t', 'No requirements' ], helpColorScheme.noRequirements )
 		print_()
-		linePrint(txt='+',c='yellow',x=.5)
+		linePrint(txt='+',c=helpColorScheme.line,x=.5)
 		# colorThis('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++','yellow')
 		print_()
 		print_()
@@ -12600,10 +12680,12 @@ class Switches:
 			if len( appInfo[__.appReg]['notes'] ):
 				print_()
 				print_()
-				printBold( 'Notes:' )
+				# printBold( 'Notes:' )
+				pr('Notes:',c=helpColorScheme.labels)
 				for col in appInfo[__.appReg]['notes']:
 					print_()
 					printVarSimple( col, prefix='                ', remove='"' )
+					# helpColorScheme.notes
 					print_()
 
 		# for x in sys.modules:
@@ -12886,16 +12968,28 @@ class Switches:
 			if n > swLen['n']: swLen['n'] = n
 			if s > swLen['s']: swLen['s'] = s
 			if e > swLen['e']: swLen['e'] = e
-			try:
-				sw.group[0]
+			if not sw.group is None:
 				valid = True
-			except Exception as e:
-				valid = False
-			if valid:
-				if not lastGroup == sw.group[0]:
-					if sgLm > len(sw.group[1]): sgLm = len(sw.group[1])
-					sgLe[sw.group[0]] = len(sw.group[1])
-				lastGroup = sw.group[0]
+				if type(sw.group) == str:
+					swgroupID = sw.group
+					swgroupLabel = sw.group
+				else:
+					if len(sw.group) > 1:
+						swgroupID = sw.group[0]
+						swgroupLabel = sw.group[1]
+					elif len(sw.group) == 1:
+						swgroupID = sw.group[0]
+						swgroupLabel = sw.group[0]
+			# try:
+			# 	sw.group[0]
+			# 	valid = True
+			# except Exception as e:
+			# 	valid = False
+			# if valid:
+			# 	if not lastGroup == sw.group[0]:
+			# 		if sgLm > len(sw.group[1]): sgLm = len(sw.group[1])
+			# 		sgLe[sw.group[0]] = len(sw.group[1])
+			# 	lastGroup = sw.group[0]
 
 		if sgLm > swLen['e']: swLen['e'] = sgLm
 		
@@ -12922,29 +13016,103 @@ class Switches:
 		# for i in range( swLen['s']-1 ): spaces['s'] += '-'
 		spaces['s'] = '  <'+spaces['s']+'>'
 		# pv(sgSe)
+		lastGroup = -1
+		lastLabel = ''
 
+		# Start: SwitchSubGroup check
+		SwitchGroup = False
+		SwitchSubGroup = False
 		for i,sw in enumerate(self.switches):
 			if self.switches[i].appReg == __.appReg:
-				try:
-					sw.group[0]
+				valid = False
+				if not sw.group is None:
 					valid = True
-				except Exception as e:
-					valid = False
-					# print(e)
-
+					if type(sw.group) == str:
+						swgroupID = sw.group
+						swgroupLabel = sw.group
+					else:
+						if len(sw.group) > 1:
+							swgroupID = sw.group[0]
+							swgroupLabel = sw.group[1]
+						elif len(sw.group) == 1:
+							swgroupID = sw.group[0]
+							swgroupLabel = sw.group[0]
+							
 				if valid:
-					if not lastGroup == sw.group[0]:
-						# switch.append({'name':'' ,'switch':'','example_or_notes': '>>'})
-						# switch.append({'Switch Group: '+str(sw.group[0]): 'switch', 'example_or_notes': '    --> '+sw.group[1]+' <--'})
-						switch.append({'name':spaces['n']+'Switch Group: '+str(sw.group[0]) ,'switch':spaces['s'],'example_or_notes': sgSe[sw.group[0]]+'--> '+sw.group[1]+' <--'})
-						# switch.append({'name':'' ,'switch':'','example_or_notes': '>>'})
-				
+					SwitchGroup = True
+					if not lastGroup == swgroupID:
+						pass
+					elif not swgroupID == swgroupLabel and not lastLabel == swgroupLabel:
+						SwitchSubGroup = True
+
 				if __.switch_skimmer.active and not self.switches[i].default:
-					switch.append({'name':sw.name ,'switch':sw.switch,'example_or_notes': sw.example_or_notes})
+					pass
 				elif not __.switch_skimmer.active:
-					switch.append({'name':sw.name ,'switch':sw.switch,'example_or_notes': sw.example_or_notes})
+					pass
 				try:
-					lastGroup = sw.group[0]
+					lastGroup = swgroupID
+					lastLabel = swgroupLabel
+				except: pass 
+		# End: SwitchSubGroup check
+
+
+		for i,sw in enumerate(self.switches):
+			if self.switches[i].default and self.justAppNotFullHelp: continue
+			if self.switches[i].appReg == __.appReg:
+				valid = False
+				if not sw.group is None:
+					valid = True
+					if type(sw.group) == str:
+						swgroupID = sw.group
+						swgroupLabel = sw.group
+					else:
+						if len(sw.group) > 1:
+							swgroupID = sw.group[0]
+							swgroupLabel = sw.group[1]
+						elif len(sw.group) == 1:
+							swgroupID = sw.group[0]
+							swgroupLabel = sw.group[0]
+							
+				if valid:
+					# print('valid',sw.name)
+					if not lastGroup == swgroupID:
+						if SwitchSubGroup:
+							switch.append({ 'HasSwitchSubGroup': '', 'SwitchGroup': swgroupLabel.strip(), 'name': '','switch': '','example_or_notes': ''})
+							
+						else:
+							switch.append({ 'SwitchGroup': swgroupLabel.strip(), 'name': '','switch': '','example_or_notes': ''})
+						# switch.append({'name':'' ,'switch':'','example_or_notes': '>>'})
+					elif not swgroupID == swgroupLabel and not lastLabel == swgroupLabel:
+						if len(sw.group) > 2:
+							switch.append({ 'SwitchGroupDepth': sw.group[2], 'SwitchSubGroup': swgroupLabel.strip(), 'name': '','switch': '','example_or_notes': ''})
+						else:
+							switch.append({ 'SwitchSubGroup': swgroupLabel.strip(), 'name': '','switch': '','example_or_notes': ''})
+					# continue
+					# SwitchGroup
+				if __.switch_skimmer.active and not self.switches[i].default:
+					if SwitchGroup:
+						if valid:
+							key = 'valid'
+						else:
+							key = 'SwitchGroup'
+
+						switch.append({key:'','name':sw.name ,'switch':sw.switch,'example_or_notes': sw.example_or_notes})
+					else:
+						switch.append({'name':sw.name ,'switch':sw.switch,'example_or_notes': sw.example_or_notes})
+				elif not __.switch_skimmer.active:
+					if SwitchGroup:
+						if valid:
+							key = 'valid'
+						else:
+							key = 'SwitchGroup'
+
+						switch.append({key:'','name':sw.name ,'switch':sw.switch,'example_or_notes': sw.example_or_notes})
+					else:
+						switch.append({'name':sw.name ,'switch':sw.switch,'example_or_notes': sw.example_or_notes})
+					# switch.append({'name':sw.name ,'switch':sw.switch,'example_or_notes': sw.example_or_notes})
+				try:
+					lastGroup = swgroupID
+					lastLabel = swgroupLabel
 				except: pass
 
 
@@ -14966,6 +15134,25 @@ class Table:
 					theRight = 0
 				result = self.addSpace2(theLeft) + text + self.addSpace2(theRight)
 			return result
+
+
+
+
+		max_length = 0
+
+		for item in self.asset:
+			result = ''
+			for c in column.split(','):
+				try:
+					result += self.showColumn(c, i, columnHeaderLength) + self.columnTab + tableLine
+				except Exception:
+					pass
+			try:
+				current_length = colorizeRowLength(tableLine + result)-len('_______________________________________________')
+				max_length = max(max_length, current_length)
+			except: pass
+
+
 		for item in self.asset:
 			# print_(item)
 			result = ''
@@ -15068,7 +15255,27 @@ class Table:
 						cp( [ self.tab['table']+loopPrint(__.table_prefix_padding) + result ], 'BackgroundGrey.blue' )
 					else:
 						if result.strip().startswith('Help  '):print_('')
-						colorizeRow( tableLine+result, prefix=self.tab['table']+loopPrint(__.table_prefix_padding), prefixColor=self.tab_color, haltColorShift=self.isExtraRecord )
+						# if result.strip().startswith('Switch Group:'): print('')
+						if 'SwitchSubGroup' in item and  'example_or_notes' in item :
+							if 'SwitchGroupDepth' in item and  'example_or_notes' in item :
+								SwitchGroupDepth = item['SwitchGroupDepth']
+							else:
+								SwitchGroupDepth = 1
+							if len(__.SwitchGroup_Help.SubGroup) ==1:
+								SwitchGroupDepth +=1
+							print()
+							printBold(__.SwitchGroup_Help.SubGroup * SwitchGroupDepth+__.SwitchGroup_Help.Delim+' '+item['SwitchSubGroup'])
+						if 'SwitchGroup' in item and  'example_or_notes' in item :
+							print()
+							if 'HasSwitchSubGroup' in item and  'example_or_notes' in item :
+								pr('_' * max_length,c=helpColorScheme.tableSwitchGroupsLine)
+							SwitchGroup = __.SwitchGroup_Help.Group
+							if item['SwitchGroup'] == '':
+								SwitchGroup = __.SwitchGroup_Help.NoGroup
+							  
+							printBold(SwitchGroup+__.SwitchGroup_Help.Delim+' '+item['SwitchGroup'])
+						# print(item)
+						colorizeRow( tableLine+result.lstrip(), prefix=self.tab['table']+loopPrint(__.table_prefix_padding), prefixColor=self.tab_color, haltColorShift=self.isExtraRecord )
 			i += 1
 			if 'example_or_notes' in column and 'switch' in column and  switchDefault == i:
 
@@ -18578,6 +18785,8 @@ def default_switch_trigger(name,script):
 	default_switch_trigger_index[name]=script
 
 def aliasesFo(fo):
+	if 'aliasesFo' in __.setting('omit-functions', d=[]):
+		return fo
 	if os.path.isdir(fo): return fo
 	import _rightThumb._bookmarks as _bm # type: ignore
 	try:
@@ -18603,14 +18812,20 @@ def defaultScriptTriggers_do():
 
 	if defaultScriptTriggers_run:
 		if len(appInfo[__.appReg_bk]['columns']) > 0:
-
-			switches.trigger('Column',formatColumns)
-			switches.trigger('Sort',formatColumnsSort)
-			switches.trigger('GroupBy',formatColumns)
-			switches.trigger('GroupTotals',formatColumns)
-		switches.trigger('PlusClose',plusCloseClean)
-		switches.trigger('Ago',timeAgo)
-		switches.trigger('PrintEpoch',print_epoch_trigger)
+			if not 'Column' in __.setting('omit-switch-triggers',d=[]):
+				switches.trigger('Column',formatColumns)
+			if not 'Sort' in __.setting('omit-switch-triggers',d=[]):
+				switches.trigger('Sort',formatColumnsSort)
+			if not 'GroupBy' in __.setting('omit-switch-triggers',d=[]):
+				switches.trigger('GroupBy',formatColumns)
+			if not 'GroupTotals' in __.setting('omit-switch-triggers',d=[]):
+				switches.trigger('GroupTotals',formatColumns)
+		if not 'PlusClose' in __.setting('omit-switch-triggers',d=[]):
+			switches.trigger('PlusClose',plusCloseClean)
+		if not 'Ago' in __.setting('omit-switch-triggers',d=[]):
+			switches.trigger('Ago',timeAgo)
+		if not 'PrintEpoch' in __.setting('omit-switch-triggers',d=[]):
+			switches.trigger('PrintEpoch',print_epoch_trigger)
 		# switches.trigger('Aggregate',aggregate_trigger)
 		switches.postScripts.append( aggregate_trigger )
 
@@ -21671,7 +21886,9 @@ _cryptFile.do( 'action' )
 # alias
 
 
-def err( msg='STOP' , e=None, note=None, kill=True):
+def err( msg='STOP' , e=None, note=None, kill=True, bulletDash=False, dash=None):
+	if not dash is None:
+		bulletDash = dash
 
 	cp( linePrint(txt='*',p=0), 'red' )
 
@@ -21733,10 +21950,16 @@ def err( msg='STOP' , e=None, note=None, kill=True):
 
 	if not note is None and type(note) == list:
 		for n in note:
-			cp( ['  \t\t   -',n], 'cyan' )
+			if bulletDash:
+				cp( ['  \t\t   -',n], 'cyan' )
+			else:
+				cp( ['  \t\t   ',n], 'cyan' )
 
 	elif not note is None and type(note) == str:
-		cp( ['  \t\t   -',note], 'cyan' )
+		if bulletDash:
+			cp( ['  \t\t   -',note], 'cyan' )
+		else:
+			cp( ['  \t\t   ',note], 'cyan' )
 
 	# if not note is None:
 		# cp( ['  \t\t\t',note], 'cyan' )
@@ -22327,7 +22550,8 @@ def l_registerSwitches_vars():
 	__.isRequired_Pipe_or_File = __.setting('require-pipe||file')
 	__.pre_error = __.setting('pre-error')
 	__.switch_raw = __.setting('switch-raw')
-	__.isRequired_or_List = __.setting('require-list')
+	if not __.isRequired_or_List:
+		__.isRequired_or_List = __.setting('require-list')
 def l_registerSwitches( trig=None, sw=None ):
 	global appInfo
 	global argvProcess
@@ -22363,7 +22587,8 @@ def l_registerSwitches( trig=None, sw=None ):
 			setPipeData( sys.stdin.readlines(), __.appReg, clean=l.conf('clean-pipe' ,d=True) )
 	postLoad( l.conf('__file__') )
 	myFileLocation_Print=l.conf('myFileLocation_Print',d=False)
-	appInfo[__.appReg]['file']=appInfo[__.appReg]['liveAppName']
+	if appInfo[__.appReg]['file'] == 'thisApp.py':
+		appInfo[__.appReg]['file'] =appInfo[__.appReg]['liveAppName']
 l=dot()
 l.v=dot()
 l.sw=dot()
@@ -24225,12 +24450,18 @@ def dict_to_markdown_table(dict_list):
 ## micro helpers
 def _default_triggers_():
 	global switches
-	switches.trigger( 'Files', myFileLocations, vs=True )
-	switches.trigger( 'Ago', timeAgo )
-	switches.trigger( 'Folder', myFolderLocations )
-	switches.trigger( 'Folders', myFolderLocations )
-	switches.trigger( 'URL', urlTrigger )
-	switches.trigger( 'Duration', timeFuture )
+	if not 'Files' in __.setting('omit-switch-triggers',d=[]):
+		switches.trigger( 'Files', myFileLocations, vs=True )
+	if not 'Ago' in __.setting('omit-switch-triggers',d=[]):
+		switches.trigger( 'Ago', timeAgo )
+	if not 'Folder' in __.setting('omit-switch-triggers',d=[]):
+		switches.trigger( 'Folder', myFolderLocations )
+	if not 'Folders' in __.setting('omit-switch-triggers',d=[]):
+		switches.trigger( 'Folders', myFolderLocations )
+	if not 'URL' in __.setting('omit-switch-triggers',d=[]):
+		switches.trigger( 'URL', urlTrigger )
+	if not 'Duration' in __.setting('omit-switch-triggers',d=[]):
+		switches.trigger( 'Duration', timeFuture )
 def _default_settings_():
 	__.setting('receipt-log',True)
 	__.setting('receipt-file',True)
@@ -25216,6 +25447,65 @@ increments = {
 
 
 ##################################################
+'''
+AesEverywhere
+git clone https://github.com/mervick/aes-everywhere
+cd aes-everywhere/python
+pip install --upgrade pip setuptools wheel build
+python -m build
+pip install dist/aes_everywhere-1.2.9-py3-none-any.whl
+pip install -e .
+python -m pip show aes-everywhere
+'''
+class aesEverywhere:
+	def __init__(self,password=None):
+		if password is None and 'aes' in _v.fig:
+			password = _v.fig['aes']
+		try:
+			from AesEverywhere import aes256
+		except: pass
+		self.aes256 = aes256
+		self.password = password
+
+	def binEncrypt(self, data, key=None ):
+		if key is None: key = self.password
+		return self.aes256.encrypt(data,key)
+	def binDecrypt(self, data, key=None ):
+		if key is None: key = self.password
+		return self.aes256.decrypt(data,key)
+	
+	def encrypt(self, data, key=None ):
+		if key is None: key = self.password
+		return self.aes256.encrypt(data,key).decode('utf-8')
+	def decrypt(self, data, key ):
+		if key is None: key = self.password
+		try:
+			return self.aes256.decrypt(data,key).decode('utf-8')
+		except:
+			e('Decryption Failure','Possibly bad password.')
+
+	## SHORTCUTS
+
+	def bEn(self, data, key=None ):
+		return self.binEncrypt(data,key)
+	def bDe(self, data, key=None ):
+		return self.binDecrypt(data,key)
+	def be(self, data, key=None ):
+		return self.binEncrypt(data,key)
+	def bd(self, data, key=None ):
+		return self.binDecrypt(data,key)
+
+	def e(self, data, key=None ):
+		return self.encrypt(data,key)
+	def d(self, data, key=None ):
+		return self.decrypt(data,key)
+	def en(self, data, key=None ):
+		return self.encrypt(data,key)
+	def de(self, data, key=None ):
+		return self.decrypt(data,key)
+
+# _base3.aesEverywhere
+##################################################
 
 # __.switch_raw
 ##################################################
@@ -25253,6 +25543,68 @@ def rImp(app):
 	return module
 
 
+##################################################
+
+
+
+def create_backup_filename(original_file,folder=None,mkdir=True):
+	"""
+	Creates a backup filename by appending the current date and epoch time.
+
+	Parameters:
+		original_file (str): The original file name with extension.
+
+	Returns:
+		str: The backup file name.
+	"""
+	import os
+	from datetime import datetime
+	if not folder is None and type(folder) == bool and folder == False: folder = None
+	if not folder is None and type(folder) == bool and folder == True:
+		global switches
+		if switches.isActive('Folder'): folder = switches.value('Folder')
+		elif switches.isActive('Folders'): folder = switches.value('Folders')
+		elif switches.isActive('BackupFolder'): folder = switches.value('BackupFolder')
+	if not folder is None and type(folder) == list and not len(folder): folder = None
+	if not folder is None and type(folder) == list:
+		folder = folder[0]
+	
+	if not type(folder) == str: folder = None
+	if not folder is None and not len(folder.strip()): folder = None
+	if not folder is None and not os.path.isdir(folder) and mkdir:
+		os.mkdir(folder)
+
+
+	# Split the file into path, name, and extension
+	dir_name, file_name = os.path.split(original_file)
+	base_name, extension = os.path.splitext(file_name)
+
+	# Get current date and epoch time
+	current_date = datetime.now().strftime("%Y-%m-%d")
+	epoch_time = int(os.path.getmtime(original_file))
+
+	# Create the backup file name
+	backup_file_name = f"{file_name}__bk__{current_date}_{epoch_time}{extension}"
+	
+	# Return the full path if a directory is provided
+	if dir_name:
+		if not folder is None:
+			if os.sep in folder:
+				return os.path.join(folder, backup_file_name)
+			else:
+				return os.path.join(dir_name.rstrip(os.sep)+os.sep+folder, backup_file_name)
+		else:
+			return os.path.join(dir_name, backup_file_name)
+	else:
+		if not folder is None:
+			return os.path.join(folder, backup_file_name)
+	return backup_file_name
+
+
+fibk=create_backup_filename
+backupName=create_backup_filename
+##################################################
+def pr0(*args,c='yellow'): return pr(*args,c=c,p=0)
 ##################################################
 
 def isLink(path):

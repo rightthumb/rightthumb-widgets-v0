@@ -23,12 +23,15 @@ fieldSet=_.l.vars(focus(),__name__,__file__,appDBA);_.load();_v=__.imp('_rightTh
 def sw():
 	pass
 	#b)--> examples
-	# _.switches.register( 'Input', '-i' )
-	# _.switches.register( 'URL', '-u,-url,-urls', 'https://etc.ac/', isData='raw' )
-	#e)--> examples
+	# _.switches.register( 'Input', '-i', group='Group Name' )
+		##  -->    p SwitchGroupsExamples   <--
+	# #e)--> examples
 	_.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=False )
 
 _._default_settings_()
+# __.setting('omit-switch-triggers',['Ago'])
+# __.setting('omit-functions',['myFolderLocations','aliasesFo'])
+# if not 'Ago' in __.setting('omit-switch-triggers',d=[]): pass
 # __.setting('require-list',['Files,Plus','File,Has']) # todo
 # __.setting('require-list',['Pipe','Files'])
 # __.setting('receipt-log',True)
@@ -69,8 +72,10 @@ def appRegDics(): return { 'appInfo': _.appInfo[focus()], 'appData': _.appData[f
 def triggers():
 	_._default_triggers_()
 	_.switches.trigger( 'Files', _.myFileLocations, vs=True )
+	_.switches.trigger( 'DB', _.aliasesFi )
 	# _.switches.trigger( 'Ago', _.timeAgo )
 	_.switches.trigger( 'Folder', _.myFolderLocations )
+	_.switches.trigger( 'OutputFolder', _.aliasesFo )
 	# _.switches.trigger( 'URL', _.urlTrigger )
 	# _.switches.trigger( 'Duration', _.timeFuture )
 def _local_(do): exec(do)

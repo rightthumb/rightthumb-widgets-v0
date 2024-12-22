@@ -3440,21 +3440,7 @@ alias fi.de="p cryptFile -vault -r -de -f "
 
 
 
-cry() {
-    # Read input string from stdin
-    local string=$(cat)
-    local password="$1"
-    local action="$2"
-
-    # Determine the action and send the appropriate request
-    if [[ $action == d* ]]; then
-        # Decrypt
-        echo $(curl -s -F "decryptFile=$string" -F "password=$password" https://cli.sds.sh/SecurityKeys_DataIntegrity/file.php)
-    else
-        # Encrypt
-        echo $(curl -s -F "encryptFile=$string" -F "password=$password" https://cli.sds.sh/SecurityKeys_DataIntegrity/file.php)
-    fi
-}
+alias aes="p aes"
 
 
 

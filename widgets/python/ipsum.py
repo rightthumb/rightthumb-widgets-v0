@@ -191,10 +191,8 @@ if __name__ == '__main__':
 # START
 
 def action():
-	ipsum = _.getText( _v.ipsum )
-	
-	for row in ipsum:
-		_.pr( row )
+	ipsum = _.URL( 'https://sds.sh/ipsum/?paragraphs=10' )
+	print( ipsum )
 
 
 
