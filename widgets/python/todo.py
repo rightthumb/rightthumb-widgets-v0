@@ -9,7 +9,7 @@ def sw():
 	_.switches.register( 'Delete', '-d,-del,-delete', '' )
 	_.switches.register( 'Day', '-day', '15: '+_.pr0('day of month') )
 	_.switches.register( 'Order', '-o,-order' )
-	_.switches.register( 'ChangeAt', '-at', '15'+_.pr0('day of month') )
+	_.switches.register( 'ChangeAt', '-at', '15: '+_.pr0('day of month') )
 	_.switches.register( 'ChangeToDo', '-u,-update,-change' )
 _._default_settings_()
 

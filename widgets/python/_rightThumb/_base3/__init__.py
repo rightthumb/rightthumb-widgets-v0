@@ -25604,7 +25604,11 @@ def create_backup_filename(original_file,folder=None,mkdir=True):
 fibk=create_backup_filename
 backupName=create_backup_filename
 ##################################################
-def pr0(*args,c='yellow'): return pr(*args,c=c,p=0)
+pr0c='yellow'
+def pr0(*args,c=None):
+	global pr0c
+	if c is None: c=pr0c
+	return pr(*args,c=c,p=0)
 ##################################################
 
 def isLink(path):
