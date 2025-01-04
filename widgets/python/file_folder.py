@@ -39,7 +39,7 @@ def appSwitches():
 	_.switches.register( 'Save', '-save' )
 	_.switches.register( 'Clean', '--c' )
 	_.switches.register( 'Compair', '-compair' )
-	_.switches.register( 'Folder', '-f,-folder' )
+	_.switches.register( 'Folder', '-f,-fo,-folder' )
 	_.switches.register( 'Links', '-l,-link,-links' )
 	_.switches.register( 'CopyText', '-copy,-cp' )
 	# _.switches.register( 'NoCopy', '-nocopy' )
@@ -369,6 +369,9 @@ def action():
 				_copy.imp.copy( '\n'.join(_copy_this), p=0 ); copied=True;
 
 	if copied: _.pr(' * copied *',c='r')
+	if not folder == os.getcwd():
+		_.pr()
+		_.pr(_.pr0('Location:',c='ColorBold.magenta'),_.pr0(os.getcwd(),c='ColorBold.gray'))
 
 if _.switches.isActive('Copy'):
 	_copy = _.regImp( __.appReg, '-copy' )

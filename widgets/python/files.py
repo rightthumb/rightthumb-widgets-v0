@@ -11,6 +11,7 @@
 # ## {C3P0D40fAe8B} ##
 
 import os
+import re
 import sys
 import time
 ##################################################
@@ -39,6 +40,7 @@ __.isFiles=True
 
 
 def appSwitches():
+	_.switches.trigger( 'Folders', _.myFolderLocations )
 	if not __.isFiles:
 		_.switches.register('Recursive', '-r,-recursive')
 	else:
@@ -71,8 +73,12 @@ def appSwitches():
 	_.switches.register('Search-For-Text-TOP_Of_File', '-top','10')
 	_.switches.register('Not-In-Comments', '-nocomment','html py php js')
 	_.switches.register('Reverse', '-rev,-reverse')
+	_.switches.register('Delete', '--delete')
+	_.switches.register('DeleteConfirm', '--confirm')
+	_.switches.register('OverwriteThenDelete', '--secure')
+	_.switches.register('SecureDeleteCriteria', '--criteria','*backup*.zip')
 
-	_.switches.trigger( 'Folders', _.myFolderLocations )
+	
 
 fse=False
 def fs(data):
@@ -313,24 +319,20 @@ if __name__ == '__main__':
 # START
 
 def remove_html_comments(string):
-	import re
 	pattern = re.compile(r'<!--.*?-->', re.DOTALL)
 	return pattern.sub('', string)
 
 def remove_python_comments(code):
-	import re
 	code = re.sub(r'#.*', '', code)
 	code = re.sub(r'(\'\'\'(.*?)\'\'\'|\"\"\"(.*?)\"\"\")', '', code, flags=re.DOTALL)
 	return code
 
 def remove_php_comments(code):
-	import re
 	code = re.sub(r'(//.*|#.*)', '', code)
 	code = re.sub(r'/\*.*?\*/', '', code, flags=re.DOTALL)
 	return code
 
 def remove_javascript_comments(code):
-	import re
 	code = re.sub(r'//.*', '', code)
 	code = re.sub(r'/\*.*?\*/', '', code, flags=re.DOTALL)
 	return code
@@ -914,7 +916,9 @@ def action():
 		# 													'files': i,
 
 		# 	} )
-
+	global deletedFiles
+	if _.switches.isActive('Delete'):
+		iS = deletedFiles
 	if _.switches.isActive('Count') == False:
 		if not scan:
 			if not i == iS:
@@ -1054,7 +1058,8 @@ def IPs(text,domains=False):
 			if good and not gr in ips:
 				ips.append(gr)
 	return ips
-
+###################################################################################################
+deletedFiles = 0
 def printer(path,ni=0):
 	global spent
 	global infile
@@ -1073,12 +1078,90 @@ def printer(path,ni=0):
 
 		if _.v.no_extension and '.' in path:
 			path=path[:-len(path.split('.')[-1])-1]
-
-
-	_.pr( _.colorThis( path, 'cyan', p=0 ) )
+	
+	global shouldDelete
+	if shouldDelete:
+		global deletedFiles
+		global deleteConfirmed
+		global secureDelete
+		global SecureDeleteCriteria
+		if not secureDelete:
+			if _.isCrypt(path):
+				deletedFiles+=1
+				secure_delete(path)
+			elif not deleteConfirmed:
+				deletedFiles+=1
+				_.pr('Would Deleted:',path,c='green')
+			else:
+				deletedFiles+=1
+				os.remove(path)
+				_.pr('Deleted:',path,c='red')
+		elif secureDelete:
+			shouldSecureDelete = False
+			if not SecureDeleteCriteria:
+				shouldSecureDelete = True
+			elif star(path,SecureDeleteCriteria):
+				shouldSecureDelete = True
+			if shouldSecureDelete:
+				deletedFiles+=1
+				secure_delete(path)
+			
+	else:
+		_.pr( _.colorThis( path, 'cyan', p=0 ) )
 	# _.pr( _.colorThis( [_.pyApp(path)], 'cyan', p=0 ) )
 	# _.pr( _.colorThis( [_.pyApp(path),path], 'cyan', p=0 ) )
 	infile+=1
+deleteConfirmed = _.switches.isActive('DeleteConfirm')
+shouldDelete = _.switches.isActive('Delete')
+secureDelete = _.switches.isActive('OverwriteThenDelete')
+SecureDeleteCriteria = _.switches.values('SecureDeleteCriteria')
+# if SecureDeleteCriteria: print(   ' '.join(SecureDeleteCriteria)  )
+def secure_delete(path):
+	global deleteConfirmed
+	if not deleteConfirmed:
+		_.pr('Would Delete:',path,c='green')
+		return False
+	if not os.path.isfile(path): return False
+	try:
+		file_size = os.path.getsize(path)
+		with open(path, 'wb') as f:
+			f.write(b'\x00' * file_size)
+		with open(path, 'wb') as f:
+			f.truncate(0)
+		os.remove(path)
+		_.pr('Secure Deleted:',path,c='red')
+		return True
+	except Exception as e:
+		print(f"Error during secure delete: {e}")
+		return False
+
+
+def star(string, criteria=[], case_sensitive=False):
+    if not case_sensitive:
+        string = string.lower()
+
+    # Ensure criteria is a list
+    if not isinstance(criteria, list):
+        criteria = [criteria]
+
+    for crit in criteria:
+        if not crit:  # Skip empty criteria
+            continue
+
+        # No wildcard, check for direct substring match
+        if '*' not in crit:
+            if crit in string:
+                return True
+
+        # Handle *wildcard* pattern
+        pattern = re.escape(crit).replace(r'\*', '.*')
+        if re.search(pattern, string):  # Changed to re.search for partial matches
+            return True
+
+    return False
+
+###################################################################################################
+
 
 def process(path):
 	path=path.strip()

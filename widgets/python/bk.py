@@ -7,6 +7,7 @@ def sw():
 	_.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name', description='Files', isRequired=False )
 	_.switches.register( 'Folder', '-fo,-folder','folderName' )
 	_.switches.register( 'Label', '-l,-label','preChangeLabel' )
+	_.switches.register( 'PathID', '-p,-md5,,-md5ID,-path,-pathID',' can be resolved to a path with:  | p resolveIDs' )
 _._default_settings_()
 __.setting('omit-switch-triggers',['Folder','Folders'])
 __.setting('omit-functions',['myFolderLocations','aliasesFo'])
@@ -48,17 +49,22 @@ _.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw );
 #n)--> start
 
 def action():
+	PathID = _.switches.isActive('PathID')
 	import os
 	folder = None
 	if _.switches.isActive('Folder'):
 		folder = _.switches.value('Folder')
+	if folder == '-bk':
+		folder = _v.wprofile+os.sep+'bk'
+		PathID = True
 	from shutil import copyfile
 	for path in _.isData(r=0):
 		if not os.path.isfile(path): continue
 		if _.switches.isActive('Label'):
-			backup = _.backupName(path,folder=folder,mkdir=True,label=' '.join(_.switches.values('Label')))
+			backup = _.backupName(path,folder=folder,mkdir=True,label=' '.join(_.switches.values('Label')),md5=PathID)
 		else:
-			backup = _.backupName(path,folder=folder,mkdir=True)
+			backup = _.backupName(path,folder=folder,mkdir=True,md5=PathID)
+		# print(backup); return
 		copyfile(path, backup)
 		_.pr()
 		_.pr(line=1,c='yellow')

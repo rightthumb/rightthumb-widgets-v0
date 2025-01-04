@@ -65,7 +65,7 @@ def startTrace(search='widgets'):
 		return trace_calls
 
 	sys.settrace(trace_calls)
-
+import os
 def endTrace(functions=None,a=False):
 	sys.settrace(None)
 	table = {}

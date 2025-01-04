@@ -252,7 +252,10 @@ def action():
 			_.pr(page_line(),c='Background.red')
 			_.pr()
 			_.pr()
-			_.pr('Locking Secure Files',c='Background.green')
+			if _.switches.isActive('Unlock'):
+				_.pr('Unlocking Secure Files',c='Background.green')
+			else:
+				_.pr('Locking Secure Files',c='Background.green')
 			_.pr()
 			_.pr()
 			if _.switches.isActive('Timer'): time.sleep(2)

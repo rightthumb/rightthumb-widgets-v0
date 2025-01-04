@@ -1478,7 +1478,10 @@ def get_administrator_sid():
 		temp_file_name = temp_file.name
 
 	try:
-		os.system(f'wmic useraccount where "name=\'administrator\' and domain=\'%computername%\'" get name,sid | find "admin" > {temp_file_name}')
+		try:
+			os.system(f'wmic useraccount where "name=\'administrator\' and domain=\'%computername%\'" get name,sid | find "admin" > {temp_file_name}')
+		except:
+			os.system(f'powershell -Command "Get-WmiObject Win32_UserAccount | Where-Object {{ $_.Name -eq \'administrator\' }} | Select-Object Name,SID | Out-File -FilePath {temp_file_name}"')
 		
 		with open(temp_file_name, 'r') as temp_file:
 			output = temp_file.read()

@@ -9,10 +9,10 @@ rem Such a place exists, it is called programming.
 rem    - Scott Taylor Reph, RightThumb.com
 rem ###########################################################################
 rem ## {C3P0D40fAe8B} ##
-call p. PowerShell_Welcome_Hush -status -clean > "%tmpf%-PowerShell_Welcome_Hush"
-set /p WelcomeStatus= < "%tmpf%-PowerShell_Welcome_Hush"
+call p. PowerShell_Welcome -status -clean > "%tmpf%-PowerShell_Welcome"
+set /p WelcomeStatus= < "%tmpf%-PowerShell_Welcome"
 
-call p. PowerShell_Welcome_Hush -off -noPrint
+call p. PowerShell_Welcome -off -noPrint
 if [%1]==[enable] (
     call:pwshExecutionPolicy
     goto:eof
@@ -63,9 +63,9 @@ goto:eof
 
 :WelcomeStatusToOriginalSetting
 if [%WelcomeStatus%]==[on] (
-    call p. PowerShell_Welcome_Hush -on -noPrint
+    call p. PowerShell_Welcome -on -noPrint
 ) else (
-    call p. PowerShell_Welcome_Hush -off -noPrint
+    call p. PowerShell_Welcome -off -noPrint
 )
 goto:eof
 

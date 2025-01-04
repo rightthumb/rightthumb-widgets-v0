@@ -199,7 +199,7 @@ _.postLoad( __file__ )
 
 def action():
 
-	_.colorThis( 'x', 'intentional error' )
+	_.colorThis( 'x', 'Catalog' )
 
 
 

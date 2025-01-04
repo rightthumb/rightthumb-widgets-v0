@@ -136,7 +136,7 @@ _.appInfo[focus()] = {
 						'',
 						'type data.adj | p line -p " " 4 [pipe] 1',
 						'',
-						'type %tmpf0% | p line --c -make ";\'¶¶¶¶BaaseTabel: {}¶¶;\' & RelationInfo(;\'LINAC_ENG;\';;\'{};\')&"',
+						# 'type %tmpf0% | p line --c -make ";\'¶¶¶¶BaaseTabel: {}¶¶;\' & RelationInfo(;\'LINAC_ENG;\';;\'{};\')&"',
 						'',
 						'',
 						'type txtBackup3.py | p line --c + "import " - # | p sortthis | p counteach',

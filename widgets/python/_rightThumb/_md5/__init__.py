@@ -212,7 +212,7 @@ def md5(chunk):
 	hashData.update(bytes(chunk, 'utf-8'))
 	return hashData.hexdigest()
 			
-def md52GUID(string,brackets):
+def md52GUID(string,brackets=True):
 	string = string.upper()
 	result = ''
 	result += str(string[0:8])

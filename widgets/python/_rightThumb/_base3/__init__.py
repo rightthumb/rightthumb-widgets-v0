@@ -6990,7 +6990,7 @@ def colorThis( strings='', color='red', notBold=False, shouldPrint=True, ipsum=F
 	result = aaPre+result
 
 	if not found:
-		printBold( 'Error: _.colorThis: color not found ' + str(color), 'red' )
+		printBold( 'Color:: ' + str(color), 'red' )
 		print_()
 		print_( strings )
 		print_()
@@ -9569,6 +9569,49 @@ def uuidEpoc( uuid, f='iso' ):
 def genUUID3(): return genUUID()[1:-1].replace('-','')
 def genUUID2(): return genUUID()[1:-1]
 
+def md5UUID(string,brackets=False):
+	import hashlib
+	md5_hash = hashlib.md5(string.encode('utf-8')).hexdigest()
+	if brackets:
+		uuid_format = f"{{{md5_hash[:8]}-{md5_hash[8:12]}-{md5_hash[12:16]}-{md5_hash[16:20]}-{md5_hash[20:]}}}"
+	else:
+		uuid_format = f"{md5_hash[:8]}-{md5_hash[8:12]}-{md5_hash[12:16]}-{md5_hash[16:20]}-{md5_hash[20:]}"
+	return uuid_format
+
+def regMD5( data, project='', label='' ):
+	myMD5 = md5UUID(data)
+	if len(project):
+		resolve = getTable('idResolution.json')
+		if len(label):
+			resolve.append({'id': myMD5, 'name': project+' - '+label})
+		else:
+			resolve.append({'id': myMD5, 'name': project})
+		saveTable(resolve,'idResolution.json',printThis=False)
+	return myMD5
+
+def regMD5Mini( data, project='', label='' ):
+	myMD5 = md5UUID(data).split('-')[-1]
+	if len(project):
+		resolve = getTable('idResolution.json')
+		if len(label):
+			resolve.append({'id': myMD5, 'name': project+' - '+label})
+		else:
+			resolve.append({'id': myMD5, 'name': project})
+		saveTable(resolve,'idResolution.json',printThis=False)
+	return myMD5
+
+def regID( data, project='', label='' ):
+	data = str(data)
+	if not len(project): return data
+	if len(project):
+		resolve = getTable('idResolution.json')
+		if len(label):
+			resolve.append({'id': data, 'name': project+' - '+label})
+		else:
+			resolve.append({'id': data, 'name': project})
+		saveTable(resolve,'idResolution.json',printThis=False)
+	return data
+
 def genUUID( project='', label='', uniqueTimestamp=False, note=None, r=None, e=None, n=None, c=False, epoch=None,    small=None, t=None, tiny=None, focus=None, save=None ):
 	if focus is None: focus=__.appReg
 	if not tiny is None: small=tiny;    #KEEP 1ST
@@ -9622,6 +9665,13 @@ def genUUID( project='', label='', uniqueTimestamp=False, note=None, r=None, e=N
 		string = ss
 	else:
 		string = '{' + ss + '}'
+	if len(project):
+		resolve = getTable('idResolution.json')
+		if len(label):
+			resolve.append({'id': string, 'name': project+' - '+label})
+		else:
+			resolve.append({'id': string, 'name': project})
+		saveTable(resolve,'idResolution.json',printThis=False)
 	try:
 		type(appData[focus]['uuid'])
 		good = True
@@ -12398,16 +12448,16 @@ class Switches:
 		helpColorScheme.tags = 'green'
 		helpColorScheme.prerequisite = 'ColorBold.blue'
 		helpColorScheme.relatedapps = 'ColorBold.blue'
-		helpColorScheme.examples = '' # handled differently
+		helpColorScheme.examples = 'purple' # handled differently
 		helpColorScheme.ask_example_id = 'yellow'
-		helpColorScheme.abbreviations = '' # is colorizeRow
+		helpColorScheme.abbreviations = 'purple' # is colorizeRow
 		helpColorScheme.line = 'yellow'
 		helpColorScheme.requiredLabel = 'red'
 		helpColorScheme.required = 'Background.red'
 		helpColorScheme.switchRequredLabel = 'ColorBold.white'
 		helpColorScheme.switchRequred = 'yellow'
 		helpColorScheme.noRequirements = 'green' # cyan
-		helpColorScheme.notes = '' # handled differently
+		helpColorScheme.notes = 'purple' # handled differently
 		self.justAppNotFullHelp = justAppNotFullHelp
 		if self.value('Help') == 'x' or self.value('Help') == 'cls' or self.value('Help') == 'clear' or 'fn' in self.value('Help'):
 
@@ -12775,7 +12825,7 @@ class Switches:
 					printBold( 'Examples:' )
 					for example in self.switches[i].documentation['examples']:
 						if type(example) == list:
-							_.colorThis( '\t\t'+example[0], example[1]  )
+							colorThis( '\t\t'+example[0], example[1]  )
 						else:
 							colorizeRow( '\t\t'+ example , 2)
 
@@ -25547,16 +25597,7 @@ def rImp(app):
 
 
 
-def create_backup_filename(original_file,folder=None,mkdir=True,label=None):
-	"""
-	Creates a backup filename by appending the current date and epoch time.
-
-	Parameters:
-		original_file (str): The original file name with extension.
-
-	Returns:
-		str: The backup file name.
-	"""
+def create_backup_filename(original_file,folder=None,mkdir=True,label=None,md5=False):
 	import os
 	from datetime import datetime
 	if not folder is None and type(folder) == bool and folder == False: folder = None
@@ -25586,10 +25627,21 @@ def create_backup_filename(original_file,folder=None,mkdir=True,label=None):
 	except:
 		import time
 		epoch_time = int(time.time())
+	if os.path.isfile(original_file):
+		regID(epoch_time,os.path.abspath(original_file))
+
 	inner = '__bk__'
 	if not label is None:
 		label = label.replace(' ','.')
 		inner = f'__bk-{label}__'
+	# if md5:
+	# 	if os.path.isfile(original_file):
+	# 		absPath = os.path.abspath(original_file)
+	# 		inner += '__'+regMD5Mini(absPath,absPath)+'__'
+	# 	else:
+	# 		inner += '__'+genUUID(original_file)+'__'
+	inner = inner.replace('__'+'__','__')
+
 	# Create the backup file name
 	backup_file_name = f"{file_name}{inner}{current_date}_{epoch_time}{extension}"
 	
