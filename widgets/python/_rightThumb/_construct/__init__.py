@@ -1234,14 +1234,17 @@ def getText2( theFile, raw=False, clean=False,  e=0, c=0 ):
 		return lines
 	else:
 		return lines
-
-os = imp('os.system')
-os = imp('os.sep')
-os = imp('os.listdir')
-os = imp('os.getcwd')
-os = imp('os.path.abspath')
-os = imp('os.path.isfile')
-os = imp('os.path.isdir')
-os = imp('os.name')
-os = imp('os.stat')
-sys = imp('sys.exit')
+try:
+	os = imp('os.system')
+	os = imp('os.sep')
+	os = imp('os.listdir')
+	os = imp('os.getcwd')
+	os = imp('os.path.abspath')
+	os = imp('os.path.isfile')
+	os = imp('os.path.isdir')
+	os = imp('os.name')
+	os = imp('os.stat')
+	sys = imp('sys.exit')
+except:
+	import os
+	import sys

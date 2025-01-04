@@ -2015,6 +2015,8 @@ pr-|{6FAB5628-94A1-410A-82D1-1D42A2A11750}/.rt/profile/projects"""
 		self.home()
 		if not 'wprofile' in v.bash:
 			v.bash['wprofile']=v.home+os.sep+'.rt'+os.sep+'profile'
+		if not 'code_editor' in v.bash: v.bash['code_editor']='nano'
+		if not 'code_editor2' in v.bash: v.bash['code_editor2']='C:\\Program Files\\Sublime Text\\sublime_text.exe'
 
 		v.f.mkdir(v.bash['wprofile']+os.sep+'vars')
 		vc.HD.saveText( export, v.bash['wprofile']+os.sep+'vars'+os.sep+'config.'+ext )
