@@ -65,7 +65,7 @@ def startTrace(search='widgets'):
 		return trace_calls
 
 	sys.settrace(trace_calls)
-import os
+
 def endTrace(functions=None,a=False):
 	sys.settrace(None)
 	table = {}
@@ -236,139 +236,272 @@ def uuid():
 
 
 
+
+
+
+
+
+
+
+
+
+# import os
+# import sys
+# import importlib
+
+# Helper function to dynamically import modules using dot notation
 def dots(path):
 	def _dots_(pth):
-		try: exec(pth); return True;
-		except Exception as e: return False;
-	rts=path.split('.'); exec('global '+rts[0]);
-	if _dots_(path): return eval(rts[0])
-	pre=[]; thp=[];
-	for i,seg in enumerate(rts):
-		pre=thp.copy(); thp.append(seg); npre='.'.join(pre); npath='.'.join(thp)
-		if i == len(rts)-1:
-			exec('from 1 import 2'.replace('1',npre).replace('2',rts[-1]))
-			f='3=2'.replace('1',npre).replace('2',rts[-1]).replace('3',path)
-		else: f='1=Meta_Namespace()'.replace('1',npath);
+		try:
+			exec(pth)
+			return True
+		except Exception:
+			return False
 
-		if not _dots_(npath):
-			exec(f)
-			if i == len(rts)-1: return eval(rts[0]);
+	parts = path.split('.')
+	exec(f'global {parts[0]}')
+	
+	if _dots_(path):
+		return eval(parts[0])
+
+	pre, temp_path = [], []
+	for i, segment in enumerate(parts):
+		pre = temp_path.copy()
+		temp_path.append(segment)
+		namespace_prefix = '.'.join(pre)
+		current_path = '.'.join(temp_path)
+
+		if i == len(parts) - 1:
+			# Import the final segment from the package
+			exec(f'from {namespace_prefix} import {parts[-1]}')
+			assignment = f'{path} = {parts[-1]}'
+		else:
+			# Create a dynamic namespace if it doesn't exist
+			assignment = f'{current_path} = Meta_Namespace()'
+
+		if not _dots_(current_path):
+			exec(assignment)
+			if i == len(parts) - 1:
+				return eval(parts[0])
+
+
+# Import helpers
+imp_table = {}
+
+def imp(subject, imp_table_testing=False):
+	try:
+		return imp_run(subject, imp_table_testing)
+	except ImportError:
+		imp_install(subject)
+		try:
+			return imp_run(subject, imp_table_testing)
+		except ImportError:
+			imp_run2(subject)
+
+# Install missing packages using pip
+def imp_install(mod):
+	mod = mod.split('.')[0]
+	
+	package_mapping = {
+		'all': {},
+		'win': {
+			'magic': 'python-magic-bin==0.4.14',
+		},
+		'linux': {
+			'magic': 'python-magic',
+		},
+	}
+
+	# Check platform-specific package mapping
+	if sys.platform == 'win32' and mod in package_mapping['win']:
+		mod = package_mapping['win'][mod]
+	elif sys.platform != 'win32' and mod in package_mapping['linux']:
+		mod = package_mapping['linux'][mod]
+
+	# Install the package
+	os.system(f'pip install {mod} >nul 2>&1')
+
+# Run secondary import
+def imp_run2(subject):
+	global importlib
+	global imp_table
+	if importlib is None:
+		import importlib
+	exec(f'import {subject}')
+	imp_table[subject] = eval(subject)
+
+# Main import runner
+def imp_run(subject, imp_table_testing=False):
+	global importlib
+	if '.' in subject and '_rightThumb' not in subject:
+		return dots(subject)
+
+	global imp_table
+	if subject in imp_table:
+		return imp_table[subject]
+
+	if importlib is None:
+		import importlib
+
+	try:
+		imp_table[subject] = importlib.import_module(subject)
+		if imp_table_testing:
+			print('Module imported successfully:', subject)
+		return imp_table[subject]
+	except ImportError:
+		if imp_table_testing:
+			print('Failed to import module:', subject)
+		return None
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# def dots(path):
+# 	def _dots_(pth):
+# 		try: exec(pth); return True;
+# 		except Exception as e: return False;
+# 	rts=path.split('.'); exec('global '+rts[0]);
+# 	if _dots_(path): return eval(rts[0])
+# 	pre=[]; thp=[];
+# 	for i,seg in enumerate(rts):
+# 		pre=thp.copy(); thp.append(seg); npre='.'.join(pre); npath='.'.join(thp)
+# 		if i == len(rts)-1:
+# 			exec('from 1 import 2'.replace('1',npre).replace('2',rts[-1]))
+# 			f='3=2'.replace('1',npre).replace('2',rts[-1]).replace('3',path)
+# 		else: f='1=Meta_Namespace()'.replace('1',npath);
+
+# 		if not _dots_(npath):
+# 			exec(f)
+# 			if i == len(rts)-1: return eval(rts[0]);
 
 
 try:
 	importlib
 except Exception as e:
 	importlib = None
-imp_table = {}
-def imp( subject, imp_table_testing=False ):
-	try:
-		return imp_run( subject, imp_table_testing )
-	except:
-		imp_install(subject)
-		try:
-			return imp_run( subject, imp_table_testing )
-		except:
-			try:
-				imp_run2( subject )
-			except:
-				print('unable to import:',subject)
+# imp_table = {}
+# def imp( subject, imp_table_testing=False ):
+# 	try:
+# 		return imp_run( subject, imp_table_testing )
+# 	except:
+# 		imp_install(subject)
+# 		try:
+# 			return imp_run( subject, imp_table_testing )
+# 		except:
+# 			try:
+# 				imp_run2( subject )
+# 			except:
+# 				print('unable to import:',subject)
 
-def imp_install(mod):
-	mod = mod.split('.')[0]
-	try:
-		exec('import os')
-	except Exception as e:
-		raise e
-	# print()
-	# print('__.imp_install('+mod+')')
-	# print()
-	if '.' in mod: mod = mod.split('.')[0]
+# def imp_install(mod):
+# 	mod = mod.split('.')[0]
+# 	try:
+# 		exec('import os')
+# 	except Exception as e:
+# 		raise e
+# 	# print()
+# 	# print('__.imp_install('+mod+')')
+# 	# print()
+# 	if '.' in mod: mod = mod.split('.')[0]
 
-	dic = {
-			'all': {},
-			'win': {},
-			'linux': {},
-	}
+# 	dic = {
+# 			'all': {},
+# 			'win': {},
+# 			'linux': {},
+# 	}
 
-	dic['win']['magic'] = 'python-magic-bin==0.4.14'
-	dic['linux']['magic'] = 'python-magic'
+# 	dic['win']['magic'] = 'python-magic-bin==0.4.14'
+# 	dic['linux']['magic'] = 'python-magic'
 
-	if       sys.platform == 'win32' and mod in dic['win']: mod = dic['win'][mod]
-	elif not sys.platform == 'win32' and mod in dic['linux']: mod = dic['linux'][mod]
-	elif mod in dic['linux']: mod = dic['all'][mod]
+# 	if       sys.platform == 'win32' and mod in dic['win']: mod = dic['win'][mod]
+# 	elif not sys.platform == 'win32' and mod in dic['linux']: mod = dic['linux'][mod]
+# 	elif mod in dic['linux']: mod = dic['all'][mod]
 
 
-	if mod in dic: mod=dic[mod]
+# 	if mod in dic: mod=dic[mod]
 
-	os.system('pip3 install '+mod+' >nul 2>&1')
+# 	os.system('pip3 install '+mod+' >nul 2>&1')
 	
-	# if sys.platform == 'win32':
-	#     # os.system('pip3 install python-magic-bin==0.4.14')
-	#     os.system('pip3 install '+mod+' >nul 2>&1')
-	# else:
+# 	# if sys.platform == 'win32':
+# 	#     # os.system('pip3 install python-magic-bin==0.4.14')
+# 	#     os.system('pip3 install '+mod+' >nul 2>&1')
+# 	# else:
 
-	#     def _pipy_(mod):
-	#         mod0=mod
-	#         try:
-	#             import pip
-	#             if '=' in mod: mod = mod.split('=')[0]
-	#             pip.main(['install', mod])
-	#         except: print('pip3 install '+mod0)
-	#     import subprocess
-	#     if len(subprocess.getoutput('sudo cat /etc/sudoers').split('\n')) > 3:
-	#         try: os.system('sudo pip3 install '+mod+'  > /dev/null 2>&1')
-	#         except: _pipy_(mod)
-	#     else:
-	#         try: os.system('pip3 install '+mod+'  > /dev/null 2>&1')
-	#         except:_pipy_(mod)
-
-
+# 	#     def _pipy_(mod):
+# 	#         mod0=mod
+# 	#         try:
+# 	#             import pip
+# 	#             if '=' in mod: mod = mod.split('=')[0]
+# 	#             pip.main(['install', mod])
+# 	#         except: print('pip3 install '+mod0)
+# 	#     import subprocess
+# 	#     if len(subprocess.getoutput('sudo cat /etc/sudoers').split('\n')) > 3:
+# 	#         try: os.system('sudo pip3 install '+mod+'  > /dev/null 2>&1')
+# 	#         except: _pipy_(mod)
+# 	#     else:
+# 	#         try: os.system('pip3 install '+mod+'  > /dev/null 2>&1')
+# 	#         except:_pipy_(mod)
 
 
-def imp_run2( subject ):
-	global imp_table
-	global importlib
-	if importlib is None:
-		import importlib
-	exec( 'import '+subject )
-	imp_table[subject] = eval(subject)
 
-def imp_run( subject, imp_table_testing=False ):
-	# print(subject); sys.exit();
-	if '.' in subject and not '_rightThumb' in subject: return dots(subject);
-	global imp_table
-	# if subject in imp_table: return imp_table[subject]
-	global importlib
-	if importlib is None:
-		import importlib
-		if imp_table_testing:
-			print('\n\n\t\timport importlib\n\n')
 
-	if not subject in imp_table:
-		try:
-			imp_table_tmp
-		except Exception as e:
-			pass
-		else:
-			del imp_table_tmp
+# def imp_run2( subject ):
+# 	global imp_table
+# 	global importlib
+# 	if importlib is None:
+# 		import importlib
+# 	exec( 'import '+subject )
+# 	imp_table[subject] = eval(subject)
 
-		imp_table[subject] = importlib.import_module(subject)
-		if imp_table_testing:
-			print( 'imp.DID' )
-		return imp_table[subject]
+# def imp_run( subject, imp_table_testing=False ):
+# 	# print(subject); sys.exit();
+# 	if '.' in subject and not '_rightThumb' in subject: return dots(subject);
+# 	global imp_table
+# 	# if subject in imp_table: return imp_table[subject]
+# 	global importlib
+# 	if importlib is None:
+# 		import importlib
+# 		if imp_table_testing:
+# 			print('\n\n\t\timport importlib\n\n')
 
-		# try:
-		#     imp_table[subject] = importlib.import_module(subject)
-		#     if imp_table_testing:
-		#         print( 'imp.DID' )
-		#     return imp_table[subject]
-		# except Exception as e:
-		#     if imp_table_testing:
-		#         print( 'imp.NO' )
-		#     return None
-	if imp_table_testing:
-		print( 'imp.YES' )
-	return imp_table[subject]
+# 	if not subject in imp_table:
+# 		try:
+# 			imp_table_tmp
+# 		except Exception as e:
+# 			pass
+# 		else:
+# 			del imp_table_tmp
+
+# 		imp_table[subject] = importlib.import_module(subject)
+# 		if imp_table_testing:
+# 			print( 'imp.DID' )
+# 		return imp_table[subject]
+
+# 		# try:
+# 		#     imp_table[subject] = importlib.import_module(subject)
+# 		#     if imp_table_testing:
+# 		#         print( 'imp.DID' )
+# 		#     return imp_table[subject]
+# 		# except Exception as e:
+# 		#     if imp_table_testing:
+# 		#         print( 'imp.NO' )
+# 		#     return None
+# 	if imp_table_testing:
+# 		print( 'imp.YES' )
+# 	return imp_table[subject]
 
 
 
