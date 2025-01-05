@@ -480,7 +480,11 @@ def action(path=None):
 				if app == 'C:\\Program': app=_v.fig['code_editor']
 				if _.switches.isActive('ForceSublime'): app = 'C:\\Program Files\\Sublime Text 3\\sublime_text.exe'
 				# print(app);sys.exit();
-				if not os.path.isfile(app): _.e('Unable to open','app does not exist')
+				if not os.path.isfile(app):
+					try:
+						app=_v.fig['code_editor']
+					except:
+						_.e('Unable to open','app issue')
 				if _.IS(path,'gzip'):
 					gzip=True
 					_.decompress(path)
