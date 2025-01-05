@@ -492,7 +492,11 @@ def action(path=None):
 					else:
 						subprocess.Popen([ app, path])
 				except:
-					_.e('Unable to open','app issue')
+					try:
+						app=_v.fig['code_editor']
+					except:
+						_.e('Unable to open','app issue')
+
 				if gzip:
 					_.compress(path)
 			else:
