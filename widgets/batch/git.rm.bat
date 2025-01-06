@@ -1,6 +1,6 @@
 @echo off
 
-call p. full-path -script -f %1 
+call p. full-path -script -f %1    > nul 2>&1
 set /p full_path=<%stmp%\full-path.tmp
 @REM echo %full_path%
 call m back   > nul 2>&1
