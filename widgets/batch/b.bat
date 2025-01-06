@@ -27,13 +27,14 @@ set pp=%myBookmarks%\BM-%1.txt
 IF NOT EXIST "%pp%" (
         echo Not Valid
     ) else (
-        call :action
+        call :action %1
     )
 set p=
 set pp=
 GOTO:EOF
 
 :action
+    call p. b -a %1 --c
     rem type %pp%
     SET /p p=<"%pp%"
     rem echo %p%

@@ -10617,6 +10617,7 @@ def minusResults(string,minus='',itIs=False):
 		pass
 	return result
 
+
 def saveLog( logname, rows=[], focus=True, printThis=True ):
 	try:
 		import simplejson
@@ -25675,6 +25676,23 @@ def isLink(path):
 	try: return os.stat(path).st_nlink > 1
 	except: return False
 
+##################################################
+def logLine(*items, log=None):
+	if log is None:
+		e("missing log='file.log'")
+		return
+	
+	try:
+		asterisks = '*' * len(items)
+		tab_delimited_items = '\t'.join(map(str, items))
+		with open(log, 'a') as log_file:
+			log_file.write(f'{asterisks}\n')
+			log_file.write(f'{tab_delimited_items}\n')
+		pr('Saved',c='green')
+		return True
+	except Exception as e:
+		e(f"Error appending to log file: {e}")
+		return False
 ##################################################
 # self.value('Help')
 # 'DumpSwitches'
