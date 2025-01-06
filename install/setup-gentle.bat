@@ -1,6 +1,6 @@
 @echo off
 
-if [%pip3%] == [] (
+if not [%pip3%] == [] (
     %pip3% install -r ..\require.txt
 ) else (
     pip3 install -r ..\require.txt
