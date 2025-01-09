@@ -5,6 +5,8 @@ if "%~1"=="" (
     exit /b 1
 )
 
+set py=%1
+
 REM Extract the base directory from the provided path
 set "PYTHON_DIR=%~dp1"
 
