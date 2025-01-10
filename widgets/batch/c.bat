@@ -10,6 +10,9 @@ REM    - Scott Taylor Reph, RightThumb.com
 REM ###########################################################################
 REM ## {C3P0D40fAe8B} ##
 
+
+:: e fileLocks
+
 IF [%1] == [simple] (
     SET "MainArg=simple"
 ) else (

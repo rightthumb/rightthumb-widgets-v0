@@ -44,6 +44,8 @@ from pathlib import Path
 ##################################################
 
 def appSwitches():
+
+	
 	_.switches.register('Input', '-i,-f,-file','file.txt')
 	_.switches.register('Result', '-result')
 	_.switches.register('Flag', '-flag', 'V')
