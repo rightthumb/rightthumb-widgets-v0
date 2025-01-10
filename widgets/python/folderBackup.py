@@ -26,7 +26,10 @@ def sw():
 	# _.switches.register( 'Input', '-i', group='Group Name' )
 		##  -->    p SwitchGroupsExamples   <--
 	# #e)--> examples
-	_.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=False )
+	_.switches.register( 'Folders', '-f,-fo,-folder,-folders','0 py /opt')
+	_.switches.register( 'Recursive', '-r,-recursive')
+	_.switches.register( 'Ago', '-ago', '1h 3d 2w 6m' )
+	# _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=False )
 
 _._default_settings_()
 # __.setting('omit-switch-triggers',['Ago'])
@@ -45,8 +48,8 @@ _._default_settings_()
 
 _.appInfo[focus()] = {
 	# 'app': '8facG-jo0Cxk',
-	'file': 'thisApp.py',
-	'description': 'Changes the world',
+	'file': 'folderBackup.py',
+	'description': 'Backup a folder to fileBackup',
 		# _.ail(1,'subject')+
 		# _.aib('one')+
 	'categories': [
@@ -116,16 +119,44 @@ _.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw );
 ########################################################################################
 #n)--> start
 
+ago = 0
+fileBackup = None
+def _fileBackup():
+	global fileBackup
+	if not fileBackup is None:
+		return fileBackup
+	fileBackup = _.regImp( __.appReg, 'fileBackup' )
 
-for x in dir(_v):
-	y = '_v.'+x
-	z = eval(y)
-	if type(z) == str:
-		if _.showLine(x):
-			_.pr(y,'\t',z)
+	fileBackup.switch( 'Flag', 'A' )
+	fileBackup.switch( 'DoNotSchedule' )
+	fileBackup.switch( 'isRunOnce' )
+	fileBackup.switch( 'isRunOnce' )
+	fileBackup.deleteSwitch( 'Session' )
+	return fileBackup
+
+
+import os
+
+def script(path):
+	global ago
+	if not os.path.isfile(path): return False
+	if not _.showLine(path): return False
+	if ago and _.md(path) < ago: return False
+	fileBackup=_fileBackup()
+	fileBackup.switch( 'Input', path )
+	# fileBackup.action(path)
+	fileBackup.do('action' )
+	_.pr()
 
 def action():
-	pass
+	folder = [os.getcwd()]
+	if _.switches.isActive('Ago'):
+		global ago
+		ago = _.switches.value('Ago')
+	if _.switches.isActive('Folders'):
+		folder = _.switches.values('Folders')
+	for f in folder:
+		_.fo(f,script=script,r=_.switches.isActive('Recursive'))
 	# load(); global c3po;
 
 	#n)--> iterate

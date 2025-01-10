@@ -613,7 +613,9 @@ def fos(folder=None,r=False,script=None,first=True,rel=False):
 	return fo_fi
 
 
-def printt( table, cols=None, sort=None, responsive=None, focus=None,    c=None,s=None,r=None, name='default', fn=None, long=False  ):
+def printt( table, cols=None, sort=None, responsive=None, focus=None,    c=None,s=None,r=None, name='default', fn=None, long=False, l=None, triggers=None, t=None  ):
+	if not t is None: triggers = t
+	if not l is None: long = l
 	if not r is None: responsive=r
 	if responsive: cols=unixAutoColumns(table,cols,focus,responsive)
 	''' ( table, cols=None, sort=None,    c=None,s=None  ) '''
@@ -13706,7 +13708,7 @@ class Table:
 		else:
 			text = str(value)
 
-
+		
 		groupBy = switches.value('GroupBy')
 		GroupTotals = switches.values('GroupTotals')
 		try:
@@ -15352,7 +15354,12 @@ class Table:
 							theLine = tableLine+result.lstrip()
 						else:
 							theLine = tableLine+result
-						colorizeRow( theLine, prefix=self.tab['table']+loopPrint(__.table_prefix_padding), prefixColor=self.tab_color, haltColorShift=self.isExtraRecord )
+						shouldPrint = True
+						if not theLine.strip() and switches.isActive('GroupBy'):
+							shouldPrint = False
+
+						if shouldPrint:
+							colorizeRow( theLine, prefix=self.tab['table']+loopPrint(__.table_prefix_padding), prefixColor=self.tab_color, haltColorShift=self.isExtraRecord )
 			i += 1
 			if 'example_or_notes' in column and 'switch' in column and  switchDefault == i:
 
@@ -15737,7 +15744,7 @@ class Tables:
 	def print(self,name,fields,fieldLengths=False, pc=None, printColumns=True, h=None, l=None, p=None ):
 		global switches
 
-
+		
 		if not h is None:
 			printColumns = h
 		if not ',' in fields:
@@ -15757,6 +15764,12 @@ class Tables:
 		for t in self.tables:
 			if t.name == name:
 				if len(self.tables[i].asset) > 0:
+					if switches.isActive('GroupBy'):
+						keys = list(self.tables[i].asset[0].keys())
+						_rec = {}
+						for key in keys:
+							_rec[key] = ''
+						self.tables[i].asset = [ _rec ] + self.tables[i].asset
 					if not ',' in fields:
 						printColumns = False
 					# if switches.isActive('Markdown-Table'):
@@ -15767,6 +15780,7 @@ class Tables:
 				else:
 					# print_('Null Set')
 					pass
+
 			i += 1
 		if switches.isActive('FieldTotal'):
 			fieldTotals = {}
@@ -25729,6 +25743,43 @@ def logLine(*items, log=None):
 # sys.stdin.readlines()
 ########################################################################################
 import os
+import time
+
+def bkExpire(file, backup, age='1d', p=0, pCP=1,ago=None,cp=None):
+	import shutil
+	if not ago is None: age=ago
+	file_path = file
+	backup_path = backup
+	age_in_epoch = timeAgo(age)
+
+	if not os.path.exists(file_path):
+		if p:
+			print(f"Error: File '{file_path}' does not exist.")
+		return False
+	
+	if os.path.isfile(backup_path):
+		file_mod_time = os.path.getmtime(backup_path)
+
+	if not os.path.isfile(backup_path)   or   file_mod_time < age_in_epoch:
+		_v.mkdir(backup_path,pop=True)
+		shutil.copy2(file_path, backup_path)
+		if p or pCP:
+			print(f"Backup created: '{file_path}' -> '{backup_path}'")
+		if cp:
+			bk = create_backup_filename(file_path,cp)
+			_v.mkdir(bk,pop=True)
+			shutil.copy2(file_path, bk)
+		return True
+	else:
+		if p:
+			print(f"No backup needed. The file '{file_path}' is not older than the specified age.")
+		return False
+
+bkExpire(_v.tt+os.sep+'fileBackup.json',_v.tt+os.sep+'fileBackup-bk.json',age='3h',cp=_v.tt+os.sep+'bk'+os.sep+'fileBackup')
+
+
+########################################################################################
+import os
 import re
 import time
 
@@ -25785,6 +25836,12 @@ class FileLocker:
 		lock_file = lock_path + ".lock"
 		while os.path.exists(lock_file):
 			time.sleep(0.1)
+			# if time.time() - md(path) > 15:
+			# 	pr('File Lock Override in 15 Seconds',c='red')
+
+			if time.time() - md(path) > 30:
+				pr('Lock Override',c='red')
+				FileLocker.unlock(path)
 
 
 # FileLocker.check(path)
@@ -25792,5 +25849,97 @@ class FileLocker:
 # FileLocker.unlock(path)
 # folderProfileAttribute <-- errors
 
+########################################################################################
+def md(path): return os.path.getmtime(path)
+########################################################################################
+WidgetsFW = {
+	'_rightThumb._construct': '__',
+
+	'_rightThumb._auditCodeBase': '_code',
+	'_rightThumb._asynchronous': '_async',
+	'_rightThumb._backupLog': '_bkLog',
+	'_rightThumb._banners': '_banners',
+	'_rightThumb._base3': '_',
+	'_rightThumb._base': '_',
+	'_rightThumb._base1': '_',
+	'_rightThumb._base2': '_',
+	'_rightThumb._base3b': '_',
+	'_rightThumb._base3c': '_',
+	'_rightThumb._base4': '___',
+	'_rightThumb._base5': '_',
+	'_rightThumb._beep': '_beep',
+	'_rightThumb._beep': '_beeper',
+	'_rightThumb._bookmarks': '_bm',
+	'_rightThumb._cloud': '_cloud',
+	'_rightThumb._copy': '_copy',
+	'_rightThumb._date': '_date',
+	'_rightThumb._dir': '_dir',
+	'_rightThumb._drive': '_drive',
+	'_rightThumb._encryptFile': '_bl',
+	'_rightThumb._encryptFile': '_blowfish',
+	'_rightThumb._encryptFile': '_crypt',
+	'_rightThumb._encryptString': '_',
+	'_rightThumb._encryptString': '_blowfish',
+	'_rightThumb._getPipe': '_getPipe',
+	'_rightThumb._imdb': '_imdb',
+	'_rightThumb._logs': '_logs',
+	'_rightThumb._Bible': '_B',
+	'_rightThumb._matrix': '_matrix',
+	'_rightThumb._md5': '_hash',
+	'_rightThumb._md5': '_md5',
+	'_rightThumb._mimetype': '_mime',
+	'_rightThumb._nID': '_nID',
+	'_rightThumb._pID': '_pID',
+	'_rightThumb._profileVariables': '_',
+	'_rightThumb._profileVariables': '_profile',
+	'_rightThumb._servers': '_srv',
+	'_rightThumb._sessions': '_sessions',
+	'_rightThumb._simpleThreads': '_threads',
+	'_rightThumb._stardate': '_sd',
+	'_rightThumb._string': '_str',
+	'_rightThumb._tar': '_tar',
+	'_rightThumb._toolsScrapeFrontEnd': '_browser',
+	'_rightThumb._tz': '_tz',
+	'_rightThumb._vars': '_v',
+	'_rightThumb._vault': '_vault',
+	'_rightThumb._zipper': '_zipper',
+}
+WidgetsFW_Clean = {
+	'_rightThumb._construct': '__',
+	'_rightThumb._base3': '_',
+	'_rightThumb._vars': '_v',
+	'_rightThumb._string': '_str',
+	'_rightThumb._dir': '_dir',
+	'_rightThumb._md5': '_hash',
+	'_rightThumb._vault': '_vault',
+	'_rightThumb._encryptString': '_crypt',
+	'_rightThumb._encryptFile': '_crypt',
+	'_rightThumb._bookmarks': '_bm',
+	'_rightThumb._beep': '_beep',
+	'_rightThumb._copy': '_copy',
+	'_rightThumb._date': '_date',
+	'_rightThumb._mimetype': '_mime',
+
+	'_rightThumb._backupLog': '_bkLog',
+	'_rightThumb._banners': '_banners',
+	'_rightThumb._getPipe': '_getPipe',
+	'_rightThumb._logs': '_logs',
+	'_rightThumb._matrix': '_matrix',
+	
+	
+	'_rightThumb._nID': '_nID',
+	'_rightThumb._pID': '_pID',
+	'_rightThumb._profileVariables': '_profile',
+	'_rightThumb._servers': '_srv',
+	'_rightThumb._sessions': '_sessions',
+	'_rightThumb._simpleThreads': '_threads',
+	'_rightThumb._stardate': '_sd',
+
+	'_rightThumb._tar': '_tar',
+	'_rightThumb._toolsScrapeFrontEnd': '_browser',
+	'_rightThumb._tz': '_tz',
+	
+	'_rightThumb._zipper': '_zipper',
+}
 ########################################################################################
 # EOF

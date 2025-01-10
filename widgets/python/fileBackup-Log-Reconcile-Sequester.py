@@ -45,7 +45,7 @@ _._default_settings_()
 
 _.appInfo[focus()] = {
 	# 'app': '8facG-jo0Cxk',
-	'file': 'thisApp.py',
+	'file': 'fileBackup-Log-Reconcile-Sequester.py',
 	'description': 'Changes the world',
 		# _.ail(1,'subject')+
 		# _.aib('one')+
@@ -53,7 +53,7 @@ _.appInfo[focus()] = {
 						'DEFAULT',
 				],
 	'examples': [
-						_.hp('p thisApp -file file.txt'),
+						_.hp('p fileBackup-Log-Reconcile-Sequester'),
 						_.linePrint(label='simple',p=0),
 						'',
 	],
@@ -116,16 +116,48 @@ _.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw );
 ########################################################################################
 #n)--> start
 
+bad = []
+def script(path):
+	global bk
+	global bad
+	path = __.path(path)
+	if not __.os.path.isfile(path):
+		return False
+	if not path in bk:
+		bad.append(path)	
 
-for x in dir(_v):
-	y = '_v.'+x
-	z = eval(y)
-	if type(z) == str:
-		if _.showLine(x):
-			_.pr(y,'\t',z)
+import shutil
 
 def action():
-	pass
+	txt = _v.myBackup+__.os.sep+'txt'+__.os.sep
+	bin = _v.myBackup+__.os.sep+'bin'+__.os.sep
+	txtSequester = _v.myBackup+__.os.sep+'txt'+__.os.sep+'Orphaned'+__.os.sep
+	binSequester = _v.myBackup+__.os.sep+'bin'+__.os.sep+'Orphaned'+__.os.sep
+	_v.mkdir(txtSequester)
+	_v.mkdir(binSequester)
+	log = _.getTable('fileBackup.json')
+	global bk
+	bk = []
+	for rec in log:
+		if 'backup' in rec: bk.append(rec['backup'])
+	del log
+	global bad
+
+
+	bad = []
+	_.fo(bin,script=script)
+	for path in bad:
+		_.pr(path,c='red')
+		shutil.move(path,binSequester)
+
+
+	bad = []
+	_.fo(txt,script=script)
+	for path in bad:
+		_.pr(path,c='red')
+		shutil.move(path,txtSequester)
+
+
 	# load(); global c3po;
 
 	#n)--> iterate

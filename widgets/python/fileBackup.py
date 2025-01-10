@@ -957,6 +957,7 @@ def action(path=None,flag=None,o=None,pre=None):
 					# return None
 					continue
 			pathpath=path
+			# print(55)
 			if path in INDEX and os.path.getmtime(path) == INDEX[path]['timestamp']:
 				if not isActive('Silent'):
 					_.pr(path, c='cyan')
@@ -1316,8 +1317,7 @@ def action(path=None,flag=None,o=None,pre=None):
 					
 					# focus()
 					_.saveText(  tehFile, path  )
-
-
+		
 		library = _.getTableDB( 'library-path.hash' )
 		if path in library:
 			libFile = library[path]
@@ -1355,7 +1355,6 @@ def action(path=None,flag=None,o=None,pre=None):
 					os.utime(libFile,(fMod, fMod))
 
 
-		
 		txtScheduler.append( { 'timestamp': genEpoch(), 'file': __.path(path), 'status': 0, 'app': 'fileBackup', 'group': 0, 'session': __.Session_ID } )
 		if not _.switches.isActive('BypassScheduler'): _.saveTable( txtScheduler,'fileBackupSchedule.json', p=0, lock=True )
 		if __.openSecure:
@@ -1394,7 +1393,6 @@ def action(path=None,flag=None,o=None,pre=None):
 				if pathpath in INDEX: path=pathpath
 				elif pathpath.lower() in INDEX: path=pathpath.lower()
 				elif __.path(pathpath) in INDEX: path=__.path(pathpath)
-
 			# path=pathpath
 			# _.pv(INDEX[list(INDEX.keys())[0]]);sys.exit();
 			# if not _.switches.isActive('isRunOnce'):
@@ -1442,6 +1440,7 @@ def action(path=None,flag=None,o=None,pre=None):
 				# 	_bkLog.imp.addFlagIfHasBackup( idCheck )
 				# _.pr(idCheck)
 			else:
+				# print(1005)
 				modified = formatDate(modifiedRaw)
 				if _mime.isText(path) and _.isTextFi(path,100):
 					newname = _v.myTXT + os.sep + str(now) + '-' + modified +  '-' + name
@@ -1453,7 +1452,6 @@ def action(path=None,flag=None,o=None,pre=None):
 						_.colorThis( [  '   File is BINARY'  ], 'yellow' )
 						_.colorThis( [  '********************'  ], 'yellow' )
 					newname = _v.myBIN + os.sep + str(now) + '-' + modified +  '-'+ _md5.string(path,'sha1') +'-'+ name
-
 				if not __.secureFilesID is None:
 					theID = __.secureFilesID
 				else:
@@ -1488,7 +1486,6 @@ def action(path=None,flag=None,o=None,pre=None):
 				# changed timestamp on 1620919454
 				#   previously...    'timestamp': now 
 
-			
 
 				if _.switches.isActive('isRunOnce'):
 					log = { 'id': theID, 'timestamp': modifiedRaw, 'file': os.path.abspath(path), 'backup': newname,'mime': mime, 'status': 100, 'name': name, 'log': '', 'flag':__flag__ }
@@ -1560,7 +1557,6 @@ def action(path=None,flag=None,o=None,pre=None):
 					if fromPath:
 						return newname
 					continue
-	
 	return True
 
 

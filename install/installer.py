@@ -3443,6 +3443,7 @@ alias fi.de="p cryptFile -vault -r -de -f "
 
 
 alias aes="p aes"
+alias if.="p Import-Module-Functions -i"
 
 
 
