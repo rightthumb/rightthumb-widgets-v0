@@ -24,6 +24,7 @@ SwitchGroup_Help.Delim = ''
 SwitchGroup_Help.Group = '|'
 SwitchGroup_Help.SubGroup = ':' # if this len 1: SwitchGroupDepth +=1
 SwitchGroup_Help.NoGroup = '-'
+SwitchGroup_Help.PostLabel = '  '
 # HasSwitchSubGroup search for in framework
 
 ##################################################

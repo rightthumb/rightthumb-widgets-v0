@@ -3,44 +3,29 @@ def focus(parentApp='', childApp='', reg=True): global appDBA; f = __.appName(ap
 fieldSet=_.l.vars(focus(),__name__,__file__,appDBA);_.load();_v=__.imp('_rightThumb._vars');
 
 def sw():
-	tabGroup = 0
-	tabGroup += 1
-	# post label precedes with a zero
-	_.switches.register( 'Files', '-f,-fi,-file,-files','(optional) file.txt', isPipe='glob', description='Files', group=[tabGroup,'A Group',0,'Post Label Here'])
-	_.switches.register( 'One', '-one', group=[tabGroup,'A Group'] )
-	_.switches.register( 'Two', '-two', group=[tabGroup,'Same tabGroup But Different Label'] )
-	tabSubGroupDepth = 2
-	_.switches.register( 'Three', '-three', group=[tabGroup,'BB Group',tabSubGroupDepth] )
-	tabGroup += 1
-	_.switches.register( 'Four', '-for', group=[tabGroup,'B Group'] )
-	_.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=False )
+	pass
+	_.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name', description='Files', isRequired=False )
 _._default_settings_()
 
 _.appInfo[focus()] = {
-	'file': 'SwitchGroupsExamples.py',
-	'description': 'Switch Group Examples: Empty App That Opens Help Menu Only To Display nth Nested Grouped Switch',
-	# 'description': ['one','two','three','four'],
+	'file': 'thisApp.py',
+	'description': 'Changes the world',
 	'categories': [
-						'example',
-						'grouped switches',
-						'switch groups',
-						'nested switches subgroups',
-						'nth switch group depth',
+						'DEFAULT',
 				],
 	'examples': [
-						_.hp('p SwitchGroupsExamples'),
+						_.hp('p thisApp -file file.txt'),
 						_.linePrint(label='simple',p=0),
 						'',
 	],
 	'columns': [
 	],
 	'aliases': [],
-	'relatedapps': [ 'All Python Framework Apps' ],
-	'prerequisite': [ 'A RightThumb Framework App' ],
-	'required': [  ],
-	'notes': [ 'Modify this to test nth nested switch groups' ],
+	'relatedapps': [],
+	'prerequisite': [],
+	'notes': [],
 }
-__.isRequired_or_List = ['Curiosity of how to use switch groups']
+
 _.appInfo[focus()] = _.appInfoContinuity(__.thisApp( __file__ ),_.appInfo[focus()])
 _.appData[focus()] = _.appDataContinuity()
 def appRegDics(): return { 'appInfo': _.appInfo[focus()], 'appData': _.appData[focus()] }
@@ -57,7 +42,11 @@ _.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw );
 #n)--> start
 
 def action():
-	_.help(1)
+	for path in _.isData():
+		data = _.getTable2(path)
+		_.pv(data)
+		_.saveTable2(data,path)
+		break
 
 ########################################################################################
 if __name__ == '__main__':

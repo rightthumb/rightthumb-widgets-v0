@@ -35,45 +35,64 @@ import _rightThumb._string as _str
 
 def appSwitches():
 	pass
+	tabGroup = 0
+	tabGroup += 1
+	# , group=[tabGroup,'Scan What (default current folder)'] )
+	_.switches.register( 'Files', '-f,-fi,-file,-files','(optional) file.txt', isPipe='glob', description='Files', group=[tabGroup,'Scan What',0,'(defaults to current folder)'] )
+	_.switches.register( 'Files', '-f,-fi,-file,-files','(optional) file.txt', isPipe='glob', description='Files', group=[tabGroup,'Scan What', 0,'(defaults to current folder)'] )
+	_.switches.register('Folder', '-fo,-folder', group=[tabGroup,'Scan What',0,'(defaults to current folder)'] )
 
-	_.switches.register('Database', '-db,-database')
-	_.switches.register('Recursive', '-r,-recursive')
-	_.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isPipe='glob', description='Files' )
-	_.switches.register('Folder', '-fo,-folder')
+	_.switches.register('Recursive', '-r,-recursive', group=[tabGroup,'Scan Settings'] )
+	_.switches.register('Duplicate', '-dup,-duplicates', 'bytes,epoch,filename OR (c,m,b,f,n) DAY', group=[tabGroup,'Scan Settings'] )
+	_.switches.register('Ago', '-ago','1m c, 1y, 1d a', group=[tabGroup,'Refine Search'] )
+	# _.switches.register('Ago_by_Created', '-cago', group=[tabGroup,'Scan Settings'] ) 
+	_.switches.register('Ago-Create-Date', '-cd', group=[tabGroup,'Refine Search'] )
+	_.switches.register('Text', '-t,-text,-txt', group=[tabGroup,'Refine Search'] )
+	_.switches.register('Binary', '-bin', group=[tabGroup,'Refine Search'] )
+	_.switches.register('Size', '-size',' g 10mb, L 2kb ', group=[tabGroup,'Refine Search'] )
+	# , group=[tabGroup,'Scan Settings'] )
+	_.switches.register('FolderRefine', '-fr', group=[tabGroup,'Refine Search'] )
+	_.switches.register('PlusFile', '-pf,-pn,-plusfile', group=[tabGroup,'Refine Search'] )
 
-	_.switches.register('Count', '-c,-count,--c')
-	# _.switches.register('Path', '-p,-path,-folder')
-	_.switches.register('Text', '-t,-text,-txt')
-	_.switches.register('Binary', '-bin')
-	_.switches.register('Size', '-size',' g 10mb, L 2kb ')
-	_.switches.register('JSON', '-json')
-	_.switches.register('YAML', '-yml,-yaml')
-	_.switches.register('Ago', '-ago','1m c, 1y, 1d a')
-	_.switches.register('Time', '-time')
-	_.switches.register('Clean', '--c')
-	_.switches.register('CacheInfo', '-info')
-	_.switches.register('Cache', '-cache')
-	_.switches.register('Save', '-save')
-	_.switches.register('Totals', '-total,-totals')
-	_.switches.register('FolderRefine', '-fr')
-	_.switches.register('Duplicate', '-dup,-duplicates', 'bytes,epoch,filename OR (c,m,b,f,n) DAY')
-	_.switches.register('Hash', '-hash', 'md5 sha1 sha224 sha256 sha384 sha512 sha3_224 sha3_256 sha3_384 sha3_512 shake_128 shake_256')
-	_.switches.register('mimeType', '-m,-mime')
-	_.switches.register('MovieTitle', '-movietitle')
-	_.switches.register('NameLength', '-nl,-namelength', '4 OR 4 L OR 3 g')
-	_.switches.register('ExtLength', '-el,-extlength', '4 OR 4 L OR 3 g')
-	_.switches.register('SuperDate', '-sdate,-superdate','older OR newer')
-	_.switches.register('NoMeta', '-nm,-nometa')
-	_.switches.register('Ago_by_Created', '-cago')
-	_.switches.register('Not', '-not,-invert')
-	_.switches.register('Extensions', '-ext', 'db image graphic video app audio doc script archive')
-	_.switches.register('Header', '-h,-header','5')
-	_.switches.register('Group>=', '++g', '2' )
-	_.switches.register('Group<=', '--g', '2' )
-	_.switches.register('PlusFile', '-pf,-pn,-plusfile')
-	_.switches.register('Ago-Create-Date', '-cd')
-	_.switches.register('PrintBytes', '-bytes')
-	_.switches.register('Disable-Intelligence', '-showall')
+
+
+
+	tabGroup += 1
+	# , group=[tabGroup,'Destination'] )
+	_.switches.register('Database', '-db,-database', group=[tabGroup,'Destination'] )
+	_.switches.register('Cache', '-cache', group=[tabGroup,'Destination'] )
+	_.switches.register('Save', '-save', group=[tabGroup,'Destination'] )
+	
+
+	tabGroup += 1
+	_.switches.register('PrintBytes', '-bytes', group=[tabGroup,'Output'] )
+	_.switches.register('Disable-Intelligence', '-showall', group=[tabGroup,'Output'] )
+	_.switches.register('Count', '-c,-count,--c', group=[tabGroup,'Output'] )
+	_.switches.register('Totals', '-total,-totals', group=[tabGroup,'Output'] )
+	_.switches.register('JSON', '-json', group=[tabGroup,'Output'] )
+	_.switches.register('YAML', '-yml,-yaml', group=[tabGroup,'Output'] )
+	_.switches.register('Time', '-time', group=[tabGroup,'Output'] )
+	_.switches.register('Clean', '--c', group=[tabGroup,'Output'] )
+	_.switches.register('CacheInfo', '-info', group=[tabGroup,'Output'] )
+	_.switches.register('NoMeta', '-nm,-nometa', group=[tabGroup,'Output'] )
+	
+	
+
+	tabGroup += 1
+	# , group=[tabGroup,'Fields'] )
+	_.switches.register('Hash', '-hash', 'md5 sha1 sha224 sha256 sha384 sha512 sha3_224 sha3_256 sha3_384 sha3_512 shake_128 shake_256', group=[tabGroup,'Fields'] )
+	_.switches.register('mimeType', '-m,-mime', group=[tabGroup,'Fields'] )
+	_.switches.register('MovieTitle', '-movietitle', group=[tabGroup,'Fields'] )
+	_.switches.register('NameLength', '-nl,-namelength', '4 OR 4 L OR 3 g', group=[tabGroup,'Fields'] )
+	_.switches.register('ExtLength', '-el,-extlength', '4 OR 4 L OR 3 g', group=[tabGroup,'Fields'] )
+	_.switches.register('SuperDate', '-sdate,-superdate','older OR newer', group=[tabGroup,'Fields'] )
+	
+	_.switches.register('Not', '-not,-invert', group=[tabGroup,'Fields'] )
+	_.switches.register('Extensions', '-ext', 'db image graphic video app audio doc script archive', group=[tabGroup,'Fields'] )
+	_.switches.register('Header', '-h,-header','5', group=[tabGroup,'Fields'] )
+	_.switches.register('Group>=', '++g', '2' , group=[tabGroup,'Fields'] )
+	_.switches.register('Group<=', '--g', '2' , group=[tabGroup,'Fields'] )
+
 	# _.switches.register('WOYCreatedDate', '-cwoy')
 
 

@@ -3875,132 +3875,295 @@ toggler['alt_win_m'] = 'clean-terminal-copy'
 
 
 
+# def scheduler_job(rec=None):
+
+# 	if rec is None:
+# 		# _.pr('scheduler: checking for database changes',r=1)
+
+# 		if os.path.isfile(__.scheduler_db):
+# 			mod=_.mod(__.scheduler_db)
+# 			if not __.scheduler_mod == mod:
+# 				beepy.note('d',2); beepy.note('d',2);
+# 				__.scheduler_restart=True
+# 				__.scheduler_exit=True
+# 		return None
+
+# 	if 'once' in rec: once=True
+# 	else: once=False
+
+# 	os.system(rec['command'])
+# 	if once:
+# 		schedule.clear(_id)
+# 		records=_.getTable(__.scheduler_db)
+# 		recs=[]
+# 		for r in records:
+# 			if not rec['id'] == r['id']: recs.append(r)
+# 		_.saveTable(recs,__.scheduler_db)
+# 		print('Deleted:',_id,rec['id'])
+
+# 	# if rec['beep']: beepy.note('d',3); beepy.note('c#'); beepy.note('d',3)
+# 	print('RAN:',_.toYML(rec))
+# try:
+# 	import schedule
+# except Exception as e:
+# 	pass
+
+# def schedulerDB():
+# 	# _.pr(line=1,c='gray')
+# 	# _.pr('scheduler: creating schedule: start',c='gray')
+# 	_.pr('scheduler:',c='gray')
+# 	for rec in _.getTable(__.scheduler_db):
+# 		# print(_.toYML(rec))
+# 		if 'command' in rec:
+# 			cmd=rec['command']
+# 			if '\\rp.bat' in rec['command']:
+# 				cmd=cmd.split('\\rp.bat')[1]
+# 			cmd=cmd.strip()
+# 			if 'days' in rec and is_today_in_days(rec['days']):
+# 				cmd+=', Today: '+', '.join(rec['days'])
+# 			elif 'days' in rec:
+# 				cmd+=', '+', '.join(rec['days'])
+# 			_.pr('\t',cmd,c='gray')
+# 		if rec['status']:
+# 			run=True
+# 			if 'days' in rec:
+# 				run=False
+# 			if 'days' in rec and is_today_in_days(rec['days']):
+# 				run=True
+# 			if run:
+# 				if 'sec' in rec:
+# 					schedule.every(int(rec['sec'])).seconds.do(scheduler_job,rec).tag(rec['id'])
+# 				elif 'min' in rec:
+# 					schedule.every(int(rec['min'])).minutes.do(scheduler_job,rec).tag(rec['id'])
+# 				elif 'hour' in rec:
+# 					schedule.every(int(rec['hour'])).hours.do(scheduler_job,rec).tag(rec['id'])
+# 				elif 'day' in rec and 'at' in rec and _.isNu(rec['day']):
+# 					schedule.every(int(rec['day'])).days.at(rec['at']).do(scheduler_job,rec).tag(rec['id'])
+# 				pass
+# 				# schedule.every().day.at("12:00").do(job).tag(rec['id'])
+# 				# schedule.every().day.at("10:30").do(job)
+# 				# schedule.every().monday.do(job)
+# 				# schedule.every().wednesday.at("13:15").do(job)
+# 				# schedule.every(2).days.at("10:30").do(job)
+# 				# schedule.every().week.do(job)
+# 				# schedule.every().hour.do(job)
+# 				# schedule.every(5).seconds.do(job)
+# 				# schedule.every().minute.do(job)
+# 	# _.pr('scheduler: creating schedule: end',c='gray')
+# 	# _.pr(line=1,c='gray')
+# import traceback
+
+# def schedulerNoError():
+# 	try: scheduler()
+# 	except Exception as e:
+# 		print('scheduler error',e)
+# 		traceback.print_exc()
+
+# def scheduler():
+# 	# print('\nscheduler: started\n')
+# 	__.scheduler_mod=0
+# 	__.scheduler_db=_v.tt+os.sep+'scheduler.json'
+# 	schedule.every(1).minute.do(scheduler_job)
+# 	if os.path.isfile(__.scheduler_db):
+# 		__.scheduler_mod=_.mod(__.scheduler_db)
+# 		schedulerDB()
+# 	else:
+# 		print('scheduler: No Database')
+
+
+# 	while True:
+# 		if __.scheduler_exit: break
+# 		schedule.run_pending()
+# 		time.sleep(1)
+# 	if __.scheduler_restart:
+# 		__.scheduler_exit=False
+# 		scheduler()
+
+# def schedulerRun():
+# 	# ad1acf13-2809-4fb8-aaf0-37ea2a8ce2b5
+# 	__.scheduler_exit=False
+# 	__.scheduler_restart=True
+# 	threads=[]
+# 	import threading
+# 	# t = threading.Thread(target=scheduler, args=(1,2,3), kwargs={'name':'scott'})
+# 	t = threading.Thread(target=schedulerNoError)
+# 	threads.append(t)
+# 	t.start()
+
+# def is_today_in_days(days_list):
+# 	"""Check if today is in the provided list of days."""
+# 	return current_day() in days_list
+
+# def current_day():
+# 	import datetime
+# 	"""Return current day in short form, e.g., 'fri' for Friday."""
+# 	now = datetime.datetime.now()
+# 	return now.strftime('%a').lower()
+
+# __.schedulerRun=True
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 def scheduler_job(rec=None):
 
-	if rec is None:
-		# _.pr('scheduler: checking for database changes',r=1)
+    if rec is None:
+        # _.pr('scheduler: checking for database changes',r=1)
 
-		if os.path.isfile(__.scheduler_db):
-			mod=_.mod(__.scheduler_db)
-			if not __.scheduler_mod == mod:
-				beepy.note('d',2); beepy.note('d',2);
-				__.scheduler_restart=True
-				__.scheduler_exit=True
-		return None
+        if os.path.isfile(__.scheduler_db):
+            mod = _.mod(__.scheduler_db)
+            if not __.scheduler_mod == mod:
+                beepy.note('d', 2); beepy.note('d', 2);
+                __.scheduler_restart = True
+                __.scheduler_exit = True
+        return None
 
-	if 'once' in rec: once=True
-	else: once=False
+    if 'once' in rec:
+        once = True
+    else:
+        once = False
 
-	os.system(rec['command'])
-	if once:
-		schedule.clear(_id)
-		records=_.getTable(__.scheduler_db)
-		recs=[]
-		for r in records:
-			if not rec['id'] == r['id']: recs.append(r)
-		_.saveTable(recs,__.scheduler_db)
-		print('Deleted:',_id,rec['id'])
+    if rec['command'].startswith(('http://', 'https://')):
+        import webbrowser
+        webbrowser.open(rec['command'])
+    else:
+        os.system(rec['command'])
 
-	# if rec['beep']: beepy.note('d',3); beepy.note('c#'); beepy.note('d',3)
-	print('RAN:',_.toYML(rec))
+    if once:
+        schedule.clear(rec['id'])
+        records = _.getTable(__.scheduler_db)
+        recs = [r for r in records if not rec['id'] == r['id']]
+        _.saveTable(recs, __.scheduler_db)
+        print('Deleted:', rec['id'])
+
+    print('RAN:', _.toYML(rec))
+
 try:
-	import schedule
+    import schedule
 except Exception as e:
-	pass
+    pass
 
 def schedulerDB():
-	# _.pr(line=1,c='gray')
-	# _.pr('scheduler: creating schedule: start',c='gray')
-	_.pr('scheduler:',c='gray')
-	for rec in _.getTable(__.scheduler_db):
-		# print(_.toYML(rec))
-		if 'command' in rec:
-			cmd=rec['command']
-			if '\\rp.bat' in rec['command']:
-				cmd=cmd.split('\\rp.bat')[1]
-			cmd=cmd.strip()
-			if 'days' in rec and is_today_in_days(rec['days']):
-				cmd+=', Today: '+', '.join(rec['days'])
-			elif 'days' in rec:
-				cmd+=', '+', '.join(rec['days'])
-			_.pr('\t',cmd,c='gray')
-		if rec['status']:
-			run=True
-			if 'days' in rec:
-				run=False
-			if 'days' in rec and is_today_in_days(rec['days']):
-				run=True
-			if run:
-				if 'sec' in rec:
-					schedule.every(int(rec['sec'])).seconds.do(scheduler_job,rec).tag(rec['id'])
-				elif 'min' in rec:
-					schedule.every(int(rec['min'])).minutes.do(scheduler_job,rec).tag(rec['id'])
-				elif 'hour' in rec:
-					schedule.every(int(rec['hour'])).hours.do(scheduler_job,rec).tag(rec['id'])
-				elif 'day' in rec and 'at' in rec and _.isNu(rec['day']):
-					schedule.every(int(rec['day'])).days.at(rec['at']).do(scheduler_job,rec).tag(rec['id'])
-				pass
-				# schedule.every().day.at("12:00").do(job).tag(rec['id'])
-				# schedule.every().day.at("10:30").do(job)
-				# schedule.every().monday.do(job)
-				# schedule.every().wednesday.at("13:15").do(job)
-				# schedule.every(2).days.at("10:30").do(job)
-				# schedule.every().week.do(job)
-				# schedule.every().hour.do(job)
-				# schedule.every(5).seconds.do(job)
-				# schedule.every().minute.do(job)
-	# _.pr('scheduler: creating schedule: end',c='gray')
-	# _.pr(line=1,c='gray')
+    _.pr('scheduler:', c='gray')
+    for rec in _.getTable(__.scheduler_db):
+        if 'command' in rec:
+            cmd = rec['command']
+            if '\\rp.bat' in rec['command']:
+                cmd = cmd.split('\\rp.bat')[1]
+            cmd = cmd.strip()
+            if 'days' in rec and is_today_in_days(rec['days']):
+                cmd += ', Today: ' + ', '.join(rec['days'])
+            elif 'days' in rec:
+                cmd += ', ' + ', '.join(rec['days'])
+            _.pr('\t', cmd, c='gray')
+        if rec['status']:
+            run = True
+            if 'days' in rec:
+                run = False
+            if 'days' in rec and is_today_in_days(rec['days']):
+                run = True
+            if run:
+                if 'sec' in rec:
+                    schedule.every(int(rec['sec'])).seconds.do(scheduler_job, rec).tag(rec['id'])
+                elif 'min' in rec:
+                    schedule.every(int(rec['min'])).minutes.do(scheduler_job, rec).tag(rec['id'])
+                elif 'hour' in rec:
+                    schedule.every(int(rec['hour'])).hours.do(scheduler_job, rec).tag(rec['id'])
+                elif 'day' in rec and 'at' in rec and _.isNu(rec['day']):
+                    schedule.every(int(rec['day'])).days.at(rec['at']).do(scheduler_job, rec).tag(rec['id'])
+
 import traceback
 
 def schedulerNoError():
-	try: scheduler()
-	except Exception as e:
-		print('scheduler error',e)
-		traceback.print_exc()
+    try:
+        scheduler()
+    except Exception as e:
+        print('scheduler error', e)
+        traceback.print_exc()
 
 def scheduler():
-	# print('\nscheduler: started\n')
-	__.scheduler_mod=0
-	__.scheduler_db=_v.tt+os.sep+'scheduler.json'
-	schedule.every(1).minute.do(scheduler_job)
-	if os.path.isfile(__.scheduler_db):
-		__.scheduler_mod=_.mod(__.scheduler_db)
-		schedulerDB()
-	else:
-		print('scheduler: No Database')
+    __.scheduler_mod = 0
+    __.scheduler_db = _v.tt + os.sep + 'scheduler.json'
+    schedule.every(1).minute.do(scheduler_job)
+    if os.path.isfile(__.scheduler_db):
+        __.scheduler_mod = _.mod(__.scheduler_db)
+        schedulerDB()
+    else:
+        print('scheduler: No Database')
 
-
-	while True:
-		if __.scheduler_exit: break
-		schedule.run_pending()
-		time.sleep(1)
-	if __.scheduler_restart:
-		__.scheduler_exit=False
-		scheduler()
+    while True:
+        if __.scheduler_exit:
+            break
+        schedule.run_pending()
+        time.sleep(1)
+    if __.scheduler_restart:
+        __.scheduler_exit = False
+        scheduler()
 
 def schedulerRun():
-	# ad1acf13-2809-4fb8-aaf0-37ea2a8ce2b5
-	__.scheduler_exit=False
-	__.scheduler_restart=True
-	threads=[]
-	import threading
-	# t = threading.Thread(target=scheduler, args=(1,2,3), kwargs={'name':'scott'})
-	t = threading.Thread(target=schedulerNoError)
-	threads.append(t)
-	t.start()
+    __.scheduler_exit = False
+    __.scheduler_restart = True
+    threads = []
+    import threading
+    t = threading.Thread(target=schedulerNoError)
+    threads.append(t)
+    t.start()
 
 def is_today_in_days(days_list):
-	"""Check if today is in the provided list of days."""
-	return current_day() in days_list
+    return current_day() in days_list
 
 def current_day():
-	import datetime
-	"""Return current day in short form, e.g., 'fri' for Friday."""
-	now = datetime.datetime.now()
-	return now.strftime('%a').lower()
+    import datetime
+    now = datetime.datetime.now()
+    return now.strftime('%a').lower()
 
-__.schedulerRun=True
+__.schedulerRun = True
+
+# if __.schedulerRun: zschedulerRun()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

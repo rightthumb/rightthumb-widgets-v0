@@ -43,6 +43,8 @@ class Meta_Namespace():
 	def __init__( self ): pass
 dot=Meta_Namespace
 helpColorScheme = dot()
+# __.SwitchGroup_Help.SubGroup
+# HasSwitchSubGroup
 ##################################################
 # sudo apt install libpython2.7-stdlib
 # import json
@@ -12444,6 +12446,7 @@ class Switches:
 		## Unused colors commented for navigation
 		helpColorScheme.labels = 'ColorBold.white'
 		helpColorScheme.tableSwitchGroupsLine = 'blue'
+		helpColorScheme.tableSwitchGroupsPostLabel = 'yellow'
 		helpColorScheme.file = 'Background.light_blue'
 		helpColorScheme.description = 'Background.green'
 		helpColorScheme.tags = 'green'
@@ -12692,7 +12695,7 @@ class Switches:
 			print_(isRequired_or_List1 +':   '+ isRequired_or_List2)
 			# colorThis(  [  '  !! Required ' + ' or '.join(__.isRequired_or_List)  ]  , 'red' )
 
-		lastGroup = 0
+		lastGroup = -1
 		for switch in self.switches:
 			# print_( dir(switch) )
 			# print_( switch.__dict__ )
@@ -13001,14 +13004,14 @@ class Switches:
 	def print(self):
 		switch = []
 		global tables
-		lastGroup = 0
+		lastGroup = -1
 		swLen = {
 			'n':0,
 			's':0,
 			'e':0,
 		}
 		sgLe = {}
-		lastGroup = 0
+		lastGroup = -1
 		sgLm = 0
 		for i,sw in enumerate(self.switches):
 			n = len(sw.name)
@@ -13095,15 +13098,16 @@ class Switches:
 						pass
 					elif not swgroupID == swgroupLabel and not lastLabel == swgroupLabel:
 						SwitchSubGroup = True
+						# sys.exit()
 
 				if __.switch_skimmer.active and not self.switches[i].default:
 					pass
 				elif not __.switch_skimmer.active:
 					pass
-				try:
-					lastGroup = swgroupID
-					lastLabel = swgroupLabel
-				except: pass 
+				# try:
+				# 	lastGroup = swgroupID
+				# 	lastLabel = swgroupLabel
+				# except: pass 
 		# End: SwitchSubGroup check
 
 
@@ -13126,12 +13130,22 @@ class Switches:
 							
 				if valid:
 					# print('valid',sw.name)
-					if not lastGroup == swgroupID:
+					if False:
+						pass
+					elif not lastGroup == swgroupID:
 						if SwitchSubGroup:
+							pass
 							switch.append({ 'HasSwitchSubGroup': '', 'SwitchGroup': swgroupLabel.strip(), 'name': '','switch': '','example_or_notes': ''})
 							
 						else:
-							switch.append({ 'SwitchGroup': swgroupLabel.strip(), 'name': '','switch': '','example_or_notes': ''})
+							pass
+							# sys.exit()
+							# pr(swgroupLabel,c='BackgroundGreyBold.green')
+							if len(sw.group) > 3 and sw.group[2] == 0:
+								# switch.append({ 'SwitchGroupPostLabel': sw.group[3].strip(), 'name': '','switch': '','example_or_notes': ''})
+								switch.append({ 'SwitchGroup': swgroupLabel.strip(), 'SwitchGroupPostLabel': sw.group[3].strip(),'name': '','switch': '','example_or_notes': ''})
+							else:
+								switch.append({ 'SwitchGroup': swgroupLabel.strip(), 'name': '','switch': '','example_or_notes': ''})
 						# switch.append({'name':'' ,'switch':'','example_or_notes': '>>'})
 					elif not swgroupID == swgroupLabel and not lastLabel == swgroupLabel:
 						if len(sw.group) > 2:
@@ -15301,13 +15315,19 @@ class Table:
 
 
 
-
+					isSwitchGroup = False
 					if self.groupID_KEY in item and item[self.groupID_KEY].endswith('-B'):
 						cp( [ self.tab['table']+loopPrint(__.table_prefix_padding) + result ], 'BackgroundGrey.blue' )
 					else:
 						if result.strip().startswith('Help  '):print_('')
+
+						SwitchGroupPostLabel = ''
+						if 'SwitchGroupPostLabel' in item and  'example_or_notes' in item :
+							isSwitchGroup = True
+							SwitchGroupPostLabel = pr(__.SwitchGroup_Help.PostLabel,item['SwitchGroupPostLabel'],c=helpColorScheme.tableSwitchGroupsPostLabel,p=0)
 						# if result.strip().startswith('Switch Group:'): print('')
 						if 'SwitchSubGroup' in item and  'example_or_notes' in item :
+							isSwitchGroup = True
 							if 'SwitchGroupDepth' in item and  'example_or_notes' in item :
 								SwitchGroupDepth = item['SwitchGroupDepth']
 							else:
@@ -15315,18 +15335,24 @@ class Table:
 							if len(__.SwitchGroup_Help.SubGroup) ==1:
 								SwitchGroupDepth +=1
 							print()
-							printBold(__.SwitchGroup_Help.SubGroup * SwitchGroupDepth+__.SwitchGroup_Help.Delim+' '+item['SwitchSubGroup'])
+							pr(pr(__.SwitchGroup_Help.SubGroup * SwitchGroupDepth+__.SwitchGroup_Help.Delim+' '+item['SwitchSubGroup'],c='ColorBold.white',p=0),SwitchGroupPostLabel)
 						if 'SwitchGroup' in item and  'example_or_notes' in item :
+							isSwitchGroup = True
 							print()
+
 							if 'HasSwitchSubGroup' in item and  'example_or_notes' in item :
 								pr('_' * max_length,c=helpColorScheme.tableSwitchGroupsLine)
 							SwitchGroup = __.SwitchGroup_Help.Group
 							if item['SwitchGroup'] == '':
 								SwitchGroup = __.SwitchGroup_Help.NoGroup
-							  
-							printBold(SwitchGroup+__.SwitchGroup_Help.Delim+' '+item['SwitchGroup'])
+							
+							pr(  pr(SwitchGroup+__.SwitchGroup_Help.Delim+' '+item['SwitchGroup'],c='ColorBold.white',p=0)  ,  SwitchGroupPostLabel)
 						# print(item)
-						colorizeRow( tableLine+result.lstrip(), prefix=self.tab['table']+loopPrint(__.table_prefix_padding), prefixColor=self.tab_color, haltColorShift=self.isExtraRecord )
+						if isSwitchGroup:
+							theLine = tableLine+result.lstrip()
+						else:
+							theLine = tableLine+result
+						colorizeRow( theLine, prefix=self.tab['table']+loopPrint(__.table_prefix_padding), prefixColor=self.tab_color, haltColorShift=self.isExtraRecord )
 			i += 1
 			if 'example_or_notes' in column and 'switch' in column and  switchDefault == i:
 
