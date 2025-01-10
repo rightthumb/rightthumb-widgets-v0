@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if which programname >/dev/null; then
-    echo exists
+	echo exists
 else
-    echo does not exist
+	echo does not exist
 fi
