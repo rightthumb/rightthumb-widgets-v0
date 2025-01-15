@@ -284,6 +284,16 @@ class Bookmarks:
 		self.log()
 		return c41(self.folder)
 	###########################################################################################
+
+	def get2( self ):
+		if not self.alias in self.index['labels'] and not self.alias.lower() in self.index['labels']:
+			return None
+		for alias in self.index['labels']:
+			if alias == self.alias or alias.lower() == self.alias:
+				fo = _v.resolveFolderIDs(self.index['labels'][alias])
+				# print('Alias:',fo)
+				return fo
+
 	def get( self ):
 		if not self.alias in self.index['labels'] and not self.alias.lower() in self.index['labels']:
 

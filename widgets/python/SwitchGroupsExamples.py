@@ -14,6 +14,7 @@ def sw():
 	tabGroup += 1
 	_.switches.register( 'Four', '-for', group=[tabGroup,'B Group'] )
 	_.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=False )
+	_.switches.register( 'Fo', '-fo,-folder,-folders' )
 _._default_settings_()
 
 _.appInfo[focus()] = {
@@ -49,6 +50,9 @@ def triggers():
 	_._default_triggers_()
 	_.switches.trigger( 'Files', _.myFileLocations, vs=True )
 	_.switches.trigger( 'DB', _.aliasesFi )
+	_.switches.trigger( 'Fo', _.myFolder )
+	# _.switches.trigger( 'Fo', _.aliasesFo )
+	_.switches.trigger( 'Folders', _.myFolderLocations )
 	_.switches.trigger( 'Folder', _.myFolderLocations )
 	_.switches.trigger( 'OutputFolder', _.aliasesFo )
 def _local_(do): exec(do)
@@ -57,6 +61,13 @@ _.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw );
 #n)--> start
 
 def action():
+	if _.switches.isActive('Fo'):
+		# print('value',_.switches.value('Fo'))
+		# print(_.switches.values('Fo'))
+		# print(__.appReg)
+		for path in _.switches.values('Fo'):
+			_.pr( path )
+		return None
 	_.help(1)
 
 ########################################################################################

@@ -5,7 +5,7 @@ fieldSet=_.l.vars(focus(),__name__,__file__,appDBA);_.load();_v=__.imp('_rightTh
 def sw():
 	pass
 	_.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name', description='Files', isRequired=False )
-	_.switches.register( 'Folder', '-fo,-folder','folderName' )
+	_.switches.register( 'Folder', '-fo,-folder','-bk, folderName' )
 	_.switches.register( 'Label', '-l,-label','preChangeLabel' )
 	_.switches.register( 'PathID', '-p,-md5,,-md5ID,-path,-pathID',' can be resolved to a path with:  | p resolveIDs' )
 _._default_settings_()

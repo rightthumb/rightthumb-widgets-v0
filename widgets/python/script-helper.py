@@ -43,6 +43,7 @@ def appSwitches():
 	_.switches.register('JQ-Select', '-jq-select')
 	_.switches.register('JQ-Keys', '-jq-keys')
 	_.switches.register('JQ-Values', '-jq-values')
+	_.switches.register('File-Contains', '-fc,--file-contains', 'FolderPath')
 
 _.autoBackupData = __.setting('receipt-log')
 __.releaseAcquiredData = __.setting('receipt-file')
@@ -274,7 +275,38 @@ def load_json_file(filename):
 	with open(filename, 'r') as file:
 		return simplejson.load(file)
 
+import os
+
 def action():
+	if _.switches.isActive('File-Contains'):
+		values = _.switches.values('File-Contains')
+		for i,v in enumerate(values):
+			values[i] = v.strip().lower()
+		val = ' '.join(values)
+		
+		valid = False
+		for path in _.switches.values('Files'):
+			file = _.getText( path, raw=True )
+			# print(file)
+			if not values:
+				if len(file.strip()) > 0:
+					valid = True
+					break
+			elif 'path' in val and 'fo':
+				for line in file.split('\n'):
+					line = line.strip()
+					# print(line)
+					if os.path.isdir(line):
+						valid = True
+						break
+		if valid:
+			print('yes')
+		else:
+			print('no')
+		return valid
+
+			
+
 	if _.switches.isActive('JQ-Filter'):
 		files = _.switches.values('Files')
 		for file in files:

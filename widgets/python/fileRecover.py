@@ -281,8 +281,10 @@ def helpMenu():
 	_.pr('\t\tf - (f1)  - change the flag of an item')
 	_.pr('\t\tt - (t5275)  - print path to ticket')
 	_.pr('\t\tr - Recover the original file then exit')
+	_.pr('\t\tbk - List all paths to the backup files (len > 2 to not include dates)')
 	_.pr('\t\tnumber - type a number from the above list to recover')
 	_.pr('\t\tthis - (this5)  - list all backups for selected file')
+	# _.pr('\t\tg')
 	_.pr('\t\tx - exit')
 	_.pr()
 
@@ -304,6 +306,22 @@ def ask(data, doneselection=False, backupfile='', originalfile=''):
 
 
 	selection = selection.lower()
+	if 'bk' in selection:
+		global records
+		global thePath
+		# _.pv(records)
+		_.pr()
+		_.pr(thePath,c='darkcyan')
+		_.pr()
+		for rec in records:
+			if len(selection) > 2:
+				_.pr(rec['backup'],c='cyan')
+			else:
+				_.pr(_.friendlyDate(_.md(rec['backup'])),rec['backup'],c='cyan')
+		_.isExit(__file__)
+		_.pr()
+		_.pr()
+		return None
 	if 'this' in selection:
 		selection = selection.replace( 'this', '' )
 		fxx = data[int(selection)]['file']
@@ -592,9 +610,12 @@ def cleanLog(printThis=True):
 	# _.pr( 'HERE', 2 )
 	return newLog
 
-
+thePath = ''
 
 def action():
+	global thePath
+	global records
+	records = []
 	load()
 	if _.switches.isActive('CleanLog'):
 		cleanLog()
@@ -623,13 +644,13 @@ def action():
 		_.decrypt( _v.stmp+os.sep+'fileRecover.cache')
 	if _.switches.isActive('Input') or _.switches.isActive('ShowLast'):
 		path = _.switches.value('Input')
+		thePath = path
 		
 		if os.path.isfile(path) or _.switches.isActive('ShowLast'):
 			if not _.switches.isActive('ShowLast'):
 				abPath = os.path.abspath(path)
 				theID = generateID(path)
 			# _.pr()
-
 			data = []
 			justFile = []
 			# _.tables.register('backupLog',backupLog)
@@ -654,6 +675,7 @@ def action():
 						logItem['age'] = getTime(timeDelta(logItem['timestamp']))
 						logItem['ticket_open_at_time'] = getTicket( logItem['timestamp'] )
 						data.append(logItem)
+						records.append(logItem)
 
 						if len( justFile ) == 0:
 							if _.switches.isActive('Audit'):
@@ -727,6 +749,7 @@ def action():
 				else:
 
 					for i,rec in enumerate(data):
+						records.append(rec)
 						# for k in rec:
 						#     _.pr(k, rec[k])
 						# sys.exit()

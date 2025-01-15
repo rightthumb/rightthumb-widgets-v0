@@ -16,7 +16,7 @@
 ##################################################
 import _rightThumb._construct as __;appDBA=__.clearFocus(__name__,__file__);__.appReg=appDBA;import _rightThumb._base3 as _;
 def focus(parentApp='', childApp='', reg=True): global appDBA; f = __.appName(appDBA, parentApp, childApp); return f if reg else f
-fieldSet=_.l.vars(focus(),__name__,__file__,appDBA);_.load();_v=__.imp('_rightThumb._vars');
+fieldSet=_.l.vars(focus(),__name__,__file__,appDBA);_.load();_v=__.imp('_rightThumb._vars')
 ##################################################
 
 # app_navigator: switches
@@ -71,15 +71,17 @@ _.appData[focus()] = _.appDataContinuity()
 def appRegDics(): return { 'appInfo': _.appInfo[focus()], 'appData': _.appData[focus()] }
 def triggers():
 	_._default_triggers_()
-	_.switches.trigger( 'Files', _.myFileLocations, vs=True )
+	_.switches.trigger( 'Files', _.myFileLocations, vs=False )
 	_.switches.trigger( 'DB', _.aliasesFi )
 	# _.switches.trigger( 'Ago', _.timeAgo )
 	_.switches.trigger( 'Folder', _.myFolderLocations )
+	_.switches.trigger( 'Folders', _.myFolderLocations )
+	__.forceSwitchTrigger['Folders'] = _.myFolder
 	_.switches.trigger( 'OutputFolder', _.aliasesFo )
 	# _.switches.trigger( 'URL', _.urlTrigger )
 	# _.switches.trigger( 'Duration', _.timeFuture )
 def _local_(do): exec(do)
-_.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw );
+_.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw )
 
 ########################################################################################
 #b)--> examples
@@ -149,5 +151,5 @@ if __name__ == '__main__':
 	# if len(_.switches.all())==0: banner.gossip()
 	
 	#e)--> examples
-	action(); _.isExit(__file__);
+	action(); _.isExit(__file__)
 

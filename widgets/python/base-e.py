@@ -16,9 +16,9 @@
 ##################################################
 import _rightThumb._construct as __;appDBA=__.clearFocus(__name__,__file__);__.appReg=appDBA;import _rightThumb._base3 as _;
 def focus(parentApp='', childApp='', reg=True): global appDBA; f = __.appName(appDBA, parentApp, childApp); return f if reg else f
-fieldSet=_.l.vars(focus(),__name__,__file__,appDBA);_.load();_v=__.imp('_rightThumb._vars');
+fieldSet=_.l.vars(focus(),__name__,__file__,appDBA);_.load();_v=__.imp('_rightThumb._vars')
 ##################################################
-
+import _rightThumb._base3.library.functions.create_backup_filename as create_backup_filename; print(create_backup_filename)
 # app_navigator: switches
 def sw():
 	pass
@@ -79,7 +79,7 @@ def triggers():
 	# _.switches.trigger( 'URL', _.urlTrigger )
 	# _.switches.trigger( 'Duration', _.timeFuture )
 def _local_(do): exec(do)
-_.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw );
+_.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw )
 
 ########################################################################################
 #b)--> examples
@@ -115,14 +115,6 @@ _.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw );
 #e)--> examples
 ########################################################################################
 #n)--> start
-
-
-for x in dir(_v):
-	y = '_v.'+x
-	z = eval(y)
-	if type(z) == str:
-		if _.showLine(x):
-			_.pr(y,'\t',z)
 
 def action():
 	pass

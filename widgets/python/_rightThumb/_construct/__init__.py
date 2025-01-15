@@ -17,7 +17,7 @@ class Meta_Namespace():
 dot=Meta_Namespace
 fn=Meta_Namespace()
 ##################################################
-
+forceSwitchTrigger = {}
 # App Help Menu Switch Grouping
 SwitchGroup_Help = Meta_Namespace()
 SwitchGroup_Help.Delim = ''

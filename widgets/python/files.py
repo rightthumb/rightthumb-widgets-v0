@@ -259,16 +259,25 @@ def unFormatSize(size):
 
 def registerSwitches( argvProcessForce=False ):
 	global appDBA
+	_.switches.trigger( 'Folder', _.myFolder )
+	_.switches.trigger( 'Folders', _.myFolder )
+	__.forceSwitchTrigger['Folders'] = _.myFolder
+	# _.load()
 	if not __.appReg == appDBA and appDBA in __.appReg:
 
 		if not __name__ == '__main__':
 			_.argvProcess = argvProcessForce
 		else:
 			_.argvProcess = True
-
+		_.switches.trigger( 'Folder', _.myFolder )
+		_.switches.trigger( 'Folders', _.myFolder )
+		print('123')
 		_.load()
+		print('456')
 		_.appInfo[__.appReg] = _.appInfo[appDBA]
 		_.appData[__.appReg] = _.appData[appDBA]
+		
+
 	__.constructRegistration(_.appInfo[__.appReg]['file'],__.appReg)
 	appSwitches()
 
@@ -291,7 +300,6 @@ if not __name__ == '__main__':
 	_.argvProcess = False
 else:
 	_.argvProcess = True
-
 registerSwitches()
 
 def minusF():
