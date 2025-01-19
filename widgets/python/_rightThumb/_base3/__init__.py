@@ -100,6 +100,30 @@ helpColorScheme = dot()
 
 # from _rightThumb._base3.library.variables.framework.fwSettings import _all_colors_, _all_colors_nobk_, _all_colors_nobk_, _all_colors_tact_
 
+from _rightThumb._base3.library.frameworks.base.variables.bundle import    _all_colors_, _all_colors_nobk_, _all_colors_nobk_, _all_colors_tact_
+
+
+
+
+def hexColor(*args, **kwargs):
+	if not 'hexColor' in intelligent_code.functions:
+		from _rightThumb._base3.library.tools.functions.code.hexColor import hexColor
+		intelligent_code.functions['hexColor'] = hexColor
+	return intelligent_code.functions['hexColor'](*args, **kwargs)
+
+def pyColor(*args, **kwargs):
+	if not 'pyColor' in intelligent_code.functions:
+		from _rightThumb._base3.library.tools.functions.code.pyColor import pyColor
+		intelligent_code.functions['pyColor'] = pyColor
+	return intelligent_code.functions['pyColor'](*args, **kwargs)
+
+
+
+
+
+
+
+
 
 def process_pipe_data(data):
 	import datetime
@@ -339,7 +363,7 @@ def random_color():
 	return random.choice(_all_colors_tact_)
 
 print_ed_group={}
-def print_(*args,p=None,c=None,pad=3,g=None,end=None,pvs=None,pv=None,json=None, dic=None, line=None, rstrip=True, lineMinus=0, lineLen=None, r=None):
+def print_(*args,p=None,c=None,pad=3,g=None,end=None,pvs=None,pv=None,json=None, dic=None, line=None, rstrip=True, lineMinus=0, lineLen=None, r=None, h=None):
 	if type(args) == tuple: args = list(args)
 	global prStatus
 	if not prStatus: return args
@@ -363,7 +387,7 @@ def print_(*args,p=None,c=None,pad=3,g=None,end=None,pvs=None,pv=None,json=None,
 			import json
 		except ImportError:
 			json = simplejson
-		args[0]=simplejson.dumps(args[0], indent=4, sort_keys=False, default=str);
+		args[0]=simplejson.dumps(args[0], indent=4, sort_keys=False, default=str)
 		if rint:
 			print(args[0])
 		return args[0]
@@ -375,7 +399,7 @@ def print_(*args,p=None,c=None,pad=3,g=None,end=None,pvs=None,pv=None,json=None,
 
 	if not dic and type(dic) == bool or ( type(dic) == int and dic == 1): printDicFields(args[0]); return None
 	try:
-		if not end is None and (type(end) == bool or type(end) == int) and end:   end='\r';
+		if not end is None and (type(end) == bool or type(end) == int) and end:   end='\r'
 		else:
 			if not end is None and not end == '\r':   end=None
 		if pvs and not p: return printVarColor_OLD(args[0])
@@ -400,41 +424,42 @@ def print_(*args,p=None,c=None,pad=3,g=None,end=None,pvs=None,pv=None,json=None,
 				import json
 			except ImportError:
 				json = simplejson
-			args[0]=simplejson.dumps(args[0], indent=4, sort_keys=False, default=str);
+			args[0]=simplejson.dumps(args[0], indent=4, sort_keys=False, default=str)
 		if not line is None and line:
 			if not lineLen is None:
 				args=[linePrint(c=c,p=0,minus=lineMinus,length=lineLen)]
 			else:
 				args=[linePrint(c=c,p=0,minus=lineMinus)]
-		global print_ed; global print_ed_group; items=[];
+		global print_ed; global print_ed_group; items=[]
 		pre=''
 		# if not g is None:
 		# print_ed_group
 		for arg in args:
 			if type(arg) == list:
 				tmp=[]
-				for rg in arg: tmp.append(str(rg));
+				for rg in arg: tmp.append(str(rg))
 				items.append( ' '.join(tmp) )
 			else:
 				items.append(str(arg))
 		prn=pre+' '.join(items)
 		if rstrip: prn=prn.rstrip()
-		if not c is None: prn=cp( prn, c, p=0 );
-		if p is None: rint=True;
-		elif p: rint=True;
-		elif not p: rint=False;
-		else: rint=True;
+		if not c is None: prn=cp( prn, c, p=0 )
+		if not h is None: prn=hexColor( prn, c=h, p=0 )
+		if p is None: rint=True
+		elif p: rint=True
+		elif not p: rint=False
+		else: rint=True
 		_line__ = ''
 		if rint:
 			if not end is None:
 				if not lineLen is None:
 					_line__ = linePrint(txt=' ',p=0,minus=lineMinus)
-					print( _line__ , end=end ); print( prn, end=end );
+					print( _line__ , end=end ); print( prn, end=end )
 				else:
 					_line__ = linePrint(txt=' ',p=0,minus=lineMinus,length=lineLen)
-					print( _line__, end=end ); print( prn, end=end );
+					print( _line__, end=end ); print( prn, end=end )
 			# if not end is None: print( '                                                                                        ' , end=end ); print( prn, end=end );
-			else: print( prn );
+			else: print( prn )
 		print_ed.append({'prn':prn, 'line': _line__ })
 		return prn
 	except Exception as e:
@@ -451,27 +476,27 @@ def fo2( folder=None, r=False, script=None, trigger=None, test=None, first=True 
 	'''
 
 	def _fo_fi_add(path,trigger,script):
-			if not script is None: script(path);
+			if not script is None: script(path)
 			if not trigger is None: fo_fi2.append(trigger(path))
 			else: fo_fi2.append(path)
 
 
 	if folder is None: folder=os.getcwd()
 	global fo_fi2
-	if first: fo_fi2=[];
-	if not os.path.isdir(folder) and not os.path.isfile(folder): return fo_fi2;
+	if first: fo_fi2=[]
+	if not os.path.isdir(folder) and not os.path.isfile(folder): return fo_fi2
 	if not os.path.isdir(folder) and os.path.isfile(folder): folder = __.path(folder,pop=True)
 
 	try: files=os.listdir(folder)
 	except Exception as ee: return fo_fi2
 	for item in files:
-		path=folder+os.sep+item; path=__.path(path);
+		path=folder+os.sep+item; path=__.path(path)
 
 		if not test is None and test(path): _fo_fi_add(path,trigger,script)
 
 		if os.path.isfile(path) or os.path.isdir(path):
 			if test is None: _fo_fi_add(path,trigger,script)
-			if r and os.path.isdir(path): fo2(path,r,script,trigger,test,first=False);
+			if r and os.path.isdir(path): fo2(path,r,script,trigger,test,first=False)
 	return fo_fi2
 
 
@@ -486,8 +511,8 @@ def fo(folder=None,r=False,script=None,first=True,rel=False):
 	global fo_fi
 	if first:
 		fo_rel = folder
-		fo_fi=[];
-	if not os.path.isdir(folder): return fo_fi;
+		fo_fi=[]
+	if not os.path.isdir(folder): return fo_fi
 	try:
 		files=os.listdir(folder)
 	except Exception as e:
@@ -502,8 +527,8 @@ def fo(folder=None,r=False,script=None,first=True,rel=False):
 			else:
 				fo_fi.append(path)
 
-		if not script is None: script(path);
-		if r and os.path.isdir(path): fo(path,r,script,False,rel);
+		if not script is None: script(path)
+		if r and os.path.isdir(path): fo(path,r,script,False,rel)
 	return fo_fi
 
 def fos(folder=None,r=False,script=None,first=True,rel=False):
@@ -515,8 +540,8 @@ def fos(folder=None,r=False,script=None,first=True,rel=False):
 	global fo_fi
 	if first:
 		fo_rel = folder
-		fo_fi=[];
-	if not os.path.isdir(folder): return fo_fi;
+		fo_fi=[]
+	if not os.path.isdir(folder): return fo_fi
 	try:
 		files=os.listdir(folder)
 	except Exception as e:
@@ -526,12 +551,12 @@ def fos(folder=None,r=False,script=None,first=True,rel=False):
 		path=__.path(path)
 		relative=path[len(fo_rel)+1:]
 		if os.path.isdir(path):
-			if not script is None: script(path);
+			if not script is None: script(path)
 			if rel:
 				fo_fi.append(relative)
 			else:
 				fo_fi.append(path)
-			if r: fos(path,r,script,False,rel);
+			if r: fos(path,r,script,False,rel)
 	return fo_fi
 
 
@@ -607,7 +632,29 @@ tinydic_data = []
 tinydic_last = {}
 tinydic_dic = {}
 def tinydic(data,par='',skim=None, mt=True, lan='js', prev=False, dump=None, dic=False, list0=True):
-	if type(dump)==str: dump=[dump];
+	"""
+	Recursively traverses and processes complex data structures, such as nested lists and dictionaries,
+	generating a list of paths to each item or a dictionary containing the items. The function can be
+	configured to perform additional tasks, such as filtering output, previewing values, and adjusting
+	output based on language-specific syntax.
+
+	Parameters:
+	- data: The data structure to traverse, which can be a list or dictionary.
+	- par (str): The parent path to prefix to each key or index.
+	- skim: A condition to filter the output paths (default: None).
+	- mt (bool): A flag indicating whether to include paths in the output data (default: True).
+	- lan (str): Specifies the language for path formatting, either 'js' or 'py' (default: 'js').
+	- prev (bool): Flag to determine if previews of values should be included in the output (default: False).
+	- dump: A list of specific paths to print or process (default: None).
+	- dic (bool): If True, returns a dictionary containing the data items (default: False).
+	- list0 (bool): If True, paths for list items start at index 0 (default: True).
+
+	Returns:
+	- When dic is False, returns a list of strings representing the paths to each item.
+	- When dic is True, returns a dictionary with paths as keys and corresponding data as values.
+	"""
+
+	if type(dump)==str: dump=[dump]
 	global tinydic_data
 	global tinydic_last
 	global tinydic_dic
@@ -624,7 +671,7 @@ def tinydic(data,par='',skim=None, mt=True, lan='js', prev=False, dump=None, dic
 		elif lan == 'js':
 			p2=p+".{k}".replace('{k}',k)
 		else:
-			_.e('type(key)')
+			e('type(key)')
 		return p2
 	if not par:
 		# if mt: print_('mt');
@@ -677,21 +724,35 @@ def tinydic(data,par='',skim=None, mt=True, lan='js', prev=False, dump=None, dic
 			if dump is None and not prev and skim is None and mt and not par2 in tinydic_data:
 				tinydic_data.append(par2)
 			tinydic(value,par2,skim,mt,lan,prev,dump,dic,list0)
-	if dic: return tinydic_dic;
+	if dic: return tinydic_dic
 	return tinydic_data
 
 
-def tailpop(subject,delim):
-	parts=subject.split(delim)
-	parts.reverse()
-	e=parts.pop(0)
-	parts.reverse()
-	return delim.join(parts)
+def tailpop(subject, delim):
+    parts = subject.rsplit(delim, 1)
+    return parts[0] if len(parts) > 1 else ''
+
 
 def tab(val,n=None, t='    ', cnt=False, add=None,  s=False):
-
+	'''
+		Tabulate a string, adding tabs to the beginning of each line.
+		
+		Arguments:
+			val {str} - The string to tabulate.
+			
+		Keyword Arguments:
+			n {int} - The number of tabs to add. (default: {1})
+			t {str} - The tab character to use. (default: {'    '})
+			cnt {bool} - Count the number of tabs needed to align the string. (default: {False})
+			add {bool} - Add a tab to the beginning of each line. (default: {None})
+			s {bool} - Shorten the string by removing unneeded tabs. (default: {False})
+		
+		Returns:
+			str - The tabulated string.
+	'''
 	if n is None and add is None and not s and not cnt:
 		n=1
+
 
 	def shortest(lines):
 		p=None
@@ -2092,61 +2153,61 @@ def replaceFile( fIn, fOut ):
 
 
 def percentageDiffIntAuto(smaller, bigger, isFloat=False):
-    if smaller < bigger:
-        s = smaller
-        b = bigger
-    else:
-        s = bigger
-        b = smaller
-    if not isFloat:
-        return _.percentageDiffInt(s, b)
-    else:
-        result = round(float(s / b * 100), 1)
-        r = str(result)
-        if '.0' in r:
-            result = int(result)
-        return result
+	if smaller < bigger:
+		s = smaller
+		b = bigger
+	else:
+		s = bigger
+		b = smaller
+	if not isFloat:
+		return _.percentageDiffInt(s, b)
+	else:
+		result = round(float(s / b * 100), 1)
+		r = str(result)
+		if '.0' in r:
+			result = int(result)
+		return result
 def percentageDiffAuto(smaller, bigger, isFloat=False, rnd=1):
-    if smaller < bigger:
-        s = smaller
-        b = bigger
-    else:
-        s = bigger
-        b = smaller
-    return _.percentageDiffCalc(s, b, isFloat, rnd)
+	if smaller < bigger:
+		s = smaller
+		b = bigger
+	else:
+		s = bigger
+		b = smaller
+	return _.percentageDiffCalc(s, b, isFloat, rnd)
 def percentageDiffSmaller(smaller, bigger, isFloat=False, rnd=1):
-    if smaller < bigger:
-        s = smaller
-        b = bigger
-    else:
-        s = bigger
-        b = smaller
-    a = _.percentageDiffCalc(s, b, isFloat, rnd)
-    b = _.percentageDiffCalc(b, s, isFloat, rnd)
-    if a < b:
-        return a
-    else:
-        return b
+	if smaller < bigger:
+		s = smaller
+		b = bigger
+	else:
+		s = bigger
+		b = smaller
+	a = _.percentageDiffCalc(s, b, isFloat, rnd)
+	b = _.percentageDiffCalc(b, s, isFloat, rnd)
+	if a < b:
+		return a
+	else:
+		return b
 def percentageDiffCalc(smaller, bigger, isFloat=False, rnd=1):
-    try:
-        if not isFloat:
-            return int(round(abs(abs(smaller - bigger) / smaller) * 100, 0))
-        else:
-            r = round(abs(abs(smaller - bigger) / smaller) * 100, rnd)
-            if str(r) == '0.0':
-                return 0
-            return r
-    except Exception as e:
-        return 0
-        smaller += 1
-        bigger += 1
-        if not isFloat:
-            return int(round(abs(abs(smaller - bigger) / smaller) * 100, 0))
-        else:
-            r = round(abs(abs(smaller - bigger) / smaller) * 100, rnd)
-            if str(r) == '0.0':
-                return 0
-            return r
+	try:
+		if not isFloat:
+			return int(round(abs(abs(smaller - bigger) / smaller) * 100, 0))
+		else:
+			r = round(abs(abs(smaller - bigger) / smaller) * 100, rnd)
+			if str(r) == '0.0':
+				return 0
+			return r
+	except Exception as e:
+		return 0
+		smaller += 1
+		bigger += 1
+		if not isFloat:
+			return int(round(abs(abs(smaller - bigger) / smaller) * 100, 0))
+		else:
+			r = round(abs(abs(smaller - bigger) / smaller) * 100, rnd)
+			if str(r) == '0.0':
+				return 0
+			return r
 
 def patternDiff(a,b):
 	# print_('here')
@@ -2982,6 +3043,8 @@ def isData( data=None, focus=None, pipeClean=False, required=False,     r=None, 
 	__.FilesFiles = myFileLocation_Files
 	global switches
 	global appData
+	if type(appData[__.appReg]['pipe']) == list:
+		pipeCleaner(0)
 	try:
 		if appData[__.appReg]['pipe']: return appData[__.appReg]['pipe']
 		for sw in __.isData_Switches:
@@ -3390,7 +3453,7 @@ def unixAutoColumns( asset, columns, focus=None, threshold=10 ):
 	# sys.exit()
 	return columns
 
-
+responsiveColumns = unixAutoColumns
 def callers( i=1 ):
 	callersX = []
 	error=False
@@ -6330,30 +6393,30 @@ def patternz(string):
 
 
 def percentageInt(percent, whole, isFloat=False):
-    if not isFloat:
-        return int(round(percent * whole / 100.0, 0))
-    else:
-        return round(percent * whole / 100.0, 1)
+	if not isFloat:
+		return int(round(percent * whole / 100.0, 0))
+	else:
+		return round(percent * whole / 100.0, 1)
 def percentageDiffInt(smaller, bigger, isFloat=False, rnd=1):
-    try:
-        if not isFloat:
-            return int(round(abs(smaller / bigger) * 100, 0))
-        else:
-            r = round(abs(smaller / bigger) * 100, rnd)
-            if str(r) == '0.0':
-                return 0
-            return r
-    except Exception as e:
-        return 0
-        smaller += 1
-        bigger += 1
-        if not isFloat:
-            return int(round(abs(smaller / bigger) * 100, 0))
-        else:
-            r = round(abs(smaller / bigger) * 100, rnd)
-            if str(r) == '0.0':
-                return 0
-            return r
+	try:
+		if not isFloat:
+			return int(round(abs(smaller / bigger) * 100, 0))
+		else:
+			r = round(abs(smaller / bigger) * 100, rnd)
+			if str(r) == '0.0':
+				return 0
+			return r
+	except Exception as e:
+		return 0
+		smaller += 1
+		bigger += 1
+		if not isFloat:
+			return int(round(abs(smaller / bigger) * 100, 0))
+		else:
+			r = round(abs(smaller / bigger) * 100, rnd)
+			if str(r) == '0.0':
+				return 0
+			return r
 
 
 def stringDiff( one, two ):
@@ -7537,7 +7600,7 @@ def myFileLocationsXYZ( file, silent=False, currentBaseVersion=3 ):
 	global appData
 	global myFileLocation_Files
 	global myFileLocation_Pipe
-	myFileLocationsABC( file, silent=silent, currentBaseVersion=currentBaseVersion )
+	# myFileLocationsABC( file, silent=silent, currentBaseVersion=currentBaseVersion )
 	if not __.myFileLocations_SKIP_VALIDATION:
 		if type(appData[__.appReg]['pipe']) == list:
 			for i,f in enumerate(appData[__.appReg]['pipe']):
@@ -8474,9 +8537,10 @@ def getText2(theFile,what='text',t=None,l=None):
 	raise Exception(f"Failed to read the file {theFile} with any of the provided encodings.")
 
 
-
 def getText( theFile, raw=False, clean=False,  e=0, c=0 ):
-	if os.path.isfile(theFile): vv.opened_file_me[theFile] = os.path.getmtime( theFile );
+	if type(theFile) == list: theFile = theFile[0]
+	if os.path.isfile(theFile):
+		vv.opened_file_me[theFile] = os.path.getmtime( theFile );
 	HD.chmod(theFile)
 	lines = None
 	if os.path.isfile(theFile):
@@ -16318,7 +16382,7 @@ def rImp(app):
 
 def create_backup_filename(*args, **kwargs):
 	if not 'create_backup_filename' in intelligent_code.functions:
-		from _rightThumb._base3.library.tools.os.file.create_backup_filename import create_backup_filename
+		from _rightThumb._base3.library.tools.functions.os.file.create_backup_filename import create_backup_filename
 		intelligent_code.functions['create_backup_filename'] = create_backup_filename
 	return intelligent_code.functions['create_backup_filename'](*args, **kwargs)
 
@@ -16370,7 +16434,7 @@ import time
 
 def bkExpire(*args, **kwargs):
 	if not 'bkExpire' in intelligent_code.functions:
-		from _rightThumb._base3.library.tools.os.file.bkExpire import bkExpire
+		from _rightThumb._base3.library.tools.functions.os.file.bkExpire import bkExpire
 		intelligent_code.functions['bkExpire'] = bkExpire
 	return intelligent_code.functions['bkExpire'](*args, **kwargs)
 
@@ -16514,7 +16578,7 @@ class index
 class index:
 	def __new__(cls, *args, **kwargs):
 		if not 'index' in intelligent_code.classes:
-			from _rightThumb._base3.library.classes.code.index import index as live
+			from _rightThumb._base3.library.tools.classes.code.index import index as live
 			intelligent_code.classes['index'] = live
 		return intelligent_code.classes['index'](*args, **kwargs)
 

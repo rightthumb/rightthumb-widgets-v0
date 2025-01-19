@@ -3453,6 +3453,8 @@ alias dex="p search-indexDB-files -db"
 alias dex.="p indexDB-files"
 alias sqlite="sqlite3"
 
+alias sshp="echo 'ssh -L 59001:localhost:5901 -C -N -l scott teth.sds.sh'"
+
 
 
 

@@ -8,7 +8,7 @@ def sw():
 	_.switches.register('Folder', '-fo,-folder')
 	_.switches.register('Recursive', '-r,-recursive')
 
-	_.switches.register('Path', '-p,-path')
+	_.switches.register('Path', '-p,-path', 'callables variables all') 
 
 	_.switches.register('Class', '-class')
 	_.switches.register('Tabs', '-t,-tabs')
@@ -55,10 +55,11 @@ _.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw )
 
 import re
 
-from _rightThumb._base3.library.classes.code.PythonCodeColorizer import PythonCodeColorizer
+# from _rightThumb._base3.library.tools.classes.code.PythonCodeColorizer import PythonCodeColorizer
 
 
 iFnPath='from iPath import iName'
+iFnPath='from iPath import'
 iFn='''
 def iName(*args, **kwargs):
 	if not 'iName' in intelligent_code.functions:
@@ -68,6 +69,7 @@ def iName(*args, **kwargs):
 '''.strip().replace('    ', '\t')
 
 iClassPath='from iPath import iName'
+iClassPath='from iPath import'
 iClass='''
 class iName:
 	def __new__(cls, *args, **kwargs):
@@ -82,7 +84,7 @@ import os
 # from _rightThumb._base3.library.classes.index import index as live
 # from _rightThumb._base3.library.functions.create_backup_filename import create_backup_filename
 def action():
-	colorizer = PythonCodeColorizer()
+	# colorizer = PythonCodeColorizer()
 	# print(colorizer.colorize(sample_code))
 	files = []
 
@@ -102,6 +104,8 @@ def action():
 	global iClassPath
 	isData = []
 	for path in files:
+		# print(path)
+		# continue
 		if not os.path.isfile(path): continue
 		if not _.showLine(path): continue
 		if '__pycache__' in path: continue
@@ -162,13 +166,49 @@ def action():
 		if _.switches.isActive('Spaces')  or  len(isData) > 1:
 			iCode = iCode.replace('\t', '    ')
 		
-		colorized = colorizer.colorize(iCode)
+		# colorized = colorizer.colorize(iCode)
 		
 		if _.switches.isActive('Path'):
+			file = _.getText(path,raw=True)
+			file = file.replace('    ','\t')
+			objects = []
+			basic = []
+			All = []
+			for line in file.split('\n'):
+				line = line.split('#')[0]
+				st = line.strip()
+				if line.startswith('class '):
+					if 'c' in _.switches.value('Path') or 'all' in _.switches.value('Path'):
+						objects.append(st.split('class ')[1].split('(')[0].split(':')[0].strip())
+						basic.append(st.split('class ')[1].split('(')[0].split(':')[0].strip())
+						All.append(st.split('class ')[1].split('(')[0].split(':')[0].strip())
+				if line.startswith('def '):
+					if 'c' in _.switches.value('Path') or 'all' in _.switches.value('Path'):
+						objects.append(st.split('def ')[1].split('(')[0].strip())
+						basic.append(st.split('def ')[1].split('(')[0].strip())
+						All.append(st.split('def ')[1].split('(')[0].strip())
+				if 'v' in _.switches.value('Path') or 'all' in _.switches.value('Path'):
+					if '=' in line:
+						objects.append(st.split('=')[0].strip())
+				if '=' in line:
+					All.append(st.split('=')[0].strip())
+
+			if not basic:
+				objects = All
+				_.switches.fieldSet('Path','value','all')
+
+			# impPath = _.tailpop(impPath,' ')
+			if len(_.switches.value('Path')):
+				impPath += '  '+', '.join(objects)
+			else:
+				if iName in basic:
+					impPath += '  '+ iName
+				else:
+					impPath += '  '+ basic[0]
 			print(impPath)
 			_copy.imp.copy( impPath, p=0 )
 		else:
-			print(colorized)
+			_.pyColor(iCode)
 			_copy.imp.copy( iCode, p=0 )
 
 
