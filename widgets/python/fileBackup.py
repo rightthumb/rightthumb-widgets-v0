@@ -884,7 +884,10 @@ def action(path=None,flag=None,o=None,pre=None):
 	# now = millTimeStamp()
 
 	# secureFiles
-	
+	# print(_.isData())
+	# for path in _.isData():
+	# 	print(path)
+	# return False
 
 	now = genEpoch()
 	# print(path)
@@ -907,6 +910,14 @@ def action(path=None,flag=None,o=None,pre=None):
 		filesToProcess.append(path)
 	elif _.isData():
 		filesToProcess = _.isData()
+
+		# raw = _.isData()
+		# filesToProcess = []
+		# for path in raw:
+		# 	path = path.strip()
+		# 	if path and os.path.isfile(path):
+		# 		filesToProcess.append(path)
+	
 	for path in filesToProcess:
 		if len(filesToProcess) > 1:
 			_.pr()
@@ -915,6 +926,10 @@ def action(path=None,flag=None,o=None,pre=None):
 		# if path is None:
 		# 	path = _.switches.value('Input')
 		# _.pr( 'path::::', path )
+		path = __.path(path)
+		# print('path',path)
+		# path = path.strip()
+		if not os.path.isfile(path): return False
 		if os.path.isfile(path):
 			path = __.path(  path  )
 			myFileLocationsRegister(path)
@@ -1371,7 +1386,8 @@ def action(path=None,flag=None,o=None,pre=None):
 
 		name = Path(path).name
 		if not os.path.isfile(path):
-			_.colorThis( [  'Does not exist'  ], 'red' )
+			_.colorThis( [  'Does not exist:', path  ], 'red' )
+			continue
 			# _.pr('Does not exist')
 			# txtScheduler = _.getTable( 'fileBackupSchedule.json' )
 			# path = os.path.abspath(path)

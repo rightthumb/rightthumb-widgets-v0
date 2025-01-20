@@ -1,111 +1,11 @@
 import _rightThumb._base3 as _
-# import HD
 import _rightThumb._construct as __
 import _rightThumb._string as _str
-# import f
 import os
+import simplejson
 import sys
-from operator import itemgetter
+import uuid
 
-class Fields:
-	def __new__(cls, *args, **kwargs):
-		if not 'Fields' in _.intelligent_code.classes:
-			from _rightThumb._base3.library.frameworks.base.classes.Fields import Fields as live
-			_.intelligent_code.classes['Fields'] = live
-		return _.intelligent_code.classes['Fields'](*args, **kwargs)
-fields = Fields()
-# unixAutoColumns
-def responsiveColumns( asset, columns, focus=None, threshold=10 ):
-	if not isinstance(threshold, int): threshold=10
-	import _rightThumb._md5 as _md5
-	label=_md5.string(str(asset))
-	if not asset or not len(asset):
-		return columns
-	asset = asset.copy()
-
-	if columns is None:
-		columns=','.join(list(asset[0].keys()))
-
-	if not __.terminal.width:
-		return columns
-
-	cols = __.terminal.width
-	cols-=threshold
-	if focus is None:
-		focus = __.appReg
-	global appInfo
-	rec = {}
-	for k in asset[0].keys():
-		rec[k]=k
-	asset.append( rec )
-		# cols = 102
-	reg = appInfo[focus]['columns'].copy()
-	reg.reverse()
-	importance = []
-	for x in reg:
-		importance.append(x['name'])
-	# importance = [
-	#               'date_accessed',
-	#               'week_of_year',
-	#               'date_created',
-	#               'date_modified',
-	#               'ext',
-	#               'size',
-	# ]
-	fields.asset( label, asset )
-	lengths = fields.lengths( label )
-
-	# printVarSimple( lengths )
-
-	total = 3
-	for col in columns.split(','):
-		total+=3
-		for key in lengths:
-			if col.lower() == key.lower():
-				total += lengths[key]
-	# print_( total, columns )
-	# print_( cols, type(cols) )
-	nextDel = 0
-	done = False
-	newList = []
-	if not len(importance):
-		e(
-			'columns registration missing',
-			[
-				'in _.appInfo[focus()] = {',
-				'order them most important fields on top',
-				'to least on bottom',
-			])
-	while total > cols and not done:
-		total = 3
-		newCols = []
-		for col in columns.split(','):
-			if col == importance[nextDel]:
-				if not col in newList:
-					newList.append(col)
-			if not col == importance[nextDel]:
-				newCols.append(col)
-				total+=3
-				for key in lengths:
-					if col.lower() == key.lower():
-						total += lengths[key]
-			columns = ','.join(newCols)
-		nextDel += 1
-		if not len(newCols):
-			done=True
-	pass
-	if not len(columns):
-		columns = newList[ len(newList)-1 ]
-	# print_( total, columns )
-
-
-	# print_( 'total:', total )
-
-	# sys.exit()
-	return columns
-
-
-errors = []
 class TableView:
     def __init__(self, name, table, fields, sort):
         self.name = name
@@ -114,10 +14,8 @@ class TableView:
         self.table = table
 TableProfile_Config = {}
 class Table:
-    def __init__(self, name, asset=[], group_space=True, tab='', webtable=None):
+    def __init__(self, name, asset=[], group_space=True, tab=''):
         global _dir
-        self.GroupTotals = {}
-        self.webtable = webtable
         self.group_space = group_space
         self.name = name
         self.asset = asset
@@ -229,9 +127,6 @@ class Table:
         rows = self.asset
         spacer = 1
         size = len(name) + spacer
-        for i, rec in enumerate(self.asset):
-            if not name in rec:
-                self.asset[i][name] = ''
         try:
             pass
             if name in rows[0]:
@@ -239,15 +134,7 @@ class Table:
             else:
                 eval('rows[0]["' + '"]["'.join(name.split('.')) + '"]')
         except Exception as e:
-            errors.append({'id': 9, 'function': 'tabGetMaxSpace()', 'cnt': 1, 'location': 'rows[0][name]', 'vars': [{'name': 'rows', 'value': 'nope to that, to big'}, {'name': 'name', 'value': name}], 'error': e})
-            _.printBold('Error:', 'red')
-            _.printBold('\tBad column input.')
-            _.print_(9)
-            _.print_(name)
-            _.print_('rows[0]["' + '"]["'.join(name.split('.')) + '"]')
-            _.printVarSimple(rows[0])
-            _.printBold('record sample', 'red')
-            os._exit(0)
+            pass
         for item in rows:
             shorten = True
             if _.switches.isActive('Long') == True:
@@ -407,17 +294,12 @@ class Table:
         else:
             text = str(value)
         groupBy = _.switches.value('GroupBy')
-        GroupTotals = _.switches.values('GroupTotals')
         try:
             tabFix = self.spaces[column]
         except Exception as e:
             tabFix = self.tabGetMaxSpace(column)
             self.spaces[column] = tabFix
         if _.switches.isActive('GroupBy') == True:
-            if column in GroupTotals:
-                if not column in self.GroupTotals:
-                    self.GroupTotals[column] = 0
-                self.GroupTotals[column] += float(self.asset[i][column])
             for gb in groupBy.split(','):
                 gb = str(gb)
                 if column == gb:
@@ -425,14 +307,14 @@ class Table:
                         if groupBy.split(',')[0] == column:
                             pass
                             if self.group_space:
-                                _.print_(self.groupLine(columnList, columnHeaderLength))
+                                print(self.groupLine(columnList, columnHeaderLength))
                             if not self.isExtraRecord:
                                 for g in groupBy.split(','):
                                     groupByList[g] = ''
                         else:
                             pass
                             if self.group_space:
-                                _.print_('')
+                                print('')
                         if not self.isExtraRecord:
                             groupByList[gb] = text
                         elif self.isExtraRecord_000x.split('-')[0] in self.isExtraRecord_0001:
@@ -442,9 +324,6 @@ class Table:
                         if len(self.isExtraRecord_000x):
                             self.isExtraRecord_0001[self.isExtraRecord_000x.split('-')[0]] = 1
                         text = ''
-                        if not column in self.Groups:
-                            self.Groups[column] = {'lines': []}
-                        self.Groups[column]['lines'].append(i)
         alignment = self.fieldProfileGet(column, 'alignment')
         result = text + self.addSpace(text, tabFix)
         if alignment == 'left':
@@ -477,7 +356,7 @@ class Table:
             loop += 1
         return result
     def showColumnHeader(self, column):
-        result = ' '
+        result = ''
         if type(self.universalSpacing) == dict:
             self.spaces = self.universalSpacing
         for c in column.split(','):
@@ -487,13 +366,8 @@ class Table:
                 tabFix = self.tabGetMaxSpace(c)
                 self.spaces[c] = tabFix
             alignment = self.fieldProfileGet(c, 'alignment', isHeader=True)
-            alignment = 'left'
             if alignment == '':
-                alignment = 'left'
-            if _.switches.isActive('YesTableLines'):
-                result += '|'
-            else:
-                result += ' '
+                alignment = 'right'
             if alignment == 'center':
                 totalSpace = int(tabFix) - len(c)
                 if totalSpace > 0:
@@ -514,21 +388,7 @@ class Table:
                 result += c.replace('_', ' ').upper() + self.addSpace(c, tabFix) + self.columnTab
             if alignment == 'right':
                 result += self.addSpace(c, tabFix) + c.replace('_', ' ').upper() + self.columnTab
-        if _.switches.isActive('YesTableLines'):
-            result += '|'
-            if len(_.switches.value('YesTableLines')):
-                newResult = '\n'
-                for x in result.replace(' |', '| '):
-                    if x == '|':
-                        newResult += x
-                    else:
-                        newResult += '-'
-                newResult = _str.cleanEnd(newResult, '-')
-                result += newResult
-        if _.switches.isActive('YesTableLines'):
-            result = result.replace(' |', '| ')
-        else:
-            result += '\n'
+        result += '\n'
         return '\n' + result
     def findColumName(self, column):
         for k in self.asset[0].keys():
@@ -541,7 +401,7 @@ class Table:
         pre = ''
         for x in self.tab['table'] + _.loopPrint(__.table_prefix_padding):
             if x == '\t':
-                pre += '    '
+                pre += '\t'
             else:
                 pre += x
         return len(pre)
@@ -630,11 +490,10 @@ class Table:
                 total += len(self.columnTab)
         wrapTableKey = self.wrapTableKey
         counter = 0
-        global fields
-        fields.register(wrapTableKey + '-b', 'val', 4, m=4)
-        fields.register(wrapTableKey, 'val', 7, m=12)
-        test = fields.padZeros(wrapTableKey, 'val', 5)
-        test = fields.padZeros(wrapTableKey + '-b', 'val', 5)
+        _.fields.register(wrapTableKey + '-b', 'val', 4, m=4)
+        _.fields.register(wrapTableKey, 'val', 7, m=12)
+        test = _.fields.padZeros(wrapTableKey, 'val', 5)
+        test = _.fields.padZeros(wrapTableKey + '-b', 'val', 5)
         letters = {}
         def letterBoost(i):
             if not str(i) in letters:
@@ -643,8 +502,8 @@ class Table:
         for i, record in enumerate(self.asset):
             letters[str(i)] = 'a'
             recordKey = 1
-            this_key = fields.padZeros(wrapTableKey, 'val', i + 1)
-            this_key_B = fields.padZeros(wrapTableKey + '-b', 'val', recordKey)
+            this_key = _.fields.padZeros(wrapTableKey, 'val', i + 1)
+            this_key_B = _.fields.padZeros(wrapTableKey + '-b', 'val', recordKey)
             self.asset[i][wrapTableKey + '-sort'] = this_key + '-' + this_key_B
             rec = {}
             rec_last = {}
@@ -657,7 +516,7 @@ class Table:
                     for rp in rec_parts:
                         if len(rp) and (not last_rp == rp):
                             last_rp = rp
-                            cs = fields.padZeros(wrapTableKey + '-b', 'val', recordKey)
+                            cs = _.fields.padZeros(wrapTableKey + '-b', 'val', recordKey)
                             recordKey += 1
                             if not cs in rec:
                                 rec[cs] = {}
@@ -749,13 +608,13 @@ class Table:
                             if data['data'] > self.aggregates.group_storage[lbl]:
                                 self.aggregates.group_storage[lbl] = data['data']
                         except Exception as e:
-                            _.cp('Error: group max variable', 'red')
+                            cp('Error: group max variable', 'red')
                     if do == 'add':
                         done = True
                         try:
                             self.aggregates.group_storage[lbl] += data['data']
                         except Exception as e:
-                            _.cp('Error: group add variable', 'red')
+                            cp('Error: group add variable', 'red')
                 pass
                 pass
                 if i in self.aggregates.groups[fld]['e']:
@@ -817,13 +676,13 @@ class Table:
                                 if data['data'] > self.aggregates.storage[seg['txt']][alpha]['data']:
                                     self.aggregates.storage[seg['txt']][alpha]['data'] = data['data']
                             except Exception as e:
-                                _.cp('Error: max variable', 'red')
+                                cp('Error: max variable', 'red')
                         if do == 'add':
                             done = True
                             try:
                                 self.aggregates.storage[seg['txt']][alpha]['data'] += data['data']
                             except Exception as e:
-                                _.cp('Error: add variable', 'red')
+                                cp('Error: add variable', 'red')
                         if not done:
                             self.aggregates.storage[seg['txt']][alpha]['data'] = data['data']
                     elif seg['txt'].startswith('eof?'):
@@ -834,13 +693,13 @@ class Table:
                                 if data['data'] > __.aggregate.eof.storage[seg['txt']][alpha]['data']:
                                     __.aggregate.eof.storage[seg['txt']][alpha]['data'] = data['data']
                             except Exception as e:
-                                _.cp('Error: max variable', 'red')
+                                cp('Error: max variable', 'red')
                         if do == 'add':
                             done = True
                             try:
                                 __.aggregate.eof.storage[seg['txt']][alpha]['data'] += data['data']
                             except Exception as e:
-                                _.cp('Error: add variable', 'red')
+                                cp('Error: add variable', 'red')
                         if not done:
                             __.aggregate.eof.storage[seg['txt']][alpha]['data'] = data['data']
                 else:
@@ -888,13 +747,7 @@ class Table:
                             for cn in str(v['data']):
                                 if cn in '0123456789.':
                                     nX.append(cn)
-                    try:
-                        result = float(''.join(nX))
-                    except Exception as e:
-                        nXj = []
-                        for x99 in nX:
-                            nXj.append(str(x99))
-                        result = ''.join(nXj)
+                    result = float(''.join(nX))
                     if str(result).endswith('.0'):
                         result = int(result)
                     return {'data': result}
@@ -950,7 +803,7 @@ class Table:
                         try:
                             eval('__.aggregate.config' + suffix)
                         except Exception as e:
-                            exec('__.aggregate.config' + suffix + ' = { }')
+                            exec('__.aggregate.config' + suffix + '={ }')
                 pass
                 if seg['txt'] == 'format':
                     result = []
@@ -967,7 +820,7 @@ class Table:
                         try:
                             eval('__.aggregate.format' + suffix)
                         except Exception as e:
-                            exec('__.aggregate.format' + suffix + ' = { }')
+                            exec('__.aggregate.format' + suffix + '={ }')
                 if seg['txt'] == 'isDate':
                     result = None
                     v = {}
@@ -1055,7 +908,7 @@ class Table:
                     try:
                         gc = rec['txt'].split('?')[2]
                     except Exception as e:
-                        _.cp('Error: aggregates, group split', 'red')
+                        cp('Error: aggregates, group split', 'red')
                         sys.exit()
                     else:
                         self.aggregates.columns.append(gc)
@@ -1071,13 +924,13 @@ class Table:
             if seg['status']:
                 try:
                     record = self.aggregate_record_process_group(i, seg['i'])
-                except Exception as ee:
-                    _.cp('Error: aggregate, group error', 'red')
-                    _.cp('\t expected:', 'yellow')
-                    _.cp('\t\t eog?level?group-len=add(len)', 'green')
-                    _.print_()
-                    _.cp(['Specifically:', ee], 'red')
-                    _.print_()
+                except Exception as e:
+                    cp('Error: aggregate, group error', 'red')
+                    cp('\t expected:', 'yellow')
+                    cp('\t\t eog?level?group-len=add(len)', 'green')
+                    print()
+                    cp(['Specifically:', e], 'red')
+                    print()
                     sys.exit()
     def aggregateGroup(self):
         for ix in self.aggregates.agroups:
@@ -1108,12 +961,12 @@ class Table:
         for i, record in enumerate(self.asset):
             self.aggregateRecordGroups(i)
         if self.aggregates.agroupsADD:
-            fields.register(self.groupID_KEY, 'val', 7, m=6)
-            test = fields.padZeros(self.groupID_KEY, 'val', 5)
+            _.fields.register(self.groupID_KEY, 'val', 7, m=6)
+            test = _.fields.padZeros(self.groupID_KEY, 'val', 5)
             newRecords = []
             for i, record in enumerate(self.asset):
                 ii = str(i)
-                ix = fields.padZeros(self.groupID_KEY, 'val', i)
+                ix = _.fields.padZeros(self.groupID_KEY, 'val', i)
                 record[self.groupID_KEY] = ix + '-A'
                 newRecords.append(record)
                 if ii in self.aggregates.agroupsADD:
@@ -1124,40 +977,14 @@ class Table:
                             rec[self.backup.allfields[k]] = ''
                     newRecords.append(rec)
             self.asset = newRecords
-    def print(self, column, fieldLengths=False, pc=None, printColumns=True, force=False, l=None, p=None):
-        if _.switches.isActive('GroupBy') and self.asset:
-            val = []
-            for k in self.asset[0]:
-                for y in _.switches.values('GroupBy'):
-                    if k.lower().replace(' ', '_') in y.lower().replace(' ', '_'):
-                        val.append(k)
-            _.switches.fieldSet('GroupBy', 'value', ','.join(val))
-            _.switches.fieldSet('GroupBy', 'values', val)
-        if _.switches.isActive('GroupTotals') and self.asset:
-            val = []
-            for k in self.asset[0]:
-                for y in _.switches.values('GroupTotals'):
-                    if k.lower().replace(' ', '_') in y.lower().replace(' ', '_'):
-                        val.append(k)
-            _.switches.fieldSet('GroupTotals', 'value', ','.join(val))
-            _.switches.fieldSet('GroupTotals', 'values', val)
-        if _.switches.isActive('TableJSON'):
-            if len(_.switches.value('TableJSON')):
-                _.saveTable2(self.asset, _.switches.values('TableJSON')[0])
-                _.cp(['saved:', _.switches.values('TableJSON')[0]], 'green')
-            else:
-                _.print_(_.d2json(self.asset))
-            return None
-        if not p is None:
-            self.tab['table'] = p
+    def print(self, column, fieldLengths=False, pc=None, printColumns=True, force=False):
         if not type(self.asset) == list or len(self.asset) == 0:
+            print('Null Set')
             sys.exit()
         if not force:
             if not _.switches.isActive('Help'):
                 if _.switches.isActive('Column'):
                     column = _.switches.value('Column')
-                    if column == '*' and self.asset:
-                        column = ','.join(list(self.asset[0].keys()))
                 if _.switches.isActive('Sort'):
                     self.asset = self.sort()
                 elif _.switches.isActive('GroupBy'):
@@ -1196,18 +1023,6 @@ class Table:
                 for k in record:
                     if record[k] is None:
                         self.asset[i][k] = ''
-        if _.switches.isActive('Markdown-Table'):
-            _.pr(_.dict_to_markdown_table(self.asset))
-            sys.exit()
-            return self.asset
-        if self.webtable and _.switches.isActive('WebTable') and len(_.switches.value('WebTable')):
-            asset = []
-            for record in self.asset:
-                rec = {}
-                for k in column.split(','):
-                    rec[k] = record[k]
-                asset.append(rec)
-            _.saveTable(asset, 'web-tmp-' + _.switches.values('WebTable')[0] + '.json')
         self.isExtraRecord = False
         if force:
             self.isWrap = True
@@ -1220,9 +1035,10 @@ class Table:
         if type(fieldLengths) == dict:
             self.universalSpacing = fieldLengths
         if not type(self.asset) == list or len(self.asset) == 0:
+            print('Null Set')
             sys.exit()
         global errors
-        
+        global switchDefault
         column = column.lower()
         columnSearch = column
         column = ''
@@ -1389,77 +1205,16 @@ class Table:
         except Exception as e:
             pass
         if printColumns:
-            if _.switches.isActive('YesTableLines'):
-                columnHeader = self.tab['table'] + _.loopPrint(__.table_prefix_padding) + columnHeader
-            else:
-                columnHeader = self.tab['table'] + _.loopPrint(__.table_prefix_padding) + columnHeader.replace('\n', '')
-            _.print_()
+            columnHeader = self.tab['table'] + _.loopPrint(__.table_prefix_padding) + columnHeader.replace('\n', '')
+            print()
             _.printBold(columnHeader)
-            if not len(_.switches.value('YesTableLines')):
-                _.print_()
+            print()
         i = 0
         self.isExtraRecord_0001 = {}
         self.isExtraRecord_000x = ''
-        tableLine = __.tableLine
-        if _.switches.isActive('YesTableLines'):
-            tableLine = '|'
-        if l is None:
-            if _.switches.isActive('NoTableLines'):
-                tableLine = ''
-        elif not l:
-            tableLine = ''
-        self.Groups = {}
-        for c in _.switches.values('GroupTotals'):
-            self.Groups[c] = {'lines': []}
-        def addField(text, column):
-            try:
-                tabFix = self.spaces[column]
-            except Exception as e:
-                tabFix = self.tabGetMaxSpace(column)
-                self.spaces[column] = tabFix
-            tabFix += 4
-            alignment = self.fieldProfileGet(column, 'alignment')
-            result = text + self.addSpace(text, tabFix)
-            if alignment == 'left':
-                result = text + self.addSpace(text, tabFix)
-            if alignment == 'right':
-                result = self.addSpace(text, tabFix) + text
-            if alignment == 'center':
-                totalSpace = int(tabFix) - len(text)
-                if totalSpace > 0:
-                    if totalSpace % 2 == 0:
-                        div2 = totalSpace / 2
-                        theLeft = div2
-                        theRight = div2
-                    else:
-                        divTMP = totalSpace - 1
-                        div2 = divTMP / 2
-                        theLeft = div2 + 1
-                        theRight = div2
-                else:
-                    theLeft = 0
-                    theRight = 0
-                result = self.addSpace2(theLeft) + text + self.addSpace2(theRight)
-            return result
-        max_length = 0
         for item in self.asset:
             result = ''
             for c in column.split(','):
-                try:
-                    result += self.showColumn(c, i, columnHeaderLength) + self.columnTab + tableLine
-                except Exception:
-                    pass
-            try:
-                current_length = _.colorizeRowLength(tableLine + result) - len('_______________________________________________')
-                max_length = max(max_length, current_length)
-            except:
-                pass
-        for item in self.asset:
-            result = ''
-            for c in column.split(','):
-                if _.switches.isActive('TablePlus'):
-                    if not _.showLine(str(item), _._.switches.values('TablePlus'), _._.switches.values('TableMinus')):
-                        continue
                 try:
                     pass
                 except Exception as e:
@@ -1471,20 +1226,20 @@ class Table:
                     self.isExtraRecord = True
                 try:
                     pass
-                    result += self.showColumn(c, i, columnHeaderLength) + self.columnTab + tableLine
+                    result += self.showColumn(c, i, columnHeaderLength) + self.columnTab
                 except Exception as e:
-                    errors.append({'id': 12, 'function': 'print()', 'cnt': 1, 'location': "result += showColumn(rows,c,i) + _v.slash+'t'", 'vars': [{'name': 'folder', 'value': 'folder'}, {'name': 'column', 'value': column}], 'error': e})
+                    errors.append({'id': 12, 'function': 'print()', 'cnt': 1, 'location': "result +=showColumn(rows,c,i) + _v.slash+'t'", 'vars': [{'name': 'folder', 'value': 'folder'}, {'name': 'column', 'value': column}], 'error': e})
                     _.printBold('Error:', 'red')
                     _.printBold('\tBad column input.')
-                    _.print_(12)
-                    _.print_(c)
-                    _.print_(12)
+                    print(12)
+                    print(c)
+                    print(12)
                     os._exit(0)
             maxSize = len(result) + self.prefixSize()
             if maxSize > __.terminal.width and (not _.switches.isActive('NoWrapTable')):
-                ToDo = " result = ''   "
+                ToDo = " result=''   "
                 ToDo = ' for sult in self.wrapTable2(i):  '
-                ToDo = '     result += sult  '
+                ToDo = '\t result +=sult  '
             else:
                 ToDo = ' the below if will be under this else '
             if len(result) > 0:
@@ -1495,69 +1250,16 @@ class Table:
                     if not len(testResult):
                         shouldPrint = False
                 if shouldPrint:
-                    hasTotal = False
-                    _result_ = ''
-                    for c in column.split(','):
-                        if c in self.Groups and (not i in self.Groups[c]['lines']) and (i - 1 in self.Groups[c]['lines']):
-                            hasTotal = True
-                    if hasTotal:
-                        for c in column.split(','):
-                            total = {}
-                            for gc in self.GroupTotals:
-                                total[gc] = 0
-                            _g_ = _.switches.values('GroupBy')[0]
-                            _sub_ = self.asset[i - 1][_g_]
-                            for ass in self.asset:
-                                if _g_ in ass and ass[_g_] == _sub_:
-                                    for gc in self.GroupTotals:
-                                        total[gc] += ass[gc]
-                            if c in self.GroupTotals:
-                                _result_ += addField(_.addComma(total[c]), c)
-                                self.GroupTotals[c] = 0
-                            else:
-                                _result_ += addField('', c)
-                        _.cp(' ' + tableLine + _result_, c='green')
-                    isSwitchGroup = False
                     if self.groupID_KEY in item and item[self.groupID_KEY].endswith('-B'):
-                        _.cp([self.tab['table'] + _.loopPrint(__.table_prefix_padding) + result], 'BackgroundGrey.blue')
+                        cp([self.tab['table'] + _.loopPrint(__.table_prefix_padding) + result], 'BackgroundGrey.blue')
                     else:
-                        if result.strip().startswith('Help  '):
-                            _.print_('')
-                        SwitchGroupPostLabel = ''
-                        if 'SwitchGroupPostLabel' in item and 'example_or_notes' in item:
-                            isSwitchGroup = True
-                            SwitchGroupPostLabel = _.pr(__.SwitchGroup_Help.PostLabel, item['SwitchGroupPostLabel'], c=_.helpColorScheme.tableSwitchGroupsPostLabel, p=0)
-                        if 'SwitchSubGroup' in item and 'example_or_notes' in item:
-                            isSwitchGroup = True
-                            if 'SwitchGroupDepth' in item and 'example_or_notes' in item:
-                                SwitchGroupDepth = item['SwitchGroupDepth']
-                            else:
-                                SwitchGroupDepth = 1
-                            if len(__.SwitchGroup_Help.SubGroup) == 1:
-                                SwitchGroupDepth += 1
-                            print()
-                            _.pr(_.pr(__.SwitchGroup_Help.SubGroup * SwitchGroupDepth + __.SwitchGroup_Help.Delim + ' ' + item['SwitchSubGroup'], c='ColorBold.white', p=0), SwitchGroupPostLabel)
-                        if 'SwitchGroup' in item and 'example_or_notes' in item:
-                            isSwitchGroup = True
-                            print()
-                            if 'HasSwitchSubGroup' in item and 'example_or_notes' in item:
-                                _.pr('_' * max_length, c=_.helpColorScheme.tableSwitchGroupsLine)
-                            SwitchGroup = __.SwitchGroup_Help.Group
-                            if item['SwitchGroup'] == '':
-                                SwitchGroup = __.SwitchGroup_Help.NoGroup
-                            _.pr(_.pr(SwitchGroup + __.SwitchGroup_Help.Delim + ' ' + item['SwitchGroup'], c='ColorBold.white', p=0), SwitchGroupPostLabel)
-                        if isSwitchGroup:
-                            theLine = tableLine + result.lstrip()
-                        else:
-                            theLine = tableLine + result
-                        shouldPrint = True
-                        if not theLine.strip() and _.switches.isActive('GroupBy'):
-                            shouldPrint = False
-                        if shouldPrint:
-                            _.colorizeRow(theLine, prefix=self.tab['table'] + _.loopPrint(__.table_prefix_padding), prefixColor=self.tab_color, haltColorShift=self.isExtraRecord)
+                        _.colorizeRow(result, prefix=self.tab['table'] + _.loopPrint(__.table_prefix_padding), prefixColor=self.tab_color, haltColorShift=self.isExtraRecord)
             i += 1
-            if 'example_or_notes' in column and 'switch' in column and (_.switchDefault == i):
+            if 'expected_input_example' in column and 'switch' in column and (switchDefault == i):
+                if '??' in __.switch_skimmer.active:
+                    sys.exit()
                 pass
+                print('')
         self.asset = self.backup.asset.copy()
         self.aggregate_processed = False
         footer = {}
@@ -1603,15 +1305,15 @@ class Table:
                         theKey = y
                     footer[theKey] = __.aggregate.obj.format([k, y], __.aggregate.storage[k][y]['data'])
         if footer:
-            _.print_()
+            print()
             footer_txt = []
             footer_txt.append(__.aggregate.prefix)
             for k in footer:
                 footer_txt.append(k + ':')
                 footer_txt.append(footer[k])
                 footer_txt.append('  ')
-            _.cp(footer_txt, 'cyan')
-            _.print_()
+            cp(footer_txt, 'cyan')
+            print()
     def sort(self, fields=''):
         rows = self.asset
         if not len(self.asset):
@@ -1638,6 +1340,7 @@ class Table:
                     sb = item
             except Exception as e:
                 errors.append({'id': 16, 'function': 'sortThis()', 'cnt': 1, 'location': 'rows[0][sb]', 'vars': [{'name': 'rows', 'value': 'nope to that, to big'}, {'name': 'name', 'value': name}], 'error': e})
+        itemgetter = __.imp('operator.itemgetter')
         for item in sortList:
             try:
                 direction = item.split(delim)[0]
@@ -1651,15 +1354,15 @@ class Table:
                     pass
                     self.asset = sorted(self.asset, key=itemgetter(self.findColumName(item)))
                 except Exception as e:
-                    errors.append({'id': 17, 'function': 'sortThis()', 'cnt': 2, 'location': 'rows = sorted(rows, key=itemgetter(sb))', 'vars': [{'name': 'rows', 'value': 'nope to that, to big'}, {'name': 'name', 'value': name}], 'error': e})
-            import uuid
+                    errors.append({'id': 17, 'function': 'sortThis()', 'cnt': 2, 'location': 'rows=sorted(rows, key=itemgetter(sb))', 'vars': [{'name': 'rows', 'value': 'nope to that, to big'}, {'name': 'name', 'value': name}], 'error': e})
+            uuid = __.imp('uuid')
             sortBy[item] = str(uuid.uuid4())
             tempFields.append(sortBy[item])
             i = 0
             for row in self.asset:
                 self.asset[i][sortBy[item]] = i
                 i += 1
-        sortCode = 'rows = sorted(rows, key=lambda d: ('
+        sortCode = 'rows=sorted(rows, key=lambda d:('
         for item in sortList:
             sortCode += "d['" + str(sortBy[item]) + "'],"
         sortCode = sortCode[:-1]
@@ -1681,17 +1384,9 @@ class Table:
         return i
     def file(self, file):
         self.file = file
-    def save(self, theFile='', tableTemp=True, printThis=True, me=0):
+    def save(self, theFile='', tableTemp=True, printThis=True):
         _.HD.chmod(theFile)
-        try:
-            import simplejson
-            json = simplejson
-        except:
-            pass
-        try:
-            import json
-        except ImportError:
-            json = simplejson
+        simplejson = __.imp('simplejson')
         if theFile == '':
             theFile = str(self.file)
         self.file = theFile
@@ -1699,27 +1394,15 @@ class Table:
             file0 = str(_v.myTables) + str(_v.slash) + str(theFile)
         else:
             file0 = _v.stmp + _v.slash + theFile
-        dataDump = simplejson.dumps(self.asset, indent=4, sort_keys=True, default=str)
+        dataDump = simplejson.dumps(self.asset, indent=4, sort_keys=True)
         f = open(file0, 'w')
         f.write(str(dataDump))
         f.close()
         _.HD.chmod(theFile)
         if printThis:
-            _.print_('Saved: ' + file0)
-        if me and theFile in vv.opened_file_me:
-            _.changeM(theFile, vv.opened_file_me[theFile])
+            print('Saved: ' + file0)
     def get(self, theFile='', tableTemp=True, printThis=False):
-        if os.path.isfile(theFile):
-            vv.opened_file_me[theFile] = os.path.getmtime(theFile)
-        try:
-            import simplejson
-            json = simplejson
-        except:
-            pass
-        try:
-            import json
-        except ImportError:
-            json = simplejson
+        simplejson = __.imp('simplejson')
         if theFile == '':
             theFile = self.file
         self.file = theFile
@@ -1728,7 +1411,7 @@ class Table:
         else:
             file0 = _v.stmp + _v.slash + theFile
         if printThis:
-            _.print_('Loaded: ' + file0)
+            print('Loaded: ' + file0)
         if os.path.isfile(file0) == True:
             with open(file0, 'r', encoding='latin-1') as json_file:
                 json_data = simplejson.load(json_file)
@@ -1770,11 +1453,7 @@ class Tables:
         if name is None:
             name = self.tables[len(self.tables) - 1].name
         self.tables[self.index[name]].aggregate(code)
-    def rprint(self, asset, columns=None, name=None, n=None, sc=True, printColumns=True, h=None, l=None, p=None):
-        if columns is None:
-            columns = ','.join(list(asset[0].keys()))
-        if not h is None:
-            printColumns = h
+    def rprint(self, asset, columns, name=None, n=None, sc=True):
         if not n is None:
             name = n
         if name is None:
@@ -1782,7 +1461,7 @@ class Tables:
         self.register(name, asset)
         if sc and _.switches.isActive('Column'):
             columns = _.switches.value('Column')
-        self.print(name, columns, printColumns=printColumns, l=l, p=p)
+        self.print(name, columns)
     def rsort(self, asset, columns, name=None, n=None):
         if not n is None:
             name = n
@@ -1790,7 +1469,7 @@ class Tables:
             name = _.genUUID()
         self.register(name, asset)
         return self.returnSorted(name, columns, asset)
-    def register(self, name=None, asset=[], group_space=True, tab='', gs=None, t=None, n=None, w=True):
+    def register(self, name=None, asset=[], group_space=True, tab='', gs=None, t=None, n=None):
         global TableProfile_Config
         if not n is None:
             name = n
@@ -1822,7 +1501,7 @@ class Tables:
             self.tables.pop(thisID)
             found = False
         if not found:
-            self.tables.append(Table(name, asset, group_space, tab, w))
+            self.tables.append(Table(name, asset, group_space, tab))
             self.tables[len(self.tables) - 1].maxNameLength = self.maxNameLength
             self.index[name] = len(self.tables) - 1
         return name
@@ -1853,9 +1532,7 @@ class Tables:
                 if t.name == table:
                     self.tables[i].fieldProfileSet(field, propertyName, value)
                 i += 1
-    def print(self, name, fields, fieldLengths=False, pc=None, printColumns=True, h=None, l=None, p=None):
-        if not h is None:
-            printColumns = h
+    def print(self, name, fields, fieldLengths=False, pc=None, printColumns=True):
         if not ',' in fields:
             pc = False
         xXx = _.switches.records('dic_on-off-v')
@@ -1869,18 +1546,12 @@ class Tables:
         for t in self.tables:
             if t.name == name:
                 if len(self.tables[i].asset) > 0:
-                    if _.switches.isActive('GroupBy'):
-                        keys = list(self.tables[i].asset[0].keys())
-                        _rec = {}
-                        for key in keys:
-                            _rec[key] = ''
-                        self.tables[i].asset = [_rec] + self.tables[i].asset
                     if not ',' in fields:
                         printColumns = False
-                    self.tables[i].print(fields, fieldLengths, printColumns=printColumns, l=l, p=p)
+                    self.tables[i].print(fields, fieldLengths, printColumns=printColumns)
                     sI = i
                 else:
-                    pass
+                    print('Null Set')
             i += 1
         if _.switches.isActive('FieldTotal'):
             fieldTotals = {}
@@ -1897,19 +1568,19 @@ class Tables:
                                     thisFieldB.append(char)
                             thisFieldC = int(''.join(thisFieldB))
                             fieldTotals[field]['total'] += thisFieldC
-            _.print_()
-            _.print_()
+            print()
+            print()
             for field in fieldTotals:
-                _.print_(_.addComma(fieldTotals[field]['total']), '\t', fieldTotals[field]['actual'])
+                print(_.addComma(fieldTotals[field]['total']), '\t', fieldTotals[field]['actual'])
     def sort(self, name, fields):
-        fields = fields.replace('.', ':')
+        fields = _.fields.replace('.', ':')
         i = 0
         for t in self.tables:
             if t.name == name:
                 self.tables[i].sort(fields)
             i += 1
     def returnSorted(self, name, fields, asset=[]):
-        fields = fields.replace('.', ':')
+        fields = _.fields.replace('.', ':')
         if len(asset) > 0:
             self.register(name, asset)
         result = []
@@ -1929,7 +1600,7 @@ class Tables:
                 except Exception as e:
                     pass
             i += 1
-    def save(self, table, theFile='', tableTemp=True, printThis=True, me=0):
+    def save(self, table, theFile='', tableTemp=True, printThis=True):
         _.HD.chmod(theFile)
         theFile = str(theFile)
         if not theFile == '' and (not '.json' in theFile):
@@ -1940,11 +1611,7 @@ class Tables:
                 self.tables[i].save(theFile, tableTemp, printThis)
             i += 1
         _.HD.chmod(theFile)
-        if me and theFile in vv.opened_file_me:
-            _.changeM(theFile, vv.opened_file_me[theFile])
     def get(self, table, theFile='', tableTemp=True, printThis=False):
-        if os.path.isfile(theFile):
-            vv.opened_file_me[theFile] = os.path.getmtime(theFile)
         theFile = str(theFile)
         if not theFile == '' and (not '.json' in theFile):
             theFile = theFile + '.json'
@@ -2007,8 +1674,8 @@ class Tables:
         if not __.aggregate.eof.storage:
             shouldPrint = False
         if shouldPrint:
-            _.print_()
-            _.print_()
+            print()
+            print()
             _.linePrint()
         footer = {}
         aSettings = {}
@@ -2051,12 +1718,12 @@ class Tables:
                         theKey = y
                     footer[theKey] = __.aggregate.obj.format([k, y], __.aggregate.eof.storage[k][y]['data'])
         if footer:
-            _.print_()
+            print()
             footer_txt = []
             footer_txt.append(__.aggregate.prefix)
             for k in footer:
                 footer_txt.append(k + ':')
                 footer_txt.append(footer[k])
                 footer_txt.append('  ')
-            _.cp(footer_txt, 'cyan')
-            _.print_()
+            cp(footer_txt, 'cyan')
+            print()

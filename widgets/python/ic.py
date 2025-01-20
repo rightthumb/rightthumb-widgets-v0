@@ -13,6 +13,7 @@ def sw():
 	_.switches.register('Class', '-class')
 	_.switches.register('Tabs', '-t,-tabs')
 	_.switches.register('Spaces', '-sp,-spaces,-print,-printable')
+	_.switches.register('PrintClean', '--c')
 _._default_settings_()
 
 _.appInfo[focus()] = {
@@ -55,7 +56,7 @@ _.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw )
 
 import re
 
-# from _rightThumb._base3.library.tools.classes.code.PythonCodeColorizer import PythonCodeColorizer
+# from _rightThumb._base3.library.tools.code.classes.PythonCodeColorizer import PythonCodeColorizer
 
 
 iFnPath='from iPath import iName'
@@ -82,7 +83,6 @@ class iName:
 
 import os
 # from _rightThumb._base3.library.classes.index import index as live
-# from _rightThumb._base3.library.functions.create_backup_filename import create_backup_filename
 def action():
 	# colorizer = PythonCodeColorizer()
 	# print(colorizer.colorize(sample_code))
@@ -104,12 +104,13 @@ def action():
 	global iClassPath
 	isData = []
 	for path in files:
+		path = __.path(path)
 		# print(path)
 		# continue
 		if not os.path.isfile(path): continue
 		if not _.showLine(path): continue
 		if '__pycache__' in path: continue
-		if os.sep+'backup'+os.sep in path: continue
+		if os.sep+'backup'+os.sep in path and not 'os' in path and not 'file' in path: continue
 		isData.append(path)
 
 	# print(isData)
@@ -119,12 +120,14 @@ def action():
 	# print(isData)
 	# print(isData)
 	for path in isData:
+		
 		path = __.path(path)
 		
-		if len(isData) > 1: _.pr(path,c='green')
 		if len(isData) > 1:
-			_.pr()
-			_.pr(line=1)
+			if not _.switches.isActive('PrintClean'):
+				_.pr()
+				_.pr(line=1)
+				_.pr(path,c='green')
 		# try:
 
 
@@ -144,8 +147,10 @@ def action():
 		
 		if 'library.classes' in iPath:
 			isClass = True
+		# print(relevant)
 		iName = relevant[-1].replace('.py','')
 		iName = iName[0:len(iPath)-len('.py')]
+		# print(iName)
 		if isClass or _.switches.isActive('Class'):
 			iCode = iClass
 			impPath = iClassPath.replace('iPath',iPath).replace('iName',iName)
@@ -181,27 +186,35 @@ def action():
 					if 'c' in _.switches.value('Path') or 'all' in _.switches.value('Path'):
 						objects.append(st.split('class ')[1].split('(')[0].split(':')[0].strip())
 						basic.append(st.split('class ')[1].split('(')[0].split(':')[0].strip())
-						All.append(st.split('class ')[1].split('(')[0].split(':')[0].strip())
-				if line.startswith('def '):
+						# All.append(st.split('class ')[1].split('(')[0].split(':')[0].strip())
+				elif line.startswith('def '):
 					if 'c' in _.switches.value('Path') or 'all' in _.switches.value('Path'):
 						objects.append(st.split('def ')[1].split('(')[0].strip())
 						basic.append(st.split('def ')[1].split('(')[0].strip())
-						All.append(st.split('def ')[1].split('(')[0].strip())
-				if 'v' in _.switches.value('Path') or 'all' in _.switches.value('Path'):
-					if '=' in line:
-						objects.append(st.split('=')[0].strip())
-				if '=' in line:
-					All.append(st.split('=')[0].strip())
+						# All.append(st.split('def ')[1].split('(')[0].strip())
+				elif '='  in line  and not st.startswith('def ') and not '[' in line.split('=')[0] and not '(' in line.split('=')[0]:
+					if not line.startswith('\t') and not line.startswith(' '):
+						if 'v' in _.switches.value('Path') or 'all' in _.switches.value('Path'):
+							objects.append(st.split('=')[0].strip())
+						# All.append(line)
+						All.append(st.split('=')[0].strip())
 
 			if not basic:
 				objects = All
 				_.switches.fieldSet('Path','value','all')
 
+			# for o in objects: print(o)
+			# return None
 			# impPath = _.tailpop(impPath,' ')
 			if len(_.switches.value('Path')):
-				impPath += '  '+', '.join(objects)
+				if not objects:
+					impPath += '  '+ iName
+				else:
+					impPath += '  '+', '.join(objects)
 			else:
-				if iName in basic:
+				if not basic:
+					impPath += '  '+ iName
+				elif iName in basic:
 					impPath += '  '+ iName
 				else:
 					impPath += '  '+ basic[0]

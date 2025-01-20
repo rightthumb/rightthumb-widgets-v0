@@ -433,8 +433,8 @@ def add(path,r=False):
 	global baseDepth
 	global base_path
 	global isClean
-	if not isClean:
-		_.pr(' ',r=1)
+	# if not isClean:
+	# 	_.pr(' ',r=1)
 	path = path.replace(_v.slash+_v.slash,_v.slash)
 	path = path.replace('",','')
 	path = path.replace('"','')

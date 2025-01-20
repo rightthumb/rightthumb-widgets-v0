@@ -3,22 +3,22 @@ def focus(parentApp='', childApp='', reg=True): global appDBA; f = __.appName(ap
 fieldSet=_.l.vars(focus(),__name__,__file__,appDBA);_.load();_v=__.imp('_rightThumb._vars');
 
 def sw():
-	tabGroup = 0
-	tabGroup += 1
+	swGrp = 0
+	swGrp += 1
 	# post label precedes with a zero
-	_.switches.register( 'Files', '-f,-fi,-file,-files','(optional) file.txt', isPipe='glob', description='Files', group=[tabGroup,'A Group',0,'Post Label Here'])
-	_.switches.register( 'One', '-one', group=[tabGroup,'A Group'] )
-	_.switches.register( 'Two', '-two', group=[tabGroup,'Same tabGroup But Different Label'] )
+	_.switches.register( 'Files', '-f,-fi,-file,-files','(optional) file.txt', isPipe='glob', description='Files', group=[swGrp,'A Group',0,'Post Label Here'])
+	_.switches.register( 'One', '-one', group=[swGrp,'A Group'] )
+	_.switches.register( 'Two', '-two', group=[swGrp,'Same swGrp But Different Label'] )
 	tabSubGroupDepth = 2
-	_.switches.register( 'Three', '-three', group=[tabGroup,'BB Group',tabSubGroupDepth] )
-	tabGroup += 1
-	_.switches.register( 'Four', '-for', group=[tabGroup,'B Group'] )
+	_.switches.register( 'Three', '-three', group=[swGrp,'BB Group',tabSubGroupDepth] )
+	swGrp += 1
+	_.switches.register( 'Four', '-for', group=[swGrp,'B Group'] )
 	_.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=False )
 	_.switches.register( 'Fo', '-fo,-folder,-folders' )
 _._default_settings_()
 
 _.appInfo[focus()] = {
-	'file': 'SwitchGroupsExamples.py',
+	'file': 'swGrpsExamples.py',
 	'description': 'Switch Group Examples: Empty App That Opens Help Menu Only To Display nth Nested Grouped Switch',
 	# 'description': ['one','two','three','four'],
 	'categories': [
@@ -29,7 +29,7 @@ _.appInfo[focus()] = {
 						'nth switch group depth',
 				],
 	'examples': [
-						_.hp('p SwitchGroupsExamples'),
+						_.hp('p swGrpsExamples'),
 						_.linePrint(label='simple',p=0),
 						'',
 	],

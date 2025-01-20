@@ -3,9 +3,11 @@ def focus(parentApp='', childApp='', reg=True): global appDBA; f = __.appName(ap
 fieldSet=_.l.vars(focus(),__name__,__file__,appDBA);_.load();_v=__.imp('_rightThumb._vars');
 
 def sw():
-	pass
-	_.switches.register( 'Text', '-i,-t,-text', isData='name', isRequired=True )
-	_.switches.register( 'Color', '-color', isRequired=True )
+	swGrp = 1
+	_.switches.register( 'Text', '-i,-t,-txt,-text', isData='name', isRequired=True, group=[swGrp,'Text Input'] )
+	swGrp += 1
+	_.switches.register( 'Color', '-color', isRequired=True, group=[swGrp,'Colors per Text arg'] )
+	_.switches.register( 'HexColor', '-h,-hex', isRequired=True, group=[swGrp,'Colors per Text arg'] )
 _._default_settings_()
 
 _.appInfo[focus()] = {
@@ -20,6 +22,8 @@ _.appInfo[focus()] = {
 				],
 	'examples': [
 						_.hp('p colorize -text "Error: Invalid Input" "Example: script valid/folder" -color red yellow'),
+						_.hp('p colorize -text List Colors -color list'),
+						_.hp('p colorize -text List Colors -hex list'),
 						_.pr('   Error: Invalid Input',c='red',p=0)+' '+_.pr('Example: script.sh valid/folder',c='yellow',p=0),
 						_.linePrint(label='simple',p=0),
 						'',
@@ -51,12 +55,17 @@ def action():
 	else:
 		text = []
 		colors = _.switches.values('Color')
+		if _.switches.isActive('HexColor'):
+			colors = _.switches.values('HexColor')
 		color = colors[0]
 		for i,txt in enumerate(_.switches.values('Text')):
 			try:
 				color = colors[i]
 			except: pass
-			text.append( _.pr(txt,c=color,p=0) )
+			if _.switches.isActive('HexColor'):
+				text.append( _.pr(txt,h=color,p=0) )
+			else:
+				text.append( _.pr(txt,c=color,p=0) )
 		final = ' '.join(text)
 		print(final)
 

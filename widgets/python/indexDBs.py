@@ -381,6 +381,7 @@ def indexDB(files):
 	}
 	
 	for path in files:
+		if not _.showLine(path): continue
 		path = os.path.abspath(path)
 		if _.switches.isActive('Ago'):
 			if os.path.getmtime(path) < _.switches.value('Ago'): continue

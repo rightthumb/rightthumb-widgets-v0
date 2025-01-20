@@ -43,24 +43,78 @@ _.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw )
 ########################################################################################
 #n)--> start
 
+from _rightThumb._base3.library.tools.code.classes.CodeIndexerPygments import CodeIndexerPygments
+
 def action():
 	fi = _.switches.value('Files')
 	_.pr( fi, c='cyan' )
 	file = _.getText( fi, raw=True )
 	file = file.replace('\r','')
 	file = file.replace('    ','\t')
+
+	code = CodeIndexerPygments( file, 'py' )
+	data = []
+	for k in code.db:
+		data.append({'name': k+'  ' })
+	_.fields.asset( 'data', data )
+	
+	for k in code.db:
+		x = _.fields.value( 'data', 'name', k+':' )+'  '+str(len(code.db[k]))
+		_.pr(x)
+		# _.pr( _.pr0(k+':'),'\t', _.pr0(len(code.db[k]),c='cyan') )
+	# return False
 	cnt = 0
-	for i, line in enumerate(file.split('\n')):
+	l = 0
+	table = []
+	for b in code.db['lines']:
+		l += 1
+		e = code.db['lines'][b]
+		line = code.code[b:e]
 		Line = line
 		line = line.split('#')[0].rstrip()
 		st = line.strip()
 		if st and '=' in line and not line.startswith('\t') and not line.startswith('def ') and not '.append(' in line:
+			v = b
+			value = ''
+			while not v == e:
+				v+=1
+				for k in code.db:
+					if v in code.db[k]:
+						value = code.code[v:code.db[k][v]+1]
+						break
+			if not value:
+				value = line.split('=')[1].strip()
+			preview = ''
+			for xx, char in enumerate(value):
+				if xx > 30:
+					preview += '...'
+					break
+				preview += char
 			var = line.split('=')[0].strip()
-			if not _.showLine(var): continue
-			_.pr( '  ',_.pr0(i), _.pr0(var,c='cyan') )
+			if _.switches.isActive('SearchValue'):
+				if not _.showLine(value): continue
+			else:
+				if not _.showLine(var): continue
+			table.append({ 'line': l, 'var': var, 'size': len(value), 'preview': preview })
+			# _.pr( '  ',_.pr0(l),len(value), _.pr0(var,c='cyan') )
 			cnt += 1
+	_.pt( table )
 	_.pr()
 	_.pr( '', cnt,c='yellow' )
+
+	# for i, line in enumerate(file.split('\n')):
+	# 	Line = line
+	# 	line = line.split('#')[0].rstrip()
+	# 	st = line.strip()
+	# 	if st and '=' in line and not line.startswith('\t') and not line.startswith('def ') and not '.append(' in line:
+	# 		var = line.split('=')[0].strip()
+	# 		if not _.showLine(var): continue
+	# 		_.pr( '  ',_.pr0(i), _.pr0(var,c='cyan') )
+	# 		cnt += 1
+	# _.pr()
+	# _.pr( '', cnt,c='yellow' )
+
+
 
 
 # def action():
@@ -69,7 +123,10 @@ def action():
 # 	file = _.getText( fi, raw=True )
 # 	file = file.replace('\r','')
 # 	file = file.replace('    ','\t')
-# 	code = _.index( file )
+# 	code = CodeIndexer( file )
+# 	# _.pv(code.db)
+# 	for k in code.db:
+# 		_.pr( k, len(code.db[k]) )
 	
 
 

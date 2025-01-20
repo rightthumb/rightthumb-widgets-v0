@@ -4,7 +4,7 @@ fieldSet=_.l.vars(focus(),__name__,__file__,appDBA);_.load();_v=__.imp('_rightTh
 
 def sw():
 	pass
-	_.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=False )
+	_.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name', description='Files', isRequired=False )
 _._default_settings_()
 
 _.appInfo[focus()] = {
@@ -32,46 +32,24 @@ def appRegDics(): return { 'appInfo': _.appInfo[focus()], 'appData': _.appData[f
 
 def triggers():
 	_._default_triggers_()
-	_.switches.trigger( 'Files', _.myFileLocations, vs=True )
+	_.switches.trigger( 'Files', _.myFileLocations, vs=False )
 	_.switches.trigger( 'DB', _.aliasesFi )
 	_.switches.trigger( 'Folder', _.myFolderLocations )
+	_.switches.trigger( 'Folders', _.myFolderLocations )
+	__.forceSwitchTrigger['Folders'] = _.myFolder
 	_.switches.trigger( 'OutputFolder', _.aliasesFo )
 def _local_(do): exec(do)
 _.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw )
 ########################################################################################
 #n)--> start
 
-# from _rightThumb._base3.library.functions.code.pyClassesFunctions import pyClassesFunctions, ranges
+from _rightThumb._base3.library.tools.code.functions.pyColor import pyColor
 
-# from _rightThumb._base3.library.classes.code.PythonCodeColorizer import PythonCodeColorizer
-
-# from _rightThumb._base3.library.tools.code.classes.CodeIndexerPygments import CodeIndexerPygments
-
-# def action():
-# 	text = 'this is a test'
-# 	c =_.pr(text,h='asdf')
-# 	# print(c)
-# 	# fi = _.switches.value('Files')
-# 	# # _.pr(fi)
-# 	# # return False
-# 	# code = _.getText( fi, raw=True )
-# 	# # color = PythonCodeColorizer()
-# 	# # test = color.colorize(code)
-# 	# # test = pyClassesFunctions(code)
-# 	# index = CodeIndexerPygments( code )
-# 	# index.color()
-
-# 	# print( test )
-
-
-from _rightThumb._base3.library.tools.security.modules.liaison import liaison
 def action():
-	lias = liaison('hexColor', '123')
-	mod=lias.secureModule()
-	# for x in dir(mod): print(x)
-	# mod.hexColor('test',c='red',p=1,asdf=1)
-	mod.hexColor('test',c='red',p=1)
-	# lias.interact('test',c='red',p=1,asdf=2)
+	for path in _.isData():
+		file = _.getText( path, raw=True )
+		pyColor(file)
+
 
 ########################################################################################
 if __name__ == '__main__':

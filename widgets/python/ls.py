@@ -968,7 +968,7 @@ def action():
 				theColumns = theColumns.replace( ',date_accessed', '' )
 
 			theColumns = theColumns.replace( ',date_accessed', '' )
-			_.tables.print( 'data', _.unixAutoColumns( data, theColumns, focus() ) )
+			_.tables.print( 'data', _.responsiveColumns( data, theColumns, focus() ) )
 			return None
 
 	# _.switches.fieldSet( 'NoTableLines', 'active', True )

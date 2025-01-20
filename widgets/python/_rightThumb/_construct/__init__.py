@@ -28,6 +28,15 @@ SwitchGroup_Help.PostLabel = '  '
 # HasSwitchSubGroup search for in framework
 
 ##################################################
+
+# earthy_tones oceanic pastel warm_bold autumn midnight
+# spring earthy_tones oceanic pastel warm_bold autumn
+# midnight spring2 volcano frosty desert forest rainbow
+# mystic industrial rustic sci_fi victorian retro
+
+CodeTheme = 'retro'
+
+##################################################
 def isGui():
 	import platform
 	if platform.system() == "Windows":

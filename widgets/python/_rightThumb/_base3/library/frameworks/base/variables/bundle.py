@@ -1,7 +1,7 @@
 # o fw.v variables\framework\fwSettings.py
 '''
 
-from _rightThumb._base3.library.variables.framework.fwSettings import 
+from _rightThumb._base3.library.frameworks.base.variables.bundle import 
 _all_colors_, _all_colors_nobk_, _all_colors_nobk_, _all_colors_tact_, 
 
 

@@ -54,8 +54,8 @@ dot=Meta_Namespace
 intelligent_code = Meta_Namespace()
 intelligent_code.functions = {}
 intelligent_code.classes = {}
-
-helpColorScheme = dot()
+helpColorScheme = Meta_Namespace()
+liaison = Meta_Namespace()
 
 # __.SwitchGroup_Help.SubGroup
 # HasSwitchSubGroup
@@ -98,7 +98,6 @@ helpColorScheme = dot()
 #   pass
 
 
-# from _rightThumb._base3.library.variables.framework.fwSettings import _all_colors_, _all_colors_nobk_, _all_colors_nobk_, _all_colors_tact_
 
 from _rightThumb._base3.library.frameworks.base.variables.bundle import    _all_colors_, _all_colors_nobk_, _all_colors_nobk_, _all_colors_tact_
 
@@ -107,13 +106,13 @@ from _rightThumb._base3.library.frameworks.base.variables.bundle import    _all_
 
 def hexColor(*args, **kwargs):
 	if not 'hexColor' in intelligent_code.functions:
-		from _rightThumb._base3.library.tools.functions.code.hexColor import hexColor
+		from _rightThumb._base3.library.tools.code.functions.hexColor import  hexColors
 		intelligent_code.functions['hexColor'] = hexColor
 	return intelligent_code.functions['hexColor'](*args, **kwargs)
 
 def pyColor(*args, **kwargs):
 	if not 'pyColor' in intelligent_code.functions:
-		from _rightThumb._base3.library.tools.functions.code.pyColor import pyColor
+		from _rightThumb._base3.library.tools.code.functions.pyColor import pyColor
 		intelligent_code.functions['pyColor'] = pyColor
 	return intelligent_code.functions['pyColor'](*args, **kwargs)
 
@@ -729,8 +728,8 @@ def tinydic(data,par='',skim=None, mt=True, lan='js', prev=False, dump=None, dic
 
 
 def tailpop(subject, delim):
-    parts = subject.rsplit(delim, 1)
-    return parts[0] if len(parts) > 1 else ''
+	parts = subject.rsplit(delim, 1)
+	return parts[0] if len(parts) > 1 else ''
 
 
 def tab(val,n=None, t='    ', cnt=False, add=None,  s=False):
@@ -1188,7 +1187,7 @@ def qindex( data, comment='#' ):
 
 def vindex(*args, **kwargs):
 	if not 'vindex' in intelligent_code.functions:
-		from _rightThumb._base3.library.frameworks.base.functions.vindex import vindex
+		from _rightThumb._base3.library.frameworks.base.functions.vindex import  vindex
 		intelligent_code.functions['vindex'] = vindex
 	return intelligent_code.functions['vindex'](*args, **kwargs)
 
@@ -2160,7 +2159,7 @@ def percentageDiffIntAuto(smaller, bigger, isFloat=False):
 		s = bigger
 		b = smaller
 	if not isFloat:
-		return _.percentageDiffInt(s, b)
+		return percentageDiffInt(s, b)
 	else:
 		result = round(float(s / b * 100), 1)
 		r = str(result)
@@ -3804,6 +3803,26 @@ def pDiff( one, two, use=None,r=None ):
 		return b
 
 
+def percentageDiff(smaller, bigger, isFloat=False):
+	try:
+		if not isFloat:
+			return abs(smaller / bigger) * 100
+		else:
+			r = abs(smaller / bigger) * 100
+			if str(r) == '0.0':
+				return 0
+			return r
+	except Exception as e:
+		return 0
+		smaller += 1
+		bigger += 1
+		if not isFloat:
+			return abs(smaller / bigger) * 100
+		else:
+			r = abs(smaller / bigger) * 100
+			if str(r) == '0.0':
+				return 0
+			return r
 def pDiff2( one, two, use=None,r=None ):
 	if not use is None:
 		use = use.lower()
@@ -10369,6 +10388,12 @@ from _rightThumb._base3.library.frameworks.base.classes.Tables import Tables
 
 
 ###########################################################################################
+
+
+def md5Str(text: str) -> str:
+	import hashlib
+	return hashlib.md5(text.encode()).hexdigest()
+
 def md5(fname):
 	import hashlib
 	hash_md5 = hashlib.md5()
@@ -12209,222 +12234,12 @@ def isFloat( data ):
 		return False
 
 ###################################################################################################################
-
-
-class Field:
-
-	def __init__( self, project, name, value, appReg, script, maxField ):
-		self.appReg = appReg
-		self.project = project
-		self.name = name
-		self.trigger = script
-		self.maxField = maxField
-
-
-
-		self.registerValue( value )
-
-	def setTrigger( self, script ):
-		self.trigger = script
-
-	def addPadding( self, value, extra, right, center ):
-		value = self.runTrigger( str(value) )
-		oValue = value
-		addPadding = (extra + self.maxField) - len( value )
-		add = ''
-		i=0
-		l=''
-		r=''
-		while not len(value) >= self.maxField+extra:
-			i+=1
-			if(i%2==0):
-				l+=' '
-			else:
-				r+=' '
-			value += ' '
-			add += ' '
-		# for x in range(1,addPadding+1):
-		#   value += ' '
-		# return str(self.maxField)+' '+str(len( value ))+value
-		if right:
-			value = add + oValue
-		if center:
-			value = l + oValue + r
-		return value
-
-	def addPaddingSetSpaces( self, value ):
-		value = self.runTrigger( str(value) )
-		addPadding = self.maxField - len( value )
-		newValue = value
-		Zeros = ''
-		while not len(newValue) == self.maxField:
-			Zeros += ' '
-			newValue = Zeros + value
-		return newValue
-
-	def addPaddingZeros( self, value ):
-		value = self.runTrigger( str(value) )
-		addPadding = self.maxField - len( value )
-		newValue = value
-		Zeros = ''
-		while not len(newValue) == self.maxField:
-			Zeros += '0'
-			newValue = Zeros + value
-		return newValue
-
-	def runTrigger( self, value ):
-		if type( self.trigger ) == bool:
-			return value
-
-		# print_( 'HERE' )
-		return self.trigger( value )
-
-	def registerValue( self, value ):
-		thisLen = len( self.runTrigger( str(value) ) )
-
-		if thisLen > self.maxField:
-			self.maxField = thisLen
-
-
-
 class Fields:
-
-	def __init__(self):
-		self.fields = {}
-		self.extra = 0
-
-	def lengths( self, project ):
-		global switches
-		if switches.isActive('Long'):
-			minLength=False
-		else:
-			minLength=True
-		result = {}
-		for record in self.fields[project]:
-			if record.project == project:
-				if minLength:
-					result[record.name]=43
-				else:
-					result[record.name] = record.maxField
-
-		return result
-
-
-	def register( self, project='', names='', value='', appReg=False, script=False, maxField=None,        p=None, n=None, v=None, m=None, isRegisterDic=False ):
-
-		# if project in self.fields:
-		#   if not isRegisterDic:
-		#       del self.fields[ project ]
-
-		if not p is None:
-			project = p
-
-		if not n is None:
-			names = n
-
-		if not v is None:
-			value = v
-
-		maxField = 0
-
-		if not maxField is None:
-			maxField = maxField
-
-		if not m is None:
-			maxField = m
-
-
-		if type(appReg) == bool:
-			appReg = __.appReg
-		if not project in self.fields:
-			self.fields[project] = []
-		for name in names.split(','):
-
-			shouldAdd = True
-
-			for i,s in enumerate(self.fields[project]):
-				if self.fields[project][i].appReg == appReg and project == self.fields[project][i].project and name == self.fields[project][i].name:
-					shouldAdd = False
-			if shouldAdd:
-				self.fields[project].append( Field( project, name, value, appReg, script, maxField ) )
-				if maxField and type(value) == int:
-					return self.fields[project][len(self.fields[project])-1].addPaddingZeros(value)
-				elif maxField and type(value) == str:
-					return self.fields[project][len(self.fields[project])-1].addPadding(value)
-			else:
-				self.registerValue( project, name, value, appReg )
-
-	def registerValue( self, project, name, value, appReg=False ):
-		if type(appReg) == bool:
-			appReg = __.appReg
-
-		result = False
-		for i,s in enumerate(self.fields[project]):
-			if self.fields[project][i].appReg == appReg and project == self.fields[project][i].project and name == self.fields[project][i].name:
-				self.fields[project][i].registerValue( value )
-				result = True
-		return result
-
-
-	def padZeros( self, project, name, value, extra=None, appReg=False, space=False ):
-
-		if extra is None:
-			extra = self.extra
-
-		if type(appReg) == bool:
-			appReg = __.appReg
-		for i,s in enumerate(self.fields[project]):
-			if self.fields[project][i].appReg == appReg and project == self.fields[project][i].project and name == self.fields[project][i].name:
-				if space:
-					return self.fields[project][i].addPaddingSetSpaces( value )
-				else:
-					return self.fields[project][i].addPaddingZeros( value )
-				result = self.fields[project][i].addPaddingZeros( value )
-		return result
-
-
-	def value( self, project, name, value, extra=None, right=False, appReg=False,    r=None, center=False ):
-		result = value
-		if not r is None:
-			right = r
-
-		if extra is None:
-			extra = self.extra
-
-		if type(appReg) == bool:
-			appReg = __.appReg
-		for i,s in enumerate(self.fields[project]):
-			if self.fields[project][i].appReg == appReg and project == self.fields[project][i].project and name == self.fields[project][i].name:
-				result = self.fields[project][i].addPadding( value, extra, right, center )
-		return result
-	def valuez( self, project, name, value, appReg=False ):
-		if type(appReg) == bool:
-			appReg = __.appReg
-		for i,s in enumerate(self.fields[project]):
-			if self.fields[project][i].appReg == appReg and project == self.fields[project][i].project and name == self.fields[project][i].name:
-				result = self.fields[project][i].addPaddingZeros( value )
-		return result
-
-	def asset( self, project, asset, appReg=False ):
-		self.fields[project] = []
-		if type(appReg) == bool:
-			appReg = __.appReg
-
-		if type( asset ) == dict:
-			self.registerDic( project, asset, appReg )
-
-		if type( asset ) == list:
-			for row in asset:
-				if type( row ) == dict:
-					self.registerDic( project, row, appReg )
-
-
-	def registerDic( self, project, asset, appReg=False ):
-		if type(appReg) == bool:
-			appReg = __.appReg
-
-		for name in asset.keys():
-			self.register( project, name, asset[name], appReg, isRegisterDic=True )
+	def __new__(cls, *args, **kwargs):
+		if not 'Fields' in intelligent_code.classes:
+			from _rightThumb._base3.library.frameworks.base.classes.Fields import Fields as live
+			intelligent_code.classes['Fields'] = live
+		return intelligent_code.classes['Fields'](*args, **kwargs)
 
 # _.fields.register( 'project', 'name', script=_.resolveEpochTest )
 # _.fields.asset( 'project', {} )
@@ -12432,7 +12247,7 @@ class Fields:
 # _.fields.register( 'project', 'name', value, appReg=focus() )
 # _.fields.register( 'project', 'name', value )
 # _.fields.value( 'project', 'name', value )
-
+# fields=Fields()
 ###################################################################################################################
 
 
@@ -16382,7 +16197,7 @@ def rImp(app):
 
 def create_backup_filename(*args, **kwargs):
 	if not 'create_backup_filename' in intelligent_code.functions:
-		from _rightThumb._base3.library.tools.functions.os.file.create_backup_filename import create_backup_filename
+		from _rightThumb._base3.library.tools.os.file.create_backup_filename import create_backup_filename
 		intelligent_code.functions['create_backup_filename'] = create_backup_filename
 	return intelligent_code.functions['create_backup_filename'](*args, **kwargs)
 
@@ -16434,7 +16249,7 @@ import time
 
 def bkExpire(*args, **kwargs):
 	if not 'bkExpire' in intelligent_code.functions:
-		from _rightThumb._base3.library.tools.functions.os.file.bkExpire import bkExpire
+		from _rightThumb._base3.library.tools.os.file.bkExpire import bkExpire
 		intelligent_code.functions['bkExpire'] = bkExpire
 	return intelligent_code.functions['bkExpire'](*args, **kwargs)
 
@@ -16578,10 +16393,49 @@ class index
 class index:
 	def __new__(cls, *args, **kwargs):
 		if not 'index' in intelligent_code.classes:
-			from _rightThumb._base3.library.tools.classes.code.index import index as live
+			from _rightThumb._base3.library.tools.code.classes.index import  index as live
 			intelligent_code.classes['index'] = live
 		return intelligent_code.classes['index'](*args, **kwargs)
 
+
+########################################################################################
+def sort2(table, fields):
+    """Sorts a list of dictionaries based on multiple fields with ascending (.a) and descending (.d) support."""
+    
+    # Process sorting fields
+    sorting_criteria = []
+    reverse_flags = []
+
+    for field in fields.replace(' ', '').split(','):
+        if '.a' in field:
+            sorting_criteria.append(field.replace('.a', ''))
+            reverse_flags.append(False)  # Ascending
+        elif '.d' in field:
+            sorting_criteria.append(field.replace('.d', ''))
+            reverse_flags.append(True)   # Descending
+        else:
+            sorting_criteria.append(field)
+            reverse_flags.append(False)  # Default to ascending
+
+    # Pre-process: Ensure all fields exist in each record
+    for record in table:
+        for field in sorting_criteria:
+            if field not in record:
+                # Determine default value (int -> 0, string -> "")
+                record[field] = 0 if any(isinstance(r.get(field, ""), int) for r in table) else ""
+
+    # Perform sorting
+    table = sorted(
+        table,
+        key=lambda x: tuple(x[field] for field in sorting_criteria),
+        reverse=False  # Always sort ascending first, then adjust descending fields
+    )
+
+    # Apply descending order where needed
+    for field, reverse in reversed(list(zip(sorting_criteria, reverse_flags))):
+        table = sorted(table, key=lambda x: x[field], reverse=reverse)
+
+    return table
 
 ########################################################################################
 WidgetsFW = {

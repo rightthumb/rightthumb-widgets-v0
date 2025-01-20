@@ -112,6 +112,13 @@ _.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw )
 	#n)--> inline
 		# for rel in [ subject for subject in _.isData(r=0) if _.showLine(subject) ]: print(rel)
 
+	#n)--> fields
+		# data = []
+		# for k in code.db: data.append({'name': k+'  ' })
+		# _.fields.asset( 'data', data )
+		# for k in code.db:
+		# 	_.pr(   _.fields.value( 'data', 'name', k+':' )+'  '+str(len(code.db[k]))   )
+
 	#n)--> banner
 		# banner=_.Banner(app); goss=banner.goss;
 #e)--> examples
