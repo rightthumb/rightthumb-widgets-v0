@@ -226,6 +226,7 @@ def action():
 		# _site.action()
 		for subject in subjects:
 			subject = __.path(subject)
+			_.pr( subject, c='cyan' )
 			_.pr(line=1,c='yellow')
 			if _.switches.isActive('WSL'):
 				wslPath = wsl(subject,True)
