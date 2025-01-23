@@ -4,28 +4,31 @@ fieldSet=_.l.vars(focus(),__name__,__file__,appDBA);_.load();_v=__.imp('_rightTh
 
 def sw():
 
-	tabGroup = 0
-	_.switches.register( 'DB', '-db,-database', group=[tabGroup, 'Initialization'] )
+	swGrp = 0
+	_.switches.register( 'DB', '-db,-database', group=[swGrp, 'Initialization'] )
 	
-	_.switches.register( 'Create/UpdateDatabase', '-create,-u,-up,-update', group=[tabGroup, 'Used When Creating Or Updating The Database'] )
-	_.switches.register( 'Ago', '-ago', '(blank=db date), 1w 1mo 1y, age/print-db-age', group=[tabGroup, 'Used When Updating The Database'] )
+	_.switches.register( 'Create/UpdateDatabase', '-create,-u,-up,-update', group=[swGrp, 'Used When Creating Or Updating The Database'] )
+	_.switches.register( 'Ago', '-ago', '(blank=db date), 1w 1mo 1y, age/print-db-age', group=[swGrp, 'Used When Updating The Database'] )
 
-	_.switches.register( 'DB-Type', '-t,-type', 'm c meta content', group=[tabGroup, 'Used When Creating'] )
-	tabGroup += 1
-	_.switches.register( 'Recursive', '-r,-recursive', group=[tabGroup, 'Multipurpose'] )
-	_.switches.register( 'SQL', '-sql', '''"select * from files where path = 'file.txt'"''', group=[tabGroup, 'Multipurpose'] )
+	_.switches.register( 'DB-Type', '-t,-type', 'm c meta content', group=[swGrp, 'Used When Creating'] )
+	swGrp += 1
+	_.switches.register( 'Recursive', '-r,-recursive', group=[swGrp, 'Multipurpose'] )
+	_.switches.register( 'SQL', '-sql', '''"select * from files where path = 'file.txt'"''', group=[swGrp, 'Multipurpose'] )
 
-	tabGroup += 1
-	_.switches.register( 'Print-File-Content', '-pf,-pfc,-content', 'filename.txt/ or pipe|', group=[tabGroup, 'Recovery'] )
-	_.switches.register( 'Recover-Files', '-rFi,-recoverFile', 'filename.txt/or pipe|: backs up the overwrites file', group=[tabGroup, 'Recovery'] )
-	_.switches.register( 'Recover-Folders', '-rFo,-recoverFolder', 'optional folder/ or pipe|, can use with: -recursive', group=[tabGroup, 'Recovery'] )
+	swGrp += 1
+	_.switches.register( 'Print-File-Content', '-pf,-pfc,-content', 'filename.txt/ or pipe|', group=[swGrp, 'Recovery'] )
+	_.switches.register( 'Recover-Files', '-rFi,-recoverFile', 'filename.txt/or pipe|: backs up the overwrites file', group=[swGrp, 'Recovery'] )
+	_.switches.register( 'Recover-Folders', '-rFo,-recoverFolder', 'optional folder/ or pipe|, can use with: -recursive', group=[swGrp, 'Recovery'] )
 	
-	tabGroup += 1
-	_.switches.register( 'Query', '-q,-query', '', group=[tabGroup, 'Research'] )
-	_.switches.register( 'Tool-List-Fields', '-fields', 'optional table name', group=[tabGroup, 'Research'] )
+	# swGrp += 1
+	# _.switches.register( 'Backup-Files', '-bk', '', group=[swGrp, 'Backup Files'] )
+	
+	swGrp += 1
+	_.switches.register( 'Query', '-q,-query', '', group=[swGrp, 'Research'] )
+	_.switches.register( 'Tool-List-Fields', '-fields', 'optional table name', group=[swGrp, 'Research'] )
 
-	tabGroup += 1
-	_.switches.register( 'Tool-File-Meta', '-meta', group=[tabGroup, 'Off Topic'] )
+	swGrp += 1
+	_.switches.register( 'Tool-File-Meta', '-meta', group=[swGrp, 'Off Topic'] )
 
 
 	
@@ -57,7 +60,7 @@ def appRegDics(): return { 'appInfo': _.appInfo[focus()], 'appData': _.appData[f
 
 def triggers():
 	# _._default_triggers_()
-	_.switches.trigger( 'DB', _.aliasesFi )
+	# _.switches.trigger( 'DB', _.aliasesFi )
 	_.switches.trigger( 'Print-File-Content', _.aliasesFi )
 	_.switches.trigger( 'Tool-File-Meta', _.aliasesFi )
 	_.switches.trigger( 'Files', _.myFileLocations, vs=True )
@@ -255,7 +258,7 @@ def connectDB(db,dbType=None):
 		if dbType is None:
 			_.e('Database does not exist','Please specify the database type to create',['ex: -type meta','ex: -type content'])
 		if dbType == 'meta':
-			sql =  'CREATE TABLE files (path text, name_ text, name text, folder text, stat text, attrib text, bytes int, size text, date_created_raw double, date_modified_raw double, date_created text, date_modified text, type text, typesort text, ext text, week_of_year text, week_of_year_ text, day_of_the_week text, month text, friendly_week text, friendly_month text, accessed_raw double, date_accessed text                        , ce double, me double, ae double, meta text, header text, err int        )'
+			sql =  'CREATE TABLE files (path text,  name_ text, name text, folder text, stat text, attrib text, bytes int, size text, date_created_raw double, date_modified_raw double, date_created text, date_modified text, type text, typesort text, ext text, week_of_year text, week_of_year_ text, day_of_the_week text, month text, friendly_week text, friendly_month text, accessed_raw double, date_accessed text                        , ce double, me double, ae double, meta text, header text, err int        )'
 		else:
 			sql = 'CREATE TABLE files (name text, path text, size real, created real, modified real, is_dir integer, content text, mime text, skipped integer)'
 		cursor.execute(sql)
@@ -282,6 +285,8 @@ import sqlite3
 
 # Assuming `connect` and `cursor` are defined globally
 def fields(table_name='files'):
+	global sqlMgr
+	return sqlMgr.fields('files')
 	global connect
 	global cursor
 
@@ -299,6 +304,12 @@ def fields(table_name='files'):
 def insertDB(data, table='files'):
 	global connect
 	global cursor
+
+	fld = fields(table)
+	for rec in data:
+		for k in rec:
+			if not k in fld:
+				del rec[k]
 
 	# Prepare the column names and placeholders for values
 	columns = ', '.join([f'"{key}"' for key in data.keys()])
@@ -323,8 +334,16 @@ def insertDB(data, table='files'):
 
 
 def updateDB(path, data, table='files'):
+	global sqlMgr
+	info = sqlMgr.update_or_insert('files', {'path': path}, data, {})
+	return info
 	global connect
 	global cursor
+	fld = fields(table)
+	for rec in data:
+		for k in rec:
+			if not k in fld:
+				del rec[k]
 
 	# Escape column names and prepare the set clause
 	set_clause = ', '.join([f'"{key}" = ?' for key in data.keys()])
@@ -370,6 +389,8 @@ def tableExists(table='files'):
 
 
 def indexDB(files):
+	global sqlMgr
+	
 	info = {
 		'total': len(files),
 		'success': 0,
@@ -386,6 +407,8 @@ def indexDB(files):
 		if _.switches.isActive('Ago'):
 			if os.path.getmtime(path) < _.switches.value('Ago'): continue
 		record = _dir.fileInfo( path )
+		info = sqlMgr.insert('files', record)
+		return info
 		if queryDB(path):
 			try:
 				updateDB(path, record)
@@ -649,16 +672,25 @@ def fo(folder=None,r=False,script=None):
 	return None
 
 
+
+
+
+
+from _rightThumb._base3.library.tools.db.sqliteMgr import  sqliteMgr
+
+
 import sqlite3
 import os
 import _rightThumb._dir as _dir
 ########################################################################################
 def action():
+	global sqlMgr
 	# print(backupName('index.db')); _.isExit(__file__)
 	if _.switches.isActive('DB'):
 		db = _.switches.value('DB')
 	else:
 		db = 'index.db'
+	sqlMgr = sqliteMgr(db)
 
 	if _.switches.isActive('Ago'):
 		if _.switches.value('Ago') == '':
@@ -672,7 +704,7 @@ def action():
 	if _.switches.isActive('Tool-File-Meta'):
 		_.pv(_dir.fileInfo( _.switches.values('Tool-File-Meta')[0] )); _.isExit(__file__)
 
-	connectDB(db)
+	# connectDB(db)
 
 	if _.switches.isActive('Query'):
 		dbQuery()
@@ -790,7 +822,7 @@ def action():
 		indexDB(files)
 	else:
 		contentDB(files)
-
-	closeDB()
+	sqlMgr.close()
+	# closeDB()
 if __name__ == '__main__':
 	action(); _.isExit(__file__);

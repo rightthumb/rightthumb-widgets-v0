@@ -169,7 +169,10 @@ def action():
 				if len(hashes) < mx: hashes.append(ha)
 	else: hashes = ['md5']
 	hashID={}
+	if len(_.isData()) > 1:
+		_.pr(line=1,c='yellow')
 	for path in _.isData():
+		
 		index={}
 		index['path']=path
 		# _.pr(path)
@@ -185,6 +188,8 @@ def action():
 			hashID[path]+=1
 
 		_.pr(index,dic=1)
+		if len(_.isData()) > 1:
+			_.pr(line=1,c='yellow')
 
 	if _.switches.isActive('Compare'):
 		first=True

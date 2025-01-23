@@ -34,16 +34,25 @@ import _rightThumb._string as _str
 
 
 def appSwitches():
+	# , group=[swGrp,'A Group'] )
+	swGrp = 1
 	_.switches.register( 'Files', '-f,-file,-files','file.txt', isPipe='name', description='Files' )
-	_.switches.register( 'Head', '-head', '10' )
-	_.switches.register( 'Tail', '-tail', '10' )
+	
+	swGrp = 1
 	_.switches.register( 'Line', '-l,-ln,-line' )
-	_.switches.register( 'NoComment', '-nc' )
-	_.switches.register( 'StripPreNumber', '-sn' )
-	_.switches.register( 'Comment', '-comment', '"#"' )
 	_.switches.register( 'Clean', '--c', 'noline' )
 	_.switches.register( 'NotCleanForce', '-pr,-print,--nc,---c,-c-', 'noline' )
 	_.switches.register( 'Count', '-cnt,-count' )
+	
+	swGrp = 1
+	_.switches.register( 'Head', '-head', '10' )
+	_.switches.register( 'Tail', '-tail', '10' )
+	
+	swGrp = 1
+	_.switches.register( 'NoComment', '-nc' )
+	_.switches.register( 'StripPreNumber', '-sn' )
+	_.switches.register( 'Comment', '-comment', '"#"' )
+	
 	_.switches.register( 'Function', '-fn' )
 	_.switches.register( 'JustPath', '-jp,-justpath' )
 	_.switches.register( 'Json', '-json' )

@@ -40,44 +40,60 @@ __.isFiles=True
 
 
 def appSwitches():
+	# , group=[swGrp,'A Group'] )
+	swGrp = 1
 	_.switches.trigger( 'Folders', _.myFolderLocations )
 	if not __.isFiles:
-		_.switches.register('Recursive', '-r,-recursive')
+		_.switches.register('Recursive', '-r,-recursive', group=[swGrp,'Folder Settings'] )
 	else:
-		_.switches.register('Not-Recursive', '-r')
-	_.switches.register('Force-Full-Path', '-fp,-pf,-forcepath')
-	_.switches.register('Force-Relative-Path', '-rf,-forcerelative')
-	_.switches.register('Count', '-c,-count,--c')
-	_.switches.register('Folders', '-f,-folder,-folders,-fo')
-	_.switches.register('Text', '-t,-text,-txt')
-	_.switches.register('Binary', '-bin')
-	_.switches.register('Encrypted', '-en,-crypt,-encryption,-encrypted')
-	_.switches.register('Size', '-size',' g 10mb, L 2kb ')
-	_.switches.register('Totals', '-total,-totals')
-	_.switches.register('FolderRefine', '-fr')
-	_.switches.register('Ago', '-ago', '1m')
-	_.switches.register('MaxDepth', '-depth', '3')
-	_.switches.register('Extensions', '-ext', 'db image graphic video app audio doc script archive')
-	_.switches.register('Toggle-Relative-Path', '-rr')
-	_.switches.register('Widget-V0', '-w,-v0')
-	_.switches.register('Ago-Create-Date', '-cd')
-	_.switches.register('Search-Print-Line', '-p,-print','all')
-	_.switches.register('Contains-IPs', '-ip','domains')
-	_.switches.register('Disable-Intelligence', '-showall')
-	_.switches.register('No-Extension', '-noext')
-	_.switches.register('Symlink-Path-Integrity', '-si,-spi,-sym,-symlink')
-	_.switches.register('Relative-Path-Persistent', '-rrr')
-	_.switches.register('Search-For-Text-Include', '-has,-search')
-	_.switches.register('Search-For-Text-Exclude', '-not')
-	_.switches.register('Search-For-Text-Dump', '--dump')
-	_.switches.register('Search-For-Text-TOP_Of_File', '-top','10')
-	_.switches.register('Not-In-Comments', '-nocomment','html py php js')
-	_.switches.register('Reverse', '-rev,-reverse')
-	_.switches.register('Delete', '--delete')
-	_.switches.register('DeleteConfirm', '--confirm')
-	_.switches.register('OverwriteThenDelete', '--secure')
-	_.switches.register('SecureDeleteCriteria', '--criteria','*backup*.zip')
+		_.switches.register('Not-Recursive', '-r', group=[swGrp,'Folder Settings'] )
+	_.switches.register('Folders', '-f,-folder,-folders,-fo', group=[swGrp,'Folder Settings'] )
+	_.switches.register('FolderRefine', '-fr', group=[swGrp,'Folder Settings'] )
+	_.switches.register('MaxDepth', '-depth', '3', group=[swGrp,'Folder Settings'] )
+	
+	swGrp = 1
+	_.switches.register('Print-Clean', '--c,-clean', group=[swGrp,'Formatting and Output'] )
+	_.switches.register('No-Extension', '-noext', group=[swGrp,'Formatting and Output'] )
+	_.switches.register('Toggle-Relative-Path', '-rr', group=[swGrp,'Formatting and Output'] )
+	_.switches.register('Force-Full-Path', '-fp,-pf,-forcepath', group=[swGrp,'Formatting and Output'] )
+	_.switches.register('Relative-Path-Persistent', '-rrr', group=[swGrp,'Formatting and Output'] )
+	_.switches.register('Force-Relative-Path', '-rf,-forcerelative', group=[swGrp,'Formatting and Output'] )
+	_.switches.register('Reverse', '-rev,-reverse', group=[swGrp,'Formatting and Output'] )
 
+
+	swGrp = 1
+	_.switches.register('Symlink-Path-Integrity', '-si,-spi,-sym,-symlink', group=[swGrp,'OS Links'] )
+	swGrp = 1
+	_.switches.register('Text', '-t,-text,-txt', group=[swGrp,'File Search Toolbox'] )
+	_.switches.register('Binary', '-bin', group=[swGrp,'File Search Toolbox'] )
+	_.switches.register('Encrypted', '-en,-crypt,-encryption,-encrypted', group=[swGrp,'File Search Toolbox'] )
+	_.switches.register('Size', '-size',' g 10mb, L 2kb ', group=[swGrp,'File Search Toolbox'] )
+	_.switches.register('Totals', '-total,-totals', group=[swGrp,'File Search Toolbox'] )
+	_.switches.register('Ago', '-ago', '1m', group=[swGrp,'File Search Toolbox'] )
+	_.switches.register('Extensions', '-ext', 'db image graphic video app audio doc script archive', group=[swGrp,'File Search Toolbox'] )
+	_.switches.register('Ago-Create-Date', '-cd', group=[swGrp,'File Search Toolbox'] )
+	_.switches.register('Search-Print-Line', '-p,-print','all', group=[swGrp,'File Search Toolbox'] )
+	_.switches.register('Contains-IPs', '-ip','domains', group=[swGrp,'File Search Toolbox'] )
+	_.switches.register('Disable-Intelligence', '-showall', group=[swGrp,'File Search Toolbox'] )
+
+	swGrp = 1
+
+
+	_.switches.register('Search-For-Text-Include', '-has,-search', group=[swGrp,'Contents Search Toolbox'] )
+	_.switches.register('Search-For-Text-Exclude', '-not', group=[swGrp,'Contents Search Toolbox'] )
+	_.switches.register('Search-For-Text-Dump', '--dump', group=[swGrp,'Contents Search Toolbox'] )
+	_.switches.register('Search-For-Text-TOP_Of_File', '-top','10', group=[swGrp,'Contents Search Toolbox'] )
+	_.switches.register('Not-In-Comments', '-nocomment','html py php js', group=[swGrp,'Contents Search Toolbox'] )
+
+
+	swGrp = 1
+	_.switches.register('Delete', '--delete', group=[swGrp,'Delete and Secure Delete'] )
+	_.switches.register('DeleteConfirm', '--confirm', group=[swGrp,'Delete and Secure Delete'] )
+	_.switches.register('SecureDelete', '--secure', group=[swGrp,'Delete and Secure Delete'] )
+	_.switches.register('SecureDeleteCriteria', '--criteria','*backup*.zip', group=[swGrp,'Delete and Secure Delete'] )
+
+	swGrp = 1
+	_.switches.register('Widget-V0', '-w,-v0')
 	
 
 fse=False
@@ -426,7 +442,7 @@ def getFolder(folder,r=True):
 			record = None
 			path = folder + _v.slash + item
 			add(path,r)
-isClean = _.switches.isActive('Count')
+isClean = _.switches.isActive('Print-Clean')
 def add(path,r=False):
 	global i
 	global iS
@@ -599,7 +615,7 @@ def add(path,r=False):
 						shouldAdd = False
 						
 
-						if _.switches.isActive('Count'):
+						if _.switches.isActive('Print-Clean'):
 							if not _.v.show_full_path:
 								# process(pathX)
 								process(path)
@@ -865,7 +881,7 @@ def action():
 		if not _.switches.isActive('Widget-V0'):
 			getFolder(folder,r=r)
 			if _.switches.isActive('Size'):
-				if not _.switches.isActive('Count'):
+				if not _.switches.isActive('Print-Clean'):
 					_.pr()
 					_.pr('total:',formatSize(totals_bytes),c='Background.light_blue')
 		else:
@@ -878,8 +894,8 @@ def action():
 			_.switches.fieldSet( 'Minus', 'value', 'minecraft.py,vps-' )
 			_.switches.fieldSet( 'Minus', 'values', ['minecraft.py','vps-'] )
 			_.switches.fieldSet( 'Plus', 'active', True )
-			_.switches.fieldSet( 'Plus', 'value', '*.py,*.sh,*.bat,*.MD,*.ad,*.ps1,*.yml' )
-			_.switches.fieldSet( 'Plus', 'values', ['*.py','*.sh','*.bat','*.MD','*.ad','*.ps1','*.yml'] )
+			_.switches.fieldSet( 'Plus', 'value', '*.py,*.sh,*.bat,*.MD,*.ad,*.ps1,*.yml,*.cpp' )
+			_.switches.fieldSet( 'Plus', 'values', ['*.py','*.sh','*.bat','*.MD','*.ad','*.ps1','*.yml','*.cpp'] )
 			_.switches.fieldSet( 'PlusOr', 'active', True )
 			getFolder(_v.ww+os.sep+'python')
 			getFolder(_v.ww+os.sep+'batch', r=False)
@@ -895,7 +911,7 @@ def action():
 		if _.switches.isActive('Extensions'):
 			folderProfileAttribute( folder=folder, info={
 															'recursive': True,
-															'count': iS,
+															'Print-Clean': iS,
 															'files': i ,
 															'diff': _.pDiff( iS, i, use='less' ) ,
 			} )
@@ -920,14 +936,14 @@ def action():
 		# 																	'MinusVals': _.switches.values('Minus'),
 		# 													},
 		# 													'percentage': _.pDiff( iS, i, use='less' ),
-		# 													'count': iS,
+		# 													'Print-Clean': iS,
 		# 													'files': i,
 
 		# 	} )
 	global deletedFiles
 	if _.switches.isActive('Delete'):
 		iS = deletedFiles
-	if _.switches.isActive('Count') == False:
+	if _.switches.isActive('Print-Clean') == False:
 		if not scan:
 			if not i == iS:
 			# if _.switches.isActive('Size'):
@@ -1121,7 +1137,7 @@ def printer(path,ni=0):
 	infile+=1
 deleteConfirmed = _.switches.isActive('DeleteConfirm')
 shouldDelete = _.switches.isActive('Delete')
-secureDelete = _.switches.isActive('OverwriteThenDelete')
+secureDelete = _.switches.isActive('SecureDelete')
 SecureDeleteCriteria = _.switches.values('SecureDeleteCriteria')
 # if SecureDeleteCriteria: print(   ' '.join(SecureDeleteCriteria)  )
 def secure_delete(path):
