@@ -42,3 +42,8 @@ call pathAdd C:\QMK_MSYS\mingw64\lib\gcc\x86_64-w64-mingw32\13.2.0\adainclude
 call pathAdd C:\msys64\ucrt64\lib\gcc\x86_64-w64-mingw32\14.2.0\adainclude
 call pathAdd C:\GCC\gcc\ada\libgnat
 call pathAdd C:\GCC\gcc\testsuite\gnat.dg
+
+
+call pathAdd C:\adacf\src
+
+set ADA_INCLUDE_PATH=C:\adacf\src

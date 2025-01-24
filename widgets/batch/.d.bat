@@ -1,4 +1,9 @@
 @echo off
+
+d:
+cd \
+
+goto :eof
 call m back   > nul 2>&1
 echo Background.green linePrint       > %tmpf%-print_color-day
 echo yellow last fo: b back          >> %tmpf%-print_color-day

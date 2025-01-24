@@ -3455,6 +3455,22 @@ alias sqlite="sqlite3"
 
 alias sshp="echo 'ssh -L 59001:localhost:5901 -C -N -l scott teth.sds.sh'"
 
+sshr() {
+    local host="$1"
+
+    if [[ -z "$host" ]]; then
+        echo "Usage: remove_ssh_known_host <hostname or IP>"
+        return 1
+    fi
+
+    # Remove entry from known_hosts
+    ssh-keygen -R "$host"
+
+    # Optional: Remove any hashed entries (if hashed SSH keys are used)
+    sed -i.bak "/^|1|/d" ~/.ssh/known_hosts
+
+    echo "Removed $host from ~/.ssh/known_hosts."
+}
 
 
 
