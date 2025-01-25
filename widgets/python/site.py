@@ -714,6 +714,7 @@ def action():
 	else: end='';
 	# for i,path in enumerate( _.switches.values('Files') ):
 	for i,path in enumerate( _.isData(r=1) ):
+		path = __.path(path)
 		# process(path,end)
 		if not _.switches.isActive('Servers'):
 			process(path,end)
@@ -790,4 +791,3 @@ if __name__ == '__main__':
 # URL()
 
 # dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart
-

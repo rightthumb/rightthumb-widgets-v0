@@ -18,7 +18,7 @@ import _rightThumb._construct as __;appDBA=__.clearFocus(__name__,__file__);__.a
 def focus(parentApp='', childApp='', reg=True): global appDBA; f = __.appName(appDBA, parentApp, childApp); return f if reg else f
 fieldSet=_.l.vars(focus(),__name__,__file__,appDBA);_.load();_v=__.imp('_rightThumb._vars')
 ##################################################
-import _rightThumb._base3.library.functions.create_backup_filename as create_backup_filename; print(create_backup_filename)
+
 # app_navigator: switches
 def sw():
 	pass
@@ -71,10 +71,12 @@ _.appData[focus()] = _.appDataContinuity()
 def appRegDics(): return { 'appInfo': _.appInfo[focus()], 'appData': _.appData[focus()] }
 def triggers():
 	_._default_triggers_()
-	_.switches.trigger( 'Files', _.myFileLocations, vs=True )
+	_.switches.trigger( 'Files', _.myFileLocations, vs=False )
 	_.switches.trigger( 'DB', _.aliasesFi )
 	# _.switches.trigger( 'Ago', _.timeAgo )
 	_.switches.trigger( 'Folder', _.myFolderLocations )
+	_.switches.trigger( 'Folders', _.myFolderLocations )
+	__.SwitchesModifier.Trigger['Folders'] = _.myFolder
 	_.switches.trigger( 'OutputFolder', _.aliasesFo )
 	# _.switches.trigger( 'URL', _.urlTrigger )
 	# _.switches.trigger( 'Duration', _.timeFuture )
@@ -110,11 +112,25 @@ _.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw )
 	#n)--> inline
 		# for rel in [ subject for subject in _.isData(r=0) if _.showLine(subject) ]: print(rel)
 
+	#n)--> fields
+		# data = []
+		# for k in code.db: data.append({'name': k+'  ' })
+		# _.fields.asset( 'data', data )
+		# for k in code.db:
+		# 	_.pr(   _.fields.value( 'data', 'name', k+':' )+'  '+str(len(code.db[k]))   )
+
 	#n)--> banner
 		# banner=_.Banner(app); goss=banner.goss;
 #e)--> examples
 ########################################################################################
 #n)--> start
+
+
+_.pr('one')
+_.pr('two')
+_.pr('three')
+
+
 
 def action():
 	pass
@@ -149,5 +165,5 @@ if __name__ == '__main__':
 	# if len(_.switches.all())==0: banner.gossip()
 	
 	#e)--> examples
-	action(); _.isExit(__file__);
+	action(); _.isExit(__file__)
 

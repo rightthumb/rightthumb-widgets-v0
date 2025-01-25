@@ -15,7 +15,7 @@ appData = {}
 def blank_script_trigger(data):
 	return data
 class Switch:
-    def __init__(self, name, switch, example_or_notes, description, space, default, group):
+    def __init__(self, name, switch='', example_or_notes=None, description='', space=False, default=False, group=None):
         self.appReg = __.appReg
         self.name = name
         self.switch = switch
@@ -195,7 +195,55 @@ class Switches:
                 data.append({'name': row.name, 'value': row.value, 'appreg': row.appReg})
         _.tables.register('data', data)
         _.tables.print('data', 'appreg,name,value')
-    def register(self, name, switch, example_or_notes=None, isRequired=False, isPipe=None, isData=None, description='', space=False, default=False, group=None, g=None):
+    def items(self): return self.switches
+    def pr(self,name,switch,trigger=None): self.postRegister(name,switch,trigger)
+    def pReg(self,name,switch,trigger=None): self.postRegister(name,switch,trigger)
+    def postRegister(self,name,switch,trigger=None):
+        if trigger:
+            __.SwitchesModifier.Trigger[name] = trigger
+        self.switches.append(Switch(name,switch))
+        if _.argvProcess:
+            for i, a in enumerate(sys.argv):
+                a = a.replace('↔', ' ')
+                if a in __.switch_skimmer.scan:
+                    __.switch_skimmer.active.append(a)
+                a = a.replace(':', '')
+                __.switches_values = {}
+
+                for ii, sw in enumerate(self.switches):
+                    if not sw.name == name:
+                        continue
+                    if a.lower() in sw.switch.lower().split(','):
+                        __.switches_values[self.switches[ii].name] = []
+                        self.index[__.appReg][self.switches[ii].name] = ii
+                        self.switches[ii].pos = i
+                        self.switches[ii].active = True
+                        self.switches[ii].value = self.format(self.switches[ii].name)
+                        self.switches[ii].values = self.format2(self.switches[ii].name)
+
+
+
+                        if self.switches[ii].name in __.SwitchesModifier.Trigger:
+                            self.switches[ii].script_trigger = __.SwitchesModifier.Trigger[self.switches[ii].name]
+                        
+
+                        try:
+                            self.switches[ii].value = self.switches[ii].script_trigger(self.switches[ii].value)
+                            for i,value in enumerate(self.switches[ii].values):
+                                self.switches[ii].values[i] = self.switches[ii].script_trigger(value)
+                            self.switches[ii].valuesBK = self.switches[ii].values
+                        except: pass
+
+
+
+                                    
+
+
+
+
+    def register(self, name, switch, example_or_notes=None, isRequired=False, isPipe=None, isData=None, description='', space=False, default=False, group=None, g=None, trigger=None, t=None):
+        if not t is None: trigger = t
+        if not trigger is None: __.SwitchesModifier.Trigger[name] = trigger
         if not g is None:
             group = g
         if not isPipe is None:
@@ -254,6 +302,8 @@ class Switches:
                     elif column == 'values':
                         self.switches[i].values = values
                         self.switches[i].value = ','.join(valuesV)
+    def val(self, name, column, value, theFocus=False, runTrigger=True):
+        return self.fieldSet(name, column, value, theFocus, runTrigger)
     def fieldSet(self, name, column, value, theFocus=False, runTrigger=True):
         if name == 'Sort':
             if column == 'value':
@@ -474,7 +524,10 @@ class Switches:
         else:
             return result
     def value3(self, name):
-        return __.switches_values[name]
+        if name in __.switches_values:
+            return __.switches_values[name]
+        else:
+            return None
         switchInput = sys.argv
         for i, a in enumerate(switchInput):
             switchInput[i] = a.replace('↔', ' ')
@@ -506,7 +559,6 @@ class Switches:
         return result
     def format(self, name):
         value = self.value2(name)
-        # print(7, value)
         if self.fieldExists(name, 'script_trigger'):
             value = self.scriptTrigger(name, value, cc=True)
         elif self.fieldExists(name, 'script_trigger'):
@@ -516,7 +568,6 @@ class Switches:
     def format2(self, name):
         # valuesBK
         values = self.value3(name)
-        # print(8,values)
         if values is None:
             values = []
         else:
@@ -526,7 +577,6 @@ class Switches:
                 elif self.fieldExists(name, 'script_trigger'):
                     script = "{}('{}','{}')".format(self.fieldGet(name, 'script_trigger'), name, value)
                     values[i] = eval(script)
-        # print(9,values)
         return values
     def exists(self, name):
         result = False
@@ -805,20 +855,15 @@ class Switches:
 
 
 
-                                if self.switches[ii].name in __.forceSwitchTrigger:
-                                    self.switches[ii].script_trigger = __.forceSwitchTrigger[self.switches[ii].name]
+                                if self.switches[ii].name in __.SwitchesModifier.Trigger:
+                                    self.switches[ii].script_trigger = __.SwitchesModifier.Trigger[self.switches[ii].name]
                                 
 
                                 try:
-                                
-                                    # c3p0 script_trigger
                                     self.switches[ii].value = self.switches[ii].script_trigger(self.switches[ii].value)
-                                    # if self.switches[ii].value and not self.switches[ii].values: self.switches[ii].values = self.switches[ii].value.split(',')
                                     for i,value in enumerate(self.switches[ii].values):
                                         self.switches[ii].values[i] = self.switches[ii].script_trigger(value)
                                     self.switches[ii].valuesBK = self.switches[ii].values
-                                    # print('123',__.appReg,self.switches[ii].value)
-                                    # print('456',__.appReg,self.switches[ii].values)
                                 except: pass
 
 

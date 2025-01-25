@@ -5,6 +5,7 @@ fieldSet=_.l.vars(focus(),__name__,__file__,appDBA);_.load();_v=__.imp('_rightTh
 def sw():
 	pass
 	_.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name', description='Files', isRequired=False )
+	_.switches.register('Contains', '-contains','')
 _._default_settings_()
 
 _.appInfo[focus()] = {
@@ -40,27 +41,67 @@ def triggers():
 	_.switches.trigger( 'OutputFolder', _.aliasesFo )
 def _local_(do): exec(do)
 _.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw )
+########################################################################################
+#n)--> start
+
+_paste = _.regImp( __.appReg, '-paste' )
+
+def clean(data):
+	Type = type(data)
+	if Type == str:
+		data = data.split('\n')
+	lines = []
+	for i, line in enumerate(data):
+		line = line.strip()
+		if line:
+			lines.append(line)
+	if Type == str:
+		lines = '\n'.join(lines)
+	return lines
+
+original = {}
+def clean2(data):
+	global original
+	Type = type(data)
+	if Type == str:
+		data = data.split('\n')
+	lines = []
+	for i, line in enumerate(data):
+		og = line
+		line = line.strip()
+		original[line] = og
+		if line:
+			lines.append(line)
+	if Type == str:
+		lines = '\n'.join(lines)
+	return lines
 
 def action():
-	file = _.getText( _.switches.value('Files') )
-	# print( _.switches.value('Files') )
-	# print(file)
-	lines = []
-	for line in file:
-		line = line.replace('\n','')
-		line = line.replace('\r','')
-		st = line.split('#')[0]
-		# if st and '//' in line:
-		# 	if '\\opt' in line or '$w' in line or '$HOME' in line:
-		# 		# line = line.replace('/opt','')
+	global original
+	if _.switches.isActive('Files'):
+		data = _.getText( _.switches.value('Files') )
+	else:
+		data = _.isData(r=0)
 
-		# 		line = line.replace('\\','/')
-		# 		# line = line.replace('/','\\')
-		# 		# print(line)
-		if st:
-			lines.append(st)
-	_.saveText( lines, _.switches.value('Files') )
+	data = clean(data)
+	copy = clean2(_paste.imp.paste()).split('\n')
+	spent=[]
+	for line in copy:
+		if _.switches.isActive('Contains'):
+			for c in data:
+				if c in line:
+					if not line in spent:
+						spent.append(line)
+						print(line)
+
+		else:
+			if line in data:
+				if not original[line] in spent:
+					spent.append(original[line])
+					print(original[line])
+		
 
 
+########################################################################################
 if __name__ == '__main__':
 	action(); _.isExit(__file__)

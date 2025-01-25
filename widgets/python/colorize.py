@@ -6,8 +6,10 @@ def sw():
 	swGrp = 1
 	_.switches.register( 'Text', '-i,-t,-txt,-text', isData='name', isRequired=True, group=[swGrp,'Text Input'] )
 	swGrp += 1
-	_.switches.register( 'Color', '-color', isRequired=True, group=[swGrp,'Colors per Text arg'] )
-	_.switches.register( 'HexColor', '-h,-hex', isRequired=True, group=[swGrp,'Colors per Text arg'] )
+	_.switches.register( 'Color', '-color', isRequired=False, group=[swGrp,'Colors per Text arg'] )
+	_.switches.register( 'HexColor', '-h,-hex', isRequired=False, group=[swGrp,'Colors per Text arg'] )
+	swGrp += 1
+	_.switches.register( 'Copy', '-cp,-copy', isRequired=False, group=[swGrp,'Extra'] )
 _._default_settings_()
 
 _.appInfo[focus()] = {
@@ -47,6 +49,20 @@ def triggers():
 def _local_(do): exec(do)
 _.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw );
 
+def clean(data):
+	Type = type(data)
+	if Type == str:
+		data = data.split('\n')
+	lines = []
+	for i, line in enumerate(data):
+		line = line.strip()
+		if line:
+			lines.append(line)
+	if Type == str:
+		lines = '\n'.join(lines)
+	return lines
+
+
 def action():
 	if len(_.switches.values('Color')) == 1:
 		color = _.switches.value('Color')
@@ -66,8 +82,16 @@ def action():
 				text.append( _.pr(txt,h=color,p=0) )
 			else:
 				text.append( _.pr(txt,c=color,p=0) )
-		final = ' '.join(text)
+		final = ' '.join(text).replace('\\n','\n')
 		print(final)
+		if _.switches.isActive('Copy'):
+			txt = ' '.join(_.switches.values('Text'))
+			_copy = _.regImp( __.appReg, '-copy' )
+			if '\\n' in txt:
+				_copy.imp.copy(   '\n'.join(  clean(txt.strip().split('\\n'))  ), p=0 )
+			else:
+				_copy.imp.copy( txt.strip(), p=0 )
+
 
 if __name__ == '__main__':
 	action(); _.isExit(__file__);

@@ -94,7 +94,22 @@ def appSwitches():
 
 	swGrp = 1
 	_.switches.register('Widget-V0', '-w,-v0')
-	
+	_.switches.register('Backup', '-b,-bk,-backup')
+
+
+_bk = None
+def backup(path):
+	global _bk
+	if not _bk:
+		_bk = _.regImp( __.appReg, 'fileBackup' )
+	_bk.switch( 'Silent' )
+	_bk.switch( 'isRunOnce' )
+	_bk.switch( 'Flag', 'APP' )
+	_bk.switch( 'DoNotSchedule' )
+	_bk.switch( 'Input', path )
+	bkfi = _bk.action()
+	return bkfi
+
 
 fse=False
 def fs(data):
@@ -277,7 +292,7 @@ def registerSwitches( argvProcessForce=False ):
 	global appDBA
 	_.switches.trigger( 'Folder', _.myFolder )
 	_.switches.trigger( 'Folders', _.myFolder )
-	__.forceSwitchTrigger['Folders'] = _.myFolder
+	__.SwitchesModifier.Trigger['Folders'] = _.myFolder
 	# _.load()
 	if not __.appReg == appDBA and appDBA in __.appReg:
 

@@ -17,7 +17,6 @@ class Meta_Namespace():
 dot=Meta_Namespace
 fn=Meta_Namespace()
 ##################################################
-forceSwitchTrigger = {}
 # App Help Menu Switch Grouping
 SwitchGroup_Help = Meta_Namespace()
 SwitchGroup_Help.Delim = ''
@@ -25,6 +24,8 @@ SwitchGroup_Help.Group = '|'
 SwitchGroup_Help.SubGroup = ':' # if this len 1: SwitchGroupDepth +=1
 SwitchGroup_Help.NoGroup = '-'
 SwitchGroup_Help.PostLabel = '  '
+SwitchesModifier = Meta_Namespace()
+SwitchesModifier.Trigger = {}
 # HasSwitchSubGroup search for in framework
 
 ##################################################
@@ -563,8 +564,20 @@ def IS(path,check=1):
 			if header.startswith(c): return True
 	
 	return False
-def path( p, ab=True, pop=False, file=False, slash=None, folder=None, fi=None, fo=None, fix=True, ln=None ):
+def path( p, ab=True, pop=False, file=False, slash=None, folder=None, relative=False, fi=None, fo=None, fix=True, ln=None, r=None  ):
+	if not r is None:
+		relative = r
 	os=imp('os.path.isfile')
+	if relative:
+		if not type(relative) == str:
+			relative = os.getcwd()
+		if relative.endswith('\\') or relative.endswith('/'):
+			relative = relative[:-1]
+		
+		p = p.strip()
+		if p.startswith(relative):
+			p = p[len(relative)+1:]
+		return p
 	if not os.path.isfile(p) and not os.path.isdir(p): p = p.strip()
 	if not os.path.isfile(p) and not os.path.isdir(p):
 		if pop or folder:

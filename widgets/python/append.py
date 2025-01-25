@@ -36,7 +36,7 @@ def triggers():
 	_.switches.trigger( 'DB', _.aliasesFi )
 	_.switches.trigger( 'Folder', _.myFolderLocations )
 	_.switches.trigger( 'Folders', _.myFolderLocations )
-	__.forceSwitchTrigger['Folders'] = _.myFolder
+	__.SwitchesModifier.Trigger['Folders'] = _.myFolder
 	_.switches.trigger( 'OutputFolder', _.aliasesFo )
 def _local_(do): exec(do)
 _.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw )

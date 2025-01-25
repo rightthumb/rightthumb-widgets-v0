@@ -20,8 +20,8 @@ from operator import itemgetter
 from datetime import datetime as dt, timedelta
 from datetime import date
 ##################################################
-MINI_ADS = False
 SHOW_ADS = False
+MINI_ADS = False
 ADS_CONFIG = False
 if ADS_CONFIG:
 	adFigFi = _v.myConfig+os.sep+'ads.yml'
@@ -106,7 +106,7 @@ from _rightThumb._base3.library.frameworks.base.variables.bundle import    _all_
 
 def hexColor(*args, **kwargs):
 	if not 'hexColor' in intelligent_code.functions:
-		from _rightThumb._base3.library.tools.code.functions.hexColor import  hexColors
+		from _rightThumb._base3.library.tools.code.functions.hexColor import hexColor
 		intelligent_code.functions['hexColor'] = hexColor
 	return intelligent_code.functions['hexColor'](*args, **kwargs)
 
@@ -3181,7 +3181,8 @@ def payloadCache( data, file=None, theFocus=None ):
 		appDBA = __.thisApp( __.postLoadFile )
 	else:
 		appDBA = __.thisApp( file )
-	releaseAcquiredData( appDBA, theFocus, data )
+	__.appInfoAcquiredData = { 'app': appDBA, 'focus': theFocus, 'data': data }
+	# releaseAcquiredData( appDBA, theFocus, data )
 
 __.appInfoScan = None
 
@@ -6631,9 +6632,11 @@ def postLoad( file, epoch=0, theFocus=False ):
 
 
 	if autoLoadData:
-		reclaimAcquiredData( appDBA, epoch, theFocus )
+		__.appInfoAcquiredData = { 'app': appDBA, 'focus': theFocus, 'data': epoch }
+		# reclaimAcquiredData( appDBA, epoch, theFocus )
 	else:
-		releaseAcquiredData( appDBA, theFocus )
+		__.appInfoAcquiredData = { 'app': appDBA, 'focus': theFocus, 'data': None }
+		# releaseAcquiredData( appDBA, theFocus )
 
 # print(os.environ['burn_this']); sys.exit();
 
@@ -6685,6 +6688,13 @@ def releaseAcquiredData( appDBA, theFocus, payload=None ):
 				'errors': [],
 				'printed': print_ed,
 	}
+	# print(print_ed)
+	# global switches
+	if switches.isActive('SavePrint'):
+		printed = []
+		for rec in print_ed:
+			printed.append( rec['prn'].rstrip() )
+		saveText(printed,switches.value('SavePrint'))
 	# pv(info); sys.exit();
 	if not payload is None:
 		info['payload'] = payload
@@ -7853,7 +7863,9 @@ def myFileLocations( file, silent=False, currentBaseVersion=3 ):
 						if isFirst:
 							isFirst=False
 						else:
-							appData[__.appReg]['pipe'].append( thisFile )
+							try:
+								appData[__.appReg]['pipe'].append( thisFile )
+							except: pass
 			else:
 				for thisFile in myFileLocation_Files:
 					if os.path.isfile( thisFile ):
@@ -12335,6 +12347,7 @@ def load():
 		switches.register( 'Paste-isData', '--pa,--paste,-ppa,-ppaste,-ispa,-idpa' , default=True)
 		switches.register( 'Paste-isData-json', '--json,-pjson,-jsonp' , default=True)
 		switches.register( 'Markdown-Table', '--md' , default=True)
+		switches.register( 'SavePrint', '--savePrint' , default=True)
 		# switches.register('SkipColumnTriggers', '-skiptriggers', default=True)
 		defaultScriptTriggers_do()
 
@@ -13195,6 +13208,7 @@ def l_registerSwitches( trig=None, sw=None ):
 	global argvProcess
 	global myFileLocation_Print
 	global autoBackupData
+	# __.appInfoAcquiredData = { 'app': __.appReg, 'focus': theFocus, 'data': data }
 	l_registerSwitches_vars()
 	# appInfo=l.conf('info')
 
@@ -13710,6 +13724,10 @@ class Banner:
 def isExit(_file_):
 	# print(__.appReg)
 	# print('_file_:',_file_)
+	appDBA = __.appInfoAcquiredData['app']
+	theFocus = __.appInfoAcquiredData['focus']
+	data = __.appInfoAcquiredData['data']
+	releaseAcquiredData( appDBA, theFocus, data )
 	__.isExit()
 	global appInfo
 
@@ -16400,42 +16418,42 @@ class index:
 
 ########################################################################################
 def sort2(table, fields):
-    """Sorts a list of dictionaries based on multiple fields with ascending (.a) and descending (.d) support."""
-    
-    # Process sorting fields
-    sorting_criteria = []
-    reverse_flags = []
+	"""Sorts a list of dictionaries based on multiple fields with ascending (.a) and descending (.d) support."""
+	
+	# Process sorting fields
+	sorting_criteria = []
+	reverse_flags = []
 
-    for field in fields.replace(' ', '').split(','):
-        if '.a' in field:
-            sorting_criteria.append(field.replace('.a', ''))
-            reverse_flags.append(False)  # Ascending
-        elif '.d' in field:
-            sorting_criteria.append(field.replace('.d', ''))
-            reverse_flags.append(True)   # Descending
-        else:
-            sorting_criteria.append(field)
-            reverse_flags.append(False)  # Default to ascending
+	for field in fields.replace(' ', '').split(','):
+		if '.a' in field:
+			sorting_criteria.append(field.replace('.a', ''))
+			reverse_flags.append(False)  # Ascending
+		elif '.d' in field:
+			sorting_criteria.append(field.replace('.d', ''))
+			reverse_flags.append(True)   # Descending
+		else:
+			sorting_criteria.append(field)
+			reverse_flags.append(False)  # Default to ascending
 
-    # Pre-process: Ensure all fields exist in each record
-    for record in table:
-        for field in sorting_criteria:
-            if field not in record:
-                # Determine default value (int -> 0, string -> "")
-                record[field] = 0 if any(isinstance(r.get(field, ""), int) for r in table) else ""
+	# Pre-process: Ensure all fields exist in each record
+	for record in table:
+		for field in sorting_criteria:
+			if field not in record:
+				# Determine default value (int -> 0, string -> "")
+				record[field] = 0 if any(isinstance(r.get(field, ""), int) for r in table) else ""
 
-    # Perform sorting
-    table = sorted(
-        table,
-        key=lambda x: tuple(x[field] for field in sorting_criteria),
-        reverse=False  # Always sort ascending first, then adjust descending fields
-    )
+	# Perform sorting
+	table = sorted(
+		table,
+		key=lambda x: tuple(x[field] for field in sorting_criteria),
+		reverse=False  # Always sort ascending first, then adjust descending fields
+	)
 
-    # Apply descending order where needed
-    for field, reverse in reversed(list(zip(sorting_criteria, reverse_flags))):
-        table = sorted(table, key=lambda x: x[field], reverse=reverse)
+	# Apply descending order where needed
+	for field, reverse in reversed(list(zip(sorting_criteria, reverse_flags))):
+		table = sorted(table, key=lambda x: x[field], reverse=reverse)
 
-    return table
+	return table
 
 ########################################################################################
 WidgetsFW = {

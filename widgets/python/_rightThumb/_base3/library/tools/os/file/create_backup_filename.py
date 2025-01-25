@@ -32,10 +32,21 @@ def create_backup_filename(original_file, folder=None, mkdir=True, label=None, m
         epoch_time = int(time.time())
     if os.path.isfile(original_file):
         _.regID(epoch_time, os.path.abspath(original_file))
-    inner = '__bk__'
+    inner = ''
+    name = os.path.basename(original_file)
+    if name == '__init__.py':
+        base = os.path.basename(os.path.dirname(original_file))
+        inner += '...(' + base + ')...'
+        
+    
     if not label is None:
         label = label.replace(' ', '.')
-        inner = f'__bk-{label}__'
+        if len(inner):
+            inner += f'{label}...'+'__bk__'
+        else:
+            inner += f'...{label}...'+'__bk__'
+    else:
+        inner += '__bk__'
     inner = inner.replace('__' + '__', '__')
     backup_file_name = f'{file_name}{inner}{current_date}_{epoch_time}{extension}'
     if dir_name:

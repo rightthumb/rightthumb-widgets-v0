@@ -88,6 +88,11 @@ def action():
 	# print(colorizer.colorize(sample_code))
 	files = []
 
+	# if _.switches.isActive('Path'):
+	# 	if not _.switches.values('Path'):
+	# 		_.switches.val('Path','value','m')
+	# 		_.switches.val('Path','values',['m'])
+
 	if _.isData():
 		files = _.isData()
 	else:
@@ -150,6 +155,7 @@ def action():
 		# print(relevant)
 		iName = relevant[-1].replace('.py','')
 		iName = iName[0:len(iPath)-len('.py')]
+		oName = iName
 		# print(iName)
 		if isClass or _.switches.isActive('Class'):
 			iCode = iClass
@@ -201,7 +207,8 @@ def action():
 
 			if not basic:
 				objects = All
-				_.switches.fieldSet('Path','value','all')
+				if len(_.switches.value('Path')):
+					_.switches.fieldSet('Path','value','all')
 
 			# for o in objects: print(o)
 			# return None
