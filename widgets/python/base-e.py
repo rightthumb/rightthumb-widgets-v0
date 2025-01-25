@@ -125,13 +125,6 @@ _.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw )
 ########################################################################################
 #n)--> start
 
-
-_.pr('one')
-_.pr('two')
-_.pr('three')
-
-
-
 def action():
 	pass
 	# load(); global c3po;

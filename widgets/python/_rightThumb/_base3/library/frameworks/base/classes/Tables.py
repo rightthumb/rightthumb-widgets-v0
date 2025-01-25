@@ -2,6 +2,10 @@ import _rightThumb._base3 as _
 # import HD
 import _rightThumb._construct as __
 import _rightThumb._string as _str
+
+# __.SwitchGroup_Help.
+# _.helpColorScheme
+
 # import f
 import os
 import sys
@@ -1558,6 +1562,13 @@ class Table:
             i += 1
             if 'example_or_notes' in column and 'switch' in column and (_.switchDefault == i):
                 pass
+                if len(__.switch_skimmer.active):
+                    print()
+                    print()
+                    print()
+                    return None
+                # print(__.switch_skimmer.active)
+                # return None
         self.asset = self.backup.asset.copy()
         self.aggregate_processed = False
         footer = {}

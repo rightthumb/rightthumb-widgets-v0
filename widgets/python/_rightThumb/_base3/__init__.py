@@ -6695,6 +6695,16 @@ def releaseAcquiredData( appDBA, theFocus, payload=None ):
 		for rec in print_ed:
 			printed.append( rec['prn'].rstrip() )
 		saveText(printed,switches.value('SavePrint'))
+
+	if switches.isActive('CopyPrint'):
+		printed = []
+		for rec in print_ed:
+			printed.append( rec['prn'].rstrip() )
+		_copy = regImp( __.appReg, '-copy' )
+		_copy.imp.copy( '\n'.join(printed), p=0 )
+		
+
+
 	# pv(info); sys.exit();
 	if not payload is None:
 		info['payload'] = payload
@@ -12302,53 +12312,66 @@ def load():
 		# switches.trigger('Column',formatColumns)
 
 		switchDefault = switches.length()
-		switches.register('Help', '?,??,/?,/??,-?,-??,--??,/h,/help,-help,--help', '(?? Print Table Help Without Global Switches) copy  OR ids  OR  12  OR  ?? x ', default=True)
-		switches.register('Column', '-c,-column', 'size, name', default=True)
-		switches.register('Sort','-s,-sort', 'a.type, d.ext', default=True)
-		switches.register('TablePlus','t+,+t,-ts+,-st+,-tablesearch', 'Search_Sting', default=True)
-		switches.register('TableMinus','t-,-t,-ts-,st-,-tableminus', 'Search_Sting', default=True)
-		switches.register('Debug', '-debug', default=True)
-		switches.register('DumpSwitches', '-dump', 'all', default=True)
-		switches.register('Errors', '-Error,-Errors', '8,11 OR hide:8,11', default=True)
-		switches.register('Timeout', '-t,-Timeout', default=True)
-		switches.register('GroupBy', '-g,-group,-groupby', 'ext, month', default=True)
-		switches.register('GroupTotals', '-gt,-grouptotal,-gtotal,-gtotals', 'mem_usage', default=True)
-		switches.register('WrapTable', '-wrap', 'n p  OR  2  OR  path', default=True)
-		switches.register('NoWrapTable', '-nowrap', default=True)
-		# switches.register('NoTableLines', '-nolines', default=True)
-		switches.register('YesTableLines', '-yl,-yeslines', default=True)
-		switches.register('TableJSON', '-tjson,-tablejson', default=True)
-		switches.register('FieldTotal', '-fieldtotal', 'mem_usage', default=True)
-		switches.register('Aggregate', '-aggregate', '" eof-field-len= add(len(version),len(backup)); config(var,eof,isFirst); "', default=True)
-		switches.register('GroupSpaces', '-gs,-space,-groupspaces', default=True)
-		switches.register('TableProfile', '-tp,-table',' *;c *;l  h;l header;left  size;l,gs', default=True)
-		# switches.register('ShortenColumn', '-sc,-shortencolumn', default=True)
-		switches.register('WebTable', '-web', default=True)
-		switches.register('Long', '-long', default=True)
-		switches.register('Short', '-sc,-short', default=True)
-		switches.register('Length', '-length','x3', default=True)
-		# switches.register('Report', '-report', default=True)
-		switches.register('Plus', '+','all unless -or', default=True)
-		switches.register('Minus', '-', default=True)
-		switches.register('Plus-single', '+1', default=True)
-		switches.register('Minus-single', '-1', default=True)
-		switches.register('Plus-Sub', '++','any', default=True)
-		switches.register('PlusOr', '-or', default=True)
-		switches.register('PlusClose', '+close', '90%', default=True)
-		switches.register('PlusCode', '+code','=  OR  *x  OR  x*  AND/OR color AND/OR n/new' , default=True)
-		switches.register('PlusDuplicate', '+dup,+duplicate', '90%', default=True)
-		switches.register('StrictCase', '-case,-strictcase,-strict', default=True)
-		switches.register('PrintAutoAbbreviations', '-printa,-aprint', default=True)
-		switches.register('NoColor', '-nocolor', space=True, default=True)
-		switches.register('LoadEpoch', '-loadepoch', default=True)
-		switches.register('PrintEpoch', '-printepoch', default=True)
-		switches.register('NoTitleChange', '-ntc,-notitlechange', default=True)
-		switches.register('chmod', '-chmod,-777', default=True)
-		switches.register( 'Paste-isData', '--pa,--paste,-ppa,-ppaste,-ispa,-idpa' , default=True)
-		switches.register( 'Paste-isData-json', '--json,-pjson,-jsonp' , default=True)
-		switches.register( 'Markdown-Table', '--md' , default=True)
-		switches.register( 'SavePrint', '--savePrint' , default=True)
-		# switches.register('SkipColumnTriggers', '-skiptriggers', default=True)
+		swGrp = 0
+		swGrp += 1
+		switches.register('Help', '?,??,/?,/??,-?,-??,--??,/h,/help,-help,--help', '(?? Print Table Help Without Global Switches) copy  OR ids  OR  12  OR  ?? x ', default=True, group=[swGrp,'Help'] )
+		
+		swGrp += 1
+		switches.register('Plus', '+','all unless -or', default=True, group=[swGrp,'Search'] )
+		switches.register('Minus', '-', default=True, group=[swGrp,'Search'] )
+		switches.register('Plus-single', '+1', default=True, group=[swGrp,'Search'] )
+		switches.register('Minus-single', '-1', default=True, group=[swGrp,'Search'] )
+		switches.register('Plus-Sub', '++','any', default=True, group=[swGrp,'Search'] )
+		switches.register('PlusOr', '-or', default=True, group=[swGrp,'Search'] )
+		switches.register('PlusClose', '+close', '90%', default=True, group=[swGrp,'Search'] )
+		switches.register('PlusCode', '+code','=  OR  *x  OR  x*  AND/OR color AND/OR n/new' , default=True, group=[swGrp,'Search'] )
+		switches.register('PlusDuplicate', '+dup,+duplicate', '90%', default=True, group=[swGrp,'Search'] )
+		switches.register('StrictCase', '-case,-strictcase,-strict', default=True, group=[swGrp,'Search'] )
+		
+		swGrp += 1
+		switches.register('Column', '-c,-column', 'size, name', default=True, group=[swGrp,'Tables'] )
+		switches.register('Sort','-s,-sort', 'a.type, d.ext', default=True, group=[swGrp,'Tables'] )
+		switches.register('PrintAutoAbbreviations', '-printa,-aprint', default=True, group=[swGrp,'Tables Help'] )
+		switches.register('TablePlus','t+,+t,-ts+,-st+,-tablesearch', 'Search_Sting', default=True, group=[swGrp,'Tables Seach'] )
+		switches.register('TableMinus','t-,-t,-ts-,st-,-tableminus', 'Search_Sting', default=True, group=[swGrp,'Tables Seach'] )
+		switches.register('GroupBy', '-g,-group,-groupby', 'ext, month', default=True, group=[swGrp,'Tables Reports'] )
+		switches.register('GroupTotals', '-gt,-grouptotal,-gtotal,-gtotals', 'mem_usage', default=True, group=[swGrp,'Tables Reports'] )
+		switches.register('Aggregate', '-aggregate', '" eof-field-len= add(len(version),len(backup)); config(var,eof,isFirst); "', default=True, group=[swGrp,'Tables Reports'] )
+		switches.register('GroupSpaces', '-gs,-space,-groupspaces', default=True, group=[swGrp,'Tables Reports'] )
+		switches.register('WrapTable', '-wrap', 'n p  OR  2  OR  path', default=True, group=[swGrp,'Tables Format'] )
+		switches.register('NoWrapTable', '-nowrap', default=True, group=[swGrp,'Tables Format'] )
+		switches.register('TableProfile', '-tp,-table',' *;c *;l  h;l header;left  size;l,gs', default=True, group=[swGrp,'Tables Format'] )
+		switches.register('Long', '-long', default=True, group=[swGrp,'Tables Format'] )
+		switches.register('Short', '-sc,-short', default=True, group=[swGrp,'Tables Format'] )
+		switches.register('Length', '-length','x3', default=True, group=[swGrp,'Tables Format'] )
+		# switches.register('ShortenColumn', '-sc,-shortencolumn', default=True, group=[swGrp,'Tables'] )
+		# switches.register('SkipColumnTriggers', '-skiptriggers', default=True, group=[swGrp,'Tables'] )
+		swGrp += 1
+		switches.register('Debug', '-debug', default=True, group=[swGrp,'Debug'] )
+		switches.register('DumpSwitches', '-dump', 'all', default=True, group=[swGrp,'Debug'] )
+		switches.register('Errors', '-Error,-Errors', '8,11 OR hide:8,11', default=True, group=[swGrp,'Debug'] )
+		switches.register('Timeout', '-t,-Timeout', default=True, group=[swGrp,'Debug'] )
+		switches.register('chmod', '-chmod,-777', default=True, group=[swGrp,'Debug'] )
+		swGrp += 1
+		# switches.register('NoTableLines', '-nolines', default=True, group=[swGrp,'A_Group'] )
+		switches.register('YesTableLines', '-yl,-yeslines', default=True, group=[swGrp,'Output'] )
+		switches.register('TableJSON', '-tjson,-tablejson', default=True, group=[swGrp,'Output'] )
+		switches.register('FieldTotal', '-fieldtotal', 'mem_usage', default=True, group=[swGrp,'Output'] )
+		switches.register('NoColor', '-nocolor', space=True, default=True, group=[swGrp,'Output'] )
+		switches.register('NoTitleChange', '-ntc,-notitlechange', default=True, group=[swGrp,'Output'] )
+		switches.register( 'Paste-isData', '--pa,--paste,-ppa,-ppaste,-ispa,-idpa' , default=True, group=[swGrp,'Output'] )
+		switches.register( 'Paste-isData-json', '--json,-pjson,-jsonp' , default=True, group=[swGrp,'Output'] )
+		switches.register( 'Markdown-Table', '--md' , default=True, group=[swGrp,'Output'] )
+		# switches.register('Report', '-report', default=True, group=[swGrp,'Output'] )
+		swGrp += 1
+		switches.register( 'SavePrint', '--savePrint' , default=True, group=[swGrp,'Script Helper'] )
+		switches.register( 'CopyPrint', '--copyPrint' , default=True, group=[swGrp,'Script Helper'] )
+
+
+		swGrp += 1
+		switches.register('LoadEpoch', '-loadepoch', default=True, group=[swGrp,'Rebuild From Logs'] )
+		switches.register('PrintEpoch', '-printepoch', default=True, group=[swGrp,'Rebuild From Logs'] )
+
 		defaultScriptTriggers_do()
 
 
