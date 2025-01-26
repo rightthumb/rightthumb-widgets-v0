@@ -93,16 +93,18 @@ def appSwitches():
 	_.switches.register('SecureDeleteCriteria', '--criteria','*backup*.zip', group=[swGrp,'Delete and Secure Delete'] )
 
 	swGrp = 1
-	_.switches.register('Widget-V0', '-w,-v0')
-	_.switches.register('Backup', '-b,-bk,-backup')
+	_.switches.register('Widget-V0', '-w,-v0', group=[swGrp,'Extra Features'] )
+	_.switches.register('Backup', '-b,-bk,-backup', group=[swGrp,'Extra Features'] )
 
 
 _bk = None
 def backup(path):
+	if not os.path.isfile(path): return None
 	global _bk
 	if not _bk:
 		_bk = _.regImp( __.appReg, 'fileBackup' )
-	_bk.switch( 'Silent' )
+	if _.switches.isActive('Widget-V0'):
+		_bk.switch( 'Silent' )
 	_bk.switch( 'isRunOnce' )
 	_bk.switch( 'Flag', 'APP' )
 	_bk.switch( 'DoNotSchedule' )
@@ -693,6 +695,8 @@ def add(path,r=False):
 				if not _.v.do_not_hide__pycache and path.endswith('.pyc'): shouldAdd=False
 
 			if shouldAdd:
+				if _.switches.isActive('Backup'):
+					bkFi = backup(path)
 				iS+=1
 				if not _.switches.isActive('Totals'):
 					if not _.v.show_full_path:

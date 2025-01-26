@@ -26,6 +26,9 @@ SwitchGroup_Help.NoGroup = '-'
 SwitchGroup_Help.PostLabel = '  '
 SwitchesModifier = Meta_Namespace()
 SwitchesModifier.Trigger = {}
+SwitchesModifier.PrintActive = True
+appInfoAcquiredData = { 'app': '', 'focus': '', 'data': None }
+
 # HasSwitchSubGroup search for in framework
 
 ##################################################
@@ -52,6 +55,14 @@ def Form(form):
 	from _rightThumb._forms import genForm
 	results = genForm(form)
 	return results
+#################################################
+prFn  = None
+def pr( *args, **kwargs ):
+	global prFn
+	if prFn is None:
+		from _rightThumb._base3 import print_
+		prFn = print_
+	return prFn( *args, **kwargs )
 #################################################
 startTraceRecords = []
 def startTrace(search='widgets'):
@@ -523,7 +534,7 @@ def onExit(script,subject=None):
 		subject = uuid()
 	on_exit_subjects[subject] = script
 decompress_log = []
-def isExit():
+def isExit(fromKill=False):
 	global on_exit_subjects
 	global decompress_log
 	for path in decompress_log:
@@ -531,7 +542,9 @@ def isExit():
 
 	for subject in on_exit_subjects:
 		on_exit_subjects[subject]()
-	sys.exit()
+	if fromKill and not type(fromKill) == str:
+		return True
+	KILL()
 
 def compress(path):
 	os=imp('os.rename')
@@ -765,7 +778,7 @@ def mkdir(path,isFile=False,pop=False):
 	return absolute_path
 
 def getTable( file, simple=False ):
-	# os = imp('os')
+	os = imp('os.path.isfile')
 	if not get_first_char(file) == '{' and  not get_first_char(file) == '[':
 		if simple:
 			return yamlSimp(file)
@@ -816,10 +829,9 @@ class Table_Aggregates:
 table_aggregates = Table_Aggregates()
 
 
-payloadCache = None
+# payloadCache = None
 varFoldersCheck = False
 myFileLocations_SKIP_VALIDATION = False
-
 
 
 
@@ -870,6 +882,7 @@ def clearFocus( name, file ):
 		x = '__' + f[len(f)-1].replace('.py','') + '__'
 	else:
 		x = f[len(f)-1].replace('.py','')
+	appInfoAcquiredData['app'] = x
 	return x
 
 def thisApp( file ):
@@ -924,6 +937,7 @@ def appName( appReg, parentApp='', childApp='' ):
 	if not childApp == '':
 		appReg = parentApp + delimReg + appReg
 	isRequired_index[appReg] = []
+	appInfoAcquiredData['focus'] = appReg
 	return appReg
 
 def structure():
@@ -1271,3 +1285,146 @@ try:
 except:
 	import os
 	import sys
+
+
+
+
+
+import sys
+
+class VariableManager:
+	def __init__(self):
+		self.values = {}
+		self.triggers = {}
+		self.triggersAll = {}
+		self.aliases = {}
+		self.globals = {}
+
+	def setGlobal(self, name):
+		if name in self.aliases:
+			name = self.aliases[name]
+		self.globals[name] = True
+
+	def g(self, name):
+		self.setGlobal(name)
+
+	def append(self, name, value, p=None, c=None, h=None, pp=True):
+		return self.set(name, value, append=True, p=p, c=c, h=h, pp=pp)
+
+	def appendIf(self, name, value, p=None, c=None, h=None, pp=True):
+		if name in self.aliases:
+			name = self.aliases[name]
+		if name in self.triggers:
+			if self.triggers[name](value):
+				return self.set(name, value, append=True, p=p, c=c, h=h, pp=pp)
+			else:
+				return False
+		else:
+			return None
+
+	def ai(self, name, value, p=None, c=None, h=None, pp=True):
+		return self.appendIf(name, value, p=p, c=c, h=h, pp=pp)
+
+	def setIf(self, name, value, p=None, c=None, h=None, pp=True):
+		if name in self.aliases:
+			name = self.aliases[name]
+		if name in self.triggers:
+			if self.triggers[name](value):
+				return self.set(name, value, p=p, c=c, h=h, pp=pp)
+			else:
+				return False
+		else:
+			return None
+
+	def If(self, name, value, p=None, c=None, h=None, pp=True):
+		return self.setIf(name, value, p=p, c=c, h=h, pp=pp)
+
+	def runTrigger(self, name, value):
+		if name in self.aliases:
+			name = self.aliases[name]
+		if name in self.triggers:
+			return self.triggers[name](value)
+
+	def Trigger(self, name, value): return self.runTrigger(name, value)
+	def t(self, name, value): return self.runTrigger(name, value)
+	def run(self, name, value): return self.runTrigger(name, value)
+	def check(self, name, value): return self.runTrigger(name, value)
+
+	def set(self, name, value, append=False, a=None, p=None, c=None, h=None, pp=True):
+		if a is not None:
+			append = a
+		if name in self.aliases:
+			name = self.aliases[name]
+		if append:
+			if name not in self.values:
+				self.values[name] = []
+			self.values[name].append(value)
+			if name in self.globals:
+				setattr(self, name, self.values[name])  # Replaces exec
+		else:
+			self.values[name] = value
+			if name in self.globals:
+				setattr(self, name, value)  # Replaces exec
+		if name in self.triggersAll:
+			self.triggersAll[name](self.values[name])
+		if name in self.triggers:
+			self.triggers[name](value)
+		for alias, actual_name in self.aliases.items():
+			if actual_name == name:
+				if name in self.globals:
+					setattr(self, alias, self.values[name])  # Replaces exec
+		if p:
+			if not pp:
+				return pr(value, c=c, h=h, p=pp)  # Using placeholder pr function
+			else:
+				pr(value, c=c, h=h)
+		return self.values[name]
+
+	def alias(self, name, *aliases):
+		for a in aliases:
+			if a in self.values:
+				print(self.values)
+				pr('Error: Alias already exists in values:', name, c='red')
+				KILL()
+			self.aliases[a] = name
+
+	def value(self, name):
+		if name in self.aliases:
+			name = self.aliases[name]
+		return self.values.get(name, None)
+
+	def get(self, name): return self.value(name)
+	def val(self, name): return self.value(name)
+
+	def trigger(self, name, script, all=False):
+		if name in self.aliases:
+			name = self.aliases[name]
+		if all:
+			self.triggersAll[name] = script
+		else:
+			self.triggers[name] = script
+
+# Placeholder `pr()` function (replace with your actual implementation)
+# def pr(value, c=None, h=None, p=True):
+#     print(f"{c.upper() if c else ''} {value}")
+
+
+# appInfoAcquiredData  app focus data
+
+def vmTrigger_payloadCache(value):
+	global appInfoAcquiredData
+	appInfoAcquiredData['data'] = value
+
+VM = VariableManager
+Store = VariableManager
+Vars = VariableManager
+store = VariableManager()
+store.set('payloadCache', None)
+store.alias('payloadCache', 'data','payload','records')
+store.trigger('payloadCache', vmTrigger_payloadCache, all=True)
+
+
+def KILL():
+	isExit(fromKill=True)
+	os = imp('os._exit')
+	os._exit(1)

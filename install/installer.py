@@ -3310,6 +3310,7 @@ alias on.run='while true; do $p on; sleep 1; done'
 alias on.fi="/opt/rightthumb-widgets-v0/widgets/bash/on.fi.sh"
 alias on.fo="/opt/rightthumb-widgets-v0/widgets/bash/on.fo.sh"
 alias on="/opt/rightthumb-widgets-v0/widgets/bash/on.sh"
+alias listZip="/opt/rightthumb-widgets-v0/widgets/bash/list_zip.sh"
 
 export Session_ID_Suffix=${Session_ID:4:5}
 

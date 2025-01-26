@@ -55,7 +55,7 @@ def clean(data):
 		data = data.split('\n')
 	lines = []
 	for i, line in enumerate(data):
-		line = line.strip()
+		line = line.strip().replace("'",'"').replace('"','')
 		if line:
 			lines.append(line)
 	if Type == str:
@@ -79,9 +79,9 @@ def action():
 				color = colors[i]
 			except: pass
 			if _.switches.isActive('HexColor'):
-				text.append( _.pr(txt,h=color,p=0) )
+				text.append( _.pr(txt.replace("'",'"'),h=color,p=0) )
 			else:
-				text.append( _.pr(txt,c=color,p=0) )
+				text.append( _.pr(txt.replace("'",'"'),c=color,p=0) )
 		final = ' '.join(text).replace('\\n','\n')
 		print(final)
 		if _.switches.isActive('Copy'):

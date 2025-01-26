@@ -1459,114 +1459,124 @@ class Table:
             except:
                 pass
         for item in self.asset:
-            result = ''
-            for c in column.split(','):
-                if _.switches.isActive('TablePlus'):
-                    if not _.showLine(str(item), _._.switches.values('TablePlus'), _._.switches.values('TableMinus')):
-                        continue
-                try:
-                    pass
-                except Exception as e:
-                    pass
-                self.isExtraRecord = False
-                if self.wrapTableKey + '-sort' in item:
-                    self.isExtraRecord_000x = item[self.wrapTableKey + '-sort']
-                if self.wrapTableKey + '-sort' in item and (not item[self.wrapTableKey + '-sort'].endswith('-0001')):
-                    self.isExtraRecord = True
-                try:
-                    pass
-                    result += self.showColumn(c, i, columnHeaderLength) + self.columnTab + tableLine
-                except Exception as e:
-                    errors.append({'id': 12, 'function': 'print()', 'cnt': 1, 'location': "result += showColumn(rows,c,i) + _v.slash+'t'", 'vars': [{'name': 'folder', 'value': 'folder'}, {'name': 'column', 'value': column}], 'error': e})
-                    _.printBold('Error:', 'red')
-                    _.printBold('\tBad column input.')
-                    _.print_(12)
-                    _.print_(c)
-                    _.print_(12)
-                    os._exit(0)
-            maxSize = len(result) + self.prefixSize()
-            if maxSize > __.terminal.width and (not _.switches.isActive('NoWrapTable')):
-                ToDo = " result = ''   "
-                ToDo = ' for sult in self.wrapTable2(i):  '
-                ToDo = '     result += sult  '
-            else:
-                ToDo = ' the below if will be under this else '
-            if len(result) > 0:
-                shouldPrint = True
-                if self.isExtraRecord_000x.split('-')[0] in self.isExtraRecord_0001:
-                    testResult = result
-                    testResult = testResult.replace(' ', '').replace('\t', '')
-                    if not len(testResult):
-                        shouldPrint = False
-                if shouldPrint:
-                    hasTotal = False
-                    _result_ = ''
-                    for c in column.split(','):
-                        if c in self.Groups and (not i in self.Groups[c]['lines']) and (i - 1 in self.Groups[c]['lines']):
-                            hasTotal = True
-                    if hasTotal:
-                        for c in column.split(','):
-                            total = {}
-                            for gc in self.GroupTotals:
-                                total[gc] = 0
-                            _g_ = _.switches.values('GroupBy')[0]
-                            _sub_ = self.asset[i - 1][_g_]
-                            for ass in self.asset:
-                                if _g_ in ass and ass[_g_] == _sub_:
-                                    for gc in self.GroupTotals:
-                                        total[gc] += ass[gc]
-                            if c in self.GroupTotals:
-                                _result_ += addField(_.addComma(total[c]), c)
-                                self.GroupTotals[c] = 0
-                            else:
-                                _result_ += addField('', c)
-                        _.cp(' ' + tableLine + _result_, c='green')
-                    isSwitchGroup = False
-                    if self.groupID_KEY in item and item[self.groupID_KEY].endswith('-B'):
-                        _.cp([self.tab['table'] + _.loopPrint(__.table_prefix_padding) + result], 'BackgroundGrey.blue')
-                    else:
-                        if result.strip().startswith('Help  '):
-                            _.print_('')
-                        SwitchGroupPostLabel = ''
-                        if 'SwitchGroupPostLabel' in item and 'example_or_notes' in item:
-                            isSwitchGroup = True
-                            SwitchGroupPostLabel = _.pr(__.SwitchGroup_Help.PostLabel, item['SwitchGroupPostLabel'], c=_.helpColorScheme.tableSwitchGroupsPostLabel, p=0)
-                        if 'SwitchSubGroup' in item and 'example_or_notes' in item:
-                            isSwitchGroup = True
-                            if 'SwitchGroupDepth' in item and 'example_or_notes' in item:
-                                SwitchGroupDepth = item['SwitchGroupDepth']
-                            else:
-                                SwitchGroupDepth = 1
-                            if len(__.SwitchGroup_Help.SubGroup) == 1:
-                                SwitchGroupDepth += 1
-                            print()
-                            _.pr(_.pr(__.SwitchGroup_Help.SubGroup * SwitchGroupDepth + __.SwitchGroup_Help.Delim + ' ' + item['SwitchSubGroup'], c='ColorBold.white', p=0), SwitchGroupPostLabel)
-                        if 'SwitchGroup' in item and 'example_or_notes' in item:
-                            isSwitchGroup = True
-                            print()
-                            if 'HasSwitchSubGroup' in item and 'example_or_notes' in item:
-                                _.pr('_' * max_length, c=_.helpColorScheme.tableSwitchGroupsLine)
-                            SwitchGroup = __.SwitchGroup_Help.Group
-                            if item['SwitchGroup'] == '':
-                                SwitchGroup = __.SwitchGroup_Help.NoGroup
-                            _.pr(_.pr(SwitchGroup + __.SwitchGroup_Help.Delim + ' ' + item['SwitchGroup'], c='ColorBold.white', p=0), SwitchGroupPostLabel)
-                        if isSwitchGroup:
-                            theLine = tableLine + result.lstrip()
-                        else:
-                            theLine = tableLine + result
-                        shouldPrint = True
-                        if not theLine.strip() and _.switches.isActive('GroupBy'):
-                            shouldPrint = False
-                        if shouldPrint:
-                            _.colorizeRow(theLine, prefix=self.tab['table'] + _.loopPrint(__.table_prefix_padding), prefixColor=self.tab_color, haltColorShift=self.isExtraRecord)
-            i += 1
-            if 'example_or_notes' in column and 'switch' in column and (_.switchDefault == i):
+            # print(item)
+            try:
+                if len(__.switch_skimmer.active) and item['SwitchSubGroup'] == 'Help':
+                    print()
+                    print()
+                    print()
+                    __.SwitchesModifier.PrintActive = False
+            except:
                 pass
-                if len(__.switch_skimmer.active):
-                    print()
-                    print()
-                    print()
-                    return None
+                # print(item)
+
+            if __.SwitchesModifier.PrintActive:
+                result = ''
+                for c in column.split(','):
+                    if _.switches.isActive('TablePlus'):
+                        if not _.showLine(str(item), _._.switches.values('TablePlus'), _._.switches.values('TableMinus')):
+                            continue
+                    try:
+                        pass
+                    except Exception as e:
+                        pass
+                    self.isExtraRecord = False
+                    if self.wrapTableKey + '-sort' in item:
+                        self.isExtraRecord_000x = item[self.wrapTableKey + '-sort']
+                    if self.wrapTableKey + '-sort' in item and (not item[self.wrapTableKey + '-sort'].endswith('-0001')):
+                        self.isExtraRecord = True
+                    try:
+                        pass
+                        result += self.showColumn(c, i, columnHeaderLength) + self.columnTab + tableLine
+                    except Exception as e:
+                        errors.append({'id': 12, 'function': 'print()', 'cnt': 1, 'location': "result += showColumn(rows,c,i) + _v.slash+'t'", 'vars': [{'name': 'folder', 'value': 'folder'}, {'name': 'column', 'value': column}], 'error': e})
+                        _.printBold('Error:', 'red')
+                        _.printBold('\tBad column input.')
+                        _.print_(12)
+                        _.print_(c)
+                        _.print_(12)
+                        os._exit(0)
+                maxSize = len(result) + self.prefixSize()
+                if maxSize > __.terminal.width and (not _.switches.isActive('NoWrapTable')):
+                    ToDo = " result = ''   "
+                    ToDo = ' for sult in self.wrapTable2(i):  '
+                    ToDo = '     result += sult  '
+                else:
+                    ToDo = ' the below if will be under this else '
+                if len(result) > 0:
+                    shouldPrint = True
+                    if self.isExtraRecord_000x.split('-')[0] in self.isExtraRecord_0001:
+                        testResult = result
+                        testResult = testResult.replace(' ', '').replace('\t', '')
+                        if not len(testResult):
+                            shouldPrint = False
+                    if shouldPrint:
+                        hasTotal = False
+                        _result_ = ''
+                        for c in column.split(','):
+                            if c in self.Groups and (not i in self.Groups[c]['lines']) and (i - 1 in self.Groups[c]['lines']):
+                                hasTotal = True
+                        if hasTotal:
+                            for c in column.split(','):
+                                total = {}
+                                for gc in self.GroupTotals:
+                                    total[gc] = 0
+                                _g_ = _.switches.values('GroupBy')[0]
+                                _sub_ = self.asset[i - 1][_g_]
+                                for ass in self.asset:
+                                    if _g_ in ass and ass[_g_] == _sub_:
+                                        for gc in self.GroupTotals:
+                                            total[gc] += ass[gc]
+                                if c in self.GroupTotals:
+                                    _result_ += addField(_.addComma(total[c]), c)
+                                    self.GroupTotals[c] = 0
+                                else:
+                                    _result_ += addField('', c)
+                            _.cp(' ' + tableLine + _result_, c='green')
+                        isSwitchGroup = False
+                        if self.groupID_KEY in item and item[self.groupID_KEY].endswith('-B'):
+                            _.cp([self.tab['table'] + _.loopPrint(__.table_prefix_padding) + result], 'BackgroundGrey.blue')
+                        else:
+                            if result.strip().startswith('Help  '):
+                                _.print_('')
+                            SwitchGroupPostLabel = ''
+                            if 'SwitchGroupPostLabel' in item and 'example_or_notes' in item:
+                                isSwitchGroup = True
+                                SwitchGroupPostLabel = _.pr(__.SwitchGroup_Help.PostLabel, item['SwitchGroupPostLabel'], c=_.helpColorScheme.tableSwitchGroupsPostLabel, p=0)
+                            if 'SwitchSubGroup' in item and 'example_or_notes' in item:
+                                isSwitchGroup = True
+                                if 'SwitchGroupDepth' in item and 'example_or_notes' in item:
+                                    SwitchGroupDepth = item['SwitchGroupDepth']
+                                else:
+                                    SwitchGroupDepth = 1
+                                if len(__.SwitchGroup_Help.SubGroup) == 1:
+                                    SwitchGroupDepth += 1
+                                print()
+                                _.pr(_.pr(__.SwitchGroup_Help.SubGroup * SwitchGroupDepth + __.SwitchGroup_Help.Delim + ' ' + item['SwitchSubGroup'], c='ColorBold.white', p=0), SwitchGroupPostLabel)
+                            if 'SwitchGroup' in item and 'example_or_notes' in item:
+                                isSwitchGroup = True
+                                print()
+                                if 'HasSwitchSubGroup' in item and 'example_or_notes' in item:
+                                    if __.SwitchesModifier.PrintActive:
+                                        _.pr('_' * max_length, c=_.helpColorScheme.tableSwitchGroupsLine)
+                                SwitchGroup = __.SwitchGroup_Help.Group
+                                if item['SwitchGroup'] == '':
+                                    SwitchGroup = __.SwitchGroup_Help.NoGroup
+                                if __.SwitchesModifier.PrintActive:
+                                    _.pr(_.pr(SwitchGroup + __.SwitchGroup_Help.Delim + ' ' + item['SwitchGroup'], c='ColorBold.white', p=0), SwitchGroupPostLabel)
+                            if isSwitchGroup:
+                                theLine = tableLine + result.lstrip()
+                            else:
+                                theLine = tableLine + result
+                            shouldPrint = True
+                            if not theLine.strip() and _.switches.isActive('GroupBy'):
+                                shouldPrint = False
+                            if shouldPrint:
+                                _.colorizeRow(theLine, prefix=self.tab['table'] + _.loopPrint(__.table_prefix_padding), prefixColor=self.tab_color, haltColorShift=self.isExtraRecord)
+                i += 1
+                if 'example_or_notes' in column and 'switch' in column and (_.switchDefault == i):
+                    pass
+
                 # print(__.switch_skimmer.active)
                 # return None
         self.asset = self.backup.asset.copy()
