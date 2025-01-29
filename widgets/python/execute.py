@@ -46,6 +46,7 @@ def appSwitches():
 	_.switches.register('Threaded', '-t,-thread,-threaded')
 	_.switches.register('Stats', '-stats,-stat')
 	_.switches.register('NoCount', '--c')
+	_.switches.register('Command', '-cmd,-command','if not set, will use pipe data')
 
 _.appInfo[focus()] = {
 	'file': 'execute.py',
@@ -168,6 +169,8 @@ def executePipeRow( pip, qID=False ):
 		_.threads.spent( qID, sys.getsizeof( 'obj') )
 
 def action():
+	if _.switches.isActive('Command'):
+		_.appData[__.appReg]['pipe'] = [ ' '.join( _.switches.values('Command') ) ]
 	if not type( _.appData[__.appReg]['pipe'] ) == bool:
 		if _.switches.isActive('Threaded'):
 			threaded()

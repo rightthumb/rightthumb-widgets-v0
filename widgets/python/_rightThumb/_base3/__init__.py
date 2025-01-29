@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 ########################################################################################
 
-# _rightThumb._base3.library
+# library
 
 ## epyi baseIC
 ## p ic
@@ -99,20 +99,20 @@ liaison = Meta_Namespace()
 
 
 
-from _rightThumb._base3.library.frameworks.base.variables.bundle import    _all_colors_, _all_colors_nobk_, _all_colors_nobk_, _all_colors_tact_
+from library.frameworks.base.variables.bundle import    _all_colors_, _all_colors_nobk_, _all_colors_nobk_, _all_colors_tact_
 
 
 
 
 def hexColor(*args, **kwargs):
 	if not 'hexColor' in intelligent_code.functions:
-		from _rightThumb._base3.library.tools.code.functions.hexColor import hexColor
+		from library.tools.code.functions.hexColor import hexColor
 		intelligent_code.functions['hexColor'] = hexColor
 	return intelligent_code.functions['hexColor'](*args, **kwargs)
 
 def pyColor(*args, **kwargs):
 	if not 'pyColor' in intelligent_code.functions:
-		from _rightThumb._base3.library.tools.code.functions.pyColor import pyColor
+		from library.tools.code.functions.pyColor import pyColor
 		intelligent_code.functions['pyColor'] = pyColor
 	return intelligent_code.functions['pyColor'](*args, **kwargs)
 
@@ -1187,7 +1187,7 @@ def qindex( data, comment='#' ):
 
 def vindex(*args, **kwargs):
 	if not 'vindex' in intelligent_code.functions:
-		from _rightThumb._base3.library.frameworks.base.functions.vindex import  vindex
+		from library.frameworks.base.functions.vindex import  vindex
 		intelligent_code.functions['vindex'] = vindex
 	return intelligent_code.functions['vindex'](*args, **kwargs)
 
@@ -1605,7 +1605,7 @@ def date_diff_dic(one,two=time.time()):
 
 def isDate(*args, **kwargs):
 	if not 'isDate' in intelligent_code.functions:
-		from _rightThumb._base3.library.frameworks.base.functions.isDate import isDate
+		from library.frameworks.base.functions.isDate import isDate
 		intelligent_code.functions['isDate'] = isDate
 	return intelligent_code.functions['isDate'](*args, **kwargs)
 
@@ -1682,7 +1682,7 @@ class RawTableLength:
 #   return enumerate(table)
 
 
-from _rightThumb._base3.library.frameworks.base.classes.AGGREGATE import AGGREGATE, aggregate_trigger
+from library.frameworks.base.classes.AGGREGATE import AGGREGATE, aggregate_trigger
 
 
 __.aggregate.obj = AGGREGATE()
@@ -1917,7 +1917,7 @@ def getCryptTable( theFile, db=False, bank=False, index=False, temp=False, free=
 
 def saveCryptTable(*args, **kwargs):
 	if not 'saveCryptTable' in intelligent_code.functions:
-		from _rightThumb._base3.library.frameworks.base.functions.saveCryptTable import saveCryptTable
+		from library.frameworks.base.functions.saveCryptTable import saveCryptTable
 		intelligent_code.functions['saveCryptTable'] = saveCryptTable
 	return intelligent_code.functions['saveCryptTable'](*args, **kwargs)
 
@@ -2035,7 +2035,7 @@ def linePrint(  label=None, text=None, txt='_', mn=50, add=5, p=2, c='', x=None,
 
 def dic_key_sort2(*args, **kwargs):
 	if not 'dic_key_sort2' in intelligent_code.functions:
-		from _rightThumb._base3.library.frameworks.base.functions.dic_key_sort2 import dic_key_sort2
+		from library.frameworks.base.functions.dic_key_sort2 import dic_key_sort2
 		intelligent_code.functions['dic_key_sort2'] = dic_key_sort2
 	return intelligent_code.functions['dic_key_sort2'](*args, **kwargs)
 
@@ -3036,13 +3036,15 @@ class dt:
 #     print(data)
 #     return data
 FilesFiles = []
-def isData( data=None, focus=None, pipeClean=False, required=False,     r=None, c=None, noclean=None ):
+def isData( data=None, focus=None, pipeClean=False, required=False,     r=None, c=None, noclean=None, p=False ):
 	global FilesFiles
 	FilesFiles = myFileLocation_Files
 	__.FilesFiles = myFileLocation_Files
 	global switches
 	global appData
 	if type(appData[__.appReg]['pipe']) == list:
+		if p: 
+			return appData[__.appReg]['pipe']
 		pipeCleaner(0)
 	try:
 		if appData[__.appReg]['pipe']: return appData[__.appReg]['pipe']
@@ -3182,6 +3184,9 @@ def payloadCache( data, file=None, theFocus=None ):
 	else:
 		appDBA = __.thisApp( file )
 	__.appInfoAcquiredData = { 'app': appDBA, 'focus': theFocus, 'data': data }
+	__.appInfoAcquiredData['app'] = appDBA
+	__.appInfoAcquiredData['focus'] = theFocus
+	__.appInfoAcquiredData['data'] = data
 	# releaseAcquiredData( appDBA, theFocus, data )
 
 __.appInfoScan = None
@@ -6632,10 +6637,16 @@ def postLoad( file, epoch=0, theFocus=False ):
 
 
 	if autoLoadData:
-		__.appInfoAcquiredData = { 'app': appDBA, 'focus': theFocus, 'data': epoch }
+		__.appInfoAcquiredData['app'] = appDBA
+		__.appInfoAcquiredData['focus'] = theFocus
+		# __.appInfoAcquiredData['data'] = data
+		# __.appInfoAcquiredData = { 'app': appDBA, 'focus': theFocus }
 		# reclaimAcquiredData( appDBA, epoch, theFocus )
 	else:
-		__.appInfoAcquiredData = { 'app': appDBA, 'focus': theFocus, 'data': None }
+		__.appInfoAcquiredData['app'] = appDBA
+		__.appInfoAcquiredData['focus'] = theFocus
+		# __.appInfoAcquiredData['data'] = data
+		# __.appInfoAcquiredData = { 'app': appDBA, 'focus': theFocus }
 		# releaseAcquiredData( appDBA, theFocus )
 
 # print(os.environ['burn_this']); sys.exit();
@@ -6779,9 +6790,10 @@ def reclaimAcquiredData( appDBA, epoch, theFocus=False ):
 		cp( 'Error: please select a valid backup', 'error' )
 		sys.exit()
 	info = getTable2( log )
-	__.payloadCache = None
+	# __.payloadCache = None
 	if 'payload' in info:
-		__.payloadCache = info['payload']
+		__.store.set('payloadCache', info['payload'])
+		# __.payloadCache = info['payload']
 
 
 	# print_( log )
@@ -7414,7 +7426,7 @@ def printVarSimpleFake3( data ):
 			print(line)
 def printVarSimpleFake2(*args, **kwargs):
 	if not 'printVarSimpleFake2' in intelligent_code.functions:
-		from _rightThumb._base3.library.frameworks.base.functions.printVarSimpleFake2 import printVarSimpleFake2
+		from library.frameworks.base.functions.printVarSimpleFake2 import printVarSimpleFake2
 		intelligent_code.functions['printVarSimpleFake2'] = printVarSimpleFake2
 	return intelligent_code.functions['printVarSimpleFake2'](*args, **kwargs)
 
@@ -10405,8 +10417,8 @@ def blank_script_trigger(data):
 
 printAutoAbbreviations_scheduled = False
 
-from _rightThumb._base3.library.frameworks.base.classes.Switches import Switches
-from _rightThumb._base3.library.frameworks.base.classes.Tables import Tables
+from library.frameworks.base.classes.Switches import Switches
+from library.frameworks.base.classes.Tables import Tables
 
 
 ###########################################################################################
@@ -10425,7 +10437,7 @@ def md5(fname):
 	return hash_md5.hexdigest()
 	return hash_md5.hexdigest()
 
-from _rightThumb._base3.library.frameworks.base.functions.formatSize import formatSize, unFormatSize, unFormatSize2, to_bytes
+from library.frameworks.base.functions.formatSize import formatSize, unFormatSize, unFormatSize2, to_bytes
 
 def count_bytes(fo, recursive=True):
 	total_files = 0
@@ -11389,19 +11401,19 @@ def checkKey(dict, key):
 
 def Databases(*args, **kwargs):
 	if not 'Database' in intelligent_code.functions:
-		from _rightThumb._base3.library.frameworks.base.classes.Database import Databases
+		from library.frameworks.base.classes.Database import Databases
 		intelligent_code.functions['Databases'] = Databases
 	return intelligent_code.functions['Databases'](*args, **kwargs)
 
 def Database(*args, **kwargs):
 	if not 'Database' in intelligent_code.functions:
-		from _rightThumb._base3.library.frameworks.base.classes.Database import Database
+		from library.frameworks.base.classes.Database import Database
 		intelligent_code.functions['Database'] = Database
 	return intelligent_code.functions['Database'](*args, **kwargs)
 
 def Database2(*args, **kwargs):
 	if not 'Database2' in intelligent_code.functions:
-		from _rightThumb._base3.library.frameworks.base.classes.Database2 import Database2
+		from library.frameworks.base.classes.Database2 import Database2
 		intelligent_code.functions['Database2'] = Database2
 	return intelligent_code.functions['Database2'](*args, **kwargs)
 
@@ -12143,13 +12155,13 @@ class ThisThread( threading.Thread ):
 
 def Threads(*args, **kwargs):
 	if not 'Threads' in intelligent_code.functions:
-		from _rightThumb._base3.library.frameworks.base.classes.Threads import Threads
+		from library.frameworks.base.classes.Threads import Threads
 		intelligent_code.functions['Threads'] = Threads
 	return intelligent_code.functions['Threads'](*args, **kwargs)
 
 def Queue(*args, **kwargs):
 	if not 'Queue' in intelligent_code.functions:
-		from _rightThumb._base3.library.frameworks.base.classes.Queue import Queue
+		from library.frameworks.base.classes.Queue import Queue
 		intelligent_code.functions['Queue'] = Queue
 	return intelligent_code.functions['Queue'](*args, **kwargs)
 #########################################################################################################################################################
@@ -12259,7 +12271,7 @@ def isFloat( data ):
 class Fields:
 	def __new__(cls, *args, **kwargs):
 		if not 'Fields' in intelligent_code.classes:
-			from _rightThumb._base3.library.frameworks.base.classes.Fields import Fields as live
+			from library.frameworks.base.classes.Fields import Fields as live
 			intelligent_code.classes['Fields'] = live
 		return intelligent_code.classes['Fields'](*args, **kwargs)
 
@@ -12381,7 +12393,7 @@ def load():
 regImps = {}
 def regImp(*args, **kwargs):
 	if not 'regImp' in intelligent_code.functions:
-		from _rightThumb._base3.library.frameworks.base.classes.regImp import regImp
+		from library.frameworks.base.classes.regImp import regImp
 		intelligent_code.functions['regImp'] = regImp
 	return intelligent_code.functions['regImp'](*args, **kwargs)
 impReg=regImp
@@ -16238,7 +16250,7 @@ def rImp(app):
 
 def create_backup_filename(*args, **kwargs):
 	if not 'create_backup_filename' in intelligent_code.functions:
-		from _rightThumb._base3.library.tools.os.file.create_backup_filename import create_backup_filename
+		from library.tools.os.file.create_backup_filename import create_backup_filename
 		intelligent_code.functions['create_backup_filename'] = create_backup_filename
 	return intelligent_code.functions['create_backup_filename'](*args, **kwargs)
 
@@ -16290,7 +16302,7 @@ import time
 
 def bkExpire(*args, **kwargs):
 	if not 'bkExpire' in intelligent_code.functions:
-		from _rightThumb._base3.library.tools.os.file.bkExpire import bkExpire
+		from library.tools.os.file.bkExpire import bkExpire
 		intelligent_code.functions['bkExpire'] = bkExpire
 	return intelligent_code.functions['bkExpire'](*args, **kwargs)
 
@@ -16434,7 +16446,7 @@ class index
 class index:
 	def __new__(cls, *args, **kwargs):
 		if not 'index' in intelligent_code.classes:
-			from _rightThumb._base3.library.tools.code.classes.index import  index as live
+			from library.tools.code.classes.index import  index as live
 			intelligent_code.classes['index'] = live
 		return intelligent_code.classes['index'](*args, **kwargs)
 

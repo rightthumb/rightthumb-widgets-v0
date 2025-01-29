@@ -3477,6 +3477,15 @@ sshr() {
 
 alias rc.="curl -s -o $HOME/.bashrc_sds -L -k https://u.sds.sh/bashrc; chmod +x $HOME/.bashrc_sds; source $HOME/.bashrc_sds"
 
+
+alias file="/opt/rightthumb-widgets-v0/widgets/bash/vps-file-documentation.sh"
+
+
+
+
+
+
+
 clear
 # get_time_difference
 # a3bc42ec51e9

@@ -4,8 +4,7 @@ fieldSet=_.l.vars(focus(),__name__,__file__,appDBA);_.load();_v=__.imp('_rightTh
 
 def sw():
 	pass
-	_.switches.register( 'Collection', '-col,-collection','id name search', isData='name', description='Files', isRequired=True )
-	_.switches.register( 'Items', '-i,-item,-items','file folder file url', isData='name', description='Files', isRequired=True )
+	_.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=False )
 _._default_settings_()
 
 _.appInfo[focus()] = {
@@ -41,9 +40,17 @@ def triggers():
 	_.switches.trigger( 'OutputFolder', _.aliasesFo )
 def _local_(do): exec(do)
 _.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw )
+########################################################################################
+#n)--> start
 
 def action():
-	pass
+	spent = []
+	for line in _.isData():
+		st = line.strip()
+		if st not in spent:
+			print(line)
+			spent.append(line)
 
+########################################################################################
 if __name__ == '__main__':
 	action(); _.isExit(__file__)

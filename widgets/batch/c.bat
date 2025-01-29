@@ -227,7 +227,7 @@ GOTO:EOF
             ::::::: Command Paths
             SET javabin=C:\Program Files\Java\jdk-18.0.2
 
-            SET appPaths=C:\Users\Scott\.cargo\bin;%binWin%;%batch%;%python%;%myBatch%;%myPython%;%exe_folders%;%USERPROFILE%;%filemeta%
+            SET appPaths=%binWin%;%batch%;%python%;%myBatch%;%myPython%;%exe_folders%;%USERPROFILE%;%filemeta%
             IF EXIST "%pyf%\Scripts" ( SET appPaths=%appPaths%;%pyf%\Scripts )
             SET pathPython=%USERPROFILE%
             IF EXIST "%pyf2%\Lib" ( SET SET pathPython=%pyf2%;%pyf2%\Lib;%pyf2%\Lib\site-packages;%pyf2%;%pyf2%\Scripts )
@@ -241,6 +241,12 @@ GOTO:EOF
             
             SET pathBuilder=
             SET pathPython=
+
+
+
+            call pathAddPre C:\Users\Scott\.cargo\bin
+            call pathAdd C:\Program Files\MongoDB\Server\8.0\bin
+
 
             SET phpFiles=%php2%
 

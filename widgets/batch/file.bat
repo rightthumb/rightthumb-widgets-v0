@@ -1,2 +1,2 @@
 @echo off
-CALL p. files %*
+call vps-file-documentation %*

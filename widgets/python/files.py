@@ -103,8 +103,7 @@ def backup(path):
 	global _bk
 	if not _bk:
 		_bk = _.regImp( __.appReg, 'fileBackup' )
-	if _.switches.isActive('Widget-V0'):
-		_bk.switch( 'Silent' )
+	_bk.switch( 'Silent' )
 	_bk.switch( 'isRunOnce' )
 	_bk.switch( 'Flag', 'APP' )
 	_bk.switch( 'DoNotSchedule' )
@@ -1349,3 +1348,13 @@ import _rightThumb._dir as _dir
 ########################################################################################
 if __name__ == '__main__':
 	action()
+	if _.switches.isActive('Backup') and not _.switches.isActive('Widget-V0'):
+		if not _.switches.isActive('Print-Clean'):
+			_.pr()
+			_.pr()
+			_.pr()
+			_.pr('    File Backup Complete',h='light_steel_blue')
+			_.pr()
+			_.pr()
+			_.pr()
+	_.isExit(__file__)
