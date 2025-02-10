@@ -12,10 +12,10 @@ intelligent_code.functions = {}
 intelligent_code.classes = {}
 
 def create_backup_filename(*args, **kwargs):
-	if not 'create_backup_filename' in intelligent_code.functions:
-		from library.tools.functions.os.file.create_backup_filename import  create_backup_filename
-		intelligent_code.functions['create_backup_filename'] = create_backup_filename
-	return intelligent_code.functions['create_backup_filename'](*args, **kwargs)
+        if not 'create_backup_filename' in intelligent_code.functions:
+                from library.tools.os.file.create_backup_filename import create_backup_filename
+                intelligent_code.functions['create_backup_filename'] = create_backup_filename
+        return intelligent_code.functions['create_backup_filename'](*args, **kwargs)
 
 
 
@@ -23,7 +23,7 @@ def create_backup_filename(*args, **kwargs):
 class index:
 	def __new__(cls, *args, **kwargs):
 		if not 'index' in intelligent_code.classes:
-			from library.tools.code.classes.index import  index as live
+			from library.tools.code.classes.index import index as live
 			intelligent_code.classes['index'] = live
 		return intelligent_code.classes['index'](*args, **kwargs)
 

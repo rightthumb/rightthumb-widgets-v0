@@ -3,7 +3,8 @@ def focus(parentApp='', childApp='', reg=True): global appDBA; f = __.appName(ap
 fieldSet=_.l.vars(focus(),__name__,__file__,appDBA);_.load();_v=__.imp('_rightThumb._vars');
 
 def sw():
-	pass
+	_.switches.register( 'SaveHash', '-save', isRequired=False )
+	_.switches.register( 'SecureDeleteHash', '-del,-delete,-secure-delete', isRequired=False )
 _._default_settings_()
 
 _.appInfo[focus()] = {

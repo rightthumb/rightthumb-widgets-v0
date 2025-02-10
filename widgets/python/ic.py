@@ -44,10 +44,15 @@ _.appData[focus()] = _.appDataContinuity()
 def appRegDics(): return { 'appInfo': _.appInfo[focus()], 'appData': _.appData[focus()] }
 def triggers():
 	_._default_triggers_()
-	_.switches.trigger( 'Files', _.myFileLocations, vs=True )
+	_.switches.trigger( 'Files', _.myFileLocations, vs=False )
 	_.switches.trigger( 'DB', _.aliasesFi )
-	# _.switches.trigger( 'Folder', _.myFolderLocations )
+	# _.switches.trigger( 'Ago', _.timeAgo )
+	_.switches.trigger( 'Folder', _.myFolderLocations )
+	_.switches.trigger( 'Folders', _.myFolderLocations )
+	__.SwitchesModifier.Trigger['Folders'] = _.myFolder
 	_.switches.trigger( 'OutputFolder', _.aliasesFo )
+	# _.switches.trigger( 'URL', _.urlTrigger )
+	# _.switches.trigger( 'Duration', _.timeFuture )
 def _local_(do): exec(do)
 _.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw )
 ########################################################################################
@@ -92,8 +97,9 @@ def action():
 	# 	if not _.switches.values('Path'):
 	# 		_.switches.val('Path','value','m')
 	# 		_.switches.val('Path','values',['m'])
-
-	if _.isData():
+	if _.switches.isActive('Files'):
+		files = _.switches.values('Files')
+	elif _.isData():
 		files = _.isData()
 	else:
 		folder = os.getcwd()
@@ -109,6 +115,7 @@ def action():
 	global iClassPath
 	isData = []
 	for path in files:
+		# print(path)
 		path = __.path(path)
 		# print(path)
 		# continue
@@ -118,6 +125,8 @@ def action():
 		if os.sep+'backup'+os.sep in path and not 'os' in path and not 'file' in path: continue
 		isData.append(path)
 
+	# print(isData)
+	# print(isData)
 	# print(isData)
 	# print(isData)
 	# print(isData)
@@ -142,7 +151,7 @@ def action():
 		parts = path.split(os.sep)
 		active = False
 		for part in parts:
-			if part == '_rightThumb':
+			if part == '_rightThumb' or part == 'library':
 				active = True
 			if active:
 				relevant.append(part)
@@ -152,6 +161,7 @@ def action():
 		
 		if 'library.classes' in iPath:
 			isClass = True
+		# print(relevant)
 		# print(relevant)
 		iName = relevant[-1].replace('.py','')
 		iName = iName[0:len(iPath)-len('.py')]

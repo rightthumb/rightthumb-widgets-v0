@@ -124,7 +124,7 @@ _.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw )
 #e)--> examples
 ########################################################################################
 #n)--> start
-
+print(_.switches.values('Files'))
 def action():
 	pass
 	# load(); global c3po;

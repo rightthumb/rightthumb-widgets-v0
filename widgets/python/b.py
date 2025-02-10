@@ -185,6 +185,7 @@ def action():
 				copyfile(a,b)
 		except Exception as e:
 			pass
+	# print("_.switches.value('Alias')",_.switches.value('Alias'))
 	path = _bm.Bookmarks( _.switches.value('Alias') ).get()
 	if path is None:
 		_.colorThis( 'Error, Bookmark does not exist', 'red' )

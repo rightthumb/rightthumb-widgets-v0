@@ -1,5 +1,11 @@
 #!/usr/bin/python3
 ########################################################################################
+
+# library
+
+## epyi baseIC
+## p ic
+########################################################################################
 # alt+29 ↔ is space
 # helpColorScheme
 
@@ -14,8 +20,8 @@ from operator import itemgetter
 from datetime import datetime as dt, timedelta
 from datetime import date
 ##################################################
-MINI_ADS = False
 SHOW_ADS = False
+MINI_ADS = False
 ADS_CONFIG = False
 if ADS_CONFIG:
 	adFigFi = _v.myConfig+os.sep+'ads.yml'
@@ -48,8 +54,8 @@ dot=Meta_Namespace
 intelligent_code = Meta_Namespace()
 intelligent_code.functions = {}
 intelligent_code.classes = {}
-
-helpColorScheme = dot()
+helpColorScheme = Meta_Namespace()
+liaison = Meta_Namespace()
 
 # __.SwitchGroup_Help.SubGroup
 # HasSwitchSubGroup
@@ -90,6 +96,30 @@ helpColorScheme = dot()
 #   import sqlite3
 # except Exception as e:
 #   pass
+
+
+
+from library.frameworks.base.variables.bundle import    _all_colors_, _all_colors_nobk_, _all_colors_nobk_, _all_colors_tact_
+
+
+
+
+def hexColor(*args, **kwargs):
+	if not 'hexColor' in intelligent_code.functions:
+		from library.tools.code.functions.hexColor import hexColor
+		intelligent_code.functions['hexColor'] = hexColor
+	return intelligent_code.functions['hexColor'](*args, **kwargs)
+
+def pyColor(*args, **kwargs):
+	if not 'pyColor' in intelligent_code.functions:
+		from library.tools.code.functions.pyColor import pyColor
+		intelligent_code.functions['pyColor'] = pyColor
+	return intelligent_code.functions['pyColor'](*args, **kwargs)
+
+
+
+
+
 
 
 
@@ -323,99 +353,6 @@ def print_pr(text):
 try: print_ed;
 except Exception as e: print_ed=[];
 
-_all_colors_='''ColorBold.gray
-ColorBold.red
-ColorBold.green
-ColorBold.yellow
-ColorBold.blue
-ColorBold.magenta
-ColorBold.cyan
-ColorBold.white
-Color.purple
-Color.cyan
-Color.darkcyan
-Color.blue
-Color.green
-Color.yellow
-Color.red
-Color.bold
-Background.red
-Background.green
-Background.yellow
-Background.blue
-Background.purple
-Background.light_blue
-Background.grey
-Background.black
-BackgroundGrey.black
-BackgroundGrey.red
-BackgroundGrey.green
-BackgroundGrey.brown
-BackgroundGrey.blue
-BackgroundGrey.magenta
-BackgroundGrey.cyan
-BackgroundGrey.gray
-BackgroundGreyBold.black
-BackgroundGreyBold.red
-BackgroundGreyBold.green
-BackgroundGreyBold.blue
-BackgroundGreyBold.magenta
-BackgroundGreyBold.cyan
-BackgroundGreyBold.gray'''.split('\n')
-_all_colors_nobk_='''ColorBold.gray
-ColorBold.red
-ColorBold.green
-ColorBold.yellow
-ColorBold.blue
-ColorBold.magenta
-ColorBold.cyan
-ColorBold.white
-Color.purple
-Color.cyan
-Color.darkcyan
-Color.blue
-Color.green
-Color.yellow
-Color.red
-Color.bold'''.split('\n')
-_all_colors_nobk_='''ColorBold.gray
-ColorBold.red
-ColorBold.green
-ColorBold.yellow
-ColorBold.blue
-ColorBold.magenta
-ColorBold.cyan
-ColorBold.white
-Color.purple
-Color.cyan
-Color.darkcyan
-Color.blue
-Color.green
-Color.yellow
-Color.red
-Color.bold'''.split('\n')
-_all_colors_tact_='''ColorBold.gray
-ColorBold.red
-ColorBold.green
-ColorBold.yellow
-ColorBold.blue
-ColorBold.magenta
-ColorBold.cyan
-ColorBold.white
-Color.purple
-Color.cyan
-Color.darkcyan
-Color.blue
-Color.green
-Color.yellow
-Color.red
-Color.bold
-Background.red
-Background.green
-Background.yellow
-Background.blue
-Background.purple
-Background.light_blue'''.split('\n')
 
 def random_color():
 	global _all_colors_
@@ -425,7 +362,7 @@ def random_color():
 	return random.choice(_all_colors_tact_)
 
 print_ed_group={}
-def print_(*args,p=None,c=None,pad=3,g=None,end=None,pvs=None,pv=None,json=None, dic=None, line=None, rstrip=True, lineMinus=0, lineLen=None, r=None):
+def print_(*args,p=None,c=None,pad=3,g=None,end=None,pvs=None,pv=None,json=None, dic=None, line=None, rstrip=True, lineMinus=0, lineLen=None, r=None, h=None):
 	if type(args) == tuple: args = list(args)
 	global prStatus
 	if not prStatus: return args
@@ -449,7 +386,7 @@ def print_(*args,p=None,c=None,pad=3,g=None,end=None,pvs=None,pv=None,json=None,
 			import json
 		except ImportError:
 			json = simplejson
-		args[0]=simplejson.dumps(args[0], indent=4, sort_keys=False, default=str);
+		args[0]=simplejson.dumps(args[0], indent=4, sort_keys=False, default=str)
 		if rint:
 			print(args[0])
 		return args[0]
@@ -461,7 +398,7 @@ def print_(*args,p=None,c=None,pad=3,g=None,end=None,pvs=None,pv=None,json=None,
 
 	if not dic and type(dic) == bool or ( type(dic) == int and dic == 1): printDicFields(args[0]); return None
 	try:
-		if not end is None and (type(end) == bool or type(end) == int) and end:   end='\r';
+		if not end is None and (type(end) == bool or type(end) == int) and end:   end='\r'
 		else:
 			if not end is None and not end == '\r':   end=None
 		if pvs and not p: return printVarColor_OLD(args[0])
@@ -486,41 +423,42 @@ def print_(*args,p=None,c=None,pad=3,g=None,end=None,pvs=None,pv=None,json=None,
 				import json
 			except ImportError:
 				json = simplejson
-			args[0]=simplejson.dumps(args[0], indent=4, sort_keys=False, default=str);
+			args[0]=simplejson.dumps(args[0], indent=4, sort_keys=False, default=str)
 		if not line is None and line:
 			if not lineLen is None:
 				args=[linePrint(c=c,p=0,minus=lineMinus,length=lineLen)]
 			else:
 				args=[linePrint(c=c,p=0,minus=lineMinus)]
-		global print_ed; global print_ed_group; items=[];
+		global print_ed; global print_ed_group; items=[]
 		pre=''
 		# if not g is None:
 		# print_ed_group
 		for arg in args:
 			if type(arg) == list:
 				tmp=[]
-				for rg in arg: tmp.append(str(rg));
+				for rg in arg: tmp.append(str(rg))
 				items.append( ' '.join(tmp) )
 			else:
 				items.append(str(arg))
 		prn=pre+' '.join(items)
 		if rstrip: prn=prn.rstrip()
-		if not c is None: prn=cp( prn, c, p=0 );
-		if p is None: rint=True;
-		elif p: rint=True;
-		elif not p: rint=False;
-		else: rint=True;
+		if not c is None: prn=cp( prn, c, p=0 )
+		if not h is None: prn=hexColor( prn, c=h, p=0 )
+		if p is None: rint=True
+		elif p: rint=True
+		elif not p: rint=False
+		else: rint=True
 		_line__ = ''
 		if rint:
 			if not end is None:
 				if not lineLen is None:
 					_line__ = linePrint(txt=' ',p=0,minus=lineMinus)
-					print( _line__ , end=end ); print( prn, end=end );
+					print( _line__ , end=end ); print( prn, end=end )
 				else:
 					_line__ = linePrint(txt=' ',p=0,minus=lineMinus,length=lineLen)
-					print( _line__, end=end ); print( prn, end=end );
+					print( _line__, end=end ); print( prn, end=end )
 			# if not end is None: print( '                                                                                        ' , end=end ); print( prn, end=end );
-			else: print( prn );
+			else: print( prn )
 		print_ed.append({'prn':prn, 'line': _line__ })
 		return prn
 	except Exception as e:
@@ -537,27 +475,27 @@ def fo2( folder=None, r=False, script=None, trigger=None, test=None, first=True 
 	'''
 
 	def _fo_fi_add(path,trigger,script):
-			if not script is None: script(path);
+			if not script is None: script(path)
 			if not trigger is None: fo_fi2.append(trigger(path))
 			else: fo_fi2.append(path)
 
 
 	if folder is None: folder=os.getcwd()
 	global fo_fi2
-	if first: fo_fi2=[];
-	if not os.path.isdir(folder) and not os.path.isfile(folder): return fo_fi2;
+	if first: fo_fi2=[]
+	if not os.path.isdir(folder) and not os.path.isfile(folder): return fo_fi2
 	if not os.path.isdir(folder) and os.path.isfile(folder): folder = __.path(folder,pop=True)
 
 	try: files=os.listdir(folder)
 	except Exception as ee: return fo_fi2
 	for item in files:
-		path=folder+os.sep+item; path=__.path(path);
+		path=folder+os.sep+item; path=__.path(path)
 
 		if not test is None and test(path): _fo_fi_add(path,trigger,script)
 
 		if os.path.isfile(path) or os.path.isdir(path):
 			if test is None: _fo_fi_add(path,trigger,script)
-			if r and os.path.isdir(path): fo2(path,r,script,trigger,test,first=False);
+			if r and os.path.isdir(path): fo2(path,r,script,trigger,test,first=False)
 	return fo_fi2
 
 
@@ -572,8 +510,8 @@ def fo(folder=None,r=False,script=None,first=True,rel=False):
 	global fo_fi
 	if first:
 		fo_rel = folder
-		fo_fi=[];
-	if not os.path.isdir(folder): return fo_fi;
+		fo_fi=[]
+	if not os.path.isdir(folder): return fo_fi
 	try:
 		files=os.listdir(folder)
 	except Exception as e:
@@ -588,8 +526,8 @@ def fo(folder=None,r=False,script=None,first=True,rel=False):
 			else:
 				fo_fi.append(path)
 
-		if not script is None: script(path);
-		if r and os.path.isdir(path): fo(path,r,script,False,rel);
+		if not script is None: script(path)
+		if r and os.path.isdir(path): fo(path,r,script,False,rel)
 	return fo_fi
 
 def fos(folder=None,r=False,script=None,first=True,rel=False):
@@ -601,8 +539,8 @@ def fos(folder=None,r=False,script=None,first=True,rel=False):
 	global fo_fi
 	if first:
 		fo_rel = folder
-		fo_fi=[];
-	if not os.path.isdir(folder): return fo_fi;
+		fo_fi=[]
+	if not os.path.isdir(folder): return fo_fi
 	try:
 		files=os.listdir(folder)
 	except Exception as e:
@@ -612,12 +550,12 @@ def fos(folder=None,r=False,script=None,first=True,rel=False):
 		path=__.path(path)
 		relative=path[len(fo_rel)+1:]
 		if os.path.isdir(path):
-			if not script is None: script(path);
+			if not script is None: script(path)
 			if rel:
 				fo_fi.append(relative)
 			else:
 				fo_fi.append(path)
-			if r: fos(path,r,script,False,rel);
+			if r: fos(path,r,script,False,rel)
 	return fo_fi
 
 
@@ -693,7 +631,29 @@ tinydic_data = []
 tinydic_last = {}
 tinydic_dic = {}
 def tinydic(data,par='',skim=None, mt=True, lan='js', prev=False, dump=None, dic=False, list0=True):
-	if type(dump)==str: dump=[dump];
+	"""
+	Recursively traverses and processes complex data structures, such as nested lists and dictionaries,
+	generating a list of paths to each item or a dictionary containing the items. The function can be
+	configured to perform additional tasks, such as filtering output, previewing values, and adjusting
+	output based on language-specific syntax.
+
+	Parameters:
+	- data: The data structure to traverse, which can be a list or dictionary.
+	- par (str): The parent path to prefix to each key or index.
+	- skim: A condition to filter the output paths (default: None).
+	- mt (bool): A flag indicating whether to include paths in the output data (default: True).
+	- lan (str): Specifies the language for path formatting, either 'js' or 'py' (default: 'js').
+	- prev (bool): Flag to determine if previews of values should be included in the output (default: False).
+	- dump: A list of specific paths to print or process (default: None).
+	- dic (bool): If True, returns a dictionary containing the data items (default: False).
+	- list0 (bool): If True, paths for list items start at index 0 (default: True).
+
+	Returns:
+	- When dic is False, returns a list of strings representing the paths to each item.
+	- When dic is True, returns a dictionary with paths as keys and corresponding data as values.
+	"""
+
+	if type(dump)==str: dump=[dump]
 	global tinydic_data
 	global tinydic_last
 	global tinydic_dic
@@ -710,7 +670,7 @@ def tinydic(data,par='',skim=None, mt=True, lan='js', prev=False, dump=None, dic
 		elif lan == 'js':
 			p2=p+".{k}".replace('{k}',k)
 		else:
-			_.e('type(key)')
+			e('type(key)')
 		return p2
 	if not par:
 		# if mt: print_('mt');
@@ -763,21 +723,35 @@ def tinydic(data,par='',skim=None, mt=True, lan='js', prev=False, dump=None, dic
 			if dump is None and not prev and skim is None and mt and not par2 in tinydic_data:
 				tinydic_data.append(par2)
 			tinydic(value,par2,skim,mt,lan,prev,dump,dic,list0)
-	if dic: return tinydic_dic;
+	if dic: return tinydic_dic
 	return tinydic_data
 
 
-def tailpop(subject,delim):
-	parts=subject.split(delim)
-	parts.reverse()
-	e=parts.pop(0)
-	parts.reverse()
-	return delim.join(parts)
+def tailpop(subject, delim):
+	parts = subject.rsplit(delim, 1)
+	return parts[0] if len(parts) > 1 else ''
+
 
 def tab(val,n=None, t='    ', cnt=False, add=None,  s=False):
-
+	'''
+		Tabulate a string, adding tabs to the beginning of each line.
+		
+		Arguments:
+			val {str} - The string to tabulate.
+			
+		Keyword Arguments:
+			n {int} - The number of tabs to add. (default: {1})
+			t {str} - The tab character to use. (default: {'    '})
+			cnt {bool} - Count the number of tabs needed to align the string. (default: {False})
+			add {bool} - Add a tab to the beginning of each line. (default: {None})
+			s {bool} - Shorten the string by removing unneeded tabs. (default: {False})
+		
+		Returns:
+			str - The tabulated string.
+	'''
 	if n is None and add is None and not s and not cnt:
 		n=1
+
 
 	def shortest(lines):
 		p=None
@@ -1211,214 +1185,55 @@ def qindex( data, comment='#' ):
 		else: i+=1
 	return dex
 
-
-def vindex(  code, i=0, esc='\\', n='', v=True,r=False,both=True, sort=True, isArg=False, comment='//' ):
-	ari=i
-	if isArg: a_='-+'
-	else: a_=''
-	def _sort(sort,dic):
-		if not sort: return dic;
-		ks=list(dic.keys()); ks.sort(); new={};
-		for k in ks: new[k]=dic[k];
-		return new
-
-	if type(code)==list:
-		code=''.join(code)
-	at=i
-
-	table={}
-
-	table['brackets'] = {}
-	table['brackets']['i']=0
-	table['brackets']['open'] = {}
-
-	table['braces'] = {}
-	table['braces']['i']=0
-	table['braces']['open'] = {}
-
-	table['par'] = {}
-	table['par']['i']=0
-	table['par']['open'] = {}
-	index={}
-
-	i-=1
-	while True:
-		i+=1
-		if i >= len(code):
-			break
-		c=code[i]
-		try:
-			c2=c+code[i+1]
-		except Exception as e:
-			c2=''
-		try:
-			c3=c2+code[i+2]
-		except Exception as e:
-			c3=''
-		try:
-			c4=c3+code[i+3]
-		except Exception as e:
-			c4=''
-		try:
-			c5=c4+code[i+4]
-		except Exception as e:
-			c5=''
-		if len(esc) == 1 and c==esc:
-			i+=1
-		else:
-			if len(esc) == 1 and c==esc:
-				i+=1
-			if n=='\n' and r:
-				ii=i
-				c=code[i]
-				while not ii == 0 and c == '\n':
-					ii-=1
-					c=code[ii]
-					if ii == 0:
-						return 0
-					elif c == '\n':
-						return ii
-
-			elif len(n) == 1 and c==n:
-				return i
-			elif len(n) == 2 and c2==n:
-				return i+1
-			elif len(n) == 3 and c3==n:
-				return i+2
-			elif len(n):
-				pass
-			else:
-				if not n and c in '0123456789.':
-					cx = c
-					ii=i-1
-					while cx in '0123456789.':
-						ii+=1
-						try:
-							cx=code[ii]
-						except Exception as e:
-							ii-=1
-							index[i] = ii
-							if both:
-								index[ii] = i
-							break
-					index[i] = ii
-					if both:
-						index[ii] = i
-					i=ii
-				elif not n and c in a_+'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ':
-					cx = c
-					ii=i-1
-					while cx in a_+'0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ._':
-						ii+=1
-						try:
-							cx=code[ii]
-						except Exception as e:
-							ii-=1
-							index[i] = ii
-							if both:
-								index[ii] = i
-							break
-
-					index[i] = ii
-					if both:
-						index[ii] = i
-					i=ii
-				elif not n and c3 == '"""':
-					ss=vindex(code,i+3,esc,n='"""',v=0,isArg=isArg,comment=comment)
-					if type(ss)==int or i in ss:
-						if type(ss)==int: s=ss
-						else: s=ss[i]
-						index[i] = s
-						if both:
-							index[s] = i
-						i=s+2
-				elif not n and c3 == "'''":
-					ss=vindex(code,i+3,esc,n="'''",v=0,isArg=isArg,comment=comment)
-					# if i in ss: s=ss[i]
-					if type(ss)==int or i in ss:
-						if type(ss)==int: s=ss
-						else: s=ss[i]
-						index[i] = s
-						if both:
-							index[s] = i
-						i=s+2
-				elif not n and c == "'":
-					ss=vindex(code,i+1,esc,n="'",v=0,isArg=isArg,comment=comment)
-					if type(ss)==int or i in ss:
-						if type(ss)==int: s=ss
-						else: s=ss[i]
-						index[i] = s
-						if both:
-							# print(index,s,i,type(index),c)
-							index[s] = i
-						i=s
-					# else: pr('err',i,ss,c='yellow')
-				elif not n and c == '"':
-					ss=vindex(code,i+1,esc,n='"',v=0,isArg=isArg,comment=comment)
-					if type(ss)==int or i in ss:
-						if type(ss)==int: s=ss
-						else: s=ss[i]
-						index[i] = s
-						if both:
-							index[s] = i
-						i = s
-				elif not n and c2 == '/*':
-					i = vindex(code,i+2,esc,n='*/',v=0,isArg=isArg,comment=comment)
-				elif not n and len(comment)==1 and c == comment and not code[ari] in '`"'+"'":
-					i = vindex(code,i+1,esc,n='\n',v=0,isArg=isArg,comment=comment)+1
-				elif not n and len(comment)==2 and c2 == comment and not code[ari] in '`"'+"'":
-					i = vindex(code,i+2,esc,n='\n',v=0,isArg=isArg,comment=comment)+1
+def vindex(*args, **kwargs):
+	if not 'vindex' in intelligent_code.functions:
+		from library.frameworks.base.functions.vindex import  vindex
+		intelligent_code.functions['vindex'] = vindex
+	return intelligent_code.functions['vindex'](*args, **kwargs)
 
 
-				elif not n and c == '{':
-					table['brackets']['i']+=1
-					table['brackets']['open'][table['brackets']['i']]=i
-				elif not n and c == '}':
-					try:
-						s=table['brackets']['open'][table['brackets']['i']]
-					except Exception as e:
-						return _sort(sort,index)
-					index[ s ]=i
-					if both:
-						index[ i ]=s
-					table['brackets']['i']-=1
-					if s==at:
-						return _sort(sort,index)
-				elif not n and c == '[':
-					table['braces']['i']+=1
-					table['braces']['open'][table['braces']['i']]=i
-				elif not n and c == ']':
-					try:
-						s=table['braces']['open'][table['braces']['i']]
-					except Exception as e:
-						return _sort(sort,index)
-					index[ s ]=i
-					if both:
-						index[ i ]=s
-					table['braces']['i']-=1
-					if s==at:
-						return _sort(sort,index)
-				elif not n and c == '(':
-					table['par']['i']+=1
-					table['par']['open'][table['par']['i']]=i
-				elif not n and c == ')':
-					try:
-						s=table['par']['open'][table['par']['i']]
-					except Exception as e:
-						return _sort(sort,index)
-					index[ s ]=i
-					if both:
-						index[ i ]=s
-					table['par']['i']-=1
-					if s==at:
-						return _sort(sort,index)
-	return _sort(sort,index)
+##change
+class Switches:
+	def __new__(cls, *args, **kwargs):
+		if not 'Switches' in intelligent_code.classes:
+			from library.frameworks.base.classes.Switches import Switches
+			intelligent_code.classes['Switches'] = Switches
+		return intelligent_code.classes['Switches'](*args, **kwargs)
+
+
+class Tables:
+	def __new__(cls, *args, **kwargs):
+		if not 'Tables' in intelligent_code.classes:
+			from library.frameworks.base.classes.Tables import Tables
+			intelligent_code.classes['Tables'] = Tables
+		return intelligent_code.classes['Tables'](*args, **kwargs)
 
 
 
-
-
-
+# class TableSystem:
+# 	def register(self, *args, **kwargs):
+# 		global tables
+# 		if not 'Tables' in intelligent_code.classes:
+# 			from library.frameworks.base.classes.Tables import Tables
+# 			intelligent_code.classes['Tables'] = Tables
+# 		self = intelligent_code.classes['Tables']
+# 		return tables.register(*args, **kwargs)
+	
+# 	def print(self, *args, **kwargs):
+# 		global tables
+# 		if not 'Tables' in intelligent_code.classes:
+# 			from library.frameworks.base.classes.Tables import Tables
+# 			intelligent_code.classes['Tables'] = Tables
+# 		self = intelligent_code.classes['Tables']
+# 		return tables.print(*args, **kwargs)
+# 	def returnSorted(self, *args, **kwargs):
+# 		global tables
+# 		if not 'Tables' in intelligent_code.classes:
+# 			from library.frameworks.base.classes.Tables import Tables
+# 			intelligent_code.classes['Tables'] = Tables
+# 		tables = intelligent_code.classes['Tables']
+# 		# intelligent_code.classes['Tables'] = Tables
+# 		return intelligent_code.classes['Tables'].returnSorted(*args, **kwargs)
 
 
 try:
@@ -1461,6 +1276,37 @@ def find_all_do(a_str, sub):
 ######################################################
 
 _bm=None
+def myFolder(subject):
+	if type(subject) == str:
+		subjects = [subject]
+	elif type(subject) == list:
+		subjects = subject
+	else:
+		print_(type(subject))
+		err( 'myFolder', subject )
+	results=[]
+
+	for sub in subjects:
+		if os.path.isdir(sub):
+			results.append(sub)
+		else:
+			global _bm
+			if _bm is None:
+				import _rightThumb._bookmarks as _bm
+			path = _bm.Bookmarks( sub ).get2()
+			# print_(sub,path)
+			if path is None:
+				cp( 'Error, Bookmark does not exist', 'red' )
+				results.append(sub)
+			else:
+				results.append(path)
+	# print(results)
+	if type(subject) == str and len(results):
+		return results[0]
+	elif type(subject) == str and not len(results):
+		return subject
+	elif type(subject) == list:
+		return results
 def bAlias(subject):
 	# print_(type(subject))
 	if type(subject) == str:
@@ -1500,7 +1346,7 @@ def bAlias(subject):
 						copyfile(a,b)
 				except Exception as e:
 					pass
-			path = _bm.Bookmarks( sub ).get()
+			path = _bm.Bookmarks( sub ).get2()
 			# print_(sub,path)
 			if path is None:
 				cp( 'Error, Bookmark does not exist', 'red' )
@@ -1797,373 +1643,12 @@ def date_diff_dic(one,two=time.time()):
 			dic=date_diff_dic(oneA-1,twoA)
 	return dic
 
-def isDate( theDate=None, record={}, tz=None, q=True, f=None,w=None,what=None ):
-	if type(record) == str: e('expected: f='+record)
-	# record={}
-	if (type(theDate) == int or type(theDate) == float) and theDate < 1:
-		return 0
-	# if (type(theDate) == int or type(theDate) == float): return theDate
-	if theDate is None: theDate=time.time();
-	if not w is None: f=w;
-	if not what is None: f=what;
 
-	# theDate = autoDate(theDate)
-
-	# print_(theDate)
-	# sys.exit()
-
-	global _dir
-	if _dir is None:
-		import _rightThumb._dir as _dir
-
-	s = time.time()
-	# slow from loading pandas
-	if not tz is None and not len(tz):
-		tz = None
-
-
-
-	local_tz = str(time.strftime("%z")).replace(':','')
-
-
-	hasTZ = False
-	if type(theDate) == str and len(theDate) > 11:
-		if theDate[-6:].startswith('+') or theDate[-6:].startswith('-'):
-			hasTZ = theDate[-6:].replace(':','')
-
-	if type(theDate) == str and len(theDate) > 11 and type(hasTZ) == bool:
-		if theDate[-5:].startswith('+') or theDate[-5:].startswith('-'):
-			hasTZ = theDate[-5:].replace(':','')
-	epoch = autoDate(theDate)
-
-
-
-	_dow_ = {
-				'Sunday': 'sun',
-				'Monday': 'mon',
-				'Tuesday': 'tue',
-				'Wednesday': 'wed',
-				'Thursday': 'thu',
-				'Friday': 'fri',
-				'Saturday': 'sat',
-	}
-
-
-	def fitem(f):
-		if f=='ago': return _dir.dateDiffText(epoch);
-		if f=='ago-dic':
-			ad=_2dates(epoch,dic=1); del ad['txt'];
-			return ad;
-		if f=='ago-txt': return _2dates(epoch)
-		if f=='friendly': return friendlyDate( epoch );
-		if f=='friendly': return friendlyDate( epoch );
-		if f=='friendly3': return friendlyDate3( epoch );
-		if f=='iso': return friendlyDate( epoch ).replace( ' ', 'T' ) + local_tz;
-		if f=='woy': return _dir.getWeekAndYear( epoch );
-		if f=='month': return _dir.getMonthFromEpoch( epoch );
-		if f=='epoch': return epoch;
-		if f=='ordinal': return datetime.datetime.fromtimestamp( epoch ).toordinal();
-		if f=='text-date': return datetime.datetime.fromtimestamp( epoch ).strftime('%b, %d %Y');
-		if f=='text-time': return datetime.datetime.fromtimestamp( epoch ).strftime('%I:%M %p');
-		if f=='text-datetime': return datetime.datetime.fromtimestamp( epoch ).strftime('%b, %d %Y @ %I:%M %p');
-		if f=='sdate': return friendlyDate2( epoch );
-		if f=='strip': return onlyNumbers_strip(friendlyDate( epoch ).split(' ')[0]);
-		if f=='strip': return onlyNumbers_strip(friendlyDate( epoch ).split(' ')[0]);
-		if f=='stript': return onlyNumbers_strip(friendlyDate( epoch ));
-		if f=='stripa': return onlyNumbers_strip(friendlyDate( epoch ))[:-2];
-		if f=='date': return friendlyDate( epoch ).split(' ')[0];
-		if f=='time': return friendlyDate2( epoch ).split(' ')[1];
-		if f=='fdate': return friendlyDate( epoch );
-		if f=='fdatea': return friendlyDate( epoch )[:-3];
-		if f=='cmd': return friendlyDate( epoch )[:-3].replace(' ',' @ ').replace('-','.').replace(':','.');
-		if f=='month': return _dir.getMonthFromEpoch( epoch );
-		if f=='year': return friendlyDate( epoch ).split('-')[0]
-		if f=='year2': return _dir.getYearFromEpoch( epoch ); # prioritizes week over actual year (if jan 01 and week 52 of last year)
-		if f=='woy': return _dir.getWeekAndYear( epoch );
-		if f=='woy2': return _dir.getWeekAndYear( epoch ).replace(str(_dir.getYearFromEpoch( epoch ))+'.','');
-		if f=='ago': return _dir.dateDiffText( epoch );
-		if f=='days': return daysDiff(  epoch, time.time()  );
-		if f=='dow': return _dir.getDOWromEpochText( epoch );
-		if f=='dow2': return _dow_[_dir.getDOWromEpochText( epoch )];
-		if f=='tz': return local_tz;
-		if f=='fo': return day(epoch);
-		if f in 'crypt-date crypt-time crypt-epoch appID app crypt-pass'.split(' '):
-			try:
-				import _rightThumb._nID as _nID
-				try:
-					# _keychain = regImp( __.appReg, 'keychain' )
-					# nID_password = _keychain.imp.key('nID')
-					# _nID.mini.password( nID_password )
-					_nID.mini.password( appID_nID_password() )
-					isPass = 'secure'
-				except Exception as e:
-					_nID.mini.password( '1970' )
-					isPass = 'unsecure'
-				eee = ''
-				try:
-					ee = str(record['epoch'])
-					for c in ee:
-						if '.' == c:
-							break
-						eee+=c
-				except Exception as e:
-					eee=theDate
-					# print_(f,1,'err:', e)
-				pass
-
-				if f=='crypt-date': return _nID.mini.gen( record['strip'] );
-				if f=='crypt-time': return _nID.mini.gen( record['stript'] );
-				try:
-					if f=='crypt-epoch': return _nID.mini.gen( int(eee) );
-					if f=='appID' or f=='app': return _nID.mini.gen( int(eee) );
-				except Exception as ee:
-					print_(f,2,'err:', ee)
-					sys.exit()
-				if f=='crypt-pass': return isPass;
-			except Exception as ee:
-				print_(f,3,'err:',ee)
-				pass
-		if f=='stardate':
-			try:
-				import _rightThumb._stardate as _sd
-				return _sd.gen(  epoch  )
-			except Exception as e:
-				return None
-		if f=='quarter':
-			dt = friendlyDate( epoch ).split(' ')[0].split('-')
-			try:
-				return str(record['year']) +'.'+ str(pandas.Timestamp(datetime.date( int(dt[0]) , int(dt[1]), int(dt[2]))).quarter)
-			except Exception as e:
-				return None
-		if f=='true': return True;
-		if f=='dow':
-			dow=_dir.getDOWromEpochText( epoch ).lower()
-			dci = {
-					'monday': 'mon',
-					'tuesday': 'tue',
-					'wednesday': 'wed',
-					'thursday': 'thu',
-					'friday': 'fri',
-					'saturday': 'sat',
-					'sunday': 'sun',
-			}
-			if dow in dci:
-				return dci[dow]
-			return dow
-		return None
-
-
-
-	#########################################################
-	pass
-	if f:
-		if type(f)==list:
-			f=' '.join(f)
-		f=f.replace(',',' ')
-		if not ' ' in f:
-			return fitem(f)
-		else:
-			j={}
-			for q in f.split(' '):
-				j[q] = fitem(q)
-			return j
-
-
-
-
-
-
-
-
-	#########################################################
-
-	# pv(_v.config_hash)
-	if 'noarrow' in _v.config_hash:
-		local_tz = ''
-	else:
-		global _tz
-		if _tz is None:
-			import _rightThumb._tz as _tz
-
-		if not type(hasTZ) == bool:
-			if not hasTZ == local_tz:
-				epoch = _tz.convert( epoch, hasTZ, local_tz )
-		if not tz is None and not local_tz == tz:
-			epoch = _tz.convert( epoch, local_tz, tz )
-			local_tz = tz
-
-			if '/' in tz:
-				global arrow
-				if arrow is None:
-					import arrow
-				utc = arrow.utcnow()
-				theDate = str(utc.to(tz))
-				hasTZ = False
-				if type(theDate) == str and len(theDate) > 11:
-					if theDate[-6:].startswith('+') or theDate[-6:].startswith('-'):
-						hasTZ = theDate[-6:].replace(':','')
-
-				if type(theDate) == str and len(theDate) > 11 and type(hasTZ) == bool:
-					if theDate[-5:].startswith('+') or theDate[-5:].startswith('-'):
-						hasTZ = theDate[-5:].replace(':','')
-				local_tz = hasTZ
-
-
-
-	if not epoch:
-		return record
-
-	global pandas
-	if pandas is None:
-		if q:
-			try:
-				#  pandas  takes .5 seconds to load
-				import pandas
-			except Exception as e:
-				pass
-
-	ss = time.time()
-
-
-
-	if type(epoch) == str:
-		epoch = autoDate(epoch.replace('z',''))
-
-	todo='ago ago-dic ago-txt epoch ordinal text-date text-time text-datetime sdate strip stript stripa date time fdate fdatea cmd month year woy woy2 dow dow2 days tz iso fo friendly friendly3'
-
-	for k in todo.split(' '):
-		record[k]=isDate(epoch,f=k)
-
-	# record['ago'] = _dir.dateDiffText(epoch)
-	# record['epoch'] = epoch
-	# # print_( epoch )
-	# record['ordinal'] = datetime.datetime.fromtimestamp( epoch ).toordinal()
-	# # sys.exit()
-	# record['text-date'] = datetime.datetime.fromtimestamp( epoch ).strftime('%b, %d %Y')
-	# record['text-time'] = datetime.datetime.fromtimestamp( epoch ).strftime('%I:%M %p')
-	# record['text-datetime'] = datetime.datetime.fromtimestamp( epoch ).strftime('%b, %d %Y @ %I:%M %p')
-	# record['sdate'] = friendlyDate2( epoch )
-	# record['strip'] = onlyNumbers_strip(friendlyDate( epoch ).split(' ')[0])
-	# record['stript'] = onlyNumbers_strip(friendlyDate( epoch ))
-	# record['date'] = friendlyDate( epoch ).split(' ')[0]
-	# record['time'] = friendlyDate2( epoch ).split(' ')[1]
-	# record['fdate'] = friendlyDate( epoch )
-	# record['month'] = _dir.getMonthFromEpoch( epoch )
-	# record['year'] = _dir.getYearFromEpoch( epoch )
-	# record['woy'] = _dir.getWeekAndYear( epoch )
-	# record['woy2'] = _dir.getWeekAndYear( epoch ).replace(str(_dir.getYearFromEpoch( epoch ))+'.','')
-	# record['dow'] = _dir.getDOWromEpochText( epoch )
-	# # record['ago'] = _dir.dateDiffText( epoch )
-	# record['days'] = daysDiff(  epoch, time.time()  )
-	# record['tz'] = local_tz
-	# # record['iso'] = datetime.datetime.fromtimestamp( epoch ).isoformat()
-	# # record['iso'] = datetime.datetime.fromtimestamp( epoch ).replace(microsecond=0).astimezone().isoformat()
-	# record['iso'] = record['fdate'].replace( ' ', 'T' ) + record['tz']
-	# --------------------------------------------------
-	# __.isPass=None
-	# def _en_(subject):
-	#         try:
-	#             import _rightThumb._nID as _nID
-	#             if __.isPass is None:
-	#                 try:
-	#                     # _keychain = regImp( __.appReg, 'keychain' )
-	#                     # nID_password = _keychain.imp.key('nID')
-	#                     # _nID.mini.password( nID_password )
-	#                     _nID.mini.password( appID_nID_password() )
-	#                     __.isPass = 'secure'
-	#                 except Exception as e:
-	#                     _nID.mini.password( '1970' )
-	#                     __.isPass = 'unsecure'
-	#             eee = ''
-	#             ee = str(record['epoch'])
-	#             for c in ee:
-	#                 if '.' == c:
-	#                     break
-	#                 eee+=c
-	#             # record['crypt-password'] = nID_password
-	#             return _nID.mini.gen( subject )
-	#         except Exception as e:
-	#             return None
-	# # iso 24
-	# # pv(_v.config_hash)
-	# global isWin
-	# if isWin:
-	#     if 'nocrypt' in _v.config_hash:
-	#         pass
-	#     else:
-	#         sub='strip';val=_en_(record[sub]);
-	#         if val: record[sub] = val
-	#         sub='crypt-date';val=_en_(record[sub]);
-	#         if val: record[sub] = val
-	#         sub='crypt-time';val=_en_(record[sub]);
-	#         if val: record[sub] = val
-	#         sub='crypt-pass';val=_en_(record[sub]);
-	#         if val: record[sub] = val
-	#         sub='appID';val=_en_(record[sub]);
-	#         if val: record[sub] = val
-
-	#         sub='crypt-epoch';val=_en_(int(eee));
-	#         if val: record[sub] = val
-
-	#         sub='';val=_en_(record[sub]);
-	#         if val: record[sub] = sub
-
-	#         # sub=_en_(record['strip'])
-	#         # if sub: record['crypt-date'] = sub
-	#         # record['crypt-time'] = _nID.mini.gen( record['stript'] )
-	#         # record['crypt-epoch'] = _nID.mini.gen(  )
-	#         # record['appID'] = _nID.mini.gen( int(eee) )
-	#         # record['crypt-pass'] = __.isPass
-	#         del __.isPass
-	# --------------------------------------------------
-
-	global isWin
-	if isWin:
-		if 'nocrypt' in _v.config_hash:
-			pass
-		else:
-			try:
-				import _rightThumb._nID as _nID
-				try:
-					# _keychain = regImp( __.appReg, 'keychain' )
-					# nID_password = _keychain.imp.key('nID')
-					# _nID.mini.password( nID_password )
-					_nID.mini.password( appID_nID_password() )
-					isPass = 'secure'
-				except Exception as e:
-					_nID.mini.password( '1970' )
-					isPass = 'unsecure'
-				eee = ''
-				ee = str(record['epoch'])
-				for c in ee:
-					if '.' == c:
-						break
-					eee+=c
-				# record['crypt-password'] = nID_password
-				record['crypt-date'] = _nID.mini.gen( record['strip'] )
-				record['crypt-time'] = _nID.mini.gen( record['stript'] )
-				record['crypt-epoch'] = _nID.mini.gen( int(eee) )
-				record['appID'] = _nID.mini.gen( int(eee) )
-				record['crypt-pass'] = isPass
-			except Exception as e:
-				pass
-
-		try:
-			import _rightThumb._stardate as _sd
-			record['stardate'] = _sd.gen(  epoch  )
-		except Exception as e:
-			pass
-
-		dt = record['fdate'].split(' ')[0].split('-')
-		try:
-			record['quarter'] = str(record['year']) +'.'+ str(pandas.Timestamp(datetime.date( int(dt[0]) , int(dt[1]), int(dt[2]))).quarter)
-		except Exception as e:
-			pass
-
-	e = time.time()
-	# print_( e-s )
-	# print_( e-ss )
-	return record
+def isDate(*args, **kwargs):
+	if not 'isDate' in intelligent_code.functions:
+		from library.frameworks.base.functions.isDate import isDate
+		intelligent_code.functions['isDate'] = isDate
+	return intelligent_code.functions['isDate'](*args, **kwargs)
 
 
 def onlyNumbers_strip(n):
@@ -2237,498 +1722,11 @@ class RawTableLength:
 #       table.append(txt[x])
 #   return enumerate(table)
 
+##change
+# from library.frameworks.base.classes.AGGREGATE import AGGREGATE, aggregate_trigger
+# __.aggregate.obj = AGGREGATE()
 
 
-
-aggregate_trigger_ran = False
-def aggregate_trigger():
-	global aggregate_trigger_ran
-	if aggregate_trigger_ran:
-		return None
-	global switches
-	if not switches.isActive('Aggregate'):
-		return None
-	script = ' '.join( switches.values('Aggregate') )
-	__.aggregate.obj.code( script, isSwitch=True )
-
-
-
-
-class AGGREGATE:
-	def __init__( self ):
-
-		self.records = {}
-		self.index = {}
-		self.columns = dot()
-
-		self.columns.table = {}
-		self.columns.group = {}
-		self.columns.eof = {}
-
-		self.columns.eot = {}
-		self.columns.otherQ = {}
-		self.columns.other = {}
-
-		self.switch = dot()
-		self.switch.label = '--sw--c3p0-r2d2-4life--sw--'
-		self.switch.processed = False
-		# eof eot eog bog eogA
-
-		self.functions = dot()
-		self.functions.index = {}
-		self.other = dot()
-		self.other.index = {}
-		self.counter = -1
-		self.formating = {}
-
-		self.cache = dot()
-		self.cache.records = {}
-		self.cache.formating = {}
-		self.last = '{D346F128-1468-481C-A0C8-FF8C6083EE64}'
-		self.lasting = []
-	def code( self, script, label=None, isSwitch=False, addSwitch=False, addAll=False ):
-		if script is None:
-			return None
-		# print_()
-		# print_( script )
-		# sys.exit()
-		self.counter += 1
-		if isSwitch:
-			label = self.switch.label
-			if self.switch.processed:
-				return self.records[label]
-			self.switch.processed = True
-		else:
-			if label is None:
-				label = 'simple-' + str(self.counter)
-
-		self.records[label] = []
-		records = code( script=script, addString=[['alphaParam','?']]  )
-
-		# print_(  )
-		# print_( records )
-		# print_(  )
-		# sys.exit()
-		# return None
-
-		indexes = dot()
-		indexes.functions = {}
-		indexes.table = []
-		indexes.group = []
-		indexes.eot = []
-		indexes.eof = []
-		indexes.otherVar = []
-		indexes.otherVarQ = []
-		indexes.other = []
-
-		for fXn in __.aggregate.fn.order:
-			indexes.functions[fXn] = []
-		indexes.functions['other'] = []
-		for rec in records:
-			# print_(rec)
-			if rec['status'] and 'function' in rec['l']:
-				if rec['txt'] in __.aggregate.fn.order:
-					indexes.functions[rec['txt']].append(rec)
-				else:
-					indexes.functions['other'].append(rec)
-
-			elif rec['status'] and 'variable' in rec['l']:
-				if not '?' in rec['txt'] or ( '?' in rec['txt'] and not rec['txt'].lower().split('?')[0]+'?' in __.aggregate.prefixes):
-					indexes.table.append( rec )
-
-				elif rec['txt'].startswith('eot?'):
-					indexes.eot.append( rec )
-
-				elif rec['txt'].startswith('eof?'):
-					indexes.eof.append( rec )
-
-				elif rec['txt'].startswith('eog?'):
-					indexes.group.append( rec )
-
-				elif rec['txt'].startswith('bog?'):
-					indexes.group.append( rec )
-
-				elif rec['txt'].lower().startswith('eoga?'):
-					indexes.group.append( rec )
-
-				elif '?' in rec['txt']:
-					indexes.otherVarQ.append( rec )
-
-				else:
-					indexes.otherVar.append( rec )
-			else:
-				indexes.other.append( rec )
-
-		tmp_records = []
-		for fXn in __.aggregate.fn.order:
-			for rec in indexes.functions[ fXn ]:
-				tmp_records.append(rec)
-
-		for rec in indexes.functions['other']:
-			tmp_records.append(rec)
-
-		for rec in indexes.table:
-			tmp_records.append(rec)
-
-		for rec in indexes.otherVarQ:
-			tmp_records.append(rec)
-
-		for rec in indexes.otherVar:
-			tmp_records.append(rec)
-
-		for rec in indexes.group:
-			tmp_records.append(rec)
-
-		for rec in indexes.eot:
-			tmp_records.append(rec)
-
-		for rec in indexes.eof:
-			tmp_records.append(rec)
-
-
-		for rec in indexes.other:
-			tmp_records.append(rec)
-
-		# for rec in tmp_records:
-		#   print_(rec)
-
-		# sys.exit()
-
-		for rec in tmp_records:
-			self.records[label].append(rec)
-
-
-		table = {}
-		for i,rec in enumerate( self.records[label] ):
-			# print_( rec )
-			table[ str(rec['i']) ] = str(self.counter) +'-'+ str(i)
-			# print_( i, rec )
-		# sys.exit()
-		for i,rec in enumerate( self.records[label] ):
-			self.records[label][i]['i'] = str(self.counter) +'-'+ str(i)
-			# print_( rec['i'], i )
-		# sys.exit()
-
-		for i,rec in enumerate( self.records[label] ):
-			if str( rec['rent'] ) in table:
-				self.records[label][i]['rent'] = table[ str( rec['rent'] ) ]
-			if 'args' in rec:
-				args = []
-				for ar in rec['args']:
-					if str(ar) in table:
-						args.append( table[str(ar)] )
-				self.records[label][i]['args'] = args
-			if 'p' in rec:
-				self.records[label][i]['p'] = table[ str(rec['p']) ]
-			if 'val' in rec:
-				self.records[label][i]['val'] = table[ str(rec['val']) ]
-
-
-		for i,rec in enumerate(self.records[label]):
-			self.index[rec['i']] = rec
-
-			if rec['status'] and 'function' in rec['l']:
-				self.functions.index[rec['i']] = rec
-
-			elif rec['status'] and 'variable' in rec['l']:
-				if not '?' in rec['txt'] or ( '?' in rec['txt'] and not rec['txt'].lower().split('?')[0]+'?' in __.aggregate.prefixes):
-					self.columns.table[rec['i']] = rec
-
-
-
-				elif rec['txt'].startswith('eot?'):
-					self.columns.eot[rec['i']] = rec
-
-				elif rec['txt'].startswith('eof?'):
-					self.columns.eof[rec['i']] = rec
-
-				elif rec['txt'].startswith('eog?'):
-					self.columns.group[rec['i']] = rec
-
-				elif rec['txt'].startswith('bog?'):
-					self.columns.group[rec['i']] = rec
-
-				elif rec['txt'].lower().startswith('eoga?'):
-					self.columns.group[rec['i']] = rec
-
-				elif '?' in rec['txt']:
-					self.columns.otherQ[rec['i']] = rec
-
-				else:
-					self.columns.other[rec['i']] = rec
-			else:
-				self.other.index[rec['i']] = rec
-
-
-		# for rec in self.records[label]:
-		#   print_( rec )
-
-		# sys.exit()
-
-
-		self.cache.records[label] = self.records[label]
-		self.last = label
-		self.lasting = [label]
-		# addSwitch addAll
-		if addSwitch or addAll:
-			return self.build( label=label, addSwitch=addSwitch, addAll=addAll )
-
-		return self.records[label]
-
-
-	def build( self, label=None, addSwitch=None, addAll=None, s=None ):
-		if not s is None:
-			addSwitch = s
-		if label is None:
-			addAll = True
-
-		records = []
-		toProcess = []
-		if addAll:
-			for k in self.records:
-				toProcess.append(k)
-
-		elif addSwitch:
-			if self.switch.label in self.records:
-				toProcess.append(self.switch.label)
-
-			if label in self.records:
-				toProcess.append(label)
-					# print_(rec)
-		self.last = '<?>'.join(toProcess)
-		self.lasting = toProcess
-		if self.last in self.cache.records:
-			return self.cache.records[self.last]
-
-
-		for lab in toProcess:
-			for rec in self.records[lab]:
-				records.append(rec)
-
-
-
-		# else:
-		#   cp( 'Error: AGGREGATE.build() ', 'red' )
-		#   return []
-
-		indexes = dot()
-		indexes.functions = {}
-		indexes.table = []
-		indexes.group = []
-		indexes.eot = []
-		indexes.eof = []
-		indexes.otherVar = []
-		indexes.otherVarQ = []
-		indexes.other = []
-
-		for fXn in __.aggregate.fn.order:
-			indexes.functions[fXn] = []
-		indexes.functions['other'] = []
-		for rec in records:
-			# print_(rec)
-			if rec['status'] and 'function' in rec['l']:
-				if rec['txt'] in __.aggregate.fn.order:
-					indexes.functions[rec['txt']].append(rec)
-				else:
-					indexes.functions['other'].append(rec)
-
-			elif rec['status'] and 'variable' in rec['l']:
-				if not '?' in rec['txt'] or ( '?' in rec['txt'] and not rec['txt'].lower().split('?')[0]+'?' in __.aggregate.prefixes):
-					indexes.table.append( rec )
-
-				elif rec['txt'].startswith('eot?'):
-					indexes.eot.append( rec )
-
-				elif rec['txt'].startswith('eof?'):
-					indexes.eof.append( rec )
-
-				elif rec['txt'].startswith('eog?'):
-					indexes.group.append( rec )
-
-				elif rec['txt'].startswith('bog?'):
-					indexes.group.append( rec )
-
-				elif rec['txt'].lower().startswith('eoga?'):
-					indexes.group.append( rec )
-
-				elif '?' in rec['txt']:
-					indexes.otherVarQ.append( rec )
-
-				else:
-					indexes.otherVar.append( rec )
-			else:
-				indexes.other.append( rec )
-
-		tmp_records = []
-
-		for fXn in __.aggregate.fn.order:
-			for rec in indexes.functions[ fXn ]:
-				tmp_records.append(rec)
-
-		for rec in indexes.functions['other']:
-			tmp_records.append(rec)
-
-		for rec in indexes.table:
-			tmp_records.append(rec)
-
-		for rec in indexes.otherVarQ:
-			tmp_records.append(rec)
-
-		for rec in indexes.otherVar:
-			tmp_records.append(rec)
-
-		for rec in indexes.group:
-			tmp_records.append(rec)
-
-		for rec in indexes.eot:
-			tmp_records.append(rec)
-
-		for rec in indexes.eof:
-			tmp_records.append(rec)
-
-
-		for rec in indexes.other:
-			tmp_records.append(rec)
-		combine_records = []
-		for rec in tmp_records:
-			combine_records.append(rec)
-
-		# print_()
-		# # print_( combine_records )
-		# print_()
-
-		# for rec in combine_records:
-		#   print_(rec)
-
-
-		# print_( '   self.last:', self.last )
-		# print_( 'self.lasting:', self.lasting )
-		# sys.exit()
-		self.cache.records[self.last] = combine_records
-
-		return combine_records
-
-
-	def formatGen( self, label=None, addSwitch=None, addAll=None, s=None ):
-		records = self.build( label=label, addSwitch=addSwitch, addAll=addAll, s=s )
-
-		if self.last in self.cache.formating:
-			return self.cache.formating[self.last]
-
-
-		results = []
-		for i,rec in enumerate(records):
-			if rec['status'] and 'function' in rec['l'] and 'format' == rec['txt']:
-				rXy = []
-				for arg in rec['args']:
-					rXy.append( self.index[arg]['txt'] )
-				results.append( rXy )
-
-			if rec['status'] and 'function' in rec['l'] and rec['txt'] in __.aggregate.fn.format:
-				rXy = []
-				for arg in rec['args']:
-					rXy.append( self.index[arg]['txt'] )
-
-				rXy.append( __.aggregate.fn.format[rec['txt']] )
-				results.append( rXy )
-
-			if rec['status'] and 'variable' in rec['l']:
-				child = self.index[rec['val']]
-				if 'function' in child['l'] and child['txt'] in __.aggregate.fn.format:
-					# print_( 'here' )
-					rXy = []
-					if '?' in rec['txt'] and rec['txt'].lower().split('?')[0]+'?' in __.aggregate.group_prefixes:
-						gc = rec['txt'].split('?')[2]
-						rXy.append( gc )
-					else:
-						rXy.append( rec['txt'] )
-
-					rXy.append( __.aggregate.fn.format[child['txt']] )
-					results.append( rXy )
-
-		formating = {}
-		for rXy in results:
-			fields = []
-			cmds = {}
-
-			for res in rXy:
-				if not res.startswith('?'):
-					fields.append( tfc(res) )
-				elif res.startswith('?') and not res.startswith('??') and not res.startswith('???'):
-					last = res
-					if not res in cmds:
-						cmds[res] = {}
-				elif res.startswith('???'):
-					cmds[last][last2][res] = {}
-				elif res.startswith('??'):
-					last2 = res
-					cmds[last][res] = {}
-
-
-			for f in fields:
-				if not f in formating:
-					formating[f] = {}
-				for c in cmds:
-					if not c in formating[f]:
-						formating[f][c] = {}
-					for p in cmds[c]:
-						if not p in formating[f][c]:
-							formating[f][c][p] = {}
-						for pp in cmds[c]:
-							if not pp in formating[f][c][p]:
-								formating[f][c][p][pp] = {}
-		# printVarSimple( formating )
-		# sys.exit()
-		self.cache.formating[self.last] = formating
-		pass
-		return formating
-
-	def format( self, fields, data, label=None, addSwitch=None, addAll=None, s=None ):
-		formating = self.formatGen( label=label, addSwitch=addSwitch, addAll=addAll, s=s )
-		if not type(fields) is list:
-			fields = [fields]
-
-		try:
-
-
-
-
-
-			for field in fields:
-				f = tfc(field)
-				# print_( formating[f] )
-				if f in formating:
-					if '?date1' in formating[f]:
-						return friendlyDate( data )
-					if '?date' in formating[f]:
-						return friendlyDate2( data )
-					if '?size' in formating[f]:
-						data = str(data).replace( ',', '' ).replace( ' ', '' )
-						# print_('here                                               xx')
-						if formating[f]['?size']:
-							fm = list(formating[f]['?size'].keys())[0]
-							return reFormatSize( str(data)+fm )
-
-						# print_( formatSize( int(data) ) )
-						return formatSize( int(data) )
-					if '?bytes' in formating[f]:
-						return unFormatSize( data )
-
-					if '?comma' in formating[f]:
-						return addComma( data )
-
-
-
-		except Exception as e:
-			return data
-
-
-
-
-		return data
-
-
-__.aggregate.obj = AGGREGATE()
 
 def autoWrapText( text, length=None, txt=False, prefix='', breakOn=None, pre_skip_0=False ):
 	if type(prefix) == int:
@@ -2958,133 +1956,11 @@ def getCryptTable( theFile, db=False, bank=False, index=False, temp=False, free=
 		return __.data_default(file=theFile,default=[]).default()
 
 
-
-def saveCryptTable( rows, theFile, db=False, bank=False, index=False, temp=False, free=False, indentCode=True, sort_keys=False, archive=False, p=1, password=None, me=0 ):
-	HD.chmod(theFile)
-
-	try:
-		import simplejson
-		json = simplejson
-	except:
-		pass
-	try:
-		import json
-	except ImportError:
-		json = simplejson
-	global _vault
-	global shutil
-	global _md5
-	global pyAesCrypt
-	if _md5 is None:
-		import _rightThumb._md5 as _md5
-	if shutil is None:
-		import shutil
-	if pyAesCrypt is None:
-		import pyAesCrypt
-	if password is None:
-		if _vault is None:
-			import _rightThumb._vault as _vault
-		password =  _md5.md5( _vault.key() )
-
-	the_temp_file = _v.stmp +_v.slash+ '_-cryptTable-'+genUUID()
-
-
-
-	# defaults to myTables
-	px = ''
-	if theFile.startswith('temp'+_v.slash):
-		theFile = theFile.replace( 'temp'+_v.slash, '' )
-		file0 = _v.stmp + _v.slash + theFile
-		px = file0
-	elif db or bank:
-		theFile = _v.dbTables + _v.slash + theFile
-		px = theFile
-	elif index:
-		theFile = _v.myIndexes + _v.slash + theFile
-		px = theFile
-	elif free:
-			file0 = theFile
-			px = theFile
-	else:
-		if not temp:
-			file0 = _v.myTables + _v.slash + theFile
-			px = theFile
-		else:
-			file0 = _v.stmp + _v.slash + theFile
-			px = file0
-
-	if indentCode:
-		dataDump = simplejson.dumps(rows, indent=4, sort_keys=sort_keys, default=str)
-	else:
-		dataDump = simplejson.dumps(rows, sort_keys=False, default=str)
-
-	if archive:
-		import _rightThumb._md5 as _md5
-
-		theFileLabel = theFile
-		if _v.slash in theFileLabel:
-			global appInfo
-			tfl = theFileLabel.split(_v.slash)
-			tfl.reverse()
-			theFileLabel = str(appInfo[__.appReg]['liveAppName']) + '__' + tfl[0]
-		theFileLabel = theFileLabel.replace( '.json', '' )
-		theFileLabel = theFileLabel.replace( '.JSON', '' )
-
-		lastMD5 = None
-		if os.path.isfile( file0 ):
-			lastMD5 = _md5.md5File( file0 )
-
-			backupFile = _v.stmp + _v.slash+'__archive_temp__' + theFileLabel + '__' + genUUID() + '.json'
-
-
-
-
-
-
-	f = open(the_temp_file,'w')
-	f.write( str(dataDump) )
-	f.close()
-	HD.chmod(theFile)
-	bufferSize = 64 * 1024
-	# encFileSize = os.stat(  file0  ).st_size
-	with open( the_temp_file, 'rb' ) as fIn:
-		with open( file0 , 'wb' ) as fOut:
-			pyAesCrypt.encryptStream(fIn, fOut, password, bufferSize)
-
-	shutil.copyfile( file0, the_temp_file )
-	os.unlink(the_temp_file)
-
-	if archive:
-		shouldDocument = False
-
-		if os.path.isfile( file0 ):
-			thisMD5 = _md5.md5File( file0 )
-		if lastMD5 is None:
-			shouldDocument = True
-		else:
-			if not lastMD5 == thisMD5:
-				shouldDocument = True
-
-		if not shouldDocument:
-			if os.path.isfile( backupFile ):
-				os.remove( backupFile )
-
-		if shouldDocument:
-			md5Table = getTable( 'table_archive_log.json' )
-			found = False
-			for i,record in enumerate(md5Table):
-				if theFileLabel == record['name']:
-					found = True
-
-			theFileLabel
-			theFile
-			fileDate( theData )
-
-
-	if p:
-		printBold('Saved: ' + px, 'blue')
-	if me and theFile in vv.opened_file_me: changeM( theFile, vv.opened_file_me[theFile] );
-	return file0
+def saveCryptTable(*args, **kwargs):
+	if not 'saveCryptTable' in intelligent_code.functions:
+		from library.frameworks.base.functions.saveCryptTable import saveCryptTable
+		intelligent_code.functions['saveCryptTable'] = saveCryptTable
+	return intelligent_code.functions['saveCryptTable'](*args, **kwargs)
 
 
 
@@ -3198,6 +2074,11 @@ def linePrint(  label=None, text=None, txt='_', mn=50, add=5, p=2, c='', x=None,
 		return result
 
 
+def dic_key_sort2(*args, **kwargs):
+	if not 'dic_key_sort2' in intelligent_code.functions:
+		from library.frameworks.base.functions.dic_key_sort2 import dic_key_sort2
+		intelligent_code.functions['dic_key_sort2'] = dic_key_sort2
+	return intelligent_code.functions['dic_key_sort2'](*args, **kwargs)
 
 def dic_key_sort( table, n=False ):
 	saveTable( table, '-tmp-dic_key_sort.json', tableTemp=True, printThis=False,  sort_keys=True )
@@ -3208,71 +2089,6 @@ def dic_key_sort( table, n=False ):
 	# return json.load( str(dataDump) )
 
 
-
-def dic_key_sort2( table, n=False, ip=False, r=False ):
-
-
-	keys = list( table.keys() )
-	dic = {}
-	theData = []
-	if ip:
-		fields.register( 'cnt-ip', 'val', 7, m=3 )
-		for x in keys:
-
-			if not x.count('.') == 3:
-				theData.append( x )
-			else:
-				zZz = []
-
-				for y in x.split('.'):
-					xXx = fields.padZeros( 'cnt-ip', 'val', int(y) )
-					# print_(xXx)
-
-					zZz.append( xXx )
-				theData.append( '.'.join(zZz) )
-		theData.sort()
-		if r:
-			theData.reverse()
-		for x in theData:
-			y = ''
-			zZz = []
-			if not x.count('.') == 3:
-				y = x
-			elif x.count('.') == 3:
-				for y in x.split('.'):
-					# print_(y)
-					zZz.append( str(int(y)) )
-				y = '.'.join(zZz)
-				# print_(y)
-			if y in table:
-				dic[y] = table[y]
-		# print_(theData)
-		# printVarSimple(dic)
-		# print_()
-		return dic
-
-
-
-	if not n:
-		keys.sort()
-		if r:
-			keys.reverse()
-
-		for x in keys:
-			dic[x] = table[x]
-		return dic
-	else:
-		nKeys = []
-		fields.register( 'cnt-n', 'val', 7, m=40 )
-		for k in keys:
-			nKeys.append(  fields.padZeros( 'cnt-n', 'val', int(k) )  )
-		nKeys.sort()
-		if r:
-			nKeys.reverse()
-
-		for x in nKeys:
-			dic[  str(int(x))  ] = table[str(int(x))]
-		return dic
 def isCrypt(path):
 	if IS(path,'41 45 53 02 00 00 1B'): return True
 	else:
@@ -3373,6 +2189,65 @@ def replaceFile( fIn, fOut ):
 	parts.pop(0)
 	parts.reverse()
 	return _v.slash.join( parts )+_v.slash+fOut
+
+
+
+def percentageDiffIntAuto(smaller, bigger, isFloat=False):
+	if smaller < bigger:
+		s = smaller
+		b = bigger
+	else:
+		s = bigger
+		b = smaller
+	if not isFloat:
+		return percentageDiffInt(s, b)
+	else:
+		result = round(float(s / b * 100), 1)
+		r = str(result)
+		if '.0' in r:
+			result = int(result)
+		return result
+def percentageDiffAuto(smaller, bigger, isFloat=False, rnd=1):
+	if smaller < bigger:
+		s = smaller
+		b = bigger
+	else:
+		s = bigger
+		b = smaller
+	return _.percentageDiffCalc(s, b, isFloat, rnd)
+def percentageDiffSmaller(smaller, bigger, isFloat=False, rnd=1):
+	if smaller < bigger:
+		s = smaller
+		b = bigger
+	else:
+		s = bigger
+		b = smaller
+	a = _.percentageDiffCalc(s, b, isFloat, rnd)
+	b = _.percentageDiffCalc(b, s, isFloat, rnd)
+	if a < b:
+		return a
+	else:
+		return b
+def percentageDiffCalc(smaller, bigger, isFloat=False, rnd=1):
+	try:
+		if not isFloat:
+			return int(round(abs(abs(smaller - bigger) / smaller) * 100, 0))
+		else:
+			r = round(abs(abs(smaller - bigger) / smaller) * 100, rnd)
+			if str(r) == '0.0':
+				return 0
+			return r
+	except Exception as e:
+		return 0
+		smaller += 1
+		bigger += 1
+		if not isFloat:
+			return int(round(abs(abs(smaller - bigger) / smaller) * 100, 0))
+		else:
+			r = round(abs(abs(smaller - bigger) / smaller) * 100, rnd)
+			if str(r) == '0.0':
+				return 0
+			return r
 
 def patternDiff(a,b):
 	# print_('here')
@@ -4202,12 +3077,16 @@ class dt:
 #     print(data)
 #     return data
 FilesFiles = []
-def isData( data=None, focus=None, pipeClean=False, required=False,     r=None, c=None, noclean=None ):
+def isData( data=None, focus=None, pipeClean=False, required=False,     r=None, c=None, noclean=None, p=False ):
 	global FilesFiles
 	FilesFiles = myFileLocation_Files
 	__.FilesFiles = myFileLocation_Files
 	global switches
 	global appData
+	if type(appData[__.appReg]['pipe']) == list:
+		if p: 
+			return appData[__.appReg]['pipe']
+		pipeCleaner(0)
 	try:
 		if appData[__.appReg]['pipe']: return appData[__.appReg]['pipe']
 		for sw in __.isData_Switches:
@@ -4345,7 +3224,11 @@ def payloadCache( data, file=None, theFocus=None ):
 		appDBA = __.thisApp( __.postLoadFile )
 	else:
 		appDBA = __.thisApp( file )
-	releaseAcquiredData( appDBA, theFocus, data )
+	__.appInfoAcquiredData = { 'app': appDBA, 'focus': theFocus, 'data': data }
+	__.appInfoAcquiredData['app'] = appDBA
+	__.appInfoAcquiredData['focus'] = theFocus
+	__.appInfoAcquiredData['data'] = data
+	# releaseAcquiredData( appDBA, theFocus, data )
 
 __.appInfoScan = None
 
@@ -4616,7 +3499,7 @@ def unixAutoColumns( asset, columns, focus=None, threshold=10 ):
 	# sys.exit()
 	return columns
 
-
+responsiveColumns = unixAutoColumns
 def callers( i=1 ):
 	callersX = []
 	error=False
@@ -4967,6 +3850,26 @@ def pDiff( one, two, use=None,r=None ):
 		return b
 
 
+def percentageDiff(smaller, bigger, isFloat=False):
+	try:
+		if not isFloat:
+			return abs(smaller / bigger) * 100
+		else:
+			r = abs(smaller / bigger) * 100
+			if str(r) == '0.0':
+				return 0
+			return r
+	except Exception as e:
+		return 0
+		smaller += 1
+		bigger += 1
+		if not isFloat:
+			return abs(smaller / bigger) * 100
+		else:
+			r = abs(smaller / bigger) * 100
+			if str(r) == '0.0':
+				return 0
+			return r
 def pDiff2( one, two, use=None,r=None ):
 	if not use is None:
 		use = use.lower()
@@ -5603,6 +4506,7 @@ def urlTrigger(url):
 	return url
 
 def myFolderLocations( data ):
+	return myFolder(data)
 	if 'myFolderLocations' in __.setting('omit-functions', d=[]):
 		return data
 	if type(data) == list:
@@ -5847,22 +4751,7 @@ def listColor( text, rows, color='green' ):
 
 
 
-def LoadingDone(done=None):
-	if not done is None:
-		__.loadingVar['done'] = done
-	__.loadingVar['hasLoaded'] = True
 
-	global threads
-	while not __.loadingVar['hasCleared']:
-		time.sleep( .2 )
-	time.sleep( .7 )
-	print_( '                                                        ', end='\r' )
-	time.sleep( 2 )
-	__.loadingVar['hasCleared'] = False
-	__.loadingVar['hasLoaded'] = False
-	__.loadingVar['isRunning'] = False
-	del threads
-	threads = Queue()
 
 def loadingAnimation(loading='Searching',done='Found' ):
 	__.loadingVar['done'] = done
@@ -6427,7 +5316,49 @@ def getData( theFile, exitOnError=False ):
 		data = textList
 	return data
 
-
+class AllColor:
+	magenta = '\033[1;35;40m'
+	red = '\033[1;31;40m'
+	green = '\033[92m'
+	cyan = '\033[0;36;47m'
+	white = '\033[1;37;40m'
+	bold = '\033[1m'
+	yellow = '\033[1;37;43m'
+	blue = '\033[1;34;47m'
+	blue = '\033[0;34;47m'
+	end = '\033[0m'
+	red = '\033[91m'
+	blue = '\033[1;37;44m'
+	cyan = '\033[1;36;40m'
+	light_blue = '\033[1;37;46m'
+	yellow = '\033[93m'
+	brown = '\033[0;33;47m'
+	yellow = '\033[1;33;40m'
+	red = '\033[0;31;47m'
+	brown = '\033[1;33;47m'
+	gray = '\033[1;30;40m'
+	gray = '\033[1;37;40m'
+	magenta = '\033[0;35;47m'
+	cyan = '\033[1;36;47m'
+	green = '\033[1;37;42m'
+	black = '\033[1;30;47m'
+	magenta = '\033[1;35;47m'
+	red = '\033[1;31;47m'
+	green = '\033[0;32;47m'
+	underline = '\033[4m'
+	blue = '\033[1;34;40m'
+	cyan = '\033[96m'
+	purple = '\033[95m'
+	darkcyan = '\033[36m'
+	purple = '\033[1;37;45m'
+	red = '\033[1;37;41m'
+	black = '\033[1;37;48m'
+	black = '\033[0;30;47m'
+	green = '\033[1;32;47m'
+	gray = '\033[0;37;40m'
+	grey = '\033[1;37;47m'
+	green = '\033[1;32;40m'
+	blue = '\033[94m'
 
 class ColorBold:
 	gray = '\033[1;30;40m'
@@ -7527,6 +6458,31 @@ def patternz(string):
 
 
 
+def percentageInt(percent, whole, isFloat=False):
+	if not isFloat:
+		return int(round(percent * whole / 100.0, 0))
+	else:
+		return round(percent * whole / 100.0, 1)
+def percentageDiffInt(smaller, bigger, isFloat=False, rnd=1):
+	try:
+		if not isFloat:
+			return int(round(abs(smaller / bigger) * 100, 0))
+		else:
+			r = round(abs(smaller / bigger) * 100, rnd)
+			if str(r) == '0.0':
+				return 0
+			return r
+	except Exception as e:
+		return 0
+		smaller += 1
+		bigger += 1
+		if not isFloat:
+			return int(round(abs(smaller / bigger) * 100, 0))
+		else:
+			r = round(abs(smaller / bigger) * 100, rnd)
+			if str(r) == '0.0':
+				return 0
+			return r
 
 
 def stringDiff( one, two ):
@@ -7722,9 +6678,17 @@ def postLoad( file, epoch=0, theFocus=False ):
 
 
 	if autoLoadData:
-		reclaimAcquiredData( appDBA, epoch, theFocus )
+		__.appInfoAcquiredData['app'] = appDBA
+		__.appInfoAcquiredData['focus'] = theFocus
+		# __.appInfoAcquiredData['data'] = data
+		# __.appInfoAcquiredData = { 'app': appDBA, 'focus': theFocus }
+		# reclaimAcquiredData( appDBA, epoch, theFocus )
 	else:
-		releaseAcquiredData( appDBA, theFocus )
+		__.appInfoAcquiredData['app'] = appDBA
+		__.appInfoAcquiredData['focus'] = theFocus
+		# __.appInfoAcquiredData['data'] = data
+		# __.appInfoAcquiredData = { 'app': appDBA, 'focus': theFocus }
+		# releaseAcquiredData( appDBA, theFocus )
 
 # print(os.environ['burn_this']); sys.exit();
 
@@ -7776,6 +6740,23 @@ def releaseAcquiredData( appDBA, theFocus, payload=None ):
 				'errors': [],
 				'printed': print_ed,
 	}
+	# print(print_ed)
+	# global switches
+	if switches.isActive('SavePrint'):
+		printed = []
+		for rec in print_ed:
+			printed.append( rec['prn'].rstrip() )
+		saveText(printed,switches.value('SavePrint'))
+
+	if switches.isActive('CopyPrint'):
+		printed = []
+		for rec in print_ed:
+			printed.append( rec['prn'].rstrip() )
+		_copy = regImp( __.appReg, '-copy' )
+		_copy.imp.copy( '\n'.join(printed), p=0 )
+		
+
+
 	# pv(info); sys.exit();
 	if not payload is None:
 		info['payload'] = payload
@@ -7850,9 +6831,10 @@ def reclaimAcquiredData( appDBA, epoch, theFocus=False ):
 		cp( 'Error: please select a valid backup', 'error' )
 		sys.exit()
 	info = getTable2( log )
-	__.payloadCache = None
+	# __.payloadCache = None
 	if 'payload' in info:
-		__.payloadCache = info['payload']
+		__.store.set('payloadCache', info['payload'])
+		# __.payloadCache = info['payload']
 
 
 	# print_( log )
@@ -8483,317 +7465,11 @@ def printVarSimpleFake3( data ):
 			printVarColor(line)
 		except Exception as e:
 			print(line)
-def printVarSimpleFake2( data ):
-	# this sucks, new class with centralized database of indices and single run colorization coming soon
-	import re
-	arguments=[]
-	def has_alphanumeric_around_equal(s):
-		for i in range(1, len(s) - 1):
-			if s[i] == '=' and s[i - 1].isalnum() and s[i + 1].isalnum():
-				return True
-		return False
-	# def colorize_quotes(s, quote_color='darkcyan', content_color='cyan'):
-	def show_ansi_codes(s): return s.replace('\033', '\\033')
-	def colorize_quotes(s, quote_color='darkcyan', content_color='cyan'):
-		# s = re.sub(r'\\033\[\d*\\033\[\d*m', 'm', s)
-		# Strip out the broken color codes
-		s = re.sub(r'\033\[\d+m', '', s)
-
-		# Colorize the function name
-		s = re.sub(r'\b(TABLE_PUT)\b', Color.cyan + r'\1' + Color.end, s)
-
-		# Colorize the quotes and their content
-		s = colorize_quotes2(s,quote_color,content_color)
-
-		return s
-	def colorize_quotes2(s, quote_color='darkcyan', content_color='cyan'):
-		# Pattern to match content inside single or double quotes
-		pattern = r"(['\"])(.*?)(?<!\\033)\1"
-
-		# Calculating offsets due to insertion of color codes
-		offset = 0
-
-		for match in re.finditer(pattern, s):
-			start_quote = match.start(1) + offset
-			end_quote = start_quote + len(match.group(1))
-
-			start_content = match.start(2) + offset
-			end_content = start_content + len(match.group(2))
-
-			# Colorizing content inside the quote
-			s = s[:start_content] + eval(f"Color.{content_color}") + s[start_content:end_content] + Color.end + s[end_content:]
-			offset += len(Color.end) + len(eval(f"Color.{content_color}"))
-
-			# Colorizing the starting quote
-			s = s[:start_quote] + eval(f"Color.{quote_color}") + s[start_quote:end_quote] + Color.end + s[end_quote:]
-			offset += len(Color.end) + len(eval(f"Color.{quote_color}"))
-
-			# Colorizing the ending quote
-			end_quote = match.end(2) + offset
-			s = s[:end_quote] + eval(f"Color.{quote_color}") + s[end_quote:end_quote + len(match.group(1))] + Color.end + s[end_quote + len(match.group(1)):]
-			offset += len(Color.end) + len(eval(f"Color.{quote_color}"))
-
-		return s
-
-
-
-
-	# def colorize_quotes(s, quote_color='darkcyan', content_color='cyan'):
-	# 	# Pattern to match content inside single or double quotes
-	# 	pattern = r"(['\"])(.*?)\1"
-
-	# 	offset = 0
-	# 	for match in re.finditer(pattern, s):
-	# 		start_quote = match.start(1) + offset
-	# 		end_quote = start_quote + len(match.group(1))
-
-	# 		start_content = match.start(2) + offset
-	# 		end_content = start_content + len(match.group(2))
-
-	# 		# Colorizing content inside the quote
-	# 		s = s[:start_content] + eval(f"Color.{content_color}") + s[start_content:end_content] + Color.end + s[end_content:]
-	# 		offset += len(Color.end) + len(eval(f"Color.{content_color}"))
-
-	# 		# Colorizing the starting quote
-	# 		s = s[:start_quote] + eval(f"Color.{quote_color}") + s[start_quote:end_quote] + Color.end + s[end_quote:]
-	# 		offset += len(Color.end) + len(eval(f"Color.{quote_color}"))
-
-	# 		# Colorizing the ending quote
-	# 		end_quote = match.end(2) + offset
-	# 		s = s[:end_quote] + eval(f"Color.{quote_color}") + s[end_quote:end_quote + len(match.group(1))] + Color.end + s[end_quote + len(match.group(1)):]
-	# 		offset += len(Color.end) + len(eval(f"Color.{quote_color}"))
-
-	# 	return s
-	def find_all_function_names(s):
-		pattern = r'\b[A-Za-z]\w*(?=\()'
-		matches = [m for m in re.finditer(pattern, s)]
-
-		indices = []
-		for match in matches:
-			start = match.start()
-			end = match.end() - 1
-			indices.append((start, end))
-
-		return indices
-
-	def find_arguments(s):
-		pattern = r'\(([^)]*)\)'
-		matches = list(re.finditer(pattern, s))
-		all_indices = []
-
-		for match in matches:
-			args_str = match.group(1)
-			split_indices = [0] + [m.end() for m in re.finditer(r'(?<!["\']),', args_str)]
-			arg_strings = [args_str[i:j] for i, j in zip(split_indices, split_indices[1:] + [None])]
-
-			start_index = match.start(1)
-			indices = [(start_index + i, start_index + i + len(arg) - 1) for i, arg in enumerate(arg_strings)]
-			all_indices.extend(indices)
-
-		return all_indices
-	def find_arguments_words(s):
-		pattern = r'\(([^)]*)\)'
-		matches = list(re.finditer(pattern, s))
-		all_args = []
-
-		for match in matches:
-			args_str = match.group(1)
-			split_indices = [0] + [m.end() for m in re.finditer(r'(?<!["\']),', args_str)]
-			arg_strings = [args_str[i:j].strip() for i, j in zip(split_indices, split_indices[1:] + [None])]
-
-			for arg in arg_strings:
-				if not arg.startswith('"') and not arg.startswith("'"):
-					all_args.append(arg)
-
-		return all_args
-
-	def colorize_indices(s, indices, color):
-		if not indices:
-			return s
-
-		if not isinstance(indices, list):
-			indices = [indices]
-
-		offset = 0
-		for start, end in indices:
-			try:
-				colored_string = eval('Color.' + color + '+ s[start+offset:end+offset+1] + Color.end')
-			except Exception:
-				continue
-
-			s = s[:start+offset] + colored_string + s[end+offset+1:]
-			offset += len(colored_string) - (end - start + 1)
-		return s
-	def colorize_chars(result, dic):
-		i = 0
-		while i < len(result):
-			# Detect if current section is an ANSI color code and skip it
-			if result[i:i+2] == '\\033':
-				color_code_end = result.find('m', i)
-				i = color_code_end + 1
-				continue
-
-			# Check if the character matches any in the dictionary keys and colorize it
-			for k, color in dic.items():
-				if result[i] in k:
-					result = result[:i] + eval('Color.' + color) + result[i] + Color.end + result[i+1:]
-					i += len(eval('Color.' + color)) + len(Color.end) # We have to adjust i to account for the new color sequences added
-					break
-			i += 1
-
-		return result
-
-
-
-	# def colorize_chars(result, dic):
-	#   i = 0
-	#   output = []
-	#   while i < len(result):
-	#       # Detect if current section is an ANSI color code and skip it
-	#       if result[i:i+2] == '\\033':
-	#           color_code_end = result.find('m', i)
-	#           output.append(result[i:color_code_end+1])
-	#           i = color_code_end + 1
-	#           continue
-
-	#       # Check if the character matches any in the dictionary keys and colorize it
-	#       colorized = False
-	#       for k, color in dic.items():
-	#           if result[i] in k:
-	#               output.append(eval('Color.' + color) + result[i] + Color.end)
-	#               colorized = True
-	#               break
-
-	#       # If not colorized, just append the original character
-	#       if not colorized:
-	#           output.append(result[i])
-
-	#       i += 1
-
-	#   return ''.join(output)
-	def colorize_words(result, dic):
-		i = 0
-		while i < len(result):
-			# Detect if current section is an ANSI color code and skip it
-			if result[i:i+2] == '\\033':
-				color_code_end = result.find('m', i)
-				i = color_code_end + 1
-				continue
-
-			matched = False
-			for word, color in dic.items():
-				# If the word is a variable name, ensure that it stands alone by using word boundaries (\b).
-				pattern = rf'\b{re.escape(word)}\b' if word.isidentifier() else re.escape(word)
-				match = re.search(pattern, result[i:])
-				if match:
-					matched_text = match.group(0)
-					colored_text = eval(f"Color.{color}") + matched_text + Color.end
-					result = result[:i + match.start()] + colored_text + result[i + match.end():]
-					i += len(colored_text)
-					matched = True
-					break
-
-			if not matched:
-				i += 1
-
-		return result
-
-	def find_argument_usage(s, color='CYAN'):
-		# Extract arguments from the function description section
-		args_match = re.search(r'Usage.*?\(([^)]*)\)', s, re.DOTALL)
-		if not args_match:
-			return s
-
-		args_str = args_match.group(1)
-		arguments = [arg.strip() for arg in re.split(r'(?<!["\']),', args_str)]
-
-		i = 0
-		while i < len(s):
-			# If current section is an ANSI color code, skip it
-			if s[i:i+2] == '\\033':
-				color_code_end = s.find('m', i)
-				i = color_code_end + 1
-				continue
-
-			# Check for standalone word match
-			found = False
-			for arg in arguments:
-				pattern = rf'(?<=[\s(])({re.escape(arg)})(?=[\s,).])'
-				match = re.search(pattern, s[i:])
-				if match:
-					matched_text = match.group(1)
-					colored_text = eval(f"Color.{color}") + matched_text + Color.end
-					s = s[:match.start()+i] + colored_text + s[match.end()+i:]
-					i += len(colored_text)
-					found = True
-					break
-
-			if not found:
-				i += 1
-
-		return s
-	variables=[]
-	clean=[]
-	for line in data.split('\n'):
-		if '=' in line and has_alphanumeric_around_equal(line):
-			# print(line);sys.exit();
-			line=line.replace('=',' = ')
-		clean.append(line)
-	result = '\n'.join(clean)
-	# result=data
-	arguments=find_arguments_words(result)
-	dic = {
-		'[]': 'purple',
-	}
-	for line in result.split('\n'):
-		if ' = ' in line:
-			variables.append(line.split(' = ')[0].strip())
-	# print(result);sys.exit();
-	# result = printVarColor_OLD( result )
-	result = colorize_indices(result, find_all_function_names(result), 'cyan')
-	result = colorize_indices(result, find_arguments(result), 'darkcyan')
-	result = colorize_chars(result,dic)
-	# del colorama
-
-	result = colorize_quotes(result)
-	result = find_argument_usage(result,'darkcyan')
-	dic = {
-		'!': 'yellow',
-		'(){}': 'purple',
-		'-=/': 'red',
-	}
-	result = colorize_chars(result,dic)
-	dic = {
-		'RETURN': 'blue',
-		'IF': 'purple',
-		'THEN': 'purple',
-		'ELSE': 'purple',
-	}
-	spentV=[]
-	spentA=[]
-	for v in variables:
-		v=v.strip()
-		if v in spentV: continue
-		spentV.append(v)
-		if v in arguments:
-			dic[' '+v+' ']='darkcyan'
-			dic['\n'+v+' ']='darkcyan'
-		else:
-			dic['\n'+v+' ']='green'
-			dic[' '+v+' ']='green'
-	for v in arguments:
-		if v in spentA: continue
-		spentA.append(v)
-		dic[' '+v+' ']='darkcyan'
-		dic['\n'+v+' ']='darkcyan'
-	# print(variables)
-	# print(arguments)
-	result = colorize_words(result,dic)
-	# print(show_ansi_codes(result));sys.exit();
-	# print_( re.sub(r'\\033\[0\\033\[36mm', 'm', result) )
-	# print_( re.sub(r'\033\[\d+m', '', result) )
-	print_( result )
-
+def printVarSimpleFake2(*args, **kwargs):
+	if not 'printVarSimpleFake2' in intelligent_code.functions:
+		from library.frameworks.base.functions.printVarSimpleFake2 import printVarSimpleFake2
+		intelligent_code.functions['printVarSimpleFake2'] = printVarSimpleFake2
+	return intelligent_code.functions['printVarSimpleFake2'](*args, **kwargs)
 
 def printVarSimpleFake( data ):
 	result = printVarColor_OLD( data )
@@ -9016,7 +7692,7 @@ def myFileLocationsXYZ( file, silent=False, currentBaseVersion=3 ):
 	global appData
 	global myFileLocation_Files
 	global myFileLocation_Pipe
-	myFileLocationsABC( file, silent=silent, currentBaseVersion=currentBaseVersion )
+	# myFileLocationsABC( file, silent=silent, currentBaseVersion=currentBaseVersion )
 	if not __.myFileLocations_SKIP_VALIDATION:
 		if type(appData[__.appReg]['pipe']) == list:
 			for i,f in enumerate(appData[__.appReg]['pipe']):
@@ -9250,7 +7926,9 @@ def myFileLocations( file, silent=False, currentBaseVersion=3 ):
 						if isFirst:
 							isFirst=False
 						else:
-							appData[__.appReg]['pipe'].append( thisFile )
+							try:
+								appData[__.appReg]['pipe'].append( thisFile )
+							except: pass
 			else:
 				for thisFile in myFileLocation_Files:
 					if os.path.isfile( thisFile ):
@@ -9953,9 +8631,10 @@ def getText2(theFile,what='text',t=None,l=None):
 	raise Exception(f"Failed to read the file {theFile} with any of the provided encodings.")
 
 
-
 def getText( theFile, raw=False, clean=False,  e=0, c=0 ):
-	if os.path.isfile(theFile): vv.opened_file_me[theFile] = os.path.getmtime( theFile );
+	if type(theFile) == list: theFile = theFile[0]
+	if os.path.isfile(theFile):
+		vv.opened_file_me[theFile] = os.path.getmtime( theFile );
 	HD.chmod(theFile)
 	lines = None
 	if os.path.isfile(theFile):
@@ -11777,4298 +10456,22 @@ def sort(rows, name):
 def blank_script_trigger(data):
 	return data
 
-class Switch:
-
-	def __init__(self, name, switch, example_or_notes, description, space, default, group):
-		self.appReg = __.appReg
-		self.name = name
-		self.switch = switch
-		self.default = default
-		self.group = group
-		self.pos = 0
-		self.active = False
-		self.value = None
-		self.values = []
-		self.example_or_notes = example_or_notes
-		self.documentation = { 'description': description, 'examples': [], 'required': [], 'related': [] }
-		self.space = space
-		self.vs = False
-		self.script_trigger_alt = None
-		self.script=blank_script_trigger
-
-	def trigger(self,script,vs=False,alt=None):
-		if not alt is None:
-			self.script_trigger_alt = alt
-			vs = True
-		self.vs = vs
-		self.script_trigger = script
-		self.script = script
-
-
-
-class Switches:
-
-	def __init__(self):
-		self.switches = []
-		self.index = {}
-		self.appRegDefault = None
-		self.appReg = __.appReg
-		self.hasRequired = []
-		self.isRequired = {}
-		self.postScripts = []
-		self.dex = {}
-
-
-	def all( self, app=True, appReg=None, omit=None, omitDefaults=True,             od=1 ):
-		if not od:
-			omitDefaults = False
-		if omitDefaults:
-			omitList = [ 'Help', 'Column', 'Sort', 'Debug', 'Errors', 'Timeout', 'GroupBy', 'ShortenColumn', 'Long', 'Length', 'Report', 'Plus', 'Minus', 'PlusOr', 'PlusClose', 'PrintAutoAbbreviations', 'LoadEpoch', 'NoColor', 'Clean', 'NoCount', 'Count' ]
-		else:
-			omitList = []
-
-		if not  omit is None:
-			if type(omit) == str:
-				omit = omit.replace(  ' ', '' )
-				omit = omit.split(',')
-			for x in omit:
-				omitList.append( x )
-
-
-		# appReg values expected: None, 1, true, 'all'
-		if appReg is None:
-			appReg = __.appReg
-
-		result = []
-		for i,row in enumerate(self.switches):
-			# pv(row)
-			if not row.name in omitList:
-				if row.active:
-					shouldAdd = True
-					if app:
-						if type( appReg ) == str:
-							if not appReg == 'all':
-								if not row.appReg == appReg:
-									shouldAdd = False
-
-					if shouldAdd:
-						if not row.values:
-							for ii,rec in enumerate(self.switches):
-								if not i == ii and rec.name == row.name and rec.values: shouldAdd = False
-					if shouldAdd:
-						result.append({
-											'active': row.active,
-											'name': row.name,
-											'value': row.value,
-											'values': row.values,
-											'appReg': row.appReg,
-						})
-		# _result=[]
-		# _spent=[]
-		# for i, rec in result:
-		#   cnt=0
-		#   for i, rec in result:
-
-
-
-		return result
-
-
-
-
-	def records( self, formating=None, appReg=None ):
-	# def records( self, formating=None, appReg=None, empty=True, v=None ):
-		# if not v is None and v: empty=False
-		# elif not v is None and v: empty=True
-		if formating is None:
-			colorThis( 'formating options:', 'bold' )
-			colorThis( [ '\t', 'list' ], 'yellow' )
-			colorThis( [ '\t', 'dic_a-v', '\t', "{ 'isActive': {}, 'values': {} }" ], 'yellow' )
-			colorThis( [ '\t', 'dic_on-off-v', '\t', "{ 'on': [], 'off': [], 'values': {} }" ], 'yellow' )
-			colorThis( [ '\t', 'dump' ], 'yellow' )
-			colorThis( [ '\t', 'relevant' ], 'yellow' )
-			colorThis( [ '\t', 'dump2' ], 'yellow' )
-			sys.exit()
-
-			colorThis(  )
-		if appReg is None:
-			appReg = __.appReg
-
-
-		records = {
-						'list': [],
-						'dic_a-v': { 'active': self.active(), 'isActive': {}, 'values': {} },
-						'dic_on-off-v': { 'on': [], 'off': [], 'values': {} },
-						'dump': [],
-						'dump2': {},
-		}
-
-
-		for i,switch in enumerate(self.switches):
-
-			#b)--> dump2
-			if not switch.appReg in records['dump2']: records['dump2'][switch.appReg]={}
-			if not 'on' in records['dump2'][switch.appReg]:
-				records['dump2'][switch.appReg]['on']={}
-				records['dump2'][switch.appReg]['off']={}
-
-			if switch.active:
-				if switch.name in records['dump2'][switch.appReg]['on'] and switch.values:
-					records['dump2'][switch.appReg]['on'][switch.name] = switch.values
-				else:
-					records['dump2'][switch.appReg]['on'][switch.name] = switch.values
-			else: records['dump2'][switch.appReg]['off'][switch.name] = switch.values
-			#e)--> dump2
-
-
-
-			#b)--> duplicate fix
-			##### #timestamp)--> 2022-07-26T17:09:11-0400
-			shouldAdd = True
-			for ii,rec in enumerate(self.switches):
-				if not i == ii and rec.name == switch.name and rec.values: shouldAdd = False
-			if shouldAdd:
-			#e)--> duplicate fix
-
-				if self.switches[i].appReg == appReg:
-					records['list'].append({ 'name': switch.name, 'values': switch.values })
-
-
-					records['dic_a-v']['isActive'][switch.name] = switch.active
-					records['dic_a-v']['values'][switch.name] = switch.values
-
-
-					records['dump'] = dict((name, getattr(switch, name)) for name in dir(switch) if not name.startswith('__'))
-					records['dic_on-off-v']['values'][switch.name] = switch.values
-
-
-					if switch.active:
-						records['dic_on-off-v']['on'].append( switch.name )
-					else:
-						records['dic_on-off-v']['off'].append( switch.name )
-
-		#b)--> relevant
-		records['relevant']={}
-		for on in records['dic_on-off-v']['on']:
-			records['relevant'][on] = records['dic_on-off-v']['values'][on]
-		if formating.startswith('r'): formating = 'relevant'
-		#e)--> relevant
-		return records[ formating ]
-	def documentation( self, name, data ):
-		result = False
-		try:
-			for i,row in enumerate(self.switches):
-				if row.name == name:
-					# print_( 'SET' )
-					if self.switches[i].appReg == __.appReg:
-
-						try:
-							if len( data['description'] ):
-								self.switches[i].documentation['description'] = data['description']
-						except Exception as e:
-							pass
-
-						try:
-							if len( data['examples'] ):
-								self.switches[i].documentation['examples'] = data['examples']
-						except Exception as e:
-							pass
-
-						try:
-							if len( data['required'] ):
-								self.switches[i].documentation['required'] = []
-								self.switches[i].documentation['related'] = []
-								for record in data['required']:
-									if record == 'Pipe':
-										__.isRequired_Pipe = True
-									else:
-										self.switches[i].documentation['required'].append( record )
-										self.switches[i].documentation['related'].append( record )
-										if not name in self.hasRequired:
-											self.hasRequired.append( name )
-
-
-						except Exception as e:
-							pass
-
-						try:
-							if len( data['related'] ):
-								for record in data['related']:
-									self.switches[i].documentation['related'].append( record )
-						except Exception as e:
-							pass
-
-						try:
-							if type( data['isRequired'] ) == bool:
-								if data['isRequired']:
-									if not name in self.isRequired[__.appReg]:
-										self.isRequired[__.appReg].append( name )
-						except Exception as e:
-							pass
-
-
-
-		except Exception as e:
-			result = False
-		return result
-
-
-	def record( self, name ):
-		result = False
-		try:
-			for i,row in enumerate(self.switches):
-				if self.switches[i].appReg == __.appReg:
-					if row.name == name:
-						return i
-		except Exception as e:
-			result = False
-		return result
-
-	def dumpSwitches(self,includeBlank=False):
-		self.fieldSet('Long','active',True)
-		data = []
-		for i,row in enumerate(self.switches):
-			# if not row.value is None:
-			if includeBlank:
-				data.append({ 'name': row.name, 'value': row.value, 'appreg': row.appReg })
-			else:
-				if not row.value is None or row.active:
-					data.append({ 'name': row.name, 'value': row.value, 'appreg': row.appReg })
-			# print_(row.name,'\t',row.value,'\t',row.appReg)
-		tables.register('data',data)
-		tables.print('data','appreg,name,value')
-
-	def register(self, name, switch, example_or_notes = None, isRequired=False, isPipe=None, isData=None, description='', space=False, default=False, group=None, g=None):
-		if not g is None:
-			group = g
-
-		if not isPipe is None:
-			__.trigger_isPipe = isPipe
-
-		if not isData is None:
-			__.trigger_isPipe = isData
-			isPipe=isData
-		i=len(self.switches)
-
-		if not __.appReg in self.dex:
-			self.dex[__.appReg]={}
-		self.dex[__.appReg][name]=i
-
-		self.switches.append(Switch(name, switch, example_or_notes, description, space, default, group))
-
-		try:
-			if not type(self.isRequired[__.appReg]) == list:
-				self.isRequired[__.appReg] = []
-		except Exception as e:
-			self.isRequired[__.appReg] = []
-
-
-
-		switch = switch.replace( ' ', '' )
-
-
-		if not isPipe is None:
-			__.isData_Switches[name]=isPipe
-			if type(isPipe) == bool and isPipe:
-				isPipe = 'data'
-			vv.isData[name]=isPipe
-			isPipe=isPipe.replace('raw','name')
-			if 'name' in isPipe and ( 'data' in isPipe or 'clean' in isPipe ):
-				pass
-			elif 'name' in isPipe:
-				__.trigger_isPipe = 'name'
-			elif 'data' in isPipe or 'clean' in isPipe:
-				if 'clean' in isPipe:
-					__.trigger_isPipe = 'data,clean'
-				else:
-					__.trigger_isPipe = 'data'
-		elif isPipe:
-			__.trigger_isPipe = 'data'
-
-		if isRequired:
-			__.isRequired_index[__.appReg].append( name )
-			if not name in self.isRequired[__.appReg]:
-				self.isRequired[__.appReg].append( name )
-
-
-
-	def fieldSet2( self, name, column, value, theFocus=False, runTrigger=True ):
-		for i,row in enumerate(self.switches):
-			if self.switches[i].appReg == theFocus:
-				if row.name == name:
-					if column == 'active':
-						if value == True:
-							self.switches[i].active = True
-						else:
-							self.switches[i].active = False
-					elif column == 'value':
-						if value == True:
-							self.switches[i].value = True
-						elif value == False:
-							self.switches[i].value = False
-						else:
-							self.switches[i].value = value
-					elif column == 'values':
-						self.switches[i].values = values
-						self.switches[i].value = ','.join(valuesV)
-	def fieldSet( self, name, column, value, theFocus=False, runTrigger=True ):
-		if name == 'Sort':
-			if column == 'value':
-				if type(value) == str:
-					if value.startswith('a.'):
-						value = 'a:' + value[2:]
-					if ',a.' in value:
-						value = value.replace( ',a.', ',a:' )
-
-					if value.startswith('d.'):
-						value = 'd:' + value[2:]
-					if ',d.' in value:
-						value = value.replace( ',d.', ',d:' )
-			if column == 'values':
-				if type(value) == list:
-					for i,asdf in enumerate(value):
-						if value[i].startswith('a.'):
-							value[i] = 'a:' + value[i][2:]
-						if value[i].startswith('d.'):
-							value[i] = 'd:' + value[i][2:]
-
-
-		if type( theFocus ) == bool:
-			theFocus = __.appReg
-
-		if column == 'values':
-			if type(value) == str:
-				value = [value]
-			values = []
-			valuesV = []
-			if not runTrigger:
-				for x in value:
-					values.append( x )
-			elif runTrigger:
-				if self.fieldExists( name, 'script_trigger', theFocus ):
-					for x in value:
-						values.append( self.scriptTrigger( name, x, theFocus  ) )
-
-				elif self.fieldExists( name, 'script_trigger', theFocus ) == True:
-					for x in value:
-						script = '{}(\'{}\',\'{}\')'.format(self.fieldGet(name,'script_trigger'),name,x)# script_trigger_external
-						values.append( eval(script) )
-				else:
-					for x in value:
-						values.append( x )
-			for x in values:
-				if type(x) == str:
-					valuesV.append( x.replace(',',';;') )
-		if column == 'value':
-			if runTrigger:
-				if self.fieldExists( name, 'script_trigger', theFocus ):
-					value = self.scriptTrigger( name, value, theFocus  )
-					# self.fieldGet(name,'script_trigger')(value)
-				elif self.fieldExists( name, 'script_trigger', theFocus ) == True:
-					script = '{}(\'{}\',\'{}\')'.format(self.fieldGet(name,'script_trigger'),name,value)# script_trigger_external
-					value = eval(script)
-		# print_( name, column, value )
-		# sys.exit()
-		for i,row in enumerate(self.switches):
-			if self.switches[i].appReg == theFocus:
-				if row.name == name:
-					if column == 'active':
-						if value == True:
-							self.switches[i].active = True
-						else:
-							self.switches[i].active = False
-					elif column == 'value':
-						if value == True:
-							self.switches[i].value = True
-						elif value == False:
-							self.switches[i].value = False
-						else:
-							self.switches[i].value = value
-					elif column == 'values':
-						self.switches[i].values = values
-						self.switches[i].value = ','.join(valuesV)
-
-					else:
-						# self.switches[i][column] = value
-						exec('self.switches[i].' + column + '= value')
-						# value = str(value)
-						# try:
-						#   exec('self.switches[i].' + column + '=str(\'' + value + '\')')
-						# except Exception as e:
-						#   exec('self.switches[i].' + column + '=\'' + value + '\'')
-
-		return ''
-
-
-
-	def fieldExists( self, name, column, theFocus=False ):# doesFieldExist
-		result = False
-		try:
-			for i,row in enumerate(self.switches):
-				if self.switches[i].appReg == __.appReg:
-					if row.name == name:
-						eval('row.' + column)
-						result = True
-		except Exception as e:
-			result = False
-		return result
-	def scriptTrigger( self, name, value, theFocus=False, cc=False ):# externalScriptTrigger
-		for i,s in enumerate(self.switches):
-			if self.switches[i].appReg == __.appReg:
-				if name == self.switches[i].name:
-					if not cc:
-						value = self.switches[i].script_trigger(value)# script_trigger_external
-					elif cc:
-						if not self.switches[i].vs:
-							value = self.switches[i].script_trigger(value)# script_trigger_external
-						elif not self.switches[i].script_trigger_alt is None:
-							value = self.switches[i].script_trigger_alt(value)# script_trigger_external
-
-
-
-		return value
-
-	def fieldGet2(self,name,column):# getSwitchField
-		# print_(name,column)
-		result = ''
-		for i,row in enumerate(self.switches):
-			if row.name == name:
-				result = eval('row.' + column)
-		return result
-
-	def fieldGet( self, name, column, theFocus=False ):# getSwitchField
-		# print_(name,column)
-		result = ''
-		if not column == 'pos':
-
-			if name == 'NoColor' and column == 'active':
-
-				found = False
-
-				for i,row in enumerate(self.switches):
-					if row.name == name:
-						# print_( row.name, row.active )
-						if row.active:
-							found = True
-
-				result = found
-
-				# print_( 'here', name, found )
-				# sys.exit()
-
-
-			else:
-
-
-				i = self.searchIndex( name, theFocus )
-				if i is None:
-
-					if column == 'active':
-						return False
-
-					if column == 'value':
-						return ''
-
-					if column == 'values':
-						return []
-
-					printBold( 'Error: Nonexistent Switch', 'red' )
-					print_( name, column, theFocus )
-					printVar( self.index )
-					sys.exit()
-				row = self.switches[i]
-				result = eval('row.' + column)
-
-		else:
-			if type( theFocus ) == bool:
-				theFocus = __.appReg
-			for i,row in enumerate(self.switches):
-				if self.switches[i].appReg == theFocus:
-					if row.name == name:
-						result = eval('row.' + column)
-		return result
-
-	def isActive2( self, name, theFocus=False ):
-		for i,row in enumerate(self.switches):
-			if self.switches[i].name == name and self.switches[i].active: return True
-		return False
-
-
-	def isActive( self, name, theFocus=False ):# isSwitchActive
-		if not theFocus: theFocus = __.appReg
-		if theFocus in self.dex and name in self.dex[theFocus]:
-			# print('from index')
-			return self.switches[self.dex[theFocus][name]].active
-		return self.fieldGet( name, 'active', theFocus )
-
-	def getField( self, name, field, theFocus=False ):
-		return self.fieldGet( name, field, theFocus )
-
-	def value( self, name, theFocus=False ):# getSwitchValue
-		result = self.fieldGet( name, 'value', theFocus )
-		if result is None:
-			result = ''
-		return result
-
-	def values2( self, name, theFocus=False ):# getSwitchValue
-		for i,row in enumerate(self.switches):
-			if self.switches[i].name == name and self.switches[i].active:
-				return self.fieldGet( name, 'values', theFocus )
-		return []
-
-	def value2( self, name, theFocus=False ):# getSwitchValue
-		for i,row in enumerate(self.switches):
-			if self.switches[i].name == name and self.switches[i].active:
-				return self.fieldGet( name, 'value', theFocus )
-		return ''
-
-	def isActive2( self, name, theFocus=False ):
-			for i,row in enumerate(self.switches):
-				if self.switches[i].name == name and self.switches[i].active: return True
-			return False
-
-	def values( self, name, theFocus=False ):# getSwitchValue
-		result = self.fieldGet( name, 'values', theFocus )
-		if result is None:
-			result = []
-		return result
-
-	def trigger( self, name, script, vs=False, alt=None ):
-		for i,s in enumerate(self.switches):
-			if self.switches[i].appReg == __.appReg:
-				if name == self.switches[i].name:
-					self.switches[i].trigger(script,vs,alt)
-
-	def simpleTrigger( self, name, value ):
-		return self.switches[self.dex[__.appReg][name]].script(value)
-
-
-	def value2(self,name):
-		# return ','.join( self.value3(name) )
-		# return ','.join(  self.value3(name)  )
-
-
-		switchInput = sys.argv
-		for i,a in enumerate(switchInput): switchInput[i]=a.replace('↔',' ')
-		# print(switchInput)
-		# sys.exit()
-
-		try:
-			switchInput[self.fieldGet(name,'pos') + 1]
-			result = ''
-
-			i = 0
-			for a in switchInput:
-				if i > self.fieldGet(name,'pos'):
-					if self.isSwitch(switchInput[i]) == True:
-						break
-					else:
-						if not name in __.switch_raw:
-							if switchInput[i] == ':': switchInput[i] = switchInput[i].replace(':','_;192B;_')
-							if switchInput[i] == ',':
-								switchInput[i] = switchInput[i].replace(',','_;192A;_')
-						result += str(switchInput[i]) + ','
-				i += 1
-			result = result[:-1]
-			if not name in __.switch_raw:
-				result = _str.cleanAll(result,'"','')
-				result = _str.cleanAll(result,':,',':')
-				result = _str.cleanAll(result,',,',',')
-
-		except Exception as e:
-			result = ''
-		if not name in __.switch_raw:
-			return result
-			# return _str.cleanBE( result, ' ' )
-		else:
-			return result
-
-	def value3(self,name):
-		switchInput = sys.argv
-		for i,a in enumerate(switchInput): switchInput[i]=a.replace('↔',' ')
-		data = []
-		try:
-			switchInput[self.fieldGet(name,'pos') + 1]
-			result = ''
-
-			for i,a in enumerate(switchInput):
-				# a=self.simpleTrigger(name,a)
-				if i > self.fieldGet(name,'pos'):
-					if self.isSwitch(switchInput[i]) == True:
-						break
-					else:
-						if not a == ' ':
-							if not name in __.switch_raw:
-								data.append(a)
-								# data.append( _str.cleanBE( a, ' ' ) )
-							else:
-								data.append( a )
-						else:
-							data.append( a )
-
-
-		except Exception as e:
-			data = []
-		return data
-
-	def isSwitch(self,string):# checkIfSwitch
-		result = False
-		for i,a in enumerate(self.switches):
-			if self.switches[i].appReg == __.appReg:
-				for b in a.switch.split(','):
-					if b == string:
-						result = True
-					# print_(b,result)
-		return result
-
-	def format(self,name):# processSwitchFormatting
-		value = self.value2(name)
-		if self.fieldExists(name,'script_trigger'):
-			value = self.scriptTrigger(name,value,cc=True)
-		elif self.fieldExists(name,'script_trigger'):
-			script = '{}(\'{}\',\'{}\')'.format(self.fieldGet(name,'script_trigger'),name,value)
-			value = eval(script)
-		return value
-
-	def format2( self, name ):
-		values = self.value3(name)
-		# if name =='Plus':
-		#     print_(values)
-		if values is None:
-			values = []
-		else:
-			for i,value in enumerate(values):
-				if self.fieldExists(name,'script_trigger'):
-					values[i] = self.scriptTrigger(name,value)
-				elif self.fieldExists(name,'script_trigger'):
-					script = '{}(\'{}\',\'{}\')'.format(self.fieldGet(name,'script_trigger'),name,value)
-					values[i] = eval(script)
-		return values
-
-	def exists(self,name):# checkSwitchExist
-		result = False
-		for i,sw in enumerate(self.switches):
-			if self.switches[i].appReg == __.appReg:
-				if sw.name == name:
-					result = True
-		return result
-	def help(self,justAppNotFullHelp=False):
-		
-		# Help Menu Color Scheme
-		## Unused colors commented for navigation
-		helpColorScheme.labels = 'ColorBold.white'
-		helpColorScheme.tableSwitchGroupsLine = 'blue'
-		helpColorScheme.tableSwitchGroupsPostLabel = 'yellow'
-		helpColorScheme.file = 'Background.light_blue'
-		helpColorScheme.description = 'Background.green'
-		helpColorScheme.tags = 'green'
-		helpColorScheme.prerequisite = 'ColorBold.blue'
-		helpColorScheme.relatedapps = 'ColorBold.blue'
-		helpColorScheme.examples = 'purple' # handled differently
-		helpColorScheme.ask_example_id = 'yellow'
-		helpColorScheme.abbreviations = 'purple' # is colorizeRow
-		helpColorScheme.line = 'yellow'
-		helpColorScheme.requiredLabel = 'red'
-		helpColorScheme.required = 'Background.red'
-		helpColorScheme.switchRequredLabel = 'ColorBold.white'
-		helpColorScheme.switchRequred = 'yellow'
-		helpColorScheme.noRequirements = 'green' # cyan
-		helpColorScheme.notes = 'purple' # handled differently
-		self.justAppNotFullHelp = justAppNotFullHelp
-		if self.value('Help') == 'x' or self.value('Help') == 'cls' or self.value('Help') == 'clear' or 'fn' in self.value('Help'):
-
-
-			if 'fn' in self.values('Help'):
-				info = self.values('Help')
-				info.pop(0)
-				if not info:
-					pr('Usage:',c='yellow')
-					for li in ['']: pr('\t- '+li,c='cyan')
-					sys.exit()
-
-				import inspect
-				fn = info[0]
-				info.pop(0)
-				pr('Function:',fn,c='yellow')
-				if not info or (info[0] == 'arg' or info[0] == 'args'):
-					argspec = list(inspect.getfullargspec(eval(fn)))
-					pr('\t',argspec[0])
-					# for spec in argspec: pr('\t-',spec )
-
-				sys.exit()
-
-
-			if __.isWin:
-				os.system('cls')
-			else:
-				os.system('clear')
-		# print_(__.registeredApps)
-		# print_(__.appReg)
-		# sys.exit()
-		if len(__.registeredApps) > 1:
-			# print_(__.appReg)
-			if __.appReg == '__init__' or __.appReg == 'cryptFile':
-				return None
-		if __.appInfoScan:
-			return None
-		# self.help()
-		global appInfo
-		global fields
-		self.fieldSet('Long','active',True)
-		if __.cls_process_switches_help or 'cls' in self.value('Help'):
-			os.system('cls')
-		# os.system('cls')
-		print_()
-		print_()
-
-		filename = colorThis(  [ 'Program:  \t' ], helpColorScheme.labels, p=0  )
-		try:
-			if not appInfo[__.appReg]['file'] == 'thisApp.py' and appInfo[__.appReg]['liveAppName'] == '__init__':
-				filename += colorThis(  [ appInfo[__.appReg]['file'].replace('.py','') ], helpColorScheme.file, p=0  )
-				sys.exit()
-			else:
-				try:
-					if not appInfo[__.appReg]['file'] == 'thisApp.py' and not appInfo[__.appReg]['liveAppName'] == '__init__':
-						filename += colorThis(  [ appInfo[__.appReg]['liveAppName'] ], helpColorScheme.file, p=0  )
-					else:
-						filename += colorThis(  [ appInfo[__.appReg]['file'].replace('.py','') ], helpColorScheme.file, p=0  )
-				except Exception as e:
-					filename += colorThis(  [ appInfo[__.appReg]['file'].replace('.py','') ], helpColorScheme.file, p=0  )
-		except: pass
-
-		print_()
-		print_( filename )
-		print_()
-
-		try:
-			if type( appInfo[__.appReg]['description'] ) == list:
-				print_( pr('Description:   ',c=helpColorScheme.labels,p=0))
-				for x in appInfo[__.appReg]['description']:
-					print_( '                 - ', pr(x,c=helpColorScheme.description,p=0) )
-				print_()
-			else:
-				print_( inlineBold('Description:   '), pr(appInfo[__.appReg]['description'],c=helpColorScheme.description,p=0) + '\n')
-			configured = True
-		except Exception as e:
-			configured = False
-
-		try:
-			# print_( inlineBold('Categories:    '), ', '.join( appInfo[__.appReg]['categories'] ) + '\n')
-			print_( inlineBold('Tags:          '), '(',    pr(', '.join( appInfo[__.appReg]['categories'] ),c=helpColorScheme.tags,p=0)   , ')' + '\n')
-			# print_( inlineBold('Tags:          '), '(',    ', '.join( appInfo[__.appReg]['categories'] )   , ')' + '\n')
-			# print_( inlineBold('          Tags:'), ', '.join( appInfo[__.appReg]['categories'] ) + '\n')
-			pass
-		except Exception as e:
-			pass
-
-		try:
-			if len(appInfo[__.appReg]['prerequisite']) > 0:
-				pr('Prerequisite:',c=helpColorScheme.labels)
-				for docItem in appInfo[__.appReg]['prerequisite']:
-					if type(docItem) == list:
-						# colorThis( '\t\t'+docItem[0], docItem[1]  )
-						pr('\t\t'+docItem[0],c=helpColorScheme.prerequisite)
-					else:
-						pr('\t\t'+docItem,c=helpColorScheme.prerequisite)
-						# colorizeRow( '\t\t'+ docItem , 2)
-					# colorizeRow('\t' + prereq,2)
-				print_('\n')
-		except Exception as e:
-			pass
-		try:
-			if len(appInfo[__.appReg]['relatedapps']) > 0:
-				# printBold('Related Apps:')
-				pr('Related Apps:',c=helpColorScheme.labels)
-				
-				for docItem in appInfo[__.appReg]['relatedapps']:
-					if type(docItem) == list:
-						pr('\t\t'+docItem[0],c=helpColorScheme.relatedapps)
-					else:
-						pr('\t\t'+docItem,c=helpColorScheme.relatedapps)
-				print_('\n')
-		except Exception as e:
-			pass
-		if configured:
-			quit_early = False
-			if len(appInfo[__.appReg]['examples']) > 0:
-				# printBold('Examples:')
-				pr('Examples:',c=helpColorScheme.labels)
-				IDs = {}
-				ei = 1
-				for docItem in appInfo[__.appReg]['examples']:
-					if not docItem is None:
-						prei = str(ei)
-						if len(self.value('Help')) and self.value('Help') == prei:
-							prei = '*'
-						elif not 'id' in self.value('Help') and not 'c' in self.value('Help') and not 'i' in self.value('Help') :
-							prei = ''
-						else:
-							quit_early = True
-						if type(docItem) == list:
-							if not len(docItem[0]):
-								prei = ''
-							else:
-								ei+=1
-							if prei == '*':
-								setClip(docItem[0])
-								quit_early= True
-							if len(prei):
-								IDs[prei] = docItem[0]
-							# colorThis( '\t'+prei+'\t'+docItem[0], docItem[1]  )
-							pr('\t'+prei+'\t'+docItem[0],c=helpColorScheme.examples)
-						else:
-							if not len(docItem):
-								prei = ''
-							else:
-								ei+=1
-
-							if len(prei):
-								IDs[prei] = docItem
-							if prei == '*':
-								setClip(docItem)
-								quit_early = True
-							colorizeRow( '\t'+prei+'\t'+ docItem , 2)
-							# pr('\t'+prei+'\t'+ docItem ,c=helpColorScheme.examples)
-			if 'id' in self.value('Help') or 'c' in self.value('Help') or 'ask' in self.value('Help') or 'i' in self.value('Help'):
-				askID = input( '?> : ' )
-				if askID in IDs:
-					setClip(IDs[askID])
-					cp(  [ '\n\nCopied:\n\t', IDs[askID], '\n\n' ], helpColorScheme.ask_example_id  )
-			if quit_early:
-				sys.exit()
-					# colorizeRow('\t' + ex,2)
-				print_('\n')
-			if len(appInfo[__.appReg]['columns']) > 0:
-				printBold('Columns and abbreviations:')
-				result = ''
-				if len( appInfo[__.appReg]['columns'] ):
-					# fields.register( 'columns', 'name,abbreviation', script=__.triggerTest )
-					fields.asset( 'columns', appInfo[__.appReg]['columns'] )
-					print_()
-
-				if __.columnAbbreviations == 0:
-					for col in appInfo[__.appReg]['columns']:
-						if not col['name'] == col['abbreviation']:
-							result += col['name'] + '(' + col['abbreviation'] + '), '
-					result = result[:-2]
-					colorizeRow('\t' + result + '\n',2)
-					# helpColorScheme.abbreviations
-
-				if __.columnAbbreviations == 1:
-					for col in appInfo[__.appReg]['columns']:
-						if not col['name'] == col['abbreviation']:
-							abbreviation =  fields.value( 'columns', 'abbreviation', col['abbreviation'] )
-							name =          fields.value( 'columns', 'name', col['name'] )
-							colorizeRow( '\t' + abbreviation + '\t' + name )
-							# helpColorScheme.abbreviations
-						# print_( '\t', col['abbreviation'], '\t', col['name']  )
-
-				if len( appInfo[__.appReg]['columns'] ):
-					print_()
-					print_()
-				# print_('\n')
-		pass
-		print_()
-		print_()
-		# def linePrint(  label=None, text=None, txt='_', mn=50, add=5, p=2, c='', half=False, h=None )
-		linePrint(txt='+',c=helpColorScheme.line,x=.5)
-		# colorThis('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++','yellow')
-		# printBold( 'Requirements:' )
-		pr('Requirements:',c=helpColorScheme.labels)
-		print_()
-		hasRequirements = False
-		# if __.isRequired_Pipe_or_File:
-		#     hasRequirements = True
-		#     colorThis(  [  '  !! Required Pipe or Files'  ]  , 'red' )
-
-		# if len( self.isRequired[__.appReg] ):
-		#     for x in self.isRequired[__.appReg]:
-		#         hasRequirements = True
-		#         colorThis(  [  '  !! Required Switch:', x  ]  , 'red' )
-
-		if __.isRequired_Pipe:
-			hasRequirements = True
-			colorThis(  [  '  !! Required Pipe data' ]  , helpColorScheme.requiredLabel )
-
-		if __.isRequired_Pipe_or_File:
-			hasRequirements = True
-			colorThis(  [  '  !! Required Pipe data or Files switch' ]  , helpColorScheme.requiredLabel )
-
-		if len(self.isRequired[__.appReg]):
-			hasRequirements = True
-			colorThis(  [  '  !! Required ' + ' and '.join(self.isRequired[__.appReg])  ]  , helpColorScheme.requiredLabel )
-
-
-		if not __.isRequired_or_List is None:
-			# for x in __.isRequired_or_List:
-			hasRequirements = True
-			isRequired_or_List1 = pr('  !! Required   ',c=helpColorScheme.requiredLabel,p=0)
-			isRequired_or_List2 = pr(' or '.join(__.isRequired_or_List),c=helpColorScheme.required,p=0)
-			print_(isRequired_or_List1 +':   '+ isRequired_or_List2)
-			# colorThis(  [  '  !! Required ' + ' or '.join(__.isRequired_or_List)  ]  , 'red' )
-
-		lastGroup = -1
-		for switch in self.switches:
-			# print_( dir(switch) )
-			# print_( switch.__dict__ )
-			if len(switch.documentation['required']) :
-				print_()
-				print_()
-				print_( colorThis( '  !! If using switch:' , helpColorScheme.switchRequredLabel, p=0 ), colorThis( switch.name , helpColorScheme.switchRequred, p=0 ), colorThis( 'the following is required:' , helpColorScheme.switchRequredLabel, p=0 ) )
-
-				for x in switch.documentation['required']:
-					hasRequirements = True
-					colorThis(  [ '\t', x  ]  , 'red' )
-
-
-			if len(switch.documentation['related']) :
-				print_()
-				print_()
-				print_( colorThis( '  If using switch:' , helpColorScheme.switchRequredLabel, p=0 ), colorThis( switch.name , helpColorScheme.switchRequred, p=0 ), colorThis( 'the following is related:' , helpColorScheme.switchRequredLabel, p=0 ) )
-				for x in switch.documentation['related']:
-					hasRequirements = True
-					colorThis(  [ '\t', x  ]  , 'yellow' )
-
-				# del switch.script_trigger
-				# del switch.__dict__.script_trigger
-				# print_( dict( str(switch.__dict__) ) )
-				# printVar( dict(switch.__dict__) )
-			# sys.exit()
-		if not hasRequirements:
-			colorThis( [ '\t', 'No requirements' ], helpColorScheme.noRequirements )
-		print_()
-		linePrint(txt='+',c=helpColorScheme.line,x=.5)
-		# colorThis('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++','yellow')
-		print_()
-		print_()
-		self.print()
-		if 'notes' in appInfo[__.appReg]:
-			if len( appInfo[__.appReg]['notes'] ):
-				print_()
-				print_()
-				# printBold( 'Notes:' )
-				pr('Notes:',c=helpColorScheme.labels)
-				for col in appInfo[__.appReg]['notes']:
-					print_()
-					printVarSimple( col, prefix='                ', remove='"' )
-					# helpColorScheme.notes
-					print_()
-
-		# for x in sys.modules:
-		#     print_(x)
-		sys.exit()
-		raise SystemExit
-		os._exit(0)
-		sys.exit(1)
-		os._exit(os.EX_OK)
-
-
-
-
-	def process( self, helpx=False ):
-		load()
-		global customHelp
-		global argvProcess
-		global printAutoAbbreviations_scheduled
-		for ii,sw in enumerate(self.switches):
-			if self.switches[ii].appReg == __.appReg:
-				self.switches[ii].pos = None
-				self.switches[ii].active = False
-				self.switches[ii].value = None
-				try:
-					__.trigger_isPipe = self.switches[ii].isData
-				except Exception as e:
-					pass
-
-		switchHelp = []
-		isActiveList = []
-		hasActiveRequireList = []
-		isActiveRequireList = []
-
-		if argvProcess:
-			for i,a in enumerate(sys.argv):
-				a=a.replace('↔',' ')
-				if a in __.switch_skimmer.scan:
-					__.switch_skimmer.active.append( a )
-				a = a.replace(':','')
-				for ii,sw in enumerate(self.switches):
-					for s in sw.switch.split(','):
-						if s.lower() == a.lower():
-							if self.switches[ii].appReg == __.appReg:
-								self.switches[ii].pos = i
-								self.switches[ii].active = True
-								self.switches[ii].value = self.format(self.switches[ii].name)
-								self.switches[ii].values = self.format2(self.switches[ii].name)
-
-								isActiveList.append( ii )
-								if self.switches[ii].name in self.hasRequired:
-									hasActiveRequireList.append( ii )
-								if self.switches[ii].name in self.isRequired[__.appReg]:
-									isActiveRequireList.append( ii )
-
-								if type( self.switches[ii].value ) == str:
-									if '-??' in self.switches[ii].value:
-										switchHelp.append(ii)
-
-		if self.exists('_Raw') == True:
-			# print_('test')
-			self.fieldSet('_Raw','pos',1)
-			self.fieldSet('_Raw','active',True)
-			self.fieldSet('_Raw','value',self.format('_Raw'))
-
-
-		for i,record in enumerate(self.switches):
-			if self.appRegDefault is None:
-				self.appRegDefault = self.switches[i].appReg
-			self.index[ self.switches[i].appReg ] = {}
-		for i,record in enumerate(self.switches):
-			self.index[ self.switches[i].appReg ][self.switches[i].name] = i
-
-
-
-		if len( switchHelp ):
-			if __.cls_process_switches_help:
-				os.system('cls')
-
-			somethingPrinted = False
-			for i in switchHelp:
-				if len( self.switches[i].documentation['description'] ):
-					somethingPrinted = True
-					print_()
-					print_( inlineBold('Description:\t'), self.switches[i].documentation['description'] )
-					print_()
-				if len( self.switches[i].documentation['examples'] ):
-					printBold( 'Examples:' )
-					for example in self.switches[i].documentation['examples']:
-						if type(example) == list:
-							colorThis( '\t\t'+example[0], example[1]  )
-						else:
-							colorizeRow( '\t\t'+ example , 2)
-
-
-
-			if somethingPrinted:
-				sys.exit()
-
-		if self.isActive('PlusCode'):
-			__.sw.PlusCode.append('0a72b2d27816')
-			for xCode in self.values('PlusCode'):
-				if len(xCode) > 1:
-					if xCode.startswith('*'): __.sw.PlusCode.append('*x')
-					elif xCode.endswith('*'): __.sw.PlusCode.append('x*')
-				else:
-					if xCode == '=': __.sw.PlusCode.append('=')
-					elif xCode == '!': __.sw.PlusCode.append('=')
-
-
-		if self.isActive('Help') or helpx:
-			self.help()
-
-		# if self.isActive(''):
-
-		if not __.appReg in self.isRequired:
-			for key in self.isRequired:
-				__.appReg = key
-		if len( self.isRequired[__.appReg] ):
-			allSatisfied = True
-
-			for req in self.isRequired[__.appReg]:
-				satisfied = False
-				for i in isActiveRequireList:
-					if self.switches[i].name.lower() == req.lower():
-						satisfied = True
-
-				try:
-					__.appInfoScan
-				except Exception as e:
-					if not satisfied:
-						allSatisfied = False
-						print_()
-						print_( colorThis( 'Error:', 'red', p=0 ) + ' missing required switch:', req )
-						sys.exit()
-
-
-		if len( hasActiveRequireList ):
-			allSatisfied = True
-			for i in hasActiveRequireList:
-				satisfied = False
-				for r in self.switches[i].documentation['required']:
-					for ia in isActiveList:
-						if self.switches[i].name.lower() == r.lower():
-							satisfied = True
-				if not satisfied:
-					if not i in switchHelp:
-						switchHelp.append( i )
-						print_()
-						print_( 'Error:\t\t missing required switch' )
-					allSatisfied = False
-
-
-
-		if self.isActive('DumpSwitches'):
-			if self.value('DumpSwitches'):
-				pv(self.all())
-			else:
-				self.dumpSwitches()
-			sys.exit()
-		if self.isActive('Debug') == True or self.isActive('Errors') == True:
-			# self.print()
-			self.printStatus()
-			sys.exit()
-
-		if printAutoAbbreviations_scheduled:
-			printAutoAbbreviations()
-
-		if self.isActive('TableProfile') and len(self.value('TableProfile')):
-			global TableProfile_Config
-
-			TableProfile_Config = {}
-
-			values = self.values('TableProfile')
-			value  = self.value('TableProfile')
-
-			if not ',' in value and not ';' in value:
-				tpv = value
-
-
-				if tpv == 'gs' or tpv == 'groupspaces' or tpv == 'groupspace':
-					try:
-						TableProfile_Config['ALLTABLES']['GroupSpaces'] = True
-					except Exception as e:
-						TableProfile_Config['ALLTABLES'] = {}
-						TableProfile_Config['ALLTABLES']['GroupSpaces'] = True
-				elif tpv == 'hl':
-					try:
-						TableProfile_Config['_header_']['alignment'] = 'left'
-					except Exception as e:
-						TableProfile_Config['_header_'] = {}
-						TableProfile_Config['_header_']['alignment'] = 'left'
-
-
-
-			else:
-				for tpv in value.split(','):
-					if not ';' in tpv:
-
-
-
-						if tpv == 'gs' or tpv == 'groupspaces' or tpv == 'groupspace':
-							try:
-								TableProfile_Config['ALLTABLES']['GroupSpaces'] = True
-							except Exception as e:
-								TableProfile_Config['ALLTABLES'] = {}
-								TableProfile_Config['ALLTABLES']['GroupSpaces'] = True
-						elif tpv == 'hl':
-							try:
-								TableProfile_Config['_header_']['alignment'] = 'left'
-							except Exception as e:
-								TableProfile_Config['_header_'] = {}
-								TableProfile_Config['_header_']['alignment'] = 'left'
-
-
-					elif ';' in tpv and tpv.count(';') == 1:
-
-
-						tpvX = tpv.split(';')
-						if tpvX[1] == 'l' or tpvX[1] == 'left' or tpvX[1] == 'r' or tpvX[1] == 'right' or tpvX[1] == 'c' or tpvX[1] == 'center':
-							if tpvX[0] == 'header' or tpvX[0] == 'h':
-								tpvX[0] = '_header_'
-							if tpvX[1] == 'l': tpvX[1] = 'left';
-							if tpvX[1] == 'r': tpvX[1] = 'right';
-							if tpvX[1] == 'c': tpvX[1] = 'center';
-							try:
-								TableProfile_Config[  tpvX[0]  ]['alignment'] = tpvX[1]
-							except Exception as e:
-								TableProfile_Config[  tpvX[0]  ] = {}
-								TableProfile_Config[  tpvX[0]  ]['alignment'] = tpvX[1]
-
-							# printVarSimple( TableProfile_Config )
-
-		# theErrors()
-		pass
-		pass
-		# for i,record in enumerate(self.switches):
-		#   self.index[ self.switches[i].name +'._.'+ self.switches[i].appReg ] = i
-
-		if len( self.postScripts ):
-			for childScript in self.postScripts:
-				if 'function' in str(type(childScript)):
-					childScript()
-
-
-	def searchIndex( self, name, appReg ):
-		if type(appReg) == bool or appReg is None:
-			appReg = __.appReg
-		try:
-			result = self.index[ appReg ][ name ]
-
-			# result = self.index[ name +'._.'+ appReg ]
-		except Exception as e:
-			try:
-				result = self.index[ self.appRegDefault ][ name ]
-			except Exception as e:
-				# print_( name, appReg, self.appRegDefault )
-				result = None
-
-		return result
-
-
-	def print(self):
-		switch = []
-		global tables
-		lastGroup = -1
-		swLen = {
-			'n':0,
-			's':0,
-			'e':0,
-		}
-		sgLe = {}
-		lastGroup = -1
-		sgLm = 0
-		for i,sw in enumerate(self.switches):
-			n = len(sw.name)
-			s = len(sw.switch)
-			try:
-				e = len(sw.example_or_notes)
-			except: e=0
-			if n > swLen['n']: swLen['n'] = n
-			if s > swLen['s']: swLen['s'] = s
-			if e > swLen['e']: swLen['e'] = e
-			if not sw.group is None:
-				valid = True
-				if type(sw.group) == str:
-					swgroupID = sw.group
-					swgroupLabel = sw.group
-				else:
-					if len(sw.group) > 1:
-						swgroupID = sw.group[0]
-						swgroupLabel = sw.group[1]
-					elif len(sw.group) == 1:
-						swgroupID = sw.group[0]
-						swgroupLabel = sw.group[0]
-			# try:
-			# 	sw.group[0]
-			# 	valid = True
-			# except Exception as e:
-			# 	valid = False
-			# if valid:
-			# 	if not lastGroup == sw.group[0]:
-			# 		if sgLm > len(sw.group[1]): sgLm = len(sw.group[1])
-			# 		sgLe[sw.group[0]] = len(sw.group[1])
-			# 	lastGroup = sw.group[0]
-
-		if sgLm > swLen['e']: swLen['e'] = sgLm
-		
-		
-		sgSe = {}
-		import math
-		for i,L in enumerate(sgLe):
-			l = swLen['e'] - sgLe[L]
-			sp = math.floor(l / 4)
-			sgSe[L] = ''
-			for i in range( sp+1 ): sgSe[L] += ' '
-
-		spaces = {
-			'n':'',
-			's':'',
-		}
-		sg = len('Switch Group: 1')
-		if sg > swLen['n']: swLen['n'] = sg
-		# for k in swLen:
-		if not swLen['n'] == sg:
-			for i in range( math.floor(swLen['n'] / 4) ): spaces['n'] += ' '
-		
-		for i in range( math.floor(swLen['s'] / 2) ): spaces['s'] += '-'
-		# for i in range( swLen['s']-1 ): spaces['s'] += '-'
-		spaces['s'] = '  <'+spaces['s']+'>'
-		# pv(sgSe)
-		lastGroup = -1
-		lastLabel = ''
-
-		# Start: SwitchSubGroup check
-		SwitchGroup = False
-		SwitchSubGroup = False
-		for i,sw in enumerate(self.switches):
-			if self.switches[i].appReg == __.appReg:
-				valid = False
-				if not sw.group is None:
-					valid = True
-					if type(sw.group) == str:
-						swgroupID = sw.group
-						swgroupLabel = sw.group
-					else:
-						if len(sw.group) > 1:
-							swgroupID = sw.group[0]
-							swgroupLabel = sw.group[1]
-						elif len(sw.group) == 1:
-							swgroupID = sw.group[0]
-							swgroupLabel = sw.group[0]
-							
-				if valid:
-					SwitchGroup = True
-					if not lastGroup == swgroupID:
-						pass
-					elif not swgroupID == swgroupLabel and not lastLabel == swgroupLabel:
-						SwitchSubGroup = True
-						# sys.exit()
-
-				if __.switch_skimmer.active and not self.switches[i].default:
-					pass
-				elif not __.switch_skimmer.active:
-					pass
-				# try:
-				# 	lastGroup = swgroupID
-				# 	lastLabel = swgroupLabel
-				# except: pass 
-		# End: SwitchSubGroup check
-
-
-		for i,sw in enumerate(self.switches):
-			if self.switches[i].default and self.justAppNotFullHelp: continue
-			if self.switches[i].appReg == __.appReg:
-				valid = False
-				if not sw.group is None:
-					valid = True
-					if type(sw.group) == str:
-						swgroupID = sw.group
-						swgroupLabel = sw.group
-					else:
-						if len(sw.group) > 1:
-							swgroupID = sw.group[0]
-							swgroupLabel = sw.group[1]
-						elif len(sw.group) == 1:
-							swgroupID = sw.group[0]
-							swgroupLabel = sw.group[0]
-							
-				if valid:
-					# print('valid',sw.name)
-					if False:
-						pass
-					elif not lastGroup == swgroupID:
-						if SwitchSubGroup:
-							pass
-							switch.append({ 'HasSwitchSubGroup': '', 'SwitchGroup': swgroupLabel.strip(), 'name': '','switch': '','example_or_notes': ''})
-							
-						else:
-							pass
-							# sys.exit()
-							# pr(swgroupLabel,c='BackgroundGreyBold.green')
-							if len(sw.group) > 3 and sw.group[2] == 0:
-								# switch.append({ 'SwitchGroupPostLabel': sw.group[3].strip(), 'name': '','switch': '','example_or_notes': ''})
-								switch.append({ 'SwitchGroup': swgroupLabel.strip(), 'SwitchGroupPostLabel': sw.group[3].strip(),'name': '','switch': '','example_or_notes': ''})
-							else:
-								switch.append({ 'SwitchGroup': swgroupLabel.strip(), 'name': '','switch': '','example_or_notes': ''})
-						# switch.append({'name':'' ,'switch':'','example_or_notes': '>>'})
-					elif not swgroupID == swgroupLabel and not lastLabel == swgroupLabel:
-						if len(sw.group) > 2:
-							switch.append({ 'SwitchGroupDepth': sw.group[2], 'SwitchSubGroup': swgroupLabel.strip(), 'name': '','switch': '','example_or_notes': ''})
-						else:
-							switch.append({ 'SwitchSubGroup': swgroupLabel.strip(), 'name': '','switch': '','example_or_notes': ''})
-					# continue
-					# SwitchGroup
-				if __.switch_skimmer.active and not self.switches[i].default:
-					if SwitchGroup:
-						if valid:
-							key = 'valid'
-						else:
-							key = 'SwitchGroup'
-
-						switch.append({key:'','name':sw.name ,'switch':sw.switch,'example_or_notes': sw.example_or_notes})
-					else:
-						switch.append({'name':sw.name ,'switch':sw.switch,'example_or_notes': sw.example_or_notes})
-				elif not __.switch_skimmer.active:
-					if SwitchGroup:
-						if valid:
-							key = 'valid'
-						else:
-							key = 'SwitchGroup'
-
-						switch.append({key:'','name':sw.name ,'switch':sw.switch,'example_or_notes': sw.example_or_notes})
-					else:
-						switch.append({'name':sw.name ,'switch':sw.switch,'example_or_notes': sw.example_or_notes})
-					# switch.append({'name':sw.name ,'switch':sw.switch,'example_or_notes': sw.example_or_notes})
-				try:
-					lastGroup = swgroupID
-					lastLabel = swgroupLabel
-				except: pass
-
-
-		# def test(value):
-		#   value = value + '_V_'
-		#   return value
-		tables.register('switches',switch)
-		# tables.trigger('switches','switch,name',test,True)
-		tables.print('switches','name,switch,example_or_notes')
-	def printStatus(self):
-		switch = []
-		global tables
-		for i,sw in enumerate(self.switches):
-			if self.switches[i].appReg == __.appReg:
-				if sw.active:
-					active = 'True'
-				else:
-					active = ''
-				v=[]
-				for x in sw.values: v.append(str(x))
-				value = ' | '.join(v)
-
-				if sw.value == True:
-					value = 'True'
-				elif sw.value == False:
-					value = ''
-
-				switch.append({'name':sw.name ,'active':active,'value': value})
-		# def test(value):
-		#   value = value + '_V_'
-		#   return value
-		tables.register('switches',switch)
-		# tables.trigger('switches','switch,name',test,True)
-		tables.print('switches','name,active,value')
-	def active(self,theFocus=None):
-		if theFocus is None:
-			theFocus = __.appReg
-		table = []
-		for i,sw in enumerate(self.switches):
-			if self.switches[i].appReg == theFocus:
-				# print_( type(sw.active), sw.active )
-				if sw.active:
-					table.append(sw.name)
-		return table
-
-
-	def length(self,theFocus=None):
-		if theFocus is None:
-			theFocus = __.appReg
-		ii = 0
-		for i,sw in enumerate(self.switches):
-			if self.switches[i].appReg == theFocus:
-				ii += 1
-		return ii
-
-	def rebuild( self, theFocus=False ):
-		if not type( theFocus ) == bool:
-			appReg = theFocus
-		else:
-			appReg = __.appReg
-
-
-		data = []
-		for i,row in enumerate(self.switches):
-			# if not row.value is None:
-			if row.appReg == appReg:
-				if row.active:
-					sX = row.switch.split(',')
-					if row.value is None:
-						r = sX[0]
-					else:
-						r = sX[0] + ' ' + str(row.value)
-					data.append( r )
-			# print_(row.name,'\t',row.value,'\t',row.appReg)
-		return ' '.join( data )
-	def getTable( self, theFocus=False ):
-		if not type( theFocus ) == bool:
-			appReg = theFocus
-		else:
-			appReg = __.appReg
-
-
-		data = []
-		for i,row in enumerate(self.switches):
-			if row.appReg == appReg:
-				if row.active:
-
-					info = {
-								'name': row.name,
-								'value': row.value,
-								'values': row.values,
-					}
-
-					data.append( info )
-		return data
-
-
-	def loadTable( self, data, theFocus=False ):
-		if not type( theFocus ) == bool:
-			appReg = theFocus
-		else:
-			appReg = __.appReg
-
-
-		for i,row in enumerate(self.switches):
-			for info in data:
-				if row.appReg == appReg:
-					if row.name == info['name']:
-
-						self.switches[i].value = info['value']
-						self.switches[i].values = info['values']
-						self.switches[i].active = True
-
-	def onlyLoadEpoch( self, theFocus=False ):
-		if not type( theFocus ) == bool:
-			appReg = theFocus
-		else:
-			appReg = __.appReg
-
-
-		for i,row in enumerate(self.switches):
-			if row.appReg == appReg:
-				if row.active and not row.name == 'LoadEpoch':
-					return False
-
-
-		return True
-
-
-
-#   def getSelf(self,name):
-#       result = ''
-#       for sw in self.switches:
-#           if sw.name == name:
-#               result = sw
-#       return result
-# def getSwitchSelf(name):
-#   global switches
-#   return switches.getSelf(name)
-
-
-class TableView:
-
-	def __init__(self,name,table,fields,sort):
-		self.name = name
-		self.fields = fields
-		self.sort = sort
-		self.table = table
-		# print_(self.name)
-
-
-TableProfile_Config = {}
-class Table:
-
-	def __init__( self, name, asset=[], group_space=True, tab='', webtable=None ):
-		global switches
-		global _dir
-
-		self.GroupTotals={}
-		self.webtable = webtable
-		self.group_space = group_space
-		self.name = name
-		self.asset = asset
-		self.fields = []
-		self.views = []
-		self.spaces = {}
-		self.maxNameLength = 35
-		if switches.isActive('Long'):
-			try:
-				self.maxNameLength = int(switches.value('Long'))
-			except Exception as e:
-				self.maxNameLength = 35
-		self.columnTab = '   '
-		self.groupSeparator = '_'
-		self.tableProfile = []
-		self.tableProfileDefaultAlignment = 'left'
-		self.tableProfileDefaultAlignmentHeader = ''
-		self.tableProfileDefaultAlignmentChanged = False
-		self.tableProfileDefaultAlignment = False
-		self.tableProfileDefaultSupersedes = False
-		self.views = []
-		self.universalSpacing = False
-
-		self.wrapTableKey = 'Da529801Ef674997B9f3382B3eD2b93F'
-		self.backup = dot()
-		self.backup.asset = asset.copy()
-		self.aggregate_processed = False
-		self.isWrap = False
-		self.hasAggregate = False
-		self.hasGroups = False
-		self.backup.fields = {}
-		self.backup.allfields = {}
-		self.backup.NGfields = {}
-		self.groupID_KEY = genUUID()
-		if len( self.asset ):
-			for r in self.asset:
-				for k in r:
-					if not k in self.backup.fields:
-						self.backup.fields[k] = 1
-						self.backup.allfields[ tfc(k) ] = k
-						self.backup.NGfields[ tfc(k) ] = k
-
-
-		self.tab_color = ''
-		if type(tab) == list:
-			self.tab_color = tab[1]
-			tab = tab[0]
-
-		tabH = ''
-		i=0
-		while not i == len(tab):
-			i+=1
-			tabH+=' '
-
-		self.tab = { 'header': tabH, 'table': tab }
-
-	def registerView(self,name,fields,sort = ''):
-		self.views.append(TableView(name,self.name,fields,sort))
-
-	def printView(self,name):
-		global switches
-		i=0
-		for tp in self.views:
-			# print_()
-			# for x in dir(self.views[i]):
-			#   print_(x)
-
-			if self.views[i].name == name:
-				# print_('found')
-				switches.fieldSet('Sort','active',True)
-				switches.fieldSet('Sort','value',str(self.views[i].sort))
-				# print_(switches.value('Sort'))
-				# try:
-
-				# except Exception as e:
-				#   pass
-				# print_('name:',name)
-				self.print(self.views[i].fields)
-			i += 1
-
-	# def trigger(self,field,script,includes):
-	#   self.views.append({'name': field, 'script_trigger': script , 'includes': includes })
-
-
-	def nameLength(self,string,suffix):
-		result = ''
-		toLong = False
-		if switches.isActive('Length'):
-			result = self.nameLengthFix(string,switches.value('Length'),'')
-		else:
-			try:
-				i = 0
-				for L in string:
-					if i <= self.maxNameLength:
-						result += L
-					else:
-						toLong = True
-					i += 1
-				if toLong == True:
-					result += '...'
-					if len(suffix) > 0:
-						result += '  .' + suffix
-			except Exception as e:
-				result = string
-		return result
-
-	def nameLengthFix(self,string,change,suffix):
-		result = ''
-		toLong = False
-		change = change.lower()
-		old = self.maxNameLength
-		if 'x' in change:
-			change = change.replace('x','')
-			newLength = self.maxNameLength * int(change)
-		else:
-			newLength = self.maxNameLength + int(change)
-		try:
-			i = 0
-			for L in string:
-				if i <= newLength:
-					result += L
-				else:
-					toLong = True
-				i += 1
-			if toLong == True:
-				result += '...'
-				if len(suffix) > 0:
-					result += '  .' + suffix
-		except Exception as e:
-			result = string
-		return result
-
-	def tabGetMaxSpace(self,name):
-		global errors
-		global switches
-		rows = self.asset
-		spacer = 1
-		# print_('*** ' + name)
-
-		# 23-01-09 14:19
-		# an attempt to fix    p ls -r    long folder names that include new trigger   _.tables.fieldProfileSet( 'data', 'folder', 'trigger', relative_folder )
-			# def fn(field):return field
-			# for i,x in enumerate(self.tableProfile):
-			#   if self.tableProfile[i]['name'] == name and '' in self.tableProfile[i] and  'function' in type(self.tableProfile[i]['trigger']):
-			#       fn=self.tableProfile[i]['trigger']
-		# did not work
-
-		size = len(name) + spacer
-
-		# print_(name,00)
-		# rows[0][name]
-		for i,rec in enumerate(self.asset):
-			if not name in rec: self.asset[i][name]=''
-		try:
-			pass
-			if name in rows[0]:
-				rows[0][name]
-			else:
-				# print_(  'rows[0]["' + '"]["'.join(name.split('.')) + '"]'  )
-				eval(  'rows[0]["' + '"]["'.join(name.split('.')) + '"]'  )
-		except Exception as e:
-			errors.append({'id': 9, 'function': 'tabGetMaxSpace()', 'cnt': 1, 'location': 'rows[0][name]', 'vars': [{'name': 'rows', 'value': 'nope to that, to big'}, {'name': 'name', 'value': name}], 'error': e})
-			printBold('Error:','red')
-			printBold('\tBad column input.')
-			print_(9)
-			print_(name)
-			print_(  'rows[0]["' + '"]["'.join(name.split('.')) + '"]'  )
-			printVarSimple(rows[0])
-			printBold('record sample','red')
-			os._exit(0)
-		# print_(name)
-		for item in rows:
-			shorten = True
-			if switches.isActive('Long') == True:
-				shorten = False
-				if switches.isActive('ShortenColumn') == True:
-					shortenColumn = switches.value('ShortenColumn')
-					for sc in shortenColumn.split(','):
-						if sc == name:
-							shorten = True
-
-			if name in item:
-				thisData = item[name]
-			elif name.split('.')[0] in item:
-				thisData = eval(  'item["' + '"]["'.join(name.split('.')) + '"]'  )
-
-
-			if shorten == True and not switches.isActive('Length'):
-				try:
-					text = self.nameLength( str(self.scriptTriggerField(name,thisData)) ,'')
-				except Exception as e:
-					text = self.nameLength(str(thisData),'')
-			else:
-				if switches.isActive('Length'):
-					# print_('asdf')
-					# sys.exit()
-					try:
-
-						text = self.nameLengthFix(  str(self.scriptTriggerField(name,thisData)) ,switches.value('Length'),'')
-					except Exception as e:
-						text = self.nameLengthFix(str(thisData),switches.value('Length'),'')
-				else:
-					# sys.exit()
-					# if type(thisData) == int or type(thisData) == float:
-					#     text = thisData
-					# else:
-					try:
-						text = self.scriptTriggerField(name,thisData)
-					except Exception as e:
-						text = thisData
-
-
-			itemSize = len(str(text)) + spacer
-			if itemSize > size:
-				size = itemSize
-			# print_(item)
-		return size
-
-	def addSpace(self,string,max):
-		dif = int(max) - len(string)
-		build = ''
-		for x in range(dif):
-			build = build + ' '
-		return build
-	def addSpace2(self,max):
-		dif = int(max)
-		build = ''
-		for x in range(dif):
-			build = build + ' '
-		return build
-	def scriptTriggerField(self,field,value):
-		i = 0
-		for s in self.tableProfile:
-			try:
-				if self.tableProfile[i]['includes'] == True:
-					if ',' in self.tableProfile[i]['name']:
-						found = False
-						for n in self.tableProfile[i]['name'].split(','):
-							if n in field:
-								found = True
-						if found:
-							value = self.tableProfile[i]['script_trigger'](value)
-					else:
-						if self.tableProfile[i]['name'] in field:
-							value = self.tableProfile[i]['script_trigger'](value)
-				else:
-					if field == self.tableProfile[i]['name']:
-						value = self.tableProfile[i]['script_trigger'](value)
-			except Exception as e:
-				pass
-			i += 1
-		return value
-	def triggerExecute(self,field,value):
-		i = 0
-		for s in self.tableProfile:
-			if self.tableProfile[i]['name'] == field:
-				try:
-					value = self.tableProfile[i]['trigger'](value)
-				except Exception as e:
-					pass
-			else:
-				if type(value) == int:
-					value = addComma( str(value) )
-			i += 1
-		return value
-
-	def fieldProfileSet(self,field,propertyName,value):
-		field = field.lower()
-		if field == '*' and propertyName == 'alignment':
-			self.tableProfileDefaultAlignment = value
-			self.tableProfileDefaultAlignmentChanged = True
-		if field == '_header_' and propertyName == 'alignment':
-			self.tableProfileDefaultAlignmentHeader = value
-		else:
-			if ',' in field:
-				for n in field.split(','):
-					self.fieldProfileSet(n,propertyName,value)
-
-			found = False
-			i = 0
-			for s in self.tableProfile:
-				if self.tableProfile[i]['name'] == field:
-					found = True
-					self.tableProfile[i][propertyName] = value
-				i += 1
-
-			if not found:
-				item = len(self.tableProfile)
-				self.tableProfile.append({'name': field, propertyName: value})
-
-	def fieldProfileGet(self,field,propertyName,isHeader = False):
-		# print_('ran')
-		field = field.lower()
-		i = 0
-		value = ''
-		if isHeader and '_header_' in TableProfile_Config.keys() and propertyName in TableProfile_Config['_header_'].keys():
-			return TableProfile_Config['_header_'][propertyName]
-		elif not isHeader and field in TableProfile_Config.keys() and propertyName in TableProfile_Config[field].keys():
-			return TableProfile_Config[field][propertyName]
-		elif '*' in TableProfile_Config.keys() and propertyName in TableProfile_Config['*'].keys():
-			return TableProfile_Config['*'][propertyName]
-
-		if propertyName == 'alignment':
-			value = self.tableProfileDefaultAlignment
-
-		for s in self.tableProfile:
-			if self.tableProfile[i]['name'] == field:
-				try:
-					value = self.tableProfile[i][propertyName]
-				except Exception as e:
-					pass
-			i += 1
-
-
-		if self.tableProfileDefaultAlignmentChanged and self.tableProfileDefaultSupersedes:
-			value = self.tableProfileDefaultAlignment
-		if isHeader and len(self.tableProfileDefaultAlignmentHeader) > 0:
-			value = self.tableProfileDefaultAlignmentHeader
-
-		elif isHeader:
-			value = 'center'
-		if propertyName == 'alignment' and value == '':
-			value = 'left'
-		return value
-	def showColumn(self,column,i,columnHeaderLength):
-		# print_(column)
-		global errors
-		global lastGroup
-		global switches
-		def test(one,two):
-			# print_(one,two)
-			if (one) == (two):
-				return True
-			else:
-				return False
-		groupByList = self.groupByList
-		rows = self.asset
-		# print_(rows)
-
-		columnList = column
-		if column in rows[i]:
-			value = str(self.triggerExecute(column,rows[i][column]))
-		elif column.split('.')[0] in rows[i]:
-			value = str(self.triggerExecute(column,  eval(  'rows[i]["' + '"]["'.join(column.split('.')) + '"]'  )  ) )
-
-		# value = rows[i][column]
-		# print_(column,value)
-		value = value.replace('\n','')
-		# value = self.scriptTriggerField(column,rows[i][column])
-		try:
-			pass
-		except Exception as e:
-			pass
-
-		shorten = True
-		if switches.isActive('Long') == True:
-			shorten = False
-			if switches.isActive('ShortenColumn') == True:
-				shortenColumn = switches.value('ShortenColumn')
-				for sc in shortenColumn.split(','):
-					if sc == column:
-						shorten = True
-		text = str(value)
-		if shorten == True:
-			text = self.nameLength(str(value),'')
-		else:
-			text = str(value)
-
-		
-		groupBy = switches.value('GroupBy')
-		GroupTotals = switches.values('GroupTotals')
-		try:
-			tabFix = self.spaces[column]
-		except Exception as e:
-			# errors.append({'id': 10, 'function': 'showColumn()', 'cnt': 1, 'location': 'tabFix = spaces[column]', 'vars': [{'name': 'rows', 'value': 'nope to that, to big'}, {'name': 'column', 'value': column}, {'name': 'i', 'value': i}], 'error': e})
-			tabFix = self.tabGetMaxSpace(column)
-			self.spaces[column] = tabFix
-
-		if switches.isActive('GroupBy') == True:
-			if column in GroupTotals:
-				if not column in self.GroupTotals: self.GroupTotals[column]=0
-				self.GroupTotals[column]+=float(self.asset[i][column])
-			for gb in groupBy.split(','):
-				gb = str(gb)
-				if column == gb:
-					# print_('- -',last,text)
-					if not test(groupByList[gb],text) == True:
-						if groupBy.split(',')[0] == column:
-							pass
-							if self.group_space:
-								print_(self.groupLine(columnList,columnHeaderLength))
-							if not self.isExtraRecord:
-								for g in groupBy.split(','):
-									groupByList[g] = ''
-						else:
-							pass
-							if self.group_space:
-								print_('')
-
-
-						if not self.isExtraRecord:
-							groupByList[gb] = text
-						else:
-							if self.isExtraRecord_000x.split('-')[0] in self.isExtraRecord_0001:
-								text = ''
-
-						# else:
-						#   print_(text)
-					else:
-						pass
-
-						if len(self.isExtraRecord_000x):
-							self.isExtraRecord_0001[ self.isExtraRecord_000x.split('-')[0] ] = 1
-						text = ''
-						if not column in self.Groups: self.Groups[column]={'lines':[]}
-						self.Groups[column]['lines'].append(i)
-
-		alignment = self.fieldProfileGet(column,'alignment')
-		# print_(alignment)
-		# if alignment == 'left':
-		result = text + self.addSpace(text,tabFix)
-		if alignment == 'left':
-			result = text + self.addSpace(text,tabFix)
-		if alignment == 'right':
-			result = self.addSpace(text,tabFix) + text
-		if alignment == 'center':
-			totalSpace = int(tabFix) - len(text)
-			if totalSpace > 0:
-				if totalSpace % 2 == 0:
-					div2 = totalSpace/2
-					theLeft = div2
-					theRight = div2
-				else:
-					divTMP = totalSpace - 1
-					div2 = divTMP/2
-					theLeft = div2 + 1
-					theRight = div2
-			else:
-				theLeft = 0
-				theRight = 0
-			result = self.addSpace2(theLeft) + text + self.addSpace2(theRight)
-			# print_(column,theLeft,theRight,'0' + result + '0')
-			# print_(totalSpace,theLeft,theRight)
-		#   result = theLeft + text + theRight
-		return result
-
-	def groupLine(self,columnList,columnHeaderLength):
-		columnNumber = len(columnList.split(','))
-		loop = 0
-		result = ''
-		while loop < columnHeaderLength + (columnNumber * 4):
-			result += self.groupSeparator
-			loop += 1
-		return result
-
-	def showColumnHeader(self,column):
-		# rows = self.asset
-		result = ' '
-		if type(self.universalSpacing) == dict:
-			self.spaces = self.universalSpacing
-		for c in column.split(','):
-			try:
-				tabFix = self.spaces[c]
-			except Exception as e:
-				# errors.append({'id': 11, 'function': 'showColumn()', 'cnt': 2, 'location': 'tabFix = spaces[c]', 'vars': [{'name': 'rows', 'value': 'nope to that, to big'}, {'name': 'column', 'value': column}], 'error': e})
-				tabFix = self.tabGetMaxSpace(c)
-				self.spaces[c] = tabFix
-				# print_(tabFix)
-			# x
-			# alignment = 'center'
-			alignment = self.fieldProfileGet(c,'alignment',isHeader=True)
-			alignment='left'
-			if alignment == '':
-				########## Default Alignment ##########
-				alignment = 'left'
-
-			if switches.isActive('YesTableLines'):
-				result+='|'
-			else:
-				result+=' '
-
-			if alignment == 'center':
-				totalSpace = int(tabFix) - len(c)
-				if totalSpace > 0:
-					if totalSpace % 2 == 0:
-						div2 = totalSpace/2
-						theLeft = div2
-						theRight = div2
-					else:
-						divTMP = totalSpace - 1
-						div2 = divTMP/2
-						theLeft = div2 + 1
-						theRight = div2
-				else:
-					theLeft = 0
-					theRight = 0
-				result += self.addSpace2(theLeft) + c.replace('_',' ').upper() + self.addSpace2(theRight) + self.columnTab
-			if alignment == 'left':
-				result += c.replace('_',' ').upper() + self.addSpace(c,tabFix) + self.columnTab
-			if alignment == 'right':
-				result += self.addSpace(c,tabFix) + c.replace('_',' ').upper() + self.columnTab
-			# else:
-				# result += c.replace('_',' ').upper() + self.addSpace(c,tabFix) + self.columnTab
-
-		if switches.isActive('YesTableLines'):
-			result += '|'
-			if len(switches.value('YesTableLines')):
-				newResult = '\n'
-				for x in result.replace(' |','| '):
-					if x == '|':
-						newResult+=x
-					else:
-						newResult+='-'
-				newResult = _str.cleanEnd(newResult,'-')
-				result+=newResult
-
-				# for c in column.split(','):
-					# result += '|'+self.addSpace(c,tabFix).replace(' ','-') + self.columnTab.replace(' ','-')
-					# result += '|'+self.addSpace(c,tabFix).replace(' ','-')
-
-
-		if switches.isActive('YesTableLines'):
-			result = result.replace(' |','| ')
-		else:
-			result += '\n'
-		return '\n'+result
-
-	def findColumName( self, column ):
-		for k in self.asset[0].keys():
-			if k.lower() == column.lower():
-				return k
-		for k in self.asset[0].keys():
-			if k.lower() == column.split('.')[0].lower():
-				return column
-
-
-
-
-	def prefixSize( self ):
-		pre = ''
-		for x in self.tab['table']+loopPrint(__.table_prefix_padding):
-			if x == '\t':
-				pre += '    '
-			else:
-				pre += x
-		return len(pre)
-
-
-	def wrapTable( self, cols=None ):
-		# return None
-
-		if not __.terminal.width:
-			return None
-
-		cols = __.terminal.width
-		cols -= 8
-		spaces = []
-		theKeys = []
-		for c in self.spaces:
-			theKeys.append(c)
-			spaces.append({ 'c': c, 's': self.spaces[c] })
-
-		spaces = sorted(spaces, key=lambda d: (d['s']))
-		spaces.reverse()
-
-		fieldsToShorten = []
-
-		if not len(switches.value('WrapTable')):
-			fieldsToShorten.append( spaces[0]['c'] )
-			if len( self.spaces.keys() ) > 1:
-				diff = percentageDiffIntAuto( spaces[0]['s'], spaces[1]['s'] )
-				if diff >= 50:
-					fieldsToShorten.append( spaces[1]['c'] )
-				# print_( 'diff:', diff )
-
-				if len( self.spaces.keys() ) > 2:
-					diff = percentageDiffIntAuto( spaces[0]['s'], spaces[2]['s'] )
-					if diff >= 50:
-						fieldsToShorten.append( spaces[2]['c'] )
-					# print_( 'diff:', diff )
-		elif len(switches.value('WrapTable')):
-			done = False
-			if len(switches.values('WrapTable')) == 1:
-				done = False
-				wrapBy = switches.value('WrapTable')
-				if wrapBy in self.asset[0].keys():
-					done = True
-				if not done:
-					if formatColumns(wrapBy) in self.asset[0].keys():
-						wrapBy = formatColumns(wrapBy)
-						done = True
-
-				if not done:
-					wrapBy = 0
-					try:
-						wrapBy = int(switches.value('WrapTable'))
-					except Exception as e:
-						wrapBy = 0
-					if wrapBy > 0:
-						done = True
-			elif len(switches.values('WrapTable')) > 1:
-				wrapBy = []
-				for xx in switches.values('WrapTable'):
-					y = formatColumns(xx)
-					if y in self.asset[0].keys():
-						wrapBy.append(y)
-						done = True
-
-			if done:
-				if type(wrapBy) == str:
-					fieldsToShorten.append( wrapBy )
-				if type(wrapBy) == list:
-					for yy in wrapBy:
-						fieldsToShorten.append( yy )
-				if type(wrapBy) == int:
-					for isp, itx in enumerate(spaces):
-						fieldsToShorten.append( itx['c'] )
-
-						if isp+1 == wrapBy:
-							break
-
-				# print_(type(wrapBy))
-				# print_(wrapBy)
-				# sys.exit()
-
-
-
-
-		# print_(fieldsToShorten)
-		# sys.exit()
-
-		maxLen = self.maxNameLength
-		total = self.prefixSize()
-		for c in self.spaces:
-			total += self.spaces[c]
-			total += len(self.columnTab)
-
-		tempSpaces = self.spaces.copy()
-		for c in tempSpaces:
-			if tempSpaces[c] > maxLen:
-				if not c in fieldsToShorten:
-					fieldsToShorten.append(c)
-
-		while total > cols:
-			hasGrtMax = False
-
-			for fs in fieldsToShorten:
-				if tempSpaces[fs] > maxLen:
-					hasGrtMax = True
-					tempSpaces[fs] -=1
-			if not hasGrtMax:
-				for fs in fieldsToShorten:
-					tempSpaces[fs] -=1
-
-			total = self.prefixSize()
-			for c in tempSpaces:
-				total += tempSpaces[c]
-				total += len(self.columnTab)
-
-
-
-		# percentageDiffIntAuto
-		# printVarSimple( self.spaces )
-		# print_( '---------' )
-		# printVarSimple( tempSpaces )
-		# for x in spaces:
-		#   print_(x)
-
-		wrapTableKey = self.wrapTableKey
-
-		counter = 0
-		global fields
-		fields.register( wrapTableKey+'-b', 'val', 4, m=4 )
-		fields.register( wrapTableKey, 'val', 7, m=12 )
-		test = fields.padZeros( wrapTableKey, 'val', 5 )
-		test = fields.padZeros( wrapTableKey+'-b', 'val', 5 )
-		letters = {}
-
-
-		# print_(letterSet)
-		# sys.exit()
-		def letterBoost( i ):
-			if not str(i) in letters:
-				letters[str(i)] = 'a'
-
-
-		recordsToAdd = []
-		for i,record in enumerate(self.asset):
-			letters[ str(i) ] = 'a'
-			recordKey = 1
-
-
-			this_key = fields.padZeros( wrapTableKey, 'val', i+1 )
-			this_key_B = fields.padZeros( wrapTableKey+'-b', 'val', recordKey )
-
-
-			self.asset[i][wrapTableKey+'-sort'] = this_key+'-'+this_key_B
-			rec = {}
-			rec_last = {}
-			for c in tempSpaces:
-
-				if c in record and len( str(record[c]) ) > tempSpaces[c]:
-					# rec[c] = {}
-					recordKey = 1
-					# cs = fields.padZeros( wrapTableKey+'-b', 'val', recordKey )
-					# # print_(cs)
-					# if not cs in rec:
-					#   rec[cs] = {}
-					# if not c in rec[cs]:
-					#   rec[cs][c] = ''
-
-					rec_parts = autoWrapText( str(record[c]), length=tempSpaces[c] )
-
-					# print_('_________________________________________')
-					# print_()
-					# print_(record[c])
-					# print_()
-					# print_(rec_parts)
-					# print_()
-					# print_('_________________________________________')
-					rp = ''
-					last_rp = ''
-					for rp in rec_parts:
-						if len(rp) and not last_rp == rp:
-							last_rp = rp
-							cs = fields.padZeros( wrapTableKey+'-b', 'val', recordKey )
-							recordKey += 1
-							if not cs in rec:
-								rec[cs] = {}
-							if not cs in rec_last:
-								rec_last[cs] = {}
-							# if not c in rec[cs]:
-								# rec[cs][c] = ''
-
-							# if c in rec_last[cs]:
-							#   if
-							rec[cs][c] = rp
-					rp = ''
-
-					# for x in record[c]:
-					#   rec[cs][c] += x
-					#   if len( rec[cs][c] ) > tempSpaces[c]:
-					#       recordKey += 1
-					#       cs = fields.padZeros( wrapTableKey+'-b', 'val', recordKey )
-					#       # print_(cs)
-					#       if not cs in rec:
-					#           rec[cs] = {}
-					#       if not c in rec[cs]:
-					#           rec[cs][c] = ''
-					# printVarSimple(rec)
-					# sys.exit()
-			if rec:
-				for iii,xXx in enumerate(rec):
-					if xXx == '0001':
-						for c in rec[xXx]:
-							self.asset[i][c] = rec[xXx][c]
-					else:
-						# print_(xXx)
-						rec[xXx][wrapTableKey+'-sort'] = this_key +'-'+ xXx
-						recordsToAdd.append(rec[xXx])
-					# print_(rec[x])
-				# print_(rec)
-
-		for rec in recordsToAdd:
-			self.asset.append(rec)
-			# print_(rec)
-		# sys.exit()
-		self.spaces = {}
-
-
-		groupBy = switches.values('GroupBy')
-		last = {}
-		for gb in groupBy:
-			last[gb] = '{7270D97A-CC1D-4365-9545-87CA34F2F026}'
-
-
-
-		for i,record in enumerate(self.asset):
-			ks = list(record.keys())
-			for k in theKeys:
-				if not k in ks:
-					self.asset[i][k] = ''
-			for k in theKeys:
-				if not k in self.spaces:
-					self.spaces[k] = 0
-				if len(str(record[k])) > self.spaces[k]:
-					self.spaces[k] = len(str(record[k]))
-
-
-		# for i,record in enumerate(self.asset):
-		#   for gb in groupBy:
-		#       if gb in self.asset[i]:
-		#           if self.asset[i][gb] == last[gb]:
-		#               self.asset[i][gb] = ''
-		#           else:
-		#               last[gb] = self.asset[i][gb]
-		self.asset = sorted(self.asset, key=lambda d: (d[wrapTableKey+'-sort']))
-
-
-		# for x in self.asset:
-		#   print_()
-		#   print_(x)
-		#   print_()
-
-
-
-
-		# for i,record in enumerate(self.asset):
-		#   print_( record[wrapTableKey+'-sort'] )
-		# sys.exit()
-		# print_(self.asset)
-		# for x in self.asset:
-		#   print_()
-		#   print_(x)
-		#   print_()
-		# sys.exit()
-
-		self.print(
-					column=self.print_backup['column'],
-					fieldLengths=self.print_backup['fieldLengths'],
-					pc=self.print_backup['pc'],
-					printColumns=self.print_backup['printColumns'],
-					force=True
-		)
-
-
-
-
-	def aggregateRecord( self, i ):
-		# print_()
-
-		for c in self.aggregates.columns:
-			if not c in self.asset[i]:
-				self.asset[i][c] = ''
-
-		for seg in self.aggregates.segments:
-			if seg['status']:
-				record = self.aggregate_record_process( i, seg['i'] )
-
-
-	def aggregateTop( self, s ):
-		ss = str(s)
-		if self.aggregates.index[ss]['rent'] >= 0:
-			return self.aggregateTop(self.aggregates.index[ss]['rent'])
-		else:
-			return self.aggregates.index[ss]
-
-
-	def aggregateItemValue( self, v, f ):
-		if not 'params' in v:
-			v['params'] = {}
-		if not 'fields' in v:
-			v['fields'] = {}
-		if not 'data' in v:
-			v['data'] = []
-
-		# print_( self.aggregate_backtrack )
-
-		if 'data' in f:
-			v['data'].append( f['data'] )
-		if 'fields' in f:
-			if not 'fields' in v:
-				v['fields'] = {}
-			for k in f['fields']:
-				v['fields'][k] = f['fields'][k]
-		elif 'params' in f:
-			if not 'params' in v:
-				v['params'] = {}
-			for k in f['params']:
-				v['params'][k] = f['params'][k]
-		return v
-
-	def aggregate_record_process_group( self, i, s ):
-		ss = str(s)
-		seg = self.aggregates.index[ss]
-		if 'variable' in seg['l']:
-			alpha = seg['l']
-			if '?' in seg['txt'] and seg['txt'].lower().split('?')[0]+'?' in __.aggregate.group_prefixes:
-				txtParts = seg['txt'].split('?')
-				grp = txtParts[0]+'?'
-				fld = txtParts[1]
-				lbl = txtParts[2]
-				if not lbl in self.aggregates.group_storage:
-					self.aggregates.group_storage[lbl] = 0
-
-
-				data = self.aggregate_record_process( i, seg['val'] )
-				child = self.aggregates.index[ str(seg['val']) ]
-				do = None
-				if 'function' in child['l']:
-					do = child['txt']
-					done = False
-					if do == 'max':
-						done = True;
-						try:
-							if data['data'] > self.aggregates.group_storage[lbl]:
-								self.aggregates.group_storage[lbl] = data['data']
-						except Exception as e: cp('Error: group max variable', 'red');
-
-					if do == 'add':
-						done = True;
-						try:
-							self.aggregates.group_storage[lbl] += data['data']
-						except Exception as e: cp('Error: group add variable', 'red');
-
-					# if not done:
-					#   self.aggregates.group_storage[lbl] = data['data']
-
-				pass
-
-
-
-				pass
-
-				if i in self.aggregates.groups[fld]['e']:
-					if  __.aggregate.group_prefixes[  seg['txt'].lower().split('?')[0]+'?'  ] == 3:
-						self.asset[  self.aggregates.groups[fld]['e'][i]  ][lbl] = addComma( self.aggregates.group_storage[lbl] )
-					else:
-						if tfc(lbl) in self.backup.NGfields:
-							if not str(i) in self.aggregates.agroupsADD:
-								self.aggregates.agroupsADD[ str(i) ] = {}
-							self.aggregates.agroupsADD[ str(i) ][lbl] = self.aggregates.group_storage[lbl]
-						else:
-							self.asset[i][lbl] = addComma( self.aggregates.group_storage[lbl] )
-					if not __.aggregate.group_prefixes[  seg['txt'].lower().split('?')[0]+'?'  ] == 2:
-						self.aggregates.group_storage[lbl] = 0
-
-
-
-		# if self.aggregates.groups:
-		#   printVarSimple(self.aggregates.groups)
-		#   print_( list( self.asset[0].keys() ) )
-		#   sys.exit()
-
-
-	def aggregate_record_process( self, i, s ):
-
-		ss = str(s)
-		if True:
-			seg = self.aggregates.index[ss]
-			# print_(seg)
-
-			# self.aggregate_backtrack = { 'i': i, 's': s, 'seg': seg }
-
-
-			if 'alpha' in seg['l'] and 'arg' in seg['l'] :
-				simple_keys = {}
-				for key in list(self.asset[i].keys()):
-					simple_keys[ tfc(key) ] = key
-				if tfc(formatColumns( seg['txt'] )) in simple_keys:
-					vXv = simple_keys[tfc(formatColumns( seg['txt'] ))]
-					return { 'fields': { vXv: self.asset[i][vXv] }, 'data': self.asset[i][vXv] }
-
-				elif formatColumns( seg['txt'] ) in self.asset[i]:
-					return { 'fields': { formatColumns( seg['txt'] ): self.asset[i][formatColumns( seg['txt'] )] }, 'data': self.asset[i][formatColumns( seg['txt'] )] }
-				return { 'params': { seg['txt']: 1 } }
-
-
-
-			if 'variable' in seg['l']:
-				alpha = seg['l']
-				isOF = False
-				data = self.aggregate_record_process( i, seg['val'] )
-				if '?' in seg['txt'] and  seg['txt'].lower().split('?')[0]+'?' in __.aggregate.prefixes:
-					isOF = True
-					if '?' in seg['txt'] and seg['txt'].lower().split('?')[0]+'?' in __.aggregate.group_prefixes:
-						return None
-					if seg['txt'].startswith('eot?'):
-						if not seg['txt'] in self.aggregates.storage:
-							self.aggregates.storage[ seg['txt'] ] = {}
-						if not alpha in self.aggregates.storage[seg['txt']]:
-							self.aggregates.storage[seg['txt']][alpha] = {}
-							self.aggregates.storage[seg['txt']][alpha]['data'] = 0
-							self.aggregates.storage[seg['txt']][alpha]['settings'] = {}
-					if seg['txt'].startswith('eof?'):
-						# print_( seg['txt'] ); sys.exit();
-						if not seg['txt'] in __.aggregate.eof.storage:
-							__.aggregate.eof.storage[ seg['txt'] ] = {}
-						if not alpha in __.aggregate.eof.storage[seg['txt']]:
-							__.aggregate.eof.storage[seg['txt']][alpha] = {}
-							__.aggregate.eof.storage[seg['txt']][alpha]['data'] = 0
-							__.aggregate.eof.storage[seg['txt']][alpha]['settings'] = {}
-
-
-					# print_(isOF, seg['txt'])
-
-
-					child = self.aggregates.index[ str(seg['val']) ]
-					do = None
-					if 'function' in child['l']:
-						do = child['txt']
-
-
-					if seg['txt'].startswith('eot?'):
-						done = False
-						if do == 'max':
-							done = True;
-							try:
-								if data['data'] > self.aggregates.storage[seg['txt']][alpha]['data']:
-									self.aggregates.storage[seg['txt']][alpha]['data'] = data['data']
-							except Exception as e: cp('Error: max variable', 'red');
-
-						if do == 'add':
-							done = True;
-							try:
-								self.aggregates.storage[seg['txt']][alpha]['data'] += data['data']
-							except Exception as e: cp('Error: add variable', 'red');
-
-
-						if not done:
-							self.aggregates.storage[seg['txt']][alpha]['data'] = data['data']
-
-					elif seg['txt'].startswith('eof?'):
-						done = False
-						if do == 'max':
-							done = True;
-							try:
-								if data['data'] > __.aggregate.eof.storage[seg['txt']][alpha]['data']:
-									__.aggregate.eof.storage[seg['txt']][alpha]['data'] = data['data']
-							except Exception as e: cp('Error: max variable', 'red');
-
-						if do == 'add':
-							done = True;
-							try:
-								__.aggregate.eof.storage[seg['txt']][alpha]['data'] += data['data']
-							except Exception as e: cp('Error: add variable', 'red');
-
-						if not done:
-							__.aggregate.eof.storage[seg['txt']][alpha]['data'] = data['data']
-
-				else:
-					# print_( i, seg['txt'], data['data'] )
-					self.asset[i][seg['txt']] = data['data']
-
-
-
-					return data
-				return { 'data': '' }
-			if 'function' in seg['l']:
-				###########################################################################################################
-				if seg['txt'] == 'trigger':
-					pass
-
-				# { 'fields': {  'field': 123, 'data': 123 } }  { 'params': {  'param': 1  } }
-				if seg['txt'] == 'add':
-					result = 0; v = {};
-					for s in seg['args']:
-						f = self.aggregate_record_process( i, s ); v = self.aggregateItemValue( v, f );
-					if 'data' in v:
-						if type(v['data']) == list:
-							for d in v['data']:
-								try:
-									result += float( d )
-								except Exception as e: pass;
-						else:
-							try:
-								result += float( v['data'] )
-							except Exception as e: pass;
-					if str(result).endswith('.0'):
-						result = int(result)
-					return { 'data': result }
-
-
-
-				# { 'fields': {  'field': 123, 'data': 123 } }  { 'params': {  'param': 1  } }
-				if seg['txt'] == 'int':
-					result = 0; v = {};
-					for s in seg['args']:
-						f = self.aggregate_record_process( i, s ); v = self.aggregateItemValue( v, f );
-					if 'data' in v:
-						nX = []
-						if type(v['data']) == list:
-							for d in v['data']:
-								for cn in str(d):
-									if cn in '0123456789.':
-										nX.append(cn)
-						else:
-							for cn in str(v['data']):
-								if cn in '0123456789.':
-									nX.append(cn)
-
-					try:
-						result = float(''.join(nX))
-					except Exception as e:
-						nXj=[]
-						for x99 in nX:nXj.append(str(x99))
-						result = ''.join(nXj)
-					if str(result).endswith('.0'):
-						result = int(result)
-					# print_(result)
-					return { 'data': result }
-
-
-
-				# { 'fields': {  'field': 123, 'data': 123 } }  { 'params': {  'param': 1  } }
-				if seg['txt'] == 'len':
-					result = 0; v = {};
-					for s in seg['args']:
-						f = self.aggregate_record_process( i, s ); v = self.aggregateItemValue( v, f );
-					if 'data' in v:
-						if type(v['data']) == list:
-							for d in v['data']:
-								# print_( 'len-d:', d )
-								result += len( str( d ) )
-						else:
-							# print_( 'len-vd:', v['data'] )
-							result += len( str( v['data'] ) )
-					# print_( 'len-v', v )
-					if str(result).endswith('.0'):
-						result = int(result)
-					return { 'data': result }
-
-
-
-				# { 'fields': {  'field': 123, 'data': 123 } }  { 'params': {  'param': 1  } }
-				if seg['txt'] == 'max':
-					result = []; v = {};
-					for s in seg['args']:
-						f = self.aggregate_record_process( i, s ); v = self.aggregateItemValue( v, f );
-					for d in v['data']:
-						if '?date' in v['params']:
-							try:
-								ad = autoDate( d )
-							except Exception as e: ad = 0;
-							result.append(ad)
-						else:
-							try:
-								ad = float( d )
-							except Exception as e: ad = 0;
-							result.append(ad)
-					result.sort()
-					result.reverse()
-
-					return { 'data': result[0] }
-
-
-				if seg['txt'] == 'config':
-					result = []; v = {};
-					for s in seg['args']:
-						f = self.aggregate_record_process( i, s ); v = self.aggregateItemValue( v, f );
-					for par in v['params']:
-						result.append(par)
-					suffix = ''
-					for par in result:
-						suff = "['"+par+"']"
-						suffix += suff
-						try:
-							eval( '__.aggregate.config'+suffix  )
-						except Exception as e:
-							exec( '__.aggregate.config'+suffix+' = { }'  )
-					# printVarSimple(__.aggregate.config)
-					# sys.exit()
-
-				pass
-				if seg['txt'] == 'format':
-					result = []; v = {};
-					for s in seg['args']:
-						f = self.aggregate_record_process( i, s ); v = self.aggregateItemValue( v, f );
-					for par in v['params']:
-						result.append(par)
-					suffix = ''
-					for par in result:
-						suff = "['"+par+"']"
-						suffix += suff
-						# print_( 'suffix:', suffix )
-						try:
-							eval( '__.aggregate.format'+suffix  )
-						except Exception as e:
-							exec( '__.aggregate.format'+suffix+' = { }'  )
-
-
-
-				# { 'fields': {  'field': 123, 'data': 123 } }  { 'params': {  'param': 1  } }
-				if seg['txt'] == 'isDate':
-					result = None; v = {};
-					for s in seg['args']:
-						f = self.aggregate_record_process( i, s ); v = self.aggregateItemValue( v, f );
-					if 'data' in v:
-						if type(v['data']) == list:
-							for d in v['data']:
-								try:
-									result = autoDate( d )
-								except Exception as e: pass;
-						else:
-							try:
-								result = autoDate( v['data'] )
-							except Exception as e: pass;
-
-					if not result is None:
-						try:
-							global _dir
-						except Exception as e:
-							pass
-						if _dir is None:
-							import _rightThumb._dir as _dir
-						# print_( result )
-						# self.asset[i]['month'] = _dir.getMonthFromEpoch( result )
-						# self.asset[i]['year'] = _dir.getYearFromEpoch( result )
-						# self.asset[i]['woy'] = _dir.getWeekAndYear( result )
-						# self.asset[i]['dow'] = _dir.getDOWromEpochText( result )
-						# self.asset[i]['ago'] = _dir.dateDiffText( result )
-						self.asset[i] = isDate( result, self.asset[i] )
-
-						# month year woy dow ago
-
-
-						month = _dir.getMonthFromEpoch
-						# year = _dir.getYearFromEpoch
-						# woy = _dir.getWOYFromEpoch
-						# dow = _dir.getDOWromEpochText
-						# ago = _dir.dateDiffText
-					return { 'data': None }
-
-
-
-				# { 'fields': {  'field': 123, 'data': 123 } }  { 'params': {  'param': 1  } }
-				if seg['txt'] == 'file':
-					result = ''; v = {};
-					for s in seg['args']:
-						f = self.aggregate_record_process( i, s ); v = self.aggregateItemValue( v, f );
-					if 'data' in v:
-						if type(v['data']) == list:
-							for d in v['data']:
-								try:
-									result = d
-								except Exception as e: pass;
-						else:
-							try:
-								result = v['data']
-							except Exception as e: pass;
-
-
-					# global _dir
-					if _dir is None:
-						import _rightThumb._dir as _dir
-					# info = _dir.info( _str.cleanBE( result, ' ' ).replace( '\t', '' ) )
-					# print_( info )
-					try:
-						info = _dir.info( _str.cleanBE( result, ' ' ).replace( '\t', '' ) )
-					except Exception as e:
-						info = {
-									"path": "",
-									"name_": "",
-									"name": "",
-									"folder": "",
-									"bytes": 0,
-									"size": "",
-									"date_created_raw": 0,
-									"date_modified_raw": 0,
-									"date_created": "",
-									"date_modified": "",
-									"type": "File",
-									"typesort": 1,
-									"ext": "txt",
-									"week_of_year": "",
-									"week_of_year_": 0,
-									"day_of_the_week": "",
-									"month": "",
-									"friendly_week": "",
-									"friendly_month": "",
-									"md5": "",
-									"year": 2021,
-									"accessed_raw": 0,
-									"date_accessed": "",
-									"ce": 0,
-									"me": 0,
-									"ae": 0,
-									"meta": {},
-									"ago": "",
-									"header": "",
-									"error": 0
-								}
-
-					for k in info:
-						if not k in self.asset[i]:
-							self.asset[i][k] = info[k]
-
-					return { 'data': result }
-
-
-
-
-				# { 'fields': {  'field': 123, 'data': 123 } }  { 'params': {  'param': 1  } }
-				###########################################################################################################
-
-
-
-	def aggregateBuild( self ):
-		if self.aggregate_processed:
-			return None
-
-		self.aggregate_processed = True
-
-
-		a = ' '.join( switches.values('Aggregate') )
-		# print_( a )
-
-
-		self.aggregates = dot()
-
-
-		self.aggregates.storage = {}
-		self.aggregates.group_storage = {}
-		# self.aggregates.segments = __.code.process( a, addString=[['alphaParam','?']] )
-		# self.aggregates.segments = __.aggregate.data.records
-		self.aggregates.segments = __.aggregate.obj.build( self.name, addSwitch=True )
-
-		self.aggregates.index = {}
-
-		self.aggregates.groups = {}
-		self.aggregates.agroups = {}
-		self.aggregates.agroupsADD = {}
-		self.aggregates.columns = []
-		for rec in self.aggregates.segments:
-			self.aggregates.index[ str(rec['i']) ] = rec
-			if rec['status'] and rec['l'] == 'variable':
-				# if not rec['txt'].startswith('eot?'):
-				# if not rec['txt'].startswith('eot?') and not rec['txt'].startswith('eof?') and not rec['txt'].startswith('eog?') and  not rec['txt'].startswith('bog?') and  not rec['txt'].lower().startswith('eoga?'):
-				if not '?' in rec['txt'] or ( '?' in rec['txt'] and not rec['txt'].lower().split('?')[0]+'?' in __.aggregate.prefixes):
-					self.aggregates.columns.append( rec['txt'] )
-					if not rec['txt'] in self.backup.allfields:
-						self.backup.allfields[ rec['txt'] ] = rec['txt']
-						self.backup.NGfields[ rec['txt'] ] = rec['txt']
-		for rec in self.aggregates.segments:
-			if rec['status'] and rec['l'] == 'variable':
-				if not '?' in rec['txt'] or ( '?' in rec['txt'] and not rec['txt'].lower().split('?')[0]+'?' in __.aggregate.prefixes):
-					pass
-				elif '?' in rec['txt'] and rec['txt'].lower().split('?')[0]+'?' in __.aggregate.group_prefixes:
-				# elif 'g?' in rec['txt']:
-					self.aggregates.agroups[ rec['i'] ] = rec
-
-					try:
-						gc = rec['txt'].split('?')[2]
-
-					except Exception as e:
-						cp( 'Error: aggregates, group split', 'red' )
-						sys.exit()
-					else:
-						self.aggregates.columns.append( gc )
-					if not gc in self.backup.allfields:
-						self.backup.allfields[ rec['txt'] ] = gc
-
-		# self.hasGroups
-
-		pass
-		# print_( self.aggregates.columns )
-		# sys.exit()
-
-
-
-		# sys.exit()
-		# for x in segments:
-		#   if x['status']:
-		#       cp( x, 'green' )
-		#   else:
-		#       cp( x, 'cyan' )
-		#       # print_( x )
-
-		for i,record in enumerate(self.asset):
-			self.aggregateRecord( i )
-
-
-		# sys.exit()
-		__.aggregate.storage = self.aggregates.storage
-		return self.aggregates.columns
-
-
-	def aggregateRecordGroups( self, i ):
-		# print_()
-
-		for seg in self.aggregates.segments:
-			if seg['status']:
-				# record = self.aggregate_record_process_group( i, seg['i'] )
-				try:
-					record = self.aggregate_record_process_group( i, seg['i'] )
-				except Exception as ee:
-					cp( 'Error: aggregate, group error', 'red' )
-					cp( '\t expected:', 'yellow' )
-					cp( '\t\t eog?level?group-len=add(len)', 'green' )
-					print_()
-					cp( [ 'Specifically:', ee ], 'red' )
-					print_()
-					sys.exit()
-
-
-
-
-	def aggregateGroup( self ):
-		# NOTE: reprocess after aggregates added
-		for ix in self.aggregates.agroups:
-			seg = self.aggregates.agroups[ix]
-			q = seg['txt'].split('?')
-			subject = q[1]
-			# print_( self.asset[0].keys() )
-			# print_(subject); sys.exit();
-			if subject in self.asset[0] and not subject in self.aggregates.groups:
-				self.aggregates.groups[subject] = {}
-				self.aggregates.groups[subject]['b'] = {}
-				self.aggregates.groups[subject]['e'] = {}
-				lastQ = ''
-				lastID = -1
-				for i,record in enumerate(self.asset):
-					# print_(subject)
-					if subject in record:
-						# print_( record[subject] )
-						if not record[subject] == lastQ:
-							if not lastID == -1:
-								self.aggregates.groups[subject]['b'][lastID] = i
-								self.aggregates.groups[subject]['e'][i] = lastID
-							lastQ = record[subject]
-							lastID = i
-				self.aggregates.groups[subject]['b'][lastID] = len(self.asset)-1
-				self.aggregates.groups[subject]['e'][len(self.asset)-1] = lastID
-
-		# if self.aggregates.groups:
-		#   printVarSimple(self.aggregates.groups)
-		#   print_( list( self.asset[0].keys() ) )
-		#   sys.exit()
-
-	def aggregate( self, script ):
-		self.hasAggregate = True
-		__.aggregate.obj.code( script, label=self.name )
-
-	def aggregateBuildGroup( self ):
-		self.aggregateGroup()
-		for i,record in enumerate(self.asset):
-			self.aggregateRecordGroups( i )
-
-		if self.aggregates.agroupsADD:
-
-
-			fields.register( self.groupID_KEY, 'val', 7, m=6 )
-			test = fields.padZeros( self.groupID_KEY, 'val', 5 )
-			newRecords = []
-			for i,record in enumerate(self.asset):
-				ii = str(i)
-				ix = fields.padZeros( self.groupID_KEY, 'val', i )
-				record[ self.groupID_KEY ] = ix + '-A'
-				newRecords.append(record)
-				if ii in self.aggregates.agroupsADD:
-					rec = self.aggregates.agroupsADD[ii]
-					rec[ self.groupID_KEY ] = ix + '-B'
-					for k in self.backup.allfields:
-						if not self.backup.allfields[k] in rec:
-							rec[ self.backup.allfields[k] ] = ''
-					newRecords.append(rec)
-			self.asset = newRecords
-	def print( self, column, fieldLengths=False, pc=None, printColumns=True, force=False, l=None, p=None ):
-		global switches
-
-		if switches.isActive('GroupBy') and self.asset:
-			val=[]
-			for k in self.asset[0]:
-				for y in switches.values('GroupBy'):
-					if k.lower().replace(' ','_') in y.lower().replace(' ','_'): val.append(k)
-			switches.fieldSet('GroupBy','value',','.join(val))
-			switches.fieldSet('GroupBy','values',val)
-
-
-
-
-		if switches.isActive('GroupTotals') and self.asset:
-			val=[]
-			for k in self.asset[0]:
-				for y in switches.values('GroupTotals'):
-					if k.lower().replace(' ','_') in y.lower().replace(' ','_'): val.append(k)
-			switches.fieldSet('GroupTotals','value',','.join(val))
-			switches.fieldSet('GroupTotals','values',val)
-
-		if switches.isActive('TableJSON'):
-			if len(switches.value('TableJSON')):
-				saveTable2( self.asset, switches.values('TableJSON')[0] )
-				cp( [ 'saved:', switches.values('TableJSON')[0] ], 'green' )
-			else:
-				# printVarSimple(self.asset)
-				print_( d2json(self.asset) )
-			return None
-
-
-		if not p is None:
-			self.tab['table'] = p
-
-		if not type(self.asset) == list or len(self.asset) == 0:
-			# print_('Null Set')
-			sys.exit()
-
-
-
-
-		if not force:
-			if not switches.isActive('Help'):
-				if switches.isActive('Column'):
-					column = switches.value('Column')
-					if column == '*' and self.asset:
-						column = ','.join( list( self.asset[0].keys() ) )
-
-				if switches.isActive('Sort'):
-					self.asset = self.sort()
-				elif switches.isActive('GroupBy'):
-
-					switches.fieldSet('Sort','active',True)
-					switches.fieldSet('Sort','value',switches.value('GroupBy'))
-					self.asset = self.sort()
-
-			pass
-			__.aggregate.storage = {}
-			__.aggregate.config = {}
-			__.aggregate.format = {}
-			__.aggregate.prefix = self.tab['table']+loopPrint(__.table_prefix_padding)
-			if switches.isActive('Aggregate') or self.hasAggregate:
-				aggregate_columns = self.aggregateBuild()
-				if  type(aggregate_columns) == list:
-					columns = column.split(',')
-					for ac in aggregate_columns:
-						if not ac in columns:
-							columns.append(ac)
-					column = ','.join(columns)
-				__.aggregate.columns = columns
-
-				shouldSortAgain = False
-				if switches.isActive('Sort'):
-					for sxy in switches.values('Sort'):
-						if sxy in aggregate_columns:
-							shouldSortAgain = True
-
-					if shouldSortAgain:
-						self.asset = self.sort()
-				self.aggregateBuildGroup()
-				for i,record in enumerate(self.asset):
-					for c in record:
-						nw = __.aggregate.obj.format( c, record[c] )
-						if not nw == record[c]:
-							self.asset[i][c] = nw
-			pass
-			for i,record in enumerate( self.asset ):
-				for k in record:
-					if record[k] is None:
-						self.asset[i][k] = ''
-
-		if switches.isActive('Markdown-Table'):
-			pr(dict_to_markdown_table(self.asset))
-			sys.exit()
-			return self.asset
-
-		if self.webtable and switches.isActive('WebTable') and len(switches.value('WebTable')):
-			asset = []
-			for record in self.asset:
-				rec = {}
-				for k in column.split(','):
-					rec[k] = record[k]
-				asset.append(rec)
-			saveTable( asset, 'web-tmp-'+switches.values('WebTable')[0]+'.json' )
-
-
-		self.isExtraRecord = False
-		if force:
-			self.isWrap = True
-		self.print_backup = {
-								'column': column,
-								'fieldLengths': fieldLengths,
-								'pc': pc,
-								'printColumns': printColumns,
-		}
-		self.isExtraRecord_0001 = {}
-		self.isExtraRecord_000x = ''
-		# print_('here',column)
-		if not pc is None:
-			printColumns = pc
-		self.groupByTrigger()
-		if type(fieldLengths) == dict:
-			self.universalSpacing = fieldLengths
-		# print_(column)
-		# print_(self.assets)
-		# rows = self.asset
-		if not type(self.asset) == list or len(self.asset) == 0:
-			# print_('Null Set')
-			sys.exit()
-		global errors
-		global switchDefault
-		column = column.lower()
-		columnSearch = column
-		column = ''
-		for cs in columnSearch.split(','):
-			try:
-				column += self.findColumName(cs.split('=')[0]) + ','
-			except Exception as e:
-				column += cs + ','
-				# print_( 'Error: print column', cs )
-				# sys.exit()
-			# print_(cs.split('=')[0])
-		column = _str.cleanBE(column,',')
-		# print_(column)
-		newData = []
-		oldData = []
-		if ':' in column or '=' in columnSearch:
-			oldData = self.asset
-		if ':' in column:
-			depth = []
-			flat = []
-			for c in column.split(','):
-				if not ':' in c:
-					flat.append(c)
-				else:
-					try:
-						found = False
-						i=0
-						for dp in depth:
-							if depth[i]['parent'] == c.split(':')[0]:
-								found = True
-								dpID = i
-							i+=1
-					except Exception as e:
-						found = False
-					if found:
-						depth[dpID]['children'].append(c.split(':')[1])
-					else:
-						depth.append({'parent': c.split(':')[0],'children': [c.split(':')[1]]})
-
-			i = 0
-			for data in self.asset:
-				r = {}
-				for f in flat:
-					r[f] = data[f]
-				x = []
-				hasRecords = False
-				for dp in depth:
-					if len(data[dp['parent']]) > 0:
-						hasRecords = True
-						for dpi in data[dp['parent']]:
-							y = {}
-							hasData = False
-							for dpic in dp['children']:
-								try:
-									if len(str(dpi[dpic])) > 1:
-										hasData = True
-								except Exception as e:
-									pass
-								try:
-									y[str(dp['parent']) + ':' + str(dpic)] = dpi[dpic]
-								except Exception as e:
-									pass
-							for f in flat:
-								y[f] = r[f]
-							if hasData:
-								newData.append(y)
-				if not hasRecords:
-					for dpi in data[dp['parent']]:
-						for dpic in dp['children']:
-							r[str(dp['parent']) + ':' + str(dpic)] = ''
-					newData.append(r)
-				i+=1
-			self.asset = newData
-			# print_(newData)
-			# print_('dasfdasdfasdfadsf')
-
-
-		newData = []
-		if '=' in columnSearch:
-			for data in self.asset:
-				rowInclude = True
-				for c in columnSearch.split(','):
-					if rowInclude:
-						if '=' in c:
-							cc = c.split('=')
-							string = data[cc[0]]
-							string = _str.cleanBE(string.lower(),' ')
-							cc[1] = _str.cleanBE(cc[1],' ')
-							try:
-								dataYes = _str.cleanBE(cc[1].split('-')[0],' ')
-							except Exception as e:
-								dataYes = ''
-							try:
-								dataNo = _str.cleanBE(cc[1].split('-')[1],' ')
-							except Exception as e:
-								dataNo = ''
-							if len(dataYes) > 0:
-								# print_('IS')
-								# print_(dataYes)
-								length = 0
-
-								for s in dataYes.split(' '):
-									if rowInclude:
-										rowInclude = False
-										if len(s) > 0:
-											length += 1
-											# print_(string)
-											s = s.lower()
-											cnt = 0
-											if len(s) > 1 and s[0] == '*':
-												s = s.replace('*','')
-												if string.endswith(s):
-													cnt += 1
-													rowInclude = True
-											elif len(s) > 1 and s[-1] == '*':
-												s = s.replace('*','')
-												if string.startswith(s):
-													# print_(s,string)
-													cnt += 1
-													rowInclude = True
-											elif s in string:
-												cnt += 1
-												rowInclude = True
-								# print_(length,cnt)
-								# if length == cnt:
-								# if cnt > 0:
-									# rowInclude = True
-										# if switches.isActive('PlusOr') == True:
-										#   if cnt > 0:
-										#       rowInclude = True
-							if len(dataNo) > 0 and rowInclude:
-								# print_('ISNOT')
-								rowInclude = True
-								try:
-									for s in dataNo.split(' '):
-										if len(s) > 0:
-											s = s.lower()
-											cnt = 0
-											if len(s) > 1 and s[0] == '*':
-												s = s.replace('*','')
-												if string.endswith(s):
-													cnt += 1
-											elif len(s) > 1 and s[-1] == '*':
-												s = s.replace('*','')
-												if string.startswith(s):
-													cnt += 1
-											elif not string.find(ci(s)) == -1:
-												cnt += 1
-											# if not string.find(ci(s)) == -1:
-											if cnt > 0:
-												rowInclude = False
-												break
-								except Exception as e:
-									pass
-				if rowInclude:
-					newData.append(data)
-			self.asset = newData
-			# print_(self.asset)
-
-
-
-
-
-		# if not len(groupByList):
-
-
-		# if not column == False:
-			# switches.fieldSet('Column','value',column)
-			# column = switches.value('Column')
-
-		# print_('-',column)
-		columnHeader = self.showColumnHeader(column)
-		columnHeaderLength = len(columnHeader)
-		# print_(columnHeader)
-
-
-		self.groupByList = {}
-		try:
-			for gb in switches.value('GroupBy').split(','):
-				self.groupByList[str(gb)] = ''
-		except Exception as e:
-			pass
-
-
-
-		if not force and not switches.isActive('NoWrapTable'):
-
-			if __.terminal.width:
-				maxSize = 0
-				i=0
-				for item in self.asset:
-					result = ''
-					for c in column.split(','):
-						try:
-							result += self.showColumn(c,i,columnHeaderLength) + self.columnTab
-						except Exception as e:
-							pass
-					# print_(result)
-					maxSize = len(result)+self.prefixSize()
-					i+=1
-
-
-				# print_( maxSize )
-				if maxSize > __.terminal.width and not switches.isActive('NoWrapTable'):
-					self.wrapTable(__.terminal.width)
-					# print_( 'error' )
-					# sys.exit()
-					return None
-
-
-		pass
-		self.groupByList = {}
-		try:
-			for gb in switches.value('GroupBy').split(','):
-				self.groupByList[str(gb)] = ''
-		except Exception as e:
-			pass
-
-
-		if printColumns:
-			if switches.isActive('YesTableLines'):
-				columnHeader = self.tab['table']+loopPrint(__.table_prefix_padding) + columnHeader
-			else:
-				columnHeader = self.tab['table']+loopPrint(__.table_prefix_padding) + columnHeader.replace( '\n', '' )
-			print_()
-			printBold( columnHeader )
-			# printBold( columnHeader, prefix=self.tab['header'] )
-			if not len(switches.value('YesTableLines')):
-				print_()
-		i = 0
-		# print_(self.asset)
-		self.isExtraRecord_0001 = {}
-		self.isExtraRecord_000x = ''
-		tableLine = __.tableLine
-		if switches.isActive('YesTableLines'):
-			tableLine = '|'
-
-		if l is None:
-			if switches.isActive('NoTableLines'):
-				tableLine = ''
-		elif not l:
-			tableLine = ''
-
-		self.Groups={}
-		for c in switches.values('GroupTotals'):
-			self.Groups[c]={
-								'lines': [],
-			}
-		def addField(text,column):
-
-			try:
-				tabFix = self.spaces[column]
-			except Exception as e:
-				# errors.append({'id': 10, 'function': 'showColumn()', 'cnt': 1, 'location': 'tabFix = spaces[column]', 'vars': [{'name': 'rows', 'value': 'nope to that, to big'}, {'name': 'column', 'value': column}, {'name': 'i', 'value': i}], 'error': e})
-				tabFix = self.tabGetMaxSpace(column)
-				self.spaces[column] = tabFix
-			tabFix+=4
-			alignment = self.fieldProfileGet(column,'alignment')
-			# print_(alignment)
-			# if alignment == 'left':
-			result = text + self.addSpace(text,tabFix)
-			if alignment == 'left':
-				result = text + self.addSpace(text,tabFix)
-			if alignment == 'right':
-				result = self.addSpace(text,tabFix) + text
-			if alignment == 'center':
-				totalSpace = int(tabFix) - len(text)
-				if totalSpace > 0:
-					if totalSpace % 2 == 0:
-						div2 = totalSpace/2
-						theLeft = div2
-						theRight = div2
-					else:
-						divTMP = totalSpace - 1
-						div2 = divTMP/2
-						theLeft = div2 + 1
-						theRight = div2
-				else:
-					theLeft = 0
-					theRight = 0
-				result = self.addSpace2(theLeft) + text + self.addSpace2(theRight)
-			return result
-
-
-
-
-		max_length = 0
-
-		for item in self.asset:
-			result = ''
-			for c in column.split(','):
-				try:
-					result += self.showColumn(c, i, columnHeaderLength) + self.columnTab + tableLine
-				except Exception:
-					pass
-			try:
-				current_length = colorizeRowLength(tableLine + result)-len('_______________________________________________')
-				max_length = max(max_length, current_length)
-			except: pass
-
-
-		for item in self.asset:
-			# print_(item)
-			result = ''
-			# global switches
-			for c in column.split(','):
-				if switches.isActive('TablePlus'):
-					if not  _.showLine(str(item),_.switches.values('TablePlus'),_.switches.values('TableMinus')): continue
-				try:
-					pass
-					# result += self.showColumn(c,i,columnHeaderLength) + self.columnTab
-				except Exception as e:
-					pass
-				# print_(result)
-				self.isExtraRecord = False
-
-
-				# if self.wrapTableKey+'-sort' in item:
-					# print_(  item[self.wrapTableKey+'-sort']  )
-					# print_(    )
-
-				if self.wrapTableKey+'-sort' in item:
-					self.isExtraRecord_000x = item[self.wrapTableKey+'-sort']
-
-				if self.wrapTableKey+'-sort' in item and not item[self.wrapTableKey+'-sort'].endswith('-0001'):
-					self.isExtraRecord = True
-
-				try:
-					pass
-					result += self.showColumn(c,i,columnHeaderLength) + self.columnTab+tableLine
-				except Exception as e:
-					errors.append({'id': 12, 'function': 'print()', 'cnt': 1, 'location': "result += showColumn(rows,c,i) + _v.slash+'t'", 'vars': [{'name': 'folder', 'value': 'folder'}, {'name': 'column', 'value': column}], 'error': e})
-					printBold('Error:','red')
-					printBold('\tBad column input.')
-					print_(12)
-					print_(c)
-					print_(12)
-					os._exit(0)
-			# print_(_str.totalStrip5(result)) #TESTING
-
-			maxSize = len(result)+self.prefixSize()
-			if maxSize > __.terminal.width and not switches.isActive('NoWrapTable'):
-				ToDo = " result = ''   "
-				ToDo = ' for sult in self.wrapTable2(i):  '
-				ToDo = '     result += sult  '
-			else:
-				ToDo = ' the below if will be under this else '
-
-			if len(result) > 0:
-				# print_(result)
-				shouldPrint = True
-				if self.isExtraRecord_000x.split('-')[0] in self.isExtraRecord_0001:
-					testResult = result
-					testResult = testResult.replace( ' ', '' ).replace( '\t', '' )
-					if not len(testResult):
-						shouldPrint = False
-				# if self.isExtraRecord:
-				#   print_( self.isExtraRecord )
-
-
-				if shouldPrint:
-
-
-
-
-
-					hasTotal=False
-					_result_=''
-					for c in column.split(','):
-						if c in self.Groups and not i in self.Groups[c]['lines'] and i-1 in self.Groups[c]['lines']:
-							hasTotal=True
-					if hasTotal:
-
-
-
-						for c in column.split(','):
-							total={}
-							for gc in self.GroupTotals:
-								total[gc]=0
-							_g_=switches.values('GroupBy')[0]
-							_sub_=self.asset[i-1][_g_]
-							for ass in self.asset:
-								if _g_ in ass and ass[_g_] == _sub_:
-									for gc in self.GroupTotals:
-										total[gc]+=ass[gc]
-
-							if c in self.GroupTotals:
-								# _result_+=addField( addComma(self.GroupTotals[c]) ,c)
-								_result_+=addField( addComma(total[c]) ,c)
-								self.GroupTotals[c]=0
-							else:
-								_result_+=addField('',c)
-						# colorizeRow( tableLine+_result_, prefix=self.tab['table']+loopPrint(__.table_prefix_padding), prefixColor=self.tab_color, haltColorShift=self.isExtraRecord )
-						cp(' '+tableLine+_result_,c='green')
-
-
-
-
-					isSwitchGroup = False
-					if self.groupID_KEY in item and item[self.groupID_KEY].endswith('-B'):
-						cp( [ self.tab['table']+loopPrint(__.table_prefix_padding) + result ], 'BackgroundGrey.blue' )
-					else:
-						if result.strip().startswith('Help  '):print_('')
-
-						SwitchGroupPostLabel = ''
-						if 'SwitchGroupPostLabel' in item and  'example_or_notes' in item :
-							isSwitchGroup = True
-							SwitchGroupPostLabel = pr(__.SwitchGroup_Help.PostLabel,item['SwitchGroupPostLabel'],c=helpColorScheme.tableSwitchGroupsPostLabel,p=0)
-						# if result.strip().startswith('Switch Group:'): print('')
-						if 'SwitchSubGroup' in item and  'example_or_notes' in item :
-							isSwitchGroup = True
-							if 'SwitchGroupDepth' in item and  'example_or_notes' in item :
-								SwitchGroupDepth = item['SwitchGroupDepth']
-							else:
-								SwitchGroupDepth = 1
-							if len(__.SwitchGroup_Help.SubGroup) ==1:
-								SwitchGroupDepth +=1
-							print()
-							pr(pr(__.SwitchGroup_Help.SubGroup * SwitchGroupDepth+__.SwitchGroup_Help.Delim+' '+item['SwitchSubGroup'],c='ColorBold.white',p=0),SwitchGroupPostLabel)
-						if 'SwitchGroup' in item and  'example_or_notes' in item :
-							isSwitchGroup = True
-							print()
-
-							if 'HasSwitchSubGroup' in item and  'example_or_notes' in item :
-								pr('_' * max_length,c=helpColorScheme.tableSwitchGroupsLine)
-							SwitchGroup = __.SwitchGroup_Help.Group
-							if item['SwitchGroup'] == '':
-								SwitchGroup = __.SwitchGroup_Help.NoGroup
-							
-							pr(  pr(SwitchGroup+__.SwitchGroup_Help.Delim+' '+item['SwitchGroup'],c='ColorBold.white',p=0)  ,  SwitchGroupPostLabel)
-						# print(item)
-						if isSwitchGroup:
-							theLine = tableLine+result.lstrip()
-						else:
-							theLine = tableLine+result
-						shouldPrint = True
-						if not theLine.strip() and switches.isActive('GroupBy'):
-							shouldPrint = False
-
-						if shouldPrint:
-							colorizeRow( theLine, prefix=self.tab['table']+loopPrint(__.table_prefix_padding), prefixColor=self.tab_color, haltColorShift=self.isExtraRecord )
-			i += 1
-			if 'example_or_notes' in column and 'switch' in column and  switchDefault == i:
-
-				# if __.switch_skimmer.active: sys.exit()
-				pass
-				# print_('')
-		# if len(oldData) > 0:
-		#   self.asset = oldData
-		self.asset = self.backup.asset.copy()
-		self.aggregate_processed = False
-		# print_( 'recovered' )
-
-
-		footer = {}
-		aSettings = {}
-		for k in __.aggregate.storage:
-			if k.startswith('eot?'):
-				f = k[len('eot?'):]
-				for y in __.aggregate.storage[k]:
-					for sv in __.aggregate.storage[k][y]['settings']:
-						aSettings[sv] = __.aggregate.storage[k][y]['settings'][sv]
-
-					if '?date' in __.aggregate.storage[k][y]['settings']:
-						__.aggregate.storage[k][y]['data'] = friendlyDate( __.aggregate.storage[k][y]['data'] )
-					theKey = f
-					special = {}
-
-					kk = k
-					var = 'var'
-					if 'var' in __.aggregate.config:
-						var = 'var'
-					if '?var' in __.aggregate.config:
-						var = '?var'
-					if 'var?' in __.aggregate.config:
-						var = 'var?'
-
-					if var in __.aggregate.config and kk in __.aggregate.config[var]:
-						for spK in __.aggregate.config[var][kk]:
-							special[spK] = __.aggregate.config[var][kk][spK]
-					kk = '?all'
-					if var in __.aggregate.config and kk in __.aggregate.config[var]:
-						for spK in __.aggregate.config[var][kk]:
-							special[spK] = __.aggregate.config[var][kk][spK]
-
-					kk = 'all?'
-					if var in __.aggregate.config and kk in __.aggregate.config[var]:
-						for spK in __.aggregate.config[var][kk]:
-							special[spK] = __.aggregate.config[var][kk][spK]
-
-					kk = 'eot?'
-					if var in __.aggregate.config and kk in __.aggregate.config[var]:
-						for spK in __.aggregate.config[var][kk]:
-							special[spK] = __.aggregate.config[var][kk][spK]
-
-
-					if '?fl' in special:
-						theKey = f + ' '+ y
-					if '?first' in special:
-						theKey = f
-					elif '?second' in special:
-						theKey = y
-
-
-					# for fo in __.aggregate.format:
-					#   if fo == k or fo == y:
-					#       if '?date' in __.aggregate.format[fo]:
-					#           __.aggregate.storage[k][y]['data'] = friendlyDate( __.aggregate.storage[k][y]['data'] )
-					#       if '?comma' in __.aggregate.format[fo]:
-					#           __.aggregate.storage[k][y]['data'] = addComma( __.aggregate.storage[k][y]['data'] )
-					# # print_(  )
-					# footer[ theKey ] = __.aggregate.storage[k][y]['data']
-					footer[ theKey ] = __.aggregate.obj.format( [k,y], __.aggregate.storage[k][y]['data'] )
-		if footer:
-			print_()
-			# print_()
-			footer_txt = []
-			footer_txt.append( __.aggregate.prefix )
-
-			for k in footer:
-				footer_txt.append( k+':' )
-				footer_txt.append( footer[k] )
-				footer_txt.append( '  ' )
-			cp( footer_txt, 'cyan' )
-			# print_( __.aggregate.config )
-			print_()
-					# print_( f, y, __.aggregate.storage[k][y]['data'] )
-			# print_( k )
-			# sys.exit()
-
-	def sort(self,fields=''):# sortThis
-		rows = self.asset
-
-		if not len(self.asset):
-			return None
-
-		if self.wrapTableKey+'-sort' in self.asset[0]:
-			return rows
-
-
-		global errors
-		global switches
-		# self.sort = name
-		tempFields = []
-		delim = ':'
-		if fields == '':
-			name = switches.value('Sort')
-		else:
-			name = fields
-		name = name.replace(':',delim)
-		# if not name:
-		sortBy = {}
-		sortList = name.split(',')
-		sortList.reverse()
-
-		### Check for bad sort input
-		for item in sortList:
-			item = item
-			try:
-				if item.count(delim) > 0:
-					sb = item.split(delim)[1]
-				else:
-					sb = item
-			except Exception as e:
-				errors.append({'id': 16, 'function': 'sortThis()', 'cnt': 1, 'location': 'rows[0][sb]', 'vars': [{'name': 'rows', 'value': 'nope to that, to big'}, {'name': 'name', 'value': name}], 'error': e})
-
-		# itemgetter = __.imp('operator.itemgetter')
-		for item in sortList:
-			try:
-				direction = item.split(delim)[0]
-				sb = self.findColumName(item.split(delim)[1])
-				if 'a' in direction:
-				# if direction.find('a') == 0:
-					self.asset = sorted(self.asset, key=itemgetter(sb))
-				else:
-					self.asset = sorted(self.asset, key=itemgetter(sb), reverse=True)
-			except Exception as e:
-				try:
-					pass
-					self.asset = sorted(self.asset, key=itemgetter(self.findColumName(item)))
-				except Exception as e:
-					errors.append({'id': 17, 'function': 'sortThis()', 'cnt': 2, 'location': 'rows = sorted(rows, key=itemgetter(sb))', 'vars': [{'name': 'rows', 'value': 'nope to that, to big'}, {'name': 'name', 'value': name}], 'error': e})
-
-			import uuid
-			sortBy[item] = str(uuid.uuid4())
-			tempFields.append( sortBy[item] )
-			i = 0
-			for row in self.asset:
-				self.asset[i][sortBy[item]] = i
-				i += 1
-
-		# rows = sorted(rows, key=lambda d: (-d['typesort'], d['ext'], d['name']))
-
-		sortCode = 'rows = sorted(rows, key=lambda d: ('
-		for item in sortList:
-			sortCode += "d['" + str(sortBy[item]) + "'],"
-		sortCode = sortCode[:-1]
-		sortCode += '))'
-		exec(sortCode)
-		if len( tempFields ):
-			# print_( tempFields )
-			for ix,r in enumerate(rows):
-				for tmp in tempFields:
-					try:
-						del rows[ix][tmp]
-					except Exception as e:
-						pass
-		return self.asset
-
-	def countThis(self):
-		rows = self.asset
-		i = 0
-		for x in self.asset:
-			i += 1
-		return i
-
-	def file(self,file):
-		self.file = file
-
-	def save(self,theFile = '',tableTemp = True,printThis = True, me=0):
-		HD.chmod(theFile)
-		try:
-			import simplejson
-			json = simplejson
-		except:
-			pass
-		try:
-			import json
-		except ImportError:
-			json = simplejson
-		if theFile == '':
-			theFile = str(self.file)
-		self.file = theFile
-		# print_(theFile)
-	# def saveTable(rows,theFile,tableTemp = True,printThis = True):
-		# defaults to myTables
-		if tableTemp == True:
-			file0 = str(_v.myTables) + str(_v.slash) + str(theFile)
-		else:
-			file0 = _v.stmp + _v.slash + theFile
-		dataDump = simplejson.dumps(self.asset, indent=4, sort_keys=True, default=str)
-		f = open(file0,'w')
-		f.write(str(dataDump))
-		f.close()
-		HD.chmod(theFile)
-		if printThis:
-			print_('Saved: ' + file0)
-		if me and theFile in vv.opened_file_me: changeM( theFile, vv.opened_file_me[theFile] );
-	def get(self,theFile = '',tableTemp = True,printThis = False):
-		if os.path.isfile(theFile): vv.opened_file_me[theFile] = os.path.getmtime( theFile );
-		try:
-			import simplejson
-			json = simplejson
-		except:
-			pass
-		try:
-			import json
-		except ImportError:
-			json = simplejson
-		if theFile == '':
-			theFile = self.file
-		self.file = theFile
-		# defaults to myTables
-		if tableTemp == True:
-			file0 = _v.myTables + _v.slash + theFile
-		else:
-			file0 = _v.stmp + _v.slash + theFile
-		if printThis:
-			print_('Loaded: ' + file0)
-		if os.path.isfile(file0) == True:
-			with open(file0,'r', encoding="latin-1") as json_file:
-				json_data = simplejson.load(json_file)
-				# json_data = simplejson.load(json_file, object_pairs_hook=OrderedDict)
-		else:
-			json_data = []
-		self.asset = json_data
-		return json_data
-
-	def assets(self):
-		return self.asset
-
-	def set(self,asset):
-		self.asset = asset
-		return self.asset
-
-	def groupByTrigger( self ):
-		try:
-			if switches.isActive('GroupBy') and len(self.asset):
-				newValues = []
-				keys = []
-				for key in self.asset[0].keys():
-					keys.append( key )
-				for val in switches.value('GroupBy').split( ',' ):
-					for key in keys:
-						if key.lower() == val.lower():
-							newValues.append( key )
-				if len(newValues):
-					switches.fieldSet( 'GroupBy', 'value', ','.join(newValues) )
-		except Exception as e:
-			pass
-
-
-
-class Tables:
-
-	def __init__(self):
-		self.tables = []
-		self.index = {}
-		self.maxNameLength = 35
-		self.columnTab = '\t'
-		self.groupSeparator = '_'
-		self.group_space = False
-
-
-
-	def aggregate( self, name=None, code=None ):
-		if code is None:
-			return None
-		if name is None:
-			name = self.tables[ len(self.tables)-1 ].name
-
-		self.tables[ self.index[name] ].aggregate( code )
-
-
-	def rprint( self, asset, columns=None, name=None, n=None, sc=True, printColumns=True, h=None, l=None, p=None ):
-		if columns is None:
-			columns = ','.join(list(asset[0].keys()))
-
-
-		if not h is None:
-			printColumns = h
-		if not n is None:
-			name = n
-		if name is None:
-			name = genUUID()
-		self.register( name, asset )
-		if sc and switches.isActive('Column'):
-			columns = switches.value('Column')
-		self.print( name, columns, printColumns=printColumns, l=l, p=p )
-
-
-
-	def rsort( self, asset, columns, name=None, n=None ):
-		if not n is None:
-			name = n
-		if name is None:
-			name = genUUID()
-		self.register( name, asset )
-		return self.returnSorted( name,columns,asset )
-		# return self.sort( name, columns )
-
-
-	def register( self, name=None, asset = [], group_space=True, tab='',    gs=None, t=None, n=None, w=True ):
-		global TableProfile_Config
-		if not n is None:
-			name = n
-		if name is None:
-			name = genUUID()
-		if not __.table_b_print:
-			for i,record in enumerate(asset):
-				for field in record.keys():
-					if str( record[field] ) == 'b':
-						asset[i][field] = ''
-
-
-		found = False
-		thisID = False
-		if not gs is None:
-			group_space = gs
-		elif 'ALLTABLES' in TableProfile_Config.keys() and 'GroupSpaces' in TableProfile_Config['ALLTABLES'].keys():
-			group_space = TableProfile_Config['ALLTABLES']['GroupSpaces']
-		else:
-			group_space = switches.isActive('GroupSpaces')
-		if not t is None:
-			tab = t
-		for i,t in enumerate(self.tables):
-			if t.name == name:
-				thisID = i
-				found = True
-				self.tables[i].maxNameLength = self.maxNameLength
-				if len(asset) > 0:
-					self.tables[i].set(asset)
-		if found:
-			self.tables.pop( thisID )
-			found = False
-
-		if not found:
-			self.tables.append(Table( name, asset, group_space, tab, w ))
-			self.tables[ len( self.tables )-1 ].maxNameLength = self.maxNameLength
-			self.index[name] = len( self.tables )-1
-		return name
-
-	def trigger(self,name,field,script,includes = False):
-		i = 0
-		for t in self.tables:
-			if t.name == name:
-				self.tables[i].trigger(field,script,includes)
-			i += 1
-
-	def registerView(self,table,name,fields,sort):
-		i = 0
-		for t in self.tables:
-			if t.name == table:
-				self.tables[i].registerView(name,fields,sort)
-			i += 1
-
-	def fieldProfileSet(self,table,field,propertyName,value):
-		i = 0
-		found = False
-		for t in self.tables:
-			if t.name == table:
-				found = True
-				self.tables[i].fieldProfileSet(field,propertyName,value)
-			i += 1
-		if not found:
-			self.tables.append(Table(table,[]))
-			i = 0
-			for t in self.tables:
-				if t.name == table:
-					self.tables[i].fieldProfileSet(field,propertyName,value)
-				i += 1
-
-	def print(self,name,fields,fieldLengths=False, pc=None, printColumns=True, h=None, l=None, p=None ):
-		global switches
-
-		
-		if not h is None:
-			printColumns = h
-		if not ',' in fields:
-			pc = False
-
-		xXx = switches.records('dic_on-off-v')
-		if 'Sort' in xXx['on']:
-			sortBy = xXx['values']['Sort']
-			self.sort( name, ','.join( sortBy ) )
-			# print_( sortBy )
-			# sys.exit()
-		if not pc is None:
-			printColumns = pc
-		# print_(name,fields)
-		sI = None
-		i = 0
-		for t in self.tables:
-			if t.name == name:
-				if len(self.tables[i].asset) > 0:
-					if switches.isActive('GroupBy'):
-						keys = list(self.tables[i].asset[0].keys())
-						_rec = {}
-						for key in keys:
-							_rec[key] = ''
-						self.tables[i].asset = [ _rec ] + self.tables[i].asset
-					if not ',' in fields:
-						printColumns = False
-					# if switches.isActive('Markdown-Table'):
-						# self.tables[i].set(asset)
-						# pr(dict_to_markdown_table(self.tables[i].asset)); return True;
-					self.tables[i].print(fields,fieldLengths,printColumns=printColumns, l=l, p=p)
-					sI = i
-				else:
-					# print_('Null Set')
-					pass
-
-			i += 1
-		if switches.isActive('FieldTotal'):
-			fieldTotals = {}
-			for field in switches.values('FieldTotal'):
-				fieldTotals[field] = { 'actual': None, 'total': 0 }
-				for rec in self.tables[sI].asset:
-					for key in rec.keys():
-						if check_field_match( key, field ):
-							fieldTotals[field]['actual'] = key
-							thisFieldA = str(rec[key])
-							thisFieldB = []
-							for char in thisFieldA:
-								if char in '0123456789':
-									thisFieldB.append(char)
-							thisFieldC = int(''.join(thisFieldB))
-							fieldTotals[field]['total'] += thisFieldC
-			print_()
-			print_()
-			for field in fieldTotals:
-				print_( addComma(fieldTotals[field]['total']),'\t', fieldTotals[field]['actual'] )
-
-
-
-
-	def sort(self,name,fields):
-		fields = fields.replace('.',':')
-		i = 0
-		for t in self.tables:
-			if t.name == name:
-				self.tables[i].sort(fields)
-			i += 1
-
-	def returnSorted(self,name,fields,asset = []):
-		fields = fields.replace('.',':')
-		if len(asset) > 0:
-			self.register(name,asset)
-
-		result = []
-		i = 0
-		for t in self.tables:
-			if t.name == name:
-				self.tables[i].sort(fields)
-				result = self.tables[i].asset
-			i += 1
-		return result
-	def view(self,table,name):
-		i = 0
-		for t in self.tables:
-			if t.name == table:
-				try:
-					self.tables[i].printView(name)
-				except Exception as e:
-					pass
-			i += 1
-
-	def save(self,table,theFile = '',tableTemp = True,printThis = True, me=0):
-		HD.chmod(theFile)
-		theFile = str(theFile)
-		if not theFile == '' and not '.json' in theFile:
-			theFile = theFile + '.json'
-		i = 0
-		for t in self.tables:
-			if t.name == table:
-				self.tables[i].save(theFile,tableTemp,printThis)
-			i += 1
-		HD.chmod(theFile)
-		if me and theFile in vv.opened_file_me: changeM( theFile, vv.opened_file_me[theFile] );
-
-	def get(self,table,theFile = '',tableTemp = True,printThis = False):
-		if os.path.isfile(theFile): vv.opened_file_me[theFile] = os.path.getmtime( theFile );
-		theFile = str(theFile)
-		if not theFile == '' and not '.json' in theFile:
-			theFile = theFile + '.json'
-		i = 0
-		for t in self.tables:
-			if t.name == table:
-				return self.tables[i].get(theFile,tableTemp,printThis)
-			i += 1
-
-	def asset(self,table):
-		i = 0
-		for t in self.tables:
-			if t.name == table:
-				return self.tables[i].assets()
-			i += 1
-
-	def file(self,table,theFile):
-		i = 0
-		for t in self.tables:
-			if t.name == table:
-				return self.tables[i].file(theFile)
-			i += 1
-
-	def set(self,table,asset):
-		i = 0
-		for t in self.tables:
-			if t.name == table:
-				return self.tables[i].set(asset)
-			i += 1
-
-	def alignmentMasterSupersedes(self,table,value):
-		i = 0
-		for t in self.tables:
-			if t.name == table:
-				self.tables[i].tableProfileDefaultSupersedes = value
-			i += 1
-
-	def getLength(self,name,fields):
-		i = 0
-		for t in self.tables:
-			if t.name == name:
-				self.tables[i].showColumnHeader(fields)
-				result = self.tables[i].spaces
-			i += 1
-		total = 0
-		for r in result.keys():
-			total += result[r]
-			total += 5
-		# print_(result)
-		return total
-
-	def getFieldLengths(self,name,fields):
-		i = 0
-		for t in self.tables:
-			if t.name == name:
-				self.tables[i].showColumnHeader(fields)
-				result = self.tables[i].spaces
-			i += 1
-		###### How it works:
-		# totalColumnWidth = 0
-		# for m in self.meta['data']:
-		#   tables.register(m['table'],m['fields'])
-		#   spaces = tables.getLength(m['table'],'type,field,max,min,average')
-		#   if spaces > totalColumnWidth:
-		#       totalColumnWidth = spaces
-
-
-		# fieldLengths = 0
-		# for m in self.meta['data']:
-		#   tables.register(m['table'],m['fields'])
-		#   data = tables.getFieldLengths(m['table'],'type,field,max,min,average')
-		#   if not type(fieldLengths) == dict:
-		#       fieldLengths = data
-		#   for name in fieldLengths.keys():
-		#       if data[name] > fieldLengths[name]:
-		#           fieldLengths[name] = data[name]
-
-
-
-		# for m in self.meta['data']:
-		#   genLine(totalColumnWidth,'=')
-		#   print_('Table:\t',m['table'])
-		#   print_('Parent:\t',m['parent'])
-		#   print_('Records:',m['count'])
-		#   print_()
-		#   tables.register(m['table'],m['fields'])
-		#   tables.fieldProfileSet(m['table'],'*','alignment','center')
-		#   tables.print(m['table'],'type,field,max,min,average',fieldLengths)
-
-		#   genLine(totalColumnWidth,'=')
-		# print_()
-		# print_('Records:',self.meta['records'])
-		# print_()
-		# print_('Errors:')
-		# for e in self.meta['errors']:
-		#   print_('\t',e)
-
-		return result
-
-
-
-	def eof( self ):
-		try:
-			__.aggregate.eof.storage
-		except Exception as e:
-			shouldPrint = False
-		else:
-			shouldPrint = True
-
-		if not __.aggregate.eof.storage:
-			shouldPrint = False
-
-		if shouldPrint:
-			print_()
-			print_()
-
-			linePrint()
-
-			# print_()
-			# printVarSimple( __.aggregate.eof.storage )
-
-
-		footer = {}
-		aSettings = {}
-
-		for k in __.aggregate.eof.storage:
-			if k.startswith('eof?'):
-				f = k[len('eof?'):]
-				for y in __.aggregate.eof.storage[k]:
-					for sv in __.aggregate.eof.storage[k][y]['settings']:
-						aSettings[sv] = __.aggregate.eof.storage[k][y]['settings'][sv]
-
-					if '?date' in __.aggregate.eof.storage[k][y]['settings']:
-						__.aggregate.eof.storage[k][y]['data'] = friendlyDate( __.aggregate.eof.storage[k][y]['data'] )
-					theKey = f +' '+ y
-					special = {}
-
-					kk = k
-					var = 'var'
-					if 'var' in __.aggregate.config:
-						var = 'var'
-					if '?var' in __.aggregate.config:
-						var = '?var'
-					if 'var?' in __.aggregate.config:
-						var = 'var?'
-
-					if var in __.aggregate.config and kk in __.aggregate.config[var]:
-						for spK in __.aggregate.config[var][kk]:
-							special[spK] = __.aggregate.config[var][kk][spK]
-					kk = '?all'
-					if var in __.aggregate.config and kk in __.aggregate.config[var]:
-						for spK in __.aggregate.config[var][kk]:
-							special[spK] = __.aggregate.config[var][kk][spK]
-
-					kk = 'all?'
-					if var in __.aggregate.config and kk in __.aggregate.config[var]:
-						for spK in __.aggregate.config[var][kk]:
-							special[spK] = __.aggregate.config[var][kk][spK]
-
-					kk = 'eof?'
-					if var in __.aggregate.config and kk in __.aggregate.config[var]:
-						for spK in __.aggregate.config[var][kk]:
-							special[spK] = __.aggregate.config[var][kk][spK]
-
-
-					if '?first' in special:
-						theKey = f
-					elif '?second' in special:
-						theKey = y
-
-					# print_( 'format:', __.aggregate.format )
-					# print_( 'k y:', k, y  )
-
-					# for fo in __.aggregate.format:
-					#   if fo == k or fo == y:
-					#       if '?date' in __.aggregate.format[fo]:
-					#           __.aggregate.eof.storage[k][y]['data'] = friendlyDate( __.aggregate.eof.storage[k][y]['data'] )
-					#       if '?comma' in __.aggregate.format[fo]:
-					#           __.aggregate.eof.storage[k][y]['data'] = addComma( __.aggregate.eof.storage[k][y]['data'] )
-
-
-
-					# # print_(  )
-					# footer[ theKey ] = __.aggregate.eof.storage[k][y]['data']
-					footer[ theKey ] = __.aggregate.obj.format( [k,y], __.aggregate.eof.storage[k][y]['data'] )
-		if footer:
-			print_()
-			# print_()
-			footer_txt = []
-			footer_txt.append( __.aggregate.prefix )
-
-			for k in footer:
-				footer_txt.append( k+':' )
-				footer_txt.append( footer[k] )
-				footer_txt.append( '  ' )
-			cp( footer_txt, 'cyan' )
-			# print_( __.aggregate.config )
-			print_()
-					# print_( f, y, __.aggregate.storage[k][y]['data'] )
-			# print_( k )
-
-
-
-
+printAutoAbbreviations_scheduled = False
+
+##change
+# from library.frameworks.base.classes.Switches import Switches
+# from library.frameworks.base.classes.Tables import Tables
 
 
 ###########################################################################################
+
+
+def md5Str(text: str) -> str:
+	import hashlib
+	return hashlib.md5(text.encode()).hexdigest()
+
 def md5(fname):
+	import hashlib
 	hash_md5 = hashlib.md5()
 	with open(fname, "rb") as f:
 		for chunk in iter(lambda: f.read(4096), b""):
@@ -16076,373 +10479,7 @@ def md5(fname):
 	return hash_md5.hexdigest()
 	return hash_md5.hexdigest()
 
-
-def formatSize(size,what=None):
-	try:
-		size = int(size)
-	except Exception as e:
-		size = float(size)
-	result = ''
-	if what is None:
-
-		if size == None:
-			result = ''
-		elif size < 1024:
-			result = str(size) + ' B'
-		elif size >= 1024 and size < 1048576:
-			num = round(size / 1024, 2)
-			result = str(num) + ' KB'
-		elif size >= 1048576 and size < 1073741824:
-			num = round(size / 1048576, 2)
-			result = str(num) + ' MB'
-		elif size >= 1073741824 and size < 1099511627776 :
-			num = round(size / 1073741824, 2)
-			result = str(num) + ' GB'
-		elif size >= 1099511627776 and size < 1125899906842624 :
-			num = round(size / 1099511627776, 2)
-			result = str(num) + ' TB'
-		elif size >= 1125899906842624 and size < 1152921504606847000 :
-			num = round(size / 1125899906842624, 2)
-			result = str(num) + ' PB'
-		elif size >= 1152921504606847000 and size < 1180591620717411303424 :
-			num = round(size / 1152921504606847000, 2)
-			result = str(num) + ' EB'
-		elif size >= 1180591620717411303424 and size < 1208925819614629174706176 :
-			num = round(size / 1180591620717411303424, 2)
-			result = str(num) + ' ZB'
-		else:
-			num = round(size / 1208925819614629174706176, 2)
-			result = str(num) + ' YB'
-
-	elif not what is None:
-		what=what.upper()
-		if size == None:
-			result = ''
-		elif what == 'B':
-			result = str(size) + ' B'
-		elif what == 'KB':
-			num = size / 1024
-			test = str(num)
-			if '.' in test:
-				roun=2
-				x=test.split('.')[1]
-				for y in x:
-					if y == '0':
-						roun+=1
-					else:
-						break
-				pass
-				num=round(num,roun)
-			result = str(num) + ' KB'
-		elif what == 'MB':
-			num = size / 1048576
-			test = str(num)
-			if '.' in test:
-				roun=2
-				x=test.split('.')[1]
-				for y in x:
-					if y == '0':
-						roun+=1
-					else:
-						break
-				pass
-				num=round(num,roun)
-			result = str(num) + ' MB'
-		elif what == 'GB':
-			num = size / 1073741824
-			test = str(num)
-			if '.' in test:
-				roun=2
-				x=test.split('.')[1]
-				for y in x:
-					if y == '0':
-						roun+=1
-					else:
-						break
-				pass
-				num=round(num,roun)
-			result = str(num) + ' GB'
-		elif what == 'TB':
-			num = size / 1099511627776
-			test = str(num)
-			if '.' in test:
-				roun=2
-				x=test.split('.')[1]
-				for y in x:
-					if y == '0':
-						roun+=1
-					else:
-						break
-				pass
-				num=round(num,roun)
-			result = str(num) + ' TB'
-		elif what == 'PB':
-			num = size / 1125899906842624
-			test = str(num)
-			if '.' in test:
-				roun=2
-				x=test.split('.')[1]
-				for y in x:
-					if y == '0':
-						roun+=1
-					else:
-						break
-				pass
-				num=round(num,roun)
-			result = str(num) + ' PB'
-		elif what == 'EB':
-			num = size / 1152921504606847000
-			test = str(num)
-			if '.' in test:
-				roun=2
-				x=test.split('.')[1]
-				for y in x:
-					if y == '0':
-						roun+=1
-					else:
-						break
-				pass
-				num=round(num,roun)
-			result = str(num) + ' EB'
-		elif what == 'ZB':
-			num = size/1180591620717411303424
-			test = str(num)
-			if '.' in test:
-				roun=2
-				x=test.split('.')[1]
-				for y in x:
-					if y == '0':
-						roun+=1
-					else:
-						break
-				pass
-				num=round(num,roun)
-			result = str(num) + ' ZB'
-		elif what == 'YB':
-			num = size / 1208925819614629174706176
-			test = str(num)
-			if '.' in test:
-				roun=2
-				x=test.split('.')[1]
-				for y in x:
-					if y == '0':
-						roun+=1
-					else:
-						break
-				pass
-				num=round(num,roun)
-			result = str(num) + ' YB'
-		else:
-			result = str(size) + ' B'
-	return result
-
-def unFormatSize(size):
-	size = str(size)
-	size = size.upper()
-	factor = ''
-	# 1152921504606846976
-	if False:
-		pass
-
-
-
-	elif 'YB' in size:
-		factor = 1208925819614629174706176
-	elif 'ZB' in size:
-		factor = 1180591620717411303424
-	elif 'EB' in size:
-		factor = 1152921504606847000
-	elif 'PB' in size:
-		factor = 1125899906842624
-	elif 'TB' in size:
-		factor = 1099511627776
-	elif 'GB' in size:
-		factor = 1073741824
-	elif 'MB' in size:
-		factor = 1048576
-	elif 'KB' in size:
-		factor = 1024
-
-	else:
-		factor = 1
-	size2 = ''
-	for c in size:
-		if c in '0123456789.':
-			size2+=c
-	size = size2
-	# size = size.replace('X','')
-	# size = size.replace('Y','')
-	# size = size.replace('Z','')
-	# size = size.replace('E','')
-	# size = size.replace('P','')
-	# size = size.replace('T','')
-	# size = size.replace('B','')
-	# size = size.replace('M','')
-	# size = size.replace('K','')
-	# size = size.replace('G','')
-	size = float(size)
-	if str(size).endswith('.0'):
-		size = int(size)
-
-	result = round(size * factor,0)
-	# print_( size, factor )
-	# result = size * factor
-	return int(result)
-
-def unFormatSize2(size):
-	size = str(size)
-	# size = size.upper()
-	factor = ''
-	# 1152921504606846976
-
-	bity=False
-	if False:
-		pass
-
-
-
-	elif 'YB' in size or 'yB' in size:
-		factor = 1208925819614629174706176
-	elif 'ZB' in size or 'zB' in size:
-		factor = 1180591620717411303424
-	elif 'EB' in size or 'eB' in size:
-		factor = 1152921504606847000
-	elif 'PB' in size or 'pB' in size:
-		factor = 1125899906842624
-	elif 'TB' in size or 'tB' in size:
-		factor = 1099511627776
-	elif 'GB' in size or 'gB' in size:
-		factor = 1073741824
-	elif 'MB' in size or 'mB' in size:
-		factor = 1048576
-	elif 'KB' in size or 'kB' in size:
-		factor = 1024
-
-
-
-
-	elif 'Yb' in size or 'yb' in size or 'ybit' in size.lower():
-		bity=True
-		factor = 1000000000000000000000000
-	elif 'Zb' in size or 'zb' in size or 'zbit' in size.lower():
-		bity=True
-		factor = 1000000000000000000000
-	elif 'Eb' in size or 'eb' in size or 'ebit' in size.lower():
-		bity=True
-		factor = 1000000000000000000
-	elif 'Pb' in size or 'pb' in size or 'pbit' in size.lower():
-		bity=True
-		factor = 1000000000000000
-	elif 'Tb' in size or 'tb' in size or 'tbit' in size.lower():
-		bity=True
-		factor = 1000000000000
-	elif 'Gb' in size or 'gb' in size or 'gbit' in size.lower():
-		bity=True
-		factor = 1000000000
-	elif 'Mb' in size or 'mb' in size or 'mbit' in size.lower():
-		bity=True
-		factor = 1000000
-	elif 'Kb' in size or 'kb' in size or 'kbit' in size.lower():
-		bity=True
-		factor = 1000
-
-	else:
-		factor = 1
-	size2 = ''
-	for c in size:
-		if c in '0123456789.':
-			size2+=c
-	size = size2
-	# size = size.replace('X','')
-	# size = size.replace('Y','')
-	# size = size.replace('Z','')
-	# size = size.replace('E','')
-	# size = size.replace('P','')
-	# size = size.replace('T','')
-	# size = size.replace('B','')
-	# size = size.replace('M','')
-	# size = size.replace('K','')
-	# size = size.replace('G','')
-	size = float(size)
-	if str(size).endswith('.0'):
-		size = int(size)
-
-	result = round(size * factor,0)
-	if 0 and bity:
-		result = result /8
-	# print_( size, factor )
-	# result = size * factor
-	rt = str(result)
-	if rt.endswith('.0'):
-		return int(result)
-	return result
-
-
-
-def to_bytes(size_str):
-	if 'Kb' in size_str: size_str = size_str.replace('Kb', 'kbit')
-	if 'Mb' in size_str: size_str = size_str.replace('Mb', 'mbit')
-	if 'Gb' in size_str: size_str = size_str.replace('Gb', 'gbit')
-	if 'Tb' in size_str: size_str = size_str.replace('Tb', 'tbit')
-	if 'Pb' in size_str: size_str = size_str.replace('Pb', 'pbyte')
-	if 'Eb' in size_str: size_str = size_str.replace('Eb', 'ebyte')
-	if 'Zb' in size_str: size_str = size_str.replace('Zb', 'zbyte')
-	if 'Yb' in size_str: size_str = size_str.replace('Yb', 'ybyte')
-
-	size_str = size_str.lower()
-	unit_map = {
-		'b': 1,
-		'kb': 1024,
-		'mb': 1024**2,
-		'gb': 1024**3,
-		'tb': 1024**4,
-		'pb': 1024**5,
-		'eb': 1024**6,
-		'zb': 1024**7,
-		'yb': 1024**8,
-		'byte': 1,
-		'kbyte': 1024,
-		'mbyte': 1024**2,
-		'gbyte': 1024**3,
-		'tbyte': 1024**4,
-		'pbyte': 1024**5,
-		'ebyte': 1024**6,
-		'zbyte': 1024**7,
-		'ybyte': 1024**8,
-		'kbit': 1024/8,
-		'mbit': 1024**2/8,
-		'gbit': 1024**3/8,
-		'tbit': 1024**4/8,
-		'pbit': 1024**5/8,
-		'ebit': 1024**6/8,
-		'zbit': 1024**7/8,
-		'ybit': 1024**8/8,
-		'bit': 1/8
-	}
-	try:
-		size, unit = size_str.split()
-		size = float(size)
-		if unit[-1] in ['b', 'e', 't', 'p', 'z', 'y']:
-			unit = unit[:-1]
-		if unit[-1] == 'k':
-			unit = unit[:-1] + 'byte'
-		elif unit[-1] == 'm':
-			unit = unit[:-1] + 'byte'
-		elif unit[-1] == 'g':
-			unit = unit[:-1] + 'byte'
-		elif unit[-1] == 't':
-			unit = unit[:-1] + 'byte'
-		elif unit[-1] == 'p':
-			unit = unit[:-1] + 'byte'
-		elif unit[-1] == 'e':
-			unit = unit[:-1] + 'byte'
-		elif unit[-1] == 'z':
-			unit = unit[:-1] + 'byte'
-		elif unit[-1] == 'y':
-			unit = unit[:-1] + 'byte'
-		return int
-	except:
-		raise ValueError(f'Invalid size string: {size_str}')
+from library.frameworks.base.functions.formatSize import formatSize, unFormatSize, unFormatSize2, to_bytes
 
 def count_bytes(fo, recursive=True):
 	total_files = 0
@@ -17400,1049 +11437,30 @@ def checkKey(dict, key):
 	else:
 		return False
 
-class Databases:
-
-# FOREIGN KEY (project_id) REFERENCES projects (id)
-
-	def __init__( self ):
-
-		self.databases = []
-
-
-	def register( self, name=False, file=False, table=False, records=False, fields=False, delete=False, description=False, project=False, auto=False, printFileActivity=False ):
-
-		idx = len( self.databases )
-		self.databases.append( Database( name=name, file=file, table=table, records=records, fields=fields, delete=delete, description=description, project=project, auto=auto, printFileActivity=printFileActivity ) )
-
-
-	def search( self, name=False, info=False ):
-		for i,d in enumerate(self.databases):
-			if self.databases[i].name == name:
-				return self.databases[i].search( info )
-
-	def getFields( self, name=False, table=False, exclude=False ):
-		for i,d in enumerate(self.databases):
-			if self.databases[i].name == name:
-				return self.databases[i].getFields( table, exclude )
-
-	def update( self, name=False, info=False ):
-		for i,d in enumerate(self.databases):
-			if self.databases[i].name == name:
-				return self.databases[i].update( info )
-
-	def add( self, name=False, info=False ):
-		for i,d in enumerate(self.databases):
-			if self.databases[i].name == name:
-				return self.databases[i].add( info )
-
-	def insertRecords( self, name, table, records ):
-		for i,d in enumerate(self.databases):
-			if self.databases[i].name == name:
-				return self.databases[i].insertRecords( table=table, records=records )
-
-	def trigger( self, name, table, field, trigger ):
-		for i,d in enumerate(self.databases):
-			if self.databases[i].name == name:
-				return self.databases[i].addTrigger( table, field, trigger )
-
-
-class Database:
-
-	def __init__( self, name=False, file=False, table=False, records=False, fields=False, delete=False, description=False, project=False, auto=False, printFileActivity=False ):
-		self.initialized = []
-		self.initializedDB = False
-		self.tableInfo = []
-		self.tables = []
-		self.relationships = []
-
-		self.name = name
-		self.file = _v.myDatabases + _v.slash + file
-		self.delete = delete
-		self.printFileActivity = printFileActivity
-
-		self.project = project
-		self.description = description
-		self.apps = False
-
-		self.table = table
-		self.records = records
-
-		self.fieldsManual = fields
-		self.fields = {}
-
-		if type( table ) == bool:
-			auto = True
-		if not type( self.records ) == bool:
-			for i,r in enumerate(self.records):
-				self.records[i]['date_created'] = time.time()
-				self.records[i]['date_modified'] = ''
-				# print_( self.records[i] )
-
-		if self.delete and os.path.isfile( self.file ):
-			os.unlink( self.file )
-			if self.printFileActivity:
-				print_( ' file deleted ')
-		if os.path.isfile( self.file ):
-			if self.printFileActivity:
-				print_( ' file exists ')
-
-		if auto and os.path.isfile( self.file ):
-			self.genInfo( process=True )
-		else:
-			if not type( table ) == bool:
-				if not type( self.records ) == bool:
-					self.insertRecords( table )
-
-
-
-	def generateStructure( self, table ):
-		if not table in self.initialized:
-			self.initialized.append( table )
-			if os.path.isfile( self.file ):
-				self.genInfo( process=True )
-			else:
-				fieldsData = self.processRecords()
-				self.create( table, fieldsData )
-
-				self.genInfo( process=True )
-
-
-
-	def addTrigger( self, table, field, trigger ):
-		for i,r in enumerate(self.tables):
-			if self.tables[i].table == table:
-				for ii,fieldX in enumerate(self.tables[i].fields):
-					if fieldX.name == field:
-						self.tables[i].fields[ii].info['trigger'] = trigger
-
-
-
-	def updateFieldInfo( self, table, field, label, data ):
-		for i,r in enumerate(self.tables):
-			if self.tables[i].table == table:
-				for ii,fieldX in enumerate(self.tables[i].fields):
-					if fieldX.name == field:
-						self.tables[i].fields[ii].info['label'] = data
-	def updateManualFieldInfo( self ):
-		if not type( self.fieldsManual ) == bool:
-			for i,f in enumerate(self.fieldsManual):
-				for k in f.keys():
-					if not k == 'name' and not k == 'type' and not k == 'table':
-						self.updateFieldInfo( f['table'], f['name'], k, f[k] )
-
-	def getFields( self, table, exclude=False ):
-		result = []
-		for i,r in enumerate(self.tables):
-			if self.tables[i].table == table:
-				for field in self.tables[i].fields:
-					add = True
-					if not type( exclude ) == bool:
-
-						if type( exclude ) == str:
-							ex = exclude.split(',')
-						else:
-							ex = exclude
-
-						for x in ex:
-							if len( x ) > 0:
-								if x in field.name:
-									add = False
-					if add:
-						result.append( field.name )
-
-		return result
-
-	def getFieldType( self, table, field ):
-		result = ''
-		for i,r in enumerate(self.tables):
-			if self.tables[i].table == table:
-				for fieldX in self.tables[i].fields:
-					if fieldX.name == field:
-						result = fieldX.info['type']
-		return result
-
-	# def update( self, info ):
-
-	#   sql = "update "+info['table']+" set [x] where " + info['update'] + " "
-	#   u = ''
-	#   for f in info['record'].keys():
-	#       t = self.getFieldType( info['table'], f )
-	#       if 'int' in t:
-	#           u += f + " = " + str(info['record'][f]) + ","
-	#       else:
-	#           u += f + " = '" + str(info['record'][f]) + "',"
-	#   u = _str.cleanBE( u, ',' )
-
-	#   sql = sql.replace( '[x]', u )
-
-	#   conn = sqlite3.connect( self.file )
-	#   cursor = conn.cursor()
-	#   tables = []
-	#   rows = cursor.execute( sql )
-
-	#   fields = self.getFields( info['table'] )
-	#   results = []
-	#   for row in (rows):
-	#       d = {}
-	#       for i,column in enumerate(row):
-	#           d[ fields[i] ] = row[i]
-	#       results.append( d )
-	#   conn.commit()
-	#   conn.close()
-
-	def update( self, info ):
-		import sqlite3
-		sql = "update "+info['table']+" set [x] where " + info['update'] + " "
-		u = ''
-		for f in info['record'].keys():
-			t = self.getFieldType( info['table'], f )
-			if 'int' in t:
-				u += f + " = " + str(info['record'][f]) + ","
-			else:
-				u += f + " = '" + str(info['record'][f]) + "',"
-		u = _str.cleanBE( u, ',' )
-
-		sql = sql.replace( '[x]', u )
-
-		conn = sqlite3.connect( self.file )
-		cursor = conn.cursor()
-		tables = []
-		rows = cursor.execute( sql )
-
-		fields = self.getFields( info['table'] )
-		results = []
-		for row in (rows):
-			d = {}
-			for i,column in enumerate(row):
-				d[ fields[i] ] = row[i]
-			results.append( d )
-		conn.commit()
-		conn.close()
-
-	def search( self, info ):
-		import sqlite3
-		if not self.initializedDB:
-			print_( 'no data' )
-			sys.exit()
-
-		if not type( info['custom'] ) == bool and not info['force']:
-			sql = "select * from "+info['table']+" where "+info['custom']
-		elif info['force'] and not type( info['custom'] ) == bool:
-			sql = info['custom']
-		else:
-			if info['type'] == 'text':
-				sql = "select * from "+info['table']+" where "+info['field']+" like '"+info['search']+"'"
-			else:
-				sql = "select * from "+info['table']+" where "+info['field']+" "+info['search']
-
-		conn = sqlite3.connect( self.file )
-		cursor = conn.cursor()
-		tables = []
-		rows = cursor.execute( sql )
-
-		fields = self.getFields( info['table'] )
-		results = []
-		for row in (rows):
-			d = {}
-			for i,column in enumerate(row):
-				# d[ fields[i] ] = row[i]
-				d[ fields[i] ] = self.trigger( info['table'], fields[i], row[i] )
-			results.append( d )
-
-		conn.close()
-
-		return results
-		# print_( info )
-	def trigger( self, table, field, data ):
-		result = data
-		if field == 'date_created':
-			return resolveEpochTest( data )
-		for i,r in enumerate(self.tables):
-			if self.tables[i].table == table:
-				for fieldX in self.tables[i].fields:
-					if fieldX.name == field:
-						if not type( fieldX.info['trigger'] ) == bool:
-							result = fieldX.info['trigger']( data )
-		return result
-
-
-	def insertRecords( self, table, records=[] ):
-		import sqlite3
-		if len( records ) > 0:
-			self.records = records
-			for i,r in enumerate(self.records):
-				self.records[i]['date_created'] = time.time()
-				self.records[i]['date_modified'] = ''
-		self.generateStructure( table )
-
-		conn = sqlite3.connect(self.file)
-		cursor = conn.cursor()
-		for record in self.records:
-			# self.records[i]['date_created'] = time.time()
-			record['date_created'] = time.time()
-			record['date_modified'] = ''
-			sql = self.genRecordInsert( table, record )
-			# n = ''
-
-			# for field in fields:
-			#   n += field['name'] + ' ' + field['type'] + ','
-
-			# n = _str.cleanBE( n, ',' )
-			# sql = sql.replace( '[n]', n )
-
-
-			cursor.execute( sql )
-			conn.commit()
-		conn.close()
-
-
-
-	def genRecordInsert( self, table, record ):
-		b = "'insert into [table] ( [names] ) values ( [dataDel] )'.format( [data] )"
-		n = ''
-		dd = ''
-		d = ''
-		b = b.replace( '[table]', table )
-		x = []
-
-		for k in record.keys():
-			n += k + ','
-			d += "record['"+k+"'],"
-			dd += '"{}",'
-			x.append( record[k] )
-		n = _str.cleanBE( n, ',' )
-		dd = _str.cleanBE( dd, ',' )
-		d = _str.cleanBE( d, ',' )
-
-		b = b.replace( '[names]', n )
-		b = b.replace( '[dataDel]', dd )
-		b = b.replace( '[data]', d )
-		# print_( b )
-		return eval( b )
-
-
-	def genInfo( self, process=False ):
-		import sqlite3
-		if os.path.isfile( self.file ) and not self.initializedDB:
-			self.initializedDB = True
-			self.tableInfo = []
-			sql = "select name from sqlite_master where type = 'table'"
-
-			conn = sqlite3.connect( self.file )
-			cursor = conn.cursor()
-			tables = []
-			tablesRaw = cursor.execute( sql )
-			for table in tablesRaw:
-				for data in table:
-					if len( data ) > 1 and not 'sqlite' in data:
-						tables.append( data )
-
-			# print_( tables )
-
-			for table in tables:
-				sql = 'PRAGMA table_info('+table+')'
-				fieldsRaw = cursor.execute( sql )
-				fields = []
-				for fieldsX in fieldsRaw:
-
-					if not type( self.fieldsManual ) == bool:
-						data = list(filter(lambda itemX: itemX['name'] == fieldsX[1], self.fieldsManual))
-						if len( data ) > 0:
-							data[0][ 'type' ] = fieldsX[2]
-							fields.append( data[0] )
-						else:
-							fields.append({ 'name': fieldsX[1], 'type': fieldsX[2],  })
-					else:
-						fields.append({ 'name': fieldsX[1], 'type': fieldsX[2],  })
-
-
-
-				self.tableInfo.append({ 'name': table, 'fields': fields })
-
-			conn.close()
-			if process:
-				self.addGeneratedTables()
-			return self.tableInfo
-
-	def addGeneratedTables( self ):
-		dataOK = True
-		if not type( self.records ) == bool:
-
-			for record in self.processRecords():
-				found = False
-				for table in self.tableInfo:
-					for field in table['fields']:
-						if record['name'] == field:
-							found = True
-				if not found:
-					dataOK = False
-
-		for table in self.tableInfo:
-			self.tables.append( DatabaseTables( table['name'], table['fields'] ) )
-			self.updateManualFieldInfo()
-
-	def processRecords( self ):
-		autoFieldType = []
-		for record in self.records:
-
-			for field in record.keys():
-				if len(list(filter(lambda itemX: itemX['name'] == field, autoFieldType))) == 0:
-					if isText( record[ field ] ):
-						t = 'text'
-						if 'date_' in field:
-							t = 'date'
-						if not type( self.fieldsManual ) == bool:
-							data = list(filter(lambda itemX: itemX['name'] == field, self.fieldsManual))
-							if len( data ) > 0:
-								data[0][ 'type' ] = t
-								autoFieldType.append( data[0] )
-							else:
-								autoFieldType.append({ 'name': field, 'type': t })
-						else:
-							autoFieldType.append({ 'name': field, 'type': t })
-					if isNum( record[ field ] ):
-						t = 'integer'
-						if 'date_' in field:
-							t = 'date'
-						if not type( self.fieldsManual ) == bool:
-							data = list(filter(lambda itemX: itemX['name'] == field, self.fieldsManual))
-							if len( data ) > 0:
-								data[0][ 'type' ] = t
-								autoFieldType.append( data[0] )
-							else:
-								autoFieldType.append({ 'name': field, 'type': t })
-						else:
-							autoFieldType.append({ 'name': field, 'type': t })
-					if isFloat( record[ field ] ):
-						t = 'real'
-						if 'date_' in field:
-							t = 'date'
-						if not type( self.fieldsManual ) == bool:
-							data = list(filter(lambda itemX: itemX['name'] == field, self.fieldsManual))
-							if len( data ) > 0:
-								data[0][ 'type' ] = t
-								autoFieldType.append( data[0] )
-							else:
-								autoFieldType.append({ 'name': field, 'type': t })
-						else:
-							autoFieldType.append({ 'name': field, 'type': t })
-
-
-		return autoFieldType
-
-	def fieldInfo( self, table, field, fType ):
-		self.fields[ field ] = fType
-
-	def create( self, table=False, fields=False ):
-		import sqlite3
-		if os.path.isfile(self.file):
-			print_( 'Database exists' )
-		else:
-			conn = sqlite3.connect(self.file)
-			cursor = conn.cursor()
-			# sql =  'CREATE TABLE '+table+' ([n])'
-			sql =  'CREATE TABLE '+table+' (id integer primary key autoincrement not null, [n])'
-			n = ''
-			nn = ''
-			for field in fields:
-				n += field['name'] + ' ' + field['type'] + ','
-				if not 'date_modified' == field['name']:
-					nn += field['name'] + ','
-
-			n = _str.cleanBE( n, ',' )
-			nn = _str.cleanBE( nn, ',' )
-			sql = sql.replace( '[n]', n )
-			cursor.execute( sql )
-			sql =   "CREATE TRIGGER UpdateLastTime UPDATE OF "+nn+" ON "+table+" "\
-					" BEGIN"\
-					"  UPDATE "+table+" SET date_modified=datetime('now','localtime') WHERE id=old.id;"\
-					" END;"
-			cursor.execute( sql )
-
-			conn.close()
-
-
-
-class DatabaseTables:
-	def __init__( self, table=False, fields=False ):
-
-		self.fields = []
-
-		self.table = table
-
-		if not type( fields ) == bool:
-			for i,field in enumerate(fields):
-				idx = len( self.fields )
-				self.fields.append( DatabaseFields( field['name'], field['type'] ) )
-				for label in field.keys():
-					if not label == 'name' and not label == 'type' and not label == 'table':
-						self.fields[ idx ].addFieldInfo( label, field[ label ] )
-
-	def setInfo( self, field, label, info ):
-		for i,row in enumerate(self.fields):
-			if self.fields[i].name == field:
-				self.fields[i].info[ label ] = info
-
-
-	def setFields( self, fields=False ):
-		if not type( fields ) == bool:
-			for i,field in enumerate(fields):
-				idx = len( self.fields )
-				self.fields.append( DatabaseFields( field['name'], field['type'] ) )
-				for label in field.keys():
-					if not label == 'name' and not label == 'type' and not label == 'table':
-						self.fields[ idx ].addFieldInfo( label, field[ label ] )
-
-	def updateFieldInfo( self, field, label, data ):
-		for i,f in enumerate(self.fields):
-			if self.fields[i].name == field:
-				self.fields[i].info[ label ] = data
-
-
-class DatabaseFields:
-	def __init__( self, name=False, fieldType='text' ):
-		self.name = name
-
-		self.info = {
-						'name': name,
-						'type': fieldType,
-						'trigger': False,
-						'default': False,
-		}
-
-	def addFieldInfo( self, label, info ):
-		self.info[ label ] = info
-
-	def fieldInfo( self, label ):
-		if label in list( self.info.keys() ):
-			return self.info[ label ]
-		else:
-			return False
-
 
 
 ###########################################################################################
+
+def Databases(*args, **kwargs):
+	if not 'Database' in intelligent_code.functions:
+		from library.frameworks.base.classes.Database import Databases
+		intelligent_code.functions['Databases'] = Databases
+	return intelligent_code.functions['Databases'](*args, **kwargs)
+
+def Database(*args, **kwargs):
+	if not 'Database' in intelligent_code.functions:
+		from library.frameworks.base.classes.Database import Database
+		intelligent_code.functions['Database'] = Database
+	return intelligent_code.functions['Database'](*args, **kwargs)
+
+def Database2(*args, **kwargs):
+	if not 'Database2' in intelligent_code.functions:
+		from library.frameworks.base.classes.Database2 import Database2
+		intelligent_code.functions['Database2'] = Database2
+	return intelligent_code.functions['Database2'](*args, **kwargs)
+
 ###########################################################################################
 
-class Database2:
-
-	def __init__(self, data):
-
-		appDB = '_Generated_App_Database.db'
-		appJSON = '_Generated_App_Database_Config.json'
-		appPyRaw = '_Gen_App_Database_Data'
-		appPy = appPyRaw + '.py'
-		self.appPyDefault = _v.myDatabases + _v.slash+'_default.py'
-
-
-		self.data = {}
-		self.tables = []
-		self.name = data.replace(appDB,'').replace(appJSON,'').replace(appPy,'').replace('.json','')
-		if os.path.isfile(self.name + appDB):
-			self.appDB =   self.name + appDB
-			self.appJSON = self.name + appJSON
-			self.appPy =   self.name + appPy
-
-		else:
-			self.appDB = _v.myDatabases + _v.slash + self.name + appDB
-			self.appJSON = _v.myDatabases + _v.slash + self.name + appJSON
-			self.appPy = _v.myDatabases + _v.slash + self.name + appPy
-		self.appPyRaw = self.name + appPyRaw
-
-		self.tableDelim = '_x_'
-
-		self.meta = []
-
-	def registerTable(self, name):
-		self.tables.append(TablesDB(name))
-
-	def TableFieldCount(self):
-		result = 0
-		for i,ci in enumerate(self.tables):
-			if ci.name == name:
-				result = self.tables[i].getCount()
-		return result
-# {
-#   'table': 'table,name',
-#   'fields': [
-#       {'names': 'one,two'},
-#       {'names': 'three', 'table': 'name', 'as': 'threeish'}
-#   ],
-#   'action': [
-#       { 'type': 'text', 'names': 'field', 'table': 'your_mom', 'search': '*.txt,desktop'},
-#       { 'type': 'text', 'names': 'testy', 'and_or': 'or', 'table': 'or_test', 'search': '*.py,*.txt'},
-#       { 'type': 'field_type(text)', 'table': 'name', 'names': 'field,names', 'and_or': 'and',  'search': '*.py,tech'},
-#       { 'type': 'field_type(number)', 'names': 'field,names', 'search': '1000,2000'},
-#       { 'type': 'field_type(number)', 'names': 'field,names', 'search': 'g,1000'},
-#       { 'type': 'field_type(number)', 'names': 'field,names', 'search': 'l,1000'},
-#       { 'type': 'field_type(number)', 'names': 'field,names', 'search': 'str(ago(2000))'},
-#       { 'type': 'field_type(number)', 'names': 'field,names', 'search': 'str(epoch(2018.07))'},
-#       { 'type': 'field_type(number)', 'names': 'field,names', 'search': 'str(epoch(2018.07)),str(epoch('2018.10',True))'},
-#       { 'type': 'field_type(sort)', 'names': 'field', 'order': 'asc'},
-#       { 'type': 'field_type(sort)', 'names': 'field', 'order': 'desc'},
-#   ]
-# }
-
-	def queryBuilder(self,data): # queryBuilder
-		self.data = data
-		# print_(data['fields'])
-		# sys.exit()
-		self.qbFields = []
-		tbls = data['table'].split(',')
-		if len(tbls) > 1:
-			multi_Table = True
-		else:
-			multi_Table = False
-		if multi_Table:
-			sql = 'SELECT '
-			# print_(data['fields'])
-			for field in data['fields']:
-				for name in field['names'].split(','):
-					thisT = ''
-					try:
-						thisT = field['table']
-					except Exception as e:
-						thisT =  tbls[0]
-					try:
-						asF = field['as']
-					except Exception as e:
-						asF =  name
-					name = "" + thisT + '.' + name + " AS " + asF
-					self.qbFields.append(asF)
-					sql += name + ', '
-			sql = _str.cleanLast(sql,', ')
-			sql += ' FROM ' + tbls[0] + ' '
-			for iJ,tJ in enumerate(tbls):
-				if iJ > 0:
-					sql += ' JOIN ' + tJ + ' ON ' + tJ + '.id_parent = ' + tbls[0] + '.id_uuid '
-
-			sql += ' WHERE '
-		else:
-			sql = 'SELECT '
-			for field in data['fields']:
-				for name in field['names'].split(','):
-					thisT = ''
-					try:
-						thisT = field['table']
-					except Exception as e:
-						thisT =  tbls[0]
-					try:
-						asF = field['as']
-					except Exception as e:
-						asF =  name
-					name = "" + thisT + '.' + name + " AS " + asF
-					self.qbFields.append(asF)
-					sql += name + ', '
-			sql = _str.cleanLast(sql,', ')
-			sql += ' FROM ' + tbls[0] + ' WHERE '
-		# JOIN albums ON albums.albumid = tracks.albumid
-		orderBy = False
-		for i,action in enumerate(data['action']):
-			if action['type'] == 'text':
-				sql += '('
-				for name in action['names'].split(','):
-					if multi_Table:
-						try:
-							thisT =  action['table']
-						except Exception as e:
-							thisT =  tbls[0]
-						name = "" + thisT + '.' + name + ""
-					try:
-						and_or = action['and_or']
-					except Exception as e:
-						and_or =  'and'
-					for tv in action['search'].split(','):
-						if tv.startswith('*'):
-							tv = tv.replace('*','')
-							sql += ' ' + name + " like '%" + tv + "' " + and_or + ' '
-						elif tv.endswith('*'):
-							tv = tv.replace('*','')
-							sql += ' ' + name + " like '" + tv + "%' " + and_or + ' '
-						else:
-							sql += ' ' + name + " like '%" + tv + "%' " + and_or + ' '
-				sql = _str.replaceDuplicate(sql,' ')
-				sql = _str.cleanLast(sql,' and ')
-				sql = _str.cleanLast(sql,' or ')
-				sql += ') and '
-			sql = sql.replace('WHERE and ','WHERE ')
-			if action['type'] == 'number':
-				for name in action['names'].split(','):
-					if multi_Table:
-						try:
-							thisT =  action['table']
-						except Exception as e:
-							thisT =  tbls[0]
-						name = "'" + thisT + '.' + name + "'"
-
-					coin = action['search'].split(',')
-					if not len(coin) == 2:
-						print_('bad input')
-						sys.exit()
-					if isNu(coin[0]):
-						do = 'b'
-					else:
-						do = coin[0]
-					if do == 'b':
-						sql += name + ' > ' + str(coin[0]) + " and " + name + " < " + str(coin[1]) + ' and '
-					if do == 'l':
-						sql += name + ' < ' + str(coin[1]) + ' and '
-					if do == 'g':
-						sql += name + ' > ' + str(coin[1]) + ' and '
-
-
-
-			if action['type'] == 'date':
-				for name in action['names'].split(','):
-					if multi_Table:
-						try:
-							thisT =  action['table']
-						except Exception as e:
-							thisT =  tbls[0]
-						name = "'" + thisT + '.' + name + "'"
-
-					coin = action['search'].split(',')
-					if not len(coin) == 2:
-						if isNu2(coin[0]):
-							sql += name + ' > ' + str(epoch(coin[0])) + ' and '
-						else:
-							sql += name + ' > ' + str(timeAgo(coin[0])) + ' and '
-					else:
-						if isNu2(coin[0]):
-							do = 'b'
-						else:
-							do = coin[0]
-						if do == 'b':
-							sql += name + ' > ' + str(epoch(coin[0])) + " and " + name + " < " + str(epoch(coin[1],True)) + ' and '
-						if do == 'l':
-							sql += name + ' < ' + str(epoch(coin[1])) + ' and '
-						if do == 'g':
-							sql += name + ' > ' + str(epoch(coin[1])) + ' and '
-
-
-
-			if action['type'] == 'bytes':
-				for name in action['names'].split(','):
-					if multi_Table:
-						try:
-							thisT =  action['table']
-						except Exception as e:
-							thisT =  tbls[0]
-						name = "'" + thisT + '.' + name + "'"
-
-					coin = action['search'].split(',')
-					if coin[0] == 'l':
-						sql += name + ' < ' + str(unFormatSize(coin[1])) + ' and '
-					elif coin[0] == 'g':
-						sql += name + ' > ' + str(unFormatSize(coin[1])) + ' and '
-					else:
-						sql += name + ' > ' + str(unFormatSize(coin[0])) + " and " + name + " < " + str(unFormatSize(coin[1])) + ' and '
-
-
-
-			if action['type'] == 'sort':
-				orderBy = True
-		sql = _str.cleanLast(sql,' and ')
-		sql = _str.cleanLast(sql,' or ')
-		if orderBy:
-			sql += ' ORDER BY '
-			for i,action in enumerate(data['action']):
-				if action['type'] == 'sort':
-					try:
-						if 'a' in action['order'].lower():
-							order = 'ASC'
-						else:
-							order = 'DESC'
-					except Exception as e:
-						order = 'ASC'
-					for name in action['names'].split(','):
-						if multi_Table:
-							try:
-								thisT =  action['table']
-							except Exception as e:
-								thisT =  tbls[0]
-							name = "'" + thisT + '.' + name + "'"
-						sql += name + ' ' + order + ', '
-
-		sql = _str.cleanLast(sql,' and ')
-		sql = _str.cleanLast(sql,' or ')
-		sql = _str.cleanLast(sql,', ')
-		sql = _str.replaceDuplicate(sql,' ')
-		sql = _str.cleanLast(sql,' ')
-		sql += ';'
-		sql = sql.replace('WHERE;',';')
-		return sql
-	def metaGen(self):
-		import sqlite3
-		import re
-		# import numpy as np
-		meta = []
-		con = sqlite3.connect(self.appDB)
-		for line in con.iterdump():
-			if 'CREATE TABLE' in line and not 'INSERT INTO' in line:
-				# print_(line)
-				one = line.split('CREATE TABLE ')[1]
-				two = one.split(' (')
-				table = two[0]
-				# print_(table)
-				fieldRaw = two[1].split(')')[0]
-				f = []
-				for field in fieldRaw.split(', '):
-					# print_('\t',field)
-					fd = field.split(' ')
-					f.append({'type': fd[1], 'field': fd[0], 'max': 0, 'min': 0, 'average': 0})
-
-
-				if self.tableDelim in table:
-					parent = ''
-					mx = len(table.split(self.tableDelim))-1
-					for iT,tX in enumerate(table.split(self.tableDelim)):
-						if iT < mx:
-							parent += tX + self.tableDelim
-					parent = _str.cleanLast(parent,self.tableDelim)
-				else:
-					parent = ''
-
-
-				meta.append({'table': table, 'parent': parent, 'fields': f})
-			elif 'INSERT INTO' in line:
-				pass
-				# break
-		average = {}
-		for im,m in enumerate(meta):
-			sql = 'SELECT * FROM ' + m['table']
-			conn = sqlite3.connect(self.appDB)
-			c = conn.cursor()
-			c.execute(sql)
-			rows = c.fetchall()
-			for row in rows:
-				# print_(row)
-				for fi,field in enumerate(m['fields']):
-					# print_(field['field'],row[fi])
-					aKey = str(m['table']) + '-' + str(number2Words(field['field']))
-					# print_(aKey)
-
-					try:
-						if not type(average[aKey]['datapoints']) == list:
-							average[aKey] = {'max': 0, 'min': 'first', 'average': 0, 'datapoints': [], 'count': 0}
-
-						# print_(type())
-					except Exception as e:
-						average[aKey] = {'max': 0, 'min': 'first', 'average': 0, 'datapoints': [], 'count': 0}
-					average[aKey]
-					# print_(aKey)
-					if field['type'] == 'int':
-						if type(row[fi]) == int:
-							size = row[fi]
-						else:
-							string = re.sub('[^0-9]', '', str(row[fi]))
-							# print_(type(string),string)
-							# print_(string)
-							if len(string) == 0:
-								size = 0
-							else:
-								size = int(string)
-					if field['type'] == 'str':
-						size = len(str(row[fi]))
-					# print_()
-					# print_(type(average[aKey]['max']),average[aKey]['max'])
-					# print_(type(size),size)
-					if average[aKey]['max'] < size:
-						average[aKey]['max'] = size
-					if average[aKey]['min'] == 'first':
-						average[aKey]['min'] = size
-					elif average[aKey]['min'] > size:
-						average[aKey]['min'] = size
-					average[aKey]['datapoints'].append(size)
-
-		errors = []
-		totalCount = 0
-		for im,m in enumerate(meta):
-
-			for row in rows:
-				# print_(row)
-				for fi,field in enumerate(m['fields']):
-					# print_(meta[im]['fields'][fi]['max'])
-					aKey = m['table'] + '-' + number2Words(field['field'])
-					# print_(aKey)
-					try:
-						# print_(average[aKey]['max'])
-						meta[im]['fields'][fi]['max'] = average[aKey]['max']
-						meta[im]['fields'][fi]['min'] = average[aKey]['min']
-						# meta[im]['fields'][fi]['average'] = int(np.mean(average[aKey]['datapoints']))
-						meta[im]['count'] = len(average[aKey]['datapoints'])
-						total = meta[im]['count']
-					except Exception as e:
-						errors.append(aKey)
-				totalCount += total
-
-		self.meta = {'data': meta, 'records': totalCount, 'errors': errors}
-		saveTable2(meta,'database_meta.json')
-
-		return meta
-	def metaPrint(self):
-		if self.meta == []:
-			self.metaGen()
-
-		totalColumnWidth = 0
-		for m in self.meta['data']:
-			tables.register(m['table'],m['fields'])
-			spaces = tables.getLength(m['table'],'type,field,max,min,average')
-			if spaces > totalColumnWidth:
-				totalColumnWidth = spaces
-
-
-
-		# fieldLengths = 0
-		# for m in self.meta['data']:
-		#   tables.register(m['table'],m['fields'])
-		#   data = tables.getFieldLengths(m['table'],'type,field,max,min,average')
-		#   if not type(fieldLengths) == dict:
-		#       fieldLengths = data
-		#   for name in fieldLengths.keys():
-		#       if data[name] > fieldLengths[name]:
-		#           fieldLengths[name] = data[name]
-
-
-
-		for m in self.meta['data']:
-			genLine(totalColumnWidth,'=')
-			print_('Table:\t',m['table'])
-			print_('Parent:\t',m['parent'])
-			print_('Records:',m['count'])
-			print_()
-			tables.register(m['table'],m['fields'])
-			# tables.fieldProfileSet(m['table'],'*','alignment','center')
-			# tables.print(m['table'],'type,field,max,min,average',fieldLengths)
-			tables.print(m['table'],'type,field,max,min,average')
-
-			genLine(totalColumnWidth,'=')
-		print_()
-		print_('Records:',self.meta['records'])
-		print_()
-		print_('Errors:')
-		for e in self.meta['errors']:
-			print_('\t',e)
-		print_()
-		print_()
-		print_('Example:')
-		print_('\t p dba -app',self.name)
-		print_()
-		print_()
-	def findParent(self,table):
-		# parent = 'Error'
-		# for m in self.meta['data']:
-		#   if m['table'] == table:
-		#       parent = m['parent']
-		#       break
-		if self.tableDelim in table:
-			parent = ''
-			mx = len(table.split(self.tableDelim))-1
-			for iT,tX in enumerate(table.split(self.tableDelim)):
-				if iT < mx:
-					parent += tX + self.tableDelim
-			parent = _str.cleanLast(parent,self.tableDelim)
-		else:
-			parent = ''
-		return parent
-
-	def findChildren(self,table):
-		if self.meta == []:
-			self.metaGen()
-		children = []
-		for m in self.meta['data']:
-			if m['parent'] == table:
-				children.append(m['table'])
-
-		return children
-
-	def findType(self,column):
-		mainTable = self.data['table'].split(',')[0]
-		found = False
-		nm = ''
-		result = ''
-
-		for action in self.data['fields']:
-			for name in action['names'].split(','):
-				if name == column:
-					try:
-						if action['type'] == 'date' or 'byte' in action['type']:
-							result = action['type']
-					except Exception as e:
-						pass
-
-		if len(result) == 0:
-			for action in self.data['action']:
-				for name in action['names'].split(','):
-					if name == column:
-						if action['type'] == 'date' or 'byte' in action['type']:
-							result = action['type']
-
-		if len(result) == 0:
-			for field in self.data['fields']:
-				try:
-					table = field['table']
-				except Exception as e:
-					table = mainTable
-				if ',' in field['names']:
-					for name in field['names'].split(','):
-						if name == column:
-							nm = name
-							found = True
-				else:
-					try:
-						newName = field['as']
-					except Exception as e:
-						newName = field['names']
-					if newName == column:
-						nm = newName
-						found = True
-				# print_(field)
-				if found:
-					break
-
-			result = self.checkConfig(table,nm)
-		# print_(mainTable)
-		return result
-	def checkConfig(self,tbl,nm):
-		self.appJSON
-		# print_(self.appJSON)
-		# print_(tbl,nm)
-		structure = getTable2(self.appJSON)
-		result = ''
-		if tbl == structure['name']:
-			for zs in structure['zstructure']:
-				if zs['field'] == nm:
-					result = zs['type']
-					break
-		return result
-
-	def executeSQL(self,sql,group=0):
-		import sqlite3
-		conn = sqlite3.connect(self.appDB)
-		c = conn.cursor()
-		c.execute(sql)
-		all_rows = c.fetchall()
-		records = []
-		for f in all_rows:
-			row = {}
-			for ic,c in enumerate(self.qbFields):
-				row[c] = f[ic]
-
-			records.append(row)
-		col = ''
-		for c in self.qbFields:
-			col += c + ','
-		col = _str.cleanLast(col,',')
-		tables.register('sql',records)
-		for ic,c in enumerate(self.qbFields):
-			if self.findType(c) == 'date':
-				tables.fieldProfileSet('sql',c,'trigger',float2Date2)
-			if 'byte' in self.findType(c):
-				tables.fieldProfileSet('sql',c,'trigger',formatSize)
-			if self.findType(c) == 'bytes':
-				tables.fieldProfileSet('sql',c,'trigger',formatSize)
-			# print_(self.findType(c))
-		tables.print('sql',col)
 
 
 
@@ -18928,10 +11946,11 @@ def defaultScriptTriggers_do():
 		if not 'PrintEpoch' in __.setting('omit-switch-triggers',d=[]):
 			switches.trigger('PrintEpoch',print_epoch_trigger)
 		# switches.trigger('Aggregate',aggregate_trigger)
-		switches.postScripts.append( aggregate_trigger )
+		##change
+		# switches.postScripts.append( aggregate_trigger )
 
 
-printAutoAbbreviations_scheduled = False
+
 def autoAbbreviations():
 	global printAutoAbbreviations_scheduled
 	# return False
@@ -19177,1943 +12196,19 @@ class ThisThread( threading.Thread ):
 
 #########################################################################################################################################################
 
-class Threads:
-	# Threads.openCnt
-	# Threads.closedCnt
-	openCnt = 0
-	closedCnt = 0
-	def __init__( self, name=None, func=None, arg=None, kwargs=None, focus=None, qID=None, addID=None, pID=None, timeout=None ):
-		global appInfo
-		if name is None:
-			name = __.uuid()
-		# Threads.openCnt += 1
-		self.active = False
+def Threads(*args, **kwargs):
+	if not 'Threads' in intelligent_code.functions:
+		from library.frameworks.base.classes.Threads import Threads
+		intelligent_code.functions['Threads'] = Threads
+	return intelligent_code.functions['Threads'](*args, **kwargs)
 
-		self.created = time.time()
-		if focus is None:
-			focus = __.appReg
-		self.app = appInfo[focus]['file']
-		self.name = name
-		self.func = func
-		self.focus = focus
-		self.arg = arg
-		self.kwargs = kwargs
-		self.qID = qID
-		self.addID = addID
-		self.created = time.time()
-		self.status = True
-		self.instance = ''
-		self.bottom = False
-		self.timeout = timeout
-		self.hasTimedOut = 0
-		self.pID = pID
-		self.sstatus = 2
-
-
-
-		self.data = False
-		# self.trigger = False
-		# self.triggerArg = False
-		self.executed = False
-		self.triggerError = False
-
-		self.thisThread = None
-
-		__.threadActivity[self.qID] = {}
-		__.threadActivity[self.qID]['error'] = False
-		__.threadActivity[self.qID]['activity'] = time.time()
-		__.threadActivity[self.qID]['log'] = False
-
-		# try:
-		#   self.instance = appInfo[focus]['instance']
-		# except Exception as e:
-
-
-
-		self.log = {
-						'id':       self.qID,
-						'parent':   self.pID,
-						'app':      self.app,
-						'func':     'unknown',
-						'arg':      'unknown',
-						'instance': self.instance,
-						'focus':    self.focus,
-						'start':    0,
-						'end':      0,
-						'runtime':  0,
-						'mem':      0,
-						'lines':      0,
-						'wait':     0,
-						'qcount':   0
-		}
-		try:
-			self.log['func'] = self.func.__name__
-		except Exception as e:
-			pass
-
-		self.log['arg'] = _profile.records.audit(  self.name+' - '+str(self.qID)  , self.arg )
-		# if not type(self.arg) == str and not type(self.arg) == list and not type(self.arg) == dict and not type(self.arg) == int and not type(self.arg) == float and not type(self.arg) == tuple:
-		#     try:
-		#         self.log['arg'] = str(self.arg)
-		#     except Exception as e:
-		#         pass
-		# else:
-
-
-
-		try:
-			self.argID = self.arg
-			self.argID.append( self.qID )
-		except Exception as e:
-			self.argID = False
-		self.open()
-	def getLog( self ):
-		self.log['error'] = __.threadActivity[self.qID]['error']
-		self.log['activity'] = __.threadActivity[self.qID]['activity']
-		self.log['errorlog'] = __.threadActivity[self.qID]['log']
-		if self.thisThread is None:
-			self.log['thisThread'] = None
-		else:
-			self.log['thisThread'] = self.thisThread.log
-		# try:
-		# except Exception as e:
-		#     pass
-		return self.log
-
-
-
-	def open( self ):
-		# print_('open 0')
-		self.sstatus = 1
-		__.queueLastActivity = time.time()
-		self.active = True
-		self.log['start'] = time.time()
-		self.log['qcount'] = __.queueCount
-
-		if self.kwargs:
-			if self.addID:
-				data = [{ 'func': self.func, 'args': self.arg[:-1] }]
-				data[0]['args'][0]['qID']=self.qID
-				self.thisThread = ThisThread(
-												qID = self.qID,
-												name = self.name+' - '+str(self.qID),
-												fn = self.func,
-												k = data[0]['args'][0],
-												t = self.timeout,
-												start = True,
-				)
-				# threadTimer( .0001, threadKwargs, data, qID=self.qID )
-			else:
-				data = [[{ 'func': self.func, 'args': self.arg }]]
-				self.thisThread = ThisThread(
-												qID = self.qID,
-												name = self.name+' - '+str(self.qID),
-												fn = self.func,
-												k = self.arg,
-												t = self.timeout,
-												start = True,
-				)
-				# threadTimer( .0001, threadKwargs, data, qID=self.qID )
-		else:
-			if self.addID:
-				self.thisThread = ThisThread(
-												qID = self.qID,
-												name = self.name+' - '+str(self.qID),
-												fn = self.func,
-												a = self.qID,
-												t = self.timeout,
-												start = True,
-				)
-				# threadTimer( .0001, self.func, self.argID, qID=self.qID )
-			else:
-				self.thisThread = ThisThread(
-												qID = self.qID,
-												name = self.name+' - '+str(self.qID),
-												fn = self.func,
-												a = self.arg,
-												t = self.timeout,
-												start = True,
-				)
-				# threadTimer( .0001, self.func, self.arg, qID=self.qID )
-		# print_('open 1')
-
-	def close( self, mem=0, data=False, trigger=False, triggerArg=False, kwargs=False, lines=0 ):
-		self.sstatus = 0
-		__.queueLastActivity = time.time()
-		if not type(trigger) == bool:
-			try:
-				triggerName = trigger.__name__
-			except Exception as e:
-				triggerName = ''
-
-			try:
-
-
-
-				if type(data) == bool and type(triggerArg) == bool:
-					threadTimer( .0001, trigger )
-				elif not type(data) == bool and type(triggerArg) == bool:
-					threadTimer( .0001, trigger, data )
-				elif type(data) == bool and not type(triggerArg) == bool:
-					threadTimer( .0001, trigger, triggerArg )
-				elif not type(data) == bool and not type(triggerArg) == bool and kwargs:
-					args = [{ 'func': trigger, 'args': triggerArg }]
-					args[0]['args'][0]['data'] = data
-					threadTimer( .0001, threadKwargs, args )
-				elif not type(data) == bool and not type(triggerArg) == bool and not kwargs:
-					try:
-						triggerArg.append(data)
-						threadTimer( .0001, threadKwargs, triggerArg )
-					except Exception as e:
-						try:
-							triggerArg[0].append(data)
-							threadTimer( .0001, threadKwargs, triggerArg )
-						except Exception as e:
-							printBold('close trigger error '+str(self.focus)+' '+ str(self.name) +' '+ str(self.func)+' '+ str(triggerName), 'red' )
-							self.triggerError = True
-
-
-				self.executed = True
-				if self.triggerError:
-					self.executed = False
-			except Exception as e:
-				printBold('close trigger error '+str(self.focus)+' '+ str(self.name) +' '+ str(self.func)+' '+ str(triggerName), 'red')
-				self.triggerError = True
-
-
-
-		# Threads.closedCnt += 1
-		# print_('Closed:',self.qID,'\tTotal Closed:',Threads.newCounter,'\tScheduler:',__.queueCountScheduleAudit,__.queueCountSchedule,'\tTimers:',__.queueCountTimer)
-		self.status = False
-		self.log['end'] = time.time()
-		self.log['runtime'] = self.log['end'] - self.log['start']
-		self.log['mem'] = mem
-		self.log['lines'] = lines
-		if not type(data) == bool:
-			self.data = data
-		return self.qID
-
-	def openCnt( self ):
-		return Threads.openCnt
-
-	def closedCnt( self ):
-		return Threads.closedCnt
+def Queue(*args, **kwargs):
+	if not 'Queue' in intelligent_code.functions:
+		from library.frameworks.base.classes.Queue import Queue
+		intelligent_code.functions['Queue'] = Queue
+	return intelligent_code.functions['Queue'](*args, **kwargs)
 #########################################################################################################################################################
-class Queue:
 
-	def __init__( self ):
-
-		self.created = time.time()
-		self.loadedBy = 0
-		self.loadTime = 0
-		self.completionTime = 0
-		self.lastActivity = 0
-		self.lastActivityEach = {}
-
-		# self.qID_index = {}
-
-		self.records = {}
-		self.nextID = 0
-		self.opened = 0
-		self.closed = 0
-		self.notstarted = 0
-		self.maxInQueue = 0
-		self.maxThreads = 100
-		self.maxThreadsSafe = 100
-		self.minThreads = 50
-		self.table = {'focus': [], 'name': []}
-		self.schedulerInitialized = False
-
-
-		self.auditPrint = True
-		self.maxThreadsAuto = True
-		self.auditInitialized = False
-		self.auditPercentChangeMax = 30
-		self.auditPercentChangeMin = 10
-		self.auditPercentReduceBy = 5
-		self.auditPercentReduceByDrastic = 15
-		self.auditPercentDrasticThreshold = 3
-		self.auditWatchMax = 5
-		self.auditPercentSample = 10
-		self.auditMaxFailuresBeforeAction = 3
-		self.auditLogInternal = []
-		self.auditLogExternal = []
-		self.auditAutoAdjust = False
-
-
-		##
-		self.scheduleLoop = .01
-		self.auditLoop = .1
-		self.autoLoadedAfter = 5
-		self.statusTotal = 0
-		self.prefix = False
-		##
-
-
-		self.autoLoaded = True
-
-		self.report = False
-		self.reportPrinted = False
-
-
-		self.timeout = False
-		self.timeoutAsk = False
-
-
-		self.saveLog = True
-		self.isLoaded = False
-
-		self.appStructure = __.structure()
-
-		__.totalTask = 0
-		__.queueCount = 0
-		__.queueCountSchedule = 0
-		__.queueCountAudit = 0
-		__.queueCountScheduleAudit = 0
-		__.queueCountAuditAudit = 0
-		__.queueLastActivity = time.time()
-		__.queueCountTimer = 0
-
-		__.threadActivity = {}
-
-		self.projectDataMaxLen = 2000
-		self.projectDataDetected = False
-		__.datadumps = 0
-		__.projectData = {}
-		__.pdID = {}
-		__.saveInitiated = False
-
-		self.listeningFor = False
-
-
-
-	def killAll( self ):
-
-
-
-		for focus in self.records.keys():
-			for i, threads in enumerate( self.records[focus]['threads'] ):
-				if not threads.thisThread is None and threads.sstatus == 1:
-
-					name = self.records[focus]['threads'][i].name
-					qID = self.records[focus]['threads'][i].qID
-
-					self.records[focus]['threads'][i].hasTimedOut = 1
-					self.records[focus]['threads'][i].thisThread.kill()
-					self.spent( qID, 0 )
-
-		self.isLoaded = True
-		for focus in self.records.keys():
-			for name in self.records[focus]['names'].keys():
-				self.records[focus]['names'][name]['loaded'] = True
-				self.spendFocus( name, focus, 99 )
-
-
-
-# func=False, arg=False, kwargs=False, focus=False , addID=True ,
-# loaded=False,
-# , pID=False
-
-
-
-	def register( self, name, trigger=None, triggerArg=False, triggerKwargs=False,  timeout=False, database=False, focus=None,      completed=None, onComplete=None,      oc=None, c=None, a=None, k=None, t=None, d=None  ):
-		if not completed is None:
-			trigger = completed
-		if not onComplete is None:
-			trigger = onComplete
-		if not oc is None:
-			trigger = oc
-		if not c is None:
-			trigger = c
-
-		if not a is None:
-			triggerArg = a
-		if not k is None:
-			triggerKwargs = k
-		if not t is None:
-			timeout = t
-		if not d is None:
-			database = d
-
-
-
-		loaded = False
-
-
-
-		# print_('arg:',arg)
-		# print_( name, type( trigger ) )
-		# sys.exit()
-		nextID = False
-		global appInfo
-		self.lastActivity = time.time()
-
-		if focus is None:
-			focus = __.appReg
-		pass
-
-		try:
-			self.lastActivityEach[focus][name] = time.time()
-		except Exception as e:
-			self.lastActivityEach[focus] = {}
-			self.lastActivityEach[focus][name] = time.time()
-
-
-
-		try:
-			__.projectData[focus]
-		except Exception as e:
-			__.projectData[focus] = {}
-
-		__.projectData[focus][name] = {}
-		# if not 'folder' in name:
-		#   print_( 'zero' )
-		#   sys.exit()
-
-		__.projectData[focus][name][0] = {}
-		__.projectData[focus][name][0]['saveInitiated'] = False
-		# print_( 'check3:', focus, name, 0 )
-		__.projectData[focus][name][0]['data'] = []
-
-		__.projectData[focus][name][1] = {}
-		__.projectData[focus][name][1]['saveInitiated'] = False
-		# print_( 'check4:', focus, name, 1 )
-		__.projectData[focus][name][1]['data'] = []
-
-		try:
-			__.pdID[focus]
-		except Exception as e:
-			__.pdID = {}
-			__.pdID[focus] = {}
-
-
-		__.pdID[focus][name] = 0
-
-		if self.maxThreadsAuto:
-			maxThreads = self.maxThreadsSafe
-		else:
-			maxThreads = self.maxThreads
-		if trigger is None:
-			trigger = False
-
-		try:
-			self.records[focus]['names'][name] = {
-													'timeout': timeout,
-													'loaded': loaded,
-													'trigger': trigger,
-													'maxThreads': maxThreads,
-													'failure': 0,
-													'changes': 0,
-													'watch': 0,
-													'closed': 0,
-													'database': database,
-													'executed': False,
-													'projectSaveInitiated': False,
-												}
-		except Exception as e:
-			self.records[focus] = {
-										'threads': [],
-										'open': 0,
-										'app': appInfo[focus]['file'],
-										'names': {
-												name: {
-													'timeout': timeout,
-													'loaded': loaded,
-													'trigger': trigger,
-													'maxThreads': maxThreads,
-													'failure': 0,
-													'changes': 0,
-													'watch': 0,
-													'closed': 0,
-													'database': database,
-													'executed': False,
-													'projectSaveInitiated': False,
-												}
-										}
-			}
-
-
-
-		pass
-		self.isLoaded = False
-		self.records[focus]['names'][name]['loaded'] = loaded
-		if not self.auditAutoAdjust:
-			# print_(focus,name)
-			if self.maxThreadsAuto:
-				self.records[focus]['names'][name]['maxThreads'] = self.maxThreadsSafe
-			else:
-				self.records[focus]['names'][name]['maxThreads'] = self.maxThreads
-
-
-		if not loaded:
-			self.records[focus]['names'][name]['loaded'] = False
-
-		if not trigger is None:
-			self.records[focus]['names'][name]['trigger'] = trigger
-			if not triggerArg is None:
-				self.records[focus]['names'][name]['triggerArg'] = triggerArg
-			else:
-				self.records[focus]['names'][name]['triggerArg'] = False
-
-
-
-		if not self.auditInitialized and self.maxThreadsAuto:
-			self.auditInitialized = True
-			threadTimer( self.auditLoop, threadAudit )
-			# Timer( .3, threadAudit ).start()
-
-		return nextID
-
-
-
-	def add( self, name, func=False, arg=False, kwargs=False, focus=False , addID=True , trigger=False, triggerArg=False, triggerKwargs=False, loaded=False, timeout=False, database=False, pID=False ):
-		# print_('arg:',arg)
-		# print_( name, type( trigger ) )
-		# sys.exit()
-		nextID = False
-		global appInfo
-		self.lastActivity = time.time()
-
-		if type(focus) == bool:
-			focus = __.appReg
-
-		try:
-			self.lastActivityEach[focus][name] = time.time()
-		except Exception as e:
-			self.lastActivityEach[focus] = {}
-			self.lastActivityEach[focus][name] = time.time()
-
-		try:
-			self.records[focus]['threads']
-			self.records[focus]['names'][name]['loaded'] = loaded
-		except Exception as e:
-
-			try:
-				__.projectData[focus]
-			except Exception as e:
-				__.projectData[focus] = {}
-
-			__.projectData[focus][name] = {}
-			# if not 'folder' in name:
-			#   print_( 'zero' )
-			#   sys.exit()
-
-			__.projectData[focus][name][0] = {}
-			__.projectData[focus][name][0]['saveInitiated'] = False
-			# print_( 'check3:', focus, name, 0 )
-			__.projectData[focus][name][0]['data'] = []
-
-			__.projectData[focus][name][1] = {}
-			__.projectData[focus][name][1]['saveInitiated'] = False
-			# print_( 'check4:', focus, name, 1 )
-			__.projectData[focus][name][1]['data'] = []
-
-			try:
-				__.pdID[focus]
-			except Exception as e:
-				__.pdID = {}
-				__.pdID[focus] = {}
-
-
-			__.pdID[focus][name] = 0
-
-			if self.maxThreadsAuto:
-				maxThreads = self.maxThreadsSafe
-			else:
-				maxThreads = self.maxThreads
-			try:
-				self.records[focus]['names'][name] = {
-														'timeout': timeout,
-														'loaded': loaded,
-														'trigger': trigger,
-														'maxThreads': maxThreads,
-														'failure': 0,
-														'changes': 0,
-														'watch': 0,
-														'closed': 0,
-														'database': database,
-														'executed': False,
-														'projectSaveInitiated': False,
-													}
-			except Exception as e:
-				self.records[focus] = {
-											'threads': [],
-											'open': 0,
-											'app': appInfo[focus]['file'],
-											'names': {
-													name: {
-														'timeout': timeout,
-														'loaded': loaded,
-														'trigger': trigger,
-														'maxThreads': maxThreads,
-														'failure': 0,
-														'changes': 0,
-														'watch': 0,
-														'closed': 0,
-														'database': database,
-														'executed': False,
-														'projectSaveInitiated': False,
-													}
-											}
-				}
-
-
-		if type(timeout) == bool:
-			timeout = self.records[focus]['names'][name]['timeout']
-
-
-		self.isLoaded = False
-		self.records[focus]['names'][name]['loaded'] = loaded
-		if not self.auditAutoAdjust:
-			# print_(focus,name)
-			if self.maxThreadsAuto:
-				self.records[focus]['names'][name]['maxThreads'] = self.maxThreadsSafe
-			else:
-				self.records[focus]['names'][name]['maxThreads'] = self.maxThreads
-
-
-		if not loaded:
-			self.records[focus]['names'][name]['loaded'] = False
-
-		if not type(trigger) == bool:
-			self.records[focus]['names'][name]['trigger'] = trigger
-			if not type(triggerArg) == bool:
-				self.records[focus]['names'][name]['triggerArg'] = triggerArg
-			else:
-				self.records[focus]['names'][name]['triggerArg'] = False
-
-		if not type(func) == bool:
-			self.table['focus'].append(focus)
-			# self.table['name'].append(name)
-			nextID = self.nextID
-			# self.qID_index[ (qID) ] = { 'focus': focus, 'name': name }
-			self.records[focus]['threads'].append( Threads( name, func, arg, kwargs, focus, nextID, addID, pID=pID, timeout=timeout ) )
-
-			shouldOpen = False
-			if not self.records[focus]['names'][name]['maxThreads']:
-				shouldOpen = True
-			elif self.opened > self.records[focus]['names'][name]['maxThreads']:
-				shouldOpen = True
-			if not shouldOpen:
-				self.notstarted += 1
-			else:
-				pass
-				# self.records[focus]['threads'][nextID].open()
-				# self.cnt( focus, True )
-			self.nextID += 1
-			if not self.schedulerInitialized and True:
-				self.schedulerInitialized = True
-				threadTimer( self.scheduleLoop, threadSchedule )
-				# Timer( self.scheduleLoop, threadSchedule ).start()
-
-		if not self.auditInitialized and self.maxThreadsAuto:
-			self.auditInitialized = True
-			threadTimer( self.auditLoop, threadAudit )
-			# Timer( .3, threadAudit ).start()
-
-		return nextID
-
-	def loadedGroup( self, name=False , focus=False ):
-
-		if self.autoLoaded:
-
-			if type(focus) == bool:
-				focus = __.appReg
-
-
-			hasChildren = False
-			for rec in self.records[focus]['threads']:
-				if rec.focus == focus and rec.name == name:
-					# if name == 'processMovies':
-					#     colorThis( [ 'processMovies' ], 'red' )
-					hasChildren = True
-
-
-			if hasChildren:
-				self.records[focus]['names'][name]['loaded'] = True
-
-
-
-	def loaded( self, name=False , focus=False ):
-
-
-		if self.autoLoaded:
-
-			if type(focus) == bool:
-				focus = __.appReg
-
-
-			hasChildren = False
-			for rec in self.records[focus]['threads']:
-				if rec.focus == focus and rec.name == name:
-					# if name == 'processMovies':
-					#     colorThis( [ 'processMovies' ], 'red' )
-					hasChildren = True
-
-
-			if hasChildren:
-				# self.isLoaded = True
-				if not type(name) == bool:
-					self.records[focus]['names'][name]['loaded'] = True
-					# name = str(list(self.records[focus]['names'].keys())[0])
-				else:
-					for f in self.records.keys():
-						for n in self.records[f]['names'].keys():
-							if not self.records[f]['names'][n]['loaded']:
-								self.records[f]['names'][n]['loaded'] = True
-
-
-		pass
-		allComplete = True
-		for f in self.records.keys():
-			for n in self.records[f]['names'].keys():
-				if not self.records[f]['names'][n]['loaded']:
-					allComplete = False
-		if allComplete:
-			self.isLoaded = True
-
-
-	def spent( self, qID, mem=0, data=False, trigger=False, triggerArg=False, kwargs=False, lines=0 ):
-		qID = int(qID)
-		focus = False
-		result = False
-		for i,t in enumerate(self.records[self.table['focus'][qID]]['threads']):
-			if self.records[ self.table['focus'][qID] ]['threads'][i].qID == qID:
-				result = self.records[self.table['focus'][qID]]['threads'][i].close( mem, data, trigger, triggerArg, kwargs, lines )
-				focus = self.table['focus'][qID]
-				name = self.records[self.table['focus'][qID]]['threads'][i].name
-		if not type(focus) == bool:
-			self.cnt( focus, False )
-
-			# if self.isEverythingLoadedEach(  focus,  name  ) and self.notstarted == 0:
-			if self.isEverythingLoadedEach(  focus,  name  ) and self.isEverythingClosedEach( focus, name ):
-				self.spendFocus( name, focus, 1 )
-				self.printReport()
-		return result
-
-
-
-	def printReport( self ):
-		if not self.reportPrinted:
-			self.completionTime = time.time() - self.created
-			if self.report:
-				self.reportPrinted = True
-				print_('__________________________________________')
-				print_()
-				print_('opened:',self.opened)
-				# print_('records open:',self.records[focus]['open'])
-				print_('isEverythingLoaded:',time.time()-self.loadedBy,time.time()-self.lastActivity)
-				print_('spendFocus')
-				print_('queueCountSchedule:',__.queueCountSchedule)
-				print_('queueCountAudit:',__.queueCountAudit)
-				print_('audit:',__.queueCountAudit)
-				print_()
-				print_('load time:\t', int(self.loadTime))
-				print_('time after load:\t', int(time.time()-self.loadedBy))
-				print_()
-				print_('app time:\t', int(self.completionTime))
-				print_()
-				print_('maxInQueue:',self.maxInQueue)
-				# str((self.completionTime/1000)%60)
-				print_()
-				print_('timeouts:',self.timeoutCount())
-				# print_("Average of the list =", round(average, 2))
-				print_()
-				print_('__________________________________________')
-			elif self.statusTotal > 0:
-				cTime = round(self.completionTime,2)
-				if cTime > 60:
-					ncTime = str(round((self.completionTime/60),2)) + ' min'
-				else:
-					ncTime = str(round(self.completionTime,2)) + ' sec'
-				print_('App time: ' + str(ncTime), end='\r', flush=True)
-				# sys.stdout.flush()
-
-	def spendFocus( self, name, focus, which ):
-
-
-		# print_( 'spendFocus which:', which )
-
-		# print_( 'HERE: 0' )
-		self.saveData()
-		# print_( 'HERE: 1' )
-
-		if not self.records[focus]['names'][name]['executed']:
-			if not type( self.records[focus]['names'][name]['trigger'] ) == bool:
-				if not type( self.records[focus]['names'][name]['triggerArg'] ) == bool:
-					# Timer(.0001, self.records[focus]['names'][name]['trigger'], self.records[focus]['names'][name]['triggerArg']).start()
-					# print_( '\trunning 0' )
-					self.records[focus]['names'][name]['trigger'](**self.records[focus]['names'][name]['triggerArg'])
-
-				else:
-					# print_( '\trunning 1' )
-					self.records[focus]['names'][name]['trigger']()
-			self.records[focus]['names'][name]['executed'] = True
-		# print_( 'HERE: 2' )
-
-
-	def log( self, name=False, focus=False ):
-		if type(focus) == bool:
-			focus = __.appReg
-		log = []
-		if not type(name) == bool:
-			for i,t in enumerate(self.records[focus]['threads']):
-				if self.records[focus]['threads'][i].name == name:
-					log.append(self.records[focus]['threads'][i].getLog())
-		else:
-			for i,t in enumerate(self.records[focus]['threads']):
-				for n in self.records[focus]['names']:
-					if self.records[focus]['threads'][i].name == n:
-						log.append(self.records[focus]['threads'][i].getLog())
-
-		for f in self.records:
-			self.records[f]['threads'] = False
-			for n in self.records[f]['names']:
-				if not type(self.records[f]['names'][n]['trigger']) == bool:
-					self.records[f]['names'][n]['trigger'] = True
-
-
-
-		return {
-					'session': _v.session(),
-					'created': self.created,
-					'loadedby': self.loadedBy,
-					'loadtime': self.loadTime,
-					'lastactivity': self.lastActivity,
-					'completiontime': self.completionTime,
-					'nextid': self.nextID,
-					'maxinqueue': self.maxInQueue,
-					'totaltask': __.totalTask,
-					'records': self.records,
-					'maxthreadssafe': self.maxThreadsSafe,
-					'projectdatamaxlen': self.projectDataMaxLen,
-					'datadumps': __.datadumps,
-					'appstructure': __.structure(),
-					'threadlog': log
-		}
-
-	def cnt( self, focus, up ):
-		# self.maxThreadsSafe
-		# self.maxThreads
-		if up:
-			if self.opened > self.maxInQueue:
-				self.maxInQueue = self.opened
-			self.lastActivity = time.time()
-			self.records[focus]['open'] += 1
-			self.opened += 1
-			__.queueCount += 1
-		else:
-			self.closed += 1
-			self.records[focus]['open'] -= 1
-			self.opened -= 1
-			__.queueCount -= 1
-
-	def schedule( self ):
-		Timer = __.imp('threading.Timer')
-		__.queueCountSchedule += 1
-		__.queueCountScheduleAudit -= 1
-
-
-
-		if self.opened > self.maxThreads and self.notstarted > 0:
-			pass
-			time.sleep(.02)
-			# Timer( self.scheduleLoop, threadSchedule ).start()
-		else:
-
-			i = 0
-			while self.opened < self.maxThreads-10 and i < self.notstarted:
-				# time.sleep(.02)
-				# print_( 'open:', self.opened, 'max:', self.maxThreads )
-				# if self.opened < self.maxThreads-10 and i < self.notstarted:
-				chosen = self.nextInQueue()
-				if type(chosen) == bool:
-						return False
-				else:
-					try:
-						self.records[chosen['focus']]['threads'][chosen['qID']].open()
-						self.notstarted -= 1
-						self.cnt( chosen['focus'], True )
-						i += 1
-					except Exception as e:
-						time.sleep(.2)
-						try:
-							self.records[chosen['focus']]['threads'][chosen['qID']].open()
-							self.notstarted -= 1
-							self.cnt( chosen['focus'], True )
-							i += 1
-						except Exception as e:
-							time.sleep(.2)
-							try:
-								self.records[chosen['focus']]['threads'][chosen['qID']].open()
-								self.notstarted -= 1
-								self.cnt( chosen['focus'], True )
-								i += 1
-							except Exception as e:
-								pass
-
-
-		if self.notstarted > 0:
-			try:
-				Timer( self.scheduleLoop, threadSchedule ).start()
-			except Exception as e:
-				time.sleep(.2)
-				try:
-					Timer( self.scheduleLoop, threadSchedule ).start()
-				except Exception as e:
-					time.sleep(.2)
-					try:
-						Timer( self.scheduleLoop, threadSchedule ).start()
-					except Exception as e:
-						time.sleep(.2)
-						try:
-							Timer( self.scheduleLoop, threadSchedule ).start()
-						except Exception as e:
-							pass
-
-
-
-
-	def nextInQueue( self ):
-		chosen = False
-		try:
-			for key in self.records.keys():
-				for i,q in enumerate(self.records[key]['threads']):
-					if not self.records[key]['threads'][i].active:
-						chosen = { 'focus': key, 'qID': self.records[key]['threads'][i].qID }
-			if type(chosen) == bool:
-				# print_('active:',self.checkActive())
-				return False
-		except Exception as e:
-			chosen = False
-		return chosen
-
-	def checkActive( self ):
-		active = 0
-		for key in self.records.keys():
-			for i,q in enumerate(self.records[key]['threads']):
-				if not self.records[key]['threads'][i].active:
-					active += 1
-		return active
-
-	def isEverythingLoaded( self ):
-		loaded = True
-		shouldRun = True
-		if self.loadedBy > 0:
-			if self.loadedBy > self.lastActivity:
-				shouldRun = False
-
-		if shouldRun:
-			for f in self.records.keys():
-				for n in self.records[f]['names'].keys():
-					if not self.records[f]['names'][n]['loaded']:
-						loaded = False
-			if loaded:
-				self.loadedBy = time.time()
-				self.loadTime = self.loadedBy - self.created
-				# self.isLoaded = True
-		return loaded
-
-	def isEverythingClosedEach( self, focus, name ):
-
-		closed = 0
-		total = 0
-		for key in self.records.keys():
-			for i,q in enumerate(self.records[key]['threads']):
-				if self.records[key]['threads'][i].name == name and self.records[key]['threads'][i].focus == focus:
-					total += 1
-					if self.records[key]['threads'][i].sstatus == 0:
-						closed += 1
-		if total and closed and total == closed:
-			return True
-		return False
-
-	def isEverythingLoadedEach( self, focus, name ):
-		f = focus
-		n = name
-
-
-
-		hasChildren = False
-		for rec in self.records[focus]['threads']:
-			if rec.focus == focus and rec.name == name:
-				# if name == 'processMovies':
-				#     colorThis( [ 'processMovies' ], 'red' )
-				hasChildren = True
-
-
-		if not hasChildren:
-			loaded = False
-		if hasChildren:
-
-
-
-			diff = int(time.time() - self.lastActivityEach[focus][name])
-			if diff > self.autoLoadedAfter:
-				self.loadedGroup( name=name , focus=focus )
-
-
-			loaded = True
-			shouldRun = True
-			# if self.loadedBy > 0:
-			#     if self.loadedBy > self.lastActivityEach[focus][name]:
-			#         shouldRun = False
-
-			if shouldRun:
-
-				if not self.records[f]['names'][n]['loaded']:
-					loaded = False
-
-				if loaded:
-					self.loadedBy = time.time()
-					self.loadTime = self.loadedBy - self.created
-					# self.isLoaded = True
-
-
-
-			allComplete = True
-			for f in self.records.keys():
-				for n in self.records[f]['names'].keys():
-					if not self.records[f]['names'][n]['loaded']:
-						allComplete = False
-			if allComplete:
-				self.isLoaded = True
-
-
-		return loaded
-
-
-
-	def getRuntimeMemoryFocus( self, focus ):
-		runtime = []
-		memory = []
-		runtimeMemory = []
-		for i,q in enumerate(self.records[focus]['threads']):
-			if not self.records[key]['threads'][i].status:
-				run = self.records[focus]['threads'][i].log['runtime']
-				mem = self.records[focus]['threads'][i].log['mem']
-				runtime.append( run )
-				memory.append( mem )
-				runtimeMemory.append({ 'runtime': run, 'mem': mem })
-
-		return { 'runtime': runtime, 'mem': memory, 'runmem': runtimeMemory, 'averagemem': self.calcAverage(memory), 'averageruntime': self.calcAverage(runtime)  }
-
-	def getRuntimeMemoryNameFocus( self, name, focus ):
-		runtime = []
-		runtimebottom = []
-		memory = []
-		runtimeMemory = []
-		self.numberClosed()
-		if self.records[focus]['names'][name]['closed'] < 5:
-			return False
-
-		for i,q in enumerate(self.records[focus]['threads']):
-			if not self.records[focus]['threads'][i].status and self.records[focus]['threads'][i].name == name:
-				run = self.records[focus]['threads'][i].log['runtime']
-				mem = self.records[focus]['threads'][i].log['mem']
-				runtime.append( run )
-				memory.append( mem )
-				runtimeMemory.append({ 'runtime': run, 'mem': mem })
-			if not self.records[focus]['threads'][i].status and self.records[focus]['threads'][i].name == name and not self.records[focus]['threads'][i].bottom:
-				self.records[focus]['threads'][i].bottom = True
-				runtimebottom.append( run )
-
-			if len(runtime) == 0 or len(memory) == 0 or len(runtimebottom) == 0 :
-				return False
-
-		try:
-
-			data = {
-					'runtime': runtime,
-					'runtimebottom': runtimebottom,
-					'mem': memory,
-					'runmem': runtimeMemory,
-					'averagemem': self.calcAverage(memory),
-					'averageruntime': self.calcAverage(runtime)
-		}
-
-		except Exception as e:
-			data = False
-			# print_(memory)
-
-		return data
-
-	def getRuntimeMemoryReport( self ):
-		self.runtime = []
-		self.mem = []
-		self.runtimeMemory = []
-		self.averagemem = 0
-		self.averageruntime = 0
-		for key in self.records.keys():
-			for i,q in enumerate(self.records[key]['threads']):
-				if not self.records[key]['threads'][i].status:
-					run = self.records[key]['threads'][i].log['runtime']
-					mem = self.records[key]['threads'][i].log['mem']
-
-					self.runtime.append( run )
-					self.mem.append( mem )
-					self.runtimeMemory.append({ 'runtime': runtime, 'mem': mem })
-
-		self.averagemem = self.calcAverage(mem)
-		self.averageruntime = self.calcAverage(runtime)
-		return { 'runtime': runtime, 'mem': mem, 'runmem': self.runtimeMemory, 'averagemem': self.averagemem, 'averageruntime': self.averageruntime }
-
-
-	def calcAverage( data ):
-		return round(data, 2)
-
-	def saveData( self ):
-
-		import sqlite3
-		for focus in __.projectData:
-			try:
-				del __.projectData[focus][0]
-			except Exception as e:
-				pass
-			for name in __.projectData[focus].keys():
-				logName = 'auto_' + self.records[focus]['app'] + '_' + name + '_' + str(self.created)
-				for pdID in __.projectData[focus][name].keys():
-					if len(__.projectData[focus][name][pdID]['data']):
-						__.datadumps += 1
-						if type(self.records[focus]['names'][name]['database']) == bool or self.records[focus]['names'][name]['database'] is None:
-							if len(__.projectData[focus][name][pdID]['data']) > 0:
-
-								saveTableSplitNew( __.projectData[focus][name][pdID]['data'], logName, project=True )
-								print_( 'check0:', focus, name, pdID )
-								if not 'folder' in name:
-									print_( 'zero' )
-									sys.exit()
-								__.projectData[focus][name][pdID]['data'] = []
-						else:
-							print_()
-							print_('Data saved to:',self.records[focus]['names'][name]['database'])
-							print_()
-
-
-							if len(__.projectData[focus][name][pdID]['data']) > 0:
-								try:
-									conn = sqlite3.connect(self.records[focus]['names'][name]['database'])
-									cursor = conn.cursor()
-									errors = []
-									for sql in __.projectData[focus][name][pdID]['data']:
-										try:
-											cursor.execute( sql )
-										except Exception as e:
-											errors.append( sql )
-									conn.commit()
-									conn.close()
-									if len(errors) > 0:
-										saveTableSplitNew( errors, logName+'__ERRORS__', project=True )
-								except Exception as e:
-									saveTableSplitNew( __.projectData[focus][name][pdID]['data'], logName, project=True )
-									print_( 'check1:', focus, name, pdID )
-								if not 'folder' in name:
-									print_( 'zero' )
-									sys.exit()
-								__.projectData[focus][name][pdID]['data'] = []
-
-
-
-	def manageData( self ):
-		import sqlite3
-		self.data = {}
-		self.data[0] = 0
-		self.data[1] = 0
-		for focus in __.projectData:
-			# print_( 'focus:', focus )
-			try:
-				del __.projectData[focus][0]
-			except Exception as e:
-				pass
-			for name in __.projectData[focus].keys():
-				logName = 'auto_' + self.records[focus]['app'] + '_' + name + '_' + str(self.created)
-				for pdID in __.projectData[focus][name].keys():
-					if not type(__.projectData[focus][name][pdID]['saveInitiated']) == bool:
-						# print_('saveInitiated:',__.projectData[focus][name][pdID]['saveInitiated'])
-						# print_()
-						# print_(len( __.projectData[focus][name][ __.projectData[focus][name][pdID]['saveInitiated']['pdID'] ]['data'] ), __.projectData[focus][name][pdID]['saveInitiated']['size'] )
-						# print_()
-						if len( __.projectData[focus][name][ __.projectData[focus][name][pdID]['saveInitiated']['pdID'] ]['data'] ) > __.projectData[focus][name][pdID]['saveInitiated']['size']:
-							__.projectData[focus][name][pdID]['saveInitiated']['timeSizeChange'] = time.time()
-						else:
-							# print_()
-							# print_('got here')
-							# print_()
-
-							diff = time.time() - __.projectData[focus][name][pdID]['saveInitiated']['timestamp']
-							print_()
-							# print_()
-							# print_('diff:',diff)
-							# print_()
-							print_( 'diff:', diff )
-							print_( __.projectData[focus][name][pdID]['saveInitiated']['size'], len(__.projectData[focus][name][  __.projectData[focus][name][pdID]['saveInitiated']['pdID']  ]['data']))
-							if diff > __.projectData[focus][name][pdID]['saveInitiated']['startAfterNoChangeFor']:
-								__.datadumps += 1
-								if type(self.records[focus]['names'][name]['database']) == bool or self.records[focus]['names'][name]['database'] is None:
-									tmpData = __.projectData[focus][name][__.projectData[focus][name][pdID]['saveInitiated']['pdID']]['data']
-									print_( 'save started' )
-									saveTableSplitNew( tmpData, __.projectData[focus][name][pdID]['saveInitiated']['logname'], project=True )
-									tmpData = []
-									print_( 'post split save:', len(__.projectData[focus][name][__.projectData[focus][name][pdID]['saveInitiated']['pdID']]['data']) )
-									__.projectData[__.projectData[focus][name][pdID]['saveInitiated']['focus']][__.projectData[focus][name][pdID]['saveInitiated']['pdID']] = []
-									if not 'folder' in name:
-										print_( 'zero' )
-										sys.exit()
-									__.projectData[focus][name][pdID]['saveInitiated'] = False
-									threadTimer( .5, enableThreadDataSwap )
-
-								else:
-									print_()
-									print_('Data saved to:',self.records[focus]['names'][name]['database'])
-									print_()
-									# try:
-									conn = sqlite3.connect(self.records[focus]['names'][name]['database'])
-									cursor = conn.cursor()
-									errors = []
-									for sql in __.projectData[focus][name][__.projectData[focus][name][pdID]['saveInitiated']['pdID']]['data']:
-										try:
-											cursor.execute( sql )
-										except Exception as e:
-											errors.append( sql )
-									conn.commit()
-									conn.close()
-									if len(errors) > 0:
-										saveTableSplitNew( errors, logName+'__ERRORS__', project=True )
-									# except Exception as e:
-									#   saveTableSplitNew( __.projectData[focus][name][__.projectData[focus][name][pdID]['saveInitiated']['pdID']]['data'], __.projectData[focus][name][pdID]['saveInitiated']['logname'], project=True )
-
-
-
-									# __.projectData[focus][name][  __.projectData[focus][name][pdID]['saveInitiated']['pdID']  ]['data'] = []
-									if not 'folder' in name:
-										print_( 'zero' )
-										sys.exit()
-									__.projectData[focus][name][pdID]['saveInitiated'] = False
-									threadTimer( .5, enableThreadDataSwap )
-
-
-
-		tmpData = []
-
-		if not __.saveInitiated:
-			for focus in __.projectData:
-				try:
-					del __.projectData[focus][0]
-				except Exception as e:
-					pass
-				for name in __.projectData[focus].keys():
-					for pdID in __.projectData[focus][name].keys():
-						# print_('data len:',len(__.projectData[focus][name][pdID]['data']))
-						# print_('projectDataMaxLen:',self.projectDataMaxLen)
-						if len(__.projectData[focus][name][pdID]['data']):
-							self.projectDataDetected = True
-
-							# print_()
-							# print_( len(__.projectData[focus][name][pdID]['data']), self.projectDataMaxLen )
-							# print_()
-
-							if len(__.projectData[focus][name][pdID]['data']) >= self.projectDataMaxLen:
-
-								if __.pdID[focus][name] == 0:
-									__.pdID[focus][name] = 1
-									print_( 'NOW: 1' )
-								else:
-									__.pdID[focus][name] = 0
-									print_( 'NOW: 0' )
-
-								logname = 'auto_' + self.records[focus]['app'] + '_' + str(self.created)
-								__.saveInitiated = True
-
-								__.processing = [ focus, name, pdID ]
-
-								__.projectData[focus][name][pdID]['saveInitiated'] = {
-															'logname': logname,
-															'pdID': pdID,
-															'focus': focus,
-															'timestamp': time.time(),
-															'size': len(__.projectData[focus][name][pdID]['data']),
-															'startAfterNoChangeFor': 3,
-															'timeSizeChange': 0,
-
-								}
-
-
-			# self.timeout = False
-			# self.timeoutAsk = False
-
-
-
-	def listen( self, qID, trigger=False, triggerArg=False, kwargs=False, data=False  ):
-		try:
-			self.listeningFor['active']
-		except Exception as e:
-			self.listeningFor = []
-		self.listeningFor.append( { 'active': True, 'qID': qID, 'trigger': trigger, 'triggerArg': triggerArg, 'kwargs': kwargs, 'data': data } )
-
-	def listener( self ):
-		for li,listen in enumerate(self.listeningFor):
-			if self.listeningFor[li]['active']:
-				for focus in self.records.keys():
-					for i,q in enumerate(self.records[focus]['threads']):
-						if self.records[focus]['threads'][i].qID == listen['qID'] and not self.records[focus]['threads'][i].status:
-							thisData0 = self.records[focus]['threads'][i].data
-							thisData1 = self.listeningFor[li]['data']
-							thisData = False
-							if sys.getsizeof(thisData0) > sys.getsizeof(thisData1):
-								thisData = thisData0
-							elif sys.getsizeof(thisData0) < sys.getsizeof(thisData1):
-								thisData = thisData1
-							self.listeningFor[li]['data'] = False
-							self.listeningFor[li]['active'] = False
-							self.records[focus]['threads'][i].data = False
-							self.listenActivated( self.listeningFor[li]['trigger'], self.listeningFor[li]['triggerArg'], self.listeningFor[li]['kwargs'], thisData )
-
-
-	def listenActivated( self, trigger=False, triggerArg=False, kwargs=False, data=False  ):
-
-		__.queueLastActivity = time.time()
-		if not type(trigger) == bool:
-			try:
-				triggerName = trigger.__name__
-			except Exception as e:
-				triggerName = ''
-
-			try:
-
-				if type(data) == bool and type(triggerArg) == bool:
-					threadTimer( .0001, trigger )
-				elif not type(data) == bool and type(triggerArg) == bool:
-					threadTimer( .0001, trigger, [data] )
-				elif type(data) == bool and not type(triggerArg) == bool:
-					threadTimer( .0001, trigger, triggerArg )
-				elif not type(data) == bool and not type(triggerArg) == bool and kwargs:
-					args = [{ 'func': trigger, 'args': triggerArg }]
-					try:
-						args[0]['args'][0]['data'] = data
-					except Exception as e:
-						args[0]['args']['data'] = data
-
-
-					# print_(args)
-					threadTimer( .0001, threadKwargs, args )
-				elif not type(data) == bool and not type(triggerArg) == bool and not kwargs:
-					try:
-						triggerArg.append(data)
-						threadTimer( .0001, threadKwargs, triggerArg )
-					except Exception as e:
-						try:
-							triggerArg[0].append(data)
-							threadTimer( .0001, threadKwargs, triggerArg )
-						except Exception as e:
-							print_('listener trigger error')
-
-
-			except Exception as e:
-				print_('listener trigger error')
-
-
-	def printStatus( self ):
-		pDone = str(int(percentageDiffInt(self.closed, self.statusTotal)))
-		if not type( self.prefix ) == bool:
-			print_(' ' + self.prefix + ':', pDone + '%' , end='\r')
-		else:
-			print_(' ' + pDone + '%' , end='\r')
-		sys.stdout.flush()
-
-	def timeoutCount( self ):
-		cnt = 0
-		for focus in self.records.keys():
-			for i,q in enumerate(self.records[focus]['threads']):
-
-				if self.records[focus]['threads'][i].hasTimedOut:
-					cnt += 1
-		return cnt
-
-
-
-	def kill( self, qID ):
-
-		qID = int(qID)
-		focus = None
-		rID = None
-		for i,t in enumerate(self.records[self.table['focus'][qID]]['threads']):
-			if self.records[ self.table['focus'][qID] ]['threads'][i].qID == qID:
-				focus = self.table['focus'][qID]
-				name = self.records[self.table['focus'][qID]]['threads'][i].name
-
-				self.spent( qID, 0 )
-				self.records[focus]['threads'][i].hasTimedOut = 1
-				self.records[focus]['threads'][i].thisThread.kill()
-
-
-
-	def checkTimeout( self ):
-
-		for focus in self.records.keys():
-			for i, threads in enumerate( self.records[focus]['threads'] ):
-				if not threads.thisThread is None:
-					if threads.status and threads.timeout:
-						dur = time.time() - threads.log['start']
-						if dur > threads.timeout:
-							# print_( 'time ran out',threads.qID )
-							# print_( 'time ran out',threads.qID )
-							# print_( 'time ran out',threads.qID )
-
-
-							# for x in dir(threads.thisThread):
-							#     print_(x)
-
-							# sys.exit()
-
-
-							self.spent( threads.qID, 0 )
-							self.records[focus]['threads'][i].hasTimedOut = 1
-							self.records[focus]['threads'][i].thisThread.kill()
-							# print_( 'stopped' )
-
-
-
-		# return None
-		# if self.opened:
-		#     for focus in self.records.keys():
-		#         for i, threads in enumerate( self.records[focus]['threads'] ):
-		#             if not threads.thisThread is None:
-		#                 if threads.status and threads.timeout:
-		#                     print_( 'Has timeout' )
-		#                     dur = time.time() - threads.log['start']
-		#                     if dur > threads.timeout:
-		#                         print_( 'time ran out' )
-		#                         self.spent( threads.qID, 0 )
-		#                         self.records[focus]['threads'][i].hasTimedOut = 1
-		#                         self.records[focus]['threads'][i].thisThread.kill()
-		#                         self.records[focus]['threads'][i].thisThread.join()
-		#                         print_( 'stopped' )
-
-
-
-		# if not type( self.timeout ) == bool:
-		#     for focus in self.records.keys():
-		#         for i,q in enumerate(self.records[focus]['threads']):
-		#             if self.records[focus]['threads'][i].status:
-		#                 diff = time.time() - self.records[focus]['threads'][i].created
-		#                 if diff > self.timeout:
-		#                     self.records[focus]['threads'][i].timeout = True
-		#                     __.threadQueue[  self.records[focus]['threads'][i].qID  ]._stop()
-
-		# for focus in self.records.keys():
-		#     for name in self.records[focus]['names'].keys():
-		#         if not type( self.records[focus]['names'][name]['timeout'] ) == bool:
-		#             for i,q in enumerate(self.records[focus]['threads']):
-		#                 if name == self.records[focus]['threads'][i].name:
-		#                     if self.records[focus]['threads'][i].status:
-		#                         diff = time.time() - self.records[focus]['threads'][i].created
-		#                         if diff > self.records[focus]['names'][name]['timeout']:
-		#                             self.records[focus]['threads'][i].timeout = True
-		#                             __.threadQueue[  self.records[focus]['threads'][i].qID  ]._stop()
-
-
-
-	def audit( self ):
-		if not type(self.listeningFor) == bool:
-			self.listener()
-		self.schedule()
-		self.checkTimeout()
-		self.isEverythingLoaded()
-		__.queueCountAudit += 1
-		__.queueCountAuditAudit -= 1
-		self.numberClosed()
-		if not self.isLoaded:
-			if self.autoLoaded:
-
-				diff2 = int(time.time() - __.queueLastActivity)
-				diff = int(time.time() - self.lastActivity)
-				if diff > self.autoLoadedAfter:
-					if diff2 > self.autoLoadedAfter:
-						if self.auditPrint:
-							print_('Auto Loaded:', diff)
-
-						for focus in self.records.keys():
-							for name in self.records[focus]['names'].keys():
-								self.loaded( name=name, focus=focus )
-
-						self.numberClosed()
-
-
-		self.manageData()
-
-
-
-		if self.auditPrint:
-			if self.projectDataDetected:
-
-				if False:
-					print_()
-					print_()
-					print_('Opened:',self.opened,'\tClosed:',self.totalClosed,'\tClosed:',self.closed,'\tTotal:',self.nextID,'\tMax in queue:',self.maxInQueue,'\tTotal Task:',__.totalTask,'\tTotal Audit:',__.queueCountScheduleAudit+__.queueCountSchedule )
-					print_()
-				for focus in __.projectData:
-					try:
-						del __.projectData[focus][0]
-					except Exception as e:
-						pass
-					for name in __.projectData[focus].keys():
-						print_( 'pre:', focus, name, __.projectData[focus].keys() )
-						print_( '0:', len(__.projectData[focus][name][0]['data']), focus, name )
-						print_( '1:', len(__.projectData[focus][name][1]['data']), focus, name )
-						if len(__.projectData[focus][name][0]['data']) or len(__.projectData[focus][name][1]['data']):
-							if False:
-								print_('Name:',name, '\tProject 0 Length:', len(__.projectData[focus][name][0]['data']), '\tProject 1 Length:', len(__.projectData[focus][name][1]['data']),'\tdb:',self.records[focus]['names'][name]['database'] )
-							if True:
-								print_('Name:',name, '\tOpened:',self.opened,'\tClosed:',self.closed,'\tTotal:',self.nextID,'\tMax in queue:',self.maxInQueue,'\tTotal Task:',__.totalTask, '\tProject 0 Length:', len(__.projectData[focus][name][0]['data']), '\tProject 1 Length:', len(__.projectData[focus][name][1]['data']),'\tdb:',self.records[focus]['names'][name]['database'] )
-			else:
-				print_('Opened:',self.opened,'\tClosed:',self.closed,'\tTotal:',self.nextID,'\tMax in queue:',self.maxInQueue,'\tTotal Task:',__.totalTask,'\tTotal Audit:',__.queueCountScheduleAudit+__.queueCountSchedule )
-			# print_( self.opened, self.isLoaded, self.notstarted )
-			if False:
-				print_()
-				print_( self.opened, self.isLoaded, self.notstarted )
-				print_()
-
-		elif self.statusTotal > 0:
-			self.printStatus()
-
-		pass
-		# if self.opened == 0:
-		for f in self.records.keys():
-			for n in self.records[f]['names'].keys():
-				if self.isEverythingLoadedEach( name=n, focus=f ) and self.isEverythingClosedEach( name=n, focus=f ):
-					self.spendFocus( n, f, 2 )
-
-
-		if self.opened == 0 and self.isLoaded and self.notstarted <= 0:
-			if self.auditPrint:
-				print_('audit:',__.queueCountAudit)
-			self.printReport()
-			self.saveData()
-			if self.saveLog:
-				threadTimer( 1, saveThreadsLog )
-
-			for f in self.records.keys():
-				for n in self.records[f]['names'].keys():
-					self.spendFocus( n, f, 2 )
-
-
-		else:
-			diff = self.nextID - self.opened
-
-			if diff < 5:
-				threadTimer( self.auditLoop, threadAudit )
-				# Timer( .5, threadAudit ).start()
-			else:
-				for f in self.records.keys():
-					for n in self.records[f]['names'].keys():
-
-						data = self.getRuntimeMemoryNameFocusTopBottom( n, f )
-						if type(data) == bool:
-							threadTimer( self.auditLoop, threadAudit )
-							# Timer( .5, threadAudit ).start()
-							return False
-						else:
-							diff = percentageDiffInt(data['top'], data['bottom'])
-							diff2 = percentageDiffInt(data['top'], data['freshbottom'])
-
-							if diff < self.auditPercentChangeMax or diff2 < self.auditPercentChangeMax:
-								self.records[f]['names'][n]['failure'] = 0
-								self.records[f]['names'][n]['changes'] = 0
-								self.records[f]['names'][n]['watch'] = 0
-								shouldAct = False
-							else:
-								if not self.records[f]['names'][n]['watch'] >= self.auditWatchMax:
-									self.records[f]['names'][n]['watch'] += 1
-								else:
-									self.records[f]['names'][n]['failure'] += 1
-									self.records[f]['names'][n]['changes'] += 1
-								shouldAct = True
-
-							if shouldAct:
-
-								if self.records[f]['names'][n]['failure'] >= self.auditMaxFailuresBeforeAction:
-									lastMax = self.records[f]['names'][n]['maxThreads']
-									if self.records[f]['names'][n]['changes'] >= self.auditPercentDrasticThreshold:
-										changeBy = self.auditPercentReduceByDrastic
-									else:
-										changeBy = self.auditPercentReduceBy
-
-									newMax = percentageInt(self.opened, changeBy)
-
-									if newMax < self.minThreads:
-										newMax = self.minThreads
-									if newMax > self.maxThreadsSafe:
-										newMax = self.maxThreadsSafe
-									self.auditAutoAdjust = True
-									self.records[f]['names'][n]['maxThreads'] = newMax
-									print_('_________________________________________')
-									print_()
-									print_('Changed max threads from:', lastMax,'to:',newMax)
-
-				threadTimer( self.auditLoop, threadAudit )
-				# Timer( .5, threadAudit ).start()
-	# self.auditWatchMax
-
-# watch
-
-#                           if self.records[f]['names'][n]['maxThreads'] == 0:
-#                               newMax = self.opened
-#                       percentageInt(percent, whole)
-#                       if not self.records[f]['names'][n]['loaded']:
-#                           self.records[f]['names'][n]['maxThreads'] = True
-
-#                           self.records[f]['names'][n]['maxThreads'] =
-
-
-#       self.auditPercentReduceByOverMax = 15       self.maxThreads = 1000
-#       self.auditPercentReduceByOverMaxBy = 30
-
-
-# self.auditPercentReduceByDrastic
-#       self.auditPercentChangeMin = 10
-#       self. = 5
-
-#       self.auditPercentChangeMin = 10
-#       self.auditPercentReduceBy = 5
-
-# self.records[focus]['names'][name]['maxThreads']
-# self.auditPercentChangeMax
-#           __.queueCountAudit += 1
-#           Timer( .5, threadSchedule ).start()
-
-# threadTimer
-# thread = Timer( .0001, threadKwargs, data ).start()
-# thread = Timer( .0001, threadKwargs, data ).start()
-# thread = Timer( .0001, self.func, self.argID ).start()
-# thread = Timer( .0001, self.func, self.arg ).start()
-# Timer( self.scheduleLoop, threadSchedule ).start()
-# Timer( .3, threadAudit ).start()
-# Timer( self.scheduleLoop, threadSchedule ).start()
-# Timer( self.scheduleLoop, threadSchedule ).start()
-# Timer( self.scheduleLoop, threadSchedule ).start()
-# Timer( .5, threadAudit ).start()
-# Timer( .5, threadAudit ).start()
-# Timer( .5, threadAudit ).start()
-
-
-# __.queueCountScheduleAudit = 0
-# __.queueCountAuditAudit = 0
-
-
-	def numberClosed( self ):
-		self.isEverythingLoaded()
-		totalClosed = 0
-		for f in self.records.keys():
-			for i,t in enumerate(self.records[f]['threads']):
-				for n in self.records[f]['names'].keys():
-					if not self.records[f]['threads'][i].name == n:
-						self.records[f]['names'][n]['closed'] = 0
-
-
-		info = {}
-		for f in self.records.keys():
-			for i,t in enumerate(self.records[f]['threads']):
-				if not self.records[f]['threads'][i].status:
-					for n in self.records[f]['names'].keys():
-						if self.records[f]['threads'][i].name == n:
-							try:
-								info[n]['total'] += 1
-								info[n]['closed'] += 1
-							except Exception as e:
-								info[n] = {}
-								info[n]['total'] = 0
-								info[n]['closed'] = 0
-								info[n]['total'] += 1
-								info[n]['closed'] += 1
-							if not self.records[f]['threads'][i].status:
-								self.records[f]['names'][n]['closed'] += 1
-								totalClosed += 1
-						# if info[n]['total'] == info[n]['closed'] and info[n]['total'] > 0 and self.opened == 0 and self.isEverythingLoaded() and self.notstarted == 0:
-							if self.isEverythingLoadedEach( name=n, focus=f ) and self.isEverythingClosedEach( name=n, focus=f ):
-								self.spendFocus( n, f, 3 )
-								# if not type( self.records[f]['names'][n]['trigger'] ) == bool:
-
-
-		self.totalClosed = totalClosed
-
-
-
-	def getRuntimeMemoryNameFocusTopBottom( self, name, focus ):
-		topruntime = []
-		bottomruntime = []
-		bottomruntimeFresh = []
-
-		length = len(self.records[focus]['threads'])
-		sampleSize = percentageInt( self.auditPercentSample, length )
-		bottom = length - sampleSize
-		data = self.getRuntimeMemoryNameFocus( name, focus )
-		if type(data) == bool:
-			return False
-		if len(data['runtimebottom']) < 5:
-			return False
-		else:
-
-			for i,row in enumerate(data['runtime']):
-				if i <= sampleSize:
-					topruntime.append(row)
-				if i >= bottom:
-					bottomruntime.append(row)
-			for i,row in enumerate(data['runtimebottom']):
-					bottomruntimeFresh.append(row)
-
-			topaverageruntime = self.calcAverage(topruntime)
-			bottomaverageruntime = self.calcAverage(bottomruntime)
-			freshbottomaverageruntime = self.calcAverage(bottomruntimeFresh)
-
-			return { 'top': topaverageruntime, 'bottom': bottomaverageruntime, 'freshbottom': freshbottomaverageruntime }
-
-
-	def getRuntimeMemoryFocusTopBottom( self, focus ):
-		topruntime = []
-		bottomruntime = []
-
-		length = len(self.records[focus]['threads'])
-		sampleSize = percentageInt( self.auditPercentSample, length )
-		bottom = length - sampleSize
-		data = self.getRuntimeMemoryFocus( focus )
-
-		for i,row in enumerate(data['runtime']):
-			if i <= sampleSize:
-				topruntime.append(row)
-			if i >= bottom:
-				bottomruntime.append(row)
-
-		topaverageruntime = self.calcAverage(topruntime)
-		bottomaverageruntime = self.calcAverage(bottomruntime)
-
-		return { 'top': topaverageruntime, 'bottom': bottomaverageruntime }
-
-
-
-def enableThreadDataSwap():
-	print_( 'key test00:', __.projectData[ __.processing[0] ].keys() )
-	print_( 'enableThreadDataSwap: initiated' )
-	# print_( __.processing )
-	print_( 'post process size:', len(__.projectData[ __.processing[0] ][ __.processing[1] ][   __.processing[2]   ]['data']) )
-	__.saveInitiated = False
-
-	# __.projectData[focus][name][0]['data'] = []
-	print_( 'key test0:', __.projectData[ __.processing[0] ].keys() )
-	# __.projectData[ __.processing[0] ][ __.processing[1] ][   __.processing[2]   ]['data'] = []
-	# __.projectData[ '__main__' ][ 'folder' ][   __.processing[2]   ]['data'] = []
-	print_( 'key test1:', __.projectData[ __.processing[0] ].keys() )
-
-# def hasTimedOut():
-#   print_( 'hasTimedOut' )
-
-# @timeout( 10, hasTimedOut() )
-def threadTimer( tim, func, args=False, qID=False ):
-	Timer = __.imp('threading.Timer')
-	__.totalTask += 1
-	# print_(func.__name__)
-	shouldRun = True
-	if func.__name__ == 'threadSchedule':
-		if __.queueCountScheduleAudit > 4:
-			shouldRun = False
-		else:
-			__.queueCountScheduleAudit += 1
-
-	if func.__name__ == 'threadAudit':
-		if __.queueCountAuditAudit > 4:
-			shouldRun = False
-		else:
-			__.queueCountAuditAudit += 1
-
-	if shouldRun:
-		if tim < .01:
-			tim = .01
-
-		try:
-			if type(args) == bool:
-				if not type(qID) == bool:
-					__.threadQueue[qID] = Timer( tim, func )
-					__.threadQueue[qID].start()
-				else:
-					Timer( tim, func ).start()
-			else:
-				if not type(qID) == bool:
-					__.threadQueue[qID] = Timer( tim, func, args )
-					__.threadQueue[qID].start()
-				else:
-					Timer( tim, func, args ).start()
-			__.queueCountTimer += 1
-			# https://stackoverflow.com/questions/34562473/most-pythonic-way-to-kill-a-thread-after-some-period-of-time
-			# __.threadQueue[qID].join(30)
-			# if __.threadQueue[qID].is_alive():
-			#   print_( 'Has Timed Out' )
-			#   e.set()
-			# else:
-			#   pass
-		except Exception as e:
-			print_('Thread Error:',__.queueCountTimer)
-
-
-def threadAudit():
-	global threads
-	threads.audit()
-
-def threadSchedule():
-	global threads
-	threads.schedule()
-
-def threadKwargs( data=False ):
-	# print_(data)
-	try:
-		data['func'](**data['args'][0])
-	except Exception as e:
-		try:
-			data[0]['func'](**data['args'][0])
-		except Exception as e:
-			print_('Error: kwargs')
-
-
-
-def percentageInt( percent, whole, isFloat=False ):
-	# return int((percent * whole) / 100.0)
-	if not isFloat:
-		return int(round( (percent * whole) / 100.0 , 0))
-	else:
-		return round( (percent * whole) / 100.0 , 1)
-
-def percentageDiffInt( smaller, bigger, isFloat=False, rnd=1 ):
-	# fr = force rounding
-	# return int((smaller/bigger)*100)
-	try:
-
-		if not isFloat:
-			return int(round( abs(smaller/bigger)*100, 0))
-		else:
-			r = round( abs(smaller/bigger)*100, rnd)
-			if str(r) == '0.0':
-				return 0
-			# if str(r).endswtih('.0'):
-			#     return int(r)
-
-			return r
-
-	except Exception as e:
-		return 0
-		smaller+=1
-		bigger+=1
-		if not isFloat:
-			return int(round( abs(smaller/bigger)*100, 0))
-		else:
-			r = round( abs(smaller/bigger)*100, rnd)
-			if str(r) == '0.0':
-				return 0
-			return r
-
-def percentageDiff( smaller, bigger, isFloat=False ):
-	# fr = force rounding
-	# return int((smaller/bigger)*100)
-	try:
-
-		if not isFloat:
-			return abs(smaller/bigger)*100
-		else:
-			r = abs(smaller/bigger)*100
-			if str(r) == '0.0':
-				return 0
-			# if str(r).endswtih('.0'):
-			#     return int(r)
-
-			return r
-
-	except Exception as e:
-		return 0
-		smaller+=1
-		bigger+=1
-		if not isFloat:
-			return abs(smaller/bigger)*100
-		else:
-			r = abs(smaller/bigger)*100
-			if str(r) == '0.0':
-				return 0
-			return r
-
-
-def percentageDiffIntAuto( smaller, bigger, isFloat=False ):
-	if smaller < bigger:
-		s = smaller
-		b = bigger
-	else:
-		s = bigger
-		b = smaller
-	if not isFloat:
-		return percentageDiffInt(s, b)
-	else:
-		result = round(float((s/b)*100), 1)
-		r = str(result)
-		if '.0' in r:
-			result = int(result)
-		return result
-
-def percentageDiffAuto( smaller, bigger, isFloat=False, rnd=1 ):
-	if smaller < bigger:
-		s = smaller
-		b = bigger
-	else:
-		s = bigger
-		b = smaller
-	return percentageDiffCalc(s, b, isFloat, rnd)
-
-def percentageDiffSmaller( smaller, bigger, isFloat=False, rnd=1 ):
-	if smaller < bigger:
-		s = smaller
-		b = bigger
-	else:
-		s = bigger
-		b = smaller
-	a = percentageDiffCalc(s, b, isFloat, rnd)
-	b = percentageDiffCalc(b, s, isFloat, rnd)
-	if a<b:
-		return a
-	else:
-		return b
-
-
-
-def percentageDiffCalc( smaller, bigger, isFloat=False, rnd=1 ):
-	# x=abs(abs(smaller - bigger)/smaller)*100
-	try:
-
-		if not isFloat:
-			return int(round( abs(abs(smaller - bigger)/smaller)*100, 0))
-		else:
-			r = round( abs(abs(smaller - bigger)/smaller)*100, rnd)
-			if str(r) == '0.0':
-				return 0
-			# if str(r).endswtih('.0'):
-			#     return int(r)
-
-			return r
-
-	except Exception as e:
-		return 0
-		smaller+=1
-		bigger+=1
-		if not isFloat:
-			return int(round( abs(abs(smaller - bigger)/smaller)*100, 0))
-		else:
-			r = round( abs(abs(smaller - bigger)/smaller)*100, rnd)
-			if str(r) == '0.0':
-				return 0
-			return r
-
-
-	# = 0.2 = 20%
- # |5 - 6|/5 = 1/5 = 0.2 = 20%
-
-
-	# return percentageDiffInt(s, b, isFloat, rnd)
-
-
-###################################################################################################################
 """ {7DB6A001-0637-4F13-B328-2B17A481CF35}
 	print_('got here 2')
 
@@ -21216,222 +12311,12 @@ def isFloat( data ):
 		return False
 
 ###################################################################################################################
-
-
-class Field:
-
-	def __init__( self, project, name, value, appReg, script, maxField ):
-		self.appReg = appReg
-		self.project = project
-		self.name = name
-		self.trigger = script
-		self.maxField = maxField
-
-
-
-		self.registerValue( value )
-
-	def setTrigger( self, script ):
-		self.trigger = script
-
-	def addPadding( self, value, extra, right, center ):
-		value = self.runTrigger( str(value) )
-		oValue = value
-		addPadding = (extra + self.maxField) - len( value )
-		add = ''
-		i=0
-		l=''
-		r=''
-		while not len(value) >= self.maxField+extra:
-			i+=1
-			if(i%2==0):
-				l+=' '
-			else:
-				r+=' '
-			value += ' '
-			add += ' '
-		# for x in range(1,addPadding+1):
-		#   value += ' '
-		# return str(self.maxField)+' '+str(len( value ))+value
-		if right:
-			value = add + oValue
-		if center:
-			value = l + oValue + r
-		return value
-
-	def addPaddingSetSpaces( self, value ):
-		value = self.runTrigger( str(value) )
-		addPadding = self.maxField - len( value )
-		newValue = value
-		Zeros = ''
-		while not len(newValue) == self.maxField:
-			Zeros += ' '
-			newValue = Zeros + value
-		return newValue
-
-	def addPaddingZeros( self, value ):
-		value = self.runTrigger( str(value) )
-		addPadding = self.maxField - len( value )
-		newValue = value
-		Zeros = ''
-		while not len(newValue) == self.maxField:
-			Zeros += '0'
-			newValue = Zeros + value
-		return newValue
-
-	def runTrigger( self, value ):
-		if type( self.trigger ) == bool:
-			return value
-
-		# print_( 'HERE' )
-		return self.trigger( value )
-
-	def registerValue( self, value ):
-		thisLen = len( self.runTrigger( str(value) ) )
-
-		if thisLen > self.maxField:
-			self.maxField = thisLen
-
-
-
 class Fields:
-
-	def __init__(self):
-		self.fields = {}
-		self.extra = 0
-
-	def lengths( self, project ):
-		global switches
-		if switches.isActive('Long'):
-			minLength=False
-		else:
-			minLength=True
-		result = {}
-		for record in self.fields[project]:
-			if record.project == project:
-				if minLength:
-					result[record.name]=43
-				else:
-					result[record.name] = record.maxField
-
-		return result
-
-
-	def register( self, project='', names='', value='', appReg=False, script=False, maxField=None,        p=None, n=None, v=None, m=None, isRegisterDic=False ):
-
-		# if project in self.fields:
-		#   if not isRegisterDic:
-		#       del self.fields[ project ]
-
-		if not p is None:
-			project = p
-
-		if not n is None:
-			names = n
-
-		if not v is None:
-			value = v
-
-		maxField = 0
-
-		if not maxField is None:
-			maxField = maxField
-
-		if not m is None:
-			maxField = m
-
-
-		if type(appReg) == bool:
-			appReg = __.appReg
-		if not project in self.fields:
-			self.fields[project] = []
-		for name in names.split(','):
-
-			shouldAdd = True
-
-			for i,s in enumerate(self.fields[project]):
-				if self.fields[project][i].appReg == appReg and project == self.fields[project][i].project and name == self.fields[project][i].name:
-					shouldAdd = False
-			if shouldAdd:
-				self.fields[project].append( Field( project, name, value, appReg, script, maxField ) )
-				if maxField and type(value) == int:
-					return self.fields[project][len(self.fields[project])-1].addPaddingZeros(value)
-				elif maxField and type(value) == str:
-					return self.fields[project][len(self.fields[project])-1].addPadding(value)
-			else:
-				self.registerValue( project, name, value, appReg )
-
-	def registerValue( self, project, name, value, appReg=False ):
-		if type(appReg) == bool:
-			appReg = __.appReg
-
-		result = False
-		for i,s in enumerate(self.fields[project]):
-			if self.fields[project][i].appReg == appReg and project == self.fields[project][i].project and name == self.fields[project][i].name:
-				self.fields[project][i].registerValue( value )
-				result = True
-		return result
-
-
-	def padZeros( self, project, name, value, extra=None, appReg=False, space=False ):
-
-		if extra is None:
-			extra = self.extra
-
-		if type(appReg) == bool:
-			appReg = __.appReg
-		for i,s in enumerate(self.fields[project]):
-			if self.fields[project][i].appReg == appReg and project == self.fields[project][i].project and name == self.fields[project][i].name:
-				if space:
-					return self.fields[project][i].addPaddingSetSpaces( value )
-				else:
-					return self.fields[project][i].addPaddingZeros( value )
-				result = self.fields[project][i].addPaddingZeros( value )
-		return result
-
-
-	def value( self, project, name, value, extra=None, right=False, appReg=False,    r=None, center=False ):
-		result = value
-		if not r is None:
-			right = r
-
-		if extra is None:
-			extra = self.extra
-
-		if type(appReg) == bool:
-			appReg = __.appReg
-		for i,s in enumerate(self.fields[project]):
-			if self.fields[project][i].appReg == appReg and project == self.fields[project][i].project and name == self.fields[project][i].name:
-				result = self.fields[project][i].addPadding( value, extra, right, center )
-		return result
-	def valuez( self, project, name, value, appReg=False ):
-		if type(appReg) == bool:
-			appReg = __.appReg
-		for i,s in enumerate(self.fields[project]):
-			if self.fields[project][i].appReg == appReg and project == self.fields[project][i].project and name == self.fields[project][i].name:
-				result = self.fields[project][i].addPaddingZeros( value )
-		return result
-
-	def asset( self, project, asset, appReg=False ):
-		self.fields[project] = []
-		if type(appReg) == bool:
-			appReg = __.appReg
-
-		if type( asset ) == dict:
-			self.registerDic( project, asset, appReg )
-
-		if type( asset ) == list:
-			for row in asset:
-				if type( row ) == dict:
-					self.registerDic( project, row, appReg )
-
-
-	def registerDic( self, project, asset, appReg=False ):
-		if type(appReg) == bool:
-			appReg = __.appReg
-
-		for name in asset.keys():
-			self.register( project, name, asset[name], appReg, isRegisterDic=True )
+	def __new__(cls, *args, **kwargs):
+		if not 'Fields' in intelligent_code.classes:
+			from library.frameworks.base.classes.Fields import Fields as live
+			intelligent_code.classes['Fields'] = live
+		return intelligent_code.classes['Fields'](*args, **kwargs)
 
 # _.fields.register( 'project', 'name', script=_.resolveEpochTest )
 # _.fields.asset( 'project', {} )
@@ -21439,7 +12324,7 @@ class Fields:
 # _.fields.register( 'project', 'name', value, appReg=focus() )
 # _.fields.register( 'project', 'name', value )
 # _.fields.value( 'project', 'name', value )
-
+# fields=Fields()
 ###################################################################################################################
 
 
@@ -21474,343 +12359,93 @@ def load():
 	if switches_loaded > 1:
 		if not __.setting('default-switches'): return None
 	# if True
-		global switches
-		global switchDefault
+	
+	##change
+	global switches
+	if switches is None:
+		# from library.frameworks.base.classes.Switches import Switches
+		switches = Switches()
 
-		# global tables
 
-		# switches.trigger('Column',formatColumns)
+	global switchDefault
 
-		switchDefault = switches.length()
-		switches.register('Help', '?,??,/?,/??,-?,-??,--??,/h,/help,-help,--help', '(?? Print Table Help Without Global Switches) copy  OR ids  OR  12  OR  ?? x ', default=True)
-		switches.register('Column', '-c,-column', 'size, name', default=True)
-		switches.register('Sort','-s,-sort', 'a.type, d.ext', default=True)
-		switches.register('TablePlus','t+,+t,-ts+,-st+,-tablesearch', 'Search_Sting', default=True)
-		switches.register('TableMinus','t-,-t,-ts-,st-,-tableminus', 'Search_Sting', default=True)
-		switches.register('Debug', '-debug', default=True)
-		switches.register('DumpSwitches', '-dump', 'all', default=True)
-		switches.register('Errors', '-Error,-Errors', '8,11 OR hide:8,11', default=True)
-		switches.register('Timeout', '-t,-Timeout', default=True)
-		switches.register('GroupBy', '-g,-group,-groupby', 'ext, month', default=True)
-		switches.register('GroupTotals', '-gt,-grouptotal,-gtotal,-gtotals', 'mem_usage', default=True)
-		switches.register('WrapTable', '-wrap', 'n p  OR  2  OR  path', default=True)
-		switches.register('NoWrapTable', '-nowrap', default=True)
-		# switches.register('NoTableLines', '-nolines', default=True)
-		switches.register('YesTableLines', '-yl,-yeslines', default=True)
-		switches.register('TableJSON', '-tjson,-tablejson', default=True)
-		switches.register('FieldTotal', '-fieldtotal', 'mem_usage', default=True)
-		switches.register('Aggregate', '-aggregate', '" eof-field-len= add(len(version),len(backup)); config(var,eof,isFirst); "', default=True)
-		switches.register('GroupSpaces', '-gs,-space,-groupspaces', default=True)
-		switches.register('TableProfile', '-tp,-table',' *;c *;l  h;l header;left  size;l,gs', default=True)
-		# switches.register('ShortenColumn', '-sc,-shortencolumn', default=True)
-		switches.register('WebTable', '-web', default=True)
-		switches.register('Long', '-long', default=True)
-		switches.register('Short', '-sc,-short', default=True)
-		switches.register('Length', '-length','x3', default=True)
-		# switches.register('Report', '-report', default=True)
-		switches.register('Plus', '+','all unless -or', default=True)
-		switches.register('Minus', '-', default=True)
-		switches.register('Plus-single', '+1', default=True)
-		switches.register('Minus-single', '-1', default=True)
-		switches.register('Plus-Sub', '++','any', default=True)
-		switches.register('PlusOr', '-or', default=True)
-		switches.register('PlusClose', '+close', '90%', default=True)
-		switches.register('PlusCode', '+code','=  OR  *x  OR  x*  AND/OR color AND/OR n/new' , default=True)
-		switches.register('PlusDuplicate', '+dup,+duplicate', '90%', default=True)
-		switches.register('StrictCase', '-case,-strictcase,-strict', default=True)
-		switches.register('PrintAutoAbbreviations', '-printa,-aprint', default=True)
-		switches.register('NoColor', '-nocolor', space=True, default=True)
-		switches.register('LoadEpoch', '-loadepoch', default=True)
-		switches.register('PrintEpoch', '-printepoch', default=True)
-		switches.register('NoTitleChange', '-ntc,-notitlechange', default=True)
-		switches.register('chmod', '-chmod,-777', default=True)
-		switches.register( 'Paste-isData', '--pa,--paste,-ppa,-ppaste,-ispa,-idpa' , default=True)
-		switches.register( 'Paste-isData-json', '--json,-pjson,-jsonp' , default=True)
-		switches.register( 'Markdown-Table', '--md' , default=True)
-		# switches.register('SkipColumnTriggers', '-skiptriggers', default=True)
-		defaultScriptTriggers_do()
+	# global tables
 
-import importlib
+	# switches.trigger('Column',formatColumns)
 
-regImps = {}
+	switchDefault = switches.length()
+	swGrp = 0
+	swGrp += 1
+	switches.register('Help', '?,??,/?,/??,-?,-??,--??,/h,/help,-help,--help', '(?? Print Table Help Without Global Switches) copy  OR ids  OR  12  OR  ?? x ', default=True, group=[swGrp,'Help'] )
+	
+	swGrp += 1
+	switches.register('Plus', '+','all unless -or', default=True, group=[swGrp,'Search'] )
+	switches.register('Minus', '-', default=True, group=[swGrp,'Search'] )
+	switches.register('Plus-single', '+1', default=True, group=[swGrp,'Search'] )
+	switches.register('Minus-single', '-1', default=True, group=[swGrp,'Search'] )
+	switches.register('Plus-Sub', '++','any', default=True, group=[swGrp,'Search'] )
+	switches.register('PlusOr', '-or', default=True, group=[swGrp,'Search'] )
+	switches.register('PlusClose', '+close', '90%', default=True, group=[swGrp,'Search'] )
+	switches.register('PlusCode', '+code','=  OR  *x  OR  x*  AND/OR color AND/OR n/new' , default=True, group=[swGrp,'Search'] )
+	switches.register('PlusDuplicate', '+dup,+duplicate', '90%', default=True, group=[swGrp,'Search'] )
+	switches.register('StrictCase', '-case,-strictcase,-strict', default=True, group=[swGrp,'Search'] )
+	
+	swGrp += 1
+	switches.register('Column', '-c,-column', 'size, name', default=True, group=[swGrp,'Tables'] )
+	switches.register('Sort','-s,-sort', 'a.type, d.ext', default=True, group=[swGrp,'Tables'] )
+	switches.register('PrintAutoAbbreviations', '-printa,-aprint', default=True, group=[swGrp,'Tables Help'] )
+	switches.register('TablePlus','t+,+t,-ts+,-st+,-tablesearch', 'Search_Sting', default=True, group=[swGrp,'Tables Seach'] )
+	switches.register('TableMinus','t-,-t,-ts-,st-,-tableminus', 'Search_Sting', default=True, group=[swGrp,'Tables Seach'] )
+	switches.register('GroupBy', '-g,-group,-groupby', 'ext, month', default=True, group=[swGrp,'Tables Reports'] )
+	switches.register('GroupTotals', '-gt,-grouptotal,-gtotal,-gtotals', 'mem_usage', default=True, group=[swGrp,'Tables Reports'] )
+	switches.register('Aggregate', '-aggregate', '" eof-field-len= add(len(version),len(backup)); config(var,eof,isFirst); "', default=True, group=[swGrp,'Tables Reports'] )
+	switches.register('GroupSpaces', '-gs,-space,-groupspaces', default=True, group=[swGrp,'Tables Reports'] )
+	switches.register('WrapTable', '-wrap', 'n p  OR  2  OR  path', default=True, group=[swGrp,'Tables Format'] )
+	switches.register('NoWrapTable', '-nowrap', default=True, group=[swGrp,'Tables Format'] )
+	switches.register('TableProfile', '-tp,-table',' *;c *;l  h;l header;left  size;l,gs', default=True, group=[swGrp,'Tables Format'] )
+	switches.register('Long', '-long', default=True, group=[swGrp,'Tables Format'] )
+	switches.register('Short', '-sc,-short', default=True, group=[swGrp,'Tables Format'] )
+	switches.register('Length', '-length','x3', default=True, group=[swGrp,'Tables Format'] )
+	# switches.register('ShortenColumn', '-sc,-shortencolumn', default=True, group=[swGrp,'Tables'] )
+	# switches.register('SkipColumnTriggers', '-skiptriggers', default=True, group=[swGrp,'Tables'] )
+	swGrp += 1
+	switches.register('Debug', '-debug', default=True, group=[swGrp,'Debug'] )
+	switches.register('DumpSwitches', '-dump', 'all', default=True, group=[swGrp,'Debug'] )
+	switches.register('Errors', '-Error,-Errors', '8,11 OR hide:8,11', default=True, group=[swGrp,'Debug'] )
+	switches.register('Timeout', '-t,-Timeout', default=True, group=[swGrp,'Debug'] )
+	switches.register('chmod', '-chmod,-777', default=True, group=[swGrp,'Debug'] )
+	swGrp += 1
+	# switches.register('NoTableLines', '-nolines', default=True, group=[swGrp,'A_Group'] )
+	switches.register('YesTableLines', '-yl,-yeslines', default=True, group=[swGrp,'Output'] )
+	switches.register('TableJSON', '-tjson,-tablejson', default=True, group=[swGrp,'Output'] )
+	switches.register('FieldTotal', '-fieldtotal', 'mem_usage', default=True, group=[swGrp,'Output'] )
+	switches.register('NoColor', '-nocolor', space=True, default=True, group=[swGrp,'Output'] )
+	switches.register('NoTitleChange', '-ntc,-notitlechange', default=True, group=[swGrp,'Output'] )
+	switches.register( 'Paste-isData', '--pa,--paste,-ppa,-ppaste,-ispa,-idpa' , default=True, group=[swGrp,'Output'] )
+	switches.register( 'Paste-isData-json', '--json,-pjson,-jsonp' , default=True, group=[swGrp,'Output'] )
+	switches.register( 'Markdown-Table', '--md' , default=True, group=[swGrp,'Output'] )
+	# switches.register('Report', '-report', default=True, group=[swGrp,'Output'] )
+	swGrp += 1
+	switches.register( 'SavePrint', '--savePrint' , default=True, group=[swGrp,'Script Helper'] )
+	switches.register( 'CopyPrint', '--copyPrint' , default=True, group=[swGrp,'Script Helper'] )
+
+
+	swGrp += 1
+	switches.register('LoadEpoch', '-loadepoch', default=True, group=[swGrp,'Rebuild From Logs'] )
+	switches.register('PrintEpoch', '-printepoch', default=True, group=[swGrp,'Rebuild From Logs'] )
+
+	defaultScriptTriggers_do()
+
+
+
 
 ##############################
-
-class regImp:
-
-	def __init__( self, focus=None, app=None, argvProcessForce=False, dirty=False, a=None, i=None ):
-		if focus == 0: focus = None
-		# if app == 'file-open': self.switch('Clean')
-		DEFAULTS = {
-						'file-open': {'Clean': 1},
-		}
-
-
-		if (not '__' and '.' in focus) or app is None:
-			# pr('_.imp should be __.imp, auto corrected', focus, c='r')
-			return __.imp(focus)
-
-		if not a is None: app=a
-		if not i is None: app=i
-		global regImps
-		global appInfo
-		if app is None:
-			err( 'class regImp', 'expected: _.regImp(__.appReg,app)  or _.regImp(focus(),app)' )
-
-		if focus is None: focus = __.appReg
-
-		regImps[focus] = {}
-
-		# self.functions = autoKwargsGetArgsFromApp(app)
-
-		self.app = app
-		self.parent = focus
-		# print_( 'self.imp = importlib.import_module', app )
-		self.imp = importlib.import_module(app)
-		# self.imp = importlib.util.spec_from_file_location( app, _v.py + _v.slash + app + '.py' )
-		# print(app)
-		# print(app)
-		# print(app)
-		# for x in dir(self.imp):
-		#   print(x)
-		# sys.exit()
-		# print_( os.path.isfile( _v.py + _v.slash + app + '.py' ) )
-		# print_( self.imp )
-		# print_( self.imp.test )
-		# sys.exit()
-		# print_(self.imp.focus())
-
-		self.focus = self.imp.focus( parentApp=focus )
-		# print('self.focus:',self.focus)
-		self.focusPop = focus
-
-		self.saveLog = True
-
-		try:
-			self.imp.registerSwitches( argvProcessForce=False)
-		except Exception as e:
-			self.imp.sw()
-
-		appInfo[self.imp.focus(focus)] = appInfo[self.imp.focus()]
-		appData[self.imp.focus(focus)] = appData[self.imp.focus()]
-		__.constructRegistration(appInfo[self.imp.focus(focus)]['file'],self.imp.focus(focus))
-
-		regImps[focus] = {}
-		regImps[focus][app] = self.imp
-
-		__.appReg = self.focusPop
-
-		if dirty   and   not self.focus == '__init___-___init__':
-			self.imp.appDBA = self.focus
-
-
-		# self.provideImport()
-
-		if app in DEFAULTS:
-			for sw in DEFAULTS[app]:
-				if type(DEFAULTS[app][sw]) == str:
-					self.switch(sw,DEFAULTS[app][sw])
-				elif DEFAULTS[app][sw]:
-					self.switch(sw)
-				else:
-					self.switch(sw,delete=True)
-		# if app == 'file-open': self.switch('Clean')
-
-
-	def provideImport( self ):
-		return self.imp
-
-	def listFunctions( self ):
-		self.functions
-		for func in self.functions:
-			print_( func['name'], func['args'] )
-
-	def pipe( self, data=[], xfer=False, clear=True, appReg=False ):
-		global appData
-		if type(data) == bool:
-			return appData[self.focus]['pipe']
-
-		if type(appReg) == bool:
-			appReg = self.focusPop
-
-		if not len( data ):
-			if xfer:
-				data = appData[appReg]['pipe']
-				if clear:
-					appData[appReg]['pipe'] = []
-
-		appData[self.focus]['pipe'] = data
-
-		try:
-			appData[self.focus]['data']['table']['received']
-
-			profile = _profile.records.audit( 'pipe', data, appReg=[appReg,self.focus] )
-			appData[appReg]['data']['table']['sent'].append( profile )
-			appData[self.focus]['data']['table']['received'].append( profile )
-		except Exception as e:
-			pass
-
-	def switch( self, names=[], value=None, appReg=False, dump=False, delete=False,        d=False ):
-		global appData
-		global switches
-
-		if type(appReg) == bool:
-			appReg = self.focusPop
-
-		if dump:
-			switches.dumpSwitches()
-		else:
-			for name in names.split(','):
-				vl = value
-				if name == 'Password' or name == 'Key':
-					vl = '*******'
-				if not value is None:
-					try:
-						appData[self.focus]['data']['field']['received']
-						profile = _profile.records.audit( name, vl, appReg=[appReg,self.focus] )
-						appData[appReg]['data']['field']['sent'].append( profile )
-						appData[self.focus]['data']['field']['received'].append( profile )
-					except Exception as e:
-						pass
-
-
-				# print_(self.focus)
-				__.appReg = self.focus
-
-				if delete or d:
-					switches.fieldSet( name, 'active', False )
-
-				else:
-
-					switches.fieldSet( name, 'active', True )
-
-					# if not type ( value ) == bool:
-					if not value is None:
-						if type( value ) == list:
-							switches.fieldSet( name, 'values', value )
-							switches.fieldSet( name, 'value', ','.join(value) )
-						else:
-							switches.fieldSet( name, 'value', value )
-							switches.fieldSet( name, 'values', [value] )
-
-
-			pass
-		__.appReg = self.focusPop
-
-	def deleteSwitch( self, name ):
-		global switches
-		__.appReg = self.focus
-
-		switches.fieldSet( name, 'active', False )
-
-		__.appReg = self.focusPop
-
-
-	def kwargs( self, *args, **kwargs ):
-		focusPop=True
-		if 'focusPop' in kwargs:
-			focusPop=kwargs['focusPop']
-			del kwargs['focusPop']
-
-		__.appReg = self.focus
-
-		self.imp.appDBA = self.focus
-		if args and kwargs:
-			result = self.imp.action(*args, **kwargs)
-		elif args:
-			result = self.imp.action(*args)
-		elif kwargs:
-			result = self.imp.action(**kwargs)
-		else:
-			result = self.imp.action()
-
-		if focusPop:
-			__.appReg = self.focusPop
-
-		return result
-	def action( self, arg='c766f06b', focusPop=True ):
-		# focusBK = __.appReg
-		__.appReg = self.focus
-
-		self.imp.appDBA = self.focus
-		if not arg == 'c766f06b':
-			result = self.imp.action(arg)
-		else:
-			result = self.imp.action()
-
-		if focusPop:
-			__.appReg = self.focusPop
-
-		return result
-
-
-	# def do( self, func, arg=False, focusPop=True ):
-	def do(self, *args, **kwargs):
-		# focusBK = __.appReg
-		focusPop=True
-
-		args=list(args)
-		if len(args) == 1 and args[0] == 'action': return self.action()
-		func=args.pop(0)
-		_kwargs={}
-		for k in kwargs:
-			if k == 'focusPop': focusPop=kwargs[k]
-			else: _kwargs[k]=kwargs[k]
-
-		__.appReg = self.focus
-
-		if 'function' in str(type( func )):
-			return func()
-		elif type( func ) == str:
-			theFunction = eval( 'self.imp.' + func )
-		else:
-			theFunction = func
-
-		result = 'theFunction'+fak(args,kwargs)
-
-
-		# if type( arg ) == bool:
-		#   result = theFunction()
-		# elif type( arg ) == dict:
-		#   result = theFunction(**arg)
-		# elif type( arg ) == list:
-		#   result = theFunction(*arg)
-		# else:
-		#   result = theFunction(arg)
-
-
-
-		if focusPop:
-			__.appReg = self.focusPop
-
-		return result
-
-	def execute( self, func, arg=False, nofocus=False ):
-		global threads
-		theFunc = eval('self.imp.'+func)
-
-		shouldRun = True
-		if not nofocus and  type(arg) == bool:
-			args = [ self.focus ]
-		elif not nofocus and  not type(arg) == bool:
-			args = [ arg, self.focus ]
-
-		if nofocus and  type(arg) == bool:
-			shouldRun = False
-			theID = threads.add( 'execute', theFunc, loaded=True )
-		elif nofocus and  not type(arg) == bool:
-			args = [ arg ]
-
-
-		if shouldRun:
-
-			theID = threads.add( 'execute', theFunc, args, loaded=True )
-
-		# if self.saveLog:
-		# else:
-		#   theID = threads.add( 'execute', theFunc, [ arg, self.focus ], trigger=saveThreadsLog, loaded=True )
-
-		return theID
+regImps = {}
+def regImp(*args, **kwargs):
+	if not 'regImp' in intelligent_code.functions:
+		from library.frameworks.base.classes.regImp import regImp
+		intelligent_code.functions['regImp'] = regImp
+	return intelligent_code.functions['regImp'](*args, **kwargs)
 impReg=regImp
 ##############################
 # _regImpEXAMPLE = _.regImp( focus(), '_rightThumb._auditCodeBase' )
@@ -22083,6 +12718,11 @@ def key( subject ):
 
 
 def historyPrint( code, pre='' ):
+	##change
+	global switches
+	if switches is None:
+		# from library.frameworks.base.classes.Switches import Switches
+		switches = Switches()
 	i=0
 	while not i >= 4:
 		i+=1
@@ -22658,6 +13298,7 @@ def l_registerSwitches( trig=None, sw=None ):
 	global argvProcess
 	global myFileLocation_Print
 	global autoBackupData
+	# __.appInfoAcquiredData = { 'app': __.appReg, 'focus': theFocus, 'data': data }
 	l_registerSwitches_vars()
 	# appInfo=l.conf('info')
 
@@ -22722,7 +13363,6 @@ def l_vars(fcs,n,f,d):
 	l.conf('appDBA',d)
 	return l.fieldSet
 l.vars=l_vars
-oc=vindex
 
 
 def dots(path):
@@ -22844,18 +13484,6 @@ def URL(url, data={}):
 	import requests
 	response = requests.post(url, data=data)
 	return response.content.decode("utf-8").replace('\\n', '\n')
-
-def URL2(url, data={}):
-	import requests
-	headers = {
-		"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36",
-		"Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8",
-		"Accept-Language": "en-US,en;q=0.9",
-		"Connection": "keep-alive"
-	}
-	response = requests.post(url, data=data, headers=headers)
-	print(f"Fetching data from: {url}")
-	return response.text.replace('\\n', '\n')
 
 def getConfig(path):
 	def _cl_(string): return _str.do('be',   _str.do('be',string,'\n')   ,' ');
@@ -22985,6 +13613,7 @@ def waiting(sec,p=True,txt=''):
 			time.sleep(1)
 			sec-=1
 		pr( '', end=1 )
+		
 def day(epoch=None,sep=None,end=None, e=None):
 	if end == None and e == None: e=True
 	if not end == None: e=end
@@ -23185,6 +13814,10 @@ class Banner:
 def isExit(_file_):
 	# print(__.appReg)
 	# print('_file_:',_file_)
+	appDBA = __.appInfoAcquiredData['app']
+	theFocus = __.appInfoAcquiredData['focus']
+	data = __.appInfoAcquiredData['data']
+	releaseAcquiredData( appDBA, theFocus, data )
 	__.isExit()
 	global appInfo
 
@@ -24368,13 +15001,15 @@ def sortFo2(file_paths):
 
 ##################################################
 fields = Fields()
-threads = Queue()
-switches = Switches()
-tables = Tables()
-databases = Databases()
-__.databases = Databases()
+##change
+switches = None
+# switches = Switches()
+# tables = Tables()
+# tables = TableSystem()
+# __.onExit(tables.eof)
+# databases = Databases()
+# __.databases = Databases()
 
-__.onExit(tables.eof)
 ##################################################
 errors = []
 appInfo = {}
@@ -25111,16 +15746,16 @@ def mdFigSimp(md='', title='###', wrap=True, file=None, t=None, w=None, f=None):
 	if defaultSection in code: del code[defaultSection]
 	return code
 ##################################################
-def code( script, addString=None ):
+def code( script, addString=None, lan = 'javascript' ):
 	global _code
 	try:
 		__.code
 	except Exception as e:
 		_code = regImp( __.appReg, '_rightThumb._auditCodeBase' )
-
+	_code.imp.validator.register( script, lan )
 	return __.code.process( script, addString=addString )
-def code2( script, addString=None ):
-	li = code( script, addString=None )
+def code2( script, addString=None, lan = 'javascript' ):
+	li = code( script, addString, lan )
 	index = {}
 	for rec in li:
 		# print(rec)
@@ -25666,40 +16301,7 @@ def rImp(app):
 
 
 ##################################################
-##change
 
-_bm=None
-def myFolder(subject):
-	if type(subject) == str:
-		subjects = [subject]
-	elif type(subject) == list:
-		subjects = subject
-	else:
-		print_(type(subject))
-		err( 'myFolder', subject )
-	results=[]
-
-	for sub in subjects:
-		if os.path.isdir(sub):
-			results.append(sub)
-		else:
-			global _bm
-			if _bm is None:
-				import _rightThumb._bookmarks as _bm
-			path = _bm.Bookmarks( sub ).get2()
-			# print_(sub,path)
-			if path is None:
-				cp( 'Error, Bookmark does not exist', 'red' )
-				results.append(sub)
-			else:
-				results.append(path)
-	# print(results)
-	if type(subject) == str and len(results):
-		return results[0]
-	elif type(subject) == str and not len(results):
-		return subject
-	elif type(subject) == list:
-		return results
 
 
 
@@ -25714,19 +16316,6 @@ def create_backup_filename(*args, **kwargs):
 
 fibk=create_backup_filename
 backupName=create_backup_filename
-##################################################
-##change
-def hexColor(*args, **kwargs):
-	if not 'hexColor' in intelligent_code.functions:
-		from library.tools.code.functions.hexColor import hexColor
-		intelligent_code.functions['hexColor'] = hexColor
-	return intelligent_code.functions['hexColor'](*args, **kwargs)
-
-def pyColor(*args, **kwargs):
-	if not 'pyColor' in intelligent_code.functions:
-		from library.tools.code.functions.pyColor import pyColor
-		intelligent_code.functions['pyColor'] = pyColor
-	return intelligent_code.functions['pyColor'](*args, **kwargs)
 ##################################################
 pr0c='yellow'
 def pr0(*args,c=None):
@@ -25766,46 +16355,19 @@ def logLine(*items, log=None):
 # dict_to_markdown_table
 # sys.stdin.readlines()
 ########################################################################################
-import os
 import time
 
-def bkExpire(file, backup, age='1d', p=0, pCP=1,ago=None,cp=None,force=False):
-	import shutil
-	if not ago is None: age=ago
-	file_path = file
-	backup_path = backup
-	age_in_epoch = timeAgo(age)
-
-	if not os.path.exists(file_path):
-		if p:
-			print(f"Error: File '{file_path}' does not exist.")
-		return False
-	
-	if os.path.isfile(backup_path):
-		file_mod_time = os.path.getmtime(backup_path)
-
-	if force or not os.path.isfile(backup_path)   or   file_mod_time < age_in_epoch:
-		_v.mkdir(backup_path,pop=True)
-		shutil.copy2(file_path, backup_path)
-		if p or pCP:
-			print(f"Backup created: '{file_path}' -> '{backup_path}'")
-		if cp:
-			bk = create_backup_filename(file_path,cp)
-			_v.mkdir(bk,pop=True)
-			shutil.copy2(file_path, bk)
-		return True
-	else:
-		if p:
-			print(f"No backup needed. The file '{file_path}' is not older than the specified age.")
-		return False
+def bkExpire(*args, **kwargs):
+	if not 'bkExpire' in intelligent_code.functions:
+		from library.tools.os.file.bkExpire import bkExpire
+		intelligent_code.functions['bkExpire'] = bkExpire
+	return intelligent_code.functions['bkExpire'](*args, **kwargs)
 
 
 
 
 ########################################################################################
-import os
 import re
-import time
 
 class FileLocker:
 	@staticmethod
@@ -25941,10 +16503,49 @@ class index
 class index:
 	def __new__(cls, *args, **kwargs):
 		if not 'index' in intelligent_code.classes:
-			from library.tools.code.classes.index import index as live
+			from library.tools.code.classes.index import  index as live
 			intelligent_code.classes['index'] = live
 		return intelligent_code.classes['index'](*args, **kwargs)
 
+
+########################################################################################
+def sort2(table, fields):
+	"""Sorts a list of dictionaries based on multiple fields with ascending (.a) and descending (.d) support."""
+	
+	# Process sorting fields
+	sorting_criteria = []
+	reverse_flags = []
+
+	for field in fields.replace(' ', '').split(','):
+		if '.a' in field:
+			sorting_criteria.append(field.replace('.a', ''))
+			reverse_flags.append(False)  # Ascending
+		elif '.d' in field:
+			sorting_criteria.append(field.replace('.d', ''))
+			reverse_flags.append(True)   # Descending
+		else:
+			sorting_criteria.append(field)
+			reverse_flags.append(False)  # Default to ascending
+
+	# Pre-process: Ensure all fields exist in each record
+	for record in table:
+		for field in sorting_criteria:
+			if field not in record:
+				# Determine default value (int -> 0, string -> "")
+				record[field] = 0 if any(isinstance(r.get(field, ""), int) for r in table) else ""
+
+	# Perform sorting
+	table = sorted(
+		table,
+		key=lambda x: tuple(x[field] for field in sorting_criteria),
+		reverse=False  # Always sort ascending first, then adjust descending fields
+	)
+
+	# Apply descending order where needed
+	for field, reverse in reversed(list(zip(sorting_criteria, reverse_flags))):
+		table = sorted(table, key=lambda x: x[field], reverse=reverse)
+
+	return table
 
 ########################################################################################
 WidgetsFW = {

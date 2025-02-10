@@ -42,6 +42,7 @@ _.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw );
 def action():
 	spent = []
 	for line in _.isData(r=0):
+		if not _.showLine(line): continue
 		cl = line.replace('#','').strip()
 		if not cl in spent:
 			spent.append(cl)

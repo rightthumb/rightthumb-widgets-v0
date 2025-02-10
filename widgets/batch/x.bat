@@ -46,6 +46,7 @@ if [%burn_this%] == [yes] (
     title Closed
     call:del_session
     call p. lock-wait -unlock x
+    call p. lock-wait -unlock x
     exit
 )
 IF [%1] == [r] SET reclaim_tickets=yes
@@ -248,6 +249,7 @@ rem )
 call lab-timer
 call p. ticketTimeline
 title=Closed
+call p. lock-wait -unlock x
 call p. lock-wait -unlock x
 exit
 :RunOnceBackupAsk

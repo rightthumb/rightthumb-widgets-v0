@@ -1,5 +1,11 @@
-import _rightThumb._base3 as _
-import _rightThumb._construct as __
+import sys
+import os
+import importlib.util
+
+
+
+# import _rightThumb._base3 as _
+# import _rightThumb._construct as __
 
 class Field:
     def __init__(self, project, name, value, appReg, script, maxField):
@@ -125,7 +131,7 @@ class Fields:
                 else:
                     return self.fields[project][i].addPaddingZeros(value)
                 result = self.fields[project][i].addPaddingZeros(value)
-        return result
+        return None
     def value(self, project, name, value, extra=None, right=False, appReg=False, r=None, center=False):
         result = value
         if not r is None:
@@ -160,3 +166,37 @@ class Fields:
             appReg = __.appReg
         for name in asset.keys():
             self.register(project, name, asset[name], appReg, isRegisterDic=True)
+
+
+
+
+def import_something(relative_module_path, module_name):
+    # Get the directory of the current file (instead of the file itself)
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    
+    # Compute the base path; here we go up 4 levels from the current directory.
+    base_path = os.path.normpath(os.path.join(current_dir, '..', '..', '..', '..'))
+    
+    # Construct the full module file path using the relative module path you provide.
+    # For example, if relative_module_path is '_rightThumb/_base3/__init__.py'
+    module_full_path = os.path.join(base_path, relative_module_path)
+    
+    # Check if the file exists to give a clearer error message
+    if not os.path.exists(module_full_path):
+        raise FileNotFoundError(f"Module file not found: {module_full_path}")
+    
+    # Create a module spec from the file location.
+    spec = importlib.util.spec_from_file_location(module_name, module_full_path)
+    if spec is None or spec.loader is None:
+        raise ImportError(f"Could not load spec for module '{module_name}' at {module_full_path}")
+    
+    # Create a module from the spec and execute it.
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    
+    # Optionally, add it to sys.modules
+    sys.modules[module_name] = module
+    return module
+
+_ = import_something(os.path.join('_rightThumb', '_base3', '__init__.py'), '_base3')
+__ = import_something(os.path.join('_rightThumb', '_construct', '__init__.py'), '_construct')

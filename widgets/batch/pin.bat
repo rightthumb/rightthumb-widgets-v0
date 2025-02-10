@@ -1,4 +1,12 @@
 @echo off
+if [%isPWSH%] == [] (
+    call isPWSH print
+)
+@REM echo pin isPWSH = %isPWSH%
+if [%isPWSH%] == [yes] (
+    echo PowerShell, No Pin Support
+    goto :eof
+)
 set asked=0
 if "%1" == "-ask" (
     echo ask>"%stmp%/pin_ask"

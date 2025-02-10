@@ -45,6 +45,7 @@ def appSwitches():
 	_.switches.register('JustReturn', '-return')
 	_.switches.register('NoResults', '-no')
 	_.switches.register('Clean', '--c')
+	_.switches.register('Top', '-t,-top')
 	
 
 
@@ -351,6 +352,9 @@ def action():
 		found = []
 
 		for i,line in enumerate(file):
+			if _.switches.isActive('Top'):
+				if line.startswith(' ') or line.startswith('\t'):
+					continue
 			line = _.listColor( line, _.switches.values('Plus'), 'green' )
 			line = line.replace('\n','')
 			if doSearch:

@@ -13,7 +13,14 @@ REM ## {C3P0D40fAe8B} ##
 
 :: e fileLocks
 
-IF [%1] == [simple] (
+if [%isPWSH%] == [yes] (
+    echo pwsh
+    CLS
+)
+
+IF [%1] == [c] (
+    SET "MainArg=simple"
+) ELSE IF [%1] == [simple] (
     SET "MainArg=simple"
 ) else (
     SET "MainArg=None"
@@ -227,7 +234,7 @@ GOTO:EOF
             ::::::: Command Paths
             SET javabin=C:\Program Files\Java\jdk-18.0.2
 
-            SET appPaths=%binWin%;%batch%;%python%;%myBatch%;%myPython%;%exe_folders%;%USERPROFILE%;%filemeta%
+            SET appPaths=%binWin%;%myPython%;%exe_folders%;%USERPROFILE%;%filemeta%
             IF EXIST "%pyf%\Scripts" ( SET appPaths=%appPaths%;%pyf%\Scripts )
             SET pathPython=%USERPROFILE%
             IF EXIST "%pyf2%\Lib" ( SET SET pathPython=%pyf2%;%pyf2%\Lib;%pyf2%\Lib\site-packages;%pyf2%;%pyf2%\Scripts )
@@ -246,6 +253,11 @@ GOTO:EOF
 
             call pathAddPre C:\Users\Scott\.cargo\bin
             call pathAdd C:\Program Files\MongoDB\Server\8.0\bin
+            call pathAddPre %batch%
+            call pathAddPre %myBatch%
+
+            call pathAdd %python%
+            call pathRemove %python%
 
 
             SET phpFiles=%php2%
@@ -354,10 +366,36 @@ GOTO:EOF
 
 :SET_PIN
 IF [%MainArg%] == [None] (
-    call pin
-    call c
+    call :Possible_isPWSH
+    call :Possible_Pin
+    call :Possible_Call_Parent
 )
 GOTO:EOF
+
+:Possible_Pin
+    if not [%isPWSH%] == [yes] (
+        call pin
+    )
+GOTO:EOF
+
+:Possible_isPWSH
+    if [%isPWSH%] == [] (
+        call isPWSH
+        goto :eof
+    )
+GOTO:EOF
+
+:Possible_Call_Parent
+    set "SCRIPT_DIR=%~dp0"
+    set "SCRIPT_DIR=%SCRIPT_DIR:~0,-1%"
+    if not "%SCRIPT_DIR:~-1%"=="%batch%" (
+        call c simple
+        @REM echo Called C
+    ) 
+GOTO:EOF
+
+
+
 
 
 :BUILD_TICKET_HISTORY

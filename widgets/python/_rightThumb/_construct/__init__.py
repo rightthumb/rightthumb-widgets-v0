@@ -16,6 +16,8 @@ class Meta_Namespace():
 		pass
 dot=Meta_Namespace
 fn=Meta_Namespace()
+switch_skimmer = Meta_Namespace()
+switch_skimmer.scan = {}
 ##################################################
 # App Help Menu Switch Grouping
 SwitchGroup_Help = Meta_Namespace()
@@ -37,7 +39,7 @@ appInfoAcquiredData = { 'app': '', 'focus': '', 'data': None }
 # spring earthy_tones oceanic pastel warm_bold autumn
 # midnight spring2 volcano frosty desert forest rainbow
 # mystic industrial rustic sci_fi victorian retro
-
+isData_Switches = {}
 CodeTheme = 'retro'
 
 ##################################################

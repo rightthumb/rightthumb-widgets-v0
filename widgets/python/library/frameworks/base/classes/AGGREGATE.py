@@ -1,38 +1,18 @@
-import os
-import importlib.util
 import sys
+import os
+current_file = os.path.abspath(__file__)
+base_path = os.path.normpath(os.path.join(current_file, f'..{os.sep}..{os.sep}..{os.sep}..{os.sep}'))
+if base_path not in sys.path:
+    sys.path.insert(0, base_path)
+module_path = os.path.join(base_path, '_rightThumb', '_base3/__init__.py')
+import importlib.util
+spec = importlib.util.spec_from_file_location("_base3", module_path)
+_ = importlib.util.module_from_spec(spec)
 
-# Define possible paths for _base3
-base3_paths = [
-    r"D:\\.rightthumb-widgets\\widgets\\python\\_rightThumb\\_base3\\S__init__.py",  # Windows path
-    r"/opt/rightthumb-widgets-v0/widgets/python/_rightThumb/_base3/__init__.py",  # Linux path
-]
 
-def load_module_from_path(module_name, path):
-    """Dynamically load a module from the given file path."""
-    if os.path.exists(path):
-        spec = importlib.util.spec_from_file_location(module_name, path)
-        module = importlib.util.module_from_spec(spec)
-        sys.modules[module_name] = module
-        spec.loader.exec_module(module)
-        return module
-    return None
 
-# Try to load from paths
-module_name = "_rightThumb_base3"
-_ = None
 
-for path in base3_paths:
-    _ = load_module_from_path(module_name, path)
-    if _:
-        break  # Stop at first successful load
-
-# If the module wasn't loaded, try normal import
-if _ is None:
-    try:
-        import _rightThumb._base3 as _
-    except ImportError:
-        raise ImportError("Failed to import _rightThumb._base3 from both predefined paths and normal import.")
+# import _rightThumb._base3 as _
 
 # _ is now set to the loaded module
 # print(f"Successfully imported {module_name}")
