@@ -19,7 +19,7 @@ if "%vault_pin%" == "" (
 ) else (
     call :check
 )
-goto :eof
+goto :end
 
 :noask
 if exist "%stmp%/pin_ask" (
@@ -53,3 +53,4 @@ if not exist "%rt%\profile\config\.vault.%vault_pin%" (
     echo pin is set
 )
 goto :eof
+:end

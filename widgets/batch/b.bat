@@ -11,16 +11,28 @@ rem ###########################################################################
 rem ## {C3P0D40fAe8B} ##
 
 
-
+@REM echo args: %*
 
 
 SET "bh_brand=false"
+SET "bh_brand=true"
 
 
 
 
 
 goto :main
+
+:VALIDATE
+echo.%2 | findstr /C:"%1" 1>nul
+if errorlevel 1 (
+    set valid=no
+) ELSE (
+    set valid=yes
+)
+goto:eof
+
+
 :backup
 set pp=%myBookmarks%\BM-%1.txt
 
@@ -50,9 +62,14 @@ GOTO:EOF
 GOTO:EOF
 
 
+
+
+
+
 :main
 if [%1] == [0] call p. b0
 call result call p. b -a "%1"
+@REM echo result %result%
 
 
 
@@ -67,12 +84,13 @@ if [%valid%] == [yes] (
     rem %result:~0,2%
 
 if not exist "%result%" (call p. nsfw -color red -on "folder does not exist, mothafucka" -off "folder does not exist")
-rem if not exist %result% call p. nsfw -color red Background.red red -on "folder does" "not exist" ", mothafucka" -off "folder does not exist"
 if not exist "%result%" call p. print_color -text ";t%result%" -color cyan
 if not exist "%result%" goto:eof
+
     %py% %widgets%\widgets\python\folder-registration.py
     SET endpointF = %b%
     CALL:LogBookmark %1 "%result%"
+    @REM cd
     cd /d "%result%"
     %py% %widgets%\widgets\python\folder-registration.py
     cd
@@ -80,18 +98,24 @@ if not exist "%result%" goto:eof
         echo.
         echo View History: bh
     )
+    exit /b
+    goto:eof
+
 ) else (
     p error -err Bookmark does not exist
 )
 goto:eof
-:VALIDATE
-echo.%2 | findstr /C:"%1" 1>nul
-if errorlevel 1 (
-    set valid=no
-) ELSE (
-    set valid=yes
-)
-goto:eof
+
+
+
+
+
+
+
+
+
+
+
 rem THE END *************************************************************
 
 

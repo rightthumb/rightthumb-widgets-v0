@@ -86,8 +86,11 @@ class Switches:
 				omitList.append(x)
 		if appReg is None:
 			appReg = __.appReg
+		# print('appReg', appReg)
 		result = []
 		for i, row in enumerate(self.switches):
+			if appReg == '__init__':
+				appReg = row.appReg
 			if not row.name in omitList:
 				if row.active:
 					shouldAdd = True

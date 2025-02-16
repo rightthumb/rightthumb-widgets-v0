@@ -23,10 +23,10 @@ fieldSet=_.l.vars(focus(),__name__,__file__,appDBA);_.load();_v=__.imp('_rightTh
 def sw():
 	pass
 	#b)--> examples
-	# _.switches.register( 'Input', '-i', group='Group Name' )
 		##  -->    p SwitchGroupsExamples   <--
 	# #e)--> examples
-	_.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=False )
+	# _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=False )
+	_.switches.register( 'App', '-app', group='Group Name' )
 
 _._default_settings_()
 # __.setting('omit-switch-triggers',['Ago'])
@@ -45,8 +45,11 @@ _._default_settings_()
 
 _.appInfo[focus()] = {
 	# 'app': '8facG-jo0Cxk',
-	'file': 'thisApp.py',
-	'description': 'Changes the world',
+	'file': 'php-resource.py',
+	'description': [
+		'Code Snippet Library for usage of PHP Library of apps and resources.',
+		'    ',
+		],
 		# _.ail(1,'subject')+
 		# _.aib('one')+
 	'categories': [

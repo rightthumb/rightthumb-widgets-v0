@@ -1,7 +1,7 @@
 @echo off
 
 
-call addPath "D:\.rightthumb-widgets\widgets\rust\_\bin\binaryen-version_90-x86-windows"
+call pathAdd "D:\.rightthumb-widgets\widgets\rust\_\bin\binaryen-version_90-x86-windows"
 
 :              w   n   b   o
 

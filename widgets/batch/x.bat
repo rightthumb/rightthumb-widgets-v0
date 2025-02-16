@@ -3,8 +3,7 @@ call c
 call p. on -delete -session %Session_ID%
 if [%1] == [lock] call p. lock-files
 if [%1] == [l] call p. lock-files
-if [%1] == [] call pin
-
+@REM if [%1] == [] call pin
 title=Closing Queue
 call p. lock-wait -wait x
 call p. lock-wait -lock x
@@ -47,7 +46,11 @@ if [%burn_this%] == [yes] (
     call:del_session
     call p. lock-wait -unlock x
     call p. lock-wait -unlock x
+    @REM call p. ctrl-w
+    echo Exit Script Complete
     exit
+    
+
 )
 IF [%1] == [r] SET reclaim_tickets=yes
 doskey /history >> "%stmp%\unclaimed_tickets_history\history-%Session_ID%.txt"  2>&1
@@ -207,7 +210,7 @@ GOTO END
 
 type %html%\header > %html%\tickets.htm
 ::type %myTickets%\open-* >> %html%\tickets.htm
-call b myTickets
+call g myTickets
 dir /b open-* |sort >~openTickets.txt
 for /F "tokens=*" %%A in  (~openTickets.txt) do  (
    ECHO Processing Ticket File %%A.... 
@@ -251,6 +254,8 @@ call p. ticketTimeline
 title=Closed
 call p. lock-wait -unlock x
 call p. lock-wait -unlock x
+@REM call p. ctrl-w
+echo Exit Script Complete
 exit
 :RunOnceBackupAsk
 if [%skip_backup%] == [YES] (

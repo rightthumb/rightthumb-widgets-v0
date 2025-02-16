@@ -34,7 +34,7 @@ import _rightThumb._string as _str
 
 
 def appSwitches():
-	_.switches.register('Alias', '-a,-i,-alias','d,sendto,docs', isRequired=True)
+	_.switches.register('Alias', '-a,-i,-alias','d,sendto,docs', isRequired=False)
 	_.switches.register('Save', '-save')
 
 
@@ -166,6 +166,11 @@ _.postLoad( __file__ )
 
 
 def action():
+	# _.pv(_.switches.all())
+	# if not _.switches.all():
+	# 	print(sys.argv)
+	# 	print(sys.executable)
+	# 	print('Error: Missing alias')
 	# print(_.switches.value('Alias')); sys.exit();
 	made={}
 	if 'wprofile' in _v.config_hash:

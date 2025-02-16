@@ -1,2 +1,3 @@
 @echo off
-call p. string-length -string %*
+call p. sortByLength
+:: call p. string-length -string %*

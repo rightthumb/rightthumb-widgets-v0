@@ -120,7 +120,8 @@ def action():
 		# print(path)
 		# continue
 		if not os.path.isfile(path): continue
-		if not _.showLine(path): continue
+		if not _.switches.isActive('Files'):
+			if not _.showLine(path): continue
 		if '__pycache__' in path: continue
 		if os.sep+'backup'+os.sep in path and not 'os' in path and not 'file' in path: continue
 		isData.append(path)
@@ -174,12 +175,18 @@ def action():
 			iCode = iFn
 			impPath = iFnPath.replace('iPath',iPath).replace('iName',iName)
 		
-		if '.__init__ import __init__' in impPath:
-			impPath = impPath.replace('.__init__ import __init__', ' as _')
-			impPath = impPath.replace('from ', 'import ')
+
+		
+		impPath = impPath.replace('library.python.', '')
 		iCode = iCode.replace('iPath',iPath)
 		iCode = iCode.replace('iName',iName)
 
+		if '.__init__ import  __init__' in impPath:
+			impPath = impPath.replace('.__init__ import  __init__', ' as imp')
+			impPath = impPath.replace('from ', 'import ')
+		if '.__init__ import __init__' in impPath:
+			impPath = impPath.replace('.__init__ import __init__', ' as _')
+			impPath = impPath.replace('from ', 'import ')
 		
 		if _.switches.isActive('Tabs'):
 			iCode = iCode.replace('    ', '\t')
@@ -195,6 +202,7 @@ def action():
 			objects = []
 			basic = []
 			All = []
+
 			for line in file.split('\n'):
 				line = line.split('#')[0]
 				st = line.strip()
@@ -219,22 +227,56 @@ def action():
 				objects = All
 				if len(_.switches.value('Path')):
 					_.switches.fieldSet('Path','value','all')
-
+			if '.__init__' in impPath:
+				impPath = impPath.replace('.__init__', '')
+				# impPath = impPath.replace('from ', 'import ')
+			if '.__init__ import __init__' in impPath:
+				impPath = impPath.replace('.__init__ import __init__', ' as _')
+				# impPath = impPath.replace('from ', 'import ')
 			# for o in objects: print(o)
 			# return None
 			# impPath = _.tailpop(impPath,' ')
+
+			# print(objects)
+			objs = []
+			for o in objects:
+				# print(o)
+				if _.switches.isActive('Files'):
+					if _.showLine(o):
+						objs.append(o)
+				else:
+					objs.append(o)
+			objectItems = '  '+', '.join(objs)
+
+
 			if len(_.switches.value('Path')):
+				# print(impPath)
 				if not objects:
-					impPath += '  '+ iName
+					# impPath += '  '+ iName
+					objects = '  '+ iName
 				else:
-					impPath += '  '+', '.join(objects)
+					objs = []
+					for o in objects:
+						if _.switches.isActive('Files'):
+							objs.append(o)
+						else:
+							if _.showLine(o):
+								objs.append(o)
+					objects = '  '+', '.join(objs)
+					# impPath += '  '+', '.join(objs)
 			else:
+				# print(impPath)
 				if not basic:
-					impPath += '  '+ iName
+					# impPath += '  '+ iName
+					objects = '  '+ iName
 				elif iName in basic:
-					impPath += '  '+ iName
+					# impPath += '  '+ iName
+					objects = '  '+ iName
 				else:
-					impPath += '  '+ basic[0]
+					# impPath += '  '+ basic[0]
+					objects = '  '+ basic[0]
+			impPath += objectItems
+			impPath = impPath.replace('import  __init__','as ')
 			print(impPath)
 			_copy.imp.copy( impPath, p=0 )
 		else:

@@ -38,7 +38,7 @@ def appSwitches():
 	tabGroup = 0
 	tabGroup += 1
 	# , group=[tabGroup,'Scan What (default current folder)'] )
-	_.switches.register( 'Files', '-f,-fi,-file,-files','(optional) file.txt', isPipe='glob', description='Files', group=[tabGroup,'Scan What',0,'(defaults to current folder)'] )
+	# _.switches.register( 'Files', '-f,-fi,-file,-files','(optional) file.txt', isPipe='glob', description='Files', group=[tabGroup,'Scan What',0,'(defaults to current folder)'] )
 	_.switches.register( 'Files', '-f,-fi,-file,-files','(optional) file.txt', isPipe='glob', description='Files', group=[tabGroup,'Scan What', 0,'(defaults to current folder)'] )
 	_.switches.register('Folder', '-fo,-folder', group=[tabGroup,'Scan What',0,'(defaults to current folder)'] )
 

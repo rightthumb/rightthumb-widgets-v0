@@ -22,8 +22,11 @@ switch_skimmer.scan = {}
 # App Help Menu Switch Grouping
 SwitchGroup_Help = Meta_Namespace()
 SwitchGroup_Help.Delim = ''
-SwitchGroup_Help.Group = '|'
-SwitchGroup_Help.SubGroup = ':' # if this len 1: SwitchGroupDepth +=1
+SwitchGroup_Help.Group = '>'
+SwitchGroup_Help.SubGroup = '>' # if this len 1: SwitchGroupDepth +=1
+SwitchGroup_Help.Group_After = '  \u25BD Group \u25BD '
+SwitchGroup_Help.SubGroup_After = '  \u25BD SubGroup cnt\u25BD '
+SwitchGroup_Help.NoGroup_After = '  \u25BD Switches \u25BD '
 SwitchGroup_Help.NoGroup = '-'
 SwitchGroup_Help.PostLabel = '  '
 SwitchesModifier = Meta_Namespace()

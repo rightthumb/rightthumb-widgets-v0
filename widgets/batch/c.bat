@@ -257,7 +257,9 @@ GOTO:EOF
             call pathAddPre %myBatch%
 
             call pathAdd %python%
-            call pathRemove %python%
+            call pathRemove C:\QMK_MSYS\mingw64\bin
+            call pathRemove C:\Python313
+            call pathRemove D:\techApps\Python\Python36-32
 
 
             SET phpFiles=%php2%

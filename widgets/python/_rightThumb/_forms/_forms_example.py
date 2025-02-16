@@ -9,6 +9,27 @@ example_forms1 = [
 			"color": {"text": "black", "bg": "white"},
 			"field": {"width": 40}
 		},
+		"Event Registration Form with Example Values": [
+			{"label": "Event Name", "type": "text", "value": "Annual Conference"},
+			{"label": "First Name", "type": "text", "value": "Alice"},
+			{"label": "Last Name", "type": "text", "value": "Johnson"},
+			{"label": "Email", "type": "text", "value": "alice.johnson@example.com"},
+			{"label": "Phone Number", "type": "text", "value": "555-5678"}
+		],
+		"Attendance Preferences Form with Example Values": [
+			{"label": "Attendance Mode", "type": "radio", "options": ["In-person", "Virtual"], "value": "In-person"},
+			{"label": "Venue", "type": "checkbox", "options": ["Convention Center", "Grand Ballroom"], "value": "Convention Center"},
+			{"label": "Meal Preference", "type": "dropdown", "options": ["Vegetarian", "Non-Vegetarian", "Vegan"], "value": "Vegetarian"}
+		]
+	},
+	{
+		"Config": {
+			"html": True,
+			"column": {"width": 2},
+			"font": {"type": "Arial", "size": 12},
+			"color": {"text": "black", "bg": "white"},
+			"field": {"width": 40}
+		},
 		"Personal Information Form with Example Values": [
 			{"label": "First Name", "type": "text", "value": "John"},
 			{"label": "Last Name", "type": "text", "value": "Doe"},
@@ -43,26 +64,6 @@ example_forms1 = [
 			{"label": "Position", "type": "text", "value": "Developer"},
 			{"label": "Start Date", "type": "text", "value": "01/01/2020"},
 			{"label": "End Date", "type": "text", "value": "Present"}
-		]
-	},
-	{
-		"Config": {
-			"html": True,
-			"column": {"width": 2},
-			"font": {"type": "Arial", "size": 12},
-			"color": {"text": "black", "bg": "white"},
-			"field": {"width": 40}
-		},
-		"Event Registration Form with Example Values": [
-			{"label": "Event Name", "type": "text", "value": "Annual Conference"},
-			{"label": "First Name", "type": "text", "value": "Alice"},
-			{"label": "Last Name", "type": "text", "value": "Johnson"},
-			{"label": "Email", "type": "text", "value": "alice.johnson@example.com"},
-			{"label": "Phone Number", "type": "text", "value": "555-5678"}
-		],
-		"Attendance Preferences Form with Example Values": [
-			{"label": "Attendance Mode", "type": "radio", "options": ["In-person", "Virtual"], "value": "In-person"},
-			{"label": "Meal Preference", "type": "dropdown", "options": ["Vegetarian", "Non-Vegetarian", "Vegan"], "value": "Vegetarian"}
 		]
 	},
 	{

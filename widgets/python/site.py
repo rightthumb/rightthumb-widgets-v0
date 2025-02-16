@@ -537,6 +537,16 @@ def process(path,end='',ft=None):
 		# if _.switches.isActive('Print'): _.pr(do)
 
 		if _.switches.isActive('Upload-Scp') or _.switches.isActive('Download-Scp') or _.switches.isActive('rsync'):
+			#here
+			#do
+			# print(do)
+			# print(do)
+			# print(do)
+			# print(do)
+			# print(do)
+			# print(do)
+			# print(do)
+			# print(do)
 			if _.switches.isActive('Print'):
 				if 'p' in _.switches.value('Print'):
 					_.pr(do)

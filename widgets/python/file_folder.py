@@ -172,9 +172,18 @@ def has_hard_links(path):
 		return False
 
 import pathlib
+if not os.path.isfile('.subjects'):
+	subjects = []
+else:
+	subjects = _.getText( '.subjects', raw=True, clean=2 ).split('\n')
+__.subItem = 'Background.blue'
+__.subLink = 'Background.yellow'
+for i,s in enumerate(subjects):
+	subjects[i] = s.strip()
 
 def action():
 	global copied
+	global subjects
 	_copy_this=[]
 	if _.switches.isActive( 'Folder' ):
 		if len( _.switches.values( 'Folder' ) ):
@@ -245,12 +254,19 @@ def action():
 				
 			for i,item in enumerate(files):
 				files[i]['sort_by_field'] = item['label'].replace( '__', '_0_' )
-
+			global subjects
+			# for f in files:
+			# 	if f['label'] in subjects:
+			# 		_.pr( f['label'], c='green' )
+			
 			if _.switches.isActive('Links') and links:
 				_.pr()
 				_.colorThis( 'Links:', 'green' )
 				for f in _.tables.returnSorted( 'links', 'a.sort_by_field', links ):
-					_.colorThis( [ '\t',f['label'] ], 'yellow' )
+					if f['label'] in subjects:
+						_.colorThis( [ '\t',f['label'] ], __.subLink )
+					else:
+						_.colorThis( [ '\t',f['label'] ], 'yellow' )
 
 			files=_.tables.returnSorted( 'files', 'a.sort_by_field', files )    
 			for f in files: _copy_this.append(f['label'])
@@ -263,18 +279,26 @@ def action():
 			#     else:
 			#         _.colorThis( [ '\t',f['label'] ], 'cyan' )
 
-
+			
 			displayed_files=[]
 			for f in files:
 				if not os.path.islink(f['label']) and not has_hard_links(f['label']):
 					displayed_files.append(f['label'])
-					_.colorThis( [ '\t',f['label'] ], 'cyan' )
+					# if 'scrap' in f['label']:
+					# 	print(subjects)
+					if f['label'] in subjects:
+						_.colorThis( [ '\t',f['label'] ], __.subItem )
+					else:
+						_.colorThis( [ '\t',f['label'] ], 'cyan' )
 
 
 			for f in files:
 				if os.path.islink(f['label']) or has_hard_links(f['label']):
 					displayed_files.append(f['label'])
-					_.colorThis( [ '\t',f['label'] ], 'yellow' )
+					if f['label'] in subjects:
+						_.colorThis( [ '\t',f['label'] ], __.subLink )
+					else:
+						_.colorThis( [ '\t',f['label'] ], 'yellow' )
 
 			if _.isWin and len(displayed_files) == 1:
 				# if not _.switches.isActive('NoCopy'):
@@ -300,16 +324,25 @@ def action():
 					islink=True
 
 				if islink or  os.path.islink(f['label']):
-					_.colorThis( [ '\t',f['label'] ], 'yellow' )
+					if f['label'] in subjects:
+						_.colorThis( [ '\t',f['label'] ], __.subLink )
+					else:
+						_.colorThis( [ '\t',f['label'] ], 'yellow' )
 				else:
-					_.colorThis( [ '\t',f['label'] ], 'cyan' )
+					if f['label'] in subjects:
+						_.colorThis( [ '\t',f['label'] ], __.subItem )
+					else:
+						_.colorThis( [ '\t',f['label'] ], 'cyan' )
 			_.pr()
 			if totalFolder == len(folders):
 				_.colorThis( [ '',totalFolder ], 'yellow' )
 			else:
 				_.pr('',_.colorThis( [ _.addComma(len(folders)) ], 'yellow', p=0 ),'of',_.colorThis( [ _.addComma(totalFolder) ], 'yellow', p=0 ))
 			_.pr()
-			_.colorThis( folder, 'darkcyan' )
+			if folder in subjects:
+				_.colorThis( folder, __.subItem )
+			else:
+				_.colorThis( folder, 'darkcyan' )
 			_.pr()
 
 
@@ -343,7 +376,10 @@ def action():
 			_.pr()
 			_.colorThis( 'Files:', 'green' )
 			for f in newItems['files']:
-				_.colorThis( [ '\t',f ], 'cyan' )
+				if f in subjects:
+					_.colorThis( [ '\t',f ], __.subItem )
+				else:
+					_.colorThis( [ '\t',f ], 'cyan' )
 			_.pr()
 			if totalFile == len(files):
 				_.colorThis( [ '',_.addComma(totalFile) ], 'yellow' )
@@ -352,7 +388,10 @@ def action():
 			_.pr()
 			_.colorThis( 'Folders:', 'green' )
 			for f in newItems['folders']:
-				_.colorThis( [ '\t',f ], 'cyan' )
+				if f in subjects:
+					_.colorThis( [ '\t',f ], __.subItem )
+				else:
+					_.colorThis( [ '\t',f ], 'cyan' )
 			_.pr()
 			if totalFolder == len(folders):
 				_.colorThis( [ '',_.addComma(totalFolder) ], 'yellow' )

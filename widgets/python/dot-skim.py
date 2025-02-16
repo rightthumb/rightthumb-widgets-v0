@@ -4,6 +4,7 @@ fieldSet=_.l.vars(focus(),__name__,__file__,appDBA);_.load();_v=__.imp('_rightTh
 
 def sw():
 	_.switches.register( 'NotSingle', '-ns' )
+	_.switches.register( 'Count', '-cnt', '2' )
 _._default_settings_()
 
 _.appInfo[focus()] = {
@@ -44,14 +45,17 @@ _.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw );
 _copy = _.regImp( __.appReg, '-copy' )
 
 def action():
+	cnt = 1
+	if _.switches.isActive('Count'):
+		cnt = int(_.switches.value('Count'))
 	results = []
 	if not _.switches.isActive('NotSingle'):
 		for line in _.myData():
-			if '.' in line and line.count('.') == 1:
+			if '.' in line and line.count('.') == cnt:
 				results.append(line)
 	elif _.switches.isActive('NotSingle'):
 		for line in _.myData():
-			if '.' in line and line.count('.') > 1:
+			if '.' in line and line.count('.') > cnt:
 				results.append(line)
 	if _.isGui():
 		_copy.imp.copy( '\n'.join(results) )

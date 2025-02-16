@@ -51,6 +51,16 @@ rem cd
 rem :echo ^</%pc%^>
 rem echo Files:
 rem echo.
+if [%1] == [-subject] (
+    echo %2 >> .subjects
+    echo Saved: %2 to .subjects
+    GOTO:EOF
+)
+if [%1] == [-s] (
+    echo %2 >> .subjects
+    echo Saved: %2 to .subjects
+    GOTO:EOF
+)
 if [%1] == [-copy] (
     call :ACTION3 %*
     GOTO:EOF
