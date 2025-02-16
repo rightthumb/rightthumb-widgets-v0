@@ -15454,8 +15454,8 @@ class Table:
 							if item['SwitchGroup'] == 'Help' and 'Help' in __.switchTableSpentPrint: continue
 							if item['SwitchGroup'] == 'Help':
 								print('\n\n')
-								pr(line=1,c='yellow',lineLen=__.theRowLength)
-								pr('\u25BD\u25BD  :: Default Switches::  \u25BD\u25BD',c='Background.yellow',center=__.theRowLength)
+								pr(line=1,c='red',lineLen=__.theRowLength)
+								pr('\u25BD\u25BD  :: Default Switches::  \u25BD\u25BD',c='Background.red',center=__.theRowLength)
 							if not I-1 == last_print_of_uncategorized_switch_preceding_dash:
 								pr(  pr(SwitchGroup+__.SwitchGroup_Help.Delim+' '+item['SwitchGroup']+END,c='ColorBold.white',p=0)  ,  SwitchGroupPostLabel)
 								if SwitchGroup == __.SwitchGroup_Help.NoGroup:
