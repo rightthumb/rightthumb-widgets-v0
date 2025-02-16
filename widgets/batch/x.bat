@@ -9,6 +9,74 @@ call p. lock-wait -wait x
 call p. lock-wait -lock x
 call p. lock-files -timer
 
+
+
+
+::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+call p. day-divisible -save %tmpf%-day-divisible -divisible 2
+set /p dayDivisible=<%tmpf%-day-divisible
+if [%dayDivisible%] == [Yes] goto check_if_already_backed_up_today
+
+goto End_Of_LogBackup
+
+:check_if_already_backed_up_today
+setlocal
+:: Create the directory if it does not exist
+if not exist "%tt%\bk" mkdir "%tt%\bk"
+
+:: Set today's date in YYYY-MM-DD format
+for /f "tokens=2-4 delims=/ " %%a in ('date /t') do (
+    set year=%%c
+    set month=%%a
+    set day=%%b
+)
+set todaysDate=%year%-%month%-%day%
+
+:: Check if the directory for today exists, if not, set bkBackupLog to false
+if not exist "%tt%\bk\today" (
+    set bkBackupLog=false
+) else (
+    set bkBackupLog=true
+)
+
+:: Perform operations based on bkBackupLog
+if "%bkBackupLog%"=="false" (
+    call :checkToday
+) else (
+    echo fileBackup.json already backed up today
+)
+echo %todaysDate% > "%tt%\bk\today"
+endlocal
+goto End_Of_LogBackup
+
+:: Define the checkToday subroutine
+:checkToday
+set /p checkToday=<"%tt%\bk\today"
+call :trimSpaces checkToday
+
+if "%checkToday%"=="%todaysDate%" (
+    echo fileBackup.json already backed up today <====================================== Already
+) else (
+    call p. bk -f %tt%\fileBackup.json -fo %tt%\bk
+    echo fileBackup.json backed up <------------------------------------------ First
+)
+goto:eof
+
+:: Trim function to remove leading and trailing spaces
+:trimSpaces
+setlocal enabledelayedexpansion
+set "str=!%1!"
+for /f "tokens=* delims= " %%a in ("!str!") do set "str=%%a"
+for /f "tokens=* delims= " %%a in ("!str!") do endlocal & set "%1=%%a"
+goto :eof
+
+:: End of script
+:End_Of_LogBackup
+::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+
+
+
 rem ## {R2D2919B742E} ##
 rem ###########################################################################
 rem What if magic existed?
