@@ -18677,6 +18677,7 @@ ciData = (
 		[';bk',         _v.myBackup ],
 		[ '[caret]',    '^'       ],
 		[ '[and]',      '&'       ],
+		[ '[u]',      '_'       ],
 
 
  )
@@ -26297,6 +26298,23 @@ WidgetsPY = [
 	"_rightThumb._sms_listener.group_auto_reply",
 	"-copy"
 ]
+##################################################
+def isFile(fileAliasUrl):
+	ref = fileAliasUrl
+	del fileAliasUrl
+
+	if os.path.isfile(ref): return ref
+	if ref.startswith('http:') or ref.startswith('https:'):
+		ref = url2file(ref)
+	aliases=_.getTable('file-open-aliases.hash')
+
+	if 'aliases' in aliases and not ref in aliases['aliases']:
+		return aliases['aliases'][ref]
+	
+	return ref
+##################################################
+
+
 ########################################################################################
 # bkExpire(_v.tt+os.sep+'fileBackup.json',_v.tt+os.sep+'fileBackup-bk.json',age='3h',cp=_v.tt+os.sep+'bk'+os.sep+'fileBackup')
 # bkExpire(_v.tt+os.sep+'fileBackup.json',_v.tt+os.sep+'fileBackup-bk.json',age='3h',cp=_v.tt+os.sep+'bk'+os.sep+'fileBackup',force=True)

@@ -14,8 +14,8 @@ rem ## {C3P0D40fAe8B} ##
 @REM echo args: %*
 
 
-SET "bh_brand=false"
 SET "bh_brand=true"
+SET "bh_brand=false"
 
 
 

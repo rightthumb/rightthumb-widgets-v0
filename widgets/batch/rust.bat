@@ -39,14 +39,14 @@ wasm-pack build --target web --release
 wasm-opt -Oz -o pkg/secure_wasm_bg.wasm pkg/secure_wasm_bg.wasm
 echo.
 
-@REM Linux    --------------------------------------------
-@REM cargo build --release %*
+:: Linux    --------------------------------------------
+:: cargo build --release %*
 goto:eof
 
 
-@REM wasm-pack build --target web --release
-@REM wasm-opt -Oz -o pkg/secure_wasm_bg.wasm pkg/secure_wasm_bg.wasm
-@REM wasm-validate pkg/secure_wasm_bg.wasm
+:: wasm-pack build --target web --release
+:: wasm-opt -Oz -o pkg/secure_wasm_bg.wasm pkg/secure_wasm_bg.wasm
+:: wasm-validate pkg/secure_wasm_bg.wasm
 
 
 

@@ -98,7 +98,7 @@ _.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw )
 		# globals()['var']
 		# for k in globals(): print(k, eval(k) )
 
-	#n)--> webpage from url
+	#n)--> caseUnspecific
 		# for subject in _.caseUnspecific( line, needle ): line = line.replace( subject, _.colorThis( subject, 'green', p=0 ) )
 
 	#n)--> webpage from url
@@ -111,6 +111,9 @@ _.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw )
 	
 	#n)--> inline
 		# for rel in [ subject for subject in _.isData(r=0) if _.showLine(subject) ]: print(rel)
+		#     or
+		# results = [rel for rel in [subject for subject in _.isData(r=0) if _.showLine(subject)]]
+
 
 	#n)--> fields
 		# data = []

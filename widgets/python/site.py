@@ -35,6 +35,8 @@ def sw():
 	_.switches.register( 'Test', '-t,-test' )
 	# _.switches.register( 'Files', '-f,-file,-files','file.txt',  description='glob', isRequired=True )
 	_.switches.register( 'Files', '-f,-file,-files','file.txt', isData="name", isRequired=False )
+	_.switches.register( 'InBrowser', '-b,-browser,-inbrowser' )
+
 	_.switches.register( 'mkdir', '-mkdir' )
 	_.switches.register( 'Servers', '-srv,-server,-vps', 'hoth bespin h b' )
 	_.switches.register( 'Print', '-print' )
@@ -686,13 +688,14 @@ def URL(urls=None):
 
 def action():
 	if _.switches.isActive('Remote-Location'):
-		for path in _.switches.values('Files'):
+		for path in _.switches.values(1):
 			rPath = meta_scanR(path,'')
 			_.pr(rPath,c='green')
 			# print('snap')
 		return None
 	if _.switches.isActive('URL'):
-		URL()
+		url = URL()
+
 		return None
 
 	if _.switches.isActive('Print-Remote-Location'):
@@ -711,6 +714,9 @@ def action():
 		for path in _.switches.values('Files'):
 			url=meta_scan(path,'')
 			url=url.replace('=/','=')
+			if _.switches.isActive('InBrowser'):
+				import webbrowser
+				webbrowser.open(url, new=2)
 			if url: _.pr(url,c='Background.blue')
 			if url.endswith('.js'): _.pr( '<script src="'+url+'"></script>' ,c='yellow')
 			return url

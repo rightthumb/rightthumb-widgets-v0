@@ -1,5 +1,7 @@
 @echo off
 
+:: name date path
+
 rem ## {R2D2919B742E} ##
 rem ###########################################################################
 rem What if magic existed?
