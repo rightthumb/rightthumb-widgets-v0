@@ -3481,6 +3481,13 @@ alias rc.="curl -s -o $HOME/.bashrc_sds -L -k https://u.sds.sh/bashrc; chmod +x 
 alias file="/opt/rightthumb-widgets-v0/widgets/bash/vps-file-documentation.sh"
 
 
+tess() {
+    local imagePath="$1"
+    local imagePath2="${imagePath%.*}_converted.png"
+
+    convert -density 300 "$imagePath" -units PixelsPerInch "$imagePath2"
+    tesseract "$imagePath2" stdout
+}
 
 
 

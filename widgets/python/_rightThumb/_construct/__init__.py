@@ -19,6 +19,8 @@ fn=Meta_Namespace()
 switch_skimmer = Meta_Namespace()
 switch_skimmer.scan = {}
 ##################################################
+switchTableSpentPrint = []
+##################################################
 # App Help Menu Switch Grouping
 SwitchGroup_Help = Meta_Namespace()
 SwitchGroup_Help.Delim = ''
