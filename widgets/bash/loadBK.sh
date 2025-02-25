@@ -119,7 +119,7 @@ case "$filename" in
 		;;
 esac
 
-payload_dir=$(python3 $ww/widgets/python/locateDecompressedFiles.py "$tempdir")
+payload_dir=$(python3 $ww/python/locateDecompressedFiles.py "$tempdir")
 
 [ -d "$payload_dir" ] && mv "$payload_dir"/* "$destination"
 

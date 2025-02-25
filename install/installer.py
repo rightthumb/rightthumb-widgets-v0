@@ -3490,8 +3490,13 @@ tess() {
 }
 
 
+alias _figlet='$ww/bash/_figlet.sh'
+alias _figlet_='$ww/bash/_figlet_.sh'
+alias _cowsay='$ww/bash/_cowsay.sh'
 
 
+alias dex='python3 $ww/python/search-indexDB-files.py'
+alias dex.='python3 $ww/python/indexDB-files.py'
 
 clear
 # get_time_difference

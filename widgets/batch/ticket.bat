@@ -141,7 +141,7 @@ set did=Edit /Open Ticket %2
 
 dir /b *%2.txt > ``
 set /p editme=<``
-
+del ``
 rename *%2.txt open-%2.txt
 start "EDIT" %code_editor% %caseroot%\open-%2.txt
 GOTO END
