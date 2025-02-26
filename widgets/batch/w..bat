@@ -1,2 +1,4 @@
 @echo off
-call p. webdav -f %*
+@REM call p. webdav -f %*
+
+call .w %*

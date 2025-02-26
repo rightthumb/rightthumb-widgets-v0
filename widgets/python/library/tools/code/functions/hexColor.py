@@ -3,6 +3,32 @@ import _rightThumb._base3 as _
 def hexColor(*args, h=None, c=None, p=False):
     text = ''.join(map(str, args))
     global color_dict
+    # print(h,c)
+    # if c and c == 'help':
+    #     # print(color_dict)
+    #     for color in color_dict:
+    #         hex_color = color_dict[color]
+    #         hex_color = hex_color.lstrip('#')
+    #         text = color
+    #         r, g, b = tuple(int(hex_color[i:i+2], 16) for i in (0, 2, 4))
+    #         colorized = f"\033[38;2;{r};{g};{b}m{text}\033[0m"
+
+    #         test = color
+    #         test = test.replace('_red','')
+    #         test = test.replace('_orange','')
+    #         test = test.replace('_purple','')
+    #         test = test.replace('_white','')
+    #         test = test.replace('_blue','')
+    #         test = test.replace('_pink','')
+    #         test = test.replace('_green','')
+    #         test = test.replace('_gray','')
+
+
+    #         if _.showLine(test):
+    #             print(colorized)
+    #     return text
+
+
     if c.startswith('#'):
         h = c
         c = None
@@ -30,15 +56,39 @@ def hexColor(*args, h=None, c=None, p=False):
     hex_color = h
     
     if h is None and c is None:
+        global colorHelp
+
+        if _.switches.isActive('Plus') and _.switches.value('Plus') == 'help':
+            colors = []
+            spent=[]
+            for color in color_dict:
+                for col in colorHelp[color].split(','):
+                    hex_color = color_dict[color]
+                    hex_color = hex_color.lstrip('#')
+                    r, g, b = tuple(int(hex_color[i:i+2], 16) for i in (0, 2, 4))
+                    colorized = f"\033[38;2;{r};{g};{b}m{col}\033[0m"
+                    if col in spent:
+                        continue
+                    colors.append(colorized)
+                    spent.append(col)
+            # colors.sort()
+            for color in colors:
+                print(color)
+            return ''
         for color in color_dict:
             hex_color = color_dict[color]
             hex_color = hex_color.lstrip('#')
             text = color
             r, g, b = tuple(int(hex_color[i:i+2], 16) for i in (0, 2, 4))
             colorized = f"\033[38;2;{r};{g};{b}m{text}\033[0m"
-            if _.showLine(color):
+            
+            if color in colorHelp:
+                ColorCategory = colorHelp[color]
+            else:
+                ColorCategory = 'a5db92a1b958'
+            if _.showLine(color) or _.showLine(ColorCategory):
                 print(colorized)
-        return text
+        return ''
     hex_color = hex_color.lstrip('#')
     r, g, b = tuple(int(hex_color[i:i+2], 16) for i in (0, 2, 4))
     colorized = f"\033[38;2;{r};{g};{b}m{text}\033[0m"
@@ -197,3 +247,133 @@ color_dict = {
     "yellow_green": "#9acd32",
 }
 hexColors = color_dict
+
+colorHelp = {
+    "black": "black",
+    "white": "white",
+    "red": "red",
+    "green": "green",
+    "blue": "blue",
+    "yellow": "yellow",
+    "cyan": "cyan,blue,green",
+    "magenta_purple": "magenta,purple,red,blue",
+    "gray": "gray,black,white",
+    "dark_gray": "dark,gray,black",
+    "light_gray": "light,gray,white",
+    "silver": "silver,gray,white",
+    "alice_blue": "alice,blue,white",
+    "antique_white": "antique,white",
+    "aqua": "aqua,cyan,blue,green",
+    "aquamarine": "aquamarine,cyan,green,blue",
+    "azure": "azure,blue,white",
+    "beige": "beige,tan,white",
+    "bisque": "bisque,peach,white",
+    "blue_violet": "blue,violet,purple",
+    "brown": "brown,red",
+    "burly_wood": "burly,wood,brown,tan",
+    "cadet_blue": "cadet,blue,gray",
+    "chartreuse": "chartreuse,green,yellow",
+    "chocolate": "chocolate,brown",
+    "coral_orange": "coral,orange,red",
+    "cornflower_blue": "cornflower,blue",
+    "crimson_red": "crimson,red",
+    "dark_blue": "dark,blue",
+    "dark_cyan": "dark,cyan,blue,green",
+    "dark_goldenrod": "dark,goldenrod,gold,brown",
+    "dark_gray": "dark,gray,black",
+    "dark_green": "dark,green",
+    "dark_khaki": "dark,khaki,yellow,brown",
+    "dark_magenta_purple": "dark,magenta,purple,red,blue",
+    "dark_olive_green": "dark,olive,green",
+    "dark_orange": "dark,orange,red",
+    "dark_orchid": "dark,orchid,purple",
+    "dark_red": "dark,red",
+    "dark_salmon": "dark,salmon,red,orange",
+    "dark_sea_green": "dark,sea,green",
+    "dark_slate_blue": "dark,slate,blue",
+    "dark_slate_gray": "dark,slate,gray,black",
+    "dark_turquoise": "dark,turquoise,cyan,blue",
+    "dark_violet": "dark,violet,purple",
+    "deep_pink": "deep,pink,red",
+    "deep_sky_blue": "deep,sky,blue",
+    "dim_gray": "dim,gray,black",
+    "dodger_blue": "dodger,blue",
+    "firebrick": "firebrick,red",
+    "forest_green": "forest,green",
+    "fuchsia": "fuchsia,magenta,purple,red,blue",
+    "gainsboro": "gainsboro,gray,white",
+    "gold": "gold,yellow",
+    "goldenrod": "goldenrod,gold,yellow,brown",
+    "green_yellow": "green,yellow",
+    "hot_pink": "hot,pink,red",
+    "indian_red": "indian,red",
+    "indigo": "indigo,blue,purple",
+    "khaki": "khaki,yellow,brown",
+    "lawn_green": "lawn,green",
+    "light_blue": "light,blue",
+    "light_coral": "light,coral,red,orange",
+    "light_cyan": "light,cyan,blue,green",
+    "light_gray": "light,gray,white",
+    "light_green": "light,green",
+    "light_pink": "light,pink,red",
+    "light_salmon": "light,salmon,red,orange",
+    "light_sea_green": "light,sea,green,cyan",
+    "light_sky_blue": "light,sky,blue",
+    "light_slate_gray": "light,slate,gray,black",
+    "light_steel_blue": "light,steel,blue",
+    "light_yellow": "light,yellow",
+    "lime": "lime,green",
+    "lime_green": "lime,green",
+    "linen": "linen,white",
+    "medium_aquamarine": "medium,aquamarine,cyan,green,blue",
+    "medium_blue": "medium,blue",
+    "medium_orchid": "medium,orchid,purple",
+    "medium_purple": "medium,purple",
+    "medium_sea_green": "medium,sea,green",
+    "medium_slate_blue": "medium,slate,blue",
+    "medium_spring_green": "medium,spring,green",
+    "medium_turquoise": "medium,turquoise,cyan,blue",
+    "medium_violet_red": "medium,violet,red,purple",
+    "mint_cream_white": "mint,cream,white",
+    "misty_rose": "misty,rose,pink,red",
+    "moccasin": "moccasin,peach,white",
+    "navajo_white": "navajo,white",
+    "old_lace": "old,lace,white",
+    "olive": "olive,green,brown",
+    "orange": "orange,red,yellow",
+    "orange_red": "orange,red",
+    "orchid": "orchid,purple",
+    "pale_goldenrod": "pale,goldenrod,gold,yellow,brown",
+    "pale_green": "pale,green",
+    "pale_turquoise": "pale,turquoise,cyan,blue",
+    "pale_violet_red": "pale,violet,red,purple",
+    "papaya_whip": "papaya,whip,peach,white",
+    "peach_puff": "peach,puff,orange,white",
+    "peru": "peru,brown",
+    "pink": "pink,red",
+    "plum": "plum,purple",
+    "powder_blue": "powder,blue",
+    "purple": "purple,magenta,blue,red",
+    "rebecca_purple": "rebecca,purple",
+    "rosy_brown": "rosy,brown",
+    "royal_blue": "royal,blue",
+    "saddle_brown": "saddle,brown",
+    "salmon": "salmon,red,orange",
+    "sandy_brown": "sandy,brown",
+    "sea_green": "sea,green",
+    "seashell": "seashell,white",
+    "sienna": "sienna,brown",
+    "sky_blue": "sky,blue",
+    "slate_blue": "slate,blue",
+    "snow": "snow,white",
+    "spring_green": "spring,green",
+    "steel_blue": "steel,blue",
+    "tan": "tan,brown",
+    "teal": "teal,cyan,blue,green",
+    "thistle": "thistle,purple",
+    "tomato_red": "tomato,red,orange",
+    "turquoise": "turquoise,cyan,blue,green",
+    "violet": "violet,purple",
+    "wheat": "wheat,tan,white",
+    "yellow_green": "yellow,green",
+}

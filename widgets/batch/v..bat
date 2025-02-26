@@ -10,8 +10,12 @@ rem    - Scott Taylor Reph, RightThumb.com
 rem ###########################################################################
 rem ## {C3P0D40fAe8B} ##
 
+if [%1]==[] (
+        start .
+) ELSE (
+        explorer /n, /select,"%~f1"
+)
+:Same as view.bat
+:checkout notes in above script
 
-call c %*
-goto:eof
-
-call p. file %* --c
+ 

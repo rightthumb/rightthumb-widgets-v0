@@ -117,7 +117,7 @@ if [%burn_this%] == [yes] (
     @REM call p. ctrl-w
     echo Exit Script Complete
     exit
-    
+    goto:eof
 
 )
 IF [%1] == [r] SET reclaim_tickets=yes
@@ -325,6 +325,7 @@ call p. lock-wait -unlock x
 @REM call p. ctrl-w
 echo Exit Script Complete
 exit
+goto:eof
 :RunOnceBackupAsk
 if [%skip_backup%] == [YES] (
 call c

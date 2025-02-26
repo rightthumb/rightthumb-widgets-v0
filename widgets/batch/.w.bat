@@ -1,11 +1,9 @@
 @echo off
 
-
-call p %*
-goto:eof
-
-CALL a.BTN--wt--ctrlw-toggle
-goto:eof
+if [%1] == [] (
+    CALL a.BTN--wt--ctrlw-toggle
+    goto:eof
+)
 
 
 setlocal

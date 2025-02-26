@@ -460,7 +460,7 @@ def action():
 	plus = _.switches.isActive('Plus')
 
 	try:
-		data = _.getTable2( file )
+		data = _.tableGet( file )
 
 		if _.switches.isActive('Index'):
 			_.switches.fieldSet( 'Long', 'active', True )
@@ -497,8 +497,9 @@ def action():
 				if ask:
 					data=__.val_data[ask]
 					_.pr(data)
-					simplejson=__.imp('simplejson')
-					data2=simplejson.loads(data)
+					# simplejson=__.imp('simplejson')
+					# data2=simplejson.loads(data)
+					data2 = _.tableGet(data)
 					_.pr(data2,pv=1)
 					_.pr((__.val_data_url[ask]))
 

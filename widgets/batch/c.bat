@@ -10,6 +10,7 @@ REM    - Scott Taylor Reph, RightThumb.com
 REM ###########################################################################
 REM ## {C3P0D40fAe8B} ##
 
+set "PATHEXT=.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC;.PYW"
 
 :: e fileLocks
 

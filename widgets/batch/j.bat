@@ -1,3 +1,3 @@
 @echo off
 
-call c %*
+call p %*

@@ -441,7 +441,13 @@ def random_color():
 
 print_ed_group={}
 
-def print_(*args,p=None,c=None,pad=3,g=None,end=None,pvs=None,pv=None,json=None, dic=None, line=None, rstrip=True, lineMinus=0, lineLen=None, r=None, h=None, center=False):
+def print_(*args,p=None,c=None,pad=3,g=None,end=None,pvs=None,pv=None,json=None, dic=None, line=None, rstrip=True, lineMinus=0, lineLen=None, r=None, h=None, center=False, ShowLine={}, lineNumber=None):
+	if type(ShowLine) == str:
+		ShowLine = { 'line': ShowLine }
+	# lineNumber
+	if line and type(line) == int and line > 1:
+		lineLen = line
+
 	if type(args) == tuple: args = list(args)
 	global prStatus
 	if not prStatus: return args
@@ -528,6 +534,38 @@ def print_(*args,p=None,c=None,pad=3,g=None,end=None,pvs=None,pv=None,json=None,
 			length = (baseLength/2)-(len(prn)/2)
 			prn = ' '*int(length)+prn
 		if rstrip: prn=prn.rstrip()
+
+
+		# def showLine( string, plus = '', minus = '',plusOr = False, end=None,isSub=False, OR=None, code=False, itIs=False ):
+
+		if ShowLine:
+			if 'line' in ShowLine:
+				if not 'plus' in ShowLine: ShowLine['plus'] = ''
+				if not 'minus' in ShowLine: ShowLine['minus'] = ''
+				if not 'plusOr' in ShowLine: ShowLine['plusOr'] = False
+				if not 'end' in ShowLine: ShowLine['end'] = None
+				if not 'isSub' in ShowLine: ShowLine['isSub'] = False
+				if not 'OR' in ShowLine: ShowLine['OR'] = None
+				if not 'code' in ShowLine: ShowLine['code'] = False
+				if not 'itIs' in ShowLine: ShowLine['itIs'] = False
+
+				if not showLine( 
+						string=ShowLine['line'],
+						plus=ShowLine['plus'],
+						minus=ShowLine['minus'],
+						plusOr=ShowLine['plusOr'],
+						end=ShowLine['end'],
+						isSub=ShowLine['isSub'],
+						OR=ShowLine['OR'],
+						code=ShowLine['code'],
+						itIs=ShowLine['itIs']
+					): return False
+
+
+		## ShowLine
+
+
+		## Pre Print End
 		if not c is None: prn=cp( prn, c, p=0 )
 		if not h is None: prn=hexColor( prn, c=h, p=0 )
 		if p is None: rint=True
@@ -5681,6 +5719,23 @@ def colorPlus( data, color='green' ):
 					cx = data.count( subject['data'] )
 					data = nth_repl(data, subject['data'], colorThis( subject['data'], color, p=0 ), cx)
 	return data
+
+
+def colorPlus2( data, color='green' ):
+	if not showLine(data): return ''
+	for search in switches.values('Plus'):
+		for subject in caseUnspecific( data, search, isPlus=True ):
+
+			if type( subject ) == str:
+				data = data.replace( subject, colorThis( subject, color, p=0 ) )
+			else:
+				if subject['pos'] == 'first':
+					data = nth_repl(data, subject['data'], colorThis( subject['data'], color, p=0 ), 1)
+				else:
+					cx = data.count( subject['data'] )
+					data = nth_repl(data, subject['data'], colorThis( subject['data'], color, p=0 ), cx)
+	return data
+
 
 def plusColor( row, color='green' ):
 	# row = thePrintLine
@@ -26074,6 +26129,51 @@ class FileLocker:
 
 ########################################################################################
 def md(path): return os.path.getmtime(path)
+########################################################################################
+def tableGet(path):
+    """
+    Try loading a JSON file using various parsers, returning immediately on success.
+    
+    Args:
+        path (str): The path to the JSON or HAR file.
+    
+    Returns:
+        dict: Parsed JSON data.
+    """
+    parsers = []
+
+    # Try importing each JSON module
+    try:
+        import orjson
+        parsers.append(("orjson", lambda f: orjson.loads(f.read()), "rb"))
+    except ImportError:
+        pass
+
+    try:
+        import ujson
+        parsers.append(("ujson", lambda f: ujson.load(f), "r"))
+    except ImportError:
+        pass
+
+    try:
+        import simplejson as json
+        parsers.append(("simplejson", lambda f: json.load(f), "r"))
+    except ImportError:
+        import json
+        parsers.append(("json", lambda f: json.load(f), "r"))
+
+    # Try each parser and return immediately on success
+    for name, parser, mode in parsers:
+        try:
+            with open(path, mode, encoding=None if mode == "rb" else "utf-8") as f:
+                data = parser(f)
+            # print(f"Loaded with {name}")
+            return data  # Return immediately on success
+        except Exception as e:
+            print(f"Failed with {name}: {e}")
+
+    raise RuntimeError("All JSON parsers failed.")
+
 ########################################################################################
 
 

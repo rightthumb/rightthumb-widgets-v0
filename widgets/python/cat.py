@@ -57,6 +57,7 @@ def appSwitches():
 	_.switches.register( 'JustPath', '-jp,-justpath' )
 	_.switches.register( 'Json', '-json' )
 	_.switches.register( 'Snippet', '-snip,-snippet', 'split search (i) exclude | ex: ~~~ version, ~~~ searchThis 1 omitThis, ~~~ searchThis * omitThis' )
+	_.switches.register( 'StopFile', '-stop', '"in last line you want to see"' )
 
 
 
@@ -195,6 +196,13 @@ if _.switches.isActive('NotCleanForce') and _.switches.isActive('Clean'): _.swit
 
 ########################################################################################
 # START
+
+StrictCase = _.switches.isActive('StrictCase')
+
+StopFile = ' '.join(_.switches.values('StopFile')) if _.switches.isActive('StopFile') else None
+
+
+
 
 def cleaner(line):
 	line=_str.do('sh', line)
@@ -398,8 +406,17 @@ def action():
 				if maxLEN > 150:
 					maxLEN = 150
 
-
+			FileStop = False
+			global StopFile
+			global StrictCase
 			for i, row in enumerate(theFile):
+				if FileStop: break
+				if StrictCase:
+					test = row
+				else:
+					test = row.lower()
+				if not StopFile is None and StopFile in test:
+					FileStop = True
 				ogRow = row
 				vVv.total += 1
 				shouldAdd = _.showLine(row)

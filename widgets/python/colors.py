@@ -199,7 +199,10 @@ _.postLoad( __file__ )
 
 def action():
 
-	_.colorThis( 'x', 'Catalog' )
+	_.pr('help',h='help')
+
+	_.colorThis( '_______', 'Catalog' )
+
 
 
 
