@@ -514,11 +514,11 @@ def add(path,r=False):
 
 			pass
 
+			ago1 = None
+			ago2 = None
 
 			if _.switches.isActive('Ago'):
 
-				ago1 = None
-				ago2 = None
 
 				if len( _.switches.values('Ago') ) > 1:
 					ago1 = _.switches.values('Ago')[0]
