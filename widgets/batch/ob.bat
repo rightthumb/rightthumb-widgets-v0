@@ -21,4 +21,4 @@ if [%1]==[] (
     goto :eof
 )
 
-call p. script-helper -t a -i %*
+call p. script-helper -i %*

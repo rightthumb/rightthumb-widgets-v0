@@ -9542,7 +9542,7 @@ def autoDate( theDate ):
 	except:
 		pass
 	
-	return autoDateRun( ago(theDate) )
+	return autoDateRun( theDate )
 
 def autoDateRun( theDate ):
 	n=isN(theDate)
@@ -16695,7 +16695,17 @@ def timeAgo( do='', startDate=None,epoch=None, d=None ):
 	if do == 'm': do = 'md'
 	if do == 'c': do = 'cd'
 	if do == 'md' or do == 'cd': return do
+	# test = 'sdwmy'
+	# good = False
+	# for t in test:
+	# 	if t in do:
+	# 		good = True
+	# if not good:
+	# 	raise ValueError("Invalid value provided")
 	new=timeAgo22( do, startDate,epoch, d )
+	if not type(new) == float:
+		raise ValueError("Invalid value provided")
+
 
 	return new
 

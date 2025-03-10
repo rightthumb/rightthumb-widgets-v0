@@ -12,5 +12,5 @@ if [%1]==[] (
     goto :eof
 )
 
-call p. script-helper -i %* -t r:_.al
+call p. script-helper -t r:_.al -i %* 
 echo.
