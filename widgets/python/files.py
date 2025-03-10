@@ -710,12 +710,14 @@ def add(path,r=False):
 
 			if ago2 and shouldAdd:
 				# 'ago'
+				# 'agoAGO'
 				ago = _.md(path)
 				if ago > ago1 and ago < ago2:
 					pass
 				else:
 					shouldAdd = False
-
+				if shouldAdd:
+					print(path)
 			if shouldAdd:
 				if _.switches.isActive('Backup'):
 					bkFi = backup(path)
