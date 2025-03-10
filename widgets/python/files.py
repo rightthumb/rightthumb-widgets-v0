@@ -726,6 +726,8 @@ def add(path,r=False):
 				# if shouldAdd:
 				# 	print(path)
 				# 	return None
+			if _.switches.isActive('InvertResults'):
+				shouldAdd = not shouldAdd
 			if shouldAdd:
 				if _.switches.isActive('Backup'):
 					bkFi = backup(path)
