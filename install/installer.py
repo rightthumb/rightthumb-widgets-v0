@@ -3504,6 +3504,11 @@ alias mem="free -h"
 
 alias f='/opt/rightthumb-widgets-v0/widgets/bash/nav/c.sh'
 alias j='sh /opt/rightthumb-widgets-v0/widgets/bash/nav/p.sh'
+
+
+alias vps-="/usr/bin/python3 /opt/rightthumb-widgets-v0/widgets/python/files.py + vps- -folders /opt/rightthumb-widgets-v0/"
+
+
 clear
 # get_time_difference
 # a3bc42ec51e9
