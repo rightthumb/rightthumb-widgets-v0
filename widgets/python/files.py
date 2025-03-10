@@ -607,7 +607,7 @@ def add(path,r=False):
 
 			if ago2 and shouldAdd:
 				ago = _.md(path)
-				if ago < ago1 and ago > ago2:
+				if ago > ago1 and ago < ago2:
 					pass
 				else:
 					shouldAdd = False
