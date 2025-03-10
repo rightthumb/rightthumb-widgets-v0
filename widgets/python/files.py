@@ -716,9 +716,9 @@ def add(path,r=False):
 					pass
 				else:
 					shouldAdd = False
-				if shouldAdd:
-					print(path)
-					return None
+				# if shouldAdd:
+				# 	print(path)
+				# 	return None
 			if shouldAdd:
 				if _.switches.isActive('Backup'):
 					bkFi = backup(path)
