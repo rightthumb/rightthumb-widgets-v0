@@ -1478,7 +1478,7 @@ def get_administrator_sid():
 		temp_file_name = temp_file.name
 
 	try:
-		if os.path.isfile('C:\Windows\System32\wbem\WMIC.exe'):
+		if os.path.isfile('C:\\Windows\\System32\\wbem\\WMIC.exe'):
 			os.system(f'wmic useraccount where "name=\'administrator\' and domain=\'%computername%\'" get name,sid | find "admin" > {temp_file_name}')
 		else:
 			os.system(f'powershell -Command "Get-WmiObject Win32_UserAccount | Where-Object {{ $_.Name -eq \'administrator\' }} | Select-Object Name,SID | Out-File -FilePath {temp_file_name}"')
