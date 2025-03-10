@@ -509,6 +509,14 @@ def add(path,r=False):
 
 
 			if _.switches.isActive('Ago'):
+
+				ago1 = None
+				ago2 = None
+
+				if len( _.switches.values('Ago') ) > 1:
+					ago1 = _.switches.values('Ago')[0]
+					ago2 = _.switches.values('Ago')[1]
+
 				# sys.exit()
 				record = _dir.fileInfo( path )
 				# _.pr( _.switches.values('Ago'), record['date_modified_raw'], record['date_created_raw'],  )
@@ -596,6 +604,14 @@ def add(path,r=False):
 
 			pass
 			# if shouldAdd: _.pr( 1001, path );
+
+			if ago2 and shouldAdd:
+				ago = _.md(path)
+				if ago < ago1 and ago > ago2:
+					pass
+				else:
+					shouldAdd = False
+
 			if shouldAdd:
 				if _.switches.isActive('Size'):
 					shouldAdd = False
