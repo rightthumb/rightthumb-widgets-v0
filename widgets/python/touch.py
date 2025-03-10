@@ -361,7 +361,7 @@ def action():
 			for x in _.switches.values('Folders'):
 				getFolder(x)
 
-	for i,path in enumerate(_.switches.values('Files')):
+	for i,path in enumerate(_.isData(r=1)):
 		process(path)
 	if not _.switches.isActive('Meta') and (  _.switches.isActive('Created') or _.switches.isActive('Undo')  ):
 		# _.PowerShell_bashrc_name_break()
