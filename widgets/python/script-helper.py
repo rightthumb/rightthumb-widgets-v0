@@ -45,6 +45,13 @@ def appSwitches():
 	_.switches.register('JQ-Values', '-jq-values')
 	_.switches.register('File-Contains', '-fc,--file-contains', 'FolderPath')
 
+	_.switches.register('Input-Multipurpose', '-i', 'file or string')
+	_.switches.register('Execute-Framework-Function', '-fn', '(`auto: _. __. _v. _str.` ) ex: -i 1w -fn _.ago -t r:_.fd | ex:  -fn _.md  -i file.txt || (--c) (-t _.fd ) (fd = friendlyDate)')
+
+	_.switches.register( 'Triggers-And-Settings', '-t', '`na;i;r`  `na=not auto (auto is file stuff, float to date etc), i=input, r=result(default is r)`ex: -t na:isFile | -t na (no auto result trigger) | -t _.fd | -i 1w -fn _.ago -t _.fd' )
+	# _.switches.register( 'Triggers-And-Settings', '-t', '`i=input, r=result(default is r)`ex: -t _.fd | -t r:_.friendlyDate  |  i:_.isFileAdvanced;r:_.friendlyDate (i=input, r=result `i` by itself skips default _.isFile trigger r: runs trigger on result)' )
+	
+
 _.autoBackupData = __.setting('receipt-log')
 __.releaseAcquiredData = __.setting('receipt-file')
 __.myFileLocations_SKIP_VALIDATION = False
@@ -277,7 +284,181 @@ def load_json_file(filename):
 
 import os
 
+
+## New Input Function Trigger stuff    <- START
+## New Input Function Trigger stuff    <- START
+def blank(arg):
+	return arg
+def fnLoad(rr):
+	toTest = '_. __. _v. _str.'
+	toTest = toTest.strip()
+	while '  ' in toTest: toTest = toTest.replace('  ',' ')
+	test = toTest.split(' ')
+	test.insert(0,'')
+	fn = blank
+	for i,t in enumerate(test):
+		try:
+			fn = eval(t+rr)
+			# print(t+rr)
+			break
+		except Exception as e:
+			pass
+	return fn
+
+def autoTrigger(data):
+
+	test = {
+		'float': '_.friendlyDate',
+	}
+
+	# clean space delim functions
+	for k in test.keys():
+		test[k] = test[k].strip()
+		while '  ' in test[k]: test[k] = test[k].replace('  ',' ')
+
+
+	dataType = str(type(data)).split("'")[1]
+	if not dataType in test: return data
+
+
+	for i,t in enumerate( test[dataType].split(' ') ):
+		try:
+			fn = eval(t)
+			data = fn(data)
+			break
+		except Exception as e:
+			pass
+	return data
+
+def pr1(arg):
+	# print('arg',arg)
+	global aSettings
+	if 'r' in aSettings:
+		fn = fnLoad(aSettings['r'])
+		# eval(aSettings['r'])
+		# print('|'+aSettings['r']+'|')
+		# fn = _.friendlyDate
+		result = fn(arg)
+		if type(result) == list:
+			_.pr(line=1,c='green')
+			_.pr(arg,c='yellow')
+			_.pr()
+			for r in result:
+				_.pr(r,c='cyan')
+			
+		else:
+			if not 'na' in aSettings:
+				# ogResult = result
+				result = autoTrigger(result)
+				# if not ogResult == result:
+				# 	_.pr(ogResult,c='yellow')
+			_.pr(result,c='cyan')
+	else:
+		_.pr(arg,c='yellow')
+	if _.linePr:
+		_.pr(line=1,c='green')
+aSettings = {}
+## New Input Function Trigger stuff    <- END
+## New Input Function Trigger stuff    <- END
+
 def action():
+
+
+
+	## New Input Function Trigger stuff    <- START
+	## New Input Function Trigger stuff    <- START
+	global aSettings
+	# Execute-Framework-Function  Input-Multipurpose
+	if _.switches.isActive('Triggers-And-Settings'):
+		default = 'r'
+		stringKeys = [
+			'na',
+		]
+		keys = [
+			'na',
+			'i',
+			'r',
+		]
+		dic = {
+			# 'nt': 'No-Trigger',
+		}
+		for aa in _.switches.values('Triggers-And-Settings'):
+			aa = aa.replace(' ','')
+			for a in aa.split(';'):
+				sub = a.split(':')
+				sub[0] = sub[0]
+					
+				if len(sub) == 1:
+					if sub[0] in keys:
+						if sub[0] in stringKeys:
+							aSettings[ sub[0] ] = ''
+						else:	
+							aSettings[ sub[0] ] = True
+					else:
+						if sub[0].lower() in dic:
+							aSettings[ default ] = dic[sub[0].lower()]
+						else:
+							aSettings[ default ] = sub[0]
+
+				else:
+					aSettings[ sub[0] ] = sub[1]
+					if sub[1].lower() in dic:
+						aSettings[ sub[0] ] = dic[sub[1].lower()]
+					
+				# if a in dic:
+				# 	aSettings[ dic[a] ] = True
+				# else:
+				# 	aSettings[a] = True
+	# print(aSettings)
+	if _.switches.isActive('Input-Multipurpose') and not _.switches.isActive('Execute-Framework-Function'):
+		for im in _.switches.values('Input-Multipurpose'):
+			im = _.ci( im )
+			if not 'i' in aSettings:
+				if 'na' in aSettings:
+					if not'isFile' in aSettings['na']: im = _.isFile( im )
+				else:
+					im = _.isFile(im)
+			elif type(aSettings['i']) == bool: pass
+			elif aSettings['i'] == 'nt': pass
+			else:
+				tr = fnLoad(aSettings['i'])
+				im = tr(im)
+			pr1(im)
+		return im
+
+
+	if _.switches.isActive('Execute-Framework-Function'):
+		fn = fnLoad(_.switches.value('Execute-Framework-Function'))
+		if _.switches.isActive('Input-Multipurpose'):
+			for im in _.switches.values('Input-Multipurpose'):
+				if not 'No-Trigger' in aSettings:
+					im = _.ci( im )
+					if not 'i' in aSettings:
+						if 'na' in aSettings:
+							if not'isFile' in aSettings['na']: im = _.isFile( im )
+						else:
+							im = _.isFile(im)
+					elif type(aSettings['i']) == bool: pass
+					elif aSettings['i'] == 'nt': pass
+					else:
+						tr = fnLoad(aSettings['i'])
+						im = tr(im)
+				ogIm = im
+				result = fn(im)
+				if not ogIm == result:
+					if not _.switches.isActive('NoPrint'):
+						_.pr(line=1,c='green')
+						_.pr(ogIm,c='yellow')
+						_.pr()
+
+				if not _.switches.isActive('NoPrint'):
+					pr1(result)
+		else:
+			result = fn()
+			if not _.switches.isActive('NoPrint'):
+				pr1(result)
+		return result
+		
 	if _.switches.isActive('File-Contains'):
 		values = _.switches.values('File-Contains')
 		for i,v in enumerate(values):
@@ -304,8 +485,19 @@ def action():
 		else:
 			print('no')
 		return valid
+	
+	## New Input Function Trigger stuff    <- END
+	## New Input Function Trigger stuff    <- END
 
-			
+
+
+
+
+
+
+
+
+
 
 	if _.switches.isActive('JQ-Filter'):
 		files = _.switches.values('Files')

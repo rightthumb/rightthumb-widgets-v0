@@ -54,6 +54,20 @@ helpColorScheme = dot()
 # __.SwitchGroup_Help.SubGroup
 # HasSwitchSubGroup
 ##################################################
+
+## ################################################## ##
+def isFile(path,simple=True,s=None):
+	if not s is None: simple=s
+	if not simple: return myFileLocations(path)
+	if os.path.isfile(path): return path
+	if path.startswith('http:') or path.startswith('https:'):
+		path=path.replace('http:','https:')
+		path = url2file(path)
+		return path
+	return aliases_file_open(path)
+## ################################################## ##
+
+##################################################
 # sudo apt install libpython2.7-stdlib
 # import json
 # 1674156772
@@ -440,11 +454,14 @@ def random_color():
 	return random.choice(_all_colors_tact_)
 
 print_ed_group={}
-
+linePr=False
 def print_(*args,p=None,c=None,pad=3,g=None,end=None,pvs=None,pv=None,json=None, dic=None, line=None, rstrip=True, lineMinus=0, lineLen=None, r=None, h=None, center=False, ShowLine={}, lineNumber=None):
 	if type(ShowLine) == str:
 		ShowLine = { 'line': ShowLine }
 	# lineNumber
+	if line:
+		global linePr
+		linePr=True
 	if line and type(line) == int and line > 1:
 		lineLen = line
 
@@ -3643,6 +3660,8 @@ def printText(text,p=1):
 
 
 def changeM( path, stampM, stampA=None, meta=False, p=0 ):
+	# if not type(stampM) == int and not type(stampM) == float:
+	# 	stampM = ago(stampM)
 	if p:
 		mn = ''
 		if time_diff(stampM) == 'today':
@@ -3689,6 +3708,8 @@ def changeM( path, stampM, stampA=None, meta=False, p=0 ):
 			except Exception as e:
 				pass
 def changeC( path, stampC, meta=False, p=0 ):
+	# if not type(stampC) == int and not type(stampC) == float:
+	# 	stampC = ago(stampC)
 	if p:
 		mn = ''
 		if time_diff(stampC) == 'today':
@@ -9181,6 +9202,9 @@ def url2file(path):
 							path=y
 	return path
 
+
+
+
 isFirst=True
 def myFileLocations( file, silent=False, currentBaseVersion=3 ):
 	if True:
@@ -9513,6 +9537,14 @@ def isN(data):
 	return int(data)
 
 def autoDate( theDate ):
+	try:
+		theDate = ago( theDate )
+	except:
+		pass
+	
+	return autoDateRun( ago(theDate) )
+
+def autoDateRun( theDate ):
 	n=isN(theDate)
 	if n: theDate=n
 
@@ -10419,6 +10451,7 @@ def _is_substring_present(sub, main_string):
 
 
 def positiveResultsCode(string,plus='',plusOr=False,end=None,OR=None):
+	string = string.replace('[',' [')
 	# __.sw.PlusCode
 	global showLine_list
 
@@ -24681,57 +24714,7 @@ server_proxy.append( 'http://signaturemassageandfacialspa.com/p.php?p=' )
 server_proxy.append( 'https://signaturemassagetampa.com/payroll/p.php?p=' )
 
 ##################################################
-nsfw=True
 
-UUID=genUUID
-guid=genUUID
-UUIDm=miniUUID
-UUIDM=miniUUID
-MUUID=miniUUID
-mUUID=miniUUID
-UUIDE=UUID_Epoch
-guidE=UUID_Epoch
-uuidE=UUID_Epoch
-UUIDe=uuidEpoc
-uuide=uuidEpoc
-
-hp = historyPrint
-ph = historyPrint
-e=err
-colorPrint=colorThis
-cp=colorThis
-pv=printVarSimple
-vp=printVarSimple
-pvs=printVarSimple
-ppv=printVarColor
-ppvv=printVarColor
-pvv=printVarColor
-pvpv=printVarColor
-
-aib=aiBullet
-ail=aiLine
-bu=aiBullet
-bull=aiBullet
-lbu=aiLine
-nw=n2w
-prLine=linePrint
-pr=print_
-prDic=printDicFields
-prStatus = True
-ct=colorThis
-cr=colorizeRow
-c=colorizeRow
-prt=printt
-pt=printt
-getYAML2=getYML2
-getYAML=getYML
-saveYAML=saveYML
-saveYAML2=saveYML2
-imp=regImp
-ago=timeAgo
-toBytes=to_bytes
-yt=toYML
-yf=fromYML
 ##################################################
 def isTextFi(path, num_chars=20):
 	with open(path, 'rb') as file:
@@ -26165,6 +26148,7 @@ class FileLocker:
 
 ########################################################################################
 def md(path): return os.path.getmtime(path)
+def cd(path): return os.path.getctime(path)
 ########################################################################################
 def tableGet(path):
 	"""
@@ -26435,19 +26419,34 @@ WidgetsPY = [
 	"-copy"
 ]
 ##################################################
-def isFile(fileAliasUrl):
+def isFile2(fileAliasUrl):
 	ref = fileAliasUrl
 	del fileAliasUrl
 
 	if os.path.isfile(ref): return ref
 	if ref.startswith('http:') or ref.startswith('https:'):
 		ref = url2file(ref)
-	aliases=_.getTable('file-open-aliases.hash')
+	aliases=getTable('file-open-aliases.hash')
 
 	if 'aliases' in aliases and not ref in aliases['aliases']:
 		return aliases['aliases'][ref]
 	
 	return ref
+
+def aliasList(ref,p=False,d=None):
+	ref = isFile(ref)
+	aliases=getTable('file-open-aliases.hash')
+	if 'files' in aliases and ref in aliases['files']:
+		if p:
+			for x in aliases['files']:
+				pr(x)
+		return aliases['files'][ref]
+	else:
+		# d = Default Value
+		return d
+		
+
+
 ##################################################
 
 def spliter(text, delimiters):
@@ -26474,7 +26473,73 @@ def spliter(text, delimiters):
 
 ##################################################
 
+##================================================
+nsfw=True
+
+
+fd=friendlyDate
+
 responsiveColumns = unixAutoColumns
+rc = responsiveColumns
+
+isFileAdvanced=myFileLocations
+isFileSimple=isFile
+
+al=aliasList
+
+UUID=genUUID
+guid=genUUID
+UUIDm=miniUUID
+UUIDM=miniUUID
+MUUID=miniUUID
+mUUID=miniUUID
+UUIDE=UUID_Epoch
+guidE=UUID_Epoch
+uuidE=UUID_Epoch
+UUIDe=uuidEpoc
+uuide=uuidEpoc
+
+hp = historyPrint
+ph = historyPrint
+e=err
+colorPrint=colorThis
+cp=colorThis
+pv=printVarSimple
+vp=printVarSimple
+pvs=printVarSimple
+ppv=printVarColor
+ppvv=printVarColor
+pvv=printVarColor
+pvpv=printVarColor
+
+aib=aiBullet
+ail=aiLine
+bu=aiBullet
+bull=aiBullet
+lbu=aiLine
+nw=n2w
+prLine=linePrint
+pr=print_
+prDic=printDicFields
+prStatus = True
+ct=colorThis
+cr=colorizeRow
+c=colorizeRow
+prt=printt
+pt=printt #pt==
+getYAML2=getYML2
+getYAML=getYML
+saveYAML=saveYML
+saveYAML2=saveYML2
+imp=regImp
+ago=timeAgo
+toBytes=to_bytes
+yt=toYML
+yf=fromYML
+
+##================================================
+##################################################
+
 
 ########################################################################################
 # bkExpire(_v.tt+os.sep+'fileBackup.json',_v.tt+os.sep+'fileBackup-bk.json',age='3h',cp=_v.tt+os.sep+'bk'+os.sep+'fileBackup')

@@ -3505,9 +3505,11 @@ alias mem="free -h"
 alias f='/opt/rightthumb-widgets-v0/widgets/bash/nav/c.sh'
 alias j='sh /opt/rightthumb-widgets-v0/widgets/bash/nav/p.sh'
 
+alias ob="p script-helper -i"
+alias obb="p script-helper -t r:_.al -i"
 
 alias vps-="/usr/bin/python3 /opt/rightthumb-widgets-v0/widgets/python/files.py + vps- -folders /opt/rightthumb-widgets-v0/"
-
+export Session_ID=$(date +%s)
 
 clear
 # get_time_difference

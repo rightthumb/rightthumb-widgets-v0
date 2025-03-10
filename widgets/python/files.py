@@ -518,15 +518,18 @@ def add(path,r=False):
 
 			ago1 = None
 			ago2 = None
+			agoType = None
 
 			if _.switches.isActive('Ago'):
 
+				ago1 = _.switches.values('Ago')[0]
 
 				if len( _.switches.values('Ago') ) > 1:
-					ago1 = _.switches.values('Ago')[0]
 					ago2 = _.switches.values('Ago')[1]
+					agoType = 'Range'
 					if not type(ago2) == float:
 						ago2 = None
+						agoType = None
 						
 
 				# sys.exit()
@@ -546,6 +549,7 @@ def add(path,r=False):
 						run = 'resent'
 					elif 'm' in _.switches.values('Ago')[2]:
 						run = 'md'
+					agoType = run
 
 
 				elif len( _.switches.values('Ago') ) > 1 and type(_.switches.values('Ago')[1]) == str:
@@ -560,6 +564,7 @@ def add(path,r=False):
 						run = 'resent'
 					elif 'm' in _.switches.values('Ago')[1]:
 						run = 'md'
+					agoType = run
 
 
 				# _.pr(  len( _.switches.values('Ago') )  )

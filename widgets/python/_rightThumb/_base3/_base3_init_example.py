@@ -71,7 +71,10 @@ _.appData[focus()] = _.appDataContinuity()
 def appRegDics(): return { 'appInfo': _.appInfo[focus()], 'appData': _.appData[focus()] }
 def triggers():
 	_._default_triggers_()
-	_.switches.trigger( 'Files', _.myFileLocations, vs=False )
+
+	_.switches.trigger( 'Files',   _.isFileAdvanced, vs=False )     # Advanced File Registration    (Fn Alias Resolves To: def myFileLocations)
+	# _.switches.trigger( 'Files', _.isFileSimple )                 # No File Registration          (Fn Alias Resolves To: def isFile)
+	
 	_.switches.trigger( 'DB', _.aliasesFi )
 	# _.switches.trigger( 'Ago', _.timeAgo )
 	_.switches.trigger( 'Folder', _.myFolderLocations )

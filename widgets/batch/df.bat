@@ -10,10 +10,6 @@ rem    - Scott Taylor Reph, RightThumb.com
 rem ###########################################################################
 rem ## {C3P0D40fAe8B} ##
 
-:: Previous Migrated to: def..bat
-
-
-:: df is clone of this file below
 
 call p. inFunc -f %*
 

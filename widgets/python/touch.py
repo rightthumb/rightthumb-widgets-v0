@@ -221,12 +221,17 @@ def process( path ):
 		if _.switches.isActive('Modified'):
 			default = False
 			if _.switches.value('Modified') == '':
+				# print(111)
 				stampM = now
 			elif _.switches.value('Modified') == 'now':
+				# print(222)
 				stampM = now
 			elif _.isFloat( _.switches.value('Modified') ):
+				# print(333)
+				# print(111)
 				stampM = float(_.switches.value('Modified'))
 			else:
+				# print(444)
 				stampM = _.autoDate(' '.join( _.switches.values('Modified') ))
 			stampA = stampM
 
@@ -318,6 +323,16 @@ def process( path ):
 
 def action():
 
+	if _.switches.isActive('Modified'):
+		md = _.switches.value('Modified')
+		md = str(_.autoDate(md))
+		_.switches.fieldSet( 'Modified', 'value', md )
+		_.switches.fieldSet( 'Modified', 'values', [md] )
+		# try:
+		# 	md = float(md)
+		# except:
+		# 	md = _.
+
 	for fi in _.switches.values('Files'):
 		if not os.path.isfile(fi):
 			_.saveText('',fi)
@@ -333,12 +348,13 @@ def action():
 		_.switches.fieldSet( 'Modified', 'value', 'now' )
 		_.switches.fieldSet( 'Modified', 'values', ['now'] )
 
-
-	x = len(_.switches.records('dic_on-off-v')['on'])
-	if x <= 1:
-		_.switches.fieldSet( 'Modified', 'active', True )
-		_.switches.fieldSet( 'Modified', 'value', 'now' )
-		_.switches.fieldSet( 'Modified', 'values', ['now'] )
+	if _.switches.isActive('Modified'):
+		if not _.isFloat(_.switches.value('Modified')):
+			x = len(_.switches.records('dic_on-off-v')['on'])
+			if x <= 1:
+				_.switches.fieldSet( 'Modified', 'active', True )
+				_.switches.fieldSet( 'Modified', 'value', 'now' )
+				_.switches.fieldSet( 'Modified', 'values', ['now'] )
 
 
 	# _.pr(x)

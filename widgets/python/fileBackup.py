@@ -111,6 +111,7 @@ def registerSwitches( argvProcessForce=False ):
 	appSwitches()
 	_.defaultScriptTriggers()
 	_.switches.trigger( 'Flag', _bkLog.imp.validateFlag )
+	_.switches.trigger( 'Input', _.isFile )
 	_.switches.process()
 
 
@@ -919,6 +920,10 @@ def action(path=None,flag=None,o=None,pre=None):
 		# 		filesToProcess.append(path)
 	
 	for path in filesToProcess:
+		# if not os.path.isfile(path):
+		# 	path = _.isFile(path)
+		if not os.path.isfile(path):
+			_.pr( 'Error: file not found:', path )
 		if len(filesToProcess) > 1:
 			_.pr()
 			_.pr(line=1,c='yellow')
