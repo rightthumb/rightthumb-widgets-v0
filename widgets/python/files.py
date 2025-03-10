@@ -40,6 +40,9 @@ __.isFiles=True
 
 
 def appSwitches():
+
+	
+
 	# , group=[swGrp,'A Group'] )
 	swGrp = 1
 	_.switches.trigger( 'Folders', _.myFolderLocations )
@@ -51,7 +54,7 @@ def appSwitches():
 	_.switches.register('FolderRefine', '-fr', group=[swGrp,'Folder Settings'] )
 	_.switches.register('MaxDepth', '-depth', '3', group=[swGrp,'Folder Settings'] )
 	
-	swGrp = 1
+	swGrp += 1
 	_.switches.register('Print-Clean', '--c,-clean', group=[swGrp,'Formatting and Output'] )
 	_.switches.register('No-Extension', '-noext', group=[swGrp,'Formatting and Output'] )
 	_.switches.register('Toggle-Relative-Path', '-rr', group=[swGrp,'Formatting and Output'] )
@@ -61,9 +64,9 @@ def appSwitches():
 	_.switches.register('Reverse', '-rev,-reverse', group=[swGrp,'Formatting and Output'] )
 
 
-	swGrp = 1
+	swGrp += 1
 	_.switches.register('Symlink-Path-Integrity', '-si,-spi,-sym,-symlink', group=[swGrp,'OS Links'] )
-	swGrp = 1
+	swGrp += 1
 	_.switches.register('Text', '-t,-text,-txt', group=[swGrp,'File Search Toolbox'] )
 	_.switches.register('Binary', '-bin', group=[swGrp,'File Search Toolbox'] )
 	_.switches.register('Encrypted', '-en,-crypt,-encryption,-encrypted', group=[swGrp,'File Search Toolbox'] )
@@ -76,7 +79,7 @@ def appSwitches():
 	_.switches.register('Contains-IPs', '-ip','domains', group=[swGrp,'File Search Toolbox'] )
 	_.switches.register('Disable-Intelligence', '-showall', group=[swGrp,'File Search Toolbox'] )
 
-	swGrp = 1
+	swGrp += 1
 
 
 	_.switches.register('Search-For-Text-Include', '-has,-search', group=[swGrp,'Contents Search Toolbox'] )
@@ -86,15 +89,19 @@ def appSwitches():
 	_.switches.register('Not-In-Comments', '-nocomment','html py php js', group=[swGrp,'Contents Search Toolbox'] )
 
 
-	swGrp = 1
+	swGrp += 1
 	_.switches.register('Delete', '--delete', group=[swGrp,'Delete and Secure Delete'] )
 	_.switches.register('DeleteConfirm', '--confirm', group=[swGrp,'Delete and Secure Delete'] )
 	_.switches.register('SecureDelete', '--secure', group=[swGrp,'Delete and Secure Delete'] )
 	_.switches.register('SecureDeleteCriteria', '--criteria','*backup*.zip', group=[swGrp,'Delete and Secure Delete'] )
 
-	swGrp = 1
+	swGrp += 1
 	_.switches.register('Widget-V0', '-w,-v0', group=[swGrp,'Extra Features'] )
+	swGrp += 1
 	_.switches.register('Backup', '-b,-bk,-backup', group=[swGrp,'Extra Features'] )
+	
+	swGrp += 1
+	_.switches.register('InvertResults', '-invert', group=[swGrp,'Invert'] )
 
 
 _bk = None
