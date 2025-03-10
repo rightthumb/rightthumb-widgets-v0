@@ -516,6 +516,9 @@ def add(path,r=False):
 				if len( _.switches.values('Ago') ) > 1:
 					ago1 = _.switches.values('Ago')[0]
 					ago2 = _.switches.values('Ago')[1]
+					if not type(ago2) == float:
+						ago2 = None
+						
 
 				# sys.exit()
 				record = _dir.fileInfo( path )
@@ -605,12 +608,7 @@ def add(path,r=False):
 			pass
 			# if shouldAdd: _.pr( 1001, path );
 
-			if ago2 and shouldAdd:
-				ago = _.md(path)
-				if ago > ago1 and ago < ago2:
-					pass
-				else:
-					shouldAdd = False
+
 
 			if shouldAdd:
 				if _.switches.isActive('Size'):
@@ -708,6 +706,15 @@ def add(path,r=False):
 
 			if shouldAdd:
 				if not _.v.do_not_hide__pycache and path.endswith('.pyc'): shouldAdd=False
+
+
+			if ago2 and shouldAdd:
+				# 'ago'
+				ago = _.md(path)
+				if ago > ago1 and ago < ago2:
+					pass
+				else:
+					shouldAdd = False
 
 			if shouldAdd:
 				if _.switches.isActive('Backup'):
