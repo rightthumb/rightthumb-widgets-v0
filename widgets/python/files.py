@@ -102,6 +102,8 @@ def appSwitches():
 	
 	swGrp += 1
 	_.switches.register('InvertResults', '-invert', group=[swGrp,'Invert'] )
+	swGrp += 1
+	_.switches.register('FileNameIs', '-is', group=[swGrp,'FileIs'] )
 
 
 _bk = None
@@ -920,7 +922,7 @@ def action():
 		global infile
 		global scan
 		# load()
-		if _.switches.isActive('Folders') == False:
+		if not _.switches.isActive('Folders'):
 			folder = os.getcwd()
 		else:
 			folder = _.switches.value('Folders')
@@ -1241,6 +1243,11 @@ def star(string, criteria=[], case_sensitive=False):
 
 
 def process(path):
+	if _.switches.isActive('FileNameIs'):
+		filename = os.path.basename(path)
+		filename2 = filename.lower()
+		if not filename in _.switches.values('FileNameIs') and not filename2 in _.switches.values('FileNameIs'):
+			return None
 	path=path.strip()
 	if not os.path.isfile(path):
 		return path
