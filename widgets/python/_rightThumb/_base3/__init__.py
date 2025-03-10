@@ -10270,9 +10270,26 @@ def calculate_monthdelta(date1, date2):
 #     x = Timer(0.0, timeout, ('start',defaultTimeout))
 #     x.start()
 
-hasPlus=None
-def showLine( string, plus = '', minus = '',plusOr = False, end=None,isSub=False, OR=None, code=False, itIs=False ):
 
+
+
+
+
+
+
+# def showLine2(): pass
+# showLine = showLine2
+
+
+showLine_list = []
+showLineC = False
+sl = False
+hasPlus=None
+def showLine( string, plus = '', minus = '',plusOr = False, end=None,isSub=False, OR=None, code=False, itIs=False, c=False ):
+	ogString = string
+	global showLineC
+	global showLine_list
+	showLineC = False
 	# <2024-04-02>
 	string = str(string)
 	string = string.strip()
@@ -10311,11 +10328,25 @@ def showLine( string, plus = '', minus = '',plusOr = False, end=None,isSub=False
 						break
 
 
+				
+
+
 		else:
 			result = True
 	if result == True and  (switches.isActive('Minus') or not minus == ''):
 		result = minusResults(string,minus,itIs)
 	# print_(result)
+
+
+	if result and c:
+		# print(showLine_list)
+		showLineC = ogString
+		for by in showLine_list:
+			# print(by)
+			showLineC = prWC2(showLineC,by)
+			# print(showLineC)
+	global sl
+	sl = showLineC
 	return result
 def closeResults( string ):
 	global switches
@@ -10389,6 +10420,7 @@ def _is_substring_present(sub, main_string):
 
 def positiveResultsCode(string,plus='',plusOr=False,end=None,OR=None):
 	# __.sw.PlusCode
+	global showLine_list
 
 	string = string.replace("'",' ').replace('"',' ')
 	global switches
@@ -10406,6 +10438,7 @@ def positiveResultsCode(string,plus='',plusOr=False,end=None,OR=None):
 			plusInput = plus
 	else:
 		plusInput = switches.values('Plus').copy()
+	showLine_list = plusInput
 
 
 
@@ -10515,6 +10548,7 @@ def positiveResultsCode(string,plus='',plusOr=False,end=None,OR=None):
 
 def positiveResults(string,plus='',plusOr=False,end=None,OR=None):
 	global switches
+	global showLine_list
 	# print('here')
 	if plusOr or switches.isActive('PlusOr'):
 		plusOr = True
@@ -10530,6 +10564,8 @@ def positiveResults(string,plus='',plusOr=False,end=None,OR=None):
 		for i,yh in enumerate(plusInput):
 			plusInput[i]= ci(plusInput[i])
 	# -->   #end> this was added 2022-07-20
+	showLine_list = plusInput
+	# print('here',showLine_list)
 	if __.showLine_quoteFix and type(plusInput)==list:
 		new=[]
 		for i,x in enumerate(plusInput):
@@ -26131,48 +26167,48 @@ class FileLocker:
 def md(path): return os.path.getmtime(path)
 ########################################################################################
 def tableGet(path):
-    """
-    Try loading a JSON file using various parsers, returning immediately on success.
-    
-    Args:
-        path (str): The path to the JSON or HAR file.
-    
-    Returns:
-        dict: Parsed JSON data.
-    """
-    parsers = []
+	"""
+	Try loading a JSON file using various parsers, returning immediately on success.
+	
+	Args:
+		path (str): The path to the JSON or HAR file.
+	
+	Returns:
+		dict: Parsed JSON data.
+	"""
+	parsers = []
 
-    # Try importing each JSON module
-    try:
-        import orjson
-        parsers.append(("orjson", lambda f: orjson.loads(f.read()), "rb"))
-    except ImportError:
-        pass
+	# Try importing each JSON module
+	try:
+		import orjson
+		parsers.append(("orjson", lambda f: orjson.loads(f.read()), "rb"))
+	except ImportError:
+		pass
 
-    try:
-        import ujson
-        parsers.append(("ujson", lambda f: ujson.load(f), "r"))
-    except ImportError:
-        pass
+	try:
+		import ujson
+		parsers.append(("ujson", lambda f: ujson.load(f), "r"))
+	except ImportError:
+		pass
 
-    try:
-        import simplejson as json
-        parsers.append(("simplejson", lambda f: json.load(f), "r"))
-    except ImportError:
-        import json
-        parsers.append(("json", lambda f: json.load(f), "r"))
+	try:
+		import simplejson as json
+		parsers.append(("simplejson", lambda f: json.load(f), "r"))
+	except ImportError:
+		import json
+		parsers.append(("json", lambda f: json.load(f), "r"))
 
-    # Try each parser and return immediately on success
-    for name, parser, mode in parsers:
-        try:
-            with open(path, mode, encoding=None if mode == "rb" else "utf-8") as f:
-                data = parser(f)
-            # print(f"Loaded with {name}")
-            return data  # Return immediately on success
-        except Exception as e:
-            print(f"Failed with {name}: {e}")
+	# Try each parser and return immediately on success
+	for name, parser, mode in parsers:
+		try:
+			with open(path, mode, encoding=None if mode == "rb" else "utf-8") as f:
+				data = parser(f)
+			# print(f"Loaded with {name}")
+			return data  # Return immediately on success
+		except Exception as e:
+			print(f"Failed with {name}: {e}")
 
-    raise RuntimeError("All JSON parsers failed.")
+	raise RuntimeError("All JSON parsers failed.")
 
 ########################################################################################
 
@@ -26414,6 +26450,31 @@ def isFile(fileAliasUrl):
 	return ref
 ##################################################
 
+def spliter(text, delimiters):
+	delimiters = delimiters.replace(' |', '|').replace('| ', '|')
+	"""
+	Splits `text` by multiple substrings provided in `delimiters`, separated by '|'.
+	
+	Args:
+		text (str): The input string to split.
+		delimiters (str): A string of delimiters separated by '|', e.g., "123|XYZ|-|Mango".
+	
+	Returns:
+		list: A list of split substrings.
+	"""
+	pattern = '|'.join(map(re.escape, delimiters.split('|')))  # Escape special characters
+	return [s for s in re.split(pattern, text) if s]  # Remove empty strings
+
+# # Example usage
+# text = "apple123bananaXYZorange-MangoPineapple"
+# delimiters = "123|XYZ|-|Mango"
+
+# result = split_by_multiple(text, delimiters)
+# print(result)
+
+##################################################
+
+responsiveColumns = unixAutoColumns
 
 ########################################################################################
 # bkExpire(_v.tt+os.sep+'fileBackup.json',_v.tt+os.sep+'fileBackup-bk.json',age='3h',cp=_v.tt+os.sep+'bk'+os.sep+'fileBackup')

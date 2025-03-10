@@ -10,6 +10,21 @@ rem    - Scott Taylor Reph, RightThumb.com
 rem ###########################################################################
 rem ## {C3P0D40fAe8B} ##
 
-call t %1 %2 %3
+
+
+echo.
+echo Files:
+echo.
+es dm:last1days type:file | p line --c  -  %es% backup logs temp | p files --c | sort | p line %*
+echo.
+echo.
+echo Folders:
+echo.
+es dm:last1days type:folder | p line  --c -  %es% backup logs temp | sort | p line %*
+echo.
+echo.
+echo.
+
+:: call t %1 %2 %3
 
  

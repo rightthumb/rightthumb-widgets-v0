@@ -345,8 +345,8 @@ if _.switches.isActive('Ago_by_Created'):
 	_dir.dateCalcByModified = False
 	if not _.switches.isActive('Sort') and not _.switches.isActive('GroupBy'):
 		_.switches.fieldSet( 'Sort', 'active', True )
-		_.switches.fieldSet( 'Sort', 'value', 'date_created_raw' )
-		_.switches.fieldSet( 'Sort', 'values', ['date_created_raw'] )
+		_.switches.fieldSet( 'Sort', 'value', 'date_created_raw,ago' )
+		_.switches.fieldSet( 'Sort', 'values', ['date_created_raw','ago'] )
 		_.switches.fieldSet( 'GroupBy', 'active', True )
 		_.switches.fieldSet( 'GroupBy', 'value', 'ago' )
 		_.switches.fieldSet( 'GroupBy', 'values', ['ago'] )

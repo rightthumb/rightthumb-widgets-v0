@@ -1,3 +1,4 @@
 @echo off
 
-call c %*
+explorer /select, %1
+@REM call c %*
