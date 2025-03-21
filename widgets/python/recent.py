@@ -159,7 +159,7 @@ else:
 	_.argvProcess = True
 
 registerSwitches()
-print(_.switches.values('Ago'))
+# print(_.switches.values('Ago'))
 
 def fieldSet( switchName, switchField, switchValue, theFocus=False ):
 	if not type( theFocus ) == bool:

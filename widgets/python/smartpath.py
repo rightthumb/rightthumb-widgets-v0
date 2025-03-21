@@ -26,7 +26,9 @@ def sw():
 	# _.switches.register( 'Input', '-i', group='Group Name' )
 		##  -->    p SwitchGroupsExamples   <--
 	# #e)--> examples
-	_.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=False )
+	_.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name', description='Files', isRequired=False )
+	_.switches.register( 'Filename', '-n,-name,-filename', 'returns just filename' )
+
 
 _._default_settings_()
 # __.setting('omit-switch-triggers',['Ago'])
@@ -131,8 +133,15 @@ _.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw )
 ########################################################################################
 #n)--> start
 
+from os import sep
+
 def action():
-	pass
+	path='No Path'
+	if _.isData():
+		path = _.isData()[0]
+	if _.switches.isActive('Filename'):
+		path = path.strip(sep).split(sep)[-1]
+	_.pr(path,c='green')
 	# load(); global c3po;
 
 	#n)--> iterate
@@ -145,135 +154,6 @@ def action():
 # 	c3po = _.getTable( 'table' )
 # 	#n)--> print table
 # 	_.pt(c3po)
-
-
-def n2l(n):
-	if 1 <= n <= 26:
-		return chr(n + 96)
-	return None
-
-
-def myDic(n):
-	dic = {}
-	for i in range(1, n + 1):
-		dic[i] = n2l(i)
-	return dic
-
-
-
-
-
-def pattern(n):
-	dic = myDic(5)
-	xx = []
-	bb = {}
-	aa = {}
-	t = '(-)'
-	for i in range(1, n + 1):
-		l = n2l(i)
-		aa[l] = f'({l})'
-
-	for i in range(1, n + 1):
-		line = ""
-		k = []
-		# bb = {}
-		for x in range(1, i + 1):
-			k.append(dic[x])
-		bb[i] = k
-		xx.append(k)
-	return bb
-
-# Example usage
-# y = pattern(5)
-# _.pv(y)
-class SimpleNestedStructure:
-	def __init__(self, depth, symbol="🐶"):
-		"""
-		Initialize the structure with a given depth and symbol.
-
-		:param depth: Number of levels to nest.
-		:param symbol: The symbol to place at the lowest level.
-		"""
-		self.depth = depth
-		self.symbol = symbol
-		self.letter_map = self._create_letter_mapping(depth)
-
-	def _number_to_letter(self, num):
-		"""
-		Convert a number to a corresponding lowercase letter.
-
-		Example: 1 -> 'a', 2 -> 'b', ..., 26 -> 'z'
-
-		:param num: Number to convert.
-		:return: Corresponding letter or None if out of range.
-		"""
-		if num >= 1 and num <= 26:
-			letter = chr(num + 96)
-		else:
-			letter = None
-
-		return letter
-
-	def _create_letter_mapping(self, depth):
-		"""
-		Create a dictionary that maps numbers to letters.
-
-		Example: {1: 'a', 2: 'b', 3: 'c', ...}
-
-		:param depth: Number of mappings to create.
-		:return: Dictionary of number-letter pairs.
-		"""
-		mapping = {}
-
-		for i in range(1, depth + 1):
-			letter = self._number_to_letter(i)
-			mapping[i] = letter
-			_.pv(mapping)
-		# _.pv(mapping)
-		return mapping
-
-	def _build_nested_structure(self, level):
-		"""
-		Recursively create a nested dictionary structure.
-
-		:param level: Current depth level.
-		:return: Nested dictionary structure.
-		"""
-		if level > 1:
-			key = self.letter_map[level] + "G" + str(level)
-		else:
-			key = self.letter_map[level] + str(level)
-
-		if level == 1:
-			result = {key: self.symbol}
-			return result
-
-		previous_level = self._build_nested_structure(level - 1)
-
-		result = {}
-		result[key] = previous_level
-		result[self.letter_map[level] + str(level)] = self.symbol
-
-		return result
-
-	def generate(self):
-		"""
-		Generate the full structure up to the specified depth.
-
-		:return: Nested dictionary structure.
-		"""
-		result = self._build_nested_structure(self.depth)
-		return result
-
-
-# Example usage:
-structure = SimpleNestedStructure(3)
-nested_dict = structure.generate()
-
-import json
-print(json.dumps(nested_dict, indent=4, ensure_ascii=False))
-
-
 
 
 ##################################################

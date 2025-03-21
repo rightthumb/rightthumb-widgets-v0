@@ -4,21 +4,18 @@ fieldSet=_.l.vars(focus(),__name__,__file__,appDBA);_.load();_v=__.imp('_rightTh
 
 def sw():
 	pass
-	_.switches.register( 'URL', '-url,-f', isRequired=True )
+	_.switches.register( 'Say', '-say', 'say this save it to mp3')
+	_.switches.register( 'Save', '-save', 'speak.mp3')
 _._default_settings_()
 
 _.appInfo[focus()] = {
-	'file': 'printUrl.py',
-	'description': 'Print a URL',
+	'file': 'thisApp.py',
+	'description': 'Changes the world',
 	'categories': [
-						'print',
-						'url',
-						'website',
-						'webpage',
-						'tool',
+						'DEFAULT',
 				],
 	'examples': [
-						_.hp('p printUrl -url https://google.com'),
+						_.hp('p thisApp -file file.txt'),
 						_.linePrint(label='simple',p=0),
 						'',
 	],
@@ -36,7 +33,7 @@ def appRegDics(): return { 'appInfo': _.appInfo[focus()], 'appData': _.appData[f
 
 def triggers():
 	_._default_triggers_()
-	_.switches.trigger( 'Files', _.myFileLocations, vs=False )
+	_.switches.trigger( 'Files',   _.isFileAdvanced, vs=False )     # Advanced File Registration    (Fn Alias Resolves To: def myFileLocations)
 	_.switches.trigger( 'DB', _.aliasesFi )
 	_.switches.trigger( 'Folder', _.myFolderLocations )
 	_.switches.trigger( 'Folders', _.myFolderLocations )
@@ -47,14 +44,41 @@ _.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw )
 ########################################################################################
 #n)--> start
 
+import time
 
 def action():
-	for url in _.switches.values('URL'):
-		page = _.URL( url ).replace('\r','')
-		for line in page.split('\n'):
-			if _.showLine(line):
-				_.pr( line )
-
+	from gtts import gTTS
+	import os
+	mytext = ' '.join( _.switches.values('Say') )
+	mytext = mytext.replace( '_', ' ' )
+	language = 'en'
+	myobj = gTTS(text=mytext, lang=language, slow=False)
+	path = _v.stmp+os.sep+'speak.mp3'
+	# if not ' ' in mytext:
+	if True:
+		path = mytext+'.mp3'
+	if _.switches.isActive('Save') and _.switches.value('Save'):
+		path = _.switches.value('Save')
+		if not '.mp3' in path:
+			path += '.mp3'
+	path = path.replace(' ','_')
+	if not os.path.isfile(path):
+		myobj.save(path)
+		
+	if _.switches.isActive('Save'):
+		return path
+	import subprocess
+	time.sleep(1)
+	pygame.mixer.init()
+	pygame.mixer.music.load(path)
+	pygame.mixer.music.play()
+	while pygame.mixer.music.get_busy():
+		pygame.time.Clock().tick(10)
+	return None
+import os
+os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = "hide"
+import pygame
 ########################################################################################
+
 if __name__ == '__main__':
 	action(); _.isExit(__file__)

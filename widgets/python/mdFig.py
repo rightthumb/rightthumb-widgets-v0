@@ -8,6 +8,7 @@ def sw():
 	_.switches.register( 'Wrap', '-w,-wrap' )
 	_.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name', description='Files', isRequired=False )
 	_.switches.register( 'Key', '-key', 'dictKeyName' )
+	_.switches.register( 'Advanced', '-a', '' )
 _._default_settings_()
 
 _.appInfo[focus()] = {
@@ -49,10 +50,24 @@ def action():
 	else:
 		label = '###'
 	file = _.isData()[0]
+	# try:
+	contents = _.getText( file, raw=True )
 	try:
-		fig = _.mdFig( '', label, wrap, file = file )
-	except:
-		_.e('Error: mdFig','-f configFile.md')
+		from library.tools.code.classes.mdFig import  MdFig
+		mdFig = MdFig(contents)
+	except Exception as e:
+		_.colorThis( [ 'Error: mdFig', e ], 'red' )
+		from library.tools.code.classes.mdFig import  MdFigParser
+		mdFig = MdFigParser(contents)
+
+	fig = mdFig.get_code()
+		# fig = _.mdFig( '', label, wrap, file = file )
+		# if _.switches.isActive('Advanced'):
+		# 	fig = _.mdFig( '', label, wrap, file = file )
+		# else:
+		# 	fig = _.mdFigSimp( '', label, wrap, file = file )
+	# except:
+	# 	_.e('Error: mdFig','-f configFile.md')
 	if _.switches.isActive('Key'):
 		for key in _.switches.values('Key'):
 			try:

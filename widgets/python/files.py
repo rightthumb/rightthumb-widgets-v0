@@ -538,13 +538,26 @@ def add(path,r=False):
 				# if os.path.isfile(path):
 				shouldAdd = False
 				run = 'default'
+				if _.switches.isActive('Ago-Create-Date'):
+					run = 'cd'
+				if len( _.switches.values('Ago') ) > 1:
+					actionTaken = False
+					if 'cd' in _.switches.values('Ago')[1]:
+						run = 'cd'
+						actionTaken = True
+					if 'md' in _.switches.values('Ago')[1]:
+						actionTaken = True
+						run = 'md'
+					# if actionTaken:
+					# 	_.switches.set('Ago', 'value', _.switches.values('Ago')[0])
+					# 	_.switches.set('Ago', 'values', [_.switches.values('Ago')[0]])
+
 				if len( _.switches.values('Ago') ) > 2:
 					if 'a' in _.switches.values('Ago')[2]:
 						run = 'a'
 					elif 'md' in _.switches.values('Ago')[2]:
 						run = 'md'
-					elif _.switches.isActive('Ago-Create-Date'):
-						run = 'cd'
+
 					elif 'resent' in _.switches.values('Ago')[2]:
 						run = 'resent'
 					elif 'm' in _.switches.values('Ago')[2]:
@@ -572,7 +585,7 @@ def add(path,r=False):
 				# sys.exit()
 				# accessed_raw
 
-
+				# print(run)
 				agoRange = False
 				if len( _.switches.values('Ago') ) > 1 and type(_.switches.values('Ago')[1]) == float:
 					agoRange = True

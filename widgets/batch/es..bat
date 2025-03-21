@@ -1,2 +1,2 @@
 @echo off
-es -reindex
+es.exe -reindex

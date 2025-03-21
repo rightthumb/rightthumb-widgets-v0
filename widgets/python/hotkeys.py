@@ -658,6 +658,7 @@ class HOTKEYS:
 
 
 	def release_key( self, key ):
+		if not __.HK.active: return None
 		global post_do
 		global key_set
 		global force_clean
@@ -715,7 +716,8 @@ class HOTKEYS:
 
 						break
 					ii+=1
-					print(444)
+					if __.TroubleShoot.backspace:
+						print(444)
 					keyboard.press(Key.backspace)
 					keyboard.release(Key.backspace)
 			if not os.path.isfile(_v.tt+os.sep+'hotkeys-log.csv'): _.saveText('epoch,label',_v.tt+os.sep+'hotkeys-log.csv')
@@ -730,13 +732,15 @@ class HOTKEYS:
 				# print('force_clean[k]',force_clean[k])
 				while not i==force_clean[k]:
 					i+=1
-					print(111)
+					if __.TroubleShoot.backspace:
+						print(111)
 					keyboard.press(Key.backspace)
 					keyboard.release(Key.backspace)
 			exec(do)
 			beepy.simple_beep2()
 
 	def process_keystroke( self, key ):
+		if not __.HK.active: return None
 		global post_do
 		global key_set
 		global print_chars
@@ -1078,7 +1082,9 @@ class BEEPS:
 
 def _bk():
 	global keyboard
-	print(222)
+	if __.TroubleShoot.backspace:
+		print(222)
+
 	keyboard.press(Key.backspace)
 	keyboard.release(Key.backspace)
 
@@ -2575,6 +2581,7 @@ function get__THETABLE( $ID_label ){
 		_paste = _.regImp( __.appReg, '-paste' )
 		_copy = _.regImp( __.appReg, '-copy' )
 		text = _paste.imp.paste().strip()
+		text = text.replace('\\/','/').strip()
 		print(text)
 		
 		isHTML=is_html(text)
@@ -3274,7 +3281,8 @@ function get__THETABLE( $ID_label ){
 			log0.reverse()
 			x=log0[0]
 		if x in '123456789':
-			print(333)
+			if __.TroubleShoot.backspace:
+				print(333)
 			keyboard.press(Key.backspace)
 			keyboard.release(Key.backspace)
 			# _.pr('y',x)
@@ -3520,6 +3528,57 @@ def action():
 		l.join()
 
 
+## o minThread 
+from library.tools.threads.MinThread import  MinThread
+
+__.HK = _.dot()
+__.HK.active = True
+__.TroubleShoot = _.dot()
+__.TroubleShoot.backspace = False
+
+
+class vArgs:
+	def __init__(self):
+		self.active = True		
+		self.status = False
+		self.callback = False
+		self.stopOn = False
+		self.keys = []
+		self.time = _.dot()
+		self.time.start = None
+		self.time.expire = None
+		self.time.last = None
+		self.default = '3ac505ae287e'
+	
+	def register(self, callback=None,stopOn=None,default='3ac505ae287e',expire=None):
+		self.status = True
+		self.callback = callback
+		self.stopOn = stopOn
+		self.keys = []
+		self.time.start = time.time()
+		self.time.expire = expire
+		self.time.last = time.time()
+
+	def activity(self,key):
+		if not self.status: return False
+
+		if not key in self.stopOn:
+			self.keys.append(key)
+		else:
+				
+			
+			if self.callback:
+				self.callback(''.join(self.keys))
+			self = _.dot()
+			self.status = False
+			self.keys = []
+			self.stopOn = False
+
+		self.time.last = time.time()
+		return True
+	
+__.HK.vArgs = vArgs()
+
 ctrl_chars = {
 	'a': '\x01',
 	'b': '\x02',
@@ -3610,8 +3669,8 @@ def load():
 				# 'load_clip_9': { 'raw': [ 'win.','space.', '9' ], 'do': 'Clip.load_clip_9()' },
 
 				'save_clip_0': { 'raw': [ 'shift.,2', '0' ], 'do': 'Clip.save_clip_0()' },
-				'save_clip_1': { 'raw': [ 'shift.,2', '1' ], 'do': 'Clip.save_clip_1()' },
-				'save_clip_2': { 'raw': [ 'shift.,2', '2' ], 'do': 'Clip.save_clip_2()' },
+				'save_clip_1-Haystack': { 'raw': [ 'shift.,2', '1' ], 'do': 'Clip.save_clip_1()' },
+				'save_clip_2-Needle': { 'raw': [ 'shift.,2', '2' ], 'do': 'Clip.save_clip_2()' },
 				'save_clip_3': { 'raw': [ 'shift.,2', '3' ], 'do': 'Clip.save_clip_3()' },
 				'save_clip_4': { 'raw': [ 'shift.,2', '4' ], 'do': 'Clip.save_clip_4()' },
 				'save_clip_5': { 'raw': [ 'shift.,2', '5' ], 'do': 'Clip.save_clip_5()' },

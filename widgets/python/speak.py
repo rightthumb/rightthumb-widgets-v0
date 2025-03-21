@@ -184,6 +184,29 @@ _.postLoad( __file__ )
 ########################################################################################
 # START
 
+
+
+def action99():
+	from gtts import gTTS
+	import os
+	for let in 'abcdefghijklmnopqrstuvwxyz':
+		mytext = let
+		language = 'en'
+		myobj = gTTS(text=mytext, lang=language, slow=False)
+		path = let+'.mp3'
+		myobj.save(path)
+		import subprocess
+		time.sleep(1)
+		pygame.mixer.init()
+		pygame.mixer.music.load(path)
+		pygame.mixer.music.play()
+		while pygame.mixer.music.get_busy():
+			pygame.time.Clock().tick(10)
+	return None
+
+
+
+
 def action():
 	# Import the required module for text 
 	# to speech conversion

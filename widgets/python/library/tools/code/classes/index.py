@@ -692,7 +692,9 @@ class index:
 					bClose
 					bStack[text[i]].append(i)
 				elif text[i] in bClose:
-					index['oc'][bStack[bClose[text[i]]].pop()] = i+1
+					try:
+						index['oc'][bStack[bClose[text[i]]].pop()] = i+1
+					except: pass
 			i += 1
 		if inText: index['words'][lastTextStart] = len(text)
 		alt = None

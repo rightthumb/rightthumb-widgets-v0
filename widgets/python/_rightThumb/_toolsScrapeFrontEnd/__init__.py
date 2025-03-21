@@ -91,17 +91,27 @@ import unicodedata
 import urllib
 from subprocess import call
 ##################################################
-from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.support.ui import Select
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.common.by import By
+from selenium import webdriver # type: ignore
+from selenium.webdriver.common.keys import Keys # type: ignore
+from selenium.webdriver.support.ui import Select # type: ignore
+from selenium.webdriver.support.ui import WebDriverWait # type: ignore
+from selenium.webdriver.common.by import By # type: ignore
 # from selenium.common.exceptions import StaleElementReferenceException
 
 if not __.isWin:
-	from selenium.webdriver.chrome.service import Service
-	from webdriver_manager.chrome import ChromeDriverManager
-	from selenium.webdriver.chrome.options import Options
+	from selenium.webdriver.chrome.service import Service # type: ignore
+	from webdriver_manager.chrome import ChromeDriverManager # type: ignore
+	from selenium.webdriver.chrome.options import Options # type: ignore
+
+
+
+import time
+import copy
+import socket
+from selenium.webdriver.common.by import By # type: ignore
+from selenium.webdriver.common.keys import Keys # type: ignore
+from selenium.common.exceptions import StaleElementReferenceException # type: ignore
+	
 ##################################################
 
 
@@ -202,48 +212,63 @@ def URL(url,data={}):
 	return str(__.imp('requests.post').post(url, data=data).content,'iso-8859-1').replace('\\n','\n')
 	return __.imp('requests.get').get(url).content.decode("utf-8").replace('\\n','\n')
 
+from browsermobproxy import Server  # type: ignore
 
 class ProxyManager:
+    _BMP = "D:\\.rightthumb-widgets\\widgets\\exe\\ChromeDriver\\134.0.6998.90\\browsermob-proxy-2.1.4-bin\\browsermob-proxy-2.1.4\\bin\\browsermob-proxy.bat"
 
-	# _BMP = "C:\\Users\\Scott\\Downloads\\browsermob-proxy-2.1.4-bin\\browsermob-proxy-2.1.4\\bin\\browsermob-proxy.bat"
-	_BMP = "C:\\Users\\Scott\\Downloads\\browsermob-proxy-2.1.4-bin\\browsermob-proxy-2.1.4\\bin\\server.bat"
+    def __init__(self):
+        self.__server = Server(ProxyManager._BMP)
+        self.__client = None
 
-	def __init__( self ):
+    def start_server(self):
+        self.__server.start()
+        return self.__server
 
-		# self.__server = Server( ProxyManager._BMP,  options={'port': 8080 } )
-		self.__server = Server( ProxyManager._BMP )
-		self.__client = None
+    def start_client(self):
+        self.__client = self.__server.create_proxy(params={'trustAllServers': 'true'})
+        return self.__client
 
-	def start_server( self ):
-		self.__server.start()
-		return self.__server
+    @property
+    def client(self):
+        return self.__client
 
-	def start_client( self ):
+    @property
+    def server(self):
+        return self.__server
 
-		# self.__client = self.__server.create_proxy()
-		self.__client = self.__server.create_proxy(params={'trustAllServers':'true'})
-		return self.__client
-
-	@property
-	def client(self):
-		return self.__client
-	
-	@property
-	def server(self):
-		return self.__server
 	
 	
+from selenium.webdriver.chrome.service import Service # type: ignore
+from selenium.webdriver.chrome.options import Options # type: ignore
+from selenium.webdriver.common.keys import Keys # type: ignore
+from selenium.webdriver.common.by import By # type: ignore
+from selenium.webdriver.support.ui import WebDriverWait # type: ignore
+from selenium.webdriver.support import expected_conditions as EC # type: ignore
 
+import unicodedata
+
+def u_to_s(text):
+	if isinstance(text, bytes):
+		text = text.decode('utf-8', errors='ignore')
+	text = str(text)
+	text = unicodedata.normalize('NFKC', text)  # Normalize width/formatting
+	return text.strip()
+
+
+########################################################################################
 
 class FrontEnd(object):
 
 	def __init__( self ):
-		self.jqueryFile = _v.myAppsJs + os.sep+'jquery-1.11.3.js'
+		self.jqueryFile = _v.myAppsJs + os.sep+'jquery-1.12.4.min.js'
+		self.jqueryFile = _v.myAppsJs + os.sep+'jquery-3.7.1.min.js'
 		# self.jquery = jquery.theCode()
 		self.browser = None
 		self.download_default = 'text/plain'
 
-
+		self.har = True
+		self.harFile = 'selenium.har'
 		self.cookies = False
 		self.cookies_filename = '_toolsScrapeFrontEnd__ALL_AUTO_COOKIES.json'
 		self.cookies_recent_hrs = 36
@@ -326,19 +351,24 @@ class FrontEnd(object):
 		self.postURL( url )
 
 
-	"""
 	def getCookies( self ):
 		cookies = []
 		for cookie in self.browser.get_cookies():
 			# del cookie['expiry']
 			cookies.append( cookie )
 		return cookies
-	"""
 
 	def initialize( self ):
 		if self.browser is None:
 			if __.isWin:
-				self.browser = webdriver.Chrome(executable_path='C:\\Users\\Scott\\.rt\\profile\\exe\\chromedriver.exe')
+				options = Options()
+				# options.add_argument("--headless")
+				options.add_argument("--no-sandbox")
+				options.add_argument("--disable-dev-shm-usage")
+				service = Service(executable_path="D:\\.rightthumb-widgets\\widgets\\exe\\ChromeDriver\\134.0.6998.90\\chromedriver.exe")
+				self.browser = webdriver.Chrome(service=service, options=options)
+				# self.browser = webdriver.Chrome(executable_path='C:\\Users\\Scott\\.rt\\profile\\exe\\chromedriver.exe')
+				
 			elif not __.isWin:
 				chrome_options = Options()
 				chrome_options.add_argument("--headless")  # Ensure GUI is off
@@ -349,109 +379,165 @@ class FrontEnd(object):
 
 
 
-	# def select( self, selector ):
-	#     if not '.' in selector and not '#' in selector and not '[' in selector and not '=' in selector:
-	#         elem = self.browser.find_element_by_name( selector )
-	#     else:
-	#         elem = self.browser.find_element_by_css_selector( selector )
-	#     return elem
-	def setField( self, data, selector, enter=False, click=False ):
-		elem = self.select( selector )
-		elem.send_keys( data )
-		if enter:
-			elem.send_keys(Keys.RETURN)
-		elif not type( click ) == bool:
-			elemX = self.select( click )
-			elemX.click()
+	def select(self, selector):
+		# _browser.imp.project.select('.my-button')[0].click()
+		if any(x in selector for x in ['.', '#', '[', '=']):
+			return self.browser.find_elements(By.CSS_SELECTOR, selector)
+		else:
+			return self.browser.find_elements(By.NAME, selector)
+
+
+
+	def runme(self, url, threshold=50):
+		final_results = []
+		previmages = []
+		tries = 0
+
+		try:
+			self.url(url)
+			while threshold > 0:
+				try:
+					results = []
+					images = self.browser.find_elements(By.TAG_NAME, 'img')
+
+					if images == previmages:
+						tries += 1
+					else:
+						tries = 0
+
+					if tries > 20:
+						return final_results
+
+					for img in images:
+						src = img.get_attribute("src")
+						if src:
+							if "/236x/" in src or "/474x/" in src:
+								_.pr(src)
+								src = src.replace("/236x/", "/736x/")
+								src = src.replace("/474x/", "/736x/")
+								results.append(u_to_s(src))  # Assumes u_to_s is defined elsewhere
+
+					previmages = copy.copy(images)
+					final_results = list(set(final_results + results))
+
+					dummy = self.browser.find_element(By.TAG_NAME, 'a')
+					dummy.send_keys(Keys.PAGE_DOWN)
+					time.sleep(3)
+					threshold -= 1
+
+				except StaleElementReferenceException:
+					threshold -= 1
+
+		except (socket.error, socket.timeout):
+			pass
+
+		return final_results
+
+
+	def setField(self, data, selector, enter=False, click=False):
+		try:
+			# Wait for element to be present & interactable
+			elem = WebDriverWait(self.browser, 10).until(
+				EC.presence_of_element_located((By.CSS_SELECTOR, selector))
+			)
+			WebDriverWait(self.browser, 10).until(
+				EC.element_to_be_clickable((By.CSS_SELECTOR, selector))
+			)
+
+			# Debugging: Print element details
+			print(f"Element found: {selector}, Tag: {elem.tag_name}, Type: {elem.get_attribute('type')}")
+
+			# Check if inside an iframe
+			if "iframe" in elem.get_attribute("outerHTML").lower():
+				print("Element is inside an iframe. Switching...")
+				iframe = self.browser.find_element(By.TAG_NAME, "iframe")
+				self.browser.switch_to.frame(iframe)
+
+			# Clear the field before entering new data
+			elem.clear()
+			elem.send_keys(data)
+
+			if enter:
+				elem.send_keys(Keys.RETURN)
+			elif click and not isinstance(click, bool):
+				elemX = self.select(click)
+				WebDriverWait(self.browser, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, click))).click()
+
+			# If we switched to an iframe, switch back
+			self.browser.switch_to.default_content()
+
+		except Exception as e:
+			print(f"Error in setField: {e}")
+			# Attempt JavaScript as a fallback
+			try:
+				print("Trying JavaScript-based input...")
+				self.browser.execute_script("arguments[0].value = arguments[1];", elem, data)
+			except Exception as js_e:
+				print(f"JavaScript input failed: {js_e}")
+
 
 	def login( self, url, login, password, login_selector, password_selector, submit_selector=None ):
+		self.initialize()
+		# for x in dir(self.browser): print(x)
+		# sys.exit()
 		self.open( url )
-		email_elem = self.browser.find_element_by_css_selector( login_selector )
+
+
+
+		email_elem = self.browser.find_element(By.CSS_SELECTOR,  login_selector )
 		email_elem.send_keys( login )
-		password_elem = self.browser.find_element_by_css_selector( password_selector )
+		password_elem = self.browser.find_element(By.CSS_SELECTOR,  password_selector )
 		password_elem.send_keys( password )
 		if submit_selector is None:
 			password_elem.send_keys(Keys.RETURN)
 		else:
-			button1 = self.browser.find_element_by_css_selector( submit_selector )
+			button1 = self.browser.find_element(By.CSS_SELECTOR,  submit_selector )
 			button1.click()
 		time.sleep( 3 )
 
-	def loginIndividually( self, url, login, password, login_selector, password_selector, login_button='', password_button='', rawPass=False ):
-		# _.pr( 'works' )
-		# _.pr( url, login, password, login_selector, password_selector, login_button, password_button )
-		# sys.exit()
-		self.open( url )
-		if not '.' in login_selector and not '#' in login_selector and not '[' in login_selector and not '=' in login_selector:
-			email_elem = self.browser.find_element_by_name( login_selector )
-		else:
-			email_elem = self.browser.find_element_by_css_selector( login_selector )
+	def loginIndividually(self, url, login, password, login_selector, password_selector, login_button='', password_button='', rawPass=False):
+		self.open(url)
 
-		email_elem.send_keys( login )
-		if login_button == '':
-			email_elem.send_keys(Keys.RETURN)
+		# Determine method for login field
+		if any(x in login_selector for x in ['.', '#', '[', '=']):
+			email_elem = self.browser.find_element(By.CSS_SELECTOR, login_selector)
 		else:
-			button1 = self.browser.find_element_by_css_selector( login_button )
+			email_elem = self.browser.find_element(By.NAME, login_selector)
+
+		email_elem.send_keys(login)
+
+		if login_button:
+			button1 = self.browser.find_element(By.CSS_SELECTOR, login_button)
 			button1.click()
-		time.sleep( 1 )
-
-		if not '.' in password_selector and not '#' in password_selector and not '[' in password_selector and not '=' in password_selector:
-			password_elem = self.browser.find_element_by_name( password_selector )
 		else:
-			password_elem = self.browser.find_element_by_css_selector( password_selector )
-		if not rawPass:
-			password = _blowfish.decrypt( password )
+			email_elem.send_keys(Keys.RETURN)
 
-		if password.endswith( ' ' ):
-			password = _str.cleanEnd( password, ' ' )
-		password_elem.send_keys( password )
+		time.sleep(1)
+
+		# Determine method for password field
+		if any(x in password_selector for x in ['.', '#', '[', '=']):
+			password_elem = self.browser.find_element(By.CSS_SELECTOR, password_selector)
+		else:
+			password_elem = self.browser.find_element(By.NAME, password_selector)
+
+		if not rawPass:
+			password = _blowfish.decrypt(password)
+
+		if password.endswith(' '):
+			password = _str.cleanEnd(password, ' ')
+
+		password_elem.send_keys(password)
 		password = ''
 
-
-		if password_button == '':
-			pass
-			password_elem.send_keys(Keys.RETURN)
-		else:
-			button2 = self.browser.find_element_by_css_selector( login_button )
+		if password_button:
+			button2 = self.browser.find_element(By.CSS_SELECTOR, password_button)
 			button2.click()
-		time.sleep( 3 )
+		else:
+			password_elem.send_keys(Keys.RETURN)
 
-	# def runme( self, url ):
-	#   final_results = []
-	#   previmages = []
-	#   tries = 0
-	#   try:
-	#       self.url(url)
-	#       while threshold > 0:
-	#           try:
-	#               results = []
-	#               images = 
-	#               if images == previmages:
-	#                   tries += 1
-	#               else:
-	#                   tries = 0
-	#               if tries > 20:
-	#                   return final_results
-	#               for i in images:
-	#                   src = i.get_attribute("src")
-	#               if src:
- #                            if src.find("/236x/") != -1 or src.find("/474x/") != 1:
- #                                _.pr(src)
- #                                src = src.replace("/236x/", "/736x/")
- #                                src = src.replace("/474x/", "/736x/")
- #                                results.append(u_to_s(src))
+		time.sleep(3)
 
- #                    previmages = copy.copy(images)
- #                    final_results = list(set(final_results + results))
- #                    dummy = self.browser.find_element_by_tag_name('a')
- #                    dummy.send_keys(Keys.PAGE_DOWN)
- #                    time.sleep( 3 )
- #                    threshold -= 1
- #                except StaleElementReferenceException:
- #                    threshold -= 1
- #        except (socket.error, socket.timeout):
- #            pass
- #        return final_results
+
 
 
 	def open( self, url ):
@@ -463,7 +549,7 @@ class FrontEnd(object):
 	def js( self, path=None ):
 		if path is None:
 			return self.jq()
-		elif path.startwith('https://') or path.startwith('http://'):
+		elif path.startswith('https://') or path.startswith('http://'):
 			return self.injectURL( path )
 		elif os.path.isfile(path):
 			return self.injectFile( path )
@@ -497,81 +583,66 @@ class FrontEnd(object):
 			return self.browser.execute_script(code)
 		# time.sleep( 2 )
 
-	# def click( self, selector ):
-	#   if not '.' in selector and not '#' in selector and not '[' in selector and not '=' in selector:
-	#       elem = self.browser.find_element_by_name( selector )
-	#   else:
-	#       elem = self.browser.find_element_by_css_selector( selector )
-	#   elem.click()
 
-	# def clickEach( self, selector ):
-	#   if not '.' in selector and not '#' in selector and not '[' in selector and not '=' in selector:
-	#       elem = self.browser.find_element_by_name( selector )
-	#   else:
-	#       elem = self.browser.find_element_by_css_selector( selector )
+	def click(self, selector):
+		if any(x in selector for x in ['.', '#', '[', '=']):
+			elem = self.browser.find_element(By.CSS_SELECTOR, selector)
+		else:
+			elem = self.browser.find_element(By.NAME, selector)
+		elem.click()
+
+	def clickEach(self, selector):
+		if any(x in selector for x in ['.', '#', '[', '=']):
+			elems = self.browser.find_elements(By.CSS_SELECTOR, selector)
+		else:
+			elems = self.browser.find_elements(By.NAME, selector)
+
+		for elem in elems:
+			if elem.is_displayed():
+				elem.click()
+				time.sleep(0.5)
 
 
-	#   for x,row in enumerate(elem):
-	#       if elem[x].is_displayed():
-	#           elem[x].click()
-	#           time.sleep( .5 )
 
-
-	def close( self ):
+	def close(self):
 		self.active = False
-		# if __.har:
-		#   _.printVarSimple( self.client.har )
-			# pprint.p_.pr( self.client.har )
-			# self.proxy.new_har("myhar")
-			# with open('myhar.har', 'w') as har_file:
-			#   json.dump(proxy.har, har_file)
-		self.browser.close()
+		if hasattr(self, 'har') and self.har:
+			_.printVarSimple(self.har)
+			_.pr(self.har)
+			with open(self.harFile, 'w') as har_file:
+				json.dump(self.har, har_file)
+		if self.browser:
+			self.browser.quit()
 
-	def wait( self ):
-		time.sleep( 2 )
-		# _.pr(  )
-		# _.pr( 'Waiting for task completion' )
+
+	def wait(self, max_retries=30):
+		time.sleep(2)  # Initial wait to allow loading
+
 		ix = 0
-		while not self.injectReturn('return document.readyState;') == 'complete':
-			self.inject( "window.onload = function() { window.taskComplete=1; };" )
-			time.sleep( 1 )
-			ix+=1
-			_.pr( ix, end='\r', flush=True )
+		while ix < max_retries:
+			state = self.injectReturn("return document.readyState;")
+			if state == "complete":
+				break  # Stop waiting once the page is fully loaded
+
+			time.sleep(1)
+			ix += 1
+			_.pr(f"Waiting... {ix}", end='\r', flush=True)
+
+		_.pr("\nPage load complete.")
+
 
 	def code( self ):
-		
 		return self.browser.page_source
 
-
+import simplejson as json
 project = FrontEnd()
 
 
-# https://selenium-python.readthedocs.io/locating-elements.html
-#   self.browser.find_elements_by_tag_name("img")
-
-#   find_element_by_id
-#   find_element_by_name
-#   find_element_by_xpath
-#   find_element_by_link_text
-#   find_element_by_partial_link_text
-#   find_element_by_tag_name
-#   find_element_by_class_name
-#   find_element_by_css_selector
-
-# https://selenium-python.readthedocs.io/api.html
-#   i.get_attribute("src")
-
-# searches:
-#   python webdriver find_element_by_css_selector
 
 
 def action():
 	pass
-	# if _.switches.isActive('Input'):
-	#   _.setPipeData( _.getText( _.switches.value('Input') ), focus() )
-	# if not type( _.appData[__.appReg]['pipe'] ) == bool:
-	#   pass
-	# _.pr( _.d2json(_.appData) )
+
 
 
 

@@ -4,21 +4,19 @@ fieldSet=_.l.vars(focus(),__name__,__file__,appDBA);_.load();_v=__.imp('_rightTh
 
 def sw():
 	pass
-	_.switches.register( 'URL', '-url,-f', isRequired=True )
+	_.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name', description='Files', isRequired=False )
+	_.switches.register( 'Reverse', '-r,-reverse' )
+	_.switches.register( 'DirtyJsonLine', '-d' )
 _._default_settings_()
 
 _.appInfo[focus()] = {
-	'file': 'printUrl.py',
-	'description': 'Print a URL',
+	'file': 'thisApp.py',
+	'description': 'Changes the world',
 	'categories': [
-						'print',
-						'url',
-						'website',
-						'webpage',
-						'tool',
+						'DEFAULT',
 				],
 	'examples': [
-						_.hp('p printUrl -url https://google.com'),
+						_.hp('p thisApp -file file.txt'),
 						_.linePrint(label='simple',p=0),
 						'',
 	],
@@ -36,7 +34,7 @@ def appRegDics(): return { 'appInfo': _.appInfo[focus()], 'appData': _.appData[f
 
 def triggers():
 	_._default_triggers_()
-	_.switches.trigger( 'Files', _.myFileLocations, vs=False )
+	_.switches.trigger( 'Files',   _.isFileAdvanced, vs=False )     # Advanced File Registration    (Fn Alias Resolves To: def myFileLocations)
 	_.switches.trigger( 'DB', _.aliasesFi )
 	_.switches.trigger( 'Folder', _.myFolderLocations )
 	_.switches.trigger( 'Folders', _.myFolderLocations )
@@ -47,14 +45,33 @@ _.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw )
 ########################################################################################
 #n)--> start
 
-
 def action():
-	for url in _.switches.values('URL'):
-		page = _.URL( url ).replace('\r','')
-		for line in page.split('\n'):
-			if _.showLine(line):
-				_.pr( line )
+	if _.switches.isActive('Files'):
+		data = _.getText( _.switches.value('Files') )
+	else:
+		data = _.isData()
+	
+	if _.switches.isActive('DirtyJsonLine'):
+		import simplejson as json
+		data = ''.join(data).strip().rstrip(',')
+		dic = json.loads(f'{{data}}')
+		
+		
 
+
+	
+	elif not _.switches.isActive('DirtyJsonLine'):
+		if not _.switches.isActive('Reverse'):
+			data = '\\n'.join(data)
+
+		
+		elif _.switches.isActive('Reverse'):
+			data = '\n'.join(data).replace('\\n','\n')
+			
+
+	
+	_copy = _.regImp( __.appReg, '-copy' )
+	_copy.imp.copy( data )
 ########################################################################################
 if __name__ == '__main__':
 	action(); _.isExit(__file__)

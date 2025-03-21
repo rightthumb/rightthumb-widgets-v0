@@ -202,20 +202,22 @@ def action():
 			objects = []
 			basic = []
 			All = []
-
+			# print(file)
 			for line in file.split('\n'):
 				line = line.split('#')[0]
 				st = line.strip()
 				if line.startswith('class '):
-					if 'c' in _.switches.value('Path') or 'all' in _.switches.value('Path'):
+					# print(line)
+					if 'c' in _.switches.value('Path') or 'all' in _.switches.value('Path') or _.switches.value('Path') == '':
+						# print(line)
 						objects.append(st.split('class ')[1].split('(')[0].split(':')[0].strip())
 						basic.append(st.split('class ')[1].split('(')[0].split(':')[0].strip())
-						# All.append(st.split('class ')[1].split('(')[0].split(':')[0].strip())
+						All.append(st.split('class ')[1].split('(')[0].split(':')[0].strip())
 				elif line.startswith('def '):
 					if 'c' in _.switches.value('Path') or 'all' in _.switches.value('Path'):
 						objects.append(st.split('def ')[1].split('(')[0].strip())
 						basic.append(st.split('def ')[1].split('(')[0].strip())
-						# All.append(st.split('def ')[1].split('(')[0].strip())
+						All.append(st.split('def ')[1].split('(')[0].strip())
 				elif '='  in line  and not st.startswith('def ') and not '[' in line.split('=')[0] and not '(' in line.split('=')[0]:
 					if not line.startswith('\t') and not line.startswith(' '):
 						if 'v' in _.switches.value('Path') or 'all' in _.switches.value('Path'):
@@ -248,6 +250,7 @@ def action():
 					objs.append(o)
 			objectItems = '  '+', '.join(objs)
 
+			# print(All)
 
 			if len(_.switches.value('Path')):
 				# print(impPath)

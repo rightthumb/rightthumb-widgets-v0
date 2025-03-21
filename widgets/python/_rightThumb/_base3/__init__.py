@@ -59,10 +59,12 @@ helpColorScheme = dot()
 def isFile(path,simple=True,s=None):
 	if not s is None: simple=s
 	if not simple: return myFileLocations(path)
-	if os.path.isfile(path): return path
+	if os.path.isfile(path): return __.path(path)
 	if path.startswith('http:') or path.startswith('https:'):
 		path=path.replace('http:','https:')
 		path = url2file(path)
+		return path
+	if os.sep in path:
 		return path
 	return aliases_file_open(path)
 ## ################################################## ##
@@ -455,7 +457,28 @@ def random_color():
 
 print_ed_group={}
 linePr=False
-def print_(*args,p=None,c=None,pad=3,g=None,end=None,pvs=None,pv=None,json=None, dic=None, line=None, rstrip=True, lineMinus=0, lineLen=None, r=None, h=None, center=False, ShowLine={}, lineNumber=None):
+def print_(
+			*args,
+			p=None,
+			c=None,
+			pad=3,
+			g=None,
+			end=None,
+			pvs=None,
+			pv=None,
+			json=None,
+			dic=None,
+			line=None,
+			rstrip=True,
+			lineMinus=0,
+			lineLen=None,
+			r=None,
+			h=None,
+			center=False,
+			ShowLine={},
+			lineNumber=None,
+			flush=False,
+		):
 	if type(ShowLine) == str:
 		ShowLine = { 'line': ShowLine }
 	# lineNumber
@@ -490,7 +513,7 @@ def print_(*args,p=None,c=None,pad=3,g=None,end=None,pvs=None,pv=None,json=None,
 			json = simplejson
 		args[0]=simplejson.dumps(args[0], indent=4, sort_keys=False, default=str)
 		if rint:
-			print(args[0])
+			print(args[0], end=end, flush=flush)
 		return args[0]
 	# if pvs: pvs=None; pv=1;
 
@@ -594,10 +617,10 @@ def print_(*args,p=None,c=None,pad=3,g=None,end=None,pvs=None,pv=None,json=None,
 			if not end is None:
 				if not lineLen is None:
 					_line__ = linePrint(txt=' ',p=0,minus=lineMinus)
-					print( _line__ , end=end ); print( prn, end=end )
+					print( _line__ , end=end ); print( prn, end=end, flush=flush )
 				else:
 					_line__ = linePrint(txt=' ',p=0,minus=lineMinus,length=lineLen)
-					print( _line__, end=end ); print( prn, end=end )
+					print( _line__, end=end ); print( prn, end=end, flush=flush )
 			# if not end is None: print( '                                                                                        ' , end=end ); print( prn, end=end );
 			else: print( prn )
 		print_ed.append({'prn':prn, 'line': _line__ })
@@ -3660,6 +3683,8 @@ def printText(text,p=1):
 
 
 def changeM( path, stampM, stampA=None, meta=False, p=0 ):
+	# agoThrow
+
 	# if not type(stampM) == int and not type(stampM) == float:
 	# 	stampM = ago(stampM)
 	if p:
@@ -3708,6 +3733,8 @@ def changeM( path, stampM, stampA=None, meta=False, p=0 ):
 			except Exception as e:
 				pass
 def changeC( path, stampC, meta=False, p=0 ):
+	# agoThrow
+
 	# if not type(stampC) == int and not type(stampC) == float:
 	# 	stampC = ago(stampC)
 	if p:
@@ -9537,8 +9564,11 @@ def isN(data):
 	return int(data)
 
 def autoDate( theDate ):
+	
+	# agoThrow
 	try:
-		theDate = ago( theDate )
+		if len(theDate) < 4:
+			theDate = ago( theDate )
 	except:
 		pass
 	
@@ -12263,6 +12293,11 @@ class Switches:
 					elif column == 'values':
 						self.switches[i].values = values
 						self.switches[i].value = ','.join(valuesV)
+	def field( self, name, column, value, theFocus=False, runTrigger=True ):
+		return self.fieldSet( name, column, value, theFocus, runTrigger )
+	
+	def set( self, name, column, value, theFocus=False, runTrigger=True ):
+		return self.fieldSet( name, column, value, theFocus, runTrigger )
 	def fieldSet( self, name, column, value, theFocus=False, runTrigger=True ):
 		if name == 'Sort':
 			if column == 'value':
@@ -16691,7 +16726,8 @@ def count_bytes(fo, recursive=True):
 isTime = False
 timeAgoBase = []
 timeAgoBaseCount = 0
-def timeAgo( do='', startDate=None,epoch=None, d=None ):
+def timeAgoThrow( do='', startDate=None,epoch=None, d=None ):
+	# agoThrow
 	if do == 'm': do = 'md'
 	if do == 'c': do = 'cd'
 	if do == 'md' or do == 'cd': return do
@@ -16705,6 +16741,24 @@ def timeAgo( do='', startDate=None,epoch=None, d=None ):
 	new=timeAgo22( do, startDate,epoch, d )
 	if not type(new) == float:
 		raise ValueError("Invalid value provided")
+
+
+	return new
+
+def timeAgo( do='', startDate=None,epoch=None, d=None ):
+	if do == 'm': do = 'md'
+	if do == 'c': do = 'cd'
+	if do == 'md' or do == 'cd': return do
+	# test = 'sdwmy'
+	# good = False
+	# for t in test:
+	# 	if t in do:
+	# 		good = True
+	# if not good:
+	# 	raise ValueError("Invalid value provided")
+	new=timeAgo22( do, startDate,epoch, d )
+	# if not type(new) == float:
+	# 	raise ValueError("Invalid value provided")
 
 
 	return new
@@ -26482,6 +26536,39 @@ def spliter(text, delimiters):
 # print(result)
 
 ##################################################
+	# Equivalent windows type command stripping invalid characters
+
+def Type(file_path):
+	"""
+	Mimics the Windows `type` command:
+	- Reads the file as raw text
+	- Outputs exactly as-is (no extra encoding issues)
+	- Ensures `>` and `|` work correctly
+	"""
+	if not file_path or not isinstance(file_path, (str, bytes, os.PathLike)):
+		# sys.stderr.write("Error: Invalid file path provided.\n")
+		sys.stderr.flush()
+		return ''
+
+	if not os.path.isfile(file_path):
+		sys.stderr.write(f"Error: File '{file_path}' not found.\n")
+		sys.stderr.flush()
+		return ''
+
+	try:
+		with open(file_path, "rb") as file:  # Open in binary mode to prevent encoding issues
+			while chunk := file.read(4096):  # Read in chunks for efficiency
+				sys.stdout.buffer.write(chunk)  # Write raw bytes directly to stdout
+				sys.stdout.flush()  # Ensure immediate output
+		return ''
+	except Exception as e:
+		# sys.stderr.write(f"Error reading file: {str(e)}\n")
+		sys.stderr.flush()
+		return ''
+		
+
+
+##################################################
 
 ##================================================
 nsfw=True
@@ -26543,6 +26630,7 @@ saveYAML=saveYML
 saveYAML2=saveYML2
 imp=regImp
 ago=timeAgo
+agoThrow=timeAgoThrow
 toBytes=to_bytes
 yt=toYML
 yf=fromYML

@@ -188,6 +188,7 @@ GOTO:EOF
             SET m3ID={D644A899-89BB-9748-8339-3FC5F75B8A16}
             SET pubID={C7DA4040-A42C-0372-B54A-8E40F835D3E1}
             SET privID={5B55D9AE-6C90-B44B-2071-5376CBB2AAAE}
+            SET last=%wprofile%\tables\file-open.last
             REM IF NOT EXIST %widgets%\hosts (mkdir %widgets%\hosts) 
             REM IF NOT EXIST %myHome% (
             REM         md %myHome%

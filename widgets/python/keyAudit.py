@@ -4,21 +4,17 @@ fieldSet=_.l.vars(focus(),__name__,__file__,appDBA);_.load();_v=__.imp('_rightTh
 
 def sw():
 	pass
-	_.switches.register( 'URL', '-url,-f', isRequired=True )
+	_.switches.register( 'Duration', '-d' )
 _._default_settings_()
 
 _.appInfo[focus()] = {
-	'file': 'printUrl.py',
-	'description': 'Print a URL',
+	'file': 'thisApp.py',
+	'description': 'Changes the world',
 	'categories': [
-						'print',
-						'url',
-						'website',
-						'webpage',
-						'tool',
+						'DEFAULT',
 				],
 	'examples': [
-						_.hp('p printUrl -url https://google.com'),
+						_.hp('p thisApp -file file.txt'),
 						_.linePrint(label='simple',p=0),
 						'',
 	],
@@ -36,7 +32,7 @@ def appRegDics(): return { 'appInfo': _.appInfo[focus()], 'appData': _.appData[f
 
 def triggers():
 	_._default_triggers_()
-	_.switches.trigger( 'Files', _.myFileLocations, vs=False )
+	_.switches.trigger( 'Files',   _.isFileAdvanced, vs=False )     # Advanced File Registration    (Fn Alias Resolves To: def myFileLocations)
 	_.switches.trigger( 'DB', _.aliasesFi )
 	_.switches.trigger( 'Folder', _.myFolderLocations )
 	_.switches.trigger( 'Folders', _.myFolderLocations )
@@ -47,13 +43,27 @@ _.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw )
 ########################################################################################
 #n)--> start
 
+import keyboard
+import time
+LISTEN_DURATION = 3  # Seconds
+
+def on_key_event(event):
+	key = event.name.lower() if len(event.name) == 1 else event.name
+	print(key)
+
+def start():
+	global LISTEN_DURATION
+	start_time = time.time()
+	keyboard.hook(on_key_event)
+	while time.time() - start_time < LISTEN_DURATION:
+		time.sleep(0.1)  # Prevents high CPU usage
+	keyboard.unhook_all()
 
 def action():
-	for url in _.switches.values('URL'):
-		page = _.URL( url ).replace('\r','')
-		for line in page.split('\n'):
-			if _.showLine(line):
-				_.pr( line )
+	global LISTEN_DURATION
+	if _.switches.isActive('Duration'):
+		LISTEN_DURATION = float(_.switches.value('Duration'))
+	start()
 
 ########################################################################################
 if __name__ == '__main__':

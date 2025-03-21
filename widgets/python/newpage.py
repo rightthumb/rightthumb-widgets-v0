@@ -87,6 +87,11 @@ def expand_spaces_to_tabs(input_string):
 		expanded_lines.append(new_line)
 	return '\n'.join(expanded_lines)
 
+
+
+
+
+
 def action():
 	url = 'https://apps.eyeformeta.com/templates/html/'
 	win = 'D:\\websites\\domains\\apps.eyeformeta.com\\public_html\\templates\\html\\'
@@ -100,6 +105,14 @@ def action():
 		url=wsl
 	if not _.switches.isActive('Template'):
 		url+='0.htm'
+	
+	
+	elif _.switches.value('Template') == 'n': url+='n.htm'
+	elif _.switches.value('Template') == 'b': url+='b.htm'
+	elif _.switches.value('Template') == '00': url+='00.htm'
+	elif _.switches.value('Template') == '000': url+='000.htm'
+
+
 	elif _.switches.value('Template') == 'th': url+='theme-manager.md'
 	elif _.switches.value('Template') == 's': url+='template.htm'
 	elif _.switches.value('Template') == 't': url+='template.htm'
@@ -121,7 +134,9 @@ def action():
 	elif _.switches.value('Template') == 'ns': url+='ns.js'
 	else: url+=_.switches.value('Template')
 	if isLocal:
-		page = _.getText2(url,'text')
+		# page = _.getText2(url,'text')
+		page = _.Type(url)
+		pass
 	else:
 		page = requests.get(url).content.decode('utf-8')
 	if _.switches.isActive('Remove-Comments'):
@@ -136,7 +151,7 @@ def action():
 					page = remove_html_comments(page)
 			else:
 				page = remove_html_comments(page)
-	_.pr(page)
+	print(page)
 import requests
 import os
 

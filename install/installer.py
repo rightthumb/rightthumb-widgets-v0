@@ -1,5 +1,7 @@
 #!/usr/bin/python3
 
+# bashrc a3bc42ec51e9
+
 # ## {R2D2919B742E} ##
 # ###########################################################################
 # What if magic existed?
@@ -3500,7 +3502,9 @@ alias dex.='python3 $ww/python/indexDB-files.py'
 alias mem="free -h"
 
 
+alias .bash="bash --norc --noprofile"
 
+alias exec='/opt/rightthumb-widgets-v0/widgets/bash/vps-______________execute_on_all_servers.sh'
 
 alias f='/opt/rightthumb-widgets-v0/widgets/bash/nav/c.sh'
 alias j='sh /opt/rightthumb-widgets-v0/widgets/bash/nav/p.sh'
@@ -3510,6 +3514,21 @@ alias obb="p script-helper -t r:_.al -i"
 
 alias vps-="/usr/bin/python3 /opt/rightthumb-widgets-v0/widgets/python/files.py + vps- -folders /opt/rightthumb-widgets-v0/"
 export Session_ID=$(date +%s)
+
+
+
+url() {
+  if [ -z "$1" ]; then
+    echo "Usage: smartpath_remote <argument>"
+    return 1
+  fi
+
+  ssh root@teth.sds.sh "/bin/python3 /opt/rightthumb-widgets-v0/widgets/python/smartpath.py -f \"$1\""
+}
+
+
+
+
 
 clear
 # get_time_difference

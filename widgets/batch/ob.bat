@@ -10,7 +10,7 @@ if [%1]==[] (
     echo ob https://sds.sh/  -fn md
     echo ob https://sds.sh/  -fn cd
     echo ob c.bat  -fn cd
-    echo ob c.bat  -fn md
+    echo ob c.bat  -fn md -t fd
     echo.
     echo.
     echo Off Topic But Possible: ob 1w -fn ago -t fd
@@ -21,4 +21,4 @@ if [%1]==[] (
     goto :eof
 )
 
-call p. script-helper -i %*
+call p. script-helper -i %* | call cp

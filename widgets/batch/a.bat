@@ -10,6 +10,9 @@ rem    - Scott Taylor Reph, RightThumb.com
 rem ###########################################################################
 rem ## {C3P0D40fAe8B} ##
 
-echo Deprecated as aa
-
+call o a %* 
+set /p a=<%last%
+echo.
+echo Set Active File
+echo.
  

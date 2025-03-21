@@ -8,7 +8,7 @@ def focus(parentApp='', childApp='', reg=True): global appDBA; f = __.appName(ap
 fieldSet=_.l.vars(focus(),__name__,__file__,appDBA);_.load();_v=__.imp('_rightThumb._vars');
 
 def sw():
-	_.switches.register( 'Input', '-i,-input' )
+	_.switches.register( 'Input', '-f,-i,-input' )
 	_.switches.register( 'JS-Namespace', '-js', '_.cookies.' )
 	_.switches.register( 'PHP-Namespace', '-php', '$myClass->' )
 	_.switches.register( 'Project', '-p,-project', 'storage' )
@@ -134,7 +134,16 @@ def phpKeysClean(data,o):
 def processPhpKeys(data,php):
 	# print('processPhpKeys')
 	_code.imp.validator.register( data, 'javascript' )
+
+	
+	# original
 	_code.imp.validator.createIndex( data, 'javascript', skipLoad=True, simple=False )
+	
+	# used for testing found in script-helper
+	# _code.imp.validator.createIndex( data, 'javascript',  skipLoad=True, simple=False, B=True  )
+	
+	
+	
 	_code.imp.validator.identity['location']['open']
 	found = []
 	for o,c in enumerate(data):

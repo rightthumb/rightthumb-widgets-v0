@@ -74,7 +74,7 @@ template.info(focus()); exec(  template.triggers()  ); _.l.sw.register( triggers
 #n)--> start
 
 if _.switches.isActive('Default-Print-Command'): print_command = 'print('
-else: print_command = '_.pr('
+else: print_command = 'print('
 
 counter=40000
 def inject(line):

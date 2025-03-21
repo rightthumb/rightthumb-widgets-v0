@@ -279,7 +279,7 @@ templates['public']='''
     Header Set Access-Control-Allow-Headers "Content-Type, Authorization, X-Requested-With, XMLHttpRequest"
 </IfModule>
 '''
-templates['xsite']='''
+templates['xsite.']='''
 # Enable CORS headers
 <IfModule mod_headers.c>
     Header Set Access-Control-Allow-Origin "*"
@@ -299,6 +299,27 @@ templates['xsite']='''
 <FilesMatch "\.(js|css|png|jpg|jpeg|gif|svg|woff|woff2|ttf|eot)$">
     Header Set Access-Control-Allow-Origin "*"
 </FilesMatch>
+'''.strip()
+
+templates['xsite']='''
+# Enable Cross-Origin Resource Sharing (CORS)
+<IfModule mod_headers.c>
+    Header Set Access-Control-Allow-Origin "*"
+    Header Set Access-Control-Allow-Methods "GET, POST, OPTIONS"
+    Header Set Access-Control-Allow-Headers "*"
+</IfModule>
+
+# Ensure that preflight requests (OPTIONS) are handled correctly
+RewriteEngine On
+RewriteCond %{REQUEST_METHOD} OPTIONS
+RewriteRule ^(.*)$ $1 [R=200,L]
+
+# php -- BEGIN cPanel-generated handler, do not edit
+# Set the “ea-php82” package as the default “PHP” programming language.
+<IfModule mime_module>
+  AddHandler application/x-httpd-ea-php82 .php .php8 .phtml
+</IfModule>
+# php -- END cPanel-generated handler, do not edit
 '''.strip()
 
 templates['xsite1']='''

@@ -19,14 +19,14 @@ if not "%1"=="" (
 echo.
 echo Files:
 echo.
-es dm:last%nDays%days type:file | p. line --c - %es% backup logs temp | p. files --c | sort | p. line %*
+es.exe dm:last%nDays%days type:file | p. line --c - %es% backup logs temp | p. files --c | sort | p. line %*
 echo.
 echo.
 
 :: Display Folders
 echo Folders:
 echo.
-es dm:last%nDays%days type:folder | p. line --c - %es% backup logs temp | p. isFolder | sort | p. line %*
+es.exe dm:last%nDays%days type:folder | p. line --c - %es% backup logs temp | p. isFolder | sort | p. line %*
 echo.
 echo.
 echo.

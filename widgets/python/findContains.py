@@ -29,6 +29,9 @@ def sw():
 	_.switches.register( 'Files', '-f,-fi,-file,-files','file.txt',  description='Files', isRequired=False )
 	_.switches.register( 'HasQuotes', '-q,-quote,-quotes', 'quotes required in output' )
 	_.switches.register( 'Original', '-o,-og,-original', 'refined pipe input' )
+	_.switches.register( 'Slots_12', '-slot,-slots,-12', 'Compares Clipboard Slots (1=haystack, 2=needle)' )
+	_.switches.register( 'UseCaseID', '-case', 'b546' )
+	_.switches.register( 'Missing', '-m,-r' )
 
 _._default_settings_()
 # __.setting('omit-switch-triggers',['Ago'])
@@ -130,24 +133,49 @@ _.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw )
 ########################################################################################
 #n)--> start
 
-def action():
-	file = _.getText( _.switches.value('Files') )
+import os
 
-	for line in _.isData(r=0):
+def action():
+	if _.switches.isActive('Slots_12'):
+		one = _.getText( _v.stmp+os.sep+'hotkeys-save_clip_1' )
+		two = _.getText( _v.stmp+os.sep+'hotkeys-save_clip_2' )
+	else:
+		one = _.getText( _.switches.value('Files') )
+		two = _.isData(r=0)
+	yes = []
+	no = []
+	for line in two:
 		og = line
-		for scan in file:
+		found = False
+		for scan in one:
 			if line in scan:
 				line = scan
+				yes.append(og)
+				found = True
 				break
-		if _.switches.isActive('Original'):
-			out = og
-		else:
-			out = line
-		if _.switches.isActive('HasQuotes'):
-			if '"' in line:
+		if not found:
+			no.append(og)
+		if _.switches.isActive('UseCaseID') and _.switches.value('UseCaseID') in 'b546':
+			# Start  UseCaseID: b546
+			if _.switches.isActive('Original'):
+				out = og
+			else:
+				out = line
+			if _.switches.isActive('HasQuotes'):
+				if '"' in line:
+					_.pr(out)
+			else:
 				_.pr(out)
-		else:
-			_.pr(out)
+			return None
+			# End  UseCaseID: b546
+	if _.switches.isActive('Missing'):
+		for line in no:
+			_.pr(line)
+	else:
+		for line in yes:
+			_.pr(line)
+
+
 	# load(); global c3po;
 
 	#n)--> iterate

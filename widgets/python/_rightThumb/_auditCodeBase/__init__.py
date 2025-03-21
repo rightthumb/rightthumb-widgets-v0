@@ -276,6 +276,8 @@ class Validator:
 		except Exception as e:
 			self.rls = {}
 			self.rlID = 0
+
+		# self.buildIndexes()
 			# _.colorThis( [ 'self.rlID: set to 0' ], 'red' )
 
 
@@ -1090,6 +1092,14 @@ class Validator:
 
 
 	def buildIndexes( self ):
+		# print('buildIndexes')
+		# print('buildIndexes')
+		# print('buildIndexes')
+		# print('buildIndexes')
+		# print('buildIndexes')
+		# print('buildIndexes')
+		# print('buildIndexes')
+		# print('buildIndexes')
 		# os.system('cls')
 		self.buildIndexStructure()
 		self.buildCarriageIndex()
