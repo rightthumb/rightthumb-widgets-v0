@@ -148,14 +148,17 @@ return content
 
 def action():
 	global js
-	_browser.imp.project.login("https://www.facebook.com/login/device-based/regular/login/?login_attempt=1", 'scott.reph@gmail.com', '21667013691424', '#email', '#pass', '#loginbutton')
-	_browser.imp.project.url("https://www.facebook.com/paul.panfilowitz")
-	data = _browser.imp.project.execute_script(js)
-	_.pv(data)
-	# _browser.imp.project.
-	# _browser.imp.project.
-	# _browser.imp.project.
-	# _browser.imp.project.
+	# _browser.imp.project.login("https://www.facebook.com/login/device-based/regular/login/?login_attempt=1", 'scott.reph@gmail.com', '21667013691424', '#email', '#pass', '#loginbutton')
+	# _browser.imp.project.url("https://www.facebook.com/paul.panfilowitz")
+	_browser.imp.project.url("https://eyeformeta.com/apps/DocWeaver/")
+
+	input('Waiting...')
+	_browser.imp.project.testPromptWait()
+	# data = _browser.imp.project.execute_script(js)
+	# _.pv(data)
+	# # _browser.imp.project.
+	# # _browser.imp.project.
+	# # _browser.imp.project.
 	_browser.imp.project.close()
 
 # from selenium import webdriver

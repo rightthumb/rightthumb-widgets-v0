@@ -104,6 +104,8 @@ def appSwitches():
 	_.switches.register('InvertResults', '-invert', group=[swGrp,'Invert'] )
 	swGrp += 1
 	_.switches.register('FileNameIs', '-is', group=[swGrp,'FileIs'] )
+	swGrp += 1
+	_.switches.register('NoF1', '-nof1', group=[swGrp,'No f1 Listener to add omit mid app'] )
 
 
 _bk = None
@@ -464,11 +466,19 @@ def getFolder(folder,r=True):
 			dirList = os.listdir(folder)
 			if _.switches.isActive('Reverse'): dirList.reverse()
 		for item in dirList:
-			record = None
 			path = folder + _v.slash + item
+			if __.MonActivated:
+				if not _.showLine(folder) or not _.showLine(item+_v.slash):
+					break
+				elif not _.showLine(path):
+					continue
+			record = None
 			add(path,r)
+			possiblyWait()
 isClean = _.switches.isActive('Print-Clean')
 def add(path,r=False):
+	
+
 	global i
 	global iS
 	global baseDepth
@@ -873,7 +883,42 @@ def Relative_Path_Persistent():
 			else:
 				_.switches.fieldSet( 'Toggle-Relative-Path', 'active', True )
 
+_paste = None
+
+
+def possiblyWait():
+	while __.Mon.pause:
+		time.sleep(1)
+
+
+def addOmit():
+	global _paste
+	if _paste is None:
+		_paste = _.regImp( __.appReg, '-paste' )
+	omit=_paste.imp.paste()
+	omit = omit.strip()
+	if not omit: return None
+	_.switches.Add( 'Minus', omit )
+	__.MonActivated = True
+
+	# current = _.switches.value('Minus')
+	# current.append(omit)
+	# _.switches.fieldSet( 'Minus', 'active', True )
+	# _.switches.fieldSet( 'Minus', 'values', current )
+	# _.switches.fieldSet( 'Minus', 'value', ','.join(current) )
+	# __.Mon.pause = False
+
+
 def action():
+	__.appRegBK = __.appReg
+	__.MonActivated = False
+
+	if _.switches.isActive('NoF1'):
+		__.F1 = False
+		__.Mon = _.dot(); __.Mon.pause = False
+	else:
+		__.F1 = True
+		__.Mon = _.KeyMon({'f1': lambda:addOmit()},strict=True)
 	Relative_Path_Persistent()
 
 	_.v.no_extension = _.switches.isActive('No-Extension')
@@ -1261,6 +1306,7 @@ def star(string, criteria=[], case_sensitive=False):
 
 
 def process(path):
+	# possiblyWait()
 	if _.switches.isActive('FileNameIs'):
 		filename = os.path.basename(path)
 		filename2 = filename.lower()

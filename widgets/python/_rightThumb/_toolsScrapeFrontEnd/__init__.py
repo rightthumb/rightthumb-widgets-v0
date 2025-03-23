@@ -90,6 +90,7 @@ import socket
 import unicodedata
 import urllib
 from subprocess import call
+import re
 ##################################################
 from selenium import webdriver # type: ignore
 from selenium.webdriver.common.keys import Keys # type: ignore
@@ -207,12 +208,12 @@ if __name__ == '__main__':
 
 # from browswermobproxy import Server
 # from browsermobproxy import Server
+from browsermobproxy import Server  # type: ignore
 
 def URL(url,data={}):
 	return str(__.imp('requests.post').post(url, data=data).content,'iso-8859-1').replace('\\n','\n')
 	return __.imp('requests.get').get(url).content.decode("utf-8").replace('\\n','\n')
 
-from browsermobproxy import Server  # type: ignore
 
 class ProxyManager:
     _BMP = "D:\\.rightthumb-widgets\\widgets\\exe\\ChromeDriver\\134.0.6998.90\\browsermob-proxy-2.1.4-bin\\browsermob-proxy-2.1.4\\bin\\browsermob-proxy.bat"
@@ -272,6 +273,7 @@ class FrontEnd(object):
 		self.cookies = False
 		self.cookies_filename = '_toolsScrapeFrontEnd__ALL_AUTO_COOKIES.json'
 		self.cookies_recent_hrs = 36
+		self.headless = False
 		
 		self.active = False
 
@@ -362,7 +364,8 @@ class FrontEnd(object):
 		if self.browser is None:
 			if __.isWin:
 				options = Options()
-				# options.add_argument("--headless")
+				if self.headless:
+					options.add_argument("--headless")
 				options.add_argument("--no-sandbox")
 				options.add_argument("--disable-dev-shm-usage")
 				service = Service(executable_path="D:\\.rightthumb-widgets\\widgets\\exe\\ChromeDriver\\134.0.6998.90\\chromedriver.exe")
@@ -494,6 +497,66 @@ class FrontEnd(object):
 			button1 = self.browser.find_element(By.CSS_SELECTOR,  submit_selector )
 			button1.click()
 		time.sleep( 3 )
+		_.pr()
+		_.pr(line=1,c='yellow')
+		input("Press Enter to continue...")
+		input("Press Enter again...")
+
+
+
+
+
+
+	def testPromptWait__This__MF__THIS(self):
+		# This ---> MF THIS <---
+		# This ---> MF THIS <---
+		# This ---> MF THIS <---
+		# This ---> MF THIS <---
+		# This ---> MF THIS <---
+		if not self.headless:
+			# Inject a prompt after delay, so the browser has time to display it
+			js = """
+			setTimeout(function() {
+				window.__promptValue = prompt("Manual verification required (CAPTCHA or 2FA).\\nHow many minutes should I wait?", "2");
+			}, 500);
+			"""
+
+			self.browser.execute_script(js)
+
+			# Wait for user to respond to the prompt manually
+			input("⏳ Please enter response in browser prompt and press ENTER here when done...")
+
+			# Retrieve the response from the browser
+			response = self.browser.execute_script("return window.__promptValue;")
+			print('response',response)
+			print('response',response)
+			print('response',response)
+			print('response',response)
+			if response is not None:
+				response = str(response).strip()
+				try:
+					yy=float(response)
+					yy+=10
+					yy-=10
+					valid = True
+				except:
+					valid = False
+
+				# if re.match(r'^\\d*\\.?\\d+$', response):  # Valid float format
+				if valid:
+					wait_minutes = float(response)
+					wait_seconds = int(wait_minutes * 60)
+					_.pr(f'⏱️ Waiting {wait_seconds} seconds...')
+					time.sleep(wait_seconds)
+				else:
+					_.pr("⚠️ Invalid input. No wait.")
+			else:
+				_.pr("🚫 Prompt canceled or no input. No wait.")
+		else:
+			time.sleep(10)  # Fallback wait
+
+
+
 
 	def loginIndividually(self, url, login, password, login_selector, password_selector, login_button='', password_button='', rawPass=False):
 		self.open(url)

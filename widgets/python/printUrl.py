@@ -5,6 +5,7 @@ fieldSet=_.l.vars(focus(),__name__,__file__,appDBA);_.load();_v=__.imp('_rightTh
 def sw():
 	pass
 	_.switches.register( 'URL', '-url,-f', isRequired=True )
+	_.switches.register( 'Text', '-t,-txt,-text', isRequired=True )
 _._default_settings_()
 
 _.appInfo[focus()] = {
@@ -50,7 +51,7 @@ _.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw )
 
 def action():
 	for url in _.switches.values('URL'):
-		page = _.URL( url ).replace('\r','')
+		page = _.URL( url, text=_.switches.isActive('Text') ).replace('\r','')
 		for line in page.split('\n'):
 			if _.showLine(line):
 				_.pr( line )

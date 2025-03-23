@@ -3530,6 +3530,11 @@ url() {
 
 
 
+alias social="p vps-scan-social-media"
+
+
+
+
 clear
 # get_time_difference
 # a3bc42ec51e9

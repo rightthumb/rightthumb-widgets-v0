@@ -301,7 +301,7 @@ templates['xsite.']='''
 </FilesMatch>
 '''.strip()
 
-templates['xsite']='''
+templates['xsite-old']='''
 # Enable Cross-Origin Resource Sharing (CORS)
 <IfModule mod_headers.c>
     Header Set Access-Control-Allow-Origin "*"
@@ -328,6 +328,43 @@ templates['xsite1']='''
 </IfModule>
 '''.strip()
 
+templates['xsite']='''
+# Ensure mod_headers is available
+<IfModule mod_headers.c>
+
+    # Allow any origin to access resources (wildcard CORS)
+    Header always set Access-Control-Allow-Origin "*"
+
+    # Allow standard CORS methods
+    Header always set Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS"
+
+    # Allow common request headers
+    Header always set Access-Control-Allow-Headers "Content-Type, Authorization, X-Requested-With, XMLHttpRequest"
+
+    # Optional: Allow credentials (note: must not use '*' for origin in that case!)
+    # Header always set Access-Control-Allow-Credentials "true"
+
+    # Allow cache of CORS preflight
+    Header always set Access-Control-Max-Age "1728000"
+
+</IfModule>
+
+# Ensure mod_rewrite is available
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Handle OPTIONS preflight requests directly, without redirect
+    RewriteCond %{REQUEST_METHOD} OPTIONS
+    RewriteRule ^(.*)$ $1 [R=204,L]
+</IfModule>
+
+# Ensure all static assets also allow CORS (all file types)
+<FilesMatch ".*\.(js|css|png|jpg|jpeg|gif|svg|woff|woff2|ttf|eot|otf|json|txt|xml|html|webp|mp3|mp4|avi|pdf)$">
+    <IfModule mod_headers.c>
+        Header always set Access-Control-Allow-Origin "*"
+    </IfModule>
+</FilesMatch>
+'''.strip()
 templates['wp']='''
 # BEGIN WordPress
 # The directives (lines) between "BEGIN WordPress" and "END WordPress" are

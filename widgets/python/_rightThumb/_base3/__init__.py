@@ -3,6 +3,21 @@
 # alt+29 ↔ is space
 # helpColorScheme
 
+
+
+
+
+
+# function_with_args_to_variable = lambda: my_fn("Alice")
+# function_with_args_to_variable()
+
+
+
+
+
+
+
+
 ##################################################
 import _rightThumb._construct as __
 import _rightThumb._vars as _v
@@ -12291,13 +12306,28 @@ class Switches:
 						else:
 							self.switches[i].value = value
 					elif column == 'values':
-						self.switches[i].values = values
-						self.switches[i].value = ','.join(valuesV)
+						self.switches[i].values = [value]
+						self.switches[i].value = value
 	def field( self, name, column, value, theFocus=False, runTrigger=True ):
 		return self.fieldSet( name, column, value, theFocus, runTrigger )
-	
+
+
+	def Add( self, name, value ):
+		for i,row in enumerate(self.switches):
+			if row.name == name:
+				self.switches[i].active = True
+				if not type(self.switches[i].values) == list:
+					self.switches[i].values = []
+				self.switches[i].values.append( value )
+				self.switches[i].value = ','.join(self.switches[i].values)
+				
+
+
+
 	def set( self, name, column, value, theFocus=False, runTrigger=True ):
 		return self.fieldSet( name, column, value, theFocus, runTrigger )
+
+		
 	def fieldSet( self, name, column, value, theFocus=False, runTrigger=True ):
 		if name == 'Sort':
 			if column == 'value':
@@ -19219,6 +19249,7 @@ def defaultScriptTriggers_do():
 			switches.trigger('Ago',timeAgo)
 		if not 'PrintEpoch' in __.setting('omit-switch-triggers',d=[]):
 			switches.trigger('PrintEpoch',print_epoch_trigger)
+
 		# switches.trigger('Aggregate',aggregate_trigger)
 		switches.postScripts.append( aggregate_trigger )
 
@@ -21842,6 +21873,8 @@ def load():
 	swGrp += 1
 	switches.register('LoadEpoch', '-loadepoch', default=True, group=[swGrp,'Rebuild From Logs'] )
 	switches.register('PrintEpoch', '-printepoch', default=True, group=[swGrp,'Rebuild From Logs'] )
+	swGrp += 1
+	switches.register('ExitNotify', '--notify', default=True, group=[swGrp,'--> Notify When App Completes <--'] )
 
 	defaultScriptTriggers_do()
 
@@ -22995,7 +23028,7 @@ def epoch_times():
 # timeCalc
 
 def newid(subject):
-	import requests
+	import requests # type: ignore
 	url='https://eyeformeta.com/apps/ids/?subject=live-'+subject
 	page = requests.get(url).content.decode("utf-8").replace('\\n','\n').replace('\n','').replace('\r','').replace(' ','').replace('\t','')
 	return page
@@ -23227,13 +23260,23 @@ def ad(path=None,label='ad'):
 # def URL(url):
 # 	requests=dots('requests.get')
 # 	return requests.get(url).content.decode("utf-8").replace('\\n','\n')
-def URL(url, data={}):
-	import requests
+def URL(url, data={},t=None,txt=None,text=False):
+	if not t is None: text=t
+	if not txt is None: text=txt
+	# print(text)
+	# return ''
+	import requests # type: ignore
 	response = requests.post(url, data=data)
-	return response.content.decode("utf-8").replace('\\n', '\n')
+	if text:
+		from bs4 import BeautifulSoup
+		# return 'works'
+		soup = BeautifulSoup(response.text, 'html.parser')
+		return soup.get_text(separator='\n', strip=True)
+	else:
+		return response.content.decode("utf-8").replace('\\n', '\n')
 
 def URL2(url, data={}):
-	import requests
+	import requests # type: ignore
 	headers = {
 		"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36",
 		"Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8",
@@ -23570,6 +23613,11 @@ class Banner:
 
 
 def isExit(_file_):
+	global switches
+	if switches.isActive('ExitNotify'):
+		Notify(Exit='Force')
+	else:
+		Notify(Exit=True)
 	# print(__.appReg)
 	# print('_file_:',_file_)
 	__.isExit()
@@ -26569,6 +26617,396 @@ def Type(file_path):
 
 
 ##################################################
+class Pressed:
+	ctypes = None
+	keyboard = None
+	pynput_kb = None
+	pynput_available = None
+
+	@classmethod
+	def __init_once(cls):
+		if cls.ctypes is None:
+			import ctypes
+			cls.ctypes = ctypes
+		if cls.keyboard is None:
+			try:
+				import keyboard  # type: ignore
+				cls.keyboard = keyboard
+			except ImportError:
+				cls.keyboard = None
+		if cls.pynput_available is None:
+			try:
+				from pynput.keyboard import Controller as PynputKeyboard, Key  # type: ignore
+				cls.pynput_kb = PynputKeyboard()
+				cls.pynput_available = True
+			except ImportError:
+				cls.pynput_available = False
+
+	@classmethod
+	def key(cls, key):
+		cls.__init_once()
+
+		vk_codes = {
+			'shift': 0x10,
+			'left shift': 0xA0,
+			'right shift': 0xA1,
+			'ctrl': 0x11,
+			'left ctrl': 0xA2,
+			'right ctrl': 0xA3,
+			'alt': 0x12,
+			'left alt': 0xA4,
+			'right alt': 0xA5,
+			'caps lock': 0x14,
+			'esc': 0x1B,
+			'tab': 0x09,
+			'enter': 0x0D,
+			'space': 0x20,
+			'backspace': 0x08,
+			'insert': 0x2D,
+			'delete': 0x2E,
+			'home': 0x24,
+			'end': 0x23,
+			'page up': 0x21,
+			'page down': 0x22,
+			'left': 0x25,
+			'up': 0x26,
+			'right': 0x27,
+			'down': 0x28,
+			'win': 0x5B,
+			'num lock': 0x90,
+			'scroll lock': 0x91,
+		}
+
+		key_lower = key.lower()
+		vk = vk_codes.get(key_lower)
+		win_state = False
+		kb_state = False
+		pynput_state = False
+
+		# 1. Windows low-level check
+		try:
+			if vk is not None:
+				win_state = cls.ctypes.windll.user32.GetKeyState(vk) & 0x8000 != 0
+		except:
+			pass
+
+		# 2. Keyboard module check
+		if cls.keyboard:
+			try:
+				kb_state = cls.keyboard.is_pressed(key)
+			except:
+				kb_state = False
+
+		# 3. Pynput fallback check
+		if cls.pynput_available:
+			try:
+				pynput_state = key in str(cls.pynput_kb.pressed_keys)
+			except:
+				pynput_state = False
+
+		return win_state or kb_state or pynput_state
+
+##################################################
+class KeyMon:
+	def __init__(self, listen=None, p=None, kill=['esc','f1'], strict=False):
+		import keyboard  # type: ignore
+		import threading
+		self.threading = threading
+		self.keyboard = keyboard
+
+		if type(kill) == str:
+			kill = kill.replace(' ','')
+			kill = kill.split(',')
+
+		self.kill = kill
+
+		self.strict = strict
+		self.strictWait = .01
+
+		self.print = None
+		if not listen is None:
+			self.listen = listen
+			self.print = False
+		else:
+			self.listen = {}
+
+		if not p is None:
+			self.print = p
+		elif not self.print is None and not self.print == False:
+			self.print = True
+
+		self.pressed_keys = []
+		self.shutdown_flag = False
+		self.pause = False
+		self.start()
+
+	def on_key_press(self, event):
+		if self.shutdown_flag: return None
+		if self.pause: return None
+		if not event.name in self.pressed_keys:
+			self.pressed_keys.append(event.name)
+		self.listener(event.name)
+		if self.print:
+			if False:
+				if __.keyListener:
+					print('Pressed:', ' + '.join(sorted(self.pressed_keys)))
+			else:
+				print('Pressed:', ' + '.join(sorted(self.pressed_keys)))
+
+	def on_key_release(self, event):
+		if self.shutdown_flag: return None
+		if self.pause: return None
+		# Remove keys that are no longer physically pressed
+		self.pressed_keys.remove(event.name)
+		self.cleanup()
+
+
+	def cleanup(self):
+		self.pressed_keys = [k for k in self.pressed_keys if Pressed.key(k)]
+		def watch_caps():
+			cnt = 0
+			pre = len(self.pressed_keys)
+			while cnt < 3:
+				if self.shutdown_flag: return None
+				time.sleep(self.strictWait)
+				self.pressed_keys = [k for k in self.pressed_keys if Pressed.key(k)]
+				time.sleep(self.strictWait)
+				self.pressed_keys = [k for k in self.pressed_keys if Pressed.key(k)]
+				cnt += 1
+			# if not pre == len(self.pressed_keys):
+			# 	pr('KeyMon: Cleaned',c='red')
+		if self.strict:
+			self.threading.Thread(target=watch_caps, daemon=True).start()
+		if self.pause:
+			# pr('Unpaused',c='green')
+			self.pause = False
+
+
+	def listener(self,key):
+		if self.shutdown_flag: return None
+		if self.pause: return None
+		if self.strict:
+			time.sleep(self.strictWait)
+			self.pressed_keys = [k for k in self.pressed_keys if Pressed.key(k)]
+
+		completed = False
+		
+		if len(self.listen.keys()) == 1:
+			for k in self.listen:
+				if key == k:
+					self.pause = True
+					try:
+						self.listen[k]()
+					except:
+						pass
+				
+		if not completed:
+			for key_combo, fn in self.listen.items():
+				if self.shutdown_flag: return None
+				required_keys = [k.strip().lower() for k in key_combo.split(',')]
+				cnt = sum(1 for k in required_keys if k in self.pressed_keys)
+				if cnt == len(required_keys):
+					self.pause = True
+					try:
+						fn()
+					except:
+						pass
+		self.cleanup()
+		if self.pause:
+			if key in self.pressed_keys:
+				self.pressed_keys.remove(key)
+			pr('Unpaused',c='red')
+			self.pause = False
+
+	def run(self):
+		if self.pause: return None
+		if self.shutdown_flag: return None
+		self.keyboard.on_press(self.on_key_press)
+		self.keyboard.on_release(self.on_key_release)
+		try:
+			while not self.shutdown_flag:
+				active = 0
+				for key in self.kill:
+					if self.keyboard.is_pressed(key):
+						active += 1
+				if active == len(self.kill):
+					self.shutdown_flag = True
+					pr('KeyMon: Shutdown',c='red')
+					break
+				if self.shutdown_flag: return None
+		except KeyboardInterrupt:
+			self.shutdown_flag = True
+			pr('KeyMon: Interrupted by Ctrl+C', c='Background.red')
+
+	def start(self):
+		self.shutdown_flag = False
+		t = self.threading.Thread(target=self.run, daemon=True)
+		t.start()
+		return t
+
+	def stop(self):
+		# print('stopped')
+		self.shutdown_flag = True
+
+
+
+
+
+
+	
+def WaitFor(what='f1',p=True,strict=False):
+	if type(what) == int or type(what) == bool: what = 'f1'
+	__.WaitForThis = False
+	def ThisStops():
+		__.WaitForThis = True
+	km = KeyMon({what:ThisStops},strict=strict)
+	if p:
+		pr('Waiting for:',what,c='Background.blue')
+	try:
+		while not __.WaitForThis:
+			time.sleep(.1)
+	except KeyboardInterrupt:
+		pr('Interrupted by Ctrl+C', c='Background.red')
+		return
+	if p:
+		pr('Waiting Complete',c='Background.blue')
+
+
+
+class Skip:
+	def __init__(self,what='f1',label='Skipped',p=True):
+		self.skip = False
+		self.label = label
+		self.print = p
+		self.KeyMon = KeyMon({what:self.onActivation},strict=True)
+
+	def status(self):
+		return self.skip
+	
+	def onActivation(self):
+		self.skip = True
+		if self.print and self.label:
+			pr(self.label,c='red')
+
+
+
+
+# _.KeyMon.listen = {
+# 	'ctrl,z': test,
+# }
+# KeyMon.app()
+##################################################
+import time
+
+winSound = None
+
+class beep:
+	def __init__(self, key=1, wait=.1, warmup=True, p=False, label=None, c='cyan'):
+		self.key = key
+		self.wait = wait
+		self.warmup = warmup
+		self.print = p
+		self.label = label
+		self.color = c
+		self.freq = self.tones().get(str(key), 400)
+
+		global winSound
+		if winSound is None:
+			import winsound
+			winSound = winsound
+
+		if self.warmup:
+			self.preLoad()
+
+	def preLoad(self):
+		# Use a short, real beep to initialize the sound system
+		try:
+			winSound.Beep(440, 50)  # 440 Hz is reliably audible
+			if self.wait:
+				time.sleep(0.2)
+		except RuntimeError:
+			pr('Beep Error',c='red')
+
+	def tones(self):
+		return {
+			'1': 500,
+			'2': 600,
+			'3': 700,
+			'4': 800,
+			'5': 900,
+			'6': 1000,
+			'7': 1100,
+			'8': 1200,
+			'9': 1300,
+			'10': 1400,
+		}
+
+
+	def play(self, t=None, d=300, label=None,c=None):
+		color = self.color
+		if not c is None: color = c
+		if label is None: label = self.label
+		global winSound
+		if winSound is None:
+			import winsound
+			winSound = winsound
+
+		freq = self.freq
+		if t is None:
+			t = self.key
+		freq = self.tones().get(str(t), freq)
+		if not label is None and self.print:
+			pr(label, t, c=color)
+		elif not label is None:
+			pr(label, c=color)
+		elif self.print:
+			pr(t, c=color)
+		winSound.Beep(freq, d)
+		if self.wait:
+			time.sleep(self.wait)
+	def multi(self,keys='234', d=300, label=None,c=None):
+		if not self.wait: self.wait = .1
+		for key in list(keys):
+			self.play(key, d, label,c)
+			
+
+
+
+def Notify(label=None,c='yellow', Exit=False):
+	global notify
+
+	if Exit == 'Force':
+		Exit = True
+		if not notify.run: notify.run = True
+		if not notify.run: notify.run = True
+
+	if Exit and not notify.run: return None
+	if Exit and notify.run:
+		label = notify.message
+		c = notify.color
+	if label is None: label = 'Notification'
+	bp = beep()
+	if not label is None:
+		pr(label,c=c)
+	time.sleep(.1)
+	bp.multi()
+
+def Beep(waitToStart=1,wait=1):
+	bp = beep(wait=.1, p=True)
+	bp.play( 1 )
+	bp.play( 2 )
+	bp.play( 3 )
+	bp.play( 4 )
+	bp.play( 5 )
+	bp.play( 6 )
+	bp.play( 7 )
+	bp.play( 8 )
+	bp.play( 9 )
+	bp.play( 10 )
+
+
+
+##################################################
 
 ##================================================
 nsfw=True
@@ -26636,6 +27074,11 @@ yt=toYML
 yf=fromYML
 
 ##================================================
+##################################################
+notify = dot()
+notify.run = False
+notify.message = 'Complete'
+notify.color = 'yellow'
 ##################################################
 
 
