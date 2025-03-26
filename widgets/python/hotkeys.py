@@ -478,12 +478,17 @@ def scrape_linux_file_paths(text):
 	return set(linux_paths)
 
 
-def scrape_urls(text):
+def scrape_urls__old(text):
 	url_pattern = r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+'
 	urls = re.findall(url_pattern, text)
 	return set(urls)
 
-
+def scrape_urls(text):
+    # Regex matches full URLs surrounded by quotes or not
+    url_pattern = r'https?://[^\s\'",;]+'
+    urls = re.findall(url_pattern, text)
+    return set(urls)  # Use set to remove duplicates if needed
+    
 
 
 def scrape_all(text):

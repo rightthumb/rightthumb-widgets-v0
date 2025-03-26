@@ -655,6 +655,7 @@ if True:
 	import threading
 	import signal
 	import sys
+	import ctypes
 	from pynput import keyboard as kb
 	import keyboard  # type: ignore
 
@@ -667,6 +668,7 @@ if True:
 			self.esc_pressed_time = None
 			self.listener = None
 			self.active = []
+			self.cops_lock_off()
 
 		def watch_caps(self):
 			once = False
@@ -682,17 +684,22 @@ if True:
 							once = True
 							keyboard.press("ctrl")
 							self.caps_pressed = True
-							_.pr('ctrl pressed', c='Background.green')
+							# _.pr('ctrl pressed', c='Background.green')
 				else:
 					if self.caps_pressed:
 						keyboard.release("ctrl")
+						self.cops_lock_off()
 						self.caps_pressed = False
-						keyboard.press("caps lock")
-						keyboard.release("caps lock")
 						once = False
-						_.pr('ctrl released', c='Background.yellow')
+						# _.pr('ctrl released', c='Background.yellow')
 				time.sleep(0.01)
-
+		def cops_lock_off(self):
+			if self.is_caps_lock_on():
+				keyboard.press("caps lock")
+				keyboard.release("caps lock")
+		def is_caps_lock_on(self):
+			return ctypes.windll.user32.GetKeyState(0x14) & 1
+		
 		def on_press(self, key):
 
 

@@ -405,6 +405,8 @@ RewriteRule . /index.php [L]
 
 '''.strip()
 templates['base']='''
+Header always set Access-Control-Allow-Methods "POST, GET, OPTIONS"
+Header always set Access-Control-Allow-Headers "Content-Type"
 
 Options -Indexes
 <IfModule mime_module>
