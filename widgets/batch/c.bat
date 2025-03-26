@@ -236,7 +236,7 @@ GOTO:EOF
             ::::::: Command Paths
             SET javabin=C:\Program Files\Java\jdk-18.0.2
 
-            SET appPaths=%binWin%;%myPython%;%exe_folders%;%USERPROFILE%;%filemeta%
+            SET appPaths=%binWin%;%myPython%;%exe_folders%;%USERPROFILE%;%filemeta%;C:\Users\Scott\AppData\Roaming\npm
             IF EXIST "%pyf%\Scripts" ( SET appPaths=%appPaths%;%pyf%\Scripts )
             SET pathPython=%USERPROFILE%
             IF EXIST "%pyf2%\Lib" ( SET SET pathPython=%pyf2%;%pyf2%\Lib;%pyf2%\Lib\site-packages;%pyf2%;%pyf2%\Scripts )

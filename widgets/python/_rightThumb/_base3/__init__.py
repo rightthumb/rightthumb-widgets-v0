@@ -26854,7 +26854,7 @@ class KeyMon:
 
 
 	
-def WaitFor(what='f1',p=True,strict=False):
+def KeyWait(what='f1',p=True,strict=False):
 	if type(what) == int or type(what) == bool: what = 'f1'
 	__.WaitForThis = False
 	def ThisStops():
@@ -26871,7 +26871,7 @@ def WaitFor(what='f1',p=True,strict=False):
 	if p:
 		pr('Waiting Complete',c='Background.blue')
 
-
+WaitFor=KeyWait
 
 class Skip:
 	def __init__(self,what='f1',label='Skipped',p=True):

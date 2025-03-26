@@ -45,6 +45,9 @@ import webbrowser
 
 def action():
 	url = _.switches.values('URL')[0]
+	url = url.replace('index.php','')
+	url = url.replace('index.html','')
+	url = url.replace('index.htm	','')
 	if 'http' not in url:
 		webbrowser.open(url)
 	else:
