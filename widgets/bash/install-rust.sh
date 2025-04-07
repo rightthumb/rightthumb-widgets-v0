@@ -41,3 +41,6 @@ else
 	echo "[-] Rust installation failed or not in PATH."
 	exit 1
 fi
+
+echo 'source "$HOME/.cargo/env.fish"' >> $HOME/.bashrc.
+echo 'source "$HOME/.cargo/env.nu"' >> $HOME/.bashrc.
