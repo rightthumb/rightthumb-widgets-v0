@@ -3560,14 +3560,6 @@ up_date() {
         echo "📦 pacman (Arch/Manjaro)"
         sudo pacman -Syu --noconfirm
 
-    elif command -v dnf >/dev/null 2>&1; then
-        echo "📦 DNF (Fedora/Alma/RHEL)"
-        sudo dnf upgrade --refresh -y
-
-    elif command -v yum >/dev/null 2>&1; then
-        echo "📦 YUM (Older RHEL/CentOS)"
-        sudo yum update -y
-
     elif command -v zypper >/dev/null 2>&1; then
         echo "📦 zypper (openSUSE)"
         sudo zypper refresh && sudo zypper update -y
@@ -3600,6 +3592,18 @@ up_date() {
         echo "📦 flatpak"
         flatpak update -y
     fi
+
+
+
+    if command -v dnf >/dev/null 2>&1; then
+        echo "📦 DNF (Fedora/Alma/RHEL)"
+        sudo dnf upgrade --refresh -y
+
+    if command -v yum >/dev/null 2>&1; then
+        echo "📦 YUM (Older RHEL/CentOS)"
+        sudo yum update -y
+
+		
 
     if command -v snap >/dev/null 2>&1; then
         echo "📦 snap"
