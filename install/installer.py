@@ -3039,11 +3039,11 @@ dl.mp3t() {
 	youtube-dlc -x --audio-format mp3 "$url" &
 }
 load() {
-	source "/opt/rightthumb-widgets-v0/widgets/bash/vps-bashrc_extended.sh"
-	# source "/opt/rightthumb-widgets-v0/widgets/bash/vps-bashrc_extended.sh" &> /dev/null
+	source "$widgets/widgets/bash/vps-bashrc_extended.sh"
+	# source "$widgets/widgets/bash/vps-bashrc_extended.sh" &> /dev/null
 }
 loada() {
-	source "/opt/rightthumb-widgets-v0/widgets/bash/vps-bashrc_aliases.sh" &> /dev/null
+	source "$widgets/widgets/bash/vps-bashrc_aliases.sh" &> /dev/null
 }
 # echo 000-014
 
@@ -3077,7 +3077,7 @@ fi
 alias cron.="sudo service cron start"
 ####### wsl cron end
 
-source /opt/rightthumb-widgets-v0/widgets/bash/rc/full.sh
+source $widgets/widgets/bash/rc/full.sh
 
 
 # echo 000-015
@@ -3116,7 +3116,7 @@ alias whitelist.="bash $widgets/widgets/bash/vps-whitelistAuto.sh"
 alias whitelist.a="bash $widgets/widgets/bash/vps-whitelistAuto.sh"
 alias block="bash $widgets/widgets/bash/blocklist.sh"
 alias block.r="bash $widgets/widgets/bash/blocklist-remove.sh"
-export PATH=$PATH:/opt/rightthumb-widgets-v0/widgets/bash:/opt/rightthumb-widgets-v0/widgets/python
+export PATH=$PATH:$widgets/widgets/bash:$widgets/widgets/python
 
 # echo 000-016
 
@@ -3140,14 +3140,14 @@ export PATH=$PATH:/opt/rightthumb-widgets-v0/widgets/bash:/opt/rightthumb-widget
 
 function git_add_modified_files() {
 	if [ -z "$1" ]; then
-		/opt/rightthumb-widgets-v0/widgets/python/files.py  - minecraft.py vps- + *.py *.sh *.bat *.md *.ad *.ps1 -or  --c -ago 10h | p line --c -make "git add {}" | p execute
+		$widgets/widgets/python/files.py  - minecraft.py vps- + *.py *.sh *.bat *.md *.ad *.ps1 -or  --c -ago 10h | p line --c -make "git add {}" | p execute
 	else
-		/opt/rightthumb-widgets-v0/widgets/python/files.py  - minecraft.py vps- + *.py *.sh *.bat *.md *.ad *.ps1 -or --c -ago "$1" | p line --c -make "git add {}" | p execute
+		$widgets/widgets/python/files.py  - minecraft.py vps- + *.py *.sh *.bat *.md *.ad *.ps1 -or --c -ago "$1" | p line --c -make "git add {}" | p execute
 	fi
 }
 generate_and_push() {
 	tmpf=$(mktemp)
-	/opt/rightthumb-widgets-v0/widgets/python/genuuid.py -e > "$tmpf"
+	$widgets/widgets/python/genuuid.py -e > "$tmpf"
 	uuid=$(cat "$tmpf")
 	git commit -m "$uuid"
 	git push --force
@@ -3235,7 +3235,7 @@ alias shell="source $widgets/widgets/bash/shell.sh"
 alias ovpn="source $widgets/widgets/bash/openvpn_manager.sh"
 alias ovpn.="source $widgets/widgets/bash/openvpn_manager.sh"
 alias ...ssh="rm -rf $HOME/.ssh/*; ssh-keygen -t rsa -b 4096"
-alias ..ssh..="/opt/rightthumb-widgets-v0/widgets/bash/srv/MISC/ssh.sh"
+alias ..ssh..="$widgets/widgets/bash/srv/MISC/ssh.sh"
 
 
 if [ -f "${stmp}/pin_ask" ]; then
@@ -3255,7 +3255,7 @@ alias p="$p"
 
 
 
-alias d='/opt/rightthumb-widgets-v0/widgets/bash/nav/d.sh'
+alias d='$widgets/widgets/bash/nav/d.sh'
 alias rr="sudo su root"
 
 if [ ! -d "$h/widgets/python" ]; then
@@ -3309,14 +3309,14 @@ alias tmux..="curl -s https://sds.sh/tmux-aliases | $p line --c "
 alias ..b='cd /opt ; cd rightthumb-widgets-v0 ; m w ; cd install/ ; m in ; cd .. ; cd widgets/ ; m ww ; cd python/ ; m py ; cd .. ; cd bash/ ; m b ; m bash ; cd .. ; cd databank/ ; m db ; cd tables/ ; m ttt ; cd ; cd .rt ; m rt ; cd profile/ ; m h ; cd tables/ ; m tt ; cd .. ; cd config/ ; m config ; m c ; cd .. ; cd projects/ ; m pr ; cd'
 
 alias on.run='while true; do $p on; sleep 1; done'
-alias on.fi="/opt/rightthumb-widgets-v0/widgets/bash/on.fi.sh"
-alias on.fo="/opt/rightthumb-widgets-v0/widgets/bash/on.fo.sh"
-alias on="/opt/rightthumb-widgets-v0/widgets/bash/on.sh"
-alias listZip="/opt/rightthumb-widgets-v0/widgets/bash/list_zip.sh"
+alias on.fi="$widgets/widgets/bash/on.fi.sh"
+alias on.fo="$widgets/widgets/bash/on.fo.sh"
+alias on="$widgets/widgets/bash/on.sh"
+alias listZip="$widgets/widgets/bash/list_zip.sh"
 
 export Session_ID_Suffix=${Session_ID:4:5}
 
-alias sync.="/opt/rightthumb-widgets-v0/widgets/bash/srv/sync.sh"
+alias sync.="$widgets/widgets/bash/srv/sync.sh"
 
 sshssh() {
     local who=${2:-scott}
@@ -3480,7 +3480,7 @@ sshr() {
 alias rc.="curl -s -o $HOME/.bashrc_sds -L -k https://u.sds.sh/bashrc; chmod +x $HOME/.bashrc_sds; source $HOME/.bashrc_sds"
 
 
-alias file="/opt/rightthumb-widgets-v0/widgets/bash/vps-file-documentation.sh"
+alias file="$widgets/widgets/bash/vps-file-documentation.sh"
 
 
 tess() {
@@ -3504,15 +3504,15 @@ alias mem="free -h"
 
 alias .bash="bash --norc --noprofile"
 
-alias exec='/opt/rightthumb-widgets-v0/widgets/bash/vps-______________execute_on_all_servers.sh'
+alias exec='$widgets/widgets/bash/vps-______________execute_on_all_servers.sh'
 
-alias f='/opt/rightthumb-widgets-v0/widgets/bash/nav/c.sh'
-alias j='sh /opt/rightthumb-widgets-v0/widgets/bash/nav/p.sh'
+alias f='$widgets/widgets/bash/nav/c.sh'
+alias j='sh $widgets/widgets/bash/nav/p.sh'
 
 alias ob="p script-helper -i"
 alias obb="p script-helper -t r:_.al -i"
 
-alias vps-="/usr/bin/python3 /opt/rightthumb-widgets-v0/widgets/python/files.py + vps- -folders /opt/rightthumb-widgets-v0/"
+alias vps-="/usr/bin/python3 $widgets/widgets/python/files.py + vps- -folders /opt/rightthumb-widgets-v0/"
 export Session_ID=$(date +%s)
 
 
@@ -3523,7 +3523,7 @@ url() {
     return 1
   fi
 
-  ssh root@teth.sds.sh "/bin/python3 /opt/rightthumb-widgets-v0/widgets/python/smartpath.py -f \"$1\""
+  ssh root@teth.sds.sh "/bin/python3 $widgets/widgets/python/smartpath.py -f \"$1\""
 }
 
 
@@ -3533,10 +3533,84 @@ alias px="python3"
 alias social="p vps-scan-social-media"
 
 
-alias ui='/opt/rightthumb-widgets-v0/widgets/bash/universal-install.sh'
+alias ui='$widgets/widgets/bash/universal-install.sh'
 
 alias wget-s="wget -q -O - "
+
 alias pacman.="pacman -Sy --noconfirm"
+
+
+# alias up.date='sudo apt-get update -y; sudo apt-get upgrade -y;'
+# alias up.date.debian='sudo apt-get update -y; sudo apt-get upgrade -y;'
+# alias up.date.apt='sudo apt-get update -y; sudo apt-get upgrade -y;'
+# alias up.date.arch='sudo pacman -Syu --noconfirm'
+# alias up.date.pacman='sudo pacman -Syu --noconfirm'
+# alias up.date.dnf='sudo dnf upgrade --refresh -y'
+# alias up.date.yum='sudo yum update -y'
+
+
+up_date() {
+    echo "🔍 Detecting system and package manager..."
+
+    if command -v apt-get >/dev/null 2>&1; then
+        echo "📦 APT (Debian/Ubuntu)"
+        sudo apt-get update -y && sudo apt-get upgrade -y
+
+    elif command -v pacman >/dev/null 2>&1; then
+        echo "📦 pacman (Arch/Manjaro)"
+        sudo pacman -Syu --noconfirm
+
+    elif command -v dnf >/dev/null 2>&1; then
+        echo "📦 DNF (Fedora/Alma/RHEL)"
+        sudo dnf upgrade --refresh -y
+
+    elif command -v yum >/dev/null 2>&1; then
+        echo "📦 YUM (Older RHEL/CentOS)"
+        sudo yum update -y
+
+    elif command -v zypper >/dev/null 2>&1; then
+        echo "📦 zypper (openSUSE)"
+        sudo zypper refresh && sudo zypper update -y
+
+    elif command -v apk >/dev/null 2>&1; then
+        echo "📦 apk (Alpine Linux)"
+        sudo apk update && sudo apk upgrade
+
+    elif command -v xbps-install >/dev/null 2>&1; then
+        echo "📦 xbps (Void Linux)"
+        sudo xbps-install -Syu
+
+    elif command -v emerge >/dev/null 2>&1; then
+        echo "📦 emerge (Gentoo)"
+        sudo emerge --sync && sudo emerge -avuDN @world
+
+    elif command -v nix-env >/dev/null 2>&1; then
+        echo "📦 Nix (NixOS)"
+        nix-channel --update && nix-env -u '*'
+
+    elif command -v brew >/dev/null 2>&1; then
+        echo "🍏 Homebrew (macOS/Linuxbrew)"
+        brew update && brew upgrade
+
+    elif command -v pkg >/dev/null 2>&1 && uname | grep -qi "bsd"; then
+        echo "📦 pkg (FreeBSD)"
+        sudo pkg update && sudo pkg upgrade -y
+
+    elif command -v flatpak >/dev/null 2>&1; then
+        echo "📦 flatpak"
+        flatpak update -y
+    fi
+
+    if command -v snap >/dev/null 2>&1; then
+        echo "📦 snap"
+        sudo snap refresh
+    fi
+
+    echo "✅ Update complete."
+}
+
+alias up.date="up_date"
+
 
 clear
 # get_time_difference
