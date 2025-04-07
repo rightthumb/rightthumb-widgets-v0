@@ -3536,6 +3536,7 @@ alias social="p vps-scan-social-media"
 alias ui='/opt/rightthumb-widgets-v0/widgets/bash/universal-install.sh'
 
 alias wget-s="wget -q -O - "
+alias pacman.="pacman -Sy --noconfirm"
 
 clear
 # get_time_difference
