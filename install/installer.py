@@ -3551,13 +3551,23 @@ alias pacman.="pacman -Sy --noconfirm"
 up_date() {
     echo "🔍 Detecting system and package manager..."
 
+    has_sudo() {
+        command -v sudo >/dev/null 2>&1 && sudo -n true 2>/dev/null
+    }
+
     if command -v apt-get >/dev/null 2>&1; then
         echo "📦 APT (Debian/Ubuntu)"
         sudo apt-get update -y && sudo apt-get upgrade -y
 
     elif command -v pacman >/dev/null 2>&1; then
-        echo "📦 pacman (Arch/Manjaro)"
-        sudo pacman -Syu --noconfirm
+        echo "📦 pacman (Arch, Manjaro, MSYS2)"
+        if has_sudo; then
+            echo "🔐 Running with sudo"
+            sudo pacman -Syu --noconfirm
+        else
+            echo "⚠️ sudo not available — running pacman without it"
+            pacman -Syu --noconfirm
+        fi
 
     elif command -v dnf >/dev/null 2>&1; then
         echo "📦 DNF (Fedora/Alma/RHEL)"
