@@ -3548,7 +3548,6 @@ alias pacman.="pacman -Sy --noconfirm"
 # alias up.date.dnf='sudo dnf upgrade --refresh -y'
 # alias up.date.yum='sudo yum update -y'
 
-
 up_date() {
     echo "🔍 Detecting system and package manager..."
 
@@ -3563,20 +3562,14 @@ up_date() {
     elif command -v dnf >/dev/null 2>&1; then
         echo "📦 DNF (Fedora/Alma/RHEL)"
         sudo dnf upgrade --refresh -y
-		if command -v yum >/dev/null 2>&1; then
-			echo "📦 YUM (Older RHEL/CentOS)"
-			sudo yum update -y
-			
+        if command -v yum >/dev/null 2>&1; then
+            echo "📦 Also running YUM (compatibility layer)"
+            sudo yum update -y
+        fi
+
     elif command -v yum >/dev/null 2>&1; then
         echo "📦 YUM (Older RHEL/CentOS)"
         sudo yum update -y
-			
-    elif command -v dnf >/dev/null 2>&1; then
-        echo "📦 DNF (Fedora/Alma/RHEL)"
-        sudo dnf upgrade --refresh -y
-		if command -v yum >/dev/null 2>&1; then
-			echo "📦 YUM (Older RHEL/CentOS)"
-			sudo yum update -y
 
     elif command -v zypper >/dev/null 2>&1; then
         echo "📦 zypper (openSUSE)"
@@ -3609,6 +3602,10 @@ up_date() {
     elif command -v flatpak >/dev/null 2>&1; then
         echo "📦 flatpak"
         flatpak update -y
+
+    else
+        echo "❌ No supported package manager found."
+        return 1
     fi
 
     if command -v snap >/dev/null 2>&1; then
@@ -3618,6 +3615,7 @@ up_date() {
 
     echo "✅ Update complete."
 }
+
 
 alias up.date="up_date"
 
