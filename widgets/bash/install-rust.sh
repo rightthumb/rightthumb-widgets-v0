@@ -11,7 +11,8 @@ if ! command -v curl &>/dev/null; then
 	if command -v dnf &>/dev/null; then
 		sudo dnf install curl -y
 	elif command -v apt &>/dev/null; then
-		sudo apt update && sudo apt install curl -y
+		sudo apt update
+		sudo apt install -y curl pkg-config libssl-dev
 	elif command -v pacman &>/dev/null; then
 		sudo pacman -Sy curl --noconfirm
 	else
@@ -19,6 +20,7 @@ if ! command -v curl &>/dev/null; then
 		exit 1
 	fi
 fi
+
 
 # Make a safe temp directory to bypass noexec issues
 export TMPDIR="$HOME/tmp_rust_installer"
