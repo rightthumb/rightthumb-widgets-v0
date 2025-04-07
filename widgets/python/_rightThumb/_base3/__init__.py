@@ -8374,7 +8374,7 @@ def HELP(topic):
 	Print the full path to a help file within _base3/help/.
 
 	Example:
-		HELP('pipeCleaner')  # -> D:\.rightthumb-widgets\widgets\python\_rightThumb\_base3\help\pipeCleaner.py
+		HELP('pipeCleaner')  # -> D:\\.rightthumb-widgets\\widgets\\python\\_rightThumb\\_base3\\help\\pipeCleaner.py
 	"""
 	base_path = os.path.dirname(__file__)  # points to _base3 directory
 	help_path = os.path.join(base_path, 'help', f'{topic}.py')
