@@ -3358,6 +3358,87 @@ mp3() {
 	youtube-dlc -x --audio-format mp3 "$url" &
 }
 #####################################################################
+
+
+
+up_date() {
+    echo "🔍 Detecting system and package manager..."
+
+    has_sudo() {
+        command -v sudo >/dev/null 2>&1 && sudo -n true 2>/dev/null
+    }
+
+    if command -v apt-get >/dev/null 2>&1; then
+        echo "📦 APT (Debian/Ubuntu)"
+        sudo apt-get update -y && sudo apt-get upgrade -y
+
+    elif command -v pacman >/dev/null 2>&1; then
+        echo "📦 pacman (Arch, Manjaro, MSYS2)"
+        if has_sudo; then
+            echo "🔐 Running with sudo"
+            sudo pacman -Syu --noconfirm
+        else
+            echo "⚠️ sudo not available — running pacman without it"
+            pacman -Syu --noconfirm
+        fi
+
+    elif command -v dnf >/dev/null 2>&1; then
+        echo "📦 DNF (Fedora/Alma/RHEL)"
+        sudo dnf upgrade --refresh -y
+        if command -v yum >/dev/null 2>&1; then
+            echo "📦 Also running YUM (compatibility layer)"
+            sudo yum update -y
+        fi
+
+    elif command -v yum >/dev/null 2>&1; then
+        echo "📦 YUM (Older RHEL/CentOS)"
+        sudo yum update -y
+
+    elif command -v zypper >/dev/null 2>&1; then
+        echo "📦 zypper (openSUSE)"
+        sudo zypper refresh && sudo zypper update -y
+
+    elif command -v apk >/dev/null 2>&1; then
+        echo "📦 apk (Alpine Linux)"
+        sudo apk update && sudo apk upgrade
+
+    elif command -v xbps-install >/dev/null 2>&1; then
+        echo "📦 xbps (Void Linux)"
+        sudo xbps-install -Syu
+
+    elif command -v emerge >/dev/null 2>&1; then
+        echo "📦 emerge (Gentoo)"
+        sudo emerge --sync && sudo emerge -avuDN @world
+
+    elif command -v nix-env >/dev/null 2>&1; then
+        echo "📦 Nix (NixOS)"
+        nix-channel --update && nix-env -u '*'
+
+    elif command -v brew >/dev/null 2>&1; then
+        echo "🍏 Homebrew (macOS/Linuxbrew)"
+        brew update && brew upgrade
+
+    elif command -v pkg >/dev/null 2>&1 && uname | grep -qi "bsd"; then
+        echo "📦 pkg (FreeBSD)"
+        sudo pkg update && sudo pkg upgrade -y
+
+    elif command -v flatpak >/dev/null 2>&1; then
+        echo "📦 flatpak"
+        flatpak update -y
+
+    else
+        echo "❌ No supported package manager found."
+        return 1
+    fi
+
+    if command -v snap >/dev/null 2>&1; then
+        echo "📦 snap"
+        sudo snap refresh
+    fi
+
+    echo "✅ Update complete."
+}
+#####################################################################
 run_bash_url() {
 	if [ "$#" -lt 1 ]; then
 		echo "Usage: bash.. <URL> [arg1 arg2 ...]"
@@ -3540,91 +3621,6 @@ alias wget-s="wget -q -O - "
 alias pacman.="pacman -Sy --noconfirm"
 
 
-# alias up.date='sudo apt-get update -y; sudo apt-get upgrade -y;'
-# alias up.date.debian='sudo apt-get update -y; sudo apt-get upgrade -y;'
-# alias up.date.apt='sudo apt-get update -y; sudo apt-get upgrade -y;'
-# alias up.date.arch='sudo pacman -Syu --noconfirm'
-# alias up.date.pacman='sudo pacman -Syu --noconfirm'
-# alias up.date.dnf='sudo dnf upgrade --refresh -y'
-# alias up.date.yum='sudo yum update -y'
-
-up_date() {
-    echo "🔍 Detecting system and package manager..."
-
-    has_sudo() {
-        command -v sudo >/dev/null 2>&1 && sudo -n true 2>/dev/null
-    }
-
-    if command -v apt-get >/dev/null 2>&1; then
-        echo "📦 APT (Debian/Ubuntu)"
-        sudo apt-get update -y && sudo apt-get upgrade -y
-
-    elif command -v pacman >/dev/null 2>&1; then
-        echo "📦 pacman (Arch, Manjaro, MSYS2)"
-        if has_sudo; then
-            echo "🔐 Running with sudo"
-            sudo pacman -Syu --noconfirm
-        else
-            echo "⚠️ sudo not available — running pacman without it"
-            pacman -Syu --noconfirm
-        fi
-
-    elif command -v dnf >/dev/null 2>&1; then
-        echo "📦 DNF (Fedora/Alma/RHEL)"
-        sudo dnf upgrade --refresh -y
-        if command -v yum >/dev/null 2>&1; then
-            echo "📦 Also running YUM (compatibility layer)"
-            sudo yum update -y
-        fi
-
-    elif command -v yum >/dev/null 2>&1; then
-        echo "📦 YUM (Older RHEL/CentOS)"
-        sudo yum update -y
-
-    elif command -v zypper >/dev/null 2>&1; then
-        echo "📦 zypper (openSUSE)"
-        sudo zypper refresh && sudo zypper update -y
-
-    elif command -v apk >/dev/null 2>&1; then
-        echo "📦 apk (Alpine Linux)"
-        sudo apk update && sudo apk upgrade
-
-    elif command -v xbps-install >/dev/null 2>&1; then
-        echo "📦 xbps (Void Linux)"
-        sudo xbps-install -Syu
-
-    elif command -v emerge >/dev/null 2>&1; then
-        echo "📦 emerge (Gentoo)"
-        sudo emerge --sync && sudo emerge -avuDN @world
-
-    elif command -v nix-env >/dev/null 2>&1; then
-        echo "📦 Nix (NixOS)"
-        nix-channel --update && nix-env -u '*'
-
-    elif command -v brew >/dev/null 2>&1; then
-        echo "🍏 Homebrew (macOS/Linuxbrew)"
-        brew update && brew upgrade
-
-    elif command -v pkg >/dev/null 2>&1 && uname | grep -qi "bsd"; then
-        echo "📦 pkg (FreeBSD)"
-        sudo pkg update && sudo pkg upgrade -y
-
-    elif command -v flatpak >/dev/null 2>&1; then
-        echo "📦 flatpak"
-        flatpak update -y
-
-    else
-        echo "❌ No supported package manager found."
-        return 1
-    fi
-
-    if command -v snap >/dev/null 2>&1; then
-        echo "📦 snap"
-        sudo snap refresh
-    fi
-
-    echo "✅ Update complete."
-}
 
 
 alias up.date="up_date"
