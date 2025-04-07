@@ -380,6 +380,12 @@ unixID_path = myConfig + slash + '.unix_id'
 vault_path = myConfig + slash + '.vault'
 pin_path = myConfig + slash + '.pin'
 myDecrypt = myConfig+os.sep+'decrypt.key'
+
+def HELP(file):
+	global py
+	fi = py + os.sep + 'help' + os.sep + file + '.py'
+	return fi
+
 # if not os.path.isfile(myConfig+os.sep+'.machine'): saveText(getMachineID(),myConfig+os.sep+'.machine')
 def vaultPath(forceLogin=False):
 	global myConfig
@@ -1923,9 +1929,18 @@ ttt = dbTables
 p   = home
 pp = widgets
 ta = appsFolder
+gptTokens = tt +slash+'gpt-tokens.log'
 
-
-
+def log(line, file):
+	line = str(line)
+	try:
+		with open(file, 'a') as f:
+			f.write(line+os.linesep)
+		return True
+	except Exception as e:
+		return False
+		print('Error writing to log file:', e)
+	
 if not os.path.isdir(myConfig):
 	dir_structure()
 # dir_check_create

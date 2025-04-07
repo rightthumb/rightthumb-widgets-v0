@@ -1095,6 +1095,8 @@ def _bk():
 
 class CLIP:
 
+
+
 	# def browser_f12(self,code):
 	
 	# load_clip_3
@@ -1227,11 +1229,36 @@ class CLIP:
 			with keyboard.pressed(Key.ctrl): keyboard.press('v'); keyboard.release('v')
 
 
+
+
+	def pipAndStuff_Paste(self):
+		_copy = _.regImp( __.appReg, '-copy' )
+		_paste = _.regImp( __.appReg, '-paste' )
+		# _copy.imp.dirty=True
+		# _paste.imp.dirty=True
+
+		pa=_paste.imp.paste()
+
+
+		pa = pa.replace('pip ','pip. ')
+		pa = pa.replace('pip.exe ','pip. ')
+		
+		pa = pa.replace('pip3 ','pip. ')
+		pa = pa.replace('pip3.exe ','pip. ')
+
+
+		_copy.imp.copy( pa, p=0 )
+	
+		with keyboard.pressed(Key.ctrl):
+			keyboard.press('v')
+			keyboard.release('v')
+
+
 	def browser_f12_gen_md_link(self):
 		global keyboard
 		_copy = _.regImp( __.appReg, '-copy' )
-		_copy.imp.dirty=True
 		_paste = _.regImp( __.appReg, '-paste' )
+		_copy.imp.dirty=True
 		_paste.imp.dirty=True
 		# Subject
 		_.pr('NEED TO ADD COOL STUFF HERE',c='Background.red')
@@ -3802,6 +3829,7 @@ def load():
 				'center-to-top-comment': { 'raw': [   'ctrl.,4', 'shift.,2',  'center'   ], 'do': 'Clip.center_to_top_comment()' },
 
 				'scrape-paths': { 'raw': [   'ctrl.', 'win.', 'h'   ], 'do': 'Clip.scrape_paths()' },
+				'pip-and-stuff': { 'raw': [   'shift.', 'alt.', 'p'   ], 'do': 'Clip.pipAndStuff_Paste()' },
 
 	}
 

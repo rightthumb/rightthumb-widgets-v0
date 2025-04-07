@@ -26,7 +26,8 @@ def sw():
 	# _.switches.register( 'Input', '-i', group='Group Name' )
 		##  -->    p SwitchGroupsExamples   <--
 	# #e)--> examples
-	_.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=False )
+	# _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=False )
+	_.switches.register( 'Namespace', '-ns', '_.appName.one.two.three', isData='glob,name,data,clean', description='Files', isRequired=False )
 
 _._default_settings_()
 
@@ -136,19 +137,23 @@ _.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw )
 #n)--> start
 
 def action():
-	pass
-	# load(); global c3po;
+    ns = _.switches.value('Namespace')
+    if not ns:
+        return
 
-	#n)--> iterate
-	# for subject in _.isData(r=0): _.pr(subject)
-	# for subject in _.myData(): _.pr(subject)
-	
+    parts = ns.split('.')
+    path = ''
+    lines = []
 
-# def load():
-# 	global c3po
-# 	c3po = _.getTable( 'table' )
-# 	#n)--> print table
-# 	_.pt(c3po)
+    for i in range(len(parts)):
+        path = '.'.join(parts[:i+1])
+        line = f"{path} = typeof {path} !== 'undefined' ? {path} : {{}} ;"
+        lines.append(line)
+
+    code = '\n'.join(lines)
+    _.pr(code)
+
+		
 
 
 ##################################################

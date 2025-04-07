@@ -48,6 +48,7 @@ def sw():
 	_.switches.register( 'Print-Remote-Location', '-where' )
 	_.switches.register( 'Remote-Location', '-rp,-rpath' )
 	_.switches.register( 'CMD', '-cmd' )
+	_.switches.register( 'Toggle-Url/.folder.meta', '-tu,-turl' )
 	# _.switches.register( 'IsFile', '-isfi' )
 
 

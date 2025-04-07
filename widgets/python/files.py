@@ -105,7 +105,7 @@ def appSwitches():
 	swGrp += 1
 	_.switches.register('FileNameIs', '-is', group=[swGrp,'FileIs'] )
 	swGrp += 1
-	_.switches.register('NoF1', '-nof1', group=[swGrp,'No f1 Listener to add omit mid app'] )
+	_.switches.register('f1', '-f1', 'Kill: esc + f1', group=[swGrp,'No f1 Listener to add omit mid app'] )
 
 
 _bk = None
@@ -900,6 +900,7 @@ def addOmit():
 	if not omit: return None
 	_.switches.Add( 'Minus', omit )
 	__.MonActivated = True
+	# __.Mon.pause = False
 
 	# current = _.switches.value('Minus')
 	# current.append(omit)
@@ -913,12 +914,13 @@ def action():
 	__.appRegBK = __.appReg
 	__.MonActivated = False
 
-	if _.switches.isActive('NoF1'):
-		__.F1 = False
-		__.Mon = _.dot(); __.Mon.pause = False
-	else:
+	if _.switches.isActive('f1'):
 		__.F1 = True
 		__.Mon = _.KeyMon({'f1': lambda:addOmit()},strict=True)
+	else:
+		__.F1 = False
+		__.Mon = _.dot(); __.Mon.pause = False
+	
 	Relative_Path_Persistent()
 
 	_.v.no_extension = _.switches.isActive('No-Extension')
@@ -1075,7 +1077,7 @@ def action():
 			else:
 				_.colorThis( [  '\n','in', _.addComma(infile), 'of', _.addComma(i), '\n'  ], 'yellow' )
 		# _.pr('\n{}\n'.format(i))
-
+	
 extensionList = []
 
 i = 0

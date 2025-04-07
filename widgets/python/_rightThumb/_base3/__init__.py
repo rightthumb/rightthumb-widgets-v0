@@ -8369,9 +8369,85 @@ def setPipeData( data, theFocus=False, clean=False ):
 				appData[theFocus]['pipe'].append(pd.rstrip())
 		setPipeDataRan = True
 
+def HELP(topic):
+    """
+    Print the full path to a help file within _base3/help/.
 
+    Example:
+        HELP('pipeCleaner')  # -> D:\.rightthumb-widgets\widgets\python\_rightThumb\_base3\help\pipeCleaner.py
+    """
+    base_path = os.path.dirname(__file__)  # points to _base3 directory
+    help_path = os.path.join(base_path, 'help', f'{topic}.py')
+    print(help_path)
+    return help_path
+
+
+__.setting('pipe-cleaner', {
+    'first': True,      # Clean first character if not safe
+    'trim': True,       # Strip spaces (left and right)
+    'deep': True,       # Strip \r \n \t
+    'multi': 3,         # Repeat deep cleaning n times
+    'skip': []          # List of indices to skip cleaning
+})
 
 def pipeCleaner(clean=0):
+    settings = __.setting('pipe-cleaner')
+
+    if isinstance(settings, bool):
+        if not settings:
+            return None
+        settings = {}
+
+    # Ensure all expected keys exist
+    settings.setdefault('first', True)
+    settings.setdefault('trim', True)
+    settings.setdefault('deep', True)
+    settings.setdefault('multi', 1)
+    settings.setdefault('skip', [])
+
+    if isinstance(clean, bool):
+        clean = settings
+
+    if 'clean-pipe' in l.v.cnf.data and not l.conf('clean-pipe'):
+        return
+
+    def pipeCleanerDeep(p):
+        for _ in range(settings['multi']):
+            p = p.strip(' \t\r\n')
+        return p
+
+    global appData
+    try:
+        if settings['first']:
+            if appData[__.appReg]['pipe'] and appData[__.appReg]['pipe'][0]:
+                first_char = appData[__.appReg]['pipe'][0][0]
+                if first_char not in _str.safeChar and first_char not in _str.safe:
+                    appData[__.appReg]['pipe'][0] = appData[__.appReg]['pipe'][0][1:]
+    except Exception as e:
+        pass
+
+    try:
+        for i, pipeData in enumerate(appData[__.appReg]['pipe']):
+            if i in settings['skip']:
+                continue
+
+            p = pipeData.replace('\n', '')
+
+            if clean and settings['trim']:
+                p = p.strip()
+
+            if clean and settings['deep']:
+                p = pipeCleanerDeep(p)
+
+            appData[__.appReg]['pipe'][i] = p
+    except Exception as e:
+        pass
+
+    return appData[__.appReg]['pipe']
+
+
+
+def pipeCleaner_______Original(clean=0):
 	if 'clean-pipe' in l.v.cnf.data and not l.conf('clean-pipe'): return
 	def pipeCleanerDeep(p):
 		while p.startswith(' '):
@@ -13010,7 +13086,9 @@ class Switches:
 				a = a.replace(':','')
 				for ii,sw in enumerate(self.switches):
 					for s in sw.switch.split(','):
-						if s.lower() == a.lower():
+						# if s.lower() == a.lower():
+						if s == a:
+							#taco#
 							if self.switches[ii].appReg == __.appReg:
 								self.switches[ii].pos = i
 								self.switches[ii].active = True
@@ -15559,7 +15637,8 @@ class Table:
 						shouldPrint = False
 				# if self.isExtraRecord:
 				#   print_( self.isExtraRecord )
-
+				theLine = tableLine+result.lstrip()
+				__.theRowLength = len(theLine)
 
 				if shouldPrint:
 
@@ -16775,7 +16854,18 @@ def timeAgoThrow( do='', startDate=None,epoch=None, d=None ):
 
 	return new
 
+def Ago( do='', startDate=None,epoch=None, d=None ):
+	if type(do) == float: return do
+	return timeAgo_past( do, startDate )
+
 def timeAgo( do='', startDate=None,epoch=None, d=None ):
+	if type(do) == float: return do
+
+	# translation = str.maketrans('0123456789', '*' * 10)
+	# onlyText = do.translate(translation)
+	# onlyNumbers = ''.join(c for c in text if c.isdigit())
+
+
 	if do == 'm': do = 'md'
 	if do == 'c': do = 'cd'
 	if do == 'md' or do == 'cd': return do
@@ -18839,6 +18929,14 @@ def genLine(count,what, p=1):
 	return result
 
 ciData = (
+
+
+
+		[ '↔',          ' '       ],
+
+
+
+
 		[ ';sp',        ' '       ],
 		[ '_;192A;_',   ','       ],
 		[ '_;192B;_',   ':'       ],
@@ -18891,11 +18989,19 @@ ciData = (
 		[';t',          '\t'      ],
 		['↔',           ' '       ],
 		['--',          '-'       ],
-		['[oo]',          '>>'       ],
+		['[oo]',          '>>'    ],
 		[';bk',         _v.myBackup ],
 		[ '[caret]',    '^'       ],
 		[ '[and]',      '&'       ],
-		[ '[u]',      '_'       ],
+		[ '[u]',      '_'         ],
+
+
+
+		[ '↔',          ' '       ],
+
+
+
+
 
 
  )
@@ -23613,6 +23719,7 @@ class Banner:
 
 
 def isExit(_file_):
+	__.KeyMonActive=False
 	global switches
 	if switches.isActive('ExitNotify'):
 		Notify(Exit='Force')
@@ -26707,6 +26814,7 @@ class Pressed:
 		return win_state or kb_state or pynput_state
 
 ##################################################
+__.KeyMonActive = True
 class KeyMon:
 	def __init__(self, listen=None, p=None, kill=['esc','f1'], strict=False):
 		import keyboard  # type: ignore
@@ -26825,6 +26933,8 @@ class KeyMon:
 		self.keyboard.on_release(self.on_key_release)
 		try:
 			while not self.shutdown_flag:
+				if not __.KeyMonActive: self.shutdown_flag = True
+				if self.pause: return None
 				active = 0
 				for key in self.kill:
 					if self.keyboard.is_pressed(key):

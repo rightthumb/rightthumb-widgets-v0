@@ -3528,12 +3528,12 @@ url() {
 
 
 
-
+alias px="python3"
 
 alias social="p vps-scan-social-media"
 
 
-
+alias ui='/opt/rightthumb-widgets-v0/widgets/bash/universal-install.sh'
 
 clear
 # get_time_difference

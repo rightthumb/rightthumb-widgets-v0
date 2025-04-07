@@ -67,6 +67,368 @@ https://stackoverflow.com/questions/2049502/what-characters-are-allowed-in-an-em
 _str.hasAlpha( row )
 '''
 
+## Start: Latest Version
+import platform
+import re
+
+# Set slash character depending on OS
+slash = chr(92) if platform.system() == 'Windows' else chr(47)
+
+# Common character sets
+upperChar = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+lowerChar = 'abcdefghijklmnopqrstuvwxyz'
+alphaChar = lowerChar + upperChar
+printable = ' 0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~ \t\n\r\x0b\x0c'
+printable2 = printable + '🧻🧪💀🦆🦉🥓🦄🦀🖕🍣🍤🍥🍡🥃🥞🐕👾🐉🐓🐋🐌🐢👽👿🥑🐡🐗💐🏹🎨🐔🐛🎯🌯📷🛶🥕🍒🍸🍳🐲🎣🐟🦅👀🐸🤞💪💾👻🐊🍔🌭🍀🕓🦊🍟🥝🖕🐒🥞🐼📎🐧💩🍕🍍🦏🍗🌈🐳🦑🚀🙈🙊🙉🌮🥒🐅🐯🍉🚽🍅👅🎩🍷'
+alphanumeric = ' 0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
+safeChar = printable
+visibleChar = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~'
+notFilenameSafe = '/\\?%*:|"<>'
+safe = alphanumeric + '!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~ \t\n\r\x0b\x0c' + '¡¢£¤¥¦§¨©ª«¬­®¯°±²³´µ¶·¸¹º»¼½¾¿'
+safe2 = safe + 'ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞß' + 'àáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿ'
+
+# ────────────────────────────
+# Utility Functions
+# ────────────────────────────
+
+def randomStr(s):
+	import random
+	char_list = list(s)
+	random.shuffle(char_list)
+	return ''.join(char_list)
+
+def printClean(text):
+	text = str(text)
+	return ''.join([x for x in text if x in printable])
+
+def minimalistClean(row):
+	result = ''.join([x if x in printable else ' ' for x in row])
+	result = replaceDuplicate(result, ' ')
+	result = cleanBE(result, ' ')
+	return result
+
+def hasAlpha(row):
+	row = str(row)
+	for r in row:
+		if r in alphaChar:
+			return True
+	return False
+
+def totalClean(row):
+	row = row.replace('\n', '').replace('\r', '')
+	row = replaceDuplicate(row, ' ')
+	row = replaceDuplicate(row, '\t')
+	row = cleanBE(row, ' ')
+	row = cleanBE(row, '\t')
+	return row
+
+def filenameSafe(data):
+	data = str(data)
+	result = ''.join([d if d in printable and d not in notFilenameSafe else ' ' for d in data])
+	result = replaceDuplicate(result, ' ')
+	result = cleanBE(result, ' ')
+	return result
+
+def hasVisible(data):
+	for char in data:
+		if char in visibleChar:
+			return True
+	return False
+
+def removeUnsave(data):
+	return ''.join([char for char in data if char in safeChar])
+
+def spaceba(string, what):
+	if what in string:
+		i = 0
+		while f' {what}' in string or f'{what} ' in string:
+			i += 1
+			if i > 1000: break
+			string = string.replace(f' {what}', what)
+			string = string.replace(f'{what} ', what)
+	return string
+
+def makePrintable(string, replaceWith=' ', appropriate=False):
+	if appropriate is False:
+		appropriate = safeChar
+	result = ''.join([char if char in appropriate else replaceWith for char in string])
+	result = replaceDuplicate(result, replaceWith)
+	result = cleanBE(result, replaceWith)
+	return result
+
+def namespace(app, data):
+	chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_.'
+	data = makePrintable(data, replaceWith=' ', appropriate=chars)
+	for row in data.split(' '):
+		if row.startswith(str(app) + '.'):
+			return row
+	return False
+
+def _ws():
+	string = __.imp('string')
+	return string.whitespace
+
+
+
+
+
+
+
+
+
+
+
+# ════════════════════════════════════════════════════════════════════════════════
+# Legacy String Utilities
+# Full Module: Cleaners, Strip Functions, Type Checkers, Character Fixes
+# Preserved in original functionality, cleaned formatting, ready for production
+# ════════════════════════════════════════════════════════════════════════════════
+
+# SECTION: Basic Replace and Cleanup Utilities
+
+def replaceAll(string, rWhat, rWith):
+	if not len(rWhat):
+		return string
+	if rWhat not in string:
+		return string
+	tmp = '{C9DCAA81-3B8A-68E9-E4CF-A405E2199CB9}'
+	while rWhat in string:
+		string = string.replace(rWhat, tmp)
+	while tmp in string:
+		string = string.replace(tmp, rWith)
+	return string
+
+def removeAll(string, rWhat):
+	if not len(rWhat):
+		return string
+	if rWhat not in string:
+		return string
+	return replaceAll(string, rWhat, '')
+
+def replaceDuplicate(string, rWhat):
+	if not isinstance(string, str):
+		return string
+	if not len(rWhat):
+		return string
+	if rWhat not in string:
+		return string
+	while rWhat + rWhat in string:
+		string = string.replace(rWhat + rWhat, rWhat)
+	return string
+
+def cleanFirst(string, rWhat):
+	if not len(rWhat) or rWhat not in string:
+		return string
+	while string.startswith(rWhat):
+		string = string[len(rWhat):]
+	return string
+
+def cleanEnd(string, rWhat):
+	if not len(rWhat) or rWhat not in string:
+		return string
+	while string.endswith(rWhat):
+		string = string[:-len(rWhat)]
+	return string
+
+def cleanBE(string, rWhat):
+	return cleanFirst(cleanEnd(string, rWhat), rWhat)
+
+def cleanAll(string, rWhat, rWith):
+	while rWhat in string:
+		string = string.replace(rWhat, rWith)
+	return string
+
+# SECTION: Strip Functions
+
+def totalStrip(line):
+	permitted = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_.,-@:'#\""
+	return ' '.join(''.join(c for c in word if c in permitted) for word in line.split())
+
+def totalStrip1b(line, add=''):
+	permitted = " 0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" + (add or '')
+	return ' '.join(''.join(c for c in word if c in permitted) for word in line.split())
+
+def totalStrip2(line):
+	permitted = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-"
+	return ' '.join(''.join(c for c in word if c in permitted) for word in line.split())
+
+def totalStrip2b(line):
+	permitted = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_ "
+	return ' '.join(''.join(c for c in word if c in permitted) for word in line.split())
+
+def totalStrip3(line):
+	permitted = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-,"
+	return ' '.join(''.join(c for c in word if c in permitted) for word in line.split())
+
+def totalStrip4(line):
+	permitted = "0123456789"
+	return ' '.join(''.join(c for c in word if c in permitted) for word in line.split())
+
+def totalStrip5(line):
+	permitted = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_.,-@:'#\"()"
+	return ' '.join(''.join(c for c in word if c in permitted) for word in line.split())
+
+def totalStrip6(line):
+	line = characterClean(removeAll(removeAll(line, '\n'), '\r'))
+	permitted = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_.,-@:'#\"()"
+	return ' '.join(''.join(c for c in word if c in permitted) for word in line.split())
+
+def totalStrip7(line):
+	line = underscore(removeAll(removeAll(line, '\n'), '\r'))
+	permitted = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ."
+	return ' '.join(''.join(c for c in word if c in permitted) for word in line.split())
+
+def totalStrip8(line):
+	line = characterClean(removeAll(removeAll(line, '\n'), '\r'))
+	permitted = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_.,-@:'#\"()"
+	return ' '.join(''.join(c for c in word if c in permitted) for word in line.split())
+
+def totalStrip9(line):
+	line = underscore(removeAll(removeAll(line, '\n'), '\r'))
+	permitted = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ."
+	result = ''.join(char if char in permitted else ' ' for char in line)
+	return replaceDuplicate(cleanBE(result, ' '), ' ')
+
+def underscore(line):
+	return line.replace('\u005F', ' ').replace('\uFF3F', ' ').replace('\u2017', ' ').replace('\u203E', ' ').replace('\u0332', ' ').replace('_', ' ')
+
+# SECTION: Type and Numeric Utilities
+
+def isInt(data):
+	return isinstance(data, int) or (isinstance(data, str) and data.isdigit())
+
+def isFloat(data):
+	try:
+		float(data)
+		return '.' in str(data) and not isInt(data)
+	except:
+		return False
+
+def autoFloatInt(data):
+	if isInt(data):
+		return int(data)
+	elif isFloat(data):
+		return float(data)
+	return data
+
+def onlyDigits(line):
+	permitted = "0123456789-"
+	return ''.join(c if c in permitted else ' ' for c in characterClean(removeAll(removeAll(line, '\n'), '\r')))
+
+def removeNonAlpha(string):
+	permitted = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+	return ''.join(c for c in str(string) if c in permitted)
+
+def removeNonNumber(string):
+	return ''.join(c for c in str(string) if c.isdigit())
+
+# SECTION: Character Cleaning Utilities
+
+def characterClean(string):
+	return string.replace('\xe2\x80\x9c','\"').replace('\xe2\x80\x9d','\"').replace('\xe2\x80\x99',"'").replace('\xe2\x80\x93','-')
+
+def cleanupString(string, beforeAfter=True):
+	string = replaceAll(string, '\n', ' ')
+	string = replaceAll(string, '\t', ' ')
+	string = replaceDuplicate(string, ' ')
+	string = cleanFirst(string, ' ')
+	string = cleanLast(string, ' ')
+	string = characterClean(string)
+	if beforeAfter:
+		string = string.split('(')[0]
+	else:
+		string = string.split('(')[-1]
+	string = string.split('/')[0]
+	return string.strip()
+
+# SECTION: do() Dispatcher
+
+def do(what=None, string='', a=None, b=None, c=None, d=None):
+	if what in 'an alphan'.split(): return totalStrip1b(string, a)
+	if what in 'file'.split(): return clean_filename(string, a, b, c)
+	if what == 'trim': return string.strip()
+	if what == 'nows': return ''.join(string.split())
+	if what == 'all': return replaceAll(string, a, b)
+	if what == 'cleanAll': return cleanAll(string, a, b)
+	if what == 'dup': return replaceDuplicate(string, a)
+	if what == 'be': return cleanBE(string, a)
+	if what == 'b': return cleanFirst(string, a)
+	if what == 'e': return cleanEnd(string, a)
+	if 'alpha' in what and 'nu' in what: return totalStrip1b(string)
+	if what in 'n'.split(): return removeNonNumber(string)
+	if what in 'ra remove'.split(): return removeAll(string, a)
+	return string
+
+# SECTION: JSON Classes
+
+class st(str):
+	def all(self,a,b): return do('all',self,a,b)
+	def cleanAll(self,a,b): return do('cleanAll',self,a,b)
+	def dup(self,a): return do('dup',self,a)
+	def be(self,a): return do('be',self,a)
+	def b(self,a): return do('b',self,a)
+	def e(self,a): return do('e',self,a)
+	def alpha(self): return do('n',self)
+	def num(self): return do('nu',self)
+	def remove(self,a): return do('remove',self,a)
+	def ra(self,a): return do('remove',self,a)
+	def json(self):
+		import json
+		result = json.loads(self)
+		return dic(result) if isinstance(result, dict) else lis(result)
+
+class dic(dict):
+	def string(self):
+		import json
+		return json.dumps(self, indent=4)
+	def inline(self):
+		import json
+		return json.dumps(self)
+
+class lis(list):
+	def string(self):
+		import json
+		return json.dumps(self, indent=4)
+	def inline(self):
+		import json
+		return json.dumps(self)
+
+
+## END: Latest Version
+## END: Latest Version
+## END: Latest Version
+## END: Latest Version
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Legacy
 import platform
 slash = 0
 if platform.system() == 'Windows':
@@ -79,14 +441,14 @@ import re
 upperChar = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 lowerChar = 'abcdefghijklmnopqrstuvwxyz'
 alphaChar = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
-printable = ' 0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~ \t\n\r\x0b\x0c'
+printable = ' 0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!"#$%&\'()*+,-./:;<=>?@[\\]^_{|}~ \t\n\r\x0b\x0c'
 printable2 = printable + '🧻🧪💀🦆🦉🥓🦄🦀🖕🍣🍤🍥🍡🥃🥞🐕👾🐉🐓🐋🐌🐢👽👿🥑🐡🐗💐🏹🎨🐔🐛🎯🌯📷🛶🥕🍒🍸🍳🐲🎣🐟🦅👀🐸🤞💪💾👻🐊🍔🌭🍀🕓🦊🍟🥝🖕🐒🥞🐼📎🐧💩🍕🍍🦏🍗🌈🐳🦑🚀🙈🙊🙉🌮🥒🐅🐯🍉🚽🍅👅🎩🍷'
 alphanumeric = ' 0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
 safeChar = printable
-visibleChar = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~'
+visibleChar = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!"#$%&\'()*+,-./:;<=>?@[\\]^_{|}~'
 notFilenameSafe = '/\\?%*:|"<>'
-safe = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ' + '!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~ \t\n\r\x0b\x0c' + '¡¢£¤¥¦§¨©ª«¬­®¯°±²³´µ¶·¸¹º»¼½¾¿'
-safe2 = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ' + '!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~ \t\n\r\x0b\x0c' + '¡¢£¤¥¦§¨©ª«¬­®¯°±²³´µ¶·¸¹º»¼½¾¿' + 'ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞß' + 'àáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿ'
+safe = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ' + '!"#$%&\'()*+,-./:;<=>?@[\\]^_{|}~ \t\n\r\x0b\x0c' + '¡¢£¤¥¦§¨©ª«¬­®¯°±²³´µ¶·¸¹º»¼½¾¿'
+safe2 = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ' + '!"#$%&\'()*+,-./:;<=>?@[\\]^_{|}~ \t\n\r\x0b\x0c' + '¡¢£¤¥¦§¨©ª«¬­®¯°±²³´µ¶·¸¹º»¼½¾¿' + 'ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞß' + 'àáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿ'
 
 
 
@@ -911,13 +1273,13 @@ def characterClean(string):
 	return string
 
 def basic(string):
-    pattern = re.compile(r'([^\s\w]|_)+')
-    string = pattern.sub('', string)
-    string = replaceDuplicate(string, ' ')
-    string = cleanFirst(string, ' ')
-    string = cleanLast(string, ' ')
+	pattern = re.compile(r'([^\s\w]|_)+')
+	string = pattern.sub('', string)
+	string = replaceDuplicate(string, ' ')
+	string = cleanFirst(string, ' ')
+	string = cleanLast(string, ' ')
 
-    return string
+	return string
 
 def charFix( string ):
 	global slash
@@ -1024,7 +1386,7 @@ charFixData = ['','x00'],
 [']','x5d'],
 ['^','x5e'],
 ['_','x5f'],
-['`','x60'],
+['','x60'],
 ['a','x61'],
 ['b','x62'],
 ['c','x63'],
@@ -1475,3 +1837,5 @@ class lis(list):
 	def inline(self):
 		simplejson = __.imp('simplejson')
 		return string(simplejson.dumps(self))
+
+

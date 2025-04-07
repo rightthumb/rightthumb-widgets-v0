@@ -79,11 +79,12 @@ def appSwitches():
 	_.switches.register('Lower', '-lower','')
 	_.switches.register('EndsWith', '-ew','')
 	_.switches.register('CountDiv', '-div','')
-	_.switches.register('Original', '-original','')
+	_.switches.register('Original', '-og,-original','')
 	_.switches.register('Blanks', '-blanks','')
 	_.switches.register('CleanB', '-cb,-cleanb','')
 	_.switches.register('NoBlanks', '-nb,-noblanks','')
 	_.switches.register('PrintDelimLines', '-delim','')
+	# _.switches.register('Original', '-delim','')
 	
 _.autoBackupData = __.autoCreationConfiguration['backup']
 __.releaseAcquiredData = __.autoCreationConfiguration['logs']
