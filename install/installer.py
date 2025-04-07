@@ -3535,6 +3535,8 @@ alias social="p vps-scan-social-media"
 
 alias ui='/opt/rightthumb-widgets-v0/widgets/bash/universal-install.sh'
 
+alias wget-s="wget -q -O - "
+
 clear
 # get_time_difference
 # a3bc42ec51e9
