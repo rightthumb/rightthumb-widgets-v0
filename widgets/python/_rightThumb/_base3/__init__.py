@@ -8370,80 +8370,80 @@ def setPipeData( data, theFocus=False, clean=False ):
 		setPipeDataRan = True
 
 def HELP(topic):
-    """
-    Print the full path to a help file within _base3/help/.
+	"""
+	Print the full path to a help file within _base3/help/.
 
-    Example:
-        HELP('pipeCleaner')  # -> D:\.rightthumb-widgets\widgets\python\_rightThumb\_base3\help\pipeCleaner.py
-    """
-    base_path = os.path.dirname(__file__)  # points to _base3 directory
-    help_path = os.path.join(base_path, 'help', f'{topic}.py')
-    print(help_path)
-    return help_path
+	Example:
+		HELP('pipeCleaner')  # -> D:\.rightthumb-widgets\widgets\python\_rightThumb\_base3\help\pipeCleaner.py
+	"""
+	base_path = os.path.dirname(__file__)  # points to _base3 directory
+	help_path = os.path.join(base_path, 'help', f'{topic}.py')
+	print(help_path)
+	return help_path
 
 
 __.setting('pipe-cleaner', {
-    'first': True,      # Clean first character if not safe
-    'trim': True,       # Strip spaces (left and right)
-    'deep': True,       # Strip \r \n \t
-    'multi': 3,         # Repeat deep cleaning n times
-    'skip': []          # List of indices to skip cleaning
+	'first': True,      # Clean first character if not safe
+	'trim': True,       # Strip spaces (left and right)
+	'deep': True,       # Strip \r \n \t
+	'multi': 3,         # Repeat deep cleaning n times
+	'skip': []          # List of indices to skip cleaning
 })
 
 def pipeCleaner(clean=0):
-    settings = __.setting('pipe-cleaner')
+	settings = __.setting('pipe-cleaner')
 
-    if isinstance(settings, bool):
-        if not settings:
-            return None
-        settings = {}
+	if isinstance(settings, bool):
+		if not settings:
+			return None
+		settings = {}
 
-    # Ensure all expected keys exist
-    settings.setdefault('first', True)
-    settings.setdefault('trim', True)
-    settings.setdefault('deep', True)
-    settings.setdefault('multi', 1)
-    settings.setdefault('skip', [])
+	# Ensure all expected keys exist
+	settings.setdefault('first', True)
+	settings.setdefault('trim', True)
+	settings.setdefault('deep', True)
+	settings.setdefault('multi', 1)
+	settings.setdefault('skip', [])
 
-    if isinstance(clean, bool):
-        clean = settings
+	if isinstance(clean, bool):
+		clean = settings
 
-    if 'clean-pipe' in l.v.cnf.data and not l.conf('clean-pipe'):
-        return
+	if 'clean-pipe' in l.v.cnf.data and not l.conf('clean-pipe'):
+		return
 
-    def pipeCleanerDeep(p):
-        for _ in range(settings['multi']):
-            p = p.strip(' \t\r\n')
-        return p
+	def pipeCleanerDeep(p):
+		for _ in range(settings['multi']):
+			p = p.strip(' \t\r\n')
+		return p
 
-    global appData
-    try:
-        if settings['first']:
-            if appData[__.appReg]['pipe'] and appData[__.appReg]['pipe'][0]:
-                first_char = appData[__.appReg]['pipe'][0][0]
-                if first_char not in _str.safeChar and first_char not in _str.safe:
-                    appData[__.appReg]['pipe'][0] = appData[__.appReg]['pipe'][0][1:]
-    except Exception as e:
-        pass
+	global appData
+	try:
+		if settings['first']:
+			if appData[__.appReg]['pipe'] and appData[__.appReg]['pipe'][0]:
+				first_char = appData[__.appReg]['pipe'][0][0]
+				if first_char not in _str.safeChar and first_char not in _str.safe:
+					appData[__.appReg]['pipe'][0] = appData[__.appReg]['pipe'][0][1:]
+	except Exception as e:
+		pass
 
-    try:
-        for i, pipeData in enumerate(appData[__.appReg]['pipe']):
-            if i in settings['skip']:
-                continue
+	try:
+		for i, pipeData in enumerate(appData[__.appReg]['pipe']):
+			if i in settings['skip']:
+				continue
 
-            p = pipeData.replace('\n', '')
+			p = pipeData.replace('\n', '')
 
-            if clean and settings['trim']:
-                p = p.strip()
+			if clean and settings['trim']:
+				p = p.strip()
 
-            if clean and settings['deep']:
-                p = pipeCleanerDeep(p)
+			if clean and settings['deep']:
+				p = pipeCleanerDeep(p)
 
-            appData[__.appReg]['pipe'][i] = p
-    except Exception as e:
-        pass
+			appData[__.appReg]['pipe'][i] = p
+	except Exception as e:
+		pass
 
-    return appData[__.appReg]['pipe']
+	return appData[__.appReg]['pipe']
 
 
 
