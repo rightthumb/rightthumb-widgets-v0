@@ -19,9 +19,9 @@
 
 
 ##################################################
-import _rightThumb._construct as __
-import _rightThumb._vars as _v
-import _rightThumb._string as _str
+import _rightThumb._construct as __ # type: ignore
+import _rightThumb._vars as _v # type: ignore
+import _rightThumb._string as _str # type: ignore
 ##################################################
 import glob
 import sys,os,time,datetime,threading
@@ -27117,10 +27117,186 @@ def Beep(waitToStart=1,wait=1):
 
 
 ##################################################
+class ThreadManager:
+	def __init__(self, threads=10, timeout=None, onDone=None, t=None):
+		if not t is None: threads = t
+		import threading
+		import queue
+		import time
+		import traceback
+
+		# Internalized modules
+		self._threading = threading
+		self._queue = queue
+		self._time = time
+		self._traceback = traceback
+
+		self.max_threads = threads
+		self.global_timeout = timeout
+		self.onAllDone = onDone
+
+		self._lock = threading.Lock()
+		self._job_queue = queue.Queue()
+		self._scheduled = []
+		self._stop_flag = False
+
+		# Runtime stats
+		self.active_count = 0
+		self.total_started = 0
+		self.total_completed = 0
+		self.total_killed = 0
+		self.total_timeout = 0
+		self.job_log = []
+		self.report = []
+
+		self._manager_thread = threading.Thread(target=self._manager_loop, daemon=True)
+		self._manager_thread.start()
+
+	def queue(self, fn, ak=None, timeout=None, onStart=None, onDone=None, onKill=None, onTimeout=None, label=None):
+		argsKwargs = ak
+		job = {
+			"fn": fn,
+			"start": self._time.time(),
+			"args": argsKwargs if isinstance(argsKwargs, tuple) else (),
+			"kwargs": argsKwargs if isinstance(argsKwargs, dict) else {},
+			"timeout": timeout,
+			"onStart": onStart,
+			"onDone": onDone,
+			"onKill": onKill,
+			"onTimeout": onTimeout,
+			"label": label or f"job-{self.total_started + 1}"
+		}
+		self._scheduled.append(job)
+		self._job_queue.put(job)
+
+	def _manager_loop(self):
+		while not self._stop_flag:
+			if self.active_count < self.max_threads:
+				try:
+					job = self._job_queue.get(timeout=0.1)
+				except self._queue.Empty:
+					if self._scheduled == [] and self.active_count == 0 and self.onAllDone:
+						self.onAllDone()
+					continue
+				self._threading.Thread(target=self._run_job, args=(job,), daemon=True).start()
+			else:
+				self._time.sleep(0.01)
+
+	def _run_job(self, job):
+		label = job["label"]
+		start_time = self._time.time()
+
+		with self._lock:
+			self.active_count += 1
+			self.total_started += 1
+
+		fn = job["fn"]
+		args = job["args"]
+		kwargs = job["kwargs"]
+		timeout = job["timeout"] if job["timeout"] is not None else self.global_timeout
+
+		start_cb = job["onStart"]
+		done_cb = job["onDone"]
+		kill_cb = job["onKill"]
+		timeout_cb = job["onTimeout"]
+
+		result = None
+		error = None
+		killed = False
+		timed_out = False
+
+		if start_cb:
+			try:
+				start_cb()
+			except Exception:
+				self._traceback.print_exc()
+
+		def target_fn():
+			nonlocal result, error
+			try:
+				result = fn(*args, **kwargs)
+			except Exception as e:
+				error = e
+
+		t = self._threading.Thread(target=target_fn)
+		t.start()
+		t.join(timeout)
+
+		status = "completed"
+
+		if t.is_alive():
+			timed_out = True
+			killed = True
+			status = "timeout"
+			with self._lock:
+				self.total_timeout += 1
+			if timeout_cb:
+				try:
+					timeout_cb()
+				except Exception:
+					self._traceback.print_exc()
+		elif error:
+			killed = True
+			status = "killed"
+			with self._lock:
+				self.total_killed += 1
+			if kill_cb:
+				try:
+					kill_cb()
+				except Exception:
+					self._traceback.print_exc()
+		else:
+			with self._lock:
+				self.total_completed += 1
+			if done_cb:
+				try:
+					done_cb(result)
+				except Exception:
+					self._traceback.print_exc()
+
+		duration = self._time.time() - start_time
+		log_entry = {
+			"label": label,
+			"status": status,
+			"result": str(result) if result is not None else None,
+			"error": str(error) if error else None,
+			"duration": round(duration, 3)
+		}
+
+		with self._lock:
+			self.active_count -= 1
+			self.job_log.append(log_entry)
+
+		if self._scheduled:
+			self._scheduled.pop(0)
+
+		if self._scheduled == [] and self.active_count == 0 and self.onAllDone:
+			self.onAllDone()
+
+	def stats(self):
+		with self._lock:
+			return {
+				"active": self.active_count,
+				"total_started": self.total_started,
+				"total_completed": self.total_completed,
+				"total_killed": self.total_killed,
+				"total_timeout": self.total_timeout,
+				"log": list(self.job_log)
+			}
+
+	def stop(self):
+		self._stop_flag = True
+
+	# Threads = _.Threads(t=10, onDone=None)
+	# def Done(result): pass  # other onFn have no args
+	# Threads.queue(fn,  ak=None, timeout=None, onStart=None, onDone=Done, onKill=None, onTimeout=None, label=None)  # ak = args, kwargs
+##################################################
 
 ##================================================
 nsfw=True
 
+Threads=ThreadManager
+T=ThreadManager
 
 fd=friendlyDate
 

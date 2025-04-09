@@ -6,8 +6,8 @@ def sw():
 	pass
 	_.switches.register( 'URLs', '-url', 'url here or leave blank to | pipe', isData='name' )
 	_.switches.register( 'Depth', '-d,-depth', '3 defaults to unlimited' )
-	_.switches.register( 'MaxThreads', '-t,-threads,-max,-maxThreads', '0 to disable threading. defaults to 10' )
 	_.switches.register( 'Omit', '-o,-omit', '-o .zip .pdf' )
+	_.switches.register( 'MaxThreads', '-t,-threads,-max,-maxThreads', '0 to disable threading. defaults to 10' )
 _._default_settings_()
 
 _.appInfo[focus()] = {
@@ -47,201 +47,6 @@ _.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw )
 #n)--> start
 
 
-import threading
-import queue
-import time
-import traceback
-
-
-class ThreadManager:
-    def __init__(self, threads=10, timeout=None, onDone=None):
-        self.max_threads = threads
-        self.global_timeout = timeout
-        self.onAllDone = onDone
-
-        self._lock = threading.Lock()
-        self._job_queue = queue.Queue()
-        self._scheduled = []
-        self._stop_flag = False
-
-        # Runtime stats
-        self.active_count = 0
-        self.total_started = 0
-        self.total_completed = 0
-        self.total_killed = 0
-        self.total_timeout = 0
-        self.job_log = []
-
-        self._manager_thread = threading.Thread(target=self._manager_loop, daemon=True)
-        self._manager_thread.start()
-
-    def queue(self, fn, argsKwargs=None, timeout=None, onStart=None, onDone=None, onKill=None, onTimeout=None, label=None):
-        job = {
-            "fn": fn,
-            "args": argsKwargs if isinstance(argsKwargs, tuple) else (),
-            "kwargs": argsKwargs if isinstance(argsKwargs, dict) else {},
-            "timeout": timeout,
-            "onStart": onStart,
-            "onDone": onDone,
-            "onKill": onKill,
-            "onTimeout": onTimeout,
-            "label": label or f"job-{self.total_started + 1}"
-        }
-        self._scheduled.append(job)
-        self._job_queue.put(job)
-
-    def _manager_loop(self):
-        while not self._stop_flag:
-            if self.active_count < self.max_threads:
-                try:
-                    job = self._job_queue.get(timeout=0.1)
-                except queue.Empty:
-                    if self._scheduled == [] and self.active_count == 0 and self.onAllDone:
-                        self.onAllDone()
-                    continue
-                threading.Thread(target=self._run_job, args=(job,), daemon=True).start()
-            else:
-                time.sleep(0.01)
-
-    def _run_job(self, job):
-        label = job["label"]
-        start_time = time.time()
-
-        with self._lock:
-            self.active_count += 1
-            self.total_started += 1
-
-        fn = job["fn"]
-        args = job["args"]
-        kwargs = job["kwargs"]
-        timeout = job["timeout"] if job["timeout"] is not None else self.global_timeout
-
-        start_cb = job["onStart"]
-        done_cb = job["onDone"]
-        kill_cb = job["onKill"]
-        timeout_cb = job["onTimeout"]
-
-        result = None
-        error = None
-        killed = False
-        timed_out = False
-
-        if start_cb:
-            try:
-                start_cb()
-            except Exception:
-                traceback.print_exc()
-
-        def target_fn():
-            nonlocal result, error
-            try:
-                result = fn(*args, **kwargs)
-            except Exception as e:
-                error = e
-
-        t = threading.Thread(target=target_fn)
-        t.start()
-        t.join(timeout)
-
-        status = "completed"
-
-        if t.is_alive():
-            timed_out = True
-            killed = True
-            status = "timeout"
-            with self._lock:
-                self.total_timeout += 1
-            if timeout_cb:
-                try:
-                    timeout_cb()
-                except Exception:
-                    traceback.print_exc()
-        elif error:
-            killed = True
-            status = "killed"
-            with self._lock:
-                self.total_killed += 1
-            if kill_cb:
-                try:
-                    kill_cb()
-                except Exception:
-                    traceback.print_exc()
-        else:
-            with self._lock:
-                self.total_completed += 1
-            if done_cb:
-                try:
-                    done_cb(result)
-                except Exception:
-                    traceback.print_exc()
-
-        duration = time.time() - start_time
-        log_entry = {
-            "label": label,
-            "status": status,
-            "result": str(result) if result is not None else None,
-            "error": str(error) if error else None,
-            "duration": round(duration, 3)
-        }
-
-        with self._lock:
-            self.active_count -= 1
-            self.job_log.append(log_entry)
-
-        if self._scheduled:
-            self._scheduled.pop(0)
-
-        if self._scheduled == [] and self.active_count == 0 and self.onAllDone:
-            self.onAllDone()
-
-    def stats(self):
-        with self._lock:
-            return {
-                "active": self.active_count,
-                "total_started": self.total_started,
-                "total_completed": self.total_completed,
-                "total_killed": self.total_killed,
-                "total_timeout": self.total_timeout,
-                "log": list(self.job_log)
-            }
-
-    def stop(self):
-        self._stop_flag = True
-
-
-# # start thread manager example
-# if __name__ == "__main__":
-#     import random
-
-#     def work(i, delay=None):
-#         if delay is None:
-#             delay = random.uniform(0.5, 2)
-#         print(f"→ Work {i}")
-#         time.sleep(delay)
-#         return f"Done {i}"
-
-#     def on_all_done():
-#         print("✅ All jobs complete!")
-#         print(tm.stats())
-
-#     tm = ThreadManager(threads=3, onDone=on_all_done)
-
-#     for i in range(7):
-#         tm.queue(
-#             fn=work,
-#             argsKwargs=(i,),
-#             label=f"Task-{i}",
-#             timeout=1.5,
-#             onDone=lambda result: print("✔", result),
-#             onTimeout=lambda: print("⏰ Timeout"),
-#             onKill=lambda: print("❌ Failed")
-#         )
-
-#     while threading.active_count() > 1:
-#         time.sleep(0.1)
-
-# # end thread manager example
-
 
 
 
@@ -260,7 +65,9 @@ from bs4 import BeautifulSoup
 # start version 1
 
 class SiteSpider:
-    def __init__(self, output_folder, omit=None, threaded=True, max_threads=10, max_depth=0):
+    def __init__(self, output_folder, omit=None, threaded=True, max_threads=10, max_depth=0, t=None, m=None):
+        if not t is None: threaded = t
+        if not m is None: max_threads = m
         self.output_folder = output_folder
         self.omit = omit or []
         self.threaded = threaded
@@ -272,7 +79,7 @@ class SiteSpider:
         self.paths = []
         self.url_map = {}
         self.force_exit = False
-        self.thread_manager = ThreadManager(
+        self.thread_manager = _.ThreadManager(
             threads=max_threads,
             onDone=self._on_all_done
         )
@@ -403,7 +210,7 @@ class SiteSpider:
             for link in downloaded_urls:
                 if any(link.lower().endswith(ext) for ext in ['.css', '.js', '.jpg', '.jpeg', '.png', '.gif', '.svg', '.ico', '.woff', '.woff2', '.ttf', '.eot']):
                     continue
-                self.thread_manager.queue(self.crawl, argsKwargs=(link, depth + 1), label=link)
+                self.thread_manager.queue(self.crawl, ak=(link, depth + 1), label=link)
 
         except Exception as e:
             print(f"[✘] Error: {url} — {e}")
@@ -425,7 +232,7 @@ class SiteSpider:
 
         threading.Thread(target=ctrl_c_exit, daemon=True).start()
 
-        self.thread_manager.queue(self.crawl, argsKwargs=(root_url, 0), label="initial")
+        self.thread_manager.queue(self.crawl, ak=(root_url, 0), label="initial")
 
         while True:
             if not self.thread_manager._scheduled and self.thread_manager.active_count == 0:
@@ -453,7 +260,7 @@ class SiteSpider:
 # start beta untested 
 # start beta untested 
 # start beta untested 
-'''
+"""
 import os
 import threading
 import time
@@ -508,7 +315,7 @@ class SiteSpider:
         self.paths = []
         self.url_map = {}
         self.force_exit = False
-        self.thread_manager = ThreadManager(
+        self.thread_manager = _.ThreadManager(
             threads=max_threads,
             onDone=self._on_all_done
         )
@@ -666,7 +473,7 @@ class SiteSpider:
             for link in downloaded_urls:
                 if any(link.lower().endswith(ext) for ext in ['.css', '.js', '.jpg', '.jpeg', '.png', '.gif', '.svg', '.ico', '.woff', '.woff2', '.ttf', '.eot']):
                     continue
-                self.thread_manager.queue(self.crawl, argsKwargs=(link, depth + 1), label=link)
+                self.thread_manager.queue(self.crawl, ak=(link, depth + 1), label=link)
         except Exception as e:
             print(f"[✘] Error: {url} — {e}")
         finally:
@@ -685,7 +492,7 @@ class SiteSpider:
                 print("\n[⛔] Ctrl+C detected! Force exiting spider...")
                 os._exit(0)
         threading.Thread(target=ctrl_c_exit, daemon=True).start()
-        self.thread_manager.queue(self.crawl, argsKwargs=(root_url, 0), label="initial")
+        self.thread_manager.queue(self.crawl, ak=(root_url, 0), label="initial")
         while True:
             if not self.thread_manager._scheduled and self.thread_manager.active_count == 0:
                 break
@@ -702,7 +509,28 @@ class SiteSpider:
         else:
             print(f"[!] Could not write spider.init – missing map for {root_url}")
 
-'''
+            
+# ✅ What’s Included
+# ✅ Everything works exactly as before
+
+# ✅ only=[] argument filters content based on:
+
+# Literal text
+
+# [relevant_key] keywords (e.g., [email], [phone])
+
+# Custom regex {label: pattern}
+
+# ✅ Automatically saves findings to relevant.json
+
+# ✅ Stops early if only=[0] and finds one of each type
+
+# ✅ Uses your existing ThreadManager
+
+# ✅ Thread-safe and optimized with clean code and minimal changes
+
+"""
+
 # end  beta untested 
 # end  beta untested 
 # end  beta untested 

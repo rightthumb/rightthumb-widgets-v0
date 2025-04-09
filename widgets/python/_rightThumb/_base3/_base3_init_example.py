@@ -14,7 +14,7 @@
 ##################################################
 # import sys, time
 ##################################################
-import _rightThumb._construct as __;appDBA=__.clearFocus(__name__,__file__);__.appReg=appDBA;import _rightThumb._base3 as _;
+import _rightThumb._construct as __;appDBA=__.clearFocus(__name__,__file__);__.appReg=appDBA;import _rightThumb._base3 as _; # type: ignore
 def focus(parentApp='', childApp='', reg=True): global appDBA; f = __.appName(appDBA, parentApp, childApp); return f if reg else f
 fieldSet=_.l.vars(focus(),__name__,__file__,appDBA);_.load();_v=__.imp('_rightThumb._vars')
 ##################################################
@@ -137,7 +137,12 @@ _.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw )
 
 def action():
 	pass
+
 	# load(); global c3po;
+
+	# Threads = _.Threads(t=10, onDone=None)
+	# def Done(result): pass  # other onFn have no args
+	# Threads.queue(fn,  ak=None, timeout=None, onStart=None, onDone=Done, onKill=None, onTimeout=None, label=None)  # ak = args, kwargs
 
 	#n)--> iterate
 	# for subject in _.isData(r=0): _.pr(subject)
