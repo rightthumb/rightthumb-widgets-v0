@@ -64,4 +64,4 @@ cd "$domaindir" && wp core download --allow-root && wp core config --dbname=$dbn
 echo "Fixing permissions and ownership"
 sudo chown -R www-data:www-data $domaindir
 find $domaindir -type d -exec chmod 0755 {} \;
-find $domaindir -type f -exec chmod 0644 {} \; 
+find $domaindir -type f -exec chmod 0644 {} \;

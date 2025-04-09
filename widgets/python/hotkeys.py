@@ -1228,8 +1228,21 @@ class CLIP:
 		if os.path.isfile(auto):
 			with keyboard.pressed(Key.ctrl): keyboard.press('v'); keyboard.release('v')
 
+	def databeastLogin(self):
+		_copy = _.regImp( __.appReg, '-copy' )
+		pa='XanTay98TayXan98!\n'
+		_copy.imp.copy( pa, p=0 )
+		with keyboard.pressed(Key.ctrl):
+			keyboard.press('v')
+			keyboard.release('v')
 
-
+	def databeastUser(self):
+		_copy = _.regImp( __.appReg, '-copy' )
+		pa='ssh root@databeast.vp-servers.com'
+		_copy.imp.copy( pa, p=0 )
+		with keyboard.pressed(Key.ctrl):
+			keyboard.press('v')
+			keyboard.release('v')
 
 	def pipAndStuff_Paste(self):
 		_copy = _.regImp( __.appReg, '-copy' )
@@ -3830,6 +3843,8 @@ def load():
 
 				'scrape-paths': { 'raw': [   'ctrl.', 'win.', 'h'   ], 'do': 'Clip.scrape_paths()' },
 				'pip-and-stuff': { 'raw': [   'shift.', 'alt.', 'p'   ], 'do': 'Clip.pipAndStuff_Paste()' },
+				'databeastLogin': { 'raw': [   'shift.,2', 'e'   ], 'do': 'Clip.databeastLogin()' },
+				'databeastUser': { 'raw': [   'alt.,2',  'e'   ], 'do': 'Clip.databeastUser()' },
 
 	}
 

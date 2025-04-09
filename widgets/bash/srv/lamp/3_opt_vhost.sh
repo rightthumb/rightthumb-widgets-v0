@@ -109,4 +109,4 @@ else
 	echo -e "\e[31mThe action not recognized!\e[39m"
 	exit
 fi
-sudo service apache2 reload &>/dev/null 
+sudo service apache2 reload &>/dev/null

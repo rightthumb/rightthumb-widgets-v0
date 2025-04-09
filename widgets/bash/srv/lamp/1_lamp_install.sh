@@ -90,6 +90,7 @@ else
 	# sudo apt-get autoremove
 
 
+	sudo apt update -y
 
 
 	# Enabling modules
@@ -97,6 +98,9 @@ else
 	echo ''
 	sudo a2enmod rewrite &>/dev/null
 
+	echo "Installing php"
+	echo ''
+	sudo apt install php libapache2-mod-php -y
 	# Install Lets Encrypt
 	echo "Installing additional dependencies"
 	echo ''

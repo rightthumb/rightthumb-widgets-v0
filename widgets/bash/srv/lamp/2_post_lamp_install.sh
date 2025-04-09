@@ -6,12 +6,10 @@ if [ $# -lt 1 ]; then
 	exit 1
 fi
 
-echo "Create virtual host"
-spvhost create $1
-echo "Installing Apache plugin for Lets encrypt"
 sudo apt install certbot python3-certbot-apache -y
 sudo certbot --apache
-echo "Add SSL"
-spssl main $1
-echo "spssl sub $1 force"
+
+#   sudo certbot delete --cert-name "$DOMAIN"
+
+
 echo "/var/www"
