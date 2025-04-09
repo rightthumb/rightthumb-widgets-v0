@@ -11,13 +11,20 @@ def sw():
 _._default_settings_()
 
 _.appInfo[focus()] = {
-	'file': 'thisApp.py',
-	'description': 'Changes the world',
-	'categories': [
-						'DEFAULT',
+	'file': 'spider.py',
+	'description': 'Downloads a website and all its assets',
+    'categories': [
+                        'web',
+                        'download',
+                        'website',
+                        'spider',
+                        'crawl',
+                        'assets',
+                        'html',
+                        'webpage',
 				],
 	'examples': [
-						_.hp('p thisApp -file file.txt'),
+						_.hp('p spider -url https://domain.com/ -o .zip .pdf -d 3 -t 10'),
 						_.linePrint(label='simple',p=0),
 						'',
 	],
