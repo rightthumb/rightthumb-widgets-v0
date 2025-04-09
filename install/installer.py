@@ -2755,6 +2755,7 @@ if [[ "$FORCE_BASHRC" != "true" ]]; then
 	return
   fi
 fi
+
 # echo 000-005
 if [ -z "$Session_ID" ]; then
   export Session_ID=$(date +%s)
@@ -2859,6 +2860,15 @@ if [[ "$FORCE_BASHRC" != "true" ]]; then
 	return
   fi
 fi
+
+
+if command -v python3.11 >/dev/null; then
+    alias python3='python3.11'
+    alias pip3='pip3.11'
+fi
+
+
+
 if [ -z "$Session_ID" ]; then
   export Session_ID=$(date +%s)
 fi
@@ -3619,6 +3629,13 @@ alias ui='$widgets/widgets/bash/universal-install.sh'
 alias wget-s="wget -q -O - "
 
 alias pacman.="pacman -Sy --noconfirm"
+
+
+
+
+
+
+
 
 
 
