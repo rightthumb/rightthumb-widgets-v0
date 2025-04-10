@@ -26693,6 +26693,7 @@ def spliter(text, delimiters):
 ##################################################
 	# Equivalent windows type command stripping invalid characters
 
+
 def Type(file_path):
 	"""
 	Mimics the Windows `type` command:
@@ -26701,7 +26702,6 @@ def Type(file_path):
 	- Ensures `>` and `|` work correctly
 	"""
 	if not file_path or not isinstance(file_path, (str, bytes, os.PathLike)):
-		# sys.stderr.write("Error: Invalid file path provided.\n")
 		sys.stderr.flush()
 		return ''
 
@@ -26712,14 +26712,17 @@ def Type(file_path):
 
 	try:
 		with open(file_path, "rb") as file:  # Open in binary mode to prevent encoding issues
-			while chunk := file.read(4096):  # Read in chunks for efficiency
+			while True:
+				chunk = file.read(4096)
+				if not chunk:
+					break
 				sys.stdout.buffer.write(chunk)  # Write raw bytes directly to stdout
 				sys.stdout.flush()  # Ensure immediate output
 		return ''
 	except Exception as e:
-		# sys.stderr.write(f"Error reading file: {str(e)}\n")
 		sys.stderr.flush()
 		return ''
+
 		
 
 

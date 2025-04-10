@@ -204,12 +204,9 @@ def action():
 	counter = {}
 	spent = {}
 	for record in data:
-		count += 1
-		if not record['sortable'] in counter:
-			counter[record['sortable']] = 0
-		counter[record['sortable']] +=1
-
-		if not record['sortable'] == last['sortable']:
+		if record['sortable'] == last['sortable']:
+			count += 1
+		else:
 			if _.switches.isActive('SkipFirst'):
 				if len(last['sortable']) > 0:
 					result.append({ 'cnt': count, 'record': last })
@@ -217,17 +214,27 @@ def action():
 			else:
 				result.append({'cnt': count, 'record': last})
 				spent[last['sortable']] = 1
-			count = 0
+			count = 1  # start new group with this record
+		if not record['sortable'] in counter:
+			counter[record['sortable']] = 0
+		counter[record['sortable']] += 1
 		last = record
+
 	# _.pr(data[ len(data)-1 ]['sortable'])
 	# _.pr(data[ len(data)-1 ]['sortable'] in spent)
 	# _.printVarSimple(result)
 	# _.pr( spent.keys() )
 
+	# if not data[ len(data)-1 ]['sortable'] in spent:
+	# 	# _.pr( data[ len(data)-1 ] )
+	# 	# _.pr( spent[data[ len(data)-1 ]['sortable']] )
+	# 	result.append({'cnt': counter[data[ len(data)-1 ]['sortable']]  , 'record': data[ len(data)-1 ]})
+
 	if not data[ len(data)-1 ]['sortable'] in spent:
-		# _.pr( data[ len(data)-1 ] )
-		# _.pr( spent[data[ len(data)-1 ]['sortable']] )
-		result.append({'cnt': counter[data[ len(data)-1 ]['sortable']]  , 'record': data[ len(data)-1 ]})
+		result.append({'cnt': count, 'record': data[ len(data)-1 ]})
+
+
+
 	result0 = _.sort(result,'cnt')
 
 	# _.printVarSimple(result0)
