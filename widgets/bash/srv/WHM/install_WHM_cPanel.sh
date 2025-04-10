@@ -76,4 +76,3 @@ fi
 echo "────────────────────────────────────────────"
 
 echo -e "${GREEN}✅ Initial server setup complete! WHM/cPanel installation started.${NC}"
-

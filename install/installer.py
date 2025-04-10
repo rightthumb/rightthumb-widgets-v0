@@ -3634,8 +3634,16 @@ alias pacman.="pacman -Sy --noconfirm"
 
 alias Ssh="ssh-copy-id -i ~/.ssh/id_rsa.pub "
 
+MC() {
+	python3 $ww/python/line.py -make "$@" 
+}
 
+MX() {
+	python3 $ww/python/line.py -make "$@" | python3 $ww/python/execute.py
+}
 
+alias .mx='MX'
+alias .mc='MC'
 
 
 

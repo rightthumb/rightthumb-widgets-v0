@@ -4328,11 +4328,15 @@ class dt:
 #     return data
 FilesFiles = []
 def isData( data=None, focus=None, pipeClean=False, required=False,     r=None, c=None, noclean=None ):
+	global switches
+	global appData
+	if switches.isActive('Paste-isData'):
+		_paste = regImp( __.appReg, '-paste' )
+		appData[__.appReg]['pipe'] = _paste.imp.paste().split('\n')
 	global FilesFiles
 	FilesFiles = myFileLocation_Files
 	__.FilesFiles = myFileLocation_Files
-	global switches
-	global appData
+	# global switches
 	try:
 		if appData[__.appReg]['pipe']: return appData[__.appReg]['pipe']
 		for sw in __.isData_Switches:
@@ -18937,6 +18941,8 @@ ciData = (
 
 
 
+		[ '[[',        '('       ],
+		[ ']]',        ')'       ],
 		[ ';sp',        ' '       ],
 		[ '_;192A;_',   ','       ],
 		[ '_;192B;_',   ':'       ],
@@ -23366,20 +23372,24 @@ def ad(path=None,label='ad'):
 # def URL(url):
 # 	requests=dots('requests.get')
 # 	return requests.get(url).content.decode("utf-8").replace('\\n','\n')
-def URL(url, data={},t=None,txt=None,text=False):
-	if not t is None: text=t
-	if not txt is None: text=txt
-	# print(text)
-	# return ''
-	import requests # type: ignore
-	response = requests.post(url, data=data)
+def URL(url, data={}, t=None, txt=None, text=False, headers=None, h=None):
+	if not h is None:
+		headers = h
+	if not t is None:
+		text = t
+	if not txt is None:
+		text = txt
+
+	import requests  # type: ignore
+	response = requests.post(url, data=data, headers=headers)
+
 	if text:
 		from bs4 import BeautifulSoup
-		# return 'works'
 		soup = BeautifulSoup(response.text, 'html.parser')
 		return soup.get_text(separator='\n', strip=True)
 	else:
 		return response.content.decode("utf-8").replace('\\n', '\n')
+
 
 def URL2(url, data={}):
 	import requests # type: ignore
@@ -27294,7 +27304,24 @@ class ThreadManager:
 	# def Done(result): pass  # other onFn have no args
 	# Threads.queue(fn,  ak=None, timeout=None, onStart=None, onDone=Done, onKill=None, onTimeout=None, label=None)  # ak = args, kwargs
 ##################################################
-
+def stack(name,download=False):
+	def updateStack():
+		import simplejson as json
+		Json = _.URL( _v.fig['stack']+'load.php',{'api':_v.fig['stack-api']})
+		if not Json.strip():
+			_.pr('No stack found')
+			sys.exit(0)
+		saveTableDB(Json,'stack')
+		return json.loads(Json)
+	if download:
+		updateStack()
+	Stack = getTableDB('stack')
+	if not Stack and not download:
+		Stack = updateStack()
+	if name in Stack:
+		return Stack[name]
+	else:
+		return ''
 ##================================================
 nsfw=True
 
@@ -27310,7 +27337,7 @@ isFileAdvanced=myFileLocations
 isFileSimple=isFile
 
 al=aliasList
-
+DB=getTableDB
 UUID=genUUID
 guid=genUUID
 UUIDm=miniUUID

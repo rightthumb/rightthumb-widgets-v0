@@ -161,9 +161,21 @@ def log_result(name, result, start, end):
 		if result.stderr:
 			f.write(f"\nERROR:\n{result.stderr}\n")
 
+import subprocess
+
 def notify_error(task_name, message):
-	# Send to ntfy or any system you want
-	subprocess.run(["python3", "ntfy.py", "--title", f"Error: {task_name}", "--message", message[:300]])
+	note = {
+		"url": _.stack('ntfy')+"/sds-notify",
+		"headers": {
+			"Title": f"Error: {task_name}",
+			"Priority": "urgent",
+			"Tags": "+1"
+		},
+		"data": message[:300]
+	}
+	_.URL(note['url'], note['data'], h=note['headers'] )
+
+
 
 
 
