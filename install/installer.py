@@ -3190,10 +3190,36 @@ alias flushdns="sudo systemctl restart systemd-resolved"
 alias set.="(set -o posix; set)"
 # echo 000-018
 
+tmux_exec_bg() {
+    if [ "$#" -ne 2 ]; then
+        echo "Usage: tmux_exec_bg <session-name> <command>"
+        return 1
+    fi
+
+    local session="$1"
+    local cmd="$2"
+
+    tmux new-session -d -s "$session" "$cmd"
+}
+
+tmux_exec_fg() {
+    if [ "$#" -ne 2 ]; then
+        echo "Usage: tmux_exec_fg <session-name> <command>"
+        return 1
+    fi
+
+    local session="$1"
+    local cmd="$2"
+
+    tmux new-session -s "$session" "$cmd"
+}
+
 
 # pa | p line + alias --c | p line -p = 0 --c | p line -p " " 1
 #####################################################################
 # TMUX Session Management
+alias tr="tmux_exec_fg"            # Run a command in a new TMUX session, in the forground
+alias trb="tmux_exec_bg"           # Run a command in a new TMUX session, in the background
 alias tn="tmux new-session -s"     # Create a new TMUX session
 alias td="tmux detach"             # Detach from the current session
 alias tl="tmux list-sessions"      # List all TMUX sessions
@@ -3598,12 +3624,13 @@ alias .bash="bash --norc --noprofile"
 alias exec='$widgets/widgets/bash/vps-______________execute_on_all_servers.sh'
 
 alias f='$widgets/widgets/bash/nav/c.sh'
-alias j='sh $widgets/widgets/bash/nav/p.sh'
+
 
 alias ob="p script-helper -i"
 alias obb="p script-helper -t r:_.al -i"
 
 alias vps-="/usr/bin/python3 $widgets/widgets/python/files.py + vps- -folders /opt/rightthumb-widgets-v0/"
+
 export Session_ID=$(date +%s)
 
 
@@ -3645,10 +3672,18 @@ MX() {
 alias .mx='MX'
 alias .mc='MC'
 
-
-
+alias .cat="/usr/bin/python3 $widgets/widgets/python/cat.py -f"
+alias j='sh $widgets/widgets/bash/nav/p.sh'
 
 alias up.date="up_date"
+
+# source /opt/rightthumb-widgets-v0/widgets/bash/rc/full.sh
+# source /opt/rightthumb-widgets-v0/widgets/bash/rc/full.sh
+# source /opt/rightthumb-widgets-v0/widgets/bash/rc/full.sh
+
+
+alias os="cat /etc/os-release"
+
 
 
 clear

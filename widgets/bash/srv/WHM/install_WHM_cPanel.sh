@@ -11,7 +11,7 @@ NC='\033[0m' # No Color
 echo -e "${CYAN}🚀 Starting base system setup and SSL prep...${NC}"
 
 echo -e "${YELLOW}📦 Installing updates and popular repos...${NC}"
-sudo ./Add_Repos__apt_dnf_yum_pacman.sh
+# sudo ./Add_Repos__apt_dnf_yum_pacman.sh
 
 echo -e "${YELLOW}🔍 Detecting package manager and installing dependencies (perl, curl, certbot)...${NC}"
 

@@ -167,10 +167,15 @@ def cmdSetVar( n, v ):
 def cmdGetVar( n ):
 	return os.getenv( n.upper() )
 
+# if __.isWin:
+# 	profileTMP = cmdGetVar('userprofile') + slash+'_AppShareTemp'
+# elif not __.isWin:
+# 	profileTMP = cmdGetVar('HOME') + slash+'_AppShareTemp'
+
 if __.isWin:
-	profileTMP = cmdGetVar('userprofile') + slash+'_AppShareTemp'
+	profileTMP = ''
 elif not __.isWin:
-	profileTMP = cmdGetVar('HOME') + slash+'_AppShareTemp'
+	profileTMP = ''
 
 home = ''
 if __.isWin:
@@ -196,6 +201,11 @@ elif not __.isWin:
 	import socket
 	computername = socket.gethostname()
 	userprofile = os.getenv('HOME')
+if not userprofile:
+	userprofile = '/opt/pyWebHome'
+	if not os.path.isdir(userprofile):
+		os.mkdir( userprofile )
+	
 # user = os.getlogin()
 downloads = userprofile + slash+'Downloads'
 computername2 = computername.replace(' ','_')

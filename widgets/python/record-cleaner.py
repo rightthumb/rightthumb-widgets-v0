@@ -712,7 +712,9 @@ class Scanner:
 
 		if not subject == 'website':
 			try:
-				url = re.search("(?P<url>https?://[^\s]+)", data).group("url")
+				url = (re.search("(?P<url>https?://[^\s]+)", data) or re.match(r'(?!x)x')).group("url")
+
+				# url = re.search("(?P<url>https?://[^\s]+)", data).group("url")
 			except Exception as e:
 				url = None
 			if not url is None:
