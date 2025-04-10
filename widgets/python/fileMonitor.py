@@ -148,58 +148,175 @@ _.postLoad( __file__ )
 ########################################################################################
 # START
 
-def on_created(event):
-	_.pr(f"created, {event.src_path} has been created!")
+# def on_created(event):
+# 	_.pr(f"created, {event.src_path} has been created!")
 
-def on_deleted(event):
-	_.pr(f"deleted {event.src_path}!")
+# def on_deleted(event):
+# 	_.pr(f"deleted {event.src_path}!")
 
-def on_modified(event):
-	_.pr(f"modified, {event.src_path} has been modified")
+# def on_modified(event):
+# 	_.pr(f"modified, {event.src_path} has been modified")
 
-def on_moved(event):
-	_.pr(f"moved {event.src_path} to {event.dest_path}")
+# def on_moved(event):
+# 	_.pr(f"moved {event.src_path} to {event.dest_path}")
 
-def action():
-	patterns = "*"
-	ignore_patterns = ""
-	ignore_directories = False
-	case_sensitive = True
-	my_event_handler = PatternMatchingEventHandler(patterns, ignore_patterns, ignore_directories, case_sensitive)
-
-
-
-	my_event_handler.on_created = on_created
-	my_event_handler.on_deleted = on_deleted
-	my_event_handler.on_modified = on_modified
-	my_event_handler.on_moved = on_moved
-
-	# for x in dir(my_event_handler): print('my_event_handler.',x)
-
-	path = "."
-	if _.switches.isActive('Folder'): path = __.path(_.switches.values('Folder')[0])
-
-
-	go_recursively = True
-	my_observer = Observer()
-	my_observer.schedule(my_event_handler, path, recursive=go_recursively)
+# def action():
+# 	patterns = "*"
+# 	ignore_patterns = ""
+# 	ignore_directories = False
+# 	case_sensitive = True
+# 	my_event_handler = PatternMatchingEventHandler(patterns, ignore_patterns, ignore_directories, case_sensitive)
 
 
 
-	my_observer.start()
-	try:
-		while True:
-			time.sleep(1)
-	except KeyboardInterrupt:
-		my_observer.stop()
-		my_observer.join()
+# 	my_event_handler.on_created = on_created
+# 	my_event_handler.on_deleted = on_deleted
+# 	my_event_handler.on_modified = on_modified
+# 	my_event_handler.on_moved = on_moved
+
+# 	# for x in dir(my_event_handler): print('my_event_handler.',x)
+
+# 	path = "."
+# 	if _.switches.isActive('Folder'): path = __.path(_.switches.values('Folder')[0])
+
+
+# 	go_recursively = True
+# 	my_observer = Observer()
+# 	my_observer.schedule(my_event_handler, path, recursive=go_recursively)
 
 
 
+# 	my_observer.start()
+# 	try:
+# 		while True:
+# 			time.sleep(1)
+# 	except KeyboardInterrupt:
+# 		my_observer.stop()
+# 		my_observer.join()
+
+
+
+
+# import _rightThumb._dir as _dir
+# from watchdog.observers import Observer
+# from watchdog.events import PatternMatchingEventHandler
+
+
+
+
+
+import os
+import time
+from datetime import datetime
 
 import _rightThumb._dir as _dir
 from watchdog.observers import Observer
 from watchdog.events import PatternMatchingEventHandler
+
+def on_created(event):
+    _.pr(f"created, {event.src_path} has been created!")
+
+def on_deleted(event):
+    _.pr(f"deleted {event.src_path}!")
+
+def on_modified(event):
+    _.pr(f"modified, {event.src_path} has been modified")
+
+def on_moved(event):
+    _.pr(f"moved {event.src_path} to {event.dest_path}")
+
+def action():
+    patterns = "*"
+    ignore_patterns = ""
+    ignore_directories = False
+    case_sensitive = True
+    my_event_handler = PatternMatchingEventHandler(patterns, ignore_patterns, ignore_directories, case_sensitive)
+
+    my_event_handler.on_created = on_created
+    my_event_handler.on_deleted = on_deleted
+    my_event_handler.on_modified = on_modified
+    my_event_handler.on_moved = on_moved
+
+    path = "."
+    if _.switches.isActive('Folder'):
+        path = __.path(_.switches.values('Folder')[0])
+
+    go_recursively = True
+    my_observer = Observer()
+    my_observer.schedule(my_event_handler, path, recursive=go_recursively)
+
+    # --- Track access times ---
+    access_times = {}
+
+    def scan_access_times():
+        for root, _, files in os.walk(path):
+            for name in files:
+                file_path = os.path.join(root, name)
+                try:
+                    stat = os.stat(file_path)
+                    atime = stat.st_atime
+                    if file_path in access_times:
+                        if atime != access_times[file_path]:
+                            access_times[file_path] = atime
+                            _.pr(f"accessed, {file_path} was accessed at {datetime.fromtimestamp(atime)}")
+                    else:
+                        access_times[file_path] = atime
+                except Exception:
+                    pass
+
+    my_observer.start()
+    try:
+        while True:
+            scan_access_times()
+            time.sleep(1)
+    except KeyboardInterrupt:
+        my_observer.stop()
+        my_observer.join()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ########################################################################################
 if __name__ == '__main__':
