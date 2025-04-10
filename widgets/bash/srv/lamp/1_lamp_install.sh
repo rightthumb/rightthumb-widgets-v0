@@ -1,175 +1,126 @@
 #!/bin/bash
 
-echo ''
-echo -e "\e[32mWelcome to LampPack LAMP automation bash script\e[39m"
-echo ''
-sleep 1
-echo -e "\e[32mPlease sit back and relax while LampPack configures your server, this may take several minutes\e[39m"
+set -e
 
 echo ''
+echo -e "\e[32m🚀 LampPack: Cross-Distro LAMP Web Setup + Firewall Configuration\e[39m"
+echo ''
 
-sleep 3
-
-# Check if is root or not
-if [ "$EUID" -ne 0 ]; then
-	echo -e "\e[31mError! You must run this as root user\e[39m"
-	exit 1
+# 🧑‍🔒 Must run as root
+if [[ "$EUID" -ne 0 ]]; then
+    echo -e "\e[31m❌ Error: Run this script as root.\e[39m"
+    exit 1
 fi
 
-# Install sudo if missing
-if ! command -v sudo &>/dev/null; then
-	echo "sudo is not installed. Installing it..."
-	apt-get update -y &>/dev/null
-	apt-get install -y sudo
-fi
-
-echo 'Checking OS compatibility'
-echo ''
-
-cmd="lsb_release -d"
-output=$(eval $cmd 2>&1)
-os=${output//[[:blank:]]/}
-os=${os#*:}
-bitversion=$(getconf LONG_BIT)
-
-# Provide credentials for MySQL and PHPMyAdmin
-ROOT_PASS=$(date +%s | sha256sum | base64 | head -c 15)
-APP_DB_PASS=$(date +%s | sha256sum | base64 | head -c 15)
-PMA_PASS=$(date +%s | sha256sum | base64 | head -c 15)
-
-echo "phpmyadmin phpmyadmin/dbconfig-install boolean true" | sudo debconf-set-selections
-echo "phpmyadmin phpmyadmin/app-password-confirm password $PMA_PASS" | sudo debconf-set-selections
-echo "phpmyadmin phpmyadmin/mysql/admin-pass password $ROOT_PASS" | sudo debconf-set-selections
-echo "phpmyadmin phpmyadmin/mysql/app-pass password $APP_DB_PASS" | sudo debconf-set-selections
-echo "phpmyadmin phpmyadmin/reconfigure-webserver multiselect apache2" | sudo debconf-set-selections
-echo "mysql-server mysql-server/root_password password $ROOT_PASS" | sudo debconf-set-selections
-echo "mysql-server mysql-server/root_password_again password $ROOT_PASS" | sudo debconf-set-selections
-
-if command -v mysql &>/dev/null; then
-	echo -e "\e[31mWe detected that MySQL is already installed. Only clean servers are supported\e[39m"
-	echo ''
-elif command -v apache2 &>/dev/null; then
-	echo -e "\e[31mWe detected that Apache server is already installed. Only clean servers are supported\e[39m"
-	echo ''
-elif command -v php &>/dev/null; then
-	echo -e "\e[31mWe detected that PHP is already installed. Only clean servers are supported\e[39m"
-	echo ''
+# 🧪 Detect package manager
+if command -v apt &>/dev/null; then
+    PM="apt"
+    UPDATE="apt update -y"
+    INSTALL="apt install -y"
+    CERTBOT="certbot python3-certbot-apache"
+    PHP_PACKAGES="php libapache2-mod-php php-mbstring php-zip"
+    APACHE_SERVICE="apache2"
+    ENABLE_MODULES="a2enmod rewrite ssl"
+elif command -v dnf &>/dev/null; then
+    PM="dnf"
+    UPDATE="dnf update -y"
+    INSTALL="dnf install -y"
+    CERTBOT="certbot python3-certbot-apache"
+    PHP_PACKAGES="php php-mbstring php-zip"
+    APACHE_SERVICE="httpd"
+    ENABLE_MODULES=""
+elif command -v yum &>/dev/null; then
+    PM="yum"
+    UPDATE="yum update -y"
+    INSTALL="yum install -y"
+    CERTBOT="certbot python3-certbot-apache"
+    PHP_PACKAGES="php php-mbstring php-zip"
+    APACHE_SERVICE="httpd"
+    ENABLE_MODULES=""
+elif command -v pacman &>/dev/null; then
+    PM="pacman"
+    UPDATE="pacman -Sy"
+    INSTALL="pacman -S --noconfirm"
+    CERTBOT="certbot certbot-apache"
+    PHP_PACKAGES="php apache php-apache"
+    APACHE_SERVICE="httpd"
+    ENABLE_MODULES=""
 else
-
-	# Run an update and upgrade for packages
-	echo "Checking for available software updates"
-	echo ''
-	sudo apt-get update -y &>/dev/null
-	echo "Applying critical updates"
-	echo ''
-	sudo apt-get upgrade -y &>/dev/null
-
-	# Install essential dependencies
-	echo "Installing essential dependencies"
-	echo ''
-	sudo apt-get install -y build-essential &>/dev/null
-
-	# Install AMP + PHPMyAdmin
-	echo "Installing LAMP server and phpMyAdmin"
-	echo ''
-	sudo apt-get -y install lamp-server^ phpmyadmin &>/dev/null
-
-	# Install PHP modules
-	sudo apt-get -y install php-mcrypt php-zip php-mbstring &>/dev/null
-
-	# Install ZIP
-	sudo apt-get -y install zip &>/dev/null
-
-	# # Install sendmail
-	echo "Installing sendmail"
-	echo ''
-	sudo apt-get -y install sendmail &>/dev/null
-
-	# sudo systemctl stop sendmail
-	# sudo apt-get purge sendmail sendmail-base sendmail-bin sendmail-cf
-	# sudo apt-get autoremove
-
-
-	sudo apt update -y
-
-
-	# Enabling modules
-	echo "Enabling Apache modules"
-	echo ''
-	sudo a2enmod rewrite &>/dev/null
-
-	echo "Installing php"
-	echo ''
-	sudo apt install php libapache2-mod-php -y
-	# Install Lets Encrypt
-	echo "Installing additional dependencies"
-	echo ''
-	sudo apt-get install -y libxml2-dev mysql-client libfreetype6-dev libssl-dev libcurl4-openssl-dev pkg-config libbz2-dev libjpeg-dev libpng-dev libmcrypt-dev libmysqlclient-dev &>/dev/null
-
-	echo "Installing Let's Encrypt libraries"
-	echo ''
-	if ! command -v letsencrypt &>/dev/null; then
-		lecheck=$(apt-cache show letsencrypt 2>&1)
-		if [[ "$lecheck" == *"No"* ]]; then
-			sudo wget --no-check-certificate https://dl.eff.org/certbot-auto &>/dev/null
-			sudo chmod a+x certbot-auto &>/dev/null
-			sudo mv certbot-auto /usr/local/bin/letsencrypt &>/dev/null
-		else
-			sudo apt-get install -y letsencrypt letsencrypt-* &>/dev/null
-		fi
-	fi
-
-	# Install WP-CLI to manage WordPress sites
-	echo "Installing WP-CLI for WordPress management"
-	echo ''
-	sudo wget --no-check-certificate -O wp-cli.phar https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar &>/dev/null
-	sudo chmod +x wp-cli.phar &>/dev/null
-	sudo mv wp-cli.phar /usr/local/bin/wp &>/dev/null
-
-	# Import vhost creation bash script
-	echo "Configuring LampPack core utilities"
-	echo ''
-	sudo mv sp-vhost.sh /usr/local/bin/spvhost &>/dev/null
-	sudo chmod +x /usr/local/bin/spvhost &>/dev/null
-
-	# Import ssl management bash script
-	sudo mv sp-ssl.sh /usr/local/bin/spssl &>/dev/null
-	sudo chmod +x /usr/local/bin/spssl &>/dev/null
-
-	# Import WordPress installation script
-	sudo mv sp-wordpress.sh /usr/local/bin/spwp &>/dev/null
-	sudo chmod +x /usr/local/bin/spwp &>/dev/null
-
-	# Delete apache default conf
-	sudo rm /etc/apache2/sites-available/* &>/dev/null
-	sudo rm /etc/apache2/sites-enabled/* &>/dev/null
-
-	# Restart Apache
-	echo -e "\e[33mReloading and restarting Apache server\e[39m"
-	echo ''
-	sudo service apache2 reload &>/dev/null
-	sudo service apache2 restart &>/dev/null
-
-	# Enable auto upgrades
-	echo "Enabling automatic software updates"
-	echo ''
-	sudo apt-get install -y unattended-upgrades &>/dev/null
-	sudo dpkg-reconfigure -p critical unattended-upgrades &>/dev/null
-	sudo service apache2 restart &>/dev/null
-
-	# Clean junk
-	echo -e "\e[33mCleaning junk and completing the installation\e[39m"
-	echo ''
-	sudo apt-get -
-	apt-get -y autoremove &>/dev/null
-	sudo chmod -R 0755 /var/www &>/dev/null
-	sudo chown -R www-data:www-data /var/www &>/dev/null
-
-	# Save the MySQL root password in .my.cnf]
-	sudo echo "[client]
-	user=root
-	password=$ROOT_PASS" > /root/.my.cnf
-
-	echo -e "\e[32mInstallation completed!\e[39m"
-	echo ''
+    echo -e "\e[31m❌ Unsupported distro. No known package manager found (apt, yum, dnf, pacman)\e[39m"
+    exit 1
 fi
+
+echo -e "\e[34m📦 Using package manager: $PM\e[39m"
+
+# 🔄 Update system
+echo -e "\e[34m🔄 Updating system packages...\e[39m"
+eval "$UPDATE"
+
+# 📥 Install core components
+echo -e "\e[34m📥 Installing Apache, PHP, SSL, and core tools...\e[39m"
+eval "$INSTALL $APACHE_SERVICE $PHP_PACKAGES zip sendmail $CERTBOT"
+
+# 🔌 Enable Apache modules if needed
+if [[ "$PM" == "apt" ]]; then
+    echo -e "\e[34m🔌 Enabling Apache modules...\e[39m"
+    eval "$ENABLE_MODULES" &>/dev/null
+fi
+
+# 🧹 Remove default site configs (optional)
+if [[ "$PM" == "apt" ]]; then
+    echo -e "\e[34m🧹 Cleaning up Apache defaults...\e[39m"
+    rm -f /etc/apache2/sites-{enabled,available}/000-default.conf
+fi
+
+# 🌍 Permissions
+echo -e "\e[34m🔧 Setting permissions for /var/www...\e[39m"
+chmod -R 0755 /var/www
+chown -R www-data:www-data /var/www || chown -R apache:apache /var/www
+
+# 🔥 Configure Firewall
+echo -e "\e[34m🔥 Checking and configuring firewall rules...\e[39m"
+
+if command -v ufw &>/dev/null; then
+    echo -e "\e[36m🛡️ Using ufw\e[39m"
+    ufw allow 80/tcp   # HTTP
+    ufw allow 443/tcp  # HTTPS
+    ufw allow 25/tcp   # SMTP
+    ufw allow 465/tcp  # SMTPS
+    ufw allow 587/tcp  # Submission
+    echo -e "\e[32m✅ Allowed common web/email ports via UFW\e[39m"
+elif command -v firewall-cmd &>/dev/null; then
+    echo -e "\e[36m🛡️ Using firewalld\e[39m"
+    firewall-cmd --permanent --add-service=http
+    firewall-cmd --permanent --add-service=https
+    firewall-cmd --permanent --add-port=25/tcp
+    firewall-cmd --permanent --add-port=465/tcp
+    firewall-cmd --permanent --add-port=587/tcp
+    firewall-cmd --reload
+    echo -e "\e[32m✅ Allowed common web/email ports via firewalld\e[39m"
+elif command -v iptables &>/dev/null; then
+    echo -e "\e[36m🛡️ Using iptables\e[39m"
+    iptables -C INPUT -p tcp --dport 80  -j ACCEPT || iptables -A INPUT -p tcp --dport 80  -j ACCEPT
+    iptables -C INPUT -p tcp --dport 443 -j ACCEPT || iptables -A INPUT -p tcp --dport 443 -j ACCEPT
+    iptables -C INPUT -p tcp --dport 25  -j ACCEPT || iptables -A INPUT -p tcp --dport 25  -j ACCEPT
+    iptables -C INPUT -p tcp --dport 465 -j ACCEPT || iptables -A INPUT -p tcp --dport 465 -j ACCEPT
+    iptables -C INPUT -p tcp --dport 587 -j ACCEPT || iptables -A INPUT -p tcp --dport 587 -j ACCEPT
+    echo -e "\e[33m⚠️ iptables changes are temporary unless saved manually\e[39m"
+    echo -e "\e[32m✅ Allowed common web/email ports via iptables\e[39m"
+else
+    echo -e "\e[31m⚠️ No supported firewall system detected. Skipping firewall config.\e[39m"
+fi
+
+# 🔁 Restart Apache
+echo -e "\e[34m🔁 Restarting Apache ($APACHE_SERVICE)...\e[39m"
+systemctl reload "$APACHE_SERVICE" || true
+systemctl restart "$APACHE_SERVICE"
+
+# ⬆️ Enable auto-upgrades if available
+if [[ "$PM" == "apt" ]]; then
+    echo -e "\e[34m📅 Enabling unattended upgrades...\e[39m"
+    $INSTALL unattended-upgrades &>/dev/null
+    dpkg-reconfigure -p critical unattended-upgrades &>/dev/null
+fi
+
+echo ''
+echo -e "\e[32m✅ LampPack complete! Web server is ready for add-domain.sh\e[39m"
