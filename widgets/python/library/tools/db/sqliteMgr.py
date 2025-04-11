@@ -26,14 +26,18 @@ class sqliteMgr:
                 self.logs.append(f'Inserted record into table {table_name}')
             except sqlite3.Error as e:
                 self.logs.append(f'Error: {str(e)}')
+
     def read(self, table_name, conditions={}):
         self.logs.append('fn: read')
         self.logs.append(f'Reading from table: {table_name}')
-        
+
+        if conditions and not self.structure:
+            self.structureMgr(table_name, [conditions])
+
         where_clauses = [f'"{key}" = :{key}' for key in conditions.keys()]
         where_sql = f'WHERE {" AND ".join(where_clauses)}' if where_clauses else ''
         select_sql = f'SELECT * FROM {table_name} {where_sql}'
-        
+
         try:
             self.cursor.execute(select_sql, conditions)
             results = [dict(row) for row in self.cursor.fetchall()]
@@ -43,10 +47,32 @@ class sqliteMgr:
             self.logs.append(f'Error: {str(e)}')
             return []
 
+    def delete(self, table_name, conditions):
+        self.logs.append('fn: delete')
+        self.logs.append(f'Deleting from table: {table_name}')
+
+        if conditions and not self.structure:
+            self.structureMgr(table_name, [conditions])
+
+        where_clauses = [f'"{key}" = :{key}' for key in conditions.keys()]
+        where_sql = f'WHERE {" AND ".join(where_clauses)}' if where_clauses else ''
+        delete_sql = f'DELETE FROM {table_name} {where_sql}'
+
+        try:
+            self.cursor.execute(delete_sql, conditions)
+            self.conn.commit()
+            self.logs.append(f'Deleted {self.cursor.rowcount} records from table {table_name}')
+        except sqlite3.Error as e:
+            self.logs.append(f'Error deleting from {table_name}: {str(e)}')
+
     def update_or_insert(self, table_name, conditions, record, info):
         self.logs.append('fn: update_or_insert')
+
+        if not self.structure:
+            self.structureMgr(table_name, [record, conditions])
+
         existing_records = self.read(table_name, conditions)
-        
+
         if existing_records:
             try:
                 set_clauses = [f'"{key}" = :{key}' for key in record.keys()]
@@ -71,6 +97,7 @@ class sqliteMgr:
                 self.logs.append(f'Error inserting record for: {table_name} - {str(e)}')
                 info['failed'] += 1
                 info['failed-inserting'] += 1
+
     def structureMgr(self, table_name, records):
         self.logs.append('fn: structureMgr')
         try:
@@ -79,12 +106,12 @@ class sqliteMgr:
             self.structure = True
         except Exception as e:
             self.logs.append(f'Error in structureMgr: {str(e)}')
-    
+
     def createTable(self, table_name, records):
         self.logs.append('fn: createTable')
         self.cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name=?", (table_name,))
         table_exists = self.cursor.fetchone()
-        
+
         if not table_exists:
             try:
                 column_definitions = {key: self.get_sqlite_type(value) for record in records if isinstance(record, dict) for key, value in record.items()}
@@ -99,7 +126,7 @@ class sqliteMgr:
     def ensure_columns_exist(self, table_name, records):
         self.logs.append('fn: ensure_columns_exist')
         existing_fields = self.fields(table_name)
-        
+
         for record in records:
             if isinstance(record, dict):
                 for key, value in record.items():
@@ -123,6 +150,7 @@ class sqliteMgr:
             return 'TEXT'
         else:
             return 'TEXT'
+
     def fields(self, table_name):
         self.logs.append('fn: fields')
         try:
@@ -131,10 +159,10 @@ class sqliteMgr:
         except sqlite3.Error as e:
             self.logs.append(f'Error retrieving fields for {table_name}: {str(e)}')
             return []
+
     def close(self):
         self.conn.close()
         self.logs.append('Database connection closed.')
-
 
     def ensureTable(self, table, sql):
         self.logs.append('fn: ensureTable')
@@ -150,6 +178,44 @@ class sqliteMgr:
 
         self.cursor.execute("PRAGMA table_info({})".format(table))
 
+
+
+
+
+    def r(self, table_name, conditions={}):
+        return self.read( table_name, conditions)
+    
+    def get(self, table_name, conditions={}):
+        return self.read( table_name, conditions)
+
+
+
+    def d(self, table_name, conditions={}):
+        return self.delete( table_name, conditions)
+
+
+
+    def create(self, table_name, conditions, record, info):
+        return self.update_or_insert(table_name, conditions, record, info)
+    
+    def c(self, table_name, conditions, record, info):
+        return self.update_or_insert(table_name, conditions, record, info)
+
+    def i(self, table_name, conditions, record, info):
+        return self.update_or_insert(table_name, conditions, record, info)
+
+    def ui(self, table_name, conditions, record, info):
+        return self.update_or_insert(table_name, conditions, record, info)
+
+    def record(self, table_name, conditions, record, info):
+        return self.update_or_insert(table_name, conditions, record, info)
+    
+    def rec(self, table_name, conditions, record, info):
+        return self.update_or_insert(table_name, conditions, record, info)
+
+
+
+sq=sqliteMgr
 
 '''
 # Example usage

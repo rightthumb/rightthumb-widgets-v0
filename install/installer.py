@@ -2852,6 +2852,7 @@ clear
 
 		if path == '.bashrc.full':
 			data = """
+#9483b053a84b
 # echo 000-019
 ## .bashrc.full
 # exit if scp or similar 4f8c
@@ -3672,6 +3673,7 @@ MX() {
 alias .mx='MX'
 alias .mc='MC'
 
+alias ..cat="/usr/bin/python3 $widgets/widgets/python/cat.py"
 alias .cat="/usr/bin/python3 $widgets/widgets/python/cat.py -f"
 alias j='sh $widgets/widgets/bash/nav/p.sh'
 
@@ -3681,11 +3683,13 @@ alias up.date="up_date"
 # source /opt/rightthumb-widgets-v0/widgets/bash/rc/full.sh
 # source /opt/rightthumb-widgets-v0/widgets/bash/rc/full.sh
 
+alias 101="python3 $ww/python/file.py -folder $ww/bash/101 -a"
 
 alias os="cat /etc/os-release"
+alias curl-="curl -s"
+## p tag-cycle ##
 
-
-
+#9483b053a84b
 clear
 # get_time_difference
 # a3bc42ec51e9

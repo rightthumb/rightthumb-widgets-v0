@@ -16,7 +16,7 @@ function p() {
 	source "$widgets/widgets/bash/nav/p.sh"
 }
 
-alias pp="$widgets/widgets/bash/nav/pp.sh"
+# alias pp="$widgets/widgets/bash/nav/pp.sh"
 alias b="$widgets/widgets/bash/nav/b.sh"
 alias bb="$widgets/widgets/bash/nav/bb.sh"
 alias m="$widgets/widgets/bash/nav/m.sh"
@@ -115,6 +115,7 @@ alias c.s.="$widgets/widgets/bash/nav/p.sh cloud -sync"
 alias c.s.dl.="$widgets/widgets/bash/nav/p.sh cloud -sync -download"
 
 
+
 alias py="$widgets/widgets/bash/py.sh"
 alias up.date='echo "update"; sudo apt-get update -y; echo "upgrade"; sudo apt-get upgrade -y;'
 
@@ -157,11 +158,85 @@ alias ports='netstat -tulanp'
 
 #--> start#> git clone this project
 alias .git="git clone https://github.com/rightthumb/rightthumb-widgets-v0"
-alias .git.="mkdir -p "/opt/__rightthumb-widgets-v0/"; rsync -av --include '*/' --include 'vps-*' --exclude '*' /opt/rightthumb-widgets-v0/ /opt/__rightthumb-widgets-v0/;cd /opt ; rm -rf rightthumb-widgets-v0 ; git clone https://github.com/rightthumb/rightthumb-widgets-v0 ; rsync -av ./__rightthumb-widgets-v0/* /opt/rightthumb-widgets-v0/; cd rightthumb-widgets-v0 ; chmod -R 777 . ; p shClean -folder -r"
+# alias .git.="mkdir -p "/opt/__rightthumb-widgets-v0/"; rsync -av --include '*/' --include 'vps-*' --exclude '*' /opt/rightthumb-widgets-v0/ /opt/__rightthumb-widgets-v0/;cd /opt ; rm -rf rightthumb-widgets-v0 ; git clone https://github.com/rightthumb/rightthumb-widgets-v0 ; rsync -av ./__rightthumb-widgets-v0/* /opt/rightthumb-widgets-v0/; cd rightthumb-widgets-v0 ; chmod -R 777 . ; p shClean -folder -r"
+
+
+
+
+_git_restore() {
+    local widgets="/opt/rightthumb-widgets-v0"
+    local backup="/opt/__rightthumb-widgets-v0"
+
+    echo "♻️  Restoring vps-* files from backup..."
+
+    if [ ! -d "$backup" ]; then
+        echo "❌ Backup folder not found: $backup"
+        return 1
+    fi
+
+    if [ ! -d "$widgets" ]; then
+        echo "⚠️  Target folder not found: $widgets — creating it..."
+        mkdir -p "$widgets"
+    fi
+
+    rsync -av --include '*/' --include 'vps-*' --exclude '*' "$backup/" "$widgets/"
+
+    echo "✅ Restore complete"
+}
+
+
+
+
+
+_git_() {
+    local widgets="/opt/rightthumb-widgets-v0"
+    local backup="/opt/__rightthumb-widgets-v0"
+
+    echo "🔁 Starting .git. refresh..."
+
+    # Create backup directory if it doesn't exist
+    mkdir -p "$backup"
+
+    # Backup from $widgets if it exists
+    if [ -d "$widgets" ]; then
+        echo "📦 Backing up vps-* files from $widgets"
+        rsync -av --include '*/' --include 'vps-*' --exclude '*' "$widgets/" "$backup/"
+    else
+        echo "⚠️  Warning: $widgets does not exist. Skipping backup."
+    fi
+
+    # Clone fresh repo
+    cd /opt || return 1
+    echo "🌐 Cloning rightthumb-widgets-v0 from GitHub..."
+    rm -rf "$widgets"
+    git clone https://github.com/rightthumb/rightthumb-widgets-v0 "$widgets"
+
+    # Restore backed up files if backup exists
+    if [ -d "$backup" ]; then
+        echo "♻️  Restoring files from backup $backup"
+        rsync -av "$backup/" "$widgets/"
+    fi
+
+    # Fix permissions
+    chmod -R 777 "$widgets"
+
+    # Final cleanup
+    cd "$widgets" || return 1
+    echo "🧹 Running p shClean -folder -r"
+    p shClean -folder -r
+
+    echo "✅ .git. update complete"
+}
+
+
+alias .v.="_git_restore"
+alias .git.="_git_"
+alias Git="echo https://github.com/rightthumb/rightthumb-widgets-v0"
+
 #-->   end#> git clone this project
 
 alias pp.='python3 $ww/python/paths.py'
-alias pp='python3 $ww/python/paths.py -f '
+# alias pp='python3 $ww/python/paths.py -f '
 
 
 alias mkdir.fi='python3 $ww/python/mkdir.py -files '

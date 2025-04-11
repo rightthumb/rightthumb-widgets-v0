@@ -40,6 +40,7 @@ __.isFiles=False
 
 def appSwitches():
 	if not __.isFiles:
+		_.switches.register('AbsolutePath', '-a')
 		_.switches.register('Recursive', '-r,-recursive')
 	_.switches.register('Count', '-c,-count,--c')
 	_.switches.register('Folders', '-f,-p,-path,-paths,-folder,-folders,-fo')
@@ -279,11 +280,13 @@ def getFolder(folder,r=True):
 			record = None
 			path = folder + _v.slash + item
 			path = path.replace(_v.slash+_v.slash,_v.slash)
+			
 			if os.path.isfile(path):
 				pathX=path
-				pathX=pathX.replace(base_path+os.sep,'')
+				if not _.switches.isActive('AbsolutePath'):
+					pathX=pathX.replace(base_path+os.sep,'')
 				i = i + 1
-
+				
 				if _.showLine(os.path.basename(path)):
 					shouldAdd = False
 
@@ -312,7 +315,7 @@ def getFolder(folder,r=True):
 					pass
 
 					pass
-
+					
 
 					if _.switches.isActive('Ago'):
 						# sys.exit()
@@ -410,6 +413,7 @@ def getFolder(folder,r=True):
 					pass
 					# if shouldAdd: _.pr( 1001, path );
 					if shouldAdd:
+						
 						if _.switches.isActive('Size'):
 							shouldAdd = False
 							shouldAdd_2 = False
@@ -497,6 +501,7 @@ def getFolder(folder,r=True):
 
 
 					if shouldAdd:
+						
 						iS+=1
 						if not _.switches.isActive('Totals'):
 
