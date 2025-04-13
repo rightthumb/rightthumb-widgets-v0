@@ -106,6 +106,8 @@ def appSwitches():
 	_.switches.register('FileNameIs', '-is', group=[swGrp,'FileIs'] )
 	swGrp += 1
 	_.switches.register('f1', '-f1', 'Kill: esc + f1', group=[swGrp,'No f1 Listener to add omit mid app'] )
+	swGrp += 1
+	_.switches.register('AlmaFixPipe', '-alma', 'On Alma Linux regular pipe does not work, this fixes it', group=[swGrp,'Alma Fix Pipe'] )
 
 
 _bk = None
@@ -344,6 +346,9 @@ if not __name__ == '__main__':
 else:
 	_.argvProcess = True
 registerSwitches()
+if _.switches.isActive('AlmaFixPipe'):
+	_.postLoad( __file__ )
+
 
 def minusF():
 	mi=_.switches.values('Minus')

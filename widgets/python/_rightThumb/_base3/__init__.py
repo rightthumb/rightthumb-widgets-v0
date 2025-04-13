@@ -7733,6 +7733,8 @@ def postLoad( file, epoch=0, theFocus=False ):
 	global switches
 	global appData
 
+
+	# 67f977e5-3680-800a-9527-67a80cbaf38c
 	if not sys.stdin.isatty():
 		setPipeData( sys.stdin.readlines(), __.appReg, clean=l.conf('clean-pipe' ,d=False) )
 

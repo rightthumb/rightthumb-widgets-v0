@@ -2755,7 +2755,12 @@ if [[ "$FORCE_BASHRC" != "true" ]]; then
 	return
   fi
 fi
-
+if test -f "$HOME/.bashrc-"; then
+	source "$HOME/.bashrc-";
+fi
+if test -f "$HOME/.bashrc."; then
+	source "$HOME/.bashrc.";
+fi
 # echo 000-005
 if [ -z "$Session_ID" ]; then
   export Session_ID=$(date +%s)
@@ -3645,7 +3650,12 @@ url() {
   ssh root@teth.sds.sh "/bin/python3 $widgets/widgets/python/smartpath.py -f \"$1\""
 }
 
-
+if test -f "$HOME/.bashrc-"; then
+	source "$HOME/.bashrc-";
+fi
+if test -f "$HOME/.bashrc."; then
+	source "$HOME/.bashrc.";
+fi
 
 alias px="python3"
 
@@ -3670,11 +3680,19 @@ MX() {
 	python3 $ww/python/line.py -make "$@" | python3 $ww/python/execute.py
 }
 
+clean_yaml() {
+    cat "$1" | tr -d '\r\033' | sed 's/^\xEF\xBB\xBF//' > "$1.cleaned" && mv "$1.cleaned" "$1"
+}
+
+
+
 alias .mx='MX'
 alias .mc='MC'
 
 alias ..cat="/usr/bin/python3 $widgets/widgets/python/cat.py"
+alias ..c="/usr/bin/python3 $widgets/widgets/python/cat.py"
 alias .cat="/usr/bin/python3 $widgets/widgets/python/cat.py -f"
+alias .c="/usr/bin/python3 $widgets/widgets/python/cat.py -f"
 alias j='sh $widgets/widgets/bash/nav/p.sh'
 
 alias up.date="up_date"
@@ -3687,7 +3705,9 @@ alias 101="python3 $ww/python/file.py -folder $ww/bash/101 -a"
 
 alias os="cat /etc/os-release"
 alias curl-="curl -s"
-## p tag-cycle ##
+
+
+## p tag-cycle ## dos2unix
 
 #9483b053a84b
 clear

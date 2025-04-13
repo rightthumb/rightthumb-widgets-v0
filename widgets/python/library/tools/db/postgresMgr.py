@@ -1,17 +1,18 @@
-import mysql.connector
+import psycopg2
+import psycopg2.extras
 
-class mysqlMgr:
-    def __init__(self, host, database, user, password, port=3306):
+class postgresMgr:
+    def __init__(self, host, dbname, user, password, port=5432):
         self.logs = ['fn: __init__']
-        self.logs.append(f'Connecting to {database}@{host}:{port}')
-        self.conn = mysql.connector.connect(
+        self.logs.append(f'Connecting to {dbname}@{host}:{port}')
+        self.conn = psycopg2.connect(
             host=host,
-            database=database,
+            database=dbname,
             user=user,
             password=password,
             port=port
         )
-        self.cursor = self.conn.cursor(dictionary=True)
+        self.cursor = self.conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
         self.structure = False
 
     def insert(self, table_name, records):
@@ -26,7 +27,7 @@ class mysqlMgr:
             try:
                 self.cursor.execute(insert_sql, values)
                 self.conn.commit()
-                self.logs.append(f'Inserted into {table_name}')
+                self.logs.append(f'Inserted record into {table_name}')
             except Exception as e:
                 self.logs.append(f'Insert error: {e}')
 
@@ -42,7 +43,9 @@ class mysqlMgr:
         sql = f'SELECT * FROM {table_name} {where_clause}'
         try:
             self.cursor.execute(sql, values)
-            return self.cursor.fetchall()
+            results = self.cursor.fetchall()
+            self.logs.append(f'Read {len(results)} records from {table_name}')
+            return results
         except Exception as e:
             self.logs.append(f'Read error: {e}')
             return []
@@ -65,15 +68,15 @@ class mysqlMgr:
         self.logs.append('fn: update_or_insert')
         if not self.structure:
             self.structureMgr(table_name, [record, conditions])
-        exists = self.read(table_name, conditions)
-        if exists:
+        results = self.read(table_name, conditions)
+        if results:
             try:
                 set_clause = ', '.join([f"{key} = %s" for key in record])
                 where_clause = ' AND '.join([f"{key} = %s" for key in conditions])
                 sql = f'UPDATE {table_name} SET {set_clause} WHERE {where_clause}'
                 self.cursor.execute(sql, list(record.values()) + list(conditions.values()))
                 self.conn.commit()
-                self.logs.append(f'Updated {table_name}')
+                self.logs.append(f'Updated record in {table_name}')
             except Exception as e:
                 self.logs.append(f'Update error: {e}')
         else:
@@ -89,53 +92,59 @@ class mysqlMgr:
             self.logs.append(f'Structure error: {e}')
 
     def createTable(self, table_name, records):
-        self.cursor.execute("SHOW TABLES LIKE %s", (table_name,))
-        if not self.cursor.fetchone():
+        self.cursor.execute(
+            "SELECT EXISTS (SELECT FROM information_schema.tables WHERE table_name = %s)",
+            (table_name,)
+        )
+        if not self.cursor.fetchone()['exists']:
             fields = {}
             for record in records:
                 for key, val in record.items():
-                    fields[key] = self.get_mysql_type(val)
-            columns = ', '.join([f'`{k}` {v}' for k, v in fields.items()])
-            sql = f'CREATE TABLE {table_name} (id INT AUTO_INCREMENT PRIMARY KEY, {columns})'
+                    fields[key] = self.get_pg_type(val)
+            cols = ', '.join([f'"{k}" {v}' for k, v in fields.items()])
+            sql = f'CREATE TABLE {table_name} (id SERIAL PRIMARY KEY, {cols})'
             self.cursor.execute(sql)
             self.conn.commit()
             self.logs.append(f'Created table {table_name}')
 
     def ensure_columns_exist(self, table_name, records):
-        self.cursor.execute(f"SHOW COLUMNS FROM `{table_name}`")
-        existing = [row['Field'] for row in self.cursor.fetchall()]
+        self.cursor.execute("""
+            SELECT column_name FROM information_schema.columns
+            WHERE table_name = %s
+        """, (table_name,))
+        existing = [row['column_name'] for row in self.cursor.fetchall()]
         for record in records:
             for key, val in record.items():
                 if key not in existing:
                     try:
-                        sql = f'ALTER TABLE `{table_name}` ADD COLUMN `{key}` {self.get_mysql_type(val)}'
-                        self.cursor.execute(sql)
+                        self.cursor.execute(f'ALTER TABLE {table_name} ADD COLUMN "{key}" {self.get_pg_type(val)}')
                         self.conn.commit()
                         self.logs.append(f'Added column {key}')
                     except Exception as e:
                         self.logs.append(f'Add column error: {e}')
 
-    def get_mysql_type(self, val):
+    def get_pg_type(self, val):
         if isinstance(val, int):
-            return 'INT'
+            return 'INTEGER'
         elif isinstance(val, float):
-            return 'DOUBLE'
+            return 'REAL'
         elif isinstance(val, bool):
-            return 'TINYINT(1)'
+            return 'BOOLEAN'
         elif isinstance(val, (dict, list)):
-            return 'TEXT'
+            return 'JSONB'
         else:
             return 'TEXT'
 
     def fields(self, table_name):
-        self.cursor.execute(f"SHOW COLUMNS FROM `{table_name}`")
-        return [row['Field'] for row in self.cursor.fetchall()]
+        self.cursor.execute("""
+            SELECT column_name FROM information_schema.columns
+            WHERE table_name = %s
+        """, (table_name,))
+        return [row['column_name'] for row in self.cursor.fetchall()]
 
     def close(self):
         self.conn.close()
-        self.logs.append('Connection closed.')
-
-
+        self.logs.append('Database connection closed.')
 
 
     def r(self, table_name, conditions={}):
@@ -162,18 +171,18 @@ class mysqlMgr:
     def d(self, table_name, conditions={}):
         return self.delete(table_name, conditions)
 
-db=mysqlMgr
+db=postgresMgr
 
 '''
-db = mysqlMgr(
+db = postgresMgr(
     host='localhost',
-    database='mydb',
+    dbname='mydb',
     user='myuser',
     password='mypassword'
 )
 
-record = {'username': 'john', 'email': 'john@example.com'}
-db.update_or_insert('users', {'username': 'john'}, record)
+record = {'name': 'Alice', 'email': 'alice@example.com'}
+db.update_or_insert('users', {'name': 'Alice'}, record)
 db.close()
 
 '''

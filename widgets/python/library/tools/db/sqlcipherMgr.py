@@ -1,16 +1,13 @@
-import sqlite3
-import json
+from pysqlcipher3 import dbapi2 as sqlite
 
-import sqlite3
-
-class sqliteMgr:
-    def __init__(self, database):
+class sqlcipherMgr:
+    def __init__(self, database, password):
         self.logs = ['fn: __init__']
         self.logs.append(f'init: {database}')
         self.database_name = database
-        self.conn = sqlite3.connect(database)
-        self.conn.row_factory = sqlite3.Row
+        self.conn = sqlite.connect(database)
         self.cursor = self.conn.cursor()
+        self.cursor.execute("PRAGMA key = ?", (password,))
         self.structure = False
 
     def insert(self, table_name, records):
@@ -26,12 +23,11 @@ class sqliteMgr:
                 self.cursor.execute(insert_sql, record)
                 self.conn.commit()
                 self.logs.append(f'Inserted record into table {table_name}')
-            except sqlite3.Error as e:
+            except sqlite.Error as e:
                 self.logs.append(f'Error: {str(e)}')
 
     def read(self, table_name, conditions={}):
         self.logs.append('fn: read')
-        self.logs.append(f'Reading from table: {table_name}')
         if conditions and not self.structure:
             self.structureMgr(table_name, [conditions])
 
@@ -41,16 +37,15 @@ class sqliteMgr:
 
         try:
             self.cursor.execute(select_sql, conditions)
-            results = [dict(row) for row in self.cursor.fetchall()]
+            results = [dict(zip([c[0] for c in self.cursor.description], row)) for row in self.cursor.fetchall()]
             self.logs.append(f'Read {len(results)} records from table {table_name}')
             return results
-        except sqlite3.Error as e:
+        except sqlite.Error as e:
             self.logs.append(f'Error: {str(e)}')
             return []
 
     def delete(self, table_name, conditions):
         self.logs.append('fn: delete')
-        self.logs.append(f'Deleting from table: {table_name}')
         if conditions and not self.structure:
             self.structureMgr(table_name, [conditions])
 
@@ -62,7 +57,7 @@ class sqliteMgr:
             self.cursor.execute(delete_sql, conditions)
             self.conn.commit()
             self.logs.append(f'Deleted {self.cursor.rowcount} records from table {table_name}')
-        except sqlite3.Error as e:
+        except sqlite.Error as e:
             self.logs.append(f'Error deleting from {table_name}: {str(e)}')
 
     def update_or_insert(self, table_name, conditions, record):
@@ -71,6 +66,7 @@ class sqliteMgr:
             self.structureMgr(table_name, [record, conditions])
 
         existing_records = self.read(table_name, conditions)
+
         if existing_records:
             try:
                 set_clauses = [f'"{key}" = :{key}' for key in record.keys()]
@@ -80,14 +76,14 @@ class sqliteMgr:
                 self.cursor.execute(update_sql, params)
                 self.conn.commit()
                 self.logs.append(f'Updated: {table_name}')
-            except sqlite3.Error as e:
-                self.logs.append(f'Error updating record for: {table_name} - {str(e)}')
+            except sqlite.Error as e:
+                self.logs.append(f'Error updating: {str(e)}')
         else:
             try:
                 self.insert(table_name, [record])
                 self.logs.append(f'Inserted: {table_name}')
-            except sqlite3.Error as e:
-                self.logs.append(f'Error inserting record for: {table_name} - {str(e)}')
+            except sqlite.Error as e:
+                self.logs.append(f'Error inserting: {str(e)}')
 
     def structureMgr(self, table_name, records):
         self.logs.append('fn: structureMgr')
@@ -127,7 +123,7 @@ class sqliteMgr:
                             self.cursor.execute(alter_sql)
                             self.conn.commit()
                             self.logs.append(f'Field added: {key}')
-                        except sqlite3.Error as e:
+                        except sqlite.Error as e:
                             self.logs.append(f'Error adding column: {str(e)}')
 
     def get_sqlite_type(self, value):
@@ -146,8 +142,8 @@ class sqliteMgr:
         self.logs.append('fn: fields')
         try:
             self.cursor.execute(f'PRAGMA table_info({table_name})')
-            return [row['name'] for row in self.cursor.fetchall()]
-        except sqlite3.Error as e:
+            return [row[1] for row in self.cursor.fetchall()]
+        except sqlite.Error as e:
             self.logs.append(f'Error retrieving fields for {table_name}: {str(e)}')
             return []
 
@@ -155,19 +151,6 @@ class sqliteMgr:
         self.conn.close()
         self.logs.append('Database connection closed.')
 
-    def ensureTable(self, table, sql):
-        self.logs.append('fn: ensureTable')
-        try:
-            self.cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name=?", (table,))
-            table_exists = self.cursor.fetchone()
-            if not table_exists:
-                self.cursor.execute(sql)
-                self.conn.commit()
-                self.logs.append(f'Table created: {table}')
-        except sqlite3.Error as e:
-            self.logs.append(f'Error ensuring table {table}: {str(e)}')
-
-        self.cursor.execute("PRAGMA table_info({})".format(table))
 
 
 
@@ -194,32 +177,6 @@ class sqliteMgr:
 
     def d(self, table_name, conditions={}):
         return self.delete(table_name, conditions)
-
-
-
-sq=sqliteMgr
-db=sqliteMgr
-
-'''
-# Example usage
-
-# Initialize the database
-db = SQLiteTableManager('path/to/database.db')
-
-# Example info dictionary to track results
-info = {'updated': 0, 'success': 0, 'failed': 0, 'failed-updating': 0, 'inserted': 0, 'failed-inserting': 0}
-
-# Example record
-record = {'name': 'John Doe', 'email': 'john@example.com'}
-conditions = {'email': 'john@example.com'}
-
-# Use update_or_insert
-db.update_or_insert('users', conditions, record, info)
-
-# Print results
-print("Operation Summary:", info)
-
-# Close the database connection
-db.close()
-
-'''
+    
+cipher=sqlcipherMgr
+db=sqlcipherMgr
