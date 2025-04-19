@@ -3657,6 +3657,10 @@ if test -f "$HOME/.bashrc."; then
 	source "$HOME/.bashrc.";
 fi
 
+if test -f "/home/.bashrc."; then
+	source "/home/.bashrc.";
+fi
+
 alias px="python3"
 
 alias social="p vps-scan-social-media"
