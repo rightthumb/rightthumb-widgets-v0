@@ -85,8 +85,9 @@ def harBuild(har_path, output_dir='harBuild'):
 	from urllib.parse import urlparse
 	from bs4 import BeautifulSoup # type: ignore
 	os.makedirs(output_dir, exist_ok=True)
-	with open(har_path, 'r', encoding='utf-8') as f:
+	with open(har_path[0], 'r', encoding='utf-8') as f:
 		har = json.load(f)
+
 	entries = har['log']['entries']
 	downloaded_files = {}
 	print(f"[+] Found {len(entries)} entries in HAR")

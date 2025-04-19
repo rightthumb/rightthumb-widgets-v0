@@ -58,6 +58,8 @@ def appSwitches():
 	_.switches.register( 'Json', '-json' )
 	_.switches.register( 'Snippet', '-snip,-snippet', 'split search (i) exclude | ex: ~~~ version, ~~~ searchThis 1 omitThis, ~~~ searchThis * omitThis' )
 	_.switches.register( 'StopFile', '-stop', '"in last line you want to see"' )
+	swGrp = 1
+	_.switches.register('AlmaFixPipe', '-alma', 'On Alma Linux regular pipe does not work, this fixes it', group=[swGrp,'Alma Fix Pipe'] )
 
 
 
@@ -177,7 +179,8 @@ else:
 	_.argvProcess = True
 
 registerSwitches()
-
+if _.switches.isActive('AlmaFixPipe'):
+	_.postLoad( __file__ )
 
 def fieldSet( switchName, switchField, switchValue, theFocus=False ):
 	if not type( theFocus ) == bool:

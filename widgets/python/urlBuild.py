@@ -252,8 +252,9 @@ class UrlBuilder:
 		if not m is None: max_threads = m
 		if max_threads == 0: threaded = False
 		self.max_threads = max_threads
-		self.thread_manager = thread_manager
-		if self.threaded and not self.thread_manager:
+		if not thread_manager is None:
+			self.thread_manager = thread_manager
+		else:
 			self.thread_manager = _.ThreadManager(threads=max_threads, onDone=self._on_done)
 		self.output_dir = output_dir
 		self.threaded = threaded

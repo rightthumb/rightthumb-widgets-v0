@@ -6,6 +6,8 @@ def sw():
 	pass
 	_.switches.register( 'Recursive', '-r' )
 	_.switches.register( 'FullPath', '-f' )
+	_.switches.register( 'Missing', '-m' )
+
 _._default_settings_()
 
 _.appInfo[focus()] = {
@@ -47,6 +49,7 @@ _.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw )
 ########################################################################################
 #n)--> start
 
+__.folderFlag = []
 
 import os
 def list_files_and_folders(
@@ -68,16 +71,26 @@ def list_files_and_folders(
 		if should_colorize(item_path):
 			_.pr(item_path, c='yellow')
 		else:
-			_.pr(item_path)
+			__.folderFlag.append(item_path)
+			_.pr(item_path,c='red')
 
 	def should_colorize(item):
+		item = item.strip()
 		item_abs = os.path.abspath(item)
-		return any(
-			os.path.abspath(x) == item_abs or
-			os.path.normpath(x) == os.path.normpath(item) or
-			os.path.basename(x) == os.path.basename(item)
-			for x in colorize
-		)
+		if _.switches.isActive('StrictCase'):
+			return any(
+				os.path.abspath(x) == item_abs or
+				os.path.normpath(x) == os.path.normpath(item) or
+				os.path.basename(x) == os.path.basename(item)
+				for x in colorize
+			)
+		else:
+			return any(
+				os.path.abspath(x).lower() == item_abs.lower() or
+				os.path.normpath(x).lower() == os.path.normpath(item).lower() or
+				os.path.basename(x).lower() == os.path.basename(item).lower()
+				for x in colorize
+			)
 
 	def handle_directory(path):
 		files = []
@@ -110,7 +123,17 @@ def list_files_and_folders(
 		handle_directory('.')
 		
 def action():
-	list_files_and_folders(_.isData(), _.switches.isActive('Recursive'), _.switches.isActive('FullPath'))
+	items = []
+	for line in _.isData():
+		line = line.strip()
+		items.append(line)
+
+	list_files_and_folders(items, _.switches.isActive('Recursive'), _.switches.isActive('FullPath'))
+	if _.switches.isActive('Missing'):
+		_.pr(line=True,c='purple')
+		for item in _.isData():
+			if item.strip().lower() not in __.folderFlag:
+				_.pr(item, c='purple')
 
 ########################################################################################
 if __name__ == '__main__':

@@ -699,6 +699,7 @@ def fo(folder=None,r=False,script=None,first=True,rel=False):
 		path=folder+os.sep+item
 		path=__.path(path)
 		relative=path[len(fo_rel)+1:]
+		__.relative=relative
 		if os.path.isfile(path):
 			if rel:
 				fo_fi.append(relative)
@@ -11289,6 +11290,7 @@ def getTableBIG( theFile,     isDic=None, isList=None ):
 
 _tar = None
 def getTableDB( theFile,     isDic=None, isList=None ):
+	# decompress2x(theFile)
 	if os.path.isfile(theFile): vv.opened_file_me[theFile] = os.path.getmtime( theFile );
 	try:
 		import simplejson
@@ -24702,6 +24704,41 @@ def columnAbbreviations(data,appReg=None):
 ##################################################
 # path=_.zZip(path);   _.cleanUnzip()
 
+
+##################################################
+isHeaders = {
+	# IS(path, 'gz')
+	'gzip': '1F 8B 08 08',
+	'docx': [
+		'50 4B 03 04',
+		'50 4B 05 06',
+	],
+	'isCrypt': '41 45 53 02 00 00 1B',
+	'gz': '1F 8B 08 08',
+	'bz2': '42 5A 68',
+}
+IS_IS = {
+	'gzip': 'gz',
+}
+##################################################
+
+
+__.myHeaders = {}
+
+def myHeaders():
+	if list(__.myHeaders.keys()):
+		return
+	hex_headers = getTableDB('hex_headers.json')
+	for rec in hex_headers:
+		if 'extension' in rec and 'signature' in rec:
+			ext = rec['extension'].lower()
+			sig = rec['signature']  # No `.lower()`
+			if ext not in __.myHeaders:
+				__.myHeaders[ext] = []
+			__.myHeaders[ext].append(sig)
+	if not __.myHeaders: pr('myHeaders Not Loaded',c='red')
+
+
 def IS(path,check=1):
 	if not os.path.isfile(path): return False
 	global isHeaders
@@ -24716,6 +24753,57 @@ def IS(path,check=1):
 			if header.startswith(c): return True
 
 	return False
+
+
+def Is(path, check):
+	check = check.lower()
+	if check in IS_IS:
+		check = IS_IS[check]
+
+	myHeaders()
+	thisHeader = IS(path)
+	if not thisHeader:
+		return False
+
+	if check in __.myHeaders:
+		return any(thisHeader.startswith(sig) for sig in __.myHeaders[check])
+
+	return False
+
+def IsIs(path):
+	myHeaders()
+	thisHeader = IS(path)
+	if not thisHeader:
+		return False
+	
+	thisExt = path.split('.')[-1].lower()
+	if Is(path, thisExt):
+		ext = thisExt
+		sigs = []
+		for sig in __.myHeaders[thisExt]:
+			if thisHeader.startswith(sig):
+				sigs.append(sig)
+		length = 99999
+		for signature in sigs:
+			if len(signature) < length:
+				length = len(signature)
+				sig = signature
+		
+		pr(pr(ext, c='yellow',p=0), pr(sig, c='green',p=0))
+		return thisExt
+
+
+	exts = []
+	for ext, signatures in __.myHeaders.items():
+		for sig in signatures:
+			if thisHeader.startswith(sig):
+				pr(pr(ext, c='yellow',p=0), pr(sig, c='green',p=0))
+				exts.append(ext)
+				# return ext
+
+	if not exts:
+		return False
+	return exts
 
 
 def isZip(path):
@@ -25187,22 +25275,14 @@ test
 
 
 ##################################################
-isHeaders = {
-	# IS(path, 'gz')
-	'gzip': '1F 8B 08 08',
-	'docx': [
-		'50 4B 03 04',
-		'50 4B 05 06',
-	],
-	'isCrypt': '41 45 53 02 00 00 1B',
-	'gz': '1F 8B 08 08',
-	'bz2': '42 5A 68',
-}
-##################################################
+
 
 
 
 def compress2(original_file_path, compressed_file_path):
+	'''
+		.gz
+	'''
 	import gzip
 	import shutil
 	try:
@@ -25217,6 +25297,9 @@ def compress2(original_file_path, compressed_file_path):
 		return 'Error'
 
 def decompress2(compressed_file_path, decompressed_file_path):
+	# if not head(compressed_file_path).strip().startswith('1F 8B 08 08'):
+	# 	print(f"File '{compressed_file_path}' is not a gzip file.")
+	# 	return 'Not Gzip'
 	import gzip
 	import shutil
 	try:
@@ -25230,6 +25313,19 @@ def decompress2(compressed_file_path, decompressed_file_path):
 	except:
 		return 'Error'
 
+def decompress2x(path):
+	if not IS(path,'gzip'):
+		return False
+	import shutil
+	path = path.strip()
+	shutil.move(path, path+'.gz')
+	decompress2(path+'.gz',path)
+	if path:
+		os.remove(path+'.gz')
+		return True
+	else:
+		shutil.move(path+'.gz', path)
+		return False
 def compress(path):
 	import gzip
 	import shutil

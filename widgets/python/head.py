@@ -151,7 +151,9 @@ _.l.sw.register( triggers, sw )
 
 def action():
 	for path in _.isData():
-		print( _.head(path), path )
+		x=_.IsIs(path)
+		if not x:
+			_.pr( _.head(path), c ='red' )
 
 ##################################################
 #b)--> examples

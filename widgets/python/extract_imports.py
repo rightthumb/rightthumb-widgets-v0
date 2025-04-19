@@ -131,27 +131,59 @@ _.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw )
 
 	#n)--> banner
 		# banner=_.Banner(app); goss=banner.goss;
-
-
-	#n)--> gptbot
-		# from  _rightThumb._gptbot import GPT4oBot
-		# bot = GPT4oBot()
-		# bot.init_goal(goal='build a calculator webpage')
-		# while True:
-		# 	task, result = bot.run_next_task()
-		# 	if not task:
-		# 		print(result)
-		# 		break
-		# 	print(f"\n✅ Completed: {task}\n{result}\n")
-		# 	input("Press Enter to continue...")
-
-
 #e)--> examples
 ########################################################################################
 #n)--> start
 
+
+import os
+import re
+
+def extract_imports(recursive=True):
+    stdlib = set([
+        'sys', 'os', 're', 'math', 'time', 'json', 'datetime', 'subprocess',
+        'threading', 'urllib', 'http', 'base64', 'shutil', 'collections',
+        'random', 'argparse', 'typing', 'getopt', 'pathlib', 'unittest',
+        'io', 'pprint', 'socket', 'queue', 'email', 'html', 'logging', 'glob',
+        'csv', 'itertools', 'functools', 'hashlib', 'pickle', 'tempfile',
+        'textwrap', 'decimal', 'inspect', 'abc', 'signal', 'traceback',
+        'types', 'uuid', 'statistics', 'bz2', 'lzma', 'tarfile', 'zipfile',
+        'codecs', 'difflib', 'filecmp', 'platform', 'warnings', 'contextlib',
+        'ctypes', 'builtins', 'errno', 'marshal', 'readline', 'tokenize',
+        'smtplib', 'selectors', 'webbrowser', 'asyncio', 'enum', 'ssl',
+        'sched', 'stat', 'xml', 'sqlite3', 'token', 'concurrent', 'fnmatch'
+    ])
+
+    found = set()
+
+    for root, _, files in os.walk('.' if recursive else './'):
+        for file in files:
+            if file.endswith('.py'):
+                path = os.path.join(root, file)
+                try:
+                    with open(path, 'r', encoding='utf-8') as f:
+                        for line in f:
+                            line = re.sub(r'#.*', '', line).strip()
+                            if line.startswith('import ') or line.startswith('from '):
+                                # Split by comma and strip
+                                parts = re.split(r'import|from', line)
+                                for part in parts[1:]:
+                                    tokens = part.strip().split()
+                                    if tokens:
+                                        mod = tokens[0].split('.')[0].strip(',;')
+                                        if mod and mod not in stdlib and not mod.startswith('_'):
+                                            found.add(mod)
+                except Exception:
+                    continue
+
+    return sorted(found)
+
+
 def action():
-	pass
+	mods = extract_imports(recursive=True)
+	print(' '.join(mods))           # for pip install
+	# print('\n'.join(mods))          # one per line
+
 
 	# load(); global c3po;
 

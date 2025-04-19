@@ -857,7 +857,10 @@ def Relative_Path_Persistent():
 			_.pr('','Relative-Path-Persistent:',say,c=c)
 		_.pr()
 	rpp_fig='files_Relative-Path-Persistent.fig'
-	Session_ID = os.environ['Session_ID']
+	try:
+		Session_ID = os.environ['Session_ID']
+	except:
+		Session_ID = ''
 	fig=_.getTable(rpp_fig)
 	# _.pv(fig)
 	if _.switches.isActive('Relative-Path-Persistent'):

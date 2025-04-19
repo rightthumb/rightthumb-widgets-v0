@@ -26,7 +26,7 @@ def sw():
 	# _.switches.register( 'Input', '-i', group='Group Name' )
 		##  -->    p SwitchGroupsExamples   <--
 	# #e)--> examples
-	_.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=False )
+	_.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name', description='Files', isRequired=False )
 
 _._default_settings_()
 
@@ -131,27 +131,33 @@ _.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw )
 
 	#n)--> banner
 		# banner=_.Banner(app); goss=banner.goss;
-
-
-	#n)--> gptbot
-		# from  _rightThumb._gptbot import GPT4oBot
-		# bot = GPT4oBot()
-		# bot.init_goal(goal='build a calculator webpage')
-		# while True:
-		# 	task, result = bot.run_next_task()
-		# 	if not task:
-		# 		print(result)
-		# 		break
-		# 	print(f"\n✅ Completed: {task}\n{result}\n")
-		# 	input("Press Enter to continue...")
-
-
 #e)--> examples
 ########################################################################################
 #n)--> start
 
 def action():
-	pass
+	for file in _.isData(r=0):
+		lines = _.getText(file)
+		files = []
+		for line in lines:
+			if _.showLine(line):
+				if not file in files:
+					files.append(file)
+					_.pr('')
+					_.pr(file,c='green')
+				for vVv in _.switches.values('Plus'):
+					for x in _.caseUnspecific(line, vVv):
+						line = line.replace(x, _.colorThis(x, 'cyan', p=0))
+				_.pr(line.rstrip())
+
+			# print(line.rstrip())
+
+	# if not sys.stdin.isatty():
+	# 	for line in sys.stdin:
+	# 		if _.showLine(line):
+	# 			print(line.rstrip())
+	# 	sys.exit()
+
 
 	# load(); global c3po;
 

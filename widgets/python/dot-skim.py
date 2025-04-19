@@ -41,7 +41,10 @@ def appRegDics(): return { 'appInfo': _.appInfo[focus()], 'appData': _.appData[f
 def triggers():
 	_._default_triggers_()
 def _local_(do): exec(do)
-_.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw );
+_.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw )
+########################################################################################
+#n)--> start
+
 _copy = _.regImp( __.appReg, '-copy' )
 
 def action():
@@ -51,16 +54,20 @@ def action():
 	results = []
 	if not _.switches.isActive('NotSingle'):
 		for line in _.myData():
+			line= line.strip()
 			if '.' in line and line.count('.') == cnt:
 				results.append(line)
 	elif _.switches.isActive('NotSingle'):
 		for line in _.myData():
+			line= line.strip()
 			if '.' in line and line.count('.') > cnt:
 				results.append(line)
 	if _.isGui():
 		_copy.imp.copy( '\n'.join(results) )
 	else:
 		_.pr( '\n'.join(results) )
-	
+
+
+########################################################################################
 if __name__ == '__main__':
 	action(); _.isExit(__file__);
