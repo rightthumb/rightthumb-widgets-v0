@@ -3704,8 +3704,8 @@ alias up.date="up_date"
 alias 101="python3 $ww/python/file.py -folder $ww/bash/101 -a"
 
 alias os="cat /etc/os-release"
-alias curl-="curl -s"
-alias curl.="curl -s"
+alias curl-="curl -sLk"
+alias curl.="curl -sLk"
 
 
 ## p tag-cycle ## dos2unix
