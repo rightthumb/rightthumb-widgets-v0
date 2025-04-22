@@ -1,5 +1,7 @@
 @echo off
 
+call wl
+goto :eof
 SET fi=%1
 
 SET do_paste=FALSE

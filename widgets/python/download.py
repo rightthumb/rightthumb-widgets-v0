@@ -36,6 +36,7 @@ def sw():
 	#e)--> examples
 	# _.switches.register( 'Files', '-url,-urls,-f,-fi,-file,-files','file.txt', isData='name', description='Files', isRequired=False )
 	_.switches.register( 'URL', '-u,-url,-urls', 'https://efm.cx/', isData='raw' )
+	_.switches.register( 'Save', '-save', 'file.js' )
 
 # __.setting('require-list',['Files,Plus','File,Has']) # todo
 # __.setting('require-list',['Pipe','Files'])
@@ -153,6 +154,8 @@ _.l.sw.register( triggers, sw )
 def action():
 	for url in _.isData(r=0):
 		fi = url.split('/')[-1]
+		if _.switches.isActive('Save'):
+			fi = _.switches.value('Save')
 		_.pr(fi,url)
 		urllib.request.urlretrieve(url, fi)
 

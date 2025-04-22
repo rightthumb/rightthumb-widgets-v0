@@ -48,6 +48,7 @@ def sw():
 	_.switches.register( 'Print-Remote-Location', '-where' )
 	_.switches.register( 'Remote-Location', '-rp,-rpath' )
 	_.switches.register( 'CMD', '-cmd' )
+	_.switches.register( 'NoPassword', '-nopass' )
 	_.switches.register( 'Toggle-Url/.folder.meta', '-tu,-turl' )
 	# _.switches.register( 'IsFile', '-isfi' )
 
@@ -267,7 +268,7 @@ def meta_scan(path,end=''):
 	url=None
 	if 'url' in meta:
 
-		url = file.replace( __.path(folder), meta['url'] ).replace('\\','/')
+		url = file.replace( __.path(folder), meta['url'] ).replace('\\','/')	
 		# print(url)
 		if os.path.isdir(path) and not url.endswith('/'): url += '/'
 		try:
@@ -398,7 +399,10 @@ def process(path,end='',ft=None):
 			_.pr(s,c='green')
 		f=ftp['path']
 		u=ftp['user']
-		pw=_vault.imp.s.de( ftp['password'] )
+		if _.switches.isActive('NoPassword'):
+			pw=ftp['password']
+		else:
+			pw=_vault.imp.s.de( ftp['password'] )
 		_ssh=sshpass(pw,'ssh')
 		_scp=sshpass(pw,'scp')
 		if _.switches.isActive('Verbose'):
@@ -485,7 +489,10 @@ def process(path,end='',ft=None):
 		# if True:
 			fi = file.replace( __.path(folder), f ).replace('\\','/')
 			rfo = _.tailpop(fi,'/')
-			pw=_vault.imp.s.de( ftp['password'] )
+			if _.switches.isActive('NoPassword'):
+				pw=ftp['password']
+			else:
+				pw=_vault.imp.s.de( ftp['password'] )
 			# if os.path.isdir(path):
 			#     fi=__.path(fi,pop=True)
 			#     fi += '/'
@@ -601,7 +608,10 @@ def remoteFolder():
 		_.pr(s,c='green')
 		f=ftp['path']
 		u=ftp['user']
-		pw=_vault.imp.s.de( ftp['password'] )
+		if _.switches.isActive('NoPassword'):
+			pw=ftp['password']
+		else:
+			pw=_vault.imp.s.de( ftp['password'] )
 		_ssh=sshpass(pw,'ssh')
 		# print(_.isWin)
 		# print(_.switches.isActive('NotWSL'))
@@ -775,9 +785,12 @@ def wsl(path):
 	wsl5=wsl5.replace(' ','\\ ')
 	return wsl5
 
-def sshpass(pw,cmd): return f"wsl sshpass -p '{pw}' {cmd} "
-
-_vault = _.regImp( __.appReg, '_rightThumb._vault' )
+def sshpass(pw,cmd):
+	if _.switches.isActive('NoPassword'):
+		return f"wsl {cmd} "
+	return f"wsl sshpass -p '{pw}' {cmd} "
+if not _.switches.isActive('NoPassword'):
+	_vault = _.regImp( __.appReg, '_rightThumb._vault' )
 _.v.quiet = False
 
 

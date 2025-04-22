@@ -210,6 +210,7 @@ def action():
 	totalLink = 0
 	totalFile = 0
 	totalFolder = 0
+	if not folder.strip(): folder = os.getcwd()
 	for item in os.listdir(folder):
 		path = folder + _v.slash + item
 		# _.pr( path )

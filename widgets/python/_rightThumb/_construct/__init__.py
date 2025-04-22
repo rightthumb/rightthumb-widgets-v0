@@ -39,6 +39,16 @@ appInfoAcquiredData = { 'app': '', 'focus': '', 'data': None }
 # HasSwitchSubGroup search for in framework
 
 ##################################################
+ForcePipe = False
+import sys
+if '--pipe' in sys.argv:
+	if not sys.stdin.isatty():
+		ForcePipe = sys.stdin.read()
+		if type(ForcePipe) == str:
+			ForcePipe = ForcePipe.split('\n')
+		
+
+##################################################
 
 # earthy_tones oceanic pastel warm_bold autumn midnight
 # spring earthy_tones oceanic pastel warm_bold autumn

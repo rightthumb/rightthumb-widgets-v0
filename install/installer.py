@@ -2742,7 +2742,8 @@ fi
 alias beep.="play -nq -t alsa synth 1 sine 440"
 ################# ################# #################
 # echo 000-003
-clear
+[ -z "$pterm" ] && clear
+
 		"""
 			return self.file( path, data, { 'status': 'virtual' } )
 		if path == '.bashrc-all':
@@ -2791,7 +2792,8 @@ else
 	PS1='\n┌── (\\u${prompt_symbol}\\h)──[ \\w ].20F54359E924\\n└─── $ '
 fi
 unset color_prompt force_color_prompt
-clear
+[ -z "$pterm" ] && clear
+
 			"""
 			data = data.replace( 'THE_EMOJIS_GO_HERE', v.emojis )
 			return self.file( path, data, { 'status': 'virtual' } )
@@ -2851,7 +2853,8 @@ export HISTSIZE=100000
 export HISTFILESIZE=100000
 # get_time_difference
 # echo 000-028
-clear
+[ -z "$pterm" ] && clear
+
 			"""
 			return self.file( path, data, { 'status': 'virtual' } )
 
@@ -3689,6 +3692,19 @@ clean_yaml() {
 }
 
 
+get_content_type() {
+    local url="$1"
+    if [ -z "$url" ]; then
+        echo "Usage: get_content_type <URL>"
+        return 1
+    fi
+    curl -s -D - -o /dev/null -L "$url" | grep -i '^Content-Type:' | cut -d';' -f1 | sed 's/^[Cc]ontent-[Tt]ype: //'
+}
+
+
+alias curl..="get_content_type"
+
+
 
 alias .mx='MX'
 alias .mc='MC'
@@ -3707,6 +3723,8 @@ alias up.date="up_date"
 
 alias 101="python3 $ww/python/file.py -folder $ww/bash/101 -a"
 
+alias who.f="stat -c '%A %U %G %u %g %n'"
+
 alias os="cat /etc/os-release"
 alias curl-="curl -sLk"
 alias curl.="curl -sLk"
@@ -3715,7 +3733,8 @@ alias curl.="curl -sLk"
 ## p tag-cycle ## dos2unix
 
 #9483b053a84b
-clear
+[ -z "$pterm" ] && clear
+
 # get_time_difference
 # a3bc42ec51e9
 

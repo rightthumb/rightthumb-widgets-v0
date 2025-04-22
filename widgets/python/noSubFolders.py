@@ -150,30 +150,31 @@ _.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw )
 ########################################################################################
 #n)--> start
 
-
-
-
-
-exec('''
-
-def test():
-	 print('works')
-__.test=test
-''')
-
-
-
-__.test()
-
-
-
-
-
-
-
-
 def action():
 	pass
+
+
+
+import os
+
+def list_folders_without_subfolders(path='.'):
+    result = []
+    for entry in os.listdir(path):
+        full_path = os.path.join(path, entry)
+        if os.path.isdir(full_path):
+            # Check if there are any subdirectories inside
+            has_subfolders = any(
+                os.path.isdir(os.path.join(full_path, sub)) for sub in os.listdir(full_path)
+            )
+            if not has_subfolders:
+                result.append(entry)
+    return result
+
+if __name__ == '__main__':
+    folders = list_folders_without_subfolders()
+    for folder in folders:
+        print(f'{folder}')
+
 
 	# load(); global c3po;
 

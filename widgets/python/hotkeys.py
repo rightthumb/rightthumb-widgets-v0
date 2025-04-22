@@ -315,6 +315,123 @@ _.postLoad( __file__ )
 ########################################################################################
 # START
 
+__.BackupOnSave = _.dot()
+__.BackupOnSave.status = False
+__.BackupOnSave.file = []
+def BackupOnSave():
+
+
+	## Changed to multi file save monitor
+	# if __.BackupOnSave.status:
+	# 	# beepy.simple_beep2()
+	# 	# beepy.simple_beep2()
+	# 	__.BackupOnSave.status = False
+	# 	__.BackupOnSave.file = None
+	# 	print(f"[Watchdog] Backup Stopped")
+
+
+	# 	# Restarting App Since it wont stop monitoring
+
+	# 	with keyboard.pressed(Key.cmd):  # Key.cmd is the Windows key
+	# 		keyboard.press(Key.esc)
+	# 		keyboard.release(Key.esc)
+
+
+	# 	return None
+	
+
+	
+	
+	def onSave():
+		beepy.simple_beep2()
+		
+		appReg=__.appReg
+		_bk = _.regImp( __.appReg, 'fileBackup' )
+		_bk.switch( 'Silent' )
+		_bk.switch( 'isPreOpen' )
+		for path in __.BackupOnSave.file:
+			print(f"[Watchdog] Backup: {path}")
+			_bk.switch( 'Input', path )
+		bkfi = _bk.action()
+		__.appReg=appReg
+	
+	vs = ' - Visual Studio Code'
+	sub = ' - Sublime Text'
+	title = copy_active_window()
+
+	if vs in title:
+		path = title.replace(vs,'')
+		if os.path.isfile(path):
+			__.BackupOnSave.status = True
+			__.BackupOnSave.file.append(path)
+			beepy.simple_beep2()
+			beepy.simple_beep2()
+			# monitor_file(path, onSave)
+			import threading
+			thread = threading.Thread(target=monitor_file, args=(path, onSave), daemon=True)
+			thread.start()
+		else:
+			print('No file, unable to monitor save and backup')
+
+	elif sub in title:
+		path = title.split(' • ')[0]
+		if os.path.isfile(path):
+			__.BackupOnSave.status = True
+			__.BackupOnSave.file.append(path)
+			beepy.simple_beep2()
+			beepy.simple_beep2()
+			# monitor_file(path, onSave)
+			import threading
+			thread = threading.Thread(target=monitor_file, args=(path, onSave), daemon=True)
+			thread.start()
+		else:
+			print('No file, unable to monitor save and backup')
+	else:
+		print('File Save Monitor Only Works From Visual Studio Code or Sublime Text')
+
+
+
+def copy_active_window():
+	import pygetwindow as gw # type: ignore
+	win = gw.getActiveWindow()
+	if win:
+		return win.title
+	return ''
+
+
+
+def monitor_file(file_path, on_save_function):
+    from watchdog.observers import Observer  # type: ignore
+    from watchdog.events import FileSystemEventHandler  # type: ignore
+    import time
+    import os
+
+    class SaveHandler(FileSystemEventHandler):
+        def on_modified(self, event):
+            if event.src_path == os.path.abspath(file_path):
+                print(f"[Watchdog] Detected save: {file_path}")
+                on_save_function()
+
+    observer = Observer()
+    handler = SaveHandler()
+    folder = os.path.dirname(os.path.abspath(file_path))
+    observer.schedule(handler, folder, recursive=False)
+    observer.start()
+    print(f"[Watchdog] Monitoring: {file_path}")
+
+    try:
+        while __.BackupOnSave.status:
+            time.sleep(1)
+    except KeyboardInterrupt:
+        pass  # Optional: handle Ctrl+C gracefully
+    finally:
+        observer.stop()
+        observer.join()
+        print(f"[Watchdog] Stopped: {file_path}")
+
+
+
+
 def wt_implode(text):
 	# text = text.replace('\n',', ')
 	text = text.replace('\r','')
@@ -484,11 +601,11 @@ def scrape_urls__old(text):
 	return set(urls)
 
 def scrape_urls(text):
-    # Regex matches full URLs surrounded by quotes or not
-    url_pattern = r'https?://[^\s\'",;]+'
-    urls = re.findall(url_pattern, text)
-    return set(urls)  # Use set to remove duplicates if needed
-    
+	# Regex matches full URLs surrounded by quotes or not
+	url_pattern = r'https?://[^\s\'",;]+'
+	urls = re.findall(url_pattern, text)
+	return set(urls)  # Use set to remove duplicates if needed
+	
 
 
 def scrape_all(text):
@@ -668,6 +785,9 @@ class HOTKEYS:
 		global key_set
 		global force_clean
 		global no_escape
+		if 'PreHook' in post_do:
+			# print("post_do=post_do['PreHook'](post_do)",post_do['PreHook'])
+			post_do=post_do['PreHook'](post_do)
 		try:
 			if '_clip_' in post_do['label']:
 				# print('is a MF clip')
@@ -723,8 +843,11 @@ class HOTKEYS:
 					ii+=1
 					if __.TroubleShoot.backspace:
 						print(444)
-					keyboard.press(Key.backspace)
-					keyboard.release(Key.backspace)
+					if post_do['backspace']:
+						keyboard.press(Key.backspace)
+						keyboard.release(Key.backspace)
+			__.shouldBackspace = post_do['backspace']
+			__.shouldEsc = post_do['esc']
 			if not os.path.isfile(_v.tt+os.sep+'hotkeys-log.csv'): _.saveText('epoch,label',_v.tt+os.sep+'hotkeys-log.csv')
 			log=_.getText(_v.tt+os.sep+'hotkeys-log.csv',raw=True).strip()+'\n'
 			log+=str(time.time()).split('.')[0]+','+str(k)
@@ -739,9 +862,12 @@ class HOTKEYS:
 					i+=1
 					if __.TroubleShoot.backspace:
 						print(111)
-					keyboard.press(Key.backspace)
-					keyboard.release(Key.backspace)
+					if post_do['backspace']:
+						keyboard.press(Key.backspace)
+						keyboard.release(Key.backspace)
 			exec(do)
+			# print('do',do)
+			# print('post_do',post_do)
 			beepy.simple_beep2()
 
 	def process_keystroke( self, key ):
@@ -796,6 +922,8 @@ class HOTKEYS:
 		for k in table:
 			good=True
 			count=0
+			backspace=None
+			if 'backspace' in table[k]: backspace=table[k]['backspace']
 
 			for kk in key_set:
 				found=False
@@ -826,6 +954,19 @@ class HOTKEYS:
 				good=False
 			if good:
 				beepy.simple_beep()
+				
+				if 'PreHook' in table[k]:
+					# print("table[k]['PreHook']",table[k]['PreHook'])
+					post_do['PreHook'] = table[k]['PreHook']
+					if 'PreHookChange' in table[k]:
+						post_do['PreHookChange'] = table[k]['PreHookChange']
+					else:
+						post_do['PreHookChange'] = {}
+				else:
+					post_do['PreHook'] = PreHook
+					post_do['PreHookChange'] = {}
+					
+				post_do['backspace'] = backspace
 				post_do['status'] = 1
 				post_do['esc'] = esc
 				post_do['count'] = count
@@ -850,6 +991,7 @@ class HOTKEYS:
 			good=True
 			count=0
 			for i,t in enumerate(table[k]['test']):
+				if 'backspace' in table[k]: backspace=table[k]['backspace']
 
 				if '.alt' in t.lower():
 					esc=True
@@ -874,6 +1016,18 @@ class HOTKEYS:
 					break
 			if good:
 				beepy.simple_beep()
+
+				if 'PreHook' in table[k]:
+					post_do['PreHook'] = table[k]['PreHook']
+					if 'PreHookChange' in table[k]:
+						post_do['PreHookChange'] = table[k]['PreHookChange']
+					else:
+						post_do['PreHookChange'] = {}
+				else:
+					post_do['PreHook'] = PreHook
+					post_do['PreHookChange'] = {}
+
+				post_do['backspace'] = backspace
 				post_do['status'] = 1
 				post_do['esc'] = esc
 				post_do['count'] = count
@@ -1089,9 +1243,9 @@ def _bk():
 	global keyboard
 	if __.TroubleShoot.backspace:
 		print(222)
-
-	keyboard.press(Key.backspace)
-	keyboard.release(Key.backspace)
+	if __.shouldBackspace:
+		keyboard.press(Key.backspace)
+		keyboard.release(Key.backspace)
 
 class CLIP:
 
@@ -1235,6 +1389,76 @@ class CLIP:
 		with keyboard.pressed(Key.ctrl):
 			keyboard.press('v')
 			keyboard.release('v')
+
+
+
+	def pipi(self):
+		# active_window_test()
+		# _paste = _.regImp( __.appReg, '-paste' )
+
+		# def copy_to_clipboard(text):
+		# 	import ctypes
+		# 	# Constants
+		# 	CF_UNICODETEXT = 13
+		# 	GHND = 0x0042
+
+		# 	# Allocate global memory for the text
+		# 	h_global_mem = ctypes.windll.kernel32.GlobalAlloc(GHND, (len(text) + 1) * 2)
+		# 	lp_global_mem = ctypes.windll.kernel32.GlobalLock(h_global_mem)
+
+		# 	# Copy text into memory
+		# 	ctypes.cdll.msvcrt.wcscpy_s(ctypes.c_wchar_p(lp_global_mem), len(text) + 1, text)
+		# 	ctypes.windll.kernel32.GlobalUnlock(h_global_mem)
+
+		# 	# Open clipboard and set data
+		# 	if ctypes.windll.user32.OpenClipboard(None):
+		# 		ctypes.windll.user32.EmptyClipboard()
+		# 		ctypes.windll.user32.SetClipboardData(CF_UNICODETEXT, h_global_mem)
+		# 		ctypes.windll.user32.CloseClipboard()
+		# 		print("[Copied] π copied to clipboard.")
+		# 	else:
+		# 		print("❌ Could not open clipboard.")
+
+		# copy_to_clipboard("π")
+
+
+		# print(_paste.imp.paste())
+
+
+		# import pyperclip
+		# pyperclip.copy('π')
+
+		# print(_paste.imp.paste())
+
+
+		import tkinter as tk
+		r = tk.Tk()
+		r.withdraw()  # Hide the main window
+		r.clipboard_clear()
+		r.clipboard_append('π')
+		r.update()  # Keep the clipboard content after the script ends
+		r.destroy()
+
+		# print(_paste.imp.paste())
+
+
+
+
+		# # import pyperclip
+		# # pyperclip.copy('π')
+		with keyboard.pressed(Key.ctrl):
+			keyboard.press('v')
+			keyboard.release('v')
+
+
+	def copy_active_window(self):
+		import pygetwindow as gw # type: ignore
+		win = gw.getActiveWindow()
+		if win:
+			win.title
+			_copy = _.regImp( __.appReg, '-copy' )
+			_copy.imp.copy( win.title, p=0 )
+			return win
 
 	def databeastUser(self):
 		_copy = _.regImp( __.appReg, '-copy' )
@@ -1832,6 +2056,7 @@ copy(  hackTool.payload.label  )
 		if not '{}' in text:
 			beepy.simple_beep2()
 			return None
+		
 		keyboard.press(Key.esc)
 		keyboard.release(Key.esc)
 		keyboard.press(Key.esc)
@@ -3580,7 +3805,8 @@ __.HK = _.dot()
 __.HK.active = True
 __.TroubleShoot = _.dot()
 __.TroubleShoot.backspace = False
-
+__.shouldBackspace = True
+__.shouldEsc = True
 
 class vArgs:
 	def __init__(self):
@@ -3687,7 +3913,7 @@ def load():
 	global toggler
 	log = []
 	table = {
-				'EXIT': { 'raw': [ 'esc.','win.' ], 'do': '__.scheduler_restart=False;__.scheduler_exit=True;sys.exit();' },
+				'EXIT': { 'raw': [ 'esc.','win.' ], 'do': '__.scheduler_restart=False;__.scheduler_exit=True;sys.exit();'    , 'backspace': False, 'no-esc': True, 'esc': False,  },
 
 
 
@@ -3744,6 +3970,13 @@ def load():
 				# 'implode-clean': { 'raw': [ 'ctrl.,2', 'space.', 'i', 'Key.up' ], 'do': 'Clip.implode_clean()' },
 				# 'reduction_loop': { 'raw': [ 'alt.', 'shift.', 'win.', 'r' ], 'do': 'Clip.reduction_loop()' },
 				'implode2': { 'raw': [ 'alt.', 'win.', 'i' ], 'do': 'Clip.implode()' },
+
+
+
+
+
+
+
 				# 'implode-clean': { 'raw': [ 'shift.', 'alt.', 'win.', 'i' ], 'do': 'Clip.implode()' },
 				'implode-clean': { 'raw': [ 'alt.', 'win.', 'Key.down' ], 'do': 'Clip.implode_clean()' },
 				'implode3': { 'raw': [ 'alt.', 'shift.', 'i' ], 'do': 'Clip.implode3()' },
@@ -3846,6 +4079,16 @@ def load():
 				'databeastLogin': { 'raw': [   'shift.,2', 'e'   ], 'do': 'Clip.databeastLogin()' },
 				'databeastUser': { 'raw': [   'alt.,2',  'e'   ], 'do': 'Clip.databeastUser()' },
 
+ 
+
+
+				'copy_active_window': { 'raw': [   'alt.',  'space.'    ], 'do': 'Clip.copy_active_window()' },
+				'pi': { 'raw': [   'alt.',  'shift.',  'd'   ], 'do': 'Clip.pi()' },
+				'pipi': { 'raw': [   'ctrl.',   'space.'  ], 'do': 'Clip.pipi()', 'backspace': False, 'no-esc': True, 'esc': False, 'PreHook': capture_active_window, 'PreHookChange': {'backspace': True } },
+				'BackupOnSave': { 'raw': [   'alt.',    'b'   ], 'do': 'BackupOnSave()'   , 'backspace': False, 'no-esc': True, 'esc': False,  },
+
+
+
 	}
 
 	toggles={
@@ -3897,6 +4140,25 @@ def load():
 	# _.pv(table)
 
 ########################################################################################
+def PreHook(post_do): return post_do
+
+def capture_active_window(data={}):
+	import pygetwindow as gw # type: ignore
+	win = gw.getActiveWindow()
+	if win:
+		# print("[capture_active_window]", win.title)
+		if 'loc-' in win.title:
+			if 'PreHookChange' in data:
+				for k in data['PreHookChange']:
+					data[k] = data['PreHookChange'][k]
+					print('PreHook Changed',k, data['PreHookChange'][k])
+					return data
+		print('PreHook: No change')
+		return data
+		return win
+
+
+########################################################################################
 def ctrl_a():
 	global keyboard
 	# Press Ctrl+A
@@ -3935,16 +4197,16 @@ def ctrl_w():
 	keyboard.release(Key.ctrl_l)
 
 def win_tab():
-    keyboard.press(Key.cmd)
-    keyboard.press(Key.tab)
-    keyboard.release(Key.tab)
-    keyboard.release(Key.cmd)
+	keyboard.press(Key.cmd)
+	keyboard.press(Key.tab)
+	keyboard.release(Key.tab)
+	keyboard.release(Key.cmd)
 
 def alt_esc():
-    keyboard.press(Key.alt)
-    keyboard.press(Key.esc)
-    keyboard.release(Key.esc)
-    keyboard.release(Key.alt)
+	keyboard.press(Key.alt)
+	keyboard.press(Key.esc)
+	keyboard.release(Key.esc)
+	keyboard.release(Key.alt)
 
 def ctrl_p():
 	global keyboard
@@ -4195,115 +4457,115 @@ toggler['alt_win_m'] = 'clean-terminal-copy'
 
 def scheduler_job(rec=None):
 
-    if rec is None:
-        # _.pr('scheduler: checking for database changes',r=1)
+	if rec is None:
+		# _.pr('scheduler: checking for database changes',r=1)
 
-        if os.path.isfile(__.scheduler_db):
-            mod = _.mod(__.scheduler_db)
-            if not __.scheduler_mod == mod:
-                beepy.note('d', 2); beepy.note('d', 2);
-                __.scheduler_restart = True
-                __.scheduler_exit = True
-        return None
+		if os.path.isfile(__.scheduler_db):
+			mod = _.mod(__.scheduler_db)
+			if not __.scheduler_mod == mod:
+				beepy.note('d', 2); beepy.note('d', 2);
+				__.scheduler_restart = True
+				__.scheduler_exit = True
+		return None
 
-    if 'once' in rec:
-        once = True
-    else:
-        once = False
+	if 'once' in rec:
+		once = True
+	else:
+		once = False
 
-    if rec['command'].startswith(('http://', 'https://')):
-        import webbrowser
-        webbrowser.open(rec['command'])
-    else:
-        os.system(rec['command'])
+	if rec['command'].startswith(('http://', 'https://')):
+		import webbrowser
+		webbrowser.open(rec['command'])
+	else:
+		os.system(rec['command'])
 
-    if once:
-        schedule.clear(rec['id'])
-        records = _.getTable(__.scheduler_db)
-        recs = [r for r in records if not rec['id'] == r['id']]
-        _.saveTable(recs, __.scheduler_db)
-        print('Deleted:', rec['id'])
+	if once:
+		schedule.clear(rec['id'])
+		records = _.getTable(__.scheduler_db)
+		recs = [r for r in records if not rec['id'] == r['id']]
+		_.saveTable(recs, __.scheduler_db)
+		print('Deleted:', rec['id'])
 
-    print('RAN:', _.toYML(rec))
+	print('RAN:', _.toYML(rec))
 
 try:
-    import schedule
+	import schedule
 except Exception as e:
-    pass
+	pass
 
 def schedulerDB():
-    _.pr('scheduler:', c='gray')
-    for rec in _.getTable(__.scheduler_db):
-        if 'command' in rec:
-            cmd = rec['command']
-            if '\\rp.bat' in rec['command']:
-                cmd = cmd.split('\\rp.bat')[1]
-            cmd = cmd.strip()
-            if 'days' in rec and is_today_in_days(rec['days']):
-                cmd += ', Today: ' + ', '.join(rec['days'])
-            elif 'days' in rec:
-                cmd += ', ' + ', '.join(rec['days'])
-            _.pr('\t', cmd, c='gray')
-        if rec['status']:
-            run = True
-            if 'days' in rec:
-                run = False
-            if 'days' in rec and is_today_in_days(rec['days']):
-                run = True
-            if run:
-                if 'sec' in rec:
-                    schedule.every(int(rec['sec'])).seconds.do(scheduler_job, rec).tag(rec['id'])
-                elif 'min' in rec:
-                    schedule.every(int(rec['min'])).minutes.do(scheduler_job, rec).tag(rec['id'])
-                elif 'hour' in rec:
-                    schedule.every(int(rec['hour'])).hours.do(scheduler_job, rec).tag(rec['id'])
-                elif 'day' in rec and 'at' in rec and _.isNu(rec['day']):
-                    schedule.every(int(rec['day'])).days.at(rec['at']).do(scheduler_job, rec).tag(rec['id'])
+	_.pr('scheduler:', c='gray')
+	for rec in _.getTable(__.scheduler_db):
+		if 'command' in rec:
+			cmd = rec['command']
+			if '\\rp.bat' in rec['command']:
+				cmd = cmd.split('\\rp.bat')[1]
+			cmd = cmd.strip()
+			if 'days' in rec and is_today_in_days(rec['days']):
+				cmd += ', Today: ' + ', '.join(rec['days'])
+			elif 'days' in rec:
+				cmd += ', ' + ', '.join(rec['days'])
+			_.pr('\t', cmd, c='gray')
+		if rec['status']:
+			run = True
+			if 'days' in rec:
+				run = False
+			if 'days' in rec and is_today_in_days(rec['days']):
+				run = True
+			if run:
+				if 'sec' in rec:
+					schedule.every(int(rec['sec'])).seconds.do(scheduler_job, rec).tag(rec['id'])
+				elif 'min' in rec:
+					schedule.every(int(rec['min'])).minutes.do(scheduler_job, rec).tag(rec['id'])
+				elif 'hour' in rec:
+					schedule.every(int(rec['hour'])).hours.do(scheduler_job, rec).tag(rec['id'])
+				elif 'day' in rec and 'at' in rec and _.isNu(rec['day']):
+					schedule.every(int(rec['day'])).days.at(rec['at']).do(scheduler_job, rec).tag(rec['id'])
 
 import traceback
 
 def schedulerNoError():
-    try:
-        scheduler()
-    except Exception as e:
-        print('scheduler error', e)
-        traceback.print_exc()
+	try:
+		scheduler()
+	except Exception as e:
+		print('scheduler error', e)
+		traceback.print_exc()
 
 def scheduler():
-    __.scheduler_mod = 0
-    __.scheduler_db = _v.tt + os.sep + 'scheduler.json'
-    schedule.every(1).minute.do(scheduler_job)
-    if os.path.isfile(__.scheduler_db):
-        __.scheduler_mod = _.mod(__.scheduler_db)
-        schedulerDB()
-    else:
-        print('scheduler: No Database')
+	__.scheduler_mod = 0
+	__.scheduler_db = _v.tt + os.sep + 'scheduler.json'
+	schedule.every(1).minute.do(scheduler_job)
+	if os.path.isfile(__.scheduler_db):
+		__.scheduler_mod = _.mod(__.scheduler_db)
+		schedulerDB()
+	else:
+		print('scheduler: No Database')
 
-    while True:
-        if __.scheduler_exit:
-            break
-        schedule.run_pending()
-        time.sleep(1)
-    if __.scheduler_restart:
-        __.scheduler_exit = False
-        scheduler()
+	while True:
+		if __.scheduler_exit:
+			break
+		schedule.run_pending()
+		time.sleep(1)
+	if __.scheduler_restart:
+		__.scheduler_exit = False
+		scheduler()
 
 def schedulerRun():
-    __.scheduler_exit = False
-    __.scheduler_restart = True
-    threads = []
-    import threading
-    t = threading.Thread(target=schedulerNoError)
-    threads.append(t)
-    t.start()
+	__.scheduler_exit = False
+	__.scheduler_restart = True
+	threads = []
+	import threading
+	t = threading.Thread(target=schedulerNoError)
+	threads.append(t)
+	t.start()
 
 def is_today_in_days(days_list):
-    return current_day() in days_list
+	return current_day() in days_list
 
 def current_day():
-    import datetime
-    now = datetime.datetime.now()
-    return now.strftime('%a').lower()
+	import datetime
+	now = datetime.datetime.now()
+	return now.strftime('%a').lower()
 
 __.schedulerRun = True
 

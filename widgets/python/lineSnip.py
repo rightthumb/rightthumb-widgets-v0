@@ -26,7 +26,13 @@ def sw():
 	# _.switches.register( 'Input', '-i', group='Group Name' )
 		##  -->    p SwitchGroupsExamples   <--
 	# #e)--> examples
-	_.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=False )
+	_.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='data', description='Files', isRequired=False )
+
+	_.switches.register( 'StartAt', '-start','if not used start at first line' )
+	_.switches.register( 'StopAt', '-stop','line in file to stop at' )
+	_.switches.register( 'Strip', '-strip' )
+	_.switches.register( 'LineNumber', '-ln,-n' )
+	_.switches.register( 'Does-Not-Start-With-Whitespace', '-0' )
 
 _._default_settings_()
 
@@ -151,57 +157,34 @@ _.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw )
 #n)--> start
 
 
-
-
-
-exec('''
-
-def test():
-	 print('works')
-__.test=test
-''')
-
-
-
-__.test()
-
-
-
-
-
-
-
-
 def action():
-	pass
 
-	# load(); global c3po;
+	active = not _.switches.isActive('StartAt')
 
-	# Threads = _.Threads(t=10, onDone=None)
-	# def Done(result): pass  # other onFn have no args
-	# Threads.queue(fn,  ak=None, timeout=None, onStart=None, onDone=Done, onKill=None, onTimeout=None, label=None)  # ak = args, kwargs
+	for i,line in enumerate(_.isData()):
+		if not active:
+			if ''.join(_.switches.values('StartAt'))  in line.replace(' ','').replace('\t',''): active = True
+		if active:
+			skip = False
+			if _.switches.isActive('Does-Not-Start-With-Whitespace'):
+				if not line == line.lstrip():
+					skip = True
 
-	#n)--> iterate
-	# for subject in _.isData(r=0): _.pr(subject)
-	# for subject in _.myData(): _.pr(subject)
-	
+			if not skip and _.showLine(line):
+				if _.switches.isActive('Strip'):
+					linePrint = line.strip()
+				else:
+					linePrint = line
+				if _.switches.isActive('LineNumber'):
+					_.pr( i+1, linePrint )
+				else:
+					_.pr( linePrint )
 
-# def load():
-# 	global c3po
-# 	c3po = _.getTable( 'table' )
-# 	#n)--> print table
-# 	_.pt(c3po)
+		if _.switches.isActive('StopAt'):
+			if ''.join(_.switches.values('StopAt'))  in line.replace(' ','').replace('\t',''):
+				return None
 
 
-##################################################
-#b)--> examples
-# banner=_.Banner(dependencies)
-# goss=banner.goss
-# goss('-\t this app will sherlock tf out of any python app or python module')
-#e)--> examples
-##################################################
-########################################################################################
-# import requests # pip install requests
 ########################################################################################
 if __name__ == '__main__':
 	#b)--> examples

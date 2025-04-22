@@ -61,7 +61,6 @@ def action():
 			print(result)
 			break
 		print(f"\n✅ Completed: {task}\n{result}\n")
-		# input("Press Enter to continue...")
 
 if __name__ == '__main__':
 	action(); _.isExit(__file__)

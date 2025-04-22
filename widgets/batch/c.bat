@@ -11,6 +11,7 @@ REM ###########################################################################
 REM ## {C3P0D40fAe8B} ##
 
 set "PATHEXT=.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC;.PYW"
+@REM :CLEAR_SCREEN
 
 :: e fileLocks
 
@@ -62,7 +63,6 @@ GOTO:EOF
     IF [%1] == [cc] SET "noTOP="
     IF [%1] == [test] SET noClear=TRUE
 
-    REM CALL:CLEAR_SCREEN
     IF [%Session_ID%] == [] (
         ECHO Loading...
     )
@@ -82,19 +82,22 @@ GOTO:EOF
         CALL:CLEAR_SCREEN
     )
     CALL :TIMESTAMP >nul 2>&1
-    REM CALL:CLEAR_SCREEN
 GOTO:EOF
 
 
 
 :CLEAR_SCREEN
+
     IF NOT [%noClear%] == [TRUE] (
         REM prompt - 
         CLS
-        IF [%noTOP%] == [] %py% %widgets%\widgets\python\windows-terminal-header.py
+        @REM IF [%noTOP%] == [] %py% %widgets%\widgets\python\windows-terminal-header.py
+        IF [%noTOP%]==[] IF [%pterm%]==[] %py% %widgets%\widgets\python\windows-terminal-header.py
         %py% %widgets%\widgets\python\folder-registration.py
         REM ECHO %noTOP%
     )
+    if [%pterm%] == [true] cls
+    if [%pterm%] == [true] goto:theEndOfTheFile
 GOTO:EOF
 
 
@@ -446,3 +449,4 @@ goto:eof
     SET exe_folders=%exe_folders%;%1
 goto:eof
  
+:theEndOfTheFile

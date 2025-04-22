@@ -35,8 +35,10 @@ import _rightThumb._string as _str
 
 
 def appSwitches():
-	_.switches.register( 'Size', '-z,-size,-i', '15mb  OR 356900864  ' )
-	_.switches.register( 'Print', '-print' )
+	_.switches.register( 'Size', '--s,-z,-size,-i', '15mb  OR 356900864  ' )
+	_.switches.register( 'Print', '-p,-print', 'also for -math: -print bytes | b | format | f | kb | mb | gb | tb | -tb add dash for bits | +tb for bits to bytes | --- for bits in bytes | +++ to convert bits to bytes ' )
+	_.switches.register( 'Math', '-m,-math', '1024 * 5 OR + 1024  or   p ls -c bytes | p size' )
+	_.switches.register( 'Clean', '--c' )
 	pass
 
 
@@ -98,6 +100,18 @@ _.appInfo[focus()] = {
 						'p size -print',
 						'p size -print g',
 						'p size -print g f',
+						'',
+						':: Math Section ::',
+						'p size -m 1024 * 4',
+						'p size -m 2048 + 1024',
+						'p ls -c bytes | p size',
+						'p ls -c bytes | p size -p bytes',
+						'p ls -c bytes | p size -p gb',
+						'p ls -c bytes | p size -p ---',
+						'p ls -c bytes | p size -p +++',
+						'p size -m 1024 * 100',
+						'p size -math 1024gb * 2 -print gb',
+						'p size -math 1024gb * 2 -print -gb',
 						'',
 	],
 	'columns': [
@@ -193,8 +207,199 @@ sizes="""
 1024 Brontobytes = 1 Geopbyte
 """
 
+def hasAlpha(s): return any(c.isalpha() for c in str(s))
+
+def toBytes(size):
+	if hasAlpha(size):
+		size = size.strip()
+		if size.count(' ') > 1: return 0
+		# formatted = ''
+		# first = True
+		# firstfirst = True
+		# for c in size:
+		# 	if c in '0123456789.':
+		# 		formatted += c
+		# 	if first and not c in '0123456789.':
+		# 		formatted += ' '
+		# 		firstfirst = False
+		# 	if not first and not c in '0123456789.':
+		# 		formatted += c
+		# 	first = firstfirst
+
+
+		try:
+			return int(_.unFormatSize( size ))
+		except:
+			return 0
+	return int(size)
+
+
+def isPlusMinusTimesDivide(arg):
+	items = [
+		'+',
+		'-',
+		'*',
+		'/',
+	]
+	if arg in items:
+		return True
+	return False
+
+def mathMe(plusMinusTimesDivide, byteSybject):
+	pmtd = plusMinusTimesDivide
+	global total
+	if pmtd == '+':
+		total += byteSybject
+	elif pmtd == '-':
+		total -= byteSybject
+	elif pmtd == '*':
+		total *= byteSybject
+	elif pmtd == '/':
+		total /= byteSybject
+
+total = 0
+
+factor = {
+	# 'B': 1,
+	'KB': 1024,
+	'MB': 1024**2,
+	'GB': 1024**3,
+	'TB': 1024**4,
+}
+
+def format_size(size, unit):
+	global factor
+	global total
+	size = total
+	unit = unit.upper()
+
+	if '-' in unit:
+		unit = unit.replace('-','')
+		size = size/8
+
+	elif '+' in unit:
+		unit = unit.replace('+','')
+		size = size*8
+	
+
+	if unit not in factor:
+		raise ValueError(f"Unsupported unit: {unit}")
+
+	value = size / factor[unit]
+	rounded = round(value, 2)
+	rounded = int(rounded) if rounded == int(rounded) else rounded
+
+	return f"{rounded} {unit}".replace('.0 ',' ')
+
+
+
+
+
+def printMathTotal():
+	global factor
+	global total
+	global outputFormat
+	global forceBits
+	global forceBytes
+
+	Total = total
+	did = False
+	if forceBits:
+		did = '/8'
+		total = total / 8
+	elif forceBytes:
+		did = '*8'
+		total = total * 8
+
+	if not _.switches.isActive('Clean'):
+		if did:
+			_.pr(did, c='cyan')
+	# print(Total,total, len(str(Total)), len(str(total)), did )
+
+	if type(outputFormat) == str:
+		test = outputFormat.replace('-','').replace('+','')
+	if type(outputFormat) == str and test and test in factor.keys():
+		_.pr( format_size(total, outputFormat), c='yellow' )
+	elif not type(outputFormat) == bool and outputFormat == -1:
+		if len(str(total)) < 6:
+			_.pr( total, c='yellow' )
+		else:
+			_.pr( _.formatSize( total ).replace('.0 ',' '), c='yellow' )
+			
+	elif outputFormat:
+		_.pr( total, c='yellow' )
+	elif not outputFormat:
+		_.pr( _.formatSize( total ).replace('.0 ',' '), c='yellow' )
+	return
+
+
 
 def action():
+	global total
+	global outputFormat
+	global forceBits
+	global forceBytes
+	forceBits = False
+	forceBytes = False
+	if _.isData(r=0) and not _.switches.isActive('Math'):
+		_.switches.fieldSet( 'Math', 'active', True )
+		# _.switches.fieldSet( 'Math', 'values', ['+;'] )
+	if _.switches.isActive('Math'):
+		values = _.switches.values('Math')
+		if not values: values = ['+']
+		# print(values)
+		outputFormat = -1
+		if _.switches.isActive('Print'):
+			pr = _.switches.value('Print')
+			# print(pr)
+			if not hasAlpha(pr) and '-' in pr:
+				outputFormat = True
+				forceBits = True
+			elif not hasAlpha(pr) and '+' in pr:
+				forceBytes = True
+				outputFormat = True
+			else:
+				if pr.upper().replace('-','').replace('+','')  in factor.keys():
+					# print('here')
+					outputFormat = pr.upper()
+
+				elif 'b' in pr.lower():
+					outputFormat = True
+				elif 'f' in pr.lower():
+					outputFormat = False
+		if not _.isData(r=0):
+			lastPMTD = None
+			for value in values:
+				if isPlusMinusTimesDivide(value):
+					lastPMTD = value
+				else:
+					size = toBytes(value)
+					if total == 0:
+						total = size
+						continue
+					mathMe(lastPMTD, size)
+			printMathTotal()
+			return
+		elif _.isData(r=0):
+			pmtd = values[0].replace(';','')
+			for line in _.isData():
+				line = line.strip().replace(',','')
+				sp = line.split(' ')
+				if len(sp) == 2 and sp[1].lower() in factor.keys():
+					line = line.replace(' ','')
+				size = toBytes(line)
+				mathMe(pmtd, size)
+			printMathTotal()
+			return
+		return
+
+
+
+
+
+
+
+		return None
 	if _.switches.isActive('Print'):
 		_.pr()
 		global sizes

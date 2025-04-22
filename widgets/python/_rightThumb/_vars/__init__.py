@@ -1262,6 +1262,7 @@ def createDestinationFolders( folder, o=None, isFile=False, p=False, f=None, pop
 		f.pop(0)
 		f.reverse()
 		folder = thisSlash.join( f )
+	if not folder: return False
 	if os.path.isdir( folder ):
 		return folder
 	try:

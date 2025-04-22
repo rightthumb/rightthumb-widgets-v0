@@ -150,28 +150,6 @@ _.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw )
 ########################################################################################
 #n)--> start
 
-
-
-
-
-exec('''
-
-def test():
-	 print('works')
-__.test=test
-''')
-
-
-
-__.test()
-
-
-
-
-
-
-
-
 def action():
 	pass
 

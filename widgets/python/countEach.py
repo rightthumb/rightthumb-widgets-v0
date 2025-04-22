@@ -40,6 +40,7 @@ def appSwitches():
 	_.switches.register('SkipFirst', '-first,-skip')
 	_.switches.register('CleanBE', '-clean')
 	_.switches.register('NoCount', '--c')
+	_.switches.register('Strip', '-strip')
 	
 
 _.autoBackupData = False
@@ -181,6 +182,8 @@ def action():
 		row = _str.clean_latin1( row )
 		row = _str.replaceDuplicate( row,' ' )
 		row = _str.cleanBE( row,' ' )
+		if _.switches.isActive('Strip'):
+			row = row.strip()
 		
 		if _.switches.isActive( 'CleanBE' ) and len( _.switches.values( 'CleanBE' ) ) :
 			for clean in _.switches.values( 'CleanBE' ):

@@ -14,7 +14,7 @@
 
 
 
-
+# p lineSnip -f base -start class Switches -stop #Switches-end + "def " -ln
 
 
 
@@ -1658,6 +1658,7 @@ __.tableLine = '\t'
 v = dot()
 vv = dot()
 vv.isData = {}
+vv.isDataData = {}
 vv.opened_file_me = {}
 __.switch_skimmer = dot()
 __.switch_skimmer.scan = [ '??','-??','--??','/??' ]
@@ -4328,7 +4329,23 @@ class dt:
 #     print(data)
 #     return data
 FilesFiles = []
-def isData( data=None, focus=None, pipeClean=False, required=False,     r=None, c=None, noclean=None ):
+isData_Save = False
+def isData( data=None, focus=None, pipeClean=False, required=False,     r=None, c=None, noclean=None, save=False ):
+	global isData_Save
+	if save:
+		isData_Save = data
+
+		return data
+	if isData_Save:
+		return isData_Save
+	
+	if __.ForcePipe:
+		return __.ForcePipe
+	if vv.isDataData:
+		for name in vv.isDataData:
+			# print(vv.isDataData[name])
+			return vv.isDataData[name]
+
 	global switches
 	global appData
 	if switches.isActive('Paste-isData'):
@@ -4363,6 +4380,8 @@ def isData( data=None, focus=None, pipeClean=False, required=False,     r=None, 
 			if not tst: return myFileLocation_Files;
 			# print(tst,myFileLocation_Files)
 
+
+			
 			for name in vv.isData:
 				if len(switches.values(name)):
 					if 'data' in vv.isData[name]: return tst
@@ -12329,7 +12348,11 @@ class Switches:
 		if not isData is None:
 			__.trigger_isPipe = isData
 			isPipe=isData
+			if isData == 'data':
+				vv.isDataData[name] = []
 		i=len(self.switches)
+
+
 
 		if not __.appReg in self.dex:
 			self.dex[__.appReg]={}
@@ -13102,6 +13125,10 @@ class Switches:
 								self.switches[ii].active = True
 								self.switches[ii].value = self.format(self.switches[ii].name)
 								self.switches[ii].values = self.format2(self.switches[ii].name)
+								if self.switches[ii].name in vv.isDataData:
+									for thisFile in self.switches[ii].values:
+										for fileLine in getText(thisFile):
+											vv.isDataData[self.switches[ii].name].append( fileLine )
 
 								isActiveList.append( ii )
 								if self.switches[ii].name in self.hasRequired:
@@ -13657,7 +13684,7 @@ class Switches:
 
 
 		return True
-
+#Switches-end
 
 
 #   def getSelf(self,name):
@@ -16008,6 +16035,7 @@ class Table:
 					switches.fieldSet( 'GroupBy', 'value', ','.join(newValues) )
 		except Exception as e:
 			pass
+#Table-end
 
 
 
@@ -16441,7 +16469,7 @@ class Tables:
 					# print_( f, y, __.aggregate.storage[k][y]['data'] )
 			# print_( k )
 
-
+#Tables-end
 
 
 
@@ -17863,7 +17891,7 @@ class Databases:
 		for i,d in enumerate(self.databases):
 			if self.databases[i].name == name:
 				return self.databases[i].addTrigger( table, field, trigger )
-
+#Databases-end
 
 class Database:
 
@@ -18280,6 +18308,7 @@ class Database:
 
 			conn.close()
 
+#Database-end
 
 
 class DatabaseTables:
@@ -18316,6 +18345,7 @@ class DatabaseTables:
 		for i,f in enumerate(self.fields):
 			if self.fields[i].name == field:
 				self.fields[i].info[ label ] = data
+#DatabaseTables-end
 
 
 class DatabaseFields:
@@ -18338,7 +18368,7 @@ class DatabaseFields:
 		else:
 			return False
 
-
+#DatabaseFields-end
 
 ###########################################################################################
 ###########################################################################################
@@ -18862,7 +18892,7 @@ class Database2:
 				tables.fieldProfileSet('sql',c,'trigger',formatSize)
 			# print_(self.findType(c))
 		tables.print('sql',col)
-
+#Database2-end
 
 
 class TablesDB:
@@ -19611,7 +19641,7 @@ class ThisThread( threading.Thread ):
 		# print_( 'kill complete' )
 		# raise Exception('My error!')
 
-
+#ThisThread-end
 
 
 #########################################################################################################################################################
@@ -19837,6 +19867,7 @@ class Threads:
 
 	def closedCnt( self ):
 		return Threads.closedCnt
+#Threads-end
 #########################################################################################################################################################
 class Queue:
 
@@ -21326,7 +21357,7 @@ class Queue:
 		bottomaverageruntime = self.calcAverage(bottomruntime)
 
 		return { 'top': topaverageruntime, 'bottom': bottomaverageruntime }
-
+#Queue-end
 
 
 def enableThreadDataSwap():
@@ -21731,7 +21762,7 @@ class Field:
 		if thisLen > self.maxField:
 			self.maxField = thisLen
 
-
+#Field-end
 
 class Fields:
 
@@ -21871,7 +21902,7 @@ class Fields:
 
 		for name in asset.keys():
 			self.register( project, name, asset[name], appReg, isRegisterDic=True )
-
+#Fields-end
 # _.fields.register( 'project', 'name', script=_.resolveEpochTest )
 # _.fields.asset( 'project', {} )
 # _.fields.asset( 'project', [{}] )
@@ -27420,6 +27451,12 @@ def stack(name,download=False):
 		return Stack[name]
 	else:
 		return ''
+##================================================
+def getJsonYaml(path):
+	contents = getText(path,raw=True).strip()
+	if contents.startswith('{') or contents.startswith('['):
+		return getTable2(path)
+	return fromYML(contents)
 ##================================================
 nsfw=True
 

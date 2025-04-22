@@ -164,24 +164,24 @@ alias .git="git clone https://github.com/rightthumb/rightthumb-widgets-v0"
 
 
 _git_restore() {
-    local widgets="/opt/rightthumb-widgets-v0"
-    local backup="/opt/__rightthumb-widgets-v0"
+	local widgets="/opt/rightthumb-widgets-v0"
+	local backup="/opt/__rightthumb-widgets-v0"
 
-    echo "♻️  Restoring vps-* files from backup..."
+	echo "♻️  Restoring vps-* files from backup..."
 
-    if [ ! -d "$backup" ]; then
-        echo "❌ Backup folder not found: $backup"
-        return 1
-    fi
+	if [ ! -d "$backup" ]; then
+		echo "❌ Backup folder not found: $backup"
+		return 1
+	fi
 
-    if [ ! -d "$widgets" ]; then
-        echo "⚠️  Target folder not found: $widgets — creating it..."
-        mkdir -p "$widgets"
-    fi
+	if [ ! -d "$widgets" ]; then
+		echo "⚠️  Target folder not found: $widgets — creating it..."
+		mkdir -p "$widgets"
+	fi
 
-    rsync -av --include '*/' --include 'vps-*' --exclude '*' "$backup/" "$widgets/"
+	rsync -av --include '*/' --include 'vps-*' --exclude '*' "$backup/" "$widgets/"
 
-    echo "✅ Restore complete"
+	echo "✅ Restore complete"
 }
 
 
@@ -189,43 +189,43 @@ _git_restore() {
 
 
 _git_() {
-    local widgets="/opt/rightthumb-widgets-v0"
-    local backup="/opt/__rightthumb-widgets-v0"
+	local widgets="/opt/rightthumb-widgets-v0"
+	local backup="/opt/__rightthumb-widgets-v0"
 
-    echo "🔁 Starting .git. refresh..."
+	echo "🔁 Starting .git. refresh..."
 
-    # Create backup directory if it doesn't exist
-    mkdir -p "$backup"
+	# Create backup directory if it doesn't exist
+	mkdir -p "$backup"
 
-    # Backup from $widgets if it exists
-    if [ -d "$widgets" ]; then
-        echo "📦 Backing up vps-* files from $widgets"
-        rsync -av --include '*/' --include 'vps-*' --exclude '*' "$widgets/" "$backup/"
-    else
-        echo "⚠️  Warning: $widgets does not exist. Skipping backup."
-    fi
+	# Backup from $widgets if it exists
+	if [ -d "$widgets" ]; then
+		echo "📦 Backing up vps-* files from $widgets"
+		rsync -av --include '*/' --include 'vps-*' --exclude '*' "$widgets/" "$backup/"
+	else
+		echo "⚠️  Warning: $widgets does not exist. Skipping backup."
+	fi
 
-    # Clone fresh repo
-    cd /opt || return 1
-    echo "🌐 Cloning rightthumb-widgets-v0 from GitHub..."
-    rm -rf "$widgets"
-    git clone https://github.com/rightthumb/rightthumb-widgets-v0 "$widgets"
+	# Clone fresh repo
+	cd /opt || return 1
+	echo "🌐 Cloning rightthumb-widgets-v0 from GitHub..."
+	rm -rf "$widgets"
+	git clone https://github.com/rightthumb/rightthumb-widgets-v0 "$widgets"
 
-    # Restore backed up files if backup exists
-    if [ -d "$backup" ]; then
-        echo "♻️  Restoring files from backup $backup"
-        rsync -av "$backup/" "$widgets/"
-    fi
+	# Restore backed up files if backup exists
+	if [ -d "$backup" ]; then
+		echo "♻️  Restoring files from backup $backup"
+		rsync -av "$backup/" "$widgets/"
+	fi
 
-    # Fix permissions
-    chmod -R 777 "$widgets"
+	# Fix permissions
+	chmod -R 777 "$widgets"
 
-    # Final cleanup
-    cd "$widgets" || return 1
-    echo "🧹 Running p shClean -folder -r"
-    p shClean -folder -r
+	# Final cleanup
+	cd "$widgets" || return 1
+	echo "🧹 Running p shClean -folder -r"
+	p shClean -folder -r
 
-    echo "✅ .git. update complete"
+	echo "✅ .git. update complete"
 }
 
 
@@ -249,7 +249,8 @@ echo '' > $stmp/.gp
 alias .gp=" pwd > $stmp/.gp ; cd $ww ; git reset --hard ; git pull ; sudo chmod 777 -R . ; python3 $ww/install/installer.py -rc.d h  ; cd $( cat $stmp/.gp )"
 
 
-
+alias .u..='python3 $ww/python/site.py -mkdir -nopass -u -f '
+alias .u.='python3 $ww/python/site.py  -nopass -u -f '
 
 
 alias u..='python3 $ww/python/site.py -mkdir -u -f '

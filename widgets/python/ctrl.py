@@ -659,6 +659,10 @@ if True:
 	from pynput import keyboard as kb
 	import keyboard  # type: ignore
 
+	import platform
+	import subprocess
+	import shutil
+
 	class CapsCtrlWatcher:
 		def __init__(self):
 			self.caps_pressed = False
@@ -689,6 +693,7 @@ if True:
 					if self.caps_pressed:
 						keyboard.release("ctrl")
 						self.cops_lock_off()
+						self.num_lock_on()
 						self.caps_pressed = False
 						once = False
 						# _.pr('ctrl released', c='Background.yellow')
@@ -697,9 +702,66 @@ if True:
 			if self.is_caps_lock_on():
 				keyboard.press("caps lock")
 				keyboard.release("caps lock")
+		# def is_caps_lock_on(self):
+		# 	return ctypes.windll.user32.GetKeyState(0x14) & 1
+
+		# def is_num_lock_on(self):
+		# 	return ctypes.windll.user32.GetKeyState(0x90) & 1
+
+
+
 		def is_caps_lock_on(self):
-			return ctypes.windll.user32.GetKeyState(0x14) & 1
-		
+			system = platform.system()
+			if system == 'Windows':
+				return ctypes.windll.user32.GetKeyState(0x14) & 1
+
+			elif system == 'Linux':
+				if not shutil.which('xset'):
+					print("❌ 'xset' is not installed. Run: sudo apt install x11-xserver-utils")
+					return None
+
+				try:
+					output = subprocess.check_output(['xset', 'q']).decode()
+					for line in output.splitlines():
+						if 'Caps Lock:' in line:
+							return 'on' in line.lower()
+				except Exception as e:
+					print(f"⚠️  Error checking Caps Lock: {e}")
+					return None
+
+			else:
+				print(f"❌ Caps Lock detection not supported on: {system}")
+				return None
+
+		def is_num_lock_on(self):
+			system = platform.system()
+			if system == 'Windows':
+				return ctypes.windll.user32.GetKeyState(0x90) & 1
+
+			elif system == 'Linux':
+				if not shutil.which('xset'):
+					print("❌ 'xset' is not installed. Run: sudo apt install x11-xserver-utils")
+					return None
+
+				try:
+					output = subprocess.check_output(['xset', 'q']).decode()
+					for line in output.splitlines():
+						if 'Num Lock:' in line:
+							return 'on' in line.lower()
+				except Exception as e:
+					print(f"⚠️  Error checking Num Lock: {e}")
+					return None
+
+			else:
+				print(f"❌ Num Lock detection not supported on: {system}")
+				return None
+
+
+		def num_lock_on(self):
+			if not self.is_num_lock_on():
+				keyboard.press("num lock")
+				keyboard.release("num lock")
+
 		def on_press(self, key):
 
 

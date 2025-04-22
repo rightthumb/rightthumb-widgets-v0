@@ -1,6 +1,17 @@
 #!/usr/bin/python3
 
 loader='''#!/usr/bin/python3
+
+import sys
+
+if not sys.stdin.isatty():
+    RawPipe = sys.stdin.read()
+    if type(RawPipe) == str: RawPipe = RawPipe.split('\\n')
+else:
+    RawPipe = False
+
+
+
 import os,sys,time,importlib,simplejson
 if sys.platform[0] == 'w': figpath=os.getenv('USERPROFILE') +os.sep+'.rt'+os.sep+ '.config.hash'
 else: figpath=os.getenv('HOME') +os.sep+'.rt'+os.sep+ '.config.hash'
@@ -42,7 +53,7 @@ sys.path.append( fig['w']+'/widgets/python'.replace('/',os.sep) )
 
 import _rightThumb._construct as __
 
-
+__.Pipe = RawPipe
 
 try:
     name__ = __name__
