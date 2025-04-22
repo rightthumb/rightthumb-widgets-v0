@@ -352,7 +352,7 @@ ads = life + 'ads' + slash
 rtp=home +os.sep+'.rt'+os.sep+'profile'+os.sep
 rt=home +os.sep+'.rt'
 
-
+pro=home +os.sep+'.rt'+os.sep+'profile'+os.sep
 
 if __.isWin:
 	# sublime = '"C:\\Program Files\\Sublime Text 3\\sublime_text.exe"'

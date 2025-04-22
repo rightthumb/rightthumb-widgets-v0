@@ -11055,7 +11055,7 @@ def saveTable( rows, theFile, tableTemp=False, printThis=True, indentCode=True, 
 
 			backupFile = _v.stmp + _v.slash+'__archive_temp__' + theFileLabel + '__' + genUUID() + '.json'
 
-
+	_v.mkdir(file0,f=1)
 	f = open(file0,'w')
 	f.write(str(dataDump))
 	f.close()
@@ -16476,6 +16476,7 @@ class Tables:
 
 ###########################################################################################
 def md5(fname):
+	import hashlib
 	hash_md5 = hashlib.md5()
 	with open(fname, "rb") as f:
 		for chunk in iter(lambda: f.read(4096), b""):
@@ -16483,6 +16484,15 @@ def md5(fname):
 	return hash_md5.hexdigest()
 	return hash_md5.hexdigest()
 
+
+def md5_string(text):
+	import hashlib
+	return hashlib.md5(text.encode('utf-8')).hexdigest()
+
+md5String=md5_string
+md5Str=md5_string
+str5=md5_string
+md5File=md5
 
 def formatSize(size,what=None):
 	try:
@@ -19359,10 +19369,12 @@ def aliasesFo(fo):
 	if os.path.isdir(fo): return fo
 	import _rightThumb._bookmarks as _bm # type: ignore
 	try:
-		return _bm.Bookmarks( fo ).get()
+		fo =_bm.Bookmarks( fo ).get()
+		if fo:
+			return fo
 	except: pass
 
-	return fo
+	return __.path(fo)
 
 def aliasesFi(fi):
 	if os.path.isfile(fi): return fi

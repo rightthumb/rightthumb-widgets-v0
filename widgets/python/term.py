@@ -1373,9 +1373,11 @@ class TerminalProxy:
 					if part[:-3] in self.aliases['aliases']:
 						part = self.aliases['aliases'][part[:-3]]
 				elif part.endswith('.fo'):
-					path = _bm.Bookmarks( part[:-3] ).get()
-					if path and os.path.exists(path):
-						part = path
+					try:
+						path = _bm.Bookmarks( part[:-3] ).get()
+						if path and os.path.exists(path):
+							part = path
+					except: pass
 				new.append(part)
 			command = ' '.join(new)
 		if os.name != 'nt':

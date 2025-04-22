@@ -315,33 +315,243 @@ _.postLoad( __file__ )
 ########################################################################################
 # START
 
+
+# def runAirTerminal():
+# 	import keyboard
+# 	import sys
+
+# 	class Air_Terminal:
+# 		'''
+# 		AirTerminal captures key input after a hotkey (e.g., Alt+A), parses it into
+# 		virtual switches, and returns a structured dictionary.
+
+# 		Example usage:
+
+# 			term = AirTerminal()
+
+# 			print("✅ AirTerminal is running... Press Alt+A to activate input mode.")
+# 			keyboard.wait()
+
+# 		Example input (typed after pressing Alt+A):
+
+# 			-f file.txt + one two --omit
+
+# 		Output:
+
+# 			{
+# 				'-f': 'file.txt',
+# 				'+': ['one', 'two'],
+# 				'-omit': ''
+# 			}
+# 		'''
+		
+# 		'''
+# 		if __name__ == '__main__':
+# 			term = AirTerminal()
+
+# 			def clean_exit():
+# 				print("\n👋 Exiting AirTerminal...")
+# 				keyboard.unhook_all_hotkeys()
+# 				sys.exit(0)
+
+# 			# First hotkey bind
+# 			term.alt_a_hook = keyboard.add_hotkey('alt+a', term.run_once)
+# 			keyboard.add_hotkey('alt+esc', clean_exit)
+
+# 			print("✅ AirTerminal is running...")
+# 			print("   • Press Alt+A to type switches")
+# 			print("   • Press Alt+Esc or Ctrl+C to exit")
+
+# 			try:
+# 				keyboard.wait()
+# 			except KeyboardInterrupt:
+# 				clean_exit()
+# 		'''
+
+# 		def __init__(self):
+# 			self.raw_text = ''
+# 			self.switches = {}
+# 			self.alt_a_hook = None
+# 			self.active = False
+
+# 		def get_hidden_input_until_enter(self):
+# 			keys = []
+# 			while self.active:
+# 				event = keyboard.read_event(suppress=True)
+# 				if event.event_type == keyboard.KEY_DOWN:
+# 					key = event.name
+# 					if key == 'enter':
+# 						break
+# 					if key == 'backspace':
+# 						if keys:
+# 							keys.pop()
+# 					else:
+# 						keys.append(key)
+
+# 			self.raw_text = ''.join(' ' if k == 'space' else k for k in keys)
+# 			return self.raw_text
+
+# 		def parse_virtual_switches(self, raw_text=None):
+# 			if raw_text is None:
+# 				raw_text = self.raw_text
+
+# 			tokens = raw_text.strip().split()
+# 			switches = {}
+# 			current = None
+
+# 			for token in tokens:
+# 				if token.startswith('--'):
+# 					token = '-' + token[2:]
+
+# 				if token.startswith('-') or token.startswith('+'):
+# 					current = token
+# 					if current not in switches:
+# 						switches[current] = []
+# 				else:
+# 					if current is None:
+# 						continue
+# 					switches[current].append(token)
+
+# 			for k in list(switches.keys()):
+# 				if isinstance(switches[k], list) and len(switches[k]) == 1:
+# 					switches[k] = switches[k][0]
+
+# 			self.switches = switches
+# 			self.active = False
+# 			return switches
+
+# 		def get_switches(self):
+# 			print("Air Terminal Started — type your switches and press Enter...")
+# 			self.get_hidden_input_until_enter()
+# 			switches = self.parse_virtual_switches()
+# 			print("Air Terminal Stopped")
+# 			return switches
+
+# 		def run_once(self):
+# 			self.active = True
+
+# 			# ## If not in hotkeys
+# 			# # Unregister hotkey so it can't be double-triggered
+# 			# if self.alt_a_hook:
+# 			# 	keyboard.remove_hotkey(self.alt_a_hook)
+# 			# 	self.alt_a_hook = None
+
+
+
+# 			keyboard.release('alt')
+# 			keyboard.release('alt')
+# 			switches = self.get_switches()
+# 			print('\n[Parsed Switches]', switches)
+# 			keyboard.release('alt')
+# 			keyboard.release('alt')
+
+
+# 			# ## If not in hotkeys
+# 			# # Re-register hotkey after session
+# 			# self.alt_a_hook = keyboard.add_hotkey('alt+a', self.run_once)
+
+# 	term = Air_Terminal()
+# 	term.run_once()
+# 	return term.switches
+
+
+
+def runAirTerminal():
+	import keyboard as airKeyboard
+	class Air_Terminal:
+		def get_hidden_input_until_enter(self):
+			keys = []
+			while True:
+				event = airKeyboard.read_event(suppress=True)
+				if event.event_type == airKeyboard.KEY_DOWN:
+					key = event.name
+					if key == 'enter':
+						break
+					if key == 'backspace':
+						if keys:
+							keys.pop()
+					else:
+						keys.append(key)
+			return ''.join(' ' if k == 'space' else k for k in keys)
+
+		def parse_virtual_switches(self, raw_text):
+			tokens = raw_text.strip().split()
+			switches = {}
+			current = None
+			for token in tokens:
+				if token.startswith('--'):
+					token = '-' + token[2:]
+				if token.startswith('-') or token.startswith('+'):
+					current = token
+					switches[current] = []
+				else:
+					if current:
+						switches[current].append(token)
+			for k in list(switches.keys()):
+				if len(switches[k]) == 1:
+					switches[k] = switches[k][0]
+			return switches
+
+		def run(self):
+			raw = self.get_hidden_input_until_enter()
+			return self.parse_virtual_switches(raw)
+
+
+	terminal = Air_Terminal()
+	switches = terminal.run()
+	__.AirTerminalSwitches = switches
+	# print(switches)
+	return switches
+
+
+
+
+
+def AirTerminal():
+	_paste = _.regImp( __.appReg, '-paste' )
+	pa =_paste.imp.paste()
+	# term = Air_Terminal()
+	# term.run_once()
+	beepy.simple_beep2()
+	switches = runAirTerminal()
+	switches = __.AirTerminalSwitches
+	print('AirTerminal',switches)
+	beepy.simple_beep2()
+	
+	# try:
+	# 	keyboard.release('alt')
+	# except: pass
+	if '+' in switches:
+		# print('has plus')
+		Plus = switches['+']
+	else:
+		# print('no plus')
+		Plus = ''
+
+	if '-' in switches:
+		# print('has minus')
+		Minus = switches['-']
+	else:
+		# print('no minus')
+		Minus = ''
+
+	# print('pa',pa)
+	new = []
+	for line in pa.split('\n'):
+		# print('has',line)
+		if _.showLine(line,Plus,Minus):
+			# print('kept',line)
+			new.append(line)
+	text = '\n'.join(new)
+	# print('text',text)
+	_copy = _.regImp( __.appReg, '-copy' )
+	_copy.imp.copy( text )
+
+
 __.BackupOnSave = _.dot()
 __.BackupOnSave.status = False
 __.BackupOnSave.file = []
 def BackupOnSave():
-
-
-	## Changed to multi file save monitor
-	# if __.BackupOnSave.status:
-	# 	# beepy.simple_beep2()
-	# 	# beepy.simple_beep2()
-	# 	__.BackupOnSave.status = False
-	# 	__.BackupOnSave.file = None
-	# 	print(f"[Watchdog] Backup Stopped")
-
-
-	# 	# Restarting App Since it wont stop monitoring
-
-	# 	with keyboard.pressed(Key.cmd):  # Key.cmd is the Windows key
-	# 		keyboard.press(Key.esc)
-	# 		keyboard.release(Key.esc)
-
-
-	# 	return None
-	
-
-	
-	
 	def onSave():
 		beepy.simple_beep2()
 		
@@ -401,33 +611,173 @@ def copy_active_window():
 
 
 def monitor_file(file_path, on_save_function):
-    from watchdog.observers import Observer  # type: ignore
-    from watchdog.events import FileSystemEventHandler  # type: ignore
-    import time
-    import os
+	from watchdog.observers import Observer  # type: ignore
+	from watchdog.events import FileSystemEventHandler  # type: ignore
+	import time
+	import os
 
-    class SaveHandler(FileSystemEventHandler):
-        def on_modified(self, event):
-            if event.src_path == os.path.abspath(file_path):
-                print(f"[Watchdog] Detected save: {file_path}")
-                on_save_function()
+	class SaveHandler(FileSystemEventHandler):
+		def on_modified(self, event):
+			if event.src_path == os.path.abspath(file_path):
+				print(f"[Watchdog] Detected save: {file_path}")
+				on_save_function()
 
-    observer = Observer()
-    handler = SaveHandler()
-    folder = os.path.dirname(os.path.abspath(file_path))
-    observer.schedule(handler, folder, recursive=False)
-    observer.start()
-    print(f"[Watchdog] Monitoring: {file_path}")
+	observer = Observer()
+	handler = SaveHandler()
+	folder = os.path.dirname(os.path.abspath(file_path))
+	observer.schedule(handler, folder, recursive=False)
+	observer.start()
+	print(f"[Watchdog] Monitoring: {file_path}")
 
-    try:
-        while __.BackupOnSave.status:
-            time.sleep(1)
-    except KeyboardInterrupt:
-        pass  # Optional: handle Ctrl+C gracefully
-    finally:
-        observer.stop()
-        observer.join()
-        print(f"[Watchdog] Stopped: {file_path}")
+	try:
+		while __.BackupOnSave.status:
+			time.sleep(1)
+	except KeyboardInterrupt:
+		pass  # Optional: handle Ctrl+C gracefully
+	finally:
+		observer.stop()
+		observer.join()
+		print(f"[Watchdog] Stopped: {file_path}")
+
+
+
+
+
+
+def SaveFileFolderFlag(path, flag):
+	# Load or initialize the flag meta table
+	flag_data = _.getTable('flag.meta')
+
+	if 'folders' not in flag_data:
+		flag_data['folders'] = {}
+	if 'files' not in flag_data:
+		flag_data['files'] = {}
+
+	paths = [path]
+
+	if flag is None:
+		flag = '-'
+
+	# Folders logic
+	if os.path.isdir(path):
+		if flag == 'close':
+			for folder_path, notes in flag_data['folders'].items():
+				for note in notes:
+					if note.get('status') and folder_path in paths:
+						note['status'] = False
+						note['closed'] = time.time()
+			_.saveTable(flag_data, 'flag.meta')
+			return
+
+		found = []
+		for folder_path, notes in flag_data['folders'].items():
+			for note in notes:
+				if note.get('status') and folder_path in paths:
+					note['notes'].append({'note': flag, 'time': time.time()})
+					found.append(folder_path)
+
+		for target_path in paths:
+			if target_path in found:
+				continue
+			if target_path not in flag_data['folders']:
+				flag_data['folders'][target_path] = []
+			if not flag == '-':
+				flag_data['folders'][target_path].append({
+					'status': True,
+					'notes': [{'note': flag, 'time': time.time()}],
+					'opened': time.time(),
+					'closed': None
+				})
+			else:
+				flag_data['folders'][target_path].append({
+					'status': True,
+					'notes': [],
+					'opened': time.time(),
+					'closed': None
+				})
+
+	# Files logic
+	if os.path.isfile(path):  # You might want to change this to os.path.isfile(path)
+		if flag == 'close':
+			for file_path, notes in flag_data['files'].items():
+				for note in notes:
+					if note.get('status') and file_path in paths:
+						note['status'] = False
+						note['closed'] = time.time()
+			_.saveTable(flag_data, 'flag.meta')
+			return
+
+		found = []
+		for file_path, notes in flag_data['files'].items():
+			for note in notes:
+				if note.get('status') and file_path in paths:
+					note['notes'].append({'note': flag, 'time': time.time()})
+					found.append(file_path)
+
+		for target_path in paths:
+			if target_path in found:
+				continue
+			if target_path not in flag_data['files']:
+				flag_data['files'][target_path] = []
+			if not flag == '-':
+				flag_data['files'][target_path].append({
+					'status': True,
+					'notes': [{'note': flag, 'time': time.time()}],
+					'opened': time.time(),
+					'closed': None
+				})
+			else:
+				flag_data['files'][target_path].append({
+					'status': True,
+					'notes': [],
+					'opened': time.time(),
+					'closed': None
+				})
+	_.saveTable(flag_data, 'flag.meta')
+
+
+def FlagFileFolder():
+	flag=None
+	_paste = _.regImp( __.appReg, '-paste' )
+	pa = _paste.imp.paste()
+
+	if not pa.startswith(':') and os.path.exists(pa):
+		beepy.simple_beep2()
+		beepy.simple_beep2()
+		# print('Flag: clipboard path')
+		print(0)
+		SaveFileFolderFlag(pa,flag)
+
+
+	else:
+		if pa.startswith(':'):
+			flag = pa[1:]
+
+
+		vs = ' - Visual Studio Code'
+		sub = ' - Sublime Text'
+		title = copy_active_window()
+
+		if vs in title:
+			path = title.replace(vs,'').strip()
+			if os.path.isfile(path):
+				beepy.simple_beep2()
+				beepy.simple_beep2()
+				print(1)
+				SaveFileFolderFlag(path,flag)
+
+
+		elif sub in title:
+			path = title.split(' • ')[0].strip()
+			if os.path.isfile(path):
+				beepy.simple_beep2()
+				beepy.simple_beep2()
+				print(2)
+				SaveFileFolderFlag(path,flag)
+
+
+
+
 
 
 
@@ -843,11 +1193,11 @@ class HOTKEYS:
 					ii+=1
 					if __.TroubleShoot.backspace:
 						print(444)
-					if post_do['backspace']:
+					if not post_do['backspace'] == False:
 						keyboard.press(Key.backspace)
 						keyboard.release(Key.backspace)
 			__.shouldBackspace = post_do['backspace']
-			__.shouldEsc = post_do['esc']
+
 			if not os.path.isfile(_v.tt+os.sep+'hotkeys-log.csv'): _.saveText('epoch,label',_v.tt+os.sep+'hotkeys-log.csv')
 			log=_.getText(_v.tt+os.sep+'hotkeys-log.csv',raw=True).strip()+'\n'
 			log+=str(time.time()).split('.')[0]+','+str(k)
@@ -862,7 +1212,7 @@ class HOTKEYS:
 					i+=1
 					if __.TroubleShoot.backspace:
 						print(111)
-					if post_do['backspace']:
+					if not post_do['backspace'] is False:
 						keyboard.press(Key.backspace)
 						keyboard.release(Key.backspace)
 			exec(do)
@@ -923,7 +1273,10 @@ class HOTKEYS:
 			good=True
 			count=0
 			backspace=None
-			if 'backspace' in table[k]: backspace=table[k]['backspace']
+			if 'backspace' in table[k]:
+				backspace=table[k]['backspace']
+			else:
+				backspace=None
 
 			for kk in key_set:
 				found=False
@@ -991,7 +1344,10 @@ class HOTKEYS:
 			good=True
 			count=0
 			for i,t in enumerate(table[k]['test']):
-				if 'backspace' in table[k]: backspace=table[k]['backspace']
+				if 'backspace' in table[k]:
+					backspace=table[k]['backspace']
+				else:
+					backspace=None
 
 				if '.alt' in t.lower():
 					esc=True
@@ -1243,7 +1599,7 @@ def _bk():
 	global keyboard
 	if __.TroubleShoot.backspace:
 		print(222)
-	if __.shouldBackspace:
+	if not __.shouldBackspace == False:
 		keyboard.press(Key.backspace)
 		keyboard.release(Key.backspace)
 
@@ -3805,8 +4161,7 @@ __.HK = _.dot()
 __.HK.active = True
 __.TroubleShoot = _.dot()
 __.TroubleShoot.backspace = False
-__.shouldBackspace = True
-__.shouldEsc = True
+__.shouldBackspace = None
 
 class vArgs:
 	def __init__(self):
@@ -4082,10 +4437,12 @@ def load():
  
 
 
-				'copy_active_window': { 'raw': [   'alt.',  'space.'    ], 'do': 'Clip.copy_active_window()' },
+				# 'copy_active_window': { 'raw': [   'alt.',  'space.'    ], 'do': 'Clip.copy_active_window()' },
+				'FlagFileFolder': { 'raw': [   'alt.',  'space.'    ], 'do': 'FlagFileFolder()' },
 				'pi': { 'raw': [   'alt.',  'shift.',  'd'   ], 'do': 'Clip.pi()' },
 				'pipi': { 'raw': [   'ctrl.',   'space.'  ], 'do': 'Clip.pipi()', 'backspace': False, 'no-esc': True, 'esc': False, 'PreHook': capture_active_window, 'PreHookChange': {'backspace': True } },
 				'BackupOnSave': { 'raw': [   'alt.',    'b'   ], 'do': 'BackupOnSave()'   , 'backspace': False, 'no-esc': True, 'esc': False,  },
+				'AirTerminal': { 'raw': [   'alt.',  'a'   ], 'do': 'AirTerminal()'     , 'backspace': False, 'no-esc': True, 'esc': False,  },
 
 
 

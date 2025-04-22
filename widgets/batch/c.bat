@@ -13,6 +13,16 @@ REM ## {C3P0D40fAe8B} ##
 set "PATHEXT=.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC;.PYW"
 @REM :CLEAR_SCREEN
 
+
+
+
+
+@REM                 %stmp%\pin_ask
+
+
+
+
+
 :: e fileLocks
 
 if [%isPWSH%] == [yes] (

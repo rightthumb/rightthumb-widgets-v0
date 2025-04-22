@@ -1,5 +1,8 @@
 @echo off
 
+if not "%1" == "run" echo must be in folder you want to remove. run: git.rm.fo run
+if not "%1" == "run" goto :eof
+
 :: Define the temporary storage path if not already defined
 if not defined stmp set "stmp=%TEMP%"
 
