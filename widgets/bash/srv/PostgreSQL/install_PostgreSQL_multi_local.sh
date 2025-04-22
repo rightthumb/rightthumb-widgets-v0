@@ -9,34 +9,34 @@ SAVE_FILE="$(pwd)/postgres_settings.yml"
 
 # ---------- Help Menu ----------
 if [[ "$1" == "--help" || "$1" == "-h" || "$#" -eq 0 ]]; then
-	echo "Usage:"
-	echo "  $0 --name=pg1 [--port=5433] [--auto] [--save=/path/to/settings.yml]"
-	echo
-	echo "  --name     PostgreSQL instance name (required)"
-	echo "  --port     Optional port (auto-increments if omitted)"
-	echo "  --auto     Fully automated mode"
-	echo "  --save     Alternate YAML config file (default: ./postgres_settings.yml)"
-	echo
-	echo "Example:"
-	echo "  $0 --name=pg2 --auto"
-	exit 0
+    echo "Usage:"
+    echo "  $0 --name=pg1 [--port=5433] [--auto] [--save=/path/to/settings.yml]"
+    echo
+    echo "  --name     PostgreSQL instance name (required)"
+    echo "  --port     Optional port (auto-increments if omitted)"
+    echo "  --auto     Fully automated mode"
+    echo "  --save     Alternate YAML config file (default: ./postgres_settings.yml)"
+    echo
+    echo "Example:"
+    echo "  $0 --name=pg2 --auto"
+    exit 0
 fi
 
 # ---------- Parse Args ----------
 for ARG in "$@"; do
-	case $ARG in
-		--name=*) NAME="${ARG#*=}" ;;
-		--port=*) PORT="${ARG#*=}" ;;
-		--auto) AUTO=true ;;
-		--save=*) SAVE_FILE="${ARG#*=}" ;;
-		*) echo "Unknown argument: $ARG" && exit 1 ;;
-	esac
+    case $ARG in
+        --name=*) NAME="${ARG#*=}" ;;
+        --port=*) PORT="${ARG#*=}" ;;
+        --auto) AUTO=true ;;
+        --save=*) SAVE_FILE="${ARG#*=}" ;;
+        *) echo "Unknown argument: $ARG" && exit 1 ;;
+    esac
 done
 
 # ---------- Validation ----------
 if [[ -z "$NAME" ]]; then
-	echo "Missing --name"
-	exit 1
+    echo "Missing --name"
+    exit 1
 fi
 
 DATA_DIR="$BASE_DIR/$NAME"
@@ -45,28 +45,28 @@ CONF_FILE="$DATA_DIR/postgresql.conf"
 
 # ---------- Install PostgreSQL if missing ----------
 if ! command -v initdb &>/dev/null; then
-	echo "[+] Installing PostgreSQL..."
+    echo "[+] Installing PostgreSQL..."
 
-	if command -v apt &>/dev/null; then
-		apt update && apt install -y postgresql
-	elif command -v dnf &>/dev/null; then
-		dnf install -y postgresql-server
-	elif command -v yum &>/dev/null; then
-		yum install -y postgresql-server
-	elif command -v pacman &>/dev/null; then
-		pacman -Sy --noconfirm postgresql
-	else
-		echo "Unsupported package manager"
-		exit 1
-	fi
+    if command -v apt &>/dev/null; then
+        apt update && apt install -y postgresql
+    elif command -v dnf &>/dev/null; then
+        dnf install -y postgresql-server
+    elif command -v yum &>/dev/null; then
+        yum install -y postgresql-server
+    elif command -v pacman &>/dev/null; then
+        pacman -Sy --noconfirm postgresql
+    else
+        echo "Unsupported package manager"
+        exit 1
+    fi
 fi
 
 # ---------- Auto Port Detection ----------
 if [[ -z "$PORT" ]]; then
-	PORT=$DEFAULT_PORT
-	while ss -tuln | grep -q ":$PORT"; do
-		((PORT++))
-	done
+    PORT=$DEFAULT_PORT
+    while ss -tuln | grep -q ":$PORT"; do
+        ((PORT++))
+    done
 fi
 
 # ---------- Generate Password ----------
@@ -74,13 +74,18 @@ PASS=$(openssl rand -base64 24)
 
 # ---------- Create Data Dir ----------
 if [ -d "$DATA_DIR" ]; then
-	echo "[!] Instance already exists: $NAME"
+    echo "[!] Instance already exists: $NAME"
 else
-	echo "[+] Creating data dir: $DATA_DIR"
-	mkdir -p "$DATA_DIR"
-	chown -R postgres:postgres "$DATA_DIR"
-	sudo -u postgres initdb -D "$DATA_DIR"
+    echo "[+] Creating data dir: $DATA_DIR"
+    mkdir -p "$DATA_DIR"
+    chown -R postgres:postgres "$DATA_DIR"
+    sudo -u postgres initdb -D "$DATA_DIR"
 fi
+
+# ---------- Fix Log File Permissions ----------
+touch "$LOGFILE"
+chown postgres:postgres "$LOGFILE"
+chmod 600 "$LOGFILE"
 
 # ---------- Configure Instance ----------
 sed -i "s/^#port =.*/port = $PORT/" "$CONF_FILE"

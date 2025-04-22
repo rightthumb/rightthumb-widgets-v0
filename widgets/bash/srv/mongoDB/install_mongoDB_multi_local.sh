@@ -77,7 +77,7 @@ if [[ -z "$PORT" ]]; then
 	done
 fi
 
-# ---------- Prepare Data ----------
+# ---------- Prepare Data Directory ----------
 if [ -d "$DATA_DIR" ]; then
 	echo "[!] Instance already exists: $NAME"
 else
@@ -85,6 +85,11 @@ else
 	mkdir -p "$DATA_DIR"
 	chown -R mongodb:mongodb "$DATA_DIR"
 fi
+
+# ---------- Fix Log File Permissions ----------
+touch "$LOGFILE"
+chown mongodb:mongodb "$LOGFILE"
+chmod 600 "$LOGFILE"
 
 # ---------- Generate Config ----------
 echo "[+] Writing config: $CONF_FILE"
