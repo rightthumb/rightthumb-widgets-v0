@@ -46,7 +46,9 @@ set pp=
 GOTO:EOF
 
 :action
-    call p. b -a %1 --c
+    if not exist "%myHome%\logs\bookmarks" mkdir "%myHome%\logs\bookmarks"
+    call p. b -a %1 >> "%myHome%\logs\bookmarks\history.log"
+    echo "%myHome%\logs\bookmarks\history.log"
     rem type %pp%
     SET /p p=<"%pp%"
     rem echo %p%

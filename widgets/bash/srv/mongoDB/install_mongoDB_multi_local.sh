@@ -5,95 +5,79 @@ set -e
 BASE_DIR="/var/lib"
 DEFAULT_PORT=27017
 AUTO=false
-SAVE_FILE="$(pwd)/mongoDB_settings.yml"
+NAME=""
+PORT=""
+SAVE_DIR="/opt/db.yml"
 
-# ---------- Help Menu ----------
+# ---------- Help ----------
 if [[ "$1" == "--help" || "$1" == "-h" || "$#" -eq 0 ]]; then
-	echo "Usage:"
-	echo "  $0 --name=mongo2 [--port=27018] [--auto] [--save=/path/to/settings.yml]"
-	echo
-	echo "  --name     MongoDB instance name (required)"
-	echo "  --port     Optional port (auto-increments from 27017 if omitted)"
-	echo "  --auto     Fully automated, no prompts"
-	echo "  --save     Optional YAML log file (default: ./mongoDB_settings.yml)"
-	echo
-	echo "Example:"
-	echo "  $0 --name=mongo2 --auto"
-	exit 0
+    echo "Usage:"
+    echo "  $0 --name=mongo1 [--port=27018] [--auto]"
+    echo
+    echo "Creates MongoDB instance and saves config to /opt/db.yml/mongo1.yml"
+    echo "Includes admin user setup and startup instructions"
+    exit 0
 fi
 
-# ---------- Argument Parsing ----------
+# ---------- Parse Args ----------
 for ARG in "$@"; do
-	case $ARG in
-		--name=*) NAME="${ARG#*=}" ;;
-		--port=*) PORT="${ARG#*=}" ;;
-		--auto) AUTO=true ;;
-		--save=*) SAVE_FILE="${ARG#*=}" ;;
-		*) echo "Unknown argument: $ARG" && exit 1 ;;
-	esac
+    case $ARG in
+        --name=*) NAME="${ARG#*=}" ;;
+        --port=*) PORT="${ARG#*=}" ;;
+        --auto) AUTO=true ;;
+        *) echo "Unknown argument: $ARG" && exit 1 ;;
+    esac
 done
 
 # ---------- Validation ----------
 if [[ -z "$NAME" ]]; then
-	echo "Missing --name"
-	exit 1
+    echo "❌ Missing --name"
+    exit 1
 fi
 
 DATA_DIR="/var/lib/$NAME"
 CONF_FILE="/etc/${NAME}.conf"
 LOGFILE="/var/log/${NAME}.log"
+YAML_FILE="$SAVE_DIR/${NAME}.yml"
+ADMIN_USER="admin"
+ADMIN_PASS=$(openssl rand -base64 16)
+
+# ---------- Create save folder ----------
+mkdir -p "$SAVE_DIR"
+
+# ---------- Ensure mongodb user exists ----------
+if ! id mongodb &>/dev/null; then
+    useradd --system --home /var/lib/mongo --shell /sbin/nologin mongodb
+fi
 
 # ---------- Install MongoDB if needed ----------
 if ! command -v mongod &>/dev/null; then
-	echo "[+] Installing MongoDB..."
-
-	if command -v apt &>/dev/null; then
-		apt update
-		apt install -y gnupg curl
-		curl -fsSL https://pgp.mongodb.com/server-6.0.asc | gpg --dearmor -o /usr/share/keyrings/mongodb-server.gpg
-		echo "deb [ signed-by=/usr/share/keyrings/mongodb-server.gpg ] https://repo.mongodb.org/apt/ubuntu $(lsb_release -sc)/mongodb-org/6.0 multiverse" > /etc/apt/sources.list.d/mongodb-org-6.0.list
-		apt update && apt install -y mongodb-org
-	elif command -v dnf &>/dev/null || command -v yum &>/dev/null; then
-		cat <<EOF > /etc/yum.repos.d/mongodb-org.repo
-[mongodb-org-6.0]
-name=MongoDB Repository
-baseurl=https://repo.mongodb.org/yum/redhat/\$releasever/mongodb-org/6.0/x86_64/
-gpgcheck=1
-enabled=1
-gpgkey=https://pgp.mongodb.com/server-6.0.asc
-EOF
-		dnf install -y mongodb-org || yum install -y mongodb-org
-	else
-		echo "Unsupported package manager"
-		exit 1
-	fi
+    echo "[+] Installing MongoDB..."
+    if command -v apt &>/dev/null; then
+        apt update
+        apt install -y mongodb-org
+    elif command -v dnf &>/dev/null || command -v yum &>/dev/null; then
+        yum install -y mongodb-org
+    else
+        echo "Unsupported package manager"
+        exit 1
+    fi
 fi
 
-# ---------- Auto Port Fallback ----------
+# ---------- Port Detection ----------
 if [[ -z "$PORT" ]]; then
-	PORT=$DEFAULT_PORT
-	while ss -tuln | grep -q ":$PORT"; do
-		((PORT++))
-	done
+    PORT=$DEFAULT_PORT
+    while ss -tuln | grep -q ":$PORT"; do ((PORT++)); done
 fi
 
-# ---------- Prepare Data Directory ----------
-if [ -d "$DATA_DIR" ]; then
-	echo "[!] Instance already exists: $NAME"
-else
-	echo "[+] Creating data directory: $DATA_DIR"
-	mkdir -p "$DATA_DIR"
-	chown -R mongodb:mongodb "$DATA_DIR"
-fi
-
-# ---------- Fix Log File Permissions ----------
+# ---------- Create folders ----------
+mkdir -p "$DATA_DIR"
 touch "$LOGFILE"
+chown -R mongodb:mongodb "$DATA_DIR"
 chown mongodb:mongodb "$LOGFILE"
 chmod 600 "$LOGFILE"
 
 # ---------- Generate Config ----------
-echo "[+] Writing config: $CONF_FILE"
-
 cat <<EOF > "$CONF_FILE"
 systemLog:
   destination: file
@@ -106,28 +90,63 @@ storage:
 net:
   bindIp: 127.0.0.1
   port: $PORT
+
+security:
+  authorization: enabled
 EOF
 
-# ---------- Start MongoDB ----------
-echo "[+] Starting MongoDB instance: $NAME"
+# ---------- Start Instance ----------
 mongod --config "$CONF_FILE" --fork
+sleep 2
 
-# ---------- Append to YAML Config ----------
-echo >> "$SAVE_FILE"
-echo "# Created on $(date)" >> "$SAVE_FILE"
-echo "$NAME:" >> "$SAVE_FILE"
-echo "  port: $PORT" >> "$SAVE_FILE"
-echo "  data_dir: $DATA_DIR" >> "$SAVE_FILE"
-echo "  config: $CONF_FILE" >> "$SAVE_FILE"
-echo "  log_file: $LOGFILE" >> "$SAVE_FILE"
+# ---------- Create Admin User ----------
+mongosh --port "$PORT" --eval "
+use admin
+db.createUser({
+  user: '$ADMIN_USER',
+  pwd: '$ADMIN_PASS',
+  roles: [ { role: 'root', db: 'admin' } ]
+})
+"
 
-# ---------- Done ----------
+# ---------- Write YAML Config ----------
+{
+    echo "# MongoDB instance created: $(date)"
+    echo "$NAME:"
+    echo "  type: mongodb"
+    echo "  port: $PORT"
+    echo "  data: $DATA_DIR"
+    echo "  config: $CONF_FILE"
+    echo "  log: $LOGFILE"
+    echo "  start: mongod --config $CONF_FILE --fork"
+    echo "  stop: mongod --config $CONF_FILE --shutdown"
+    echo "  restart: \"mongod --config $CONF_FILE --shutdown && sleep 1 && mongod --config $CONF_FILE --fork\""
+    echo "  users:"
+    echo "    $ADMIN_USER:"
+    echo "      password: \"#!/en|$ENCRYPTED_PASS\""    # <-------- password write
+} >> "$YAML_FILE"
+
+
+
+
+
+# ---------- Final Output ----------
 echo
-echo "[✓] MongoDB instance '$NAME' started"
-echo "    Port     : $PORT"
-echo "    Data Dir : $DATA_DIR"
-echo "    Log File : $LOGFILE"
-echo "    Config   : $CONF_FILE"
+echo "[✓] MongoDB instance '$NAME' is running on port $PORT"
+echo "[📝] Settings saved to: $YAML_FILE"
 echo
-echo "[📝] Settings saved to: $SAVE_FILE"
+echo "────────────────────────────────────────────"
+echo "🔐 Admin Login:"
+echo "  user: $ADMIN_USER"
+echo "  pass: $ADMIN_PASS"
+echo
+echo "🖥️  Start the instance manually:"
+echo "  mongod --config $CONF_FILE --fork"
+echo
+echo "🛑 Stop the instance manually:"
+echo "  mongod --config $CONF_FILE --shutdown"
+echo
+echo "🔗 Connect:"
+echo "  mongosh --port $PORT -u $ADMIN_USER -p --authenticationDatabase admin"
+echo "────────────────────────────────────────────"
 echo

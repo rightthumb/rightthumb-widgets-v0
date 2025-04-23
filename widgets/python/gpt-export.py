@@ -3,6 +3,7 @@ def focus(parentApp='', childApp='', reg=True): global appDBA; f = __.appName(ap
 fieldSet=_.l.vars(focus(),__name__,__file__,appDBA);_.load();_v=__.imp('_rightThumb._vars');
 
 def sw():
+	_.switches.register( 'List', '-l,-list' )
 	_.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name,data,clean', description='Files', isRequired=False )
 	_.switches.register( 'ID', '-id' )
 	_.switches.register( 'URL', '-url' )
@@ -156,12 +157,38 @@ def process(path):
 							print(line)
 				except: pass
 
-			
-
-
+def listChats(path):
+	data = _.getTable2(path)
+	records = _.sort(data,'create_time')
+	# records.reverse()
+	cnt = 0
+	for rec in records:
+		include = False
+		title = rec['title']
+		id = rec['conversation_id']
+		if _.showLine(title):
+			cnt += 1
+			id = _.pr(id,c='purple',p=0)
+			title = _.pr(title,c='yellow',p=0)
+			_.pr(id,title)
+	_.pr()
+	if not cnt == len(records):
+		_.pr('\t',_.addComma(cnt), 'of',_.addComma(len(records)),'chats',c='yellow')
+	else:
+		_.pr('\t',_.addComma(len(records)),'chats',c='yellow')
 import sys
 
 def action():
+	if _.switches.isActive('List'):
+		if not _.switches.isActive('Files'):
+			listChats('conversations.json')
+		for path in _.switches.values('Files'):
+			listChats(path)
+		return None
+
+	if not _.switches.isActive('Files'):
+		process('conversations.json')
+		return None
 	for path in _.switches.values('Files'):
 		process(path)
 

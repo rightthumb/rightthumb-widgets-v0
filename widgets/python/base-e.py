@@ -26,6 +26,7 @@ def sw():
 	# _.switches.register( 'Input', '-i', group='Group Name' )
 		##  -->    p SwitchGroupsExamples   <--
 	# #e)--> examples
+	_.switches.register( 'Command', '-cmd' )
 	_.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=False )
 
 _._default_settings_()
@@ -150,139 +151,15 @@ _.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw )
 ########################################################################################
 #n)--> start
 
-def runAirTerminal():
-	import keyboard
-	import sys
+import subprocess
 
-	class Air_Terminal:
-		'''
-		AirTerminal captures key input after a hotkey (e.g., Alt+A), parses it into
-		virtual switches, and returns a structured dictionary.
+def run_command_get_output(command):
+    result = subprocess.run(command, shell=True, text=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    return result.stdout.strip().splitlines()
 
-		Example usage:
-
-			term = AirTerminal()
-
-			print("✅ AirTerminal is running... Press Alt+A to activate input mode.")
-			keyboard.wait()
-
-		Example input (typed after pressing Alt+A):
-
-			-f file.txt + one two --omit
-
-		Output:
-
-			{
-				'-f': 'file.txt',
-				'+': ['one', 'two'],
-				'-omit': ''
-			}
-		'''
-		
-		'''
-		if __name__ == '__main__':
-			term = AirTerminal()
-
-			def clean_exit():
-				print("\n👋 Exiting AirTerminal...")
-				keyboard.unhook_all_hotkeys()
-				sys.exit(0)
-
-			# First hotkey bind
-			term.alt_a_hook = keyboard.add_hotkey('alt+a', term.run_once)
-			keyboard.add_hotkey('alt+esc', clean_exit)
-
-			print("✅ AirTerminal is running...")
-			print("   • Press Alt+A to type switches")
-			print("   • Press Alt+Esc or Ctrl+C to exit")
-
-			try:
-				keyboard.wait()
-			except KeyboardInterrupt:
-				clean_exit()
-		'''
-
-		def __init__(self):
-			self.raw_text = ''
-			self.switches = {}
-			self.alt_a_hook = None
-
-		def get_hidden_input_until_enter(self):
-			keys = []
-			while True:
-				event = keyboard.read_event(suppress=True)
-				if event.event_type == keyboard.KEY_DOWN:
-					key = event.name
-					if key == 'enter':
-						break
-					if key == 'backspace':
-						if keys:
-							keys.pop()
-					else:
-						keys.append(key)
-
-			self.raw_text = ''.join(' ' if k == 'space' else k for k in keys)
-			return self.raw_text
-
-		def parse_virtual_switches(self, raw_text=None):
-			if raw_text is None:
-				raw_text = self.raw_text
-
-			tokens = raw_text.strip().split()
-			switches = {}
-			current = None
-
-			for token in tokens:
-				if token.startswith('--'):
-					token = '-' + token[2:]
-
-				if token.startswith('-') or token.startswith('+'):
-					current = token
-					if current not in switches:
-						switches[current] = []
-				else:
-					if current is None:
-						continue
-					switches[current].append(token)
-
-			for k in list(switches.keys()):
-				if isinstance(switches[k], list) and len(switches[k]) == 1:
-					switches[k] = switches[k][0]
-
-			self.switches = switches
-			return switches
-
-		def get_switches(self):
-			print("Air Terminal Started — type your switches and press Enter...")
-			self.get_hidden_input_until_enter()
-			switches = self.parse_virtual_switches()
-			print("Air Terminal Stopped")
-			return switches
-
-		def run_once(self):
-			# Unregister hotkey so it can't be double-triggered
-			if self.alt_a_hook:
-				keyboard.remove_hotkey(self.alt_a_hook)
-				self.alt_a_hook = None
-
-			switches = self.get_switches()
-			print('\n[Parsed Switches]', switches)
-
-			# Re-register hotkey after session
-			self.alt_a_hook = keyboard.add_hotkey('alt+a', self.run_once)
-
-	term = Air_Terminal()
-	term.run_once()
-	return term.switches
-
-# ----------------------
-# 🔧 Hotkey Setup + Clean Exit
-# ----------------------
-
-switches = runAirTerminal()
-print(switches)
-
-
+command = ' '.join(_.switches.values('Command'))
+for line in run_command_get_output(command):
+	print(line)
 
 def action():
 	pass

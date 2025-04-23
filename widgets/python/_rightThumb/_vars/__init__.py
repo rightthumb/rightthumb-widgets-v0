@@ -352,7 +352,12 @@ ads = life + 'ads' + slash
 rtp=home +os.sep+'.rt'+os.sep+'profile'+os.sep
 rt=home +os.sep+'.rt'
 
+
 pro=home +os.sep+'.rt'+os.sep+'profile'+os.sep
+bmLogs=pro+'logs'+os.sep+'bookmarks'+os.sep+'DATE.log'
+bmLog=pro+'logs'+os.sep+'bookmarks'+os.sep+   time.strftime('%Y-%m-%d', time.localtime(time.time()))   +'.log'
+
+
 
 if __.isWin:
 	# sublime = '"C:\\Program Files\\Sublime Text 3\\sublime_text.exe"'

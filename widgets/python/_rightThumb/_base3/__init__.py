@@ -26384,6 +26384,46 @@ def isLink(path):
 	except: return False
 
 ##################################################
+
+
+def past(value):
+	value = str(value)
+	import datetime
+	value = value.strip()
+	today = datetime.date.today()
+
+	# Future date: '+1'
+	if value.startswith('+') and value[1:].isdigit():
+		return (today + datetime.timedelta(days=int(value[1:]))).strftime('%Y-%m-%d')
+
+	# MM-DD format (e.g., '4-11')
+	elif '-' in value and value.count('-') == 1 and all(part.isdigit() for part in value.split('-')):
+		month, day = map(int, value.split('-'))
+		try:
+			target = datetime.date(today.year, month, day)
+			if target > today:
+				target = datetime.date(today.year - 1, month, day)
+			return target.strftime('%Y-%m-%d')
+		except:
+			raise ValueError("Invalid MM-DD date.")
+
+	# Day of current month: '-11'
+	elif value.startswith('-') and value[1:].isdigit():
+		day = abs(int(value))
+		try:
+			return datetime.date(today.year, today.month, day).strftime('%Y-%m-%d')
+		except:
+			raise ValueError("Invalid day for current month.")
+
+	# Days ago: '0', '1', '10' etc.
+	elif value.isdigit():
+		return (today - datetime.timedelta(days=int(value))).strftime('%Y-%m-%d')
+
+	raise ValueError("Unsupported input format.")
+
+
+
+##################################################
 def logLine(*items, log=None):
 	if log is None:
 		e("missing log='file.log'")
@@ -26400,6 +26440,25 @@ def logLine(*items, log=None):
 	except Exception as e:
 		e(f"Error appending to log file: {e}")
 		return False
+def saveLine(log, *items, p=False):
+	if os.path.isfile(log):
+		log = __.path(log)
+	if not _v.slash in log:
+		e('First arg is log path')
+	_v.mkdir(log,pop=True)
+
+	try:
+		tab_delimited_items = '\t'.join(map(str, items))
+		with open(log, 'a') as log_file:
+			log_file.write(f'{tab_delimited_items}\n')
+		if p:
+			pr('Saved', c='green')
+		return True
+	except Exception as ee:
+		e(f"Error appending to log file: {ee}")
+		return False
+
+line=saveLine
 ##################################################
 # self.value('Help')
 # 'DumpSwitches'
@@ -27469,6 +27528,14 @@ def getJsonYaml(path):
 	if contents.startswith('{') or contents.startswith('['):
 		return getTable2(path)
 	return fromYML(contents)
+##================================================
+def cli(command):
+	import subprocess
+	result = subprocess.run(command, shell=True, text=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+	return result.stdout.strip().splitlines()
+CMD=cli
+term=CMD
+terminal=CMD
 ##================================================
 nsfw=True
 

@@ -277,8 +277,11 @@ def meta_scan(path,end=''):
 		except: pass
 	theUrl = urlpr(url,meta)
 	if os.path.isdir(path):
-		theUrl = theUrl.replace('?loader&url=%3Fview%3D1%26f%3D','?fo=').rstrip('/')
-		theUrl = theUrl.replace('?view=1&f=','?fo=').rstrip('/')
+		try:
+			theUrl = theUrl.replace('?loader&url=%3Fview%3D1%26f%3D','?fo=').rstrip('/')
+			theUrl = theUrl.replace('?view=1&f=','?fo=').rstrip('/')
+		except:
+			theUrl=''
 	return theUrl
 
 def meta_scanR(path,end):

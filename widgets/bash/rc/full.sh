@@ -151,7 +151,9 @@ alias cd..="cd .."
 alias pi='ping -c 5'
 alias fastping='ping -c 100 -s.2'
 alias fping='ping -c 100 -s.2'
-alias ports='netstat -tulanp'
+alias ports.='netstat -tulanp'
+alias ports='ports. | grep 127.'
+alias who.='grep $(curl ifconfig.me)'
 
 
 

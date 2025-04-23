@@ -26,11 +26,8 @@ def sw():
 	# _.switches.register( 'Input', '-i', group='Group Name' )
 		##  -->    p SwitchGroupsExamples   <--
 	# #e)--> examples
-	_.switches.register( 'List', '-l,-list' )
-	_.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='data', description='Files', isRequired=False )
-	_.switches.register( 'SearchTitles', '-t,-title,-titles' )
-	_.switches.register( 'File-id', '-fid' )
-	_.switches.register( 'GPT-id', '-id,-gid' )
+	_.switches.register( 'Read', '-r,-read' )
+	_.switches.register( 'Save', '--s,-save' )
 
 _._default_settings_()
 
@@ -155,83 +152,32 @@ _.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw )
 #n)--> start
 
 
+# save_clipboard.py
+
+import pyperclip
+
+def save_clipboard_to_file(filename="clipboard.txt"):
+	text = pyperclip.paste()
+	text = text.replace('\r','')
+	with open(filename, 'w', encoding='utf-8') as file:
+		file.write(text)
+	print(f"Clipboard saved to {filename}")
 
 
-'''
-{
-    "id": "68064764-0a54-800a-a45f-c73888222116",
-    "title": "Secure PostgreSQL Installation Script",
-    "url": "https://chatgpt.com/c/68064764-0a54-800a-a45f-c73888222116",
-    "hostname": "chatgpt.com",
-    "pathname": "/c/68064764-0a54-800a-a45f-c73888222116",
-    "epoch": 1745346020,
-    "date": "2025-04-22 14:20",
-    "files": [
-        {
-            "name": "install_postgres_secure.sh",
-            "content": "#!/bin/bash\n\nset -e\n\n# Detect package manager"
-        }
-	]
-}
-'''
 
 
 
 def action():
-
-	if _.switches.isActive('List'):
-		fo = _v.tt+_v.slash+'gptChats'+_v.slash
-		files = _.fo(fo)
-		for file in files:
-			cache = _.getTable2(file)
-			id = _.pr(cache['id'],c='purple',p=0)
-			title = _.pr(cache['title'],c='yellow',p=0)
-			if _.showLine(cache['title']):
-				_.pr(id,title)
-
-
-
-
-
-
-
+	fi = _v.home+_v.slash+'.rt'+_v.slash+'clip.cache'
+	if _.switches.isActive('Save'):
+		save_clipboard_to_file(fi)
 		return None
-	# print(_.isData(r=0))
-	if not _.isData(r=0) or '\n'.join(_.pp()).startswith('{'):
-		if '\n'.join(_.pp()).startswith('{'):
-			data = '\n'.join(_.pp())
-		else:
-			data = '\n'.join(_.isData(r=0))
-		if data.startswith('{'):
-			import simplejson as json
-			dic = json.loads(data)
-			_.saveTable(dic,'gptChats'+_v.slash+dic['id']+'.cache',p=0)
-			_.saveTable(dic,'gptChats.dex',p=0)
-	if _.switches.isActive('GPT-id'):
-		gpt = _.getTable('gptChats'+_v.slash+  _.switches.value('GPT-id')  +'.cache')
-	else:
-		gpt = _.getTable('gptChats.dex')
-	if not _.switches.all() or (  len(_.switches.all()) == 1 and _.switches.isActive('GPT-id') ):
-		_.pr(gpt['id'],c='purple')
-		_.pr(gpt['title'],c='yellow')
-		_.pr()
-		for i,file in enumerate(gpt['files']):
-			if _.showLine(file['name']):
-				_.pr('\t',i+1,'\t',file['name'],c='cyan')
-			# _.pr(file['content'])
-		_.pr()
-
-	elif _.switches.isActive('File-id'):
-		id = int(_.switches.value('File-id'))-1
-		file = gpt['files'][id]['content']
-		file = file.replace( chr(10), '\n' )
-		file = file.replace( chr(27), '' )
-		file = file.replace( '\r', '' )
-		_.pr(file)
-		
-	# _.pv(gpt)
-	
-
+	if _.switches.isActive('Read'):
+		data = _.getText(fi)
+		for line in data:
+			line=line.rstrip()
+			if _.showLine(line):
+				_.pr(line,c='cyan')
 
 	# load(); global c3po;
 

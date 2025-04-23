@@ -36,6 +36,7 @@ import _rightThumb._string as _str
 def appSwitches():
 	_.switches.register('Alias', '-a,-i,-alias','d,sendto,docs', isRequired=False)
 	_.switches.register('Save', '-save')
+	_.switches.register('History', '-h,-hist', 's 1 -15 4-15 (if len = 2 it will show duplicates for backtrack)', isRequired=False)
 
 
 _.autoBackupData = __.autoCreationConfiguration['backup']
@@ -166,6 +167,57 @@ _.postLoad( __file__ )
 
 
 def action():
+	# print()
+
+	if _.switches.isActive('History'):
+		
+		if _.switches.values('History') and 's' in _.switches.values('History')[0]:
+
+			def extactFolder(line):
+				while '  ' in line:
+					line = line.replace('  ',' ')
+				line = line.strip()
+				return line.split(' ')[2]
+
+			log = _v.tt+os.sep+'BookmarksBySession'+os.sep+_v.session()+'.log'
+			if not os.path.isfile(log):
+				_.e('No log for that session')
+			log = _.getText(log)
+			spent=[]
+			last=''
+			log = align_log_lines(log)
+			for i,line in enumerate(log):
+				if  not i: continue
+				if line in spent: continue
+				if not len(_.switches.values('History')) == 2:
+					spent.append(line)
+				if _.showLine(line):
+					current= extactFolder(line)
+					if current == last and ' - ' in line:
+						continue
+					_.pr(line,c='cyan')
+					last= extactFolder(line)
+			return None
+
+		if not _.switches.values('History'):
+			when = _.past(0)
+		else:
+			when = _.switches.values('History')[0]
+		if  not os.path.isfile(_v.bmLog):
+			_.e('No log for that date')
+		log = _.getText(_v.bmLog)
+		log.reverse()
+		spent=[]
+		for i,line in enumerate(log):
+			if line in spent: continue
+			if not len(_.switches.values('History')) == 2:
+				spent.append(line)
+			if _.showLine(line):
+				# _.pr(i+1, line,c='cyan')
+				_.pr(line,c='cyan')
+		return None
+
+
 	# _.pv(_.switches.all())
 	# if not _.switches.all():
 	# 	print(sys.argv)
@@ -195,6 +247,9 @@ def action():
 	if path is None:
 		_.colorThis( 'Error, Bookmark does not exist', 'red' )
 		sys.exit()
+	# print(_v.bmLog)
+	_.saveLine(_v.bmLog, path)
+	# print(_.)
 	if _.switches.isActive('Save'):
 		if _.switches.value('Save') == '':
 			_.saveText( path, _v.myTemp + _v.slash+'bookmark.tmp' )
@@ -208,6 +263,39 @@ def action():
 			path = path[0]+':'+parts[0]
 
 		_.pr(path)
+
+
+
+def align_log_lines(lines, delimiter='     ', num_columns=3):
+
+	new = []
+	for line in lines:
+		line = line.replace(' back ',' - ')
+		new.append(line)
+	lines = new
+
+	# Split each line into the desired number of columns
+	rows = [line.strip().split(delimiter, maxsplit=num_columns - 1) for line in lines]
+
+	# Pad rows with fewer columns
+	for row in rows:
+		while len(row) < num_columns:
+			row.append('')
+
+	# Get maximum width of each column
+	col_widths = [
+		max(len(row[i]) for row in rows)
+		for i in range(num_columns)
+	]
+
+	# Create aligned lines
+	aligned_lines = [
+		'  '.join(row[i].ljust(col_widths[i]) for i in range(num_columns))
+		for row in rows
+	]
+
+	return aligned_lines
+
 
 
 import _rightThumb._bookmarks as _bm
