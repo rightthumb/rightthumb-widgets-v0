@@ -170,7 +170,7 @@ alias who.='grep $(curl ifconfig.me)'
 
 #--> start#> git clone this project
 alias .git="git clone https://github.com/rightthumb/rightthumb-widgets-v0"
-# alias .git.="mkdir -p "/opt/__rightthumb-widgets-v0/"; rsync -av --include '*/' --include 'vps-*' --exclude '*' /opt/rightthumb-widgets-v0/ /opt/__rightthumb-widgets-v0/;cd /opt ; rm -rf rightthumb-widgets-v0 ; git clone https://github.com/rightthumb/rightthumb-widgets-v0 ; rsync -av ./__rightthumb-widgets-v0/* /opt/rightthumb-widgets-v0/; cd rightthumb-widgets-v0 ; chmod -R 777 . ; p shClean -folder -r"
+# alias .git.="mkdir -p "/opt/__rightthumb-widgets-v0/"; rsync -av --include '*/' --include 'vps-*' --exclude '*' /opt/rightthumb-widgets-v0/ /opt/__rightthumb-widgets-v0/;cd /opt ; rm -rf rightthumb-widgets-v0 ; git clone https://github.com/rightthumb/rightthumb-widgets-v0 ; rsync -av ./__rightthumb-widgets-v0/* /opt/rightthumb-widgets-v0/; cd rightthumb-widgets-v0 ; chmod -R 777 . ; p shClean -folder . -r"
 
 
 
@@ -235,7 +235,7 @@ _git_() {
 	# Final cleanup
 	cd "$widgets" || return 1
 	echo "🧹 Running p shClean -folder . -r"
-	p shClean -folder -r
+	p shClean -folder . -r
 
 	echo "✅ .git. update complete"
 }
