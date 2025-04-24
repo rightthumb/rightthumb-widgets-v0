@@ -5,6 +5,16 @@ alias get.t="wget http://reph.us/tools/file.php?file=tool -O installer.py; $PY $
 alias get.t2="wget http://reph.us/tools/file.php?file=tool2 -O installer.py2; $PY installer.py2 -h.f installer.py2;";
 alias get.h="wget http://reph.us/tools/file.php?file=help.txt -O $HOME/.rt/help.txt; $PY installer.py2 -h.f $HOME/.rt/help.txt;";
 
+op() {
+    if [ -z "$1" ]; then
+        echo "❌ Usage: run_py_app <app_name> [args...]"
+        return 1
+    fi
+
+    app="$1"
+    shift
+    python3.11 "/opt/rightthumb-widgets-v0/widgets/python/${app}.py" "$@"
+}
 
 
 alias s.p="sudo $widgets/widgets/bash/nav/p.sh"
