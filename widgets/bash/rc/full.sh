@@ -234,8 +234,8 @@ _git_() {
 
 	# Final cleanup
 	cd "$widgets" || return 1
-	echo "🧹 Running p shClean -folder . -r"
-	p shClean -folder . -r
+	# echo "🧹 Running p shClean -folder . -r"
+	# p shClean -folder . -r
 
 	echo "✅ .git. update complete"
 }
