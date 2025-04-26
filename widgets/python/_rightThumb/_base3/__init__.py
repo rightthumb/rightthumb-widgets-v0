@@ -17035,8 +17035,11 @@ def timeAgo_past(do='', startDate=None):
 	do = do.lower()
 
 	if 't' in do:
-		one = resolveEpochTest( startDate )
-		two = autoDate( one.split(' ')[0] )
+		try:
+			one = resolveEpochTest( startDate )
+			two = autoDate( one.split(' ')[0] )
+		except:
+			err('bad second switch',do)
 		return two
 	if isTime:
 		if 'm' in do:

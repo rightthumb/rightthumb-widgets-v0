@@ -12,15 +12,15 @@ def get_stems(text):
 	return " ".join(stems)
 
 def query_log_jsonl(log_file_path, query_sql="SELECT * FROM read_json_auto(?)"):
-    conn = duckdb.connect()
-    try:
-        result = conn.execute(query_sql, [log_file_path]).fetchall()
-        return result
-    except Exception as e:
-        print(f"❌ Query error: {e}")
-        return []
-    finally:
-        conn.close()
+	conn = duckdb.connect()
+	try:
+		result = conn.execute(query_sql, [log_file_path]).fetchall()
+		return result
+	except Exception as e:
+		print(f"❌ Query error: {e}")
+		return []
+	finally:
+		conn.close()
 
 import os
 import json
@@ -414,11 +414,21 @@ If no database or table is needed, output an empty list: []
 
 		
 
-	
-		
-
 if __name__ == "__main__":
-	if len(sys.argv) == 1:
+	recover_only = "--recover-only" in sys.argv
+	project_path = None
+	goal = None
+
+	found = False
+	for i, arg in enumerate(sys.argv):
+		if arg == "--project-path" and i + 1 < len(sys.argv):
+			found = True
+			project_path = sys.argv[i + 1]
+		if arg == "--goal" and i + 1 < len(sys.argv):
+			found = True
+			goal = sys.argv[i + 1]
+
+	if not found:
 		print("""
 Usage:
   python3 bot.py --recover-only                  # Recover only, no project execution
@@ -428,23 +438,17 @@ Usage:
 """)
 		sys.exit(0)
 
-	recover_only = "--recover-only" in sys.argv
-	project_path = None
-	goal = None
-
-	for i, arg in enumerate(sys.argv):
-		if arg == "--project-path" and i + 1 < len(sys.argv):
-			project_path = sys.argv[i + 1]
-		if arg == "--goal" and i + 1 < len(sys.argv):
-			goal = sys.argv[i + 1]
-
-	bot = AIBot(recover_only=recover_only, project_path=project_path)
-	if goal and not recover_only:
-		print(f"🚀 Creating project with goal: {goal}")
-		bot.create_project(goal)
-		tasks = bot.split_goal_into_tasks(goal)
-		if tasks:
-			bot.run_sprint(tasks)
-	if not recover_only:
-		bot.thread_manager.run()
-		print("✅ Bot and Thread Manager running.")
+	try:
+		bot = AIBot(recover_only=recover_only, project_path=project_path)
+		if goal and not recover_only:
+			print(f"🚀 Creating project with goal: {goal}")
+			bot.create_project(goal)
+			tasks = bot.split_goal_into_tasks(goal)
+			if tasks:
+				bot.run_sprint(tasks)
+		if not recover_only:
+			bot.thread_manager.run()
+			print("✅ Bot and Thread Manager running.")
+	except KeyboardInterrupt:
+		print("\n❌ Ctrl+C detected. Exiting gracefully...")
+		sys.exit(0)

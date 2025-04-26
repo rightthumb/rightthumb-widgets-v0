@@ -636,6 +636,8 @@ def remoteFolder():
 		ssh+=f' -t "{us}" "cd \"{fo}\"; exec bash -l";'
 		# print(ssh)
 		# sys.exit()
+		if _.switches.isActive('CMD'):
+			print(ssh)
 		os.system(ssh)
 		_.pr()
 		_.pr()
@@ -722,6 +724,7 @@ def action():
 	# sys.exit()
 	if _.switches.isActive('SSH-Remote_Folder'):
 		remoteFolder()
+		return None
 
 	if _.switches.isActive('Files') and len(_.switches.all())==1:
 		_.v.quiet = True
