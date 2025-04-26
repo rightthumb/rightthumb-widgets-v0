@@ -2780,6 +2780,13 @@ EMOJIS=(THE_EMOJIS_GO_HERE)
 prompt_symbol=${EMOJIS[$RANDOM % ${#EMOJIS[@]}]};
 # echo 000-006
 
+
+
+if [ -f /mnt/.chroot ]; then
+	host_prefix="chroot: "
+else
+	host_prefix=""
+fi
 if [ "$color_prompt" = yes ]; then
 	prompt_color='\\[\033[;32m\\]'
 	info_color='\\[\033[1;34m\\]'
@@ -2787,10 +2794,12 @@ if [ "$color_prompt" = yes ]; then
 	prompt_color='\\[\033[;94m\\]'
 	info_color='\\[\033[1;31m\\]'
 	fi
-	PS1=$prompt_color'\n┌──${debian_chroot:+($debian_chroot)──}('$info_color'\\u${prompt_symbol}\\h'$prompt_color')-[\\[\033[0;1m\\] \\w '$prompt_color'].20F54359E924\n'$prompt_color'└─'$info_color'\\$\\[\033[0m\\] '
+	PS1=$prompt_color'\n┌──${debian_chroot:+($debian_chroot)──}($host_prefix'$info_color'\\u${prompt_symbol}\\h'$prompt_color')-[\\[\033[0;1m\\] \\w '$prompt_color'].20F54359E924\n'$prompt_color'└─'$info_color'\\$\\[\033[0m\\] '
 else
 	PS1='\n┌── (\\u${prompt_symbol}\\h)──[ \\w ].20F54359E924\\n└─── $ '
 fi
+
+
 unset color_prompt force_color_prompt
 [ -z "$pterm" ] && clear
 
@@ -3734,6 +3743,8 @@ alias curl.="curl -sLk"
 
 #9483b053a84b
 [ -z "$pterm" ] && clear
+
+alias pid="ps aux | grep "
 
 # get_time_difference
 # a3bc42ec51e9
