@@ -24,7 +24,8 @@ source venv/bin/activate
 pip install --upgrade pip
 
 echo "=== Installing required Python libraries ==="
-pip install torch transformers accelerate duckdb huggingface-hub
+pip install transformers accelerate duckdb huggingface-hub
+pip install torch --index-url https://download.pytorch.org/whl/cpu
 
 echo "=== Saving AIBot Python file ==="
 cat <<EOF > bot.py

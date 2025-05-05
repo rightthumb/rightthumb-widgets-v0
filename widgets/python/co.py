@@ -26,7 +26,8 @@ def sw():
     # _.switches.register( 'Input', '-i', group='Group Name' )
         ##  -->    p SwitchGroupsExamples   <--
     # #e)--> examples
-    _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=False )
+    # _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=False )
+    _.switches.register( 'Alias', '-a' )
 
 _._default_settings_()
 
@@ -151,7 +152,16 @@ _.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw )
 #n)--> start
 
 def action():
-    pass
+    if not _.switches.isActive('Alias'):
+        _.pr('No Alias switch')
+        return None
+    _copy = _.regImp( __.appReg, '-copy' )
+    
+    Alias = _.switches.value('Alias')
+    aliases=_.getTable('file-open-aliases.hash')
+    if 'aliases' in aliases and Alias in aliases['aliases']:
+        alias = aliases['aliases'][Alias]
+        _copy.imp.copy( alias )
 
     # load(); global c3po;
 

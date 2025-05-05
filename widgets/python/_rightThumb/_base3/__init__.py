@@ -8728,7 +8728,7 @@ def printVarSimpleFake3( data ):
 			printVarColor(line)
 		except Exception as e:
 			print(line)
-def printVarSimpleFake2( data ):
+def printVarSimpleFake2( data, noWords=False ):
 	# this sucks, new class with centralized database of indices and single run colorization coming soon
 	import re
 	arguments=[]
@@ -8739,7 +8739,7 @@ def printVarSimpleFake2( data ):
 		return False
 	# def colorize_quotes(s, quote_color='darkcyan', content_color='cyan'):
 	def show_ansi_codes(s): return s.replace('\033', '\\033')
-	def colorize_quotes(s, quote_color='darkcyan', content_color='cyan'):
+	def colorize_quotes(s, quote_color='darkcyan', content_color='yellow'):
 		# s = re.sub(r'\\033\[\d*\\033\[\d*m', 'm', s)
 		# Strip out the broken color codes
 		s = re.sub(r'\033\[\d+m', '', s)
@@ -8751,7 +8751,7 @@ def printVarSimpleFake2( data ):
 		s = colorize_quotes2(s,quote_color,content_color)
 
 		return s
-	def colorize_quotes2(s, quote_color='darkcyan', content_color='cyan'):
+	def colorize_quotes2(s, quote_color='darkcyan', content_color='yellow'):
 		# Pattern to match content inside single or double quotes
 		pattern = r"(['\"])(.*?)(?<!\\033)\1"
 
@@ -8941,6 +8941,19 @@ def printVarSimpleFake2( data ):
 			if not matched:
 				i += 1
 
+		words = {
+			'def': 'cornflower_blue',
+			'return': 'chartreuse',
+			'while': 'dark_salmon',
+			'import': 'light_sea_green',
+			'True': 'fuchsia',
+			'False': 'fuchsia',
+			'None': 'dark_orchid',
+		}
+		if not noWords:
+			for word, color in words.items():
+				result = result.replace(word, pr(word,h=color,p=0))
+		
 		return result
 
 	def find_argument_usage(s, color='CYAN'):

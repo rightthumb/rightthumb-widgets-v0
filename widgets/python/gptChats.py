@@ -159,75 +159,150 @@ _.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw )
 
 '''
 {
-    "id": "68064764-0a54-800a-a45f-c73888222116",
-    "title": "Secure PostgreSQL Installation Script",
-    "url": "https://chatgpt.com/c/68064764-0a54-800a-a45f-c73888222116",
-    "hostname": "chatgpt.com",
-    "pathname": "/c/68064764-0a54-800a-a45f-c73888222116",
-    "epoch": 1745346020,
-    "date": "2025-04-22 14:20",
-    "files": [
-        {
-            "name": "install_postgres_secure.sh",
-            "content": "#!/bin/bash\n\nset -e\n\n# Detect package manager"
-        }
+	"id": "68064764-0a54-800a-a45f-c73888222116",
+	"title": "Secure PostgreSQL Installation Script",
+	"url": "https://chatgpt.com/c/68064764-0a54-800a-a45f-c73888222116",
+	"hostname": "chatgpt.com",
+	"pathname": "/c/68064764-0a54-800a-a45f-c73888222116",
+	"epoch": 1745346020,
+	"date": "2025-04-22 14:20",
+	"files": [
+		{
+			"name": "install_postgres_secure.sh",
+			"content": "#!/bin/bash\n\nset -e\n\n# Detect package manager"
+		}
 	]
 }
 '''
 
-
-
 def action():
-
 	if _.switches.isActive('List'):
-		fo = _v.tt+_v.slash+'gptChats'+_v.slash
+		fo = _v.tt + _v.slash + 'gptChats' + _v.slash
 		files = _.fo(fo)
 		for file in files:
 			cache = _.getTable2(file)
-			id = _.pr(cache['id'],c='purple',p=0)
-			title = _.pr(cache['title'],c='yellow',p=0)
-			if _.showLine(cache['title']):
-				_.pr(id,title)
-
-
-
-
-
-
-
+			id = _.pr(cache.get('id', ''), c='purple', p=0)
+			title = _.pr(cache.get('title', ''), c='yellow', p=0)
+			if _.showLine(title):
+				_.pr(id, title)
 		return None
-	# print(_.isData(r=0))
-	if not _.isData(r=0) or '\n'.join(_.pp()).startswith('{'):
-		if '\n'.join(_.pp()).startswith('{'):
-			data = '\n'.join(_.pp())
-		else:
-			data = '\n'.join(_.isData(r=0))
-		if data.startswith('{'):
+
+	data_raw = '\n'.join(_.pp())
+	if not _.isData(r=0) or data_raw.startswith('{'):
+		if not data_raw.startswith('{'):
+			data_raw = '\n'.join(_.isData(r=0))
+		if data_raw.startswith('{'):
 			import simplejson as json
-			dic = json.loads(data)
-			_.saveTable(dic,'gptChats'+_v.slash+dic['id']+'.cache',p=0)
-			_.saveTable(dic,'gptChats.dex',p=0)
+			dic = json.loads(data_raw)
+			path = f"gptChats{_v.slash}{dic['id']}.cache"
+			_.saveTable(dic, path, p=0)
+			_.saveTable(dic, 'gptChats.dex', p=0)
+
 	if _.switches.isActive('GPT-id'):
-		gpt = _.getTable('gptChats'+_v.slash+  _.switches.value('GPT-id')  +'.cache')
+		file_path = f"gptChats{_v.slash}{_.switches.value('GPT-id')}.cache"
+		gpt = _.getTable(file_path)
 	else:
 		gpt = _.getTable('gptChats.dex')
-	if not _.switches.all() or (  len(_.switches.all()) == 1 and _.switches.isActive('GPT-id') ):
-		_.pr(gpt['id'],c='purple')
-		_.pr(gpt['title'],c='yellow')
+
+	if not _.switches.all() or (len(_.switches.all()) == 1 and _.switches.isActive('GPT-id')):
+		_.pr(gpt.get('id', ''), c='purple')
+		_.pr(gpt.get('title', ''), c='yellow')
 		_.pr()
-		for i,file in enumerate(gpt['files']):
-			if _.showLine(file['name']):
-				_.pr('\t',i+1,'\t',file['name'],c='cyan')
-			# _.pr(file['content'])
+
+		if 'files' in gpt:
+			for i, file in enumerate(gpt['files']):
+				name = file.get('name', '')
+				content = file.get('content', '')
+				words = content.strip().split()
+				snippet = ' '.join(words[:8])
+				if _.showLine(name):
+					_.pr(f'\t{i+1}\tfile\t{snippet}')
+		elif 'chat' in gpt:
+			for i, chat in enumerate(gpt['chat']):
+				role = chat.get('role', '')
+				role = 'gpt' if role == 'assistant' else role
+				content = chat.get('content', '')
+				words = content.strip().split()
+				snippet = ' '.join(words[:8])
+				if _.showLine(content):
+					I = _.pr(i+1, c='cyan', p=0)
+					Role = _.pr(role, c='purple', p=0)
+					Snippet = _.pr(snippet, c='yellow', p=0)
+					_.pr(f'\t{I}\t{Role}\t{Snippet}')
+
 		_.pr()
 
 	elif _.switches.isActive('File-id'):
-		id = int(_.switches.value('File-id'))-1
-		file = gpt['files'][id]['content']
-		file = file.replace( chr(10), '\n' )
-		file = file.replace( chr(27), '' )
-		file = file.replace( '\r', '' )
-		_.pr(file)
+		id = int(_.switches.value('File-id')) - 1
+
+		if 'files' in gpt and id < len(gpt['files']):
+			file_content = gpt['files'][id]['content']
+		elif 'chat' in gpt and id < len(gpt['chat']):
+			file_content = gpt['chat'][id]['content']
+		else:
+			_.pr('❌ Invalid File-id', c='red')
+			return
+
+		file_content = file_content.replace(chr(10), '\n').replace(chr(27), '').replace('\r', '')
+		if _.switches.isActive('NoColor'):
+			_.pr(file_content)
+		else:
+			_.printVarSimpleFake2(file_content)
+		# _.pr(file_content)
+
+
+
+# def action():
+
+# 	if _.switches.isActive('List'):
+# 		fo = _v.tt+_v.slash+'gptChats'+_v.slash
+# 		files = _.fo(fo)
+# 		for file in files:
+# 			cache = _.getTable2(file)
+# 			id = _.pr(cache['id'],c='purple',p=0)
+# 			title = _.pr(cache['title'],c='yellow',p=0)
+# 			if _.showLine(cache['title']):
+# 				_.pr(id,title)
+
+
+
+
+
+
+
+# 		return None
+# 	# print(_.isData(r=0))
+# 	if not _.isData(r=0) or '\n'.join(_.pp()).startswith('{'):
+# 		if '\n'.join(_.pp()).startswith('{'):
+# 			data = '\n'.join(_.pp())
+# 		else:
+# 			data = '\n'.join(_.isData(r=0))
+# 		if data.startswith('{'):
+# 			import simplejson as json
+# 			dic = json.loads(data)
+# 			_.saveTable(dic,'gptChats'+_v.slash+dic['id']+'.cache',p=0)
+# 			_.saveTable(dic,'gptChats.dex',p=0)
+# 	if _.switches.isActive('GPT-id'):
+# 		gpt = _.getTable('gptChats'+_v.slash+  _.switches.value('GPT-id')  +'.cache')
+# 	else:
+# 		gpt = _.getTable('gptChats.dex')
+# 	if not _.switches.all() or (  len(_.switches.all()) == 1 and _.switches.isActive('GPT-id') ):
+# 		_.pr(gpt['id'],c='purple')
+# 		_.pr(gpt['title'],c='yellow')
+# 		_.pr()
+# 		for i,file in enumerate(gpt['files']):
+# 			if _.showLine(file['name']):
+# 				_.pr('\t',i+1,'\t',file['name'],c='cyan')
+# 			# _.pr(file['content'])
+# 		_.pr()
+
+# 	elif _.switches.isActive('File-id'):
+# 		id = int(_.switches.value('File-id'))-1
+# 		file = gpt['files'][id]['content']
+# 		file = file.replace( chr(10), '\n' )
+# 		file = file.replace( chr(27), '' )
+# 		file = file.replace( '\r', '' )
+# 		_.pr(file)
 		
 	# _.pv(gpt)
 	

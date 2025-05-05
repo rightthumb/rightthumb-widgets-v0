@@ -1,12 +1,12 @@
 @echo off
 
-if [%1]==[] (
-    call p %*
-    goto:eof
+@REM if [%1]==[] (
+@REM     call p %*
+@REM     goto:eof
 
-    CALL a.BTN--wt--ctrlw-toggle
-    goto:eof
-)
+@REM     CALL a.BTN--wt--ctrlw-toggle
+@REM     goto:eof
+@REM )
 
 
 setlocal

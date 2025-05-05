@@ -11,6 +11,13 @@
 # ## {C3P0D40fAe8B} ##
 
 ##################################################
+# import sys
+
+# if not sys.stdin.isatty():
+#     LINES = [line.strip() for line in sys.stdin if line.strip()]
+# else:
+#     LINES = []
+##################################################
 class Meta_Namespace():
 	def __init__( self ):
 		pass

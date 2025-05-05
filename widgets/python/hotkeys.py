@@ -1786,7 +1786,8 @@ class CLIP:
 
 		# print(_paste.imp.paste())
 
-
+		_paste = _.regImp( __.appReg, '-paste' )
+		backup = _paste.imp.paste()
 		import tkinter as tk
 		r = tk.Tk()
 		r.withdraw()  # Hide the main window
@@ -1805,6 +1806,8 @@ class CLIP:
 		with keyboard.pressed(Key.ctrl):
 			keyboard.press('v')
 			keyboard.release('v')
+		_copy = _.regImp( __.appReg, '-copy' )
+		_copy.imp.copy( backup, p=0 )
 
 
 	def copy_active_window(self):
@@ -4435,14 +4438,14 @@ def load():
 				'databeastUser': { 'raw': [   'alt.,2',  'e'   ], 'do': 'Clip.databeastUser()' },
 
  
-
+ 
 
 				# 'copy_active_window': { 'raw': [   'alt.',  'space.'    ], 'do': 'Clip.copy_active_window()' },
 				'FlagFileFolder': { 'raw': [   'alt.',  'space.'    ], 'do': 'FlagFileFolder()' },
 				'pi': { 'raw': [   'alt.',  'shift.',  'd'   ], 'do': 'Clip.pi()' },
-				'pipi': { 'raw': [   'ctrl.',   'space.'  ], 'do': 'Clip.pipi()', 'backspace': False, 'no-esc': True, 'esc': False, 'PreHook': capture_active_window, 'PreHookChange': {'backspace': True } },
+				'pipi': { 'raw': [     'shift.',   'space.'  ], 'do': 'Clip.pipi()', 'backspace': False, 'no-esc': True, 'esc': False, 'PreHook': capture_active_window, 'PreHookChange': {'backspace': True } },
 				'BackupOnSave': { 'raw': [   'alt.',    'b'   ], 'do': 'BackupOnSave()'   , 'backspace': False, 'no-esc': True, 'esc': False,  },
-				'AirTerminal': { 'raw': [   'alt.',  'a'   ], 'do': 'AirTerminal()'     , 'backspace': False, 'no-esc': True, 'esc': False,  },
+				# 'AirTerminal': { 'raw': [   'alt.',  'a'   ], 'do': 'AirTerminal()'     , 'backspace': False, 'no-esc': True, 'esc': False,  },
 
 
 
@@ -4924,7 +4927,7 @@ def current_day():
 	now = datetime.datetime.now()
 	return now.strftime('%a').lower()
 
-__.schedulerRun = True
+__.schedulerRun = False
 
 # if __.schedulerRun: zschedulerRun()
 

@@ -1,5 +1,5 @@
 #!/bin/bash
-echo "update"; sudo apt-get update -y; echo "upgrade"; sudo apt-get upgrade -y;
+echo "update"; sudo apt update -y; echo "upgrade"; sudo apt upgrade -y;
 # ## {R2D2919B742E} ##
 # ###########################################################################
 # What if magic existed?
@@ -12,13 +12,13 @@ echo "update"; sudo apt-get update -y; echo "upgrade"; sudo apt-get upgrade -y;
 
 #Get the necessary components
 sudo apt-mark hold udisks2
-[ ! -f /root/.parrot ] && sudo apt-get update || echo "Parrot detected, not updating apt cache since that will break the whole distro"
-sudo apt-get install keyboard-configuration -y
-sudo apt-get install sudo sudo wget -y
-sudo apt-get install sudo sudo curl -y
-sudo apt-get install xfce4 xfce4-terminal tigervnc-standalone-server -y
-sudo apt-get install xfe -y
-sudo apt-get clean
+[ ! -f /root/.parrot ] && sudo apt update || echo "Parrot detected, not updating apt cache since that will break the whole distro"
+sudo apt install keyboard-configuration -y
+sudo apt install sudo sudo wget -y
+sudo apt install sudo sudo curl -y
+sudo apt install xfce4 xfce4-terminal tigervnc-standalone-server -y
+sudo apt install xfe -y
+sudo apt clean
 #Setup the necessary files
 mkdir ~/.vnc
 sudo curl -s  https://raw.githubusercontent.com/rightthumb/rightthumb-widgets-v0/main/widgets/bash/dt/files/xstartup.sh -o ~/.vnc/xstartup
@@ -52,6 +52,43 @@ echo " "
 echo " "
 echo " "
 sudo echo 'export DISPLAY=":1"' | sudo tee -a /etc/profile
+
+cat > ~/.Xresources << 'EOF'
+! Fonts
+Xft.dpi: 96
+Xft.antialias: true
+Xft.hinting: true
+Xft.hintstyle: hintslight
+Xft.rgba: rgb
+
+! Cursor
+Xcursor.theme: Adwaita
+Xcursor.size: 24
+
+! URxvt terminal settings (if you use it)
+URxvt*scrollBar: false
+URxvt*font: xft:Monospace:size=10
+URxvt*foreground: #ffffff
+URxvt*background: #1e1e1e
+
+! xterm fallback
+XTerm*faceName: Monospace
+XTerm*faceSize: 10
+XTerm*foreground: white
+XTerm*background: black
+
+! GTK theming
+Gtk/DecorationLayout: menu:minimize,maximize,close
+EOF
+# sudo echo "xfce4-session &" >> ~/.vnc/xstartup
+
+cd /tmp
+wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+dpkg --ignore-depends -i google-chrome-stable_current_amd64.deb || true
+apt-get install -f
+
+# google-chrome &
+
 
 source /etc/profile
 vncserver-start
