@@ -28,7 +28,7 @@ import _rightThumb._base4 as ___
 import _rightThumb._string as _str
 import _rightThumb._dir as _dir
 
-_.appInfo[__.appReg] = {"file": "testing123.py", "liveAppName": "testing123", "description": "Changes the world", "categories": [""], "usage": [], "relatedapps": [], "prerequisite": [], "examples": [""], "columns": [], "aliases": [], "notes": []}
+_.appInfo[__.appReg] = {"file": "thisApp.py", "liveAppName": "thisApp", "description": "Changes the world", "categories": [""], "usage": [], "relatedapps": [], "prerequisite": [], "examples": [""], "columns": [], "aliases": [], "notes": []}
 _.appData[__.appReg] = {"start": __.startTime, "uuid": "", "audit": [], "pipe": False, "data": {"field": {"sent": [], "received": []}, "table": {"sent": [], "received": []}}}
 
 _.autoBackupData = __.autoCreationConfiguration['backup']

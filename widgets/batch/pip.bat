@@ -1,3 +1,4 @@
 @echo off
-%pip% %*
+ %py% -m pip %*
+@REM %pip% %*
 rem echo %*

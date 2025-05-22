@@ -35,7 +35,8 @@ def sw():
 	_.switches.register( 'Password', '-password', 'randomize case and adds nums+special and  unless -build is used' )
 	_.switches.register( 'Password-Build', '-build', 'ex. "-build n myWords v adj adv dsp" ≈ aj av ' )
 	_.switches.register( 'Password-Build-Loop', '-loop', 'ex. "-password Love -build pw adv -loop 5 ' )
-
+__.setting('receipt-log',False)
+__.setting('receipt-file',False)
 # __.setting('require-list',['Files,Plus','File,Has']) # todo
 # __.setting('require-list',['Pipe','Files'])
 __.setting('receipt-log')
@@ -238,4 +239,4 @@ def action():
 ######################################
 if __name__ == '__main__':
 	action()
-	_.isExit(__file__)
+	# _.isExit(__file__)

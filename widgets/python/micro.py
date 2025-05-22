@@ -99,7 +99,8 @@ import _rightThumb._dir as _dir
 
 _.appInfo[focus()] = {
     # 'app': '8facG-jo0Cxk',
-    'file': 'thisApp.py',
+    'file': 'thisApp2.py',
+    'liveAppName': 'thisApp2',
     'description': 'Changes the world',
         # _.ail(1,'subject')+
         # _.aib('one')+
@@ -148,7 +149,7 @@ def _local_(do): exec(do)
 _.l.conf('appDBA',__.appReg);
 _.l.conf('clean-pipe',True); _.l_registerSwitches( triggers, switches );
 
-_.appInfo[__.appReg] = {"file": "testing123.py", "liveAppName": "testing123", "description": "Changes the world", "categories": [""], "usage": [], "relatedapps": [], "prerequisite": [], "examples": [""], "columns": [], "aliases": [], "notes": []}
+#_.appInfo[__.appReg] = {"file": "thisApp2.py", "liveAppName": "thisApp2", "description": "Changes the world", "categories": [""], "usage": [], "relatedapps": [], "prerequisite": [], "examples": [""], "columns": [], "aliases": [], "notes": []}
 _.appData[__.appReg] = {"start": __.startTime, "uuid": "", "audit": [], "pipe": False, "data": {"field": {"sent": [], "received": []}, "table": {"sent": [], "received": []}}}
 
 _.autoBackupData = __.autoCreationConfiguration['backup']

