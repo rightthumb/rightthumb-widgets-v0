@@ -17,13 +17,16 @@ if [%gitfilesago%] == [] (
 call b back > nul
 goto:eof
 :one
-call p. files -nof1 -backup -w --c -ago 10h  | p. line --c -make "git add {}" | p. execute
+echo one
+call p files -backup -w --c -ago 10h  | p. line --c -make "git add {}" | p. execute
 goto:eof
 :two
-call p. files -nof1 -backup -w --c -ago %*  | p. line --c -make "git add {}" | p. execute
+echo two
+call p files -backup -w --c -ago %*  | p. line --c -make "git add {}" | p. execute
 goto:eof
 :three
-call p. files -nof1 -backup -w --c -ago %1  | p. line --c -make "git add {}" | p. execute
+echo three
+call p files -backup -w --c -ago %1  | p. line --c -make "git add {}" | p. execute
 goto:eof
 
 :vars

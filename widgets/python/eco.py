@@ -82,6 +82,8 @@ os.makedirs(ππ.p.app, exist_ok=True)
 
 ππ.p.eco = os.path.join(ππ.p.app, "eco")
 ππ.p.py = os.path.join(ππ.p.eco, "py")
+ππ.p.apps = os.path.join(ππ.p.eco, "apps")+os.sep
+ππ.p.call = os.path.join(ππ.p.eco, "callable")+os.sep
 ππ.p.db.cli = os.path.join(ππ.p.app, "eco.db")
 ππ.p.db.private = os.path.join(ππ.p.app, "private.db")
 
@@ -100,10 +102,6 @@ else:
     ππ.p.app = "/opt/eco"
 os.makedirs(ππ.p.app, exist_ok=True)
 
-ππ.p.eco = os.path.join(ππ.p.app, "eco")
-ππ.p.py = os.path.join(ππ.p.eco, "py")
-ππ.p.db.cli = os.path.join(ππ.p.app, "eco.db")
-ππ.p.db.private = os.path.join(ππ.p.app, "private.db")
 
 def EnsureDB():
     if not os.path.exists(ππ.p.db.cli):
@@ -117,7 +115,8 @@ EnsureDB()
 
 import sqlite3
 
-def loader(db, table='py', cond={'usage': 'ecocli'}):
+def loader(db, table='py', cond={'usage': 'ecocli'}, saveTo='py'):
+    folder = os.path.join(ππ.p.eco, saveTo)
     conn = sqlite3.connect(db)
     conn.row_factory = sqlite3.Row
     where = 'WHERE ' + ' AND '.join(f'"{k}"=?' for k in cond) if cond else ''
@@ -136,10 +135,10 @@ def loader(db, table='py', cond={'usage': 'ecocli'}):
         
 
 
-        file = os.path.join(ππ.p.py, name)+'.py'
+        file = os.path.join(folder, name)+'.py'
         file = file.replace('/', os.sep).replace('\\', os.sep).replace('.py.py', '.py')
-        if not os.path.exists(ππ.p.py):
-            os.makedirs(ππ.p.py, exist_ok=True)
+        if not os.path.exists(folder):
+            os.makedirs(folder, exist_ok=True)
         if not os.path.exists(file):
             print(name)
             with open(file, 'w', encoding='utf-8') as f:
@@ -149,48 +148,20 @@ def loader(db, table='py', cond={'usage': 'ecocli'}):
 
 
 
-
-
-
-
-#         print(name)
-#         if not code:
-#             continue
-#         lines = []
-#         for line in code.split('\n'):
-#             if line.startswith('import ') or line.startswith('from '):
-#                 if line not in imports:
-#                     imports.append(line)
-#             else:
-#                 lines.append(line)
-#         code = '\n'.join(lines)
-#         try:
-#             exec(code, globals(), locals())
-#             for line in code.split('\n'):
-#                 if '=' in line and 'π.e.' in line:
-#                     key = line.split('=')[0].strip()
-#                     out[key.replace('π', 'pi')] = str(eval(key)).split(' ')[0].replace('<', '')
-#         except Exception as e:
-#             print(f"[EcoCLI] ⚠️ {name} Error loading {key}: {e}")
-#     return out, imports
-
-
-
-# π.l.collables, imports = loader(π.p.db.cli, 'py', {'usage': 'ecocli'})
-
-# for imp in imports:
-#     # if not 'nt' == os.name and 'readline' in imp:
-#     #     continue
-
-#     exec(imp)  # GLOBAL
-# π.db.cli = π.e.sqliteMgr(π.p.db.cli)
-# π.db.cli.delete('py', {'name': 'SwitchManager'})
-
 loader(ππ.p.db.cli, 'py', {'usage': 'ecocli'})
 π = Import('construct',ππ.p.py)
 
 
 
+
+
+
+π.cli = ππ.p.db.cli
+π.apps = ππ.p.apps
+π.ππ = ππ
+π.Import = Import
+loader(ππ.p.db.cli, 'apps', {'usage': 'general'}, saveTo='apps')
+# loader(ππ.p.db.cli, 'callables', {'usage': 'general'}, saveTo='callable')
 
 π.load()
 
@@ -199,9 +170,6 @@ loader(ππ.p.db.cli, 'py', {'usage': 'ecocli'})
 
 π.π = MetaNamespace()
 ππ = MetaNamespace()
-# π.p = MetaNamespace()
-# π.p.db = MetaNamespace()
-# π.db = MetaNamespace()
 π.l = MetaNamespace()
 import sys
 

@@ -4346,8 +4346,11 @@ def isData( data=None, focus=None, pipeClean=False, required=False,     r=None, 
 			# print(vv.isDataData[name])
 			return vv.isDataData[name]
 
-	global switches
 	global appData
+	# if '...' in sys.argv:
+	if __.lines: appData[__.appReg]['pipe'] = __.lines
+
+	global switches
 	if switches.isActive('Paste-isData'):
 		_paste = regImp( __.appReg, '-paste' )
 		appData[__.appReg]['pipe'] = _paste.imp.paste().split('\n')
@@ -10477,6 +10480,7 @@ showLine_list = []
 showLineC = False
 sl = False
 hasPlus=None
+
 def showLine( string, plus = '', minus = '',plusOr = False, end=None,isSub=False, OR=None, code=False, itIs=False, c=False ):
 	ogString = string
 	global showLineC
@@ -11109,7 +11113,9 @@ def saveTable( rows, theFile, tableTemp=False, printThis=True, indentCode=True, 
 	return file0
 
 def getTable(theFile, tableTemp=False, isDic=None, isList=None, tmp=None):
-	# print(theFile)
+	global switches
+	if switches.isActive('Timeout') and 'table' in switches.value('Timeout'):
+		print(theFile)
 	if os.path.isfile(theFile):
 		vv.opened_file_me[theFile] = os.path.getmtime(theFile)
 

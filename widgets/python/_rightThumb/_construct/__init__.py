@@ -46,6 +46,26 @@ appInfoAcquiredData = { 'app': '', 'focus': '', 'data': None }
 # HasSwitchSubGroup search for in framework
 
 ##################################################
+
+
+
+import sys
+from io import StringIO
+
+if not sys.stdin.isatty():
+    stdin_data = sys.stdin.read()
+    sys.stdin = StringIO(stdin_data)  # Replace with in-memory stream
+    lines = [line.strip() for line in sys.stdin if line.strip()]
+    sys.stdin.seek(0)  # Reset pointer for reuse
+else:
+    lines = []
+
+
+
+
+
+
+##################################################
 ForcePipe = False
 import sys
 if '--pipe' in sys.argv:

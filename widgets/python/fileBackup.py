@@ -767,7 +767,12 @@ def secureFiles(path):
 
 		elif secure_record['Encrypt'] and __.fileBackup.isPreOpen:
 			if _.isCrypt(path):
-				secureFiles_Decrypt( path, secure_record['Password'] )
+				try:
+					# ...
+					secureFiles_Decrypt( path, secure_record['Password'] )
+				except:
+					_.pr('Error decrypting file:', path)
+					_.isExit(__file__)
 
 		# _.pr( 'isPreOpen', __.fileBackup.isPreOpen )
 

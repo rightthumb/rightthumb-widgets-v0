@@ -4275,31 +4275,10 @@ def load():
 
 
 
-				# 'save_clip_0': { 'raw': [ 'space.','ctrl.', '0' ], 'do': 'Clip.save_clip_0()' },
-				# 'save_clip_1': { 'raw': [ 'space.','ctrl.', '1' ], 'do': 'Clip.save_clip_1()' },
-				# 'save_clip_2': { 'raw': [ 'space.','ctrl.', '2' ], 'do': 'Clip.save_clip_2()' },
-				# 'save_clip_3': { 'raw': [ 'space.','ctrl.', '3' ], 'do': 'Clip.save_clip_3()' },
-				# 'save_clip_4': { 'raw': [ 'space.','ctrl.', '4' ], 'do': 'Clip.save_clip_4()' },
-				# 'save_clip_5': { 'raw': [ 'space.','ctrl.', '5' ], 'do': 'Clip.save_clip_5()' },
-				# 'save_clip_6': { 'raw': [ 'space.','ctrl.', '6' ], 'do': 'Clip.save_clip_6()' },
-				# 'save_clip_7': { 'raw': [ 'space.','ctrl.', '7' ], 'do': 'Clip.save_clip_7()' },
-				# 'save_clip_8': { 'raw': [ 'space.','ctrl.', '8' ], 'do': 'Clip.save_clip_8()' },
-				# 'save_clip_9': { 'raw': [ 'space.','ctrl.', '9' ], 'do': 'Clip.save_clip_9()' },
-
-				# 'load_clip_0': { 'raw': [ 'win.','space.', '0' ], 'do': 'Clip.load_clip_0()' },
-				# 'load_clip_1': { 'raw': [ 'win.','space.', '1' ], 'do': 'Clip.load_clip_1()' },
-				# 'load_clip_2': { 'raw': [ 'win.','space.', '2' ], 'do': 'Clip.load_clip_2()' },
-				# 'load_clip_3': { 'raw': [ 'win.','space.', '3' ], 'do': 'Clip.load_clip_3()' },
-				# 'load_clip_4': { 'raw': [ 'win.','space.', '3' ], 'do': 'Clip.load_clip_4()' },
-				# 'load_clip_5': { 'raw': [ 'win.','space.', '4' ], 'do': 'Clip.load_clip_5()' },
-				# 'load_clip_6': { 'raw': [ 'win.','space.', '5' ], 'do': 'Clip.load_clip_6()' },
-				# 'load_clip_7': { 'raw': [ 'win.','space.', '7' ], 'do': 'Clip.load_clip_7()' },
-				# 'load_clip_8': { 'raw': [ 'win.','space.', '8' ], 'do': 'Clip.load_clip_8()' },
-				# 'load_clip_9': { 'raw': [ 'win.','space.', '9' ], 'do': 'Clip.load_clip_9()' },
 
 				'save_clip_0': { 'raw': [ 'shift.,2', '0' ], 'do': 'Clip.save_clip_0()' },
-				'save_clip_1-Haystack': { 'raw': [ 'shift.,2', '1' ], 'do': 'Clip.save_clip_1()' },
-				'save_clip_2-Needle': { 'raw': [ 'shift.,2', '2' ], 'do': 'Clip.save_clip_2()' },
+				'save_clip_1-Haystack__12': { 'raw': [ 'shift.,2', '1' ], 'do': 'Clip.save_clip_1()' },
+				'save_clip_2-Needle____12': { 'raw': [ 'shift.,2', '2' ], 'do': 'Clip.save_clip_2()' },
 				'save_clip_3': { 'raw': [ 'shift.,2', '3' ], 'do': 'Clip.save_clip_3()' },
 				'save_clip_4': { 'raw': [ 'shift.,2', '4' ], 'do': 'Clip.save_clip_4()' },
 				'save_clip_5': { 'raw': [ 'shift.,2', '5' ], 'do': 'Clip.save_clip_5()' },

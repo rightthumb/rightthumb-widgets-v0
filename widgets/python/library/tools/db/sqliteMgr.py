@@ -27,12 +27,41 @@ class sqliteMgr:
 		else:
 			self.logs.append(f'SQL: {sql}')
 
+	# def insert(self, table_name, records):
+	# 	if not records:
+	# 		return
+	# 	if not self.table_exists(table_name):
+	# 		self.createTable(table_name, records)
+
+	# 	self.ensure_columns_exist(table_name, records)
+	# 	for record in records:
+	# 		columns = [f'"{col}"' for col in record.keys()]
+	# 		placeholders = ['?' for _ in record]
+	# 		sql = f'INSERT INTO {table_name} ({", ".join(columns)}) VALUES ({", ".join(placeholders)})'
+	# 		params = tuple(record.values())
+	# 		self.safe_log_sql(sql, params)
+	# 		try:
+	# 			self.cursor.execute(sql, params)
+	# 		except Exception as e:
+	# 			self.logs.append(f'Insert error: {str(e)}')
+	# 	self.conn.commit()
+
+
 	def insert(self, table_name, records):
+		self.logs.append('fn: insert')
 		if not records:
 			return
+
+		if isinstance(records, dict):
+			records = [records]
+		if not isinstance(records, list):
+			raise TypeError(f'records must be dict or list of dicts, got {type(records)}')
+
 		if not self.table_exists(table_name):
 			self.createTable(table_name, records)
+
 		self.ensure_columns_exist(table_name, records)
+
 		for record in records:
 			columns = [f'"{col}"' for col in record.keys()]
 			placeholders = ['?' for _ in record]
@@ -44,6 +73,7 @@ class sqliteMgr:
 			except Exception as e:
 				self.logs.append(f'Insert error: {str(e)}')
 		self.conn.commit()
+
 
 	def read(self, table_name, conditions={}):
 		self.logs.append('fn: read')
@@ -129,20 +159,44 @@ class sqliteMgr:
 		except Exception as e:
 			self.logs.append(f'Error in structureMgr: {str(e)}')
 
+	# def createTable(self, table_name, records):
+	# 	self.logs.append('fn: createTable')
+	# 	fields = {}
+	# 	for record in records:
+	# 		if isinstance(record, dict):
+	# 			for key, value in record.items():
+	# 				fields[key] = self.get_type(value)
+	# 	columns_sql = ', '.join(f'"{k}" {v}' for k, v in fields.items())
+
+	# 	sql = f'CREATE TABLE "{table_name}" ({columns_sql})'
+	# 	self.logs.append(sql)
+	# 	self.cursor.execute(sql)
+	# 	self.conn.commit()
+	# 	self.logs.append(f'Table created: {table_name}')
+
 	def createTable(self, table_name, records):
 		self.logs.append('fn: createTable')
 		fields = {}
+
+		if isinstance(records, dict):
+			records = [records]  # 🔧 Ensure it’s a list of dicts
+
 		for record in records:
 			if isinstance(record, dict):
 				for key, value in record.items():
 					fields[key] = self.get_type(value)
-		columns_sql = ', '.join(f'"{k}" {v}' for k, v in fields.items())
 
+		if not fields:
+			raise ValueError(f'No valid fields found to create table "{table_name}"')
+
+		columns_sql = ', '.join(f'"{k}" {v}' for k, v in fields.items())
 		sql = f'CREATE TABLE "{table_name}" ({columns_sql})'
 		self.logs.append(sql)
 		self.cursor.execute(sql)
 		self.conn.commit()
 		self.logs.append(f'Table created: {table_name}')
+
+
 
 	def table_exists(self, table_name):
 		self.logs.append('fn: table_exists')
