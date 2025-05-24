@@ -101,6 +101,7 @@ if os.name == 'nt':
 else:
     ππ.p.app = "/opt/eco"
 os.makedirs(ππ.p.app, exist_ok=True)
+os.makedirs(ππ.p.call, exist_ok=True)
 
 
 def EnsureDB():
