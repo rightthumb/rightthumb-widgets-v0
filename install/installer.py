@@ -3746,6 +3746,8 @@ alias curl.="curl -sLk"
 
 alias pid="ps aux | grep "
 
+alias _name="sudo hostnamectl set-hostname "
+
 # get_time_difference
 # a3bc42ec51e9
 

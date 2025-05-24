@@ -188,6 +188,7 @@ def cl(text):
 
 def action():
 	global templates
+	global documentation
 	global alias
 	if _.switches.isActive('ListTemplates'):
 		for key in templates: _.pr(key)
@@ -204,6 +205,12 @@ def action():
 		if not template in templates:  _.e('invalid template','deny access basic')
 		_.saveText(templates[template].strip(),'.htaccess')
 		_.pr(templates[template])
+		if template in documentation:
+			_.pr(line=1,c='yellow')
+			_.pr(line=1,c='yellow')
+			_.pr(documentation[template])
+			_.pr(line=1,c='yellow')
+			_.pr(line=1,c='yellow')
 		return None
 		
 	if os.path.isfile('.htaccess'):
@@ -267,11 +274,34 @@ def action():
 	backup('.htaccess')
 
 
+documentation={}
+documentation['get']='''
+<?php
+if (isset($_GET['__path'])) {
+    $segments = explode('/', trim($_GET['__path'], '/'));
+    $_GET['path'] = $segments;
+    unset($_GET['__path']);
+}
 
+header('Content-Type: application/json');
+echo json_encode($_GET, JSON_PRETTY_PRINT);
+
+'''.strip()
 	
 	# rightthumb\\.com|eyeformeta\\.com
 templates={}
 
+templates['get']='''
+RewriteEngine On
+
+# Skip real files and folders
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Send everything to /path/index.php with a helper parameter
+RewriteRule ^(.*)$ /index.php?__path=$1 [L,QSA]
+
+'''.strip()
 templates['public']='''
 <IfModule mod_headers.c>
     Header Set Access-Control-Allow-Origin "*"
