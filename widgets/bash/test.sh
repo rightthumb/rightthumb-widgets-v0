@@ -1,0 +1,1 @@
+#!/bin/bashargv = ''for i in $*; do     argv = "$argv $i"doneecho $argv

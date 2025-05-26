@@ -54,4 +54,3 @@ if not exist "%rt%\profile\config\.vault.%vault_pin%" (
 )
 goto :end
 :end
-cls

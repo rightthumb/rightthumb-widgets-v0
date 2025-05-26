@@ -1,0 +1,78 @@
+import _rightThumb._construct as __;appDBA=__.clearFocus(__name__,__file__);__.appReg=appDBA;import _rightThumb._base3 as _;
+def focus(parentApp='', childApp='', reg=True): global appDBA; f = __.appName(appDBA, parentApp, childApp); return f if reg else f
+fieldSet=_.l.vars(focus(),__name__,__file__,appDBA);_.load();_v=__.imp('_rightThumb._vars')
+
+def sw():
+	pass
+	_.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=False )
+_._default_settings_()
+
+_.appInfo[focus()] = {
+	'file': 'thisApp.py',
+	'description': 'Changes the world',
+	'categories': [
+						'DEFAULT',
+				],
+	'examples': [
+						_.hp('p thisApp -file file.txt'),
+						_.linePrint(label='simple',p=0),
+						'',
+	],
+	'columns': [
+	],
+	'aliases': [],
+	'relatedapps': [],
+	'prerequisite': [],
+	'notes': [],
+}
+
+_.appInfo[focus()] = _.appInfoContinuity(__.thisApp( __file__ ),_.appInfo[focus()])
+_.appData[focus()] = _.appDataContinuity()
+def appRegDics(): return { 'appInfo': _.appInfo[focus()], 'appData': _.appData[focus()] }
+
+def triggers():
+	_._default_triggers_()
+	_.switches.trigger( 'Files', _.myFileLocations, vs=True )
+	_.switches.trigger( 'DB', _.aliasesFi )
+	_.switches.trigger( 'Folder', _.myFolderLocations )
+	_.switches.trigger( 'OutputFolder', _.aliasesFo )
+def _local_(do): exec(do)
+_.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw )
+########################################################################################
+#n)--> start
+
+# from _rightThumb._base3.library.functions.code.pyClassesFunctions import pyClassesFunctions, ranges
+
+# from _rightThumb._base3.library.classes.code.PythonCodeColorizer import PythonCodeColorizer
+
+# from _rightThumb._base3.library.tools.code.classes.CodeIndexerPygments import CodeIndexerPygments
+
+# def action():
+# 	text = 'this is a test'
+# 	c =_.pr(text,h='asdf')
+# 	# print(c)
+# 	# fi = _.switches.value('Files')
+# 	# # _.pr(fi)
+# 	# # return False
+# 	# code = _.getText( fi, raw=True )
+# 	# # color = PythonCodeColorizer()
+# 	# # test = color.colorize(code)
+# 	# # test = pyClassesFunctions(code)
+# 	# index = CodeIndexerPygments( code )
+# 	# index.color()
+
+# 	# print( test )
+
+
+from _rightThumb._base3.library.tools.security.modules.liaison import liaison
+def action():
+	lias = liaison('hexColor', '123')
+	mod=lias.secureModule()
+	# for x in dir(mod): print(x)
+	# mod.hexColor('test',c='red',p=1,asdf=1)
+	mod.hexColor('test',c='red',p=1)
+	# lias.interact('test',c='red',p=1,asdf=2)
+
+########################################################################################
+if __name__ == '__main__':
+	action(); _.isExit(__file__)

