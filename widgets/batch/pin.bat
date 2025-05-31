@@ -1,6 +1,7 @@
 @echo off
 if [%isPWSH%] == [] (
-    call isPWSH print
+    call isPWSH
+    @REM call isPWSH print
 )
 @REM echo pin isPWSH = %isPWSH%
 if [%isPWSH%] == [yes] (

@@ -53,13 +53,13 @@ import sys
 from io import StringIO
 
 if not sys.stdin.isatty():
-    stdin_data = sys.stdin.read()
-    sys.stdin = StringIO(stdin_data)  # Replace with in-memory stream
-    # PIPE = [line for line in sys.stdin if line]
-    PIPE = [line.rstrip() for line in sys.stdin]
-    sys.stdin.seek(0)  # Reset pointer for reuse
+	stdin_data = sys.stdin.read()
+	sys.stdin = StringIO(stdin_data)  # Replace with in-memory stream
+	# PIPE = [line for line in sys.stdin if line]
+	PIPE = [line.rstrip() for line in sys.stdin]
+	sys.stdin.seek(0)  # Reset pointer for reuse
 else:
-    PIPE = []
+	PIPE = []
 
 
 
@@ -155,6 +155,174 @@ def endTrace(functions=None,a=False):
 					table[record['file']][record['function']] = 0
 				if table[record['file']][record['function']] == 0:
 					print(f'{record["function"]} in {record["file"]}:{record["line"]}')
+#################################################
+
+import sys
+import json
+class SwitchManager:
+	def __init__(self, command=None, Switches=None, Triggers=None):
+		if isinstance(command, int):
+			command = sys.argv[command:]
+		elif isinstance(command, str):
+			command = command.replace('  ', ' ').split(' ')
+		elif not command:
+			command = sys.argv
+
+		self.command = command
+		self.app = command[0]
+		self.args = command[1:]
+
+		if Switches is None:
+			Switches = {}
+		if Triggers is None:
+			Triggers = {}
+
+		self.triggers = {**Triggers}
+		self.switchesRegister = self._flatten_switches(Switches)
+		self.used = {}
+		self._Values = {}
+		self.usage = {}
+		self.instances = {}
+
+		self.flag_to_key = {}
+		for key, val in self.switchesRegister.items():
+			self.used[key] = False
+			self._Values[key] = []
+			if isinstance(val, str):
+				val = val.strip().replace('  ', ' ').replace(' ', ',')
+				self.switchesRegister[key] = val
+			for flag in self.switchesRegister[key].split(','):
+				self.flag_to_key[flag] = key
+
+		self.parse()
+
+	def _flatten_switches(self, switches):
+		flat = {}
+		for group_or_key, val in switches.items():
+			if isinstance(val, dict):
+				flat.update(val)
+			else:
+				flat[group_or_key] = val
+		return flat
+
+	def _clean_quotes(self, value):
+		if not isinstance(value, str):
+			return value
+		for quote in ["'", '"']:
+			if value.startswith(quote * 2) and value.endswith(quote * 2):
+				value = value[2:-2]
+			elif value.startswith(quote) and value.endswith(quote):
+				value = value[1:-1]
+		return value
+
+	def parse(self):
+		current_switch = None
+		current_key = None
+		i = 0
+
+		while i < len(self.args):
+			arg = self.args[i]
+
+			# Handle --flag=value format
+			if arg.startswith('--') and '=' in arg:
+				flag, val = arg.split('=', 1)
+				key = self.flag_to_key.get(flag)
+				if key:
+					current_key = key
+					current_switch = flag
+					self._register_usage(key, current_switch)
+					values = val.split(',')
+					for v in values:
+						value = self.triggers[key](v) if key in self.triggers else v
+						value = self._clean_quotes(value)
+						self._Values[key].append(value)
+						self.instances[key][current_switch].append(value)
+
+			# Handle standalone flags like -pulldown or -m
+			elif arg in self.flag_to_key:
+				key = self.flag_to_key[arg]
+				current_key = key
+				current_switch = arg
+				self._register_usage(key, current_switch)
+				if self._Values[key] == []:
+					self._Values[key] = True
+
+			# Handle values passed after a flag
+			elif current_key and current_switch:
+				if self._Values[current_key] is True:
+					self._Values[current_key] = []
+				value = self.triggers[current_key](arg) if current_key in self.triggers else arg
+				value = self._clean_quotes(value)
+				self._Values[current_key].append(value)
+				self.instances[current_key][current_switch].append(value)
+
+			# Orphan value (no active flag) — ignored, or could log
+			else:
+				pass
+
+			i += 1
+
+
+	def _register_usage(self, key, flag):
+		self.used[key] = True
+		if key not in self.instances:
+			self.instances[key] = {}
+		if flag not in self.instances[key]:
+			self.instances[key][flag] = []
+		if key not in self.usage:
+			self.usage[key] = []
+		if flag not in self.usage[key]:
+			self.usage[key].append(flag)
+
+	def isActive(self, name):
+		return self.used.get(name, False)
+
+	def values(self, name):
+		val = self._Values.get(name, [])
+		if val is True:
+			return []
+		return val
+
+	def value(self, name):
+		vals = self.values(name)
+		if len(vals) == 1:
+			return vals[0]
+		return ','.join(vals)
+
+	def Values(self, name, instance=None):
+		if name not in self.instances:
+			return []
+		if instance is not None:
+			return self.instances[name].get(instance, [])
+		return self.values(name)
+
+	def strip(self):
+		return [item for item in self.command if item not in self.flag_to_key]
+
+	def validate(self):
+		print('___________\nApp:')
+		print(self.app)
+		print('___________\nUsed:')
+		print(json.dumps(self.used, indent=4))
+		print('___________\nValues:')
+		print(json.dumps(self._Values, indent=4))
+		print('___________\nUsage:')
+		print(json.dumps(self.usage, indent=4))
+		print('___________\nInstances:')
+		print(json.dumps(self.instances, indent=4))
+
+	def dump(self):
+		return {
+			'command': self.command,
+			'app': self.app,
+			'used': self.used,
+			'values': self._Values,
+			'usage': self.usage,
+			'instances': self.instances
+		}
+
+
+Switches = SwitchManager
 #################################################
 
 

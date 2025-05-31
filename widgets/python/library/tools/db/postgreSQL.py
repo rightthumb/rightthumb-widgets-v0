@@ -14,6 +14,43 @@ class postgresMgr:
         self.cursor = self.conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
         self.structure = False
 
+    def sql(self, sql, params=None, fetch=False):
+        """
+        Execute arbitrary SQL commands, optionally with parameters.
+        Set fetch=True to return results (e.g., for SELECT queries).
+
+        # Create a new table
+        db().sql('CREATE TABLE IF NOT EXISTS demo_table (id SERIAL PRIMARY KEY, name TEXT)')
+
+        # Insert data using raw SQL
+        db().sql('INSERT INTO demo_table (name) VALUES (%s)', ('Alice',))
+
+        # Read data
+        rows = db().sql('SELECT * FROM demo_table', fetch=True)
+        print(rows)
+
+        # Alter table (add column)
+        db().sql('ALTER TABLE demo_table ADD COLUMN age INT')
+        """
+        self.logs.append('fn: sql')
+        self.logs.append(f'Executing SQL: {sql}')
+        try:
+            if params:
+                self.cursor.execute(sql, params)
+            else:
+                self.cursor.execute(sql)
+            if fetch:
+                results = self.cursor.fetchall()
+                self.logs.append(f'Fetched {len(results)} records.')
+                return results
+            else:
+                self.logs.append(f'Executed successfully.')
+        except psycopg2.Error as e:
+            self.logs.append(f'Error executing SQL: {str(e)}')
+            return None
+
+
+
     def insert(self, table_name, records):
         self.logs.append('fn: insert')
         if not self.structure:

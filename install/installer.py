@@ -3749,6 +3749,15 @@ alias pid="ps aux | grep "
 alias name...="sudo hostnamectl set-hostname "
 alias name....="sudo nano /etc/hosts"
 alias pp="realpath -- "
+
+
+
+
+
+
+
+
+
 # get_time_difference
 # a3bc42ec51e9
 

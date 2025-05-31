@@ -3199,8 +3199,52 @@ function get__THETABLE( $ID_label ){
 		_copy.imp.copy( '\n'.join(rows), p=0 )
 
 
+
+
+
+
+
+	def extract_huggingface_download_command(self,text, local_dir='.', symlinks=False):
+		# Fix broken slashes from copy-paste formatting
+		text = text.replace('\n/', '/').replace('/\n', '/')
+
+		# Extract repo: anything like org_name/repo_name-GGUF
+		repo_match = re.search(r'([a-zA-Z0-9_.-]+/[a-zA-Z0-9_.-]*-GGUF)', text)
+		repo = repo_match.group(1).strip() if repo_match else None
+
+		# Extract filename: any GGUF file
+		filename_match = re.search(r'([a-zA-Z0-9_.-]+\.gguf)', text)
+		filename = filename_match.group(1).strip() if filename_match else None
+
+		if not repo or not filename:
+			return ''
+			# raise ValueError("Could not extract model repo or filename from input.")
+
+		# Build huggingface-cli command
+		command = (
+			f"huggingface-cli download {repo} {filename} "
+			f"--local-dir {local_dir} --local-dir-use-symlinks {str(symlinks)}"
+		)
+		return command
+
+
+
+
+
+	def validate_huggingface_download_command(self, command: str) -> bool:
+		import re
+		pattern = (
+			r'^huggingface-cli download\s+'
+			r'[a-zA-Z0-9_.-]+/[a-zA-Z0-9_.-]+\s+'
+			r'[a-zA-Z0-9_.-]+\.gguf\s+'
+			r'--local-dir\s+[^\s]+\s+'
+			r'--local-dir-use-symlinks\s+(True|False)$'
+		)
+		return bool(re.match(pattern, command.strip()))
+
+
 	def scrape_paths(self):
-		import pyautogui
+		import pyautogui # type: ignore
 
 		pyautogui.doubleClick()
 		pyautogui.click()
@@ -3211,7 +3255,21 @@ function get__THETABLE( $ID_label ){
 		_copy = _.regImp( __.appReg, '-copy' )
 		text = _paste.imp.paste().strip()
 		text = text.replace('\\/','/').strip()
-		print(text)
+
+		if '.gguf' in text:
+			try:
+				gguf = self.extract_huggingface_download_command(str(text))
+				_.pr(line=1)
+				print(gguf)
+				_.pr(line=1)
+				if '.gguf' in gguf:
+					if self.validate_huggingface_download_command(gguf):
+						_copy.imp.copy( gguf, p=0 )
+						return None
+
+			except: pass
+
+		# print(text)
 		
 		isHTML=is_html(text)
 
@@ -3219,9 +3277,11 @@ function get__THETABLE( $ID_label ){
 			result=extract_urls(text)
 		else:
 			text = text.replace('└─','')
+				
 
 			windows_paths, linux_paths, urls = scrape_all(text)
 			result=[]
+
 			for path in windows_paths:
 				if not "'" in path:
 					result.append(path)

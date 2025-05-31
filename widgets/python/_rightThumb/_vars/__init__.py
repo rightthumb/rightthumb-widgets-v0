@@ -46,6 +46,72 @@ def dics(*arg):
 	return dic
 
 
+yFig_data = {}
+def yFig(file,key=None,de=0):
+	global yFig_data
+	fi = home  +os.sep+'.rt'+os.sep+  file
+	if not os.path.isfile(fi):
+		for ext in ['.yml','.yaml']:
+			fi = home  +os.sep+'.rt'+os.sep+  file + ext
+			if os.path.isfile(fi):
+				break
+
+	if not os.path.isfile(fi):
+		_.pr('Error: yFig', file, 'file not found')
+		return None
+	if not yFig_data:
+		import yaml # type: ignore
+		try:
+			with open(fi, 'r', encoding='utf-8') as f:
+				yFig_data = yaml.safe_load(f)
+		except Exception as e:
+			_.pr('Error: yFig', file, 'could not load yaml file',c='red')
+			return None
+		
+	if key is not None:
+		return yFig_data
+	
+	if key in yFig_data:
+		if de:
+			_vault = _.regImp( __.appReg, '_rightThumb._vault' )
+			return _vault.imp.s.de( yFig_data[key] )
+		return yFig_data[key]
+	_.pr('Error: key not found in yFig',c='red')
+
+
+jFig_data = {}
+def jFig(file,key,de=0):
+	global jFig_data
+
+	fi = home  +os.sep+'.rt'+os.sep+  file
+	if not os.path.isfile(fi):
+		for ext in ['.yml','.yaml']:
+			fi = home  +os.sep+'.rt'+os.sep+  file + ext
+			if os.path.isfile(fi):
+				break
+
+	if not os.path.isfile(fi):
+		_.pr('Error: jFig', file, 'file not found')
+		return None
+	if not jFig_data:
+		import json
+		try:
+			with open(fi, 'r', encoding='utf-8') as f:
+				jFig_data = json.load(f)
+		except Exception as e:
+			_.pr('Error: jFig', file, 'could not load yaml file',c='red')
+			return None
+		
+	if key is not None:
+		return jFig_data
+	
+	if key in jFig_data:
+		if de:
+			_vault = _.regImp( __.appReg, '_rightThumb._vault' )
+			return _vault.imp.s.de( jFig_data[key] )
+		return jFig_data[key]
+	_.pr('Error: key not found in jFig',c='red')
+
 def path_fix(path):
 	path=path.replace('/',os.sep).replace('\\',os.sep)
 	path=_str.do('dup',path,os.sep)
@@ -409,7 +475,10 @@ def vaultPath(forceLogin=False):
 	try:
 		pin = os.getenv('vault_pin')
 	except:
-		pin = vaultPinLogin()
+		try:
+			pin = os.getenv('vp')
+		except:
+			pin = vaultPinLogin()
 	if pin is None:
 		pin = vaultPinLogin()
 

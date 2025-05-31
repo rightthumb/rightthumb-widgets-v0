@@ -436,6 +436,57 @@ alias yt.dl="sudo wget https://github.com/blackjack4494/yt-dlc/releases/latest/d
 
 
 
+xd5() {
+	local input="$1"
+
+	if [[ -z "$input" ]]; then
+		echo -n "Enter: "
+
+		# Custom star-printing password reader
+		input=""
+		while IFS= read -r -s -n1 char; do
+			# Enter key ends input
+			[[ $char == $'\0' || $char == $'\n' ]] && break
+			# Backspace handling
+			if [[ $char == $'\177' ]]; then
+				if [ -n "$input" ]; then
+					input="${input%?}"
+					echo -ne "\b \b"
+				fi
+			else
+				input+="$char"
+				echo -n "*"
+			fi
+		done
+		echo
+	fi
+
+	if [[ -f "$input" ]]; then
+		# It's a file
+		if command -v md5sum >/dev/null 2>&1; then
+			export xd5=$(md5sum "$input" | awk '{print $1}')
+		elif command -v md5 >/dev/null 2>&1; then
+			export xd5=$(md5 -q "$input")
+		else
+			echo "No md5 tool found." >&2
+			return 1
+		fi
+	else
+		# It's a string
+		if command -v md5sum >/dev/null 2>&1; then
+			export xd5=$(echo -n "$input" | md5sum | awk '{print $1}')
+		elif command -v md5 >/dev/null 2>&1; then
+			export xd5=$(echo -n "$input" | md5 | awk '{print $NF}')
+		else
+			echo "No md5 tool found." >&2
+			return 1
+		fi
+	fi
+	alias vp="export vault_pin=$xd5"
+}
+
+
+
 alias url="$widgets/widgets/bash/url.sh"
 alias u="$widgets/widgets/bash/url.sh"
 alias uploadFolder="$widgets/widgets/bash/uploadFolder.sh"

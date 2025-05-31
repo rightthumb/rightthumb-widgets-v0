@@ -1,5 +1,8 @@
 import os
 
+# s.de = string_de
+# s.en = string_en
+
 # ## {R2D2919B742E} ##
 # ###########################################################################
 # What if magic existed?
@@ -213,6 +216,7 @@ def key(password=None):
 			_blowfish.myEn('1998',password)
 	enPass = open(auto, 'r').read()
 	gateKey = _blowfish.decrypt( enPass,456)
+	# gateKey = _blowfish.decryptU( enPass,456)
 	return gateKey
 
 def string( data ):

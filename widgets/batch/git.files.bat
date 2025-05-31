@@ -1,6 +1,15 @@
 @echo off
 call m back --c
+call b w --c
 call:vars %*
+
+if "%2" == "" (
+    set shouldbackup=-backup
+    echo backup enabled
+) else (
+    set "shouldbackup="
+    echo backup disabled
+)
 
 if [%gitfilesrepo%] == [] (
     call b w > nul
@@ -17,16 +26,19 @@ if [%gitfilesago%] == [] (
 call b back > nul
 goto:eof
 :one
-echo one
-call p files -backup -w --c -ago 10h  | p. line --c -make "git add {}" | p. execute
+call b w --c
+@REM echo one
+call p files %shouldbackup% -w --c -ago 10h  | p. line --c -make "git add {}" | p. execute
 goto:eof
 :two
-echo two
-call p files -backup -w --c -ago %*  | p. line --c -make "git add {}" | p. execute
+call b w --c
+@REM echo two
+call p files %shouldbackup% -w --c -ago %*  | p. line --c -make "git add {}" | p. execute
 goto:eof
 :three
-echo three
-call p files -backup -w --c -ago %1  | p. line --c -make "git add {}" | p. execute
+call b w --c
+@REM echo three
+call p files %shouldbackup% -w --c -ago %1  | p. line --c -make "git add {}" | p. execute
 goto:eof
 
 :vars

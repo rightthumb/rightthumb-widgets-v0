@@ -253,6 +253,7 @@ def myDe2(text,password):
 	except (ValueError, KeyError) as e:
 		print(f'Decryption error: {e}')
 		return "Decryption failed. Incorrect padding or invalid key."
+	
 def decrypt( data, password=False ):
 	crypt_obj = Blowfish.new(newKey(password), Blowfish.MODE_ECB)
 	decoded = base64.b64decode(data)
@@ -260,6 +261,24 @@ def decrypt( data, password=False ):
 	result = str(decrypt,'iso-8859-1')
 	return result
 	return _str.do('e',result,' ')
+
+
+
+def decryptU(data, password=False):
+	from Crypto.Cipher import Blowfish
+	from Crypto.Util.Padding import unpad
+	import base64
+	crypt_obj = Blowfish.new(newKey(password), Blowfish.MODE_ECB)
+	decoded = base64.b64decode(data)
+	decrypted = crypt_obj.decrypt(decoded)
+
+	try:
+		unpadded = unpad(decrypted, Blowfish.block_size)
+	except ValueError as e:
+		raise Exception(f"Decryption error: {e}")
+
+	return unpadded.decode('utf-8', errors='ignore')
+
 
 def encrypt( data, password=False ):
 	data=str(data)

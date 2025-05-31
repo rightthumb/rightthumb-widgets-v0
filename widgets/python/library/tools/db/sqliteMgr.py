@@ -20,6 +20,39 @@ class sqliteMgr:
 		self.threadLock = threading.Lock()
 		self.threadTimeoutSeconds = {}
 
+
+	def sql(self, sql, params=None, fetch=False):
+		"""
+		Execute arbitrary SQL commands, optionally with parameters.
+		Set fetch=True to return results (e.g., for SELECT queries).
+
+		Examples:
+			db.sql('CREATE TABLE IF NOT EXISTS demo (id INTEGER PRIMARY KEY, name TEXT)')
+			db.sql('INSERT INTO demo (name) VALUES (?)', ('Alice',))
+			rows = db.sql('SELECT * FROM demo', fetch=True)
+		"""
+		self.logs.append('fn: sql')
+		self.logs.append(f'Executing SQL: {sql}')
+		if params:
+			self.safe_log_sql(sql, params)
+		try:
+			if params:
+				self.cursor.execute(sql, params)
+			else:
+				self.cursor.execute(sql)
+			if fetch:
+				columns = [desc[0] for desc in self.cursor.description]
+				results = [dict(zip(columns, row)) for row in self.cursor.fetchall()]
+				self.logs.append(f'Fetched {len(results)} rows')
+				return results
+			else:
+				self.conn.commit()
+				self.logs.append('SQL executed successfully.')
+		except Exception as e:
+			self.logs.append(f'Error executing SQL: {type(e).__name__}: {e}')
+			return None
+
+
 	def safe_log_sql(self, sql, params=None):
 		if params:
 			param_str = ', '.join(repr(p) for p in params)
