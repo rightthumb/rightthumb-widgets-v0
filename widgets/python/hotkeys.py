@@ -324,7 +324,7 @@ def press_f12():
 
 	global last_f12
 	now = time.time()
-	if now - last_f12 < 0.5:
+	if now - last_f12 < 3:
 		return
 	last_f12 = now
 	keyboard = Controller()
