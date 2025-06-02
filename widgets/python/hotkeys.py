@@ -322,7 +322,7 @@ def press_f12():
 	import time
 	if time.time() - f12 < 0.5:
 		return
-	f12 = time.time()L
+	f12 = time.time()
 	from pynput.keyboard import Key, Controller # type: ignore
 	import time
 	keyboard = Controller()
