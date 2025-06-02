@@ -315,9 +315,13 @@ _.postLoad( __file__ )
 ########################################################################################
 # START
 
-
-
+import time
+f12 = time.time()
 def press_f12():
+	global f12
+	if time.time() - f12 < 0.5:
+		return
+	f12 = time.time()
 	from pynput.keyboard import Key, Controller # type: ignore
 	import time
 	keyboard = Controller()
