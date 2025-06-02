@@ -9,6 +9,8 @@ def sw():
 	_.switches.register( 'SearchTitles', '-t,-title,-titles' )
 	_.switches.register( 'File-id', '-fid' )
 	_.switches.register( 'GPT-id', '-id,-gid' )
+	_.switches.register( 'Name', '-n,-name' )
+	_.switches.register( 'Download', '-dl' )
 _._default_settings_()
 
 _.appInfo[focus()] = {
@@ -67,6 +69,8 @@ _.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw )
 
 '''
 
+import re
+
 def action():
 	if _.switches.isActive('List'):
 		fo = _v.tt + _v.slash + 'gptChats' + _v.slash
@@ -93,6 +97,50 @@ def action():
 			path = f"gptChats{_v.slash}{dic['id']}.cache"
 			_.saveTable(dic, path, p=0)
 			_.saveTable(dic, 'gptChats.dex', p=0)
+
+
+
+
+
+
+		if _.switches.isActive('Download'):
+			download_all()
+
+
+
+
+
+
+
+
+
+
+
+
+		if _.switches.isActive('Name') and not _.switches.isActive('File-id'):
+			if _.switches.isActive('GPT-id'):
+				file_path = f"gptChats{_v.slash}{_.switches.value('GPT-id')}.cache"
+				gpt = _.getTable(file_path)
+			else:
+				gpt = _.getTable('gptChats.dex')
+
+			if 'files' in gpt:
+				_.pr()
+				_.pr('🗂️ Code Headings:', c='cyan')
+				for i, file in enumerate(gpt['files']):
+					name = file.get('name', '')
+					if _.showLine(name):
+						I = _.pr(i + 1, c='cyan', p=0)
+						Label = _.pr(name, c='green', p=0)
+						_.pr(f'\t{I}\t{Label}')
+				_.pr()
+			else:
+				_.pr('⚠️ No files found in this entry', c='red')
+			return
+
+
+
+
 	if _.switches.isActive('GPT-id'):
 		file_path = f"gptChats{_v.slash}{_.switches.value('GPT-id')}.cache"
 		gpt = _.getTable(file_path)
@@ -137,6 +185,108 @@ def action():
 			_.pr(file_content)
 		else:
 			_.printVarSimpleFake2(file_content)
+def download_all():
+	from library.tools.os.file.FileAnalyzer import FileAnalyzer
+
+	if _.switches.isActive('GPT-id'):
+		file_path = f"gptChats{_v.slash}{_.switches.value('GPT-id')}.cache"
+	else:
+		_.pr('❌ Missing -id for download', c='red')
+		return
+
+	gpt = _.getTable(file_path)
+	base_folder = 'downloads'
+	all_files = gpt.get('files', [])
+	skipped = []
+
+	# Build cross-reference tokens from all files
+	name_to_content = {
+		file.get('name', '').replace('📁', '').strip(): file.get('content', '')
+		for file in all_files
+	}
+	name_patterns = FileAnalyzer.fn.generate_patterns_dict(name_to_content)
+	reference_tokens = {}
+	for fname, text in name_to_content.items():
+		for token in FileAnalyzer.fn.extract_name_tokens(text):
+			reference_tokens[token] = text
+	ref_patterns = FileAnalyzer.fn.generate_patterns_dict(reference_tokens)
+	ref_matches = FileAnalyzer.fn.compare_patterns_dicts(ref_patterns, name_patterns, threshold=0.25)
+
+	for i, file in enumerate(all_files):
+		name = file.get('name', '').replace('📁', '').strip()
+		content = file.get('content', '')
+
+		# 🧠 Determine if it's likely a file
+		likelihood = FileAnalyzer.fn.score_file_likelihood(name, content, list(reference_tokens.keys()))
+		if likelihood < 0.35:
+			skipped.append((i + 1, name, likelihood))
+			continue
+
+		# 🧠 Guess file path
+		candidates = (
+			FileAnalyzer.fn.scrape_windows_file_paths(name + '\n' + content) +
+			FileAnalyzer.fn.scrape_windows_file_paths2(name + '\n' + content) +
+			FileAnalyzer.fn.scrape_linux_file_paths(name + '\n' + content)
+		)
+
+		# 🧼 Filter out junky candidates that are just fragments or code
+		candidates = [
+			p for p in candidates
+			if (
+				len(p) < 255 and
+				'.' in os.path.basename(p) and
+				not os.path.basename(p).startswith('.') and
+				not any(x in p for x in ['_.', 'pr(', 'replace', 'print', '"', "'", '\\n', 'def ', 'path.', 'snippet', 'file.', '=', ':'])
+			)
+		]
+
+		if not candidates and likelihood < 0.5:
+			skipped.append((i + 1, name, likelihood))
+			continue
+
+		if candidates:
+			rel_path = candidates[0]
+		else:
+			# Look for best reference match
+			ref_guess = None
+			for ref_name, matches in ref_matches.items():
+				for matched_name, score in matches:
+					if matched_name == name:
+						ref_guess = ref_name
+						break
+				if ref_guess:
+					break
+			if ref_guess:
+				rel_path = ref_guess
+			else:
+				parts = name.split()
+				for p in parts:
+					if '.' in p:
+						rel_path = p
+						break
+				else:
+					rel_path = name or 'file.txt'
+
+		try:
+			saved_path = FileAnalyzer.fn.save_file_safe(base_folder, rel_path, content)
+			_.pr(f'✅ Saved {saved_path}', c='green')
+		except Exception as e:
+			_.pr(f'❌ Failed to save: {rel_path} — {e}', c='red')
+
+	if skipped:
+		_.pr('\n🔍 Skipped possible section headers (not treated as files):', h='goldenrod')
+		for idx, sname, sscore in skipped:
+			_.pr(f'⏭️ {idx}\t{sname} (score={sscore})', h='light_gray')
+
+	return
+
+import os
+
+
+
+
+
+
 ########################################################################################
 if __name__ == '__main__':
 	action(); _.isExit(__file__)

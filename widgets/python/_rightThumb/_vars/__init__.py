@@ -45,72 +45,92 @@ def dics(*arg):
 			dic[k] = table[k]
 	return dic
 
-
-yFig_data = {}
-def yFig(file,key=None,de=0):
-	global yFig_data
-	fi = home  +os.sep+'.rt'+os.sep+  file
-	if not os.path.isfile(fi):
-		for ext in ['.yml','.yaml']:
-			fi = home  +os.sep+'.rt'+os.sep+  file + ext
-			if os.path.isfile(fi):
-				break
-
-	if not os.path.isfile(fi):
-		_.pr('Error: yFig', file, 'file not found')
-		return None
-	if not yFig_data:
-		import yaml # type: ignore
-		try:
-			with open(fi, 'r', encoding='utf-8') as f:
-				yFig_data = yaml.safe_load(f)
-		except Exception as e:
-			_.pr('Error: yFig', file, 'could not load yaml file',c='red')
-			return None
-		
-	if key is not None:
-		return yFig_data
-	
-	if key in yFig_data:
-		if de:
-			_vault = _.regImp( __.appReg, '_rightThumb._vault' )
-			return _vault.imp.s.de( yFig_data[key] )
-		return yFig_data[key]
-	_.pr('Error: key not found in yFig',c='red')
+import os
 
 
-jFig_data = {}
-def jFig(file,key,de=0):
-	global jFig_data
 
-	fi = home  +os.sep+'.rt'+os.sep+  file
-	if not os.path.isfile(fi):
-		for ext in ['.yml','.yaml']:
-			fi = home  +os.sep+'.rt'+os.sep+  file + ext
-			if os.path.isfile(fi):
-				break
+YFIG = {}
+def yFig(file=None, key=None, deCrypt=0):
+    if file is None:
+        print('(file, key=None, deCrypt=0) YFIG')
+        return {}
 
-	if not os.path.isfile(fi):
-		_.pr('Error: jFig', file, 'file not found')
-		return None
-	if not jFig_data:
-		import json
-		try:
-			with open(fi, 'r', encoding='utf-8') as f:
-				jFig_data = json.load(f)
-		except Exception as e:
-			_.pr('Error: jFig', file, 'could not load yaml file',c='red')
-			return None
-		
-	if key is not None:
-		return jFig_data
-	
-	if key in jFig_data:
-		if de:
-			_vault = _.regImp( __.appReg, '_rightThumb._vault' )
-			return _vault.imp.s.de( jFig_data[key] )
-		return jFig_data[key]
-	_.pr('Error: key not found in jFig',c='red')
+    global YFIG
+    fi = os.path.join(home, '.rt', file)
+    if not os.path.isfile(fi):
+        for ext in ['.yml', '.yaml']:
+            test = fi + ext
+            if os.path.isfile(test):
+                fi = test
+                break
+
+    if not os.path.isfile(fi):
+        print('Error: yFig', file, 'file not found')
+        return {}
+
+    if fi not in YFIG:
+        import yaml  # type: ignore
+        try:
+            with open(fi, 'r', encoding='utf-8') as f:
+                YFIG[fi] = yaml.safe_load(f) or {}
+        except Exception:
+            print('Error: yFig', file, 'could not load YAML file')
+            return {}
+
+    ydata = YFIG[fi]
+    if key is None:
+        return ydata
+
+    if key in ydata:
+        if deCrypt:
+            _vault = _.regImp(__.appReg, '_rightThumb._vault')
+            return _vault.imp.s.de(ydata[key])
+        return ydata[key]
+
+    print('Error: key not found in yFig')
+    return None
+
+JFIG = {}
+def jFig(file=None, key=None, deCrypt=0):
+    if file is None:
+        print('(file, key=None, deCrypt=0) JFIG')
+        return {}
+
+    global JFIG
+    fi = os.path.join(home, '.rt', file)
+    if not os.path.isfile(fi):
+        for ext in ['.json']:
+            test = fi + ext
+            if os.path.isfile(test):
+                fi = test
+                break
+
+    if not os.path.isfile(fi):
+        print('Error: jFig', file, 'file not found')
+        return {}
+
+    if fi not in JFIG:
+        import json
+        try:
+            with open(fi, 'r', encoding='utf-8') as f:
+                JFIG[fi] = json.load(f)
+        except Exception:
+            print('Error: jFig', file, 'could not load JSON file')
+            return {}
+
+    jdata = JFIG[fi]
+    if key is None:
+        return jdata
+
+    if key in jdata:
+        if deCrypt:
+            _vault = _.regImp(__.appReg, '_rightThumb._vault')
+            return _vault.imp.s.de(jdata[key])
+        return jdata[key]
+
+    print('Error: key not found in jFig')
+    return None
+
 
 def path_fix(path):
 	path=path.replace('/',os.sep).replace('\\',os.sep)
@@ -126,13 +146,13 @@ def configFile( item=None, value=None, p=True ):
 				if not simplejson is None:
 					import simplejson
 				dataDump = simplejson.dumps(configFile_data, indent=4, sort_keys=False)
-				_.pr(dataDump)
+				print(dataDump)
 			return configFile_data
 		if value is None:
 			if item in configFile_data:
 				return configFile_data[item]
 			else:
-				_.pr( 'Error: configFile', item, 'value not set' )
+				print( 'Error: configFile', item, 'value not set' )
 		elif not value is None:
 			configFile_data[item] = value
 			return value
@@ -1083,9 +1103,9 @@ def cloud_path( path ):
 		newPath = newPath.replace( '//', '/' )
 		newPath = newPath.replace( '//', '/' )
 		newPath = newPath.replace( '//', '/' )
-		_.pr(newPath)
+		print(newPath)
 		return newPath
-	_.pr(path)
+	print(path)
 	return path
 def projectData( project ):
 	global slash
@@ -1342,7 +1362,7 @@ def createDestinationFolders( folder, o=None, isFile=False, p=False, f=None, pop
 	try:
 		os.mkdir(  folder )
 		if _pr:
-			_.pr( folder )
+			print( folder )
 		return folder
 	except Exception as e:
 		pass
@@ -1497,7 +1517,7 @@ def getTable( theFile, tableTemp=False, printThis=False ):
 			else:
 				file0 = myTables + slash + theFile
 	if printThis:
-		_.pr('Loaded: ' + file0)
+		print('Loaded: ' + file0)
 	if os.path.isfile(file0) == True:
 		with open(file0,'r', encoding="latin-1") as json_file:
 			json_data = simplejson.load(json_file)
@@ -1975,7 +1995,7 @@ try:
 		with open(   myConfig+os.sep+'construct.settings',    'w' ) as f:
 			pass
 except Exception as e:
-	_.pr( 'unable to touch:', myConfig+os.sep+'construct.settings' )
+	print( 'unable to touch:', myConfig+os.sep+'construct.settings' )
 
 def settings_load():
 	global myConfig

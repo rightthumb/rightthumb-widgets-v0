@@ -316,6 +316,17 @@ _.postLoad( __file__ )
 # START
 
 
+
+def press_f12():
+	from pynput.keyboard import Key, Controller # type: ignore
+	import time
+	keyboard = Controller()
+	time.sleep(0.5)  # Optional: wait before pressing
+	keyboard.press(Key.f12)
+	keyboard.release(Key.f12)
+
+
+
 # def runAirTerminal():
 # 	import keyboard
 # 	import sys
@@ -4486,6 +4497,9 @@ def load():
 				'BackupOnSave': { 'raw': [   'alt.',    'b'   ], 'do': 'BackupOnSave()'   , 'backspace': False, 'no-esc': True, 'esc': False,  },
 				# 'AirTerminal': { 'raw': [   'alt.',  'a'   ], 'do': 'AirTerminal()'     , 'backspace': False, 'no-esc': True, 'esc': False,  },
 
+				
+				
+				'f12_press': { 'raw': [   'ctrl.,2',  'f'   ], 'do': 'press_f12()'  },
 
 
 	}
