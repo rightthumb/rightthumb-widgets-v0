@@ -315,20 +315,22 @@ _.postLoad( __file__ )
 ########################################################################################
 # START
 
-import time
-f12 = time.time()
+
+last_f12 = 0
+
 def press_f12():
-	global f12
 	import time
-	if time.time() - f12 < 0.5:
+	from pynput.keyboard import Key, Controller
+
+	global last_f12
+	now = time.time()
+	if now - last_f12 < 0.5:
 		return
-	f12 = time.time()
-	from pynput.keyboard import Key, Controller # type: ignore
-	import time
+	last_f12 = now
 	keyboard = Controller()
-	time.sleep(0.5)  # Optional: wait before pressing
 	keyboard.press(Key.f12)
 	keyboard.release(Key.f12)
+
 
 
 
