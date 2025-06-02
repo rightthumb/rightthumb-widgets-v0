@@ -4507,6 +4507,8 @@ def load():
 				
 				
 				'f12_press': { 'raw': [   'ctrl.,2',  'f'   ], 'do': 'press_f12()'  },
+				'f12_press2': { 'raw': [   'ctrl.', 'shift.', 'f'   ], 'do': 'press_f12()'  },
+				'f12_press3': { 'raw': [   'ctrl.', 'alt.',  'f'   ], 'do': 'press_f12()'  },
 
 
 	}
