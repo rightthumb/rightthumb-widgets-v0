@@ -1,0 +1,24 @@
+# ctrl+z
+
+## list
+jobs
+
+## foreground
+fg %1
+
+## disown
+bg && disown
+### disown specific
+disown %1
+### disown all jobs
+disown -a
+
+## no hub, keep running if terminal closes
+nohup command here &
+
+___
+disown: keep running if terminal closes only if not required: stdin/stdout/stderr
+
+* stdin:  Standard input — the default source of input for a program (usually the keyboard).
+* stdout: Standard output — the default destination for program output (usually the terminal screen).
+* stderr: Standard error — the default destination for error messages (also usually the terminal screen, separate from stdout).
