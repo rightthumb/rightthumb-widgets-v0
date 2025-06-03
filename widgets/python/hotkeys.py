@@ -4506,9 +4506,10 @@ def load():
 
 				
 				
-				'f12_press': { 'raw': [   'ctrl.,2',  'f'   ], 'do': 'press_f12()'  },
-				'f12_press2': { 'raw': [   'ctrl.', 'shift.', 'f'   ], 'do': 'press_f12()'  },
-				'f12_press3': { 'raw': [   'ctrl.', 'alt.',  'f'   ], 'do': 'press_f12()'  },
+				# 'f12_press': { 'raw': [   'ctrl.,2',  'f'   ], 'do': 'press_f12()'  },
+				# 'f12_press2': { 'raw': [   'ctrl.', 'shift.', 'f'   ], 'do': 'press_f12()'  },
+				# 'f12_press3': { 'raw': [   'ctrl.', 'alt.',  'f'   ], 'do': 'press_f12()'  },
+				'f12_press4': { 'raw': [   'esc.',     'f'   ], 'do': 'press_f12()'  },
 
 
 	}
@@ -4540,6 +4541,7 @@ def load():
 			t=t.replace('win.','Key.cmd')
 			t=t.replace('cmd.','Key.cmd')
 			t=t.replace('ctrl.','Key.ctrl')
+			t=t.replace('f.','Key.f')
 			t=t.replace('shift.','Key.shift')
 			t=t.replace('alt.','Key.alt')
 			t=t.replace('key.','Key.')

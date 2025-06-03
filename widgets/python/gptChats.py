@@ -11,16 +11,29 @@ def sw():
 	_.switches.register( 'GPT-id', '-id,-gid' )
 	_.switches.register( 'Name', '-n,-name' )
 	_.switches.register( 'Download', '-dl' )
+	_.switches.register( 'Search', '--s,-search' )
+	_.switches.register( 'Chat-id', '-cid' )
 _._default_settings_()
 
 _.appInfo[focus()] = {
-	'file': 'thisApp.py',
-	'description': 'Changes the world',
+	'file': 'gptChats.py',
+	'description': 'Save, Search, and Download GPT Chats and Files. Evan every file at once!!',
 	'categories': [
 						'DEFAULT',
 				],
 	'examples': [
-						_.hp('p thisApp -file file.txt'),
+						_.hp(''),
+						_.hp('Chat:'),
+						_.hp('\tchats -list'),
+						_.hp('\tchatschats -id 683eedef-c964-800a-b0c7-80f714b03bd7 --s + nexa'),
+						_.hp('\tchats -id 683eedef-c964-800a-b0c7-80f714b03bd7 + nexa -cid 36'),
+						_.hp(''),
+						_.hp('Files:'),
+						_.hp('\tchats -list'),
+						_.hp('\tchats -id 683b3bf4-1b68-800a-bfae-f3152a05a7af -name'),
+						_.hp('\tchats -id 683b3bf4-1b68-800a-bfae-f3152a05a7af       <--(file snippet)'),
+						_.hp('\tchats -id 683b3bf4-1b68-800a-bfae-f3152a05a7af -fid 2'),
+						_.hp(''),
 						_.linePrint(label='simple',p=0),
 						'',
 	],
@@ -72,16 +85,63 @@ _.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw )
 import re
 
 def action():
+	fo = _v.tt + _v.slash + 'gptChats' + _v.slash
+
+	if _.switches.isActive('Chat-id'):
+		if not _.switches.isActive('GPT-id'):
+			_.pr('❌ Missing -id for search', c='red')
+			return
+		gptID = _.switches.value('GPT-id')
+
+		cache = _.getTable2(fo+gptID+'.cache')
+		content = cache['chat'][int(_.switches.value('Chat-id')) - 1].get('content', '')
+		# _.pr(content, c='cyan')
+		_.pr(_.colorPlus(content))
+		_.pr(line=1,c='cyan')
+		# _.printVarSimpleFake2(content)
+		return None
+
+
+
+	if _.switches.isActive('Search'):
+		if not _.switches.isActive('GPT-id'):
+			_.pr('❌ Missing -id for search', c='red')
+			return
+		gptID = _.switches.value('GPT-id')
+
+		cache = _.getTable2(fo+gptID+'.cache')
+		key = 'chat' if 'chat' in cache else 'files'
+		_.pr('Type: ',key.title(), c='yellow')
+		for i, item in enumerate(cache[key]):
+			content = item.get('content', '')
+			# print(content)
+			ii = i + 1
+			if _.showLine(content):
+				snippet = content[:50].replace('\n', ' | ')
+				# _.pr(line=1,c='cyan')
+				if key == 'chat':
+					words = content.strip().split()
+					snippet = ' '.join(words[:8])
+					_.pr(f'\t{ii}\t{item.get("role", "unknown")}\t{snippet}...')
+				else:
+					_.pr(f'\t{ii}\tfile\t{item.get("name", "unknown")}\t{snippet}...')
+
+		return None
+
+
 	if _.switches.isActive('List'):
-		fo = _v.tt + _v.slash + 'gptChats' + _v.slash
 		files = _.fo(fo)
 		for file in files:
 			cache = _.getTable2(file)
+			key = 'chat ' if 'chat' in cache else 'files'
 			id = _.pr(cache.get('id', ''), c='purple', p=0)
 			title = _.pr(cache.get('title', ''), c='yellow', p=0)
 			if _.showLine(title):
-				_.pr(id, title)
+				_.pr(id, key, title)
 		return None
+	
+	
+
 	data_raw = '\n'.join(_.pp())
 	if not _.isData(r=0) or data_raw.startswith('{'):
 		if not data_raw.startswith('{'):
@@ -101,18 +161,8 @@ def action():
 
 
 
-
-
 		if _.switches.isActive('Download'):
 			download_all()
-
-
-
-
-
-
-
-
 
 
 
@@ -137,6 +187,7 @@ def action():
 			else:
 				_.pr('⚠️ No files found in this entry', c='red')
 			return
+
 
 
 
@@ -185,6 +236,9 @@ def action():
 			_.pr(file_content)
 		else:
 			_.printVarSimpleFake2(file_content)
+
+
+
 def download_all():
 	from library.tools.os.file.FileAnalyzer import FileAnalyzer
 

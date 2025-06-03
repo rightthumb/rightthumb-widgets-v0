@@ -11,7 +11,7 @@ if [%key%] == [pg] set "key=programmer@sullust.sds.sh"
 if [%key%] == [py] set key=python
 
 if "%~2"=="" (
-    call p. keychain -temp 45 -get -label "!key!"
+    call p. keychain -temp 25 -get -label "!key!"
 ) else if "%~2"=="-crypt" (
     call p. keychain -get -label "!key!"
     call p. cryptString -en -clip

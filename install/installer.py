@@ -3588,6 +3588,8 @@ alias if.="p Import-Module-Functions -i"
 alias php='/usr/local/bin/php'
 alias wp="php /usr/local/bin/wp.phar"
 alias dex="p search-indexDB-files -db"
+alias dex="$p search-indexDB-files -db"
+export dex="$p search-indexDB-files -db"
 alias dex.="p indexDB-files"
 alias sqlite="sqlite3"
 
@@ -3726,9 +3728,9 @@ alias j='sh $widgets/widgets/bash/nav/p.sh'
 
 alias up.date="up_date"
 
-# source /opt/rightthumb-widgets-v0/widgets/bash/rc/full.sh
-# source /opt/rightthumb-widgets-v0/widgets/bash/rc/full.sh
-# source /opt/rightthumb-widgets-v0/widgets/bash/rc/full.sh
+# source $widgets/widgets/bash/rc/full.sh
+# source $widgets/widgets/bash/rc/full.sh
+# source $widgets/widgets/bash/rc/full.sh
 
 alias 101="python3 $ww/python/file.py -folder $ww/bash/101 -a"
 
@@ -3741,24 +3743,29 @@ alias curl.="curl -sLk"
 
 ## p tag-cycle ## dos2unix
 
-#9483b053a84b
 [ -z "$pterm" ] && clear
 
 alias pid="ps aux | grep "
 
-alias name...="sudo hostnamectl set-hostname "
-alias name....="sudo nano /etc/hosts"
+alias name.="sudo hostnamectl set-hostname "
+alias name..="sudo nano /etc/hosts"
+
+alias host.="sudo hostnamectl set-hostname "
+alias host..="sudo nano /etc/hosts"
+
 alias pp="realpath -- "
-
-
-
-
-
-
-
-
+alias bg.="cat $widgets/widgets/bash/background.txt"
 
 # get_time_difference
+alias chats="$p gptChats"
+
+
+
+
+
+
+
+# top: 9483b053a84b
 # a3bc42ec51e9
 
 			"""
