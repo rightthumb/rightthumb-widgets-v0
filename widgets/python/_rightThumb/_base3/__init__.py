@@ -19053,85 +19053,85 @@ def genLine(count,what, p=1):
 
 ciData = (
 
-    # ── Brackets ─────────────────────────────
-    [ '[[',            '(',              'bracket' ],
-    [ ']]',            ')',              'bracket' ],
-    [ ';opar;',        '[',              'bracket' ],
-    [ ';bkt0;',        '[',              'bracket' ],
-    [ ';bkt1;',        ']',              'bracket' ],
+	# ── Brackets ─────────────────────────────
+	[ '[[',            '(',              'bracket' ],
+	[ ']]',            ')',              'bracket' ],
+	[ ';opar;',        '[',              'bracket' ],
+	[ ';bkt0;',        '[',              'bracket' ],
+	[ ';bkt1;',        ']',              'bracket' ],
 
-    # ── Quotes ───────────────────────────────
-    [ ";'",            '"',              'quote'   ],
-    [ ';q;',           '"',              'quote'   ],
-    [ '"\'"',          "'",              'quote'   ],
-    [ ';sq',           "'",              'quote'   ],
-    [ ";;'",           _v.slash+'"',     'quote'   ],
+	# ── Quotes ───────────────────────────────
+	[ ";'",            '"',              'quote'   ],
+	[ ';q;',           '"',              'quote'   ],
+	[ '"\'"',          "'",              'quote'   ],
+	[ ';sq',           "'",              'quote'   ],
+	[ ";;'",           _v.slash+'"',     'quote'   ],
 
-    # ── Whitespace / Control ────────────────
-    [ ';sp',           ' ',              'whitespace' ],
-    [ _v.slash+'n',    '\n',             'whitespace' ],
-    [ ';n',            '\n',             'whitespace' ],
-    [ ';return',       '\n',             'whitespace' ],
-    [ ';t',            '\t',             'whitespace' ],
+	# ── Whitespace / Control ────────────────
+	[ ';sp',           ' ',              'whitespace' ],
+	[ _v.slash+'n',    '\n',             'whitespace' ],
+	[ ';n',            '\n',             'whitespace' ],
+	[ ';return',       '\n',             'whitespace' ],
+	[ ';t',            '\t',             'whitespace' ],
 
-    # ── Delimiters ───────────────────────────
-    [ ';d;',           __.theDelim,      'delimiter' ],
-    [ ';delim;',       __.theDelim,      'delimiter' ],
-    [ ';thedelim;',    __.theDelim,      'delimiter' ],
-    [ ';theDelim;',    __.theDelim,      'delimiter' ],
+	# ── Delimiters ───────────────────────────
+	[ ';d;',           __.theDelim,      'delimiter' ],
+	[ ';delim;',       __.theDelim,      'delimiter' ],
+	[ ';thedelim;',    __.theDelim,      'delimiter' ],
+	[ ';theDelim;',    __.theDelim,      'delimiter' ],
 
-    # ── Symbols ──────────────────────────────
-    [ '[plus]',        '+',              'symbol' ],
-    [ ';+',            '+',              'symbol' ],
-    [ '[eq]',          '=',              'symbol' ],
-    [ '[star]',        '*',              'symbol' ],
-    [ '[a]',           '*',              'symbol' ],
-    [ '[s]',           '$',              'symbol' ],
-    [ '[caret]',       '^',              'symbol' ],
-    [ ';6',            '^',              'symbol' ],
-    [ '[pipe]',        '|',              'symbol' ],
-    [ '[p]',           '|',              'symbol' ],
-    [ '[semi]',        ';',              'symbol' ],
-    [ ';.',            ':',              'symbol' ],
-    [ '_;192A;_',      ',',              'symbol' ],
-    [ '_;192B;_',      ':',              'symbol' ],
-    [ ';;',            ',',              'symbol' ],
-    [ ';c',            ',',              'symbol' ],
-    [ '[and]',         '&',              'symbol' ],
-    [ '[u]',           '_',              'symbol' ],
-    [ '[q]',           '?',              'symbol' ],
+	# ── Symbols ──────────────────────────────
+	[ '[plus]',        '+',              'symbol' ],
+	[ ';+',            '+',              'symbol' ],
+	[ '[eq]',          '=',              'symbol' ],
+	[ '[star]',        '*',              'symbol' ],
+	[ '[a]',           '*',              'symbol' ],
+	[ '[s]',           '$',              'symbol' ],
+	[ '[caret]',       '^',              'symbol' ],
+	[ ';6',            '^',              'symbol' ],
+	[ '[pipe]',        '|',              'symbol' ],
+	[ '[p]',           '|',              'symbol' ],
+	[ '[semi]',        ';',              'symbol' ],
+	[ ';.',            ':',              'symbol' ],
+	[ '_;192A;_',      ',',              'symbol' ],
+	[ '_;192B;_',      ':',              'symbol' ],
+	[ ';;',            ',',              'symbol' ],
+	[ ';c',            ',',              'symbol' ],
+	[ '[and]',         '&',              'symbol' ],
+	[ '[u]',           '_',              'symbol' ],
+	[ '[q]',           '?',              'symbol' ],
 
-    # ── Dashes / Minuses ─────────────────────
-    [ ';_',            '-',              'dash'   ],
-    [ ';-',            '-',              'dash'   ],
-    [ '[minus]',       '-',              'dash'   ],
-    [ '[min]',         '-',              'dash'   ],
-    [ '[mn]',          '-',              'dash'   ],
-    [ '[m]',           '-',              'dash'   ],
-    [ '[m]',           '-',              'dash'   ],
-    [ '+--+c',         '--c',            'dash'   ],
-    [ '--',            '-',              'dash'   ],
+	# ── Dashes / Minuses ─────────────────────
+	[ ';_',            '-',              'dash'   ],
+	[ ';-',            '-',              'dash'   ],
+	[ '[minus]',       '-',              'dash'   ],
+	[ '[min]',         '-',              'dash'   ],
+	[ '[mn]',          '-',              'dash'   ],
+	[ '[m]',           '-',              'dash'   ],
+	[ '[m]',           '-',              'dash'   ],
+	[ '+--+c',         '--c',            'dash'   ],
+	[ '--',            '-',              'dash'   ],
 
-    # ── Redirects / Arrows ───────────────────
-    [ '[gg]',          '>>',             'arrow' ],
-    [ '[oo]',          '>>',             'arrow' ],
+	# ── Redirects / Arrows ───────────────────
+	[ '[gg]',          '>>',             'arrow' ],
+	[ '[oo]',          '>>',             'arrow' ],
 
-    # ── HTML / Angle Brackets ────────────────
-    [ '[htmlopen]',    '<',              'html' ],
-    [ '[htmlclose]',   '>',              'html' ],
-    [ '[gtr]',         '>',              'html' ],
-    [ '[lss]',         '<',              'html' ],
+	# ── HTML / Angle Brackets ────────────────
+	[ '[htmlopen]',    '<',              'html' ],
+	[ '[htmlclose]',   '>',              'html' ],
+	[ '[gtr]',         '>',              'html' ],
+	[ '[lss]',         '<',              'html' ],
 
-    # ── Slashes / Paths ──────────────────────
-    [ ';bs',           '/',              'path' ],
-    [ ';fs',           '\\',             'path' ],
-    [ ';js',           '//',             'path' ],
-    [ ';bk',           _v.myBackup,      'path' ],
+	# ── Slashes / Paths ──────────────────────
+	[ ';bs',           '/',              'path' ],
+	[ ';fs',           '\\',             'path' ],
+	[ ';js',           '//',             'path' ],
+	[ ';bk',           _v.myBackup,      'path' ],
 
-    # ── Other / Utility ──────────────────────
-    [ '↔',             ' ',              'misc' ],
-    [ 'null00',        '"",',            'misc' ],
-    [ '"\'", "\'"',    "','" ,           'misc' ],
+	# ── Other / Utility ──────────────────────
+	[ '↔',             ' ',              'misc' ],
+	[ 'null00',        '"",',            'misc' ],
+	[ '"\'", "\'"',    "','" ,           'misc' ],
 
 # ── Brackets ─────────────────────────────
 # ── Quotes ───────────────────────────────
@@ -27629,49 +27629,80 @@ CMD=cli
 term=CMD
 terminal=CMD
 ##================================================
-def get_namespace_contents(namespace=None, path='', seen=None):
-    if namespace is None:
-        # Simulate `window` in JS by defaulting to global variables
-        namespace = globals()
+def get_namespace_contents(namespace=None, path='', seen=None, dirty=False, d=None):
+	if not d is None:
+		dirty = d
+	if namespace is None:
+		namespace = globals()
 
-    if seen is None:
-        seen = set()
+	if type(namespace) == str:
+		path = namespace
+		namespace = eval(namespace)
 
-    if not isinstance(namespace, (dict, object)):
-        return {path or '<root>': f'Invalid namespace: {namespace}'}
+	if seen is None:
+		seen = set()
 
-    if id(namespace) in seen:
-        return {path or '<root>': 'Circular reference'}
+	if not isinstance(namespace, (dict, object)):
+		return {path or '<root>': f'Invalid namespace: {namespace}'}
 
-    seen.add(id(namespace))
-    result = {}
+	if id(namespace) in seen:
+		return {path or '<root>': 'Circular reference'}
 
-    # Handle dict-style namespaces (like globals()) or objects
-    keys = namespace.keys() if isinstance(namespace, dict) else dir(namespace)
+	seen.add(id(namespace))
+	result = {}
 
-    for key in keys:
-        if isinstance(namespace, dict):
-            value = namespace[key]
-        else:
-            if key.startswith('__') and key.endswith('__'):
-                continue  # Skip dunder methods
-            try:
-                value = getattr(namespace, key)
-            except Exception:
-                result_key = f'{path}.{key}' if path else key
-                result[result_key] = 'unreachable'
-                continue
+	try:
+		keys = list(namespace.keys()) if isinstance(namespace, dict) else dir(namespace)
+	except Exception:
+		return {path or '<root>': 'uninspectable'}
 
-        result_key = f'{path}.{key}' if path else key
-        result[result_key] = type(value).__name__
+	for key in keys:
+		if isinstance(namespace, dict):
+			try:
+				value = namespace[key]
+			except Exception:
+				continue
+		else:
+			if key.startswith('__') and key.endswith('__'):
+				continue
+			try:
+				value = getattr(namespace, key)
+			except Exception:
+				result_key = f'{path}.{key}' if path else key
+				result[result_key] = 'unreachable'
+				continue
 
-        if isinstance(value, (dict, object)) and not isinstance(value, (str, int, float, bool, bytes, bytearray)):
-            if not isinstance(value, (type, type(get_namespace_contents))):
-                nested = get_namespace_contents(value, result_key, seen)
-                result.update(nested)
+		result_key = f'{path}.{key}' if path else key
+		result[result_key] = type(value).__name__
 
-    return result
+		if isinstance(value, (dict, object)) and not isinstance(value, (str, int, float, bool, bytes, bytearray)):
+			if not isinstance(value, (type, type(get_namespace_contents))):
+				try:
+					nested = get_namespace_contents(value, result_key, seen)
+					result.update(nested)
+				except Exception:
+					result[f'{result_key}._error'] = 'recursion failed'
+	if not dirty:
+		cleaned = {}
+		for k in result:
+			pr = True
+			for y in ['.__.','._v.']:
+				if y in k:
+					pr = False
+			if pr:
+				cleaned[k] = result[k]
+		result = cleaned
+	return result
+
 ns=get_namespace_contents
+def nsKeys(namespace=None, path='', seen=None, dirty=False, d=None):
+	x=get_namespace_contents(namespace=namespace, path=path, seen=seen, dirty=dirty, d=d)
+	# _.pv(x)
+	for k in x:
+		if showLine(k):
+			pr(k)
+nsKey=nsKeys
+nsk=nsKeys
 ##================================================
 nsfw=True
 
