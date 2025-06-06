@@ -1,12 +1,21 @@
 @echo off
 
-set /p "hkpin=PIN: "
+@REM set /p "hkpin=PIN: "
 
-if [%hkpin%]==[] (
-    call:nopassword
-) else (
-    call:password %hkpin%
+@REM if [%hkpin%]==[] (
+@REM     call:nopassword
+@REM ) else (
+@REM     call:password %hkpin%
+@REM )
+
+
+@echo off
+for /f "delims=" %%P in ('powershell -Command "$p = Read-Host 'PIN:' -AsSecureString; [Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($p))"') do (
+    set "hkpin=%%P"
 )
+
+
+
 
 :nopassword
 call p. hotkeys

@@ -7,6 +7,7 @@ def sw():
     _.switches.register( 'Recursive', '-r', '3 (depth)' )
     _.switches.register( 'DeepClean', '-d' )
     _.switches.register( 'ShowFolders', '-f' )
+    _.switches.register( 'IncludeCommands', '-i' )
 _._default_settings_()
 
 _.appInfo[focus()] = {
@@ -186,9 +187,60 @@ def scan_composer_folders_recursive(base_dir='.', max_depth=0):
 
 
 
-from collections import defaultdict
 
+
+def generate_include_commands():
+    include_lines = []
+    seen_paths = set()
+
+    def get_include(path):
+        composer_dir = os.path.dirname(os.path.abspath(path))
+        autoload_path = os.path.join(composer_dir, 'vendor', 'autoload.php')
+        return f"include_once('{autoload_path}');"
+
+    targets = {}
+
+    # Recursive if active
+    if _.switches.isActive('Recursive'):
+        depth = int(_.switches.value('Recursive')[0]) if _.switches.value('Recursive') else 0
+        targets.update(scan_composer_folders_recursive('.', depth))
+
+    # Flat scan if active
+    if _.switches.isActive('Scan'):
+        targets.update(scan_composer_folders())
+
+    # Always check current folder's composer.json
+    current_path = './composer.json'
+    if os.path.isfile(current_path):
+        targets[current_path] = reverse_engineer_composer_require(current_path)
+
+    for composer_path in targets:
+        resolved = os.path.abspath(composer_path)
+        if resolved not in seen_paths:
+            seen_paths.add(resolved)
+            try:
+                line = get_include(composer_path)
+                include_lines.append(line)
+            except Exception as e:
+                include_lines.append(f"# Error generating include for {composer_path}: {e}")
+
+    return include_lines
+
+
+
+
+
+
+
+from collections import defaultdict
 def action():
+
+    if _.switches.isActive('IncludeCommands'):
+        include_lines = generate_include_commands()
+        for line in include_lines:
+            _.pr(line, c='cyan')
+        return
+
     _commands = []
     seen = set()
     package_map = defaultdict(list)

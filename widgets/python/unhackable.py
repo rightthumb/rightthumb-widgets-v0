@@ -105,6 +105,11 @@ def build():
 		i += 1
 	_.saveTableSplitNew(data,'DecryptionTable')
 ########################################################################################
+
+
+
+
+
 def newID(char):
 	global data
 	# global theRange

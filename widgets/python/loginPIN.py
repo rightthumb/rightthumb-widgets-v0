@@ -37,8 +37,13 @@ _.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw );
 #n)--> start
 
 def action():
-	pin = _v.vaultPinLogin()
-	_.saveText(pin,_v.pinTemp)
+	try:
+		pin = _v.vaultPinLogin()
+		_.saveText(pin, _v.pinTemp)
+	except KeyboardInterrupt:
+		print('\n[Ctrl+C detected] Exiting...')
+		exit()
+
 
 ########################################################################################
 if __name__ == '__main__':

@@ -20,8 +20,8 @@ __register_php=False
 __ip_php=False
 #e)--> legacy registration system
 
-import _rightThumb._construct as __
-import _rightThumb._string as _str
+import _rightThumb._construct as __ # type: ignore
+import _rightThumb._string as _str # type: ignore
 from pathlib import Path
 import os
 import sys
@@ -418,6 +418,19 @@ programs=widgets
 pp  = techFolder + slash+'widgets'
 w   = techFolder 
 ww  = techFolder +slash+ 'widgets'
+
+import os
+import sys
+
+# Base path
+lib_path = os.path.join(os.path.join(ww,'python'), 'library')
+
+# Iterate subfolders and add them to sys.path
+for folder in os.listdir(lib_path):
+    full_path = os.path.join(lib_path, folder)
+    if os.path.isdir(full_path):
+        sys.path.append(full_path)
+
 
 appProfiles = widgets+os.sep+'widgets'+ slash+'python'+slash+'profiles'
 compiled = widgets+os.sep+'widgets'+ slash+'compiled'
@@ -2090,3 +2103,148 @@ chromePortable = 'D:\\techApps\\chrome-win\\chrome.exe'
 # if not os.path.isfile(myConfig+os.sep+'.machine'):
 	# with open(myConfig+os.sep+'.machine', 'w') as machineID: machineID.write(f'{getMachineID()}')
 if not os.path.isfile(myConfig+os.sep+'.machine'): saveText(getMachineID(),machineID)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+pp
+ww
+documentation
+project
+
+
+
+
+
+
+
+
+
+def getPath(var=None,file=None):
+	if var is None:
+		destination = os.getcwd()+slash
+		return destination
+	paths = {
+		'tt': tt,
+		'ttt': ttt,
+		'~': os.path.expanduser('~'),
+		'home': os.path.expanduser('~'),
+		"base_file": base_file,
+		"downloads": downloads,
+		"appsFolder": appsFolder,
+		"archive7z": archive7z,
+		"pp": pp,
+		"ww": ww,
+		"appProfiles": appProfiles,
+		"compiled": compiled,
+		"documentation": documentation,
+		"project": project,
+		"updates": updates,
+		"images": images,
+		"log_config": log_config,
+		"log_config_html": log_config_html,
+		"life": life,
+		"fileLocks": fileLocks,
+		"rtp": rtp,
+		"rt": rt,
+		"pro": pro,
+		"bmLogs": bmLogs,
+		"bmLog": bmLog,
+		"myHome": myHome,
+		"dataFolder": dataFolder,
+		"myIndexes": myIndexes,
+		"quickIndex": quickIndex,
+		"myTables": myTables,
+		"mdFig": mdFig,
+		"duckDuckGo": duckDuckGo,
+		"relevant_folders": relevant_folders,
+		"myWebApp": myWebApp,
+		"myBackup": myBackup,
+		"myLogs": myLogs,
+		"myConfig": myConfig,
+		"unixID_path": unixID_path,
+		"vault_path": vault_path,
+		"pin_path": pin_path,
+		"myDecrypt": myDecrypt,
+		"research": research,
+		"keys": keys,
+		"py": py,
+		"dbTables": dbTables,
+		"databases": databases,
+		"dbs": dbs,
+		"dbdbs": dbdbs,
+		"myBatch": myBatch,
+		"myTXT": myTXT,
+		"myBIN": myBIN,
+		"webapp": webapp,
+		"library": library,
+		"myDatabases": myDatabases,
+		"myVars": myVars,
+		"terminal": terminal,
+		"myNotes": myNotes,
+		"umlJson": umlJson,
+		"umlHtml": umlHtml,
+		"androidMasterFull": androidMasterFull,
+		"myApps": myApps,
+		"ipsum": ipsum,
+		"myAppsJs": myAppsJs,
+		"myAppsBatch": myAppsBatch,
+		"stmp": stmp,
+		"rtstmp": rtstmp,
+		"chromedriver": chromedriver,
+		"exif_temp": exif_temp,
+		"json_temp": json_temp,
+		"txt_temp": txt_temp,
+		"text_temp": text_temp,
+		"html_temp": html_temp,
+		"pips": pips,
+		"tmpbat": tmpbat,
+		"tempFile": tempFile,
+		"pinTemp": pinTemp,
+		"tmpf": tmpf,
+		"tmpf0": tmpf0,
+		"tmpf1": tmpf1,
+		"tmpf2": tmpf2,
+		"tmpf3": tmpf3,
+		"tmpf4": tmpf4,
+		"tmpf5": tmpf5,
+		"tmpf6": tmpf6,
+		"tmpf7": tmpf7,
+		"tmpf8": tmpf8,
+		"tmpf9": tmpf9,
+		"contextTemp": contextTemp,
+		"myBookmarks": myBookmarks,
+		"bookmarkFormat": bookmarkFormat,
+		"myTickets": myTickets,
+		"printable": printable,
+		"myLogs": myLogs,
+		"myAppLogs": myAppLogs,
+		"machineID": machineID,
+		"figpath": figpath,
+		"pp": pp,
+		"ww": ww,
+		"gptTokens": gptTokens,
+		"keychainPath": keychainPath,
+
+	}
+	if var in paths:
+		if file is None:
+			destination = paths[var]
+			if not destination.endswith(slash):
+				destination += slash
+		else:
+			destination = os.path.join(paths[var], file)
+	return destination
+
+paths=getPath
+P=getPath

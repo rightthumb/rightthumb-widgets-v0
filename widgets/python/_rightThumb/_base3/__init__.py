@@ -19053,84 +19053,100 @@ def genLine(count,what, p=1):
 
 ciData = (
 
+    # ── Brackets ─────────────────────────────
+    [ '[[',            '(',              'bracket' ],
+    [ ']]',            ')',              'bracket' ],
+    [ ';opar;',        '[',              'bracket' ],
+    [ ';bkt0;',        '[',              'bracket' ],
+    [ ';bkt1;',        ']',              'bracket' ],
+
+    # ── Quotes ───────────────────────────────
+    [ ";'",            '"',              'quote'   ],
+    [ ';q;',           '"',              'quote'   ],
+    [ '"\'"',          "'",              'quote'   ],
+    [ ';sq',           "'",              'quote'   ],
+    [ ";;'",           _v.slash+'"',     'quote'   ],
+
+    # ── Whitespace / Control ────────────────
+    [ ';sp',           ' ',              'whitespace' ],
+    [ _v.slash+'n',    '\n',             'whitespace' ],
+    [ ';n',            '\n',             'whitespace' ],
+    [ ';return',       '\n',             'whitespace' ],
+    [ ';t',            '\t',             'whitespace' ],
+
+    # ── Delimiters ───────────────────────────
+    [ ';d;',           __.theDelim,      'delimiter' ],
+    [ ';delim;',       __.theDelim,      'delimiter' ],
+    [ ';thedelim;',    __.theDelim,      'delimiter' ],
+    [ ';theDelim;',    __.theDelim,      'delimiter' ],
+
+    # ── Symbols ──────────────────────────────
+    [ '[plus]',        '+',              'symbol' ],
+    [ ';+',            '+',              'symbol' ],
+    [ '[eq]',          '=',              'symbol' ],
+    [ '[star]',        '*',              'symbol' ],
+    [ '[a]',           '*',              'symbol' ],
+    [ '[s]',           '$',              'symbol' ],
+    [ '[caret]',       '^',              'symbol' ],
+    [ ';6',            '^',              'symbol' ],
+    [ '[pipe]',        '|',              'symbol' ],
+    [ '[p]',           '|',              'symbol' ],
+    [ '[semi]',        ';',              'symbol' ],
+    [ ';.',            ':',              'symbol' ],
+    [ '_;192A;_',      ',',              'symbol' ],
+    [ '_;192B;_',      ':',              'symbol' ],
+    [ ';;',            ',',              'symbol' ],
+    [ ';c',            ',',              'symbol' ],
+    [ '[and]',         '&',              'symbol' ],
+    [ '[u]',           '_',              'symbol' ],
+    [ '[q]',           '?',              'symbol' ],
+
+    # ── Dashes / Minuses ─────────────────────
+    [ ';_',            '-',              'dash'   ],
+    [ ';-',            '-',              'dash'   ],
+    [ '[minus]',       '-',              'dash'   ],
+    [ '[min]',         '-',              'dash'   ],
+    [ '[mn]',          '-',              'dash'   ],
+    [ '[m]',           '-',              'dash'   ],
+    [ '[m]',           '-',              'dash'   ],
+    [ '+--+c',         '--c',            'dash'   ],
+    [ '--',            '-',              'dash'   ],
+
+    # ── Redirects / Arrows ───────────────────
+    [ '[gg]',          '>>',             'arrow' ],
+    [ '[oo]',          '>>',             'arrow' ],
+
+    # ── HTML / Angle Brackets ────────────────
+    [ '[htmlopen]',    '<',              'html' ],
+    [ '[htmlclose]',   '>',              'html' ],
+    [ '[gtr]',         '>',              'html' ],
+    [ '[lss]',         '<',              'html' ],
+
+    # ── Slashes / Paths ──────────────────────
+    [ ';bs',           '/',              'path' ],
+    [ ';fs',           '\\',             'path' ],
+    [ ';js',           '//',             'path' ],
+    [ ';bk',           _v.myBackup,      'path' ],
+
+    # ── Other / Utility ──────────────────────
+    [ '↔',             ' ',              'misc' ],
+    [ 'null00',        '"",',            'misc' ],
+    [ '"\'", "\'"',    "','" ,           'misc' ],
+
+# ── Brackets ─────────────────────────────
+# ── Quotes ───────────────────────────────
+# ── Whitespace / Control ────────────────
+# ── Delimiters ───────────────────────────
+# ── Symbols ──────────────────────────────
+# ── Dashes / Minuses ─────────────────────
+# ── Redirects / Arrows ───────────────────
+# ── HTML / Angle Brackets ────────────────
+# ── Slashes / Paths ──────────────────────
+# ── Other / Utility ──────────────────────
 
 
-		[ '↔',          ' '       ],
+)
 
-
-
-
-		[ '[[',        '('       ],
-		[ ']]',        ')'       ],
-		[ ';sp',        ' '       ],
-		[ '_;192A;_',   ','       ],
-		[ '_;192B;_',   ':'       ],
-		[ ';;',         ','       ],
-		[ ';c',         ','       ],
-		[ ';_',         '-'       ],
-		[ ';-',         '-'       ],
-		[ ';p;',        '%'       ],
-		[ ';p',         '%'       ],
-		[ ';.',         ':'       ],
-		[ ";;'",        _v.slash+'"' ],
-		[ _v.slash+'n', '\n'      ],
-		[ ';n',         '\n'      ],
-		[ ';return',    '\n'      ],
-		[ ';t',         '\t'      ],
-		[ ";'",         '"'       ],
-		[ ';q;',        '"'       ],
-		[ '"\'"',       "'"       ],
-		[ ';sq',        "'"       ],
-		[ 'null00',     '"",'     ],
-		[ '"\'", "\'"', "','"      ],
-		[ '[gg]',       '>>'       ],
-		[ '[star]',     '*'       ],
-		[ '[a]',        '*'       ],
-		[ '[s]',        '$'       ],
-		[ '[eq]',       '='       ],
-		[ ';opar;',     '['       ],
-		[ ';bkt0;',     '['       ],
-		[ ';bkt1;',     ']'       ],
-		[ '[pipe]',     '|'       ],
-		[ '[p]',        '|'       ],
-		[ '[htmlopen]', '<'       ],
-		[ '[htmlclose]','>'       ],
-		[ '[gtr]',      '>'       ],
-		[ '[lss]',      '<'       ],
-		[ ';6',         '^'       ],
-		[ ';+',         '+'       ],
-		[ '+--+c',      '--c'     ],
-		[ '[semi]',     ';'       ],
-		[ ';bs',        '/'       ],
-		[ ';fs',        '\\'      ],
-		[';d;',         __.theDelim ],
-		[';delim;',     __.theDelim ],
-		[';thedelim;',  __.theDelim ],
-		[';theDelim;',  __.theDelim ],
-		[';p',          '%'       ],
-		[';js',         '//'      ],
-		[';bs',         '/'       ],
-		[';fs',         '\\'      ],
-		[';t',          '\t'      ],
-		['↔',           ' '       ],
-		['--',          '-'       ],
-		['[oo]',          '>>'    ],
-		[';bk',         _v.myBackup ],
-		[ '[caret]',    '^'       ],
-		[ '[and]',      '&'       ],
-		[ '[u]',      '_'         ],
-
-
-
-		[ '↔',          ' '       ],
-		[ '[q]',          '?'       ],
-
-
-
-
-
-
- )
 ci_spent=[]
 def ci(string):
 	#switchValueClean
@@ -27612,6 +27628,50 @@ def cli(command):
 CMD=cli
 term=CMD
 terminal=CMD
+##================================================
+def get_namespace_contents(namespace=None, path='', seen=None):
+    if namespace is None:
+        # Simulate `window` in JS by defaulting to global variables
+        namespace = globals()
+
+    if seen is None:
+        seen = set()
+
+    if not isinstance(namespace, (dict, object)):
+        return {path or '<root>': f'Invalid namespace: {namespace}'}
+
+    if id(namespace) in seen:
+        return {path or '<root>': 'Circular reference'}
+
+    seen.add(id(namespace))
+    result = {}
+
+    # Handle dict-style namespaces (like globals()) or objects
+    keys = namespace.keys() if isinstance(namespace, dict) else dir(namespace)
+
+    for key in keys:
+        if isinstance(namespace, dict):
+            value = namespace[key]
+        else:
+            if key.startswith('__') and key.endswith('__'):
+                continue  # Skip dunder methods
+            try:
+                value = getattr(namespace, key)
+            except Exception:
+                result_key = f'{path}.{key}' if path else key
+                result[result_key] = 'unreachable'
+                continue
+
+        result_key = f'{path}.{key}' if path else key
+        result[result_key] = type(value).__name__
+
+        if isinstance(value, (dict, object)) and not isinstance(value, (str, int, float, bool, bytes, bytearray)):
+            if not isinstance(value, (type, type(get_namespace_contents))):
+                nested = get_namespace_contents(value, result_key, seen)
+                result.update(nested)
+
+    return result
+ns=get_namespace_contents
 ##================================================
 nsfw=True
 

@@ -50,6 +50,7 @@ def appSwitches():
 	_.switches.register('Execute-Framework-Function', '-fn', '(`auto: _. __. _v. _str.` ) ex: -i 1w -fn _.ago -t r:_.fd | ex:  -fn _.md  -i file.txt || (--c) (-t _.fd ) (fd = friendlyDate)')
 
 	_.switches.register( 'Triggers-And-Settings', '-t', '`na;i;r`  `na=not auto (auto is file stuff, float to date etc), i=input, r=result(default is r)`ex: -t na:isFile | -t na (no auto result trigger) | -t _.fd | -i 1w -fn _.ago -t _.fd' )
+	_.switches.register("Strip-/'", '-sq')
 	# _.switches.register( 'Triggers-And-Settings', '-t', '`i=input, r=result(default is r)`ex: -t _.fd | -t r:_.friendlyDate  |  i:_.isFileAdvanced;r:_.friendlyDate (i=input, r=result `i` by itself skips default _.isFile trigger r: runs trigger on result)' )
 	
 
@@ -363,6 +364,15 @@ aSettings = {}
 ## New Input Function Trigger stuff    <- END
 
 def action():
+	if _.switches.isActive("Strip-/'"):
+		for line in _.isData():
+			if _.showLine(line):
+				line = line.replace("\\'","'")
+				_.pr(line)
+	
+		return None
+	
+
 	if _.switches.isActive('ColorPrint'):
 		val = _.switches.values('ColorPrint')
 		color = val[0]

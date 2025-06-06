@@ -3763,6 +3763,25 @@ alias chats="$p gptChats"
 
 
 
+alias dig.="dig +short "
+
+
+
+
+schema() {
+    local db="${1:-index.db}"
+    sqlite3 "$db" .schema
+}
+
+
+
+
+
+
+
+
+
+
 
 
 # top: 9483b053a84b

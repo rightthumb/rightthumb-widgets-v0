@@ -976,6 +976,136 @@ def scrape_urls(text):
 	
 
 
+
+
+
+
+
+
+
+def extract_huggingface_download_command(text, local_dir='.', symlinks=False):
+	# Fix broken slashes from copy-paste formatting
+	text = text.replace('\n/', '/').replace('/\n', '/')
+
+	# Extract repo: anything like org_name/repo_name-GGUF
+	repo_match = re.search(r'([a-zA-Z0-9_.-]+/[a-zA-Z0-9_.-]*-GGUF)', text)
+	repo = repo_match.group(1).strip() if repo_match else None
+
+	# Extract filename: any GGUF file
+	filename_match = re.search(r'([a-zA-Z0-9_.-]+\.gguf)', text)
+	filename = filename_match.group(1).strip() if filename_match else None
+
+	if not repo or not filename:
+		return ''
+		# raise ValueError("Could not extract model repo or filename from input.")
+
+	# Build huggingface-cli command
+	command = (
+		f"huggingface-cli download {repo} {filename} "
+		f"--local-dir {local_dir} --local-dir-use-symlinks {str(symlinks)}"
+	)
+	return command
+
+
+
+
+
+def validate_huggingface_download_command(command: str) -> bool:
+	import re
+	pattern = (
+		r'^huggingface-cli download\s+'
+		r'[a-zA-Z0-9_.-]+/[a-zA-Z0-9_.-]+\s+'
+		r'[a-zA-Z0-9_.-]+\.gguf\s+'
+		r'--local-dir\s+[^\s]+\s+'
+		r'--local-dir-use-symlinks\s+(True|False)$'
+	)
+	return bool(re.match(pattern, command.strip()))
+
+
+
+
+
+
+
+
+import os
+import json
+import re
+import requests  # type: ignore
+
+tld_set = None
+
+def get_cached_tld_list(cache_path='~/.tlds.json', source_url='https://a.sds.sh/assets/json/TLDs.json'):
+    """
+    Load TLDs from cache if available; otherwise fetch from the given URL and cache it.
+    Returns a set of lowercase TLDs.
+    """
+    global tld_set
+    cache_path = os.path.expanduser(cache_path)
+
+    if os.path.exists(cache_path):
+        try:
+            with open(cache_path, 'r') as f:
+                tld_set = set(json.load(f))
+                return tld_set
+        except Exception as e:
+            print(f"Failed to load cached TLDs: {e}")
+
+    try:
+        response = requests.get(source_url, timeout=10)
+        response.raise_for_status()
+        tld_set = {tld.lower() for tld in response.json()}
+        with open(cache_path, 'w') as f:
+            json.dump(sorted(tld_set), f, indent=2)
+        return tld_set
+    except Exception as e:
+        print(f"Failed to fetch TLD list from {source_url}: {e}")
+        # Fallback to a minimal set
+        tld_set = {'com', 'net', 'org', 'io', 'top'}
+        return tld_set
+
+
+def extract_domains(text):
+    """
+    Extracts domain names from the provided text using the given set of TLDs.
+    Returns a sorted list of unique domain names.
+    """
+    global tld_set
+    if tld_set is None:
+        tld_set = get_cached_tld_list()
+
+    tld_pattern = '|'.join(re.escape(tld) for tld in sorted(tld_set, key=len, reverse=True))
+    domain_pattern = re.compile(
+        rf'\b(?:[a-zA-Z0-9-]+\.)+(?:{tld_pattern})(?![a-zA-Z0-9])', re.IGNORECASE
+    )
+
+    domains = {
+        match.group().rstrip('.,;:!?)]}') for match in domain_pattern.finditer(text)
+    }
+
+    return sorted(domains)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 def scrape_all(text):
 	windows_paths = scrape_windows_file_paths(text)
 	windows_paths2 = scrape_windows_file_paths2(text)
@@ -1001,8 +1131,9 @@ def scrape_all(text):
 
 	linux_paths = scrape_linux_file_paths(text)
 	urls = scrape_urls(text)
+	domains = extract_domains(text)
 
-	return combined_windows_paths, linux_paths, urls
+	return combined_windows_paths, linux_paths, urls, domains
 
 
 
@@ -3220,47 +3351,6 @@ function get__THETABLE( $ID_label ){
 
 
 
-
-
-	def extract_huggingface_download_command(self,text, local_dir='.', symlinks=False):
-		# Fix broken slashes from copy-paste formatting
-		text = text.replace('\n/', '/').replace('/\n', '/')
-
-		# Extract repo: anything like org_name/repo_name-GGUF
-		repo_match = re.search(r'([a-zA-Z0-9_.-]+/[a-zA-Z0-9_.-]*-GGUF)', text)
-		repo = repo_match.group(1).strip() if repo_match else None
-
-		# Extract filename: any GGUF file
-		filename_match = re.search(r'([a-zA-Z0-9_.-]+\.gguf)', text)
-		filename = filename_match.group(1).strip() if filename_match else None
-
-		if not repo or not filename:
-			return ''
-			# raise ValueError("Could not extract model repo or filename from input.")
-
-		# Build huggingface-cli command
-		command = (
-			f"huggingface-cli download {repo} {filename} "
-			f"--local-dir {local_dir} --local-dir-use-symlinks {str(symlinks)}"
-		)
-		return command
-
-
-
-
-
-	def validate_huggingface_download_command(self, command: str) -> bool:
-		import re
-		pattern = (
-			r'^huggingface-cli download\s+'
-			r'[a-zA-Z0-9_.-]+/[a-zA-Z0-9_.-]+\s+'
-			r'[a-zA-Z0-9_.-]+\.gguf\s+'
-			r'--local-dir\s+[^\s]+\s+'
-			r'--local-dir-use-symlinks\s+(True|False)$'
-		)
-		return bool(re.match(pattern, command.strip()))
-
-
 	def scrape_paths(self):
 		import pyautogui # type: ignore
 
@@ -3276,12 +3366,12 @@ function get__THETABLE( $ID_label ){
 
 		if '.gguf' in text:
 			try:
-				gguf = self.extract_huggingface_download_command(str(text))
+				gguf = extract_huggingface_download_command(str(text))
 				_.pr(line=1)
 				print(gguf)
 				_.pr(line=1)
 				if '.gguf' in gguf:
-					if self.validate_huggingface_download_command(gguf):
+					if validate_huggingface_download_command(gguf):
 						_copy.imp.copy( gguf, p=0 )
 						return None
 
@@ -3297,7 +3387,7 @@ function get__THETABLE( $ID_label ){
 			text = text.replace('└─','')
 				
 
-			windows_paths, linux_paths, urls = scrape_all(text)
+			windows_paths, linux_paths, urls, domains = scrape_all(text)
 			result=[]
 
 			for path in windows_paths:
@@ -3316,6 +3406,8 @@ function get__THETABLE( $ID_label ){
 				for item in scan[k]:
 					if not item in result:
 						result.append(item)
+			for k in domains:
+				result.append(item)
 
 		def cleanScrape(item):
 			item=item.strip()

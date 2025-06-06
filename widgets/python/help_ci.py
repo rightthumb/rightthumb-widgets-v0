@@ -207,7 +207,8 @@ def action():
 		# _.pr( rec )
 		a = _.printText( rec[0], p=0 )
 		b = _.printText( rec[1], p=0 )
-		table.append({ 'input': a, 'output': b })
+		c = _.printText( rec[2], p=0 )
+		table.append({ 'category': c, 'input': a, 'output': b })
 		# _.pr(a)
 		# _.pr(b)
 		# _.printText( rec[1] )
@@ -216,7 +217,12 @@ def action():
 		# _.pr()
 	_.tables.register( 'data', table )
 	_.tables.fieldProfileSet( 'data', '*', 'alignment', 'center' )
-	_.tables.print( 'data', 'input,output' )
+	_.tables.sort( 'data', 'category' )
+	_.switches.set('GroupBy', 'active', True)
+	_.switches.set('GroupBy', 'value', 'category')
+	_.switches.set('GroupBy', 'values', ['category'])
+	_.tables.print( 'data', 'category,input,output' )
+	# _.tables.print( 'data', 'category,input,output' )
 
 
 
