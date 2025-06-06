@@ -51,85 +51,85 @@ import os
 
 YFIG = {}
 def yFig(file=None, key=None, deCrypt=0):
-    if file is None:
-        print('(file, key=None, deCrypt=0) YFIG')
-        return {}
+	if file is None:
+		print('(file, key=None, deCrypt=0) YFIG')
+		return {}
 
-    global YFIG
-    fi = os.path.join(home, '.rt', file)
-    if not os.path.isfile(fi):
-        for ext in ['.yml', '.yaml']:
-            test = fi + ext
-            if os.path.isfile(test):
-                fi = test
-                break
+	global YFIG
+	fi = os.path.join(home, '.rt', file)
+	if not os.path.isfile(fi):
+		for ext in ['.yml', '.yaml']:
+			test = fi + ext
+			if os.path.isfile(test):
+				fi = test
+				break
 
-    if not os.path.isfile(fi):
-        print('Error: yFig', file, 'file not found')
-        return {}
+	if not os.path.isfile(fi):
+		print('Error: yFig', file, 'file not found')
+		return {}
 
-    if fi not in YFIG:
-        import yaml  # type: ignore
-        try:
-            with open(fi, 'r', encoding='utf-8') as f:
-                YFIG[fi] = yaml.safe_load(f) or {}
-        except Exception:
-            print('Error: yFig', file, 'could not load YAML file')
-            return {}
+	if fi not in YFIG:
+		import yaml  # type: ignore
+		try:
+			with open(fi, 'r', encoding='utf-8') as f:
+				YFIG[fi] = yaml.safe_load(f) or {}
+		except Exception:
+			print('Error: yFig', file, 'could not load YAML file')
+			return {}
 
-    ydata = YFIG[fi]
-    if key is None:
-        return ydata
+	ydata = YFIG[fi]
+	if key is None:
+		return ydata
 
-    if key in ydata:
-        if deCrypt:
-            _vault = _.regImp(__.appReg, '_rightThumb._vault')
-            return _vault.imp.s.de(ydata[key])
-        return ydata[key]
+	if key in ydata:
+		if deCrypt:
+			_vault = _.regImp(__.appReg, '_rightThumb._vault')
+			return _vault.imp.s.de(ydata[key])
+		return ydata[key]
 
-    print('Error: key not found in yFig')
-    return None
+	print('Error: key not found in yFig')
+	return None
 
 JFIG = {}
 def jFig(file=None, key=None, deCrypt=0):
-    if file is None:
-        print('(file, key=None, deCrypt=0) JFIG')
-        return {}
+	if file is None:
+		print('(file, key=None, deCrypt=0) JFIG')
+		return {}
 
-    global JFIG
-    fi = os.path.join(home, '.rt', file)
-    if not os.path.isfile(fi):
-        for ext in ['.json']:
-            test = fi + ext
-            if os.path.isfile(test):
-                fi = test
-                break
+	global JFIG
+	fi = os.path.join(home, '.rt', file)
+	if not os.path.isfile(fi):
+		for ext in ['.json']:
+			test = fi + ext
+			if os.path.isfile(test):
+				fi = test
+				break
 
-    if not os.path.isfile(fi):
-        print('Error: jFig', file, 'file not found')
-        return {}
+	if not os.path.isfile(fi):
+		print('Error: jFig', file, 'file not found')
+		return {}
 
-    if fi not in JFIG:
-        import json
-        try:
-            with open(fi, 'r', encoding='utf-8') as f:
-                JFIG[fi] = json.load(f)
-        except Exception:
-            print('Error: jFig', file, 'could not load JSON file')
-            return {}
+	if fi not in JFIG:
+		import json
+		try:
+			with open(fi, 'r', encoding='utf-8') as f:
+				JFIG[fi] = json.load(f)
+		except Exception:
+			print('Error: jFig', file, 'could not load JSON file')
+			return {}
 
-    jdata = JFIG[fi]
-    if key is None:
-        return jdata
+	jdata = JFIG[fi]
+	if key is None:
+		return jdata
 
-    if key in jdata:
-        if deCrypt:
-            _vault = _.regImp(__.appReg, '_rightThumb._vault')
-            return _vault.imp.s.de(jdata[key])
-        return jdata[key]
+	if key in jdata:
+		if deCrypt:
+			_vault = _.regImp(__.appReg, '_rightThumb._vault')
+			return _vault.imp.s.de(jdata[key])
+		return jdata[key]
 
-    print('Error: key not found in jFig')
-    return None
+	print('Error: key not found in jFig')
+	return None
 
 
 def path_fix(path):
@@ -424,12 +424,8 @@ import sys
 
 # Base path
 lib_path = os.path.join(os.path.join(ww,'python'), 'library')
-
+# print(lib_path)
 # Iterate subfolders and add them to sys.path
-for folder in os.listdir(lib_path):
-    full_path = os.path.join(lib_path, folder)
-    if os.path.isdir(full_path):
-        sys.path.append(full_path)
 
 
 appProfiles = widgets+os.sep+'widgets'+ slash+'python'+slash+'profiles'
@@ -2248,3 +2244,18 @@ def getPath(var=None,file=None):
 
 paths=getPath
 P=getPath
+
+
+
+
+
+def add_subfolders_to_syspath(lib_path):
+    for root, dirs, _ in os.walk(lib_path):
+        for d in dirs:
+            full_path = os.path.join(root, d)
+            # print(full_path)
+            sys.path.append(full_path)
+add_subfolders_to_syspath(lib_path)
+
+
+
