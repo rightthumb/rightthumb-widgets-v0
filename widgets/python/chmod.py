@@ -26,7 +26,9 @@ def sw():
     # _.switches.register( 'Input', '-i', group='Group Name' )
         ##  -->    p SwitchGroupsExamples   <--
     # #e)--> examples
-    _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=False )
+    _.switches.register( 'Files', '-f,-fi,-file,-files','.bashrc' )
+    _.switches.register( 'Folders', '-fo,-folder,-folders','/opt' )
+    _.switches.register( 'JustFolder', '-j,-jf,-justFolder' )
 
 _._default_settings_()
 
@@ -150,8 +152,71 @@ _.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw )
 ########################################################################################
 #n)--> start
 
+import os
+import stat
+
+def chmod_of_path(path, just_folder=False):
+    """
+    Returns chmod permission string (e.g., '755') for a given file/folder path.
+    If just_folder is True, only returns for folders.
+    """
+    try:
+        if just_folder and not os.path.isdir(path):
+            return None
+
+        mode = os.stat(path).st_mode
+        perms = ''
+        for who in [stat.S_IRUSR, stat.S_IWUSR, stat.S_IXUSR,
+                    stat.S_IRGRP, stat.S_IWGRP, stat.S_IXGRP,
+                    stat.S_IROTH, stat.S_IWOTH, stat.S_IXOTH]:
+            perms += 'rwxrwxrwx'[(who.bit_length() - 1)] if mode & who else '-'
+
+        chmod = ''
+        for i in range(0, 9, 3):
+            val = (4 if perms[i] == 'r' else 0) + (2 if perms[i+1] == 'w' else 0) + (1 if perms[i+2] == 'x' else 0)
+            chmod += str(val)
+        return chmod
+    except Exception as e:
+        return f'ERR: {e}'
+
+def list_chmod(paths=None, just_folder=False):
+    """
+    Prints chmod numeric values and names for a list of paths.
+    If paths is None, defaults to current directory contents.
+    If just_folder is True, skips files and only shows folders.
+    """
+    if paths is None:
+        paths = os.listdir('.')
+
+    for path in paths:
+        if not os.path.exists(path):
+            print(f'⚠️ Not found: {path}')
+            continue
+
+        chmod = chmod_of_path(path, just_folder=just_folder)
+        if chmod:
+            print(f'{chmod} {path}')
+
 def action():
-    pass
+    paths = []
+    just_folder = _.switches.isActive('JustFolder')
+
+    for path in _.switches.values('Files'):
+        if os.path.exists(path):
+            paths.append(path)
+        else:
+            print(f'⚠️ Not found: {path}')
+
+    for path in _.switches.values('Folders'):
+        if os.path.exists(path):
+            paths.extend([os.path.join(path, f) for f in os.listdir(path)])
+        else:
+            print(f'⚠️ Not found: {path}')
+
+    if not paths:
+        paths = None
+
+    list_chmod(paths, just_folder=just_folder)
 
     # load(); global c3po;
 

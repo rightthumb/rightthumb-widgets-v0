@@ -27704,6 +27704,58 @@ def nsKeys(namespace=None, path='', seen=None, dirty=False, d=None):
 nsKey=nsKeys
 nsk=nsKeys
 ##================================================
+import os
+import sys
+import importlib.util
+import hashlib
+
+def Import(path, module_name=None):
+    """
+    Import a Python module from a full path.
+
+    Args:
+        path (str): Full path to .py file or package directory.
+        module_name (str, optional): Name for the imported module.
+                                     If omitted, a unique hash will be used.
+
+    Returns:
+        module or None if failed
+    """
+    try:
+        path = os.path.abspath(path)
+
+        # Resolve file from directory or auto-add .py
+        if os.path.isdir(path):
+            target = os.path.join(path, '__init__.py')
+            if not os.path.isfile(target):
+                return None
+        else:
+            if not path.endswith('.py'):
+                path += '.py'
+            if not os.path.isfile(path):
+                return None
+            target = path
+
+        # Auto-generate a unique name if none given
+        if not module_name:
+            hash_name = hashlib.md5(target.encode()).hexdigest()
+            module_name = f'module_{hash_name[:8]}'
+
+        spec = importlib.util.spec_from_file_location(module_name, target)
+        if spec is None or spec.loader is None:
+            return None
+
+        module = importlib.util.module_from_spec(spec)
+        sys.modules[module_name] = module
+        spec.loader.exec_module(module)
+
+        return module
+
+    except Exception:
+        return None
+
+
+##================================================
 nsfw=True
 
 Threads=ThreadManager
@@ -27772,6 +27824,8 @@ yf=fromYML
 
 yFig=_v.yFig
 jFig=_v.jFig
+
+# Import=import_path
 
 ##================================================
 ##################################################

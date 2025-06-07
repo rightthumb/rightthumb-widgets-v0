@@ -2248,14 +2248,31 @@ P=getPath
 
 
 
+# print(lib_path)
+lib=lib_path
+GPT=os.path.join(os.path.join(os.path.join(lib_path, 'ai'), 'gpt'), '__init__.py')
+# import os
+# import sys
 
-def add_subfolders_to_syspath(lib_path):
-    for root, dirs, _ in os.walk(lib_path):
-        for d in dirs:
-            full_path = os.path.join(root, d)
-            # print(full_path)
-            sys.path.append(full_path)
-add_subfolders_to_syspath(lib_path)
+# def add_to_paths(path):
+#     path = os.path.abspath(path)
+
+#     # Add to sys.path (for Python imports)
+#     if path not in sys.path:
+#         sys.path.append(path)
+
+#     # Add to environment PATH (for subprocess commands)
+#     if 'PATH' in os.environ:
+#         paths = os.environ['PATH'].split(os.pathsep)
+#         if path not in paths:
+#             paths.append(path)
+#             os.environ['PATH'] = os.pathsep.join(paths)
+#     else:
+#         os.environ['PATH'] = path
+
+# # Example usage
+# add_to_paths(lib_path)
+
 
 
 

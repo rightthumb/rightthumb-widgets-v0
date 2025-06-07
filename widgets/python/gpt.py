@@ -130,9 +130,9 @@ import os
 # try:
 #     from library.ai.gpt import  GPT # type: ignore
 #except:
-from GPT import  GPT # type: ignore
-
-
+# from GPT import  GPT # type: ignore
+GPT = _.Import(_v.GPT,'__init__.py')
+GPT= GPT.GPT
 
 def action():
     if _.switches.isActive('-Help-') or _.switches.isActive('Help') or len(_.switches.all()) == 0:

@@ -3773,7 +3773,7 @@ schema() {
     sqlite3 "$db" .schema
 }
 
-
+alias gpt="p gpt -p "
 
 
 
