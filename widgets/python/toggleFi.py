@@ -44,45 +44,67 @@ def _local_(do): exec(do)
 _.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw )
 ########################################################################################
 #n)--> start
+import os
 
 def txt(path):
     return _.getText(path, raw=True)
 
-import os
-
 def action():
+    # Determine the working folder
     if _.switches.isActive('Folder'):
-        os.chdir(_.switches.value('Folder'))
-        folder = _.switches.value('Folder')+ os.sep
+        folder = os.path.abspath(_.switches.value('Folder')) + os.sep
+        os.chdir(folder)
     else:
-        folder = os.getcwd()+ os.sep
+        folder = os.getcwd() + os.sep
 
+    # Resolve destination file path
+    destination_name = _.switches.value('Destination')
+    if not destination_name:
+        _.e('No destination specified')
+    destination = folder + destination_name
 
-    destination = folder+ _.switches.value('Destination')
-
-    dest = txt(destination) if destination else None
-    if not dest:
-        _.e('no destination')
-
-    files = _.switches.values('Files')
-
-    isI = None
-    for i,file in enumerate(files):
-        contents = txt(file)
-        if contents == dest:
-            # _.pr('Is: ' + file,c='green')
-            isI = i
-            break
+    # Read destination content
     try:
-        files[isI+1]
-        nextI = isI + 1
+        dest = txt(destination)
+    except Exception:
+        _.e('Destination file does not exist or cannot be read: ' + destination)
+
+    # Prepare list of source files
+    files = _.switches.values('Files')
+    files = [file if os.sep in file else folder + file for file in files]
+
+    # Determine which source file matches current destination content
+    current_index = -1
+    for i, file in enumerate(files):
+        if not os.path.exists(file):
+            _.e('Source file does not exist: ' + file)
+        if os.path.exists(file) and txt(file) == dest:
+            current_index = i
+            break
+
+    # print('Current index:', current_index)
+    if current_index == -1:
+        current_index = 0
+        # _.e('No matching file found in the list of source files.')
+
+    # Determine next file to copy
+    next_index = (current_index + 1) % len(files)
+    try:
+        files[current_index+1]
+        next_index = current_index + 1
     except:
-        nextI = 0
-    # print('nextI: ' + str(nextI))
-    
-    contents = txt(files[nextI])
+        next_index = 0
+    # print(next_index)
+    # Copy contents to destination
+    next_file = files[next_index]
+    contents = txt(next_file)
+    # print('Copying contents from:', next_file)
     _.saveText(contents, destination)
-    _.pr('Now: ' + files[nextI].replace(_.switches.values('Destination')[0],''),c='green')    
+
+    # Output result
+    relative_name = next_file.replace(folder, '')
+    _.pr('Now: ' + relative_name, c='green')
+ 
     
 
 ########################################################################################

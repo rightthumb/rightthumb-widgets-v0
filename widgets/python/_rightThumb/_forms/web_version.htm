@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Universal Form Renderer</title>
+    <style>
+        body {
+            background-color: #121212;
+            color: #e0e0e0;
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        form {
+            background-color: #1e1e1e;
+            padding: 20px;
+            border-radius: 8px;
+            max-width: 700px;
+            margin: auto;
+            box-shadow: 0 0 12px rgba(0,0,0,0.5);
+        }
+        h2 {
+            text-align: center;
+            color: #ffd369;
+        }
+        label {
+            display: block;
+            margin: 15px 0 5px;
+        }
+        input, textarea, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #444;
+            border-radius: 4px;
+            background-color: #2a2a2a;
+            color: #f0f0f0;
+            box-sizing: border-box;
+        }
+        input[type="radio"],
+        input[type="checkbox"] {
+            width: auto;
+            margin-right: 10px;
+        }
+        fieldset {
+            margin-top: 20px;
+            border: 1px solid #555;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        legend {
+            padding: 0 10px;
+            font-weight: bold;
+        }
+        .button-bar {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .button-bar button {
+            padding: 10px 20px;
+            margin: 0 10px;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .button-bar button:hover {
+            background-color: #555;
+        }
+    </style>
+</head>
+<body>
+
+<div id="form-container"></div>
+
+<div class="button-bar">
+    <button onclick="prevForm()">⟵ Back</button>
+    <button onclick="nextForm()">Next ⟶</button>
+</div>
+
+<script>
+const formExamples = [
+    {
+        title: 'All Fields Demo',
+        fields: [
+            { label: 'Text', type: 'text', value: 'Hello', attributes: { required: true, id: 'text1' } },
+            { label: 'Password', type: 'password', value: '' },
+            { label: 'Email', type: 'email', value: 'user@example.com' },
+            { label: 'Number', type: 'number', value: 42 },
+            { label: 'Search', type: 'search', value: 'query' },
+            { label: 'Telephone', type: 'tel', value: '555-1234' },
+            { label: 'URL', type: 'url', value: 'https://example.com' },
+            { label: 'Date', type: 'date', value: '2024-12-25' },
+            { label: 'Datetime', type: 'datetime-local', value: '2024-12-25T12:30' },
+            { label: 'Month', type: 'month', value: '2024-06' },
+            { label: 'Week', type: 'week', value: '2024-W22' },
+            { label: 'Time', type: 'time', value: '13:37' },
+            { label: 'Color', type: 'color', value: '#00ffcc' },
+            { label: 'Range', type: 'range', value: 50 },
+            { label: 'Checkbox', type: 'checkbox', value: true },
+            { label: 'Radio Group', type: 'radio', name: 'radio1', options: ['One', 'Two'], value: 'One' },
+            { label: 'File Upload', type: 'file' },
+            { label: 'Hidden Value', type: 'hidden', value: 'secret' },
+            { label: 'Datalist Example', type: 'text', list: 'list1', value: 'Chrome' },
+            { label: 'Textarea Field', type: 'textarea', value: 'Write something...' },
+            { label: 'Dropdown', type: 'select', options: ['Red', 'Green', 'Blue'], value: 'Green' }
+        ],
+        datalists: [
+            { id: 'list1', options: ['Chrome', 'Firefox', 'Edge', 'Safari'] }
+        ],
+        fieldsets: [
+            {
+                legend: 'Grouped Info',
+                fields: [
+                    { label: 'Full Name', type: 'text', value: 'Alice Example' },
+                    { label: 'Phone', type: 'tel', value: '555-6789' }
+                ]
+            }
+        ]
+    },
+    {
+        title: 'Basic Contact Form',
+        fields: [
+            { label: 'Name', type: 'text' },
+            { label: 'Email', type: 'email' },
+            { label: 'Message', type: 'textarea' }
+        ],
+        fieldsets: [
+            {
+                legend: 'Contact Info',
+                fields: [
+                    { label: 'Name', type: 'text', value: 'Alice', attributes: { required: true, id: 'name'} },
+                    { label: 'Phone', type: 'tel', value: '555-1234' }
+                ]
+            }
+        ],
+        datalists: [
+            {
+                id: 'browsers',
+                options: ['Chrome', 'Firefox', 'Safari', 'Edge']
+            }
+        ]
+    },
+    {
+        title: 'Basic Short Form',
+        config: {},
+        fields: [
+            { label: 'Your Name', type: 'text' },
+            { label: 'Agree to terms', type: 'checkbox', value: false }
+        ]
+    },
+    {
+        title: 'Login Form',
+        config: { post: '/login' },
+        fields: [
+            { label: 'Username', type: 'text', value: '' },
+            { label: 'Password', type: 'password', value: '' }
+        ]
+    },
+    {
+        title: 'Feedback Form',
+        config: { post: '/feedback' },
+        fields: [
+            { label: 'Name', type: 'text', value: 'Daniel' },
+            { label: 'Email', type: 'text', value: 'daniel@example.com' },
+            { label: 'Comments', type: 'text_area', value: 'Awesome product!' },
+            { label: 'Rating', type: 'dropdown', options: ['1','2','3','4','5'], value: '5' }
+        ]
+    },
+    {
+        title: 'Event Registration',
+        config: { post: '/register' },
+        fields: [
+            { label: 'Event Name', type: 'text', value: 'Tech Meetup' },
+            { label: 'Full Name', type: 'text', value: '' },
+            { label: 'Email', type: 'text', value: '' },
+            { label: 'Mode', type: 'radio', options: ['In-person','Virtual'], value: 'Virtual' }
+        ]
+    },
+    {
+        title: 'Survey',
+        config: {},
+        fields: [
+            { label: 'Favorite Language', type: 'dropdown', options: ['Python','JavaScript','C++'], value: 'Python' },
+            { label: 'Why?', type: 'text_area', value: '' }
+        ]
+    },
+    {
+        title: 'Simple Contact',
+        config: {},
+        fields: [
+            { label: 'Name', type: 'text', value: '' },
+            { label: 'Message', type: 'text_area', value: '' }
+        ]
+    }
+];
+
+let currentFormIndex = 0;
+
+function render(form) {
+    const container = document.getElementById('form-container');
+    container.innerHTML = '';
+
+    const formEl = document.createElement('form');
+
+    const title = document.createElement('h2');
+    title.textContent = form.title || 'Form';
+    formEl.appendChild(title);
+
+    form.fields.forEach(field => {
+        const attrs = field.attributes || {};
+        const fieldId = attrs.id || `field-${Math.random().toString(36).substr(2, 9)}`;
+
+        if (field.type !== 'hidden') {
+            const label = document.createElement('label');
+            label.textContent = field.label;
+            if (attrs.id) label.setAttribute('for', attrs.id);
+            formEl.appendChild(label);
+        }
+
+        let input;
+
+        if (field.type === 'textarea') {
+            input = document.createElement('textarea');
+            input.value = field.value || '';
+
+        } else if (field.type === 'select') {
+            input = document.createElement('select');
+            (field.options || []).forEach(opt => {
+                const o = document.createElement('option');
+                o.value = opt;
+                o.textContent = opt;
+                if (field.value === opt) o.selected = true;
+                input.appendChild(o);
+            });
+
+        } else if (field.type === 'radio') {
+            input = document.createElement('div');
+            (field.options || []).forEach(opt => {
+                const radioId = `${fieldId}-${opt.replace(/\s+/g, '_')}`;
+
+                const radio = document.createElement('input');
+                radio.type = 'radio';
+                radio.name = field.name || field.label;
+                radio.value = opt;
+                radio.id = radioId;
+                if (opt === field.value) radio.checked = true;
+
+                const span = document.createElement('label');
+                span.setAttribute('for', radioId);
+                span.style.marginRight = '15px';
+                span.appendChild(document.createTextNode(opt));
+
+                input.appendChild(radio);
+                input.appendChild(span);
+            });
+
+        } else if (field.type === 'checkbox') {
+            input = document.createElement('input');
+            input.type = 'checkbox';
+            input.checked = !!field.value;
+
+        } else {
+            input = document.createElement('input');
+            input.type = field.type || 'text';
+            if (field.value) input.value = field.value;
+            if (field.list) input.setAttribute('list', field.list);
+        }
+
+        // Assign name and all attributes
+        input.name = field.label;
+
+        Object.entries(attrs).forEach(([key, val]) => {
+            if (val === true) input.setAttribute(key, '');
+            else input.setAttribute(key, val);
+        });
+
+        // Only append if not a radio group wrapper
+        if (field.type !== 'radio') {
+            formEl.appendChild(input);
+        } else {
+            formEl.appendChild(input); // input is a <div> with radios
+        }
+    });
+
+    // Datalists
+    (form.datalists || []).forEach(dl => {
+        const datalist = document.createElement('datalist');
+        datalist.id = dl.id;
+        (dl.options || []).forEach(opt => {
+            const o = document.createElement('option');
+            o.value = opt;
+            datalist.appendChild(o);
+        });
+        formEl.appendChild(datalist);
+    });
+
+    // Fieldsets
+    (form.fieldsets || []).forEach(fset => {
+        const fs = document.createElement('fieldset');
+        const legend = document.createElement('legend');
+        legend.textContent = fset.legend;
+        fs.appendChild(legend);
+
+        (fset.fields || []).forEach(f => {
+            const label = document.createElement('label');
+            label.textContent = f.label;
+            fs.appendChild(label);
+
+            const input = document.createElement('input');
+            input.type = f.type;
+            input.name = f.label;
+            input.value = f.value || '';
+            fs.appendChild(input);
+        });
+
+        formEl.appendChild(fs);
+    });
+
+    container.appendChild(formEl);
+}
+
+
+
+function nextForm() {
+    currentFormIndex = (currentFormIndex + 1) % formExamples.length;
+    render(formExamples[currentFormIndex]);
+}
+
+function prevForm() {
+    currentFormIndex = (currentFormIndex - 1 + formExamples.length) % formExamples.length;
+    render(formExamples[currentFormIndex]);
+}
+
+render(formExamples[currentFormIndex]);
+</script>
+
+</body>
+</html>

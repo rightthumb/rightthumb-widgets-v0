@@ -233,7 +233,7 @@ def action():
 			if not record['file'] in spent:
 				if os.path.isfile( record['file'] ):
 
-					newName = _fileNameDate.imp.newName( fileFolder['file'], suffix='(preRecover)' )
+					newName = _fileNameDate.imp.new_name( fileFolder['file'], suffix='(preRecover)' )
 					os.rename( record['file'], newName )
 
 				_.pr( record['file'] )

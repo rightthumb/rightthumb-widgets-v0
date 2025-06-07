@@ -10166,6 +10166,8 @@ def UUID_Epoch(vVv=None,dec=2,epoch=None):
 
 __.fn.saveText = False
 def saveText( rows, theFile, errors=True, me=0, test=None, lock=False ):
+	if rows is None:
+		err('Error: data is None')
 	if lock:
 		FileLocker.check(theFile)
 		FileLocker.lock(theFile)
@@ -23523,7 +23525,7 @@ def URL(url, data={}, t=None, txt=None, text=False, headers=None, h=None):
 	response = requests.post(url, data=data, headers=headers)
 
 	if text:
-		from bs4 import BeautifulSoup
+		from bs4 import BeautifulSoup # type: ignore
 		soup = BeautifulSoup(response.text, 'html.parser')
 		return soup.get_text(separator='\n', strip=True)
 	else:
@@ -25447,7 +25449,7 @@ def decompress2(compressed_file_path, decompressed_file_path):
 		print(f"Decompressed gzip {decompressed_file_path}")
 	except:
 		return 'Error'
-
+decompress2('1748977323.3772092-2025_05_31-12_36_55-.config.hash','.config.hash')
 def decompress2x(path):
 	if not IS(path,'gzip'):
 		return False

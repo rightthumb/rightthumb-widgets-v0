@@ -1028,62 +1028,68 @@ def validate_huggingface_download_command(command: str) -> bool:
 
 
 
-import os
-import json
 import re
-import requests  # type: ignore
+import os
+import requests # type: ignore
 
-tld_set = None
+import re
+import os
+import requests # type: ignore
 
-def get_cached_tld_list(cache_path='~/.tlds.json', source_url='https://a.sds.sh/assets/json/TLDs.json'):
-    """
-    Load TLDs from cache if available; otherwise fetch from the given URL and cache it.
-    Returns a set of lowercase TLDs.
-    """
-    global tld_set
-    cache_path = os.path.expanduser(cache_path)
+def download_json_array(url):
+	"""
+	Downloads JSON data from a given URL and returns it as a Python list.
+	"""
+	try:
+		response = requests.get(url)
+		response.raise_for_status()  # Raise an error for bad status
+		data = response.json()
+		if isinstance(data, list):
+			return data
+		else:
+			raise ValueError("Expected a JSON array (list), got something else.")
+	except Exception as e:
+		print(f"Error: {e}")
+		return []
+def get_cached_tld_list(cache_path='~/.rt/.tlds.json', source_url='https://a.sds.sh/assets/json/TLDs.json'):
+	cache_path = os.path.expanduser(cache_path)
+	import json
+	if os.path.exists(cache_path):
+		try:
+			return json.loads(_.getText(cache_path,raw=True))
+		except:
+			return { 'com', 'net', 'org', 'top', 'xyz', 'sh', 'pro', 'rip', 'cx', 'ac', 'cc', 'app', 'solutions', 'menu', 'ing' }  # fallback
+	tlds = download_json_array(source_url)
+	# tlds = sorted(tlds, key=lambda x: len(x))
+	
+	_.saveText(json.dumps(tlds, indent=4), cache_path)
+	return tlds
+	try:
+		response = requests.get(source_url)
+		response.raise_for_status()
+		
+		# print(tlds)
 
-    if os.path.exists(cache_path):
-        try:
-            with open(cache_path, 'r') as f:
-                tld_set = set(json.load(f))
-                return tld_set
-        except Exception as e:
-            print(f"Failed to load cached TLDs: {e}")
-
-    try:
-        response = requests.get(source_url, timeout=10)
-        response.raise_for_status()
-        tld_set = {tld.lower() for tld in response.json()}
-        with open(cache_path, 'w') as f:
-            json.dump(sorted(tld_set), f, indent=2)
-        return tld_set
-    except Exception as e:
-        print(f"Failed to fetch TLD list from {source_url}: {e}")
-        # Fallback to a minimal set
-        tld_set = {'com', 'net', 'org', 'io', 'top'}
-        return tld_set
+	except:
+		return { 'com', 'net', 'org', 'top', 'xyz', 'sh', 'pro', 'rip', 'cx', 'ac', 'cc', 'app', 'solutions', 'menu', 'ing' }  # fallback
 
 
 def extract_domains(text):
-    """
-    Extracts domain names from the provided text using the given set of TLDs.
-    Returns a sorted list of unique domain names.
-    """
-    global tld_set
-    if tld_set is None:
-        tld_set = get_cached_tld_list()
-
-    tld_pattern = '|'.join(re.escape(tld) for tld in sorted(tld_set, key=len, reverse=True))
-    domain_pattern = re.compile(
-        rf'\b(?:[a-zA-Z0-9-]+\.)+(?:{tld_pattern})(?![a-zA-Z0-9])', re.IGNORECASE
-    )
-
-    domains = {
-        match.group().rstrip('.,;:!?)]}') for match in domain_pattern.finditer(text)
-    }
-
-    return sorted(domains)
+	tld_set = { 'com', 'net', 'org', 'top', 'xyz', 'sh', 'pro', 'rip', 'cx', 'ac', 'cc', 'app', 'solutions', 'menu', 'ing' }
+	tld_set = get_cached_tld_list()
+	# print(tld_set)
+	pattern = re.compile(r'\b(?:[a-zA-Z0-9-]+\.)+(?:[a-zA-Z]{2,63})\b')
+	# print(pattern)
+	domains = []
+	# print(domains)
+	for match in pattern.findall(text):
+		parts = match.lower().split('.')
+		if parts[-1] in tld_set:
+			if not 'a-zA' in parts[-1] and not '0-9' in parts[-1]:
+				m = match.lower()
+				if m not in domains:
+					domains.append(m)
+	return domains
 
 
 
@@ -1132,7 +1138,7 @@ def scrape_all(text):
 	linux_paths = scrape_linux_file_paths(text)
 	urls = scrape_urls(text)
 	domains = extract_domains(text)
-
+	# print(domains)
 	return combined_windows_paths, linux_paths, urls, domains
 
 
@@ -3388,7 +3394,7 @@ function get__THETABLE( $ID_label ){
 				
 
 			windows_paths, linux_paths, urls, domains = scrape_all(text)
-			result=[]
+			result=domains
 
 			for path in windows_paths:
 				if not "'" in path:
@@ -3406,11 +3412,11 @@ function get__THETABLE( $ID_label ){
 				for item in scan[k]:
 					if not item in result:
 						result.append(item)
-			for k in domains:
-				result.append(item)
+
 
 		def cleanScrape(item):
 			item=item.strip()
+			item=item.replace('[a-zA-Z0-9-]+\.)+(','')
 			def csi(item,e):
 				if item.endswith(e): item=item[:-len(e)]
 				return item

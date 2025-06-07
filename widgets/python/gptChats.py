@@ -13,6 +13,7 @@ def sw():
 	_.switches.register( 'Download', '-dl' )
 	_.switches.register( 'Search', '--s,-search' )
 	_.switches.register( 'Chat-id', '-cid' )
+	_.switches.register( 'OpenChat', '-o,-open' )
 _._default_settings_()
 
 _.appInfo[focus()] = {
@@ -85,6 +86,23 @@ _.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw )
 import re
 
 def action():
+	if _.switches.isActive('OpenChat'):
+		url = 'https://chatgpt.com/c/'
+		
+		a = _.switches.value('OpenChat')
+		b = _.switches.value('GPT-id')
+		
+		if a:
+			url += a
+		elif b:
+			url += b
+		else:
+			_.pr('❌ Missing -o or -id for open', c='red')
+			return
+		import webbrowser
+		webbrowser.open(url)
+		return None
+	
 	fo = _v.tt + _v.slash + 'gptChats' + _v.slash
 
 	if _.switches.isActive('Chat-id'):
