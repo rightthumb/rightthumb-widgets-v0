@@ -83,26 +83,26 @@ const formExamples = [
         title: 'All Fields Demo',
         fields: [
             { label: 'Text', type: 'text', value: 'Hello', attributes: { required: true, id: 'text1' } },
-            { label: 'Password', type: 'password', value: '' },
-            { label: 'Email', type: 'email', value: 'user@example.com' },
-            { label: 'Number', type: 'number', value: 42 },
-            { label: 'Search', type: 'search', value: 'query' },
-            { label: 'Telephone', type: 'tel', value: '555-1234' },
-            { label: 'URL', type: 'url', value: 'https://example.com' },
-            { label: 'Date', type: 'date', value: '2024-12-25' },
-            { label: 'Datetime', type: 'datetime-local', value: '2024-12-25T12:30' },
-            { label: 'Month', type: 'month', value: '2024-06' },
-            { label: 'Week', type: 'week', value: '2024-W22' },
-            { label: 'Time', type: 'time', value: '13:37' },
-            { label: 'Color', type: 'color', value: '#00ffcc' },
-            { label: 'Range', type: 'range', value: 50 },
-            { label: 'Checkbox', type: 'checkbox', value: true },
-            { label: 'Radio Group', type: 'radio', name: 'radio1', options: ['One', 'Two'], value: 'One' },
-            { label: 'File Upload', type: 'file' },
-            { label: 'Hidden Value', type: 'hidden', value: 'secret' },
-            { label: 'Datalist Example', type: 'text', list: 'list1', value: 'Chrome' },
-            { label: 'Textarea Field', type: 'textarea', value: 'Write something...' },
-            { label: 'Dropdown', type: 'select', options: ['Red', 'Green', 'Blue'], value: 'Green' }
+            { label: 'Password', type: 'password', value: '', attributes: { id: 'password1' } },
+            { label: 'Email', type: 'email', value: 'user@example.com', attributes: { id: 'email1' } },
+            { label: 'Number', type: 'number', value: 42, attributes: { id: 'number1' } },
+            { label: 'Search', type: 'search', value: 'query', attributes: { id: 'search1' } },
+            { label: 'Telephone', type: 'tel', value: '555-1234', attributes: { id: 'telephone1' } },
+            { label: 'URL', type: 'url', value: 'https://example.com', attributes: { id: 'url1' } },
+            { label: 'Date', type: 'date', value: '2024-12-25', attributes: { id: 'date1' } },
+            { label: 'Datetime', type: 'datetime-local', value: '2024-12-25T12:30', attributes: { id: 'datetime1' } },
+            { label: 'Month', type: 'month', value: '2024-06', attributes: { id: 'month1' } },
+            { label: 'Week', type: 'week', value: '2024-W22', attributes: { id: 'week1' } },
+            { label: 'Time', type: 'time', value: '13:37', attributes: { id: 'time1' } },
+            { label: 'Color', type: 'color', value: '#00ffcc', attributes: { id: 'color1' } },
+            { label: 'Range', type: 'range', value: 50, attributes: { id: 'range1' } },
+            { label: 'Checkbox', type: 'checkbox', value: true, attributes: { id: 'checkbox1' } },
+            { label: 'Radio Group', type: 'radio', name: 'radio1', options: ['One', 'Two'], value: 'One', attributes: { id: 'radiogroup1' } },
+            { label: 'File Upload', type: 'file', attributes: { id: 'fileupload1' } },
+            { label: 'Hidden Value', type: 'hidden', value: 'secret', attributes: { id: 'hiddenvalue1' } },
+            { label: 'Datalist Example', type: 'text', list: 'list1', value: 'Chrome', attributes: { id: 'datalistexample1' } },
+            { label: 'Textarea Field', type: 'textarea', value: 'Write something...', attributes: { id: 'textareafield1' } },
+            { label: 'Dropdown', type: 'select', options: ['Red', 'Green', 'Blue'], value: 'Green', attributes: { id: 'dropdown1' } }
         ],
         datalists: [
             { id: 'list1', options: ['Chrome', 'Firefox', 'Edge', 'Safari'] }
@@ -111,8 +111,8 @@ const formExamples = [
             {
                 legend: 'Grouped Info',
                 fields: [
-                    { label: 'Full Name', type: 'text', value: 'Alice Example' },
-                    { label: 'Phone', type: 'tel', value: '555-6789' }
+                    { label: 'Full Name', type: 'text', value: 'Alice Example', attributes: { id: 'fullname1' } },
+                    { label: 'Phone', type: 'tel', value: '555-6789', attributes: { id: 'phone1' } }
                 ]
             }
         ]
@@ -120,16 +120,16 @@ const formExamples = [
     {
         title: 'Basic Contact Form',
         fields: [
-            { label: 'Name', type: 'text' },
-            { label: 'Email', type: 'email' },
-            { label: 'Message', type: 'textarea' }
+            { label: 'Name', type: 'text', attributes: { id: 'name1' } },
+            { label: 'Email', type: 'email', attributes: { id: 'email2' } },
+            { label: 'Message', type: 'textarea', attributes: { id: 'message1' } }
         ],
         fieldsets: [
             {
                 legend: 'Contact Info',
                 fields: [
-                    { label: 'Name', type: 'text', value: 'Alice', attributes: { required: true, id: 'name'} },
-                    { label: 'Phone', type: 'tel', value: '555-1234' }
+                    { label: 'Name', type: 'text', value: 'Alice', attributes: { required: true, id: 'name2' } },
+                    { label: 'Phone', type: 'tel', value: '555-1234', attributes: { id: 'phone2' } }
                 ]
             }
         ],
@@ -144,55 +144,56 @@ const formExamples = [
         title: 'Basic Short Form',
         config: {},
         fields: [
-            { label: 'Your Name', type: 'text' },
-            { label: 'Agree to terms', type: 'checkbox', value: false }
+            { label: 'Your Name', type: 'text', attributes: { id: 'yourname1' } },
+            { label: 'Agree to terms', type: 'checkbox', value: false, attributes: { id: 'agreetoterms1' } }
         ]
     },
     {
         title: 'Login Form',
         config: { post: '/login' },
         fields: [
-            { label: 'Username', type: 'text', value: '' },
-            { label: 'Password', type: 'password', value: '' }
+            { label: 'Username', type: 'text', value: '', attributes: { id: 'username1' } },
+            { label: 'Password', type: 'password', value: '', attributes: { id: 'password2' } }
         ]
     },
     {
         title: 'Feedback Form',
         config: { post: '/feedback' },
         fields: [
-            { label: 'Name', type: 'text', value: 'Daniel' },
-            { label: 'Email', type: 'text', value: 'daniel@example.com' },
-            { label: 'Comments', type: 'text_area', value: 'Awesome product!' },
-            { label: 'Rating', type: 'dropdown', options: ['1','2','3','4','5'], value: '5' }
+            { label: 'Name', type: 'text', value: 'Daniel', attributes: { id: 'name3' } },
+            { label: 'Email', type: 'text', value: 'daniel@example.com', attributes: { id: 'email3' } },
+            { label: 'Comments', type: 'text_area', value: 'Awesome product!', attributes: { id: 'comments1' } },
+            { label: 'Rating', type: 'dropdown', options: ['1','2','3','4','5'], value: '5', attributes: { id: 'rating1' } }
         ]
     },
     {
         title: 'Event Registration',
         config: { post: '/register' },
         fields: [
-            { label: 'Event Name', type: 'text', value: 'Tech Meetup' },
-            { label: 'Full Name', type: 'text', value: '' },
-            { label: 'Email', type: 'text', value: '' },
-            { label: 'Mode', type: 'radio', options: ['In-person','Virtual'], value: 'Virtual' }
+            { label: 'Event Name', type: 'text', value: 'Tech Meetup', attributes: { id: 'eventname1' } },
+            { label: 'Full Name', type: 'text', value: '', attributes: { id: 'fullname2' } },
+            { label: 'Email', type: 'text', value: '', attributes: { id: 'email4' } },
+            { label: 'Mode', type: 'radio', options: ['In-person','Virtual'], value: 'Virtual', attributes: { id: 'mode1' } }
         ]
     },
     {
         title: 'Survey',
         config: {},
         fields: [
-            { label: 'Favorite Language', type: 'dropdown', options: ['Python','JavaScript','C++'], value: 'Python' },
-            { label: 'Why?', type: 'text_area', value: '' }
+            { label: 'Favorite Language', type: 'dropdown', options: ['Python','JavaScript','C++'], value: 'Python', attributes: { id: 'favoritelanguage1' } },
+            { label: 'Why?', type: 'text_area', value: '', attributes: { id: 'why1' } }
         ]
     },
     {
         title: 'Simple Contact',
         config: {},
         fields: [
-            { label: 'Name', type: 'text', value: '' },
-            { label: 'Message', type: 'text_area', value: '' }
+            { label: 'Name', type: 'text', value: '', attributes: { id: 'name4' } },
+            { label: 'Message', type: 'text_area', value: '', attributes: { id: 'message2' } }
         ]
     }
 ];
+
 
 let currentFormIndex = 0;
 
