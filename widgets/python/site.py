@@ -703,6 +703,7 @@ def URL(urls=None):
 
 
 def action():
+	# _.switches.fieldSet( 'NotWSL', 'active', True )
 	if _.switches.isActive('Remote-Location'):
 		for path in _.switches.values(1):
 			rPath = meta_scanR(path,'')

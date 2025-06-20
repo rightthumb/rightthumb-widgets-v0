@@ -35,6 +35,8 @@ goto :end
 set /a asked+=1
 if %asked% gtr 3 (
     echo too many attempts
+    pause
+    call x
     exit
 )
 call p loginPIN

@@ -5,4 +5,5 @@ if "%1"=="" (
 	set theDay=%1
 	set theD=d
 	call p. day -ago %theDay%%theD%
+	@REM call p. day -ago %theDay%%theD%
 )

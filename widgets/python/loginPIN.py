@@ -42,7 +42,7 @@ def action():
 		_.saveText(pin, _v.pinTemp)
 	except KeyboardInterrupt:
 		print('\n[Ctrl+C detected] Exiting...')
-		exit()
+		_.isExit(__file__)
 
 
 ########################################################################################
