@@ -1,0 +1,4 @@
+#!/bin/bash
+
+alias pip install=pip3 install --upgrade --no-cache-dir --break-system-packages
+alias pip3 install=pip3 install --upgrade --no-cache-dir --break-system-packages
