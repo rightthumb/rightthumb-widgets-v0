@@ -643,8 +643,7 @@ def Client():
                 sys.stdout.flush()
                 sock.close()
         else:
-            import tty, termios, select, readline, rlcompleter
-            readline.parse_and_bind('tab: complete')
+            import tty, termios, select
             stdin_fd = sys.stdin.fileno()
             old_settings = termios.tcgetattr(stdin_fd)
             tty.setraw(stdin_fd)
@@ -672,12 +671,16 @@ def Client():
                                 sys.stdout.write('\b \b')
                                 sys.stdout.flush()
                         elif ch == '\t':
-                            completions = [cmd for cmd in os.listdir('/bin') if cmd.startswith(buffer)]
-                            if completions:
-                                completion = completions[0][len(buffer):]
-                                buffer += completion
-                                sys.stdout.write(completion)
-                                sys.stdout.flush()
+                            try:
+                                prefix = buffer.strip().split()[-1] if buffer.strip() else ''
+                                matches = [cmd for cmd in os.listdir('/bin') if cmd.startswith(prefix)]
+                                if matches:
+                                    completion = matches[0][len(prefix):]
+                                    buffer += completion
+                                    sys.stdout.write(completion)
+                                    sys.stdout.flush()
+                            except:
+                                pass
                         else:
                             buffer += ch
                             sys.stdout.write(ch)
