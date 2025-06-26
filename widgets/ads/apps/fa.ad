@@ -1,0 +1,21 @@
+.
+   ****          
+  /**/           
+ ******  ******  
+///**/  //////** 
+  /**    ******* 
+  /**   **////** 
+  /**  //********
+  //    //////// 
+
+#title)--> fa ( file alias )
+
+fa
+ | - p file-open -alias 
+
+#title)--> to create a new file alias
+
+fa notes.py -f notes-py.md
+
+
+.
