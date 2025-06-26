@@ -4,7 +4,9 @@ fieldSet=_.l.vars(focus(),__name__,__file__,appDBA);_.load();_v=__.imp('_rightTh
 
 def sw():
     pass
-    _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=False )
+    _.switches.register( 'Server', '-srv' )
+    _.switches.register( 'Client', '-client' )
+    _.switches.register( 'AsymmetricKeys', '-keys' )
 _._default_settings_()
 
 _.appInfo[focus()] = {
@@ -43,13 +45,12 @@ _.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw )
 ########################################################################################
 #n)--> start
 
+import os
 
-### secure_terminal_server.py (RSA + PTY + PIN handshake only, relay fix)
-import sys
-if '-srv' in sys.argv:
+def Server():
     import os, socket, pty, select, random, time, subprocess, threading
-    from cryptography.hazmat.primitives import serialization, hashes
-    from cryptography.hazmat.primitives.asymmetric import padding
+    from cryptography.hazmat.primitives import serialization, hashes # type: ignore
+    from cryptography.hazmat.primitives.asymmetric import padding # type: ignore
 
     HOST = '127.0.0.1'
 
@@ -64,13 +65,14 @@ if '-srv' in sys.argv:
     if relay:
         relay_server = relay
     relay_port = random.randint(20000, 30000)
+    private_path = os.path.expanduser('~/.rt/remote-terminal_private.pem')
 
-    with open("private.pem", "rb") as key_file:
+    with open(private_path, "rb") as key_file:
         private_key = serialization.load_pem_private_key(key_file.read(), password=None)
 
     raw_pin = f"{random.randint(100000, 999999):06d}"
     PIN = f"{raw_pin[:3]}-{raw_pin[3:]}"
-    print(f"[+] SESSION PIN: {PIN}")
+    _.pr(f"[+] SESSION PIN: {PIN}", c='yellow')
 
     def rsa_decrypt_command(encrypted_data):
         return private_key.decrypt(
@@ -126,30 +128,31 @@ if '-srv' in sys.argv:
             ]
             try:
                 subprocess.check_call(cmd)
-                print(f"[+] Relay active: {relay_server}:{relay_port}")
+                _.pr(f"[+] Relay active: {relay_server}:{relay_port}", c='green')
             except subprocess.CalledProcessError as e:
-                print(f"[!] SSH tunnel failed: {e}")
+                _.pr(f"[!] SSH tunnel failed: {e}")
                 return
 
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             s.bind((HOST, PORT))
             s.listen(1)
-            print(f"[+] Ready on {HOST}:{PORT}")
+            _.pr(f"[+] Ready on {HOST}:{PORT}", c='purple')
             conn, addr = s.accept()
-            # print(f"[+] Connected: {addr}")
+            _.pr(f"[+] Connected: {addr}", c='purple')
             with conn:
                 run_terminal_session(conn)
 
     if __name__ == "__main__":
         start_server()
 
-if '-client' in sys.argv:
+def Client():
+    _.pr('CTRL+X  Behaves like CTRL+C to force quit remote commands\n\n', c='yellow')
     import socket
     import threading
     import sys
     import platform
-    from cryptography.hazmat.primitives import serialization, hashes
-    from cryptography.hazmat.primitives.asymmetric import padding
+    from cryptography.hazmat.primitives import serialization, hashes # type: ignore
+    from cryptography.hazmat.primitives.asymmetric import padding # type: ignore
 
     relay_server = None
     relay = _v.yFig('remote_terminal', 'relay')
@@ -158,7 +161,9 @@ if '-client' in sys.argv:
     relay_port = int(input('Port: '))
     PIN = input("Enter PIN (e.g. 123-456): ").replace('-', '')
 
-    with open("public.pem", "rb") as f:
+    public_path = os.path.expanduser('~/.rt/remote-terminal_public.pem')
+
+    with open(public_path, "rb") as f:
         public_key = serialization.load_pem_public_key(f.read())
 
     def encrypt_command(command):
@@ -172,65 +177,87 @@ if '-client' in sys.argv:
         )
 
     def receive_output(sock):
+        global skip_first_line
+        skip_first_line = False
         while True:
             try:
                 data = sock.recv(1024)
                 if data:
-                    print(data.decode(errors='ignore'), end='', flush=True)
+                    text = data.decode(errors='ignore')
+                    if skip_first_line:
+                        # print('skipped first line')
+                        text = '\n'.join(text.split('\n')[1:])
+                        skip_first_line = False
+                    sys.stdout.write(text)
+                    sys.stdout.flush()
             except Exception:
                 break
 
     def interactive_input(sock):
-        buffer = ''
+        global skip_first_line
         if platform.system() == 'Windows':
             import msvcrt
-            while True:
-                if msvcrt.kbhit():
-                    char = msvcrt.getch()
-                    if char == b'\x18':  # Ctrl+X
-                        print("\n[+] Sending CTRL signal")
-                        sock.sendall(b'__CTRL_C__')
-                        buffer = ''
-                        continue
-                    elif char in (b'\r', b'\n'):
-                        print()
-                        if buffer.strip():
-                            encrypted = encrypt_command(buffer.strip())
-                            sock.sendall(encrypted)
-                        buffer = ''
-                    elif char == b'\x08':  # Backspace
-                        if buffer:
-                            buffer = buffer[:-1]
-                            sys.stdout.write('\b \b')
+            buffer = ''
+            try:
+                while True:
+                    if msvcrt.kbhit():
+                        ch = msvcrt.getch()
+                        if ch == b'\x18':  # Ctrl+X
+                            sys.stdout.write("\n[+] Sending CTRL signal\n")
                             sys.stdout.flush()
-                    else:
-                        try:
-                            decoded = char.decode()
-                            buffer += decoded
-                            sys.stdout.write(decoded)
+                            sock.sendall(b'__CTRL_C__')
+                            buffer = ''
+                        elif ch in (b'\r', b'\n'):  # Enter
+                            sys.stdout.write('\n')
                             sys.stdout.flush()
-                        except:
-                            pass
+                            if buffer.strip():
+                                encrypted = encrypt_command(buffer)
+                                sock.sendall(encrypted)
+                                skip_first_line = True
+                            buffer = ''
+                        elif ch == b'\x08':  # Backspace
+                            if buffer:
+                                buffer = buffer[:-1]
+                                sys.stdout.write('\b \b')
+                                sys.stdout.flush()
+                        elif ch == b'\xe0':
+                            msvcrt.getch()  # Ignore arrow key prefix
+                        else:
+                            try:
+                                decoded = ch.decode()
+                                buffer += decoded
+                                sys.stdout.write(decoded)
+                                sys.stdout.flush()
+                            except:
+                                pass
+            except KeyboardInterrupt:
+                sys.stdout.write("\n[+] Disconnected.\n")
+                sys.stdout.flush()
+                sock.close()
         else:
             import tty, termios, select
             stdin_fd = sys.stdin.fileno()
             old_settings = termios.tcgetattr(stdin_fd)
             tty.setcbreak(stdin_fd)
+            buffer = ''
             try:
                 while True:
                     if select.select([sys.stdin], [], [], 0.1)[0]:
                         ch = sys.stdin.read(1)
-                        if ch == '\x18':  # Ctrl+X
-                            print("\n[+] Sending CTRL signal")
+                        if ch == '\x18':
+                            sys.stdout.write("\n[+] Sending CTRL signal\n")
+                            sys.stdout.flush()
                             sock.sendall(b'__CTRL_C__')
                             buffer = ''
                         elif ch in ('\r', '\n'):
-                            print()
+                            sys.stdout.write('\n')
+                            sys.stdout.flush()
                             if buffer.strip():
-                                encrypted = encrypt_command(buffer.strip())
+                                encrypted = encrypt_command(buffer)
                                 sock.sendall(encrypted)
+                                skip_first_line = True
                             buffer = ''
-                        elif ch == '\x7f':  # Backspace
+                        elif ch == '\x7f':
                             if buffer:
                                 buffer = buffer[:-1]
                                 sys.stdout.write('\b \b')
@@ -244,12 +271,13 @@ if '-client' in sys.argv:
 
     host = relay_server
     port = relay_port
-    print(f"[+] Connecting to {host}:{port}...")
+    _.pr(f"[+] Connecting to {host}:{port}...")
 
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         s.connect((host, port))
         s.sendall(PIN.encode())
-        print(s.recv(1024).decode())
+        sys.stdout.write(s.recv(1024).decode())
+        sys.stdout.flush()
 
         threading.Thread(target=receive_output, args=(s,), daemon=True).start()
         interactive_input(s)
@@ -257,8 +285,174 @@ if '-client' in sys.argv:
 
 
 
+def AsymmetricKeys0():
+    import os
+    from cryptography.hazmat.primitives.asymmetric import rsa  # type: ignore
+    from cryptography.hazmat.primitives import serialization   # type: ignore
+
+    home_dir = os.path.expanduser('~/.rt')
+    os.makedirs(home_dir, exist_ok=True)  # Ensure the directory exists
+
+    private_path = os.path.join(home_dir, 'remote-terminal_private.pem')
+    public_path = os.path.join(home_dir, 'remote-terminal_public.pem')
+
+    private_key = rsa.generate_private_key(public_exponent=65537, key_size=2048)
+    public_key = private_key.public_key()
+
+    with open(private_path, "wb") as f:
+        f.write(private_key.private_bytes(
+            encoding=serialization.Encoding.PEM,
+            format=serialization.PrivateFormat.TraditionalOpenSSL,
+            encryption_algorithm=serialization.NoEncryption()
+        ))
+
+    with open(public_path, "wb") as f:
+        f.write(public_key.public_bytes(
+            encoding=serialization.Encoding.PEM,
+            format=serialization.PublicFormat.SubjectPublicKeyInfo
+        ))
+
+
+def AsymmetricKeys():
+    import os
+    import random
+    import requests
+    from cryptography.hazmat.primitives.asymmetric import rsa  # type: ignore
+    from cryptography.hazmat.primitives import serialization   # type: ignore
+
+    # Set the upload URL
+    upload_url = 'https://yourserver.example.com/upload'  # ← Update this with your server
+
+    # Create ~/.rt directory if it doesn't exist
+    home_dir = os.path.expanduser('~/.rt')
+    os.makedirs(home_dir, exist_ok=True)
+
+    # File paths
+    private_path = os.path.join(home_dir, 'remote-terminal_private.pem')
+    public_path = os.path.join(home_dir, 'remote-terminal_public.pem')
+
+    # Generate RSA key pair
+    private_key = rsa.generate_private_key(public_exponent=65537, key_size=2048)
+    public_key = private_key.public_key()
+
+    # Save private key
+    with open(private_path, "wb") as f:
+        f.write(private_key.private_bytes(
+            encoding=serialization.Encoding.PEM,
+            format=serialization.PrivateFormat.TraditionalOpenSSL,
+            encryption_algorithm=serialization.NoEncryption()
+        ))
+
+    # Save public key
+    with open(public_path, "wb") as f:
+        pub_bytes = public_key.public_bytes(
+            encoding=serialization.Encoding.PEM,
+            format=serialization.PublicFormat.SubjectPublicKeyInfo
+        )
+        f.write(pub_bytes)
+
+    # Generate a 5-digit code with dash after 2nd digit
+    digits = ''.join(str(random.randint(0, 9)) for _ in range(5))
+    code = digits[:2] + '-' + digits[2:]
+    print(f"[+] Generated code: {code}")
+
+    # Upload public key
+    try:
+        response = requests.post(
+            upload_url,
+            data=pub_bytes,
+            headers={'Content-Type': 'application/x-pem-file'}
+        )
+        response.raise_for_status()
+        print("[+] Public key uploaded successfully.")
+    except Exception as e:
+        print(f"[!] Failed to upload public key: {e}")
+
+
+
+def DownloadPublicKey():
+    import os
+    import requests
+
+    # Prompt for PIN (e.g., 12-345)
+    pin = input("Enter the 5-digit code (format: ##-###): ").strip()
+
+    # Define download URL (modify as needed to match your server logic)
+    download_url = f"https://yourserver.example.com/public?code={pin}"
+
+    # Output path
+    public_path = os.path.expanduser('~/.rt/remote-terminal_public.pem')
+    os.makedirs(os.path.dirname(public_path), exist_ok=True)
+
+    # Attempt download
+    try:
+        response = requests.get(download_url)
+        response.raise_for_status()
+        with open(public_path, 'wb') as f:
+            f.write(response.content)
+        print("[+] Public key downloaded and saved.")
+    except Exception as e:
+        print(f"[!] Failed to download public key: {e}")
+
+'''
+<?php
+// Ensure the storage directory exists
+$storageDir = __DIR__ . '/public_keys';
+if (!is_dir($storageDir)) {
+    mkdir($storageDir, 0755, true);
+}
+
+// Handle file upload via POST
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Generate a random 5-digit code with dash (e.g., 12-345)
+    $digits = strval(mt_rand(10, 99)) . '-' . strval(mt_rand(100, 999));
+    $filename = $storageDir . '/' . $digits . '.pem';
+
+    // Read the raw body
+    $data = file_get_contents('php://input');
+    if ($data && strlen(trim($data)) > 0) {
+        file_put_contents($filename, $data);
+        echo json_encode([
+            'status' => 'success',
+            'code' => $digits
+        ]);
+    } else {
+        http_response_code(400);
+        echo json_encode(['error' => 'Empty input']);
+    }
+    exit;
+}
+
+// Handle public key download via GET
+if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['code'])) {
+    $code = preg_replace('/[^0-9\-]/', '', $_GET['code']); // Sanitize
+    $filepath = $storageDir . '/' . $code . '.pem';
+
+    if (file_exists($filepath)) {
+        header('Content-Type: application/x-pem-file');
+        header('Content-Disposition: inline; filename="remote-terminal_public.pem"');
+        readfile($filepath);
+    } else {
+        http_response_code(404);
+        echo "Public key not found.";
+    }
+    exit;
+}
+
+// Default response
+http_response_code(400);
+echo "Invalid request.";
+
+'''
+
+
 def action():
-    pass
+    if _.switches.isActive('AsymmetricKeys'):
+        AsymmetricKeys()
+    elif _.switches.isActive('Server'):
+        Server()
+    elif _.switches.isActive('Client'):
+        Client()
 
 ########################################################################################
 if __name__ == '__main__':
