@@ -134,9 +134,9 @@ if '-srv' in sys.argv:
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             s.bind((HOST, PORT))
             s.listen(1)
-            print(f"[+] Connected: {addr}")
             print(f"[+] Ready on {HOST}:{PORT}")
             conn, addr = s.accept()
+            # print(f"[+] Connected: {addr}")
             with conn:
                 run_terminal_session(conn)
 
