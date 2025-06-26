@@ -402,56 +402,325 @@ def DownloadPublicKey():
     except Exception as e:
         print(f"[!] Failed to download public key: {e}")
 
-'''
-<?php
-// Ensure the storage directory exists
-$storageDir = __DIR__ . '/public_keys';
-if (!is_dir($storageDir)) {
-    mkdir($storageDir, 0755, true);
-}
 
-// Handle file upload via POST
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Generate a random 5-digit code with dash (e.g., 12-345)
-    $digits = strval(mt_rand(10, 99)) . '-' . strval(mt_rand(100, 999));
-    $filename = $storageDir . '/' . $digits . '.pem';
 
-    // Read the raw body
-    $data = file_get_contents('php://input');
-    if ($data && strlen(trim($data)) > 0) {
-        file_put_contents($filename, $data);
-        echo json_encode([
-            'status' => 'success',
-            'code' => $digits
-        ]);
-    } else {
-        http_response_code(400);
-        echo json_encode(['error' => 'Empty input']);
-    }
-    exit;
-}
 
-// Handle public key download via GET
-if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['code'])) {
-    $code = preg_replace('/[^0-9\-]/', '', $_GET['code']); // Sanitize
-    $filepath = $storageDir . '/' . $code . '.pem';
 
-    if (file_exists($filepath)) {
-        header('Content-Type: application/x-pem-file');
-        header('Content-Disposition: inline; filename="remote-terminal_public.pem"');
-        readfile($filepath);
-    } else {
-        http_response_code(404);
-        echo "Public key not found.";
-    }
-    exit;
-}
 
-// Default response
-http_response_code(400);
-echo "Invalid request.";
 
-'''
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+### secure_terminal_server.py (RSA + PTY + PIN handshake only, relay fix)
+import os
+
+def Server():
+    import os, socket, pty, select, random, subprocess, threading
+    from cryptography.hazmat.primitives import serialization, hashes  # type: ignore
+    from cryptography.hazmat.primitives.asymmetric import padding  # type: ignore
+
+    HOST = '127.0.0.1'
+
+    def get_free_port():
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+            s.bind((HOST, 0))
+            return s.getsockname()[1]
+
+    PORT = get_free_port()
+    relay_server = None
+    relay = _v.yFig('remote_terminal', 'relay')
+    if relay:
+        relay_server = relay
+    relay_port = random.randint(20000, 30000)
+    private_path = os.path.expanduser('~/.rt/remote-terminal_private.pem')
+
+    with open(private_path, "rb") as key_file:
+        private_key = serialization.load_pem_private_key(key_file.read(), password=None)
+
+    raw_pin = f"{random.randint(100000, 999999):06d}"
+    PIN = f"{raw_pin[:3]}-{raw_pin[3:]}"
+    _.pr(f"[+] SESSION PIN: {PIN}", c='yellow')
+
+    def rsa_decrypt_command(encrypted_data):
+        return private_key.decrypt(
+            encrypted_data,
+            padding.OAEP(
+                mgf=padding.MGF1(algorithm=hashes.SHA256()),
+                algorithm=hashes.SHA256(),
+                label=None
+            )
+        ).decode()
+
+    def run_terminal_session(conn):
+        pid, fd = pty.fork()
+        if pid == 0:
+            os.execv('/bin/bash', ['bash', '-i', '-l'])
+        else:
+            pin_verified = False
+            while True:
+                rlist, _, _ = select.select([conn, fd], [], [])
+                if conn in rlist:
+                    try:
+                        incoming = conn.recv(4096)
+                        if not incoming:
+                            break
+                        if not pin_verified:
+                            if incoming.decode().strip() == raw_pin:
+                                conn.send(b'[+] PIN Verified\n')
+                                pin_verified = True
+                            else:
+                                conn.send(b'[!] INVALID PIN\n')
+                            continue
+                        if incoming.strip() == b'__CTRL_C__':
+                            os.write(fd, b'\x03')
+                        else:
+                            cmd = rsa_decrypt_command(incoming).strip() + '\n'
+                            os.write(fd, cmd.encode())
+                    except Exception as e:
+                        conn.send(f'[ERROR] {e}\n'.encode())
+                if fd in rlist:
+                    try:
+                        output = os.read(fd, 1024)
+                        if not output:
+                            break
+                        conn.send(output)
+                    except Exception:
+                        break
+
+    def start_server():
+        if relay_server:
+            cmd = [
+                "ssh", "-o", "ExitOnForwardFailure=yes", "-fN",
+                "-R", f"{relay_port}:localhost:{PORT}", relay_server
+            ]
+            try:
+                subprocess.check_call(cmd)
+                _.pr(f"[+] Relay active: {relay_server}:{relay_port}", c='green')
+            except subprocess.CalledProcessError as e:
+                _.pr(f"[!] SSH tunnel failed: {e}")
+                return
+
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+            s.bind((HOST, PORT))
+            s.listen(1)
+            _.pr(f"[+] Ready on {HOST}:{PORT}", c='purple')
+            conn, addr = s.accept()
+            _.pr(f"[+] Connected: {addr}", c='purple')
+            with conn:
+                run_terminal_session(conn)
+
+    if __name__ == "__main__":
+        start_server()
+
+
+def Client():
+    _.pr('CTRL+X  Behaves like CTRL+C to force quit remote commands\n\n', c='yellow')
+    import socket
+    import threading
+    import sys
+    import platform
+    from cryptography.hazmat.primitives import serialization, hashes  # type: ignore
+    from cryptography.hazmat.primitives.asymmetric import padding  # type: ignore
+
+    relay_server = None
+    relay = _v.yFig('remote_terminal', 'relay')
+    if relay:
+        relay_server = relay
+    relay_port = int(input('Port: '))
+    PIN = input("Enter PIN (e.g. 123-456): ").replace('-', '')
+
+    public_path = os.path.expanduser('~/.rt/remote-terminal_public.pem')
+
+    with open(public_path, "rb") as f:
+        public_key = serialization.load_pem_public_key(f.read())
+
+    def encrypt_command(command):
+        return public_key.encrypt(
+            command.encode(),
+            padding.OAEP(
+                mgf=padding.MGF1(algorithm=hashes.SHA256()),
+                algorithm=hashes.SHA256(),
+                label=None
+            )
+        )
+
+    def receive_output(sock):
+        global skip_first_line
+        skip_first_line = False
+        while True:
+            try:
+                data = sock.recv(1024)
+                if data:
+                    text = data.decode(errors='ignore')
+                    if skip_first_line:
+                        text = '\n'.join(text.split('\n')[1:])
+                        skip_first_line = False
+                    sys.stdout.write(text)
+                    sys.stdout.flush()
+            except Exception:
+                break
+
+    def interactive_input(sock):
+        global skip_first_line
+        if platform.system() == 'Windows':
+            import msvcrt
+            buffer = ''
+            try:
+                while True:
+                    if msvcrt.kbhit():
+                        ch = msvcrt.getch()
+                        if ch == b'\x18':
+                            sys.stdout.write("\n[+] Sending CTRL signal\n")
+                            sys.stdout.flush()
+                            sock.sendall(b'__CTRL_C__')
+                            buffer = ''
+                        elif ch in (b'\r', b'\n'):
+                            sys.stdout.write('\n')
+                            sys.stdout.flush()
+                            if buffer.strip():
+                                encrypted = encrypt_command(buffer)
+                                sock.sendall(encrypted)
+                                skip_first_line = True
+                            buffer = ''
+                        elif ch == b'\x08':
+                            if buffer:
+                                buffer = buffer[:-1]
+                                sys.stdout.write('\b \b')
+                                sys.stdout.flush()
+                        elif ch == b'\xe0':
+                            msvcrt.getch()
+                        else:
+                            try:
+                                decoded = ch.decode()
+                                buffer += decoded
+                                sys.stdout.write(decoded)
+                                sys.stdout.flush()
+                            except:
+                                pass
+            except KeyboardInterrupt:
+                sys.stdout.write("\n[+] Disconnected.\n")
+                sys.stdout.flush()
+                sock.close()
+        else:
+            import tty, termios, select, readline, rlcompleter
+            readline.parse_and_bind('tab: complete')
+            stdin_fd = sys.stdin.fileno()
+            old_settings = termios.tcgetattr(stdin_fd)
+            tty.setraw(stdin_fd)
+            buffer = ''
+            try:
+                while True:
+                    if select.select([sys.stdin], [], [], 0.1)[0]:
+                        ch = sys.stdin.read(1)
+                        if ch == '\x18':
+                            sys.stdout.write("\n[+] Sending CTRL signal\n")
+                            sys.stdout.flush()
+                            sock.sendall(b'__CTRL_C__')
+                            buffer = ''
+                        elif ch in ('\r', '\n'):
+                            sys.stdout.write('\n')
+                            sys.stdout.flush()
+                            if buffer.strip():
+                                encrypted = encrypt_command(buffer)
+                                sock.sendall(encrypted)
+                                skip_first_line = True
+                            buffer = ''
+                        elif ch == '\x7f':
+                            if buffer:
+                                buffer = buffer[:-1]
+                                sys.stdout.write('\b \b')
+                                sys.stdout.flush()
+                        elif ch == '\t':
+                            completions = [cmd for cmd in os.listdir('/bin') if cmd.startswith(buffer)]
+                            if completions:
+                                completion = completions[0][len(buffer):]
+                                buffer += completion
+                                sys.stdout.write(completion)
+                                sys.stdout.flush()
+                        else:
+                            buffer += ch
+                            sys.stdout.write(ch)
+                            sys.stdout.flush()
+            finally:
+                termios.tcsetattr(stdin_fd, termios.TCSADRAIN, old_settings)
+
+    host = relay_server
+    port = relay_port
+    _.pr(f"[+] Connecting to {host}:{port}...")
+
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+        s.connect((host, port))
+        s.sendall(PIN.encode())
+        sys.stdout.write(s.recv(1024).decode())
+        sys.stdout.flush()
+
+        threading.Thread(target=receive_output, args=(s,), daemon=True).start()
+        interactive_input(s)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 def action():
@@ -463,6 +732,58 @@ def action():
         Client()
     elif _.switches.isActive('DownloadPublicKey'):
         DownloadPublicKey()
+
+
+
+
+
+'''
+<?php
+$storageDir = __DIR__ . '/public_keys';
+if (!is_dir($storageDir)) mkdir($storageDir, 0755, true);
+
+$code = isset($_GET['code']) ? preg_replace('/[^a-zA-Z0-9_\-]/', '', $_GET['code']) : null;
+
+// ===== POST: Upload =====
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && $code) {
+    $data = file_get_contents('php://input');
+    if (!$data || trim($data) === '') {
+        http_response_code(400);
+        echo 'Empty upload';
+        exit;
+    }
+
+    $path = "$storageDir/$code.pem";
+    if (file_put_contents($path, $data) === false) {
+        http_response_code(500);
+        echo 'Failed to save file';
+    } else {
+        echo 'OK';
+    }
+    exit;
+}
+
+// ===== GET: Download =====
+if ($_SERVER['REQUEST_METHOD'] === 'GET' && $code) {
+    $path = "$storageDir/$code.pem";
+    if (is_file($path)) {
+        header('Content-Type: application/x-pem-file');
+        header('Content-Disposition: inline; filename="remote-terminal_public.pem"');
+        readfile($path);
+    } else {
+        http_response_code(404);
+        echo 'NOT FOUND';
+    }
+    exit;
+}
+
+// ===== Fallback =====
+http_response_code(400);
+echo 'BAD REQUEST';
+
+
+'''
+
 
 ########################################################################################
 if __name__ == '__main__':
