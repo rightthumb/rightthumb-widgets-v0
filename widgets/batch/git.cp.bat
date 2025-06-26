@@ -24,6 +24,15 @@ echo [INFO] UUID generated: %uuid%
 set AMENDED=false
 echo [INFO] AMENDED initially set to false
 
+REM [NEW] Check if anything is staged
+git diff --cached --quiet
+if %ERRORLEVEL% NEQ 0 (
+    echo [INFO] Detected staged changes.
+) else (
+    echo [!] No staged changes detected. Skipping commit.
+    goto end
+)
+
 echo [INFO] Checking for staged secrets...
 git diff --cached | findstr /R "ghp_[A-Za-z0-9][A-Za-z0-9]*" > nul
 if %ERRORLEVEL% EQU 0 (
@@ -59,6 +68,7 @@ if "!AMENDED!" == "false" (
 echo [INFO] Running: git push --force
 git push --force
 
+:end
 echo [INFO] Restoring shell...
 call b back > nul
 

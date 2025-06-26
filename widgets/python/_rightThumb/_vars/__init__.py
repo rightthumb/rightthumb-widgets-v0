@@ -1652,9 +1652,35 @@ def getMachineID(x=False):
 		return guid
 	else:
 		# machine_id_1 = str(uuid.uuid1())
+		# mac_address = str(uuid.getnode())
+		# with open('/etc/machine-id', 'r') as file:
+		# 	machine_id_2 = str(file.read().strip())
+
+
 		mac_address = str(uuid.getnode())
-		with open('/etc/machine-id', 'r') as file:
-			machine_id_2 = str(file.read().strip())
+		import os, pathlib, random, string
+		if os.path.exists('/etc/machine-id'):
+			with open('/etc/machine-id', 'r') as file:
+				machine_id_2 = str(file.read().strip())
+		else:
+			fallback_path = os.path.expanduser('~/.config/machine-id')
+			path = pathlib.Path(fallback_path)
+			if not path.exists():
+				new_id = ''.join(random.choices(string.ascii_letters + string.digits, k=32))
+				path.parent.mkdir(parents=True, exist_ok=True)
+				with open(path, 'w') as f:
+					f.write(new_id)
+			with open(fallback_path, 'r') as f:
+				machine_id_2 = f.read().strip()
+
+
+
+
+
+
+
+
+
 		# global unixID
 		if x:
 			return _md5.md52GUID(_md5.md5(myNode+mac_address+machine_id_2+getPIN()),True)
