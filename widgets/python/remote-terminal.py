@@ -322,6 +322,10 @@ def AsymmetricKeys():
 
     # Set the upload URL
     upload_url = 'https://yourserver.example.com/upload'  # ← Update this with your server
+    url = _v.yFig('remote_terminal', 'url')
+    if url:
+        upload_url = url
+
 
     # Create ~/.rt directory if it doesn't exist
     home_dir = os.path.expanduser('~/.rt')
@@ -378,8 +382,11 @@ def DownloadPublicKey():
     pin = input("Enter the 5-digit code (format: ##-###): ").strip()
 
     # Define download URL (modify as needed to match your server logic)
-    download_url = f"https://yourserver.example.com/public?code={pin}"
-
+    download_url = f"https://yourserver.example.com/public"
+    url = _v.yFig('remote_terminal', 'url')
+    if url:
+        download_url = url
+    download_url += f"?code={pin}"
     # Output path
     public_path = os.path.expanduser('~/.rt/remote-terminal_public.pem')
     os.makedirs(os.path.dirname(public_path), exist_ok=True)
