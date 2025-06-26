@@ -7,6 +7,7 @@ def sw():
     _.switches.register( 'Server', '-srv' )
     _.switches.register( 'Client', '-client' )
     _.switches.register( 'AsymmetricKeys', '-keys' )
+    _.switches.register( 'DownloadPublicKey', '-dl' )
 _._default_settings_()
 
 _.appInfo[focus()] = {
@@ -363,7 +364,7 @@ def AsymmetricKeys():
     # Upload public key
     try:
         response = requests.post(
-            upload_url,
+            f"{upload_url}?code={code}",
             data=pub_bytes,
             headers={'Content-Type': 'application/x-pem-file'}
         )
@@ -460,6 +461,8 @@ def action():
         Server()
     elif _.switches.isActive('Client'):
         Client()
+    elif _.switches.isActive('DownloadPublicKey'):
+        DownloadPublicKey()
 
 ########################################################################################
 if __name__ == '__main__':
