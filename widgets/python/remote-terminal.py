@@ -726,6 +726,126 @@ def Client():
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+def Client():
+    _.pr('CTRL+X  Behaves like CTRL+C to force quit remote commands\n\n', c='yellow')
+    import socket, sys, threading, os, platform, termios, tty, select
+
+    from cryptography.hazmat.primitives import serialization, hashes  # type: ignore
+    from cryptography.hazmat.primitives.asymmetric import padding  # type: ignore
+
+    relay_server = _v.yFig('remote_terminal', 'relay') or None
+    relay_port = int(input('Port: '))
+    PIN = input("Enter PIN (e.g. 123-456): ").replace('-', '')
+
+    public_path = os.path.expanduser('~/.rt/remote-terminal_public.pem')
+    with open(public_path, "rb") as f:
+        public_key = serialization.load_pem_public_key(f.read())
+
+    def encrypt_command(command):
+        return public_key.encrypt(
+            command.encode(),
+            padding.OAEP(
+                mgf=padding.MGF1(algorithm=hashes.SHA256()),
+                algorithm=hashes.SHA256(),
+                label=None
+            )
+        )
+
+    def read_and_forward(sock):
+        try:
+            while True:
+                data = sock.recv(4096)
+                if not data:
+                    break
+                sys.stdout.buffer.write(data)
+                sys.stdout.flush()
+        except:
+            pass
+
+    def interactive_terminal(sock):
+        old_attrs = termios.tcgetattr(sys.stdin.fileno())
+        try:
+            tty.setraw(sys.stdin.fileno())
+            while True:
+                rlist, _, _ = select.select([sys.stdin], [], [], 0.1)
+                if sys.stdin in rlist:
+                    data = os.read(sys.stdin.fileno(), 1024)
+                    if b'\x18' in data:  # Ctrl+X
+                        sock.sendall(b'__CTRL_C__')
+                        sys.stdout.write("\n[+] Sent CTRL+C\n")
+                        sys.stdout.flush()
+                    else:
+                        sock.sendall(encrypt_command(data.decode(errors='ignore')))
+        except KeyboardInterrupt:
+            pass
+        finally:
+            termios.tcsetattr(sys.stdin.fileno(), termios.TCSADRAIN, old_attrs)
+
+    host = relay_server
+    port = relay_port
+    _.pr(f"[+] Connecting to {host}:{port}...")
+
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+        s.connect((host, port))
+        s.sendall(PIN.encode())
+        sys.stdout.write(s.recv(1024).decode())
+        sys.stdout.flush()
+
+        threading.Thread(target=read_and_forward, args=(s,), daemon=True).start()
+        interactive_terminal(s)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 def action():
     if _.switches.isActive('AsymmetricKeys'):
         AsymmetricKeys()
