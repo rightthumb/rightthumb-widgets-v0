@@ -547,10 +547,10 @@ def Server():
             _.pr(f"[+] Ready on {HOST}:{PORT}", c='purple')
             conn, addr = s.accept()
             _.pr(f"[+] Connected: {addr}", c='purple')
-            _.pr()
-            _.pr(relay_port, h='orange')
-            _.pr(PIN, h='orange')
-            _.pr()
+            # _.pr()
+            # _.pr(relay_port, h='orange')
+            # _.pr(PIN, h='orange')
+            # _.pr()
             with conn:
                 run_terminal_session(conn)
 
