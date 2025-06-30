@@ -22661,6 +22661,7 @@ _cryptFile.do( 'action' )
 
 
 def err( msg='STOP' , e=None, note=None, kill=True, bulletDash=False, dash=None):
+	pr()
 	if not dash is None:
 		bulletDash = dash
 

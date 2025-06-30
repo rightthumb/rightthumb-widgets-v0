@@ -1,5 +1,26 @@
 #!/bin/bash
 ################# ################# ################# #################
+Md5() {
+	local input
+
+	if [[ -n "$1" ]]; then
+		input="$1"
+	else
+		echo -n " > "
+		read -s input
+		echo
+	fi
+
+	if command -v md5sum >/dev/null 2>&1; then
+		printf "%s" "$input" | md5sum | awk '{print $1}'
+	elif command -v md5 >/dev/null 2>&1; then
+		printf "%s" "$input" | md5 | awk '{print $NF}'
+	else
+		echo "No md5sum or md5 command found"
+		return 1
+	fi
+}
+################# ################# ################# #################
 alias get.t.sh="wget http://reph.us/tools/file.php?file=tool.sh -O $HOME/.rt/tool.sh";
 alias get.t="wget http://reph.us/tools/file.php?file=tool -O installer.py; $PY $widgets/install/installer.py -h.f installer.py;";
 alias get.t2="wget http://reph.us/tools/file.php?file=tool2 -O installer.py2; $PY installer.py2 -h.f installer.py2;";

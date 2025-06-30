@@ -67,13 +67,13 @@ def appSwitches():
 	swGrp += 1
 	_.switches.register('Symlink-Path-Integrity', '-si,-spi,-sym,-symlink', group=[swGrp,'OS Links'] )
 	swGrp += 1
+	_.switches.register('Kind', '-kind,-ext', 'db image graphic video app audio doc script archive', group=[swGrp,'File Search Toolbox'] )
 	_.switches.register('Text', '-t,-text,-txt', group=[swGrp,'File Search Toolbox'] )
 	_.switches.register('Binary', '-bin', group=[swGrp,'File Search Toolbox'] )
 	_.switches.register('Encrypted', '-en,-crypt,-encryption,-encrypted', group=[swGrp,'File Search Toolbox'] )
 	_.switches.register('Size', '-size',' g 10mb, L 2kb ', group=[swGrp,'File Search Toolbox'] )
 	_.switches.register('Totals', '-total,-totals', group=[swGrp,'File Search Toolbox'] )
 	_.switches.register('Ago', '-ago', '1m', group=[swGrp,'File Search Toolbox'] )
-	_.switches.register('Extensions', '-ext', 'db image graphic video app audio doc script archive', group=[swGrp,'File Search Toolbox'] )
 	_.switches.register('Ago-Create-Date', '-cd', group=[swGrp,'File Search Toolbox'] )
 	_.switches.register('Search-Print-Line', '-p,-print','all', group=[swGrp,'File Search Toolbox'] )
 	_.switches.register('Contains-IPs', '-ip','domains', group=[swGrp,'File Search Toolbox'] )
@@ -827,14 +827,14 @@ def extensionsDatabank():
 	extensionList = []
 	_db = _.regImp( __.appReg, 'databank' )
 	_db.switch( 'JustReturn' )
-	_db.switch( 'Tables', [ 'file', 'extensions' ] )
+	_db.switch( 'Tables', [ 'file', 'Kind' ] )
 	useDB=True
-	for index in _.switches.values('Extensions'):
+	for index in _.switches.values('Kind'):
 		if index.startswith('.'):
 			useDB=False
 			extensionList.append(index)
 	if useDB:
-		for index in _.switches.values('Extensions'):
+		for index in _.switches.values('Kind'):
 			_db.switch( 'Plus', [index] )
 			for i,x in enumerate(_db.action()):
 				# print(x)
@@ -950,7 +950,7 @@ def action():
 	if _.switches.isActive('Minus'): minusF()
 
 	global base_path
-	if _.switches.isActive('Extensions'): extensionsDatabank()
+	if _.switches.isActive('Kind'): extensionsDatabank()
 	if _.isData():
 		base_path=''
 		if _.switches.isActive('Toggle-Relative-Path'):
@@ -1036,7 +1036,7 @@ def action():
 			getFolder(_v.widgets, r=False)
 		
 		"""
-		if _.switches.isActive('Extensions'):
+		if _.switches.isActive('Kind'):
 			folderProfileAttribute( folder=folder, info={
 															'recursive': True,
 															'Print-Clean': iS,
@@ -1052,8 +1052,8 @@ def action():
 		# 													'factors': {
 		# 																	'Text': _.switches.isActive('Text'),
 		# 																	'Binary': _.switches.isActive('Binary'),
-		# 																	'Extensions': _.switches.isActive('Extensions'),
-		# 																	'Type': _.switches.values('Extensions'),
+		# 																	'Kind': _.switches.isActive('Kind'),
+		# 																	'Type': _.switches.values('Kind'),
 
 		# 																	'PlusOr': _.switches.isActive('PlusOr'),
 		# 																	'PlusClose': _.switches.isActive('PlusClose'),

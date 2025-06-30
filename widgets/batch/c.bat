@@ -38,9 +38,7 @@ IF [%1] == [c] (
     SET "MainArg=None"
 )
 
-CALL %USERPROFILE%\.rt\profile\vars\config.bat
-if [%wprofile%] == [] SET wprofile=%USERPROFILE%\.rt\profile
-CALL %wprofile%\vars\personal.bat
+
 SET fileLocks=%wprofile%\fileLocks
 if not exist "%fileLocks%" mkdir "%fileLocks%"
 CALL:GET_STRAIT_TO_LOADING
@@ -147,6 +145,9 @@ GOTO:EOF
 
 
 :LOAD
+            CALL %USERPROFILE%\.rt\profile\vars\config.bat
+            if [%wprofile%] == [] SET wprofile=%USERPROFILE%\.rt\profile
+            CALL %wprofile%\vars\personal.bat
             IF NOT EXIST "%wprofile%\vars\instanceID.sys" (
                 p genuuid -strip be > "%wprofile%\vars\instanceID.sys"
             )

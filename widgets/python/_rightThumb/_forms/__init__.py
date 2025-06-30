@@ -38,6 +38,25 @@ _.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw );
 
 
 
+
+
+
+try:
+    from prompt_toolkit.application import Application # type: ignore
+    from prompt_toolkit.key_binding import KeyBindings # type: ignore
+    from prompt_toolkit.layout import Layout # type: ignore
+    from prompt_toolkit.layout.containers import HSplit, Window # type: ignore
+    from prompt_toolkit.widgets import TextArea, Label, Button # type: ignore
+    from prompt_toolkit.styles import Style # type: ignore
+    has_prompt_toolkit = True
+except ImportError:
+    has_prompt_toolkit = False
+
+
+
+
+
+
 import tkinter as tk
 from tkinter import ttk, messagebox
 import getpass
@@ -214,6 +233,11 @@ def integrity(form_structure):
 			new_form_structure[k] = form_structure['Form'][k]
 	return form_structure
 
+
+
+
+
+
 class UniversalInterfaceCreator:
 
 	def __init__(self, form_structure):
@@ -229,6 +253,15 @@ class UniversalInterfaceCreator:
 		self.form_data = {}
 		self.config = self.form_structure.get("Config", {})
 		_ns.config = self.config
+
+
+		self.use_advanced = self.config.get("advanced", False)
+
+		if self.use_advanced and has_prompt_toolkit:
+			self.create_advanced_form()
+			self.field_value()
+			return  # skip remaining
+
 		self.use_tkinter = self.detect_gui()
 		if self.use_tkinter:
 			if self.config.get("html", False):
@@ -566,6 +599,114 @@ class UniversalInterfaceCreator:
 
 
 
+
+
+
+
+	def create_advanced_form(self):
+		_.e('advanced form not implemented yet')
+		from prompt_toolkit.application import Application # type: ignore
+		from prompt_toolkit.key_binding import KeyBindings # type: ignore
+		from prompt_toolkit.layout import Layout # type: ignore
+		from prompt_toolkit.layout.containers import HSplit, VSplit # type: ignore
+		from prompt_toolkit.widgets import TextArea, Label, Button, RadioList, CheckboxList # type: ignore
+		from prompt_toolkit.styles import Style # type: ignore
+
+		self.result_data = {}
+		containers = []
+		bindings = KeyBindings()
+
+		def exit_app():
+			self._app.exit()
+
+		def on_submit():
+			for key, widget in self.result_data.items():
+				if isinstance(widget, TextArea):
+					self.form_data[key] = widget.text.strip()
+				elif isinstance(widget, RadioList):
+					self.form_data[key] = widget.current_value
+				elif isinstance(widget, CheckboxList):
+					self.form_data[key] = [val for val in widget.current_values]
+			exit_app()
+
+		def on_cancel():
+			print("\nForm cancelled.")
+			exit_app()
+
+		for section, items in self.form_structure.items():
+			if section == 'Config':
+				continue
+
+			section_label = str(section) if not isinstance(section, str) else section
+			containers.append(Label(text=f"== {section_label} ==", style='class:section'))
+
+			for field in items:
+				# Normalize label
+				raw_label = field.get("label", "")
+				label = str(raw_label) if not isinstance(raw_label, str) else raw_label
+
+				ftype = field.get("type", "text")
+				raw_val = field.get("value", "")
+				options = field.get("options", [])
+
+				# Normalize value
+				if isinstance(raw_val, list):
+					val = raw_val
+				elif isinstance(raw_val, (int, float, str, bool)):
+					val = str(raw_val)
+				elif raw_val is None:
+					val = ""
+				else:
+					val = str(raw_val)
+
+				# Safely render label
+				try:
+					containers.append(Label(text=label + ':'))
+				except Exception as e:
+					print(f"[ERROR] Failed to render label for {label!r}: {e}")
+					continue
+
+				# Create input widgets
+				if ftype in ('text', 'password'):
+					ta = TextArea(text=val, password=(ftype == 'password'))
+					containers.append(ta)
+					self.result_data[label] = ta
+
+				elif ftype == 'text_area':
+					ta = TextArea(text=val, height=5)
+					containers.append(ta)
+					self.result_data[label] = ta
+
+				elif ftype in ('radio', 'dropdown'):
+					rl = RadioList([(o, o) for o in options])
+					if val in options:
+						rl.current_value = val
+					containers.append(rl)
+					self.result_data[label] = rl
+
+				elif ftype == 'checkbox':
+					default = val if isinstance(val, list) else [val]
+					cl = CheckboxList([(o, o in default) for o in options])
+					containers.append(cl)
+					self.result_data[label] = cl
+
+		submit_btn = Button(text='Submit', handler=on_submit)
+		cancel_btn = Button(text='Cancel', handler=on_cancel)
+		btn_row = VSplit([submit_btn, cancel_btn], padding=3)
+
+		layout = Layout(HSplit(containers + [btn_row], padding=1))
+
+		style = Style.from_dict({
+			'section': 'bg:#ffffff #000000 bold',
+		})
+
+		self._app = Application(
+			layout=layout,
+			key_bindings=bindings,
+			style=style,
+			full_screen=True
+		)
+		self._app.run()
 
 
 

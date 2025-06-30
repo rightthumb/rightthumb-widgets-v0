@@ -108,6 +108,21 @@ forms['paths'] = {
 		{'label': 'Note', 'type': 'text', 'value': ''},
 	],
 }
+forms['advanced'] = {
+    "Config": {
+        "advanced": True,
+        "description": "Complete Field Type Test",
+        "field": { "width": 40 }
+    },
+    "Full Field Type Test Section": [
+        { "label": "Username", "type": "text", "value": "test_user" },
+        { "label": "Password", "type": "password", "value": "secret123" },
+        { "label": "Bio", "type": "text_area", "value": "This is a short bio.\nSupports multiline input." },
+        { "label": "User Role", "type": "radio", "options": ["Admin", "Editor", "Viewer"], "value": "Editor" },
+        { "label": "Subscription Plan", "type": "dropdown", "options": ["Free", "Basic", "Pro", "Enterprise"], "value": "Pro" },
+        { "label": "Notification Preferences", "type": "checkbox", "options": ["Email", "SMS", "Push"], "value": ["Email", "Push"] }
+    ]
+}
 
 def action():
 	global forms

@@ -671,6 +671,24 @@ Array.prototype.slice.call(
 		
 		subject['js'] = {}
 		subject['js']['q'] = "document.querySelectorAll('')"
+		subject['js']['get'] = '''
+var get = (url, callback = null) => {
+    var asyncStatus = callback !== null;
+    var request = new XMLHttpRequest();
+    request.open('GET', url, asyncStatus);
+    request.send(null);
+    var contentType = request.getResponseHeader('Content-Type');
+    if (request.status === 200) {
+        var response = contentType && contentType.includes('application/json') ? JSON.parse(request.responseText) : request.responseText;
+        if (typeof callback === 'function') {
+            callback(response);
+        }
+        return response;
+    } else {
+        throw new Error('Request failed with status ' + request.status);
+    }
+}
+'''.strip()
 		subject['js']['qq'] = """$ = document.querySelectorAll.bind(document);
 $('td').forEach(div => div.style.background = 'orange');
 """

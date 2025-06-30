@@ -50,6 +50,7 @@ def sw():
 	_.switches.register( 'CMD', '-cmd' )
 	_.switches.register( 'NoPassword', '-nopass' )
 	_.switches.register( 'Toggle-Url/.folder.meta', '-tu,-turl' )
+	_.switches.register( 'Find.folder.meta', '-meta' )
 	# _.switches.register( 'IsFile', '-isfi' )
 
 
@@ -140,6 +141,28 @@ if type(file_trigger_data) == list:
 
 ########################################################################################
 # START
+
+
+import os
+import sys
+
+def find_meta_file(filename='.folder.meta'):
+    current_dir = os.path.abspath(os.getcwd())
+    
+    while True:
+        candidate = os.path.join(current_dir, filename)
+        if os.path.isfile(candidate):
+            print(candidate)
+            return
+        parent_dir = os.path.dirname(current_dir)
+        if current_dir == parent_dir:
+            # Reached the root
+            break
+        current_dir = parent_dir
+    print('not found')
+
+
+
 
 
 def tail():
@@ -405,7 +428,10 @@ def process(path,end='',ft=None):
 		if _.switches.isActive('NoPassword'):
 			pw=ftp['password']
 		else:
-			pw=_vault.imp.s.de( ftp['password'] )
+			try:
+				pw=_vault.imp.s.de( ftp['password'] )
+			except:
+				_.e('Login error')
 		_ssh=sshpass(pw,'ssh')
 		_scp=sshpass(pw,'scp')
 		if _.switches.isActive('Verbose'):
@@ -495,7 +521,10 @@ def process(path,end='',ft=None):
 			if _.switches.isActive('NoPassword'):
 				pw=ftp['password']
 			else:
-				pw=_vault.imp.s.de( ftp['password'] )
+				try:
+					pw=_vault.imp.s.de( ftp['password'] )
+				except:
+					_.e('Login error')
 			# if os.path.isdir(path):
 			#     fi=__.path(fi,pop=True)
 			#     fi += '/'
@@ -614,7 +643,10 @@ def remoteFolder():
 		if _.switches.isActive('NoPassword'):
 			pw=ftp['password']
 		else:
-			pw=_vault.imp.s.de( ftp['password'] )
+			try:
+				pw=_vault.imp.s.de( ftp['password'] )
+			except:
+				_.e('Login error')
 		_ssh=sshpass(pw,'ssh')
 		# print(_.isWin)
 		# print(_.switches.isActive('NotWSL'))
@@ -703,6 +735,11 @@ def URL(urls=None):
 
 
 def action():
+	if _.switches.isActive('Find.folder.meta'):
+		find_meta_file()
+		return None
+
+
 	# _.switches.fieldSet( 'NotWSL', 'active', True )
 	if _.switches.isActive('Remote-Location'):
 		for path in _.switches.values(1):

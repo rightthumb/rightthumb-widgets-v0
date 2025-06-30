@@ -9,7 +9,8 @@ rem Such a place exists, it is called programming.
 rem    - Scott Taylor Reph, RightThumb.com
 rem ###########################################################################
 rem ## {C3P0D40fAe8B} ##
-
-call p. cloud -sync
+curl -s %*
+echo.
+@REM call p. cloud -sync
 
  
