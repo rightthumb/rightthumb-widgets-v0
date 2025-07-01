@@ -188,8 +188,9 @@ def add():
 		password = _copy.imp.paste()
 	if _.switches.isActive('Password'):
 		password = _.switches.values('Password')[0]
-
-	table[label] = _vault.imp.s.en( password )
+	try:
+		table[label] = _vault.imp.s.en( password )
+	except: _.e( 'Login error' )
 	# if 'eof' in table: del table['eof']; table['eof']='';
 	_.saveTableDB( table, 'keychain.hash' )
 
@@ -226,7 +227,9 @@ def get(theLabel=None,cp=True):
 	password = ''
 	# _.pr('label',label)
 	if label in table:
-		password = _vault.imp.s.de(table[label])
+		try:
+			password = _vault.imp.s.de(table[label])
+		except: _.e( 'Login error' )
 
 		if theLabel is None and not _.switches.isActive('JustReturn'):
 			if _.switches.isActive('JustPrint'):
@@ -244,7 +247,9 @@ def get(theLabel=None,cp=True):
 			possibly_wait()
 		return password
 	elif label in aliases:
-		password = _vault.imp.s.de(table[aliases[label]])
+		try:
+			password = _vault.imp.s.de(table[aliases[label]])
+		except: _.e( 'Login error' )
 		if theLabel is None and not _.switches.isActive('JustReturn'):
 			if _.switches.isActive('JustPrint'):
 				if 'r' == _.switches.value('JustPrint'):
@@ -266,13 +271,17 @@ def changePassword():
 	global table
 
 	for label in table:
-		table[label] = _vault.imp.s.de(table[label])
+		try:
+			table[label] = _vault.imp.s.de(table[label])
+		except: _.e( 'Login error' )
 
 	_logout = _.regImp( __.appReg, 'logout' )
 	_logout.action()
 
 	for label in table:
-		table[label] = _vault.imp.s.en(table[label])
+		try:
+			table[label] = _vault.imp.s.en(table[label])
+		except: _.e( 'Login error' )
 	# if 'eof' in table: del table['eof']; table['eof']='';
 	_.saveTableDB( table, 'keychain.hash' )
 
@@ -397,7 +406,9 @@ def load():
 		if _.switches.isActive('Backup'):
 			backup={}
 			for k in table:
-				backup[k]=_vault.imp.s.de(table[k])
+				try:
+					backup[k]=_vault.imp.s.de(table[k])
+				except: _.e( 'Login error' )
 			yml=_.toYML(backup)
 
 			save = _v.tt+os.sep+'keychain.crypt'

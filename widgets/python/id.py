@@ -4,7 +4,7 @@ fieldSet=_.l.vars(focus(),__name__,__file__,appDBA);_.load();_v=__.imp('_rightTh
 
 def sw():
 	pass
-	_.switches.register( 'ID', '-i, -id','' )
+	_.switches.register( 'ID', '-i,-id','' )
 	_.switches.register( 'Name', '-n,-name','' )
 _._default_settings_()
 
@@ -44,14 +44,29 @@ _.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw )
 ########################################################################################
 #n)--> start
 
+def findID(index, name):
+	for rec in index:
+		if rec['id'] == name:
+			return rec['id']
+	return None
+
 def action():
-	print(_.switches.values('ID'),_.switches.values('Name'))
-	return True
-	if not _.switches.isActive('ID') or not _.switches.isActive('Name'):
-		_.e('Missing required switch','-id and/or -name')
-		return False
-	index = _.getTables('idResolution.json')
-	index[_.switches.value('ID')] = _.switches.value('Name')
+	# print(_.switches.all()); _.isExit(__file__)
+	# print(_.switches.values('ID'),_.switches.values('Name'))
+	# return True
+	index = _.getTable('idResolution.json')
+	# _.pv(index); _.isExit(__file__)
+	if _.switches.isActive('ID') and not _.switches.isActive('Name'):
+		name = findID(index, _.switches.value('ID'))
+		if name:
+			_.pr( name, c='yellow' )
+		else:
+			_.pr('ID not found: ' + _.switches.value('ID'), c='red')
+		return None
+	if not _.switches.isActive('Name'):
+		_.pr('Missing required switch','-id','-id -name')
+		return None
+	index.append({'id': _.switches.value('ID'), 'name': _.switches.value('Name')})
 	_.saveTable(index,'idResolution.json',printThis=True)
 	
 

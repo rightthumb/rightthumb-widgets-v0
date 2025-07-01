@@ -710,8 +710,53 @@ class UniversalInterfaceCreator:
 
 
 
+# working advanced form
+'''
+from prompt_toolkit.application import Application
+from prompt_toolkit.key_binding import KeyBindings
+from prompt_toolkit.layout import Layout
+from prompt_toolkit.layout.containers import HSplit, VSplit, Window
+from prompt_toolkit.widgets import TextArea, Label, Button
 
+def main():
+    name = TextArea(height=1, focusable=True, width=40)
+    email = TextArea(height=1, focusable=True, width=40)
+    notes = TextArea(height=5, focusable=True, wrap_lines=True, scrollbar=True)
 
+    submit_btn = Button(text="Submit", handler=lambda: submit())
+
+    def submit():
+        print("\n--- Form Submitted ---")
+        print("Name: ", name.text.strip())
+        print("Email:", email.text.strip())
+        print("Notes:\n", notes.text.strip())
+        app.exit()
+
+    kb = KeyBindings()
+
+    @kb.add("tab")
+    def _(event): event.app.layout.focus_next()
+
+    @kb.add("s-tab")
+    def _(event): event.app.layout.focus_previous()
+
+    @kb.add("c-q")
+    def _(event): print("\n--- Cancelled ---"); event.app.exit()
+
+    layout = Layout(HSplit([
+        Label(text="Fill out the form below:\n"),
+        VSplit([Label("Name: ", width=10), name]),
+        VSplit([Label("Email:", width=10), email]),
+        VSplit([Label("Notes:", width=10), notes]),
+        VSplit([Window(width=10), submit_btn]),  # align submit under fields
+    ]))
+
+    app = Application(layout=layout, full_screen=True, key_bindings=kb)
+    app.run()
+
+if __name__ == "__main__":
+    main()
+'''
 
 
 

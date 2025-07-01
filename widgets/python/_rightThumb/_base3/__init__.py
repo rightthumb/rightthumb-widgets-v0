@@ -12413,6 +12413,8 @@ class Switches:
 		tables.print('data','appreg,name,value')
 
 	def register(self, name, switch, example_or_notes = None, isRequired=False, isPipe=None, isData=None, description='', space=False, default=False, group=None, g=None):
+		if type(switch) == str:
+			switch = switch.replace( ' ', '' )
 		if not g is None:
 			group = g
 

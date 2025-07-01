@@ -217,10 +217,10 @@ def action():
 		replaceText = _.ci(_.switches.value('Replace'))
 		# replaceText = _str.cleanBE( replaceText, ' ' )
 
-	if len(insertText) == 0:
-		confirm = input('Insert blank, run? ')
-		if not 'y' in confirm.lower():
-			sys.exit()
+	# if len(insertText) == 0:
+	# 	confirm = input('Insert blank, run? ')
+	# 	if not 'y' in confirm.lower():
+	# 		sys.exit()
 
 	if not shouldRun:
 		_.pr( 'Error: Bad switch 1' )
