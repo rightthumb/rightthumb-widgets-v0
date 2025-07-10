@@ -1,9 +1,9 @@
 @echo off
 
-if [%1] == [o] (
-	call p. file-open %*
-	goto :eof
-)
+@REM if [%1] == [o] (
+@REM 	call p. file-open %*
+@REM 	goto :eof
+@REM )
 
 if [%1] == [-f] (
 	call p. file-open -backup secure %*

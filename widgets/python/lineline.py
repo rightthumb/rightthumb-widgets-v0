@@ -37,7 +37,7 @@ _.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw );
 def action():
 	# print(__.PIPE)
 	# return
-	for line in __.PIPE:
+	for line in _.isData():
 		if _.showLine(line):
 			print(line)
 

@@ -54,7 +54,8 @@ def sw():
 	# _.switches.register( 'IsFile', '-isfi' )
 
 
-
+# __.setting('omit-switch-triggers',['Files'])
+# __.setting('omit-functions',['myFolderLocations','aliasesFo'])
 
 
 _.appInfo[focus()] = {

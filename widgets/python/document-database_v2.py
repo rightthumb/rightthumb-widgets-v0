@@ -919,7 +919,7 @@ def load():
 ########################################################
 
 try:
-	import usaddress
+	import usaddress # type: ignore
 except: pass
 
 

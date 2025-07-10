@@ -168,6 +168,7 @@ import subprocess
 # focus()
 
 def action(path=None):
+	# print(_.switches.all())
 	if _.switches.isActive('HostedTemp'):
 		if not 'HostedTemp' in _v.fig:
 			_.pr()

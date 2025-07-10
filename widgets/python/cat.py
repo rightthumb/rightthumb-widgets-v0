@@ -263,6 +263,7 @@ def printFile(i,filepath):
 __.fileCount = 0
 __.fileTotal = 0
 def action():
+	# print(_.switches.values('Plus'));return
 	if _.switches.isActive('Json'):
 		_.prStatus = False
 	focus()
@@ -423,7 +424,9 @@ def action():
 				ogRow = row
 				vVv.total += 1
 				shouldAdd = _.showLine(row)
+				# print(shouldAdd, row)
 				if shouldAdd:
+					# print(row)
 					row=pr(row)
 					if Function and not row: continue
 					if _.switches.isActive('Plus'):

@@ -1,73 +1,65 @@
-#!/usr/bin/python3
+import _rightThumb._construct as __;appDBA=__.clearFocus(__name__,__file__);__.appReg=appDBA;import _rightThumb._base3 as _; # type: ignore
+def focus(parentApp='', childApp='', reg=True): global appDBA; f = __.appName(appDBA, parentApp, childApp); return f if reg else f
+fieldSet=_.l.vars(focus(),__name__,__file__,appDBA);_.load();_v=__.imp('_rightThumb._vars')
 
-# ## {R2D2919B742E} ##
-# ###########################################################################
-# What if magic existed?
-# What if a place existed where your every thought and dream come to life.
-# There is only one catch: it has to be written down.
-# Such a place exists, it is called programming.
-#    - Scott Taylor Reph, RightThumb.com
-# ###########################################################################
-# ## {C3P0D40fAe8B} ##
+def sw():
+	pass
+	_.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='data,clean', description='Files', isRequired=False )
+_._default_settings_()
 
-# import os
-import sys
-# import simplejson as json
-# import shutil
-
-import _rightThumb._base1 as _
-import _rightThumb._vars as _v
-import _rightThumb._string as _str
-
-_.switches.register('Input', '-i','appIn.py')
-_.switches.register('Output', '-o','folder\\appOut.py')
-_.switches.register('Move', '-move','completed_in-folder_name')
-
-_.appInfo=    {
+_.appInfo[focus()] = {
 	'file': 'thisApp.py',
 	'description': 'Changes the world',
+	'categories': [
+						'DEFAULT',
+				],
+	'examples': [
+						_.hp('p thisApp -file file.txt'),
+						_.linePrint(label='simple',p=0),
+						'',
+	],
+	'columns': [
+	],
+	'aliases': [],
+	'relatedapps': [],
 	'prerequisite': [],
-	'examples': [],
-	'columns': [],
-	}
+	'notes': [],
+}
 
-_.appInfo['examples'].append('p thisApp -file file.txt')
+_.appInfo[focus()] = _.appInfoContinuity(__.thisApp( __file__ ),_.appInfo[focus()])
+_.appData[focus()] = _.appDataContinuity()
+def appRegDics(): return { 'appInfo': _.appInfo[focus()], 'appData': _.appData[focus()] }
 
-_.appInfo['columns'].append({'name': 'name', 'abbreviation': 'n'})
-
-
-_.switches.process()
-
-
-pipeData = ''
-
-if not sys.stdin.isatty():
-	pipeData = sys.stdin.readlines()
-	try:
-		if not pipeData[0][0] in _str.safeChar:
-			pipeData[0] = pipeData[0][1:]
-	except Exception as e:
-		pass
-
+def triggers():
+	_._default_triggers_()
+	_.switches.trigger( 'Files',   _.isFileAdvanced, vs=False )     # Advanced File Registration    (Fn Alias Resolves To: def myFileLocations)
+	_.switches.trigger( 'DB', _.aliasesFi )
+	_.switches.trigger( 'Folder', _.myFolderLocations )
+	_.switches.trigger( 'Folders', _.myFolderLocations )
+	__.SwitchesModifier.Trigger['Folders'] = _.myFolder
+	_.switches.trigger( 'OutputFolder', _.aliasesFo )
+def _local_(do): exec(do)
+_.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw )
 ########################################################################################
+#n)--> start
+
+import re
+
+def strip_non_alphanumeric(text):
+	"""Remove all non-alphanumeric characters from a string."""
+	return re.sub(r'[^a-zA-Z0-9]', '', text)
+
+def strip_not_allowed(text, allowed="._-\\/abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"):
+    """Remove characters not in the allowed string."""
+    return ''.join(c for c in text if c in allowed)
+
+
 def action():
-	global pipeData
-	# for word in pipeData:
-	#     print(_str.alpha(word))
-
-	# for word in pipeData:
-	#     print(word.lower())
-	
-	for word in pipeData:
-		print(word.replace("'s",''))
-
-
+	for line in _.isData(2):
+		clean = strip_not_allowed(line)
+		if _.showLine(clean.strip()):
+			print(clean)
 
 ########################################################################################
 if __name__ == '__main__':
-	action()
-
-
-
-
-
+	action(); _.isExit(__file__)

@@ -4385,13 +4385,21 @@ FilesFiles = []
 isData_Save = False
 def isData( data=None, focus=None, pipeClean=False, required=False,     r=None, c=None, noclean=None, save=False ):
 	global isData_Save
+	
+	if __.PIPE and data == 2: return __.PIPE
+
 	if save:
 		isData_Save = data
-
 		return data
+
 	if isData_Save:
 		return isData_Save
 	
+	global switches
+	if switches.isActive('Paste-isData'):
+		_paste = regImp( __.appReg, '-paste' )
+		return _paste.imp.paste().split('\n')
+
 	if __.ForcePipe:
 		return __.ForcePipe
 	if vv.isDataData:
@@ -4403,10 +4411,7 @@ def isData( data=None, focus=None, pipeClean=False, required=False,     r=None, 
 	# if '...' in sys.argv:
 	if __.PIPE: appData[__.appReg]['pipe'] = __.PIPE
 
-	global switches
-	if switches.isActive('Paste-isData'):
-		_paste = regImp( __.appReg, '-paste' )
-		appData[__.appReg]['pipe'] = _paste.imp.paste().split('\n')
+
 	global FilesFiles
 	FilesFiles = myFileLocation_Files
 	__.FilesFiles = myFileLocation_Files
@@ -4482,7 +4487,7 @@ def isData( data=None, focus=None, pipeClean=False, required=False,     r=None, 
 							for n in switches.values(name):
 								for f in isData_path_list( glob.glob( n ) ):
 									__.FilesFiles.append(f)
-									for xXx in getText2( f ).split('\n'):
+									for xXx in getText( f, raw = True ).split('\n'):
 										data.append(xXx)
 						elif isD == 'glob':
 							for n in switches.values(name):
@@ -4496,7 +4501,7 @@ def isData( data=None, focus=None, pipeClean=False, required=False,     r=None, 
 							tData=[]
 							for n in switches.values(name):
 								__.FilesFiles.append(n)
-								tData.append(getText2(n))
+								tData.append(getText(n,raw=True))
 							data = '\n'.join(tData)
 
 			if data:
@@ -10526,17 +10531,82 @@ def calculate_monthdelta(date1, date2):
 
 
 
-
-# def showLine2(): pass
-# showLine = showLine2
-
-
 showLine_list = []
 showLineC = False
 sl = False
 hasPlus=None
+switch_dict = {}
+switch_dict_set=False
+LINE = None
+showLine2 = False
+showLine_Run={}
+def showLine(string, plus='', minus='', plusOr=False, end=None, isSub=False, OR=None, code=False, itIs=False, c=False, run=0):
+	""" This function wraps the show method in the Line class and dynamically creates the switch_dict. """
+	# print(run,string)
+	global switches
+	global switch_dict
+	global switch_dict_set
+	global LINE
+	global showLine2
+	global showLine_Run
+	
+	
 
-def showLine( string, plus = '', minus = '',plusOr = False, end=None,isSub=False, OR=None, code=False, itIs=False, c=False ):
+
+	# Create a dictionary of arguments, only including ones that are not their default value
+	def createSwitchDict(theArgs):
+		global switches
+		global switch_dict
+		global switch_dict_set
+		global LINE
+		global showLine2
+		global showLine_Run
+		valid_args = ['plus', 'minus', 'plusOr', 'end', 'isSub', 'OR', 'code', 'itIs', 'c']
+		
+		for arg in valid_args:
+			# value = locals().get(arg)
+			value = theArgs.get(arg, None)
+			# if arg == 'minus':
+				# print(run,arg, value)
+			if value not in ['', None, False]:  # Check if the value is not default
+				# print('arg', arg, value	)
+				if not type(switch_dict) == dict:
+					switch_dict = {}
+				# print(arg,value)
+				switch_dict[arg] = value
+		
+		# If all values are default, set switch_dict to None
+		if not switch_dict:
+			switch_dict = None
+		if not LINE is None:
+			LINE.register(switch_dict)
+		switch_dict_set = True
+		showLine_Run[run] = switch_dict
+
+	valid_args = ['plus', 'minus', 'plusOr', 'end', 'isSub', 'OR', 'code', 'itIs', 'c']
+	theArgs = {}
+	for arg in valid_args:
+		value = locals().get(arg)
+		theArgs[arg] = value
+
+	if not switch_dict_set or len(plus): createSwitchDict(theArgs)
+	if showLine2:
+		if run in showLine_Run:
+			switch_dict = showLine_Run[run]
+		else:
+			createSwitchDict(theArgs)
+
+
+		# Debugging: Check what switch_dict contains
+		# print("switch_dict:", switch_dict)
+		
+		# Call the show method in Line with the dynamically populated switch_dict
+	# if LINE is None:
+	LINE = __.Line(switches, switch_dict, run)
+	# print(string)
+	return LINE.show(string)
+
+
 	ogString = string
 	global showLineC
 	global showLine_list
@@ -10548,7 +10618,10 @@ def showLine( string, plus = '', minus = '',plusOr = False, end=None,isSub=False
 
 
 	'''showLine( string, plus = '', minus = '',plusOr = False, end=None,isSub=False, OR=None, code=False )'''
-	global switches
+
+
+
+
 	global hasPlus
 	if hasPlus is None:
 		hasPlus = switches.isActive('Plus')
@@ -11169,6 +11242,7 @@ def saveTable( rows, theFile, tableTemp=False, printThis=True, indentCode=True, 
 
 def getTable(theFile, tableTemp=False, isDic=None, isList=None, tmp=None):
 	global switches
+	# print(theFile)
 	if switches.isActive('Timeout') and 'table' in switches.value('Timeout'):
 		print(theFile)
 	if os.path.isfile(theFile):
@@ -11208,7 +11282,7 @@ def getTable(theFile, tableTemp=False, isDic=None, isList=None, tmp=None):
 					json_data = json.load(json_file)
 				return json_data
 		except Exception as e:
-			print('Error loading JSON file:', e)
+			print('Error loading JSON file:',theFile, e)
 			sys.exit()
 
 	else:
@@ -11310,7 +11384,7 @@ def getTable2(theFile, isDic=None, isList=None):
 					json_data = json.load(json_file)
 				return json_data
 		except Exception as e:
-			print('Error loading JSON file:', e)
+			print('Error loading JSON file:', theFile, e)
 			sys.exit()
 	else:
 		# print(f"File {theFile} not found or is empty.")
@@ -19471,16 +19545,20 @@ def aliasesFo(fo):
 	except: pass
 
 	return __.path(fo)
-
+aliasesFiDb=None
 def aliasesFi(fi):
-	if os.path.isfile(fi): return fi
-	aliases=getTable('file-open-aliases.hash')
+	global aliasesFiDb
+	if os.sep in fi and os.path.isfile(fi) and isTextFi(fi): return fi
+	if not aliasesFiDb:
+		aliasesFiDb=getTable('file-open-aliases.hash')
+	aliases = aliasesFiDb
+	# print(len(aliasesFiDb))
 	if not 'aliases' in aliases: aliases['aliases']={}
 	if not 'files' in aliases: aliases['files']={}
 	if fi in aliases['aliases']:
 		fi = aliases['aliases'][fi]
 	return fi
-
+__.aliasesFi=aliasesFi
 def defaultScriptTriggers_do():
 	global defaultScriptTriggers_run
 	global default_switch_trigger_index
@@ -22117,7 +22195,7 @@ def load():
 	switches.register('NoColor', '-nocolor', space=True, default=True, group=[swGrp,'Output'] )
 	switches.register('NoTitleChange', '-ntc,-notitlechange', default=True, group=[swGrp,'Output'] )
 	switches.register( 'Markdown-Table', '--md' , default=True, group=[swGrp,'Output'] )
-	switches.register( 'Paste-isData', '--pa,--paste,-ppa,-ppaste,-ispa,-idpa' , default=True, group=[swGrp,'Input'] )
+	switches.register( 'Paste-isData', '--clip,--pa,--paste,-ppa,-ppaste,-ispa,-idpa' , default=True, group=[swGrp,'Input'] )
 	switches.register( 'Paste-isData-json', '--json,-pjson,-jsonp' , default=True, group=[swGrp,'Input'] )
 	# switches.register('Report', '-report', default=True, group=[swGrp,'Output'] )
 	swGrp += 1
@@ -25175,7 +25253,7 @@ server_proxy.append( 'https://signaturemassagetampa.com/payroll/p.php?p=' )
 ##################################################
 
 ##################################################
-def isTextFi(path, num_chars=20):
+def isTextFi___last(path, num_chars=20):
 	with open(path, 'rb') as file:
 		content = file.read(num_chars)
 		try:
@@ -25183,6 +25261,90 @@ def isTextFi(path, num_chars=20):
 			return True
 		except UnicodeDecodeError:
 			return False
+def isTextFi(path, num_chars=1024):
+    """
+    First applies a lightweight check (Fi1).
+    If inconclusive or negative, double-checks with heuristic (Fi2).
+    """
+    if not os.path.isfile(path):
+        return False
+
+    result1 = is_likely_utf8_text(path, num_chars)
+    if result1:
+        return True
+
+    # If first check fails, confirm with deeper heuristic
+    return is_heuristic_text_file(path, num_chars)
+
+def is_likely_utf8_text(path, num_chars=1024):
+    """Determine if a file is likely a text file."""
+    if not os.path.isfile(path):
+        return False
+
+    try:
+        with open(path, 'rb') as file:
+            content = file.read(num_chars)
+            if not content:
+                return True  # empty files are considered text
+
+            # Check for null bytes (common in binaries)
+            if b'\x00' in content:
+                return False
+
+            # Try UTF-8 decode
+            try:
+                content.decode('utf-8')
+                return True
+            except UnicodeDecodeError:
+                pass
+
+            # Fallback: try Latin-1 or ASCII (more forgiving)
+            try:
+                content.decode('latin-1')
+                return True
+            except UnicodeDecodeError:
+                return False
+
+    except Exception:
+        return False
+
+import os
+
+def is_heuristic_text_file(path, num_chars=1024):
+    """
+    Heuristically determines if a file is a text file.
+    - Reads the first `num_chars` bytes
+    - Tries UTF-8 decoding
+    - Falls back to ASCII if needed
+    - Checks for non-text control characters
+    """
+    if not os.path.isfile(path):
+        return False
+
+    try:
+        with open(path, 'rb') as file:
+            chunk = file.read(num_chars)
+            if b'\x00' in chunk:
+                return False  # Null byte = almost certainly binary
+
+            try:
+                chunk.decode('utf-8')
+            except UnicodeDecodeError:
+                try:
+                    chunk.decode('ascii')
+                except UnicodeDecodeError:
+                    return False
+
+            # Check for high ratio of printable characters
+            text_chars = bytearray({7, 8, 9, 10, 12, 13, 27} | set(range(0x20, 0x100)))
+            if len(chunk) == 0:
+                return False
+            nontext_ratio = sum(byte not in text_chars for byte in chunk) / len(chunk)
+            return nontext_ratio < 0.30
+    except Exception:
+        return False
+
+
 def isTextFiGet(path, num_chars=20):
 	with open(path, 'rb') as file:
 		content = file.read(num_chars)
@@ -27715,51 +27877,142 @@ import importlib.util
 import hashlib
 
 def Import(path, module_name=None):
-    """
-    Import a Python module from a full path.
+	"""
+	Import a Python module from a full path.
 
-    Args:
-        path (str): Full path to .py file or package directory.
-        module_name (str, optional): Name for the imported module.
-                                     If omitted, a unique hash will be used.
+	Args:
+		path (str): Full path to .py file or package directory.
+		module_name (str, optional): Name for the imported module.
+									 If omitted, a unique hash will be used.
 
-    Returns:
-        module or None if failed
-    """
-    try:
-        path = os.path.abspath(path)
+	Returns:
+		module or None if failed
+	"""
+	try:
+		path = os.path.abspath(path)
 
-        # Resolve file from directory or auto-add .py
-        if os.path.isdir(path):
-            target = os.path.join(path, '__init__.py')
-            if not os.path.isfile(target):
-                return None
-        else:
-            if not path.endswith('.py'):
-                path += '.py'
-            if not os.path.isfile(path):
-                return None
-            target = path
+		# Resolve file from directory or auto-add .py
+		if os.path.isdir(path):
+			target = os.path.join(path, '__init__.py')
+			if not os.path.isfile(target):
+				return None
+		else:
+			if not path.endswith('.py'):
+				path += '.py'
+			if not os.path.isfile(path):
+				return None
+			target = path
 
-        # Auto-generate a unique name if none given
-        if not module_name:
-            hash_name = hashlib.md5(target.encode()).hexdigest()
-            module_name = f'module_{hash_name[:8]}'
+		# Auto-generate a unique name if none given
+		if not module_name:
+			hash_name = hashlib.md5(target.encode()).hexdigest()
+			module_name = f'module_{hash_name[:8]}'
 
-        spec = importlib.util.spec_from_file_location(module_name, target)
-        if spec is None or spec.loader is None:
-            return None
+		spec = importlib.util.spec_from_file_location(module_name, target)
+		if spec is None or spec.loader is None:
+			return None
 
-        module = importlib.util.module_from_spec(spec)
-        sys.modules[module_name] = module
-        spec.loader.exec_module(module)
+		module = importlib.util.module_from_spec(spec)
+		sys.modules[module_name] = module
+		spec.loader.exec_module(module)
 
-        return module
+		return module
 
-    except Exception:
-        return None
+	except Exception:
+		return None
 
 
+##================================================
+##================================================
+
+import os
+import time
+import re
+
+
+class Touch:
+	base_dir = os.path.normpath(os.path.expanduser(os.path.expandvars('~/.rt/Scheduled/touch')))
+	durations = {
+		's': 1, 'sec': 1, 'secs': 1, 'second': 1, 'seconds': 1,
+		'n': 60, 'mn': 60, 'min': 60, 'mins': 60, 'minute': 60, 'minutes': 60,
+		'h': 3600, 'hr': 3600, 'hrs': 3600, 'hour': 3600, 'hours': 3600,
+		'd': 86400, 'day': 86400, 'days': 86400,
+		'w': 604800, 'week': 604800, 'weeks': 604800,
+		'm': 2592000, 'mo': 2592000, 'month': 2592000, 'months': 2592000,
+		'y': 31536000, 'yr': 31536000, 'yrs': 31536000, 'year': 31536000, 'years': 31536000,
+	}
+
+	@staticmethod
+	def _get_path(name):
+		os.makedirs(Touch.base_dir, exist_ok=True)
+		return os.path.join(Touch.base_dir, f"{name}.touch")
+
+	@staticmethod
+	def touch(name):
+		"""Create or update a touch file with current time."""
+		path = Touch._get_path(name)
+		with open(path, 'a'):
+			os.utime(path, None)
+
+	@staticmethod
+	def read(name,path=None):
+		"""Return last modified time as datetime, or None if missing."""
+		from datetime import datetime, timedelta
+		if path is None:
+			path = Touch._get_path(name)
+		if os.path.exists(path):
+			ts = os.path.getmtime(path)
+			return datetime.fromtimestamp(ts)
+		return None
+
+	@staticmethod
+	def schedule(name, interval='3h'):
+		"""Returns True if task is due to run based on interval."""
+		from datetime import datetime, timedelta
+		if os.path.isfile(name):
+			path = name
+			name = os.path.splitext(path)[0]
+		name = name.replace(' ', '_')
+		last = Touch.read(name, path)
+		if last is None:
+		
+			Touch.touch(name)
+			return True
+		threshold = datetime.now() - timedelta(seconds=Touch.parse_duration(interval))
+		if last < threshold:
+			if path is None:
+				Touch.touch(name)
+			return True
+		return False
+
+	@staticmethod
+	def parse_duration(s):
+		"""Parses durations like '1d 3h' to total seconds."""
+		s = s.lower().strip()
+		total = 0
+		matches = re.findall(r'([-+]?\d*\.?\d+)\s*([a-z]+)', s)
+		for num, unit in matches:
+			if unit in Touch.durations:
+				total += float(num) * Touch.durations[unit]
+		return int(total)
+
+
+
+'''
+_.Touch.touch('win_cron_3hr')
+
+if _.Touch.schedule('backup', interval='3h'):
+	print("Running backup task...")
+	# Do your backup here
+else:
+	print("Skip — already ran recently.")
+
+
+if _.Touch.schedule(path, interval='3h'):
+	pass
+'''
+
+##================================================
 ##================================================
 nsfw=True
 
@@ -27829,7 +28082,7 @@ yf=fromYML
 
 yFig=_v.yFig
 jFig=_v.jFig
-
+__.ci = ci
 # Import=import_path
 
 ##================================================

@@ -395,7 +395,11 @@ def remove_javascript_comments(code):
 
 
 def isText(file):
-	return _mime.isText(file)
+	result = _.isTextFi(file)
+	return result
+	if result:
+		return _mime.isText(file)
+	return False
 
 def whatIsIt(file):
 	if isText(file):
@@ -473,17 +477,18 @@ def getFolder(folder,r=True):
 		for item in dirList:
 			path = folder + _v.slash + item
 			if __.MonActivated:
-				if not _.showLine(folder) or not _.showLine(item+_v.slash):
+				if not _.showLine(folder) or not _.showLine(item+_v.slash,run=480):
 					break
-				elif not _.showLine(path):
+				elif not _.showLine(path,run=482):
 					continue
 			record = None
-			add(path,r)
+			add(path,r,l=1)
 			possiblyWait()
 isClean = _.switches.isActive('Print-Clean')
-def add(path,r=False):
+_.showLine2=True
+def add(path,r=False,l=-1):
 	
-
+	# print(path,l)
 	global i
 	global iS
 	global baseDepth
@@ -501,8 +506,13 @@ def add(path,r=False):
 		if pathX.startswith(os.sep): pathX=pathX[1:]
 
 		i = i + 1
-
-		if _.showLine(path):
+		# print(__.appReg)
+		if not os.path.isfile(path) or not os.path.exists(path):
+			# _.pr( 1000, path )
+			return None
+		# print(path)
+		if _.showLine(path,run=510):
+			# print(path)
 			shouldAdd = False
 
 			if not _.switches.isActive('Text') and not _.switches.isActive('Binary'):
@@ -690,9 +700,9 @@ def add(path,r=False):
 						if _.switches.isActive('Print-Clean'):
 							if not _.v.show_full_path:
 								# process(pathX)
-								process(path)
+								process(path,l=702)
 							else:
-								process(path)
+								process(path,l=704)
 						else:
 							iS+=1
 
@@ -771,15 +781,15 @@ def add(path,r=False):
 					if not _.v.show_full_path:
 						if not _.switches.isActive('Plus'):
 							# process(pathX)
-							process(path)
+							process(path,l=783)
 						else:
 							# process(pathX)
-							process(path)
+							process(path,l=786)
 					else:
 						if not _.switches.isActive('Plus'):
-							process(path)
+							process(path,l=789)
 						else:
-							process(path)
+							process(path,l=791)
 
 
 			# if shouldAdd:
@@ -805,7 +815,7 @@ def add(path,r=False):
 		if os.path.isdir(newFolder):
 			shouldRun = True
 			if _.switches.isActive('FolderRefine'):
-				if not _.showLine(newFolder):
+				if not _.showLine(newFolder,run=813):
 					shouldRun = False
 			if r and shouldRun:
 				if not _.switches.isActive('Not-Recursive'):
@@ -978,7 +988,7 @@ def action():
 			path = path.replace('"','')
 			path=path.strip()
 			if os.path.isfile(path):
-				add(path)
+				add(path,l=1)
 	
 	elif not _.isData():
 		if not __.isFiles:
@@ -1007,6 +1017,7 @@ def action():
 		base_path=folder
 
 		if not _.switches.isActive('Widget-V0'):
+			
 			getFolder(folder,r=r)
 			if _.switches.isActive('Size'):
 				if not _.switches.isActive('Print-Clean'):
@@ -1315,7 +1326,9 @@ def star(string, criteria=[], case_sensitive=False):
 ###################################################################################################
 
 
-def process(path):
+def process(path,l=-1):
+	# print('process',path,l)
+	# return
 	# possiblyWait()
 	if _.switches.isActive('FileNameIs'):
 		filename = os.path.basename(path)
@@ -1370,12 +1383,20 @@ def process(path):
 		if some:
 			if _.isTextFi(path):
 				the_file=getSome(path,some)
+				# the_file=_.getText(path,raw=True)
 			else: the_file=''
 		else:
+			# _.pr(path,c='purple')
 			if _.isTextFi(path):
+				# _.pr(path,c='green')
 				the_file=nocomment(_.getText(path,raw=True))
+				# if 'load.php' in path.lower(): print(the_file)
+				# the_file=_.getText(path,raw=True)
 			else: the_file=''
-		if _.showLine(the_file, plus=inc, minus=ex,OR=False,code=True):
+		# print(l,path)
+		# print('ex',ex)
+		# return
+		if _.showLine(the_file, plus=inc, minus=ex,OR=False,code=True,run=1389):
 			pass
 		else:
 			return path
@@ -1403,7 +1424,7 @@ def process(path):
 				# _.pr(inc)
 				# _.pr(ex)
 				# sys.exit()
-				if _.showLine(line, plus=inc, minus=ex,OR=False,code=True):
+				if _.showLine(line, plus=inc, minus=ex,OR=False,code=True,run=1417):
 					# print('here');sys.exit();
 					if pr: _.pr()
 					printer(path,ni=1)
