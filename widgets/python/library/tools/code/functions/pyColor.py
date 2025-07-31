@@ -6,6 +6,12 @@ from pygments.token import Token, Punctuation, Keyword, Name, String, Comment
 from pygments.formatters import Terminal256Formatter
 from pygments.style import Style
 
+def pyColor(code,theme=None):
+    if not theme is None:
+        __.CodeTheme = theme
+    highlighted_code = highlight(code, PythonLexer(), Terminal256Formatter(style=CustomStyle))
+    print(highlighted_code)
+
 # Custom color dictionary
 custom_colors = {
     Punctuation: 'bold #ff79c6',      # Brackets and parentheses
@@ -258,11 +264,7 @@ class CustomStyle(Style):
     styles = eval(__.CodeTheme)
 
 # Function to colorize Python code with custom colors
-def pyColor(code,theme=None):
-    if not theme is None:
-        __.CodeTheme = theme
-    highlighted_code = highlight(code, PythonLexer(), Terminal256Formatter(style=CustomStyle))
-    print(highlighted_code)
+
 
 
 

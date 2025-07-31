@@ -42,6 +42,7 @@ def appSwitches():
 	_.switches.register('Clean', '-clean')
 	_.switches.register('MaxDepth', '-depth', '3')
 	_.switches.register('Relative-Path', '-rr,-rel,-relative')
+	_.switches.register('No-Linked-Folders', '-nl,-nolinks' )
 
 
 	pass
@@ -175,6 +176,10 @@ def process( folder ):
 
 	if not os.path.isdir(folder):
 		return None
+		
+	if _.switches.isActive('No-Linked-Folders'):
+		if os.path.islink(folder):
+			return None
 	folder = os.path.abspath( folder )
 
 

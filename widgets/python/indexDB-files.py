@@ -240,7 +240,7 @@ omit_extensions = [
     '.eml', '.msg', '.mbox', '.pst', '.ost',
 
     # Large text or dataset files
-    '.txt', '.csv', '.tsv', '.xlsx', '.xls', '.ods',
+    '.csv', '.tsv', '.xlsx', '.xls', '.ods',
 
     # Code artifacts and metadata
     '.class', '.rbi', '.pyc', '.pyo', '.log',

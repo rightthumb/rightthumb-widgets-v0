@@ -37,14 +37,34 @@ _.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw );
 def action():
 	if not _.switches.isActive('Files'): _.e('No File Specified','-f recover.json')
 	db = _.getTable('fileBackup.json')
-	recover = _.getTable2(_.switches.values('Files')[0])
+
 	index = {}
 	for rec in db: index[rec['backup']] = 1
-	for rec in recover:
-		add = True
-		if rec['backup'] in index: add = False
-		if add: db.append(rec)
-	_.saveTable(db,'fileBackup.json')
+	
+	# print(_.switches.values('Files'))
+
+	ran = {}
+	added = {}
+	for path in _.switches.values('Files'):
+		# print(path); continue
+		try:
+			recover = _.getTable2(path)
+			for rec in recover:
+				add = True
+				if rec['backup'] in index: add = False
+				if add:
+					added[rec['backup']] = 1
+					index[rec['backup']] = 1
+					db.append(rec)
+		except:
+			_.pr('Error reading file:', path,c='red')
+		
+		finally:
+			ran[path] = 1
+			_.pr('Recovered:', path, c='green')
+
+	if added:
+		_.saveTable(db,'fileBackup.json')
 
 
 ########################################################################################

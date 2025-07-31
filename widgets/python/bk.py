@@ -59,6 +59,7 @@ def action():
 		PathID = True
 	from shutil import copyfile
 	for path in _.isData(r=0):
+		# print(path); return
 		if not os.path.isfile(path): continue
 		if _.switches.isActive('Label'):
 			backup = _.backupName(path,folder=folder,mkdir=True,label=' '.join(_.switches.values('Label')),md5=PathID)

@@ -34,7 +34,7 @@ def appSwitches():
 	_.switches.register( 'AS', '-as', 'psd, xls' )
 	_.switches.register( 'Path', '-path' )
 	_.switches.register( 'App', '-app' )
-	_.switches.register( 'Files', '-f,-file,-files','file.txt', description='Files' )
+	_.switches.register( 'Files', '-f,-file,-files','file.txt', isData="name", description='Files' )
 	_.switches.register( 'Alias', '-a,-alias','' )
 	_.switches.register( 'Backup', '-b,-backup' )
 	_.switches.register( 'Clean', '--c,-clean' )
@@ -127,7 +127,7 @@ def registerSwitches( argvProcessForce=False ):
 	appSwitches()
 
 	_.myFileLocation_Print = False
-	# _.switches.trigger( 'Files', _.myFileLocations, vs=True )
+	_.switches.trigger( 'Files', _.myFileLocations, vs=True )
 	_.switches.trigger( 'Folder', _.myFolderLocations )
 	_.switches.trigger( 'URL', _.urlTrigger )
 	_.switches.trigger( 'Ago', _.timeAgo )
@@ -168,6 +168,18 @@ import subprocess
 # focus()
 
 def action(path=None):
+
+	if _.switches.isActive('PrintAliases'):
+		
+		for path in _.isData():
+			if _.switches.isActive('Clean'):
+				print(path)
+			else:
+				_.pr(path,c='cyan')
+		if _.isData():
+			return None
+
+
 	# print(_.switches.all())
 	if _.switches.isActive('HostedTemp'):
 		if not 'HostedTemp' in _v.fig:

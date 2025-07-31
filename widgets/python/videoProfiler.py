@@ -43,16 +43,17 @@ _.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw )
 ########################################################################################
 #n)--> start
 
-
 import os
-import cv2
+import cv2 # type: ignore
 import json
 import tempfile
-from moviepy.editor import VideoFileClip
-import mediapipe as mp
-from library.ai.gpt import  GPT
+import numpy as np # type: ignore
+import face_recognition # type: ignore
+from moviepy.editor import VideoFileClip # type: ignore
+os.environ["SDL_AUDIODRIVER"] = "dummy"
+os.environ["XDG_RUNTIME_DIR"] = "/tmp"
 
-gpt = GPT()
+gpt = _.GPT()
 
 def extract_audio_from_video(video_path, audio_output):
     clip = VideoFileClip(video_path)
@@ -60,61 +61,62 @@ def extract_audio_from_video(video_path, audio_output):
 
 def transcribe_segments(audio_path):
     import openai
-    with open(audio_path, 'rb') as f:
+    with open(audio_path, "rb") as f:
         transcript = openai.Audio.transcribe(
             model="whisper-1",
             file=f,
             response_format="verbose_json",
-            timestamp_granularities=["segment"]
+            timestamp_granularities=["segment"],
         )
-    return transcript['segments']  # list of dicts with start, end, text
+    return transcript["segments"]
+
+# ---------- NO MEDIAPIPE: pure OpenCV + face_recognition ----------
 
 def analyze_video_by_segment(video_path, segments):
-    import face_recognition
     import numpy as np
+    import cv2
 
     cap = cv2.VideoCapture(video_path)
     fps = cap.get(cv2.CAP_PROP_FPS)
+
+    face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
     results = []
 
     for seg in segments:
-        start_frame = int(seg['start'] * fps)
-        end_frame = int(seg['end'] * fps)
-        cap.set(cv2.CAP_PROP_POS_FRAMES, start_frame)
+        start_f = int(seg["start"] * fps)
+        end_f = int(seg["end"] * fps)
+        cap.set(cv2.CAP_PROP_POS_FRAMES, start_f)
 
-        face_count = 0
+        faces_seen = 0
         motion_score = 0
-        prev_frame = None
-        total_frames = end_frame - start_frame
+        prev_gray = None
+        total_frames = max(end_f - start_f, 1)
 
         for _ in range(total_frames):
             ret, frame = cap.read()
             if not ret:
                 break
-            small_frame = cv2.resize(frame, (0, 0), fx=0.5, fy=0.5)
-            rgb = cv2.cvtColor(small_frame, cv2.COLOR_BGR2RGB)
 
-            # Expression (face) detection
-            faces = face_recognition.face_locations(rgb)
-            if faces:
-                face_count += 1
+            small = cv2.resize(frame, (0, 0), fx=0.5, fy=0.5)
+            gray = cv2.cvtColor(small, cv2.COLOR_BGR2GRAY)
 
-            # Motion (frame delta)
-            gray = cv2.cvtColor(small_frame, cv2.COLOR_BGR2GRAY)
-            if prev_frame is not None:
-                frame_diff = cv2.absdiff(prev_frame, gray)
-                score = np.sum(frame_diff) / 255
-                motion_score += score
-            prev_frame = gray
+            faces = face_cascade.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=4)
+            if len(faces) > 0:
+                faces_seen += 1
 
-        expression_freq = face_count / total_frames if total_frames else 0
+            if prev_gray is not None:
+                diff = cv2.absdiff(prev_gray, gray)
+                motion_score += np.sum(diff) / 255
+            prev_gray = gray
+
+        expression_freq = faces_seen / total_frames
         motion_freq = min(motion_score / (total_frames * 1000), 1.0)
 
         results.append({
-            "start": seg['start'],
-            "end": seg['end'],
-            "text": seg['text'],
-            "expression_count": face_count,
+            "start": seg["start"],
+            "end": seg["end"],
+            "text": seg["text"],
+            "expression_count": faces_seen,
             "motion_count": motion_score,
             "frames": total_frames,
             "expression_freq": expression_freq,
@@ -124,6 +126,7 @@ def analyze_video_by_segment(video_path, segments):
     cap.release()
     return results
 
+# -----------------------------------------------------------------
 
 def synthesize_profile(segments):
     full = []
@@ -132,56 +135,61 @@ def synthesize_profile(segments):
 
 Text: "{s['text']}"
 Facial expressions detected in {s['expression_count']} of {s['frames']} frames.
-Body movements detected in {s['motion_count']} of {s['frames']} frames.
+Motion score (0-1): {s['motion_freq']:.2f}
 
 Profile this psychologically and physically.
-Output JSON like this:
-
-{{
-  "text": "...",
-  "emotion": "...",
-  "psychological_inference": "...",
-  "engagement": "...",
-  "confidence_level": 0.0-1.0,
-  "movement_intensity": "low|moderate|high",
-  "expression_freq": float (0.0–1.0),
-  "motion_freq": float (0.0–1.0)
-}}
+Return JSON with keys: text, emotion, psychological_inference,
+engagement, confidence_level, movement_intensity,
+expression_freq, motion_freq.
 """
-        result = gpt.prompt(prompt, code=True)
-        parsed = json.loads(result[0]) if result else {"error": "Parsing failed", "segment": s}
-        parsed["start"] = s['start']
-        parsed["end"] = s['end']
+        reply = gpt.prompt(prompt, code=True)
+        parsed = json.loads(reply[0]) if reply else {"error": "parse"}
+        parsed.update({"start": s["start"], "end": s["end"]})
         full.append(parsed)
     return full
 
+def normalize_segments(segments):
+    for s in segments:
+        try:
+            s["expression_freq"] = float(s["expression_freq"])
+        except:
+            s["expression_freq"] = 0.0
+        try:
+            s["motion_freq"] = float(s["motion_freq"])
+        except:
+            s["motion_freq"] = 0.0
+        s["expression_freq"] = round(s["expression_freq"], 4)
+        s["motion_freq"] = round(s["motion_freq"], 4)
+    return segments
+
 def build_final_profile(segments):
-    avg_expr = sum(s["expression_freq"] for s in segments) / len(segments)
-    avg_mot = sum(s["motion_freq"] for s in segments) / len(segments)
+    segments2 = normalize_segments(segments)
+    try:
+        avg_expr = sum(s["expression_freq"] for s in segments2) / len(segments)
+    except:
+        avg_expr = '-'
+    try:
+        avg_mot = sum(s["motion_freq"] for s in segments2) / len(segments)
+    except:
+        avg_mot = '-'
     return {
-        "duration": round(segments[-1]['end'], 2),
+        "duration": round(segments[-1]["end"], 2),
         "platform": "Unspecified",
         "topic": "Analyzed Video",
         "visual_profile": {
             "avg_expression_freq": avg_expr,
             "avg_motion_freq": avg_mot,
         },
-        "segments": segments
+        "segments": segments,
     }
 
 def process_video(video_path):
-    with tempfile.NamedTemporaryFile(suffix=".wav", delete=False) as audio_file:
-        extract_audio_from_video(video_path, audio_file.name)
-        segments = transcribe_segments(audio_file.name)
-        enriched = analyze_video_by_segment(video_path, segments)
-
-        for s in enriched:
-            s["expression_freq"] = s.get("expression_freq", 0)
-            s["motion_freq"] = s.get("motion_freq", 0)
-
-
-        profiled_segments = synthesize_profile(enriched)
-        return build_final_profile(profiled_segments)
+    with tempfile.NamedTemporaryFile(suffix=".wav", delete=False) as audio:
+        extract_audio_from_video(video_path, audio.name)
+        segments  = transcribe_segments(audio.name)
+        enriched  = analyze_video_by_segment(video_path, segments)
+        profiles  = synthesize_profile(enriched)
+        return build_final_profile(profiles)
 
 
 
@@ -189,13 +197,20 @@ def process_video(video_path):
 
 
 def action():
+    # print(_.isData())
     for path in _.isData():
+        print(f"Processing video: {path}")
         # === RUN ===
         profile = process_video(path)
 
+        try:
+            data = json.dump(profile, indent=4)
+        except:
+            data = str(profile)
+
         # Save to JSON
         with open(path+'.json', "w", encoding="utf-8") as f:
-            json.dump(profile, f, indent=4)
+            f.write(data)
         _.pr(path+'.json',c='cyan')
 
 ########################################################################################

@@ -258,7 +258,7 @@ def meta_scan(path,end=''):
 		file = os.path.abspath(path)
 	except Exception as e:
 		file = path
-	if os.path.isfile(path):
+	if type(path) == str and os.path.isfile(path):
 		folder = __.path(path,pop=True)
 	else:
 		folder = __.path(path)
@@ -384,7 +384,7 @@ def process(path,end='',ft=None):
 		verbos = ' -v '
 	else:
 		verbos = ''
-	if not os.path.exists(path): return None
+	if type(path) == str and not os.path.exists(path): return None
 	global folder
 	global meta
 	# _.pr(path,c='cyan')

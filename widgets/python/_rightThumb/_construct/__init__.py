@@ -695,17 +695,7 @@ class Line:
             return code  # Return code unchanged if no valid keywords
 
         # Select color code from the Color class based on the input color
-        color_map = {
-            "purple": Color.purple,
-            "cyan": Color.cyan,
-            "darkcyan": Color.darkcyan,
-            "blue": Color.blue,
-            "green": Color.green,
-            "yellow": Color.yellow,
-            "red": Color.red,
-            "bold": Color.bold,
-            "underline": Color.underline
-        }
+        global color_map
 
         color_code = color_map.get(color, Color.blue)  # Default to blue if invalid color
         import re
@@ -720,7 +710,9 @@ class Line:
         colorized_code = re.sub(pattern, colorize_match, code, flags=re.IGNORECASE)
 
         return colorized_code
-    
+
+
+
 class Color:
     purple = '\033[95m'
     cyan = '\033[96m'
@@ -733,6 +725,28 @@ class Color:
     underline = '\033[4m'
     end = '\033[0m'
 
+color_map = {
+    "purple": Color.purple,
+    "cyan": Color.cyan,
+    "darkcyan": Color.darkcyan,
+    "blue": Color.blue,
+    "green": Color.green,
+    "yellow": Color.yellow,
+    "red": Color.red,
+    "bold": Color.bold,
+    "underline": Color.underline
+}
+
+def color(*args, c=None, p=True):
+    if not args:
+        return ''
+    text = ' '.join(map(str, args))
+    if c:
+        color_code = color_map.get(c, Color.blue)
+        text = f'{color_code}{text}{Color.end}'
+    if p:
+        print(text)
+    return text
 # # Usage example
 # switches = SwitchManager()  # Assuming this is your switch manager
 # LINE = Line(switches)
@@ -860,11 +874,91 @@ def endTrace(functions=None,a=False):
                 if table[record['file']][record['function']] == 0:
                     print(f'{record["function"]} in {record["file"]}:{record["line"]}')
 #################################################
+def print_table1(data):
+    from pprint import pprint
 
-import sys
-import json
+    def print_single_table(rows, title=None):
+        if not rows:
+            print(f"\n{title or 'Table'}: (empty)\n")
+            return
+
+        headers = list(rows[0].keys())
+        col_widths = {h: max(len(h), *(len(str(row.get(h, ''))) for row in rows)) for h in headers}
+        line = ' | '.join(f'{h:<{col_widths[h]}}' for h in headers)
+
+        if title:
+            print(f"\n{title}\n{'=' * len(title)}")
+
+        print(line)
+        print('-' * len(line))
+
+        for row in rows:
+            print(' | '.join(f'{str(row.get(h, "")):<{col_widths[h]}}' for h in headers))
+
+    if isinstance(data, list):
+        print_single_table(data)
+    elif isinstance(data, dict):
+        for key, value in data.items():
+            if isinstance(value, list):
+                print_single_table(value, title=str(key))
+            else:
+                print(f"\n{key}:\n(Not a list, skipping)")
+    else:
+        print("Unsupported data type.")
+
+
+
+def print_table(data, title=None):
+    from pprint import pprint
+
+    def print_single_table(rows, title=None):
+        if not rows:
+            print(f"\n{title or 'Table'}: (empty)\n")
+            return
+
+        headers = list(rows[0].keys())
+        def HEADER(h): return color(h, c='bold', p=0)
+        headersPrint = [HEADER(h) for h in headers]
+        col_widths = {h: max(len(h), *(len(str(row.get(h, ''))) for row in rows)) for h in headers}
+        sep = color(' | ', c='green', p=0)
+        line = ' | '.join(f'{h:<{col_widths[h]}}' for h in headers)
+        linePrint = sep.join(color(f"{h:<{col_widths[h]}}", c="bold", p=0) for h in headers)
+
+
+        if title:
+            sep = color('=', c='purple', p=0)
+            title = color(title, c='yellow', p=0)
+            print(f"\n{title}\n{sep * len(title)}")
+
+        # color(line, c='green', p=1)
+        print(linePrint)
+        color('-' * len(line), c='darkcyan', p=1)
+        sep = color(' | ', c='bold', p=0)
+        for row in rows:
+            print(sep.join(color(f"{str(row.get(h, '')):<{col_widths[h]}}", c='cyan', p=0) for h in headers))
+
+
+    if isinstance(data, list):
+        print_single_table(data,title)
+    elif isinstance(data, dict):
+        for key, value in data.items():
+            if isinstance(value, list):
+                print_single_table(value, title=str(key))
+            else:
+                print(f"\n{key}:\n(Not a list, skipping)")
+    else:
+        print("Unsupported data type.")
+pt=print_table
+#################################################
+
+trig = {}
 class SwitchManager:
-    def __init__(self, command=None, Switches=None, Triggers=None):
+    def __init__(self, Switches=None, Triggers=None, Help=None, command=None, c=None, cmd=None):
+        if not cmd is None: command = cmd
+        if not c is None: command = c
+        if command is None and Switches is None and Triggers is None:
+            color("SwitchManager args:     Switches, Triggers, command",c='red',p=1)
+            command = sys.argv[1:] if len(sys.argv) > 1 else []
         if isinstance(command, int):
             command = sys.argv[command:]
         elif isinstance(command, str):
@@ -880,9 +974,18 @@ class SwitchManager:
             Switches = {}
         if Triggers is None:
             Triggers = {}
-
         self.triggers = {**Triggers}
-        self.switchesRegister = self._flatten_switches(Switches)
+        if Help is None: Help = {}
+        self.Help = Help
+        self.Switches = Switches
+        self.possibleList()
+
+
+        self.switchesRegister = self._flatten_switches(self.Switches)
+        if not 'Help' in self.switchesRegister:
+            self.switchesRegister['Help'] = '?,-h,--help'
+            self.triggers['Help'] = self.help
+        
         self.used = {}
         self._Values = {}
         self.usage = {}
@@ -899,8 +1002,104 @@ class SwitchManager:
                 self.flag_to_key[flag] = key
 
         self.parse()
+        if 'Help' in self.usage:
+            if 'Help' in self._Values and self._Values['Help']:
+                self.triggers['Help'](self._Values['Help'][0])
+            else:
+                self.triggers['Help']()
+
+        # self.usage[key].append(flag)
+        # self._Values[key].append(flag)
+
+
+    def help(self,full=None):
+        if full:
+            self.validate()
+            print('\n\n')
+
+        isGrouped = False
+        if type(self.Switches[next(iter(self.Switches))]) == dict:
+            isGrouped = True
+
+
+
+        if not isGrouped:
+            table = []
+            for key in self.Switches:
+                rec = {}
+                rec['name'] = key
+                rec['switch'] = self.Switches[key]
+                if self.Help:
+                    if key in self.Help:
+                        rec['help'] = self.Help[key]
+                    else:
+                        rec['help'] = ''
+                table.append(rec)
+            pt(table)
+
+        elif isGrouped:
+
+            tables = {}
+            for group in self.Switches:
+                tables[group] = []
+                for key in self.Switches[group]:
+                    rec = {}
+                    rec['name'] = key
+                    rec['switch'] = self.Switches[group][key]
+                    if self.Help:
+                        if key in self.Help:
+                            rec['help'] = self.Help[key]
+                        else:
+                            rec['help'] = ''
+                    tables[group].append(rec)
+            pt(tables)
+        sys.exit(0)
+
+        
+
+
+    def possibleList(self):
+        isGrouped = False
+        if type(self.Switches[next(iter(self.Switches))]) == list:
+            isGrouped = True
+        elif not type(self.Switches) == list: return
+        global trig
+
+        Switches = self.Switches.copy()
+        self.Switches = {}
+
+        if not isGrouped:
+            for rec in Switches:
+                self.Switches[rec['n']] = rec['s']
+                if 't' in rec:
+                    if type(rec['t']) == str:
+                        if rec['t'] in globals() and callable(globals()[rec['t']]):
+                            rec['t'] = eval(rec['t'])
+                        elif rec['t'] in trig and callable(trig[rec['t']]):
+                            rec['t'] = trig[rec['t']]
+                    self.triggers[rec['n']] = rec['t']
+                if 'h' in rec:
+                    self.Help[rec['n']] = rec['h']
+
+        elif isGrouped:
+            for group in Switches:
+                self.Switches[group] = {}
+                for rec in Switches[group]:
+                    self.Switches[group][rec['n']] = rec['s']
+                    if 't' in rec:
+                        
+                        if type(rec['t']) == str:
+                            if rec['t'] in globals() and callable(globals()[rec['t']]):
+                                rec['t'] = eval(rec['t'])
+                            elif rec['t'] in trig and callable(trig[rec['t']]):
+                                rec['t'] = trig[rec['t']]
+                        self.triggers[rec['n']] = rec['t']
+                    if 'h' in rec:
+                        self.Help[rec['n']] = rec['h']
+
 
     def _flatten_switches(self, switches):
+        
         flat = {}
         for group_or_key, val in switches.items():
             if isinstance(val, dict):
@@ -919,12 +1118,86 @@ class SwitchManager:
                 value = value[1:-1]
         return value
 
-    def parse(self):
+
+    def unset(self, name, instance=None):
+        """Clear usage data for a switch, optionally just for one instance (flag)."""
+        if name in self.used:
+            self.used[name] = False
+
+        if instance is None:
+            self._Values[name] = []
+            self.usage.pop(name, None)
+            self.instances.pop(name, None)
+        else:
+            if name in self.usage:
+                self.usage[name] = [i for i in self.usage[name] if i != instance]
+                if not self.usage[name]:
+                    self.usage.pop(name)
+            if name in self.instances and instance in self.instances[name]:
+                self.instances[name].pop(instance)
+            if name in self.instances and not self.instances[name]:
+                self.instances.pop(name)
+            # Don't clear _Values if other instances remain
+            self._Values[name] = [
+                val for inst in self.instances.get(name, {}).values() for val in inst
+            ] if name in self.instances else []
+
+    def set(self, name, flag=None, values=None, add=False):
+        """Add switch usage manually (values can be list or single)."""
+
+        # next(iter(self.Switches))
+        if type(flag) == int:
+            if name in self.switchesRegister:
+                flag = self.switchesRegister[name].split(',')[flag].strip()
+                flagFixed = True
+        elif not flag:
+            flagFixed = False
+            if name in self.instances:
+                flag = next(iter(self.instances[name]))
+                flagFixed = True
+            if not flagFixed and name in self.switchesRegister:
+                flag = self.switchesRegister[name].split(',')[0].strip()
+                flagFixed = True
+
+
+        if not add:
+            self.unset(name, flag)
+
+        self.used[name] = True
+        if name not in self._Values or self._Values[name] is True:
+            self._Values[name] = []
+        if isinstance(values, str):
+            values = [values]
+        elif values is None:
+            values = []
+
+        if name not in self.usage:
+            self.usage[name] = []
+        if flag not in self.usage[name]:
+            self.usage[name].append(flag)
+
+        if name not in self.instances:
+            self.instances[name] = {}
+        if flag not in self.instances[name]:
+            self.instances[name][flag] = []
+
+        for val in values:
+            cleaned = self._clean_quotes(val)
+            if name in self.triggers:
+                cleaned = self.triggers[name](cleaned)
+            self._Values[name].append(cleaned)
+            self.instances[name][flag].append(cleaned)
+
+
+    def parse(self,args=None, reset=False):
         current_switch = None
         current_key = None
         i = 0
 
-        while i < len(self.args):
+        if args is None:
+            args = self.args
+
+        while i < len(args):
             arg = self.args[i]
 
             # Handle --flag=value format
@@ -978,10 +1251,34 @@ class SwitchManager:
         if flag not in self.usage[key]:
             self.usage[key].append(flag)
 
-    def isActive(self, name):
-        return self.used.get(name, False)
 
-    def values(self, name):
+    def isActive(self, name, instance=None):
+        if name not in self.used or not self.used[name]:
+            return False
+        if instance is None:
+            return True
+        return instance in self.usage.get(name, [])
+
+
+    def data(self, what, name, instance=None):
+        if what == 0: what = 'name'
+        elif what == 1: what = 'data'
+        val = self.values(name, instance)
+        if not val:
+            global PIPE
+            return PIPE if PIPE else []
+        elif what == 'data':
+            os=imp('os.path.isfile')
+            if os.path.isfile(val[0]):
+                with open(val[0], 'r') as f:
+                    return f.read().splitlines()
+            return val
+        
+        return val
+        
+
+    def values(self, name, instance=None):
+        if not instance is None: return self.Values(name, instance)
         val = self._Values.get(name, [])
         if val is True:
             return []
@@ -1003,17 +1300,28 @@ class SwitchManager:
     def strip(self):
         return [item for item in self.command if item not in self.flag_to_key]
 
+    def resetState(self):
+        self.used = {}
+        self._Values = {}
+        self.usage = {}
+        self.instances = {}
+        for key in self.switchesRegister:
+            self.used[key] = False
+            self._Values[key] = []
+
+
     def validate(self):
-        print('___________\nApp:')
-        print(self.app)
-        print('___________\nUsed:')
-        print(json.dumps(self.used, indent=4))
-        print('___________\nValues:')
-        print(json.dumps(self._Values, indent=4))
-        print('___________\nUsage:')
-        print(json.dumps(self.usage, indent=4))
-        print('___________\nInstances:')
-        print(json.dumps(self.instances, indent=4))
+        import json
+        color('___________\nApp:',c='cyan')
+        color(self.app, c='yellow')
+        color('___________\nUsed:',c='cyan')
+        color(json.dumps(self.used, indent=4), c='yellow')
+        color('___________\nValues:',c='cyan')
+        color(json.dumps(self._Values, indent=4), c='yellow')
+        color('___________\nUsage:',c='cyan')
+        color(json.dumps(self.usage, indent=4), c='yellow')
+        color('___________\nInstances:',c='cyan')
+        color(json.dumps(self.instances, indent=4), c='yellow')
 
     def dump(self):
         return {
@@ -1495,10 +1803,34 @@ def IS(path,check=1):
     
     return False
 def aliasesFi(path): return path
-def path( p, ab=True, pop=False, file=False, slash=None, folder=None, relative=False, fi=None, fo=None, fix=True, ln=None, r=None, R=None ):
-    if R:
-        p = aliasesFi(p)
+
+def wPath(_path):
+    if not 'widgets' in _path: return _path
+    # import _rightThumb._vars as _v
+    # print(_path,_path.split('widgets'))
+    x = _path.split('widgets')[2]
+    # print(x)
+    # w =_v.w+'/widgets'+x
+    w = '/widgets'+x
+    return w.replace('\\','/').replace('//','/').replace('\\\\','/')
+
+def path( p, ab=True, pop=False, file=False, slash=None, folder=None, relative=False, fi=None, fo=None, fix=True, ln=None, r=None, R=None, a=None, w=False ):
+    # print('___')
+    # print(p)
     os = imp('os.sep')
+    os = imp('os.path.exists')
+    if type(p) == list:
+        new = []
+        for i,pp in enumerate(p):
+            # print(pp)
+            if type(pp) == str and os.path.exists(pp):
+                new.append( path(pp, ab, pop, file, slash, folder, relative, fi, fo, fix, ln, r, R, a) )
+            # p[i] = path(pp, ab, pop, file, slash, folder, relative, fi, fo, fix, ln, r, R, a)
+        return new
+    
+    if R or a:
+        p = aliasesFi(p)
+    
     p = p.replace('/', os.sep)
     if not r is None:
         relative = r

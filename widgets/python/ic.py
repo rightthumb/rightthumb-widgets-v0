@@ -14,6 +14,7 @@ def sw():
 	_.switches.register('Tabs', '-t,-tabs')
 	_.switches.register('Spaces', '-sp,-spaces,-print,-printable')
 	_.switches.register('PrintClean', '--c')
+	_.switches.register('EnforceName', '-n', 'pyColor')
 _._default_settings_()
 
 _.appInfo[focus()] = {
@@ -64,6 +65,30 @@ import re
 # from _rightThumb._base3.library.tools.code.classes.PythonCodeColorizer import PythonCodeColorizer
 
 
+
+
+
+
+'''
+
+def create_backup_filename(*args, **kwargs):
+import importlib.util
+	if 'create_backup_filename' not in intelligent_code.functions:
+		path = '/opt/rightthumb-widgets-v0/widgets/python/library/tools/os/file/create_backup_filename.py'
+		spec = importlib.util.spec_from_file_location('create_backup_filename', path)
+		module = importlib.util.module_from_spec(spec)
+		spec.loader.exec_module(module)
+		intelligent_code.functions['create_backup_filename'] = module.create_backup_filename
+	return intelligent_code.functions['create_backup_filename'](*args, **kwargs)
+
+'''
+
+
+
+
+
+
+
 iFnPath='from iPath import iName'
 iFnPath='from iPath import'
 iFn='''
@@ -83,6 +108,35 @@ class iName:
 			from iPath import iName as live
 			intelligent_code.classes['iName'] = live
 		return intelligent_code.classes['iName'](*args, **kwargs)
+'''.strip().replace('    ', '\t')
+
+
+
+
+iFn = '''
+def iName(*args, **kwargs):
+\timport importlib.util
+\tif 'iName' not in intelligent_code.functions:
+\t\timport importlib.util
+\t\tpath = os.path.normpath(_v.w+'iFullPath')
+\t\tspec = importlib.util.spec_from_file_location('iName', path)
+\t\tmodule = importlib.util.module_from_spec(spec)
+\t\tspec.loader.exec_module(module)
+\t\tintelligent_code.functions['iName'] = module.iName
+\treturn intelligent_code.functions['iName'](*args, **kwargs)
+'''.strip().replace('    ', '\t')
+iClass = '''
+class iName:
+\tdef __new__(cls, *args, **kwargs):
+\t\timport importlib.util
+\t\tif 'iName' not in intelligent_code.classes:
+\t\t\timport importlib.util
+\t\t\tpath = os.path.normpath(_v.w+'iFullPath')
+\t\t\tspec = importlib.util.spec_from_file_location('iName', path)
+\t\t\tmodule = importlib.util.module_from_spec(spec)
+\t\t\tspec.loader.exec_module(module)
+\t\t\tintelligent_code.classes['iName'] = module.iName
+\t\treturn intelligent_code.classes['iName'](*args, **kwargs)
 '''.strip().replace('    ', '\t')
 
 
@@ -168,62 +222,103 @@ def action():
 		iName = iName[0:len(iPath)-len('.py')]
 		oName = iName
 		# print(iName)
+
+
+
+
+
+		# impPath = impPath.replace('library.python.', '')
+		# iCode = iCode.replace('iPath',iPath)
+		# iCode = iCode.replace('iName',iName)
+
+		# if '.__init__ import  __init__' in impPath:
+		# 	impPath = impPath.replace('.__init__ import  __init__', ' as imp')
+		# 	impPath = impPath.replace('from ', 'import ')
+		# if '.__init__ import __init__' in impPath:
+		# 	impPath = impPath.replace('.__init__ import __init__', ' as _')
+		# 	impPath = impPath.replace('from ', 'import ')
+		
+		# if _.switches.isActive('Tabs'):
+		# 	iCode = iCode.replace('    ', '\t')
+		
+		# if _.switches.isActive('Spaces')  or  len(isData) > 1:
+		# 	iCode = iCode.replace('\t', '    ')
+
+
 		if isClass or _.switches.isActive('Class'):
+			# print('isClass')
 			iCode = iClass
 			impPath = iClassPath.replace('iPath',iPath).replace('iName',iName)
 		else:
 			iCode = iFn
 			impPath = iFnPath.replace('iPath',iPath).replace('iName',iName)
-		
 
-		
-		impPath = impPath.replace('library.python.', '')
-		iCode = iCode.replace('iPath',iPath)
-		iCode = iCode.replace('iName',iName)
-
-		if '.__init__ import  __init__' in impPath:
-			impPath = impPath.replace('.__init__ import  __init__', ' as imp')
-			impPath = impPath.replace('from ', 'import ')
-		if '.__init__ import __init__' in impPath:
-			impPath = impPath.replace('.__init__ import __init__', ' as _')
-			impPath = impPath.replace('from ', 'import ')
-		
-		if _.switches.isActive('Tabs'):
-			iCode = iCode.replace('    ', '\t')
-		
-		if _.switches.isActive('Spaces')  or  len(isData) > 1:
-			iCode = iCode.replace('\t', '    ')
 		
 		# colorized = colorizer.colorize(iCode)
 		
-		if _.switches.isActive('Path'):
+		# if _.switches.isActive('Path'):
+		if True:
 			file = _.getText(path,raw=True)
 			file = file.replace('    ','\t')
 			objects = []
 			basic = []
+			classes = []
+			functions = []
 			All = []
 			# print(file)
 			for line in file.split('\n'):
-				line = line.split('#')[0]
-				st = line.strip()
-				if line.startswith('class '):
-					# print(line)
-					if 'c' in _.switches.value('Path') or 'all' in _.switches.value('Path') or _.switches.value('Path') == '':
-						# print(line)
-						objects.append(st.split('class ')[1].split('(')[0].split(':')[0].strip())
-						basic.append(st.split('class ')[1].split('(')[0].split(':')[0].strip())
-						All.append(st.split('class ')[1].split('(')[0].split(':')[0].strip())
-				elif line.startswith('def '):
-					if 'c' in _.switches.value('Path') or 'all' in _.switches.value('Path'):
-						objects.append(st.split('def ')[1].split('(')[0].strip())
-						basic.append(st.split('def ')[1].split('(')[0].strip())
-						All.append(st.split('def ')[1].split('(')[0].strip())
-				elif '='  in line  and not st.startswith('def ') and not '[' in line.split('=')[0] and not '(' in line.split('=')[0]:
-					if not line.startswith('\t') and not line.startswith(' '):
-						if 'v' in _.switches.value('Path') or 'all' in _.switches.value('Path'):
-							objects.append(st.split('=')[0].strip())
-						# All.append(line)
-						All.append(st.split('=')[0].strip())
+				line = line.split('#')[0].rstrip()
+				# st = line.strip()
+				st = line
+
+				if st.startswith('class '):
+					isClass = True
+					name = st[6:].split('(')[0].split(':')[0].strip()
+					if any(x in _.switches.value('Path') for x in ['c', 'all']) or _.switches.value('Path') == '':
+						classes.append(name)
+						objects.append(name)
+						basic.append(name)
+						All.append(name)
+
+				elif st.startswith('def '):
+					name = st[4:].split('(')[0].strip()
+					# print(name)
+					if not _.switches.isActive('Path') or any(x in _.switches.value('Path') for x in ['c', 'all']):
+						functions.append(name)
+						objects.append(name)
+						basic.append(name)
+						All.append(name)
+
+				elif '=' in st and not st.startswith('def ') and not st.startswith('class '):
+					left = st.split('=')[0].strip()
+					if not any(c in left for c in ['[', '(', '{']) and not line.startswith((' ', '\t')):
+						if any(x in _.switches.value('Path') for x in ['v', 'all']):
+							objects.append(left)
+						All.append(left)
+
+
+			# for line in file.split('\n'):
+			# 	line = line.split('#')[0]
+			# 	st = line.strip()
+			# 	if line.startswith('class '):
+			# 		isClass = True
+			# 		# print(line)
+			# 		if 'c' in _.switches.value('Path') or 'all' in _.switches.value('Path') or _.switches.value('Path') == '':
+			# 			# print(line)
+			# 			objects.append(st.split('class ')[1].split('(')[0].split(':')[0].strip())
+			# 			basic.append(st.split('class ')[1].split('(')[0].split(':')[0].strip())
+			# 			All.append(st.split('class ')[1].split('(')[0].split(':')[0].strip())
+			# 	elif line.startswith('def '):
+			# 		if 'c' in _.switches.value('Path') or 'all' in _.switches.value('Path'):
+			# 			objects.append(st.split('def ')[1].split('(')[0].strip())
+			# 			basic.append(st.split('def ')[1].split('(')[0].strip())
+			# 			All.append(st.split('def ')[1].split('(')[0].strip())
+			# 	elif '='  in line  and not st.startswith('def ') and not '[' in line.split('=')[0] and not '(' in line.split('=')[0]:
+			# 		if not line.startswith('\t') and not line.startswith(' '):
+			# 			if 'v' in _.switches.value('Path') or 'all' in _.switches.value('Path'):
+			# 				objects.append(st.split('=')[0].strip())
+			# 			# All.append(line)
+			# 			All.append(st.split('=')[0].strip())
 
 			if not basic:
 				objects = All
@@ -280,9 +375,37 @@ def action():
 					objects = '  '+ basic[0]
 			impPath += objectItems
 			impPath = impPath.replace('import  __init__','as ')
-			print(impPath)
-			_copy.imp.copy( impPath, p=0 )
-		else:
+			if _.switches.isActive('Path'):
+				print(impPath)
+				_copy.imp.copy( impPath, p=0 )
+		# else:
+		if True:
+
+			if oName in functions:
+				isClass = False
+
+			
+			if isClass or _.switches.isActive('Class'):
+				iCode = iClass
+				iName = classes[0]
+
+			if oName in classes:
+				# print('oName in All')
+				iName = oName
+			elif oName in functions:
+				iName = oName
+			# print(All)
+			# iCode = iCode.replace('iName', 'asdf')
+			if _.switches.isActive('EnforceName'):
+				iCode = iCode.replace('iName', _.switches.value('EnforceName'))
+			else:
+				iCode = iCode.replace('iName', iName)
+
+			iCode = iCode.replace('iFullPath', __.wPath(path))
+			# iCode = iCode.replace('iName', iName)
+			
+
+
 			_.pyColor(iCode)
 			_copy.imp.copy( iCode, p=0 )
 

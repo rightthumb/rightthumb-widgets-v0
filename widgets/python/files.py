@@ -78,6 +78,7 @@ def appSwitches():
 	_.switches.register('Search-Print-Line', '-p,-print','all', group=[swGrp,'File Search Toolbox'] )
 	_.switches.register('Contains-IPs', '-ip','domains', group=[swGrp,'File Search Toolbox'] )
 	_.switches.register('Disable-Intelligence', '-showall', group=[swGrp,'File Search Toolbox'] )
+	_.switches.register('No-Linked-Folders', '-nl,-nolinks', group=[swGrp,'File Search Toolbox'] )
 
 	swGrp += 1
 
@@ -472,6 +473,9 @@ def getFolder(folder,r=True):
 		takeAction = False
 	if takeAction:
 		if os.path.isdir(folder):
+			if _.switches.isActive('No-Linked-Folders'):
+				if os.path.islink(folder):
+					return None
 			dirList = os.listdir(folder)
 			if _.switches.isActive('Reverse'): dirList.reverse()
 		for item in dirList:

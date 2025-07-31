@@ -163,7 +163,7 @@ _.l.sw.register( triggers, sw )
 
 def action():
 	lines=[]
-	for line in _.myData():
+	for line in _.isData(2):
 		lines.append(line[::-1])
 	lines.sort()
 	for line in lines:

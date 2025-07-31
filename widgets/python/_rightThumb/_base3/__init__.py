@@ -123,18 +123,6 @@ def isFile(path,simple=True,s=None):
 #   pass
 
 ########################################################################################
-def hexColor(*args, **kwargs):
-	if not 'hexColor' in intelligent_code.functions:
-		from library.tools.code.functions.hexColor import hexColor
-		intelligent_code.functions['hexColor'] = hexColor
-	return intelligent_code.functions['hexColor'](*args, **kwargs)
-
-def pyColor(*args, **kwargs):
-	if not 'pyColor' in intelligent_code.functions:
-		from library.tools.code.functions.pyColor import pyColor
-		intelligent_code.functions['pyColor'] = pyColor
-	return intelligent_code.functions['pyColor'](*args, **kwargs)
-
 
 ########################################################################################
 
@@ -1712,6 +1700,7 @@ v = dot()
 vv = dot()
 vv.isData = {}
 vv.isDataData = {}
+vv.isDataName = {}
 vv.opened_file_me = {}
 __.switch_skimmer = dot()
 __.switch_skimmer.scan = [ '??','-??','--??','/??' ]
@@ -4402,9 +4391,11 @@ def isData( data=None, focus=None, pipeClean=False, required=False,     r=None, 
 
 	if __.ForcePipe:
 		return __.ForcePipe
+	if vv.isDataName:
+		for name in vv.isDataName:
+			return vv.isDataName[name]
 	if vv.isDataData:
 		for name in vv.isDataData:
-			# print(vv.isDataData[name])
 			return vv.isDataData[name]
 
 	global appData
@@ -9425,6 +9416,10 @@ def url2file(path):
 
 isFirst=True
 def myFileLocations( file, silent=False, currentBaseVersion=3 ):
+	if type(file) == str:
+		file = aliasesFi(file)
+		if os.path.exists(file):
+			file = __.path(file)
 	if True:
 		valid = True
 		for test in [
@@ -12500,6 +12495,8 @@ class Switches:
 			isPipe=isData
 			if isData == 'data':
 				vv.isDataData[name] = []
+			if isData == 'name':
+				vv.isDataName[name] = []
 		i=len(self.switches)
 
 
@@ -12760,6 +12757,8 @@ class Switches:
 				if self.switches[i].appReg == theFocus:
 					if row.name == name:
 						result = eval('row.' + column)
+		if type(result) == list and len(result) and type(result[0]) == list:
+			return result[0]
 		return result
 
 	def isActive2( self, name, theFocus=False ):
@@ -12782,6 +12781,8 @@ class Switches:
 		result = self.fieldGet( name, 'value', theFocus )
 		if result is None:
 			result = ''
+		if type(result) == list:
+			result = ','.join(result)
 		return result
 
 	def values2( self, name, theFocus=False ):# getSwitchValue
@@ -13275,6 +13276,10 @@ class Switches:
 								self.switches[ii].active = True
 								self.switches[ii].value = self.format(self.switches[ii].name)
 								self.switches[ii].values = self.format2(self.switches[ii].name)
+								if self.switches[ii].name in vv.isDataName:
+									for thisFile in self.switches[ii].values:
+										vv.isDataName[self.switches[ii].name].append( thisFile )
+
 								if self.switches[ii].name in vv.isDataData:
 									for thisFile in self.switches[ii].values:
 										for fileLine in getText(thisFile):
@@ -25262,87 +25267,87 @@ def isTextFi___last(path, num_chars=20):
 		except UnicodeDecodeError:
 			return False
 def isTextFi(path, num_chars=1024):
-    """
-    First applies a lightweight check (Fi1).
-    If inconclusive or negative, double-checks with heuristic (Fi2).
-    """
-    if not os.path.isfile(path):
-        return False
+	"""
+	First applies a lightweight check (Fi1).
+	If inconclusive or negative, double-checks with heuristic (Fi2).
+	"""
+	if not os.path.isfile(path):
+		return False
 
-    result1 = is_likely_utf8_text(path, num_chars)
-    if result1:
-        return True
+	result1 = is_likely_utf8_text(path, num_chars)
+	if result1:
+		return True
 
-    # If first check fails, confirm with deeper heuristic
-    return is_heuristic_text_file(path, num_chars)
+	# If first check fails, confirm with deeper heuristic
+	return is_heuristic_text_file(path, num_chars)
 
 def is_likely_utf8_text(path, num_chars=1024):
-    """Determine if a file is likely a text file."""
-    if not os.path.isfile(path):
-        return False
+	"""Determine if a file is likely a text file."""
+	if not os.path.isfile(path):
+		return False
 
-    try:
-        with open(path, 'rb') as file:
-            content = file.read(num_chars)
-            if not content:
-                return True  # empty files are considered text
+	try:
+		with open(path, 'rb') as file:
+			content = file.read(num_chars)
+			if not content:
+				return True  # empty files are considered text
 
-            # Check for null bytes (common in binaries)
-            if b'\x00' in content:
-                return False
+			# Check for null bytes (common in binaries)
+			if b'\x00' in content:
+				return False
 
-            # Try UTF-8 decode
-            try:
-                content.decode('utf-8')
-                return True
-            except UnicodeDecodeError:
-                pass
+			# Try UTF-8 decode
+			try:
+				content.decode('utf-8')
+				return True
+			except UnicodeDecodeError:
+				pass
 
-            # Fallback: try Latin-1 or ASCII (more forgiving)
-            try:
-                content.decode('latin-1')
-                return True
-            except UnicodeDecodeError:
-                return False
+			# Fallback: try Latin-1 or ASCII (more forgiving)
+			try:
+				content.decode('latin-1')
+				return True
+			except UnicodeDecodeError:
+				return False
 
-    except Exception:
-        return False
+	except Exception:
+		return False
 
 import os
 
 def is_heuristic_text_file(path, num_chars=1024):
-    """
-    Heuristically determines if a file is a text file.
-    - Reads the first `num_chars` bytes
-    - Tries UTF-8 decoding
-    - Falls back to ASCII if needed
-    - Checks for non-text control characters
-    """
-    if not os.path.isfile(path):
-        return False
+	"""
+	Heuristically determines if a file is a text file.
+	- Reads the first `num_chars` bytes
+	- Tries UTF-8 decoding
+	- Falls back to ASCII if needed
+	- Checks for non-text control characters
+	"""
+	if not os.path.isfile(path):
+		return False
 
-    try:
-        with open(path, 'rb') as file:
-            chunk = file.read(num_chars)
-            if b'\x00' in chunk:
-                return False  # Null byte = almost certainly binary
+	try:
+		with open(path, 'rb') as file:
+			chunk = file.read(num_chars)
+			if b'\x00' in chunk:
+				return False  # Null byte = almost certainly binary
 
-            try:
-                chunk.decode('utf-8')
-            except UnicodeDecodeError:
-                try:
-                    chunk.decode('ascii')
-                except UnicodeDecodeError:
-                    return False
+			try:
+				chunk.decode('utf-8')
+			except UnicodeDecodeError:
+				try:
+					chunk.decode('ascii')
+				except UnicodeDecodeError:
+					return False
 
-            # Check for high ratio of printable characters
-            text_chars = bytearray({7, 8, 9, 10, 12, 13, 27} | set(range(0x20, 0x100)))
-            if len(chunk) == 0:
-                return False
-            nontext_ratio = sum(byte not in text_chars for byte in chunk) / len(chunk)
-            return nontext_ratio < 0.30
-    except Exception:
-        return False
+			# Check for high ratio of printable characters
+			text_chars = bytearray({7, 8, 9, 10, 12, 13, 27} | set(range(0x20, 0x100)))
+			if len(chunk) == 0:
+				return False
+			nontext_ratio = sum(byte not in text_chars for byte in chunk) / len(chunk)
+			return nontext_ratio < 0.30
+	except Exception:
+		return False
 
 
 def isTextFiGet(path, num_chars=20):
@@ -26605,30 +26610,86 @@ def myFolder(subject):
 
 
 
+
+
+
+
+
+
+
+
+##################################################
+##################################################
+##################################################
 def create_backup_filename(*args, **kwargs):
-	if not 'create_backup_filename' in intelligent_code.functions:
-		from library.tools.os.file.create_backup_filename import create_backup_filename
-		intelligent_code.functions['create_backup_filename'] = create_backup_filename
+	import importlib.util
+	if 'create_backup_filename' not in intelligent_code.functions:
+		import importlib.util
+		path = os.path.normpath(_v.w+'/widgets/python/library/tools/os/file/create_backup_filename.py')
+		spec = importlib.util.spec_from_file_location('create_backup_filename', path)
+		module = importlib.util.module_from_spec(spec)
+		spec.loader.exec_module(module)
+		intelligent_code.functions['create_backup_filename'] = module.create_backup_filename
 	return intelligent_code.functions['create_backup_filename'](*args, **kwargs)
-
-
-
-
 fibk=create_backup_filename
 backupName=create_backup_filename
-##################################################
-##change
+
+
 def hexColor(*args, **kwargs):
-	if not 'hexColor' in intelligent_code.functions:
-		from library.tools.code.functions.hexColor import hexColor
-		intelligent_code.functions['hexColor'] = hexColor
+	import importlib.util
+	if 'hexColor' not in intelligent_code.functions:
+		import importlib.util
+		path = os.path.normpath(_v.w+'/widgets/python/library/tools/code/functions/hexColor.py')
+		spec = importlib.util.spec_from_file_location('hexColor', path)
+		module = importlib.util.module_from_spec(spec)
+		spec.loader.exec_module(module)
+		intelligent_code.functions['hexColor'] = module.hexColor
 	return intelligent_code.functions['hexColor'](*args, **kwargs)
 
 def pyColor(*args, **kwargs):
-	if not 'pyColor' in intelligent_code.functions:
-		from library.tools.code.functions.pyColor import pyColor
-		intelligent_code.functions['pyColor'] = pyColor
+	import importlib.util
+	if 'pyColor' not in intelligent_code.functions:
+		import importlib.util
+		path = os.path.normpath(_v.w+'/widgets/python/library/tools/code/functions/pyColor.py')
+		spec = importlib.util.spec_from_file_location('pyColor', path)
+		module = importlib.util.module_from_spec(spec)
+		spec.loader.exec_module(module)
+		intelligent_code.functions['pyColor'] = module.pyColor
 	return intelligent_code.functions['pyColor'](*args, **kwargs)
+
+class GPT:
+	def __new__(cls, *args, **kwargs):
+		import importlib.util
+		if 'GPT' not in intelligent_code.classes:
+			import importlib.util
+			path = os.path.normpath(_v.w+'/widgets/python/library/ai/gpt/__init__.py')
+			spec = importlib.util.spec_from_file_location('GPT', path)
+			module = importlib.util.module_from_spec(spec)
+			spec.loader.exec_module(module)
+			intelligent_code.classes['GPT'] = module.GPT
+		return intelligent_code.classes['GPT'](*args, **kwargs)
+	
+
+
+
+
+class index:
+	def __new__(cls, *args, **kwargs):
+		import importlib.util
+		if 'index' not in intelligent_code.classes:
+			import importlib.util
+			path = os.path.normpath(_v.w+'/widgets/python/library/tools/code/classes/index.py')
+			spec = importlib.util.spec_from_file_location('index', path)
+			module = importlib.util.module_from_spec(spec)
+			spec.loader.exec_module(module)
+			intelligent_code.classes['index'] = module.index
+		return intelligent_code.classes['index'](*args, **kwargs)
+	
+
+
+
+##################################################
+##################################################
 ##################################################
 pr0c='yellow'
 def pr0(*args,c=None):
@@ -26945,12 +27006,7 @@ class index
 '''
 
 
-class index:
-	def __new__(cls, *args, **kwargs):
-		if not 'index' in intelligent_code.classes:
-			from library.tools.code.classes.index import index as live
-			intelligent_code.classes['index'] = live
-		return intelligent_code.classes['index'](*args, **kwargs)
+
 
 
 ########################################################################################
@@ -28014,6 +28070,20 @@ if _.Touch.schedule(path, interval='3h'):
 
 ##================================================
 ##================================================
+def y(yaml,p=False):
+	while ' ||' in yaml:
+		yaml = yaml.replace(' ||', '||')
+	while '|| ' in yaml:
+		yaml = yaml.replace('|| ', '||')
+	yaml = yaml.replace('||','|')
+	yaml = yaml.replace('|','\n')
+	if p:
+		print(yaml)
+	return fromYML(yaml)
+
+
+##================================================
+##================================================
 nsfw=True
 
 Threads=ThreadManager
@@ -28083,6 +28153,11 @@ yf=fromYML
 yFig=_v.yFig
 jFig=_v.jFig
 __.ci = ci
+
+aFi=aliasesFi
+aFo=aliasesFo
+__.aFi = aFi
+__.aFo = aFo
 # Import=import_path
 
 ##================================================

@@ -93,6 +93,39 @@ _.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw )
 ########################################################################################
 #b)--> examples
 #d)--> code hints to quickly get started
+    #n)--> _.Switches usage
+        # Triggers = { 'Files': myFunc }
+        # Help = { 'Files': 'Specify Files' }
+        ## ---> Switches Method <---
+        # Switches = { 'Files': '-json,-yaml' }; Triggers = { 'Files': _.isFileAdvanced }
+        # sw = __.Switches(Switches, Triggers, Help, input(': '))
+        ## ---> Switches Method <---
+        # grouped = _.y("Files:|  In: -f,-in|  Out: -o,-out   ||   Utility:|  Clean: --c")
+        ## ---> Switches Method <---
+        # simple = _.y("Files: -json,-yaml || Clean: --c")
+        ## ---> Switches Method <---
+        # All_in_One=_.y('- n: Files|  s: -f|  h: Specify Files|  t: All_in_One    ||    - n: Clean|  s: --c|  h: Pretty Print')
+        # def a1File(p): return '~~'+p
+        # __.trig['All_in_One'] = a1File
+        ## ---> Switches Method <---
+        # p=1
+        # Grouped_All_in_One=_.y('Os: || - n: Files|  s: -f|  h: Specify Files|  t: aFi    ||    - n: Folder|  s: -d|  h: Specify Folder    ||   Utility:|- n: Clean|  s: --c|  h: Pretty Print',p=p)
+        # cmd = 'app -f test.txt -d test -h more'
+        # sw = __.Switches(Grouped_All_in_One, {}, {}, cmd)
+        
+        
+        # sw.isActive('Files')  sw.isActive('Files','-json')
+        # sw.value('Files')  sw.values('Files')  sw.values('Files','-json')
+
+        # sw.set('Files', '-f', ['in'],add=True)
+        # sw.set('Files', 0, 'f.c')                      # switch id from set switches
+        # sw.set('Files', 0.0, ['in.'],add=True)         # uses last switch used or first switch if no id is given
+        
+        # sw.unset('Files')
+
+        # v = sw.data('data','Files')
+        # v = sw.data('data','Files', '-f)
+
     #n)--> inline examples
         # any(ele in 'scott5' for ele in list('0123456789'))
         # if _.switches.isActive('Test'): test(); return None;

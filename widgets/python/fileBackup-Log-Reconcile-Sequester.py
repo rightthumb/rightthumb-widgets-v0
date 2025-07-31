@@ -148,14 +148,18 @@ def action():
 	_.fo(bin,script=script)
 	for path in bad:
 		_.pr(path,c='red')
-		shutil.move(path,binSequester)
+		try:
+			shutil.move(path,binSequester)
+		except: pass
 
 
 	bad = []
 	_.fo(txt,script=script)
 	for path in bad:
 		_.pr(path,c='red')
-		shutil.move(path,txtSequester)
+		try:
+			shutil.move(path,txtSequester)
+		except: pass
 
 
 	# load(); global c3po;
