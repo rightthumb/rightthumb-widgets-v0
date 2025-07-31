@@ -9,7 +9,14 @@ if exist %1 (
 goto:eof
 
 :OPEN_FILE
-    call p. file-open -backup -f %*
+set "shouldcreate="
+if [%create%] == [y] if not exist "%~1" (
+    set "shouldcreate=+c"
+    @REM echo. > "%~1"
+    @REM echo File created: %1
+)
+
+    call p. file-open %shouldcreate% -backup -f %*
 goto:eof
 
 :shouldcreate

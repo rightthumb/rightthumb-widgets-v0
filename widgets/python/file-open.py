@@ -44,6 +44,7 @@ def appSwitches():
 	_.switches.register( 'PrintAliases', '-pa,-ap,-printaliases', 'path' )
 	_.switches.register( 'HostedTemp', '-tmp,-temp', 'ext name |alias> o.t' )
 	_.switches.register( 'DoNotOpen', '-n,-no,-nope', 'used to create aliases but not open' )
+	_.switches.register( 'CreateFile', '+c,-create' )
 
 _.autoBackupData = __.autoCreationConfiguration['backup']
 __.releaseAcquiredData = __.autoCreationConfiguration['logs'] 
@@ -127,7 +128,11 @@ def registerSwitches( argvProcessForce=False ):
 	appSwitches()
 
 	_.myFileLocation_Print = False
-	_.switches.trigger( 'Files', _.myFileLocations, vs=True )
+	if '+c' in sys.argv or '-create' in sys.argv or '--create' in sys.argv:
+		pass
+		# _.pr('Creating File, Skipping Files Trigger',h='burly_wood')
+	else:
+		_.switches.trigger( 'Files', _.myFileLocations, vs=True )
 	_.switches.trigger( 'Folder', _.myFolderLocations )
 	_.switches.trigger( 'URL', _.urlTrigger )
 	_.switches.trigger( 'Ago', _.timeAgo )
@@ -168,6 +173,12 @@ import subprocess
 # focus()
 
 def action(path=None):
+
+	if _.switches.isActive('CreateFile') and _.switches.isActive('Files') and len(_.switches.values('Files')) == 1:
+		cPath = _.switches.values('Files')[0]
+		if not os.path.isfile(cPath):
+			open(cPath, 'w').close()
+			_.pr('File created: '+cPath,c='green')
 
 	if _.switches.isActive('PrintAliases'):
 		

@@ -9417,7 +9417,9 @@ def url2file(path):
 isFirst=True
 def myFileLocations( file, silent=False, currentBaseVersion=3 ):
 	if type(file) == str:
-		file = aliasesFi(file)
+		if not os.path.exists(file):
+			file = aliasesFi(file)
+
 		if os.path.exists(file):
 			file = __.path(file)
 	if True:
