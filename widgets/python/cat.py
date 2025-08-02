@@ -552,8 +552,8 @@ Function=_.switches.isActive('Function')
 
 ########################################################################################
 if __name__ == '__main__':
-	action()
 	try:
+		action()
 		# print(output)
 		if _.switches.isActive('Json'):
 			_.prStatus = True
