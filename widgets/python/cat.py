@@ -425,6 +425,7 @@ def action():
 				vVv.total += 1
 				shouldAdd = _.showLine(row)
 				# print(shouldAdd, row)
+				if not shouldAdd: continue
 				if shouldAdd:
 					# print(row)
 					row=pr(row)
@@ -551,8 +552,8 @@ Function=_.switches.isActive('Function')
 
 ########################################################################################
 if __name__ == '__main__':
+	action()
 	try:
-		action()
 		# print(output)
 		if _.switches.isActive('Json'):
 			_.prStatus = True

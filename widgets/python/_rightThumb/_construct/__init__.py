@@ -579,12 +579,25 @@ class Line:
     def minusResults(self, string, minus='', itIs=False):
         """ Processes string with 'Minus' functionality. """
 
+        testMode = False
+        # if 'myNotes' in string: testMode = True
+
+
         string = str(string)
 
+        minusInput = self.getMinusInput(minus)
+        if minusInput and type(minusInput) == list and type(minusInput[0]) == list:
+            minusInput = minusInput[0]
+        if isinstance(minusInput, str):
+            minusInput = [minusInput]
         if not 'StrictCase' in self.switch_dict or not self.switch_dict['StrictCase']:
             string = string.lower()
-        # minusInput = self.getMinusInput(minus)
-        minusInput = minus
+
+            for i, m in enumerate(minusInput):
+                minusInput[i] = str(m).lower()
+        if testMode:
+            print('minusInput:', minusInput, self.run)
+
         # if not self.run == 510:
         #     print(self.run,minusInput)
         result = True
@@ -618,6 +631,10 @@ class Line:
                     done = True
                     break
         # print(4)
+        if testMode:
+            print('minusInput:', minusInput, self.run)
+            print('string:', string)
+            sys.exit(0)
         return result
 
     def getPlusInput(self, plus, plusOr, OR):

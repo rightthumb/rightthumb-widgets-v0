@@ -153,6 +153,8 @@ _.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw )
 def script(path):
     global index
     global backup
+    if not path.endswith('.json'):
+        return
     try:
         for j, rec in enumerate(_.getTable2(path)):
             if not rec['backup'] in index:

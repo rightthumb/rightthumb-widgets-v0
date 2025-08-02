@@ -18,7 +18,7 @@ SET "bh_brand=true"
 SET "bh_brand=false"
 
 
-
+call lab %1
 
 
 goto :main
