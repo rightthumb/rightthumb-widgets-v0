@@ -166,7 +166,7 @@ class Bookmarks:
 							'paths': {},
 			}
 
-		self.current = os.getcwd()
+		self.current = __.path('.')
 		self.alias = alias
 		self.path = path
 		self.folder = None
@@ -182,7 +182,7 @@ class Bookmarks:
 
 	def reverse( self, path=None ):
 		spent = []
-		if path is None: path = os.getcwd()
+		if path is None: path = __.path('.')
 		# if path in self.index['labels']:
 			# for bm in self.index['labels'][path]: _.pr( bm )
 		for bm in self.index['labels']:

@@ -14,19 +14,48 @@
 # SCRIPT_DIR="${SCRIPT_DIR/bash\/nav/bash}"
 # source  "$SCRIPT_DIR/load-vars.sh"
 # code_editor=$( cat "/opt/RightThumb/.editor" )
+
+
+
+
+# subject=$1
+# if [ "$subject" == "base" ]; then
+# 	subject="base3"
+# fi
+# subject_path=$widgets/widgets/python/_rightThumb/_$subject/__init__.py
+# p="bash $widgets/widgets/bash/nav/p.sh"
+# if [[ ! -e $widgets/widgets/python/_rightThumb/_$subject ]]; then
+# 	mkdir $widgets/widgets/python/_rightThumb/_$subject
+# 	echo "directory created"
+# elif [[ ! -d $dir ]]; then
+# 	echo "directory exists"
+# fi
+# $p file-open -f $subject_path -backup
+
+
+# With Comments
+
 subject=$1
-if [ "$subject" == "base" ]; then
+if [ "$subject" == "base" ]; then  # If the subject is exactly "base", rename it to "base3"
 	subject="base3"
 fi
 subject_path=$widgets/widgets/python/_rightThumb/_$subject/__init__.py
 p="bash $widgets/widgets/bash/nav/p.sh"
-if [[ ! -e $widgets/widgets/python/_rightThumb/_$subject ]]; then
+if [[ ! -e $widgets/widgets/python/_rightThumb/_$subject ]]; then  # If the directory does not exist, create it
 	mkdir $widgets/widgets/python/_rightThumb/_$subject
 	echo "directory created"
-elif [[ ! -d $dir ]]; then
+elif [[ ! -d $dir ]]; then  # If the path exists but is not a directory, notify user
 	echo "directory exists"
 fi
 $p file-open -f $subject_path -backup
+
+
+
+
+
+
+
+
 # if [ "$code_editor_pre" = "" -a "$code_editor_suff" = "" ]; then
 #     echo 1
 #     $code_editor $subject_path

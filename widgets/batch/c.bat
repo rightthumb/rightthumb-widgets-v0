@@ -13,13 +13,17 @@ REM ## {C3P0D40fAe8B} ##
 set "PATHEXT=.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC;.PYW"
 @REM :CLEAR_SCREEN
 
-
+set debug=no
 
 
 
 @REM                 %stmp%\pin_ask
 
-
+if [%vault_pin%] == [] (
+    prompt └─ 
+) else (
+    prompt └─. 
+)
 
 
 

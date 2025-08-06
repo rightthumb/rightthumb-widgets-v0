@@ -200,8 +200,8 @@ _.postLoad( __file__ )
 def action():
 
 	_.pr('help',h='help')
-
-	_.colorThis( '_______', 'Catalog' )
+	if not _.switches.isActive('Plus'):
+		_.colorThis( '_______', 'Catalog' )
 
 
 

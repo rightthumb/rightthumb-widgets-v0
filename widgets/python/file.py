@@ -10,6 +10,8 @@
 # ###########################################################################
 # ## {C3P0D40fAe8B} ##
 
+# _.pr(__.appReg)
+
 import os
 import sys
 import time
@@ -56,7 +58,8 @@ def appSwitches():
 	_.switches.register('Remove-Root-Folder', '-rr')
 	_.switches.register('Widget-V0', '-w,-v0')
 	_.switches.register('Ago-Create-Date', '-cd')
-	_.switches.register('NoExtension', '-noext')
+	_.switches.register('NoExtension', '-noext,--ne')
+	_.switches.register('ForceSimple', '--s,-simple')
 	_.switches.trigger( 'Folders', _.myFolderLocations )
 
 
@@ -187,6 +190,8 @@ def unFormatSize(size):
 
 
 def registerSwitches( argvProcessForce=False ):
+	# _.pr(__.appReg)
+	_appReg_ = __.appReg
 	global appDBA
 	if not __.appReg == appDBA and appDBA in __.appReg:
 
@@ -198,8 +203,10 @@ def registerSwitches( argvProcessForce=False ):
 		_.load()
 		_.appInfo[__.appReg] = _.appInfo[appDBA]
 		_.appData[__.appReg] = _.appData[appDBA]
+	# _.pr(__.appReg)
 	__.constructRegistration(_.appInfo[__.appReg]['file'],__.appReg)
 	appSwitches()
+	# _.pr(__.appReg)
 
 	_.switches.trigger( 'Size' , unFormatSize )
 	# _.switches.trigger( 'Folders' , _.bAlias )
@@ -211,7 +218,11 @@ def registerSwitches( argvProcessForce=False ):
 	# _.switches.trigger('Input',_.formatColumns)
 	
 	_.defaultScriptTriggers()
+	# _.pr(__.appReg)
+	# _.pr(__.appReg,11)
 	_.switches.process()
+	# _.pr(__.appReg, 22)
+	
 
 
 
@@ -239,7 +250,29 @@ if __name__ == '__main__':
 ########################################################################################
 # START
 
+# x=_.switches.all()
+# # _.pr(__.appReg)
+# _.pv(x); sys.exit()
 
+def formatResults(path):
+	ran = False
+	if _.switches.isActive('Remove-Root-Folder'):
+		ran = True
+		path = os.path.basename(path)
+
+	if _.switches.isActive('NoExtension'):
+		ran = True
+		path = os.path.splitext(path)[0]
+	
+	for replace in _.switches.values('NoExtension'):
+		ran = True
+		path = path.replace(replace,' ')
+		while '  ' in path:
+			path = path.replace('  ',' ')
+	path = path.strip()
+	if ran:
+		return path
+	return False
 
 def isText(file):
 	return _mime.isText(file)
@@ -450,9 +483,9 @@ def getFolder(folder,r=True):
 
 								if _.switches.isActive('Count'):
 									if _.switches.isActive('Remove-Root-Folder'):
-										_.pr( _.colorThis( pathX, 'cyan', p=0 ) )
+										_.pr( pathX, c='cyan')
 									else:
-										_.pr( _.colorThis( path, 'cyan', p=0 ) )
+										_.pr( path, c='cyan')
 								else:
 									iS+=1
 
@@ -501,6 +534,13 @@ def getFolder(folder,r=True):
 
 
 					if shouldAdd:
+
+						if _.switches.isActive('ForceSimple'):
+							possible = formatResults(path)
+							if possible:
+								# _.pr( possible, plus='yellow,cyan', c='cyan' )
+								_.pr( possible, plus=1, h='chartreuse,cornflower_blue' )
+								continue
 						
 						iS+=1
 						if not _.switches.isActive('Totals'):
@@ -511,8 +551,9 @@ def getFolder(folder,r=True):
 									prt=pathX.split('.')
 									prt.pop(-1)
 									pathX='.'.join(prt)
+									if '_' in _.switches.values(''): pathX = pathX.replace('_',' ')
 								if not _.switches.isActive('Plus'):
-									_.colorThis( pathX, 'cyan' )
+									_.pr( pathX, c='cyan' )
 								else:
 									_.pr( _.colorPlus( pathX, 'cyan' ) )
 							else:
@@ -520,8 +561,9 @@ def getFolder(folder,r=True):
 									prt=path.split('.')
 									prt.pop(-1)
 									path='.'.join(prt)
+									
 								if not _.switches.isActive('Plus'):
-									_.colorThis( path, 'cyan' )
+									_.pr( path, c='cyan' )
 								else:
 									_.pr( _.colorPlus( path, 'cyan' ) )
 

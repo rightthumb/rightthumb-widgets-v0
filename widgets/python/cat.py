@@ -425,7 +425,6 @@ def action():
 				vVv.total += 1
 				shouldAdd = _.showLine(row)
 				# print(shouldAdd, row)
-				if not shouldAdd: continue
 				if shouldAdd:
 					# print(row)
 					row=pr(row)

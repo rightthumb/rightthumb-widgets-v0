@@ -14,6 +14,7 @@ def sw():
 	_.switches.register( 'Search', '--s,-search' )
 	_.switches.register( 'Chat-id', '-cid' )
 	_.switches.register( 'OpenChat', '-o,-open' )
+	_.switches.register( 'Just-Title', '-title' )
 _._default_settings_()
 
 _.appInfo[focus()] = {

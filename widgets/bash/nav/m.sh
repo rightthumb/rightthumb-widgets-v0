@@ -15,3 +15,15 @@
 # # source  "$SCRIPT_DIR/load-vars.sh"
 # echo $PY $widgets/widgets/python/m.py -alias $1
 $PY $widgets/widgets/python/m.py -alias $*
+
+alias ref="source $HOME/.bashrc"
+
+echo '> ref   to refresh .bashrc'
+echo 'ref'
+
+# if [ -f "$HOME/.m" ]; then
+# 		echo source "$HOME/.bashrc"
+# else
+# 		echo "Instant Availability"
+# 		echo "  touch ~/.m"
+# fi

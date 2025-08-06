@@ -1947,7 +1947,8 @@ class CLIP:
 		r = tk.Tk()
 		r.withdraw()  # Hide the main window
 		r.clipboard_clear()
-		r.clipboard_append('π')
+		r.clipboard_append('π λ ℵ')
+		# r.clipboard_append('π λ ℵ ى ٻ ﺑ ﺗ ﺛ ﺟ ﺣ ﺧ ﺫ ﺭ ﺯ ﺳ ﺷ ﺻ ﻁ ﻅ ﻉ ﻋ ﻍ ﻑ ﻕ ﻙ ﻝ ﻡ ﻥ ﻩ ﻭ ﻱ')
 		r.update()  # Keep the clipboard content after the script ends
 		r.destroy()
 

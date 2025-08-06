@@ -2881,8 +2881,8 @@ fi
 
 
 if command -v python3.11 >/dev/null; then
-    alias python3='python3.11'
-    alias pip3='pip3.11'
+	alias python3='python3.11'
+	alias pip3='pip3.11'
 fi
 
 
@@ -3209,27 +3209,27 @@ alias set.="(set -o posix; set)"
 # echo 000-018
 
 tmux_exec_bg() {
-    if [ "$#" -ne 2 ]; then
-        echo "Usage: tmux_exec_bg <session-name> <command>"
-        return 1
-    fi
+	if [ "$#" -ne 2 ]; then
+		echo "Usage: tmux_exec_bg <session-name> <command>"
+		return 1
+	fi
 
-    local session="$1"
-    local cmd="$2"
+	local session="$1"
+	local cmd="$2"
 
-    tmux new-session -d -s "$session" "$cmd"
+	tmux new-session -d -s "$session" "$cmd"
 }
 
 tmux_exec_fg() {
-    if [ "$#" -ne 2 ]; then
-        echo "Usage: tmux_exec_fg <session-name> <command>"
-        return 1
-    fi
+	if [ "$#" -ne 2 ]; then
+		echo "Usage: tmux_exec_fg <session-name> <command>"
+		return 1
+	fi
 
-    local session="$1"
-    local cmd="$2"
+	local session="$1"
+	local cmd="$2"
 
-    tmux new-session -s "$session" "$cmd"
+	tmux new-session -s "$session" "$cmd"
 }
 
 
@@ -3259,7 +3259,7 @@ alias tsk="tmux send-keys -t"      # Send keys to a specific pane, simulating ke
   # Example usage: tmux send-keys -t mysession:0.1 'ls -l' C-m
   # C-m is the Enter key.
   # https://sds.sh/tmux-send_key-examples
-    
+	
 # TMUX Template Management
 alias t4="source $widgets/widgets/bash/tmux/templates/4_Square.sh"
 alias tq="source $widgets/widgets/bash/tmux/templates/Quadrants.sh"
@@ -3322,7 +3322,7 @@ alias mp="$mp"
 alias dt="ssh -L 59001:localhost:5901 -C -N -l scott"
 
 dtdt() {
-    ssh -L 59001:localhost:5901 -C -N -l scott "$1" &
+	ssh -L 59001:localhost:5901 -C -N -l scott "$1" &
 }
 
 mp4() {
@@ -3360,7 +3360,7 @@ alias ai.t="$p ai -prompt what is the tmux shortcut for"
 alias tmux.="curl -s https://sds.sh/tmux-aliases | $p line --c +"
 alias tmux..="curl -s https://sds.sh/tmux-aliases | $p line --c "
 
-alias ..b='cd /opt ; cd rightthumb-widgets-v0 ; m w ; cd install/ ; m in ; cd .. ; cd widgets/ ; m ww ; cd python/ ; m py ; cd .. ; cd bash/ ; m b ; m bash ; cd .. ; cd databank/ ; m db ; cd tables/ ; m ttt ; cd ; cd .rt ; m rt ; cd profile/ ; m h ; cd tables/ ; m tt ; cd .. ; cd config/ ; m config ; m c ; cd .. ; cd projects/ ; m pr ; cd'
+alias ..b='cd /opt ; cd rightthumb-widgets-v0 ; m w ; cd install/ ; m in ; cd .. ; cd widgets/ ; m ww ; cd python/ ; m py ; cd .. ; cd bash/ ; m b ; m bash ; cd 101; m 101; cd ..; cd .. ; cd databank/ ; m db ; cd tables/ ; m ttt ; cd ; cd .rt ; m rt ; cd profile/ ; m h ; cd tables/ ; m tt ; cd .. ; cd config/ ; m config ; m c ; cd .. ; cd projects/ ; m pr ; cd'
 
 alias on.run='while true; do $p on; sleep 1; done'
 alias on.fi="$widgets/widgets/bash/on.fi.sh"
@@ -3373,7 +3373,7 @@ export Session_ID_Suffix=${Session_ID:4:5}
 alias sync.="$widgets/widgets/bash/srv/sync.sh"
 
 sshssh() {
-    local who=${2:-scott}
+	local who=${2:-scott}
 	ssh-copy-id -i ~/.ssh/id_rsa.pub "$who@$1.sds.sh"
 }
 
@@ -3416,81 +3416,81 @@ mp3() {
 
 
 up_date() {
-    echo "🔍 Detecting system and package manager..."
+	echo "🔍 Detecting system and package manager..."
 
-    has_sudo() {
-        command -v sudo >/dev/null 2>&1 && sudo -n true 2>/dev/null
-    }
+	has_sudo() {
+		command -v sudo >/dev/null 2>&1 && sudo -n true 2>/dev/null
+	}
 
-    if command -v apt-get >/dev/null 2>&1; then
-        echo "📦 APT (Debian/Ubuntu)"
-        sudo apt-get update -y && sudo apt-get upgrade -y
+	if command -v apt-get >/dev/null 2>&1; then
+		echo "📦 APT (Debian/Ubuntu)"
+		sudo apt-get update -y && sudo apt-get upgrade -y
 
-    elif command -v pacman >/dev/null 2>&1; then
-        echo "📦 pacman (Arch, Manjaro, MSYS2)"
-        if has_sudo; then
-            echo "🔐 Running with sudo"
-            sudo pacman -Syu --noconfirm
-        else
-            echo "⚠️ sudo not available — running pacman without it"
-            pacman -Syu --noconfirm
-        fi
+	elif command -v pacman >/dev/null 2>&1; then
+		echo "📦 pacman (Arch, Manjaro, MSYS2)"
+		if has_sudo; then
+			echo "🔐 Running with sudo"
+			sudo pacman -Syu --noconfirm
+		else
+			echo "⚠️ sudo not available — running pacman without it"
+			pacman -Syu --noconfirm
+		fi
 
-    elif command -v dnf >/dev/null 2>&1; then
-        echo "📦 DNF (Fedora/Alma/RHEL)"
-        sudo dnf upgrade --refresh -y
-        if command -v yum >/dev/null 2>&1; then
-            echo "📦 Also running YUM (compatibility layer)"
-            sudo yum update -y
-        fi
+	elif command -v dnf >/dev/null 2>&1; then
+		echo "📦 DNF (Fedora/Alma/RHEL)"
+		sudo dnf upgrade --refresh -y
+		if command -v yum >/dev/null 2>&1; then
+			echo "📦 Also running YUM (compatibility layer)"
+			sudo yum update -y
+		fi
 
-    elif command -v yum >/dev/null 2>&1; then
-        echo "📦 YUM (Older RHEL/CentOS)"
-        sudo yum update -y
+	elif command -v yum >/dev/null 2>&1; then
+		echo "📦 YUM (Older RHEL/CentOS)"
+		sudo yum update -y
 
-    elif command -v zypper >/dev/null 2>&1; then
-        echo "📦 zypper (openSUSE)"
-        sudo zypper refresh && sudo zypper update -y
+	elif command -v zypper >/dev/null 2>&1; then
+		echo "📦 zypper (openSUSE)"
+		sudo zypper refresh && sudo zypper update -y
 
-    elif command -v apk >/dev/null 2>&1; then
-        echo "📦 apk (Alpine Linux)"
-        sudo apk update && sudo apk upgrade
+	elif command -v apk >/dev/null 2>&1; then
+		echo "📦 apk (Alpine Linux)"
+		sudo apk update && sudo apk upgrade
 
-    elif command -v xbps-install >/dev/null 2>&1; then
-        echo "📦 xbps (Void Linux)"
-        sudo xbps-install -Syu
+	elif command -v xbps-install >/dev/null 2>&1; then
+		echo "📦 xbps (Void Linux)"
+		sudo xbps-install -Syu
 
-    elif command -v emerge >/dev/null 2>&1; then
-        echo "📦 emerge (Gentoo)"
-        sudo emerge --sync && sudo emerge -avuDN @world
+	elif command -v emerge >/dev/null 2>&1; then
+		echo "📦 emerge (Gentoo)"
+		sudo emerge --sync && sudo emerge -avuDN @world
 
-    elif command -v nix-env >/dev/null 2>&1; then
-        echo "📦 Nix (NixOS)"
-        nix-channel --update && nix-env -u '*'
+	elif command -v nix-env >/dev/null 2>&1; then
+		echo "📦 Nix (NixOS)"
+		nix-channel --update && nix-env -u '*'
 
-    elif command -v brew >/dev/null 2>&1; then
-        echo "🍏 Homebrew (macOS/Linuxbrew)"
-        brew update && brew upgrade
+	elif command -v brew >/dev/null 2>&1; then
+		echo "🍏 Homebrew (macOS/Linuxbrew)"
+		brew update && brew upgrade
 
-    elif command -v pkg >/dev/null 2>&1 && uname | grep -qi "bsd"; then
-        echo "📦 pkg (FreeBSD)"
-        sudo pkg update && sudo pkg upgrade -y
+	elif command -v pkg >/dev/null 2>&1 && uname | grep -qi "bsd"; then
+		echo "📦 pkg (FreeBSD)"
+		sudo pkg update && sudo pkg upgrade -y
 
-    elif command -v flatpak >/dev/null 2>&1; then
-        echo "📦 flatpak"
-        flatpak update -y
+	elif command -v flatpak >/dev/null 2>&1; then
+		echo "📦 flatpak"
+		flatpak update -y
 
-    else
-        echo "❌ No supported package manager found."
-        return 1
-    fi
+	else
+		echo "❌ No supported package manager found."
+		return 1
+	fi
 
-    if command -v snap >/dev/null 2>&1; then
-        echo "📦 snap"
-        sudo snap refresh
-    fi
+	if command -v snap >/dev/null 2>&1; then
+		echo "📦 snap"
+		sudo snap refresh
+	fi
 
-    echo "✅ Update complete."
+	echo "✅ Update complete."
 }
 #####################################################################
 run_bash_url() {
@@ -3596,20 +3596,20 @@ alias sqlite="sqlite3"
 alias sshp="echo 'ssh -L 59001:localhost:5901 -C -N -l scott teth.sds.sh'"
 
 sshr() {
-    local host="$1"
+	local host="$1"
 
-    if [[ -z "$host" ]]; then
-        echo "Usage: remove_ssh_known_host <hostname or IP>"
-        return 1
-    fi
+	if [[ -z "$host" ]]; then
+		echo "Usage: remove_ssh_known_host <hostname or IP>"
+		return 1
+	fi
 
-    # Remove entry from known_hosts
-    ssh-keygen -R "$host"
+	# Remove entry from known_hosts
+	ssh-keygen -R "$host"
 
-    # Optional: Remove any hashed entries (if hashed SSH keys are used)
-    sed -i.bak "/^|1|/d" ~/.ssh/known_hosts
+	# Optional: Remove any hashed entries (if hashed SSH keys are used)
+	sed -i.bak "/^|1|/d" ~/.ssh/known_hosts
 
-    echo "Removed $host from ~/.ssh/known_hosts."
+	echo "Removed $host from ~/.ssh/known_hosts."
 }
 
 
@@ -3621,11 +3621,11 @@ alias file="$widgets/widgets/bash/vps-file-documentation.sh"
 
 
 tess() {
-    local imagePath="$1"
-    local imagePath2="${imagePath%.*}_converted.png"
+	local imagePath="$1"
+	local imagePath2="${imagePath%.*}_converted.png"
 
-    convert -density 300 "$imagePath" -units PixelsPerInch "$imagePath2"
-    tesseract "$imagePath2" stdout
+	convert -density 300 "$imagePath" -units PixelsPerInch "$imagePath2"
+	tesseract "$imagePath2" stdout
 }
 
 
@@ -3657,8 +3657,8 @@ export Session_ID=$(date +%s)
 
 url() {
   if [ -z "$1" ]; then
-    echo "Usage: smartpath_remote <argument>"
-    return 1
+	echo "Usage: smartpath_remote <argument>"
+	return 1
   fi
 
   ssh root@teth.sds.sh "/bin/python3 $widgets/widgets/python/smartpath.py -f \"$1\""
@@ -3699,17 +3699,17 @@ MX() {
 }
 
 clean_yaml() {
-    cat "$1" | tr -d '\r\033' | sed 's/^\xEF\xBB\xBF//' > "$1.cleaned" && mv "$1.cleaned" "$1"
+	cat "$1" | tr -d '\r\033' | sed 's/^\xEF\xBB\xBF//' > "$1.cleaned" && mv "$1.cleaned" "$1"
 }
 
 
 get_content_type() {
-    local url="$1"
-    if [ -z "$url" ]; then
-        echo "Usage: get_content_type <URL>"
-        return 1
-    fi
-    curl -s -D - -o /dev/null -L "$url" | grep -i '^Content-Type:' | cut -d';' -f1 | sed 's/^[Cc]ontent-[Tt]ype: //'
+	local url="$1"
+	if [ -z "$url" ]; then
+		echo "Usage: get_content_type <URL>"
+		return 1
+	fi
+	curl -s -D - -o /dev/null -L "$url" | grep -i '^Content-Type:' | cut -d';' -f1 | sed 's/^[Cc]ontent-[Tt]ype: //'
 }
 
 
@@ -3753,7 +3753,9 @@ alias name..="sudo nano /etc/hosts"
 alias host.="sudo hostnamectl set-hostname "
 alias host..="sudo nano /etc/hosts"
 
-alias pp="realpath -- "
+# alias pp="realpath -- "
+alias pp="$p pp -f"
+
 alias bg.="cat $widgets/widgets/bash/background.txt"
 
 # get_time_difference
@@ -3769,16 +3771,20 @@ alias dig.="dig +short "
 
 
 schema() {
-    local db="${1:-index.db}"
-    sqlite3 "$db" .schema
+	local db="${1:-index.db}"
+	sqlite3 "$db" .schema
 }
 
 alias gpt="p gpt -p "
 
 
+alias .rc.="source $HOME/.bashrc"
+alias ..rc="source $HOME/.bashrc"
+alias brc="source $HOME/.bashrc"
+alias ref="source $HOME/.bashrc"
 
-
-
+alias ccat="$p cat -f "
+alias o.a="$p file-open -ap -a "
 
 
 

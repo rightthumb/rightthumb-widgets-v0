@@ -11,6 +11,7 @@ cd /d "%w%" && call m call m w
 cd /d "%archive7z%" && call m archive7z
 cd /d "%b%" && call m b
 cd /d "%bash%" && call m bash
+cd /d "%bash%\101" && call m 101
 cd /d "%bat%" && call m bat
 cd /d "%batch%" && call m batch
 cd /d "%data%" && call m data

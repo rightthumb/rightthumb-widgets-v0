@@ -4,7 +4,15 @@
 # helpColorScheme
 
 
+FilesFiles = []
+isData_Save = False
 
+AutoClipboardApps = [
+	'__isData__',
+	'__line__',
+	'__lineline__',
+	'__hasLines__',
+]
 
 
 
@@ -460,6 +468,14 @@ def random_color():
 
 print_ed_group={}
 linePr=False
+
+# colorPlus
+
+# _.pr( line, plus='cyan' )
+# _.pr( line, plus='yellow,cyan', c='cyan' )
+# _.pr( line, plus=1, h='chartreuse,cornflower_blue' )
+# _.pr( line, plus='cyan',      Plus='list of things to colorize non case specific'.split()      )
+
 def print_(
 			*args,
 			p=None,
@@ -481,6 +497,8 @@ def print_(
 			ShowLine={},
 			lineNumber=None,
 			flush=False,
+			plus=None,
+			Plus=None,
 		):
 	if type(ShowLine) == str:
 		ShowLine = { 'line': ShowLine }
@@ -569,6 +587,10 @@ def print_(
 			else:
 				items.append(str(arg))
 		prn=pre+' '.join(items)
+
+
+
+
 		if center:
 			if type(center) == int and not center == 1:
 				baseLength = center
@@ -578,6 +600,35 @@ def print_(
 			prn = ' '*int(length)+prn
 		if rstrip: prn=prn.rstrip()
 
+
+		if plus:
+			# sys.exit()
+			plusDone = False
+			if not type(plus) == str:
+				if h and ',' in h:
+					_prn_ = colorList(prn, h=h, v=Plus)
+					hh = autoDelim(h)
+					h = hh[1]
+					plusDone = True
+				if not plusDone:
+					plus = 'yellow,cyan'
+			
+			if not plusDone:
+				_prn_ = colorList(prn, c=plus, v=Plus)
+				plusDone = True
+			if not c and not h:
+				cc=autoDelim(plus)
+				if len(cc) > 1:
+					c=cc[1]
+			# return _prn_
+			# sys.exit()
+			
+			if prn == _prn_:
+				print_(prn, c=c, h=h)
+				return prn
+			else:
+				c=None
+			prn = _prn_
 
 		# def showLine( string, plus = '', minus = '',plusOr = False, end=None,isSub=False, OR=None, code=False, itIs=False ):
 
@@ -1700,6 +1751,7 @@ v = dot()
 vv = dot()
 vv.isData = {}
 vv.isDataData = {}
+vv.isDataDataRaw = {}
 vv.isDataName = {}
 vv.opened_file_me = {}
 __.switch_skimmer = dot()
@@ -4370,19 +4422,35 @@ class dt:
 #     print(vv.isData)
 #     print(data)
 #     return data
-FilesFiles = []
-isData_Save = False
+
+
+
+
+def isData_Data(data=None,loc=None):
+	# if not loc is None: print_( 'isData_Data', loc )
+	# if not loc is None: print_( 'isData_Data, start', loc, data, 'isData_Data, end' )
+	if not __.appReg in AutoClipboardApps:
+		return data
+	# print('data', data); sys.exit(0)
+	# if type(data) != list:data = []
+	if not data:
+		return getClip().split('\n')
+	return data
+
 def isData( data=None, focus=None, pipeClean=False, required=False,     r=None, c=None, noclean=None, save=False ):
 	global isData_Save
 	
-	if __.PIPE and data == 2: return __.PIPE
+	if __.PIPE and data == 2:
+		return __.PIPE
+	elif data == 2:
+		data = None
 
 	if save:
 		isData_Save = data
-		return data
+		return isData_Data(data,2.111)
 
 	if isData_Save:
-		return isData_Save
+		return isData_Data(isData_Save,2.222)
 	
 	global switches
 	if switches.isActive('Paste-isData'):
@@ -4393,10 +4461,13 @@ def isData( data=None, focus=None, pipeClean=False, required=False,     r=None, 
 		return __.ForcePipe
 	if vv.isDataName:
 		for name in vv.isDataName:
-			return vv.isDataName[name]
+			return isData_Data(vv.isDataName[name],2.333)
+	if vv.isDataDataRaw:
+		for name in vv.isDataDataRaw:
+			return isData_Data(vv.isDataDataRaw[name],2.411)
 	if vv.isDataData:
 		for name in vv.isDataData:
-			return vv.isDataData[name]
+			return isData_Data(vv.isDataData[name],2.444)
 
 	global appData
 	# if '...' in sys.argv:
@@ -4429,17 +4500,18 @@ def isData( data=None, focus=None, pipeClean=False, required=False,     r=None, 
 		def _isData_(tst):
 			global myFileLocation_Files
 			# if not tst and pipe_surfing(): tst = pipe_surfing()
-			if not tst: return myFileLocation_Files;
+			if not tst: return isData_Data(myFileLocation_Files,2.555)
 			# print(tst,myFileLocation_Files)
 
 
 			
 			for name in vv.isData:
 				if len(switches.values(name)):
-					if 'data' in vv.isData[name]: return tst
+					if 'data' in vv.isData[name]: return isData_Data(tst,2.666)
 
 			if myFileLocation_Files and os.path.isfile(myFileLocation_Files[0]): return myFileLocation_Files
-			return tst
+
+			return isData_Data(tst,2.777)
 		def isData_path_list(stuff,dAta=[]):
 			for f in stuff:
 				f = __.path(f)
@@ -5846,34 +5918,106 @@ def mod(path):
 
 
 def colorPlus( data, color='green' ):
+	if ' ' in color or ',' in color:
+		return colorPlus2( data, color=color )
 	for search in switches.values('Plus'):
 		for subject in caseUnspecific( data, search, isPlus=True ):
+			# print('subject:', subject)
 
 			if type( subject ) == str:
-				data = data.replace( subject, colorThis( subject, color, p=0 ) )
+				# print('subject:', subject, colorThis( subject, color, p=0 ))
+				data = data.replace( subject, pr( subject, c=color, p=0 ) )
 			else:
 				if subject['pos'] == 'first':
-					data = nth_repl(data, subject['data'], colorThis( subject['data'], color, p=0 ), 1)
+					data = nth_repl(data, subject['data'], pr( subject['data'], c=color, p=0 ), 1)
 				else:
 					cx = data.count( subject['data'] )
-					data = nth_repl(data, subject['data'], colorThis( subject['data'], color, p=0 ), cx)
+					data = nth_repl(data, subject['data'], pr( subject['data'], c=color, p=0 ), cx)
 	return data
 
+def autoDelim(data,d=',', alt=' |'):
+	if not type(data) == str:
+		return []
+	for a in list(alt):
+		if a in data:
+			data = data.replace(a, d)
+	while d+d in data:
+		data = data.replace(d+d, d)
 
-def colorPlus2( data, color='green' ):
-	if not showLine(data): return ''
-	for search in switches.values('Plus'):
+	items = data.split(d)
+	return items
+
+
+
+def ws_edges3(s): # whitespace edges, including text
+	import re
+	match = re.match(r'^(\s*)(.*?)(\s*)$', s)
+	if match:
+		return (match.group(1), match.group(2), match.group(3))
+	return ('', s, '')
+
+def ws_edges2(s): # whitespace edges
+	import re
+	match = re.match(r'^(\s*)(.*?)(\s*)$', s)
+	if match:
+		return (match.group(1), match.group(3))
+	return ('', '')
+
+# colorPlus2
+def colorList( data, c=None, h=None, v=None, l=None,  delim='3e05a45efd9f' ):
+	if not c is None: color = c
+	if c:
+		colors = autoDelim(c)
+		c = colors[0]
+	if h:
+		colors = autoDelim(h)
+		h = colors[0]
+
+	if not l is None: v = l
+	
+	if not v is None:
+		values = v
+	else:
+		values = switches.values('Plus')
+
+	# if len(colors) == 1: return colorPlus( data, color=color )
+	
+	for search in values:
 		for subject in caseUnspecific( data, search, isPlus=True ):
+			# print('subject:', subject)
 
 			if type( subject ) == str:
-				data = data.replace( subject, colorThis( subject, color, p=0 ) )
+				data = data.replace( subject, delim+ pr( subject, c=c, h=h, p=0 )+delim )
 			else:
 				if subject['pos'] == 'first':
-					data = nth_repl(data, subject['data'], colorThis( subject['data'], color, p=0 ), 1)
+					data = nth_repl(data, subject['data'], delim+ pr( subject['data'], c=c, h=h, p=0 )+delim, 1)
 				else:
 					cx = data.count( subject['data'] )
-					data = nth_repl(data, subject['data'], colorThis( subject['data'], color, p=0 ), cx)
+					data = nth_repl(data, subject['data'], delim+ pr( subject['data'], c=c, h=h, p=0 )+delim, cx)
+	# print('here')
+	if len(colors) == 1:
+		return data.replace(delim,'')
+	elif not delim in data:
+		return data
+	else:
+		# print('here')
+		parts = data.split(delim)
+		new = ''
+		for i, part in enumerate(parts):
+			if i % 2 == 0:
+				ws = ws_edges3(part)
+				part = ws[1]
+				if c:
+					new += ws[0] + pr( part, c=colors[1], p=0 ) + ws[2]
+				elif h:
+					new += ws[0] + pr( part, h=colors[1], p=0 ) + ws[2]
+			else:
+				new += part
+				pass
+		return new
+
 	return data
+
 
 
 def plusColor( row, color='green' ):
@@ -6949,6 +7093,10 @@ def generateColorIndex():
 # _.colorThis( [ '\t', part_profile  ], 'yellow', simpleDic=True, colorProfile=[  ] )
 
 # simpleDic=True, simpleDicColor=[ [ 'match', 'red' ] ]
+
+
+
+
 def colorThis( strings='', color='red', notBold=False, shouldPrint=True, ipsum=False, simpleDic=False, colorProfile=None,      p=None, c=None, sd=None, isError=False ):
 
 	if isError:
@@ -9353,10 +9501,11 @@ def myFileLocations_add_file(path):
 	if __.myFileLocations_SKIP_VALIDATION:
 		if type( appData[__.appReg]['pipe'] ) == bool:
 			appData[__.appReg]['pipe'] = []
-		if isFirst:
-			isFirst=False
-		else:
-			appData[__.appReg]['pipe'].append( path )
+		# if isFirst:
+		# 	isFirst=False
+		# else:
+		# 	appData[__.appReg]['pipe'].append( path )
+		appData[__.appReg]['pipe'].append( path )
 	if  not path in myFileLocation_Files:
 		myFileLocation_Files.append( path )
 
@@ -9411,11 +9560,43 @@ def url2file(path):
 							path=y
 	return path
 
+# import os
 
+def getExtension(path):
+	"""
+	Returns the file extension from a full path or filename.
+	If there is no extension, returns an empty string.
+	"""
 
+	global EXT
+	if EXT:
+		return EXT
 
+	if type(path) == list:
+		for p in path:
+			if os.path.isfile(p):
+				EXT = os.path.splitext(p)[1].replace('.', '').strip()
+				return EXT 
+	try:
+		EXT = os.path.splitext(path)[1].replace('.', '').strip()
+		return EXT
+	except:
+		return ''
+
+def setLanguage(path):
+	global EXT
+	EXT = getExtension(path)
+	if EXT:
+		__.language = EXT
+	return EXT
+getEXT = getExtension
+getExt = getExtension
+EXT = None
 isFirst=True
 def myFileLocations( file, silent=False, currentBaseVersion=3 ):
+	# if '*' in file:
+	# 	import glob
+	# 	file = glob.glob("*.txt")
 	if type(file) == str:
 		if not os.path.exists(file):
 			file = aliasesFi(file)
@@ -9423,6 +9604,8 @@ def myFileLocations( file, silent=False, currentBaseVersion=3 ):
 		if os.path.exists(file):
 			file = __.path(file)
 	if True:
+		ext = setLanguage(file)
+		# print(ext)
 		valid = True
 		for test in [
 			'unclaimed_tickets_history',
@@ -9521,10 +9704,11 @@ def myFileLocations( file, silent=False, currentBaseVersion=3 ):
 		if not type(appData[__.appReg]['pipe']) == list:
 			appData[__.appReg]['pipe']=[]
 			return _mfl(None)
-		if isFirst:
-			isFirst=False
-		else:
-			appData[__.appReg]['pipe'].append( file )
+		# if isFirst:
+		# 	isFirst=False
+		# else:
+		# 	appData[__.appReg]['pipe'].append( file )
+		appData[__.appReg]['pipe'].append( file )
 		return _mfl(None)
 	# if ',' in file and not os.path.isfile( file ):
 	#   nFiles = []
@@ -9566,10 +9750,11 @@ def myFileLocations( file, silent=False, currentBaseVersion=3 ):
 					# if os.path.isfile( thisFile ):
 					if not thisFile in myFileLocation_Pipe:
 						myFileLocation_Pipe.append( thisFile )
-						if isFirst:
-							isFirst=False
-						else:
-							appData[__.appReg]['pipe'].append( thisFile )
+						# if isFirst:
+						# 	isFirst=False
+						# else:
+						# 	appData[__.appReg]['pipe'].append( thisFile )
+						appData[__.appReg]['pipe'].append( thisFile )
 			else:
 				for thisFile in myFileLocation_Files:
 					if os.path.isfile( thisFile ):
@@ -9580,18 +9765,20 @@ def myFileLocations( file, silent=False, currentBaseVersion=3 ):
 								appData[__.appReg]['pipe'] = []
 							if 'clean' in __.trigger_isPipe:
 								for row in getText( thisFile, raw=True, clean=True ).split('\n'):
-									if isFirst:
-										isFirst=False
-									else:
-										appData[__.appReg]['pipe'].append( row )
+									# print('isFirst',isFirst)
+									# if isFirst:
+									# 	isFirst=False
+									# else:
+									appData[__.appReg]['pipe'].append( row )
 									# tmpFiles.append( row )
 							else:
+								if type(appData[__.appReg]['pipe']) == bool: appData[__.appReg]['pipe'] = []
 								for row in getText( thisFile, raw=True ).split('\n'):
-									if isFirst:
-										isFirst=False
-									else:
-										if type(appData[__.appReg]['pipe']) == list:
-											appData[__.appReg]['pipe'].append( row )
+									# if isFirst:
+									# 	isFirst=False
+									# else:
+									if type(appData[__.appReg]['pipe']) == list:
+										appData[__.appReg]['pipe'].append( row )
 									# tmpFiles.append( row )
 			# if hasFiles:
 			#   if 'clean' in __.trigger_isPipe:
@@ -9602,10 +9789,10 @@ def myFileLocations( file, silent=False, currentBaseVersion=3 ):
 				if type( appData[__.appReg]['pipe'] ) == bool:
 					appData[__.appReg]['pipe'] = []
 					for row in myFileLocation_Files:
-						if isFirst:
-							isFirst=False
-						else:
-							appData[__.appReg]['pipe'].append( row )
+						# if isFirst:
+						# 	isFirst=False
+						# else:
+						appData[__.appReg]['pipe'].append( row )
 
 
 
@@ -10317,8 +10504,10 @@ def getText( theFile, raw=False, clean=False,  e=0, c=0 ):
 		# txt = txt.replace( _v.slash+'n', '\n' )
 
 		if clean:
+			# print('pre',txt.split('\n')[0])
 			txt = _str.replaceDuplicate( txt, '\n' )
 			txt = _str.cleanBE( txt, '\n' )
+			# print('post',txt.split('\n')[0])
 		if clean == 2:
 			txt = txt.replace( '\t', ' ' )
 			txt = _str.replaceDuplicate( txt, ' ' )
@@ -10326,6 +10515,7 @@ def getText( theFile, raw=False, clean=False,  e=0, c=0 ):
 				txt = txt.replace( '\n \n', '\n' )
 			txt = _str.replaceDuplicate( txt, '\n' )
 			txt = _str.cleanBE( txt, '\n' )
+		# print('final',txt.split('\n')[0])
 		return txt
 	elif c > 0:
 		if c > 1:
@@ -10537,6 +10727,11 @@ switch_dict_set=False
 LINE = None
 showLine2 = False
 showLine_Run={}
+
+# _.pr( line, plus='cyan' )
+# _.pr( line, plus='yellow,cyan', c='cyan' )
+# _.pr( line, plus=1, h='chartreuse,cornflower_blue' )
+
 def showLine(string, plus='', minus='', plusOr=False, end=None, isSub=False, OR=None, code=False, itIs=False, c=False, run=0):
 	""" This function wraps the show method in the Line class and dynamically creates the switch_dict. """
 	# print(run,string)
@@ -12495,9 +12690,13 @@ class Switches:
 		if not isData is None:
 			__.trigger_isPipe = isData
 			isPipe=isData
-			if isData == 'data':
+			if False: pass
+			elif 'data' in isData and 'raw' in isData:
+				# print('here')
+				vv.isDataDataRaw[name] = ''
+			elif 'data' in isData and not 'raw' in isData:
 				vv.isDataData[name] = []
-			if isData == 'name':
+			elif isData == 'name':
 				vv.isDataName[name] = []
 		i=len(self.switches)
 
@@ -13243,7 +13442,10 @@ class Switches:
 
 
 	def process( self, helpx=False ):
+		appRegI = 0
+		_appReg_ = __.appReg
 		load()
+		__.appReg = _appReg_
 		global customHelp
 		global argvProcess
 		global printAutoAbbreviations_scheduled
@@ -13261,6 +13463,9 @@ class Switches:
 		isActiveList = []
 		hasActiveRequireList = []
 		isActiveRequireList = []
+		
+		# #DEBUG
+		# appRegI+=1;pr(__.appReg,appRegI)
 
 		if argvProcess:
 			for i,a in enumerate(sys.argv):
@@ -13282,7 +13487,11 @@ class Switches:
 									for thisFile in self.switches[ii].values:
 										vv.isDataName[self.switches[ii].name].append( thisFile )
 
+								if self.switches[ii].name in vv.isDataDataRaw:
+									for thisFile in self.switches[ii].values:
+										vv.isDataDataRaw[self.switches[ii].name] += getText(thisFile, raw=True)
 								if self.switches[ii].name in vv.isDataData:
+									# print( 'here here' ); sys.exit()
 									for thisFile in self.switches[ii].values:
 										for fileLine in getText(thisFile):
 											vv.isDataData[self.switches[ii].name].append( fileLine )
@@ -13481,6 +13690,12 @@ class Switches:
 			for childScript in self.postScripts:
 				if 'function' in str(type(childScript)):
 					childScript()
+		global appData
+		if __.regApp in appData and __.appReg == '__init__':
+			if '--appReg' in sys.argv or os.environ.get('debug', 'no') == 'yes':
+				pr('appReg regApp',__.appReg, __.regApp, h='lawn_green')
+			__.appReg = __.regApp
+		# def process( self )     :: END ::     switches.process()
 
 
 	def searchIndex( self, name, appReg ):
@@ -22299,6 +22514,13 @@ regImps = {}
 class regImp:
 
 	def __init__( self, focus=None, app=None, argvProcessForce=False, dirty=False, a=None, i=None ):
+		
+		
+		# __.appReg = __.regApp
+		self.regApp = __.appReg
+		# __.appReg = self.regApp
+		
+		
 		if focus == 0: focus = None
 		# if app == 'file-open': self.switch('Clean')
 		DEFAULTS = {
@@ -22326,6 +22548,7 @@ class regImp:
 		self.app = app
 		self.parent = focus
 		# print_( 'self.imp = importlib.import_module', app )
+		appReg = __.appReg
 		self.imp = importlib.import_module(app)
 		# self.imp = importlib.util.spec_from_file_location( app, _v.py + _v.slash + app + '.py' )
 		# print(app)
@@ -22375,7 +22598,8 @@ class regImp:
 				else:
 					self.switch(sw,delete=True)
 		# if app == 'file-open': self.switch('Clean')
-
+		
+		__.appReg = self.regApp
 
 	def provideImport( self ):
 		return self.imp
@@ -22409,6 +22633,7 @@ class regImp:
 			appData[self.focus]['data']['table']['received'].append( profile )
 		except Exception as e:
 			pass
+		__.appReg = self.regApp
 
 	def switch( self, names=[], value=None, appReg=False, dump=False, delete=False,        d=False ):
 		global appData
@@ -22456,6 +22681,7 @@ class regImp:
 
 			pass
 		__.appReg = self.focusPop
+		__.appReg = self.regApp
 
 	def deleteSwitch( self, name ):
 		global switches
@@ -22464,6 +22690,7 @@ class regImp:
 		switches.fieldSet( name, 'active', False )
 
 		__.appReg = self.focusPop
+		__.appReg = self.regApp
 
 
 	def kwargs( self, *args, **kwargs ):
@@ -22488,21 +22715,27 @@ class regImp:
 			__.appReg = self.focusPop
 
 		return result
-	def action( self, arg='c766f06b', focusPop=True ):
+	def action( self, *arg, **kwargs ):
+		focusPop=True
 		# focusBK = __.appReg
 		__.appReg = self.focus
 
 		self.imp.appDBA = self.focus
-		if not arg == 'c766f06b':
-			result = self.imp.action(arg)
-		else:
-			result = self.imp.action()
+		result = self.imp.action( *arg, **kwargs )
+		# if not arg == 'c766f06b':
+		# 	result = self.imp.action(arg)
+		# else:
+		# 	result = self.imp.action()
 
 		if focusPop:
 			__.appReg = self.focusPop
 
+		__.appReg = self.regApp
+
 		return result
 
+
+	# def do( self, func,
 
 	# def do( self, func, arg=False, focusPop=True ):
 	def do(self, *args, **kwargs):
@@ -22543,6 +22776,7 @@ class regImp:
 		if focusPop:
 			__.appReg = self.focusPop
 
+		__.appReg = self.regApp
 		return result
 
 	def execute( self, func, arg=False, nofocus=False ):
@@ -22569,7 +22803,7 @@ class regImp:
 		# if self.saveLog:
 		# else:
 		#   theID = threads.add( 'execute', theFunc, [ arg, self.focus ], trigger=saveThreadsLog, loaded=True )
-
+		__.appReg = self.regApp
 		return theID
 impReg=regImp
 ##############################
@@ -28086,6 +28320,94 @@ def y(yaml,p=False):
 
 ##================================================
 ##================================================
+
+def defaultDics(appReg=None,info={},data={},path=None):
+	if appReg is None:
+		appReg = __.appReg
+	file = _v.py+os.sep
+	if not path is None:
+		if os.sep in path:
+			file = path
+		else:
+			file += path
+	elif 'file' in info:
+		file += info['file']
+	else:
+		file+='thisApp.py'
+	if not file.endswith('.py'):
+		file += '.py'
+	global appInfo
+	global appData
+	appInfo[appReg] = {
+		'file': 'thisApp.py',
+		'liveAppName': __.thisApp( file ),
+		'description': 'Changes the world',
+		'categories': [],
+		'usage': [],
+		'relatedapps': [],
+		'prerequisite': [],
+		'examples': [],
+		'columns': [],
+		'aliases': [],
+		'notes': [],
+	}
+	appData[appReg] = {
+		'start': __.startTime,
+		'uuid': '',
+		'audit': [],
+		'pipe': False,
+		'data': {
+					'field': {'sent': [], 'received': [] },
+					'table': {'sent': [], 'received': [] }, 
+		},
+	}
+	for k in info: appInfo[k] = info[k]
+	for k in data: appData[k] = data[k]
+
+
+def psudoAppTriggers():
+	global switches
+	_default_triggers_()
+	switches.trigger( 'Files',   isFileAdvanced, vs=False )     # Advanced File Registration    (Fn Alias Resolves To: def myFileLocations)
+	switches.trigger( 'DB', aliasesFi )
+	switches.trigger( 'Folder', myFolderLocations )
+	switches.trigger( 'Folders', myFolderLocations )
+	__.SwitchesModifier.Trigger['Folders'] = myFolder
+	switches.trigger( 'OutputFolder', aliasesFo )
+
+def psudoApp(appReg,dic):
+	parent = __.appReg
+	regApp = __.appName(appReg, parent)
+	__.appReg = regApp
+	info = dic.get('info',{})
+	data = dic.get('data',{})
+	path = dic.get('path',None)
+
+	defaultDics(appReg,info,data,path)
+	sw = dic.get('switches',{})
+	global switches
+	for k in sw:
+		switches.register( k, 'd5d578c8')
+	l_registerSwitches_vars()
+
+	for k in sw:
+		switches.fieldSet(k,'active', True)
+		switches.fieldSet(k,'values', sw[k])
+		switches.fieldSet(k,'value', ','.join(sw[k]))
+	__.appReg = parent
+
+
+
+
+
+
+##================================================
+##================================================
+# 9377                    if isFirst:
+# 9545                    if isFirst:
+# 9590                                                    if isFirst:
+##================================================
+##================================================
 nsfw=True
 
 Threads=ThreadManager
@@ -28151,6 +28473,7 @@ agoThrow=timeAgoThrow
 toBytes=to_bytes
 yt=toYML
 yf=fromYML
+cl=colorList
 
 yFig=_v.yFig
 jFig=_v.jFig

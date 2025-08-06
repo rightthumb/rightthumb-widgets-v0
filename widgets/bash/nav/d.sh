@@ -14,10 +14,22 @@
 # SCRIPT_DIR="${SCRIPT_DIR/bash\/nav/bash}"
 # source  "$SCRIPT_DIR/load-vars.sh"
 
+
+
+
+# Check if the first argument ($1) is non-empty (-n "$1"),
+# and does NOT equal '-' or start with a dash (i.e., it's a valid filename or folder name, not a flag)
 if [[ -n "$1" && "$1" != '-' && $1 != -* ]]; then
-  $PY $widgets/widgets/python/file_folder.py + $@
+	# If so, run file_folder.py and prepend '+' to the arguments
+	$PY $widgets/widgets/python/file_folder.py + $@
+	
+# If $1 is non-empty but *is* '-' or starts with a dash (i.e., it's a flag like -r or --help)
 elif [ -n "$1" ]; then
+	# Run file_folder.py with arguments as-is (likely passing flags)
 	$PY $widgets/widgets/python/file_folder.py $@
+
+# If no arguments were passed at all
 else
-  $PY $widgets/widgets/python/file_folder.py
+	# Run file_folder.py with no arguments
+	$PY $widgets/widgets/python/file_folder.py
 fi
