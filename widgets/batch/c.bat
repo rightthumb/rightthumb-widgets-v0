@@ -27,8 +27,10 @@ set debug=no
 
 if [%vault_pin%] == [] (
     prompt └─ 
+    set "vpDot="
 ) else (
     prompt └─. 
+    set "vpDot=."
 )
 
 
@@ -132,9 +134,9 @@ GOTO:EOF
     SET today=%timestamp_start%  - %nowTime%
     call SET "Session_ID_Suffix=%%Session_ID:~-3%%"
     IF NOT ["%lab%"] == [""] (
-        TITLE loc-%Session_ID_Suffix% :: %lab%
+        TITLE %vpDot%loc-%Session_ID_Suffix% :: %lab%
     ) else (
-        TITLE loc-%Session_ID_Suffix%
+        TITLE %vpDot%loc-%Session_ID_Suffix%
     )
     CALL timestamp t2 noEcho >nul 2>&1
 GOTO:EOF

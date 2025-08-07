@@ -17,8 +17,9 @@ rem ## {C3P0D40fAe8B} ##
 SET "bh_brand=true"
 SET "bh_brand=false"
 
-
-call lab %1
+if not [%1] == [back] (
+    call lab %1
+)
 
 
 goto :main

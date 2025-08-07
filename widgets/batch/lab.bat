@@ -16,4 +16,4 @@ IF NOT ["%lab%"] == [""] (
 ) else (
      set "terminalTitle=loc-%Session_ID_Suffix%"
 )
-TITLE %terminalTitle%
+TITLE %vpDot%%terminalTitle%
