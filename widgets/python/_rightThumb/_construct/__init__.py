@@ -226,16 +226,20 @@ class Language:
 class FakeSwitches:
 	def __init__(self):
 		pass
-	def isActive(self, name):
+	def isActive(self, name, appReg=None):
 		return False
-	def values(self, name):
+	def values(self, name, appReg=None):
 		return []
-	def value(self, name):
+	def value(self, name, appReg=None):
 		return ''
 
 class Line:
-	def __init__(self, switches=None, switch_dict=None, run=-1, lang=None):
+	def __init__(self, switches=None, switch_dict=None, run=-1, lang=None, focus=None):
 		""" Initialize the Line processor with a SwitchManager instance. Optionally accept a pre-populated switch_dict. """
+		if focus is None:
+			global appReg
+			focus = appReg
+		self.appReg = focus
 		self.run = run
 		self.active = {}
 		if switches is None:
@@ -261,8 +265,7 @@ class Line:
 		else:
 			self.Language = Meta_Namespace()
 			self.Language.valid = False
-		global appReg
-		self.appReg = appReg
+
 		switch_dict2 = {}
 		if not switch_dict is None:
 			if 'appReg' in switch_dict:
@@ -285,14 +288,14 @@ class Line:
 		switch_names = [ 'Plus', 'Minus', 'PlusOr', 'PlusCode', 'PlusClose', 'Plus-Sub', 'StrictCase', 'Plus-single', 'PlusDuplicate', 'Minus-single' ]
 
 		for switch in switch_names:
-			if self.switches.isActive(switch) or self.switch_dict2.get(switch.lower(),False):
+			if self.switches.isActive(switch, self.appReg) or self.switch_dict2.get(switch.lower(),False):
 				self.active[switch] = True
 				if switch in ['Plus','Minus']:
 					x=[]
-					for y in self.switches.values(switch):
+					for y in self.switches.values(switch, self.appReg):
 						x.append(self.ci(y))
 				else:
-					x=self.switches.values(switch)
+					x=self.switches.values(switch, self.appReg)
 				if not switch in switch_dict:
 					switch_dict[switch] = x
 			else:
@@ -467,7 +470,7 @@ class Line:
 
 				if result and not self.switch_dict.get('isSub', False) and self.isActive('Plus-Sub'):
 					result = False
-					for xXx in self.switches.values('Plus-Sub'):
+					for xXx in self.switches.values('Plus-Sub', self.appReg):
 						if self.ci(xXx) in self.ci(string):
 							result = True
 							break
@@ -801,10 +804,12 @@ class Line:
 
 	def minusResults(self, string, minus='', itIs=False):
 		""" Processes string with 'Minus' functionality. """
-
+		# print('minusResults')
 		testMode = False
+		testModeInt = False
 		# if 'myNotes' in string: testMode = True
 
+		if testModeInt: print(11)
 
 		string = str(string)
 
@@ -830,6 +835,10 @@ class Line:
 			for row in minusInput:
 				if string == row:
 					return False
+				
+		if testModeInt: print(22)
+
+
 		def asterisk(search,string):
 			if not '*' in search: return None
 			string = string.strip()
@@ -866,16 +875,18 @@ class Line:
 					if star == True:
 						result = False
 						done = True
+						break
 
 				if s in string:
 					result = False
 					done = True
 					break
 		# print(4)
+		if testModeInt: print(33)
 		if testMode:
-			print('minusInput:', minusInput, self.run)
-			print('string:', string)
-			sys.exit(0)
+			print('minusInput:', minusInput, result)
+			# print('string:', string)
+			# sys.exit(0)
 		return result
 
 	def getPlusInput(self, plus, plusOr, OR):
@@ -2288,7 +2299,7 @@ def fromYML(text):
 	elif not '\n' in text and text.count(os.sep):
 		return {}
 	try:
-		import yaml
+		import yaml # type: ignore
 		return yaml.safe_load(text.replace('\t','    '))
 	except Exception as e:
 		table = {}

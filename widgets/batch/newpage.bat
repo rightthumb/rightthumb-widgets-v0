@@ -32,6 +32,7 @@ rem set wwwPage_0=D:\techApps\Library\WEB\newpage\blank0.htm
 rem set wwwPage_1=D:\techApps\Library\WEB\newpage\blank1.htm
 set wwwPage_F=D:\websites\domains\apps.eyeformeta.com\public_html\templates\html
 rem set wwwPage_h=D:\websites\domains\apps.eyeformeta.com\public_html\templates\html\headers.htm
+set wwwPage_php=D:\websites\domains\apps.eyeformeta.com\public_html\templates\html\php.php
 set wwwPage_h=D:\websites\domains\apps.eyeformeta.com\public_html\templates\html\headers.php
 set wwwPage_01=D:\websites\domains\apps.eyeformeta.com\public_html\templates\html\0.1.htm
 set wwwPage_0=D:\websites\domains\apps.eyeformeta.com\public_html\templates\html\0.htm
@@ -62,6 +63,8 @@ rem o html.js %wwwPage_js1%
 
 if [%1] == [] (
     set wwwPage=%wwwPage_0%
+) else if [%1] == [php] (
+    set wwwPage=%wwwPage_php%
 ) else if [%1] == [t] (
     set wwwPage=%wwwPage_template%
 ) else if [%1] == [headers] (

@@ -57,3 +57,12 @@ if not exist "%rt%\profile\config\.vault.%vault_pin%" (
 )
 goto :end
 :end
+
+if [%vault_pin%] == [] (
+    prompt └─ 
+    set "vpDot="
+) else (
+    set "vpDot=."
+    prompt └─. 
+)
+@REM TITLE %vpDot%%terminalTitle%

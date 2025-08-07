@@ -54,7 +54,7 @@ def appSwitches():
 	_.switches.register( 'Comment', '-comment', '"#"' )
 	
 	_.switches.register( 'Function', '-fn' )
-	_.switches.register( 'JustPath', '-jp,-justpath' )
+	_.switches.register( 'JustPath', '-jp,-justpath,--p' )
 	_.switches.register( 'Json', '-json' )
 	_.switches.register( 'Snippet', '-snip,-snippet', 'split search (i) exclude | ex: ~~~ version, ~~~ searchThis 1 omitThis, ~~~ searchThis * omitThis' )
 	_.switches.register( 'StopFile', '-stop', '"in last line you want to see"' )

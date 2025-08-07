@@ -8,13 +8,23 @@ FilesFiles = []
 isData_Save = False
 
 AutoClipboardApps = [
-	'__isData__',
-	'__line__',
-	'__lineline__',
-	'__hasLines__',
+	'isData',
+	'line',
+	'lineline',
+	'hasLines',
+	'thePath',
+	'jsDict',
 ]
+def isDataClip(app=None):
+	global AutoClipboardApps
 
-
+	if not app is None:
+		AutoClipboardApps.append(app)
+	
+	for i,ac in enumerate(AutoClipboardApps):
+		if not ac.startswith('__'):
+			AutoClipboardApps[i] = '__'+ac+'__'
+isDataClip(app=None)
 
 # function_with_args_to_variable = lambda: my_fn("Alice")
 # function_with_args_to_variable()
@@ -85,7 +95,7 @@ def isFile(path,simple=True,s=None):
 	if os.path.isfile(path): return __.path(path)
 	if path.startswith('http:') or path.startswith('https:'):
 		path=path.replace('http:','https:')
-		path = url2file(path)
+		path = autoUrl(path)
 		return path
 	if os.sep in path:
 		return path
@@ -4425,23 +4435,48 @@ class dt:
 
 
 
+def formatIsData( data ):
+	global isData_Resolve_Remote
+	# os.environ.get('debug', 'no')
+	if not isData_Resolve_Remote:
+		return data
+	if type(data) == str:
+			temp = data.split('\n')
+			for i,d in enumerate(temp):
+				temp[i] = autoUrl(d)
+			data = '\n'.join(temp)
+
+	if type(data) == list:
+		for i,d in enumerate(data):
+			data[i] = autoUrl(d)
+	return data
+	# autoUrl
 
 def isData_Data(data=None,loc=None):
 	# if not loc is None: print_( 'isData_Data', loc )
 	# if not loc is None: print_( 'isData_Data, start', loc, data, 'isData_Data, end' )
 	if not __.appReg in AutoClipboardApps:
-		return data
+		return formatIsData(data)
 	# print('data', data); sys.exit(0)
 	# if type(data) != list:data = []
 	if not data:
-		return getClip().split('\n')
-	return data
+		return formatIsData(getClip().split('\n'))
+	return formatIsData(data)
 
-def isData( data=None, focus=None, pipeClean=False, required=False,     r=None, c=None, noclean=None, save=False ):
+isData_Resolve_Remote = False
+def isData( data=None, focus=None, pipeClean=False, required=False,     r=None, c=None, noclean=None, save=False, resolve=False, R=None ):
 	global isData_Save
-	
+
+	if not R is None:
+		resolve = R
+
+	global isData_Resolve_Remote
+	isData_Resolve_Remote = True
+	items_to_check = ['--r']
+	if any(item in sys.argv for item in items_to_check):
+		isData_Resolve_Remote = True
 	if __.PIPE and data == 2:
-		return __.PIPE
+		return isData_Data(__.PIPE)
 	elif data == 2:
 		data = None
 
@@ -4455,10 +4490,10 @@ def isData( data=None, focus=None, pipeClean=False, required=False,     r=None, 
 	global switches
 	if switches.isActive('Paste-isData'):
 		_paste = regImp( __.appReg, '-paste' )
-		return _paste.imp.paste().split('\n')
+		return isData_Data(_paste.imp.paste().split('\n'))
 
 	if __.ForcePipe:
-		return __.ForcePipe
+		return isData_Data(__.ForcePipe)
 	if vv.isDataName:
 		for name in vv.isDataName:
 			return isData_Data(vv.isDataName[name],2.333)
@@ -4479,9 +4514,9 @@ def isData( data=None, focus=None, pipeClean=False, required=False,     r=None, 
 	__.FilesFiles = myFileLocation_Files
 	# global switches
 	try:
-		if appData[__.appReg]['pipe']: return appData[__.appReg]['pipe']
+		if appData[__.appReg]['pipe']: return isData_Data(appData[__.appReg]['pipe'])
 		for sw in __.isData_Switches:
-			if not sw == 'Files': return switches.values(sw)
+			if not sw == 'Files': return isData_Data(switches.values(sw))
 		if data is None and switches.isActive('Paste-isData-json'):
 			try:
 				import simplejson
@@ -4494,7 +4529,7 @@ def isData( data=None, focus=None, pipeClean=False, required=False,     r=None, 
 				json = simplejson
 			d=getClip().strip()
 			return simplejson.loads(d)
-		elif data is None and switches.isActive('Paste-isData'): return getClip().split('\n')
+		elif data is None and switches.isActive('Paste-isData'): return isData_Data(getClip().split('\n'))
 
 
 		def _isData_(tst):
@@ -5874,8 +5909,36 @@ def urlTrigger(url):
 	elif not url.startswith('http'):
 		url = 'http://' + url
 	return url
+def resolve(path,isFolder=None):
+	if type(path) == list:
+		for i,p in enumerate(path):
+			path[i] = resolve(p)
+		return path
 
+	if not os.path.exists(path):
+		path = autoUrl(path)
+
+
+	if isFolder:
+		if not os.path.exists(path): path = aliasesFo(path)
+	elif not isFolder:
+		if not os.path.exists(path): path = aliasesFi(path)
+	return path
+
+def autoUrl(path):
+	if type(path) == list:
+		for i,p in enumerate(path):
+			path[i] = autoUrl(p)
+	
+	if type(path) == str:
+		if path.startswith('http:') or path.startswith('https:') or path.startswith('/') or path.startswith('\\'):
+			test = url2file(path)
+			if test and os.path.exists(test):
+				return test
+	return path
 def myFolderLocations( data ):
+	data = autoUrl(data)
+
 	if 'myFolderLocations' in __.setting('omit-functions', d=[]):
 		return data
 	if type(data) == list:
@@ -9283,7 +9346,7 @@ def printVar2( data, sort_keys=False ):
 	print_( result )
 
 
-def printVarColor( data ):
+def printVarColor( data, p=True ):
 	_code = regImp( __.appReg, '_rightThumb._auditCodeBase' )
 	validator = _code.imp.Validator()
 
@@ -9293,7 +9356,7 @@ def printVarColor( data ):
 	index = validator.createIndex( data, 'javascript', skipLoad=True, simple=False, A=None, B=True, C=None )
 	# printVarSimple(validator.identity)
 	# index = validator.createIndex( data, 'javascript', simple=False, B=True )
-	validator.colorPrint()
+	return validator.colorPrint(p)
 
 def printVarSimpleSTR(data):
 	print_( printVarColor_OLD( data ) )
@@ -9527,7 +9590,43 @@ def aliases_file_open(file):
 			# print(a,file)
 	return file
 
+def remote2file(path):
+	remote_path = path
+	remote_path = remote_path.replace('\\', '/')
+	if not remote_path.startswith('/'):
+		return path
+	sites = getTable('site-locations.list')
+
+	for mPath in sites:
+		if not os.path.isfile(mPath):
+			continue
+
+		local_base = __.path(mPath, pop=True)
+		raw = getText(mPath, raw=True).strip()
+		meta = getTable2(mPath) if raw.startswith('{') else getYML(mPath)
+
+		if 'sftp' in meta and 'path' in meta['sftp']:
+			remote_base = meta['sftp']['path'].replace('\\', '/').rstrip('/')
+			if remote_path.startswith(remote_base):
+				relative_path = remote_path[len(remote_base):].lstrip('/')
+				local_full = os.path.join(local_base, *relative_path.split('/'))
+				test = os.path.normpath(local_full)
+				if os.path.exists(test):
+					return os.path.normpath(local_full)
+
+	return None
+
+
 def url2file(path):
+	if path.startswith('/'):
+		try:
+			test = remote2file(path)
+		except: pass
+		# print('remote2file',test)
+		# sys.exit(0)
+		if not test is None:
+			if os.path.exists(test):
+				return test
 	url=path
 	if path.startswith('http:'): path=path.replace('http:','https:')
 	if path.startswith('https:') or path.startswith('http:'):
@@ -9556,7 +9655,7 @@ def url2file(path):
 								if os.path.isfile(yt):
 									y=yt
 						y=y.replace(os.sep+os.sep,os.sep)
-						if os.path.isfile(y):
+						if os.path.exists(y):
 							path=y
 	return path
 
@@ -9625,7 +9724,7 @@ def myFileLocations( file, silent=False, currentBaseVersion=3 ):
 					recs[path] = {'epoch': time.time(), 'session': time.time()}
 			saveTable(recs,'myFileLocations.index',printThis=False)
 
-	file=url2file(file)
+	file=autoUrl(file)
 	file = aliases_file_open(file)
 	if isWin and type(file) == str and '/' in file: file=file.replace('/',os.sep)
 	if isWin and type(file) == str and file.startswith('~'): file=_v.home+file[1:]
@@ -10496,7 +10595,11 @@ def getText( theFile, raw=False, clean=False,  e=0, c=0 ):
 		# 		f.close()
 	else:
 		if not e:
-			return None
+			if raw:
+				return ''
+			elif not raw:
+				return []
+			# return None
 		print_('(getText) Error: No File')
 		sys.exit()
 	if raw:
@@ -11450,7 +11553,7 @@ def getTable(theFile, tableTemp=False, isDic=None, isList=None, tmp=None):
 		import json
 	except ImportError:
 		json = simplejson
-
+	
 	# Determine the file path
 	file0 = _v.myTables + _v.slash + theFile
 	if not isinstance(tableTemp, bool):
@@ -11463,22 +11566,38 @@ def getTable(theFile, tableTemp=False, isDic=None, isList=None, tmp=None):
 
 	if not os.path.isfile(file0):
 		file0 = theFile
-
+	theFile = file0
 	# Check if the file is empty
-	if os.path.isfile(file0) and os.path.getsize(file0) > 0:
+	if os.path.isfile(theFile) and os.path.getsize(theFile) > 0:
 		try:
-			with open(file0, 'r', encoding='utf-8') as json_file:
-				try:
-					json_data = simplejson.load(json_file)
-				except Exception as e:
-					json_data = json.load(json_file)
-				return json_data
-		except Exception as e:
-			print('Error loading JSON file:',theFile, e)
-			sys.exit()
 
+			text = getText(theFile, raw=True)
+			text=text.strip()
+			
+			if text.startswith('[') or text.startswith('{'):
+				try:
+					return json.loads(text)
+				except:
+					try:
+						return json.loads(text[:-1])
+					except:
+						e('Error loading JSON file:', theFile,'jq . broken.json > fixed.json')
+
+			else:
+				return fromYML(text)
+		except:
+			try:
+				with open(theFile, 'r', encoding='utf-8') as json_file:
+					try:
+						json_data = simplejson.load(json_file)
+					except Exception as e:
+						json_data = json.load(json_file)
+					return json_data
+			except Exception as e:
+				print('Error loading JSON file:', theFile, e)
+				sys.exit()
 	else:
-		# print(f"File {file0} not found or is empty.")
+		# print(f"File {theFile} not found or is empty.")
 		return __.data_default(file=theFile, default=[]).default()
 
 
@@ -11569,15 +11688,23 @@ def getTable2(theFile, isDic=None, isList=None):
 	# Check if the file exists and is not empty
 	if os.path.isfile(theFile) and os.path.getsize(theFile) > 0:
 		try:
-			with open(theFile, 'r', encoding='utf-8') as json_file:
-				try:
-					json_data = simplejson.load(json_file)
-				except Exception as e:
-					json_data = json.load(json_file)
-				return json_data
-		except Exception as e:
-			print('Error loading JSON file:', theFile, e)
-			sys.exit()
+
+			text = getText(theFile, raw=True)
+			if text.startswith('[') or text.startswith('{'):
+				return json.loads(text)
+			else:
+				return fromYML(text)
+		except:
+			try:
+				with open(theFile, 'r', encoding='utf-8') as json_file:
+					try:
+						json_data = simplejson.load(json_file)
+					except Exception as e:
+						json_data = json.load(json_file)
+					return json_data
+			except Exception as e:
+				print('Error loading JSON file:', theFile, e)
+				sys.exit()
 	else:
 		# print(f"File {theFile} not found or is empty.")
 		return __.data_default(file=theFile, default=[]).default()
@@ -12454,6 +12581,23 @@ class Switches:
 		self.isRequired = {}
 		self.postScripts = []
 		self.dex = {}
+		self.resolve = {}
+
+
+	def dic( self, simple=False ):
+		recs = self.all()
+		result = {}
+		for rec in recs:
+			if rec['active']:
+				if rec['name'] == 'DumpSwitches': continue
+				if rec['values']:
+					result[rec['name']] = rec['values']
+					if simple and len(rec['values']) <2:
+						result[rec['name']] = rec['value']
+				elif not rec['values']:
+					result[rec['name']] = '_'
+
+		return result
 
 
 	def all( self, app=True, appReg=None, omit=None, omitDefaults=True,             od=1 ):
@@ -12665,24 +12809,45 @@ class Switches:
 		return result
 
 	def dumpSwitches(self,includeBlank=False):
+		longActive = False
+		if self.isActive('Long'):
+			longActive = True
 		self.fieldSet('Long','active',True)
 		data = []
+		spent = {}
 		for i,row in enumerate(self.switches):
 			# if not row.value is None:
+			if not row.appReg in spent:
+				spent[row.appReg] = []
+				if not longActive:
+					spent[row.appReg].append( 'Long' )
+					spent[row.appReg].append( 'DumpSwitches' )
+			if row.name in spent[row.appReg]:
+				continue
 			if includeBlank:
-				data.append({ 'name': row.name, 'value': row.value, 'appreg': row.appReg })
+				data.append({ 'name': row.name, 'value': row.value.replace(',', '\t'), 'appreg': row.appReg })
+				spent[row.appReg].append( row.name )
 			else:
 				if not row.value is None or row.active:
-					data.append({ 'name': row.name, 'value': row.value, 'appreg': row.appReg })
+					data.append({ 'name': row.name, 'value': row.value.replace(',', '\t'), 'appreg': row.appReg })
+					spent[row.appReg].append( row.name )
 			# print_(row.name,'\t',row.value,'\t',row.appReg)
 		tables.register('data',data)
 		tables.print('data','appreg,name,value')
 
-	def register(self, name, switch, example_or_notes = None, isRequired=False, isPipe=None, isData=None, description='', space=False, default=False, group=None, g=None):
+	def register(self, name, switch, example_or_notes = None, isRequired=False, isPipe=None, isData=None, description='', space=False, default=False, group=None, g=None, resolve=None):
 		if type(switch) == str:
 			switch = switch.replace( ' ', '' )
 		if not g is None:
 			group = g
+
+		if not resolve is None:
+			if not type(resolve) == str:
+				resolve = 'file'
+			if 'fo' in resolve.lower():
+				self.resolve[name] = 'folder'
+			else:
+				self.resolve[name] = 'file'
 
 		if not isPipe is None:
 			__.trigger_isPipe = isPipe
@@ -12745,6 +12910,14 @@ class Switches:
 
 
 	def fieldSet2( self, name, column, value, theFocus=False, runTrigger=True ):
+		if name in self.resolve:
+			if column in 'value values'.split():
+				isFolder = True if self.resolve[name] == 'folder' else False
+				if type(value) == str:
+					value = resolve(value, isFolder)
+				if type(value) == list and len(value) > 0 and type(value[0]) == str:
+					for i,v in enumerate(value):
+						value[i] = resolve(v, isFolder)
 		for i,row in enumerate(self.switches):
 			if self.switches[i].appReg == theFocus:
 				if row.name == name:
@@ -12784,6 +12957,23 @@ class Switches:
 
 		
 	def fieldSet( self, name, column, value, theFocus=False, runTrigger=True ):
+
+
+		# if name == 'Alias': print(1,'Alias set:', value)
+
+		if name in self.resolve:
+			if column in 'value values'.split():
+				isFolder = True if self.resolve[name] == 'folder' else False
+				if type(value) == str:
+					value = resolve(value, isFolder)
+				if type(value) == list and len(value) > 0 and type(value[0]) == str:
+					for i,v in enumerate(value):
+						value[i] = resolve(v, isFolder)
+
+
+		# if name == 'Alias': print(2,'Alias set:', value)
+
+
 		if name == 'Sort':
 			if column == 'value':
 				if type(value) == str:
@@ -13483,6 +13673,32 @@ class Switches:
 								self.switches[ii].active = True
 								self.switches[ii].value = self.format(self.switches[ii].name)
 								self.switches[ii].values = self.format2(self.switches[ii].name)
+
+
+
+								if self.switches[ii].name in self.resolve:
+									isFolder = True if self.resolve[self.switches[ii].name] == 'folder' else False
+									self.switches[ii].value = resolve( self.switches[ii].value, isFolder )
+									for i, thisFile in enumerate(self.switches[ii].values):
+										self.switches[ii].values[i] = resolve( thisFile, isFolder )
+
+
+										
+									val = self.switches[ii].values
+									if type(val) == list and  len(val) > 1 and type(self.switches[ii].value) == str:
+										all_strings = all(isinstance(item, str) for item in val)
+										if all_strings:
+											self.switches[ii].value = ','.join(val)
+								pass
+								# self.switches[ii].name
+								# λname=self.switches[ii].name
+								# λval=self.switches[ii].value
+								# λvals=self.switches[ii].values
+
+								# if λname == 'Alias':
+								# 	print('Alias set:', λval, '->', λvals)
+								# 	sys.exit()
+
 								if self.switches[ii].name in vv.isDataName:
 									for thisFile in self.switches[ii].values:
 										vv.isDataName[self.switches[ii].name].append( thisFile )
@@ -13490,11 +13706,16 @@ class Switches:
 								if self.switches[ii].name in vv.isDataDataRaw:
 									for thisFile in self.switches[ii].values:
 										vv.isDataDataRaw[self.switches[ii].name] += getText(thisFile, raw=True)
+
 								if self.switches[ii].name in vv.isDataData:
 									# print( 'here here' ); sys.exit()
 									for thisFile in self.switches[ii].values:
+										# print(thisFile)
 										for fileLine in getText(thisFile):
 											vv.isDataData[self.switches[ii].name].append( fileLine )
+
+
+
 
 								isActiveList.append( ii )
 								if self.switches[ii].name in self.hasRequired:
@@ -13601,12 +13822,7 @@ class Switches:
 
 
 
-		if self.isActive('DumpSwitches'):
-			if self.value('DumpSwitches'):
-				pv(self.all())
-			else:
-				self.dumpSwitches()
-			sys.exit()
+
 		if self.isActive('Debug') == True or self.isActive('Errors') == True:
 			# self.print()
 			self.printStatus()
@@ -13695,6 +13911,40 @@ class Switches:
 			if '--appReg' in sys.argv or os.environ.get('debug', 'no') == 'yes':
 				pr('appReg regApp',__.appReg, __.regApp, h='lawn_green')
 			__.appReg = __.regApp
+
+
+		if self.isActive('DumpSwitches'):
+			if not self.value('DumpSwitches'):
+				self.dumpSwitches()
+				sys.exit()
+				pv(self.all())
+
+		if 'json' in self.value('DumpSwitches'):
+			pv(self.dic())
+			sys.exit(0)
+		if 'dic' in self.value('DumpSwitches'):
+			pv(self.dic(1))
+			sys.exit(0)
+		# if 'yml' in self.value('DumpSwitches'):
+		if any(item in self.values('DumpSwitches') for item in 'yml yaml _ .'.split()):
+			print()
+			y = toYML( self.dic() )
+			if not any(item in self.values('DumpSwitches') for item in 'raw r'.split()):
+				# y = y.replace("'",'')
+				lines = []
+				for i,line in enumerate(y.split('\n')):
+					line = line.rstrip()
+					if line.startswith("- '"):
+						line = line.rstrip("'")
+						line = line.replace("- '","- ")
+					lines.append(line)
+				y = '\n'.join(lines)
+
+			pr( y, h='lawn_green' )
+			print()
+			sys.exit(0)
+
+
 		# def process( self )     :: END ::     switches.process()
 
 
@@ -27405,7 +27655,7 @@ def isFile2(fileAliasUrl):
 
 	if os.path.isfile(ref): return ref
 	if ref.startswith('http:') or ref.startswith('https:'):
-		ref = url2file(ref)
+		ref = autoUrl(ref)
 	aliases=getTable('file-open-aliases.hash')
 
 	if 'aliases' in aliases and not ref in aliases['aliases']:
@@ -28163,10 +28413,7 @@ def nsKeys(namespace=None, path='', seen=None, dirty=False, d=None):
 nsKey=nsKeys
 nsk=nsKeys
 ##================================================
-import os
-import sys
-import importlib.util
-import hashlib
+
 
 def Import(path, module_name=None):
 	"""
@@ -28180,6 +28427,15 @@ def Import(path, module_name=None):
 	Returns:
 		module or None if failed
 	"""
+
+	import os
+	import sys
+	import importlib.util
+	import hashlib
+
+	if not os.path.isfile(path):
+		return False
+
 	try:
 		path = os.path.abspath(path)
 
@@ -28403,6 +28659,34 @@ def psudoApp(appReg,dic):
 
 ##================================================
 ##================================================
+
+def noWarnings():
+	import warnings
+	warnings.filterwarnings("ignore", category=DeprecationWarning)
+
+def print_markdown(arg):
+	if os.path.isfile(arg):
+		document = getText(arg, raw=True)
+	else:
+		document = arg
+	if not document:
+		pr('No Markdown Document Found', c='red')
+		return False
+	# noWarnings()
+
+	import warnings
+	with warnings.catch_warnings():
+		warnings.simplefilter("ignore", DeprecationWarning)
+		from cgi import parse_header, parse_multipart
+
+	from rich.console import Console # type: ignore
+	from rich.markdown import Markdown # type: ignore
+	console = Console()
+	console.print(Markdown(document))
+	return True
+
+##================================================
+##================================================
 # 9377                    if isFirst:
 # 9545                    if isFirst:
 # 9590                                                    if isFirst:
@@ -28481,8 +28765,14 @@ __.ci = ci
 
 aFi=aliasesFi
 aFo=aliasesFo
+pmd=print_markdown
+pMD=print_markdown
 __.aFi = aFi
 __.aFo = aFo
+
+
+
+
 # Import=import_path
 
 ##================================================

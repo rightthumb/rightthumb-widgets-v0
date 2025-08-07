@@ -211,7 +211,7 @@ def relevant():
 	_.saveText(relevant,_relevant)
 	_.pr(_relevant,c='cyan')
 
-
+import time
 def register():
 	load()
 	global epoch
@@ -219,8 +219,12 @@ def register():
 	global last
 	global lastFi
 	global xFo
+	try:
+		session = os.environ['Session_ID']
 	
-	session = os.environ['Session_ID']
+	except:
+		session = str(time.time())
+
 	_v.mkdir(day+session)
 
 	lastFi = day+session+os.sep+'id'

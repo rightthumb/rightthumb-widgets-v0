@@ -1,114 +1,140 @@
-#!/usr/bin/python3
-
-"""Find the currently active window."""
-# ## {R2D2919B742E} ##
-# ###########################################################################
-# What if magic existed?
-# What if a place existed where your every thought and dream come to life.
-# There is only one catch: it has to be written down.
-# Such a place exists, it is called programming.
-#    - Scott Taylor Reph, RightThumb.com
-# ###########################################################################
-# ## {C3P0D40fAe8B} ##
-
-##################################################
-import sys, time
-##################################################
-import _rightThumb._construct as __
-appDBA=__.clearFocus(__name__,__file__);__.appReg=appDBA;
-
-def focus(parentApp='',childApp='',reg=True):
-	global appDBA;f=__.appName(appDBA,parentApp,childApp);
-	if reg:__.appReg=f;
-	return f
-import _rightThumb._base3 as _
-fieldSet=_.l.vars(focus(),__name__,__file__,appDBA)
-_.load()
-##################################################
-_v = __.imp('_rightThumb._vars')
-_str = __.imp('_rightThumb._string')
-##################################################
-from threading import Timer
-##################################################
+import _rightThumb._construct as __;appDBA=__.clearFocus(__name__,__file__);__.appReg=appDBA;import _rightThumb._base3 as _; # type: ignore
+def focus(parentApp='', childApp='', reg=True): global appDBA; f = __.appName(appDBA, parentApp, childApp); return f if reg else f
+fieldSet=_.l.vars(focus(),__name__,__file__,appDBA);_.load();_v=__.imp('_rightThumb._vars')
 
 def sw():
 	_.switches.register( 'Log', '-log' )
 	_.switches.register( 'Stop', '-stop' )
 	_.switches.register( 'Start', '-start' )
-	pass
-	# _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=True )
-# __.setting('require-list',['Files,Plus','File,Has']) # todo
-# __.setting('require-list',['Pipe','Files'])
-__.setting('receipt-log')
-__.setting('receipt-file')
-__.setting('myFileLocations-skip-validation',False)
-__.setting('require-pipe',False)
-__.setting('require-pipe||file',False)
-__.setting('pre-error',False)
-__.setting('switch-raw',[])
+     
+
+_._default_settings_()
 
 _.appInfo[focus()] = {
-	# 'app': '8facG-jo0Cxk',
-	'file': 'active-window.py',
-	'liveAppName': __.thisApp( __file__ ),
-	'description': 'Changes the world',
-		# _.ail(1,'subject')+
-		# _.aib('one')+
-	'categories': [
-						'DEFAULT',
-				],
-	'usage': [
-						# 'epy another',
-						# 'e nmap',
-						# '',
-	],
-	'relatedapps': [
-						# 'p another -file file.txt',
-						# '',
-	],
-	'prerequisite': [
-						# 'p another -file file.txt',
-						# '',
-	],
-	'examples': [
-						_.hp('p active-window -file file.txt'),
-						_.linePrint(label='simple',p=0),
-						'',
-	],
-	'columns': [
-					# { 'name': 'name', 'abbreviation': 'n' },
-					# { 'name': '{1}', 'abbreviation': '{0}', 'sort': '{2}' },
-	],
-	'aliases': [
-					# 'this',
-					# 'app',
-	],
-	'notes': [
-					# {},
-	],
+    'file': 'active-window2.py',
+    'description': 'Changes the world',
+    'categories': [
+                        'DEFAULT',
+                ],
+    'examples': [
+                        _.hp('p active-window -file file.txt'),
+                        _.linePrint(label='simple',p=0),
+                        '',
+    ],
+    'columns': [
+    ],
+    'aliases': [],
+    'relatedapps': [],
+    'prerequisite': [],
+    'notes': [],
 }
-_.appData[focus()] = {
-		'start': __.startTime,
-		'uuid': '',
-		'audit': [],
-		'pipe': False,
-		'data': {
-					'field': {'sent': [], 'received': [] }, # { 'label': '', 'context': [],  }
-					'table': {'sent': [], 'received': [] },
-		},
-	}
+
+_.appInfo[focus()] = _.appInfoContinuity(__.thisApp( __file__ ),_.appInfo[focus()])
+_.appData[focus()] = _.appDataContinuity()
+def appRegDics(): return { 'appInfo': _.appInfo[focus()], 'appData': _.appData[focus()] }
 
 def triggers():
-	_.switches.trigger( 'Files', _.myFileLocations, vs=True )
-	_.switches.trigger( 'Ago', _.timeAgo )
-	_.switches.trigger( 'Folder', _.myFolderLocations )
-	_.switches.trigger( 'URL', _.urlTrigger )
-	_.switches.trigger( 'Duration', _.timeFuture )
-_.l.conf('clean-pipe',True)
-_.l.sw.register( triggers, sw )
-
+    _._default_triggers_()
+    _.switches.trigger( 'Files',   _.isFileAdvanced, vs=False )     # Advanced File Registration    (Fn Alias Resolves To: def myFileLocations)
+    _.switches.trigger( 'DB', _.aliasesFi )
+    _.switches.trigger( 'Folder', _.myFolderLocations )
+    _.switches.trigger( 'Folders', _.myFolderLocations )
+    __.SwitchesModifier.Trigger['Folders'] = _.myFolder
+    _.switches.trigger( 'OutputFolder', _.aliasesFo )
+def _local_(do): exec(do)
+_.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw )
 ########################################################################################
 #n)--> start
+
+
+
+
+
+
+
+
+import threading
+import time
+from pynput import mouse, keyboard
+
+class IdleTimer:
+    def __init__(self, threshold=60, interval=1, on_idle=None, on_active=None):
+        self.idle_time = 0
+        self.threshold = threshold
+        self.interval = interval
+        self.on_idle = on_idle or (lambda t: print(f"User is idle after {t}s"))
+        self.on_active = on_active or (lambda t: print(f"User became active after being idle for {t}s"))
+        self.is_idle = False
+        self._running = False
+        self._lock = threading.Lock()
+
+        # Event listeners
+        self.mouse_listener = mouse.Listener(on_move=self.reset, on_click=self.reset, on_scroll=self.reset)
+        self.keyboard_listener = keyboard.Listener(on_press=self.reset)
+
+    def start(self):
+        self._running = True
+        self.reset()
+        self.mouse_listener.start()
+        self.keyboard_listener.start()
+        self.thread = threading.Thread(target=self._run, daemon=True)
+        self.thread.start()
+
+    def stop(self):
+        self._running = False
+        self.mouse_listener.stop()
+        self.keyboard_listener.stop()
+        self.thread.join()
+
+    def _run(self):
+        while self._running:
+            time.sleep(self.interval)
+            with self._lock:
+                self.idle_time += self.interval
+                if not self.is_idle and self.idle_time >= self.threshold:
+                    self.is_idle = True
+                    self.on_idle(self.idle_time)
+
+    def reset(self, *args, **kwargs):
+        with self._lock:
+            if self.is_idle:
+                self.on_active(self.idle_time)
+                self.is_idle = False
+            self.idle_time = 0
+
+    def get_idle_time(self):
+        with self._lock:
+            return self.idle_time
+
+
+
+
+if __name__ == "__main__"     and False:
+    idle = IdleTimer(
+        threshold=10,
+        on_idle=lambda t: print(f"[IDLE] {t}s"),
+        on_active=lambda t: print(f"[ACTIVE] {t}s")
+    )
+    idle.start()
+
+    try:
+        while True:
+            time.sleep(1)
+    except KeyboardInterrupt:
+        print("Stopping idle timer...")
+        idle.stop()
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 if _.switches.isActive('Stop'): time.sleep(4); sys.exit();
@@ -525,9 +551,6 @@ signal.signal(signal.SIGINT, sigint_handler)
 
 
 
-
-##################################################
-######################################
+########################################################################################
 if __name__ == '__main__':
-	action()
-	_.isExit(__file__)
+    action(); _.isExit(__file__)

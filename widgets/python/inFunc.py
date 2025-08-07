@@ -329,7 +329,9 @@ def action():
 		# _.pr( focus() )
 		# _.pr( __.appReg )
 		sys.exit()
-	if _.switches.isActive('Files'):
+	is_File = _.switches.isActive('Files')
+
+	if is_File or _.isData(2):
 		xXx = {
 				'classes': 0,
 				'functions': 0,
@@ -339,12 +341,16 @@ def action():
 		# _.pr( _.switches.value('Input') )
 		# sys.exit()
 		# _.pr(_.switches.values('Files'))
-		if not os.path.isfile( _.switches.values('Files')[0] ):
-			# _.printBold( 'Error: File Not Found', 'red' )
-			_.printBold( 'File Not Found', 'red' )
-			sys.exit()
-		modifiedRaw = os.path.getmtime(_.switches.values('Files')[0])
-		file = _.getText(_.switches.values('Files')[0])
+		if is_File:
+			if not os.path.isfile( _.switches.values('Files')[0] ):
+				# _.printBold( 'Error: File Not Found', 'red' )
+				_.printBold( 'File Not Found', 'red' )
+				sys.exit()
+			modifiedRaw = os.path.getmtime(_.switches.values('Files')[0])
+			file = _.getText(_.switches.values('Files')[0])
+		elif not is_File:
+			modifiedRaw = time.time()
+			file = _.isData(2)
 		if _.switches.isActive('Plus') or _.switches.isActive('Minus'):
 			doSearch = True
 		else:
@@ -573,7 +579,9 @@ def action():
 			# _.pr(xXx)
 			_.printDicFields(xXx)
 			_.pr()
-			_.cp( _.switches.values('Files')[0], 'cyan' )
+			if is_File:
+				_.cp( _.switches.values('Files')[0], 'cyan' )
+			
 		return data
 	pass
 

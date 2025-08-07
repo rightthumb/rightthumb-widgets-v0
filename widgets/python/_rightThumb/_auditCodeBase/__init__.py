@@ -408,7 +408,7 @@ class Validator:
 				
 
 		pass
-	def colorPrint( self ):
+	def colorPrint( self, printThis=True ):
 		# {6402B9BC-FF5C-4B6F-B8B4-CB1EFADDF405}
 
 		# index = self.query( "'", justIndex=False, isGroup=True )
@@ -535,6 +535,10 @@ class Validator:
 				concealed
 
 		"""
+
+		# printThis
+		# printThis
+		# printThis
 
 
 		# colors['all']

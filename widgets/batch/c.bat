@@ -1,4 +1,10 @@
 @echo off
+
+if [%computername%] == [KNIGHT] (
+    call c__knight__.bat
+    goto: eof
+)
+
 chcp 65001 > nul
 REM ## {R2D2919B742E} ##
 REM ###########################################################################
@@ -101,7 +107,7 @@ GOTO:EOF
 :CLEAR_SCREEN
 
     IF NOT [%noClear%] == [TRUE] (
-        REM prompt - 
+        REM prompt -
         CLS
         @REM IF [%noTOP%] == [] %py% %widgets%\widgets\python\windows-terminal-header.py
         IF [%noTOP%]==[] IF [%pterm%]==[] %py% %widgets%\widgets\python\windows-terminal-header.py
@@ -207,30 +213,30 @@ GOTO:EOF
             SET pubID={C7DA4040-A42C-0372-B54A-8E40F835D3E1}
             SET privID={5B55D9AE-6C90-B44B-2071-5376CBB2AAAE}
             SET last=%wprofile%\tables\file-open.last
-            REM IF NOT EXIST %widgets%\hosts (mkdir %widgets%\hosts) 
+            REM IF NOT EXIST %widgets%\hosts (mkdir %widgets%\hosts)
             REM IF NOT EXIST %myHome% (
             REM         md %myHome%
             REM         ECHO Building profile on USB
             REM         xcopy /s/d/y/c %widgets%\%hostDefault%\*.* %myHome%\>nul
             REM     )
-            IF NOT EXIST %myVars% (mkdir %myVars%) 
-            IF NOT EXIST %myBookmarks% (mkdir %myBookmarks%) 
-            IF NOT EXIST %myTickets% (mkdir %myTickets%) 
-            IF NOT EXIST %myIndexes% (mkdir %myIndexes%) 
-            IF NOT EXIST %myIndexes%\archive (mkdir %myIndexes%\archive) 
-            IF NOT EXIST %myTables% (mkdir %myTables%) 
-            IF NOT EXIST %myDatabases% (mkdir %myDatabases%) 
-            IF NOT EXIST %myInfo% (mkdir %myInfo%) 
-            IF NOT EXIST %myProjects% (mkdir %myProjects%) 
-            IF NOT EXIST %mywidgets% (mkdir %mywidgets%) 
-            IF NOT EXIST %myNotes% (mkdir %myNotes%) 
+            IF NOT EXIST %myVars% (mkdir %myVars%)
+            IF NOT EXIST %myBookmarks% (mkdir %myBookmarks%)
+            IF NOT EXIST %myTickets% (mkdir %myTickets%)
+            IF NOT EXIST %myIndexes% (mkdir %myIndexes%)
+            IF NOT EXIST %myIndexes%\archive (mkdir %myIndexes%\archive)
+            IF NOT EXIST %myTables% (mkdir %myTables%)
+            IF NOT EXIST %myDatabases% (mkdir %myDatabases%)
+            IF NOT EXIST %myInfo% (mkdir %myInfo%)
+            IF NOT EXIST %myProjects% (mkdir %myProjects%)
+            IF NOT EXIST %mywidgets% (mkdir %mywidgets%)
+            IF NOT EXIST %myNotes% (mkdir %myNotes%)
             IF NOT EXIST %myWebApp% (mkdir %myWebApp%)
-            IF NOT EXIST %myBatch% (mkdir %myBatch%) 
-            IF NOT EXIST %myPython% (mkdir %myPython%) 
-            IF NOT EXIST %myPowershell% (mkdir %myPowershell%) 
-            IF NOT EXIST %myPhp% (mkdir %myPhp%) 
-            IF NOT EXIST %stmp% (mkdir %stmp%) 
-            IF NOT EXIST %myTxt% (mkdir %myTxt%) 
+            IF NOT EXIST %myBatch% (mkdir %myBatch%)
+            IF NOT EXIST %myPython% (mkdir %myPython%)
+            IF NOT EXIST %myPowershell% (mkdir %myPowershell%)
+            IF NOT EXIST %myPhp% (mkdir %myPhp%)
+            IF NOT EXIST %stmp% (mkdir %stmp%)
+            IF NOT EXIST %myTxt% (mkdir %myTxt%)
             SET batch=%widgets%\widgets\batch
             SET bash=%widgets%\widgets\bash
             SET python=%widgets%\widgets\python
@@ -243,11 +249,11 @@ GOTO:EOF
             SET binWin=%widgets%\widgets\bin\Win
             SET myImports=%python%\_rightThumb
             SET filemeta=%exeB%\File_Metadata
-            IF NOT EXIST %widgets% (mkdir %widgets%) 
+            IF NOT EXIST %widgets% (mkdir %widgets%)
             IF NOT EXIST %batch% (mkdir %batch%)
-            IF NOT EXIST %python% (mkdir %python%) 
-            IF NOT EXIST %powershell% (mkdir %powershell%) 
-            IF NOT EXIST %php2% (mkdir %php2%) 
+            IF NOT EXIST %python% (mkdir %python%)
+            IF NOT EXIST %powershell% (mkdir %powershell%)
+            IF NOT EXIST %php2% (mkdir %php2%)
             IF NOT EXIST %exe% (mkdir %exe%)
             CALL :run_process_exe_folders
 
@@ -265,7 +271,7 @@ GOTO:EOF
                 SET "pathBuilder=%pathBuilder%;D:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\bin\Hostx64\x64"
             )
             SET path=%pathBuilder%
-            
+
             SET pathBuilder=
             SET pathPython=
 
@@ -347,7 +353,7 @@ GOTO:EOF
             IF NOT EXIST "%myHome%\config" mkdir "%myHome%\config"
             IF NOT EXIST %distro% CALL p. this_distro > %distro%
             SET /p distro=<%distro%
-            IF NOT EXIST %archive7z% (mkdir %archive7z%) 
+            IF NOT EXIST %archive7z% (mkdir %archive7z%)
                 net session >nul 2>&1
                 IF %errorLevel% == 0 (
                     SET isAdmin=True
@@ -378,8 +384,7 @@ GOTO:EOF
             CALL:CLEAR_SCREEN
             REM ECHO.
             REM cls
-            prompt └─ 
-            REM prompt - 
+            REM prompt -
             if exist "%stmp%\pin_ask" (
                 CALL:SET_PIN
             )
@@ -413,7 +418,7 @@ GOTO:EOF
     if not "%SCRIPT_DIR:~-1%"=="%batch%" (
         call c simple
         @REM echo Called C
-    ) 
+    )
 GOTO:EOF
 
 
@@ -463,5 +468,5 @@ goto:eof
 :process_exe_folders
     SET exe_folders=%exe_folders%;%1
 goto:eof
- 
+
 :theEndOfTheFile

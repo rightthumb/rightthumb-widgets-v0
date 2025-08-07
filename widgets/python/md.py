@@ -34,11 +34,12 @@ def appSwitches():
 	_.switches.register( 'GUI-Edit', '-edit' )
 	_.switches.register( 'Folder', '-folder' )
 	_.switches.register( 'Recursive', '-r,-recursive' )
-	_.switches.register( 'Files', '-f,-file,-files','file.txt', description='Files' )
+	_.switches.register( 'Files', '-f,-file,-files','file.txt', isData='name', description='Files' )
 	_.switches.register( 'Meta', '-m,-meta' )
 	_.switches.register( 'HTML', '-htm,-html' )
 	_.switches.register( 'View-Webpage', '-web,-page,-view,-v' )
 
+	_.switches.register( 'Print', '-p,-print' )
 	_.switches.register( 'Clean', '--c' )
 
 _.autoBackupData = __.setting('receipt-log')
@@ -594,6 +595,14 @@ def processFile(path):
 	markdown.append( sep.replace('FILE_PATH',path.replace(base+os.sep,'')) + _.getText( path, raw=True ) )
 base=None
 def action():
+	if _.switches.isActive('Print'):
+		path = _.switches.value('Files')
+		if not os.path.isfile(path):
+			_.pr('File not found: ' + path, c='red')
+			return None
+		_.print_markdown( path )
+		return None
+
 	if _.switches.isActive('Files') and _.switches.isActive('Meta'):
 		import urllib.parse
 		url='https://eyeformeta.com/apps/meta/listener/?vpath='+urllib.parse.quote( __.path(_.switches.values( 'Files' )[0]) )

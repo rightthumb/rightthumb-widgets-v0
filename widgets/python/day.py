@@ -273,12 +273,24 @@ def load():
 				bm['labels']['yesterday']=dX;  _.saveText(dX,vbm+'BM-yesterday.txt');
 				bm['labels']['y']=dX;  _.saveText(dX,vbm+'BM-yy.txt');
 				bm['labels']['y']=dX;  _.saveText(dX,vbm+'BM-yy.txt');
-				dA=epoch-86400-86400; dayX = _.day(dA); dX = _v.rtp+'daily'+os.sep+dayX; aliases.append('alias 2="cd '+wsl(dX)+'"'); bm['labels'][str(2)]=dX; _.saveText(dX,vbm+'BM-2.txt'); we=_.isDate(dA,f='dow2'); bm['labels'][we]=dX;  _.saveText(dX,vbm+'BM-'+we+'.txt');
-				dA=epoch-86400-86400-86400; dayX = _.day(dA); dX = _v.rtp+'daily'+os.sep+dayX; aliases.append('alias 3="cd '+wsl(dX)+'"'); bm['labels'][str(3)]=dX; _.saveText(dX,vbm+'BM-3.txt'); we=_.isDate(dA,f='dow2'); bm['labels'][we]=dX;  _.saveText(dX,vbm+'BM-'+we+'.txt');
-				dA=epoch-86400-86400-86400-86400; dayX = _.day(dA); dX = _v.rtp+'daily'+os.sep+dayX; aliases.append('alias 4="cd '+wsl(dX)+'"'); bm['labels'][str(4)]=dX; _.saveText(dX,vbm+'BM-4.txt'); we=_.isDate(dA,f='dow2'); bm['labels'][we]=dX;  _.saveText(dX,vbm+'BM-'+we+'.txt');
-				dA=epoch-86400-86400-86400-86400-86400; dayX = _.day(dA); dX = _v.rtp+'daily'+os.sep+dayX; aliases.append('alias 5="cd '+wsl(dX)+'"'); bm['labels'][str(5)]=dX; _.saveText(dX,vbm+'BM-5.txt'); we=_.isDate(dA,f='dow2'); bm['labels'][we]=dX;  _.saveText(dX,vbm+'BM-'+we+'.txt');
-				dA=epoch-86400-86400-86400-86400-86400-86400; dayX = _.day(dA); dX = _v.rtp+'daily'+os.sep+dayX; aliases.append('alias 6="cd '+wsl(dX)+'"'); bm['labels'][str(6)]=dX; _.saveText(dX,vbm+'BM-6.txt'); we=_.isDate(dA,f='dow2'); bm['labels'][we]=dX;  _.saveText(dX,vbm+'BM-'+we+'.txt');
-				dA=epoch-86400-86400-86400-86400-86400-86400-86400; dayX = _.day(dA); dX = _v.rtp+'daily'+os.sep+dayX; aliases.append('alias 7="cd '+wsl(dX)+'"'); bm['labels'][str(7)]=dX; _.saveText(dX,vbm+'BM-7.txt'); we=_.isDate(dA,f='dow2'); bm['labels'][we]=dX;  _.saveText(dX,vbm+'BM-'+we+'.txt');
+
+				dA=epoch; dayX = _.day(dA); dX = _v.rtp+'daily'+os.sep+dayX; aliases.append('alias 0="cd '+wsl(dX)+'"'); bm['labels'][str(2)]=dX; _.saveText(dX,vbm+'BM-0.txt'); we=_.isDate(dA,f='dow2'); bm['labels'][we]=dX;  _.saveText(dX,vbm+'BM-'+we+'.txt');
+				dA=_.Ago('1d',epoch); dayX = _.day(dA); dX = _v.rtp+'daily'+os.sep+dayX; aliases.append('alias 1="cd '+wsl(dX)+'"'); bm['labels'][str(2)]=dX; _.saveText(dX,vbm+'BM-1.txt'); we=_.isDate(dA,f='dow2'); bm['labels'][we]=dX;  _.saveText(dX,vbm+'BM-'+we+'.txt');
+				
+				dA=_.Ago('2d',epoch); dayX = _.day(dA); dX = _v.rtp+'daily'+os.sep+dayX; aliases.append('alias 2="cd '+wsl(dX)+'"'); bm['labels'][str(2)]=dX; _.saveText(dX,vbm+'BM-2.txt'); we=_.isDate(dA,f='dow2'); bm['labels'][we]=dX;  _.saveText(dX,vbm+'BM-'+we+'.txt');
+				dA=_.Ago('3d',epoch); dayX = _.day(dA); dX = _v.rtp+'daily'+os.sep+dayX; aliases.append('alias 3="cd '+wsl(dX)+'"'); bm['labels'][str(3)]=dX; _.saveText(dX,vbm+'BM-3.txt'); we=_.isDate(dA,f='dow2'); bm['labels'][we]=dX;  _.saveText(dX,vbm+'BM-'+we+'.txt');
+				dA=_.Ago('4d',epoch); dayX = _.day(dA); dX = _v.rtp+'daily'+os.sep+dayX; aliases.append('alias 4="cd '+wsl(dX)+'"'); bm['labels'][str(4)]=dX; _.saveText(dX,vbm+'BM-4.txt'); we=_.isDate(dA,f='dow2'); bm['labels'][we]=dX;  _.saveText(dX,vbm+'BM-'+we+'.txt');
+				dA=_.Ago('5d',epoch); dayX = _.day(dA); dX = _v.rtp+'daily'+os.sep+dayX; aliases.append('alias 5="cd '+wsl(dX)+'"'); bm['labels'][str(5)]=dX; _.saveText(dX,vbm+'BM-5.txt'); we=_.isDate(dA,f='dow2'); bm['labels'][we]=dX;  _.saveText(dX,vbm+'BM-'+we+'.txt');
+				dA=_.Ago('6d',epoch); dayX = _.day(dA); dX = _v.rtp+'daily'+os.sep+dayX; aliases.append('alias 6="cd '+wsl(dX)+'"'); bm['labels'][str(6)]=dX; _.saveText(dX,vbm+'BM-6.txt'); we=_.isDate(dA,f='dow2'); bm['labels'][we]=dX;  _.saveText(dX,vbm+'BM-'+we+'.txt');
+				dA=_.Ago('7d',epoch); dayX = _.day(dA); dX = _v.rtp+'daily'+os.sep+dayX; aliases.append('alias 7="cd '+wsl(dX)+'"'); bm['labels'][str(7)]=dX; _.saveText(dX,vbm+'BM-7.txt'); we=_.isDate(dA,f='dow2'); bm['labels'][we]=dX;  _.saveText(dX,vbm+'BM-'+we+'.txt');
+
+
+				# dA=epoch-86400-86400; dayX = _.day(dA); dX = _v.rtp+'daily'+os.sep+dayX; aliases.append('alias 2="cd '+wsl(dX)+'"'); bm['labels'][str(2)]=dX; _.saveText(dX,vbm+'BM-2.txt'); we=_.isDate(dA,f='dow2'); bm['labels'][we]=dX;  _.saveText(dX,vbm+'BM-'+we+'.txt');
+				# dA=epoch-86400-86400-86400; dayX = _.day(dA); dX = _v.rtp+'daily'+os.sep+dayX; aliases.append('alias 3="cd '+wsl(dX)+'"'); bm['labels'][str(3)]=dX; _.saveText(dX,vbm+'BM-3.txt'); we=_.isDate(dA,f='dow2'); bm['labels'][we]=dX;  _.saveText(dX,vbm+'BM-'+we+'.txt');
+				# dA=epoch-86400-86400-86400-86400; dayX = _.day(dA); dX = _v.rtp+'daily'+os.sep+dayX; aliases.append('alias 4="cd '+wsl(dX)+'"'); bm['labels'][str(4)]=dX; _.saveText(dX,vbm+'BM-4.txt'); we=_.isDate(dA,f='dow2'); bm['labels'][we]=dX;  _.saveText(dX,vbm+'BM-'+we+'.txt');
+				# dA=epoch-86400-86400-86400-86400-86400; dayX = _.day(dA); dX = _v.rtp+'daily'+os.sep+dayX; aliases.append('alias 5="cd '+wsl(dX)+'"'); bm['labels'][str(5)]=dX; _.saveText(dX,vbm+'BM-5.txt'); we=_.isDate(dA,f='dow2'); bm['labels'][we]=dX;  _.saveText(dX,vbm+'BM-'+we+'.txt');
+				# dA=epoch-86400-86400-86400-86400-86400-86400; dayX = _.day(dA); dX = _v.rtp+'daily'+os.sep+dayX; aliases.append('alias 6="cd '+wsl(dX)+'"'); bm['labels'][str(6)]=dX; _.saveText(dX,vbm+'BM-6.txt'); we=_.isDate(dA,f='dow2'); bm['labels'][we]=dX;  _.saveText(dX,vbm+'BM-'+we+'.txt');
+				# dA=epoch-86400-86400-86400-86400-86400-86400-86400; dayX = _.day(dA); dX = _v.rtp+'daily'+os.sep+dayX; aliases.append('alias 7="cd '+wsl(dX)+'"'); bm['labels'][str(7)]=dX; _.saveText(dX,vbm+'BM-7.txt'); we=_.isDate(dA,f='dow2'); bm['labels'][we]=dX;  _.saveText(dX,vbm+'BM-'+we+'.txt');
 
 				# print(bm['labels'][str(7)]); sys.exit();
 				_.saveText(aliases,_v.rtp+'daily'+os.sep+'.seven.sh')

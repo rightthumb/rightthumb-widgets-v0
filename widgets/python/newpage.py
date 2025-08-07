@@ -107,6 +107,7 @@ def action():
 		url+='0.htm'
 	
 	
+	elif _.switches.value('Template') == 'php': url+='php.php'
 	elif _.switches.value('Template') == 'n': url+='n.htm'
 	elif _.switches.value('Template') == 'b': url+='b.htm'
 	elif _.switches.value('Template') == '00': url+='00.htm'

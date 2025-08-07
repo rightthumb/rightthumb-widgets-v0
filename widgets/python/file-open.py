@@ -10,6 +10,7 @@
 # ###########################################################################
 # ## {C3P0D40fAe8B} ##
 ##################################################
+from ast import alias
 import os, sys, time
 ##################################################
 import _rightThumb._construct as __
@@ -37,7 +38,7 @@ def appSwitches():
 	_.switches.register( 'Files', '-f,-file,-files','file.txt', isData="name", description='Files' )
 	_.switches.register( 'Alias', '-a,-alias','' )
 	_.switches.register( 'Backup', '-b,-backup' )
-	_.switches.register( 'Clean', '--c,-clean' )
+	_.switches.register( 'Clean', '--c,-clean,-m,-min' )
 	_.switches.register( 'OpenSingle', '-single', 'joins by space' )
 	_.switches.register( 'ForceSublime', '-sub,-sublime' )
 	_.switches.register( 'PrintAliasLocation', '-print' )
@@ -172,7 +173,129 @@ import subprocess
 # _bk.switch( 'Silent' ); _bk.switch( 'isRunOnce' ); _bk.switch( 'Flag', 'APP' ); _bk.switch( 'DoNotSchedule' )
 # focus()
 
+
+
+def Auto_Message():
+	logFi = _v.tt+os.sep+'file-open'+os.sep+_.friendlyDate(time.time()).split(' ')[0]+'.hash'
+	log = _.getTable2(logFi)
+	cnt = 0
+	manual = any(item in _.switches.values('Clean') for item in '. m n note message todo'.split())
+	if any(item in sys.argv for item in '-m -todo -t'.split()):
+		manual = True
+	for path in log:
+		cnt += len(log[path])
+	if manual or (     cnt % 10 == 0 and False     ):
+		if manual:
+			return 2
+		return True
+	return False
+
+def display__o_message():
+	print()
+	print()
+	path = _v.rt+os.sep+'file-open__message.md'
+	_.print_markdown(path)
+	print()
+	print()
+
+
+
+def cleanAndBacklogAliases():
+	global aliases
+	# the order of filepath in aliases is order it was created
+	# it was never deleted from files key
+	# have a separate log for backlog
+
+def changeLog_Add(alias, path, old=False, quick=False, save=True):
+	global aliases
+	global changeLog
+	newLog = {
+		'epoch': time.time(),
+		'alias': alias,
+	}
+	if old:
+		oldLog = newLog.copy()
+		newLog['old'] = old
+		oldLog['new'] = path
+		oldLog['path'] = path
+		if not old in changeLog: changeLog[old] = []
+		changeLog[old].append(oldLog)
+
+		
+	newLog['path'] = path
+	newLog['quick'] = quick
+	if not path in changeLog: changeLog[path] = []
+	changeLog[path].append(newLog)
+
+	# file-open-alias--change_log.hash
+	_.saveTable(changeLog,'file-open-alias--change_log.hash',p=0)
+
+
+def setAlias(alias, path, quick=False):
+	global aliases
+	old = False
+
+	if alias in aliases['aliases']:
+		old = aliases['aliases'][alias]
+		if old in aliases['files'] and alias in aliases['files'][old]:
+			aID = aliases['files'][old].index(alias)
+			aliases['files'][old].pop(aID)
+
+	changeLog_Add(alias, path, old, quick)
+
+	aliases['aliases'][alias]=path
+	if not quick:
+		if not path in aliases['files']: aliases['files'][path]=[]
+		if not alias in aliases['files'][path]: aliases['files'][path].append(alias)
+	_.saveTable(aliases,'file-open-aliases.hash',p=0)
+
+
+
+
+	
+	
+
+
+
+def DayLog__File_Open__Add(path):
+	#logFi
+	logFi = _v.tt+os.sep+'file-open'+os.sep+_.friendlyDate(time.time()).split(' ')[0]+'.hash'
+	_v.mkdir(logFi,f=1)
+	log = _.getTable2(logFi)
+	session = os.environ.get('Session_ID',str(__.startTime2))
+	if not path in log: log[path] = []
+	log[path].append({'session': session, 'time': int(time.time())})
+	_.saveTable2(log,logFi)
+	printLogNames = any(item in _.switches.values('Clean') for item in '. log'.split())
+	if printLogNames:
+		_.pr('Log:',logFi, h='dark_khaki')
+
+aliases = None
+def loadAliases():
+	global aliases
+	global changeLog
+	if aliases is None:
+		aliases = _.getTable('file-open-aliases.hash')
+		changeLog=_.getTable('file-open-alias--change_log.hash')
+		default={
+			'aliases':{},
+			'files':{},
+		}
+		if not type(aliases) == dict:
+			aliases = default
+		for k in default:
+			if not k in aliases: aliases[k] = default[k]
+
+	return aliases
+
+
 def action(path=None):
+	Display = Auto_Message()
+	if Display:
+		display__o_message()
+	if Display == 2:
+		return
+	global aliases
 
 	if _.switches.isActive('CreateFile') and _.switches.isActive('Files') and len(_.switches.values('Files')) == 1:
 		cPath = _.switches.values('Files')[0]
@@ -273,7 +396,7 @@ def action(path=None):
 			_.switches.fieldSet( 'Files', 'values', [_path_] )
 
 	if _.switches.isActive('Alias') and not _.switches.isActive('Files') and len(_.switches.values('Alias')) ==1 and os.path.isfile(_.switches.values('Alias')[0]):
-		aliases=_.getTable('file-open-aliases.hash')
+		loadAliases()
 		a=_.switches.values('Alias')[0]
 		if 'aliases' in aliases and not a in aliases['aliases']:
 			_.switches.fieldSet( 'Alias', 'active', False )
@@ -299,17 +422,28 @@ def action(path=None):
 
 	if _.switches.isActive('Alias') and not _.switches.isActive('Files') and len(_.switches.values('Alias')) ==2:
 		aa=None
+		spent=[]
 		for a in _.switches.values('Alias'):
 			if os.path.isfile(a):
-				a=__.path(a)
-				_.switches.fieldSet( 'Files', 'active', True )
-				_.switches.fieldSet( 'Files', 'value', a )
-				_.switches.fieldSet( 'Files', 'values', [a] )
+				if not a in spent:
+					spent.append(a)
+					a=__.path(a)
+					_.switches.fieldSet( 'Files', 'active', True )
+					_.switches.fieldSet( 'Files', 'value', a )
+					_.switches.fieldSet( 'Files', 'values', [a] )
+				else:
+					aa=a
 			else:
 				aa=a
-		
-		_.switches.fieldSet( 'Alias', 'value', aa )
-		_.switches.fieldSet( 'Alias', 'values', [aa] )
+
+		if not aa is None:
+			_.switches.fieldSet( 'Alias', 'value', aa )
+			_.switches.fieldSet( 'Alias', 'values', [aa] )
+		else:
+			_.pr('Alias not saved.',c='red')
+
+
+			
 	paths=[]
 	if not path is None:
 		paths=[path]
@@ -344,16 +478,11 @@ def action(path=None):
 	if _.switches.isActive('App'): app = ' '.join(_.switches.values('App'))
 	if _.switches.isActive('Alias'):
 		_aliases=_.switches.values('Alias')
-		aliases=_.getTable('file-open-aliases.hash')
+		loadAliases()
 
 
 
-		if not aliases and paths:
-			aliases={
-						'aliases':{},
-						'files':{},
-			}
-		elif not aliases: _.e('no aliases, create an alias','p file-open -alias important -f file.md')
+
 
 		if paths:
 			for path in paths:
@@ -361,9 +490,9 @@ def action(path=None):
 				for _alias in _aliases:
 
 					#b)--> actual code
-					aliases['aliases'][_alias]=path
-					if not path in aliases['files']: aliases['files'][path]=[]
-					if not _alias in aliases['files'][path]: aliases['files'][path].append(_alias)
+
+					setAlias(_alias, path)
+
 					#e)--> actual code
 					
 					#b)--> testing
@@ -379,7 +508,6 @@ def action(path=None):
 
 
 
-			_.saveTable(aliases,'file-open-aliases.hash')
 		elif not paths:
 			for _alias in _aliases:
 				if _alias in aliases['aliases']:
@@ -400,19 +528,20 @@ def action(path=None):
 			if not _.switches.isActive('PrintAliases'):
 				_.ad()
 	if paths:
-		logFi = _v.tt+os.sep+'file-open'+os.sep+_.friendlyDate(time.time()).split(' ')[0]+'.hash'
-		_v.mkdir(logFi,f=1)
-		log = _.getTable2(logFi)
+		#logFi
+		
+
 		# print(logFi)
-		session = str(__.startTime2)
-		try: session = os.getenv('Session_ID')
-		except: pass
+		session = os.environ.get('Session_ID',str(__.startTime2))
+		# session = str(__.startTime2)
+		# try: session = os.getenv('Session_ID')
+		# except: pass
 		for path in paths:
 			if _.switches.isActive('PrintAliases'):
 				try:
 					aliases
 				except:
-					aliases=_.getTable('file-open-aliases.hash')
+					loadAliases()
 				if _.switches.isActive('Clean'):
 					for alias in aliases['files'][__.path(path)]:
 						_.pr(alias,c='cyan')
@@ -442,35 +571,40 @@ def action(path=None):
 			path=_.zZip(path)
 			if not _.switches.isActive('Path'):
 				_.pr(path,c='yellow')
-			aliases=_.getTable('file-open-aliases.hash')
-			if not 'aliases' in aliases: aliases['aliases']={}
-			if not 'files' in aliases: aliases['files']={}
-			aliases['aliases']['last']=path
+			loadAliases()
+			setAlias('last', path, quick=True)
+			# aliases['aliases']['last']=path
 			if _.switches.isActive('HostedTemp'):
 				HT = _.switches.values('HostedTemp')
 				if len(HT) > 0:
 					_ext_ = HT[0]
 				else:
 					_ext_ = 'htm' 
-				aliases['aliases']['tmp']=path
+				setAlias('tmp', path, quick=True)
+				# aliases['aliases']['tmp']=path
 				if len(HT) > 1:
 					customAlias = 'ht.'+HT[1]
-					aliases['aliases'][customAlias]=path
+					# aliases['aliases'][customAlias]=path
+					setAlias('customAlias', path, quick=True)
 					_.pr('Alias:',customAlias)
-				aliases['aliases']['ht.']=path
+				# aliases['aliases']['ht.']=path
+				setAlias('ht.', path, quick=True)
 				_.pr('Alias:','ht.')
 				i=1
 				while 'ht.'+str(i) in aliases['aliases']: i+=1
-				aliases['aliases']['ht.'+str(i)]=path
+				# aliases['aliases']['ht.'+str(i)]=path
+				setAlias('ht.'+str(i), path, quick=True)
 				_.pr('Alias:','ht.'+str(i))
 
-				aliases['aliases']['ht.'+_ext_]=path
+				# aliases['aliases']['ht.'+_ext_]=path
+				setAlias('ht.'+_ext_, path, quick=True)
+				
+
 				_.pr('Alias:','ht.'+_ext_)
 
 			_.saveText(path,_v.tt+os.sep+'file-open.last')
 			if _.switches.isActive('PrintAliasLocation'): return None
 				
-			_.saveTable(aliases,'file-open-aliases.hash',p=0)
 			if _.switches.isActive('DoNotOpen') and (  not 'bk' in _.switches.value('DoNotOpen') and not 'backup' in _.switches.value('DoNotOpen')   ):
 				return None
 			if _.switches.isActive('Backup'): backup(path)
@@ -531,13 +665,15 @@ def action(path=None):
 				if app == 'C:\\Program': app=_v.fig['code_editor']
 				command = f'{app} {path}'
 				os.system(command)
-			if not path in log: log[path] = []
-			log[path].append(session)
+
 			if _.switches.isActive('Backup') and 'secure' in  _.switches.value('Backup'):
 				if __.setting('fileBackup-secure_file'):
 					backup(path,False)
 
-		_.saveTable2(log,logFi)
+
+		DayLog__File_Open__Add(path)
+		#logFi
+
 		_.cleanUnzip()
 bki=0
 

@@ -10,6 +10,8 @@ rem    - Scott Taylor Reph, RightThumb.com
 rem ###########################################################################
 rem ## {C3P0D40fAe8B} ##
 
-call updateDate
+@REM call updateDate
 
+
+call p. vps-upDown %*
  

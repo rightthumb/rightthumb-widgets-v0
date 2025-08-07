@@ -4674,9 +4674,9 @@ def capture_active_window(data={}):
 			if 'PreHookChange' in data:
 				for k in data['PreHookChange']:
 					data[k] = data['PreHookChange'][k]
-					print('PreHook Changed',k, data['PreHookChange'][k])
+					# print('PreHook Changed',k, data['PreHookChange'][k])
 					return data
-		print('PreHook: No change')
+		# print('PreHook: No change')
 		return data
 		return win
 
