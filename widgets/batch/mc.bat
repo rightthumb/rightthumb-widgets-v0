@@ -18,6 +18,3 @@ dir "Y:\Videos\_Mom\Movies_Small\*%1*"  >> ```
  Type  ```  | call + %1
 
 :END
-
-
- 

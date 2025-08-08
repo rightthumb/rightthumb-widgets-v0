@@ -13,10 +13,10 @@ rem ## {C3P0D40fAe8B} ##
 set bmRoot=%scriptroot%\script-bookmarks\%computername%
 
 IF NOT [%1] == [] (
-        CALL :RUN %1
-    ) ELSE (
-        ECHO ERROR: No b search content
-    )
+		CALL :RUN %1
+	) ELSE (
+		ECHO ERROR: No b search content
+	)
 
 GOTO:EOF
 
@@ -28,8 +28,3 @@ CALL b b
 dir /b *%1*
 CALL b back
 GOTO:EOF
-
-
-
-
- 

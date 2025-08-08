@@ -1,1 +1,1 @@
-ipconfig /displaydns |+ host |- loc |- 127 
+ipconfig /displaydns |+ host |- loc |- 127

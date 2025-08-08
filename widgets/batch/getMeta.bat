@@ -15,6 +15,3 @@ set thisFile=getMeta.php
 %php% %phpFiles%\%thisFile%
 echo.
 echo.
-
-
- 

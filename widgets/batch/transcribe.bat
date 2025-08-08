@@ -29,4 +29,3 @@ rem GOTO:EOF
 :NEXT
 call cat transcript.txt - "Error:"
 GOTO:EOF
-

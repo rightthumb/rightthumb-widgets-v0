@@ -2,14 +2,14 @@
 
 
 if [%1]==[] (
-    echo.
-    echo obb index.php
-    echo obb wt
-    echo obb https://sds.sh/
-    echo.
+	echo.
+	echo obb index.php
+	echo obb wt
+	echo obb https://sds.sh/
+	echo.
 
 
-    goto :eof
+	goto :eof
 )
 
 call p. script-helper -t r:_.al -i %* 

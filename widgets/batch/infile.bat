@@ -21,6 +21,3 @@ IF ["%checkisinfile%"] == [""] (set isinfile=n)
 
 set checkisinfile=
 set tmpFile=
-
-
- 

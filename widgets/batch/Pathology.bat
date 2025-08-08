@@ -61,8 +61,3 @@ GOTO END
 :END 
 set m.path.log=%index%.log.txt
 echo %search%, %2, %3, %4, %5 >> %m.path.log%
- 
- 
-
-
- 

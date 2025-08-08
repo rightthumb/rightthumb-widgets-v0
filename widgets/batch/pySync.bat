@@ -18,7 +18,3 @@ echo %widgets%
 IF NOT EXIST %widgets%\ (CALL :ERROR) 
 IF EXIST %widgets%\ (CALL :START) 
 GOTO:EOF
-
-
-
- 

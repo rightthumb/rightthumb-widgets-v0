@@ -24,5 +24,3 @@ echo %cnt%
 GOTO P1
 :ENDP1
 set cnt=0
-
- 

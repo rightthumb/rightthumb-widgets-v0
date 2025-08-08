@@ -16,5 +16,3 @@ set thisFile=weather.php
 echo.
 echo.
 : copied as g
-
- 

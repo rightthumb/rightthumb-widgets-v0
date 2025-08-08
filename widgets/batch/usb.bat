@@ -14,8 +14,8 @@ rem ## {C3P0D40fAe8B} ##
 CALL findUSB
 
 if not [%1] == [] (
-    SET theusb=%1
-    SET theusb=%theusb:~0,1%
+	SET theusb=%1
+	SET theusb=%theusb:~0,1%
 )
 
 cls
@@ -73,6 +73,3 @@ GOTO:EOF
 CALL p. copyTool -m -src tapy3 -dst %theusb% -answer a
 CALL p. USB_python_modules_synchronized -drive %theusb%
 GOTO:EOF
-
-
- 

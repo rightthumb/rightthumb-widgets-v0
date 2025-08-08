@@ -43,5 +43,3 @@ title %thing0% %title_ccd%
 prompt - 
 cls
 :END
-
- 

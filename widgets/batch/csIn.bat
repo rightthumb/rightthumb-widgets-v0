@@ -1,15 +1,15 @@
 @echo off
 if [%1]==[] (
-    set clipSlot=Default
+	set clipSlot=Default
 ) else (
-    set clipSlot=%1
+	set clipSlot=%1
 )
 call pa > %tmpf%-clipSlot-%clipSlot%
 set cs%clipSlot%=%tmpf%-clipSlot-%clipSlot%
 call pa > %tmpf%-clipSlot-%clipSlot%
 set /p pa%clipSlot%=<%tmpf%-clipSlot-%clipSlot%
 if [%clipSlot%]==[Default] (
-    set "clipSlot="
+	set "clipSlot="
 )
 set "per=%%"
 @REM echo %quote%

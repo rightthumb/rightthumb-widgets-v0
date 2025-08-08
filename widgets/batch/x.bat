@@ -26,24 +26,24 @@ if not exist "%tt%\bk" mkdir "%tt%\bk"
 
 :: Set today's date in YYYY-MM-DD format
 for /f "tokens=2-4 delims=/ " %%a in ('date /t') do (
-    set year=%%c
-    set month=%%a
-    set day=%%b
+	set year=%%c
+	set month=%%a
+	set day=%%b
 )
 set todaysDate=%year%-%month%-%day%
 
 :: Check if the directory for today exists, if not, set bkBackupLog to false
 if not exist "%tt%\bk\today" (
-    set bkBackupLog=false
+	set bkBackupLog=false
 ) else (
-    set bkBackupLog=true
+	set bkBackupLog=true
 )
 
 :: Perform operations based on bkBackupLog
 if "%bkBackupLog%"=="false" (
-    call :checkToday
+	call :checkToday
 ) else (
-    echo fileBackup.json already backed up today
+	echo fileBackup.json already backed up today
 )
 echo %todaysDate% > "%tt%\bk\today"
 endlocal
@@ -55,10 +55,10 @@ set /p checkToday=<"%tt%\bk\today"
 call :trimSpaces checkToday
 
 if "%checkToday%"=="%todaysDate%" (
-    echo fileBackup.json already backed up today <====================================== Already
+	echo fileBackup.json already backed up today <====================================== Already
 ) else (
-    call p. bk -f %tt%\fileBackup.json -fo %tt%\bk
-    echo fileBackup.json backed up <------------------------------------------ First
+	call p. bk -f %tt%\fileBackup.json -fo %tt%\bk
+	echo fileBackup.json backed up <------------------------------------------ First
 )
 goto:eof
 
@@ -103,21 +103,21 @@ goto:skipper
 
 :del_session
 if exist "%stmp%\unclaimed_tickets_history\history-%Session_ID%.txt" (
-    call rm "%stmp%\unclaimed_tickets_history\history-%Session_ID%.txt"
+	call rm "%stmp%\unclaimed_tickets_history\history-%Session_ID%.txt"
 )
 goto:eof
 
 :skipper
 SET ORIGINAL_Session_ID=%Session_ID%
 if [%burn_this%] == [yes] (
-    title Closed
-    call:del_session
-    call p. lock-wait -unlock x
-    call p. lock-wait -unlock x
-    @REM call p. ctrl-w
-    echo Exit Script Complete
-    exit
-    goto:eof
+	title Closed
+	call:del_session
+	call p. lock-wait -unlock x
+	call p. lock-wait -unlock x
+	@REM call p. ctrl-w
+	echo Exit Script Complete
+	exit
+	goto:eof
 
 )
 IF [%1] == [r] SET reclaim_tickets=yes
@@ -142,8 +142,8 @@ rem echo %Session_ID%
 rem echo %myVars%\ID.sys
 IF NOT EXIST %myVars%\ID.sys SET myVars=D:\.rightthumb-widgets\hosts\VULCAN\vars
 IF NOT EXIST %myVars%\ID.sys (
-    echo NOT EXIST %myVars%\ID.sys
-    goto:eof
+	echo NOT EXIST %myVars%\ID.sys
+	goto:eof
 )
 
 CALL :IDTEST
@@ -152,9 +152,9 @@ CALL :IDTEST
 
 if not [%computername%] == [VULCAN] GOTO :SKIP1
 if %Session_ID% LSS 5000 (
-    echo Session_ID: %Session_ID% BAD
-    echo.
-    goto:eof
+	echo Session_ID: %Session_ID% BAD
+	echo.
+	goto:eof
 )
 :SKIP1
 
@@ -172,15 +172,15 @@ CALL :TESTFILE
 
 CALL :FILENAME
 IF EXIST "%file%" (
-    echo File exists: %file%
-    echo %Session_ID%
-    goto:eof
+	echo File exists: %file%
+	echo %Session_ID%
+	goto:eof
 )
 if not [%computername%] == [VULCAN] GOTO :SKIP2
 if %Session_ID% LSS 5000 (
-    echo Session_ID: %Session_ID% BAD
-    echo.
-    goto:eof
+	echo Session_ID: %Session_ID% BAD
+	echo.
+	goto:eof
 )
 :SKIP2
 set html=%myTickets%\html
@@ -295,15 +295,15 @@ IF EXIST ~openTickets.txt (del ~openTickets.txt)
 rem echo BackupRunOnce: %BackupRunOnce%
 IF [%BackupRunOnce%] == [Y] (
 
-    echo BackupRunOnce: STARTED
-    call:autoBackup_A
-    call p. autoBackup -date "%open_timestamp2%" -include_once
-    call:clearBackupFiles
+	echo BackupRunOnce: STARTED
+	call:autoBackup_A
+	call p. autoBackup -date "%open_timestamp2%" -include_once
+	call:clearBackupFiles
 ) ELSE (
-    echo BackupRunOnce: SKIPPED
-    call:autoBackup_B
-    call p. autoBackup -date "%open_timestamp2%"
-    call:clearBackupFiles
+	echo BackupRunOnce: SKIPPED
+	call:autoBackup_B
+	call p. autoBackup -date "%open_timestamp2%"
+	call:clearBackupFiles
 )
 
 if not [%ORIGINAL_Session_ID%] == [%Session_ID%] ( CALL p. ticket_transfer -old %ORIGINAL_Session_ID% -new %Session_ID%)
@@ -331,12 +331,12 @@ if [%skip_backup%] == [YES] (
 call c
 echo skip_backup
 ) else (
-    call:RunOnceBackupAsk2
+	call:RunOnceBackupAsk2
 )
 goto:eof
 
-    SET /p roAsk=Backup run once? (n)  
-    IF NOT [%roAsk%] == [] SET BackupRunOnce=Y
+	SET /p roAsk=Backup run once? (n)  
+	IF NOT [%roAsk%] == [] SET BackupRunOnce=Y
 goto:eof
 
 :FILENAME
@@ -352,77 +352,77 @@ if [%computername%] == [VULCAN] CALL :TESTFILE2
 :TESTFILE2
 CALL :FILENAME
 IF EXIST "%file%" (
-    SET /p LastID=<%myVars%\ID.sys
-    SET /a Session_ID=%LastID% + 1
-    if %Session_ID% GTR 5000 ( CALL :UPDATE_ID_FILE )
+	SET /p LastID=<%myVars%\ID.sys
+	SET /a Session_ID=%LastID% + 1
+	if %Session_ID% GTR 5000 ( CALL :UPDATE_ID_FILE )
 )
 goto:eof
 
 :IDTEST
 if [%computername%] == [VULCAN] (
-    CALL :IDTEST_HOME
+	CALL :IDTEST_HOME
 ) else (
-    CALL :IDTEST_ALT
+	CALL :IDTEST_ALT
 )
 :IDTEST_HOME
 if %Session_ID% LSS 5000 (
-    echo Session_ID: %Session_ID% BAD
-    SET /p LastID=<%myVars%\ID.sys
-    SET /a Session_ID=%LastID% + 1
-    if %Session_ID% GTR 5000 ( CALL :UPDATE_ID_FILE )
-    echo Session_ID: %Session_ID% NEW
-    echo.
+	echo Session_ID: %Session_ID% BAD
+	SET /p LastID=<%myVars%\ID.sys
+	SET /a Session_ID=%LastID% + 1
+	if %Session_ID% GTR 5000 ( CALL :UPDATE_ID_FILE )
+	echo Session_ID: %Session_ID% NEW
+	echo.
 )
 :IDTEST_ALT
 CALL :TEST_FILE
 
 if [%fileError%] == [True] (
-    echo Session_ID: %Session_ID% BAD
-    SET /p LastID=<%myVars%\ID.sys
-    SET /a Session_ID=%LastID% + 1
-    CALL :UPDATE_ID_FILE
-    
-    echo.
-    CALL :IDTEST_ALT
+	echo Session_ID: %Session_ID% BAD
+	SET /p LastID=<%myVars%\ID.sys
+	SET /a Session_ID=%LastID% + 1
+	CALL :UPDATE_ID_FILE
+	
+	echo.
+	CALL :IDTEST_ALT
 )
 goto:eof
 :TEST_FILE
 SET fileError=False
 CALL :FILENAME
 IF EXIST "%file%" (
-    SET fileError=True
+	SET fileError=True
 )
 goto:eof
 
 :UPDATE_ID_FILE
 if [%Session_ID%] == [] (
-    SET Session_ID=%Session_ID_BK%
+	SET Session_ID=%Session_ID_BK%
 ) else (
-    echo %Session_ID% > %myVars%\ID.sys
+	echo %Session_ID% > %myVars%\ID.sys
 )
 goto:eof
 :autoBackup_A
 if [%skip_backup%] == [YES] (
-    echo skip_backup
+	echo skip_backup
 ) else (
-    call p. autoBackup -date "%open_timestamp2%" -include_once
-    call:clearBackupFiles
+	call p. autoBackup -date "%open_timestamp2%" -include_once
+	call:clearBackupFiles
 )
 goto:eof
 :autoBackup_B
 if [%skip_backup%] == [YES] (
-    echo skip_backup
+	echo skip_backup
 ) else (
-    echo autoBackup running...
-    call p. autoBackup -date "%open_timestamp2%"
-    call:clearBackupFiles
+	echo autoBackup running...
+	call p. autoBackup -date "%open_timestamp2%"
+	call:clearBackupFiles
 )
 goto:eof
 :clearBackupFiles
-    move %myTables%\fileBackupSchedule.json  %myTables%\log_backup\fileBackupSchedule.json 
-    move %myTables%\myFileLocations.json  %myTables%\log_backup\myFileLocations.json 
-    call ndp %myTables%\log_backup\fileBackupSchedule.json
-    call ndp %myTables%\log_backup\myFileLocations.index
-    echo {} > %myTables%\myFileLocations.index
-    echo [] > %myTables%\fileBackupSchedule.json
+	move %myTables%\fileBackupSchedule.json  %myTables%\log_backup\fileBackupSchedule.json 
+	move %myTables%\myFileLocations.json  %myTables%\log_backup\myFileLocations.json 
+	call ndp %myTables%\log_backup\fileBackupSchedule.json
+	call ndp %myTables%\log_backup\myFileLocations.index
+	echo {} > %myTables%\myFileLocations.index
+	echo [] > %myTables%\fileBackupSchedule.json
 goto:eof

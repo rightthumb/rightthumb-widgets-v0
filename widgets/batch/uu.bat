@@ -21,7 +21,3 @@ if [%1] == [] (
 ) else (
 	CALL p. genuuid -short -e %*
 )
-
-
-
- 

@@ -11,5 +11,3 @@ rem ###########################################################################
 rem ## {C3P0D40fAe8B} ##
 
 "D:\techApps\Python\Python36-32\Scripts\har2requests.exe" %*
-
- 

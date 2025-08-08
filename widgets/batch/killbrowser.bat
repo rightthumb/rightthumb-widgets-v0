@@ -19,6 +19,3 @@ taskkill /f /im MOZILL~1.EXE /t
 taskkill /f /im iexplo~1.EXE /t
 taskkill /f /im netsca~1.EXE /t
 taskkill /f /im chrome.exe /t
-
-
- 

@@ -1,2 +1,2 @@
 @echo off
-where %1 
+where %1

@@ -30,7 +30,7 @@ set last4=!name:~-4!
 
 IF NOT EXIST %parent%\%%~xa (mkdir %parent%\%%~xa)
 
-     move "%%a" %parent%\%%~xa
+	move "%%a" %parent%\%%~xa
 
 
 cls
@@ -160,5 +160,3 @@ for /f "delims=" %%d in ('dir /s /b /ad ^| sort /r') do rd "%%d"
 for /f "delims=" %%d in ('dir /s /b /ad %parent%\ ^| sort /r') do rd "%%d" 
 
 cls
-
- 

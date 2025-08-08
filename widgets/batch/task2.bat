@@ -17,7 +17,3 @@ if [%1] == [-report] (
 ) else ( 
 	p cmd2table -print | p. printTable -sort image_name - svchost -s image_name + .exe %*  -aggregate " eot?mem-total=add( int(MEM_USAGE) )); format(eot?mem-total,?size,??kb);"
 )
-
-
-
- 

@@ -16,5 +16,3 @@ start notepad %file%
 ping google.com>``
 del %file%
 del ``
-
- 

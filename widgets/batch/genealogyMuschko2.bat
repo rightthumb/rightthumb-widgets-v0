@@ -19,6 +19,3 @@ set thisFile=genealogyMuschko2.php
 %php% %phpFiles%\%thisFile%
 echo.
 echo.
-
-
- 

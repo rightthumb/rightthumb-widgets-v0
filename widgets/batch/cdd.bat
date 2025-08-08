@@ -13,23 +13,23 @@ if "!param!" neq "!param::=!" set "colonFound=true"
 
 :: Check if quotes were present and choose the correct cd command
 if not "!param!"=="!stripped!" (
-    :: Quotes were present
-    %py% %widgets%\widgets\python\folder-registration.py
-    if "!colonFound!"=="true" (
-        cd /d %param%
-    ) else (
-        cd %param%
-    )
-    %py% %widgets%\widgets\python\folder-registration.py
+	:: Quotes were present
+	%py% %widgets%\widgets\python\folder-registration.py
+	if "!colonFound!"=="true" (
+		cd /d %param%
+	) else (
+		cd %param%
+	)
+	%py% %widgets%\widgets\python\folder-registration.py
 ) else (
-    :: Quotes were not present
-    %py% %widgets%\widgets\python\folder-registration.py
-    if "!colonFound!"=="true" (
-        cd /d "%param%"
-    ) else (
-        cd "%param%"
-    )
-    %py% %widgets%\widgets\python\folder-registration.py
+	:: Quotes were not present
+	%py% %widgets%\widgets\python\folder-registration.py
+	if "!colonFound!"=="true" (
+		cd /d "%param%"
+	) else (
+		cd "%param%"
+	)
+	%py% %widgets%\widgets\python\folder-registration.py
 )
 
 endlocal

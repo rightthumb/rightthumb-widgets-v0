@@ -10,10 +10,10 @@ set "db=index.db"
 
 :: Check if the argument exists
 if not "%~1"=="" (
-    echo %~1 | findstr /i "\.db \.sqlite" >nul
-    if not errorlevel 1 (
-        set "db=%~1"
-    )
+	echo %~1 | findstr /i "\.db \.sqlite" >nul
+	if not errorlevel 1 (
+		set "db=%~1"
+	)
 )
 
 call schema %db% > %schema%

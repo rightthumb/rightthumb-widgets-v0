@@ -11,12 +11,12 @@ rem ###########################################################################
 rem ## {C3P0D40fAe8B} ##
 
 if [%1] == [] (
-    call p. cat
+	call p. cat
 ) else if [%1] == [-f] (
-    shift
-    call p. cat --c -f %* | call cp
+	shift
+	call p. cat --c -f %* | call cp
 ) else (
-    call p. cat --c -f %* | call cp
+	call p. cat --c -f %* | call cp
 )
 
-rem related to cat 
+rem related to cat

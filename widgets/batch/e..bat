@@ -20,6 +20,3 @@ rem )
 rem start "EDIT" %code_editor% "%batch%\%1.bat"
 call p. file-open -backup -f "%batch%\%1.bat"
 rem echo "%batch%\%1.bat"
-
-
- 

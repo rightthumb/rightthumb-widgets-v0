@@ -19,9 +19,3 @@ copy %widgets%\widgets\bash\install\py\tool2 %USERPROFILE%\AppData\Local\Package
 
 copy %widgets%\widgets\bash\install\py\tool %USERPROFILE%\.rt\tool /y
 copy %widgets%\widgets\bash\install\py\tool2 %USERPROFILE%\.rt\tool2 /y
-
-
-
-
-
- 

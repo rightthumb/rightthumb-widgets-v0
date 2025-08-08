@@ -47,8 +47,3 @@ echo. bm file as var:   b 7z -run 7z.exe
 echo. 
 
 :END
-
-
-
-
- 

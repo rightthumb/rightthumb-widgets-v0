@@ -2,9 +2,9 @@
 
 @echo off
 if not "%~2"=="" (
-    CALL p. site. -a %1 -url %2 -add
+	CALL p. site. -a %1 -url %2 -add
 ) else (
-    CALL p. site. -a %*
+	CALL p. site. -a %*
 )
 
 goto:eof

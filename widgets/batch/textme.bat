@@ -5,9 +5,9 @@
 call p. isPhoneNumber -i %1 > %tmpf%
 set /p isPhoneNumber=<%tmpf%
 if [%isPhoneNumber%] == [yes] (
-    set phone=%1
+	set phone=%1
 ) else (
-    set phone=8136901260
+	set phone=8136901260
 )
 
 

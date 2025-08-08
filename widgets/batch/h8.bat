@@ -14,9 +14,9 @@ if not exist %myPython%\_rightThumb\    mkdir %myPython%\_rightThumb\
 xcopy      /s/d/y/c      %python%\_rightThumb\*.py      %myPython%\_rightThumb\      >nul
 
 if not exist "%myPython%\%1.py" (
-    set originalOne=%1
-    set searched=0
-    GOTO :APP_SEARCH
+	set originalOne=%1
+	set searched=0
+	GOTO :APP_SEARCH
 )
 
 :START_WORKING
@@ -31,17 +31,17 @@ rem set py2=D:\Python27\python.exe
 set two=%2
 call :DeQuote two
 if [%two:~0,1%] == [/] (
-        set switchUsed=true
-        set switch=%two:~1,100%
-    ) else (
-        set switch=%2
-    )
+		set switchUsed=true
+		set switch=%two:~1,100%
+	) else (
+		set switch=%2
+	)
 if [%switch%] == [a] (
-        call :TOFOLDER
-        if exist %1.py (move %1.py archive)
-        if exist %1.py.bak (move %1.py.bak archive)
-        goto:EOF
-    )
+		call :TOFOLDER
+		if exist %1.py (move %1.py archive)
+		if exist %1.py.bak (move %1.py.bak archive)
+		goto:EOF
+	)
 
 if [%switch%] == [v] set clean=true
 if [%switch%] == [/] set clean=true
@@ -53,38 +53,38 @@ if [%switch%] == [l] call :labelLegacy %1
 call :checkLegacy %1
 call :TOBACK
 if [%switch%] == [2] (
-        if [%switchAutoLegacy%] == [true] (
-                call :ver2 %*
-            ) else (
-                set one = %1&shift&shift
-                call :ver2 %one% %*
-            )
-    ) else (
-        if [%switchUsed%] == [false] (
-                call :ver3 %*
-            ) else (
-                set one = %1&shift&shift
-                call :ver3 %one% %*
-            )
-    )
+		if [%switchAutoLegacy%] == [true] (
+				call :ver2 %*
+			) else (
+				set one = %1&shift&shift
+				call :ver2 %one% %*
+			)
+	) else (
+		if [%switchUsed%] == [false] (
+				call :ver3 %*
+			) else (
+				set one = %1&shift&shift
+				call :ver3 %one% %*
+			)
+	)
 
 
 goto:EOF
 :APP_SEARCH
-    set /a searched=%searched%+1
-    if [%searched%] == [1] set plusClose=90
-    rem echo %plusClose%
-    if [%searched%] == [2] set plusClose=80
-    rem echo %plusClose%
-    if [%searched%] == [3] set plusClose=70
-    rem echo %plusClose%
-    echo.>"%stmp%\app(file.py)_output.txt"
-    echo Error: Does not exist>>"%stmp%\app(file.py)_output.txt"
-    echo.>>"%stmp%\app(file.py)_output.txt"
-    echo Try:>>"%stmp%\app(file.py)_output.txt"
-    rem echo %searched% %plusClose%
-    call p. file -folder %myPython% -noext -label ;tApps -prefix ;t +close %plusClose% + %1>>"%stmp%\app(file.py)_output.txt"
-    GOTO :POST_ERROR_COUNT_CHECK
+	set /a searched=%searched%+1
+	if [%searched%] == [1] set plusClose=90
+	rem echo %plusClose%
+	if [%searched%] == [2] set plusClose=80
+	rem echo %plusClose%
+	if [%searched%] == [3] set plusClose=70
+	rem echo %plusClose%
+	echo.>"%stmp%\app(file.py)_output.txt"
+	echo Error: Does not exist>>"%stmp%\app(file.py)_output.txt"
+	echo.>>"%stmp%\app(file.py)_output.txt"
+	echo Try:>>"%stmp%\app(file.py)_output.txt"
+	rem echo %searched% %plusClose%
+	call p. file -folder %myPython% -noext -label ;tApps -prefix ;t +close %plusClose% + %1>>"%stmp%\app(file.py)_output.txt"
+	GOTO :POST_ERROR_COUNT_CHECK
 goto:EOF
 
 :POST_ERROR_COUNT_CHECK
@@ -102,9 +102,9 @@ goto:EOF
 
 
 if exist "%stmp%\app(file.py).txt" (
-    goto :POST_ERROR_HAS_SINGLE
+	goto :POST_ERROR_HAS_SINGLE
 ) else (
-    type "%stmp%\app(file.py)_output.txt"
+	type "%stmp%\app(file.py)_output.txt"
 )
 
 
@@ -132,7 +132,7 @@ GOTO:EOF
 call :START_WORKING %argsNew%
 :DOCUMENT_AND_START
 if not exist "%appAliasLog%" (
-    echo "timestamp","session","alias","original","folder">>%appAliasLog%
+	echo "timestamp","session","alias","original","folder">>%appAliasLog%
 )
 
 call timestamp sdel noEcho
@@ -158,16 +158,16 @@ goto:EOF
 :ver2
 rem cls
 if not [%clean%] == [true] (
-    echo.
-    echo _____________
-    echo.
+	echo.
+	echo _____________
+	echo.
 )
 %py2% "%myPython%\%1.py" %*
 if not [%clean%] == [true] (
-    echo.
-    echo _____________
-    echo Python 2.7.13
-    echo.
+	echo.
+	echo _____________
+	echo Python 2.7.13
+	echo.
 )
 goto:EOF
 
@@ -175,16 +175,16 @@ goto:EOF
 rem echo %switch%
 rem cls
 if [%clean%] == [true] (
-    echo.
-    echo _____________
-    echo.
+	echo.
+	echo _____________
+	echo.
 )
 %py% "%myPython%\%1.py" %*
 if [%clean%] == [true] (
-    echo.
-    echo ____________
-    echo Python 3.6.2
-    echo.
+	echo.
+	echo ____________
+	echo Python 3.6.2
+	echo.
 )
 goto:EOF
 
@@ -209,28 +209,25 @@ goto:EOF
 :checkLegacy
 find /c "#835B0032" "%myPython%\%1.py" > nul
 if not %errorlevel% equ 1 (
-        set switchAutoLegacy=true
-        set switch=2
-    )
+		set switchAutoLegacy=true
+		set switch=2
+	)
 goto:EOF
 
 :recoverLegacy
 call :TOFOLDER
 set fileName=%myPython%\%1.py
 if exist "%fileName%" (
-        if exist "%fileName%.bak" (
-                del /q "%fileName%"
-                type "%fileName%.bak" > "%fileName%"
-                del /q "%fileName%.bak"
+		if exist "%fileName%.bak" (
+				del /q "%fileName%"
+				type "%fileName%.bak" > "%fileName%"
+				del /q "%fileName%.bak"
 
-                
-            )
-    )
+				
+			)
+	)
 set switchAutoLegacy=true
 set switchUsed=true
 set switch=2
 call :labelLegacy %1
 goto:EOF
-
-
- 

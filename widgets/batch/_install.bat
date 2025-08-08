@@ -27,5 +27,3 @@ GOTO END
 
 :END
 pause
-
- 

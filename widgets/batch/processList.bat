@@ -18,5 +18,3 @@ for /F "tokens=*" %%A in  ( ~list.txt ) do  (
 )
 type ~relevant.txt | sort > relevant.txt 
 del ~relevant.txt
-
- 

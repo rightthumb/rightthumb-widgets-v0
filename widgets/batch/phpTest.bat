@@ -15,6 +15,3 @@ set thisFile=phpTest.php
 %php% %phpFiles%\%thisFile%
 echo.
 echo.
-
-
- 

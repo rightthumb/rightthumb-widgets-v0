@@ -14,5 +14,3 @@ rem ## {C3P0D40fAe8B} ##
 call dmp %1
 
 ::dmp.bat
-
- 

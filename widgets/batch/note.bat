@@ -21,5 +21,3 @@ echo %pc%= How may I help you %code_editor%?
 prompt :%code_editor%- 
 
 :END
-
- 

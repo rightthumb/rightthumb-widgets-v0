@@ -17,5 +17,3 @@ set thisFile=fgc.php
 echo.
 echo.
 : copied as g
-
- 

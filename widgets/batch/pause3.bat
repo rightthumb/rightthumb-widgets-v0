@@ -12,5 +12,3 @@ rem ## {C3P0D40fAe8B} ##
 
 ping yahoo.com > "%stmp%\~"
 IF EXIST "%stmp%\~" (del "%stmp%\~")
-
- 

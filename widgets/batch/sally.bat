@@ -30,6 +30,3 @@ GOTO N1
 cls
 echo %e%
 :END
-
-
- 

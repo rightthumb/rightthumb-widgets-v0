@@ -12,6 +12,3 @@ rem ## {C3P0D40fAe8B} ##
 
 echo Researching...
 p files + *.py | p. f + .json - #    |    p line -ps ' .json    --c | p. line --c - " " | p. countEach
-
-
- 

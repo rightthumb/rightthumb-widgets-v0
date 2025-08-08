@@ -19,4 +19,4 @@ rem 	SET alias=%1
 rem 	shift
 rem 	call p. file-open -backup -alias %alias% -f %*
 rem 	rem echo bb
-rem ) 
+rem )

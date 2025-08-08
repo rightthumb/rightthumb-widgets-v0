@@ -8,5 +8,4 @@ goto:eof
 :two
 echo two %*
 set fn_two=%*
-goto:eof 
- 
+goto:eof

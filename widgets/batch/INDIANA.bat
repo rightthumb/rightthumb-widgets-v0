@@ -16,5 +16,3 @@ set thisFile=MS_INDIANA.php
 echo.
 
 :END
-
- 

@@ -17,5 +17,3 @@ set thisFile=url.php
 echo.
 echo.
 : copied as g
-
- 

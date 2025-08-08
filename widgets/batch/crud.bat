@@ -12,5 +12,3 @@ rem ## {C3P0D40fAe8B} ##
 
 CALL b payroll
 CALL p. crud -prefix _reph_signature_ -app signature -file payroll.sql
-
- 

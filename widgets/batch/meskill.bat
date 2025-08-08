@@ -12,5 +12,3 @@ rem ## {C3P0D40fAe8B} ##
 
 taskkill /F /IM "msmsgs.exe" /T
 ren "D:\Program Files\Messenger" -old-Messenger
-
- 

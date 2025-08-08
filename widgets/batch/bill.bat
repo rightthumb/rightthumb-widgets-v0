@@ -63,11 +63,3 @@ echo.
 
 :END
 call b back x> nul
- 
- 
- 
- 
- 
-
-
- 

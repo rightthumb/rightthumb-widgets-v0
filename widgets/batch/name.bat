@@ -53,6 +53,3 @@ GOTO END
 echo -------------------------
 title name change: old = %old% , new = %code_editor%
 pause
-
-
- 

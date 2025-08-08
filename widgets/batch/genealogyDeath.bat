@@ -16,6 +16,3 @@ set thisFile=genealogyDeath.php
 %php% %phpFiles%\%thisFile%
 echo.
 echo.
-
-
- 

@@ -11,11 +11,9 @@ rem ###########################################################################
 rem ## {C3P0D40fAe8B} ##
 
 if [%1]==[] (
-        start .
+		start .
 ) ELSE (
-        explorer /n, /select,"%~f1"
+		explorer /n, /select,"%~f1"
 )
 :Same as v.bat
 : Just found this: http://ss64.com/nt/syntax-args.html
-
- 

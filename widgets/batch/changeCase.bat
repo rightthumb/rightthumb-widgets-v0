@@ -43,6 +43,3 @@ String=Hello, how are you ?
 String=Hello, How Are You ?
 String=HELLO, HOW ARE YOU ?
 String=hello, how are you ?
-
-
- 

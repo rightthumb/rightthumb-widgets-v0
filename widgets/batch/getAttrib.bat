@@ -16,6 +16,3 @@ set thisFile=getAttrib.php
 %php% %phpFiles%\%thisFile%
 echo.
 echo.
-
-
- 

@@ -21,5 +21,3 @@ IF [%1] == [] (%php% %phpFiles%\%thisFile%)
 set /a loop=%loop% + 1
 IF [%1] == [loop] (GOTO LOOP)
 echo.
-
- 

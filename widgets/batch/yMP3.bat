@@ -14,18 +14,14 @@ rem ## {C3P0D40fAe8B} ##
 SET VIDEO=%1
 CALL :dequote VIDEO
 if [%2] == [] (
-    echo yAudio "%VIDEO%" & CALL autoMP3
-    CALL yAudio "%VIDEO%" & CALL autoMP3
+	echo yAudio "%VIDEO%" & CALL autoMP3
+	CALL yAudio "%VIDEO%" & CALL autoMP3
 ) else (
-    echo yAudio "%VIDEO%" & CALL autoMP3 %2
-    CALL yAudio "%VIDEO%" & CALL autoMP3 %2
+	echo yAudio "%VIDEO%" & CALL autoMP3 %2
+	CALL yAudio "%VIDEO%" & CALL autoMP3 %2
 )
 
 Goto :eof
 :DeQuote
 for /f "delims=" %%A in ('echo %%%1%%') do set %1=%%~A
 Goto :eof
-
-
-
- 

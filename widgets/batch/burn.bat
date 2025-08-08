@@ -46,7 +46,3 @@ rem mkdir %widgets%\widgets\python\burn\unix
 
 rem xcopy /s/d/y/c %widgets%\widgets\python\src\unix\*.py %widgets%\widgets\python\burn\unix\
 rem xcopy /s/d/y/c %widgets%\widgets\python\*.py %widgets%\widgets\python\burn\windows\
-
-
-
- 

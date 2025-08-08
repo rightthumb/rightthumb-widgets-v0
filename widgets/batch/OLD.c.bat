@@ -36,5 +36,3 @@ pause
 
 :SALLY
 call %systemroot%/system32/sally.bat
-
- 

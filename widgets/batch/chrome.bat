@@ -12,5 +12,3 @@ rem ## {C3P0D40fAe8B} ##
 set GoogleChrome="C:\Program Files\Google\Chrome\Application\chrome.exe"
 rem start %GoogleChrome% %1
 %GoogleChrome% %1
-
- 

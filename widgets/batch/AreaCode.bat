@@ -15,6 +15,3 @@ if [%1] == [] GOTO END
 start "%USERPROFILE%\AppData\Local\Google\Chrome\Application\chrome.exe" "http://en.wikipedia.org/wiki/Area_code_%1"
 
 :END
-
-
- 

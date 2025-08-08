@@ -13,10 +13,10 @@ rem ## {C3P0D40fAe8B} ##
 
 SET index=%scriptroot%\manage_drives\%computername%\index\01*
 IF [%1] == [/p] (
-        SET index=%scriptroot%\manage_drives\%computername%\index\%2*
-        SHIFT
-        SHIFT
-    )
+		SET index=%scriptroot%\manage_drives\%computername%\index\%2*
+		SHIFT
+		SHIFT
+	)
 
 
 
@@ -70,7 +70,4 @@ GOTO END
 
 
 
-:END 
-
-
- 
+:END

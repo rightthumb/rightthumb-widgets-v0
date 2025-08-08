@@ -11,7 +11,3 @@ rem ###########################################################################
 rem ## {C3P0D40fAe8B} ##
 
 p -copy -subject tools ssh | p. cryptString -clip -temp 8
-
-
-
- 

@@ -12,15 +12,15 @@ set "ext=%~x1"
 
 
 if /i "%ext%"==".py" (
-    call :py_dst_nd "%2"
-    copy "%1" "%2"
-    pyarmor obfuscate "%2"
+	call :py_dst_nd "%2"
+	copy "%1" "%2"
+	pyarmor obfuscate "%2"
 ) else if /i "%ext%"==".php" (
-    php %ww%\obfuscators\yakpro-po\yakpro-po.php  "%1" -o "%2"
+	php %ww%\obfuscators\yakpro-po\yakpro-po.php  "%1" -o "%2"
 ) else if /i "%ext%"==".js" (
-    javascript-obfuscator "%1" --output "%2"
+	javascript-obfuscator "%1" --output "%2"
 ) else (
-    echo works with .py, .php, and .js files only.
+	echo works with .py, .php, and .js files only.
 )
 goto :eof
 :rename_src
@@ -28,7 +28,7 @@ set "filename=file.js"
 
 :: Extract base name without extension
 for %%F in ("%filename%") do (
-    set "basename=%%~nF"
+	set "basename=%%~nF"
 )
 
 :: Rename the file
@@ -41,7 +41,3 @@ goto :eof
 
 
 endlocal
-
-
-
-

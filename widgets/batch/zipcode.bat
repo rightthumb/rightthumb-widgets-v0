@@ -15,6 +15,3 @@ if [%1] == [] GOTO END
 start "%USERPROFILE%\AppData\Local\Google\Chrome\Application\chrome.exe" "http://zipinfo.com/cgi-local/zipsrch.exe?zip=%1"
 
 :END
-
-
- 

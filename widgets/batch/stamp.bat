@@ -12,5 +12,3 @@ rem ## {C3P0D40fAe8B} ##
 
 set timestamp=%date% @ %time%
 echo Time_Stamp: %timestamp%
-
- 

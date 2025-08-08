@@ -14,5 +14,3 @@ if exist "C:\Program Files(x86)\Microsoft Office\Office12\scanpst.exe" echo Outl
 if exist "C:\Program Files\Common Files\System\MSMAPI\1033\scanpst.exe" echo Other, this less 2007 and this greater 2000
 if exist "C:\Program Files\Common Files\System\Mapi\1033\NT\scanpst.exe" echo Other, Windows NT and Windows 2000
 if exist "C:\Program Files\Common Files\System\Mapi\1033\95\scanpst.exe" echo Other, Windows 95 and Windows 98
-
- 

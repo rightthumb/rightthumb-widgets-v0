@@ -12,11 +12,8 @@ rem ## {C3P0D40fAe8B} ##
 
 SET "theDrive="
 IF EXIST "%stmp%\findDriveLetter.txt" (
-    del "%stmp%\findDriveLetter.txt"
-    )
+	del "%stmp%\findDriveLetter.txt"
+	)
 CALL p. findDriveLetter %* > "%stmp%\findDriveLetter.txt"
 SET /p theDrive=<"%stmp%\findDriveLetter.txt"
 rem echo '%theDrive%'
-
-
- 

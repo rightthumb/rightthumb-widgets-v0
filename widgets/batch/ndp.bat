@@ -20,8 +20,8 @@ set log=%temp%\~nd_tmp.txt
 
 rem Extract the file name and directory
 for %%F in ("%input%") do (
-    set "fileName=%%~nxF"
-    set "fileDir=%%~dpF"
+	set "fileName=%%~nxF"
+	set "fileDir=%%~dpF"
 )
 
 dir "%input%" | find "/" > _tmp
@@ -41,10 +41,10 @@ set /a cnt=%cnt%+1
 set "check=%moddate%-%cnt%-%fileName%"
 
 IF EXIST "%fileDir%%check%" (
-    GOTO LOOP
+	GOTO LOOP
 ) ELSE (
-    rename "%input%" "%check%"
-    echo %fileDir%%check%
+	rename "%input%" "%check%"
+	echo %fileDir%%check%
 )
 
 goto END

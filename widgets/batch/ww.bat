@@ -36,6 +36,3 @@ type %log%
 
 
 :ENDX
-
-
- 

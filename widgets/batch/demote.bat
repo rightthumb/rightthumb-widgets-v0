@@ -33,7 +33,4 @@ IF [] == [] GOTO
 
 :END
 
-IF [%error%] == [] GOTO 
-
-
- 
+IF [%error%] == [] GOTO

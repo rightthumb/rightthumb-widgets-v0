@@ -12,5 +12,3 @@ rem ## {C3P0D40fAe8B} ##
 
 doskey /history > %tmpf%
 type %tmpf% | p. line %*
-
- 

@@ -20,5 +20,3 @@ rem CALL bb tickets
 CALL p. context + %*
 
 rem json2DB
-
- 

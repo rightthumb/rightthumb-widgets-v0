@@ -16,5 +16,3 @@ set thisFile=getTable.php
 echo.
 echo.
 : copied as g
-
- 

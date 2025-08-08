@@ -31,5 +31,3 @@ auditFMDB type > ~out.txt & cleanLines ~out.txt & del ~out.txt
 CALL b back
 
 :: also fma
-
- 

@@ -41,6 +41,3 @@ SET /p Drive=<%userprofile%\.tk421
 SET widgets=%Drive:~0,1%
 call %widgets%\widgets\batch\c.bat %1 
 GOTO:EOF
-
-
- 

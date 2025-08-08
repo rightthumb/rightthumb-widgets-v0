@@ -26,5 +26,3 @@ GOTO END
 
 del ~DIR_LIST.txt
 del ~MOVIE_NAME_RENAME.bat
-
- 

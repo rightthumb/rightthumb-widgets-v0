@@ -25,5 +25,3 @@ set thisFile=editfunctionalName.php
 %php% %phpFiles%\%thisFile%
 echo.
 :END
-
- 

@@ -29,24 +29,3 @@ echo %moddate% - %input%
 set modraw=
 set mod=
 set moddate=
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-
-
- 

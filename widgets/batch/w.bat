@@ -24,11 +24,11 @@ call :strlen status len
 if %len% GTR 4 set "has_length=true"
 
 if defined has_length (
-    type "%single%" > "%file%"
-    echo Single
+	type "%single%" > "%file%"
+	echo Single
 ) else (
-    type "%multi%" > "%file%"
-    echo Multi
+	type "%multi%" > "%file%"
+	echo Multi
 )
 endlocal
 exit /b
@@ -37,13 +37,13 @@ exit /b
 setlocal EnableDelayedExpansion
 set "s=!%~1!"
 if not defined s (
-    endlocal & set "%~2=0"
-    exit /b
+	endlocal & set "%~2=0"
+	exit /b
 )
 set "len=0"
 for /l %%i in (12,-1,0) do (
-    set /a "len|=1<<%%i"
-    for %%j in (!len!) do if "!s:~%%j,1!"=="" set /a "len&=~1<<%%i"
+	set /a "len|=1<<%%i"
+	for %%j in (!len!) do if "!s:~%%j,1!"=="" set /a "len&=~1<<%%i"
 )
 endlocal & set "%~2=%len%"
 exit /b

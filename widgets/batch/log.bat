@@ -18,7 +18,3 @@ echo ----------------------- >> "%log%"
 echo %date% - %time% >> "%log%"
 echo (%1)  >> "%log%"
 call %1  >> "%log%"
-
-
- 
- 

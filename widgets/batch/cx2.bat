@@ -16,7 +16,3 @@ echo %*
 CALL %*
 
 rem pause
-
-
-
- 

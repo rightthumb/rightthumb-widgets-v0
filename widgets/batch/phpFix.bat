@@ -13,5 +13,3 @@ rem ## {C3P0D40fAe8B} ##
 echo %php%
 set php=D:\xampp\php\php.exe
 echo %php%
-
- 

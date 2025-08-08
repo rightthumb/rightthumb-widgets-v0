@@ -10,7 +10,7 @@
 :::: if no options run as `l .`        - ** --> ADD A DOT AT THE END <-- **
 
 if "%1" == "" (
-    wsl
+	wsl
 ) else (
-    call p. line %*
+	call p. line %*
 )

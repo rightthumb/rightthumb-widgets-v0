@@ -18,8 +18,8 @@ goto:eof
 rem alias u.bat
 
 if [%1] == [] (
-    call p. url
-    goto:eof
+	call p. url
+	goto:eof
 )
 
 setlocal enabledelayedexpansion
@@ -28,14 +28,14 @@ set theScript=%USERPROFILE%\Downloads\URL-SCRIPT.py
 
 REM Check if URL or code is provided
 if "%~1"=="" (
-    echo ERROR: no URL, ex: u ^<url^> [args...]
-    exit /b 1
+	echo ERROR: no URL, ex: u ^<url^> [args...]
+	exit /b 1
 )
 
 REM Check if %1 ends in .py and append it if not
 set filename=%~1
 if /I not "%~x1"==".py" (
-    set filename=%~1.py
+	set filename=%~1.py
 )
 
 REM Form the URL

@@ -1,2 +1,2 @@
 @echo off
-call nn %1 
+call nn %1

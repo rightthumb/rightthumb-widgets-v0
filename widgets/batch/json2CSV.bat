@@ -17,5 +17,3 @@ set thisFile=json2CSV.php
 echo.
 echo.
 : copied as g
-
- 

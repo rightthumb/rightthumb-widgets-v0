@@ -79,7 +79,3 @@ call m p1
 
 call b projectX
 call m p0
-
-
-
- 

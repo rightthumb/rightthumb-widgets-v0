@@ -12,4 +12,3 @@ rem ## {C3P0D40fAe8B} ##
 
 @REM fciv %1
 call p. md5-string-paste
- 

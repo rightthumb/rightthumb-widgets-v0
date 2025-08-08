@@ -18,7 +18,3 @@ echo oxford
 echo credo
 echo netlib
 echo smartimg
-
-
-
- 

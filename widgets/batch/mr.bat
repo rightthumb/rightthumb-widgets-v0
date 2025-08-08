@@ -11,6 +11,3 @@ rem ###########################################################################
 rem ## {C3P0D40fAe8B} ##
 
 type "D:\_Scott\S_Documents\Projects\self\Library\meta_refresh.txt"
-
-
- 

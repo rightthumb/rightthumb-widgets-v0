@@ -12,6 +12,3 @@ rem ## {C3P0D40fAe8B} ##
 
 echo Starting Firefox portable
 start "D:\Tech\-_Stand Alone\FirefoxPortable\" "D:\Tech\-_Stand Alone\FirefoxPortable\FirefoxPortable.exe"
-
-
- 

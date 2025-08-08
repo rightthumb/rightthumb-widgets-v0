@@ -59,7 +59,4 @@ GOTO END
 :OPEN
 start notepad %index%
 
-:END 
-
-
- 
+:END

@@ -29,15 +29,3 @@ GOTO END
 echo ERROR
 :END
 call b tmp0
- 
- 
- 
- 
- 
- 
- 
- 
- 
-
-
- 

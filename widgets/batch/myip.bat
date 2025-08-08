@@ -13,7 +13,3 @@ rem ## {C3P0D40fAe8B} ##
 
 set find=IPv4
 ipconfig | find /i "%find%"
-
-
-
- 

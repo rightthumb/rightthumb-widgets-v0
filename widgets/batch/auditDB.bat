@@ -11,5 +11,3 @@ rem ###########################################################################
 rem ## {C3P0D40fAe8B} ##
 
 auditFMDB %1 > ~out.txt & cleanLines ~out.txt & del ~out.txt
-
- 

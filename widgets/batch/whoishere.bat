@@ -26,6 +26,3 @@ echo.
 ::IF EXIST ~whoishere.txt (del ~whoishere.txt)
 ::IF EXIST ~whoishere2.txt (del ~whoishere2.txt)
 ::IF EXIST ~ipOwner.txt (del ~ipOwner.txt)
-
-
- 

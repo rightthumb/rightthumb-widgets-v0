@@ -17,6 +17,3 @@ set thisFile=medabrev2.php
 findstr /r "[A-Za-z]" ~tmp.txt
 del ~tmp.txt
 echo.
-
-
- 

@@ -41,5 +41,3 @@ call m backuproot
 :END
 call b tmp
 echo Auto Generated BMs
-
- 

@@ -16,10 +16,3 @@ rem ## {C3P0D40fAe8B} ##
 :: df is clone of this file below
 
 call p. inFunc -f %*
-
-
-
-
-
-
- 

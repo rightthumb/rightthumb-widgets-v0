@@ -15,5 +15,3 @@ set thisFile=wiki.php
 cls
 %php% %phpFiles%\%thisFile%
 echo.
-
- 

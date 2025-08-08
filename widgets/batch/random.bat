@@ -18,4 +18,4 @@ CALL p. genuuid -e
 CALL p. genuuid -short
 CALL p. genuuid -short -e
 rem %py% -c "import random; print(random.randrange(100000000000000,1000000000000000));"
-%py% -c "import time; e=time.time(); print(int(e));" 
+%py% -c "import time; e=time.time(); print(int(e));"

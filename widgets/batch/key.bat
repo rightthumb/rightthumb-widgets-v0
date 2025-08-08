@@ -13,10 +13,10 @@ if [%key%] == [et] set "key=ecoterm@sullust.sds.sh"
 if [%key%] == [py] set key=python
 
 if "%~2"=="" (
-    call p. keychain -temp 10 -get -label "!key!"
+	call p. keychain -temp 10 -get -label "!key!"
 ) else if "%~2"=="-crypt" (
-    call p. keychain -get -label "!key!"
-    call p. cryptString -en -clip
+	call p. keychain -get -label "!key!"
+	call p. cryptString -en -clip
 )
 
 endlocal

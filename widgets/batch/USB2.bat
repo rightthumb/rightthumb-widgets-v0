@@ -65,7 +65,3 @@ rem xcopy /s/d/y/c %widgets%\widgets\*.* %usbDrive%:\widgets\
 xcopy /d/y/c %widgets%\tech\*.* %usbDrive%:\tech\
 xcopy /d/y/c %widgets%\widgets\*.* %usbDrive%:\widgets\
 xcopy /d/y/c %widgets%\tech\srv\*.* %usbDrive%:\tech\srv\
-
-
-
- 

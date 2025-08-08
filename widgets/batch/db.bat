@@ -20,8 +20,3 @@ echo     b db.new
 echo.
 echo     clients
 echo.
-
-
-
-
- 

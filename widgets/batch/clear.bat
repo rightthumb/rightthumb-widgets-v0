@@ -12,5 +12,3 @@ rem ## {C3P0D40fAe8B} ##
 
 cd\
 call %systemroot%\system32\note.bat
-
- 

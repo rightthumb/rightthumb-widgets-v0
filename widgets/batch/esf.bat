@@ -7,8 +7,8 @@ set "nDays=1"
 
 :: Check if %1 is a number
 if not "%1"=="" (
-    set /a testval=%1 2>nul
-    if "!testval!"=="%1" set "nDays=%1"
+	set /a testval=%1 2>nul
+	if "!testval!"=="%1" set "nDays=%1"
 )
 
 :: Display Values for Debugging

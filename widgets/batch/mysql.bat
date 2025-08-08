@@ -16,6 +16,3 @@ rem ## {C3P0D40fAe8B} ##
 :: echo -
 :: echo.
 D:\xampp\mysql\bin\mysql.exe -u root
-
-
- 

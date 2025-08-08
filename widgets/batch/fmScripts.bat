@@ -17,5 +17,3 @@ set thisFile=fmScripts.php
 echo.
 echo.
 ::auditFM
-
- 

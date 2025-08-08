@@ -1,8 +1,8 @@
 @echo off
 
 if "%~2"=="" (
-    set "runSet=null"
-    goto :eof
+	set "runSet=null"
+	goto :eof
 )
 
 if not defined stmp set "stmp=%TEMP%"

@@ -53,7 +53,3 @@ findstr /i/s /m "%find%" *.%ext% > "%log%"
 GOTO FOOTER
 
 :END
-
-
-
- 

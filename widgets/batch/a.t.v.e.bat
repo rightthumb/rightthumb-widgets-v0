@@ -11,7 +11,3 @@ rem ###########################################################################
 rem ## {C3P0D40fAe8B} ##
 
 echo ssh -L 59000:localhost:5901 -C -N -l scott vps.rightthumb.com
-
-
-
- 

@@ -17,5 +17,3 @@ set thisFile=HijackThisLog.php
 echo.
 start "" notepad HijackThis_WhitelistCMD.txt
 call b stmp
-
- 

@@ -96,6 +96,4 @@ set VARTHREE =
 set VARFOUR =
 set VARFIVE =
 set LOOP=
-:END 
-
- 
+:END

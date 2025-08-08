@@ -17,5 +17,3 @@ echo Set objShell = WScript.CreateObject("WScript.Shell") >> %doneBox.vbs%
 echo objShell.Popup %1, TIMEOUT >> %doneBox.vbs%
 start %doneBox.vbs%
 GOTO:EOF
-
- 

@@ -16,5 +16,3 @@ echo By: Scott Reph
 ipconfig /all
 pause
 call ipip.bat
-
- 

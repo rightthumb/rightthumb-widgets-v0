@@ -13,5 +13,3 @@ rem ## {C3P0D40fAe8B} ##
 netstat -a | + ESTABLISHED
 pause
 cls
-
- 

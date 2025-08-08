@@ -30,6 +30,3 @@ GOTO:EOF
 del %last_db%
 CALL p. print_color -text  "YES, the file '%last_db%' WAS deleted" -color red
 GOTO:EOF
-
-
- 

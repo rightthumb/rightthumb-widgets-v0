@@ -21,5 +21,3 @@ GOTO END
 
 :END
  echo %root%\%1
-
- 

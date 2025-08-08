@@ -16,5 +16,3 @@ set thisFile=headerTest.php
 echo.
 echo.
 : copied as g
-
- 

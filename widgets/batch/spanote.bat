@@ -24,5 +24,3 @@ echo %date% @ %time% >> "%spa_notes%"
 echo %spa_note% >> "%spa_notes%"
 
 :END
-
- 

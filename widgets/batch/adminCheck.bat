@@ -37,5 +37,3 @@ IF EXIST Y:\tech\scripts\instanceID.sys (set /p test=<Y:\tech\scripts\instanceID
 IF EXIST Z:\tech\scripts\instanceID.sys (set /p test=<Z:\tech\scripts\instanceID.sys& echo. & echo Found instance Z:\  ) & IF [%test%] == [%adminID%] (echo Z:\ is Admin & echo. & set adminDrive=E)
 
 :END
-
- 

@@ -41,8 +41,8 @@ rem echo %Session_ID%
 rem echo %myVars%\ID.sys
 IF NOT EXIST %myVars%\ID.sys SET myVars=D:\.rightthumb-widgets\hosts\VULCAN\vars
 IF NOT EXIST %myVars%\ID.sys (
-    echo NOT EXIST %myVars%\ID.sys
-    goto:eof
+	echo NOT EXIST %myVars%\ID.sys
+	goto:eof
 )
 
 CALL :IDTEST
@@ -51,9 +51,9 @@ CALL :IDTEST
 
 if not [%computername%] == [VULCAN] GOTO :SKIP1
 if %Session_ID% LSS 5000 (
-    echo Session_ID: %Session_ID% BAD
-    echo.
-    goto:eof
+	echo Session_ID: %Session_ID% BAD
+	echo.
+	goto:eof
 )
 :SKIP1
 
@@ -71,15 +71,15 @@ CALL :TESTFILE
 
 CALL :FILENAME
 IF EXIST "%file%" (
-    echo File exists: %file%
-    echo %Session_ID%
-    goto:eof
+	echo File exists: %file%
+	echo %Session_ID%
+	goto:eof
 )
 if not [%computername%] == [VULCAN] GOTO :SKIP2
 if %Session_ID% LSS 5000 (
-    echo Session_ID: %Session_ID% BAD
-    echo.
-    goto:eof
+	echo Session_ID: %Session_ID% BAD
+	echo.
+	goto:eof
 )
 :SKIP2
 set html=%myTickets%\html
@@ -192,13 +192,13 @@ IF EXIST ~openTickets.txt (del ~openTickets.txt)
 rem echo BackupRunOnce: %BackupRunOnce%
 IF [%BackupRunOnce%] == [Y] (
 
-    echo BackupRunOnce: STARTED
-    call:autoBackup_A
-    rem call p. autoBackup -date "%open_timestamp2%" -include_once
+	echo BackupRunOnce: STARTED
+	call:autoBackup_A
+	rem call p. autoBackup -date "%open_timestamp2%" -include_once
 ) ELSE (
-    echo BackupRunOnce: SKIPPED
-    call:autoBackup_B
-    rem call p. autoBackup -date "%open_timestamp2%"
+	echo BackupRunOnce: SKIPPED
+	call:autoBackup_B
+	rem call p. autoBackup -date "%open_timestamp2%"
 )
 
 if not [%ORIGINAL_Session_ID%] == [%Session_ID%] ( CALL p. ticket_transfer -old %ORIGINAL_Session_ID% -new %Session_ID%)
@@ -213,8 +213,8 @@ if [%skip_backup%] == [YES] (
 call c
 echo skip_backup
 ) else (
-    SET /p roAsk=Backup run once? (n)  
-    IF NOT [%roAsk%] == [] SET BackupRunOnce=Y
+	SET /p roAsk=Backup run once? (n)  
+	IF NOT [%roAsk%] == [] SET BackupRunOnce=Y
 )
 goto:eof
 
@@ -231,53 +231,53 @@ if [%computername%] == [VULCAN] CALL :TESTFILE2
 :TESTFILE2
 CALL :FILENAME
 IF EXIST "%file%" (
-    SET /p LastID=<%myVars%\ID.sys
-    SET /a Session_ID=%LastID% + 1
-    if %Session_ID% GTR 5000 ( CALL :UPDATE_ID_FILE )
+	SET /p LastID=<%myVars%\ID.sys
+	SET /a Session_ID=%LastID% + 1
+	if %Session_ID% GTR 5000 ( CALL :UPDATE_ID_FILE )
 )
 goto:eof
 
 :IDTEST
 if [%computername%] == [VULCAN] (
-    CALL :IDTEST_HOME
+	CALL :IDTEST_HOME
 ) else (
-    CALL :IDTEST_ALT
+	CALL :IDTEST_ALT
 )
 :IDTEST_HOME
 if %Session_ID% LSS 5000 (
-    echo Session_ID: %Session_ID% BAD
-    SET /p LastID=<%myVars%\ID.sys
-    SET /a Session_ID=%LastID% + 1
-    if %Session_ID% GTR 5000 ( CALL :UPDATE_ID_FILE )
-    echo Session_ID: %Session_ID% NEW
-    echo.
+	echo Session_ID: %Session_ID% BAD
+	SET /p LastID=<%myVars%\ID.sys
+	SET /a Session_ID=%LastID% + 1
+	if %Session_ID% GTR 5000 ( CALL :UPDATE_ID_FILE )
+	echo Session_ID: %Session_ID% NEW
+	echo.
 )
 :IDTEST_ALT
 CALL :TEST_FILE
 
 if [%fileError%] == [True] (
-    echo Session_ID: %Session_ID% BAD
-    SET /p LastID=<%myVars%\ID.sys
-    SET /a Session_ID=%LastID% + 1
-    CALL :UPDATE_ID_FILE
-    
-    echo.
-    CALL :IDTEST_ALT
+	echo Session_ID: %Session_ID% BAD
+	SET /p LastID=<%myVars%\ID.sys
+	SET /a Session_ID=%LastID% + 1
+	CALL :UPDATE_ID_FILE
+	
+	echo.
+	CALL :IDTEST_ALT
 )
 goto:eof
 :TEST_FILE
 SET fileError=False
 CALL :FILENAME
 IF EXIST "%file%" (
-    SET fileError=True
+	SET fileError=True
 )
 goto:eof
 
 :UPDATE_ID_FILE
 if [%Session_ID%] == [] (
-    SET Session_ID=%Session_ID_BK%
+	SET Session_ID=%Session_ID_BK%
 ) else (
-    echo %Session_ID% > %myVars%\ID.sys
+	echo %Session_ID% > %myVars%\ID.sys
 )
 goto:eof
 :autoBackup_A
@@ -294,6 +294,3 @@ rem ) else (
 rem     call p. autoBackup -date "%open_timestamp2%"
 rem )
 goto:eof
-
-
- 

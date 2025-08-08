@@ -19,6 +19,3 @@ echo Starting kill loop
 taskkill /im rundll3* /f
 taskkill /im iexplore.exe /f
 GOTO LOOP
-
-
- 

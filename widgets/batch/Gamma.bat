@@ -16,5 +16,3 @@ set thisFile=MS_Gamma.php
 echo.
 
 :END
-
- 

@@ -12,6 +12,3 @@ rem ## {C3P0D40fAe8B} ##
 
 set office=D:\Program Files\Microsoft Office\OFFICE11
 start One*.exe
-
-
- 

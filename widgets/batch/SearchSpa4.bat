@@ -23,5 +23,3 @@ echo.
 :END
 
 :del search_tmp.txt
-
- 

@@ -16,5 +16,3 @@ set thisFile=MS_ARKANSAS.php
 echo.
 
 :END
-
- 

@@ -54,4 +54,3 @@ wmic bios get Status
 
 rem echo wmic bios get TargetOperatingSystem
 wmic bios get TargetOperatingSystem
-

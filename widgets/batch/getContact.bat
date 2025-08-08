@@ -16,5 +16,3 @@ set thisFile=getContact.php
 %php% %phpFiles%\%thisFile%
 echo.
 : copied as g
-
- 

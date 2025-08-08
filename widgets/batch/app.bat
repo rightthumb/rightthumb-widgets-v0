@@ -27,4 +27,3 @@ goto:eof
 :searchAppRegistrationInfo
 p searchAppRegistrationInfo %*
 goto:eof
- 

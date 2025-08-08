@@ -101,6 +101,3 @@ xcopy /s/d/y/c %widgets%\widgets\%fld%\*.%xt%  %subject_folder%\
 echo.
 echo.
 goto:eof
-
-
- 

@@ -11,6 +11,3 @@ goto :eof
 :other
 call CALL p. genuuid -cnt %1
 goto :eof
-
-
- 

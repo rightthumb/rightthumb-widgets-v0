@@ -17,5 +17,3 @@ set thisFile=curl.php
 echo.
 echo.
 : copied as g
-
- 

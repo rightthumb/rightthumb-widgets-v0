@@ -17,4 +17,4 @@ rem echo. > %1
 rem if [%2] == [yes] echo cleared %1
 rem if [%2] == [no] echo created %1
 rem call n %1
-rem goto:eof 
+rem goto:eof

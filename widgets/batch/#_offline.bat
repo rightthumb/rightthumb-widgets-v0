@@ -30,6 +30,3 @@ color %blink_1_color%
 
   if not "%count%"=="-------" %then% GOTO blink
 exit
-
-
- 

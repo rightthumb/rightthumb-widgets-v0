@@ -31,5 +31,3 @@ if [%2] == [] (
 	shift
 	call p. cat -f %fi%  | p. cmd2table -print -int Mem_Usage | p. printTable  - svchost + .exe   -aggregate " eot?mem-total=add( int(MEM_USAGE) )); format(eot?mem-total,?size,??kb);" -int Mem_Usage -s Mem_Usage %*
 )
-
- 

@@ -12,6 +12,3 @@ rem ## {C3P0D40fAe8B} ##
 
 call %userprofile%\c.bat
 call offline_www
-
-
- 

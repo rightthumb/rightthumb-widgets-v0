@@ -12,6 +12,3 @@ rem ## {C3P0D40fAe8B} ##
 
 call p. fileBackup -open -i "%powershell%\%1.ps1"
 start "EDIT" %code_editor% "%powershell%\%1.ps1"
-
-
- 

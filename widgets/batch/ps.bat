@@ -13,6 +13,3 @@ rem ## {C3P0D40fAe8B} ##
 rem type d:\tech\MyScripts\photoshop_shortcuts.csv
 call p. fileBackup -open -i %*
 start "EDIT" %ps% %*
-
-
- 

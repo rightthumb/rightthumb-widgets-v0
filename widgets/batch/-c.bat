@@ -20,6 +20,3 @@ set n=Scott
 
 :GO
 call note
-
-
- 

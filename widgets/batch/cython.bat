@@ -12,7 +12,7 @@ key = Fernet.generate_key()
 cipher = Fernet(key)
 
 def encrypt(data: str) -> bytes:
-    return cipher.encrypt(data.encode())
+	return cipher.encrypt(data.encode())
 
 
 

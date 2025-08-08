@@ -129,6 +129,3 @@ SET back=
 SET bname=
 %USERPROFILE:~0,1%:
 cd %USERPROFILE%
-
-
- 

@@ -37,9 +37,4 @@ GOTO END
 
 :END
 echo -------------------------
-title name: [old = %old% , new = %code_editor%] PC: [old = %oldpc% , new = %pc%] 
-
-
-
-
- 
+title name: [old = %old% , new = %code_editor%] PC: [old = %oldpc% , new = %pc%]

@@ -14,19 +14,19 @@ set "downloadFolder=%userprofile%"
 
 rem Loop through the array and update each batch file
 for /L %%i in (0,1,5) do (
-    set "batchFile=!batchFiles[%%i]!"
-    set "fileURL=!baseURL!!batchFile!"
-    set "filePath=!downloadFolder!\!batchFile!.bat"
+	set "batchFile=!batchFiles[%%i]!"
+	set "fileURL=!baseURL!!batchFile!"
+	set "filePath=!downloadFolder!\!batchFile!.bat"
 
-    echo Getting content of !batchFile!...
-    
-    rem Print the URL for debugging
-    echo !fileURL!
+	echo Getting content of !batchFile!...
+	
+	rem Print the URL for debugging
+	echo !fileURL!
 
-    rem Use curl to download the file from the URL
-    curl -o "!filePath!" "!fileURL!"
+	rem Use curl to download the file from the URL
+	curl -o "!filePath!" "!fileURL!"
 
-    echo !batchFile!.bat updated.
+	echo !batchFile!.bat updated.
 )
 
 echo All batch files updated.

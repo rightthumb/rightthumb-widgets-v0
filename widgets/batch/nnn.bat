@@ -101,7 +101,3 @@ start "EDIT" %code_editor% %*
 echo %*
 
 )
-
-
-
- 

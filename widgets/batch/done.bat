@@ -53,10 +53,7 @@ rem set song99=tapeatalk_records\Time lord treachery.mp3
 set song=%song02%
 
 
-    
+	
 
 
 start "%mplayer%" "%mFolder%\%song%"
-
-
- 

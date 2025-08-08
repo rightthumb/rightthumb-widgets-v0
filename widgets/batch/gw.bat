@@ -134,5 +134,3 @@ xcopy %0 %systemroot%\system32\ /ys
 GOTO end
 
 :end
-
- 

@@ -14,6 +14,3 @@ echo.
 
 @REM set skip_backup=YES
 @REM CALL X
-
-
- 

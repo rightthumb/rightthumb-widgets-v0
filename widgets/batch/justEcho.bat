@@ -4,33 +4,33 @@ set "justEcho1=Var One"
 set "justEcho2=Var Two"
 
 if "%~1"=="" (
-    echo Default
+	echo Default
 ) else if /I "%~1" == "echo" (
-    shift
-    call :subAction %*
+	shift
+	call :subAction %*
 ) else if /I "%~1" == "echo2" (
-    shift
-    call :subAction %*
+	shift
+	call :subAction %*
 ) else (
-    echo %*
+	echo %*
 )
 goto :eof
 
 :subAction
 if "%~1"=="" (
-    echo No variables provided to echo.
-    goto :eof
+	echo No variables provided to echo.
+	goto :eof
 )
 
 :loop
 if "%~1"=="" goto :eof
 if /I "%~1" == "echo" (
-    shift
-    goto loop
+	shift
+	goto loop
 )
 if /I "%~1" == "echo2" (
-    shift
-    goto loop
+	shift
+	goto loop
 )
 
 rem Store variable name safely
@@ -41,7 +41,7 @@ call set "justEchoVarValue=%%%justEchoVarName%%%"
 
 rem Check if the variable is not empty
 if not "%justEchoVarValue%"=="" (
-    echo %justEchoVarValue%
+	echo %justEchoVarValue%
 )
 
 shift

@@ -27,5 +27,3 @@ rem %folder:~0,1%:
 rem cd "%folder%"
 echo %folder%
 echo.
-
- 

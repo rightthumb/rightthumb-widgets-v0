@@ -25,6 +25,3 @@ start notepad "%alias%"
 GOTO END
 
 :END
-
-
- 

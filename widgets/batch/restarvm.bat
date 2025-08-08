@@ -23,6 +23,3 @@ start "D:\Program Files (x86)\VMware\VMware Workstation\" "D:\Program Files (x86
 start "D:\Program Files (x86)\VMware\VMware Workstation\" "D:\Program Files (x86)\VMware\VMware Workstation\vmware-unity-helper.exe"
 start "D:\Program Files (x86)\VMware\VMware Workstation\" "D:\Program Files (x86)\VMware\VMware Workstation\vmware-vmx.exe"
 start "D:\Program Files (x86)\VMware\VMware Workstation\x64\" "D:\Program Files (x86)\VMware\VMware Workstation\x64\vmware-vmx.exe"
-
-
- 

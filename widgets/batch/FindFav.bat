@@ -25,5 +25,3 @@ dir /s/b | find /i "%find%" > "%log%"
 start notepad "%log%"
 cls
 call %0
-
- 

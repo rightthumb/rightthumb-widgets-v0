@@ -15,5 +15,3 @@ if [%1] == [] (
 
 
 call b back > nul
-
- 

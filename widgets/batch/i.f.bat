@@ -13,6 +13,3 @@ rem ## {C3P0D40fAe8B} ##
 set log=i.i
 
 type %log% | f "%1"
-
-
- 

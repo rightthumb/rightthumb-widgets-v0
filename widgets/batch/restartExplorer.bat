@@ -12,6 +12,3 @@ rem ## {C3P0D40fAe8B} ##
 
 taskkill /im explorer.exe /f
 explorer.exe
-
-
- 

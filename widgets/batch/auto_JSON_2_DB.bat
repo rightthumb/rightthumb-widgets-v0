@@ -20,8 +20,3 @@ echo dba issue
 CALL p. dba -app %1
 PAUSE
 PAUSE
-
-
-
-
- 

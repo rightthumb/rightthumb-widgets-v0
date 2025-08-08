@@ -12,7 +12,3 @@ rem ## {C3P0D40fAe8B} ##
 
 
 start cmd /c %scriptroot%\-monitor %1
-
-
-
- 

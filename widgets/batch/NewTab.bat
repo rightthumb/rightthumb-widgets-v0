@@ -22,5 +22,3 @@ start "%USERPROFILE%\AppData\Local\Google\Chrome\Application\chrome.exe" "https:
 :END
 del ```
 : ping google.com -t
-
- 

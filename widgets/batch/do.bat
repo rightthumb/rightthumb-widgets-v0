@@ -1,43 +1,43 @@
 @echo off
 if [%1] == [d] (
-    shift
-    call:meta %1 %2 %3 %4 %5 %6 %7 %8 %9
-    goto:eof
+	shift
+	call:meta %1 %2 %3 %4 %5 %6 %7 %8 %9
+	goto:eof
 )
 if [%1] == [o] (
-    shift
-    call:meta %1 %2 %3 %4 %5 %6 %7 %8 %9
-    goto:eof
+	shift
+	call:meta %1 %2 %3 %4 %5 %6 %7 %8 %9
+	goto:eof
 )
 if [%1] == [-] (
-    shift
-    call:meta %1 %2 %3 %4 %5 %6 %7 %8 %9
-    goto:eof
+	shift
+	call:meta %1 %2 %3 %4 %5 %6 %7 %8 %9
+	goto:eof
 )
 if [%1] == [--] (
-    shift
-    call:meta %1 %2 %3 %4 %5 %6 %7 %8 %9
-    goto:eof
+	shift
+	call:meta %1 %2 %3 %4 %5 %6 %7 %8 %9
+	goto:eof
 )
 if [%1] == [-m] (
-    shift
-    call:meta %1 %2 %3 %4 %5 %6 %7 %8 %9
-    goto:eof
+	shift
+	call:meta %1 %2 %3 %4 %5 %6 %7 %8 %9
+	goto:eof
 )
 if [%1] == [-meta] (
-    shift
-    call:meta %1 %2 %3 %4 %5 %6 %7 %8 %9
-    goto:eof
+	shift
+	call:meta %1 %2 %3 %4 %5 %6 %7 %8 %9
+	goto:eof
 )
 if [%1] == [m] (
-    shift
-    call:meta %1 %2 %3 %4 %5 %6 %7 %8 %9
-    goto:eof
+	shift
+	call:meta %1 %2 %3 %4 %5 %6 %7 %8 %9
+	goto:eof
 )
 if [%1] == [db] (
-    shift
-    call:meta %1 %2 %3 %4 %5 %6 %7 %8 %9
-    goto:eof
+	shift
+	call:meta %1 %2 %3 %4 %5 %6 %7 %8 %9
+	goto:eof
 )
 call:contents %*
 

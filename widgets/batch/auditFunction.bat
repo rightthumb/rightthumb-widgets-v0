@@ -17,5 +17,3 @@ echo.
 echo.
 echo %phpFiles%\%thisFile%
 echo.
-
- 

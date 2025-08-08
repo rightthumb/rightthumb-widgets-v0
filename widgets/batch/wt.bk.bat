@@ -6,4 +6,3 @@ set to=C:\Users\Scott\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8
 copy %from% %to% /y
 call p. fileBackup -flag lock -runonce -noschedule -f %from%
 endlocal
-

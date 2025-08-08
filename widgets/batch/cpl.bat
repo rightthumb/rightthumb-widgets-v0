@@ -24,5 +24,3 @@ dir /s/b D:\*.cpl > D:\cpl.txt
 GOTO END
 
 :END
-
- 

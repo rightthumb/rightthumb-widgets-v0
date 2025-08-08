@@ -1,4 +1,4 @@
-    @echo off
+	@echo off
 
 rem ## {R2D2919B742E} ##
 rem ###########################################################################
@@ -52,41 +52,41 @@ rem :echo ^</%pc%^>
 rem echo Files:
 rem echo.
 if [%1] == [-cp] (
-    call :ACTION3 %*
-    GOTO:EOF
+	call :ACTION3 %*
+	GOTO:EOF
 )
 if [%1] == [-cp] (
-    call :ACTION3 %*
-    GOTO:EOF
+	call :ACTION3 %*
+	GOTO:EOF
 )
 if [%1] == [-links] (
-    call :ACTION3 %*
-    GOTO:EOF
+	call :ACTION3 %*
+	GOTO:EOF
 )
 if [%1] == [-link] (
-    call :ACTION3 %*
-    GOTO:EOF
+	call :ACTION3 %*
+	GOTO:EOF
 )
 
 if [%1] == [-l] (
-    call :ACTION3 %*
-    GOTO:EOF
+	call :ACTION3 %*
+	GOTO:EOF
 )
 
 if [%1] == [-f] (
-    call :ACTION3 %*
-    GOTO:EOF
+	call :ACTION3 %*
+	GOTO:EOF
 )
 if [%1] == [-folder] (
-    call :ACTION3 %*
-    GOTO:EOF
+	call :ACTION3 %*
+	GOTO:EOF
 )
 
 if [%1] == [] (
-        call :ACTION1
-    ) else (
-        call :ACTION2 %*
-    )
+		call :ACTION1
+	) else (
+		call :ACTION2 %*
+	)
 GOTO:EOF
 :ACTION1
 cls
@@ -108,8 +108,3 @@ echo.
 call p. file_folder -cp %*
 echo.
 GOTO:EOF
-
-
-
- 
- 

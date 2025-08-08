@@ -38,5 +38,3 @@ echo %1 - W:%width% x H:%height%
 
 GOTO END
 :END
-
- 

@@ -13,6 +13,3 @@ rem ## {C3P0D40fAe8B} ##
 set thisFile=backupFilesDB.php
 %php% %phpFiles%\%thisFile%
 echo.
-
-
- 

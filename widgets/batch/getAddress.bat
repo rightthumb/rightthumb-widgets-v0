@@ -17,5 +17,3 @@ set thisFile=getAddress.php
 echo.
 echo.
 : copied as g
-
- 

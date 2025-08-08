@@ -1,7 +1,7 @@
 @echo off
 if "%~1"=="" (
-    echo Usage: pathAdd "C:\your\path"
-    exit /b 1
+	echo Usage: pathAdd "C:\your\path"
+	exit /b 1
 )
 
 set path=%path%;%~1

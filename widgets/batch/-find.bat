@@ -66,5 +66,3 @@ ___________________
 title Sally says: How can I help you %username%
 cls
 echo dir /s/b *
-
- 

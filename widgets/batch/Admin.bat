@@ -12,5 +12,3 @@ rem ## {C3P0D40fAe8B} ##
 
 
 runas /user:Administrator cmd
-
- 

@@ -10,7 +10,4 @@ rem    - Scott Taylor Reph, RightThumb.com
 rem ###########################################################################
 rem ## {C3P0D40fAe8B} ##
 
-dir /b /a "%1\*" | >nul findstr "^" && (echo Folder Not Empty) || (echo Folder Empty) 
-
-
- 
+dir /b /a "%1\*" | >nul findstr "^" && (echo Folder Not Empty) || (echo Folder Empty)

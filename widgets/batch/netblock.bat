@@ -14,9 +14,3 @@ rem ## {C3P0D40fAe8B} ##
 :END
 
 call nb %1
-
-
-
-
-
- 

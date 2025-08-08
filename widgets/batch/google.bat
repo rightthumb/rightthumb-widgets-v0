@@ -16,5 +16,3 @@ set thisFile=google.php
 echo.
 echo.
 : copied as g
-
- 

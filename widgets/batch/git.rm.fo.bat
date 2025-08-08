@@ -19,8 +19,8 @@ call b w > nul 2>&1
 
 :: Check if the script is in the git root folder
 if not exist .git (
-    echo You need to be in the git root folder.
-    goto :eof
+	echo You need to be in the git root folder.
+	goto :eof
 )
 
 :: Use git filter-branch to remove the specified path from all commits

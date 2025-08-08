@@ -18,6 +18,3 @@ SET /p pause=Pause:
 echo.
 echo %pause%
 echo four
-
-
- 

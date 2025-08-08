@@ -16,5 +16,3 @@ set thisFile=pageDescription.php
 %php% %phpFiles%\%thisFile%
 echo.
 : copied as g
-
- 

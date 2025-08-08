@@ -20,6 +20,3 @@ call p. fileBackupBackupBackup
 :: schtasks /create /tn "bkbk_Every3Hours" /tr "\"D:\.rightthumb-widgets\widgets\batch\bkbk.bat\"" /sc HOURLY /mo 3 /st 00:00 /ru SYSTEM
 
 :: schtasks /delete /tn "bkbk_Every3Hours" /f
-
-
-

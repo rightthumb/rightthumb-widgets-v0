@@ -19,5 +19,3 @@ GOTO :EOF
 %py% "%python%\labelFile.py" %1 #A1695618-Converted
 call pyVer2 %1
 GOTO :EOF
-
- 

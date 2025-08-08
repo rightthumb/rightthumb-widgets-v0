@@ -29,7 +29,7 @@ goto :EOF
 @end // end Batch / begin JScript hybrid code
 
 var htmlfile = WSH.CreateObject('htmlfile'),
-    txt = WSH.CreateObject('Wscript.Shell').Environment('process').Item('JSON');
+	txt = WSH.CreateObject('Wscript.Shell').Environment('process').Item('JSON');
 
 htmlfile.write('<meta http-equiv="x-ua-compatible" content="IE=9" />');
 var obj = htmlfile.parentWindow.JSON.parse(txt);
@@ -38,6 +38,3 @@ htmlfile.close();
 for (var i in obj) WSH.Echo('JSON[' + i + ']=' + obj[i]);
 
 rem echo %JSON%
-
-
- 

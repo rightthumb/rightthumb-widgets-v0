@@ -1,9 +1,9 @@
 @echo off
 
 if [%1]==[] (
-    call:nopassword
+	call:nopassword
 ) else (
-    call:password %1
+	call:password %1
 )
 
 :nopassword

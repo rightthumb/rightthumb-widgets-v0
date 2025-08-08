@@ -114,7 +114,3 @@ if exist %* (
  start "EDIT" %code_editor% %*
  rem echo %*
 )
-
-
-
- 

@@ -16,6 +16,3 @@ set thisFile=auditCSS.php
 %php% %phpFiles%\%thisFile%
 echo.
 echo.
-
-
- 

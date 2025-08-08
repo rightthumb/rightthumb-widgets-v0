@@ -87,5 +87,3 @@ rename "%myvar2%" "%ndVar%"
 set a=
 set myvar2=
 set myvar=
-
- 

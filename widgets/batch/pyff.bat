@@ -11,8 +11,4 @@ rem ###########################################################################
 rem ## {C3P0D40fAe8B} ##
 
 
-call p. f -in %widgets%\widgets\python\*.py - # %* 
-
-
-
- 
+call p. f -in %widgets%\widgets\python\*.py - # %*

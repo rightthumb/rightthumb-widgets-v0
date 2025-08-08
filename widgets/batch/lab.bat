@@ -12,8 +12,8 @@ rem ## {C3P0D40fAe8B} ##
 
 SET lab=%*
 IF NOT ["%lab%"] == [""] (
-     set "terminalTitle=loc-%Session_ID_Suffix% :: %lab%"
+	set "terminalTitle=loc-%Session_ID_Suffix% :: %lab%"
 ) else (
-     set "terminalTitle=loc-%Session_ID_Suffix%"
+	set "terminalTitle=loc-%Session_ID_Suffix%"
 )
 TITLE %vpDot%%terminalTitle%

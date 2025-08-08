@@ -21,7 +21,3 @@ echo Set objVoice = CreateObject("SAPI.SpVoice") >> %say%
 echo objVoice.Speak strText >> %say%
 
 start %say%
-
-
-
- 

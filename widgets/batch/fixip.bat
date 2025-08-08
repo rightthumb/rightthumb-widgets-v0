@@ -16,5 +16,3 @@ ipconfig /release
 ipconfig /renew
 
 call myip
-
- 

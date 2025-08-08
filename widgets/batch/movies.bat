@@ -15,4 +15,3 @@ type  %tmpf0%-franchise  | p. cmd2table -print | p. printTable -g first second -
 rem type  %tmpf0%-franchise-marvel  | p. cmd2table -print | p. printTable -g first second -s first second label
  
 rem p dir -cache %mData% -movietitle -movies -franchise marvel
-

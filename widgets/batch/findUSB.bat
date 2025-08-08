@@ -12,10 +12,7 @@ rem ## {C3P0D40fAe8B} ##
 
 CALL theUSB
 if [%theusb%] == [] (
-    echo No USB found
+	echo No USB found
 ) else (
-    echo %theusb%
+	echo %theusb%
 )
-
-
- 

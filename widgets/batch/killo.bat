@@ -40,5 +40,3 @@ set k=
 taskkill /F /IM "%k%" /t
 pause
 shutdown -a -m %computername%
-
- 

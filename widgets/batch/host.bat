@@ -13,5 +13,3 @@ rem ## {C3P0D40fAe8B} ##
 type D:\Windows\System32\drivers\etc\hosts
 echo.
 echo D:\Windows\System32\drivers\etc\hosts
-
- 

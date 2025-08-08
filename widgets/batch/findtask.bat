@@ -70,5 +70,3 @@ goto exit
 if [] == [] GOTO 
 
 :exit
-
- 

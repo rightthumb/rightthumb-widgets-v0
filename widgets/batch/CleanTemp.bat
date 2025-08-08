@@ -80,5 +80,3 @@ cls
 
 :end
 echo end
-
- 

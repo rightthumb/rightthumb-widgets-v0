@@ -12,5 +12,3 @@ rem ## {C3P0D40fAe8B} ##
 
 CALL b toyapp
 CALL p. crud -prefix _reph_kids_ -app kids -file kids.sql
-
- 

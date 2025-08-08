@@ -23,13 +23,13 @@ if ["%1"] == ["print"] SET shouldEcho=true
 
 
 if [%3] == [] (
-    SET YYYY=%date:~-4,4%
-    SET MM=%date:~-10,2%
-    SET DD=%date:~-7,2%
+	SET YYYY=%date:~-4,4%
+	SET MM=%date:~-10,2%
+	SET DD=%date:~-7,2%
 ) else (
-    SET YYYY=%1
-    SET MM=%2
-    SET DD=%3
+	SET YYYY=%1
+	SET MM=%2
+	SET DD=%3
 )
 
 
@@ -53,5 +53,3 @@ SET DD=
 if [%shouldEcho%] == [true] ECHO %JDate%
 SET shouldEcho=
 GOTO:EOF
-
- 

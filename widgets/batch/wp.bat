@@ -1,2 +1,2 @@
 @echo off
-python3 "%python%\%1.py" %* 
+python3 "%python%\%1.py" %*

@@ -18,5 +18,3 @@ set thisFile=accc-cancer_state.php
 echo.
 echo.
 : copied as g
-
- 

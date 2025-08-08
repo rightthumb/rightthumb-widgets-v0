@@ -12,5 +12,3 @@ rem ## {C3P0D40fAe8B} ##
 
 set browser=D:\Program Files\Google\Chrome\Application\chrome.exe
 start "%browser%" %1
-
- 

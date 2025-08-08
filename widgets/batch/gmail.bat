@@ -36,11 +36,11 @@ set browser_app=%USERPROFILE%\AppData\Local\Google\Chrome\Application\chrome.exe
 set www0=https://mail.google.com/mail/?shva=1#search/
 set www1=
 
-    start "%browser_app%" "%www0%+%1%www1%"
+	start "%browser_app%" "%www0%+%1%www1%"
 Charecters not allowed in var set so....
 
 *** replace encapsulating url from above vars to change search ***
-    start "%browser_app%" "https://mail.google.com/mail/?shva=1#search/"
+	start "%browser_app%" "https://mail.google.com/mail/?shva=1#search/"
 :END NOTES
 
 
@@ -84,7 +84,3 @@ echo NULL
 GOTO END
 
 :END
-
-
-
- 

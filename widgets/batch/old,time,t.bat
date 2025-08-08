@@ -12,4 +12,3 @@ rem ## {C3P0D40fAe8B} ##
 
 net time \power /set /yes
 call c.bat
-

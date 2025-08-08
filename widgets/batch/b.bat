@@ -30,9 +30,9 @@ goto :main
 :VALIDATE
 echo.%2 | findstr /C:"%1" 1>nul
 if errorlevel 1 (
-    set valid=no
+	set valid=no
 ) ELSE (
-    set valid=yes
+	set valid=yes
 )
 goto:eof
 
@@ -41,30 +41,30 @@ goto:eof
 set pp=%myBookmarks%\BM-%1.txt
 
 IF NOT EXIST "%pp%" (
-        echo Not Valid
-    ) else (
-        call :action %1
-    )
+		echo Not Valid
+	) else (
+		call :action %1
+	)
 set p=
 set pp=
 GOTO:EOF
 
 :action
-    if not exist "%myHome%\logs\bookmarks" mkdir "%myHome%\logs\bookmarks"
-    call p. b -a %1 >> "%myHome%\logs\bookmarks\history.log"
-    echo "%myHome%\logs\bookmarks\history.log"
-    rem type %pp%
-    SET /p p=<"%pp%"
-    rem echo %p%
-    call set p=%%p:{A8693D4B-8A80-898F-83F0-E806D2F36800}=%widgets%%%
-    call set p=%%p:{6FAB5628-94A1-410A-82D1-1D42A2A11750}=%userprofile%%%
-    call set p=%%p:{C12F266D-71B9-40D2-98B9-424B42D2DBAC}=%thisHost%%%
-    SET b=%p%
-    call p. script-helper -replace "'%b%' '/' '\\'" > %tmpf%
-    SET /p b=<%tmpf%
-    cd /d %b%
-    rem IF [%2] == [] echo ^%%b^%% = %b%
-    IF [%2] == [] echo %b%
+	if not exist "%myHome%\logs\bookmarks" mkdir "%myHome%\logs\bookmarks"
+	call p. b -a %1 >> "%myHome%\logs\bookmarks\history.log"
+	echo "%myHome%\logs\bookmarks\history.log"
+	rem type %pp%
+	SET /p p=<"%pp%"
+	rem echo %p%
+	call set p=%%p:{A8693D4B-8A80-898F-83F0-E806D2F36800}=%widgets%%%
+	call set p=%%p:{6FAB5628-94A1-410A-82D1-1D42A2A11750}=%userprofile%%%
+	call set p=%%p:{C12F266D-71B9-40D2-98B9-424B42D2DBAC}=%thisHost%%%
+	SET b=%p%
+	call p. script-helper -replace "'%b%' '/' '\\'" > %tmpf%
+	SET /p b=<%tmpf%
+	cd /d %b%
+	rem IF [%2] == [] echo ^%%b^%% = %b%
+	IF [%2] == [] echo %b%
 GOTO:EOF
 
 
@@ -87,28 +87,28 @@ rem GOTO:EOF
 rem echo %result%
 call:VALIDATE ":" %result%
 if [%valid%] == [yes] (
-    rem %result:~0,2%
+	rem %result:~0,2%
 
 if not exist "%result%" (call p. nsfw -color red -on "folder does not exist, mothafucka" -off "folder does not exist")
 if not exist "%result%" call p. print_color -text ";t%result%" -color cyan
 if not exist "%result%" goto:eof
 
-    %py% %widgets%\widgets\python\folder-registration.py
-    SET endpointF = %b%
-    CALL:LogBookmark %1 "%result%"
-    @REM cd
-    cd /d "%result%"
-    %py% %widgets%\widgets\python\folder-registration.py
-    cd
-    if [%bh_brand%] == [true] (
-        echo.
-        echo View History: bh
-    )
-    exit /b
-    goto:eof
+	%py% %widgets%\widgets\python\folder-registration.py
+	SET endpointF = %b%
+	CALL:LogBookmark %1 "%result%"
+	@REM cd
+	cd /d "%result%"
+	%py% %widgets%\widgets\python\folder-registration.py
+	cd
+	if [%bh_brand%] == [true] (
+		echo.
+		echo View History: bh
+	)
+	exit /b
+	goto:eof
 
 ) else (
-    p error -err Bookmark does not exist
+	p error -err Bookmark does not exist
 )
 goto:eof
 
@@ -128,9 +128,9 @@ rem THE END *************************************************************
 SETLOCAL ENABLEDELAYEDEXPANSION
 SET count=1
 FOR /F "tokens=* USEBACKQ" %%F IN (`p b -a %*`) DO (
-    SET result!count!=%%F
-    SET result=%%F
-    SET /a count=!count!+1
+	SET result!count!=%%F
+	SET result=%%F
+	SET /a count=!count!+1
 )
 ENDLOCAL
 echo %var1%
@@ -210,9 +210,9 @@ set "base=%myTables%\BookmarksBySession"
 if not exist "%base%" mkdir "%base%"
 
 for /f "tokens=2-4 delims=/ " %%a in ("%date%") do (
-    set "month=%%a"
-    set "day=%%b"
-    set "year=%%c"
+	set "month=%%a"
+	set "day=%%b"
+	set "year=%%c"
 )
 if not exist "%base%\%Session_ID%.log" echo  >> "%base%\%Session_ID%.log"
 set theFile=%2
@@ -221,12 +221,8 @@ echo %year%-%month%-%day%     %1     %theFile% >> "%base%\%Session_ID%.log"
 goto:eof
 
 :DeQuote
-    for /f "delims=" %%A in ('echo %%%1%%') do set %1=%%~A
+	for /f "delims=" %%A in ('echo %%%1%%') do set %1=%%~A
 goto :eof
 
 :END
 goto:eof
-
-
-
- 

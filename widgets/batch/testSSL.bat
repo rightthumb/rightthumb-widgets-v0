@@ -47,7 +47,3 @@ start cmd /c cx p ssl_socket_bridge_client_user_administrator_b
 start cmd /c cx p ssl_socket_bridge_client_user_administrator_logs_b
 
 start cmd /c cx p ssl_socket_bridge_client_user_administrator_phone
-
-
-
- 

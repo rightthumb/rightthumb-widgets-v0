@@ -14,5 +14,3 @@ doskey /history >> "%stmp%\unclaimed_tickets_history\history-%Session_ID%.txt"  
 CALL p. singleLine -f "%stmp%\unclaimed_tickets_history\history-%Session_ID%.txt" > "%tmpf%"  2>&1
 rem doskey /history > %tmpf%
 CALL p. cat -f %tmpf% %*
-
- 

@@ -24,5 +24,3 @@ set /p to=Enter the computer name:)
 set /p m=Enter the single line Message:)
 net send %to% %m%
 echo success
-
- 

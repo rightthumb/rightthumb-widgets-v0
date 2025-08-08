@@ -12,6 +12,3 @@ rem ## {C3P0D40fAe8B} ##
 
 CALL p. ls -folder "%userprofile%\.rt\profile\tickets" -ago 1d -c p  --c -s md.d>%tmpf%
 CALL p. typeEach -f %tmpf%
-
-
- 

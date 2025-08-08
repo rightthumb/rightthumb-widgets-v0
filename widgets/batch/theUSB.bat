@@ -177,8 +177,3 @@ GOTO:EOF
 set now=%YYYY%.%MM%.%DD%-%HH%.%MI%_%SS%.%FF%
 IF NOT [%theEcho%] == [noEcho] (echo now = %now%)
 GOTO:EOF
-
-
-    
-
- 

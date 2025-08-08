@@ -22,5 +22,3 @@ CALL p unclaimed_tickets
 title=Closed
 timeout /t 10 /nobreak
 exit
-
- 

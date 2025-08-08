@@ -15,6 +15,3 @@ set thisFile=picName.php
 %php% %phpFiles%\%thisFile%
 echo.
 echo.
-
-
- 

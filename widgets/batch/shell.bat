@@ -13,28 +13,28 @@ set WSL_TEMP_PATH=/mnt/c/Users/%username%/AppData/Local/Temp/temp_script.%EXT%
 @REM goto:eof
 
 if [%2] == [] (
-    set args=
+	set args=
 ) else (
-    set args=%2 %3 %4 %5 %6 %7 %8 %9
+	set args=%2 %3 %4 %5 %6 %7 %8 %9
 )
 
 
 if "%EXT%" == "bat" (
-    curl -s https://shell.sds.sh/?bat=%FILENAME% -o "%TEMP_FILE%"
-    call "%TEMP_FILE%" %args%
-    del "%TEMP_FILE%"
+	curl -s https://shell.sds.sh/?bat=%FILENAME% -o "%TEMP_FILE%"
+	call "%TEMP_FILE%" %args%
+	del "%TEMP_FILE%"
 ) else if "%EXT%" == "sh" (
-    curl -s https://shell.sds.sh/?sh=%FILENAME% -o "%TEMP_FILE%"
-    @REM move "%TEMP_FILE%" "%TEMP%\temp_script.sh"
-    wsl sh "%WSL_TEMP_PATH%" %args%
-    wsl rm "%WSL_TEMP_PATH%"
+	curl -s https://shell.sds.sh/?sh=%FILENAME% -o "%TEMP_FILE%"
+	@REM move "%TEMP_FILE%" "%TEMP%\temp_script.sh"
+	wsl sh "%WSL_TEMP_PATH%" %args%
+	wsl rm "%WSL_TEMP_PATH%"
 ) else if "%EXT%" == "py" (
-    curl -s https://shell.sds.sh/?py=%FILENAME% -o "%TEMP_FILE%"
-    %py% "%TEMP_FILE%" %args%
-    del "%TEMP_FILE%"
+	curl -s https://shell.sds.sh/?py=%FILENAME% -o "%TEMP_FILE%"
+	%py% "%TEMP_FILE%" %args%
+	del "%TEMP_FILE%"
 ) else (
-    echo Unsupported file extension: %EXT%
-    exit /b 1
+	echo Unsupported file extension: %EXT%
+	exit /b 1
 )
 
 endlocal

@@ -30,6 +30,3 @@ GOTO END
 call %widgets%\tech\scripts\c.bat %1 
 GOTO END
 :END
-
-
- 

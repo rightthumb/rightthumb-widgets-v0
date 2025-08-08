@@ -35,10 +35,10 @@ set /a  cnt=%cnt%+1
 set check=%moddate%-%cnt%-%input%
 
  IF EXIST "%check%" (
-     GOTO LOOP
+	GOTO LOOP
  ) ELSE (
-     rename "%input%" "%check%"
-     echo %check%
+	rename "%input%" "%check%"
+	echo %check%
  )
 
 goto END

@@ -26,5 +26,3 @@ start "%USERPROFILE%\AppData\Local\Google\Chrome\Application\chrome.exe" "http:/
 
 
 :start "%USERPROFILE%\AppData\Local\Google\Chrome\Application\chrome.exe" "http://www.google.com/#hl=en&newwindow=1&safe=off&q=site:www.dandwiki.com+%1 %2 %3 %4 %5 %6 %7 %8 %9&aq=f&aqi=&aql=&oq=&gs_rfai=&fp=84c7fb41710deb10"
-
- 

@@ -15,10 +15,10 @@ if not errorlevel 1 exit /b 0
 
 REM === PowerShell: Append, Deduplicate, and Set PATH (User) ===
 powershell -NoProfile -Command ^
-    "$p=[Environment]::GetEnvironmentVariable('PATH','User');" ^
-    "$p=($p -split ';') + '%newPath%';" ^
-    "$p=$p | Where-Object { $_ -ne '' } | Select-Object -Unique;" ^
-    "[Environment]::SetEnvironmentVariable('PATH',($p -join ';'),'User')"
+	"$p=[Environment]::GetEnvironmentVariable('PATH','User');" ^
+	"$p=($p -split ';') + '%newPath%';" ^
+	"$p=$p | Where-Object { $_ -ne '' } | Select-Object -Unique;" ^
+	"[Environment]::SetEnvironmentVariable('PATH',($p -join ';'),'User')"
 
 endlocal
 exit /b 0

@@ -12,9 +12,9 @@ rem ## {C3P0D40fAe8B} ##
 
 
 if [%isAdmin%] == [False] (
-    echo Error: Not Admin
+	echo Error: Not Admin
 ) else (
-    CALL :GenerateDirDatabase
+	CALL :GenerateDirDatabase
 )
 GOTO:EOF
 
@@ -33,7 +33,3 @@ type 01{65E57A88-6471-E426-D878-AD55F117A804} | p. dir -db D_Drive.db -md5
 
 CALL done
 GOTO:EOF
-
-
-
- 

@@ -12,7 +12,3 @@ rem ## {C3P0D40fAe8B} ##
 
 
 start "EDIT" "D:\xampp\xampp-control.exe" ""
-
-
-
- 

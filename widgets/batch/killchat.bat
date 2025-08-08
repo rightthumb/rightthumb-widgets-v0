@@ -13,5 +13,3 @@ rem ## {C3P0D40fAe8B} ##
 taskkill /F /IM msmsgs.exe /t
 taskkill /F /IM YPager.exe /t
 taskkill /F /IM aim.exe /t
-
- 

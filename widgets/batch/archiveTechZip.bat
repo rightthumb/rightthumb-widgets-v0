@@ -22,5 +22,3 @@ type %tmpf% | p. execute
 rem type %tmpf0%
 
 call b back
-
- 

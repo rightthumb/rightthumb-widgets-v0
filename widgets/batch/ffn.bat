@@ -23,5 +23,3 @@ set search=%1
 findstr /i /r /m "%search%" "%indexindex%"
 :END
 echo.
-
- 

@@ -19,5 +19,3 @@ set thisFile=MS_Accuray2.php
 echo.
 
 :END
-
- 

@@ -13,5 +13,3 @@ rem ## {C3P0D40fAe8B} ##
 if ["%1"] == [""] GOTO END
 call ticket %*
 :END
-
- 

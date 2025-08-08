@@ -27,5 +27,3 @@ set app=
 taskkill /F /IM %app% /t
 set app=
 taskkill /F /IM %app% /t
-
- 

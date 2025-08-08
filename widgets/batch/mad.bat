@@ -11,5 +11,3 @@ rem ###########################################################################
 rem ## {C3P0D40fAe8B} ##
 
 del /P d:\tech\MyScripts\log\script-bookmarks\alias\a.%1.bat
-
- 

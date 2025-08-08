@@ -26,5 +26,3 @@ start chrome.exe --profile-directory=Default --disable-web-security --disable-si
 :END
 cls
 GOTO:EOF
-
- 

@@ -19,5 +19,3 @@ cls
 %php% %phpFiles%\%thisFile%
 echo.
 :END
-
- 

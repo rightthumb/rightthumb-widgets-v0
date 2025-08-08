@@ -20,5 +20,3 @@ GOTO END
 :CNL
 echo CNL
 :END
-
- 

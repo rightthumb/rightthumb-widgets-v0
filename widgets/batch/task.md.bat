@@ -19,5 +19,3 @@ if [%1] == [-report] (
 )
 
 call tf.
-
- 

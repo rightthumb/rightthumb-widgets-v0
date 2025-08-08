@@ -16,6 +16,3 @@ cd %today%
 title %today%
 cd
 :also mdt
-
-
- 

@@ -12,5 +12,3 @@ rem ## {C3P0D40fAe8B} ##
 
 
 ffmpeg -i %1 -codec:a libmp3lame -qscale:a 2 output.mp3
-
- 

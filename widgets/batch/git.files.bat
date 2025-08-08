@@ -4,24 +4,24 @@ call b w --c
 call:vars %*
 
 if "%2" == "" (
-    set shouldbackup=-backup
-    echo backup enabled
+	set shouldbackup=-backup
+	echo backup enabled
 ) else (
-    set "shouldbackup="
-    echo backup disabled
+	set "shouldbackup="
+	echo backup disabled
 )
 
 if [%gitfilesrepo%] == [] (
-    call b w > nul
+	call b w > nul
 ) else (
-    call b %gitfilesrepo% > nul
+	call b %gitfilesrepo% > nul
 )
 
 
 if [%gitfilesago%] == [] (
-    call:one
+	call:one
 ) else (
-    call:two %gitfilesago%
+	call:two %gitfilesago%
 )
 call b back > nul
 goto:eof
@@ -53,9 +53,9 @@ set "firstChar=%testvar:~0,1%"
 
 :: Check if the character is a number
 if "%firstChar%" geq "0" if "%firstChar%" leq "9" (
-    set gitfilesago=%testvar%
+	set gitfilesago=%testvar%
 ) else (
-    set gitfilesrepo=%testvar%
+	set gitfilesrepo=%testvar%
 )
 set "testvar="
 set "firstChar="

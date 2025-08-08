@@ -12,6 +12,3 @@ rem ## {C3P0D40fAe8B} ##
 
 call %userprofile%\cc v
 call offline_www %1
-
-
- 

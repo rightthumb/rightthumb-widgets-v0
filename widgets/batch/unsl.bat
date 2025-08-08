@@ -50,5 +50,3 @@ echo To delete temp files...
 pause
 del %input%
 del %out%
-
- 

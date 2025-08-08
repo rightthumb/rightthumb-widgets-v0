@@ -50,504 +50,269 @@ _.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw )
 
 
 
-
-
-
-import threading
-import time
-from pynput import mouse, keyboard
-
-class IdleTimer:
-    def __init__(self, threshold=60, interval=1, on_idle=None, on_active=None):
-        self.idle_time = 0
-        self.threshold = threshold
-        self.interval = interval
-        self.on_idle = on_idle or (lambda t: print(f"User is idle after {t}s"))
-        self.on_active = on_active or (lambda t: print(f"User became active after being idle for {t}s"))
-        self.is_idle = False
-        self._running = False
-        self._lock = threading.Lock()
-
-        # Event listeners
-        self.mouse_listener = mouse.Listener(on_move=self.reset, on_click=self.reset, on_scroll=self.reset)
-        self.keyboard_listener = keyboard.Listener(on_press=self.reset)
-
-    def start(self):
-        self._running = True
-        self.reset()
-        self.mouse_listener.start()
-        self.keyboard_listener.start()
-        self.thread = threading.Thread(target=self._run, daemon=True)
-        self.thread.start()
-
-    def stop(self):
-        self._running = False
-        self.mouse_listener.stop()
-        self.keyboard_listener.stop()
-        self.thread.join()
-
-    def _run(self):
-        while self._running:
-            time.sleep(self.interval)
-            with self._lock:
-                self.idle_time += self.interval
-                if not self.is_idle and self.idle_time >= self.threshold:
-                    self.is_idle = True
-                    self.on_idle(self.idle_time)
-
-    def reset(self, *args, **kwargs):
-        with self._lock:
-            if self.is_idle:
-                self.on_active(self.idle_time)
-                self.is_idle = False
-            self.idle_time = 0
-
-    def get_idle_time(self):
-        with self._lock:
-            return self.idle_time
-
-
-
-
-if __name__ == "__main__"     and False:
-    idle = IdleTimer(
-        threshold=10,
-        on_idle=lambda t: print(f"[IDLE] {t}s"),
-        on_active=lambda t: print(f"[ACTIVE] {t}s")
-    )
-    idle.start()
-
-    try:
-        while True:
-            time.sleep(1)
-    except KeyboardInterrupt:
-        print("Stopping idle timer...")
-        idle.stop()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-if _.switches.isActive('Stop'): time.sleep(4); sys.exit();
-if _.switches.isActive('Start'): time.sleep(4); sys.exit();
-
-
-import logging
-import sys
-logging.basicConfig(format='%(asctime)s %(levelname)s %(message)s',
-					level=logging.DEBUG,
-					stream=sys.stdout)
-
-def get_active_window():
-	"""
-	Get the currently active window.
-	Returns
-	-------
-	string :
-		Name of the currently active window.
-	"""
-	import sys
-	active_window_name = None
-	if sys.platform in ['linux', 'linux2']:
-		# Alternatives: https://unix.stackexchange.com/q/38867/4784
-		try:
-			import wnck
-		except ImportError:
-			logging.info("wnck not installed")
-			wnck = None
-		if wnck is not None:
-			screen = wnck.screen_get_default()
-			screen.force_update()
-			window = screen.get_active_window()
-			if window is not None:
-				pid = window.get_pid()
-				with open("/proc/{pid}/cmdline".format(pid=pid)) as f:
-					active_window_name = f.read()
-		else:
-			try:
-				from gi.repository import Gtk, Wnck # type: ignore
-				gi = "Installed"
-			except ImportError:
-				logging.info("gi.repository not installed")
-				gi = None
-			if gi is not None:
-				Gtk.init([])  # necessary if not using a Gtk.main() loop
-				screen = Wnck.Screen.get_default()
-				screen.force_update()  # recommended per Wnck documentation
-				active_window = screen.get_active_window()
-				pid = active_window.get_pid()
-				with open("/proc/{pid}/cmdline".format(pid=pid)) as f:
-					active_window_name = f.read()
-	elif sys.platform in ['Windows', 'win32', 'cygwin']:
-		# https://stackoverflow.com/a/608814/562769
-		import win32gui # type: ignore
-		window = win32gui.GetForegroundWindow()
-		active_window_name = win32gui.GetWindowText(window)
-	elif sys.platform in ['Mac', 'darwin', 'os2', 'os2emx']:
-		# https://stackoverflow.com/a/373310/562769
-		from AppKit import NSWorkspace # type: ignore
-		active_window_name = (NSWorkspace.sharedWorkspace()
-							.activeApplication()['NSApplicationName'])
-	else:
-		print("sys.platform={platform} is unknown. Please report."
-			.format(platform=sys.platform))
-		print(sys.version)
-	return active_window_name
-# print("Active window: %s" % str(get_active_window()))
-
-
-def strip(text):
-	text=text.replace('\t',' ')
-	result=''
-	for ch in text:
-		if ch in ' 0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~':
-			result+=ch
-		else:
-			result+=' '
-	return clean(result)
-
-def clean(text):
-	while '  ' in text: text=text.replace('  ',' ')
-	while text.endswith(' '): text=text[:-1]
-	while text.startswith(' '): text=text[1:]
-	return text
-
-def action():
-	global idle_group
-	global idle_time
-	global aw
-	global fi
-	Timer( .1, idle_monitor ).start()
-	# return None
-	load(); global c3po;
-	LOG=_.switches.isActive('Log')
-	fi=_.dot()
-	# day=_.day(sep='-',e=0)
-	day=_.isDate(time.time(),f='date')
-	fi.log = 'active-window-'+day+'-log.json'
-	fi.index = 'active-window-'+day+'-title.index'
-	fi.groups = 'active-window-'+day+'-groups.index'
-
-
-	
-
-	aw=_.dot()
-	aw.log=[]
-	aw.index={}
-	aw.indexg={}
-	aw.idle={}
-	aw.idleg={}
-
-
-
-	if LOG:
-		aw.log=_.getTable(fi.log)
-		aw.index=_.getTable(fi.index)
-		aw.indexg=_.getTable(fi.groups)
-	else:
-		_.pr('no logging',c='red')
-
-	aw.aw=''
-	aw.group=''
-	aw.saved=time.time()
-	aw.last=_.dot()
-	aw.last.aw=''
-	aw.last.group=''
-	aw.last.start=0
-	aw.last.startg=0
-	isStop=False
-
-	
-	while __.v.active:
-		aw.aw=str(get_active_window()).replace('(LICENSE UPGRADE REQUIRED)','')
-		aw.aw=clean(aw.aw)
-		if isStop and scan(aw.aw) == 'start': isStop=False;continue;
-		elif not isStop and scan(aw.aw) == 'stop': isStop=True
-		
-		if isStop:
-			time.sleep(.2)
-			continue
-
-		if '(documents) - Sublime Text' in aw.aw:
-			aw.aw=aw.aw.replace('(documents) - Sublime Text','')
-			while not aw.aw[-1] == strip(aw.aw[-1]): aw.aw=aw.aw[:-1]
-			aw.aw+=' - Sublime Text'
-		# aw.aw=clean(aw.aw)
-		
-		z=False
-		if not ' - ' in aw.aw:
-			if aw.aw == 'local': z=True
-			elif aw.aw.startswith('admin'): z=True
-			elif aw.aw.startswith('scott'): z=True
-			elif aw.aw.startswith('root'): z=True
-		if z:
-			aw.aw=strip(aw.aw)
-			if not aw.aw == 'local':
-				aw.aw=aw.aw.replace(' ','@')
-			# if len(aw.aw.split(' ')) == 1: 
-			
-			aw.group=aw.aw
-		elif not ' - ' in aw.aw:
-			aw.group=aw.aw
-		else:
-			_gr=aw.aw.split(' - ')
-			z=False
-			if _gr[0] == 'local': z=True
-			elif _gr[0].startswith('admin'): z=True
-			elif _gr[0].startswith('scott'): z=True
-			elif _gr[0].startswith('root'): z=True
-			if z:
-				aw.aw=strip(aw.aw)
-				aw.group=strip(_gr[0])
-			else:
-				aw.group=_gr[-1]
-		if not aw.group in aw.indexg: aw.indexg[aw.group]=0
-		if not aw.aw in aw.index: aw.index[aw.aw]=0
-		
-		if not aw.aw in aw.idle: aw.idle[aw.aw]={}
-		if not aw.group in aw.idleg: aw.idleg[aw.group]={}
-		if not aw.group == aw.last.group:
-			if aw.last.startg>0:
-				end=time.time()
-				diff=end-aw.last.startg
-				aw.indexg[aw.group]+=diff
-			aw.last.startg=time.time()
-			aw.last.group=aw.group
-		if not aw.aw == aw.last.aw:
-			_.pr()
-			if aw.last.start>0:
-				end=time.time()
-				diff=end-aw.last.start
-				aw.index[aw.aw]+=diff
-				
-
-				fo={
-						'g': aw.group,
-						'w': aw.aw,
-				}
-				if fo['g'] == fo['w']: del fo['g']
-				if 'g' in fo and fo['g']+' - ' in fo['w']: fo['w']=fo['w'].replace(fo['g']+' - ','')
-				if 'g' in fo and ' - '+fo['g'] in fo['w']: fo['w']=fo['w'].replace(' - '+fo['g'],'')
-
-				rec={
-						'group': aw.group,
-						'label': fo['w'],
-						'window': aw.aw,
-						'start': aw.last.start,
-						'end': end,
-						'diff': diff,
-						'w-total': aw.index[aw.aw],
-						'g-total': aw.indexg[aw.group],
-					}
-				if diff < 60:
-					aw.log.append(rec)
-					if LOG and time.time()-aw.saved > 300:
-						day=_.isDate(time.time(),f='date')
-						if not fi.log == 'active-window-'+day+'-log.json':
-							_.saveTable(aw.log,fi.log,p=0)
-							_.saveTable(aw.index,fi.index,p=0)
-							_.saveTable(aw.indexg,fi.groups,p=0)
-							aw.log=[]
-							aw.index={}
-							aw.indexg={}
-							aw.idle={}
-							aw.idleg={}
-							continue
-						fi.log = 'active-window-'+day+'-log.json'
-						fi.index = 'active-window-'+day+'-title.index'
-						fi.groups = 'active-window-'+day+'-groups.index'
-						_.saveTable(aw.log,fi.log,p=0)
-						_.saveTable(aw.index,fi.index,p=0)
-						_.saveTable(aw.indexg,fi.groups,p=0)
-						_.pr()
-						_.pr(fi.log,c='green')
-						_.pr(fi.index,c='green')
-						_.pr(fi.groups,c='green')
-						_.pr()
-			aw.last.aw=aw.aw
-			aw.last.start=time.time()
-			# print(_._2dates(aw.last.start),"Active: %s" % aw.aw)
-		active=(aw.index[aw.aw]+(time.time()-aw.last.start))
-		activeg=(aw.indexg[aw.group]+(time.time()-aw.last.startg))
-		guess=time.time()-active
-		# _.pr(_._2dates(aw.last.start),aw.aw,end=1)
-		a=round(active,2)
-		b=round(activeg,2)
-		if not a == b:
-			fo={
-					'g': aw.group,
-					'at': a,
-					'gt': b,
-					'df': _._2dates(guess),
-					'w': aw.aw,
-			}
-			if fo['g'] == fo['w']: del fo['g']
-			if 'g' in fo and fo['g']+' - ' in fo['w']: fo['w']=fo['w'].replace(fo['g']+' - ','')
-			if 'g' in fo and ' - '+fo['g'] in fo['w']: fo['w']=fo['w'].replace(' - '+fo['g'],'')
-			txt=str(fo).replace('"','').replace("'",'').replace(',','   ').replace('}','').replace('{','')
-			_.pr(txt,end=1)
-			# _.pr(a,'-',b,'-',_._2dates(guess),aw.aw,end=1)
-		else:
-			fo={
-					'g': aw.group,
-					'at': a,
-					'gt': '-',
-					'df': _._2dates(guess),
-					'w': aw.aw,
-			}
-			if fo['g'] == fo['w']: del fo['g']
-			if 'g' in fo and fo['g']+' - ' in fo['w']: fo['w']=fo['w'].replace(fo['g']+' - ','')
-			if 'g' in fo and ' - '+fo['g'] in fo['w']: fo['w']=fo['w'].replace(' - '+fo['g'],'')
-			txt=str(fo).replace('"','').replace("'",'').replace(',','   ').replace('}','').replace('{','')
-			_.pr(txt,end=1)
-			# _.pr(a,'-',_._2dates(guess),aw.aw,'-',aw.group,end=1)
-		time.sleep(.2)
-		if idle_time > 600:
-			if not aw.aw in aw.idle: aw.idle[aw.aw] ={}
-			if not idle_group in aw.idle[aw.aw]: aw.idle[aw.aw][idle_group]=idle_time
-			else: aw.idle[aw.aw][idle_group]+=idle_time-aw.idle[aw.aw][idle_group]
-			if not idle_group in aw.idleg[aw.group]: aw.idleg[aw.group][idle_group]=idle_time
-			else: aw.idleg[aw.group][idle_group]+=idle_time-aw.idleg[aw.group][idle_group]
-
-	# aw.idleg[aw.group]
-	# aw.idleg[aw.group]
-	# global idle_group
-	# global idle_time
-
-def scan(win):
-	if ' active-window -stop' in win: return 'stop'
-	if ' active-window -start' in win: return 'start'
-	return ''
-
-
-idle_group=0
-idle_time=0
-def idle_monitor():
-	# print('idle_monitor')
-	# print('idle_monitor')
-	# print('idle_monitor')
-	# print('idle_monitor')
-	global idle_group
-	global idle_time
-
-
-
-	from ctypes import Structure, windll, c_uint, sizeof, byref
-	import time
-	import winsound
-	# http://stackoverflow.com/questions/911856/detecting-idle-time-in-python
-	class LASTINPUTINFO(Structure):
-		_fields_ = [
-			('cbSize', c_uint),
-			('dwTime', c_uint),
-		]
-
-	def get_idle_duration():
-		lastInputInfo = LASTINPUTINFO()
-		lastInputInfo.cbSize = sizeof(lastInputInfo)
-		windll.user32.GetLastInputInfo(byref(lastInputInfo))
-		millis = windll.kernel32.GetTickCount() - lastInputInfo.dwTime
-		return millis / 1000.0
-	last=0
-	while __.v.active:
-		GetLastInputInfo = int(get_idle_duration())
-		# print(GetLastInputInfo)
-		if last and not GetLastInputInfo : idle_group+=1
-		idle_time=GetLastInputInfo
-		last=GetLastInputInfo
-		time.sleep(1)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	# while 1:
-	#     GetLastInputInfo = int(get_idle_duration())
-	#     print(GetLastInputInfo)
-	#     time.sleep(1)
-
-
-
-	#     if GetLastInputInfo == 480:
-	#         # if GetLastInputInfo is 8 minutes, play a sound
-	#         sound = r"c:\windows\media\notify.wav"
-	#         winsound.PlaySound(sound, winsound.SND_FILENAME)
-	#     if GetLastInputInfo == 560:
-	#         # if GetLastInputInfo is 9 minutes, play a more annoying sound
-	#         sound = r"c:\windows\media\ringout.wav"
-	#         winsound.PlaySound(sound, winsound.SND_FILENAME)
-	#         winsound.PlaySound(sound, winsound.SND_FILENAME)
-	#         winsound.PlaySound(sound, winsound.SND_FILENAME)
-
-
-# idle time monitor
-# idle time monitor
-# idle time monitor
-# idle time monitor
-from ctypes import Structure, windll, c_uint, sizeof, byref
-
-# # http://stackoverflow.com/questions/911856/detecting-idle-time-in-python
-class LASTINPUTINFO(Structure):
-	_fields_ = [
-		('cbSize', c_uint),
-		('dwTime', c_uint),
-	]
-
-def get_idle_duration():
-	lastInputInfo = LASTINPUTINFO()
-	lastInputInfo.cbSize = sizeof(lastInputInfo)
-	windll.user32.GetLastInputInfo(byref(lastInputInfo))
-	millis = windll.kernel32.GetTickCount() - lastInputInfo.dwTime
-	return millis / 1000.0
-
-def load():
-	global c3po
-	c3po = _.getTable( 'active_window.json' )
-	#n)--> print table
-	_.pt(c3po)
-
-
-
-__.v.active = True
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+"""
+Desktop tracker that mirrors the Chrome extension's behavior:
+- Single endpoint with actions: start, nav, ping, end
+- device_id persisted locally; new session_id per run
+- Idle-aware active time accounting (delta_active_ms)
+- Sends 'nav' on active window title changes
+"""
+
+import atexit
+import json
+import os
+import platform
 import signal
 import sys
+import threading
 import time
+import uuid
 
-def sigint_handler(signal, frame):
-	global aw
-	global fi
-	__.v.active = False
-	print()
-	_.pr('Closing...',end=1)
-	time.sleep(1)
-	_.pr('               ',end=1)
-	if _.switches.isActive('Log'):
-		_.pr('Saved',c='green')
-		_.saveTable(aw.log,fi.log,p=0)
-		_.saveTable(aw.index,fi.index,p=0)
-		_.saveTable(aw.indexg,fi.groups,p=0)
-	sys.exit()
+# ---------- config ----------
+ENDPOINT = _v.fig.get('CodexScripta', None)
+if not ENDPOINT:
+    _.e("Please set 'CodexScripta' in ~/.rt/.config.hash")
+PING_INTERVAL_SEC = 5
+IDLE_THRESHOLD_SEC = 10
+DEVICE_ID_PATH = os.path.join(os.path.expanduser("~"), ".codexscripta_device_id")
 
-signal.signal(signal.SIGINT, sigint_handler)
+# ---------- deps ----------
+try:
+    import requests # type: ignore
+except Exception:
+    print("Please: pip install requests")
+    sys.exit(1)
+
+# Optional cross-platform helpers
+def get_active_window_title() -> str:
+    """
+    Returns the current active window title (best effort per OS).
+    """
+    sysplat = sys.platform
+    try:
+        if sysplat.startswith("win"):
+            import win32gui  # type: ignore # pywin32
+            hwnd = win32gui.GetForegroundWindow()
+            return win32gui.GetWindowText(hwnd) or ""
+        elif sysplat == "darwin":
+            from AppKit import NSWorkspace  # type: ignore # pyobjc
+            app = NSWorkspace.sharedWorkspace().frontmostApplication()
+            name = app.localizedName() if app else ""
+            # You can add ScriptingBridge to fetch the actual window title if needed
+            return name or ""
+        else:
+            # Linux (various WMs)
+            # xdotool path (fallback) if available:
+            from subprocess import check_output, CalledProcessError
+            try:
+                title = check_output(["xdotool", "getactivewindow", "getwindowname"], text=True).strip()
+                return title
+            except (FileNotFoundError, CalledProcessError):
+                # Try WNCK via gi if installed
+                try:
+                    from gi.repository import Wnck, Gtk  # type: ignore
+                    Gtk.init([])
+                    screen = Wnck.Screen.get_default()
+                    screen.force_update()
+                    w = screen.get_active_window()
+                    return w.get_name() if w else ""
+                except Exception:
+                    return ""
+    except Exception:
+        return ""
+    return ""
+
+def get_idle_seconds() -> float:
+    """
+    Cross-platform idle time. Uses best available source.
+    """
+    sysplat = sys.platform
+    if sysplat.startswith("win"):
+        # Win32 LASTINPUTINFO
+        from ctypes import Structure, windll, c_uint, sizeof, byref
+
+        class LASTINPUTINFO(Structure):
+            _fields_ = [("cbSize", c_uint), ("dwTime", c_uint)]
+
+        info = LASTINPUTINFO()
+        info.cbSize = sizeof(info)
+        if windll.user32.GetLastInputInfo(byref(info)):
+            millis = windll.kernel32.GetTickCount() - info.dwTime
+            return millis / 1000.0
+        return 0.0
+
+    # macOS / Linux: try X11/Mac idle utilities if you have them; otherwise fall back to key/mouse hooks.
+    # Simple portable fallback: no exact idle; assume 0 (always active). You can replace with pynput or platform-specific tools.
+    try:
+        # Optional fallback via pynput (resets on any event we catch)
+        from pynput import mouse, keyboard  # type: ignore
+        now = time.time()
+        if not hasattr(get_idle_seconds, "_last_input_ts"):
+            get_idle_seconds._last_input_ts = now
+
+            def bump(*_):
+                get_idle_seconds._last_input_ts = time.time()
+
+            get_idle_seconds._mouse_listener = mouse.Listener(on_move=bump, on_click=bump, on_scroll=bump)
+            get_idle_seconds._kbd_listener = keyboard.Listener(on_press=bump)
+            get_idle_seconds._mouse_listener.start()
+            get_idle_seconds._kbd_listener.start()
+
+        return max(0.0, time.time() - get_idle_seconds._last_input_ts)
+    except Exception:
+        return 0.0
+
+# ---------- identity ----------
+def get_device_id() -> str:
+    try:
+        if os.path.isfile(DEVICE_ID_PATH):
+            with open(DEVICE_ID_PATH, "r", encoding="utf-8") as f:
+                v = f.read().strip()
+                if v:
+                    return v
+        v = str(uuid.uuid4())
+        with open(DEVICE_ID_PATH, "w", encoding="utf-8") as f:
+            f.write(v)
+        return v
+    except Exception:
+        return str(uuid.uuid4())
+
+DEVICE_ID = get_device_id()
+SESSION_ID = str(uuid.uuid4())
+
+# ---------- post helper ----------
+def post(action: str, extra: dict | None = None) -> dict | None:
+    """
+    Posts JSON to the single endpoint. Mirrors the extension's shape:
+      {
+        action, device_id, session_id,
+        url, domain, title, visible,
+        (headings for start/nav if applicable),
+        ...extra
+      }
+    """
+    payload = {
+        "action": action,
+        "device_id": DEVICE_ID,
+        "session_id": SESSION_ID,
+        # Desktop "URL" schema: desktop://<platform>/<app_or_window>
+        "url": f"desktop://{platform.system().lower()}",
+        "domain": platform.node() or "",
+        "title": get_active_window_title(),
+        "visible": True,  # desktop app is considered visible when running
+    }
+
+    # Keep headings for parity with the web tracker (empty on desktop)
+    if action in ("start", "nav"):
+        payload["headings"] = []  # nothing equivalent on desktop
+
+    if extra:
+        payload.update(extra)
+
+    try:
+        r = requests.post(ENDPOINT, json=payload, timeout=10)
+        try:
+            return r.json()
+        except Exception:
+            return {"status": r.status_code, "ok": r.ok, "text": r.text}
+    except Exception as e:
+        # Silent failures to avoid spam, like the extension
+        # print(f"[post:{action}] {e}")
+        return None
+
+# ---------- tracker ----------
+class DesktopTracker:
+    def __init__(self, idle_threshold: int = IDLE_THRESHOLD_SEC, ping_interval: int = PING_INTERVAL_SEC):
+        self.idle_threshold = idle_threshold
+        self.ping_interval = ping_interval
+        self._stop = threading.Event()
+        self._last_tick = time.time()
+        self._last_title = ""
+        self._ticker_thr: threading.Thread | None = None
+        self._nav_thr: threading.Thread | None = None
+
+    def start(self):
+        # start
+        self._last_title = get_active_window_title()
+        post("start")
+
+        # nav watcher (active window changes)
+        self._nav_thr = threading.Thread(target=self._nav_watch_loop, daemon=True)
+        self._nav_thr.start()
+
+        # ping loop
+        self._ticker_thr = threading.Thread(target=self._ping_loop, daemon=True)
+        self._ticker_thr.start()
+
+    def stop(self):
+        self._stop.set()
+        if self._ticker_thr:
+            self._ticker_thr.join(timeout=2)
+        if self._nav_thr:
+            self._nav_thr.join(timeout=2)
+        post("end")
+
+    def _nav_watch_loop(self):
+        # Poll for window title changes and send 'nav'
+        while not self._stop.is_set():
+            title = get_active_window_title()
+            if title != self._last_title:
+                self._last_title = title
+                post("nav")
+            time.sleep(0.5)
+
+    def _ping_loop(self):
+        self._last_tick = time.time()
+        while not self._stop.is_set():
+            time.sleep(self.ping_interval)
+            now = time.time()
+            elapsed_ms = int((now - self._last_tick) * 1000)
+            self._last_tick = now
+
+            idle_sec = get_idle_seconds()
+            visible = True  # desktop app is "visible" if running
+
+            # Match extension logic: if idle or not visible, delta_active_ms = 0
+            add_ms = 0 if (idle_sec >= self.idle_threshold or not visible) else elapsed_ms
+
+            post("ping", {"delta_active_ms": add_ms})
+
+# ---------- main ----------
+_tracker: DesktopTracker | None = None
+
+def _shutdown(*_):
+    global _tracker
+    if _tracker:
+        try:
+            _tracker.stop()
+        except Exception:
+            pass
+    # Allow process to exit cleanly
+    os._exit(0)
+
+def main():
+    global _tracker
+    # SIGINT/SIGTERM handling
+    signal.signal(signal.SIGINT, _shutdown)
+    try:
+        signal.signal(signal.SIGTERM, _shutdown)
+    except Exception:
+        pass
+    atexit.register(_shutdown)
+
+    _tracker = DesktopTracker()
+    _tracker.start()
+
+    # Sleep-until-killed loop
+    while True:
+        time.sleep(60)
+
+if __name__ == "__main__":
+    main()
+
 
 
 

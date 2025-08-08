@@ -45,6 +45,3 @@ i:
 echo I:
 cd\
 dir %search% %switch% >> "%log%"
-
-
- 

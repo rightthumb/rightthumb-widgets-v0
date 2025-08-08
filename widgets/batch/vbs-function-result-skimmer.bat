@@ -12,6 +12,4 @@ rem rem echo here
 rem call p. algorithm -a vps-function-result-skimmer--01 -f %*
 
 rem call p. algorithm -a vps-function-result-skimmer--02 -f %* | call p. execute --c
-rem rem call p. algorithm -a vps-function-result-skimmer--02 -f %* 
-
-
+rem rem call p. algorithm -a vps-function-result-skimmer--02 -f %*

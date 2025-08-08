@@ -4,13 +4,13 @@
 CALL :GETPARENT PARENT
 
 IF /I "%PARENT%" == "WindowsTerminal" (
-    set isPWSH=no
+	set isPWSH=no
 ) ELSE IF /I "%PARENT%" == "cmd" (
-    set isPWSH=no
+	set isPWSH=no
 ) ELSE IF /I "%PARENT%" == "pwsh" (
-    set isPWSH=yes
+	set isPWSH=yes
 ) ELSE (
-    set isPWSH=yes
+	set isPWSH=yes
 )
 set isPWSHp=%PARENT%
 if not [%1] == [] echo isPWSH = %isPWSH%

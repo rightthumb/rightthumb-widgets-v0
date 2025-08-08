@@ -12,6 +12,3 @@ rem ## {C3P0D40fAe8B} ##
 
 set thisFile=stripHTML.php
 %php% %phpFiles%\%thisFile%
-
-
- 

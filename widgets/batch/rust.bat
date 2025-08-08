@@ -47,6 +47,3 @@ goto:eof
 :: wasm-pack build --target web --release
 :: wasm-opt -Oz -o pkg/secure_wasm_bg.wasm pkg/secure_wasm_bg.wasm
 :: wasm-validate pkg/secure_wasm_bg.wasm
-
-
-

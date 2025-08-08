@@ -21,6 +21,3 @@ ping google.com -n 1 >nul
 if exist %bat% call %bat%
 ::if exist %bat% del /q %bat%
 ::if exist %out% del /q %out%
-
-
- 

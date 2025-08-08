@@ -12,9 +12,6 @@ rem ## {C3P0D40fAe8B} ##
 
 IF EXIST %today% ( rmdir %today% /S )
 IF EXIST ../%today% ( 
-    cd..
-    rmdir %today% /S 
-    )
-
-
- 
+	cd..
+	rmdir %today% /S 
+	)

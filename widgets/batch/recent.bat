@@ -11,5 +11,4 @@ rem ###########################################################################
 rem ## {C3P0D40fAe8B} ##
 
 call p. recent -ago 1d + tickets | call p. files -has %* | call p. cat + %*
-echo. 
- 
+echo.

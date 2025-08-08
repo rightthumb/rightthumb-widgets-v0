@@ -13,6 +13,3 @@ rem ## {C3P0D40fAe8B} ##
 call p. line + %*
 
 @REM find /i %1
-
-
- 

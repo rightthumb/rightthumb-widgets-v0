@@ -36,6 +36,3 @@ echo g generate cmd
 echo n new
 GOTO END
 :END
-
-
- 

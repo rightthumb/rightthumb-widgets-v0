@@ -24,4 +24,3 @@ set js=%USERPROFILE%\rightthumb-widgets-v0\widgets\javascript
 set db=%USERPROFILE%\rightthumb-widgets-v0\widgets\databank
 set ps=%USERPROFILE%\rightthumb-widgets-v0\widgets\powershell
 set wt=%USERPROFILE%\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json
-

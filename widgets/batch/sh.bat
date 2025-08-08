@@ -11,9 +11,7 @@ rem ###########################################################################
 rem ## {C3P0D40fAe8B} ##
 
 if [%1] == [] (
-    type %widgets%\widgets\bash\bash-file\headers.txt
+	type %widgets%\widgets\bash\bash-file\headers.txt
 ) else (
-    CALL p. file -noext --c -folder %widgets%\widgets\bash + %*
+	CALL p. file -noext --c -folder %widgets%\widgets\bash + %*
 )
-
- 

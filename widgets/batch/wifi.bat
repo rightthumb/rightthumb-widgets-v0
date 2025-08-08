@@ -14,28 +14,28 @@ set /p WelcomeStatus= < "%tmpf%-PowerShell_Welcome"
 
 call p. PowerShell_Welcome -off -noPrint
 if [%1]==[enable] (
-    call:pwshExecutionPolicy
-    goto:eof
+	call:pwshExecutionPolicy
+	goto:eof
 )
 if [%1]==[] (
-    set ActionRouter=NoSearch
+	set ActionRouter=NoSearch
 ) else (
-    set ActionRouter=Search
+	set ActionRouter=Search
 )
 if [%1]==[] (
-    echo.
-    echo Building Wi-Fi Passwords List...
-    echo.
-    powershell -Command "Invoke-WebRequest -Uri 'https://shell.sds.sh/?f=ps1/wifi_passwords.ps1' -OutFile 'ps1_wifi_passwords.ps1'; powershell -ExecutionPolicy Bypass -File 'ps1_wifi_passwords.ps1'" > "%tmpf%"
-    goto:ValidatePasswordData_And_ActionRouter
-    goto:eof
+	echo.
+	echo Building Wi-Fi Passwords List...
+	echo.
+	powershell -Command "Invoke-WebRequest -Uri 'https://shell.sds.sh/?f=ps1/wifi_passwords.ps1' -OutFile 'ps1_wifi_passwords.ps1'; powershell -ExecutionPolicy Bypass -File 'ps1_wifi_passwords.ps1'" > "%tmpf%"
+	goto:ValidatePasswordData_And_ActionRouter
+	goto:eof
 ) else (
-    echo.
-    echo Searching Wi-Fi Passwords for: %*
-    echo.
-    powershell -Command "Invoke-WebRequest -Uri 'https://shell.sds.sh/?f=ps1/wifi_passwords.ps1' -OutFile 'ps1_wifi_passwords.ps1'; powershell -ExecutionPolicy Bypass -File 'ps1_wifi_passwords.ps1'" > "%tmpf%"
-    goto:ValidatePasswordData_And_ActionRouter
-    goto:eof
+	echo.
+	echo Searching Wi-Fi Passwords for: %*
+	echo.
+	powershell -Command "Invoke-WebRequest -Uri 'https://shell.sds.sh/?f=ps1/wifi_passwords.ps1' -OutFile 'ps1_wifi_passwords.ps1'; powershell -ExecutionPolicy Bypass -File 'ps1_wifi_passwords.ps1'" > "%tmpf%"
+	goto:ValidatePasswordData_And_ActionRouter
+	goto:eof
 )
 
 
@@ -54,8 +54,8 @@ call p. BoolSearch -f "%tmpf%" + Profile Password -line > "%tmpf%-BoolSearch"
 set /p PasswordDataValid= < "%tmpf%-BoolSearch"
 del "%tmpf%-BoolSearch"
 if [%PasswordDataValid%]==[False] (
-    call p. DisplayError -1 PowerShell Scripts Not Enabled -2 To Fix Run -3 "wifi enable"
-    goto:end
+	call p. DisplayError -1 PowerShell Scripts Not Enabled -2 To Fix Run -3 "wifi enable"
+	goto:end
 )
 goto:%ActionRouter%
 goto:eof
@@ -63,9 +63,9 @@ goto:eof
 
 :WelcomeStatusToOriginalSetting
 if [%WelcomeStatus%]==[on] (
-    call p. PowerShell_Welcome -on -noPrint
+	call p. PowerShell_Welcome -on -noPrint
 ) else (
-    call p. PowerShell_Welcome -off -noPrint
+	call p. PowerShell_Welcome -off -noPrint
 )
 goto:eof
 
@@ -73,8 +73,8 @@ goto:eof
 :pwshExecutionPolicy
 net session >nul 2>&1
 if %errorlevel% neq 0 (
-    echo Please run this script as Administrator.
-    goto:eof
+	echo Please run this script as Administrator.
+	goto:eof
 )
 powershell Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
 powershell Set-ExecutionPolicy -Scope LocalMachine -ExecutionPolicy Unrestricted

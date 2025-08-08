@@ -28,7 +28,3 @@ type %tmpf2% > %funcListFile%
 call n %funcListFile%
 
 echo includes function in classes
-
-
-
- 

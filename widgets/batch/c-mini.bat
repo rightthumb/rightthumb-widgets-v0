@@ -19,11 +19,11 @@ CALL :GENERATE_API_ID
 GOTO:EOF
 
 :GENERATE_API_ID
-    SET /p LastID=<%userprofile%\.rt\profile\vars\ID.sys
-    SET /a Session_ID=%LastID% + 1
-    SET Session_ID_BK=%Session_ID%
-    ECHO %Session_ID% > %userprofile%\.rt\profile\vars\ID.sys
-    CALL timestamp ats2 noEcho >nul 2>&1
-    CALL p. files -folder %userprofile%\.rt\profile\vars -rrr > nul
-    @REM SET timestamp_start=%now%
+	SET /p LastID=<%userprofile%\.rt\profile\vars\ID.sys
+	SET /a Session_ID=%LastID% + 1
+	SET Session_ID_BK=%Session_ID%
+	ECHO %Session_ID% > %userprofile%\.rt\profile\vars\ID.sys
+	CALL timestamp ats2 noEcho >nul 2>&1
+	CALL p. files -folder %userprofile%\.rt\profile\vars -rrr > nul
+	@REM SET timestamp_start=%now%
 GOTO:EOF

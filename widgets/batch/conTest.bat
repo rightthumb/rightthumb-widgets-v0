@@ -16,5 +16,3 @@ set thisFile=conTest.php
 echo.
 echo.
 : copied as g
-
- 

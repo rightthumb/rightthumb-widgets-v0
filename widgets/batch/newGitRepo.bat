@@ -6,9 +6,9 @@ setlocal enabledelayedexpansion
 :: Validate arguments
 :: ===============================
 if "%2" == "" (
-    echo [!] Missing arguments.
-    echo Usage: create_repo.bat <github_user> <repo_name>
-    exit /b 1
+	echo [!] Missing arguments.
+	echo Usage: create_repo.bat <github_user> <repo_name>
+	exit /b 1
 )
 
 :: ===============================
@@ -24,15 +24,15 @@ set "GITHUB_USER=%1"
 set "REPO_NAME=%2"
 
 if "%GITHUB_USER%"=="" (
-    echo [!] Missing GitHub username.
-    echo Usage: create_repo.bat <github_user> <repo_name>
-    exit /b 1
+	echo [!] Missing GitHub username.
+	echo Usage: create_repo.bat <github_user> <repo_name>
+	exit /b 1
 )
 
 if "%REPO_NAME%"=="" (
-    echo [!] Missing repository name.
-    echo Usage: create_repo.bat <github_user> <repo_name>
-    exit /b 1
+	echo [!] Missing repository name.
+	echo Usage: create_repo.bat <github_user> <repo_name>
+	exit /b 1
 )
 
 :: ===============================

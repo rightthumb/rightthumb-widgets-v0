@@ -33,8 +33,8 @@ CD /D %REPO_PATH%
 
 REM Make sure the path exists and is a Git repo
 IF NOT EXIST .git (
-    ECHO ERROR: Not a Git repository at %REPO_PATH%
-    EXIT /B 1
+	ECHO ERROR: Not a Git repository at %REPO_PATH%
+	EXIT /B 1
 )
 
 REM Checkout orphan branch

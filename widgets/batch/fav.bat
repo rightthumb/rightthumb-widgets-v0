@@ -38,5 +38,3 @@ GOTO END
 
 if [] == [] Do%
 :END
-
- 

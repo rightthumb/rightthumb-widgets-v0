@@ -42,10 +42,10 @@ set /a  cnt=%cnt%+1
 set check=%moddate%-%cnt%-%input%
 
  IF EXIST "%check%" (
-     GOTO LOOP
+	GOTO LOOP
  ) ELSE (
-     set ndVar=%moddate%-%cnt%-%fileName%
-     echo %check%
+	set ndVar=%moddate%-%cnt%-%fileName%
+	echo %check%
  )
 
 goto END
@@ -67,25 +67,3 @@ set "mod="
 set "moddate="
 set "check="
 set "name="
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-
-
- 

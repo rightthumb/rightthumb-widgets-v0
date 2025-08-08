@@ -24,14 +24,14 @@ setlocal EnableDelayedExpansion
 :: This assumes your system date format is MM/DD/YYYY or similar. Adjust tokens as needed.
 
 for /f "tokens=1-3 delims=/- " %%a in ("%date%") do (
-    set "mm=%%a"
-    set "dd=%%b"
-    set "yyyy=%%c"
+	set "mm=%%a"
+	set "dd=%%b"
+	set "yyyy=%%c"
 )
 
 :: Handle two-digit year formats (rare)
 if "!yyyy!" LSS "100" (
-    set /a "yyyy=2000+yyyy"
+	set /a "yyyy=2000+yyyy"
 )
 
 :: Zero-pad if needed

@@ -13,6 +13,3 @@ rem ## {C3P0D40fAe8B} ##
 start D:\techApps\Python\Python27\Scripts\pip.exe %*
 
 rem start D:\Python27\Scripts\pip.exe %*
-
-
- 

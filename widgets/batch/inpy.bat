@@ -23,6 +23,4 @@ rem call b current
 rem THE NEW ALGORITHM
 rem THE NEW ALGORITHM
 
-call p. files + *.py --c -folder D:\.rightthumb-widgets\widgets\python | p. f3 -jn + %* | p. ls -s a.md -c path 
-
- 
+call p. files + *.py --c -folder D:\.rightthumb-widgets\widgets\python | p. f3 -jn + %* | p. ls -s a.md -c path

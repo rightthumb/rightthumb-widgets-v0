@@ -12,10 +12,10 @@ rem ## {C3P0D40fAe8B} ##
 
 SET checkID=%1
 if [%2] == [] (
-        SET "folder="
-    ) else (
-        SET folder=%2
-    )
+		SET "folder="
+	) else (
+		SET folder=%2
+	)
 rem echo %*
 SET found=False
 SET foundFolder=False
@@ -48,41 +48,38 @@ IF EXIST "Z:\" SET thisDrive=Z& CALL :SCANTHIS
 goto:eof
 
 :SCANTHIS
-    if [%found%] == [True] goto:eof
-    SET thisDriveID=%thisDrive%:\drive.id.sys
-    IF EXIST %thisDriveID% (
-            CALL :CHECKINFILE
-        )
-    goto:eof
+	if [%found%] == [True] goto:eof
+	SET thisDriveID=%thisDrive%:\drive.id.sys
+	IF EXIST %thisDriveID% (
+			CALL :CHECKINFILE
+		)
+	goto:eof
 
 :CHECKINFILE
-    find /c "%checkID%" "%thisDriveID%" > nul
-    if not %errorlevel% equ 1 (
-            SET found=True
+	find /c "%checkID%" "%thisDriveID%" > nul
+	if not %errorlevel% equ 1 (
+			SET found=True
 
-            %thisDrive%:
-            cd\
-            
-            if [%folder%] == [] (
-                    SET foundFolder=True
-                    echo Found: %thisDrive%:
-                ) else (
-                    CALL :THEFOLDER
-                )
-        )
-    goto:eof
+			%thisDrive%:
+			cd\
+			
+			if [%folder%] == [] (
+					SET foundFolder=True
+					echo Found: %thisDrive%:
+				) else (
+					CALL :THEFOLDER
+				)
+		)
+	goto:eof
 
 :THEFOLDER
-    IF EXIST %thisDrive%:\%folder% (
-            SET foundFolder=True
-            cd %thisDrive%:\%folder%
-            echo Found: %thisDrive%:\%folder%
-        ) else (
-            echo Found: %thisDrive%:
-        )
-    goto:eof
+	IF EXIST %thisDrive%:\%folder% (
+			SET foundFolder=True
+			cd %thisDrive%:\%folder%
+			echo Found: %thisDrive%:\%folder%
+		) else (
+			echo Found: %thisDrive%:
+		)
+	goto:eof
 
 goto:eof
-
-
- 

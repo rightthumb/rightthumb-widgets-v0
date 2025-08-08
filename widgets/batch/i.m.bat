@@ -22,5 +22,3 @@ echo ============== >> \index\logs\i.log.txt
 date /t >> \index\logs\i.log.txt
 time /t >> \index\logs\i.log.txt
 dir /b %log% >> \index\logs\i.log.txt
-
- 

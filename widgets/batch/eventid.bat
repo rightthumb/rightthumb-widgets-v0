@@ -19,6 +19,3 @@ if not [%3] == [] set source=%2 %3
 start "%USERPROFILE%\AppData\Local\Google\Chrome\Application\chrome.exe" "http://www.eventid.net/display.asp?eventid=%eventid%&eventno=1274&source=%source%&phase=1"
 
 :END
-
-
- 

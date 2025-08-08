@@ -17,4 +17,3 @@ rem )
 rem rem echo remainingArgs=%remainingArgs%
 
 rem call p. bot -r "%remainingArgs%"
- 

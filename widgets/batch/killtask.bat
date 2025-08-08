@@ -13,5 +13,3 @@ rem ## {C3P0D40fAe8B} ##
 tasklist
 set /p t=Enter task::
 taskkill /F /IM "%t%" /t
-
- 

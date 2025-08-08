@@ -15,6 +15,3 @@ set thisFile=phpTMP.php
 %php% %phpFiles%\%thisFile%
 echo.
 echo.
-
-
- 

@@ -5,9 +5,9 @@ set "input=%~1"
 
 :: Check if input ends with .exe
 if /i "%input:~-4%"==".exe" (
-    set "processName=%input%"
+	set "processName=%input%"
 ) else (
-    set "processName=%input%.exe"
+	set "processName=%input%.exe"
 )
 
 :: Kill the process

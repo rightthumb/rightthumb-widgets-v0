@@ -11,7 +11,7 @@
 
 @echo off
 for /f "delims=" %%P in ('powershell -Command "$p = Read-Host 'PIN:' -AsSecureString; [Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($p))"') do (
-    set "hkpin=%%P"
+	set "hkpin=%%P"
 )
 
 

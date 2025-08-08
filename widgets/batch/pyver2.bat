@@ -18,7 +18,3 @@ set thisFile=pyVer.php
 %php% %phpFiles%\%thisFile%
 echo.
 rem call b back
-
-
-
- 

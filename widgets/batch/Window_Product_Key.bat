@@ -29,11 +29,11 @@ for /f "delims=" %%a in ('cscript.exe //nologo "%vbsGetKey%"') do set "productKe
 
 echo %productKey% | find "-" > nul
 if errorlevel 1 (
-    echo   Product Key: OEM >> "%theFile%"
-    echo   Product Key: OEM
+	echo   Product Key: OEM >> "%theFile%"
+	echo   Product Key: OEM
 ) else (
-    echo   Product Key: %productKey% >> "%theFile%"
-    echo   Product Key: %productKey%
+	echo   Product Key: %productKey% >> "%theFile%"
+	echo   Product Key: %productKey%
 )
 echo.
 echo.

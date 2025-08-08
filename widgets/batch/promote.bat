@@ -35,5 +35,3 @@ GOTO END
 
 :IF [%error%] == [] GOTO 
 echo [%1 has been promoted to the production enviroment.]
-
- 

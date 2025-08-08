@@ -16,5 +16,3 @@ echo Hey there quick fingers slow down!
 echo.
 echo     You ok?
 echo.
-
- 

@@ -185,6 +185,3 @@ GOTO loop
 :netsh interface show interface 
 :netsh wlan show networks
 :netsh wlan show all |+ ssid |- number |- bssid |- name |++ "     "
-
-
- 

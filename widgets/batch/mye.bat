@@ -12,6 +12,3 @@ rem ## {C3P0D40fAe8B} ##
 
 call p. fileBackup -open -i "%myBatch%\%1.bat"
 start "EDIT" %code_editor% "%myBatch%\%1.bat"
-
-
- 
