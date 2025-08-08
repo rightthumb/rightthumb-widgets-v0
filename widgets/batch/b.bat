@@ -17,9 +17,12 @@ rem ## {C3P0D40fAe8B} ##
 SET "bh_brand=true"
 SET "bh_brand=false"
 
-if not [%1] == [back] (
-    call lab %1
-)
+
+set b_Should_Lab=true
+if not [%2] == [] set b_Should_Lab=false
+if [%1] == [back] set b_Should_Lab=false
+if [%b_Should_Lab%] == [true] call lab %1
+
 
 
 goto :main

@@ -175,7 +175,7 @@ goto:POST_BULD_ARGUMENTS
 set changeDIR=true
 echo ran
 call m back --c
-call b py
+call b py x
 goto:EOF
 :TOBACK
 if [%changeDIR%] == [true] call b back

@@ -1400,10 +1400,39 @@ def process(path,l=-1):
 		# print(l,path)
 		# print('ex',ex)
 		# return
-		if _.showLine(the_file, plus=inc, minus=ex,OR=False,code=True,run=1389):
+
+		'''
+		VALID = True
+		vRan = False
+		# if not _.switches.isActive('StrictCase'):
+		# 	inc = [s.lower() for s in inc]
+
+		if VALID and not ex:
+			# if all(word in text for word in words):
+			if not all(word in the_file for word in inc):
+				vRan = True
+				VALID = False
+		if not vRan:
+			if not _.showLine(the_file, plus=inc, minus=ex,OR=False,code=True,run=1389):
+				VALID = False
+		if VALID:
 			pass
 		else:
 			return path
+		'''
+
+		# _.validLine(string, has=None, omit=None, Any=False, caseStrict=False, strict=None)
+		
+		# if _.showLine(the_file, plus=inc, minus=ex,OR=False,code=True,run=1389):
+		if _.validLine( the_file, has=inc, omit=ex, Any=False, caseStrict=_.switches.isActive('StrictCase') ):
+			pass
+		else:
+			return path
+
+
+
+
+
 
 		for line in the_file.split('\n'):
 			# if _.showLine(line, plus=inc, minus=ex,OR=False,code=True): _.pr(line)

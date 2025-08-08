@@ -257,7 +257,7 @@ GOTO KILL
 
 =================
 
-call b s
+call b s x
 cd
 
 echo code_in > name.txt

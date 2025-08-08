@@ -286,9 +286,12 @@ class Line:
 
 		# List of all possible switch names that we are checking
 		switch_names = [ 'Plus', 'Minus', 'PlusOr', 'PlusCode', 'PlusClose', 'Plus-Sub', 'StrictCase', 'Plus-single', 'PlusDuplicate', 'Minus-single' ]
+		switch2dict = {
+			'PlusCode': 'code',
 
+		}
 		for switch in switch_names:
-			if self.switches.isActive(switch, self.appReg) or self.switch_dict2.get(switch.lower(),False):
+			if self.switches.isActive(switch, self.appReg) or self.switch_dict2.get(  switch2dict.get(switch, switch.lower())  ,False):
 				self.active[switch] = True
 				if switch in ['Plus','Minus']:
 					x=[]

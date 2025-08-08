@@ -154,7 +154,7 @@ GOTO KILL
 
 =================
 
-call b s
+call b s x
 cd
 
 echo code_in > name.txt
@@ -175,7 +175,7 @@ GOTO END
 
 type %html%\header > %html%\tickets.htm
 ::type %myTickets%\open-* >> %html%\tickets.htm
-call b myTickets
+call b myTickets x
 dir /b open-* |sort >~openTickets.txt
 for /F "tokens=*" %%A in  (~openTickets.txt) do  (
    ECHO Processing Ticket File %%A.... 

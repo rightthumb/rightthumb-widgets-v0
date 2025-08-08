@@ -16,8 +16,8 @@ if not [%1] == [] set invoice_client=%1
 if not [%invoice_client%] == [] echo invoice: %invoice_client%
 
 call m back --c
-call b 0 > nul
-call b myTickets > nul
+call b 0 x > nul
+call b myTickets x> nul
 call t v > ~
 call p. b0 -print -date > %myTickets%\folder.txt
 set /p csv_export=<%tmpf%
@@ -62,7 +62,7 @@ echo.
 
 
 :END
-call b back > nul
+call b back x> nul
  
  
  

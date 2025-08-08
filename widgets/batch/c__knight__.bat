@@ -78,7 +78,7 @@ GOTO:EOF
 :CLEAR_SCREEN
 	IF NOT [%noClear%] == [TRUE] (
 		REM prompt - 
-		@REM CLS
+		CLS
 		IF [%noTOP%] == [] %py% %widgets%\widgets\python\windows-terminal-header.py
 		%py% %widgets%\widgets\python\folder-registration.py
 		REM ECHO %noTOP%

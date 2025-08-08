@@ -1107,6 +1107,37 @@ def extract_domains(text):
 
 
 
+import re
+
+def scrape_ip_addresses(text):
+    """
+    Extracts IPv4 and IPv6 addresses from the given text.
+
+    Args:
+        text (str): The input text to search.
+
+    Returns:
+        dict: Dictionary with 'ipv4' and 'ipv6' lists of unique matches.
+    """
+    # IPv4 regex (0–255 per octet)
+    ipv4_pattern = r'\b(?:[0-9]{1,3}\.){3}[0-9]{1,3}\b'
+
+    # IPv6 regex (full + shorthand)
+    ipv6_pattern = r'\b(?:[A-F0-9]{1,4}:){1,7}[A-F0-9]{1,4}\b'
+
+    ipv4_matches = re.findall(ipv4_pattern, text, flags=re.IGNORECASE)
+    ipv6_matches = re.findall(ipv6_pattern, text, flags=re.IGNORECASE)
+
+    # Optional: filter out invalid IPv4 addresses (e.g., 999.999.999.999)
+    def valid_ipv4(ip):
+        return all(0 <= int(part) <= 255 for part in ip.split('.'))
+
+    ipv4_matches = [ip for ip in ipv4_matches if valid_ipv4(ip)]
+
+    return {
+        'ipv4': sorted(set(ipv4_matches)),
+        'ipv6': sorted(set(ipv6_matches))
+    }
 
 
 
@@ -1115,6 +1146,7 @@ def extract_domains(text):
 def scrape_all(text):
 	windows_paths = scrape_windows_file_paths(text)
 	windows_paths2 = scrape_windows_file_paths2(text)
+	ips = scrape_ip_addresses(text)
 
 	combined_windows_paths = []
 
@@ -1139,7 +1171,7 @@ def scrape_all(text):
 	urls = scrape_urls(text)
 	domains = extract_domains(text)
 	# print(domains)
-	return combined_windows_paths, linux_paths, urls, domains
+	return combined_windows_paths, linux_paths, urls, domains, ips
 
 
 
@@ -3394,8 +3426,9 @@ function get__THETABLE( $ID_label ){
 			text = text.replace('└─','')
 				
 
-			windows_paths, linux_paths, urls, domains = scrape_all(text)
+			windows_paths, linux_paths, urls, domains, ips = scrape_all(text)
 			result=domains
+
 
 			for path in windows_paths:
 				if not "'" in path:
@@ -3413,6 +3446,9 @@ function get__THETABLE( $ID_label ){
 				for item in scan[k]:
 					if not item in result:
 						result.append(item)
+			for ip in ips['ipv4']: result.append(ip)
+			for ip in ips['ipv6']: result.append(ip)
+			# print('ips',ips)
 
 
 		def cleanScrape(item):

@@ -10835,6 +10835,62 @@ showLine_Run={}
 # _.pr( line, plus='yellow,cyan', c='cyan' )
 # _.pr( line, plus=1, h='chartreuse,cornflower_blue' )
 
+def ValidLine(string, has=None, omit=None, Any=None, caseStrict=None,        strict=None, Case=None):
+	global switches
+
+	if not Case is None: caseStrict = Case
+	if not strict is None: caseStrict = strict
+
+
+	if has is None: has = switches.value('Plus')
+	if omit is None: omit = switches.value('Minus')
+	if Any is None: Any = switches.value('PlusOr')
+	if caseStrict is None: caseStrict = switches.value('StrictCase')
+
+
+	has = has or []
+	omit = omit or []
+	
+	# Handle case sensitivity
+	if not caseStrict:
+		string = string.lower()
+		has = [h.lower() for h in has]
+		omit = [o.lower() for o in omit]
+	
+	# If omit list contains any matches, fail immediately
+	if any(o in string for o in omit):
+		return False
+	
+	# Check for presence based on Any flag
+	if Any:
+		return any(h in string for h in has) if has else True
+	else:
+		return all(h in string for h in has) if has else True
+
+
+def validLine(string, has=None, omit=None, Any=False, caseStrict=False,        strict=None, Case=None):
+	if not Case is None: caseStrict = Case
+	if not strict is None: caseStrict = strict
+	has = has or []
+	omit = omit or []
+	
+	# Handle case sensitivity
+	if not caseStrict:
+		string = string.lower()
+		has = [h.lower() for h in has]
+		omit = [o.lower() for o in omit]
+	
+	# If omit list contains any matches, fail immediately
+	if any(o in string for o in omit):
+		return False
+	
+	# Check for presence based on Any flag
+	if Any:
+		return any(h in string for h in has) if has else True
+	else:
+		return all(h in string for h in has) if has else True
+
+
 def showLine(string, plus='', minus='', plusOr=False, end=None, isSub=False, OR=None, code=False, itIs=False, c=False, run=0):
 	""" This function wraps the show method in the Line class and dynamically creates the switch_dict. """
 	# print(run,string)
@@ -10845,7 +10901,17 @@ def showLine(string, plus='', minus='', plusOr=False, end=None, isSub=False, OR=
 	global showLine2
 	global showLine_Run
 	
-	
+	defaults = {
+		'plus': '',
+		'minus': '',
+		'plusOr': False,
+		'end': None,
+		'isSub': False,
+		'OR': None,
+		'code': False,
+		'itIs': False,
+		'c': False
+	}
 
 
 	# Create a dictionary of arguments, only including ones that are not their default value
@@ -28684,6 +28750,161 @@ def print_markdown(arg):
 	console = Console()
 	console.print(Markdown(document))
 	return True
+
+##================================================
+##================================================
+
+def _ago(text, when=None):
+	dt = _autoDate(text)
+	if dt:
+		return dt
+	text = text.strip().lower()
+	if when is None:
+		when = time.time()
+	now = when
+	# Fast path: if it ends with 'm', assume month first
+	if text.endswith('m') and text[:-1].isdigit():
+		number = int(text[:-1])
+		now_dt = datetime.fromtimestamp(now)
+		year = now_dt.year
+		month = now_dt.month + number
+
+		while month > 12:
+			month -= 12
+			year += 1
+
+		days_in_month = [31,
+						 29 if year % 4 == 0 and (year % 100 != 0 or year % 400 == 0) else 28,
+						 31,30,31,30,31,31,30,31,30,31]
+		day = min(now_dt.day, days_in_month[month - 1])
+		new_dt = datetime(year, month, day, now_dt.hour, now_dt.minute, now_dt.second)
+		return int(new_dt.timestamp())
+
+	units = {
+		's': 1,
+		'sec': 1,
+		'secs': 1,
+		'second': 1,
+		'seconds': 1,
+		'min': 60,
+		'mins': 60,
+		'minute': 60,
+		'minutes': 60,
+		'h': 3600,
+		'hr': 3600,
+		'hrs': 3600,
+		'hour': 3600,
+		'hours': 3600,
+		'd': 86400,
+		'day': 86400,
+		'days': 86400,
+		'w': 604800,
+		'wk': 604800,
+		'wks': 604800,
+		'week': 604800,
+		'weeks': 604800,
+		'y': 31536000,
+		'yr': 31536000,
+		'yrs': 31536000,
+		'year': 31536000,
+		'years': 31536000,
+	}
+
+	import re
+	match = re.match(r'^(\d+)\s*([a-z]+)$', text)
+	if not match:
+		raise ValueError(f"Invalid format: {text}")
+	
+	number = int(match.group(1))
+	unit = match.group(2)
+
+	unit = unit.rstrip('s')  # allow plural forms like "hours", "minutes"
+
+	if unit not in units:
+		raise ValueError(f"Unknown time unit: {unit}")
+	
+	seconds = number * units[unit]
+	return int(now + seconds)
+
+
+def _autoDate(data, fail=False):
+	try:
+		import datefinder # type: ignore
+		matches = list(datefinder.find_dates(str(data)))
+		if matches:
+			return matches[0].timestamp()
+	except Exception:
+		pass
+
+	if isinstance(data, (int, float)):
+		if int(data) > 1000000000:
+			if int(data) > 9999999999:
+				return int(data) / 1000
+			return int(data)
+		else:
+			return False
+
+	try:
+		s = str(data).strip()
+		s = s.replace('T', ' ').split('+')[0].split('Z')[0].strip()
+		if any(x in s.lower() for x in ['am', 'pm']):
+			try:
+				dt = datetime.datetime.strptime(s, '%Y-%m-%d %I:%M:%S %p')
+				return dt.timestamp()
+			except Exception:
+				pass
+			try:
+				dt = datetime.datetime.strptime(s, '%Y-%m-%d %I:%M %p')
+				return dt.timestamp()
+			except Exception:
+				pass
+
+		# Try ISO standard
+		try:
+			dt = datetime.datetime.fromisoformat(s)
+			return dt.timestamp()
+		except Exception:
+			pass
+
+		# Try some common formats
+		for fmt in [
+			'%Y-%m-%d %H:%M:%S',
+			'%Y-%m-%d %H:%M',
+			'%Y-%m-%d',
+			'%m/%d/%Y',
+			'%m/%d/%y',
+			'%d-%m-%Y',
+			'%d/%m/%Y',
+			'%b %d %Y',
+			'%B %d %Y',
+			'%b %d, %Y',
+			'%B %d, %Y',
+		]:
+			try:
+				dt = datetime.datetime.strptime(s, fmt)
+				return dt.timestamp()
+			except Exception:
+				continue
+
+		# If still looks numeric
+		if s.isdigit():
+			if len(s) > 10:
+				return int(s) / 1000
+			return int(s)
+
+	except Exception as e:
+		if fail:
+			raise e
+		return False
+
+	if fail:
+		raise Exception('Could not parse date')
+	return False
+
+
+
+
+
 
 ##================================================
 ##================================================
