@@ -9,10 +9,10 @@ echo [INFO] Returned from: call m back --c
 
 if [%1] == [] (
 	echo [INFO] No argument passed. Running: call b w
-	call b w > nul
+	call b w --c > nul
 ) else (
 	echo [INFO] Argument passed: %1. Running: call b %1
-	call b %1 > nul
+	call b %1 --c > nul
 )
 
 echo [INFO] Generating UUID...
@@ -70,6 +70,6 @@ git push --force
 
 :end
 echo [INFO] Restoring shell...
-call b back > nul
+call b back --c > nul
 
 echo [DONE] Script complete.

@@ -20,7 +20,9 @@ SET "bh_brand=false"
 
 set b_Should_Lab=true
 if not [%2] == [] set b_Should_Lab=false
+if [%2] == [--c] set b_Should_Lab=false
 if [%1] == [back] set b_Should_Lab=false
+@REM if [%1] == [w] set b_Should_Lab=false
 if [%b_Should_Lab%] == [true] call lab %1
 
 
