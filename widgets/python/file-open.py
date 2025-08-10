@@ -473,8 +473,8 @@ def action(path=None):
 				host=str(socket.gethostname()).strip()
 				if host in servers:
 					app = servers[host]
-				elif os.path.isfile('/opt/sublime_text/sublime_text'):
-					app = '/opt/sublime_text/sublime_text'
+				# elif os.path.isfile('/opt/sublime_text/sublime_text'):
+				# 	app = '/opt/sublime_text/sublime_text'
 	if _.switches.isActive('App'): app = ' '.join(_.switches.values('App'))
 	if _.switches.isActive('Alias'):
 		_aliases=_.switches.values('Alias')

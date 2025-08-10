@@ -4,21 +4,17 @@ fieldSet=_.l.vars(focus(),__name__,__file__,appDBA);_.load();_v=__.imp('_rightTh
 
 def sw():
     pass
-    _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='data', description='Files', isRequired=False )
-    _.switches.register( 'NumberOfCharsToSarchFor', '-chars', '5' )
-    _.switches.register( 'ReturnNumberOfChars', '-count', 'b.bat' )
+    _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='glob,name,data,clean', description='Files', isRequired=False )
 _._default_settings_()
 
 _.appInfo[focus()] = {
-    'file': 'charCount.py',
-    'description': 'Only prints if has specific number of characters',
+    'file': 'thisApp.py',
+    'description': 'Changes the world',
     'categories': [
-                        'search',
-						'tool',
-						'refine results',
+                        'DEFAULT',
                 ],
     'examples': [
-                        _.hp('p file --c | p charCount -chars 5'),
+                        _.hp('p thisApp -file file.txt'),
                         _.linePrint(label='simple',p=0),
                         '',
     ],
@@ -47,18 +43,48 @@ _.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw )
 ########################################################################################
 #n)--> start
 
-def action():
-    if _.switches.isActive('ReturnNumberOfChars'):
-        print( len(_.switches.values('ReturnNumberOfChars')) )
+db = _.MongoDBMgr('widgets', 'mongodb://localhost:27017/', sanitize_keys=True)
+# print(_._ago('3m'))
+def test():
+    test = db.find('fileBackup')
+    for t in test:
+        _.pv(t)
         return
-    
-    if _.switches.isActive('NumberOfCharsToSarchFor'):
-        chars = int(_.switches.value('NumberOfCharsToSarchFor'))
 
-    for line in _.isData(2):
-        l = len(line.strip())
-        if l == chars:
-            _.pr(line,c='cyan')
+def test():
+    # print(_._ago('3d'))
+    test = db.find('fileBackup',{
+        "file": {"$regex": r"\.py$"},
+        "timestamp": {"$gt": _._ago('3d')}
+    })
+    cnt=0
+    for t in test:
+        cnt+=1
+        _.pv(t)
+        # return
+    print(cnt)
+
+
+def test():
+    # print(_._ago('3d'))
+    test = db.db['fileBackup'].find({
+        "file": {"$regex": r"\.py$"},
+        "timestamp": {"$gt": _._ago('1m ')}
+    })
+    cnt=0
+    for t in test:
+        cnt+=1
+        _.pv(t)
+        # return
+    print(cnt)
+
+
+
+
+
+
+def action():
+    pass
 
 ########################################################################################
 if __name__ == '__main__':

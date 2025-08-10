@@ -56,6 +56,8 @@ def appSwitches():
 	_.switches.register('Audit', '-audit')
 	_.switches.register('FindGroup', '-fg,-fgroup,-findgroup')
 	_.switches.register('DontResolveIDs', '-nores')
+	# _.switches.register('DontShowTickets', '-nt,-noTickets')
+	_.switches.register('ShowTickets', '-tickets,-showTickets')
 	# _.switches.register('BackupFiles', '-bk')
 	
 
@@ -290,10 +292,11 @@ def helpMenu():
 
 
 def ask(data, doneselection=False, backupfile='', originalfile=''):
+	# print('ask'); sys.exit()
 	global originalFile
 	global hasSearched
 
-
+	
 
 	if type(doneselection) == bool:
 		selection = input('Make Selection: ')
@@ -782,9 +785,9 @@ def action():
 
 					originalData = data
 
-
+					# print(type(_.appData[__.appReg]['pipe']))
 					# _.pr(type(_.appData[__.appReg]['pipe']))
-					if type(_.appData[__.appReg]['pipe']) == str:
+					if type(_.appData[__.appReg]['pipe']) == str or type(_.appData[__.appReg]['pipe']) == bool:
 						ask(data)
 	# backup
 # file
@@ -800,8 +803,13 @@ def initName( record ):
 	# return '__init__: ' + fileX[1] + '.' + fileX[2] 
 	return '__init__: '  + fileX[2][1:].replace( 'base3', 'base' ).upper()
 	
-
+ShowTickets = '-showTickets'
 def getTicket( epoch ):
+	global ShowTickets
+	if not _.switches.isActive('ShowTickets'):
+		note = ShowTickets
+		ShowTickets = ''
+		return note
 	global epochTickets
 	result = ''
 	for ticket in epochTickets:

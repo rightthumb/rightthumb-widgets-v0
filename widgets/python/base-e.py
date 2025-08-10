@@ -183,8 +183,7 @@ _.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw )
 ########################################################################################
 #n)--> start
 
-import os
-os.environ['snapple'] = 'utf-8'
+_.pr('Threads = _.Threads(t=10, onDone=None)',h='powder_blue       purple ')
 
 def action():
     pass

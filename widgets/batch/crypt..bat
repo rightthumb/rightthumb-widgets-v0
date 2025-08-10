@@ -28,8 +28,7 @@ if [%2] == [-y] (
 	CALL:ENTIRE
 	GOTO:EOF
 )
-@REM SET /p entire= encrypt entire file? 
-SET "entire=y"
+SET /p entire= encrypt entire file? 
 if [%entire%] == [y] (
 	CALL:ENTIRE
 ) else (

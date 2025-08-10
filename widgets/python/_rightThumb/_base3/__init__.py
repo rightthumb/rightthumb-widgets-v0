@@ -671,7 +671,8 @@ def print_(
 
 		## Pre Print End
 		if not c is None: prn=cp( prn, c, p=0 )
-		if not h is None: prn=hexColor( prn, c=h, p=0 )
+		if not h is None:
+			prn=hexColor( prn, c=h, p=0 )
 		if p is None: rint=True
 		elif p: rint=True
 		elif not p: rint=False
@@ -5923,6 +5924,10 @@ def resolve(path,isFolder=None):
 		if not os.path.exists(path): path = aliasesFo(path)
 	elif not isFolder:
 		if not os.path.exists(path): path = aliasesFi(path)
+	# if not os.path.exists(path):
+	# 	path = inRelevantFolderSearch(path)
+	# if not os.path.exists(path):
+	# 	path = inRecentFolders( path )
 	return path
 
 def autoUrl(path):
@@ -8399,6 +8404,17 @@ def longDashRemove( data ):
 	return data
 
 
+def inRecentFolders( item ):
+	if os.path.exist(item):
+		return item
+	log = _v.tt+os.sep+'BookmarksBySession'+os.sep+_v.session()+'.log'
+	recent = getText(log,raw=True,clean=2).split('\n')
+	for line in recent:
+		if os.path.exists(line+os.sep+item):
+			pr('Found in recent folder: '+line+os.sep+item,c='Background.green')
+			return line+os.sep+item
+	return item
+
 def inRelevantFolder( file ):
 	# if __.myFileLocations_SKIP_VALIDATION:
 	#   return file
@@ -9853,6 +9869,7 @@ def myFileLocations( file, silent=False, currentBaseVersion=3 ):
 						# 	isFirst=False
 						# else:
 						# 	appData[__.appReg]['pipe'].append( thisFile )
+						if not type(appData[__.appReg]['pipe']) == list: appData[__.appReg]['pipe'] = []
 						appData[__.appReg]['pipe'].append( thisFile )
 			else:
 				for thisFile in myFileLocation_Files:
@@ -14152,6 +14169,7 @@ class Switches:
 			defaultStarted = False
 			spent = []
 			for i,sw in enumerate(self.switches):
+				
 				toAdd = []
 				if not help and self.switches[i].default: continue
 				if help and not self.switches[i].default: continue
@@ -14403,6 +14421,7 @@ class Table:
 		global switches
 		global _dir
 
+		self.iGroupFirsts=[]
 		self.GroupTotals={}
 		self.webtable = webtable
 		self.group_space = group_space
@@ -14558,17 +14577,21 @@ class Table:
 		# rows[0][name]
 		for i,rec in enumerate(self.asset):
 			if not name in rec: self.asset[i][name]=''
+		Name = name.replace('d.','')
 		try:
 			pass
-			if name in rows[0]:
-				rows[0][name]
+			if Name in rows[0]:
+				rows[0][Name]
 			else:
 				# print_(  'rows[0]["' + '"]["'.join(name.split('.')) + '"]'  )
-				eval(  'rows[0]["' + '"]["'.join(name.split('.')) + '"]'  )
+				do = 'rows[0]["' + '"]["'.join(Name.split('.')) + '"]'
+				print(do)
+				eval(  do  )
 		except Exception as e:
 			errors.append({'id': 9, 'function': 'tabGetMaxSpace()', 'cnt': 1, 'location': 'rows[0][name]', 'vars': [{'name': 'rows', 'value': 'nope to that, to big'}, {'name': 'name', 'value': name}], 'error': e})
 			printBold('Error:','red')
 			printBold('\tBad column input.')
+			my_dict = {col: [] for col in self.asset[0].keys()}; print('Keys:', ' '.join(my_dict) )
 			print_(9)
 			print_(name)
 			print_(  'rows[0]["' + '"]["'.join(name.split('.')) + '"]'  )
@@ -14729,8 +14752,11 @@ class Table:
 		if propertyName == 'alignment' and value == '':
 			value = 'left'
 		return value
-	def showColumn(self,column,i,columnHeaderLength):
+	def showColumn(self,column,i,columnHeaderLength,f71=None):
 		# print_(column)
+
+		#c3p0
+
 		global errors
 		global lastGroup
 		global switches
@@ -14783,14 +14809,19 @@ class Table:
 			tabFix = self.tabGetMaxSpace(column)
 			self.spaces[column] = tabFix
 
-		if switches.isActive('GroupBy') == True:
+		if switches.isActive('GroupBy') == True: #			theLasts
 			if column in GroupTotals:
 				if not column in self.GroupTotals: self.GroupTotals[column]=0
-				self.GroupTotals[column]+=float(self.asset[i][column])
+				if i in self.iGroupFirsts: self.GroupTotals[column]=0
+
+				try:
+					self.GroupTotals[column]+=float(self.asset[i][column])
+				except: pass
 			for gb in groupBy.split(','):
 				gb = str(gb)
 				if column == gb:
-					# print_('- -',last,text)
+					
+
 					if not test(groupByList[gb],text) == True:
 						if groupBy.split(',')[0] == column:
 							pass
@@ -14818,9 +14849,11 @@ class Table:
 
 						if len(self.isExtraRecord_000x):
 							self.isExtraRecord_0001[ self.isExtraRecord_000x.split('-')[0] ] = 1
-						text = ''
+						text = '' #c3p0
 						if not column in self.Groups: self.Groups[column]={'lines':[]}
 						self.Groups[column]['lines'].append(i)
+
+
 
 		alignment = self.fieldProfileGet(column,'alignment')
 		# print_(alignment)
@@ -15854,8 +15887,13 @@ class Table:
 			self.asset = newRecords
 	def print( self, column, fieldLengths=False, pc=None, printColumns=True, force=False, l=None, p=None ):
 		global switches
-
+		#c3p0
+		printedLines = 0
 		if switches.isActive('GroupBy') and self.asset:
+
+
+
+
 			val=[]
 			for k in self.asset[0]:
 				for y in switches.values('GroupBy'):
@@ -15864,6 +15902,34 @@ class Table:
 			switches.fieldSet('GroupBy','values',val)
 
 
+			####################################
+			group_columns = switches.values('GroupBy')
+			first_index = None
+			last_key = None
+			valTracker = {}
+			for i, row in enumerate(self.asset):
+				for k in row:
+					v = str(row[k])
+					if not k in valTracker: valTracker[k] = {}
+					if not v in valTracker[k]: valTracker[k][v] = []
+					valTracker[k][v].append(i)
+					
+			for i, row in enumerate(self.asset):
+				key = tuple(row[col] for col in group_columns)
+
+				if key != last_key:
+					first_index = i
+					last_key = key
+					valid = True
+					vCnt = 0
+
+					for k in group_columns:
+						v = str(row[k])
+						if i in valTracker[k][v] and len(valTracker[k][v]) == 1:
+							vCnt += 1
+					if not vCnt == len(group_columns):
+						self.iGroupFirsts.append(first_index)
+			####################################
 
 
 		if switches.isActive('GroupTotals') and self.asset:
@@ -16298,6 +16364,8 @@ class Table:
 			self.asset = _records
 
 		for I, item in enumerate(self.asset):
+			if I in self.iGroupFirsts:
+				print('')
 			if 'name' in item:
 				if item['name'] in __.switchTableSpentPrint and item['name'] == 'Help':
 					break
@@ -16308,8 +16376,8 @@ class Table:
 			result = ''
 			# global switches
 			for c in column.split(','):
-				if switches.isActive('TablePlus'):
-					if not  _.showLine(str(item),_.switches.values('TablePlus'),_.switches.values('TableMinus')): continue
+				# if switches.isActive('TablePlus'):
+				# 	if not  showLine(str(item),switches.values('TablePlus'),switches.values('TableMinus')): continue
 				try:
 					pass
 					# result += self.showColumn(c,i,columnHeaderLength) + self.columnTab
@@ -16328,14 +16396,34 @@ class Table:
 
 				if self.wrapTableKey+'-sort' in item and not item[self.wrapTableKey+'-sort'].endswith('-0001'):
 					self.isExtraRecord = True
+				
+
+				
+				# result += self.showColumn(c,i,columnHeaderLength,2) + self.columnTab+tableLine
 
 				try:
 					pass
-					result += self.showColumn(c,i,columnHeaderLength) + self.columnTab+tableLine
+					if not switches.isActive('GroupTotals'):
+						theLine = self.showColumn(c,i,columnHeaderLength,2) + self.columnTab+tableLine
+						result += theLine
+						if len(theLine.strip()) > 10: printedLines+=1
+					try:
+						if switches.isActive('GroupTotals'):
+							theLine = self.showColumn(c,i,columnHeaderLength,2) + self.columnTab+tableLine
+							result += theLine
+							if len(theLine.strip()) > 10: printedLines+=1
+						pass
+					except:
+						pass
+						
+						# print(result)
+						# sys.exit()
+						#c3p0
 				except Exception as e:
 					errors.append({'id': 12, 'function': 'print()', 'cnt': 1, 'location': "result += showColumn(rows,c,i) + _v.slash+'t'", 'vars': [{'name': 'folder', 'value': 'folder'}, {'name': 'column', 'value': column}], 'error': e})
 					printBold('Error:','red')
 					printBold('\tBad column input.')
+					my_dict = {col: [] for col in self.asset[0].keys()}; print('Keys:', ' '.join(my_dict) )
 					print_(12)
 					print_(c)
 					print_(12)
@@ -16389,6 +16477,7 @@ class Table:
 							for ass in self.asset:
 								if _g_ in ass and ass[_g_] == _sub_:
 									for gc in self.GroupTotals:
+										if not type(ass[gc]) == int: ass[gc] = 0
 										total[gc]+=ass[gc]
 
 							if c in self.GroupTotals:
@@ -16398,7 +16487,15 @@ class Table:
 							else:
 								_result_+=addField('',c)
 						# colorizeRow( tableLine+_result_, prefix=self.tab['table']+loopPrint(__.table_prefix_padding), prefixColor=self.tab_color, haltColorShift=self.isExtraRecord )
-						cp(' '+tableLine+_result_,c='green')
+						# printedLines
+						# str(printedLines)
+						
+						if printedLines == 1 and str(_result_).strip() == '0':
+							pass
+						else:
+							# print(_result_)
+							cp(' '+tableLine+_result_,c='green')
+							# cp(str(printedLines)+' '+tableLine+_result_,c='green')
 
 
 
@@ -27239,6 +27336,20 @@ class index:
 	
 
 
+class MongoDBMgr:
+		def __new__(cls, *args, **kwargs):
+				import importlib.util
+				if 'MongoDBMgr' not in intelligent_code.classes:
+						import importlib.util
+						path = os.path.normpath(_v.w+'/widgets/python/library/tools/db/mongoMgr.py')
+						spec = importlib.util.spec_from_file_location('MongoDBMgr', path)
+						module = importlib.util.module_from_spec(spec)
+						spec.loader.exec_module(module)
+						intelligent_code.classes['MongoDBMgr'] = module.MongoDBMgr
+				return intelligent_code.classes['MongoDBMgr'](*args, **kwargs)
+
+
+
 
 ##################################################
 ##################################################
@@ -28748,84 +28859,18 @@ def print_markdown(arg):
 	from rich.console import Console # type: ignore
 	from rich.markdown import Markdown # type: ignore
 	console = Console()
+	if os.platform == 'win32':
+		os.system('cls')
+	else:
+		try:
+			os.system('clear')
+		except:
+			os.system('cls')
 	console.print(Markdown(document))
 	return True
 
 ##================================================
 ##================================================
-
-def _ago(text, when=None):
-	dt = _autoDate(text)
-	if dt:
-		return dt
-	text = text.strip().lower()
-	if when is None:
-		when = time.time()
-	now = when
-	# Fast path: if it ends with 'm', assume month first
-	if text.endswith('m') and text[:-1].isdigit():
-		number = int(text[:-1])
-		now_dt = datetime.fromtimestamp(now)
-		year = now_dt.year
-		month = now_dt.month + number
-
-		while month > 12:
-			month -= 12
-			year += 1
-
-		days_in_month = [31,
-						 29 if year % 4 == 0 and (year % 100 != 0 or year % 400 == 0) else 28,
-						 31,30,31,30,31,31,30,31,30,31]
-		day = min(now_dt.day, days_in_month[month - 1])
-		new_dt = datetime(year, month, day, now_dt.hour, now_dt.minute, now_dt.second)
-		return int(new_dt.timestamp())
-
-	units = {
-		's': 1,
-		'sec': 1,
-		'secs': 1,
-		'second': 1,
-		'seconds': 1,
-		'min': 60,
-		'mins': 60,
-		'minute': 60,
-		'minutes': 60,
-		'h': 3600,
-		'hr': 3600,
-		'hrs': 3600,
-		'hour': 3600,
-		'hours': 3600,
-		'd': 86400,
-		'day': 86400,
-		'days': 86400,
-		'w': 604800,
-		'wk': 604800,
-		'wks': 604800,
-		'week': 604800,
-		'weeks': 604800,
-		'y': 31536000,
-		'yr': 31536000,
-		'yrs': 31536000,
-		'year': 31536000,
-		'years': 31536000,
-	}
-
-	import re
-	match = re.match(r'^(\d+)\s*([a-z]+)$', text)
-	if not match:
-		raise ValueError(f"Invalid format: {text}")
-	
-	number = int(match.group(1))
-	unit = match.group(2)
-
-	unit = unit.rstrip('s')  # allow plural forms like "hours", "minutes"
-
-	if unit not in units:
-		raise ValueError(f"Unknown time unit: {unit}")
-	
-	seconds = number * units[unit]
-	return int(now + seconds)
-
 
 def _autoDate(data, fail=False):
 	try:
@@ -28900,6 +28945,122 @@ def _autoDate(data, fail=False):
 	if fail:
 		raise Exception('Could not parse date')
 	return False
+##================================================
+
+def _ago(text, when=None):
+	import datetime
+	import time
+	import re
+
+	dt = _autoDate(text)
+	if dt:
+		return dt
+
+	text = text.strip().lower()
+	if when is None:
+		when = time.time()
+	now = when
+
+	# Fast path: months
+	if text.endswith('m') and text[:-1].isdigit():
+		number = int(text[:-1])
+		now_dt = datetime.datetime.fromtimestamp(now)
+		year = now_dt.year
+		month = now_dt.month - number  # subtract months for "ago"
+
+		while month <= 0:
+			month += 12
+			year -= 1
+
+		days_in_month = [
+			31,
+			29 if year % 4 == 0 and (year % 100 != 0 or year % 400 == 0) else 28,
+			31, 30, 31, 30, 31, 31, 30, 31, 30, 31
+		]
+		day = min(now_dt.day, days_in_month[month - 1])
+		new_dt = datetime.datetime(year, month, day, now_dt.hour, now_dt.minute, now_dt.second)
+		return int(new_dt.timestamp())
+
+	units = {
+		's': 1, 'sec': 1, 'secs': 1, 'second': 1, 'seconds': 1,
+		'min': 60, 'mins': 60, 'minute': 60, 'minutes': 60,
+		'h': 3600, 'hr': 3600, 'hrs': 3600, 'hour': 3600, 'hours': 3600,
+		'd': 86400, 'day': 86400, 'days': 86400,
+		'w': 604800, 'wk': 604800, 'wks': 604800, 'week': 604800, 'weeks': 604800,
+		'y': 31536000, 'yr': 31536000, 'yrs': 31536000, 'year': 31536000, 'years': 31536000,
+	}
+
+	match = re.match(r'^(\d+)\s*([a-z]+)$', text)
+	if not match:
+		raise ValueError(f"Invalid format: {text}")
+
+	number = int(match.group(1))
+	unit = match.group(2)
+	unit = unit.rstrip('s')  # normalize plurals
+
+	if unit not in units:
+		raise ValueError(f"Unknown time unit: {unit}")
+
+	seconds = number * units[unit]
+	return int(now - seconds)  # subtract for past
+
+
+def _future(text, when=None):
+	import datetime
+	import time
+	import re
+
+	dt = _autoDate(text)
+	if dt:
+		return dt
+	text = text.strip().lower()
+	if when is None:
+		when = time.time()
+	now = when
+
+	# Fast path: if it ends with 'm', assume month first
+	if text.endswith('m') and text[:-1].isdigit():
+		number = int(text[:-1])
+		now_dt = datetime.datetime.fromtimestamp(now)
+		year = now_dt.year
+		month = now_dt.month + number
+
+		while month > 12:
+			month -= 12
+			year += 1
+
+		days_in_month = [
+			31,
+			29 if year % 4 == 0 and (year % 100 != 0 or year % 400 == 0) else 28,
+			31, 30, 31, 30, 31, 31, 30, 31, 30, 31
+		]
+		day = min(now_dt.day, days_in_month[month - 1])
+		new_dt = datetime.datetime(year, month, day, now_dt.hour, now_dt.minute, now_dt.second)
+		return int(new_dt.timestamp())
+
+	units = {
+		's': 1, 'sec': 1, 'secs': 1, 'second': 1, 'seconds': 1,
+		'min': 60, 'mins': 60, 'minute': 60, 'minutes': 60,
+		'h': 3600, 'hr': 3600, 'hrs': 3600, 'hour': 3600, 'hours': 3600,
+		'd': 86400, 'day': 86400, 'days': 86400,
+		'w': 604800, 'wk': 604800, 'wks': 604800, 'week': 604800, 'weeks': 604800,
+		'y': 31536000, 'yr': 31536000, 'yrs': 31536000, 'year': 31536000, 'years': 31536000,
+	}
+
+	match = re.match(r'^(\d+)\s*([a-z]+)$', text)
+	if not match:
+		raise ValueError(f"Invalid format: {text}")
+
+	number = int(match.group(1))
+	unit = match.group(2)
+
+	unit = unit.rstrip('s')  # allow plural forms like "hours", "minutes"
+
+	if unit not in units:
+		raise ValueError(f"Unknown time unit: {unit}")
+
+	seconds = number * units[unit]
+	return int(now + seconds)
 
 
 
@@ -28992,6 +29153,9 @@ __.aFi = aFi
 __.aFo = aFo
 
 
+# ARG = ' '.join(ARG.strip().replace('\t',' ').split()).replace(' ', ',') #   <-------- DELIM
+
+
 
 
 # Import=import_path
@@ -29004,6 +29168,7 @@ notify.message = 'Complete'
 notify.color = 'yellow'
 ##################################################
 
+if os.environ.get('autocls','0') == '1' or os.environ.get('autocls','0').lower() == 'true': os.system('cls')
 
 ########################################################################################
 # bkExpire(_v.tt+os.sep+'fileBackup.json',_v.tt+os.sep+'fileBackup-bk.json',age='3h',cp=_v.tt+os.sep+'bk'+os.sep+'fileBackup')

@@ -14,13 +14,21 @@ def sw():
 _._default_settings_()
 
 _.appInfo[focus()] = {
-	'file': 'thisApp.py',
-	'description': 'Changes the world',
+	'file': 'callable.py',
+	'description': 'Function and class tool for JavaScript and Python.',
 	'categories': [
-						'DEFAULT',
+						'function',
+						'class',
+						'code',
+						'python',
+						'javascript',
+						'js',
+						'py',
 				],
 	'examples': [
-						_.hp('p thisApp -file file.txt'),
+						_.hp('p callable -f callable.py'),
+						_.hp('p callable -f base --c Switches | p inFunc'),
+						_.hp('p callable -f base --c Switches + def'),
 						_.linePrint(label='simple',p=0),
 						'',
 	],
@@ -442,7 +450,7 @@ def action():
 		firstText = False
 		print('')
 
-		colorized = _.printVarColor( relevant.copy() )
+		# colorized = _.printVarColor( relevant )
 
 
 		for line in relevant.splitlines():

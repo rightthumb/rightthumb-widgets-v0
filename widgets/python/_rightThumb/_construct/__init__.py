@@ -1146,7 +1146,7 @@ def endTrace(functions=None,a=False):
 				if table[record['file']][record['function']] == 0:
 					print(f'{record["function"]} in {record["file"]}:{record["line"]}')
 #################################################
-def print_table1(data):
+def print_table1(data,title=None):
 	from pprint import pprint
 
 	def print_single_table(rows, title=None):
@@ -1180,47 +1180,211 @@ def print_table1(data):
 
 
 
-def print_table(data, title=None):
-	from pprint import pprint
+def align(text, align='center', width=None):
+	def center(text, width):
+		if type(width) != int:
+			width = len(width)
+		if width <= len(text):
+			return text
+		# x = (width - len(text)) // 2
+		# return ' ' * x + text + ' ' * (width - len(text) - x)
+		return text.center(width)
 
-	def print_single_table(rows, title=None):
+	def right(text, width):
+		if type(width) != int:
+			width = len(width)
+		if width <= len(text):
+			return text
+		return ' ' * (width - len(text)) + text
+
+	def left(text, width):
+		if type(width) != int:
+			width = len(width)
+		if width <= len(text):
+			return text
+		return text + ' ' * (width - len(text))
+
+	if 'c' in align:
+		return center(text, width)
+	elif  'r' in align:
+		return right(text, width)
+	elif  'l' in align:
+		return left(text, width)
+	else:
+		return text
+
+
+def dicGen(ns, val=None, dic=None, default=None):
+	"""
+	Creates/updates or retrieves a value from a nested dictionary using a dotted path.
+
+	Args:
+		ns (str): Dot-separated keys for the nested structure.
+		val (optional): The value to set at the final key. If None, the function
+						will return the value instead of setting it.
+		dic (dict, optional): The dictionary to update or search in. If None, creates a new one.
+
+	Returns:
+		dict or value: If val is given, returns the updated dict.
+					   If val is None, returns the value at the path or None if not found.
+	"""
+	if dic is None:
+		dic = {}
+
+	keys = ns.split(".")
+	current = dic
+
+	if val is None:  # GET MODE
+		for key in keys:
+			if isinstance(current, dict) and key in current:
+				current = current[key]
+			else:
+				return default
+		return current
+
+	# SET MODE
+	for key in keys[:-1]:
+		if key not in current or not isinstance(current[key], dict):
+			current[key] = {}
+		current = current[key]
+
+	current[keys[-1]] = val
+	return dic
+
+
+
+# # Example usage:
+# settings = dicGen('fields.cols.help.case', 'upper')
+# settings = dicGen('fields.cols.help.align', 'center', settings)
+# settings = dicGen('fields.cols.help.trigger', lambda: print("Triggered!"), settings)
+
+# print(settings)
+
+# settings = { 'fields': { 'title': {...}, 'heading': {...}, 'cols': {colName: {...}} } }
+
+def render_table(data, title=None, settings=None, pre=5, p=True):
+	# --- normalize settings to a dict and extract fields ---
+	if callable(settings):
+		try:
+			settings = settings()  # allow zero-arg factory
+		except TypeError:
+			settings = {}
+	if not isinstance(settings, dict):
+		settings = {}
+	fields = settings.get('fields', {}) if isinstance(settings.get('fields', {}), dict) else {}
+
+	out = []
+	prefix = (' ' * pre) if isinstance(pre, int) else (pre if isinstance(pre, str) else '')
+
+	# --- helpers that read your native structure ---
+	def _field_case(kind=None, col=None, default=None):
+		if col is not None:
+			return fields.get('cols', {}).get(col, {}).get('case', default)
+		if kind in ('title', 'heading'):
+			return fields.get(kind, {}).get('case', default)
+		return default
+
+	def _field_align(kind=None, col=None, default=None):
+		if col is not None:
+			return fields.get('cols', {}).get(col, {}).get('align', default)
+		if kind in ('title', 'heading'):
+			return fields.get(kind, {}).get('align', default)
+		return default
+
+	def _field_trigger(col):
+		"""Optional per-col value transformer. Must be a callable(v, row, col)."""
+		trig = fields.get('cols', {}).get(col, {}).get('trigger')
+		if callable(trig):
+			return trig
+		# also tolerate a 1-arg callable(v)
+		if callable(trig):
+			try:
+				return lambda v, row=None, c=None: trig(v)
+			except TypeError:
+				pass
+		return lambda v, row=None, c=None: v
+
+	def _change_case(text, mode):
+		if text is None:
+			return ''
+		s = str(text)
+		if not s.strip() or not mode:
+			return s
+		if mode == 'upper':  return s.upper()
+		if mode == 'lower':  return s.lower()
+		if mode == 'title':  return s[:1].upper() + s[1:]
+		return s
+
+	def _cell_value(col, row):	
+		trig = _field_trigger(col)
+		raw = row.get(col, '')
+		val = trig(raw, row, col)
+		val = _change_case(val, _field_case(col=col))
+		return str(val)
+
+	def build_single_table(rows, maybe_title=None):
 		if not rows:
-			print(f"\n{title or 'Table'}: (empty)\n")
+			out.append(f"{prefix}{maybe_title or 'Table'}: (empty)")
+			out.append("")
 			return
 
 		headers = list(rows[0].keys())
-		def HEADER(h): return color(h, c='bold', p=0)
-		headersPrint = [HEADER(h) for h in headers]
-		col_widths = {h: max(len(h), *(len(str(row.get(h, ''))) for row in rows)) for h in headers}
+
+		# Compute widths AFTER triggers/case so alignment fits final text
+		col_widths = {}
+		for h in headers:
+			max_data = max((len(_cell_value(h, r)) for r in rows), default=0)
+			col_widths[h] = max(len(str(h)), max_data)
+
+		width = sum(col_widths[h] for h in headers) + 3 * (len(headers) - 1)
+
+		# Title
+		if maybe_title:
+			t = _change_case(maybe_title, _field_case(kind='title', default='title'))
+			t = align(t, _field_align(kind='title', default='center'), width)
+			out.append(prefix + color(t, c='yellow', p=0))
+			out.append(prefix + color('=' * width, c='purple', p=0))
+
+		# Header row
 		sep = color(' | ', c='green', p=0)
-		line = ' | '.join(f'{h:<{col_widths[h]}}' for h in headers)
-		linePrint = sep.join(color(f"{h:<{col_widths[h]}}", c="bold", p=0) for h in headers)
+		head_cells = []
+		for h in headers:
+			hh = _change_case(h, _field_case(kind='heading', default='title'))
+			hh = align(hh, _field_align(kind='heading', default='center'), col_widths[h])
+			head_cells.append(color(hh, c='bold', p=0))
+		out.append(prefix + sep.join(head_cells))
+		out.append(prefix + color('-' * width, c='darkcyan', p=0))
 
-
-		if title:
-			sep = color('=', c='purple', p=0)
-			title = color(title, c='yellow', p=0)
-			print(f"\n{title}\n{sep * len(title)}")
-
-		# color(line, c='green', p=1)
-		print(linePrint)
-		color('-' * len(line), c='darkcyan', p=1)
-		sep = color(' | ', c='bold', p=0)
+		# Rows
+		cell_sep = color(' | ', c='bold', p=0)
 		for row in rows:
-			print(sep.join(color(f"{str(row.get(h, '')):<{col_widths[h]}}", c='cyan', p=0) for h in headers))
-
+			cells = []
+			for h in headers:
+				txt = _cell_value(h, row)
+				txt = align(txt, _field_align(col=h, default='left'), col_widths[h])
+				cells.append(color(txt, c='cyan', p=0))
+			out.append(prefix + cell_sep.join(cells))
+		out.append("")
 
 	if isinstance(data, list):
-		print_single_table(data,title)
+		build_single_table(data, title)
 	elif isinstance(data, dict):
-		for key, value in data.items():
-			if isinstance(value, list):
-				print_single_table(value, title=str(key))
+		for k, v in data.items():
+			if isinstance(v, list):
+				build_single_table(v, str(k))
 			else:
-				print(f"\n{key}:\n(Not a list, skipping)")
+				out.append(f"{prefix}{k}:")
+				out.append(f"{prefix}(Not a list, skipping)")
+				out.append("")
 	else:
-		print("Unsupported data type.")
-pt=print_table
+		out.append(prefix + "Unsupported data type.")
+		out.append("")
+	if p:
+		print('\n'.join(out))
+	return out
+
+
+pt=render_table
 #################################################
 
 trig = {}
@@ -1252,37 +1416,44 @@ class SwitchManager:
 		self.Switches = Switches
 		self.possibleList()
 
-
 		self.switchesRegister = self._flatten_switches(self.Switches)
 		if not 'Help' in self.switchesRegister:
-			self.switchesRegister['Help'] = '?,-h,--help'
+			self.switchesRegister['Help'] = '?,-h,--help,?h,?help'
+		if not 'Help' in self.triggers:
 			self.triggers['Help'] = self.help
-		
+
 		self.used = {}
 		self._Values = {}
 		self.usage = {}
 		self.instances = {}
+
+		# ---------- ADDED for occurrence grouping ----------
+		# Per-occurrence buckets and order per switch
+		# _occ_buckets: { name: { flag: [ [vals1], [vals2], ... ] } }
+		# _occ_sequence: { name: [ (flag, idx), ... ] } in the order seen
+		self._occ_buckets = {}
+		self._occ_sequence = {}
+		# ---------------------------------------------------
 
 		self.flag_to_key = {}
 		for key, val in self.switchesRegister.items():
 			self.used[key] = False
 			self._Values[key] = []
 			if isinstance(val, str):
-				val = val.strip().replace('  ', ' ').replace(' ', ',')
+				val = ' '.join(val.split()).replace(' ', ',')
 				self.switchesRegister[key] = val
 			for flag in self.switchesRegister[key].split(','):
 				self.flag_to_key[flag] = key
 
 		self.parse()
 		if 'Help' in self.usage:
-			if 'Help' in self._Values and self._Values['Help']:
+			if 'Help' in self._Values and self._Values['Help'] and type(self._Values['Help']) == list:
 				self.triggers['Help'](self._Values['Help'][0])
 			else:
 				self.triggers['Help']()
 
 		# self.usage[key].append(flag)
 		# self._Values[key].append(flag)
-
 
 	def help(self,full=None):
 		if full:
@@ -1292,9 +1463,7 @@ class SwitchManager:
 		isGrouped = False
 		if type(self.Switches[next(iter(self.Switches))]) == dict:
 			isGrouped = True
-
-
-
+		
 		if not isGrouped:
 			table = []
 			for key in self.Switches:
@@ -1307,7 +1476,9 @@ class SwitchManager:
 					else:
 						rec['help'] = ''
 				table.append(rec)
-			pt(table)
+
+			# settings = dicGen('fields.cols.help.case', 'upper')
+			pt(table,'switches',settings)
 
 		elif isGrouped:
 
@@ -1324,10 +1495,9 @@ class SwitchManager:
 						else:
 							rec['help'] = ''
 					tables[group].append(rec)
-			pt(tables)
+			pt(tables,'switches')
 		sys.exit(0)
 
-		
 
 
 	def possibleList(self):
@@ -1359,7 +1529,7 @@ class SwitchManager:
 				for rec in Switches[group]:
 					self.Switches[group][rec['n']] = rec['s']
 					if 't' in rec:
-						
+
 						if type(rec['t']) == str:
 							if rec['t'] in globals() and callable(globals()[rec['t']]):
 								rec['t'] = eval(rec['t'])
@@ -1369,9 +1539,8 @@ class SwitchManager:
 					if 'h' in rec:
 						self.Help[rec['n']] = rec['h']
 
-
 	def _flatten_switches(self, switches):
-		
+
 		flat = {}
 		for group_or_key, val in switches.items():
 			if isinstance(val, dict):
@@ -1390,7 +1559,6 @@ class SwitchManager:
 				value = value[1:-1]
 		return value
 
-
 	def unset(self, name, instance=None):
 		"""Clear usage data for a switch, optionally just for one instance (flag)."""
 		if name in self.used:
@@ -1399,6 +1567,12 @@ class SwitchManager:
 		if instance is None:
 			self._Values[name] = []
 			self.usage.pop(name, None)
+
+			# ---------- ADDED for occurrence grouping ----------
+			self._occ_buckets.pop(name, None)
+			self._occ_sequence.pop(name, None)
+			# ---------------------------------------------------
+
 			self.instances.pop(name, None)
 		else:
 			if name in self.usage:
@@ -1409,9 +1583,24 @@ class SwitchManager:
 				self.instances[name].pop(instance)
 			if name in self.instances and not self.instances[name]:
 				self.instances.pop(name)
+
+			# ---------- ADDED for occurrence grouping ----------
+			if name in self._occ_buckets and instance in self._occ_buckets[name]:
+				# Drop sequence entries referencing this flag
+				if name in self._occ_sequence:
+					self._occ_sequence[name] = [
+						(f, idx) for (f, idx) in self._occ_sequence[name] if f != instance
+					]
+					if not self._occ_sequence[name]:
+						self._occ_sequence.pop(name)
+				self._occ_buckets[name].pop(instance)
+				if not self._occ_buckets[name]:
+					self._occ_buckets.pop(name)
+			# ---------------------------------------------------
+
 			# Don't clear _Values if other instances remain
 			self._Values[name] = [
-				val for inst in self.instances.get(name, {}).values() for val in inst
+				val for inst in self.instances.get(name, {}).values() for val in (inst if isinstance(inst, list) else [])
 			] if name in self.instances else []
 
 	def set(self, name, flag=None, values=None, add=False):
@@ -1430,7 +1619,6 @@ class SwitchManager:
 			if not flagFixed and name in self.switchesRegister:
 				flag = self.switchesRegister[name].split(',')[0].strip()
 				flagFixed = True
-
 
 		if not add:
 			self.unset(name, flag)
@@ -1453,6 +1641,19 @@ class SwitchManager:
 		if flag not in self.instances[name]:
 			self.instances[name][flag] = []
 
+		# ---------- ADDED for occurrence grouping ----------
+		if name not in self._occ_buckets:
+			self._occ_buckets[name] = {}
+		if flag not in self._occ_buckets[name]:
+			self._occ_buckets[name][flag] = []
+		# Start a new occurrence bucket if we're not "adding" to an existing one
+		if not add or not self._occ_buckets[name][flag]:
+			self._occ_buckets[name][flag].append([])
+			if name not in self._occ_sequence:
+				self._occ_sequence[name] = []
+			self._occ_sequence[name].append((flag, len(self._occ_buckets[name][flag]) - 1))
+		# ---------------------------------------------------
+
 		for val in values:
 			cleaned = self._clean_quotes(val)
 			if name in self.triggers:
@@ -1460,6 +1661,9 @@ class SwitchManager:
 			self._Values[name].append(cleaned)
 			self.instances[name][flag].append(cleaned)
 
+			# ---------- ADDED for occurrence grouping ----------
+			self._occ_buckets[name][flag][-1].append(cleaned)
+			# ---------------------------------------------------
 
 	def parse(self,args=None, reset=False):
 		current_switch = None
@@ -1487,6 +1691,10 @@ class SwitchManager:
 						self._Values[key].append(value)
 						self.instances[key][current_switch].append(value)
 
+						# ---------- ADDED for occurrence grouping ----------
+						self._occ_buckets[key][current_switch][-1].append(value)
+						# ---------------------------------------------------
+
 			# Handle standalone flags like -pulldown or -m
 			elif arg in self.flag_to_key:
 				key = self.flag_to_key[arg]
@@ -1505,12 +1713,15 @@ class SwitchManager:
 				self._Values[current_key].append(value)
 				self.instances[current_key][current_switch].append(value)
 
+				# ---------- ADDED for occurrence grouping ----------
+				self._occ_buckets[current_key][current_switch][-1].append(value)
+				# ---------------------------------------------------
+
 			# Orphan value (no active flag) — ignored, or could log
 			else:
 				pass
 
 			i += 1
-
 
 	def _register_usage(self, key, flag):
 		self.used[key] = True
@@ -1523,6 +1734,19 @@ class SwitchManager:
 		if flag not in self.usage[key]:
 			self.usage[key].append(flag)
 
+		# ---------- ADDED for occurrence grouping ----------
+		if key not in self._occ_buckets:
+			self._occ_buckets[key] = {}
+		if flag not in self._occ_buckets[key]:
+			self._occ_buckets[key][flag] = []
+		# start a NEW bucket for this occurrence
+		self._occ_buckets[key][flag].append([])
+		occ_idx = len(self._occ_buckets[key][flag]) - 1
+
+		if key not in self._occ_sequence:
+			self._occ_sequence[key] = []
+		self._occ_sequence[key].append((flag, occ_idx))
+		# ---------------------------------------------------
 
 	def isActive(self, name, instance=None):
 		if name not in self.used or not self.used[name]:
@@ -1530,7 +1754,6 @@ class SwitchManager:
 		if instance is None:
 			return True
 		return instance in self.usage.get(name, [])
-
 
 	def data(self, what, name, instance=None):
 		if what == 0: what = 'name'
@@ -1545,9 +1768,8 @@ class SwitchManager:
 				with open(val[0], 'r') as f:
 					return f.read().splitlines()
 			return val
-		
+
 		return val
-		
 
 	def values(self, name, instance=None):
 		if not instance is None: return self.Values(name, instance)
@@ -1569,6 +1791,30 @@ class SwitchManager:
 			return self.instances[name].get(instance, [])
 		return self.values(name)
 
+	# ---------- ADDED: accessor for grouped-by-occurrence ----------
+	def Instances(self, name, instance=None):
+		"""
+		Return grouped occurrences for a switch.
+
+		- Instances('Has') -> list of lists in global occurrence order across all flags
+		- Instances('Has', '-and') -> list of lists for that flag only (each occurrence)
+		- Instances('Has', '-or') -> list of lists for that flag only
+		"""
+		if name not in self._occ_buckets:
+			return []
+		if instance is None:
+			if name not in self._occ_sequence:
+				return []
+			out = []
+			for (flag, idx) in self._occ_sequence[name]:
+				bucket_list = self._occ_buckets[name].get(flag, [])
+				if 0 <= idx < len(bucket_list):
+					out.append(bucket_list[idx])
+			return out
+		else:
+			return list(self._occ_buckets[name].get(instance, []))
+	# ---------------------------------------------------------------
+
 	def strip(self):
 		return [item for item in self.command if item not in self.flag_to_key]
 
@@ -1577,10 +1823,13 @@ class SwitchManager:
 		self._Values = {}
 		self.usage = {}
 		self.instances = {}
+		# ---------- ADDED for occurrence grouping ----------
+		self._occ_buckets = {}
+		self._occ_sequence = {}
+		# ---------------------------------------------------
 		for key in self.switchesRegister:
 			self.used[key] = False
 			self._Values[key] = []
-
 
 	def validate(self):
 		import json
@@ -1604,6 +1853,7 @@ class SwitchManager:
 			'usage': self.usage,
 			'instances': self.instances
 		}
+
 
 
 Switches = SwitchManager

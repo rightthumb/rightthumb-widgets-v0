@@ -11,9 +11,13 @@ rem ###########################################################################
 rem ## {C3P0D40fAe8B} ##
 
 SET lab=%*
+if [%1] == [autocls] set lab=cls
+
 IF NOT ["%lab%"] == [""] (
 	set "terminalTitle=loc-%Session_ID_Suffix% :: %lab%"
 ) else (
 	set "terminalTitle=loc-%Session_ID_Suffix%"
 )
 TITLE %vpDot%%terminalTitle%
+
+if [%1] == [autocls] set autocls=1

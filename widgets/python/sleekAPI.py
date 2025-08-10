@@ -110,3 +110,96 @@ class SleekDBClient:
     def logs(self, collection="_"): return self.call("log", collection)
     def close(self): return self.call("close", "_")
 
+
+
+'''
+# what does this do?
+
+That Python code defines a **client class (`SleekDBClient`)** that talks to a server (likely a PHP backend) using **HTTP POST requests** to perform CRUD (Create, Read, Update, Delete) operations on a SleekDB-like database.
+
+Here’s the breakdown:
+
+---
+
+### **Main purpose**
+
+It’s a wrapper around `requests.post` to send JSON commands to a given URL (default `http://localhost/index.php`) for database operations.
+
+---
+
+### **Key points**
+
+1. **Initialization (`__init__`)**
+
+   * Stores the target URL for API calls.
+   * Builds a database path (`self.db_path`) based on the current working directory and a folder name (`data` by default).
+   * Creates the folder if it doesn’t exist.
+
+2. **`call()` method**
+
+   * Sends an HTTP POST with:
+
+     ```json
+     {
+         "action": <what to do>,
+         "collection": <table or collection name>,
+         "params": {...},
+         "db": <absolute path to db folder>
+     }
+     ```
+   * Tries to parse JSON response.
+   * Optionally pretty-prints the result if `debug=True`.
+   * Handles errors if the server says `success` is `false`.
+
+3. **CRUD Aliases**
+
+   * `insert`, `find`, `findOne`, `update`, `updateOrInsert`, `delete`
+   * Just shortcuts that call `call()` with the right `action` and parameters.
+
+4. **Child operations**
+
+   * Functions like `insertChild`, `updateChild`, `findChild` let you modify nested/related records inside a parent record.
+
+5. **SQL-like commands**
+
+   * `sql(collection, sub_action, params)` sends SQL-style requests (still in JSON form) to the server.
+
+6. **Diagnostics**
+
+   * `logs()` gets logs.
+   * `close()` closes the database connection (server-side).
+
+---
+
+### **So what it does in practice**
+
+If you run:
+
+```python
+client = SleekDBClient()
+client.insert("users", [{"name": "Alice"}])
+```
+
+…it sends something like:
+
+```json
+POST http://localhost/index.php
+{
+    "action": "insert",
+    "collection": "users",
+    "params": {"records": [{"name": "Alice"}]},
+    "db": "/your/current/path/data"
+}
+```
+
+The server handles this request and returns a JSON response (success/failure + data).
+
+---
+
+This means the Python script is **not the database itself** — it’s just the client talking to a backend (probably PHP + SleekDB).
+
+If you want, I can also show you **exactly what network traffic this would generate** for one of the methods so you can see the raw request. Would you like me to do that?
+
+
+
+'''
