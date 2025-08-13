@@ -4448,11 +4448,20 @@ def formatIsData( data ):
 			data = '\n'.join(temp)
 
 	if type(data) == list:
+		# print('resolve')
 		for i,d in enumerate(data):
 			data[i] = autoUrl(d)
+
 	return data
 	# autoUrl
 
+def isDataSearch( data=None, focus=None, pipeClean=False, required=False,     r=None, c=None, noclean=None, save=False, resolve=False, R=None ):
+	data = isData( data, focus, pipeClean, required, r, c, noclean, save, resolve, R )
+	new = []
+	for d in data:
+		if showLine(d):
+			new.append(d)
+	return new
 def isData_Data(data=None,loc=None):
 	# if not loc is None: print_( 'isData_Data', loc )
 	# if not loc is None: print_( 'isData_Data, start', loc, data, 'isData_Data, end' )
@@ -4466,13 +4475,23 @@ def isData_Data(data=None,loc=None):
 
 isData_Resolve_Remote = False
 def isData( data=None, focus=None, pipeClean=False, required=False,     r=None, c=None, noclean=None, save=False, resolve=False, R=None ):
+	testingI = False
 	global isData_Save
-
-	if not R is None:
-		resolve = R
-
+	global urlPipeActivated
+	global appData
 	global isData_Resolve_Remote
-	isData_Resolve_Remote = True
+	
+	if not R is None: resolve = R
+	if not resolve is None: isData_Resolve_Remote = resolve
+
+	if testingI: print(11)
+
+	if urlPipeActivated and appData[__.appReg]['pipe']:
+		return appData[__.appReg]['pipe']
+
+
+	if testingI: print(22)
+
 	items_to_check = ['--r']
 	if any(item in sys.argv for item in items_to_check):
 		isData_Resolve_Remote = True
@@ -4480,10 +4499,12 @@ def isData( data=None, focus=None, pipeClean=False, required=False,     r=None, 
 		return isData_Data(__.PIPE)
 	elif data == 2:
 		data = None
-
+	if testingI: print(33)
 	if save:
 		isData_Save = data
 		return isData_Data(data,2.111)
+
+	if testingI: print(44)
 
 	if isData_Save:
 		return isData_Data(isData_Save,2.222)
@@ -4492,20 +4513,29 @@ def isData( data=None, focus=None, pipeClean=False, required=False,     r=None, 
 	if switches.isActive('Paste-isData'):
 		_paste = regImp( __.appReg, '-paste' )
 		return isData_Data(_paste.imp.paste().split('\n'))
-
+	
+	if testingI: print(55)
+	
 	if __.ForcePipe:
 		return isData_Data(__.ForcePipe)
+
+	if testingI: print(66)
+
+	if vv.isDataData:
+		for name in vv.isDataData:
+			return isData_Data(vv.isDataData[name],2.444)
+	
+	if testingI: print(77)
+	
 	if vv.isDataName:
 		for name in vv.isDataName:
 			return isData_Data(vv.isDataName[name],2.333)
 	if vv.isDataDataRaw:
 		for name in vv.isDataDataRaw:
 			return isData_Data(vv.isDataDataRaw[name],2.411)
-	if vv.isDataData:
-		for name in vv.isDataData:
-			return isData_Data(vv.isDataData[name],2.444)
 
-	global appData
+
+	
 	# if '...' in sys.argv:
 	if __.PIPE: appData[__.appReg]['pipe'] = __.PIPE
 
@@ -5929,6 +5959,8 @@ def resolve(path,isFolder=None):
 	# if not os.path.exists(path):
 	# 	path = inRecentFolders( path )
 	return path
+
+remoteFolders_sftp = None
 
 def autoUrl(path):
 	if type(path) == list:
@@ -9606,11 +9638,35 @@ def aliases_file_open(file):
 			# print(a,file)
 	return file
 
+
+def remote2filePathBuild():
+	global remoteFolders_sftp
+	if not remoteFolders_sftp is None: return remoteFolders_sftp
+	remoteFolders_sftp = []
+	sites = getTable('site-locations.list')
+
+	for mPath in sites:
+		if not os.path.isfile(mPath):
+			continue
+		raw = getText(mPath, raw=True).strip()
+		meta = getTable2(mPath) if raw.startswith('{') else getYML(mPath)
+
+		if 'sftp' in meta and 'path' in meta['sftp']:
+			remote_base = meta['sftp']['path'].replace('\\', '/').rstrip('/')
+			remoteFolders_sftp.append(remote_base)
+
+
 def remote2file(path):
 	remote_path = path
 	remote_path = remote_path.replace('\\', '/')
 	if not remote_path.startswith('/'):
 		return path
+	
+	remoteFolders_sftp = remote2filePathBuild()
+
+	if not any(folder in path for folder in remoteFolders_sftp):
+		return path
+	return 'error'
 	sites = getTable('site-locations.list')
 
 	for mPath in sites:
@@ -9634,15 +9690,21 @@ def remote2file(path):
 
 
 def url2file(path):
+	# test = remote2file(path)
+	if os.path.exists(path):
+		return path
 	if path.startswith('/'):
 		try:
 			test = remote2file(path)
-		except: pass
-		# print('remote2file',test)
-		# sys.exit(0)
-		if not test is None:
 			if os.path.exists(test):
 				return test
+			else:
+				return path
+		except:
+			return path
+		# print('remote2file',test)
+		# sys.exit(0)
+			
 	url=path
 	if path.startswith('http:'): path=path.replace('http:','https:')
 	if path.startswith('https:') or path.startswith('http:'):
@@ -13746,11 +13808,16 @@ class Switches:
 				if a in __.switch_skimmer.scan:
 					__.switch_skimmer.active.append( a )
 				a = a.replace(':','')
+				# print(a)
+				# print(__.appReg)
 				for ii,sw in enumerate(self.switches):
 					for s in sw.switch.split(','):
 						# if s.lower() == a.lower():
+						# print(s)
+						# print(s,a)
 						if s == a:
 							#taco#
+							# print(self.switches[ii].appReg)
 							if self.switches[ii].appReg == __.appReg:
 								self.switches[ii].pos = i
 								self.switches[ii].active = True
@@ -13772,7 +13839,7 @@ class Switches:
 										all_strings = all(isinstance(item, str) for item in val)
 										if all_strings:
 											self.switches[ii].value = ','.join(val)
-								pass
+								# pass
 								# self.switches[ii].name
 								# λname=self.switches[ii].name
 								# λval=self.switches[ii].value
@@ -13781,6 +13848,14 @@ class Switches:
 								# if λname == 'Alias':
 								# 	print('Alias set:', λval, '->', λvals)
 								# 	sys.exit()
+								# print(vv.isDataData)
+								if self.switches[ii].name in vv.isDataData:
+									# print( 'here here' ); sys.exit()
+									for thisFile in self.switches[ii].values:
+										# print(thisFile)
+										for fileLine in getText(thisFile):
+											vv.isDataData[self.switches[ii].name].append( fileLine )
+									# print( vv.isDataData ); sys.exit()
 
 								if self.switches[ii].name in vv.isDataName:
 									for thisFile in self.switches[ii].values:
@@ -13790,12 +13865,7 @@ class Switches:
 									for thisFile in self.switches[ii].values:
 										vv.isDataDataRaw[self.switches[ii].name] += getText(thisFile, raw=True)
 
-								if self.switches[ii].name in vv.isDataData:
-									# print( 'here here' ); sys.exit()
-									for thisFile in self.switches[ii].values:
-										# print(thisFile)
-										for fileLine in getText(thisFile):
-											vv.isDataData[self.switches[ii].name].append( fileLine )
+
 
 
 
@@ -24279,6 +24349,38 @@ def URL2(url, data={}):
 	print(f"Fetching data from: {url}")
 	return response.text.replace('\\n', '\n')
 
+
+
+
+def URL3(url, post_data=None):
+	"""
+	Fetch a URL using a Windows 11 Chrome User-Agent.
+	If post_data is provided, uses POST, otherwise GET.
+	Returns plain text extracted from the HTML.
+	"""
+	import requests
+	from bs4 import BeautifulSoup
+
+	headers = {
+		"User-Agent": (
+			"Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+			"AppleWebKit/537.36 (KHTML, like Gecko) "
+			"Chrome/115.0.0.0 Safari/537.36"
+		)
+	}
+
+	if post_data:
+		resp = requests.post(url, data=post_data, headers=headers)
+	else:
+		resp = requests.get(url, headers=headers)
+
+	resp.raise_for_status()  # raise an error for HTTP 4xx/5xx
+
+	soup = BeautifulSoup(resp.text, "html.parser")
+	return soup.get_text(separator="\n", strip=True)
+
+
+
 def getConfig(path):
 	def _cl_(string): return _str.do('be',   _str.do('be',string,'\n')   ,' ');
 	def _val_(string):
@@ -27311,15 +27413,12 @@ class GPT:
 		import importlib.util
 		if 'GPT' not in intelligent_code.classes:
 			import importlib.util
-			path = os.path.normpath(_v.w+'/widgets/python/library/ai/gpt/__init__.py')
+			path = os.path.normpath(_v.w + '/widgets/python/library/ai/gpt/__init__.py')
 			spec = importlib.util.spec_from_file_location('GPT', path)
 			module = importlib.util.module_from_spec(spec)
 			spec.loader.exec_module(module)
 			intelligent_code.classes['GPT'] = module.GPT
 		return intelligent_code.classes['GPT'](*args, **kwargs)
-	
-
-
 
 
 class index:
@@ -27327,28 +27426,37 @@ class index:
 		import importlib.util
 		if 'index' not in intelligent_code.classes:
 			import importlib.util
-			path = os.path.normpath(_v.w+'/widgets/python/library/tools/code/classes/index.py')
+			path = os.path.normpath(_v.w + '/widgets/python/library/tools/code/classes/index.py')
 			spec = importlib.util.spec_from_file_location('index', path)
 			module = importlib.util.module_from_spec(spec)
 			spec.loader.exec_module(module)
 			intelligent_code.classes['index'] = module.index
 		return intelligent_code.classes['index'](*args, **kwargs)
-	
 
 
 class MongoDBMgr:
-		def __new__(cls, *args, **kwargs):
-				import importlib.util
-				if 'MongoDBMgr' not in intelligent_code.classes:
-						import importlib.util
-						path = os.path.normpath(_v.w+'/widgets/python/library/tools/db/mongoMgr.py')
-						spec = importlib.util.spec_from_file_location('MongoDBMgr', path)
-						module = importlib.util.module_from_spec(spec)
-						spec.loader.exec_module(module)
-						intelligent_code.classes['MongoDBMgr'] = module.MongoDBMgr
-				return intelligent_code.classes['MongoDBMgr'](*args, **kwargs)
+	def __new__(cls, *args, **kwargs):
+		import importlib.util
+		if 'MongoDBMgr' not in intelligent_code.classes:
+			import importlib.util
+			path = os.path.normpath(_v.w + '/widgets/python/library/tools/db/mongoMgr.py')
+			spec = importlib.util.spec_from_file_location('MongoDBMgr', path)
+			module = importlib.util.module_from_spec(spec)
+			spec.loader.exec_module(module)
+			intelligent_code.classes['MongoDBMgr'] = module.MongoDBMgr
+		return intelligent_code.classes['MongoDBMgr'](*args, **kwargs)
 
 
+def fetch_advanced(*args, **kwargs):
+	import importlib.util
+	if 'fetch_advanced' not in intelligent_code.functions:
+		import importlib.util
+		path = os.path.normpath(_v.w+'/widgets/python/library/tools/url/fetch_advanced.py')
+		spec = importlib.util.spec_from_file_location('fetch_advanced', path)
+		module = importlib.util.module_from_spec(spec)
+		spec.loader.exec_module(module)
+		intelligent_code.functions['fetch_advanced'] = module.fetch_advanced
+	return intelligent_code.functions['fetch_advanced'](*args, **kwargs)
 
 
 ##################################################
@@ -28836,6 +28944,13 @@ def psudoApp(appReg,dic):
 
 ##================================================
 ##================================================
+def clear_screen():
+	if sys.platform == "win32":
+		os.system("cls")
+	else:
+		# Try 'clear', fallback to 'cls'
+		if os.system("clear") != 0:
+			os.system("cls")
 
 def noWarnings():
 	import warnings
@@ -28859,13 +28974,11 @@ def print_markdown(arg):
 	from rich.console import Console # type: ignore
 	from rich.markdown import Markdown # type: ignore
 	console = Console()
-	if os.platform == 'win32':
-		os.system('cls')
-	else:
-		try:
-			os.system('clear')
-		except:
-			os.system('cls')
+	
+	
+	clear_screen()
+
+
 	console.print(Markdown(document))
 	return True
 
@@ -29072,6 +29185,20 @@ def _future(text, when=None):
 # 9377                    if isFirst:
 # 9545                    if isFirst:
 # 9590                                                    if isFirst:
+##================================================
+##================================================
+urlPipeActivated=False
+def urlPipe(url):
+	global appData
+	global urlPipeActivated
+	urlPipeActivated=True
+	if type(url) == list:
+		for u in url:
+			urlPipe(u)
+		return
+			
+	appData[__.appReg]['pipe'] = URL3(url).split('\n')
+pipeUrl=urlPipe
 ##================================================
 ##================================================
 nsfw=True

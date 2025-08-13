@@ -10,33 +10,32 @@ def hexColor(*args, h=None, bg=None, c=None, p=False):
 
 
 
-    # print(h,c)
-    # if c and c == 'help':
-    #     # print(color_dict)
-    #     for color in color_dict:
-    #         hex_color = color_dict[color]
-    #         hex_color = hex_color.lstrip('#')
-    #         text = color
-    #         r, g, b = tuple(int(hex_color[i:i+2], 16) for i in (0, 2, 4))
-    #         colorized = f"\033[38;2;{r};{g};{b}m{text}\033[0m"
+	# print(h,c)
+	# if c and c == 'help':
+	#     # print(color_dict)
+	#     for color in color_dict:
+	#         hex_color = color_dict[color]
+	#         hex_color = hex_color.lstrip('#')
+	#         text = color
+	#         r, g, b = tuple(int(hex_color[i:i+2], 16) for i in (0, 2, 4))
+	#         colorized = f"\033[38;2;{r};{g};{b}m{text}\033[0m"
 
-    #         test = color
-    #         test = test.replace('_red','')
-    #         test = test.replace('_orange','')
-    #         test = test.replace('_purple','')
-    #         test = test.replace('_white','')
-    #         test = test.replace('_blue','')
-    #         test = test.replace('_pink','')
-    #         test = test.replace('_green','')
-    #         test = test.replace('_gray','')
-
-
-    #         if _.showLine(test):
-    #             print(colorized)
-    #     return text
+	#         test = color
+	#         test = test.replace('_red','')
+	#         test = test.replace('_orange','')
+	#         test = test.replace('_purple','')
+	#         test = test.replace('_white','')
+	#         test = test.replace('_blue','')
+	#         test = test.replace('_pink','')
+	#         test = test.replace('_green','')
+	#         test = test.replace('_gray','')
 
 
-bg_color
+	#         if _.showLine(test):
+	#             print(colorized)
+	#     return text
+
+
 
 
 	if type(c) == str and ',' in c:

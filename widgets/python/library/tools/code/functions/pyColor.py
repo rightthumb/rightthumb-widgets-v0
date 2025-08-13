@@ -7,6 +7,7 @@ from pygments.formatters import Terminal256Formatter
 from pygments.style import Style
 
 def pyColor(code,theme=None):
+    code = code.replace('\t','    ')
     if not theme is None:
         __.CodeTheme = theme
     highlighted_code = highlight(code, PythonLexer(), Terminal256Formatter(style=CustomStyle))

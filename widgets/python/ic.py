@@ -113,6 +113,10 @@ class iName:
 
 
 
+
+
+
+# Tabs
 iFn = '''
 def iName(*args, **kwargs):
 \timport importlib.util
@@ -137,7 +141,37 @@ class iName:
 \t\t\tspec.loader.exec_module(module)
 \t\t\tintelligent_code.classes['iName'] = module.iName
 \t\treturn intelligent_code.classes['iName'](*args, **kwargs)
+'''.strip().replace('\t','    ')
+
+
+
+# Spaces
+iFn = '''
+def iName(*args, **kwargs):
+    import importlib.util
+    if 'iName' not in intelligent_code.functions:
+        import importlib.util
+        path = os.path.normpath(_v.w+'iFullPath')
+        spec = importlib.util.spec_from_file_location('iName', path)
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        intelligent_code.functions['iName'] = module.iName
+    return intelligent_code.functions['iName'](*args, **kwargs)
 '''.strip().replace('    ', '\t')
+iClass = '''
+class iName:
+    def __new__(cls, *args, **kwargs):
+        import importlib.util
+        if 'iName' not in intelligent_code.classes:
+            import importlib.util
+            path = os.path.normpath(_v.w+'iFullPath')
+            spec = importlib.util.spec_from_file_location('iName', path)
+            module = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(module)
+            intelligent_code.classes['iName'] = module.iName
+        return intelligent_code.classes['iName'](*args, **kwargs)
+'''.strip().replace('    ', '\t')
+
 
 
 import os
@@ -407,6 +441,7 @@ def action():
 
 
 			_.pyColor(iCode)
+			# print(iCode)
 			_copy.imp.copy( iCode, p=0 )
 
 
