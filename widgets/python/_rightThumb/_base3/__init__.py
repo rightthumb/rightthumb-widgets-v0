@@ -6017,9 +6017,12 @@ def mod(path):
 
 
 
-def colorPlus( data, color='green' ):
+def colorPlus( data, c=None, h=None ):
+	color = c
+	if color is None and h is None:
+		color = 'green'
 	if ' ' in color or ',' in color:
-		return colorPlus2( data, color=color )
+		return colorList( data, color=color )
 	for search in switches.values('Plus'):
 		for subject in caseUnspecific( data, search, isPlus=True ):
 			# print('subject:', subject)
@@ -6087,7 +6090,12 @@ def colorList( data, c=None, h=None, v=None, l=None,  delim='3e05a45efd9f' ):
 			# print('subject:', subject)
 
 			if type( subject ) == str:
-				data = data.replace( subject, delim+ pr( subject, c=c, h=h, p=0 )+delim )
+				# data = data.replace( subject, delim+ pr( subject, c=c, h=h, p=0 )+delim )
+
+				c = delim+ pr( subject, c=c, h=h, p=0 )+delim
+				r = data.split( subject )
+				data = c.join( r )
+
 			else:
 				if subject['pos'] == 'first':
 					data = nth_repl(data, subject['data'], delim+ pr( subject['data'], c=c, h=h, p=0 )+delim, 1)
@@ -6129,7 +6137,10 @@ def plusColor( row, color='green' ):
 			plusSearchX = ci( plusSearchX )
 
 			for subject in caseUnspecific( row, plusSearchX ):
-				row = thePrintLine.replace( subject, colorThis( subject, color , p=0 ) )
+				# row = thePrintLine.replace( subject, colorThis( subject, color , p=0 )  )
+				c = colorThis( subject, color , p=0 )
+				r = row.split( subject )
+				row = c.join( r )
 
 	return row
 
@@ -9781,7 +9792,7 @@ def myFileLocations( file, silent=False, currentBaseVersion=3 ):
 		if os.path.exists(file):
 			file = __.path(file)
 	if True:
-		ext = setLanguage(file)
+		# ext = setLanguage(file) # 2025-08-13
 		# print(ext)
 		valid = True
 		for test in [
@@ -9802,8 +9813,8 @@ def myFileLocations( file, silent=False, currentBaseVersion=3 ):
 					recs[path] = {'epoch': time.time(), 'session': time.time()}
 			saveTable(recs,'myFileLocations.index',printThis=False)
 
-	file=autoUrl(file)
-	file = aliases_file_open(file)
+	# file=autoUrl(file)
+	# file = aliases_file_open(file)
 	if isWin and type(file) == str and '/' in file: file=file.replace('/',os.sep)
 	if isWin and type(file) == str and file.startswith('~'): file=_v.home+file[1:]
 	if __.isRequired_Pipe_or_File:
@@ -9899,10 +9910,10 @@ def myFileLocations( file, silent=False, currentBaseVersion=3 ):
 	myFileLocation_File = myFileLocations2( file, silent, currentBaseVersion )
 	if  not myFileLocation_File in myFileLocation_Files:
 		myFileLocation_Files.append( myFileLocation_File )
-	try:
-		autoAbbreviations()
-	except Exception as e:
-		pass
+	# try:
+	# 	autoAbbreviations()
+	# except Exception as e:
+	# 	pass
 	if len( myFileLocation_Files ):
 		# print_('xxx')
 	# if len( myFileLocation_Files ) and type( appData[__.appReg]['pipe'] ) == bool:
@@ -11682,7 +11693,7 @@ def saveTable( rows, theFile, tableTemp=False, printThis=True, indentCode=True, 
 
 def getTable(theFile, tableTemp=False, isDic=None, isList=None, tmp=None):
 	global switches
-	# print(theFile)
+	if '--src' in sys.argv: print(1, __.appReg, theFile)
 	if switches.isActive('Timeout') and 'table' in switches.value('Timeout'):
 		print(theFile)
 	if os.path.isfile(theFile):
@@ -11813,6 +11824,14 @@ def getTable3(theFile):
 
 
 def getTable2(theFile, isDic=None, isList=None):
+	if '--src' in sys.argv:
+		import inspect
+		stack = inspect.stack()
+		caller_frame = stack[1]  # [0] is current function, [1] is the caller
+		print(f"Called from function: {caller_frame.function}")
+		print(f"In file: {caller_frame.filename}, line {caller_frame.lineno}")
+
+		print(2, __.appReg, theFile)
 	if os.path.isfile(theFile):
 		vv.opened_file_me[theFile] = os.path.getmtime(theFile)
 

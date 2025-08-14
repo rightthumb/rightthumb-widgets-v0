@@ -1,325 +1,876 @@
-# rightthumb.com framework
+# ⚡ Universal Terminal Framework & Automation Suite
 
-___
+A **cross-platform terminal framework** with **~4,000 apps** for **Windows, Linux, macOS, and PowerShell**.  
+Designed for **automation, ops, provisioning, data wrangling, and rapid development**. Everything is optimized for **CLI-first workflows**, strong **switch management**, and **intelligent tables**.
 
-## Almost 3,000 Apps
+**Repo:** https://github.com/rightthumb/rightthumb-widgets-v0
+## 📥 Installation (Linux, Windows, PowerShell)
 
-___
+```bash
+# From the repo root:
+cd rightthumb-widgets-v0/install
+python3 installer.py -rc.d h
+````
 
-## Just sharing how I customized my terminal
+* **Linux:** After install, start a new terminal (or run `bash`) so the environment refreshes and system paths/aliases load.
+* **Windows (CMD):** `rr.bat` is placed in your profile root. Type:
 
-### Efficiently accomplish a wide range of tasks in a short amount of time
+  ```cmd
+  rr
+  ```
 
-#### with a few thousand apps I made over my 20+ year career
+  to reload the environment.
+* **PowerShell:** After installing via CMD as above, copy:
 
-___
+  ```
+  rightthumb-widgets-v0/widgets/powershell
+  ```
 
-## Platform Support
+  to your **PowerShell** folder in **Documents**.
 
-### The Framework is designed to work on the following
+### `.bashrc` handling
 
-- Windows
-- Linux
-- macOS
-- iOS
-- Android
-- Other:  PowerShell, etc
+* The installer **adds** to `.bashrc` but **never removes** anything you had.
+* All inserted blocks are wrapped **between unique ID markers** (start/end) so they can be cleanly uninstalled later.
 
-## Hype
+---
 
-- I push 10 on my [mouse](https://www.amazon.com/dp/B088B3ZM76) to activate voice commands and say "Sally paste, convert this python to javascript" (ai). I then paste the results.
-  - The hotkeys.py app manages keyboard shortcuts. A programmable mouse can activate any of them.
-    - View all keyboard shortcuts 'p hotkeys -k'
-- Generate PHP code
-  - Copy the CREATE TABLE sql, hit alt+win+c to automatically generate the create, read, update, delete of a table in php (crud), then paste the results.
-- Tasklist
-  - Grouped memory usage subtotals and grand total
-    - ' task -report '
-  - Search tasklist
-    - ' task + chrome '
-      - try 'kill chrome'
-- Folder Navigation
-  - How to navigate to the Downloads folder 'b dl'. How to create a new bookmark 'm name'.
-  - How to view files and folders ' d ', to search for something  'd something'. Linked items are yellow.
-- List all python apps ' list '
-  - Search for an app that does something with json ' list json ' or ' py json '
-- Responsive tables
-  - Make the terminal full screen
-  - Run ' p ls '
-  - Resize the terminal smaller
-  - Run ' p ls '
-  - Resize the terminal smaller
-  - Run ' p ls '
-  - Resize the terminal smaller
-  - Run ' p ls '
-- Auto Backup, Auto Encryption, Auto save terminal history, Index every app and switch used associated with a history ID.
-  - How to close the terminal ' x ' (backs everything up that you opened since you started the terminal and encrypts registered encrypted files).
-- How to logout 'p logout'
-  - Login is automatic when a password is needed, it will ask, or you can use 'p login'
-- Encryption
-  - How to register a document for encryption 'crypt file.md'.
-  - How to open a document a text file, including encrypted, 'n file.md'
-    - if you are not in that folder 'fa label'.
-      - How to create that alias 'fa label file.md'.
-  - How do you encrypt the file without closing the terminal 'p fileBackup -f file.md'.
-- Search in files even if they are Zipped or Encrypted
-  - How to view content of a file 'p cat -f file.md + <user@domain.com>'
-    - How to zip a file in a way it can be searched 'p zzip -f file.md'
-- File Search
-  - How to find a file that was modified within the last day 'p file -ago 1d', week 'p file -ago 1w', month 'p file -ago 1m', 10 minutes 'p file -ago 10min'.
-  - How to recursively find a '.md' file modified in the last week with 'abc' in the file name without 'xyz' in file name with 'due 2025-12-25' inside the file 'p files + \*.md -ago 1w + abc - xyz -has "due 2025-12-25"'.
-- Checksum 'p checksum -f pop-os_20.10_amd64_nvidia_10.iso ' or 'p checksum -f pop-os_20.10_amd64_nvidia_10.iso -test 412c49dcdda20dfa69b574f255a63d10dcfe20aa'
-- Entertainment
-  - How to view all of the episodes of a tv show 'ee the flash'.
-  - How to do automated franchise research of everything from a franchise including video games 'p franchise -franchise marvel'. How to view the results 'p franchiseView -franchise marvel'.
-- Mine the clipboard
-  - How to find all emails, urls, mailing addresses, Windows paths, Linux paths in copied text 'ctrl win h', then paste the results.
-    - I just hit 7 on my mouse
-- Windows terminal
-  - List all keyboard shortcuts 'p wt -key actions'
-  - List all profiles 'p wt -key profiles' (displays index for keyboard shortcuts)
-  - List all keyboard shortcuts associated with a profile 'p wt -key actions + index'
+## 🧭 What this is
 
-## Thousands of apps with many features
+* A **terminal framework** that unifies thousands of curated CLI utilities across **Python, Bash, and PowerShell**.
+* A **switch-first** philosophy: global switches, triggers, and composition make pipelines powerful and readable.
+* An **adaptive table engine**: sort, group, subtotal, aggregate, and render responsive tables (fewer columns as your terminal narrows).
+* **Filesystem & aliasing convenience**: file/folder/url aliases, encryption vault, site registration, and more.
+* **Server automation**: extensive **auto-install / maintenance** scripts for databases, web servers, VPN, SMB, OpenVAS, WebDAV, etc. (see the bottom of this README).
 
-## Anecdote
+---
 
-When covid began, I created an app called harResearch to identify how websites communicate with the server. I then use their data sources in my apps for Realtime covid research. (why I write apps securely)
+## 🚀 Quick Start
 
-## Installation
+### Create a new Python app from template
 
-~~~sh
-python3 -m pip install --upgrade pip
-apt-get install python3  -y
-apt-get install fonts-emojione  -y
-apt-get install wget  -y
-apt-get install unzip  -y
-apt install iputils-ping  -y
-apt-get install python3-pip -y
+```bash
+epyi base -build appName
+```
 
-pip3 install -r require.txt
-~~~
+This copies from the standard template and wires the app into the framework.
 
-## How to install the framework
+### Folder & file aliasing
 
-~~~md
-Windows:
-    cd /d %USERPROFILE%
-Linux:
-    cd /opt
+```bash
+# Create a folder alias: cd into a folder first
+m aliasName
 
-git clone https://github.com/rightthumb/rightthumb-widgets-v0
-cd rightthumb-widgets-v0
-cd install
+# Create a file alias
+o aliasName /path/to/file
+```
 
-python3 installer.py -install
+### Built-in encryption manager
 
-After that if you are running Linux
-    python3 installer.py -rc.d h
+```bash
+# Login to your vault
+p login
 
-add a default editor
-    which nano | python3 installer.py -config.editor
-    or
-    python3 installer.py -config.editor "C:\Program Files\Sublime Text 3\sublime_text.exe"
+# Encrypt a password from clipboard and put it back encrypted
+p cryptString -clip -en
 
-How to open a file
-    n file.txt
+# You will be prompted for pin
+```
 
-How to recover a file
-    p fileRecover -f file.txt
+### Colors & printing helpers
 
-How the installer works
+```bash
+# Print helpers
+_.pr(line=True, c='green')              # line across terminal width
+_.pr(var, var2, c='red')                # text with color
+_.pr(var, var2, h='chartreuse,#6495ED') # hex foreground + hex background
 
-in Windows
-    a file %USERPROFILE%\rr.bat
-        i recommend copying it to %SYSTEMROOT%\System32\rr.bat
-    when you open Windows terminal type rr
-    or
-    in Windows terminal
-        "commandline": "cmd /k \"C:\\Users\\Scott\\rr.bat\"",
-    
-in Linux
-    the .bashrc is modified
-    NOTHING IS REMOVED!!!
-    variables and aliases between ## {E45D09D22184} ## and ## {AEC80B4D3338} ##
-    bookmarks cd aliases between ## {42F74F699A95} ## and ## {6D2B143FF720} ##
-    VERY EASY TO REMOVE
-~~~
+# Explore color options
+p colors                 # shows available hex colors (categorized)
+p colors + blue          # search for “blue” family
+```
 
-## Help
+### “Site” registration via SFTP (per-folder metadata)
 
-~~~md
-Every app has multiple switches per registerd switch.
-    Help Switches
-        -?, -??, --??, ?, ??, /?, /??, /h, /help, -help, --help
+Create a `.folder.meta` file in the site root (JSON or YAML). Example (YAML):
 
-Help that includes global switches (included in all apps).
-    p ls ?
-Help that is just for that app.
-    p ls ??
-~~~
-
-## Have a movie drive?
-
-### Auto franchise hierarchy
-
-~~~md
-Marvel                      Avengers                   2019 Avengers: Endgame
-                                                       2018 Avengers: Infinity War
-                                                       2015 Avengers: Age of Ultron
-                            Spiderman                  2018 Spider-Man: Into the Spider-Verse
-                                                       2017 Spider-Man: Homecoming
-                                                       2014 The Amazing Spider-Man 2
-                                                       2007 Spider-Man 3
-                                                       2004 Spider-Man 2
-                                                       2002 Spider-Man
-                            Ant-Man                    2018 Ant-Man and the Wasp
-                                                       2015 Ant-Man
-                            Wolverine                  2017 Logan
-                                                       2013 The Wolverine
-                                                       2009 X-Men Origins: Wolverine
-                            Thor                       2017 Thor: Ragnarok
-                                                       2013 Thor: The Dark World
-                                                       2011 Thor
-~~~
-
-## Create your own apps
-
-~~~md
-in Windows
-    epyi base -build myApp
-Linux
-    epyiBuild myApp
-
-To edit the framework new app template
-    epyi base -e
-
-it will open a template in your editor
-scroll down to '#n)--> start'
-
-
-_.isData()
-    Switch arguments
-        _.switches.register( 'Files', '-f,-fi,-file,-files','file.txt', isData='name', description='Files', isRequired=False )
-            To get the contents of the file isData='data' or isData='data,clean'
-    OR PIPE
-        cat paths.txt | p app
-    OR PASTE copied text
-        p app --pa
-        or
-        p -paste | p app
-
-To use the ' + ' and ' - ' switches: _.showLine(data)
-
-# example:
-    for path in _.isData():
-        if _.showLine(path):
-            process(path)
-
-Don't forget to try this:
-    os=__.imp('os.path.isfile')
-
-~~~
-
-## Note
-
-### The use of '-' dashes in the file names is because framework apps are imported via class
-
-~~~md
-example:
-    _paste = _.regImp( __.appReg, '-paste' )
-~~~
-
-## Automatically profile every app in the framework (including ones you create)
-
-~~~md
-first go to the python folder.
-
-The FAST way:
-   p f -in *.py + _rightThumb._base  -jn | p f + "if __name__ == '__main__';." - # -jn  | p appInfo
-
-The Accurate way
-   p f -in *.py + _rightThumb._base  -jn | p f + "if __name__ == '__main__';." - # -jn  | p line --c -make "echo {}| p appInfo" | p execute
-
-it saves a json file here:
-    widgets/databank/tables/appRegistration.hash
-~~~
-
-___
-
-## Website management
-
-To upload a file 'u. index.htm' or 'p site -f index.htm -u' (automatically creating entire necessary folder structure) then if displays the full url to a file (unless it is an index file which it displays cleanly)
-
-- To accomplish this add a file called '.folder.meta' in the site root.
-  - It accepts json or yaml
-- To encrypt the password, copy it then 'p cryptString -clip' and paste
-
-~~~md
-url: https://domain.com
+```yml
+url: https://site.com
 sftp:
-  server: domain.com
-  user: admin
-  password: Uebt27i4dLAT8VxdwcJRd3MWdcdYN2+t2uVNPWnT8sIqeJB4IsJPsQ==
-  path: /home/user/public_html
-~~~
+  server: site.com
+  user: usernameHere
+  password: AiP5bJLu9iasMXWuKhJTaHQGYLG3GFu2iDgGj9kxl/eMZ+9pCVRmHw==
+  path: /home/userName/public_html/site.com
+```
 
-___
-___
+Drop this into **any** folder you want to control; the registration applies at that level.
 
-## Misc
+Common flows:
 
-___
-___
+```bash
+# Upload a file or folder to the remote path
+p site -f index.php -u -f fileOrFolder
 
-## How do I extract stuff from a website?
+# Create remote directory first, then upload file/folder
+p site -f index.php -u -f fileOrFolder -mkdir
 
-- method 1
-  - Hit 10 on my [mouse](https://www.amazon.com/dp/B088B3ZM76)
-  - Say 'scrape table'
-- method 2
-  - Copy the selector
-  - Hit 10 on my [mouse](https://www.amazon.com/dp/B088B3ZM76)
-  - Say 'auto text'
-- method 3 (beta)
-  - Put my mouse over it.
-  - Hit 10 on my [mouse](https://www.amazon.com/dp/B088B3ZM76)
-  - Say 'auto scrape'
-- method 4
-  - Use my auto injecting scraping tool (see bellow)
+# Jump to the remote folder (defined in .folder.meta)
+p site -f index.php -r
 
-### How to install my scraping tool
+# Download a file/folder (must exist locally—touch or mkdir first)
+p site -f index.php -d -f fileOrFolder
+```
 
-- create a new link.
-- paste the bellow code as the url.
+> On **first usage** of any `p site` commands, the website is auto-registered.
 
-~~~md
-javascript:{ var script = document.createElement('script');script.type = 'text/javascript'; if (location.protocol === 'https:') { script.src = 'https://eyeformeta.com/tools/tool.js'; } else { script.src = 'http://eyeformeta.com/tools/tool.js'; } document.head.appendChild(script);}
-~~~
+Convenience aliases:
 
-- view the JavaScript console for instructions.
-  - example: copy and paste one of the suggestions "hackTool.help( {'tags': 'tables_w_labels'} )" then "copy(hackTool.helper)" and paste in the console.
-- Note: I also created a chrome extension that scrapes data from webpages in a variety of formats for instant access in apps. That is what the databank app does.
-- Note: Voice commands are managed by using the hotkeys.py app that talks to the listen.py app.
+```bash
+u.   = p site -u -f %*
+u..  = p site -u -f %* -mkdir
+d.   = p site -d -f %*
+r    = p site -remote
 
-## Dungeons and Dragons app (dnd.py)
+# Tip: run `u.` with no args to upload the last thing you opened
+```
 
-Created this when I was learning dnd and python. I have learned a lot since I created this app.
+### Open anything by alias / URL / path
 
-- Manage sorcerer spells
-- Categorizes spells as Heal, Hurt, and Help <--
-  - Having a battle
-    - Look for Hurt, Distance, and Hit Dice <--
-- Check a DND website I just started [icosahedron.quest](https://icosahedron.quest/)
+```bash
+p cat -f file.txt
+p cat -f aliasName
+p cat -f https://site.com/products/ + "#login"     # auto-detects index.* pages
+p cat -f https://site.com/products/search.php + login +code
+# “+code” is a universal switch to show source; searching is smart (no blind greps)
+```
 
-## About
+### Stream large files
 
-~~~md
-What if magic existed?
-What if a place existed where your every thought and dream come to life.
-There is only one catch: it has to be written down.
-Such a place exists, it is called programming.
-    - Scott Taylor Reph, https://softwaredevelopment.solutions
-~~~
+```bash
+p cat2
+```
 
-[Software Development Solutions](https://softwaredevelopment.solutions/)
+### Responsive table app
+
+```bash
+p ls
+# As you resize the terminal, columns reduce intelligently (most important first).
+```
+
+### Search multiple shell scripts and view all matches
+
+```bash
+p files + *.sh -has "apt install" -print                  # first instance per file
+p files + *.sh -has "apt install" | p cat + "apt install" # show every match
+```
+
+### Default editor
+
+Set a default code editor in `$HOME/.rt/.config.hash`:
+
+```json
+{
+    "code_editor": "nano"
+}
+```
+
+> On Windows, this can be `notepad` or any executable you prefer.
+
+---
+
+## 🖨 Printing Tables
+
+The framework includes a built-in **Printed Table** function for rendering, sorting, and formatting tabular data directly in the terminal.
+
+### Basic Usage
+
+```python
+_.pt(table)
+_.pt(table, 'name,description')
+```
+
+### Function Signature
+
+```python
+_.pt(
+    table,              # list of dicts or similar tabular data
+    cols=None,          # columns to include (comma-separated string or list)
+    sort=None,          # sort columns (comma-separated string or list)
+    responsive=None,    # True = auto-hide columns based on terminal width
+    focus=None,         # focus label for the current app (e.g., '__myApp__')
+    c=None, s=None, r=None, t=None,  # optional shorthand column configs
+    name='default',     # table profile name
+    fn=None,            # function to run on table before printing
+    long=False, l=None, # long format printing options
+    triggers=None, t=None, # column-level triggers (transform functions)
+    unique=None, u=None,# deduplicate based on given columns
+    p=True              # print to terminal (False = return modified table)
+)
+```
+
+### Example: With Sorting, Responsive Layout, and Triggers
+
+```python
+_.pt(
+    table,
+    cols='name,date',
+    sort='name,d.data',
+    responsive=True,
+    focus='__myApp__',
+    triggers={'date': _.friendlyDate},
+)
+```
+
+### Returning the Modified Table Instead of Printing
+
+```python
+sortedTableWithTriggersExecuted = _.pt(
+    table,
+    cols='name,date',
+    sort='name,d.data',
+    responsive=True,
+    focus='__myApp__',
+    triggers={'date': _.friendlyDate},
+    p=False
+)
+```
+
+> **Tip:** Set `responsive=True` to automatically hide lower-priority columns as the terminal shrinks.
+> Use `triggers` to preprocess column values (e.g., formatting dates, calculating derived fields).
+
+---
+
+## 🧠 Advanced Switches & Aggregations
+
+The framework’s **switch engine** supports:
+
+* **Triggers** (conditional behavior wired to switches)
+* **Global aggregates** (group/subtotal/grand totals)
+* **Typed columns & transforms** (e.g., `-int MemUsage`)
+
+Example (grouped & totals via Windows Tasklist):
+
+```bash
+tasklist | p tasklist2table - svchost + .exe %* \
+  -int MemUsage -s Name MemUsage -g Name -gt MemUsage \
+  -aggregate " eot?mem-total=add( int(MemUsage) )); format(eot?mem-total,?size,??kb);"
+```
+
+* `-int MemUsage` → cast values
+* `-s` → sort by Name & MemUsage
+* `-g Name` → group by process Name
+* `-gt MemUsage` → grand total
+* `-aggregate` → compute + format end-of-table totals
+
+---
+
+## 🖨 Printing API (`_.pr`)
+
+Concise helpers for rendering at the terminal:
+
+```python
+_.pr(line=True, c='green')                         # full-width separator
+_.pr(var, var2, c='red')                           # colored text
+_.pr(var, var2, h='chartreuse,cornflower_blue')    # hex fg/bg (comma-delimited)
+_.pr(var, var2, h='red')
+```
+
+---
+
+## 🐍 Python App Pattern (instantiated class import)
+
+```python
+appReg = __.appReg
+_bk = _.regImp(__.appReg, 'fileBackup')
+_bk.switch('Silent')
+_bk.switch('isPreOpen')
+_bk.switch('Input', path)
+bkfi = _bk.action()
+__.appReg = appReg
+```
+
+This preserves the global app registry, injects switches, runs the action, and restores the registry.
+
+---
+
+## 🧩 Example: New App Registration (Cleaned)
+
+Below is a cleaned, consistent `_.appInfo[focus()]` block for the **`ls`** app.
+Comments are minimized; duplicates removed where possible while preserving your intent.
+
+```python
+_.appInfo[focus()] = {
+    'file': 'ls.py',
+    'liveAppName': __.thisApp(__file__),
+    'description': 'Display information about files in a folder and subfolders',
+    'categories': [
+        'dir', 'file', 'folder', 'db', 'file database', 'json',
+        'report', 'file report', 'tool', 'tools', 'files', 'folders',
+        'meta', 'meta data', 'meta report', 'meta data report'
+    ],
+    'relatedapps': [],
+    'prerequisite': [],
+    'examples': [
+        'p ls',
+        'p ls -ago 1d',
+        'p ls -folder %pyFolder% -r -save %i%\\py.cache',
+        'p ls -cache %i%\\py.cache -ago 1d',
+        'p ls -r -c ext size name md cd -g ext -s ext md',
+        'p ls -ext image',
+        'b pys',
+        'p ls -duplicates epoch -r + dir -g | p resolveIDs -replace',
+        'p ls -cache %mData% -movietitle -save %mData%',
+        "p ls -movietitle -c n tf -table header;left --c | p cmd2table -make rename '{name}' '{file}' -settings quote",
+        'p ls -ago 2d -invert',
+        'ls.p ago -ago 1m',
+        'ls.p -ago 1m',
+        'ls.d',
+        'p ls -s md -aggregate "isDate(me); bog?woy?week-totals=add(bytes); format(week-totals,?size);"',
+        'p ls -s md -aggregate "isDate(me); bog?month?month-totals=add(bytes); format(month-totals,?size);"',
+        'b txt',
+        'p ls -s md -aggregate "isDate(ce); bog?woy?week-totals=add(bytes); format(week-totals,?size);" -c week-totals | p line --c',
+        'p size -print',
+        'p size -print g',
+        'p size -print g f',
+        'p ls -c g s n -s g -g g'
+    ],
+    'columns': [
+        {'name': 'group',           'abbreviation': 'g',            'sort': 'bytes'},
+        {'name': 'path',            'abbreviation': 'p',            'sort': ''},
+        {'name': 'name',            'abbreviation': 'n',            'sort': 'path'},
+        {'name': 'folder',          'abbreviation': 'f',            'sort': 'path'},
+        {'name': 'relative',        'abbreviation': 'r',            'sort': 'path'},
+        {'name': 'parent',          'abbreviation': 'pa,par,rent',  'sort': 'path'},
+        {'name': 'bytes',           'abbreviation': 'b',            'sort': ''},
+        {'name': 'size',            'abbreviation': 's',            'sort': 'bytes'},
+        {'name': 'md5',             'abbreviation': '5',            'sort': ''},
+        {'name': 'ext',             'abbreviation': 'e',            'sort': ''},
+        {'name': 'year',            'abbreviation': 'y',            'sort': 'date_modified_raw'},
+        {'name': 'date_modified',   'abbreviation': 'm,md,dm',      'sort': 'date_modified_raw'},
+        {'name': 'date_created',    'abbreviation': 'c,cd,dc',      'sort': 'date_created_raw'},
+        {'name': 'friendly_month',  'abbreviation': 'fm',           'sort': 'date_modified_raw'},
+        {'name': 'friendly_week',   'abbreviation': 'fw',           'sort': 'date_modified_raw'},
+        {'name': 'week_of_year',    'abbreviation': 'woy',          'sort': 'date_modified_raw'},
+        {'name': 'ago',             'abbreviation': 'ago',          'sort': 'date_modified_raw'},
+        {'name': 'day_of_the_week', 'abbreviation': 'dow',          'sort': 'date_modified_raw'},
+        {'name': 'date_accessed',   'abbreviation': 'a,ad,da',      'sort': ''},
+        {'name': 'movie',           'abbreviation': 'mv,mt',        'sort': ''},
+        {'name': 'title',           'abbreviation': 't,mvt',        'sort': ''},
+        {'name': 'file',            'abbreviation': 'tf',           'sort': ''},
+        {'name': 'sdate',           'abbreviation': 'sdate',        'sort': 'sdate_raw'},
+        {'name': 'dps',             'abbreviation': 'dps',          'sort': 'sdate_raw'},
+        {'name': 'header',          'abbreviation': 'h'                              }
+    ],
+    'aliases': []
+}
+```
+
+> Notes:
+>
+> * Removed duplicate `'size'` column spec.
+> * Gave `friendly_month`/`friendly_week` unique abbreviations (`fm`, `fw`) to avoid collision with `m` and `w`.
+> * Preserved your examples verbatim where possible, only trimming empty strings.
+
+---
+
+## 📚 Python Library Highlights
+
+Paths are under:
+`/opt/rightthumb-widgets-v0/widgets/python/library/`
+
+```text
+colors.md
+tools/security/modules/liaison.py
+tools/documentation/CollectionManager.py
+tools/har/HarTool.py
+tools/code/classes/CodeIndexer2.py
+tools/code/classes/CodeIndexerPygments.py
+tools/code/classes/index.py
+tools/code/classes/mdFig/v0/mdFig__Sample.md
+tools/code/classes/mdFig/v0/mdFig_bk.py
+tools/code/classes/mdFig/v0/mdFig_Prompt.md
+tools/code/classes/mdFig/v1_IDs/Sample_Input.md
+tools/code/classes/mdFig/v1_IDs/Prompt.md
+tools/code/classes/mdFig/v1_Heading/Sample_Input.md
+tools/code/classes/mdFig/v1_Heading/Prompt.md
+tools/code/classes/notes.md
+tools/code/classes/mdFig.py
+tools/code/classes/CodeIndexerParso.py
+tools/code/functions/pyClassesFunctions.py
+tools/code/functions/hexColor.py
+tools/code/functions/pyColor.py
+tools/code/functions/indexText.py
+tools/patterns/PatternDB.py
+tools/threads/MinThread.py
+tools/tables/TableTool.py
+tools/tables/SafeExpr.py
+tools/os/file/refine.py
+tools/os/file/create_backup_filename.py
+tools/os/file/bkExpire.py
+tools/os/file/FileAnalyzer.py
+tools/db/tools/StemPhraseProcessor.py
+tools/db/postgreSQL.py
+tools/db/duckdbMgr.py
+tools/db/sqliteMgr.py
+tools/db/JsonDatabase.py
+tools/db/sqlcipherMgr.py
+tools/db/sqliteLock.py
+tools/db/mongoMgr.py
+tools/db/UnQLiteMgr.py
+tools/db/_UnQLiteMgr.md
+tools/db/postgresMgr.py
+tools/db/mysqlMgr.py
+tools/url/fetch_advanced.py
+tools/url/fetch_advanced.md
+frameworks/base/classes/Switches.py
+frameworks/base/classes/Database.py
+frameworks/base/classes/Threads.py
+frameworks/base/classes/Queue.py
+frameworks/base/classes/Fields.py
+frameworks/base/classes/Tables.py
+frameworks/base/classes/regImp.py
+frameworks/base/classes/AGGREGATE.py
+frameworks/base/classes/Database2.py
+frameworks/base/variables/bundle.py
+frameworks/base/functions/dic_key_sort2.py
+frameworks/base/functions/printVarSimpleFake2.py
+frameworks/base/functions/isDate.py
+frameworks/base/functions/vindex.py
+frameworks/base/functions/formatSize.py
+frameworks/base/functions/saveCryptTable.py
+frameworks/generic/Switches.py
+frameworks/generic/SwitchManager.py
+frameworks/testing/switches/SwitchesClassMin.py
+frameworks/testing/switches/SwitchesClassMin_2.py
+frameworks/testing/tables/TablesClass_OldCopy.py
+frameworks/testing/tables/bland/three.py
+frameworks/testing/tables/bland/two.py
+frameworks/testing/tables/bland/one.py
+frameworks/testing/tables/notes.md
+frameworks/testing/tables/TablesClass_OldCopy_lib.py
+lib.py
+ai/HuggingFace.md
+ai/gpt/__init__.py
+ai/gpt/gpt.md
+ai/gpt.py
+ai/HuggingFace.py
+ai/gpt.md
+modules/os/files/refine.py
+gpt-test.py
+```
+
+---
+
+## 🧷 Notes on Aliases
+
+* The framework ships with many helpful aliases (Python, pip, tmux helpers, search, compression, OCR helpers, etc.).
+* You mentioned **not** to include the full list here; consider this a feature highlight only (e.g., “simplified tmux usage,” “quick `git` helpers,” “OCR with `tesseract` shims,” etc.).
+* **No `vps-` aliases** or references are included in this README.
+
+---
+
+## 🛠 Server, Database, and Service Scripts (Index)
+
+> **Placed at the bottom** by request.
+> The following list excludes anything with `vps-` in the name.
+
+### APT & Package Management
+
+* `apt/setup.sh`
+* `APT_Repository/manager.sh`
+
+### DNS
+
+* `dns/install.sh`
+* `dns/notes.md`
+* `dns/NS.sh`
+* `dns/SOA.sh`
+
+### FreePBX
+
+* `FreePBX/install.sh`
+* `FreePBX/vps-notes.md` **(omitted from README references per `vps-` rule; file may exist)**
+
+### FTP (ProFTPD & utilities)
+
+* `ftp/add_user.sh`
+* `ftp/download.sh`
+* `ftp/install-client.sh`
+* `ftp/install-server.sh`
+* `ftp/proftpd.conf`
+* `ftp/reset_password.sh`
+* `ftp/status.sh`
+* `ftp/upload.sh`
+
+### Fullstack: Back-end
+
+* `fullstack/back-end/check-uptime.sh`
+* `fullstack/back-end/clean-old-logs.sh`
+* `fullstack/back-end/deploy-back-end.sh`
+* `fullstack/back-end/install-redis.sh`
+* `fullstack/back-end/monitor-backend.sh`
+* `fullstack/back-end/setup-database-backup.sh`
+* `fullstack/back-end/setup-mongo.sh`
+* `fullstack/back-end/setup-nginx.sh`
+* `fullstack/back-end/setup-ssl.sh`
+* `fullstack/back-end/update-server.sh`
+
+### Fullstack: Front-end
+
+* `fullstack/front-end/bundle-assets.sh`
+* `fullstack/front-end/compile-css.sh`
+* `fullstack/front-end/compile-js.sh`
+* `fullstack/front-end/deploy-front-end.sh`
+* `fullstack/front-end/generate-js-css-config-for-compile.sh`
+* `fullstack/front-end/minify-css.sh`
+* `fullstack/front-end/minify-js.sh`
+* `fullstack/front-end/optimize-images.sh`
+* `fullstack/front-end/serve-local.sh`
+* `fullstack/front-end/test-linting.sh`
+* `fullstack/front-end/watch-css.sh`
+* `fullstack/front-end/watch-js.sh`
+* `fullstack/generate-sitemap.sh`
+
+### GPT4All
+
+* `gpt4all/install.sh`
+
+### HTTP/PHP
+
+* `http_php/http_php.sh`
+
+### LAMP
+
+* `lamp/0_usage.md`
+* `lamp/1_lamp_install.sh`
+* `lamp/2_add-domain.sh`
+* `lamp/3_MySQL_phpMyAdmin.sh`
+* `lamp/4_email_webmail_(RainLoop).sh`
+* `lamp/4_opt_ssl.sh`
+* `lamp/notes.md`
+* `lamp/README.md`
+* `lamp/wp__cli-install-help.sh`
+
+### Logs
+
+* `logs/setup_log_retention.sh`
+
+### Mail
+
+* `mail/install.sh`
+* `mail/notes.md`
+
+### Misc
+
+* `MISC/sync.sh`
+* `MISC/vps-HD_Write_Monitor.sh` **(omitted from README references per `vps-` rule; file may exist)**
+* `MISC/__clear_temp__cleaner__.sh`
+
+### MongoDB
+
+* `mongoDB/99-mongodb.conf`
+* `mongoDB/install.sh`
+* `mongoDB/install_mongoDB_multi_local.sh`
+* `mongoDB/install_mongoDB_multi_local__for_Windows.ps1`
+* `mongoDB/multi.md`
+* `mongoDB/setup_db_backup.sh`
+* `mongoDB/setup_mongo_replica_set.sh`
+* `mongoDB/sync_mongo_to_backup.sh`
+
+### Mount Remote Folders
+
+* `Mount_Remote_Folders/setup__openssh-server.sh`
+* `Mount_Remote_Folders/setup__sshfs.sh`
+
+### MySQL
+
+* `mysql/1-secure.sh`
+* `mysql/add_user_to_database.sh`
+* `mysql/create_database.sh`
+* `mysql/create_user.sh`
+* `mysql/install.sh`
+* `mysql/pw.txt`
+* `mysql/vps-cpanel_db_backup.sh` **(name includes `vps-`; excluded from README)**
+
+### Node.js
+
+* `node.js/manager.sh`
+* `node.js/setup.sh`
+
+### ntfy
+
+* `ntfy/install_ntfy.sh`
+* `ntfy/_start_stop.sh`
+
+### OpenVAS
+
+* `OpenVAS/apt_install.sh`
+* `OpenVAS/dnf_install.sh`
+
+### PostgreSQL
+
+* `PostgreSQL/install_PostgreSQL_multi_local.sh`
+* `PostgreSQL/install_PostgreSQL_multi_local__for_Windows.ps1`
+* `PostgreSQL/install_Secure_PostgreSQL.sh`
+* `PostgreSQL/renew_cert.sh`
+* `PostgreSQL/setup_db_backup.sh`
+* `PostgreSQL/setup_pg_logical_replication.sh`
+* `PostgreSQL/sync_postgres_to_backup.sh`
+* `PostgreSQL/vps-notes.md` **(omitted from README references per `vps-` rule; file may exist)**
+* `PostgreSQL/vps-pg-config.sample.yml` **(name includes `vps-`; excluded from README)**
+
+### RustDesk
+
+* `RustDesk/install.sh`
+
+### Service
+
+* `service/manage.sh`
+
+### SMB (Samba)
+
+* `smb/domain_install.sh`
+* `smb/install.sh`
+* `smb/notes.md`
+* `smb/users.md`
+
+### SMS
+
+* `sms/install.sh`
+
+### Temporary HTTPS PHP Server
+
+* `Temporary_Servers/_php-https-server__Temporary.sh`
+
+### Virtual Machines
+
+* `VM/documentation.md`
+* `VM/install.sh`
+* `VM/manage.sh`
+
+### VPN
+
+* `vpn/byPassword/client.sh`
+* `vpn/byPassword/install.sh`
+* `vpn/byPassword/login_script.sh`
+* `vpn/byPassword/notes.md`
+* `vpn/install.sh`
+* `vpn/vpn_client.sh`
+* `vpn/vps-generate_client.py` **(name includes `vps-`; excluded from README)**
+
+### WebDAV (core + tests)
+
+* `webdav/1234.sh`
+* `webdav/1_install.sh`
+* `webdav/2_ssl_install.sh`
+* `webdav/3_ssl_config.sh`
+* `webdav/4_add_user.sh`
+* `webdav/davfs2.conf`
+* `webdav/mount.md`
+* `webdav/sds.db`
+* `webdav/test/add_user.sh`
+* `webdav/test/install.sh`
+* `webdav/test/mount.md`
+* `webdav/test/ssl_config.sh`
+* `webdav/test/ssl_install.sh`
+* `webdav/test/users.md`
+* *(All files with `vps-` in `webdav/` or `webdav/test/` are intentionally omitted.)*
+
+### Web Tools
+
+* `webTools/fix_permissions.sh`
+
+### WHM / cPanel
+
+* `WHM/Add_Repos__apt_dnf_yum_pacman.sh`
+* `WHM/install_WHM_cPanel.sh`
+* `WHM/post_install_notes.md`
+* `WHM/recover/clean_home__post_recover_without_full_recover_just_accounts.sh`
+* `WHM/whm_tunnel.sh`
+
+### WordPress
+
+* `WordPress/wp_harden.sh`
+
+---
+
+## Library Modules (single library example of ~70)
+
+### To use library items
+
+```sh
+p ic -f /opt/rightthumb-widgets-v0/widgets/python/library/tools/tables/TableTool.py
+
+# Generates: add this to your code to use a library class or function
+
+class TableTool:
+    def __new__(cls, *args, **kwargs):
+        import importlib.util
+        if 'TableTool' not in intelligent_code.classes:
+            import importlib.util
+            path = os.path.normpath(_v.w+'/widgets/python/library/tools/tables/TableTool.py')
+            spec = importlib.util.spec_from_file_location('TableTool', path)
+            module = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(module)
+            intelligent_code.classes['TableTool'] = module.TableTool
+        return intelligent_code.classes['TableTool'](*args, **kwargs)
+```
+
+### 📊 TableTool — Advanced Table Processing Engine
+
+`TableTool` is the framework’s **core table manipulation class**.
+It powers printed tables (`_.pt`), table triggers, data transformation pipelines, and aggregation.
+
+#### Key Features
+
+* **Field-level operations**: register and chain operations (built-in or custom).
+* **Row-level functions**: apply transformations or calculations across entire rows.
+* **Custom aggregates**: group, sum, mean, min/max, counts, percentiles, or custom functions.
+* **Trigger system**: queue transformations and run them in a single pass.
+* **Safe expressions**: run inline formulas safely with controlled access.
+
+---
+
+#### Creating a TableTool
+
+```python
+
+
+rows = [
+    {"sku": "abc-123", "price": 10, "qty": 2, "cost": 4},
+    {"sku": "xyz-789", "price": 15, "qty": 1, "cost": 7},
+]
+
+tool = TableTool(rows)
+```
+
+---
+
+#### Registering Custom Field Operations
+
+Field ops run on **individual column values** and can be chained.
+
+```python
+# FIELD FUNCTION: normalize SKU
+import re
+def squeeze_sku(value, row, keep_dash=True):
+    if not isinstance(value, str): return value
+    v = re.sub(r"[^A-Za-z0-9\-]+", "", value)
+    return v.upper() if keep_dash else v.replace("-", "").upper()
+
+tool.register_field_op("squeeze_sku", squeeze_sku)
+tool.add_field_trigger("sku", "squeeze_sku", keep_dash=True)
+```
+
+Built-in ops include:
+`default`, `strip`, `lower`, `upper`, `title`, `replace`, `regex_extract`, `map`, `coalesce`, `cast`, `round`, and `expr`.
+
+---
+
+#### Registering Custom Row Functions
+
+Row funcs operate on **entire rows** and can:
+
+* Return a `dict` to update multiple fields
+* Return a single value to assign to a target field
+
+```python
+# ROW FUNCTION: compute margin and flag profitable
+def compute_margin(row, fee_rate=0.03):
+    price = float(row.get("price") or 0)
+    qty   = int(row.get("qty") or 0)
+    cost  = float(row.get("cost") or 0)
+    rev   = price * qty
+    fees  = rev * fee_rate
+    margin = rev - cost*qty - fees
+    return {"revenue": rev, "fees": fees, "margin": margin, "profitable": margin >= 0}
+
+tool.register_row_func("compute_margin", compute_margin)
+tool.add_row_func("compute_margin", fee_rate=0.025)  # updates multiple fields
+
+# Single-field row func
+def sku_prefix(row):
+    sku = row.get("sku") or ""
+    return sku.split("-")[0] if "-" in sku else sku
+
+tool.add_row_func(sku_prefix, target="sku_prefix")
+```
+
+Run all triggers:
+
+```python
+tool.run_triggers()
+```
+
+---
+
+#### Aggregation
+
+Group rows and compute metrics.
+
+```python
+def p95_price(rows):
+    vals = sorted(float(r.get("price") or 0) for r in rows)
+    if not vals: return None
+    k = int(round(0.95*(len(vals)-1)))
+    return vals[k]
+
+tool.register_row_func("p95_price", p95_price)
+
+aggregated = tool.aggregate({
+    "group_by": ["region"],
+    "metrics": {
+        "count_rows": {"count": "*"},
+        "max_price": {"max": "price"},
+        "p95_price": {"func": "p95_price"},  # custom metric
+    }
+})
+```
+
+Built-in metrics:
+
+* `sum`, `mean`, `min`, `max`, `count`, `nunique`, `expr`, and custom `func`.
+
+---
+
+#### SafeExpr — Safe Inline Expressions
+
+`SafeExpr` lets you evaluate formulas in the context of a row.
+It restricts access to a whitelist of functions, types, and modules.
+
+Example:
+
+```python
+from TableTool import SafeExpr
+
+row = {"qty": 2, "price": 10, "cost": 4}
+expr = SafeExpr("qty * price if price and qty else 0")
+total = expr.eval(row)  # 20
+```
+
+Allowed built-ins include:
+
+* Math: `abs`, `round`, `min`, `max`, `sum`, `math` module
+* Types: `int`, `float`, `str`, `bool`, `list`, `dict`, `tuple`, `set`
+* Logic and comparisons
+* Date/time (`datetime`, `date`)
+
+---
+
+#### Example: Full Pipeline
+
+```python
+tool = TableTool(rows)
+
+# Field trigger
+tool.register_field_op("strip_upper", lambda v, r: v.strip().upper() if isinstance(v, str) else v)
+tool.add_field_trigger("sku", "strip_upper")
+
+# Row trigger
+tool.register_row_func("calc_total", lambda r: {"total": r["price"] * r["qty"]})
+tool.add_row_func("calc_total")
+
+# Run and print
+tool.run_triggers()
+_.pt(tool.rows, cols="sku,price,qty,total", sort="total", responsive=True)
+```

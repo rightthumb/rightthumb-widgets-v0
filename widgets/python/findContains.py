@@ -31,7 +31,8 @@ def sw():
 	_.switches.register( 'Original', '-o,-og,-original', 'refined pipe input' )
 	_.switches.register( 'Slots_12', '-slot,-slots,-12', 'Compares Clipboard Slots (1=haystack, 2=needle)' )
 	_.switches.register( 'UseCaseID', '-case', 'b546' )
-	_.switches.register( 'Missing', '-m,-r' )
+	_.switches.register( 'Missing', '-m,-r,no,-not' )
+	_.switches.register( 'Markdown', '-md' )
 
 _._default_settings_()
 # __.setting('omit-switch-triggers',['Ago'])
@@ -50,15 +51,18 @@ _._default_settings_()
 
 _.appInfo[focus()] = {
 	# 'app': '8facG-jo0Cxk',
-	'file': 'thisApp.py',
-	'description': 'Changes the world',
+	'file': 'findContains.py',
+	'description': 'Returns secondary input (not file) lines in file content',
 		# _.ail(1,'subject')+
 		# _.aib('one')+
 	'categories': [
-						'DEFAULT',
+						'search tool',
+						'search',
+						'research',
+						'data',
 				],
 	'examples': [
-						_.hp('p thisApp -file file.txt'),
+						_.hp('cat ATS_Developer.md | p findContains -f ATS__Resume_Scott_Reph_Developer.md -md'),
 						_.linePrint(label='simple',p=0),
 						'',
 	],
@@ -144,9 +148,14 @@ def action():
 		two = _.isData(r=0)
 	yes = []
 	no = []
+	searchedFor = []
 	for line in two:
 		og = line
+		if _.switches.isActive('Markdown'):
+			line = line.replace('*', '').replace('-', '').replace('_', '').strip()
+		if not line.strip(): continue
 		found = False
+		searchedFor.append(line)
 		for scan in one:
 			if line in scan:
 				line = scan
@@ -170,10 +179,33 @@ def action():
 			# End  UseCaseID: b546
 	if _.switches.isActive('Missing'):
 		for line in no:
-			_.pr(line)
+			isBullet = False
+			og = line
+			if _.switches.isActive('Markdown'):
+				if line.startswith('*') or line.startswith('-') or line.startswith('_'):
+					line = line.replace('*', '').replace('-', '').replace('_', '').strip()
+				if not og == line: isBullet = True
+			if isBullet:
+				color = 'cyan'
+			else:
+				color = 'darkcyan'
+			_.pr(og, c=color)
 	else:
 		for line in yes:
 			_.pr(line)
+
+	did = 'found'
+	color = 'green'
+	if _.switches.isActive('Missing'):
+		did = 'not found'
+		color = 'red'
+		# print('Inverted results:')
+		yes, no = no, yes
+	percentage = (len(yes) / len(searchedFor)) * 100 if searchedFor else 0
+	_.pr()
+	_.pr('',len(yes), 'of', len(searchedFor), did ,c = color)
+	_.pr()
+	_.pr('  %'+ str(round(percentage)), c='yellow')
 
 
 	# load(); global c3po;

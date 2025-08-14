@@ -38,7 +38,7 @@ from shutil import copyfile
 ##################################################
 
 def appSwitches():
-	_.switches.register('Input', '-f,-file','file.txt')
+	_.switches.register('Input', '-f,-file','file.txt', isData='name')
 	_.switches.register('Insert', '-i,-insert')
 	_.switches.register('InsertFile', '-if,-insertfile')
 	_.switches.register('Replace', '-r,-replace')
@@ -226,19 +226,19 @@ def action():
 		_.pr( 'Error: Bad switch 1' )
 		sys.exit()
 
-	if not type( _.appData[__.appReg]['pipe'] ) == bool or _.switches.isActive('Input') and os.path.isfile( _.switches.value('Input') ):
-		if type( _.appData[__.appReg]['pipe'] ) == bool:
-			_.appData[__.appReg]['pipe'] = []
-			_.appData[__.appReg]['pipe'].append( _.switches.value('Input') )
+	# if not type( _.appData[__.appReg]['pipe'] ) == bool or _.switches.isActive('Input') and os.path.isfile( _.switches.value('Input') ):
+	# 	if type( _.appData[__.appReg]['pipe'] ) == bool:
+	# 		_.appData[__.appReg]['pipe'] = []
+	# 		_.appData[__.appReg]['pipe'].append( _.switches.value('Input') )
 		
-		files = _.myData()
-		for filename in files:
-			filename.strip()
-			if os.path.isfile( filename ):
-				processFile(filename)
-	else:
-		_.pr( 'Error: No Files' )
-		sys.exit()
+	files = _.isData(2)
+	for filename in files:
+		filename.strip()
+		if os.path.isfile( filename ):
+			processFile(filename)
+	# else:
+	# 	_.pr( 'Error: No Files' )
+	# 	sys.exit()
 
 
 def getTabs( line ):
