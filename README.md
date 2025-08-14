@@ -66,7 +66,7 @@ o aliasName /path/to/file
 ```
 
 ### Built-in encryption manager
- 
+  
 ```bash
 # Login to your vault
 p login
