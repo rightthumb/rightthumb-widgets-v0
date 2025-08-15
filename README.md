@@ -77,19 +77,6 @@ p cryptString -clip -en
 # You will be prompted for pin
 ```
 
-### Colors & printing helpers
-
-```bash
-# Print helpers
-_.pr(line=True, c='green')              # line across terminal width
-_.pr(var, var2, c='red')                # text with color
-_.pr(var, var2, h='chartreuse,#6495ED') # hex foreground + hex background
-
-# Explore color options
-p colors                 # shows available hex colors (categorized)
-p colors + blue          # search for “blue” family
-```
-
 ### “Site” registration via SFTP (per-folder metadata)
 
 Create a `.folder.meta` file in the site root (JSON or YAML). Example (YAML):
@@ -264,15 +251,18 @@ tasklist | p tasklist2table - svchost + .exe %* \
 
 ---
 
-## 🖨 Printing API (`_.pr`)
-
-Concise helpers for rendering at the terminal:
+### Colors & printing helpers
 
 ```python
 _.pr(line=True, c='green')                         # full-width separator
 _.pr(var, var2, c='red')                           # colored text
+_.pr(var, var2, h='khaki')                         # hex khaki
 _.pr(var, var2, h='chartreuse,cornflower_blue')    # hex fg/bg (comma-delimited)
-_.pr(var, var2, h='red')
+_.pr(var, var2, h='chartreuse,#6495ED') # hex foreground + hex background
+
+# Explore color options
+p colors                 # shows available hex colors (categorized)
+p colors + blue          # search for “blue” family
 ```
 
 ---
@@ -319,8 +309,6 @@ _.appInfo[focus()] = {
         'p ls -ext image',
         'b pys',
         'p ls -duplicates epoch -r + dir -g | p resolveIDs -replace',
-        'p ls -cache %mData% -movietitle -save %mData%',
-        "p ls -movietitle -c n tf -table header;left --c | p cmd2table -make rename '{name}' '{file}' -settings quote",
         'p ls -ago 2d -invert',
         'ls.p ago -ago 1m',
         'ls.p -ago 1m',
@@ -335,6 +323,7 @@ _.appInfo[focus()] = {
         'p ls -c g s n -s g -g g'
     ],
     'columns': [
+        {'name': 'size',            'abbreviation': 's',            'sort': 'bytes'},
         {'name': 'group',           'abbreviation': 'g',            'sort': 'bytes'},
         {'name': 'path',            'abbreviation': 'p',            'sort': ''},
         {'name': 'name',            'abbreviation': 'n',            'sort': 'path'},
@@ -342,85 +331,68 @@ _.appInfo[focus()] = {
         {'name': 'relative',        'abbreviation': 'r',            'sort': 'path'},
         {'name': 'parent',          'abbreviation': 'pa,par,rent',  'sort': 'path'},
         {'name': 'bytes',           'abbreviation': 'b',            'sort': ''},
-        {'name': 'size',            'abbreviation': 's',            'sort': 'bytes'},
         {'name': 'md5',             'abbreviation': '5',            'sort': ''},
         {'name': 'ext',             'abbreviation': 'e',            'sort': ''},
         {'name': 'year',            'abbreviation': 'y',            'sort': 'date_modified_raw'},
         {'name': 'date_modified',   'abbreviation': 'm,md,dm',      'sort': 'date_modified_raw'},
         {'name': 'date_created',    'abbreviation': 'c,cd,dc',      'sort': 'date_created_raw'},
-        {'name': 'friendly_month',  'abbreviation': 'fm',           'sort': 'date_modified_raw'},
-        {'name': 'friendly_week',   'abbreviation': 'fw',           'sort': 'date_modified_raw'},
+        {'name': 'date_accessed',   'abbreviation': 'a,ad,da',      'sort': ''},
         {'name': 'week_of_year',    'abbreviation': 'woy',          'sort': 'date_modified_raw'},
         {'name': 'ago',             'abbreviation': 'ago',          'sort': 'date_modified_raw'},
         {'name': 'day_of_the_week', 'abbreviation': 'dow',          'sort': 'date_modified_raw'},
-        {'name': 'date_accessed',   'abbreviation': 'a,ad,da',      'sort': ''},
-        {'name': 'movie',           'abbreviation': 'mv,mt',        'sort': ''},
-        {'name': 'title',           'abbreviation': 't,mvt',        'sort': ''},
-        {'name': 'file',            'abbreviation': 'tf',           'sort': ''},
-        {'name': 'sdate',           'abbreviation': 'sdate',        'sort': 'sdate_raw'},
-        {'name': 'dps',             'abbreviation': 'dps',          'sort': 'sdate_raw'},
-        {'name': 'header',          'abbreviation': 'h'                              }
+        {'name': 'header',          'abbreviation': 'h'             'sort': ''},
     ],
     'aliases': []
 }
 ```
-
-> Notes:
->
-> * Removed duplicate `'size'` column spec.
-> * Gave `friendly_month`/`friendly_week` unique abbreviations (`fm`, `fw`) to avoid collision with `m` and `w`.
-> * Preserved your examples verbatim where possible, only trimming empty strings.
 
 ---
 
 ## 📚 Python Library Highlights
 
 Paths are under:
-`/opt/rightthumb-widgets-v0/widgets/python/library/`
+`rightthumb-widgets-v0/widgets/python/library/`
 
 ```text
-rightthumb-widgets-v0/widgets/python/library/tools/security/modules/liaison.py
-rightthumb-widgets-v0/widgets/python/library/tools/documentation/CollectionManager.py
-rightthumb-widgets-v0/widgets/python/library/tools/har/HarTool.py
-rightthumb-widgets-v0/widgets/python/library/tools/code/classes/CodeIndexer2.py
-rightthumb-widgets-v0/widgets/python/library/tools/code/classes/CodeIndexerPygments.py
-rightthumb-widgets-v0/widgets/python/library/tools/code/classes/index.py
-rightthumb-widgets-v0/widgets/python/library/tools/code/classes/mdFig.py
-rightthumb-widgets-v0/widgets/python/library/tools/code/classes/CodeIndexerParso.py
-rightthumb-widgets-v0/widgets/python/library/tools/code/functions/pyClassesFunctions.py
-rightthumb-widgets-v0/widgets/python/library/tools/code/functions/hexColor.py
-rightthumb-widgets-v0/widgets/python/library/tools/code/functions/pyColor.py
-rightthumb-widgets-v0/widgets/python/library/tools/code/functions/indexText.py
-rightthumb-widgets-v0/widgets/python/library/tools/patterns/PatternDB.py
-rightthumb-widgets-v0/widgets/python/library/tools/threads/MinThread.py
-rightthumb-widgets-v0/widgets/python/library/tools/tables/TableTool.py
-rightthumb-widgets-v0/widgets/python/library/tools/tables/SafeExpr.py
-rightthumb-widgets-v0/widgets/python/library/tools/os/file/refine.py
-rightthumb-widgets-v0/widgets/python/library/tools/os/file/create_backup_filename.py
-rightthumb-widgets-v0/widgets/python/library/tools/os/file/FileAnalyzer.py
-rightthumb-widgets-v0/widgets/python/library/tools/db/tools/StemPhraseProcessor.py
-rightthumb-widgets-v0/widgets/python/library/tools/db/postgreSQL.py
-rightthumb-widgets-v0/widgets/python/library/tools/db/duckdbMgr.py
-rightthumb-widgets-v0/widgets/python/library/tools/db/sqliteMgr.py
-rightthumb-widgets-v0/widgets/python/library/tools/db/JsonDatabase.py
-rightthumb-widgets-v0/widgets/python/library/tools/db/sqlcipherMgr.py
-rightthumb-widgets-v0/widgets/python/library/tools/db/sqliteLock.py
-rightthumb-widgets-v0/widgets/python/library/tools/db/mongoMgr.py
-rightthumb-widgets-v0/widgets/python/library/tools/db/UnQLiteMgr.py
-rightthumb-widgets-v0/widgets/python/library/tools/db/postgresMgr.py
-rightthumb-widgets-v0/widgets/python/library/tools/db/mysqlMgr.py
-rightthumb-widgets-v0/widgets/python/library/tools/url/fetch_advanced.py
-rightthumb-widgets-v0/widgets/python/library/ai/gpt/__init__.py
-rightthumb-widgets-v0/widgets/python/library/ai/HuggingFace.py
-rightthumb-widgets-v0/widgets/python/library/modules/os/files/refine.py
+tools/security/modules/liaison.py
+tools/documentation/CollectionManager.py
+tools/har/HarTool.py
+tools/code/classes/CodeIndexer2.py
+tools/code/classes/CodeIndexerPygments.py
+tools/code/classes/index.py
+tools/code/classes/mdFig.py
+tools/code/classes/CodeIndexerParso.py
+tools/code/functions/pyClassesFunctions.py
+tools/code/functions/hexColor.py
+tools/code/functions/pyColor.py
+tools/code/functions/indexText.py
+tools/patterns/PatternDB.py
+tools/threads/MinThread.py
+tools/tables/TableTool.py
+tools/tables/SafeExpr.py
+tools/os/file/refine.py
+tools/os/file/create_backup_filename.py
+tools/os/file/FileAnalyzer.py
+tools/db/tools/StemPhraseProcessor.py
+tools/db/postgreSQL.py
+tools/db/duckdbMgr.py
+tools/db/sqliteMgr.py
+tools/db/JsonDatabase.py
+tools/db/sqlcipherMgr.py
+tools/db/sqliteLock.py
+tools/db/mongoMgr.py
+tools/db/UnQLiteMgr.py
+tools/db/postgresMgr.py
+tools/db/mysqlMgr.py
+tools/url/fetch_advanced.py
+ai/gpt/__init__.py
+ai/HuggingFace.py
+modules/os/files/refine.py
 ```
 
 ---
 
-## 🛠 Server, Database, and Service Scripts (Index)
-
-> **Placed at the bottom** by request.
-> The following list excludes anything with `vps-` in the name.
+## 🛠 Server, Database, and Service Scripts (Index) `rightthumb-widgets-v0/widgets/bash/srv`
 
 ### APT & Package Management
 
@@ -437,7 +409,6 @@ rightthumb-widgets-v0/widgets/python/library/modules/os/files/refine.py
 ### FreePBX
 
 * `FreePBX/install.sh`
-* `FreePBX/vps-notes.md` **(omitted from README references per `vps-` rule; file may exist)**
 
 ### FTP (ProFTPD & utilities)
 
@@ -511,7 +482,6 @@ rightthumb-widgets-v0/widgets/python/library/modules/os/files/refine.py
 ### Misc
 
 * `MISC/sync.sh`
-* `MISC/vps-HD_Write_Monitor.sh` **(omitted from README references per `vps-` rule; file may exist)**
 * `MISC/__clear_temp__cleaner__.sh`
 
 ### MongoDB
@@ -538,7 +508,6 @@ rightthumb-widgets-v0/widgets/python/library/modules/os/files/refine.py
 * `mysql/create_user.sh`
 * `mysql/install.sh`
 * `mysql/pw.txt`
-* `mysql/vps-cpanel_db_backup.sh` **(name includes `vps-`; excluded from README)**
 
 ### Node.js
 
@@ -564,8 +533,6 @@ rightthumb-widgets-v0/widgets/python/library/modules/os/files/refine.py
 * `PostgreSQL/setup_db_backup.sh`
 * `PostgreSQL/setup_pg_logical_replication.sh`
 * `PostgreSQL/sync_postgres_to_backup.sh`
-* `PostgreSQL/vps-notes.md` **(omitted from README references per `vps-` rule; file may exist)**
-* `PostgreSQL/vps-pg-config.sample.yml` **(name includes `vps-`; excluded from README)**
 
 ### RustDesk
 
@@ -604,7 +571,6 @@ rightthumb-widgets-v0/widgets/python/library/modules/os/files/refine.py
 * `vpn/byPassword/notes.md`
 * `vpn/install.sh`
 * `vpn/vpn_client.sh`
-* `vpn/vps-generate_client.py` **(name includes `vps-`; excluded from README)**
 
 ### WebDAV (core + tests)
 
@@ -622,7 +588,6 @@ rightthumb-widgets-v0/widgets/python/library/modules/os/files/refine.py
 * `webdav/test/ssl_config.sh`
 * `webdav/test/ssl_install.sh`
 * `webdav/test/users.md`
-* *(All files with `vps-` in `webdav/` or `webdav/test/` are intentionally omitted.)*
 
 ### Web Tools
 
@@ -647,7 +612,7 @@ rightthumb-widgets-v0/widgets/python/library/modules/os/files/refine.py
 ### To use library items
 
 ```sh
-p ic -f /opt/rightthumb-widgets-v0/widgets/python/library/tools/tables/TableTool.py
+p ic -f rightthumb-widgets-v0/widgets/python/library/tools/tables/TableTool.py
 
 # Generates: add this to your code to use a library class or function
 
