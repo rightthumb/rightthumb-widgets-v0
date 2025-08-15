@@ -4350,7 +4350,7 @@ def action():
 		for key in table2:
 			txt=str(table2[key])
 			# if not key in omit and _.showLine(txt): _.pr(key,'\t','\t'.join(table2[key]['raw']).replace('Key.','').replace('cmd','win'));
-			if not key in omit and _.showLine(key): _.pr(key,'\t','\t'.join(table2[key]['raw']).replace('Key.','').replace('cmd','win'));
+			if not key in omit and ( _.showLine(key) or _.showLine(txt) ): _.pr(key,'\t','\t'.join(table2[key]['raw']).replace('Key.','').replace('cmd','win'));
 		# a_t=[]
 		# for rec in auto_text:
 		#     txt=str(rec)

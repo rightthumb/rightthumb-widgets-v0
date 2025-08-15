@@ -16,7 +16,9 @@ set "PATHEXT=.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC;.PYW"
 
 set debug=no
 
-
+if not [%clscls%] == [] (
+	set autocls=%clscls%
+)
 
 @REM                 %stmp%\pin_ask
 

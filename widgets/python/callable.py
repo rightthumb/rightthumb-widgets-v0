@@ -452,26 +452,30 @@ def action():
 
 		# colorized = _.printVarColor( relevant )
 
-
-		for line in relevant.splitlines():
+		isClass = False
+		for i, line in enumerate(relevant.splitlines()):
 			if not firstText and not line.strip():
 				continue
 			
 			
 			if _.showLine(line):
+				if line.startswith('class '):
+					isClass = True
+			
 				# _.pr(line)
 				if not firstText:
 					_.printVarSimpleFake3( line )
 				else:
-					_.pr(line,c='cyan')
+					if isClass and _.switches.isActive('First') and line.strip().startswith('def '):
+						_.printVarSimpleFake3( line )
+						return
+
+					_.pr(line,h='dark_orange')
 
 			firstText = True
 
-			if _.switches.isActive('First'):
+			if _.switches.isActive('First') and line.startswith('def '):
 				return
-
-		
-
 
 ########################################################################################
 if __name__ == '__main__':

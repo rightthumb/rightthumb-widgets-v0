@@ -186,6 +186,9 @@ _.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw )
 def action():
     pass
 
+
+    # _.isDataClip()
+    
     # load(); global c3po;
 
     # Threads = _.Threads(t=10, onDone=None)

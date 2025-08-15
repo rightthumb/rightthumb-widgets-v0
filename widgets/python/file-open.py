@@ -451,7 +451,7 @@ def action(path=None):
 		if _.switches.isActive('Files'):
 			paths=_.switches.values('Files')
 		elif _.isData():
-			paths=_.isData()
+			paths=_.isData(0)
 
 	if _.isWin and not 'code_editor' in _v.fig: app = 'C:\\Windows\\System32\\notepad.exe'
 	elif _.isWin and 'code_editor' in _v.fig: app = _v.fig['code_editor']
@@ -509,14 +509,19 @@ def action(path=None):
 
 
 		elif not paths:
-			for _alias in _aliases:
-				if _alias in aliases['aliases']:
-					if list == type(aliases['aliases'][_alias]):
-						for _al in aliases['aliases'][_alias]:
-							paths.append( _al )
+			for a in _.switches.values('Alias'):
+				path = _.aliasesFi(a)
+				# print(a,path)
+				if os.path.isfile(path):
+					paths.append(path)
+			# for _alias in _aliases:
+			# 	if _alias in aliases['aliases']:
+			# 		if list == type(aliases['aliases'][_alias]):
+			# 			for _al in aliases['aliases'][_alias]:
+			# 				paths.append( _al )
 
-					elif str == type(aliases['aliases'][_alias]):
-						paths.append( aliases['aliases'][_alias] )
+			# 		elif str == type(aliases['aliases'][_alias]):
+			# 			paths.append( aliases['aliases'][_alias] )
 
 
 	appReg=__.appReg

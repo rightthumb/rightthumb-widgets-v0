@@ -4463,6 +4463,9 @@ def isDataSearch( data=None, focus=None, pipeClean=False, required=False,     r=
 			new.append(d)
 	return new
 def isData_Data(data=None,loc=None):
+	global isDataZero
+	if data==2:data=[]
+	if isDataZero and not data: return []
 	# if not loc is None: print_( 'isData_Data', loc )
 	# if not loc is None: print_( 'isData_Data, start', loc, data, 'isData_Data, end' )
 	if not __.appReg in AutoClipboardApps:
@@ -4474,8 +4477,14 @@ def isData_Data(data=None,loc=None):
 	return formatIsData(data)
 
 isData_Resolve_Remote = False
+isDataZero = False
 def isData( data=None, focus=None, pipeClean=False, required=False,     r=None, c=None, noclean=None, save=False, resolve=False, R=None ):
 	testingI = False
+	global isDataZero
+	if data == 0:
+		isDataZero = True
+		data=2
+	
 	global isData_Save
 	global urlPipeActivated
 	global appData
