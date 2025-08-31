@@ -1,0 +1,1 @@
+p cat -f TablesClass_OldCopy_lib.py + _. - __. switches genUUID _.HD. _.dot _.fields.

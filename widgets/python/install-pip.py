@@ -1,0 +1,3 @@
+import ensurepip
+ensurepip.bootstrap()
+ 

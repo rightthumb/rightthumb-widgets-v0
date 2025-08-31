@@ -1,0 +1,14 @@
+aes-everywhere
+arrow
+beautifulsoup4
+cryptography
+cssselect
+lxml
+pynput
+pycryptodome
+requests
+simplejson
+watchdog
+openai
+getmac
+netaddr
