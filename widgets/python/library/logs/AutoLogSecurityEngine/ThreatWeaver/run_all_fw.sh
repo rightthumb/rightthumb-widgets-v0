@@ -356,15 +356,13 @@ done
 
 
 # # RHEL/Alma/CentOS secure log (every 5m)
-# */5 * * * * /opt/ThreatWeaver/run_all_fw.sh --secure
+# */5 * * * * /opt/ThreatWeaver/run_all_fw.sh  --set USE_SQLITE=0  --python /bin/python3.11  --engine /opt/ThreatWeaver/FirewallEngine.py  --secure
 
 # # Debian/Ubuntu auth.log (every 5m)
-# */5 * * * * /opt/ThreatWeaver/run_all_fw.sh --auth
+# */5 * * * * /opt/ThreatWeaver/run_all_fw.sh  --set USE_SQLITE=0  --python /bin/python3.11  --engine /opt/ThreatWeaver/FirewallEngine.py  --auth
 
 # # Apache access (cPanel) (every 10m)
-# */10 * * * * /opt/ThreatWeaver/run_all_fw.sh --apache-access
+# */10 * * * * /opt/ThreatWeaver/run_all_fw.sh  --set USE_SQLITE=0  --python /bin/python3.11  --engine /opt/ThreatWeaver/FirewallEngine.py  --apache-access
 
 # # Apache error (cPanel) (every 10m)
-# */10 * * * * /opt/ThreatWeaver/run_all_fw.sh --apache-error
-
-# ./run_all_fw.sh  --set USE_SQLITE=0  --python /bin/python3.11  --engine /opt/ThreatWeaver/FirewallEngine.py  --secure
+# */10 * * * * /opt/ThreatWeaver/run_all_fw.sh  --set USE_SQLITE=0  --python /bin/python3.11  --engine /opt/ThreatWeaver/FirewallEngine.py  --apache-error
