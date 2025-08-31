@@ -367,4 +367,4 @@ done
 # # Apache error (cPanel) (every 10m)
 # */10 * * * * /opt/ThreatWeaver/run_all_fw.sh --apache-error
 
-# ./run_all_fw.sh     --set USE_SQLITE=0     --python-strict /bin/python3.11     --engine /opt/ThreatWeaver/FirewallEngine.py     --secure
+# ./run_all_fw.sh     --set USE_SQLITE=0     --python /bin/python3.11     --engine /opt/ThreatWeaver/FirewallEngine.py     --secure
