@@ -810,10 +810,22 @@ def printt( table, cols=None, sort=None, responsive=None, focus=None,    c=None,
 	if long:
 		switches.fieldSet('Long','active',True)
 	if not sort is None:
-		switches.fieldSet( 'Sort', 'active', True )
-		switches.fieldSet( 'Sort', 'value', sort )
-		switches.fieldSet( 'Sort', 'values', sort.split(',') )
+		table = tables.returnSorted( 'backupLog', sort, table )
+		# switches.fieldSet( 'Sort', 'active', True )
+		# switches.fieldSet( 'Sort', 'value', sort )
+		# switches.fieldSet( 'Sort', 'values', sort.split(',') )
 
+	if not cols is None and type(cols) == str:
+		new = []
+		try:
+			if cols.startswith('id,') and not 'id' in table[0]:
+				cnt = -1
+				for rec in table:
+					cnt += 1
+					rec['id'] = cnt
+					new.append(rec)
+				table = new
+		except: pass
 
 	def trig(table,triggers):
 		new = []
@@ -27514,16 +27526,16 @@ def fetch_advanced(*args, **kwargs):
 
 
 class CodeColor:
-	def __new__(cls, *args, **kwargs):
-		import importlib.util
-		if 'CodeColor' not in intelligent_code.classes:
-			import importlib.util
-			path = os.path.normpath(_v.w+'/widgets/python/library/code/classes/CodeColor.py')
-			spec = importlib.util.spec_from_file_location('CodeColor', path)
-			module = importlib.util.module_from_spec(spec)
-			spec.loader.exec_module(module)
-			intelligent_code.classes['CodeColor'] = module.CodeColor
-		return intelligent_code.classes['CodeColor'](*args, **kwargs)
+    def __new__(cls, *args, **kwargs):
+        import importlib.util
+        if 'CodeColor' not in intelligent_code.classes:
+            import importlib.util
+            path = os.path.normpath(_v.w+'/widgets/python/library/code/classes/CodeColor.py')
+            spec = importlib.util.spec_from_file_location('CodeColor', path)
+            module = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(module)
+            intelligent_code.classes['CodeColor'] = module.CodeColor
+        return intelligent_code.classes['CodeColor'](*args, **kwargs)
 
 
 class When:

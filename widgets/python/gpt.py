@@ -131,8 +131,8 @@ import os
 #     from library.ai.gpt import  GPT # type: ignore
 #except:
 # from GPT import  GPT # type: ignore
-GPT = _.Import(_v.GPT,'__init__.py')
-GPT= GPT.GPT
+# GPT = _.Import(_v.GPT,'__init__.py')
+# GPT= GPT.GPT
 
 def action():
     if _.switches.isActive('-Help-') or _.switches.isActive('Help') or len(_.switches.all()) == 0:
@@ -149,7 +149,7 @@ def action():
     system_prompt = _.switches.value('SystemPrompt') if _.switches.isActive('SystemPrompt') else 'You are a helpful assistant.'
 
     # Instantiate GPT class
-    gpt = GPT(model=model)
+    gpt = _.GPT(model=model)
 
     if mode == 'chat':
         if prompt_text:

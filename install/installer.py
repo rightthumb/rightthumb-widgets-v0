@@ -3789,7 +3789,8 @@ alias resolve="$p resolveIDs3 "
 
 export COLORTERM=truecolor
 export TERM=xterm-256color
-
+alias del="rm -rf"
+alias move="mv"
 
 
 

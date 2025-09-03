@@ -54,6 +54,7 @@ def appSwitches():
 	_.switches.register('FolderRefine', '-fr', group=[swGrp,'Folder Settings'] )
 	_.switches.register('MaxDepth', '-depth', '3', group=[swGrp,'Folder Settings'] )
 	
+	
 	swGrp += 1
 	_.switches.register('Print-Clean', '--c,-clean', group=[swGrp,'Formatting and Output'] )
 	_.switches.register('No-Extension', '-noext', group=[swGrp,'Formatting and Output'] )
@@ -79,6 +80,7 @@ def appSwitches():
 	_.switches.register('Contains-IPs', '-ip','domains', group=[swGrp,'File Search Toolbox'] )
 	_.switches.register('Disable-Intelligence', '-showall', group=[swGrp,'File Search Toolbox'] )
 	_.switches.register('No-Linked-Folders', '-nl,-nolinks', group=[swGrp,'File Search Toolbox'] )
+	_.switches.register('NotSmart', '-dumb', group=[swGrp,'File Search Toolbox'] )
 
 	swGrp += 1
 
@@ -480,6 +482,8 @@ def getFolder(folder,r=True):
 			dirList = os.listdir(folder)
 			if _.switches.isActive('Reverse'): dirList.reverse()
 		for item in dirList:
+			if __.filesSmart:
+				if item.endswith('.pyc'): continue
 			path = folder + _v.slash + item
 			if __.MonActivated:
 				if not _.showLine(folder) or not _.showLine(item+_v.slash,run=480):
@@ -492,7 +496,7 @@ def getFolder(folder,r=True):
 isClean = _.switches.isActive('Print-Clean')
 _.showLine2=True
 def add(path,r=False,l=-1):
-	
+
 	# print(path,l)
 	global i
 	global iS
@@ -938,6 +942,8 @@ __.filesCopy = _.switches.isActive('Copy')
 if _.switches.isActive('Copy'):
 	_copy = _.regImp( __.appReg, '-copy' )
 
+
+__.filesSmart = not _.switches.isActive('NotSmart')
 
 def action():
 	

@@ -183,11 +183,64 @@ _.l.conf('clean-pipe',True); _.l.sw.register( triggers, sw )
 ########################################################################################
 #n)--> start
 
-
-x = _.When().parse('-2m')
-print(x)
+import os
+import shutil
 
 def action():
+	db = _.getTable('fileBackup.json')
+	base = os.getcwd() + os.sep
+
+	# Collect all backup candidates per file, newest first
+	candidates = {}
+	for i, rec in enumerate(db):
+		file_path = rec.get('file')
+		backup_path = rec.get('backup')
+		ts = rec.get('timestamp', 0)
+
+		if not file_path or not backup_path:
+			continue
+		# Only consider files under the current working directory
+		if not file_path.startswith(base):
+			continue
+
+		candidates.setdefault(file_path, []).append((ts, i))
+
+	# Sort candidates for each file by timestamp (newest first)
+	for file_path in candidates:
+		candidates[file_path].sort(key=lambda t: t[0], reverse=True)
+
+	restored, failed = [], []
+
+	for path, items in candidates.items():
+		# Only restore if the destination file exists and is exactly 0 bytes
+		if not os.path.isfile(path):
+			continue
+		if os.path.getsize(path) != 0:
+			continue
+
+		# _.pr(path); continue
+
+		# Find the newest backup that exists and is non-zero
+		chosen_backup = None
+		for _, idx in items:
+			rec = db[idx]
+			bpath = rec.get('backup')
+			if bpath and os.path.isfile(bpath) and os.path.getsize(bpath) > 0:
+				chosen_backup = bpath
+				break
+
+		if chosen_backup:
+			os.makedirs(os.path.dirname(path), exist_ok=True)
+			shutil.copy2(chosen_backup, path)
+			_.pr(f"[restored] {path} <- {chosen_backup}")
+			restored.append(path)
+		else:
+			_.pr(f"[no valid backup] {path}", c='red')
+			failed.append(path)
+
+	# Optionally return or log counts
+	return {"restored": len(restored), "failed": len(failed)}
+def action2():
     pass
 
 
