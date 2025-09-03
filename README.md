@@ -355,7 +355,6 @@ Paths are under:
 
 ```text
 ai\gpt\__init__.py
-ai\gpt.py
 ai\HuggingFace.py
 code\classes\CodeAnalyzer.py
 code\classes\CodeColor.py
