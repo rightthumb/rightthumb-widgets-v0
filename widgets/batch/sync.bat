@@ -1,0 +1,23 @@
+@echo off
+
+rem ## {R2D2919B742E} ##
+rem ###########################################################################
+rem What if magic existed?
+rem What if a place existed where your every thought and dream come to life.
+rem There is only one catch: it has to be written down.
+rem Such a place exists, it is called programming.
+rem    - Scott Taylor Reph, RightThumb.com
+rem ###########################################################################
+rem ## {C3P0D40fAe8B} ##
+
+call timestamp ats noEcho
+set appPath=D:\techApps\Python
+echo =============================================== >> %appPath%\log.txt
+echo %now% >> %appPath%\log.txt
+echo. >> %appPath%\log.txt
+xcopy /s/d/y/c %appPath%\Python27\*.* c:\Python27\ >> %appPath%\log.txt
+xcopy /s/d/y/c "D:\Apps\Python\Python36-32\*.*" "%appPath%\Python36-32\" >> %appPath%\log.txt
+xcopy /s/d/y/c "%appPath%\Python36-32\*.*" "%USERPROFILE%\AppData\Local\Programs\Python\Python36-32\" >> %appPath%\log.txt
+xcopy /s/d/y/c c:\Python27\*.* %appPath%\Python27\ >> %appPath%\log.txt
+xcopy /s/d/y/c "%USERPROFILE%\AppData\Local\Programs\Python\Python36-32\*.*" "%appPath%\Python36-32\" >> %appPath%\log.txt
+xcopy /s/d/y/c  "%appPath%\Python36-32\" "D:\Apps\Python\Python36-32\*.*">> %appPath%\log.txt

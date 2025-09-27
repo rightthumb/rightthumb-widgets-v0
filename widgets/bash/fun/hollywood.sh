@@ -1,0 +1,95 @@
+#!/bin/bash
+# /usr/bin/hollywood
+# N.B.: Use bash for $RANDOM
+#
+# hollywood: create a hollywood suitable consoles of tech geekery
+#
+# Copyright 2014 Dustin Kirkland <dustin.kirkland@gmail.com>
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#    http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+PKG="hollywood"
+trap "pkill -f -9 lib/hollywood/ >/dev/null 2>&1; exit 0" INT
+spin_up() {
+    local w=
+    local panes=
+    local splits=
+    local pane=
+    local dir="v"
+    local split=1
+    sleep 0.5
+    for w in $(ls "$WIDGET_DIR" | sort -R); do
+        [ "$dir" = "-v" ] && dir="-h" || dir="-v"
+        panes=$(tmux list-panes -t $PKG 2>/dev/null)
+        # Allow for failed widgets
+        splits=$(echo "$panes" | wc -l)
+        pane=$((RANDOM % $splits))
+        tmux split-window $dir -t ${PKG}.$pane "nice -n 19 $WIDGET_DIR/$w" >/dev/null 2>&1
+        sleep 0.2
+        split=$((split+1))
+        if [ $split -ge $SPLITS ]; then
+            break
+        fi
+    done
+}
+WIDGET_DIR="$(dirname $0)/../lib/$PKG"
+SPLITS=$(ls "$WIDGET_DIR" | wc -l)
+DELAY=10
+while [ ! -z "$1" ]; do
+    case "$1" in
+        -d|--delay)
+            DELAY="$2"
+            shift 2
+        ;;
+        -s|--splits)
+            SPLITS="$2"
+            shift 2
+        ;;
+        -h|--help|*)
+            exec man $PKG
+        ;;
+    esac
+done
+widget1=$(ls "$WIDGET_DIR/" | sort -R | head -n1)
+arrangements="main-horizontal main-vertical tiled"
+if [ -z "$TMUX" ]; then
+    # Not in a tmux session: start one, with
+    # byobu if it's found, else with plain tmux
+    command -v byobu >/dev/null 2>&1
+    if [ $? -eq 0 ]; then
+        tmux_launcher=byobu
+    else
+        tmux_launcher=tmux
+    fi
+    $tmux_launcher new-session -d -s $PKG "/bin/bash"
+    $tmux_launcher send-keys -t $PKG "$0 $1"
+    $tmux_launcher send-keys -t $PKG Enter
+    exec $tmux_launcher attach-session -t $PKG
+    exit 1
+fi
+tmux new-window -n $PKG "$WIDGET_DIR/$widget1" \; \
+    set-option -g pane-active-border-bg "default" \; \
+    set-option -g pane-active-border-fg "default" >/dev/null 2>&1
+spin_up
+i=0
+while true; do
+    i=$((i+1))
+    if [ "$((i % DELAY))" = "0" ]; then
+        tmux kill-pane -a -t $PKG.bottom-right
+        spin_up
+    fi
+    if [ $(tmux list-panes -t $PKG 2>/dev/null | wc -l) -gt 0 ]; then
+        sleep 1
+        continue
+    fi
+    exit 0
+done

@@ -1,0 +1,180 @@
+{
+    "surprised": {
+        "startled": {
+            "shocked": ["stunned", "dismayed", "jarred", "bewildered"],
+            "dismayed": ["taken aback", "rattled", "dumbfounded"]
+        },
+        "confused": {
+            "disillusioned": ["disenchanted", "let down"],
+            "perplexed": ["baffled", "puzzled", "confounded", "flustered"]
+        },
+        "amazed": {
+            "astonished": ["astounded", "flabbergasted", "thunderstruck"],
+            "awe": ["wonder", "admiration", "respect", "reverence"]
+        },
+        "excited": {
+            "eager": ["enthusiastic", "keen", "anticipatory"],
+            "energetic": ["lively", "vibrant", "animated", "spirited"]
+        }
+    },
+    "happy": {
+        "playful": {
+            "aroused": ["stimulated", "turned on", "animated"],
+            "cheeky": ["mischievous", "silly", "teasing"]
+        },
+        "content": {
+            "free": ["liberated", "unburdened"],
+            "joyful": ["glad", "delighted", "cheerful", "merry"]
+        },
+        "interested": {
+            "curious": ["inquiring", "engaged", "exploratory"],
+            "inquisitive": ["questioning", "nosy", "probing"]
+        },
+        "proud": {
+            "successful": ["accomplished", "achieved", "fulfilled"],
+            "confident": ["self-assured", "bold", "secure"]
+        },
+        "accepted": {
+            "respected": ["recognized", "esteemed", "valued"],
+            "valued": ["appreciated", "included", "welcomed"]
+        },
+        "powerful": {
+            "courageous": ["brave", "fearless", "determined"],
+            "creative": ["innovative", "inventive", "imaginative"]
+        },
+        "peaceful": {
+            "loving": ["tender", "affectionate", "caring"],
+            "thankful": ["grateful", "appreciative", "blessed"]
+        },
+        "trusting": {
+            "sensitive": ["tenderhearted", "empathetic"],
+            "intimate": ["close", "affectionate", "bonded"]
+        },
+        "optimistic": {
+            "hopeful": ["positive", "expectant"],
+            "inspired": ["uplifted", "motivated", "encouraged"]
+        }
+    },
+    "sad": {
+        "lonely": {
+            "isolated": ["alienated", "secluded"],
+            "abandoned": ["forsaken", "deserted", "neglected"]
+        },
+        "vulnerable": {
+            "victimized": ["oppressed", "bullied"],
+            "fragile": ["delicate", "weak", "exposed"]
+        },
+        "despair": {
+            "grief": ["mourning", "sorrow", "anguish"],
+            "powerless": ["helpless", "defenseless"]
+        },
+        "guilty": {
+            "ashamed": ["humiliated", "self-conscious"],
+            "remorseful": ["regretful", "contrite", "apologetic"]
+        },
+        "depressed": {
+            "empty": ["hollow", "lifeless"],
+            "inferior": ["worthless", "low", "insignificant"]
+        },
+        "hurt": {
+            "embarrassed": ["awkward", "uneasy", "mortified"],
+            "disappointed": ["let down", "discouraged"]
+        }
+    },
+    "disgusted": {
+        "disapproving": {
+            "judgmental": ["condemning", "critical"],
+            "embarrassed": ["ashamed", "mortified"]
+        },
+        "disappointed": {
+            "appalled": ["shocked", "outraged"],
+            "revolted": ["repulsed", "offended"]
+        },
+        "awful": {
+            "nauseated": ["sickened", "queasy"],
+            "detestable": ["hateful", "abhorrent"]
+        },
+        "repelled": {
+            "horrified": ["terrified", "aghast"],
+            "hesitant": ["reluctant", "unwilling"]
+        }
+    },
+    "angry": {
+        "let down": {
+            "betrayed": ["deceived", "misled"],
+            "resentful": ["bitter", "grudging"]
+        },
+        "humiliated": {
+            "disrespected": ["insulted", "degraded"],
+            "ridiculed": ["mocked", "laughed at"]
+        },
+        "bitter": {
+            "indignant": ["offended", "outraged"],
+            "violated": ["abused", "exploited"]
+        },
+        "mad": {
+            "furious": ["enraged", "irate"],
+            "jealous": ["envious", "covetous"]
+        },
+        "aggressive": {
+            "provoked": ["goaded", "triggered"],
+            "hostile": ["antagonistic", "menacing"]
+        },
+        "frustrated": {
+            "infuriated": ["exasperated", "incensed"],
+            "annoyed": ["irritated", "bothered"]
+        },
+        "distant": {
+            "withdrawn": ["aloof", "detached"],
+            "numb": ["apathetic", "emotionless"]
+        },
+        "critical": {
+            "skeptical": ["doubtful", "cynical"],
+            "dismissive": ["contemptuous", "scornful"]
+        }
+    },
+    "fearful": {
+        "scared": {
+            "helpless": ["defenseless", "vulnerable"],
+            "frightened": ["alarmed", "spooked"]
+        },
+        "anxious": {
+            "overwhelmed": ["swamped", "burdened"],
+            "worried": ["concerned", "uneasy"]
+        },
+        "insecure": {
+            "inadequate": ["deficient", "lacking"],
+            "inferior": ["lesser", "subpar"]
+        },
+        "weak": {
+            "worthless": ["useless", "pointless"],
+            "insignificant": ["trivial", "minor"]
+        },
+        "rejected": {
+            "excluded": ["ostracized", "shunned"],
+            "persecuted": ["victimized", "oppressed"]
+        },
+        "threatened": {
+            "nervous": ["restless", "uneasy"],
+            "exposed": ["vulnerable", "at risk"]
+        }
+    },
+    "bad": {
+        "bored": {
+            "indifferent": ["unconcerned", "detached"],
+            "apathetic": ["unmotivated", "listless"]
+        },
+        "busy": {
+            "pressured": ["burdened", "stressed"],
+            "rushed": ["hurried", "hasty"]
+        },
+        "stressed": {
+            "overwhelmed": ["overloaded", "frazzled"],
+            "out of control": ["chaotic", "erratic"]
+        },
+        "tired": {
+            "sleepy": ["drowsy", "exhausted"],
+            "unfocused": ["distracted", "scatterbrained"]
+        }
+    }
+}
