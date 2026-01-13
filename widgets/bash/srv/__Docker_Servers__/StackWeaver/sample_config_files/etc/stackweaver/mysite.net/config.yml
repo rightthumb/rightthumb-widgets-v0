@@ -1,0 +1,29 @@
+domain: "mysite.net"
+root: "/var/www/html/mysite.net"
+docroot: "/var/www/html/mysite.net/www"
+
+services:
+  apache_php: true
+
+  mysql:
+    enabled: true
+    database: "mysite_net"
+    user: "mysite_user"
+    password_enc: "U2FsdGVkX1/sj0dEXAMPLEENCRYPTEDPASSWORD=="
+
+  mongo:
+    enabled: false
+    database: "mysite_net"
+    user: "mysite_net"
+    password_enc: ""
+
+  email:
+    enabled: false
+    accounts: []
+
+  dns:
+    enabled: false
+
+ssl:
+  enabled: true
+  email: "admin@mysite.net"

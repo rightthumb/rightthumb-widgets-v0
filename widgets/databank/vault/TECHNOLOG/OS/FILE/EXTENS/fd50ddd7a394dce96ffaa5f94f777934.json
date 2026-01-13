@@ -1,0 +1,500 @@
+{
+    "url": "https://en.wikipedia.org/wiki/List_of_filename_extensions",
+    "settings": {
+        "clicked": "aquire_m_header_table",
+        "settings": {
+            "tag_path": "technology os file extensions",
+            "subject": "Ext.",
+            "description": [
+                "Description"
+            ],
+            "label": "file extensions",
+            "header": "H2",
+            "parent": "",
+            "split": "",
+            "record_split": [
+                ""
+            ],
+            "fields": [
+                ""
+            ],
+            "children": false,
+            "structureless": false,
+            "upload": true
+        },
+        "subject": {
+            "table": true,
+            "ul": false,
+            "custom": null
+        },
+        "aquire_on": {
+            "click_single": false,
+            "click_multi": false,
+            "all": false
+        },
+        "isTraditional": true
+    },
+    "data": {
+        "data": [
+            {
+                "label": "",
+                "records": [
+                    {
+                        "undefined": "This article needs additional citations for verification. Please help improve this article by adding citations to reliable sources. Unsourced material may be challenged and removed.Find sources:\u00c2\u00a0\"List of filename extensions\"\u00c2\u00a0\u00e2\u0080\u0093\u00c2\u00a0news\u00c2\u00a0\u00c2\u00b7 newspapers\u00c2\u00a0\u00c2\u00b7 books\u00c2\u00a0\u00c2\u00b7 scholar\u00c2\u00a0\u00c2\u00b7 JSTOR (August 2016) (Learn how and when to remove this template message)"
+                    }
+                ]
+            },
+            {
+                "label": "!$@",
+                "records": [
+                    {
+                        "Ext.": "###",
+                        "Description": "Temporary file",
+                        "Used by": "Program-dependent format"
+                    },
+                    {
+                        "Ext.": "#24",
+                        "Description": "Printer data file for 24-pin matrix printer",
+                        "Used by": "LocoScript"
+                    },
+                    {
+                        "Ext.": "#IB",
+                        "Description": "Printer data file",
+                        "Used by": "LocoScript"
+                    },
+                    {
+                        "Ext.": "#nn",
+                        "Description": "Part of file image",
+                        "Used by": "Long"
+                    },
+                    {
+                        "Ext.": "#SC",
+                        "Description": "Printer data file",
+                        "Used by": "LocoScript"
+                    },
+                    {
+                        "Ext.": "#ST",
+                        "Description": "Standard mode printer definitions",
+                        "Used by": "LocoScript"
+                    },
+                    {
+                        "Ext.": "$$$",
+                        "Description": "OS/2 archive file (i.e. archives$.$$, keys$.$$)",
+                        "Used by": "OS/2"
+                    },
+                    {
+                        "Ext.": "$$$",
+                        "Description": "Temporary file",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "$?",
+                        "Description": "ZX Spectrum file in HOBETA format",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "$00",
+                        "Description": "Pipe file",
+                        "Used by": "DOS"
+                    },
+                    {
+                        "Ext.": "$DB",
+                        "Description": "Database temporary file",
+                        "Used by": "dBase"
+                    },
+                    {
+                        "Ext.": "$O1",
+                        "Description": "Pipe file",
+                        "Used by": "DOS"
+                    },
+                    {
+                        "Ext.": "$VM",
+                        "Description": "Virtual manager temporary file",
+                        "Used by": "Windows 3.x"
+                    },
+                    {
+                        "Ext.": "&01, &02, etc",
+                        "Description": "Holdfast backup archive files",
+                        "Used by": "Holdfast"
+                    },
+                    {
+                        "Ext.": ")2(",
+                        "Description": "LHA archiver temporary file",
+                        "Used by": "LHA"
+                    },
+                    {
+                        "Ext.": "??$",
+                        "Description": "Backup file",
+                        "Used by": "P-CAD"
+                    },
+                    {
+                        "Ext.": "??_",
+                        "Description": "Microsoft packed file",
+                        "Used by": "Expand. Note:\u00c2\u00a0?? could be any first two characters in a file extension (e.g. BM_ for compressed bitmap (BMP), DL_ for compressed library, etc.) Files compressed using this method have been in use on Microsoft software CDs and floppies since around 1995."
+                    },
+                    {
+                        "Ext.": "?DK",
+                        "Description": "Disk image",
+                        "Used by": "Loaddskf.exe"
+                    },
+                    {
+                        "Ext.": "?UT",
+                        "Description": "Nonpacked FTN mail (? - flavor)",
+                        "Used by": "FidoNet"
+                    },
+                    {
+                        "Ext.": "!qB",
+                        "Description": "Unfinished qBittorrent download",
+                        "Used by": "qBittorrent"
+                    },
+                    {
+                        "Ext.": "!ut",
+                        "Description": "Unfinished \u00ce\u00bcTorrent download",
+                        "Used by": "\u00ce\u00bcTorrent"
+                    },
+                    {
+                        "Ext.": "@@@",
+                        "Description": "DOS 2.0 - 3.2 backup control file",
+                        "Used by": "DOS commands BACKUP and RESTORE"
+                    },
+                    {
+                        "Ext.": "___",
+                        "Description": "Adinf table",
+                        "Used by": "Adinf"
+                    },
+                    {
+                        "Ext.": "?Q?",
+                        "Description": "Squeeze",
+                        "Used by": "CP/M and MS-DOS"
+                    },
+                    {
+                        "Ext.": "~$~",
+                        "Description": "Temporary file",
+                        "Used by": "1st Reader"
+                    },
+                    {
+                        "Ext.": "~1~, ~2~, etc.",
+                        "Description": "Backup file (name is constructed with numbered backup option by appending ~, the incremented number, and another ~ after the original name)",
+                        "Used by": "GNU coreutils (cp, install, ln, mv ), Emacs"
+                    },
+                    {
+                        "Ext.": "~??",
+                        "Description": "Old Backup files (.MNU to .~MN)",
+                        "Used by": "Resource Workshop (Borland Delphi)"
+                    },
+                    {
+                        "Ext.": "~H",
+                        "Description": "Cardfile heap",
+                        "Used by": "AZZ Cardfile"
+                    },
+                    {
+                        "Ext.": "\u00ce\u00bc",
+                        "Description": "Metrowerks Codewarrior project",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "\u00ce\u00a0",
+                        "Description": "THINK C project",
+                        "Used by": ""
+                    }
+                ]
+            },
+            {
+                "label": "0\u00e2\u0080\u00939",
+                "records": [
+                    {
+                        "Ext.": "0",
+                        "Description": "Compressed harddisk data",
+                        "Used by": "DoubleSpace"
+                    },
+                    {
+                        "Ext.": "0B",
+                        "Description": "Printer font with lineDraw extended character set",
+                        "Used by": "PageMaker"
+                    },
+                    {
+                        "Ext.": "001, 002, ...",
+                        "Description": "Split parts of a single whole file",
+                        "Used by": "FFSJ, HJSplit, JJSplit, split (Unix) (when using numeric suffixes)"
+                    },
+                    {
+                        "Ext.": "1",
+                        "Description": "Fax",
+                        "Used by": "(Many programs)"
+                    },
+                    {
+                        "Ext.": "1",
+                        "Description": "Roff/nroff/troff/groff source for manual page",
+                        "Used by": "cawf2.zip"
+                    },
+                    {
+                        "Ext.": "123",
+                        "Description": "Spreadsheet",
+                        "Used by": "Lotus 1-2-3 version 9 and version 97"
+                    },
+                    {
+                        "Ext.": "123dx",
+                        "Description": "CAD drawing file",
+                        "Used by": "Autodesk 123D design file, a ZIP file format package containing a .sat file and .png thumbnails.[1]"
+                    },
+                    {
+                        "Ext.": "15U",
+                        "Description": "Printer font with PI font set",
+                        "Used by": "PageMaker"
+                    },
+                    {
+                        "Ext.": "16",
+                        "Description": "SYSLINUX Splash Screen Graphic",
+                        "Used by": "SYSLINUX, XnView"
+                    },
+                    {
+                        "Ext.": "1ST",
+                        "Description": "Usually README.1ST text file",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "1TX",
+                        "Description": "1toX Logipole file",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "2GR",
+                        "Description": "286 Grabber File",
+                        "Used by": "Win"
+                    },
+                    {
+                        "Ext.": "301",
+                        "Description": "Fax",
+                        "Used by": "Super FAX 2000 - Fax-Mail 96"
+                    },
+                    {
+                        "Ext.": "386",
+                        "Description": "Intel 80386 processor driver",
+                        "Used by": "Windows 3.x"
+                    },
+                    {
+                        "Ext.": "386",
+                        "Description": "Windows virtual device driver",
+                        "Used by": "Win"
+                    },
+                    {
+                        "Ext.": "3D",
+                        "Description": "Universal Combat 3D model file",
+                        "Used by": "Universal Combat"
+                    },
+                    {
+                        "Ext.": "3DMF",
+                        "Description": "QuickDraw 3D Metafile",
+                        "Used by": "QuickDraw"
+                    },
+                    {
+                        "Ext.": "3DS",
+                        "Description": "3D Studio Graphics format",
+                        "Used by": "3D Studio"
+                    },
+                    {
+                        "Ext.": "3DSX",
+                        "Description": "Nintendo 3DS Homebrew File Format",
+                        "Used by": "Nintendo 3DS Homebrew Launcher"
+                    },
+                    {
+                        "Ext.": "3DT",
+                        "Description": "Database in which the meta-data of a 3D Topicscape is held",
+                        "Used by": "3D Topicscape"
+                    },
+                    {
+                        "Ext.": "3DV",
+                        "Description": "3-D wireframe graphics by Oscar Garcia",
+                        "Used by": "3dv wireframe viewer"
+                    },
+                    {
+                        "Ext.": "3FX",
+                        "Description": "Effect",
+                        "Used by": "CorelChart"
+                    },
+                    {
+                        "Ext.": "3G2",
+                        "Description": "Mobile Phone Video",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "3GA",
+                        "Description": "Mobile Phone Audio (Samsung)",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "3GP",
+                        "Description": "Mobile Phone Video",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "3GR",
+                        "Description": "386 Grabber File",
+                        "Used by": "Win"
+                    },
+                    {
+                        "Ext.": "3MF",
+                        "Description": "3D Manufacturing Format",
+                        "Used by": "3D Builder"
+                    },
+                    {
+                        "Ext.": "3T4",
+                        "Description": "Binary file converter to ASCII",
+                        "Used by": "Util3"
+                    },
+                    {
+                        "Ext.": "4DB",
+                        "Description": "4D Structure File",
+                        "Used by": "4D"
+                    },
+                    {
+                        "Ext.": "4DD",
+                        "Description": "4D Data File",
+                        "Used by": "4D"
+                    },
+                    {
+                        "Ext.": "4DIndy",
+                        "Description": "4D Structure Index File",
+                        "Used by": "4D"
+                    },
+                    {
+                        "Ext.": "4C$",
+                        "Description": "Datafile",
+                        "Used by": "4Cast/2"
+                    },
+                    {
+                        "Ext.": "4MD",
+                        "Description": "Musical file",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "4SW",
+                        "Description": "4DOS Swap File",
+                        "Used by": "4DOS"
+                    },
+                    {
+                        "Ext.": "4TH",
+                        "Description": "FORTH source code file",
+                        "Used by": "ForthCMP - LMI Forth"
+                    },
+                    {
+                        "Ext.": "555",
+                        "Description": "16 bit per pixel image file format (5bit per component)",
+                        "Used by": "Sierra Entertainment"
+                    },
+                    {
+                        "Ext.": "602",
+                        "Description": "Text (fairly simple format, plain text with binary control commands embedded within text lines and special formatting commands on dedicated lines)",
+                        "Used by": "Text602 text processor by Software602"
+                    },
+                    {
+                        "Ext.": "668",
+                        "Description": "Music (the mixing is always at 12048\u00c2\u00a0Hz)",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "669",
+                        "Description": "Music (8 channels)",
+                        "Used by": "The 669 Composer"
+                    },
+                    {
+                        "Ext.": "6CM",
+                        "Description": "Music (6 Channel Module)",
+                        "Used by": "Triton FastTracker"
+                    },
+                    {
+                        "Ext.": "75",
+                        "Description": "75\u00c3\u009775 dpi display font",
+                        "Used by": "Ventura Publisher"
+                    },
+                    {
+                        "Ext.": "7z",
+                        "Description": "A compressed archive file format that supports several different data compression, encryption and pre-processing algorithms",
+                        "Used by": "7-Zip"
+                    },
+                    {
+                        "Ext.": "8",
+                        "Description": "A86 assembler source code file",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "85",
+                        "Description": "85\u00c3\u009785 dpi display font",
+                        "Used by": "Ventura Publisher"
+                    },
+                    {
+                        "Ext.": "8BF",
+                        "Description": "Adobe Photoshop compatible filters/plugins",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "8BI",
+                        "Description": "Adobe Photoshop compatible filters/plugins",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "8BX",
+                        "Description": "Adobe Photoshop compatible filters/plugins",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "890",
+                        "Description": "ScanTitling subtitle files"
+                    },
+                    {
+                        "Ext.": "8CM",
+                        "Description": "Music (8 Channel Module)",
+                        "Used by": "Triton FastTracker"
+                    },
+                    {
+                        "Ext.": "8M",
+                        "Description": "Printer font with Math 8 extended character set",
+                        "Used by": "PageMaker"
+                    },
+                    {
+                        "Ext.": "8U",
+                        "Description": "Printer font with Roman 8 extended character set",
+                        "Used by": "PageMaker"
+                    },
+                    {
+                        "Ext.": "83p",
+                        "Description": "Executable program for TI-83 Graphing Calculator",
+                        "Used by": "TI Connect"
+                    },
+                    {
+                        "Ext.": "89p",
+                        "Description": "Executable program for TI-89/89 Titanium Graphing Calculator",
+                        "Used by": "TI Connect"
+                    },
+                    {
+                        "Ext.": "8xp",
+                        "Description": "Executable program for TI-83/84 Plus Graphing Calculator",
+                        "Used by": "TI Connect"
+                    },
+                    {
+                        "Ext.": "91",
+                        "Description": "91\u00c3\u009791 dpi display font",
+                        "Used by": "Ventura Publisher"
+                    },
+                    {
+                        "Ext.": "96",
+                        "Description": "96\u00c3\u009796 dpi display font",
+                        "Used by": "Ventura Publisher"
+                    }
+                ]
+            },
+            {
+                "label": "References",
+                "records": [
+                    {
+                        "undefined": "This article includes a technology-related list of lists."
+                    }
+                ]
+            }
+        ],
+        "src": "https://en.wikipedia.org/wiki/List_of_filename_extensions"
+    },
+    "md5-page": "6703f613fe85741ba7d8ec178bbd42f7",
+    "md5-site": "d1063af181fe606e55ed93dd5b867169",
+    "md5-url": "fd50ddd7a394dce96ffaa5f94f777934"
+}

@@ -1,0 +1,29 @@
+domain: "example.com"
+root: "/var/www/html/example.com"
+docroot: "/var/www/html/example.com/www"
+
+services:
+  apache_php: true
+
+  mysql:
+    enabled: false
+    database: "example_com"
+    user: "example_com"
+    password_enc: ""
+
+  mongo:
+    enabled: false
+    database: "example_com"
+    user: "example_com"
+    password_enc: ""
+
+  email:
+    enabled: false
+    accounts: []
+
+  dns:
+    enabled: false
+
+ssl:
+  enabled: false
+  email: ""

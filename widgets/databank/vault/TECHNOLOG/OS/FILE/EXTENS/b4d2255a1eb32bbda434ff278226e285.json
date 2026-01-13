@@ -1,0 +1,674 @@
+{
+    "url": "https://www.computerhope.com/issues/ch001789.htm",
+    "settings": {
+        "clicked": "aquire_m_header_ul_split",
+        "settings": {
+            "tag_path": "technology os file extensions",
+            "subject": "extension",
+            "description": [
+                "description"
+            ],
+            "label": "file extensions",
+            "header": "H2",
+            "parent": "",
+            "split": " - ",
+            "record_split": [
+                " or ",
+                " and "
+            ],
+            "fields": [
+                "extension",
+                "description"
+            ],
+            "children": false,
+            "structureless": false,
+            "upload": true
+        },
+        "subject": {
+            "table": false,
+            "ul": true,
+            "custom": null
+        },
+        "aquire_on": {
+            "click_single": false,
+            "click_multi": true,
+            "all": false
+        },
+        "isTraditional": true
+    },
+    "data": {
+        "label": "file extensions",
+        "data": [
+            {
+                "label": "Audio file formats by file extensions",
+                "records": [
+                    {
+                        "extension": ".aif",
+                        "description": "AIF audio file"
+                    },
+                    {
+                        "extension": ".cda",
+                        "description": "CD audio track file"
+                    },
+                    {
+                        "extension": ".mid",
+                        "description": "MIDI audio file."
+                    },
+                    {
+                        "extension": ".midi",
+                        "description": "MIDI audio file."
+                    },
+                    {
+                        "extension": ".mp3",
+                        "description": "MP3 audio file"
+                    },
+                    {
+                        "extension": ".mpa",
+                        "description": "MPEG-2 audio file"
+                    },
+                    {
+                        "extension": ".ogg",
+                        "description": "Ogg Vorbis audio file"
+                    },
+                    {
+                        "extension": ".wav",
+                        "description": "WAV file"
+                    },
+                    {
+                        "extension": ".wma",
+                        "description": "WMA audio file"
+                    },
+                    {
+                        "extension": ".wpl",
+                        "description": "Windows Media Player playlist"
+                    }
+                ]
+            },
+            {
+                "label": "Compressed file extensions",
+                "records": [
+                    {
+                        "extension": ".7z",
+                        "description": "7-Zip compressed file"
+                    },
+                    {
+                        "extension": ".arj",
+                        "description": "ARJ compressed file"
+                    },
+                    {
+                        "extension": ".deb",
+                        "description": "Debian software package file"
+                    },
+                    {
+                        "extension": ".pkg",
+                        "description": "Package file"
+                    },
+                    {
+                        "extension": ".rar",
+                        "description": "RAR file"
+                    },
+                    {
+                        "extension": ".rpm",
+                        "description": "Red Hat Package Manager"
+                    },
+                    {
+                        "extension": ".tar.gz",
+                        "description": "Tarball compressed file"
+                    },
+                    {
+                        "extension": ".z",
+                        "description": "Z compressed file"
+                    },
+                    {
+                        "extension": ".zip",
+                        "description": "Zip compressed file"
+                    }
+                ]
+            },
+            {
+                "label": "Disc and media file extensions",
+                "records": [
+                    {
+                        "extension": ".bin",
+                        "description": "Binary disc image"
+                    },
+                    {
+                        "extension": ".dmg",
+                        "description": "macOS X disk image"
+                    },
+                    {
+                        "extension": ".iso",
+                        "description": "ISO disc image"
+                    },
+                    {
+                        "extension": ".toast",
+                        "description": "Toast disc image"
+                    },
+                    {
+                        "extension": ".vcd",
+                        "description": "Virtual CD"
+                    }
+                ]
+            },
+            {
+                "label": "Data and database file extensions",
+                "records": [
+                    {
+                        "extension": ".csv",
+                        "description": "Comma separated value file"
+                    },
+                    {
+                        "extension": ".dat",
+                        "description": "Data file"
+                    },
+                    {
+                        "extension": ".db",
+                        "description": "Database file"
+                    },
+                    {
+                        "extension": ".dbf",
+                        "description": "Database file"
+                    },
+                    {
+                        "extension": ".log",
+                        "description": "Log file"
+                    },
+                    {
+                        "extension": ".mdb",
+                        "description": "Microsoft Access database file"
+                    },
+                    {
+                        "extension": ".sav",
+                        "description": "Save file (e.g., game save file)"
+                    },
+                    {
+                        "extension": ".sql",
+                        "description": "SQL database file"
+                    },
+                    {
+                        "extension": ".tar",
+                        "description": "Linux / Unix tarball file archive"
+                    },
+                    {
+                        "extension": ".xml",
+                        "description": "XML file"
+                    }
+                ]
+            },
+            {
+                "label": "Executable file extensions",
+                "records": [
+                    {
+                        "extension": ".apk",
+                        "description": "Android package file"
+                    },
+                    {
+                        "extension": ".bat",
+                        "description": "Batch file"
+                    },
+                    {
+                        "extension": ".bin",
+                        "description": "Binary file"
+                    },
+                    {
+                        "extension": ".cgi",
+                        "description": "Perl script file"
+                    },
+                    {
+                        "extension": ".pl",
+                        "description": "Perl script file"
+                    },
+                    {
+                        "extension": ".com",
+                        "description": "MS-DOS command file"
+                    },
+                    {
+                        "extension": ".exe",
+                        "description": "Executable file"
+                    },
+                    {
+                        "extension": ".gadget",
+                        "description": "Windows gadget"
+                    },
+                    {
+                        "extension": ".jar",
+                        "description": "Java Archive file"
+                    },
+                    {
+                        "extension": ".py",
+                        "description": "Python file"
+                    },
+                    {
+                        "extension": ".wsf",
+                        "description": "Windows Script File"
+                    }
+                ]
+            },
+            {
+                "label": "Font file extensions",
+                "records": [
+                    {
+                        "extension": ".fnt",
+                        "description": "Windows font file"
+                    },
+                    {
+                        "extension": ".fon",
+                        "description": "Generic font file"
+                    },
+                    {
+                        "extension": ".otf",
+                        "description": "Open type font file"
+                    },
+                    {
+                        "extension": ".ttf",
+                        "description": "TrueType font file"
+                    }
+                ]
+            },
+            {
+                "label": "Image file formats by file extension",
+                "records": [
+                    {
+                        "extension": ".ai",
+                        "description": "Adobe Illustrator file"
+                    },
+                    {
+                        "extension": ".bmp",
+                        "description": "Bitmap image"
+                    },
+                    {
+                        "extension": ".gif",
+                        "description": "GIF image"
+                    },
+                    {
+                        "extension": ".ico",
+                        "description": "Icon file"
+                    },
+                    {
+                        "extension": ".jpeg",
+                        "description": "JPEG image"
+                    },
+                    {
+                        "extension": ".jpg",
+                        "description": "JPEG image"
+                    },
+                    {
+                        "extension": ".png",
+                        "description": "PNG image"
+                    },
+                    {
+                        "extension": ".ps",
+                        "description": "PostScript file"
+                    },
+                    {
+                        "extension": ".psd",
+                        "description": "PSD image"
+                    },
+                    {
+                        "extension": ".svg",
+                        "description": "Scalable Vector Graphics file"
+                    },
+                    {
+                        "extension": ".tif",
+                        "description": "TIFF image"
+                    },
+                    {
+                        "extension": ".tiff",
+                        "description": "TIFF image"
+                    }
+                ]
+            },
+            {
+                "label": "Internet related file extensions",
+                "records": [
+                    {
+                        "extension": ".asp and .aspx",
+                        "description": "Active Server Page file"
+                    },
+                    {
+                        "extension": ".asp",
+                        "description": "Active Server Page file"
+                    },
+                    {
+                        "extension": ".aspx",
+                        "description": "Active Server Page file"
+                    },
+                    {
+                        "extension": ".cer",
+                        "description": "Internet security certificate"
+                    },
+                    {
+                        "extension": ".cfm",
+                        "description": "ColdFusion Markup file"
+                    },
+                    {
+                        "extension": ".cgi",
+                        "description": "Perl script file"
+                    },
+                    {
+                        "extension": ".pl",
+                        "description": "Perl script file"
+                    },
+                    {
+                        "extension": ".css",
+                        "description": "Cascading Style Sheet file"
+                    },
+                    {
+                        "extension": ".htm and .html",
+                        "description": "HTML file"
+                    },
+                    {
+                        "extension": ".htm",
+                        "description": "HTML file"
+                    },
+                    {
+                        "extension": ".html",
+                        "description": "HTML file"
+                    },
+                    {
+                        "extension": ".js",
+                        "description": "JavaScript file"
+                    },
+                    {
+                        "extension": ".jsp",
+                        "description": "Java Server Page file"
+                    },
+                    {
+                        "extension": ".part",
+                        "description": "Partially downloaded file"
+                    },
+                    {
+                        "extension": ".php",
+                        "description": "PHP file"
+                    },
+                    {
+                        "extension": ".py",
+                        "description": "Python file"
+                    },
+                    {
+                        "extension": ".rss",
+                        "description": "RSS file"
+                    },
+                    {
+                        "extension": ".xhtml",
+                        "description": "XHTML file"
+                    }
+                ]
+            },
+            {
+                "label": "Presentation file formats by file extension",
+                "records": [
+                    {
+                        "extension": ".key",
+                        "description": "Keynote presentation"
+                    },
+                    {
+                        "extension": ".odp",
+                        "description": "OpenOffice Impress presentation file"
+                    },
+                    {
+                        "extension": ".pps",
+                        "description": "PowerPoint slide show"
+                    },
+                    {
+                        "extension": ".ppt",
+                        "description": "PowerPoint presentation"
+                    },
+                    {
+                        "extension": ".pptx",
+                        "description": "PowerPoint Open XML presentation"
+                    }
+                ]
+            },
+            {
+                "label": "Programming files by file extensions",
+                "records": [
+                    {
+                        "extension": ".c",
+                        "description": "C and C++ source code file"
+                    },
+                    {
+                        "extension": ".class",
+                        "description": "Java class file"
+                    },
+                    {
+                        "extension": ".cpp",
+                        "description": "C++ source code file"
+                    },
+                    {
+                        "extension": ".cs",
+                        "description": "Visual C# source code file"
+                    },
+                    {
+                        "extension": ".h",
+                        "description": "C, C++, and Objective-C header file"
+                    },
+                    {
+                        "extension": ".java",
+                        "description": "Java Source code file"
+                    },
+                    {
+                        "extension": ".sh",
+                        "description": "Bash shell script"
+                    },
+                    {
+                        "extension": ".swift",
+                        "description": "Swift source code file"
+                    },
+                    {
+                        "extension": ".vb",
+                        "description": "Visual Basic file"
+                    }
+                ]
+            },
+            {
+                "label": "Spreadsheet file formats by file extension",
+                "records": [
+                    {
+                        "extension": ".ods",
+                        "description": "OpenOffice Calc spreadsheet file"
+                    },
+                    {
+                        "extension": ".xlr",
+                        "description": "Microsoft Works spreadsheet file"
+                    },
+                    {
+                        "extension": ".xls",
+                        "description": "Microsoft Excel file"
+                    },
+                    {
+                        "extension": ".xlsx",
+                        "description": "Microsoft Excel Open XML spreadsheet file"
+                    }
+                ]
+            },
+            {
+                "label": "System related file formats and file extensions",
+                "records": [
+                    {
+                        "extension": ".bak",
+                        "description": "Backup file"
+                    },
+                    {
+                        "extension": ".cab",
+                        "description": "Windows Cabinet file"
+                    },
+                    {
+                        "extension": ".cfg",
+                        "description": "Configuration file"
+                    },
+                    {
+                        "extension": ".cpl",
+                        "description": "Windows Control panel file"
+                    },
+                    {
+                        "extension": ".cur",
+                        "description": "Windows cursor file"
+                    },
+                    {
+                        "extension": ".dll",
+                        "description": "DLL file"
+                    },
+                    {
+                        "extension": ".dmp",
+                        "description": "Dump file"
+                    },
+                    {
+                        "extension": ".drv",
+                        "description": "Device driver file"
+                    },
+                    {
+                        "extension": ".icns",
+                        "description": "macOS X icon resource file"
+                    },
+                    {
+                        "extension": ".ico",
+                        "description": "Icon file"
+                    },
+                    {
+                        "extension": ".ini",
+                        "description": "Initialization file"
+                    },
+                    {
+                        "extension": ".lnk",
+                        "description": "Windows shortcut file"
+                    },
+                    {
+                        "extension": ".msi",
+                        "description": "Windows installer package"
+                    },
+                    {
+                        "extension": ".sys",
+                        "description": "Windows system file"
+                    },
+                    {
+                        "extension": ".tmp",
+                        "description": "Temporary file"
+                    }
+                ]
+            },
+            {
+                "label": "Video file formats by file extension",
+                "records": [
+                    {
+                        "extension": ".3g2",
+                        "description": "3GPP2 multimedia file"
+                    },
+                    {
+                        "extension": ".3gp",
+                        "description": "3GPP multimedia file"
+                    },
+                    {
+                        "extension": ".avi",
+                        "description": "AVI file"
+                    },
+                    {
+                        "extension": ".flv",
+                        "description": "Adobe Flash file"
+                    },
+                    {
+                        "extension": ".h264",
+                        "description": "H.264 video file"
+                    },
+                    {
+                        "extension": ".m4v",
+                        "description": "Apple MP4 video file"
+                    },
+                    {
+                        "extension": ".mkv",
+                        "description": "Matroska Multimedia Container"
+                    },
+                    {
+                        "extension": ".mov",
+                        "description": "Apple QuickTime movie file"
+                    },
+                    {
+                        "extension": ".mp4",
+                        "description": "MPEG4 video file"
+                    },
+                    {
+                        "extension": ".mpg",
+                        "description": "MPEG video file"
+                    },
+                    {
+                        "extension": ".mpeg",
+                        "description": "MPEG video file"
+                    },
+                    {
+                        "extension": ".rm",
+                        "description": "RealMedia file"
+                    },
+                    {
+                        "extension": ".swf",
+                        "description": "Shockwave flash file"
+                    },
+                    {
+                        "extension": ".vob",
+                        "description": "DVD Video Object"
+                    },
+                    {
+                        "extension": ".wmv",
+                        "description": "Windows Media Video file"
+                    }
+                ]
+            },
+            {
+                "label": "Word processor and text file formats by file extension",
+                "records": [
+                    {
+                        "extension": ".doc and .docx",
+                        "description": "Microsoft Word file"
+                    },
+                    {
+                        "extension": ".doc",
+                        "description": "Microsoft Word file"
+                    },
+                    {
+                        "extension": ".docx",
+                        "description": "Microsoft Word file"
+                    },
+                    {
+                        "extension": ".odt",
+                        "description": "OpenOffice Writer document file"
+                    },
+                    {
+                        "extension": ".pdf",
+                        "description": "PDF file"
+                    },
+                    {
+                        "extension": ".rtf",
+                        "description": "Rich Text Format"
+                    },
+                    {
+                        "extension": ".tex",
+                        "description": "A LaTeX document file"
+                    },
+                    {
+                        "extension": ".txt",
+                        "description": "Plain text file"
+                    },
+                    {
+                        "extension": ".wks and .wps- Microsoft Works file",
+                        "description": ""
+                    },
+                    {
+                        "extension": ".wks",
+                        "description": ""
+                    },
+                    {
+                        "extension": ".wps- Microsoft Works file",
+                        "description": ""
+                    },
+                    {
+                        "extension": ".wpd",
+                        "description": "WordPerfect document"
+                    }
+                ]
+            }
+        ],
+        "src": "https://www.computerhope.com/issues/ch001789.htm"
+    },
+    "md5-page": "075021bb9a19c6c22f578ca6e8aafc5d",
+    "md5-site": "3230cd3e8fb13ee905c0d1fd2f075e55",
+    "md5-url": "b4d2255a1eb32bbda434ff278226e285"
+}

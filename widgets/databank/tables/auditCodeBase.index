@@ -1,0 +1,672 @@
+{
+    "characters": [{
+        "id": 0,
+        "char": "[",
+        "print": "[",
+        "database": [],
+        "profiles": [{
+            "language": "global",
+            "groupID": 0,
+            "tags": ["list"],
+            "set": [],
+            "escape": [],
+            "rules": [],
+            "nest": true,
+            "isOpen": true,
+            "hasClose": true
+        }]
+    }, {
+        "id": 1,
+        "char": "]",
+        "print": "]",
+        "database": [],
+        "profiles": [{
+            "language": "global",
+            "groupID": 0,
+            "tags": ["list"],
+            "set": [],
+            "escape": [],
+            "rules": [],
+            "nest": true,
+            "isOpen": false,
+            "hasClose": false
+        }]
+    }, {
+        "id": 2,
+        "char": "(",
+        "print": "(",
+        "database": [],
+        "profiles": [{
+            "language": "global",
+            "groupID": 1,
+            "tags": ["parentheses"],
+            "set": [],
+            "escape": [],
+            "rules": [],
+            "nest": true,
+            "isOpen": true,
+            "hasClose": true
+        }]
+    }, {
+        "id": 3,
+        "char": ")",
+        "print": ")",
+        "database": [],
+        "profiles": [{
+            "language": "global",
+            "groupID": 1,
+            "tags": ["parentheses"],
+            "set": [],
+            "escape": [],
+            "rules": [],
+            "nest": true,
+            "isOpen": false,
+            "hasClose": false
+        }]
+    }, {
+        "id": 4,
+        "char": "{",
+        "print": "{",
+        "database": [],
+        "profiles": [{
+            "language": "global",
+            "groupID": 2,
+            "tags": ["dict"],
+            "set": [],
+            "escape": [],
+            "rules": [],
+            "nest": true,
+            "isOpen": true,
+            "hasClose": true
+        }]
+    }, {
+        "id": 5,
+        "char": "}",
+        "print": "}",
+        "database": [],
+        "profiles": [{
+            "language": "global",
+            "groupID": 2,
+            "tags": ["dict"],
+            "set": [],
+            "escape": [],
+            "rules": [],
+            "nest": true,
+            "isOpen": false,
+            "hasClose": false
+        }]
+    }, {
+        "id": 6,
+        "char": "/",
+        "print": "/",
+        "database": [],
+        "profiles": [ {
+            "language": "javascript",
+            "groupID": 4,
+            "tags": ["inline comment"],
+            "set": [6],
+            "escape": [],
+            "rules": [],
+            "nest": false,
+            "isOpen": true,
+            "hasClose": true
+        }, {
+            "language": "javascript",
+            "groupID": 3,
+            "tags": ["comment"],
+            "set": [7],
+            "escape": [],
+            "rules": [],
+            "nest": false,
+            "isOpen": true,
+            "hasClose": true
+        },{
+            "language": "global",
+            "groupID": false,
+            "tags": ["regex"],
+            "set": [],
+            "escape": [18],
+            "rules": [],
+            "nest": false,
+            "isOpen": true,
+            "hasClose": true
+        }]
+    }, {
+        "id": 7,
+        "char": "*",
+        "print": "*",
+        "database": [],
+        "profiles": [{
+            "language": "global",
+            "groupID": false,
+            "tags": [],
+            "set": [],
+            "escape": [],
+            "rules": [],
+            "nest": true,
+            "isOpen": false,
+            "hasClose": false
+        }, {
+            "language": "javascript",
+            "groupID": 3,
+            "tags": ["comment"],
+            "set": [6],
+            "escape": [],
+            "rules": [],
+            "nest": false,
+            "isOpen": false,
+            "hasClose": false
+        }]
+    }, {
+        "id": 8,
+        "char": "\n",
+        "print": "\\n",
+        "database": [],
+        "profiles": [{
+            "language": "global",
+            "groupID": false,
+            "tags": ["carriage", "end", "return"],
+            "set": [],
+            "escape": [],
+            "rules": [],
+            "nest": true,
+            "isOpen": false,
+            "hasClose": false
+        },{
+            "language": "global",
+            "groupID": 4,
+            "tags": ["carriage", "end", "return"],
+            "set": [],
+            "escape": [],
+            "rules": [],
+            "nest": true,
+            "isOpen": false,
+            "hasClose": false
+        }]
+    }, {
+        "id": 9,
+        "char": " ",
+        "print": " ",
+        "database": [],
+        "profiles": [{
+            "language": "global",
+            "groupID": false,
+            "tags": ["whitespace"],
+            "set": [],
+            "escape": [],
+            "rules": [],
+            "nest": true,
+            "isOpen": false,
+            "hasClose": false
+        }]
+    }, {
+        "id": 10,
+        "char": "\t",
+        "print": "\\t",
+        "database": [],
+        "profiles": [{
+            "language": "global",
+            "groupID": false,
+            "tags": ["tab"],
+            "set": [],
+            "escape": [],
+            "rules": [],
+            "nest": true,
+            "isOpen": false,
+            "hasClose": false
+        },{
+            "language": "javascript",
+            "groupID": false,
+            "tags": ["whitespace"],
+            "set": [],
+            "escape": [],
+            "rules": [],
+            "nest": true,
+            "isOpen": false,
+            "hasClose": false
+        }]
+    }, {
+        "id": 11,
+        "char": "'",
+        "print": "'",
+        "database": [],
+        "profiles": [{
+            "language": "global",
+            "groupID": false,
+            "tags": ["quote"],
+            "set": [],
+            "escape": [18],
+            "rules": [],
+            "nest": false,
+            "isOpen": true,
+            "hasClose": true
+        },{
+            "language": "python",
+            "groupID": false,
+            "tags": ["quote"],
+            "set": [11,11],
+            "escape": [18],
+            "rules": [],
+            "nest": false,
+            "isOpen": true,
+            "hasClose": true
+        }]
+    }, {
+        "id": 12,
+        "char": "\"",
+        "print": "\"",
+        "database": [],
+        "profiles": [{
+            "language": "global",
+            "groupID": false,
+            "tags": ["quote"],
+            "set": [],
+            "escape": [18],
+            "rules": [],
+            "nest": false,
+            "isOpen": true,
+            "hasClose": true
+        }, {
+            "language": "python",
+            "groupID": false,
+            "tags": ["quote"],
+            "rules": [],
+            "nest": true,
+            "set": [12, 12],
+            "escape": [],
+            "rules": [],
+            "nest": false,
+            "isOpen": true,
+            "hasClose": true
+        }]
+    }, {
+        "id": 13,
+        "char": "=",
+        "print": "=",
+        "database": [],
+        "profiles": [{
+            "language": "global",
+            "groupID": false,
+            "tags": ["equals"],
+            "set": [],
+            "escape": [],
+            "rules": [],
+            "nest": true,
+            "isOpen": false,
+            "hasClose": false
+        }]
+    }, {
+        "id": 14,
+        "char": ";",
+        "print": ";",
+        "database": [],
+        "profiles": [{
+            "language": "global",
+            "groupID": false,
+            "tags": [],
+            "set": [],
+            "escape": [],
+            "rules": [],
+            "nest": true,
+            "isOpen": false,
+            "hasClose": false
+        }, {
+            "language": "javascript",
+            "groupID": false,
+            "tags": ["end"],
+            "set": [],
+            "escape": [],
+            "rules": [],
+            "nest": true,
+            "isOpen": false,
+            "hasClose": false
+        }]
+    }, {
+        "id": 15,
+        "char": ":",
+        "print": ":",
+        "database": [],
+        "profiles": [{
+            "language": "global",
+            "groupID": false,
+            "tags": [],
+            "set": [],
+            "escape": [],
+            "rules": [],
+            "nest": true,
+            "isOpen": false,
+            "hasClose": false
+        },{
+            "language": "javascript_Archive",
+            "groupID": 5,
+            "tags": ["nsField"],
+            "set": [],
+            "escape": [],
+            "rules": [],
+            "nest": true,
+            "isOpen": true,
+            "hasClose": false
+        }]
+    }, {
+        "id": 16,
+        "char": "#",
+        "print": "#",
+        "database": [],
+        "profiles": [{
+            "language": "global",
+            "groupID": false,
+            "tags": [],
+            "set": [],
+            "escape": [],
+            "rules": [],
+            "nest": true,
+            "isOpen": false,
+            "hasClose": false
+        }, {
+            "language": "python",
+            "groupID": false,
+            "tags": ["inline comment"],
+            "set": [],
+            "escape": [],
+            "rules": [],
+            "nest": false,
+            "isOpen": true,
+            "hasClose": false
+        }]
+    }, {
+        "id": 17,
+        "char": ",",
+        "print": ",",
+        "database": [],
+        "profiles": [{
+            "language": "global",
+            "groupID": false,
+            "tags": ["delimiter"],
+            "set": [],
+            "escape": [],
+            "rules": [],
+            "nest": true,
+            "isOpen": false,
+            "hasClose": false
+        },{
+            "language": "javascript",
+            "groupID": 5,
+            "tags": [],
+            "set": [],
+            "escape": [],
+            "rules": [],
+            "nest": true,
+            "isOpen": false,
+            "hasClose": false
+        }]
+    }, {
+        "id": 18,
+        "char": "\\",
+        "print": "\\",
+        "database": [],
+        "profiles": [{
+            "language": "global",
+            "groupID": false,
+            "tags": [],
+            "set": [],
+            "escape": [],
+            "rules": [],
+            "nest": true,
+            "isOpen": false,
+            "hasClose": false
+        },{
+            "language": "javascript",
+            "groupID": false,
+            "tags": [],
+            "set": [],
+            "escape": [],
+            "rules": [],
+            "nest": true,
+            "isOpen": false,
+            "hasClose": false
+        }]
+    }, {
+        "id": 19,
+        "char": "<",
+        "print": "<",
+        "database": [],
+        "profiles": [{
+            "language": "global",
+            "groupID": false,
+            "tags": [],
+            "set": [],
+            "escape": [],
+            "rules": [],
+            "nest": true,
+            "isOpen": false,
+            "hasClose": false
+        },{
+            "language": "java",
+            "groupID": 6,
+            "tags": ["angle"],
+            "set": [],
+            "escape": [],
+            "rules": [],
+            "nest": true,
+            "isOpen": false,
+            "hasClose": false
+        }]
+    }, {
+        "id": 20,
+        "char": ">",
+        "print": ">",
+        "database": [],
+        "profiles": [{
+            "language": "global",
+            "groupID": false,
+            "tags": [],
+            "set": [],
+            "escape": [],
+            "rules": [],
+            "nest": true,
+            "isOpen": false,
+            "hasClose": false
+        },{
+            "language": "java",
+            "groupID": 6,
+            "tags": ["angle"],
+            "set": [],
+            "escape": [],
+            "rules": [],
+            "nest": true,
+            "isOpen": false,
+            "hasClose": false
+        }]
+    }, {
+        "id": 21,
+        "char": ".",
+        "print": ".",
+        "database": [],
+        "profiles": [{
+            "language": "global",
+            "groupID": false,
+            "tags": [],
+            "set": [],
+            "escape": [],
+            "rules": [],
+            "nest": true,
+            "isOpen": false,
+            "hasClose": false
+        }]
+    }, {
+        "id": 22,
+        "char": "+",
+        "print": "+",
+        "database": [],
+        "profiles": [{
+            "language": "global",
+            "groupID": false,
+            "tags": [],
+            "set": [],
+            "escape": [],
+            "rules": [],
+            "nest": true,
+            "isOpen": false,
+            "hasClose": false
+        }]
+    },
+    {
+        "id": 23,
+        "char": "`",
+        "print": "`",
+        "database": [],
+        "profiles": [{
+            "language": "global",
+            "groupID": false,
+            "tags": ["quote"],
+            "set": [],
+            "escape": [18],
+            "rules": [],
+            "nest": false,
+            "isOpen": true,
+            "hasClose": true
+        },{
+            "language": "python",
+            "groupID": false,
+            "tags": ["quote"],
+            "set": [23,23],
+            "escape": [18],
+            "rules": [],
+            "nest": false,
+            "isOpen": true,
+            "hasClose": true
+        }]
+    }],
+    "action": [{
+        "id": 0,
+        "description": "namespace",
+        "language": "javascript",
+        "patterns": [
+                        { "type": "text", "strict": 0, "test": "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-." },
+                        { "type": "text", "strict": 1, "test": "=" },
+                        { "type": "index", "strict": 1, "test": "{" }
+                ],
+        "specific": false,
+        "caseStrict": false,
+        "start": true,
+        "type": [3],
+        "rules": ["validate namespace"]
+    }],
+    "type": [{
+        "id": 0,
+        "name": "function"
+    }, {
+        "id": 1,
+        "name": "class"
+    }, {
+        "id": 2,
+        "name": "label"
+    }, {
+        "id": 3,
+        "name": "variable"
+    }, {
+        "id": 4,
+        "name": "command"
+    }],
+    "rules": [{
+        "id": 0,
+        "language": "javascript",
+        "tags": "namespace,validate",
+        "description": "validate namespace",
+        "loop": true,
+        "rules": [],
+        "patterns": [
+                        { "type": "text", "strict": 0, "test": "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-.", "rules": [] },
+                        { "type": "text", "strict": 1, "test": ":", "rules": [] },
+                        { "type": "scan", "strict": 1, "test": "namespace variable", "rules": [] },
+                        { "type": "text", "strict": 5, "test": ",", "rules": [] }
+                ]
+    },{
+        "id": 1,
+        "language": "javascript",
+        "tags": "namespace,variable,quote",
+        "description": "namespace variable",
+        "loop": false,
+        "rules": [],
+        "patterns": [
+                        { "type": "index", "strict": 1, "test": "\"", "rules": [] }
+                ]
+    },{
+        "id": 2,
+        "language": "javascript",
+        "tags": "namespace,variable,quote",
+        "description": "namespace variable",
+        "loop": false,
+        "rules": [],
+        "patterns": [
+                        { "type": "index", "strict": 1, "test": "'", "rules": [] }
+                ]
+    },{
+        "id": 3,
+        "language": "javascript",
+        "tags": "namespace,variable,braces",
+        "description": "namespace variable",
+        "loop": false,
+        "rules": ["validate namespace"],
+        "patterns": [
+                        { "type": "index", "strict": 1, "test": "{", "rules": [] }
+                ]
+    },{
+        "id": 4,
+        "language": "javascript",
+        "tags": "namespace,variable,bracket",
+        "description": "namespace variable",
+        "loop": false,
+        "rules": ["validate bracket"],
+        "patterns": [
+                        { "type": "index", "strict": 1, "test": "[", "rules": [] }
+                ]
+    },{
+        "id": 5,
+        "language": "javascript",
+        "tags": "namespace,variable,bracket",
+        "description": "namespace variable",
+        "loop": false,
+        "rules": ["validate bracket"],
+        "patterns": [
+                        { "type": "index", "strict": 1, "test": "[", "rules": [] }
+                ]
+    },{
+        "id": 6,
+        "language": "javascript",
+        "tags": "namespace,variable,function",
+        "description": "namespace variable",
+        "loop": false,
+        "rules": ["validate bracket"],
+        "patterns": [
+                        { "type": "text", "strict": 1, "test": "function", "rules": [] },
+                        { "type": "index", "strict": 1, "test": "(", "rules": [] },
+                        { "type": "index", "strict": 1, "test": "{", "rules": [] }
+                        
+                ]
+    },{
+        "id": 7,
+        "language": "javascript",
+        "tags": "namespace,variable,number",
+        "description": "namespace variable",
+        "loop": false,
+        "rules": [],
+        "patterns": [
+                        { "type": "text", "strict": 0, "test": "0123456789.", "rules": [] },
+                        { "type": "text", "strict": 1, "test": ",", "rules": [] }
+                        
+                ]
+    },{
+        "id": 8,
+        "language": "javascript",
+        "tags": "scan,namespace",
+        "description": "scan",
+        "loop": false,
+        "rules": [],
+        "patterns": [
+                        { "type": "text", "strict": 0, "test": "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-.", "rules": [] },
+                        { "type": "text", "strict": 1, "test": "=", "rules": [] },
+                        { "type": "index", "strict": 1, "test": "{", "rules": ["validate namespace"] }
+                ]
+    }]
+}

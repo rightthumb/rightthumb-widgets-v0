@@ -1,0 +1,4233 @@
+{
+    "url": "https://en.wikipedia.org/wiki/List_of_filename_extensions_(F%E2%80%93L)",
+    "settings": {
+        "clicked": "aquire_m_header_table",
+        "settings": {
+            "tag_path": "technology os file extensions",
+            "subject": "Ext.",
+            "description": [
+                "Description"
+            ],
+            "label": "file extensions",
+            "header": "H2",
+            "parent": "",
+            "split": "",
+            "record_split": [
+                ""
+            ],
+            "fields": [
+                ""
+            ],
+            "children": false,
+            "structureless": false,
+            "upload": true
+        },
+        "subject": {
+            "table": true,
+            "ul": false,
+            "custom": null
+        },
+        "aquire_on": {
+            "click_single": false,
+            "click_multi": false,
+            "all": false
+        },
+        "isTraditional": true
+    },
+    "data": {
+        "data": [
+            {
+                "label": "",
+                "records": [
+                    {
+                        "undefined": "This article needs additional citations for verification. Please help improve this article by adding citations to reliable sources. Unsourced material may be challenged and removed.Find sources:\u00c2\u00a0\"List of filename extensions\"\u00c2\u00a0F\u00e2\u0080\u0093L\u00c2\u00a0\u00e2\u0080\u0093\u00c2\u00a0news\u00c2\u00a0\u00c2\u00b7 newspapers\u00c2\u00a0\u00c2\u00b7 books\u00c2\u00a0\u00c2\u00b7 scholar\u00c2\u00a0\u00c2\u00b7 JSTOR (August 2016) (Learn how and when to remove this template message)"
+                    }
+                ]
+            },
+            {
+                "label": "F",
+                "records": [
+                    {
+                        "Ext.": "F",
+                        "Description": "Archive",
+                        "Used by": "FREEZE"
+                    },
+                    {
+                        "Ext.": "F",
+                        "Description": "Forth language source code file",
+                        "Used by": "Forth development systems"
+                    },
+                    {
+                        "Ext.": "F",
+                        "Description": "Fortran language source code file (in fixed form)",
+                        "Used by": "Many Fortran compilers"
+                    },
+                    {
+                        "Ext.": "F01",
+                        "Description": "Fax",
+                        "Used by": "perfectfax"
+                    },
+                    {
+                        "Ext.": "F03",
+                        "Description": "Fortran language source code file (in free form)",
+                        "Used by": "Many Fortran compilers"
+                    },
+                    {
+                        "Ext.": "F08",
+                        "Description": "Fortran language source code file (in free form)",
+                        "Used by": "Fortran compilers"
+                    },
+                    {
+                        "Ext.": "F18",
+                        "Description": "Fortran language source code file (in free form)",
+                        "Used by": "Fortran compilers"
+                    },
+                    {
+                        "Ext.": "F2R",
+                        "Description": "Farandole Linear Module",
+                        "Used by": "Farandole"
+                    },
+                    {
+                        "Ext.": "F3R",
+                        "Description": "Farandole Blocked Linear Module",
+                        "Used by": "Farandole"
+                    },
+                    {
+                        "Ext.": "F4",
+                        "Description": "Fortran IV source code file",
+                        "Used by": "Fortran IV source code"
+                    },
+                    {
+                        "Ext.": "F4A",
+                        "Description": "Flash Video F4V with only audio (see also SWF)",
+                        "Used by": "Adobe Flash"
+                    },
+                    {
+                        "Ext.": "F4B",
+                        "Description": "Flash Video F4V audiobook (see also SWF)",
+                        "Used by": "Adobe Flash"
+                    },
+                    {
+                        "Ext.": "F4P",
+                        "Description": "Flash Video F4V with digital rights management (see also SWF)",
+                        "Used by": "Adobe Flash"
+                    },
+                    {
+                        "Ext.": "F4V",
+                        "Description": "A container format for Flash Video that differs from the older FLV file format (see also SWF)",
+                        "Used by": "Adobe Flash"
+                    },
+                    {
+                        "Ext.": "F77",
+                        "Description": "Fortran language source code file (in fixed form)",
+                        "Used by": "Many Fortran compilers"
+                    },
+                    {
+                        "Ext.": "F90",
+                        "Description": "Fortran language source code file (in free form)",
+                        "Used by": "Many Fortran compilers"
+                    },
+                    {
+                        "Ext.": "F95",
+                        "Description": "Fortran language source code file (in free form)",
+                        "Used by": "Many Fortran compilers"
+                    },
+                    {
+                        "Ext.": "F96",
+                        "Description": "Fax",
+                        "Used by": "Frecom FAX96"
+                    },
+                    {
+                        "Ext.": "FA",
+                        "Description": "FASTA format sequence file[1]",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "FAA",
+                        "Description": "FASTA format amino acid",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "FAC",
+                        "Description": "see FACE",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "FACE",
+                        "Description": "Usenix FACE graphics file",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "FAM",
+                        "Description": "Famtasia Famicom image format",
+                        "Used by": "Famtasia"
+                    },
+                    {
+                        "Ext.": "FAQ",
+                        "Description": "Frequently Asked Questions text file",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "FAR",
+                        "Description": "Music format (Farandole Composer Module)",
+                        "Used by": "Farandole"
+                    },
+                    {
+                        "Ext.": "FAS",
+                        "Description": "Macsyma compiled program",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "FASTA",
+                        "Description": "FASTA format sequence file[1]",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "FASTQ",
+                        "Description": "FASTQ format sequence file",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "FAX",
+                        "Description": "Fax (raster graphics in CCITT format)",
+                        "Used by": "most Fax programs"
+                    },
+                    {
+                        "Ext.": "FB",
+                        "Description": "Backup files",
+                        "Used by": "Fifth Generation Systems FastBack Plus"
+                    },
+                    {
+                        "Ext.": "FB2",
+                        "Description": "FictionBook e-book 2.0 file (DRM-free XML format)",
+                        "Used by": "e-book readers"
+                    },
+                    {
+                        "Ext.": "FB2K",
+                        "Description": "foobar2000 File",
+                        "Used by": "foobar2000"
+                    },
+                    {
+                        "Ext.": "FB2K-COMPONENT",
+                        "Description": "foobar2000 Component",
+                        "Used by": "foobar2000"
+                    },
+                    {
+                        "Ext.": "FBM",
+                        "Description": "Fuzzy Bitmap",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "FBW",
+                        "Description": "HP Backup and Recovery Manager",
+                        "Used by": "HP Backup"
+                    },
+                    {
+                        "Ext.": "FBX",
+                        "Description": "3D model geometry, material textures, lighting, armature, and animation sequences for inter application use/transport",
+                        "Used by": "Autodesk"
+                    },
+                    {
+                        "Ext.": "FC",
+                        "Description": "Spell checking dictionary",
+                        "Used by": "Harvard Graphics 2.0"
+                    },
+                    {
+                        "Ext.": "FCM",
+                        "Description": "Binary file patch file (forward compression)",
+                        "Used by": "jlpak10.zip"
+                    },
+                    {
+                        "Ext.": "FCS",
+                        "Description": "Flow cytometry standard file",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "FCP",
+                        "Description": "Final Cut Pro project file",
+                        "Used by": "Final Cut Pro"
+                    },
+                    {
+                        "Ext.": "FCX",
+                        "Description": "Fortimer's Completely eXcised archive",
+                        "Used by": "Unix Archive & CP/M or DOS Archives"
+                    },
+                    {
+                        "Ext.": "FD",
+                        "Description": "Declaration file",
+                        "Used by": "Microsoft Fortran"
+                    },
+                    {
+                        "Ext.": "FD",
+                        "Description": "Field offsets for compiler",
+                        "Used by": "DataFlex"
+                    },
+                    {
+                        "Ext.": "FD",
+                        "Description": "Front Door' resource files",
+                        "Used by": "FD"
+                    },
+                    {
+                        "Ext.": "FDB",
+                        "Description": "Font Definition Block",
+                        "Used by": "Ming library"
+                    },
+                    {
+                        "Ext.": "FDS",
+                        "Description": "fwNES Famicom Disk System image",
+                        "Used by": "fwNES"
+                    },
+                    {
+                        "Ext.": "FDS",
+                        "Description": "Headerless Famicom Disk System image",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "FDW",
+                        "Description": "Form",
+                        "Used by": "F3 Design and Mapping"
+                    },
+                    {
+                        "Ext.": "FDX",
+                        "Description": "Screenplay",
+                        "Used by": "Final Draft"
+                    },
+                    {
+                        "Ext.": "FE",
+                        "Description": "Data",
+                        "Used by": "Surface Evolver 3D surface"
+                    },
+                    {
+                        "Ext.": "FEB",
+                        "Description": "Button bar for Figure Editor",
+                        "Used by": "WordPerfect for Win"
+                    },
+                    {
+                        "Ext.": "FEI",
+                        "Description": "Fatal Error Infotable",
+                        "Used by": "Geoworks"
+                    },
+                    {
+                        "Ext.": "FEN",
+                        "Description": "Forsyth\u00e2\u0080\u0093Edwards Notation",
+                        "Used by": "Chess applications -text data describes a specific position."
+                    },
+                    {
+                        "Ext.": "FES",
+                        "Description": "File produced when a fileless occurrence in 3D Topicscape is exported to Windows",
+                        "Used by": "3D Topicscape"
+                    },
+                    {
+                        "Ext.": "FF",
+                        "Description": "Intelligont FIAS format",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "FF",
+                        "Description": "Outline font description",
+                        "Used by": "Agfa Compugraphics"
+                    },
+                    {
+                        "Ext.": "FFE",
+                        "Description": "Front Fareast Famicom image format",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "FFF",
+                        "Description": "Fax",
+                        "Used by": "defFax"
+                    },
+                    {
+                        "Ext.": "FFI",
+                        "Description": "Atech FastFont (AllType)",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "FFN",
+                        "Description": "FASTA format nucleotide of gene regions",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "FFIVW",
+                        "Description": "File Format for the Interchange of Virtual Worlds",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "FFT",
+                        "Description": "Dca/FFT Final Form Text text file (DisplayWrite)",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "FFT",
+                        "Description": "DCA/FFT Final Form Text text file",
+                        "Used by": "DisplayWrite"
+                    },
+                    {
+                        "Ext.": "FH3",
+                        "Description": "Vector graphics",
+                        "Used by": "Aldus FreeHand 3.x"
+                    },
+                    {
+                        "Ext.": "FH4",
+                        "Description": "Vector graphics",
+                        "Used by": "Aldus FreeHand 3.x"
+                    },
+                    {
+                        "Ext.": "FI",
+                        "Description": "Interface file",
+                        "Used by": "Microsoft Fortran"
+                    },
+                    {
+                        "Ext.": "FIF",
+                        "Description": "Fractal Image Format file",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "FIG",
+                        "Description": "Figure File",
+                        "Used by": "MATLAB"
+                    },
+                    {
+                        "Ext.": "FIL",
+                        "Description": "Table Data",
+                        "Used by": "Audit Command Language (ACL)"
+                    },
+                    {
+                        "Ext.": "FIL",
+                        "Description": "File template",
+                        "Used by": "Application Generator"
+                    },
+                    {
+                        "Ext.": "FIL",
+                        "Description": "Filelist",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "FIL",
+                        "Description": "Files list object file",
+                        "Used by": "dBASE Application Generator"
+                    },
+                    {
+                        "Ext.": "FIL",
+                        "Description": "Mirror. FIL is the name given to the saved FAT by the mirror program included in some versions of DOS and in PCTools",
+                        "Used by": "MS-DOS -"
+                    },
+                    {
+                        "Ext.": "FIL",
+                        "Description": "Overlay",
+                        "Used by": "WordPerfect"
+                    },
+                    {
+                        "Ext.": "FIL",
+                        "Description": "File which was moved to the Virus Vault by AVG",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "FILE",
+                        "Description": "A generic Windows file",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "FILM",
+                        "Description": "Filmkey film file",
+                        "Used by": "Filmkey Player"
+                    },
+                    {
+                        "Ext.": "FIN",
+                        "Description": "Print-formatted text file",
+                        "Used by": "Perfect Writer - Scribble - MINCE"
+                    },
+                    {
+                        "Ext.": "FIO",
+                        "Description": "Aldus PhotoStyler graphics filter",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "FIO",
+                        "Description": "Image PALS viewer DLL",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "FIT",
+                        "Description": "File Index Table",
+                        "Used by": "WindowsNT"
+                    },
+                    {
+                        "Ext.": "FIT",
+                        "Description": "see FITS",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "FIT",
+                        "Description": "Fityk Script",
+                        "Used by": "Fityk"
+                    },
+                    {
+                        "Ext.": "FITS",
+                        "Description": "Flexible Image Transport System",
+                        "Used by": "astronomy software"
+                    },
+                    {
+                        "Ext.": "FIX",
+                        "Description": "Patch file",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "FKY",
+                        "Description": "Macro file",
+                        "Used by": "FoxPro"
+                    },
+                    {
+                        "Ext.": "FLA",
+                        "Description": "Source material for Flash applications (see SWF)",
+                        "Used by": "Adobe Flash"
+                    },
+                    {
+                        "Ext.": "FLAC",
+                        "Description": "Audio codec, Audio file format",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "FLAME",
+                        "Description": "Fractal configuration file",
+                        "Used by": "Apophysis"
+                    },
+                    {
+                        "Ext.": "FLB",
+                        "Description": "Format library",
+                        "Used by": "Papyrus"
+                    },
+                    {
+                        "Ext.": "FLC",
+                        "Description": "Animation format FLIC >320x200",
+                        "Used by": "AAPlay - Autodesk AniPro"
+                    },
+                    {
+                        "Ext.": "FLD",
+                        "Description": "Folder",
+                        "Used by": "Charisma"
+                    },
+                    {
+                        "Ext.": "FLI",
+                        "Description": "Animation format FLIC 320x200",
+                        "Used by": "Autodesk Animator"
+                    },
+                    {
+                        "Ext.": "FLI",
+                        "Description": "TeX font library",
+                        "Used by": "EmTeX"
+                    },
+                    {
+                        "Ext.": "FLM",
+                        "Description": "Film Roll",
+                        "Used by": "AutoCAD/AutoShade"
+                    },
+                    {
+                        "Ext.": "FLM",
+                        "Description": "Fl Studio Mobile project file",
+                        "Used by": "Fruity Loops Mobile (FlStudio Mobile)"
+                    },
+                    {
+                        "Ext.": "FLP",
+                        "Description": "Flstudio project file",
+                        "Used by": "Fruity Loops (FlStudio)"
+                    },
+                    {
+                        "Ext.": "FLP",
+                        "Description": "FLP Designer layout file",
+                        "Used by": "FLP Designer"
+                    },
+                    {
+                        "Ext.": "FLT",
+                        "Description": "Data/file conversion filter (or overlay)",
+                        "Used by": "Alsud, Microsoft Word"
+                    },
+                    {
+                        "Ext.": "FLT",
+                        "Description": "Filter file",
+                        "Used by": "Micrografx Picture Publisher"
+                    },
+                    {
+                        "Ext.": "FLT",
+                        "Description": "MultiGen Flight",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "FLT",
+                        "Description": "Support file - graphics filter",
+                        "Used by": "Asymetrix ToolBook"
+                    },
+                    {
+                        "Ext.": "FLX",
+                        "Description": "Animation format",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "FLX",
+                        "Description": "Compiled binary",
+                        "Used by": "DataFlex"
+                    },
+                    {
+                        "Ext.": "FLV",
+                        "Description": "A container format for Flash Video (see also SWF)",
+                        "Used by": "Adobe Flash"
+                    },
+                    {
+                        "Ext.": "FM",
+                        "Description": "Database",
+                        "Used by": "FileMaker Pro"
+                    },
+                    {
+                        "Ext.": "FM1",
+                        "Description": "Spreadsheet format overlay",
+                        "Used by": "Lotus 1-2-3 release 2.x"
+                    },
+                    {
+                        "Ext.": "FM3",
+                        "Description": "Device driver",
+                        "Used by": "Harvard Graphics 3.0"
+                    },
+                    {
+                        "Ext.": "FM3",
+                        "Description": "Spreadsheet",
+                        "Used by": "Lotus 1-2-3 release 3.x"
+                    },
+                    {
+                        "Ext.": "FMB",
+                        "Description": "File Manager Button bar",
+                        "Used by": "WordPerfect for Win"
+                    },
+                    {
+                        "Ext.": "FMF",
+                        "Description": "Font or icon file",
+                        "Used by": "IBM LinkWay"
+                    },
+                    {
+                        "Ext.": "FMK",
+                        "Description": "Makefile",
+                        "Used by": "Fortran PowerStation"
+                    },
+                    {
+                        "Ext.": "FMO",
+                        "Description": "Compiled format file",
+                        "Used by": "dBASE IV"
+                    },
+                    {
+                        "Ext.": "FMT",
+                        "Description": "Format file",
+                        "Used by": "dBASE IV - FoxPro - Clipper 5 - dBFast"
+                    },
+                    {
+                        "Ext.": "FMT",
+                        "Description": "Gate3 format file",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "FMT",
+                        "Description": "Style sheet",
+                        "Used by": "Sprint"
+                    },
+                    {
+                        "Ext.": "FMV",
+                        "Description": "Full Motion Video file",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "FN3",
+                        "Description": "Font file",
+                        "Used by": "Harvard Graphics 3.0"
+                    },
+                    {
+                        "Ext.": "FNA",
+                        "Description": "FASTA format nucleic acid",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "FND",
+                        "Description": "Files searching properties",
+                        "Used by": "Win95"
+                    },
+                    {
+                        "Ext.": "FNI",
+                        "Description": "FileNet Native Document",
+                        "Used by": "FileNet"
+                    },
+                    {
+                        "Ext.": "FNK",
+                        "Description": "FunkTracker music module",
+                        "Used by": "AWAVE, FunkTracker"
+                    },
+                    {
+                        "Ext.": "FNM",
+                        "Description": "Fannie Mae Residential Loan Data (RLD) format for mortgage submission to DO/DU",
+                        "Used by": "Desktop Originator"
+                    },
+                    {
+                        "Ext.": "Fnn",
+                        "Description": "DOS screen text font - height nn pixels",
+                        "Used by": "fntcol13.zip"
+                    },
+                    {
+                        "Ext.": "FNT",
+                        "Description": "Font file",
+                        "Used by": "many"
+                    },
+                    {
+                        "Ext.": "FNX",
+                        "Description": "Inactive font",
+                        "Used by": "Exact"
+                    },
+                    {
+                        "Ext.": "FO1",
+                        "Description": "Font file",
+                        "Used by": "Borland Turbo C"
+                    },
+                    {
+                        "Ext.": "FO2",
+                        "Description": "Font file",
+                        "Used by": "Borland Turbo C"
+                    },
+                    {
+                        "Ext.": "FOG",
+                        "Description": "Fontographer Database File",
+                        "Used by": "Fontographer 3.5"
+                    },
+                    {
+                        "Ext.": "FOL",
+                        "Description": "Folder of saved messages",
+                        "Used by": "1st Reader"
+                    },
+                    {
+                        "Ext.": "FON",
+                        "Description": "Log of all calls",
+                        "Used by": "Procomm Plus"
+                    },
+                    {
+                        "Ext.": "FON",
+                        "Description": "Terminate phonebook",
+                        "Used by": "Terminate - Terminator - Telix"
+                    },
+                    {
+                        "Ext.": "FON",
+                        "Description": "Windows bitmapped font file",
+                        "Used by": "Win"
+                    },
+                    {
+                        "Ext.": "FONT",
+                        "Description": "Font data",
+                        "Used by": "unix"
+                    },
+                    {
+                        "Ext.": "FOP",
+                        "Description": "Freedom of the Press graphic file",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "FOR",
+                        "Description": "Form",
+                        "Used by": "WindowBase"
+                    },
+                    {
+                        "Ext.": "FOR",
+                        "Description": "Fortran language source file",
+                        "Used by": "many"
+                    },
+                    {
+                        "Ext.": "FOT",
+                        "Description": "Installed Truetype font",
+                        "Used by": "Windows Font Installer"
+                    },
+                    {
+                        "Ext.": "FOX",
+                        "Description": "Foxbase executable (precompiled .prg)",
+                        "Used by": "FoxBase"
+                    },
+                    {
+                        "Ext.": "FP",
+                        "Description": "Final Page file",
+                        "Used by": "FoxPro for DOS"
+                    },
+                    {
+                        "Ext.": "FP",
+                        "Description": "Tiff file",
+                        "Used by": "TIFF/IT P1"
+                    },
+                    {
+                        "Ext.": "FP",
+                        "Description": "Video file",
+                        "Used by": "DVICO/TVIX MPEG1 video file"
+                    },
+                    {
+                        "Ext.": "FP3",
+                        "Description": "Database",
+                        "Used by": "FileMaker Pro"
+                    },
+                    {
+                        "Ext.": "FP4",
+                        "Description": "Database",
+                        "Used by": "FileMaker Pro"
+                    },
+                    {
+                        "Ext.": "FP5",
+                        "Description": "Database",
+                        "Used by": "FileMaker Pro"
+                    },
+                    {
+                        "Ext.": "FP7",
+                        "Description": "Database",
+                        "Used by": "FileMaker Pro"
+                    },
+                    {
+                        "Ext.": "FPC",
+                        "Description": "Catalog",
+                        "Used by": "FoxPro"
+                    },
+                    {
+                        "Ext.": "FPD",
+                        "Description": "TMT Pascal compiled unit",
+                        "Used by": "TMT Pascal"
+                    },
+                    {
+                        "Ext.": "FPL",
+                        "Description": "Playlist",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "FPM",
+                        "Description": "Configuration file",
+                        "Used by": "FoxPro for MacIntosh"
+                    },
+                    {
+                        "Ext.": "FPT",
+                        "Description": "Foxpro memo field tables",
+                        "Used by": "FoxPro"
+                    },
+                    {
+                        "Ext.": "FPU",
+                        "Description": "Configuration file",
+                        "Used by": "FoxPro for Unix"
+                    },
+                    {
+                        "Ext.": "FPW",
+                        "Description": "Floorplan drawing",
+                        "Used by": "FloorPLAN plus for Windows"
+                    },
+                    {
+                        "Ext.": "FPW",
+                        "Description": "Configuration file",
+                        "Used by": "Visual FoxPro"
+                    },
+                    {
+                        "Ext.": "FPX",
+                        "Description": "FlashPix Bitmap Image File",
+                        "Used by": "FlashPix"
+                    },
+                    {
+                        "Ext.": "FQ",
+                        "Description": "FASTQ format sequence file",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "FR?",
+                        "Description": "Packed mail",
+                        "Used by": "FTN software"
+                    },
+                    {
+                        "Ext.": "FR3",
+                        "Description": "Renamed dBASE III+ form file",
+                        "Used by": "dBASE IV"
+                    },
+                    {
+                        "Ext.": "FRF",
+                        "Description": "FontMonger Database file",
+                        "Used by": "FontMonger"
+                    },
+                    {
+                        "Ext.": "FRG",
+                        "Description": "Uncompiled report file",
+                        "Used by": "dBASE IV"
+                    },
+                    {
+                        "Ext.": "FRL",
+                        "Description": "GP-Forth library",
+                        "Used by": "GP-Forth"
+                    },
+                    {
+                        "Ext.": "FRM",
+                        "Description": "Registration or other form",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "FRM",
+                        "Description": "Report file",
+                        "Used by": "dBASE IV - Clipper 5 - dBFast"
+                    },
+                    {
+                        "Ext.": "FRM",
+                        "Description": "Visual Basic Form",
+                        "Used by": "Visual Basic"
+                    },
+                    {
+                        "Ext.": "FRM",
+                        "Description": "MySQL Database Metadata",
+                        "Used by": "MySQL"
+                    },
+                    {
+                        "Ext.": "FRN",
+                        "Description": "FASTA format non-coding RNA",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "FRO",
+                        "Description": "Compiled report file",
+                        "Used by": "dBASE IV"
+                    },
+                    {
+                        "Ext.": "FRP",
+                        "Description": "Form",
+                        "Used by": "PerForm PRO Plus - FormFlow"
+                    },
+                    {
+                        "Ext.": "FRS",
+                        "Description": "Screen Font Resource",
+                        "Used by": "WordPerfect for Win"
+                    },
+                    {
+                        "Ext.": "FRT",
+                        "Description": "Additional (FPT) report description file",
+                        "Used by": "FoxPro"
+                    },
+                    {
+                        "Ext.": "FRT",
+                        "Description": "GP-Forth source file",
+                        "Used by": "GP-Forth"
+                    },
+                    {
+                        "Ext.": "FRX",
+                        "Description": "Main (DBF) report description file",
+                        "Used by": "Visual FoxPro"
+                    },
+                    {
+                        "Ext.": "FRX",
+                        "Description": "Visual Basic binary program file",
+                        "Used by": "Visual Basic"
+                    },
+                    {
+                        "Ext.": "FSA",
+                        "Description": "Applied Biosystems Genetic Analysis data file",
+                        "Used by": "GeneScan"
+                    },
+                    {
+                        "Ext.": "FSIM",
+                        "Description": "Simulation File Format",
+                        "Used by": "Loudsoft"
+                    },
+                    {
+                        "Ext.": "FSL",
+                        "Description": "Form",
+                        "Used by": "Paradox for Windows"
+                    },
+                    {
+                        "Ext.": "FSM",
+                        "Description": "Farandole Composer WaveSample",
+                        "Used by": "Farandole"
+                    },
+                    {
+                        "Ext.": "FSPROJ",
+                        "Description": "Habanero Firestarter project",
+                        "Used by": "Habanero Firestarter"
+                    },
+                    {
+                        "Ext.": "FST",
+                        "Description": "FL Studio Preset File",
+                        "Used by": "FL Studio"
+                    },
+                    {
+                        "Ext.": "FST",
+                        "Description": "Linkable program",
+                        "Used by": "dBFast"
+                    },
+                    {
+                        "Ext.": "FST",
+                        "Description": "Temporal database file",
+                        "Used by": "GTKWave data file"
+                    },
+                    {
+                        "Ext.": "FSTICK",
+                        "Description": "Temporal database file",
+                        "Used by": "Flash Joystick"
+                    },
+                    {
+                        "Ext.": "FSX",
+                        "Description": "Data",
+                        "Used by": "Lotus 1-2-3"
+                    },
+                    {
+                        "Ext.": "FTB",
+                        "Description": "Compressed Ftb file",
+                        "Used by": "Family Tree Builder"
+                    },
+                    {
+                        "Ext.": "FTH",
+                        "Description": "foobar2000 Theme File",
+                        "Used by": "foobar2000"
+                    },
+                    {
+                        "Ext.": "FTM",
+                        "Description": "Font file",
+                        "Used by": "Micrografx"
+                    },
+                    {
+                        "Ext.": "FTS",
+                        "Description": "Full text search index of old Windows Help file",
+                        "Used by": "Windows 3.0 - XP"
+                    },
+                    {
+                        "Ext.": "FTXT",
+                        "Description": "text",
+                        "Used by": "Cloanto text document"
+                    },
+                    {
+                        "Ext.": "FTP",
+                        "Description": "Configuration",
+                        "Used by": "FTP Software PC/TCP"
+                    },
+                    {
+                        "Ext.": "FUK",
+                        "Description": "Map File",
+                        "Used by": "Postal 2"
+                    },
+                    {
+                        "Ext.": "FW",
+                        "Description": "Database",
+                        "Used by": "FrameWork"
+                    },
+                    {
+                        "Ext.": "FW2",
+                        "Description": "Database",
+                        "Used by": "Framework II"
+                    },
+                    {
+                        "Ext.": "FW3",
+                        "Description": "Database",
+                        "Used by": "Framework III"
+                    },
+                    {
+                        "Ext.": "FWEB",
+                        "Description": "Fortran WEB",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "FWK",
+                        "Description": "Fireworkz document",
+                        "Used by": "Fireworkz (Colton Software)"
+                    },
+                    {
+                        "Ext.": "FWT",
+                        "Description": "Fireworkz template",
+                        "Used by": "Fireworkz (Colton Software)"
+                    },
+                    {
+                        "Ext.": "FX",
+                        "Description": "On-line guide",
+                        "Used by": "FastLynx"
+                    },
+                    {
+                        "Ext.": "FXD",
+                        "Description": "Phonebook",
+                        "Used by": "FAXit"
+                    },
+                    {
+                        "Ext.": "FXP",
+                        "Description": "Foxpro executable (precompiled .prg)",
+                        "Used by": "Visual FoxPro"
+                    },
+                    {
+                        "Ext.": "FXS",
+                        "Description": "FAX Transmit Format graphics file",
+                        "Used by": "WinFax"
+                    },
+                    {
+                        "Ext.": "FYF",
+                        "Description": "FileLoc",
+                        "Used by": "FyTek, Inc."
+                    }
+                ]
+            },
+            {
+                "label": "[2]G",
+                "records": [
+                    {
+                        "Ext.": "G",
+                        "Description": "Data chart",
+                        "Used by": "APPLAUSE"
+                    },
+                    {
+                        "Ext.": "G16",
+                        "Description": "GoldED for DOS compiled config",
+                        "Used by": "GOLDED.EXE"
+                    },
+                    {
+                        "Ext.": "G3",
+                        "Description": "Group 3 Fax",
+                        "Used by": "Netpbm, ImageMagick, XnView"
+                    },
+                    {
+                        "Ext.": "G3D",
+                        "Description": "Glest model file",
+                        "Used by": "G3D viewer"
+                    },
+                    {
+                        "Ext.": "G3P",
+                        "Description": "data",
+                        "Used by": "Grand Prix 3 car physics"
+                    },
+                    {
+                        "Ext.": "G8",
+                        "Description": "Raw graphics file (one byte per pixel) plane three",
+                        "Used by": "PicLab - Cubicomb Picturemaker"
+                    },
+                    {
+                        "Ext.": "GAF",
+                        "Description": "Globa Game Engine audio format",
+                        "Used by": "Globa Game Engine"
+                    },
+                    {
+                        "Ext.": "GAM",
+                        "Description": "Fax",
+                        "Used by": "GammaFax"
+                    },
+                    {
+                        "Ext.": "GAME",
+                        "Description": "Chess Game",
+                        "Used by": "macOS Chess"
+                    },
+                    {
+                        "Ext.": "GAMEPROJ",
+                        "Description": "Gamesalad game project format",
+                        "Used by": "GameSalad"
+                    },
+                    {
+                        "Ext.": "gaupol-extension",
+                        "Description": "",
+                        "Used by": "Gaupol"
+                    },
+                    {
+                        "Ext.": "GB",
+                        "Description": "Game Boy ROM",
+                        "Used by": "Nintendo"
+                    },
+                    {
+                        "Ext.": "GB",
+                        "Description": "GenBank flat file",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "GB1",
+                        "Description": "Game Maker backup file (can also be GB2, GB3, etc.)",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "GBA",
+                        "Description": "Game Boy Advance ROM",
+                        "Used by": "Nintendo"
+                    },
+                    {
+                        "Ext.": "GBC",
+                        "Description": "Game Boy Color ROM",
+                        "Used by": "Nintendo"
+                    },
+                    {
+                        "Ext.": "GBK",
+                        "Description": "GenBank flat file",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "GBL",
+                        "Description": "Genesis Bitmap Layout",
+                        "Used by": "Genesis Bitmap"
+                    },
+                    {
+                        "Ext.": "GBL",
+                        "Description": "Global definitions",
+                        "Used by": "VAXTPU editor"
+                    },
+                    {
+                        "Ext.": "GBL",
+                        "Description": "Global module in Basic programs",
+                        "Used by": "Basic"
+                    },
+                    {
+                        "Ext.": "GBP",
+                        "Description": "Genesis Bitmap Pattern",
+                        "Used by": "Genesis Bitmap"
+                    },
+                    {
+                        "Ext.": "GBS",
+                        "Description": "GBS meta data",
+                        "Used by": "Generic Build Support (GBS)"
+                    },
+                    {
+                        "Ext.": "GBR",
+                        "Description": "Gerber format",
+                        "Used by": "PCB CAD/CAM"
+                    },
+                    {
+                        "Ext.": "GBR",
+                        "Description": "GIMP brush",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "GC",
+                        "Description": "Savegame",
+                        "Used by": "Star Wars: Battlefront II Galactic Conquest save file"
+                    },
+                    {
+                        "Ext.": "GC1",
+                        "Description": "Lisp source code",
+                        "Used by": "Golden Common Lisp 1.1"
+                    },
+                    {
+                        "Ext.": "GC3",
+                        "Description": "Lisp source code",
+                        "Used by": "Golden Common Lisp 1.3"
+                    },
+                    {
+                        "Ext.": "GCA",
+                        "Description": "IBM GOCA",
+                        "Used by": "GCGW"
+                    },
+                    {
+                        "Ext.": "GCD",
+                        "Description": "Graphics",
+                        "Used by": "Roblox"
+                    },
+                    {
+                        "Ext.": "GCD",
+                        "Description": "General content descriptor",
+                        "Used by": "Wireless devices"
+                    },
+                    {
+                        "Ext.": "GCD",
+                        "Description": "Generic Cadd drawing",
+                        "Used by": "Generic Cadd, Visual Cadd"
+                    },
+                    {
+                        "Ext.": "GCF",
+                        "Description": "Game cache file",
+                        "Used by": "Steam content delivery system"
+                    },
+                    {
+                        "Ext.": "GCH",
+                        "Description": "GNU preprocessed C++ header file",
+                        "Used by": "GNU C++ compiler"
+                    },
+                    {
+                        "Ext.": "GCI",
+                        "Description": "Nintendo GameCube save file",
+                        "Used by": "Nintendo GameCube"
+                    },
+                    {
+                        "Ext.": "GCW",
+                        "Description": "Microsoft Mathematics Worksheet",
+                        "Used by": "Microsoft Mathematics"
+                    },
+                    {
+                        "Ext.": "GCX",
+                        "Description": "Graph file",
+                        "Used by": "Mac OS X Grapher"
+                    },
+                    {
+                        "Ext.": "GD3",
+                        "Description": "Game Doctor Super NES ROM image",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "GDF",
+                        "Description": "General Data Format for Biomedical Signals",
+                        "Used by": "Biomedical signal processing, Brain Computer Interfaces"
+                    },
+                    {
+                        "Ext.": "GDF",
+                        "Description": "Dictionary file",
+                        "Used by": "GEOS"
+                    },
+                    {
+                        "Ext.": "GDF",
+                        "Description": "Geographical Data Format",
+                        "Used by": "Various mapping software"
+                    },
+                    {
+                        "Ext.": "GDF",
+                        "Description": "IBM Graphics Data Format",
+                        "Used by": "Legacy IBM systems"
+                    },
+                    {
+                        "Ext.": "GDL",
+                        "Description": "Data",
+                        "Used by": "ArchiCAD model"
+                    },
+                    {
+                        "Ext.": "GDS",
+                        "Description": "McDonnell-Douglas Things",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "GDT",
+                        "Description": "Ger\u00c3\u00a4tedatentransfer, an xDT application",
+                        "Used by": "Healthcare providers in Germany"
+                    },
+                    {
+                        "Ext.": "GE",
+                        "Description": "GEcho config file",
+                        "Used by": "GEcho"
+                    },
+                    {
+                        "Ext.": "GED",
+                        "Description": "GEDCOM",
+                        "Used by": "Genealogy data exchange"
+                    },
+                    {
+                        "Ext.": "GED",
+                        "Description": "Native format for all A&L products since 1983",
+                        "Used by": "Arts & Letters"
+                    },
+                    {
+                        "Ext.": "GED",
+                        "Description": "GoldED for DOS compiled config file",
+                        "Used by": "GOLDED.EXE"
+                    },
+                    {
+                        "Ext.": "GED",
+                        "Description": "Graphics editor file",
+                        "Used by": "EnerGraphics"
+                    },
+                    {
+                        "Ext.": "GED",
+                        "Description": "Game Editor Data / project file",
+                        "Used by": "Game Editor"
+                    },
+                    {
+                        "Ext.": "GEM",
+                        "Description": "Vector graphics file",
+                        "Used by": "GEM - Ventura Publisher"
+                    },
+                    {
+                        "Ext.": "GEN",
+                        "Description": "Compiled template",
+                        "Used by": "dBASE Application Generator"
+                    },
+                    {
+                        "Ext.": "GEN",
+                        "Description": "Generated text",
+                        "Used by": "Ventura Publisher"
+                    },
+                    {
+                        "Ext.": "GENBANK",
+                        "Description": "GenBank flat file",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "GEO",
+                        "Description": "Geode",
+                        "Used by": "Geoworks"
+                    },
+                    {
+                        "Ext.": "GEO",
+                        "Description": "GEOS specific file (application)",
+                        "Used by": "GEOS"
+                    },
+                    {
+                        "Ext.": "GEO",
+                        "Description": "GoldED for OS/2 compiled config file",
+                        "Used by": "GED2.EXE"
+                    },
+                    {
+                        "Ext.": "GEX",
+                        "Description": "GEcho config file",
+                        "Used by": "GEcho"
+                    },
+                    {
+                        "Ext.": "GFB",
+                        "Description": "Compressed GIF image created by GIFBLAST",
+                        "Used by": "gifblast.exe"
+                    },
+                    {
+                        "Ext.": "GFF",
+                        "Description": "General feature format",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "GFO",
+                        "Description": "SGI Radiosity",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "GFT",
+                        "Description": "Font",
+                        "Used by": "NeoPaint"
+                    },
+                    {
+                        "Ext.": "GFT",
+                        "Description": "GEM-translator font file",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "GFX",
+                        "Description": "Instant Artist graphics Files",
+                        "Used by": "Instant Artist"
+                    },
+                    {
+                        "Ext.": "GFX",
+                        "Description": "PCBoard @X-coded colorful text",
+                        "Used by": "GFX2COM - GFX2EXE"
+                    },
+                    {
+                        "Ext.": "GHO",
+                        "Description": "Norton Ghost File (first file)",
+                        "Used by": "Symantec"
+                    },
+                    {
+                        "Ext.": "GHS",
+                        "Description": "Norton Ghost File (split file)",
+                        "Used by": "Symantec"
+                    },
+                    {
+                        "Ext.": "GHW",
+                        "Description": "GHDL Wave file",
+                        "Used by": "GHDL/GTKWave data file"
+                    },
+                    {
+                        "Ext.": "GI",
+                        "Description": "Disk image",
+                        "Used by": "Roxio"
+                    },
+                    {
+                        "Ext.": "GIB",
+                        "Description": "Chart",
+                        "Used by": "Graph-in-the-Box"
+                    },
+                    {
+                        "Ext.": "GIB",
+                        "Description": "GIMP animated brush",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "GID",
+                        "Description": "Global index of old Windows Help file",
+                        "Used by": "Windows 3.0 - XP"
+                    },
+                    {
+                        "Ext.": "GIF",
+                        "Description": "Compuserves' Graphics Interchange Format (bitmapped graphics)",
+                        "Used by": "QPeg - Display - CompuShow"
+                    },
+                    {
+                        "Ext.": "GIW",
+                        "Description": "Presentation",
+                        "Used by": "Graph-in-the-Box for Windows"
+                    },
+                    {
+                        "Ext.": "GKH",
+                        "Description": "Ensoniq Disk Image (VFX, SD, EPS, ASR, TS)",
+                        "Used by": "Ensoniq"
+                    },
+                    {
+                        "Ext.": "GKS",
+                        "Description": "Graphics Kernel System",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "GL",
+                        "Description": "Animation format",
+                        "Used by": "grasprt.exe, PV"
+                    },
+                    {
+                        "Ext.": "GL",
+                        "Description": "Animation",
+                        "Used by": "GRASP GRAphical System for Presentation"
+                    },
+                    {
+                        "Ext.": "GLB",
+                        "Description": "Global module in Basic programs",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "GLM",
+                        "Description": "Datafile, KernelCAD model",
+                        "Used by": "Glim, KernelCAD"
+                    },
+                    {
+                        "Ext.": "GLO",
+                        "Description": "Global module in Basic programs",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "GLS",
+                        "Description": "Datafile",
+                        "Used by": "Across"
+                    },
+                    {
+                        "Ext.": "GLY",
+                        "Description": "Winword Glossary",
+                        "Used by": "Microsoft Word"
+                    },
+                    {
+                        "Ext.": "GM6",
+                        "Description": "GameMaker Editable file as of version 6.x",
+                        "Used by": "Game Maker"
+                    },
+                    {
+                        "Ext.": "GM81",
+                        "Description": "GameMaker Editable file as of version 8.1.x",
+                        "Used by": "Game Maker"
+                    },
+                    {
+                        "Ext.": "GMD",
+                        "Description": "GameMaker Editable file up to version 5.x",
+                        "Used by": "Game Maker"
+                    },
+                    {
+                        "Ext.": "GMF",
+                        "Description": "CGM graphics file",
+                        "Used by": "APPLAUSE"
+                    },
+                    {
+                        "Ext.": "GMK",
+                        "Description": "GameMaker Editable file as of version 7.x or 8.x",
+                        "Used by": "Game Maker"
+                    },
+                    {
+                        "Ext.": "GML",
+                        "Description": "GameMaker GML script file",
+                        "Used by": "Game Maker"
+                    },
+                    {
+                        "Ext.": "GML",
+                        "Description": "Geography Markup Language File",
+                        "Used by": "Geography Markup Language"
+                    },
+                    {
+                        "Ext.": "GMOD",
+                        "Description": "Data",
+                        "Used by": "Golgotha 3D model"
+                    },
+                    {
+                        "Ext.": "GMP",
+                        "Description": "Geomorph tile map",
+                        "Used by": "SPX"
+                    },
+                    {
+                        "Ext.": "GMS",
+                        "Description": "Ghost Mouse Script",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "GMS",
+                        "Description": "Gesture and Motion File Formats",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "GMT",
+                        "Description": "Gene Matrix Transposed",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "GMT",
+                        "Description": "data",
+                        "Used by": "RFactor car physics"
+                    },
+                    {
+                        "Ext.": "GMX",
+                        "Description": "GameMaker:Studio Editable File as of 1.x",
+                        "Used by": "Game Maker"
+                    },
+                    {
+                        "Ext.": "GND",
+                        "Description": "GNUnet directory file",
+                        "Used by": "gnunet-fs"
+                    },
+                    {
+                        "Ext.": "GO",
+                        "Description": "Go source code file",
+                        "Used by": "Golang"
+                    },
+                    {
+                        "Ext.": "GOC",
+                        "Description": "Goc source code file",
+                        "Used by": "Geoworks"
+                    },
+                    {
+                        "Ext.": "GOE",
+                        "Description": "GOES graphic file",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "GOH",
+                        "Description": "Goc header file",
+                        "Used by": "Geoworks"
+                    },
+                    {
+                        "Ext.": "GP",
+                        "Description": "Geode parameter file",
+                        "Used by": "Geoworks Glue"
+                    },
+                    {
+                        "Ext.": "GP",
+                        "Description": "Great Programmable Calculator script source code",
+                        "Used by": "PARI/GP"
+                    },
+                    {
+                        "Ext.": "GP4",
+                        "Description": "data",
+                        "Used by": "Grand Prix 4 car physics"
+                    },
+                    {
+                        "Ext.": "GP5",
+                        "Description": "Guitar Pro 5 song",
+                        "Used by": "Guitar Pro 5"
+                    },
+                    {
+                        "Ext.": "GPH",
+                        "Description": "Graph",
+                        "Used by": "Lotus 1-2-3/G"
+                    },
+                    {
+                        "Ext.": "GPK",
+                        "Description": "Omnigo program package",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "GPL",
+                        "Description": "GIMP palette file (text)",
+                        "Used by": "GIMP, Inkscape"
+                    },
+                    {
+                        "Ext.": "GPX",
+                        "Description": "GPS eXchange Format",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "GR2",
+                        "Description": "Screen driver",
+                        "Used by": "Windows 3.x"
+                    },
+                    {
+                        "Ext.": "GRA",
+                        "Description": "Datafile",
+                        "Used by": "SigmaPlot"
+                    },
+                    {
+                        "Ext.": "GrADS",
+                        "Description": "Metafile",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "GRAFFLE",
+                        "Description": "OmniGraffle graph file",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "GRASP",
+                        "Description": "Graphical System for Presentation",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "GRB",
+                        "Description": "T-FLEX CAD file",
+                        "Used by": "Top Systems"
+                    },
+                    {
+                        "Ext.": "GRB",
+                        "Description": "MS-DOS Shell Monitor file",
+                        "Used by": "MS-DOS 5"
+                    },
+                    {
+                        "Ext.": "GRD",
+                        "Description": "Drivers for GRX (graphics library)",
+                        "Used by": "GRX (c) Free Soft. Found."
+                    },
+                    {
+                        "Ext.": "GRDNT",
+                        "Description": "Image format used in the core of some very obscure customized operating systems to represent gradients; see also SCTOR",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "GRE",
+                        "Description": "data",
+                        "Used by": "Grenoble Thermal ellipsoids Plot Program"
+                    },
+                    {
+                        "Ext.": "GREENFOOT",
+                        "Description": "Greenfoot Project",
+                        "Used by": "Greenfoot"
+                    },
+                    {
+                        "Ext.": "GRF",
+                        "Description": "Graph file",
+                        "Used by": "Graph Plus, DPlot, and Charisma"
+                    },
+                    {
+                        "Ext.": "GRFT",
+                        "Description": "Graph definition text file",
+                        "Used by": "SELDM Postprocessor"
+                    },
+                    {
+                        "Ext.": "GRIB",
+                        "Description": "Gridded Binary",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "GRN",
+                        "Description": "Drivers for GRX (graphics library)",
+                        "Used by": "GRX (c) Free Soft. Found."
+                    },
+                    {
+                        "Ext.": "GRP",
+                        "Description": "Group file",
+                        "Used by": "Windows 3.x - Papyrus"
+                    },
+                    {
+                        "Ext.": "GRP",
+                        "Description": "Pictures group",
+                        "Used by": "PixBase"
+                    },
+                    {
+                        "Ext.": "GRY",
+                        "Description": "Graphics format (RAW GREYz)",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "GS",
+                        "Description": "Script written in Google Apps Script, used for automating tasks across online Google products",
+                        "Used by": "Google Apps Script"
+                    },
+                    {
+                        "Ext.": "GS1",
+                        "Description": "Presentation",
+                        "Used by": "GraphShow"
+                    },
+                    {
+                        "Ext.": "GS3",
+                        "Description": "data",
+                        "Used by": "GameStarter"
+                    },
+                    {
+                        "Ext.": "GSA",
+                        "Description": "data",
+                        "Used by": "Microsoft Office Groove Space Archive"
+                    },
+                    {
+                        "Ext.": "GSD",
+                        "Description": "Vector graphics",
+                        "Used by": "Professional Draw"
+                    },
+                    {
+                        "Ext.": "GSM",
+                        "Description": "Raw GSM 6.10 audio stream",
+                        "Used by": "AWAVE"
+                    },
+                    {
+                        "Ext.": "GSP",
+                        "Description": "Geometer's Sketchpad",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "GSW",
+                        "Description": "Worksheet",
+                        "Used by": "GraphShow"
+                    },
+                    {
+                        "Ext.": "GT7",
+                        "Description": "RS7 Guided tour",
+                        "Used by": "Redshift 7"
+                    },
+                    {
+                        "Ext.": "GTA",
+                        "Description": "data",
+                        "Used by": "Microsoft Office Groove Tool Archive"
+                    },
+                    {
+                        "Ext.": "GTF",
+                        "Description": "Gene transfer format",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "GUP",
+                        "Description": "",
+                        "Used by": "PopMail"
+                    },
+                    {
+                        "Ext.": "GV",
+                        "Description": "GrandView outline file",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "GVO",
+                        "Description": "Data",
+                        "Used by": "GFXFX Vector Object"
+                    },
+                    {
+                        "Ext.": "GWI",
+                        "Description": "Groupwise File",
+                        "Used by": "Local saved Email"
+                    },
+                    {
+                        "Ext.": "GXL",
+                        "Description": "Graphics library",
+                        "Used by": "Genus"
+                    },
+                    {
+                        "Ext.": "GXK",
+                        "Description": "Secure Data encryption Format",
+                        "Used by": "Galaxkey"
+                    },
+                    {
+                        "Ext.": "GZ",
+                        "Description": "Archive",
+                        "Used by": "GNU zip - WinZipNT"
+                    },
+                    {
+                        "Ext.": "GZR",
+                        "Description": "data",
+                        "Used by": "GunZ action replay"
+                    }
+                ]
+            },
+            {
+                "label": "H",
+                "records": [
+                    {
+                        "Ext.": "H!",
+                        "Description": "On-line help file",
+                        "Used by": "Flambeaux Help! Display Engine"
+                    },
+                    {
+                        "Ext.": "H!",
+                        "Description": "Pertext database",
+                        "Used by": "HELP.EXE"
+                    },
+                    {
+                        "Ext.": "H--",
+                        "Description": "C\u00e2\u0080\u0094language header",
+                        "Used by": "Sphinx C--"
+                    },
+                    {
+                        "Ext.": "H",
+                        "Description": "Header file (usually C language)",
+                        "Used by": "Watcom C/C++"
+                    },
+                    {
+                        "Ext.": "H++",
+                        "Description": "Header file",
+                        "Used by": "C++"
+                    },
+                    {
+                        "Ext.": "HA",
+                        "Description": "Archive",
+                        "Used by": "HA"
+                    },
+                    {
+                        "Ext.": "HACK",
+                        "Description": "Source file for the programming language hack",
+                        "Used by": "The HHVM[3]"
+                    },
+                    {
+                        "Ext.": "HAL",
+                        "Description": "Data file",
+                        "Used by": "Hyper Access Lite OS/2"
+                    },
+                    {
+                        "Ext.": "HAM",
+                        "Description": "Disk Drivers NPA",
+                        "Used by": "Novell NetWare"
+                    },
+                    {
+                        "Ext.": "HAM",
+                        "Description": "Hold And Modify",
+                        "Used by": "Deluxe Paint image file"
+                    },
+                    {
+                        "Ext.": "HAP",
+                        "Description": "Archive",
+                        "Used by": "HAP3"
+                    },
+                    {
+                        "Ext.": "HAR",
+                        "Description": "HTTP Archive format (JSON-format web-browser log)",
+                        "Used by": "W3C draft standard"
+                    },
+                    {
+                        "Ext.": "HBC",
+                        "Description": "Compressed Archive File (Shrink Algorithm)",
+                        "Used by": "Hyperbac"
+                    },
+                    {
+                        "Ext.": "HBC",
+                        "Description": "Compressed Archive File (Shrink Fast Algorithm)",
+                        "Used by": "Hyperbac"
+                    },
+                    {
+                        "Ext.": "HBE",
+                        "Description": "Compressed, Encrypted Archive File (Shrink & AES256-bit Encryption)",
+                        "Used by": "Hyperbac"
+                    },
+                    {
+                        "Ext.": "HBK",
+                        "Description": "MathCAD handbook",
+                        "Used by": "MathCAD"
+                    },
+                    {
+                        "Ext.": "HC",
+                        "Description": "Header file",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "HCG",
+                        "Description": "Document",
+                        "Used by": "HCLab"
+                    },
+                    {
+                        "Ext.": "HCGS",
+                        "Description": "Document",
+                        "Used by": "HCLab"
+                    },
+                    {
+                        "Ext.": "HDD",
+                        "Description": "data",
+                        "Used by": "disk image"
+                    },
+                    {
+                        "Ext.": "HDD",
+                        "Description": "HotDisc Designer label"
+                    },
+                    {
+                        "Ext.": "HDF",
+                        "Description": "Amiga Hard Disk Image"
+                    },
+                    {
+                        "Ext.": "HDF",
+                        "Description": "Help file",
+                        "Used by": "Help Development Kit"
+                    },
+                    {
+                        "Ext.": "HDF",
+                        "Description": "Hierarchical Data File graphics file",
+                        "Used by": "SDSC Image Tools"
+                    },
+                    {
+                        "Ext.": "HDL",
+                        "Description": "Alternate download file listing",
+                        "Used by": "Procomm Plus"
+                    },
+                    {
+                        "Ext.": "HDMP",
+                        "Description": "heap dumpfile",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "HDR",
+                        "Description": "Datafile",
+                        "Used by": "Egret"
+                    },
+                    {
+                        "Ext.": "HDR",
+                        "Description": "Message header text",
+                        "Used by": "Procomm Plus - 1st Reader"
+                    },
+                    {
+                        "Ext.": "HDR",
+                        "Description": "PC-File+ Database header",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "HDR",
+                        "Description": "SPOT image file",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "HDS",
+                        "Description": "Hierarchical Data System",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "HDW",
+                        "Description": "Vector graphics",
+                        "Used by": "Harvard Draw"
+                    },
+                    {
+                        "Ext.": "HDX",
+                        "Description": "Help index",
+                        "Used by": "AutoCAD - Zortech C++"
+                    },
+                    {
+                        "Ext.": "HDZ",
+                        "Description": "Amiga Zip compressed Hard Disk Image"
+                    },
+                    {
+                        "Ext.": "HEP",
+                        "Description": "Novell Help Librarian Data File",
+                        "Used by": "Novell NetWare"
+                    },
+                    {
+                        "Ext.": "HEX",
+                        "Description": "Hex dump",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "HFI",
+                        "Description": "HP Font Info file",
+                        "Used by": "GEM"
+                    },
+                    {
+                        "Ext.": "HGL",
+                        "Description": "Highlight groups definitions",
+                        "Used by": "DN"
+                    },
+                    {
+                        "Ext.": "HGL",
+                        "Description": "HP Graphics Language graphics file",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "HH",
+                        "Description": "C++ header file",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "HHH",
+                        "Description": "Precompiled header file",
+                        "Used by": "Power C"
+                    },
+                    {
+                        "Ext.": "HHP",
+                        "Description": "Help information for remote users",
+                        "Used by": "Procomm Plus"
+                    },
+                    {
+                        "Ext.": "HHP",
+                        "Description": "Microsoft HTML Help project",
+                        "Used by": "Microsoft HTML Help Workshop and Compiler"
+                    },
+                    {
+                        "Ext.": "HI",
+                        "Description": "Game high scores table",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "HIN",
+                        "Description": "Molecule",
+                        "Used by": "HyperChem"
+                    },
+                    {
+                        "Ext.": "HIS",
+                        "Description": "History of executing/viewing/editing",
+                        "Used by": "DN"
+                    },
+                    {
+                        "Ext.": "HIS",
+                        "Description": "Yard Information File",
+                        "Used by": "FYM"
+                    },
+                    {
+                        "Ext.": "HKM",
+                        "Description": "Stores sound in a bitmapped graphics file",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "HLB",
+                        "Description": "Help library",
+                        "Used by": "VAX"
+                    },
+                    {
+                        "Ext.": "HLP",
+                        "Description": "old Windows Help file",
+                        "Used by": "Windows 3.0 - XP, Help Explorer Viewer"
+                    },
+                    {
+                        "Ext.": "HLX",
+                        "Description": "Multi Edit help file",
+                        "Used by": "MultiEdit 5.0"
+                    },
+                    {
+                        "Ext.": "HLZ",
+                        "Description": "Multi Edit packed help file",
+                        "Used by": "MultiEdit"
+                    },
+                    {
+                        "Ext.": "HMI",
+                        "Description": "Music format (MIDI)",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "HMM",
+                        "Description": "Alternate Mail Read option menu",
+                        "Used by": "Procomm Plus"
+                    },
+                    {
+                        "Ext.": "HMP",
+                        "Description": "Music format (MIDI)",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "HMP",
+                        "Description": "Hump Setup File - Obsolete as of version 2.4 (See SET and SWT files)",
+                        "Used by": "FYM"
+                    },
+                    {
+                        "Ext.": "HNC",
+                        "Description": "CNC program files Heidenhain (?) dialog",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "HOF",
+                        "Description": "Hall Of Fame (game scores)",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "HOM",
+                        "Description": "CAD Software Data File",
+                        "Used by": "PLXHOME"
+                    },
+                    {
+                        "Ext.": "HP",
+                        "Description": "Printout file for HP printers/plotters (HP/GL)",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "HP8",
+                        "Description": "ASCII text HP Roman8 character set",
+                        "Used by": "NewWave Write"
+                    },
+                    {
+                        "Ext.": "HP9",
+                        "Description": "ASCII text HP Roman9 character set",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "HPF",
+                        "Description": "HP LaserJet fonts",
+                        "Used by": "PageMaker"
+                    },
+                    {
+                        "Ext.": "HPG",
+                        "Description": "see HPGL",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "HPGL",
+                        "Description": "Plotter file vector graphics (Hewlett-Packard Graphics Language)",
+                        "Used by": "AutoCad - Harvard Graphics"
+                    },
+                    {
+                        "Ext.": "HPI",
+                        "Description": "Font information file",
+                        "Used by": "GEM"
+                    },
+                    {
+                        "Ext.": "HPJ",
+                        "Description": "Help project",
+                        "Used by": "Microsoft Help Compiler for Windows - HC.EXE"
+                    },
+                    {
+                        "Ext.": "HPK",
+                        "Description": "Archive",
+                        "Used by": "HPACK"
+                    },
+                    {
+                        "Ext.": "HPM",
+                        "Description": "Alternate Main menu for privileged users",
+                        "Used by": "Procomm Plus"
+                    },
+                    {
+                        "Ext.": "HPM",
+                        "Description": "EMM text",
+                        "Used by": "HP NewWave"
+                    },
+                    {
+                        "Ext.": "HPM",
+                        "Description": "High Performance Map",
+                        "Used by": "Quaestor 1.x"
+                    },
+                    {
+                        "Ext.": "HPP",
+                        "Description": "C++ header file",
+                        "Used by": "Zortech C++ - Watcom C/C++"
+                    },
+                    {
+                        "Ext.": "HPPCL",
+                        "Description": "Hewlett-Packard Printer Control Language",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "HQX",
+                        "Description": "Archive (ASCII Mac)",
+                        "Used by": "BINHEX"
+                    },
+                    {
+                        "Ext.": "HRF",
+                        "Description": "Graphics file (Hitachi Raster Format)",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "HRM",
+                        "Description": "Alternate Main menu for limited/normal users",
+                        "Used by": "Procomm Plus"
+                    },
+                    {
+                        "Ext.": "HRZ",
+                        "Description": "Graphics format",
+                        "Used by": "SSTV"
+                    },
+                    {
+                        "Ext.": "HS2",
+                        "Description": "Monochrome image",
+                        "Used by": "Postering"
+                    },
+                    {
+                        "Ext.": "HSC",
+                        "Description": "2-op FM music",
+                        "Used by": "HSC tracker - hscplay.exe"
+                    },
+                    {
+                        "Ext.": "HSH",
+                        "Description": "Disk image hash file",
+                        "Used by": "DriveSnapshot"
+                    },
+                    {
+                        "Ext.": "HSI",
+                        "Description": "Handmade Software Inc. graphics file almost JPEG",
+                        "Used by": "Image Alchemy"
+                    },
+                    {
+                        "Ext.": "HST",
+                        "Description": "History file",
+                        "Used by": "Procomm Plus"
+                    },
+                    {
+                        "Ext.": "HTA",
+                        "Description": "HTML Application",
+                        "Used by": "Microsoft Windows"
+                    },
+                    {
+                        "Ext.": "HTM",
+                        "Description": "see HTML",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "HTML",
+                        "Description": "Hypertext Markup Language (WWW)",
+                        "Used by": "Netscape - Mosaic - many"
+                    },
+                    {
+                        "Ext.": "HTX",
+                        "Description": "Hypertext file",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "HUS",
+                        "Description": "Husqvarna Viking Embroidery Format",
+                        "Used by": "Embroidermodder"
+                    },
+                    {
+                        "Ext.": "HVE",
+                        "Description": "Hive file[4]",
+                        "Used by": "Microsoft"
+                    },
+                    {
+                        "Ext.": "HWA",
+                        "Description": "Hollywood applet",
+                        "Used by": "Hollywood"
+                    },
+                    {
+                        "Ext.": "HWD",
+                        "Description": "Presentation",
+                        "Used by": "Hollywood Designer"
+                    },
+                    {
+                        "Ext.": "HWP",
+                        "Description": "Hangul Word Processor Document",
+                        "Used by": "Hangul (word processor)"
+                    },
+                    {
+                        "Ext.": "HWS",
+                        "Description": "Hollywood script",
+                        "Used by": "Hollywood"
+                    },
+                    {
+                        "Ext.": "HXM",
+                        "Description": "Alternate Protocol Selection menu for all users",
+                        "Used by": "Procomm Plus"
+                    },
+                    {
+                        "Ext.": "HXS",
+                        "Description": "Microsoft Help 2 compiled help file",
+                        "Used by": "Microsoft Windows, Help Explorer Viewer"
+                    },
+                    {
+                        "Ext.": "HXX",
+                        "Description": "C++ header file",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "HY1",
+                        "Description": "Hyphenation algorithms",
+                        "Used by": "Ventura Publisher"
+                    },
+                    {
+                        "Ext.": "HY2",
+                        "Description": "Hyphenation algorithms",
+                        "Used by": "Ventura Publisher"
+                    },
+                    {
+                        "Ext.": "HYC",
+                        "Description": "Data",
+                        "Used by": "WordPerfect"
+                    },
+                    {
+                        "Ext.": "HYD",
+                        "Description": "Hyphenation dictionary",
+                        "Used by": "WordPerfect for Win"
+                    },
+                    {
+                        "Ext.": "HYP",
+                        "Description": "Archive",
+                        "Used by": "HYPER"
+                    }
+                ]
+            },
+            {
+                "label": "I",
+                "records": [
+                    {
+                        "Ext.": "I",
+                        "Description": "Preprocessor output file",
+                        "Used by": "Borland C Preprocessor"
+                    },
+                    {
+                        "Ext.": "I",
+                        "Description": "SWIG interface file",
+                        "Used by": "SWIG"
+                    },
+                    {
+                        "Ext.": "IAK",
+                        "Description": "Internet Access Kit",
+                        "Used by": "OS/2"
+                    },
+                    {
+                        "Ext.": "IAM",
+                        "Description": "Assembly file",
+                        "Used by": "Autodesk Inventor"
+                    },
+                    {
+                        "Ext.": "IAX",
+                        "Description": "Bitmap graphics (IBM Image Access eXecutive)",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "IAX",
+                        "Description": "data",
+                        "Used by": "InstallAnywhere.NET project"
+                    },
+                    {
+                        "Ext.": "IBE",
+                        "Description": "Index Braille Embosser",
+                        "Used by": "Special file for embosser from Index Braille"
+                    },
+                    {
+                        "Ext.": "IBG",
+                        "Description": "PDS graphic file",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "IBM",
+                        "Description": "Archive (Internal IBM only)",
+                        "Used by": "ARCHDOS"
+                    },
+                    {
+                        "Ext.": "IBRO",
+                        "Description": "Robot save file",
+                        "Used by": "Incredibots 2"
+                    },
+                    {
+                        "Ext.": "ICA",
+                        "Description": "Bitmap graphics (Image Object Content Architecture)",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "ICB",
+                        "Description": "Targa ICB bitmap graphics",
+                        "Used by": "many raster graphics editors"
+                    },
+                    {
+                        "Ext.": "ICC",
+                        "Description": "ICC profile",
+                        "Used by": "Color Configuration for color input or output devices"
+                    },
+                    {
+                        "Ext.": "ICE",
+                        "Description": "LHA Archive",
+                        "Used by": "Cracked LHA (old LHA), Total Commander"
+                    },
+                    {
+                        "Ext.": "ICFE",
+                        "Description": "IceFormula Equation Workspace",
+                        "Used by": "Penguin George"
+                    },
+                    {
+                        "Ext.": "ICFM",
+                        "Description": "IceFormula Math Workspace",
+                        "Used by": "Penguin George"
+                    },
+                    {
+                        "Ext.": "ICL",
+                        "Description": "Icon Library",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "ICM",
+                        "Description": "ICC configuration",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "ICN",
+                        "Description": "ICON source code file",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "ICO",
+                        "Description": "Icon file",
+                        "Used by": "ICONEDIT.EXE; Microsoft Windows"
+                    },
+                    {
+                        "Ext.": "ID",
+                        "Description": "Disk identification file",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "IDB",
+                        "Description": "IDA database",
+                        "Used by": "IDA"
+                    },
+                    {
+                        "Ext.": "IDB",
+                        "Description": "VC++ Minimum Rebuild Dependency File",
+                        "Used by": "Visual C++"
+                    },
+                    {
+                        "Ext.": "IDC",
+                        "Description": "IDA C language source",
+                        "Used by": "IDA"
+                    },
+                    {
+                        "Ext.": "IDE",
+                        "Description": "Borland C++ 4.x IDE project",
+                        "Used by": "BCW.EXE"
+                    },
+                    {
+                        "Ext.": "IDF",
+                        "Description": "MIDI instrument description or Intermediate Data Format",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "IDS",
+                        "Description": "IDA imported names format",
+                        "Used by": "IDA"
+                    },
+                    {
+                        "Ext.": "IDW",
+                        "Description": "Vector graphics",
+                        "Used by": "IntelliDraw"
+                    },
+                    {
+                        "Ext.": "IDW",
+                        "Description": "Drawing file",
+                        "Used by": "Autodesk Inventor"
+                    },
+                    {
+                        "Ext.": "IDX",
+                        "Description": "Index",
+                        "Used by": "many - FoxPro; also unrelated Quicken file format"
+                    },
+                    {
+                        "Ext.": "IFC",
+                        "Description": "Industry Foundation Classes (platform neutral, open file format used by BIM software). It is registered by ISO and is an official International Standard ISO 16739-1:2018.",
+                        "Used by": "BIM softwares[5]."
+                    },
+                    {
+                        "Ext.": "IFD",
+                        "Description": "Form",
+                        "Used by": "JetForm Design"
+                    },
+                    {
+                        "Ext.": "IFF",
+                        "Description": "Interchange Format File (IFF)",
+                        "Used by": "EA Software - Convert (C) Villena - Amiga"
+                    },
+                    {
+                        "Ext.": "IFF",
+                        "Description": "Sun TAAC Image File Format",
+                        "Used by": "SDSC Image Tool"
+                    },
+                    {
+                        "Ext.": "IFP",
+                        "Description": "Script",
+                        "Used by": "KnowledgeMan"
+                    },
+                    {
+                        "Ext.": "IFS",
+                        "Description": "Fractal image compressed file",
+                        "Used by": "Yuvpak"
+                    },
+                    {
+                        "Ext.": "IFS",
+                        "Description": "Iterated fractal system file",
+                        "Used by": "IFS Creation Kit, Apophysis"
+                    },
+                    {
+                        "Ext.": "IFS",
+                        "Description": "Installable file system",
+                        "Used by": "OS/2"
+                    },
+                    {
+                        "Ext.": "IGC",
+                        "Description": "Flight tracks downloaded from GPS devices in the International Gliding Commission's prescribed format"
+                    },
+                    {
+                        "Ext.": "IGES",
+                        "Description": "Initial Graphics Exchange Specification",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "IGF",
+                        "Description": "Inset Systems",
+                        "Used by": "GCGW"
+                    },
+                    {
+                        "Ext.": "IGF",
+                        "Description": "LasershowGen Frames",
+                        "Used by": "LasershowGen"
+                    },
+                    {
+                        "Ext.": "IGP",
+                        "Description": "LasershowGen Project",
+                        "Used by": "LasershowGen"
+                    },
+                    {
+                        "Ext.": "IHP",
+                        "Description": "Watcom help file",
+                        "Used by": "whelp.exe"
+                    },
+                    {
+                        "Ext.": "IHS",
+                        "Description": "Inbound History",
+                        "Used by": "Bink/+"
+                    },
+                    {
+                        "Ext.": "IIC",
+                        "Description": "Sertainty Identity File",
+                        "Used by": "Sertainty"
+                    },
+                    {
+                        "Ext.": "IIW",
+                        "Description": "Power Point Image Importer Wizard"
+                    },
+                    {
+                        "Ext.": "IL",
+                        "Description": "hDC Designer Icon Lin dll format",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "ILB",
+                        "Description": "Data",
+                        "Used by": "Scream Tracker"
+                    },
+                    {
+                        "Ext.": "ILG",
+                        "Description": "data",
+                        "Used by": "LaTeX Index Generation log"
+                    },
+                    {
+                        "Ext.": "ILK",
+                        "Description": "Outline of program's format",
+                        "Used by": "Microsoft ILink incremental linker"
+                    },
+                    {
+                        "Ext.": "ILX",
+                        "Description": "ILMTXT Scrolling Text File Viewer executable file",
+                        "Used by": "ILMTXT"
+                    },
+                    {
+                        "Ext.": "IM",
+                        "Description": "Auran Jet indexed mesh file",
+                        "Used by": "Trainz"
+                    },
+                    {
+                        "Ext.": "IM8",
+                        "Description": "Sun Raster graphics file",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "IMA",
+                        "Description": "Mirage vector graphics",
+                        "Used by": "EGO - Chart - Autumn"
+                    },
+                    {
+                        "Ext.": "IMA",
+                        "Description": "Disk image",
+                        "Used by": "WinImage"
+                    },
+                    {
+                        "Ext.": "IMG",
+                        "Description": "ADEX graphic file",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "IMG",
+                        "Description": "Disk Image",
+                        "Used by": "NC 5.0"
+                    },
+                    {
+                        "Ext.": "IMG",
+                        "Description": "GEM bitmapped graphics file",
+                        "Used by": "Ventura"
+                    },
+                    {
+                        "Ext.": "IMG",
+                        "Description": "Image for Windows/Image for DOS Disk image",
+                        "Used by": "TeraByte, Inc. dba TeraByte Unlimited"
+                    },
+                    {
+                        "Ext.": "IMG",
+                        "Description": "Vivid IMG file",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "IMI",
+                        "Description": "image",
+                        "Used by": "Magellan Meridian map"
+                    },
+                    {
+                        "Ext.": "IMI",
+                        "Description": "image",
+                        "Used by": "Magellan eXplorist map"
+                    },
+                    {
+                        "Ext.": "IMMODULES",
+                        "Description": "Module",
+                        "Used by": "GTK+"
+                    },
+                    {
+                        "Ext.": "IMP",
+                        "Description": "Spreadsheet",
+                        "Used by": "Lotus Improv"
+                    },
+                    {
+                        "Ext.": "IMQ",
+                        "Description": "Image presentation",
+                        "Used by": "ImageQ"
+                    },
+                    {
+                        "Ext.": "IMZ",
+                        "Description": "Disk image",
+                        "Used by": "WinImage"
+                    },
+                    {
+                        "Ext.": "IN",
+                        "Description": "Design II for Windows INput file",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "IN",
+                        "Description": "autoconf INput file",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "IN$",
+                        "Description": "Installation file",
+                        "Used by": "HP NewWave"
+                    },
+                    {
+                        "Ext.": "IN3",
+                        "Description": "Input device driver",
+                        "Used by": "Harvard Graphics 3.0"
+                    },
+                    {
+                        "Ext.": "INB",
+                        "Description": "Test script",
+                        "Used by": "Vermont HighTest"
+                    },
+                    {
+                        "Ext.": "INC",
+                        "Description": "Include file",
+                        "Used by": "several programming languages"
+                    },
+                    {
+                        "Ext.": "IND",
+                        "Description": "Data Index",
+                        "Used by": "dBASE IV"
+                    },
+                    {
+                        "Ext.": "INDD",
+                        "Description": "InDesign Document",
+                        "Used by": "Adobe InDesign"
+                    },
+                    {
+                        "Ext.": "INF",
+                        "Description": "Information text file (ASCII)",
+                        "Used by": "Sidecar file used by applications that need to store file metadata on filesystems that do not support the metadata natively"
+                    },
+                    {
+                        "Ext.": "INF",
+                        "Description": "Install script",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "INF",
+                        "Description": "OS/2 hypertext help system file",
+                        "Used by": "VIEW.EXE"
+                    },
+                    {
+                        "Ext.": "INF",
+                        "Description": "Type 1 LaserJet font information file",
+                        "Used by": "soft font installers"
+                    },
+                    {
+                        "Ext.": "INFO",
+                        "Description": "GNU info reader (output from Texinfo)",
+                        "Used by": "info (Unix)"
+                    },
+                    {
+                        "Ext.": "INFO",
+                        "Description": "Icon Data (Amiga)",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "INGR",
+                        "Description": "Intergraph Raster File Format",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "INI",
+                        "Description": "Initialization file",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "INK",
+                        "Description": "Pantone reference fills file",
+                        "Used by": "CorelDRAW"
+                    },
+                    {
+                        "Ext.": "INO",
+                        "Description": "Arduino file",
+                        "Used by": "Arduino"
+                    },
+                    {
+                        "Ext.": "INS",
+                        "Description": "Data",
+                        "Used by": "WordPerfect"
+                    },
+                    {
+                        "Ext.": "INS",
+                        "Description": "Ensoniq Instrument File",
+                        "Used by": "Ensoniq"
+                    },
+                    {
+                        "Ext.": "INS",
+                        "Description": "Installation script",
+                        "Used by": "1st Reader"
+                    },
+                    {
+                        "Ext.": "INS",
+                        "Description": "Instrument music file (Adlib)",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "INT",
+                        "Description": "Borland Interface Units",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "INT",
+                        "Description": "Program saved in Internal (semi-compiled) format",
+                        "Used by": "Signature"
+                    },
+                    {
+                        "Ext.": "INT",
+                        "Description": "Source of Borland interface module",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "INX",
+                        "Description": "Index",
+                        "Used by": "Foxbase"
+                    },
+                    {
+                        "Ext.": "IO",
+                        "Description": "Archive",
+                        "Used by": "CPIO"
+                    },
+                    {
+                        "Ext.": "IOB",
+                        "Description": "3d graphics database in TDDD format",
+                        "Used by": "Imagine"
+                    },
+                    {
+                        "Ext.": "IOC",
+                        "Description": "Organizational chart",
+                        "Used by": "Instant ORGcharting!"
+                    },
+                    {
+                        "Ext.": "ION",
+                        "Description": "4DOS DESCRIPT.ION file (file descriptions like long filenames, comments, or extended attributes)",
+                        "Used by": "4DOS, NDOS, 4OS2, 4NT, TC, TCC, VC, DN, ODN, NDN, Windows Commander, Total Commander, Double Commander, XnView, ACDSee, Newsbin Pro, V, as well as some CUI LIB-based applications"
+                    },
+                    {
+                        "Ext.": "IP",
+                        "Description": "Immortal Player file",
+                        "Used by": "Immortal Player"
+                    },
+                    {
+                        "Ext.": "IPA",
+                        "Description": "Apple iOS Application",
+                        "Used by": "iPhone, iPod touch, iPad"
+                    },
+                    {
+                        "Ext.": "IPC",
+                        "Description": "Intellitec Program Configuration - used to configure vehicle electronics",
+                        "Used by": "Intellitec"
+                    },
+                    {
+                        "Ext.": "IPF",
+                        "Description": "Interchangeable Preservation Format",
+                        "Used by": "SoftPres"
+                    },
+                    {
+                        "Ext.": "IPG",
+                        "Description": "iPod game file",
+                        "Used by": "iTunes and iPod"
+                    },
+                    {
+                        "Ext.": "IPH",
+                        "Description": "Hi-Res Image",
+                        "Used by": "InterPaint"
+                    },
+                    {
+                        "Ext.": "IPL",
+                        "Description": "Pantone Spot reference palette file",
+                        "Used by": "CorelDRAW"
+                    },
+                    {
+                        "Ext.": "IPN",
+                        "Description": "Presentation File",
+                        "Used by": "Autodesk Inventor"
+                    },
+                    {
+                        "Ext.": "IPN",
+                        "Description": "Intecplan project",
+                        "Used by": "Intecplan Business Plan Software"
+                    },
+                    {
+                        "Ext.": "IPS",
+                        "Description": "IPS Patching Format (International Patching System)[citation needed]",
+                        "Used by": "Rom hacking community"
+                    },
+                    {
+                        "Ext.": "IPSW",
+                        "Description": "iOS firmware file",
+                        "Used by": "iPhone, iPod touch, iPad, Apple TV"
+                    },
+                    {
+                        "Ext.": "IPT",
+                        "Description": "Part file",
+                        "Used by": "Autodesk Inventor"
+                    },
+                    {
+                        "Ext.": "IPT",
+                        "Description": "MultiColor Image",
+                        "Used by": "InterPaint"
+                    },
+                    {
+                        "Ext.": "IPT",
+                        "Description": "XnView IPTC template",
+                        "Used by": "XnView, XnViewMP"
+                    },
+                    {
+                        "Ext.": "IPTC",
+                        "Description": "XnView XML-based IPTC template",
+                        "Used by": "XnViewMP"
+                    },
+                    {
+                        "Ext.": "IPYNB",
+                        "Description": "IPython Notebook",
+                        "Used by": "Jupyter Notebook"
+                    },
+                    {
+                        "Ext.": "IRRMESH",
+                        "Description": "static irrMesh files",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "IRS",
+                        "Description": "Resource (WordPerfect) standard.irs",
+                        "Used by": "WordPerfect"
+                    },
+                    {
+                        "Ext.": "IRT",
+                        "Description": "Data",
+                        "Used by": "IRIT 3D model"
+                    },
+                    {
+                        "Ext.": "IRTR",
+                        "Description": "Graphicon-2000 Interactive Real-Time PHIGS",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "ISD",
+                        "Description": "Spelling Checker dictionary",
+                        "Used by": "RapidFile"
+                    },
+                    {
+                        "Ext.": "ISH",
+                        "Description": "Archive",
+                        "Used by": "ISH"
+                    },
+                    {
+                        "Ext.": "ISMA",
+                        "Description": "Output Video file",
+                        "Used by": "Islam Abusa'a Software"
+                    },
+                    {
+                        "Ext.": "ISN",
+                        "Description": "InstallShield Installer Source File",
+                        "Used by": "InstallShield"
+                    },
+                    {
+                        "Ext.": "ISO",
+                        "Description": "ISO-9660 table",
+                        "Used by": "see: List of ISO image software"
+                    },
+                    {
+                        "Ext.": "IST",
+                        "Description": "Digitrakker Instrument File",
+                        "Used by": "AWAVE"
+                    },
+                    {
+                        "Ext.": "IT",
+                        "Description": "Impulse Tracker music file",
+                        "Used by": "Impulse Tracker"
+                    },
+                    {
+                        "Ext.": "IT",
+                        "Description": "Settings",
+                        "Used by": "intalk"
+                    },
+                    {
+                        "Ext.": "ITDB",
+                        "Description": "iTunes Database File",
+                        "Used by": "iTunes"
+                    },
+                    {
+                        "Ext.": "ITF",
+                        "Description": "Technical indicator, trading system or market scan source code file",
+                        "Used by": "ProRealTime"
+                    },
+                    {
+                        "Ext.": "ITF",
+                        "Description": "Interface file",
+                        "Used by": "JPI TopSpeed Pascal"
+                    },
+                    {
+                        "Ext.": "ITL",
+                        "Description": "iTunes music library",
+                        "Used by": "iTunes"
+                    },
+                    {
+                        "Ext.": "ITLP",
+                        "Description": "iTunes LP",
+                        "Used by": "iTunes"
+                    },
+                    {
+                        "Ext.": "ITN",
+                        "Description": "Itinerary file",
+                        "Used by": "TomTom PNDs"
+                    },
+                    {
+                        "Ext.": "ITR",
+                        "Description": "i-Tree project files",
+                        "Used by": "i-Tree Software Suite"
+                    },
+                    {
+                        "Ext.": "ITT",
+                        "Description": "IconTweaker Theme",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "IV",
+                        "Description": "SGI Inventor",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "IV-VRML",
+                        "Description": "Inventor VRML Format",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "IVE",
+                        "Description": "OpenSceneGraph 3D model"
+                    },
+                    {
+                        "Ext.": "IVI",
+                        "Description": "Image file",
+                        "Used by": "ImmerVision"
+                    },
+                    {
+                        "Ext.": "IVL",
+                        "Description": "Lensflare file",
+                        "Used by": "ImmerVision"
+                    },
+                    {
+                        "Ext.": "IVP",
+                        "Description": "Panorama file",
+                        "Used by": "ImmerVision"
+                    },
+                    {
+                        "Ext.": "IVU",
+                        "Description": "User Interface file",
+                        "Used by": "ImmerVision"
+                    },
+                    {
+                        "Ext.": "IW",
+                        "Description": "Presentation flowchart",
+                        "Used by": "IconAuthor - HSC InterActive"
+                    },
+                    {
+                        "Ext.": "IWA",
+                        "Description": "Text file",
+                        "Used by": "IBM Writing Assistant"
+                    },
+                    {
+                        "Ext.": "IWB",
+                        "Description": "Information WorkBench",
+                        "Used by": "Prodeo"
+                    },
+                    {
+                        "Ext.": "IWD",
+                        "Description": "Call of Duty Map - Game Data Archive",
+                        "Used by": "Activision, Inc."
+                    },
+                    {
+                        "Ext.": "IWP",
+                        "Description": "Text file",
+                        "Used by": "Wang"
+                    },
+                    {
+                        "Ext.": "IX",
+                        "Description": "data",
+                        "Used by": "dtSearch index"
+                    },
+                    {
+                        "Ext.": "IZT",
+                        "Description": "Izl binary token file",
+                        "Used by": "IZL"
+                    }
+                ]
+            },
+            {
+                "label": "J",
+                "records": [
+                    {
+                        "Ext.": "J2C",
+                        "Description": "JPEG 2000 image",
+                        "Used by": "JPEG 2000"
+                    },
+                    {
+                        "Ext.": "JA",
+                        "Description": "Mozilla archive omni.ja",
+                        "Used by": "Mozilla Firefox 4, Thunderbird"
+                    },
+                    {
+                        "Ext.": "JAD",
+                        "Description": "Java Application Descriptor",
+                        "Used by": "Mobile JAR, Java Games and Applications"
+                    },
+                    {
+                        "Ext.": "JAM",
+                        "Description": "Jam messagebase",
+                        "Used by": "FTN software"
+                    },
+                    {
+                        "Ext.": "JAM",
+                        "Description": "Jam music score",
+                        "Used by": "Jam"
+                    },
+                    {
+                        "Ext.": "JAR",
+                        "Description": "Java archive",
+                        "Used by": "JAR, Java Games and Applications"
+                    },
+                    {
+                        "Ext.": "JAS",
+                        "Description": "see JASC",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "JASC",
+                        "Description": "Graphics format (JASC)",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "JAV",
+                        "Description": "see JAVA",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "JAVA",
+                        "Description": "Java source code file",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "JBD",
+                        "Description": "Datafile",
+                        "Used by": "SigmaScan"
+                    },
+                    {
+                        "Ext.": "JBIG",
+                        "Description": "Joint Bilevel Image Group",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "JBX",
+                        "Description": "Project file",
+                        "Used by": "Project Scheduler 4"
+                    },
+                    {
+                        "Ext.": "JCN",
+                        "Description": "JobClock.Net Synch File"
+                    },
+                    {
+                        "Ext.": "JEF",
+                        "Description": "Janome Embroidery Format",
+                        "Used by": "Embroidermodder"
+                    },
+                    {
+                        "Ext.": "JET",
+                        "Description": "Fax",
+                        "Used by": "Hybrid JetFax"
+                    },
+                    {
+                        "Ext.": "JFF",
+                        "Description": "see JFIF",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "JFIF",
+                        "Description": "JPEG File Interchange Format",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "JIF",
+                        "Description": "see JFIF",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "JKS",
+                        "Description": "Java Keystore",
+                        "Used by": "Java"
+                    },
+                    {
+                        "Ext.": "JMS",
+                        "Description": "Music format (JMusic file)",
+                        "Used by": "UltraForce"
+                    },
+                    {
+                        "Ext.": "JNLP",
+                        "Description": "Java Network Launching Protocol",
+                        "Used by": "Java Web Start"
+                    },
+                    {
+                        "Ext.": "JNR",
+                        "Description": "Jinx! file recording",
+                        "Used by": "Jinx! LED Matrix control"
+                    },
+                    {
+                        "Ext.": "JNX",
+                        "Description": "Saved data",
+                        "Used by": "Jinx! LED Matrix control"
+                    },
+                    {
+                        "Ext.": "JNX",
+                        "Description": "Garmin raster map file",
+                        "Used by": "BirdsEye service (subscription only)"
+                    },
+                    {
+                        "Ext.": "JOB",
+                        "Description": "Gravostyle engraving pattern file",
+                        "Used by": "Gravostyle/Gravograph"
+                    },
+                    {
+                        "Ext.": "JOB",
+                        "Description": "QUEUE output file",
+                        "Used by": "RT-11"
+                    },
+                    {
+                        "Ext.": "JOR",
+                        "Description": "Journal file SQL",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "JOU",
+                        "Description": "Journal backup",
+                        "Used by": "VAX Edt editor"
+                    },
+                    {
+                        "Ext.": "JP2",
+                        "Description": "JPEG 2000 image",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "JPC",
+                        "Description": "Graphics",
+                        "Used by": "Japan PIC"
+                    },
+                    {
+                        "Ext.": "JPEG",
+                        "Description": "Joint Photographic Experts Group graphics file format",
+                        "Used by": "QPeg - FullView - Display"
+                    },
+                    {
+                        "Ext.": "JPG",
+                        "Description": "Joint Photographic Group",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "JPS",
+                        "Description": "backup of startup files (AUTOEXEC.BAT, CONFIG.SYS, 4DOS.INI) by installation of 4DOS (JP Software)",
+                        "Used by": "4DOS"
+                    },
+                    {
+                        "Ext.": "JRE",
+                        "Description": "Java Runtime Environment",
+                        "Used by": "Java"
+                    },
+                    {
+                        "Ext.": "JRN",
+                        "Description": "JMP journal",
+                        "Used by": "JMP"
+                    },
+                    {
+                        "Ext.": "JS",
+                        "Description": "JavaScript file",
+                        "Used by": "script in HTML pages"
+                    },
+                    {
+                        "Ext.": "JSON",
+                        "Description": "JSON (JavaScript Object Notation)",
+                        "Used by": "Ajax"
+                    },
+                    {
+                        "Ext.": "JSONLD",
+                        "Description": "JSON-LD, a JSON-based Serialization for Linked Data",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "JSP",
+                        "Description": "JavaServer Pages",
+                        "Used by": "Dynamic pages running Web servers using Java technology"
+                    },
+                    {
+                        "Ext.": "JSX",
+                        "Description": "JavaScript XML, an extension to the JavaScript language syntax",
+                        "Used by": "React components"
+                    },
+                    {
+                        "Ext.": "JTF",
+                        "Description": "Fax",
+                        "Used by": "Hayes JT Fax"
+                    },
+                    {
+                        "Ext.": "JTF",
+                        "Description": "Graphics (TIFF file with JPEG compression)",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "JVX",
+                        "Description": "Data",
+                        "Used by": "JavaView object"
+                    },
+                    {
+                        "Ext.": "JW",
+                        "Description": "Text document",
+                        "Used by": "JustWrite"
+                    },
+                    {
+                        "Ext.": "JWL",
+                        "Description": "Library",
+                        "Used by": "JustWrite"
+                    },
+                    {
+                        "Ext.": "JZZ",
+                        "Description": "Spreadsheet",
+                        "Used by": "Jazz"
+                    }
+                ]
+            },
+            {
+                "label": "K",
+                "records": [
+                    {
+                        "Ext.": "K2A",
+                        "Description": "Data",
+                        "Used by": "Prince of Persia 3D object"
+                    },
+                    {
+                        "Ext.": "K3D",
+                        "Description": "Description of macro language 3DS",
+                        "Used by": "3DS"
+                    },
+                    {
+                        "Ext.": "K7Z",
+                        "Description": "Keysight 7-Zip File",
+                        "Used by": "Keysight PathWave FPGA"
+                    },
+                    {
+                        "Ext.": "KAP",
+                        "Description": "Map Info Sea Chart",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "KAR",
+                        "Description": "Music format (Karaoke)",
+                        "Used by": "ITune 1000.Corp"
+                    },
+                    {
+                        "Ext.": "KAR",
+                        "Description": "Precompiled .prg for KARAT",
+                        "Used by": "Rus. FOX+ 2.0"
+                    },
+                    {
+                        "Ext.": "KB",
+                        "Description": "Keyboard script",
+                        "Used by": "Borland C++ 4.5"
+                    },
+                    {
+                        "Ext.": "KB",
+                        "Description": "Program source",
+                        "Used by": "Knowledge Pro"
+                    },
+                    {
+                        "Ext.": "KB",
+                        "Description": "K-Brief in XML format",
+                        "Used by": "TCC's Set-Based Thinking\u00e2\u0084\u00a2 Tools"
+                    },
+                    {
+                        "Ext.": "KBA",
+                        "Description": "K-Brief Attachment",
+                        "Used by": "TCC's Set-Based Thinking\u00e2\u0084\u00a2 Tools"
+                    },
+                    {
+                        "Ext.": "KBASIC",
+                        "Description": "Source",
+                        "Used by": "KBasic"
+                    },
+                    {
+                        "Ext.": "KBD",
+                        "Description": "Keyboard mapping",
+                        "Used by": "LocoScript - Signature - Procomm Plus"
+                    },
+                    {
+                        "Ext.": "KBM",
+                        "Description": "Keyboard mapping",
+                        "Used by": "Reflection 4.0"
+                    },
+                    {
+                        "Ext.": "KBS",
+                        "Description": "K-Brief in Encrypted format",
+                        "Used by": "TCC's Set-Based Thinking\u00e2\u0084\u00a2 Tools"
+                    },
+                    {
+                        "Ext.": "KBZ",
+                        "Description": "K-Brief in Compressed format",
+                        "Used by": "TCC's Set-Based Thinking\u00e2\u0084\u00a2 Tools"
+                    },
+                    {
+                        "Ext.": "KCL",
+                        "Description": "Lisp source code",
+                        "Used by": "Kyoto Common Lisp"
+                    },
+                    {
+                        "Ext.": "KD",
+                        "Description": "Koara Document",
+                        "Used by": "Koara"
+                    },
+                    {
+                        "Ext.": "KDB",
+                        "Description": "KeePass 1.x database file",
+                        "Used by": "KeePass"
+                    },
+                    {
+                        "Ext.": "KDBX",
+                        "Description": "KeePass 2.x database file",
+                        "Used by": "KeePass"
+                    },
+                    {
+                        "Ext.": "KDC",
+                        "Description": "Kodak Digital Camera (graphics)",
+                        "Used by": "PhotoEnhancer by PictureWorks"
+                    },
+                    {
+                        "Ext.": "KEP",
+                        "Description": "(unknown)",
+                        "Used by": "(unknown)"
+                    },
+                    {
+                        "Ext.": "KEX",
+                        "Description": "Kedit Macro File",
+                        "Used by": "Kedit"
+                    },
+                    {
+                        "Ext.": "KEXT",
+                        "Description": "macOS Kernel Extension[6]",
+                        "Used by": "macOS"
+                    },
+                    {
+                        "Ext.": "KEY",
+                        "Description": "Datafile",
+                        "Used by": "Forecast Pro"
+                    },
+                    {
+                        "Ext.": "KEY",
+                        "Description": "Keynote presentation file",
+                        "Used by": "Keynote"
+                    },
+                    {
+                        "Ext.": "KEY",
+                        "Description": "Keyboard macros",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "KEY",
+                        "Description": "OS/2 archive .key-file (i.e. OS2.KEY)",
+                        "Used by": "OS/2"
+                    },
+                    {
+                        "Ext.": "KEY",
+                        "Description": "Security file e.g. Shareware Registration info"
+                    },
+                    {
+                        "Ext.": "KFN",
+                        "Description": "complex music format|[7]",
+                        "Used by": "Karafun Karaoke(R)"
+                    },
+                    {
+                        "Ext.": "KFX",
+                        "Description": "Kofax Group",
+                        "Used by": "GCGW"
+                    },
+                    {
+                        "Ext.": "KFDK",
+                        "Description": "Keysight PathWave FPGA Design File",
+                        "Used by": "Keysight PathWave FPGA"
+                    },
+                    {
+                        "Ext.": "KIT",
+                        "Description": "Power Chords drum kit file",
+                        "Used by": "Power Chord"
+                    },
+                    {
+                        "Ext.": "KMC",
+                        "Description": "KatzReview's MegaCrammer"
+                    },
+                    {
+                        "Ext.": "KML",
+                        "Description": "Kedit Macro Library Keyhole Markup Language",
+                        "Used by": "KeditGoogle Earth"
+                    },
+                    {
+                        "Ext.": "KMY",
+                        "Description": "data",
+                        "Used by": "KMyMoney"
+                    },
+                    {
+                        "Ext.": "KMZ",
+                        "Description": "Keyhole Markup Language (Zip compressed)",
+                        "Used by": "Google Earth"
+                    },
+                    {
+                        "Ext.": "Knn",
+                        "Description": "Database key file",
+                        "Used by": "Clarion"
+                    },
+                    {
+                        "Ext.": "KNO",
+                        "Description": "Personal Knowbase data file",
+                        "Used by": "Personal Knowbase"
+                    },
+                    {
+                        "Ext.": "KO",
+                        "Description": "linux kernel object file",
+                        "Used by": "linux kernel"
+                    },
+                    {
+                        "Ext.": "KODE",
+                        "Description": "Encrypted File",
+                        "Used by": "KodeFile"
+                    },
+                    {
+                        "Ext.": "KODU",
+                        "Description": "Kodu game save file",
+                        "Used by": "Kodu Game Lab"
+                    },
+                    {
+                        "Ext.": "KPL",
+                        "Description": "source code",
+                        "Used by": "Phrogram"
+                    },
+                    {
+                        "Ext.": "KPP",
+                        "Description": "Toolpad",
+                        "Used by": "SmartPad"
+                    },
+                    {
+                        "Ext.": "KPS",
+                        "Description": "IBM KIPS bitmap graphics",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "KR1",
+                        "Description": "Kurzweil 2000 sample file",
+                        "Used by": "AWAVE"
+                    },
+                    {
+                        "Ext.": "KR2",
+                        "Description": "Kurzweil 2000 sample file",
+                        "Used by": "AWAVE"
+                    },
+                    {
+                        "Ext.": "KRZ",
+                        "Description": "Kurzweil K2000 File",
+                        "Used by": "Kurzweil"
+                    },
+                    {
+                        "Ext.": "KS",
+                        "Description": "Source code",
+                        "Used by": "KonsolScript Document"
+                    },
+                    {
+                        "Ext.": "KS3",
+                        "Description": "Data",
+                        "Used by": "3D Forgastest Editor object"
+                    },
+                    {
+                        "Ext.": "KSM",
+                        "Description": "Pfaff Embroidery Format",
+                        "Used by": "Embroidermodder"
+                    },
+                    {
+                        "Ext.": "KT",
+                        "Description": "Kotlin source code",
+                        "Used by": "Kotlin Programming Language"
+                    },
+                    {
+                        "Ext.": "KDLG",
+                        "Description": "Datalog",
+                        "Used by": "KTuner"
+                    },
+                    {
+                        "Ext.": "KTU",
+                        "Description": "Know The Unknown Online Service Packs",
+                        "Used by": "Unknownsoft"
+                    },
+                    {
+                        "Ext.": "KWB",
+                        "Description": "Knowledge WorkBench",
+                        "Used by": "Prodeo"
+                    },
+                    {
+                        "Ext.": "KYB",
+                        "Description": "Keyboard mapping",
+                        "Used by": "FTP Software PC/TCP"
+                    }
+                ]
+            },
+            {
+                "label": "L",
+                "records": [
+                    {
+                        "Ext.": "L",
+                        "Description": "LEX source code file",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "L",
+                        "Description": "Linker directive file",
+                        "Used by": "WATCOM wlink"
+                    },
+                    {
+                        "Ext.": "L",
+                        "Description": "LISP source code file",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "LA0",
+                        "Description": "Datafile",
+                        "Used by": "SCUMM index file"
+                    },
+                    {
+                        "Ext.": "LAB",
+                        "Description": "Datafile",
+                        "Used by": "NCSS - SOLO"
+                    },
+                    {
+                        "Ext.": "LAB",
+                        "Description": "Mailing labels",
+                        "Used by": "Q+E for Microsoft Excel"
+                    },
+                    {
+                        "Ext.": "LACCDB",
+                        "Description": "Access lock file",
+                        "Used by": "Microsoft Access"
+                    },
+                    {
+                        "Ext.": "LAN",
+                        "Description": "Erdas image file",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "LAN",
+                        "Description": "LAN Drivers",
+                        "Used by": "Novell NetWare"
+                    },
+                    {
+                        "Ext.": "LANG",
+                        "Description": "Language file",
+                        "Used by": "Minecraft, Skype"
+                    },
+                    {
+                        "Ext.": "LAPOI",
+                        "Description": "Language file",
+                        "Used by": "Ransomware"
+                    },
+                    {
+                        "Ext.": "LAS",
+                        "Description": "Lasso File",
+                        "Used by": "Lasso Programming Language File"
+                    },
+                    {
+                        "Ext.": "LASSO",
+                        "Description": "Lasso File",
+                        "Used by": "Lasso Programming Language File"
+                    },
+                    {
+                        "Ext.": "LAY",
+                        "Description": "Word chart layout",
+                        "Used by": "APPLAUSE"
+                    },
+                    {
+                        "Ext.": "LBG",
+                        "Description": "Label generator data",
+                        "Used by": "dBASE IV"
+                    },
+                    {
+                        "Ext.": "LBL",
+                        "Description": "Label",
+                        "Used by": "dBASE IV - Clipper 5 - dBFast"
+                    },
+                    {
+                        "Ext.": "LBM",
+                        "Description": "Graphics format (Amiga)",
+                        "Used by": "Pic-view - Deluxe Paint"
+                    },
+                    {
+                        "Ext.": "LBM",
+                        "Description": "Linear bitmap graphics",
+                        "Used by": "XLib"
+                    },
+                    {
+                        "Ext.": "LBO",
+                        "Description": "Compiled label",
+                        "Used by": "dBASE IV"
+                    },
+                    {
+                        "Ext.": "LBR",
+                        "Description": ".LBR Archive",
+                        "Used by": "for CP/M and MS-DOS using the LU program"
+                    },
+                    {
+                        "Ext.": "LBR",
+                        "Description": "Display driver",
+                        "Used by": "Lotus 1-2-3"
+                    },
+                    {
+                        "Ext.": "LBR",
+                        "Description": "EAGLE library file",
+                        "Used by": "EAGLE (program)EAGLE"
+                    },
+                    {
+                        "Ext.": "LBT",
+                        "Description": "Additional (FPT) label description file",
+                        "Used by": "FoxPro"
+                    },
+                    {
+                        "Ext.": "LBX",
+                        "Description": "Main (DBF) label description file",
+                        "Used by": "FoxPro"
+                    },
+                    {
+                        "Ext.": "LCF",
+                        "Description": "Linker Control File",
+                        "Used by": "Norton Guides compiler"
+                    },
+                    {
+                        "Ext.": "LCH",
+                        "Description": "Chart",
+                        "Used by": "IBM Works for OS/2"
+                    },
+                    {
+                        "Ext.": "LCK",
+                        "Description": "Lockfile",
+                        "Used by": "Paradox"
+                    },
+                    {
+                        "Ext.": "LCL",
+                        "Description": "Data (FTP Software PC/TCP)",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "LCL",
+                        "Description": "Data",
+                        "Used by": "FTP Software PC/TCP"
+                    },
+                    {
+                        "Ext.": "LCN",
+                        "Description": "Lection",
+                        "Used by": "WordPerfect"
+                    },
+                    {
+                        "Ext.": "LCS",
+                        "Description": "Datafile",
+                        "Used by": "ACT! History Files"
+                    },
+                    {
+                        "Ext.": "LCW",
+                        "Description": "Spreadsheet",
+                        "Used by": "Lucid 3-D"
+                    },
+                    {
+                        "Ext.": "LD",
+                        "Description": "Long Distance codes file",
+                        "Used by": "Telix"
+                    },
+                    {
+                        "Ext.": "LDA",
+                        "Description": "Absolute binary file (load image)",
+                        "Used by": "PDP-11, RT-11"
+                    },
+                    {
+                        "Ext.": "LD1",
+                        "Description": "Overlay file",
+                        "Used by": "dBASE"
+                    },
+                    {
+                        "Ext.": "LDB",
+                        "Description": "Data filer database",
+                        "Used by": "IBM Works for OS/2"
+                    },
+                    {
+                        "Ext.": "LDB",
+                        "Description": "Overlay file",
+                        "Used by": "Microsoft Access"
+                    },
+                    {
+                        "Ext.": "LDF",
+                        "Description": "Data filer form",
+                        "Used by": "IBM Works for OS/2"
+                    },
+                    {
+                        "Ext.": "LDF",
+                        "Description": "Library definition file",
+                        "Used by": "Geoworks Glue"
+                    },
+                    {
+                        "Ext.": "LDR",
+                        "Description": "LDraw file",
+                        "Used by": "LDraw"
+                    },
+                    {
+                        "Ext.": "LDT",
+                        "Description": "EULUMDAT",
+                        "Used by": "Data file format used for specification of photometric data"
+                    },
+                    {
+                        "Ext.": "LDT",
+                        "Description": "Labordatentr\u00c3\u00a4ger, an xDT application",
+                        "Used by": "Healthcare providers in Germany"
+                    },
+                    {
+                        "Ext.": "LE",
+                        "Description": "DOS/4GW executable image",
+                        "Used by": "DOS/4GW PM 32X DOS Extender"
+                    },
+                    {
+                        "Ext.": "LES",
+                        "Description": "Lesson (check *.cbt)",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "LEV",
+                        "Description": "Level file",
+                        "Used by": "NetHack 3.x"
+                    },
+                    {
+                        "Ext.": "LEX",
+                        "Description": "Dictionary",
+                        "Used by": "Microsoft Word - Lexicon"
+                    },
+                    {
+                        "Ext.": "LFL",
+                        "Description": "LucasArts resource file",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "LFD",
+                        "Description": "LucasArts resource file",
+                        "Used by": "LucasArts games"
+                    },
+                    {
+                        "Ext.": "LFT",
+                        "Description": "Laser printer font",
+                        "Used by": "ChiWriter"
+                    },
+                    {
+                        "Ext.": "LG",
+                        "Description": "Logo procedure definitions",
+                        "Used by": "LSRHS Logo"
+                    },
+                    {
+                        "Ext.": "LGO",
+                        "Description": "Logo for header and footer",
+                        "Used by": "SuperFax"
+                    },
+                    {
+                        "Ext.": "LGO",
+                        "Description": "Startup logo code",
+                        "Used by": "Windows 3.x"
+                    },
+                    {
+                        "Ext.": "LGP",
+                        "Description": "LG Plate file",
+                        "Used by": "Lase Graphic Number plate software"
+                    },
+                    {
+                        "Ext.": "LGS",
+                        "Description": "LG Sign file",
+                        "Used by": "Laser Graphic Signs Software"
+                    },
+                    {
+                        "Ext.": "LHA",
+                        "Description": "LHA Archive",
+                        "Used by": "LHA/LHARC, Total Commander"
+                    },
+                    {
+                        "Ext.": "LHW",
+                        "Description": "Amiga archive",
+                        "Used by": "LHWARP"
+                    },
+                    {
+                        "Ext.": "LIB",
+                        "Description": "Library file",
+                        "Used by": "several programming languages"
+                    },
+                    {
+                        "Ext.": "LIC",
+                        "Description": "License file used by some programs to put their license on disk",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "LICENSE",
+                        "Description": "License file used by some programs to put their license on disk",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "LIF",
+                        "Description": "Archive",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "LIF",
+                        "Description": "CA Clipper packed file",
+                        "Used by": "CA Clipper installer"
+                    },
+                    {
+                        "Ext.": "LIF",
+                        "Description": "Logical Interchange Format data file",
+                        "Used by": "Hewlett-Packard"
+                    },
+                    {
+                        "Ext.": "LIM",
+                        "Description": "Archive",
+                        "Used by": "LIMIT"
+                    },
+                    {
+                        "Ext.": "LIN",
+                        "Description": "Line types",
+                        "Used by": "AutoCAD"
+                    },
+                    {
+                        "Ext.": "LIS",
+                        "Description": "Listing",
+                        "Used by": "VAX"
+                    },
+                    {
+                        "Ext.": "LISP",
+                        "Description": "LISP source code file",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "LIT",
+                        "Description": "Microsoft E-book file",
+                        "Used by": "Microsoft Reader"
+                    },
+                    {
+                        "Ext.": "LIT",
+                        "Description": "Web3D File",
+                        "Used by": "Web3D"
+                    },
+                    {
+                        "Ext.": "LIX",
+                        "Description": "Log file (history)",
+                        "Used by": "Audit Command Language (ACL)"
+                    },
+                    {
+                        "Ext.": "LJ",
+                        "Description": "Text file for HP LJ II printer",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "LL",
+                        "Description": "LLVM Assembly Language",
+                        "Used by": "llvm"
+                    },
+                    {
+                        "Ext.": "LL3",
+                        "Description": "LapLink III related file (document)",
+                        "Used by": "LapLink III"
+                    },
+                    {
+                        "Ext.": "LM",
+                        "Description": "Auran Jet LOD mesh table (text file to control LODs)",
+                        "Used by": "Trainz"
+                    },
+                    {
+                        "Ext.": "LMP",
+                        "Description": "Doom lump (data file, commonly \"demo\" recordings)",
+                        "Used by": "Doom - Doom2"
+                    },
+                    {
+                        "Ext.": "LNG",
+                        "Description": "Language definition file",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "LNK",
+                        "Description": "Linker response file",
+                        "Used by": ".RTLink"
+                    },
+                    {
+                        "Ext.": "LNK",
+                        "Description": "Linker script",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "LNK",
+                        "Description": "Windows 95 shortcut",
+                        "Used by": "Windows 95"
+                    },
+                    {
+                        "Ext.": "LNK",
+                        "Description": "Windows XP shortcut",
+                        "Used by": "Windows XP"
+                    },
+                    {
+                        "Ext.": "LOADERS",
+                        "Description": "Loaders",
+                        "Used by": "GTK+"
+                    },
+                    {
+                        "Ext.": "LOCK",
+                        "Description": "Lockfile",
+                        "Used by": "Various systems"
+                    },
+                    {
+                        "Ext.": "LOD",
+                        "Description": "Load file",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "LOG",
+                        "Description": "Log file",
+                        "Used by": "Numerous systems"
+                    },
+                    {
+                        "Ext.": "LOM",
+                        "Description": "3D Model",
+                        "Used by": "Lock On: Modern Air Combat"
+                    },
+                    {
+                        "Ext.": "LOVE",
+                        "Description": "L\u00c3\u0096VE Game File",
+                        "Used by": "L\u00c3\u0096VE"
+                    },
+                    {
+                        "Ext.": "LPC",
+                        "Description": "Printer driver",
+                        "Used by": "TEKO"
+                    },
+                    {
+                        "Ext.": "LRC",
+                        "Description": "Lyrics data",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "LRF",
+                        "Description": "Linker response file",
+                        "Used by": "Microsoft C/C++"
+                    },
+                    {
+                        "Ext.": "LRF",
+                        "Description": "Unencrypted BroadBand eBook file",
+                        "Used by": "Sony Librie eBook reader"
+                    },
+                    {
+                        "Ext.": "LRMODULE",
+                        "Description": "Adobe Photoshop Lightroom Module",
+                        "Used by": "Adobe Photoshop Lightroom"
+                    },
+                    {
+                        "Ext.": "LRP",
+                        "Description": "Report",
+                        "Used by": "IBM Works for OS/2"
+                    },
+                    {
+                        "Ext.": "LRPLUGIN",
+                        "Description": "Adobe Photoshop Lightroom Plug-in",
+                        "Used by": "Adobe Photoshop Lightroom"
+                    },
+                    {
+                        "Ext.": "LRS",
+                        "Description": "Language Resource File",
+                        "Used by": "WordPerfect for Win"
+                    },
+                    {
+                        "Ext.": "LRWEB",
+                        "Description": "Adobe Photoshop Lightroom Web Gallery",
+                        "Used by": "Adobe Photoshop Lightroom"
+                    },
+                    {
+                        "Ext.": "LRX",
+                        "Description": "Encrypted BroadBand eBook file",
+                        "Used by": "Sony Librie eBook reader"
+                    },
+                    {
+                        "Ext.": "LS",
+                        "Description": "LiveScript source code file",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "LSA",
+                        "Description": "Lightscape Technologies ASCII",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "LSA",
+                        "Description": "Lingvo system audio",
+                        "Used by": "ABBYY Lingvo"
+                    },
+                    {
+                        "Ext.": "LSB",
+                        "Description": "Lightscape Technologies Binary",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "LSC",
+                        "Description": "Leostream Connect file",
+                        "Used by": "Leostream Corporation"
+                    },
+                    {
+                        "Ext.": "LSD",
+                        "Description": "Lingvo system dictionary",
+                        "Used by": "ABBYY Lingvo"
+                    },
+                    {
+                        "Ext.": "LSP",
+                        "Description": "LISP source code file",
+                        "Used by": "Xlisp, AutoLISP"
+                    },
+                    {
+                        "Ext.": "LSS",
+                        "Description": "Spreadsheet",
+                        "Used by": "Legato - IBM Works for OS/2"
+                    },
+                    {
+                        "Ext.": "LSS",
+                        "Description": "SYSLINUX Splash Screen Graphic",
+                        "Used by": "SYSLINUX, XnView"
+                    },
+                    {
+                        "Ext.": "LST",
+                        "Description": "Aus. BOM Hourly weather Data"
+                    },
+                    {
+                        "Ext.": "LST",
+                        "Description": "Filelist",
+                        "Used by": "FRQView"
+                    },
+                    {
+                        "Ext.": "LST",
+                        "Description": "Keyboard macro",
+                        "Used by": "1st Reader"
+                    },
+                    {
+                        "Ext.": "LST",
+                        "Description": "List file (archive index - compiler listfile)",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "LST",
+                        "Description": "Listing (e.g. source code)",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "LST",
+                        "Description": "Map list",
+                        "Used by": "Holux - Alan"
+                    },
+                    {
+                        "Ext.": "LST",
+                        "Description": "Spool file",
+                        "Used by": "Oracle"
+                    },
+                    {
+                        "Ext.": "LST",
+                        "Description": "SLP output file",
+                        "Used by": "RT-11"
+                    },
+                    {
+                        "Ext.": "LTA",
+                        "Description": "Data",
+                        "Used by": "LithTech ASCII 3D object"
+                    },
+                    {
+                        "Ext.": "LTM",
+                        "Description": "Form (Lotus Forms)",
+                        "Used by": "Lotus"
+                    },
+                    {
+                        "Ext.": "LUA",
+                        "Description": "Lua script file",
+                        "Used by": "Microsoft Visual C++, Notepad++"
+                    },
+                    {
+                        "Ext.": "LUD",
+                        "Description": "Lingvo user dictionary",
+                        "Used by": "ABBYY Lingvo"
+                    },
+                    {
+                        "Ext.": "LUW",
+                        "Description": "label data file",
+                        "Used by": "Labels Unlimited for Windows"
+                    },
+                    {
+                        "Ext.": "LUX",
+                        "Description": "2D and 3D graphics data file",
+                        "Used by": "Foliomap and Spectramap"
+                    },
+                    {
+                        "Ext.": "LUZ",
+                        "Description": "3D graphics data file",
+                        "Used by": "Spectramap CUDA"
+                    },
+                    {
+                        "Ext.": "LWD",
+                        "Description": "Text document",
+                        "Used by": "LotusWorks"
+                    },
+                    {
+                        "Ext.": "LWO",
+                        "Description": "Lightwave Object Format",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "LWP",
+                        "Description": "Word processor",
+                        "Used by": "IBM Works for OS/2, Lotus Wordpro"
+                    },
+                    {
+                        "Ext.": "LXF",
+                        "Description": "Lego Exchange Format",
+                        "Used by": "Lego Digital Designer data file"
+                    },
+                    {
+                        "Ext.": "LXO",
+                        "Description": "Luxology scene",
+                        "Used by": "modo3D software"
+                    },
+                    {
+                        "Ext.": "LXT",
+                        "Description": "Temporal database file",
+                        "Used by": "GTKWave data file"
+                    },
+                    {
+                        "Ext.": "LY",
+                        "Description": "LilyPond Notation File",
+                        "Used by": "LilyPond"
+                    },
+                    {
+                        "Ext.": "LYR",
+                        "Description": "Lyrics (ASCII)",
+                        "Used by": ""
+                    },
+                    {
+                        "Ext.": "LYT",
+                        "Description": "Document Layout file",
+                        "Used by": "Adminsoft Accounts"
+                    },
+                    {
+                        "Ext.": "LZ",
+                        "Description": "Archive",
+                        "Used by": "Lzip"
+                    },
+                    {
+                        "Ext.": "LZD",
+                        "Description": "Difference file for binaries",
+                        "Used by": "LDiff 1.20"
+                    },
+                    {
+                        "Ext.": "LZH",
+                        "Description": "LHA Archive",
+                        "Used by": "LHA/LHARC, Total Commander"
+                    },
+                    {
+                        "Ext.": "LZS",
+                        "Description": "LHA Archive",
+                        "Used by": "LARC, Total Commander"
+                    },
+                    {
+                        "Ext.": "LZW",
+                        "Description": "Archive",
+                        "Used by": "LHWARP"
+                    },
+                    {
+                        "Ext.": "LZX",
+                        "Description": "Amiga Archive",
+                        "Used by": "LZX"
+                    }
+                ]
+            }
+        ],
+        "src": "https://en.wikipedia.org/wiki/List_of_filename_extensions_(F%E2%80%93L)"
+    },
+    "md5-page": "b098629448063be9718754a48770077c",
+    "md5-site": "d1063af181fe606e55ed93dd5b867169",
+    "md5-url": "8cf1a65115d19660dddce0375d3a7e6d"
+}
