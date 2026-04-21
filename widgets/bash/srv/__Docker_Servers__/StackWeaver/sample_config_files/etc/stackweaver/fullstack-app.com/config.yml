@@ -1,0 +1,37 @@
+domain: "fullstack-app.com"
+root: "/var/www/html/fullstack-app.com"
+docroot: "/var/www/html/fullstack-app.com/www"
+
+services:
+  apache_php: true
+
+  mysql:
+    enabled: true
+    database: "fullstack_app"
+    user: "fs_user"
+    password_enc: "U2FsdGVkX1/FSsqlPassEncryptedExample=="
+
+  mongo:
+    enabled: true
+    database: "fullstack_app_mongo"
+    user: "fs_mongo"
+    password_enc: "U2FsdGVkX19MongoPassEncryptedExample=="
+
+  email:
+    enabled: true
+    accounts:
+      - address: "admin@fullstack-app.com"
+        password_enc: "U2FsdGVkX1/AdminEncryptedExample=="
+      - address: "no-reply@fullstack-app.com"
+        password_enc: "U2FsdGVkX1/NoreplyEncryptedExample=="
+
+  dns:
+    enabled: true
+    zonefile: "/var/www/html/fullstack-app.com/named/zonefile.db"
+    allow_transfer:
+      - "8.8.8.8"
+      - "9.9.9.9"
+
+ssl:
+  enabled: true
+  email: "admin@fullstack-app.com"

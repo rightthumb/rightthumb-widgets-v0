@@ -1,0 +1,33 @@
+domain: "mail.mydomain.org"
+root: "/var/www/html/mail.mydomain.org"
+docroot: "/var/www/html/mail.mydomain.org/www"
+
+services:
+  apache_php: true
+
+  mysql:
+    enabled: false
+    database: "mail_mydomain_org"
+    user: "mail_mydomain_org"
+    password_enc: ""
+
+  mongo:
+    enabled: false
+    database: "mail_mydomain_org"
+    user: "mail_mydomain_org"
+    password_enc: ""
+
+  email:
+    enabled: true
+    accounts:
+      - address: "admin@mail.mydomain.org"
+        password_enc: "U2FsdGVkX19MailAdminEncrypted=="
+      - address: "support@mail.mydomain.org"
+        password_enc: "U2FsdGVkX19MailSupportEncrypted=="
+
+  dns:
+    enabled: false
+
+ssl:
+  enabled: true
+  email: "admin@mail.mydomain.org"

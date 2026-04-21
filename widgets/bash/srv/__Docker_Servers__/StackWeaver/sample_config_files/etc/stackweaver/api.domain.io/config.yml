@@ -1,0 +1,29 @@
+domain: "api.domain.io"
+root: "/var/www/html/api.domain.io"
+docroot: "/var/www/html/api.domain.io/www"
+
+services:
+  apache_php: false   # no PHP needed
+
+  mysql:
+    enabled: false
+    database: "api_domain_io"
+    user: "api_domain_io"
+    password_enc: ""
+
+  mongo:
+    enabled: true
+    database: "api_domain_io"
+    user: "apiuser"
+    password_enc: "U2FsdGVkX1/t3kDasdfEXAMPLE=="
+
+  email:
+    enabled: false
+    accounts: []
+
+  dns:
+    enabled: false
+
+ssl:
+  enabled: true
+  email: "sysadmin@domain.io"

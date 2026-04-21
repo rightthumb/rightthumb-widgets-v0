@@ -1,0 +1,25 @@
+domain: "mynewsite.dev"
+root: "/var/www/html/mynewsite.dev"
+docroot: "/var/www/html/mynewsite.dev/www"
+
+services:
+  apache_php: true
+  mysql:
+    enabled: false
+    database: "mynewsite_dev"
+    user: "mynewsite_dev"
+    password_enc: ""
+  mongo:
+    enabled: false
+    database: "mynewsite_dev"
+    user: "mynewsite_dev"
+    password_enc: ""
+  email:
+    enabled: false
+    accounts: []
+  dns:
+    enabled: false
+
+ssl:
+  enabled: false
+  email: ""

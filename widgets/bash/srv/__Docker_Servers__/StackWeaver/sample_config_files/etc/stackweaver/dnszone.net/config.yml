@@ -1,0 +1,33 @@
+domain: "dnszone.net"
+root: "/var/www/html/dnszone.net"
+docroot: "/var/www/html/dnszone.net/www"
+
+services:
+  apache_php: false
+
+  mysql:
+    enabled: false
+    database: "dnszone_net"
+    user: "dnszone_net"
+    password_enc: ""
+
+  mongo:
+    enabled: false
+    database: "dnszone_net"
+    user: "dnszone_net"
+    password_enc: ""
+
+  email:
+    enabled: false
+    accounts: []
+
+  dns:
+    enabled: true
+    zonefile: "/var/www/html/dnszone.net/named/zonefile.db"
+    allow_transfer:
+      - "1.2.3.4"
+      - "5.6.7.8"
+
+ssl:
+  enabled: false
+  email: ""
