@@ -1,4 +1,16 @@
 @echo off
+call cp.git %*
+
+echo.
+echo.
+echo.
+echo Ran: cp.git instead
+echo.
+echo.
+echo.
+
+
+goto:eof
 setlocal enabledelayedexpansion
 
 echo [INFO] Starting aggressive git force-push script...

@@ -1339,12 +1339,19 @@ pc_execute_user_operations() {
 }
 
 pc_apply_owner_group_single() {
-	local path="$1"
-	local owner="$2"
-	local group="$3"
+	local state_name="$1"
+	local path="$2"
+	local owner="$3"
+	local group="$4"
+	local -n st="$state_name"
 
-	[[ -n "$owner" ]] && pc_run chown "$owner" "$path"
-	[[ -n "$group" ]] && pc_run chgrp "$group" "$path"
+	if [[ "${st[recursive]}" == "0" ]]; then
+		[[ -n "$owner" ]] && pc_run chown "$owner" "$path"
+		[[ -n "$group" ]] && pc_run chgrp "$group" "$path"
+	else
+		[[ -n "$owner" ]] && pc_run chown -R "$owner" "$path"
+		[[ -n "$group" ]] && pc_run chgrp -R "$group" "$path"
+	fi
 }
 
 pc_apply_mode_single() {
@@ -1352,10 +1359,19 @@ pc_apply_mode_single() {
 	local path="$2"
 	local -n st="$state_name"
 
-	if [[ -d "$path" ]]; then
-		[[ -n "${st[dir_mode]}" ]] && pc_run chmod "${st[dir_mode]}" "$path"
-	elif [[ -f "$path" ]]; then
-		[[ -n "${st[file_mode]}" ]] && pc_run chmod "${st[file_mode]}" "$path"
+	if [[ "${st[recursive]}" == "0" ]]; then
+		if [[ -d "$path" ]]; then
+			[[ -n "${st[dir_mode]}" ]] && pc_run chmod "${st[dir_mode]}" "$path"
+		elif [[ -f "$path" ]]; then
+			[[ -n "${st[file_mode]}" ]] && pc_run chmod "${st[file_mode]}" "$path"
+		fi
+	else
+		if [[ -d "$path" ]]; then
+			[[ -n "${st[dir_mode]}" ]] && pc_run find "$path" -type d -exec chmod "${st[dir_mode]}" {} +
+			[[ -n "${st[file_mode]}" ]] && pc_run find "$path" -type f -exec chmod "${st[file_mode]}" {} +
+		else
+			[[ -n "${st[file_mode]}" ]] && pc_run chmod "${st[file_mode]}" "$path"
+		fi
 	fi
 }
 
