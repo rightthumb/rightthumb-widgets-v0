@@ -72,17 +72,7 @@ def _ensure_dirs() -> None:
 
     # default config (mainly KDF params)
     if not PATHS["CONFIG_FILE"].exists():
-        cfg = {
-            "kdf": {
-                "type": "scrypt",
-                "n": 2**14,
-                "r": 8,
-                "p": 1,
-                "length": 32,
-            },
-            "version": 1,
-        }
-        PATHS["CONFIG_FILE"].write_text(json.dumps(cfg, indent=2), encoding="utf-8")
+        _tight_write(PATHS["CONFIG_FILE"], json.dumps(_default_config(), indent=2), text=True)
 
 
 def _read_pepper() -> bytes:
@@ -100,6 +90,58 @@ def _tight_write(path: Path, data: bytes | str, text: bool = False) -> None:
     except Exception:
         pass
 
+
+
+
+def _default_config() -> Dict[str, Any]:
+    return {
+        "kdf": {
+            "type": "scrypt",
+            "n": 2**14,
+            "r": 8,
+            "p": 1,
+            "length": 32,
+        },
+        "version": 1,
+    }
+
+
+def _valid_config(cfg: Any) -> bool:
+    if not isinstance(cfg, dict):
+        return False
+    kdf = cfg.get("kdf")
+    if not isinstance(kdf, dict):
+        return False
+    try:
+        return (
+            kdf.get("type", "scrypt") == "scrypt"
+            and int(kdf.get("n", 0)) > 1
+            and int(kdf.get("r", 0)) > 0
+            and int(kdf.get("p", 0)) > 0
+            and int(kdf.get("length", 0)) in (16, 24, 32)
+        )
+    except (TypeError, ValueError):
+        return False
+
+
+def _load_or_repair_config() -> Dict[str, Any]:
+    cfg_path = PATHS["CONFIG_FILE"]
+    try:
+        cfg = json.loads(cfg_path.read_text(encoding="utf-8"))
+    except Exception:
+        cfg = None
+
+    if not _valid_config(cfg):
+        bad_path = cfg_path.with_suffix(f".bad-{int(time.time())}.json")
+        if cfg_path.exists():
+            try:
+                cfg_path.replace(bad_path)
+            except Exception:
+                pass
+        cfg = _default_config()
+        _tight_write(cfg_path, json.dumps(cfg, indent=2), text=True)
+
+    return cfg
 
 def kdf_scrypt(secret: str, salt: bytes, **params) -> bytes:
     """
@@ -170,7 +212,7 @@ class VaultWeaver:
 
     def __init__(self) -> None:
         _ensure_dirs()
-        self.cfg = json.loads(PATHS["CONFIG_FILE"].read_text(encoding="utf-8"))
+        self.cfg = _load_or_repair_config()
         self._data_keys: Dict[str, bytes] = {}  # in-memory only, per-process
 
     # ------------- paths -------------
@@ -214,7 +256,10 @@ class VaultWeaver:
         udir = self._u_dir(username)
         udir.mkdir(parents=True, exist_ok=True)
 
+        if not _valid_config(self.cfg):
+            self.cfg = _load_or_repair_config()
         kdf_cfg = self.cfg["kdf"]
+
         pin_salt = secrets.token_bytes(16)
         pw_salt = secrets.token_bytes(16)
 
@@ -519,6 +564,7 @@ def demo() -> None:
     vw.change_password(user, pin="11223344", old_password=pw, new_password="EvenStronger!99")
 
     print("[verify] unlock again with new creds, decrypt again")
+    vw.lock(user)
     vw.unlock(user, pin="11223344", password="EvenStronger!99")
     dec_path2 = vw.decrypt_file(user, item_id)
     print(f"  -> decrypted again to: {dec_path2}")
