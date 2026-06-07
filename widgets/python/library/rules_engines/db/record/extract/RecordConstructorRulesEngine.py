@@ -125,7 +125,9 @@ class RecordConstructorRulesEngine:
 	def process_file(self, input_file):
 		input_path = Path(input_file).expanduser()
 
+		
 		self.runtime.meta['input_file'] = str(input_path)
+		processing_file = str(input_path)
 
 		text = input_path.read_text(
 			encoding="utf-8",
@@ -464,6 +466,8 @@ class RecordConstructorRulesEngine:
 			self.runtime.output.update(result)
 
 
+processing_file = type('Processing_File', (), {})()
+
 # =========================
 # EXAMPLE TRIGGERS / CALLBACKS
 # =========================
@@ -485,18 +489,73 @@ def normalize_address_callback(value, rule=None):
 
 
 
+import re
+from datetime import datetime
 
+def extract_epoch(text):
+    match = re.search(r'\b(\d{10}|\d{13})\b', str(text))
+    if not match:
+        return False
 
+    epoch = int(match.group(1))
 
+    try:
+        # Convert milliseconds to seconds if needed
+        if len(match.group(1)) == 13:
+            epoch /= 1000
+
+        dt = datetime.fromtimestamp(epoch)
+
+        return {
+            "epoch": match.group(1),
+            "datetime": dt.isoformat(),
+            "year": dt.year,
+            "month": dt.month,
+            "day": dt.day,
+            "hour": dt.hour,
+            "minute": dt.minute,
+            "second": dt.second,
+        }
+    except (ValueError, OSError, OverflowError):
+        return False
+
+import re
+from datetime import datetime
+
+def epoch_to_date(text):
+    m = re.search(r'\d{10,13}', text)
+    if not m:
+        return False
+
+    ts = int(m.group())
+    if len(m.group()) == 13:
+        ts //= 1000
+
+    try:
+        dt = datetime.fromtimestamp(ts)
+        return {
+            "date": dt.strftime("%Y-%m-%d"),
+            "time": dt.strftime("%I:%M %p")
+        }
+    except:
+        return False
+	
+	
 def final_callback(output, rule=None):
 	# simple placeholder for upload/api later
 	
 
-	global Add_GPS
+	# check if filename is epoch and add date time to record
+	if not 'date' in output :
+
+		valid = epoch_to_date(processing_file)
+		if valid:
+			output.update(valid)
 
 
 	
 	# <GPS>
+	global Add_GPS
 	if Add_GPS:
 		import sys, os
 		sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', '..', '..', 'location')))
