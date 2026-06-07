@@ -16,7 +16,6 @@ INPUT_FOLDER = "./parsed"
 OUTPUT_FOLDER = "./yaml"
 
 Add_GPS = False
-
 # class Runtime: pass
 
 
@@ -123,6 +122,7 @@ class RecordConstructorRulesEngine:
 
 
 	def process_file(self, input_file):
+		processingFile.path = input_file
 		input_path = Path(input_file).expanduser()
 
 		self.runtime.meta['input_file'] = str(input_path)
@@ -135,8 +135,8 @@ class RecordConstructorRulesEngine:
 		return self.process_text(text)
 
 	def process_file_to_yaml_dir(self, input_file, input_folder=None, output_folder=None):
+		processingFile.path = input_file
 		input_path = Path(input_file).expanduser()
-
 		if not input_path.is_absolute():
 			input_path = Path(input_folder or ".").expanduser() / input_path
 
@@ -485,13 +485,38 @@ def normalize_address_callback(value, rule=None):
 
 
 
+import re
+from datetime import datetime
 
+def epoch_to_date(text):
+    m = re.search(r'\d{10,13}', text)
+    if not m:
+        return False
 
+    ts = int(m.group())
+    if len(m.group()) == 13:
+        ts //= 1000
 
+    try:
+        dt = datetime.fromtimestamp(ts)
+        return {
+            "date": dt.strftime("%Y-%m-%d"),
+            "time": dt.strftime("%I:%M %p")
+        }
+    except:
+        return False
+
+processingFile = type('ProcessingFile', (), {})()
 def final_callback(output, rule=None):
 	# simple placeholder for upload/api later
 	
 
+	# check if filename is epoch and add date
+	if processingFile and not 'date' in output and not 'time' in output:
+		valid = epoch_to_date(processingFile.path)
+		if valid:
+			output['date'] = valid['date']
+			output['time'] = valid['time']
 
 
 	
