@@ -29575,6 +29575,10 @@ Advantages
 ##================================================
 ##================================================
 def y(yaml,p=False):
+	yaml = yaml.replace(',','||')
+	yaml = yaml.replace('--','||')
+	yaml = yaml.replace('::','||')
+	while ': ' in yaml: yaml = yaml.replace(': ',':')
 	yaml = yaml.replace(':',': ').replace(':  ',': ')
 	while ' ||' in yaml:
 		yaml = yaml.replace(' ||', '||')
