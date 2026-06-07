@@ -125,7 +125,6 @@ class RecordConstructorRulesEngine:
 	def process_file(self, input_file):
 		input_path = Path(input_file).expanduser()
 
-		
 		self.runtime.meta['input_file'] = str(input_path)
 
 		text = input_path.read_text(
@@ -465,8 +464,6 @@ class RecordConstructorRulesEngine:
 			self.runtime.output.update(result)
 
 
-
-
 # =========================
 # EXAMPLE TRIGGERS / CALLBACKS
 # =========================
@@ -495,8 +492,7 @@ def final_callback(output, rule=None):
 	# simple placeholder for upload/api later
 	
 
-	# check if filename is epoch and add date time to record
-	valid = self.runtime.meta['input_file']
+
 
 	
 	# <GPS>
