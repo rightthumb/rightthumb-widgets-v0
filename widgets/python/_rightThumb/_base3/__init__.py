@@ -23441,7 +23441,7 @@ def load():
 # 		defaultScriptTriggers_do()
 
 import importlib
-
+import importlib.util
 regImps = {}
 
 ##############################
